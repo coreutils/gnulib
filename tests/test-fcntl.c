@@ -46,7 +46,7 @@ SIGNATURE_CHECK (fcntl, int, (int, int, ...));
 #include "macros.h"
 
 #if !O_BINARY
-# define setmode(f,m) zero ()
+# define set_binary_mode(f,m) zero ()
 static int zero (void) { return 0; }
 #endif
 
@@ -94,8 +94,8 @@ is_inheritable (int fd)
 static bool
 is_mode (int fd, int mode)
 {
-  int value = setmode (fd, O_BINARY);
-  setmode (fd, value);
+  int value = set_binary_mode (fd, O_BINARY);
+  set_binary_mode (fd, value);
   return mode == value;
 }
 
@@ -271,7 +271,7 @@ main (void)
 
   /* For F_DUPFD*, check for correct inheritance, as well as
      preservation of text vs. binary.  */
-  setmode (fd, O_BINARY);
+  set_binary_mode (fd, O_BINARY);
   ASSERT (is_open (fd));
   ASSERT (!is_open (fd + 1));
   ASSERT (!is_open (fd + 2));
@@ -297,7 +297,7 @@ main (void)
   ASSERT (is_mode (fd + 2, O_BINARY));
   ASSERT (close (fd) == 0);
 
-  setmode (fd + 2, O_TEXT);
+  set_binary_mode (fd + 2, O_TEXT);
   ASSERT (fcntl (fd + 2, F_DUPFD, fd + 1) == fd + 1);
   ASSERT (!is_open (fd));
   ASSERT (is_open (fd + 1));

@@ -62,7 +62,7 @@ is_inheritable (int fd)
 }
 
 #if !O_BINARY
-# define setmode(f,m) zero ()
+# define set_binary_mode(f,m) zero ()
 static int zero (void) { return 0; }
 #endif
 
@@ -71,8 +71,8 @@ static int zero (void) { return 0; }
 static int
 is_mode (int fd, int mode)
 {
-  int value = setmode (fd, O_BINARY);
-  setmode (fd, value);
+  int value = set_binary_mode (fd, O_BINARY);
+  set_binary_mode (fd, value);
   return mode == value;
 }
 
@@ -107,13 +107,13 @@ main (void)
 
   /* On systems that distinguish between text and binary mode,
      dup_cloexec reuses the mode of the source.  */
-  setmode (fd, O_BINARY);
+  set_binary_mode (fd, O_BINARY);
   ASSERT (is_mode (fd, O_BINARY));
   fd2 = dup_cloexec (fd);
   ASSERT (fd < fd2);
   ASSERT (is_mode (fd2, O_BINARY));
   ASSERT (close (fd2) == 0);
-  setmode (fd, O_TEXT);
+  set_binary_mode (fd, O_TEXT);
   ASSERT (is_mode (fd, O_TEXT));
   fd2 = dup_cloexec (fd);
   ASSERT (fd < fd2);

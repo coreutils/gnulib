@@ -92,7 +92,7 @@ is_inheritable (int fd)
 #endif /* GNULIB_TEST_CLOEXEC */
 
 #if !O_BINARY
-# define setmode(f,m) zero ()
+# define set_binary_mode(f,m) zero ()
 static int zero (void) { return 0; }
 #endif
 
@@ -101,8 +101,8 @@ static int zero (void) { return 0; }
 static int
 is_mode (int fd, int mode)
 {
-  int value = setmode (fd, O_BINARY);
-  setmode (fd, value);
+  int value = set_binary_mode (fd, O_BINARY);
+  set_binary_mode (fd, value);
   return mode == value;
 }
 
@@ -203,11 +203,11 @@ main (void)
 
   /* On systems that distinguish between text and binary mode, dup2
      reuses the mode of the source.  */
-  setmode (fd, O_BINARY);
+  set_binary_mode (fd, O_BINARY);
   ASSERT (is_mode (fd, O_BINARY));
   ASSERT (dup2 (fd, fd + 1) == fd + 1);
   ASSERT (is_mode (fd + 1, O_BINARY));
-  setmode (fd, O_TEXT);
+  set_binary_mode (fd, O_TEXT);
   ASSERT (is_mode (fd, O_TEXT));
   ASSERT (dup2 (fd, fd + 1) == fd + 1);
   ASSERT (is_mode (fd + 1, O_TEXT));
