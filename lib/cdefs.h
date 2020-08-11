@@ -167,8 +167,8 @@
 #if defined __STDC_VERSION__ && __STDC_VERSION__ >= 199901L && !defined __HP_cc
 # define __flexarr	[]
 # define __glibc_c99_flexarr_available 1
-#elif __GNUC_PREREQ (2,97)
-/* GCC 2.97 supports C99 flexible array members as an extension,
+#elif __GNUC_PREREQ (2,97) || defined __clang__
+/* GCC 2.97 and clang support C99 flexible array members as an extension,
    even when in C89 mode or compiling C++ (any version).  */
 # define __flexarr	[]
 # define __glibc_c99_flexarr_available 1
