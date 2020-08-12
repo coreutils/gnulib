@@ -53,7 +53,7 @@
 # define IF_MT_DECL  char optimize_for_single_thread = __libc_single_threaded
 # define IF_MT       if (!optimize_for_single_thread)
 #else
-# define IF_MT_DECL  (void *)0
+# define IF_MT_DECL  (void)0
 # define IF_MT
 #endif
 
