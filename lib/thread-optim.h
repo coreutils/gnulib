@@ -26,23 +26,25 @@
 
 /* Typical use: In a block or function, use
 
-     IF_MT_DECL;
+     bool mt = gl_multithreaded ();
      ...
-     IF_MT
+     if (mt)
        if (pthread_mutex_lock (&lock)) abort ();
      ...
-     IF_MT
+     if (mt)
        if (pthread_mutex_unlock (&lock)) abort ();
 
-   The macro IF_MT_DECL establishes local variables for use by IF_MT.
+   The gl_multithreaded () invocation determines whether the program currently
+   is multithreaded.
 
-   IF_MT STATEMENT executes STATEMENT in the multithreaded cases, and skips it
-   in the single-threaded case.
+   if (mt) STATEMENT executes STATEMENT in the multithreaded case, and skips
+   it in the single-threaded case.
 
-   The code between IF_MT_DECL and IF_MT must not create threads or invoke
-   functions that may indirectly create threads (e.g. 'dlopen' may, indirectly
-   through C++ initializers of global variables in the shared library being
-   opened, create threads).
+   The code between the gl_multithreaded () invocation and any use of the
+   variable 'mt' must not create threads or invoke functions that may
+   indirectly create threads (e.g. 'dlopen' may, indirectly through C++
+   initializers of global variables in the shared library being opened,
+   create threads).
 
    The lock here is meant to synchronize threads in the same process.  The
    same optimization cannot be applied to locks that synchronize different
@@ -50,11 +52,9 @@
 
 #if HAVE_SYS_SINGLE_THREADED_H /* glibc >= 2.32 */
 # include <sys/single_threaded.h>
-# define IF_MT_DECL  char optimize_for_single_thread = __libc_single_threaded
-# define IF_MT       if (!optimize_for_single_thread)
+# define gl_multithreaded()  !__libc_single_threaded
 #else
-# define IF_MT_DECL  (void)0
-# define IF_MT
+# define gl_multithreaded()  1
 #endif
 
 #endif /* _THREAD_OPTIM_H */

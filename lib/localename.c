@@ -28,6 +28,7 @@
 #endif
 
 #include <limits.h>
+#include <stdbool.h>
 #include <stddef.h>
 #include <stdlib.h>
 #include <locale.h>
@@ -2699,9 +2700,9 @@ struniq (const char *string)
     return "C";
   memcpy (new_node->contents, string, size);
   {
-    IF_MT_DECL;
+    bool mt = gl_multithreaded ();
     /* Lock while inserting new_node.  */
-    IF_MT gl_lock_lock (struniq_lock);
+    if (mt) gl_lock_lock (struniq_lock);
     /* Check whether another thread already added the string while we were
        waiting on the lock.  */
     for (p = struniq_hash_table[slot]; p != NULL; p = p->next)
@@ -2717,7 +2718,7 @@ struniq (const char *string)
     struniq_hash_table[slot] = new_node;
    done:
     /* Unlock after new_node is inserted.  */
-    IF_MT gl_lock_unlock (struniq_lock);
+    if (mt) gl_lock_unlock (struniq_lock);
   }
   return new_node->contents;
 }
