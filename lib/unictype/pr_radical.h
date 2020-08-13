@@ -11,7 +11,7 @@ struct
     int header[1];
     int level1[1];
     short level2[1 << 7];
-    /*unsigned*/ int level3[1 << 4];
+    unsigned int level3[1 << 4];
   }
 u_property_radical =
 {
@@ -148,9 +148,9 @@ u_property_radical =
        -1
   },
   {
-    0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0xFBFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x000FFFFF,
-    0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
-    0xFFFFFFFF, 0xFFFFFFFF, 0x003FFFFF, 0x00000000
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0xFBFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU, 0x000FFFFFU,
+    0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU,
+    0xFFFFFFFFU, 0xFFFFFFFFU, 0x003FFFFFU, 0x00000000U
   }
 };

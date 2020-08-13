@@ -18,20 +18,20 @@
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 /* Usage example:
-     $ gen-uni-tables /usr/local/share/Unidata/UnicodeData.txt \
-                      /usr/local/share/Unidata/PropList.txt \
-                      /usr/local/share/Unidata/DerivedCoreProperties.txt \
-                      /usr/local/share/Unidata/ArabicShaping.txt \
-                      /usr/local/share/Unidata/Scripts.txt \
-                      /usr/local/share/Unidata/Blocks.txt \
-                      /usr/local/share/Unidata/PropList-3.0.1.txt \
-                      /usr/local/share/Unidata/EastAsianWidth.txt \
-                      /usr/local/share/Unidata/LineBreak.txt \
-                      /usr/local/share/Unidata/WordBreakProperty.txt \
-                      /usr/local/share/Unidata/GraphemeBreakProperty.txt \
-                      /usr/local/share/Unidata/CompositionExclusions.txt \
-                      /usr/local/share/Unidata/SpecialCasing.txt \
-                      /usr/local/share/Unidata/CaseFolding.txt \
+     $ gen-uni-tables /usr/local/share/www.unicode.org/Public/9.0.0/ucd/UnicodeData.txt \
+                      /usr/local/share/www.unicode.org/Public/9.0.0/ucd/PropList.txt \
+                      /usr/local/share/www.unicode.org/Public/9.0.0/ucd/DerivedCoreProperties.txt \
+                      /usr/local/share/www.unicode.org/Public/9.0.0/ucd/ArabicShaping.txt \
+                      /usr/local/share/www.unicode.org/Public/9.0.0/ucd/Scripts.txt \
+                      /usr/local/share/www.unicode.org/Public/9.0.0/ucd/Blocks.txt \
+                      /usr/local/share/www.unicode.org/Public/3.0-Update1/PropList-3.0.1.txt \
+                      /usr/local/share/www.unicode.org/Public/9.0.0/ucd/EastAsianWidth.txt \
+                      /usr/local/share/www.unicode.org/Public/9.0.0/ucd/LineBreak.txt \
+                      /usr/local/share/www.unicode.org/Public/9.0.0/ucd/auxiliary/WordBreakProperty.txt \
+                      /usr/local/share/www.unicode.org/Public/9.0.0/ucd/auxiliary/GraphemeBreakProperty.txt \
+                      /usr/local/share/www.unicode.org/Public/9.0.0/ucd/CompositionExclusions.txt \
+                      /usr/local/share/www.unicode.org/Public/9.0.0/ucd/SpecialCasing.txt \
+                      /usr/local/share/www.unicode.org/Public/9.0.0/ucd/CaseFolding.txt \
                       9.0.0
  */
 
@@ -741,7 +741,7 @@ output_predicate (const char *filename, bool (*predicate) (unsigned int), const 
   fprintf (stream, "    int header[1];\n");
   fprintf (stream, "    int level1[%zu];\n", t.level1_size);
   fprintf (stream, "    short level2[%zu << %d];\n", t.level2_size, t.q);
-  fprintf (stream, "    /*unsigned*/ int level3[%zu << %d];\n", t.level3_size, t.p);
+  fprintf (stream, "    unsigned int level3[%zu << %d];\n", t.level3_size, t.p);
   fprintf (stream, "  }\n");
   fprintf (stream, "%s =\n", name);
   fprintf (stream, "{\n");
@@ -793,7 +793,7 @@ output_predicate (const char *filename, bool (*predicate) (unsigned int), const 
     {
       if (i > 0 && (i % 4) == 0)
         fprintf (stream, "\n   ");
-      fprintf (stream, " 0x%08X",
+      fprintf (stream, " 0x%08XU",
                ((uint32_t *) (t.result + level3_offset))[i]);
       if (i+1 < t.level3_size << t.p)
         fprintf (stream, ",");
@@ -10382,21 +10382,21 @@ main (int argc, char * argv[])
  * compile-command: "\
  *   gcc -O -Wall gen-uni-tables.c -Iunictype -o gen-uni-tables &&      \\
  *   ./gen-uni-tables                                                   \\
- *        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/UnicodeData.txt \\
- *        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/PropList.txt \\
- *        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/DerivedCoreProperties.txt \\
- *        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/ArabicShaping.txt \\
- *        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/Scripts.txt \\
- *        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/Blocks.txt \\
- *        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/3.0.1/PropList-3.0.1.txt \\
- *        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/EastAsianWidth.txt \\
- *        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/LineBreak.txt \\
- *        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/auxiliary/WordBreakProperty.txt \\
- *        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/auxiliary/GraphemeBreakProperty.txt \\
- *        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/CompositionExclusions.txt \\
- *        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/SpecialCasing.txt \\
- *        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/CaseFolding.txt \\
- *        6.0.0                                                         \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/9.0.0/ucd/UnicodeData.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/9.0.0/ucd/PropList.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/9.0.0/ucd/DerivedCoreProperties.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/9.0.0/ucd/ArabicShaping.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/9.0.0/ucd/Scripts.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/9.0.0/ucd/Blocks.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/3.0.1/PropList-3.0.1.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/9.0.0/ucd/EastAsianWidth.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/9.0.0/ucd/LineBreak.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/9.0.0/ucd/auxiliary/WordBreakProperty.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/9.0.0/ucd/auxiliary/GraphemeBreakProperty.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/9.0.0/ucd/CompositionExclusions.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/9.0.0/ucd/SpecialCasing.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/9.0.0/ucd/CaseFolding.txt \\
+ *        9.0.0                                                         \\
  *   && diff unilbrk/lbrkprop_org.txt unilbrk/lbrkprop.txt              \\
  *   && diff uniwbrk/wbrkprop_org.txt uniwbrk/wbrkprop.txt"
  * End:
