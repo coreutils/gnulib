@@ -7,11 +7,11 @@ m4/strdup.m4
 
 Depends-on:
 string
-malloc-posix    [test $ac_cv_func_strdup = no || test $REPLACE_STRDUP = 1]
+malloc-posix    [test $REPLACE_STRDUP = 1]
 
 configure.ac:
 gl_FUNC_STRDUP_POSIX
-if test $ac_cv_func_strdup = no || test $REPLACE_STRDUP = 1; then
+if test $REPLACE_STRDUP = 1; then
   AC_LIBOBJ([strdup])
   gl_PREREQ_STRDUP
 fi

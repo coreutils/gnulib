@@ -20,21 +20,10 @@
 /* Specification.  */
 #include "unistr.h"
 
-#if HAVE_STRDUP
-
-# include <string.h>
+#include <string.h>
 
 uint8_t *
 u8_strdup (const uint8_t *s)
 {
   return (uint8_t *) strdup ((const char *) s);
 }
-
-#else
-
-# define FUNC u8_strdup
-# define UNIT uint8_t
-# define U_STRLEN u8_strlen
-# include "u-strdup.h"
-
-#endif
