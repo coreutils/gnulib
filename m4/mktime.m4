@@ -1,4 +1,4 @@
-# serial 32
+# serial 33
 dnl Copyright (C) 2002-2003, 2005-2007, 2009-2020 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -31,7 +31,6 @@ AC_DEFUN([gl_FUNC_MKTIME_WORKS],
   dnl in Autoconf and because it invokes AC_LIBOBJ.
   AC_CHECK_HEADERS_ONCE([unistd.h])
   AC_CHECK_DECLS_ONCE([alarm])
-  AC_CHECK_FUNCS_ONCE([tzset])
   AC_REQUIRE([gl_MULTIARCH])
   AC_CACHE_CHECK([for working mktime], [gl_cv_func_working_mktime],
     [if test $APPLE_UNIVERSAL_BUILD = 1; then
