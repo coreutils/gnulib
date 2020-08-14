@@ -21,7 +21,6 @@
 # define HAVE_TM_GMTOFF 1
 # define HAVE_TM_ZONE 1
 # define HAVE_TZNAME 1
-# define HAVE_TZSET 1
 # include "../locale/localeinfo.h"
 #else
 # include <config.h>
@@ -389,7 +388,6 @@ iso_week_days (int yday, int wday)
 #endif
 
 #ifdef my_strftime
-# undef HAVE_TZSET
 # define extra_args , tz, ns
 # define extra_args_spec , timezone_t tz, int ns
 #else
@@ -523,7 +521,7 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
     {
       /* POSIX.1 requires that local time zone information be used as
          though strftime called tzset.  */
-# if HAVE_TZSET
+# ifndef my_strftime
       if (!*tzset_called)
         {
           tzset ();
@@ -1417,7 +1415,7 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
 
                 /* POSIX.1 requires that local time zone information be used as
                    though strftime called tzset.  */
-# if HAVE_TZSET
+# ifndef my_strftime
                 if (!*tzset_called)
                   {
                     tzset ();
