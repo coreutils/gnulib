@@ -1,4 +1,4 @@
-# serial 33
+# serial 34
 dnl Copyright (C) 2002-2003, 2005-2007, 2009-2020 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -57,9 +57,6 @@ AC_DEFUN([gl_FUNC_MKTIME_WORKS],
 #ifndef TIME_T_IS_SIGNED
 # define TIME_T_IS_SIGNED 0
 #endif
-
-/* Work around redefinition to rpl_putenv by other config tests.  */
-#undef putenv
 
 static time_t time_t_max;
 static time_t time_t_min;
