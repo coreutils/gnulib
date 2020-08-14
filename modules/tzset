@@ -10,7 +10,7 @@ time
 
 configure.ac:
 gl_FUNC_TZSET
-if test $HAVE_TZSET = 0 || test $REPLACE_TZSET = 1; then
+if test $REPLACE_TZSET = 1; then
   AC_LIBOBJ([tzset])
 fi
 gl_TIME_MODULE_INDICATOR([tzset])

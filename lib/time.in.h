@@ -136,9 +136,6 @@ _GL_CXXALIASWARN (nanosleep);
 _GL_FUNCDECL_RPL (tzset, void, (void));
 _GL_CXXALIAS_RPL (tzset, void, (void));
 #  else
-#   if ! @HAVE_TZSET@
-_GL_FUNCDECL_SYS (tzset, void, (void));
-#   endif
 _GL_CXXALIAS_SYS (tzset, void, (void));
 #  endif
 _GL_CXXALIASWARN (tzset);
