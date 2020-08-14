@@ -1,4 +1,4 @@
-# serial 23
+# serial 24
 # Check for several getcwd bugs with long file names.
 # If so, arrange to compile the wrapper function.
 
@@ -54,9 +54,6 @@ AC_DEFUN([gl_FUNC_GETCWD_PATH_MAX],
 
 /* Use the getcwd function, not any macro.  */
 #undef getcwd
-
-/* Don't get link errors because mkdir is redefined to rpl_mkdir.  */
-#undef mkdir
 
 #ifndef S_IRWXU
 # define S_IRWXU 0700
