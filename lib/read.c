@@ -51,7 +51,7 @@ read_nothrow (int fd, void *buf, size_t count)
 
   TRY_MSVC_INVAL
     {
-      result = read (fd, buf, count);
+      result = _read (fd, buf, count);
     }
   CATCH_MSVC_INVAL
     {
@@ -63,7 +63,7 @@ read_nothrow (int fd, void *buf, size_t count)
   return result;
 }
 # else
-#  define read_nothrow read
+#  define read_nothrow _read
 # endif
 
 ssize_t

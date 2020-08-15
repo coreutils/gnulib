@@ -1,4 +1,4 @@
-# unlink.m4 serial 14
+# unlink.m4 serial 15
 dnl Copyright (C) 2009-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -26,7 +26,7 @@ AC_DEFUN([gl_FUNC_UNLINK],
            # include <io.h>
            #endif
            #include <errno.h>
-         ]],
+         ]GL_MDA_DEFINES],
          [[int result = 0;
            if (!unlink ("conftest.file/"))
              result |= 1;
@@ -98,6 +98,7 @@ AC_DEFUN([gl_FUNC_UNLINK],
                 # include <direct.h>
                 # include <io.h>
                 #endif
+                ]GL_MDA_DEFINES[
                 int main ()
                 {
                   int result = 0;

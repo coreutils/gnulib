@@ -104,7 +104,7 @@
 # undef closedir
 #endif
 
-#ifdef _MSC_VER
+#if defined _WIN32 && !defined __CYGWIN__
 # if HAVE_MSVC_INVALID_PARAMETER_HANDLER
 static char *
 getcwd_nothrow (char *buf, size_t size)

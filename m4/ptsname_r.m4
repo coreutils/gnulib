@@ -1,4 +1,4 @@
-# ptsname_r.m4 serial 6
+# ptsname_r.m4 serial 7
 dnl Copyright (C) 2010-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -90,7 +90,7 @@ AC_DEFUN([gl_PREREQ_PTSNAME_R], [
             #else
             # include <unistd.h>
             #endif
-          ]],
+          ]GL_MDA_DEFINES],
           [[errno = 0;
             isatty (-1);
             return errno == 0;

@@ -1,4 +1,4 @@
-# fflush.m4 serial 17
+# fflush.m4 serial 18
 
 # Copyright (C) 2007-2020 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -38,7 +38,8 @@ AC_DEFUN([gl_FUNC_FFLUSH_STDIN],
 #else /* on Windows with MSVC */
 # include <io.h>
 #endif
-       ]], [[FILE *f = fopen ("conftest.txt", "r");
+       ]GL_MDA_DEFINES],
+       [[FILE *f = fopen ("conftest.txt", "r");
          char buffer[10];
          int fd;
          int c;

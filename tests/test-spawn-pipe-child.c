@@ -48,6 +48,9 @@ static FILE *myerr;
 #undef fprintf
 #undef read
 #undef write
+#if defined _WIN32 && !defined __CYGWIN__
+# define fdopen _fdopen
+#endif
 
 /* Return non-zero if FD is open.  */
 static int

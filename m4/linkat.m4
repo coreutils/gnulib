@@ -1,4 +1,4 @@
-# serial 11
+# serial 12
 # See if we need to provide linkat replacement.
 
 dnl Copyright (C) 2009-2020 Free Software Foundation, Inc.
@@ -58,7 +58,7 @@ AC_DEFUN([gl_FUNC_LINKAT],
               #include <fcntl.h>
               #include <errno.h>
               #include <stdio.h>
-            ]],
+            ]GL_MDA_DEFINES],
             [[int result;
               int fd;
               /* Create a regular file.  */

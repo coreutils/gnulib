@@ -1,4 +1,4 @@
-# pread.m4 serial 5
+# pread.m4 serial 6
 dnl Copyright (C) 2009-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -37,7 +37,7 @@ changequote([,])dnl
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdio.h>
-             ]],
+             ]GL_MDA_DEFINES],
              [[
 {
   int result = 0;

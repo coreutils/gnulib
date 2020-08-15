@@ -135,10 +135,19 @@ _GL_CXXALIASWARN (nanosleep);
 #   endif
 _GL_FUNCDECL_RPL (tzset, void, (void));
 _GL_CXXALIAS_RPL (tzset, void, (void));
+#  elif defined _WIN32 && !defined __CYGWIN__
+#   if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#    undef tzset
+#    define tzset _tzset
+#   endif
+_GL_CXXALIAS_MDA (tzset, void, (void));
 #  else
 _GL_CXXALIAS_SYS (tzset, void, (void));
 #  endif
 _GL_CXXALIASWARN (tzset);
+# elif defined _WIN32 && !defined __CYGWIN__
+#  undef tzset
+#  define tzset _tzset
 # endif
 
 /* Return the 'time_t' representation of TP and normalize TP.  */

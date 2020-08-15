@@ -1293,6 +1293,22 @@ _GL_WARN_ON_USE (ilogbl, "ilogbl is unportable - "
 #endif
 
 
+#if defined _WIN32 && !defined __CYGWIN__
+# undef j0
+# define j0 _j0
+#endif
+
+#if defined _WIN32 && !defined __CYGWIN__
+# undef j1
+# define j1 _j1
+#endif
+
+#if defined _WIN32 && !defined __CYGWIN__
+# undef jn
+# define jn _jn
+#endif
+
+
 /* Return x * 2^exp.  */
 #if @GNULIB_LDEXPF@
 # if !@HAVE_LDEXPF@
@@ -2241,6 +2257,22 @@ _GL_WARN_ON_USE (truncl, "truncl is unportable - "
 #endif
 
 
+#if defined _WIN32 && !defined __CYGWIN__
+# undef y0
+# define y0 _y0
+#endif
+
+#if defined _WIN32 && !defined __CYGWIN__
+# undef y1
+# define y1 _y1
+#endif
+
+#if defined _WIN32 && !defined __CYGWIN__
+# undef yn
+# define yn _yn
+#endif
+
+
 /* Definitions of function-like macros come here, after the function
    declarations.  */
 
@@ -2260,7 +2292,7 @@ _GL_EXTERN_C int gl_isfinitel (long double x);
 #  if defined isfinite || defined GNULIB_NAMESPACE
 _GL_MATH_CXX_REAL_FLOATING_DECL_1 (isfinite)
 #   undef isfinite
-#   if __GNUC__ >= 6 || (defined __clang__ && !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined _AIX))
+#   if __GNUC__ >= 6 || (defined __clang__ && !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined _AIX || (defined _WIN32 && !defined __CYGWIN__)))
   /* This platform's <cmath> possibly defines isfinite through a set of inline
      functions.  */
 _GL_MATH_CXX_REAL_FLOATING_DECL_2 (isfinite, rpl_isfinite, bool)
@@ -2294,7 +2326,7 @@ _GL_EXTERN_C int gl_isinfl (long double x);
 #  if defined isinf || defined GNULIB_NAMESPACE
 _GL_MATH_CXX_REAL_FLOATING_DECL_1 (isinf)
 #   undef isinf
-#   if __GNUC__ >= 6 || (defined __clang__ && !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__))
+#   if __GNUC__ >= 6 || (defined __clang__ && !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || (defined _WIN32 && !defined __CYGWIN__)))
   /* This platform's <cmath> possibly defines isinf through a set of inline
      functions.  */
 _GL_MATH_CXX_REAL_FLOATING_DECL_2 (isinf, rpl_isinf, bool)
@@ -2421,7 +2453,7 @@ _GL_EXTERN_C int rpl_isnanl (long double x) _GL_ATTRIBUTE_CONST;
 #  if defined isnan || defined GNULIB_NAMESPACE
 _GL_MATH_CXX_REAL_FLOATING_DECL_1 (isnan)
 #   undef isnan
-#   if __GNUC__ >= 6 || (defined __clang__ && !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__))
+#   if __GNUC__ >= 6 || (defined __clang__ && !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || (defined _WIN32 && !defined __CYGWIN__)))
   /* This platform's <cmath> possibly defines isnan through a set of inline
      functions.  */
 _GL_MATH_CXX_REAL_FLOATING_DECL_2 (isnan, rpl_isnan, bool)
@@ -2504,7 +2536,7 @@ _GL_EXTERN_C int gl_signbitl (long double arg);
 #  if defined signbit || defined GNULIB_NAMESPACE
 _GL_MATH_CXX_REAL_FLOATING_DECL_1 (signbit)
 #   undef signbit
-#   if __GNUC__ >= 6 || (defined __clang__ && !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined _AIX))
+#   if __GNUC__ >= 6 || (defined __clang__ && !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined _AIX || (defined _WIN32 && !defined __CYGWIN__)))
   /* This platform's <cmath> possibly defines signbit through a set of inline
      functions.  */
 _GL_MATH_CXX_REAL_FLOATING_DECL_2 (signbit, rpl_signbit, bool)

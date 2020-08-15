@@ -1,4 +1,4 @@
-#serial 14
+#serial 15
 
 dnl From J. David Anglin.
 
@@ -16,7 +16,8 @@ AC_DEFUN([gl_FUNC_UNLINK_BUSY_TEXT],
     [
       AC_RUN_IFELSE(
         [AC_LANG_SOURCE(
-           [AC_INCLUDES_DEFAULT[
+           [AC_INCLUDES_DEFAULT
+            GL_MDA_DEFINES[
             int
             main (int argc, char **argv)
             {

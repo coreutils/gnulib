@@ -1,4 +1,4 @@
-# serial 12
+# serial 13
 # Determine whether getcwd aborts when the length of the working directory
 # name is unusually large.  Any length between 4k and 16k trigger the bug
 # when using glibc-2.4.90-9 or older.
@@ -45,6 +45,7 @@ AC_DEFUN([gl_FUNC_GETCWD_ABORT_BUG],
 #include <sys/stat.h>
 
 ]gl_PATHMAX_SNIPPET[
+]GL_MDA_DEFINES[
 
 #ifndef S_IRWXU
 # define S_IRWXU 0700

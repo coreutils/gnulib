@@ -1,4 +1,4 @@
-# fdopen.m4 serial 4
+# fdopen.m4 serial 5
 dnl Copyright (C) 2011-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -22,6 +22,7 @@ AC_DEFUN([gl_FUNC_FDOPEN],
           [AC_LANG_SOURCE([[
 #include <stdio.h>
 #include <errno.h>
+]GL_MDA_DEFINES[
 int
 main (void)
 {

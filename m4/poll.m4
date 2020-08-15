@@ -1,4 +1,4 @@
-# poll.m4 serial 19
+# poll.m4 serial 20
 dnl Copyright (c) 2003, 2005-2007, 2009-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -19,6 +19,7 @@ AC_DEFUN([gl_FUNC_POLL],
        AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <fcntl.h>
 #include <poll.h>
+]GL_MDA_DEFINES[
          int main()
          {
            int result = 0;

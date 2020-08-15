@@ -1,4 +1,4 @@
-# serial 34
+# serial 35
 dnl Copyright (C) 2002-2003, 2005-2007, 2009-2020 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -53,6 +53,8 @@ AC_DEFUN([gl_FUNC_MKTIME_WORKS],
 #if HAVE_DECL_ALARM
 # include <signal.h>
 #endif
+
+]GL_MDA_DEFINES[
 
 #ifndef TIME_T_IS_SIGNED
 # define TIME_T_IS_SIGNED 0

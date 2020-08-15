@@ -1,4 +1,4 @@
-# fopen.m4 serial 11
+# fopen.m4 serial 12
 dnl Copyright (C) 2007-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -104,6 +104,7 @@ int main ()
 #include <stdio.h>
 #include <errno.h>
 #include <fcntl.h>
+]GL_MDA_DEFINES[
 int main ()
 {
   FILE *fp = fopen ("conftest.x", "re");

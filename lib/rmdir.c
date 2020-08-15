@@ -26,6 +26,9 @@
 #include "filename.h"
 
 #undef rmdir
+#if defined _WIN32 && !defined __CYGWIN__
+# define rmdir _rmdir
+#endif
 
 /* Remove directory DIR.
    Return 0 if successful, -1 if not.  */

@@ -177,7 +177,7 @@ rpl_fd_isset (SOCKET fd, fd_set * set)
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   undef close
 #   define close close_used_without_including_unistd_h
-#  else
+#  elif !defined __clang__
     _GL_WARN_ON_USE (close,
                      "close() used without including <unistd.h>");
 #  endif

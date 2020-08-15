@@ -27,7 +27,8 @@
 
 #undef fdopen
 
-#if HAVE_MSVC_INVALID_PARAMETER_HANDLER
+#if defined _WIN32 && !defined __CYGWIN__
+# if HAVE_MSVC_INVALID_PARAMETER_HANDLER
 static FILE *
 fdopen_nothrow (int fd, const char *mode)
 {
@@ -35,7 +36,7 @@ fdopen_nothrow (int fd, const char *mode)
 
   TRY_MSVC_INVAL
     {
-      result = fdopen (fd, mode);
+      result = _fdopen (fd, mode);
     }
   CATCH_MSVC_INVAL
     {
@@ -45,6 +46,9 @@ fdopen_nothrow (int fd, const char *mode)
 
   return result;
 }
+# else
+#  define fdopen_nothrow _fdopen
+# endif
 #else
 # define fdopen_nothrow fdopen
 #endif

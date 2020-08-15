@@ -27,6 +27,9 @@
 #include "filename.h"
 
 #undef unlink
+#if defined _WIN32 && !defined __CYGWIN__
+# define unlink _unlink
+#endif
 
 /* Remove file NAME.
    Return 0 if successful, -1 if not.  */

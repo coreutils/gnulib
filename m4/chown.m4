@@ -1,4 +1,4 @@
-# serial 34
+# serial 35
 # Determine whether we need the chown wrapper.
 
 dnl Copyright (C) 1997-2001, 2003-2005, 2007, 2009-2020 Free Software
@@ -27,7 +27,7 @@ AC_DEFUN([AC_FUNC_CHOWN],
        [AC_LANG_PROGRAM(
           [AC_INCLUDES_DEFAULT
            [#include <fcntl.h>
-          ]],
+          ]GL_MDA_DEFINES],
           [[
             char *f = "conftest.chown";
             struct stat before, after;
@@ -104,7 +104,8 @@ AC_DEFUN_ONCE([gl_FUNC_CHOWN],
 #include <unistd.h>
 #include <stdlib.h>
 #include <errno.h>
-]], [[    if (symlink ("conftest.file", "conftest.link")) return 1;
+]GL_MDA_DEFINES],
+        [[if (symlink ("conftest.file", "conftest.link")) return 1;
           if (chown ("conftest.link/", getuid (), getgid ()) == 0) return 2;
         ]])],
         [gl_cv_func_chown_slash_works=yes],
@@ -137,7 +138,8 @@ AC_DEFUN_ONCE([gl_FUNC_CHOWN],
 #include <errno.h>
 #include <fcntl.h>
 #include <sys/stat.h>
-]], [[    struct stat st1, st2;
+]GL_MDA_DEFINES],
+        [[struct stat st1, st2;
           if (close (creat ("conftest.file", 0600))) return 1;
           if (stat ("conftest.file", &st1)) return 2;
           sleep (1);
@@ -179,7 +181,7 @@ AC_DEFUN_ONCE([gl_FUNC_CHOWN_FOLLOWS_SYMLINK],
 #include <unistd.h>
 #include <stdlib.h>
 #include <errno.h>
-
+]GL_MDA_DEFINES[
         int
         main ()
         {

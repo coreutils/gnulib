@@ -1,4 +1,4 @@
-# serial 12
+# serial 13
 # See if we need to provide fdopendir.
 
 dnl Copyright (C) 2009-2020 Free Software Foundation, Inc.
@@ -29,6 +29,7 @@ AC_DEFUN([gl_FUNC_FDOPENDIR],
 #include <dirent.h>
 #include <fcntl.h>
 #include <unistd.h>
+]GL_MDA_DEFINES[
 #if !HAVE_DECL_FDOPENDIR
 extern
 # ifdef __cplusplus

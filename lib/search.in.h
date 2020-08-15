@@ -38,6 +38,17 @@
 /* The definition of _GL_WARN_ON_USE is copied here.  */
 
 
+#if defined _WIN32 && !defined __CYGWIN__
+# undef lfind
+# define lfind _lfind
+#endif
+
+#if defined _WIN32 && !defined __CYGWIN__
+# undef lsearch
+# define lsearch _lsearch
+#endif
+
+
 #if @GNULIB_TSEARCH@
 # if @REPLACE_TSEARCH@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)

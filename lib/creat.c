@@ -28,7 +28,11 @@
 static int
 orig_creat (const char *filename, mode_t mode)
 {
+#if defined _WIN32 && !defined __CYGWIN__
+  return _creat (filename, mode);
+#else
   return creat (filename, mode);
+#endif
 }
 
 /* Specification.  */

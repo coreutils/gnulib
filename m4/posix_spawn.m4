@@ -1,4 +1,4 @@
-# posix_spawn.m4 serial 17
+# posix_spawn.m4 serial 18
 dnl Copyright (C) 2008-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -123,6 +123,7 @@ AC_DEFUN([gl_POSIX_SPAWN_WORKS],
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+]GL_MDA_DEFINES[
 
 extern char **environ;
 
@@ -266,6 +267,7 @@ main ()
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+]GL_MDA_DEFINES[
 
 extern char **environ;
 

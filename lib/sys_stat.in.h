@@ -391,6 +391,12 @@ struct stat
 #endif
 
 
+#if defined _WIN32 && !defined __CYGWIN__
+# undef chmod
+# define chmod _chmod
+#endif
+
+
 #if @GNULIB_FCHMODAT@
 # if @REPLACE_FCHMODAT@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
@@ -797,6 +803,12 @@ _GL_EXTERN_C int stat (const char *restrict name, struct stat *restrict buf)
 _GL_WARN_ON_USE (stat, "stat is unportable - "
                  "use gnulib module stat for portability");
 # endif
+#endif
+
+
+#if defined _WIN32 && !defined __CYGWIN__
+# undef umask
+# define umask _umask
 #endif
 
 

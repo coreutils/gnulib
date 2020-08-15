@@ -62,6 +62,12 @@
 _GL_FUNCDECL_RPL (utime, int, (const char *filename, const struct utimbuf *ts)
                               _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (utime, int, (const char *filename, const struct utimbuf *ts));
+# elif defined _WIN32 && !defined __CYGWIN__
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef utime
+#   define utime _utime
+#  endif
+_GL_CXXALIAS_MDA (utime, int, (const char *filename, const struct utimbuf *ts));
 # else
 #  if !@HAVE_UTIME@
 _GL_FUNCDECL_SYS (utime, int, (const char *filename, const struct utimbuf *ts)
@@ -77,6 +83,9 @@ _GL_WARN_ON_USE (utime,
                  "utime is unportable - "
                  "use gnulib module canonicalize-lgpl for portability");
 # endif
+#elif defined _WIN32 && !defined __CYGWIN__
+# undef utime
+# define utime _utime
 #endif
 
 #if @GNULIB_UTIME@
