@@ -1,4 +1,4 @@
-# canonicalize.m4 serial 32
+# canonicalize.m4 serial 33
 
 dnl Copyright (C) 2003-2007, 2009-2020 Free Software Foundation, Inc.
 
@@ -79,6 +79,7 @@ AC_DEFUN([gl_FUNC_REALPATH_WORKS],
   AC_CHECK_FUNCS_ONCE([realpath])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CACHE_CHECK([whether realpath works], [gl_cv_func_realpath_works], [
+    rm -rf conftest.a conftest.d
     touch conftest.a
     mkdir conftest.d
     AC_RUN_IFELSE([
