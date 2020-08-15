@@ -94,7 +94,7 @@ my_tzset (void)
   const char *tz = getenv ("TZ");
   if (tz != NULL && strchr (tz, '/') != NULL)
     _putenv ("TZ=");
-# else
+# elif HAVE_TZSET
   tzset ();
 # endif
 }
