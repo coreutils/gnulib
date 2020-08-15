@@ -66,11 +66,11 @@ Mac OS X 10.12, FreeBSD 6.1.
 @item
 printf @code{"%010f"} of NaN and Infinity yields an incorrect result (padded
 with zeroes) on some platforms:
-Mac OS X 10.5, FreeBSD 6.0, NetBSD 5.0, AIX 5.2, IRIX 6.5, Solaris 11.0, Cygwin 1.5.x, mingw, MSVC 14.
+Mac OS X 10.5, FreeBSD 6.0, NetBSD 5.0, AIX 5.2, IRIX 6.5, Solaris 11.0, Cygwin 1.5.x, mingw, MSVC/clang.
 @item
 This function does not support precisions larger than 512 or 1024 in integer,
 floating-point and pointer output on some platforms:
-Solaris 10/x86, mingw, MSVC 14.
+Solaris 10/x86, mingw, MSVC/clang.
 @item
 This function can crash in out-of-memory conditions on some platforms:
 FreeBSD 6.0, NetBSD 5.0.
