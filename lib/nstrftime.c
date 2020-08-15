@@ -33,6 +33,7 @@
 #endif
 
 #include <ctype.h>
+#include <errno.h>
 #include <time.h>
 
 #if HAVE_TZNAME && !HAVE_DECL_TZNAME
@@ -162,7 +163,10 @@ extern char *tzname[];
       size_t _w = pad == L_('-') || width < 0 ? 0 : width;                    \
       size_t _incr = _n < _w ? _w : _n;                                       \
       if (_incr >= maxsize - i)                                               \
-        return 0;                                                             \
+        {                                                                     \
+          errno = ERANGE;                                                     \
+          return 0;                                                           \
+        }                                                                     \
       if (p)                                                                  \
         {                                                                     \
           if (_n < _w)                                                        \
@@ -447,6 +451,7 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
   size_t maxsize = (size_t) -1;
 #endif
 
+  int saved_errno = errno;
   int hour12 = tp->tm_hour;
 #ifdef _NL_CURRENT
   /* We cannot make the following values variables since we must delay
@@ -1186,7 +1191,13 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
             time_t t;
 
             ltm = *tp;
+            ltm.tm_yday = -1;
             t = mktime_z (tz, &ltm);
+            if (ltm.tm_yday < 0)
+              {
+                errno = EOVERFLOW;
+                return 0;
+              }
 
             /* Generate string value for T using time_t arithmetic;
                this works even if sizeof (long) < sizeof (time_t).  */
@@ -1484,5 +1495,6 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
     *p = L_('\0');
 #endif
 
+  errno = saved_errno;
   return i;
 }

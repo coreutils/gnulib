@@ -9,6 +9,7 @@ m4/nstrftime.m4
 
 Depends-on:
 attribute
+errno
 extensions
 intprops
 stdbool

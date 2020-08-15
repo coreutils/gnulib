@@ -20,7 +20,10 @@
 
 #include "strftime.h"
 
+#include "intprops.h"
+
 #include <errno.h>
+#include <limits.h>
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
@@ -247,6 +250,81 @@ quarter_test (void)
   return result;
 }
 
+static int
+errno_test (void)
+{
+  int fail = 0;
+  struct tm tm = { .tm_year = 2020 - 1900, .tm_mday = 1 };
+  char buf[INT_BUFSIZE_BOUND (time_t)];
+  size_t n;
+  int bigyear = LLONG_MAX - 1900 < INT_MAX ? LLONG_MAX - 1900 : INT_MAX;
+
+  errno = 0;
+  n = nstrftime (buf, 0, "%m", &tm, 0, 0);
+  if (! (n == 0 && errno == ERANGE))
+    {
+      fail = 1;
+      printf ("nstrftime failed to set errno = ERANGE\n");
+    }
+
+  errno = 0;
+  n = nstrftime (buf, sizeof buf, "", &tm, 0, 0);
+  if (! (n == 0 && errno == 0))
+    {
+      fail = 1;
+      printf ("nstrftime failed to leave errno alone\n");
+    }
+
+
+  tm.tm_year = bigyear;
+  errno = 0;
+  n = nstrftime (buf, sizeof buf, "%s", &tm, 0, 0);
+  if (n == 0)
+    {
+      if (errno != EOVERFLOW)
+        {
+          fail = 1;
+          printf ("nstrftime failed to set errno = EOVERFLOW\n");
+        }
+
+      if (mktime_z (0, &tm) != (time_t) -1)
+        {
+          fail = 1;
+          printf ("nstrftime %%s failed but mktime_z worked for tm_year=%d\n",
+                  bigyear);
+        }
+    }
+  else
+    {
+      long long int text_seconds = atoll (buf);
+      if (text_seconds <= (LLONG_MAX - 1 < TYPE_MAXIMUM (time_t)
+                           ? LLONG_MAX - 1 : TYPE_MAXIMUM (time_t)))
+        {
+          time_t bigtime = text_seconds;
+          struct tm *tmp = gmtime (&bigtime);
+          if (!tmp)
+            {
+              fail = 1;
+              printf ("gmtime failed on nstrftime result\n");
+            }
+          else
+            {
+              char buf1[sizeof buf];
+              size_t n1 = nstrftime (buf1, sizeof buf1, "%s", tmp, 0, 0);
+              buf1[n1] = '\0';
+              if (! STREQ (buf, buf1))
+                {
+                  fail = 1;
+                  printf ("nstrftime %%s first returned '%s', then '%s'\n",
+                          buf, buf1);
+                }
+            }
+        }
+    }
+
+  return fail;
+}
+
 int
 main (void)
 {
@@ -254,6 +332,7 @@ main (void)
   fail |= posixtm_test ();
   fail |= tzalloc_test ();
   fail |= quarter_test ();
+  fail |= errno_test ();
   return fail;
 }
 
