@@ -1,4 +1,4 @@
-# round.m4 serial 22
+# round.m4 serial 23
 dnl Copyright (C) 2007, 2009-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -41,7 +41,7 @@ extern
 "C"
 #endif
 double round (double);
-#ifdef _MSC_VER
+#if defined _MSC_VER && !defined __clang__
 # pragma fenv_access (off)
 #endif
 int main()

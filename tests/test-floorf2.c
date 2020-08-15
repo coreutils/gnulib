@@ -33,7 +33,7 @@
 
 /* MSVC with option -fp:strict refuses to compile constant initializers that
    contain floating-point operations.  Pacify this compiler.  */
-#ifdef _MSC_VER
+#if defined _MSC_VER && !defined __clang__
 # pragma fenv_access (off)
 #endif
 
