@@ -478,7 +478,9 @@ _GL_CXXALIAS_SYS_CAST (pthread_create, int,
                         const pthread_attr_t *restrict attr,
                         void * (*mainfunc) (void *), void *restrict arg));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_create);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_create
 # if HAVE_RAW_DECL_PTHREAD_CREATE
@@ -503,7 +505,9 @@ _GL_FUNCDECL_SYS (pthread_attr_init, int, (pthread_attr_t *attr)
 #  endif
 _GL_CXXALIAS_SYS (pthread_attr_init, int, (pthread_attr_t *attr));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_attr_init);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_attr_init
 # if HAVE_RAW_DECL_PTHREAD_ATTR_INIT
@@ -532,7 +536,9 @@ _GL_FUNCDECL_SYS (pthread_attr_getdetachstate, int,
 _GL_CXXALIAS_SYS (pthread_attr_getdetachstate, int,
                   (const pthread_attr_t *attr, int *detachstatep));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_attr_getdetachstate);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_attr_getdetachstate
 # if HAVE_RAW_DECL_PTHREAD_ATTR_GETDETACHSTATE
@@ -561,7 +567,9 @@ _GL_FUNCDECL_SYS (pthread_attr_setdetachstate, int,
 _GL_CXXALIAS_SYS (pthread_attr_setdetachstate, int,
                   (pthread_attr_t *attr, int detachstate));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_attr_setdetachstate);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_attr_setdetachstate
 # if HAVE_RAW_DECL_PTHREAD_ATTR_SETDETACHSTATE
@@ -586,7 +594,9 @@ _GL_FUNCDECL_SYS (pthread_attr_destroy, int, (pthread_attr_t *attr)
 #  endif
 _GL_CXXALIAS_SYS (pthread_attr_destroy, int, (pthread_attr_t *attr));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_attr_destroy);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_attr_destroy
 # if HAVE_RAW_DECL_PTHREAD_ATTR_DESTROY
@@ -609,7 +619,9 @@ _GL_FUNCDECL_SYS (pthread_self, pthread_t, (void) _GL_ATTRIBUTE_PURE);
 #  endif
 _GL_CXXALIAS_SYS (pthread_self, pthread_t, (void));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_self);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_self
 # if HAVE_RAW_DECL_PTHREAD_SELF
@@ -632,7 +644,9 @@ _GL_FUNCDECL_SYS (pthread_equal, int, (pthread_t thread1, pthread_t thread2));
 #  endif
 _GL_CXXALIAS_SYS (pthread_equal, int, (pthread_t thread1, pthread_t thread2));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_equal);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_equal
 # if HAVE_RAW_DECL_PTHREAD_EQUAL
@@ -655,7 +669,9 @@ _GL_FUNCDECL_SYS (pthread_detach, int, (pthread_t thread));
 #  endif
 _GL_CXXALIAS_SYS (pthread_detach, int, (pthread_t thread));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_detach);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_detach
 # if HAVE_RAW_DECL_PTHREAD_DETACH
@@ -678,7 +694,9 @@ _GL_FUNCDECL_SYS (pthread_join, int, (pthread_t thread, void **valuep));
 #  endif
 _GL_CXXALIAS_SYS (pthread_join, int, (pthread_t thread, void **valuep));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_join);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_join
 # if HAVE_RAW_DECL_PTHREAD_JOIN
@@ -702,7 +720,9 @@ _GL_FUNCDECL_SYS (pthread_exit, _Noreturn void, (void *value));
 /* Need to cast because of AIX with xlclang++.  */
 _GL_CXXALIAS_SYS_CAST (pthread_exit, void, (void *value));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_exit);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_exit
 # if HAVE_RAW_DECL_PTHREAD_EXIT
@@ -734,7 +754,9 @@ _GL_CXXALIAS_SYS_CAST (pthread_once, int,
                        (pthread_once_t *once_control,
                         void (*initfunction) (void)));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_once);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_once
 # if HAVE_RAW_DECL_PTHREAD_ONCE
@@ -769,7 +791,9 @@ _GL_CXXALIAS_SYS (pthread_mutex_init, int,
                   (pthread_mutex_t *restrict mutex,
                    const pthread_mutexattr_t *restrict attr));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_mutex_init);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_mutex_init
 # if HAVE_RAW_DECL_PTHREAD_MUTEX_INIT
@@ -794,7 +818,9 @@ _GL_FUNCDECL_SYS (pthread_mutexattr_init, int, (pthread_mutexattr_t *attr)
 #  endif
 _GL_CXXALIAS_SYS (pthread_mutexattr_init, int, (pthread_mutexattr_t *attr));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_mutexattr_init);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_mutexattr_init
 # if HAVE_RAW_DECL_PTHREAD_MUTEXATTR_INIT
@@ -829,7 +855,9 @@ _GL_CXXALIAS_SYS_CAST (pthread_mutexattr_gettype, int,
                        (const pthread_mutexattr_t *restrict attr,
                         int *restrict typep));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_mutexattr_gettype);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_mutexattr_gettype
 # if HAVE_RAW_DECL_PTHREAD_MUTEXATTR_GETTYPE
@@ -856,7 +884,9 @@ _GL_FUNCDECL_SYS (pthread_mutexattr_settype, int,
 _GL_CXXALIAS_SYS (pthread_mutexattr_settype, int,
                   (pthread_mutexattr_t *attr, int type));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_mutexattr_settype);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_mutexattr_settype
 # if HAVE_RAW_DECL_PTHREAD_MUTEXATTR_SETTYPE
@@ -949,7 +979,9 @@ _GL_FUNCDECL_SYS (pthread_mutexattr_destroy, int, (pthread_mutexattr_t *attr)
 #  endif
 _GL_CXXALIAS_SYS (pthread_mutexattr_destroy, int, (pthread_mutexattr_t *attr));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_mutexattr_destroy);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_mutexattr_destroy
 # if HAVE_RAW_DECL_PTHREAD_MUTEXATTR_DESTROY
@@ -1001,7 +1033,9 @@ _GL_FUNCDECL_SYS (pthread_mutex_trylock, int, (pthread_mutex_t *mutex)
 #  endif
 _GL_CXXALIAS_SYS (pthread_mutex_trylock, int, (pthread_mutex_t *mutex));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_mutex_trylock);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_mutex_trylock
 # if HAVE_RAW_DECL_PTHREAD_MUTEX_TRYLOCK
@@ -1034,7 +1068,9 @@ _GL_CXXALIAS_SYS (pthread_mutex_timedlock, int,
                   (pthread_mutex_t *restrict mutex,
                    const struct timespec *restrict abstime));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_mutex_timedlock);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_mutex_timedlock
 # if HAVE_RAW_DECL_PTHREAD_MUTEX_TIMEDLOCK
@@ -1059,7 +1095,9 @@ _GL_FUNCDECL_SYS (pthread_mutex_unlock, int, (pthread_mutex_t *mutex)
 #  endif
 _GL_CXXALIAS_SYS (pthread_mutex_unlock, int, (pthread_mutex_t *mutex));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_mutex_unlock);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_mutex_unlock
 # if HAVE_RAW_DECL_PTHREAD_MUTEX_UNLOCK
@@ -1084,7 +1122,9 @@ _GL_FUNCDECL_SYS (pthread_mutex_destroy, int, (pthread_mutex_t *mutex)
 #  endif
 _GL_CXXALIAS_SYS (pthread_mutex_destroy, int, (pthread_mutex_t *mutex));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_mutex_destroy);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_mutex_destroy
 # if HAVE_RAW_DECL_PTHREAD_MUTEX_DESTROY
@@ -1119,7 +1159,9 @@ _GL_CXXALIAS_SYS (pthread_rwlock_init, int,
                   (pthread_rwlock_t *restrict lock,
                    const pthread_rwlockattr_t *restrict attr));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_rwlock_init);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_rwlock_init
 # if HAVE_RAW_DECL_PTHREAD_RWLOCK_INIT
@@ -1144,7 +1186,9 @@ _GL_FUNCDECL_SYS (pthread_rwlockattr_init, int, (pthread_rwlockattr_t *attr)
 #  endif
 _GL_CXXALIAS_SYS (pthread_rwlockattr_init, int, (pthread_rwlockattr_t *attr));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_rwlockattr_init);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_rwlockattr_init
 # if HAVE_RAW_DECL_PTHREAD_RWLOCKATTR_INIT
@@ -1171,7 +1215,9 @@ _GL_FUNCDECL_SYS (pthread_rwlockattr_destroy, int,
 _GL_CXXALIAS_SYS (pthread_rwlockattr_destroy, int,
                   (pthread_rwlockattr_t *attr));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_rwlockattr_destroy);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_rwlockattr_destroy
 # if HAVE_RAW_DECL_PTHREAD_RWLOCKATTR_DESTROY
@@ -1196,7 +1242,9 @@ _GL_FUNCDECL_SYS (pthread_rwlock_rdlock, int, (pthread_rwlock_t *lock)
 #  endif
 _GL_CXXALIAS_SYS (pthread_rwlock_rdlock, int, (pthread_rwlock_t *lock));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_rwlock_rdlock);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_rwlock_rdlock
 # if HAVE_RAW_DECL_PTHREAD_RWLOCK_RDLOCK
@@ -1221,7 +1269,9 @@ _GL_FUNCDECL_SYS (pthread_rwlock_wrlock, int, (pthread_rwlock_t *lock)
 #  endif
 _GL_CXXALIAS_SYS (pthread_rwlock_wrlock, int, (pthread_rwlock_t *lock));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_rwlock_wrlock);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_rwlock_wrlock
 # if HAVE_RAW_DECL_PTHREAD_RWLOCK_WRLOCK
@@ -1246,7 +1296,9 @@ _GL_FUNCDECL_SYS (pthread_rwlock_tryrdlock, int, (pthread_rwlock_t *lock)
 #  endif
 _GL_CXXALIAS_SYS (pthread_rwlock_tryrdlock, int, (pthread_rwlock_t *lock));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_rwlock_tryrdlock);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_rwlock_tryrdlock
 # if HAVE_RAW_DECL_PTHREAD_RWLOCK_TRYRDLOCK
@@ -1271,7 +1323,9 @@ _GL_FUNCDECL_SYS (pthread_rwlock_trywrlock, int, (pthread_rwlock_t *lock)
 #  endif
 _GL_CXXALIAS_SYS (pthread_rwlock_trywrlock, int, (pthread_rwlock_t *lock));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_rwlock_trywrlock);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_rwlock_trywrlock
 # if HAVE_RAW_DECL_PTHREAD_RWLOCK_TRYWRLOCK
@@ -1304,7 +1358,9 @@ _GL_CXXALIAS_SYS (pthread_rwlock_timedrdlock, int,
                   (pthread_rwlock_t *restrict lock,
                    const struct timespec *restrict abstime));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_rwlock_timedrdlock);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_rwlock_timedrdlock
 # if HAVE_RAW_DECL_PTHREAD_RWLOCK_TIMEDRDLOCK
@@ -1337,7 +1393,9 @@ _GL_CXXALIAS_SYS (pthread_rwlock_timedwrlock, int,
                   (pthread_rwlock_t *restrict lock,
                    const struct timespec *restrict abstime));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_rwlock_timedwrlock);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_rwlock_timedwrlock
 # if HAVE_RAW_DECL_PTHREAD_RWLOCK_TIMEDWRLOCK
@@ -1362,7 +1420,9 @@ _GL_FUNCDECL_SYS (pthread_rwlock_unlock, int, (pthread_rwlock_t *lock)
 #  endif
 _GL_CXXALIAS_SYS (pthread_rwlock_unlock, int, (pthread_rwlock_t *lock));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_rwlock_unlock);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_rwlock_unlock
 # if HAVE_RAW_DECL_PTHREAD_RWLOCK_UNLOCK
@@ -1387,7 +1447,9 @@ _GL_FUNCDECL_SYS (pthread_rwlock_destroy, int, (pthread_rwlock_t *lock)
 #  endif
 _GL_CXXALIAS_SYS (pthread_rwlock_destroy, int, (pthread_rwlock_t *lock));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_rwlock_destroy);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_rwlock_destroy
 # if HAVE_RAW_DECL_PTHREAD_RWLOCK_DESTROY
@@ -1422,7 +1484,9 @@ _GL_CXXALIAS_SYS (pthread_cond_init, int,
                   (pthread_cond_t *restrict cond,
                    const pthread_condattr_t *restrict attr));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_cond_init);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_cond_init
 # if HAVE_RAW_DECL_PTHREAD_COND_INIT
@@ -1447,7 +1511,9 @@ _GL_FUNCDECL_SYS (pthread_condattr_init, int, (pthread_condattr_t *attr)
 #  endif
 _GL_CXXALIAS_SYS (pthread_condattr_init, int, (pthread_condattr_t *attr));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_condattr_init);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_condattr_init
 # if HAVE_RAW_DECL_PTHREAD_CONDATTR_INIT
@@ -1472,7 +1538,9 @@ _GL_FUNCDECL_SYS (pthread_condattr_destroy, int, (pthread_condattr_t *attr)
 #  endif
 _GL_CXXALIAS_SYS (pthread_condattr_destroy, int, (pthread_condattr_t *attr));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_condattr_destroy);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_condattr_destroy
 # if HAVE_RAW_DECL_PTHREAD_CONDATTR_DESTROY
@@ -1505,7 +1573,9 @@ _GL_CXXALIAS_SYS (pthread_cond_wait, int,
                   (pthread_cond_t *restrict cond,
                    pthread_mutex_t *restrict mutex));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_cond_wait);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_cond_wait
 # if HAVE_RAW_DECL_PTHREAD_COND_WAIT
@@ -1542,7 +1612,9 @@ _GL_CXXALIAS_SYS (pthread_cond_timedwait, int,
                    pthread_mutex_t *restrict mutex,
                    const struct timespec *restrict abstime));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_cond_timedwait);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_cond_timedwait
 # if HAVE_RAW_DECL_PTHREAD_COND_TIMEDWAIT
@@ -1567,7 +1639,9 @@ _GL_FUNCDECL_SYS (pthread_cond_signal, int, (pthread_cond_t *cond)
 #  endif
 _GL_CXXALIAS_SYS (pthread_cond_signal, int, (pthread_cond_t *cond));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_cond_signal);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_cond_signal
 # if HAVE_RAW_DECL_PTHREAD_COND_SIGNAL
@@ -1592,7 +1666,9 @@ _GL_FUNCDECL_SYS (pthread_cond_broadcast, int, (pthread_cond_t *cond)
 #  endif
 _GL_CXXALIAS_SYS (pthread_cond_broadcast, int, (pthread_cond_t *cond));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_cond_broadcast);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_cond_broadcast
 # if HAVE_RAW_DECL_PTHREAD_COND_BROADCAST
@@ -1617,7 +1693,9 @@ _GL_FUNCDECL_SYS (pthread_cond_destroy, int, (pthread_cond_t *cond)
 #  endif
 _GL_CXXALIAS_SYS (pthread_cond_destroy, int, (pthread_cond_t *cond));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_cond_destroy);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_cond_destroy
 # if HAVE_RAW_DECL_PTHREAD_COND_DESTROY
@@ -1648,7 +1726,9 @@ _GL_FUNCDECL_SYS (pthread_key_create, int,
 _GL_CXXALIAS_SYS_CAST (pthread_key_create, int,
                        (pthread_key_t *keyp, void (*destructor) (void *)));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_key_create);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_key_create
 # if HAVE_RAW_DECL_PTHREAD_KEY_CREATE
@@ -1675,7 +1755,9 @@ _GL_FUNCDECL_SYS (pthread_setspecific, int,
 _GL_CXXALIAS_SYS (pthread_setspecific, int,
                   (pthread_key_t key, const void *value));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_setspecific);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_setspecific
 # if HAVE_RAW_DECL_PTHREAD_SETSPECIFIC
@@ -1698,7 +1780,9 @@ _GL_FUNCDECL_SYS (pthread_getspecific, void *, (pthread_key_t key));
 #  endif
 _GL_CXXALIAS_SYS (pthread_getspecific, void *, (pthread_key_t key));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_getspecific);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_getspecific
 # if HAVE_RAW_DECL_PTHREAD_GETSPECIFIC
@@ -1721,7 +1805,9 @@ _GL_FUNCDECL_SYS (pthread_key_delete, int, (pthread_key_t key));
 #  endif
 _GL_CXXALIAS_SYS (pthread_key_delete, int, (pthread_key_t key));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_key_delete);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_key_delete
 # if HAVE_RAW_DECL_PTHREAD_KEY_DELETE

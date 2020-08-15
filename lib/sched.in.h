@@ -84,7 +84,9 @@ _GL_FUNCDECL_SYS (sched_yield, int, (void));
 #  endif
 _GL_CXXALIAS_SYS (sched_yield, int, (void));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (sched_yield);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef sched_yield
 # if HAVE_RAW_DECL_SCHED_YIELD
