@@ -13,6 +13,10 @@ Portability problems fixed by Gnulib:
 @item
 This header file is missing on many platforms:
 FreeBSD 6.4, NetBSD 7.1, OpenBSD 3.8, Minix 3.3.0, AIX 7.1, HP-UX 11.31, IRIX 6.5, Solaris 11.3, Cygwin 2.9.0, mingw, MSVC 14, Android 9.0.
+@item
+This file conflicts with some system header files, such as @code{<stdlib.h>} and
+@code{<process.h>}, on some platforms:
+MSVC/clang.
 @end itemize
 
 Portability problems not fixed by Gnulib:

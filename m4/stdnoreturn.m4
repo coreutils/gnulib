@@ -24,6 +24,9 @@ AC_DEFUN([gl_STDNORETURN_H],
            [AC_LANG_PROGRAM(
               [[#include <stdlib.h>
                 #include <stdnoreturn.h>
+                #if defined _WIN32 && !defined __CYGWIN__
+                # include <process.h>
+                #endif
                 /* Do not check for 'noreturn' after the return type.
                    C11 allows it, but it's rarely done that way
                    and circa-2012 bleeding-edge GCC rejects it when given
