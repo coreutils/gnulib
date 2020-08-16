@@ -2536,7 +2536,7 @@ _GL_WARN_REAL_FLOATING_DECL (isnan);
 _GL_EXTERN_C int gl_signbitf (float arg);
 _GL_EXTERN_C int gl_signbitd (double arg);
 _GL_EXTERN_C int gl_signbitl (long double arg);
-#  if __GNUC__ >= 2 && !defined __STRICT_ANSI__
+#  if (__GNUC__ >= 2 || defined __clang__) && !defined __STRICT_ANSI__
 #   define _GL_NUM_UINT_WORDS(type) \
       ((sizeof (type) + sizeof (unsigned int) - 1) / sizeof (unsigned int))
 #   if defined FLT_SIGNBIT_WORD && defined FLT_SIGNBIT_BIT && !defined gl_signbitf
