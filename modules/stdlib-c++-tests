@@ -16,5 +16,5 @@ if ANSICXX
 TESTS += test-stdlib-c++
 check_PROGRAMS += test-stdlib-c++
 test_stdlib_c___SOURCES = test-stdlib-c++.cc test-stdlib-c++2.cc
-test_stdlib_c___LDADD = $(LDADD) $(LIBINTL) $(LIB_CLOCK_GETTIME) $(LIB_EACCESS)
+test_stdlib_c___LDADD = $(LDADD) $(LIBINTL) $(LIB_CLOCK_GETTIME) $(LIB_EACCESS) $(LIB_GETRANDOM)
 endif
