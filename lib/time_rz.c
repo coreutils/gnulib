@@ -54,31 +54,6 @@ enum { ABBR_SIZE_MIN = DEFAULT_MXFAST - offsetof (struct tm_zone, abbrs) };
    matters; the pointer is never dereferenced.  */
 static timezone_t const local_tz = (timezone_t) 1;
 
-#if HAVE_TM_ZONE || HAVE_TZNAME
-
-/* Return true if the values A and B differ according to the rules for
-   tm_isdst: A and B differ if one is zero and the other positive.  */
-static bool
-isdst_differ (int a, int b)
-{
-  return !a != !b && 0 <= a && 0 <= b;
-}
-
-/* Return true if A and B are equal.  */
-static int
-equal_tm (const struct tm *a, const struct tm *b)
-{
-  return ! ((a->tm_sec ^ b->tm_sec)
-            | (a->tm_min ^ b->tm_min)
-            | (a->tm_hour ^ b->tm_hour)
-            | (a->tm_mday ^ b->tm_mday)
-            | (a->tm_mon ^ b->tm_mon)
-            | (a->tm_year ^ b->tm_year)
-            | isdst_differ (a->tm_isdst, b->tm_isdst));
-}
-
-#endif
-
 /* Copy to ABBRS the abbreviation at ABBR with size ABBR_SIZE (this
    includes its trailing null byte).  Append an extra null byte to
    mark the end of ABBRS.  */
