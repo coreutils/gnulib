@@ -172,7 +172,7 @@ main (void)
       long result;
       errno = 0;
       result = strtol (input, &ptr, 10);
-      ASSERT (result == 65535L * 65537L);
+      ASSERT (result == (long) 4294967295UL);
       ASSERT (ptr == input + 10);
       ASSERT (errno == 0);
     }
