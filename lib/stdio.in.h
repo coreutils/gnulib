@@ -1199,7 +1199,9 @@ _GL_CXXALIAS_SYS (snprintf, int,
                   (char *restrict str, size_t size,
                    const char *restrict format, ...));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (snprintf);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef snprintf
 # if HAVE_RAW_DECL_SNPRINTF
@@ -1416,7 +1418,9 @@ _GL_CXXALIAS_SYS (vfscanf, int,
                   (FILE *restrict stream,
                    const char *restrict format, va_list args));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (vfscanf);
+# endif
 #endif
 
 #if @GNULIB_VPRINTF_POSIX@ || @GNULIB_VPRINTF@
@@ -1470,7 +1474,9 @@ _GL_CXXALIAS_RPL (vscanf, int, (const char *restrict format, va_list args));
 # else
 _GL_CXXALIAS_SYS (vscanf, int, (const char *restrict format, va_list args));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (vscanf);
+# endif
 #endif
 
 #if @GNULIB_VSNPRINTF@
@@ -1498,7 +1504,9 @@ _GL_CXXALIAS_SYS (vsnprintf, int,
                   (char *restrict str, size_t size,
                    const char *restrict format, va_list args));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (vsnprintf);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef vsnprintf
 # if HAVE_RAW_DECL_VSNPRINTF

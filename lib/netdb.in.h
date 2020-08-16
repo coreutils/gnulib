@@ -231,7 +231,9 @@ _GL_FUNCDECL_SYS (gai_strerror, const char *, (int ecode));
 #  endif
 _GL_CXXALIAS_SYS (gai_strerror, const char *, (int ecode));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (gai_strerror);
+# endif
 
 # if !@HAVE_DECL_GETNAMEINFO@
 /* Convert socket address to printable node and service names.

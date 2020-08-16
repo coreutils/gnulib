@@ -438,7 +438,9 @@ _GL_CXXALIAS_RPL (fstat, int, (int fd, struct stat *buf));
 # else
 _GL_CXXALIAS_SYS (fstat, int, (int fd, struct stat *buf));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (fstat);
+# endif
 #elif @GNULIB_OVERRIDES_STRUCT_STAT@
 # undef fstat
 # define fstat fstat_used_without_requesting_gnulib_module_fstat

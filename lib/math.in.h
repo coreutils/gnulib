@@ -255,7 +255,9 @@ _GL_WARN_ON_USE (acosf, "acosf is unportable - "
 _GL_FUNCDECL_SYS (acosl, long double, (long double x));
 # endif
 _GL_CXXALIAS_SYS (acosl, long double, (long double x));
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (acosl);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef acosl
 # if HAVE_RAW_DECL_ACOSL
@@ -295,7 +297,9 @@ _GL_WARN_ON_USE (asinf, "asinf is unportable - "
 _GL_FUNCDECL_SYS (asinl, long double, (long double x));
 # endif
 _GL_CXXALIAS_SYS (asinl, long double, (long double x));
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (asinl);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef asinl
 # if HAVE_RAW_DECL_ASINL
@@ -335,7 +339,9 @@ _GL_WARN_ON_USE (atanf, "atanf is unportable - "
 _GL_FUNCDECL_SYS (atanl, long double, (long double x));
 # endif
 _GL_CXXALIAS_SYS (atanl, long double, (long double x));
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (atanl);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef atanl
 # if HAVE_RAW_DECL_ATANL
@@ -488,7 +494,9 @@ _GL_FUNCDECL_SYS (ceill, long double, (long double x));
 #  endif
 _GL_CXXALIAS_SYS (ceill, long double, (long double x));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (ceill);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef ceill
 # if HAVE_RAW_DECL_CEILL
@@ -574,7 +582,9 @@ _GL_WARN_ON_USE (cosf, "cosf is unportable - "
 _GL_FUNCDECL_SYS (cosl, long double, (long double x));
 # endif
 _GL_CXXALIAS_SYS (cosl, long double, (long double x));
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (cosl);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef cosl
 # if HAVE_RAW_DECL_COSL
@@ -648,7 +658,9 @@ _GL_FUNCDECL_SYS (expl, long double, (long double x));
 #  endif
 _GL_CXXALIAS_SYS (expl, long double, (long double x));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (expl);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef expl
 # if HAVE_RAW_DECL_EXPL
@@ -803,7 +815,9 @@ _GL_WARN_ON_USE (expm1l, "expm1l is unportable - "
 _GL_FUNCDECL_SYS (fabsf, float, (float x));
 # endif
 _GL_CXXALIAS_SYS (fabsf, float, (float x));
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (fabsf);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef fabsf
 # if HAVE_RAW_DECL_FABSF
@@ -827,7 +841,9 @@ _GL_FUNCDECL_SYS (fabsl, long double, (long double x));
 #  endif
 _GL_CXXALIAS_SYS (fabsl, long double, (long double x));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (fabsl);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef fabsl
 # if HAVE_RAW_DECL_FABSL
@@ -892,7 +908,9 @@ _GL_FUNCDECL_SYS (floorl, long double, (long double x));
 #  endif
 _GL_CXXALIAS_SYS (floorl, long double, (long double x));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (floorl);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef floorl
 # if HAVE_RAW_DECL_FLOORL
@@ -1044,7 +1062,9 @@ _GL_FUNCDECL_SYS (fmodl, long double, (long double x, long double y));
 #  endif
 _GL_CXXALIAS_SYS (fmodl, long double, (long double x, long double y));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (fmodl);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef fmodl
 # if HAVE_RAW_DECL_FMODL
@@ -1076,7 +1096,9 @@ _GL_FUNCDECL_SYS (frexpf, float, (float x, int *expptr) _GL_ARG_NONNULL ((2)));
 #  endif
 _GL_CXXALIAS_SYS (frexpf, float, (float x, int *expptr));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (frexpf);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef frexpf
 # if HAVE_RAW_DECL_FREXPF
@@ -1138,7 +1160,9 @@ _GL_CXXALIAS_SYS (frexpl, long double, (long double x, int *expptr));
 # endif
 #endif
 #if @GNULIB_FREXPL@ && !(@REPLACE_FREXPL@ && !@HAVE_DECL_FREXPL@)
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (frexpl);
+# endif
 #endif
 #if !@GNULIB_FREXPL@ && defined GNULIB_POSIXCHECK
 # undef frexpl
@@ -1164,7 +1188,9 @@ _GL_FUNCDECL_SYS (hypotf, float, (float x, float y));
 #  endif
 _GL_CXXALIAS_SYS (hypotf, float, (float x, float y));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (hypotf);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef hypotf
 # if HAVE_RAW_DECL_HYPOTF
@@ -1211,7 +1237,9 @@ _GL_FUNCDECL_SYS (hypotl, long double, (long double x, long double y));
 #  endif
 _GL_CXXALIAS_SYS (hypotl, long double, (long double x, long double y));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (hypotl);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef hypotl
 # if HAVE_RAW_DECL_HYPOTL
@@ -1316,7 +1344,9 @@ _GL_WARN_ON_USE (ilogbl, "ilogbl is unportable - "
 _GL_FUNCDECL_SYS (ldexpf, float, (float x, int exp));
 # endif
 _GL_CXXALIAS_SYS (ldexpf, float, (float x, int exp));
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (ldexpf);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef ldexpf
 # if HAVE_RAW_DECL_LDEXPF
@@ -1342,7 +1372,9 @@ _GL_CXXALIAS_SYS (ldexpl, long double, (long double x, int exp));
 # endif
 #endif
 #if @GNULIB_LDEXPL@
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (ldexpl);
+# endif
 #endif
 #if !@GNULIB_LDEXPL@ && defined GNULIB_POSIXCHECK
 # undef ldexpl
@@ -1414,7 +1446,9 @@ _GL_FUNCDECL_SYS (logl, long double, (long double x));
 #  endif
 _GL_CXXALIAS_SYS (logl, long double, (long double x));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (logl);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef logl
 # if HAVE_RAW_DECL_LOGL
@@ -1485,7 +1519,9 @@ _GL_FUNCDECL_SYS (log10l, long double, (long double x));
 #  endif
 _GL_CXXALIAS_SYS (log10l, long double, (long double x));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (log10l);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef log10l
 # if HAVE_RAW_DECL_LOG10L
@@ -1776,7 +1812,9 @@ _GL_FUNCDECL_SYS (modfl, long double, (long double x, long double *iptr)
 #  endif
 _GL_CXXALIAS_SYS (modfl, long double, (long double x, long double *iptr));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (modfl);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef modfl
 # if HAVE_RAW_DECL_MODFL
@@ -2036,7 +2074,9 @@ _GL_WARN_ON_USE (sinf, "sinf is unportable - "
 _GL_FUNCDECL_SYS (sinl, long double, (long double x));
 # endif
 _GL_CXXALIAS_SYS (sinl, long double, (long double x));
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (sinl);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef sinl
 # if HAVE_RAW_DECL_SINL
@@ -2110,7 +2150,9 @@ _GL_FUNCDECL_SYS (sqrtl, long double, (long double x));
 #  endif
 _GL_CXXALIAS_SYS (sqrtl, long double, (long double x));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (sqrtl);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef sqrtl
 # if HAVE_RAW_DECL_SQRTL
@@ -2150,7 +2192,9 @@ _GL_WARN_ON_USE (tanf, "tanf is unportable - "
 _GL_FUNCDECL_SYS (tanl, long double, (long double x));
 # endif
 _GL_CXXALIAS_SYS (tanl, long double, (long double x));
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (tanl);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef tanl
 # if HAVE_RAW_DECL_TANL

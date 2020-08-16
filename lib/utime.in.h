@@ -75,7 +75,9 @@ _GL_FUNCDECL_SYS (utime, int, (const char *filename, const struct utimbuf *ts)
 #  endif
 _GL_CXXALIAS_SYS (utime, int, (const char *filename, const struct utimbuf *ts));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (utime);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef utime
 # if HAVE_RAW_DECL_UTIME
