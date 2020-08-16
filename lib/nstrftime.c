@@ -368,7 +368,7 @@ tm_diff (const struct tm *a, const struct tm *b)
 #define ISO_WEEK1_WDAY 4 /* Thursday */
 #define YDAY_MINIMUM (-366)
 static int iso_week_days (int, int);
-#ifdef __GNUC__
+#if defined __GNUC__ || defined __clang__
 __inline__
 #endif
 static int
