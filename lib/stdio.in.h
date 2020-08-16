@@ -1143,7 +1143,7 @@ _GL_WARN_ON_USE (renameat, "renameat is not portable - "
 
 #if @GNULIB_SCANF@
 # if @REPLACE_STDIO_READ_FUNCS@ && @GNULIB_STDIO_H_NONBLOCKING@
-#  if defined __GNUC__
+#  if defined __GNUC__ || defined __clang__
 #   if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #    undef scanf
 /* Don't break __attribute__((format(scanf,M,N))).  */
