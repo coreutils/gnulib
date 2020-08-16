@@ -85,7 +85,7 @@
 #  define __NTH(fct)	__attribute__ ((__nothrow__ __LEAF)) fct
 #  define __NTHNL(fct)  __attribute__ ((__nothrow__)) fct
 # else
-#  if defined __cplusplus && __GNUC_PREREQ (2,8)
+#  if defined __cplusplus && (__GNUC_PREREQ (2,8) || __clang_major >= 4)
 #   define __THROW	throw ()
 #   define __THROWNL	throw ()
 #   define __NTH(fct)	__LEAF_ATTR fct throw ()
