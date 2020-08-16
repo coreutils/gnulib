@@ -28,6 +28,7 @@
 #endif
 #include <limits.h>
 #include <string.h>
+#include <strings.h>
 #include <stdbool.h>
 
 #ifdef _LIBC
