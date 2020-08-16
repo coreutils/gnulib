@@ -194,7 +194,7 @@
    Example:
    int __REDIRECT(setpgrp, (__pid_t pid, __pid_t pgrp), setpgid); */
 
-#if defined __GNUC__ && __GNUC__ >= 2
+#if (defined __GNUC__ && __GNUC__ >= 2) || (__clang_major__ >= 4)
 
 # define __REDIRECT(name, proto, alias) name proto __asm__ (__ASMNAME (#alias))
 # ifdef __cplusplus
