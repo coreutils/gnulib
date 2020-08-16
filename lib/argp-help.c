@@ -1723,7 +1723,7 @@ __argp_short_program_name (void)
   /* FIXME: What now? Miles suggests that it is better to use NULL,
      but currently the value is passed on directly to fputs_unlocked,
      so that requires more changes. */
-# if __GNUC__
+# if __GNUC__ || (__clang_major__ >= 4)
 #  warning No reasonable value to return
 # endif /* __GNUC__ */
   return "";
