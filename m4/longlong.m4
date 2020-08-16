@@ -1,4 +1,4 @@
-# longlong.m4 serial 18
+# longlong.m4 serial 19
 dnl Copyright (C) 1999-2007, 2009-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -28,12 +28,12 @@ AC_DEFUN([AC_TYPE_LONG_LONG_INT],
           dnl nobody cross compiles for this platform as far as we know.
           AC_RUN_IFELSE(
             [AC_LANG_PROGRAM(
-               [[@%:@include <limits.h>
-                 @%:@ifndef LLONG_MAX
-                 @%:@ define HALF \
+               [[#include <limits.h>
+                 #ifndef LLONG_MAX
+                 # define HALF \
                           (1LL << (sizeof (long long int) * CHAR_BIT - 2))
-                 @%:@ define LLONG_MAX (HALF - 1 + HALF)
-                 @%:@endif]],
+                 # define LLONG_MAX (HALF - 1 + HALF)
+                 #endif]],
                [[long long int n = 1;
                  int i;
                  for (i = 0; ; i++)
