@@ -29,7 +29,7 @@
 #include "pathmax.h"
 #include "macros.h"
 
-#if ! HAVE_GETPAGESIZE
+#if !(HAVE_GETPAGESIZE || defined getpagesize)
 # define getpagesize() 0
 #endif
 
