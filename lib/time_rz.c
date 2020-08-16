@@ -327,17 +327,25 @@ mktime_z (timezone_t tz, struct tm *tm)
       timezone_t old_tz = set_tz (tz);
       if (old_tz)
         {
-          time_t t = mktime (tm);
-#if HAVE_TM_ZONE || HAVE_TZNAME
-          time_t badtime = -1;
           struct tm tm_1;
-          if ((t != badtime
-               || (localtime_r (&t, &tm_1) && equal_tm (tm, &tm_1)))
-              && !save_abbr (tz, tm))
-            t = badtime;
+          tm_1.tm_sec = tm->tm_sec;
+          tm_1.tm_min = tm->tm_min;
+          tm_1.tm_hour = tm->tm_hour;
+          tm_1.tm_mday = tm->tm_mday;
+          tm_1.tm_mon = tm->tm_mon;
+          tm_1.tm_year = tm->tm_year;
+          tm_1.tm_yday = -1;
+          tm_1.tm_isdst = tm->tm_isdst;
+          time_t t = mktime (&tm_1);
+          bool ok = 0 <= tm_1.tm_yday;
+#if HAVE_TM_ZONE || HAVE_TZNAME
+          ok = ok && save_abbr (tz, &tm_1);
 #endif
-          if (revert_tz (old_tz))
-            return t;
+          if (revert_tz (old_tz) && ok)
+            {
+              *tm = tm_1;
+              return t;
+            }
         }
       return -1;
     }
