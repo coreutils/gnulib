@@ -72,7 +72,7 @@ __libc_lock_define_initialized (static, envlock)
    values are from a small set.  Outside glibc this will eat up all
    memory after a while.  */
 #if defined _LIBC || (defined HAVE_SEARCH_H && defined HAVE_TSEARCH \
-                      && defined __GNUC__)
+                      && (defined __GNUC__ || defined __clang__))
 # define USE_TSEARCH    1
 # include <search.h>
 typedef int (*compar_fn_t) (const void *, const void *);
