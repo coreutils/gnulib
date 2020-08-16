@@ -47,7 +47,9 @@ typedef uint32_t ucs4_t;
    pass a pointer to a different object in the specified pointer argument
    than in the other pointer arguments.  */
 #ifndef _UC_RESTRICT
-# if defined __restrict || 2 < __GNUC__ + (95 <= __GNUC_MINOR__)
+# if defined __restrict \
+     || 2 < __GNUC__ + (95 <= __GNUC_MINOR__) \
+     || __clang_major__ >= 3
 #  define _UC_RESTRICT __restrict
 # elif 199901L <= __STDC_VERSION__ || defined restrict
 #  define _UC_RESTRICT restrict

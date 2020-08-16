@@ -39,7 +39,8 @@
    Other compilers use __restrict, __restrict__, and _Restrict, and
    'configure' might #define 'restrict' to those words.  */
 #ifndef __restrict
-# if ! (2 < __GNUC__ || (2 == __GNUC__ && 95 <= __GNUC_MINOR__))
+# if ! (2 < __GNUC__ || (2 == __GNUC__ && 95 <= __GNUC_MINOR__) \
+        || __clang_major__ >= 3)
 #  if 199901L <= __STDC_VERSION__
 #   define __restrict restrict
 #  else
