@@ -36,7 +36,8 @@
 #define THREAD_COUNT 10
 
 /* Number of operations performed in each thread.  */
-#if !(defined _WIN32 && ! defined __CYGWIN__) && HAVE_PTHREAD_H && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 1)) && !defined __ibmxl__
+#if !(defined _WIN32 && ! defined __CYGWIN__) && HAVE_PTHREAD_H && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 1) || __clang_major__ >= 3) && !defined __ibmxl__
+
 /* The GCC built-ins are known to work fine.  */
 # define REPEAT_COUNT 5000
 #else
