@@ -48,7 +48,7 @@
    These tests should be checkable via 'verify' rather than 'ASSERT', but
    using 'verify' would run into a bug with HP-UX 11.23 cc; see
    <https://lists.gnu.org/r/bug-gnulib/2011-05/msg00401.html>.  */
-#if __GNUC__ || __SUNPRO_C
+#if __GNUC__ || __clang__ || __SUNPRO_C
 # define VERIFY(x) verify_stmt (x)
 #else
 # define VERIFY(x) ASSERT (x)
