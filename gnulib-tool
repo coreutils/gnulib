@@ -48,11 +48,11 @@ nl='
 '
 IFS=" ""	$nl"
 
-# You can set AUTOCONFPATH to empty if autoconf 2.63 is already in your PATH.
+# You can set AUTOCONFPATH to empty if autoconf 2.64 is already in your PATH.
 AUTOCONFPATH=
 #case $USER in
 #  bruno )
-#    AUTOCONFBINDIR=/arch/x86-linux/gnu-inst-autoconf/2.63/bin
+#    AUTOCONFBINDIR=/arch/x86-linux/gnu-inst-autoconf/2.64/bin
 #    AUTOCONFPATH="eval env PATH=${AUTOCONFBINDIR}:\$PATH "
 #    ;;
 #esac
@@ -1541,7 +1541,7 @@ func_determine_path_separator
 
   # Determine the minimum supported autoconf version from the project's
   # configure.ac.
-  DEFAULT_AUTOCONF_MINVERSION="2.63"
+  DEFAULT_AUTOCONF_MINVERSION="2.64"
   autoconf_minversion=
   configure_ac=
   if case "$mode" in import | add-import | remove-import | update) true;; *) false;; esac \
@@ -1588,8 +1588,8 @@ func_determine_path_separator
     autoconf_minversion=$DEFAULT_AUTOCONF_MINVERSION
   fi
   case "$autoconf_minversion" in
-    1.* | 2.[0-5]* | 2.6[0-2]*)
-      func_fatal_error "minimum supported autoconf version is 2.63. Try adding AC_PREREQ([$DEFAULT_AUTOCONF_MINVERSION]) to your configure.ac." ;;
+    1.* | 2.[0-5]* | 2.6[0-3]*)
+      func_fatal_error "minimum supported autoconf version is 2.64. Try adding AC_PREREQ([$DEFAULT_AUTOCONF_MINVERSION]) to your configure.ac." ;;
   esac
 
   # Remove trailing slashes from the directory names. This is necessary for

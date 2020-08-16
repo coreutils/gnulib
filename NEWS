@@ -3,6 +3,8 @@ Important general notes
 
 Date        Modules         Changes
 
+2020-08-16  (all)           Automake >= 1.11 and Autoconf >= 2.64 are required.
+
 2019-12-11  Support for     These modules are now supported in C++ mode as well.
             ISO C or POSIX  This means, while the autoconfiguration uses the C
             functions       compiler, the resulting header files and function

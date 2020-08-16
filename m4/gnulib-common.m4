@@ -1,4 +1,4 @@
-# gnulib-common.m4 serial 56
+# gnulib-common.m4 serial 57
 dnl Copyright (C) 2007-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -480,14 +480,6 @@ AC_DEFUN([gl_FEATURES_H],
   AC_SUBST([HAVE_FEATURES_H])
 ])
 
-# AS_VAR_IF(VAR, VALUE, [IF-MATCH], [IF-NOT-MATCH])
-# ----------------------------------------------------
-# Backport of autoconf-2.63b's macro.
-# Remove this macro when we can assume autoconf >= 2.64.
-m4_ifndef([AS_VAR_IF],
-[m4_define([AS_VAR_IF],
-[AS_IF([test x"AS_VAR_GET([$1])" = x""$2], [$3], [$4])])])
-
 # gl_PROG_CC_C99
 # Modifies the value of the shell variable CC in an attempt to make $CC
 # understand ISO C99 source code.
@@ -659,10 +651,6 @@ AC_DEFUN([gl_CACHE_VAL_SILENT],
   AC_CACHE_VAL([$1], [$2])
   as_echo_n="$saved_as_echo_n"
 ])
-
-# AS_VAR_COPY was added in autoconf 2.63b
-m4_define_default([AS_VAR_COPY],
-[AS_LITERAL_IF([$1[]$2], [$1=$$2], [eval $1=\$$2])])
 
 dnl Expands to some code for use in .c programs that, on native Windows, defines
 dnl the Microsoft deprecated alias function names to the underscore-prefixed
