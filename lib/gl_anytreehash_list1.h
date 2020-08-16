@@ -340,7 +340,7 @@ add_nodes_to_buckets (gl_list_t list)
   return -1;
 }
 /* Tell GCC that the likely return value is 0.  */
-#if __GNUC__ >= 3
+#if (__GNUC__ >= 3) || (__clang_major__ >= 4)
 # define add_nodes_to_buckets(list) \
     __builtin_expect ((add_nodes_to_buckets) (list), 0)
 #endif
