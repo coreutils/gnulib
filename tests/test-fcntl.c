@@ -206,6 +206,7 @@ check_flags (void)
 # endif
 #endif
 
+    default:
       ;
     }
 }
