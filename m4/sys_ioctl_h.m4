@@ -1,4 +1,4 @@
-# sys_ioctl_h.m4 serial 11
+# sys_ioctl_h.m4 serial 12
 dnl Copyright (C) 2008-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -23,7 +23,7 @@ AC_DEFUN([gl_SYS_IOCTL_H],
        AC_COMPILE_IFELSE(
          [AC_LANG_PROGRAM(
             [[#include <sys/ioctl.h>]],
-            [(void) ioctl;])],
+            [[(void) ioctl;]])],
          [gl_cv_decl_ioctl_in_sys_ioctl_h=yes],
          [gl_cv_decl_ioctl_in_sys_ioctl_h=no])
       ])

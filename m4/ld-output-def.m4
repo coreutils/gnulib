@@ -1,4 +1,4 @@
-# ld-output-def.m4 serial 2
+# ld-output-def.m4 serial 3
 dnl Copyright (C) 2008-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -19,7 +19,7 @@ AC_DEFUN([gl_LD_OUTPUT_DEF],
      else
        gl_ldflags_save=$LDFLAGS
        LDFLAGS="-Wl,--output-def,conftest.def"
-       AC_LINK_IFELSE([AC_LANG_PROGRAM([])],
+       AC_LINK_IFELSE([AC_LANG_PROGRAM([[]])],
                    [gl_cv_ld_output_def=yes],
                    [gl_cv_ld_output_def=no])
        rm -f conftest.def

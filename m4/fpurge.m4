@@ -1,4 +1,4 @@
-# fpurge.m4 serial 10
+# fpurge.m4 serial 11
 dnl Copyright (C) 2007, 2009-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -19,36 +19,36 @@ AC_DEFUN([gl_FUNC_FPURGE],
          [AC_LANG_PROGRAM(
             [[#include <stdio.h>
 ]],
-            [FILE *f = fopen ("conftest.txt", "w+");
-             if (!f)
-               return 1;
-             if (fputc ('a', f) != 'a')
-               { fclose (f); return 2; }
-             rewind (f);
-             if (fgetc (f) != 'a')
-               { fclose (f); return 3; }
-             if (fgetc (f) != EOF)
-               { fclose (f); return 4; }
-             if (fpurge (f) != 0)
-               { fclose (f); return 5; }
-             if (putc ('b', f) != 'b')
-               { fclose (f); return 6; }
-             if (fclose (f) != 0)
-               return 7;
-             if ((f = fopen ("conftest.txt", "r")) == NULL)
-               return 8;
-             if (fgetc (f) != 'a')
-               { fclose (f); return 9; }
-             if (fgetc (f) != 'b')
-               { fclose (f); return 10; }
-             if (fgetc (f) != EOF)
-               { fclose (f); return 11; }
-             if (fclose (f) != 0)
-               return 12;
-             if (remove ("conftest.txt") != 0)
-               return 13;
-             return 0;
-            ])],
+            [[FILE *f = fopen ("conftest.txt", "w+");
+              if (!f)
+                return 1;
+              if (fputc ('a', f) != 'a')
+                { fclose (f); return 2; }
+              rewind (f);
+              if (fgetc (f) != 'a')
+                { fclose (f); return 3; }
+              if (fgetc (f) != EOF)
+                { fclose (f); return 4; }
+              if (fpurge (f) != 0)
+                { fclose (f); return 5; }
+              if (putc ('b', f) != 'b')
+                { fclose (f); return 6; }
+              if (fclose (f) != 0)
+                return 7;
+              if ((f = fopen ("conftest.txt", "r")) == NULL)
+                return 8;
+              if (fgetc (f) != 'a')
+                { fclose (f); return 9; }
+              if (fgetc (f) != 'b')
+                { fclose (f); return 10; }
+              if (fgetc (f) != EOF)
+                { fclose (f); return 11; }
+              if (fclose (f) != 0)
+                return 12;
+              if (remove ("conftest.txt") != 0)
+                return 13;
+              return 0;
+            ]])],
          [gl_cv_func_fpurge_works=yes],
          [gl_cv_func_fpurge_works=no],
          [case "$host_os" in

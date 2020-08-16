@@ -1,4 +1,4 @@
-# wcstok.m4 serial 4
+# wcstok.m4 serial 5
 dnl Copyright (C) 2011-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -36,7 +36,7 @@ AC_DEFUN([gl_FUNC_WCSTOK],
 #include <wchar.h>
 wchar_t *wcstok (wchar_t *, const wchar_t *, wchar_t **);
 ]],
-                [])],
+                [[]])],
              [gl_cv_func_wcstok_posix_signature=yes],
              [gl_cv_func_wcstok_posix_signature=no])
           ])

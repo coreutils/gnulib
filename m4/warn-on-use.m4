@@ -1,4 +1,4 @@
-# warn-on-use.m4 serial 7
+# warn-on-use.m4 serial 8
 dnl Copyright (C) 2010-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -35,8 +35,8 @@ AC_DEFUN([gl_WARN_ON_USE_PREPARE],
        AC_CACHE_CHECK([whether $gl_func is declared without a macro],
          [gl_Symbol],
          [AC_COMPILE_IFELSE([AC_LANG_PROGRAM([$1],
-[@%:@undef $gl_func
-  (void) $gl_func;])],
+[[@%:@undef $gl_func
+  (void) $gl_func;]])],
            [AS_VAR_SET([gl_Symbol], [yes])], [AS_VAR_SET([gl_Symbol], [no])])])
        AS_VAR_IF([gl_Symbol], [yes],
          [AC_DEFINE_UNQUOTED(AS_TR_CPP([HAVE_RAW_DECL_$gl_func]), [1])

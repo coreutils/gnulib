@@ -1,4 +1,4 @@
-# fseeko.m4 serial 19
+# fseeko.m4 serial 20
 dnl Copyright (C) 2007-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -17,7 +17,7 @@ AC_DEFUN([gl_FUNC_FSEEKO],
   AC_CACHE_CHECK([for fseeko], [gl_cv_func_fseeko],
     [
       AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include <stdio.h>
-]], [fseeko (stdin, 0, 0);])],
+]], [[fseeko (stdin, 0, 0);]])],
         [gl_cv_func_fseeko=yes], [gl_cv_func_fseeko=no])
     ])
 
