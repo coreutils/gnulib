@@ -1,4 +1,4 @@
-# printf.m4 serial 67
+# printf.m4 serial 68
 dnl Copyright (C) 2003, 2007-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -1072,9 +1072,8 @@ AC_DEFUN([gl_PRINTF_ENOMEM],
       gl_cv_func_printf_enomem="guessing no"
       if test "$cross_compiling" = no; then
         if test $APPLE_UNIVERSAL_BUILD = 0; then
-          AC_LANG_CONFTEST([AC_LANG_SOURCE([
+          AC_LANG_CONFTEST([AC_LANG_SOURCE([[
 ]GL_NOCRASH[
-changequote(,)dnl
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/time.h>
@@ -1119,8 +1118,7 @@ int main()
   ret = printf ("%.5000000f", 1.0);
   return !(ret == 5000002 || (ret < 0 && errno == ENOMEM));
 }
-changequote([,])dnl
-          ])])
+          ]])])
           if AC_TRY_EVAL([ac_link]) && test -s conftest$ac_exeext; then
             (./conftest 2>&AS_MESSAGE_LOG_FD
              result=$?
