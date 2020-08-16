@@ -68,9 +68,11 @@ pthread_spin_destroy (pthread_spinlock_t *lock)
 /* We don't use the C11 <stdatomic.h> (available in GCC >= 4.9) because it would
    require to link with -latomic.  */
 
-# if __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 7)
-/* Use GCC built-ins (available in GCC >= 4.7) that operate on the first 32-bit
-   word of the lock.
+# if (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 7) \
+      || __clang_major > 3 || (__clang_major__ == 3 && __clang_minor__ >= 1)) \
+     && !defined __ibmxl__
+/* Use GCC built-ins (available in GCC >= 4.7 and clang >= 3.1) that operate on
+   the first byte of the lock.
    Documentation:
    <https://gcc.gnu.org/onlinedocs/gcc-4.7.0/gcc/_005f_005fatomic-Builtins.html>  */
 
@@ -162,8 +164,10 @@ pthread_spin_destroy (pthread_spinlock_t *lock)
   return 0;
 }
 
-# elif __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 1)
-/* Use GCC built-ins (available in GCC >= 4.1).
+# elif (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 1) \
+        || __clang_major__ >= 3) \
+       && !defined __ibmxl__
+/* Use GCC built-ins (available in GCC >= 4.1 and clang >= 3.0).
    Documentation:
    <https://gcc.gnu.org/onlinedocs/gcc-4.1.2/gcc/Atomic-Builtins.html>  */
 
