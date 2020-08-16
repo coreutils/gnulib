@@ -79,7 +79,7 @@ main_writer_loop (int test, size_t data_block_size, int fd,
         usleep (1000000);
 
         dbgfprintf (stderr, "%s:1: >> write (%lu)\n", PROG_ROLE,
-                    (unsigned long) 2 * data_block_size);
+                    (unsigned long) (2 * data_block_size));
         START_TIMING
         ret = write (fd, data, 2 * data_block_size);
         saved_errno = errno;
