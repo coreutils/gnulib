@@ -120,6 +120,7 @@ local_snprintf (char *buf, size_t buflen, const char *format, ...)
     buf[buflen - 1] = '\0';
   return result;
 }
+# undef snprintf
 # define snprintf local_snprintf
 #endif
 
