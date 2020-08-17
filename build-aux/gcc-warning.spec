@@ -83,7 +83,7 @@
 -Wcpp					default
 -Wctor-dtor-privacy			c++
 -Wdangling-else				enabled by -Wparentheses
--Wdeclaration-after-statement		FIXME: do not want.  others may
+-Wdeclaration-after-statement		needed only for pre-C99, so obsolete
 -Wdelete-incomplete			c++ and objc++
 -Wdelete-non-virtual-dtor		c++
 -Wdeprecated				default
@@ -236,7 +236,7 @@
 -Wshift-negative-value			enabled by -Wextra
 -Wshift-overflow			covered by -Wshift-overflow=2
 -Wshift-overflow=<0,2>			gcc --help=warnings artifact
--Wsign-compare				FIXME maybe? borderline.  some will want this
+-Wsign-compare				enabled by -Wextra
 -Wsign-conversion			FIXME maybe? borderline.  some will want this
 -Wsign-promo				c++ and objc++
 -Wsized-deallocation			c++ and objc++
