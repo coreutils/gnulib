@@ -6,8 +6,10 @@ m4/ansi-c++.m4
 
 Depends-on:
 
-configure.ac:
+configure.ac-early:
 AC_REQUIRE([gl_ANSI_CXX])
+
+configure.ac:
 
 Makefile.am:
 
