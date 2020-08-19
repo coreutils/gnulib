@@ -16,15 +16,16 @@ if test "$CXX" != no; then
   dnl have the <cuchar> header file from C++11.
   AC_CACHE_CHECK([whether the C++ compiler has <cuchar>],
     [gl_cv_cxxheader_cuchar],
-    [AC_LANG_PUSH([C++])
-     AC_COMPILE_IFELSE(
-       [AC_LANG_PROGRAM(
-          [[#include <cuchar>]],
-          [[]])
-       ],
-       [gl_cv_cxxheader_cuchar=yes],
-       [gl_cv_cxxheader_cuchar=no])
-     AC_LANG_POP([C++])
+    [dnl We can't use AC_LANG_PUSH([C++]) and AC_LANG_POP([C++]) here, due to
+     dnl an autoconf bug <https://savannah.gnu.org/support/?110294>.
+     echo '#include <cuchar>' > conftest.cpp
+     gl_command="$CXX $CXXFLAGS $CPPFLAGS -c conftest.cpp"
+     if AC_TRY_EVAL([gl_command]); then
+       gl_cv_cxxheader_cuchar=yes
+     else
+       gl_cv_cxxheader_cuchar=no
+     fi
+     rm -fr conftest*
     ])
 else
   gl_cv_cxxheader_cuchar=no
