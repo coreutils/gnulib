@@ -1,4 +1,4 @@
-# uchar.m4 serial 14
+# uchar.m4 serial 15
 dnl Copyright (C) 2019-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -21,6 +21,31 @@ AC_DEFUN_ONCE([gl_UCHAR_H],
 
   gl_TYPE_CHAR16_T
   gl_TYPE_CHAR32_T
+
+  dnl In C++ mode, clang defines 'char16_t' and 'char32_t' as built-in types
+  dnl on some platforms (e.g. OpenBSD 6.7).
+  CXX_HAS_UCHAR_TYPES=0
+  if test $HAVE_UCHAR_H = 0; then
+    if test "$CXX" != no; then
+      AC_CACHE_CHECK([whether the C++ compiler predefines the <uchar.h> types],
+        [gl_cv_cxx_has_uchar_types],
+        [dnl We can't use AC_LANG_PUSH([C++]) and AC_LANG_POP([C++]) here, due to
+         dnl an autoconf bug <https://savannah.gnu.org/support/?110294>.
+         echo 'char16_t a; char32_t b;' > conftest.cpp
+         gl_command="$CXX $CXXFLAGS $CPPFLAGS -c conftest.cpp"
+         if AC_TRY_EVAL([gl_command]); then
+           gl_cv_cxx_has_uchar_types=yes
+         else
+           gl_cv_cxx_has_uchar_types=no
+         fi
+         rm -fr conftest*
+        ])
+      if test $gl_cv_cxx_has_uchar_types = yes; then
+        CXX_HAS_UCHAR_TYPES=1
+      fi
+    fi
+  fi
+  AC_SUBST([CXX_HAS_UCHAR_TYPES])
 
   dnl Test whether a 'char32_t' can hold more characters than a 'wchar_t'.
   gl_STDINT_BITSIZEOF([wchar_t], [gl_STDINT_INCLUDES])

@@ -40,7 +40,7 @@
 /* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
 
 
-#if !@HAVE_UCHAR_H@
+#if !(@HAVE_UCHAR_H@ || (defined __cplusplus && @CXX_HAS_UCHAR_TYPES@))
 
 /* A 16-bit variant of wchar_t.
    Note: This type does *NOT* denote UTF-16 units.  (Only on platforms
@@ -54,7 +54,7 @@ typedef uint_least16_t gl_char16_t;
 
 #endif
 
-#if !@HAVE_UCHAR_H@
+#if !(@HAVE_UCHAR_H@ || (defined __cplusplus && @CXX_HAS_UCHAR_TYPES@))
 
 /* A 32-bit variant of wchar_t.
    Note: This type does *NOT* denote UTF-32 code points.  (Only on platforms
