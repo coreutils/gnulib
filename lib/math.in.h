@@ -405,7 +405,7 @@ _GL_FUNCDECL_SYS (cbrt, double, (double x));
 # endif
 _GL_CXXALIAS_SYS (cbrt, double, (double x));
 # if __GLIBC__ >= 2
-_GL_CXXALIASWARN (cbrt);
+_GL_CXXALIASWARN1 (cbrt, double, (double x));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef cbrt
@@ -475,7 +475,7 @@ _GL_CXXALIAS_RPL (ceil, double, (double x));
 _GL_CXXALIAS_SYS (ceil, double, (double x));
 # endif
 # if __GLIBC__ >= 2
-_GL_CXXALIASWARN (ceil);
+_GL_CXXALIASWARN1 (ceil, double, (double x));
 # endif
 #endif
 
@@ -527,7 +527,7 @@ _GL_FUNCDECL_SYS (copysign, double, (double x, double y));
 # endif
 _GL_CXXALIAS_SYS (copysign, double, (double x, double y));
 # if __GLIBC__ >= 2
-_GL_CXXALIASWARN (copysign);
+_GL_CXXALIASWARN1 (copysign, double, (double x, double y));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef copysign
@@ -699,7 +699,7 @@ _GL_FUNCDECL_SYS (exp2, double, (double x));
 _GL_CXXALIAS_SYS (exp2, double, (double x));
 # endif
 # if __GLIBC__ >= 2
-_GL_CXXALIASWARN (exp2);
+_GL_CXXALIASWARN1 (exp2, double, (double x));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef exp2
@@ -772,7 +772,7 @@ _GL_FUNCDECL_SYS (expm1, double, (double x));
 _GL_CXXALIAS_SYS (expm1, double, (double x));
 # endif
 # if __GLIBC__ >= 2
-_GL_CXXALIASWARN (expm1);
+_GL_CXXALIASWARN1 (expm1, double, (double x));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef expm1
@@ -889,7 +889,7 @@ _GL_CXXALIAS_RPL (floor, double, (double x));
 _GL_CXXALIAS_SYS (floor, double, (double x));
 # endif
 # if __GLIBC__ >= 2
-_GL_CXXALIASWARN (floor);
+_GL_CXXALIASWARN1 (floor, double, (double x));
 # endif
 #endif
 
@@ -960,7 +960,7 @@ _GL_FUNCDECL_SYS (fma, double, (double x, double y, double z));
 _GL_CXXALIAS_SYS (fma, double, (double x, double y, double z));
 # endif
 # if __GLIBC__ >= 2
-_GL_CXXALIASWARN (fma);
+_GL_CXXALIASWARN1 (fma, double, (double x, double y, double z));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef fma
@@ -1037,7 +1037,7 @@ _GL_CXXALIAS_RPL (fmod, double, (double x, double y));
 _GL_CXXALIAS_SYS (fmod, double, (double x, double y));
 # endif
 # if __GLIBC__ >= 2
-_GL_CXXALIASWARN (fmod);
+_GL_CXXALIASWARN1 (fmod, double, (double x, double y));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef fmod
@@ -1212,7 +1212,7 @@ _GL_CXXALIAS_RPL (hypot, double, (double x, double y));
 _GL_CXXALIAS_SYS (hypot, double, (double x, double y));
 # endif
 # if __GLIBC__ >= 2
-_GL_CXXALIASWARN (hypot);
+_GL_CXXALIASWARN1 (hypot, double, (double x, double y));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef hypot
@@ -1287,7 +1287,7 @@ _GL_FUNCDECL_SYS (ilogb, int, (double x));
 _GL_CXXALIAS_SYS (ilogb, int, (double x));
 # endif
 # if __GLIBC__ >= 2
-_GL_CXXALIASWARN (ilogb);
+_GL_CXXALIASWARN1 (ilogb, int, (double x));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef ilogb
@@ -1421,7 +1421,7 @@ _GL_CXXALIAS_RPL (log, double, (double x));
 _GL_CXXALIAS_SYS (log, double, (double x));
 # endif
 # if __GLIBC__ >= 2
-_GL_CXXALIASWARN (log);
+_GL_CXXALIASWARN1 (log, double, (double x));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef log
@@ -1494,7 +1494,7 @@ _GL_CXXALIAS_RPL (log10, double, (double x));
 _GL_CXXALIAS_SYS (log10, double, (double x));
 # endif
 # if __GLIBC__ >= 2
-_GL_CXXALIASWARN (log10);
+_GL_CXXALIASWARN1 (log10, double, (double x));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef log10
@@ -1569,7 +1569,7 @@ _GL_FUNCDECL_SYS (log1p, double, (double x));
 _GL_CXXALIAS_SYS (log1p, double, (double x));
 # endif
 # if __GLIBC__ >= 2
-_GL_CXXALIASWARN (log1p);
+_GL_CXXALIASWARN1 (log1p, double, (double x));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef log1p
@@ -1643,7 +1643,7 @@ _GL_FUNCDECL_SYS (log2, double, (double x));
 _GL_CXXALIAS_SYS (log2, double, (double x));
 # endif
 # if __GLIBC__ >= 2
-_GL_CXXALIASWARN (log2);
+_GL_CXXALIASWARN1 (log2, double, (double x));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef log2
@@ -1715,7 +1715,7 @@ _GL_FUNCDECL_SYS (logb, double, (double x));
 _GL_CXXALIAS_SYS (logb, double, (double x));
 # endif
 # if __GLIBC__ >= 2
-_GL_CXXALIASWARN (logb);
+_GL_CXXALIASWARN1 (logb, double, (double x));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef logb
@@ -1785,7 +1785,7 @@ _GL_CXXALIAS_RPL (modf, double, (double x, double *iptr));
 _GL_CXXALIAS_SYS (modf, double, (double x, double *iptr));
 # endif
 # if __GLIBC__ >= 2
-_GL_CXXALIASWARN (modf);
+_GL_CXXALIASWARN1 (modf, double, (double x, double *iptr));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef modf
@@ -1878,7 +1878,7 @@ _GL_FUNCDECL_SYS (remainder, double, (double x, double y));
 _GL_CXXALIAS_SYS (remainder, double, (double x, double y));
 # endif
 # if __GLIBC__ >= 2
-_GL_CXXALIASWARN (remainder);
+_GL_CXXALIASWARN1 (remainder, double, (double x, double y));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef remainder
@@ -1935,7 +1935,7 @@ _GL_FUNCDECL_SYS (rint, double, (double x));
 # endif
 _GL_CXXALIAS_SYS (rint, double, (double x));
 # if __GLIBC__ >= 2
-_GL_CXXALIASWARN (rint);
+_GL_CXXALIASWARN1 (rint, double, (double x));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef rint
@@ -2007,7 +2007,7 @@ _GL_FUNCDECL_SYS (round, double, (double x));
 _GL_CXXALIAS_SYS (round, double, (double x));
 # endif
 # if __GLIBC__ >= 2
-_GL_CXXALIASWARN (round);
+_GL_CXXALIASWARN1 (round, double, (double x));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef round
@@ -2267,7 +2267,7 @@ _GL_FUNCDECL_SYS (trunc, double, (double x));
 _GL_CXXALIAS_SYS (trunc, double, (double x));
 # endif
 # if __GLIBC__ >= 2
-_GL_CXXALIASWARN (trunc);
+_GL_CXXALIASWARN1 (trunc, double, (double x));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef trunc
