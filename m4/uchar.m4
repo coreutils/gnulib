@@ -1,4 +1,4 @@
-# uchar.m4 serial 15
+# uchar.m4 serial 16
 dnl Copyright (C) 2019-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -23,7 +23,10 @@ AC_DEFUN_ONCE([gl_UCHAR_H],
   gl_TYPE_CHAR32_T
 
   dnl In C++ mode, clang defines 'char16_t' and 'char32_t' as built-in types
-  dnl on some platforms (e.g. OpenBSD 6.7).
+  dnl on some platforms (e.g. OpenBSD 6.7), and as types defined by many
+  dnl header files (<limits.h>, <stddef.h>, <stdint.h>, <stdio.h>, <stdlib.h>
+  dnl and others) on some platforms (e.g. Mac OS X 10.13).
+  m4_ifdef([gl_ANSI_CXX], [AC_REQUIRE([gl_ANSI_CXX])])
   CXX_HAS_UCHAR_TYPES=0
   if test $HAVE_UCHAR_H = 0; then
     if test "$CXX" != no; then
@@ -31,7 +34,11 @@ AC_DEFUN_ONCE([gl_UCHAR_H],
         [gl_cv_cxx_has_uchar_types],
         [dnl We can't use AC_LANG_PUSH([C++]) and AC_LANG_POP([C++]) here, due to
          dnl an autoconf bug <https://savannah.gnu.org/support/?110294>.
-         echo 'char16_t a; char32_t b;' > conftest.cpp
+         cat > conftest.cpp <<\EOF
+#include <stddef.h>
+char16_t a;
+char32_t b;
+EOF
          gl_command="$CXX $CXXFLAGS $CPPFLAGS -c conftest.cpp"
          if AC_TRY_EVAL([gl_command]); then
            gl_cv_cxx_has_uchar_types=yes
