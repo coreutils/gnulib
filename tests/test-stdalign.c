@@ -89,6 +89,11 @@ main ()
      https://lists.gnu.org/r/bug-gnulib/2017-03/msg00078.html  */
   fputs ("Skipping test: known HP-UX Itanium cc compiler bug\n", stderr);
   return 77;
+#elif defined __clang__ && defined __ibmxl__
+  /* Avoid a test failure with IBM xlc 16.1.  It ignores alignas (8),
+     _Alignas (8), and __attribute__ ((__aligned__ (8))).  */
+  fputs ("Skipping test: known AIX XL C compiler deficiency\n", stderr);
+  return 77;
 #else
   CHECK_ALIGNED (static_char_alignas);
   CHECK_ALIGNED (static_char_Alignas);
