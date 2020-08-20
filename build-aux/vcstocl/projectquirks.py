@@ -16,21 +16,32 @@
 
 
 class ProjectQuirks:
-    # This is a list of regex substitutions for C/C++ macros that are known to
-    # break parsing of the C programs.  Each member of this list is a dict with
-    # the key 'orig' having the regex and 'sub' having the substitution of the
-    # regex.
+    ''' Base class for project quirks
+
+    The following members can be overridden in the subclass:
+
+    - MACRO_QUIRKS
+      A list of dictionary entries with indexes as `orig` and `sub` where `orig`
+      is a Python regular expression pattern to match and `sub` is the
+      substitution.  These substitutions are used to work around C/C++ macros
+      that are known to break parsing of C programs.
+
+    - C_MACROS
+      This is a list of macro definitions that are extensively used and are
+      known to break parsing due to some characteristic, mainly the lack of a
+      semicolon at the end.
+
+    - IGNORE_LIST
+      A list of files to ignore in the changesets, either because they are not
+      needed (such as the ChangeLog) or because they are not parseable.  For
+      example, glibc has a header file that is only assembly code, which breaks
+      the C parser.
+
+    - repo
+      Specify the project repo source control.  The default value is `git`.
+
+    '''
     MACRO_QUIRKS = []
-
-    # This is a list of macro definitions that are extensively used and are
-    # known to break parsing due to some characteristic, mainly the lack of a
-    # semicolon at the end.
     C_MACROS = []
-
-    # The repo type, defaults to git.
     repo = 'git'
-
-    # List of files to ignore either because they are not needed (such as the
-    # ChangeLog) or because they are non-parseable.  For example, glibc has a
-    # header file that is only assembly code, which breaks the C parser.
     IGNORE_LIST = ['ChangeLog']

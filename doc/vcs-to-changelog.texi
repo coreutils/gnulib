@@ -43,9 +43,19 @@ members of @code{ProjectQuirks}:
 @itemize @bullet
 @item @code{repo}: Specify the project repo source control.  The default value
 is @code{git}.
-@item @code{IGNORE_LIST}: A list of files to ignore in the changesets.
+
+@item @code{IGNORE_LIST}: A list of files to ignore in the changesets, either
+because they are not needed (such as the ChangeLog) or because they are
+not parseable.  For example, the GNU C Library has a header file that is only
+assembly code, which breaks the C parser.
+
 @item @code{MACRO_QUIRKS}: A list of dictionary entries with indexes as
 @code{orig} and @code{sub} where @code{orig} is a Python regular expression
-pattern to match and @code{sub} is the substitution.
-@item @code{C_MACROS}: A list of C preprocessor macro definitions.
+pattern to match and @code{sub} is the substitution.  These substitutions are
+used to work around C/C++ macros that are known to break parsing of C programs.
+
+@item @code{C_MACROS}: This is a list of C preprocessor macro definitions that
+are extensively used and are known to break parsing due to some characteristic,
+mainly the lack of a semicolon at the end.
+
 @end itemize
