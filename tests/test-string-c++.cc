@@ -138,6 +138,10 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::strerror, char *, (int));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::strerror_r, int, (int, char *, size_t));
 #endif
 
+#if GNULIB_TEST_SIGABBREV_NP
+SIGNATURE_CHECK (GNULIB_NAMESPACE::sigabbrev_np, const char *, (int));
+#endif
+
 #if GNULIB_TEST_STRSIGNAL
 SIGNATURE_CHECK (GNULIB_NAMESPACE::strsignal, char *, (int));
 #endif
