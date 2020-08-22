@@ -22,3 +22,7 @@ glibc 2.31, Mac OS X 10.13, FreeBSD 6.4, NetBSD 9.0, OpenBSD 3.8, Minix 3.1.8, A
 Portability problems not fixed by Gnulib:
 @itemize
 @end itemize
+
+Note: Gnulib has a module @code{sig2str} that contains an equivalent function
+and also one that does the opposite conversion, from an abbreviated signal name
+to a signal number.
