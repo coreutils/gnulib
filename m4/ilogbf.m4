@@ -1,4 +1,4 @@
-# ilogbf.m4 serial 5
+# ilogbf.m4 serial 6
 dnl Copyright (C) 2010-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -46,8 +46,8 @@ AC_DEFUN([gl_FUNC_ILOGBF],
 ])
 
 dnl Test whether ilogbf() works.
-dnl On OpenBSD 4.9, ilogbf(0.0) is wrong.
-dnl On NetBSD 7.1, OpenBSD 4.9, ilogbf(Infinity) is wrong.
+dnl On OpenBSD 6.7, ilogbf(0.0) is wrong.
+dnl On NetBSD 7.1, OpenBSD 6.7, ilogbf(Infinity) is wrong.
 AC_DEFUN([gl_FUNC_ILOGBF_WORKS],
 [
   AC_REQUIRE([AC_PROG_CC])
@@ -89,13 +89,13 @@ int main (int argc, char *argv[])
 {
   int (* volatile my_ilogbf) (float) = argc ? ilogbf : dummy;
   int result = 0;
-  /* This test fails on OpenBSD 4.9.  */
+  /* This test fails on OpenBSD 6.7.  */
   {
     x = 0.0f;
     if (my_ilogbf (x) != FP_ILOGB0)
       result |= 1;
   }
-  /* This test fails on NetBSD 7.1, OpenBSD 4.9.  */
+  /* This test fails on NetBSD 7.1, OpenBSD 6.7.  */
   {
     x = 1.0f / zero;
     if (my_ilogbf (x) != INT_MAX)

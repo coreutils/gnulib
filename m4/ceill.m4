@@ -1,4 +1,4 @@
-# ceill.m4 serial 20
+# ceill.m4 serial 21
 dnl Copyright (C) 2007, 2009-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -73,7 +73,7 @@ int main (int argc, char *argv[])
   else
     HAVE_DECL_CEILL=0
   fi
-  dnl On OpenBSD5.6 the system's native ceill() is buggy:
+  dnl On OpenBSD 5.6 the system's native ceill() is buggy:
   dnl it returns '0' for small values. Test for this anomaly.
   if test $REPLACE_CEILL = 0 ; then
     AC_CACHE_CHECK([whether ceill() breaks with small values],

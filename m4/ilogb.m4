@@ -1,4 +1,4 @@
-# ilogb.m4 serial 5
+# ilogb.m4 serial 6
 dnl Copyright (C) 2010-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -43,9 +43,9 @@ AC_DEFUN([gl_FUNC_ILOGB],
 ])
 
 dnl Test whether ilogb() works.
-dnl On OpenBSD 4.9, AIX 5.1, ilogb(0.0) is wrong.
-dnl On NetBSD 7.1, OpenBSD 4.9, ilogb(Infinity) is wrong.
-dnl On NetBSD 7.1, OpenBSD 4.9, ilogb(NaN) is wrong.
+dnl On OpenBSD 6.7, AIX 5.1, ilogb(0.0) is wrong.
+dnl On NetBSD 7.1, OpenBSD 6.7, ilogb(Infinity) is wrong.
+dnl On NetBSD 7.1, OpenBSD 6.7, ilogb(NaN) is wrong.
 AC_DEFUN([gl_FUNC_ILOGB_WORKS],
 [
   AC_REQUIRE([AC_PROG_CC])
@@ -87,19 +87,19 @@ int main (int argc, char *argv[])
 {
   int (* volatile my_ilogb) (double) = argc ? ilogb : dummy;
   int result = 0;
-  /* This test fails on OpenBSD 4.9, AIX 5.1.  */
+  /* This test fails on OpenBSD 6.7, AIX 5.1.  */
   {
     x = 0.0;
     if (my_ilogb (x) != FP_ILOGB0)
       result |= 1;
   }
-  /* This test fails on NetBSD 7.1, OpenBSD 4.9.  */
+  /* This test fails on NetBSD 7.1, OpenBSD 6.7.  */
   {
     x = 1.0 / zero;
     if (my_ilogb (x) != INT_MAX)
       result |= 2;
   }
-  /* This test fails on NetBSD 7.1, OpenBSD 4.9.  */
+  /* This test fails on NetBSD 7.1, OpenBSD 6.7.  */
   {
     x = zero / zero;
     if (my_ilogb (x) != FP_ILOGBNAN)

@@ -1,4 +1,4 @@
-# serial 13
+# serial 14
 # Determine whether getcwd aborts when the length of the working directory
 # name is unusually large.  Any length between 4k and 16k trigger the bug
 # when using glibc-2.4.90-9 or older.
@@ -128,7 +128,7 @@ main ()
           ]])],
        [gl_cv_func_getcwd_abort_bug=no],
        [dnl An abort will provoke an exit code of something like 134 (128 + 6).
-        dnl An exit code of 4 can also occur (in OpenBSD 4.9, NetBSD 5.1 for
+        dnl An exit code of 4 can also occur (in OpenBSD 6.7, NetBSD 5.1 for
         dnl example): getcwd (NULL, 0) fails rather than returning a string
         dnl longer than PATH_MAX.  This may be POSIX compliant (in some
         dnl interpretations of POSIX).  But gnulib's getcwd module wants to

@@ -1,4 +1,4 @@
-# modf.m4 serial 8
+# modf.m4 serial 9
 dnl Copyright (C) 2011-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -51,7 +51,7 @@ int main (int argc, char *argv[])
   if (numeric_equal (f, f))
     result |= 1;
   /* Test modf(-Inf,...).
-     This test fails on FreeBSD 6.4, OpenBSD 4.9, IRIX 6.5, OSF/1 5.1.  */
+     This test fails on FreeBSD 6.4, OpenBSD 6.7, IRIX 6.5, OSF/1 5.1.  */
   f = my_modf (minus_one / zero, &i);
   if (!(f == 0.0) || (signbitd (minus_zerod) && !signbitd (f)))
     result |= 2;

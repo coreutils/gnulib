@@ -1,4 +1,4 @@
-# printf.m4 serial 68
+# printf.m4 serial 69
 dnl Copyright (C) 2003, 2007-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -257,6 +257,9 @@ changequote(,)dnl
            netbsd[1-2]* | netbsdelf[1-2]* | netbsdaout[1-2]* | netbsdcoff[1-2]*)
                                  gl_cv_func_printf_infinite="guessing no";;
            netbsd*)              gl_cv_func_printf_infinite="guessing yes";;
+                                 # Guess yes on OpenBSD >= 6.0.
+           openbsd[1-5].*)       gl_cv_func_printf_infinite="guessing no";;
+           openbsd*)             gl_cv_func_printf_infinite="guessing yes";;
                                  # Guess yes on BeOS.
            beos*)                gl_cv_func_printf_infinite="guessing yes";;
                                  # Guess no on Android.
@@ -469,6 +472,9 @@ changequote(,)dnl
                                          # Guess yes on HP-UX >= 11.
                    hpux[7-9]* | hpux10*) gl_cv_func_printf_infinite_long_double="guessing no";;
                    hpux*)                gl_cv_func_printf_infinite_long_double="guessing yes";;
+                                         # Guess yes on OpenBSD >= 6.0.
+                   openbsd[1-5].*)       gl_cv_func_printf_infinite_long_double="guessing no";;
+                   openbsd*)             gl_cv_func_printf_infinite_long_double="guessing yes";;
                                          # Guess no on Android.
                    linux*-android*)      gl_cv_func_printf_infinite_long_double="guessing no";;
 changequote([,])dnl
@@ -641,6 +647,9 @@ changequote(,)dnl
                                  # Guess yes on Mac OS X >= 10.3.
            darwin[1-6].*)        gl_cv_func_printf_directive_f="guessing no";;
            darwin*)              gl_cv_func_printf_directive_f="guessing yes";;
+                                 # Guess yes on OpenBSD >= 6.0.
+           openbsd[1-5].*)       gl_cv_func_printf_directive_f="guessing no";;
+           openbsd*)             gl_cv_func_printf_directive_f="guessing yes";;
                                  # Guess yes on Solaris >= 2.10.
            solaris2.[1-9][0-9]*) gl_cv_func_printf_directive_f="guessing yes";;
            solaris*)             gl_cv_func_printf_directive_f="guessing no";;
@@ -804,7 +813,9 @@ int main ()
         [
 changequote(,)dnl
          case "$host_os" in
-           openbsd*)        gl_cv_func_printf_directive_ls="guessing no";;
+                            # Guess yes on OpenBSD >= 6.0.
+           openbsd[1-5].*)  gl_cv_func_printf_directive_ls="guessing no";;
+           openbsd*)        gl_cv_func_printf_directive_ls="guessing yes";;
            irix*)           gl_cv_func_printf_directive_ls="guessing no";;
            solaris*)        gl_cv_func_printf_directive_ls="guessing no";;
            cygwin*)         gl_cv_func_printf_directive_ls="guessing no";;
@@ -1681,6 +1692,7 @@ dnl   FreeBSD 5.4, 6.1               .  .  .  .  #  .  .  .  .  .  .  #  .  #  .
 dnl   Mac OS X 10.13.5               .  .  .  #  #  .  #  .  .  .  .  .  .  .  .  .  .  #  .  .
 dnl   Mac OS X 10.5.8                .  .  .  #  #  .  .  .  .  .  .  #  .  .  .  .  .  .  .  .
 dnl   Mac OS X 10.3.9                .  .  .  .  #  .  .  .  .  .  .  #  .  #  .  .  .  .  .  .
+dnl   OpenBSD 6.0, 6.7               .  .  .  .  #  .  .  .  .  .  .  .  .  #  .  .  .  .  .  .
 dnl   OpenBSD 3.9, 4.0               .  .  #  #  #  #  .  #  .  #  .  #  .  #  .  .  .  .  .  .
 dnl   Cygwin 1.7.0 (2009)            .  .  .  #  .  .  .  ?  .  .  .  .  .  ?  .  .  .  .  .  .
 dnl   Cygwin 1.5.25 (2008)           .  .  .  #  #  .  .  #  .  .  .  .  .  #  .  .  .  .  .  .

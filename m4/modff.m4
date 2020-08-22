@@ -1,4 +1,4 @@
-# modff.m4 serial 10
+# modff.m4 serial 11
 dnl Copyright (C) 2011-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -54,7 +54,7 @@ int main (int argc, char *argv[])
   float i;
   float f;
   /* Test modff(NaN,...).
-     This test fails on NetBSD 5.1, OpenBSD 4.9, Solaris 9, Cygwin.  */
+     This test fails on NetBSD 5.1, OpenBSD 6.7, Solaris 9, Cygwin.  */
   f = my_modff (zero / zero, &i);
   if (numeric_equal (f, f))
     result |= 1;
