@@ -70,7 +70,7 @@
    ? _GL_SIGNED_INT_MAXIMUM (e)                                         \
    : _GL_INT_NEGATE_CONVERT (e, 1))
 #define _GL_SIGNED_INT_MAXIMUM(e)                                       \
-  (((_GL_INT_CONVERT (e, 1) << (TYPE_WIDTH ((e) + 0) - 2)) - 1) * 2 + 1)
+  (((_GL_INT_CONVERT (e, 1) << (TYPE_WIDTH (+ (e)) - 2)) - 1) * 2 + 1)
 
 /* Work around OpenVMS incompatibility with C99.  */
 #if !defined LLONG_MAX && defined __INT64_MAX
