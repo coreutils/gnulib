@@ -5,6 +5,7 @@ Files:
 lib/fcntl.in.h
 m4/fcntl_h.m4
 m4/fcntl-o.m4
+m4/pid_t.m4
 
 Depends-on:
 extensions

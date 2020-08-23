@@ -6,6 +6,7 @@ m4/unistd_h.m4
 lib/unistd.c
 lib/unistd.in.h
 m4/off_t.m4
+m4/pid_t.m4
 
 Depends-on:
 extern-inline

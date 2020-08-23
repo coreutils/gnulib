@@ -4,6 +4,7 @@ A POSIX compliant <spawn.h>.
 Files:
 lib/spawn.in.h
 m4/spawn_h.m4
+m4/pid_t.m4
 
 Depends-on:
 include_next

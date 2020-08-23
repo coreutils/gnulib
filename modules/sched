@@ -4,6 +4,7 @@ A <sched.h> include file.
 Files:
 lib/sched.in.h
 m4/sched_h.m4
+m4/pid_t.m4
 
 Depends-on:
 include_next

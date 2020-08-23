@@ -4,6 +4,7 @@ A <sys/wait.h> for systems with missing declarations.
 Files:
 lib/sys_wait.in.h
 m4/sys_wait_h.m4
+m4/pid_t.m4
 
 Depends-on:
 include_next

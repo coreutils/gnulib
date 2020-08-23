@@ -4,6 +4,7 @@ A GNU-like <signal.h>.
 Files:
 lib/signal.in.h
 m4/signal_h.m4
+m4/pid_t.m4
 
 Depends-on:
 include_next
