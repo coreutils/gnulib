@@ -44,7 +44,7 @@ main (int argc, char *argv[])
   const char *child_path;
   int test;
   int fd[2];
-  int child;
+  pid_t child;
   int exitcode;
 
   child_path = argv[1];

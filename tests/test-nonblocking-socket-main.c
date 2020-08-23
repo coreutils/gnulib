@@ -47,7 +47,7 @@ main (int argc, char *argv[])
   int test;
   int server;
   int port;
-  int child;
+  pid_t child;
   int server_socket;
   int exitcode;
 
