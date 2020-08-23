@@ -322,10 +322,19 @@ template <int w>
 #if _GL_HAS_BUILTIN_ASSUME
 /* Use a temporary variable, to avoid a clang warning
    "the argument to '__builtin_assume' has side effects that will be discarded"
-   if R contains invocations of functions not marked as 'const'.  */
-# define assume(R) \
-    ((void) ({ __typeof__ (R) _gl_verify_temp = (R); \
-               __builtin_assume (_gl_verify_temp); }))
+   if R contains invocations of functions not marked as 'const'.
+   The type of the temporary variable can't be __typeof__ (R), because that
+   does not work on bit field expressions.  Use '_Bool' or 'bool' as type
+   instead.  */
+# if defined __cplusplus
+#  define assume(R) \
+     ((void) ({ bool _gl_verify_temp = (R); \
+                __builtin_assume (_gl_verify_temp); }))
+# else
+#  define assume(R) \
+     ((void) ({ _Bool _gl_verify_temp = (R); \
+                __builtin_assume (_gl_verify_temp); }))
+# endif
 #elif _GL_HAS_BUILTIN_UNREACHABLE
 # define assume(R) ((R) ? (void) 0 : __builtin_unreachable ())
 #elif 1200 <= _MSC_VER
