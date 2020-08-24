@@ -60,6 +60,11 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2020-08-24  diffseq         If you do not define NOTE_ORDERED to true,
+                            the NOTE_DELETE and NOTE_INSERT actions might
+                            not be done in order, to help cut down worst-case
+                            recursion stack space from O(N) to O(log N).
+
 2020-08-01  libtextstyle-optional  You now need to invoke
                                    gl_LIBTEXTSTYLE_OPTIONAL explicitly, because
                                    this macro now takes an optional
