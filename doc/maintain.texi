@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate April 24, 2020
+@set lastupdate August 23, 2020
 @c %**end of header
 @documentencoding UTF-8
 
@@ -1141,18 +1141,26 @@ Reference Manual}).
 @node Platforms
 @chapter Platforms to Support
 
-Most GNU packages run on a wide range of platforms.  These platforms are
-not equally important.
+Most GNU packages run on a wide range of platforms.  These platforms
+are not equally important.  Please resist requests to implement or add
+features that would function only on some non-GNU systems and not on
+GNU itself.
 
 The most important platforms for a GNU package to support are GNU and
 GNU/Linux.  Developing the GNU operating system is the whole point of
-the GNU Project; a GNU package exists to make the whole GNU system more
-powerful.  So please keep that goal in mind and let it shape your work.
-For instance, every new feature you add should work on GNU, and
+the GNU Project; a GNU package exists to make the whole GNU system
+more powerful.  So please keep that goal in mind and let it shape your
+work.  For instance, every new feature you add should work on GNU, and
 GNU/Linux if possible too.  If a new feature only runs on GNU and
 GNU/Linux, it could still be acceptable.  However, a feature that runs
-only on other systems and not on GNU or GNU/Linux makes no sense in a
-GNU package.
+only on other systems and not on GNU or GNU/Linux would undermine that
+purpose, as it would promote the non-GNU system at the expense of GNU
+itself.  If the feature functions only on some nonfree systems, it
+would work against our goal of freedom for the users.
+
+Please say no when asked to implement such a feature, citing
+these reasnos, and ask the contributors to implement the feature
+for the GNU system as well.
 
 You will naturally want to keep the program running on all the platforms
 it supports.  But you personally will not have access to most of these
