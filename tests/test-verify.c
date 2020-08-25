@@ -25,6 +25,8 @@
 # define EXP_FAIL 0
 #endif
 
+/* ======================= Test verify, verify_expr ======================= */
+
 int x;
 enum { a, b, c };
 
@@ -66,4 +68,44 @@ int
 main (void)
 {
   return !(function (0) == 0 && function (1) == 8);
+}
+
+/* ============================== Test assume ============================== */
+
+static int
+f (int a)
+{
+  return a;
+}
+
+typedef struct { unsigned int context : 4; unsigned int halt : 1; } state;
+
+void
+test_assume_expressions (state *s)
+{
+  /* Check that 'assume' accepts a function call, even of a non-const
+     function.  */
+  assume (f (1));
+  /* Check that 'assume' accepts a bit-field expression.  */
+  assume (s->halt);
+}
+
+int
+test_assume_optimization (int x)
+{
+  /* Check that the compiler uses 'assume' for optimization.
+     This function, when compiled with optimization, should have code
+     equivalent to
+       return x + 3;
+     Use 'objdump --disassemble test-verify.o' to verify this.  */
+  assume (x >= 4);
+  return (x > 1 ? x + 3 : 2 * x + 10);
+}
+
+_Noreturn void
+test_assume_noreturn (void)
+{
+  /* Check that the compiler's data-flow analysis recognizes 'assume (0)'.
+     This function should not elicit a warning.  */
+  assume (0);
 }
