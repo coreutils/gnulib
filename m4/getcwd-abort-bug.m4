@@ -1,4 +1,4 @@
-# serial 14
+# serial 15
 # Determine whether getcwd aborts when the length of the working directory
 # name is unusually large.  Any length between 4k and 16k trigger the bug
 # when using glibc-2.4.90-9 or older.
@@ -10,7 +10,7 @@
 
 # From Jim Meyering
 
-# gl_FUNC_GETCWD_ABORT_BUG([ACTION-IF-FOUND[, ACTION-IF-NOT-FOUND]])
+# gl_FUNC_GETCWD_ABORT_BUG([ACTION-IF-BUGGY[, ACTION-IF-WORKS]])
 AC_DEFUN([gl_FUNC_GETCWD_ABORT_BUG],
 [
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
@@ -24,8 +24,8 @@ AC_DEFUN([gl_FUNC_GETCWD_ABORT_BUG],
       [Define to 1 if the system has the 'getpagesize' function.])
   fi
 
-  AC_CACHE_CHECK([whether getcwd aborts when 4k < cwd_length < 16k],
-    [gl_cv_func_getcwd_abort_bug],
+  AC_CACHE_CHECK([whether getcwd succeeds when 4k < cwd_length < 16k],
+    [gl_cv_func_getcwd_succeeds_beyond_4k],
     [# Remove any remnants of a previous test.
      rm -rf confdir-14B---
      # Arrange for deletion of the temporary directory this test creates.
@@ -126,7 +126,7 @@ main ()
   return fail;
 }
           ]])],
-       [gl_cv_func_getcwd_abort_bug=no],
+       [gl_cv_func_getcwd_succeeds_beyond_4k=yes],
        [dnl An abort will provoke an exit code of something like 134 (128 + 6).
         dnl An exit code of 4 can also occur (in OpenBSD 6.7, NetBSD 5.1 for
         dnl example): getcwd (NULL, 0) fails rather than returning a string
@@ -135,21 +135,21 @@ main ()
         dnl provide a non-NULL value in this case.
         ret=$?
         if test $ret -ge 128 || test $ret = 4; then
-          gl_cv_func_getcwd_abort_bug=yes
+          gl_cv_func_getcwd_succeeds_beyond_4k=no
         else
-          gl_cv_func_getcwd_abort_bug=no
+          gl_cv_func_getcwd_succeeds_beyond_4k=yes
         fi
        ],
        [case "$host_os" in
-                   # Guess no on musl systems.
-          *-musl*) gl_cv_func_getcwd_abort_bug="guessing no" ;;
-                   # Guess yes otherwise, even on glibc systems.
-          *)       gl_cv_func_getcwd_abort_bug="guessing yes"
+                   # Guess yes on musl systems.
+          *-musl*) gl_cv_func_getcwd_succeeds_beyond_4k="guessing yes" ;;
+                   # Guess no otherwise, even on glibc systems.
+          *)       gl_cv_func_getcwd_succeeds_beyond_4k="guessing no"
         esac
        ])
     ])
-  case "$gl_cv_func_getcwd_abort_bug" in
-    *yes)
+  case "$gl_cv_func_getcwd_succeeds_beyond_4k" in
+    *no)
       $1
       ;;
     *)
