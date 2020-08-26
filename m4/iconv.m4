@@ -1,4 +1,4 @@
-# iconv.m4 serial 22
+# iconv.m4 serial 23
 dnl Copyright (C) 2000-2002, 2007-2014, 2016-2020 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -8,6 +8,10 @@ dnl with or without modifications, as long as this notice is preserved.
 dnl From Bruno Haible.
 
 AC_PREREQ([2.64])
+
+dnl Note: AM_ICONV is documented in the GNU gettext manual
+dnl <https://www.gnu.org/software/gettext/manual/html_node/AM_005fICONV.html>.
+dnl Don't make changes that are incompatible with that documentation!
 
 AC_DEFUN([AM_ICONV_LINKFLAGS_BODY],
 [
@@ -239,41 +243,39 @@ AC_DEFUN_ONCE([AM_ICONV],
 [
   AM_ICONV_LINK
   if test "$am_cv_func_iconv" = yes; then
-    AC_MSG_CHECKING([for iconv declaration])
-    AC_CACHE_VAL([am_cv_proto_iconv], [
-      AC_COMPILE_IFELSE(
-        [AC_LANG_PROGRAM(
-           [[
+    AC_CACHE_CHECK([whether iconv is compatible with its POSIX signature],
+      [gl_cv_iconv_nonconst],
+      [AC_COMPILE_IFELSE(
+         [AC_LANG_PROGRAM(
+            [[
 #include <stdlib.h>
 #include <iconv.h>
 extern
 #ifdef __cplusplus
 "C"
 #endif
-#if defined(__STDC__) || defined(_MSC_VER) || defined(__cplusplus)
 size_t iconv (iconv_t cd, char * *inbuf, size_t *inbytesleft, char * *outbuf, size_t *outbytesleft);
-#else
-size_t iconv();
-#endif
-           ]],
-           [[]])],
-        [am_cv_proto_iconv_arg1=""],
-        [am_cv_proto_iconv_arg1="const"])
-      am_cv_proto_iconv="extern size_t iconv (iconv_t cd, $am_cv_proto_iconv_arg1 char * *inbuf, size_t *inbytesleft, char * *outbuf, size_t *outbytesleft);"])
-    am_cv_proto_iconv=`echo "[$]am_cv_proto_iconv" | tr -s ' ' | sed -e 's/( /(/'`
-    AC_MSG_RESULT([
-         $am_cv_proto_iconv])
+            ]],
+            [[]])],
+         [gl_cv_iconv_nonconst=yes],
+         [gl_cv_iconv_nonconst=no])
+      ])
   else
     dnl When compiling GNU libiconv on a system that does not have iconv yet,
     dnl pick the POSIX compliant declaration without 'const'.
-    am_cv_proto_iconv_arg1=""
+    gl_cv_iconv_nonconst=yes
   fi
-  AC_DEFINE_UNQUOTED([ICONV_CONST], [$am_cv_proto_iconv_arg1],
+  if test $gl_cv_iconv_nonconst = yes; then
+    iconv_arg1=""
+  else
+    iconv_arg1="const"
+  fi
+  AC_DEFINE_UNQUOTED([ICONV_CONST], [$iconv_arg1],
     [Define as const if the declaration of iconv() needs const.])
   dnl Also substitute ICONV_CONST in the gnulib generated <iconv.h>.
   m4_ifdef([gl_ICONV_H_DEFAULTS],
     [AC_REQUIRE([gl_ICONV_H_DEFAULTS])
-     if test -n "$am_cv_proto_iconv_arg1"; then
+     if test $gl_cv_iconv_nonconst != yes; then
        ICONV_CONST="const"
      fi
     ])
