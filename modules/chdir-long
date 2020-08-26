@@ -11,20 +11,20 @@ Depends-on:
 unistd
 pathmax
 chdir
-assure          [test $gl_cv_have_arbitrary_file_name_length_limit = yes]
-atexit          [test $gl_cv_have_arbitrary_file_name_length_limit = yes]
-fchdir          [test $gl_cv_have_arbitrary_file_name_length_limit = yes]
-fcntl-h         [test $gl_cv_have_arbitrary_file_name_length_limit = yes]
-openat          [test $gl_cv_have_arbitrary_file_name_length_limit = yes]
-memchr          [test $gl_cv_have_arbitrary_file_name_length_limit = yes]
-mempcpy         [test $gl_cv_have_arbitrary_file_name_length_limit = yes]
-memrchr         [test $gl_cv_have_arbitrary_file_name_length_limit = yes]
-stdbool         [test $gl_cv_have_arbitrary_file_name_length_limit = yes]
-stdlib          [test $gl_cv_have_arbitrary_file_name_length_limit = yes]
+assure          [test $gl_cv_have_unlimited_file_name_length = no]
+atexit          [test $gl_cv_have_unlimited_file_name_length = no]
+fchdir          [test $gl_cv_have_unlimited_file_name_length = no]
+fcntl-h         [test $gl_cv_have_unlimited_file_name_length = no]
+openat          [test $gl_cv_have_unlimited_file_name_length = no]
+memchr          [test $gl_cv_have_unlimited_file_name_length = no]
+mempcpy         [test $gl_cv_have_unlimited_file_name_length = no]
+memrchr         [test $gl_cv_have_unlimited_file_name_length = no]
+stdbool         [test $gl_cv_have_unlimited_file_name_length = no]
+stdlib          [test $gl_cv_have_unlimited_file_name_length = no]
 
 configure.ac:
 gl_FUNC_CHDIR_LONG
-if test $gl_cv_have_arbitrary_file_name_length_limit = yes; then
+if test $gl_cv_have_unlimited_file_name_length = no; then
   AC_LIBOBJ([chdir-long])
   gl_PREREQ_CHDIR_LONG
 fi
