@@ -1,4 +1,4 @@
-# ceill.m4 serial 21
+# ceill.m4 serial 22
 dnl Copyright (C) 2007, 2009-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -74,31 +74,31 @@ int main (int argc, char *argv[])
     HAVE_DECL_CEILL=0
   fi
   dnl On OpenBSD 5.6 the system's native ceill() is buggy:
-  dnl it returns '0' for small values. Test for this anomaly.
+  dnl it returns '0' for small values. Test against this anomaly.
   if test $REPLACE_CEILL = 0 ; then
-    AC_CACHE_CHECK([whether ceill() breaks with small values],
-        [gl_cv_func_ceill_buggy],
-        [
-          save_LIBS="$LIBS"
-          LIBS="$CEILL_LIBM"
-          AC_RUN_IFELSE(
-           [AC_LANG_PROGRAM(
-             [[#include <math.h>
+    AC_CACHE_CHECK([whether ceill() works],
+      [gl_cv_func_ceill_works],
+      [save_LIBS="$LIBS"
+       LIBS="$CEILL_LIBM"
+       AC_RUN_IFELSE(
+         [AC_LANG_PROGRAM(
+            [[#include <math.h>
 long double d = 0.3L;]],
-             [[return (!(ceill (d) == 1)); ]])],
-             [gl_cv_func_ceill_buggy=no], [gl_cv_func_ceill_buggy=yes],
-             [case "$host_os" in
-                openbsd*) gl_cv_func_ceill_buggy="guessing yes" ;;
-                          # Guess no on native Windows.
-                mingw*)   gl_cv_func_ceill_buggy="guessing no" ;;
-                *)        gl_cv_func_ceill_buggy="guessing no" ;;
-              esac
-             ])
-          LIBS="$save_LIBS"
-        ])
-    case "$gl_cv_func_ceill_buggy" in
-      *yes)
-        REPLACE_CEILL=1 ;;
+            [[return (!(ceill (d) == 1)); ]])],
+         [gl_cv_func_ceill_works=yes],
+         [gl_cv_func_ceill_works=no],
+         [case "$host_os" in
+            openbsd*) gl_cv_func_ceill_works="guessing no" ;;
+                      # Guess yes on native Windows.
+            mingw*)   gl_cv_func_ceill_works="guessing yes" ;;
+            *)        gl_cv_func_ceill_works="guessing yes" ;;
+          esac
+         ])
+       LIBS="$save_LIBS"
+      ])
+    case "$gl_cv_func_ceill_works" in
+      *yes) ;;
+      *) REPLACE_CEILL=1 ;;
     esac
   fi
   if test $HAVE_DECL_CEILL = 0 || test $REPLACE_CEILL = 1; then
