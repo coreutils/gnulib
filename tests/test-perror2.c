@@ -79,9 +79,6 @@ main (void)
     errno = -5;
     perror ("");
     ASSERT (!ferror (stderr));
-    ASSERT (msg1 == msg2 || msg1 == msg4 || STREQ (msg1, str1));
-    ASSERT (msg2 == msg4 || STREQ (msg2, str2));
-    ASSERT (msg3 == msg4 || STREQ (msg3, str3));
     ASSERT (STREQ (msg4, str4));
 
     free (str1);
