@@ -79,7 +79,6 @@ AC_DEFUN([gl_MANYWARN_ALL_GCC_CXX_IMPL],
   gl_manywarn_set=
   for gl_manywarn_item in \
     -W \
-    -Wabi \
     -Wabi-tag \
     -Waddress \
     -Waggressive-loop-optimizations \
@@ -89,7 +88,6 @@ AC_DEFUN([gl_MANYWARN_ALL_GCC_CXX_IMPL],
     -Wbuiltin-macro-redefined \
     -Wcast-align \
     -Wchar-subscripts \
-    -Wchkp \
     -Wclobbered \
     -Wcomment \
     -Wcomments \
