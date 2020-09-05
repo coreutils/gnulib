@@ -8,6 +8,7 @@ lib/tempname.h
 m4/tempname.m4
 
 Depends-on:
+c99
 extensions
 fcntl-h
 getrandom
