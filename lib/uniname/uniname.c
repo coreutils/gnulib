@@ -60,7 +60,6 @@ unicode_name_word (unsigned int index, unsigned int *lengthp)
 {
   unsigned int i1;
   unsigned int i2;
-  unsigned int i;
 
   assert (index < UNICODE_CHARNAME_NUM_WORDS);
 
@@ -80,7 +79,7 @@ unicode_name_word (unsigned int index, unsigned int *lengthp)
       else
         i2 = i;
     }
-  i = i1;
+  unsigned int i = i1;
   assert (unicode_name_by_length[i].ind_offset <= index
           && index < unicode_name_by_length[i+1].ind_offset);
   *lengthp = i;
