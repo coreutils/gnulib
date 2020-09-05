@@ -61,7 +61,7 @@ static const enum backup_type backup_vals[] =
   numbered_backups, numbered_backups, numbered_backups
 };
 
-ARGMATCH_DEFINE_GROUP(backup, enum backup_type);
+ARGMATCH_DEFINE_GROUP(backup, enum backup_type)
 
 static const argmatch_backup_doc argmatch_backup_docs[] =
 {
