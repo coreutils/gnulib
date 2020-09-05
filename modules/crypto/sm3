@@ -8,6 +8,7 @@ m4/sm3.m4
 
 Depends-on:
 byteswap
+c99
 extern-inline
 stdalign
 stdint
