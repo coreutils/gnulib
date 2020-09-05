@@ -90,7 +90,7 @@ unicode_name_word (unsigned int index, unsigned int *lengthp)
 
 /* Looks up the index of a word.  */
 static int
-unicode_name_word_lookup (const char *word, unsigned int length)
+unicode_name_word_lookup (const char *word, size_t length)
 {
   if (length > 0 && length < SIZEOF (unicode_name_by_length) - 1)
     {
@@ -359,7 +359,7 @@ unicode_character_name (ucs4_t c, char *buf)
 ucs4_t
 unicode_name_character (const char *name)
 {
-  unsigned int len = strlen (name);
+  size_t len = strlen (name);
   if (len > 1 && len <= UNICODE_CHARNAME_MAX_LENGTH)
     {
       /* Test for "word1 word2 ..." syntax.  */
@@ -469,9 +469,9 @@ unicode_name_character (const char *name)
                         p4++;
                       if (p4 == ptr)
                         {
-                          unsigned int n1 = p2 - p1;
-                          unsigned int n2 = p3 - p2;
-                          unsigned int n3 = p4 - p3;
+                          size_t n1 = p2 - p1;
+                          size_t n2 = p3 - p2;
+                          size_t n3 = p4 - p3;
 
                           if (n1 <= 2 && (n2 >= 1 && n2 <= 3) && n3 <= 2)
                             {
@@ -578,12 +578,15 @@ unicode_name_character (const char *name)
             filled_words:
               {
                 /* Multiply by 2, to simplify later comparisons.  */
-                unsigned int words_length = wordptr - words;
+                size_t words_length = wordptr - words;
                 {
-                  int i = words_length - 1;
+                  size_t i = words_length - 1;
                   words[i] = 2 * words[i];
-                  for (; --i >= 0; )
-                    words[i] = 2 * words[i] + 1;
+                  for (; i > 0; )
+                    {
+                      --i;
+                      words[i] = 2 * words[i] + 1;
+                    }
                 }
                 /* Binary search in unicode_name_to_index.  */
                 {
@@ -594,7 +597,7 @@ unicode_name_character (const char *name)
                       unsigned int i = (i1 + i2) >> 1;
                       const uint16_t *w = words;
                       const uint16_t *p = &unicode_names[unicode_name_to_index[i].name];
-                      unsigned int n = words_length;
+                      size_t n = words_length;
                       for (;;)
                         {
                           if (*p < *w)
