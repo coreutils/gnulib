@@ -28,7 +28,7 @@
 #if !HAVE_INLINE
 
 int
-u32_uctomb (uint32_t *s, ucs4_t uc, int n)
+u32_uctomb (uint32_t *s, ucs4_t uc, ptrdiff_t n)
 {
   if (uc < 0xd800 || (uc >= 0xe000 && uc < 0x110000))
     {

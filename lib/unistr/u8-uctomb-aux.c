@@ -23,7 +23,7 @@
 #include "attribute.h"
 
 int
-u8_uctomb_aux (uint8_t *s, ucs4_t uc, int n)
+u8_uctomb_aux (uint8_t *s, ucs4_t uc, ptrdiff_t n)
 {
   int count;
 

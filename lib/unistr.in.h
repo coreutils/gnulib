@@ -25,7 +25,7 @@
 /* Get bool.  */
 #include <stdbool.h>
 
-/* Get size_t.  */
+/* Get size_t, ptrdiff_t.  */
 #include <stddef.h>
 
 #ifdef __cplusplus
@@ -305,13 +305,13 @@ extern int
 #if GNULIB_UNISTR_U8_UCTOMB || HAVE_LIBUNISTRING
 /* Auxiliary function, also used by u8_chr, u8_strchr, u8_strrchr.  */
 extern int
-       u8_uctomb_aux (uint8_t *s, ucs4_t uc, int n);
+       u8_uctomb_aux (uint8_t *s, ucs4_t uc, ptrdiff_t n);
 # if !HAVE_INLINE
 extern int
-       u8_uctomb (uint8_t *s, ucs4_t uc, int n);
+       u8_uctomb (uint8_t *s, ucs4_t uc, ptrdiff_t n);
 # else
 static inline int
-u8_uctomb (uint8_t *s, ucs4_t uc, int n)
+u8_uctomb (uint8_t *s, ucs4_t uc, ptrdiff_t n)
 {
   if (uc < 0x80 && n > 0)
     {
@@ -327,13 +327,13 @@ u8_uctomb (uint8_t *s, ucs4_t uc, int n)
 #if GNULIB_UNISTR_U16_UCTOMB || HAVE_LIBUNISTRING
 /* Auxiliary function, also used by u16_chr, u16_strchr, u16_strrchr.  */
 extern int
-       u16_uctomb_aux (uint16_t *s, ucs4_t uc, int n);
+       u16_uctomb_aux (uint16_t *s, ucs4_t uc, ptrdiff_t n);
 # if !HAVE_INLINE
 extern int
-       u16_uctomb (uint16_t *s, ucs4_t uc, int n);
+       u16_uctomb (uint16_t *s, ucs4_t uc, ptrdiff_t n);
 # else
 static inline int
-u16_uctomb (uint16_t *s, ucs4_t uc, int n)
+u16_uctomb (uint16_t *s, ucs4_t uc, ptrdiff_t n)
 {
   if (uc < 0xd800 && n > 0)
     {
@@ -349,10 +349,10 @@ u16_uctomb (uint16_t *s, ucs4_t uc, int n)
 #if GNULIB_UNISTR_U32_UCTOMB || HAVE_LIBUNISTRING
 # if !HAVE_INLINE
 extern int
-       u32_uctomb (uint32_t *s, ucs4_t uc, int n);
+       u32_uctomb (uint32_t *s, ucs4_t uc, ptrdiff_t n);
 # else
 static inline int
-u32_uctomb (uint32_t *s, ucs4_t uc, int n)
+u32_uctomb (uint32_t *s, ucs4_t uc, ptrdiff_t n)
 {
   if (uc < 0xd800 || (uc >= 0xe000 && uc < 0x110000))
     {

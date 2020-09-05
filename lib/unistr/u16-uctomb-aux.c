@@ -21,7 +21,7 @@
 #include "unistr.h"
 
 int
-u16_uctomb_aux (uint16_t *s, ucs4_t uc, int n)
+u16_uctomb_aux (uint16_t *s, ucs4_t uc, ptrdiff_t n)
 {
   if (uc < 0xd800)
     {

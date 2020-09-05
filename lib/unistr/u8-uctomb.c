@@ -30,7 +30,7 @@
 #if !HAVE_INLINE
 
 int
-u8_uctomb (uint8_t *s, ucs4_t uc, int n)
+u8_uctomb (uint8_t *s, ucs4_t uc, ptrdiff_t n)
 {
   if (uc < 0x80)
     {
