@@ -10,6 +10,7 @@ m4/parse-datetime.m4
 
 Depends-on:
 bison
+c99
 c-ctype
 stdbool
 gettime

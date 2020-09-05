@@ -6,6 +6,7 @@ lib/long-options.h
 lib/long-options.c
 
 Depends-on:
+c99
 exitfail
 getopt-gnu
 stdbool

@@ -12,6 +12,7 @@ Depends-on:
 argmatch
 attribute
 basename-lgpl
+c99
 closedir
 d-ino
 dirent-safer

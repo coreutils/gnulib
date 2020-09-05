@@ -9,6 +9,7 @@ m4/nstrftime.m4
 
 Depends-on:
 attribute
+c99
 errno
 extensions
 intprops

@@ -6,6 +6,7 @@ lib/fstrcmp.h
 lib/fstrcmp.c
 
 Depends-on:
+c99
 diffseq
 lock
 tls

@@ -10,6 +10,7 @@ Depends-on:
 sys_stat
 extensions
 at-internal     [test $HAVE_FCHMODAT = 0]
+c99             [test $REPLACE_FCHMODAT = 1]
 errno           [test $HAVE_FCHMODAT = 0 || test $REPLACE_FCHMODAT = 1]
 extern-inline   [test $HAVE_FCHMODAT = 0]
 fchdir          [test $HAVE_FCHMODAT = 0]

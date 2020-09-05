@@ -10,6 +10,7 @@ m4/sha256.m4
 
 Depends-on:
 byteswap
+c99
 extern-inline
 stdalign
 stdint

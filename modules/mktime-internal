@@ -6,6 +6,7 @@ lib/mktime-internal.h
 lib/mktime.c
 
 Depends-on:
+c99
 mktime
 
 configure.ac:

@@ -7,6 +7,7 @@ lib/fsusage.c
 m4/fsusage.m4
 
 Depends-on:
+c99
 largefile
 stdbool
 stdint

@@ -2,6 +2,7 @@ Files:
 tests/test-hmac-sha1.c
 
 Depends-on:
+c99
 
 configure.ac:
 

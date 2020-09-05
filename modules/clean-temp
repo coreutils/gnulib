@@ -6,6 +6,7 @@ lib/clean-temp.h
 lib/clean-temp.c
 
 Depends-on:
+c99
 stdbool
 stdint
 unistd

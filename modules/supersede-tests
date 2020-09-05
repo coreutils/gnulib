@@ -5,6 +5,7 @@ tests/test-supersede-fopen.h
 tests/macros.h
 
 Depends-on:
+c99
 mkdtemp
 filenamecat
 write

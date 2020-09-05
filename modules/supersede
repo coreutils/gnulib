@@ -7,6 +7,7 @@ lib/supersede.c
 m4/supersede.m4
 
 Depends-on:
+c99
 fcntl-h
 sys_stat
 clean-temp

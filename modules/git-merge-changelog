@@ -5,6 +5,7 @@ Files:
 lib/git-merge-changelog.c
 
 Depends-on:
+c99
 getopt-gnu
 stdbool
 stdlib

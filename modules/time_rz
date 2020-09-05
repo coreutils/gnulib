@@ -18,6 +18,7 @@ lib/time_rz.c
 m4/time_rz.m4
 
 Depends-on:
+c99
 extensions
 time
 flexmember     [test $HAVE_TIMEZONE_T = 0]

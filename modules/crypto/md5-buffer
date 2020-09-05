@@ -10,6 +10,7 @@ m4/md5.m4
 
 Depends-on:
 byteswap
+c99
 extern-inline
 stdalign
 stdint

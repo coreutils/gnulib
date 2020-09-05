@@ -8,6 +8,7 @@ m4/c-strtod.m4
 m4/intl-thread-locale.m4
 
 Depends-on:
+c99
 extensions
 locale
 strdup-posix

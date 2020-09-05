@@ -7,6 +7,7 @@ lib/bitsetv.h
 
 Depends-on:
 bitset
+c99
 xalloc
 
 Makefile.am:

@@ -6,6 +6,7 @@ lib/opendirat.c
 lib/opendirat.h
 
 Depends-on:
+c99
 dirent
 fcntl-h
 fdopendir

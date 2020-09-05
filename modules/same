@@ -8,6 +8,7 @@ lib/same.c
 m4/same.m4
 
 Depends-on:
+c99
 error
 dirname
 fstat

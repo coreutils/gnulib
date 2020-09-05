@@ -3,6 +3,7 @@ tests/macros.h
 tests/test-libgmp.c
 
 Depends-on:
+c99
 verify
 
 configure.ac:

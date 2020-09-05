@@ -5,6 +5,7 @@ Files:
 tests/test-fts.c
 
 Depends-on:
+c99
 errno
 remove
 unlinkat

@@ -9,6 +9,7 @@ m4/fts.m4
 
 Depends-on:
 attribute
+c99
 closedir
 cycle-check
 d-ino

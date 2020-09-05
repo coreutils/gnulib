@@ -7,6 +7,7 @@ lib/xnanosleep.c
 m4/xnanosleep.m4
 
 Depends-on:
+c99
 dtotimespec
 intprops
 nanosleep

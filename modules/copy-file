@@ -9,6 +9,7 @@ m4/copy-file.m4
 Depends-on:
 acl-permissions
 binary-io
+c99
 close
 copy-file-range
 error

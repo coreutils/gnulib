@@ -3,6 +3,7 @@ tests/test-bitset.c
 tests/macros.h
 
 Depends-on:
+c99
 
 configure.ac:
 

@@ -12,6 +12,7 @@ Depends-on:
 map
 stdint
 xsize
+c99
 
 configure.ac:
 
