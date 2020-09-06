@@ -27,6 +27,7 @@
 #include <unistd.h>
 #if defined _WIN32 && ! defined __CYGWIN__
 # include <windows.h>
+# include <process.h> /* _beginthreadex, _endthreadex */
 #elif defined __KLIBC__
 # define INCL_DOS
 # include <os2.h>

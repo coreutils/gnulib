@@ -28,6 +28,7 @@
 #include <unistd.h>
 #if defined _WIN32 && ! defined __CYGWIN__
 # include <windows.h>
+# include <process.h> /* _beginthreadex, _endthreadex */
 #else
 # include <signal.h>
 # include <sys/select.h>
