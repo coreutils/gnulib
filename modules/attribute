@@ -11,6 +11,7 @@ configure.ac:
 Makefile.am:
 
 Include:
+"attribute.h"
 
 License:
 LGPLv2+
