@@ -234,7 +234,7 @@ __realpath (const char *name, char *resolved)
           if (!ISSLASH (dest[-1]))
             *dest++ = '/';
 
-          if (dest + (end - start) >= rpath_limit)
+          if (rpath_limit - dest <= end - start)
             {
               ptrdiff_t dest_offset = dest - rpath;
               char *new_rpath;

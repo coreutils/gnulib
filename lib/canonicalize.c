@@ -138,18 +138,15 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
       rname = xgetcwd ();
       if (!rname)
         return NULL;
-      dest = strchr (rname, '\0');
-      if (dest - rname < PATH_MAX)
+      size_t rnamelen = strlen (rname);
+      size_t rnamesize = rnamelen;  /* Lower bound on size; good enough.  */
+      if (rnamesize < PATH_MAX)
         {
-          char *p = xrealloc (rname, PATH_MAX);
-          dest = p + (dest - rname);
-          rname = p;
-          rname_limit = rname + PATH_MAX;
+          rnamesize = PATH_MAX;
+          rname = xrealloc (rname, rnamesize);
         }
-      else
-        {
-          rname_limit = dest;
-        }
+      dest = rname + rnamelen;
+      rname_limit = rname + rnamesize;
       start = name;
       prefix_len = FILE_SYSTEM_PREFIX_LEN (rname);
     }
@@ -204,7 +201,7 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
           if (!ISSLASH (dest[-1]))
             *dest++ = '/';
 
-          if (dest + (end - start) >= rname_limit)
+          if (rname_limit - dest <= end - start)
             {
               ptrdiff_t dest_offset = dest - rname;
               size_t new_size = rname_limit - rname;
