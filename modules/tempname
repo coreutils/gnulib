@@ -9,14 +9,17 @@ m4/tempname.m4
 
 Depends-on:
 c99
+clock-time
 extensions
 fcntl-h
 getrandom
 libc-config
 lstat
 mkdir
+stdalign
 stdint
 sys_stat
+time
 
 configure.ac:
 gl_FUNC_GEN_TEMPNAME
