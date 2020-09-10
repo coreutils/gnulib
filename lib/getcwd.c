@@ -89,6 +89,7 @@
 #endif
 
 #if !_LIBC
+# define GETCWD_RETURN_TYPE char *
 # define __close_nocancel_nostatus close
 # define __getcwd_generic rpl_getcwd
 # define stat64    stat
@@ -154,7 +155,7 @@ getcwd_nothrow (char *buf, size_t size)
    if BUF is NULL, an array is allocated with 'malloc'; the array is SIZE
    bytes long, unless SIZE == 0, in which case it is as big as necessary.  */
 
-char *
+GETCWD_RETURN_TYPE
 __getcwd_generic (char *buf, size_t size)
 {
   /* Lengths of big file name components and entire file names, and a
@@ -487,3 +488,8 @@ __getcwd_generic (char *buf, size_t size)
   }
   return NULL;
 }
+
+#if defined _LIBC && !defined GETCWD_RETURN_TYPE
+libc_hidden_def (__getcwd)
+weak_alias (__getcwd, getcwd)
+#endif
