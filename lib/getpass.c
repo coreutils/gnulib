@@ -16,6 +16,9 @@
    with this program; if not, see <https://www.gnu.org/licenses/>.  */
 
 #ifndef _LIBC
+/* Don't use __attribute__ __nonnull__ in this compilation unit.  Otherwise gcc
+   warns for the null checks on 'prompt' below.  */
+# define _GL_ARG_NONNULL(params)
 # include <config.h>
 #endif
 
@@ -124,9 +127,12 @@ getpass (const char *prompt)
     }
 # endif
 
-  /* Write the prompt.  */
-  fputs_unlocked (prompt, out);
-  fflush_unlocked (out);
+  if (prompt)
+    {
+      /* Write the prompt.  */
+      fputs_unlocked (prompt, out);
+      fflush_unlocked (out);
+    }
 
   /* Read the password.  */
   nread = getline (&buf, &bufsize, in);
