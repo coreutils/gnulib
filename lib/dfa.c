@@ -2428,8 +2428,6 @@ merge_nfa_state (struct dfa *d, idx_t tindex, char *flags,
   position_set *follows = d->follows;
   idx_t nelem = 0;
 
-  d->constraints[tindex] = 0;
-
   for (idx_t i = 0; i < follows[tindex].nelem; i++)
     {
       idx_t sindex = follows[tindex].elems[i].index;
@@ -2581,7 +2579,7 @@ dfaoptimize (struct dfa *d)
   position_set *merged = &merged0;
   alloc_position_set (merged, d->nleaves);
 
-  d->constraints = xnmalloc (d->tindex, sizeof *d->constraints);
+  d->constraints = xcalloc (d->tindex, sizeof *d->constraints);
 
   for (idx_t i = 0; i < d->tindex; i++)
     if (flags[i] & OPT_QUEUED)
