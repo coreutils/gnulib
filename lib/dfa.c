@@ -2520,6 +2520,11 @@ reorder_tokens (struct dfa *d)
     multibyte_prop = NULL;
 
   for (idx_t i = 0; i < d->tindex; i++)
+    for (idx_t j = 0; j < d->follows[i].nelem; j++)
+      if (map[d->follows[i].elems[j].index] == -1)
+        map[d->follows[i].elems[j].index] = nleaves++;
+
+  for (idx_t i = 0; i < d->tindex; i++)
     {
       if (map[i] == -1)
         {
@@ -2537,12 +2542,7 @@ reorder_tokens (struct dfa *d)
         multibyte_prop[map[i]] = d->multibyte_prop[i];
 
       for (idx_t j = 0; j < d->follows[i].nelem; j++)
-        {
-          if (map[d->follows[i].elems[j].index] == -1)
-            map[d->follows[i].elems[j].index] = nleaves++;
-
-          d->follows[i].elems[j].index = map[d->follows[i].elems[j].index];
-        }
+        d->follows[i].elems[j].index = map[d->follows[i].elems[j].index];
 
       qsort (d->follows[i].elems, d->follows[i].nelem,
              sizeof *d->follows[i].elems, compare);
