@@ -2494,39 +2494,27 @@ compare (const void *a, const void *b)
 static void
 reorder_tokens (struct dfa *d)
 {
-  idx_t nleaves;
-  ptrdiff_t *map;
-  token *tokens;
-  position_set *follows;
-  int *constraints;
-  char *multibyte_prop;
-
-  nleaves = 0;
-
-  map = xnmalloc (d->tindex, sizeof *map);
-
+  idx_t nleaves = 0;
+  ptrdiff_t *map = xnmalloc (d->tindex, sizeof *map);
   map[0] = nleaves++;
-
   for (idx_t i = 1; i < d->tindex; i++)
     map[i] = -1;
 
-  tokens = xnmalloc (d->nleaves, sizeof *tokens);
-  follows = xnmalloc (d->nleaves, sizeof *follows);
-  constraints = xnmalloc (d->nleaves, sizeof *constraints);
-
-  if (d->localeinfo.multibyte)
-    multibyte_prop = xnmalloc (d->nleaves, sizeof *multibyte_prop);
-  else
-    multibyte_prop = NULL;
+  token *tokens = xnmalloc (d->nleaves, sizeof *tokens);
+  position_set *follows = xnmalloc (d->nleaves, sizeof *follows);
+  int *constraints = xnmalloc (d->nleaves, sizeof *constraints);
+  char *multibyte_prop = (d->localeinfo.multibyte
+                          ? xnmalloc (d->nleaves, sizeof *multibyte_prop)
+                          : NULL);
 
   for (idx_t i = 0; i < d->tindex; i++)
     for (idx_t j = 0; j < d->follows[i].nelem; j++)
-      if (map[d->follows[i].elems[j].index] == -1)
+      if (map[d->follows[i].elems[j].index] < 0)
         map[d->follows[i].elems[j].index] = nleaves++;
 
   for (idx_t i = 0; i < d->tindex; i++)
     {
-      if (map[i] == -1)
+      if (map[i] < 0)
         {
           free (d->follows[i].elems);
           d->follows[i].elems = NULL;
