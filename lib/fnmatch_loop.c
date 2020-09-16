@@ -549,7 +549,7 @@ FCT (const CHAR *pattern, const CHAR *string, const CHAR *string_end,
                                 /* Get the collation sequence value.  */
                                 is_seqval = true;
 # if WIDE_CHAR_VERSION
-                                cold = wextra[1 + wextra[idx]];
+                                cold = wextra[1 + wextra[0]];
 # else
                                 idx += 1 + extra[idx];
                                 /* Adjust for the alignment.  */
@@ -726,7 +726,7 @@ FCT (const CHAR *pattern, const CHAR *string, const CHAR *string_end,
                                     /* Get the collation sequence value.  */
                                     is_seqval = true;
 # if WIDE_CHAR_VERSION
-                                    cend = wextra[1 + wextra[idx]];
+                                    cend = wextra[1 + wextra[0]];
 # else
                                     idx += 1 + extra[idx];
                                     /* Adjust for the alignment.  */
