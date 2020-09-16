@@ -58,6 +58,11 @@
 #undef GetFinalPathNameByHandle
 #define GetFinalPathNameByHandle GetFinalPathNameByHandleA
 
+/* Older mingw headers do not define VOLUME_NAME_NONE.  */
+#ifndef VOLUME_NAME_NONE
+# define VOLUME_NAME_NONE 4
+#endif
+
 #if !WIN32_ASSUME_VISTA
 
 /* Avoid warnings from gcc -Wcast-function-type.  */
