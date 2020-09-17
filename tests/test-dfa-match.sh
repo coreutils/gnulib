@@ -22,7 +22,9 @@
 path_prepend_ .
 
 if (type timeout) >/dev/null 2>&1; then
-  if timeout --help 2>&1 | grep BusyBox; then
+    # Busybox's timeout required -t until its 1.30.0 release on 2018-12-31,
+    # after which it became compatible with coreutils' timeout.
+  if timeout --help 2>&1 | grep BusyBox && timeout -t 0 true; then
     timeout_10='timeout -t 10'
   else
     timeout_10='timeout 10'
