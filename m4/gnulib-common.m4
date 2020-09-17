@@ -641,7 +641,7 @@ AC_DEFUN([gl_SILENT],
 [
   exec GL_TMP_FD>&AS_MESSAGE_FD AS_MESSAGE_FD>/dev/null
   $1
-  exec AS_MESSAGE_FD>&GL_TMP_FD AS_MESSAGE_FD>&-
+  exec AS_MESSAGE_FD>&GL_TMP_FD GL_TMP_FD>&-
 ])
 
 # gl_CACHE_VAL_SILENT(cache-id, command-to-set-it)
