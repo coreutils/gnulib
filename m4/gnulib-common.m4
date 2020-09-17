@@ -1,4 +1,4 @@
-# gnulib-common.m4 serial 57
+# gnulib-common.m4 serial 58
 dnl Copyright (C) 2007-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -630,13 +630,18 @@ AC_DEFUN([gl_BIGENDIAN],
   AC_C_BIGENDIAN
 ])
 
+# A temporary file descriptor.
+# Must be less than 10, because dash 0.5.8 does not support redirections
+# with multi-digit file descriptors.
+m4_define([GL_TMP_FD], 9)
+
 # gl_SILENT(command)
 # executes command, but without the normal configure output.
 AC_DEFUN([gl_SILENT],
 [
-  {
-    $1
-  } AS_MESSAGE_FD>/dev/null
+  exec GL_TMP_FD>&AS_MESSAGE_FD AS_MESSAGE_FD>/dev/null
+  $1
+  exec AS_MESSAGE_FD>&GL_TMP_FD AS_MESSAGE_FD>&-
 ])
 
 # gl_CACHE_VAL_SILENT(cache-id, command-to-set-it)
