@@ -1,4 +1,4 @@
-# getaddrinfo.m4 serial 32
+# getaddrinfo.m4 serial 33
 dnl Copyright (C) 2004-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,7 +8,6 @@ AC_DEFUN([gl_GETADDRINFO],
 [
   AC_REQUIRE([gl_HEADER_SYS_SOCKET])dnl for HAVE_SYS_SOCKET_H, HAVE_WINSOCK2_H
   AC_REQUIRE([gl_HEADER_NETDB])dnl for HAVE_NETDB_H
-  AC_MSG_CHECKING([how to do getaddrinfo, freeaddrinfo and getnameinfo])
   GETADDRINFO_LIB=
   gai_saved_LIBS="$LIBS"
 
