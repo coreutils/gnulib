@@ -7,6 +7,7 @@ lib/setlocale_null.c
 lib/setlocale-lock.c
 lib/windows-initguard.h
 m4/setlocale_null.m4
+m4/musl.m4
 m4/threadlib.m4
 m4/visibility.m4
 
