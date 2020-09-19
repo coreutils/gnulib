@@ -26,6 +26,9 @@ OpenBSD 6.7.
 The constants @code{YESEXPR} and @code{NOEXPR} do not return a valid
 string on some platforms:
 IRIX 6.5.
+@item
+This function is not multithread-safe on some platforms:
+Solaris 11.3.
 @end itemize
 
 Portability problems not fixed by Gnulib:
