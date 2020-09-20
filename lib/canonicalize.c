@@ -163,8 +163,34 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
       *dest++ = '/';
       if (DOUBLE_SLASH_IS_DISTINCT_ROOT)
         {
-          if (ISSLASH (name[1]) && !ISSLASH (name[2]) && !prefix_len)
-            *dest++ = '/';
+          if (prefix_len == 0 /* implies ISSLASH (name[0]) */
+              && ISSLASH (name[1]) && !ISSLASH (name[2]))
+            {
+              *dest++ = '/';
+#if defined _WIN32 && !defined __CYGWIN__
+              /* For UNC file names '\\server\path\to\file', extend the prefix
+                 to include the server: '\\server\'.  */
+              {
+                size_t i;
+                for (i = 2; name[i] != '\0' && !ISSLASH (name[i]); )
+                  i++;
+                if (name[i] != '\0' /* implies ISSLASH (name[i]) */
+                    && i + 1 < rname_limit - rname)
+                  {
+                    prefix_len = i;
+                    memcpy (dest, name + 2, i - 2 + 1);
+                    dest += i - 2 + 1;
+                  }
+                else
+                  {
+                    /* Either name = '\\server'; this is an invalid file name.
+                       Or name = '\\server\...' and server is more than
+                       PATH_MAX - 4 bytes long.  In either case, stop the UNC
+                       processing.  */
+                  }
+              }
+#endif
+            }
           *dest = '\0';
         }
       start = name + prefix_len;
