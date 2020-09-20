@@ -68,7 +68,9 @@ case "$host_os" in
     ;;
 esac
 if test -n "$origin_token"; then
-  rpath=
+  # We are not on AIX, HP-UX, or IRIX. Therefore the -rpath options are
+  # cumulative.
+  rpath_options=
   save_IFS="$IFS"; IFS=":"
   for dir in $library_path_value; do
     IFS="$save_IFS"
@@ -89,8 +91,8 @@ if test -n "$origin_token"; then
           idir=`echo "$idir" | sed -e 's,^//*[^/]*,,'`
         done
         dir="$origin_token"`echo "$idir" | sed -e 's,//*[^/]*,/..,g'`"$dir"
-        # Add dir to rpath.
-        rpath="${rpath}${rpath:+ }$dir"
+        # Augment rpath_options with dir.
+        rpath_options="${rpath_options}${rpath_options:+ }-Wl,-rpath,$dir"
         ;;
       *)
         if test -n "$dir"; then
@@ -101,15 +103,14 @@ if test -n "$origin_token"; then
   done
   IFS="$save_IFS"
   # Output it.
-  if test -n "$rpath"; then
+  if test -n "$rpath_options"; then
     case "$host_os" in
       # At least some versions of FreeBSD, DragonFly, and OpenBSD need the
       # linker option "-z origin". See <https://lekensteyn.nl/rpath.html>.
       freebsd* | dragonfly* | openbsd*)
-        echo "-Wl,-z,origin -Wl,-rpath,$rpath" ;;
-      *)
-        echo "-Wl,-rpath,$rpath" ;;
+        rpath_options="-Wl,-z,origin $rpath_options" ;;
     esac
+    echo "$rpath_options"
   fi
 else
   echo "relocation via rpath not supported on this system: $host" 1>&2
