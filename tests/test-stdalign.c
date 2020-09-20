@@ -80,7 +80,7 @@ CHECK_STATIC (struct4);
 int
 main ()
 {
-#if defined __SUNPRO_C
+#if defined __SUNPRO_C && __SUNPRO_C < 0x5150
   /* Avoid a test failure due to Sun Studio Developer Bug Report #2125432.  */
   fputs ("Skipping test: known Sun C compiler bug\n", stderr);
   return 77;

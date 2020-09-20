@@ -53,12 +53,12 @@ Some compilers require the operand of @code{_Alignas}/@code{alignas}
 to be a single integer constant, not an expression: MSVC 7.0 through
 at least 10.0.
 @item
-The Sun C 5.11 compiler sometimes mishandles the alignment of multiple
+The Sun C 5.13 compiler sometimes mishandles the alignment of multiple
 external variables that are declared close together with
-@code{_Alignas}/@code{alignas}.  This compiler bug causes the Gnulib
-module @code{stdalign-tests} to fail.  The Sun Studio Developer Bug
+@code{_Alignas}/@code{alignas}.  The Sun Studio Developer Bug
 Report Review Team assigned the internal review ID 2125432 (dated
-2011-11-01) to this issue.
+2011-11-01) to this issue.  The bug appears to be fixed in Sun C 5.15,
+also known as Oracle Developer Studio 12.6.
 @item
 @code{<stdalign.h>} must be #included before @code{_Alignas} and
 @code{_Alignof} can be used.
