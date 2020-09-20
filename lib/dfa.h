@@ -113,6 +113,9 @@ extern struct dfa *dfasuperset (struct dfa const *d) _GL_ATTRIBUTE_PURE;
 /* The DFA is likely to be fast.  */
 extern bool dfaisfast (struct dfa const *) _GL_ATTRIBUTE_PURE;
 
+/* Return true if every construct in D is supported by this DFA matcher.  */
+extern bool dfasupported (struct dfa const *) _GL_ATTRIBUTE_PURE;
+
 /* Free the storage held by the components of a struct dfa. */
 extern void dfafree (struct dfa *);
 
