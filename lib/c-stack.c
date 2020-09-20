@@ -118,7 +118,6 @@ static char const * volatile progname;
 static _GL_ASYNC_SAFE _Noreturn void
 die (int signo)
 {
-  char const *message;
 # if !SIGINFO_WORKS && !USE_LIBSIGSEGV
   /* We can't easily determine whether it is a stack overflow; so
      assume that the rest of our program is perfect (!) and that
@@ -126,11 +125,34 @@ die (int signo)
   signo = 0;
 # endif
   segv_action (signo);
-  message = signo ? program_error_message : stack_overflow_message;
-  ignore_value (write (STDERR_FILENO, progname, strlen (progname)));
-  ignore_value (write (STDERR_FILENO, ": ", 2));
-  ignore_value (write (STDERR_FILENO, message, strlen (message)));
-  ignore_value (write (STDERR_FILENO, "\n", 1));
+  char const *message = signo ? program_error_message : stack_overflow_message;
+
+  /* If the message is short, write it all at once to avoid
+     interleaving with other messages.  Avoid writev as it is not
+     documented to be async-signal-safe.  */
+  size_t prognamelen = strlen (progname);
+  size_t messagelen = strlen (message);
+  static char const separator[] = {':', ' '};
+  char buf[SIGSTKSZ / 16 + sizeof separator];
+  ptrdiff_t buflen;
+  if (prognamelen + messagelen < sizeof buf - sizeof separator)
+    {
+      char *p = mempcpy (buf, progname, prognamelen);
+      p = mempcpy (p, separator, sizeof separator);
+      p = mempcpy (p, message, messagelen);
+      *p++ = '\n';
+      buflen = p - buf;
+    }
+  else
+    {
+      ignore_value (write (STDERR_FILENO, progname, prognamelen));
+      ignore_value (write (STDERR_FILENO, separator, sizeof separator));
+      ignore_value (write (STDERR_FILENO, message, messagelen));
+      buf[0] = '\n';
+      buflen = 1;
+    }
+  ignore_value (write (STDERR_FILENO, buf, buflen));
+
   if (! signo)
     _exit (exit_failure);
   raise (signo);
@@ -299,9 +321,7 @@ segv_handler (int signo, siginfo_t *info, void *context _GL_UNUSED)
 int
 c_stack_action (_GL_ASYNC_SAFE void (*action) (int))
 {
-  int r;
   stack_t st;
-  struct sigaction act;
   st.ss_flags = 0;
 # if SIGALTSTACK_SS_REVERSED
   /* Irix mistakenly treats ss_sp as the upper bound, rather than
@@ -312,7 +332,7 @@ c_stack_action (_GL_ASYNC_SAFE void (*action) (int))
   st.ss_sp = alternate_signal_stack.buffer;
   st.ss_size = sizeof alternate_signal_stack.buffer;
 # endif
-  r = sigaltstack (&st, NULL);
+  int r = sigaltstack (&st, NULL);
   if (r != 0)
     return r;
 
@@ -325,6 +345,7 @@ c_stack_action (_GL_ASYNC_SAFE void (*action) (int))
   page_size = sysconf (_SC_PAGESIZE);
 # endif
 
+  struct sigaction act;
   sigemptyset (&act.sa_mask);
 
 # if SIGINFO_WORKS
