@@ -27,13 +27,13 @@
 
 /* ======================= Test verify, verify_expr ======================= */
 
-int x;
-enum { a, b, c };
+int gx;
+enum { A, B, C };
 
 #if EXP_FAIL == 1
-verify (x >= 0);                  /* should give ERROR: non-constant expression */
+verify (gx >= 0);                 /* should give ERROR: non-constant expression */
 #endif
-verify (c == 2);                  /* should be ok */
+verify (C == 2);                  /* should be ok */
 #if EXP_FAIL == 2
 verify (1 + 1 == 3);              /* should give ERROR */
 #endif
@@ -50,7 +50,7 @@ function (int n)
 #if EXP_FAIL == 3
   verify (n >= 0);                  /* should give ERROR: non-constant expression */
 #endif
-  verify (c == 2);                  /* should be ok */
+  verify (C == 2);                  /* should be ok */
 #if EXP_FAIL == 4
   verify (1 + 1 == 3);              /* should give ERROR */
 #endif
