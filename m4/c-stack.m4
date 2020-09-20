@@ -7,7 +7,7 @@
 
 # Written by Paul Eggert.
 
-# serial 17
+# serial 18
 
 AC_DEFUN([AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC],
   [
@@ -34,7 +34,7 @@ AC_DEFUN([AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC],
      [Define to 1 if an invalid memory address access may yield a SIGBUS.])
 
    AC_CACHE_CHECK([for working C stack overflow detection],
-     [ac_cv_sys_stack_overflow_works],
+     [gl_cv_sys_stack_overflow_works],
      [AC_RUN_IFELSE([AC_LANG_SOURCE(
            [[
             #include <unistd.h>
@@ -121,17 +121,17 @@ AC_DEFUN([AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC],
               return recurse (0);
             }
            ]])],
-        [ac_cv_sys_stack_overflow_works=yes],
-        [ac_cv_sys_stack_overflow_works=no],
+        [gl_cv_sys_stack_overflow_works=yes],
+        [gl_cv_sys_stack_overflow_works=no],
         [case "$host_os" in
                    # Guess no on native Windows.
-           mingw*) ac_cv_sys_stack_overflow_works="guessing no" ;;
-           *)      ac_cv_sys_stack_overflow_works=cross-compiling ;;
+           mingw*) gl_cv_sys_stack_overflow_works="guessing no" ;;
+           *)      gl_cv_sys_stack_overflow_works=cross-compiling ;;
          esac
         ])
      ])
 
-  if test "$ac_cv_sys_stack_overflow_works" = yes; then
+  if test "$gl_cv_sys_stack_overflow_works" = yes; then
    AC_DEFINE([HAVE_STACK_OVERFLOW_HANDLING], [1],
      [Define to 1 if extending the stack slightly past the limit causes
       a SIGSEGV which can be handled on an alternate stack established
@@ -200,14 +200,14 @@ int main ()
     fi
 
    AC_CACHE_CHECK([for precise C stack overflow detection],
-     [ac_cv_sys_xsi_stack_overflow_heuristic],
+     [gl_cv_sys_xsi_stack_overflow_heuristic],
      [dnl On Linux/sparc64 (both in 32-bit and 64-bit mode), it would be wrong
       dnl to set HAVE_XSI_STACK_OVERFLOW_HEURISTIC to 1, because the third
       dnl argument passed to the segv_handler is a 'struct sigcontext *', not
       dnl an 'ucontext_t *'.  It would lead to a failure of test-c-stack2.sh.
       case "${host_os}--${host_cpu}" in
         linux*--sparc*)
-          ac_cv_sys_xsi_stack_overflow_heuristic=no
+          gl_cv_sys_xsi_stack_overflow_heuristic=no
           ;;
         *)
           AC_RUN_IFELSE(
@@ -329,14 +329,14 @@ int main ()
                   return recurse (0);
                 }
                ]])],
-            [ac_cv_sys_xsi_stack_overflow_heuristic=yes],
-            [ac_cv_sys_xsi_stack_overflow_heuristic=no],
-            [ac_cv_sys_xsi_stack_overflow_heuristic=cross-compiling])
+            [gl_cv_sys_xsi_stack_overflow_heuristic=yes],
+            [gl_cv_sys_xsi_stack_overflow_heuristic=no],
+            [gl_cv_sys_xsi_stack_overflow_heuristic=cross-compiling])
           ;;
       esac
      ])
 
-   if test $ac_cv_sys_xsi_stack_overflow_heuristic = yes; then
+   if test "$gl_cv_sys_xsi_stack_overflow_heuristic" = yes; then
      AC_DEFINE([HAVE_XSI_STACK_OVERFLOW_HEURISTIC], [1],
        [Define to 1 if extending the stack slightly past the limit causes
         a SIGSEGV, and an alternate stack can be established with sigaltstack,
@@ -353,19 +353,16 @@ AC_DEFUN([gl_PREREQ_C_STACK],
   [AC_REQUIRE([AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC])
    AC_REQUIRE([gl_LIBSIGSEGV])
 
-   # for STACK_DIRECTION
-   AC_REQUIRE([AC_FUNC_ALLOCA])
-
    AC_CHECK_FUNCS_ONCE([sigaltstack])
    AC_CHECK_DECLS([sigaltstack], , , [[#include <signal.h>]])
 
-   AC_CHECK_HEADERS_ONCE([unistd.h ucontext.h])
+   AC_CHECK_HEADERS_ONCE([ucontext.h])
 
    AC_CHECK_TYPES([stack_t], , , [#include <signal.h>])
 
    dnl c-stack does not need -lsigsegv if the system has XSI heuristics.
    if test "$gl_cv_lib_sigsegv" = yes \
-       && test $"ac_cv_sys_xsi_stack_overflow_heuristic" != yes ; then
+       && test "$gl_cv_sys_xsi_stack_overflow_heuristic" != yes; then
      AC_SUBST([LIBCSTACK], [$LIBSIGSEGV])
      AC_SUBST([LTLIBCSTACK], [$LTLIBSIGSEGV])
    fi
