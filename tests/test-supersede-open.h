@@ -30,7 +30,7 @@ test_open_supersede (bool supersede_if_exists, bool supersede_if_does_not_exist)
     ASSERT (stat (filename, &statbuf) < 0);
 
     struct supersede_final_action action;
-    int fd = open_supersede (filename, O_RDWR | O_TRUNC, 0666,
+    int fd = open_supersede (filename, O_RDWR | O_BINARY | O_TRUNC, 0666,
                              supersede_if_exists, supersede_if_does_not_exist,
                              &action);
     ASSERT (fd >= 0);
@@ -56,7 +56,7 @@ test_open_supersede (bool supersede_if_exists, bool supersede_if_does_not_exist)
     ino_t orig_ino = statbuf.st_ino;
 
     struct supersede_final_action action;
-    int fd = open_supersede (filename, O_RDWR | O_TRUNC, 0666,
+    int fd = open_supersede (filename, O_RDWR | O_BINARY | O_TRUNC, 0666,
                              supersede_if_exists, supersede_if_does_not_exist,
                              &action);
     ASSERT (fd >= 0);
@@ -101,7 +101,7 @@ test_open_supersede (bool supersede_if_exists, bool supersede_if_does_not_exist)
     ASSERT (stat (DEV_NULL, &statbuf) == 0);
 
     struct supersede_final_action action;
-    int fd = open_supersede (DEV_NULL, O_RDWR | O_TRUNC, 0666,
+    int fd = open_supersede (DEV_NULL, O_RDWR | O_BINARY | O_TRUNC, 0666,
                              supersede_if_exists, supersede_if_does_not_exist,
                              &action);
     ASSERT (fd >= 0);
@@ -125,7 +125,7 @@ test_open_supersede (bool supersede_if_exists, bool supersede_if_does_not_exist)
 
         struct supersede_final_action action;
         int fd =
-          open_supersede (linkname, O_RDWR | O_TRUNC, 0666,
+          open_supersede (linkname, O_RDWR | O_BINARY | O_TRUNC, 0666,
                           supersede_if_exists, supersede_if_does_not_exist,
                           &action);
         ASSERT (fd >= 0);
@@ -180,7 +180,7 @@ test_open_supersede (bool supersede_if_exists, bool supersede_if_does_not_exist)
 
         struct supersede_final_action action;
         int fd =
-          open_supersede (linkname, O_RDWR | O_TRUNC, 0666,
+          open_supersede (linkname, O_RDWR | O_BINARY | O_TRUNC, 0666,
                           supersede_if_exists, supersede_if_does_not_exist,
                           &action);
         ASSERT (fd >= 0);
@@ -209,7 +209,7 @@ test_open_supersede (bool supersede_if_exists, bool supersede_if_does_not_exist)
 
         struct supersede_final_action action;
         int fd =
-          open_supersede (linkname, O_RDWR | O_TRUNC, 0666,
+          open_supersede (linkname, O_RDWR | O_BINARY | O_TRUNC, 0666,
                           supersede_if_exists, supersede_if_does_not_exist,
                           &action);
         ASSERT (fd >= 0);
@@ -243,7 +243,7 @@ test_open_supersede (bool supersede_if_exists, bool supersede_if_does_not_exist)
 
         struct supersede_final_action action;
         int fd =
-          open_supersede (linkname, O_RDWR | O_TRUNC, 0666,
+          open_supersede (linkname, O_RDWR | O_BINARY | O_TRUNC, 0666,
                           supersede_if_exists, supersede_if_does_not_exist,
                           &action);
         ASSERT (fd < 0);
