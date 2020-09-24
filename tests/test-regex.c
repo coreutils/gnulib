@@ -29,6 +29,15 @@
 
 #include "localcharset.h"
 
+/* Check whether it's really a UTF-8 locale.
+   On mingw, setlocale (LC_ALL, "en_US.UTF-8") succeeds but returns
+   "English_United States.1252", with locale_charset () returning "CP1252".  */
+static int
+really_utf8 (void)
+{
+  return strcmp (locale_charset (), "UTF-8") == 0;
+}
+
 int
 main (void)
 {
@@ -75,11 +84,7 @@ main (void)
           }
       }
 
-      /* Check whether it's really a UTF-8 locale.
-         On mingw, the setlocale call succeeds but returns
-         "English_United States.1252", with locale_charset() returning
-         "CP1252".  */
-      if (strcmp (locale_charset (), "UTF-8") == 0)
+      if (really_utf8 ())
         {
           /* This test is from glibc bug 15078.
              The test case is from Andreas Schwab in
@@ -117,6 +122,32 @@ main (void)
 
       if (! setlocale (LC_ALL, "C"))
         return 1;
+    }
+
+  if (setlocale (LC_ALL, "tr_TR.UTF-8") && really_utf8 ())
+    {
+      re_set_syntax (RE_SYNTAX_GREP | RE_ICASE);
+      if (re_compile_pattern ("i", 1, &regex))
+        result |= 1;
+      else
+        {
+          /* UTF-8 encoding of U+0130 LATIN CAPITAL LETTER I WITH DOT ABOVE.
+             In Turkish, this is the upper-case equivalent of ASCII "i".
+             Older versions of Gnulib failed to match "i" to U+0130 when
+             ignoring case in Turkish <https://bugs.gnu.org/43577>.  */
+          static char const data[] = "\xc4\xb0";
+
+          memset (&regs, 0, sizeof regs);
+          if (re_search (&regex, data, sizeof data - 1, 0, sizeof data - 1,
+                         &regs))
+            result |= 1;
+          regfree (&regex);
+          free (regs.start);
+          free (regs.end);
+
+          if (! setlocale (LC_ALL, "C"))
+            return 1;
+        }
     }
 
   /* This test is from glibc bug 3957, reported by Andrew Mackey.  */
