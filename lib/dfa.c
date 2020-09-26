@@ -370,7 +370,6 @@ typedef struct
   position_set elems;           /* Positions this state could match.  */
   unsigned char context;        /* Context from previous state.  */
   unsigned short constraint;    /* Constraint for this state to accept.  */
-  token first_end;              /* Token value of the first END in elems.  */
   position_set mbps;            /* Positions which can match multibyte
                                    characters or the follows, e.g., period.
                                    Used only if MB_CUR_MAX > 1.  */
@@ -2229,7 +2228,6 @@ state_index (struct dfa *d, position_set const *s, int context)
   size_t hash = 0;
   int constraint = 0;
   state_num i;
-  token first_end = 0;
 
   for (i = 0; i < s->nelem; ++i)
     {
@@ -2282,8 +2280,6 @@ state_index (struct dfa *d, position_set const *s, int context)
         {
           if (succeeds_in_context (c, context, CTX_ANY))
             constraint |= c;
-          if (!first_end)
-            first_end = d->tokens[s->elems[j].index];
         }
       else if (d->tokens[s->elems[j].index] == BACKREF)
         constraint = NO_CONSTRAINT;
@@ -2298,7 +2294,6 @@ state_index (struct dfa *d, position_set const *s, int context)
   copy (s, &d->states[i].elems);
   d->states[i].context = context;
   d->states[i].constraint = constraint;
-  d->states[i].first_end = first_end;
   d->states[i].mbps.nelem = 0;
   d->states[i].mbps.elems = NULL;
   d->states[i].mb_trindex = -1;
