@@ -5,6 +5,7 @@ tests/macros.h
 Depends-on:
 gettext-h
 localcharset
+wctype-h
 
 configure.ac:
 

@@ -24,6 +24,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <wctype.h>
 #if HAVE_DECL_ALARM
 # include <unistd.h>
 # include <signal.h>
@@ -141,7 +142,8 @@ main (void)
         return 1;
     }
 
-  if (setlocale (LC_ALL, "tr_TR.UTF-8") && really_utf8 ())
+  if (setlocale (LC_ALL, "tr_TR.UTF-8") && really_utf8 ()
+      && towupper (L'i') == 0x0130 /* U+0130; see below.  */)
     {
       re_set_syntax (RE_SYNTAX_GREP | RE_ICASE);
       memset (&regex, 0, sizeof regex);
