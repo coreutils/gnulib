@@ -139,38 +139,46 @@ main (void)
         }
 
       if (! setlocale (LC_ALL, "C"))
-        return 1;
+        {
+          report_error ("setlocale \"C\" failed");
+          return exit_status;
+        }
     }
 
-  if (setlocale (LC_ALL, "tr_TR.UTF-8") && really_utf8 ()
-      && towupper (L'i') == 0x0130 /* U+0130; see below.  */)
+  if (setlocale (LC_ALL, "tr_TR.UTF-8"))
     {
-      re_set_syntax (RE_SYNTAX_GREP | RE_ICASE);
-      memset (&regex, 0, sizeof regex);
-      static char const pat[] = "i";
-      s = re_compile_pattern (pat, sizeof pat - 1, &regex);
-      if (s)
-        report_error ("%s: %s", pat, s);
-      else
+      if (really_utf8 () && towupper (L'i') == 0x0130 /* U+0130; see below.  */)
         {
-          /* UTF-8 encoding of U+0130 LATIN CAPITAL LETTER I WITH DOT ABOVE.
-             In Turkish, this is the upper-case equivalent of ASCII "i".
-             Older versions of Gnulib failed to match "i" to U+0130 when
-             ignoring case in Turkish <https://bugs.gnu.org/43577>.  */
-          static char const data[] = "\xc4\xb0";
+          re_set_syntax (RE_SYNTAX_GREP | RE_ICASE);
+          memset (&regex, 0, sizeof regex);
+          static char const pat[] = "i";
+          s = re_compile_pattern (pat, sizeof pat - 1, &regex);
+          if (s)
+            report_error ("%s: %s", pat, s);
+          else
+            {
+              /* UTF-8 encoding of U+0130 LATIN CAPITAL LETTER I WITH DOT ABOVE.
+                 In Turkish, this is the upper-case equivalent of ASCII "i".
+                 Older versions of Gnulib failed to match "i" to U+0130 when
+                 ignoring case in Turkish <https://bugs.gnu.org/43577>.  */
+              static char const data[] = "\xc4\xb0";
 
-          memset (&regs, 0, sizeof regs);
-          i = re_search (&regex, data, sizeof data - 1, 0, sizeof data - 1,
-                         &regs);
-          if (i != 0)
-            report_error ("re_search '%s' on '%s' returned %d",
-                          pat, data, i);
-          regfree (&regex);
-          free (regs.start);
-          free (regs.end);
+              memset (&regs, 0, sizeof regs);
+              i = re_search (&regex, data, sizeof data - 1, 0, sizeof data - 1,
+                             &regs);
+              if (i != 0)
+                report_error ("re_search '%s' on '%s' returned %d",
+                              pat, data, i);
+              regfree (&regex);
+              free (regs.start);
+              free (regs.end);
+            }
+        }
 
-          if (! setlocale (LC_ALL, "C"))
-            report_error ("setlocale \"C\" failed");
+      if (! setlocale (LC_ALL, "C"))
+        {
+          report_error ("setlocale \"C\" failed");
+          return exit_status;
         }
     }
 
