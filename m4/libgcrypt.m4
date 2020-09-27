@@ -1,5 +1,5 @@
 # libgcrypt.m4 - Autoconf macros to detect libgcrypt
-# Copyright (C) 2002, 2003, 2004, 2011, 2014, 2018 g10 Code GmbH
+# Copyright (C) 2002, 2003, 2004, 2011, 2014, 2018, 2020 g10 Code GmbH
 #
 # This file is free software; as a special exception the author gives
 # unlimited permission to copy and/or distribute it, with or without
@@ -9,7 +9,7 @@
 # WITHOUT ANY WARRANTY, to the extent permitted by law; without even the
 # implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 #
-# Last-changed: 2018-11-13
+# Last-changed: 2020-09-27
 
 
 dnl AM_PATH_LIBGCRYPT([MINIMUM-VERSION,
@@ -30,7 +30,7 @@ dnl
 AC_DEFUN([AM_PATH_LIBGCRYPT],
 [ AC_REQUIRE([AC_CANONICAL_HOST])
   AC_ARG_WITH(libgcrypt-prefix,
-            AC_HELP_STRING([--with-libgcrypt-prefix=PFX],
+            AS_HELP_STRING([--with-libgcrypt-prefix=PFX],
                            [prefix where LIBGCRYPT is installed (optional)]),
      libgcrypt_config_prefix="$withval", libgcrypt_config_prefix="")
   if test x"${LIBGCRYPT_CONFIG}" = x ; then

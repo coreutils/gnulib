@@ -1,4 +1,4 @@
-# threadlib.m4 serial 27
+# threadlib.m4 serial 28
 dnl Copyright (C) 2005-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -398,8 +398,8 @@ AC_DEFUN([gl_THREADLIB_EARLY_BODY],
     [m4_divert_text([DEFAULTS], [gl_use_threads_default=])])
   m4_divert_text([DEFAULTS], [gl_use_winpthreads_default=])
   AC_ARG_ENABLE([threads],
-AC_HELP_STRING([--enable-threads={isoc|posix|isoc+posix|windows}], [specify multithreading API])m4_ifdef([gl_THREADLIB_DEFAULT_NO], [], [
-AC_HELP_STRING([--disable-threads], [build without multithread safety])]),
+AS_HELP_STRING([--enable-threads={isoc|posix|isoc+posix|windows}], [specify multithreading API])m4_ifdef([gl_THREADLIB_DEFAULT_NO], [], [
+AS_HELP_STRING([--disable-threads], [build without multithread safety])]),
     [gl_use_threads=$enableval],
     [if test -n "$gl_use_threads_default"; then
        gl_use_threads="$gl_use_threads_default"
