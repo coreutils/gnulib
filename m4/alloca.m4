@@ -1,4 +1,4 @@
-# alloca.m4 serial 18
+# alloca.m4 serial 19
 dnl Copyright (C) 2002-2004, 2006-2007, 2009-2020 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -50,10 +50,10 @@ AC_DEFUN([gl_FUNC_ALLOCA],
 # STACK_DIRECTION is already handled by AC_FUNC_ALLOCA.
 AC_DEFUN([gl_PREREQ_ALLOCA], [:])
 
-m4_version_prereq([2.70], [], [
+m4_version_prereq([2.69c], [], [
 
 # This works around a bug in autoconf <= 2.68 and has simplifications
-# from 2.70.  See:
+# from 2.69c.  See:
 # https://lists.gnu.org/r/bug-gnulib/2011-06/msg00277.html
 # https://git.savannah.gnu.org/cgit/autoconf.git/commit/?id=6cd9f12520b0d6f76d3230d7565feba1ecf29497
 # https://git.savannah.gnu.org/cgit/autoconf.git/commit/?id=15edf7fd8094fd14a89d9891dd72a9624762597a

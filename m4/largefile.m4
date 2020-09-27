@@ -25,7 +25,7 @@ AC_DEFUN([gl_SET_LARGEFILE_SOURCE],
 # The following implementation works around a problem in autoconf <= 2.69;
 # AC_SYS_LARGEFILE does not configure for large inodes on Mac OS X 10.5,
 # or configures them incorrectly in some cases.
-m4_version_prereq([2.70], [] ,[
+m4_version_prereq([2.69c], [] ,[
 
 # _AC_SYS_LARGEFILE_TEST_INCLUDES
 # -------------------------------
@@ -115,7 +115,7 @@ if test "$enable_largefile" != no; then
   fi
 fi
 ])# AC_SYS_LARGEFILE
-])# m4_version_prereq 2.70
+])# m4_version_prereq 2.69c
 
 # Enable large files on systems where this is implemented by Gnulib, not by the
 # system headers.
