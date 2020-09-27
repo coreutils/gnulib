@@ -1,4 +1,4 @@
-# serial 18  -*- Autoconf -*-
+# serial 19  -*- Autoconf -*-
 # Enable extensions on systems that normally disable them.
 
 # Copyright (C) 2003, 2006-2020 Free Software Foundation, Inc.
@@ -183,7 +183,7 @@ AC_DEFUN_ONCE([gl_USE_SYSTEM_EXTENSIONS],
   dnl warning: "AC_COMPILE_IFELSE was called before AC_USE_SYSTEM_EXTENSIONS".
   dnl Note: We can do this only for one of the macros AC_AIX, AC_GNU_SOURCE,
   dnl AC_MINIX. If people still use AC_AIX or AC_MINIX, they are out of luck.
-  AC_REQUIRE([AC_GNU_SOURCE])
+  m4_version_prereq([2.64], [], [AC_REQUIRE([AC_GNU_SOURCE])])
 
   AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
 ])
