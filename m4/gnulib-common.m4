@@ -1,4 +1,4 @@
-# gnulib-common.m4 serial 60
+# gnulib-common.m4 serial 61
 dnl Copyright (C) 2007-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -653,10 +653,9 @@ AC_DEFUN([gl_SILENT],
 # by an AC_MSG_CHECKING/AC_MSG_RESULT pair.
 AC_DEFUN([gl_CACHE_VAL_SILENT],
 [
-  saved_as_echo_n="$as_echo_n"
-  as_echo_n=':'
-  AC_CACHE_VAL([$1], [$2])
-  as_echo_n="$saved_as_echo_n"
+  gl_SILENT([
+    AC_CACHE_VAL([$1], [$2])
+  ])
 ])
 
 dnl Expands to some code for use in .c programs that, on native Windows, defines
