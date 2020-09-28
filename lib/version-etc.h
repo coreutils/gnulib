@@ -61,7 +61,7 @@ extern void version_etc (FILE *stream,
                          const char *command_name, const char *package,
                          const char *version,
                          /* const char *author1, ..., NULL */ ...)
-  _GL_ATTRIBUTE_SENTINEL ();
+  _GL_ATTRIBUTE_SENTINEL ((0));
 
 /* Display the usual "Report bugs to" stanza.  */
 extern void emit_bug_reporting_address (void);

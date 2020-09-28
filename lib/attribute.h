@@ -80,7 +80,7 @@
 /* Attributes for variadic functions.  */
 
 /* The variadic function expects a trailing NULL argument.
-   ATTRIBUTE_SENTINEL () - The last argument is NULL.
+   ATTRIBUTE_SENTINEL () - The last argument is NULL (requires C99).
    ATTRIBUTE_SENTINEL ((N)) - The (N+1)st argument from the end is NULL.  */
 /* Applies to: functions.  */
 #define ATTRIBUTE_SENTINEL(pos) _GL_ATTRIBUTE_SENTINEL (pos)
