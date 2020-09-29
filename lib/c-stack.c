@@ -66,7 +66,7 @@ typedef struct sigaltstack stack_t;
 
 /* Use libsigsegv only if needed; kernels like Solaris can detect
    stack overflow without the overhead of an external library.  */
-#define USE_LIBSIGSEGV (HAVE_XSI_STACK_OVERFLOW_HEURISTIC && HAVE_LIBSIGSEGV)
+#define USE_LIBSIGSEGV (!HAVE_XSI_STACK_OVERFLOW_HEURISTIC && HAVE_LIBSIGSEGV)
 
 #if USE_LIBSIGSEGV
 # include <sigsegv.h>
