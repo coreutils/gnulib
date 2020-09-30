@@ -34,7 +34,7 @@
    A null ACTION acts like an action that does nothing.
 
    ACTION must be async-signal-safe.  ACTION together with its callees
-   must not require more than SIGSTKSZ bytes of stack space.  Also,
+   must not require more than 64 KiB of stack space.  Also,
    ACTION should not call longjmp, because this implementation does
    not guarantee that it is safe to return to the original stack.
 
