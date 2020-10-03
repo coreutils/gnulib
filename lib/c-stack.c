@@ -107,8 +107,7 @@ static char const * volatile program_error_message;
 static char const * volatile stack_overflow_message;
 
 #if (USE_LIBSIGSEGV                                           \
-     || (HAVE_SIGALTSTACK && HAVE_DECL_SIGALTSTACK            \
-         && HAVE_STACK_OVERFLOW_HANDLING))
+     || (HAVE_DECL_SIGALTSTACK && HAVE_STACK_OVERFLOW_HANDLING))
 
 /* Output an error message, then exit with status EXIT_FAILURE if it
    appears to have been a stack overflow, or with a core dump
@@ -236,7 +235,7 @@ c_stack_action (_GL_ASYNC_SAFE void (*action) (int))
   return 0;
 }
 
-#elif HAVE_SIGALTSTACK && HAVE_DECL_SIGALTSTACK && HAVE_STACK_OVERFLOW_HANDLING
+#elif HAVE_DECL_SIGALTSTACK && HAVE_STACK_OVERFLOW_HANDLING
 
 # if SIGINFO_WORKS
 
@@ -361,8 +360,7 @@ c_stack_action (_GL_ASYNC_SAFE void (*action) (int))
 }
 
 #else /* ! (USE_LIBSIGSEGV
-            || (HAVE_SIGALTSTACK && HAVE_DECL_SIGALTSTACK
-                && HAVE_STACK_OVERFLOW_HANDLING)) */
+            || (HAVE_DECL_SIGALTSTACK && HAVE_STACK_OVERFLOW_HANDLING)) */
 
 int
 c_stack_action (_GL_ASYNC_SAFE void (*action) (int)  _GL_UNUSED)

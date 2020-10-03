@@ -7,7 +7,7 @@
 
 # Written by Paul Eggert.
 
-# serial 18
+# serial 19
 
 AC_DEFUN([AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC],
   [
@@ -351,21 +351,20 @@ int main ()
 
 AC_DEFUN([gl_PREREQ_C_STACK],
   [AC_REQUIRE([AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC])
-   AC_REQUIRE([gl_LIBSIGSEGV])
 
    AC_CHECK_FUNCS_ONCE([sigaltstack])
    AC_CHECK_DECLS([sigaltstack], , , [[#include <signal.h>]])
 
    AC_CHECK_HEADERS_ONCE([ucontext.h])
 
-   AC_CHECK_TYPES([stack_t], , , [#include <signal.h>])
+   AC_CHECK_TYPES([stack_t], , , [[#include <signal.h>]])
 
    dnl c-stack does not need -lsigsegv if the system has XSI heuristics.
-   if test "$gl_cv_lib_sigsegv" = yes \
-       && test "$gl_cv_sys_xsi_stack_overflow_heuristic" != yes; then
-     AC_SUBST([LIBCSTACK], [$LIBSIGSEGV])
-     AC_SUBST([LTLIBCSTACK], [$LTLIBSIGSEGV])
-   fi
+   AS_IF([test "$gl_cv_sys_xsi_stack_overflow_heuristic" != yes],
+     [gl_LIBSIGSEGV
+      AS_IF([test "$gl_cv_lib_sigsegv" = yes],
+        [AC_SUBST([LIBCSTACK], [$LIBSIGSEGV])
+         AC_SUBST([LTLIBCSTACK], [$LTLIBSIGSEGV])])])
 ])
 
 AC_DEFUN([gl_C_STACK],
