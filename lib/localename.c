@@ -3114,7 +3114,7 @@ freelocale (locale_t locale)
 static
 # endif
 const char *
-gl_locale_name_thread_unsafe (int category, const char *categoryname)
+gl_locale_name_thread_unsafe (int category, const char *categoryname _GL_UNUSED)
 {
 # if HAVE_GOOD_USELOCALE
   {
@@ -3229,7 +3229,7 @@ gl_locale_name_thread_unsafe (int category, const char *categoryname)
 #endif
 
 const char *
-gl_locale_name_thread (int category, const char *categoryname)
+gl_locale_name_thread (int category, const char *categoryname _GL_UNUSED)
 {
 #if HAVE_GOOD_USELOCALE
   const char *name = gl_locale_name_thread_unsafe (category, categoryname);
@@ -3253,7 +3253,7 @@ gl_locale_name_thread (int category, const char *categoryname)
 #endif
 
 const char *
-gl_locale_name_posix (int category, const char *categoryname)
+gl_locale_name_posix (int category, const char *categoryname _GL_UNUSED)
 {
 #if defined WINDOWS_NATIVE
   if (LC_MIN <= category && category <= LC_MAX)
@@ -3318,7 +3318,7 @@ gl_locale_name_posix (int category, const char *categoryname)
 }
 
 const char *
-gl_locale_name_environ (int category, const char *categoryname)
+gl_locale_name_environ (int category _GL_UNUSED, const char *categoryname)
 {
   const char *retval;
 
