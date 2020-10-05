@@ -232,7 +232,7 @@ extern const gl_thread_t gl_null_thread;
 extern const gl_thread_t gl_null_thread;
 # else
 #  define gl_thread_self() \
-     (pthread_in_use () ? pthread_self () : (pthread_t) NULL)
+     (pthread_in_use () ? pthread_self () : (pthread_t) 0)
 #  define gl_thread_self_pointer() \
      (pthread_in_use () ? (void *) pthread_self () : NULL)
 # endif
