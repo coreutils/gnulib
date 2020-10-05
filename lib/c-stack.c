@@ -168,6 +168,11 @@ null_action (int signo _GL_UNUSED)
 
 #if USE_LIBSIGSEGV
 
+/* Pacify GCC 9.3.1, which otherwise would complain about segv_handler.  */
+# if __GNUC_PREREQ (4, 6)
+#  pragma GCC diagnostic ignored "-Wsuggest-attribute=pure"
+# endif
+
 /* Nonzero if general segv handler could not be installed.  */
 static volatile int segv_handler_missing;
 
