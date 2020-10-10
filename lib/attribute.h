@@ -170,18 +170,21 @@
 /* Applies to: function.  */
 #define ATTRIBUTE_ALWAYS_INLINE _GL_ATTRIBUTE_ALWAYS_INLINE
 
-/* The function does not affect observable state, and always returns a value.
-   Compilers can omit duplicate calls with the same arguments if
-   observable state is not changed between calls.  (This attribute is
-   looser than ATTRIBUTE_CONST.)  */
-/* Applies to: functions.  */
-#define ATTRIBUTE_PURE _GL_ATTRIBUTE_PURE
-
-/* The function neither depends on nor affects observable state,
-   and always returns a value.  Compilers can omit duplicate calls with
-   the same arguments.  (This attribute is stricter than ATTRIBUTE_PURE.)  */
+/* It is OK for a compiler to omit duplicate calls with the same arguments.
+   This attribute is safe for a function that neither depends on
+   nor affects observable state, and always returns exactly once -
+   e.g., does not loop forever, and does not call longjmp.
+   (This attribute is stricter than ATTRIBUTE_PURE.)  */
 /* Applies to: functions.  */
 #define ATTRIBUTE_CONST _GL_ATTRIBUTE_CONST
+
+/* It is OK for a compiler to omit duplicate calls with the same
+   arguments if observable state is not changed between calls.
+   This attribute is safe for a function that does not affect
+   observable state, and always returns exactly once.
+   (This attribute is looser than ATTRIBUTE_CONST.)  */
+/* Applies to: functions.  */
+#define ATTRIBUTE_PURE _GL_ATTRIBUTE_PURE
 
 /* The function is rarely executed.  */
 /* Applies to: functions.  */
