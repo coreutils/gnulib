@@ -61,7 +61,6 @@ check_invariants (gl_list_node_t node, gl_list_node_t parent)
 
   return 1 + (left_height > right_height ? left_height : right_height);
 }
-
 void
 gl_avltree_list_check_invariants (gl_list_t list)
 {
