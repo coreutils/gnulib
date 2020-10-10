@@ -2031,6 +2031,7 @@ func_all_modules ()
   func_module readline
   func_module readtokens
   func_module readtokens0
+  func_module stack
   func_module strverscmp
   func_module filevercmp
   func_end_table
