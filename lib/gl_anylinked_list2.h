@@ -916,7 +916,7 @@ gl_linked_list_free (gl_list_t list)
 
 /* --------------------- gl_list_iterator_t Data Type --------------------- */
 
-static gl_list_iterator_t
+static gl_list_iterator_t _GL_ATTRIBUTE_PURE
 gl_linked_iterator (gl_list_t list)
 {
   gl_list_iterator_t result;
@@ -934,7 +934,7 @@ gl_linked_iterator (gl_list_t list)
   return result;
 }
 
-static gl_list_iterator_t
+static gl_list_iterator_t _GL_ATTRIBUTE_PURE
 gl_linked_iterator_from_to (gl_list_t list,
                             size_t start_index, size_t end_index)
 {
@@ -1022,7 +1022,7 @@ gl_linked_iterator_next (gl_list_iterator_t *iterator,
     return false;
 }
 
-static void
+static void _GL_ATTRIBUTE_CONST
 gl_linked_iterator_free (gl_list_iterator_t *iterator _GL_ATTRIBUTE_MAYBE_UNUSED)
 {
 }

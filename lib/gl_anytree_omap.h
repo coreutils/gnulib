@@ -49,7 +49,7 @@ gl_tree_nx_create_empty (gl_omap_implementation_t implementation,
   return map;
 }
 
-static size_t
+static size_t _GL_ATTRIBUTE_PURE
 gl_tree_size (gl_omap_t map)
 {
   return map->count;
@@ -245,7 +245,7 @@ gl_tree_omap_free (gl_omap_t map)
 
 /* --------------------- gl_omap_iterator_t Data Type --------------------- */
 
-static gl_omap_iterator_t
+static gl_omap_iterator_t _GL_ATTRIBUTE_PURE
 gl_tree_iterator (gl_omap_t map)
 {
   gl_omap_iterator_t result;
@@ -299,7 +299,7 @@ gl_tree_iterator_next (gl_omap_iterator_t *iterator,
     return false;
 }
 
-static void
-gl_tree_iterator_free (gl_omap_iterator_t *iterator)
+static void _GL_ATTRIBUTE_CONST
+gl_tree_iterator_free (gl_omap_iterator_t *iterator _GL_ATTRIBUTE_MAYBE_UNUSED)
 {
 }

@@ -67,13 +67,13 @@ gl_array_nx_create_empty (gl_omap_implementation_t implementation,
   return map;
 }
 
-static size_t
+static size_t _GL_ATTRIBUTE_PURE
 gl_array_size (gl_omap_t map)
 {
   return map->count;
 }
 
-static size_t
+static size_t _GL_ATTRIBUTE_PURE
 gl_array_indexof (gl_omap_t map, const void *key)
 {
   size_t count = map->count;
@@ -109,7 +109,7 @@ gl_array_indexof (gl_omap_t map, const void *key)
   return (size_t)(-1);
 }
 
-static bool
+static bool _GL_ATTRIBUTE_PURE
 gl_array_search (gl_omap_t map, const void *key, const void **valuep)
 {
   size_t index = gl_array_indexof (map, key);
@@ -122,7 +122,7 @@ gl_array_search (gl_omap_t map, const void *key, const void **valuep)
     return false;
 }
 
-static bool
+static bool _GL_ATTRIBUTE_PURE
 gl_array_search_atleast (gl_omap_t map,
                          gl_mapkey_threshold_fn threshold_fn,
                          const void *threshold,
@@ -324,7 +324,7 @@ gl_array_free (gl_omap_t map)
 
 /* ---------------------- gl_omap_iterator_t Data Type ---------------------- */
 
-static gl_omap_iterator_t
+static gl_omap_iterator_t _GL_ATTRIBUTE_PURE
 gl_array_iterator (gl_omap_t map)
 {
   gl_omap_iterator_t result;
@@ -369,8 +369,8 @@ gl_array_iterator_next (gl_omap_iterator_t *iterator,
     return false;
 }
 
-static void
-gl_array_iterator_free (gl_omap_iterator_t *iterator)
+static void _GL_ATTRIBUTE_CONST
+gl_array_iterator_free (gl_omap_iterator_t *iterator _GL_ATTRIBUTE_MAYBE_UNUSED)
 {
 }
 

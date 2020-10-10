@@ -47,14 +47,14 @@ gl_tree_nx_create_empty (gl_oset_implementation_t implementation,
   return set;
 }
 
-static size_t
+static size_t _GL_ATTRIBUTE_PURE
 gl_tree_size (gl_oset_t set)
 {
   return set->count;
 }
 
 /* Returns the next node in the tree, or NULL if there is none.  */
-static inline gl_oset_node_t
+static inline gl_oset_node_t _GL_ATTRIBUTE_PURE
 gl_tree_next_node (gl_oset_node_t node)
 {
   if (node->right != NULL)
@@ -73,7 +73,7 @@ gl_tree_next_node (gl_oset_node_t node)
 }
 
 /* Returns the previous node in the tree, or NULL if there is none.  */
-static inline gl_oset_node_t
+static inline gl_oset_node_t _GL_ATTRIBUTE_PURE
 gl_tree_prev_node (gl_oset_node_t node)
 {
   if (node->left != NULL)
@@ -350,7 +350,7 @@ gl_tree_oset_free (gl_oset_t set)
 
 /* --------------------- gl_oset_iterator_t Data Type --------------------- */
 
-static gl_oset_iterator_t
+static gl_oset_iterator_t _GL_ATTRIBUTE_PURE
 gl_tree_iterator (gl_oset_t set)
 {
   gl_oset_iterator_t result;
@@ -437,7 +437,7 @@ gl_tree_iterator_next (gl_oset_iterator_t *iterator, const void **eltp)
     return false;
 }
 
-static void
-gl_tree_iterator_free (gl_oset_iterator_t *iterator  _GL_ATTRIBUTE_MAYBE_UNUSED)
+static void _GL_ATTRIBUTE_CONST
+gl_tree_iterator_free (gl_oset_iterator_t *iterator _GL_ATTRIBUTE_MAYBE_UNUSED)
 {
 }

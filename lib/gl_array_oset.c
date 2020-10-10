@@ -59,13 +59,13 @@ gl_array_nx_create_empty (gl_oset_implementation_t implementation,
   return set;
 }
 
-static size_t
+static size_t _GL_ATTRIBUTE_PURE
 gl_array_size (gl_oset_t set)
 {
   return set->count;
 }
 
-static size_t
+static size_t _GL_ATTRIBUTE_PURE
 gl_array_indexof (gl_oset_t set, const void *elt)
 {
   size_t count = set->count;
@@ -101,7 +101,7 @@ gl_array_indexof (gl_oset_t set, const void *elt)
   return (size_t)(-1);
 }
 
-static bool
+static bool _GL_ATTRIBUTE_PURE
 gl_array_search (gl_oset_t set, const void *elt)
 {
   return gl_array_indexof (set, elt) != (size_t)(-1);
@@ -112,7 +112,7 @@ gl_array_search (gl_oset_t set, const void *elt)
    by the THRESHOLD_FN.
    Returns the position at which it was found, or gl_list_size (SET) if not
    found.  */
-static size_t
+static size_t _GL_ATTRIBUTE_PURE
 gl_array_indexof_atleast (gl_oset_t set,
                           gl_setelement_threshold_fn threshold_fn,
                           const void *threshold)
@@ -160,7 +160,7 @@ gl_array_indexof_atleast (gl_oset_t set,
   return count;
 }
 
-static bool
+static bool _GL_ATTRIBUTE_PURE
 gl_array_search_atleast (gl_oset_t set,
                          gl_setelement_threshold_fn threshold_fn,
                          const void *threshold,
@@ -423,7 +423,7 @@ gl_array_free (gl_oset_t set)
 
 /* --------------------- gl_oset_iterator_t Data Type --------------------- */
 
-static gl_oset_iterator_t
+static gl_oset_iterator_t _GL_ATTRIBUTE_PURE
 gl_array_iterator (gl_oset_t set)
 {
   gl_oset_iterator_t result;
@@ -441,7 +441,7 @@ gl_array_iterator (gl_oset_t set)
   return result;
 }
 
-static gl_oset_iterator_t
+static gl_oset_iterator_t _GL_ATTRIBUTE_PURE
 gl_array_iterator_atleast (gl_oset_t set,
                            gl_setelement_threshold_fn threshold_fn,
                            const void *threshold)
@@ -487,8 +487,8 @@ gl_array_iterator_next (gl_oset_iterator_t *iterator, const void **eltp)
     return false;
 }
 
-static void
-gl_array_iterator_free (gl_oset_iterator_t *iterator)
+static void _GL_ATTRIBUTE_CONST
+gl_array_iterator_free (gl_oset_iterator_t *iterator _GL_ATTRIBUTE_MAYBE_UNUSED)
 {
 }
 
