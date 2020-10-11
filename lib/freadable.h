@@ -22,7 +22,7 @@
    STREAM must not be wide-character oriented.
    The result doesn't change until the stream is closed or re-opened.  */
 
-#if HAVE___FREADABLE /* glibc >= 2.2, Solaris >= 7, Android API >= 23, musl libc */
+#if HAVE___FREADABLE /* glibc >= 2.2, Solaris >= 7, Cygwin >= 1.7.34, Android API >= 23, musl libc */
 
 # include <stdio_ext.h>
 # define freadable(stream) (__freadable (stream) != 0)

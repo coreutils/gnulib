@@ -26,7 +26,8 @@
 #endif
 
 /* This file is not used on systems that have the __fwritable function,
-   namely glibc >= 2.2, Solaris >= 7, Android API >= 23, musl libc.  */
+   namely glibc >= 2.2, Solaris >= 7, Cygwin >= 1.7.34, Android API >= 23,
+   musl libc.  */
 
 bool
 fwritable (FILE *fp)
@@ -38,7 +39,7 @@ fwritable (FILE *fp)
   /* GNU libc, BeOS, Haiku, Linux libc5 */
   return (fp->_flags & _IO_NO_WRITES) == 0;
 #elif defined __sferror || defined __DragonFly__ || defined __ANDROID__
-  /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin, Minix 3, Android */
+  /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin < 1.7.34, Minix 3, Android */
   return (fp_->_flags & (__SRW | __SWR)) != 0;
 #elif defined __EMX__               /* emx+gcc */
   return (fp->_flags & (_IORW | _IOWRT)) != 0;

@@ -19,7 +19,7 @@
 /* Specification.  */
 #include <stdio.h>
 
-#if HAVE___FPURGE                   /* glibc >= 2.2, Haiku, Solaris >= 7, Android API >= 23 */
+#if HAVE___FPURGE                   /* glibc >= 2.2, Haiku, Solaris >= 7, Cygwin >= 1.7.10, Android API >= 23 */
 # include <stdio_ext.h>
 #endif
 #include <stdlib.h>
@@ -29,13 +29,13 @@
 int
 fpurge (FILE *fp)
 {
-#if HAVE___FPURGE                   /* glibc >= 2.2, Haiku, Solaris >= 7, Android API >= 23, musl libc */
+#if HAVE___FPURGE                   /* glibc >= 2.2, Haiku, Solaris >= 7, Cygwin >= 1.7.10, Android API >= 23, musl libc */
 
   __fpurge (fp);
   /* The __fpurge function does not have a return value.  */
   return 0;
 
-#elif HAVE_FPURGE                   /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin 1.7 */
+#elif HAVE_FPURGE                   /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin >= 1.7 */
 
   /* Call the system's fpurge function.  */
 # undef fpurge

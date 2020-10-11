@@ -33,7 +33,7 @@
 
    STREAM must not be wide-character oriented.  */
 
-#if HAVE___FWRITING /* glibc >= 2.2, Solaris >= 7, Android API >= 29, musl libc */
+#if HAVE___FWRITING /* glibc >= 2.2, Solaris >= 7, Cygwin >= 1.7.34, Android API >= 29, musl libc */
 
 # include <stdio_ext.h>
 # define fwriting(stream) (__fwriting (stream) != 0)
