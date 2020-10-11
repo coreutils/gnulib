@@ -19,7 +19,7 @@
 /* Specification.  */
 #include <stdio.h>
 
-#if HAVE___FPURGE                   /* glibc >= 2.2, Haiku, Solaris >= 7, Cygwin >= 1.7.10, Android API >= 23, musl libc */
+#if HAVE___FPURGE                   /* glibc >= 2.2, Haiku, Solaris >= 7, UnixWare >= 7.1.4.MP4, Cygwin >= 1.7.10, Android API >= 23, musl libc */
 # if HAVE_STDIO_EXT_H
 #  include <stdio_ext.h>
 # endif
@@ -31,7 +31,7 @@
 int
 fpurge (FILE *fp)
 {
-#if HAVE___FPURGE                   /* glibc >= 2.2, Haiku, Solaris >= 7, Cygwin >= 1.7.10, Android API >= 23, musl libc */
+#if HAVE___FPURGE                   /* glibc >= 2.2, Haiku, Solaris >= 7, UnixWare >= 7.1.4.MP4, Cygwin >= 1.7.10, Android API >= 23, musl libc */
 
   __fpurge (fp);
   /* The __fpurge function does not have a return value.  */
@@ -101,7 +101,7 @@ fpurge (FILE *fp)
   if (fp->_ptr != NULL)
     fp->_count = 0;
   return 0;
-# elif defined _IOERR               /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw, MSVC, NonStop Kernel, OpenVMS */
+# elif defined _IOERR               /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, UnixWare, mingw, MSVC, NonStop Kernel, OpenVMS */
   fp_->_ptr = fp_->_base;
   if (fp_->_ptr != NULL)
     fp_->_cnt = 0;

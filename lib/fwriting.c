@@ -22,8 +22,8 @@
 #include "stdio-impl.h"
 
 /* This file is not used on systems that have the __fwriting function,
-   namely glibc >= 2.2, Solaris >= 7, Cygwin >= 1.7.34, Android API >= 29,
-   musl libc.  */
+   namely glibc >= 2.2, Solaris >= 7, UnixWare >= 7.1.4.MP4, Cygwin >= 1.7.34,
+   Android API >= 29, musl libc.  */
 
 bool
 fwriting (FILE *fp)
@@ -41,7 +41,7 @@ fwriting (FILE *fp)
   return (fp->_flags & _IOWRT) != 0;
 #elif defined __minix               /* Minix */
   return (fp->_flags & _IOWRITING) != 0;
-#elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw, MSVC, NonStop Kernel, OpenVMS */
+#elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, UnixWare, mingw, MSVC, NonStop Kernel, OpenVMS */
   return (fp_->_flag & _IOWRT) != 0;
 #elif defined __UCLIBC__            /* uClibc */
   return (fp->__modeflags & __FLAG_WRITING) != 0;

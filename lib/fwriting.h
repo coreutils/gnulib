@@ -33,7 +33,8 @@
 
    STREAM must not be wide-character oriented.  */
 
-#if HAVE___FWRITING /* glibc >= 2.2, Solaris >= 7, Cygwin >= 1.7.34, Android API >= 29, musl libc */
+#if HAVE___FWRITING
+/* glibc >= 2.2, Solaris >= 7, UnixWare >= 7.1.4.MP4, Cygwin >= 1.7.34, Android API >= 29, musl libc */
 
 # if HAVE_STDIO_EXT_H
 #  include <stdio_ext.h>

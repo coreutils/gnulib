@@ -26,8 +26,8 @@
 #endif
 
 /* This file is not used on systems that have the __fwritable function,
-   namely glibc >= 2.2, Solaris >= 7, Cygwin >= 1.7.34, Android API >= 23,
-   musl libc.  */
+   namely glibc >= 2.2, Solaris >= 7, UnixWare >= 7.1.4.MP4, Cygwin >= 1.7.34,
+   Android API >= 23, musl libc.  */
 
 bool
 fwritable (FILE *fp)
@@ -45,7 +45,7 @@ fwritable (FILE *fp)
   return (fp->_flags & (_IORW | _IOWRT)) != 0;
 #elif defined __minix               /* Minix */
   return (fp->_flags & _IOWRITE) != 0;
-#elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw, MSVC, NonStop Kernel, OpenVMS */
+#elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, UnixWare, mingw, MSVC, NonStop Kernel, OpenVMS */
   return (fp_->_flag & (_IORW | _IOWRT)) != 0;
 #elif defined __QNX__               /* QNX */
   return (fp->_Mode & 0x2 /* _MOPENW */) != 0;

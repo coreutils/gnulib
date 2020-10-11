@@ -33,7 +33,7 @@
    STREAM must not be wide-character oriented.  */
 
 #if HAVE___FREADING && (!defined __GLIBC__ || defined __UCLIBC__ || __GLIBC__ > 2 || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 7))
-/* Solaris >= 7, Cygwin >= 1.7.34, Android API >= 29, not glibc >= 2.2, but glibc >= 2.7, or musl libc  */
+/* Solaris >= 7, UnixWare >= 7.1.4.MP4, Cygwin >= 1.7.34, Android API >= 29, not glibc >= 2.2, but glibc >= 2.7, or musl libc  */
 
 # if HAVE_STDIO_EXT_H
 #  include <stdio_ext.h>
