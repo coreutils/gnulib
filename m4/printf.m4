@@ -1,4 +1,4 @@
-# printf.m4 serial 69
+# printf.m4 serial 70
 dnl Copyright (C) 2003, 2007-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -1198,7 +1198,7 @@ dnl Test whether the string produced by the snprintf function is always NUL
 dnl terminated. (ISO C99, POSIX:2001)
 dnl Result is gl_cv_func_snprintf_truncation_c99.
 
-AC_DEFUN([gl_SNPRINTF_TRUNCATION_C99],
+AC_DEFUN_ONCE([gl_SNPRINTF_TRUNCATION_C99],
 [
   AC_REQUIRE([AC_PROG_CC])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
