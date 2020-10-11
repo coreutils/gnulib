@@ -24,7 +24,9 @@
 
 #if HAVE___FREADABLE /* glibc >= 2.2, Solaris >= 7, Cygwin >= 1.7.34, Android API >= 23, musl libc */
 
-# include <stdio_ext.h>
+# if HAVE_STDIO_EXT_H
+#  include <stdio_ext.h>
+# endif
 # define freadable(stream) (__freadable (stream) != 0)
 
 #else

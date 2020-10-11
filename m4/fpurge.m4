@@ -1,4 +1,4 @@
-# fpurge.m4 serial 11
+# fpurge.m4 serial 12
 dnl Copyright (C) 2007, 2009-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,6 +8,7 @@ AC_DEFUN([gl_FUNC_FPURGE],
 [
   AC_REQUIRE([gl_STDIO_H_DEFAULTS])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+  AC_CHECK_HEADERS_ONCE([stdio_ext.h])
   AC_CHECK_FUNCS_ONCE([fpurge])
   AC_CHECK_FUNCS_ONCE([__fpurge])
   AC_CHECK_DECLS([fpurge], , , [[#include <stdio.h>]])

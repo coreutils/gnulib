@@ -19,8 +19,10 @@
 /* Specification.  */
 #include <stdio.h>
 
-#if HAVE___FPURGE                   /* glibc >= 2.2, Haiku, Solaris >= 7, Cygwin >= 1.7.10, Android API >= 23 */
-# include <stdio_ext.h>
+#if HAVE___FPURGE                   /* glibc >= 2.2, Haiku, Solaris >= 7, Cygwin >= 1.7.10, Android API >= 23, musl libc */
+# if HAVE_STDIO_EXT_H
+#  include <stdio_ext.h>
+# endif
 #endif
 #include <stdlib.h>
 

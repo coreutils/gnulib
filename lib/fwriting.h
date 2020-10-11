@@ -35,7 +35,9 @@
 
 #if HAVE___FWRITING /* glibc >= 2.2, Solaris >= 7, Cygwin >= 1.7.34, Android API >= 29, musl libc */
 
-# include <stdio_ext.h>
+# if HAVE_STDIO_EXT_H
+#  include <stdio_ext.h>
+# endif
 # define fwriting(stream) (__fwriting (stream) != 0)
 
 #else

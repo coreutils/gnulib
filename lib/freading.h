@@ -35,7 +35,9 @@
 #if HAVE___FREADING && (!defined __GLIBC__ || defined __UCLIBC__ || __GLIBC__ > 2 || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 7))
 /* Solaris >= 7, Cygwin >= 1.7.34, Android API >= 29, not glibc >= 2.2, but glibc >= 2.7, or musl libc  */
 
-# include <stdio_ext.h>
+# if HAVE_STDIO_EXT_H
+#  include <stdio_ext.h>
+# endif
 # define freading(stream) (__freading (stream) != 0)
 
 #else

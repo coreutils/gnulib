@@ -20,7 +20,9 @@
 #include "fbufmode.h"
 
 #if HAVE___FLBF
-# include <stdio_ext.h>
+# if HAVE_STDIO_EXT_H
+#  include <stdio_ext.h>
+# endif
 #endif
 
 #include "stdio-impl.h"
