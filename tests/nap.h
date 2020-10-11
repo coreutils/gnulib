@@ -24,6 +24,13 @@
 
 # include <intprops.h>
 
+/* Avoid a conflict with a function called nap() on UnixWare.  */
+# if defined _SCO_DS || (defined __SCO_VERSION__ || defined __sysv5__)  /* OpenServer, UnixWare */
+#  include <unistd.h>
+#  undef nap
+#  define nap gl_nap
+# endif
+
 /* Name of the witness file.  */
 #define TEMPFILE BASE "nap.tmp"
 
