@@ -94,7 +94,7 @@ main (void)
     for (i = 0; i < SIZEOF (errs); i++)
       {
         char buf[256];
-        char *err = strerror (errs[i]);
+        const char *err = strerror (errs[i]);
 
         ASSERT (err);
         ASSERT (strlen (err) < sizeof buf);
