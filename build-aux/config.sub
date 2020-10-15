@@ -1752,7 +1752,7 @@ case $kernel-$os in
 	nto-qnx*)
 		;;
 	os2-emx)
-	    	;;
+		;;
 	*-eabi* | *-gnueabi*)
 		;;
 	-*)
