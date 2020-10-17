@@ -27,6 +27,10 @@
 # include <stdio.h>
 # include <stdbool.h>
 
+# ifdef __cplusplus
+extern "C" {
+# endif
+
 struct hash_tuning
   {
     /* This structure is mainly used for 'hash_initialize', see the block
@@ -244,5 +248,9 @@ extern int hash_insert_if_absent (Hash_table *table, const void *entry,
    data (the user may want to deallocate its storage).  If ENTRY is not in the
    table, don't modify the table and return NULL.  */
 extern void *hash_delete (Hash_table *table, const void *entry);
+
+# ifdef __cplusplus
+}
+# endif
 
 #endif
