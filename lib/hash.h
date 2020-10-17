@@ -247,7 +247,12 @@ extern int hash_insert_if_absent (Hash_table *table, const void *entry,
 /* If ENTRY is already in the table, remove it and return the just-deleted
    data (the user may want to deallocate its storage).  If ENTRY is not in the
    table, don't modify the table and return NULL.  */
-extern void *hash_delete (Hash_table *table, const void *entry);
+extern void *hash_remove (Hash_table *table, const void *entry);
+
+/* Same as hash_remove.  This interface is deprecated.
+   FIXME: Remove in 2022.  */
+extern void *hash_delete (Hash_table *table, const void *entry)
+       _GL_ATTRIBUTE_DEPRECATED;
 
 # ifdef __cplusplus
 }

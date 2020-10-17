@@ -131,7 +131,7 @@ leave_dir (FTS *fts, FTSENT *ent)
       void *found;
       obj.dev = st->st_dev;
       obj.ino = st->st_ino;
-      found = hash_delete (fts->fts_cycle.ht, &obj);
+      found = hash_remove (fts->fts_cycle.ht, &obj);
       if (!found)
         abort ();
       free (found);

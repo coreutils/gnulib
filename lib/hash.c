@@ -1012,7 +1012,7 @@ hash_insert (Hash_table *table, void const *entry)
 }
 
 void *
-hash_delete (Hash_table *table, const void *entry)
+hash_remove (Hash_table *table, const void *entry)
 {
   void *data;
   struct hash_entry *bucket;
@@ -1069,6 +1069,12 @@ hash_delete (Hash_table *table, const void *entry)
     }
 
   return data;
+}
+
+void *
+hash_delete (Hash_table *table, const void *entry)
+{
+  return hash_remove (table, entry);
 }
 
 /* Testing.  */

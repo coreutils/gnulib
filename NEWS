@@ -60,6 +60,10 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2020-10-16  hash            This module deprecates the 'hash_delete' function
+                            using gcc's "deprecated" attribute.  Use the better-
+                            named 'hash_remove' equivalent.
+
 2020-08-24  diffseq         If you do not define NOTE_ORDERED to true,
                             the NOTE_DELETE and NOTE_INSERT actions might
                             not be done in order, to help cut down worst-case
