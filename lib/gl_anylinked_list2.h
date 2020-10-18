@@ -1022,7 +1022,7 @@ gl_linked_iterator_next (gl_list_iterator_t *iterator,
     return false;
 }
 
-static void _GL_ATTRIBUTE_CONST
+static void
 gl_linked_iterator_free (gl_list_iterator_t *iterator _GL_ATTRIBUTE_MAYBE_UNUSED)
 {
 }

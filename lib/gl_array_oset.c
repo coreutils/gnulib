@@ -487,7 +487,7 @@ gl_array_iterator_next (gl_oset_iterator_t *iterator, const void **eltp)
     return false;
 }
 
-static void _GL_ATTRIBUTE_CONST
+static void
 gl_array_iterator_free (gl_oset_iterator_t *iterator _GL_ATTRIBUTE_MAYBE_UNUSED)
 {
 }
