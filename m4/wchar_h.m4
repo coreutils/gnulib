@@ -7,7 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 
 dnl Written by Eric Blake.
 
-# wchar_h.m4 serial 46
+# wchar_h.m4 serial 47
 
 AC_DEFUN([gl_WCHAR_H],
 [
@@ -70,11 +70,14 @@ AC_DEFUN([gl_WCHAR_H_INLINE_OK],
   dnl and <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=42440>. In summary,
   dnl glibc version 2.5 or older, together with gcc version 4.3 or newer and
   dnl the option -std=c99 or -std=gnu99, leads to a broken <wchar.h>.
+  AC_REQUIRE([AC_CANONICAL_HOST])
   AC_CACHE_CHECK([whether <wchar.h> uses 'inline' correctly],
     [gl_cv_header_wchar_h_correct_inline],
     [gl_cv_header_wchar_h_correct_inline=yes
-     AC_LANG_CONFTEST([
-       AC_LANG_SOURCE([[#define wcstod renamed_wcstod
+     case "$host_os" in
+       *-gnu* | gnu*)
+         AC_LANG_CONFTEST([
+           AC_LANG_SOURCE([[#define wcstod renamed_wcstod
 /* Tru64 with Desktop Toolkit C has a bug: <stdio.h> must be included before
    <wchar.h>.
    BSD/OS 4.0.1 has a bug: <stddef.h>, <stdio.h> and <time.h> must be
@@ -86,17 +89,17 @@ AC_DEFUN([gl_WCHAR_H_INLINE_OK],
 extern int zero (void);
 int main () { return zero(); }
 ]])])
-     dnl Do not rename the object file from conftest.$ac_objext to
-     dnl conftest1.$ac_objext, as this will cause the link to fail on
-     dnl z/OS when using the XPLINK object format (due to duplicate
-     dnl CSECT names). Instead, temporarily redefine $ac_compile so
-     dnl that the object file has the latter name from the start.
-     save_ac_compile="$ac_compile"
-     ac_compile=`echo "$save_ac_compile" | sed s/conftest/conftest1/`
-     if echo '#include "conftest.c"' >conftest1.c &&
-        AC_TRY_EVAL([ac_compile]); then
-       AC_LANG_CONFTEST([
-         AC_LANG_SOURCE([[#define wcstod renamed_wcstod
+         dnl Do not rename the object file from conftest.$ac_objext to
+         dnl conftest1.$ac_objext, as this will cause the link to fail on
+         dnl z/OS when using the XPLINK object format (due to duplicate
+         dnl CSECT names). Instead, temporarily redefine $ac_compile so
+         dnl that the object file has the latter name from the start.
+         save_ac_compile="$ac_compile"
+         ac_compile=`echo "$save_ac_compile" | sed s/conftest/conftest1/`
+         if echo '#include "conftest.c"' >conftest1.c \
+            && AC_TRY_EVAL([ac_compile]); then
+           AC_LANG_CONFTEST([
+             AC_LANG_SOURCE([[#define wcstod renamed_wcstod
 /* Tru64 with Desktop Toolkit C has a bug: <stdio.h> must be included before
    <wchar.h>.
    BSD/OS 4.0.1 has a bug: <stddef.h>, <stdio.h> and <time.h> must be
@@ -107,19 +110,21 @@ int main () { return zero(); }
 #include <wchar.h>
 int zero (void) { return 0; }
 ]])])
-       dnl See note above about renaming object files.
-       ac_compile=`echo "$save_ac_compile" | sed s/conftest/conftest2/`
-       if echo '#include "conftest.c"' >conftest2.c &&
-          AC_TRY_EVAL([ac_compile]); then
-         if $CC -o conftest$ac_exeext $CFLAGS $LDFLAGS conftest1.$ac_objext conftest2.$ac_objext $LIBS >&AS_MESSAGE_LOG_FD 2>&1; then
-           :
-         else
-           gl_cv_header_wchar_h_correct_inline=no
+           dnl See note above about renaming object files.
+           ac_compile=`echo "$save_ac_compile" | sed s/conftest/conftest2/`
+           if echo '#include "conftest.c"' >conftest2.c \
+              && AC_TRY_EVAL([ac_compile]); then
+             if $CC -o conftest$ac_exeext $CFLAGS $LDFLAGS conftest1.$ac_objext conftest2.$ac_objext $LIBS >&AS_MESSAGE_LOG_FD 2>&1; then
+               :
+             else
+               gl_cv_header_wchar_h_correct_inline=no
+             fi
+           fi
          fi
-       fi
-     fi
-     ac_compile="$save_ac_compile"
-     rm -f conftest[12].c conftest[12].$ac_objext conftest$ac_exeext
+         ac_compile="$save_ac_compile"
+         rm -f conftest[12].c conftest[12].$ac_objext conftest$ac_exeext
+         ;;
+     esac
     ])
   if test $gl_cv_header_wchar_h_correct_inline = no; then
     AC_MSG_ERROR([<wchar.h> cannot be used with this compiler ($CC $CFLAGS $CPPFLAGS).
