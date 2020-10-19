@@ -31,22 +31,22 @@
    must be freed with freecon.  Upon error, set *CON to NULL, set errno
    and return -1.
    [*] with flags=0 here, with flags=AT_SYMLINK_NOFOLLOW for lgetfileconat  */
-int  getfileconat (int dir_fd, char const *file, security_context_t *con);
+int  getfileconat (int dir_fd, char const *file, char **con);
 
 /* dir-fd-relative lgetfilecon.  This function is just like getfileconat,
    except when DIR_FD and FILE specify a symlink:  lgetfileconat operates on
    the symlink, while getfileconat operates on the referent of the symlink.  */
-int lgetfileconat (int dir_fd, char const *file, security_context_t *con);
+int lgetfileconat (int dir_fd, char const *file, char **con);
 
 /* dir-fd-relative setfilecon.  Set the SELinux security context of
    the file specified by DIR_FD and FILE to CON.  DIR_FD and FILE are
    interpreted as for fstatat[*].  Upon success, return 0.
    Otherwise, return -1 and set errno.  */
-int  setfileconat (int dir_fd, char const *file, security_context_t con);
+int  setfileconat (int dir_fd, char const *file, char *con);
 
 /* dir-fd-relative lsetfilecon.  This function is just like setfileconat,
    except that rather than dereferencing a symlink, this function affects it. */
 /* dir-fd-relative lsetfilecon.  This function is just like setfileconat,
    except when DIR_FD and FILE specify a symlink:  lsetfileconat operates on
    the symlink, while setfileconat operates on the referent of the symlink.  */
-int lsetfileconat (int dir_fd, char const *file, security_context_t con);
+int lsetfileconat (int dir_fd, char const *file, char *con);

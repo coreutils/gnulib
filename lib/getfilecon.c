@@ -33,9 +33,9 @@
 #undef getfilecon
 #undef lgetfilecon
 #undef fgetfilecon
-int getfilecon (char const *file, security_context_t *con);
-int lgetfilecon (char const *file, security_context_t *con);
-int fgetfilecon (int fd, security_context_t *con);
+int getfilecon (char const *file, char **con);
+int lgetfilecon (char const *file, char **con);
+int fgetfilecon (int fd, char **con);
 
 /* getfilecon, lgetfilecon, and fgetfilecon can all misbehave, be it
    via an old version of libselinux where these would return 0 and set the
@@ -46,7 +46,7 @@ int fgetfilecon (int fd, security_context_t *con);
    set errno to ENOTSUP in the first case, and ENODATA in the latter.  */
 
 static int
-map_to_failure (int ret, security_context_t *con)
+map_to_failure (int ret, char **con)
 {
   if (ret == 0)
     {
@@ -66,21 +66,21 @@ map_to_failure (int ret, security_context_t *con)
 }
 
 int
-rpl_getfilecon (char const *file, security_context_t *con)
+rpl_getfilecon (char const *file, char **con)
 {
   int ret = getfilecon (file, con);
   return map_to_failure (ret, con);
 }
 
 int
-rpl_lgetfilecon (char const *file, security_context_t *con)
+rpl_lgetfilecon (char const *file, char **con)
 {
   int ret = lgetfilecon (file, con);
   return map_to_failure (ret, con);
 }
 
 int
-rpl_fgetfilecon (int fd, security_context_t *con)
+rpl_fgetfilecon (int fd, char**con)
 {
   int ret = fgetfilecon (fd, con);
   return map_to_failure (ret, con);
