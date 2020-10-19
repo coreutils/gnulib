@@ -1,0 +1,27 @@
+Description:
+Simple and straight-forward malloc implementation (front end).
+
+Files:
+lib/ssfmalloc.h
+lib/ssfmalloc-bitmap.h
+
+Depends-on:
+flexmember
+ffs
+ffsll
+lock
+thread-optim
+oset
+rbtree-oset
+
+configure.ac:
+
+Makefile.am:
+
+Include:
+
+License:
+LGPLv2+
+
+Maintainer:
+Bruno Haible
