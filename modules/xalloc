@@ -15,6 +15,7 @@ xalloc-oversized
 
 configure.ac:
 gl_XALLOC
+gl_MODULE_INDICATOR([xalloc])
 
 Makefile.am:
 lib_SOURCES += xmalloc.c
