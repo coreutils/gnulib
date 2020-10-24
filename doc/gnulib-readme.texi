@@ -384,6 +384,8 @@ Variadic macros.
 @item
 The @code{restrict} qualifier, assuming
 @code{AC_REQUIRE([AC_C_RESTRICT])} is used.
+This qualifier is sometimes implemented via a macro, so C++ code that
+uses Gnulib should avoid using @code{restrict} as an identifier.
 
 @item
 Flexible array members (however, see the @code{flexmember} module).
