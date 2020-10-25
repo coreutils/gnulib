@@ -92,7 +92,7 @@ alloc_pages (size_t size)
   return (uintptr_t) mem;
 #else
   /* Use mmap with the MAP_ANONYMOUS or MAP_ANON flag.  */
-  void *mem = mmap (NULL, size, PROT_READ | PROT_WRITE | PROT_EXEC,
+  void *mem = mmap (NULL, size, PROT_READ | PROT_WRITE,
                     MAP_PRIVATE | MAP_ANONYMOUS | MAP_VARIABLE, -1, 0);
   if (mem == (void *)(-1))
     return 0;
@@ -143,6 +143,7 @@ free_pages (uintptr_t pages, size_t size)
 
 #include "macros.h"
 
+/* Fills a block of a given size with some contents.  */
 static void
 fill_block (uintptr_t block, size_t size)
 {
@@ -150,6 +151,8 @@ fill_block (uintptr_t block, size_t size)
   memset ((char *) block, code, size);
 }
 
+/* Verifies that the contents of a block is still present
+   (i.e. has not accidentally been overwritten by other operations).  */
 static void
 verify_block (uintptr_t block, size_t size)
 {
@@ -187,12 +190,29 @@ static size_t block_sizes[] =
     64,
     65,
     71,
+    77,
     83,
+    96,
     99,
     110,
+    119,
     127,
     128,
+    130,
+    144,
+    150,
+    157,
+    161,
     169,
+    180,
+    192,
+    199,
+    204,
+    210,
+    224,
+    225,
+    236,
+    241,
     249,
     255,
     256,
@@ -266,6 +286,9 @@ main (int argc, char *argv[])
 
   init_pagesize ();
 
+  /* Randomly allocate and deallocate blocks.
+     Also verify that there are no unexpected modifications to the contents of
+     these blocks.  */
   {
     unsigned int repeat;
     char *blocks[SIZEOF (block_sizes)];
