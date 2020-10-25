@@ -55,6 +55,8 @@
      PAGESIZE           A variable-like macro of type intptr_t or uintptr_t
                         that evaluates to the memory page size (>= 4096).
 
+     PAGESIZE_MAX       A constant that specifies an upper bound for PAGESIZE.
+
      ALLOC_PAGES        A function-like macro with the signature
                           uintptr_t ALLOC_PAGES (size_t size)
                         where the argument size is > 0 and a multiple of the
@@ -151,7 +153,11 @@ struct any_page_header
 /* ========================= Small and medium blocks ======================== */
 
 /* An integer type, capable of holding the values 0 .. PAGESIZE.  */
+#if PAGESIZE_MAX >= 0x10000
+typedef unsigned int   pg_offset_t;
+#else
 typedef unsigned short pg_offset_t;
+#endif
 
 /* Tree element that corresponds to a page.
    These tree elements are allocated via malloc().  */

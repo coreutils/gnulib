@@ -118,13 +118,25 @@ free_pages (uintptr_t pages, size_t size)
 #endif
 }
 
+/* Cygwin defines PAGESIZE in <limits.h>.  */
+#undef PAGESIZE
+
 /* ======================= Instantiate the front end ======================= */
 
 #define PAGESIZE pagesize
+/* On Cygwin, PAGESIZE is 65536.  On all other platforms, it is either 4096
+   or 8192.  */
+#ifdef __CYGWIN__
+# define PAGESIZE_MAX 65536
+#else
+# define PAGESIZE_MAX 8192
+#endif
+
 #define ALLOC_PAGES alloc_pages
 #define FREE_PAGES free_pages
 #define ALIGNMENT (sizeof (void *)) /* or 8 or 16 or 32 */
 #define PAGE_RESERVED_HEADER_SIZE (3 * UINTPTR_WIDTH / 8) /* = 3 * sizeof (void *) */
+
 #include "ssfmalloc.h"
 
 /* ================================= Tests ================================= */
