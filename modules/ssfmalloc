@@ -19,6 +19,10 @@ configure.ac:
 Makefile.am:
 
 Include:
+"ssfmalloc.h"
+
+Link:
+$(LIBTHREAD)
 
 License:
 LGPLv2+

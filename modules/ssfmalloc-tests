@@ -9,3 +9,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-ssfmalloc
 check_PROGRAMS += test-ssfmalloc
+test_ssfmalloc_LDADD = $(LDADD) $(LIBTHREAD)
