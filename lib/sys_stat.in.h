@@ -375,11 +375,11 @@ struct stat
 # define S_IRWXO (S_IROTH | S_IWOTH | S_IXOTH)
 #endif
 
-/* S_IXUGO is a common extension to POSIX.  */
+/* Although S_IXUGO and S_IRWXUGO are not specified by POSIX and are
+   not implemented in GNU/Linux, some Gnulib-using apps use the macros.  */
 #if !S_IXUGO
 # define S_IXUGO (S_IXUSR | S_IXGRP | S_IXOTH)
 #endif
-
 #ifndef S_IRWXUGO
 # define S_IRWXUGO (S_IRWXU | S_IRWXG | S_IRWXO)
 #endif
