@@ -64,12 +64,6 @@ function (int n)
   return 0;
 }
 
-int
-main (void)
-{
-  return !(function (0) == 0 && function (1) == 8);
-}
-
 /* ============================== Test assume ============================== */
 
 static int
@@ -79,6 +73,10 @@ f (int a)
 }
 
 typedef struct { unsigned int context : 4; unsigned int halt : 1; } state;
+
+void test_assume_expressions (state *s);
+int test_assume_optimization (int x);
+void test_assume_noreturn (void);
 
 void
 test_assume_expressions (state *s)
@@ -108,4 +106,14 @@ test_assume_noreturn (void)
   /* Check that the compiler's data-flow analysis recognizes 'assume (0)'.
      This function should not elicit a warning.  */
   assume (0);
+}
+
+/* ============================== Main ===================================== */
+int
+main (void)
+{
+  state s;
+  test_assume_expressions (&s);
+  test_assume_optimization (5);
+  return !(function (0) == 0 && function (1) == 8);
 }
