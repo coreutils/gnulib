@@ -57,7 +57,7 @@ main (int argc, char **argv)
   init_localeinfo (&localeinfo);
 
   dfa = dfaalloc ();
-  dfasyntax (dfa, &localeinfo, RE_SYNTAX_GREP | RE_NO_EMPTY_RANGES, 0);
+  dfasyntax (dfa, &localeinfo, RE_SYNTAX_EGREP | RE_NO_EMPTY_RANGES, 0);
   dfacomp (argv[1], strlen (argv[1]), dfa, 0);
 
   beg = argv[2];
