@@ -2,6 +2,7 @@ Files:
 tests/test-dfa-match.sh
 tests/test-dfa-match-aux.c
 tests/test-dfa-invalid-char-class.sh
+tests/test-dfa-invalid-merge.sh
 
 Depends-on:
 stdio
@@ -14,6 +15,7 @@ configure.ac:
 Makefile.am:
 TESTS += \
   test-dfa-invalid-char-class.sh \
+  test-dfa-invalid-merge.sh \
   test-dfa-match.sh
 
 check_PROGRAMS += test-dfa-match-aux
