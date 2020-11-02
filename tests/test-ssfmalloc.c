@@ -124,9 +124,9 @@ free_pages (uintptr_t pages, size_t size)
 /* ======================= Instantiate the front end ======================= */
 
 #define PAGESIZE pagesize
-/* On Cygwin, PAGESIZE is 65536.  On all other platforms, it is either 4096
-   or 8192.  */
-#ifdef __CYGWIN__
+/* On Cygwin and Linux/PowerPC, PAGESIZE is 65536.  On all other platforms, it
+   is either 4096 or 8192.  */
+#if defined __CYGWIN__ || (defined __linux__ && defined __powerpc__)
 # define PAGESIZE_MAX 65536
 #else
 # define PAGESIZE_MAX 8192
@@ -140,6 +140,8 @@ free_pages (uintptr_t pages, size_t size)
 #include "ssfmalloc.h"
 
 /* ================================= Tests ================================= */
+
+#include <limits.h>
 
 #include "macros.h"
 
