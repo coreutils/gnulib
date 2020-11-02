@@ -112,7 +112,7 @@ test_assume_noreturn (void)
 int
 main (void)
 {
-  state s;
+  state s = { 0 };
   test_assume_expressions (&s);
   test_assume_optimization (5);
   return !(function (0) == 0 && function (1) == 8);
