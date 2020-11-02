@@ -18,9 +18,16 @@
 
 /* Written June, 1988 by Mike Haertel */
 
+#ifndef DFA_H_
+#define DFA_H_
+
 #include <regex.h>
 #include <stdbool.h>
 #include <stddef.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 struct localeinfo; /* See localeinfo.h.  */
 
@@ -131,3 +138,9 @@ extern void dfawarn (const char *);
    takes a single argument, a NUL-terminated string describing the error.
    The user must supply a dfaerror.  */
 extern _Noreturn void dfaerror (const char *);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* dfa.h */
