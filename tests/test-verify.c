@@ -76,7 +76,7 @@ typedef struct { unsigned int context : 4; unsigned int halt : 1; } state;
 
 void test_assume_expressions (state *s);
 int test_assume_optimization (int x);
-void test_assume_noreturn (void);
+_Noreturn void test_assume_noreturn (void);
 
 void
 test_assume_expressions (state *s)
