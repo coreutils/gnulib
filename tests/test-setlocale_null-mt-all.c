@@ -78,7 +78,6 @@ thread1_func (void *arg)
     }
 
   /*NOTREACHED*/
-  return NULL;
 }
 
 static void *
@@ -93,7 +92,6 @@ thread2_func (void *arg)
     }
 
   /*NOTREACHED*/
-  return NULL;
 }
 
 int

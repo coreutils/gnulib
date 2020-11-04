@@ -72,7 +72,6 @@ thread1_func (void *arg)
     }
 
   /*NOTREACHED*/
-  return NULL;
 }
 
 static char *expected2;
@@ -91,7 +90,6 @@ thread2_func (void *arg)
     }
 
   /*NOTREACHED*/
-  return NULL;
 }
 
 static char *expected3;
@@ -110,7 +108,6 @@ thread3_func (void *arg)
     }
 
   /*NOTREACHED*/
-  return NULL;
 }
 
 static char *expected4;
@@ -129,7 +126,6 @@ thread4_func (void *arg)
     }
 
   /*NOTREACHED*/
-  return NULL;
 }
 
 static char *expected5;
@@ -148,7 +144,6 @@ thread5_func (void *arg)
     }
 
   /*NOTREACHED*/
-  return NULL;
 }
 
 static char *expected6;
@@ -167,7 +162,6 @@ thread6_func (void *arg)
     }
 
   /*NOTREACHED*/
-  return NULL;
 }
 
 static void *
@@ -188,7 +182,6 @@ threadN_func (void *arg)
     }
 
   /*NOTREACHED*/
-  return NULL;
 }
 
 int
