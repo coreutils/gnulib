@@ -149,6 +149,31 @@ _GL_WARN_ON_USE (_Exit, "_Exit is unportable - "
 #endif
 
 
+/* Allocate memory with indefinite extent and specified alignment.  */
+#if @GNULIB_ALIGNED_ALLOC@
+# if @REPLACE_ALIGNED_ALLOC@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef aligned_alloc
+#   define aligned_alloc rpl_aligned_alloc
+#  endif
+_GL_FUNCDECL_RPL (aligned_alloc, void *, (size_t alignment, size_t size));
+_GL_CXXALIAS_RPL (aligned_alloc, void *, (size_t alignment, size_t size));
+# else
+#  if @HAVE_ALIGNED_ALLOC@
+_GL_CXXALIAS_SYS (aligned_alloc, void *, (size_t alignment, size_t size));
+#  endif
+# endif
+# if @HAVE_ALIGNED_ALLOC@
+_GL_CXXALIASWARN (aligned_alloc);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef aligned_alloc
+# if HAVE_RAW_DECL_ALIGNED_ALLOC
+_GL_WARN_ON_USE (aligned_alloc, "aligned_alloc is not portable - "
+                 "use gnulib module aligned_alloc for portability");
+# endif
+#endif
+
 #if @GNULIB_ATOLL@
 /* Parse a signed decimal integer.
    Returns the value of the integer.  Errors are not detected.  */

@@ -1,4 +1,4 @@
-# stdlib_h.m4 serial 50
+# stdlib_h.m4 serial 51
 dnl Copyright (C) 2007-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -22,7 +22,8 @@ AC_DEFUN([gl_STDLIB_H],
 #if HAVE_RANDOM_H
 # include <random.h>
 #endif
-    ]], [_Exit atoll canonicalize_file_name getloadavg getsubopt grantpt
+    ]], [_Exit aligned_alloc atoll canonicalize_file_name
+    getloadavg getsubopt grantpt
     initstate initstate_r mbtowc mkdtemp mkostemp mkostemps mkstemp mkstemps
     posix_memalign posix_openpt ptsname ptsname_r qsort_r
     random random_r reallocarray realpath rpmatch secure_getenv setenv
@@ -44,6 +45,7 @@ AC_DEFUN([gl_STDLIB_MODULE_INDICATOR],
 AC_DEFUN([gl_STDLIB_H_DEFAULTS],
 [
   GNULIB__EXIT=0;         AC_SUBST([GNULIB__EXIT])
+  GNULIB_ALIGNED_ALLOC=0; AC_SUBST([GNULIB_ALIGNED_ALLOC])
   GNULIB_ATOLL=0;         AC_SUBST([GNULIB_ATOLL])
   GNULIB_CALLOC_POSIX=0;  AC_SUBST([GNULIB_CALLOC_POSIX])
   GNULIB_CANONICALIZE_FILE_NAME=0;  AC_SUBST([GNULIB_CANONICALIZE_FILE_NAME])
@@ -81,6 +83,7 @@ AC_DEFUN([gl_STDLIB_H_DEFAULTS],
   GNULIB_WCTOMB=0;        AC_SUBST([GNULIB_WCTOMB])
   dnl Assume proper GNU behavior unless another module says otherwise.
   HAVE__EXIT=1;              AC_SUBST([HAVE__EXIT])
+  HAVE_ALIGNED_ALLOC=1;      AC_SUBST([HAVE_ALIGNED_ALLOC])
   HAVE_ATOLL=1;              AC_SUBST([HAVE_ATOLL])
   HAVE_CANONICALIZE_FILE_NAME=1;  AC_SUBST([HAVE_CANONICALIZE_FILE_NAME])
   HAVE_DECL_GETLOADAVG=1;    AC_SUBST([HAVE_DECL_GETLOADAVG])
@@ -118,6 +121,7 @@ AC_DEFUN([gl_STDLIB_H_DEFAULTS],
   HAVE_SYS_LOADAVG_H=0;      AC_SUBST([HAVE_SYS_LOADAVG_H])
   HAVE_UNLOCKPT=1;           AC_SUBST([HAVE_UNLOCKPT])
   HAVE_DECL_UNSETENV=1;      AC_SUBST([HAVE_DECL_UNSETENV])
+  REPLACE_ALIGNED_ALLOC=0;   AC_SUBST([REPLACE_ALIGNED_ALLOC])
   REPLACE_CALLOC=0;          AC_SUBST([REPLACE_CALLOC])
   REPLACE_CANONICALIZE_FILE_NAME=0;  AC_SUBST([REPLACE_CANONICALIZE_FILE_NAME])
   REPLACE_INITSTATE=0;       AC_SUBST([REPLACE_INITSTATE])

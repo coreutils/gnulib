@@ -28,6 +28,10 @@
 SIGNATURE_CHECK (GNULIB_NAMESPACE::_Exit, void, (int));
 #endif
 
+#if GNULIB_TEST_ALIGNED_ALLOC && HAVE_ALIGNED_ALLOC
+SIGNATURE_CHECK (GNULIB_NAMESPACE::aligned_alloc, void *, (size_t, size_t));
+#endif
+
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::atexit, int, (void (*) (void)));
 
 #if GNULIB_TEST_ATOLL
