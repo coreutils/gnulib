@@ -4,10 +4,13 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/posix_memalign.html}
 
-Gnulib module: ---
+Gnulib module: posix_memalign
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+This function produces misaligned results on some platforms:
+OpenBSD 6.1.
 @end itemize
 
 Portability problems not fixed by Gnulib:

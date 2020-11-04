@@ -85,6 +85,11 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::mkstemp, int, (char *));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::mkstemps, int, (char *, int));
 #endif
 
+#if GNULIB_TEST_POSIX_MEMALIGN && HAVE_POSIX_MEMALIGN
+SIGNATURE_CHECK (GNULIB_NAMESPACE::posix_memalign, int,
+                 (void **, size_t, size_t));
+#endif
+
 #if GNULIB_TEST_POSIX_OPENPT
 SIGNATURE_CHECK (GNULIB_NAMESPACE::posix_openpt, int, (int));
 #endif

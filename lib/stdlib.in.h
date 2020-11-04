@@ -488,6 +488,35 @@ _GL_WARN_ON_USE (mkstemps, "mkstemps is unportable - "
 # define mktemp _mktemp
 #endif
 
+/* Allocate memory with indefinite extent and specified alignment.  */
+#if @GNULIB_POSIX_MEMALIGN@
+# if @REPLACE_POSIX_MEMALIGN@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef posix_memalign
+#   define posix_memalign rpl_posix_memalign
+#  endif
+_GL_FUNCDECL_RPL (posix_memalign, int,
+                  (void **memptr, size_t alignment, size_t size)
+                  _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_RPL (posix_memalign, int,
+                  (void **memptr, size_t alignment, size_t size));
+# else
+#  if @HAVE_POSIX_MEMALIGN@
+_GL_CXXALIAS_SYS (posix_memalign, int,
+                  (void **memptr, size_t alignment, size_t size));
+#  endif
+# endif
+# if @HAVE_POSIX_MEMALIGN@
+_GL_CXXALIASWARN (posix_memalign);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef posix_memalign
+# if HAVE_RAW_DECL_POSIX_MEMALIGN
+_GL_WARN_ON_USE (posix_memalign, "posix_memalign is not portable - "
+                 "use gnulib module posix_memalign for portability");
+# endif
+#endif
+
 #if @GNULIB_POSIX_OPENPT@
 /* Return an FD open to the master side of a pseudo-terminal.  Flags should
    include O_RDWR, and may also include O_NOCTTY.  */
