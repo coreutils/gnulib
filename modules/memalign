@@ -1,0 +1,22 @@
+Description:
+Allocate memory with indefinite extent and specified alignment.
+
+Files:
+
+Depends-on:
+
+configure.ac:
+AC_CHECK_FUNCS([memalign])
+
+Makefile.am:
+
+Include:
+#if HAVE_MEMALIGN
+#include <malloc.h>
+#endif
+
+License:
+LGPLv2+
+
+Maintainer:
+all

@@ -15,7 +15,7 @@ Documentation:
 @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/memalign.3.html,,man memalign}.
 @end itemize
 
-Gnulib module: ---
+Gnulib module: memalign
 
 Portability problems fixed by Gnulib:
 @itemize
