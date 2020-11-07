@@ -4170,11 +4170,12 @@ func_emit_tests_Makefile_am ()
     # It needs to be passed to the linker before ${libname}.${libext}, since
     # the tests-related modules depend on the main modules.
     # It also needs to be passed to the linker after ${libname}.${libext}
-    # because the latter might contain incomplete modules (such as the 'error'
-    # module whose dependency to 'progname' is voluntarily omitted).
+    # because the latter might contain incomplete modules (such as the
+    # 'version-etc' module whose dependency to 'version-etc-fsf' is voluntarily
+    # omitted).
     # The LIBTESTS_LIBDEPS can be passed to the linker once or twice, it does
     # not matter.
-    echo "LDADD = libtests.a ${testsbase_inverse}/${sourcebase-lib}/${libname}.${libext} libtests.a ${testsbase_inverse}/${sourcebase-lib}/${libname}.${libext} \$(LIBTESTS_LIBDEPS)"
+    echo "LDADD = libtests.a ${testsbase_inverse}/${sourcebase-lib}/${libname}.${libext} libtests.a ${testsbase_inverse}/${sourcebase-lib}/${libname}.${libext} libtests.a \$(LIBTESTS_LIBDEPS)"
   else
     echo "LDADD = ${testsbase_inverse}/${sourcebase-lib}/${libname}.${libext}"
   fi
