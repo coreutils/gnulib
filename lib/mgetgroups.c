@@ -35,7 +35,7 @@
 
 /* Work around an incompatibility of OS X 10.11: getgrouplist
    accepts int *, not gid_t *, and int and gid_t differ in sign.  */
-#if 4 < __GNUC__ + (3 <= __GNUC_MINOR__)
+#if 4 < __GNUC__ + (3 <= __GNUC_MINOR__) || defined __clang__
 # pragma GCC diagnostic ignored "-Wpointer-sign"
 #endif
 
