@@ -20,9 +20,11 @@
 
 #include "parse-datetime.h"
 
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 #include "macros.h"
 
@@ -435,13 +437,21 @@ main (int argc _GL_UNUSED, char **argv)
   /* Outlandishly-long time zone abbreviations should not cause problems.  */
   {
     static char const bufprefix[] = "TZ=\"";
-    enum { tzname_len = 2000 };
+    long int tzname_max = -1;
+    errno = 0;
+#ifdef _SC_TZNAME_MAX
+    tzname_max = sysconf (_SC_TZNAME_MAX);
+#endif
+    enum { tzname_alloc = 2000 };
+    if (tzname_max < 0)
+      tzname_max = errno ? 6 : tzname_alloc;
+    int tzname_len = tzname_alloc < tzname_max ? tzname_alloc : tzname_max;
     static char const bufsuffix[] = "0\" 1970-01-01 01:02:03.123456789";
-    enum { bufsize = sizeof bufprefix - 1 + tzname_len + sizeof bufsuffix };
+    enum { bufsize = sizeof bufprefix - 1 + tzname_alloc + sizeof bufsuffix };
     char buf[bufsize];
     memcpy (buf, bufprefix, sizeof bufprefix - 1);
     memset (buf + sizeof bufprefix - 1, 'X', tzname_len);
-    strcpy (buf + bufsize - sizeof bufsuffix, bufsuffix);
+    strcpy (buf + sizeof bufprefix - 1 + tzname_len, bufsuffix);
     ASSERT (parse_datetime (&result, buf, &now));
     LOG (buf, now, result);
     ASSERT (result.tv_sec == 1 * 60 * 60 + 2 * 60 + 3
