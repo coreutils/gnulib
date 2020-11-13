@@ -49,7 +49,7 @@ print_category (int category, const char *variable)
 }
 
 int
-main ()
+main (void)
 {
   setlocale (LC_ALL, "");
 
