@@ -499,7 +499,7 @@ do
       if test -n "$backupsuffix" && test -f "$dst"; then
         $doit $mvcmd -f "$dst" "$dst$backupsuffix" 2>/dev/null
       fi
-      
+
       # Rename the file to the real destination.
       $doit $mvcmd -f "$dsttmp" "$dst" 2>/dev/null ||
 
