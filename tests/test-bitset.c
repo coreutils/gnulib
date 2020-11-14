@@ -48,24 +48,28 @@ void compare (enum bitset_attr a, enum bitset_attr b)
 {
   const int nbits = RANDOM (256);
 
-  bitset asrc0 = bitset_create (nbits, a);
+  /* Four read only random initial values of type A.  */
+  const bitset asrc0 = bitset_create (nbits, a);
   bitset_random (asrc0);
-  bitset asrc1 = bitset_create (nbits, a);
+  const bitset asrc1 = bitset_create (nbits, a);
   bitset_random (asrc1);
-  bitset asrc2 = bitset_create (nbits, a);
+  const bitset asrc2 = bitset_create (nbits, a);
   bitset_random (asrc2);
-  bitset asrc3 = bitset_create (nbits, a);
+  const bitset asrc3 = bitset_create (nbits, a);
   bitset_random (asrc3);
-  bitset adst = bitset_create (nbits, a);
 
-  bitset bsrc0 = bitset_create (nbits, b);
+  /* Four read only values of type B, equal to the values of type A. */
+  const bitset bsrc0 = bitset_create (nbits, b);
   bitset_copy (bsrc0, asrc0);
-  bitset bsrc1 = bitset_create (nbits, b);
+  const bitset bsrc1 = bitset_create (nbits, b);
   bitset_copy (bsrc1, asrc1);
-  bitset bsrc2 = bitset_create (nbits, b);
+  const bitset bsrc2 = bitset_create (nbits, b);
   bitset_copy (bsrc2, asrc2);
-  bitset bsrc3 = bitset_create (nbits, b);
+  const bitset bsrc3 = bitset_create (nbits, b);
   bitset_copy (bsrc3, asrc3);
+
+  /* Destinations for each operation.  */
+  bitset adst = bitset_create (nbits, a);
   bitset bdst = bitset_create (nbits, b);
 
   /* not */
@@ -138,6 +142,89 @@ void compare (enum bitset_attr a, enum bitset_attr b)
   bitset_zero (adst);
   bitset_zero (bdst);
   assert_bitset_equal (adst, bdst);
+
+  /* first and last and FOR_EACH.
+
+     Exercise on random values (i == -1), but also on all the
+     single-bit values: it's easy to get the handling of the most
+     significant bit wrong.  */
+  for (int i = -1; i < nbits; ++i)
+    {
+      /* Work on bdst to exercise all the bitset types (adst is
+         BITSET_VARIABLE).  */
+      if (i >= 0)
+        {
+          bitset_zero (bdst);
+          bitset_set (bdst, i);
+        }
+      else
+        {
+          bitset_copy (bdst, bsrc0);
+          debug_bitset (bdst);
+          debug_bitset (bsrc0);
+        }
+      bitset_copy (adst, bdst);
+
+      /* first and last */
+      {
+        bitset_bindex first = bitset_first (adst);
+        ASSERT (first == bitset_first (bdst));
+
+        bitset_bindex last  = bitset_last (adst);
+        ASSERT (last == bitset_last (bdst));
+
+        if (i >= 0)
+          {
+            ASSERT (first == i);
+            ASSERT (last == i);
+          }
+
+        if (first != BITSET_BINDEX_MAX)
+          {
+            ASSERT (last != BITSET_BINDEX_MAX);
+            ASSERT (first <= last);
+            ASSERT (bitset_test (adst, first));
+            ASSERT (bitset_test (adst, last));
+            ASSERT (bitset_test (bdst, first));
+            ASSERT (bitset_test (bdst, last));
+          }
+        else
+          ASSERT (last == BITSET_BINDEX_MAX);
+      }
+
+
+      /* FOR_EACH.  */
+      {
+        bitset_iterator iter;
+        bitset_bindex j;
+        bitset_bindex first = bitset_first (bdst);
+        bitset_bindex last  = bitset_last (bdst);
+        bool seen_first = false;
+        bool seen_last = false;
+        BITSET_FOR_EACH (iter, bdst, j, 0)
+          {
+            ASSERT (first <= j && j <= last);
+            ASSERT (bitset_test (bdst, j));
+            if (j == first)
+              seen_first = true;
+            if (j == last)
+              seen_last = true;
+            if (0 <= i)
+              ASSERT (j == i);
+          }
+        if (first == BITSET_BINDEX_MAX)
+          {
+            ASSERT (!seen_first);
+            ASSERT (!seen_last);
+          }
+        else
+          {
+            ASSERT (seen_first);
+            ASSERT (seen_last);
+          }
+      }
+    }
+
 
   /* resize.
 
