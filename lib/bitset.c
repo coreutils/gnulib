@@ -207,8 +207,6 @@ bitset_type_name_get (bitset bset)
 }
 
 
-/* Find next bit set in SRC starting from and including BITNO.
-   Return BITSET_BINDEX_MAX if SRC empty.  */
 bitset_bindex
 bitset_next (bitset src, bitset_bindex bitno)
 {
@@ -228,8 +226,6 @@ bitset_compatible_p (bitset bset1, bitset bset2)
 }
 
 
-/* Find previous bit set in SRC starting from and including BITNO.
-   Return BITSET_BINDEX_MAX if SRC empty.  */
 bitset_bindex
 bitset_prev (bitset src, bitset_bindex bitno)
 {

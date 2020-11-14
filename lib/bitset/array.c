@@ -42,7 +42,7 @@ abitset_resize (bitset src, bitset_bindex size)
   return size;
 }
 
-/* Find list of up to NUM bits set in BSET starting from and including
+/* Find list of up to NUM bits set in SRC starting from and including
    *NEXT and store in array LIST.  Return with actual number of bits
    found and with *NEXT indicating where search stopped.  */
 static bitset_bindex
@@ -130,7 +130,7 @@ abitset_test (bitset src MAYBE_UNUSED,
 }
 
 
-/* Find list of up to NUM bits set in BSET in reverse order, starting
+/* Find list of up to NUM bits set in SRC in reverse order, starting
    from and including NEXT and store in array LIST.  Return with
    actual number of bits found and with *NEXT indicating where search
    stopped.  */
@@ -182,7 +182,7 @@ abitset_list_reverse (bitset src, bitset_bindex *list,
 }
 
 
-/* Find list of up to NUM bits set in BSET starting from and including
+/* Find list of up to NUM bits set in SRC starting from and including
    *NEXT and store in array LIST.  Return with actual number of bits
    found and with *NEXT indicating where search stopped.  */
 static bitset_bindex

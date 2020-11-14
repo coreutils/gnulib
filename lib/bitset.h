@@ -282,17 +282,21 @@ bitset_test (bitset bset, bitset_bindex bitno)
 /* Return true if both bitsets are of the same type and size.  */
 bool bitset_compatible_p (bitset bset1, bitset bset2);
 
-/* Find next set bit from the given bit index.  */
-bitset_bindex bitset_next (bitset, bitset_bindex);
+/* Find next bit set in SRC starting from and including BITNO.
+   Return BITSET_BINDEX_MAX if SRC empty.  */
+bitset_bindex bitset_next (bitset src, bitset_bindex bitno);
 
-/* Find previous set bit from the given bit index.  */
-bitset_bindex bitset_prev (bitset, bitset_bindex);
+/* Find previous bit set in SRC starting from and including BITNO.
+   Return BITSET_BINDEX_MAX if SRC empty.  */
+bitset_bindex bitset_prev (bitset src, bitset_bindex bitno);
 
-/* Find first set bit.  */
-bitset_bindex bitset_first (bitset);
+/* Find first set bit.
+   Return BITSET_BINDEX_MAX if SRC empty.  */
+bitset_bindex bitset_first (bitset src);
 
-/* Find last set bit.  */
-bitset_bindex bitset_last (bitset);
+/* Find last set bit.
+   Return BITSET_BINDEX_MAX if SRC empty.  */
+bitset_bindex bitset_last (bitset src);
 
 /* Return nonzero if this is the only set bit.  */
 bool bitset_only_set_p (bitset, bitset_bindex);
