@@ -51,8 +51,13 @@ enum { STACK_BUF_SIZE = 1024 };
    to pacify GCC is known; even an explicit #pragma does not pacify GCC.
    When the GCC bug is fixed this workaround should be limited to the
    broken GCC versions.  */
-#if (defined GCC_LINT || defined lint) && _GL_GNUC_PREREQ (10, 1)
+#if _GL_GNUC_PREREQ (10, 1)
+# if defined GCC_LINT || defined lint
 __attribute__ ((__noinline__))
+# elif __OPTIMIZE__ && !__NO_INLINE__
+#  warning "GCC might issue a bogus -Wreturn-local-addr warning here."
+#  warning "See <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=93644>."
+# endif
 #endif
 static char *
 readlink_stk (int fd, char const *filename,
