@@ -19,6 +19,7 @@ lib/bitset/vector.h
 Depends-on:
 attribute
 c99
+ffsl
 fopen-gnu
 gettext-h
 obstack

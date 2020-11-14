@@ -24,6 +24,7 @@
 #include <limits.h>
 #include <stdbool.h>
 #include <stddef.h>
+#include <string.h> /* ffsl */
 
 #include "attribute.h"
 #include "xalloc.h"
@@ -52,6 +53,14 @@ extern const char * const bitset_type_names[];
 typedef unsigned long bitset_word;
 #define BITSET_WORD_BITS ((unsigned) (CHAR_BIT * sizeof (bitset_word)))
 
+/* Iterate over each set bit of WORD.
+   Each iteration sets POS to the 0-based index of the next set bit in WORD.
+   Repeatedly resets bits in WORD in place until it's null.  */
+#define BITSET_FOR_EACH_BIT(Pos, Word)                  \
+  for (int Pos = bitset_ffs (Word);                     \
+       0 <= Pos;                                        \
+       Word ^= 1UL << Pos, Pos = bitset_ffs (Word))
+
 /* Bit index.  In theory we might need a type wider than size_t, but
    in practice we lose at most a factor of CHAR_BIT by going with
    size_t, and that is good enough.  If this type is changed to be
@@ -59,6 +68,14 @@ typedef unsigned long bitset_word;
    overflow when converting bit counts to byte or word counts.
    The bit and word index types must be unsigned.  */
 typedef size_t bitset_bindex;
+
+/* First first set bit in WORD.
+   Indexes start at 0, return -1 if WORD is null. */
+static inline
+int bitset_ffs (bitset_word word)
+{
+  return ffsl ((long) word) - 1;
+}
 
 /* Word index.  */
 typedef size_t bitset_windex;

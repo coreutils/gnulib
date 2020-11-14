@@ -227,18 +227,15 @@ abitset_list (bitset src, bitset_bindex *list,
 
           bitoff = windex * BITSET_WORD_BITS;
           bitset_word word = srcp[windex] >> bitno;
-          for (bitno = bitoff + bitno; word; bitno++)
+          bitno = bitoff + bitno;
+          BITSET_FOR_EACH_BIT (pos, word)
             {
-              if (word & 1)
+              list[count++] = bitno + pos;
+              if (count >= num)
                 {
-                  list[count++] = bitno;
-                  if (count >= num)
-                    {
-                      *next = bitno + 1;
-                      return count;
-                    }
+                  *next = bitno + pos + 1;
+                  return count;
                 }
-              word >>= 1;
             }
           windex++;
         }
@@ -251,31 +248,20 @@ abitset_list (bitset src, bitset_bindex *list,
       if (!word)
         continue;
 
+      /* Is there enough room to avoid checking in each iteration? */
       if ((count + BITSET_WORD_BITS) < num)
-        {
-          for (bitno = bitoff; word; bitno++)
-            {
-              if (word & 1)
-                list[count++] = bitno;
-              word >>= 1;
-            }
-        }
+        BITSET_FOR_EACH_BIT (pos, word)
+          list[count++] = bitoff + pos;
       else
-        {
-          for (bitno = bitoff; word; bitno++)
-            {
-              if (word & 1)
-                {
-                  list[count++] = bitno;
-                  if (count >= num)
-                    {
-                      *next = bitno + 1;
-                      return count;
-                    }
-                }
-              word >>= 1;
-            }
-        }
+        BITSET_FOR_EACH_BIT (pos, word)
+          {
+            list[count++] = bitoff + pos;
+            if (count >= num)
+              {
+                *next = bitoff + pos + 1;
+                return count;
+              }
+          }
     }
 
   *next = bitoff;
