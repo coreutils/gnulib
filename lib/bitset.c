@@ -271,7 +271,8 @@ static void
 bitset_print (FILE *file, bitset bset, bool verbose)
 {
   if (verbose)
-    fprintf (file, "n_bits = %lu, set = {",
+    fprintf (file, "%s{n_bits = %lu, set = {",
+             bitset_type_name_get (bset),
              (unsigned long) bitset_size (bset));
 
   unsigned pos = 30;
@@ -290,7 +291,7 @@ bitset_print (FILE *file, bitset bset, bool verbose)
   }
 
   if (verbose)
-    fprintf (file, "}\n");
+    fprintf (file, "}}\n");
 }
 
 
