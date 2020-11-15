@@ -428,7 +428,7 @@ lbitset_equal_p (bitset dst, bitset src)
 
 /* Copy bits from bitset SRC to bitset DST.  */
 static inline void
-lbitset_copy (bitset dst, bitset src)
+lbitset_copy_ (bitset dst, bitset src)
 {
   if (src == dst)
     return;
@@ -462,6 +462,15 @@ lbitset_copy (bitset dst, bitset src)
   dst->b.cindex = LBITSET_HEAD (dst)->index;
 }
 
+
+static void
+lbitset_copy (bitset dst, bitset src)
+{
+  if (BITSET_COMPATIBLE_ (dst, src))
+    lbitset_copy_ (dst, src);
+  else
+    bitset_copy_ (dst, src);
+}
 
 /* Copy bits from bitset SRC to bitset DST.  Return true if
    bitsets different.  */
