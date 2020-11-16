@@ -62,38 +62,25 @@ abitset_small_list (bitset src, bitset_bindex *list,
 
   word >>= bitno;
 
-  /* If num is 1, we could speed things up with a binary search
-     of the word of interest.  */
-
-  bitset_bindex count;
+  bitset_bindex count = 0;
+  /* Is there enough room to avoid checking in each iteration? */
   if (num >= BITSET_WORD_BITS)
     {
-      for (count = 0; word; bitno++)
-        {
-          if (word & 1)
-            list[count++] = bitno;
-          word >>= 1;
-        }
+      BITSET_FOR_EACH_BIT (pos, word)
+        list[count++] = bitno + pos;
+      *next = bitno + BITSET_WORD_BITS;
+      return count;
     }
   else
-    {
-      for (count = 0; word; bitno++)
-        {
-          if (word & 1)
-            {
-              list[count++] = bitno;
-              if (count >= num)
-                {
-                  bitno++;
-                  break;
-                }
-            }
-          word >>= 1;
-        }
-    }
-
-  *next = bitno;
-  return count;
+    BITSET_FOR_EACH_BIT (pos, word)
+      {
+        list[count++] = bitno + pos;
+        if (count >= num)
+          {
+            *next = bitno + pos + 1;
+            return count;
+          }
+      }
 }
 
 
@@ -204,9 +191,6 @@ abitset_list (bitset src, bitset_bindex *list,
         continue;
       if (windex >= size)
         return 0;
-
-      /* If num is 1, we could speed things up with a binary search
-         of the current word.  */
 
       bitoff = windex * BITSET_WORD_BITS;
     }
