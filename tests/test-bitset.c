@@ -256,12 +256,10 @@ void compare (enum bitset_attr a, enum bitset_attr b)
    having attributes ATTR.  */
 
 static
-void check_attributes (enum bitset_attr attr)
+void check_attributes (enum bitset_attr attr, int nbits)
 {
-  enum { nbits = 32 };
-
   bitset bs0 = bitset_create (nbits, attr);
-  ASSERT (bitset_size (bs0) == 32);
+  ASSERT (bitset_size (bs0) == nbits);
   ASSERT (bitset_count (bs0) == 0);
   ASSERT (bitset_empty_p (bs0));
 
@@ -297,12 +295,17 @@ void check_attributes (enum bitset_attr attr)
 
 int main (void)
 {
-  check_attributes (BITSET_FIXED);
-  check_attributes (BITSET_VARIABLE);
-  check_attributes (BITSET_DENSE);
-  check_attributes (BITSET_SPARSE);
-  check_attributes (BITSET_FRUGAL);
-  check_attributes (BITSET_GREEDY);
+  for (int i = 0; i < 2; ++i)
+    {
+      /* table bitsets have elements that store 256 bits.  */
+      int nbits = i == 0 ? 32 : 257;
+      check_attributes (BITSET_FIXED,    nbits);
+      check_attributes (BITSET_VARIABLE, nbits);
+      check_attributes (BITSET_DENSE,    nbits);
+      check_attributes (BITSET_SPARSE,   nbits);
+      check_attributes (BITSET_FRUGAL,   nbits);
+      check_attributes (BITSET_GREEDY,   nbits);
+    }
 
   compare (BITSET_VARIABLE, BITSET_FIXED);
   compare (BITSET_VARIABLE, BITSET_VARIABLE);
