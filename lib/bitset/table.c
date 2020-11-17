@@ -649,15 +649,16 @@ tbitset_list (bitset bset, bitset_bindex *list,
 
   for (; eindex < size; eindex++)
     {
-      bitset_word *srcp;
 
       tbitset_elt *elt = elts[eindex];
       if (!elt)
         continue;
 
-      srcp = TBITSET_WORDS (elt);
+      bitset_word *srcp = TBITSET_WORDS (elt);
       bitset_windex windex = eindex * TBITSET_ELT_WORDS;
+      bitno = windex * BITSET_WORD_BITS;
 
+      /* Is there enough room to avoid checking in each iteration? */
       if ((count + TBITSET_ELT_BITS) < num)
         {
           /* The coast is clear, plant boot!  */
