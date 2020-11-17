@@ -27,6 +27,9 @@ lib_SOURCES += c32isblank.c
 Include:
 <uchar.h>
 
+Link:
+$(LTLIBUNISTRING) when linking with libtool, $(LIBUNISTRING) otherwise
+
 License:
 LGPLv3+ or GPLv2
 

@@ -18,4 +18,4 @@ gt_LOCALE_ZH_CN
 Makefile.am:
 TESTS += test-unicodeio1.sh test-unicodeio2.sh test-unicodeio3.sh
 check_PROGRAMS += test-unicodeio
-test_unicodeio_LDADD = $(LDADD) $(LIB_SETLOCALE) $(LIBICONV) $(LIBINTL)
+test_unicodeio_LDADD = $(LDADD) $(LIB_SETLOCALE) $(LIBUNISTRING) $(LIBICONV) $(LIBINTL)

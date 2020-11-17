@@ -27,6 +27,7 @@ Include:
 
 Link:
 $(LTLIBICONV) when linking with libtool, $(LIBICONV) otherwise
+$(LTLIBUNISTRING) when linking with libtool, $(LIBUNISTRING) otherwise
 
 License:
 GPL
