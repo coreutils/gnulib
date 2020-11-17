@@ -72,6 +72,9 @@ void compare (enum bitset_attr a, enum bitset_attr b)
   bitset adst = bitset_create (nbits, a);
   bitset bdst = bitset_create (nbits, b);
 
+  /* count */
+  ASSERT (bitset_count (asrc0) == bitset_count (bsrc0));
+
   /* not */
   bitset_not (adst, asrc0);
   bitset_not (bdst, bsrc0);
@@ -143,88 +146,57 @@ void compare (enum bitset_attr a, enum bitset_attr b)
   bitset_zero (bdst);
   assert_bitset_equal (adst, bdst);
 
-  /* first and last and FOR_EACH.
+  /* first and last and FOR_EACH.  */
+  /* Work on bdst to exercise all the bitset types (adst is
+     BITSET_VARIABLE).  */
+  bitset_copy (bdst, bsrc0);
+  debug_bitset (bdst);
+  debug_bitset (bsrc0);
+  bitset_copy (adst, bdst);
 
-     Exercise on random values (i == -1), but also on all the
-     single-bit values: it's easy to get the handling of the most
-     significant bit wrong.  */
-  for (int i = -1; i < nbits; ++i)
-    {
-      /* Work on bdst to exercise all the bitset types (adst is
-         BITSET_VARIABLE).  */
-      if (i >= 0)
-        {
-          bitset_zero (bdst);
-          bitset_set (bdst, i);
-        }
-      else
-        {
-          bitset_copy (bdst, bsrc0);
-          debug_bitset (bdst);
-          debug_bitset (bsrc0);
-        }
-      bitset_copy (adst, bdst);
+  /* count. */
+  ASSERT (bitset_count (adst) == bitset_count (bdst));
 
-      /* first and last */
+  /* first and last */
+  {
+    bitset_bindex first = bitset_first (adst);
+    ASSERT (first == bitset_first (bdst));
+
+    bitset_bindex last  = bitset_last (adst);
+    ASSERT (last == bitset_last (bdst));
+
+    ASSERT (first <= last);
+  }
+
+
+  /* FOR_EACH.  */
+  {
+    bitset_iterator iter;
+    bitset_bindex j;
+    bitset_bindex first = bitset_first (bdst);
+    bitset_bindex last  = bitset_last (bdst);
+    bool seen_first = false;
+    bool seen_last = false;
+    BITSET_FOR_EACH (iter, bdst, j, 0)
       {
-        bitset_bindex first = bitset_first (adst);
-        ASSERT (first == bitset_first (bdst));
-
-        bitset_bindex last  = bitset_last (adst);
-        ASSERT (last == bitset_last (bdst));
-
-        if (i >= 0)
-          {
-            ASSERT (first == i);
-            ASSERT (last == i);
-          }
-
-        if (first != BITSET_BINDEX_MAX)
-          {
-            ASSERT (last != BITSET_BINDEX_MAX);
-            ASSERT (first <= last);
-            ASSERT (bitset_test (adst, first));
-            ASSERT (bitset_test (adst, last));
-            ASSERT (bitset_test (bdst, first));
-            ASSERT (bitset_test (bdst, last));
-          }
-        else
-          ASSERT (last == BITSET_BINDEX_MAX);
+        ASSERT (first <= j && j <= last);
+        ASSERT (bitset_test (bdst, j));
+        if (j == first)
+          seen_first = true;
+        if (j == last)
+          seen_last = true;
       }
-
-
-      /* FOR_EACH.  */
+    if (first == BITSET_BINDEX_MAX)
       {
-        bitset_iterator iter;
-        bitset_bindex j;
-        bitset_bindex first = bitset_first (bdst);
-        bitset_bindex last  = bitset_last (bdst);
-        bool seen_first = false;
-        bool seen_last = false;
-        BITSET_FOR_EACH (iter, bdst, j, 0)
-          {
-            ASSERT (first <= j && j <= last);
-            ASSERT (bitset_test (bdst, j));
-            if (j == first)
-              seen_first = true;
-            if (j == last)
-              seen_last = true;
-            if (0 <= i)
-              ASSERT (j == i);
-          }
-        if (first == BITSET_BINDEX_MAX)
-          {
-            ASSERT (!seen_first);
-            ASSERT (!seen_last);
-          }
-        else
-          {
-            ASSERT (seen_first);
-            ASSERT (seen_last);
-          }
+        ASSERT (!seen_first);
+        ASSERT (!seen_last);
       }
-    }
-
+    else
+      {
+        ASSERT (seen_first);
+        ASSERT (seen_last);
+      }
+  }
 
   /* resize.
 
@@ -252,11 +224,39 @@ void compare (enum bitset_attr a, enum bitset_attr b)
 }
 
 
+/* Exercise on a single-bit values: it's easy to get the handling of
+   the most significant bit wrong.  */
+
+static void
+check_one_bit (bitset bs, int bitno)
+{
+  bitset_zero (bs);
+  bitset_set (bs, bitno);
+
+  /* count. */
+  ASSERT (bitset_count (bs) == 1);
+
+  /* test. */
+  ASSERT (bitset_test (bs, bitno));
+
+  /* first and last */
+  ASSERT (bitset_first (bs) == bitno);
+  ASSERT (bitset_last (bs) == bitno);
+
+  /* FOR_EACH.  */
+  {
+    bitset_iterator iter;
+    bitset_bindex i;
+    BITSET_FOR_EACH (iter, bs, i, 0)
+      ASSERT (i == bitno);
+  }
+}
+
 /* Check various operations against expected values for a bitset
    having attributes ATTR.  */
 
-static
-void check_attributes (enum bitset_attr attr, int nbits)
+static void
+check_attributes (enum bitset_attr attr, int nbits)
 {
   bitset bs0 = bitset_create (nbits, attr);
   ASSERT (bitset_size (bs0) == nbits);
@@ -286,6 +286,11 @@ void check_attributes (enum bitset_attr attr, int nbits)
   /* or */
   bitset_or (bs, bs1, bs2);
   ASSERT (bitset_count (bs) == 6);
+
+  /* Exercise on all the single-bit values: it's easy to get the
+     handling of the most significant bit wrong.  */
+  for (int bitno = 0; bitno < nbits; ++bitno)
+    check_one_bit (bs, bitno);
 
   bitset_free (bs);
   bitset_free (bs2);
