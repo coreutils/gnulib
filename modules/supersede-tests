@@ -19,4 +19,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-supersede
 check_PROGRAMS += test-supersede
-test_supersede_LDADD = $(LDADD) $(LIB_ACL) $(LIB_CLOCK_GETTIME) $(LIB_GETRANDOM) $(LIBINTL)
+test_supersede_LDADD = $(LDADD) $(LIB_ACL) $(LIB_CLOCK_GETTIME) $(LIB_GETRANDOM) $(LIBINTL) $(LIBTHREAD)

@@ -38,6 +38,7 @@ Include:
 
 Link:
 $(LIB_GETRANDOM)
+$(LIBTHREAD)
 
 License:
 GPL

@@ -27,6 +27,9 @@ lib_SOURCES += fatal-signal.h fatal-signal.c
 Include:
 "fatal-signal.h"
 
+Link:
+$(LIBTHREAD)
+
 License:
 GPL
 

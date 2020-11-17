@@ -29,6 +29,7 @@ Include:
 Link:
 $(LIB_GETRANDOM)
 $(LIB_CLOCK_GETTIME)
+$(LIBTHREAD)
 
 License:
 GPL

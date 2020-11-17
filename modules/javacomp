@@ -44,6 +44,7 @@ Include:
 Link:
 $(LIB_MBRTOWC)
 $(LIB_GETRANDOM)
+$(LIBTHREAD)
 
 License:
 GPL

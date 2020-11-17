@@ -29,6 +29,9 @@ lib_SOURCES += pipe-filter-ii.c pipe-filter-aux.c
 Include:
 "pipe-filter.h"
 
+Link:
+$(LIBTHREAD)
+
 License:
 GPL
 

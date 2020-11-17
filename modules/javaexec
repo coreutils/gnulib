@@ -30,6 +30,7 @@ Include:
 
 Link:
 $(LIB_MBRTOWC)
+$(LIBTHREAD)
 
 License:
 GPL

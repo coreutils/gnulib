@@ -24,6 +24,9 @@ lib_SOURCES += term-style-control.c
 Include:
 "term-style-control.h"
 
+Link:
+$(LIBTHREAD)
+
 License:
 GPL
 
