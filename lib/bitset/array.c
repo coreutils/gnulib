@@ -65,12 +65,8 @@ abitset_small_list (bitset src, bitset_bindex *list,
   bitset_bindex count = 0;
   /* Is there enough room to avoid checking in each iteration? */
   if (num >= BITSET_WORD_BITS)
-    {
-      BITSET_FOR_EACH_BIT (pos, word)
-        list[count++] = bitno + pos;
-      *next = bitno + BITSET_WORD_BITS;
-      return count;
-    }
+    BITSET_FOR_EACH_BIT (pos, word)
+      list[count++] = bitno + pos;
   else
     BITSET_FOR_EACH_BIT (pos, word)
       {
@@ -81,6 +77,8 @@ abitset_small_list (bitset src, bitset_bindex *list,
             return count;
           }
       }
+  *next = bitno + BITSET_WORD_BITS;
+  return count;
 }
 
 
