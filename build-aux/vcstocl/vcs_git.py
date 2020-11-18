@@ -34,7 +34,7 @@ class GitRepo:
         # Clean up the output by removing trailing spaces, newlines and dropping
         # blank lines.
         op = [decode(x[:-1]).strip() for x in proc.stdout]
-        op = [re.sub(r'[\s\f]+', ' ', x) for x in op]
+        op = [re.sub(r'[ \f]+', ' ', x) for x in op]
         op = [x for x in op if x]
         return op
 
@@ -125,25 +125,31 @@ class GitRepo:
         #
         # For more details: https://git-scm.com/docs/diff-format
         for f in op:
-            data = f.split()
+            data = f.split('\t')
+            file1 = data[1]
+            if len(data) > 2:
+                file2 = data[2]
+
+            data = data[0].split()
+
             if data[4] == 'A':
-                print('\t* %s: New file.' % data[5])
+                print('\t* %s: New file.' % file1)
             elif data[4] == 'D':
-                print('\t* %s: Delete file.' % data[5])
+                print('\t* %s: Delete file.' % file1)
             elif data[4] == 'T':
                 print('\t* %s: Changed file permission bits from %s to %s' % \
-                        (data[5], data[0], data[1]))
+                        (file1, data[0], data[1]))
             elif data[4][0] == 'M':
-                print('\t* %s: Modified.' % data[5])
-                analyze_diff(data[5],
+                print('\t* %s: Modified.' % file1)
+                analyze_diff(file1,
                              self.exec_git_cmd(['show', data[2]]),
                              self.exec_git_cmd(['show', data[3]]), frontends)
             elif data[4][0] == 'R' or data[4][0] == 'C':
                 change = int(data[4][1:])
-                print('\t* %s: Move to...' % data[5])
-                print('\t* %s: ... here.' % data[6])
+                print('\t* %s: Move to...' % file1)
+                print('\t* %s: ... here.' % file2)
                 if change < 100:
-                    analyze_diff(data[6],
+                    analyze_diff(file2,
                                  self.exec_git_cmd(['show', data[2]]),
                                  self.exec_git_cmd(['show', data[3]]), frontends)
             # We should never encounter this, so ignore for now.
