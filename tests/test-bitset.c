@@ -224,12 +224,37 @@ void compare (enum bitset_attr a, enum bitset_attr b)
 }
 
 
+/* Check empty bitsets.  */
+
+static void
+check_zero (bitset bs)
+{
+  fprintf (stderr, "check_zero\n");
+  bitset_zero (bs);
+
+  /* count. */
+  ASSERT (bitset_count (bs) == 0);
+
+  /* first and last */
+  ASSERT (bitset_first (bs) == BITSET_BINDEX_MAX);
+  ASSERT (bitset_last (bs)  == BITSET_BINDEX_MAX);
+
+  /* FOR_EACH.  */
+  {
+    bitset_iterator iter;
+    bitset_bindex i;
+    BITSET_FOR_EACH (iter, bs, i, 0)
+      ASSERT (0);
+  }
+}
+
 /* Exercise on a single-bit values: it's easy to get the handling of
    the most significant bit wrong.  */
 
 static void
 check_one_bit (bitset bs, int bitno)
 {
+  fprintf (stderr, "check_one_bit(%d)\n", bitno);
   bitset_zero (bs);
   bitset_set (bs, bitno);
 
@@ -249,6 +274,34 @@ check_one_bit (bitset bs, int bitno)
     bitset_bindex i;
     BITSET_FOR_EACH (iter, bs, i, 0)
       ASSERT (i == bitno);
+  }
+}
+
+/* Check full bitsets.  */
+
+static void
+check_ones (bitset bs)
+{
+  fprintf (stderr, "check_ones\n");
+  const bitset_bindex size = bitset_size (bs);
+
+  bitset_ones (bs);
+  debug_bitset (bs);
+
+  /* count. */
+  ASSERT (bitset_count (bs) == size);
+
+  /* first and last */
+  ASSERT (bitset_first (bs) == 0);
+  ASSERT (bitset_last (bs)  == size - 1);
+
+  /* FOR_EACH.  */
+  {
+    bitset_iterator iter;
+    bitset_bindex i;
+    bitset_bindex count = 0;
+    BITSET_FOR_EACH (iter, bs, i, 0)
+      ASSERT (i == count++);
   }
 }
 
@@ -286,6 +339,9 @@ check_attributes (enum bitset_attr attr, int nbits)
   /* or */
   bitset_or (bs, bs1, bs2);
   ASSERT (bitset_count (bs) == 6);
+
+  check_zero (bs);
+  check_ones (bs);
 
   /* Exercise on all the single-bit values: it's easy to get the
      handling of the most significant bit wrong.  */
