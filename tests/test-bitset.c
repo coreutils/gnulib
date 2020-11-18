@@ -22,8 +22,8 @@
 
 #define RANDOM(n) (rand () % (n))
 
-static
-void assert_bitset_equal (bitset bs1, bitset bs2)
+static void
+assert_bitset_equal (bitset bs1, bitset bs2)
 {
   debug_bitset (bs1);
   debug_bitset (bs2);
@@ -32,8 +32,8 @@ void assert_bitset_equal (bitset bs1, bitset bs2)
     ASSERT (bitset_test (bs1, i) == bitset_test (bs2, i));
 }
 
-static
-void bitset_random (bitset bs)
+static void
+bitset_random (bitset bs)
 {
   for (bitset_bindex i = 0; i < bitset_size (bs); ++i)
     bitset_set (bs, RANDOM (2));
@@ -43,10 +43,12 @@ void bitset_random (bitset bs)
 /* Check various operations on random bitsets with two different
    implementations.  */
 
-static
-void compare (enum bitset_attr a, enum bitset_attr b)
+static void
+compare (enum bitset_attr a, enum bitset_attr b)
 {
-  const int nbits = RANDOM (256);
+  /* bitset_list (used in many operations) uses a cache whose size is
+     BITSET_LIST_SIZE */
+  const int nbits = RANDOM (2 * BITSET_LIST_SIZE);
 
   /* Four read only random initial values of type A.  */
   const bitset asrc0 = bitset_create (nbits, a);
@@ -356,10 +358,16 @@ check_attributes (enum bitset_attr attr, int nbits)
 
 int main (void)
 {
-  for (int i = 0; i < 2; ++i)
+  for (int i = 0; i < 4; ++i)
     {
-      /* table bitsets have elements that store 256 bits.  */
-      int nbits = i == 0 ? 32 : 257;
+      /* table bitsets have elements that store 256 bits.  bitset_list
+         (used in many operations) uses a cache whose size is
+         BITSET_LIST_SIZE.  */
+      int nbits =
+        i == 0   ? 1
+        : i == 1 ? 32
+        : i == 2 ? 257
+        :          (BITSET_LIST_SIZE + 1);
       check_attributes (BITSET_FIXED,    nbits);
       check_attributes (BITSET_VARIABLE, nbits);
       check_attributes (BITSET_DENSE,    nbits);
