@@ -204,6 +204,7 @@ static bitset_bindex
 vbitset_list (bitset src, bitset_bindex *list,
               bitset_bindex num, bitset_bindex *next)
 {
+  /* FIXME: almost a duplicate of abitset_list.  Factor?  */
   bitset_windex size = VBITSET_SIZE (src);
   bitset_word *srcp = VBITSET_WORDS (src);
   bitset_bindex bitno = *next;
@@ -211,7 +212,6 @@ vbitset_list (bitset src, bitset_bindex *list,
 
   bitset_windex windex;
   bitset_bindex bitoff;
-  bitset_word word;
 
   if (!bitno)
     {
@@ -242,19 +242,16 @@ vbitset_list (bitset src, bitset_bindex *list,
              on the previous call to this function.  */
 
           bitoff = windex * BITSET_WORD_BITS;
-          word = srcp[windex] >> bitno;
-          for (bitno = bitoff + bitno; word; bitno++)
+          bitset_word word = srcp[windex] >> bitno;
+          bitno = bitoff + bitno;
+          BITSET_FOR_EACH_BIT (pos, word)
             {
-              if (word & 1)
+              list[count++] = bitno + pos;
+              if (count >= num)
                 {
-                  list[count++] = bitno;
-                  if (count >= num)
-                    {
-                      *next = bitno + 1;
-                      return count;
-                    }
+                  *next = bitno + pos + 1;
+                  return count;
                 }
-              word >>= 1;
             }
           windex++;
         }
@@ -263,34 +260,24 @@ vbitset_list (bitset src, bitset_bindex *list,
 
   for (; windex < size; windex++, bitoff += BITSET_WORD_BITS)
     {
-      if (!(word = srcp[windex]))
+      bitset_word word = srcp[windex];
+      if (!word)
         continue;
 
+      /* Is there enough room to avoid checking in each iteration? */
       if ((count + BITSET_WORD_BITS) < num)
-        {
-          for (bitno = bitoff; word; bitno++)
-            {
-              if (word & 1)
-                list[count++] = bitno;
-              word >>= 1;
-            }
-        }
+        BITSET_FOR_EACH_BIT (pos, word)
+          list[count++] = bitoff + pos;
       else
-        {
-          for (bitno = bitoff; word; bitno++)
-            {
-              if (word & 1)
-                {
-                  list[count++] = bitno;
-                  if (count >= num)
-                    {
-                      *next = bitno + 1;
-                      return count;
-                    }
-                }
-              word >>= 1;
-            }
-        }
+        BITSET_FOR_EACH_BIT (pos, word)
+          {
+            list[count++] = bitoff + pos;
+            if (count >= num)
+              {
+                *next = bitoff + pos + 1;
+                return count;
+              }
+          }
     }
 
   *next = bitoff;
