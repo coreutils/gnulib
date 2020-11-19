@@ -358,6 +358,8 @@ check_attributes (enum bitset_attr attr, int nbits)
 
 int main (void)
 {
+  bitset_stats_enable ();
+
   for (int i = 0; i < 4; ++i)
     {
       /* table bitsets have elements that store 256 bits.  bitset_list
@@ -382,5 +384,7 @@ int main (void)
   compare (BITSET_VARIABLE, BITSET_SPARSE);
   compare (BITSET_VARIABLE, BITSET_FRUGAL);
   compare (BITSET_VARIABLE, BITSET_GREEDY);
+
+  bitset_stats_dump (stderr);
   return 0;
 }
