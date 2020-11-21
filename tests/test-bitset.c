@@ -200,6 +200,36 @@ compare (enum bitset_attr a, enum bitset_attr b)
       }
   }
 
+  /* FOR_EACH_REVERSE.  */
+  {
+    bitset_iterator iter;
+    bitset_bindex j;
+    bitset_bindex first = bitset_first (bdst);
+    bitset_bindex last  = bitset_last (bdst);
+    bool seen_first = false;
+    bool seen_last = false;
+    BITSET_FOR_EACH_REVERSE (iter, bdst, j, 0)
+      {
+        ASSERT (first <= j && j <= last);
+        ASSERT (bitset_test (bdst, j));
+        if (j == first)
+          seen_first = true;
+        if (j == last)
+          seen_last = true;
+      }
+    if (first == BITSET_BINDEX_MAX)
+      {
+        ASSERT (!seen_first);
+        ASSERT (!seen_last);
+      }
+    else
+      {
+        ASSERT (seen_first);
+        ASSERT (seen_last);
+      }
+  }
+
+
   /* resize.
 
      ARRAY bitsets cannot be resized.  */
@@ -247,6 +277,8 @@ check_zero (bitset bs)
     bitset_bindex i;
     BITSET_FOR_EACH (iter, bs, i, 0)
       ASSERT (0);
+    BITSET_FOR_EACH_REVERSE (iter, bs, i, 0)
+      ASSERT (0);
   }
 }
 
@@ -276,6 +308,9 @@ check_one_bit (bitset bs, int bitno)
     bitset_bindex i;
     BITSET_FOR_EACH (iter, bs, i, 0)
       ASSERT (i == bitno);
+
+    BITSET_FOR_EACH_REVERSE (iter, bs, i, 0)
+      ASSERT (i == bitno);
   }
 }
 
@@ -304,6 +339,10 @@ check_ones (bitset bs)
     bitset_bindex count = 0;
     BITSET_FOR_EACH (iter, bs, i, 0)
       ASSERT (i == count++);
+    ASSERT (count == size);
+    BITSET_FOR_EACH_REVERSE (iter, bs, i, 0)
+      ASSERT (i == --count);
+    ASSERT (count == 0);
   }
 }
 
