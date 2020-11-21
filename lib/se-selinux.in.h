@@ -43,6 +43,7 @@ _GL_INLINE_HEADER_BEGIN
 #  if !GNULIB_defined_security_types
 
 typedef unsigned short security_class_t;
+struct selinux_opt;
 #   define is_selinux_enabled() 0
 
 SE_SELINUX_INLINE int
