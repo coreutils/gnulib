@@ -156,7 +156,6 @@ fread_file (FILE *stream, int flags, size_t *length)
               memcpy (new_buf, buf, save_alloc);
               explicit_bzero (buf, save_alloc);
               free (buf);
-              buf = new_buf;
             }
           else if (!(new_buf = realloc (buf, alloc)))
             {
