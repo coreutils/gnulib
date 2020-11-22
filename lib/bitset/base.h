@@ -27,6 +27,7 @@
 #include <string.h> /* ffsl */
 
 #include "attribute.h"
+#include "integer_length.h"
 #include "xalloc.h"
 
 /* Currently we support five flavours of bitsets:
@@ -286,6 +287,14 @@ if (!BITSET_COMPATIBLE_ (DST, SRC1) || !BITSET_COMPATIBLE_ (DST, SRC2) \
        0 <= Pos;                                        \
        Word ^= 1UL << Pos, Pos = bitset_ffs_ (Word))
 
+/* Iterate right to left over each set bit of WORD.
+   Each iteration sets POS to the 0-based index of the next set bit in WORD.
+   Repeatedly resets bits in WORD in place until it's null.  */
+#define BITSET_FOR_EACH_BIT_REVERSE(Pos, Word)          \
+  for (int Pos = bitset_fls_ (Word);                    \
+       0 <= Pos;                                        \
+       Word ^= 1UL << Pos, Pos = bitset_fls_ (Word))
+
 /* Private functions for bitset implementations.  */
 
 bool bitset_toggle_ (bitset, bitset_bindex);
@@ -314,6 +323,14 @@ static inline
 int bitset_ffs_ (bitset_word word)
 {
   return ffsl ((long) word) - 1;
+}
+
+/* Last set bit in WORD.
+   Indexes start at 0, return -1 if WORD is null. */
+static inline
+int bitset_fls_ (bitset_word word)
+{
+  return integer_length_l (word) - 1;
 }
 
 #endif /* _BBITSET_H  */
