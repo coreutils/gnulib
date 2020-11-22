@@ -8,6 +8,7 @@ Gnulib module: aligned_alloc
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
 This function fails if the alignment argument is smaller than
 @code{sizeof (void *)} on some platforms:
 AIX 7.2.
