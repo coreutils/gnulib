@@ -2298,7 +2298,8 @@ parse_datetime2 (struct timespec *result, char const *p,
                           "%+"PRIdMAX" seconds, %+d ns),\n"),
                         pc.rel.hour, pc.rel.minutes, pc.rel.seconds,
                         pc.rel.ns);
-            dbg_printf (_("    new time = %"PRIdMAX" epoch-seconds\n"), t4);
+            intmax_t t4i = t4;
+            dbg_printf (_("    new time = %"PRIdMAX" epoch-seconds\n"), t4i);
 
             /* Warn about crossing DST due to time adjustment.
                Example: https://bugs.gnu.org/8357
