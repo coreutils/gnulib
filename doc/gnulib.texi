@@ -3673,6 +3673,7 @@ not worked around by Gnulib.
 * ieee754.h::
 * ifaddrs.h::
 * libintl.h::
+* link.h::
 * mcheck.h::
 * mntent.h::
 * obstack.h::
@@ -3708,6 +3709,7 @@ not worked around by Gnulib.
 @include glibc-headers/ieee754.texi
 @include glibc-headers/ifaddrs.texi
 @include glibc-headers/libintl.texi
+@include glibc-headers/link.texi
 @include glibc-headers/mcheck.texi
 @include glibc-headers/mntent.texi
 @include glibc-headers/obstack.texi
