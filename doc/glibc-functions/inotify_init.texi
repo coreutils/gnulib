@@ -2,6 +2,8 @@
 @subsection @code{inotify_init}
 @findex inotify_init
 
+LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-inotify-init.html}
+
 Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/inotify_init.2.html,,man inotify_init}
 
 Gnulib module: ---

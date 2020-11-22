@@ -4,6 +4,8 @@
 
 SUSv2 specification: @url{https://pubs.opengroup.org/onlinepubs/7908799/xsh/getdtablesize.html}
 
+LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-getdtablesize.html}
+
 Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/getdtablesize.3.html,,man getdtablesize}
 
 Gnulib module: getdtablesize

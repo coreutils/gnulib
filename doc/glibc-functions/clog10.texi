@@ -2,6 +2,8 @@
 @subsection @code{clog10}
 @findex clog10
 
+LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib---clog10.html}
+
 Documentation:
 @itemize
 @item

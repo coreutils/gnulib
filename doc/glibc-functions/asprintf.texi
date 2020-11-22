@@ -2,6 +2,8 @@
 @subsection @code{asprintf}
 @findex asprintf
 
+LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-asprintf.html}
+
 Documentation:
 @itemize
 @item

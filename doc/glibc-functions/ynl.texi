@@ -2,6 +2,8 @@
 @subsection @code{ynl}
 @findex ynl
 
+LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-ynl.html}
+
 Documentation:
 @itemize
 @item

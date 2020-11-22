@@ -2,6 +2,8 @@
 @subsection @code{bind_textdomain_codeset}
 @findex bind_textdomain_codeset
 
+LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-bind-textdomain-codeset.html}
+
 Documentation:
 @itemize
 @item

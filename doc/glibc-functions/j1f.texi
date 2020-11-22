@@ -2,6 +2,8 @@
 @subsection @code{j1f}
 @findex j1f
 
+LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-j1f.html}
+
 Documentation:
 @itemize
 @item

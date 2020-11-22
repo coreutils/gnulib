@@ -2,6 +2,8 @@
 @subsection @code{gethostbyname_r}
 @findex gethostbyname_r
 
+LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-gethostbyname-r-3.html}
+
 Documentation:
 @itemize
 @item

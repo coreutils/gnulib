@@ -4,6 +4,16 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/ioctl.html}
 
+LSB specification:
+@itemize
+@item
+@url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-ioctl-2.html}
+@item
+@url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-ttyio-2.html}
+@item
+@url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-sockio-2.html}
+@end itemize
+
 Gnulib module: ioctl
 
 Portability problems fixed by Gnulib:

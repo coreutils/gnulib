@@ -2,6 +2,8 @@
 @subsection @code{gettext}
 @findex gettext
 
+LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-gettext.html}
+
 Documentation:
 @itemize
 @item

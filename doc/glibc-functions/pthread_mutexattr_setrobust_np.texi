@@ -2,6 +2,8 @@
 @subsection @code{pthread_mutexattr_setrobust_np}
 @findex pthread_mutexattr_setrobust_np
 
+LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-pthread-mutexattr-getrobust-np-1.html}
+
 Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/pthread_mutexattr_setrobust_np.3.html,,man pthread_mutexattr_setrobust_np}
 
 Gnulib module: ---

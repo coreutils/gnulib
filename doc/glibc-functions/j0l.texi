@@ -2,6 +2,8 @@
 @subsection @code{j0l}
 @findex j0l
 
+LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-j0l.html}
+
 Documentation:
 @itemize
 @item

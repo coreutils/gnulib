@@ -2,6 +2,8 @@
 @subsection @code{memmem}
 @findex memmem
 
+LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-memmem-3.html}
+
 Documentation:
 @itemize
 @item

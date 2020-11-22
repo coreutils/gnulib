@@ -2,6 +2,8 @@
 @subsection @code{sched_setaffinity}
 @findex sched_setaffinity
 
+LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-sched-setaffinity.html}
+
 Documentation:
 @itemize
 @item

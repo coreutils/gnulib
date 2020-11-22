@@ -2,6 +2,8 @@
 @subsection @code{svc_run}
 @findex svc_run
 
+LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-svc-run-3.html}
+
 Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/svc_run.3.html,,man svc_run}
 
 Gnulib module: ---

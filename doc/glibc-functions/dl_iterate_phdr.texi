@@ -2,6 +2,8 @@
 @subsection @code{dl_iterate_phdr}
 @findex dl_iterate_phdr
 
+LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-dl-iterate-phdr-1.html}
+
 Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/dl_iterate_phdr.3.html,,man dl_iterate_phdr}
 
 Gnulib module: ---

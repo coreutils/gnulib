@@ -2,6 +2,8 @@
 @subsection @code{sigorset}
 @findex sigorset
 
+LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-sigorset.html}
+
 Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/sigorset.3.html,,man sigorset}
 
 Gnulib module: ---

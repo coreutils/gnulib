@@ -2,6 +2,8 @@
 @subsection @code{argz_delete}
 @findex argz_delete
 
+LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-argz-add.html}
+
 Documentation:
 @itemize
 @item

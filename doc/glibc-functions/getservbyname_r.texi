@@ -2,6 +2,8 @@
 @subsection @code{getservbyname_r}
 @findex getservbyname_r
 
+LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-getservbyname-r.html}
+
 Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/getservbyname_r.3.html,,man getservbyname_r}
 
 Gnulib module: ---

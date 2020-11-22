@@ -2,6 +2,8 @@
 @subsection @code{strcasestr}
 @findex strcasestr
 
+LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-strcasestr.html}
+
 Documentation:
 @itemize
 @item

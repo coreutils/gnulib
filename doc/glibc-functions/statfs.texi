@@ -2,6 +2,8 @@
 @subsection @code{statfs}
 @findex statfs
 
+LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-statfs-2.html}
+
 Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/statfs.2.html,,man statfs}
 
 Gnulib module: ---

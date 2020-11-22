@@ -2,6 +2,8 @@
 @subsection @code{sendfile}
 @findex sendfile
 
+LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-sendfile.html}
+
 Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/sendfile.2.html,,man sendfile}
 
 Gnulib module: ---

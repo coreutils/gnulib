@@ -2,6 +2,8 @@
 @subsection @code{significandf}
 @findex significandf
 
+LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-significandf.html}
+
 Documentation:
 @itemize
 @item

@@ -2,6 +2,8 @@
 @subsection @code{pmap_unset}
 @findex pmap_unset
 
+LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-pmap-unset-3.html}
+
 Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/pmap_unset.3.html,,man pmap_unset}
 
 Gnulib module: ---

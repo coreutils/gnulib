@@ -2,6 +2,8 @@
 @subsection @code{pthread_mutex_consistent_np}
 @findex pthread_mutex_consistent_np
 
+LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-pthread-mutex-consistent-np-1.html}
+
 Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/pthread_mutex_consistent_np.3.html,,man pthread_mutex_consistent_np}
 
 Gnulib module: ---

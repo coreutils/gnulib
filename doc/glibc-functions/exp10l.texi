@@ -2,6 +2,8 @@
 @subsection @code{exp10l}
 @findex exp10l
 
+LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-exp10l.html}
+
 Documentation:
 @itemize
 @item

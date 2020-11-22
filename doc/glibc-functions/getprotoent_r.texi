@@ -2,6 +2,8 @@
 @subsection @code{getprotoent_r}
 @findex getprotoent_r
 
+LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-getprotoent-r.html}
+
 Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/getprotoent_r.3.html,,man getprotoent_r}
 
 Gnulib module: ---

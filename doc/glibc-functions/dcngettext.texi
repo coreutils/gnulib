@@ -2,6 +2,8 @@
 @subsection @code{dcngettext}
 @findex dcngettext
 
+LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-dcngettext.html}
+
 Documentation:
 @itemize
 @item

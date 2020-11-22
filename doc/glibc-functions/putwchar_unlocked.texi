@@ -2,6 +2,8 @@
 @subsection @code{putwchar_unlocked}
 @findex putwchar_unlocked
 
+LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-putwchar-unlocked-1.html}
+
 Documentation:
 @itemize
 @item

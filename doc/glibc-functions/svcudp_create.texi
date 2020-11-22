@@ -2,6 +2,8 @@
 @subsection @code{svcudp_create}
 @findex svcudp_create
 
+LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-svcudp-create-3.html}
+
 Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/svcudp_create.3.html,,man svcudp_create}
 
 Gnulib module: ---

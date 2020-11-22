@@ -2,6 +2,8 @@
 @subsection @code{inotify_rm_watch}
 @findex inotify_rm_watch
 
+LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-inotify-rm-watch.html}
+
 Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/inotify_rm_watch.2.html,,man inotify_rm_watch}
 
 Gnulib module: ---

@@ -2,6 +2,8 @@
 @subsection @code{fegetexcept}
 @findex fegetexcept
 
+LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-fegetexcept.html}
+
 Documentation:
 @itemize
 @item

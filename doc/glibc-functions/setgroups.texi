@@ -2,6 +2,8 @@
 @subsection @code{setgroups}
 @findex setgroups
 
+LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-setgroups-2.html}
+
 Documentation:
 @itemize
 @item

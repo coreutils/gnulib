@@ -2,6 +2,8 @@
 @subsection @code{sigreturn}
 @findex sigreturn
 
+LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-sigreturn-2.html}
+
 Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/sigreturn.2.html,,man sigreturn}
 
 Gnulib module: ---

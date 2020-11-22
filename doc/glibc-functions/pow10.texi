@@ -2,6 +2,8 @@
 @subsection @code{pow10}
 @findex pow10
 
+LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-pow10.html}
+
 Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/pow10.3.html,,man pow10}
 
 Gnulib module: ---

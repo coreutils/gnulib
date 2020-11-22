@@ -4,6 +4,8 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/getcwd.html}
 
+LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-getcwd.html}
+
 Gnulib module: getcwd or getcwd-lgpl
 
 Portability problems fixed by either Gnulib module @code{getcwd} or

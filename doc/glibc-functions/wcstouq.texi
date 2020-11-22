@@ -2,6 +2,8 @@
 @subsection @code{wcstouq}
 @findex wcstouq
 
+LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-wcstouq.html}
+
 Documentation:@*
 @ifinfo
 @ref{Parsing of Integers,,Parsing of Integers,libc}.

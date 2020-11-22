@@ -2,6 +2,8 @@
 @subsection @code{sigandset}
 @findex sigandset
 
+LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-sigandset.html}
+
 Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/sigandset.3.html,,man sigandset}
 
 Gnulib module: ---

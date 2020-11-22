@@ -2,6 +2,8 @@
 @subsection @code{pthread_getattr_np}
 @findex pthread_getattr_np
 
+LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-pthread-getattr-np-1.html}
+
 Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/pthread_getattr_np.3.html,,man pthread_getattr_np}
 
 Gnulib module: ---

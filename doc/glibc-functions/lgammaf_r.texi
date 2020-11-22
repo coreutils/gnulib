@@ -2,6 +2,8 @@
 @subsection @code{lgammaf_r}
 @findex lgammaf_r
 
+LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-lgammaf-r.html}
+
 Documentation:
 @itemize
 @item

@@ -2,6 +2,8 @@
 @subsection @code{acct}
 @findex acct
 
+LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-acct-3.html}
+
 Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/acct.2.html,,man acct}
 
 Gnulib module: ---

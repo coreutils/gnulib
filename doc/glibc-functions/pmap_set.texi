@@ -2,6 +2,8 @@
 @subsection @code{pmap_set}
 @findex pmap_set
 
+LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-pmap-set-3.html}
+
 Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/pmap_set.3.html,,man pmap_set}
 
 Gnulib module: ---
