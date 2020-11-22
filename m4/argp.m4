@@ -1,4 +1,4 @@
-# argp.m4 serial 15
+# argp.m4 serial 16
 dnl Copyright (C) 2003-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -10,34 +10,42 @@ AC_DEFUN([gl_ARGP],
   AC_REQUIRE([AC_C_RESTRICT])
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
 
-  AC_CHECK_DECLS([program_invocation_name], [],
-                 [AC_DEFINE([GNULIB_PROGRAM_INVOCATION_NAME], [1],
-                            [Define to 1 to add extern declaration of program_invocation_name to argp.h])],
-                 [[#include <errno.h>]])
-  AC_CHECK_DECLS([program_invocation_short_name], [],
-                 [AC_DEFINE([GNULIB_PROGRAM_INVOCATION_SHORT_NAME], [1],
-                            [Define to 1 to add extern declaration of program_invocation_short_name to argp.h])],
-                 [[#include <errno.h>]])
+  AC_CHECK_DECLS([program_invocation_name],
+    [],
+    [AC_DEFINE([GNULIB_PROGRAM_INVOCATION_NAME], [1],
+       [Define to 1 to add extern declaration of program_invocation_name to argp.h])],
+    [[#include <errno.h>]])
+  AC_CHECK_DECLS([program_invocation_short_name],
+    [],
+    [AC_DEFINE([GNULIB_PROGRAM_INVOCATION_SHORT_NAME], [1],
+       [Define to 1 to add extern declaration of program_invocation_short_name to argp.h])],
+    [[#include <errno.h>]])
 
   # Check if program_invocation_name and program_invocation_short_name
   # are defined elsewhere. It is improbable that only one of them will
   # be defined and other not, I prefer to stay on the safe side and to
   # test each one separately.
   AC_MSG_CHECKING([whether program_invocation_name is defined])
-  AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include <argp.h>]],
-                                  [[program_invocation_name = "test";]])],
-                 [AC_DEFINE([HAVE_PROGRAM_INVOCATION_NAME], [1],
-                            [Define if program_invocation_name is defined])
-                  AC_MSG_RESULT([yes])],
-                 [AC_MSG_RESULT([no])])
+  AC_LINK_IFELSE(
+    [AC_LANG_PROGRAM(
+       [[extern char *program_invocation_name;]],
+       [[program_invocation_name = "test";]])],
+    [AC_DEFINE([HAVE_PROGRAM_INVOCATION_NAME], [1],
+       [Define if program_invocation_name is defined])
+     AC_MSG_RESULT([yes])
+    ],
+    [AC_MSG_RESULT([no])])
 
   AC_MSG_CHECKING([whether program_invocation_short_name is defined])
-  AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include <argp.h>]],
-                                  [[program_invocation_short_name = "test";]])],
-                 [AC_DEFINE([HAVE_PROGRAM_INVOCATION_SHORT_NAME], [1],
-                            [Define if program_invocation_short_name is defined])
-                  AC_MSG_RESULT([yes])],
-                 [AC_MSG_RESULT([no])])
+  AC_LINK_IFELSE(
+    [AC_LANG_PROGRAM(
+       [[extern char *program_invocation_short_name;]],
+       [[program_invocation_short_name = "test";]])],
+    [AC_DEFINE([HAVE_PROGRAM_INVOCATION_SHORT_NAME], [1],
+       [Define if program_invocation_short_name is defined])
+     AC_MSG_RESULT([yes])
+    ],
+    [AC_MSG_RESULT([no])])
 
   AC_CHECK_DECLS_ONCE([clearerr_unlocked])
   AC_CHECK_DECLS_ONCE([feof_unlocked])
