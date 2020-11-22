@@ -18,6 +18,11 @@
 
 #include <config.h>
 
+/* Work around GCC bug 44511.  */
+#if 4 < __GNUC__ + (3 <= __GNUC_MINOR__)
+# pragma GCC diagnostic ignored "-Wreturn-type"
+#endif
+
 #if USE_ISOC_THREADS || USE_POSIX_THREADS || USE_ISOC_AND_POSIX_THREADS || USE_WINDOWS_THREADS
 
 /* Specification.  */
