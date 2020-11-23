@@ -56,7 +56,7 @@ SE_SELINUX_INLINE int
 getfscreatecon (char **con _GL_UNUSED_PARAMETER)
   { errno = ENOTSUP; return -1; }
 SE_SELINUX_INLINE int
-setfscreatecon (char *con _GL_UNUSED_PARAMETER)
+setfscreatecon (char const *con _GL_UNUSED_PARAMETER)
   { errno = ENOTSUP; return -1; }
 SE_SELINUX_INLINE int
 matchpathcon (char const *file _GL_UNUSED_PARAMETER,
@@ -76,29 +76,29 @@ fgetfilecon (int fd, char **con _GL_UNUSED_PARAMETER)
   { errno = ENOTSUP; return -1; }
 SE_SELINUX_INLINE int
 setfilecon (char const *file _GL_UNUSED_PARAMETER,
-            char *con _GL_UNUSED_PARAMETER)
+            char const *con _GL_UNUSED_PARAMETER)
   { errno = ENOTSUP; return -1; }
 SE_SELINUX_INLINE int
 lsetfilecon (char const *file _GL_UNUSED_PARAMETER,
-             char *con _GL_UNUSED_PARAMETER)
+             char const *con _GL_UNUSED_PARAMETER)
   { errno = ENOTSUP; return -1; }
 SE_SELINUX_INLINE int
 fsetfilecon (int fd _GL_UNUSED_PARAMETER,
-             char *con _GL_UNUSED_PARAMETER)
+             char const *con _GL_UNUSED_PARAMETER)
   { errno = ENOTSUP; return -1; }
 
 SE_SELINUX_INLINE int
-security_check_context (char *con _GL_UNUSED_PARAMETER)
+security_check_context (char const *con _GL_UNUSED_PARAMETER)
   { errno = ENOTSUP; return -1; }
 SE_SELINUX_INLINE int
-security_check_context_raw (char *con _GL_UNUSED_PARAMETER)
+security_check_context_raw (char const *con _GL_UNUSED_PARAMETER)
   { errno = ENOTSUP; return -1; }
 SE_SELINUX_INLINE int
-setexeccon (char *con _GL_UNUSED_PARAMETER)
+setexeccon (char const *con _GL_UNUSED_PARAMETER)
   { errno = ENOTSUP; return -1; }
 SE_SELINUX_INLINE int
-security_compute_create (char *scon _GL_UNUSED_PARAMETER,
-                         char *tcon _GL_UNUSED_PARAMETER,
+security_compute_create (char const *scon _GL_UNUSED_PARAMETER,
+                         char const *tcon _GL_UNUSED_PARAMETER,
                          security_class_t tclass _GL_UNUSED_PARAMETER,
                          char **newcon _GL_UNUSED_PARAMETER)
   { errno = ENOTSUP; return -1; }

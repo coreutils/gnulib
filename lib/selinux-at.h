@@ -42,11 +42,11 @@ int lgetfileconat (int dir_fd, char const *file, char **con);
    the file specified by DIR_FD and FILE to CON.  DIR_FD and FILE are
    interpreted as for fstatat[*].  Upon success, return 0.
    Otherwise, return -1 and set errno.  */
-int  setfileconat (int dir_fd, char const *file, char *con);
+int  setfileconat (int dir_fd, char const *file, char const *con);
 
 /* dir-fd-relative lsetfilecon.  This function is just like setfileconat,
    except that rather than dereferencing a symlink, this function affects it. */
 /* dir-fd-relative lsetfilecon.  This function is just like setfileconat,
    except when DIR_FD and FILE specify a symlink:  lsetfileconat operates on
    the symlink, while setfileconat operates on the referent of the symlink.  */
-int lsetfileconat (int dir_fd, char const *file, char *con);
+int lsetfileconat (int dir_fd, char const *file, char const *con);
