@@ -293,39 +293,26 @@ __realpath (const char *name, char *resolved)
                   goto error;
                 }
 
-              buf = malloca (path_max);
-              if (!buf)
-                {
-                  __set_errno (ENOMEM);
-                  goto error;
-                }
-
-              n = __readlink (rpath, buf, path_max - 1);
-              if (n < 0)
-                {
-                  int saved_errno = errno;
-                  freea (buf);
-                  __set_errno (saved_errno);
-                  goto error;
-                }
-              buf[n] = '\0';
-
               if (!extra_buf)
                 {
-                  extra_buf = malloca (path_max);
+                  extra_buf = malloca (2 * path_max);
                   if (!extra_buf)
                     {
-                      freea (buf);
-                      __set_errno (ENOMEM);
+                      alloc_failed ();
                       goto error;
                     }
                 }
+              buf = extra_buf + path_max;
+
+              n = __readlink (rpath, buf, path_max - 1);
+              if (n < 0)
+                goto error;
+              buf[n] = '\0';
 
               len = strlen (end);
               /* Check that n + len + 1 doesn't overflow and is <= path_max. */
               if (n >= SIZE_MAX - len || n + len >= path_max)
                 {
-                  freea (buf);
                   __set_errno (ENAMETOOLONG);
                   goto error;
                 }
