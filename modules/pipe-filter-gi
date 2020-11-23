@@ -19,6 +19,7 @@ stdint
 stdlib
 sys_select
 unistd
+xalloc
 
 configure.ac:
 AC_CHECK_FUNCS_ONCE([select])

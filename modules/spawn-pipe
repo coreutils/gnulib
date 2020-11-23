@@ -35,6 +35,7 @@ strpbrk
 unistd
 unistd-safer
 wait-process
+xalloc
 
 configure.ac:
 gl_SPAWN_PIPE

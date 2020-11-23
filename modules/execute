@@ -29,6 +29,7 @@ stdlib
 strpbrk
 unistd
 environ
+xalloc
 
 configure.ac:
 gl_EXECUTE

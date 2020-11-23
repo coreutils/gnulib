@@ -14,6 +14,7 @@ m4/xvasprintf.m4
 
 Depends-on:
 vasprintf
+xalloc
 xalloc-die
 xsize
 stdarg
