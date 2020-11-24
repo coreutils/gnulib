@@ -521,10 +521,20 @@ extern void __argp_usage (const struct argp_state *__state);
    message, then exit (1).  */
 extern void argp_error (const struct argp_state *__restrict __state,
                         const char *__restrict __fmt, ...)
-     _GL_ATTRIBUTE_FORMAT ((__printf__, 2, 3));
+#if GNULIB_VFPRINTF_POSIX
+     _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_STANDARD, 2, 3))
+#else
+     _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_SYSTEM, 2, 3))
+#endif
+     ;
 extern void __argp_error (const struct argp_state *__restrict __state,
                           const char *__restrict __fmt, ...)
-     _GL_ATTRIBUTE_FORMAT ((__printf__, 2, 3));
+#if GNULIB_VFPRINTF_POSIX
+     _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_STANDARD, 2, 3))
+#else
+     _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_SYSTEM, 2, 3))
+#endif
+     ;
 
 /* Similar to the standard gnu error-reporting function error(), but will
    respect the ARGP_NO_EXIT and ARGP_NO_ERRS flags in STATE, and will print
@@ -537,11 +547,21 @@ extern void __argp_error (const struct argp_state *__restrict __state,
 extern void argp_failure (const struct argp_state *__restrict __state,
                           int __status, int __errnum,
                           const char *__restrict __fmt, ...)
-     _GL_ATTRIBUTE_FORMAT ((__printf__, 4, 5));
+#if GNULIB_VFPRINTF_POSIX
+     _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_STANDARD, 4, 5))
+#else
+     _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_SYSTEM, 4, 5))
+#endif
+     ;
 extern void __argp_failure (const struct argp_state *__restrict __state,
                             int __status, int __errnum,
                             const char *__restrict __fmt, ...)
-     _GL_ATTRIBUTE_FORMAT ((__printf__, 4, 5));
+#if GNULIB_VFPRINTF_POSIX
+     _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_STANDARD, 4, 5))
+#else
+     _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_SYSTEM, 4, 5))
+#endif
+     ;
 
 #if _LIBC
 /* Returns true if the option OPT is a valid short option.  */

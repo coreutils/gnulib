@@ -20,13 +20,16 @@
 /* Get size_t.  */
 #include <stddef.h>
 
+/* Get _GL_ATTRIBUTE_SPEC_PRINTF_STANDARD.  */
+#include <stdio.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 extern int c_snprintf (char *restrict str, size_t size,
                        const char *format, ...)
-       _GL_ATTRIBUTE_FORMAT ((__printf__, 3, 4));
+       _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_STANDARD, 3, 4));
 
 #ifdef __cplusplus
 }

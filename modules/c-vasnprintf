@@ -23,6 +23,7 @@ m4/exponentd.m4
 
 Depends-on:
 attribute
+stdio
 isnand-nolibm
 isnanl-nolibm
 frexpl-nolibm

@@ -20,6 +20,9 @@
 /* Get va_list.  */
 #include <stdarg.h>
 
+/* Get _GL_ATTRIBUTE_SPEC_PRINTF_STANDARD.  */
+#include <stdio.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -35,9 +38,9 @@ extern "C" {
    Formatting takes place in the C locale, that is, the decimal point
    used in floating-point formatting directives is always '.'. */
 extern char *c_xasprintf (const char *format, ...)
-       _GL_ATTRIBUTE_FORMAT ((__printf__, 1, 2));
+       _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_STANDARD, 1, 2));
 extern char *c_xvasprintf (const char *format, va_list args)
-       _GL_ATTRIBUTE_FORMAT ((__printf__, 1, 0));
+       _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_STANDARD, 1, 0));
 
 #ifdef __cplusplus
 }

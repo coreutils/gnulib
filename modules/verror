@@ -11,6 +11,7 @@ lib/verror.h
 lib/verror.c
 
 Depends-on:
+stdio
 error
 xvasprintf
 

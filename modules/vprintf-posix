@@ -20,6 +20,7 @@ vfprintf-posix  [test $REPLACE_VPRINTF = 1]
 configure.ac:
 gl_FUNC_VPRINTF_POSIX
 gl_STDIO_MODULE_INDICATOR([vprintf-posix])
+gl_MODULE_INDICATOR([vprintf-posix])
 
 Makefile.am:
 

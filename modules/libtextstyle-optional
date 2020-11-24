@@ -8,6 +8,7 @@ m4/libtextstyle-optional.m4
 Depends-on:
 libtextstyle
 stdbool
+stdio
 unistd
 fsync
 vasprintf-posix

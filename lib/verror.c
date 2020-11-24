@@ -18,12 +18,15 @@
 
 #include <config.h>
 
+/* Specification.  */
 #include "verror.h"
-#include "xvasprintf.h"
 
 #include <errno.h>
 #include <stdarg.h>
 #include <stdlib.h>
+
+#include "error.h"
+#include "xvasprintf.h"
 
 #if ENABLE_NLS
 # include "gettext.h"

@@ -12,11 +12,11 @@ lib/xprintf.h
 lib/xprintf.c
 
 Depends-on:
+stdio
 error
 exitfail
 gettext-h
 stdarg
-stdio
 
 configure.ac:
 m4_ifdef([AM_XGETTEXT_OPTION],

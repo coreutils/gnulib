@@ -7,6 +7,7 @@ lib/c-asprintf.c
 lib/c-vasprintf.c
 
 Depends-on:
+stdio
 c-vasnprintf
 
 configure.ac:

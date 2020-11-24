@@ -40,7 +40,7 @@
 # include <wchar.h>
 # define mbsrtowcs __mbsrtowcs
 # define USE_UNLOCKED_IO 0
-# define _GL_ATTRIBUTE_FORMAT_PRINTF(a, b)
+# define _GL_ATTRIBUTE_FORMAT_PRINTF_STANDARD(a, b)
 # define _GL_ARG_NONNULL(a)
 #else
 # include "getprogname.h"
@@ -202,7 +202,7 @@ print_errno_message (int errnum)
 #endif
 }
 
-static void _GL_ATTRIBUTE_FORMAT_PRINTF (3, 0) _GL_ARG_NONNULL ((3))
+static void _GL_ATTRIBUTE_FORMAT_PRINTF_STANDARD (3, 0) _GL_ARG_NONNULL ((3))
 error_tail (int status, int errnum, const char *message, va_list args)
 {
 #if _LIBC

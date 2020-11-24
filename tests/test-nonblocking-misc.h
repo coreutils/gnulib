@@ -41,7 +41,7 @@ init_data (size_t data_block_size)
 #if ENABLE_DEBUGGING
 # include <stdarg.h>
 static int dbgfprintf (FILE *fp, const char *format, ...)
-                      _GL_ATTRIBUTE_FORMAT_PRINTF (2, 3);
+                      _GL_ATTRIBUTE_FORMAT_PRINTF_STANDARD (2, 3);
 static int
 dbgfprintf (FILE *fp, const char *format, ...)
 {
