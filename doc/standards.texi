@@ -4260,7 +4260,7 @@ The @code{configure} script needs to be able to decode all plausible
 alternatives for how to describe a machine.  Thus,
 @samp{athlon-pc-gnu/linux} would be a valid alias.  There is a shell
 script called
-@uref{https://git.savannah.gnu.org/@/gitweb/@/?p=config.git;a=blob_plain;f=config.sub;hb=HEAD,
+@uref{https://git.savannah.gnu.org/cgit/config.git/plain/config.sub,
 @file{config.sub}} that you can use as a subroutine to validate system
 types and canonicalize aliases.
 
@@ -4271,7 +4271,7 @@ plain @var{buildtype} argument.  For example, @samp{configure
 i686-pc-linux-gnu}.  When the build type is not specified by an option
 or argument, the @code{configure} script should normally guess it using
 the shell script
-@uref{https://git.savannah.gnu.org/@/gitweb/@/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD,
+@uref{https://git.savannah.gnu.org/cgit/config.git/plain/config.guess,
 @file{config.guess}}.
 
 @cindex optional features, configure-time
