@@ -52,6 +52,9 @@ main (int argc, char *argv[])
 
   name2 = strdup (setlocale (LC_ALL, NULL));
 
+  ASSERT (name1);
+  ASSERT (name2);
+
   /* Test that the two results are the same.  */
   ASSERT (strcmp (name1, name2) == 0);
   free (name1);
