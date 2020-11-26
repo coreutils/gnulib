@@ -17,6 +17,7 @@
 #include <config.h>
 
 #include <signal.h>
+#include <unistd.h>
 
 #include "signature.h"
 SIGNATURE_CHECK (raise, int, (int));
@@ -31,7 +32,7 @@ SIGNATURE_CHECK (raise, int, (int));
 static _Noreturn void
 handler (int sig)
 {
-  exit (0);
+  _exit (0);
 }
 
 int
