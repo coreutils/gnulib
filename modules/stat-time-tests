@@ -7,6 +7,7 @@ Depends-on:
 intprops
 nanosleep
 time
+unistd
 
 configure.ac:
 

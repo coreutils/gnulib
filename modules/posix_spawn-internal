@@ -14,6 +14,7 @@ errno
 open
 sh-filename
 strchrnul
+unistd
 
 configure.ac:
 gl_POSIX_SPAWN

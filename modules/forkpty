@@ -8,6 +8,7 @@ m4/pty.m4
 
 Depends-on:
 pty
+unistd
 openpty
 login_tty
 

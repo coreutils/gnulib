@@ -12,6 +12,7 @@ error
 quotearg
 exitfail
 stdbool
+unistd
 
 configure.ac:
 
