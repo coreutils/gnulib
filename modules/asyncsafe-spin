@@ -10,6 +10,7 @@ signal-h
 stdbool
 sigprocmask
 windows-spin
+sparcv8+
 
 configure.ac:
 AC_REQUIRE([AC_C_INLINE])
