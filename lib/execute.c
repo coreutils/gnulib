@@ -39,7 +39,7 @@
 
 /* Native Windows API.  */
 # include <process.h>
-# include "w32spawn.h"
+# include "windows-spawn.h"
 
 #else
 
