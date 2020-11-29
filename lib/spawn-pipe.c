@@ -40,11 +40,17 @@
 
 #define _(str) gettext (str)
 
-#if (defined _WIN32 && ! defined __CYGWIN__) || defined __KLIBC__
+#if defined _WIN32 && ! defined __CYGWIN__
 
 /* Native Windows API.  */
 # include <process.h>
 # include "windows-spawn.h"
+
+#elif defined __KLIBC__
+
+/* OS/2 kLIBC API.  */
+# include <process.h>
+# include "os2-spawn.h"
 
 #else
 

@@ -20,11 +20,9 @@
 /* Specification.  */
 #include "windows-spawn.h"
 
-#ifndef __KLIBC__
 /* Get declarations of the native Windows API functions.  */
-# define WIN32_LEAN_AND_MEAN
-# include <windows.h>
-#endif
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
 
 /* Get _open_osfhandle().  */
 #include <io.h>
@@ -106,13 +104,8 @@ undup_safer_noinherit (int tempfd, int origfd)
     }
 }
 
-#ifndef __KLIBC__
-# define SHELL_SPECIAL_CHARS "\"\\ \001\002\003\004\005\006\007\010\011\012\013\014\015\016\017\020\021\022\023\024\025\026\027\030\031\032\033\034\035\036\037*?"
-# define SHELL_SPACE_CHARS " \001\002\003\004\005\006\007\010\011\012\013\014\015\016\017\020\021\022\023\024\025\026\027\030\031\032\033\034\035\036\037"
-#else
-# define SHELL_SPECIAL_CHARS ""
-# define SHELL_SPACE_CHARS ""
-#endif
+#define SHELL_SPECIAL_CHARS "\"\\ \001\002\003\004\005\006\007\010\011\012\013\014\015\016\017\020\021\022\023\024\025\026\027\030\031\032\033\034\035\036\037*?"
+#define SHELL_SPACE_CHARS " \001\002\003\004\005\006\007\010\011\012\013\014\015\016\017\020\021\022\023\024\025\026\027\030\031\032\033\034\035\036\037"
 char **
 prepare_spawn (char **argv)
 {
