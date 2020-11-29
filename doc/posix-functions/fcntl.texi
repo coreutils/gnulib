@@ -23,6 +23,11 @@ IRIX 6.5, Solaris 11 2010-11, Cygwin 1.7.1.
 Note that the gnulib replacement code is functional but not atomic.
 
 @item
+The @code{F_DUPFD_CLOEXEC} action of this function does not set the
+@code{FD_CLOEXEC} flag on some platforms:
+NetBSD 9.0.
+
+@item
 The @code{F_DUPFD_CLOEXEC} action of this function sets the
 @code{FD_CLOEXEC} flag on the wrong file descriptor on some platforms:
 Haiku.
