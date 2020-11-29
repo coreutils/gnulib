@@ -152,10 +152,10 @@ static bitset_bindex
 vbitset_list_reverse (bitset src, bitset_bindex *list,
                       bitset_bindex num, bitset_bindex *next)
 {
+  /* FIXME: almost a duplicate of abitset_list_reverse.  Factor?  */
+  bitset_bindex rbitno = *next;
   bitset_word *srcp = VBITSET_WORDS (src);
   bitset_bindex n_bits = BITSET_SIZE_ (src);
-
-  bitset_bindex rbitno = *next;
 
   /* If num is 1, we could speed things up with a binary search
      of the word of interest.  */
@@ -173,19 +173,18 @@ vbitset_list_reverse (bitset src, bitset_bindex *list,
 
   do
     {
-      bitset_word word = srcp[windex] << (BITSET_WORD_BITS - 1 - bitcnt);
-      for (; word; bitcnt--)
+      bitset_word word = srcp[windex];
+      if (bitcnt + 1 < BITSET_WORD_BITS)
+        /* We're starting in the middle of a word: smash bits to ignore.  */
+        word &= ((bitset_word) 1 << (bitcnt + 1)) - 1;
+      BITSET_FOR_EACH_BIT_REVERSE(pos, word)
         {
-          if (word & BITSET_MSB)
+          list[count++] = bitoff + pos;
+          if (count >= num)
             {
-              list[count++] = bitoff + bitcnt;
-              if (count >= num)
-                {
-                  *next = n_bits - (bitoff + bitcnt);
-                  return count;
-                }
+              *next = n_bits - (bitoff + pos);
+              return count;
             }
-          word <<= 1;
         }
       bitoff -= BITSET_WORD_BITS;
       bitcnt = BITSET_WORD_BITS - 1;
