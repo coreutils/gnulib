@@ -550,8 +550,8 @@ tbitset_list_reverse (bitset bset, bitset_bindex *list,
   /* If num is 1, we could speed things up with a binary search
      of the word of interest.  */
   bitset_bindex count = 0;
-  unsigned bcount = bitno % BITSET_WORD_BITS;
-  bitset_bindex boffset = windex * BITSET_WORD_BITS;
+  unsigned bitcnt = bitno % BITSET_WORD_BITS;
+  bitset_bindex bitoff = windex * BITSET_WORD_BITS;
 
   do
     {
@@ -562,32 +562,32 @@ tbitset_list_reverse (bitset bset, bitset_bindex *list,
 
           do
             {
-              for (bitset_word word = srcp[woffset] << (BITSET_WORD_BITS - 1 - bcount);
-                   word; bcount--)
+              for (bitset_word word = srcp[woffset] << (BITSET_WORD_BITS - 1 - bitcnt);
+                   word; bitcnt--)
                 {
                   if (word & BITSET_MSB)
                     {
-                      list[count++] = boffset + bcount;
+                      list[count++] = bitoff + bitcnt;
                       if (count >= num)
                         {
-                          *next = n_bits - (boffset + bcount);
+                          *next = n_bits - (bitoff + bitcnt);
                           return count;
                         }
                     }
                   word <<= 1;
                 }
-              boffset -= BITSET_WORD_BITS;
-              bcount = BITSET_WORD_BITS - 1;
+              bitoff -= BITSET_WORD_BITS;
+              bitcnt = BITSET_WORD_BITS - 1;
             }
           while (woffset--);
         }
 
       woffset = TBITSET_ELT_WORDS - 1;
-      boffset = eindex * TBITSET_ELT_BITS - BITSET_WORD_BITS;
+      bitoff = eindex * TBITSET_ELT_BITS - BITSET_WORD_BITS;
     }
   while (eindex--);
 
-  *next = n_bits - (boffset + 1);
+  *next = n_bits - (bitoff + 1);
   return count;
 }
 

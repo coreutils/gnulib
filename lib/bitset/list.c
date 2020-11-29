@@ -580,21 +580,21 @@ lbitset_list_reverse (bitset bset, bitset_bindex *list,
   if (!elt)
     return 0;
 
-  unsigned bcount;
+  unsigned bitcnt;
   if (windex >= elt->index + LBITSET_ELT_WORDS)
     {
       /* We are trying to start in no-mans land so start
          at end of current elt.  */
-      bcount = BITSET_WORD_BITS - 1;
+      bitcnt = BITSET_WORD_BITS - 1;
       windex = elt->index + LBITSET_ELT_WORDS - 1;
     }
   else
     {
-      bcount = bitno % BITSET_WORD_BITS;
+      bitcnt = bitno % BITSET_WORD_BITS;
     }
 
   bitset_bindex count = 0;
-  bitset_bindex boffset = windex * BITSET_WORD_BITS;
+  bitset_bindex bitoff = windex * BITSET_WORD_BITS;
 
   /* If num is 1, we could speed things up with a binary search
      of the word of interest.  */
@@ -604,20 +604,20 @@ lbitset_list_reverse (bitset bset, bitset_bindex *list,
       bitset_word *srcp = elt->words;
 
       for (; (windex - elt->index) < LBITSET_ELT_WORDS;
-           windex--, boffset -= BITSET_WORD_BITS,
-             bcount = BITSET_WORD_BITS - 1)
+           windex--, bitoff -= BITSET_WORD_BITS,
+             bitcnt = BITSET_WORD_BITS - 1)
         {
           bitset_word word =
-            srcp[windex - elt->index] << (BITSET_WORD_BITS - 1 - bcount);
+            srcp[windex - elt->index] << (BITSET_WORD_BITS - 1 - bitcnt);
 
-          for (; word; bcount--)
+          for (; word; bitcnt--)
             {
               if (word & BITSET_MSB)
                 {
-                  list[count++] = boffset + bcount;
+                  list[count++] = bitoff + bitcnt;
                   if (count >= num)
                     {
-                      *next = n_bits - (boffset + bcount);
+                      *next = n_bits - (bitoff + bitcnt);
                       return count;
                     }
                 }
@@ -629,11 +629,11 @@ lbitset_list_reverse (bitset bset, bitset_bindex *list,
       if (elt)
         {
           windex = elt->index + LBITSET_ELT_WORDS - 1;
-          boffset = windex * BITSET_WORD_BITS;
+          bitoff = windex * BITSET_WORD_BITS;
         }
     }
 
-  *next = n_bits - (boffset + 1);
+  *next = n_bits - (bitoff + 1);
   return count;
 }
 
