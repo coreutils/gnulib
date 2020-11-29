@@ -604,25 +604,23 @@ lbitset_list_reverse (bitset bset, bitset_bindex *list,
       bitset_word *srcp = elt->words;
 
       for (; (windex - elt->index) < LBITSET_ELT_WORDS;
-           windex--, bitoff -= BITSET_WORD_BITS,
-             bitcnt = BITSET_WORD_BITS - 1)
+           windex--)
         {
-          bitset_word word =
-            srcp[windex - elt->index] << (BITSET_WORD_BITS - 1 - bitcnt);
-
-          for (; word; bitcnt--)
+          bitset_word word = srcp[windex - elt->index];
+          if (bitcnt + 1 < BITSET_WORD_BITS)
+            /* We're starting in the middle of a word: smash bits to ignore.  */
+            word &= ((bitset_word) 1 << (bitcnt + 1)) - 1;
+          BITSET_FOR_EACH_BIT_REVERSE(pos, word)
             {
-              if (word & BITSET_MSB)
+              list[count++] = bitoff + pos;
+              if (count >= num)
                 {
-                  list[count++] = bitoff + bitcnt;
-                  if (count >= num)
-                    {
-                      *next = n_bits - (bitoff + bitcnt);
-                      return count;
-                    }
+                  *next = n_bits - (bitoff + pos);
+                  return count;
                 }
-              word <<= 1;
             }
+          bitoff -= BITSET_WORD_BITS;
+          bitcnt = BITSET_WORD_BITS - 1;
         }
 
       elt = elt->prev;
