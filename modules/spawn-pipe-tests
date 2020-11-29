@@ -6,6 +6,8 @@ tests/macros.h
 
 Depends-on:
 close
+msvc-inval
+stdint
 
 configure.ac:
 

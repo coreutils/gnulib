@@ -18,6 +18,7 @@
 
 #include <errno.h>
 #include <fcntl.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -52,6 +53,17 @@ static FILE *myerr;
 # define fdopen _fdopen
 #endif
 
+#if HAVE_MSVC_INVALID_PARAMETER_HANDLER
+static void __cdecl
+gl_msvc_invalid_parameter_handler (const wchar_t *expression,
+                                   const wchar_t *function,
+                                   const wchar_t *file,
+                                   unsigned int line,
+                                   uintptr_t dummy)
+{
+}
+#endif
+
 /* Return non-zero if FD is open.  */
 static int
 is_open (int fd)
@@ -72,9 +84,6 @@ is_open (int fd)
 int
 main (int argc, char *argv[])
 {
-  char buffer[2] = { 's', 't' };
-  int fd;
-
   /* fd 2 might be closed, but fd BACKUP_STDERR_FILENO is the original
      stderr.  */
   myerr = fdopen (BACKUP_STDERR_FILENO, "w");
@@ -83,9 +92,16 @@ main (int argc, char *argv[])
 
   ASSERT (argc == 2);
 
+#if HAVE_MSVC_INVALID_PARAMETER_HANDLER
+  /* Avoid exceptions from within _get_osfhandle.  */
+  _set_invalid_parameter_handler (gl_msvc_invalid_parameter_handler);
+#endif
+
   /* Read one byte from fd 0, and write its value plus one to fd 1.
      fd 2 should be closed iff the argument is 1.  Check that no other file
      descriptors leaked.  */
+
+  char buffer[2] = { 's', 't' };
 
   ASSERT (read (STDIN_FILENO, buffer, 2) == 1);
 
@@ -111,6 +127,7 @@ main (int argc, char *argv[])
       ASSERT (0);
     }
 
+  int fd;
   for (fd = 3; fd < 7; fd++)
     {
       errno = 0;
