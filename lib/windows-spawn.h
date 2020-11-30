@@ -18,13 +18,11 @@
 #ifndef _WINDOWS_SPAWN_H
 #define _WINDOWS_SPAWN_H
 
-/* Duplicates a file handle, making the copy uninheritable and ensuring the
-   result is none of STDIN_FILENO, STDOUT_FILENO, STDERR_FILENO.
-   Returns -1 for a file handle that is equivalent to closed.  */
-extern int dup_safer_noinherit (int fd);
+#include <stdint.h>
 
-/* Undoes the effect of TEMPFD = dup_safer_noinherit (ORIGFD);  */
-extern void undup_safer_noinherit (int tempfd, int origfd);
+/* Get declarations of the native Windows API functions.  */
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
 
 /* Prepares an argument vector before calling spawn().
    Note that spawn() does not by itself call the command interpreter
@@ -57,5 +55,29 @@ extern void undup_safer_noinherit (int tempfd, int origfd);
        - Cygwin programs, when invoked from a Cygwin program.
  */
 extern char ** prepare_spawn (char **argv);
+
+/* Creates a subprocess.
+   MODE is either P_WAIT or P_NOWAIT.
+   PROGNAME is the program to invoke.
+   ARGV is the NULL-terminated array of arguments, ARGV[0] being PROGNAME by
+   convention.
+   ENVP is the NULL-terminated set of environment variable assignments, or NULL
+   to inherit the initial environ variable assignments from the caller and
+   ignore all calls to putenv(), setenv(), unsetenv() done in the caller.
+   CURRDIR is the directory in which to start the program, or NULL to inherit
+   the working directory from the caller.
+   STDIN_HANDLE, STDOUT_HANDLE, STDERR_HANDLE are the handles to use for the
+   first three file descriptors in the callee process.
+   Returns
+     - 0 for success (if MODE is P_WAIT), or
+     - a handle that be passed to _cwait (on Windows) or waitpid (on OS/2), or
+     - -1 upon error, with errno set.
+ */
+extern intptr_t spawnpvech (int mode,
+                            const char *progname, const char * const *argv,
+                            const char * const *envp,
+                            const char *currdir,
+                            HANDLE stdin_handle, HANDLE stdout_handle,
+                            HANDLE stderr_handle);
 
 #endif /* _WINDOWS_SPAWN_H */

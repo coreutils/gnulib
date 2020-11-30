@@ -8,9 +8,10 @@ m4/execute.m4
 
 Depends-on:
 dup2
+environ
 error
 fatal-signal
-wait-process
+msvc-nothrow
 gettext-h
 spawn
 posix_spawnp
@@ -24,7 +25,7 @@ posix_spawnattr_destroy
 stdbool
 stdlib
 unistd
-environ
+wait-process
 windows-spawn
 
 configure.ac:

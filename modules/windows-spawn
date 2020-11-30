@@ -6,12 +6,10 @@ lib/windows-spawn.h
 lib/windows-spawn.c
 
 Depends-on:
-cloexec
-dup2
-error
-gettext-h
+findprog-in
 msvc-nothrow
 stdbool
+stdint
 stdlib
 strpbrk
 unistd

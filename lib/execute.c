@@ -38,6 +38,11 @@
 #if defined _WIN32 && ! defined __CYGWIN__
 
 /* Native Windows API.  */
+# if GNULIB_MSVC_NOTHROW
+#  include "msvc-nothrow.h"
+# else
+#  include <io.h>
+# endif
 # include <process.h>
 # include "windows-spawn.h"
 
@@ -86,12 +91,6 @@ nonintr_open (const char *pathname, int oflag, mode_t mode)
 #endif
 
 
-/* Execute a command, optionally redirecting any of the three standard file
-   descriptors to /dev/null.  Return its exit code.
-   If it didn't terminate correctly, exit if exit_on_error is true, otherwise
-   return 127.
-   If slave_process is true, the child process will be terminated when its
-   creator receives a catchable fatal signal.  */
 int
 execute (const char *progname,
          const char *prog_path, char **prog_argv,
@@ -103,77 +102,52 @@ execute (const char *progname,
 #if defined _WIN32 && ! defined __CYGWIN__
 
   /* Native Windows API.  */
-  int orig_stdin;
-  int orig_stdout;
-  int orig_stderr;
-  int exitcode;
-  int nullinfd;
-  int nulloutfd;
 
   /* FIXME: Need to free memory allocated by prepare_spawn.  */
   prog_argv = prepare_spawn (prog_argv);
 
-  /* Save standard file handles of parent process.  */
-  if (null_stdin)
-    orig_stdin = dup_safer_noinherit (STDIN_FILENO);
-  if (null_stdout)
-    orig_stdout = dup_safer_noinherit (STDOUT_FILENO);
-  if (null_stderr)
-    orig_stderr = dup_safer_noinherit (STDERR_FILENO);
-  exitcode = -1;
+  int exitcode = -1;
 
   /* Create standard file handles of child process.  */
-  nullinfd = -1;
-  nulloutfd = -1;
+  int nullinfd = -1;
+  int nulloutfd = -1;
   if ((!null_stdin
-       || ((nullinfd = open ("NUL", O_RDONLY, 0)) >= 0
-           && (nullinfd == STDIN_FILENO
-               || (dup2 (nullinfd, STDIN_FILENO) >= 0
-                   && close (nullinfd) >= 0))))
+       || (nullinfd = open ("NUL", O_RDONLY, 0)) >= 0)
       && (!(null_stdout || null_stderr)
-          || ((nulloutfd = open ("NUL", O_RDWR, 0)) >= 0
-              && (!null_stdout
-                  || nulloutfd == STDOUT_FILENO
-                  || dup2 (nulloutfd, STDOUT_FILENO) >= 0)
-              && (!null_stderr
-                  || nulloutfd == STDERR_FILENO
-                  || dup2 (nulloutfd, STDERR_FILENO) >= 0)
-              && ((null_stdout && nulloutfd == STDOUT_FILENO)
-                  || (null_stderr && nulloutfd == STDERR_FILENO)
-                  || close (nulloutfd) >= 0))))
-    /* Use _spawnvpe and pass the environment explicitly.  This is needed if
-       the program has modified the environment using putenv() or [un]setenv().
-       On Windows, programs have two environments, one in the "environment
-       block" of the process and managed through SetEnvironmentVariable(), and
-       one inside the process, in the location retrieved by the 'environ'
-       macro.  When using _spawnvp() without 'e', the child process inherits a
-       copy of the environment block - ignoring the effects of putenv() and
-       [un]setenv().  */
+          || (nulloutfd = open ("NUL", O_RDWR, 0)) >= 0))
+    /* Pass the environment explicitly.  This is needed if the program has
+       modified the environment using putenv() or [un]setenv().  On Windows,
+       processes have two environments, one in the "environment block" of the
+       process and managed through SetEnvironmentVariable(), and one inside the
+       process, in the location retrieved by the 'environ' macro.  If we were
+       to pass NULL, the child process would inherit a copy of the environment
+       block - ignoring the effects of putenv() and [un]setenv().  */
     {
-      exitcode = _spawnvpe (P_WAIT, prog_path, (const char **) prog_argv,
-                            (const char **) environ);
-      if (exitcode < 0 && errno == ENOEXEC)
+      HANDLE stdin_handle =
+        (HANDLE) _get_osfhandle (null_stdin ? nullinfd : STDIN_FILENO);
+      HANDLE stdout_handle =
+        (HANDLE) _get_osfhandle (null_stdout ? nulloutfd : STDOUT_FILENO);
+      HANDLE stderr_handle =
+        (HANDLE) _get_osfhandle (null_stderr ? nulloutfd : STDERR_FILENO);
+
+      exitcode = spawnpvech (P_WAIT, prog_path, (const char **) prog_argv,
+                             (const char **) environ, NULL,
+                             stdin_handle, stdout_handle, stderr_handle);
+      if (exitcode == -1 && errno == ENOEXEC)
         {
           /* prog is not a native executable.  Try to execute it as a
              shell script.  Note that prepare_spawn() has already prepended
              a hidden element "sh.exe" to prog_argv.  */
           --prog_argv;
-          exitcode = _spawnvpe (P_WAIT, prog_argv[0], (const char **) prog_argv,
-                                (const char **) environ);
+          exitcode = spawnpvech (P_WAIT, prog_argv[0], (const char **) prog_argv,
+                                 (const char **) environ, NULL,
+                                 stdin_handle, stdout_handle, stderr_handle);
         }
     }
   if (nulloutfd >= 0)
     close (nulloutfd);
   if (nullinfd >= 0)
     close (nullinfd);
-
-  /* Restore standard file handles of parent process.  */
-  if (null_stderr)
-    undup_safer_noinherit (orig_stderr, STDERR_FILENO);
-  if (null_stdout)
-    undup_safer_noinherit (orig_stdout, STDOUT_FILENO);
-  if (null_stdin)
-    undup_safer_noinherit (orig_stdin, STDIN_FILENO);
 
   if (termsigp != NULL)
     *termsigp = 0;

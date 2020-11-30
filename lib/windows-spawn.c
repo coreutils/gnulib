@@ -24,13 +24,10 @@
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
-/* Get _open_osfhandle().  */
-#include <io.h>
-
 #include <stdbool.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
 #include <errno.h>
 
 /* Get _get_osfhandle().  */
@@ -39,70 +36,16 @@
 #else
 # include <io.h>
 #endif
+#include <process.h>
 
-#include "cloexec.h"
-#include "error.h"
+#include "findprog.h"
 #include "xalloc.h"
-#include "gettext.h"
 
-#define _(str) gettext (str)
-
-
-/* Duplicates a file handle, making the copy uninheritable.
-   Returns -1 for a file handle that is equivalent to closed.  */
-static int
-dup_noinherit (int fd)
-{
-  fd = dup_cloexec (fd);
-  if (fd < 0 && errno == EMFILE)
-    error (EXIT_FAILURE, errno, _("_open_osfhandle failed"));
-
-  return fd;
-}
-
-/* Returns a file descriptor equivalent to FD, except that the resulting file
-   descriptor is none of STDIN_FILENO, STDOUT_FILENO, STDERR_FILENO.
-   FD must be open and non-inheritable.  The result will be non-inheritable as
-   well.
-   If FD < 0, FD itself is returned.  */
-static int
-fd_safer_noinherit (int fd)
-{
-  if (STDIN_FILENO <= fd && fd <= STDERR_FILENO)
-    {
-      /* The recursion depth is at most 3.  */
-      int nfd = fd_safer_noinherit (dup_noinherit (fd));
-      int saved_errno = errno;
-      close (fd);
-      errno = saved_errno;
-      return nfd;
-    }
-  return fd;
-}
-
-int
-dup_safer_noinherit (int fd)
-{
-  return fd_safer_noinherit (dup_noinherit (fd));
-}
-
-void
-undup_safer_noinherit (int tempfd, int origfd)
-{
-  if (tempfd >= 0)
-    {
-      if (dup2 (tempfd, origfd) < 0)
-        error (EXIT_FAILURE, errno, _("cannot restore fd %d: dup2 failed"),
-               origfd);
-      close (tempfd);
-    }
-  else
-    {
-      /* origfd was closed or open to no handle at all.  Set it to a closed
-         state.  This is (nearly) equivalent to the original state.  */
-      close (origfd);
-    }
-}
+/* Don't assume that UNICODE is not defined.  */
+#undef STARTUPINFO
+#define STARTUPINFO STARTUPINFOA
+#undef CreateProcess
+#define CreateProcess CreateProcessA
 
 #define SHELL_SPECIAL_CHARS "\"\\ \001\002\003\004\005\006\007\010\011\012\013\014\015\016\017\020\021\022\023\024\025\026\027\030\031\032\033\034\035\036\037*?"
 #define SHELL_SPACE_CHARS " \001\002\003\004\005\006\007\010\011\012\013\014\015\016\017\020\021\022\023\024\025\026\027\030\031\032\033\034\035\036\037"
@@ -200,4 +143,358 @@ prepare_spawn (char **argv)
   new_argv[argc] = NULL;
 
   return new_argv;
+}
+
+intptr_t
+spawnpvech (int mode,
+            const char *progname, const char * const *argv,
+            const char * const *envp,
+            const char *currdir,
+            HANDLE stdin_handle, HANDLE stdout_handle, HANDLE stderr_handle)
+{
+  /* Validate the arguments.  */
+  if (!(mode == P_WAIT
+        || mode == P_NOWAIT
+        || mode == P_DETACH
+        || mode == P_OVERLAY)
+      || progname == NULL || argv == NULL)
+    {
+      errno = EINVAL;
+      return -1;
+    }
+
+  /* Implement the 'p' letter: search for PROGNAME in getenv ("PATH").  */
+  const char *resolved_progname =
+    find_in_given_path (progname, getenv ("PATH"), false);
+  if (resolved_progname == NULL)
+    return -1;
+
+  /* Compose the command.
+     Just concatenate the argv[] strings, separated by spaces.  */
+  char *command;
+  {
+    /* Determine the size of the needed block of memory.  */
+    size_t total_size = 0;
+    const char * const *ap;
+    const char *p;
+    for (ap = argv; (p = *ap) != NULL; ap++)
+      total_size += strlen (p) + 1;
+    size_t command_size = (total_size > 0 ? total_size : 1);
+    command = (char *) malloc (command_size);
+    if (command == NULL)
+      goto out_of_memory_1;
+    if (total_size > 0)
+      {
+        char *cp = command;
+        for (ap = argv; (p = *ap) != NULL; ap++)
+          {
+            size_t size = strlen (p) + 1;
+            memcpy (cp, p, size - 1);
+            cp += size;
+            cp[-1] = ' ';
+          }
+        cp[-1] = '\0';
+      }
+    else
+      *command = '\0';
+  }
+
+  /* Copy *ENVP into a contiguous block of memory.  */
+  char *envblock;
+  if (envp == NULL)
+    envblock = NULL;
+  else
+   retry:
+    {
+      /* Guess the size of the needed block of memory.
+         The guess will be exact if other threads don't make modifications.  */
+      size_t total_size = 0;
+      const char * const *ep;
+      const char *p;
+      for (ep = envp; (p = *ep) != NULL; ep++)
+        total_size += strlen (p) + 1;
+      size_t envblock_size = total_size;
+      envblock = (char *) malloc (envblock_size + 1);
+      if (envblock == NULL)
+        goto out_of_memory_2;
+      size_t envblock_used = 0;
+      for (ep = envp; (p = *ep) != NULL; ep++)
+        {
+          size_t size = strlen (p) + 1;
+          if (envblock_used + size > envblock_size)
+            {
+              /* Other threads did modifications.  Need more memory.  */
+              envblock_size += envblock_size / 2;
+              if (envblock_used + size > envblock_size)
+                envblock_size = envblock_used + size;
+
+              char *new_envblock = (char *) realloc (envblock, envblock_size + 1);
+              if (new_envblock == NULL)
+                goto out_of_memory_3;
+              envblock = new_envblock;
+            }
+          memcpy (envblock + envblock_used, p, size);
+          envblock_used += size;
+          if (envblock[envblock_used - 1] != '\0')
+            {
+              /* Other threads did modifications.  Restart.  */
+              free (envblock);
+              goto retry;
+            }
+        }
+      envblock[envblock_used] = '\0';
+    }
+
+  /* CreateProcess
+     <https://docs.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-createprocessa>  */
+  /* Regarding handle inheritance, see
+     <https://docs.microsoft.com/en-us/windows/win32/sysinfo/handle-inheritance>  */
+  /* <https://docs.microsoft.com/en-us/windows/win32/procthread/process-creation-flags>  */
+  DWORD flags = (mode == P_DETACH ? DETACHED_PROCESS : 0);
+  /* STARTUPINFO
+     <https://docs.microsoft.com/en-us/windows/win32/api/processthreadsapi/ns-processthreadsapi-startupinfoa>  */
+  STARTUPINFO sinfo;
+  sinfo.cb = sizeof (STARTUPINFO);
+  sinfo.lpReserved = NULL;
+  sinfo.lpDesktop = NULL;
+  sinfo.lpTitle = NULL;
+  sinfo.dwFlags = STARTF_USESTDHANDLES;
+  sinfo.hStdInput = stdin_handle;
+  sinfo.hStdOutput = stdout_handle;
+  sinfo.hStdError = stderr_handle;
+
+  char *hblock = NULL;
+#if 0
+  sinfo.cbReserved2 = 0;
+  sinfo.lpReserved2 = NULL;
+#else
+  /* On newer versions of Windows, more file descriptors / handles than the
+     first three can be passed.
+     The format is as follows: Let N be an exclusive upper bound for the file
+     descriptors to be passed. Two arrays are constructed in memory:
+       - flags[0..N-1], of element type 'unsigned char',
+       - handles[0..N-1], of element type 'HANDLE' or 'intptr_t'.
+     For used entries, handles[i] is the handle, and flags[i] is a set of flags,
+     a combination of:
+        1 for open file descriptors,
+       64 for handles of type FILE_TYPE_CHAR,
+        8 for handles of type FILE_TYPE_PIPE.
+     For unused entries - this includes the first three, since they are already
+     passed above -, handles[i] is INVALID_HANDLE_VALUE and flags[i] is zero.
+     lpReserved2 now is a pointer to the concatenation (without padding) of:
+       - an 'unsigned int' whose value is N,
+       - the contents of the flags[0..N-1] array,
+       - the contents of the handles[0..N-1] array.
+     cbReserved2 is the size (in bytes) of the object at lpReserved2.  */
+  {
+    /* _getmaxstdio
+       <https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/getmaxstdio>
+       Default value is 512.  */
+    unsigned int fdmax;
+    for (fdmax = _getmaxstdio (); fdmax > 0; fdmax--)
+      {
+        unsigned int fd = fdmax - 1;
+        /* _get_osfhandle
+           <https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/get-osfhandle>  */
+        HANDLE handle = (HANDLE) _get_osfhandle (fd);
+        if (handle != INVALID_HANDLE_VALUE)
+          {
+            DWORD hflags;
+            /* GetHandleInformation
+               <https://docs.microsoft.com/en-us/windows/win32/api/handleapi/nf-handleapi-gethandleinformation>  */
+            if (GetHandleInformation (handle, &hflags))
+              {
+                if ((hflags & HANDLE_FLAG_INHERIT) != 0)
+                  /* fd denotes an inheritable descriptor.  */
+                  break;
+              }
+          }
+      }
+    if (fdmax > 0)
+      {
+        sinfo.cbReserved2 =
+          sizeof (unsigned int)
+          + fdmax * sizeof (unsigned char)
+          + fdmax * sizeof (HANDLE);
+        /* Add some padding, so that we can work with a properly HANDLE array.  */
+        hblock = (char *) malloc (sinfo.cbReserved2 + (sizeof (HANDLE) - 1));
+        if (hblock == NULL)
+          goto out_of_memory_3;
+        * (unsigned int *) hblock = fdmax;
+        unsigned char *flags = (unsigned char *) (hblock + sizeof (unsigned int));
+        char *handles = (char *) (flags + fdmax);
+        HANDLE *handles_aligned =
+          (HANDLE *) (((uintptr_t) handles + (sizeof (HANDLE) - 1))
+                      & - (uintptr_t) sizeof (HANDLE));
+
+        unsigned int fd;
+        for (fd = 0; fd < fdmax; fd++)
+          {
+            flags[fd] = 0;
+            handles_aligned[fd] = INVALID_HANDLE_VALUE;
+            /* The first three are already passed above.  */
+            if (fd >= 3)
+              {
+                /* _get_osfhandle
+                   <https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/get-osfhandle>  */
+                HANDLE handle = (HANDLE) _get_osfhandle (fd);
+                if (handle != INVALID_HANDLE_VALUE)
+                  {
+                    DWORD hflags;
+                    /* GetHandleInformation
+                       <https://docs.microsoft.com/en-us/windows/win32/api/handleapi/nf-handleapi-gethandleinformation>  */
+                    if (GetHandleInformation (handle, &hflags))
+                      {
+                        if ((hflags & HANDLE_FLAG_INHERIT) != 0)
+                          {
+                            /* fd denotes an inheritable descriptor.  */
+                            /* On Microsoft Windows, it would be sufficient to
+                               set flags[fd] = 1.  But on ReactOS or Wine,
+                               adding the bit that indicates the handle type
+                               may be necessary.  So, just do it everywhere.  */
+                            switch (GetFileType (handle))
+                              {
+                              case FILE_TYPE_CHAR:
+                                flags[fd] = 64 | 1;
+                                break;
+                              case FILE_TYPE_PIPE:
+                                flags[fd] = 8 | 1;
+                                break;
+                              default:
+                                flags[fd] = 1;
+                                break;
+                              }
+                            handles_aligned[fd] = handle;
+                          }
+                      }
+                  }
+              }
+          }
+
+        if (handles != (char *) handles_aligned)
+          memmove (handles, (char *) handles_aligned, fdmax * sizeof (HANDLE));
+        sinfo.lpReserved2 = (BYTE *) hblock;
+      }
+    else
+      {
+        sinfo.cbReserved2 = 0;
+        sinfo.lpReserved2 = NULL;
+      }
+  }
+#endif
+
+  PROCESS_INFORMATION pinfo;
+  if (!CreateProcess (resolved_progname, command, NULL, NULL, TRUE,
+                      flags, envblock, currdir, &sinfo, &pinfo))
+    {
+      DWORD error = GetLastError ();
+
+      if (hblock != NULL)
+        free (hblock);
+      if (envblock != NULL)
+        free (envblock);
+      free (command);
+      if (resolved_progname != progname)
+        free ((char *) resolved_progname);
+
+      /* Some of these errors probably cannot happen.  But who knows...  */
+      switch (error)
+        {
+        case ERROR_FILE_NOT_FOUND:
+        case ERROR_PATH_NOT_FOUND:
+        case ERROR_BAD_PATHNAME:
+        case ERROR_BAD_NET_NAME:
+        case ERROR_INVALID_NAME:
+        case ERROR_DIRECTORY:
+          errno = ENOENT;
+          break;
+
+        case ERROR_ACCESS_DENIED:
+        case ERROR_SHARING_VIOLATION:
+          errno = EACCES;
+          break;
+
+        case ERROR_OUTOFMEMORY:
+          errno = ENOMEM;
+          break;
+
+        case ERROR_BUFFER_OVERFLOW:
+        case ERROR_FILENAME_EXCED_RANGE:
+          errno = ENAMETOOLONG;
+          break;
+
+        default:
+          errno = EINVAL;
+          break;
+        }
+
+      return -1;
+    }
+
+  if (pinfo.hThread)
+    CloseHandle (pinfo.hThread);
+  if (hblock != NULL)
+    free (hblock);
+  if (envblock != NULL)
+    free (envblock);
+  free (command);
+  if (resolved_progname != progname)
+    free ((char *) resolved_progname);
+
+  switch (mode)
+    {
+    case P_WAIT:
+      {
+        /* Wait until it terminates.  Then get its exit status code.  */
+        switch (WaitForSingleObject (pinfo.hProcess, INFINITE))
+          {
+          case WAIT_OBJECT_0:
+            break;
+          case WAIT_FAILED:
+            errno = ECHILD;
+            return -1;
+          default:
+            abort ();
+          }
+
+        DWORD exit_code;
+        if (!GetExitCodeProcess (pinfo.hProcess, &exit_code))
+          {
+            errno = ECHILD;
+            return -1;
+          }
+        CloseHandle (pinfo.hProcess);
+        return exit_code;
+      }
+
+    case P_NOWAIT:
+      /* Return pinfo.hProcess, not pinfo.dwProcessId.  */
+      return (intptr_t) pinfo.hProcess;
+
+    case P_DETACH:
+    case P_OVERLAY:
+      CloseHandle (pinfo.hProcess);
+      return 0;
+
+    default:
+      /* Already checked above.  */
+      abort ();
+    }
+
+  /*NOTREACHED*/
+#if 0
+ out_of_memory_4:
+  if (hblock != NULL)
+    free (hblock);
+#endif
+ out_of_memory_3:
+  if (envblock != NULL)
+    free (envblock);
+ out_of_memory_2:
+  free (command);
+ out_of_memory_1:
+  if (resolved_progname != progname)
+    free ((char *) resolved_progname);
+  errno = ENOMEM;
+  return -1;
 }
