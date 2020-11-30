@@ -35,6 +35,9 @@ Include:
 <fcntl.h>
 <unistd.h>
 
+Link:
+$(LIB_EACCESS)
+
 License:
 GPL
 
