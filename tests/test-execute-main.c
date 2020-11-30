@@ -27,6 +27,11 @@
 #include <string.h>
 #include <unistd.h>
 
+#if defined _WIN32 && ! defined __CYGWIN__
+/* Get _isatty.  */
+# include <io.h>
+#endif
+
 #include "read-file.h"
 #include "macros.h"
 
@@ -308,6 +313,122 @@ main (int argc, char *argv[])
         int ret = execute (progname, prog_argv[0], prog_argv,
                            true, false, false, false, true, false, NULL);
         ASSERT (ret == 0);
+      }
+      break;
+    case 17:
+      {
+        /* Check that file descriptors >= 3, open for reading, can be inherited,
+           including the file position.  */
+        FILE *fp = fopen (BASE ".tmp", "w");
+        fputs ("Foobar", fp);
+        ASSERT (fclose (fp) == 0);
+
+        int fd = open (BASE ".tmp", O_RDONLY);
+        ASSERT (fd >= 0 && fd < 10);
+
+        ASSERT (dup2 (fd, 10) >= 0);
+        close (fd);
+        fd = 10;
+
+        char buf[2];
+        ASSERT (read (fd, buf, sizeof (buf)) == sizeof (buf));
+        /* The file position is now 2.  */
+
+        char *prog_argv[3] = { prog_path, (char *) "17", NULL };
+        int ret = execute (progname, prog_argv[0], prog_argv,
+                           false, false, false, false, true, false, NULL);
+        ASSERT (ret == 0);
+
+        close (fd);
+        ASSERT (remove (BASE ".tmp") == 0);
+      }
+      break;
+    case 18:
+      {
+        /* Check that file descriptors >= 3, open for writing, can be inherited,
+           including the file position.  */
+        remove (BASE ".tmp");
+        int fd = open (BASE ".tmp", O_RDWR | O_CREAT | O_TRUNC, 0600);
+        ASSERT (fd >= 0 && fd < 10);
+
+        ASSERT (dup2 (fd, 10) >= 0);
+        close (fd);
+        fd = 10;
+
+        ASSERT (write (fd, "Foo", 3) == 3);
+        /* The file position is now 3.  */
+
+        char *prog_argv[3] = { prog_path, (char *) "18", NULL };
+        int ret = execute (progname, prog_argv[0], prog_argv,
+                           false, false, false, false, true, false, NULL);
+        ASSERT (ret == 0);
+
+        close (fd);
+
+        size_t length;
+        char *contents = read_file (BASE ".tmp", 0, &length);
+        ASSERT (length == 6 && memcmp (contents, "Foobar", 6) == 0);
+
+        ASSERT (remove (BASE ".tmp") == 0);
+      }
+      break;
+    case 19:
+      {
+        /* Check that file descriptors >= 3, when inherited, preserve their
+           isatty() property, part 1 (regular file).  */
+        FILE *fp = fopen (BASE ".tmp", "w");
+        fputs ("Foo", fp);
+        ASSERT (fclose (fp) == 0);
+
+        int fd_in = open (BASE ".tmp", O_RDONLY);
+        ASSERT (fd_in >= 0 && fd_in < 10);
+
+        int fd_out = open (BASE ".tmp", O_WRONLY | O_APPEND);
+        ASSERT (fd_out >= 0 && fd_out < 10);
+
+        ASSERT (dup2 (fd_in, 10) >= 0);
+        close (fd_in);
+        fd_in = 10;
+
+        ASSERT (dup2 (fd_out, 11) >= 0);
+        close (fd_out);
+        fd_out = 11;
+
+        char *prog_argv[3] = { prog_path, (char *) "19", NULL };
+        int ret = execute (progname, prog_argv[0], prog_argv,
+                           false, false, false, false, true, false, NULL);
+        #if defined _WIN32 && ! defined __CYGWIN__
+        ASSERT (ret == 4 + 2 * (_isatty (10) != 0) + (_isatty (11) != 0));
+        #else
+        ASSERT (ret == 4 + 2 * (isatty (10) != 0) + (isatty (11) != 0));
+        #endif
+
+        close (fd_in);
+        close (fd_out);
+        ASSERT (remove (BASE ".tmp") == 0);
+      }
+      break;
+    case 20:
+      {
+        /* Check that file descriptors >= 3, when inherited, preserve their
+           isatty() property, part 2 (character devices).  */
+        ASSERT (dup2 (STDIN_FILENO, 10) >= 0);
+        int fd_in = 10;
+
+        ASSERT (dup2 (STDOUT_FILENO, 11) >= 0);
+        int fd_out = 11;
+
+        char *prog_argv[3] = { prog_path, (char *) "20", NULL };
+        int ret = execute (progname, prog_argv[0], prog_argv,
+                           false, false, false, false, true, false, NULL);
+        #if defined _WIN32 && ! defined __CYGWIN__
+        ASSERT (ret == 4 + 2 * (_isatty (10) != 0) + (_isatty (11) != 0));
+        #else
+        ASSERT (ret == 4 + 2 * (isatty (10) != 0) + (isatty (11) != 0));
+        #endif
+
+        close (fd_in);
+        close (fd_out);
       }
       break;
     default:
