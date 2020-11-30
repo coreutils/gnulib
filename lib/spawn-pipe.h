@@ -42,6 +42,15 @@ extern "C" {
    After finishing communication, the caller should call wait_subprocess()
    to get rid of the subprocess in the process table.
 
+   progname is the name of the program to be executed by the subprocess, used
+   for error messages.
+   prog_path is the file name of the program to be executed by the subprocess.
+   If it contains no slashes, a search is conducted in $PATH.  An operating
+   system dependent suffix is added, if necessary.
+   prog_argv is the array of strings that the subprocess shall receive in
+   argv[].  It is a NULL-terminated array.  prog_argv[0] should normally be
+   identical to prog_path.
+
    If slave_process is true, the child process will be terminated when its
    creator receives a catchable fatal signal or exits normally.  If
    slave_process is false, the child process will continue running in this

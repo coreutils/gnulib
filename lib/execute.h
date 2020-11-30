@@ -24,6 +24,14 @@
    descriptors to /dev/null.  Return its exit code.
    If it didn't terminate correctly, exit if exit_on_error is true, otherwise
    return 127.
+   progname is the name of the program to be executed by the subprocess, used
+   for error messages.
+   prog_path is the file name of the program to be executed by the subprocess.
+   If it contains no slashes, a search is conducted in $PATH.  An operating
+   system dependent suffix is added, if necessary.
+   prog_argv is the array of strings that the subprocess shall receive in
+   argv[].  It is a NULL-terminated array.  prog_argv[0] should normally be
+   identical to prog_path.
    If ignore_sigpipe is true, consider a subprocess termination due to SIGPIPE
    as equivalent to a success.  This is suitable for processes whose only
    purpose is to write to standard output.
