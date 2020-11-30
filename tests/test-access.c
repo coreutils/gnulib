@@ -40,6 +40,7 @@ main ()
   /* Remove anything from prior partial run.  */
   unlink (BASE "f");
   unlink (BASE "f1");
+  chmod (BASE "f2", 0600);
   unlink (BASE "f2");
 
   {
@@ -86,8 +87,9 @@ main ()
   }
 
   /* Cleanup.  */
-  unlink (BASE "f1");
-  unlink (BASE "f2");
+  ASSERT (unlink (BASE "f1") == 0);
+  ASSERT (chmod (BASE "f2", 0600) == 0);
+  ASSERT (unlink (BASE "f2") == 0);
 
   return 0;
 }
