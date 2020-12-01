@@ -103,6 +103,8 @@ execute (const char *progname,
 
   /* Native Windows API.  */
 
+  int saved_errno;
+
   /* FIXME: Need to free memory allocated by prepare_spawn.  */
   prog_argv = prepare_spawn (prog_argv);
 
@@ -144,6 +146,8 @@ execute (const char *progname,
                                  stdin_handle, stdout_handle, stderr_handle);
         }
     }
+  if (exitcode == -1)
+    saved_errno = errno;
   if (nulloutfd >= 0)
     close (nulloutfd);
   if (nullinfd >= 0)
@@ -155,7 +159,7 @@ execute (const char *progname,
   if (exitcode == -1)
     {
       if (exit_on_error || !null_stderr)
-        error (exit_on_error ? EXIT_FAILURE : 0, errno,
+        error (exit_on_error ? EXIT_FAILURE : 0, saved_errno,
                _("%s subprocess failed"), progname);
       return 127;
     }
