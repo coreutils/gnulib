@@ -29,7 +29,7 @@
 /* Get declarations of the native Windows API functions.  */
 # define WIN32_LEAN_AND_MEAN
 # include <windows.h>
-/* Get _get_osfhandle, _isatty.  */
+/* Get _get_osfhandle, _isatty, _chdir, _getcwd.  */
 # include <io.h>
 #endif
 
@@ -41,6 +41,7 @@
 #undef fprintf
 #undef fputs
 #undef fstat
+#undef getcwd
 #undef isatty
 #undef raise
 #undef read
@@ -200,6 +201,23 @@ main (int argc, char *argv[])
         #else
         return 4 + 2 * (isatty (10) != 0) + (isatty (11) != 0);
         #endif
+      }
+    case 21:
+      /* Check execution in a different directory.  */
+      {
+        char cwd[1024];
+        #if defined _WIN32 && ! defined __CYGWIN__
+        if (_chdir ("..") != 0)
+          return 1;
+        if (_getcwd (cwd, sizeof (cwd)) == NULL)
+          return 2;
+        #else
+        if (chdir ("..") != 0)
+          return 1;
+        if (getcwd (cwd, sizeof (cwd)) == NULL)
+          return 2;
+        #endif
+        return (argc == 3 && strcmp (argv[2], cwd) == 0 ? 0 : 3);
       }
     default:
       abort ();

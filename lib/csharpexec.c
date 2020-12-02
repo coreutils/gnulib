@@ -106,7 +106,8 @@ execute_csharp_using_mono (const char *assembly_path,
       argv[0] = "mono";
       argv[1] = "--version";
       argv[2] = NULL;
-      exitstatus = execute ("mono", "mono", argv, false, false, true, true,
+      exitstatus = execute ("mono", "mono", argv, NULL,
+                            false, false, true, true,
                             true, false, NULL);
       mono_present = (exitstatus == 0);
       mono_tested = true;
@@ -167,7 +168,8 @@ execute_csharp_using_sscli (const char *assembly_path,
 
       argv[0] = "clix";
       argv[1] = NULL;
-      exitstatus = execute ("clix", "clix", argv, false, false, true, true,
+      exitstatus = execute ("clix", "clix", argv, NULL,
+                            false, false, true, true,
                             true, false, NULL);
       clix_present = (exitstatus == 0 || exitstatus == 1);
       clix_tested = true;

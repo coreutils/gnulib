@@ -8,15 +8,20 @@ m4/execute.m4
 
 Depends-on:
 dup2
+canonicalize
 environ
 error
 fatal-signal
+filename
+findprog-in
 msvc-nothrow
 gettext-h
 spawn
+posix_spawn
 posix_spawnp
 posix_spawn_file_actions_init
 posix_spawn_file_actions_addopen
+posix_spawn_file_actions_addchdir
 posix_spawn_file_actions_destroy
 posix_spawnattr_init
 posix_spawnattr_setsigmask

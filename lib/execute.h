@@ -32,6 +32,9 @@
    prog_argv is the array of strings that the subprocess shall receive in
    argv[].  It is a NULL-terminated array.  prog_argv[0] should normally be
    identical to prog_path.
+   If directory is not NULL, the command is executed in that directory.  If
+   prog_path is a relative file name, it resolved before changing to that
+   directory.  The current directory of the current process remains unchanged.
    If ignore_sigpipe is true, consider a subprocess termination due to SIGPIPE
    as equivalent to a success.  This is suitable for processes whose only
    purpose is to write to standard output.
@@ -44,6 +47,7 @@
    is called.  See spawn-pipe.h for the reason.  */
 extern int execute (const char *progname,
                     const char *prog_path, char **prog_argv,
+                    const char *directory,
                     bool ignore_sigpipe,
                     bool null_stdin, bool null_stdout, bool null_stderr,
                     bool slave_process, bool exit_on_error,

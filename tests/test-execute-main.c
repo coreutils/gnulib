@@ -26,9 +26,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <sys/stat.h>
 
 #if defined _WIN32 && ! defined __CYGWIN__
-/* Get _isatty.  */
+/* Get _isatty, _getcwd.  */
 # include <io.h>
 #endif
 
@@ -63,7 +64,7 @@ main (int argc, char *argv[])
       {
         /* Check an invocation without arguments.  Check the exit code.  */
         char *prog_argv[2] = { prog_path, NULL };
-        int ret = execute (progname, prog_argv[0], prog_argv,
+        int ret = execute (progname, prog_argv[0], prog_argv, NULL,
                            false, false, false, false, true, false, NULL);
         ASSERT (ret == 40);
       }
@@ -72,7 +73,7 @@ main (int argc, char *argv[])
       {
         /* Check an invocation of a non-existent program.  */
         char *prog_argv[3] = { "./non-existent", NULL };
-        int ret = execute (progname, prog_argv[0], prog_argv,
+        int ret = execute (progname, prog_argv[0], prog_argv, NULL,
                            false, false, false, false, true, false, NULL);
         ASSERT (ret == 127);
       }
@@ -96,7 +97,7 @@ main (int argc, char *argv[])
             (char *) "",
             NULL
           };
-        int ret = execute (progname, prog_argv[0], prog_argv,
+        int ret = execute (progname, prog_argv[0], prog_argv, NULL,
                            false, false, false, false, true, false, NULL);
         ASSERT (ret == 0);
       }
@@ -107,7 +108,7 @@ main (int argc, char *argv[])
         /* Check SIGPIPE handling with ignore_sigpipe = false.  */
         char *prog_argv[3] = { prog_path, (char *) "3", NULL };
         int termsig = 0xDEADBEEF;
-        int ret = execute (progname, prog_argv[0], prog_argv,
+        int ret = execute (progname, prog_argv[0], prog_argv, NULL,
                            false, false, false, false, true, false, &termsig);
         ASSERT (ret == 127);
         ASSERT (termsig == SIGPIPE);
@@ -120,7 +121,7 @@ main (int argc, char *argv[])
         /* Check SIGPIPE handling with ignore_sigpipe = true.  */
         char *prog_argv[3] = { prog_path, (char *) "4", NULL };
         int termsig = 0xDEADBEEF;
-        int ret = execute (progname, prog_argv[0], prog_argv,
+        int ret = execute (progname, prog_argv[0], prog_argv, NULL,
                            true, false, false, false, true, false, &termsig);
         ASSERT (ret == 0);
         ASSERT (termsig == SIGPIPE);
@@ -132,7 +133,7 @@ main (int argc, char *argv[])
         /* Check other signal.  */
         char *prog_argv[3] = { prog_path, (char *) "5", NULL };
         int termsig = 0xDEADBEEF;
-        int ret = execute (progname, prog_argv[0], prog_argv,
+        int ret = execute (progname, prog_argv[0], prog_argv, NULL,
                            false, false, false, false, true, false, &termsig);
         #if defined _WIN32 && !defined __CYGWIN__
         ASSERT (ret == 3);
@@ -154,7 +155,7 @@ main (int argc, char *argv[])
         ASSERT (fp != NULL);
 
         char *prog_argv[3] = { prog_path, (char *) "6", NULL };
-        int ret = execute (progname, prog_argv[0], prog_argv,
+        int ret = execute (progname, prog_argv[0], prog_argv, NULL,
                            false, false, false, false, true, false, NULL);
         ASSERT (ret == 0);
 
@@ -173,7 +174,7 @@ main (int argc, char *argv[])
         ASSERT (fp != NULL);
 
         char *prog_argv[3] = { prog_path, (char *) "7", NULL };
-        int ret = execute (progname, prog_argv[0], prog_argv,
+        int ret = execute (progname, prog_argv[0], prog_argv, NULL,
                            false, true, false, false, true, false, NULL);
         ASSERT (ret == 0);
 
@@ -188,7 +189,7 @@ main (int argc, char *argv[])
         ASSERT (fp != NULL);
 
         char *prog_argv[3] = { prog_path, (char *) "8", NULL };
-        int ret = execute (progname, prog_argv[0], prog_argv,
+        int ret = execute (progname, prog_argv[0], prog_argv, NULL,
                            false, false, false, false, true, false, NULL);
         ASSERT (ret == 0);
 
@@ -208,7 +209,7 @@ main (int argc, char *argv[])
         ASSERT (fp != NULL);
 
         char *prog_argv[3] = { prog_path, (char *) "9", NULL };
-        int ret = execute (progname, prog_argv[0], prog_argv,
+        int ret = execute (progname, prog_argv[0], prog_argv, NULL,
                            false, false, false, false, true, false, NULL);
         ASSERT (ret == 0);
       }
@@ -220,7 +221,7 @@ main (int argc, char *argv[])
         ASSERT (fp != NULL);
 
         char *prog_argv[3] = { prog_path, (char *) "10", NULL };
-        int ret = execute (progname, prog_argv[0], prog_argv,
+        int ret = execute (progname, prog_argv[0], prog_argv, NULL,
                            false, false, true, false, true, false, NULL);
         ASSERT (ret == 0);
 
@@ -240,7 +241,7 @@ main (int argc, char *argv[])
         ASSERT (fp != NULL);
 
         char *prog_argv[3] = { prog_path, (char *) "11", NULL };
-        int ret = execute (progname, prog_argv[0], prog_argv,
+        int ret = execute (progname, prog_argv[0], prog_argv, NULL,
                            false, false, false, false, true, false, NULL);
         ASSERT (ret == 0);
 
@@ -260,7 +261,7 @@ main (int argc, char *argv[])
         ASSERT (fp != NULL);
 
         char *prog_argv[3] = { prog_path, (char *) "12", NULL };
-        int ret = execute (progname, prog_argv[0], prog_argv,
+        int ret = execute (progname, prog_argv[0], prog_argv, NULL,
                            false, false, false, false, true, false, NULL);
         ASSERT (ret == 0);
       }
@@ -272,7 +273,7 @@ main (int argc, char *argv[])
         ASSERT (fp != NULL);
 
         char *prog_argv[3] = { prog_path, (char *) "13", NULL };
-        int ret = execute (progname, prog_argv[0], prog_argv,
+        int ret = execute (progname, prog_argv[0], prog_argv, NULL,
                            false, false, false, true, true, false, NULL);
         ASSERT (ret == 0);
 
@@ -290,7 +291,7 @@ main (int argc, char *argv[])
         /* Check file descriptors >= 3 can be inherited.  */
         ASSERT (dup2 (STDOUT_FILENO, 10) >= 0);
         char *prog_argv[3] = { prog_path, (char *) "14", NULL };
-        int ret = execute (progname, prog_argv[0], prog_argv,
+        int ret = execute (progname, prog_argv[0], prog_argv, NULL,
                            true, false, false, false, true, false, NULL);
         ASSERT (ret == 0);
       }
@@ -300,7 +301,7 @@ main (int argc, char *argv[])
         /* Check file descriptors >= 3 can be inherited.  */
         ASSERT (fcntl (STDOUT_FILENO, F_DUPFD, 10) >= 0);
         char *prog_argv[3] = { prog_path, (char *) "15", NULL };
-        int ret = execute (progname, prog_argv[0], prog_argv,
+        int ret = execute (progname, prog_argv[0], prog_argv, NULL,
                            true, false, false, false, true, false, NULL);
         ASSERT (ret == 0);
       }
@@ -310,7 +311,7 @@ main (int argc, char *argv[])
         /* Check file descriptors >= 3 with O_CLOEXEC bit are not inherited.  */
         ASSERT (fcntl (STDOUT_FILENO, F_DUPFD_CLOEXEC, 10) >= 0);
         char *prog_argv[3] = { prog_path, (char *) "16", NULL };
-        int ret = execute (progname, prog_argv[0], prog_argv,
+        int ret = execute (progname, prog_argv[0], prog_argv, NULL,
                            true, false, false, false, true, false, NULL);
         ASSERT (ret == 0);
       }
@@ -335,7 +336,7 @@ main (int argc, char *argv[])
         /* The file position is now 2.  */
 
         char *prog_argv[3] = { prog_path, (char *) "17", NULL };
-        int ret = execute (progname, prog_argv[0], prog_argv,
+        int ret = execute (progname, prog_argv[0], prog_argv, NULL,
                            false, false, false, false, true, false, NULL);
         ASSERT (ret == 0);
 
@@ -359,7 +360,7 @@ main (int argc, char *argv[])
         /* The file position is now 3.  */
 
         char *prog_argv[3] = { prog_path, (char *) "18", NULL };
-        int ret = execute (progname, prog_argv[0], prog_argv,
+        int ret = execute (progname, prog_argv[0], prog_argv, NULL,
                            false, false, false, false, true, false, NULL);
         ASSERT (ret == 0);
 
@@ -395,7 +396,7 @@ main (int argc, char *argv[])
         fd_out = 11;
 
         char *prog_argv[3] = { prog_path, (char *) "19", NULL };
-        int ret = execute (progname, prog_argv[0], prog_argv,
+        int ret = execute (progname, prog_argv[0], prog_argv, NULL,
                            false, false, false, false, true, false, NULL);
         #if defined _WIN32 && ! defined __CYGWIN__
         ASSERT (ret == 4 + 2 * (_isatty (10) != 0) + (_isatty (11) != 0));
@@ -419,7 +420,7 @@ main (int argc, char *argv[])
         int fd_out = 11;
 
         char *prog_argv[3] = { prog_path, (char *) "20", NULL };
-        int ret = execute (progname, prog_argv[0], prog_argv,
+        int ret = execute (progname, prog_argv[0], prog_argv, NULL,
                            false, false, false, false, true, false, NULL);
         #if defined _WIN32 && ! defined __CYGWIN__
         ASSERT (ret == 4 + 2 * (_isatty (10) != 0) + (_isatty (11) != 0));
@@ -429,6 +430,27 @@ main (int argc, char *argv[])
 
         close (fd_in);
         close (fd_out);
+      }
+      break;
+    case 21:
+      {
+        /* Check execution in a different directory.  */
+        rmdir (BASE ".sub");
+        ASSERT (mkdir (BASE ".sub", 0700) == 0);
+
+        char cwd[1024];
+        #if defined _WIN32 && ! defined __CYGWIN__
+        ASSERT (_getcwd (cwd, sizeof (cwd)) != NULL);
+        #else
+        ASSERT (getcwd (cwd, sizeof (cwd)) != NULL);
+        #endif
+
+        char *prog_argv[4] = { prog_path, (char *) "21", cwd, NULL };
+        int ret = execute (progname, prog_argv[0], prog_argv, BASE ".sub",
+                           false, false, false, false, true, false, NULL);
+        ASSERT (ret == 0);
+
+        ASSERT (rmdir (BASE ".sub") == 0);
       }
       break;
     default:

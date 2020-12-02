@@ -378,7 +378,8 @@ compile_csharp_using_sscli (const char * const *sources,
           free (command);
         }
 
-      exitstatus = execute ("csc", "csc", argv, false, false, false, false,
+      exitstatus = execute ("csc", "csc", argv, NULL,
+                            false, false, false, false,
                             true, true, NULL);
 
       for (i = 2; i < 3 + libdirs_count + libraries_count; i++)

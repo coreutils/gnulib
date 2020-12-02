@@ -28,8 +28,11 @@
 #include <signal.h>
 #include <unistd.h>
 
+#include "canonicalize.h"
 #include "error.h"
 #include "fatal-signal.h"
+#include "filename.h"
+#include "findprog.h"
 #include "wait-process.h"
 #include "gettext.h"
 
@@ -94,16 +97,65 @@ nonintr_open (const char *pathname, int oflag, mode_t mode)
 int
 execute (const char *progname,
          const char *prog_path, char **prog_argv,
+         const char *directory,
          bool ignore_sigpipe,
          bool null_stdin, bool null_stdout, bool null_stderr,
          bool slave_process, bool exit_on_error,
          int *termsigp)
 {
+  int saved_errno;
+  char *prog_path_to_free = NULL;
+
+  if (directory != NULL)
+    {
+      /* If a change of directory is requested, make sure PROG_PATH is absolute
+         before we do so.  This is needed because
+           - posix_spawn and posix_spawnp are required to resolve a relative
+             PROG_PATH *after* changing the directory.  See
+             <https://www.austingroupbugs.net/view.php?id=1208>:
+               "if this pathname does not start with a <slash> it shall be
+                interpreted relative to the working directory of the child
+                process _after_ all file_actions have been performed."
+             But this would be a surprising application behaviour, possibly
+             even security relevant.
+           - For the Windows CreateProcess() function, it is unspecified whether
+             a relative file name is interpreted to the parent's current
+             directory or to the specified directory.  See
+             <https://docs.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-createprocessa>  */
+      if (! IS_ABSOLUTE_FILE_NAME (prog_path))
+        {
+          const char *resolved_prog =
+            find_in_given_path (prog_path, getenv ("PATH"), false);
+          if (resolved_prog == NULL)
+            goto fail_with_errno;
+          if (resolved_prog != prog_path)
+            prog_path_to_free = (char *) resolved_prog;
+          prog_path = resolved_prog;
+
+          if (! IS_ABSOLUTE_FILE_NAME (prog_path))
+            {
+              char *absolute_prog =
+                canonicalize_filename_mode (prog_path,
+                                            CAN_MISSING | CAN_NOLINKS);
+              if (absolute_prog == NULL)
+                {
+                  saved_errno = errno;
+                  free (prog_path_to_free);
+                  goto fail_with_saved_errno;
+                }
+              free (prog_path_to_free);
+              prog_path_to_free = absolute_prog;
+              prog_path = absolute_prog;
+
+              if (! IS_ABSOLUTE_FILE_NAME (prog_path))
+                abort ();
+            }
+        }
+    }
+
 #if defined _WIN32 && ! defined __CYGWIN__
 
   /* Native Windows API.  */
-
-  int saved_errno;
 
   /* FIXME: Need to free memory allocated by prepare_spawn.  */
   prog_argv = prepare_spawn (prog_argv);
@@ -133,16 +185,17 @@ execute (const char *progname,
         (HANDLE) _get_osfhandle (null_stderr ? nulloutfd : STDERR_FILENO);
 
       exitcode = spawnpvech (P_WAIT, prog_path, (const char **) prog_argv,
-                             (const char **) environ, NULL,
+                             (const char **) environ, directory,
                              stdin_handle, stdout_handle, stderr_handle);
       if (exitcode == -1 && errno == ENOEXEC)
         {
           /* prog is not a native executable.  Try to execute it as a
              shell script.  Note that prepare_spawn() has already prepended
              a hidden element "sh.exe" to prog_argv.  */
+          prog_argv[0] = prog_path;
           --prog_argv;
           exitcode = spawnpvech (P_WAIT, prog_argv[0], (const char **) prog_argv,
-                                 (const char **) environ, NULL,
+                                 (const char **) environ, directory,
                                  stdin_handle, stdout_handle, stderr_handle);
         }
     }
@@ -152,17 +205,13 @@ execute (const char *progname,
     close (nulloutfd);
   if (nullinfd >= 0)
     close (nullinfd);
+  free (prog_path_to_free);
 
   if (termsigp != NULL)
     *termsigp = 0;
 
   if (exitcode == -1)
-    {
-      if (exit_on_error || !null_stderr)
-        error (exit_on_error ? EXIT_FAILURE : 0, saved_errno,
-               _("%s subprocess failed"), progname);
-      return 127;
-    }
+    goto fail_with_saved_errno;
 
   return exitcode;
 
@@ -209,6 +258,9 @@ execute (const char *progname,
                                                           "/dev/null", O_RDWR,
                                                           0))
                  != 0)
+          || (directory != NULL
+              && (err = posix_spawn_file_actions_addchdir (&actions,
+                                                           directory)))
           || (slave_process
               && ((err = posix_spawnattr_init (&attrs)) != 0
                   || (attrs_allocated = true,
@@ -218,9 +270,13 @@ execute (const char *progname,
                       || (err = posix_spawnattr_setflags (&attrs,
                                                         POSIX_SPAWN_SETSIGMASK))
                          != 0)))
-          || (err = posix_spawnp (&child, prog_path, &actions,
-                                  attrs_allocated ? &attrs : NULL, prog_argv,
-                                  environ))
+          || (err = (directory != NULL
+                     ? posix_spawn (&child, prog_path, &actions,
+                                    attrs_allocated ? &attrs : NULL, prog_argv,
+                                    environ)
+                     : posix_spawnp (&child, prog_path, &actions,
+                                     attrs_allocated ? &attrs : NULL, prog_argv,
+                                     environ)))
              != 0))
     {
       if (actions_allocated)
@@ -229,12 +285,11 @@ execute (const char *progname,
         posix_spawnattr_destroy (&attrs);
       if (slave_process)
         unblock_fatal_signals ();
+      free (prog_path_to_free);
       if (termsigp != NULL)
         *termsigp = 0;
-      if (exit_on_error || !null_stderr)
-        error (exit_on_error ? EXIT_FAILURE : 0, err,
-               _("%s subprocess failed"), progname);
-      return 127;
+      saved_errno = err;
+      goto fail_with_saved_errno;
     }
   posix_spawn_file_actions_destroy (&actions);
   if (attrs_allocated)
@@ -244,9 +299,18 @@ execute (const char *progname,
       register_slave_subprocess (child);
       unblock_fatal_signals ();
     }
+  free (prog_path_to_free);
 
   return wait_subprocess (child, progname, ignore_sigpipe, null_stderr,
                           slave_process, exit_on_error, termsigp);
 
 #endif
+
+ fail_with_errno:
+  saved_errno = errno;
+ fail_with_saved_errno:
+  if (exit_on_error || !null_stderr)
+    error (exit_on_error ? EXIT_FAILURE : 0, saved_errno,
+           _("%s subprocess failed"), progname);
+  return 127;
 }

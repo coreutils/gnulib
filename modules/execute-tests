@@ -7,6 +7,7 @@ tests/macros.h
 Depends-on:
 dup2
 fcntl
+mkdir
 msvc-inval
 read-file
 stdint

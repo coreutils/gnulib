@@ -343,8 +343,9 @@ compile_using_envjavac (const char *javac,
   argv[1] = "-c";
   argv[2] = command;
   argv[3] = NULL;
-  exitstatus = execute (javac, BOURNE_SHELL, argv, false, false, false,
-                        null_stderr, true, true, NULL);
+  exitstatus = execute (javac, BOURNE_SHELL, argv, NULL,
+                        false, false, false, null_stderr,
+                        true, true, NULL);
   err = (exitstatus != 0);
 
   freea (command);
@@ -425,7 +426,8 @@ compile_using_gcj (const char * const *java_sources,
       free (command);
     }
 
-  exitstatus = execute ("gcj", "gcj", argv, false, false, false, null_stderr,
+  exitstatus = execute ("gcj", "gcj", argv, NULL,
+                        false, false, false, null_stderr,
                         true, true, NULL);
   err = (exitstatus != 0);
 
@@ -496,7 +498,8 @@ compile_using_javac (const char * const *java_sources,
       free (command);
     }
 
-  exitstatus = execute ("javac", "javac", argv, false, false, false,
+  exitstatus = execute ("javac", "javac", argv, NULL,
+                        false, false, false,
                         null_stderr, true, true, NULL);
   err = (exitstatus != 0);
 
@@ -551,8 +554,9 @@ compile_using_jikes (const char * const *java_sources,
       free (command);
     }
 
-  exitstatus = execute ("jikes", "jikes", argv, false, false, false,
-                        null_stderr, true, true, NULL);
+  exitstatus = execute ("jikes", "jikes", argv, NULL,
+                        false, false, false, null_stderr,
+                        true, true, NULL);
   err = (exitstatus != 0);
 
   freea (argv);
@@ -1872,7 +1876,8 @@ is_javac_present (void)
 
       argv[0] = "javac";
       argv[1] = NULL;
-      exitstatus = execute ("javac", "javac", argv, false, false, true, true,
+      exitstatus = execute ("javac", "javac", argv, NULL,
+                            false, false, true, true,
                             true, false, NULL);
       javac_present = (exitstatus == 0 || exitstatus == 1 || exitstatus == 2);
       javac_tested = true;
@@ -2138,7 +2143,8 @@ is_jikes_present (void)
 
       argv[0] = "jikes";
       argv[1] = NULL;
-      exitstatus = execute ("jikes", "jikes", argv, false, false, true, true,
+      exitstatus = execute ("jikes", "jikes", argv, NULL,
+                            false, false, true, true,
                             true, false, NULL);
       jikes_present = (exitstatus == 0 || exitstatus == 1);
       jikes_tested = true;
