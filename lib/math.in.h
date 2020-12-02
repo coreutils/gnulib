@@ -22,8 +22,23 @@
 #endif
 @PRAGMA_COLUMNS@
 
-/* The include_next requires a split double-inclusion guard.  */
+#if defined _GL_INCLUDING_MATH_H
+/* Special invocation convention:
+   - On FreeBSD 12.2 we have a sequence of nested includes
+     <math.h> -> <stdlib.h> -> <sys/wait.h> -> <sys/types.h> -> <sys/select.h>
+       -> <signal.h> -> <pthread.h> -> <stdlib.h> -> <math.h>
+     In this situation, the functions are not yet declared, therefore we cannot
+     provide the C++ aliases.  */
+
 #@INCLUDE_NEXT_AS_FIRST_DIRECTIVE@ @NEXT_AS_FIRST_DIRECTIVE_MATH_H@
+
+#else
+/* Normal invocation convention.  */
+
+/* The include_next requires a split double-inclusion guard.  */
+#define _GL_INCLUDING_MATH_H
+#@INCLUDE_NEXT_AS_FIRST_DIRECTIVE@ @NEXT_AS_FIRST_DIRECTIVE_MATH_H@
+#undef _GL_INCLUDING_MATH_H
 
 #ifndef _@GUARD_PREFIX@_MATH_H
 #define _@GUARD_PREFIX@_MATH_H
@@ -2601,4 +2616,5 @@ _GL_WARN_REAL_FLOATING_DECL (signbit);
 _GL_INLINE_HEADER_END
 
 #endif /* _@GUARD_PREFIX@_MATH_H */
+#endif /* _GL_INCLUDING_MATH_H */
 #endif /* _@GUARD_PREFIX@_MATH_H */
