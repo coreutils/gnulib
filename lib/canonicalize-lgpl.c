@@ -36,7 +36,6 @@
 #if HAVE_SYS_PARAM_H || defined _LIBC
 # include <sys/param.h>
 #endif
-#include <sys/stat.h>
 #include <errno.h>
 #include <stddef.h>
 
@@ -198,12 +197,6 @@ __realpath (const char *name, char *resolved)
 
   for (end = start; *start; start = end)
     {
-#ifdef _LIBC
-      struct stat64 st;
-#else
-      struct stat st;
-#endif
-
       /* Skip sequence of multiple path-separators.  */
       while (ISSLASH (*start))
         ++start;
@@ -212,9 +205,7 @@ __realpath (const char *name, char *resolved)
       for (end = start; *end && !ISSLASH (*end); ++end)
         /* Nothing.  */;
 
-      if (end - start == 0)
-        break;
-      else if (end - start == 1 && start[0] == '.')
+      if (end - start == 1 && start[0] == '.')
         /* nothing */;
       else if (end - start == 2 && start[0] == '.' && start[1] == '.')
         {
@@ -272,20 +263,17 @@ __realpath (const char *name, char *resolved)
 #endif
           *dest = '\0';
 
-          /* FIXME: if lstat fails with errno == EOVERFLOW,
-             the entry exists.  */
-#ifdef _LIBC
-          if (__lxstat64 (_STAT_VER, rpath, &st) < 0)
-#else
-          if (lstat (rpath, &st) < 0)
-#endif
-            goto error;
-
-          if (S_ISLNK (st.st_mode))
+          char linkbuf[128];
+          ssize_t n = __readlink (rpath, linkbuf, sizeof linkbuf);
+          if (n < 0)
+            {
+              if (errno != EINVAL)
+                goto error;
+            }
+          else
             {
               char *buf;
               size_t len;
-              ssize_t n;
 
               if (++num_links > MAXSYMLINKS)
                 {
@@ -302,11 +290,15 @@ __realpath (const char *name, char *resolved)
                       goto error;
                     }
                 }
-              buf = extra_buf + path_max;
-
-              n = __readlink (rpath, buf, path_max - 1);
-              if (n < 0)
-                goto error;
+              if (n < sizeof linkbuf)
+                buf = linkbuf;
+              else
+                {
+                  buf = extra_buf + path_max;
+                  n = __readlink (rpath, buf, path_max - 1);
+                  if (n < 0)
+                    goto error;
+                }
               buf[n] = '\0';
 
               len = strlen (end);
@@ -349,11 +341,6 @@ __realpath (const char *name, char *resolved)
                       && ISSLASH (*dest) && !ISSLASH (dest[1]) && !prefix_len)
                     dest++;
                 }
-            }
-          else if (!S_ISDIR (st.st_mode) && *end != '\0')
-            {
-              __set_errno (ENOTDIR);
-              goto error;
             }
         }
     }
