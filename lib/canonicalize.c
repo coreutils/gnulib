@@ -107,6 +107,7 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
   int saved_errno;
   int can_flags = can_mode & ~CAN_MODE_MASK;
   bool logical = can_flags & CAN_NOLINKS;
+  int num_links = 0;
   size_t prefix_len;
 
   can_mode &= CAN_MODE_MASK;
@@ -248,9 +249,13 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
             {
               /* A physical traversal and RNAME is a symbolic link.  */
 
-              if (*start)
+              if (num_links < 20)
+                num_links++;
+              else if (*start)
                 {
-                  /* Get the device and inode of the parent directory, as
+                  /* Enough symlinks have been seen that it is time to
+                     worry about being in a symlink cycle.
+                     Get the device and inode of the parent directory, as
                      pre-2017 POSIX says this info is not reliable for
                      symlinks.  */
                   dest[- (end - start)] = '\0';
