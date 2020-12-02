@@ -33,8 +33,6 @@
 #include "xgetcwd.h"
 #include "filename.h"
 
-#define MULTIPLE_BITS_SET(i) (((i) & ((i) - 1)) != 0)
-
 /* In this file, we cannot handle file names longer than PATH_MAX.
    On systems with no file name length limit, use a fallback.  */
 #ifndef PATH_MAX
@@ -64,6 +62,12 @@ canonicalize_file_name (const char *name)
   return canonicalize_filename_mode (name, CAN_EXISTING);
 }
 #endif /* !HAVE_CANONICALIZE_FILE_NAME */
+
+static bool
+multiple_bits_set (canonicalize_mode_t i)
+{
+  return (i & (i - 1)) != 0;
+}
 
 /* Return true if we've already seen the triple, <FILENAME, dev, ino>.
    If *HT is not initialized, initialize it.  */
@@ -106,14 +110,12 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
   ptrdiff_t extra_len = 0;
   Hash_table *ht = NULL;
   int saved_errno;
-  int can_flags = can_mode & ~CAN_MODE_MASK;
-  bool logical = can_flags & CAN_NOLINKS;
+  bool logical = (can_mode & CAN_NOLINKS) != 0;
   int num_links = 0;
   ptrdiff_t prefix_len;
 
-  can_mode &= CAN_MODE_MASK;
-
-  if (MULTIPLE_BITS_SET (can_mode))
+  canonicalize_mode_t can_exist = can_mode & CAN_MODE_MASK;
+  if (multiple_bits_set (can_exist))
     {
       errno = EINVAL;
       return NULL;
@@ -276,7 +278,7 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
                      indicate a loop.  */
                   if (seen_triple (&ht, start, &st))
                     {
-                      if (can_mode == CAN_MISSING)
+                      if (can_exist == CAN_MISSING)
                         continue;
                       saved_errno = ELOOP;
                       free (buf);
@@ -334,7 +336,7 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
 
               free (buf);
             }
-          else if (can_mode != CAN_MISSING
+          else if (can_exist != CAN_MISSING
                    && (!logical || readlink (rname, &discard, 1) < 0))
             {
               saved_errno = errno;
@@ -346,8 +348,8 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
 
                 case ENOENT:
                   /* RNAME does not exist.  */
-                  if (can_mode == CAN_EXISTING
-                      || (can_mode == CAN_ALL_BUT_LAST
+                  if (can_exist == CAN_EXISTING
+                      || (can_exist == CAN_ALL_BUT_LAST
                           && end[strspn (end, SLASHES)]))
                     goto error;
                   break;
