@@ -7,7 +7,7 @@ lib/canonicalize.c
 m4/canonicalize.m4
 
 Depends-on:
-areadlink-with-size
+areadlink
 double-slash-root
 errno
 extensions
@@ -18,7 +18,6 @@ lstat
 memmove
 nocrash
 pathmax
-stat
 sys_stat
 xalloc
 xgetcwd

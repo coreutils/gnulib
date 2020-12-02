@@ -206,9 +206,7 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
       for (end = start; *end && !ISSLASH (*end); ++end)
         /* Nothing.  */;
 
-      if (end - start == 0)
-        break;
-      else if (end - start == 1 && start[0] == '.')
+      if (end - start == 1 && start[0] == '.')
         /* nothing */;
       else if (end - start == 2 && start[0] == '.' && start[1] == '.')
         {
@@ -222,8 +220,6 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
         }
       else
         {
-          struct stat st;
-
           if (!ISSLASH (dest[-1]))
             *dest++ = '/';
 
@@ -246,31 +242,19 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
           dest += end - start;
           *dest = '\0';
 
-          if (logical && (can_mode == CAN_MISSING))
+          char discard;
+          char *buf = logical ? NULL : areadlink (rname);
+          if (buf)
             {
-              /* Avoid the stat in this case as it's inconsequential.
-                 i.e. we're neither resolving symlinks or testing
-                 component existence.  */
-              st.st_mode = 0;
-            }
-          else if ((logical ? stat (rname, &st) : lstat (rname, &st)) != 0)
-            {
-              /* FIXME: If errno == EOVERFLOW here, the entry exists.  */
-              saved_errno = errno;
-              if (can_mode == CAN_EXISTING)
-                goto error;
-              if (can_mode == CAN_ALL_BUT_LAST)
+              /* A physical traversal and RNAME is a symbolic link.  */
+              struct stat st;
+              if (lstat (rname, &st) != 0)
                 {
-                  if (end[strspn (end, SLASHES)] || saved_errno != ENOENT)
-                    goto error;
-                  continue;
+                  saved_errno = errno;
+                  free (buf);
+                  goto error;
                 }
-              st.st_mode = 0;
-            }
 
-          if (S_ISLNK (st.st_mode))
-            {
-              char *buf;
               size_t n, len;
 
               /* Detect loops.  We cannot use the cycle-check module here,
@@ -282,15 +266,7 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
                   if (can_mode == CAN_MISSING)
                     continue;
                   saved_errno = ELOOP;
-                  goto error;
-                }
-
-              buf = areadlink_with_size (rname, st.st_size);
-              if (!buf)
-                {
-                  if (can_mode == CAN_MISSING && errno != ENOMEM)
-                    continue;
-                  saved_errno = errno;
+                  free (buf);
                   goto error;
                 }
 
@@ -344,11 +320,26 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
 
               free (buf);
             }
-          else
+          else if (can_mode != CAN_MISSING
+                   && (!logical || readlink (rname, &discard, 1) < 0))
             {
-              if (!S_ISDIR (st.st_mode) && *end && (can_mode != CAN_MISSING))
+              saved_errno = errno;
+              switch (saved_errno)
                 {
-                  saved_errno = ENOTDIR;
+                case EINVAL:
+                  /* RNAME exists and is not symbolic link.  */
+                  break;
+
+                case ENOENT:
+                  /* RNAME does not exist.  */
+                  if (can_mode == CAN_EXISTING
+                      || (can_mode == CAN_ALL_BUT_LAST
+                          && end[strspn (end, SLASHES)]))
+                    goto error;
+                  break;
+
+                default:
+                  /* Some other problem with RNAME.  */
                   goto error;
                 }
             }
