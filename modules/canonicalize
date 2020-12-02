@@ -14,10 +14,10 @@ extensions
 file-set
 filename
 hash-triple-simple
-lstat
 memmove
 nocrash
 pathmax
+stat
 sys_stat
 xalloc
 xgetcwd

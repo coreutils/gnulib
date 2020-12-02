@@ -247,31 +247,39 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
           if (buf)
             {
               /* A physical traversal and RNAME is a symbolic link.  */
-              struct stat st;
-              if (lstat (rname, &st) != 0)
+
+              if (*start)
                 {
-                  saved_errno = errno;
-                  free (buf);
-                  goto error;
+                  /* Get the device and inode of the parent directory, as
+                     pre-2017 POSIX says this info is not reliable for
+                     symlinks.  */
+                  dest[- (end - start)] = '\0';
+                  struct stat st;
+                  if (stat (*rname ? rname : ".", &st) != 0)
+                    {
+                      saved_errno = errno;
+                      free (buf);
+                      goto error;
+                    }
+                  dest[- (end - start)] = *start;
+
+                  /* Detect loops.  We cannot use the cycle-check module here,
+                     since it's possible to encounter the same parent
+                     directory more than once in a given traversal.  However,
+                     encountering the same (parentdir, START) pair twice does
+                     indicate a loop.  */
+                  if (seen_triple (&ht, start, &st))
+                    {
+                      if (can_mode == CAN_MISSING)
+                        continue;
+                      saved_errno = ELOOP;
+                      free (buf);
+                      goto error;
+                    }
                 }
 
-              size_t n, len;
-
-              /* Detect loops.  We cannot use the cycle-check module here,
-                 since it's actually possible to encounter the same symlink
-                 more than once in a given traversal.  However, encountering
-                 the same symlink,NAME pair twice does indicate a loop.  */
-              if (seen_triple (&ht, name, &st))
-                {
-                  if (can_mode == CAN_MISSING)
-                    continue;
-                  saved_errno = ELOOP;
-                  free (buf);
-                  goto error;
-                }
-
-              n = strlen (buf);
-              len = strlen (end);
+              size_t n = strlen (buf);
+              size_t len = strlen (end);
 
               if (!extra_len)
                 {
