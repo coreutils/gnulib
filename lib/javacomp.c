@@ -664,8 +664,8 @@ is_envjavac_gcj (const char *javac)
       argv[1] = "-c";
       argv[2] = command;
       argv[3] = NULL;
-      child = create_pipe_in (javac, BOURNE_SHELL, argv, DEV_NULL, true, true,
-                              false, fd);
+      child = create_pipe_in (javac, BOURNE_SHELL, argv, NULL,
+                              DEV_NULL, true, true, false, fd);
       if (child == -1)
         goto failed;
 
@@ -746,8 +746,8 @@ is_envjavac_gcj43 (const char *javac)
       argv[1] = "-c";
       argv[2] = command;
       argv[3] = NULL;
-      child = create_pipe_in (javac, BOURNE_SHELL, argv, DEV_NULL, true, true,
-                              false, fd);
+      child = create_pipe_in (javac, BOURNE_SHELL, argv, NULL,
+                              DEV_NULL, true, true, false, fd);
       if (child == -1)
         goto failed;
 
@@ -1414,8 +1414,8 @@ is_gcj_present (void)
       argv[0] = "gcj";
       argv[1] = "--version";
       argv[2] = NULL;
-      child = create_pipe_in ("gcj", "gcj", argv, DEV_NULL, true, true,
-                              false, fd);
+      child = create_pipe_in ("gcj", "gcj", argv, NULL,
+                              DEV_NULL, true, true, false, fd);
       gcj_present = false;
       if (child != -1)
         {
@@ -1530,8 +1530,8 @@ is_gcj_43 (void)
       argv[0] = "gcj";
       argv[1] = "--version";
       argv[2] = NULL;
-      child = create_pipe_in ("gcj", "gcj", argv, DEV_NULL, true, true,
-                              false, fd);
+      child = create_pipe_in ("gcj", "gcj", argv, NULL,
+                              DEV_NULL, true, true, false, fd);
       gcj_43 = false;
       if (child != -1)
         {

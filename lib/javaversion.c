@@ -65,8 +65,8 @@ execute_and_read_line (const char *progname,
   int exitstatus;
 
   /* Open a pipe to the JVM.  */
-  child = create_pipe_in (progname, prog_path, prog_argv, DEV_NULL, false,
-                          true, false, fd);
+  child = create_pipe_in (progname, prog_path, prog_argv, NULL,
+                          DEV_NULL, false, true, false, fd);
 
   if (child == -1)
     return false;

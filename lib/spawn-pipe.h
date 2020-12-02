@@ -51,6 +51,10 @@ extern "C" {
    argv[].  It is a NULL-terminated array.  prog_argv[0] should normally be
    identical to prog_path.
 
+   If directory is not NULL, the subprocess is started in that directory.  If
+   prog_path is a relative file name, it resolved before changing to that
+   directory.  The current directory of the current process remains unchanged.
+
    If slave_process is true, the child process will be terminated when its
    creator receives a catchable fatal signal or exits normally.  If
    slave_process is false, the child process will continue running in this
@@ -93,6 +97,7 @@ extern "C" {
  */
 extern pid_t create_pipe_out (const char *progname,
                               const char *prog_path, char **prog_argv,
+                              const char *directory,
                               const char *prog_stdout, bool null_stderr,
                               bool slave_process, bool exit_on_error,
                               int fd[1]);
@@ -106,6 +111,7 @@ extern pid_t create_pipe_out (const char *progname,
  */
 extern pid_t create_pipe_in (const char *progname,
                              const char *prog_path, char **prog_argv,
+                             const char *directory,
                              const char *prog_stdin, bool null_stderr,
                              bool slave_process, bool exit_on_error,
                              int fd[1]);
@@ -134,6 +140,7 @@ extern pid_t create_pipe_in (const char *progname,
  */
 extern pid_t create_pipe_bidi (const char *progname,
                                const char *prog_path, char **prog_argv,
+                               const char *directory,
                                bool null_stderr,
                                bool slave_process, bool exit_on_error,
                                int fd[2]);

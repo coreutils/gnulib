@@ -498,7 +498,7 @@ pipe_filter_gi_create (const char *progname,
 
   /* Open a bidirectional pipe to a subprocess.  */
   filter->child = create_pipe_bidi (progname, prog_path, (char **) prog_argv,
-                                    null_stderr, true, exit_on_error,
+                                    NULL, null_stderr, true, exit_on_error,
                                     filter->fd);
   filter->progname = progname;
   filter->null_stderr = null_stderr;

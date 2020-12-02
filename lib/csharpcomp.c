@@ -84,8 +84,8 @@ compile_csharp_using_mono (const char * const *sources,
       argv[0] = "mcs";
       argv[1] = "--version";
       argv[2] = NULL;
-      child = create_pipe_in ("mcs", "mcs", argv, DEV_NULL, true, true, false,
-                              fd);
+      child = create_pipe_in ("mcs", "mcs", argv, NULL,
+                              DEV_NULL, true, true, false, fd);
       mcs_present = false;
       if (child != -1)
         {
@@ -193,7 +193,8 @@ compile_csharp_using_mono (const char * const *sources,
           free (command);
         }
 
-      child = create_pipe_in ("mcs", "mcs", argv, NULL, false, true, true, fd);
+      child = create_pipe_in ("mcs", "mcs", argv, NULL,
+                              NULL, false, true, true, fd);
 
       /* Read the subprocess output, copying it to stderr.  Drop the last
          line if it starts with "Compilation succeeded".  */
@@ -270,8 +271,8 @@ compile_csharp_using_sscli (const char * const *sources,
       argv[0] = "csc";
       argv[1] = "-help";
       argv[2] = NULL;
-      child = create_pipe_in ("csc", "csc", argv, DEV_NULL, true, true, false,
-                              fd);
+      child = create_pipe_in ("csc", "csc", argv, NULL,
+                              DEV_NULL, true, true, false, fd);
       csc_present = false;
       if (child != -1)
         {

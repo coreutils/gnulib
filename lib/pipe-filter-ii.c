@@ -271,7 +271,7 @@ pipe_filter_ii_execute (const char *progname,
 
   /* Open a bidirectional pipe to a subprocess.  */
   child = create_pipe_bidi (progname, prog_path, (char **) prog_argv,
-                            null_stderr, true, exit_on_error,
+                            NULL, null_stderr, true, exit_on_error,
                             fd);
   if (child == -1)
     return -1;

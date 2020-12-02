@@ -10,20 +10,25 @@ m4/spawn-pipe.m4
 
 Depends-on:
 dup2
+canonicalize
 environ
 error
 fatal-signal
+filename
+findprog-in
 gettext-h
 msvc-nothrow
 open
 pipe2
 pipe2-safer
 spawn
+posix_spawn
 posix_spawnp
 posix_spawn_file_actions_init
 posix_spawn_file_actions_addclose
 posix_spawn_file_actions_adddup2
 posix_spawn_file_actions_addopen
+posix_spawn_file_actions_addchdir
 posix_spawn_file_actions_destroy
 posix_spawnattr_init
 posix_spawnattr_setsigmask
