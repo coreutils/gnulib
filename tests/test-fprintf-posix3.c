@@ -20,6 +20,24 @@
 
 #include <stdio.h>
 
+#if defined __APPLE__ && defined __MACH__                            /* macOS */
+
+/* On macOS 10.13, this test fails, because the address space size increases
+   by 10 MB to 42 MB during the test's execution.  But it's not a malloc
+   leak, as can be seen by running the 'leaks' program.  And it does not fail
+   if the test's output is redirected to /dev/null.  Probably piping a lot
+   of output to stdout, when not redirected to /dev/null, allocates intermediate
+   buffers in the virtual address space.  */
+
+int
+main ()
+{
+  fprintf (stderr, "Skipping test: cannot trust address space size on this platform\n");
+  return 78;
+}
+
+#else
+
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
@@ -84,7 +102,7 @@ main (int argc, char *argv[])
       if (memory == NULL)
         return 1;
       memset (memory, 17, MAX_ALLOC_TOTAL);
-      result = 78;
+      result = 80;
     }
   else
     {
@@ -98,14 +116,16 @@ main (int argc, char *argv[])
              but should not result in a permanent memory allocation.  */
           if (fprintf (stdout, "%011000d\n", 17) == -1
               && errno == ENOMEM)
-            return 1;
+            return 2;
         }
 
       result = 0;
     }
 
-  if (get_rusage_as () > initial_rusage_as + MAX_ALLOC_TOTAL)
-    return 1;
+  if (get_rusage_as () > initial_rusage_as + MAX_ALLOC_TOTAL + 100000)
+    return 3;
 
   return result;
 }
+
+#endif /* !macOS */
