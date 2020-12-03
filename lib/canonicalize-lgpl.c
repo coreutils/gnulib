@@ -41,6 +41,7 @@
 
 #ifdef _LIBC
 # include <shlib-compat.h>
+typedef ptrdiff_t idx_t;
 #else
 # define SHLIB_COMPAT(lib, introduced, obsoleted) 0
 # define versioned_symbol(lib, local, symbol, version) extern int dummy
@@ -48,6 +49,7 @@
 # define weak_alias(local, symbol)
 # define __canonicalize_file_name canonicalize_file_name
 # define __realpath realpath
+# include "idx.h"
 # include "pathmax.h"
 # include "malloca.h"
 # include "filename.h"
@@ -227,7 +229,7 @@ __realpath (const char *name, char *resolved)
 
           if (rpath_limit - dest <= end - start)
             {
-              ptrdiff_t dest_offset = dest - rpath;
+              idx_t dest_offset = dest - rpath;
               char *new_rpath;
 
               if (resolved)

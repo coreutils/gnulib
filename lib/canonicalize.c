@@ -27,6 +27,7 @@
 
 #include "areadlink.h"
 #include "file-set.h"
+#include "idx.h"
 #include "hash-triple.h"
 #include "pathmax.h"
 #include "xalloc.h"
@@ -76,7 +77,7 @@ seen_triple (Hash_table **ht, char const *filename, struct stat const *st)
 {
   if (*ht == NULL)
     {
-      int initial_capacity = 7;
+      idx_t initial_capacity = 7;
       *ht = hash_initialize (initial_capacity,
                             NULL,
                             triple_hash,
@@ -107,12 +108,12 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
   char const *start;
   char const *end;
   char const *rname_limit;
-  ptrdiff_t extra_len = 0;
+  idx_t extra_len = 0;
   Hash_table *ht = NULL;
   int saved_errno;
   bool logical = (can_mode & CAN_NOLINKS) != 0;
   int num_links = 0;
-  ptrdiff_t prefix_len;
+  idx_t prefix_len;
 
   canonicalize_mode_t can_exist = can_mode & CAN_MODE_MASK;
   if (multiple_bits_set (can_exist))
@@ -142,8 +143,8 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
       rname = xgetcwd ();
       if (!rname)
         return NULL;
-      ptrdiff_t rnamelen = strlen (rname);
-      ptrdiff_t rnamesize = rnamelen;  /* Lower bound on size; good enough.  */
+      idx_t rnamelen = strlen (rname);
+      idx_t rnamesize = rnamelen;  /* Lower bound on size; good enough.  */
       if (rnamesize < PATH_MAX)
         {
           rnamesize = PATH_MAX;
@@ -175,7 +176,7 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
               /* For UNC file names '\\server\path\to\file', extend the prefix
                  to include the server: '\\server\'.  */
               {
-                ptrdiff_t i;
+                idx_t i;
                 for (i = 2; name[i] != '\0' && !ISSLASH (name[i]); )
                   i++;
                 if (name[i] != '\0' /* implies ISSLASH (name[i]) */
@@ -229,8 +230,8 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
 
           if (rname_limit - dest <= end - start)
             {
-              ptrdiff_t dest_offset = dest - rname;
-              ptrdiff_t new_size = rname_limit - rname;
+              idx_t dest_offset = dest - rname;
+              idx_t new_size = rname_limit - rname;
 
               if (end - start + 1 > PATH_MAX)
                 new_size += end - start + 1;
@@ -286,8 +287,8 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
                     }
                 }
 
-              ptrdiff_t n = strlen (buf);
-              ptrdiff_t len = strlen (end);
+              idx_t n = strlen (buf);
+              idx_t len = strlen (end);
 
               if (!extra_len)
                 {
@@ -307,7 +308,7 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
 
               if (IS_ABSOLUTE_FILE_NAME (buf))
                 {
-                  ptrdiff_t pfxlen = FILE_SYSTEM_PREFIX_LEN (buf);
+                  idx_t pfxlen = FILE_SYSTEM_PREFIX_LEN (buf);
 
                   if (pfxlen)
                     memcpy (rname, buf, pfxlen);
