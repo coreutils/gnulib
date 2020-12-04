@@ -259,4 +259,29 @@ utime (const char *name, const struct utimbuf *ts)
     }
 }
 
+#else
+
+# include <sys/stat.h>
+# include "filename.h"
+
+int
+utime (const char *name, const struct utimbuf *ts)
+#undef utime
+{
+# if REPLACE_FUNC_UTIME_FILE
+  /* macOS 10.13 mistakenly succeeds when given a symbolic link to a
+     non-directory with a trailing slash.  */
+  size_t len = strlen (name);
+  if (ISSLASH (name[len - 1]))
+    {
+      struct stat buf;
+
+      if (stat (name, &buf) < 0)
+        return -1;
+    }
+# endif /* REPLACE_FUNC_UTIME_FILE */
+
+  return utime (name, ts);
+}
+
 #endif

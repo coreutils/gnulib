@@ -16,6 +16,10 @@ mingw, MSVC 14 (when the environment variable @code{TZ} is set).
 On some platforms, the prototype for @code{utime} omits @code{const}
 for the second argument:
 mingw, MSVC 14.
+@item
+On some platforms, @code{utime("link-to-file/",buf)} succeeds instead
+of failing with @code{ENOTDIR}.
+Mac OS X 10.13.
 @end itemize
 
 Portability problems not fixed by Gnulib:
