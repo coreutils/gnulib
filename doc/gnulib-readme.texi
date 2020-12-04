@@ -427,7 +427,8 @@ Comments beginning with @samp{//}.  This is mostly for style reasons.
 @subsection Other portability assumptions made by Gnulib
 
 The GNU coding standards allow one departure from strict C: Gnulib
-code can assume that standard internal types like @code{size_t} are no
+code can assume that standard internal types like
+@code{ptrdiff_t} and @code{size_t} are no
 wider than @code{long}.  POSIX requires implementations to support at
 least one programming environment where this is true, and such
 environments are recommended for Gnulib-using applications.  When it
@@ -447,7 +448,7 @@ and the GNU coding standards both require this.
 @item
 Signed integer arithmetic is two's complement.
 
-Previously, Gnulib code sometimes assumed that signed integer
+Previously, Gnulib code sometimes also assumed that signed integer
 arithmetic wraps around, but modern compiler optimizations
 sometimes do not guarantee this, and Gnulib code with this
 assumption is now considered to be questionable.
@@ -469,7 +470,8 @@ In particular:
 @itemize
 @item
 If two nonoverlapping objects have sizes @var{S} and @var{T} represented as
-@code{size_t} values, then @code{@var{S} + @var{T}} cannot overflow.
+@code{ptrdiff_t} or @code{size_t} values, then @code{@var{S} + @var{T}}
+cannot overflow.
 
 @item
 A pointer @var{P} points within an object @var{O} if and only if

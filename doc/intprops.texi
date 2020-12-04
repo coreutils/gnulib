@@ -41,12 +41,18 @@ are two families of precondition tests: the first, for integer types,
 is easier to use, while the second, for integer ranges, has a simple
 and straightforward portable implementation.
 
+Like other Gnulib modules, the implementation of the @code{intprops}
+module assumes that integers use a two's complement representation but
+does not assume that signed integer arithmetic wraps around.  The
+implementation is portable to almost all practical C platforms.
+
 @menu
 * Arithmetic Type Properties::  Determining properties of arithmetic types.
 * Integer Bounds::              Bounds on integer values and representations.
 * Wraparound Arithmetic::       Well-defined behavior on signed overflow.
 * Integer Type Overflow::       General integer overflow checking.
 * Integer Range Overflow::      Integer overflow checking if bounds are known.
+* Integer Portability::         Portability assumptions of Gnulib integer code.
 @end menu
 
 @node Arithmetic Type Properties
@@ -67,8 +73,8 @@ is an integer constant expression.
 @code{EXPR_SIGNED (@var{e})} is 1 if the real expression @var{e}
 has a signed integer type or a floating type.  If @var{e} is an
 integer constant expression or an arithmetic constant expression,
-@code{EXPR_SIGNED (@var{e})} is likewise.  Although @var{e} is
-evaluated, if @var{e} is free of side effects then @code{EXPR_SIGNED
+@code{EXPR_SIGNED (@var{e})} is likewise.  The expression
+@var{e} is not evaluated, and @code{EXPR_SIGNED
 (@var{e})} is typically optimized to a constant.
 
 Example usage:
@@ -100,7 +106,7 @@ CLOCKS_PER_SEC_is_signed (void)
 expression that is a bound on the size of the string representing an
 integer type or expression @var{t} in decimal notation, including the
 terminating null character and any leading @code{-} character.  For
-example, if @code{INT_STRLEN_BOUND (int)} is 12, any value of type
+example, if @code{INT_BUFSIZE_BOUND (int)} is 12, any value of type
 @code{int} can be represented in 12 bytes or less, including the
 terminating null.  The bound is not necessarily tight.
 
@@ -165,9 +171,8 @@ The following macros work around this problem by storing the
 wraparound value, i.e., the low-order bits of the correct answer, and
 by returning an overflow indication.  For example, if @code{i} is of
 type @code{int}, @code{INT_ADD_WRAPV (INT_MAX, 1, &i)} sets @code{i}
-to @code{INT_MIN} and returns 1 on a two's complement machine.  On
-newer platforms, these macros are typically more efficient than the
-overflow-checking macros.  @xref{Integer Type Overflow}.
+to @code{INT_MIN} and returns 1 on a two's complement machine.
+@xref{Integer Type Overflow}.
 
 Example usage:
 
@@ -197,10 +202,7 @@ These macros have the following restrictions:
 Their first two arguments must be integer expressions.
 
 @item
-Their last argument must be a non-null pointer to a signed integer.
-To calculate a wraparound unsigned integer you can use ordinary C
-arithmetic; to tell whether it overflowed, you can use the
-overflow-checking macros.
+Their last argument must be a non-null pointer to an integer.
 
 @item
 They may evaluate their arguments zero or multiple times, so the
@@ -365,8 +367,8 @@ harder to use than the integer type overflow macros.  @xref{Integer
 Type Overflow}.
 
 Although the implementation of these macros is similar to that
-suggested in Seacord R, The CERT C Secure Coding Standard (2009,
-revised 2011), in its two sections
+suggested in the SEI CERT C Secure Coding Standard,
+in its two sections
 ``@url{https://www.securecoding.cert.org/confluence/display/c/INT30-C.+Ensure+that+unsigned+integer+operations+do+not+wrap,
 INT30-C@. Ensure that unsigned integer operations do not wrap}'' and
 ``@url{https://www.securecoding.cert.org/confluence/display/c/INT32-C.+Ensure+that+operations+on+signed+integers+do+not+result+in+overflow,
@@ -474,3 +476,45 @@ where @var{w} is @var{a}'s word width, and that when @var{a} is negative
 then @code{@var{a} << @var{b}} has undefined behavior, but this macro
 does not check these other restrictions.
 @end table
+
+@node Integer Portability
+@subsection Integer Portability
+
+@cindex integer arithmetic portability
+@cindex portability, integer arithmetic
+
+Like other Gnulib modules, the implementation of the @code{intprops}
+modules assumes that integers use a two's complement representation
+with no padding bits in a machine word.  The implementation does not
+assume that signed integer arithmetic wraps around; however, it does
+assume that an unsigned type and its signed counterpart have the same
+number of bits when you count the latter's sign bit.
+
+Two known practical platforms violate the @code{intprops} assumptions
+and are therefore not porting targets for Gnulib.  They are listed
+below to illustrate problems that Gnulib and Gnulib-using code would
+have if it were intended to be portable to all practical POSIX or C
+platforms.
+
+@itemize @bullet
+@item
+The Unisys ClearPath Libra's machine word is 48 bits.  Its
+@code{unsigned int} uses the low-order 40 bits of the word, and
+@code{int} uses the low-order 41 bits of the word with a
+signed-magnitude representation.  On these machines, @code{INT_MAX ==
+UINT_MAX}, @code{INT_MIN == -INT_MAX}, and @code{sizeof (int) == 6}.
+This platform's architecture descends from the Burroughs B5000 (1961).
+
+@item
+The Unisys ClearPath Dorado's machine word is 36 bits.  Its signed
+integers use a ones'-complement representation.  On these machines,
+@code{CHAR_BIT == 9} and @code{INT_MIN == -INT_MAX}.  By default
+@code{UINT_MAX} is @math{2^{36} - 2}, which does not conform to the C
+requirement that it be one less than a power of two.  Although
+compiler options can raise @code{UINT_MAX} to be @math{2^{36} - 1},
+this can break system code that uses @math{-0} as a flag value.
+This platform's architecture descends from the UNIVAC 1107 (1962).
+@end itemize
+
+@noindent
+Fortunately, these platforms are now quite rare.
