@@ -272,7 +272,7 @@ utime (const char *name, const struct utimbuf *ts)
   /* macOS 10.13 mistakenly succeeds when given a symbolic link to a
      non-directory with a trailing slash.  */
   size_t len = strlen (name);
-  if (ISSLASH (name[len - 1]))
+  if (len > 0 && ISSLASH (name[len - 1]))
     {
       struct stat buf;
 
