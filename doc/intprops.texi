@@ -49,7 +49,8 @@ but it does not assume that signed integer arithmetic wraps around.
 @menu
 * Arithmetic Type Properties::  Determining properties of arithmetic types.
 * Integer Bounds::              Bounds on integer values and representations.
-* Wraparound Arithmetic::       Well-defined behavior on signed overflow.
+* Checking Integer Overflow::   Checking for overflow while computing integers.
+* Wraparound Arithmetic::       Well-defined behavior on integer overflow.
 * Integer Type Overflow::       General integer overflow checking.
 * Integer Range Overflow::      Integer overflow checking if bounds are known.
 @end menu
@@ -150,6 +151,107 @@ in_off_t_range (intmax_t a)
 @}
 @end example
 
+@node Checking Integer Overflow
+@subsection Checking Integer Overflow
+
+@cindex integer overflow checking
+
+Signed integer arithmetic has undefined behavior on overflow in C@.
+Although almost all modern computers use two's complement signed
+arithmetic that is well-defined to wrap around, C compilers routinely
+optimize assuming that signed integer overflow cannot occur, which
+means that a C program cannot easily get at the underlying machine
+arithmetic.  For example:
+
+@example
+if ((a + b < b) == (a < 0))
+  a += b;
+else
+  print ("overflow");
+@end example
+
+@noindent
+might not work as expected if @code{a} and @code{b} are signed,
+because a compiler can assume that signed overflow cannot occur and
+treat the entire @code{if} expression as if it were true.  And even if
+@code{a} is unsigned, the expression might not work as expected if
+@code{b} is negative or is wider than @code{a}.
+
+The following macros work around this problem by returning an overflow
+indication while computing the sum, difference, or product of two
+integers.  For example, if @code{i} is of type @code{int},
+@code{INT_ADD_OK (INT_MAX - 1, 1, &i)} sets @code{i} to
+@code{INT_MAX} and returns true, whereas @code{INT_ADD_OK (INT_MAX, 1,
+&i)} returns false.
+
+Example usage:
+
+@example
+#include <intprops.h>
+#include <stdio.h>
+
+/* Compute A * B, reporting whether overflow occurred.  */
+void
+print_product (long int a, long int b)
+@{
+  long int r;
+  if (INT_MULTIPLY_OK (a, b, r))
+    printf ("result is %ld\n", r);
+  else
+    printf ("overflow\n");
+@}
+@end example
+
+These macros work for both signed and unsigned integers, so they can
+be used with integer types like @code{time_t} that may or may not be
+signed, depending on the platform.
+
+These macros have the following restrictions:
+
+@itemize @bullet
+@item
+Their first two arguments must be integer expressions.
+
+@item
+Their last argument must be a non-null pointer to an integer.
+
+@item
+They may evaluate their arguments zero or multiple times, so the
+arguments should not have side effects.
+
+@item
+They are not necessarily constant expressions, even if all their
+arguments are constant expressions.
+@end itemize
+
+@table @code
+@item INT_ADD_OK (@var{a}, @var{b}, @var{r})
+@findex INT_ADD_OK
+Compute the sum of @var{a} and @var{b}.  If it fits into
+@code{*@var{r}}, store it there and return true.  Otherwise return
+false, possibly modifying @code{*@var{r}} to an unspecified value.
+See above for restrictions.
+
+@item INT_SUBTRACT_OK (@var{a}, @var{b}, @var{r})
+@findex INT_SUBTRACT_OK
+Compute the difference between @var{a} and @var{b}.  If it fits into
+@code{*@var{r}}, store it there and return true.  Otherwise return
+false, possibly modifying @code{*@var{r}} to an unspecified value.
+See above for restrictions.
+
+@item INT_MULTIPLY_OK (@var{a}, @var{b}, @var{r})
+@findex INT_MULTIPLY_OK
+Compute the product of @var{a} and @var{b}.  If it fits into
+@code{*@var{r}}, store it there and return true.  Otherwise return
+false, possibly modifying @code{*@var{r}} to an unspecified value.
+See above for restrictions.
+@end table
+
+Other macros are available if you need wrapped-around results when
+overflow occurs (@pxref{Wraparound Arithmetic}), or if you need to
+check for overflow in operations other than addition, subtraction, and
+multiplication (@pxref{Integer Type Overflow}).
+
 @node Wraparound Arithmetic
 @subsection Wraparound Arithmetic with Integers
 
@@ -237,6 +339,11 @@ Store the low-order bits of the product of @var{a} and @var{b} into
 low-order bits are the mathematically-correct product.  See above for
 restrictions.
 @end table
+
+Other macros are available if you do not need wrapped-around results
+when overflow occurs (@pxref{Checking Integer Overflow}), or if you
+need to check for overflow in operations other than addition,
+subtraction, and multiplication (@pxref{Integer Type Overflow}).
 
 @node Integer Type Overflow
 @subsection Integer Type Overflow

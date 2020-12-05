@@ -591,4 +591,33 @@
          : (tmin) / (a) < (b)) \
       : (tmax) / (b) < (a)))
 
+/* The following macros compute A + B, A - B, and A * B, respectively.
+   If no overflow occurs, they set *R to the result and return 1;
+   otherwise, they return 0 and may modify *R.
+
+   Example usage:
+
+     long int result;
+     if (INT_ADD_OK (a, b, &result))
+       printf ("result is %ld\n", result);
+     else
+       printf ("overflow\n");
+
+   A, B, and *R should be integers; they need not be the same type,
+   and they need not be all signed or all unsigned.
+
+   These macros work correctly on all known practical hosts, and do not rely
+   on undefined behavior due to signed arithmetic overflow.
+
+   These macros are not constant expressions.
+
+   These macros may evaluate their arguments zero or multiple times, so the
+   arguments should not have side effects.
+
+   These macros are tuned for B being a constant.  */
+
+#define INT_ADD_OK(a, b, r) ! INT_ADD_WRAPV (a, b, r)
+#define INT_SUBTRACT_OK(a, b, r) ! INT_SUBTRACT_WRAPV (a, b, r)
+#define INT_MULTIPLY_OK(a, b, r) ! INT_MULTIPLY_WRAPV (a, b, r)
+
 #endif /* _GL_INTPROPS_H */
