@@ -104,7 +104,16 @@ we fix bugs when they are reported.  Except that some rarely tested
 platforms are also low priority; bug fixes for these platforms can
 take longer.
 
-As of 2019, the list of supported platforms is the following:
+@menu
+* Supported Platforms::
+* Formerly Supported Platforms::
+* Unsupported Platforms::
+@end menu
+
+@node Supported Platforms
+@subsection Supported Platforms
+
+As of 2020, the list of supported platforms is the following:
 
 @itemize
 @item
@@ -166,6 +175,9 @@ uClibc on Linux is no longer tested.
 QNX is no longer tested.
 @end itemize
 
+@node Formerly Supported Platforms
+@subsection Formerly Supported Platforms
+
 The following platforms were supported in the past, but are no longer
 supported:
 @itemize
@@ -199,6 +211,56 @@ whereas it behaves fine in VirtualBox 4.
 Similarly, running native Windows binaries on GNU/Linux under WINE is
 rarely tested and low priority: WINE has a set of behaviours and bugs that
 is slightly different from native Windows.
+
+@node Unsupported Platforms
+@subsection Unsupported Platforms
+
+@cindex integer arithmetic portability
+@cindex portability, integer arithmetic
+
+Some platforms with C compilers are not supported by Gnulib because
+the platforms violate Gnulib's C portability assumptions.  @xref{Other
+portability assumptions}.
+
+These assumptions are not required by the C or POSIX standards but
+hold on almost all practical porting targets.  If you need to port
+Gnulib code to a platform where these assumptions are not true, we
+would appreciate hearing of any fixes.  We need fixes that do not
+increase runtime overhead on standard hosts and that are relatively
+easy to maintain.
+
+These platforms are listed below to illustrate problems that Gnulib
+and Gnulib-using code would have if it were intended to be portable to
+all practical POSIX or C platforms.
+
+@itemize @bullet
+@item
+The IBM i's pointers are 128 bits wide and it lacks the two types
+@code{intptr_t} and @code{uintptr_t}, which are optional in the C and
+POSIX standards.  However, these two types are required for the XSI
+extension to POSIX, and many Gnulib modules use them.  To work around
+this compatibility problem, Gnulib-using applications can be run on
+the IBM i's PASE emulation environment.  The IBM i's architecture
+descends from the System/38 (1978).
+
+@item
+The Unisys ClearPath Dorado's machine word is 36 bits.  Its signed
+integers use a ones'-complement representation.  On these machines,
+@code{CHAR_BIT == 9} and @code{INT_MIN == -INT_MAX}.  By default
+@code{UINT_MAX} is @math{2^{36} - 2}, which does not conform to the C
+requirement that it be one less than a power of two.  Although
+compiler options can raise @code{UINT_MAX} to be @math{2^{36} - 1},
+this can break system code that uses @math{-0} as a flag value.
+This platform's architecture descends from the UNIVAC 1107 (1962).
+
+@item
+The Unisys ClearPath Libra's machine word is 48 bits.  Its
+@code{unsigned int} uses the low-order 40 bits of the word, and
+@code{int} uses the low-order 41 bits of the word with a
+signed-magnitude representation.  On these machines, @code{INT_MAX ==
+UINT_MAX}, @code{INT_MIN == -INT_MAX}, and @code{sizeof (int) == 6}.
+This platform's architecture descends from the Burroughs B5000 (1961).
+@end itemize
 
 The following platforms are not supported by Gnulib.  The cost of
 supporting them would exceed the benefit because they are rarely used, or

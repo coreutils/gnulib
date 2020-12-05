@@ -308,7 +308,6 @@ general Gnulib portability guidelines.
 * C99 features assumed::
 * C99 features avoided::
 * Other portability assumptions::
-* Exotic platforms::
 @end menu
 
 @node C language versions
@@ -517,53 +516,8 @@ For example, @code{0 + (char *) NULL == (char *) NULL}.
 @end itemize
 @end itemize
 
-@node Exotic platforms
-@subsection Exotic platforms
-
-@cindex integer arithmetic portability
-@cindex portability, integer arithmetic
-
-Gnulib's portability assumptions are not required by the C or POSIX
-standards but hold on almost all practical porting targets.  If you
-need to port Gnulib code to a platform where these assumptions are not
-true, we would appreciate hearing of any fixes.  We need fixes that do
-not increase runtime overhead on standard hosts and that are
-relatively easy to maintain.
-
-A few practical platforms violate the @code{intprops} assumptions
-and are therefore not porting targets for Gnulib.  Three are listed
-below to illustrate problems that Gnulib and Gnulib-using code would
-have if it were intended to be portable to all practical POSIX or C
-platforms.
-
-@itemize @bullet
-@item
-The IBM i's pointers are 128 bits wide and it lacks the two types
-@code{intptr_t} and @code{uintptr_t}, which are optional in the C and
-POSIX standards.  However, these two types are required for the XSI
-extension to POSIX, and many Gnulib modules use them.  To work around
-this compatibility problem, Gnulib-using applications can be run on
-the IBM i's PASE emulation environment.  The IBM i's architecture
-descends from the System/38 (1978).
-
-@item
-The Unisys ClearPath Libra's machine word is 48 bits.  Its
-@code{unsigned int} uses the low-order 40 bits of the word, and
-@code{int} uses the low-order 41 bits of the word with a
-signed-magnitude representation.  On these machines, @code{INT_MAX ==
-UINT_MAX}, @code{INT_MIN == -INT_MAX}, and @code{sizeof (int) == 6}.
-This platform's architecture descends from the Burroughs B5000 (1961).
-
-@item
-The Unisys ClearPath Dorado's machine word is 36 bits.  Its signed
-integers use a ones'-complement representation.  On these machines,
-@code{CHAR_BIT == 9} and @code{INT_MIN == -INT_MAX}.  By default
-@code{UINT_MAX} is @math{2^{36} - 2}, which does not conform to the C
-requirement that it be one less than a power of two.  Although
-compiler options can raise @code{UINT_MAX} to be @math{2^{36} - 1},
-this can break system code that uses @math{-0} as a flag value.
-This platform's architecture descends from the UNIVAC 1107 (1962).
-@end itemize
+Some system platforms violate these assumptions and are therefore not
+Gnulib porting targets.  @xref{Unsupported Platforms}.
 
 @node High Quality
 @section High Quality
