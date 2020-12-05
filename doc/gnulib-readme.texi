@@ -543,7 +543,7 @@ The IBM i's pointers are 128 bits wide and it lacks the two types
 POSIX standards.  However, these two types are required for the XSI
 extension to POSIX, and many Gnulib modules use them.  To work around
 this compatibility problem, Gnulib-using applications can be run on
-the IBM i's emulation environment PASE.  The IBM i's architecture
+the IBM i's PASE emulation environment.  The IBM i's architecture
 descends from the System/38 (1978).
 
 @item
