@@ -308,6 +308,7 @@ general Gnulib portability guidelines.
 * C99 features assumed::
 * C99 features avoided::
 * Other portability assumptions::
+* Exotic platforms::
 @end menu
 
 @node C language versions
@@ -462,6 +463,12 @@ All practical Gnulib targets use two's complement.
 @item
 There are no ``holes'' in integer values: all the bits of an integer
 contribute to its value in the usual way.
+In particular, an unsigned type and its signed counterpart have the
+same number of bits when you count the latter's sign bit.
+
+@item
+The types @code{intptr_t} and @code{uintptr_t} exist, and pointers
+can be converted to and from these types without loss of information.
 
 @item
 Addresses and sizes behave as if objects reside in a flat address space.
@@ -477,6 +484,20 @@ cannot overflow.
 A pointer @var{P} points within an object @var{O} if and only if
 @code{(char *) &@var{O} <= (char *) @var{P} && (char *) @var{P} <
 (char *) (&@var{O} + 1)}.
+
+@item
+Arithmetic on a valid pointer is equivalent to the same arithmetic on
+the pointer converted to @code{uintptr_t}, except that offsets are
+multiplied by the size of the pointed-to objects.
+For example, if @code{P + I} is a valid expression involving a pointer
+@var{P} and an integer @var{I}, then @code{(uintptr_t) (P + I) ==
+(uintptr_t) ((uintptr_t) P + I * sizeof *P)}.
+Similar arithmetic can be done with @code{intptr_t}, although more
+care must be taken in case of integer overflow or negative integers.
+
+@item
+A pointer @code{P} has alignment @code{A} if and only if
+@code{(uintptr_t) P % A} is zero, and similarly for @code{intptr_t}.
 
 @item
 If an existing object has size @var{S}, and if @var{T} is sufficiently
@@ -496,12 +517,53 @@ For example, @code{0 + (char *) NULL == (char *) NULL}.
 @end itemize
 @end itemize
 
-The above assumptions are not required by the C or POSIX standards but
-hold on all practical porting targets that we're familiar with.  If
-you have a porting target where these assumptions are not true, we'd
-appreciate hearing of any fixes.  We need fixes that do not increase
-runtime overhead on standard hosts and that are relatively easy to
-maintain.
+@node Exotic platforms
+@subsection Exotic platforms
+
+@cindex integer arithmetic portability
+@cindex portability, integer arithmetic
+
+Gnulib's portability assumptions are not required by the C or POSIX
+standards but hold on almost all practical porting targets.  If you
+need to port Gnulib code to a platform where these assumptions are not
+true, we would appreciate hearing of any fixes.  We need fixes that do
+not increase runtime overhead on standard hosts and that are
+relatively easy to maintain.
+
+A few practical platforms violate the @code{intprops} assumptions
+and are therefore not porting targets for Gnulib.  Three are listed
+below to illustrate problems that Gnulib and Gnulib-using code would
+have if it were intended to be portable to all practical POSIX or C
+platforms.
+
+@itemize @bullet
+@item
+The IBM i's pointers are 128 bits wide and it lacks the two types
+@code{intptr_t} and @code{uintptr_t}, which are optional in the C and
+POSIX standards.  However, these two types are required for the XSI
+extension to POSIX, and many Gnulib modules use them.  To work around
+this compatibility problem, Gnulib-using applications can be run on
+the IBM i's emulation environment PASE.  The IBM i's architecture
+descends from the System/38 (1978).
+
+@item
+The Unisys ClearPath Libra's machine word is 48 bits.  Its
+@code{unsigned int} uses the low-order 40 bits of the word, and
+@code{int} uses the low-order 41 bits of the word with a
+signed-magnitude representation.  On these machines, @code{INT_MAX ==
+UINT_MAX}, @code{INT_MIN == -INT_MAX}, and @code{sizeof (int) == 6}.
+This platform's architecture descends from the Burroughs B5000 (1961).
+
+@item
+The Unisys ClearPath Dorado's machine word is 36 bits.  Its signed
+integers use a ones'-complement representation.  On these machines,
+@code{CHAR_BIT == 9} and @code{INT_MIN == -INT_MAX}.  By default
+@code{UINT_MAX} is @math{2^{36} - 2}, which does not conform to the C
+requirement that it be one less than a power of two.  Although
+compiler options can raise @code{UINT_MAX} to be @math{2^{36} - 1},
+this can break system code that uses @math{-0} as a flag value.
+This platform's architecture descends from the UNIVAC 1107 (1962).
+@end itemize
 
 @node High Quality
 @section High Quality

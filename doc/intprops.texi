@@ -42,9 +42,9 @@ is easier to use, while the second, for integer ranges, has a simple
 and straightforward portable implementation.
 
 Like other Gnulib modules, the implementation of the @code{intprops}
-module assumes that integers use a two's complement representation but
-does not assume that signed integer arithmetic wraps around.  The
-implementation is portable to almost all practical C platforms.
+module assumes that integers use a two's complement representation,
+but it does not assume that signed integer arithmetic wraps around.
+@xref{Other portability assumptions}.
 
 @menu
 * Arithmetic Type Properties::  Determining properties of arithmetic types.
@@ -52,7 +52,6 @@ implementation is portable to almost all practical C platforms.
 * Wraparound Arithmetic::       Well-defined behavior on signed overflow.
 * Integer Type Overflow::       General integer overflow checking.
 * Integer Range Overflow::      Integer overflow checking if bounds are known.
-* Integer Portability::         Portability assumptions of Gnulib integer code.
 @end menu
 
 @node Arithmetic Type Properties
@@ -152,7 +151,7 @@ in_off_t_range (intmax_t a)
 @end example
 
 @node Wraparound Arithmetic
-@subsection Wraparound Arithmetic with Signed Integers
+@subsection Wraparound Arithmetic with Integers
 
 @cindex wraparound integer arithmetic
 
@@ -194,7 +193,10 @@ print_product (long int a, long int b)
 @}
 @end example
 
-@noindent
+These macros work for both signed and unsigned integers, so they can
+be used with integer types like @code{time_t} that may or may not be
+signed, depending on the platform.
+
 These macros have the following restrictions:
 
 @itemize @bullet
@@ -476,45 +478,3 @@ where @var{w} is @var{a}'s word width, and that when @var{a} is negative
 then @code{@var{a} << @var{b}} has undefined behavior, but this macro
 does not check these other restrictions.
 @end table
-
-@node Integer Portability
-@subsection Integer Portability
-
-@cindex integer arithmetic portability
-@cindex portability, integer arithmetic
-
-Like other Gnulib modules, the implementation of the @code{intprops}
-modules assumes that integers use a two's complement representation
-with no padding bits in a machine word.  The implementation does not
-assume that signed integer arithmetic wraps around; however, it does
-assume that an unsigned type and its signed counterpart have the same
-number of bits when you count the latter's sign bit.
-
-Two known practical platforms violate the @code{intprops} assumptions
-and are therefore not porting targets for Gnulib.  They are listed
-below to illustrate problems that Gnulib and Gnulib-using code would
-have if it were intended to be portable to all practical POSIX or C
-platforms.
-
-@itemize @bullet
-@item
-The Unisys ClearPath Libra's machine word is 48 bits.  Its
-@code{unsigned int} uses the low-order 40 bits of the word, and
-@code{int} uses the low-order 41 bits of the word with a
-signed-magnitude representation.  On these machines, @code{INT_MAX ==
-UINT_MAX}, @code{INT_MIN == -INT_MAX}, and @code{sizeof (int) == 6}.
-This platform's architecture descends from the Burroughs B5000 (1961).
-
-@item
-The Unisys ClearPath Dorado's machine word is 36 bits.  Its signed
-integers use a ones'-complement representation.  On these machines,
-@code{CHAR_BIT == 9} and @code{INT_MIN == -INT_MAX}.  By default
-@code{UINT_MAX} is @math{2^{36} - 2}, which does not conform to the C
-requirement that it be one less than a power of two.  Although
-compiler options can raise @code{UINT_MAX} to be @math{2^{36} - 1},
-this can break system code that uses @math{-0} as a flag value.
-This platform's architecture descends from the UNIVAC 1107 (1962).
-@end itemize
-
-@noindent
-Fortunately, these platforms are now quite rare.
