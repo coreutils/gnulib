@@ -17,6 +17,7 @@ closedir
 d-ino
 dirent-safer
 fcntl
+idx
 memcmp
 opendirat
 readdir

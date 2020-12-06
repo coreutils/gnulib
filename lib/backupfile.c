@@ -22,12 +22,6 @@
 
 #include "backup-internal.h"
 
-#include "attribute.h"
-#include "basename-lgpl.h"
-#include "opendirat.h"
-#include "renameatu.h"
-#include "xalloc-oversized.h"
-
 #include <errno.h>
 #include <fcntl.h>
 #include <stdbool.h>
@@ -35,6 +29,13 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+
+#include "attribute.h"
+#include "basename-lgpl.h"
+#include "idx.h"
+#include "opendirat.h"
+#include "renameatu.h"
+#include "xalloc-oversized.h"
 
 #ifndef _D_EXACT_NAMLEN
 # define _D_EXACT_NAMLEN(dp) strlen ((dp)->d_name)
@@ -198,7 +199,7 @@ enum numbered_backup_result
 
 static enum numbered_backup_result
 numbered_backup (int dir_fd, char **buffer, size_t buffer_size, size_t filelen,
-                 ptrdiff_t base_offset, DIR **dirpp, int *pnew_fd)
+                 idx_t base_offset, DIR **dirpp, int *pnew_fd)
 {
   enum numbered_backup_result result = BACKUP_IS_NEW;
   DIR *dirp = *dirpp;
@@ -307,7 +308,7 @@ char *
 backupfile_internal (int dir_fd, char const *file,
                      enum backup_type backup_type, bool rename)
 {
-  ptrdiff_t base_offset = last_component (file) - file;
+  idx_t base_offset = last_component (file) - file;
   size_t filelen = base_offset + strlen (file + base_offset);
 
   if (! simple_backup_suffix)
