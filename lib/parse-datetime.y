@@ -35,6 +35,7 @@
 
 #include "parse-datetime.h"
 
+#include "idx.h"
 #include "intprops.h"
 #include "timespec.h"
 #include "verify.h"
@@ -139,7 +140,7 @@ typedef struct
 {
   bool negative;
   intmax_t value;
-  ptrdiff_t digits;
+  idx_t digits;
 } textint;
 
 /* An entry in the lexical lookup table.  */
@@ -212,12 +213,12 @@ typedef struct
   /* Presence or counts of nonterminals of various flavors parsed so far.  */
   bool timespec_seen;
   bool rels_seen;
-  ptrdiff_t dates_seen;
-  ptrdiff_t days_seen;
-  ptrdiff_t local_zones_seen;
-  ptrdiff_t dsts_seen;
-  ptrdiff_t times_seen;
-  ptrdiff_t zones_seen;
+  idx_t dates_seen;
+  idx_t days_seen;
+  idx_t local_zones_seen;
+  idx_t dsts_seen;
+  idx_t times_seen;
+  idx_t zones_seen;
   bool year_seen;
 
   /* Print debugging output to stderr.  */
@@ -1334,7 +1335,7 @@ lookup_word (parser_control const *pc, char *word)
 {
   char *p;
   char *q;
-  ptrdiff_t wordlen;
+  idx_t wordlen;
   table const *tp;
   bool period_found;
   bool abbrev;
@@ -1514,7 +1515,7 @@ yylex (union YYSTYPE *lvalp, parser_control *pc)
       if (c != '(')
         return to_uchar (*pc->input++);
 
-      ptrdiff_t count = 0;
+      idx_t count = 0;
       do
         {
           c = *pc->input++;
@@ -1750,7 +1751,7 @@ parse_datetime2 (struct timespec *result, char const *p,
   if (strncmp (p, "TZ=\"", 4) == 0)
     {
       char const *tzbase = p + 4;
-      ptrdiff_t tzsize = 1;
+      idx_t tzsize = 1;
       char const *s;
 
       for (s = tzbase; *s; s++, tzsize++)

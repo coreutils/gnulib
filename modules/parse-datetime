@@ -15,6 +15,7 @@ c-ctype
 stdbool
 gettime
 gettext-h
+idx
 intprops
 inttypes
 mktime
