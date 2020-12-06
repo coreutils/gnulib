@@ -529,3 +529,25 @@ break.  This means that before any change can be committed to the
 repository, a test suite program must be produced that exposes the bug
 for regression testing.  All experimental work should be done on
 branches to help promote this.
+
+When compiling and testing Gnulib and Gnulib-using programs, certain
+compiler options can help improve reliability.  The
+@code{manywarnings} module enables several forms of static checking in
+GCC and related compilers (@pxref{manywarnings}).  For dynamic checking,
+you can run @code{configure} with @code{CFLAGS} options appropriate
+for your compiler.  For example:
+
+@example
+./configure \
+ CFLAGS='-g3 -O2'\
+' -D_FORTIFY_SOURCE=2'\
+' -fsanitize=undefined'\
+' -fsanitize-undefined-trap-on-error'
+@end example
+
+@noindent
+Here, @code{-D_FORTIFY_SOURCE=2} enables extra security hardening
+checks in the GNU C library, @code{-fsanitize=undefined} enables GCC's
+undefined behavior sanitizer (@code{ubsan}), and
+@code{-fsanitize-undefined-trap-on-error} prevents @code{ubsan}'s
+linking to unnecessary libraries like @code{libstdc++}.
