@@ -559,8 +559,16 @@ the GNU C library.
 @code{-fsanitize-undefined-trap-on-error} causes @code{ubsan} to
 abort the program (through an ``illegal instruction'' signal).  This
 measure stops exploit attempts and also allows you to debug the issue.
-Without this option, @code{-fsanitize=undefined} causes messages to be
-printed, execution continues after an undefined behavior situation, and
-GCC links the program against @code{libstdc++} (which you can avoid
-through the option @code{-static-libubsan}).
 @end itemize
+
+Without the @code{-fsanitize-undefined-trap-on-error} option,
+@code{-fsanitize=undefined} causes messages to be printed, and
+execution continues after an undefined behavior situation.
+The message printing causes GCC-like compilers to arrange for the
+program to dynamically link to libraries it might not otherwise need.
+With GCC, instead of @code{-fsanitize-undefined-trap-on-error} you can
+use the @code{-static-libubsan} option to arrange for two of the extra
+libraries (@code{libstdc++} and @code{libubsan}) to be linked
+statically rather than dynamically, though this typically bloats the
+executable and the remaining extra libraries are still linked
+dynamically.
