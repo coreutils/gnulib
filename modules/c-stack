@@ -14,6 +14,7 @@ exitfail
 getprogname
 gettext-h
 havelib
+idx
 ignore-value
 intprops
 inttypes
