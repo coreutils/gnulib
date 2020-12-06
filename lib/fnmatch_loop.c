@@ -1036,9 +1036,9 @@ EXT (INT opt, const CHAR *pattern, const CHAR *string, const CHAR *string_end,
             struct patternlist *newp;                                         \
             size_t plen = (opt == L_('?') || opt == L_('@')                   \
                            ? pattern_len : (p - startp + 1UL));               \
-            ptrdiff_t slen = FLEXSIZEOF (struct patternlist, str, 0);         \
-            ptrdiff_t new_used = alloca_used + slen;                          \
-            ptrdiff_t plensize;                                               \
+            idx_t slen = FLEXSIZEOF (struct patternlist, str, 0);             \
+            idx_t new_used = alloca_used + slen;                              \
+            idx_t plensize;                                                   \
             if (INT_MULTIPLY_WRAPV (plen, sizeof (CHAR), &plensize)           \
                 || INT_ADD_WRAPV (new_used, plensize, &new_used))             \
               {                                                               \

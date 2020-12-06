@@ -76,6 +76,12 @@ extern int fnmatch (const char *pattern, const char *string, int flags);
 #include <intprops.h>
 #include <flexmember.h>
 
+#ifdef _LIBC
+typedef ptrdiff_t idx_t;
+#else
+# include "idx.h"
+#endif
+
 /* We often have to test for FNM_FILE_NAME and FNM_PERIOD being both set.  */
 #define NO_LEADING_PERIOD(flags) \
   ((flags & (FNM_FILE_NAME | FNM_PERIOD)) == (FNM_FILE_NAME | FNM_PERIOD))
