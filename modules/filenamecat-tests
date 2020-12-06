@@ -2,6 +2,7 @@ Files:
 tests/test-filenamecat.c
 
 Depends-on:
+idx
 stdbool
 
 configure.ac:

@@ -21,6 +21,8 @@
 
 #include "filenamecat.h"
 
+#include "idx.h"
+
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdio.h>
@@ -54,7 +56,7 @@ main (int argc _GL_UNUSED, char *argv[])
       char *base_in_result;
       char const *const *t = tests[i];
       char *res = file_name_concat (t[0], t[1], &base_in_result);
-      ptrdiff_t prefixlen = base_in_result - res;
+      idx_t prefixlen = base_in_result - res;
       size_t t0len = strlen (t[0]);
       size_t reslen = strlen (res);
       if (strcmp (res, t[2]) != 0)
