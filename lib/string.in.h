@@ -123,10 +123,21 @@ _GL_WARN_ON_USE (ffsll, "ffsll is not portable - use the ffsll module");
 #endif
 
 
+/* On native Windows, map 'memccpy' to '_memccpy', so that -loldnames is not
+   required.  In C++ with GNULIB_NAMESPACE, avoid differences between
+   platforms by defining GNULIB_NAMESPACE::memccpy always.  */
 #if defined _WIN32 && !defined __CYGWIN__
-# undef memccpy
-# define memccpy _memccpy
+# if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#  undef memccpy
+#  define memccpy _memccpy
+# endif
+_GL_CXXALIAS_MDA (memccpy, void *,
+                  (void *dest, const void *src, int c, size_t n));
+#else
+_GL_CXXALIAS_SYS (memccpy, void *,
+                  (void *dest, const void *src, int c, size_t n));
 #endif
+_GL_CXXALIASWARN (memccpy);
 
 
 /* Return the first instance of C within N bytes of S, or NULL.  */
@@ -413,9 +424,23 @@ _GL_CXXALIASWARN (strdup);
 _GL_WARN_ON_USE (strdup, "strdup is unportable - "
                  "use gnulib module strdup for portability");
 # endif
-#elif defined _WIN32 && !defined __CYGWIN__
-# undef strdup
-# define strdup _strdup
+#else
+/* On native Windows, map 'creat' to '_creat', so that -loldnames is not
+   required.  In C++ with GNULIB_NAMESPACE, avoid differences between
+   platforms by defining GNULIB_NAMESPACE::creat always.  */
+# if defined _WIN32 && !defined __CYGWIN__
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef strdup
+#   define strdup _strdup
+#  endif
+_GL_CXXALIAS_MDA (strdup, char *, (char const *__s));
+# else
+#  if defined __cplusplus && defined GNULIB_NAMESPACE && defined strdup
+#   undef strdup
+#  endif
+_GL_CXXALIAS_SYS (strdup, char *, (char const *__s));
+# endif
+_GL_CXXALIASWARN (strdup);
 #endif
 
 /* Append no more than N characters from SRC onto DEST.  */

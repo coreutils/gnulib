@@ -7,7 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 
 dnl Written by Eric Blake.
 
-# wchar_h.m4 serial 47
+# wchar_h.m4 serial 48
 
 AC_DEFUN([gl_WCHAR_H],
 [
@@ -60,6 +60,22 @@ AC_DEFUN([gl_WCHAR_H],
     ])
 
   AC_REQUIRE([AC_C_RESTRICT])
+
+  AC_CHECK_DECLS([wcsdup], [], [], [[
+/* Tru64 with Desktop Toolkit C has a bug: <stdio.h> must be included before
+   <wchar.h>.
+   BSD/OS 4.0.1 has a bug: <stddef.h>, <stdio.h> and <time.h> must be
+   included before <wchar.h>.  */
+#if !(defined __GLIBC__ && !defined __UCLIBC__)
+# include <stddef.h>
+# include <stdio.h>
+# include <time.h>
+#endif
+#include <wchar.h>
+    ]])
+  if test $ac_cv_have_decl_wcsdup = no; then
+    HAVE_DECL_WCSDUP=0
+  fi
 ])
 
 dnl Check whether <wchar.h> is usable at all.
@@ -232,6 +248,7 @@ AC_DEFUN([gl_WCHAR_H_DEFAULTS],
   HAVE_WCSWIDTH=1;      AC_SUBST([HAVE_WCSWIDTH])
   HAVE_WCSFTIME=1;      AC_SUBST([HAVE_WCSFTIME])
   HAVE_DECL_WCTOB=1;    AC_SUBST([HAVE_DECL_WCTOB])
+  HAVE_DECL_WCSDUP=1;   AC_SUBST([HAVE_DECL_WCSDUP])
   HAVE_DECL_WCWIDTH=1;  AC_SUBST([HAVE_DECL_WCWIDTH])
   REPLACE_MBSTATE_T=0;  AC_SUBST([REPLACE_MBSTATE_T])
   REPLACE_BTOWC=0;      AC_SUBST([REPLACE_BTOWC])

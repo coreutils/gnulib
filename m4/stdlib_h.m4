@@ -1,4 +1,4 @@
-# stdlib_h.m4 serial 51
+# stdlib_h.m4 serial 52
 dnl Copyright (C) 2007-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -31,6 +31,19 @@ AC_DEFUN([gl_STDLIB_H],
     strtod strtold strtoll strtoull unlockpt unsetenv])
 
   AC_REQUIRE([AC_C_RESTRICT])
+
+  AC_CHECK_DECLS_ONCE([ecvt])
+  if test $ac_cv_have_decl_ecvt = no; then
+    HAVE_DECL_ECVT=0
+  fi
+  AC_CHECK_DECLS_ONCE([fcvt])
+  if test $ac_cv_have_decl_fcvt = no; then
+    HAVE_DECL_FCVT=0
+  fi
+  AC_CHECK_DECLS_ONCE([gcvt])
+  if test $ac_cv_have_decl_gcvt = no; then
+    HAVE_DECL_GCVT=0
+  fi
 ])
 
 AC_DEFUN([gl_STDLIB_MODULE_INDICATOR],
@@ -86,6 +99,9 @@ AC_DEFUN([gl_STDLIB_H_DEFAULTS],
   HAVE_ALIGNED_ALLOC=1;      AC_SUBST([HAVE_ALIGNED_ALLOC])
   HAVE_ATOLL=1;              AC_SUBST([HAVE_ATOLL])
   HAVE_CANONICALIZE_FILE_NAME=1;  AC_SUBST([HAVE_CANONICALIZE_FILE_NAME])
+  HAVE_DECL_ECVT=1;          AC_SUBST([HAVE_DECL_ECVT])
+  HAVE_DECL_FCVT=1;          AC_SUBST([HAVE_DECL_FCVT])
+  HAVE_DECL_GCVT=1;          AC_SUBST([HAVE_DECL_GCVT])
   HAVE_DECL_GETLOADAVG=1;    AC_SUBST([HAVE_DECL_GETLOADAVG])
   HAVE_GETSUBOPT=1;          AC_SUBST([HAVE_GETSUBOPT])
   HAVE_GRANTPT=1;            AC_SUBST([HAVE_GRANTPT])

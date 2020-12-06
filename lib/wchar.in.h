@@ -961,9 +961,25 @@ _GL_CXXALIASWARN (wcsdup);
 _GL_WARN_ON_USE (wcsdup, "wcsdup is unportable - "
                  "use gnulib module wcsdup for portability");
 # endif
-#elif defined _WIN32 && !defined __CYGWIN__
-# undef wcsdup
-# define wcsdup _wcsdup
+#else
+/* On native Windows, map 'wcsdup' to '_wcsdup', so that -loldnames is not
+   required.  In C++ with GNULIB_NAMESPACE, avoid differences between
+   platforms by defining GNULIB_NAMESPACE::wcsdup always.  */
+# if defined _WIN32 && !defined __CYGWIN__
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef wcsdup
+#   define wcsdup _wcsdup
+#  endif
+_GL_CXXALIAS_MDA (wcsdup, wchar_t *, (const wchar_t *s));
+# else
+_GL_FUNCDECL_SYS (wcsdup, wchar_t *, (const wchar_t *s));
+#  if @HAVE_DECL_WCSDUP@
+_GL_CXXALIAS_SYS (wcsdup, wchar_t *, (const wchar_t *s));
+#  endif
+# endif
+# if (defined _WIN32 && !defined __CYGWIN__) || @HAVE_DECL_WCSDUP@
+_GL_CXXALIASWARN (wcsdup);
+# endif
 #endif
 
 
