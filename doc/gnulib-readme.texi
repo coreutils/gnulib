@@ -546,8 +546,21 @@ for your compiler.  For example:
 @end example
 
 @noindent
-Here, @code{-D_FORTIFY_SOURCE=2} enables extra security hardening
-checks in the GNU C library, @code{-fsanitize=undefined} enables GCC's
-undefined behavior sanitizer (@code{ubsan}), and
-@code{-fsanitize-undefined-trap-on-error} prevents @code{ubsan}'s
-linking to unnecessary libraries like @code{libstdc++}.
+Here:
+
+@itemize @bullet
+@item
+@code{-D_FORTIFY_SOURCE=2} enables extra security hardening checks in
+the GNU C library.
+@item
+@code{-fsanitize=undefined} enables GCC's undefined behavior sanitizer
+(@code{ubsan}), and
+@item
+@code{-fsanitize-undefined-trap-on-error} causes @code{ubsan} to
+abort the program (through an ``illegal instruction'' signal).  This
+measure stops exploit attempts and also allows you to debug the issue.
+Without this option, @code{-fsanitize=undefined} causes messages to be
+printed, execution continues after an undefined behavior situation, and
+GCC links the program against @code{libstdc++} (which you can avoid
+through the option @code{-static-libubsan}).
+@end itemize
