@@ -167,7 +167,7 @@ arithmetic.  For example:
 if ((a + b < b) == (a < 0))
   a += b;
 else
-  print ("overflow");
+  printf ("overflow\n");
 @end example
 
 @noindent
