@@ -466,6 +466,11 @@ In particular, an unsigned type and its signed counterpart have the
 same number of bits when you count the latter's sign bit.
 
 @item
+Objects with all bits zero are treated as 0 or NULL@.  For example,
+@code{memset@ (A, 0, sizeof@ A)} initializes an array @code{A} of
+pointers to NULL.
+
+@item
 The types @code{intptr_t} and @code{uintptr_t} exist, and pointers
 can be converted to and from these types without loss of information.
 
@@ -504,11 +509,6 @@ small (e.g., 8 KiB), then @code{@var{S} + @var{T}} cannot overflow.
 Overflow in this case would mean that the rest of your program fits
 into @var{T} bytes, which can't happen in realistic flat-address-space
 hosts.
-
-@item
-Objects with all bits zero are treated as 0 or NULL@.  For example,
-@code{memset@ (A, 0, sizeof@ A)} initializes an array @code{A} of
-pointers to NULL.
 
 @item
 Adding zero to a null pointer does not change the pointer.
