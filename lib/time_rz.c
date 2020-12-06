@@ -33,6 +33,7 @@
 #include <string.h>
 
 #include "flexmember.h"
+#include "idx.h"
 #include "time-internal.h"
 
 /* The approximate size to use for small allocation requests.  This is
@@ -120,7 +121,7 @@ save_abbr (timezone_t tz, struct tm *tm)
         {
           if (! (*zone_copy || (zone_copy == tz->abbrs && tz->tz_is_set)))
             {
-              ptrdiff_t zone_size = strlen (zone) + 1;
+              idx_t zone_size = strlen (zone) + 1;
               if (zone_size < tz->abbrs + ABBR_SIZE_MIN - zone_copy)
                 extend_abbrs (zone_copy, zone, zone_size);
               else
