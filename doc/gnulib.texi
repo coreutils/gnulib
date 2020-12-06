@@ -2,6 +2,14 @@
 @comment %**start of header
 @setfilename gnulib.info
 @settitle GNU Gnulib
+@c These two require Texinfo 5.0 or later, so we use the older
+@c equivalent @set variables supported in 4.11 and hence
+@ignore
+@codequotebacktick on
+@codequoteundirected on
+@end ignore
+@set txicodequoteundirected
+@set txicodequotebacktick
 @c Define a new index for the magic constants in regex.texi.
 @defcodeindex cn
 @syncodeindex fn cp
