@@ -694,7 +694,9 @@ _GL_CXXALIASWARN (putenv);
 #   undef putenv
 #   define putenv _putenv
 #  endif
-_GL_CXXALIAS_MDA (putenv, int, (char *string));
+/* Need to cast, because on mingw, the parameter is either
+   'const char *string' or 'char *string'.  */
+_GL_CXXALIAS_MDA_CAST (putenv, int, (char *string));
 # else
 _GL_CXXALIAS_SYS (putenv, int, (char *string));
 # endif

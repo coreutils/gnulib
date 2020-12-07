@@ -97,16 +97,9 @@
    <io.h> and/or <direct.h>, not in <unistd.h>.
    They also declare _access(), _chmod(), _close(), _dup(), _dup2(), _isatty(),
    _lseek(), _read(), _unlink(), _write() in <io.h>.  */
-#if ((@GNULIB_CHDIR@ || @GNULIB_GETCWD@ || @GNULIB_RMDIR@ \
-      || defined GNULIB_POSIXCHECK) \
-     && (defined _WIN32 && ! defined __CYGWIN__))
-# include <io.h>     /* mingw32, mingw64 */
-# include <direct.h> /* mingw64, MSVC 9 */
-#elif (@GNULIB_CLOSE@ || @GNULIB_DUP@ || @GNULIB_DUP2@ || @GNULIB_ISATTY@ \
-       || @GNULIB_LSEEK@ || @GNULIB_READ@ || @GNULIB_UNLINK@ || @GNULIB_WRITE@ \
-       || defined GNULIB_POSIXCHECK) \
-      && (defined _WIN32 && ! defined __CYGWIN__)
+#if defined _WIN32 && !defined __CYGWIN__
 # include <io.h>
+# include <direct.h>
 #endif
 
 /* Native Windows platforms declare _execl*, _execv* in <process.h>.  */
@@ -937,7 +930,9 @@ _GL_WARN_ON_USE (getcwd, "getcwd is unportable - "
 #   undef getcwd
 #   define getcwd _getcwd
 #  endif
-_GL_CXXALIAS_MDA (getcwd, char *, (char *buf, size_t size));
+/* Need to cast, because on mingw, the second parameter is either
+   'int size' or 'size_t size'.  */
+_GL_CXXALIAS_MDA_CAST (getcwd, char *, (char *buf, size_t size));
 # else
 _GL_CXXALIAS_SYS_CAST (getcwd, char *, (char *buf, size_t size));
 # endif
