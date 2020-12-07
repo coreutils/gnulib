@@ -14,7 +14,7 @@ getpagesize
 vma-iter
 
 configure.ac:
-AC_CHECK_FUNCS_ONCE([setrlimit])
+AC_CHECK_FUNCS_ONCE([sbrk setrlimit])
 gl_FUNC_MMAP_ANON
 
 Makefile.am:

@@ -150,7 +150,7 @@
 #if !(defined __APPLE__ && defined __MACH__) || defined TEST
 /* Implement get_rusage_data_via_setrlimit().  */
 
-# if HAVE_SETRLIMIT && defined RLIMIT_DATA && !defined __HAIKU__
+# if HAVE_SETRLIMIT && defined RLIMIT_DATA && HAVE_SBRK && !defined __HAIKU__
 
 #  ifdef _AIX
 #   define errno_expected() (errno == EINVAL || errno == EFAULT)
@@ -166,9 +166,9 @@ get_rusage_data_via_setrlimit (void)
   struct rlimit orig_limit;
 
 #  ifdef __hpux
-  /* On HP-UX 11.00, setrlimit() RLIMIT_DATA of does not work: It cannot
+  /* On HP-UX 11.00, setrlimit() of RLIMIT_DATA does not work: It cannot
      restore the previous limits.
-     On HP-UX 11.11, setrlimit() RLIMIT_DATA of does not work: It sometimes
+     On HP-UX 11.11, setrlimit() of RLIMIT_DATA does not work: It sometimes
      has no effect on the next sbrk() call.  */
   {
     struct utsname buf;
