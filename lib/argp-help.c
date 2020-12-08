@@ -720,12 +720,12 @@ canon_doc_option (const char **name)
 {
   int non_opt;
   /* Skip initial whitespace.  */
-  while (isspace (**name))
+  while (isspace ((unsigned char) **name))
     (*name)++;
   /* Decide whether this looks like an option (leading '-') or not.  */
   non_opt = (**name != '-');
   /* Skip until part of name used for sorting.  */
-  while (**name && !isalnum (**name))
+  while (**name && !isalnum ((unsigned char) **name))
     (*name)++;
   return non_opt;
 }
