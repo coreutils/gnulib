@@ -57,6 +57,8 @@
 # define SIZE_MAX ((size_t) -1)
 #endif
 
+/* ========================================================================== */
+
 /* User-selectable (using an environment variable) formatting parameters.
 
    These may be specified in an environment variable called 'ARGP_HELP_FMT',
@@ -253,6 +255,8 @@ fill_in_uparams (const struct argp_state *state)
     }
 }
 
+/* ========================================================================== */
+
 /* Returns true if OPT hasn't been marked invisible.  Visibility only affects
    whether OPT is displayed or used in sorting, not option shadowing.  */
 #define ovisible(opt) (! ((opt)->flags & OPTION_HIDDEN))
@@ -348,6 +352,9 @@ find_char (char ch, char *beg, char *end)
   return 0;
 }
 
+/* -------------------------------------------------------------------------- */
+/* Data structure: HOL = Help Option List                                     */
+
 struct hol_cluster;             /* fwd decl */
 
 struct hol_entry
@@ -366,11 +373,11 @@ struct hol_entry
   char *short_options;
 
   /* Entries are sorted by their group first, in the order:
-       1, 2, ..., n, 0, -m, ..., -2, -1
+       0, 1, 2, ..., n, -m, ..., -2, -1
      and then alphabetically within each group.  The default is 0.  */
   int group;
 
-  /* The cluster of options this entry belongs to, or 0 if none.  */
+  /* The cluster of options this entry belongs to, or NULL if none.  */
   struct hol_cluster *cluster;
 
   /* The argp from which this option came.  */
@@ -395,7 +402,7 @@ struct hol_cluster
      same depth (clusters always follow options in the same group).  */
   int group;
 
-  /* The cluster to which this cluster belongs, or 0 if it's at the base
+  /* The cluster to which this cluster belongs, or NULL if it's at the base
      level.  */
   struct hol_cluster *parent;
 
@@ -428,7 +435,7 @@ struct hol
 };
 
 /* Create a struct hol from the options in ARGP.  CLUSTER is the
-   hol_cluster in which these entries occur, or 0, if at the root.  */
+   hol_cluster in which these entries occur, or NULL if at the root.  */
 static struct hol *
 make_hol (const struct argp *argp, struct hol_cluster *cluster)
 {
@@ -545,6 +552,9 @@ hol_free (struct hol *hol)
   free (hol);
 }
 
+/* Iterate across the short_options of the given ENTRY.  Call FUNC for each.
+   Stop when such a call returns a non-zero value, and return this value.
+   If all FUNC invocations returned 0, return 0.  */
 static int
 hol_entry_short_iterate (const struct hol_entry *entry,
                          int (*func)(const struct argp_option *opt,
@@ -570,6 +580,9 @@ hol_entry_short_iterate (const struct hol_entry *entry,
   return val;
 }
 
+/* Iterate across the long options of the given ENTRY.  Call FUNC for each.
+   Stop when such a call returns a non-zero value, and return this value.
+   If all FUNC invocations returned 0, return 0.  */
 static inline int
 #if (__GNUC__ >= 3) || (__clang_major__ >= 4)
 __attribute__ ((always_inline))
@@ -596,7 +609,7 @@ hol_entry_long_iterate (const struct hol_entry *entry,
   return val;
 }
 
-/* Iterator that returns true for the first short option.  */
+/* A filter that returns true for the first short option of a given ENTRY.  */
 static int
 until_short (const struct argp_option *opt, const struct argp_option *real,
              const char *domain, void *cookie)
@@ -612,7 +625,7 @@ hol_entry_first_short (const struct hol_entry *entry)
                                   entry->argp->argp_domain, 0);
 }
 
-/* Returns the first valid long option in ENTRY, or 0 if there is none.  */
+/* Returns the first valid long option in ENTRY, or NULL if there is none.  */
 static const char *
 hol_entry_first_long (const struct hol_entry *entry)
 {
@@ -624,7 +637,7 @@ hol_entry_first_long (const struct hol_entry *entry)
   return 0;
 }
 
-/* Returns the entry in HOL with the long option name NAME, or 0 if there is
+/* Returns the entry in HOL with the long option name NAME, or NULL if there is
    none.  */
 static struct hol_entry *
 hol_find_entry (struct hol *hol, const char *name)
@@ -702,17 +715,7 @@ hol_cluster_base (struct hol_cluster *cl)
   return cl;
 }
 
-/* Return true if CL1 is a child of CL2.  */
-static int
-hol_cluster_is_child (const struct hol_cluster *cl1,
-                      const struct hol_cluster *cl2)
-{
-  while (cl1 && cl1 != cl2)
-    cl1 = cl1->parent;
-  return cl1 == cl2;
-}
-
-/* Given the name of an OPTION_DOC option, modifies NAME to start at the tail
+/* Given the name of an OPTION_DOC option, modifies *NAME to start at the tail
    that should be used for comparisons, and returns true iff it should be
    treated as a non-option.  */
 static int
@@ -729,8 +732,6 @@ canon_doc_option (const char **name)
     (*name)++;
   return non_opt;
 }
-
-#define HOL_ENTRY_PTRCMP(a,b) ((a)->ord < (b)->ord ? -1 : 1)
 
 /* Order ENTRY1 & ENTRY2 by the order which they should appear in a help
    listing.  */
@@ -805,7 +806,7 @@ hol_entry_cmp (const struct hol_entry *entry1,
     return group_cmp (group1, group2, 0);
 }
 
-/* Version of hol_entry_cmp with correct signature for qsort.  */
+/* Variant of hol_entry_cmp with correct signature for qsort.  */
 static int
 hol_entry_qcmp (const void *entry1_v, const void *entry2_v)
 {
@@ -824,11 +825,15 @@ hol_sort (struct hol *hol)
       struct hol_entry *e;
       for (i = 0, e = hol->entries; i < hol->num_entries; i++, e++)
         e->ord = i;
+
       qsort (hol->entries, hol->num_entries, sizeof (struct hol_entry),
              hol_entry_qcmp);
     }
 }
 
+/* -------------------------------------------------------------------------- */
+/* Constructing the HOL.                                                      */
+
 /* Append MORE to HOL, destroying MORE in the process.  Options in HOL shadow
    any in MORE with the same name.  */
 static void
@@ -923,6 +928,32 @@ hol_append (struct hol *hol, struct hol *more)
   hol_free (more);
 }
 
+/* Make a HOL containing all levels of options in ARGP.  CLUSTER is the
+   cluster in which ARGP's entries should be clustered, or NULL.  */
+static struct hol *
+argp_hol (const struct argp *argp, struct hol_cluster *cluster)
+{
+  const struct argp_child *child = argp->children;
+  struct hol *hol = make_hol (argp, cluster);
+  if (child)
+    while (child->argp)
+      {
+        struct hol_cluster *child_cluster =
+          ((child->group || child->header)
+           /* Put CHILD->argp within its own cluster.  */
+           ? hol_add_cluster (hol, child->group, child->header,
+                              child - argp->children, cluster, argp)
+           /* Just merge it into the parent's cluster.  */
+           : cluster);
+        hol_append (hol, argp_hol (child->argp, child_cluster)) ;
+        child++;
+      }
+  return hol;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Printing the HOL.                                                          */
+
 /* Inserts enough spaces to make sure STREAM is at column COL.  */
 static void
 indent_to (argp_fmtstream_t stream, unsigned col)
@@ -967,7 +998,7 @@ arg (const struct argp_option *real, const char *req_fmt, const char *opt_fmt,
 /* State used during the execution of hol_help.  */
 struct hol_help_state
 {
-  /* PREV_ENTRY should contain the previous entry printed, or 0.  */
+  /* PREV_ENTRY should contain the previous entry printed, or NULL.  */
   struct hol_entry *prev_entry;
 
   /* If an entry is in a different group from the previous one, and SEP_GROUPS
@@ -1045,6 +1076,16 @@ print_header (const char *str, const struct argp *argp,
     free ((char *) fstr);
 }
 
+/* Return true if CL1 is a child of CL2.  */
+static int
+hol_cluster_is_child (const struct hol_cluster *cl1,
+                      const struct hol_cluster *cl2)
+{
+  while (cl1 && cl1 != cl2)
+    cl1 = cl1->parent;
+  return cl1 == cl2;
+}
+
 /* Inserts a comma if this isn't the first item on the line, and then makes
    sure we're at least to column COL.  If this *is* the first item on a line,
    prints any pending whitespace/headers that should precede this line. Also
@@ -1356,29 +1397,6 @@ hol_usage (struct hol *hol, argp_fmtstream_t stream)
         hol_entry_long_iterate (entry, usage_long_opt,
                                 entry->argp->argp_domain, stream);
     }
-}
-
-/* Make a HOL containing all levels of options in ARGP.  CLUSTER is the
-   cluster in which ARGP's entries should be clustered, or 0.  */
-static struct hol *
-argp_hol (const struct argp *argp, struct hol_cluster *cluster)
-{
-  const struct argp_child *child = argp->children;
-  struct hol *hol = make_hol (argp, cluster);
-  if (child)
-    while (child->argp)
-      {
-        struct hol_cluster *child_cluster =
-          ((child->group || child->header)
-           /* Put CHILD->argp within its own cluster.  */
-           ? hol_add_cluster (hol, child->group, child->header,
-                              child - argp->children, cluster, argp)
-           /* Just merge it into the parent's cluster.  */
-           : cluster);
-        hol_append (hol, argp_hol (child->argp, child_cluster)) ;
-        child++;
-      }
-  return hol;
 }
 
 /* Calculate how many different levels with alternative args strings exist in
