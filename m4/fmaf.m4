@@ -1,4 +1,4 @@
-# fmaf.m4 serial 5
+# fmaf.m4 serial 6
 dnl Copyright (C) 2011-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -167,6 +167,21 @@ int main()
     if (!(result == minus_inf))
       failed_tests |= 64;
   }
+  /* This test fails on FreeBSD 12.2/arm.  */
+  if ((FLT_MANT_DIG % 2) == 0)
+    {
+      volatile float x = 1.0f + ldexpf (1.0f, - FLT_MANT_DIG / 2); /* 2^0 + 2^-12 */
+      volatile float y = x;
+      volatile float z = - ldexpf (1.0f, FLT_MIN_EXP - FLT_MANT_DIG); /* 2^-149 */
+      /* x * y + z with infinite precision: 2^0 + 2^-11 + 2^-24 - 2^-149.
+         Lies between (2^23 + 2^12 + 0) * 2^-23 and (2^23 + 2^12 + 1) * 2^-23
+         and is closer to (2^23 + 2^12 + 0) * 2^-23, therefore the rounding
+         must round down and produce (2^23 + 2^12 + 0) * 2^-23.  */
+      volatile float expected = 1.0f + ldexpf (1.0f, 1 - FLT_MANT_DIG / 2);
+      volatile float result = fmaf (x, y, z);
+      if (result != expected)
+        failed_tests |= 32;
+    }
   return failed_tests;
 }]])],
         [gl_cv_func_fmaf_works=yes],
