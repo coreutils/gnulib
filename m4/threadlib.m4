@@ -1,4 +1,4 @@
-# threadlib.m4 serial 28
+# threadlib.m4 serial 29
 dnl Copyright (C) 2005-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -486,6 +486,17 @@ AC_DEFUN([gl_THREADLIB_BODY],
               AC_DEFINE([USE_POSIX_THREADS_WEAK], [1],
                 [Define if references to the POSIX multithreading library should be made weak.])
               LIBTHREAD= LTLIBTHREAD=
+            else
+              case "$host_os" in
+                freebsd* | dragonfly*)
+                  if test "x$LIBTHREAD" != "x$LIBMULTITHREAD"; then
+                    dnl If weak symbols can't tell whether pthread_create(), pthread_key_create()
+                    dnl etc. will succeed, we need a runtime test.
+                    AC_DEFINE([PTHREAD_IN_USE_DETECTION_HARD], [1],
+                      [Define if the pthread_in_use() detection is hard.])
+                  fi
+                  ;;
+              esac
             fi
           fi
         fi
