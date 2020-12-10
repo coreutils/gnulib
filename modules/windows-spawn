@@ -29,7 +29,7 @@ Include:
 "windows-spawn.h"
 
 License:
-GPL
+LGPLv2+
 
 Maintainer:
 all
