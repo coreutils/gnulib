@@ -13,7 +13,7 @@ stdint
 stdlib
 strpbrk
 unistd
-xalloc
+malloc-posix
 
 configure.ac:
 AC_REQUIRE([AC_CANONICAL_HOST])

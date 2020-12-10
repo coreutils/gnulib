@@ -25,6 +25,7 @@
 #include <windows.h>
 
 /* Prepares an argument vector before calling spawn().
+
    Note that spawn() does not by itself call the command interpreter
      (getenv ("COMSPEC") != NULL ? getenv ("COMSPEC") :
       ({ OSVERSIONINFO v; v.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
@@ -53,8 +54,15 @@
        - programs that inspect GetCommandLine() and ignore argv,
        - mingw programs that have a global variable 'int _CRT_glob = 0;',
        - Cygwin programs, when invoked from a Cygwin program.
+
+   prepare_spawn creates and returns a new argument vector, where the arguments
+   are appropriately quoted and an additional argument "sh.exe" has been added
+   at the beginning.  The new argument vector is freshly allocated.  The memory
+   for all its elements is allocated within *MEM_TO_FREE, which is freshly
+   allocated as well.  In case of memory allocation failure, NULL is returned,
+   with errno set.
  */
-extern char ** prepare_spawn (char **argv);
+extern char ** prepare_spawn (char **argv, char **mem_to_free);
 
 /* Creates a subprocess.
    MODE is either P_WAIT or P_NOWAIT.

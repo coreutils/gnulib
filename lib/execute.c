@@ -34,6 +34,7 @@
 #include "filename.h"
 #include "findprog.h"
 #include "wait-process.h"
+#include "xalloc.h"
 #include "gettext.h"
 
 #define _(str) gettext (str)
@@ -157,8 +158,11 @@ execute (const char *progname,
 
   /* Native Windows API.  */
 
-  /* FIXME: Need to free memory allocated by prepare_spawn.  */
-  prog_argv = prepare_spawn (prog_argv);
+  char *prog_argv_mem_to_free;
+
+  prog_argv = prepare_spawn (prog_argv, &prog_argv_mem_to_free);
+  if (prog_argv == NULL)
+    xalloc_die ();
 
   int exitcode = -1;
 
@@ -184,7 +188,7 @@ execute (const char *progname,
       HANDLE stderr_handle =
         (HANDLE) _get_osfhandle (null_stderr ? nulloutfd : STDERR_FILENO);
 
-      exitcode = spawnpvech (P_WAIT, prog_path, (const char **) prog_argv,
+      exitcode = spawnpvech (P_WAIT, prog_path, (const char **) (prog_argv + 1),
                              (const char **) environ, directory,
                              stdin_handle, stdout_handle, stderr_handle);
       if (exitcode == -1 && errno == ENOEXEC)
@@ -192,8 +196,7 @@ execute (const char *progname,
           /* prog is not a native executable.  Try to execute it as a
              shell script.  Note that prepare_spawn() has already prepended
              a hidden element "sh.exe" to prog_argv.  */
-          prog_argv[0] = prog_path;
-          --prog_argv;
+          prog_argv[1] = prog_path;
           exitcode = spawnpvech (P_WAIT, prog_argv[0], (const char **) prog_argv,
                                  (const char **) environ, directory,
                                  stdin_handle, stdout_handle, stderr_handle);
@@ -205,6 +208,8 @@ execute (const char *progname,
     close (nulloutfd);
   if (nullinfd >= 0)
     close (nullinfd);
+  free (prog_argv);
+  free (prog_argv_mem_to_free);
   free (prog_path_to_free);
 
   if (termsigp != NULL)

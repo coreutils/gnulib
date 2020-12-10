@@ -27,6 +27,6 @@ extern int dup_safer_noinherit (int fd);
 extern void undup_safer_noinherit (int tempfd, int origfd);
 
 /* Prepares an argument vector before calling spawn().  */
-extern char ** prepare_spawn (char **argv);
+extern char ** prepare_spawn (char **argv, char **mem_to_free);
 
 #endif /* _OS2_SPAWN_H */

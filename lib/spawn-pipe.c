@@ -39,6 +39,7 @@
 #include "findprog.h"
 #include "unistd-safer.h"
 #include "wait-process.h"
+#include "xalloc.h"
 #include "gettext.h"
 
 #define _(str) gettext (str)
@@ -186,6 +187,7 @@ create_pipe (const char *progname,
      using the low-level functions CreatePipe(), DuplicateHandle(),
      CreateProcess() and _open_osfhandle(); see the GNU make and GNU clisp
      and cvs source code.  */
+  char *prog_argv_mem_to_free;
   int ifd[2];
   int ofd[2];
   int child;
@@ -193,8 +195,9 @@ create_pipe (const char *progname,
   int stdinfd;
   int stdoutfd;
 
-  /* FIXME: Need to free memory allocated by prepare_spawn.  */
-  prog_argv = prepare_spawn (prog_argv);
+  prog_argv = prepare_spawn (prog_argv, &prog_argv_mem_to_free);
+  if (prog_argv == NULL)
+    xalloc_die ();
 
   if (pipe_stdout)
     if (pipe2_safer (ifd, O_BINARY | O_CLOEXEC) < 0)
@@ -278,7 +281,7 @@ create_pipe (const char *progname,
       HANDLE stderr_handle =
         (HANDLE) _get_osfhandle (null_stderr ? nulloutfd : STDERR_FILENO);
 
-      child = spawnpvech (P_NOWAIT, prog_path, (const char **) prog_argv,
+      child = spawnpvech (P_NOWAIT, prog_path, (const char **) (prog_argv + 1),
                           (const char **) environ, directory,
                           stdin_handle, stdout_handle, stderr_handle);
       if (child == -1 && errno == ENOEXEC)
@@ -286,8 +289,7 @@ create_pipe (const char *progname,
           /* prog is not a native executable.  Try to execute it as a
              shell script.  Note that prepare_spawn() has already prepended
              a hidden element "sh.exe" to prog_argv.  */
-          prog_argv[0] = prog_path;
-          --prog_argv;
+          prog_argv[1] = prog_path;
           child = spawnpvech (P_NOWAIT, prog_argv[0], (const char **) prog_argv,
                               (const char **) environ, directory,
                               stdin_handle, stdout_handle, stderr_handle);
@@ -355,14 +357,13 @@ create_pipe (const char *progname,
        but it inherits all open()ed or dup2()ed file handles (which is what
        we want in the case of STD*_FILENO).  */
     {
-      child = _spawnvpe (P_NOWAIT, prog_path, (const char **) prog_argv,
+      child = _spawnvpe (P_NOWAIT, prog_path, (const char **) (prog_argv + 1),
                          (const char **) environ);
       if (child == -1 && errno == ENOEXEC)
         {
           /* prog is not a native executable.  Try to execute it as a
              shell script.  Note that prepare_spawn() has already prepended
              a hidden element "sh.exe" to prog_argv.  */
-          --prog_argv;
           child = _spawnvpe (P_NOWAIT, prog_argv[0], (const char **) prog_argv,
                              (const char **) environ);
         }
@@ -390,6 +391,8 @@ create_pipe (const char *progname,
     close (ifd[1]);
 # endif
 
+  free (prog_argv);
+  free (prog_argv_mem_to_free);
   free (prog_path_to_free);
 
   if (child == -1)

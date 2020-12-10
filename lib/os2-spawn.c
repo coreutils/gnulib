@@ -31,7 +31,6 @@
 
 #include "cloexec.h"
 #include "error.h"
-#include "xalloc.h"
 #include "gettext.h"
 
 #define _(str) gettext (str)
@@ -94,7 +93,7 @@ undup_safer_noinherit (int tempfd, int origfd)
 }
 
 char **
-prepare_spawn (char **argv)
+prepare_spawn (char **argv, char **mem_to_free)
 {
   size_t argc;
   char **new_argv;
@@ -105,24 +104,52 @@ prepare_spawn (char **argv)
     ;
 
   /* Allocate new argument vector.  */
-  new_argv = XNMALLOC (1 + argc + 1, char *);
+  new_argv = (char **) malloc ((1 + argc + 1) * sizeof (char *));
+  if (new_argv == NULL)
+    return NULL;
 
   /* Add an element upfront that can be used when argv[0] turns out to be a
      script, not a program.
      On Unix, this would be "/bin/sh".  */
-  *new_argv++ = "sh.exe";
+  new_argv[0] = "sh.exe";
 
   /* Put quoted arguments into the new argument vector.  */
+  size_t needed_size = 0;
+  for (i = 0; i < argc; i++)
+    {
+      const char *string = argv[i];
+      const char *quoted_string = (string[0] == '\0' ? "\"\"" : string);
+      size_t length = strlen (quoted_string);
+      needed_size += length + 1;
+    }
+
+  char *mem;
+  if (needed_size == 0)
+    mem = NULL;
+  else
+    {
+      mem = (char *) malloc (needed_size);
+      if (mem == NULL)
+        {
+          /* Memory allocation failure.  */
+          free (new_argv);
+          errno = ENOMEM;
+          return NULL;
+        }
+    }
+  *mem_to_free = mem;
+
   for (i = 0; i < argc; i++)
     {
       const char *string = argv[i];
 
-      if (string[0] == '\0')
-        new_argv[i] = xstrdup ("\"\"");
-      else
-        new_argv[i] = (char *) string;
+      new_argv[1 + i] = mem;
+      const char *quoted_string = (string[0] == '\0' ? "\"\"" : string);
+      size_t length = strlen (quoted_string);
+      memcpy (mem, quoted_string, length + 1);
+      mem += length + 1;
     }
-  new_argv[argc] = NULL;
+  new_argv[1 + argc] = NULL;
 
   return new_argv;
 }

@@ -39,7 +39,6 @@
 #include <process.h>
 
 #include "findprog.h"
-#include "xalloc.h"
 
 /* Don't assume that UNICODE is not defined.  */
 #undef STARTUPINFO
@@ -49,8 +48,82 @@
 
 #define SHELL_SPECIAL_CHARS "\"\\ \001\002\003\004\005\006\007\010\011\012\013\014\015\016\017\020\021\022\023\024\025\026\027\030\031\032\033\034\035\036\037*?"
 #define SHELL_SPACE_CHARS " \001\002\003\004\005\006\007\010\011\012\013\014\015\016\017\020\021\022\023\024\025\026\027\030\031\032\033\034\035\036\037"
+
+/* Returns the length of a quoted argument string.  */
+static size_t
+quoted_arg_length (const char *string)
+{
+  bool quote_around = (strpbrk (string, SHELL_SPACE_CHARS) != NULL);
+  size_t length;
+  unsigned int backslashes;
+  const char *s;
+
+  length = 0;
+  backslashes = 0;
+  if (quote_around)
+    length++;
+  for (s = string; *s != '\0'; s++)
+    {
+      char c = *s;
+      if (c == '"')
+        length += backslashes + 1;
+      length++;
+      if (c == '\\')
+        backslashes++;
+      else
+        backslashes = 0;
+    }
+  if (quote_around)
+    length += backslashes + 1;
+
+  return length;
+}
+
+/* Produces a quoted argument string.
+   Stores exactly quoted_arg_length (STRING) + 1 bytes, including the final
+   NUL byte, at MEM.
+   Returns a pointer past the stored quoted argument string.  */
+static char *
+quoted_arg_string (const char *string, char *mem)
+{
+  bool quote_around = (strpbrk (string, SHELL_SPACE_CHARS) != NULL);
+  char *p;
+  unsigned int backslashes;
+  const char *s;
+
+  p = mem;
+  backslashes = 0;
+  if (quote_around)
+    *p++ = '"';
+  for (s = string; *s != '\0'; s++)
+    {
+      char c = *s;
+      if (c == '"')
+        {
+          unsigned int j;
+          for (j = backslashes + 1; j > 0; j--)
+            *p++ = '\\';
+        }
+      *p++ = c;
+      if (c == '\\')
+        backslashes++;
+      else
+        backslashes = 0;
+    }
+  if (quote_around)
+    {
+      unsigned int j;
+      for (j = backslashes; j > 0; j--)
+        *p++ = '\\';
+      *p++ = '"';
+    }
+  *p++ = '\0';
+
+  return p;
+}
+
 char **
-prepare_spawn (char **argv)
+prepare_spawn (char **argv, char **mem_to_free)
 {
   size_t argc;
   char **new_argv;
@@ -61,7 +134,7 @@ prepare_spawn (char **argv)
     ;
 
   /* Allocate new argument vector.  */
-  new_argv = XNMALLOC (1 + argc + 1, char *);
+  new_argv = (char **) malloc ((1 + argc + 1) * sizeof (char *));
 
   /* Add an element upfront that can be used when argv[0] turns out to be a
      script, not a program.
@@ -69,78 +142,63 @@ prepare_spawn (char **argv)
      "sh.exe".  We have to omit the directory part and rely on the search in
      PATH, because the mingw "mount points" are not visible inside Windows
      CreateProcess().  */
-  *new_argv++ = "sh.exe";
+  new_argv[0] = "sh.exe";
 
   /* Put quoted arguments into the new argument vector.  */
+  size_t needed_size = 0;
+  for (i = 0; i < argc; i++)
+    {
+      const char *string = argv[i];
+      size_t length;
+
+      if (string[0] == '\0')
+        length = strlen ("\"\"");
+      else if (strpbrk (string, SHELL_SPECIAL_CHARS) != NULL)
+        length = quoted_arg_length (string);
+      else
+        length = strlen (string);
+      needed_size += length + 1;
+    }
+
+  char *mem;
+  if (needed_size == 0)
+    mem = NULL;
+  else
+    {
+      mem = (char *) malloc (needed_size);
+      if (mem == NULL)
+        {
+          /* Memory allocation failure.  */
+          free (new_argv);
+          errno = ENOMEM;
+          return NULL;
+        }
+    }
+  *mem_to_free = mem;
+
   for (i = 0; i < argc; i++)
     {
       const char *string = argv[i];
 
+      new_argv[1 + i] = mem;
       if (string[0] == '\0')
-        new_argv[i] = xstrdup ("\"\"");
+        {
+          size_t length = strlen ("\"\"");
+          memcpy (mem, "\"\"", length + 1);
+          mem += length + 1;
+        }
       else if (strpbrk (string, SHELL_SPECIAL_CHARS) != NULL)
         {
-          bool quote_around = (strpbrk (string, SHELL_SPACE_CHARS) != NULL);
-          size_t length;
-          unsigned int backslashes;
-          const char *s;
-          char *quoted_string;
-          char *p;
-
-          length = 0;
-          backslashes = 0;
-          if (quote_around)
-            length++;
-          for (s = string; *s != '\0'; s++)
-            {
-              char c = *s;
-              if (c == '"')
-                length += backslashes + 1;
-              length++;
-              if (c == '\\')
-                backslashes++;
-              else
-                backslashes = 0;
-            }
-          if (quote_around)
-            length += backslashes + 1;
-
-          quoted_string = (char *) xmalloc (length + 1);
-
-          p = quoted_string;
-          backslashes = 0;
-          if (quote_around)
-            *p++ = '"';
-          for (s = string; *s != '\0'; s++)
-            {
-              char c = *s;
-              if (c == '"')
-                {
-                  unsigned int j;
-                  for (j = backslashes + 1; j > 0; j--)
-                    *p++ = '\\';
-                }
-              *p++ = c;
-              if (c == '\\')
-                backslashes++;
-              else
-                backslashes = 0;
-            }
-          if (quote_around)
-            {
-              unsigned int j;
-              for (j = backslashes; j > 0; j--)
-                *p++ = '\\';
-              *p++ = '"';
-            }
-          *p = '\0';
-
-          new_argv[i] = quoted_string;
+          mem = quoted_arg_string (string, mem);
         }
       else
-        new_argv[i] = (char *) string;
+        {
+          size_t length = strlen (string);
+          memcpy (mem, string, length + 1);
+          mem += length + 1;
+        }
     }
-  new_argv[argc] = NULL;
+  new_argv[1 + argc] = NULL;
 
   return new_argv;
 }
