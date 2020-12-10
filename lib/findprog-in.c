@@ -30,7 +30,6 @@
 
 #include "filename.h"
 #include "concat-filename.h"
-#include "xalloc.h"
 
 #if (defined _WIN32 && !defined __CYGWIN__) || defined __EMX__ || defined __DJGPP__
   /* Native Windows, OS/2, DOS */
@@ -129,7 +128,10 @@ find_in_given_path (const char *progname, const char *path,
                   {
                     /* Concatenate progname and suffix.  */
                     char *progpathname =
-                      xconcatenated_filename ("", progname, suffix);
+                      concatenated_filename ("", progname, suffix);
+
+                    if (progpathname == NULL)
+                      return NULL; /* errno is set here */
 
                     /* On systems which have the eaccess() system call, let's
                        use it.  On other systems, let's hope that this program
@@ -178,9 +180,12 @@ find_in_given_path (const char *progname, const char *path,
     path = "";
 
   {
-    int failure_errno;
     /* Make a copy, to prepare for destructive modifications.  */
-    char *path_copy = xstrdup (path);
+    char *path_copy = strdup (path);
+    if (path_copy == NULL)
+      return NULL; /* errno is set here */
+
+    int failure_errno;
     char *path_rest;
     char *cp;
 
@@ -215,7 +220,14 @@ find_in_given_path (const char *progname, const char *path,
               {
                 /* Concatenate dir, progname, and suffix.  */
                 char *progpathname =
-                  xconcatenated_filename (dir, progname, suffix);
+                  concatenated_filename (dir, progname, suffix);
+
+                if (progpathname == NULL)
+                  {
+                    /* errno is set here.  */
+                    failure_errno = errno;
+                    goto failed;
+                  }
 
                 /* On systems which have the eaccess() system call, let's
                    use it.  On other systems, let's hope that this program
@@ -241,7 +253,13 @@ find_in_given_path (const char *progname, const char *path,
                                    This avoids a second PATH search when the
                                    caller uses execl/execv/execlp/execvp.  */
                                 progpathname =
-                                  XNMALLOC (2 + strlen (progname) + 1, char);
+                                  (char *) malloc (2 + strlen (progname) + 1);
+                                if (progpathname == NULL)
+                                  {
+                                    /* errno is set here.  */
+                                    failure_errno = errno;
+                                    goto failed;
+                                  }
                                 progpathname[0] = '.';
                                 progpathname[1] = NATIVE_SLASH;
                                 memcpy (progpathname + 2, progname,
@@ -267,6 +285,7 @@ find_in_given_path (const char *progname, const char *path,
           break;
       }
 
+   failed:
     /* Not found in PATH.  */
     free (path_copy);
 

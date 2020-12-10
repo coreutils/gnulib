@@ -53,6 +53,7 @@ extern const char *find_in_path (const char *progname);
        - EACCES: means that the program's file cannot be accessed (due to some
          issue with one of the ancestor directories) or lacks the execute
          permissions.
+       - ENOMEM: means out of memory.
    If OPTIMIZE_FOR_EXEC is true, the function saves some work, under the
    assumption that the resulting pathname will not be accessed directly,
    only through execl/execv or execlp/execvp.

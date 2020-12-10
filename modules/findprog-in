@@ -11,10 +11,11 @@ Depends-on:
 stdbool
 sys_stat
 filename
-xalloc
-xconcat-filename
+concat-filename
 access
 stat
+strdup-posix
+malloc-posix
 unistd
 
 configure.ac:
