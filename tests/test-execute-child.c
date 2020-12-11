@@ -14,8 +14,32 @@
    You should have received a copy of the GNU General Public License
    along with this program; if not, see <https://www.gnu.org/licenses/>.  */
 
+/* If the user's config.h happens to include <sys/stat.h>, let it include only
+   the system's <sys/stat.h> here.  */
+#define __need_system_sys_stat_h
 #include <config.h>
 
+/* Get the original definition of fstat.  It might be defined as a macro.
+   Also, 'stat' might be defined as a macro.  */
+#include <sys/types.h>
+#include <sys/stat.h>
+#undef __need_system_sys_stat_h
+
+/* Return non-zero if FD is opened to a device.  */
+static int
+is_device (int fd)
+{
+  struct stat st;
+  return
+#if defined _WIN32 && ! defined __CYGWIN__
+         _fstat (fd, &st) >= 0
+#else
+         fstat (fd, &st) >= 0
+#endif
+         && !S_ISREG (st.st_mode);
+}
+
+/* Now include the other header files.  */
 #include <fcntl.h>
 #include <signal.h>
 #include <stdint.h>
@@ -23,7 +47,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <sys/stat.h>
 
 #if defined _WIN32 && ! defined __CYGWIN__
 /* Get declarations of the native Windows API functions.  */
@@ -40,13 +63,11 @@
 #undef fgetc
 #undef fprintf
 #undef fputs
-#undef fstat
 #undef getcwd
 #undef isatty
 #undef raise
 #undef read
 #undef sprintf
-#undef stat
 #undef strcmp
 #undef strlen
 #undef write
@@ -127,10 +148,7 @@ main (int argc, char *argv[])
       /* Check stdout is inherited, part 2 (device).  */
     case 10:
       /* Check null_stdout = true.  */
-      {
-        struct stat st;
-        return !(fstat (STDOUT_FILENO, &st) >= 0 && !S_ISREG (st.st_mode));
-      }
+      return !is_device (STDOUT_FILENO);
     case 11:
       /* Check stderr is inherited, part 1 (regular file).  */
       return !(fputs ("bar", stderr) != EOF && fflush (stderr) == 0);
@@ -138,10 +156,7 @@ main (int argc, char *argv[])
       /* Check stderr is inherited, part 2 (device).  */
     case 13:
       /* Check null_stderr = true.  */
-      {
-        struct stat st;
-        return !(fstat (STDERR_FILENO, &st) >= 0 && !S_ISREG (st.st_mode));
-      }
+      return !is_device (STDERR_FILENO);
     case 14:
     case 15:
       /* Check file descriptors >= 3 can be inherited.  */
