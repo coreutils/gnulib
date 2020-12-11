@@ -10,7 +10,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function dereferences too much memory on some platforms:
-glibc 2.10 on x86_64, IA-64; glibc 2.11 on Alpha.
+glibc 2.10 on x86_64, IA-64; glibc 2.11 on Alpha, AIX 7.2.
 @item
 This function returns NULL if the character argument is not in the range
 of an @code{unsigned char} on some platforms:
