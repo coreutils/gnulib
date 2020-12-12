@@ -46,7 +46,7 @@
    It is recommended that no signal is blocked or ignored while execute()
    is called.  See spawn-pipe.h for the reason.  */
 extern int execute (const char *progname,
-                    const char *prog_path, char **prog_argv,
+                    const char *prog_path, const char * const *prog_argv,
                     const char *directory,
                     bool ignore_sigpipe,
                     bool null_stdin, bool null_stdout, bool null_stderr,

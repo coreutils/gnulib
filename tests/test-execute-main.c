@@ -63,7 +63,7 @@ main (int argc, char *argv[])
     case 0:
       {
         /* Check an invocation without arguments.  Check the exit code.  */
-        char *prog_argv[2] = { prog_path, NULL };
+        const char *prog_argv[2] = { prog_path, NULL };
         int ret = execute (progname, prog_argv[0], prog_argv, NULL,
                            false, false, false, false, true, false, NULL);
         ASSERT (ret == 40);
@@ -72,7 +72,7 @@ main (int argc, char *argv[])
     case 1:
       {
         /* Check an invocation of a non-existent program.  */
-        char *prog_argv[3] = { "./non-existent", NULL };
+        const char *prog_argv[3] = { "./non-existent", NULL };
         int ret = execute (progname, prog_argv[0], prog_argv, NULL,
                            false, false, false, false, true, false, NULL);
         ASSERT (ret == 127);
@@ -81,20 +81,20 @@ main (int argc, char *argv[])
     case 2:
       {
         /* Check argument passing.  */
-        char *prog_argv[13] =
+        const char *prog_argv[13] =
           {
             prog_path,
-            (char *) "2",
-            (char *) "abc def",
-            (char *) "abc\"def\"ghi",
-            (char *) "xyz\"",
-            (char *) "abc\\def\\ghi",
-            (char *) "xyz\\",
-            (char *) "???",
-            (char *) "***",
-            (char *) "",
-            (char *) "foo",
-            (char *) "",
+            "2",
+            "abc def",
+            "abc\"def\"ghi",
+            "xyz\"",
+            "abc\\def\\ghi",
+            "xyz\\",
+            "???",
+            "***",
+            "",
+            "foo",
+            "",
             NULL
           };
         int ret = execute (progname, prog_argv[0], prog_argv, NULL,
@@ -106,7 +106,7 @@ main (int argc, char *argv[])
       #if !(defined _WIN32 && !defined __CYGWIN__)
       {
         /* Check SIGPIPE handling with ignore_sigpipe = false.  */
-        char *prog_argv[3] = { prog_path, (char *) "3", NULL };
+        const char *prog_argv[3] = { prog_path, "3", NULL };
         int termsig = 0xDEADBEEF;
         int ret = execute (progname, prog_argv[0], prog_argv, NULL,
                            false, false, false, false, true, false, &termsig);
@@ -119,7 +119,7 @@ main (int argc, char *argv[])
       #if !(defined _WIN32 && !defined __CYGWIN__)
       {
         /* Check SIGPIPE handling with ignore_sigpipe = true.  */
-        char *prog_argv[3] = { prog_path, (char *) "4", NULL };
+        const char *prog_argv[3] = { prog_path, "4", NULL };
         int termsig = 0xDEADBEEF;
         int ret = execute (progname, prog_argv[0], prog_argv, NULL,
                            true, false, false, false, true, false, &termsig);
@@ -131,7 +131,7 @@ main (int argc, char *argv[])
     case 5:
       {
         /* Check other signal.  */
-        char *prog_argv[3] = { prog_path, (char *) "5", NULL };
+        const char *prog_argv[3] = { prog_path, "5", NULL };
         int termsig = 0xDEADBEEF;
         int ret = execute (progname, prog_argv[0], prog_argv, NULL,
                            false, false, false, false, true, false, &termsig);
@@ -154,7 +154,7 @@ main (int argc, char *argv[])
         fp = freopen (BASE ".tmp", "r", stdin);
         ASSERT (fp != NULL);
 
-        char *prog_argv[3] = { prog_path, (char *) "6", NULL };
+        const char *prog_argv[3] = { prog_path, "6", NULL };
         int ret = execute (progname, prog_argv[0], prog_argv, NULL,
                            false, false, false, false, true, false, NULL);
         ASSERT (ret == 0);
@@ -173,7 +173,7 @@ main (int argc, char *argv[])
         fp = freopen (BASE ".tmp", "r", stdin);
         ASSERT (fp != NULL);
 
-        char *prog_argv[3] = { prog_path, (char *) "7", NULL };
+        const char *prog_argv[3] = { prog_path, "7", NULL };
         int ret = execute (progname, prog_argv[0], prog_argv, NULL,
                            false, true, false, false, true, false, NULL);
         ASSERT (ret == 0);
@@ -188,7 +188,7 @@ main (int argc, char *argv[])
         FILE *fp = freopen (BASE ".tmp", "w", stdout);
         ASSERT (fp != NULL);
 
-        char *prog_argv[3] = { prog_path, (char *) "8", NULL };
+        const char *prog_argv[3] = { prog_path, "8", NULL };
         int ret = execute (progname, prog_argv[0], prog_argv, NULL,
                            false, false, false, false, true, false, NULL);
         ASSERT (ret == 0);
@@ -208,7 +208,7 @@ main (int argc, char *argv[])
         FILE *fp = freopen (DEV_NULL, "w", stdout);
         ASSERT (fp != NULL);
 
-        char *prog_argv[3] = { prog_path, (char *) "9", NULL };
+        const char *prog_argv[3] = { prog_path, "9", NULL };
         int ret = execute (progname, prog_argv[0], prog_argv, NULL,
                            false, false, false, false, true, false, NULL);
         ASSERT (ret == 0);
@@ -220,7 +220,7 @@ main (int argc, char *argv[])
         FILE *fp = freopen (BASE ".tmp", "w", stdout);
         ASSERT (fp != NULL);
 
-        char *prog_argv[3] = { prog_path, (char *) "10", NULL };
+        const char *prog_argv[3] = { prog_path, "10", NULL };
         int ret = execute (progname, prog_argv[0], prog_argv, NULL,
                            false, false, true, false, true, false, NULL);
         ASSERT (ret == 0);
@@ -240,7 +240,7 @@ main (int argc, char *argv[])
         FILE *fp = freopen (BASE ".tmp", "w", stderr);
         ASSERT (fp != NULL);
 
-        char *prog_argv[3] = { prog_path, (char *) "11", NULL };
+        const char *prog_argv[3] = { prog_path, "11", NULL };
         int ret = execute (progname, prog_argv[0], prog_argv, NULL,
                            false, false, false, false, true, false, NULL);
         ASSERT (ret == 0);
@@ -260,7 +260,7 @@ main (int argc, char *argv[])
         FILE *fp = freopen (DEV_NULL, "w", stderr);
         ASSERT (fp != NULL);
 
-        char *prog_argv[3] = { prog_path, (char *) "12", NULL };
+        const char *prog_argv[3] = { prog_path, "12", NULL };
         int ret = execute (progname, prog_argv[0], prog_argv, NULL,
                            false, false, false, false, true, false, NULL);
         ASSERT (ret == 0);
@@ -272,7 +272,7 @@ main (int argc, char *argv[])
         FILE *fp = freopen (BASE ".tmp", "w", stderr);
         ASSERT (fp != NULL);
 
-        char *prog_argv[3] = { prog_path, (char *) "13", NULL };
+        const char *prog_argv[3] = { prog_path, "13", NULL };
         int ret = execute (progname, prog_argv[0], prog_argv, NULL,
                            false, false, false, true, true, false, NULL);
         ASSERT (ret == 0);
@@ -290,7 +290,7 @@ main (int argc, char *argv[])
       {
         /* Check file descriptors >= 3 can be inherited.  */
         ASSERT (dup2 (STDOUT_FILENO, 10) >= 0);
-        char *prog_argv[3] = { prog_path, (char *) "14", NULL };
+        const char *prog_argv[3] = { prog_path, "14", NULL };
         int ret = execute (progname, prog_argv[0], prog_argv, NULL,
                            true, false, false, false, true, false, NULL);
         ASSERT (ret == 0);
@@ -300,7 +300,7 @@ main (int argc, char *argv[])
       {
         /* Check file descriptors >= 3 can be inherited.  */
         ASSERT (fcntl (STDOUT_FILENO, F_DUPFD, 10) >= 0);
-        char *prog_argv[3] = { prog_path, (char *) "15", NULL };
+        const char *prog_argv[3] = { prog_path, "15", NULL };
         int ret = execute (progname, prog_argv[0], prog_argv, NULL,
                            true, false, false, false, true, false, NULL);
         ASSERT (ret == 0);
@@ -310,7 +310,7 @@ main (int argc, char *argv[])
       {
         /* Check file descriptors >= 3 with O_CLOEXEC bit are not inherited.  */
         ASSERT (fcntl (STDOUT_FILENO, F_DUPFD_CLOEXEC, 10) >= 0);
-        char *prog_argv[3] = { prog_path, (char *) "16", NULL };
+        const char *prog_argv[3] = { prog_path, "16", NULL };
         int ret = execute (progname, prog_argv[0], prog_argv, NULL,
                            true, false, false, false, true, false, NULL);
         ASSERT (ret == 0);
@@ -335,7 +335,7 @@ main (int argc, char *argv[])
         ASSERT (read (fd, buf, sizeof (buf)) == sizeof (buf));
         /* The file position is now 2.  */
 
-        char *prog_argv[3] = { prog_path, (char *) "17", NULL };
+        const char *prog_argv[3] = { prog_path, "17", NULL };
         int ret = execute (progname, prog_argv[0], prog_argv, NULL,
                            false, false, false, false, true, false, NULL);
         ASSERT (ret == 0);
@@ -359,7 +359,7 @@ main (int argc, char *argv[])
         ASSERT (write (fd, "Foo", 3) == 3);
         /* The file position is now 3.  */
 
-        char *prog_argv[3] = { prog_path, (char *) "18", NULL };
+        const char *prog_argv[3] = { prog_path, "18", NULL };
         int ret = execute (progname, prog_argv[0], prog_argv, NULL,
                            false, false, false, false, true, false, NULL);
         ASSERT (ret == 0);
@@ -395,7 +395,7 @@ main (int argc, char *argv[])
         close (fd_out);
         fd_out = 11;
 
-        char *prog_argv[3] = { prog_path, (char *) "19", NULL };
+        const char *prog_argv[3] = { prog_path, "19", NULL };
         int ret = execute (progname, prog_argv[0], prog_argv, NULL,
                            false, false, false, false, true, false, NULL);
         #if defined _WIN32 && ! defined __CYGWIN__
@@ -419,7 +419,7 @@ main (int argc, char *argv[])
         ASSERT (dup2 (STDOUT_FILENO, 11) >= 0);
         int fd_out = 11;
 
-        char *prog_argv[3] = { prog_path, (char *) "20", NULL };
+        const char *prog_argv[3] = { prog_path, "20", NULL };
         int ret = execute (progname, prog_argv[0], prog_argv, NULL,
                            false, false, false, false, true, false, NULL);
         #if defined _WIN32 && ! defined __CYGWIN__
@@ -445,7 +445,7 @@ main (int argc, char *argv[])
         ASSERT (getcwd (cwd, sizeof (cwd)) != NULL);
         #endif
 
-        char *prog_argv[4] = { prog_path, (char *) "21", cwd, NULL };
+        const char *prog_argv[4] = { prog_path, "21", cwd, NULL };
         int ret = execute (progname, prog_argv[0], prog_argv, BASE ".sub",
                            false, false, false, false, true, false, NULL);
         ASSERT (ret == 0);

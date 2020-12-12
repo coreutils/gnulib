@@ -92,11 +92,11 @@ undup_safer_noinherit (int tempfd, int origfd)
     }
 }
 
-char **
-prepare_spawn (char **argv, char **mem_to_free)
+const char **
+prepare_spawn (const char * const *argv, char **mem_to_free)
 {
   size_t argc;
-  char **new_argv;
+  const char **new_argv;
   size_t i;
 
   /* Count number of arguments.  */
@@ -104,7 +104,7 @@ prepare_spawn (char **argv, char **mem_to_free)
     ;
 
   /* Allocate new argument vector.  */
-  new_argv = (char **) malloc ((1 + argc + 1) * sizeof (char *));
+  new_argv = (const char **) malloc ((1 + argc + 1) * sizeof (const char *));
   if (new_argv == NULL)
     return NULL;
 

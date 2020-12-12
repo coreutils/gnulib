@@ -123,7 +123,8 @@ nonintr_open (const char *pathname, int oflag, mode_t mode)
  */
 static pid_t
 create_pipe (const char *progname,
-             const char *prog_path, char **prog_argv,
+             const char *prog_path,
+             const char * const *prog_argv,
              const char *directory,
              bool pipe_stdin, bool pipe_stdout,
              const char *prog_stdin, const char *prog_stdout,
@@ -187,7 +188,7 @@ create_pipe (const char *progname,
      using the low-level functions CreatePipe(), DuplicateHandle(),
      CreateProcess() and _open_osfhandle(); see the GNU make and GNU clisp
      and cvs source code.  */
-  char *prog_argv_mem_to_free;
+  char *argv_mem_to_free;
   int ifd[2];
   int ofd[2];
   int child;
@@ -195,8 +196,8 @@ create_pipe (const char *progname,
   int stdinfd;
   int stdoutfd;
 
-  prog_argv = prepare_spawn (prog_argv, &prog_argv_mem_to_free);
-  if (prog_argv == NULL)
+  const char **argv = prepare_spawn (prog_argv, &argv_mem_to_free);
+  if (argv == NULL)
     xalloc_die ();
 
   if (pipe_stdout)
@@ -281,17 +282,17 @@ create_pipe (const char *progname,
       HANDLE stderr_handle =
         (HANDLE) _get_osfhandle (null_stderr ? nulloutfd : STDERR_FILENO);
 
-      child = spawnpvech (P_NOWAIT, prog_path, (const char **) (prog_argv + 1),
-                          (const char **) environ, directory,
+      child = spawnpvech (P_NOWAIT, prog_path, argv + 1,
+                          (const char * const *) environ, directory,
                           stdin_handle, stdout_handle, stderr_handle);
       if (child == -1 && errno == ENOEXEC)
         {
           /* prog is not a native executable.  Try to execute it as a
              shell script.  Note that prepare_spawn() has already prepended
-             a hidden element "sh.exe" to prog_argv.  */
-          prog_argv[1] = prog_path;
-          child = spawnpvech (P_NOWAIT, prog_argv[0], (const char **) prog_argv,
-                              (const char **) environ, directory,
+             a hidden element "sh.exe" to argv.  */
+          argv[1] = prog_path;
+          child = spawnpvech (P_NOWAIT, argv[0], argv,
+                              (const char * const *) environ, directory,
                               stdin_handle, stdout_handle, stderr_handle);
         }
     }
@@ -357,14 +358,14 @@ create_pipe (const char *progname,
        but it inherits all open()ed or dup2()ed file handles (which is what
        we want in the case of STD*_FILENO).  */
     {
-      child = _spawnvpe (P_NOWAIT, prog_path, (const char **) (prog_argv + 1),
+      child = _spawnvpe (P_NOWAIT, prog_path, argv + 1,
                          (const char **) environ);
       if (child == -1 && errno == ENOEXEC)
         {
           /* prog is not a native executable.  Try to execute it as a
              shell script.  Note that prepare_spawn() has already prepended
-             a hidden element "sh.exe" to prog_argv.  */
-          child = _spawnvpe (P_NOWAIT, prog_argv[0], (const char **) prog_argv,
+             a hidden element "sh.exe" to argv.  */
+          child = _spawnvpe (P_NOWAIT, argv[0], argv,
                              (const char **) environ);
         }
     }
@@ -391,8 +392,8 @@ create_pipe (const char *progname,
     close (ifd[1]);
 # endif
 
-  free (prog_argv);
-  free (prog_argv_mem_to_free);
+  free (argv);
+  free (argv_mem_to_free);
   free (prog_path_to_free);
 
   if (child == -1)
@@ -501,11 +502,11 @@ create_pipe (const char *progname,
                          != 0)))
           || (err = (directory != NULL
                      ? posix_spawn (&child, prog_path, &actions,
-                                    attrs_allocated ? &attrs : NULL, prog_argv,
-                                    environ)
+                                    attrs_allocated ? &attrs : NULL,
+                                    (char * const *) prog_argv, environ)
                      : posix_spawnp (&child, prog_path, &actions,
-                                     attrs_allocated ? &attrs : NULL, prog_argv,
-                                     environ)))
+                                     attrs_allocated ? &attrs : NULL,
+                                     (char * const *) prog_argv, environ)))
              != 0))
     {
       if (actions_allocated)
@@ -570,7 +571,7 @@ create_pipe (const char *progname,
  */
 pid_t
 create_pipe_bidi (const char *progname,
-                  const char *prog_path, char **prog_argv,
+                  const char *prog_path, const char * const *prog_argv,
                   const char *directory,
                   bool null_stderr,
                   bool slave_process, bool exit_on_error,
@@ -592,7 +593,7 @@ create_pipe_bidi (const char *progname,
  */
 pid_t
 create_pipe_in (const char *progname,
-                const char *prog_path, char **prog_argv,
+                const char *prog_path, const char * const *prog_argv,
                 const char *directory,
                 const char *prog_stdin, bool null_stderr,
                 bool slave_process, bool exit_on_error,
@@ -617,7 +618,7 @@ create_pipe_in (const char *progname,
  */
 pid_t
 create_pipe_out (const char *progname,
-                 const char *prog_path, char **prog_argv,
+                 const char *prog_path, const char * const *prog_argv,
                  const char *directory,
                  const char *prog_stdout, bool null_stderr,
                  bool slave_process, bool exit_on_error,

@@ -21,7 +21,7 @@
 #include <stdbool.h>
 
 typedef bool execute_fn (const char *progname,
-                         const char *prog_path, char **prog_argv,
+                         const char *prog_path, const char * const *prog_argv,
                          void *private_data);
 
 /* Execute a C# program.

@@ -100,7 +100,7 @@ execute_csharp_using_mono (const char *assembly_path,
     {
       /* Test for presence of mono:
          "mono --version >/dev/null 2>/dev/null"  */
-      char *argv[3];
+      const char *argv[3];
       int exitstatus;
 
       argv[0] = "mono";
@@ -116,7 +116,8 @@ execute_csharp_using_mono (const char *assembly_path,
   if (mono_present)
     {
       char *old_monopath;
-      char **argv = (char **) xmalloca ((2 + nargs + 1) * sizeof (char *));
+      const char **argv =
+        (const char **) xmalloca ((2 + nargs + 1) * sizeof (const char *));
       unsigned int i;
       bool err;
 
@@ -124,9 +125,9 @@ execute_csharp_using_mono (const char *assembly_path,
       old_monopath = set_monopath (libdirs, libdirs_count, false, verbose);
 
       argv[0] = "mono";
-      argv[1] = (char *) assembly_path;
+      argv[1] = assembly_path;
       for (i = 0; i <= nargs; i++)
-        argv[2 + i] = (char *) args[i];
+        argv[2 + i] = args[i];
 
       if (verbose)
         {
@@ -163,7 +164,7 @@ execute_csharp_using_sscli (const char *assembly_path,
     {
       /* Test for presence of clix:
          "clix >/dev/null 2>/dev/null ; test $? = 1"  */
-      char *argv[2];
+      const char *argv[2];
       int exitstatus;
 
       argv[0] = "clix";
@@ -178,7 +179,8 @@ execute_csharp_using_sscli (const char *assembly_path,
   if (clix_present)
     {
       char *old_clixpath;
-      char **argv = (char **) xmalloca ((2 + nargs + 1) * sizeof (char *));
+      const char **argv =
+        (const char **) xmalloca ((2 + nargs + 1) * sizeof (const char *));
       unsigned int i;
       bool err;
 
@@ -186,9 +188,9 @@ execute_csharp_using_sscli (const char *assembly_path,
       old_clixpath = set_clixpath (libdirs, libdirs_count, false, verbose);
 
       argv[0] = "clix";
-      argv[1] = (char *) assembly_path;
+      argv[1] = assembly_path;
       for (i = 0; i <= nargs; i++)
-        argv[2 + i] = (char *) args[i];
+        argv[2 + i] = args[i];
 
       if (verbose)
         {

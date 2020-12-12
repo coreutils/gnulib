@@ -60,6 +60,39 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2020-12-11  sh-quote        The argv argument of the 'shell_quote_argv' function
+                            is now of type 'const char * const *'.  You no
+                            longer need to cast read-only strings to 'char *'
+                            when constructing this argument.
+            execute         The prog_argv argument of the 'execute' function
+                            is now of type 'const char * const *'.  You no
+                            longer need to cast read-only strings to 'char *'
+                            when constructing this argument.
+            spawn-pipe      The prog_argv argument of the functions
+                            'create_pipe_out', 'create_pipe_in',
+                            'create_pipe_bidi' is now of type
+                            'const char * const *'.  You no longer need to cast
+                            read-only strings to 'char *' when constructing this
+                            argument.
+            pipe-filter-gi  The prog_argv argument of the
+                            'pipe_filter_gi_create' function is now of type
+                            'const char * const *'.  You no longer need to cast
+                            read-only strings to 'char *' when constructing this
+                            argument.
+            pipe-filter-ii  The prog_argv argument of the
+                            'pipe_filter_ii_execute' function is now of type
+                            'const char * const *'.  You no longer need to cast
+                            read-only strings to 'char *' when constructing this
+                            argument.
+            javaexec        The prog_argv argument of the 'execute_fn' function
+                            type is now of type 'const char * const *'.  Update
+                            the signature of all your implementations of this
+                            type.
+            csharpexec      The prog_argv argument of the 'execute_fn' function
+                            type is now of type 'const char * const *'.  Update
+                            the signature of all your implementations of this
+                            type.
+
 2020-12-02  spawn-pipe      The functions 'create_pipe_out', 'create_pipe_in',
                             'create_pipe_bidi' now take a 4th argument
                             'const char *directory'. To maintain the previous

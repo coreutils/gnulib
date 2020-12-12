@@ -485,7 +485,7 @@ filter_retcode (struct pipe_filter_gi *filter)
 
 struct pipe_filter_gi *
 pipe_filter_gi_create (const char *progname,
-                       const char *prog_path, const char **prog_argv,
+                       const char *prog_path, const char * const *prog_argv,
                        bool null_stderr, bool exit_on_error,
                        prepare_read_fn prepare_read,
                        done_read_fn done_read,
@@ -497,7 +497,7 @@ pipe_filter_gi_create (const char *progname,
     (struct pipe_filter_gi *) xmalloc (sizeof (struct pipe_filter_gi));
 
   /* Open a bidirectional pipe to a subprocess.  */
-  filter->child = create_pipe_bidi (progname, prog_path, (char **) prog_argv,
+  filter->child = create_pipe_bidi (progname, prog_path, prog_argv,
                                     NULL, null_stderr, true, exit_on_error,
                                     filter->fd);
   filter->progname = progname;

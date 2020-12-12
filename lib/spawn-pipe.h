@@ -96,7 +96,8 @@ extern "C" {
  * signal and the EPIPE error code.
  */
 extern pid_t create_pipe_out (const char *progname,
-                              const char *prog_path, char **prog_argv,
+                              const char *prog_path,
+                              const char * const *prog_argv,
                               const char *directory,
                               const char *prog_stdout, bool null_stderr,
                               bool slave_process, bool exit_on_error,
@@ -110,7 +111,8 @@ extern pid_t create_pipe_out (const char *progname,
  *
  */
 extern pid_t create_pipe_in (const char *progname,
-                             const char *prog_path, char **prog_argv,
+                             const char *prog_path,
+                             const char * const *prog_argv,
                              const char *directory,
                              const char *prog_stdin, bool null_stderr,
                              bool slave_process, bool exit_on_error,
@@ -139,7 +141,8 @@ extern pid_t create_pipe_in (const char *progname,
  *    input.  But you are currently busy reading from it.
  */
 extern pid_t create_pipe_bidi (const char *progname,
-                               const char *prog_path, char **prog_argv,
+                               const char *prog_path,
+                               const char * const *prog_argv,
                                const char *directory,
                                bool null_stderr,
                                bool slave_process, bool exit_on_error,

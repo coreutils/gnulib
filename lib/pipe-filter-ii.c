@@ -255,7 +255,7 @@ reader_thread_func (void *thread_arg)
 
 int
 pipe_filter_ii_execute (const char *progname,
-                        const char *prog_path, const char **prog_argv,
+                        const char *prog_path, const char * const *prog_argv,
                         bool null_stderr, bool exit_on_error,
                         prepare_write_fn prepare_write,
                         done_write_fn done_write,
@@ -270,7 +270,7 @@ pipe_filter_ii_execute (const char *progname,
 #endif
 
   /* Open a bidirectional pipe to a subprocess.  */
-  child = create_pipe_bidi (progname, prog_path, (char **) prog_argv,
+  child = create_pipe_bidi (progname, prog_path, prog_argv,
                             NULL, null_stderr, true, exit_on_error,
                             fd);
   if (child == -1)

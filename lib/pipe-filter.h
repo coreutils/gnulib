@@ -133,7 +133,8 @@ typedef void (*done_read_fn) (void *data_read, size_t num_bytes_read,
    - the positive exit code of the subprocess if that failed.  */
 extern int
        pipe_filter_ii_execute (const char *progname,
-                               const char *prog_path, const char **prog_argv,
+                               const char *prog_path,
+                               const char * const *prog_argv,
                                bool null_stderr, bool exit_on_error,
                                prepare_write_fn prepare_write,
                                done_write_fn done_write,
@@ -179,7 +180,8 @@ struct pipe_filter_gi;
    Return the freshly created 'struct pipe_filter_gi'.  */
 extern struct pipe_filter_gi *
        pipe_filter_gi_create (const char *progname,
-                              const char *prog_path, const char **prog_argv,
+                              const char *prog_path,
+                              const char * const *prog_argv,
                               bool null_stderr, bool exit_on_error,
                               prepare_read_fn prepare_read,
                               done_read_fn done_read,

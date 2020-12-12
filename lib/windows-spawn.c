@@ -122,11 +122,11 @@ quoted_arg_string (const char *string, char *mem)
   return p;
 }
 
-char **
-prepare_spawn (char **argv, char **mem_to_free)
+const char **
+prepare_spawn (const char * const *argv, char **mem_to_free)
 {
   size_t argc;
-  char **new_argv;
+  const char **new_argv;
   size_t i;
 
   /* Count number of arguments.  */
@@ -134,7 +134,7 @@ prepare_spawn (char **argv, char **mem_to_free)
     ;
 
   /* Allocate new argument vector.  */
-  new_argv = (char **) malloc ((1 + argc + 1) * sizeof (char *));
+  new_argv = (const char **) malloc ((1 + argc + 1) * sizeof (const char *));
 
   /* Add an element upfront that can be used when argv[0] turns out to be a
      script, not a program.

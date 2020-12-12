@@ -62,7 +62,8 @@
    allocated as well.  In case of memory allocation failure, NULL is returned,
    with errno set.
  */
-extern char ** prepare_spawn (char **argv, char **mem_to_free);
+extern const char ** prepare_spawn (const char * const *argv,
+                                    char **mem_to_free);
 
 /* Creates a subprocess.
    MODE is either P_WAIT or P_NOWAIT.

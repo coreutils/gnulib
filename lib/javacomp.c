@@ -288,7 +288,7 @@ compile_using_envjavac (const char *javac,
   bool err;
   unsigned int command_length;
   char *command;
-  char *argv[4];
+  const char *argv[4];
   int exitstatus;
   unsigned int i;
   char *p;
@@ -367,8 +367,8 @@ compile_using_gcj (const char * const *java_sources,
 {
   bool err;
   unsigned int argc;
-  char **argv;
-  char **argp;
+  const char **argv;
+  const char **argp;
   char *fsource_arg;
   char *ftarget_arg;
   int exitstatus;
@@ -378,7 +378,7 @@ compile_using_gcj (const char * const *java_sources,
     2 + (no_assert_option ? 1 : 0) + (fsource_option ? 1 : 0)
     + (ftarget_option ? 1 : 0) + (optimize ? 1 : 0) + (debug ? 1 : 0)
     + (directory != NULL ? 2 : 0) + java_sources_count;
-  argv = (char **) xmalloca ((argc + 1) * sizeof (char *));
+  argv = (const char **) xmalloca ((argc + 1) * sizeof (const char *));
 
   argp = argv;
   *argp++ = "gcj";
@@ -410,10 +410,10 @@ compile_using_gcj (const char * const *java_sources,
   if (directory != NULL)
     {
       *argp++ = "-d";
-      *argp++ = (char *) directory;
+      *argp++ = directory;
     }
   for (i = 0; i < java_sources_count; i++)
-    *argp++ = (char *) java_sources[i];
+    *argp++ = java_sources[i];
   *argp = NULL;
   /* Ensure argv length was correctly calculated.  */
   if (argp - argv != argc)
@@ -453,27 +453,27 @@ compile_using_javac (const char * const *java_sources,
 {
   bool err;
   unsigned int argc;
-  char **argv;
-  char **argp;
+  const char **argv;
+  const char **argp;
   int exitstatus;
   unsigned int i;
 
   argc =
     1 + (source_option ? 2 : 0) + (target_option ? 2 : 0) + (optimize ? 1 : 0)
     + (debug ? 1 : 0) + (directory != NULL ? 2 : 0) + java_sources_count;
-  argv = (char **) xmalloca ((argc + 1) * sizeof (char *));
+  argv = (const char **) xmalloca ((argc + 1) * sizeof (const char *));
 
   argp = argv;
   *argp++ = "javac";
   if (source_option)
     {
       *argp++ = "-source";
-      *argp++ = (char *) source_version;
+      *argp++ = source_version;
     }
   if (target_option)
     {
       *argp++ = "-target";
-      *argp++ = (char *) target_version;
+      *argp++ = target_version;
     }
   if (optimize)
     *argp++ = "-O";
@@ -482,10 +482,10 @@ compile_using_javac (const char * const *java_sources,
   if (directory != NULL)
     {
       *argp++ = "-d";
-      *argp++ = (char *) directory;
+      *argp++ = directory;
     }
   for (i = 0; i < java_sources_count; i++)
-    *argp++ = (char *) java_sources[i];
+    *argp++ = java_sources[i];
   *argp = NULL;
   /* Ensure argv length was correctly calculated.  */
   if (argp - argv != argc)
@@ -519,15 +519,15 @@ compile_using_jikes (const char * const *java_sources,
 {
   bool err;
   unsigned int argc;
-  char **argv;
-  char **argp;
+  const char **argv;
+  const char **argp;
   int exitstatus;
   unsigned int i;
 
   argc =
     1 + (optimize ? 1 : 0) + (debug ? 1 : 0) + (directory != NULL ? 2 : 0)
     + java_sources_count;
-  argv = (char **) xmalloca ((argc + 1) * sizeof (char *));
+  argv = (const char **) xmalloca ((argc + 1) * sizeof (const char *));
 
   argp = argv;
   *argp++ = "jikes";
@@ -538,10 +538,10 @@ compile_using_jikes (const char * const *java_sources,
   if (directory != NULL)
     {
       *argp++ = "-d";
-      *argp++ = (char *) directory;
+      *argp++ = directory;
     }
   for (i = 0; i < java_sources_count; i++)
-    *argp++ = (char *) java_sources[i];
+    *argp++ = java_sources[i];
   *argp = NULL;
   /* Ensure argv length was correctly calculated.  */
   if (argp - argv != argc)
@@ -635,7 +635,7 @@ is_envjavac_gcj (const char *javac)
          "$JAVAC --version 2>/dev/null | sed -e 1q | grep gcj > /dev/null"  */
       unsigned int command_length;
       char *command;
-      char *argv[4];
+      const char *argv[4];
       pid_t child;
       int fd[1];
       FILE *fp;
@@ -717,7 +717,7 @@ is_envjavac_gcj43 (const char *javac)
           | sed -e '/^4\.[012]/d' | grep '^[4-9]' >/dev/null"  */
       unsigned int command_length;
       char *command;
-      char *argv[4];
+      const char *argv[4];
       pid_t child;
       int fd[1];
       FILE *fp;
@@ -1406,7 +1406,7 @@ is_gcj_present (void)
          "gcj --version 2> /dev/null | \
           sed -e 's,^[^0-9]*,,' -e 1q | \
           sed -e '/^3\.[01]/d' | grep '^[3-9]' > /dev/null"  */
-      char *argv[3];
+      const char *argv[3];
       pid_t child;
       int fd[1];
       int exitstatus;
@@ -1522,7 +1522,7 @@ is_gcj_43 (void)
          "gcj --version 2> /dev/null | \
           sed -e 's,^[^0-9]*,,' -e 1q | \
           sed -e '/^4\.[012]/d' | grep '^[4-9]'"  */
-      char *argv[3];
+      const char *argv[3];
       pid_t child;
       int fd[1];
       int exitstatus;
@@ -1871,7 +1871,7 @@ is_javac_present (void)
   if (!javac_tested)
     {
       /* Test for presence of javac: "javac 2> /dev/null ; test $? -le 2"  */
-      char *argv[2];
+      const char *argv[2];
       int exitstatus;
 
       argv[0] = "javac";
@@ -2138,7 +2138,7 @@ is_jikes_present (void)
   if (!jikes_tested)
     {
       /* Test for presence of jikes: "jikes 2> /dev/null ; test $? = 1"  */
-      char *argv[2];
+      const char *argv[2];
       int exitstatus;
 
       argv[0] = "jikes";
