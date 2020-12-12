@@ -3,6 +3,7 @@ renameat() function: rename a file, relative to two directories
 
 Files:
 lib/renameat.c
+lib/at-func2.c
 m4/renameat.m4
 
 Depends-on:

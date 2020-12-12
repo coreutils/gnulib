@@ -2,6 +2,7 @@ Description:
 fnmatch() function: wildcard matching, with GNU extensions.
 
 Files:
+lib/fnmatch.c
 
 Depends-on:
 fnmatch

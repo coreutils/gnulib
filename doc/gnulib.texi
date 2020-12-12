@@ -166,6 +166,7 @@ consistency with gnulib.
 * Specification::
 * Module description::
 * Autoconf macros::
+* Using @code{AC_LIBOBJ}::
 * Unit test modules::
 * Incompatible changes::
 @end menu
@@ -345,8 +346,8 @@ or changing the implementation, you have both elements side by side.
 The advantage of texinfo formatted documentation is that it is easily
 published in HTML or Info format.
 
-Currently (as of 2010), half of gnulib uses the first practice, nearly half
-of gnulib uses the second practice, and a small minority uses the texinfo
+Currently (as of 2020), 70% of gnulib uses the first practice, 25% of
+gnulib uses the second practice, and a small minority uses the texinfo
 practice.
 
 
@@ -525,7 +526,8 @@ because sometimes a header and a function name coincide (for example,
 
 For modules that provide a replacement, it is useful to split the Autoconf
 macro into two macro definitions: one that detects whether the replacement
-is needed and requests the replacement using @code{AC_LIBOBJ} (this is the
+is needed and requests the replacement by setting a @code{HAVE_FOO}
+variable to 0 or a @code{REPLACE_FOO} variable to 1 (this is the
 entry point, say @code{gl_FUNC_FOO}), and one that arranges for the macros
 needed by the replacement code @code{lib/foo.c} (typically called
 @code{gl_PREREQ_FOO}).  The reason of this separation is
@@ -540,6 +542,61 @@ The Autoconf macros are often large enough that splitting them eases
 maintenance.
 @end enumerate
 
+
+@node Using @code{AC_LIBOBJ}
+@section Making proper use of @code{AC_LIBOBJ}
+
+Source files that provide a replacement should be only compiled on the
+platforms that need this replacement.  While it is actually possible
+to compile a @code{.c} file whose contents is entirely @code{#ifdef}'ed
+out on the platforms that don't need the replacement, this practice is
+discouraged because
+@itemize @bullet
+@item
+It makes the build time longer than needed, by invoking the compiler for
+nothing.
+@item
+It produces a @code{.o} file that suggests that a replacement was needed.
+@item
+Empty object files produce a linker warning on some platforms: MSVC.
+@end itemize
+
+The typical idiom for invoking @code{AC_LIBOBJ} is thus the following,
+in the module description:
+
+@smallexample
+if test $HAVE_FOO = 0 || test $REPLACE_FOO = 1; then
+  AC_LIBOBJ([foo])
+  gl_PREREQ_FOO
+fi
+@end smallexample
+
+Important: Do not place @code{AC_LIBOBJ} invocations in the Autoconf
+macros in the @code{m4/} directory.  The purpose of the Autoconf macros
+is to determine what features or bugs the platform has, and to make
+decisions about which replacements are needed.  The purpose of the
+@code{configure.ac} and @code{Makefile.am} sections of the module
+descriptions is to arrange for the replacements to be compiled.
+@strong{Source file names do not belong in the @code{m4/} directory.}
+
+When an @code{AC_LIBOBJ} invocation is unconditional, it is simpler
+to just have the source file compiled through an Automake variable
+augmentation: In the @code{Makefile.am} section write
+
+@smallexample
+lib_SOURCES += foo.c
+@end smallexample
+
+When a module description contains an @code{AC_LIBOBJ([foo])}
+invocation, you @strong{must} list the source file @code{lib/foo.c}
+in the @code{Files} section.  This is needed even if the module
+depends on another module that already lists @code{lib/foo.c} in its
+@code{Files} section --- because your module might be used among
+the test modules (in the directory specified through @samp{--tests-base})
+and the other module among the main modules (in the directory specified
+through @samp{--source-base}), and in this situation, the
+@code{AC_LIBOBJ([foo])} of your module can only be satisfied by having
+@code{foo.c} be present in the tests source directory as well.
 
 @node Unit test modules
 @section Unit test modules

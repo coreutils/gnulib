@@ -2,6 +2,7 @@ Description:
 strcasestr() function: efficient case-insensitive search for unibyte substring.
 
 Files:
+lib/strcasestr.c
 
 Depends-on:
 strcasestr-simple

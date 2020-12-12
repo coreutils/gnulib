@@ -2,6 +2,7 @@ Description:
 fopen() function: open a stream to a file, with GNU extensions.
 
 Files:
+lib/fopen.c
 
 Depends-on:
 fopen

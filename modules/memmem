@@ -2,6 +2,7 @@ Description:
 memmem() function: efficiently locate first substring in a buffer.
 
 Files:
+lib/memmem.c
 
 Depends-on:
 memmem-simple

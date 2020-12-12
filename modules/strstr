@@ -2,6 +2,7 @@ Description:
 strstr() function: efficiently locate first substring in a buffer.
 
 Files:
+lib/strstr.c
 
 Depends-on:
 strstr-simple
