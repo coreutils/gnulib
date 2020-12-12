@@ -29,14 +29,13 @@
 static int
 is_device (int fd)
 {
-  struct stat st;
-  return
 #if defined _WIN32 && ! defined __CYGWIN__
-         _fstat (fd, &st) >= 0
+  struct _stat st;
+  return _fstat (fd, &st) >= 0 && !((st.st_mode & S_IFMT) == S_IFREG);
 #else
-         fstat (fd, &st) >= 0
+  struct stat st;
+  return fstat (fd, &st) >= 0 && !S_ISREG (st.st_mode);
 #endif
-         && !S_ISREG (st.st_mode);
 }
 
 /* Now include the other header files.  */
