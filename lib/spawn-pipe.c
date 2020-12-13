@@ -222,6 +222,8 @@ create_pipe (const char *progname,
   bool must_close_ofd0 = pipe_stdin;
 
   /* Create standard file handles of child process.  */
+  HANDLE stdin_handle = INVALID_HANDLE_VALUE;
+  HANDLE stdout_handle = INVALID_HANDLE_VALUE;
   nulloutfd = -1;
   stdinfd = -1;
   stdoutfd = -1;
@@ -243,7 +245,7 @@ create_pipe (const char *progname,
        to pass NULL, the child process would inherit a copy of the environment
        block - ignoring the effects of putenv() and [un]setenv().  */
     {
-      HANDLE stdin_handle =
+      stdin_handle =
         (HANDLE) _get_osfhandle (pipe_stdin ? ofd[0] :
                                  prog_stdin == NULL ? STDIN_FILENO : stdinfd);
       if (pipe_stdin)
@@ -261,7 +263,7 @@ create_pipe (const char *progname,
           close (ofd[0]); /* implies CloseHandle (stdin_handle); */
           stdin_handle = duplicate;
         }
-      HANDLE stdout_handle =
+      stdout_handle =
         (HANDLE) _get_osfhandle (pipe_stdout ? ifd[1] :
                                  prog_stdout == NULL ? STDOUT_FILENO : stdoutfd);
       if (pipe_stdout)
@@ -306,10 +308,22 @@ create_pipe (const char *progname,
   if (nulloutfd >= 0)
     close (nulloutfd);
 
-  if (must_close_ofd0)
-    close (ofd[0]);
-  if (must_close_ifd1)
-    close (ifd[1]);
+  if (pipe_stdin)
+    {
+      if (must_close_ofd0)
+        close (ofd[0]);
+      else
+        if (stdin_handle != INVALID_HANDLE_VALUE)
+          CloseHandle (stdin_handle);
+    }
+  if (pipe_stdout)
+    {
+      if (must_close_ifd1)
+        close (ifd[1]);
+      else
+        if (stdout_handle != INVALID_HANDLE_VALUE)
+          CloseHandle (stdout_handle);
+    }
 
 # else /* __KLIBC__ */
   if (!(directory == NULL && strcmp (directory, ".") == 0))
