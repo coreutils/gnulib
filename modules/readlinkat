@@ -9,16 +9,16 @@ m4/readlinkat.m4
 Depends-on:
 unistd
 extensions
-at-internal     [test $HAVE_READLINKAT = 0]
-errno           [test $HAVE_READLINKAT = 0]
-fchdir          [test $HAVE_READLINKAT = 0]
-fcntl-h         [test $HAVE_READLINKAT = 0]
-filename        [test $HAVE_READLINKAT = 0]
-openat-die      [test $HAVE_READLINKAT = 0]
-openat-h        [test $HAVE_READLINKAT = 0]
-save-cwd        [test $HAVE_READLINKAT = 0]
-stat            [test $HAVE_READLINKAT = 0]
-readlink        [test $HAVE_READLINKAT = 0]
+at-internal     [test $HAVE_READLINKAT = 0 || test $REPLACE_READLINKAT = 1]
+errno           [test $HAVE_READLINKAT = 0 || test $REPLACE_READLINKAT = 1]
+fchdir          [test $HAVE_READLINKAT = 0 || test $REPLACE_READLINKAT = 1]
+fcntl-h         [test $HAVE_READLINKAT = 0 || test $REPLACE_READLINKAT = 1]
+filename        [test $HAVE_READLINKAT = 0 || test $REPLACE_READLINKAT = 1]
+fstatat         [test $HAVE_READLINKAT = 1 && test $REPLACE_READLINKAT = 1]
+openat-die      [test $HAVE_READLINKAT = 0 || test $REPLACE_READLINKAT = 1]
+openat-h        [test $HAVE_READLINKAT = 0 || test $REPLACE_READLINKAT = 1]
+save-cwd        [test $HAVE_READLINKAT = 0 || test $REPLACE_READLINKAT = 1]
+readlink        [test $HAVE_READLINKAT = 0 || test $REPLACE_READLINKAT = 1]
 
 configure.ac:
 gl_FUNC_READLINKAT
