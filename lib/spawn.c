@@ -29,5 +29,6 @@ posix_spawn (pid_t *pid, const char *path,
              const posix_spawnattr_t *attrp, char *const argv[],
              char *const envp[])
 {
-  return __spawni (pid, path, file_actions, attrp, argv, envp, 0);
+  return __spawni (pid, path, file_actions, attrp,
+                   (const char * const *) argv, (const char * const *) envp, 0);
 }

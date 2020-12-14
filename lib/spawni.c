@@ -109,7 +109,8 @@ __spawni (pid_t *pid, const char *file,
    the shell to interpret it as a script.  */
 static void
 internal_function
-script_execute (const char *file, char *const argv[], char *const envp[])
+script_execute (const char *file, const char *const argv[],
+                const char *const envp[])
 {
   /* Count the arguments.  */
   int argc = 0;
@@ -118,9 +119,10 @@ script_execute (const char *file, char *const argv[], char *const envp[])
 
   /* Construct an argument list for the shell.  */
   {
-    char **new_argv = (char **) alloca ((argc + 1) * sizeof (char *));
-    new_argv[0] = (char *) _PATH_BSHELL;
-    new_argv[1] = (char *) file;
+    const char **new_argv =
+      (const char **) alloca ((argc + 1) * sizeof (const char *));
+    new_argv[0] = _PATH_BSHELL;
+    new_argv[1] = file;
     while (argc > 1)
       {
         new_argv[argc] = argv[argc - 1];
@@ -128,7 +130,7 @@ script_execute (const char *file, char *const argv[], char *const envp[])
       }
 
     /* Execute the shell.  */
-    execve (new_argv[0], new_argv, envp);
+    execve (new_argv[0], (char * const *) new_argv, (char * const *) envp);
   }
 }
 
@@ -138,8 +140,8 @@ script_execute (const char *file, char *const argv[], char *const envp[])
 int
 __spawni (pid_t *pid, const char *file,
           const posix_spawn_file_actions_t *file_actions,
-          const posix_spawnattr_t *attrp, char *const argv[],
-          char *const envp[], int use_path)
+          const posix_spawnattr_t *attrp, const char *const argv[],
+          const char *const envp[], int use_path)
 {
   pid_t new_pid;
   char *path, *p, *name;
@@ -303,7 +305,7 @@ __spawni (pid_t *pid, const char *file,
   if (! use_path || strchr (file, '/') != NULL)
     {
       /* The FILE parameter is actually a path.  */
-      execve (file, argv, envp);
+      execve (file, (char * const *) argv, (char * const *) envp);
 
       if (errno == ENOEXEC)
         script_execute (file, argv, envp);
@@ -354,7 +356,7 @@ __spawni (pid_t *pid, const char *file,
         startp = (char *) memcpy (name - (p - path), path, p - path);
 
       /* Try to execute this name.  If it works, execv will not return.  */
-      execve (startp, argv, envp);
+      execve (startp, (char * const *) argv, (char * const *) envp);
 
       if (errno == ENOEXEC)
         script_execute (startp, argv, envp);
