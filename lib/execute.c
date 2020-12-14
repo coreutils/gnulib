@@ -126,7 +126,7 @@ execute (const char *progname,
       if (! IS_ABSOLUTE_FILE_NAME (prog_path))
         {
           const char *resolved_prog =
-            find_in_given_path (prog_path, getenv ("PATH"), false);
+            find_in_given_path (prog_path, getenv ("PATH"), NULL, false);
           if (resolved_prog == NULL)
             goto fail_with_errno;
           if (resolved_prog != prog_path)

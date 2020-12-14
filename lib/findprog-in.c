@@ -73,7 +73,7 @@ static const char * const suffixes[] =
 
 const char *
 find_in_given_path (const char *progname, const char *path,
-                    bool optimize_for_exec)
+                    const char *directory, bool optimize_for_exec)
 {
   {
     bool has_slash = false;
@@ -101,6 +101,12 @@ find_in_given_path (const char *progname, const char *path,
                with such a suffix is actually executable.  */
             int failure_errno;
             size_t i;
+
+            const char *directory_as_prefix =
+              (directory != NULL && IS_RELATIVE_FILE_NAME (progname)
+               ? directory
+               : "");
+
             #if defined _WIN32 && !defined __CYGWIN__ /* Native Windows */
             const char *progbasename;
 
@@ -126,9 +132,10 @@ find_in_given_path (const char *progname, const char *path,
                 if ((*suffix != '\0') != (strchr (progbasename, '.') != NULL))
                 #endif
                   {
-                    /* Concatenate progname and suffix.  */
+                    /* Concatenate directory_as_prefix, progname, suffix.  */
                     char *progpathname =
-                      concatenated_filename ("", progname, suffix);
+                      concatenated_filename (directory_as_prefix, progname,
+                                             suffix);
 
                     if (progpathname == NULL)
                       return NULL; /* errno is set here */
@@ -194,6 +201,8 @@ find_in_given_path (const char *progname, const char *path,
       {
         const char *dir;
         bool last;
+        char *dir_as_prefix_to_free;
+        const char *dir_as_prefix;
         size_t i;
 
         /* Extract next directory in PATH.  */
@@ -207,6 +216,25 @@ find_in_given_path (const char *progname, const char *path,
         if (dir == cp)
           dir = ".";
 
+        /* Concatenate directory and dir.  */
+        if (directory != NULL && IS_RELATIVE_FILE_NAME (dir))
+          {
+            dir_as_prefix_to_free =
+              concatenated_filename (directory, dir, NULL);
+            if (dir_as_prefix_to_free == NULL)
+              {
+                /* errno is set here.  */
+                failure_errno = errno;
+                goto failed;
+              }
+            dir_as_prefix = dir_as_prefix_to_free;
+          }
+        else
+          {
+            dir_as_prefix_to_free = NULL;
+            dir_as_prefix = dir;
+          }
+
         /* Try all platform-dependent suffixes.  */
         for (i = 0; i < sizeof (suffixes) / sizeof (suffixes[0]); i++)
           {
@@ -218,14 +246,15 @@ find_in_given_path (const char *progname, const char *path,
             if ((*suffix != '\0') != (strchr (progname, '.') != NULL))
             #endif
               {
-                /* Concatenate dir, progname, and suffix.  */
+                /* Concatenate dir_as_prefix, progname, and suffix.  */
                 char *progpathname =
-                  concatenated_filename (dir, progname, suffix);
+                  concatenated_filename (dir_as_prefix, progname, suffix);
 
                 if (progpathname == NULL)
                   {
                     /* errno is set here.  */
                     failure_errno = errno;
+                    free (dir_as_prefix_to_free);
                     goto failed;
                   }
 
@@ -249,7 +278,7 @@ find_in_given_path (const char *progname, const char *path,
                                 free (progpathname);
 
                                 /* Add the "./" prefix for real, that
-                                   xconcatenated_filename() optimized away.
+                                   concatenated_filename() optimized away.
                                    This avoids a second PATH search when the
                                    caller uses execl/execv/execlp/execvp.  */
                                 progpathname =
@@ -258,6 +287,7 @@ find_in_given_path (const char *progname, const char *path,
                                   {
                                     /* errno is set here.  */
                                     failure_errno = errno;
+                                    free (dir_as_prefix_to_free);
                                     goto failed;
                                   }
                                 progpathname[0] = '.';
@@ -266,6 +296,7 @@ find_in_given_path (const char *progname, const char *path,
                                         strlen (progname) + 1);
                               }
 
+                            free (dir_as_prefix_to_free);
                             free (path_copy);
                             return progpathname;
                           }
@@ -280,6 +311,8 @@ find_in_given_path (const char *progname, const char *path,
                 free (progpathname);
               }
           }
+
+        free (dir_as_prefix_to_free);
 
         if (last)
           break;

@@ -60,6 +60,11 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2020-12-14  findprog-in     The function 'find_in_given_path' now takes a 3rd
+                            argument 'const char *directory'. To maintain the
+                            previous behaviour, insert NULL as additional 3rd
+                            argument.
+
 2020-12-11  sh-quote        The argv argument of the 'shell_quote_argv' function
                             is now of type 'const char * const *'.  You no
                             longer need to cast read-only strings to 'char *'

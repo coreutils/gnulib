@@ -223,7 +223,7 @@ spawnpvech (int mode,
 
   /* Implement the 'p' letter: search for PROGNAME in getenv ("PATH").  */
   const char *resolved_progname =
-    find_in_given_path (progname, getenv ("PATH"), false);
+    find_in_given_path (progname, getenv ("PATH"), NULL, false);
   if (resolved_progname == NULL)
     return -1;
 
