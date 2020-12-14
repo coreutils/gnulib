@@ -9,6 +9,7 @@ m4/pid_t.m4
 Depends-on:
 include_next
 sched
+signal-h
 snippet/arg-nonnull
 snippet/c++defs
 snippet/warn-on-use
