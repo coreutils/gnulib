@@ -308,7 +308,7 @@ spawnpvech (int mode,
   /* Regarding handle inheritance, see
      <https://docs.microsoft.com/en-us/windows/win32/sysinfo/handle-inheritance>  */
   /* <https://docs.microsoft.com/en-us/windows/win32/procthread/process-creation-flags>  */
-  DWORD flags = (mode == P_DETACH ? DETACHED_PROCESS : 0);
+  DWORD process_creation_flags = (mode == P_DETACH ? DETACHED_PROCESS : 0);
   /* STARTUPINFO
      <https://docs.microsoft.com/en-us/windows/win32/api/processthreadsapi/ns-processthreadsapi-startupinfoa>  */
   STARTUPINFO sinfo;
@@ -443,7 +443,8 @@ spawnpvech (int mode,
 
   PROCESS_INFORMATION pinfo;
   if (!CreateProcess (resolved_progname, command, NULL, NULL, TRUE,
-                      flags, envblock, currdir, &sinfo, &pinfo))
+                      process_creation_flags, envblock, currdir, &sinfo,
+                      &pinfo))
     {
       DWORD error = GetLastError ();
 
