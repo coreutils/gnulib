@@ -92,6 +92,7 @@
 # define GETCWD_RETURN_TYPE char *
 # define __close_nocancel_nostatus close
 # define __getcwd_generic rpl_getcwd
+# undef stat64
 # define stat64    stat
 # define __fstat64 fstat
 # define __fstatat64 fstatat
