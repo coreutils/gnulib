@@ -22,9 +22,17 @@
 
 #include <stdlib.h>
 
+#include <errno.h>
+
 void
 rpl_free (void *p)
 {
-  if (p)
-    free (p);
+#ifdef CANNOT_FREE_NULL
+  if (!p)
+    return;
+#endif
+
+  int err = errno;
+  free (p);
+  errno = err;
 }

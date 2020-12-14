@@ -35,10 +35,43 @@ AC_DEFUN([gl_FUNC_FREE],
      esac
     ])
 
+  dnl In the next release of POSIX, free must preserve errno.
+  dnl https://www.austingroupbugs.net/view.php?id=385
+  dnl https://sourceware.org/bugzilla/show_bug.cgi?id=17924
+  dnl For now, assume implementations other than glibc do not preserve errno
+  dnl unless they set _POSIX_VERSION to the next release number,
+  dnl whatever that happens to be.
+  AC_CACHE_CHECK([whether free is known to preserve errno],
+    [gl_cv_func_free_preserves_errno],
+    [case $host_os in
+       *-gnu* | gnu*)
+         gl_cv_func_free_preserves_errno=yes;;
+       *)
+         AC_COMPILE_IFELSE(
+           [AC_LANG_PROGRAM(
+              [[#include <unistd.h>
+              ]],
+              [[#if _POSIX_VERSION <= 200809
+                  #error "'free' is not known to preserve errno"
+                #endif
+              ]])],
+           [gl_cv_func_free_preserves_errno=yes],
+           [gl_cv_func_free_preserves_errno=no]);;
+     esac
+    ])
+
   if test $gl_cv_func_free = no; then
+    AC_DEFINE([CANNOT_FREE_NULL], [1],
+      [Define to 1 if free (NULL) does not work.])
+  fi
+
+  case $gl_cv_func_free,$gl_cv_func_free_preserves_errno in
+   *yes,*yes) ;;
+   *)
     AC_DEFINE([free], [rpl_free],
       [Define to rpl_free if the replacement function should be used.])
-  fi
+    ;;
+  esac
 ])
 
 # Prerequisites of lib/free.c.

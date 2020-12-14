@@ -1,8 +1,5 @@
 Description:
-Work around incompatibility on older systems where free (NULL) fails.
-
-Notice:
-This module is obsolete.
+Work around systems where free sets errno or free (NULL) fails.
 
 Files:
 lib/free.c
@@ -12,10 +9,13 @@ Depends-on:
 
 configure.ac:
 gl_FUNC_FREE
-if test $gl_cv_func_free = no; then
+case $gl_cv_func_free,$gl_cv_func_free_errno in
+ *yes,*yes) ;;
+ *)
   AC_LIBOBJ([free])
   gl_PREREQ_FREE
-fi
+  ;;
+esac
 
 Makefile.am:
 
