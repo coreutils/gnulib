@@ -211,9 +211,13 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
       for (end = start; *end && !ISSLASH (*end); ++end)
         /* Nothing.  */;
 
-      if (end - start == 1 && start[0] == '.')
+      /* Length of this file name component; it can be zero if a file
+         name ends in '/'.  */
+      idx_t startlen = end - start;
+
+      if (startlen == 1 && start[0] == '.')
         /* nothing */;
-      else if (end - start == 2 && start[0] == '.' && start[1] == '.')
+      else if (startlen == 2 && start[0] == '.' && start[1] == '.')
         {
           /* Back up to previous component, ignore if at root already.  */
           if (dest > rname + prefix_len + 1)
@@ -228,27 +232,28 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
           if (!ISSLASH (dest[-1]))
             *dest++ = '/';
 
-          if (rname_limit - dest <= end - start)
+          if (rname_limit - dest <= startlen)
             {
               idx_t dest_offset = dest - rname;
               idx_t new_size = rname_limit - rname;
 
-              if (end - start + 1 > PATH_MAX)
-                new_size += end - start + 1;
-              else
-                new_size += PATH_MAX;
+              new_size = startlen + 1 <= PATH_MAX ? startlen + 1 : PATH_MAX;
               rname = xrealloc (rname, new_size);
               rname_limit = rname + new_size;
 
               dest = rname + dest_offset;
             }
 
-          dest = memcpy (dest, start, end - start);
-          dest += end - start;
+          dest = memcpy (dest, start, startlen);
+          dest += startlen;
           *dest = '\0';
 
+          /* If STARTLEN == 0, RNAME ends in '/'; use stat rather than
+             readlink, because readlink might fail with EINVAL without
+             checking whether RNAME sans '/' is valid.  */
           char discard;
-          char *buf = logical ? NULL : areadlink (rname);
+          struct stat st;
+          char *buf = logical || startlen == 0 ? NULL : areadlink (rname);
           if (buf)
             {
               /* A physical traversal and RNAME is a symbolic link.  */
@@ -262,15 +267,14 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
                      Get the device and inode of the parent directory, as
                      pre-2017 POSIX says this info is not reliable for
                      symlinks.  */
-                  dest[- (end - start)] = '\0';
-                  struct stat st;
+                  dest[- startlen] = '\0';
                   if (stat (*rname ? rname : ".", &st) != 0)
                     {
                       saved_errno = errno;
                       free (buf);
                       goto error;
                     }
-                  dest[- (end - start)] = *start;
+                  dest[- startlen] = *start;
 
                   /* Detect loops.  We cannot use the cycle-check module here,
                      since it's possible to encounter the same parent
@@ -338,13 +342,16 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
               free (buf);
             }
           else if (can_exist != CAN_MISSING
-                   && (!logical || readlink (rname, &discard, 1) < 0))
+                   && (startlen == 0
+                       ? stat (rname, &st) < 0
+                       : !logical && readlink (rname, &discard, 1) < 0))
             {
               saved_errno = errno;
               switch (saved_errno)
                 {
                 case EINVAL:
-                  /* RNAME exists and is not symbolic link.  */
+                case EOVERFLOW: /* Possible with stat.  */
+                  /* RNAME exists and is not a symbolic link.  */
                   break;
 
                 case ENOENT:

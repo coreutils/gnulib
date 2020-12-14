@@ -18,6 +18,7 @@ idx
 memmove
 nocrash
 pathmax
+readlink
 stat
 sys_stat
 xalloc
