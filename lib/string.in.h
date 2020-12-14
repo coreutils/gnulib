@@ -144,6 +144,7 @@ _GL_CXXALIASWARN (memccpy);
 #if @GNULIB_MEMCHR@
 # if @REPLACE_MEMCHR@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef memchr
 #   define memchr rpl_memchr
 #  endif
 _GL_FUNCDECL_RPL (memchr, void *, (void const *__s, int __c, size_t __n)
