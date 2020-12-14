@@ -88,9 +88,7 @@ areadlink_with_size (char const *file, size_t size)
       r = readlink (file, buf, buf_size);
       link_length = r;
 
-      /* On AIX 5L v5.3 and HP-UX 11i v2 04/09, readlink returns -1
-         with errno == ERANGE if the buffer is too small.  */
-      if (r < 0 && errno != ERANGE)
+      if (r < 0)
         {
           int saved_errno = errno;
           free (buffer);

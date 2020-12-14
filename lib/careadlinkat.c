@@ -90,18 +90,13 @@ readlink_stk (int fd, char const *filename,
       size_t link_size;
       if (link_length < 0)
         {
-          /* On AIX 5L v5.3 and HP-UX 11i v2 04/09, readlink returns -1
-             with errno == ERANGE if the buffer is too small.  */
-          int readlinkat_errno = errno;
-          if (readlinkat_errno != ERANGE)
+          if (buf != buffer)
             {
-              if (buf != buffer)
-                {
-                  alloc->free (buf);
-                  errno = readlinkat_errno;
-                }
-              return NULL;
+              int readlinkat_errno = errno;
+              alloc->free (buf);
+              errno = readlinkat_errno;
             }
+          return NULL;
         }
 
       link_size = link_length;
