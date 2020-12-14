@@ -2,18 +2,19 @@
    Copyright (C) 1996-2020 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
-   This program is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 3 of the License, or
-   (at your option) any later version.
+   The GNU C Library is free software; you can redistribute it and/or
+   modify it under the terms of the GNU Lesser General Public
+   License as published by the Free Software Foundation; either
+   version 2.1 of the License, or (at your option) any later version.
 
-   This program is distributed in the hope that it will be useful,
+   The GNU C Library is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   Lesser General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
+   You should have received a copy of the GNU Lesser General Public
+   License along with the GNU C Library; if not, see
+   <https://www.gnu.org/licenses/>.  */
 
 #ifndef _LIBC
 /* Don't use __attribute__ __nonnull__ in this compilation unit.  Otherwise gcc
@@ -21,32 +22,28 @@
 # define _GL_ARG_NONNULL(params)
 
 # define _GL_USE_STDLIB_ALLOC 1
-# include <config.h>
+# include <libc-config.h>
 #endif
-
-#if !HAVE_CANONICALIZE_FILE_NAME || !FUNC_REALPATH_WORKS || defined _LIBC
 
 /* Specification.  */
 #include <stdlib.h>
 
-#include <alloca.h>
 #include <string.h>
 #include <unistd.h>
 #include <limits.h>
-#if HAVE_SYS_PARAM_H || defined _LIBC
-# include <sys/param.h>
-#endif
 #include <errno.h>
 #include <stddef.h>
 
 #ifdef _LIBC
+# include <eloop-threshold.h>
 # include <shlib-compat.h>
 typedef ptrdiff_t idx_t;
+# define FILE_SYSTEM_PREFIX_LEN(name) 0
+# define IS_ABSOLUTE_FILE_NAME(name) ISSLASH(*(name))
+# define ISSLASH(c) ((c) == '/')
+# define malloca __alloca
+# define freea(p) ((void) (p))
 #else
-# define SHLIB_COMPAT(lib, introduced, obsoleted) 0
-# define versioned_symbol(lib, local, symbol, version) extern int dummy
-# define compat_symbol(lib, local, symbol, version)
-# define weak_alias(local, symbol)
 # define __canonicalize_file_name canonicalize_file_name
 # define __realpath realpath
 # include "idx.h"
@@ -73,8 +70,10 @@ typedef ptrdiff_t idx_t;
 # else
 #  define __getcwd(buf, max) getwd (buf)
 # endif
+# define __mempcpy mempcpy
+# define __pathconf pathconf
+# define __rawmemchr rawmemchr
 # define __readlink readlink
-# define __set_errno(e) errno = (e)
 # ifndef MAXSYMLINKS
 #  ifdef SYMLOOP_MAX
 #   define MAXSYMLINKS SYMLOOP_MAX
@@ -82,28 +81,14 @@ typedef ptrdiff_t idx_t;
 #   define MAXSYMLINKS 20
 #  endif
 # endif
+# define __eloop_threshold() MAXSYMLINKS
 #endif
 
 #ifndef DOUBLE_SLASH_IS_DISTINCT_ROOT
 # define DOUBLE_SLASH_IS_DISTINCT_ROOT 0
 #endif
 
-/* Define this independently so that stdint.h is not a prerequisite.  */
-#ifndef SIZE_MAX
-# define SIZE_MAX ((size_t) -1)
-#endif
-
 #if !FUNC_REALPATH_WORKS || defined _LIBC
-
-static void
-alloc_failed (void)
-{
-#if defined _WIN32 && ! defined __CYGWIN__
-  /* Avoid errno problem without using the malloc or realloc modules; see:
-     https://lists.gnu.org/r/bug-gnulib/2016-08/msg00025.html  */
-  errno = ENOMEM;
-#endif
-}
 
 /* Return the canonical absolute name of file NAME.  A canonical name
    does not contain any ".", ".." components nor any repeated path
@@ -146,19 +131,16 @@ __realpath (const char *name, char *resolved)
 #ifdef PATH_MAX
   path_max = PATH_MAX;
 #else
-  path_max = pathconf (name, _PC_PATH_MAX);
+  path_max = __pathconf (name, _PC_PATH_MAX);
   if (path_max <= 0)
-    path_max = 8192;
+    path_max = 1024;
 #endif
 
   if (resolved == NULL)
     {
       rpath = malloc (path_max);
       if (rpath == NULL)
-        {
-          alloc_failed ();
-          return NULL;
-        }
+        return NULL;
     }
   else
     rpath = resolved;
@@ -175,18 +157,13 @@ __realpath (const char *name, char *resolved)
           rpath[0] = '\0';
           goto error;
         }
-      dest = strchr (rpath, '\0');
+      dest = __rawmemchr (rpath, '\0');
       start = name;
       prefix_len = FILE_SYSTEM_PREFIX_LEN (rpath);
     }
   else
     {
-      dest = rpath;
-      if (prefix_len)
-        {
-          memcpy (rpath, name, prefix_len);
-          dest += prefix_len;
-        }
+      dest = __mempcpy (rpath, name, prefix_len);
       *dest++ = '/';
       if (DOUBLE_SLASH_IS_DISTINCT_ROOT)
         {
@@ -247,22 +224,14 @@ __realpath (const char *name, char *resolved)
                 new_size += path_max;
               new_rpath = (char *) realloc (rpath, new_size);
               if (new_rpath == NULL)
-                {
-                  alloc_failed ();
-                  goto error;
-                }
+                goto error;
               rpath = new_rpath;
               rpath_limit = rpath + new_size;
 
               dest = rpath + dest_offset;
             }
 
-#ifdef _LIBC
           dest = __mempcpy (dest, start, end - start);
-#else
-          memcpy (dest, start, end - start);
-          dest += end - start;
-#endif
           *dest = '\0';
 
           char linkbuf[128];
@@ -277,7 +246,7 @@ __realpath (const char *name, char *resolved)
               char *buf;
               size_t len;
 
-              if (++num_links > MAXSYMLINKS)
+              if (++num_links > __eloop_threshold ())
                 {
                   __set_errno (ELOOP);
                   goto error;
@@ -287,10 +256,7 @@ __realpath (const char *name, char *resolved)
                 {
                   extra_buf = malloca (2 * path_max);
                   if (!extra_buf)
-                    {
-                      alloc_failed ();
-                      goto error;
-                    }
+                    goto error;
                 }
               if (n < sizeof linkbuf)
                 buf = linkbuf;
@@ -304,8 +270,7 @@ __realpath (const char *name, char *resolved)
               buf[n] = '\0';
 
               len = strlen (end);
-              /* Check that n + len + 1 doesn't overflow and is <= path_max. */
-              if (n >= SIZE_MAX - len || n + len >= path_max)
+              if (path_max - n <= len)
                 {
                   __set_errno (ENAMETOOLONG);
                   goto error;
@@ -319,9 +284,7 @@ __realpath (const char *name, char *resolved)
                 {
                   size_t pfxlen = FILE_SYSTEM_PREFIX_LEN (buf);
 
-                  if (pfxlen)
-                    memcpy (rpath, buf, pfxlen);
-                  dest = rpath + pfxlen;
+                  dest = __mempcpy (rpath, buf, pfxlen);
                   *dest++ = '/'; /* It's an absolute symlink */
                   if (DOUBLE_SLASH_IS_DISTINCT_ROOT)
                     {
@@ -359,16 +322,13 @@ __realpath (const char *name, char *resolved)
   return rpath;
 
 error:
-  {
-    int saved_errno = errno;
-    if (extra_buf)
-      freea (extra_buf);
-    if (resolved == NULL)
-      free (rpath);
-    __set_errno (saved_errno);
-  }
+  if (extra_buf)
+    freea (extra_buf);
+  if (resolved == NULL)
+    free (rpath);
   return NULL;
 }
+libc_hidden_def (__realpath)
 versioned_symbol (libc, __realpath, realpath, GLIBC_2_3);
 #endif /* !FUNC_REALPATH_WORKS || defined _LIBC */
 
@@ -396,11 +356,3 @@ __canonicalize_file_name (const char *name)
   return __realpath (name, NULL);
 }
 weak_alias (__canonicalize_file_name, canonicalize_file_name)
-
-#else
-
-/* This declaration is solely to ensure that after preprocessing
-   this file is never empty.  */
-typedef int dummy;
-
-#endif
