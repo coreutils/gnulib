@@ -19,26 +19,21 @@
 #include "canonicalize.h"
 
 #include <errno.h>
+#include <stdbool.h>
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
 #include <unistd.h>
 
-#include "areadlink.h"
+#include <scratch_buffer.h>
+
+#include "attribute.h"
 #include "file-set.h"
 #include "idx.h"
 #include "hash-triple.h"
-#include "pathmax.h"
 #include "xalloc.h"
-#include "xgetcwd.h"
 #include "filename.h"
-
-/* In this file, we cannot handle file names longer than PATH_MAX.
-   On systems with no file name length limit, use a fallback.  */
-#ifndef PATH_MAX
-# define PATH_MAX 8192
-#endif
 
 #ifndef DOUBLE_SLASH_IS_DISTINCT_ROOT
 # define DOUBLE_SLASH_IS_DISTINCT_ROOT 0
@@ -94,26 +89,36 @@ seen_triple (Hash_table **ht, char const *filename, struct stat const *st)
   return false;
 }
 
-/* Return the canonical absolute name of file NAME, while treating
-   missing elements according to CAN_MODE.  A canonical name
-   does not contain any ".", ".." components nor any repeated file name
-   separators ('/') or, depending on other CAN_MODE flags, symlinks.
-   Whether components must exist or not depends on canonicalize mode.
-   The result is malloc'd.  */
 
-char *
-canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
+/* Act like canonicalize_filename_mode (see below), with an additional argument
+   rname_buf that can be used as temporary storage.
+
+   If GCC_LINT is defined, do not inline this function with GCC 10.1
+   and later, to avoid creating a pointer to the stack that GCC
+   -Wreturn-local-addr incorrectly complains about.  See:
+   https://gcc.gnu.org/bugzilla/show_bug.cgi?id=93644
+   Although the noinline attribute can hurt performance a bit, no better way
+   to pacify GCC is known; even an explicit #pragma does not pacify GCC.
+   When the GCC bug is fixed this workaround should be limited to the
+   broken GCC versions.  */
+#if _GL_GNUC_PREREQ (10, 1)
+# if defined GCC_LINT || defined lint
+__attribute__ ((__noinline__))
+# elif __OPTIMIZE__ && !__NO_INLINE__
+#  warning "GCC might issue a bogus -Wreturn-local-addr warning here."
+#  warning "See <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=93644>."
+# endif
+#endif
+static char *
+canonicalize_filename_mode_stk (const char *name, canonicalize_mode_t can_mode,
+                                struct scratch_buffer *rname_buf)
 {
-  char *rname, *dest, *extra_buf = NULL;
+  char *dest;
   char const *start;
   char const *end;
-  char const *rname_limit;
-  idx_t extra_len = 0;
   Hash_table *ht = NULL;
-  int saved_errno;
   bool logical = (can_mode & CAN_NOLINKS) != 0;
   int num_links = 0;
-  idx_t prefix_len;
 
   canonicalize_mode_t can_exist = can_mode & CAN_MODE_MASK;
   if (multiple_bits_set (can_exist))
@@ -134,37 +139,45 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
       return NULL;
     }
 
+  struct scratch_buffer extra_buffer, link_buffer;
+  scratch_buffer_init (&extra_buffer);
+  scratch_buffer_init (&link_buffer);
+  scratch_buffer_init (rname_buf);
+  char *rname_on_stack = rname_buf->data;
+  char *rname = rname_on_stack;
+  bool end_in_extra_buffer = false;
+  bool failed = true;
+
   /* This is always zero for Posix hosts, but can be 2 for MS-Windows
      and MS-DOS X:/foo/bar file names.  */
-  prefix_len = FILE_SYSTEM_PREFIX_LEN (name);
+  idx_t prefix_len = FILE_SYSTEM_PREFIX_LEN (name);
 
   if (!IS_ABSOLUTE_FILE_NAME (name))
     {
-      rname = xgetcwd ();
-      if (!rname)
-        return NULL;
-      idx_t rnamelen = strlen (rname);
-      idx_t rnamesize = rnamelen;  /* Lower bound on size; good enough.  */
-      if (rnamesize < PATH_MAX)
+      while (!getcwd (rname, rname_buf->length))
         {
-          rnamesize = PATH_MAX;
-          rname = xrealloc (rname, rnamesize);
+          switch (errno)
+            {
+            case ERANGE:
+              if (scratch_buffer_grow (rname_buf))
+                break;
+              FALLTHROUGH;
+            case ENOMEM:
+              xalloc_die ();
+
+            default:
+              dest = rname;
+              goto error;
+            }
+          rname = rname_buf->data;
         }
-      dest = rname + rnamelen;
-      rname_limit = rname + rnamesize;
+      dest = rawmemchr (rname, '\0');
       start = name;
       prefix_len = FILE_SYSTEM_PREFIX_LEN (rname);
     }
   else
     {
-      rname = xmalloc (PATH_MAX);
-      rname_limit = rname + PATH_MAX;
-      dest = rname;
-      if (prefix_len)
-        {
-          memcpy (rname, name, prefix_len);
-          dest += prefix_len;
-        }
+      dest = mempcpy (rname, name, prefix_len);
       *dest++ = '/';
       if (DOUBLE_SLASH_IS_DISTINCT_ROOT)
         {
@@ -180,7 +193,7 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
                 for (i = 2; name[i] != '\0' && !ISSLASH (name[i]); )
                   i++;
                 if (name[i] != '\0' /* implies ISSLASH (name[i]) */
-                    && i + 1 < rname_limit - rname)
+                    && i + 1 < rname_buf->length)
                   {
                     prefix_len = i;
                     memcpy (dest, name + 2, i - 2 + 1);
@@ -190,8 +203,8 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
                   {
                     /* Either name = '\\server'; this is an invalid file name.
                        Or name = '\\server\...' and server is more than
-                       PATH_MAX - 4 bytes long.  In either case, stop the UNC
-                       processing.  */
+                       rname_buf->length - 4 bytes long.  In either
+                       case, stop the UNC processing.  */
                   }
               }
 #endif
@@ -223,8 +236,9 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
           if (dest > rname + prefix_len + 1)
             for (--dest; dest > rname && !ISSLASH (dest[-1]); --dest)
               continue;
-          if (DOUBLE_SLASH_IS_DISTINCT_ROOT && dest == rname + 1
-              && !prefix_len && ISSLASH (*dest) && !ISSLASH (dest[1]))
+          if (DOUBLE_SLASH_IS_DISTINCT_ROOT
+              && dest == rname + 1 && !prefix_len
+              && ISSLASH (*dest) && !ISSLASH (dest[1]))
             dest++;
         }
       else
@@ -232,20 +246,16 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
           if (!ISSLASH (dest[-1]))
             *dest++ = '/';
 
-          if (rname_limit - dest <= startlen)
+          while (rname + rname_buf->length - dest <= startlen)
             {
               idx_t dest_offset = dest - rname;
-              idx_t new_size = rname_limit - rname;
-
-              new_size = startlen + 1 <= PATH_MAX ? startlen + 1 : PATH_MAX;
-              rname = xrealloc (rname, new_size);
-              rname_limit = rname + new_size;
-
+              if (!scratch_buffer_grow_preserve (rname_buf))
+                xalloc_die ();
+              rname = rname_buf->data;
               dest = rname + dest_offset;
             }
 
-          dest = memcpy (dest, start, startlen);
-          dest += startlen;
+          dest = mempcpy (dest, start, startlen);
           *dest = '\0';
 
           /* If STARTLEN == 0, RNAME ends in '/'; use stat rather than
@@ -253,7 +263,23 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
              checking whether RNAME sans '/' is valid.  */
           char discard;
           struct stat st;
-          char *buf = logical || startlen == 0 ? NULL : areadlink (rname);
+          char *buf = NULL;
+          ssize_t n;
+          if (!logical && startlen != 0)
+            {
+              while (true)
+                {
+                  buf = link_buffer.data;
+                  idx_t bufsize = link_buffer.length;
+                  n = readlink (rname, buf, bufsize - 1);
+                  if (n < bufsize - 1)
+                    break;
+                  if (!scratch_buffer_grow (&link_buffer))
+                    xalloc_die ();
+                }
+              if (n < 0)
+                buf = NULL;
+            }
           if (buf)
             {
               /* A physical traversal and RNAME is a symbolic link.  */
@@ -269,11 +295,7 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
                      symlinks.  */
                   dest[- startlen] = '\0';
                   if (stat (*rname ? rname : ".", &st) != 0)
-                    {
-                      saved_errno = errno;
-                      free (buf);
-                      goto error;
-                    }
+                    goto error;
                   dest[- startlen] = *start;
 
                   /* Detect loops.  We cannot use the cycle-check module here,
@@ -285,38 +307,37 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
                     {
                       if (can_exist == CAN_MISSING)
                         continue;
-                      saved_errno = ELOOP;
-                      free (buf);
+                      errno = ELOOP;
                       goto error;
                     }
                 }
 
-              idx_t n = strlen (buf);
-              idx_t len = strlen (end);
+              buf[n] = '\0';
 
-              if (!extra_len)
+              char *extra_buf = extra_buffer.data;
+              idx_t end_idx;
+              if (end_in_extra_buffer)
+                end_idx = end - extra_buf;
+              idx_t len = strlen (end);
+              while (extra_buffer.length <= len + n)
                 {
-                  extra_len =
-                    ((n + len + 1) > PATH_MAX) ? (n + len + 1) : PATH_MAX;
-                  extra_buf = xmalloc (extra_len);
+                  if (!scratch_buffer_grow_preserve (&extra_buffer))
+                    xalloc_die ();
+                  extra_buf = extra_buffer.data;
                 }
-              else if ((n + len + 1) > extra_len)
-                {
-                  extra_len = n + len + 1;
-                  extra_buf = xrealloc (extra_buf, extra_len);
-                }
+              if (end_in_extra_buffer)
+                end = extra_buf + end_idx;
 
               /* Careful here, end may be a pointer into extra_buf... */
               memmove (&extra_buf[n], end, len + 1);
               name = end = memcpy (extra_buf, buf, n);
+              end_in_extra_buffer = true;
 
               if (IS_ABSOLUTE_FILE_NAME (buf))
                 {
                   idx_t pfxlen = FILE_SYSTEM_PREFIX_LEN (buf);
 
-                  if (pfxlen)
-                    memcpy (rname, buf, pfxlen);
-                  dest = rname + pfxlen;
+                  dest = mempcpy (rname, buf, pfxlen);
                   *dest++ = '/'; /* It's an absolute symlink */
                   if (DOUBLE_SLASH_IS_DISTINCT_ROOT)
                     {
@@ -338,16 +359,13 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
                       && ISSLASH (*dest) && !ISSLASH (dest[1]) && !prefix_len)
                     dest++;
                 }
-
-              free (buf);
             }
           else if (can_exist != CAN_MISSING
                    && (startlen == 0
                        ? stat (rname, &st) < 0
                        : !logical && readlink (rname, &discard, 1) < 0))
             {
-              saved_errno = errno;
-              switch (saved_errno)
+              switch (errno)
                 {
                 case EINVAL:
                 case EOVERFLOW: /* Possible with stat.  */
@@ -374,20 +392,40 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
   if (DOUBLE_SLASH_IS_DISTINCT_ROOT && dest == rname + 1 && !prefix_len
       && ISSLASH (*dest) && !ISSLASH (dest[1]))
     dest++;
-  *dest = '\0';
-  if (rname_limit != dest + 1)
-    rname = xrealloc (rname, dest - rname + 1);
-
-  free (extra_buf);
-  if (ht)
-    hash_free (ht);
-  return rname;
+  failed = false;
 
 error:
-  free (extra_buf);
-  free (rname);
+  *dest++ = '\0';
   if (ht)
     hash_free (ht);
-  errno = saved_errno;
-  return NULL;
+  scratch_buffer_free (&extra_buffer);
+  scratch_buffer_free (&link_buffer);
+
+  if (failed)
+    {
+      scratch_buffer_free (rname_buf);
+      return NULL;
+    }
+
+  idx_t rname_size = dest - rname;
+  if (rname == rname_on_stack)
+    return xmemdup (rname, rname_size);
+  char *result = realloc (rname, rname_size);
+  return result != NULL ? result : rname;
+}
+
+/* Return the canonical absolute name of file NAME, while treating
+   missing elements according to CAN_MODE.  A canonical name
+   does not contain any ".", ".." components nor any repeated file name
+   separators ('/') or, depending on other CAN_MODE flags, symlinks.
+   Whether components must exist or not depends on canonicalize mode.
+   The result is malloc'd.  */
+
+char *
+canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
+{
+  /* If GCC -Wreturn-local-addr warns about this buffer, the warning
+     is bogus; see canonicalize_filename_mode_stk.  */
+  struct scratch_buffer rname_buffer;
+  return canonicalize_filename_mode_stk (name, can_mode, &rname_buffer);
 }

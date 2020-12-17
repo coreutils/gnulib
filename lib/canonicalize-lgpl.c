@@ -28,27 +28,29 @@
 /* Specification.  */
 #include <stdlib.h>
 
+#include <errno.h>
+#include <limits.h>
+#include <stdbool.h>
+#include <stddef.h>
 #include <string.h>
 #include <unistd.h>
-#include <limits.h>
-#include <errno.h>
-#include <stddef.h>
+
+#include <scratch_buffer.h>
 
 #ifdef _LIBC
 # include <eloop-threshold.h>
 # include <shlib-compat.h>
 typedef ptrdiff_t idx_t;
+# define IDX_MAX PTRDIFF_MAX
 # define FILE_SYSTEM_PREFIX_LEN(name) 0
 # define IS_ABSOLUTE_FILE_NAME(name) ISSLASH(*(name))
 # define ISSLASH(c) ((c) == '/')
-# define malloca __alloca
 # define freea(p) ((void) (p))
 #else
 # define __canonicalize_file_name canonicalize_file_name
 # define __realpath realpath
 # include "idx.h"
 # include "pathmax.h"
-# include "malloca.h"
 # include "filename.h"
 # if defined _WIN32 && !defined __CYGWIN__
 #  define __getcwd _getcwd
@@ -90,25 +92,42 @@ typedef ptrdiff_t idx_t;
 
 #if !FUNC_REALPATH_WORKS || defined _LIBC
 
+static idx_t
+get_path_max (void)
+{
+# ifdef PATH_MAX
+  long int path_max = PATH_MAX;
+# else
+  /* The caller invoked realpath with a null RESOLVED, even though
+     PATH_MAX is not defined as a constant.  The glibc manual says
+     programs should not do this, and POSIX says the behavior is undefined.
+     Historically, glibc here used the result of pathconf, or 1024 if that
+     failed; stay consistent with this (dubious) historical practice.  */
+  int err = errno;
+  long int path_max = __pathconf ("/", _PC_PATH_MAX);
+  __set_errno (err);
+# endif
+  return path_max < 0 ? 1024 : path_max <= IDX_MAX ? path_max : IDX_MAX;
+}
+
 /* Return the canonical absolute name of file NAME.  A canonical name
-   does not contain any ".", ".." components nor any repeated path
-   separators ('/') or symlinks.  All path components must exist.  If
+   does not contain any ".", ".." components nor any repeated file name
+   separators ('/') or symlinks.  All file name components must exist.  If
    RESOLVED is null, the result is malloc'd; otherwise, if the
    canonical name is PATH_MAX chars or more, returns null with 'errno'
    set to ENAMETOOLONG; if the name fits in fewer than PATH_MAX chars,
    returns the name in RESOLVED.  If the name cannot be resolved and
-   RESOLVED is non-NULL, it contains the path of the first component
-   that cannot be resolved.  If the path can be resolved, RESOLVED
+   RESOLVED is non-NULL, it contains the name of the first component
+   that cannot be resolved.  If the name can be resolved, RESOLVED
    holds the same value as the value returned.  */
 
 char *
 __realpath (const char *name, char *resolved)
 {
-  char *rpath, *dest, *extra_buf = NULL;
-  const char *start, *end, *rpath_limit;
-  long int path_max;
+  char *dest;
+  char const *start;
+  char const *end;
   int num_links = 0;
-  size_t prefix_len;
 
   if (name == NULL)
     {
@@ -128,114 +147,108 @@ __realpath (const char *name, char *resolved)
       return NULL;
     }
 
-#ifdef PATH_MAX
-  path_max = PATH_MAX;
-#else
-  path_max = __pathconf (name, _PC_PATH_MAX);
-  if (path_max <= 0)
-    path_max = 1024;
-#endif
-
-  if (resolved == NULL)
-    {
-      rpath = malloc (path_max);
-      if (rpath == NULL)
-        return NULL;
-    }
-  else
-    rpath = resolved;
-  rpath_limit = rpath + path_max;
+  struct scratch_buffer extra_buffer, link_buffer;
+  struct scratch_buffer rname_buffer;
+  struct scratch_buffer *rname_buf = &rname_buffer;
+  scratch_buffer_init (&extra_buffer);
+  scratch_buffer_init (&link_buffer);
+  scratch_buffer_init (rname_buf);
+  char *rname_on_stack = rname_buf->data;
+  char *rname = rname_on_stack;
+  bool end_in_extra_buffer = false;
+  bool failed = true;
 
   /* This is always zero for Posix hosts, but can be 2 for MS-Windows
      and MS-DOS X:/foo/bar file names.  */
-  prefix_len = FILE_SYSTEM_PREFIX_LEN (name);
+  idx_t prefix_len = FILE_SYSTEM_PREFIX_LEN (name);
 
   if (!IS_ABSOLUTE_FILE_NAME (name))
     {
-      if (!__getcwd (rpath, path_max))
+      while (!__getcwd (rname, rname_buf->length))
         {
-          rpath[0] = '\0';
-          goto error;
+          if (errno != ERANGE)
+            {
+              dest = rname;
+              goto error;
+            }
+          if (!scratch_buffer_grow (rname_buf))
+            goto error_nomem;
+          rname = rname_buf->data;
         }
-      dest = __rawmemchr (rpath, '\0');
+      dest = __rawmemchr (rname, '\0');
       start = name;
-      prefix_len = FILE_SYSTEM_PREFIX_LEN (rpath);
+      prefix_len = FILE_SYSTEM_PREFIX_LEN (rname);
     }
   else
     {
-      dest = __mempcpy (rpath, name, prefix_len);
+      dest = __mempcpy (rname, name, prefix_len);
       *dest++ = '/';
       if (DOUBLE_SLASH_IS_DISTINCT_ROOT)
         {
-          if (ISSLASH (name[1]) && !ISSLASH (name[2]) && !prefix_len)
+          if (prefix_len == 0 /* implies ISSLASH (name[0]) */
+              && ISSLASH (name[1]) && !ISSLASH (name[2]))
             *dest++ = '/';
           *dest = '\0';
         }
       start = name + prefix_len;
     }
 
-  for (end = start; *start; start = end)
+  for ( ; *start; start = end)
     {
-      /* Skip sequence of multiple path-separators.  */
+      /* Skip sequence of multiple file name separators.  */
       while (ISSLASH (*start))
         ++start;
 
-      /* Find end of path component.  */
+      /* Find end of component.  */
       for (end = start; *end && !ISSLASH (*end); ++end)
         /* Nothing.  */;
 
-      if (end - start == 1 && start[0] == '.')
+      /* Length of this file name component; it can be zero if a file
+         name ends in '/'.  */
+      idx_t startlen = end - start;
+
+      if (startlen == 1 && start[0] == '.')
         /* nothing */;
-      else if (end - start == 2 && start[0] == '.' && start[1] == '.')
+      else if (startlen == 2 && start[0] == '.' && start[1] == '.')
         {
           /* Back up to previous component, ignore if at root already.  */
-          if (dest > rpath + prefix_len + 1)
-            for (--dest; dest > rpath && !ISSLASH (dest[-1]); --dest)
+          if (dest > rname + prefix_len + 1)
+            for (--dest; dest > rname && !ISSLASH (dest[-1]); --dest)
               continue;
           if (DOUBLE_SLASH_IS_DISTINCT_ROOT
-              && dest == rpath + 1 && !prefix_len
+              && dest == rname + 1 && !prefix_len
               && ISSLASH (*dest) && !ISSLASH (dest[1]))
             dest++;
         }
       else
         {
-          size_t new_size;
-
           if (!ISSLASH (dest[-1]))
             *dest++ = '/';
 
-          if (rpath_limit - dest <= end - start)
+          while (rname + rname_buf->length - dest <= startlen)
             {
-              idx_t dest_offset = dest - rpath;
-              char *new_rpath;
-
-              if (resolved)
-                {
-                  __set_errno (ENAMETOOLONG);
-                  if (dest > rpath + prefix_len + 1)
-                    dest--;
-                  *dest = '\0';
-                  goto error;
-                }
-              new_size = rpath_limit - rpath;
-              if (end - start + 1 > path_max)
-                new_size += end - start + 1;
-              else
-                new_size += path_max;
-              new_rpath = (char *) realloc (rpath, new_size);
-              if (new_rpath == NULL)
-                goto error;
-              rpath = new_rpath;
-              rpath_limit = rpath + new_size;
-
-              dest = rpath + dest_offset;
+              idx_t dest_offset = dest - rname;
+              if (!scratch_buffer_grow_preserve (rname_buf))
+                goto error_nomem;
+              rname = rname_buf->data;
+              dest = rname + dest_offset;
             }
 
-          dest = __mempcpy (dest, start, end - start);
+          dest = __mempcpy (dest, start, startlen);
           *dest = '\0';
 
-          char linkbuf[128];
-          ssize_t n = __readlink (rpath, linkbuf, sizeof linkbuf);
+          ssize_t n;
+          char *buf;
+          while (true)
+            {
+              buf = link_buffer.data;
+              idx_t bufsize = link_buffer.length;
+              n = __readlink (rname, buf, bufsize - 1);
+              if (n < bufsize - 1)
+                break;
+              if (!scratch_buffer_grow (&link_buffer))
+                goto error_nomem;
+            }
           if (n < 0)
             {
               if (errno != EINVAL)
@@ -243,48 +256,38 @@ __realpath (const char *name, char *resolved)
             }
           else
             {
-              char *buf;
-              size_t len;
-
               if (++num_links > __eloop_threshold ())
                 {
                   __set_errno (ELOOP);
                   goto error;
                 }
 
-              if (!extra_buf)
-                {
-                  extra_buf = malloca (2 * path_max);
-                  if (!extra_buf)
-                    goto error;
-                }
-              if (n < sizeof linkbuf)
-                buf = linkbuf;
-              else
-                {
-                  buf = extra_buf + path_max;
-                  n = __readlink (rpath, buf, path_max - 1);
-                  if (n < 0)
-                    goto error;
-                }
               buf[n] = '\0';
 
-              len = strlen (end);
-              if (path_max - n <= len)
+              char *extra_buf = extra_buffer.data;
+              idx_t end_idx;
+              if (end_in_extra_buffer)
+                end_idx = end - extra_buf;
+              idx_t len = strlen (end);
+              while (extra_buffer.length <= len + n)
                 {
-                  __set_errno (ENAMETOOLONG);
-                  goto error;
+                  if (!scratch_buffer_grow_preserve (&extra_buffer))
+                    goto error_nomem;
+                  extra_buf = extra_buffer.data;
                 }
+              if (end_in_extra_buffer)
+                end = extra_buf + end_idx;
 
               /* Careful here, end may be a pointer into extra_buf... */
               memmove (&extra_buf[n], end, len + 1);
               name = end = memcpy (extra_buf, buf, n);
+              end_in_extra_buffer = true;
 
               if (IS_ABSOLUTE_FILE_NAME (buf))
                 {
-                  size_t pfxlen = FILE_SYSTEM_PREFIX_LEN (buf);
+                  idx_t pfxlen = FILE_SYSTEM_PREFIX_LEN (buf);
 
-                  dest = __mempcpy (rpath, buf, pfxlen);
+                  dest = __mempcpy (rname, buf, pfxlen);
                   *dest++ = '/'; /* It's an absolute symlink */
                   if (DOUBLE_SLASH_IS_DISTINCT_ROOT)
                     {
@@ -299,34 +302,49 @@ __realpath (const char *name, char *resolved)
                 {
                   /* Back up to previous component, ignore if at root
                      already: */
-                  if (dest > rpath + prefix_len + 1)
-                    for (--dest; dest > rpath && !ISSLASH (dest[-1]); --dest)
+                  if (dest > rname + prefix_len + 1)
+                    for (--dest; dest > rname && !ISSLASH (dest[-1]); --dest)
                       continue;
-                  if (DOUBLE_SLASH_IS_DISTINCT_ROOT && dest == rpath + 1
+                  if (DOUBLE_SLASH_IS_DISTINCT_ROOT && dest == rname + 1
                       && ISSLASH (*dest) && !ISSLASH (dest[1]) && !prefix_len)
                     dest++;
                 }
             }
         }
     }
-  if (dest > rpath + prefix_len + 1 && ISSLASH (dest[-1]))
+  if (dest > rname + prefix_len + 1 && ISSLASH (dest[-1]))
     --dest;
-  if (DOUBLE_SLASH_IS_DISTINCT_ROOT && dest == rpath + 1 && !prefix_len
+  if (DOUBLE_SLASH_IS_DISTINCT_ROOT && dest == rname + 1 && !prefix_len
       && ISSLASH (*dest) && !ISSLASH (dest[1]))
     dest++;
-  *dest = '\0';
-
-  if (extra_buf)
-    freea (extra_buf);
-
-  return rpath;
+  failed = false;
 
 error:
-  if (extra_buf)
-    freea (extra_buf);
-  if (resolved == NULL)
-    free (rpath);
-  return NULL;
+  *dest++ = '\0';
+  if (resolved != NULL && dest - rname <= get_path_max ())
+    rname = strcpy (resolved, rname);
+
+error_nomem:
+  scratch_buffer_free (&extra_buffer);
+  scratch_buffer_free (&link_buffer);
+  if (failed || rname == resolved)
+    scratch_buffer_free (rname_buf);
+
+  if (failed)
+    return NULL;
+
+  if (rname == resolved)
+    return rname;
+  idx_t rname_size = dest - rname;
+  if (rname == rname_on_stack)
+    {
+      rname = malloc (rname_size);
+      if (rname == NULL)
+        return NULL;
+      return memcpy (rname, rname_on_stack, rname_size);
+    }
+  char *result = realloc (rname, rname_size);
+  return result != NULL ? result : rname;
 }
 libc_hidden_def (__realpath)
 versioned_symbol (libc, __realpath, realpath, GLIBC_2_3);
