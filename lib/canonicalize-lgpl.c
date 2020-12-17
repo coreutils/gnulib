@@ -33,6 +33,7 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <string.h>
+#include <sys/stat.h>
 #include <unistd.h>
 
 #include <scratch_buffer.h>
@@ -237,24 +238,28 @@ __realpath (const char *name, char *resolved)
           dest = __mempcpy (dest, start, startlen);
           *dest = '\0';
 
+          /* If STARTLEN == 0, RNAME ends in '/'; use stat rather than
+             readlink, because readlink might fail with EINVAL without
+             checking whether RNAME sans '/' is valid.  */
+          struct stat st;
+          char *buf = NULL;
           ssize_t n;
-          char *buf;
-          while (true)
+          if (startlen != 0)
             {
-              buf = link_buffer.data;
-              idx_t bufsize = link_buffer.length;
-              n = __readlink (rname, buf, bufsize - 1);
-              if (n < bufsize - 1)
-                break;
-              if (!scratch_buffer_grow (&link_buffer))
-                goto error_nomem;
+              while (true)
+                {
+                  buf = link_buffer.data;
+                  idx_t bufsize = link_buffer.length;
+                  n = __readlink (rname, buf, bufsize - 1);
+                  if (n < bufsize - 1)
+                    break;
+                  if (!scratch_buffer_grow (&link_buffer))
+                    goto error_nomem;
+                }
+              if (n < 0)
+                buf = NULL;
             }
-          if (n < 0)
-            {
-              if (errno != EINVAL)
-                goto error;
-            }
-          else
+          if (buf)
             {
               if (++num_links > __eloop_threshold ())
                 {
@@ -310,6 +315,10 @@ __realpath (const char *name, char *resolved)
                     dest++;
                 }
             }
+          else if (! (startlen == 0
+                      ? stat (rname, &st) == 0 || errno == EOVERFLOW
+                      : errno == EINVAL))
+            goto error;
         }
     }
   if (dest > rname + prefix_len + 1 && ISSLASH (dest[-1]))
