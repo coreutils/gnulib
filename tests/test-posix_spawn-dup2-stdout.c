@@ -53,7 +53,7 @@ SIGNATURE_CHECK (posix_spawn_file_actions_adddup2, int,
 #include <sys/types.h>
 #include <sys/wait.h>
 
-#define CHILD_PROGRAM_FILENAME "test-posix_spawn1.sh"
+#define CHILD_PROGRAM_FILENAME "test-posix_spawn-dup2-stdout.sh"
 
 static int
 fd_safer (int fd)
