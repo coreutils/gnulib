@@ -1,4 +1,4 @@
-# stdlib_h.m4 serial 52
+# stdlib_h.m4 serial 53
 dnl Copyright (C) 2007-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -22,7 +22,7 @@ AC_DEFUN([gl_STDLIB_H],
 #if HAVE_RANDOM_H
 # include <random.h>
 #endif
-    ]], [_Exit aligned_alloc atoll canonicalize_file_name
+    ]], [_Exit aligned_alloc atoll canonicalize_file_name free
     getloadavg getsubopt grantpt
     initstate initstate_r mbtowc mkdtemp mkostemp mkostemps mkstemp mkstemps
     posix_memalign posix_openpt ptsname ptsname_r qsort_r
@@ -62,6 +62,7 @@ AC_DEFUN([gl_STDLIB_H_DEFAULTS],
   GNULIB_ATOLL=0;         AC_SUBST([GNULIB_ATOLL])
   GNULIB_CALLOC_POSIX=0;  AC_SUBST([GNULIB_CALLOC_POSIX])
   GNULIB_CANONICALIZE_FILE_NAME=0;  AC_SUBST([GNULIB_CANONICALIZE_FILE_NAME])
+  GNULIB_FREE=0;          AC_SUBST([GNULIB_FREE])
   GNULIB_GETLOADAVG=0;    AC_SUBST([GNULIB_GETLOADAVG])
   GNULIB_GETSUBOPT=0;     AC_SUBST([GNULIB_GETSUBOPT])
   GNULIB_GRANTPT=0;       AC_SUBST([GNULIB_GRANTPT])
@@ -140,6 +141,7 @@ AC_DEFUN([gl_STDLIB_H_DEFAULTS],
   REPLACE_ALIGNED_ALLOC=0;   AC_SUBST([REPLACE_ALIGNED_ALLOC])
   REPLACE_CALLOC=0;          AC_SUBST([REPLACE_CALLOC])
   REPLACE_CANONICALIZE_FILE_NAME=0;  AC_SUBST([REPLACE_CANONICALIZE_FILE_NAME])
+  REPLACE_FREE=0;            AC_SUBST([REPLACE_FREE])
   REPLACE_INITSTATE=0;       AC_SUBST([REPLACE_INITSTATE])
   REPLACE_MALLOC=0;          AC_SUBST([REPLACE_MALLOC])
   REPLACE_MBTOWC=0;          AC_SUBST([REPLACE_MBTOWC])

@@ -1,5 +1,4 @@
-# Check whether free (NULL) is supposed to work.
-
+# free.m4 serial 1
 # Copyright (C) 2003-2005, 2009-2020 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -16,6 +15,7 @@
 
 AC_DEFUN([gl_FUNC_FREE],
 [
+  AC_REQUIRE([gl_STDLIB_H_DEFAULTS])
   AC_REQUIRE([AC_CANONICAL_HOST])
   AC_CACHE_CHECK([whether free (NULL) is known to work],
     [gl_cv_func_free],
@@ -67,10 +67,7 @@ AC_DEFUN([gl_FUNC_FREE],
 
   case $gl_cv_func_free,$gl_cv_func_free_preserves_errno in
    *yes,*yes) ;;
-   *)
-    AC_DEFINE([free], [rpl_free],
-      [Define to rpl_free if the replacement function should be used.])
-    ;;
+   *) REPLACE_FREE=1 ;;
   esac
 ])
 

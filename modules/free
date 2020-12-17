@@ -6,16 +6,15 @@ lib/free.c
 m4/free.m4
 
 Depends-on:
+stdlib
 
 configure.ac:
 gl_FUNC_FREE
-case $gl_cv_func_free,$gl_cv_func_free_errno in
- *yes,*yes) ;;
- *)
+if test $REPLACE_FREE = 1; then
   AC_LIBOBJ([free])
   gl_PREREQ_FREE
-  ;;
-esac
+fi
+gl_STDLIB_MODULE_INDICATOR([free])
 
 Makefile.am:
 
