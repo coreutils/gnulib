@@ -360,31 +360,15 @@ canonicalize_filename_mode_stk (const char *name, canonicalize_mode_t can_mode,
                     dest++;
                 }
             }
-          else if (can_exist != CAN_MISSING
-                   && (startlen == 0
-                       ? stat (rname, &st) < 0
-                       : !logical && readlink (rname, &discard, 1) < 0))
-            {
-              switch (errno)
-                {
-                case EINVAL:
-                case EOVERFLOW: /* Possible with stat.  */
-                  /* RNAME exists and is not a symbolic link.  */
-                  break;
-
-                case ENOENT:
-                  /* RNAME does not exist.  */
-                  if (can_exist == CAN_EXISTING
+          else if (! (can_exist == CAN_MISSING
+                      || (startlen == 0
+                          ? stat (rname, &st) == 0 || errno == EOVERFLOW
+                          : ((logical && 0 <= readlink (rname, &discard, 1))
+                             || errno == EINVAL))
                       || (can_exist == CAN_ALL_BUT_LAST
-                          && end[strspn (end, SLASHES)]))
-                    goto error;
-                  break;
-
-                default:
-                  /* Some other problem with RNAME.  */
-                  goto error;
-                }
-            }
+                          && errno == ENOENT
+                          && !end[strspn (end, SLASHES)])))
+            goto error;
         }
     }
   if (dest > rname + prefix_len + 1 && ISSLASH (dest[-1]))
