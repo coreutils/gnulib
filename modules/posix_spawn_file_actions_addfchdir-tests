@@ -1,6 +1,6 @@
 Files:
 tests/test-posix_spawn_file_actions_addfchdir.c
-tests/test-posix_spawn5.c
+tests/test-posix_spawn-fchdir.c
 tests/signature.h
 tests/macros.h
 
@@ -16,6 +16,6 @@ TESTS += test-posix_spawn_file_actions_addfchdir
 check_PROGRAMS += test-posix_spawn_file_actions_addfchdir
 
 if POSIX_SPAWN_PORTED
-TESTS += test-posix_spawn5
-check_PROGRAMS += test-posix_spawn5
+TESTS += test-posix_spawn-fchdir
+check_PROGRAMS += test-posix_spawn-fchdir
 endif
