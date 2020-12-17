@@ -31,7 +31,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-#define CHILD_PROGRAM_FILENAME "test-posix_spawn2.sh"
+#define CHILD_PROGRAM_FILENAME "test-posix_spawn-dup2-stdin.sh"
 
 static int
 fd_safer (int fd)
