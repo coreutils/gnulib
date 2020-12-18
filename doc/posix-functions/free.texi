@@ -4,10 +4,12 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/free.html}
 
-Gnulib module: free
+Gnulib module: free-posix
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+This function may clobber @code{errno} on many platforms.
 @end itemize
 
 Portability problems not fixed by Gnulib:

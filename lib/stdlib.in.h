@@ -284,7 +284,7 @@ _GL_CXXALIAS_SYS (fcvt, char *,
 _GL_CXXALIASWARN (fcvt);
 #endif
 
-#if @GNULIB_FREE@
+#if @GNULIB_FREE_POSIX@
 # if @REPLACE_FREE@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   undef free

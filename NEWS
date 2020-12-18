@@ -60,6 +60,8 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2020-12-18  free            This module, obsoleted in 2008, is gone.
+
 2020-12-14  findprog-in     The function 'find_in_given_path' now takes a 3rd
                             argument 'const char *directory'. To maintain the
                             previous behaviour, insert NULL as additional 3rd

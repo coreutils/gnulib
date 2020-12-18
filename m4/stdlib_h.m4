@@ -1,4 +1,4 @@
-# stdlib_h.m4 serial 53
+# stdlib_h.m4 serial 54
 dnl Copyright (C) 2007-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -62,7 +62,7 @@ AC_DEFUN([gl_STDLIB_H_DEFAULTS],
   GNULIB_ATOLL=0;         AC_SUBST([GNULIB_ATOLL])
   GNULIB_CALLOC_POSIX=0;  AC_SUBST([GNULIB_CALLOC_POSIX])
   GNULIB_CANONICALIZE_FILE_NAME=0;  AC_SUBST([GNULIB_CANONICALIZE_FILE_NAME])
-  GNULIB_FREE=0;          AC_SUBST([GNULIB_FREE])
+  GNULIB_FREE_POSIX=0;    AC_SUBST([GNULIB_FREE_POSIX])
   GNULIB_GETLOADAVG=0;    AC_SUBST([GNULIB_GETLOADAVG])
   GNULIB_GETSUBOPT=0;     AC_SUBST([GNULIB_GETSUBOPT])
   GNULIB_GRANTPT=0;       AC_SUBST([GNULIB_GRANTPT])

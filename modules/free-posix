@@ -14,7 +14,7 @@ if test $REPLACE_FREE = 1; then
   AC_LIBOBJ([free])
   gl_PREREQ_FREE
 fi
-gl_STDLIB_MODULE_INDICATOR([free])
+gl_STDLIB_MODULE_INDICATOR([free-posix])
 
 Makefile.am:
 
