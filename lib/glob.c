@@ -227,7 +227,7 @@ glob_lstat (glob_t *pglob, int flags, const char *fullname)
 static bool
 size_add_wrapv (size_t a, size_t b, size_t *r)
 {
-#if 5 <= __GNUC__ && !defined __ICC
+#if 7 <= __GNUC__ && !defined __ICC
   return __builtin_add_overflow (a, b, r);
 #else
   *r = a + b;
