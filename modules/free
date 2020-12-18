@@ -1,5 +1,5 @@
 Description:
-Work around systems where free sets errno or free (NULL) fails.
+Work around systems where free clobbers errno.
 
 Files:
 lib/free.c

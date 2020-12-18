@@ -1,4 +1,4 @@
-/* Work around incompatibility on older systems where free (NULL) fails.
+/* Make free() preserve errno.
 
    Copyright (C) 2003, 2006, 2009-2020 Free Software Foundation, Inc.
 
@@ -18,7 +18,6 @@
 /* written by Paul Eggert */
 
 #include <config.h>
-#undef free
 
 #include <stdlib.h>
 
@@ -26,12 +25,8 @@
 
 void
 rpl_free (void *p)
+#undef free
 {
-#ifdef CANNOT_FREE_NULL
-  if (!p)
-    return;
-#endif
-
   int err = errno;
   free (p);
   errno = err;
