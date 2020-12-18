@@ -47,6 +47,10 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::canonicalize_file_name, char *,
                  (const char *));
 #endif
 
+#if GNULIB_TEST_FREE_POSIX
+SIGNATURE_CHECK (GNULIB_NAMESPACE::free, void, (void *));
+#endif
+
 #if GNULIB_TEST_GETLOADAVG
 SIGNATURE_CHECK (GNULIB_NAMESPACE::getloadavg, int, (double[], int));
 #endif
