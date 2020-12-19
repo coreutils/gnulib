@@ -1,4 +1,4 @@
-# free.m4 serial 2
+# free.m4 serial 3
 # Copyright (C) 2003-2005, 2009-2020 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -9,7 +9,6 @@
 AC_DEFUN([gl_FUNC_FREE],
 [
   AC_REQUIRE([gl_STDLIB_H_DEFAULTS])
-  AC_REQUIRE([AC_CANONICAL_HOST])
 
   dnl In the next release of POSIX, free must preserve errno.
   dnl https://www.austingroupbugs.net/view.php?id=385
@@ -19,21 +18,16 @@ AC_DEFUN([gl_FUNC_FREE],
   dnl whatever that happens to be.
   AC_CACHE_CHECK([whether free is known to preserve errno],
     [gl_cv_func_free_preserves_errno],
-    [case $host_os in
-       *-gnu* | gnu*)
-         gl_cv_func_free_preserves_errno=yes;;
-       *)
-         AC_COMPILE_IFELSE(
-           [AC_LANG_PROGRAM(
-              [[#include <unistd.h>
-              ]],
-              [[#if _POSIX_VERSION <= 200809
-                  #error "'free' is not known to preserve errno"
-                #endif
-              ]])],
-           [gl_cv_func_free_preserves_errno=yes],
-           [gl_cv_func_free_preserves_errno=no]);;
-     esac
+    [AC_COMPILE_IFELSE(
+       [AC_LANG_PROGRAM(
+          [[#include <unistd.h>
+          ]],
+          [[#if _POSIX_VERSION <= 200809
+              #error "'free' is not known to preserve errno"
+            #endif
+          ]])],
+       [gl_cv_func_free_preserves_errno=yes],
+       [gl_cv_func_free_preserves_errno=no])
     ])
 
   case $gl_cv_func_free_preserves_errno in
