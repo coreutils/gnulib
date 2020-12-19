@@ -56,13 +56,41 @@
     {                                                                        \
       if (!(expr))                                                           \
         {                                                                    \
-          fprintf (ASSERT_STREAM, "%s:%d: assertion '%s' failed\n",     \
-                   __FILE__, __LINE__, #expr);                          \
+          fprintf (ASSERT_STREAM, "%s:%d: assertion '%s' failed\n",          \
+                   __FILE__, __LINE__, #expr);                               \
           fflush (ASSERT_STREAM);                                            \
           abort ();                                                          \
         }                                                                    \
     }                                                                        \
   while (0)
+
+/* Like ASSERT, except that it uses no stdio.
+   Requires #include <string.h> and #include <unistd.h>.  */
+#define ASSERT_NO_STDIO(expr) \
+  do                                                        \
+    {                                                       \
+      if (!(expr))                                          \
+        {                                                   \
+          WRITE_TO_STDERR (__FILE__);                       \
+          WRITE_TO_STDERR (":");                            \
+          WRITE_MACROEXPANDED_INTEGER_TO_STDERR (__LINE__); \
+          WRITE_TO_STDERR (": assertion '");                \
+          WRITE_TO_STDERR (#expr);                          \
+          WRITE_TO_STDERR ("' failed\n");                   \
+          abort ();                                         \
+        }                                                   \
+    }                                                       \
+  while (0)
+#define WRITE_MACROEXPANDED_INTEGER_TO_STDERR(integer) \
+  WRITE_INTEGER_TO_STDERR(integer)
+#define WRITE_INTEGER_TO_STDERR(integer) \
+  WRITE_TO_STDERR (#integer)
+#define WRITE_TO_STDERR(string_literal) \
+  {                                     \
+    const char *s = string_literal;     \
+    int ret = write (2, s, strlen (s)); \
+    (void) ret;                         \
+  }
 
 /* SIZEOF (array)
    returns the number of elements of an array.  It works for arrays that are
