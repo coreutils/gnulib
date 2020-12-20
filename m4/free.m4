@@ -1,4 +1,4 @@
-# free.m4 serial 4
+# free.m4 serial 5
 # Copyright (C) 2003-2005, 2009-2020 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -9,12 +9,13 @@
 AC_DEFUN([gl_FUNC_FREE],
 [
   AC_REQUIRE([gl_STDLIB_H_DEFAULTS])
-  AC_REQUIRE([AC_CANONICAL_HOST])
 
   dnl In the next release of POSIX, free must preserve errno.
   dnl https://www.austingroupbugs.net/view.php?id=385
   dnl https://sourceware.org/bugzilla/show_bug.cgi?id=17924
-  dnl So far, we know of two platforms that do this:
+  dnl So far, we know of three platforms that do this:
+  dnl * glibc >= 2.33, thanks to the fix for this bug:
+  dnl   <https://sourceware.org/bugzilla/show_bug.cgi?id=17924>
   dnl * OpenBSD >= 4.5, thanks to this commit:
   dnl   <https://cvsweb.openbsd.org/cgi-bin/cvsweb/src/lib/libc/stdlib/malloc.c.diff?r1=1.100&r2=1.101&f=h>
   dnl * Solaris, because its malloc() implementation is based on brk(),
@@ -23,21 +24,19 @@ AC_DEFUN([gl_FUNC_FREE],
   dnl documentation, or by code inspection of the free() implementation in libc.
   AC_CACHE_CHECK([whether free is known to preserve errno],
     [gl_cv_func_free_preserves_errno],
-    [case "$host_os" in
-       # Say yes only if we know it.
-       openbsd* | solaris*)
-         gl_cv_func_free_preserves_errno=yes
-         ;;
-       # It's no on Linux, for implementations that call munmap(), due to
-       # /proc/sys/vm/max_map_count.
-       linux*)
-         gl_cv_func_free_preserves_errno=no
-         ;;
-       # If we don't know, obey --enable-cross-guesses.
-       *)
-         gl_cv_func_free_preserves_errno="$gl_cross_guess_normal"
-         ;;
-     esac
+    [AC_COMPILE_IFELSE(
+       [AC_LANG_PROGRAM(
+          [[#include <stdlib.h>
+          ]],
+          [[#if 2 < __GLIBC__ + (33 <= __GLIBC_MINOR__)
+            #elif defined __OpenBSD__
+            #elif defined __sun
+            #else
+              #error "'free' is not known to preserve errno"
+            #endif
+          ]])],
+       [gl_cv_func_free_preserves_errno=yes],
+       [gl_cv_func_free_preserves_errno=no])
     ])
 
   case $gl_cv_func_free_preserves_errno in
