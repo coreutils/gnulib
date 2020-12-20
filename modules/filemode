@@ -6,7 +6,6 @@ Files:
 lib/filemode.h
 lib/filemode.c
 m4/filemode.m4
-m4/st_dm_mode.m4
 
 Depends-on:
 sys_stat
