@@ -43,6 +43,7 @@
 
 #if ! (HAVE_PATHCONF && defined _PC_NAME_MAX)
 # define pathconf(file, option) (errno = -1)
+# define fpathconf(fd, option) (errno = -1)
 #endif
 
 #ifndef _POSIX_NAME_MAX
