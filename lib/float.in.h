@@ -93,11 +93,14 @@
      extern const long double LDBL_MAX;
 
    Unfortunately, this is not a constant expression.  */
+# if !GNULIB_defined_long_double_union
 union gl_long_double_union
   {
     struct { unsigned int lo; unsigned int hi; unsigned int exponent; } xd;
     long double ld;
   };
+#  define GNULIB_defined_long_double_union 1
+# endif
 extern const union gl_long_double_union gl_LDBL_MAX;
 # define LDBL_MAX (gl_LDBL_MAX.ld)
 /* Minimum e such that 10^e is in the range of normalized numbers.  */
