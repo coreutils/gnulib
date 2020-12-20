@@ -389,7 +389,7 @@ setup_ ()
   if test "$VERBOSE" = yes; then
     # Test whether set -x may cause the selected shell to corrupt an
     # application's stderr.  Many do, including zsh-4.3.10 and the /bin/sh
-    # from SunOS 5.11, OpenBSD 4.7 and Irix 5.x and 6.5.
+    # from SunOS 5.11, OpenBSD 4.7 and Irix 6.5.
     # If enabling verbose output this way would cause trouble, simply
     # issue a warning and refrain.
     if $gl_set_x_corrupts_stderr_; then
