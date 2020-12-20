@@ -149,11 +149,14 @@ extern const union gl_long_double_union gl_LDBL_MAX;
 
    Unfortunately, this is not a constant expression, and the latter expression
    does not work well when GCC is optimizing..  */
+# if !GNULIB_defined_long_double_union
 union gl_long_double_union
   {
     struct { double hi; double lo; } dd;
     long double ld;
   };
+#  define GNULIB_defined_long_double_union 1
+# endif
 extern const union gl_long_double_union gl_LDBL_MAX;
 # define LDBL_MAX (gl_LDBL_MAX.ld)
 #endif
