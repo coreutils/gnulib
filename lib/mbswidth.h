@@ -18,12 +18,7 @@
 
 /* Avoid a clash of our mbswidth() with a function of the same name defined
    in UnixWare 7.1.1 <wchar.h>.  We need this #include before the #define
-   below.
-   However, we don't want to #include <wchar.h> on all platforms because
-   - Tru64 with Desktop Toolkit C has a bug: <stdio.h> must be included before
-     <wchar.h>.
-   - BSD/OS 4.1 has a bug: <stdio.h> and <time.h> must be included before
-     <wchar.h>.  */
+   below.  */
 #if HAVE_DECL_MBSWIDTH_IN_WCHAR_H
 # include <wchar.h>
 #endif

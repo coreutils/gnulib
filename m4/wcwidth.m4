@@ -1,4 +1,4 @@
-# wcwidth.m4 serial 31
+# wcwidth.m4 serial 32
 dnl Copyright (C) 2006-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -21,13 +21,6 @@ AC_DEFUN([gl_FUNC_WCWIDTH],
   AC_CHECK_DECLS([wcwidth], [], [], [[
 /* AIX 3.2.5 declares wcwidth in <string.h>. */
 #include <string.h>
-/* Tru64 with Desktop Toolkit C has a bug: <stdio.h> must be included before
-   <wchar.h>.
-   BSD/OS 4.0.1 has a bug: <stddef.h>, <stdio.h> and <time.h> must be included
-   before <wchar.h>.  */
-#include <stddef.h>
-#include <stdio.h>
-#include <time.h>
 #include <wchar.h>
 ]])
   if test $ac_cv_have_decl_wcwidth != yes; then
@@ -64,13 +57,6 @@ AC_DEFUN([gl_FUNC_WCWIDTH],
 #include <locale.h>
 /* AIX 3.2.5 declares wcwidth in <string.h>. */
 #include <string.h>
-/* Tru64 with Desktop Toolkit C has a bug: <stdio.h> must be included before
-   <wchar.h>.
-   BSD/OS 4.0.1 has a bug: <stddef.h>, <stdio.h> and <time.h> must be included
-   before <wchar.h>.  */
-#include <stddef.h>
-#include <stdio.h>
-#include <time.h>
 #include <wchar.h>
 #if !HAVE_DECL_WCWIDTH
 extern

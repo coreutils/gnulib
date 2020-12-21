@@ -1,4 +1,4 @@
-# mbswidth.m4 serial 18
+# mbswidth.m4 serial 19
 dnl Copyright (C) 2000-2002, 2004, 2006-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -18,19 +18,10 @@ AC_DEFUN([gl_MBSWIDTH],
     [ac_cv_have_decl_mbswidth],
     [AC_COMPILE_IFELSE(
        [AC_LANG_PROGRAM(
-          [[
-/* Tru64 with Desktop Toolkit C has a bug: <stdio.h> must be included before
-   <wchar.h>.
-   BSD/OS 4.0.1 has a bug: <stddef.h>, <stdio.h> and <time.h> must be included
-   before <wchar.h>.  */
-#include <stddef.h>
-#include <stdio.h>
-#include <time.h>
-#include <wchar.h>
+          [[#include <wchar.h>
           ]],
-          [[
-  char *p = (char *) mbswidth;
-  return !p;
+          [[char *p = (char *) mbswidth;
+            return !p;
           ]])],
        [ac_cv_have_decl_mbswidth=yes],
        [ac_cv_have_decl_mbswidth=no])])

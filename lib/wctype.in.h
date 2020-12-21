@@ -45,14 +45,7 @@
 #ifndef _@GUARD_PREFIX@_WCTYPE_H
 
 #if @HAVE_WINT_T@
-/* Solaris 2.5 has a bug: <wchar.h> must be included before <wctype.h>.
-   Tru64 with Desktop Toolkit C has a bug: <stdio.h> must be included before
-   <wchar.h>.
-   BSD/OS 4.0.1 has a bug: <stddef.h>, <stdio.h> and <time.h> must be
-   included before <wchar.h>.  */
-# include <stddef.h>
-# include <stdio.h>
-# include <time.h>
+/* Solaris 2.5 has a bug: <wchar.h> must be included before <wctype.h>.  */
 # include <wchar.h>
 #endif
 

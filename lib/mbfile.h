@@ -51,13 +51,6 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
-
-/* Tru64 with Desktop Toolkit C has a bug: <stdio.h> must be included before
-   <wchar.h>.
-   BSD/OS 4.1 has a bug: <stdio.h> and <time.h> must be included before
-   <wchar.h>.  */
-#include <stdio.h>
-#include <time.h>
 #include <wchar.h>
 
 #include "mbchar.h"

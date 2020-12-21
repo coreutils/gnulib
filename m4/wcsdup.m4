@@ -1,4 +1,4 @@
-# wcsdup.m4 serial 3
+# wcsdup.m4 serial 4
 dnl Copyright (C) 2011-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -11,15 +11,7 @@ AC_DEFUN([gl_FUNC_WCSDUP],
     [gl_cv_func_wcsdup],
     [AC_LINK_IFELSE(
        [AC_LANG_PROGRAM(
-          [[
-/* Tru64 with Desktop Toolkit C has a bug: <stdio.h> must be included before
-   <wchar.h>.
-   BSD/OS 4.0.1 has a bug: <stddef.h>, <stdio.h> and <time.h> must be included
-   before <wchar.h>.  */
-#include <stddef.h>
-#include <stdio.h>
-#include <time.h>
-#include <wchar.h>
+          [[#include <wchar.h>
           ]GL_MDA_DEFINES],
           [[return wcsdup (L"hello") != NULL;]])
        ],
