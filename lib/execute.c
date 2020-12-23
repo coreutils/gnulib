@@ -191,6 +191,7 @@ execute (const char *progname,
       exitcode = spawnpvech (P_WAIT, prog_path, argv + 1,
                              (const char * const *) environ, directory,
                              stdin_handle, stdout_handle, stderr_handle);
+# if 0 /* Executing arbitrary files as shell scripts is unsecure.  */
       if (exitcode == -1 && errno == ENOEXEC)
         {
           /* prog is not a native executable.  Try to execute it as a
@@ -201,6 +202,7 @@ execute (const char *progname,
                                  (const char * const *) environ, directory,
                                  stdin_handle, stdout_handle, stderr_handle);
         }
+# endif
     }
   if (exitcode == -1)
     saved_errno = errno;

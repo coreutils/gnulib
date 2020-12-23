@@ -75,9 +75,6 @@
 # define sigprocmask __sigprocmask
 # define strchrnul __strchrnul
 # define vfork __vfork
-#else
-# undef internal_function
-# define internal_function /* empty */
 #endif
 
 
@@ -103,36 +100,6 @@ __spawni (pid_t *pid, const char *file,
 }
 
 #else
-
-
-/* The file is accessible but it is not an executable file.  Invoke
-   the shell to interpret it as a script.  */
-static void
-internal_function
-script_execute (const char *file, const char *const argv[],
-                const char *const envp[])
-{
-  /* Count the arguments.  */
-  int argc = 0;
-  while (argv[argc++])
-    ;
-
-  /* Construct an argument list for the shell.  */
-  {
-    const char **new_argv =
-      (const char **) alloca ((argc + 1) * sizeof (const char *));
-    new_argv[0] = _PATH_BSHELL;
-    new_argv[1] = file;
-    while (argc > 1)
-      {
-        new_argv[argc] = argv[argc - 1];
-        --argc;
-      }
-
-    /* Execute the shell.  */
-    execve (new_argv[0], (char * const *) new_argv, (char * const *) envp);
-  }
-}
 
 
 /* Spawn a new process executing PATH with the attributes describes in *ATTRP.
@@ -307,9 +274,6 @@ __spawni (pid_t *pid, const char *file,
       /* The FILE parameter is actually a path.  */
       execve (file, (char * const *) argv, (char * const *) envp);
 
-      if (errno == ENOEXEC)
-        script_execute (file, argv, envp);
-
       /* Oh, oh.  'execve' returns.  This is bad.  */
       _exit (SPAWN_ERROR);
     }
@@ -357,9 +321,6 @@ __spawni (pid_t *pid, const char *file,
 
       /* Try to execute this name.  If it works, execv will not return.  */
       execve (startp, (char * const *) argv, (char * const *) envp);
-
-      if (errno == ENOEXEC)
-        script_execute (startp, argv, envp);
 
       switch (errno)
         {

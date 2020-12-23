@@ -287,6 +287,7 @@ create_pipe (const char *progname,
       child = spawnpvech (P_NOWAIT, prog_path, argv + 1,
                           (const char * const *) environ, directory,
                           stdin_handle, stdout_handle, stderr_handle);
+#  if 0 /* Executing arbitrary files as shell scripts is unsecure.  */
       if (child == -1 && errno == ENOEXEC)
         {
           /* prog is not a native executable.  Try to execute it as a
@@ -297,6 +298,7 @@ create_pipe (const char *progname,
                               (const char * const *) environ, directory,
                               stdin_handle, stdout_handle, stderr_handle);
         }
+#  endif
     }
  failed:
   if (child == -1)
@@ -374,6 +376,7 @@ create_pipe (const char *progname,
     {
       child = _spawnvpe (P_NOWAIT, prog_path, argv + 1,
                          (const char **) environ);
+#  if 0 /* Executing arbitrary files as shell scripts is unsecure.  */
       if (child == -1 && errno == ENOEXEC)
         {
           /* prog is not a native executable.  Try to execute it as a
@@ -382,6 +385,7 @@ create_pipe (const char *progname,
           child = _spawnvpe (P_NOWAIT, argv[0], argv,
                              (const char **) environ);
         }
+#  endif
     }
   if (child == -1)
     saved_errno = errno;

@@ -60,6 +60,13 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2020-12-23  execute         These functions no longer execute scripts without
+            spawn-pipe      '#!' marker through /bin/sh. To execute such a
+            posix_spawn     script as a shell script, either add a '#!/bin/sh'
+            posix_spawnp    marker in the first line, or specify "/bin/sh" as
+                            the program to execute and the script as its first
+                            argument.
+
 2020-12-18  free            This module, obsoleted in 2008, is gone.
 
 2020-12-14  findprog-in     The function 'find_in_given_path' now takes a 3rd
