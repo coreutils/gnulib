@@ -1,6 +1,8 @@
 Files:
 tests/test-posix_spawn-open1.c
 tests/test-posix_spawn-open2.c
+tests/test-posix_spawn-inherit0.c
+tests/test-posix_spawn-inherit1.c
 tests/signature.h
 
 Depends-on:
@@ -11,6 +13,7 @@ stdbool
 unistd
 sys_wait
 environ
+fflush
 
 configure.ac:
 AC_EGREP_CPP([notposix], [[
@@ -26,8 +29,12 @@ Makefile.am:
 if POSIX_SPAWN_PORTED
 TESTS += \
   test-posix_spawn-open1 \
-  test-posix_spawn-open2
+  test-posix_spawn-open2 \
+  test-posix_spawn-inherit0 \
+  test-posix_spawn-inherit1
 check_PROGRAMS += \
   test-posix_spawn-open1 \
-  test-posix_spawn-open2
+  test-posix_spawn-open2 \
+  test-posix_spawn-inherit0 \
+  test-posix_spawn-inherit1
 endif
