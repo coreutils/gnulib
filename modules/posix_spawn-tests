@@ -1,5 +1,6 @@
 Files:
 tests/test-posix_spawn-open1.c
+tests/test-posix_spawn-open2.c
 tests/signature.h
 
 Depends-on:
@@ -23,6 +24,10 @@ AM_CONDITIONAL([POSIX_SPAWN_PORTED], [test $posix_spawn_ported = yes])
 
 Makefile.am:
 if POSIX_SPAWN_PORTED
-TESTS += test-posix_spawn-open1
-check_PROGRAMS += test-posix_spawn-open1
+TESTS += \
+  test-posix_spawn-open1 \
+  test-posix_spawn-open2
+check_PROGRAMS += \
+  test-posix_spawn-open1 \
+  test-posix_spawn-open2
 endif

@@ -1,4 +1,4 @@
-/* Test of posix_spawn() function.
+/* Test of posix_spawn() function: writing to a subprocess.
    Copyright (C) 2008-2020 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
