@@ -72,6 +72,13 @@ extern const char ** prepare_spawn (const char * const *argv,
    NULL is returned, with errno set.  */
 extern char * compose_command (const char * const *argv);
 
+/* Composes the block of memory that contains the environment variables.
+   ENVP must contain an environment (a NULL-terminated array of string of the
+   form VARIABLE=VALUE).
+   Returns a freshly allocated block of memory.  In case of memory allocation
+   failure, NULL is returned, with errno set.  */
+extern char * compose_envblock (const char * const *envp);
+
 /* Creates a subprocess.
    MODE is either P_WAIT or P_NOWAIT.
    PROGNAME is the program to invoke.

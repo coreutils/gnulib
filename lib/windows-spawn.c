@@ -244,6 +244,65 @@ compose_command (const char * const *argv)
   return command;
 }
 
+char *
+compose_envblock (const char * const *envp)
+{
+  /* This is a bit hairy, because we don't have a lock that would prevent other
+     threads from making modifications in ENVP.  So, just make sure we don't
+     crash; but if other threads are making modifications, part of the result
+     may be wrong.  */
+ retry:
+  {
+    /* Guess the size of the needed block of memory.
+       The guess will be exact if other threads don't make modifications.  */
+    size_t total_size = 0;
+    const char * const *ep;
+    const char *p;
+    for (ep = envp; (p = *ep) != NULL; ep++)
+      total_size += strlen (p) + 1;
+    size_t envblock_size = total_size;
+
+    /* Allocate the block of memory.  */
+    char *envblock = (char *) malloc (envblock_size + 1);
+    if (envblock == NULL)
+      {
+        errno = ENOMEM;
+        return NULL;
+      }
+    size_t envblock_used = 0;
+    for (ep = envp; (p = *ep) != NULL; ep++)
+      {
+        size_t size = strlen (p) + 1;
+        if (envblock_used + size > envblock_size)
+          {
+            /* Other threads did modifications.  Need more memory.  */
+            envblock_size += envblock_size / 2;
+            if (envblock_used + size > envblock_size)
+              envblock_size = envblock_used + size;
+
+            char *new_envblock = (char *) realloc (envblock, envblock_size + 1);
+            if (new_envblock == NULL)
+              {
+                free (envblock);
+                errno = ENOMEM;
+                return NULL;
+              }
+            envblock = new_envblock;
+          }
+        memcpy (envblock + envblock_used, p, size);
+        envblock_used += size;
+        if (envblock[envblock_used - 1] != '\0')
+          {
+            /* Other threads did modifications.  Restart.  */
+            free (envblock);
+            goto retry;
+          }
+      }
+    envblock[envblock_used] = '\0';
+    return envblock;
+  }
+}
+
 intptr_t
 spawnpvech (int mode,
             const char *progname, const char * const *argv,
@@ -278,45 +337,10 @@ spawnpvech (int mode,
   if (envp == NULL)
     envblock = NULL;
   else
-   retry:
     {
-      /* Guess the size of the needed block of memory.
-         The guess will be exact if other threads don't make modifications.  */
-      size_t total_size = 0;
-      const char * const *ep;
-      const char *p;
-      for (ep = envp; (p = *ep) != NULL; ep++)
-        total_size += strlen (p) + 1;
-      size_t envblock_size = total_size;
-      envblock = (char *) malloc (envblock_size + 1);
+      envblock = compose_envblock (envp);
       if (envblock == NULL)
         goto out_of_memory_2;
-      size_t envblock_used = 0;
-      for (ep = envp; (p = *ep) != NULL; ep++)
-        {
-          size_t size = strlen (p) + 1;
-          if (envblock_used + size > envblock_size)
-            {
-              /* Other threads did modifications.  Need more memory.  */
-              envblock_size += envblock_size / 2;
-              if (envblock_used + size > envblock_size)
-                envblock_size = envblock_used + size;
-
-              char *new_envblock = (char *) realloc (envblock, envblock_size + 1);
-              if (new_envblock == NULL)
-                goto out_of_memory_3;
-              envblock = new_envblock;
-            }
-          memcpy (envblock + envblock_used, p, size);
-          envblock_used += size;
-          if (envblock[envblock_used - 1] != '\0')
-            {
-              /* Other threads did modifications.  Restart.  */
-              free (envblock);
-              goto retry;
-            }
-        }
-      envblock[envblock_used] = '\0';
     }
 
   /* CreateProcess
