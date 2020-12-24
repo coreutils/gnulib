@@ -1,4 +1,4 @@
-# serial 13
+# serial 14
 # See if we need to provide linkat replacement.
 
 dnl Copyright (C) 2009-2020 Free Software Foundation, Inc.
@@ -16,7 +16,6 @@ AC_DEFUN([gl_FUNC_LINKAT],
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CHECK_FUNCS_ONCE([linkat symlink])
-  AC_CHECK_HEADERS_ONCE([sys/param.h])
   if test $ac_cv_func_linkat = no; then
     HAVE_LINKAT=0
   else
