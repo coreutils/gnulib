@@ -29,6 +29,7 @@
 #include <stdlib.h>
 
 #include <errno.h>
+#include <fcntl.h>
 #include <limits.h>
 #include <stdbool.h>
 #include <stddef.h>
@@ -46,12 +47,19 @@ typedef ptrdiff_t idx_t;
 # define FILE_SYSTEM_PREFIX_LEN(name) 0
 # define IS_ABSOLUTE_FILE_NAME(name) ISSLASH(*(name))
 # define ISSLASH(c) ((c) == '/')
+# include <sysdep.h>
+# ifdef __ASSUME_FACCESSAT2
+#  define FACCESSAT_NEVER_EOVERFLOWS __ASSUME_FACCESSAT2
+# else
+#  define FACCESSAT_NEVER_EOVERFLOWS true
+# endif
 #else
 # define __canonicalize_file_name canonicalize_file_name
 # define __realpath realpath
 # include "idx.h"
 # include "pathmax.h"
 # include "filename.h"
+# define __faccessat faccessat
 # if defined _WIN32 && !defined __CYGWIN__
 #  define __getcwd _getcwd
 # elif HAVE_GETCWD
@@ -88,10 +96,29 @@ typedef ptrdiff_t idx_t;
 #endif
 
 #ifndef DOUBLE_SLASH_IS_DISTINCT_ROOT
-# define DOUBLE_SLASH_IS_DISTINCT_ROOT 0
+# define DOUBLE_SLASH_IS_DISTINCT_ROOT false
+#endif
+#ifndef FACCESSAT_NEVER_EOVERFLOWS
+# define FACCESSAT_NEVER_EOVERFLOWS false
 #endif
 
 #if !FUNC_REALPATH_WORKS || defined _LIBC
+
+/* Return true if FILE's existence can be shown, false (setting errno)
+   otherwise.  Follow symbolic links.  */
+static bool
+file_accessible (char const *file)
+{
+# if defined _LIBC || HAVE_FACCESSAT
+  int r = __faccessat (AT_FDCWD, file, F_OK, AT_EACCESS);
+# else
+  struct stat st;
+  int r = __stat (file, &st);
+# endif
+
+  return ((!FACCESSAT_NEVER_EOVERFLOWS && r < 0 && errno == EOVERFLOW)
+          || r == 0);
+}
 
 /* True if concatenating END as a suffix to a file name means that the
    code needs to check that the file name is that of a searchable
@@ -125,18 +152,26 @@ suffix_requires_dir_check (char const *end)
   return false;
 }
 
-/* Return true if DIR is a directory, false (setting errno) otherwise.
+/* Append this to a file name to test whether it is a searchable directory.
+   On POSIX platforms "/" suffices, but "/./" is sometimes needed on
+   macOS 10.13 <https://bugs.gnu.org/30350>, and should also work on
+   platforms like AIX 7.2 that need at least "/.".  */
+
+#if defined _LIBC || defined LSTAT_FOLLOWS_SLASHED_SYMLINK
+static char const dir_suffix[] = "/";
+#else
+static char const dir_suffix[] = "/./";
+#endif
+
+/* Return true if DIR is a searchable dir, false (setting errno) otherwise.
    DIREND points to the NUL byte at the end of the DIR string.
-   Store garbage into DIREND[0] and DIREND[1].  */
+   Store garbage into DIREND[0 .. strlen (dir_suffix)].  */
 
 static bool
 dir_check (char *dir, char *dirend)
 {
-  /* Append "/"; otherwise EOVERFLOW would be ambiguous.  */
-  strcpy (dirend, "/");
-
-  struct stat st;
-  return __stat (dir, &st) == 0 || errno == EOVERFLOW;
+  strcpy (dirend, dir_suffix);
+  return file_accessible (dir);
 }
 
 static idx_t
@@ -280,8 +315,8 @@ realpath_stk (const char *name, char *resolved,
           if (!ISSLASH (dest[-1]))
             *dest++ = '/';
 
-          enum { dir_check_room = sizeof "/" };
-          while (rname + rname_buf->length - dest < startlen + dir_check_room)
+          while (rname + rname_buf->length - dest
+                 < startlen + sizeof dir_suffix)
             {
               idx_t dest_offset = dest - rname;
               if (!scratch_buffer_grow_preserve (rname_buf))

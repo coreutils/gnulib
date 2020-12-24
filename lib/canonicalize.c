@@ -19,6 +19,7 @@
 #include "canonicalize.h"
 
 #include <errno.h>
+#include <fcntl.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdlib.h>
@@ -36,7 +37,10 @@
 #include "filename.h"
 
 #ifndef DOUBLE_SLASH_IS_DISTINCT_ROOT
-# define DOUBLE_SLASH_IS_DISTINCT_ROOT 0
+# define DOUBLE_SLASH_IS_DISTINCT_ROOT false
+#endif
+#ifndef FACCESSAT_NEVER_EOVERFLOWS
+# define FACCESSAT_NEVER_EOVERFLOWS false
 #endif
 
 #if ISSLASH ('\\')
@@ -44,6 +48,22 @@
 #else
 # define SLASHES "/"
 #endif
+
+/* Return true if FILE's existence can be shown, false (setting errno)
+   otherwise.  Follow symbolic links.  */
+static bool
+file_accessible (char const *file)
+{
+# if HAVE_FACCESSAT
+  int r = faccessat (AT_FDCWD, file, F_OK, AT_EACCESS);
+# else
+  struct stat st;
+  int r = stat (file, &st);
+# endif
+
+  return ((!FACCESSAT_NEVER_EOVERFLOWS && r < 0 && errno == EOVERFLOW)
+          || r == 0);
+}
 
 /* True if concatenating END as a suffix to a file name means that the
    code needs to check that the file name is that of a searchable
@@ -77,18 +97,26 @@ suffix_requires_dir_check (char const *end)
   return false;
 }
 
-/* Return true if DIR is a directory, false (setting errno) otherwise.
+/* Append this to a file name to test whether it is a searchable directory.
+   On POSIX platforms "/" suffices, but "/./" is sometimes needed on
+   macOS 10.13 <https://bugs.gnu.org/30350>, and should also work on
+   platforms like AIX 7.2 that need at least "/.".  */
+
+#ifdef LSTAT_FOLLOWS_SLASHED_SYMLINK
+static char const dir_suffix[] = "/";
+#else
+static char const dir_suffix[] = "/./";
+#endif
+
+/* Return true if DIR is a searchable dir, false (setting errno) otherwise.
    DIREND points to the NUL byte at the end of the DIR string.
-   Store garbage into DIREND[0] and DIREND[1].  */
+   Store garbage into DIREND[0 .. strlen (dir_suffix)].  */
 
 static bool
 dir_check (char *dir, char *dirend)
 {
-  /* Append "/"; otherwise EOVERFLOW would be ambiguous.  */
-  strcpy (dirend, "/");
-
-  struct stat st;
-  return stat (dir, &st) == 0 || errno == EOVERFLOW;
+  strcpy (dirend, dir_suffix);
+  return file_accessible (dir);
 }
 
 #if !((HAVE_CANONICALIZE_FILE_NAME && FUNC_REALPATH_WORKS)      \
@@ -293,8 +321,8 @@ canonicalize_filename_mode_stk (const char *name, canonicalize_mode_t can_mode,
           if (!ISSLASH (dest[-1]))
             *dest++ = '/';
 
-          enum { dir_check_room = sizeof "/" };
-          while (rname + rname_buf->length - dest < startlen + dir_check_room)
+          while (rname + rname_buf->length - dest
+                 < startlen + sizeof dir_suffix)
             {
               idx_t dest_offset = dest - rname;
               if (!scratch_buffer_grow_preserve (rname_buf))
@@ -406,8 +434,9 @@ canonicalize_filename_mode_stk (const char *name, canonicalize_mode_t can_mode,
           else if (! (can_exist == CAN_MISSING
                       || (suffix_requires_dir_check (end)
                           ? dir_check (rname, dest)
-                          : ((logical && 0 <= readlink (rname, &discard, 1))
-                             || errno == EINVAL))
+                          : !logical
+                          ? errno == EINVAL
+                          : *end || file_accessible (rname))
                       || (can_exist == CAN_ALL_BUT_LAST
                           && errno == ENOENT
                           && !end[strspn (end, SLASHES)])))
