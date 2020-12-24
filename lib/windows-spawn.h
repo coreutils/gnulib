@@ -18,11 +18,13 @@
 #ifndef _WINDOWS_SPAWN_H
 #define _WINDOWS_SPAWN_H
 
+#include <stdbool.h>
 #include <stdint.h>
 
 /* Get declarations of the native Windows API functions.  */
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
+
 
 /* Prepares an argument vector before calling spawn().
 
@@ -78,6 +80,47 @@ extern char * compose_command (const char * const *argv);
    Returns a freshly allocated block of memory.  In case of memory allocation
    failure, NULL is returned, with errno set.  */
 extern char * compose_envblock (const char * const *envp);
+
+
+/* This struct keeps track of which handles to pass to a subprocess, and with
+   which flags.  All of the handles here are inheritable.
+   Regarding handle inheritance, see
+   <https://docs.microsoft.com/en-us/windows/win32/sysinfo/handle-inheritance>  */
+struct inheritable_handles
+{
+  /* The number of occupied entries in the two arrays below.
+     3 <= count <= allocated.  */
+  size_t count;
+  /* The number of allocated entries in the two arrays below.  */
+  size_t allocated;
+  /* handles[0..count-1] are the occupied entries.
+     handles[fd] is either INVALID_HANDLE_VALUE or an inheritable handle.  */
+  HANDLE *handles;
+  /* flags[0..count-1] are the occupied entries.
+     flags[fd] is only relevant if handles[fd] != INVALID_HANDLE_VALUE.
+     It is a bit mask consisting of:
+       - 32 for O_APPEND.
+   */
+  unsigned char *flags;
+};
+
+/* Initializes a set of inheritable handles, filling in all inheritable handles
+   assigned to file descriptors.
+   If DUPLICATE is true, the handles stored in the set are duplicates.
+   Returns 0 upon success.  In case of failure, -1 is returned, with errno set.
+ */
+extern int init_inheritable_handles (struct inheritable_handles *inh_handles,
+                                     bool duplicate);
+
+/* Fills a set of inheritable handles into a STARTUPINFO for CreateProcess().
+   Returns 0 upon success.  In case of failure, -1 is returned, with errno set.
+ */
+extern int compose_handles_block (const struct inheritable_handles *inh_handles,
+                                  STARTUPINFO *sinfo);
+
+/* Frees the memory held by a set of inheritable handles.  */
+extern void free_inheritable_handles (struct inheritable_handles *inh_handles);
+
 
 /* Creates a subprocess.
    MODE is either P_WAIT or P_NOWAIT.

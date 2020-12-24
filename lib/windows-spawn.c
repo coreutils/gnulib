@@ -303,6 +303,229 @@ compose_envblock (const char * const *envp)
   }
 }
 
+int
+init_inheritable_handles (struct inheritable_handles *inh_handles,
+                          bool duplicate)
+{
+  /* Determine the minimal count of handles we need to care about.  */
+  size_t handles_count;
+  {
+    /* _getmaxstdio
+       <https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/getmaxstdio>
+       Default value is 512.  */
+    unsigned int fdmax = _getmaxstdio ();
+    if (fdmax < 3)
+      fdmax = 3;
+    for (; fdmax > 3; fdmax--)
+      {
+        unsigned int fd = fdmax - 1;
+        /* _get_osfhandle
+           <https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/get-osfhandle>  */
+        HANDLE handle = (HANDLE) _get_osfhandle (fd);
+        if (handle != INVALID_HANDLE_VALUE)
+          {
+            DWORD hflags;
+            /* GetHandleInformation
+               <https://docs.microsoft.com/en-us/windows/win32/api/handleapi/nf-handleapi-gethandleinformation>  */
+            if (GetHandleInformation (handle, &hflags))
+              {
+                if ((hflags & HANDLE_FLAG_INHERIT) != 0)
+                  /* fd denotes an inheritable descriptor.  */
+                  break;
+              }
+          }
+      }
+    handles_count = fdmax;
+  }
+  /* Note: handles_count >= 3.  */
+
+  /* Allocate the arrays.  */
+  size_t handles_allocated = handles_count;
+  HANDLE *handles_array =
+    (HANDLE *) malloc (handles_allocated * sizeof (HANDLE));
+  if (handles_array == NULL)
+    {
+      errno = ENOMEM;
+      return -1;
+    }
+  unsigned char *flags_array =
+    (unsigned char *) malloc (handles_allocated * sizeof (unsigned char));
+  if (flags_array == NULL)
+    {
+      free (handles_array);
+      errno = ENOMEM;
+      return -1;
+    }
+
+  /* Fill in the two arrays.  */
+  {
+    HANDLE curr_process = (duplicate ? GetCurrentProcess () : INVALID_HANDLE_VALUE);
+    unsigned int fd;
+    for (fd = 0; fd < handles_count; fd++)
+      {
+        handles_array[fd] = INVALID_HANDLE_VALUE;
+        /* _get_osfhandle
+           <https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/get-osfhandle>  */
+        HANDLE handle = (HANDLE) _get_osfhandle (fd);
+        if (handle != INVALID_HANDLE_VALUE)
+          {
+            DWORD hflags;
+            /* GetHandleInformation
+               <https://docs.microsoft.com/en-us/windows/win32/api/handleapi/nf-handleapi-gethandleinformation>  */
+            if (GetHandleInformation (handle, &hflags))
+              {
+                if ((hflags & HANDLE_FLAG_INHERIT) != 0)
+                  {
+                    /* fd denotes an inheritable descriptor.  */
+                    if (duplicate)
+                      {
+                        if (!DuplicateHandle (curr_process, handle,
+                                              curr_process, &handles_array[fd],
+                                              0, TRUE, DUPLICATE_SAME_ACCESS))
+                          {
+                            unsigned int i;
+                            for (i = 0; i < fd; i++)
+                              if (handles_array[i] != INVALID_HANDLE_VALUE)
+                                CloseHandle (handles_array[i]);
+                            free (flags_array);
+                            free (handles_array);
+                            errno = EBADF; /* arbitrary */
+                            return -1;
+                          }
+                      }
+                    else
+                      handles_array[fd] = handle;
+
+                    flags_array[fd] = 0;
+                  }
+              }
+          }
+      }
+  }
+
+  /* Return the result.  */
+  inh_handles->count = handles_count;
+  inh_handles->allocated = handles_allocated;
+  inh_handles->handles = handles_array;
+  inh_handles->flags = flags_array;
+  return 0;
+}
+
+int
+compose_handles_block (const struct inheritable_handles *inh_handles,
+                       STARTUPINFO *sinfo)
+{
+  /* STARTUPINFO
+     <https://docs.microsoft.com/en-us/windows/win32/api/processthreadsapi/ns-processthreadsapi-startupinfoa>  */
+  sinfo->dwFlags = STARTF_USESTDHANDLES;
+  sinfo->hStdInput  = inh_handles->handles[0];
+  sinfo->hStdOutput = inh_handles->handles[1];
+  sinfo->hStdError  = inh_handles->handles[2];
+
+  /* On newer versions of Windows, more file descriptors / handles than the
+     first three can be passed.
+     The format is as follows: Let N be an exclusive upper bound for the file
+     descriptors to be passed. Two arrays are constructed in memory:
+       - flags[0..N-1], of element type 'unsigned char',
+       - handles[0..N-1], of element type 'HANDLE' or 'intptr_t'.
+     For used entries, handles[i] is the handle, and flags[i] is a set of flags,
+     a combination of:
+        1 for open file descriptors,
+       64 for handles of type FILE_TYPE_CHAR,
+        8 for handles of type FILE_TYPE_PIPE,
+       32 for O_APPEND.
+     For unused entries - this may include any of the first three, since they
+     are already passed above -, handles[i] is INVALID_HANDLE_VALUE and flags[i]
+     is zero.
+     lpReserved2 now is a pointer to the concatenation (without padding) of:
+       - an 'unsigned int' whose value is N,
+       - the contents of the flags[0..N-1] array,
+       - the contents of the handles[0..N-1] array.
+     cbReserved2 is the size (in bytes) of the object at lpReserved2.  */
+
+  size_t handles_count = inh_handles->count;
+
+  sinfo->cbReserved2 =
+    sizeof (unsigned int)
+    + handles_count * sizeof (unsigned char)
+    + handles_count * sizeof (HANDLE);
+  /* Add some padding, so that we can work with a properly aligned HANDLE
+     array.  */
+  char *hblock = (char *) malloc (sinfo->cbReserved2 + (sizeof (HANDLE) - 1));
+  if (hblock == NULL)
+    {
+      errno = ENOMEM;
+      return -1;
+    }
+  unsigned char *flags = (unsigned char *) (hblock + sizeof (unsigned int));
+  char *handles = (char *) (flags + handles_count);
+  HANDLE *handles_aligned =
+    (HANDLE *) (((uintptr_t) handles + (sizeof (HANDLE) - 1))
+                & - (uintptr_t) sizeof (HANDLE));
+
+  * (unsigned int *) hblock = handles_count;
+  {
+    unsigned int fd;
+    for (fd = 0; fd < handles_count; fd++)
+      {
+        handles_aligned[fd] = INVALID_HANDLE_VALUE;
+        flags[fd] = 0;
+
+        HANDLE handle = inh_handles->handles[fd];
+        if (handle != INVALID_HANDLE_VALUE
+            /* The first three are possibly already passed above.
+               But they need to passed here as well, if they have some flags.  */
+            && (fd >= 3 || inh_handles->flags[fd] != 0))
+          {
+            DWORD hflags;
+            /* GetHandleInformation
+               <https://docs.microsoft.com/en-us/windows/win32/api/handleapi/nf-handleapi-gethandleinformation>  */
+            if (GetHandleInformation (handle, &hflags))
+              {
+                if ((hflags & HANDLE_FLAG_INHERIT) != 0)
+                  {
+                    /* fd denotes an inheritable descriptor.  */
+                    handles_aligned[fd] = handle;
+                    /* On Microsoft Windows, it would be sufficient to set
+                       flags[fd] = 1.  But on ReactOS or Wine, adding the bit
+                       that indicates the handle type may be necessary.  So,
+                       just do it everywhere.  */
+                    flags[fd] = 1 | inh_handles->flags[fd];
+                    switch (GetFileType (handle))
+                      {
+                      case FILE_TYPE_CHAR:
+                        flags[fd] |= 64;
+                        break;
+                      case FILE_TYPE_PIPE:
+                        flags[fd] |= 8;
+                        break;
+                      default:
+                        break;
+                      }
+                  }
+                else
+                  /* We shouldn't have any non-inheritable handles in
+                     inh_handles->handles.  */
+                  abort ();
+              }
+          }
+      }
+  }
+  if (handles != (char *) handles_aligned)
+    memmove (handles, (char *) handles_aligned, handles_count * sizeof (HANDLE));
+
+  sinfo->lpReserved2 = (BYTE *) hblock;
+
+  return 0;
+}
+
+void
+free_inheritable_handles (struct inheritable_handles *inh_handles)
+{
+  free (inh_handles->flags);
+  free (inh_handles->handles);
+}
+
 intptr_t
 spawnpvech (int mode,
             const char *progname, const char * const *argv,
@@ -343,10 +566,25 @@ spawnpvech (int mode,
         goto out_of_memory_2;
     }
 
+  /* Collect the inheritable handles.  */
+  struct inheritable_handles inh_handles;
+  if (init_inheritable_handles (&inh_handles, false) < 0)
+    {
+      int saved_errno = errno;
+      if (envblock != NULL)
+        free (envblock);
+      free (command);
+      if (resolved_progname != progname)
+        free ((char *) resolved_progname);
+      errno = saved_errno;
+      return -1;
+    }
+  inh_handles.handles[0] = stdin_handle;  inh_handles.flags[0] = 0;
+  inh_handles.handles[1] = stdout_handle; inh_handles.flags[1] = 0;
+  inh_handles.handles[2] = stderr_handle; inh_handles.flags[2] = 0;
+
   /* CreateProcess
      <https://docs.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-createprocessa>  */
-  /* Regarding handle inheritance, see
-     <https://docs.microsoft.com/en-us/windows/win32/sysinfo/handle-inheritance>  */
   /* <https://docs.microsoft.com/en-us/windows/win32/procthread/process-creation-flags>  */
   DWORD process_creation_flags = (mode == P_DETACH ? DETACHED_PROCESS : 0);
   /* STARTUPINFO
@@ -356,130 +594,18 @@ spawnpvech (int mode,
   sinfo.lpReserved = NULL;
   sinfo.lpDesktop = NULL;
   sinfo.lpTitle = NULL;
-  sinfo.dwFlags = STARTF_USESTDHANDLES;
-  sinfo.hStdInput = stdin_handle;
-  sinfo.hStdOutput = stdout_handle;
-  sinfo.hStdError = stderr_handle;
-
-  char *hblock = NULL;
-#if 0
-  sinfo.cbReserved2 = 0;
-  sinfo.lpReserved2 = NULL;
-#else
-  /* On newer versions of Windows, more file descriptors / handles than the
-     first three can be passed.
-     The format is as follows: Let N be an exclusive upper bound for the file
-     descriptors to be passed. Two arrays are constructed in memory:
-       - flags[0..N-1], of element type 'unsigned char',
-       - handles[0..N-1], of element type 'HANDLE' or 'intptr_t'.
-     For used entries, handles[i] is the handle, and flags[i] is a set of flags,
-     a combination of:
-        1 for open file descriptors,
-       64 for handles of type FILE_TYPE_CHAR,
-        8 for handles of type FILE_TYPE_PIPE.
-     For unused entries - this includes the first three, since they are already
-     passed above -, handles[i] is INVALID_HANDLE_VALUE and flags[i] is zero.
-     lpReserved2 now is a pointer to the concatenation (without padding) of:
-       - an 'unsigned int' whose value is N,
-       - the contents of the flags[0..N-1] array,
-       - the contents of the handles[0..N-1] array.
-     cbReserved2 is the size (in bytes) of the object at lpReserved2.  */
-  {
-    /* _getmaxstdio
-       <https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/getmaxstdio>
-       Default value is 512.  */
-    unsigned int fdmax;
-    for (fdmax = _getmaxstdio (); fdmax > 0; fdmax--)
-      {
-        unsigned int fd = fdmax - 1;
-        /* _get_osfhandle
-           <https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/get-osfhandle>  */
-        HANDLE handle = (HANDLE) _get_osfhandle (fd);
-        if (handle != INVALID_HANDLE_VALUE)
-          {
-            DWORD hflags;
-            /* GetHandleInformation
-               <https://docs.microsoft.com/en-us/windows/win32/api/handleapi/nf-handleapi-gethandleinformation>  */
-            if (GetHandleInformation (handle, &hflags))
-              {
-                if ((hflags & HANDLE_FLAG_INHERIT) != 0)
-                  /* fd denotes an inheritable descriptor.  */
-                  break;
-              }
-          }
-      }
-    if (fdmax > 0)
-      {
-        sinfo.cbReserved2 =
-          sizeof (unsigned int)
-          + fdmax * sizeof (unsigned char)
-          + fdmax * sizeof (HANDLE);
-        /* Add some padding, so that we can work with a properly HANDLE array.  */
-        hblock = (char *) malloc (sinfo.cbReserved2 + (sizeof (HANDLE) - 1));
-        if (hblock == NULL)
-          goto out_of_memory_3;
-        * (unsigned int *) hblock = fdmax;
-        unsigned char *flags = (unsigned char *) (hblock + sizeof (unsigned int));
-        char *handles = (char *) (flags + fdmax);
-        HANDLE *handles_aligned =
-          (HANDLE *) (((uintptr_t) handles + (sizeof (HANDLE) - 1))
-                      & - (uintptr_t) sizeof (HANDLE));
-
-        unsigned int fd;
-        for (fd = 0; fd < fdmax; fd++)
-          {
-            flags[fd] = 0;
-            handles_aligned[fd] = INVALID_HANDLE_VALUE;
-            /* The first three are already passed above.  */
-            if (fd >= 3)
-              {
-                /* _get_osfhandle
-                   <https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/get-osfhandle>  */
-                HANDLE handle = (HANDLE) _get_osfhandle (fd);
-                if (handle != INVALID_HANDLE_VALUE)
-                  {
-                    DWORD hflags;
-                    /* GetHandleInformation
-                       <https://docs.microsoft.com/en-us/windows/win32/api/handleapi/nf-handleapi-gethandleinformation>  */
-                    if (GetHandleInformation (handle, &hflags))
-                      {
-                        if ((hflags & HANDLE_FLAG_INHERIT) != 0)
-                          {
-                            /* fd denotes an inheritable descriptor.  */
-                            /* On Microsoft Windows, it would be sufficient to
-                               set flags[fd] = 1.  But on ReactOS or Wine,
-                               adding the bit that indicates the handle type
-                               may be necessary.  So, just do it everywhere.  */
-                            switch (GetFileType (handle))
-                              {
-                              case FILE_TYPE_CHAR:
-                                flags[fd] = 64 | 1;
-                                break;
-                              case FILE_TYPE_PIPE:
-                                flags[fd] = 8 | 1;
-                                break;
-                              default:
-                                flags[fd] = 1;
-                                break;
-                              }
-                            handles_aligned[fd] = handle;
-                          }
-                      }
-                  }
-              }
-          }
-
-        if (handles != (char *) handles_aligned)
-          memmove (handles, (char *) handles_aligned, fdmax * sizeof (HANDLE));
-        sinfo.lpReserved2 = (BYTE *) hblock;
-      }
-    else
-      {
-        sinfo.cbReserved2 = 0;
-        sinfo.lpReserved2 = NULL;
-      }
-  }
-#endif
+  if (compose_handles_block (&inh_handles, &sinfo) < 0)
+    {
+      int saved_errno = errno;
+      free_inheritable_handles (&inh_handles);
+      if (envblock != NULL)
+        free (envblock);
+      free (command);
+      if (resolved_progname != progname)
+        free ((char *) resolved_progname);
+      errno = saved_errno;
+      return -1;
+    }
 
   PROCESS_INFORMATION pinfo;
   if (!CreateProcess (resolved_progname, command, NULL, NULL, TRUE,
@@ -488,8 +614,8 @@ spawnpvech (int mode,
     {
       DWORD error = GetLastError ();
 
-      if (hblock != NULL)
-        free (hblock);
+      free (sinfo.lpReserved2);
+      free_inheritable_handles (&inh_handles);
       if (envblock != NULL)
         free (envblock);
       free (command);
@@ -537,8 +663,8 @@ spawnpvech (int mode,
 
   if (pinfo.hThread)
     CloseHandle (pinfo.hThread);
-  if (hblock != NULL)
-    free (hblock);
+  free (sinfo.lpReserved2);
+  free_inheritable_handles (&inh_handles);
   if (envblock != NULL)
     free (envblock);
   free (command);
@@ -586,14 +712,6 @@ spawnpvech (int mode,
     }
 
   /*NOTREACHED*/
-#if 0
- out_of_memory_4:
-  if (hblock != NULL)
-    free (hblock);
-#endif
- out_of_memory_3:
-  if (envblock != NULL)
-    free (envblock);
  out_of_memory_2:
   free (command);
  out_of_memory_1:
