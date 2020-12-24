@@ -37,10 +37,10 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
+#include <eloop-threshold.h>
 #include <scratch_buffer.h>
 
 #ifdef _LIBC
-# include <eloop-threshold.h>
 # include <shlib-compat.h>
 typedef ptrdiff_t idx_t;
 # define IDX_MAX PTRDIFF_MAX
@@ -85,14 +85,6 @@ typedef ptrdiff_t idx_t;
 # define __rawmemchr rawmemchr
 # define __readlink readlink
 # define __stat stat
-# ifndef MAXSYMLINKS
-#  ifdef SYMLOOP_MAX
-#   define MAXSYMLINKS SYMLOOP_MAX
-#  else
-#   define MAXSYMLINKS 20
-#  endif
-# endif
-# define __eloop_threshold() MAXSYMLINKS
 #endif
 
 #ifndef DOUBLE_SLASH_IS_DISTINCT_ROOT
