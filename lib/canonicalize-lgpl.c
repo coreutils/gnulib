@@ -46,7 +46,6 @@ typedef ptrdiff_t idx_t;
 # define FILE_SYSTEM_PREFIX_LEN(name) 0
 # define IS_ABSOLUTE_FILE_NAME(name) ISSLASH(*(name))
 # define ISSLASH(c) ((c) == '/')
-# define freea(p) ((void) (p))
 #else
 # define __canonicalize_file_name canonicalize_file_name
 # define __realpath realpath
