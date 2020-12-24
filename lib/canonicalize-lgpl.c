@@ -38,15 +38,12 @@
 #include <unistd.h>
 
 #include <eloop-threshold.h>
+#include <idx.h>
+#include <filename.h>
 #include <scratch_buffer.h>
 
 #ifdef _LIBC
 # include <shlib-compat.h>
-typedef ptrdiff_t idx_t;
-# define IDX_MAX PTRDIFF_MAX
-# define FILE_SYSTEM_PREFIX_LEN(name) 0
-# define IS_ABSOLUTE_FILE_NAME(name) ISSLASH (*(name))
-# define ISSLASH(c) ((c) == '/')
 # include <sysdep.h>
 # ifdef __ASSUME_FACCESSAT2
 #  define FACCESSAT_NEVER_EOVERFLOWS __ASSUME_FACCESSAT2
@@ -56,9 +53,7 @@ typedef ptrdiff_t idx_t;
 #else
 # define __canonicalize_file_name canonicalize_file_name
 # define __realpath realpath
-# include "idx.h"
 # include "pathmax.h"
-# include "filename.h"
 # define __faccessat faccessat
 # if defined _WIN32 && !defined __CYGWIN__
 #  define __getcwd _getcwd
