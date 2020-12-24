@@ -56,11 +56,7 @@ main ()
     else
       {
         ASSERT (pid == -1);
-#if defined _WIN32 && !defined __CYGWIN__
-        ASSERT (errno == ENOENT);
-#else
         ASSERT (errno == ENOEXEC);
-#endif
       }
   }
 

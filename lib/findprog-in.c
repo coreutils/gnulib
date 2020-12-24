@@ -118,6 +118,8 @@ find_in_given_path (const char *progname, const char *path,
                 if (ISSLASH (*p))
                   progbasename = p + 1;
             }
+
+            bool progbasename_has_dot = (strchr (progbasename, '.') != NULL);
             #endif
 
             /* Try all platform-dependent suffixes.  */
@@ -129,7 +131,7 @@ find_in_given_path (const char *progname, const char *path,
                 #if defined _WIN32 && !defined __CYGWIN__ /* Native Windows */
                 /* File names without a '.' are not considered executable, and
                    for file names with a '.' no additional suffix is tried.  */
-                if ((*suffix != '\0') != (strchr (progbasename, '.') != NULL))
+                if ((*suffix != '\0') != progbasename_has_dot)
                 #endif
                   {
                     /* Concatenate directory_as_prefix, progname, suffix.  */
@@ -174,6 +176,36 @@ find_in_given_path (const char *progname, const char *path,
                     free (progpathname);
                   }
               }
+            #if defined _WIN32 && !defined __CYGWIN__ /* Native Windows */
+            if (failure_errno == ENOENT && !progbasename_has_dot)
+              {
+                /* In the loop above, we skipped suffix = "".  Do this loop
+                   round now, merely to provide a better errno than ENOENT.  */
+
+                char *progpathname =
+                  concatenated_filename (directory_as_prefix, progname, "");
+
+                if (progpathname == NULL)
+                  return NULL; /* errno is set here */
+
+                if (eaccess (progpathname, X_OK) == 0)
+                  {
+                    struct stat statbuf;
+
+                    if (stat (progpathname, &statbuf) >= 0)
+                      {
+                        if (! S_ISDIR (statbuf.st_mode))
+                          errno = ENOEXEC;
+                        else
+                          errno = EACCES;
+                      }
+                  }
+
+                failure_errno = errno;
+
+                free (progpathname);
+              }
+            #endif
 
             errno = failure_errno;
             return NULL;
@@ -195,6 +227,10 @@ find_in_given_path (const char *progname, const char *path,
     int failure_errno;
     char *path_rest;
     char *cp;
+
+    #if defined _WIN32 && !defined __CYGWIN__ /* Native Windows */
+    bool progname_has_dot = (strchr (progname, '.') != NULL);
+    #endif
 
     failure_errno = ENOENT;
     for (path_rest = path_copy; ; path_rest = cp + 1)
@@ -243,7 +279,7 @@ find_in_given_path (const char *progname, const char *path,
             #if defined _WIN32 && !defined __CYGWIN__ /* Native Windows */
             /* File names without a '.' are not considered executable, and
                for file names with a '.' no additional suffix is tried.  */
-            if ((*suffix != '\0') != (strchr (progname, '.') != NULL))
+            if ((*suffix != '\0') != progname_has_dot)
             #endif
               {
                 /* Concatenate dir_as_prefix, progname, and suffix.  */
@@ -311,6 +347,41 @@ find_in_given_path (const char *progname, const char *path,
                 free (progpathname);
               }
           }
+        #if defined _WIN32 && !defined __CYGWIN__ /* Native Windows */
+        if (failure_errno == ENOENT && !progname_has_dot)
+          {
+            /* In the loop above, we skipped suffix = "".  Do this loop
+               round now, merely to provide a better errno than ENOENT.  */
+
+            char *progpathname =
+              concatenated_filename (dir_as_prefix, progname, "");
+
+            if (progpathname == NULL)
+              {
+                /* errno is set here.  */
+                failure_errno = errno;
+                free (dir_as_prefix_to_free);
+                goto failed;
+              }
+
+            if (eaccess (progpathname, X_OK) == 0)
+              {
+                struct stat statbuf;
+
+                if (stat (progpathname, &statbuf) >= 0)
+                  {
+                    if (! S_ISDIR (statbuf.st_mode))
+                      errno = ENOEXEC;
+                    else
+                      errno = EACCES;
+                  }
+              }
+
+            failure_errno = errno;
+
+            free (progpathname);
+          }
+        #endif
 
         free (dir_as_prefix_to_free);
 
