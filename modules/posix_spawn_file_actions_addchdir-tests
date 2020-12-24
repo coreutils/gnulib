@@ -12,10 +12,9 @@ findprog
 configure.ac:
 
 Makefile.am:
-TESTS += test-posix_spawn_file_actions_addchdir
-check_PROGRAMS += test-posix_spawn_file_actions_addchdir
-
-if POSIX_SPAWN_PORTED
-TESTS += test-posix_spawn-chdir
-check_PROGRAMS += test-posix_spawn-chdir
-endif
+TESTS += \
+  test-posix_spawn_file_actions_addchdir \
+  test-posix_spawn-chdir
+check_PROGRAMS += \
+  test-posix_spawn_file_actions_addchdir \
+  test-posix_spawn-chdir

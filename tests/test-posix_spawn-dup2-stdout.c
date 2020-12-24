@@ -98,8 +98,12 @@ main ()
   sigemptyset (&fatal_signal_set);
   sigaddset (&fatal_signal_set, SIGINT);
   sigaddset (&fatal_signal_set, SIGTERM);
+  #ifdef SIGHUP
   sigaddset (&fatal_signal_set, SIGHUP);
+  #endif
+  #ifdef SIGPIPE
   sigaddset (&fatal_signal_set, SIGPIPE);
+  #endif
   sigprocmask (SIG_BLOCK, &fatal_signal_set, NULL);
   actions_allocated = false;
   attrs_allocated = false;
@@ -111,8 +115,13 @@ main ()
           || (err = posix_spawn_file_actions_addopen (&actions, STDIN_FILENO, "/dev/null", O_RDONLY, 0)) != 0
           || (err = posix_spawnattr_init (&attrs)) != 0
           || (attrs_allocated = true,
+              #if defined _WIN32 && !defined __CYGWIN__
+              0
+              #else
               (err = posix_spawnattr_setsigmask (&attrs, &blocked_signals)) != 0
-              || (err = posix_spawnattr_setflags (&attrs, POSIX_SPAWN_SETSIGMASK)) != 0)
+              || (err = posix_spawnattr_setflags (&attrs, POSIX_SPAWN_SETSIGMASK)) != 0
+              #endif
+             )
           || (err = posix_spawnp (&child, BOURNE_SHELL, &actions, &attrs, argv, environ)) != 0))
     {
       if (actions_allocated)
@@ -142,7 +151,7 @@ main ()
     }
   if (memcmp (line, "Halle Potta", 11) != 0)
     {
-      fprintf (stderr, "read output is not the expected output");
+      fprintf (stderr, "read output is not the expected output\n");
       exit (1);
     }
   fclose (fp);

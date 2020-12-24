@@ -26,19 +26,11 @@ dup
 environ
 sh-filename
 sigprocmask
+waitpid
 
 configure.ac:
-AC_EGREP_CPP([notposix], [[
-#if defined _MSC_VER || defined __MINGW32__
-  notposix
-#endif
-  ]],
-  [posix_spawn_ported=no],
-  [posix_spawn_ported=yes])
-AM_CONDITIONAL([POSIX_SPAWN_PORTED], [test $posix_spawn_ported = yes])
 
 Makefile.am:
-if POSIX_SPAWN_PORTED
 TESTS += \
   test-posix_spawn-dup2-stdout \
   test-posix_spawn-dup2-stdin \
@@ -63,4 +55,3 @@ test-posix_spawn-dup2-stdin.sh: test-posix_spawn-dup2-stdin.in.sh
 MOSTLYCLEANFILES += test-posix_spawn-dup2-stdin.sh test-posix_spawn-dup2-stdin.sh-t
 
 test_posix_spawnp_script_CPPFLAGS = $(AM_CPPFLAGS) -DSRCDIR=\"$(srcdir)/\"
-endif

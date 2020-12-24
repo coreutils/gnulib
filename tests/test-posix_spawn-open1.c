@@ -40,8 +40,9 @@ SIGNATURE_CHECK (posix_spawn, int, (pid_t *, char const *,
 
 #define CHILD_PROGRAM_FILENAME "test-posix_spawn-open1"
 #define DATA_FILENAME "t!#$%&'()*+,-;=?@[\\]^_`{|}~.tmp"
-/* On Cygwin, '*' '?' '\\' '|' cannot be used in file names.  */
-#if defined __CYGWIN__
+/* On Windows (including Cygwin), '*' '?' '\\' '|' cannot be used in file
+   names.  */
+#if defined _WIN32 || defined __CYGWIN__
 # undef DATA_FILENAME
 # define DATA_FILENAME "t!#$%&'()+,-;=@[]^_`{}~.tmp"
 #endif

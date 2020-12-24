@@ -64,6 +64,7 @@ test (const char *pwd_prog)
   int fd;
   FILE *fp;
   char line[80];
+  int line_len;
   int status;
   int exitstatus;
 
@@ -76,8 +77,12 @@ test (const char *pwd_prog)
   sigemptyset (&fatal_signal_set);
   sigaddset (&fatal_signal_set, SIGINT);
   sigaddset (&fatal_signal_set, SIGTERM);
+  #ifdef SIGHUP
   sigaddset (&fatal_signal_set, SIGHUP);
+  #endif
+  #ifdef SIGPIPE
   sigaddset (&fatal_signal_set, SIGPIPE);
+  #endif
   sigprocmask (SIG_BLOCK, &fatal_signal_set, NULL);
   actions_allocated = false;
   attrs_allocated = false;
@@ -90,8 +95,13 @@ test (const char *pwd_prog)
           || (err = posix_spawn_file_actions_addchdir (&actions, "/")) != 0
           || (err = posix_spawnattr_init (&attrs)) != 0
           || (attrs_allocated = true,
+              #if defined _WIN32 && !defined __CYGWIN__
+              0
+              #else
               (err = posix_spawnattr_setsigmask (&attrs, &blocked_signals)) != 0
-              || (err = posix_spawnattr_setflags (&attrs, POSIX_SPAWN_SETSIGMASK)) != 0)
+              || (err = posix_spawnattr_setflags (&attrs, POSIX_SPAWN_SETSIGMASK)) != 0
+              #endif
+             )
           || (err = posix_spawnp (&child, pwd_prog, &actions, &attrs, argv, environ)) != 0))
     {
       if (actions_allocated)
@@ -108,22 +118,32 @@ test (const char *pwd_prog)
   sigprocmask (SIG_UNBLOCK, &fatal_signal_set, NULL);
   close (ifd[1]);
   fd = ifd[0];
-  fp = fdopen (fd, "r");
+  fp = fdopen (fd, "rb");
   if (fp == NULL)
     {
       fprintf (stderr, "fdopen() failed\n");
       exit (1);
     }
-  if (fread (line, 1, 80, fp) < 2)
+  line_len = fread (line, 1, 80, fp);
+  if (line_len < 2)
     {
       fprintf (stderr, "could not read expected output\n");
       exit (1);
     }
-  if (memcmp (line, "/\n", 2) != 0)
-    {
-      fprintf (stderr, "read output is not the expected output");
-      exit (1);
-    }
+  if (!(line_len == 2 && memcmp (line, "/\n", 2) == 0))
+#if defined _WIN32 && !defined __CYGWIN__
+    /* If the pwd program is Cygwin's pwd, its output in the root directory is
+       "/cygdrive/N", where N is a lowercase letter.  */
+    if (!(line_len > 11
+          && memcmp (line, "/cygdrive/", 10) == 0
+          && line[10] >= 'a' && line[10] <= 'z'
+          && ((line_len == 12 && line[11] == '\n')
+              || (line_len == 13 && line[11] == '\r' && line[12] == '\n'))))
+#endif
+      {
+        fprintf (stderr, "read output is not the expected output\n");
+        exit (1);
+      }
   fclose (fp);
   status = 0;
   while (waitpid (child, &status, 0) != child)

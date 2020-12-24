@@ -90,6 +90,12 @@ main ()
       }
   }
 
+#if defined _WIN32 && !defined __CYGWIN__
+  /* On native Windows, scripts - even with '#!' marker - are not executable.
+     Only .bat and .cmd files are.  */
+  fprintf (stderr, "Skipping test: scripts are not executable on this platform.\n");
+  return 77;
+#else
   {
     const char *prog_path = SRCDIR "executable-shell-script";
     const char *prog_argv[2] = { prog_path, NULL };
@@ -141,6 +147,7 @@ main ()
         return 1;
       }
   }
+#endif
 
   /* Clean up data file.  */
   unlink (DATA_FILENAME);

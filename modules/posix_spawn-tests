@@ -18,19 +18,12 @@ unistd
 sys_wait
 environ
 fflush
+freopen
+waitpid
 
 configure.ac:
-AC_EGREP_CPP([notposix], [[
-#if defined _MSC_VER || defined __MINGW32__
-  notposix
-#endif
-  ]],
-  [posix_spawn_ported=no],
-  [posix_spawn_ported=yes])
-AM_CONDITIONAL([POSIX_SPAWN_PORTED], [test $posix_spawn_ported = yes])
 
 Makefile.am:
-if POSIX_SPAWN_PORTED
 TESTS += \
   test-posix_spawn-open1 \
   test-posix_spawn-open2 \
@@ -44,4 +37,3 @@ check_PROGRAMS += \
   test-posix_spawn-inherit1 \
   test-posix_spawn-script
 test_posix_spawn_script_CPPFLAGS = $(AM_CPPFLAGS) -DSRCDIR=\"$(srcdir)/\"
-endif
