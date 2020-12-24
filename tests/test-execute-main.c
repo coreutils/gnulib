@@ -135,11 +135,10 @@ main (int argc, char *argv[])
         int termsig = 0xDEADBEEF;
         int ret = execute (progname, prog_argv[0], prog_argv, NULL,
                            false, false, false, false, true, false, &termsig);
-        #if defined _WIN32 && !defined __CYGWIN__
-        ASSERT (ret == 3);
-        ASSERT (termsig == 0);
-        #else
         ASSERT (ret == 127);
+        #if defined _WIN32 && !defined __CYGWIN__
+        ASSERT (termsig == SIGTERM); /* dummy, from WTERMSIG in <sys/wait.h> */
+        #else
         ASSERT (termsig == SIGINT);
         #endif
       }

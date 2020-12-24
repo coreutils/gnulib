@@ -28,6 +28,9 @@
 #include <signal.h>
 #include <unistd.h>
 
+#include <sys/types.h>
+#include <sys/wait.h>
+
 #include "canonicalize.h"
 #include "error.h"
 #include "fatal-signal.h"
@@ -214,11 +217,21 @@ execute (const char *progname,
   free (argv_mem_to_free);
   free (prog_path_to_free);
 
+  /* Treat failure and signalled child processes like wait_subprocess()
+     does.  */
   if (termsigp != NULL)
     *termsigp = 0;
 
   if (exitcode == -1)
     goto fail_with_saved_errno;
+
+  if (WIFSIGNALED (exitcode))
+    {
+      if (termsigp != NULL)
+        *termsigp = WTERMSIG (exitcode);
+      saved_errno = 0;
+      goto fail_with_saved_errno;
+    }
 
   return exitcode;
 

@@ -29,6 +29,7 @@ posix_spawnattr_setflags
 posix_spawnattr_destroy
 stdbool
 stdlib
+sys_wait
 unistd
 wait-process
 windows-spawn
