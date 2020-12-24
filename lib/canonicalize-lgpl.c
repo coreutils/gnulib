@@ -45,7 +45,7 @@
 typedef ptrdiff_t idx_t;
 # define IDX_MAX PTRDIFF_MAX
 # define FILE_SYSTEM_PREFIX_LEN(name) 0
-# define IS_ABSOLUTE_FILE_NAME(name) ISSLASH(*(name))
+# define IS_ABSOLUTE_FILE_NAME(name) ISSLASH (*(name))
 # define ISSLASH(c) ((c) == '/')
 # include <sysdep.h>
 # ifdef __ASSUME_FACCESSAT2
