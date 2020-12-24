@@ -95,8 +95,8 @@
 int
 __spawni (pid_t *pid, const char *file,
           const posix_spawn_file_actions_t *file_actions,
-          const posix_spawnattr_t *attrp, char *const argv[],
-          char *const envp[], int use_path)
+          const posix_spawnattr_t *attrp, const char *const argv[],
+          const char *const envp[], int use_path)
 {
   /* Not yet implemented.  */
   return ENOSYS;
