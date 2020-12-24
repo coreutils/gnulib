@@ -526,6 +526,46 @@ free_inheritable_handles (struct inheritable_handles *inh_handles)
   free (inh_handles->handles);
 }
 
+int
+convert_CreateProcess_error (DWORD error)
+{
+  /* Some of these errors probably cannot happen.  But who knows...  */
+  switch (error)
+    {
+    case ERROR_FILE_NOT_FOUND:
+    case ERROR_PATH_NOT_FOUND:
+    case ERROR_BAD_PATHNAME:
+    case ERROR_BAD_NET_NAME:
+    case ERROR_INVALID_NAME:
+    case ERROR_DIRECTORY:
+      return ENOENT;
+      break;
+
+    case ERROR_ACCESS_DENIED:
+    case ERROR_SHARING_VIOLATION:
+      return EACCES;
+      break;
+
+    case ERROR_OUTOFMEMORY:
+      return ENOMEM;
+      break;
+
+    case ERROR_BUFFER_OVERFLOW:
+    case ERROR_FILENAME_EXCED_RANGE:
+      return ENAMETOOLONG;
+      break;
+
+    case ERROR_BAD_FORMAT:
+    case ERROR_BAD_EXE_FORMAT:
+      return ENOEXEC;
+      break;
+
+    default:
+      return EINVAL;
+      break;
+    }
+}
+
 intptr_t
 spawnpvech (int mode,
             const char *progname, const char * const *argv,
@@ -622,42 +662,7 @@ spawnpvech (int mode,
       if (resolved_progname != progname)
         free ((char *) resolved_progname);
 
-      /* Some of these errors probably cannot happen.  But who knows...  */
-      switch (error)
-        {
-        case ERROR_FILE_NOT_FOUND:
-        case ERROR_PATH_NOT_FOUND:
-        case ERROR_BAD_PATHNAME:
-        case ERROR_BAD_NET_NAME:
-        case ERROR_INVALID_NAME:
-        case ERROR_DIRECTORY:
-          errno = ENOENT;
-          break;
-
-        case ERROR_ACCESS_DENIED:
-        case ERROR_SHARING_VIOLATION:
-          errno = EACCES;
-          break;
-
-        case ERROR_OUTOFMEMORY:
-          errno = ENOMEM;
-          break;
-
-        case ERROR_BUFFER_OVERFLOW:
-        case ERROR_FILENAME_EXCED_RANGE:
-          errno = ENAMETOOLONG;
-          break;
-
-        case ERROR_BAD_FORMAT:
-        case ERROR_BAD_EXE_FORMAT:
-          errno = ENOEXEC;
-          break;
-
-        default:
-          errno = EINVAL;
-          break;
-        }
-
+      errno = convert_CreateProcess_error (error);
       return -1;
     }
 

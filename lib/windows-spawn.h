@@ -122,6 +122,11 @@ extern int compose_handles_block (const struct inheritable_handles *inh_handles,
 extern void free_inheritable_handles (struct inheritable_handles *inh_handles);
 
 
+/* Converts a CreateProcess() error code (retrieved through GetLastError()) to
+   an errno value.  */
+extern int convert_CreateProcess_error (DWORD error);
+
+
 /* Creates a subprocess.
    MODE is either P_WAIT or P_NOWAIT.
    PROGNAME is the program to invoke.
