@@ -45,6 +45,52 @@
 # define SLASHES "/"
 #endif
 
+/* True if concatenating END as a suffix to a file name means that the
+   code needs to check that the file name is that of a searchable
+   directory, since the canonicalize_filename_mode_stk code won't
+   check this later anyway when it checks an ordinary file name
+   component within END.  END must either be empty, or start with a
+   slash.  */
+
+static bool
+suffix_requires_dir_check (char const *end)
+{
+  /* If END does not start with a slash, the suffix is OK.  */
+  while (ISSLASH (*end))
+    {
+      /* Two or more slashes act like a single slash.  */
+      do
+        end++;
+      while (ISSLASH (*end));
+
+      switch (*end++)
+        {
+        default: return false;  /* An ordinary file name component is OK.  */
+        case '\0': return true; /* Trailing "/" is trouble.  */
+        case '.': break;        /* Possibly "." or "..".  */
+        }
+      /* Trailing "/.", or "/.." even if not trailing, is trouble.  */
+      if (!*end || (*end == '.' && (!end[1] || ISSLASH (end[1]))))
+        return true;
+    }
+
+  return false;
+}
+
+/* Return true if DIR is a directory, false (setting errno) otherwise.
+   DIREND points to the NUL byte at the end of the DIR string.
+   Store garbage into DIREND[0] and DIREND[1].  */
+
+static bool
+dir_check (char *dir, char *dirend)
+{
+  /* Append "/"; otherwise EOVERFLOW would be ambiguous.  */
+  strcpy (dirend, "/");
+
+  struct stat st;
+  return stat (dir, &st) == 0 || errno == EOVERFLOW;
+}
+
 #if !((HAVE_CANONICALIZE_FILE_NAME && FUNC_REALPATH_WORKS)      \
       || GNULIB_CANONICALIZE_LGPL)
 /* Return the canonical absolute name of file NAME.  A canonical name
@@ -105,8 +151,7 @@ seen_triple (Hash_table **ht, char const *filename, struct stat const *st)
 # if defined GCC_LINT || defined lint
 __attribute__ ((__noinline__))
 # elif __OPTIMIZE__ && !__NO_INLINE__
-#  warning "GCC might issue a bogus -Wreturn-local-addr warning here."
-#  warning "See <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=93644>."
+#  define GCC_BOGUS_WRETURN_LOCAL_ADDR
 # endif
 #endif
 static char *
@@ -228,7 +273,9 @@ canonicalize_filename_mode_stk (const char *name, canonicalize_mode_t can_mode,
          name ends in '/'.  */
       idx_t startlen = end - start;
 
-      if (startlen == 1 && start[0] == '.')
+      if (startlen == 0)
+        break;
+      else if (startlen == 1 && start[0] == '.')
         /* nothing */;
       else if (startlen == 2 && start[0] == '.' && start[1] == '.')
         {
@@ -246,7 +293,8 @@ canonicalize_filename_mode_stk (const char *name, canonicalize_mode_t can_mode,
           if (!ISSLASH (dest[-1]))
             *dest++ = '/';
 
-          while (rname + rname_buf->length - dest <= startlen)
+          enum { dir_check_room = sizeof "/" };
+          while (rname + rname_buf->length - dest < startlen + dir_check_room)
             {
               idx_t dest_offset = dest - rname;
               if (!scratch_buffer_grow_preserve (rname_buf))
@@ -258,14 +306,10 @@ canonicalize_filename_mode_stk (const char *name, canonicalize_mode_t can_mode,
           dest = mempcpy (dest, start, startlen);
           *dest = '\0';
 
-          /* If STARTLEN == 0, RNAME ends in '/'; use stat rather than
-             readlink, because readlink might fail with EINVAL without
-             checking whether RNAME sans '/' is valid.  */
           char discard;
-          struct stat st;
-          char *buf = NULL;
-          ssize_t n;
-          if (!logical && startlen != 0)
+          char *buf;
+          ssize_t n = -1;
+          if (!logical)
             {
               while (true)
                 {
@@ -277,10 +321,8 @@ canonicalize_filename_mode_stk (const char *name, canonicalize_mode_t can_mode,
                   if (!scratch_buffer_grow (&link_buffer))
                     xalloc_die ();
                 }
-              if (n < 0)
-                buf = NULL;
             }
-          if (buf)
+          if (0 <= n)
             {
               /* A physical traversal and RNAME is a symbolic link.  */
 
@@ -293,6 +335,7 @@ canonicalize_filename_mode_stk (const char *name, canonicalize_mode_t can_mode,
                      Get the device and inode of the parent directory, as
                      pre-2017 POSIX says this info is not reliable for
                      symlinks.  */
+                  struct stat st;
                   dest[- startlen] = '\0';
                   if (stat (*rname ? rname : ".", &st) != 0)
                     goto error;
@@ -361,8 +404,8 @@ canonicalize_filename_mode_stk (const char *name, canonicalize_mode_t can_mode,
                 }
             }
           else if (! (can_exist == CAN_MISSING
-                      || (startlen == 0
-                          ? stat (rname, &st) == 0 || errno == EOVERFLOW
+                      || (suffix_requires_dir_check (end)
+                          ? dir_check (rname, dest)
                           : ((logical && 0 <= readlink (rname, &discard, 1))
                              || errno == EINVAL))
                       || (can_exist == CAN_ALL_BUT_LAST
@@ -408,8 +451,10 @@ error:
 char *
 canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
 {
-  /* If GCC -Wreturn-local-addr warns about this buffer, the warning
-     is bogus; see canonicalize_filename_mode_stk.  */
+  #ifdef GCC_BOGUS_WRETURN_LOCAL_ADDR
+   #warning "GCC might issue a bogus -Wreturn-local-addr warning here."
+   #warning "See <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=93644>."
+  #endif
   struct scratch_buffer rname_buffer;
   return canonicalize_filename_mode_stk (name, can_mode, &rname_buffer);
 }

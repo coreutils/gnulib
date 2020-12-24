@@ -214,18 +214,32 @@ main (void)
     ASSERT (errno == ENOENT);
   }
 
-  /* Check that a non-directory symlink with trailing slash yields NULL.  */
+  /* Check that a non-directory symlink with trailing slash yields NULL,
+     and likewise for other troublesome suffixes.  */
   {
-    char *result1;
-    char *result2;
-    errno = 0;
-    result1 = canonicalize_file_name (BASE "/huk/");
-    ASSERT (result1 == NULL);
-    ASSERT (errno == ENOTDIR);
-    errno = 0;
-    result2 = canonicalize_filename_mode (BASE "/huk/", CAN_EXISTING);
-    ASSERT (result2 == NULL);
-    ASSERT (errno == ENOTDIR);
+    char const *const file_name[]
+      = {
+         BASE "/huk/",
+         BASE "/huk/.",
+         BASE "/huk/./",
+         BASE "/huk/./.",
+         BASE "/huk/x",
+         BASE "/huk/..",
+         BASE "/huk/../",
+         BASE "/huk/../.",
+         BASE "/huk/../x",
+         BASE "/huk/./..",
+         BASE "/huk/././../x",
+        };
+    for (int i = 0; i < sizeof file_name / sizeof *file_name; i++)
+      {
+        errno = 0;
+        ASSERT (!canonicalize_file_name (file_name[i]));
+        ASSERT (errno == ENOTDIR);
+        errno = 0;
+        ASSERT (!canonicalize_filename_mode (file_name[i], CAN_EXISTING));
+        ASSERT (errno == ENOTDIR);
+      }
   }
 
   /* Check that a missing directory via symlink yields NULL.  */
