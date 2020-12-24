@@ -3,6 +3,9 @@ tests/test-posix_spawn-dup2-stdout.c
 tests/test-posix_spawn-dup2-stdout.in.sh
 tests/test-posix_spawn-dup2-stdin.c
 tests/test-posix_spawn-dup2-stdin.in.sh
+tests/test-posix_spawnp-script.c
+tests/executable-script
+tests/executable-shell-script
 tests/signature.h
 
 Depends-on:
@@ -35,8 +38,14 @@ AM_CONDITIONAL([POSIX_SPAWN_PORTED], [test $posix_spawn_ported = yes])
 
 Makefile.am:
 if POSIX_SPAWN_PORTED
-TESTS += test-posix_spawn-dup2-stdout test-posix_spawn-dup2-stdin
-check_PROGRAMS += test-posix_spawn-dup2-stdout test-posix_spawn-dup2-stdin
+TESTS += \
+  test-posix_spawn-dup2-stdout \
+  test-posix_spawn-dup2-stdin \
+  test-posix_spawnp-script
+check_PROGRAMS += \
+  test-posix_spawn-dup2-stdout \
+  test-posix_spawn-dup2-stdin \
+  test-posix_spawnp-script
 
 BUILT_SOURCES += test-posix_spawn-dup2-stdout.sh
 test-posix_spawn-dup2-stdout.sh: test-posix_spawn-dup2-stdout.in.sh
@@ -51,4 +60,6 @@ test-posix_spawn-dup2-stdin.sh: test-posix_spawn-dup2-stdin.in.sh
 	cp $(srcdir)/test-posix_spawn-dup2-stdin.in.sh $@-t && \
 	mv $@-t $@
 MOSTLYCLEANFILES += test-posix_spawn-dup2-stdin.sh test-posix_spawn-dup2-stdin.sh-t
+
+test_posix_spawnp_script_CPPFLAGS = $(AM_CPPFLAGS) -DSRCDIR=\"$(srcdir)/\"
 endif

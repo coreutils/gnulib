@@ -2,6 +2,9 @@ Files:
 tests/test-execute.sh
 tests/test-execute-main.c
 tests/test-execute-child.c
+tests/test-execute-script.c
+tests/executable-script
+tests/executable-shell-script
 tests/macros.h
 
 Depends-on:
@@ -23,3 +26,8 @@ test_execute_main_LDADD = $(LDADD) @LIBINTL@ $(LIBTHREAD)
 # wrapper script, and should link against as few libraries as possible.
 # Therefore don't link it against any libraries other than -lc.
 test_execute_child_LDADD =
+
+TESTS += test-execute-script
+check_PROGRAMS += test-execute-script
+test_execute_script_LDADD = $(LDADD) @LIBINTL@ $(LIBTHREAD)
+test_execute_script_CPPFLAGS = $(AM_CPPFLAGS) -DSRCDIR=\"$(srcdir)/\"
