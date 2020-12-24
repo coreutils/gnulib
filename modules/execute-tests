@@ -4,6 +4,7 @@ tests/test-execute-main.c
 tests/test-execute-child.c
 tests/test-execute-script.c
 tests/executable-script
+tests/executable-script.sh
 tests/executable-shell-script
 tests/macros.h
 

@@ -48,13 +48,20 @@ main ()
   ASSERT (fp != NULL);
 
   {
-    const char *progname = "executable-script";
-    const char *prog_path = SRCDIR "executable-script";
-    const char *prog_argv[2] = { prog_path, NULL };
+    size_t i;
 
-    int ret = execute (progname, prog_argv[0], prog_argv, NULL,
-                       false, false, false, false, true, false, NULL);
-    ASSERT (ret == 127);
+    for (i = 0; i < 2; i++)
+      {
+        const char *progname =
+          (i == 0 ? "executable-script" : "executable-script.sh");
+        const char *prog_path =
+          (i == 0 ? SRCDIR "executable-script" : SRCDIR "executable-script.sh");
+        const char *prog_argv[2] = { prog_path, NULL };
+
+        int ret = execute (progname, prog_argv[0], prog_argv, NULL,
+                           false, false, false, false, true, false, NULL);
+        ASSERT (ret == 127);
+      }
   }
 
 #if defined _WIN32 && !defined __CYGWIN__

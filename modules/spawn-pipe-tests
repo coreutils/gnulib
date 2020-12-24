@@ -4,6 +4,7 @@ tests/test-spawn-pipe-main.c
 tests/test-spawn-pipe-child.c
 tests/test-spawn-pipe-script.c
 tests/executable-script
+tests/executable-script.sh
 tests/executable-shell-script
 tests/macros.h
 

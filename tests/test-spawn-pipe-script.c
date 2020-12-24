@@ -41,22 +41,30 @@ main ()
   pid_t pid;
 
   {
-    const char *progname = "executable-script";
-    const char *prog_path = SRCDIR "executable-script";
-    const char *prog_argv[2] = { prog_path, NULL };
+    size_t i;
 
-    pid = create_pipe_in (progname, prog_argv[0], prog_argv, NULL,
-                          NULL, false, true, false, fd);
-    if (pid >= 0)
+    for (i = 0; i < 2; i++)
       {
-        /* Wait for child.  */
-        ASSERT (wait_subprocess (pid, progname, true, true, true, false, NULL)
-                == 127);
-      }
-    else
-      {
-        ASSERT (pid == -1);
-        ASSERT (errno == ENOEXEC);
+        const char *progname =
+          (i == 0 ? "executable-script" : "executable-script.sh");
+        const char *prog_path =
+          (i == 0 ? SRCDIR "executable-script" : SRCDIR "executable-script.sh");
+        const char *prog_argv[2] = { prog_path, NULL };
+
+        pid = create_pipe_in (progname, prog_argv[0], prog_argv, NULL,
+                              NULL, false, true, false, fd);
+        if (pid >= 0)
+          {
+            /* Wait for child.  */
+            ASSERT (wait_subprocess (pid, progname, true, true, true, false,
+                                     NULL)
+                    == 127);
+          }
+        else
+          {
+            ASSERT (pid == -1);
+            ASSERT (errno == ENOEXEC);
+          }
       }
   }
 

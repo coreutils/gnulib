@@ -5,6 +5,7 @@ tests/test-posix_spawn-dup2-stdin.c
 tests/test-posix_spawn-dup2-stdin.in.sh
 tests/test-posix_spawnp-script.c
 tests/executable-script
+tests/executable-script.sh
 tests/executable-shell-script
 tests/signature.h
 

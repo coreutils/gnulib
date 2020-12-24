@@ -482,6 +482,11 @@ spawnpvech (int mode,
           errno = ENAMETOOLONG;
           break;
 
+        case ERROR_BAD_FORMAT:
+        case ERROR_BAD_EXE_FORMAT:
+          errno = ENOEXEC;
+          break;
+
         default:
           errno = EINVAL;
           break;

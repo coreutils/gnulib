@@ -52,34 +52,40 @@ main ()
           == 0);
 
   {
-    const char *prog_path = SRCDIR "executable-script";
-    const char *prog_argv[2] = { prog_path, NULL };
+    size_t i;
 
-    int err = posix_spawnp (&child, prog_path, &actions, NULL,
-                            (char **) prog_argv, environ);
-    if (err != ENOEXEC)
+    for (i = 0; i < 2; i++)
       {
-        if (err != 0)
-          {
-            errno = err;
-            perror ("posix_spawn");
-            return 1;
-          }
+        const char *prog_path =
+          (i == 0 ? SRCDIR "executable-script" : SRCDIR "executable-script.sh");
+        const char *prog_argv[2] = { prog_path, NULL };
 
-        /* Wait for child.  */
-        int status = 0;
-        while (waitpid (child, &status, 0) != child)
-          ;
-        if (!WIFEXITED (status))
+        int err = posix_spawnp (&child, prog_path, &actions, NULL,
+                                (char **) prog_argv, environ);
+        if (err != ENOEXEC)
           {
-            fprintf (stderr, "subprocess terminated with unexpected wait status %d\n", status);
-            return 1;
-          }
-        int exitstatus = WEXITSTATUS (status);
-        if (exitstatus != 127)
-          {
-            fprintf (stderr, "subprocess terminated with unexpected exit status %d\n", exitstatus);
-            return 1;
+            if (err != 0)
+              {
+                errno = err;
+                perror ("posix_spawn");
+                return 1;
+              }
+
+            /* Wait for child.  */
+            int status = 0;
+            while (waitpid (child, &status, 0) != child)
+              ;
+            if (!WIFEXITED (status))
+              {
+                fprintf (stderr, "subprocess terminated with unexpected wait status %d\n", status);
+                return 1;
+              }
+            int exitstatus = WEXITSTATUS (status);
+            if (exitstatus != 127)
+              {
+                fprintf (stderr, "subprocess terminated with unexpected exit status %d\n", exitstatus);
+                return 1;
+              }
           }
       }
   }
