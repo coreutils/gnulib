@@ -65,6 +65,13 @@
 extern const char ** prepare_spawn (const char * const *argv,
                                     char **mem_to_free);
 
+/* Composes the command to be passed to CreateProcess().
+   ARGV must contain appropriately quoted arguments, as returned by
+   prepare_spawn.
+   Returns a freshly allocated string.  In case of memory allocation failure,
+   NULL is returned, with errno set.  */
+extern char * compose_command (const char * const *argv);
+
 /* Creates a subprocess.
    MODE is either P_WAIT or P_NOWAIT.
    PROGNAME is the program to invoke.

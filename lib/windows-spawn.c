@@ -203,6 +203,47 @@ prepare_spawn (const char * const *argv, char **mem_to_free)
   return new_argv;
 }
 
+char *
+compose_command (const char * const *argv)
+{
+  /* Just concatenate the argv[] strings, separated by spaces.  */
+  char *command;
+
+  /* Determine the size of the needed block of memory.  */
+  size_t total_size = 0;
+  const char * const *ap;
+  const char *p;
+  for (ap = argv; (p = *ap) != NULL; ap++)
+    total_size += strlen (p) + 1;
+  size_t command_size = (total_size > 0 ? total_size : 1);
+
+  /* Allocate the block of memory.  */
+  command = (char *) malloc (command_size);
+  if (command == NULL)
+    {
+      errno = ENOMEM;
+      return NULL;
+    }
+
+  /* Fill it.  */
+  if (total_size > 0)
+    {
+      char *cp = command;
+      for (ap = argv; (p = *ap) != NULL; ap++)
+        {
+          size_t size = strlen (p) + 1;
+          memcpy (cp, p, size - 1);
+          cp += size;
+          cp[-1] = ' ';
+        }
+      cp[-1] = '\0';
+    }
+  else
+    *command = '\0';
+
+  return command;
+}
+
 intptr_t
 spawnpvech (int mode,
             const char *progname, const char * const *argv,
@@ -227,35 +268,10 @@ spawnpvech (int mode,
   if (resolved_progname == NULL)
     return -1;
 
-  /* Compose the command.
-     Just concatenate the argv[] strings, separated by spaces.  */
-  char *command;
-  {
-    /* Determine the size of the needed block of memory.  */
-    size_t total_size = 0;
-    const char * const *ap;
-    const char *p;
-    for (ap = argv; (p = *ap) != NULL; ap++)
-      total_size += strlen (p) + 1;
-    size_t command_size = (total_size > 0 ? total_size : 1);
-    command = (char *) malloc (command_size);
-    if (command == NULL)
-      goto out_of_memory_1;
-    if (total_size > 0)
-      {
-        char *cp = command;
-        for (ap = argv; (p = *ap) != NULL; ap++)
-          {
-            size_t size = strlen (p) + 1;
-            memcpy (cp, p, size - 1);
-            cp += size;
-            cp[-1] = ' ';
-          }
-        cp[-1] = '\0';
-      }
-    else
-      *command = '\0';
-  }
+  /* Compose the command.  */
+  char *command = compose_command (argv);
+  if (command == NULL)
+    goto out_of_memory_1;
 
   /* Copy *ENVP into a contiguous block of memory.  */
   char *envblock;
