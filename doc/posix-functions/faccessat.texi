@@ -15,6 +15,12 @@ glibc 2.3.6, macOS 10.12, FreeBSD 7.4, NetBSD 6.1.5, OpenBSD 4.9, Minix 3.1.8, A
 On some platforms, @code{faccessat (dfd, "file/", amode, flag)}
 succeeds instead of failing when @file{file} is not a directory.
 macOS 10.13.
+@item
+On some platforms, @code{faccessat} can incorrectly fail with
+@code{EOVERFLOW} when the mode is @code{F_OK}:
+GNU/Linux with glibc 2.32, or with Linux kernel 5.7.
+@c This bug should be fixed in glibc 2.33 and kernel 5.8.  See:
+@c https://sourceware.org/bugzilla/show_bug.cgi?id=18683
 @end itemize
 
 Portability problems not fixed by Gnulib:
@@ -30,9 +36,11 @@ The replacement does not support the @code{AT_SYMLINK_NOFOLLOW} flag,
 which is supported by GNU @code{faccessat}.
 @item
 On some platforms, @code{faccessat} can mishandle @code{AT_EACCESS}
-after a process starts as root and then becomes non-root:
-GNU/Linux with glibc 2.32.
-@c This bug should be fixed in glibc 2.33.  See:
+after a process starts as root and then becomes non-root,
+or can incorrectly fail with @code{EOVERFLOW} when the mode
+is not @code{F_OK}:
+GNU/Linux with glibc 2.32, or with Linux kernel 5.7.
+@c These bugs should be fixed in glibc 2.33 and kernel 5.8.  See:
 @c https://sourceware.org/bugzilla/show_bug.cgi?id=18683
 @end itemize
 
