@@ -63,7 +63,7 @@ rpl_unlink (char const *name)
          can't delete a directory via a symlink.  */
       struct stat st;
       result = lstat (name, &st);
-      if (result == 0)
+      if (result == 0 || errno == EOVERFLOW)
         {
           /* Trailing NUL will overwrite the trailing slash.  */
           char *short_name = malloc (len);
@@ -79,6 +79,7 @@ rpl_unlink (char const *name)
               return -1;
             }
           free (short_name);
+          result = 0;
         }
     }
   if (!result)

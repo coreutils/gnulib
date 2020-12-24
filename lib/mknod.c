@@ -56,7 +56,7 @@ rpl_mknod (char const *name, mode_t mode, dev_t dev)
       if (len && name[len - 1] == '/')
         {
           struct stat st;
-          if (stat (name, &st) == 0)
+          if (stat (name, &st) == 0 || errno == EOVERFLOW)
             errno = EEXIST;
           return -1;
         }

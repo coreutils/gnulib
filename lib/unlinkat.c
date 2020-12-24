@@ -59,7 +59,7 @@ rpl_unlinkat (int fd, char const *name, int flag)
          directory.  */
       struct stat st;
       result = lstatat (fd, name, &st);
-      if (result == 0)
+      if (result == 0 || errno == EOVERFLOW)
         {
           /* Trailing NUL will overwrite the trailing slash.  */
           char *short_name = malloc (len);
@@ -78,6 +78,7 @@ rpl_unlinkat (int fd, char const *name, int flag)
               return -1;
             }
           free (short_name);
+          result = 0;
         }
     }
   if (!result)

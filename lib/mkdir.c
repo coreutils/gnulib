@@ -77,7 +77,7 @@ rpl_mkdir (char const *dir, mode_t mode maybe_unused)
                          || (last[1] == '.' && last[2] == '\0')))
       {
         struct stat st;
-        if (stat (tmp_dir, &st) == 0)
+        if (stat (tmp_dir, &st) == 0 || errno == EOVERFLOW)
           errno = EEXIST;
         return -1;
       }

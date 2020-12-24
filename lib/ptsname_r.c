@@ -198,7 +198,7 @@ __ptsname_r (int fd, char *buf, size_t buflen)
     buf[sizeof (_PATH_DEV) - 1] = 't';
 # endif
 
-  if (__stat (buf, &st) < 0)
+  if (__stat (buf, &st) < 0 && errno != EOVERFLOW)
     return errno;
 
   __set_errno (save_errno);

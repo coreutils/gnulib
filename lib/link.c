@@ -107,7 +107,7 @@ link (const char *file1, const char *file2)
     char *p = strchr (dir, '\0');
     while (dir < p && (*--p != '/' && *p != '\\'));
     *p = '\0';
-    if (p != dir && stat (dir, &st) == -1)
+    if (p != dir && stat (dir, &st) != 0 && errno != EOVERFLOW)
       {
         int saved_errno = errno;
         free (dir);
@@ -181,7 +181,7 @@ rpl_link (char const *file1, char const *file2)
   struct stat st;
 
   /* Don't allow IRIX to dereference dangling file2 symlink.  */
-  if (!lstat (file2, &st))
+  if (lstat (file2, &st) == 0 || errno == EOVERFLOW)
     {
       errno = EEXIST;
       return -1;
@@ -218,7 +218,7 @@ rpl_link (char const *file1, char const *file2)
       if (p)
         {
           *p = '\0';
-          if (stat (dir, &st) == -1)
+          if (stat (dir, &st) != 0 && errno != EOVERFLOW)
             {
               int saved_errno = errno;
               free (dir);

@@ -353,7 +353,7 @@ file_has_acl (char const *name, struct stat const *sb)
             {
               struct stat statbuf;
 
-              if (stat (name, &statbuf) < 0)
+              if (stat (name, &statbuf) == -1 && errno != EOVERFLOW)
                 return -1;
 
               return acl_nontrivial (count, entries);

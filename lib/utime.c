@@ -276,7 +276,7 @@ utime (const char *name, const struct utimbuf *ts)
     {
       struct stat buf;
 
-      if (stat (name, &buf) < 0)
+      if (stat (name, &buf) == -1 && errno != EOVERFLOW)
         return -1;
     }
 # endif /* REPLACE_FUNC_UTIME_FILE */
