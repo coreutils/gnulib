@@ -15,6 +15,11 @@ open
 sh-filename
 strchrnul
 unistd
+filename        [test $HAVE_POSIX_SPAWN = 0]
+concat-filename [test $HAVE_POSIX_SPAWN = 0]
+findprog-in     [test $HAVE_POSIX_SPAWN = 0]
+malloca         [test $HAVE_POSIX_SPAWN = 0]
+windows-spawn   [test $HAVE_POSIX_SPAWN = 0]
 
 configure.ac:
 gl_POSIX_SPAWN

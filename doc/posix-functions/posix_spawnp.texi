@@ -26,7 +26,7 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function does not work on some platforms:
-AIX 6.1 (under particular circumstances), mingw.
+AIX 6.1 (under particular circumstances).
 @end itemize
 
 The Gnulib modules @code{posix_spawn_file_actions_addchdir} and
