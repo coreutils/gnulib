@@ -1700,7 +1700,7 @@ func_all_modules ()
   func_begin_table
   func_module calloc-gnu
   func_module eealloc
-  func_module free
+  func_module free-posix
   func_module malloc-gnu
   func_module realloc-gnu
   func_module reallocarray
