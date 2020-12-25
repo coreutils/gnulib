@@ -31,6 +31,7 @@ posix_spawn_file_actions_addopen
 posix_spawn_file_actions_addchdir
 posix_spawn_file_actions_destroy
 posix_spawnattr_init
+posix_spawnattr_setpgroup
 posix_spawnattr_setsigmask
 posix_spawnattr_setflags
 posix_spawnattr_destroy

@@ -44,7 +44,20 @@
 
 #define _(str) gettext (str)
 
-#if defined _WIN32 && ! defined __CYGWIN__
+
+/* Choice of implementation for native Windows.
+   - Define to 0 to use the posix_spawn facility (modules 'posix_spawn' and
+     'posix_spawnp'), that is based on the module 'windows-spawn'.
+   - Define to 1 to use the older code, that uses the module 'windows-spawn'
+     directly.
+   You can set this macro from a Makefile or at configure time, from the
+   CPPFLAGS.  */
+#ifndef SPAWN_PIPE_IMPL_AVOID_POSIX_SPAWN
+# define SPAWN_PIPE_IMPL_AVOID_POSIX_SPAWN 0
+#endif
+
+
+#if (defined _WIN32 && !defined __CYGWIN__) && SPAWN_PIPE_IMPL_AVOID_POSIX_SPAWN
 
 /* Native Windows API.  */
 # if GNULIB_MSVC_NOTHROW
@@ -89,7 +102,7 @@ nonintr_close (int fd)
 #undef close /* avoid warning related to gnulib module unistd */
 #define close nonintr_close
 
-#if defined _WIN32 && ! defined __CYGWIN__
+#if (defined _WIN32 && !defined __CYGWIN__) && SPAWN_PIPE_IMPL_AVOID_POSIX_SPAWN
 static int
 nonintr_open (const char *pathname, int oflag, mode_t mode)
 {
@@ -181,7 +194,7 @@ create_pipe (const char *progname,
         }
     }
 
-#if (defined _WIN32 && ! defined __CYGWIN__) || defined __KLIBC__
+#if ((defined _WIN32 && !defined __CYGWIN__) && SPAWN_PIPE_IMPL_AVOID_POSIX_SPAWN) || defined __KLIBC__
 
   /* Native Windows API.
      This uses _pipe(), dup2(), and _spawnv().  It could also be implemented
@@ -217,7 +230,7 @@ create_pipe (const char *progname,
 
   child = -1;
 
-# if defined _WIN32 && ! defined __CYGWIN__
+# if (defined _WIN32 && !defined __CYGWIN__) && SPAWN_PIPE_IMPL_AVOID_POSIX_SPAWN
   bool must_close_ifd1 = pipe_stdout;
   bool must_close_ofd0 = pipe_stdin;
 
@@ -512,12 +525,20 @@ create_pipe (const char *progname,
           || (slave_process
               && ((err = posix_spawnattr_init (&attrs)) != 0
                   || (attrs_allocated = true,
+# if defined _WIN32 && !defined __CYGWIN__
+                      (err = posix_spawnattr_setpgroup (&attrs, 0)) != 0
+                      || (err = posix_spawnattr_setflags (&attrs,
+                                                         POSIX_SPAWN_SETPGROUP))
+                         != 0
+# else
                       (err = posix_spawnattr_setsigmask (&attrs,
                                                          &blocked_signals))
                       != 0
                       || (err = posix_spawnattr_setflags (&attrs,
                                                         POSIX_SPAWN_SETSIGMASK))
-                         != 0)))
+                         != 0
+# endif
+             )   )   )
           || (err = (directory != NULL
                      ? posix_spawn (&child, prog_path, &actions,
                                     attrs_allocated ? &attrs : NULL,
