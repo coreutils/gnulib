@@ -1,4 +1,4 @@
-# math_h.m4 serial 121
+# math_h.m4 serial 122
 dnl Copyright (C) 2007-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -159,6 +159,13 @@ AC_DEFUN([gl_MATH_H_DEFAULTS],
   GNULIB_TRUNC=0;      AC_SUBST([GNULIB_TRUNC])
   GNULIB_TRUNCF=0;     AC_SUBST([GNULIB_TRUNCF])
   GNULIB_TRUNCL=0;     AC_SUBST([GNULIB_TRUNCL])
+  dnl Support Microsoft deprecated alias function names by default.
+  GNULIB_MDA_J0=1;     AC_SUBST([GNULIB_MDA_J0])
+  GNULIB_MDA_J1=1;     AC_SUBST([GNULIB_MDA_J1])
+  GNULIB_MDA_JN=1;     AC_SUBST([GNULIB_MDA_JN])
+  GNULIB_MDA_Y0=1;     AC_SUBST([GNULIB_MDA_Y0])
+  GNULIB_MDA_Y1=1;     AC_SUBST([GNULIB_MDA_Y1])
+  GNULIB_MDA_YN=1;     AC_SUBST([GNULIB_MDA_YN])
   dnl Assume proper GNU behavior unless another module says otherwise.
   HAVE_ACOSF=1;                     AC_SUBST([HAVE_ACOSF])
   HAVE_ACOSL=1;                     AC_SUBST([HAVE_ACOSL])

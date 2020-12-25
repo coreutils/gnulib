@@ -29,6 +29,7 @@ utime.h: utime.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) 
 	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
 	      -e 's|@''NEXT_UTIME_H''@|$(NEXT_UTIME_H)|g' \
 	      -e 's/@''GNULIB_UTIME''@/$(GNULIB_UTIME)/g' \
+	      -e 's/@''GNULIB_MDA_UTIME''@/$(GNULIB_MDA_UTIME)/g' \
 	      -e 's|@''HAVE_UTIME''@|$(HAVE_UTIME)|g' \
 	      -e 's|@''REPLACE_UTIME''@|$(REPLACE_UTIME)|g' \
 	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \

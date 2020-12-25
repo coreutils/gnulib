@@ -69,6 +69,11 @@ stdlib.h: stdlib.in.h $(top_builddir)/config.status $(CXXDEFS_H) \
 	      -e 's/@''GNULIB_UNLOCKPT''@/$(GNULIB_UNLOCKPT)/g' \
 	      -e 's/@''GNULIB_UNSETENV''@/$(GNULIB_UNSETENV)/g' \
 	      -e 's/@''GNULIB_WCTOMB''@/$(GNULIB_WCTOMB)/g' \
+	      -e 's/@''GNULIB_MDA_ECVT''@/$(GNULIB_MDA_ECVT)/g' \
+	      -e 's/@''GNULIB_MDA_FCVT''@/$(GNULIB_MDA_FCVT)/g' \
+	      -e 's/@''GNULIB_MDA_GCVT''@/$(GNULIB_MDA_GCVT)/g' \
+	      -e 's/@''GNULIB_MDA_MKTEMP''@/$(GNULIB_MDA_MKTEMP)/g' \
+	      -e 's/@''GNULIB_MDA_PUTENV''@/$(GNULIB_MDA_PUTENV)/g' \
 	      < $(srcdir)/stdlib.in.h | \
 	  sed -e 's|@''HAVE__EXIT''@|$(HAVE__EXIT)|g' \
 	      -e 's|@''HAVE_ALIGNED_ALLOC''@|$(HAVE_ALIGNED_ALLOC)|g' \

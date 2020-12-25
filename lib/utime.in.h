@@ -85,7 +85,7 @@ _GL_WARN_ON_USE (utime,
                  "utime is unportable - "
                  "use gnulib module canonicalize-lgpl for portability");
 # endif
-#else
+#elif @GNULIB_MDA_UTIME@
 /* On native Windows, map 'utime' to '_utime', so that -loldnames is not
    required.  In C++ with GNULIB_NAMESPACE, avoid differences between
    platforms by defining GNULIB_NAMESPACE::utime always.  */

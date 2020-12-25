@@ -1336,47 +1336,53 @@ _GL_WARN_ON_USE (ilogbl, "ilogbl is unportable - "
 #endif
 
 
+#if @GNULIB_MDA_J0@
 /* On native Windows, map 'j0' to '_j0', so that -loldnames is not
    required.  In C++ with GNULIB_NAMESPACE, avoid differences between
    platforms by defining GNULIB_NAMESPACE::j0 always.  */
-#if defined _WIN32 && !defined __CYGWIN__
-# if !(defined __cplusplus && defined GNULIB_NAMESPACE)
-#  undef j0
-#  define j0 _j0
-# endif
+# if defined _WIN32 && !defined __CYGWIN__
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef j0
+#   define j0 _j0
+#  endif
 _GL_CXXALIAS_MDA (j0, double, (double x));
-#else
+# else
 _GL_CXXALIAS_SYS (j0, double, (double x));
-#endif
+# endif
 _GL_CXXALIASWARN (j0);
+#endif
 
+#if @GNULIB_MDA_J1@
 /* On native Windows, map 'j1' to '_j1', so that -loldnames is not
    required.  In C++ with GNULIB_NAMESPACE, avoid differences between
    platforms by defining GNULIB_NAMESPACE::j1 always.  */
-#if defined _WIN32 && !defined __CYGWIN__
-# if !(defined __cplusplus && defined GNULIB_NAMESPACE)
-#  undef j1
-#  define j1 _j1
-# endif
+# if defined _WIN32 && !defined __CYGWIN__
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef j1
+#   define j1 _j1
+#  endif
 _GL_CXXALIAS_MDA (j1, double, (double x));
-#else
+# else
 _GL_CXXALIAS_SYS (j1, double, (double x));
-#endif
+# endif
 _GL_CXXALIASWARN (j1);
+#endif
 
+#if @GNULIB_MDA_JN@
 /* On native Windows, map 'jn' to '_jn', so that -loldnames is not
    required.  In C++ with GNULIB_NAMESPACE, avoid differences between
    platforms by defining GNULIB_NAMESPACE::jn always.  */
-#if defined _WIN32 && !defined __CYGWIN__
-# if !(defined __cplusplus && defined GNULIB_NAMESPACE)
-#  undef jn
-#  define jn _jn
-# endif
+# if defined _WIN32 && !defined __CYGWIN__
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef jn
+#   define jn _jn
+#  endif
 _GL_CXXALIAS_MDA (jn, double, (int n, double x));
-#else
+# else
 _GL_CXXALIAS_SYS (jn, double, (int n, double x));
-#endif
+# endif
 _GL_CXXALIASWARN (jn);
+#endif
 
 
 /* Return x * 2^exp.  */
@@ -2343,47 +2349,53 @@ _GL_WARN_ON_USE (truncl, "truncl is unportable - "
 #endif
 
 
+#if @GNULIB_MDA_Y0@
 /* On native Windows, map 'y0' to '_y0', so that -loldnames is not
    required.  In C++ with GNULIB_NAMESPACE, avoid differences between
    platforms by defining GNULIB_NAMESPACE::y0 always.  */
-#if defined _WIN32 && !defined __CYGWIN__
-# if !(defined __cplusplus && defined GNULIB_NAMESPACE)
-#  undef y0
-#  define y0 _y0
-# endif
+# if defined _WIN32 && !defined __CYGWIN__
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef y0
+#   define y0 _y0
+#  endif
 _GL_CXXALIAS_MDA (y0, double, (double x));
-#else
+# else
 _GL_CXXALIAS_SYS (y0, double, (double x));
-#endif
+# endif
 _GL_CXXALIASWARN (y0);
+#endif
 
+#if @GNULIB_MDA_Y1@
 /* On native Windows, map 'y1' to '_y1', so that -loldnames is not
    required.  In C++ with GNULIB_NAMESPACE, avoid differences between
    platforms by defining GNULIB_NAMESPACE::y1 always.  */
-#if defined _WIN32 && !defined __CYGWIN__
-# if !(defined __cplusplus && defined GNULIB_NAMESPACE)
-#  undef y1
-#  define y1 _y1
-# endif
+# if defined _WIN32 && !defined __CYGWIN__
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef y1
+#   define y1 _y1
+#  endif
 _GL_CXXALIAS_MDA (y1, double, (double x));
-#else
+# else
 _GL_CXXALIAS_SYS (y1, double, (double x));
-#endif
+# endif
 _GL_CXXALIASWARN (y1);
+#endif
 
+#if @GNULIB_MDA_YN@
 /* On native Windows, map 'yn' to '_yn', so that -loldnames is not
    required.  In C++ with GNULIB_NAMESPACE, avoid differences between
    platforms by defining GNULIB_NAMESPACE::yn always.  */
-#if defined _WIN32 && !defined __CYGWIN__
-# if !(defined __cplusplus && defined GNULIB_NAMESPACE)
-#  undef yn
-#  define yn _yn
-# endif
+# if defined _WIN32 && !defined __CYGWIN__
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef yn
+#   define yn _yn
+#  endif
 _GL_CXXALIAS_MDA (yn, double, (int n, double x));
-#else
+# else
 _GL_CXXALIAS_SYS (yn, double, (int n, double x));
-#endif
+# endif
 _GL_CXXALIASWARN (yn);
+#endif
 
 
 /* Definitions of function-like macros come here, after the function

@@ -1,4 +1,4 @@
-# search_h.m4 serial 11
+# search_h.m4 serial 12
 dnl Copyright (C) 2007-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -56,6 +56,9 @@ AC_DEFUN([gl_SEARCH_MODULE_INDICATOR],
 AC_DEFUN([gl_SEARCH_H_DEFAULTS],
 [
   GNULIB_TSEARCH=0; AC_SUBST([GNULIB_TSEARCH])
+  dnl Support Microsoft deprecated alias function names by default.
+  GNULIB_MDA_LFIND=1;   AC_SUBST([GNULIB_MDA_LFIND])
+  GNULIB_MDA_LSEARCH=1; AC_SUBST([GNULIB_MDA_LSEARCH])
   dnl Assume proper GNU behavior unless another module says otherwise.
   HAVE_TSEARCH=1;    AC_SUBST([HAVE_TSEARCH])
   HAVE_TWALK=1;      AC_SUBST([HAVE_TWALK])

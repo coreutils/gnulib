@@ -30,6 +30,8 @@ search.h: search.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H
 	      -e 's|@''NEXT_SEARCH_H''@|$(NEXT_SEARCH_H)|g' \
 	      -e 's|@''HAVE_TYPE_VISIT''@|$(HAVE_TYPE_VISIT)|g' \
 	      -e 's/@''GNULIB_TSEARCH''@/$(GNULIB_TSEARCH)/g' \
+	      -e 's/@''GNULIB_MDA_LFIND''@/$(GNULIB_MDA_LFIND)/g' \
+	      -e 's/@''GNULIB_MDA_LSEARCH''@/$(GNULIB_MDA_LSEARCH)/g' \
 	      -e 's|@''HAVE_TSEARCH''@|$(HAVE_TSEARCH)|g' \
 	      -e 's|@''HAVE_TWALK''@|$(HAVE_TWALK)|g' \
 	      -e 's|@''REPLACE_TSEARCH''@|$(REPLACE_TSEARCH)|g' \

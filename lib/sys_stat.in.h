@@ -391,20 +391,22 @@ struct stat
 #endif
 
 
+#if @GNULIB_MDA_CHMOD@
 /* On native Windows, map 'chmod' to '_chmod', so that -loldnames is not
    required.  In C++ with GNULIB_NAMESPACE, avoid differences between
    platforms by defining GNULIB_NAMESPACE::chmod always.  */
-#if defined _WIN32 && !defined __CYGWIN__
-# if !(defined __cplusplus && defined GNULIB_NAMESPACE)
-#  undef chmod
-#  define chmod _chmod
-# endif
+# if defined _WIN32 && !defined __CYGWIN__
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef chmod
+#   define chmod _chmod
+#  endif
 /* Need to cast, because in mingw the last argument is 'int mode'.  */
 _GL_CXXALIAS_MDA_CAST (chmod, int, (const char *filename, mode_t mode));
-#else
+# else
 _GL_CXXALIAS_SYS (chmod, int, (const char *filename, mode_t mode));
-#endif
+# endif
 _GL_CXXALIASWARN (chmod);
+#endif
 
 
 #if @GNULIB_FCHMODAT@
@@ -818,20 +820,22 @@ _GL_WARN_ON_USE (stat, "stat is unportable - "
 #endif
 
 
+#if @GNULIB_MDA_UMASK@
 /* On native Windows, map 'umask' to '_umask', so that -loldnames is not
    required.  In C++ with GNULIB_NAMESPACE, avoid differences between
    platforms by defining GNULIB_NAMESPACE::umask always.  */
-#if defined _WIN32 && !defined __CYGWIN__
-# if !(defined __cplusplus && defined GNULIB_NAMESPACE)
-#  undef umask
-#  define umask _umask
-# endif
+# if defined _WIN32 && !defined __CYGWIN__
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef umask
+#   define umask _umask
+#  endif
 /* Need to cast, because in mingw the last argument is 'int mode'.  */
 _GL_CXXALIAS_MDA_CAST (umask, mode_t, (mode_t mask));
-#else
+# else
 _GL_CXXALIAS_SYS (umask, mode_t, (mode_t mask));
-#endif
+# endif
 _GL_CXXALIASWARN (umask);
+#endif
 
 
 #if @GNULIB_UTIMENSAT@

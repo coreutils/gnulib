@@ -127,6 +127,12 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's/@''GNULIB_TRUNC''@/$(GNULIB_TRUNC)/g' \
 	      -e 's/@''GNULIB_TRUNCF''@/$(GNULIB_TRUNCF)/g' \
 	      -e 's/@''GNULIB_TRUNCL''@/$(GNULIB_TRUNCL)/g' \
+	      -e 's/@''GNULIB_MDA_J0''@/$(GNULIB_MDA_J0)/g' \
+	      -e 's/@''GNULIB_MDA_J1''@/$(GNULIB_MDA_J1)/g' \
+	      -e 's/@''GNULIB_MDA_JN''@/$(GNULIB_MDA_JN)/g' \
+	      -e 's/@''GNULIB_MDA_Y0''@/$(GNULIB_MDA_Y0)/g' \
+	      -e 's/@''GNULIB_MDA_Y1''@/$(GNULIB_MDA_Y1)/g' \
+	      -e 's/@''GNULIB_MDA_YN''@/$(GNULIB_MDA_YN)/g' \
 	  | \
 	  sed -e 's|@''HAVE_ACOSF''@|$(HAVE_ACOSF)|g' \
 	      -e 's|@''HAVE_ACOSL''@|$(HAVE_ACOSL)|g' \

@@ -92,6 +92,27 @@ unistd.h: unistd.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H
 	      -e 's/@''GNULIB_UNLINKAT''@/$(GNULIB_UNLINKAT)/g' \
 	      -e 's/@''GNULIB_USLEEP''@/$(GNULIB_USLEEP)/g' \
 	      -e 's/@''GNULIB_WRITE''@/$(GNULIB_WRITE)/g' \
+	      -e 's/@''GNULIB_MDA_ACCESS''@/$(GNULIB_MDA_ACCESS)/g' \
+	      -e 's/@''GNULIB_MDA_CHDIR''@/$(GNULIB_MDA_CHDIR)/g' \
+	      -e 's/@''GNULIB_MDA_CLOSE''@/$(GNULIB_MDA_CLOSE)/g' \
+	      -e 's/@''GNULIB_MDA_DUP''@/$(GNULIB_MDA_DUP)/g' \
+	      -e 's/@''GNULIB_MDA_DUP2''@/$(GNULIB_MDA_DUP2)/g' \
+	      -e 's/@''GNULIB_MDA_EXECL''@/$(GNULIB_MDA_EXECL)/g' \
+	      -e 's/@''GNULIB_MDA_EXECLE''@/$(GNULIB_MDA_EXECLE)/g' \
+	      -e 's/@''GNULIB_MDA_EXECLP''@/$(GNULIB_MDA_EXECLP)/g' \
+	      -e 's/@''GNULIB_MDA_EXECV''@/$(GNULIB_MDA_EXECV)/g' \
+	      -e 's/@''GNULIB_MDA_EXECVE''@/$(GNULIB_MDA_EXECVE)/g' \
+	      -e 's/@''GNULIB_MDA_EXECVP''@/$(GNULIB_MDA_EXECVP)/g' \
+	      -e 's/@''GNULIB_MDA_EXECVPE''@/$(GNULIB_MDA_EXECVPE)/g' \
+	      -e 's/@''GNULIB_MDA_GETCWD''@/$(GNULIB_MDA_GETCWD)/g' \
+	      -e 's/@''GNULIB_MDA_GETPID''@/$(GNULIB_MDA_GETPID)/g' \
+	      -e 's/@''GNULIB_MDA_ISATTY''@/$(GNULIB_MDA_ISATTY)/g' \
+	      -e 's/@''GNULIB_MDA_LSEEK''@/$(GNULIB_MDA_LSEEK)/g' \
+	      -e 's/@''GNULIB_MDA_READ''@/$(GNULIB_MDA_READ)/g' \
+	      -e 's/@''GNULIB_MDA_RMDIR''@/$(GNULIB_MDA_RMDIR)/g' \
+	      -e 's/@''GNULIB_MDA_SWAB''@/$(GNULIB_MDA_SWAB)/g' \
+	      -e 's/@''GNULIB_MDA_UNLINK''@/$(GNULIB_MDA_UNLINK)/g' \
+	      -e 's/@''GNULIB_MDA_WRITE''@/$(GNULIB_MDA_WRITE)/g' \
 	      < $(srcdir)/unistd.in.h | \
 	  sed -e 's|@''HAVE_CHOWN''@|$(HAVE_CHOWN)|g' \
 	      -e 's|@''HAVE_COPY_FILE_RANGE''@|$(HAVE_COPY_FILE_RANGE)|g' \
