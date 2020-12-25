@@ -30,7 +30,6 @@
 int
 pipe_safer (int fd[2])
 {
-#if HAVE_PIPE
   if (pipe (fd) == 0)
     {
       int i;
@@ -39,18 +38,15 @@ pipe_safer (int fd[2])
           fd[i] = fd_safer (fd[i]);
           if (fd[i] < 0)
             {
-              int e = errno;
+              int saved_errno = errno;
               close (fd[1 - i]);
-              errno = e;
+              errno = saved_errno;
               return -1;
             }
         }
 
       return 0;
     }
-#else
-  errno = ENOSYS;
-#endif
 
   return -1;
 }
