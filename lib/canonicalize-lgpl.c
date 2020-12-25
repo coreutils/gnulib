@@ -38,8 +38,8 @@
 #include <unistd.h>
 
 #include <eloop-threshold.h>
-#include <idx.h>
 #include <filename.h>
+#include <idx.h>
 #include <scratch_buffer.h>
 
 #ifdef _LIBC
@@ -50,6 +50,8 @@
 # else
 #  define FACCESSAT_NEVER_EOVERFLOWS true
 # endif
+# define GCC_LINT 1
+# define _GL_ATTRIBUTE_PURE __attribute__ ((__pure__))
 #else
 # define __canonicalize_file_name canonicalize_file_name
 # define __realpath realpath
@@ -80,6 +82,13 @@
 # define __rawmemchr rawmemchr
 # define __readlink readlink
 # define __stat stat
+#endif
+
+/* Suppress bogus GCC -Wmaybe-uninitialized warnings.  */
+#if defined GCC_LINT || defined lint
+# define IF_LINT(Code) Code
+#else
+# define IF_LINT(Code) /* empty */
 #endif
 
 #ifndef DOUBLE_SLASH_IS_DISTINCT_ROOT
@@ -114,7 +123,7 @@ file_accessible (char const *file)
    component within END.  END must either be empty, or start with a
    slash.  */
 
-static bool
+static bool _GL_ATTRIBUTE_PURE
 suffix_requires_dir_check (char const *end)
 {
   /* If END does not start with a slash, the suffix is OK.  */
@@ -338,7 +347,7 @@ realpath_stk (const char *name, char *resolved,
               buf[n] = '\0';
 
               char *extra_buf = extra_buffer.data;
-              idx_t end_idx;
+              idx_t end_idx IF_LINT (= 0);
               if (end_in_extra_buffer)
                 end_idx = end - extra_buf;
               idx_t len = strlen (end);

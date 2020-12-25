@@ -27,14 +27,21 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
+#include <filename.h>
+#include <idx.h>
 #include <scratch_buffer.h>
 
 #include "attribute.h"
 #include "file-set.h"
-#include "idx.h"
 #include "hash-triple.h"
 #include "xalloc.h"
-#include "filename.h"
+
+/* Suppress bogus GCC -Wmaybe-uninitialized warnings.  */
+#if defined GCC_LINT || defined lint
+# define IF_LINT(Code) Code
+#else
+# define IF_LINT(Code) /* empty */
+#endif
 
 #ifndef DOUBLE_SLASH_IS_DISTINCT_ROOT
 # define DOUBLE_SLASH_IS_DISTINCT_ROOT false
@@ -72,7 +79,7 @@ file_accessible (char const *file)
    component within END.  END must either be empty, or start with a
    slash.  */
 
-static bool
+static bool _GL_ATTRIBUTE_PURE
 suffix_requires_dir_check (char const *end)
 {
   /* If END does not start with a slash, the suffix is OK.  */
@@ -334,7 +341,6 @@ canonicalize_filename_mode_stk (const char *name, canonicalize_mode_t can_mode,
           dest = mempcpy (dest, start, startlen);
           *dest = '\0';
 
-          char discard;
           char *buf;
           ssize_t n = -1;
           if (!logical)
@@ -386,7 +392,7 @@ canonicalize_filename_mode_stk (const char *name, canonicalize_mode_t can_mode,
               buf[n] = '\0';
 
               char *extra_buf = extra_buffer.data;
-              idx_t end_idx;
+              idx_t end_idx IF_LINT (= 0);
               if (end_in_extra_buffer)
                 end_idx = end - extra_buf;
               idx_t len = strlen (end);
