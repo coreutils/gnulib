@@ -15,6 +15,7 @@ gl_FUNC_MKDIR
 if test $REPLACE_MKDIR = 1; then
   AC_LIBOBJ([mkdir])
 fi
+gl_SYS_STAT_MODULE_INDICATOR([mkdir])
 
 Makefile.am:
 
