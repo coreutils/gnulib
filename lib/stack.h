@@ -53,8 +53,8 @@
    After including this file, these names will be undefined.
 
    Before including this file, you also need to include:
-     #include "<stdbool.h>"
-     #include "<stdlib.h>"
+     #include <stdbool.h>
+     #include <stdlib.h>
      #include "assure.h"
      #include "xalloc.h"
 */
