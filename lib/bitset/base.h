@@ -24,6 +24,7 @@
 #include <limits.h>
 #include <stdbool.h>
 #include <stddef.h>
+#include <stdlib.h>     /* because Gnulib's <stdlib.h> may '#define free ...' */
 #include <string.h> /* ffsl */
 
 #include "attribute.h"
