@@ -8,6 +8,7 @@ m4/execvpe.m4
 Depends-on:
 unistd
 extensions
+stdbool         [test $HAVE_EXECVPE = 0 || test $REPLACE_EXECVPE = 1]
 findprog-in     [test $HAVE_EXECVPE = 0 || test $REPLACE_EXECVPE = 1]
 execve          [test $HAVE_EXECVPE = 0 || test $REPLACE_EXECVPE = 1]
 
