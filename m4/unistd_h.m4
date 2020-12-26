@@ -1,4 +1,4 @@
-# unistd_h.m4 serial 84
+# unistd_h.m4 serial 85
 dnl Copyright (C) 2006-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -42,6 +42,7 @@ AC_DEFUN([gl_UNISTD_H],
 # endif
 #endif
     ]], [access chdir chown copy_file_range dup dup2 dup3 environ euidaccess
+    execl execle execlp execv execve execvp execvpe
     faccessat fchdir
     fchownat fdatasync fsync ftruncate getcwd getdomainname getdtablesize
     getentropy getgroups gethostname getlogin getlogin_r getpagesize getpass
@@ -79,6 +80,13 @@ AC_DEFUN([gl_UNISTD_H_DEFAULTS],
   GNULIB_DUP3=0;                 AC_SUBST([GNULIB_DUP3])
   GNULIB_ENVIRON=0;              AC_SUBST([GNULIB_ENVIRON])
   GNULIB_EUIDACCESS=0;           AC_SUBST([GNULIB_EUIDACCESS])
+  GNULIB_EXECL=0;                AC_SUBST([GNULIB_EXECL])
+  GNULIB_EXECLE=0;               AC_SUBST([GNULIB_EXECLE])
+  GNULIB_EXECLP=0;               AC_SUBST([GNULIB_EXECLP])
+  GNULIB_EXECV=0;                AC_SUBST([GNULIB_EXECV])
+  GNULIB_EXECVE=0;               AC_SUBST([GNULIB_EXECVE])
+  GNULIB_EXECVP=0;               AC_SUBST([GNULIB_EXECVP])
+  GNULIB_EXECVPE=0;              AC_SUBST([GNULIB_EXECVPE])
   GNULIB_FACCESSAT=0;            AC_SUBST([GNULIB_FACCESSAT])
   GNULIB_FCHDIR=0;               AC_SUBST([GNULIB_FCHDIR])
   GNULIB_FCHOWNAT=0;             AC_SUBST([GNULIB_FCHOWNAT])
@@ -150,6 +158,7 @@ AC_DEFUN([gl_UNISTD_H_DEFAULTS],
   HAVE_COPY_FILE_RANGE=1; AC_SUBST([HAVE_COPY_FILE_RANGE])
   HAVE_DUP3=1;            AC_SUBST([HAVE_DUP3])
   HAVE_EUIDACCESS=1;      AC_SUBST([HAVE_EUIDACCESS])
+  HAVE_EXECVPE=1;         AC_SUBST([HAVE_EXECVPE])
   HAVE_FACCESSAT=1;       AC_SUBST([HAVE_FACCESSAT])
   HAVE_FCHDIR=1;          AC_SUBST([HAVE_FCHDIR])
   HAVE_FCHOWNAT=1;        AC_SUBST([HAVE_FCHOWNAT])
@@ -198,6 +207,13 @@ AC_DEFUN([gl_UNISTD_H_DEFAULTS],
   REPLACE_CLOSE=0;        AC_SUBST([REPLACE_CLOSE])
   REPLACE_DUP=0;          AC_SUBST([REPLACE_DUP])
   REPLACE_DUP2=0;         AC_SUBST([REPLACE_DUP2])
+  REPLACE_EXECL=0;        AC_SUBST([REPLACE_EXECL])
+  REPLACE_EXECLE=0;       AC_SUBST([REPLACE_EXECLE])
+  REPLACE_EXECLP=0;       AC_SUBST([REPLACE_EXECLP])
+  REPLACE_EXECV=0;        AC_SUBST([REPLACE_EXECV])
+  REPLACE_EXECVE=0;       AC_SUBST([REPLACE_EXECVE])
+  REPLACE_EXECVP=0;       AC_SUBST([REPLACE_EXECVP])
+  REPLACE_EXECVPE=0;      AC_SUBST([REPLACE_EXECVPE])
   REPLACE_FACCESSAT=0;    AC_SUBST([REPLACE_FACCESSAT])
   REPLACE_FCHOWNAT=0;     AC_SUBST([REPLACE_FCHOWNAT])
   REPLACE_FTRUNCATE=0;    AC_SUBST([REPLACE_FTRUNCATE])

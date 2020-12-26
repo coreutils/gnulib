@@ -615,7 +615,26 @@ _GL_WARN_ON_USE (euidaccess, "euidaccess is unportable - "
 #endif
 
 
-#if @GNULIB_MDA_EXECL@
+#if @GNULIB_EXECL@
+# if @REPLACE_EXECL@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef execl
+#   define execl rpl_execl
+#  endif
+_GL_FUNCDECL_RPL (execl, int, (const char *program, const char *arg, ...)
+                              _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_RPL (execl, int, (const char *program, const char *arg, ...));
+# else
+_GL_CXXALIAS_SYS (execl, int, (const char *program, const char *arg, ...));
+# endif
+_GL_CXXALIASWARN (execl);
+#elif defined GNULIB_POSIXCHECK
+# undef execl
+# if HAVE_RAW_DECL_EXECL
+_GL_WARN_ON_USE (execl, "execl behaves very differently on mingw - "
+                 "use gnulib module execl for portability");
+# endif
+#elif @GNULIB_MDA_EXECL@
 /* On native Windows, map 'execl' to '_execl', so that -loldnames is not
    required.  In C++ with GNULIB_NAMESPACE, avoid differences between
    platforms by defining GNULIB_NAMESPACE::execl always.  */
@@ -631,7 +650,26 @@ _GL_CXXALIAS_SYS (execl, int, (const char *program, const char *arg, ...));
 _GL_CXXALIASWARN (execl);
 #endif
 
-#if @GNULIB_MDA_EXECLE@
+#if @GNULIB_EXECLE@
+# if @REPLACE_EXECLE@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef execle
+#   define execle rpl_execle
+#  endif
+_GL_FUNCDECL_RPL (execle, int, (const char *program, const char *arg, ...)
+                               _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_RPL (execle, int, (const char *program, const char *arg, ...));
+# else
+_GL_CXXALIAS_SYS (execle, int, (const char *program, const char *arg, ...));
+# endif
+_GL_CXXALIASWARN (execle);
+#elif defined GNULIB_POSIXCHECK
+# undef execle
+# if HAVE_RAW_DECL_EXECLE
+_GL_WARN_ON_USE (execle, "execle behaves very differently on mingw - "
+                 "use gnulib module execle for portability");
+# endif
+#elif @GNULIB_MDA_EXECLE@
 /* On native Windows, map 'execle' to '_execle', so that -loldnames is not
    required.  In C++ with GNULIB_NAMESPACE, avoid differences between
    platforms by defining GNULIB_NAMESPACE::execle always.  */
@@ -640,14 +678,34 @@ _GL_CXXALIASWARN (execl);
 #   undef execle
 #   define execle _execle
 #  endif
-_GL_CXXALIAS_MDA (execle, intptr_t, (const char *program, const char *arg, ...));
+_GL_CXXALIAS_MDA (execle, intptr_t,
+                  (const char *program, const char *arg, ...));
 # else
 _GL_CXXALIAS_SYS (execle, int, (const char *program, const char *arg, ...));
 # endif
 _GL_CXXALIASWARN (execle);
 #endif
 
-#if @GNULIB_MDA_EXECLP@
+#if @GNULIB_EXECLP@
+# if @REPLACE_EXECLP@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef execlp
+#   define execlp rpl_execlp
+#  endif
+_GL_FUNCDECL_RPL (execlp, int, (const char *program, const char *arg, ...)
+                               _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_RPL (execlp, int, (const char *program, const char *arg, ...));
+# else
+_GL_CXXALIAS_SYS (execlp, int, (const char *program, const char *arg, ...));
+# endif
+_GL_CXXALIASWARN (execlp);
+#elif defined GNULIB_POSIXCHECK
+# undef execlp
+# if HAVE_RAW_DECL_EXECLP
+_GL_WARN_ON_USE (execlp, "execlp behaves very differently on mingw - "
+                 "use gnulib module execlp for portability");
+# endif
+#elif @GNULIB_MDA_EXECLP@
 /* On native Windows, map 'execlp' to '_execlp', so that -loldnames is not
    required.  In C++ with GNULIB_NAMESPACE, avoid differences between
    platforms by defining GNULIB_NAMESPACE::execlp always.  */
@@ -656,7 +714,8 @@ _GL_CXXALIASWARN (execle);
 #   undef execlp
 #   define execlp _execlp
 #  endif
-_GL_CXXALIAS_MDA (execlp, intptr_t, (const char *program, const char *arg, ...));
+_GL_CXXALIAS_MDA (execlp, intptr_t,
+                  (const char *program, const char *arg, ...));
 # else
 _GL_CXXALIAS_SYS (execlp, int, (const char *program, const char *arg, ...));
 # endif
@@ -664,7 +723,26 @@ _GL_CXXALIASWARN (execlp);
 #endif
 
 
-#if @GNULIB_MDA_EXECV@
+#if @GNULIB_EXECV@
+# if @REPLACE_EXECV@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef execv
+#   define execv rpl_execv
+#  endif
+_GL_FUNCDECL_RPL (execv, int, (const char *program, char * const *argv)
+                              _GL_ARG_NONNULL ((1, 2)));
+_GL_CXXALIAS_RPL (execv, int, (const char *program, char * const *argv));
+# else
+_GL_CXXALIAS_SYS (execv, int, (const char *program, char * const *argv));
+# endif
+_GL_CXXALIASWARN (execv);
+#elif defined GNULIB_POSIXCHECK
+# undef execv
+# if HAVE_RAW_DECL_EXECV
+_GL_WARN_ON_USE (execv, "execv behaves very differently on mingw - "
+                 "use gnulib module execv for portability");
+# endif
+#elif @GNULIB_MDA_EXECV@
 /* On native Windows, map 'execv' to '_execv', so that -loldnames is not
    required.  In C++ with GNULIB_NAMESPACE, avoid differences between
    platforms by defining GNULIB_NAMESPACE::execv always.  */
@@ -673,15 +751,37 @@ _GL_CXXALIASWARN (execlp);
 #   undef execv
 #   define execv _execv
 #  endif
-_GL_CXXALIAS_MDA (execv, intptr_t,
-                  (const char *program, const char * const *argv));
+_GL_CXXALIAS_MDA_CAST (execv, intptr_t,
+                       (const char *program, char * const *argv));
 # else
 _GL_CXXALIAS_SYS (execv, int, (const char *program, char * const *argv));
 # endif
 _GL_CXXALIASWARN (execv);
 #endif
 
-#if @GNULIB_MDA_EXECVE@
+#if @GNULIB_EXECVE@
+# if @REPLACE_EXECVE@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef execve
+#   define execve rpl_execve
+#  endif
+_GL_FUNCDECL_RPL (execve, int,
+                  (const char *program, char * const *argv, char * const *env)
+                  _GL_ARG_NONNULL ((1, 2)));
+_GL_CXXALIAS_RPL (execve, int,
+                  (const char *program, char * const *argv, char * const *env));
+# else
+_GL_CXXALIAS_SYS (execve, int,
+                  (const char *program, char * const *argv, char * const *env));
+# endif
+_GL_CXXALIASWARN (execve);
+#elif defined GNULIB_POSIXCHECK
+# undef execve
+# if HAVE_RAW_DECL_EXECVE
+_GL_WARN_ON_USE (execve, "execve behaves very differently on mingw - "
+                 "use gnulib module execve for portability");
+# endif
+#elif @GNULIB_MDA_EXECVE@
 /* On native Windows, map 'execve' to '_execve', so that -loldnames is not
    required.  In C++ with GNULIB_NAMESPACE, avoid differences between
    platforms by defining GNULIB_NAMESPACE::execve always.  */
@@ -690,9 +790,9 @@ _GL_CXXALIASWARN (execv);
 #   undef execve
 #   define execve _execve
 #  endif
-_GL_CXXALIAS_MDA (execve, intptr_t,
-                  (const char *program, const char * const *argv,
-                   const char * const *env));
+_GL_CXXALIAS_MDA_CAST (execve, intptr_t,
+                       (const char *program, char * const *argv,
+                        char * const *env));
 # else
 _GL_CXXALIAS_SYS (execve, int,
                   (const char *program, char * const *argv, char * const *env));
@@ -700,7 +800,26 @@ _GL_CXXALIAS_SYS (execve, int,
 _GL_CXXALIASWARN (execve);
 #endif
 
-#if @GNULIB_MDA_EXECVP@
+#if @GNULIB_EXECVP@
+# if @REPLACE_EXECVP@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef execvp
+#   define execvp rpl_execvp
+#  endif
+_GL_FUNCDECL_RPL (execvp, int, (const char *program, char * const *argv)
+                               _GL_ARG_NONNULL ((1, 2)));
+_GL_CXXALIAS_RPL (execvp, int, (const char *program, char * const *argv));
+# else
+_GL_CXXALIAS_SYS (execvp, int, (const char *program, char * const *argv));
+# endif
+_GL_CXXALIASWARN (execvp);
+#elif defined GNULIB_POSIXCHECK
+# undef execvp
+# if HAVE_RAW_DECL_EXECVP
+_GL_WARN_ON_USE (execvp, "execvp behaves very differently on mingw - "
+                 "use gnulib module execvp for portability");
+# endif
+#elif @GNULIB_MDA_EXECVP@
 /* On native Windows, map 'execvp' to '_execvp', so that -loldnames is not
    required.  In C++ with GNULIB_NAMESPACE, avoid differences between
    platforms by defining GNULIB_NAMESPACE::execvp always.  */
@@ -709,15 +828,42 @@ _GL_CXXALIASWARN (execve);
 #   undef execvp
 #   define execvp _execvp
 #  endif
-_GL_CXXALIAS_MDA (execvp, intptr_t,
-                  (const char *program, const char * const *argv));
+_GL_CXXALIAS_MDA_CAST (execvp, intptr_t,
+                       (const char *program, char * const *argv));
 # else
 _GL_CXXALIAS_SYS (execvp, int, (const char *program, char * const *argv));
 # endif
 _GL_CXXALIASWARN (execvp);
 #endif
 
-#if @GNULIB_MDA_EXECVPE@
+#if @GNULIB_EXECVPE@
+# if @REPLACE_EXECVPE@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef execvpe
+#   define execvpe rpl_execvpe
+#  endif
+_GL_FUNCDECL_RPL (execvpe, int,
+                  (const char *program, char * const *argv, char * const *env)
+                  _GL_ARG_NONNULL ((1, 2)));
+_GL_CXXALIAS_RPL (execvpe, int,
+                  (const char *program, char * const *argv, char * const *env));
+# else
+#  if !@HAVE_DECL_EXECVPE@
+_GL_FUNCDECL_SYS (execvpe, int,
+                  (const char *program, char * const *argv, char * const *env)
+                  _GL_ARG_NONNULL ((1, 2)));
+#  endif
+_GL_CXXALIAS_SYS (execvpe, int,
+                  (const char *program, char * const *argv, char * const *env));
+# endif
+_GL_CXXALIASWARN (execvpe);
+#elif defined GNULIB_POSIXCHECK
+# undef execvpe
+# if HAVE_RAW_DECL_EXECVPE
+_GL_WARN_ON_USE (execvpe, "execvpe behaves very differently on mingw - "
+                 "use gnulib module execvpe for portability");
+# endif
+#elif @GNULIB_MDA_EXECVPE@
 /* On native Windows, map 'execvpe' to '_execvpe', so that -loldnames is not
    required.  In C++ with GNULIB_NAMESPACE, avoid differences between
    platforms by defining GNULIB_NAMESPACE::execvpe on all platforms that have
@@ -727,16 +873,19 @@ _GL_CXXALIASWARN (execvp);
 #   undef execvpe
 #   define execvpe _execvpe
 #  endif
-_GL_CXXALIAS_MDA (execvpe, intptr_t,
-                  (const char *program, const char * const *argv,
-                   const char * const *env));
-# else
-#  if @HAVE_DECL_EXECVPE@
+_GL_CXXALIAS_MDA_CAST (execvpe, intptr_t,
+                       (const char *program, char * const *argv,
+                        char * const *env));
+# elif @HAVE_EXECVPE@
+#  if !@HAVE_DECL_EXECVPE@
+_GL_FUNCDECL_SYS (execvpe, int,
+                  (const char *program, char * const *argv, char * const *env)
+                  _GL_ARG_NONNULL ((1, 2)));
+#  endif
 _GL_CXXALIAS_SYS (execvpe, int,
                   (const char *program, char * const *argv, char * const *env));
-#  endif
 # endif
-# if (defined _WIN32 && !defined __CYGWIN__) || @HAVE_DECL_EXECVPE@
+# if (defined _WIN32 && !defined __CYGWIN__) || @HAVE_EXECVPE@
 _GL_CXXALIASWARN (execvpe);
 # endif
 #endif
