@@ -4,10 +4,22 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/execlp.html}
 
-Gnulib module: ---
+Gnulib module: execlp
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+On Windows platforms (excluding Cygwin), this function does not pass
+command-line arguments correctly if they contain space, tab, backslash,
+or double-quote characters.
+@item
+On Windows platforms (excluding Cygwin), this function spawns an asynchronous
+child process and then exits the current process immediately.  As a
+consequence, the parent of the current process 1. may incorrectly proceed
+as if its child had exited, and 2. will never see the child's exit status.
+@item
+On Windows platforms (excluding Cygwin), the return type of this function is
+@code{intptr_t}, not @code{int}.
 @end itemize
 
 Portability problems not fixed by Gnulib:
@@ -15,8 +27,4 @@ Portability problems not fixed by Gnulib:
 @item
 On some platforms, a script without executable permission is still run:
 Cygwin 1.5.x.
-@item
-On Windows platforms (excluding Cygwin), this function operates by spawning
-and then by exiting the current process, which means the current
-process's parent may incorrectly proceed as if its child had exited.
 @end itemize
