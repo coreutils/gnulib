@@ -9,7 +9,6 @@ lib/regex_internal.h
 lib/regexec.c
 lib/regcomp.c
 m4/eealloc.m4
-m4/glibc21.m4
 m4/regex.m4
 m4/mbstate_t.m4
 
@@ -23,7 +22,7 @@ builtin-expect  [test $ac_use_included_regex = yes]
 intprops        [test $ac_use_included_regex = yes]
 langinfo        [test $ac_use_included_regex = yes]
 libc-config     [test $ac_use_included_regex = yes]
-lock      [test "$ac_cv_gnu_library_2_1:$ac_use_included_regex" = no:yes]
+lock            [test $ac_use_included_regex = yes]
 memcmp          [test $ac_use_included_regex = yes]
 memmove         [test $ac_use_included_regex = yes]
 mbrtowc         [test $ac_use_included_regex = yes]
