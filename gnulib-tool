@@ -3634,7 +3634,6 @@ func_update_file ()
 # - uses_subdirs    nonempty if object files in subdirs exist
 func_emit_lib_Makefile_am ()
 {
-
   # When using GNU make, or when creating an includable Makefile.am snippet,
   # augment variables with += instead of assigning them.
   if $gnu_make || test -n "$makefile_name"; then
@@ -4028,7 +4027,7 @@ func_emit_tests_Makefile_am ()
       fi
       if test -n "$module"; then
         {
-          func_get_automake_snippet "$module" |
+          func_get_automake_snippet_conditional "$module" |
             LC_ALL=C \
             sed -e 's,lib_LIBRARIES,lib%_LIBRARIES,g' \
                 -e 's,lib_LTLIBRARIES,lib%_LTLIBRARIES,g' \
@@ -4042,9 +4041,13 @@ func_emit_tests_Makefile_am ()
             echo "libtests_a_LIBADD += @ALLOCA@"
             echo "libtests_a_DEPENDENCIES += @ALLOCA@"
           fi
-        } > "$tmp"/amsnippet
+        } | combine_lines "libtests_a_SOURCES" > "$tmp"/amsnippet1
+        {
+          func_get_automake_snippet_unconditional "$module" |
+            LC_ALL=C sed -e 's,lib_\([A-Z][A-Z]*\),libtests_a_\1,g'
+        } > "$tmp"/amsnippet2
         # Skip the contents if it's entirely empty.
-        if grep '[^	 ]' "$tmp"/amsnippet > /dev/null ; then
+        if grep '[^	 ]' "$tmp"/amsnippet1 "$tmp"/amsnippet2 > /dev/null ; then
           # Mention long-running tests at the end.
           ofd=3
           for word in `func_get_status "$module"`; do
@@ -4056,9 +4059,28 @@ func_emit_tests_Makefile_am ()
           { echo "## begin gnulib module $module"
             if $gnu_make; then
               echo "ifeq (,\$(OMIT_GNULIB_MODULE_$module))"
+              convert_to_gnu_make='s/^if \(.*\)/ifneq (,$(\1))/'
+            else
+              convert_to_gnu_make=
             fi
             echo
-            cat "$tmp"/amsnippet
+            if test "$cond_dependencies" = true; then
+              if func_cond_module_p "$module"; then
+                func_module_conditional_name "$module"
+                if $gnu_make; then
+                  echo "ifneq (,\$($conditional))"
+                else
+                  echo "if $conditional"
+                fi
+              fi
+            fi
+            sed "$convert_to_gnu_make" "$tmp"/amsnippet1
+            if test "$cond_dependencies" = true; then
+              if func_cond_module_p "$module"; then
+                echo "endif"
+              fi
+            fi
+            sed "$convert_to_gnu_make" "$tmp"/amsnippet2
             if $gnu_make; then
               echo "endif"
             fi
@@ -4066,7 +4088,7 @@ func_emit_tests_Makefile_am ()
             echo
           } >&$ofd
         fi
-        rm -f "$tmp"/amsnippet
+        rm -f "$tmp"/amsnippet1 "$tmp"/amsnippet2
         # Test whether there are some source files in subdirectories.
         for f in `func_get_filelist "$module"`; do
           case $f in
@@ -6255,7 +6277,7 @@ func_create_testdir ()
   # Note:
   # If $single_configure, we use the module lists $main_modules and
   # $testsrelated_modules; $modules is merely a temporary variable.
-  # Whereas if ! $configure, the module list is $modules.
+  # Whereas if ! $single_configure, the module list is $modules.
 
   # Show banner notice of every module.
   if $single_configure; then
