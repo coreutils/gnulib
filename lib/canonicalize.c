@@ -46,9 +46,6 @@
 #ifndef DOUBLE_SLASH_IS_DISTINCT_ROOT
 # define DOUBLE_SLASH_IS_DISTINCT_ROOT false
 #endif
-#ifndef FACCESSAT_NEVER_EOVERFLOWS
-# define FACCESSAT_NEVER_EOVERFLOWS false
-#endif
 
 #if ISSLASH ('\\')
 # define SLASHES "/\\"
@@ -62,14 +59,11 @@ static bool
 file_accessible (char const *file)
 {
 # if HAVE_FACCESSAT
-  int r = faccessat (AT_FDCWD, file, F_OK, AT_EACCESS);
+  return faccessat (AT_FDCWD, file, F_OK, AT_EACCESS) == 0;
 # else
   struct stat st;
-  int r = stat (file, &st);
+  return stat (file, &st) == 0 || errno == EOVERFLOW;
 # endif
-
-  return ((!FACCESSAT_NEVER_EOVERFLOWS && r < 0 && errno == EOVERFLOW)
-          || r == 0);
 }
 
 /* True if concatenating END as a suffix to a file name means that the

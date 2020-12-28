@@ -5,7 +5,6 @@ Files:
 lib/canonicalize-lgpl.c
 m4/canonicalize.m4
 m4/double-slash-root.m4
-m4/faccessat.m4
 m4/lstat.m4
 
 Depends-on:

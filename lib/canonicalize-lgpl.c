@@ -44,12 +44,6 @@
 
 #ifdef _LIBC
 # include <shlib-compat.h>
-# include <sysdep.h>
-# ifdef __ASSUME_FACCESSAT2
-#  define FACCESSAT_NEVER_EOVERFLOWS __ASSUME_FACCESSAT2
-# else
-#  define FACCESSAT_NEVER_EOVERFLOWS true
-# endif
 # define GCC_LINT 1
 # define _GL_ATTRIBUTE_PURE __attribute__ ((__pure__))
 #else
@@ -94,9 +88,6 @@
 #ifndef DOUBLE_SLASH_IS_DISTINCT_ROOT
 # define DOUBLE_SLASH_IS_DISTINCT_ROOT false
 #endif
-#ifndef FACCESSAT_NEVER_EOVERFLOWS
-# define FACCESSAT_NEVER_EOVERFLOWS false
-#endif
 
 #if defined _LIBC || !FUNC_REALPATH_WORKS
 
@@ -106,14 +97,11 @@ static bool
 file_accessible (char const *file)
 {
 # if defined _LIBC || HAVE_FACCESSAT
-  int r = __faccessat (AT_FDCWD, file, F_OK, AT_EACCESS);
+  return __faccessat (AT_FDCWD, file, F_OK, AT_EACCESS) == 0;
 # else
   struct stat st;
-  int r = __stat (file, &st);
+  return __stat (file, &st) == 0 || errno == EOVERFLOW;
 # endif
-
-  return ((!FACCESSAT_NEVER_EOVERFLOWS && r < 0 && errno == EOVERFLOW)
-          || r == 0);
 }
 
 /* True if concatenating END as a suffix to a file name means that the
