@@ -98,7 +98,7 @@
 # define FACCESSAT_NEVER_EOVERFLOWS false
 #endif
 
-#if !FUNC_REALPATH_WORKS || defined _LIBC
+#if defined _LIBC || !FUNC_REALPATH_WORKS
 
 /* Return true if FILE's existence can be shown, false (setting errno)
    otherwise.  Follow symbolic links.  */
