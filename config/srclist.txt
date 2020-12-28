@@ -49,7 +49,8 @@ $GNUORG Copyright/request-assign.future		doc/Copyright
 $GNUORG Copyright/request-assign.program	doc/Copyright
 $GNUORG Copyright/request-disclaim.changes	doc/Copyright
 
-$LIBCSRC include/scratch_buffer.h	lib/malloc
+#$LIBCSRC include/scratch_buffer.h	lib/malloc
+#$LIBCSRC malloc/scratch_buffer_dupfree.c	lib/malloc
 $LIBCSRC malloc/scratch_buffer_grow.c	lib/malloc
 $LIBCSRC malloc/scratch_buffer_grow_preserve.c	lib/malloc
 $LIBCSRC malloc/scratch_buffer_set_array_size.c	lib/malloc

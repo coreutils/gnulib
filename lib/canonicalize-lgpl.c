@@ -413,24 +413,14 @@ error:
 error_nomem:
   scratch_buffer_free (&extra_buffer);
   scratch_buffer_free (&link_buffer);
+
   if (failed || rname == resolved)
-    scratch_buffer_free (rname_buf);
-
-  if (failed)
-    return NULL;
-
-  if (rname == resolved)
-    return rname;
-  idx_t rname_size = dest - rname;
-  if (rname == rname_on_stack)
     {
-      rname = malloc (rname_size);
-      if (rname == NULL)
-        return NULL;
-      return memcpy (rname, rname_on_stack, rname_size);
+      scratch_buffer_free (rname_buf);
+      return failed ? NULL : resolved;
     }
-  char *result = realloc (rname, rname_size);
-  return result != NULL ? result : rname;
+
+  return scratch_buffer_dupfree (rname_buf, dest - rname);
 }
 
 /* Return the canonical absolute name of file NAME.  A canonical name

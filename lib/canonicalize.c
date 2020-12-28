@@ -469,11 +469,10 @@ error:
       return NULL;
     }
 
-  idx_t rname_size = dest - rname;
-  if (rname == rname_on_stack)
-    return xmemdup (rname, rname_size);
-  char *result = realloc (rname, rname_size);
-  return result != NULL ? result : rname;
+  char *result = scratch_buffer_dupfree (rname_buf, dest - rname);
+  if (!result)
+    xalloc_die ();
+  return result;
 }
 
 /* Return the canonical absolute name of file NAME, while treating
