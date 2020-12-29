@@ -3280,6 +3280,21 @@ func_determine_use_libtests ()
   done
 }
 
+# func_remove_if_blocks
+# removes if...endif blocks from an automake snippet.
+func_remove_if_blocks ()
+{
+  sed -n -e '/^if / {
+    :a
+      n
+      s/^endif//
+      tb
+      ba
+    :b
+  }
+  p'
+}
+
 # func_modules_add_dummy
 # Input:
 # - local_gnulib_path  from --local-dir
@@ -3299,8 +3314,9 @@ func_modules_add_dummy ()
         # contribute to lib_SOURCES.
         :
       else
-        # Extract the value of "lib_SOURCES += ...".
+        # Extract the value of unconditional "lib_SOURCES += ..." augmentations.
         for file in `func_get_automake_snippet "$module" | combine_lines |
+                     func_remove_if_blocks |
                      sed -n -e 's,^lib_SOURCES[	 ]*+=\([^#]*\).*$,\1,p'`; do
           # Ignore .h files since they are not compiled.
           case "$file" in
