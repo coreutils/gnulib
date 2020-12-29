@@ -86,7 +86,6 @@ __ptsname_r (int fd, char *buf, size_t buflen)
     return errno;
 #else
   int save_errno = errno;
-  int err;
   struct stat st;
 
   if (buf == NULL)
@@ -187,7 +186,7 @@ __ptsname_r (int fd, char *buf, size_t buflen)
       return ERANGE;
     }
 
-  err = __ttyname_r (fd, buf, buflen);
+  int err = __ttyname_r (fd, buf, buflen);
   if (err != 0)
     {
       __set_errno (err);
