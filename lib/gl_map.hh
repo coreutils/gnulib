@@ -21,6 +21,8 @@
 #include "gl_map.h"
 #include "gl_xmap.h"
 
+#include <stdlib.h>     /* because Gnulib's <stdlib.h> may '#define free ...' */
+
 /* gl_Map is a C++ wrapper around the gl_map data type.
    Its key type is 'KEYTYPE *'.  Its value type is 'VALUETYPE *'.
 

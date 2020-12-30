@@ -21,6 +21,8 @@
 #include "gl_oset.h"
 #include "gl_xoset.h"
 
+#include <stdlib.h>     /* because Gnulib's <stdlib.h> may '#define free ...' */
+
 /* gl_OSet is a C++ wrapper around the gl_oset data type.
    Its element type is 'ELTYPE *'.
 

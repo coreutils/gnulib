@@ -21,6 +21,8 @@
 #include "gl_omap.h"
 #include "gl_xomap.h"
 
+#include <stdlib.h>     /* because Gnulib's <stdlib.h> may '#define free ...' */
+
 /* gl_OMap is a C++ wrapper around the gl_omap data type.
    Its key type is 'KEYTYPE *'.  Its value type is 'VALUETYPE *'.
 

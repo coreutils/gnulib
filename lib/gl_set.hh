@@ -21,6 +21,8 @@
 #include "gl_set.h"
 #include "gl_xset.h"
 
+#include <stdlib.h>     /* because Gnulib's <stdlib.h> may '#define free ...' */
+
 /* gl_Set is a C++ wrapper around the gl_set data type.
    Its element type is 'ELTYPE *'.
 

@@ -23,6 +23,8 @@
 #include "gl_sublist.h"
 #include "gl_xsublist.h"
 
+#include <stdlib.h>     /* because Gnulib's <stdlib.h> may '#define free ...' */
+
 /* gl_List is a C++ wrapper around the gl_list data type.
    Its element type is 'ELTYPE *'.
 
