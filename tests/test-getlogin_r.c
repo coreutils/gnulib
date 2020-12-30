@@ -32,6 +32,14 @@ main (void)
   /* Test with a large enough buffer.  */
   char buf[1024];
   int err = getlogin_r (buf, sizeof buf);
+#if defined __sun
+  if (err == EINVAL)
+    {
+      /* This can happen on Solaris 11 OpenIndiana in the MATE desktop.  */
+      fprintf (stderr, "Skipping test: no entry in /var/adm/utmpx.\n");
+      exit (77);
+    }
+#endif
   test_getlogin_result (buf, err);
 
   /* Test with a small buffer.  */

@@ -31,7 +31,14 @@ main (void)
   /* Test value.  */
   char *buf = getlogin ();
   int err = buf ? 0 : errno;
-  ASSERT (buf || err);
+#if defined __sun
+  if (buf == NULL && err == 0)
+    {
+      /* This can happen on Solaris 11 OpenIndiana in the MATE desktop.  */
+      fprintf (stderr, "Skipping test: no entry in /var/adm/utmpx.\n");
+      exit (77);
+    }
+#endif
   test_getlogin_result (buf, err);
 
   return 0;
