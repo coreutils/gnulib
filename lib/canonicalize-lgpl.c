@@ -32,7 +32,6 @@
 #include <fcntl.h>
 #include <limits.h>
 #include <stdbool.h>
-#include <stddef.h>
 #include <string.h>
 #include <sys/stat.h>
 #include <unistd.h>
@@ -345,10 +344,7 @@ realpath_stk (const char *name, char *resolved,
                 end_idx = end - extra_buf;
               size_t len = strlen (end);
               if (NARROW_ADDRESSES && INT_ADD_OVERFLOW (len, n))
-                {
-                  __set_errno (ENOMEM);
-                  goto error;
-                }
+                goto error_nomem;
               while (extra_buffer.length <= len + n)
                 {
                   if (!scratch_buffer_grow_preserve (&extra_buffer))

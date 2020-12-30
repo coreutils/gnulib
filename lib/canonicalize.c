@@ -21,8 +21,6 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <stdbool.h>
-#include <stddef.h>
-#include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
 #include <unistd.h>
@@ -396,10 +394,7 @@ canonicalize_filename_mode_stk (const char *name, canonicalize_mode_t can_mode,
                 end_idx = end - extra_buf;
               size_t len = strlen (end);
               if (NARROW_ADDRESSES && INT_ADD_OVERFLOW (len, n))
-                {
-                  errno = ENOMEM;
-                  goto error;
-                }
+                xalloc_die ();
               while (extra_buffer.length <= len + n)
                 {
                   if (!scratch_buffer_grow_preserve (&extra_buffer))
@@ -461,7 +456,6 @@ canonicalize_filename_mode_stk (const char *name, canonicalize_mode_t can_mode,
   failed = false;
 
 error:
-  *dest++ = '\0';
   if (ht)
     hash_free (ht);
   scratch_buffer_free (&extra_buffer);
@@ -473,6 +467,7 @@ error:
       return NULL;
     }
 
+  *dest++ = '\0';
   char *result = scratch_buffer_dupfree (rname_buf, dest - rname);
   if (!result)
     xalloc_die ();
