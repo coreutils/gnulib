@@ -312,7 +312,7 @@ main (void)
 
   /* REG_STARTEND was added to glibc on 2004-01-15.
      Reject older versions.  */
-  if (! REG_STARTEND)
+  if (REG_STARTEND == 0)
     report_error ("REG_STARTEND is zero");
 
   /* Matching with the compiled form of this regexp would provoke
