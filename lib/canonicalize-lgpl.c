@@ -40,6 +40,7 @@
 #include <eloop-threshold.h>
 #include <filename.h>
 #include <idx.h>
+#include <intprops.h>
 #include <scratch_buffer.h>
 
 #ifdef _LIBC
@@ -84,6 +85,10 @@
 #else
 # define IF_LINT(Code) /* empty */
 #endif
+
+/* True if adding two valid object sizes might overflow idx_t.
+   As a practical matter, this cannot happen on 64-bit machines.  */
+enum { NARROW_ADDRESSES = IDX_MAX >> 31 >> 31 == 0 };
 
 #ifndef DOUBLE_SLASH_IS_DISTINCT_ROOT
 # define DOUBLE_SLASH_IS_DISTINCT_ROOT false
@@ -338,7 +343,12 @@ realpath_stk (const char *name, char *resolved,
               idx_t end_idx IF_LINT (= 0);
               if (end_in_extra_buffer)
                 end_idx = end - extra_buf;
-              idx_t len = strlen (end);
+              size_t len = strlen (end);
+              if (NARROW_ADDRESSES && INT_ADD_OVERFLOW (len, n))
+                {
+                  __set_errno (ENOMEM);
+                  goto error;
+                }
               while (extra_buffer.length <= len + n)
                 {
                   if (!scratch_buffer_grow_preserve (&extra_buffer))

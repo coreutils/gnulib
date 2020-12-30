@@ -19,6 +19,7 @@ free-posix
 getcwd
 hash-triple-simple
 idx
+intprops
 memmove
 mempcpy
 nocrash
