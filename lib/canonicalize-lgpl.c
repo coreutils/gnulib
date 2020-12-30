@@ -344,7 +344,10 @@ realpath_stk (const char *name, char *resolved,
                 end_idx = end - extra_buf;
               size_t len = strlen (end);
               if (NARROW_ADDRESSES && INT_ADD_OVERFLOW (len, n))
-                goto error_nomem;
+                {
+                  __set_errno (ENOMEM);
+                  goto error_nomem;
+                }
               while (extra_buffer.length <= len + n)
                 {
                   if (!scratch_buffer_grow_preserve (&extra_buffer))
