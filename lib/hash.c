@@ -498,7 +498,7 @@ compute_bucket_size (size_t candidate, const Hash_tuning *tuning)
   if (!tuning->is_n_buckets)
     {
       float new_candidate = candidate / tuning->growth_threshold;
-      if (SIZE_MAX <= new_candidate)
+      if ((float) SIZE_MAX <= new_candidate)
         return 0;
       candidate = new_candidate;
     }
@@ -961,7 +961,7 @@ hash_insert_if_absent (Hash_table *table, void const *entry,
              : (table->n_buckets * tuning->growth_factor
                 * tuning->growth_threshold));
 
-          if (SIZE_MAX <= candidate)
+          if ((float) SIZE_MAX <= candidate)
             return -1;
 
           /* If the rehash fails, arrange to return NULL.  */
