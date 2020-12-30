@@ -27,13 +27,13 @@ esac
 # Default to sibling (of parent) directories.
 : ${AUTOCONF=../autoconf}
 : ${AUTOMAKE=../automake}
-: ${GMP=../gmp}
+: ${GMP=../gmp} # https://gmplib.org/devel/repo-usage -> hg pull -u
 : ${GNUCONFIG=../config}
 : ${GNULIBSRC=../gnulib}
 : ${GNUORG=../gnuorg}
 : ${GNUSTANDARDS=../gnustandards}
 : ${GNUWWWLICENSES=../www/www/licenses}
 : ${LIBCSRC=../libc}
-: ${LIBGCRYPT=../libgcrypt}
+: ${LIBGCRYPT=../libgcrypt} # git://git.gnupg.org/libgcrypt.git
 : ${LIBTOOL=../libtool}
 : ${TEXINFOTEX=../../ftp.gnu.org/gnu/texinfo}
