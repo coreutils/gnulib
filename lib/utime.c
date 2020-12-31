@@ -261,6 +261,7 @@ utime (const char *name, const struct utimbuf *ts)
 
 #else
 
+# include <errno.h>
 # include <sys/stat.h>
 # include "filename.h"
 
