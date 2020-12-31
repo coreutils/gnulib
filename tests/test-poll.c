@@ -362,8 +362,13 @@ test_pipe (void)
   ASSERT (pipe (fd) >= 0);
   test_pair (fd[0], fd[1]);
   close (fd[0]);
-  if ((poll1_wait (fd[1], POLLIN | POLLOUT) & (POLLHUP | POLLERR)) == 0)
+  int revents = poll1_wait (fd[1], POLLIN | POLLOUT);
+#if !defined _AIX
+  if ((revents & (POLLHUP | POLLERR)) == 0)
     failed ("expecting POLLHUP after shutdown");
+#else
+  (void) revents;
+#endif
 
   close (fd[1]);
 }

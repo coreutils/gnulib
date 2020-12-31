@@ -23,8 +23,8 @@ Portability problems not fixed by Gnulib:
 Under Windows, when passing a pipe, Gnulib's @code{poll} replacement might
 return 0 even before the timeout has passed.  Programs using it with pipes can
 thus busy wait.
-
 @item
-Under HP NonStop, file descriptors other than sockets do not support
-POLLHUP; they will return a "readable" status instead.
+On some platforms, file descriptors other than sockets do not support
+POLLHUP; they will return a "readable" or "writable" status instead:
+AIX 7.2, HP NonStop.
 @end itemize
