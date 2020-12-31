@@ -52,5 +52,15 @@ main ()
    */
   ASSERT (res = fnmatch ("[/b", "[/b", 0) == 0);
 
+  ASSERT (fnmatch ("[[:alpha:]'[:alpha:]\0]", "a", 0) == FNM_NOMATCH);
+  ASSERT (fnmatch ("[a[.\0.]]", "a", 0) == FNM_NOMATCH);
+#ifdef FNM_EXTMATCH
+  ASSERT (fnmatch ("**(!()", "**(!()", FNM_EXTMATCH) == 0);
+#endif
+#ifdef FNM_LEADING_DIR
+  ASSERT (fnmatch ("x?y", "x/y/z", FNM_PATHNAME | FNM_LEADING_DIR)
+          == FNM_NOMATCH);
+#endif
+
   return 0;
 }

@@ -978,12 +978,12 @@ EXT (INT opt, const CHAR *pattern, const CHAR *string, const CHAR *string_end,
      bool no_leading_period, int flags, size_t alloca_used)
 {
   const CHAR *startp;
-  size_t level;
+  ptrdiff_t level;
   struct patternlist
   {
     struct patternlist *next;
     CHAR malloced;
-    CHAR str[FLEXIBLE_ARRAY_MEMBER];
+    CHAR str __flexarr;
   } *list = NULL;
   struct patternlist **lastp = &list;
   size_t pattern_len = STRLEN (pattern);
@@ -994,7 +994,7 @@ EXT (INT opt, const CHAR *pattern, const CHAR *string, const CHAR *string_end,
 
   /* Parse the pattern.  Store the individual parts in the list.  */
   level = 0;
-  for (startp = p = pattern + 1; ; ++p)
+  for (startp = p = pattern + 1; level >= 0; ++p)
     if (*p == L_('\0'))
       {
         /* This is an invalid pattern.  */
@@ -1065,7 +1065,6 @@ EXT (INT opt, const CHAR *pattern, const CHAR *string, const CHAR *string_end,
             *lastp = newp;                                                    \
             lastp = &newp->next
             NEW_PATTERN;
-            break;
           }
       }
     else if (*p == L_('|'))
