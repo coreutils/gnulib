@@ -59,12 +59,6 @@
 # define readdir(str) __readdir64 (str)
 # define getpwnam_r(name, bufp, buf, len, res) \
     __getpwnam_r (name, bufp, buf, len, res)
-# ifndef __lstat64
-#  define __lstat64(fname, buf) __lxstat64 (_STAT_VER, fname, buf)
-# endif
-# ifndef __stat64
-#  define __stat64(fname, buf) __xstat64 (_STAT_VER, fname, buf)
-# endif
 # define struct_stat64          struct stat64
 # define FLEXIBLE_ARRAY_MEMBER
 # include <shlib-compat.h>
