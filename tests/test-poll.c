@@ -280,8 +280,13 @@ test_accept_first (void)
         failed ("cannot read data left in the socket by closed process");
       ASSERT (read (c, buf, 3) == 3);
       ASSERT (write (c, "foo", 3) == 3);
-      if ((poll1_wait (c, POLLIN | POLLOUT) & (POLLHUP | POLLERR)) == 0)
+      int revents = poll1_wait (c, POLLIN | POLLOUT);
+# ifdef __linux__
+      if ((revents & (POLLHUP | POLLERR)) == 0)
         failed ("expecting POLLHUP after shutdown");
+# else
+      (void) revents;
+# endif
       close (c);
     }
 #endif
@@ -335,8 +340,13 @@ test_socket_pair (void)
   test_pair (c1, c2);
   close (c1);
   ASSERT (write (c2, "foo", 3) == 3);
-  if ((poll1_nowait (c2, POLLIN | POLLOUT) & (POLLHUP | POLLERR)) == 0)
+  int revents = poll1_nowait (c2, POLLIN | POLLOUT);
+#ifdef __linux__
+  if ((revents & (POLLHUP | POLLERR)) == 0)
     failed ("expecting POLLHUP after shutdown");
+#else
+  (void) revents;
+#endif
 
   close (c2);
 }
