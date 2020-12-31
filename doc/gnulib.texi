@@ -3739,6 +3739,7 @@ not worked around by Gnulib.
 * ifaddrs.h::
 * libintl.h::
 * link.h::
+* malloc.h::
 * mcheck.h::
 * mntent.h::
 * obstack.h::
@@ -3775,6 +3776,7 @@ not worked around by Gnulib.
 @include glibc-headers/ifaddrs.texi
 @include glibc-headers/libintl.texi
 @include glibc-headers/link.texi
+@include glibc-headers/malloc.texi
 @include glibc-headers/mcheck.texi
 @include glibc-headers/mntent.texi
 @include glibc-headers/obstack.texi
