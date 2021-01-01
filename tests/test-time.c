@@ -34,6 +34,10 @@ pid_t t2;
    per POSIX 2008.  */
 verify (sizeof NULL == sizeof (void *));
 
+/* Check that TIME_UTC is defined and a positive integer.  */
+int t3 = TIME_UTC;
+verify (TIME_UTC > 0);
+
 int
 main (void)
 {

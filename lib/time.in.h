@@ -101,6 +101,14 @@ struct __time_t_must_be_integral {
 #  define GNULIB_defined_struct_time_t_must_be_integral 1
 # endif
 
+/* Define TIME_UTC, a positive integer constant used for timespec_get().  */
+# if ! @TIME_H_DEFINES_TIME_UTC@
+#  if !GNULIB_defined_TIME_UTC
+#   define TIME_UTC 1
+#   define GNULIB_defined_TIME_UTC 1
+#  endif
+# endif
+
 /* Sleep for at least RQTP seconds unless interrupted,  If interrupted,
    return -1 and store the remaining time into RMTP.  See
    <https://pubs.opengroup.org/onlinepubs/9699919799/functions/nanosleep.html>.  */

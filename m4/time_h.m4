@@ -2,7 +2,7 @@
 
 # Copyright (C) 2000-2001, 2003-2007, 2009-2021 Free Software Foundation, Inc.
 
-# serial 13
+# serial 14
 
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -25,6 +25,22 @@ AC_DEFUN([gl_HEADER_TIME_H_BODY],
   AC_REQUIRE([gl_CHECK_TYPE_STRUCT_TIMESPEC])
 
   AC_REQUIRE([AC_C_RESTRICT])
+
+  AC_CACHE_CHECK([for TIME_UTC in <time.h>],
+    [gl_cv_time_h_has_TIME_UTC],
+    [AC_COMPILE_IFELSE(
+       [AC_LANG_PROGRAM(
+          [[#include <time.h>
+          ]],
+          [[static int x = TIME_UTC; x++;]])],
+       [gl_cv_time_h_has_TIME_UTC=yes],
+       [gl_cv_time_h_has_TIME_UTC=no])])
+  if test $gl_cv_time_h_has_TIME_UTC = yes; then
+    TIME_H_DEFINES_TIME_UTC=1
+  else
+    TIME_H_DEFINES_TIME_UTC=0
+  fi
+  AC_SUBST([TIME_H_DEFINES_TIME_UTC])
 ])
 
 dnl Check whether 'struct timespec' is declared
