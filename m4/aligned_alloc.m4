@@ -1,4 +1,4 @@
-# aligned_alloc.m4 serial 1
+# aligned_alloc.m4 serial 2
 dnl Copyright (C) 2020-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,7 +9,7 @@ AC_DEFUN([gl_FUNC_ALIGNED_ALLOC],
   AC_REQUIRE([gl_STDLIB_H_DEFAULTS])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
 
-  dnl Persuade glibc <stdlib.h> to declare aligned_alloc().
+  dnl Persuade glibc and OpenBSD <stdlib.h> to declare aligned_alloc().
   AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
 
   AC_CHECK_FUNCS_ONCE([aligned_alloc])
