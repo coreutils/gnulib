@@ -1,14 +1,19 @@
-dnl A placeholder for <stddef.h>, for platforms that have issues.
-# stddef_h.m4 serial 7
+# stddef_h.m4 serial 8
 dnl Copyright (C) 2009-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 
+dnl A placeholder for <stddef.h>, for platforms that have issues.
+
 AC_DEFUN([gl_STDDEF_H],
 [
   AC_REQUIRE([gl_STDDEF_H_DEFAULTS])
   AC_REQUIRE([gt_TYPE_WCHAR_T])
+
+  dnl Persuade OpenBSD <stddef.h> to declare max_align_t.
+  AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
+
   STDDEF_H=
 
   dnl Test whether the type max_align_t exists and whether its alignment
