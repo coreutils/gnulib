@@ -1,5 +1,5 @@
 /* git-merge-changelog - git "merge" driver for GNU style ChangeLog files.
-   Copyright (C) 2008-2020 Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2008-2021 Bruno Haible <bruno@clisp.org>
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -1045,7 +1045,7 @@ License GPLv2+: GNU GPL version 2 or later <https://gnu.org/licenses/gpl.html>\n
 This is free software: you are free to change and redistribute it.\n\
 There is NO WARRANTY, to the extent permitted by law.\n\
 ",
-              "2008");
+              "2020");
       printf ("Written by %s.\n", "Bruno Haible");
       exit (EXIT_SUCCESS);
     }
