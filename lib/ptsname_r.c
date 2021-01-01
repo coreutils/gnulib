@@ -97,7 +97,7 @@ __ptsname_r (int fd, char *buf, size_t buflen)
 # if defined __sun /* Solaris */
   if (fstat (fd, &st) < 0)
     return errno;
-  if (!(S_ISCHR (st.st_mode) && major (st.st_rdev) == 0))
+  if (!S_ISCHR (st.st_mode))
     {
       errno = ENOTTY;
       return errno;
