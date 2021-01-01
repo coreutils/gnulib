@@ -22,5 +22,30 @@ if test $locale = French_France.1252; then
   locale=fr_FR.CP1252
 fi
 
-LOCALE=$locale LOCALEDIR="$srcdir/testlocale" \
+# Work around a bug on Solaris 11 systems with no GNU gettext installed.
+# See gettext/gettext-tools/tests/init.cfg.
+localedir="$srcdir/testlocale"
+if test $locale != none && test $locale != fr; then
+  case "$host_os" in
+    solaris2.11)
+      mkdir -p testlocale
+      cp -a "$srcdir/testlocale/fr" "testlocale/$locale"
+      localedir="testlocale"
+      ;;
+  esac
+fi
+
+LOCALE=$locale LOCALEDIR="$localedir" \
 ${CHECKER} ./test-quotearg${EXEEXT}
+result=$?
+
+if test $locale != none && test $locale != fr; then
+  case "$host_os" in
+    solaris2.11)
+      rm -rf "testlocale/$locale"
+      rmdir testlocale 2>/dev/null
+      ;;
+  esac
+fi
+
+exit $result

@@ -25,6 +25,8 @@ gt_LOCALE_FR_UTF8
 
 Makefile.am:
 TESTS += test-quotearg.sh
-TESTS_ENVIRONMENT += LOCALE_FR='@LOCALE_FR@' LOCALE_FR_UTF8='@LOCALE_FR_UTF8@'
+TESTS_ENVIRONMENT += \
+  LOCALE_FR='@LOCALE_FR@' LOCALE_FR_UTF8='@LOCALE_FR_UTF8@' \
+  host_os='@host_os@'
 check_PROGRAMS += test-quotearg
 test_quotearg_LDADD = $(LDADD) $(LIB_SETLOCALE) @LIBINTL@ $(LIB_MBRTOWC)
