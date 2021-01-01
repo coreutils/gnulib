@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2005-2006, 2010-2020 Free Software Foundation, Inc.
+ * Copyright (C) 2005-2006, 2010-2021 Free Software Foundation, Inc.
  * Written by Simon Josefsson
  *
  * This program is free software; you can redistribute it and/or modify

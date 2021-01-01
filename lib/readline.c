@@ -1,5 +1,5 @@
 /* readline.c --- Simple implementation of readline.
-   Copyright (C) 2005-2007, 2009-2020 Free Software Foundation, Inc.
+   Copyright (C) 2005-2007, 2009-2021 Free Software Foundation, Inc.
    Written by Simon Josefsson
 
    This program is free software: you can redistribute it and/or modify

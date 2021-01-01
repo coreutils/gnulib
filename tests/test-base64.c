@@ -1,5 +1,5 @@
 /* Self tests for base64.
-   Copyright (C) 2004, 2008-2020 Free Software Foundation, Inc.
+   Copyright (C) 2004, 2008-2021 Free Software Foundation, Inc.
    Written by Simon Josefsson.
 
    This program is free software: you can redistribute it and/or modify

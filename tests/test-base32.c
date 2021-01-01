@@ -1,5 +1,5 @@
 /* Self tests for base32.
-   Copyright (C) 2004, 2008-2020 Free Software Foundation, Inc.
+   Copyright (C) 2004, 2008-2021 Free Software Foundation, Inc.
    Based on the tests for base64 written by Simon Josefsson.
    Adapted for base32 by Gijs van Tulder.
 

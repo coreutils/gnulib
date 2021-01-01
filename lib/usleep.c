@@ -1,5 +1,5 @@
 /* Pausing execution of the current thread.
-   Copyright (C) 2009-2020 Free Software Foundation, Inc.
+   Copyright (C) 2009-2021 Free Software Foundation, Inc.
    Written by Eric Blake <ebb9@byu.net>, 2009.
 
    This program is free software: you can redistribute it and/or modify
