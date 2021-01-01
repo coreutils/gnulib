@@ -171,7 +171,7 @@
 
 /* A substitute for glibc <libc-symbols.h>, good enough for Gnulib.  */
 #define attribute_hidden
-#define libc_hidden_proto(name, ...)
+#define libc_hidden_proto(name)
 #define libc_hidden_def(name)
 #define libc_hidden_weak(name)
 #define libc_hidden_ver(local, name)
