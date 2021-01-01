@@ -10,7 +10,7 @@ AC_DEFUN([gl_FUNC_ALIGNED_ALLOC],
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
 
   dnl Persuade glibc and OpenBSD <stdlib.h> to declare aligned_alloc().
-  AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
+  AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
 
   AC_CHECK_FUNCS_ONCE([aligned_alloc])
   if test $ac_cv_func_aligned_alloc = yes; then
