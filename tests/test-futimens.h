@@ -166,7 +166,7 @@ test_futimens (int (*func) (int, struct timespec const *),
     ASSERT (get_stat_atime_ns (&st2) == 0);
     ASSERT (st3.st_mtime == st2.st_mtime);
     ASSERT (get_stat_mtime_ns (&st3) == get_stat_mtime_ns (&st2));
-    if (check_ctime)
+    if (check_ctime > 0)
       ASSERT (ctime_compare (&st3, &st2) < 0);
   }
 

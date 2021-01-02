@@ -55,6 +55,9 @@ enum {
    properly tracked change time.  See
    <https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/stat-functions>.  */
 #  define check_ctime 0
+# elif defined __APPLE__ && defined __MACH__
+/* On macOS, the ctime is not updated when only the st_atime changes.  */
+#  define check_ctime -1
 # else
 #  define check_ctime 1
 # endif
