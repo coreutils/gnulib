@@ -24,6 +24,8 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <stdlib.h>
+#include <string.h>
+#include <sys/stat.h>
 
 #include "stat-time.h"
 #include "timespec.h"
@@ -105,6 +107,34 @@ rpl_utimensat (int fd, char const *file, struct timespec const times[2],
           return -1;
         }
 #  endif
+# endif
+# if defined __APPLE__ && defined __MACH__
+      /* macOS 10.13 does not reject invalid tv_nsec values either.  */
+      if (times
+          && ((times[0].tv_nsec != UTIME_OMIT
+               && times[0].tv_nsec != UTIME_NOW
+               && ! (0 <= times[0].tv_nsec
+                     && times[0].tv_nsec < TIMESPEC_HZ))
+              || (times[1].tv_nsec != UTIME_OMIT
+                  && times[1].tv_nsec != UTIME_NOW
+                  && ! (0 <= times[1].tv_nsec
+                        && times[1].tv_nsec < TIMESPEC_HZ))))
+        {
+          errno = EINVAL;
+          return -1;
+        }
+      size_t len = strlen (file);
+      if (len > 0 && file[len - 1] == '/')
+        {
+          struct stat statbuf;
+          if (fstatat (fd, file, &statbuf, 0) < 0)
+            return -1;
+          if (!S_ISDIR (statbuf.st_mode))
+            {
+              errno = ENOTDIR;
+              return -1;
+            }
+        }
 # endif
       result = utimensat (fd, file, times, flag);
       /* Linux kernel 2.6.25 has a bug where it returns EINVAL for
