@@ -109,6 +109,17 @@ struct __time_t_must_be_integral {
 #  endif
 # endif
 
+/* Set *TS to the current time, and return BASE.
+   Upon failure, return 0.  */
+# if @GNULIB_TIMESPEC_GET@
+#  if ! @HAVE_TIMESPEC_GET@
+_GL_FUNCDECL_SYS (timespec_get, int, (struct timespec *ts, int base)
+                                     _GL_ARG_NONNULL ((1)));
+#  endif
+_GL_CXXALIAS_SYS (timespec_get, int, (struct timespec *ts, int base));
+_GL_CXXALIASWARN (timespec_get);
+# endif
+
 /* Sleep for at least RQTP seconds unless interrupted,  If interrupted,
    return -1 and store the remaining time into RMTP.  See
    <https://pubs.opengroup.org/onlinepubs/9699919799/functions/nanosleep.html>.  */

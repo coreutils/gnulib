@@ -24,6 +24,10 @@
 #include "signature.h"
 
 
+#if GNULIB_TEST_TIMESPEC_GET
+SIGNATURE_CHECK (GNULIB_NAMESPACE::timespec_get, int, (struct timespec *, int));
+#endif
+
 #if GNULIB_TEST_NANOSLEEP
 SIGNATURE_CHECK (GNULIB_NAMESPACE::nanosleep, int,
                  (struct timespec const *, struct timespec *));
