@@ -86,14 +86,6 @@ renameatu (int fd1, char const *src, int fd2, char const *dst,
 #elif defined SYS_renameat2
   ret_val = syscall (SYS_renameat2, fd1, src, fd2, dst, flags);
   err = errno;
-#elif defined RENAME_EXCL
-  if (! (flags & ~(RENAME_EXCHANGE | RENAME_NOREPLACE)))
-    {
-      ret_val = renameatx_np (fd1, src, fd2, dst,
-                             ((flags & RENAME_EXCHANGE ? RENAME_SWAP : 0)
-                              | (flags & RENAME_NOREPLACE ? RENAME_EXCL : 0)));
-      err = errno;
-    }
 #endif
 
   if (! (ret_val < 0 && (err == EINVAL || err == ENOSYS || err == ENOTSUP)))
@@ -101,6 +93,9 @@ renameatu (int fd1, char const *src, int fd2, char const *dst,
 
 #if HAVE_RENAMEAT
   {
+# if defined RENAME_EXCL                /* macOS */
+  unsigned int uflags;
+# endif
   size_t src_len;
   size_t dst_len;
   char *src_temp = (char *) src;
@@ -112,33 +107,52 @@ renameatu (int fd1, char const *src, int fd2, char const *dst,
   struct stat dst_st;
   bool dst_found_nonexistent = false;
 
-  if (flags != 0)
+  /* Check the flags.  */
+# if defined RENAME_EXCL
+  /* We can support RENAME_EXCHANGE and RENAME_NOREPLACE.  */
+  if (flags & ~(RENAME_EXCHANGE | RENAME_NOREPLACE))
+# else
+  /* RENAME_NOREPLACE is the only flag currently supported.  */
+  if (flags & ~RENAME_NOREPLACE)
+# endif
+    return errno_fail (ENOTSUP);
+
+# if defined RENAME_EXCL
+  uflags = ((flags & RENAME_EXCHANGE ? RENAME_SWAP : 0)
+            | (flags & RENAME_NOREPLACE ? RENAME_EXCL : 0));
+# endif
+
+# if !defined RENAME_EXCL
+  if ((flags & RENAME_NOREPLACE) != 0)
     {
-      /* RENAME_NOREPLACE is the only flag currently supported.  */
-      if (flags & ~RENAME_NOREPLACE)
-        return errno_fail (ENOTSUP);
-      else
-        {
-          /* This has a race between the call to lstatat and the calls to
-             renameat below.  */
-          if (lstatat (fd2, dst, &dst_st) == 0 || errno == EOVERFLOW)
-            return errno_fail (EEXIST);
-          if (errno != ENOENT)
-            return -1;
-          dst_found_nonexistent = true;
-        }
+      /* This has a race between the call to lstatat and the calls to
+         renameat below.  */
+      if (lstatat (fd2, dst, &dst_st) == 0 || errno == EOVERFLOW)
+        return errno_fail (EEXIST);
+      if (errno != ENOENT)
+        return -1;
+      dst_found_nonexistent = true;
     }
+# endif
 
   /* Let strace see any ENOENT failure.  */
   src_len = strlen (src);
   dst_len = strlen (dst);
   if (!src_len || !dst_len)
+# if defined RENAME_EXCL
+    return renameatx_np (fd1, src, fd2, dst, uflags);
+# else
     return renameat (fd1, src, fd2, dst);
+# endif
 
   src_slash = src[src_len - 1] == '/';
   dst_slash = dst[dst_len - 1] == '/';
   if (!src_slash && !dst_slash)
+# if defined RENAME_EXCL
+    return renameatx_np (fd1, src, fd2, dst, uflags);
+# else
     return renameat (fd1, src, fd2, dst);
+# endif
 
   /* Presence of a trailing slash requires directory semantics.  If
      the source does not exist, or if the destination cannot be turned
@@ -211,7 +225,11 @@ renameatu (int fd1, char const *src, int fd2, char const *dst,
      on Solaris, since all other systems either lack renameat or honor
      trailing slash correctly.  */
 
+# if defined RENAME_EXCL
+  ret_val = renameatx_np (fd1, src_temp, fd2, dst_temp, uflags);
+# else
   ret_val = renameat (fd1, src_temp, fd2, dst_temp);
+# endif
   rename_errno = errno;
   goto out;
  out:
