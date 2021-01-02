@@ -246,6 +246,20 @@ fdutimens (int fd, char const *file, struct timespec const timespec[2])
 # if HAVE_UTIMENSAT
       if (fd < 0)
         {
+#  if defined __APPLE__ && defined __MACH__
+          size_t len = strlen (file);
+          if (len > 0 && file[len - 1] == '/')
+            {
+              struct stat statbuf;
+              if (stat (file, &statbuf) < 0)
+                return -1;
+              if (!S_ISDIR (statbuf.st_mode))
+                {
+                  errno = ENOTDIR;
+                  return -1;
+                }
+            }
+#  endif
           result = utimensat (AT_FDCWD, file, ts, 0);
 #  ifdef __linux__
           /* Work around a kernel bug:
