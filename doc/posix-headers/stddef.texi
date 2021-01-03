@@ -13,7 +13,7 @@ NetBSD 8.0, Solaris 11.0, and others.
 
 @item
 @code{max_align_t} does not have the expected alignment on some platforms:
-NetBSD 8.0/x86.
+NetBSD 8.0/x86, AIX 7.2 with xlc in 64-bit mode.
 
 @item
 Some old platforms fail to provide @code{wchar_t}.

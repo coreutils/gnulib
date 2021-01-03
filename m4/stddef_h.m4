@@ -1,4 +1,4 @@
-# stddef_h.m4 serial 8
+# stddef_h.m4 serial 9
 dnl Copyright (C) 2009-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -28,6 +28,13 @@ AC_DEFUN([gl_STDDEF_H],
             int check1[2 * (__alignof__ (double) <= __alignof__ (max_align_t)) - 1];
             int check2[2 * (__alignof__ (long double) <= __alignof__ (max_align_t)) - 1];
             #endif
+            typedef struct { char a; max_align_t b; } max_helper;
+            typedef struct { char a; long b; } long_helper;
+            typedef struct { char a; double b; } double_helper;
+            typedef struct { char a; long double b; } long_double_helper;
+            int check3[2 * (offsetof (long_helper, b) <= offsetof (max_helper, b)) - 1];
+            int check4[2 * (offsetof (double_helper, b) <= offsetof (max_helper, b)) - 1];
+            int check5[2 * (offsetof (long_double_helper, b) <= offsetof (max_helper, b)) - 1];
           ]])],
        [gl_cv_type_max_align_t=yes],
        [gl_cv_type_max_align_t=no])
