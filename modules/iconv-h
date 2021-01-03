@@ -46,7 +46,9 @@ endif
 MOSTLYCLEANFILES += iconv.h iconv.h-t
 
 Include:
-<iconv.h>
+#if HAVE_ICONV_H
+# include <iconv.h>
+#endif
 
 License:
 LGPLv2+
