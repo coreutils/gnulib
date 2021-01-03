@@ -1,4 +1,4 @@
-# valgrind-tests.m4 serial 4
+# valgrind-tests.m4 serial 5
 dnl Copyright (C) 2008-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -23,10 +23,13 @@ AC_DEFUN([gl_VALGRIND_TESTS],
     if test "$VALGRIND"; then
       AC_CACHE_CHECK([for valgrind options for tests],
         [gl_cv_opt_valgrind_tests],
-        [gl_cv_opt_valgrind_tests="-q --error-exitcode=1 --leak-check=full"
-         $VALGRIND $gl_valgrind_opts ls > /dev/null 2>&1 ||
-           gl_cv_opt_valgrind_tests=no])
-
+        [gl_valgrind_opts='-q --error-exitcode=1 --leak-check=full'
+         if $VALGRIND $gl_valgrind_opts ls > /dev/null 2>&1; then
+           gl_cv_opt_valgrind_tests="$gl_valgrind_opts"
+         else
+           gl_cv_opt_valgrind_tests=no
+         fi
+        ])
       if test "$gl_cv_opt_valgrind_tests" != no; then
         VALGRIND="$VALGRIND $gl_cv_opt_valgrind_tests"
       else
