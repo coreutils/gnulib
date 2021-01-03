@@ -58,7 +58,9 @@ MAINTAINERCLEANFILES += iconv_open-aix.h iconv_open-hpux.h iconv_open-irix.h ico
 EXTRA_DIST           += iconv_open-aix.h iconv_open-hpux.h iconv_open-irix.h iconv_open-osf.h iconv_open-solaris.h iconv_open-zos.h
 
 Include:
-<iconv.h>
+#if HAVE_ICONV
+# include <iconv.h>
+#endif
 
 Link:
 $(LTLIBICONV) when linking with libtool, $(LIBICONV) otherwise
