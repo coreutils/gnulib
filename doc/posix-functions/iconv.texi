@@ -10,9 +10,15 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 GNU libiconv is not found if installed in @file{$PREFIX/lib}.
+@end itemize
+
+Portability problems handled by Gnulib
+(in the sense that @code{HAVE_ICONV} does not get defined if the system's
+@code{iconv} function has this problem):
+@itemize
 @item
 Failures are not distinguishable from successful returns on some platforms:
-AIX 5.1, Solaris 10.
+AIX 5.1..7.2, Solaris 10.
 @item
 A buffer overrun can occur on some platforms:
 AIX 6.1..7.1.

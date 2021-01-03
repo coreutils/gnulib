@@ -10,6 +10,12 @@ Portability problems fixed by either Gnulib module @code{iconv} or @code{iconv_o
 @itemize
 @item
 GNU libiconv is not found if installed in @file{$PREFIX/lib}.
+@end itemize
+
+Portability problems handled by either Gnulib module @code{iconv} or @code{iconv_open}
+(in the sense that @code{HAVE_ICONV} does not get defined if the system's
+@code{iconv_open} function has this problem):
+@itemize
 @item
 No converter from EUC-JP to UTF-8 is provided on some platforms:
 HP-UX 11.
