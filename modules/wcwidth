@@ -28,6 +28,9 @@ Makefile.am:
 Include:
 <wchar.h>
 
+Link:
+$(LTLIBUNISTRING) when linking with libtool, $(LIBUNISTRING) otherwise
+
 License:
 LGPLv2+
 

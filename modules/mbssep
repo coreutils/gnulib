@@ -20,6 +20,7 @@ Include:
 <string.h>
 
 Link:
+$(LTLIBUNISTRING) when linking with libtool, $(LIBUNISTRING) otherwise
 $(LIB_MBRTOWC)
 
 License:

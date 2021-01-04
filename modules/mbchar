@@ -27,6 +27,9 @@ lib_SOURCES += mbchar.c
 Include:
 "mbchar.h"
 
+Link:
+$(LTLIBUNISTRING) when linking with libtool, $(LIBUNISTRING) otherwise
+
 License:
 LGPLv2+
 
