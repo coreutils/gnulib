@@ -29,7 +29,7 @@ if test $locale != none && test $locale != fr; then
   case "$host_os" in
     solaris2.11)
       mkdir -p testlocale
-      cp -a "$srcdir/testlocale/fr" "testlocale/$locale"
+      cp -R "$srcdir/testlocale/fr" "testlocale/$locale"
       localedir="testlocale"
       ;;
   esac
