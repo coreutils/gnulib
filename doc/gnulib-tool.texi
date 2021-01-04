@@ -673,6 +673,9 @@ in the interest of brevity):
     `-- Makefile.am
 @end example
 
+As discussed in @ref{Unit tests}, you may not use @samp{--with-tests}
+for this project since the @code{configure.ac} is shared.
+
 Integration with your code is basically the same as outlined in
 @ref{Initial import} with the one exception that you have to add both
 the macro @code{gl_EARLY} and the macro @code{gl_tools_EARLY} to your
