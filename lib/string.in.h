@@ -69,6 +69,14 @@
 # include <unistd.h>
 #endif
 
+/* AIX 7.2 declares ffsl and ffsll in <strings.h>, not in <string.h>.  */
+/* But in any case avoid namespace pollution on glibc systems.  */
+#if ((@GNULIB_FFSL@ || @GNULIB_FFSLL@ || defined GNULIB_POSIXCHECK) \
+     && defined _AIX) \
+    && ! defined __GLIBC__
+# include <strings.h>
+#endif
+
 /* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
 
 /* The definition of _GL_ARG_NONNULL is copied here.  */
