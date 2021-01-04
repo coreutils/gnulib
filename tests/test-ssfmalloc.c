@@ -142,6 +142,7 @@ free_pages (uintptr_t pages, size_t size)
 /* ================================= Tests ================================= */
 
 #include <limits.h>
+#include <string.h>
 
 #include "macros.h"
 

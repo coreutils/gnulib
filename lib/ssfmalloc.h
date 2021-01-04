@@ -121,7 +121,8 @@ static void free_block (uintptr_t block);
  */
 
 #include <stdlib.h>
-#include <string.h>
+#include <string.h>     /* ffsll */
+#include <strings.h>    /* ffs */
 #include "flexmember.h"
 #include "glthread/lock.h"
 #include "thread-optim.h"
