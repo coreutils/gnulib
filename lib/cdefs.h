@@ -15,8 +15,8 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#ifndef	_SYS_CDEFS_H
-#define	_SYS_CDEFS_H	1
+#ifndef	_GL_CDEFS_H
+#define	_GL_CDEFS_H	1
 
 /* We are almost always included from features.h. */
 #ifndef _FEATURES_H
@@ -545,4 +545,4 @@
 # define __HAVE_GENERIC_SELECTION 0
 #endif
 
-#endif	 /* sys/cdefs.h */
+#endif	 /* gnulib cdefs.h */
