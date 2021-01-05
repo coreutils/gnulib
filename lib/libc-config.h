@@ -89,7 +89,7 @@
 /* Undef the macros unconditionally defined by our copy of glibc
    <sys/cdefs.h>, so that they do not clash with any system-defined
    versions.  */
-#undef _SYS_CDEFS_H
+#undef _GL_CDEFS_H
 #undef __ASMNAME
 #undef __ASMNAME2
 #undef __BEGIN_DECLS
