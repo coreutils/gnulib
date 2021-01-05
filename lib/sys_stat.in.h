@@ -713,11 +713,21 @@ _GL_WARN_ON_USE (mkfifo, "mkfifo is not portable - "
 
 
 #if @GNULIB_MKFIFOAT@
-# if !@HAVE_MKFIFOAT@
+# if @REPLACE_MKFIFOAT@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef mkfifoat
+#   define mkfifoat rpl_mkfifoat
+#  endif
+_GL_FUNCDECL_RPL (mkfifoat, int, (int fd, char const *file, mode_t mode)
+                                 _GL_ARG_NONNULL ((2)));
+_GL_CXXALIAS_RPL (mkfifoat, int, (int fd, char const *file, mode_t mode));
+# else
+#  if !@HAVE_MKFIFOAT@
 _GL_FUNCDECL_SYS (mkfifoat, int, (int fd, char const *file, mode_t mode)
                                  _GL_ARG_NONNULL ((2)));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (mkfifoat, int, (int fd, char const *file, mode_t mode));
+# endif
 _GL_CXXALIASWARN (mkfifoat);
 #elif defined GNULIB_POSIXCHECK
 # undef mkfifoat

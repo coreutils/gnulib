@@ -1,4 +1,4 @@
-# serial 3
+# serial 4
 # See if we need to provide mkfifoat/mknodat replacement.
 
 dnl Copyright (C) 2009-2021 Free Software Foundation, Inc.
@@ -11,10 +11,50 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_FUNC_MKFIFOAT],
 [
   AC_REQUIRE([gl_SYS_STAT_H_DEFAULTS])
-  AC_REQUIRE([gl_FUNC_OPENAT])
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+
+  dnl Persuade glibc <sys/stat.h> to declare mkfifoat() and mknodat().
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
+
+  AC_REQUIRE([gl_FUNC_OPENAT])
+
   AC_CHECK_FUNCS_ONCE([mkfifoat mknodat])
-  if test $ac_cv_func_mkfifoat = no; then
+  if test $ac_cv_func_mkfifoat = yes; then
+    dnl Check for AIX 7.2 bug with trailing slash.
+    AC_CACHE_CHECK([whether mkfifoat rejects trailing slashes],
+      [gl_cv_func_mkfifoat_works],
+      [rm -f conftest.tmp
+       AC_RUN_IFELSE(
+         [AC_LANG_PROGRAM(
+            [[#include <fcntl.h>
+              #include <sys/stat.h>
+            ]],
+            [[int result = 0;
+              if (!mkfifoat (AT_FDCWD, "conftest.tmp/", 0600))
+                result |= 1;
+              return result;
+            ]])
+         ],
+         [gl_cv_func_mkfifoat_works=yes],
+         [gl_cv_func_mkfifoat_works=no],
+         [case "$host_os" in
+                             # Guess yes on Linux systems.
+            linux-* | linux) gl_cv_func_mknod_works="guessing yes" ;;
+                             # Guess yes on glibc systems.
+            *-gnu* | gnu*)   gl_cv_func_mknod_works="guessing yes" ;;
+                             # Guess no on AIX systems.
+            aix*)            gl_cv_func_mknod_works="guessing no" ;;
+                             # If we don't know, obey --enable-cross-guesses.
+            *)               gl_cv_func_mknod_works="$gl_cross_guess_normal" ;;
+          esac
+         ])
+       rm -f conftest.tmp
+      ])
+    case "$gl_cv_func_mkfifoat_works" in
+      *yes) ;;
+      *) REPLACE_MKFIFOAT=1 ;;
+    esac
+  else
     # No known system has mkfifoat but not mknodat
     HAVE_MKFIFOAT=0
     HAVE_MKNODAT=0
