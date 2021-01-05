@@ -11,11 +11,11 @@ m4/mkfifoat.m4
 Depends-on:
 sys_stat
 extensions
+fcntl-h         [test $HAVE_MKFIFOAT = 0 || test $REPLACE_MKFIFOAT = 1 || test $HAVE_MKNODAT = 0 || test $REPLACE_MKNODAT = 1]
 fstatat         [test $REPLACE_MKFIFOAT = 1 || test $REPLACE_MKNODAT = 1]
 at-internal     [test $HAVE_MKFIFOAT = 0 || test $HAVE_MKNODAT = 0]
 errno           [test $HAVE_MKFIFOAT = 0 || test $HAVE_MKNODAT = 0]
 fchdir          [test $HAVE_MKFIFOAT = 0 || test $HAVE_MKNODAT = 0]
-fcntl-h         [test $HAVE_MKFIFOAT = 0 || test $HAVE_MKNODAT = 0]
 filename        [test $HAVE_MKFIFOAT = 0 || test $HAVE_MKNODAT = 0]
 openat-die      [test $HAVE_MKFIFOAT = 0 || test $HAVE_MKNODAT = 0]
 openat-h        [test $HAVE_MKFIFOAT = 0 || test $HAVE_MKNODAT = 0]
