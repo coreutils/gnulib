@@ -85,16 +85,24 @@ link (const char *file1, const char *file2)
       errno = EPERM;
       return -1;
     }
-  /* Reject trailing slashes on non-directories; mingw does not
+  /* Reject trailing slashes on non-directories; native Windows does not
      support hard-linking directories.  */
   if ((len1 && (file1[len1 - 1] == '/' || file1[len1 - 1] == '\\'))
       || (len2 && (file2[len2 - 1] == '/' || file2[len2 - 1] == '\\')))
     {
+      /* If stat() fails, then link() should fail for the same reason.  */
       struct stat st;
-      if (stat (file1, &st) == 0 && S_ISDIR (st.st_mode))
-        errno = EPERM;
-      else
+      if (stat (file1, &st))
+        {
+          if (errno == EOVERFLOW)
+            /* It's surely a file, not a directory (see stat-w32.c).  */
+            errno = ENOTDIR;
+          return -1;
+        }
+      if (!S_ISDIR (st.st_mode))
         errno = ENOTDIR;
+      else
+        errno = EPERM;
       return -1;
     }
   /* CreateHardLink("b/.","a",NULL) creates file "b", so we must check
