@@ -49,8 +49,10 @@ $GNUORG Copyright/request-assign.future		doc/Copyright
 $GNUORG Copyright/request-assign.program	doc/Copyright
 $GNUORG Copyright/request-disclaim.changes	doc/Copyright
 
-#$LIBCSRC include/scratch_buffer.h	lib/malloc
-#$LIBCSRC malloc/scratch_buffer_dupfree.c	lib/malloc
+$LIBCSRC include/filename.h		lib
+$LIBCSRC include/idx.h			lib
+$LIBCSRC include/scratch_buffer.h	lib/malloc
+$LIBCSRC malloc/scratch_buffer_dupfree.c	lib/malloc
 $LIBCSRC malloc/scratch_buffer_grow.c	lib/malloc
 $LIBCSRC malloc/scratch_buffer_grow_preserve.c	lib/malloc
 $LIBCSRC malloc/scratch_buffer_set_array_size.c	lib/malloc
@@ -61,6 +63,7 @@ $LIBCSRC posix/regex.c			lib
 #$LIBCSRC posix/regex_internal.c	lib
 #$LIBCSRC posix/regex_internal.h		lib
 $LIBCSRC posix/regexec.c		lib
+#$LIBCSRC stdlib/canonicalize           lib/canonicalize-lgpl.c
 #$LIBCSRC sysdeps/generic/eloop-threshold.h	lib
 $LIBCSRC time/timegm.c			lib
 #$LIBCSRC time/mktime.c			lib
@@ -82,6 +85,7 @@ $LIBCSRC time/mktime-internal.h		lib
 #$LIBCSRC argp/argp-pvh.c		lib gpl
 #$LIBCSRC argp/argp-xinl.c		lib gpl
 #$LIBCSRC argp/argp.h			lib gpl
+#$LIBCSRC misc/sys/cdefs.h		lib
 #$LIBCSRC stdlib/getsubopt.c		lib gpl
 #$LIBCSRC posix/getopt.c		lib gpl
 #$LIBCSRC posix/getopt.h		lib gpl (getopt.in.h in gnulib)
