@@ -39,13 +39,13 @@ AC_DEFUN([gl_FUNC_MKFIFOAT],
          [gl_cv_func_mkfifoat_works=no],
          [case "$host_os" in
                              # Guess yes on Linux systems.
-            linux-* | linux) gl_cv_func_mknod_works="guessing yes" ;;
+            linux-* | linux) gl_cv_func_mkfifoat_works="guessing yes" ;;
                              # Guess yes on glibc systems.
-            *-gnu* | gnu*)   gl_cv_func_mknod_works="guessing yes" ;;
+            *-gnu* | gnu*)   gl_cv_func_mkfifoat_works="guessing yes" ;;
                              # Guess no on AIX systems.
-            aix*)            gl_cv_func_mknod_works="guessing no" ;;
+            aix*)            gl_cv_func_mkfifoat_works="guessing no" ;;
                              # If we don't know, obey --enable-cross-guesses.
-            *)               gl_cv_func_mknod_works="$gl_cross_guess_normal" ;;
+            *)               gl_cv_func_mkfifoat_works="$gl_cross_guess_normal" ;;
           esac
          ])
        rm -f conftest.tmp
