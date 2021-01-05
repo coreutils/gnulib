@@ -15,8 +15,8 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#ifndef	_GL_CDEFS_H
-#define	_GL_CDEFS_H	1
+#ifndef	_SYS_CDEFS_H
+#define	_SYS_CDEFS_H	1
 
 /* We are almost always included from features.h. */
 #ifndef _FEATURES_H
@@ -25,7 +25,7 @@
 
 /* The GNU libc does not support any K&R compilers or the traditional mode
    of ISO C compilers anymore.  Check for some of the combinations not
-   anymore supported.  */
+   supported anymore.  */
 #if defined __GNUC__ && !defined __STDC__
 # error "You need a ISO C conforming compiler to use the glibc headers"
 #endif
@@ -74,7 +74,7 @@
 # endif
 
 /* GCC can always grok prototypes.  For C++ programs we add throw()
-   to help it optimize the function calls.  But this works only with
+   to help it optimize the function calls.  But this only works with
    gcc 2.8.x and egcs.  For gcc 3.4 and up we even mark C functions
    as non-throwing using a function attribute since programs can use
    the -fexceptions options for C code as well.  */
@@ -86,10 +86,14 @@
 #  define __NTHNL(fct)  __attribute__ ((__nothrow__)) fct
 # else
 #  if defined __cplusplus && (__GNUC_PREREQ (2,8) || __clang_major >= 4)
-#   define __THROW	throw ()
-#   define __THROWNL	throw ()
-#   define __NTH(fct)	__LEAF_ATTR fct throw ()
-#   define __NTHNL(fct) fct throw ()
+#   if __cplusplus >= 201103L
+#    define __THROW	noexcept (true)
+#   else
+#    define __THROW	throw ()
+#   endif
+#   define __THROWNL	__THROW
+#   define __NTH(fct)	__LEAF_ATTR fct __THROW
+#   define __NTHNL(fct) fct __THROW
 #  else
 #   define __THROW
 #   define __THROWNL
@@ -142,24 +146,20 @@
 #define __bos(ptr) __builtin_object_size (ptr, __USE_FORTIFY_LEVEL > 1)
 #define __bos0(ptr) __builtin_object_size (ptr, 0)
 
+/* Use __builtin_dynamic_object_size at _FORTIFY_SOURCE=3 when available.  */
+#if __USE_FORTIFY_LEVEL == 3 && __glibc_clang_prereq (9, 0)
+# define __glibc_objsize0(__o) __builtin_dynamic_object_size (__o, 0)
+# define __glibc_objsize(__o) __builtin_dynamic_object_size (__o, 1)
+#else
+# define __glibc_objsize0(__o) __bos0 (__o)
+# define __glibc_objsize(__o) __bos (__o)
+#endif
+
 #if __GNUC_PREREQ (4,3)
-# define __warndecl(name, msg) \
-  extern void name (void) __attribute__((__warning__ (msg)))
 # define __warnattr(msg) __attribute__((__warning__ (msg)))
 # define __errordecl(name, msg) \
   extern void name (void) __attribute__((__error__ (msg)))
-#elif __glibc_clang_has_attribute (__diagnose_if__) && 0
-/* These definitions are not enabled, because they produce bogus warnings
-   in the glibc Fortify functions.  These functions are written in a style
-   that works with GCC.  In order to work with clang, these functions would
-   need to be modified.  */
-# define __warndecl(name, msg) \
-  extern void name (void) __attribute__((__diagnose_if__ (1, msg, "warning")))
-# define __warnattr(msg) __attribute__((__diagnose_if__ (1, msg, "warning")))
-# define __errordecl(name, msg) \
-  extern void name (void) __attribute__((__diagnose_if__ (1, msg, "error")))
 #else
-# define __warndecl(name, msg) extern void name (void)
 # define __warnattr(msg)
 # define __errordecl(name, msg) extern void name (void)
 #endif
@@ -285,8 +285,8 @@
 /* Since version 4.5, gcc also allows one to specify the message printed
    when a deprecated function is used.  clang claims to be gcc 4.2, but
    may also support this feature.  */
-#if __GNUC_PREREQ (4,5) || \
-    __glibc_clang_has_extension (__attribute_deprecated_with_message__)
+#if __GNUC_PREREQ (4,5) \
+    || __glibc_clang_has_extension (__attribute_deprecated_with_message__)
 # define __attribute_deprecated_msg__(msg) \
 	 __attribute__ ((__deprecated__ (msg)))
 #else
@@ -467,6 +467,16 @@
 # define __attribute_nonstring__
 #endif
 
+/* Undefine (also defined in libc-symbols.h).  */
+#undef __attribute_copy__
+#if __GNUC_PREREQ (9, 0)
+/* Copies attributes from the declaration or type referenced by
+   the argument.  */
+# define __attribute_copy__(arg) __attribute__ ((__copy__ (arg)))
+#else
+# define __attribute_copy__(arg)
+#endif
+
 #if (!defined _Static_assert && !defined __cplusplus \
      && (defined __STDC_VERSION__ ? __STDC_VERSION__ : 0) < 201112 \
      && (!(__GNUC_PREREQ (4, 6) || __clang_major__ >= 4) \
@@ -483,7 +493,37 @@
 # include <bits/long-double.h>
 #endif
 
-#if defined __LONG_DOUBLE_MATH_OPTIONAL && defined __NO_LONG_DOUBLE_MATH
+#if __LDOUBLE_REDIRECTS_TO_FLOAT128_ABI == 1
+# ifdef __REDIRECT
+
+/* Alias name defined automatically.  */
+#  define __LDBL_REDIR(name, proto) ... unused__ldbl_redir
+#  define __LDBL_REDIR_DECL(name) \
+  extern __typeof (name) name __asm (__ASMNAME ("__" #name "ieee128"));
+
+/* Alias name defined automatically, with leading underscores.  */
+#  define __LDBL_REDIR2_DECL(name) \
+  extern __typeof (__##name) __##name \
+    __asm (__ASMNAME ("__" #name "ieee128"));
+
+/* Alias name defined manually.  */
+#  define __LDBL_REDIR1(name, proto, alias) ... unused__ldbl_redir1
+#  define __LDBL_REDIR1_DECL(name, alias) \
+  extern __typeof (name) name __asm (__ASMNAME (#alias));
+
+#  define __LDBL_REDIR1_NTH(name, proto, alias) \
+  __REDIRECT_NTH (name, proto, alias)
+#  define __REDIRECT_NTH_LDBL(name, proto, alias) \
+  __LDBL_REDIR1_NTH (name, proto, __##alias##ieee128)
+
+/* Unused.  */
+#  define __REDIRECT_LDBL(name, proto, alias) ... unused__redirect_ldbl
+#  define __LDBL_REDIR_NTH(name, proto) ... unused__ldbl_redir_nth
+
+# else
+_Static_assert (0, "IEEE 128-bits long double requires redirection on this platform");
+# endif
+#elif defined __LONG_DOUBLE_MATH_OPTIONAL && defined __NO_LONG_DOUBLE_MATH
 # define __LDBL_COMPAT 1
 # ifdef __REDIRECT
 #  define __LDBL_REDIR1(name, proto, alias) __REDIRECT (name, proto, alias)
@@ -492,6 +532,8 @@
 #  define __LDBL_REDIR1_NTH(name, proto, alias) __REDIRECT_NTH (name, proto, alias)
 #  define __LDBL_REDIR_NTH(name, proto) \
   __LDBL_REDIR1_NTH (name, proto, __nldbl_##name)
+#  define __LDBL_REDIR2_DECL(name) \
+  extern __typeof (__##name) __##name __asm (__ASMNAME ("__nldbl___" #name));
 #  define __LDBL_REDIR1_DECL(name, alias) \
   extern __typeof (name) name __asm (__ASMNAME (#alias));
 #  define __LDBL_REDIR_DECL(name) \
@@ -502,11 +544,13 @@
   __LDBL_REDIR1_NTH (name, proto, __nldbl_##alias)
 # endif
 #endif
-#if !defined __LDBL_COMPAT || !defined __REDIRECT
+#if (!defined __LDBL_COMPAT && __LDOUBLE_REDIRECTS_TO_FLOAT128_ABI == 0) \
+    || !defined __REDIRECT
 # define __LDBL_REDIR1(name, proto, alias) name proto
 # define __LDBL_REDIR(name, proto) name proto
 # define __LDBL_REDIR1_NTH(name, proto, alias) name proto __THROW
 # define __LDBL_REDIR_NTH(name, proto) name proto __THROW
+# define __LDBL_REDIR2_DECL(name)
 # define __LDBL_REDIR_DECL(name)
 # ifdef __REDIRECT
 #  define __REDIRECT_LDBL(name, proto, alias) __REDIRECT (name, proto, alias)
@@ -545,4 +589,23 @@
 # define __HAVE_GENERIC_SELECTION 0
 #endif
 
-#endif	 /* gnulib cdefs.h */
+#if __GNUC_PREREQ (10, 0)
+/* Designates a 1-based positional argument ref-index of pointer type
+   that can be used to access size-index elements of the pointed-to
+   array according to access mode, or at least one element when
+   size-index is not provided:
+     access (access-mode, <ref-index> [, <size-index>])  */
+#define __attr_access(x) __attribute__ ((__access__ x))
+#else
+#  define __attr_access(x)
+#endif
+
+/* Specify that a function such as setjmp or vfork may return
+   twice.  */
+#if __GNUC_PREREQ (4, 1)
+# define __attribute_returns_twice__ __attribute__ ((__returns_twice__))
+#else
+# define __attribute_returns_twice__ /* Ignore.  */
+#endif
+
+#endif	 /* sys/cdefs.h */
