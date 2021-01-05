@@ -27,6 +27,7 @@
 #if HAVE_SYMLINKAT
 # undef symlinkat
 
+#include <fcntl.h>
 #include <sys/stat.h>
 #include <string.h>
 
@@ -38,7 +39,8 @@ rpl_symlinkat (char const *contents, int fd, char const *name)
   if (len && name[len - 1] == '/')
     {
       struct stat st;
-      if (fstatat (fd, name, &st, 0) == 0 || errno == EOVERFLOW)
+      if (fstatat (fd, name, &st, AT_SYMLINK_NOFOLLOW) == 0
+          || errno == EOVERFLOW)
         errno = EEXIST;
       return -1;
     }

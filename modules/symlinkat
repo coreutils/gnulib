@@ -9,10 +9,10 @@ m4/symlinkat.m4
 Depends-on:
 unistd
 extensions
+fcntl-h         [test $HAVE_SYMLINKAT = 0 || test $REPLACE_SYMLINKAT = 1]
 at-internal     [test $HAVE_SYMLINKAT = 0]
 errno           [test $HAVE_SYMLINKAT = 0]
 fchdir          [test $HAVE_SYMLINKAT = 0]
-fcntl-h         [test $HAVE_SYMLINKAT = 0]
 filename        [test $HAVE_SYMLINKAT = 0]
 openat-die      [test $HAVE_SYMLINKAT = 0]
 openat-h        [test $HAVE_SYMLINKAT = 0]
