@@ -59,7 +59,11 @@ main (void)
 #if HAVE_DECL_ALARM
   /* Declare failure if test takes too long, by using default abort
      caused by SIGALRM.  */
+# if defined _AIX
+  int alarm_value = 20;
+# else
   int alarm_value = 5;
+# endif
   signal (SIGALRM, SIG_DFL);
   alarm (alarm_value);
 #endif
@@ -117,6 +121,36 @@ main (void)
     ASSERT (result != NULL);
     ASSERT (memcmp (result, "/dev/pts/", 9) == 0);
 
+    close (fd);
+  }
+
+#elif defined _AIX
+  /* AIX has BSD-style /dev/ptyp[0-9a-f] files, and the function ptsname()
+     produces the corresponding /dev/ttyp[0-9a-f] file for each.  But opening
+     such a pty causes the process to hang in a state where it does not even
+     react to the SIGALRM signal for N * 15 seconds, where N is the number of
+     opened ptys, either in the close (fd) call or - when this close (fd) call
+     is commented out - at the process exit.
+     So, better don't use these BSD-style ptys.  The modern way to open a pty
+     is to go through /dev/ptc.  */
+  {
+    int fd;
+    char *result;
+
+    /* Open a pty master.  */
+    fd = open ("/dev/ptc", O_RDWR | O_NOCTTY);
+    if (fd < 0)
+      {
+        fprintf (stderr, "Skipping test: cannot open pseudo-terminal\n");
+        return 77;
+      }
+
+    result = ptsname (fd);
+    ASSERT (result != NULL);
+    ASSERT (memcmp (result, "/dev/pts/", 9) == 0);
+
+    /* This close (fd) call takes 15 seconds.  It would be interruptible by the
+       SIGALRM timer, but then this test would report failure.  */
     close (fd);
   }
 
