@@ -11,7 +11,7 @@ m4/mkfifoat.m4
 Depends-on:
 sys_stat
 extensions
-fstatat         [test $REPLACE_MKFIFOAT = 1]
+fstatat         [test $REPLACE_MKFIFOAT = 1 || test $REPLACE_MKNODAT = 1]
 at-internal     [test $HAVE_MKFIFOAT = 0 || test $HAVE_MKNODAT = 0]
 errno           [test $HAVE_MKFIFOAT = 0 || test $HAVE_MKNODAT = 0]
 fchdir          [test $HAVE_MKFIFOAT = 0 || test $HAVE_MKNODAT = 0]
@@ -28,7 +28,7 @@ gl_FUNC_MKFIFOAT
 if test $HAVE_MKFIFOAT = 0 || test $REPLACE_MKFIFOAT = 1; then
   AC_LIBOBJ([mkfifoat])
 fi
-if test $HAVE_MKNODAT = 0; then
+if test $HAVE_MKNODAT = 0 || test $REPLACE_MKNODAT = 1; then
   AC_LIBOBJ([mknodat])
 fi
 gl_SYS_STAT_MODULE_INDICATOR([mkfifoat])

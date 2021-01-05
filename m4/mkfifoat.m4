@@ -1,4 +1,4 @@
-# serial 4
+# serial 5
 # See if we need to provide mkfifoat/mknodat replacement.
 
 dnl Copyright (C) 2009-2021 Free Software Foundation, Inc.
@@ -52,7 +52,11 @@ AC_DEFUN([gl_FUNC_MKFIFOAT],
       ])
     case "$gl_cv_func_mkfifoat_works" in
       *yes) ;;
-      *) REPLACE_MKFIFOAT=1 ;;
+      *)
+        REPLACE_MKFIFOAT=1
+        dnl mknodat() has the same bug as mkfifoat().
+        REPLACE_MKNODAT=1
+        ;;
     esac
   else
     # No known system has mkfifoat but not mknodat

@@ -1,4 +1,4 @@
-# sys_stat_h.m4 serial 37   -*- Autoconf -*-
+# sys_stat_h.m4 serial 38   -*- Autoconf -*-
 dnl Copyright (C) 2006-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -106,6 +106,7 @@ AC_DEFUN([gl_SYS_STAT_H_DEFAULTS],
   REPLACE_MKFIFO=0;     AC_SUBST([REPLACE_MKFIFO])
   REPLACE_MKFIFOAT=0;   AC_SUBST([REPLACE_MKFIFOAT])
   REPLACE_MKNOD=0;      AC_SUBST([REPLACE_MKNOD])
+  REPLACE_MKNODAT=0;    AC_SUBST([REPLACE_MKNODAT])
   REPLACE_STAT=0;       AC_SUBST([REPLACE_STAT])
   REPLACE_UTIMENSAT=0;  AC_SUBST([REPLACE_UTIMENSAT])
 ])

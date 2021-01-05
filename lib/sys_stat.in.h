@@ -766,13 +766,25 @@ _GL_WARN_ON_USE (mknod, "mknod is not portable - "
 
 
 #if @GNULIB_MKNODAT@
-# if !@HAVE_MKNODAT@
+# if @REPLACE_MKNODAT@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef mknodat
+#   define mknodat rpl_mknodat
+#  endif
+_GL_FUNCDECL_RPL (mknodat, int,
+                  (int fd, char const *file, mode_t mode, dev_t dev)
+                  _GL_ARG_NONNULL ((2)));
+_GL_CXXALIAS_RPL (mknodat, int,
+                  (int fd, char const *file, mode_t mode, dev_t dev));
+# else
+#  if !@HAVE_MKNODAT@
 _GL_FUNCDECL_SYS (mknodat, int,
                   (int fd, char const *file, mode_t mode, dev_t dev)
                   _GL_ARG_NONNULL ((2)));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (mknodat, int,
                   (int fd, char const *file, mode_t mode, dev_t dev));
+# endif
 _GL_CXXALIASWARN (mknodat);
 #elif defined GNULIB_POSIXCHECK
 # undef mknodat
