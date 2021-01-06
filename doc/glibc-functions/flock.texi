@@ -13,11 +13,12 @@ Portability problems fixed by Gnulib:
 @item
 This function is missing on some platforms:
 mingw, MSVC 14
+@item
+This function is missing on some platforms:
+AIX 7.1, HP-UX 11.23, Solaris 11.4.
+But the replacement function does not really work; it exhibits test failures.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
-@item
-This function is missing on some platforms:
-AIX 5.1, HP-UX 11.23, Solaris 11.4.
 @end itemize
