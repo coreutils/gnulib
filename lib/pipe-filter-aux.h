@@ -26,6 +26,15 @@ _GL_INLINE_HEADER_BEGIN
 #ifndef SSIZE_MAX
 # define SSIZE_MAX ((ssize_t) (SIZE_MAX / 2))
 #endif
+#ifdef _AIX
+/* On AIX, despite having select() and despite having put the file descriptor
+   in non-blocking mode, it can happen that select() reports that fd[1] is
+   writable but writing a large amount of data to fd[1] then fails with errno
+   EAGAIN.  Seen with test-pipe-filter-gi1 on AIX 7.2, with data sizes of
+   29 KB.  So, limit the size of data passed to the write() call to 4 KB.  */
+# undef SSIZE_MAX
+# define SSIZE_MAX 4096
+#endif
 
 /* We use a child process, and communicate through a bidirectional pipe.
    To avoid deadlocks, let the child process decide when it wants to read
