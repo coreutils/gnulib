@@ -11,7 +11,7 @@ Portability problems fixed by Gnulib:
 @item
 On some platforms, this function fails to set the file position of a
 seekable input stream to the byte after the last one actually read:
-glibc 2.13, FreeBSD.
+glibc 2.32, FreeBSD, AIX 7.2.
 @item
 This function crashes if the stream's file descriptor has already been
 closed on some platforms:
