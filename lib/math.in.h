@@ -1322,6 +1322,7 @@ _GL_FUNCDECL_RPL (ilogbl, int, (long double x));
 _GL_CXXALIAS_RPL (ilogbl, int, (long double x));
 # else
 #  if !@HAVE_ILOGBL@
+#   undef ilogbl
 _GL_FUNCDECL_SYS (ilogbl, int, (long double x));
 #  endif
 _GL_CXXALIAS_SYS (ilogbl, int, (long double x));
@@ -2102,7 +2103,7 @@ _GL_FUNCDECL_RPL (sinf, float, (float x));
 _GL_CXXALIAS_RPL (sinf, float, (float x));
 # else
 #  if !@HAVE_SINF@
- #  undef sinf
+#   undef sinf
 _GL_FUNCDECL_SYS (sinf, float, (float x));
 #  endif
 _GL_CXXALIAS_SYS (sinf, float, (float x));
