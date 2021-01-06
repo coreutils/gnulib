@@ -16,7 +16,7 @@ This function is missing a declaration on some platforms:
 Cygwin 1.5.x.
 @item
 This function produces wrong results for subnormal numbers on some platforms:
-glibc 2.11/ppc, glibc 2.7/sparc, glibc 2.7/hppa, Solaris 11.4, Cygwin 1.5.x.
+glibc 2.17/ppc, glibc 2.7/sparc, glibc 2.7/hppa, Solaris 11.4, Cygwin 1.5.x.
 @end itemize
 
 Portability problems not fixed by Gnulib:

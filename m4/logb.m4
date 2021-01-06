@@ -1,4 +1,4 @@
-# logb.m4 serial 8
+# logb.m4 serial 9
 dnl Copyright (C) 2010-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -87,6 +87,8 @@ dnl Test whether logb() works.
 dnl On glibc 2.11/ppc, glibc 2.7/sparc, glibc 2.7/hppa, Solaris 10/SPARC,
 dnl Solaris 11.4/x86_64, Cygwin 1.5.x, the return value for subnormal
 dnl (denormalized) arguments is too large.
+dnl On glibc 2.17/ppc likewise but only for negative subnormal (denormalized)
+dnl arguments.
 AC_DEFUN([gl_FUNC_LOGB_WORKS],
 [
   AC_REQUIRE([AC_PROG_CC])
@@ -105,13 +107,27 @@ double logb (double);
 volatile double x;
 int main ()
 {
-  int i;
-  for (i = 1, x = 1.0; i >= DBL_MIN_EXP; i--, x *= 0.5)
-    ;
-  /* Here i = DBL_MIN_EXP - 1. Either x = 2^(i-1) is subnormal or x = 0.0.  */
-  if (x > 0.0 && !(logb (x) == (double)(i - 1)))
-    return 1;
-  return 0;
+  int result = 0;
+  /* This test fails on 2.11/ppc, glibc 2.7/sparc, glibc 2.7/hppa,
+     Solaris 10/SPARC, Solaris 11.4/x86_64, Cygwin 1.5.x.  */
+  {
+    int i;
+    for (i = 1, x = 1.0; i >= DBL_MIN_EXP; i--, x *= 0.5)
+      ;
+    /* Here i = DBL_MIN_EXP - 1. Either x = 2^(i-1) is subnormal or x = 0.0.  */
+    if (x > 0.0 && !(logb (x) == (double)(i - 1)))
+      result |= 1;
+  }
+  /* This test fails on glibc 2.17/ppc.  */
+  {
+    int i;
+    for (i = 1, x = -1.0; i >= DBL_MIN_EXP; i--, x *= 0.5)
+      ;
+    /* Here i = DBL_MIN_EXP - 1. Either x = -2^(i-1) is subnormal or x = -0.0.  */
+    if (x < 0.0 && !(logb (x) == (double)(i - 1)))
+      result |= 2;
+  }
+  return result;
 }
 ]])],
         [gl_cv_func_logb_works=yes],
