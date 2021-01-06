@@ -157,6 +157,17 @@ utimecmpat (int dfd, char const *dst_name,
 
   if (options & UTIMECMP_TRUNCATE_SOURCE)
     {
+#if defined _AIX
+      /* On AIX 7.2, on a jfs2 file system, the times may differ by up to
+         0.01 seconds in either direction.  But it does not seem to come
+         from clock ticks of 0.01 seconds each.  */
+      long long difference =
+        ((long long) dst_s - (long long) src_s) * BILLION
+        + ((long long) dst_ns - (long long) src_ns);
+      if (difference < 10000000 && difference > -10000000)
+        return 0;
+#endif
+
       /* Look up the timestamp resolution for the destination device.  */
 
       /* Hash table for caching information learned about devices.  */

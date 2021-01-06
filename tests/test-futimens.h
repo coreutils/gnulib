@@ -154,7 +154,7 @@ test_futimens (int (*func) (int, struct timespec const *),
     ASSERT (st3.st_atime == Y2K);
     ASSERT (0 <= get_stat_atime_ns (&st3));
     ASSERT (get_stat_atime_ns (&st3) <= BILLION / 2);
-    ASSERT (utimecmp (BASE "file", &st1, &st3, 0) <= 0);
+    ASSERT (utimecmp (BASE "file", &st1, &st3, UTIMECMP_TRUNCATE_SOURCE) <= 0);
     if (check_ctime)
       ASSERT (ctime_compare (&st2, &st3) < 0);
     nap ();
