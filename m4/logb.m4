@@ -108,7 +108,7 @@ volatile double x;
 int main ()
 {
   int result = 0;
-  /* This test fails on 2.11/ppc, glibc 2.7/sparc, glibc 2.7/hppa,
+  /* This test fails on glibc 2.11/ppc, glibc 2.7/sparc, glibc 2.7/hppa,
      Solaris 10/SPARC, Solaris 11.4/x86_64, Cygwin 1.5.x.  */
   {
     int i;
