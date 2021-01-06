@@ -16,7 +16,7 @@ Portability problems not fixed by Gnulib:
 This function is missing on some platforms:
 Minix 3.1.8, mingw, MSVC 14.
 @item
-On some platforms, this function mis-handles trailing slash:
+On some platforms, this function mis-handles a trailing slash:
 FreeBSD 7.2, Solaris 9.
 @item
 This function cannot set full timestamp resolution.  In particular,

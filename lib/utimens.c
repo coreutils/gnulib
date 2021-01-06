@@ -53,7 +53,9 @@
 
 /* Avoid recursion with rpl_futimens or rpl_utimensat.  */
 #undef futimens
-#undef utimensat
+#if !HAVE_NEARLY_WORKING_UTIMENSAT
+# undef utimensat
+#endif
 
 /* Solaris 9 mistakenly succeeds when given a non-directory with a
    trailing slash.  Force the use of rpl_stat for a fix.  */
