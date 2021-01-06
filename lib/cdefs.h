@@ -34,31 +34,24 @@
 #undef	__P
 #undef	__PMT
 
-/* Compilers that are not clang may object to
-       #if defined __clang__ && __has_attribute(...)
-   even though they do not need to evaluate the right-hand side of the &&.  */
-#if defined __clang__ && defined __has_attribute
-# define __glibc_clang_has_attribute(name) __has_attribute (name)
+/* Compilers that lack __has_attribute may object to
+       #if defined __has_attribute && __has_attribute (...)
+   even though they do not need to evaluate the right-hand side of the &&.
+   Similarly for __has_builtin, etc.  */
+#ifdef __has_attribute
+# define __glibc_has_attribute(attr) __has_attribute (attr)
 #else
-# define __glibc_clang_has_attribute(name) 0
+# define __glibc_has_attribute(attr) 0
 #endif
-
-/* Compilers that are not clang may object to
-       #if defined __clang__ && __has_builtin(...)
-   even though they do not need to evaluate the right-hand side of the &&.  */
-#if defined __clang__ && defined __has_builtin
-# define __glibc_clang_has_builtin(name) __has_builtin (name)
+#ifdef __has_builtin
+# define __glibc_has_builtin(name) __has_builtin (name)
 #else
-# define __glibc_clang_has_builtin(name) 0
+# define __glibc_has_builtin(name) 0
 #endif
-
-/* Compilers that are not clang may object to
-       #if defined __clang__ && __has_extension(...)
-   even though they do not need to evaluate the right-hand side of the &&.  */
-#if defined __clang__ && defined __has_extension
-# define __glibc_clang_has_extension(ext) __has_extension (ext)
+#ifdef __has_extension
+# define __glibc_has_extension(ext) __has_extension (ext)
 #else
-# define __glibc_clang_has_extension(ext) 0
+# define __glibc_has_extension(ext) 0
 #endif
 
 #if defined __GNUC__ || defined __clang__
@@ -79,7 +72,7 @@
    as non-throwing using a function attribute since programs can use
    the -fexceptions options for C code as well.  */
 # if !defined __cplusplus \
-     && (__GNUC_PREREQ (3, 4) || __glibc_clang_has_attribute (__nothrow__))
+     && (__GNUC_PREREQ (3, 4) || __glibc_has_attribute (__nothrow__))
 #  define __THROW	__attribute__ ((__nothrow__ __LEAF))
 #  define __THROWNL	__attribute__ ((__nothrow__))
 #  define __NTH(fct)	__attribute__ ((__nothrow__ __LEAF)) fct
@@ -233,7 +226,7 @@
 /* At some point during the gcc 2.96 development the `malloc' attribute
    for functions was introduced.  We don't want to use it unconditionally
    (although this would be possible) since it generates warnings.  */
-#if __GNUC_PREREQ (2,96) || __glibc_clang_has_attribute (__malloc__)
+#if __GNUC_PREREQ (2,96) || __glibc_has_attribute (__malloc__)
 # define __attribute_malloc__ __attribute__ ((__malloc__))
 #else
 # define __attribute_malloc__ /* Ignore */
@@ -251,14 +244,14 @@
 /* At some point during the gcc 2.96 development the `pure' attribute
    for functions was introduced.  We don't want to use it unconditionally
    (although this would be possible) since it generates warnings.  */
-#if __GNUC_PREREQ (2,96) || __glibc_clang_has_attribute (__pure__)
+#if __GNUC_PREREQ (2,96) || __glibc_has_attribute (__pure__)
 # define __attribute_pure__ __attribute__ ((__pure__))
 #else
 # define __attribute_pure__ /* Ignore */
 #endif
 
 /* This declaration tells the compiler that the value is constant.  */
-#if __GNUC_PREREQ (2,5) || __glibc_clang_has_attribute (__const__)
+#if __GNUC_PREREQ (2,5) || __glibc_has_attribute (__const__)
 # define __attribute_const__ __attribute__ ((__const__))
 #else
 # define __attribute_const__ /* Ignore */
@@ -267,7 +260,7 @@
 /* At some point during the gcc 3.1 development the `used' attribute
    for functions was introduced.  We don't want to use it unconditionally
    (although this would be possible) since it generates warnings.  */
-#if __GNUC_PREREQ (3,1) || __glibc_clang_has_attribute (__used__)
+#if __GNUC_PREREQ (3,1) || __glibc_has_attribute (__used__)
 # define __attribute_used__ __attribute__ ((__used__))
 # define __attribute_noinline__ __attribute__ ((__noinline__))
 #else
@@ -276,7 +269,7 @@
 #endif
 
 /* Since version 3.2, gcc allows marking deprecated functions.  */
-#if __GNUC_PREREQ (3,2) || __glibc_clang_has_attribute (__deprecated__)
+#if __GNUC_PREREQ (3,2) || __glibc_has_attribute (__deprecated__)
 # define __attribute_deprecated__ __attribute__ ((__deprecated__))
 #else
 # define __attribute_deprecated__ /* Ignore */
@@ -286,7 +279,7 @@
    when a deprecated function is used.  clang claims to be gcc 4.2, but
    may also support this feature.  */
 #if __GNUC_PREREQ (4,5) \
-    || __glibc_clang_has_extension (__attribute_deprecated_with_message__)
+    || __glibc_has_extension (__attribute_deprecated_with_message__)
 # define __attribute_deprecated_msg__(msg) \
 	 __attribute__ ((__deprecated__ (msg)))
 #else
@@ -299,7 +292,7 @@
    If several `format_arg' attributes are given for the same function, in
    gcc-3.0 and older, all but the last one are ignored.  In newer gccs,
    all designated arguments are considered.  */
-#if __GNUC_PREREQ (2,8) || __glibc_clang_has_attribute (__format_arg__)
+#if __GNUC_PREREQ (2,8) || __glibc_has_attribute (__format_arg__)
 # define __attribute_format_arg__(x) __attribute__ ((__format_arg__ (x)))
 #else
 # define __attribute_format_arg__(x) /* Ignore */
@@ -309,7 +302,7 @@
    attribute for functions was introduced.  We don't want to use it
    unconditionally (although this would be possible) since it
    generates warnings.  */
-#if __GNUC_PREREQ (2,97) || __glibc_clang_has_attribute (__format__)
+#if __GNUC_PREREQ (2,97) || __glibc_has_attribute (__format__)
 # define __attribute_format_strfmon__(a,b) \
   __attribute__ ((__format__ (__strfmon__, a, b)))
 #else
@@ -320,7 +313,7 @@
    must not be NULL.  Do not define __nonnull if it is already defined,
    for portability when this file is used in Gnulib.  */
 #ifndef __nonnull
-# if __GNUC_PREREQ (3,3) || __glibc_clang_has_attribute (__nonnull__)
+# if __GNUC_PREREQ (3,3) || __glibc_has_attribute (__nonnull__)
 #  define __nonnull(params) __attribute__ ((__nonnull__ params))
 # else
 #  define __nonnull(params)
@@ -329,7 +322,7 @@
 
 /* If fortification mode, we warn about unused results of certain
    function calls which can lead to problems.  */
-#if __GNUC_PREREQ (3,4) || __glibc_clang_has_attribute (__warn_unused_result__)
+#if __GNUC_PREREQ (3,4) || __glibc_has_attribute (__warn_unused_result__)
 # define __attribute_warn_unused_result__ \
    __attribute__ ((__warn_unused_result__))
 # if defined __USE_FORTIFY_LEVEL && __USE_FORTIFY_LEVEL > 0
@@ -343,7 +336,7 @@
 #endif
 
 /* Forces a function to be always inlined.  */
-#if __GNUC_PREREQ (3,2) || __glibc_clang_has_attribute (__always_inline__)
+#if __GNUC_PREREQ (3,2) || __glibc_has_attribute (__always_inline__)
 /* The Linux kernel defines __always_inline in stddef.h (283d7573), and
    it conflicts with this definition.  Therefore undefine it first to
    allow either header to be included first.  */
@@ -356,7 +349,7 @@
 
 /* Associate error messages with the source location of the call site rather
    than with the source location inside the function.  */
-#if __GNUC_PREREQ (4,3) || __glibc_clang_has_attribute (__artificial__)
+#if __GNUC_PREREQ (4,3) || __glibc_has_attribute (__artificial__)
 # define __attribute_artificial__ __attribute__ ((__artificial__))
 #else
 # define __attribute_artificial__ /* Ignore */
@@ -433,18 +426,12 @@
 # endif
 #endif
 
-#if (__GNUC__ >= 3) || __glibc_clang_has_builtin (__builtin_expect)
+#if (__GNUC__ >= 3) || __glibc_has_builtin (__builtin_expect)
 # define __glibc_unlikely(cond)	__builtin_expect ((cond), 0)
 # define __glibc_likely(cond)	__builtin_expect ((cond), 1)
 #else
 # define __glibc_unlikely(cond)	(cond)
 # define __glibc_likely(cond)	(cond)
-#endif
-
-#ifdef __has_attribute
-# define __glibc_has_attribute(attr)	__has_attribute (attr)
-#else
-# define __glibc_has_attribute(attr)	0
 #endif
 
 #if (!defined _Noreturn \
@@ -581,7 +568,7 @@ _Static_assert (0, "IEEE 128-bits long double requires redirection on this platf
    check is required to enable the use of generic selection.  */
 #if !defined __cplusplus \
     && (__GNUC_PREREQ (4, 9) \
-	|| __glibc_clang_has_extension (c_generic_selections) \
+	|| __glibc_has_extension (c_generic_selections) \
 	|| (!defined __GNUC__ && defined __STDC_VERSION__ \
 	    && __STDC_VERSION__ >= 201112L))
 # define __HAVE_GENERIC_SELECTION 1

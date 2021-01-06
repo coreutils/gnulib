@@ -144,9 +144,9 @@
 # undef __flexarr
 # undef __fortify_function
 # undef __glibc_c99_flexarr_available
-# undef __glibc_clang_has_attribute
-# undef __glibc_clang_has_builtin
-# undef __glibc_clang_has_extension
+# undef __glibc_has_attribute
+# undef __glibc_has_builtin
+# undef __glibc_has_extension
 # undef __glibc_macro_warning
 # undef __glibc_macro_warning1
 # undef __glibc_objsize
