@@ -15,6 +15,9 @@ Minix 3.1.8, MSVC 9.
 This function returns a wrong result for a zero argument on some platforms:
 OpenBSD 6.7, AIX 5.1.
 @item
+This function returns a wrong result for denormalized arguments on some platforms:
+AIX 7.1 64-bit.
+@item
 This function returns a wrong result for an infinite argument on some platforms:
 NetBSD 7.1, OpenBSD 6.7.
 @item
