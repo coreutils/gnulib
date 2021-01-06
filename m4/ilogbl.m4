@@ -1,4 +1,4 @@
-# ilogbl.m4 serial 4
+# ilogbl.m4 serial 5
 dnl Copyright (C) 2010-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -71,7 +71,8 @@ AC_DEFUN([gl_FUNC_ILOGBL],
 ])
 
 dnl Test whether ilogbl() works.
-dnl On Cygwin 2.9, ilogb(0.0L) is wrong.
+dnl On Cygwin 2.9, ilogbl(0.0L) is wrong.
+dnl On AIX 7.1 in 64-bit mode, ilogbl(2^(LDBL_MIN_EXP-1)) is wrong.
 dnl On Haiku 2017, it returns i-2 instead of i-1 for values between
 dnl ca. 2^-16444 and ca. 2^-16382.
 AC_DEFUN([gl_FUNC_ILOGBL_WORKS],
@@ -115,13 +116,22 @@ int main (int argc, char *argv[])
     if (my_ilogbl (x) != FP_ILOGB0)
       result |= 1;
   }
+  /* This test fails on AIX 7.1 in 64-bit mode.  */
+  {
+    int i;
+    x = 0.5L;
+    for (i = LDBL_MIN_EXP - 1; i < 0; i++)
+      x = x * 0.5L;
+    if (x > 0.0L && my_ilogbl (x) != LDBL_MIN_EXP - 2)
+      result |= 2;
+  }
   /* This test fails on Haiku 2017.  */
   {
     int i;
     for (i = 1, x = (long double)1.0; i >= LDBL_MIN_EXP-100 && x > (long double)0.0; i--, x *= (long double)0.5)
       if (my_ilogbl (x) != i - 1)
         {
-          result |= 2;
+          result |= 4;
           break;
         }
   }
@@ -131,7 +141,8 @@ int main (int argc, char *argv[])
         [gl_cv_func_ilogbl_works=yes],
         [gl_cv_func_ilogbl_works=no],
         [case "$host_os" in
-           haiku*) gl_cv_func_ilogbl_works="guessing no" ;;
+           aix* | haiku*)
+                   gl_cv_func_ilogbl_works="guessing no" ;;
                    # Guess yes on native Windows.
            mingw*) gl_cv_func_ilogbl_works="guessing yes" ;;
            *)      gl_cv_func_ilogbl_works="guessing yes" ;;
