@@ -1,4 +1,4 @@
-# locale_h.m4 serial 24
+# locale_h.m4 serial 25
 dnl Copyright (C) 2007, 2009-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -155,4 +155,5 @@ AC_DEFUN([gl_LOCALE_H_DEFAULTS],
   REPLACE_DUPLOCALE=0;    AC_SUBST([REPLACE_DUPLOCALE])
   REPLACE_FREELOCALE=0;   AC_SUBST([REPLACE_FREELOCALE])
   REPLACE_STRUCT_LCONV=0; AC_SUBST([REPLACE_STRUCT_LCONV])
+  LOCALENAME_ENHANCE_LOCALE_FUNCS=0; AC_SUBST([LOCALENAME_ENHANCE_LOCALE_FUNCS])
 ])

@@ -1,4 +1,4 @@
-# intl-thread-locale.m4 serial 8
+# intl-thread-locale.m4 serial 9
 dnl Copyright (C) 2015-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -72,8 +72,12 @@ int main ()
   esac
   case "$gt_cv_locale_fake" in
     *yes)
+      gt_fake_locales=yes
       AC_DEFINE([HAVE_FAKE_LOCALES], [1],
         [Define if the locale_t type contains insufficient information, as on OpenBSD.])
+      ;;
+    *)
+      gt_fake_locales=no
       ;;
   esac
 
@@ -133,10 +137,33 @@ int main ()
         [Define if the locale_t type does not contain the name of each locale category.])
       ;;
   esac
+
+  dnl We cannot support uselocale() on platforms where the locale_t type is
+  dnl fake.  So, set
+  dnl   gt_good_uselocale = gt_working_uselocale && !gt_fake_locales.
+  if test $gt_working_uselocale = yes && test $gt_fake_locales = no; then
+    gt_good_uselocale=yes
+    AC_DEFINE([HAVE_GOOD_USELOCALE], [1],
+      [Define if the uselocale exists, may be safely called, and returns sufficient information.])
+  else
+    gt_good_uselocale=no
+  fi
+
+  dnl Set gt_localename_enhances_locale_funcs to indicate whether localename.c
+  dnl overrides newlocale(), duplocale(), freelocale() to keep track of locale
+  dnl names.
+  if test $gt_good_uselocale = yes && test $gt_nameless_locales = yes; then
+    gt_localename_enhances_locale_funcs=yes
+    LOCALENAME_ENHANCE_LOCALE_FUNCS=1
+    AC_DEFINE([LOCALENAME_ENHANCE_LOCALE_FUNCS], [1],
+      [Define if localename.c overrides newlocale(), duplocale(), freelocale().])
+  else
+    gt_localename_enhances_locale_funcs=no
+  fi
 ])
 
 dnl Tests whether uselocale() exists and is usable.
-dnl Sets gt_cv_func_uselocale_works. Defines HAVE_WORKING_USELOCALE.
+dnl Sets gt_working_uselocale and defines HAVE_WORKING_USELOCALE.
 AC_DEFUN([gt_FUNC_USELOCALE],
 [
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
@@ -181,8 +208,12 @@ int main ()
   fi
   case "$gt_cv_func_uselocale_works" in
     *yes)
+      gt_working_uselocale=yes
       AC_DEFINE([HAVE_WORKING_USELOCALE], [1],
-        [Define if the uselocale function exists any may safely be called.])
+        [Define if the uselocale function exists and may safely be called.])
+      ;;
+    *)
+      gt_working_uselocale=no
       ;;
   esac
 ])
