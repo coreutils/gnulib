@@ -19,6 +19,7 @@ ssize_t
 alloca-opt      [test $ac_use_included_regex = yes]
 btowc           [test $ac_use_included_regex = yes]
 builtin-expect  [test $ac_use_included_regex = yes]
+dynarray        [test $ac_use_included_regex = yes]
 intprops        [test $ac_use_included_regex = yes]
 langinfo        [test $ac_use_included_regex = yes]
 libc-config     [test $ac_use_included_regex = yes]

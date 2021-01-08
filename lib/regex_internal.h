@@ -32,6 +32,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+#include <dynarray.h>
 #include <intprops.h>
 #include <verify.h>
 
