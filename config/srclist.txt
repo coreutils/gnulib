@@ -51,6 +51,13 @@ $GNUORG Copyright/request-disclaim.changes	doc/Copyright
 
 $LIBCSRC include/filename.h		lib
 $LIBCSRC include/idx.h			lib
+#$LIBCSRC malloc/dynarray-skeleton.c	lib/malloc
+#$LIBCSRC malloc/dynarray.h		lib/malloc
+#$LIBCSRC malloc/dynarray_at_failure.c	lib/malloc
+#$LIBCSRC malloc/dynarray_emplace_enlarge.c	lib/malloc
+$LIBCSRC malloc/dynarray_finalize.c	lib/malloc
+#$LIBCSRC malloc/dynarray_resize.c	lib/malloc
+#$LIBCSRC malloc/dynarray_resize_clear.c	lib/malloc
 $LIBCSRC include/scratch_buffer.h	lib/malloc
 $LIBCSRC malloc/scratch_buffer_dupfree.c	lib/malloc
 $LIBCSRC malloc/scratch_buffer_grow.c	lib/malloc

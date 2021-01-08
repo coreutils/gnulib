@@ -257,6 +257,14 @@
 # define __attribute_const__ /* Ignore */
 #endif
 
+#if defined __STDC_VERSION__ && 201710L < __STDC_VERSION__
+# define __attribute_maybe_unused__ [[__maybe_unused__]]
+#elif __GNUC_PREREQ (2,7) || __glibc_has_attribute (__unused__)
+# define __attribute_maybe_unused__ __attribute__ ((__unused__))
+#else
+# define __attribute_maybe_unused__ /* Ignore */
+#endif
+
 /* At some point during the gcc 3.1 development the `used' attribute
    for functions was introduced.  We don't want to use it unconditionally
    (although this would be possible) since it generates warnings.  */

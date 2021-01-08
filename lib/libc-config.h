@@ -71,12 +71,10 @@
 # endif
 #endif
 
-#ifndef __glibc_likely
-/* <sys/cdefs.h> either does not exist, or predates glibc commit
-   2012-12-28T06:33:01Z!siddhesh@redhat.com
-   (91998e449e0ce758db55aecf2abc3ee510fcbc8f)
-   and so does not suffice for Gnulib.  Prepare to include <cdefs.h>,
-   which is Gnulib's copy of a more-recent glibc <sys/cdefs.h>.  */
+#ifndef __attribute_maybe_unused__
+/* <sys/cdefs.h> either does not exist, or is too old for Gnulib.
+   Prepare to include <cdefs.h>, which is Gnulib's version of a
+   more-recent glibc <sys/cdefs.h>.  */
 
 /* Define _FEATURES_H so that <cdefs.h> does not include <features.h>.  */
 # ifndef _FEATURES_H
