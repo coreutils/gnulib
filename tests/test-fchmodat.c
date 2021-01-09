@@ -46,6 +46,39 @@ main (void)
     ASSERT (errno == EBADF);
   }
 
+  /* Test that fchmodat works on regular files.  */
+  {
+    struct stat statbuf;
+
+    unlink (BASE "file");
+    ASSERT (close (creat (BASE "file", 0600)) == 0);
+    ASSERT (fchmodat (AT_FDCWD, BASE "file", 0400, 0) == 0);
+    ASSERT (stat (BASE "file", &statbuf) >= 0);
+    ASSERT ((statbuf.st_mode & 0700) == 0400);
+
+    errno = 0;
+    ASSERT (fchmodat (AT_FDCWD, BASE "file/", 0600, 0) == -1);
+    ASSERT (errno == ENOTDIR);
+
+    /* Clean up.  */
+    ASSERT (chmod (BASE "file", 0600) == 0);
+    ASSERT (unlink (BASE "file") == 0);
+  }
+
+  /* Test that fchmodat works on directories.  */
+  {
+    struct stat statbuf;
+    rmdir (BASE "dir");
+    ASSERT (mkdir (BASE "dir", 0700) == 0);
+    ASSERT (fchmodat (AT_FDCWD, BASE "dir", 0500, 0) == 0);
+    ASSERT (stat (BASE "dir", &statbuf) >= 0);
+    ASSERT ((statbuf.st_mode & 0700) == 0500);
+    ASSERT (fchmodat (AT_FDCWD, BASE "dir/", 0700, 0) == 0);
+
+    /* Clean up.  */
+    ASSERT (rmdir (BASE "dir") == 0);
+  }
+
   /* Test that fchmodat works on non-symlinks, when given
      the AT_SYMLINK_NOFOLLOW flag.  */
   {

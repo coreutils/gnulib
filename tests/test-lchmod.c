@@ -33,7 +33,7 @@ SIGNATURE_CHECK (lchmod, int, (const char *, mode_t));
 int
 main (void)
 {
-  /* Test that lchmod works on non-symlinks.  */
+  /* Test that lchmod works on regular files.  */
   {
     struct stat statbuf;
     unlink (BASE "file");
@@ -41,9 +41,29 @@ main (void)
     ASSERT (lchmod (BASE "file", 0400) == 0);
     ASSERT (stat (BASE "file", &statbuf) >= 0);
     ASSERT ((statbuf.st_mode & 0700) == 0400);
+
+    errno = 0;
+    ASSERT (lchmod (BASE "file/", 0600) == -1);
+    ASSERT (errno == ENOTDIR);
+
     /* Clean up.  */
     ASSERT (chmod (BASE "file", 0600) == 0);
     ASSERT (unlink (BASE "file") == 0);
+  }
+
+  /* Test that lchmod works on directories.  */
+  {
+    struct stat statbuf;
+
+    rmdir (BASE "dir");
+    ASSERT (mkdir (BASE "dir", 0700) == 0);
+    ASSERT (lchmod (BASE "dir", 0500) == 0);
+    ASSERT (stat (BASE "dir", &statbuf) >= 0);
+    ASSERT ((statbuf.st_mode & 0700) == 0500);
+    ASSERT (lchmod (BASE "dir/", 0700) == 0);
+
+    /* Clean up.  */
+    ASSERT (rmdir (BASE "dir") == 0);
   }
 
   /* Test that lchmod on symlinks does not modify the symlink target.  */
