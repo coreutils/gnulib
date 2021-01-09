@@ -1,4 +1,4 @@
-# serial 8
+# serial 9
 # See if we need to provide utimensat replacement.
 
 dnl Copyright (C) 2009-2021 Free Software Foundation, Inc.
@@ -94,7 +94,7 @@ AC_DEFUN([gl_FUNC_UTIMENSAT],
         ;;
       *nearly)
         AC_DEFINE([HAVE_NEARLY_WORKING_UTIMENSAT], [1],
-          [Define to 1 of utimensat works, except for the trailing slash handling.])
+          [Define to 1 if utimensat works, except for the trailing slash handling.])
         REPLACE_UTIMENSAT=1
         ;;
       *)
