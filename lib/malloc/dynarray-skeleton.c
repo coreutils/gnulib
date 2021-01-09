@@ -150,6 +150,10 @@ struct DYNARRAY_STRUCT
 #define DYNARRAY_CONCAT1(prefix, name) DYNARRAY_CONCAT0(prefix, name)
 #define DYNARRAY_NAME(name) DYNARRAY_CONCAT1(DYNARRAY_PREFIX, name)
 
+/* Use DYNARRAY_FREE instead of DYNARRAY_NAME (free),
+   so that Gnulib does not change 'free' to 'rpl_free'.  */
+#define DYNARRAY_FREE DYNARRAY_CONCAT1 (DYNARRAY_NAME (f), ree)
+
 /* Address of the scratch buffer if any.  */
 #if DYNARRAY_HAVE_SCRATCH
 # define DYNARRAY_SCRATCH(list) (list)->scratch
@@ -200,7 +204,7 @@ DYNARRAY_NAME (init) (struct DYNARRAY_STRUCT *list)
 /* Deallocate the dynamic array and its elements.  */
 __attribute_maybe_unused__ __nonnull ((1))
 static void
-DYNARRAY_NAME (free) (struct DYNARRAY_STRUCT *list)
+DYNARRAY_FREE (struct DYNARRAY_STRUCT *list)
 {
   DYNARRAY_NAME (free__elements__)
     (list->u.dynarray_header.array, list->u.dynarray_header.used);
@@ -466,7 +470,7 @@ DYNARRAY_NAME (finalize) (struct DYNARRAY_STRUCT *list,
   else
     {
       /* On error, we need to free all data.  */
-      DYNARRAY_NAME (free) (list);
+      DYNARRAY_FREE (list);
       errno = ENOMEM;
       return false;
     }
@@ -497,7 +501,7 @@ DYNARRAY_NAME (finalize) (struct DYNARRAY_STRUCT *list, size_t *lengthp)
   else
     {
       /* On error, we need to free all data.  */
-      DYNARRAY_NAME (free) (list);
+      DYNARRAY_FREE (list);
       errno = ENOMEM;
       return NULL;
     }
