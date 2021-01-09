@@ -23,17 +23,14 @@ declared with a @code{void} return type.
 It helps the compiler's ability to emit sensible warnings, following
 data-flow analysis, to declare which functions are non-returning.
 
+To decorate function declarations and function definitions, you can
+use the @code{_Noreturn} keyword.  No modules are needed, as Gnulib
+arranges for @code{<config.h>} to define @code{_Noreturn} to an
+appropriate replacement on platforms lacking it.
+
 Gnulib has two modules that support such a declaration:
 
 @itemize @bullet
-@item
-The @samp{stdnoreturn} module.  It provides a way to put this
-declaration at function declarations and function definitions, but not
-in function pointer types.  The identifier to use is @code{_Noreturn}
-or @code{noreturn}; @code{_Noreturn} is to be preferred because
-@code{noreturn} is a no-op on some platforms.  The include file is
-@code{<stdnoreturn.h>}.
-
 @item
 The @samp{noreturn} module.  It provides a way to put this declaration
 at function declarations, at function definitions, and in function
@@ -47,6 +44,13 @@ definitions.
 @end itemize
 @noindent
 The include file is @code{<noreturn.h>}.
+
+@item
+The @samp{stdnoreturn} module.  This can improve readability by
+letting you use @code{noreturn} instead of @code{_Noreturn};
+unfortunately, @code{noreturn} is a no-op on some platforms even
+though @code{_Noreturn} works on them.  The include file is
+@code{<stdnoreturn.h>}.
 @end itemize
 
 Which of the two modules to use?  If the non-returning functions you
