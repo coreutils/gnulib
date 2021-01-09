@@ -21,7 +21,7 @@ test_function (void)
 
   /* Underflow.  */
   {
-    DOUBLE z = EXP (-100000.0);
+    volatile DOUBLE z = EXP (-100000.0);
     ASSERT (z == L_(0.0));
     ASSERT (!signbit (z));
   }
