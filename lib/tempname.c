@@ -80,10 +80,11 @@ static random_value
 random_bits (random_value var)
 {
   random_value r;
-  if (__getrandom (&r, sizeof r, 0) == sizeof r)
+  /* Without GRND_NONBLOCK it can be blocked for minutes on some systems.  */
+  if (__getrandom (&r, sizeof r, GRND_NONBLOCK) == sizeof r)
     return r;
 #if _LIBC || (defined CLOCK_MONOTONIC && HAVE_CLOCK_GETTIME)
-  /* Add entropy if getrandom is not supported.  */
+  /* Add entropy if getrandom did not work.  */
   struct __timespec64 tv;
   __clock_gettime64 (CLOCK_MONOTONIC, &tv);
   var ^= tv.tv_nsec;
