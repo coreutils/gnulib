@@ -61,7 +61,8 @@
 # define __gen_tempname gen_tempname
 # define __mkdir mkdir
 # define __open open
-# define __lxstat64(version, file, buf) lstat (file, buf)
+# define __lstat64(file, buf) lstat (file, buf)
+# define __stat64(file, buf) stat (file, buf)
 # define __getrandom getrandom
 # define __clock_gettime64 clock_gettime
 # define __timespec64 timespec
@@ -96,7 +97,7 @@ static int
 direxists (const char *dir)
 {
   struct_stat64 buf;
-  return __xstat64 (_STAT_VER, dir, &buf) == 0 && S_ISDIR (buf.st_mode);
+  return __stat64 (dir, &buf) == 0 && S_ISDIR (buf.st_mode);
 }
 
 /* Path search algorithm, for tmpnam, tmpfile, etc.  If DIR is
@@ -188,7 +189,7 @@ try_nocreate (char *tmpl, void *flags _GL_UNUSED)
 {
   struct_stat64 st;
 
-  if (__lxstat64 (_STAT_VER, tmpl, &st) == 0 || errno == EOVERFLOW)
+  if (__lstat64 (tmpl, &st) == 0 || errno == EOVERFLOW)
     __set_errno (EEXIST);
   return errno == ENOENT ? 0 : -1;
 }
