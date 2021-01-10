@@ -64,13 +64,13 @@
 #
 #   You don't add this piece of configuration to .gitmodules manually.  Instead,
 #   you would invoke
-#     $ git submodule add --name "gnulib" -- https://git.savannah.gnu.org/git/gnulib.git
+#     $ git submodule add --name "gnulib" -- https://git.savannah.gnu.org/git/gnulib.git gnulib
 #
 # * The subdirectories that are not git submodules, in a similar syntax.  For
 #   example:
 #
 #       [subcheckout "gnulib"]
-#               url = https://git.savannah.gnu.org/git/gnulib.git gnulib
+#               url = https://git.savannah.gnu.org/git/gnulib.git
 #               path = gnulib
 #
 # Here the URL is the one used for anonymous checkouts of the dependency
