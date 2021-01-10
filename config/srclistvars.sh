@@ -34,6 +34,6 @@ esac
 : ${GNUSTANDARDS=../gnustandards}
 : ${GNUWWWLICENSES=../www/www/licenses}
 : ${LIBCSRC=../libc}
-: ${LIBGCRYPT=../libgcrypt} # git://git.gnupg.org/libgcrypt.git
+: ${LIBGCRYPT=../libgcrypt} # https://dev.gnupg.org/source/libgcrypt.git
 : ${LIBTOOL=../libtool}
 : ${TEXINFOTEX=../../ftp.gnu.org/gnu/texinfo}

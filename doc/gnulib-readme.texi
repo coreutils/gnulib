@@ -53,14 +53,14 @@ Gnulib is available for anonymous checkout.  In any Bourne-shell the
 following should work:
 
 @example
-$ git clone git://git.sv.gnu.org/gnulib.git
+$ git clone https://git.savannah.gnu.org/git/gnulib.git
 @end example
 
 For a read-write checkout you need to have a login on
 @samp{savannah.gnu.org} and be a member of the Gnulib project at
 @url{https://savannah.gnu.org/projects/gnulib}.  Then, instead of the
-URL @url{git://git.sv.gnu.org/gnulib}, use the URL
-@samp{ssh://@var{user}@@git.sv.gnu.org/srv/git/gnulib} where
+URL @url{https://git.savannah.gnu.org/git/gnulib.git}, use the URL
+@samp{ssh://@var{user}@@git.savannah.gnu.org/srv/git/gnulib} where
 @var{user} is your login name on savannah.gnu.org.
 
 git resources:

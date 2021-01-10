@@ -959,7 +959,7 @@ in the directory @file{.gnulib}:
 
 @smallexample
 $ dir=.gnulib
-$ git submodule add -- git://git.sv.gnu.org/gnulib.git $dir
+$ git submodule add -- https://git.savannah.gnu.org/git/gnulib.git $dir
 $ git config alias.syncsub "submodule foreach git pull origin master"
 @end smallexample
 

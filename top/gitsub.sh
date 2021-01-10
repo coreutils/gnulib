@@ -59,18 +59,18 @@
 #   <https://git-scm.com/docs/gitmodules>.  For example:
 #
 #       [submodule "gnulib"]
-#               url = git://git.savannah.gnu.org/gnulib.git
+#               url = https://git.savannah.gnu.org/git/gnulib.git
 #               path = gnulib
 #
 #   You don't add this piece of configuration to .gitmodules manually.  Instead,
 #   you would invoke
-#     $ git submodule add --name "gnulib" -- git://git.savannah.gnu.org/gnulib.git gnulib
+#     $ git submodule add --name "gnulib" -- https://git.savannah.gnu.org/git/gnulib.git
 #
 # * The subdirectories that are not git submodules, in a similar syntax.  For
 #   example:
 #
 #       [subcheckout "gnulib"]
-#               url = git://git.savannah.gnu.org/gnulib.git
+#               url = https://git.savannah.gnu.org/git/gnulib.git gnulib
 #               path = gnulib
 #
 # Here the URL is the one used for anonymous checkouts of the dependency
