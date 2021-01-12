@@ -29,7 +29,11 @@
    per C2X.  This is supported by GCC 9.1 and later, and by clang in
    C++1z mode.
 
-   Define _GL_HAVE_STATIC_ASSERT1 if static_assert (R) works as per
+   Define _GL_HAVE_STATIC_ASSERT_CXX11 if static_assert (R, DIAGNOSTIC)
+   works as per C++11.  This is supported by GCC 6.1 and later, and by
+   clang in C++11 mode.
+
+   Define _GL_HAVE_STATIC_ASSERT_CXX17 if static_assert (R) works as per
    C++17.  This is supported by GCC 9.1 and later, and by clang in
    C++1z mode.
 
@@ -54,10 +58,15 @@
 # if 4 <= __clang_major__ && 201411 <= __cpp_static_assert
 #  define _GL_HAVE__STATIC_ASSERT1 1
 # endif
+# if 201103L <= __cplusplus \
+     || 6 <= __GNUC__ \
+     || (4 <= __clang_major__ && 200410 <= __cpp_static_assert)
+#  define _GL_HAVE_STATIC_ASSERT_CXX11 1
+# endif
 # if 201703L <= __cplusplus \
      || 9 <= __GNUC__ \
      || (4 <= __clang_major__ && 201411 <= __cpp_static_assert)
-#  define _GL_HAVE_STATIC_ASSERT1 1
+#  define _GL_HAVE_STATIC_ASSERT_CXX17 1
 # endif
 #endif
 
@@ -225,7 +234,9 @@ template <int w>
    Unfortunately, unlike C11, this implementation must appear as an
    ordinary declaration, and cannot appear inside struct { ... }.  */
 
-#if defined _GL_HAVE__STATIC_ASSERT
+#if defined _GL_HAVE_STATIC_ASSERT_CXX11
+# define _GL_VERIFY(R, DIAGNOSTIC, ...) static_assert (R, DIAGNOSTIC)
+#elif defined _GL_HAVE__STATIC_ASSERT
 # define _GL_VERIFY(R, DIAGNOSTIC, ...) _Static_assert (R, DIAGNOSTIC)
 #else
 # define _GL_VERIFY(R, DIAGNOSTIC, ...)                                \
@@ -239,7 +250,7 @@ template <int w>
 #  define _Static_assert(...) \
      _GL_VERIFY (__VA_ARGS__, "static assertion failed", -)
 # endif
-# if !defined _GL_HAVE_STATIC_ASSERT1 && !defined static_assert
+# if !defined _GL_HAVE_STATIC_ASSERT_CXX17 && !defined static_assert
 #  define static_assert _Static_assert /* C11 requires this #define.  */
 # endif
 #endif
