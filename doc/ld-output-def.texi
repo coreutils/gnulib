@@ -49,7 +49,8 @@ library:
 @smallexample
 if HAVE_LD_OUTPUT_DEF
 libfoo_la_LDFLAGS += -Wl,--output-def,libfoo-$(DLL_VERSION).def
-defexecdir = $(bindir)
+libfoo-$(DLL_VERSION).def: libfoo.la
+defexecdir = $(libdir)
 defexec_DATA = libfoo-$(DLL_VERSION).def
 DISTCLEANFILES += $(defexec_DATA)
 endif
