@@ -14,7 +14,7 @@ mingw, MSVC 14.
 @item
 This function does not allow for a NULL @samp{resolved} parameter on
 some platforms:
-Mac OS X 10.13, FreeBSD 6.4, OpenBSD 4.4, Solaris 10.
+Mac OS X 10.5, FreeBSD 6.4, OpenBSD 4.4, Solaris 10.
 @item
 This function does not always return an absolute path on some
 platforms:
@@ -22,7 +22,7 @@ Solaris 10.
 @item
 This function fails to detect trailing slashes on non-directories on
 some platforms:
-glibc 2.3.5.
+glibc 2.3.5, Mac OS X 10.13.
 @item
 This function fails to recognize non-directories followed @samp{..} on
 some platforms:
