@@ -1459,7 +1459,7 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
   /* Use the BeOS specific API.  */
 
   area_info info;
-  int32 cookie;
+  ssize_t cookie;
 
   cookie = 0;
   while (get_next_area_info (0, &cookie, &info) == B_OK)
