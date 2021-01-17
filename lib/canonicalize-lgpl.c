@@ -141,11 +141,11 @@ suffix_requires_dir_check (char const *end)
    macOS 10.13 <https://bugs.gnu.org/30350>, and should also work on
    platforms like AIX 7.2 that need at least "/.".  */
 
-#if defined _LIBC || defined LSTAT_FOLLOWS_SLASHED_SYMLINK
+# if defined _LIBC || defined LSTAT_FOLLOWS_SLASHED_SYMLINK
 static char const dir_suffix[] = "/";
-#else
+# else
 static char const dir_suffix[] = "/./";
-#endif
+# endif
 
 /* Return true if DIR is a searchable dir, false (setting errno) otherwise.
    DIREND points to the NUL byte at the end of the DIR string.
@@ -187,13 +187,13 @@ get_path_max (void)
    to pacify GCC is known; even an explicit #pragma does not pacify GCC.
    When the GCC bug is fixed this workaround should be limited to the
    broken GCC versions.  */
-#if __GNUC_PREREQ (10, 1)
-# if defined GCC_LINT || defined lint
+# if __GNUC_PREREQ (10, 1)
+#  if defined GCC_LINT || defined lint
 __attribute__ ((__noinline__))
-# elif __OPTIMIZE__ && !__NO_INLINE__
-#  define GCC_BOGUS_WRETURN_LOCAL_ADDR
+#  elif __OPTIMIZE__ && !__NO_INLINE__
+#   define GCC_BOGUS_WRETURN_LOCAL_ADDR
+#  endif
 # endif
-#endif
 static char *
 realpath_stk (const char *name, char *resolved,
               struct scratch_buffer *rname_buf)
@@ -439,7 +439,8 @@ __realpath (const char *name, char *resolved)
 }
 libc_hidden_def (__realpath)
 versioned_symbol (libc, __realpath, realpath, GLIBC_2_3);
-#endif /* !FUNC_REALPATH_WORKS || defined _LIBC */
+
+#endif /* defined _LIBC || !FUNC_REALPATH_WORKS */
 
 
 #if SHLIB_COMPAT(libc, GLIBC_2_0, GLIBC_2_3)

@@ -1,4 +1,4 @@
-# canonicalize.m4 serial 35
+# canonicalize.m4 serial 36
 
 dnl Copyright (C) 2003-2007, 2009-2021 Free Software Foundation, Inc.
 
@@ -91,6 +91,7 @@ AC_DEFUN([gl_FUNC_REALPATH_WORKS],
         #include <string.h>
       ]], [[
         int result = 0;
+        /* This test fails on Solaris 10.  */
         {
           char *name = realpath ("conftest.a", NULL);
           if (!(name && *name == '/'))
@@ -103,12 +104,14 @@ AC_DEFUN([gl_FUNC_REALPATH_WORKS],
             result |= 2;
           free (name);
         }
+        /* This test fails on Mac OS X 10.13, OpenBSD 6.0.  */
         {
           char *name = realpath ("conftest.a/", NULL);
           if (name != NULL)
             result |= 4;
           free (name);
         }
+        /* This test fails on AIX 7, Solaris 10.  */
         {
           char *name1 = realpath (".", NULL);
           char *name2 = realpath ("conftest.d//./..", NULL);
@@ -117,16 +120,31 @@ AC_DEFUN([gl_FUNC_REALPATH_WORKS],
           free (name1);
           free (name2);
         }
+        #ifdef __linux__
+        /* On Linux, // is the same as /. See also double-slash-root.m4.
+           realpath() should respect this.
+           This test fails on musl libc 1.2.2.  */
+        {
+          char *name = realpath ("//", NULL);
+          if (! name || strcmp (name, "/"))
+            result |= 16;
+          free (name);
+        }
+        #endif
         return result;
       ]])
      ],
      [gl_cv_func_realpath_works=yes],
-     [gl_cv_func_realpath_works=no],
+     [case $? in
+        16) gl_cv_func_realpath_works=nearly ;;
+        *)  gl_cv_func_realpath_works=no ;;
+      esac
+     ],
      [case "$host_os" in
                        # Guess yes on glibc systems.
         *-gnu* | gnu*) gl_cv_func_realpath_works="guessing yes" ;;
-                       # Guess yes on musl systems.
-        *-musl*)       gl_cv_func_realpath_works="guessing yes" ;;
+                       # Guess 'nearly' on musl systems.
+        *-musl*)       gl_cv_func_realpath_works="guessing nearly" ;;
                        # Guess no on native Windows.
         mingw*)        gl_cv_func_realpath_works="guessing no" ;;
                        # If we don't know, obey --enable-cross-guesses.
@@ -137,9 +155,12 @@ AC_DEFUN([gl_FUNC_REALPATH_WORKS],
   ])
   case "$gl_cv_func_realpath_works" in
     *yes)
-      AC_DEFINE([FUNC_REALPATH_WORKS], [1], [Define to 1 if realpath()
-        can malloc memory, always gives an absolute path, and handles
-        trailing slash correctly.])
+      AC_DEFINE([FUNC_REALPATH_WORKS], [1],
+        [Define to 1 if realpath() can malloc memory, always gives an absolute path, and handles leading slashes and a trailing slash correctly.])
+      ;;
+    *nearly)
+      AC_DEFINE([FUNC_REALPATH_NEARLY_WORKS], [1],
+        [Define to 1 if realpath() can malloc memory, always gives an absolute path, and handles a trailing slash correctly.])
       ;;
   esac
 ])
