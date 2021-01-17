@@ -37,27 +37,42 @@
 
 # include <stdio.h>
 
+# if defined _WIN32 && !defined __CYGWIN__
+
+/* Declare VirtualAlloc(), GetSystemInfo.  */
+#  define WIN32_LEAN_AND_MEAN
+#  define WIN32_EXTRA_LEAN
+#  include <windows.h>
+
+/* Don't assume that UNICODE is not defined.  */
+#  undef CreateFileMapping
+#  define CreateFileMapping CreateFileMappingA
+
+# else
+
 /* Declare getpagesize().  */
-# include <unistd.h>
+#  include <unistd.h>
 /* On HP-UX, getpagesize exists, but it is not declared in <unistd.h> even if
    the compiler options -D_HPUX_SOURCE -D_XOPEN_SOURCE=600 are used.  */
-# ifdef __hpux
+#  ifdef __hpux
 extern
-#  ifdef __cplusplus
+#   ifdef __cplusplus
        "C"
-#  endif
+#   endif
        int getpagesize (void);
-# endif
+#  endif
 
 /* Declare mmap(), mprotect().  */
-# include <sys/types.h>
-# include <sys/mman.h>
+#  include <sys/types.h>
+#  include <sys/mman.h>
 
 /* Declare open().  */
-# include <unistd.h>
-# include <fcntl.h>
+#  include <unistd.h>
+#  include <fcntl.h>
 
-# include "glthread/lock.h"
+#  include "glthread/lock.h"
+
+# endif
 
 
 /* ================= Back end of the malloc implementation ================= */
@@ -71,9 +86,27 @@ static void
 init_pagesize (void)
 {
   /* Simultaneous execution of this initialization in multiple threads is OK. */
+# if defined _WIN32 && !defined __CYGWIN__
+  /* GetSystemInfo
+     <https://msdn.microsoft.com/en-us/library/ms724381.aspx>
+     <https://msdn.microsoft.com/en-us/library/ms724958.aspx>  */
+  SYSTEM_INFO info;
+  GetSystemInfo (&info);
+  pagesize = info.dwPageSize;
+# else
   pagesize = getpagesize ();
+# endif
 }
 
+
+# if defined _WIN32 && !defined __CYGWIN__
+
+static inline void
+init_mmap_file (void)
+{
+}
+
+# else
 
 /* Variables needed for obtaining memory pages via mmap().  */
 static int file_fd;
@@ -109,6 +142,8 @@ init_mmap_file (void)
   gl_once (for_mmap_once, do_init_mmap_file);
 }
 
+# endif
+
 
 /* Size of the (page-aligned) header that links the writable mapping
    and the read-only mapping together.  */
@@ -121,6 +156,44 @@ init_mmap_file (void)
 static uintptr_t
 alloc_pages (size_t size)
 {
+# if defined _WIN32 && !defined __CYGWIN__
+  /* Allocate pages from the system paging file.
+     CreateFileMapping
+     <https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-createfilemappinga>  */
+  HANDLE h =
+    CreateFileMapping (INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE | SEC_COMMIT,
+                       size >> 16 >> 16, size & 0xFFFFFFFFU, NULL);
+  if (h == NULL)
+    {
+      fprintf (stderr,
+               "glimm: Cannot allocate file mapping. GetLastError() = 0x%08X\n",
+               (unsigned int) GetLastError ());
+      return 0;
+    }
+  /* MapViewOfFile
+     <https://docs.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-mapviewoffile>  */
+  char *mem_w = (char *) MapViewOfFile (h, FILE_MAP_WRITE, 0, 0, size);
+  char *mem_r = (char *) MapViewOfFile (h, FILE_MAP_READ,  0, 0, size);
+  if (mem_w == NULL || mem_r == NULL)
+    {
+      /* UnmapViewOfFile
+         <https://docs.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-unmapviewoffile>  */
+      if (mem_w != NULL)
+        UnmapViewOfFile (mem_w);
+      if (mem_r != NULL)
+        UnmapViewOfFile (mem_r);
+      return 0;
+    }
+  /* It is OK to call CloseHandle before UnmapViewOfFile.  The file mapping
+     object gets really closed only once all its views are unmapped.  */
+  if (!CloseHandle (h))
+    {
+      UnmapViewOfFile (mem_w);
+      UnmapViewOfFile (mem_r);
+      CloseHandle (h);
+      return 0;
+    }
+# else
   /* Extend the file by size/pagesize pages.  */
   long new_file_length = file_length + size;
   if (ftruncate (file_fd, new_file_length) < 0)
@@ -142,6 +215,7 @@ alloc_pages (size_t size)
       return 0;
     }
   file_length = new_file_length;
+# endif
 
   /* Link the two memory areas together.  */
   ((intptr_t *) mem_w)[0] = mem_r - mem_w;
@@ -158,10 +232,17 @@ free_pages (uintptr_t pages, size_t size)
     abort ();
   char *mem_w = (char *) pages;
   char *mem_r = mem_w + ((intptr_t *) mem_w)[0];
+# if defined _WIN32 && !defined __CYGWIN__
+  if (!UnmapViewOfFile (mem_w))
+    abort ();
+  if (!UnmapViewOfFile (mem_r))
+    abort ();
+# else
   if (munmap (mem_w, size) < 0)
     abort ();
   if (munmap (mem_r, size) < 0)
     abort ();
+# endif
 }
 
 /* Cygwin defines PAGESIZE in <limits.h>.  */

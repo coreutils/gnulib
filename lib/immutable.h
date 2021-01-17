@@ -58,7 +58,7 @@ extern "C" {
 
 /* This macro tells whether the implementation effectively rejects writes to
    immutable data.  */
-#if !NO_IMMUTABLE && HAVE_WORKING_MPROTECT
+#if !NO_IMMUTABLE && ((defined _WIN32 && !defined __CYGWIN__) || HAVE_WORKING_MPROTECT)
 # define IMMUTABLE_EFFECTIVE 1
 #else
 # define IMMUTABLE_EFFECTIVE 0
