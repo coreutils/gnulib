@@ -16,10 +16,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
-TMP=argp.$$
+. "${srcdir=.}/init.sh"; path_prepend_ .
+
+ERR=0
 
 unset ARGP_HELP_FMT
-ERR=0
 
 func_compare() {
 # If argp was compiled without base_name, it will display full program name.
@@ -27,35 +28,36 @@ func_compare() {
   sed '1{
          s,: [^ ]*/test-argp,: test-argp,
          s,: test-argp\.exe,: test-argp,
-        }' | LC_ALL=C tr -d '\r' | diff -c $TMP -
+        }' | LC_ALL=C tr -d '\r' > out
+  compare expected out
 }
 
 ####
 # Test --usage output
-cat > $TMP <<EOT
+cat > expected <<EOT
 Usage: test-argp [-tvCSOlp?V] [-f FILE] [-r FILE] [-o[ARG]] [--test]
             [--file=FILE] [--input=FILE] [--read=FILE] [--verbose] [--cantiga]
             [--sonet] [--option] [--optional[=ARG]] [--many] [--one] [--two]
             [--limerick] [--poem] [--help] [--usage] [--version] ARGS...
 EOT
 
-${CHECKER} ./test-argp${EXEEXT} --usage | func_compare || ERR=1
+${CHECKER} test-argp${EXEEXT} --usage | func_compare || ERR=1
 
 ####
 # Test working usage-indent format
 
-cat > $TMP <<EOT
+cat > expected <<EOT
 Usage: test-argp [-tvCSOlp?V] [-f FILE] [-r FILE] [-o[ARG]] [--test]
 [--file=FILE] [--input=FILE] [--read=FILE] [--verbose] [--cantiga] [--sonet]
 [--option] [--optional[=ARG]] [--many] [--one] [--two] [--limerick] [--poem]
 [--help] [--usage] [--version] ARGS...
 EOT
 
-ARGP_HELP_FMT='usage-indent=0' ${CHECKER} ./test-argp${EXEEXT} --usage | func_compare || ERR=1
+ARGP_HELP_FMT='usage-indent=0' ${CHECKER} test-argp${EXEEXT} --usage | func_compare || ERR=1
 
 ####
 # Test --help output
-cat >$TMP <<EOT
+cat >expected <<EOT
 Usage: test-argp [OPTION...] ARGS...
 documentation string
 
@@ -96,18 +98,16 @@ Report bugs to <>.
 EOT
 
 # Compare --help output, but filter out any bug-reporting email address.
-${CHECKER} ./test-argp${EXEEXT} --help \
+${CHECKER} test-argp${EXEEXT} --help \
     | sed 's/^\(Report bugs to \)<[^>]*>.$/\1<>./' | func_compare || ERR=1
 
 ####
 # Test ambiguous option handling
 
-${CHECKER} ./test-argp${EXEEXT} --optio 2>/dev/null && ERR=1
+${CHECKER} test-argp${EXEEXT} --optio 2>/dev/null && ERR=1
 
 ####
 # Run built-in tests
-${CHECKER} ./test-argp${EXEEXT} || ERR=1
+${CHECKER} test-argp${EXEEXT} || ERR=1
 
-rm $TMP
-
-exit $ERR
+Exit $ERR
