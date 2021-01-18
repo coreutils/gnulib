@@ -65,4 +65,5 @@ void func3 (void)
 int
 main ()
 {
+  return 0;
 }
