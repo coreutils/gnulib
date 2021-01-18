@@ -20,7 +20,7 @@
 
 #include "uninorm.h"
 
-#if !(WOE32DLL || defined __ANDROID__)
+#if !(((defined _WIN32 || defined __CYGWIN__) && (HAVE_LIBUNISTRING || WOE32DLL)) || defined __ANDROID__)
 /* Check that UNINORM_NFKD is defined and links.  */
 uninorm_t n = UNINORM_NFKD;
 #endif
