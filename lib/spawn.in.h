@@ -15,16 +15,33 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
-#ifndef _@GUARD_PREFIX@_SPAWN_H
-
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
 #endif
 @PRAGMA_COLUMNS@
 
+#if defined _GL_ALREADY_INCLUDING_SPAWN_H
+/* Special invocation convention:
+   On OS/2 kLIBC, <spawn.h> includes <signal.h>. Then <signal.h> ->
+   <pthread.h> -> <sched.h> -> <spawn.h> are included by GNULIB.
+   In this situation, struct sched_param is not yet defined.  */
+
+#@INCLUDE_NEXT@ @NEXT_SPAWN_H@
+
+#else
+
+#ifndef _@GUARD_PREFIX@_SPAWN_H
+/* Normal invocation convention.  */
+
 /* The include_next requires a split double-inclusion guard.  */
 #if @HAVE_SPAWN_H@
+
+# define _GL_ALREADY_INCLUDING_SPAWN_H
+
 # @INCLUDE_NEXT@ @NEXT_SPAWN_H@
+
+# define _GL_ALREADY_INCLUDING_SPAWN_H
+
 #endif
 
 #ifndef _@GUARD_PREFIX@_SPAWN_H
@@ -972,3 +989,4 @@ _GL_WARN_ON_USE (posix_spawn_file_actions_addfchdir,
 
 #endif /* _@GUARD_PREFIX@_SPAWN_H */
 #endif /* _@GUARD_PREFIX@_SPAWN_H */
+#endif
