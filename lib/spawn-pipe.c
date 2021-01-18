@@ -341,7 +341,7 @@ create_pipe (const char *progname,
     }
 
 # else /* __KLIBC__ */
-  if (!(directory == NULL && strcmp (directory, ".") == 0))
+  if (!(directory == NULL || strcmp (directory, ".") == 0))
     {
       /* A directory argument is not supported in this implementation.  */
       saved_errno = EINVAL;
