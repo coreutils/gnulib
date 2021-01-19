@@ -7,6 +7,7 @@ m4/yield.m4
 
 Depends-on:
 threadlib
+sched_yield
 
 configure.ac:
 AC_REQUIRE([gl_YIELD])
