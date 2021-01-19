@@ -34,6 +34,19 @@ sched_yield (void)
   return 0;
 }
 
+#elif defined __KLIBC__
+/* OS/2 kLIBC implementation */
+
+# define INCL_DOS
+# include <os2.h>
+
+int
+sched_yield (void)
+{
+  DosSleep (0);
+  return 0;
+}
+
 #else
 /* Provide a dummy implementation for single-threaded applications.  */
 
