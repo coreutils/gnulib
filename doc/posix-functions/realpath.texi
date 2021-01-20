@@ -24,9 +24,9 @@ This function fails to detect trailing slashes on non-directories on
 some platforms:
 glibc 2.3.5, Mac OS X 10.13, OpenBSD 6.0.
 @item
-This function fails to recognize non-directories followed @samp{..} on
-some platforms:
-cygwin.
+This function fails to recognize non-directories or symlinks to non-directories
+followed by @samp{..} on some platforms:
+Cygwin 2.9.
 @item
 This function misbehaves on consecutive slashes on some platforms:
 musl libc 1.2.2, AIX 7.
