@@ -30,7 +30,17 @@ int
 main ()
 {
   const char *progname = "test-exec-child";
-  const char *env[3] = { "PATH=.", "Hommingberg=Gepardenforelle", NULL };
+  const char *env[3] =
+    {
+      #ifdef __CYGWIN__
+      /* The Cygwin DLLs needed by the program are in /bin.  */
+      "PATH=.:/bin",
+      #else
+      "PATH=.",
+      #endif
+      "Hommingberg=Gepardenforelle",
+      NULL
+    };
   const char *argv[12] =
     {
       progname,
