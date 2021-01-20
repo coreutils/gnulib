@@ -200,8 +200,8 @@ enum Fts_stat
     while (false)
 #endif
 
-#ifndef FALLTHROUGH
-# if (__GNUC__ >= 7) || (__clang_major__ >= 10)
+#ifdef _LIBC
+# if __GNUC__ >= 7
 #  define FALLTHROUGH __attribute__ ((__fallthrough__))
 # else
 #  define FALLTHROUGH ((void) 0)
