@@ -28,11 +28,9 @@
 
 /* For randomize. */
 #if GNULIB_GC_RANDOM
-# include <unistd.h>
-# include <sys/types.h>
-# include <sys/stat.h>
-# include <fcntl.h>
-# include <errno.h>
+#include <unistd.h>
+#include <errno.h>
+#include <sys/random.h>
 #endif
 
 /* Hashes. */
@@ -75,150 +73,62 @@
 # include "rijndael-api-fst.h"
 #endif
 
-#if GNULIB_GC_RANDOM
-# if defined _WIN32 && ! defined __CYGWIN__
-#  include <windows.h>
-#  include <wincrypt.h>
-HCRYPTPROV g_hProv = 0;
-#  ifndef PROV_INTEL_SEC
-#   define PROV_INTEL_SEC 22
-#  endif
-#  ifndef CRYPT_VERIFY_CONTEXT
-#   define CRYPT_VERIFY_CONTEXT 0xF0000000
-#  endif
-# endif
-#endif
-
-#if defined _WIN32 && ! defined __CYGWIN__
-/* Don't assume that UNICODE is not defined.  */
-# undef CryptAcquireContext
-# define CryptAcquireContext CryptAcquireContextA
-#endif
-
 Gc_rc
 gc_init (void)
 {
-#if GNULIB_GC_RANDOM
-# if defined _WIN32 && ! defined __CYGWIN__
-  if (g_hProv)
-    CryptReleaseContext (g_hProv, 0);
-
-  /* There is no need to create a container for just random data, so
-     we can use CRYPT_VERIFY_CONTEXT (one call) see:
-     https://web.archive.org/web/20070314163712/http://blogs.msdn.com/dangriff/archive/2003/11/19/51709.aspx */
-
-  /* We first try to use the Intel PIII RNG if drivers are present */
-  if (!CryptAcquireContext (&g_hProv, NULL, NULL,
-                            PROV_INTEL_SEC, CRYPT_VERIFY_CONTEXT))
-    {
-      /* not a PIII or no drivers available, use default RSA CSP */
-      if (!CryptAcquireContext (&g_hProv, NULL, NULL,
-                                PROV_RSA_FULL, CRYPT_VERIFY_CONTEXT))
-        return GC_RANDOM_ERROR;
-    }
-# endif
-#endif
-
   return GC_OK;
 }
 
 void
 gc_done (void)
 {
-#if GNULIB_GC_RANDOM
-# if defined _WIN32 && ! defined __CYGWIN__
-  if (g_hProv)
-    {
-      CryptReleaseContext (g_hProv, 0);
-      g_hProv = 0;
-    }
-# endif
-#endif
-
   return;
 }
 
 #if GNULIB_GC_RANDOM
 
-/* Randomness. */
-
-static Gc_rc
-randomize (int level, char *data, size_t datalen)
+/* Overwrite BUFFER with random data, under the control of getrandom
+   FLAGS.  BUFFER contains LENGTH bytes.  Inspired by getentropy,
+   however LENGTH is not restricted to 256.  Return 0 on success, -1
+   (setting errno) on failure.  */
+static int
+randomize (void *buffer, size_t length, unsigned int flags)
 {
-#if defined _WIN32 && ! defined __CYGWIN__
-  if (!g_hProv)
-    return GC_RANDOM_ERROR;
-  CryptGenRandom (g_hProv, (DWORD) datalen, data);
-#else
-  int fd;
-  const char *device;
-  size_t len = 0;
-  int rc;
+  char *buf = buffer;
 
-  switch (level)
+  for (;;)
     {
-    case 0:
-      device = NAME_OF_NONCE_DEVICE;
-      break;
-
-    case 1:
-      device = NAME_OF_PSEUDO_RANDOM_DEVICE;
-      break;
-
-    default:
-      device = NAME_OF_RANDOM_DEVICE;
-      break;
-    }
-
-  if (strcmp (device, "no") == 0)
-    return GC_RANDOM_ERROR;
-
-  fd = open (device, O_RDONLY | O_CLOEXEC);
-  if (fd < 0)
-    return GC_RANDOM_ERROR;
-
-  do
-    {
-      ssize_t tmp;
-
-      tmp = read (fd, data, datalen);
-
-      if (tmp < 0)
-        {
-          int save_errno = errno;
-          close (fd);
-          errno = save_errno;
+      ssize_t bytes;
+      if (length == 0)
+        return GC_OK;
+      while ((bytes = getrandom (buf, length, flags)) < 0)
+        if (errno != EINTR)
           return GC_RANDOM_ERROR;
-        }
-
-      len += tmp;
+      if (bytes == 0)
+        break;
+      buf += bytes;
+      length -= bytes;
     }
-  while (len < datalen);
 
-  rc = close (fd);
-  if (rc < 0)
-    return GC_RANDOM_ERROR;
-#endif
-
-  return GC_OK;
+  return GC_RANDOM_ERROR;
 }
 
 Gc_rc
 gc_nonce (char *data, size_t datalen)
 {
-  return randomize (0, data, datalen);
+  return randomize (data, datalen, 0);
 }
 
 Gc_rc
 gc_pseudo_random (char *data, size_t datalen)
 {
-  return randomize (1, data, datalen);
+  return randomize (data, datalen, 0);
 }
 
 Gc_rc
 gc_random (char *data, size_t datalen)
 {
-  return randomize (2, data, datalen);
+  return randomize (data, datalen, GRND_RANDOM);
 }
 
 #endif
