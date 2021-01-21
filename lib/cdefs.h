@@ -38,7 +38,9 @@
        #if defined __has_attribute && __has_attribute (...)
    even though they do not need to evaluate the right-hand side of the &&.
    Similarly for __has_builtin, etc.  */
-#ifdef __has_attribute
+#if (defined __has_attribute \
+     && (!defined __clang_minor__ \
+         || 3 < __clang_major__ + (5 <= __clang_minor__)))
 # define __glibc_has_attribute(attr) __has_attribute (attr)
 #else
 # define __glibc_has_attribute(attr) 0
