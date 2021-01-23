@@ -59,6 +59,12 @@ explicit_bzero (void *s, size_t len)
 # if defined __GNUC__ && !defined __clang__
   /* Compiler barrier.  */
   asm volatile ("" ::: "memory");
+# elif defined __clang__
+  /* Compiler barrier.  */
+  /* With asm ("" ::: "memory") LLVM analyzes uses of 's' and finds that the
+     whole thing is dead and eliminates it.  Use 'g' to work around this
+     problem.  See <https://bugs.llvm.org/show_bug.cgi?id=15495#c11>.  */
+  __asm__ volatile ("" : : "g"(s) : "memory");
 # endif
 #endif
 }
