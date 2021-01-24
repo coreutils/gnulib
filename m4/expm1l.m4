@@ -1,4 +1,4 @@
-# expm1l.m4 serial 7
+# expm1l.m4 serial 8
 dnl Copyright (C) 2010-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -134,7 +134,8 @@ int main (int argc, char *argv[])
     long double x = 11.358L;
     long double y = my_expm1l (x);
     long double z = my_expm1l (- x);
-    long double err = (y + (1.0L + y) * z) * TWO_LDBL_MANT_DIG;
+    volatile long double t = (1.0L + y) * z;
+    long double err = (y + t) * TWO_LDBL_MANT_DIG;
     if (!(err >= -100.0L && err <= 100.0L))
       result |= 1;
   }
