@@ -21,4 +21,7 @@ that is different from @code{cdecl}.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+Unlike glibc's implementation, gnulib's replacement does not support
+internationalized domain names (IDN) encoding.
 @end itemize
