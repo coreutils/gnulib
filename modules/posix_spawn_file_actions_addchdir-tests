@@ -6,6 +6,7 @@ tests/macros.h
 
 Depends-on:
 posix_spawn_file_actions_init
+posix_spawn_file_actions_destroy
 posix_spawnp-tests
 findprog
 
