@@ -1,4 +1,4 @@
-# posix_spawn.m4 serial 19
+# posix_spawn.m4 serial 20
 dnl Copyright (C) 2008-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -552,8 +552,8 @@ AC_DEFUN([gl_FUNC_POSIX_SPAWN_FILE_ACTIONS_ADDCLOSE],
   if test $REPLACE_POSIX_SPAWN = 1; then
     REPLACE_POSIX_SPAWN_FILE_ACTIONS_ADDCLOSE=1
   else
-    dnl On musl libc and Solaris 11.0, posix_spawn_file_actions_addclose
-    dnl succeeds even if the fd argument is out of range.
+    dnl On musl libc, posix_spawn_file_actions_addclose succeeds even if the fd
+    dnl argument is negative.
     AC_CACHE_CHECK([whether posix_spawn_file_actions_addclose works],
       [gl_cv_func_posix_spawn_file_actions_addclose_works],
       [AC_RUN_IFELSE(
@@ -564,7 +564,7 @@ int main ()
   posix_spawn_file_actions_t actions;
   if (posix_spawn_file_actions_init (&actions) != 0)
     return 1;
-  if (posix_spawn_file_actions_addclose (&actions, 10000000) == 0)
+  if (posix_spawn_file_actions_addclose (&actions, -5) == 0)
     return 2;
   return 0;
 }]])],

@@ -54,6 +54,8 @@ main (void)
     errno = 0;
     ASSERT (posix_spawn_file_actions_addclose (&actions, -1) == EBADF);
   }
+  /* This behaviour is not mandated by POSIX, but happens to pass on all
+     platforms.  */
   {
     int bad_fd = big_fd ();
     errno = 0;
