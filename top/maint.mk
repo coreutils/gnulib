@@ -64,7 +64,11 @@ VC_LIST = $(srcdir)/$(_build-aux)/vc-list-files -C $(srcdir)
 
 # You can override this variable in cfg.mk if your gnulib submodule lives
 # in a different location.
-gnulib_dir ?= $(srcdir)/gnulib
+gnulib_dir ?= $(shell if test -d $(srcdir)/gnulib; then \
+			echo $(srcdir)/gnulib; \
+		else \
+			echo ${GNULIB_SRCDIR}; \
+		fi)
 
 # You can override this variable in cfg.mk to set your own regexp
 # matching files to ignore.
