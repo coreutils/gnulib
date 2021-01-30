@@ -14,6 +14,9 @@ c99
 libc-config
 stdbool
 stddef
+malloc-posix
+realloc-posix
+free-posix
 
 configure.ac:
 
