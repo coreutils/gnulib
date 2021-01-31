@@ -21,7 +21,6 @@
    optimizes away the name == NULL test below.  */
 # define _GL_ARG_NONNULL(params)
 
-# define _GL_USE_STDLIB_ALLOC 1
 # include <libc-config.h>
 #endif
 
