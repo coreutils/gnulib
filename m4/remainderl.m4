@@ -1,4 +1,4 @@
-# remainderl.m4 serial 12
+# remainderl.m4 serial 13
 dnl Copyright (C) 2012-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -153,6 +153,7 @@ int main (int argc, char *argv[])
 
 dnl Test whether remainderl() works.
 dnl It produces completely wrong values on OpenBSD 5.1/SPARC.
+dnl On musl 1.2.2/{arm64,s390x}, the result is accurate to only 16 digits.
 AC_DEFUN([gl_FUNC_REMAINDERL_WORKS],
 [
   AC_REQUIRE([AC_PROG_CC])
@@ -164,33 +165,90 @@ AC_DEFUN([gl_FUNC_REMAINDERL_WORKS],
 #ifndef __NO_MATH_INLINES
 # define __NO_MATH_INLINES 1 /* for glibc */
 #endif
+#include <float.h>
 #include <math.h>
+/* Override the values of <float.h>, like done in float.in.h.  */
+#if defined __i386__ && (defined __BEOS__ || defined __OpenBSD__)
+# undef LDBL_MANT_DIG
+# define LDBL_MANT_DIG   64
+# undef LDBL_MIN_EXP
+# define LDBL_MIN_EXP    (-16381)
+# undef LDBL_MAX_EXP
+# define LDBL_MAX_EXP    16384
+#endif
+#if defined __i386__ && (defined __FreeBSD__ || defined __DragonFly__)
+# undef LDBL_MANT_DIG
+# define LDBL_MANT_DIG   64
+# undef LDBL_MIN_EXP
+# define LDBL_MIN_EXP    (-16381)
+# undef LDBL_MAX_EXP
+# define LDBL_MAX_EXP    16384
+#endif
+#if (defined _ARCH_PPC || defined _POWER) && defined _AIX && (LDBL_MANT_DIG == 106) && defined __GNUC__
+# undef LDBL_MIN_EXP
+# define LDBL_MIN_EXP DBL_MIN_EXP
+#endif
+#if defined __sgi && (LDBL_MANT_DIG >= 106)
+# undef LDBL_MANT_DIG
+# define LDBL_MANT_DIG 106
+# if defined __GNUC__
+#  undef LDBL_MIN_EXP
+#  define LDBL_MIN_EXP DBL_MIN_EXP
+# endif
+#endif
 extern
 #ifdef __cplusplus
 "C"
 #endif
 long double remainderl (long double, long double);
-volatile long double x;
-volatile long double y;
-long double z;
-int main ()
+static long double dummy (long double x, long double y) { return 0; }
+volatile long double gx;
+volatile long double gy;
+long double gz;
+int main (int argc, char *argv[])
 {
+  long double (* volatile my_remainderl) (long double, long double) =
+    argc ? remainderl : dummy;
+  int result = 0;
   /* This test fails on OpenBSD 5.1/SPARC.  */
-  x = 9.245907126L;
-  y = 3.141592654L;
-  z = remainderl (x, y);
-  if (z >= 0.0L)
-    return 1;
-  return 0;
+  {
+    gx = 9.245907126L;
+    gy = 3.141592654L;
+    gz = remainderl (gx, gy);
+    if (gz >= 0.0L)
+      result |= 1;
+  }
+  /* This test fails on musl 1.2.2/arm64, musl 1.2.2/s390x.  */
+  {
+    const long double TWO_LDBL_MANT_DIG = /* 2^LDBL_MANT_DIG */
+      (long double) (1U << ((LDBL_MANT_DIG - 1) / 5))
+      * (long double) (1U << ((LDBL_MANT_DIG - 1 + 1) / 5))
+      * (long double) (1U << ((LDBL_MANT_DIG - 1 + 2) / 5))
+      * (long double) (1U << ((LDBL_MANT_DIG - 1 + 3) / 5))
+      * (long double) (1U << ((LDBL_MANT_DIG - 1 + 4) / 5));
+    long double x = 11.357996098166760874793827872740874983168L;
+    long double y = 0.486497838502717923110029188864352615388L;
+    long double z = my_remainderl (x, y) - (x - 23 * y);
+    long double err = z * TWO_LDBL_MANT_DIG;
+    if (!(err >= -32.0L && err <= 32.0L))
+      result |= 2;
+  }
+  return result;
 }
 ]])],
         [gl_cv_func_remainderl_works=yes],
         [gl_cv_func_remainderl_works=no],
         [case "$host_os" in
-           openbsd*) gl_cv_func_remainderl_works="guessing no" ;;
-                     # Guess yes on native Windows.
-           mingw*)   gl_cv_func_remainderl_works="guessing yes" ;;
-           *)        gl_cv_func_remainderl_works="guessing yes" ;;
+                          # Guess yes on glibc systems.
+           *-gnu* | gnu*) gl_cv_func_remainderl_works="guessing yes" ;;
+                          # Guess no on musl systems.
+           *-musl*)       gl_cv_func_remainderl_works="guessing no" ;;
+                          # Guess no on OpenBSD.
+           openbsd*)      gl_cv_func_remainderl_works="guessing no" ;;
+                          # Guess yes on native Windows.
+           mingw*)        gl_cv_func_remainderl_works="guessing yes" ;;
+                          # If we don't know, obey --enable-cross-guesses.
+           *)             gl_cv_func_remainderl_works="$gl_cross_guess_normal" ;;
          esac
         ])
     ])
