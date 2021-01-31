@@ -237,8 +237,16 @@ func_create_wrapper ()
                "$srcdir"/readlink.c \
                "$srcdir"/stat.c \
                "$srcdir"/canonicalize-lgpl.c \
+               "$srcdir"/malloc/scratch_buffer_dupfree.c \
+               "$srcdir"/malloc/scratch_buffer_grow.c \
+               "$srcdir"/malloc/scratch_buffer_grow_preserve.c \
+               "$srcdir"/malloc/scratch_buffer_set_array_size.c \
+               "$srcdir"/malloc.c \
+               "$srcdir"/realloc.c \
+               "$srcdir"/free.c \
+               "$srcdir"/mempcpy.c \
+               "$srcdir"/rawmemchr.c \
                "$srcdir"/malloca.c \
-               "$srcdir"/lstat.c \
                "$srcdir"/relocatable.c \
                "$srcdir"/setenv.c \
                "$srcdir"/c-ctype.c \
@@ -255,8 +263,15 @@ func_create_wrapper ()
         readlink.o \
         stat.o \
         canonicalize-lgpl.o \
+        scratch_buffer_dupfree.o \
+        scratch_buffer_grow.o \
+        scratch_buffer_grow_preserve.o \
+        scratch_buffer_set_array_size.o \
+        malloc.o \
+        realloc.o \
+        mempcpy.o \
+        rawmemchr.o \
         malloca.o \
-        lstat.o \
         relocatable.o \
         setenv.o \
         c-ctype.o

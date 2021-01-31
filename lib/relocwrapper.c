@@ -29,10 +29,26 @@
           -> readlink
              -> stat
        -> canonicalize-lgpl
+          -> libc-config
+          -> errno
+          -> fcntl-h
+          -> stdbool
+          -> sys_stat
+          -> unistd
+          -> eloop-threshold
           -> filename
-          -> malloca
-          -> lstat
+          -> idx
+          -> intprops
+          -> scratch_buffer
+             -> malloc-posix
+             -> realloc-posix
+             -> free-posix
+          -> pathmax
+          -> mempcpy
+          -> rawmemchr
           -> readlink
+          -> stat
+          -> double-slash-root
     -> relocatable
     -> setenv
        -> malloca

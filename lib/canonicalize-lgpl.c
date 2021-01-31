@@ -75,6 +75,12 @@
 # define __rawmemchr rawmemchr
 # define __readlink readlink
 # define __stat stat
+# if IN_RELOCWRAPPER
+    /* When building the relocatable program wrapper, use the system's memmove
+       function, not the gnulib override, otherwise we would get a link error.
+     */
+#  undef memmove
+# endif
 #endif
 
 /* Suppress bogus GCC -Wmaybe-uninitialized warnings.  */
