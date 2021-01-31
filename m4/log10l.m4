@@ -1,4 +1,4 @@
-# log10l.m4 serial 9
+# log10l.m4 serial 10
 dnl Copyright (C) 2011-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -126,7 +126,7 @@ int main (int argc, char *argv[])
     if (!(gy + gy == gy))
       result |= 1;
   }
-  /* This test fails on NetBSD 9.0.  */
+  /* This test fails on musl 1.2.2/arm64, musl 1.2.2/s390x, NetBSD 9.0.  */
   {
     const long double TWO_LDBL_MANT_DIG = /* 2^LDBL_MANT_DIG */
       (long double) (1U << ((LDBL_MANT_DIG - 1) / 5))
@@ -147,8 +147,8 @@ int main (int argc, char *argv[])
         [case "$host_os" in
                           # Guess yes on glibc systems.
            *-gnu* | gnu*) gl_cv_func_log10l_works="guessing yes" ;;
-                          # Guess yes on musl systems.
-           *-musl*)       gl_cv_func_log10l_works="guessing yes" ;;
+                          # Guess no on musl systems.
+           *-musl*)       gl_cv_func_log10l_works="guessing no" ;;
                           # Guess yes on native Windows.
            mingw*)        gl_cv_func_log10l_works="guessing yes" ;;
                           # If we don't know, obey --enable-cross-guesses.
