@@ -15,7 +15,6 @@ extensions
 fcntl-h
 file-set
 filename
-free-posix
 getcwd
 hash-triple-simple
 idx
@@ -29,7 +28,7 @@ scratch_buffer
 stat
 stdbool
 sys_stat
-xalloc
+unistd
 xalloc-die
 
 configure.ac:
