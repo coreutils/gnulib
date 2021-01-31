@@ -30,7 +30,11 @@
 
 #include <stdlib.h>
 
-#include <errno.h>
+/* A function definition is only needed if NEED_MALLOC_GNU is defined above
+   or if the module 'malloc-posix' requests it.  */
+#if NEED_MALLOC_GNU || (GNULIB_MALLOC_POSIX && !HAVE_MALLOC_POSIX)
+
+# include <errno.h>
 
 /* Allocate an N-byte block of memory from the heap.
    If N is zero, allocate a 1-byte block.  */
@@ -40,17 +44,19 @@ rpl_malloc (size_t n)
 {
   void *result;
 
-#if NEED_MALLOC_GNU
+# if NEED_MALLOC_GNU
   if (n == 0)
     n = 1;
-#endif
+# endif
 
   result = malloc (n);
 
-#if !HAVE_MALLOC_POSIX
+# if !HAVE_MALLOC_POSIX
   if (result == NULL)
     errno = ENOMEM;
-#endif
+# endif
 
   return result;
 }
+
+#endif
