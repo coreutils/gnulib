@@ -269,6 +269,7 @@ func_create_wrapper ()
         scratch_buffer_set_array_size.o \
         malloc.o \
         realloc.o \
+        free.o \
         mempcpy.o \
         rawmemchr.o \
         malloca.o \
