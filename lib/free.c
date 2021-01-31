@@ -19,15 +19,19 @@
 
 #include <config.h>
 
+/* Specification.  */
 #include <stdlib.h>
 
-#include <errno.h>
+/* A function definition is only needed if HAVE_FREE_POSIX is not defined.  */
+#if !HAVE_FREE_POSIX
+
+# include <errno.h>
 
 void
 rpl_free (void *p)
-#undef free
+# undef free
 {
-#if defined __GNUC__ && !defined __clang__
+# if defined __GNUC__ && !defined __clang__
   /* An invalid GCC optimization
      <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=98396>
      would optimize away the assignments in the code below, when link-time
@@ -39,9 +43,11 @@ rpl_free (void *p)
   errno = 0;
   free (p);
   errno = err[errno == 0];
-#else
+# else
   int err = errno;
   free (p);
   errno = err;
-#endif
+# endif
 }
+
+#endif
