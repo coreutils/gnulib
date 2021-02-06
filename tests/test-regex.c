@@ -290,7 +290,8 @@ main (void)
     {
       memset (&regs, 0, sizeof regs);
       static char const data[] = "WXY";
-      if (re_search (&regex, data, sizeof data - 1, 0, 3, &regs) < 0)
+      i = re_search (&regex, data, sizeof data - 1, 0, 3, &regs);
+      if (i < 0)
         report_error ("re_search '%s' on '%s' returned %d", pat_x, data, i);
       regfree (&regex);
       free (regs.start);
