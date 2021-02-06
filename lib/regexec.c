@@ -186,7 +186,8 @@ static reg_errcode_t extend_buffers (re_match_context_t *mctx, int min_len);
    REG_NOTBOL is set, then ^ does not match at the beginning of the
    string; if REG_NOTEOL is set, then $ does not match at the end.
 
-   We return 0 if we find a match and REG_NOMATCH if not.  */
+   Return 0 if a match is found, REG_NOMATCH if not, REG_BADPAT if
+   EFLAGS is invalid.  */
 
 int
 regexec (const regex_t *__restrict preg, const char *__restrict string,
@@ -269,8 +270,8 @@ compat_symbol (libc, __compat_regexec, regexec, GLIBC_2_0);
    strings.)
 
    On success, re_match* functions return the length of the match, re_search*
-   return the position of the start of the match.  Return value -1 means no
-   match was found and -2 indicates an internal error.  */
+   return the position of the start of the match.  They return -1 on
+   match failure, -2 on error.  */
 
 regoff_t
 re_match (struct re_pattern_buffer *bufp, const char *string, Idx length,
@@ -1206,7 +1207,7 @@ check_halt_state_context (const re_match_context_t *mctx,
 /* Compute the next node to which "NFA" transit from NODE("NFA" is a NFA
    corresponding to the DFA).
    Return the destination node, and update EPS_VIA_NODES;
-   return -1 in case of errors.  */
+   return -1 on match failure, -2 on error.  */
 
 static Idx
 proceed_next_node (const re_match_context_t *mctx, Idx nregs, regmatch_t *regs,
@@ -2195,6 +2196,7 @@ sift_states_iter_mb (const re_match_context_t *mctx, re_sift_context_t *sctx,
 
 /* Return the next state to which the current state STATE will transit by
    accepting the current input byte, and update STATE_LOG if necessary.
+   Return NULL on failure.
    If STATE can accept a multibyte char/collating element/back reference
    update the destination of STATE_LOG.  */
 
@@ -2395,7 +2397,7 @@ check_subexp_matching_top (re_match_context_t *mctx, re_node_set *cur_nodes,
 
 #if 0
 /* Return the next state to which the current state STATE will transit by
-   accepting the current input byte.  */
+   accepting the current input byte.  Return NULL on failure.  */
 
 static re_dfastate_t *
 transit_state_sb (reg_errcode_t *err, re_match_context_t *mctx,
@@ -2817,7 +2819,8 @@ find_subexp_node (const re_dfa_t *dfa, const re_node_set *nodes,
 /* Check whether the node TOP_NODE at TOP_STR can arrive to the node
    LAST_NODE at LAST_STR.  We record the path onto PATH since it will be
    heavily reused.
-   Return REG_NOERROR if it can arrive, or REG_NOMATCH otherwise.  */
+   Return REG_NOERROR if it can arrive, REG_NOMATCH if it cannot,
+   REG_ESPACE if memory is exhausted.  */
 
 static reg_errcode_t
 __attribute_warn_unused_result__
@@ -3433,7 +3436,8 @@ build_trtable (const re_dfa_t *dfa, re_dfastate_t *state)
 /* Group all nodes belonging to STATE into several destinations.
    Then for all destinations, set the nodes belonging to the destination
    to DESTS_NODE[i] and set the characters accepted by the destination
-   to DEST_CH[i].  This function return the number of destinations.  */
+   to DEST_CH[i].  Return the number of destinations if successful,
+   -1 on internal error.  */
 
 static Idx
 group_nodes_into_DFAstates (const re_dfa_t *dfa, const re_dfastate_t *state,
@@ -4211,7 +4215,8 @@ match_ctx_add_subtop (re_match_context_t *mctx, Idx node, Idx str_idx)
 }
 
 /* Register the node NODE, whose type is OP_CLOSE_SUBEXP, and which matches
-   at STR_IDX, whose corresponding OP_OPEN_SUBEXP is SUB_TOP.  */
+   at STR_IDX, whose corresponding OP_OPEN_SUBEXP is SUB_TOP.
+   Return the new entry if successful, NULL if memory is exhausted.  */
 
 static re_sub_match_last_t *
 match_ctx_add_sublast (re_sub_match_top_t *subtop, Idx node, Idx str_idx)
