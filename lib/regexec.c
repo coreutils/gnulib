@@ -1500,10 +1500,10 @@ update_regs (const re_dfa_t *dfa, regmatch_t *pmatch,
     }
   else if (type == OP_CLOSE_SUBEXP)
     {
+      /* We are at the last node of this sub expression.  */
       Idx reg_num = dfa->nodes[cur_node].opr.idx + 1;
       if (reg_num < nmatch)
 	{
-	  /* We are at the last node of this sub expression.  */
 	  if (pmatch[reg_num].rm_so < cur_idx)
 	    {
 	      pmatch[reg_num].rm_eo = cur_idx;
