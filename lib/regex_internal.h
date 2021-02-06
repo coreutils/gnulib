@@ -32,7 +32,10 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#include <dynarray.h>
+#ifndef _LIBC
+# include <dynarray.h>
+#endif
+
 #include <intprops.h>
 #include <verify.h>
 
