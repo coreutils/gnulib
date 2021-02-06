@@ -407,6 +407,35 @@ main (void)
       free (regs.end);
     }
 
+  /* glibc bug 11053.  */
+  re_set_syntax (RE_SYNTAX_POSIX_BASIC);
+  memset (&regex, 0, sizeof regex);
+  static char const pat_sub2[] = "\\(a*\\)*a*\\1";
+  s = re_compile_pattern (pat_sub2, sizeof pat_sub2 - 1, &regex);
+  if (s)
+    report_error ("%s: %s", pat_sub2, s);
+  else
+    {
+      memset (&regs, 0, sizeof regs);
+      static char const data[] = "a";
+      int datalen = sizeof data - 1;
+      i = re_search (&regex, data, datalen, 0, datalen, &regs);
+      if (i != 0)
+        report_error ("re_search '%s' on '%s' returned %d", pat_sub2, data, i);
+      else if (regs.num_regs < 2)
+        report_error ("re_search '%s' on '%s' returned only %d registers",
+                      pat_sub2, data, (int) regs.num_regs);
+      else if (! (regs.start[0] == 0 && regs.end[0] == 1))
+        report_error ("re_search '%s' on '%s' returned wrong match [%d,%d)",
+                      pat_sub2, data, (int) regs.start[0], (int) regs.end[0]);
+      else if (! (regs.start[1] == 0 && regs.end[1] == 0))
+        report_error ("re_search '%s' on '%s' returned wrong submatch [%d,%d)",
+                      pat_sub2, data, regs.start[1], regs.end[1]);
+      regfree (&regex);
+      free (regs.start);
+      free (regs.end);
+    }
+
   /* Catch a bug reported by Vin Shelton in
      https://lists.gnu.org/r/bug-coreutils/2007-06/msg00089.html
      */
