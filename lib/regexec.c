@@ -1215,19 +1215,17 @@ proceed_next_node (const re_match_context_t *mctx, Idx nregs, regmatch_t *regs,
 		   struct re_fail_stack_t *fs)
 {
   const re_dfa_t *const dfa = mctx->dfa;
-  Idx i;
-  bool ok;
   if (IS_EPSILON_NODE (dfa->nodes[node].type))
     {
       re_node_set *cur_nodes = &mctx->state_log[*pidx]->nodes;
       re_node_set *edests = &dfa->edests[node];
-      Idx dest_node;
-      ok = re_node_set_insert (eps_via_nodes, node);
+      bool ok = re_node_set_insert (eps_via_nodes, node);
       if (__glibc_unlikely (! ok))
 	return -2;
-      /* Pick up a valid destination, or return -1 if none
-	 is found.  */
-      for (dest_node = -1, i = 0; i < edests->nelem; ++i)
+
+      /* Pick a valid destination, or return -1 if none is found.  */
+      Idx dest_node = -1;
+      for (Idx i = 0; i < edests->nelem; i++)
 	{
 	  Idx candidate = edests->elems[i];
 	  if (!re_node_set_contains (cur_nodes, candidate))
@@ -1289,7 +1287,7 @@ proceed_next_node (const re_match_context_t *mctx, Idx nregs, regmatch_t *regs,
 	  if (naccepted == 0)
 	    {
 	      Idx dest_node;
-	      ok = re_node_set_insert (eps_via_nodes, node);
+	      bool ok = re_node_set_insert (eps_via_nodes, node);
 	      if (__glibc_unlikely (! ok))
 		return -2;
 	      dest_node = dfa->edests[node].elems[0];
