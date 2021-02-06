@@ -1346,13 +1346,15 @@ static Idx
 pop_fail_stack (struct re_fail_stack_t *fs, Idx *pidx, Idx nregs,
 		regmatch_t *regs, re_node_set *eps_via_nodes)
 {
+  if (fs == NULL || fs->num == 0)
+    return -1;
   Idx num = --fs->num;
-  DEBUG_ASSERT (num >= 0);
   *pidx = fs->stack[num].idx;
   memcpy (regs, fs->stack[num].regs, sizeof (regmatch_t) * nregs);
   re_node_set_free (eps_via_nodes);
   re_free (fs->stack[num].regs);
   *eps_via_nodes = fs->stack[num].eps_via_nodes;
+  DEBUG_ASSERT (0 <= fs->stack[num].node);
   return fs->stack[num].node;
 }
 
@@ -1411,25 +1413,22 @@ set_regs (const regex_t *preg, const re_match_context_t *mctx, size_t nmatch,
       if (idx == pmatch[0].rm_eo && cur_node == mctx->last_node)
 	{
 	  Idx reg_idx;
+	  cur_node = -1;
 	  if (fs)
 	    {
 	      for (reg_idx = 0; reg_idx < nmatch; ++reg_idx)
 		if (pmatch[reg_idx].rm_so > -1 && pmatch[reg_idx].rm_eo == -1)
-		  break;
-	      if (reg_idx == nmatch)
-		{
-		  re_node_set_free (&eps_via_nodes);
-		  regmatch_list_free (&prev_match);
-		  return free_fail_stack_return (fs);
-		}
-	      cur_node = pop_fail_stack (fs, &idx, nmatch, pmatch,
-					 &eps_via_nodes);
+		  {
+		    cur_node = pop_fail_stack (fs, &idx, nmatch, pmatch,
+					       &eps_via_nodes);
+		    break;
+		  }
 	    }
-	  else
+	  if (cur_node < 0)
 	    {
 	      re_node_set_free (&eps_via_nodes);
 	      regmatch_list_free (&prev_match);
-	      return REG_NOERROR;
+	      return free_fail_stack_return (fs);
 	    }
 	}
 
@@ -1446,13 +1445,12 @@ set_regs (const regex_t *preg, const re_match_context_t *mctx, size_t nmatch,
 	      free_fail_stack_return (fs);
 	      return REG_ESPACE;
 	    }
-	  if (fs)
-	    cur_node = pop_fail_stack (fs, &idx, nmatch, pmatch,
-				       &eps_via_nodes);
-	  else
+	  cur_node = pop_fail_stack (fs, &idx, nmatch, pmatch, &eps_via_nodes);
+	  if (cur_node < 0)
 	    {
 	      re_node_set_free (&eps_via_nodes);
 	      regmatch_list_free (&prev_match);
+	      free_fail_stack_return (fs);
 	      return REG_NOMATCH;
 	    }
 	}
