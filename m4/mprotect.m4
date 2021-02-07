@@ -1,4 +1,4 @@
-# mprotect.m4 serial 1
+# mprotect.m4 serial 2
 dnl Copyright (C) 1993-2021 Free Software Foundation, Inc.
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License as published by the Free Software Foundation;
@@ -141,7 +141,7 @@ AC_DEFUN([gl_FUNC_MPROTECT_WORKS],
            dnl Guess yes on Linux systems, glibc systems,
            dnl macOS, BSD systems, AIX, HP-UX, IRIX, Solaris, Cygwin.
            linux-* | linux | *-gnu* | gnu* | \
-           darwin* | freebsd* | dragonfly* | netbsd* | openbsd* | \
+           darwin* | freebsd* | dragonfly* | midnightbsd* | netbsd* | openbsd* | \
            aix* | hpux* | irix* | solaris* | cygwin*)
              gl_cv_func_mprotect_works="guessing yes" ;;
            mingw*)

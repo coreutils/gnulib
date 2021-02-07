@@ -1,4 +1,4 @@
-# strfmon_l.m4 serial 2
+# strfmon_l.m4 serial 3
 dnl Copyright (C) 2017-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -40,7 +40,7 @@ AC_DEFUN([gl_FUNC_STRFMON_L],
              [gl_cv_strfmon_l_works="guessing yes"])
            ;;
          # Guess no on FreeBSD and Cygwin.
-         freebsd* | cygwin*) gl_cv_strfmon_l_works="guessing no" ;;
+         freebsd* | midnightbsd* | cygwin*) gl_cv_strfmon_l_works="guessing no" ;;
          # Guess yes otherwise.
          *) gl_cv_strfmon_l_works="guessing yes" ;;
        esac

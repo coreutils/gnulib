@@ -1,4 +1,4 @@
-# posix_spawn.m4 serial 20
+# posix_spawn.m4 serial 21
 dnl Copyright (C) 2008-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -525,7 +525,8 @@ AC_DEFUN([gl_POSIX_SPAWN_SECURE],
           *-gnu* | *-musl* | netbsd*)
             gl_cv_func_posix_spawnp_secure_exec="guessing yes" ;;
           # Guess no on GNU/Hurd, macOS, FreeBSD, OpenBSD, AIX, Solaris, Cygwin.
-          gnu* | darwin* | freebsd* | dragonfly* | openbsd* | aix* | solaris* | cygwin*)
+          gnu* | darwin* | freebsd* | dragonfly* | midnightbsd* | openbsd* | \
+          aix* | solaris* | cygwin*)
             gl_cv_func_posix_spawnp_secure_exec="guessing no" ;;
           # If we don't know, obey --enable-cross-guesses.
           *)

@@ -1,4 +1,4 @@
-# realloc.m4 serial 19
+# realloc.m4 serial 20
 dnl Copyright (C) 2007, 2009-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -24,7 +24,7 @@ AC_DEFUN([_AC_FUNC_REALLOC_IF],
        [ac_cv_func_realloc_0_nonnull=no],
        [case "$host_os" in
           # Guess yes on platforms where we know the result.
-          *-gnu* | gnu* | *-musl* | freebsd* | netbsd* | openbsd* \
+          *-gnu* | gnu* | *-musl* | freebsd* | midnightbsd* | netbsd* | openbsd* \
           | hpux* | solaris* | cygwin* | mingw*)
             ac_cv_func_realloc_0_nonnull="guessing yes" ;;
           # If we don't know, obey --enable-cross-guesses.

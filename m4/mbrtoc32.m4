@@ -1,4 +1,4 @@
-# mbrtoc32.m4 serial 6
+# mbrtoc32.m4 serial 7
 dnl Copyright (C) 2014-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -158,7 +158,7 @@ AC_DEFUN([gl_MBRTOC32_SANITYCHECK],
 changequote(,)dnl
         case "$host_os" in
           # Guess no on FreeBSD, Solaris, native Windows.
-          freebsd* | solaris* | mingw*)
+          freebsd* | midnightbsd* | solaris* | mingw*)
             gl_cv_func_mbrtoc32_sanitycheck="guessing no"
             ;;
           # Guess yes otherwise.

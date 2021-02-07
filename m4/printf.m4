@@ -1,4 +1,4 @@
-# printf.m4 serial 71
+# printf.m4 serial 72
 dnl Copyright (C) 2003, 2007-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -67,6 +67,7 @@ changequote(,)dnl
                                  # Guess yes on FreeBSD >= 5.
            freebsd[1-4].*)       gl_cv_func_printf_sizes_c99="guessing no";;
            freebsd* | kfreebsd*) gl_cv_func_printf_sizes_c99="guessing yes";;
+           midnightbsd*)         gl_cv_func_printf_sizes_c99="guessing yes";;
                                  # Guess yes on Mac OS X >= 10.3.
            darwin[1-6].*)        gl_cv_func_printf_sizes_c99="guessing no";;
            darwin*)              gl_cv_func_printf_sizes_c99="guessing yes";;
@@ -247,6 +248,7 @@ changequote(,)dnl
                                  # Guess yes on FreeBSD >= 6.
            freebsd[1-5].*)       gl_cv_func_printf_infinite="guessing no";;
            freebsd* | kfreebsd*) gl_cv_func_printf_infinite="guessing yes";;
+           midnightbsd*)         gl_cv_func_printf_infinite="guessing yes";;
                                  # Guess yes on Mac OS X >= 10.3.
            darwin[1-6].*)        gl_cv_func_printf_infinite="guessing no";;
            darwin*)              gl_cv_func_printf_infinite="guessing yes";;
@@ -469,6 +471,7 @@ changequote(,)dnl
                                          # Guess yes on FreeBSD >= 6.
                    freebsd[1-5].*)       gl_cv_func_printf_infinite_long_double="guessing no";;
                    freebsd* | kfreebsd*) gl_cv_func_printf_infinite_long_double="guessing yes";;
+                   midnightbsd*)         gl_cv_func_printf_infinite_long_double="guessing yes";;
                                          # Guess yes on HP-UX >= 11.
                    hpux[7-9]* | hpux10*) gl_cv_func_printf_infinite_long_double="guessing no";;
                    hpux*)                gl_cv_func_printf_infinite_long_double="guessing yes";;
@@ -644,6 +647,7 @@ changequote(,)dnl
                                  # Guess yes on FreeBSD >= 6.
            freebsd[1-5].*)       gl_cv_func_printf_directive_f="guessing no";;
            freebsd* | kfreebsd*) gl_cv_func_printf_directive_f="guessing yes";;
+           midnightbsd*)         gl_cv_func_printf_directive_f="guessing yes";;
                                  # Guess yes on Mac OS X >= 10.3.
            darwin[1-6].*)        gl_cv_func_printf_directive_f="guessing no";;
            darwin*)              gl_cv_func_printf_directive_f="guessing yes";;
@@ -1239,6 +1243,7 @@ changequote(,)dnl
                                  # Guess yes on FreeBSD >= 5.
            freebsd[1-4].*)       gl_cv_func_snprintf_truncation_c99="guessing no";;
            freebsd* | kfreebsd*) gl_cv_func_snprintf_truncation_c99="guessing yes";;
+           midnightbsd*)         gl_cv_func_snprintf_truncation_c99="guessing yes";;
                                  # Guess yes on Mac OS X >= 10.3.
            darwin[1-6].*)        gl_cv_func_snprintf_truncation_c99="guessing no";;
            darwin*)              gl_cv_func_snprintf_truncation_c99="guessing yes";;
@@ -1343,6 +1348,7 @@ changequote(,)dnl
                                  # Guess yes on FreeBSD >= 5.
            freebsd[1-4].*)       gl_cv_func_snprintf_retval_c99="guessing no";;
            freebsd* | kfreebsd*) gl_cv_func_snprintf_retval_c99="guessing yes";;
+           midnightbsd*)         gl_cv_func_snprintf_retval_c99="guessing yes";;
                                  # Guess yes on Mac OS X >= 10.3.
            darwin[1-6].*)        gl_cv_func_snprintf_retval_c99="guessing no";;
            darwin*)              gl_cv_func_snprintf_retval_c99="guessing yes";;
@@ -1445,6 +1451,7 @@ changequote(,)dnl
                                  # Guess yes on FreeBSD >= 5.
            freebsd[1-4].*)       gl_cv_func_snprintf_directive_n="guessing no";;
            freebsd* | kfreebsd*) gl_cv_func_snprintf_directive_n="guessing yes";;
+           midnightbsd*)         gl_cv_func_snprintf_directive_n="guessing yes";;
                                  # Guess yes on Mac OS X >= 10.3.
            darwin[1-6].*)        gl_cv_func_snprintf_directive_n="guessing no";;
            darwin*)              gl_cv_func_snprintf_directive_n="guessing yes";;
@@ -1601,6 +1608,7 @@ changequote(,)dnl
                                  # Guess yes on FreeBSD >= 5.
            freebsd[1-4].*)       gl_cv_func_vsnprintf_zerosize_c99="guessing no";;
            freebsd* | kfreebsd*) gl_cv_func_vsnprintf_zerosize_c99="guessing yes";;
+           midnightbsd*)         gl_cv_func_vsnprintf_zerosize_c99="guessing yes";;
                                  # Guess yes on Mac OS X >= 10.3.
            darwin[1-6].*)        gl_cv_func_vsnprintf_zerosize_c99="guessing no";;
            darwin*)              gl_cv_func_vsnprintf_zerosize_c99="guessing yes";;
