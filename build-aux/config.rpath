@@ -371,7 +371,7 @@ else
       hardcode_direct=yes
       hardcode_minus_L=yes
       ;;
-    freebsd* | dragonfly*)
+    freebsd* | dragonfly* | midnightbsd*)
       hardcode_libdir_flag_spec='-R$libdir'
       hardcode_direct=yes
       ;;
@@ -547,7 +547,7 @@ case "$host_os" in
   freebsd[23].*)
     library_names_spec='$libname$shrext$versuffix'
     ;;
-  freebsd* | dragonfly*)
+  freebsd* | dragonfly* | midnightbsd*)
     library_names_spec='$libname$shrext'
     ;;
   gnu*)
