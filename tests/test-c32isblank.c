@@ -74,7 +74,7 @@ main (int argc, char *argv[])
       switch (c)
         {
         case '\t':
-        #if !defined __NetBSD__
+        #if !(defined __FreeBSD__ || defined __NetBSD__)
         case '\v':
         #endif
         case '\f':
