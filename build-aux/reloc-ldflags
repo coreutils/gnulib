@@ -56,7 +56,7 @@ esac
 origin_token=
 case "$host_os" in
   linux* | gnu* | kfreebsd* | \
-  freebsd* | dragonfly* | \
+  freebsd* | dragonfly* | midnightbsd* | \
   netbsd* | \
   openbsd* | \
   solaris* | \

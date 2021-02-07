@@ -1,4 +1,4 @@
-# relocatable.m4 serial 23
+# relocatable.m4 serial 24
 dnl Copyright (C) 2003, 2005-2007, 2009-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -68,10 +68,11 @@ AC_DEFUN([gl_RELOCATABLE_BODY],
         fi
         ;;
 changequote(,)dnl
-      # FreeBSD >= 7.3, DragonFly >= 3.0: yes.
+      # FreeBSD >= 7.3, DragonFly >= 3.0, MidnightBSD >= 1.1: yes.
       freebsd | freebsd[1-7] | freebsd[1-6].* | freebsd7.[0-2]) ;;
       dragonfly | dragonfly[1-2] | dragonfly[1-2].*) ;;
-      freebsd* | dragonfly*) use_elf_origin_trick=yes ;;
+      midnightbsd | midnightbsd0* | midnightbsd1.0*) ;;
+      freebsd* | dragonfly* | midnightbsd*) use_elf_origin_trick=yes ;;
       # NetBSD >= 8.0: yes.
       netbsd | netbsd[1-7] | netbsd[1-7].*) ;;
       netbsdelf | netbsdelf[1-7] | netbsdelf[1-7].*) ;;
