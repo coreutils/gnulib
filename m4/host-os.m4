@@ -1,4 +1,4 @@
-# serial 10
+# serial 11
 
 # Copyright (C) 2001, 2003-2004, 2006, 2009-2021 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -41,6 +41,7 @@ AC_DEFUN([gl_HOST_OS],
        netbsd*-gnu*)    os='GNU/NetBSD';; # NetBSD kernel+libc, GNU userland
        netbsd*)         os='NetBSD';;
        mirbsd*)         os='MirBSD';;
+       midnightbsd*)    os='MidnightBSD';;
        knetbsd*-gnu)    os='GNU/kNetBSD';; # NetBSD kernel, GNU libc+userland
        kfreebsd*-gnu)   os='GNU/kFreeBSD';; # FreeBSD kernel, GNU libc+userland
        msdosdjgpp*)     os='DJGPP';;
