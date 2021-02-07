@@ -45,7 +45,7 @@ static void
 install_segv_handler (void)
 {
   signal (SIGSEGV, segv_handler);
-# if defined __APPLE__ && defined __MACH__
+# if (defined __APPLE__ && defined __MACH__) || defined __FreeBSD__
   signal (SIGBUS, segv_handler);
 # endif
 }
