@@ -7,7 +7,7 @@
 
 # Written by Paul Eggert.
 
-# serial 20
+# serial 21
 
 AC_DEFUN([AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC],
   [
@@ -19,7 +19,7 @@ AC_DEFUN([AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC],
    dnl is accessed, or when the stack overflows.
    dnl Either { SIGSEGV } or { SIGSEGV, SIGBUS }.
    case "$host_os" in
-     sunos4* | freebsd* | dragonfly* | openbsd* | mirbsd* | netbsd* | kfreebsd* | knetbsd*) # BSD systems
+     sunos4* | freebsd* | dragonfly* | midnightbsd* | openbsd* | mirbsd* | netbsd* | kfreebsd* | knetbsd*) # BSD systems
        FAULT_YIELDS_SIGBUS=1 ;;
      hpux*) # HP-UX
        FAULT_YIELDS_SIGBUS=1 ;;
