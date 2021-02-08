@@ -22,4 +22,8 @@ Portability problems not fixed by Gnulib:
 This function has a slightly incompatible declaration (the return type being
 @samp{long} instead of @samp{void}) on some platforms:
 Cygwin 1.5.25.
+@item
+The parameter is @code{unsigned long} instead of @code{unsigned int} on some
+platforms:
+MidnightBSD 2.0.
 @end itemize

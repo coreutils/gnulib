@@ -37,5 +37,5 @@ The first parameter is @code{char *} instead of @code{const char *}
 on some platforms: Solaris 11 2010-11.
 @item
 The second parameter is @code{int} instead of @code{size_t}
-on some platforms: Mac OS X 10.12, Solaris 11 2010-11.
+on some platforms: Mac OS X 10.12, MidnightBSD 2.0, Solaris 11 2010-11.
 @end itemize
