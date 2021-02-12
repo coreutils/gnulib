@@ -164,7 +164,10 @@
 
 #define ME_DUMMY_0(Fs_name, Fs_type)            \
   (strcmp (Fs_type, "autofs") == 0              \
+   || strcmp (Fs_type, "devtmpfs") == 0         \
+   || strcmp (Fs_type, "fuse.portal") == 0      \   
    || strcmp (Fs_type, "proc") == 0             \
+   || strcmp (Fs_type, "squashfs") == 0         \
    || strcmp (Fs_type, "subfs") == 0            \
    /* for Linux 2.6/3.x */                      \
    || strcmp (Fs_type, "debugfs") == 0          \
