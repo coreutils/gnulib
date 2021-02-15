@@ -1,4 +1,4 @@
-# host-cpu-c-abi.m4 serial 13
+# host-cpu-c-abi.m4 serial 14
 dnl Copyright (C) 2002-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -211,7 +211,7 @@ changequote([,])dnl
          # be generating 64-bit code.
          AC_COMPILE_IFELSE(
            [AC_LANG_SOURCE(
-              [[#if defined __powerpc64__ || defined _ARCH_PPC64
+              [[#if defined __powerpc64__ || defined __LP64__
                  int ok;
                 #else
                  error fail
@@ -605,7 +605,7 @@ changequote([,])dnl
            # be generating 64-bit code.
            AC_COMPILE_IFELSE(
              [AC_LANG_SOURCE(
-                [[#if defined __powerpc64__ || defined _ARCH_PPC64
+                [[#if defined __powerpc64__ || defined __LP64__
                    int ok;
                   #else
                    error fail
