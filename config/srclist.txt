@@ -55,7 +55,7 @@ $LIBCSRC include/idx.h			lib
 #$LIBCSRC malloc/dynarray.h		lib/malloc
 #$LIBCSRC malloc/dynarray_at_failure.c	lib/malloc
 #$LIBCSRC malloc/dynarray_emplace_enlarge.c	lib/malloc
-$LIBCSRC malloc/dynarray_finalize.c	lib/malloc
+#$LIBCSRC malloc/dynarray_finalize.c	lib/malloc
 #$LIBCSRC malloc/dynarray_resize.c	lib/malloc
 #$LIBCSRC malloc/dynarray_resize_clear.c	lib/malloc
 $LIBCSRC include/scratch_buffer.h	lib/malloc

@@ -16,6 +16,10 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
+#ifndef _LIBC
+# include <libc-config.h>
+#endif
+
 #include <dynarray.h>
 #include <string.h>
 

@@ -19,8 +19,6 @@
 #ifndef _GL_DYNARRAY_H
 #define _GL_DYNARRAY_H
 
-#include <libc-config.h>
-
 #define __libc_dynarray_at_failure gl_dynarray_at_failure
 #define __libc_dynarray_emplace_enlarge gl_dynarray_emplace_enlarge
 #define __libc_dynarray_finalize gl_dynarray_finalize
