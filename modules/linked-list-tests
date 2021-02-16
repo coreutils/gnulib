@@ -1,12 +1,20 @@
 Files:
 tests/test-linked_list.c
+tests/test-asyncsafe-linked_list.sh
+tests/test-asyncsafe-linked_list.c
 tests/macros.h
 
 Depends-on:
 array-list
+thread
+yield
+nanosleep
+sigaction
+sigprocmask
 
 configure.ac:
 
 Makefile.am:
-TESTS += test-linked_list
-check_PROGRAMS += test-linked_list
+TESTS += test-linked_list test-asyncsafe-linked_list.sh
+check_PROGRAMS += test-linked_list test-asyncsafe-linked_list
+test_asyncsafe_linked_list_LDADD = $(LDADD) @LIBMULTITHREAD@ @YIELD_LIB@
