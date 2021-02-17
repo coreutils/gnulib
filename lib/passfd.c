@@ -142,19 +142,23 @@ recvfd (int sock, int flags)
   cmsg->cmsg_len = CMSG_LEN (sizeof fd);
   /* Initialize the payload: */
   memcpy (CMSG_DATA (cmsg), &fd, sizeof fd);
-  msg.msg_controllen = cmsg->cmsg_len;
+  msg.msg_controllen = CMSG_SPACE (sizeof fd);
 
   len = recvmsg (sock, &msg, flags_recvmsg);
   if (len < 0)
     return -1;
-
-  cmsg = CMSG_FIRSTHDR (&msg);
-  /* be paranoiac */
-  if (len == 0 || cmsg == NULL || cmsg->cmsg_len != CMSG_LEN (sizeof fd)
-      || cmsg->cmsg_level != SOL_SOCKET || cmsg->cmsg_type != SCM_RIGHTS)
+  if (len == 0)
     {
       /* fake errno: at end the file is not available */
-      errno = len ? EACCES : ENOTCONN;
+      errno = ENOTCONN;
+      return -1;
+    }
+  cmsg = CMSG_FIRSTHDR (&msg);
+  /* be paranoiac */
+  if (cmsg == NULL || cmsg->cmsg_len != CMSG_LEN (sizeof fd)
+      || cmsg->cmsg_level != SOL_SOCKET || cmsg->cmsg_type != SCM_RIGHTS)
+    {
+      errno = EACCES;
       return -1;
     }
 
