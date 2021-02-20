@@ -38,7 +38,7 @@ Makefile.am:
 #     and by the GNU Coding Standards
 #     <https://www.gnu.org/prep/standards/html_node/Makefile-Basics.html>
 #     the file should be generated in the source directory.
-#   - The #line numbers in the .c file refer to a nonexistent file once it
+#   - The #line directives in the .c file refer to a nonexistent file once it
 #     has been moved from the build directory to the source directory. This
 #     leads to error if 'lcov' is used later.
 # Additionally, here we assume GNU Bison and therefore don't need the ylwrap
