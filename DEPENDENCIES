@@ -9,7 +9,7 @@ at any time.
 
 * A C runtime, compiler, linker, etc.
   + Mandatory. Using the platform's native 'cc' gives good portability
-    exposure, but you can also use GCC 2.95 or newer.
+    exposure, but you can also use GCC 3.1 or newer.
   + GCC Homepage:
     https://gcc.gnu.org/
   + Download:
@@ -25,7 +25,10 @@ at any time.
     https://ftp.gnu.org/gnu/make/
 
 * GNU M4 1.4.5 or newer.
-  + 1.4.5 or newer is mandatory, but 1.4.9 or newer is recommended.
+  + Mandatory.
+    1.4.5 or newer is mandatory, but 1.4.9 or newer is recommended.
+    If you want to build it from source, use the tarball from
+    https://gitlab.com/gnu-m4/ci-distcheck/-/jobs/artifacts/master/raw/m4-snapshot.tar?job=check-optimized
   + Homepage:
     https://www.gnu.org/software/m4/
   + Download:
@@ -90,6 +93,15 @@ at any time.
   + Download:
     https://ftp.gnu.org/gnu/grep/
 
+* Awk.
+  + Mandatory.
+    Using the platform's native awk, mawk, or nawk gives good portability
+    exposure, but you can also use GNU awk.
+  + Homepage:
+    https://www.gnu.org/software/gawk/
+  + Download:
+    https://ftp.gnu.org/gnu/gawk/
+
 * GNU gettext.
   + If your project wants to follow GNU Coding Standards:
     + Always use the newest available gettext release, see
@@ -104,6 +116,10 @@ at any time.
     https://www.gnu.org/software/gettext/
   + Download:
     https://ftp.gnu.org/gnu/gettext/
+  + Pre-built package name:
+    - On Debian and Debian-based systems: gettext,
+    - On Red Hat distributions: gettext.
+    - Other: https://repology.org/project/gettext/versions
 
 * Bison 2.0 or newer.
   + Recommended.
@@ -112,6 +128,10 @@ at any time.
     https://www.gnu.org/software/bison/
   + Download:
     https://ftp.gnu.org/gnu/bison/
+  + Pre-built package name:
+    - On Debian and Debian-based systems: bison,
+    - On Red Hat distributions: bison.
+    - Other: https://repology.org/project/bison/versions
 
 * GNU gperf 3.0.1 or newer.
   + 3.0.1 or newer is mandatory, but 3.1 or newer is recommended.
@@ -120,6 +140,10 @@ at any time.
     https://www.gnu.org/software/gperf/
   + Download:
     https://ftp.gnu.org/gnu/gperf/
+  + Pre-built package name:
+    - On Debian and Debian-based systems: gperf,
+    - On Red Hat distributions: gperf.
+    - Other: https://repology.org/project/gperf/versions
 
 * Texinfo 4.6 or newer.
   + Recommended.
@@ -128,6 +152,10 @@ at any time.
     https://www.gnu.org/software/texinfo/
   + Download:
     https://ftp.gnu.org/gnu/texinfo/
+  + Pre-built package name:
+    - On Debian and Debian-based systems: texinfo,
+    - On Red Hat distributions: texinfo.
+    - Other: https://repology.org/project/texinfo/versions
 
 * GNU sed.
   + Recommended.
