@@ -21,7 +21,7 @@
    optimizes away the pattern == NULL test below.  */
 # define _GL_ARG_NONNULL(params)
 
-# include <config.h>
+# include <libc-config.h>
 
 #endif
 
