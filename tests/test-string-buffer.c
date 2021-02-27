@@ -90,12 +90,19 @@ main ()
     free (s);
   }
 
-  /* Test printf-like formatting failure.  */
+  /* Test printf-like formatting failure.
+     On all systems except AIX, trying to convert the wide-character 0x76543210
+     to a multibyte string (in the "C" locale) fails.
+     On all systems where REPLACE_VSNPRINTF=1 (this includes AIX), i.e. where
+     the Gnulib implementation of vsnprintf() is used), invalid format
+     directives make the *printf call fail.  */
   {
     struct string_buffer buffer;
 
     sb_init (&buffer);
     sb_append (&buffer, "<");
+    sb_appendf (&buffer, "%lc", 0x76543210);
+    sb_append (&buffer, "|");
     sb_appendf (&buffer, invalid_format_string_1, 1);
     sb_append (&buffer, "|");
     sb_appendf (&buffer, invalid_format_string_2, 2);

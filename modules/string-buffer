@@ -20,7 +20,7 @@ Include:
 "string-buffer.h"
 
 License:
-LGPLv2+
+LGPL
 
 Maintainer:
 all
