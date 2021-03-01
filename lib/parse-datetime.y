@@ -221,8 +221,10 @@ typedef struct
   idx_t zones_seen;
   bool year_seen;
 
+#ifdef GNULIB_PARSE_DATETIME2
   /* Print debugging output to stderr.  */
   bool parse_datetime_debug;
+#endif
 
   /* Which of the 'seen' parts have been printed when debugging.  */
   bool debug_dates_seen;
@@ -238,6 +240,16 @@ typedef struct
   /* Table of local time zone abbreviations, terminated by a null entry.  */
   table local_time_zone_table[3];
 } parser_control;
+
+static bool
+debugging (parser_control const *pc)
+{
+#ifdef GNULIB_PARSE_DATETIME2
+  return pc->parse_datetime_debug;
+#else
+  return false;
+#endif
+}
 
 union YYSTYPE;
 static int yylex (union YYSTYPE *, parser_control *);
@@ -421,7 +433,7 @@ debug_print_current_time (char const *item, parser_control *pc)
 {
   bool space = false;
 
-  if (!pc->parse_datetime_debug)
+  if (!debugging (pc))
     return;
 
   /* no newline, more items printed below */
@@ -521,7 +533,7 @@ debug_print_relative_time (char const *item, parser_control const *pc)
 {
   bool space = false;
 
-  if (!pc->parse_datetime_debug)
+  if (!debugging (pc))
     return;
 
   /* no newline, more items printed below */
@@ -802,7 +814,7 @@ date:
            you want portability, use the ISO 8601 format.  */
         if (4 <= $1.digits)
           {
-            if (pc->parse_datetime_debug)
+            if (debugging (pc))
               {
                 intmax_t digits = $1.digits;
                 dbg_printf (_("warning: value %"PRIdMAX" has %"PRIdMAX" digits. "
@@ -816,7 +828,7 @@ date:
           }
         else
           {
-            if (pc->parse_datetime_debug)
+            if (debugging (pc))
               dbg_printf (_("warning: value %"PRIdMAX" has less than 4 digits. "
                             "Assuming MM/DD/YY[YY]\n"),
                           $1.value);
@@ -1504,7 +1516,7 @@ yylex (union YYSTYPE *lvalp, parser_control *pc)
           tp = lookup_word (pc, buff);
           if (! tp)
             {
-              if (pc->parse_datetime_debug)
+              if (debugging (pc))
                 dbg_printf (_("error: unknown word '%s'\n"), buff);
               return '?';
             }
@@ -1651,7 +1663,7 @@ debug_mktime_not_ok (struct tm const *tm0, struct tm const *tm1,
   const bool dst_shift = eq_sec && eq_min && !eq_hour
                          && eq_mday && eq_month && eq_year;
 
-  if (!pc->parse_datetime_debug)
+  if (!debugging (pc))
     return;
 
   dbg_printf (_("error: invalid date/time value:\n"));
@@ -1690,29 +1702,15 @@ debug_mktime_not_ok (struct tm const *tm0, struct tm const *tm1,
                               : _("missing timezone")));
 }
 
-/* The original interface: run with debug=false and the default timezone.   */
-bool
-parse_datetime (struct timespec *result, char const *p,
-                struct timespec const *now)
-{
-  char const *tzstring = getenv ("TZ");
-  timezone_t tz = tzalloc (tzstring);
-  if (!tz)
-    return false;
-  bool ok = parse_datetime2 (result, p, now, 0, tz, tzstring);
-  tzfree (tz);
-  return ok;
-}
-
 /* Parse a date/time string, storing the resulting time value into *RESULT.
    The string itself is pointed to by P.  Return true if successful.
    P can be an incomplete or relative time specification; if so, use
    *NOW as the basis for the returned time.  Default to timezone
    TZDEFAULT, which corresponds to tzalloc (TZSTRING).  */
-bool
-parse_datetime2 (struct timespec *result, char const *p,
-                 struct timespec const *now, unsigned int flags,
-                 timezone_t tzdefault, char const *tzstring)
+static bool
+parse_datetime_body (struct timespec *result, char const *p,
+                     struct timespec const *now, unsigned int flags,
+                     timezone_t tzdefault, char const *tzstring)
 {
   struct tm tm;
   struct tm tm0;
@@ -1803,10 +1801,12 @@ parse_datetime2 (struct timespec *result, char const *p,
 
   parser_control pc;
   pc.input = p;
+#ifdef GNULIB_PARSE_DATETIME2
   pc.parse_datetime_debug = (flags & PARSE_DATETIME_DEBUG) != 0;
+#endif
   if (INT_ADD_WRAPV (tmp.tm_year, TM_YEAR_BASE, &pc.year.value))
     {
-      if (pc.parse_datetime_debug)
+      if (debugging (&pc))
         dbg_printf (_("error: initial year out of range\n"));
       goto fail;
     }
@@ -1900,7 +1900,7 @@ parse_datetime2 (struct timespec *result, char const *p,
 
   if (yyparse (&pc) != 0)
     {
-      if (pc.parse_datetime_debug)
+      if (debugging (&pc))
         dbg_printf ((input_sentinel <= pc.input
                      ? _("error: parsing failed\n")
                      : _("error: parsing failed, stopped at '%s'\n")),
@@ -1911,7 +1911,7 @@ parse_datetime2 (struct timespec *result, char const *p,
 
   /* Determine effective timezone source.  */
 
-  if (pc.parse_datetime_debug)
+  if (debugging (&pc))
     {
       dbg_printf (_("input timezone: "));
 
@@ -1953,7 +1953,7 @@ parse_datetime2 (struct timespec *result, char const *p,
       if (1 < (pc.times_seen | pc.dates_seen | pc.days_seen | pc.dsts_seen
                | (pc.local_zones_seen + pc.zones_seen)))
         {
-          if (pc.parse_datetime_debug)
+          if (debugging (&pc))
             {
               if (pc.times_seen > 1)
                 dbg_printf ("error: seen multiple time parts\n");
@@ -1969,11 +1969,11 @@ parse_datetime2 (struct timespec *result, char const *p,
           goto fail;
         }
 
-      if (! to_tm_year (pc.year, pc.parse_datetime_debug, &tm.tm_year)
+      if (! to_tm_year (pc.year, debugging (&pc), &tm.tm_year)
           || INT_ADD_WRAPV (pc.month, -1, &tm.tm_mon)
           || INT_ADD_WRAPV (pc.day, 0, &tm.tm_mday))
         {
-          if (pc.parse_datetime_debug)
+          if (debugging (&pc))
             dbg_printf (_("error: year, month, or day overflow\n"));
           goto fail;
         }
@@ -1984,14 +1984,14 @@ parse_datetime2 (struct timespec *result, char const *p,
             {
               char const *mrd = (pc.meridian == MERam ? "am"
                                  : pc.meridian == MERpm ?"pm" : "");
-              if (pc.parse_datetime_debug)
+              if (debugging (&pc))
                 dbg_printf (_("error: invalid hour %"PRIdMAX"%s\n"),
                             pc.hour, mrd);
               goto fail;
             }
           tm.tm_min = pc.minutes;
           tm.tm_sec = pc.seconds.tv_sec;
-          if (pc.parse_datetime_debug)
+          if (debugging (&pc))
             dbg_printf ((pc.times_seen
                          ? _("using specified time as starting value: '%s'\n")
                          : _("using current time as starting value: '%s'\n")),
@@ -2001,7 +2001,7 @@ parse_datetime2 (struct timespec *result, char const *p,
         {
           tm.tm_hour = tm.tm_min = tm.tm_sec = 0;
           pc.seconds.tv_nsec = 0;
-          if (pc.parse_datetime_debug)
+          if (debugging (&pc))
             dbg_printf ("warning: using midnight as starting time: 00:00:00\n");
         }
 
@@ -2047,7 +2047,7 @@ parse_datetime2 (struct timespec *result, char const *p,
               timezone_t tz2 = tzalloc (tz2buf);
               if (!tz2)
                 {
-                  if (pc.parse_datetime_debug)
+                  if (debugging (&pc))
                     dbg_printf (_("error: tzalloc (\"%s\") failed\n"), tz2buf);
                   goto fail;
                 }
@@ -2092,7 +2092,7 @@ parse_datetime2 (struct timespec *result, char const *p,
 
           if (Start == (time_t) -1)
             {
-              if (pc.parse_datetime_debug)
+              if (debugging (&pc))
                 dbg_printf (_("error: day '%s' "
                               "(day ordinal=%"PRIdMAX" number=%d) "
                               "resulted in an invalid date: '%s'\n"),
@@ -2103,14 +2103,14 @@ parse_datetime2 (struct timespec *result, char const *p,
               goto fail;
             }
 
-          if (pc.parse_datetime_debug)
+          if (debugging (&pc))
             dbg_printf (_("new start date: '%s' is '%s'\n"),
                         str_days (&pc, dbg_ord, sizeof dbg_ord),
                         debug_strfdatetime (&tm, &pc, dbg_tm, sizeof dbg_tm));
 
         }
 
-      if (pc.parse_datetime_debug)
+      if (debugging (&pc))
         {
           if (!pc.dates_seen && !pc.days_seen)
             dbg_printf (_("using current date as starting value: '%s'\n"),
@@ -2128,7 +2128,7 @@ parse_datetime2 (struct timespec *result, char const *p,
       /* Add relative date.  */
       if (pc.rel.year | pc.rel.month | pc.rel.day)
         {
-          if (pc.parse_datetime_debug)
+          if (debugging (&pc))
             {
               if ((pc.rel.year != 0 || pc.rel.month != 0) && tm.tm_mday != 15)
                 dbg_printf (_("warning: when adding relative months/years, "
@@ -2145,7 +2145,7 @@ parse_datetime2 (struct timespec *result, char const *p,
               || INT_ADD_WRAPV (tm.tm_mon, pc.rel.month, &month)
               || INT_ADD_WRAPV (tm.tm_mday, pc.rel.day, &day))
             {
-              if (pc.parse_datetime_debug)
+              if (debugging (&pc))
                 dbg_printf (_("error: %s:%d\n"), __FILE__, __LINE__);
               goto fail;
             }
@@ -2159,7 +2159,7 @@ parse_datetime2 (struct timespec *result, char const *p,
           Start = mktime_z (tz, &tm);
           if (Start == (time_t) -1)
             {
-              if (pc.parse_datetime_debug)
+              if (debugging (&pc))
                 dbg_printf (_("error: adding relative date resulted "
                               "in an invalid date: '%s'\n"),
                             debug_strfdatetime (&tm, &pc, dbg_tm,
@@ -2167,7 +2167,7 @@ parse_datetime2 (struct timespec *result, char const *p,
               goto fail;
             }
 
-          if (pc.parse_datetime_debug)
+          if (debugging (&pc))
             {
               dbg_printf (_("after date adjustment "
                             "(%+"PRIdMAX" years, %+"PRIdMAX" months, "
@@ -2244,7 +2244,7 @@ parse_datetime2 (struct timespec *result, char const *p,
           overflow |= INT_SUBTRACT_WRAPV (Start, delta, &t1);
           if (overflow)
             {
-              if (pc.parse_datetime_debug)
+              if (debugging (&pc))
                 dbg_printf (_("error: timezone %d caused time_t overflow\n"),
                             pc.time_zone);
               goto fail;
@@ -2252,7 +2252,7 @@ parse_datetime2 (struct timespec *result, char const *p,
           Start = t1;
         }
 
-      if (pc.parse_datetime_debug)
+      if (debugging (&pc))
         {
           intmax_t Starti = Start;
           dbg_printf (_("'%s' = %"PRIdMAX" epoch-seconds\n"),
@@ -2282,7 +2282,7 @@ parse_datetime2 (struct timespec *result, char const *p,
             || INT_ADD_WRAPV (t2, pc.rel.seconds, &t3)
             || INT_ADD_WRAPV (t3, d4, &t4))
           {
-            if (pc.parse_datetime_debug)
+            if (debugging (&pc))
               dbg_printf (_("error: adding relative time caused an "
                             "overflow\n"));
             goto fail;
@@ -2291,7 +2291,7 @@ parse_datetime2 (struct timespec *result, char const *p,
         result->tv_sec = t4;
         result->tv_nsec = normalized_ns;
 
-        if (pc.parse_datetime_debug
+        if (debugging (&pc)
             && (pc.rel.hour | pc.rel.minutes | pc.rel.seconds | pc.rel.ns))
           {
             dbg_printf (_("after time adjustment (%+"PRIdMAX" hours, "
@@ -2322,7 +2322,7 @@ parse_datetime2 (struct timespec *result, char const *p,
       }
     }
 
-  if (pc.parse_datetime_debug)
+  if (debugging (&pc))
     {
       /* Special case: using 'date -u' simply set TZ=UTC0 */
       if (! tzstring)
@@ -2370,6 +2370,36 @@ parse_datetime2 (struct timespec *result, char const *p,
   if (tz != tzdefault)
     tzfree (tz);
   free (tz1alloc);
+  return ok;
+}
+
+#ifdef GNULIB_PARSE_DATETIME2
+/* Parse a date/time string, storing the resulting time value into *RESULT.
+   The string itself is pointed to by P.  Return true if successful.
+   P can be an incomplete or relative time specification; if so, use
+   *NOW as the basis for the returned time.  Default to timezone
+   TZDEFAULT, which corresponds to tzalloc (TZSTRING).  */
+bool
+parse_datetime2 (struct timespec *result, char const *p,
+                 struct timespec const *now, unsigned int flags,
+                 timezone_t tzdefault, char const *tzstring)
+{
+  return parse_datetime_body (result, p, now, flags, tzdefault, tzstring);
+}
+#endif
+
+
+/* The plain interface: run with debug=false and the default timezone.   */
+bool
+parse_datetime (struct timespec *result, char const *p,
+                struct timespec const *now)
+{
+  char const *tzstring = getenv ("TZ");
+  timezone_t tz = tzalloc (tzstring);
+  if (!tz)
+    return false;
+  bool ok = parse_datetime_body (result, p, now, 0, tz, tzstring);
+  tzfree (tz);
   return ok;
 }
 
