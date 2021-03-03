@@ -190,7 +190,7 @@ do_unlock (asyncsafe_spinlock_t *lock)
     abort ();
 }
 
-#  elif (defined __GNUC__ || defined __clang__ || defined __SUNPRO_C) && (defined __sparc || defined __i386 || defined __x86_64__)
+#  elif ((defined __GNUC__ || defined __clang__ || defined __SUNPRO_C) && (defined __sparc || defined __i386 || defined __x86_64__)) || (defined __TINYC__ && (defined __i386 || defined __x86_64__))
 /* For older versions of GCC or clang, use inline assembly.
    GCC, clang, and the Oracle Studio C 12 compiler understand GCC's extended
    asm syntax, but the plain Oracle Studio C 11 compiler understands only
@@ -200,7 +200,7 @@ do_unlock (asyncsafe_spinlock_t *lock)
 static void
 memory_barrier (void)
 {
-#   if defined __GNUC__ || defined __clang__ || __SUNPRO_C >= 0x590
+#   if defined __GNUC__ || defined __clang__ || __SUNPRO_C >= 0x590 || defined __TINYC__
 #    if defined __i386 || defined __x86_64__
   asm volatile ("mfence");
 #    endif
@@ -223,7 +223,7 @@ static unsigned int
 atomic_compare_and_swap (volatile unsigned int *vp, unsigned int cmp,
                          unsigned int newval)
 {
-#   if defined __GNUC__ || defined __clang__ || __SUNPRO_C >= 0x590
+#   if defined __GNUC__ || defined __clang__ || __SUNPRO_C >= 0x590 || defined __TINYC__
   unsigned int oldval;
 #    if defined __i386 || defined __x86_64__
   asm volatile (" lock\n cmpxchgl %3,(%1)"
