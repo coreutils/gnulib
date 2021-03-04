@@ -202,7 +202,12 @@ memory_barrier (void)
 {
 #   if defined __GNUC__ || defined __clang__ || __SUNPRO_C >= 0x590 || defined __TINYC__
 #    if defined __i386 || defined __x86_64__
+#     if defined __TINYC__ && defined __i386
+  /* Cannot use the SSE instruction "mfence" with this compiler.  */
+  asm volatile ("lock orl $0,(%esp)");
+#     else
   asm volatile ("mfence");
+#     endif
 #    endif
 #    if defined __sparc
   asm volatile ("membar 2");
