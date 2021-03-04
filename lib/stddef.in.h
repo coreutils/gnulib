@@ -44,13 +44,11 @@
 #  @INCLUDE_NEXT@ @NEXT_STDDEF_H@
    /* On TinyCC, make sure that the macros that indicate the special invocation
       convention get undefined.  */
-#  ifdef __TINYC__
-#   undef __need_wchar_t
-#   undef __need_size_t
-#   undef __need_ptrdiff_t
-#   undef __need_NULL
-#   undef __need_wint_t
-#  endif
+#  undef __need_wchar_t
+#  undef __need_size_t
+#  undef __need_ptrdiff_t
+#  undef __need_NULL
+#  undef __need_wint_t
 # endif
 
 #else
