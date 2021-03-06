@@ -112,10 +112,12 @@ extern void *scratch_buffer_dupfree (struct scratch_buffer *buffer,
 
 #include <libc-config.h>
 
+/* Avoid possible conflicts with symbols exported by the GNU libc.  */
 #define __libc_scratch_buffer_dupfree gl_scratch_buffer_dupfree
 #define __libc_scratch_buffer_grow gl_scratch_buffer_grow
 #define __libc_scratch_buffer_grow_preserve gl_scratch_buffer_grow_preserve
 #define __libc_scratch_buffer_set_array_size gl_scratch_buffer_set_array_size
+
 #include <malloc/scratch_buffer.h>
 
 #endif /* _GL_SCRATCH_BUFFER_H */
