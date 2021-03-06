@@ -3913,7 +3913,6 @@ This list of functions is sorted according to the header that declares them.
 * Glibc sys/uio.h::
 * Glibc sys/ustat.h::
 * Glibc sys/vlimit.h::
-* Glibc sys/vtimes.h::
 * Glibc sys/wait.h::
 * Glibc sys/xattr.h::
 * Glibc termios.h::
@@ -4447,6 +4446,7 @@ This list of functions is sorted according to the header that declares them.
 
 @menu
 * mallinfo::
+* mallinfo2::
 * malloc_get_state::
 * malloc_set_state::
 * malloc_info::
@@ -4459,6 +4459,7 @@ This list of functions is sorted according to the header that declares them.
 @end menu
 
 @include glibc-functions/mallinfo.texi
+@include glibc-functions/mallinfo2.texi
 @include glibc-functions/malloc_get_state.texi
 @include glibc-functions/malloc_set_state.texi
 @include glibc-functions/malloc_info.texi
@@ -6391,15 +6392,6 @@ This list of functions is sorted according to the header that declares them.
 
 @c @node Glibc sys/vm86.h
 @c @section Glibc @code{<sys/vm86.h>}
-
-@node Glibc sys/vtimes.h
-@section Glibc @code{<sys/vtimes.h>}
-
-@menu
-* vtimes::
-@end menu
-
-@include glibc-functions/vtimes.texi
 
 @node Glibc sys/wait.h
 @section Glibc Extensions to @code{<sys/wait.h>}

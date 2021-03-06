@@ -31,7 +31,7 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 The @code{GRND_INSECURE} flag is missing on some platforms:
-glibc 2.32, macOS 10.15, GNU/kFreeBSD, FreeBSD 12.0, OpenBSD 6.7,
+glibc 2.33, macOS 10.15, GNU/kFreeBSD, FreeBSD 12.0, OpenBSD 6.7,
 Minix 3.3, Haiku.
 
 @item
