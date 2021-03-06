@@ -16,6 +16,7 @@ c99
 libc-config
 stdbool
 stddef
+intprops
 
 configure.ac:
 
@@ -27,8 +28,7 @@ lib_SOURCES += malloc/dynarray_at_failure.c \
                malloc/dynarray_resize_clear.c
 
 Include:
-<dynarray.h>
-<malloc/dynarray-skeleton.c>
+"dynarray.h"
 
 License:
 LGPLv2+
