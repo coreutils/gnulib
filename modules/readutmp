@@ -12,6 +12,7 @@ xalloc
 stdbool
 stdint
 fopen-gnu
+unlocked-io-internal
 
 configure.ac:
 gl_READUTMP

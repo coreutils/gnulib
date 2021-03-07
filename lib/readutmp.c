@@ -34,9 +34,8 @@
 
 #include "xalloc.h"
 
-#if USE_UNLOCKED_IO
-# include "unlocked-io.h"
-#endif
+/* Each of the FILE streams in this file is only used in a single thread.  */
+#include "unlocked-io.h"
 
 #if 8 <= __GNUC__
 # pragma GCC diagnostic ignored "-Wsizeof-pointer-memaccess"
