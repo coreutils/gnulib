@@ -279,9 +279,16 @@ programs in your package invoke the functions @code{mbrtowc}, @code{mbrtoc32},
 and the functions of the @code{regex} module only from a single thread.  (The
 @code{regex} module uses @code{mbrtowc} under the hood.)
 @item
-You may define the C macro @code{GNULIB_WCHAR_SINGLE}, if all the programs in
-your package are single-threaded and won't change the locale after it has
-been initialized.  This macro optimizes the functions @code{mbrtowc} and
+You may define the C macro @code{GNULIB_WCHAR_SINGLE_LOCALE}, if all the
+programs in your package set the locale early and
+@itemize
+@item
+don't change the locale after it has been initialized, and
+@item
+don't call locale sensitive functions (@code{mbrtowc}, @code{wcwidth}, etc.@:)
+before the locale has been initialized.
+@end itemize
+This macro optimizes the functions @code{mbrtowc}, @code{mbrtoc32}, and
 @code{wcwidth}.
 @item
 You may define the C macro @code{GNULIB_GETUSERSHELL_SINGLE_THREAD}, if all the

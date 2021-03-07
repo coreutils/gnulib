@@ -60,6 +60,10 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2021-03-07  mbrtowc         For single-locale optimizations, you now need to
+            mbrtoc32        define GNULIB_WCHAR_SINGLE_LOCALE instead of
+            wcwidth         GNULIB_WCHAR_SINGLE.
+
 2021-02-28  parse-datetime  The parse_datetime2 function has been moved
                             to the new parse-datetime2 module, so that
                             programs that need just parse_datetime need

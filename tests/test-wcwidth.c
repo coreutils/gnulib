@@ -35,7 +35,7 @@ main ()
 {
   wchar_t wc;
 
-#if !GNULIB_WCHAR_SINGLE
+#if !GNULIB_WCHAR_SINGLE_LOCALE
 # ifdef C_CTYPE_ASCII
   /* Test width of ASCII characters.  */
   for (wc = 0x20; wc < 0x7F; wc++)
