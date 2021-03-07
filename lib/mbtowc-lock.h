@@ -32,7 +32,9 @@ mbtowc_unlocked (wchar_t *pwc, const char *p, size_t m)
 /* Prohibit renaming this symbol.  */
 #undef gl_get_mbtowc_lock
 
-#ifdef USE_UNLOCKED_IO
+#if GNULIB_MBRTOWC_SINGLE_THREAD
+
+/* All uses of this function are in a single thread.  No locking needed.  */
 
 static int
 mbtowc_with_lock (wchar_t *pwc, const char *p, size_t m)
