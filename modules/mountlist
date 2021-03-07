@@ -11,6 +11,7 @@ Depends-on:
 fopen-gnu
 getline
 open
+unlocked-io-internal
 stdbool
 stdint
 strstr-simple

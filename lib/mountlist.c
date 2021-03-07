@@ -149,9 +149,8 @@
 # define MNT_IGNORE(M) 0
 #endif
 
-#if USE_UNLOCKED_IO
-# include "unlocked-io.h"
-#endif
+/* Each of the FILE streams in this file is only used in a single thread.  */
+#include "unlocked-io.h"
 
 /* The results of opendir() in this file are not used with dirfd and fchdir,
    therefore save some unnecessary work in fchdir.c.  */
