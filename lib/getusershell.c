@@ -39,7 +39,7 @@
 #include "stdio--.h"
 #include "xalloc.h"
 
-#if USE_UNLOCKED_IO
+#if GNULIB_GETUSERSHELL_SINGLE_THREAD
 # include "unlocked-io.h"
 #endif
 

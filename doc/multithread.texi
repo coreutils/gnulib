@@ -274,4 +274,8 @@ You may define the C macro @code{GNULIB_WCHAR_SINGLE}, if all the programs in
 your package are single-threaded and won't change the locale after it has
 been initialized.  This macro optimizes the functions @code{mbrtowc} and
 @code{wcwidth}.
+@item
+You may define the C macro @code{GNULIB_GETUSERSHELL_SINGLE_THREAD}, if all the
+programs in your package invoke the functions @code{setusershell},
+@code{getusershell}, @code{endusershell} only from a single thread.
 @end itemize
