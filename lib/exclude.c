@@ -42,7 +42,7 @@
 #include "verify.h"
 #include "filename.h"
 
-#if USE_UNLOCKED_IO
+#if GNULIB_EXCLUDE_SINGLE_THREAD
 # include "unlocked-io.h"
 #endif
 
