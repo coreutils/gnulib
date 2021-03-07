@@ -11,6 +11,10 @@ Portability problems fixed by Gnulib:
 This header file is missing on some platforms:
 mingw, MSVC 14.
 @item
+This header file defines no @code{EX_*} macros if @code{_BSD_SOURCE} is not
+defined on some platforms:
+Haiku.
+@item
 The macro @code{EX_CONFIG} is missing on some platforms:
 HP-UX 11.
 @end itemize
