@@ -270,6 +270,10 @@ You need extra code for this optimization to be effective: include the
 @code{"unlocked-io.h"} header file.  Some Gnulib modules that do operations
 on @code{FILE} streams have these preparations already included.
 @item
+You may define the C macro @code{GNULIB_REGEX_SINGLE_THREAD}, if all the
+programs in your package invoke the functions of the @code{regex} module
+only from a single thread.
+@item
 You may define the C macro @code{GNULIB_WCHAR_SINGLE}, if all the programs in
 your package are single-threaded and won't change the locale after it has
 been initialized.  This macro optimizes the functions @code{mbrtowc} and
