@@ -321,15 +321,15 @@
 
 /* The nonnull function attribute marks pointer parameters that
    must not be NULL.  */
-#ifndef __nonnull
+#ifndef __attribute_nonnull__
 # if __GNUC_PREREQ (3,3) || __glibc_has_attribute (__nonnull__)
-#  define __nonnull(params) __attribute__ ((__nonnull__ params))
+#  define __attribute_nonnull__(params) __attribute__ ((__nonnull__ params))
 # else
-#  define __nonnull(params)
+#  define __attribute_nonnull__(params)
 # endif
-#elif !defined __GLIBC__
-# undef __nonnull
-# define __nonnull(params) _GL_ATTRIBUTE_NONNULL (params)
+#endif
+#ifndef __nonnull
+# define __nonnull(params) __attribute_nonnull__ (params)
 #endif
 
 /* If fortification mode, we warn about unused results of certain

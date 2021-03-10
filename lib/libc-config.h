@@ -33,9 +33,9 @@
 #include <config.h>
 
 /* On glibc this includes <features.h> and <sys/cdefs.h> and #defines
-   _FEATURES_H, __WORDSIZE, and __set_errno.  On FreeBSD 11 it
-   includes <sys/cdefs.h> which defines __nonnull.  Elsewhere it
-   is harmless.  */
+   _FEATURES_H, __WORDSIZE, and __set_errno.  On FreeBSD 11 and
+   DragonFlyBSD 5.9 it includes <sys/cdefs.h> which defines __nonnull.
+   Elsewhere it is harmless.  */
 #include <errno.h>
 
 /* From glibc <errno.h>.  */
