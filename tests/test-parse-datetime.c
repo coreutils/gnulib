@@ -431,8 +431,12 @@ main (int argc _GL_UNUSED, char **argv)
   ASSERT (   parse_datetime (&result, "TZ=\"\"", &now));
   ASSERT (   parse_datetime (&result, "TZ=\"\" ", &now));
   ASSERT (   parse_datetime (&result, " TZ=\"\"", &now));
+  /* Exercise patterns which may be valid or invalid, depending on the
+     platform.  */
+#if !defined __NetBSD__
   ASSERT (   parse_datetime (&result, "TZ=\"\\\\\"", &now));
   ASSERT (   parse_datetime (&result, "TZ=\"\\\"\"", &now));
+#endif
 
   /* Outlandishly-long time zone abbreviations should not cause problems.  */
   {
