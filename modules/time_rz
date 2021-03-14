@@ -1,17 +1,6 @@
 Description:
 Reentrant time zone functions: localtime_rz, mktime_z, etc.
 
-Comment:
-This implements the NetBSD-inspired extensions to <time.h>, which
-defines a type timezone_t and associated allocation functions tzalloc
-and tzfree, along with two functions localtime_rz and mktime_z that
-are like localtime_r and mktime except they have a new leading
-timezone_t argument.  Time zone abbreviation strings have lifetimes
-equal to the corresponding struct tm or timezone_t object (whichever
-is less).  tzalloc (X) yields a time zone object equivalent to setting
-the TZ environment variable to X.  tzalloc (NULL) is the same as an
-unset TZ environment variable.  (timezone_t) 0 stands for UTC.
-
 Files:
 lib/time-internal.h
 lib/time_rz.c
