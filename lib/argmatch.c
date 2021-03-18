@@ -266,7 +266,7 @@ main (int argc, const char *const *argv)
                              backup_args, backup_vals);
 
   printf ("The version control is '%s'\n",
-          ARGMATCH_TO_ARGUMENT (backup_type, backup_args, backup_vals));
+          ARGMATCH_TO_ARGUMENT (&backup_type, backup_args, backup_vals));
 
   return 0;
 }
