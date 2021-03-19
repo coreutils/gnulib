@@ -277,7 +277,7 @@ atomic_compare_and_swap_ptr (uintptr_t volatile *vp,
   return oldval;
 #  else /* __SUNPRO_C */
 #   if defined __x86_64__
-  asm (" movl %rsi,%rax\n"
+  asm (" movq %rsi,%rax\n"
        " lock\n cmpxchgq %rdx,(%rdi)");
 #   elif defined __i386
   asm (" movl 16(%ebp),%ecx\n"
