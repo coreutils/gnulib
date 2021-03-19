@@ -34,16 +34,16 @@
    implementation.  */
 #define REPEAT_COUNT 1000
 
+#include "glthread/thread.h"
+#include "glthread/yield.h"
+
+#include "macros.h"
+
 #if EXPLICIT_YIELD
 # define yield() gl_thread_yield ()
 #else
 # define yield()
 #endif
-
-#include "glthread/thread.h"
-#include "glthread/yield.h"
-
-#include "macros.h"
 
 /* Counters for each thread.  */
 static unsigned int counter[THREAD_COUNT][5];
