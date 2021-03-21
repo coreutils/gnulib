@@ -19,7 +19,7 @@ This function does not work on finite numbers on some platforms:
 AIX 5.1, MSVC 14.
 @item
 This function does not work on denormalized numbers on some platforms:
-Mac OS X 10.13/i386.
+macOS 10.13/i386.
 @item
 This function does not work on infinite numbers on some platforms:
 IRIX 6.5, mingw, MSVC 14.

@@ -76,7 +76,7 @@ mingw, MSVC 14.
 @item
 This function does not fully support the @samp{n} directive on some platforms:
 glibc when used with @code{_FORTIFY_SOURCE >= 2} (set by default on Ubuntu),
-Mac OS X 10.13, HP-UX 11, mingw, MSVC 14.
+macOS 11.1, HP-UX 11, mingw, MSVC 14.
 @item
 This function overwrites memory even when a zero size argument is passed on some
 platforms:

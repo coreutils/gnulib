@@ -28,5 +28,5 @@ have this limitation.
 @item
 This function returns 0 for U+2028 (LINE SEPARATOR) and
 U+2029 (PARAGRAPH SEPARATOR) on some platforms:
-Mac OS X 10.13.
+macOS 11.1.
 @end itemize

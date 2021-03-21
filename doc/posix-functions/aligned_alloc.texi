@@ -11,14 +11,14 @@ Portability problems fixed by Gnulib:
 @item
 This function fails if the alignment argument is smaller than
 @code{sizeof (void *)} on some platforms:
-AIX 7.2.
+macOS 11.1, AIX 7.2.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on all non-glibc platforms:
-glibc 2.15, Mac OS X 10.13, FreeBSD 6.4, NetBSD 7.1, OpenBSD 6.0, Minix 3.1.8, AIX 7.1, HP-UX 11.31, IRIX 6.5, Solaris 11.3, Cygwin 1.7.x, mingw, MSVC 14, Android 8.1.
+glibc 2.15, macOS 10.13, FreeBSD 6.4, NetBSD 7.1, OpenBSD 6.0, Minix 3.1.8, AIX 7.1, HP-UX 11.31, IRIX 6.5, Solaris 11.3, Cygwin 1.7.x, mingw, MSVC 14, Android 8.1.
 @end itemize
 
 The Gnulib module @code{aligned-malloc} provides functions for

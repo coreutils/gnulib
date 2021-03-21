@@ -30,7 +30,7 @@ have this limitation.
 @item
 The specification is not clear about whether this function should update the
 conversion state when the first argument (the destination pointer) is NULL.
-The glibc implementation does not update the state in this case; the Mac OS X
+The glibc implementation does not update the state in this case; the macOS
 and FreeBSD implementations do.
 For portability, when passing a NULL destination argument, it is best to pass
 a pointer to a temporary copy of the conversion state.

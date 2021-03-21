@@ -14,7 +14,7 @@ glibc 2.3.6, macOS 10.12, FreeBSD 7.4, NetBSD 6.1.5, OpenBSD 4.9, Minix 3.1.8, A
 @item
 On some platforms, @code{faccessat (dfd, "file/", amode, flag)}
 succeeds instead of failing when @file{file} is not a directory.
-macOS 10.13.
+macOS 11.1.
 @end itemize
 
 Portability problems not fixed by Gnulib:

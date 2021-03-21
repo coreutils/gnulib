@@ -25,7 +25,7 @@ glibc 2.24, Mac OS X 10.11, FreeBSD 11.0, NetBSD 9.0, OpenBSD 5.5, Minix 3.3, AI
 @item
 This function is declared in @code{<sys/random.h>}, not in @code{<unistd.h>},
 on some platforms:
-Mac OS X 10.13, Solaris 11.4, Android 9.0.
+macOS 11.1, Solaris 11.4, Android 9.0.
 @end itemize
 
 Portability problems not fixed by Gnulib:

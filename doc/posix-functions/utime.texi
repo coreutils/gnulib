@@ -19,7 +19,7 @@ mingw, MSVC 14.
 @item
 On some platforms, @code{utime("link-to-file/",buf)} succeeds instead
 of failing with @code{ENOTDIR}.
-Mac OS X 10.13.
+macOS 11.1.
 @end itemize
 
 Portability problems not fixed by Gnulib:
