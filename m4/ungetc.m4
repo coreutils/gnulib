@@ -1,4 +1,4 @@
-# ungetc.m4 serial 9
+# ungetc.m4 serial 10
 dnl Copyright (C) 2009-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -55,11 +55,19 @@ AC_DEFUN_ONCE([gl_FUNC_UNGETC_WORKS],
          esac
         ])
     ])
+  gl_ftello_broken_after_ungetc=no
   case "$gl_cv_func_ungetc_works" in
     *yes) ;;
     *)
-      AC_DEFINE([FUNC_UNGETC_BROKEN], [1],
-        [Define to 1 if ungetc is broken when used on arbitrary bytes.])
+      dnl On macOS >= 10.15, where the above program fails with exit code 6,
+      dnl we fix it through an ftello override.
+      case "$host_os" in
+        darwin*) gl_ftello_broken_after_ungetc=yes ;;
+        *)
+          AC_DEFINE([FUNC_UNGETC_BROKEN], [1],
+            [Define to 1 if ungetc is broken when used on arbitrary bytes.])
+          ;;
+      esac
       ;;
   esac
 ])
