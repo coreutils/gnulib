@@ -15,6 +15,11 @@ mingw, MSVC 14.
 This function produces incorrect results after @code{putc} that followed a
 @code{getc} call that reached EOF on some platforms:
 Solaris 11 2010-11.
+@item
+This function, when invoked after @code{ungetc}, throws away the @code{ungetc}
+buffer, changes the stream's file position, and returns the wrong position on
+some platforms:
+macOS 10.15 and newer.
 @end itemize
 
 Portability problems not fixed by Gnulib:
