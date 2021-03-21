@@ -24,7 +24,7 @@
 #include "macros.h"
 
 static int
-byte_at (size_t i)
+byte_at (unsigned long long int i)
 {
   return ((i % 13) + ((i * i) % 251)) & 0xff;
 }

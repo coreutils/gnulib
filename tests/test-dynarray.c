@@ -28,7 +28,7 @@
 #define N 100000
 
 static int
-value_at (int i)
+value_at (long long int i)
 {
   return (i % 13) + ((i * i) % 251);
 }
