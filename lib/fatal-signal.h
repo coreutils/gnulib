@@ -56,8 +56,10 @@ extern "C" {
 
    The cleanup function is executed asynchronously.  It is unspecified
    whether during its execution the catchable fatal signals are blocked
-   or not.  */
-extern void at_fatal_signal (_GL_ASYNC_SAFE void (*function) (int sig));
+   or not.
+
+   Return 0 upon success, or -1 if there was a memory allocation problem.  */
+extern int at_fatal_signal (_GL_ASYNC_SAFE void (*function) (int sig));
 
 
 /* Sometimes it is necessary to block the usually fatal signals while the

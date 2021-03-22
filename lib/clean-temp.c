@@ -385,7 +385,8 @@ do_init_clean_temp (void)
   /* Initialize the data used by the cleanup handler.  */
   init_fatal_signal_set ();
   /* Register the cleanup handler.  */
-  at_fatal_signal (&cleanup_action);
+  if (at_fatal_signal (&cleanup_action) < 0)
+    xalloc_die ();
 }
 
 /* Ensure that do_init_clean_temp is called once only.  */

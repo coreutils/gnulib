@@ -46,6 +46,7 @@
 #include "sig-handler.h"
 #include "full-write.h"
 #include "same-inode.h"
+#include "xalloc.h"
 
 #define SIZEOF(a) (sizeof(a) / sizeof(a[0]))
 
@@ -813,7 +814,8 @@ ensure_other_signal_handlers (void)
   if (!signal_handlers_installed)
     {
       /* Install the handlers for the fatal signals.  */
-      at_fatal_signal (fatal_signal_handler);
+      if (at_fatal_signal (fatal_signal_handler) < 0)
+        xalloc_die ();
 
       #if defined SIGCONT
 

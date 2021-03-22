@@ -121,7 +121,8 @@ register_slave_subprocess (pid_t child)
   if (!cleanup_slaves_registered)
     {
       atexit (cleanup_slaves);
-      at_fatal_signal (cleanup_slaves_action);
+      if (at_fatal_signal (cleanup_slaves_action) < 0)
+        xalloc_die ();
       cleanup_slaves_registered = true;
     }
 

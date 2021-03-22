@@ -21,6 +21,7 @@ tmpdir
 mkdtemp
 rmdir
 xalloc
+xalloc-die
 xmalloca
 linkedhash-list
 linked-list

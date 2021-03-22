@@ -11,6 +11,7 @@ Depends-on:
 fatal-signal
 error
 xalloc
+xalloc-die
 gettext-h
 stdbool
 stdlib
