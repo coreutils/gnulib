@@ -30,7 +30,7 @@ Link:
 $(LIBTHREAD)
 
 License:
-GPL
+LGPLv2+
 
 Maintainer:
 all
