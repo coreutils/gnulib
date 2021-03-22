@@ -29,8 +29,9 @@ extern "C" {
 
 /* Register the given ABSOLUTE_FILE_NAME as being a file that needs to be
    removed.
-   Should be called before the file ABSOLUTE_FILE_NAME is created.  */
-extern void register_temporary_file (const char *absolute_file_name);
+   Should be called before the file ABSOLUTE_FILE_NAME is created.
+   Return 0 upon success, or -1 if there was a memory allocation problem.  */
+extern int register_temporary_file (const char *absolute_file_name);
 
 /* Unregister the given ABSOLUTE_FILE_NAME as being a file that needs to be
    removed.

@@ -178,7 +178,8 @@ create_temp_dir (const char *prefix, const char *parentdir,
           if (old_allocated == 0)
             {
               /* First use of this facility.  */
-              clean_temp_init ();
+              if (clean_temp_init () < 0)
+                xalloc_die ();
             }
           else
             {
@@ -664,9 +665,11 @@ gen_register_open_temp (char *file_name_tmpl, int suffixlen,
   int saved_errno = errno;
   if (fd >= 0)
     {
-      clean_temp_init ();
+      if (clean_temp_init () < 0)
+        xalloc_die ();
       register_fd (fd);
-      register_temporary_file (file_name_tmpl);
+      if (register_temporary_file (file_name_tmpl) < 0)
+        xalloc_die ();
     }
   unblock_fatal_signals ();
   errno = saved_errno;

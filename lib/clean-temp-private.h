@@ -75,7 +75,7 @@ extern size_t clean_temp_string_hash (const void *x);
 extern _GL_ASYNC_SAFE int clean_temp_asyncsafe_close (struct closeable_fd *element);
 extern void clean_temp_init_asyncsafe_close (void);
 
-extern void clean_temp_init (void);
+extern int clean_temp_init (void);
 
 extern int clean_temp_unlink (const char *absolute_file_name, bool cleanup_verbose);
 

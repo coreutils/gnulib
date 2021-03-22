@@ -32,10 +32,9 @@
 #include "error.h"
 #include "fatal-signal.h"
 #include "asyncsafe-spin.h"
-#include "xalloc.h"
 #include "glthread/lock.h"
 #include "thread-optim.h"
-#include "gl_xlist.h"
+#include "gl_list.h"
 #include "gl_linkedhash_list.h"
 #include "gettext.h"
 
@@ -259,6 +258,9 @@ cleanup_action (int sig _GL_UNUSED)
 }
 
 
+/* Set to -1 if initialization of this facility failed.  */
+static int volatile init_failed /* = 0 */;
+
 /* Initializes this facility.  */
 static void
 do_clean_temp_init (void)
@@ -267,17 +269,19 @@ do_clean_temp_init (void)
   init_fatal_signal_set ();
   /* Register the cleanup handler.  */
   if (at_fatal_signal (&cleanup_action) < 0)
-    xalloc_die ();
+    init_failed = -1;
 }
 
 /* Ensure that do_clean_temp_init is called once only.  */
 gl_once_define(static, clean_temp_once)
 
-/* Initializes this facility upon first use.  */
-void
+/* Initializes this facility upon first use.
+   Return 0 upon success, or -1 if there was a memory allocation problem.  */
+int
 clean_temp_init (void)
 {
   gl_once (clean_temp_once, do_clean_temp_init);
+  return init_failed;
 }
 
 
@@ -301,29 +305,58 @@ clean_temp_unlink (const char *absolute_file_name, bool cleanup_verbose)
 
 /* Register the given ABSOLUTE_FILE_NAME as being a file that needs to be
    removed.
-   Should be called before the file ABSOLUTE_FILE_NAME is created.  */
-void
+   Should be called before the file ABSOLUTE_FILE_NAME is created.
+   Return 0 upon success, or -1 if there was a memory allocation problem.  */
+int
 register_temporary_file (const char *absolute_file_name)
 {
   bool mt = gl_multithreaded ();
 
   if (mt) gl_lock_lock (file_cleanup_list_lock);
 
+  int ret = 0;
+
   /* Make sure that this facility and the file_cleanup_list are initialized.  */
   if (file_cleanup_list == NULL)
     {
-      clean_temp_init ();
+      if (clean_temp_init () < 0)
+        {
+          ret = -1;
+          goto done;
+        }
       file_cleanup_list =
-        gl_list_create_empty (GL_LINKEDHASH_LIST,
-                              clean_temp_string_equals, clean_temp_string_hash,
-                              NULL, false);
+        gl_list_nx_create_empty (GL_LINKEDHASH_LIST,
+                                 clean_temp_string_equals,
+                                 clean_temp_string_hash,
+                                 NULL, false);
+      if (file_cleanup_list == NULL)
+        {
+          ret = -1;
+          goto done;
+        }
     }
 
   /* Add absolute_file_name to file_cleanup_list, without duplicates.  */
   if (gl_list_search (file_cleanup_list, absolute_file_name) == NULL)
-    gl_list_add_first (file_cleanup_list, xstrdup (absolute_file_name));
+    {
+      absolute_file_name = strdup (absolute_file_name);
+      if (absolute_file_name == NULL)
+        {
+          ret = -1;
+          goto done;
+        }
+      if (gl_list_nx_add_first (file_cleanup_list, absolute_file_name)
+          == NULL)
+        {
+          ret = -1;
+          goto done;
+        }
+    }
 
+ done:
   if (mt) gl_lock_unlock (file_cleanup_list_lock);
+
+  return ret;
 }
 
 /* Unregister the given ABSOLUTE_FILE_NAME as being a file that needs to be

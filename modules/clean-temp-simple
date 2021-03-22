@@ -17,10 +17,7 @@ thread-optim
 error
 fatal-signal
 rmdir
-xalloc
-xalloc-die
 linkedhash-list
-xlist
 gettext-h
 
 configure.ac:
