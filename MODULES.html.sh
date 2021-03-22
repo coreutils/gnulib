@@ -2013,7 +2013,6 @@ func_all_modules ()
   func_module base64
   func_module check-version
   func_module crc
-  func_module diacrit
   func_module diffseq
   func_module execinfo
   func_module getline

@@ -60,6 +60,8 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2021-03-21  diacrit         This deprecated module is removed.
+
 2021-03-07  mbrtowc         For single-locale optimizations, you now need to
             mbrtoc32        define GNULIB_WCHAR_SINGLE_LOCALE instead of
             wcwidth         GNULIB_WCHAR_SINGLE.
