@@ -8,13 +8,14 @@ lib/clean-temp.c
 Depends-on:
 c99
 stdbool
-stdint
+clean-temp-simple
+list
+asyncsafe-spin
 unistd
 lock
 thread-optim
 error
 fatal-signal
-asyncsafe-spin
 open
 pathmax
 tmpdir
@@ -29,7 +30,6 @@ xlist
 gettext-h
 
 configure.ac:
-AC_DEFINE([SIGNAL_SAFE_LIST], [1], [Define if lists must be signal-safe.])
 
 Makefile.am:
 lib_SOURCES += clean-temp.h clean-temp.c

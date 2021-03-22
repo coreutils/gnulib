@@ -37,10 +37,11 @@ extern "C" {
    and the temporary directories can be removed, because only on Unix
    (excluding Cygwin) can one remove directories containing open files.
 
-   This module provides support for
-     - temporary directories and temporary files inside these temporary
-       directories,
-     - temporary files without temporary directories.
+   There are two modules:
+     - 'clean-temp' provides support for temporary directories and temporary
+       files inside these temporary directories,
+     - 'clean-temp-simple' provides support for temporary files without
+       temporary directories.
    The temporary directories and files are automatically cleaned up (at the
    latest) when the program exits or dies from a fatal signal such as SIGINT,
    SIGTERM, SIGHUP, but not if it dies from a fatal signal such as SIGQUIT,
@@ -64,21 +65,7 @@ extern "C" {
 
 /* ============= Temporary files without temporary directories ============= */
 
-/* Register the given ABSOLUTE_FILE_NAME as being a file that needs to be
-   removed.
-   Should be called before the file ABSOLUTE_FILE_NAME is created.  */
-extern void register_temporary_file (const char *absolute_file_name);
-
-/* Unregister the given ABSOLUTE_FILE_NAME as being a file that needs to be
-   removed.
-   Should be called when the file ABSOLUTE_FILE_NAME could not be created.  */
-extern void unregister_temporary_file (const char *absolute_file_name);
-
-/* Remove the given ABSOLUTE_FILE_NAME and unregister it.
-   CLEANUP_VERBOSE determines whether errors are reported to standard error.
-   Return 0 upon success, or -1 if there was some problem.  */
-extern int cleanup_temporary_file (const char *absolute_file_name,
-                                   bool cleanup_verbose);
+#include "clean-temp-simple.h"
 
 /* ========= Temporary directories and temporary files inside them ========= */
 
