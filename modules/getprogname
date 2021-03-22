@@ -21,7 +21,7 @@ Include:
 "getprogname.h"
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 All
