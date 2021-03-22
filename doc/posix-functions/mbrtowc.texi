@@ -44,6 +44,12 @@ Solaris 9.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
+In UTF-8 locales, this function may return wide characters up to 0x7FFFFFFF
+(that is, beyond 0x0010FFFF) on some platforms:
+@c https://sourceware.org/bugzilla/show_bug.cgi?id=2373
+@c https://sourceware.org/bugzilla/show_bug.cgi?id=26034
+glibc 2.33.
+@item
 On Windows and 32-bit AIX platforms, @code{wchar_t} is a 16-bit type and
 therefore cannot accommodate all Unicode characters.
 However, the ISO C11 function @code{mbrtoc32}, provided by Gnulib module

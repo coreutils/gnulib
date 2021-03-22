@@ -16,6 +16,12 @@ Android 4.4.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
+In UTF-8 locales, this function may return wide characters up to 0x7FFFFFFF
+(that is, beyond 0x0010FFFF) on some platforms:
+@c https://sourceware.org/bugzilla/show_bug.cgi?id=2373
+@c https://sourceware.org/bugzilla/show_bug.cgi?id=26034
+glibc 2.33.
+@item
 This function accumulates hidden state on some platforms:
 glibc 2.8 (see @url{https://sourceware.org/bugzilla/show_bug.cgi?id=9674}).
 @item
