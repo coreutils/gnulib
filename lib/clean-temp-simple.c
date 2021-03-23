@@ -339,15 +339,16 @@ register_temporary_file (const char *absolute_file_name)
   /* Add absolute_file_name to file_cleanup_list, without duplicates.  */
   if (gl_list_search (file_cleanup_list, absolute_file_name) == NULL)
     {
-      absolute_file_name = strdup (absolute_file_name);
-      if (absolute_file_name == NULL)
+      char *absolute_file_name_copy = strdup (absolute_file_name);
+      if (absolute_file_name_copy == NULL)
         {
           ret = -1;
           goto done;
         }
-      if (gl_list_nx_add_first (file_cleanup_list, absolute_file_name)
+      if (gl_list_nx_add_first (file_cleanup_list, absolute_file_name_copy)
           == NULL)
         {
+          free (absolute_file_name_copy);
           ret = -1;
           goto done;
         }
