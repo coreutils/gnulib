@@ -193,11 +193,7 @@ mem_cd_iconv (const char *src, size_t srclen, iconv_t cd,
  fail:
   {
     if (result != *resultp)
-      {
-        int saved_errno = errno;
-        free (result);
-        errno = saved_errno;
-      }
+      free (result);
     return -1;
   }
 # undef tmpbufsize
@@ -385,12 +381,8 @@ str_cd_iconv (const char *src, iconv_t cd)
   return result;
 
  failed:
-  {
-    int saved_errno = errno;
-    free (result);
-    errno = saved_errno;
-    return NULL;
-  }
+  free (result);
+  return NULL;
 
 # endif
 }
@@ -441,11 +433,7 @@ str_iconv (const char *src, const char *from_codeset, const char *to_codeset)
         {
           if (iconv_close (cd) < 0)
             {
-              /* Return NULL, but free the allocated memory, and while doing
-                 that, preserve the errno from iconv_close.  */
-              int saved_errno = errno;
               free (result);
-              errno = saved_errno;
               return NULL;
             }
         }

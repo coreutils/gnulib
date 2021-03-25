@@ -8,6 +8,7 @@ lib/striconv.c
 Depends-on:
 iconv
 iconv_open
+free-posix
 strdup
 c-strcase
 

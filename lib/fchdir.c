@@ -91,7 +91,6 @@ get_name (char const *dir)
 {
   char *cwd;
   char *result;
-  int saved_errno;
 
   if (IS_ABSOLUTE_FILE_NAME (dir))
     return strdup (dir);
@@ -102,9 +101,7 @@ get_name (char const *dir)
     return cwd;
 
   result = mfile_name_concat (cwd, dir, NULL);
-  saved_errno = errno;
   free (cwd);
-  errno = saved_errno;
   return result;
 }
 

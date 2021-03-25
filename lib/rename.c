@@ -165,10 +165,8 @@ rpl_rename (char const *src, char const *dst)
         }
       if (rmdir (dst))
         {
-          error = errno;
           free (src_temp);
           free (dst_temp);
-          errno = error;
           return -1;
         }
       free (src_temp);

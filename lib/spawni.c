@@ -398,9 +398,7 @@ do_open (struct inheritable_handles *inh_handles, int newfd,
   HANDLE handle = open_handle (filename, flags, mode);
   if (handle == INVALID_HANDLE_VALUE)
     {
-      int saved_errno = errno;
       free (filename_to_free);
-      errno = saved_errno;
       return -1;
     }
   free (filename_to_free);
@@ -711,13 +709,10 @@ __spawni (pid_t *pid, const char *prog_filename,
   }
 
  failed_1:
-  {
-    int saved_errno = errno;
-    free (envblock);
-    free (command);
-    free (argv_mem_to_free);
-    return saved_errno;
-  }
+  free (envblock);
+  free (command);
+  free (argv_mem_to_free);
+  return errno;
 }
 
 #else

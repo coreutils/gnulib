@@ -13,6 +13,7 @@ lib/wcscoll-impl.h
 m4/wcscoll.m4
 
 Depends-on:
+free-posix
 wchar
 
 configure.ac:

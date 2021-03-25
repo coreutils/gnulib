@@ -8,6 +8,7 @@ lib/wcsxfrm-impl.h
 m4/wcsxfrm.m4
 
 Depends-on:
+free-posix
 wchar
 
 configure.ac:

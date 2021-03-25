@@ -9,6 +9,7 @@ m4/read-file.m4
 Depends-on:
 explicit_bzero
 fopen-gnu
+free-posix
 fstat
 ftello
 malloc-posix

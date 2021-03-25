@@ -2183,13 +2183,10 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 #  endif
                         if (converted == NULL)
                           {
-                            int saved_errno = errno;
                             if (!(result == resultbuf || result == NULL))
                               free (result);
                             if (buf_malloced != NULL)
                               free (buf_malloced);
-                            CLEANUP ();
-                            errno = saved_errno;
                             return NULL;
                           }
                         if (converted != result + length)
@@ -3079,13 +3076,11 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                               NULL, &tmpdst_len);
                   if (tmpdst == NULL)
                     {
-                      int saved_errno = errno;
                       if (!(result == resultbuf || result == NULL))
                         free (result);
                       if (buf_malloced != NULL)
                         free (buf_malloced);
                       CLEANUP ();
-                      errno = saved_errno;
                       return NULL;
                     }
 # endif
@@ -5602,13 +5597,11 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                                     NULL, &tmpdst_len);
                         if (tmpdst == NULL)
                           {
-                            int saved_errno = errno;
                             if (!(result == resultbuf || result == NULL))
                               free (result);
                             if (buf_malloced != NULL)
                               free (buf_malloced);
                             CLEANUP ();
-                            errno = saved_errno;
                             return NULL;
                           }
                         ENSURE_ALLOCATION (xsum (length, tmpdst_len));

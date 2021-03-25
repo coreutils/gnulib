@@ -167,13 +167,9 @@ astrxfrm (const char *s, char *resultbuf, size_t *lengthp)
   return result;
 
  fail:
-  {
-    int saved_errno = errno;
-    if (result != resultbuf && result != tmpbuf)
-      free (result);
-    errno = saved_errno;
-    return NULL;
-  }
+  if (result != resultbuf && result != tmpbuf)
+    free (result);
+  return NULL;
 
  out_of_memory:
   errno = ENOMEM;

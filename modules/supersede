@@ -15,6 +15,7 @@ tempname
 canonicalize
 open
 unlink
+free-posix
 ignore-value
 stat
 stat-time

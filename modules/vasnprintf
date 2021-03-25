@@ -25,6 +25,7 @@ stdio
 alloca-opt
 attribute
 float
+free-posix
 stdint
 xsize
 errno

@@ -117,9 +117,7 @@ link (const char *file1, const char *file2)
     *p = '\0';
     if (p != dir && stat (dir, &st) != 0 && errno != EOVERFLOW)
       {
-        int saved_errno = errno;
         free (dir);
-        errno = saved_errno;
         return -1;
       }
     free (dir);
@@ -228,9 +226,7 @@ rpl_link (char const *file1, char const *file2)
           *p = '\0';
           if (stat (dir, &st) != 0 && errno != EOVERFLOW)
             {
-              int saved_errno = errno;
               free (dir);
-              errno = saved_errno;
               return -1;
             }
         }

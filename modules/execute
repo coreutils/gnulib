@@ -14,6 +14,7 @@ error
 fatal-signal
 filename
 findprog-in
+free-posix
 msvc-nothrow
 gettext-h
 spawn

@@ -499,11 +499,7 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
             else
               {
                 if (result != initial_result)
-                  {
-                    int saved_errno = errno;
-                    free (result);
-                    errno = saved_errno;
-                  }
+                  free (result);
                 return -1;
               }
           }
@@ -570,11 +566,7 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
           else
             {
               if (result != initial_result)
-                {
-                  int saved_errno = errno;
-                  free (result);
-                  errno = saved_errno;
-                }
+                free (result);
               return -1;
             }
         }
@@ -683,11 +675,7 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
             && !(errno == E2BIG || errno == EINVAL || errno == EILSEQ))
           {
             if (result != initial_result)
-              {
-                int saved_errno = errno;
-                free (result);
-                errno = saved_errno;
-              }
+              free (result);
             return -1;
           }
         if (res1 == (size_t)(-1)
@@ -907,22 +895,14 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
                           {
                             /* Failure converting the ASCII replacement.  */
                             if (result != initial_result)
-                              {
-                                int saved_errno = errno;
-                                free (result);
-                                errno = saved_errno;
-                              }
+                              free (result);
                             return -1;
                           }
                       }
                     else
                       {
                         if (result != initial_result)
-                          {
-                            int saved_errno = errno;
-                            free (result);
-                            errno = saved_errno;
-                          }
+                          free (result);
                         return -1;
                       }
                   }
@@ -1041,12 +1021,7 @@ str_cd_iconveh (const char *src,
 
   if (retval < 0)
     {
-      if (result != NULL)
-        {
-          int saved_errno = errno;
-          free (result);
-          errno = saved_errno;
-        }
+      free (result);
       return NULL;
     }
 
@@ -1118,12 +1093,8 @@ mem_iconveh (const char *src, size_t srclen,
         {
           if (iconveh_close (&cd) < 0)
             {
-              /* Return -1, but free the allocated memory, and while doing
-                 that, preserve the errno from iconveh_close.  */
-              int saved_errno = errno;
-              if (result != *resultp && result != NULL)
+              if (result != *resultp)
                 free (result);
-              errno = saved_errno;
               return -1;
             }
           *resultp = result;
@@ -1177,11 +1148,7 @@ str_iconveh (const char *src,
         {
           if (iconveh_close (&cd) < 0)
             {
-              /* Return NULL, but free the allocated memory, and while doing
-                 that, preserve the errno from iconveh_close.  */
-              int saved_errno = errno;
               free (result);
-              errno = saved_errno;
               return NULL;
             }
         }

@@ -192,7 +192,6 @@ read_file (const char *filename, int flags, size_t *length)
   const char *mode = (flags & RF_BINARY) ? "rbe" : "re";
   FILE *stream = fopen (filename, mode);
   char *out;
-  int save_errno;
 
   if (!stream)
     return NULL;
@@ -202,18 +201,14 @@ read_file (const char *filename, int flags, size_t *length)
 
   out = fread_file (stream, flags, length);
 
-  save_errno = errno;
-
   if (fclose (stream) != 0)
     {
       if (out)
         {
-          save_errno = errno;
           if (flags & RF_SENSITIVE)
             explicit_bzero (out, *length);
           free (out);
         }
-      errno = save_errno;
       return NULL;
     }
 

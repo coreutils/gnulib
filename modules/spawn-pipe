@@ -16,6 +16,7 @@ error
 fatal-signal
 filename
 findprog-in
+free-posix
 gettext-h
 msvc-nothrow
 open

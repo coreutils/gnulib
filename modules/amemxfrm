@@ -6,6 +6,7 @@ lib/amemxfrm.h
 lib/amemxfrm.c
 
 Depends-on:
+free-posix
 
 configure.ac:
 AC_REQUIRE([AC_C_RESTRICT])

@@ -64,9 +64,7 @@ xgethostname (void)
                /* OSX/Darwin does this when the buffer is not large enough */
                && errno != ENOMEM)
         {
-          int saved_errno = errno;
           free (hostname);
-          errno = saved_errno;
           return NULL;
         }
     }

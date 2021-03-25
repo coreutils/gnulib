@@ -6,6 +6,7 @@ lib/astrxfrm.h
 lib/astrxfrm.c
 
 Depends-on:
+free-posix
 
 configure.ac:
 AC_REQUIRE([AC_C_RESTRICT])

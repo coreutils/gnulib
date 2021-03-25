@@ -82,15 +82,13 @@ _unsetenv (const char *name)
 
 #if HAVE_DECL__PUTENV
   {
-    int putenv_result, putenv_errno;
+    int putenv_result;
     char *name_ = malloc (len + 2);
     memcpy (name_, name, len);
     name_[len] = '=';
     name_[len + 1] = 0;
     putenv_result = _putenv (name_);
-    putenv_errno = errno;
     free (name_);
-    __set_errno (putenv_errno);
     return putenv_result;
   }
 #else
@@ -144,7 +142,7 @@ putenv (char *string)
       /* _putenv ("NAME=") unsets NAME, so invoke _putenv ("NAME= ")
          to allocate the environ vector and then replace the new
          entry with "NAME=".  */
-      int putenv_result, putenv_errno;
+      int putenv_result;
       char *name_x = malloc (name_end - string + sizeof "= ");
       if (!name_x)
         return -1;
@@ -152,7 +150,6 @@ putenv (char *string)
       name_x[name_end - string + 1] = ' ';
       name_x[name_end - string + 2] = 0;
       putenv_result = _putenv (name_x);
-      putenv_errno = errno;
       for (ep = environ; *ep; ep++)
         if (strcmp (*ep, name_x) == 0)
           {
@@ -166,11 +163,10 @@ putenv (char *string)
              fix that by calling SetEnvironmentVariable directly.  */
           name_x[name_end - string] = 0;
           putenv_result = SetEnvironmentVariable (name_x, "") ? 0 : -1;
-          putenv_errno = ENOMEM; /* ENOMEM is the only way to fail.  */
+          errno = ENOMEM; /* ENOMEM is the only way to fail.  */
         }
 # endif
       free (name_x);
-      __set_errno (putenv_errno);
       return putenv_result;
     }
 #else

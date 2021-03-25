@@ -18,6 +18,7 @@ stdio
 nocrash
 printf-safe
 multiarch
+free-posix      [test $REPLACE_VFPRINTF = 1]
 fseterr         [test $REPLACE_VFPRINTF = 1]
 vasnprintf      [test $REPLACE_VFPRINTF = 1]
 isnand-nolibm   [test $REPLACE_VFPRINTF = 1]

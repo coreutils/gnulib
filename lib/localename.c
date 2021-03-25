@@ -58,7 +58,6 @@ extern char * getlocalename_l(int, locale_t);
 #  endif
 # endif
 # if HAVE_NAMELESS_LOCALES
-#  include <errno.h>
 #  include "localename-table.h"
 # endif
 #endif
@@ -2930,9 +2929,7 @@ newlocale (int category_mask, const char *name, locale_t base)
   result = newlocale (category_mask, name, base);
   if (result == NULL)
     {
-      int saved_errno = errno;
       free (node);
-      errno = saved_errno;
       return NULL;
     }
 
@@ -2991,9 +2988,7 @@ duplocale (locale_t locale)
   result = duplocale (locale);
   if (result == NULL)
     {
-      int saved_errno = errno;
       free (node);
-      errno = saved_errno;
       return NULL;
     }
 

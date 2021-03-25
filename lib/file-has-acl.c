@@ -206,9 +206,7 @@ file_has_acl (char const *name, struct stat const *sb)
               ;
             else
               {
-                int saved_errno = errno;
                 free (malloced);
-                errno = saved_errno;
                 return -1;
               }
           }
@@ -281,9 +279,7 @@ file_has_acl (char const *name, struct stat const *sb)
               ;
             else
               {
-                int saved_errno = errno;
                 free (malloced);
-                errno = saved_errno;
                 return -1;
               }
           }
@@ -418,11 +414,7 @@ file_has_acl (char const *name, struct stat const *sb)
           if (errno != ENOSPC)
             {
               if (acl != aclbuf)
-                {
-                  int saved_errno = errno;
-                  free (acl);
-                  errno = saved_errno;
-                }
+                free (acl);
               return -1;
             }
           aclsize = 2 * aclsize;

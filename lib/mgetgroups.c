@@ -102,9 +102,7 @@ mgetgroups (char const *username, gid_t gid, gid_t **groups)
 
           if ((h = realloc_groupbuf (g, max_n_groups)) == NULL)
             {
-              int saved_errno = errno;
               free (g);
-              errno = saved_errno;
               return -1;
             }
           g = h;
@@ -153,9 +151,7 @@ mgetgroups (char const *username, gid_t gid, gid_t **groups)
   if (ng < 0)
     {
       /* Failure is unexpected, but handle it anyway.  */
-      int saved_errno = errno;
       free (g);
-      errno = saved_errno;
       return -1;
     }
 

@@ -69,11 +69,7 @@ rpl_getcwd (char *buf, size_t size)
         }
       result = getcwd (buf, size);
       if (!result)
-        {
-          int saved_errno = errno;
-          free (buf);
-          errno = saved_errno;
-        }
+        free (buf);
       return result;
     }
 
@@ -112,11 +108,7 @@ rpl_getcwd (char *buf, size_t size)
   while (!result && errno == ERANGE);
 
   if (!result)
-    {
-      int saved_errno = errno;
-      free (buf);
-      errno = saved_errno;
-    }
+    free (buf);
   else
     {
       /* Here result == buf.  */

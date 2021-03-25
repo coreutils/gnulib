@@ -67,9 +67,7 @@ xgetdomainname (void)
         break;
       else if (err < 0 && errno != EINVAL)
         {
-          int saved_errno = errno;
           free (domainname);
-          errno = saved_errno;
           return NULL;
         }
       size *= 2;

@@ -16,6 +16,7 @@ extensions
 stdbool
 locale
 flexmember
+free-posix
 strdup
 lock
 langinfo

@@ -554,12 +554,9 @@ int
 pipe_filter_gi_close (struct pipe_filter_gi *filter)
 {
   int ret;
-  int saved_errno;
 
   filter_terminate (filter);
   ret = filter_retcode (filter);
-  saved_errno = errno;
   free (filter);
-  errno = saved_errno;
   return ret;
 }

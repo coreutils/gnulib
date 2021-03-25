@@ -64,10 +64,8 @@ link_immediate (char const *file1, char const *file2)
           if (st1.st_dev == st2.st_dev)
             {
               int result = symlink (target, file2);
-              int saved_errno = errno;
               free (target);
               free (dir);
-              errno = saved_errno;
               return result;
             }
           free (target);
@@ -137,20 +135,12 @@ link_follow (char const *file1, char const *file2)
   if (!target && errno != EINVAL)
     {
       if (name != file1)
-        {
-          int saved_errno = errno;
-          free (name);
-          errno = saved_errno;
-        }
+        free (name);
       return -1;
     }
   result = link (name, file2);
   if (name != file1)
-    {
-      int saved_errno = errno;
-      free (name);
-      errno = saved_errno;
-    }
+    free (name);
   return result;
 }
 # endif /* 0 < LINK_FOLLOWS_SYMLINKS */
@@ -261,20 +251,12 @@ linkat_follow (int fd1, char const *file1, int fd2, char const *file2)
   if (!target && errno != EINVAL)
     {
       if (name != file1)
-        {
-          int saved_errno = errno;
-          free (name);
-          errno = saved_errno;
-        }
+        free (name);
       return -1;
     }
   result = linkat (fd1, name, fd2, file2, 0);
   if (name != file1)
-    {
-      int saved_errno = errno;
-      free (name);
-      errno = saved_errno;
-    }
+    free (name);
   return result;
 }
 

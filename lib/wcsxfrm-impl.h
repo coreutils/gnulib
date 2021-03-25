@@ -55,11 +55,7 @@ wcsxfrm (wchar_t *s1, const wchar_t *s2, size_t n)
       {
         /* An error occurred.  */
         if (mbs2 != mbbuf2)
-          {
-            saved_errno = errno;
-            free (mbs2);
-            errno = saved_errno;
-          }
+          free (mbs2);
         return 0;
       }
 

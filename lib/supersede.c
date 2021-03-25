@@ -122,11 +122,7 @@ open_supersede (const char *filename, int flags, mode_t mode,
                 {
                   fd = create_temp_file (canon_filename, flags, mode, action);
                   if (fd < 0)
-                    {
-                      int saved_errno = errno;
-                      free (canon_filename);
-                      errno = saved_errno;
-                    }
+                    free (canon_filename);
                 }
             }
         }
@@ -169,28 +165,18 @@ open_supersede (const char *filename, int flags, mode_t mode,
                           fd = create_temp_file (canon_filename, flags, mode,
                                                  action);
                           if (fd < 0)
-                            {
-                              int saved_errno = errno;
-                              free (canon_filename);
-                              errno = saved_errno;
-                            }
+                            free (canon_filename);
                         }
                       else
                         {
                           /* It is possibly a character device, socket, or
                              something like that.  */
                           fd = open (canon_filename, flags | extra_flags, mode);
+                          free (canon_filename);
                           if (fd >= 0)
                             {
-                              free (canon_filename);
                               action->final_rename_temp = NULL;
                               action->final_rename_dest = NULL;
-                            }
-                          else
-                            {
-                              int saved_errno = errno;
-                              free (canon_filename);
-                              errno = saved_errno;
                             }
                         }
                     }
@@ -242,11 +228,7 @@ open_supersede (const char *filename, int flags, mode_t mode,
                 {
                   fd = create_temp_file (canon_filename, flags, mode, action);
                   if (fd < 0)
-                    {
-                      int saved_errno = errno;
-                      free (canon_filename);
-                      errno = saved_errno;
-                    }
+                    free (canon_filename);
                 }
             }
         }
@@ -394,10 +376,8 @@ close_supersede (int fd, const struct supersede_final_action *action)
 {
   if (fd < 0)
     {
-      int saved_errno = errno;
       free (action->final_rename_temp);
       free (action->final_rename_dest);
-      errno = saved_errno;
       return fd;
     }
 

@@ -161,14 +161,10 @@ amemxfrm (char *s, size_t n, char *resultbuf, size_t *lengthp)
   return result;
 
  fail:
-  {
-    int saved_errno = errno;
-    if (result != resultbuf)
-      free (result);
-    s[n] = orig_sentinel;
-    errno = saved_errno;
-    return NULL;
-  }
+  if (result != resultbuf)
+    free (result);
+  s[n] = orig_sentinel;
+  return NULL;
 
  out_of_memory_1:
   if (result != resultbuf)

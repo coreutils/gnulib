@@ -81,17 +81,9 @@ wcscoll (const wchar_t *s1, const wchar_t *s2)
     int result = strcoll (mbs1, mbs2);
 
     if (mbs1 != mbbuf1)
-      {
-        int saved_errno = errno;
-        free (mbs1);
-        errno = saved_errno;
-      }
+      free (mbs1);
     if (mbs2 != mbbuf2)
-      {
-        int saved_errno = errno;
-        free (mbs2);
-        errno = saved_errno;
-      }
+      free (mbs2);
     return result;
   }
 

@@ -96,7 +96,6 @@ streamsavedir (DIR *dirp, enum savedir_option option)
   size_t entries_allocated = 0;
   size_t entries_used = 0;
   size_t used = 0;
-  int readdir_errno;
   comparison_function cmp = comparison_function_table[option];
 
   if (dirp == NULL)
@@ -148,12 +147,10 @@ streamsavedir (DIR *dirp, enum savedir_option option)
         }
     }
 
-  readdir_errno = errno;
-  if (readdir_errno != 0)
+  if (errno != 0)
     {
       free (entries);
       free (name_space);
-      errno = readdir_errno;
       return NULL;
     }
 
@@ -196,9 +193,7 @@ savedir (char const *dir, enum savedir_option option)
       char *name_space = streamsavedir (dirp, option);
       if (closedir (dirp) != 0)
         {
-          int closedir_errno = errno;
           free (name_space);
-          errno = closedir_errno;
           return NULL;
         }
       return name_space;

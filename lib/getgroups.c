@@ -70,7 +70,6 @@ rpl_getgroups (int n, gid_t *group)
 {
   int n_groups;
   GETGROUPS_T *gbuf;
-  int saved_errno;
 
   if (n < 0)
     {
@@ -99,9 +98,7 @@ rpl_getgroups (int n, gid_t *group)
           while (n--)
             group[n] = gbuf[n];
         }
-      saved_errno = errno;
       free (gbuf);
-      errno = saved_errno;
       return result;
     }
 
@@ -121,10 +118,7 @@ rpl_getgroups (int n, gid_t *group)
       n *= 2;
     }
 
-  saved_errno = errno;
   free (gbuf);
-  errno = saved_errno;
-
   return n_groups;
 }
 

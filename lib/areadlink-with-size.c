@@ -90,9 +90,7 @@ areadlink_with_size (char const *file, size_t size)
 
       if (r < 0)
         {
-          int saved_errno = errno;
           free (buffer);
-          errno = saved_errno;
           return NULL;
         }
 

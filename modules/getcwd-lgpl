@@ -7,6 +7,7 @@ m4/getcwd.m4
 
 Depends-on:
 unistd
+free-posix      [test $REPLACE_GETCWD = 1]
 strdup          [test $REPLACE_GETCWD = 1]
 
 configure.ac:

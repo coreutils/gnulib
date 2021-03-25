@@ -54,10 +54,6 @@ execvpe (const char *program, char * const *argv, char * const *env)
 
   /* If execve returned, it must have failed.  */
   if (resolved_progname != program)
-    {
-      int saved_errno = errno;
-      free ((char *) resolved_progname);
-      errno = saved_errno;
-    }
+    free ((char *) resolved_progname);
   return -1;
 }

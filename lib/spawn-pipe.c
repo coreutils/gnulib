@@ -180,9 +180,8 @@ create_pipe (const char *progname,
                 canonicalize_filename_mode (prog_path, CAN_MISSING | CAN_NOLINKS);
               if (absolute_prog == NULL)
                 {
-                  saved_errno = errno;
                   free (prog_path_to_free);
-                  goto fail_with_saved_errno;
+                  goto fail_with_errno;
                 }
               free (prog_path_to_free);
               prog_path_to_free = absolute_prog;

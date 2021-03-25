@@ -15,6 +15,7 @@ unistr/u8-mbtouc-unsafe
 unistr/u8-mbtouc
 unistr/u8-mbtoucr
 unistr/u8-uctomb
+free-posix
 strdup
 c-strcase
 c-strcaseeq

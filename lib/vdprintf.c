@@ -46,11 +46,7 @@ vdprintf (int fd, const char *format, va_list args)
   if (full_write (fd, output, len) < len)
     {
       if (output != buf)
-        {
-          int saved_errno = errno;
-          free (output);
-          errno = saved_errno;
-        }
+        free (output);
       return -1;
     }
 

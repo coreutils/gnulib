@@ -6,6 +6,7 @@ lib/xgethostname.h
 lib/xgethostname.c
 
 Depends-on:
+free-posix
 gethostname
 xalloc
 
@@ -22,4 +23,3 @@ GPL
 
 Maintainer:
 Jim Meyering
-

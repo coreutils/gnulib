@@ -16,6 +16,7 @@ extensions
 fchdir
 fcntl-h
 filename
+free-posix
 openat-die
 openat-h
 save-cwd

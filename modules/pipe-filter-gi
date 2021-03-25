@@ -13,6 +13,7 @@ wait-process
 error
 extern-inline
 fcntl-h
+free-posix
 gettext-h
 stdbool
 stdint
