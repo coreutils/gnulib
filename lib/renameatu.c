@@ -122,18 +122,19 @@ renameatu (int fd1, char const *src, int fd2, char const *dst,
             | (flags & RENAME_NOREPLACE ? RENAME_EXCL : 0));
 # endif
 
-# if !defined RENAME_EXCL
   if ((flags & RENAME_NOREPLACE) != 0)
     {
       /* This has a race between the call to lstatat and the calls to
-         renameat below.  */
+         renameat below.  This lstatat is needed even if RENAME_EXCL
+         is defined, because RENAME_EXCL is buggy on macOS 11.2:
+         renameatx_np (fd, "X", fd, "X", RENAME_EXCL) incorrectly
+         succeeds when X exists.  */
       if (lstatat (fd2, dst, &dst_st) == 0 || errno == EOVERFLOW)
         return errno_fail (EEXIST);
       if (errno != ENOENT)
         return -1;
       dst_found_nonexistent = true;
     }
-# endif
 
   /* Let strace see any ENOENT failure.  */
   src_len = strlen (src);
