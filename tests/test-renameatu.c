@@ -189,9 +189,19 @@ main (void)
   /* Finally, make sure we cannot overwrite existing files.  */
   ASSERT (close (creat (BASE "sub2/file", 0600)) == 0);
   errno = 0;
+  ASSERT ((renameatu (dfd, BASE "sub2/file", dfd, BASE "sub2/file",
+                      RENAME_NOREPLACE)
+           == -1)
+          && errno == EEXIST);
+  errno = 0;
+  ASSERT ((renameatu (dfd, BASE "sub2", dfd, BASE "sub2", RENAME_NOREPLACE)
+           == -1)
+          && errno == EEXIST);
+  errno = 0;
   ASSERT ((renameatu (dfd, BASE "sub2", dfd, BASE "sub1", RENAME_NOREPLACE)
            == -1)
           && errno == EEXIST);
+  errno = 0;
   ASSERT ((renameatu (dfd, BASE "sub2/file", dfd, BASE "17", RENAME_NOREPLACE)
            == -1)
           && errno == EEXIST);
