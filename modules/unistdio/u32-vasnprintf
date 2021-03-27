@@ -44,6 +44,7 @@ alloca-opt
 localcharset
 xsize
 errno
+free-posix
 memchr
 multiarch
 verify
