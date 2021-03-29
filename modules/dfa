@@ -12,7 +12,7 @@ assert
 c99
 ctype
 flexmember
-intprops
+idx
 locale
 regex
 stdbool

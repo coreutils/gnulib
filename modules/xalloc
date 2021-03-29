@@ -9,6 +9,9 @@ m4/xalloc.m4
 Depends-on:
 c99
 extern-inline
+idx
+intprops
+minmax
 stdint
 xalloc-die
 xalloc-oversized

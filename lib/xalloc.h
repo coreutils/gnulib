@@ -21,6 +21,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include "idx.h"
 #include "xalloc-oversized.h"
 
 #ifndef _GL_INLINE_HEADER_BEGIN
@@ -59,6 +60,8 @@ void *xcalloc (size_t n, size_t s)
 void *xrealloc (void *p, size_t s)
       _GL_ATTRIBUTE_ALLOC_SIZE ((2));
 void *x2realloc (void *p, size_t *pn);
+void *xpalloc (void *pa, idx_t *nitems, idx_t nitems_incr_min,
+               ptrdiff_t nitems_max, idx_t item_size);
 void *xmemdup (void const *p, size_t s)
       _GL_ATTRIBUTE_ALLOC_SIZE ((2));
 char *xstrdup (char const *str)
