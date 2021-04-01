@@ -206,8 +206,9 @@ x2nrealloc (void *p, size_t *pn, size_t s)
       n += n / 2 + 1;
     }
 
+  p = xrealloc (p, n * s);
   *pn = n;
-  return xrealloc (p, n * s);
+  return p;
 }
 
 /* Return a pointer to a new buffer of N bytes.  This is like xmalloc,
