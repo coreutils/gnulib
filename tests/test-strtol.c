@@ -177,5 +177,67 @@ main (void)
       ASSERT (errno == 0);
     }
 
+  /* Hexadecimal integer syntax.  */
+  {
+    const char input[] = "0x2A";
+    char *ptr;
+    long result;
+    errno = 0;
+    result = strtol (input, &ptr, 10);
+    ASSERT (result == 0L);
+    ASSERT (ptr == input + 1);
+    ASSERT (errno == 0);
+  }
+  {
+    const char input[] = "0x2A";
+    char *ptr;
+    long result;
+    errno = 0;
+    result = strtol (input, &ptr, 16);
+    ASSERT (result == 42L);
+    ASSERT (ptr == input + 4);
+    ASSERT (errno == 0);
+  }
+  {
+    const char input[] = "0x2A";
+    char *ptr;
+    long result;
+    errno = 0;
+    result = strtol (input, &ptr, 0);
+    ASSERT (result == 42L);
+    ASSERT (ptr == input + 4);
+    ASSERT (errno == 0);
+  }
+  {
+    const char input[] = "0x";
+    char *ptr;
+    long result;
+    errno = 0;
+    result = strtol (input, &ptr, 10);
+    ASSERT (result == 0L);
+    ASSERT (ptr == input + 1);
+    ASSERT (errno == 0);
+  }
+  {
+    const char input[] = "0x";
+    char *ptr;
+    long result;
+    errno = 0;
+    result = strtol (input, &ptr, 16);
+    ASSERT (result == 0L);
+    ASSERT (ptr == input + 1);
+    ASSERT (errno == 0);
+  }
+  {
+    const char input[] = "0x";
+    char *ptr;
+    long result;
+    errno = 0;
+    result = strtol (input, &ptr, 0);
+    ASSERT (result == 0L);
+    ASSERT (ptr == input + 1);
+    ASSERT (errno == 0);
+  }
+
   return 0;
 }

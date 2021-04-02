@@ -1202,6 +1202,47 @@ _GL_WARN_ON_USE (strtold, "strtold is unportable - "
 # endif
 #endif
 
+#if @GNULIB_STRTOL@
+/* Parse a signed integer whose textual representation starts at STRING.
+   The integer is expected to be in base BASE (2 <= BASE <= 36); if BASE == 0,
+   it may be decimal or octal (with prefix "0") or hexadecimal (with prefix
+   "0x").
+   If ENDPTR is not NULL, the address of the first byte after the integer is
+   stored in *ENDPTR.
+   Upon overflow, the return value is LONG_MAX or LONG_MIN, and errno is set
+   to ERANGE.  */
+# if @REPLACE_STRTOL@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define strtol rpl_strtol
+#  endif
+#  define GNULIB_defined_strtol_function 1
+_GL_FUNCDECL_RPL (strtol, long,
+                  (const char *restrict string, char **restrict endptr,
+                   int base)
+                  _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_RPL (strtol, long,
+                  (const char *restrict string, char **restrict endptr,
+                   int base));
+# else
+#  if !@HAVE_STRTOL@
+_GL_FUNCDECL_SYS (strtol, long,
+                  (const char *restrict string, char **restrict endptr,
+                   int base)
+                  _GL_ARG_NONNULL ((1)));
+#  endif
+_GL_CXXALIAS_SYS (strtol, long,
+                  (const char *restrict string, char **restrict endptr,
+                   int base));
+# endif
+_GL_CXXALIASWARN (strtol);
+#elif defined GNULIB_POSIXCHECK
+# undef strtol
+# if HAVE_RAW_DECL_STRTOL
+_GL_WARN_ON_USE (strtol, "strtol is unportable - "
+                 "use gnulib module strtol for portability");
+# endif
+#endif
+
 #if @GNULIB_STRTOLL@
 /* Parse a signed integer whose textual representation starts at STRING.
    The integer is expected to be in base BASE (2 <= BASE <= 36); if BASE == 0,
