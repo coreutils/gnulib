@@ -51,6 +51,7 @@
 
 /* Determine the name.  */
 #ifdef USE_IN_EXTENDED_LOCALE_MODEL
+# undef strtol
 # if UNSIGNED
 #  ifdef USE_WIDE_CHAR
 #   ifdef QUAD
@@ -82,6 +83,7 @@
 # endif
 #else
 # if UNSIGNED
+#  undef strtol
 #  ifdef USE_WIDE_CHAR
 #   ifdef QUAD
 #    define strtol wcstoull
@@ -97,6 +99,7 @@
 #  endif
 # else
 #  ifdef USE_WIDE_CHAR
+#   undef strtol
 #   ifdef QUAD
 #    define strtol wcstoll
 #   else
@@ -104,6 +107,7 @@
 #   endif
 #  else
 #   ifdef QUAD
+#    undef strtol
 #    define strtol strtoll
 #   endif
 #  endif
