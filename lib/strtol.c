@@ -166,13 +166,13 @@
 # define UCHAR_TYPE unsigned char
 # define STRING_TYPE char
 # ifdef USE_IN_EXTENDED_LOCALE_MODEL
-#  define ISSPACE(Ch) __isspace_l ((Ch), loc)
-#  define ISALPHA(Ch) __isalpha_l ((Ch), loc)
-#  define TOUPPER(Ch) __toupper_l ((Ch), loc)
+#  define ISSPACE(Ch) __isspace_l ((unsigned char) (Ch), loc)
+#  define ISALPHA(Ch) __isalpha_l ((unsigned char) (Ch), loc)
+#  define TOUPPER(Ch) __toupper_l ((unsigned char) (Ch), loc)
 # else
-#  define ISSPACE(Ch) isspace (Ch)
-#  define ISALPHA(Ch) isalpha (Ch)
-#  define TOUPPER(Ch) toupper (Ch)
+#  define ISSPACE(Ch) isspace ((unsigned char) (Ch))
+#  define ISALPHA(Ch) isalpha ((unsigned char) (Ch))
+#  define TOUPPER(Ch) toupper ((unsigned char) (Ch))
 # endif
 #endif
 
