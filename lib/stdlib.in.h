@@ -1229,6 +1229,46 @@ _GL_WARN_ON_USE (strtoll, "strtoll is unportable - "
 # endif
 #endif
 
+#if @GNULIB_STRTOUL@
+/* Parse an unsigned integer whose textual representation starts at STRING.
+   The integer is expected to be in base BASE (2 <= BASE <= 36); if BASE == 0,
+   it may be decimal or octal (with prefix "0") or hexadecimal (with prefix
+   "0x").
+   If ENDPTR is not NULL, the address of the first byte after the integer is
+   stored in *ENDPTR.
+   Upon overflow, the return value is ULONG_MAX, and errno is set to ERANGE.  */
+# if @REPLACE_STRTOUL@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define strtoul rpl_strtoul
+#  endif
+#  define GNULIB_defined_strtoul_function 1
+_GL_FUNCDECL_RPL (strtoul, unsigned long,
+                  (const char *restrict string, char **restrict endptr,
+                   int base)
+                  _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_RPL (strtoul, unsigned long,
+                  (const char *restrict string, char **restrict endptr,
+                   int base));
+# else
+#  if !@HAVE_STRTOUL@
+_GL_FUNCDECL_SYS (strtoul, unsigned long,
+                  (const char *restrict string, char **restrict endptr,
+                   int base)
+                  _GL_ARG_NONNULL ((1)));
+#  endif
+_GL_CXXALIAS_SYS (strtoul, unsigned long,
+                  (const char *restrict string, char **restrict endptr,
+                   int base));
+# endif
+_GL_CXXALIASWARN (strtoul);
+#elif defined GNULIB_POSIXCHECK
+# undef strtoul
+# if HAVE_RAW_DECL_STRTOUL
+_GL_WARN_ON_USE (strtoul, "strtoul is unportable - "
+                 "use gnulib module strtoul for portability");
+# endif
+#endif
+
 #if @GNULIB_STRTOULL@
 /* Parse an unsigned integer whose textual representation starts at STRING.
    The integer is expected to be in base BASE (2 <= BASE <= 36); if BASE == 0,

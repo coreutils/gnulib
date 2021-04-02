@@ -10,6 +10,10 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function is missing on some old platforms.
+@item
+This function does not parse the leading @samp{0} when the input string is
+@code{"0x"} and the base is 16 or 0 on some platforms:
+Minix 3.3, mingw, MSVC 14.
 @end itemize
 
 Portability problems not fixed by Gnulib:
