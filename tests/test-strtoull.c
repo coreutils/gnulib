@@ -176,5 +176,67 @@ main (void)
     ASSERT (errno == 0);
   }
 
+  /* Hexadecimal integer syntax.  */
+  {
+    const char input[] = "0x2A";
+    char *ptr;
+    unsigned long long result;
+    errno = 0;
+    result = strtoull (input, &ptr, 10);
+    ASSERT (result == 0ULL);
+    ASSERT (ptr == input + 1);
+    ASSERT (errno == 0);
+  }
+  {
+    const char input[] = "0x2A";
+    char *ptr;
+    unsigned long long result;
+    errno = 0;
+    result = strtoull (input, &ptr, 16);
+    ASSERT (result == 42ULL);
+    ASSERT (ptr == input + 4);
+    ASSERT (errno == 0);
+  }
+  {
+    const char input[] = "0x2A";
+    char *ptr;
+    unsigned long long result;
+    errno = 0;
+    result = strtoull (input, &ptr, 0);
+    ASSERT (result == 42ULL);
+    ASSERT (ptr == input + 4);
+    ASSERT (errno == 0);
+  }
+  {
+    const char input[] = "0x";
+    char *ptr;
+    unsigned long long result;
+    errno = 0;
+    result = strtoull (input, &ptr, 10);
+    ASSERT (result == 0ULL);
+    ASSERT (ptr == input + 1);
+    ASSERT (errno == 0);
+  }
+  {
+    const char input[] = "0x";
+    char *ptr;
+    unsigned long long result;
+    errno = 0;
+    result = strtoull (input, &ptr, 16);
+    ASSERT (result == 0ULL);
+    ASSERT (ptr == input + 1);
+    ASSERT (errno == 0);
+  }
+  {
+    const char input[] = "0x";
+    char *ptr;
+    unsigned long long result;
+    errno = 0;
+    result = strtoull (input, &ptr, 0);
+    ASSERT (result == 0ULL);
+    ASSERT (ptr == input + 1);
+    ASSERT (errno == 0);
+  }
+
   return 0;
 }
