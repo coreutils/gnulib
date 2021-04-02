@@ -131,6 +131,12 @@
 #endif
 
 
+#ifdef USE_NUMBER_GROUPING
+# define GROUP_PARAM_PROTO , int group
+#else
+# define GROUP_PARAM_PROTO
+#endif
+
 /* We use this code also for the extended locale handling where the
    function gets as an additional argument the locale which has to be
    used.  To access the values we have to redefine the _NL_CURRENT
@@ -176,9 +182,13 @@
 # endif
 #endif
 
-#define INTERNAL(X) INTERNAL1(X)
-#define INTERNAL1(X) __##X##_internal
-#define WEAKNAME(X) WEAKNAME1(X)
+#ifdef USE_NUMBER_GROUPING
+# define INTERNAL(X) INTERNAL1(X)
+# define INTERNAL1(X) __##X##_internal
+# define WEAKNAME(X) WEAKNAME1(X)
+#else
+# define INTERNAL(X) X
+#endif
 
 #ifdef USE_NUMBER_GROUPING
 /* This file defines a function to check for correct grouping.  */
@@ -196,7 +206,7 @@
 
 INT
 INTERNAL (strtol) (const STRING_TYPE *nptr, STRING_TYPE **endptr,
-                   int base, int group LOCALE_PARAM_PROTO)
+                   int base GROUP_PARAM_PROTO LOCALE_PARAM_PROTO)
 {
   int negative;
   register unsigned LONG int cutoff;
@@ -379,15 +389,16 @@ noconv:
   return 0L;
 }
 
+#ifdef USE_NUMBER_GROUPING
 /* External user entry point.  */
 
-
 INT
-#ifdef weak_function
+# ifdef weak_function
 weak_function
-#endif
+# endif
 strtol (const STRING_TYPE *nptr, STRING_TYPE **endptr,
         int base LOCALE_PARAM_PROTO)
 {
   return INTERNAL (strtol) (nptr, endptr, base, 0 LOCALE_PARAM);
 }
+#endif
