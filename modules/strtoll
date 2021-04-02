@@ -12,7 +12,7 @@ stdlib
 
 configure.ac:
 gl_FUNC_STRTOLL
-if test $HAVE_STRTOLL = 0; then
+if test $HAVE_STRTOLL = 0 || test $REPLACE_STRTOLL = 1; then
   AC_LIBOBJ([strtoll])
   gl_PREREQ_STRTOLL
 fi

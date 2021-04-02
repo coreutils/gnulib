@@ -1252,15 +1252,29 @@ _GL_WARN_ON_USE (strtol, "strtol is unportable - "
    stored in *ENDPTR.
    Upon overflow, the return value is LLONG_MAX or LLONG_MIN, and errno is set
    to ERANGE.  */
-# if !@HAVE_STRTOLL@
+# if @REPLACE_STRTOLL@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define strtoll rpl_strtoll
+#  endif
+#  define GNULIB_defined_strtoll_function 1
+_GL_FUNCDECL_RPL (strtoll, long long,
+                  (const char *restrict string, char **restrict endptr,
+                   int base)
+                  _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_RPL (strtoll, long long,
+                  (const char *restrict string, char **restrict endptr,
+                   int base));
+# else
+#  if !@HAVE_STRTOLL@
 _GL_FUNCDECL_SYS (strtoll, long long,
                   (const char *restrict string, char **restrict endptr,
                    int base)
                   _GL_ARG_NONNULL ((1)));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (strtoll, long long,
                   (const char *restrict string, char **restrict endptr,
                    int base));
+# endif
 _GL_CXXALIASWARN (strtoll);
 #elif defined GNULIB_POSIXCHECK
 # undef strtoll
