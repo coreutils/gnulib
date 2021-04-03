@@ -73,6 +73,8 @@ extern "C" {
    gl_list_node_set_value      O(1)     O(1)     O(1)      O(1)    O((log n)²)/O(1)
    gl_list_next_node           O(1)     O(1)   O(log n)    O(1)       O(log n)
    gl_list_previous_node       O(1)     O(1)   O(log n)    O(1)       O(log n)
+   gl_list_first_node          O(1)     O(1)   O(log n)    O(1)       O(log n)
+   gl_list_last_node           O(1)     O(1)   O(log n)    O(1)       O(log n)
    gl_list_get_at              O(1)     O(n)   O(log n)    O(n)       O(log n)
    gl_list_get_first           O(1)     O(1)   O(log n)    O(1)       O(log n)
    gl_list_get_last            O(1)     O(1)   O(log n)    O(1)       O(log n)
@@ -206,6 +208,23 @@ extern gl_list_node_t gl_list_next_node (gl_list_t list, gl_list_node_t node);
 /* Returns the node immediately before the given node in the list, or NULL
    if the given node is the first (leftmost) one in the list.  */
 extern gl_list_node_t gl_list_previous_node (gl_list_t list, gl_list_node_t node);
+
+/* Returns the first node in the list, or NULL if the list is empty.
+   This function is useful for iterating through the list like this:
+     gl_list_node_t node;
+     for (node = gl_list_first_node (list); node != NULL; node = gl_list_next_node (node))
+       ...
+ */
+extern gl_list_node_t gl_list_first_node (gl_list_t list);
+
+/* Returns the last node in the list, or NULL if the list is empty.
+   This function is useful for iterating through the list in backward order,
+   like this:
+     gl_list_node_t node;
+     for (node = gl_list_last_node (list); node != NULL; node = gl_list_previous_node (node))
+       ...
+ */
+extern gl_list_node_t gl_list_last_node (gl_list_t list);
 
 /* Returns the element at a given position in the list.
    POSITION must be >= 0 and < gl_list_size (list).  */
@@ -507,6 +526,8 @@ struct gl_list_implementation
                             const void *elt);
   gl_list_node_t (*next_node) (gl_list_t list, gl_list_node_t node);
   gl_list_node_t (*previous_node) (gl_list_t list, gl_list_node_t node);
+  gl_list_node_t (*first_node) (gl_list_t list);
+  gl_list_node_t (*last_node) (gl_list_t list);
   const void * (*get_at) (gl_list_t list, size_t position);
   gl_list_node_t (*nx_set_at) (gl_list_t list, size_t position,
                                const void *elt);
@@ -629,6 +650,20 @@ gl_list_previous_node (gl_list_t list, gl_list_node_t node)
 {
   return ((const struct gl_list_impl_base *) list)->vtable
          ->previous_node (list, node);
+}
+
+GL_LIST_INLINE gl_list_node_t
+gl_list_first_node (gl_list_t list)
+{
+  return ((const struct gl_list_impl_base *) list)->vtable
+         ->first_node (list);
+}
+
+GL_LIST_INLINE gl_list_node_t
+gl_list_last_node (gl_list_t list)
+{
+  return ((const struct gl_list_impl_base *) list)->vtable
+         ->last_node (list);
 }
 
 GL_LIST_INLINE const void *

@@ -134,6 +134,14 @@ public:
   gl_list_node_t previous_node (gl_list_node_t node) const
     { return gl_list_previous_node (_ptr, node); }
 
+  /* Returns the first node in the list, or NULL if the list is empty.  */
+  gl_list_node_t first_node () const
+    { return gl_list_first_node (_ptr); }
+
+  /* Returns the last node in the list, or NULL if the list is empty.  */
+  gl_list_node_t last_node () const
+    { return gl_list_last_node (_ptr); }
+
   /* Returns the element at a given position in the list.
      POSITION must be >= 0 and < gl_list_size (list).  */
   ELTYPE * get_at (size_t position) const

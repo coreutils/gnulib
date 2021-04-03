@@ -151,6 +151,24 @@ for the ``sequential list'' data type are:
 @tab @math{O(1)}
 @tab @math{O(@log n)}
 @tab @math{O(@log n)}
+@item @code{gl_list_first_node}
+@tab @math{O(1)}
+@tab @math{O(1)}
+@tab @math{O(1)}
+@tab @math{O(@log n)}
+@tab @math{O(1)}
+@tab @math{O(1)}
+@tab @math{O(@log n)}
+@tab @math{O(@log n)}
+@item @code{gl_list_last_node}
+@tab @math{O(1)}
+@tab @math{O(1)}
+@tab @math{O(1)}
+@tab @math{O(@log n)}
+@tab @math{O(1)}
+@tab @math{O(1)}
+@tab @math{O(@log n)}
+@tab @math{O(@log n)}
 @item @code{gl_list_get_at}
 @tab @math{O(1)}
 @tab @math{O(1)}

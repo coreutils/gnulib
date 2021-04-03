@@ -100,6 +100,8 @@ const struct gl_list_implementation gl_avltreehash_list_implementation =
     gl_tree_node_nx_set_value,
     gl_tree_next_node,
     gl_tree_previous_node,
+    gl_tree_first_node,
+    gl_tree_last_node,
     gl_tree_get_at,
     gl_tree_nx_set_at,
     gl_tree_search_from_to,

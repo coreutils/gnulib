@@ -38,6 +38,8 @@ const struct gl_list_implementation gl_linked_list_implementation =
     gl_linked_node_nx_set_value,
     gl_linked_next_node,
     gl_linked_previous_node,
+    gl_linked_first_node,
+    gl_linked_last_node,
     gl_linked_get_at,
     gl_linked_nx_set_at,
     gl_linked_search_from_to,

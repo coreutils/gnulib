@@ -229,6 +229,24 @@ gl_linked_previous_node (gl_list_t list, gl_list_node_t node)
   return (node->prev != &list->root ? node->prev : NULL);
 }
 
+static gl_list_node_t _GL_ATTRIBUTE_PURE
+gl_linked_first_node (gl_list_t list)
+{
+  if (list->count > 0)
+    return list->root.next;
+  else
+    return NULL;
+}
+
+static gl_list_node_t _GL_ATTRIBUTE_PURE
+gl_linked_last_node (gl_list_t list)
+{
+  if (list->count > 0)
+    return list->root.prev;
+  else
+    return NULL;
+}
+
 static const void * _GL_ATTRIBUTE_PURE
 gl_linked_get_at (gl_list_t list, size_t position)
 {

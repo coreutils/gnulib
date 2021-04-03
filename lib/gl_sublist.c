@@ -122,6 +122,25 @@ gl_sublist_previous_node (gl_list_t list, gl_list_node_t node)
     return NULL;
 }
 
+static gl_list_node_t
+gl_sublist_first_node (gl_list_t list)
+{
+  if (list->end > list->start)
+    return INDEX_TO_NODE (0);
+  else
+    return NULL;
+}
+
+static gl_list_node_t
+gl_sublist_last_node (gl_list_t list)
+{
+  size_t count = list->end - list->start;
+  if (count > 0)
+    return INDEX_TO_NODE (count - 1);
+  else
+    return NULL;
+}
+
 static const void *
 gl_sublist_get_at (gl_list_t list, size_t position)
 {
@@ -413,6 +432,8 @@ static const struct gl_list_implementation gl_sublist_list_implementation =
     gl_sublist_node_nx_set_value,
     gl_sublist_next_node,
     gl_sublist_previous_node,
+    gl_sublist_first_node,
+    gl_sublist_last_node,
     gl_sublist_get_at,
     gl_sublist_nx_set_at,
     gl_sublist_search_from_to,

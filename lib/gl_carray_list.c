@@ -181,6 +181,24 @@ gl_carray_previous_node (gl_list_t list, gl_list_node_t node)
     return NULL;
 }
 
+static gl_list_node_t _GL_ATTRIBUTE_PURE
+gl_carray_first_node (gl_list_t list)
+{
+  if (list->count > 0)
+    return INDEX_TO_NODE (0);
+  else
+    return NULL;
+}
+
+static gl_list_node_t _GL_ATTRIBUTE_PURE
+gl_carray_last_node (gl_list_t list)
+{
+  if (list->count > 0)
+    return INDEX_TO_NODE (list->count - 1);
+  else
+    return NULL;
+}
+
 static const void * _GL_ATTRIBUTE_PURE
 gl_carray_get_at (gl_list_t list, size_t position)
 {
@@ -844,6 +862,8 @@ const struct gl_list_implementation gl_carray_list_implementation =
     gl_carray_node_nx_set_value,
     gl_carray_next_node,
     gl_carray_previous_node,
+    gl_carray_first_node,
+    gl_carray_last_node,
     gl_carray_get_at,
     gl_carray_nx_set_at,
     gl_carray_search_from_to,

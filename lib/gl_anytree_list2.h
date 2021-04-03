@@ -140,6 +140,32 @@ gl_tree_previous_node (gl_list_t list _GL_ATTRIBUTE_MAYBE_UNUSED,
   return node;
 }
 
+static gl_list_node_t _GL_ATTRIBUTE_PURE
+gl_tree_first_node (gl_list_t list _GL_ATTRIBUTE_MAYBE_UNUSED)
+{
+  gl_list_node_t node = list->root;
+
+  if (node != NULL)
+    {
+      while (node->left != NULL)
+        node = node->left;
+    }
+  return node;
+}
+
+static gl_list_node_t _GL_ATTRIBUTE_PURE
+gl_tree_last_node (gl_list_t list _GL_ATTRIBUTE_MAYBE_UNUSED)
+{
+  gl_list_node_t node = list->root;
+
+  if (node != NULL)
+    {
+      while (node->right != NULL)
+        node = node->right;
+    }
+  return node;
+}
+
 /* Returns the node at the given position < gl_tree_size (list).  */
 static gl_list_node_t _GL_ATTRIBUTE_PURE
 node_at (gl_list_node_t root, size_t position)
