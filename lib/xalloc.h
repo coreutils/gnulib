@@ -21,8 +21,10 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include "idx.h"
-#include "xalloc-oversized.h"
+#if GNULIB_XALLOC
+# include "idx.h"
+# include "xalloc-oversized.h"
+#endif
 
 #ifndef _GL_INLINE_HEADER_BEGIN
  #error "Please include config.h first."
