@@ -6,9 +6,8 @@ lib/xgetdomainname.h
 lib/xgetdomainname.c
 
 Depends-on:
-free-posix
 getdomainname
-xalloc
+xgethostname
 
 configure.ac:
 

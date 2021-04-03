@@ -16,12 +16,16 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
-/* written by Jim Meyering */
+/* written by Jim Meyering and Paul Eggert */
 
 #include <config.h>
 
+#ifndef GETANAME
 /* Specification.  */
-#include "xgethostname.h"
+# include "xgethostname.h"
+# define GETANAME gethostname
+# define XGETANAME xgethostname
+#endif
 
 #include <stdlib.h>
 #include <errno.h>
@@ -30,55 +34,39 @@
 
 #include "xalloc.h"
 
-#ifndef INITIAL_HOSTNAME_LENGTH
-# define INITIAL_HOSTNAME_LENGTH 34
-#endif
-
-/* Return the current hostname in malloc'd storage.
+/* Return the current host or domain name in malloc'd storage.
    If malloc fails, exit.
    Upon any other failure, return NULL and set errno.  */
 char *
-xgethostname (void)
+XGETANAME (void)
 {
-  char *hostname = NULL;
-  size_t size = INITIAL_HOSTNAME_LENGTH;
+  char buf[100];
+  idx_t size = sizeof buf;
+  char *name = buf;
+  char *alloc = NULL;
 
   while (1)
     {
       /* Use SIZE_1 here rather than SIZE to work around the bug in
          SunOS 5.5's gethostname whereby it NUL-terminates HOSTNAME
          even when the name is as long as the supplied buffer.  */
-      size_t size_1;
-
-      hostname = x2realloc (hostname, &size);
-      size_1 = size - 1;
-      hostname[size_1 - 1] = '\0';
+      idx_t size_1 = size - 1;
+      name[size_1] = '\0';
       errno = 0;
-
-      if (gethostname (hostname, size_1) == 0)
+      if (GETANAME (name, size_1) == 0)
         {
-          if (! hostname[size_1 - 1])
-            break;
+          /* Check whether the name was possibly truncated; POSIX does not
+             specify whether a truncated name is null-terminated.  */
+          idx_t actual_size = strlen (name) + 1;
+          if (actual_size < size_1)
+            return alloc ? alloc : xmemdup (name, actual_size);
+          errno = 0;
         }
-      else if (errno != 0 && errno != ENAMETOOLONG && errno != EINVAL
-               /* OSX/Darwin does this when the buffer is not large enough */
-               && errno != ENOMEM)
-        {
-          free (hostname);
-          return NULL;
-        }
+      free (alloc);
+      if (errno != 0 && errno != ENAMETOOLONG && errno != EINVAL
+          /* macOS/Darwin does this when SIZE_1 is too small.  */
+          && errno != ENOMEM)
+        return NULL;
+      name = alloc = xpalloc (NULL, &size, 1, -1, 1);
     }
-
-  /* Shrink HOSTNAME before returning it.  */
-  {
-    size_t actual_size = strlen (hostname) + 1;
-    if (actual_size < size)
-      {
-        char *shrinked_hostname = realloc (hostname, actual_size);
-        if (shrinked_hostname != NULL)
-          hostname = shrinked_hostname;
-      }
-  }
-
-  return hostname;
 }
