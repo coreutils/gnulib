@@ -44,6 +44,42 @@ check_equals (gl_list_t list1, gl_list_t list2)
     }
 }
 
+static void
+check_equals_by_forward_iteration (gl_list_t list1, gl_list_t list2)
+{
+  size_t n = gl_list_size (list1);
+  size_t i;
+  gl_list_node_t node2;
+
+  i = 0;
+  node2 = gl_list_first_node (list2);
+  while (i < n && node2 != NULL)
+    {
+      ASSERT (gl_list_get_at (list1, i) == gl_list_node_value (list2, node2));
+      i++;
+      node2 = gl_list_next_node (list2, node2);
+    }
+  ASSERT ((i == n) == (node2 == NULL));
+}
+
+static void
+check_equals_by_backward_iteration (gl_list_t list1, gl_list_t list2)
+{
+  size_t n = gl_list_size (list1);
+  size_t i;
+  gl_list_node_t node2;
+
+  i = n - 1;
+  node2 = gl_list_last_node (list2);
+  while (i != (size_t)(-1) && node2 != NULL)
+    {
+      ASSERT (gl_list_get_at (list1, i) == gl_list_node_value (list2, node2));
+      i--;
+      node2 = gl_list_previous_node (list2, node2);
+    }
+  ASSERT ((i == (size_t)(-1)) == (node2 == NULL));
+}
+
 int
 main (int argc, char *argv[])
 {
@@ -74,6 +110,9 @@ main (int argc, char *argv[])
       ASSERT (gl_list_nx_add_last (list2, contents[i]) != NULL);
 
     check_equals (list1, list2);
+
+    check_equals_by_forward_iteration (list1, list2);
+    check_equals_by_backward_iteration (list1, list2);
 
     for (repeat = 0; repeat < 10000; repeat++)
       {

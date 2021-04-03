@@ -48,6 +48,36 @@ check_equals (gl_list_t list1, gl_list_t list2)
 }
 
 static void
+check_equals_by_forward_iteration (gl_list_t list1, gl_list_t list2)
+{
+  gl_list_node_t node1 = gl_list_first_node (list1);
+  gl_list_node_t node2 = gl_list_first_node (list2);
+  while (node1 != NULL && node2 != NULL)
+    {
+      ASSERT (gl_list_node_value (list1, node1)
+              == gl_list_node_value (list2, node2));
+      node1 = gl_list_next_node (list1, node1);
+      node2 = gl_list_next_node (list2, node2);
+    }
+  ASSERT ((node1 == NULL) == (node2 == NULL));
+}
+
+static void
+check_equals_by_backward_iteration (gl_list_t list1, gl_list_t list2)
+{
+  gl_list_node_t node1 = gl_list_last_node (list1);
+  gl_list_node_t node2 = gl_list_last_node (list2);
+  while (node1 != NULL && node2 != NULL)
+    {
+      ASSERT (gl_list_node_value (list1, node1)
+              == gl_list_node_value (list2, node2));
+      node1 = gl_list_previous_node (list1, node1);
+      node2 = gl_list_previous_node (list2, node2);
+    }
+  ASSERT ((node1 == NULL) == (node2 == NULL));
+}
+
+static void
 check_all (gl_list_t list1, gl_list_t list2, gl_list_t list3)
 {
   gl_avltree_list_check_invariants (list2);
@@ -91,6 +121,9 @@ main (int argc, char *argv[])
     ASSERT (list3 != NULL);
 
     check_all (list1, list2, list3);
+
+    check_equals_by_forward_iteration (list1, list2);
+    check_equals_by_backward_iteration (list1, list2);
 
     for (repeat = 0; repeat < 10000; repeat++)
       {
