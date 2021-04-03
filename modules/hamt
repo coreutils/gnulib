@@ -1,0 +1,29 @@
+Description:
+Persistent hash array mapped tries.
+
+Files:
+lib/hamt.h
+lib/hamt.c
+
+Depends-on:
+count-one-bits
+flexmember
+inttypes-incomplete
+stdbool
+stdint
+verify
+xalloc
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += hamt.c
+
+Include:
+"hamt.h"
+
+License:
+GPL
+
+Maintainer:
+Marc Nieper-Wisskirchen
