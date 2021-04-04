@@ -19,6 +19,7 @@
 #ifndef BACKUPFILE_H_
 #define BACKUPFILE_H_
 
+/* Get AT_FDCWD, as a convenience for users of this file.  */
 #include <fcntl.h>
 
 #ifdef __cplusplus

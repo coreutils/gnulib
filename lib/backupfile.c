@@ -22,6 +22,7 @@
 
 #include "backup-internal.h"
 
+#include <dirent.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <stdbool.h>

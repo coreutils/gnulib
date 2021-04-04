@@ -15,8 +15,7 @@ basename-lgpl
 c99
 closedir
 d-ino
-dirent-safer
-fcntl
+fcntl-h
 idx
 memcmp
 opendirat
@@ -24,7 +23,7 @@ readdir
 renameatu
 stdbool
 stdint
-xalloc
+xalloc-die
 xalloc-oversized
 
 configure.ac:

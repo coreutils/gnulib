@@ -15,8 +15,7 @@ basename-lgpl
 c99
 closedir
 d-ino
-dirent-safer
-fcntl
+fcntl-h
 idx
 memcmp
 opendirat
