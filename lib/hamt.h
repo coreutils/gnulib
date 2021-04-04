@@ -78,10 +78,13 @@ _GL_INLINE_HEADER_BEGIN
 /************/
 
 /* A hamt stores pointers to elements.  Each element has to be a
-   struct whose initial member is of the type Hamt_entry.  An element
-   is conceptually owned by a hamt as soon as it is inserted.  It will
-   be automatically freed as soon as the last hamt containing it is
-   freed.  */
+   struct whose initial member is of the type Hamt_entry.  You need to
+   define this struct yourself.  It will typically contain an
+   Hamt_entry, a key, and, optionally, a value.
+
+   An element is conceptually owned by a hamt as soon as it is
+   inserted.  It will be automatically freed as soon as the last hamt
+   containing it is freed.  */
 typedef struct
 {
 #if GL_HAMT_THREAD_SAFE

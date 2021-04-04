@@ -35,6 +35,9 @@ log
 Gnulib provides several generic container data types.  They can be used
 to organize collections of application-defined objects.
 
+@node Ordinary containers
+@subsection Ordinary container data types
+
 @multitable @columnfractions .15 .5 .1 .1 .15
 @headitem Data type
 @tab Details
@@ -598,6 +601,58 @@ For C++, Gnulib provides a C++ template class for each of these container data t
 @tab @code{omap-c++}
 @tab @code{"gl_omap.hh"}
 @end multitable
+
+@node Specialized containers
+@subsection Specialized container data types
+
+The @code{hamt} module implements the hash array mapped trie (HAMT) data
+structure.  This is a data structure that contains (key, value) pairs.
+Lookup of a (key, value) pair given the key is on average an @math{O(1)}
+operation, assuming a good hash function for the keys is employed.
+
+The HAMT data structure is useful when you want modifications (additions
+of pairs, removal, value changes) to be visible only to some part of
+your program, whereas other parts of the program continue to use the
+unmodified HAMT.  The HAMT makes this possible in a space-efficient
+manner: the modified and the unmodified HAMT share most of their
+allocated memory.  It is also time-efficient: Every such modification
+is @math{O(1)} on average, again assuming a good hash function for the keys.
+
+A HAMT can be used whenever an ordinary hash table would be used.  It
+does however, provide non-destructive updating operations without the
+need to copy the whole container. On the other hand, a hash table is
+simpler so that its performance may be better when non-destructive
+update operations are not needed.
+
+For example, a HAMT can be used to model the dynamic environment in a
+LISP interpreter.  Updating a value in the dynamic environment of one
+continuation frame would not modify values in earlier frames.
+
+To use the module, include @code{hamt.h} in your code.  The public
+interface is documented in that header file.  You have to provide a hash
+function and an equivalence relation, which defines key equality.  The
+module includes a test file @code{test-hamt.c}, which demonstrates how
+the API can be used.
+
+In the current implementation, each inner node of the HAMT can store up
+to @math{32 = 2^5} entries and subtries.  Whenever a collision between
+the initial bits of the hash values of two entries would happen, the
+next @math{5} bits of the hash values are examined and the two entries
+pushed down one level in the trie.
+
+HAMTs have the same average access times as hash tables but grow and
+shrink dynamically, so they use memory more economically and do not have
+to be periodically resized.
+
+They were described and analyzed in @cite{Phil Bagwell (2000). Ideal
+Hash Trees (Report). Infoscience Department, École Polytechnique
+Fédérale de Lausanne.}
+
+The persistence aspect of the HAMT data structure, which means that each
+updating operation (like inserting, replacing, or removing an entry)
+returns a new HAMT while leaving the original one intact, is achieved
+through structure sharing, which is even safe in the presence of
+multiple threads when the used C compiler supports atomics.
 
 @ifnottex
 @unmacro log
