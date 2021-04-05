@@ -873,7 +873,7 @@ bucket_do_while (const struct bucket *bucket, Hamt_processor *proc, void *data,
   for (size_t i = 0; i < elt_count; ++i)
     {
       *success = proc (elts[i], data);
-      if (!success)
+      if (*success == false)
         return cnt;
       ++cnt;
     }
@@ -946,14 +946,14 @@ hamt_iterator (Hamt *hamt)
   Hamt_iterator iter;
   iter.hamt = hamt_copy (hamt);
   Hamt_entry *entry = hamt->root;
+  iter.path = 0;
+  iter.position = 0;
   if (entry == NULL)
     {
       iter.depth = -1;
       return iter;
     }
   iter.depth = 0;
-  iter.path = 0;
-  iter.position = 0;
   while (iter.entry[iter.depth] = entry, entry_type (entry) == subtrie_entry)
     {
       const struct subtrie *subtrie = (const struct subtrie *) entry;

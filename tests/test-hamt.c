@@ -152,10 +152,10 @@ test_general (void)
   hamt1 = hamt_remove (hamt2, &x4);
   sum = 0;
   ASSERT (hamt_do_while (hamt2, proc, &flag) == 4);
-  ASSERT (sum = 52);
+  ASSERT (sum == 52);
   sum = 0;
   ASSERT (hamt_do_while (hamt1, proc, &flag) == 3);
-  ASSERT (sum  = 48);
+  ASSERT (sum == 48);
 
   hamt_free (hamt1);
   hamt_free (hamt2);
