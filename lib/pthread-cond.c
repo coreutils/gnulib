@@ -118,7 +118,7 @@ pthread_cond_wait (pthread_cond_t *cond _GL_UNUSED,
       struct timespec duration;
 
       duration.tv_sec = 86400;
-      duration.tv_usec = 0;
+      duration.tv_nsec = 0;
       nanosleep (&duration, NULL);
     }
 }
