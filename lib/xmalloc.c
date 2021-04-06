@@ -122,14 +122,23 @@ xpalloc (void *pa, idx_t *nitems, idx_t nitems_incr_min,
      Adjust the growth according to three constraints: NITEMS_INCR_MIN,
      NITEMS_MAX, and what the C language can represent safely.  */
 
-  idx_t n, nbytes;
+  idx_t n;
   if (INT_ADD_WRAPV (n0, n0 >> 1, &n))
     n = IDX_MAX;
   if (0 <= nitems_max && nitems_max < n)
     n = nitems_max;
 
+  /* NBYTES is of a type suitable for holding the count of bytes in an object.
+     This is typically idx_t, but it should be size_t on (theoretical?)
+     platforms where SIZE_MAX < IDX_MAX so xpalloc does not pass
+     values greater than SIZE_MAX to xrealloc.  */
+#if IDX_MAX <= SIZE_MAX
+  idx_t nbytes;
+#else
+  size_t nbytes;
+#endif
   idx_t adjusted_nbytes
-    = ((INT_MULTIPLY_WRAPV (n, item_size, &nbytes) || SIZE_MAX < nbytes)
+    = (INT_MULTIPLY_WRAPV (n, item_size, &nbytes)
        ? MIN (IDX_MAX, SIZE_MAX)
        : nbytes < DEFAULT_MXFAST ? DEFAULT_MXFAST : 0);
   if (adjusted_nbytes)
