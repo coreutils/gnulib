@@ -9,6 +9,7 @@ Depends-on:
 unistd
 extensions
 getgroups        [test $HAVE_GROUP_MEMBER = 0]
+intprops         [test $HAVE_GROUP_MEMBER = 0]
 xalloc-oversized [test $HAVE_GROUP_MEMBER = 0]
 
 configure.ac:
