@@ -23,6 +23,7 @@
 
 #if GNULIB_XALLOC
 # include "idx.h"
+# include "intprops.h"
 # include "xalloc-oversized.h"
 #endif
 
