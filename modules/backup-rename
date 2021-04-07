@@ -17,6 +17,7 @@ closedir
 d-ino
 fcntl-h
 idx
+intprops
 memcmp
 opendirat
 readdir
