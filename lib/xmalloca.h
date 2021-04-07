@@ -45,7 +45,8 @@ extern void * xmmalloca (size_t n);
 
 /* xnmalloca(N,S) is an overflow-safe variant of xmalloca (N * S).
    It allocates an array of N objects, each with S bytes of memory,
-   on the stack.  S must be positive and N must be nonnegative.
+   on the stack.  S must be positive and N must be nonnegative,
+   and at least one of N and S should be ptrdiff_t or size_t or wider.
    The array must be freed using freea() before the function returns.
    Upon failure, it exits with an error message.  */
 #if HAVE_ALLOCA

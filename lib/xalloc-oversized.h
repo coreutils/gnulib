@@ -21,34 +21,34 @@
 #include <stddef.h>
 #include <stdint.h>
 
-/* True if N * S would overflow in a size_t calculation,
-   or would generate a value larger than PTRDIFF_MAX.
+/* True if N * S does not fit into both ptrdiff_t and size_t.
+   S must be positive and N must be nonnegative.
    This expands to a constant expression if N and S are both constants.
-   By gnulib convention, SIZE_MAX represents overflow in size
+   By gnulib convention, SIZE_MAX represents overflow in size_t
    calculations, so the conservative size_t-based dividend to use here
    is SIZE_MAX - 1.  */
 #define __xalloc_oversized(n, s) \
   ((size_t) (PTRDIFF_MAX < SIZE_MAX ? PTRDIFF_MAX : SIZE_MAX - 1) / (s) < (n))
 
 #if PTRDIFF_MAX < SIZE_MAX
-typedef ptrdiff_t __xalloc_count_type;
+typedef ptrdiff_t xalloc_count_t;
 #else
-typedef size_t __xalloc_count_type;
+typedef size_t xalloc_count_t;
 #endif
 
-/* Return 1 if an array of N objects, each of size S, cannot exist
-   reliably due to size or ptrdiff_t arithmetic overflow.  S must be
-   positive and N must be nonnegative.  This is a macro, not a
-   function, so that it works correctly even when SIZE_MAX < N.  */
-
+/* Return 1 if an array of N objects, each of size S, cannot exist reliably
+   because its total size in bytes exceeds MIN (PTRDIFF_MAX, SIZE_MAX).
+   N must be nonnegative, S must be positive, and either N or S should be
+   of type ptrdiff_t or size_t or wider.  This is a macro, not a function,
+   so that it works even if an argument exceeds MAX (PTRDIFF_MAX, SIZE_MAX).  */
 #if 7 <= __GNUC__ && !defined __clang__
 # define xalloc_oversized(n, s) \
-   __builtin_mul_overflow_p (n, s, (__xalloc_count_type) 1)
+   __builtin_mul_overflow_p (n, s, (xalloc_count_t) 1)
 #elif 5 <= __GNUC__ && !defined __ICC && !__STRICT_ANSI__
 # define xalloc_oversized(n, s) \
    (__builtin_constant_p (n) && __builtin_constant_p (s) \
     ? __xalloc_oversized (n, s) \
-    : ({ __xalloc_count_type __xalloc_count; \
+    : ({ xalloc_count_t __xalloc_count; \
          __builtin_mul_overflow (n, s, &__xalloc_count); }))
 
 /* Other compilers use integer division; this may be slower but is
