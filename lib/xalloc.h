@@ -193,22 +193,18 @@ x2nrealloc (void *p, size_t *pn, size_t s)
           n = DEFAULT_MXFAST / s;
           n += !n;
         }
-      if (xalloc_oversized (n, s))
-        xalloc_die ();
     }
   else
     {
-      /* Set N = floor (1.5 * N) + 1 so that progress is made even if N == 0.
-         Check for overflow, so that N * S stays in both ptrdiff_t and
-         size_t range.  The check may be slightly conservative, but an
-         exact check isn't worth the trouble.  */
-      if ((PTRDIFF_MAX < SIZE_MAX ? PTRDIFF_MAX : SIZE_MAX) / 3 * 2 / s
-          <= n)
+      /* Set N = floor (1.5 * N) + 1 to make progress even if N == 0.  */
+      if (INT_ADD_WRAPV (n, (n >> 1) + 1, &n))
         xalloc_die ();
-      n += n / 2 + 1;
     }
 
-  p = xrealloc (p, n * s);
+  xalloc_count_t nbytes;
+  if (INT_MULTIPLY_WRAPV (n, s, &nbytes))
+    xalloc_die ();
+  p = xrealloc (p, nbytes);
   *pn = n;
   return p;
 }
