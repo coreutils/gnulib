@@ -18,6 +18,8 @@ stdint
 unistd
 
 configure.ac:
+dnl Test for Linux system call close_range(), declared in <unistd.h>.
+AC_CHECK_FUNCS([close_range])
 
 Makefile.am:
 TESTS += test-execute.sh

@@ -58,6 +58,31 @@ main (int argc, char *argv[])
   char *prog_path = argv[1];
   const char *progname = "test-execute-child";
   int test = atoi (argv[2]);
+
+  switch (test)
+    {
+    case 14:
+    case 15:
+    case 16:
+      /* Close file descriptors that have been inherited from the parent
+         process and that would cause failures in test-execute-child.c.
+         Such file descriptors have been seen:
+           - with GNU make, when invoked as 'make -j N' with j > 1,
+           - in some versions of the KDE desktop environment,
+           - on NetBSD.
+       */
+      #if HAVE_CLOSE_RANGE
+      if (close_range (3, 20 - 1, 0) < 0)
+      #endif
+        {
+          int fd;
+          for (fd = 3; fd < 20; fd++)
+            close (fd);
+        }
+    default:
+      break;
+    }
+
   switch (test)
     {
     case 0:

@@ -171,14 +171,11 @@ main (int argc, char *argv[])
         char *p = buf;
         int fd;
         for (fd = 0; fd < 20; fd++)
-          #ifdef __NetBSD__
-          if (fd != 3)
-          #endif
-            if (is_open (fd))
-              {
-                sprintf (p, "%d ", fd);
-                p += strlen (p);
-              }
+          if (is_open (fd))
+            {
+              sprintf (p, "%d ", fd);
+              p += strlen (p);
+            }
         const char *expected = (test < 16 ? "0 1 2 10 " : "0 1 2 ");
         if (strcmp (buf, expected) == 0)
           return 0;
