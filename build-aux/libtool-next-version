@@ -42,6 +42,8 @@
 #   - It does not enforce that applying the third or fourth rule is only
 #     possible after applying the second rule.
 
+scriptversion=2021-04-11
+
 # func_usage
 # outputs to stdout the --help usage message.
 func_usage ()
@@ -68,12 +70,14 @@ Report bugs to <bruno@clisp.org>."
 # outputs to stdout the --version message.
 func_version ()
 {
-  echo "libtool-next-version (GNU gnulib)"
-  echo "Copyright (C) 2019 Free Software Foundation, Inc.
-License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>
+  copyright_year=`echo "$scriptversion" | sed -e 's/[^0-9].*//'`
+  echo "libtool-next-version (GNU gnulib) $scriptversion"
+  echo "Copyright (C) ${copyright_year} Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.
 This is free software: you are free to change and redistribute it.
 There is NO WARRANTY, to the extent permitted by law."
-  echo "Written by" "Bruno Haible"
+  echo
+  printf 'Written by %s.\n' "Bruno Haible"
 }
 
 # func_fatal_error message
