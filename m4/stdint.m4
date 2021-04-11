@@ -1,4 +1,4 @@
-# stdint.m4 serial 58
+# stdint.m4 serial 59
 dnl Copyright (C) 2001-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -527,7 +527,7 @@ AC_DEFUN([gl_STDINT_TYPE_PROPERTIES],
   dnl requirement that wint_t is "unchanged by default argument promotions".
   dnl In this case gnulib's <wchar.h> and <wctype.h> override wint_t.
   dnl Set the variable BITSIZEOF_WINT_T accordingly.
-  if test $GNULIB_OVERRIDES_WINT_T = 1; then
+  if test $GNULIBHEADERS_OVERRIDE_WINT_T = 1; then
     BITSIZEOF_WINT_T=32
   fi
 ])

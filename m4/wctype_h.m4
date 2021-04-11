@@ -1,4 +1,4 @@
-# wctype_h.m4 serial 27
+# wctype_h.m4 serial 28
 
 dnl A placeholder for ISO C99 <wctype.h>, for platforms that lack it.
 
@@ -62,7 +62,7 @@ AC_DEFUN([gl_WCTYPE_H],
   fi
   AC_SUBST([HAVE_WCTYPE_H])
 
-  if test $GNULIB_OVERRIDES_WINT_T = 1; then
+  if test $GNULIBHEADERS_OVERRIDE_WINT_T = 1; then
     REPLACE_ISWCNTRL=1
   else
     case "$gl_cv_func_iswcntrl_works" in
