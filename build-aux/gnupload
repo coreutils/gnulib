@@ -1,7 +1,7 @@
 #!/bin/sh
 # Sign files and upload them.
 
-scriptversion=2018-05-19.18; # UTC
+scriptversion=2021-04-11.09; # UTC
 
 # Copyright (C) 2004-2021 Free Software Foundation, Inc.
 #
@@ -145,6 +145,12 @@ the build-aux/ directory of the gnulib package
 
 Send patches and bug reports to <bug-gnulib@gnu.org>."
 
+copyright_year=`echo "$scriptversion" | sed -e 's/[^0-9].*//'`
+copyright="Copyright (C) ${copyright_year} Free Software Foundation, Inc.
+License GPLv2+: GNU GPL version 2 or later <https://gnu.org/licenses/gpl.html>.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law."
+
 # Read local configuration file
 if test -r "$conffile"; then
   echo "$0: Reading configuration file $conffile"
@@ -209,7 +215,8 @@ while test -n "$1"; do
       ;;
     --version)
       echo "gnupload $scriptversion"
-      exit $?
+      echo "$copyright"
+      exit 0
       ;;
     --)
       shift
