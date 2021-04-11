@@ -1,4 +1,4 @@
-# uchar.m4 serial 17
+# uchar.m4 serial 18
 dnl Copyright (C) 2019-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -91,7 +91,7 @@ AC_DEFUN_ONCE([gl_TYPE_CHAR16_T],
        [gl_cv_type_char16_t_works=no])
     ])
   if test $gl_cv_type_char16_t_works = no; then
-    GNULIB_OVERRIDES_CHAR16_T=1
+    GNULIBHEADERS_OVERRIDE_CHAR16_T=1
   fi
 ])
 AC_DEFUN_ONCE([gl_TYPE_CHAR32_T],
@@ -112,7 +112,7 @@ AC_DEFUN_ONCE([gl_TYPE_CHAR32_T],
        [gl_cv_type_char32_t_works=no])
     ])
   if test $gl_cv_type_char32_t_works = no; then
-    GNULIB_OVERRIDES_CHAR32_T=1
+    GNULIBHEADERS_OVERRIDE_CHAR32_T=1
   fi
 ])
 
@@ -127,8 +127,8 @@ AC_DEFUN([gl_UCHAR_MODULE_INDICATOR],
 
 AC_DEFUN([gl_UCHAR_H_DEFAULTS],
 [
-  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_OVERRIDES_CHAR16_T])
-  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_OVERRIDES_CHAR32_T])
+  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIBHEADERS_OVERRIDE_CHAR16_T])
+  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIBHEADERS_OVERRIDE_CHAR32_T])
   gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_BTOC32])
   gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_C32ISALNUM])
   gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_C32ISALPHA])

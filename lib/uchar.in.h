@@ -47,7 +47,7 @@
    on which __STDC_UTF_16__ is defined.)  */
 typedef uint_least16_t char16_t;
 
-#elif @GNULIB_OVERRIDES_CHAR16_T@
+#elif @GNULIBHEADERS_OVERRIDE_CHAR16_T@
 
 typedef uint_least16_t gl_char16_t;
 # define char16_t gl_char16_t
@@ -61,7 +61,7 @@ typedef uint_least16_t gl_char16_t;
    on which __STDC_UTF_32__ is defined.)  */
 typedef uint_least32_t char32_t;
 
-#elif @GNULIB_OVERRIDES_CHAR32_T@
+#elif @GNULIBHEADERS_OVERRIDE_CHAR32_T@
 
 typedef uint_least32_t gl_char32_t;
 # define char32_t gl_char32_t
