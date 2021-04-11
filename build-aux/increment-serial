@@ -1,0 +1,114 @@
+#!/bin/sh
+# Increment serial number in Autoconf *.m4 files.
+
+# Copyright (C) 2021 Free Software Foundation, Inc.
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+scriptversion=2021-04-11
+
+copyright_year=`echo "$scriptversion" | sed -e 's/[^0-9].*//'`
+copyright="Copyright (C) ${copyright_year} Free Software Foundation, Inc.
+License GPLv2+: GNU GPL version 2 or later <https://gnu.org/licenses/gpl.html>.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law."
+
+usage="Usage: $0 [FILE...]
+
+Increments the serial number, if present, in each of the files.
+
+Options:
+  --version                output version information and exit
+  --help                   print this help text and exit
+
+Send patches and bug reports to <bug-gnulib@gnu.org>."
+
+# Based on
+# <https://www.gnu.org/software/sed/manual/html_node/Increment-a-number.html>
+sed_inc_serial='1,10 {
+  /serial *[0-9]/ {
+    s/\(serial *[0-9][0-9]*\)/\1~/
+    :a
+    s/\(serial *[0-9]*\)9\(_*\)~/\1_\2~/
+    ta
+    s/\(serial *\)\(_*\)~/\11\2~/
+    tb
+    s/\(serial *[0-9]*\)8\(_*\)~/\19\2~/
+    tb
+    s/\(serial *[0-9]*\)7\(_*\)~/\18\2~/
+    tb
+    s/\(serial *[0-9]*\)6\(_*\)~/\17\2~/
+    tb
+    s/\(serial *[0-9]*\)5\(_*\)~/\16\2~/
+    tb
+    s/\(serial *[0-9]*\)4\(_*\)~/\15\2~/
+    tb
+    s/\(serial *[0-9]*\)3\(_*\)~/\14\2~/
+    tb
+    s/\(serial *[0-9]*\)2\(_*\)~/\13\2~/
+    tb
+    s/\(serial *[0-9]*\)1\(_*\)~/\12\2~/
+    tb
+    s/\(serial *[0-9]*\)0\(_*\)~/\11\2~/
+    tb
+    :b
+    s/\(serial *[0-9]*\)_/\10/
+    tb
+    s/\(serial *[0-9]*\)~/\1/
+  }
+}'
+
+# func_process FILE
+func_process ()
+{
+  sed -i -e "$sed_inc_serial" "$1" || exit 1
+}
+
+while test $# -gt 0; do
+  case "$1" in
+    --version)
+      set -e
+      echo "increment-serial $scriptversion"
+      echo "$copyright"
+      echo
+      printf 'Written by %s.\n' "Bruno Haible"
+      exit 0
+      ;;
+    --help)
+      set -e
+      echo "$usage"
+      exit 0
+      ;;
+    --)
+      shift
+      while test $# -gt 0; do
+        case "$1" in
+          -*) func_process "./$1" ;;
+          *)  func_process "$1" ;;
+        esac
+        shift
+      done
+      break
+      ;;
+    -*)
+      echo "$0: Unknown option '$1', try '$0 --help'" 1>&2
+      exit 1
+      ;;
+    *)
+      func_process "$1"
+      ;;
+  esac
+  shift
+done
+exit 0
