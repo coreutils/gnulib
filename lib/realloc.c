@@ -21,12 +21,8 @@
 #define _GL_USE_STDLIB_ALLOC 1
 #include <config.h>
 
-/* Only the AC_FUNC_REALLOC macro defines 'realloc' already in config.h.  */
-#ifdef realloc
-# define NEED_REALLOC_GNU 1
-# undef realloc
-/* Whereas the gnulib module 'realloc-gnu' defines HAVE_REALLOC_GNU.  */
-#elif GNULIB_REALLOC_GNU && !HAVE_REALLOC_GNU
+/* The gnulib module 'realloc-gnu' defines HAVE_REALLOC_GNU.  */
+#if GNULIB_REALLOC_GNU && !HAVE_REALLOC_GNU
 # define NEED_REALLOC_GNU 1
 #endif
 

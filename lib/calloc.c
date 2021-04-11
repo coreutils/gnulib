@@ -18,12 +18,9 @@
 /* written by Jim Meyering and Bruno Haible */
 
 #include <config.h>
-/* Only the AC_FUNC_CALLOC macro defines 'calloc' already in config.h.  */
-#ifdef calloc
-# define NEED_CALLOC_GNU 1
-# undef calloc
-/* Whereas the gnulib module 'calloc-gnu' defines HAVE_CALLOC_GNU.  */
-#elif GNULIB_CALLOC_GNU && !HAVE_CALLOC_GNU
+
+/* The gnulib module 'calloc-gnu' defines HAVE_CALLOC_GNU.  */
+#if GNULIB_CALLOC_GNU && !HAVE_CALLOC_GNU
 # define NEED_CALLOC_GNU 1
 #endif
 
