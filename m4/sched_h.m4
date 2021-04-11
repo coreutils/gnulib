@@ -1,4 +1,4 @@
-# sched_h.m4 serial 12
+# sched_h.m4 serial 13
 dnl Copyright (C) 2008-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -84,7 +84,7 @@ AC_DEFUN([gl_SCHED_MODULE_INDICATOR],
 
 AC_DEFUN([gl_SCHED_H_DEFAULTS],
 [
-  GNULIB_SCHED_YIELD=0;  AC_SUBST([GNULIB_SCHED_YIELD])
+  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_SCHED_YIELD])
   dnl Assume proper GNU behavior unless another module says otherwise.
   HAVE_SCHED_YIELD=1;    AC_SUBST([HAVE_SCHED_YIELD])
   REPLACE_SCHED_YIELD=0; AC_SUBST([REPLACE_SCHED_YIELD])

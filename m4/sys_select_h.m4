@@ -1,4 +1,4 @@
-# sys_select_h.m4 serial 20
+# sys_select_h.m4 serial 21
 dnl Copyright (C) 2006-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -86,8 +86,8 @@ AC_DEFUN([gl_SYS_SELECT_MODULE_INDICATOR],
 
 AC_DEFUN([gl_SYS_SELECT_H_DEFAULTS],
 [
-  GNULIB_PSELECT=0; AC_SUBST([GNULIB_PSELECT])
-  GNULIB_SELECT=0; AC_SUBST([GNULIB_SELECT])
+  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_PSELECT])
+  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_SELECT])
   dnl Assume proper GNU behavior unless another module says otherwise.
   HAVE_PSELECT=1; AC_SUBST([HAVE_PSELECT])
   REPLACE_PSELECT=0; AC_SUBST([REPLACE_PSELECT])

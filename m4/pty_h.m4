@@ -1,4 +1,4 @@
-# pty_h.m4 serial 11
+# pty_h.m4 serial 12
 dnl Copyright (C) 2009-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -61,8 +61,8 @@ AC_DEFUN([gl_PTY_MODULE_INDICATOR],
 
 AC_DEFUN([gl_PTY_H_DEFAULTS],
 [
-  GNULIB_FORKPTY=0;     AC_SUBST([GNULIB_FORKPTY])
-  GNULIB_OPENPTY=0;     AC_SUBST([GNULIB_OPENPTY])
+  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_FORKPTY])
+  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_OPENPTY])
   dnl Assume proper GNU behavior unless another module says otherwise.
   HAVE_UTIL_H=0;        AC_SUBST([HAVE_UTIL_H])
   HAVE_LIBUTIL_H=0;     AC_SUBST([HAVE_LIBUTIL_H])

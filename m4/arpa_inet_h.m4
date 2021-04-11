@@ -1,4 +1,4 @@
-# arpa_inet_h.m4 serial 14
+# arpa_inet_h.m4 serial 15
 dnl Copyright (C) 2006, 2008-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -49,8 +49,8 @@ AC_DEFUN([gl_ARPA_INET_MODULE_INDICATOR],
 
 AC_DEFUN([gl_ARPA_INET_H_DEFAULTS],
 [
-  GNULIB_INET_NTOP=0;     AC_SUBST([GNULIB_INET_NTOP])
-  GNULIB_INET_PTON=0;     AC_SUBST([GNULIB_INET_PTON])
+  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_INET_NTOP])
+  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_INET_PTON])
   dnl Assume proper GNU behavior unless another module says otherwise.
   HAVE_DECL_INET_NTOP=1;  AC_SUBST([HAVE_DECL_INET_NTOP])
   HAVE_DECL_INET_PTON=1;  AC_SUBST([HAVE_DECL_INET_PTON])

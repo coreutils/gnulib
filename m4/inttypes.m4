@@ -1,4 +1,4 @@
-# inttypes.m4 serial 32
+# inttypes.m4 serial 33
 dnl Copyright (C) 2006-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -145,10 +145,10 @@ AC_DEFUN([gl_INTTYPES_MODULE_INDICATOR],
 
 AC_DEFUN([gl_INTTYPES_H_DEFAULTS],
 [
-  GNULIB_IMAXABS=0;      AC_SUBST([GNULIB_IMAXABS])
-  GNULIB_IMAXDIV=0;      AC_SUBST([GNULIB_IMAXDIV])
-  GNULIB_STRTOIMAX=0;    AC_SUBST([GNULIB_STRTOIMAX])
-  GNULIB_STRTOUMAX=0;    AC_SUBST([GNULIB_STRTOUMAX])
+  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_IMAXABS])
+  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_IMAXDIV])
+  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_STRTOIMAX])
+  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_STRTOUMAX])
   dnl Assume proper GNU behavior unless another module says otherwise.
   HAVE_DECL_IMAXABS=1;   AC_SUBST([HAVE_DECL_IMAXABS])
   HAVE_DECL_IMAXDIV=1;   AC_SUBST([HAVE_DECL_IMAXDIV])

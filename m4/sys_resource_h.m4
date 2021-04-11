@@ -1,4 +1,4 @@
-# sys_resource_h.m4 serial 2
+# sys_resource_h.m4 serial 3
 dnl Copyright (C) 2012-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -41,7 +41,7 @@ AC_DEFUN([gl_SYS_RESOURCE_MODULE_INDICATOR],
 
 AC_DEFUN([gl_SYS_RESOURCE_H_DEFAULTS],
 [
-  GNULIB_GETRUSAGE=0;     AC_SUBST([GNULIB_GETRUSAGE])
+  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_GETRUSAGE])
   dnl Assume proper GNU behavior unless another module says otherwise.
   HAVE_GETRUSAGE=1;       AC_SUBST([HAVE_GETRUSAGE])
 ])

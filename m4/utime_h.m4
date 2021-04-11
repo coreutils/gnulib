@@ -1,4 +1,4 @@
-# utime_h.m4 serial 5
+# utime_h.m4 serial 6
 dnl Copyright (C) 2017-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -39,9 +39,9 @@ AC_DEFUN([gl_UTIME_MODULE_INDICATOR],
 
 AC_DEFUN([gl_UTIME_H_DEFAULTS],
 [
-  GNULIB_UTIME=0;            AC_SUBST([GNULIB_UTIME])
+  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_UTIME])
   dnl Support Microsoft deprecated alias function names by default.
-  GNULIB_MDA_UTIME=1;        AC_SUBST([GNULIB_MDA_UTIME])
+  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_MDA_UTIME], [1])
   dnl Assume POSIX behavior unless another module says otherwise.
   HAVE_UTIME=1;              AC_SUBST([HAVE_UTIME])
   REPLACE_UTIME=0;           AC_SUBST([REPLACE_UTIME])

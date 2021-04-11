@@ -1,4 +1,4 @@
-# sys_wait_h.m4 serial 6
+# sys_wait_h.m4 serial 7
 dnl Copyright (C) 2008-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -31,6 +31,6 @@ AC_DEFUN([gl_SYS_WAIT_MODULE_INDICATOR],
 
 AC_DEFUN([gl_SYS_WAIT_H_DEFAULTS],
 [
-  GNULIB_WAITPID=0; AC_SUBST([GNULIB_WAITPID])
+  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_WAITPID])
   dnl Assume proper GNU behavior unless another module says otherwise.
 ])

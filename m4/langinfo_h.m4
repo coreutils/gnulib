@@ -1,4 +1,4 @@
-# langinfo_h.m4 serial 9
+# langinfo_h.m4 serial 10
 dnl Copyright (C) 2009-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -115,7 +115,7 @@ AC_DEFUN([gl_LANGINFO_MODULE_INDICATOR],
 
 AC_DEFUN([gl_LANGINFO_H_DEFAULTS],
 [
-  GNULIB_NL_LANGINFO=0;  AC_SUBST([GNULIB_NL_LANGINFO])
+  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_NL_LANGINFO])
   dnl Assume proper GNU behavior unless another module says otherwise.
   HAVE_NL_LANGINFO=1;    AC_SUBST([HAVE_NL_LANGINFO])
   REPLACE_NL_LANGINFO=0; AC_SUBST([REPLACE_NL_LANGINFO])

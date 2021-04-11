@@ -1,5 +1,5 @@
 # Configure a replacement for <sys/time.h>.
-# serial 9
+# serial 10
 
 # Copyright (C) 2007, 2009-2021 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -100,7 +100,7 @@ AC_DEFUN([gl_SYS_TIME_MODULE_INDICATOR],
 
 AC_DEFUN([gl_HEADER_SYS_TIME_H_DEFAULTS],
 [
-  GNULIB_GETTIMEOFDAY=0;     AC_SUBST([GNULIB_GETTIMEOFDAY])
+  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_GETTIMEOFDAY])
   dnl Assume POSIX behavior unless another module says otherwise.
   HAVE_GETTIMEOFDAY=1;       AC_SUBST([HAVE_GETTIMEOFDAY])
   HAVE_STRUCT_TIMEVAL=1;     AC_SUBST([HAVE_STRUCT_TIMEVAL])

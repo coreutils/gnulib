@@ -1,5 +1,5 @@
 # Configure a replacement for <strings.h>.
-# serial 6
+# serial 7
 
 # Copyright (C) 2007, 2009-2021 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -44,7 +44,7 @@ AC_DEFUN([gl_STRINGS_MODULE_INDICATOR],
 
 AC_DEFUN([gl_HEADER_STRINGS_H_DEFAULTS],
 [
-  GNULIB_FFS=0;            AC_SUBST([GNULIB_FFS])
+  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_FFS])
   dnl Assume proper GNU behavior unless another module says otherwise.
   HAVE_FFS=1;              AC_SUBST([HAVE_FFS])
   HAVE_STRCASECMP=1;       AC_SUBST([HAVE_STRCASECMP])

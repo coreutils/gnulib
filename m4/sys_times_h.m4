@@ -1,5 +1,5 @@
 # Configure a replacement for <sys/times.h>.
-# serial 8
+# serial 9
 
 # Copyright (C) 2008-2021 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -45,7 +45,7 @@ AC_DEFUN([gl_SYS_TIMES_MODULE_INDICATOR],
 
 AC_DEFUN([gl_SYS_TIMES_H_DEFAULTS],
 [
-  GNULIB_TIMES=0;     AC_SUBST([GNULIB_TIMES])
+  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_TIMES])
   HAVE_STRUCT_TMS=1;  AC_SUBST([HAVE_STRUCT_TMS])
   HAVE_TIMES=1;       AC_SUBST([HAVE_TIMES])
 ])

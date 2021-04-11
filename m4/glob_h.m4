@@ -1,4 +1,4 @@
-# glob_h.m4 serial 5
+# glob_h.m4 serial 6
 dnl Copyright (C) 2018-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -63,7 +63,7 @@ AC_DEFUN([gl_GLOB_MODULE_INDICATOR],
 
 AC_DEFUN([gl_GLOB_H_DEFAULTS],
 [
-  GNULIB_GLOB=0;             AC_SUBST([GNULIB_GLOB])
+  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_GLOB])
   dnl Assume POSIX and GNU behavior unless another module says otherwise.
   HAVE_GLOB=1;               AC_SUBST([HAVE_GLOB])
   HAVE_GLOB_PATTERN_P=1;     AC_SUBST([HAVE_GLOB_PATTERN_P])

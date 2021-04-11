@@ -1,4 +1,4 @@
-# fnmatch_h.m4 serial 4
+# fnmatch_h.m4 serial 5
 dnl Copyright (C) 2009-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -68,7 +68,7 @@ AC_DEFUN([gl_FNMATCH_MODULE_INDICATOR],
 
 AC_DEFUN([gl_FNMATCH_H_DEFAULTS],
 [
-  GNULIB_FNMATCH=0;          AC_SUBST([GNULIB_FNMATCH])
+  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_FNMATCH])
   dnl Assume POSIX behavior unless another module says otherwise.
   HAVE_FNMATCH=1;            AC_SUBST([HAVE_FNMATCH])
   REPLACE_FNMATCH=0;         AC_SUBST([REPLACE_FNMATCH])

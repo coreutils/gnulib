@@ -1,5 +1,5 @@
 # Configure a replacement for <sys/file.h>.
-# serial 6
+# serial 7
 
 # Copyright (C) 2008-2021 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -36,6 +36,6 @@ AC_DEFUN([gl_HEADER_SYS_FILE_MODULE_INDICATOR],
 
 AC_DEFUN([gl_HEADER_SYS_FILE_H_DEFAULTS],
 [
-  GNULIB_FLOCK=0;        AC_SUBST([GNULIB_FLOCK])
+  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_FLOCK])
   HAVE_FLOCK=1;          AC_SUBST([HAVE_FLOCK])
 ])

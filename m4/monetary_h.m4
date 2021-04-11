@@ -1,4 +1,4 @@
-# monetary_h.m4 serial 5
+# monetary_h.m4 serial 6
 dnl Copyright (C) 2017-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -56,7 +56,7 @@ AC_DEFUN([gl_MONETARY_MODULE_INDICATOR],
 
 AC_DEFUN([gl_MONETARY_H_DEFAULTS],
 [
-  GNULIB_STRFMON_L=0;      AC_SUBST([GNULIB_STRFMON_L])
+  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_STRFMON_L])
   dnl Assume proper GNU behavior unless another module says otherwise.
   HAVE_STRFMON_L=1;        AC_SUBST([HAVE_STRFMON_L])
   REPLACE_STRFMON_L=0;     AC_SUBST([REPLACE_STRFMON_L])

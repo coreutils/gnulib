@@ -1,4 +1,4 @@
-# iconv_h.m4 serial 12
+# iconv_h.m4 serial 13
 dnl Copyright (C) 2007-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -39,7 +39,7 @@ AC_DEFUN([gl_ICONV_MODULE_INDICATOR],
 AC_DEFUN([gl_ICONV_H_DEFAULTS],
 [
   m4_ifdef([gl_ANSI_CXX], [AC_REQUIRE([gl_ANSI_CXX])])
-  GNULIB_ICONV=0;       AC_SUBST([GNULIB_ICONV])
+  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_ICONV])
   dnl Assume proper GNU behavior unless another module says otherwise.
   ICONV_CONST=;         AC_SUBST([ICONV_CONST])
   REPLACE_ICONV=0;      AC_SUBST([REPLACE_ICONV])

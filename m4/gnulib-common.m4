@@ -1,4 +1,4 @@
-# gnulib-common.m4 serial 63
+# gnulib-common.m4 serial 64
 dnl Copyright (C) 2007-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -355,6 +355,16 @@ AC_DEFUN([gl_COMMON_BODY], [
   dnl arise e.g., in the macros gl_PRINTF_DIRECTIVE_N, gl_SNPRINTF_DIRECTIVE_N.
   LIBC_FATAL_STDERR_=1
   export LIBC_FATAL_STDERR_
+])
+
+# gl_MODULE_INDICATOR_INIT_VARIABLE([variablename])
+# gl_MODULE_INDICATOR_INIT_VARIABLE([variablename], [initialvalue])
+# initializes the shell variable that indicates the presence of the given module
+# as a C preprocessor expression.
+AC_DEFUN([gl_MODULE_INDICATOR_INIT_VARIABLE],
+[
+  [$1]=m4_if([$2], , [0], [$2])
+  AC_SUBST([$1])
 ])
 
 # gl_MODULE_INDICATOR_CONDITION

@@ -1,4 +1,4 @@
-# threads.m4 serial 7
+# threads.m4 serial 8
 dnl Copyright (C) 2019-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -148,10 +148,10 @@ AC_DEFUN([gl_THREADS_MODULE_INDICATOR],
 
 AC_DEFUN([gl_THREADS_H_DEFAULTS],
 [
-  GNULIB_CND=0;           AC_SUBST([GNULIB_CND])
-  GNULIB_MTX=0;           AC_SUBST([GNULIB_MTX])
-  GNULIB_THRD=0;          AC_SUBST([GNULIB_THRD])
-  GNULIB_TSS=0;           AC_SUBST([GNULIB_TSS])
+  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_CND])
+  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_MTX])
+  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_THRD])
+  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_TSS])
   dnl Assume proper GNU behavior unless another module says otherwise.
   HAVE_THREAD_LOCAL=1;    AC_SUBST([HAVE_THREAD_LOCAL])
   BROKEN_THRD_START_T=0;  AC_SUBST([BROKEN_THRD_START_T])

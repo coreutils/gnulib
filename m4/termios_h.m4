@@ -1,4 +1,4 @@
-# termios_h.m4 serial 4
+# termios_h.m4 serial 5
 dnl Copyright (C) 2010-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -36,7 +36,7 @@ AC_DEFUN([gl_TERMIOS_MODULE_INDICATOR],
 
 AC_DEFUN([gl_TERMIOS_H_DEFAULTS],
 [
-  GNULIB_TCGETSID=0;      AC_SUBST([GNULIB_TCGETSID])
+  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_TCGETSID])
   dnl Assume proper GNU behavior unless another module says otherwise.
   HAVE_DECL_TCGETSID=1;   AC_SUBST([HAVE_DECL_TCGETSID])
   HAVE_TERMIOS_H=1;       AC_SUBST([HAVE_TERMIOS_H])

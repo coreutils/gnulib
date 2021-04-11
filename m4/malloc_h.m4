@@ -1,4 +1,4 @@
-# malloc_h.m4 serial 1
+# malloc_h.m4 serial 2
 dnl Copyright (C) 2020-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -40,7 +40,7 @@ AC_DEFUN([gl_MALLOC_MODULE_INDICATOR],
 
 AC_DEFUN([gl_MALLOC_H_DEFAULTS],
 [
-  GNULIB_MEMALIGN=0;      AC_SUBST([GNULIB_MEMALIGN])
+  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_MEMALIGN])
   dnl Assume proper GNU behavior unless another module says otherwise.
   HAVE_MEMALIGN=1;        AC_SUBST([HAVE_MEMALIGN])
   REPLACE_MEMALIGN=0;     AC_SUBST([REPLACE_MEMALIGN])
