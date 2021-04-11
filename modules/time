@@ -14,7 +14,8 @@ snippet/warn-on-use
 stddef
 
 configure.ac:
-gl_HEADER_TIME_H
+gl_TIME_H
+gl_TIME_H_REQUIRE_DEFAULTS
 
 Makefile.am:
 BUILT_SOURCES += time.h

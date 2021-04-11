@@ -3438,13 +3438,14 @@ func_modules_to_filelist_separately ()
 }
 
 # func_compute_include_guard_prefix
-# Determine include_guard_prefix.
+# Determine include_guard_prefix and module_indicator_prefix.
 # Input:
 # - macro_prefix    prefix of gl_LIBOBJS macros to use
 # Output:
 # - include_guard_prefix  replacement for ${gl_include_guard_prefix}
 # - sed_replace_include_guard_prefix
 #                   sed expression for resolving ${gl_include_guard_prefix}
+# - module_indicator_prefix  prefix of GNULIB_<modulename> variables to use
 func_compute_include_guard_prefix ()
 {
   if test "$macro_prefix" = gl; then
@@ -3453,6 +3454,7 @@ func_compute_include_guard_prefix ()
     include_guard_prefix='GL_'`echo "$macro_prefix" | LC_ALL=C tr '[a-z]' '[A-Z]'`
   fi
   sed_replace_include_guard_prefix='s/\${gl_include_guard_prefix}/'"${include_guard_prefix}"'/g'
+  module_indicator_prefix="${include_guard_prefix}"
 }
 
 # func_execute_command command [args...]
@@ -3636,6 +3638,7 @@ func_update_file ()
 # - makefile_name   from --makefile-name
 # - libtool         true if libtool will be used, false or blank otherwise
 # - macro_prefix    prefix of gl_LIBOBJS macros to use
+# - module_indicator_prefix  prefix of GNULIB_<modulename> variables to use
 # - po_domain       prefix of i18n domain to use (without -gnulib suffix)
 # - witness_c_macro  from --witness-c-macro
 # - actioncmd       (optional) command that will reproduce this invocation
@@ -3695,6 +3698,7 @@ func_emit_lib_Makefile_am ()
                 -e 's,lib_LTLIBRARIES,lib%_LTLIBRARIES,g' \
                 -e "$sed_eliminate_LDFLAGS" \
                 -e 's,lib_\([A-Z][A-Z]*\),'"${libname}_${libext}"'_\1,g' \
+                -e 's,\$(GNULIB_,$('"${module_indicator_prefix}"'_GNULIB_,' \
                 -e 's,lib%_LIBRARIES,lib_LIBRARIES,g' \
                 -e 's,lib%_LTLIBRARIES,lib_LTLIBRARIES,g' \
                 -e "$sed_transform_check_PROGRAMS" \
@@ -3706,7 +3710,9 @@ func_emit_lib_Makefile_am ()
         } | combine_lines "${libname}_${libext}_SOURCES" > "$tmp"/amsnippet1
         {
           func_get_automake_snippet_unconditional "$module" |
-            LC_ALL=C sed -e 's,lib_\([A-Z][A-Z]*\),'"${libname}_${libext}"'_\1,g'
+            LC_ALL=C \
+            sed -e 's,lib_\([A-Z][A-Z]*\),'"${libname}_${libext}"'_\1,g' \
+                -e 's,\$(GNULIB_,$('"${module_indicator_prefix}"'_GNULIB_,'
         } > "$tmp"/amsnippet2
         # Skip the contents if it's entirely empty.
         if grep '[^	 ]' "$tmp"/amsnippet1 "$tmp"/amsnippet2 > /dev/null ; then
@@ -3994,6 +4000,7 @@ func_emit_po_POTFILES_in ()
 # - m4base          relative directory containing autoconf macros
 # - testsbase       relative directory containing unit test code
 # - macro_prefix    prefix of gl_LIBOBJS macros to use
+# - module_indicator_prefix  prefix of GNULIB_<modulename> variables to use
 # - witness_c_macro  from --witness-c-macro
 # - for_test        true if creating a package for testing, false otherwise
 # - single_configure  true if a single configure file should be generated,
@@ -4049,6 +4056,7 @@ func_emit_tests_Makefile_am ()
                 -e 's,lib_LTLIBRARIES,lib%_LTLIBRARIES,g' \
                 -e "$sed_eliminate_LDFLAGS" \
                 -e 's,lib_\([A-Z][A-Z]*\),libtests_a_\1,g' \
+                -e 's,\$(GNULIB_,$('"${module_indicator_prefix}"'_GNULIB_,' \
                 -e 's,lib%_LIBRARIES,lib_LIBRARIES,g' \
                 -e 's,lib%_LTLIBRARIES,lib_LTLIBRARIES,g' \
                 -e "$sed_transform_check_PROGRAMS" \
@@ -4060,7 +4068,9 @@ func_emit_tests_Makefile_am ()
         } | combine_lines "libtests_a_SOURCES" > "$tmp"/amsnippet1
         {
           func_get_automake_snippet_unconditional "$module" |
-            LC_ALL=C sed -e 's,lib_\([A-Z][A-Z]*\),libtests_a_\1,g'
+            LC_ALL=C \
+            sed -e 's,lib_\([A-Z][A-Z]*\),libtests_a_\1,g' \
+                -e 's,\$(GNULIB_,$('"${module_indicator_prefix}"'_GNULIB_,'
         } > "$tmp"/amsnippet2
         # Skip the contents if it's entirely empty.
         if grep '[^	 ]' "$tmp"/amsnippet1 "$tmp"/amsnippet2 > /dev/null ; then
@@ -4252,7 +4262,8 @@ func_emit_tests_Makefile_am ()
 
 # func_emit_initmacro_start macro_prefix
 # emits the first few statements of the gl_INIT macro to standard output.
-# - macro_prefix    prefix of gl_EARLY, gl_INIT macros to use
+# - macro_prefix             prefix of gl_EARLY, gl_INIT macros to use
+# - module_indicator_prefix  prefix of GNULIB_<modulename> variables to use
 func_emit_initmacro_start ()
 {
   macro_prefix_arg="$1"
@@ -4280,12 +4291,16 @@ func_emit_initmacro_start ()
   # in which to expect them.
   echo "  m4_pushdef([${macro_prefix_arg}_LIBSOURCES_LIST], [])"
   echo "  m4_pushdef([${macro_prefix_arg}_LIBSOURCES_DIR], [])"
+  # Scope for m4 macros.
+  echo "  m4_pushdef([GL_MACRO_PREFIX], [${macro_prefix_arg}])"
+  # Scope the GNULIB_<modulename> variables.
+  echo "  m4_pushdef([GL_MODULE_INDICATOR_PREFIX], [${module_indicator_prefix}])"
   echo "  gl_COMMON"
 }
 
 # func_emit_initmacro_end macro_prefix
 # emits the last few statements of the gl_INIT macro to standard output.
-# - macro_prefix    prefix of gl_EARLY, gl_INIT macros to use
+# - macro_prefix             prefix of gl_EARLY, gl_INIT macros to use
 func_emit_initmacro_end ()
 {
   macro_prefix_arg="$1"
@@ -4304,6 +4319,8 @@ func_emit_initmacro_end ()
   echo "      m4_if(m4_sysval, [0], [],"
   echo "        [AC_FATAL([expected source file, required through AC_LIBSOURCES, not found])])"
   echo "  ])"
+  echo "  m4_popdef([GL_MODULE_INDICATOR_PREFIX])"
+  echo "  m4_popdef([GL_MACRO_PREFIX])"
   echo "  m4_popdef([${macro_prefix_arg}_LIBSOURCES_DIR])"
   echo "  m4_popdef([${macro_prefix_arg}_LIBSOURCES_LIST])"
   echo "  m4_popdef([AC_LIBSOURCES])"
@@ -5438,7 +5455,7 @@ s,^\(.................................................[^ ]*\) *,                
     func_append_actionarg "$module"
   done
 
-  # Determine include_guard_prefix.
+  # Determine include_guard_prefix and module_indicator_prefix.
   func_compute_include_guard_prefix
 
   # Default the makefile name to Makefile.am.
@@ -6379,7 +6396,7 @@ func_create_testdir ()
     exec 0<&5 5<&-
   }
 
-  # Determine include_guard_prefix.
+  # Determine include_guard_prefix and module_indicator_prefix.
   func_compute_include_guard_prefix
 
   # Create Makefile.ams that are for testing.

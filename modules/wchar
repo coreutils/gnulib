@@ -17,6 +17,7 @@ stddef
 
 configure.ac:
 gl_WCHAR_H
+gl_WCHAR_H_REQUIRE_DEFAULTS
 
 Makefile.am:
 BUILT_SOURCES += wchar.h

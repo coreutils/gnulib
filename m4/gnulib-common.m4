@@ -1,4 +1,4 @@
-# gnulib-common.m4 serial 64
+# gnulib-common.m4 serial 65
 dnl Copyright (C) 2007-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -363,8 +363,8 @@ AC_DEFUN([gl_COMMON_BODY], [
 # as a C preprocessor expression.
 AC_DEFUN([gl_MODULE_INDICATOR_INIT_VARIABLE],
 [
-  [$1]=m4_if([$2], , [0], [$2])
-  AC_SUBST([$1])
+  GL_MODULE_INDICATOR_PREFIX[]_[$1]=m4_if([$2], , [0], [$2])
+  AC_SUBST(GL_MODULE_INDICATOR_PREFIX[]_[$1])
 ])
 
 # gl_MODULE_INDICATOR_CONDITION
@@ -379,9 +379,9 @@ m4_define([gl_MODULE_INDICATOR_CONDITION], [1])
 AC_DEFUN([gl_MODULE_INDICATOR_SET_VARIABLE],
 [
   gl_MODULE_INDICATOR_SET_VARIABLE_AUX(
-    [GNULIB_[]m4_translit([[$1]],
-                          [abcdefghijklmnopqrstuvwxyz./-],
-                          [ABCDEFGHIJKLMNOPQRSTUVWXYZ___])],
+    [GL_MODULE_INDICATOR_PREFIX[]_GNULIB_[]m4_translit([[$1]],
+                                                       [abcdefghijklmnopqrstuvwxyz./-],
+                                                       [ABCDEFGHIJKLMNOPQRSTUVWXYZ___])],
     [gl_MODULE_INDICATOR_CONDITION])
 ])
 

@@ -14,6 +14,7 @@ wchar
 
 configure.ac:
 gl_UCHAR_H
+gl_UCHAR_H_REQUIRE_DEFAULTS
 
 Makefile.am:
 BUILT_SOURCES += uchar.h

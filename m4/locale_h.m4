@@ -1,13 +1,13 @@
-# locale_h.m4 serial 26
+# locale_h.m4 serial 27
 dnl Copyright (C) 2007, 2009-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 
-AC_DEFUN([gl_LOCALE_H],
+AC_DEFUN_ONCE([gl_LOCALE_H],
 [
-  dnl Use AC_REQUIRE here, so that the default behavior below is expanded
-  dnl once only, before all statements that occur in other macros.
+  dnl Ensure to expand the default settings once only, before all statements
+  dnl that occur in other macros.
   AC_REQUIRE([gl_LOCALE_H_DEFAULTS])
 
   dnl Persuade glibc <locale.h> to define locale_t and the int_p_*, int_n_*
@@ -131,20 +131,28 @@ AC_DEFUN([gl_LOCALE_T],
 
 AC_DEFUN([gl_LOCALE_MODULE_INDICATOR],
 [
-  dnl Use AC_REQUIRE here, so that the default settings are expanded once only.
-  AC_REQUIRE([gl_LOCALE_H_DEFAULTS])
+  dnl Ensure to expand the default settings once only.
+  gl_LOCALE_H_REQUIRE_DEFAULTS
   gl_MODULE_INDICATOR_SET_VARIABLE([$1])
   dnl Define it also as a C macro, for the benefit of the unit tests.
   gl_MODULE_INDICATOR_FOR_TESTS([$1])
 ])
 
+AC_DEFUN([gl_LOCALE_H_REQUIRE_DEFAULTS],
+[
+  m4_defun(GL_MODULE_INDICATOR_PREFIX[_LOCALE_H_MODULE_INDICATOR_DEFAULTS], [
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_LOCALECONV])
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_SETLOCALE])
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_SETLOCALE_NULL])
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_DUPLOCALE])
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_LOCALENAME])
+  ])
+  m4_require(GL_MODULE_INDICATOR_PREFIX[_LOCALE_H_MODULE_INDICATOR_DEFAULTS])
+  AC_REQUIRE([gl_LOCALE_H_DEFAULTS])
+])
+
 AC_DEFUN([gl_LOCALE_H_DEFAULTS],
 [
-  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_LOCALECONV])
-  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_SETLOCALE])
-  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_SETLOCALE_NULL])
-  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_DUPLOCALE])
-  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_LOCALENAME])
   dnl Assume proper GNU behavior unless another module says otherwise.
   HAVE_NEWLOCALE=1;       AC_SUBST([HAVE_NEWLOCALE])
   HAVE_DUPLOCALE=1;       AC_SUBST([HAVE_DUPLOCALE])

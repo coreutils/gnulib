@@ -1,13 +1,13 @@
-# pthread_h.m4 serial 6
+# pthread_h.m4 serial 7
 dnl Copyright (C) 2009-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 
-AC_DEFUN([gl_PTHREAD_H],
+AC_DEFUN_ONCE([gl_PTHREAD_H],
 [
-  dnl Use AC_REQUIRE here, so that the default behavior below is expanded
-  dnl once only, before all statements that occur in other macros.
+  dnl Ensure to expand the default settings once only, before all statements
+  dnl that occur in other macros.
   AC_REQUIRE([gl_PTHREAD_H_DEFAULTS])
 
   AC_REQUIRE([AC_CANONICAL_HOST])
@@ -139,23 +139,31 @@ AC_DEFUN([gl_PTHREAD_H],
 
 AC_DEFUN([gl_PTHREAD_MODULE_INDICATOR],
 [
-  dnl Use AC_REQUIRE here, so that the default settings are expanded once only.
-  AC_REQUIRE([gl_PTHREAD_H_DEFAULTS])
+  dnl Ensure to expand the default settings once only.
+  gl_PTHREAD_H_REQUIRE_DEFAULTS
   gl_MODULE_INDICATOR_SET_VARIABLE([$1])
   dnl Define it also as a C macro, for the benefit of the unit tests.
   gl_MODULE_INDICATOR_FOR_TESTS([$1])
 ])
 
+AC_DEFUN([gl_PTHREAD_H_REQUIRE_DEFAULTS],
+[
+  m4_defun(GL_MODULE_INDICATOR_PREFIX[_PTHREAD_H_MODULE_INDICATOR_DEFAULTS], [
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_PTHREAD_THREAD])
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_PTHREAD_ONCE])
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_PTHREAD_MUTEX])
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_PTHREAD_RWLOCK])
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_PTHREAD_COND])
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_PTHREAD_TSS])
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_PTHREAD_SPIN])
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_PTHREAD_MUTEX_TIMEDLOCK])
+  ])
+  m4_require(GL_MODULE_INDICATOR_PREFIX[_PTHREAD_H_MODULE_INDICATOR_DEFAULTS])
+  AC_REQUIRE([gl_PTHREAD_H_DEFAULTS])
+])
+
 AC_DEFUN([gl_PTHREAD_H_DEFAULTS],
 [
-  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_PTHREAD_THREAD])
-  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_PTHREAD_ONCE])
-  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_PTHREAD_MUTEX])
-  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_PTHREAD_RWLOCK])
-  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_PTHREAD_COND])
-  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_PTHREAD_TSS])
-  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_PTHREAD_SPIN])
-  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_PTHREAD_MUTEX_TIMEDLOCK])
   dnl Assume proper GNU behavior unless another module says otherwise.
   HAVE_PTHREAD_T=1;                      AC_SUBST([HAVE_PTHREAD_T])
   HAVE_PTHREAD_SPINLOCK_T=1;             AC_SUBST([HAVE_PTHREAD_SPINLOCK_T])

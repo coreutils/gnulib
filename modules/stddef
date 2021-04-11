@@ -12,6 +12,7 @@ extensions
 
 configure.ac:
 gl_STDDEF_H
+gl_STDDEF_H_REQUIRE_DEFAULTS
 
 Makefile.am:
 BUILT_SOURCES += $(STDDEF_H)

@@ -13,7 +13,8 @@ snippet/warn-on-use
 sys_socket
 
 configure.ac:
-gl_HEADER_NETDB
+gl_NETDB_H
+gl_NETDB_H_REQUIRE_DEFAULTS
 
 Makefile.am:
 BUILT_SOURCES += netdb.h

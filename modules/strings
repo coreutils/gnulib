@@ -13,7 +13,8 @@ snippet/warn-on-use
 sys_types
 
 configure.ac:
-gl_HEADER_STRINGS_H
+gl_STRINGS_H
+gl_STRINGS_H_REQUIRE_DEFAULTS
 
 Makefile.am:
 BUILT_SOURCES += strings.h

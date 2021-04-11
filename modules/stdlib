@@ -16,6 +16,7 @@ unistd
 
 configure.ac:
 gl_STDLIB_H
+gl_STDLIB_H_REQUIRE_DEFAULTS
 
 Makefile.am:
 BUILT_SOURCES += stdlib.h

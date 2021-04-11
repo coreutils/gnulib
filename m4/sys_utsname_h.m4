@@ -1,4 +1,4 @@
-# sys_utsname_h.m4 serial 9
+# sys_utsname_h.m4 serial 10
 dnl Copyright (C) 2009-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -6,10 +6,10 @@ dnl with or without modifications, as long as this notice is preserved.
 
 dnl Written by Bruno Haible.
 
-AC_DEFUN([gl_SYS_UTSNAME_H],
+AC_DEFUN_ONCE([gl_SYS_UTSNAME_H],
 [
-  dnl Use AC_REQUIRE here, so that the default behavior below is expanded
-  dnl once only, before all statements that occur in other macros.
+  dnl Ensure to expand the default settings once only, before all statements
+  dnl that occur in other macros.
   AC_REQUIRE([gl_SYS_UTSNAME_H_DEFAULTS])
 
   dnl <sys/utsname.h> is always overridden, because of GNULIB_POSIXCHECK.
@@ -40,14 +40,22 @@ AC_DEFUN([gl_SYS_UTSNAME_H],
 
 AC_DEFUN([gl_SYS_UTSNAME_MODULE_INDICATOR],
 [
-  dnl Use AC_REQUIRE here, so that the default settings are expanded once only.
-  AC_REQUIRE([gl_SYS_UTSNAME_H_DEFAULTS])
+  dnl Ensure to expand the default settings once only.
+  gl_SYS_UTSNAME_H_REQUIRE_DEFAULTS
   gl_MODULE_INDICATOR_SET_VARIABLE([$1])
+])
+
+AC_DEFUN([gl_SYS_UTSNAME_H_REQUIRE_DEFAULTS],
+[
+  m4_defun(GL_MODULE_INDICATOR_PREFIX[_SYS_UTSNAME_H_MODULE_INDICATOR_DEFAULTS], [
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_UNAME])
+  ])
+  m4_require(GL_MODULE_INDICATOR_PREFIX[_SYS_UTSNAME_H_MODULE_INDICATOR_DEFAULTS])
+  AC_REQUIRE([gl_SYS_UTSNAME_H_DEFAULTS])
 ])
 
 AC_DEFUN([gl_SYS_UTSNAME_H_DEFAULTS],
 [
-  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_UNAME])
   dnl Assume proper GNU behavior unless another module says otherwise.
   HAVE_UNAME=1;           AC_SUBST([HAVE_UNAME])
   HAVE_STRUCT_UTSNAME=1;  AC_SUBST([HAVE_STRUCT_UTSNAME])

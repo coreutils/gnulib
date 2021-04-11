@@ -13,6 +13,7 @@ snippet/warn-on-use
 
 configure.ac:
 gl_LANGINFO_H
+gl_LANGINFO_H_REQUIRE_DEFAULTS
 
 Makefile.am:
 BUILT_SOURCES += langinfo.h

@@ -1,21 +1,16 @@
 # Configure a replacement for <strings.h>.
-# serial 7
+# serial 8
 
 # Copyright (C) 2007, 2009-2021 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
 
-AC_DEFUN([gl_HEADER_STRINGS_H],
+AC_DEFUN_ONCE([gl_STRINGS_H],
 [
-  dnl Use AC_REQUIRE here, so that the default behavior below is expanded
-  dnl once only, before all statements that occur in other macros.
-  AC_REQUIRE([gl_HEADER_STRINGS_H_BODY])
-])
-
-AC_DEFUN([gl_HEADER_STRINGS_H_BODY],
-[
-  AC_REQUIRE([gl_HEADER_STRINGS_H_DEFAULTS])
+  dnl Ensure to expand the default settings once only, before all statements
+  dnl that occur in other macros.
+  AC_REQUIRE([gl_STRINGS_H_DEFAULTS])
 
   gl_CHECK_NEXT_HEADERS([strings.h])
   if test $ac_cv_header_strings_h = yes; then
@@ -37,14 +32,22 @@ AC_DEFUN([gl_HEADER_STRINGS_H_BODY],
 
 AC_DEFUN([gl_STRINGS_MODULE_INDICATOR],
 [
-  dnl Use AC_REQUIRE here, so that the default settings are expanded once only.
-  AC_REQUIRE([gl_HEADER_STRINGS_H_DEFAULTS])
+  dnl Ensure to expand the default settings once only.
+  gl_STRINGS_H_REQUIRE_DEFAULTS
   gl_MODULE_INDICATOR_SET_VARIABLE([$1])
 ])
 
-AC_DEFUN([gl_HEADER_STRINGS_H_DEFAULTS],
+AC_DEFUN([gl_STRINGS_H_REQUIRE_DEFAULTS],
 [
-  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_FFS])
+  m4_defun(GL_MODULE_INDICATOR_PREFIX[_STRINGS_H_MODULE_INDICATOR_DEFAULTS], [
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_FFS])
+  ])
+  m4_require(GL_MODULE_INDICATOR_PREFIX[_STRINGS_H_MODULE_INDICATOR_DEFAULTS])
+  AC_REQUIRE([gl_STRINGS_H_DEFAULTS])
+])
+
+AC_DEFUN([gl_STRINGS_H_DEFAULTS],
+[
   dnl Assume proper GNU behavior unless another module says otherwise.
   HAVE_FFS=1;              AC_SUBST([HAVE_FFS])
   HAVE_STRCASECMP=1;       AC_SUBST([HAVE_STRCASECMP])

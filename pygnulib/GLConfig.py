@@ -821,11 +821,15 @@ class GLConfig(object):
         Default value is False, which means that lgpl is disabled.'''
         self.table['lgpl'] = False
 
-    # Define macro_prefix methods.
     def getIncludeGuardPrefix(self):
         '''Return include_guard_prefix to use inside GLEmiter class.'''
         return(self.table['include_guard_prefix'])
 
+    def getModuleIndicatorPrefix(self):
+        '''Return module_indicator_prefix to use inside GLEmiter class.'''
+        return(getIncludeGuardPrefix(self))
+
+    # Define macro_prefix methods.
     def getMacroPrefix(self):
         '''Return the prefix of the macros 'gl_EARLY' and 'gl_INIT'.
         Default macro_prefix is 'gl'.'''

@@ -1,4 +1,4 @@
-# strtok_r.m4 serial 15
+# strtok_r.m4 serial 16
 dnl Copyright (C) 2002-2004, 2006-2007, 2009-2021 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -10,7 +10,7 @@ AC_DEFUN([gl_FUNC_STRTOK_R],
   dnl The strtok_r() declaration in lib/string.in.h uses 'restrict'.
   AC_REQUIRE([AC_C_RESTRICT])
 
-  AC_REQUIRE([gl_HEADER_STRING_H_DEFAULTS])
+  AC_REQUIRE([gl_STRING_H_DEFAULTS])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CHECK_FUNCS([strtok_r])
   if test $ac_cv_func_strtok_r = yes; then

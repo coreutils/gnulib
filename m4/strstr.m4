@@ -1,4 +1,4 @@
-# strstr.m4 serial 22
+# strstr.m4 serial 23
 dnl Copyright (C) 2008-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -7,7 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 dnl Check that strstr works.
 AC_DEFUN([gl_FUNC_STRSTR_SIMPLE],
 [
-  AC_REQUIRE([gl_HEADER_STRING_H_DEFAULTS])
+  AC_REQUIRE([gl_STRING_H_DEFAULTS])
   AC_REQUIRE([gl_FUNC_MEMCHR])
   if test $REPLACE_MEMCHR = 1; then
     REPLACE_STRSTR=1

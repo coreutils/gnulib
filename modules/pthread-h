@@ -21,6 +21,7 @@ gl_ANYTHREADLIB_EARLY
 
 configure.ac:
 gl_PTHREAD_H
+gl_PTHREAD_H_REQUIRE_DEFAULTS
 
 Makefile.am:
 BUILT_SOURCES += pthread.h

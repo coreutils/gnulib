@@ -1,4 +1,4 @@
-# arpa_inet_h.m4 serial 15
+# arpa_inet_h.m4 serial 16
 dnl Copyright (C) 2006, 2008-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -6,10 +6,10 @@ dnl with or without modifications, as long as this notice is preserved.
 
 dnl Written by Simon Josefsson and Bruno Haible
 
-AC_DEFUN([gl_HEADER_ARPA_INET],
+AC_DEFUN_ONCE([gl_ARPA_INET_H],
 [
-  dnl Use AC_REQUIRE here, so that the default behavior below is expanded
-  dnl once only, before all statements that occur in other macros.
+  dnl Ensure to expand the default settings once only, before all statements
+  dnl that occur in other macros.
   AC_REQUIRE([gl_ARPA_INET_H_DEFAULTS])
 
   AC_CHECK_HEADERS_ONCE([arpa/inet.h])
@@ -42,15 +42,23 @@ AC_DEFUN([gl_HEADER_ARPA_INET],
 
 AC_DEFUN([gl_ARPA_INET_MODULE_INDICATOR],
 [
-  dnl Use AC_REQUIRE here, so that the default settings are expanded once only.
-  AC_REQUIRE([gl_ARPA_INET_H_DEFAULTS])
+  dnl Ensure to expand the default settings once only.
+  gl_ARPA_INET_H_REQUIRE_DEFAULTS
   gl_MODULE_INDICATOR_SET_VARIABLE([$1])
+])
+
+AC_DEFUN([gl_ARPA_INET_H_REQUIRE_DEFAULTS],
+[
+  m4_defun(GL_MODULE_INDICATOR_PREFIX[_ARPA_INET_H_MODULE_INDICATOR_DEFAULTS], [
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_INET_NTOP])
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_INET_PTON])
+  ])
+  m4_require(GL_MODULE_INDICATOR_PREFIX[_ARPA_INET_H_MODULE_INDICATOR_DEFAULTS])
+  AC_REQUIRE([gl_ARPA_INET_H_DEFAULTS])
 ])
 
 AC_DEFUN([gl_ARPA_INET_H_DEFAULTS],
 [
-  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_INET_NTOP])
-  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_INET_PTON])
   dnl Assume proper GNU behavior unless another module says otherwise.
   HAVE_DECL_INET_NTOP=1;  AC_SUBST([HAVE_DECL_INET_NTOP])
   HAVE_DECL_INET_PTON=1;  AC_SUBST([HAVE_DECL_INET_PTON])

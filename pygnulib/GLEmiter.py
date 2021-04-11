@@ -460,6 +460,7 @@ USE_MSGCTXT = no\n"""
         else:  # if macro_prefix_arg has not bytes or string type
             raise(TypeError('macro_prefix_arg must be a string, not %s' %
                             type(macro_prefix_arg).__name__))
+        module_indicator_prefix = self.config.getModuleIndicatorPrefix()
         # Overriding AC_LIBOBJ and AC_REPLACE_FUNCS has the effect of storing
         # platform-dependent object files in ${macro_prefix_arg}_LIBOBJS instead
         # of LIBOBJS. The purpose is to allow several gnulib instantiations under
@@ -489,6 +490,11 @@ USE_MSGCTXT = no\n"""
         # subdirectory in which to expect them.
         emit += "  m4_pushdef([%V1%_LIBSOURCES_LIST], [])\n"
         emit += "  m4_pushdef([%V1%_LIBSOURCES_DIR], [])\n"
+        # Scope for m4 macros.
+        emit += "  m4_pushdef([GL_MACRO_PREFIX], [%V1%])"
+        # Scope the GNULIB_<modulename> variables.
+        emit += "  m4_pushdef([GL_MODULE_INDICATOR_PREFIX],"
+        emit += " [" + module_indicator_prefix + "])"
         emit += "  gl_COMMON\n"
         emit = emit.replace('%V1%', macro_prefix_arg)
         if type(emit) is bytes:
@@ -523,6 +529,8 @@ USE_MSGCTXT = no\n"""
         [AC_FATAL([expected source file, required through AC_LIBSOURCES, not \
 found])])
   ])
+  m4_popdef([GL_MODULE_INDICATOR_PREFIX])
+  m4_popdef([GL_MACRO_PREFIX])
   m4_popdef([%V1%_LIBSOURCES_DIR])
   m4_popdef([%V1%_LIBSOURCES_LIST])
   m4_popdef([AC_LIBSOURCES])
@@ -656,6 +664,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         conddeps = self.config['conddeps']
         witness_c_macro = self.config['witness_c_macro']
         include_guard_prefix = self.config['include_guard_prefix']
+        module_indicator_prefix = self.config.getModuleIndicatorPrefix()
         ac_version = self.config['ac_version']
         destfile = os.path.normpath(destfile)
 
@@ -708,6 +717,8 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                 amsnippet1 = pattern.sub('%s_%s_\\1' %
                                          (libname, libext), amsnippet1)
                 amsnippet1 = amsnippet1.replace(
+                    '$(GNULIB_', '$(' + module_indicator_prefix + '_GNULIB_')
+                amsnippet1 = amsnippet1.replace(
                     'lib%_LIBRARIES', 'lib_LIBRARIES')
                 amsnippet1 = amsnippet1.replace(
                     'lib%_LTLIBRARIES', 'lib_LTLIBRARIES')
@@ -730,6 +741,8 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                 pattern = compiler('lib_([A-Z][A-Z](?:.*?))', re.S | re.M)
                 amsnippet2 = pattern.sub('%s_%s_\\1' %
                                          (libname, libext), amsnippet2)
+                amsnippet2 = amsnippet2.replace(
+                    '$(GNULIB_', '$(' + module_indicator_prefix + '_GNULIB_')
                 if type(amsnippet1) is bytes:
                     amsnippet1 = amsnippet1.decode(ENCS['default'])
                 if type(amsnippet2) is bytes:
@@ -944,6 +957,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         conddeps = self.config['conddeps']
         witness_c_macro = self.config['witness_c_macro']
         include_guard_prefix = self.config['include_guard_prefix']
+        module_indicator_prefix = self.config.getModuleIndicatorPrefix()
         ac_version = self.config['ac_version']
         libtests = self.config['libtests']
         single_configure = self.config['single_configure']
@@ -997,6 +1011,8 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                     snippet = pattern.sub('', snippet)
                 pattern = compiler('lib_([A-Z][A-Z](?:.*?))', re.S | re.M)
                 snippet = pattern.sub('libtests_a_\\1', snippet)
+                snippet = snippet.replace(
+                    '$(GNULIB_', '$(' + module_indicator_prefix + '_GNULIB_')
                 snippet = snippet.replace('lib%_LIBRARIES', 'lib_LIBRARIES')
                 snippet = snippet.replace(
                     'lib%_LTLIBRARIES', 'lib_LTLIBRARIES')

@@ -1,4 +1,4 @@
-# sigpipe.m4 serial 2
+# sigpipe.m4 serial 3
 dnl Copyright (C) 2008-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,8 +8,8 @@ dnl Tests whether SIGPIPE is provided by <signal.h>.
 dnl Sets gl_cv_header_signal_h_SIGPIPE.
 AC_DEFUN([gl_SIGNAL_SIGPIPE],
 [
-  dnl Use AC_REQUIRE here, so that the default behavior below is expanded
-  dnl once only, before all statements that occur in other macros.
+  dnl Ensure to expand the default settings once only, before all statements
+  dnl that occur in other macros.
   AC_REQUIRE([gl_SIGNAL_SIGPIPE_BODY])
 ])
 

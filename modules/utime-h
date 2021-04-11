@@ -13,6 +13,7 @@ snippet/warn-on-use
 
 configure.ac:
 gl_UTIME_H
+gl_UTIME_H_REQUIRE_DEFAULTS
 
 Makefile.am:
 BUILT_SOURCES += utime.h

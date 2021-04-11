@@ -1,4 +1,4 @@
-# threads.m4 serial 8
+# threads.m4 serial 9
 dnl Copyright (C) 2019-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,7 +9,7 @@ dnl Sets the variable LIBSTDTHREAD to the linker options for use in a Makefile
 dnl for a program that uses the <threads.h> functions.
 dnl Sets the variable LIBTHREADLOCAL to the linker options for use in a Makefile
 dnl for a program that uses the 'thread_local' macro.
-AC_DEFUN([gl_THREADS_H],
+AC_DEFUN_ONCE([gl_THREADS_H],
 [
   AC_REQUIRE([gl_THREADS_H_DEFAULTS])
   AC_REQUIRE([AC_CANONICAL_HOST])
@@ -139,19 +139,27 @@ AC_DEFUN([gl_THREAD_LOCAL_DEFINITION],
 
 AC_DEFUN([gl_THREADS_MODULE_INDICATOR],
 [
-  dnl Use AC_REQUIRE here, so that the default settings are expanded once only.
-  AC_REQUIRE([gl_THREADS_H_DEFAULTS])
+  dnl Ensure to expand the default settings once only.
+  gl_THREADS_H_REQUIRE_DEFAULTS
   gl_MODULE_INDICATOR_SET_VARIABLE([$1])
   dnl Define it also as a C macro, for the benefit of the unit tests.
   gl_MODULE_INDICATOR_FOR_TESTS([$1])
 ])
 
+AC_DEFUN([gl_THREADS_H_REQUIRE_DEFAULTS],
+[
+  m4_defun(GL_MODULE_INDICATOR_PREFIX[_THREADS_H_MODULE_INDICATOR_DEFAULTS], [
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_CND])
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_MTX])
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_THRD])
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_TSS])
+  ])
+  m4_require(GL_MODULE_INDICATOR_PREFIX[_THREADS_H_MODULE_INDICATOR_DEFAULTS])
+  AC_REQUIRE([gl_THREADS_H_DEFAULTS])
+])
+
 AC_DEFUN([gl_THREADS_H_DEFAULTS],
 [
-  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_CND])
-  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_MTX])
-  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_THRD])
-  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_TSS])
   dnl Assume proper GNU behavior unless another module says otherwise.
   HAVE_THREAD_LOCAL=1;    AC_SUBST([HAVE_THREAD_LOCAL])
   BROKEN_THRD_START_T=0;  AC_SUBST([BROKEN_THRD_START_T])

@@ -15,7 +15,7 @@ if test $HAVE_FLOCK = 0; then
   AC_LIBOBJ([flock])
   gl_PREREQ_FLOCK
 fi
-gl_HEADER_SYS_FILE_MODULE_INDICATOR([flock])
+gl_SYS_FILE_MODULE_INDICATOR([flock])
 
 Makefile.am:
 

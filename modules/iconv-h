@@ -13,6 +13,7 @@ snippet/warn-on-use
 
 configure.ac:
 gl_ICONV_H
+gl_ICONV_H_REQUIRE_DEFAULTS
 
 Makefile.am:
 BUILT_SOURCES += $(ICONV_H)

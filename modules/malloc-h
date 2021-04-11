@@ -12,6 +12,7 @@ snippet/warn-on-use
 
 configure.ac:
 gl_MALLOC_H
+gl_MALLOC_H_REQUIRE_DEFAULTS
 
 Makefile.am:
 BUILT_SOURCES += malloc.h

@@ -1,4 +1,4 @@
-# af_alg.m4 serial 4
+# af_alg.m4 serial 5
 dnl Copyright 2018-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,7 +8,7 @@ dnl From Matteo Croce.
 
 AC_DEFUN_ONCE([gl_AF_ALG],
 [
-  AC_REQUIRE([gl_HEADER_SYS_SOCKET])
+  AC_REQUIRE([gl_SYS_SOCKET_H])
   AC_REQUIRE([AC_C_INLINE])
 
   dnl Check whether linux/if_alg.h has needed features.

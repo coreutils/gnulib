@@ -20,6 +20,7 @@ sys_types
 
 configure.ac:
 gl_UNISTD_H
+gl_UNISTD_H_REQUIRE_DEFAULTS
 
 Makefile.am:
 BUILT_SOURCES += unistd.h

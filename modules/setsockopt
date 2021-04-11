@@ -13,7 +13,7 @@ errno           [test "$ac_cv_header_winsock2_h" = yes]
 msvc-nothrow    [test "$ac_cv_header_winsock2_h" = yes]
 
 configure.ac:
-AC_REQUIRE([gl_HEADER_SYS_SOCKET])
+AC_REQUIRE([gl_SYS_SOCKET_H])
 if test "$ac_cv_header_winsock2_h" = yes; then
   AC_LIBOBJ([setsockopt])
 fi

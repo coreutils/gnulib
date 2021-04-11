@@ -1,4 +1,4 @@
-# strverscmp.m4 serial 8
+# strverscmp.m4 serial 9
 dnl Copyright (C) 2002, 2005-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,7 +9,7 @@ AC_DEFUN([gl_FUNC_STRVERSCMP],
   dnl Persuade glibc <string.h> to declare strverscmp().
   AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
 
-  AC_REQUIRE([gl_HEADER_STRING_H_DEFAULTS])
+  AC_REQUIRE([gl_STRING_H_DEFAULTS])
   AC_CHECK_FUNCS([strverscmp])
   if test $ac_cv_func_strverscmp = no; then
     HAVE_STRVERSCMP=0

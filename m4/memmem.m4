@@ -1,4 +1,4 @@
-# memmem.m4 serial 27
+# memmem.m4 serial 28
 dnl Copyright (C) 2002-2004, 2007-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -10,7 +10,7 @@ AC_DEFUN([gl_FUNC_MEMMEM_SIMPLE],
   dnl Persuade glibc <string.h> to declare memmem().
   AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
 
-  AC_REQUIRE([gl_HEADER_STRING_H_DEFAULTS])
+  AC_REQUIRE([gl_STRING_H_DEFAULTS])
   AC_CHECK_FUNCS([memmem])
   if test $ac_cv_func_memmem = yes; then
     HAVE_MEMMEM=1

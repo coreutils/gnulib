@@ -1,4 +1,4 @@
-# monetary_h.m4 serial 6
+# monetary_h.m4 serial 7
 dnl Copyright (C) 2017-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -49,14 +49,22 @@ AC_DEFUN_ONCE([gl_MONETARY_H],
 
 AC_DEFUN([gl_MONETARY_MODULE_INDICATOR],
 [
-  dnl Use AC_REQUIRE here, so that the default settings are expanded once only.
-  AC_REQUIRE([gl_MONETARY_H_DEFAULTS])
+  dnl Ensure to expand the default settings once only.
+  gl_MONETARY_H_REQUIRE_DEFAULTS
   gl_MODULE_INDICATOR_SET_VARIABLE([$1])
+])
+
+AC_DEFUN([gl_MONETARY_H_REQUIRE_DEFAULTS],
+[
+  m4_defun(GL_MODULE_INDICATOR_PREFIX[_MONETARY_H_MODULE_INDICATOR_DEFAULTS], [
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_STRFMON_L])
+  ])
+  m4_require(GL_MODULE_INDICATOR_PREFIX[_MONETARY_H_MODULE_INDICATOR_DEFAULTS])
+  AC_REQUIRE([gl_MONETARY_H_DEFAULTS])
 ])
 
 AC_DEFUN([gl_MONETARY_H_DEFAULTS],
 [
-  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_STRFMON_L])
   dnl Assume proper GNU behavior unless another module says otherwise.
   HAVE_STRFMON_L=1;        AC_SUBST([HAVE_STRFMON_L])
   REPLACE_STRFMON_L=0;     AC_SUBST([REPLACE_STRFMON_L])

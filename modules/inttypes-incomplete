@@ -15,6 +15,7 @@ stdint
 
 configure.ac:
 gl_INTTYPES_INCOMPLETE
+gl_INTTYPES_H_REQUIRE_DEFAULTS
 
 Makefile.am:
 BUILT_SOURCES += inttypes.h

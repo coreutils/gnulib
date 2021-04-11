@@ -10,7 +10,8 @@ include_next
 snippet/warn-on-use
 
 configure.ac:
-gl_HEADER_SYS_FILE_H
+gl_SYS_FILE_H
+gl_SYS_FILE_H_REQUIRE_DEFAULTS
 AC_PROG_MKDIR_P
 
 Makefile.am:

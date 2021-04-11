@@ -12,6 +12,7 @@ snippet/warn-on-use
 
 configure.ac:
 gl_SYS_TIMES_H
+gl_SYS_TIMES_H_REQUIRE_DEFAULTS
 AC_PROG_MKDIR_P
 
 Makefile.am:

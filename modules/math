@@ -16,6 +16,7 @@ float
 
 configure.ac:
 gl_MATH_H
+gl_MATH_H_REQUIRE_DEFAULTS
 
 Makefile.am:
 BUILT_SOURCES += math.h

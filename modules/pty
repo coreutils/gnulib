@@ -12,6 +12,7 @@ snippet/warn-on-use
 
 configure.ac:
 gl_PTY_H
+gl_PTY_H_REQUIRE_DEFAULTS
 
 Makefile.am:
 BUILT_SOURCES += pty.h

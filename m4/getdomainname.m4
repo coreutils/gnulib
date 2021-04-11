@@ -1,4 +1,4 @@
-# getdomainname.m4 serial 10
+# getdomainname.m4 serial 11
 dnl Copyright (C) 2002-2003, 2008-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -7,8 +7,8 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_FUNC_GETDOMAINNAME],
 [
   AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
-  AC_REQUIRE([gl_HEADER_SYS_SOCKET])dnl for HAVE_SYS_SOCKET_H
-  AC_REQUIRE([gl_HEADER_NETDB])dnl for HAVE_NETDB_H
+  AC_REQUIRE([gl_SYS_SOCKET_H])dnl for HAVE_SYS_SOCKET_H
+  AC_REQUIRE([gl_NETDB_H])dnl for HAVE_NETDB_H
 
   dnl Persuade glibc <unistd.h> to declare getdomainname().
   AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])

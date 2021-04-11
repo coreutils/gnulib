@@ -13,6 +13,7 @@ snippet/warn-on-use
 
 configure.ac:
 gl_CTYPE_H
+gl_CTYPE_H_REQUIRE_DEFAULTS
 
 Makefile.am:
 BUILT_SOURCES += ctype.h

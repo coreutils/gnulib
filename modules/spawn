@@ -16,6 +16,7 @@ snippet/warn-on-use
 
 configure.ac:
 gl_SPAWN_H
+gl_SPAWN_H_REQUIRE_DEFAULTS
 
 Makefile.am:
 BUILT_SOURCES += spawn.h

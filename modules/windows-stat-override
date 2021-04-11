@@ -12,10 +12,10 @@ Depends-on:
 sys_stat
 
 configure.ac:
-AC_REQUIRE([gl_SYS_STAT_H_DEFAULTS])
+gl_SYS_STAT_H_REQUIRE_DEFAULTS
 AC_REQUIRE([AC_CANONICAL_HOST])
 case "$host_os" in
-  mingw*) GNULIB_OVERRIDES_STRUCT_STAT=1 ;;
+  mingw*) gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_OVERRIDES_STRUCT_STAT], [1]) ;;
 esac
 
 Makefile.am:

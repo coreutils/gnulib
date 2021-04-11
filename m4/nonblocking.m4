@@ -1,4 +1,4 @@
-# nonblocking.m4 serial 2
+# nonblocking.m4 serial 3
 dnl Copyright (C) 2011-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -10,8 +10,8 @@ dnl Also tests whether open() supports O_NONBLOCK.
 dnl Sets gl_cv_have_open_O_NONBLOCK.
 AC_DEFUN([gl_NONBLOCKING_IO],
 [
-  dnl Use AC_REQUIRE here, so that the default behavior below is expanded
-  dnl once only, before all statements that occur in other macros.
+  dnl Ensure to expand the default settings once only, before all statements
+  dnl that occur in other macros.
   AC_REQUIRE([gl_NONBLOCKING_IO_BODY])
 ])
 

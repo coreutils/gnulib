@@ -13,6 +13,7 @@ snippet/warn-on-use
 
 configure.ac:
 gl_MONETARY_H
+gl_MONETARY_H_REQUIRE_DEFAULTS
 
 Makefile.am:
 BUILT_SOURCES += $(MONETARY_H)

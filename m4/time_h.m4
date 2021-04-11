@@ -2,7 +2,7 @@
 
 # Copyright (C) 2000-2001, 2003-2007, 2009-2021 Free Software Foundation, Inc.
 
-# serial 16
+# serial 17
 
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -10,16 +10,11 @@
 
 # Written by Paul Eggert and Jim Meyering.
 
-AC_DEFUN([gl_HEADER_TIME_H],
+AC_DEFUN_ONCE([gl_TIME_H],
 [
-  dnl Use AC_REQUIRE here, so that the default behavior below is expanded
-  dnl once only, before all statements that occur in other macros.
-  AC_REQUIRE([gl_HEADER_TIME_H_BODY])
-])
-
-AC_DEFUN([gl_HEADER_TIME_H_BODY],
-[
-  AC_REQUIRE([gl_HEADER_TIME_H_DEFAULTS])
+  dnl Ensure to expand the default settings once only, before all statements
+  dnl that occur in other macros.
+  AC_REQUIRE([gl_TIME_H_DEFAULTS])
 
   gl_NEXT_HEADERS([time.h])
   AC_REQUIRE([gl_CHECK_TYPE_STRUCT_TIMESPEC])
@@ -113,28 +108,36 @@ AC_DEFUN([gl_CHECK_TYPE_STRUCT_TIMESPEC],
 
 AC_DEFUN([gl_TIME_MODULE_INDICATOR],
 [
-  dnl Use AC_REQUIRE here, so that the default settings are expanded once only.
-  AC_REQUIRE([gl_HEADER_TIME_H_DEFAULTS])
+  dnl Ensure to expand the default settings once only.
+  gl_TIME_H_REQUIRE_DEFAULTS
   gl_MODULE_INDICATOR_SET_VARIABLE([$1])
   dnl Define it also as a C macro, for the benefit of the unit tests.
   gl_MODULE_INDICATOR_FOR_TESTS([$1])
 ])
 
-AC_DEFUN([gl_HEADER_TIME_H_DEFAULTS],
+AC_DEFUN([gl_TIME_H_REQUIRE_DEFAULTS],
 [
-  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_CTIME])
-  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_MKTIME])
-  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_LOCALTIME])
-  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_NANOSLEEP])
-  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_STRFTIME])
-  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_STRPTIME])
-  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_TIMEGM])
-  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_TIMESPEC_GET])
-  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_TIME_R])
-  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_TIME_RZ])
-  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_TZSET])
-  dnl Support Microsoft deprecated alias function names by default.
-  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_MDA_TZSET], [1])
+  m4_defun(GL_MODULE_INDICATOR_PREFIX[_TIME_H_MODULE_INDICATOR_DEFAULTS], [
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_CTIME])
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_MKTIME])
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_LOCALTIME])
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_NANOSLEEP])
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_STRFTIME])
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_STRPTIME])
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_TIMEGM])
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_TIMESPEC_GET])
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_TIME_R])
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_TIME_RZ])
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_TZSET])
+    dnl Support Microsoft deprecated alias function names by default.
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_MDA_TZSET], [1])
+  ])
+  m4_require(GL_MODULE_INDICATOR_PREFIX[_TIME_H_MODULE_INDICATOR_DEFAULTS])
+  AC_REQUIRE([gl_TIME_H_DEFAULTS])
+])
+
+AC_DEFUN([gl_TIME_H_DEFAULTS],
+[
   dnl Assume proper GNU behavior unless another module says otherwise.
   HAVE_DECL_LOCALTIME_R=1;               AC_SUBST([HAVE_DECL_LOCALTIME_R])
   HAVE_NANOSLEEP=1;                      AC_SUBST([HAVE_NANOSLEEP])

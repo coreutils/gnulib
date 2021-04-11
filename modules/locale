@@ -15,6 +15,7 @@ stddef
 
 configure.ac:
 gl_LOCALE_H
+gl_LOCALE_H_REQUIRE_DEFAULTS
 
 Makefile.am:
 BUILT_SOURCES += locale.h

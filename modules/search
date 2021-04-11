@@ -13,6 +13,7 @@ snippet/warn-on-use
 
 configure.ac:
 gl_SEARCH_H
+gl_SEARCH_H_REQUIRE_DEFAULTS
 
 Makefile.am:
 BUILT_SOURCES += search.h

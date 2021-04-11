@@ -15,6 +15,7 @@ extensions
 
 configure.ac:
 gl_SIGNAL_H
+gl_SIGNAL_H_REQUIRE_DEFAULTS
 
 Makefile.am:
 BUILT_SOURCES += signal.h

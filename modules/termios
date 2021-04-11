@@ -13,6 +13,7 @@ snippet/warn-on-use
 
 configure.ac:
 gl_TERMIOS_H
+gl_TERMIOS_H_REQUIRE_DEFAULTS
 
 Makefile.am:
 BUILT_SOURCES += termios.h

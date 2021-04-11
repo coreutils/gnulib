@@ -15,7 +15,8 @@ snippet/warn-on-use
 sys_socket
 
 configure.ac:
-gl_HEADER_ARPA_INET
+gl_ARPA_INET_H
+gl_ARPA_INET_H_REQUIRE_DEFAULTS
 AC_PROG_MKDIR_P
 
 Makefile.am:

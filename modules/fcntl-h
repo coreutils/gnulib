@@ -18,6 +18,7 @@ unistd
 
 configure.ac:
 gl_FCNTL_H
+gl_FCNTL_H_REQUIRE_DEFAULTS
 
 Makefile.am:
 BUILT_SOURCES += fcntl.h

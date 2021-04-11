@@ -20,7 +20,8 @@ stdalign
 sys_uio
 
 configure.ac:
-AC_REQUIRE([gl_HEADER_SYS_SOCKET])
+gl_SYS_SOCKET_H
+gl_SYS_SOCKET_H_REQUIRE_DEFAULTS
 AC_PROG_MKDIR_P
 
 Makefile.am:

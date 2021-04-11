@@ -13,6 +13,7 @@ unistd
 
 configure.ac:
 gl_SYS_IOCTL_H
+gl_SYS_IOCTL_H_REQUIRE_DEFAULTS
 AC_PROG_MKDIR_P
 
 Makefile.am:

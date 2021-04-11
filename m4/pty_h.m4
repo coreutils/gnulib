@@ -1,4 +1,4 @@
-# pty_h.m4 serial 12
+# pty_h.m4 serial 13
 dnl Copyright (C) 2009-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -52,17 +52,25 @@ AC_DEFUN_ONCE([gl_PTY_H],
 
 AC_DEFUN([gl_PTY_MODULE_INDICATOR],
 [
-  dnl Use AC_REQUIRE here, so that the default settings are expanded once only.
-  AC_REQUIRE([gl_PTY_H_DEFAULTS])
+  dnl Ensure to expand the default settings once only.
+  gl_PTY_H_REQUIRE_DEFAULTS
   gl_MODULE_INDICATOR_SET_VARIABLE([$1])
   dnl Define it also as a C macro, for the benefit of the unit tests.
   gl_MODULE_INDICATOR_FOR_TESTS([$1])
 ])
 
+AC_DEFUN([gl_PTY_H_REQUIRE_DEFAULTS],
+[
+  m4_defun(GL_MODULE_INDICATOR_PREFIX[_PTY_H_MODULE_INDICATOR_DEFAULTS], [
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_FORKPTY])
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_OPENPTY])
+  ])
+  m4_require(GL_MODULE_INDICATOR_PREFIX[_PTY_H_MODULE_INDICATOR_DEFAULTS])
+  AC_REQUIRE([gl_PTY_H_DEFAULTS])
+])
+
 AC_DEFUN([gl_PTY_H_DEFAULTS],
 [
-  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_FORKPTY])
-  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_OPENPTY])
   dnl Assume proper GNU behavior unless another module says otherwise.
   HAVE_UTIL_H=0;        AC_SUBST([HAVE_UTIL_H])
   HAVE_LIBUTIL_H=0;     AC_SUBST([HAVE_LIBUTIL_H])

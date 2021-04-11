@@ -29,7 +29,8 @@ configure.ac-early:
 gl_ANYTHREADLIB_EARLY
 
 configure.ac:
-AC_REQUIRE([gl_THREADS_H])
+gl_THREADS_H
+gl_THREADS_H_REQUIRE_DEFAULTS
 
 Makefile.am:
 BUILT_SOURCES += threads.h

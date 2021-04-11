@@ -15,7 +15,8 @@ snippet/warn-on-use
 stddef
 
 configure.ac:
-gl_HEADER_STRING_H
+gl_STRING_H
+gl_STRING_H_REQUIRE_DEFAULTS
 
 Makefile.am:
 BUILT_SOURCES += string.h

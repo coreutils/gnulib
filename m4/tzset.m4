@@ -1,4 +1,4 @@
-# serial 15
+# serial 16
 
 # Copyright (C) 2003, 2007, 2009-2021 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -9,7 +9,7 @@
 
 AC_DEFUN([gl_FUNC_TZSET],
 [
-  AC_REQUIRE([gl_HEADER_TIME_H_DEFAULTS])
+  AC_REQUIRE([gl_TIME_H_DEFAULTS])
   AC_REQUIRE([AC_CANONICAL_HOST])
   REPLACE_TZSET=0
   case "$host_os" in

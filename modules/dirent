@@ -15,6 +15,7 @@ snippet/warn-on-use
 
 configure.ac:
 gl_DIRENT_H
+gl_DIRENT_H_REQUIRE_DEFAULTS
 
 Makefile.am:
 BUILT_SOURCES += dirent.h

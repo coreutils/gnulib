@@ -17,6 +17,7 @@ sys_types
 
 configure.ac:
 gl_STDIO_H
+gl_STDIO_H_REQUIRE_DEFAULTS
 
 Makefile.am:
 BUILT_SOURCES += stdio.h

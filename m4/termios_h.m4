@@ -1,13 +1,13 @@
-# termios_h.m4 serial 5
+# termios_h.m4 serial 6
 dnl Copyright (C) 2010-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 
-AC_DEFUN([gl_TERMIOS_H],
+AC_DEFUN_ONCE([gl_TERMIOS_H],
 [
-  dnl Use AC_REQUIRE here, so that the default behavior below is expanded
-  dnl once only, before all statements that occur in other macros.
+  dnl Ensure to expand the default settings once only, before all statements
+  dnl that occur in other macros.
   AC_REQUIRE([gl_TERMIOS_H_DEFAULTS])
 
   gl_CHECK_NEXT_HEADERS([termios.h])
@@ -27,16 +27,24 @@ AC_DEFUN([gl_TERMIOS_H],
 
 AC_DEFUN([gl_TERMIOS_MODULE_INDICATOR],
 [
-  dnl Use AC_REQUIRE here, so that the default settings are expanded once only.
-  AC_REQUIRE([gl_TERMIOS_H_DEFAULTS])
+  dnl Ensure to expand the default settings once only.
+  gl_TERMIOS_H_REQUIRE_DEFAULTS
   gl_MODULE_INDICATOR_SET_VARIABLE([$1])
   dnl Define it also as a C macro, for the benefit of the unit tests.
   gl_MODULE_INDICATOR_FOR_TESTS([$1])
 ])
 
+AC_DEFUN([gl_TERMIOS_H_REQUIRE_DEFAULTS],
+[
+  m4_defun(GL_MODULE_INDICATOR_PREFIX[_TERMIOS_H_MODULE_INDICATOR_DEFAULTS], [
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_TCGETSID])
+  ])
+  m4_require(GL_MODULE_INDICATOR_PREFIX[_TERMIOS_H_MODULE_INDICATOR_DEFAULTS])
+  AC_REQUIRE([gl_TERMIOS_H_DEFAULTS])
+])
+
 AC_DEFUN([gl_TERMIOS_H_DEFAULTS],
 [
-  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_TCGETSID])
   dnl Assume proper GNU behavior unless another module says otherwise.
   HAVE_DECL_TCGETSID=1;   AC_SUBST([HAVE_DECL_TCGETSID])
   HAVE_TERMIOS_H=1;       AC_SUBST([HAVE_TERMIOS_H])

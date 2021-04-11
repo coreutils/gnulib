@@ -1,4 +1,4 @@
-# glob_h.m4 serial 6
+# glob_h.m4 serial 7
 dnl Copyright (C) 2018-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -47,23 +47,31 @@ AC_DEFUN_ONCE([gl_GLOB_H],
 dnl Unconditionally enables the replacement of <glob.h>.
 AC_DEFUN([gl_REPLACE_GLOB_H],
 [
-  AC_REQUIRE([gl_GLOB_H_DEFAULTS])
+  gl_GLOB_H_REQUIRE_DEFAULTS
   GLOB_H='glob.h'
   AM_CONDITIONAL([GL_GENERATE_GLOB_H], [test -n "$GLOB_H"])
 ])
 
 AC_DEFUN([gl_GLOB_MODULE_INDICATOR],
 [
-  dnl Use AC_REQUIRE here, so that the default settings are expanded once only.
-  AC_REQUIRE([gl_GLOB_H_DEFAULTS])
+  dnl Ensure to expand the default settings once only.
+  gl_GLOB_H_REQUIRE_DEFAULTS
   gl_MODULE_INDICATOR_SET_VARIABLE([$1])
   dnl Define it also as a C macro, for the benefit of the unit tests.
   gl_MODULE_INDICATOR_FOR_TESTS([$1])
 ])
 
+AC_DEFUN([gl_GLOB_H_REQUIRE_DEFAULTS],
+[
+  m4_defun(GL_MODULE_INDICATOR_PREFIX[_GLOB_H_MODULE_INDICATOR_DEFAULTS], [
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_GLOB])
+  ])
+  m4_require(GL_MODULE_INDICATOR_PREFIX[_GLOB_H_MODULE_INDICATOR_DEFAULTS])
+  AC_REQUIRE([gl_GLOB_H_DEFAULTS])
+])
+
 AC_DEFUN([gl_GLOB_H_DEFAULTS],
 [
-  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_GLOB])
   dnl Assume POSIX and GNU behavior unless another module says otherwise.
   HAVE_GLOB=1;               AC_SUBST([HAVE_GLOB])
   HAVE_GLOB_PATTERN_P=1;     AC_SUBST([HAVE_GLOB_PATTERN_P])

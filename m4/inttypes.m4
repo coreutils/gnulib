@@ -1,4 +1,4 @@
-# inttypes.m4 serial 33
+# inttypes.m4 serial 34
 dnl Copyright (C) 2006-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -7,7 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 dnl From Derek Price, Bruno Haible.
 dnl Test whether <inttypes.h> is supported or must be substituted.
 
-AC_DEFUN([gl_INTTYPES_H],
+AC_DEFUN_ONCE([gl_INTTYPES_H],
 [
   AC_REQUIRE([gl_INTTYPES_INCOMPLETE])
   gl_INTTYPES_PRI_SCN
@@ -138,17 +138,25 @@ AC_DEFUN([gl_INTTYPES_CHECK_LONG_LONG_INT_CONDITION],
 
 AC_DEFUN([gl_INTTYPES_MODULE_INDICATOR],
 [
-  dnl Use AC_REQUIRE here, so that the default settings are expanded once only.
-  AC_REQUIRE([gl_INTTYPES_H_DEFAULTS])
+  dnl Ensure to expand the default settings once only.
+  gl_INTTYPES_H_REQUIRE_DEFAULTS
   gl_MODULE_INDICATOR_SET_VARIABLE([$1])
+])
+
+AC_DEFUN([gl_INTTYPES_H_REQUIRE_DEFAULTS],
+[
+  m4_defun(GL_MODULE_INDICATOR_PREFIX[_INTTYPES_H_MODULE_INDICATOR_DEFAULTS], [
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_IMAXABS])
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_IMAXDIV])
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_STRTOIMAX])
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_STRTOUMAX])
+  ])
+  m4_require(GL_MODULE_INDICATOR_PREFIX[_INTTYPES_H_MODULE_INDICATOR_DEFAULTS])
+  AC_REQUIRE([gl_INTTYPES_H_DEFAULTS])
 ])
 
 AC_DEFUN([gl_INTTYPES_H_DEFAULTS],
 [
-  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_IMAXABS])
-  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_IMAXDIV])
-  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_STRTOIMAX])
-  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_STRTOUMAX])
   dnl Assume proper GNU behavior unless another module says otherwise.
   HAVE_DECL_IMAXABS=1;   AC_SUBST([HAVE_DECL_IMAXABS])
   HAVE_DECL_IMAXDIV=1;   AC_SUBST([HAVE_DECL_IMAXDIV])

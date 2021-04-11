@@ -18,6 +18,7 @@ sys_stat
 
 configure.ac:
 gl_GLOB_H
+gl_GLOB_H_REQUIRE_DEFAULTS
 
 Makefile.am:
 BUILT_SOURCES += $(GLOB_H)

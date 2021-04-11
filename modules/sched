@@ -13,6 +13,7 @@ snippet/warn-on-use
 
 configure.ac:
 gl_SCHED_H
+gl_SCHED_H_REQUIRE_DEFAULTS
 
 Makefile.am:
 BUILT_SOURCES += sched.h

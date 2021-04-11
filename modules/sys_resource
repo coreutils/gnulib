@@ -13,7 +13,8 @@ snippet/warn-on-use
 sys_time
 
 configure.ac:
-gl_HEADER_SYS_RESOURCE
+gl_SYS_RESOURCE_H
+gl_SYS_RESOURCE_H_REQUIRE_DEFAULTS
 AC_PROG_MKDIR_P
 
 Makefile.am:
