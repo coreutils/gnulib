@@ -171,7 +171,7 @@ null_action (int signo _GL_UNUSED)
 #if USE_LIBSIGSEGV
 
 /* Pacify GCC 9.3.1, which otherwise would complain about segv_handler.  */
-# if __GNUC_PREREQ (4, 6)
+# if 4 < __GNUC__ + (6 <= __GNUC_MINOR__)
 #  pragma GCC diagnostic ignored "-Wsuggest-attribute=pure"
 # endif
 
