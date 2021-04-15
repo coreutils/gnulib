@@ -9,3 +9,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-hamt
 check_PROGRAMS += test-hamt
+test_hamt_LDADD = $(LDADD) @LIBINTL@
