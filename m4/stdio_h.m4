@@ -1,4 +1,4 @@
-# stdio_h.m4 serial 54
+# stdio_h.m4 serial 55
 dnl Copyright (C) 2007-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -40,17 +40,6 @@ AC_DEFUN_ONCE([gl_STDIO_H],
        attribute "__gnu_printf__" instead of "__printf__"])
   fi
 
-  dnl No need to create extra modules for these functions. Everyone who uses
-  dnl <stdio.h> likely needs them.
-  gl_STDIO_MODULE_INDICATOR([fscanf])
-  gl_MODULE_INDICATOR([fscanf])
-  gl_STDIO_MODULE_INDICATOR([scanf])
-  gl_MODULE_INDICATOR([scanf])
-  gl_STDIO_MODULE_INDICATOR([fgetc])
-  gl_STDIO_MODULE_INDICATOR([getc])
-  gl_STDIO_MODULE_INDICATOR([getchar])
-  gl_STDIO_MODULE_INDICATOR([fgets])
-  gl_STDIO_MODULE_INDICATOR([fread])
   dnl This ifdef is necessary to avoid an error "missing file lib/stdio-read.c"
   dnl "expected source file, required through AC_LIBSOURCES, not found". It is
   dnl also an optimization, to avoid performing a configure check whose result
@@ -64,18 +53,6 @@ AC_DEFUN_ONCE([gl_STDIO_H],
     fi
   ])
 
-  dnl No need to create extra modules for these functions. Everyone who uses
-  dnl <stdio.h> likely needs them.
-  gl_STDIO_MODULE_INDICATOR([fprintf])
-  gl_STDIO_MODULE_INDICATOR([printf])
-  gl_STDIO_MODULE_INDICATOR([vfprintf])
-  gl_STDIO_MODULE_INDICATOR([vprintf])
-  gl_STDIO_MODULE_INDICATOR([fputc])
-  gl_STDIO_MODULE_INDICATOR([putc])
-  gl_STDIO_MODULE_INDICATOR([putchar])
-  gl_STDIO_MODULE_INDICATOR([fputs])
-  gl_STDIO_MODULE_INDICATOR([puts])
-  gl_STDIO_MODULE_INDICATOR([fwrite])
   dnl This ifdef is necessary to avoid an error "missing file lib/stdio-write.c"
   dnl "expected source file, required through AC_LIBSOURCES, not found". It is
   dnl also an optimization, to avoid performing a configure check whose result

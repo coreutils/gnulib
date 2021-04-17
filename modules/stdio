@@ -19,6 +19,31 @@ configure.ac:
 gl_STDIO_H
 gl_STDIO_H_REQUIRE_DEFAULTS
 
+dnl No need to create extra modules for these functions. Everyone who uses
+dnl <stdio.h> likely needs them.
+gl_STDIO_MODULE_INDICATOR([fscanf])
+gl_MODULE_INDICATOR([fscanf])
+gl_STDIO_MODULE_INDICATOR([scanf])
+gl_MODULE_INDICATOR([scanf])
+gl_STDIO_MODULE_INDICATOR([fgetc])
+gl_STDIO_MODULE_INDICATOR([getc])
+gl_STDIO_MODULE_INDICATOR([getchar])
+gl_STDIO_MODULE_INDICATOR([fgets])
+gl_STDIO_MODULE_INDICATOR([fread])
+
+dnl No need to create extra modules for these functions. Everyone who uses
+dnl <stdio.h> likely needs them.
+gl_STDIO_MODULE_INDICATOR([fprintf])
+gl_STDIO_MODULE_INDICATOR([printf])
+gl_STDIO_MODULE_INDICATOR([vfprintf])
+gl_STDIO_MODULE_INDICATOR([vprintf])
+gl_STDIO_MODULE_INDICATOR([fputc])
+gl_STDIO_MODULE_INDICATOR([putc])
+gl_STDIO_MODULE_INDICATOR([putchar])
+gl_STDIO_MODULE_INDICATOR([fputs])
+gl_STDIO_MODULE_INDICATOR([puts])
+gl_STDIO_MODULE_INDICATOR([fwrite])
+
 Makefile.am:
 BUILT_SOURCES += stdio.h
 
