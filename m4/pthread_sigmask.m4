@@ -1,4 +1,4 @@
-# pthread_sigmask.m4 serial 20
+# pthread_sigmask.m4 serial 21
 dnl Copyright (C) 2011-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -111,7 +111,7 @@ AC_DEFUN([gl_FUNC_PTHREAD_SIGMASK],
     AC_REQUIRE([AC_PROG_CC])
     AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
 
-    dnl On FreeBSD 6.4, MidnightBSD 1.1, HP-UX 11.31, Solaris 9, in programs
+    dnl On FreeBSD 13.0, MidnightBSD 1.1, HP-UX 11.31, Solaris 9, in programs
     dnl that are not linked with -lpthread, the pthread_sigmask() function
     dnl always returns 0 and has no effect.
     if test -z "$LIB_PTHREAD_SIGMASK"; then

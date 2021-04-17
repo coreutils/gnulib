@@ -1,4 +1,4 @@
-# printf.m4 serial 72
+# printf.m4 serial 73
 dnl Copyright (C) 2003, 2007-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -537,7 +537,7 @@ int main ()
           && strcmp (buf, "-0X6.488P-1 33") != 0
           && strcmp (buf, "-0XC.91P-2 33") != 0))
     result |= 2;
-  /* This catches a FreeBSD 6.1 bug: it doesn't round.  */
+  /* This catches a FreeBSD 13.0 bug: it doesn't round.  */
   if (sprintf (buf, "%.2a %d", 1.51, 33, 44, 55) < 0
       || (strcmp (buf, "0x1.83p+0 33") != 0
           && strcmp (buf, "0x3.05p-1 33") != 0
@@ -1690,6 +1690,7 @@ dnl
 dnl                                  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20
 dnl   glibc 2.5                      .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
 dnl   glibc 2.3.6                    .  .  .  .  #  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+dnl   FreeBSD 13.0                   .  .  .  .  #  .  .  .  .  .  .  .  .  #  .  .  .  .  .  .
 dnl   FreeBSD 5.4, 6.1               .  .  .  .  #  .  .  .  .  .  .  #  .  #  .  .  .  .  .  .
 dnl   Mac OS X 10.13.5               .  .  .  #  #  .  #  .  .  .  .  .  .  .  .  .  .  #  .  .
 dnl   Mac OS X 10.5.8                .  .  .  #  #  .  .  .  .  .  .  #  .  .  .  .  .  .  .  .

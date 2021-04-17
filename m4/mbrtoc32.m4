@@ -1,4 +1,4 @@
-# mbrtoc32.m4 serial 8
+# mbrtoc32.m4 serial 9
 dnl Copyright (C) 2014-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -194,7 +194,7 @@ int main ()
             result |= 1;
         }
     }
-  /* This fails on FreeBSD 12 and Solaris 11.4:
+  /* This fails on FreeBSD 13.0 and Solaris 11.4:
      mbrtoc32 returns (size_t)-2 or (size_t)-1.
      mbrtowc returns 4 (correct).  */
   if (setlocale (LC_ALL, "$LOCALE_ZH_CN") != NULL)

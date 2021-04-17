@@ -49,7 +49,7 @@ NetBSD 3.0, Cygwin 1.5.24, mingw, MSVC 14.
 @item
 This function does not round the argument of the @samp{a} directive correctly
 on some platforms:
-Mac OS X 10.12, FreeBSD 6.1.
+Mac OS X 10.12, FreeBSD 13.0.
 @item
 printf @code{"%010f"} of NaN and Infinity yields an incorrect result (padded
 with zeroes, or wrong capitalization) on some platforms:
@@ -65,7 +65,7 @@ on some platforms:
 Solaris 10.
 @item
 This function can crash in out-of-memory conditions on some platforms:
-FreeBSD 6.0, NetBSD 5.0.
+FreeBSD 13.0, NetBSD 5.0.
 @end itemize
 
 Portability problems fixed by Gnulib module @code{stdio} or @code{printf-posix}, together with module @code{nonblocking}:

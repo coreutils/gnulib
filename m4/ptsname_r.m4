@@ -1,4 +1,4 @@
-# ptsname_r.m4 serial 7
+# ptsname_r.m4 serial 8
 dnl Copyright (C) 2010-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -43,8 +43,8 @@ AC_DEFUN([gl_FUNC_PTSNAME_R],
     else
       AC_DEFINE([HAVE_ESSENTIALLY_WORKING_PTSNAME_R], [1],
         [Define to 1 if ptsname_r() is essentially working.])
-      dnl On Android 4.3, when ptsname_r fails, it returns -1 instead of the
-      dnl error code.
+      dnl On FreeBSD 13.0 and Android 4.3, when ptsname_r fails, it returns -1
+      dnl instead of the error code.
       AC_REQUIRE([AC_CANONICAL_HOST])
       AC_CACHE_CHECK([whether ptsname_r returns an error code],
         [gl_cv_func_ptsname_r_retval_ok],
@@ -60,10 +60,12 @@ main (void)
            [gl_cv_func_ptsname_r_retval_ok=yes],
            [gl_cv_func_ptsname_r_retval_ok=no],
            [case "$host_os" in
-                               dnl Guess no on Android.
-              linux*-android*) gl_cv_func_ptsname_r_retval_ok="guessing no" ;;
-                               dnl Guess yes otherwise.
-              *)               gl_cv_func_ptsname_r_retval_ok="guessing yes" ;;
+              dnl Guess no on FreeBSD, Android.
+              freebsd* | dragonfly* | midnightbsd* | linux*-android*)
+                gl_cv_func_ptsname_r_retval_ok="guessing no" ;;
+              dnl Guess yes otherwise.
+              *)
+                gl_cv_func_ptsname_r_retval_ok="guessing yes" ;;
             esac
            ])
         ])
