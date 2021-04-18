@@ -7,7 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 
 dnl Written by Eric Blake.
 
-# wchar_h.m4 serial 52
+# wchar_h.m4 serial 53
 
 AC_DEFUN_ONCE([gl_WCHAR_H],
 [
@@ -125,6 +125,10 @@ Configuration aborted.])
   fi
 ])
 
+# gl_WCHAR_MODULE_INDICATOR([modulename])
+# sets the shell variable that indicates the presence of the given module
+# to a C preprocessor expression that will evaluate to 1.
+# This macro invocation must not occur in macros that are AC_REQUIREd.
 AC_DEFUN([gl_WCHAR_MODULE_INDICATOR],
 [
   dnl Ensure to expand the default settings once only.
@@ -134,6 +138,9 @@ AC_DEFUN([gl_WCHAR_MODULE_INDICATOR],
   gl_MODULE_INDICATOR_FOR_TESTS([$1])
 ])
 
+# Initializes the default values for AC_SUBSTed shell variables.
+# This macro must not be AC_REQUIREd.  It must only be invoked, and only
+# outside of macros or in macros that are not AC_REQUIREd.
 AC_DEFUN([gl_WCHAR_H_REQUIRE_DEFAULTS],
 [
   m4_defun(GL_MODULE_INDICATOR_PREFIX[_WCHAR_H_MODULE_INDICATOR_DEFAULTS], [

@@ -1,5 +1,5 @@
 # Configure a replacement for <strings.h>.
-# serial 8
+# serial 9
 
 # Copyright (C) 2007, 2009-2021 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -30,6 +30,10 @@ AC_DEFUN_ONCE([gl_STRINGS_H],
     ]], [ffs strcasecmp strncasecmp])
 ])
 
+# gl_STRINGS_MODULE_INDICATOR([modulename])
+# sets the shell variable that indicates the presence of the given module
+# to a C preprocessor expression that will evaluate to 1.
+# This macro invocation must not occur in macros that are AC_REQUIREd.
 AC_DEFUN([gl_STRINGS_MODULE_INDICATOR],
 [
   dnl Ensure to expand the default settings once only.
@@ -37,6 +41,9 @@ AC_DEFUN([gl_STRINGS_MODULE_INDICATOR],
   gl_MODULE_INDICATOR_SET_VARIABLE([$1])
 ])
 
+# Initializes the default values for AC_SUBSTed shell variables.
+# This macro must not be AC_REQUIREd.  It must only be invoked, and only
+# outside of macros or in macros that are not AC_REQUIREd.
 AC_DEFUN([gl_STRINGS_H_REQUIRE_DEFAULTS],
 [
   m4_defun(GL_MODULE_INDICATOR_PREFIX[_STRINGS_H_MODULE_INDICATOR_DEFAULTS], [

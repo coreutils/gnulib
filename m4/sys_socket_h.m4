@@ -1,4 +1,4 @@
-# sys_socket_h.m4 serial 27
+# sys_socket_h.m4 serial 28
 dnl Copyright (C) 2005-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -156,6 +156,10 @@ AC_DEFUN([gl_PREREQ_SYS_H_WS2TCPIP],
   AC_SUBST([HAVE_WS2TCPIP_H])
 ])
 
+# gl_SYS_SOCKET_MODULE_INDICATOR([modulename])
+# sets the shell variable that indicates the presence of the given module
+# to a C preprocessor expression that will evaluate to 1.
+# This macro invocation must not occur in macros that are AC_REQUIREd.
 AC_DEFUN([gl_SYS_SOCKET_MODULE_INDICATOR],
 [
   dnl Ensure to expand the default settings once only.
@@ -165,6 +169,9 @@ AC_DEFUN([gl_SYS_SOCKET_MODULE_INDICATOR],
   gl_MODULE_INDICATOR_FOR_TESTS([$1])
 ])
 
+# Initializes the default values for AC_SUBSTed shell variables.
+# This macro must not be AC_REQUIREd.  It must only be invoked, and only
+# outside of macros or in macros that are not AC_REQUIREd.
 AC_DEFUN([gl_SYS_SOCKET_H_REQUIRE_DEFAULTS],
 [
   m4_defun(GL_MODULE_INDICATOR_PREFIX[_SYS_SOCKET_H_MODULE_INDICATOR_DEFAULTS], [

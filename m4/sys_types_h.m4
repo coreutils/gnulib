@@ -1,4 +1,4 @@
-# sys_types_h.m4 serial 12
+# sys_types_h.m4 serial 13
 dnl Copyright (C) 2011-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -31,6 +31,9 @@ AC_DEFUN_ONCE([gl_SYS_TYPES_H],
   AC_SUBST([WINDOWS_STAT_INODES])
 ])
 
+# Initializes the default values for AC_SUBSTed shell variables.
+# This macro must not be AC_REQUIREd.  It must only be invoked, and only
+# outside of macros or in macros that are not AC_REQUIREd.
 AC_DEFUN([gl_SYS_TYPES_H_REQUIRE_DEFAULTS],
 [
   m4_defun(GL_MODULE_INDICATOR_PREFIX[_SYS_TYPE_H_MODULE_INDICATOR_DEFAULTS], [
