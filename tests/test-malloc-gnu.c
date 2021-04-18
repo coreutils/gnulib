@@ -17,6 +17,7 @@
 #include <config.h>
 
 #include <stdlib.h>
+#include <stdint.h>
 
 int
 main ()
@@ -25,7 +26,15 @@ main ()
   char *p = malloc (0);
   if (p == NULL)
     return 1;
-
   free (p);
+
+  /* Check that malloc (n) fails when n exceeds PTRDIFF_MAX.  */
+  if (PTRDIFF_MAX < SIZE_MAX)
+    {
+      size_t n = PTRDIFF_MAX, n1 = n + 1;
+      if (malloc (n1) != NULL)
+        return 1;
+    }
+
   return 0;
 }

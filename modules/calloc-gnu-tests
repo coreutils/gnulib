@@ -2,6 +2,7 @@ Files:
 tests/test-calloc-gnu.c
 
 Depends-on:
+stdint
 
 configure.ac:
 

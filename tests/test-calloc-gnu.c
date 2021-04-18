@@ -17,6 +17,7 @@
 #include <config.h>
 
 #include <stdlib.h>
+#include <stdint.h>
 
 /* Return 8.
    Usual compilers are not able to infer something about the return value.  */
@@ -49,13 +50,24 @@ main ()
      'volatile' is needed to defeat an incorrect optimization by clang 10,
      see <https://bugs.llvm.org/show_bug.cgi?id=46055>.  */
   {
-    void * volatile p = calloc ((size_t) -1 / 8 + 1, eight ());
+    void * volatile p = calloc (SIZE_MAX / 8 + 1, eight ());
     if (p != NULL)
       {
         free (p);
         return 2;
       }
   }
+
+  /* Likewise for PTRDIFF_MAX.  */
+  if (PTRDIFF_MAX / 8 < SIZE_MAX)
+    {
+      void * volatile p = calloc (PTRDIFF_MAX / 8 + 1, eight ());
+      if (p != NULL)
+        {
+          free (p);
+          return 2;
+        }
+    }
 
   return 0;
 }

@@ -17,6 +17,7 @@
 #include <config.h>
 
 #include <stdlib.h>
+#include <stdint.h>
 
 int
 main ()
@@ -25,6 +26,15 @@ main ()
   char *p = realloc (NULL, 0);
   if (p == NULL)
     return 1;
+
+  /* Check that realloc (p, n) fails when p is non-null and n exceeds
+     PTRDIFF_MAX.  */
+  if (PTRDIFF_MAX < SIZE_MAX)
+    {
+      size_t n = PTRDIFF_MAX, n1 = n + 1;
+      if (realloc (p, n1) != NULL)
+        return 1;
+    }
 
   free (p);
   return 0;
