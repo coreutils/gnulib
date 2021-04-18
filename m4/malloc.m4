@@ -1,20 +1,21 @@
-# malloc.m4 serial 23
+# malloc.m4 serial 24
 dnl Copyright (C) 2007, 2009-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 
 # This is adapted with modifications from upstream Autoconf here:
-# https://git.savannah.gnu.org/cgit/autoconf.git/commit/?id=04be2b7a29d65d9a08e64e8e56e594c91749598c
+# https://git.savannah.gnu.org/cgit/autoconf.git/tree/lib/autoconf/functions.m4?id=v2.70#n949
 AC_DEFUN([_AC_FUNC_MALLOC_IF],
-[ AC_REQUIRE([AC_CANONICAL_HOST])dnl for cross-compiles
+[
+  AC_REQUIRE([AC_CANONICAL_HOST])dnl for cross-compiles
   AC_CACHE_CHECK([whether malloc (0) returns nonnull],
     [ac_cv_func_malloc_0_nonnull],
     [AC_RUN_IFELSE(
        [AC_LANG_PROGRAM(
           [[#include <stdlib.h>
           ]],
-          [[char *p = malloc (0);
+          [[void *p = malloc (0);
             int result = !p;
             free (p);
             return result;]])
@@ -23,22 +24,17 @@ AC_DEFUN([_AC_FUNC_MALLOC_IF],
        [ac_cv_func_malloc_0_nonnull=no],
        [case "$host_os" in
           # Guess yes on platforms where we know the result.
-          *-gnu* | gnu* | *-musl* | freebsd* | midnightbsd* | netbsd* | openbsd* \
-          | hpux* | solaris* | cygwin* | mingw*)
+          *-gnu* | freebsd* | netbsd* | openbsd* | bitrig* \
+          | gnu* | *-musl* | midnightbsd* \
+          | hpux* | solaris* | cygwin* | mingw* | msys* )
             ac_cv_func_malloc_0_nonnull="guessing yes" ;;
           # If we don't know, obey --enable-cross-guesses.
           *) ac_cv_func_malloc_0_nonnull="$gl_cross_guess_normal" ;;
         esac
        ])
     ])
-  case "$ac_cv_func_malloc_0_nonnull" in
-    *yes)
-      $1
-      ;;
-    *)
-      $2
-      ;;
-  esac
+  AS_IF([case $ac_cv_func_malloc_0_nonnull in *yes) :;; *) false;; esac],
+    [$1], [$2])
 ])# _AC_FUNC_MALLOC_IF
 
 # gl_FUNC_MALLOC_GNU

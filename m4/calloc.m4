@@ -1,4 +1,4 @@
-# calloc.m4 serial 24
+# calloc.m4 serial 25
 
 # Copyright (C) 2004-2021 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -16,7 +16,8 @@
 # -------------------------------------
 # If calloc is compatible with GNU calloc, run IF-WORKS, otherwise, IF-NOT.
 AC_DEFUN([_AC_FUNC_CALLOC_IF],
-[ AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+[
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CACHE_CHECK([whether calloc (0, n) and calloc (n, 0) return nonnull],
     [ac_cv_func_calloc_0_nonnull],
     [if test $cross_compiling != yes; then
@@ -46,14 +47,8 @@ AC_DEFUN([_AC_FUNC_CALLOC_IF],
        esac
      fi
     ])
-  case "$ac_cv_func_calloc_0_nonnull" in
-    *yes)
-      $1
-      ;;
-    *)
-      $2
-      ;;
-  esac
+  AS_IF([case $ac_cv_func_calloc_0_nonnull in *yes) :;; *) false;; esac],
+    [$1], [$2])
 ])
 
 
