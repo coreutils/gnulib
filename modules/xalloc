@@ -8,10 +8,13 @@ m4/xalloc.m4
 
 Depends-on:
 c99
+calloc-gnu
 extern-inline
 idx
 intprops
+malloc-gnu
 minmax
+realloc-gnu
 stdint
 xalloc-die
 xalloc-oversized

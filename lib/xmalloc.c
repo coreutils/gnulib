@@ -27,34 +27,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-/* 1 if calloc, malloc and realloc are known to be compatible with GNU.
-   This matters if we are not also using the calloc-gnu, malloc-gnu
-   and realloc-gnu modules, which define HAVE_CALLOC_GNU,
-   HAVE_MALLOC_GNU and HAVE_REALLOC_GNU and support the GNU API even
-   on non-GNU platforms.  */
-#if defined HAVE_CALLOC_GNU || (defined __GLIBC__ && !defined __UCLIBC__)
-enum { HAVE_GNU_CALLOC = 1 };
-#else
-enum { HAVE_GNU_CALLOC = 0 };
-#endif
-#if defined HAVE_MALLOC_GNU || (defined __GLIBC__ && !defined __UCLIBC__)
-enum { HAVE_GNU_MALLOC = 1 };
-#else
-enum { HAVE_GNU_MALLOC = 0 };
-#endif
-#if defined HAVE_REALLOC_GNU || (defined __GLIBC__ && !defined __UCLIBC__)
-enum { HAVE_GNU_REALLOC = 1 };
-#else
-enum { HAVE_GNU_REALLOC = 0 };
-#endif
-
 /* Allocate N bytes of memory dynamically, with error checking.  */
 
 void *
 xmalloc (size_t n)
 {
   void *p = malloc (n);
-  if (!p && (HAVE_GNU_MALLOC || n))
+  if (!p)
     xalloc_die ();
   return p;
 }
@@ -65,15 +44,8 @@ xmalloc (size_t n)
 void *
 xrealloc (void *p, size_t n)
 {
-  if (!HAVE_GNU_REALLOC && !n && p)
-    {
-      /* The GNU and C99 realloc behaviors disagree here.  Act like GNU.  */
-      free (p);
-      return NULL;
-    }
-
   void *r = realloc (p, n);
-  if (!r && (n || (HAVE_GNU_REALLOC && !p)))
+  if (!r && (!p || n))
     xalloc_die ();
   return r;
 }
@@ -175,13 +147,8 @@ xzalloc (size_t n)
 void *
 xcalloc (size_t n, size_t s)
 {
-  void *p;
-  /* Test for overflow, since objects with size greater than
-     PTRDIFF_MAX cause pointer subtraction to go awry.  Omit size-zero
-     tests if HAVE_GNU_CALLOC, since GNU calloc never returns NULL if
-     successful.  */
-  if (xalloc_oversized (n, s)
-      || (! (p = calloc (n, s)) && (HAVE_GNU_CALLOC || n != 0)))
+  void *p = calloc (n, s);
+  if (!p)
     xalloc_die ();
   return p;
 }
