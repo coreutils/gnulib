@@ -1,4 +1,4 @@
-# stdint.m4 serial 59
+# stdint.m4 serial 60
 dnl Copyright (C) 2001-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -170,7 +170,7 @@ struct s {
       PTRDIFF_MIN == TYPE_MINIMUM (ptrdiff_t)
       && PTRDIFF_MAX == TYPE_MAXIMUM (ptrdiff_t)
       ? 1 : -1;
-  /* Detect bug in FreeBSD 6.0 / ia64.  */
+  /* Detect bug in FreeBSD 6.0/ia64 and FreeBSD 13.0/arm64.  */
   int check_SIG_ATOMIC:
       SIG_ATOMIC_MIN == TYPE_MINIMUM (sig_atomic_t)
       && SIG_ATOMIC_MAX == TYPE_MAXIMUM (sig_atomic_t)

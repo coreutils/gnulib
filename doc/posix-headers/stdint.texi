@@ -15,7 +15,7 @@ This header file is very incomplete on some platforms.
 @item
 The values of @code{SIG_ATOMIC_MIN} and @code{SIG_ATOMIC_MAX} are incorrect
 on some platforms:
-FreeBSD 6.2 / ia64.
+FreeBSD 6.2/ia64, FreeBSD 13.0/arm64.
 @item
 The value of @code{WINT_MAX} is incorrect on some platforms:
 mingw.
