@@ -26,7 +26,6 @@
 #include <stdlib.h>
 
 #include "intprops.h"
-#include "xalloc-oversized.h"
 
 /* Most processes have no more than this many groups, and for these
    processes we can avoid using malloc.  */
@@ -54,9 +53,8 @@ get_group_info (struct group_info *gi)
   if (n_groups < 0)
     {
       int n_group_slots = getgroups (0, NULL);
-      xalloc_count_t nbytes;
-      if (0 <= n_group_slots
-          && ! INT_MULTIPLY_WRAPV (n_group_slots, sizeof *gi->group, &nbytes))
+      size_t nbytes;
+      if (! INT_MULTIPLY_WRAPV (n_group_slots, sizeof *gi->group, &nbytes))
         {
           gi->group = malloc (nbytes);
           if (gi->group)
