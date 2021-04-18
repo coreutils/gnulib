@@ -30,25 +30,20 @@
 #define __xalloc_oversized(n, s) \
   ((size_t) (PTRDIFF_MAX < SIZE_MAX ? PTRDIFF_MAX : SIZE_MAX - 1) / (s) < (n))
 
-#if PTRDIFF_MAX < SIZE_MAX
-typedef ptrdiff_t xalloc_count_t;
-#else
-typedef size_t xalloc_count_t;
-#endif
-
 /* Return 1 if an array of N objects, each of size S, cannot exist reliably
-   because its total size in bytes exceeds MIN (PTRDIFF_MAX, SIZE_MAX).
+   because its total size in bytes exceeds MIN (PTRDIFF_MAX, SIZE_MAX - 1).
    N must be nonnegative, S must be positive, and either N or S should be
    of type ptrdiff_t or size_t or wider.  This is a macro, not a function,
    so that it works even if an argument exceeds MAX (PTRDIFF_MAX, SIZE_MAX).  */
-#if 7 <= __GNUC__ && !defined __clang__
+#if 7 <= __GNUC__ && !defined __clang__ && PTRDIFF_MAX < SIZE_MAX
 # define xalloc_oversized(n, s) \
-   __builtin_mul_overflow_p (n, s, (xalloc_count_t) 1)
-#elif 5 <= __GNUC__ && !defined __ICC && !__STRICT_ANSI__
+   __builtin_mul_overflow_p (n, s, (ptrdiff_t) 1)
+#elif (5 <= __GNUC__ && !defined __ICC && !__STRICT_ANSI__ \
+       && PTRDIFF_MAX < SIZE_MAX)
 # define xalloc_oversized(n, s) \
    (__builtin_constant_p (n) && __builtin_constant_p (s) \
     ? __xalloc_oversized (n, s) \
-    : ({ xalloc_count_t __xalloc_count; \
+    : ({ ptrdiff_t __xalloc_count; \
          __builtin_mul_overflow (n, s, &__xalloc_count); }))
 
 /* Other compilers use integer division; this may be slower but is
