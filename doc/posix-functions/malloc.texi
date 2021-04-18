@@ -26,5 +26,6 @@ by fixing this portability problem:
 
 @itemize
 @item
-On some platforms, @code{malloc (0)} returns @code{NULL} on success.
+@code{malloc (0)} returns @code{NULL} on success on some platforms:
+AIX 7.2.
 @end itemize

@@ -28,6 +28,7 @@ It fixes this portability problem:
 
 @itemize
 @item
-On some platforms, @code{calloc (0, s)} and @code{calloc (n, 0)}
-return @code{NULL} on success.
+@code{calloc (0, s)} and @code{calloc (n, 0)} return @code{NULL} on success
+on some platforms:
+AIX 7.2.
 @end itemize
