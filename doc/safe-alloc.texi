@@ -36,12 +36,14 @@ passed in as arguments when appropriate.
 It uses return values only for a success/failure error condition flag,
 and annotates them with GCC's @code{__warn_unused_result__} attribute.
 @item
-It uses @code{calloc} instead of @code{malloc}.
+When allocating a fresh array, it uses @code{calloc} instead of
+@code{malloc} so that the array's contents are zeroed.
+However, memory added to an already-existing array is uninitialized.
 @end itemize
 
 @defmac {int} ALLOC (ptr)
 @findex ALLOC
-Allocate @code{sizeof(*ptr)} bytes of memory and store the address of
+Allocate @code{sizeof *ptr} bytes of memory and store the address of
 allocated memory in @code{ptr}.  Fill the newly allocated memory with
 zeros.
 
@@ -50,7 +52,7 @@ Returns @minus{}1 on failure, 0 on success.
 
 @defmac {int} ALLOC_N (ptr, count)
 @findex ALLOC_N
-Allocate an array of @code{count} elements, each @code{sizeof(*ptr)}
+Allocate an array of @code{count} elements, each @code{sizeof *ptr}
 bytes long, and store the address of allocated memory in
 @code{ptr}.  Fill the newly allocated memory with zeros.
 
@@ -59,7 +61,7 @@ Returns @minus{}1 on failure, 0 on success.
 
 @defmac {int} ALLOC_N_UNINITIALIZED (ptr, count)
 @findex ALLOC_N_UNINITIALIZED
-Allocate an array of @code{count} elements, each @code{sizeof(*ptr)}
+Allocate an array of @code{count} elements, each @code{sizeof *ptr}
 bytes long, and store the address of allocated memory in
 @code{ptr}.  The allocated memory is not initialized.
 
@@ -69,9 +71,11 @@ Returns @minus{}1 on failure, 0 on success.
 @defmac {int} REALLOC_N (ptr, count)
 @findex REALLOC_N
 Reallocate the memory pointed to by @code{ptr} to be big enough to hold
-at least @code{count} elements, each @code{sizeof(*ptr)} bytes long,
+at least @code{count} elements, each @code{sizeof *ptr} bytes long,
 and store the address of allocated memory in @code{ptr}.  If
 reallocation fails, the @code{ptr} variable is not modified.
+If the new array is smaller than the old one, discard excess contents;
+if larger, the newly added storage is not initialized.
 
 Returns @minus{}1 on failure, 0 on success.
 @end defmac
