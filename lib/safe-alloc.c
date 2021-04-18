@@ -22,8 +22,6 @@
 /* Specification.  */
 #include "safe-alloc.h"
 
-#include "xalloc-oversized.h"
-
 #include <stdlib.h>
 #include <stddef.h>
 #include <errno.h>
@@ -51,16 +49,10 @@ safe_alloc_alloc_n (void *ptrptr, size_t size, size_t count, int zeroed)
       return 0;
     }
 
-  if (xalloc_oversized (count, size))
-    {
-      errno = ENOMEM;
-      return -1;
-    }
-
   if (zeroed)
     *(void **) ptrptr = calloc (count, size);
   else
-    *(void **) ptrptr = malloc (count * size);
+    *(void **) ptrptr = reallocarray (NULL, count, size);
 
   if (*(void **) ptrptr == NULL)
     return -1;
@@ -91,12 +83,7 @@ safe_alloc_realloc_n (void *ptrptr, size_t size, size_t count)
       *(void **) ptrptr = NULL;
       return 0;
     }
-  if (xalloc_oversized (count, size))
-    {
-      errno = ENOMEM;
-      return -1;
-    }
-  tmp = realloc (*(void **) ptrptr, size * count);
+  tmp = reallocarray (*(void **) ptrptr, size, count);
   if (!tmp)
     return -1;
   *(void **) ptrptr = tmp;
