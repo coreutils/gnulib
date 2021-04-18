@@ -21,11 +21,11 @@ intprops
 memcmp
 opendirat
 readdir
+realloc-gnu
 renameatu
 stdbool
 stdint
 xalloc-die
-xalloc-oversized
 
 configure.ac:
 gl_BACKUPFILE
