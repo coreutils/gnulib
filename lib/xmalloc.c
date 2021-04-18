@@ -50,6 +50,18 @@ xrealloc (void *p, size_t n)
   return r;
 }
 
+/* Change the size of an allocated block of memory P to an array of N
+   objects each of S bytes, with error checking.  */
+
+void *
+xreallocarray (void *p, size_t n, size_t s)
+{
+  void *r = reallocarray (p, n, s);
+  if (!r && (!p || (n && s)))
+    xalloc_die ();
+  return r;
+}
+
 /* If P is null, allocate a block of at least *PN bytes; otherwise,
    reallocate P so that it contains more than *PN bytes.  *PN must be
    nonzero unless P is null.  Set *PN to the new block's size, and

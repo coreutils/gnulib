@@ -15,9 +15,9 @@ intprops
 malloc-gnu
 minmax
 realloc-gnu
+reallocarray
 stdint
 xalloc-die
-xalloc-oversized
 
 configure.ac:
 gl_XALLOC
