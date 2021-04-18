@@ -3,7 +3,7 @@ A GNU-like <uchar.h>.
 
 Files:
 lib/uchar.in.h
-m4/uchar.m4
+m4/uchar_h.m4
 m4/stdint.m4
 
 Depends-on:

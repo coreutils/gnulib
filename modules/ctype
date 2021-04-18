@@ -3,7 +3,7 @@ A <ctype.h> that conforms to C99.
 
 Files:
 lib/ctype.in.h
-m4/ctype.m4
+m4/ctype_h.m4
 
 Depends-on:
 extern-inline

@@ -12,7 +12,7 @@ lib/windows-once.h
 lib/windows-cond.h
 lib/windows-tls.h
 lib/windows-initguard.h
-m4/threads.m4
+m4/threads_h.m4
 m4/threadlib.m4
 build-aux/config.rpath
 
