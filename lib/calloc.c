@@ -19,49 +19,34 @@
 
 #include <config.h>
 
-/* The gnulib module 'calloc-gnu' defines HAVE_CALLOC_GNU.  */
-#if GNULIB_CALLOC_GNU && !HAVE_CALLOC_GNU
-# define NEED_CALLOC_GNU 1
-#endif
-
 /* Specification.  */
 #include <stdlib.h>
 
 #include <errno.h>
 
+#include "xalloc-oversized.h"
+
 /* Call the system's calloc below.  */
 #undef calloc
 
-/* Allocate and zero-fill an NxS-byte block of memory from the heap.
-   If N or S is zero, allocate and zero-fill a 1-byte block.  */
+/* Allocate and zero-fill an NxS-byte block of memory from the heap,
+   even if N or S is zero.  */
 
 void *
 rpl_calloc (size_t n, size_t s)
 {
-  void *result;
-
-#if NEED_CALLOC_GNU
   if (n == 0 || s == 0)
-    {
-      n = 1;
-      s = 1;
-    }
-  else
-    {
-      /* Defend against buggy calloc implementations that mishandle
-         size_t overflow.  */
-      size_t bytes = n * s;
-      if (bytes / s != n)
-        {
-          errno = ENOMEM;
-          return NULL;
-        }
-    }
-#endif
+    n = s = 1;
 
-  result = calloc (n, s);
+  if (xalloc_oversized (n, s))
+    {
+      errno = ENOMEM;
+      return NULL;
+    }
 
-#if !HAVE_CALLOC_POSIX
+  void *result = calloc (n, s);
+
+#if !HAVE_MALLOC_POSIX
   if (result == NULL)
     errno = ENOMEM;
 #endif

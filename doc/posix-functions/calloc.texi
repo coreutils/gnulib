@@ -12,11 +12,22 @@ Portability problems fixed by Gnulib:
 Upon failure, the function does not set @code{errno} to @code{ENOMEM} on
 some platforms:
 mingw, MSVC 14.
-@end itemize
 
-Portability problems not fixed by Gnulib:
-@itemize
+@item
+On some platforms, @code{calloc (n, s)} can succeed even if
+multiplying @code{n} by @code{s} would exceed @code{PTRDIFF_MAX} or
+@code{SIZE_MAX}.  Although failing to check for exceeding
+@code{PTRDIFF_MAX} is arguably allowed by POSIX it can lead to
+undefined behavior later, so @code{calloc-posix} does not allow
+going over the limit.
 @end itemize
 
 Extension: Gnulib provides a module @samp{calloc-gnu} that substitutes a
 @code{calloc} implementation that behaves more like the glibc implementation.
+It fixes this portability problem:
+
+@itemize
+@item
+On some platforms, @code{calloc (0, s)} and @code{calloc (n, 0)}
+return @code{NULL} on success.
+@end itemize

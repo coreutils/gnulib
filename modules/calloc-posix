@@ -8,6 +8,7 @@ m4/malloc.m4
 
 Depends-on:
 stdlib
+xalloc-oversized     [test $REPLACE_REALLOC = 1]
 
 configure.ac:
 gl_FUNC_CALLOC_POSIX

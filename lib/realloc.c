@@ -21,66 +21,43 @@
 #define _GL_USE_STDLIB_ALLOC 1
 #include <config.h>
 
-/* The gnulib module 'realloc-gnu' defines HAVE_REALLOC_GNU.  */
-#if GNULIB_REALLOC_GNU && !HAVE_REALLOC_GNU
-# define NEED_REALLOC_GNU 1
-#endif
-
-/* Infer the properties of the system's malloc function.
-   The gnulib module 'malloc-gnu' defines HAVE_MALLOC_GNU.  */
-#if GNULIB_MALLOC_GNU && HAVE_MALLOC_GNU
-# define SYSTEM_MALLOC_GLIBC_COMPATIBLE 1
-#endif
-
 #include <stdlib.h>
 
-/* A function definition is only needed if NEED_REALLOC_GNU is defined above
-   or if the module 'realloc-posix' requests it.  */
-#if NEED_REALLOC_GNU || (GNULIB_REALLOC_POSIX && !HAVE_REALLOC_POSIX)
+#include <errno.h>
 
-# include <errno.h>
+#include "xalloc-oversized.h"
 
-/* Call the system's malloc and realloc below.  */
-# undef malloc
-# undef realloc
+/* Call the system's realloc below.  */
+#undef realloc
 
 /* Change the size of an allocated block of memory P to N bytes,
-   with error checking.  If N is zero, change it to 1.  If P is NULL,
-   use malloc.  */
+   with error checking.  If P is NULL, use malloc.  Otherwise if N is zero,
+   free P and return NULL.  */
 
 void *
 rpl_realloc (void *p, size_t n)
 {
-  void *result;
+  if (p == NULL)
+    return malloc (n);
 
-# if NEED_REALLOC_GNU
   if (n == 0)
     {
-      n = 1;
-
-      /* In theory realloc might fail, so don't rely on it to free.  */
       free (p);
-      p = NULL;
+      return NULL;
     }
-# endif
 
-  if (p == NULL)
+  if (xalloc_oversized (n, 1))
     {
-# if GNULIB_REALLOC_GNU && !NEED_REALLOC_GNU && !SYSTEM_MALLOC_GLIBC_COMPATIBLE
-      if (n == 0)
-        n = 1;
-# endif
-      result = malloc (n);
+      errno = ENOMEM;
+      return NULL;
     }
-  else
-    result = realloc (p, n);
 
-# if !HAVE_REALLOC_POSIX
+  void *result = realloc (p, n);
+
+#if !HAVE_MALLOC_POSIX
   if (result == NULL)
     errno = ENOMEM;
-# endif
+#endif
 
   return result;
 }
-
-#endif

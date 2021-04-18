@@ -13,7 +13,6 @@ gl_FUNC_CALLOC_GNU
 if test $REPLACE_CALLOC = 1; then
   AC_LIBOBJ([calloc])
 fi
-gl_MODULE_INDICATOR([calloc-gnu])
 
 Makefile.am:
 
