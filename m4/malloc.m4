@@ -33,8 +33,7 @@ AC_DEFUN([_AC_FUNC_MALLOC_IF],
         esac
        ])
     ])
-  AS_IF([case $ac_cv_func_malloc_0_nonnull in *yes) :;; *) false;; esac],
-    [$1], [$2])
+  AS_CASE([$ac_cv_func_malloc_0_nonnull], [*yes], [$1], [$2])
 ])# _AC_FUNC_MALLOC_IF
 
 # gl_FUNC_MALLOC_GNU

@@ -47,8 +47,7 @@ AC_DEFUN([_AC_FUNC_CALLOC_IF],
        esac
      fi
     ])
-  AS_IF([case $ac_cv_func_calloc_0_nonnull in *yes) :;; *) false;; esac],
-    [$1], [$2])
+  AS_CASE([$ac_cv_func_calloc_0_nonnull], [*yes], [$1], [$2])
 ])
 
 

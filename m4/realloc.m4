@@ -33,8 +33,7 @@ AC_DEFUN([_AC_FUNC_REALLOC_IF],
         esac
        ])
     ])
-  AS_IF([case $ac_cv_func_realloc_0_nonnull in *yes) :;; *) false;; esac],
-    [$1], [$2])
+  AS_CASE([$ac_cv_func_realloc_0_nonnull], [*yes], [$1], [$2])
 ])# AC_FUNC_REALLOC
 
 # gl_FUNC_REALLOC_GNU
