@@ -7,6 +7,7 @@ lib/safe-alloc.c
 m4/safe-alloc.m4
 
 Depends-on:
+calloc-gnu
 reallocarray
 
 configure.ac:

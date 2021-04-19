@@ -13,6 +13,8 @@ Some of the memory allocation mistakes that are commonly made are
 passing the incorrect number of bytes to @code{malloc}, especially
 when allocating an array,
 @item
+unchecked integer overflow when calculating array sizes,
+@item
 fail to check the return value of @code{malloc} and @code{realloc} for
 errors,
 @item
