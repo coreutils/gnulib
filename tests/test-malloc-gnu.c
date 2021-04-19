@@ -20,7 +20,7 @@
 #include <stdint.h>
 
 int
-main ()
+main (int argc, char **argv)
 {
   /* Check that malloc (0) is not a NULL pointer.  */
   char *p = malloc (0);
@@ -31,8 +31,8 @@ main ()
   /* Check that malloc (n) fails when n exceeds PTRDIFF_MAX.  */
   if (PTRDIFF_MAX < SIZE_MAX)
     {
-      size_t n = PTRDIFF_MAX, n1 = n + 1;
-      if (malloc (n1) != NULL)
+      size_t one = argc != 12345;
+      if (malloc (PTRDIFF_MAX + one) != NULL)
         return 1;
     }
 

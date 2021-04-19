@@ -20,7 +20,7 @@
 #include <stdint.h>
 
 int
-main ()
+main (int argc, char **argv)
 {
   /* Check that realloc (NULL, 0) is not a NULL pointer.  */
   char *p = realloc (NULL, 0);
@@ -31,8 +31,8 @@ main ()
      PTRDIFF_MAX.  */
   if (PTRDIFF_MAX < SIZE_MAX)
     {
-      size_t n = PTRDIFF_MAX, n1 = n + 1;
-      if (realloc (p, n1) != NULL)
+      size_t one = argc != 12345;
+      if (realloc (p, PTRDIFF_MAX + one) != NULL)
         return 1;
     }
 
