@@ -132,7 +132,7 @@ main (int argc, char *argv[])
       {
         /* Check SIGPIPE handling with ignore_sigpipe = false.  */
         const char *prog_argv[3] = { prog_path, "3", NULL };
-        int termsig = 0xDEADBEEF;
+        int termsig = 0x7DEADBEE;
         int ret = execute (progname, prog_argv[0], prog_argv, NULL,
                            false, false, false, false, true, false, &termsig);
         ASSERT (ret == 127);
@@ -145,7 +145,7 @@ main (int argc, char *argv[])
       {
         /* Check SIGPIPE handling with ignore_sigpipe = true.  */
         const char *prog_argv[3] = { prog_path, "4", NULL };
-        int termsig = 0xDEADBEEF;
+        int termsig = 0x7DEADBEE;
         int ret = execute (progname, prog_argv[0], prog_argv, NULL,
                            true, false, false, false, true, false, &termsig);
         ASSERT (ret == 0);
@@ -157,7 +157,7 @@ main (int argc, char *argv[])
       {
         /* Check other signal.  */
         const char *prog_argv[3] = { prog_path, "5", NULL };
-        int termsig = 0xDEADBEEF;
+        int termsig = 0x7DEADBEE;
         int ret = execute (progname, prog_argv[0], prog_argv, NULL,
                            false, false, false, false, true, false, &termsig);
         ASSERT (ret == 127);
