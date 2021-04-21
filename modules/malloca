@@ -9,6 +9,8 @@ m4/eealloc.m4
 
 Depends-on:
 alloca-opt
+idx
+intprops
 stdint
 verify
 xalloc-oversized
