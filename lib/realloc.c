@@ -18,7 +18,6 @@
 
 /* written by Jim Meyering and Bruno Haible */
 
-#define _GL_USE_STDLIB_ALLOC 1
 #include <config.h>
 
 #include <stdlib.h>
@@ -27,7 +26,8 @@
 
 #include "xalloc-oversized.h"
 
-/* Call the system's realloc below.  */
+/* Call the system's realloc below.  This file does not define
+   _GL_USE_STDLIB_ALLOC because it needs Gnulib's malloc if present.  */
 #undef realloc
 
 /* Change the size of an allocated block of memory P to N bytes,
