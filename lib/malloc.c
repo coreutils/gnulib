@@ -26,9 +26,6 @@
 
 #include "xalloc-oversized.h"
 
-/* Call the system's malloc below.  */
-# undef malloc
-
 /* Allocate an N-byte block of memory from the heap, even if N is 0.  */
 
 void *
