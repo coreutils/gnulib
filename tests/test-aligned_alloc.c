@@ -36,12 +36,12 @@ main (int argc, char *argv[])
 #if HAVE_ALIGNED_ALLOC
   static size_t sizes[] =
     { 13, 8, 17, 450, 320, 1, 99, 4, 15, 16, 2, 76, 37, 127, 2406, 641, 5781 };
-  void *aligned2_blocks[SIZEOF (sizes)];
-  void *aligned4_blocks[SIZEOF (sizes)];
-  void *aligned8_blocks[SIZEOF (sizes)];
-  void *aligned16_blocks[SIZEOF (sizes)];
-  void *aligned32_blocks[SIZEOF (sizes)];
-  void *aligned64_blocks[SIZEOF (sizes)];
+  void *volatile aligned2_blocks[SIZEOF (sizes)];
+  void *volatile aligned4_blocks[SIZEOF (sizes)];
+  void *volatile aligned8_blocks[SIZEOF (sizes)];
+  void *volatile aligned16_blocks[SIZEOF (sizes)];
+  void *volatile aligned32_blocks[SIZEOF (sizes)];
+  void *volatile aligned64_blocks[SIZEOF (sizes)];
   size_t i;
 
   for (i = 0; i < SIZEOF (sizes); i++)

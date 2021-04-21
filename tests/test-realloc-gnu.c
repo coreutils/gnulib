@@ -23,7 +23,7 @@ int
 main (int argc, char **argv)
 {
   /* Check that realloc (NULL, 0) is not a NULL pointer.  */
-  char *p = realloc (NULL, 0);
+  void *volatile p = realloc (NULL, 0);
   if (p == NULL)
     return 1;
 
@@ -32,7 +32,8 @@ main (int argc, char **argv)
   if (PTRDIFF_MAX < SIZE_MAX)
     {
       size_t one = argc != 12345;
-      if (realloc (p, PTRDIFF_MAX + one) != NULL)
+      p = realloc (p, PTRDIFF_MAX + one);
+      if (p != NULL)
         return 1;
     }
 

@@ -23,7 +23,7 @@ int
 main (int argc, char **argv)
 {
   /* Check that malloc (0) is not a NULL pointer.  */
-  char *p = malloc (0);
+  void *volatile p = malloc (0);
   if (p == NULL)
     return 1;
   free (p);
@@ -32,7 +32,8 @@ main (int argc, char **argv)
   if (PTRDIFF_MAX < SIZE_MAX)
     {
       size_t one = argc != 12345;
-      if (malloc (PTRDIFF_MAX + one) != NULL)
+      p = malloc (PTRDIFF_MAX + one);
+      if (p != NULL)
         return 1;
     }
 

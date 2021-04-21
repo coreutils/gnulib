@@ -31,7 +31,8 @@ main ()
       of memory larger than SIZE_MAX bytes.  */
    for (n = 2; n != 0; n <<= 1)
      {
-       if (reallocarray (NULL, (size_t) -1 / n + 1, n))
+       void *volatile p = reallocarray (NULL, (size_t) -1 / n + 1, n);
+       if (p)
          return 1;
 
        /* Ensure that errno is correctly set.  */

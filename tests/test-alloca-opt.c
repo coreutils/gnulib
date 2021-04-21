@@ -25,7 +25,7 @@
 static void
 do_allocation (int n)
 {
-  void *ptr = alloca (n);
+  void *volatile ptr = alloca (n);
   (void) ptr;
 }
 

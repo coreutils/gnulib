@@ -25,7 +25,7 @@
 static void
 do_allocation (int n)
 {
-  void *ptr = malloca (n);
+  void *volatile ptr = malloca (n);
   freea (ptr);
   safe_alloca (n);
 }
