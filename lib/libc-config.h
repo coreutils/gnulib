@@ -71,7 +71,7 @@
 # endif
 #endif
 
-#ifndef __attribute_maybe_unused__
+#ifndef __attribute_nonnull__
 /* <sys/cdefs.h> either does not exist, or is too old for Gnulib.
    Prepare to include <cdefs.h>, which is Gnulib's version of a
    more-recent glibc <sys/cdefs.h>.  */
