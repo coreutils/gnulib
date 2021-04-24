@@ -27,12 +27,12 @@
 void *
 reallocarray (void *ptr, size_t nmemb, size_t size)
 {
-    if (xalloc_oversized (nmemb, size))
-      {
-        errno = ENOMEM;
-        return NULL;
-      }
+  if (xalloc_oversized (nmemb, size))
+    {
+      errno = ENOMEM;
+      return NULL;
+    }
 
-    /* Rely on the semantics of GNU realloc.  */
-    return realloc (ptr, nmemb * size);
+  /* Rely on the semantics of GNU realloc.  */
+  return realloc (ptr, nmemb * size);
 }

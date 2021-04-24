@@ -3,6 +3,7 @@ reallocarray function that is glibc compatible.
 
 Files:
 lib/reallocarray.c
+m4/malloc.m4
 m4/reallocarray.m4
 
 Depends-on:
@@ -13,7 +14,7 @@ stdlib
 
 configure.ac:
 gl_FUNC_REALLOCARRAY
-if test $HAVE_REALLOCARRAY = 0; then
+if test $HAVE_REALLOCARRAY = 0 || test $REPLACE_REALLOCARRAY = 1; then
   AC_LIBOBJ([reallocarray])
   gl_PREREQ_REALLOCARRAY
 fi

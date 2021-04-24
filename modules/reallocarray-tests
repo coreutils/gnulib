@@ -3,6 +3,7 @@ tests/test-reallocarray.c
 tests/signature.h
 
 Depends-on:
+stdint
 
 configure.ac:
 

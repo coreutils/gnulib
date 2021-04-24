@@ -26,6 +26,12 @@ Portability problems fixed by Gnulib:
 @item
 This function is missing on many platforms:
 glibc 2.25, macOS 11.1, FreeBSD 10, NetBSD 7, OpenBSD 5.5, Minix 3.3.0, AIX 7.2, HP-UX 11, IRIX, Solaris 11.4, Cygwin 1.7.x, mingw, MSVC 14, Android 9.0.
+
+@item
+On some platforms, @code{reallocarray (n, s)} can succeed even if
+multiplying @code{n} by @code{s} would exceed @code{PTRDIFF_MAX},
+which can lead to undefined behavior later:
+FreeBSD 13, NetBSD 9, OpenBSD 6, musl 1.2.
 @end itemize
 
 Portability problems not fixed by Gnulib:
