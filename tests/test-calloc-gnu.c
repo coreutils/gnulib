@@ -19,10 +19,10 @@
 #include <stdlib.h>
 #include <stdint.h>
 
-/* Return 8.
+/* Return N.
    Usual compilers are not able to infer something about the return value.  */
-static unsigned int
-eight (void)
+static size_t
+identity (size_t n)
 {
   unsigned int x = rand ();
   unsigned int y = x * x * x * x;
@@ -30,7 +30,10 @@ eight (void)
   x++; y |= x * x * x * x;
   x++; y |= x * x * x * x;
   y = y >> 1;
-  return y & -y;
+  y &= -y;
+  y -= 8;
+  /* At this point Y is zero but GCC doesn't infer this.  */
+  return n + y;
 }
 
 int
@@ -45,29 +48,21 @@ main ()
   }
 
   /* Check that calloc fails when requested to allocate a block of memory
-     larger than SIZE_MAX bytes.
-     We use eight (), not 8, to avoid a compiler warning from GCC 7.
+     larger than PTRDIFF_MAX or SIZE_MAX bytes.
+     Use 'identity' to avoid a compiler warning from GCC 7.
      'volatile' is needed to defeat an incorrect optimization by clang 10,
      see <https://bugs.llvm.org/show_bug.cgi?id=46055>.  */
   {
-    void * volatile p = calloc (SIZE_MAX / 8 + 1, eight ());
-    if (p != NULL)
+    for (size_t n = 2; n != 0; n <<= 1)
       {
-        free (p);
-        return 2;
+        void *volatile p = calloc (PTRDIFF_MAX / n + 1, identity (n));
+        if (p != NULL)
+          return 2;
+        p = calloc (SIZE_MAX / n + 1, identity (n));
+        if (p != NULL)
+          return 3;
       }
   }
-
-  /* Likewise for PTRDIFF_MAX.  */
-  if (PTRDIFF_MAX / 8 < SIZE_MAX)
-    {
-      void * volatile p = calloc (PTRDIFF_MAX / 8 + 1, eight ());
-      if (p != NULL)
-        {
-          free (p);
-          return 2;
-        }
-    }
 
   return 0;
 }
