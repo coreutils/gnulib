@@ -54,7 +54,7 @@ extern void * xmmalloca (size_t n);
 #if HAVE_ALLOCA
 /* Rely on xmalloca (SIZE_MAX) calling xalloc_die ().  */
 # define xnmalloca(n, s) \
-    xmalloca (xalloc_oversized (n, s) ? (size_t) (-1) : (n) * (ptrdiff_t) (s))
+    xmalloca (xalloc_oversized (n, s) ? (size_t) (-1) : (n) * (size_t) (s))
 #else
 # define xnmalloca(n, s) \
     xnmalloc (n, s)

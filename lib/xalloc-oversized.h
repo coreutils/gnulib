@@ -38,8 +38,8 @@
 
    Warning: (xalloc_oversized (N, S) ? NULL : malloc (N * S)) can
    misbehave if N and S are both narrower than ptrdiff_t and size_t,
-   and can be rewritten as (xalloc_oversized (N, S) ?  NULL : malloc
-   (N * (ptrdiff_t) S)) or similarly with size_t.
+   and can be rewritten as (xalloc_oversized (N, S) ?  NULL
+   : malloc (N * (size_t) S)).
 
    This is a macro, not a function, so that it works even if an
    argument exceeds MAX (PTRDIFF_MAX, SIZE_MAX).  */
