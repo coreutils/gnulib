@@ -30,11 +30,19 @@
 #define __xalloc_oversized(n, s) \
   ((size_t) (PTRDIFF_MAX < SIZE_MAX ? PTRDIFF_MAX : SIZE_MAX - 1) / (s) < (n))
 
-/* Return 1 if an array of N objects, each of size S, cannot exist reliably
-   because its total size in bytes exceeds MIN (PTRDIFF_MAX, SIZE_MAX - 1).
-   N must be nonnegative, S must be positive, and either N or S should be
-   of type ptrdiff_t or size_t or wider.  This is a macro, not a function,
-   so that it works even if an argument exceeds MAX (PTRDIFF_MAX, SIZE_MAX).  */
+/* Return 1 if and only if an array of N objects, each of size S,
+   cannot exist reliably because its total size in bytes would exceed
+   MIN (PTRDIFF_MAX, SIZE_MAX - 1).
+
+   N must be nonnegative and S must be positive.
+
+   Warning: (xalloc_oversized (N, S) ? NULL : malloc (N * S)) can
+   misbehave if N and S are both narrower than ptrdiff_t and size_t,
+   and can be rewritten as (xalloc_oversized (N, S) ?  NULL : malloc
+   (N * (ptrdiff_t) S)) or similarly with size_t.
+
+   This is a macro, not a function, so that it works even if an
+   argument exceeds MAX (PTRDIFF_MAX, SIZE_MAX).  */
 #if 7 <= __GNUC__ && !defined __clang__ && PTRDIFF_MAX < SIZE_MAX
 # define xalloc_oversized(n, s) \
    __builtin_mul_overflow_p (n, s, (ptrdiff_t) 1)

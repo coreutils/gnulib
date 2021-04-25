@@ -8,6 +8,7 @@ lib/xmalloca.c
 Depends-on:
 malloca
 xalloc
+xalloc-oversized
 
 configure.ac:
 

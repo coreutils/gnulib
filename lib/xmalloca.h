@@ -20,6 +20,7 @@
 
 #include "malloca.h"
 #include "xalloc.h"
+#include "xalloc-oversized.h"
 
 
 #ifdef __cplusplus
@@ -29,7 +30,8 @@ extern "C" {
 
 /* xmalloca(N) is a checking safe variant of alloca(N).  It allocates N bytes
    of memory allocated on the stack, that must be freed using freea() before
-   the function returns.  Upon failure, it exits with an error message.  */
+   the function returns.  N should not have side effects.
+   Upon failure, it exits with an error message.  */
 #if HAVE_ALLOCA
 # define xmalloca(N) \
   ((N) < 4032 - (2 * sa_alignment_max - 1)                                   \
@@ -46,16 +48,16 @@ extern void * xmmalloca (size_t n);
 /* xnmalloca(N,S) is an overflow-safe variant of xmalloca (N * S).
    It allocates an array of N objects, each with S bytes of memory,
    on the stack.  S must be positive and N must be nonnegative,
-   and at least one of N and S should be ptrdiff_t or size_t or wider.
+   and S and N should not have side effects.
    The array must be freed using freea() before the function returns.
    Upon failure, it exits with an error message.  */
 #if HAVE_ALLOCA
 /* Rely on xmalloca (SIZE_MAX) calling xalloc_die ().  */
 # define xnmalloca(n, s) \
-    xmalloca (xalloc_oversized ((n), (s)) ? (size_t) (-1) : (n) * (s))
+    xmalloca (xalloc_oversized (n, s) ? (size_t) (-1) : (n) * (ptrdiff_t) (s))
 #else
 # define xnmalloca(n, s) \
-    xnmalloc ((n), (s))
+    xnmalloc (n, s)
 #endif
 
 
