@@ -79,7 +79,7 @@ extern void freea (void *p);
    on the stack.  S must be positive and N must be nonnegative.
    The array must be freed using freea() before the function returns.  */
 #define nmalloca(n, s) \
-  (xalloc_oversized (n, s) ? NULL : malloca ((n) * (ptrdiff_t) (s)))
+  (xalloc_oversized (n, s) ? NULL : malloca ((n) * (size_t) (s)))
 
 
 #ifdef __cplusplus
