@@ -8,8 +8,8 @@ m4/reallocarray.m4
 
 Depends-on:
 extensions
-xalloc-oversized
-realloc-gnu
+intprops       [test $HAVE_REALLOCARRAY = 0 || test $REPLACE_REALLOCARRAY = 1]
+realloc-gnu    [test $HAVE_REALLOCARRAY = 0 || test $REPLACE_REALLOCARRAY = 1]
 stdlib
 
 configure.ac:

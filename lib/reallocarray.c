@@ -22,17 +22,18 @@
 #include <stdlib.h>
 #include <errno.h>
 
-#include "xalloc-oversized.h"
+#include "intprops.h"
 
 void *
 reallocarray (void *ptr, size_t nmemb, size_t size)
 {
-  if (xalloc_oversized (nmemb, size))
+  size_t nbytes;
+  if (INT_MULTIPLY_WRAPV (nmemb, size, &nbytes))
     {
       errno = ENOMEM;
       return NULL;
     }
 
   /* Rely on the semantics of GNU realloc.  */
-  return realloc (ptr, nmemb * size);
+  return realloc (ptr, nbytes);
 }
