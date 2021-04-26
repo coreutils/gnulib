@@ -26,12 +26,12 @@ SIGNATURE_CHECK (reallocarray, void *, (void *, size_t, size_t));
 int
 main ()
 {
-  void *volatile p = NULL;
-
   /* Check that reallocarray fails when requested to allocate a block
      of memory larger than PTRDIFF_MAX or SIZE_MAX bytes.  */
   for (size_t n = 2; n != 0; n <<= 1)
     {
+      void *volatile p = NULL;
+
       p = reallocarray (p, PTRDIFF_MAX / n + 1, n);
       if (p)
         return 1;
@@ -43,6 +43,11 @@ main ()
         return 3;
       if (errno != ENOMEM)
         return 4;
+
+      /* Reallocarray should not crash with zero sizes.  */
+      p = reallocarray (p, 0, n);
+      p = reallocarray (p, n, 0);
+      free (p);
     }
 
   return 0;

@@ -22,19 +22,21 @@
 #include <stdint.h>
 
 /* True if N * S does not fit into both ptrdiff_t and size_t.
-   S must be positive and N must be nonnegative.
+   N and S should be nonnegative and free of side effects.
    This expands to a constant expression if N and S are both constants.
    By gnulib convention, SIZE_MAX represents overflow in size_t
    calculations, so the conservative size_t-based dividend to use here
    is SIZE_MAX - 1.  */
 #define __xalloc_oversized(n, s) \
-  ((size_t) (PTRDIFF_MAX < SIZE_MAX ? PTRDIFF_MAX : SIZE_MAX - 1) / (s) < (n))
+  ((s) != 0 \
+   && ((size_t) (PTRDIFF_MAX < SIZE_MAX ? PTRDIFF_MAX : SIZE_MAX - 1) / (s) \
+       < (n)))
 
 /* Return 1 if and only if an array of N objects, each of size S,
    cannot exist reliably because its total size in bytes would exceed
    MIN (PTRDIFF_MAX, SIZE_MAX - 1).
 
-   N must be nonnegative and S must be positive.
+   N and S should be nonnegative and free of side effects.
 
    Warning: (xalloc_oversized (N, S) ? NULL : malloc (N * S)) can
    misbehave if N and S are both narrower than ptrdiff_t and size_t,
