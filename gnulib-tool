@@ -6142,9 +6142,11 @@ s,//*$,/,'
     fi
   done
   if grep '^ *AC_PROG_CC_STDC' "$configure_ac" > /dev/null; then
+    echo "  - replace AC_PROG_CC_STDC with AC_PROG_CC in $configure_ac,"
     position_early_after=AC_PROG_CC_STDC
   else
     if grep '^ *AC_PROG_CC_C99' "$configure_ac" > /dev/null; then
+      echo "  - replace AC_PROG_CC_C99 with AC_PROG_CC in $configure_ac,"
       position_early_after=AC_PROG_CC_C99
     else
       position_early_after=AC_PROG_CC
