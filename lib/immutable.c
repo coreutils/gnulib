@@ -330,6 +330,8 @@ immstrdup (const char *string)
 {
   size_t size = strlen (string) + 1;
   void *wp = immmalloc (size);
+  if (wp == NULL)
+    return NULL;
   memcpy (wp, string, size);
   return (const char *) immfreeze (wp);
 }
