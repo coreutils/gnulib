@@ -60,6 +60,8 @@ create_temp_file (char *canon_filename, int flags, mode_t mode,
   /* The temporary file needs to be in the same directory, otherwise the
      final rename may fail.  */
   char *temp_filename = (char *) malloc (canon_filename_length + 7 + 1);
+  if (temp_filename == NULL)
+    return -1;
   memcpy (temp_filename, canon_filename, canon_filename_length);
   memcpy (temp_filename + canon_filename_length, ".XXXXXX", 7 + 1);
 
