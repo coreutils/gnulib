@@ -116,7 +116,7 @@ extern int init_inheritable_handles (struct inheritable_handles *inh_handles,
    Returns 0 upon success.  In case of failure, -1 is returned, with errno set.
  */
 extern int compose_handles_block (const struct inheritable_handles *inh_handles,
-                                  STARTUPINFO *sinfo);
+                                  STARTUPINFOA *sinfo);
 
 /* Frees the memory held by a set of inheritable handles.  */
 extern void free_inheritable_handles (struct inheritable_handles *inh_handles);
