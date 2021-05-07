@@ -12,7 +12,7 @@ Depends-on:
 unitypes
 
 configure.ac:
-gl_LIBUNISTRING_LIBHEADER([0.9.4], [uniconv.h])
+gl_LIBUNISTRING_LIBHEADER([0.9.11], [uniconv.h])
 
 Makefile.am:
 BUILT_SOURCES += $(LIBUNISTRING_UNICONV_H)

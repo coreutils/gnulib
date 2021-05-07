@@ -10,7 +10,7 @@ Depends-on:
 unitypes
 
 configure.ac:
-gl_LIBUNISTRING_LIBHEADER([0.9.4], [uniwidth.h])
+gl_LIBUNISTRING_LIBHEADER([0.9.11], [uniwidth.h])
 
 Makefile.am:
 BUILT_SOURCES += $(LIBUNISTRING_UNIWIDTH_H)
