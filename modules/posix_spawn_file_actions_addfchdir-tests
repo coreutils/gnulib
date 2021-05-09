@@ -27,4 +27,5 @@ check_PROGRAMS += test-posix_spawn_file_actions_addfchdir
 if POSIX_SPAWN_PORTED
 TESTS += test-posix_spawn-fchdir
 check_PROGRAMS += test-posix_spawn-fchdir
+test_posix_spawn_fchdir_LDADD = $(LDADD) @LIBINTL@
 endif

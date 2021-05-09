@@ -19,3 +19,4 @@ TESTS += \
 check_PROGRAMS += \
   test-posix_spawn_file_actions_addchdir \
   test-posix_spawn-chdir
+test_posix_spawn_chdir_LDADD = $(LDADD) @LIBINTL@
