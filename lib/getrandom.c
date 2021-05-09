@@ -178,7 +178,10 @@ getrandom (void *buffer, size_t length, unsigned int flags)
                     + (flags & GRND_NONBLOCK ? O_NONBLOCK : 0));
       fd = open (randdevice[devrandom], oflags);
       if (fd < 0)
-        return fd;
+        {
+          errno = ENOSYS;
+          return -1;
+        }
       randfd[devrandom] = fd;
     }
 
