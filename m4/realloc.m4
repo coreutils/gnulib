@@ -1,4 +1,4 @@
-# realloc.m4 serial 22
+# realloc.m4 serial 23
 dnl Copyright (C) 2007, 2009-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -43,7 +43,9 @@ AC_DEFUN([gl_FUNC_REALLOC_GNU],
 [
   AC_REQUIRE([gl_STDLIB_H_DEFAULTS])
   AC_REQUIRE([gl_FUNC_REALLOC_POSIX])
-  test $REPLACE_REALLOC = 1 || _AC_FUNC_REALLOC_IF([], [REPLACE_REALLOC=1])
+  if test $REPLACE_REALLOC = 0; then
+    _AC_FUNC_REALLOC_IF([], [REPLACE_REALLOC=1])
+  fi
 ])# gl_FUNC_REALLOC_GNU
 
 # gl_FUNC_REALLOC_POSIX

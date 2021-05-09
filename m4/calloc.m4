@@ -1,4 +1,4 @@
-# calloc.m4 serial 25
+# calloc.m4 serial 26
 
 # Copyright (C) 2004-2021 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -58,7 +58,9 @@ AC_DEFUN([gl_FUNC_CALLOC_GNU],
 [
   AC_REQUIRE([gl_STDLIB_H_DEFAULTS])
   AC_REQUIRE([gl_FUNC_CALLOC_POSIX])
-  test $REPLACE_CALLOC = 1 || _AC_FUNC_CALLOC_IF([], [REPLACE_CALLOC=1])
+  if test $REPLACE_CALLOC = 0; then
+    _AC_FUNC_CALLOC_IF([], [REPLACE_CALLOC=1])
+  fi
 ])# gl_FUNC_CALLOC_GNU
 
 # gl_FUNC_CALLOC_POSIX
