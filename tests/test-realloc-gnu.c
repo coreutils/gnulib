@@ -17,6 +17,8 @@
 #include <config.h>
 
 #include <stdlib.h>
+
+#include <errno.h>
 #include <stdint.h>
 
 int
@@ -33,7 +35,7 @@ main (int argc, char **argv)
     {
       size_t one = argc != 12345;
       p = realloc (p, PTRDIFF_MAX + one);
-      if (p != NULL)
+      if (!(p == NULL && errno == ENOMEM))
         return 1;
     }
 

@@ -17,6 +17,8 @@
 #include <config.h>
 
 #include <stdlib.h>
+
+#include <errno.h>
 #include <stdint.h>
 
 /* Return N.
@@ -56,10 +58,10 @@ main ()
     for (size_t n = 2; n != 0; n <<= 1)
       {
         void *volatile p = calloc (PTRDIFF_MAX / n + 1, identity (n));
-        if (p != NULL)
+        if (!(p == NULL && errno == ENOMEM))
           return 2;
         p = calloc (SIZE_MAX / n + 1, identity (n));
-        if (p != NULL)
+        if (!(p == NULL && errno == ENOMEM))
           return 3;
       }
   }
