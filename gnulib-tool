@@ -888,6 +888,15 @@ func_hardlink ()
   }
 }
 
+# The 'join' program does not exist on all platforms.  Where it exists,
+# we can use it.  Where not, bail out.
+if (type join) >/dev/null 2>&1; then
+  :
+else
+  echo "$progname: 'join' program not found. Consider installing GNU coreutils." >&2
+  func_exit 1
+fi
+
 # Ensure an 'echo' command that
 #   1. does not interpret backslashes and
 #   2. does not print an error message "broken pipe" when writing into a pipe
