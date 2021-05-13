@@ -1,4 +1,4 @@
-# posix_spawn.m4 serial 21
+# posix_spawn.m4 serial 22
 dnl Copyright (C) 2008-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -32,6 +32,7 @@ AC_DEFUN([gl_POSIX_SPAWN_BODY],
   dnl AC_CHECK_FUNCS_ONCE([posix_spawnattr_getsigmask])
   dnl AC_CHECK_FUNCS_ONCE([posix_spawnattr_setsigmask])
   dnl AC_CHECK_FUNCS_ONCE([posix_spawnattr_destroy])
+  AC_CHECK_DECLS([posix_spawn], , , [[#include <spawn.h>]])
   if test $ac_cv_func_posix_spawn = yes; then
     m4_ifdef([gl_FUNC_POSIX_SPAWN_FILE_ACTIONS_ADDCHDIR],
       [dnl Module 'posix_spawn_file_actions_addchdir' is present.
@@ -100,6 +101,17 @@ AC_DEFUN([gl_POSIX_SPAWN_BODY],
            [gl_cv_func_spawnattr_setschedparam=yes],
            [gl_cv_func_spawnattr_setschedparam=no])
         ])
+    fi
+  else
+    dnl The system does not have the main function. Therefore we have to
+    dnl provide our own implementation. This implies to define our own
+    dnl posix_spawn_file_actions_t and posix_spawnattr_t types.
+    if test $ac_cv_have_decl_posix_spawn = yes; then
+      dnl The system declares posix_spawn() already. This declaration uses
+      dnl the original posix_spawn_file_actions_t and posix_spawnattr_t types.
+      dnl But we need a declaration with our own posix_spawn_file_actions_t and
+      dnl posix_spawnattr_t types.
+      REPLACE_POSIX_SPAWN=1
     fi
   fi
   if test $ac_cv_func_posix_spawn != yes || test $REPLACE_POSIX_SPAWN = 1; then
