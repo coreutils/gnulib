@@ -41,7 +41,8 @@ main ()
       p = reallocarray (p, SIZE_MAX / n + 1, n);
       if (p)
         return 3;
-      if (errno != ENOMEM)
+      if (!(errno == ENOMEM
+            || errno == EOVERFLOW /* NetBSD */))
         return 4;
 
       /* Reallocarray should not crash with zero sizes.  */
