@@ -179,7 +179,8 @@ getrandom (void *buffer, size_t length, unsigned int flags)
       fd = open (randdevice[devrandom], oflags);
       if (fd < 0)
         {
-          errno = ENOSYS;
+          if (errno == ENOENT || errno == ENOTDIR)
+            errno = ENOSYS;
           return -1;
         }
       randfd[devrandom] = fd;
