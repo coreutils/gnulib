@@ -35,5 +35,9 @@ offset from @code{tv_sec}.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
+This function does not fail when the second argument is an empty string
+on some platforms:
+glibc 2.7.
+@item
 @xref{sys/stat.h}, for general portability problems with @code{struct stat}.
 @end itemize
