@@ -1,4 +1,4 @@
-# valgrind-tests.m4 serial 7
+# valgrind-tests.m4 serial 8
 dnl Copyright (C) 2008-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -79,9 +79,12 @@ AC_DEFUN_ONCE([gl_VALGRIND_TESTS],
            ],
            [gl_cv_prog_valgrind_works=no])
         ])
-      if test $gl_cv_prog_valgrind_works != yes; then
-        VALGRIND=
-      fi
+    fi
+
+    if test $gl_cv_prog_valgrind_works != yes; then
+      VALGRIND=
+      VALGRINDFLAGS=
+      DEFAULT_VALGRINDFLAGS=
     fi
 
    AC_SUBST([LOG_VALGRIND], ["\$(VALGRIND) \$(DEFAULT_VALGRINDFLAGS) \$(VALGRINDFLAGS)"])
