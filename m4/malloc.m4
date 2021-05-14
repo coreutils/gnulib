@@ -1,4 +1,4 @@
-# malloc.m4 serial 26
+# malloc.m4 serial 27
 dnl Copyright (C) 2007, 2009-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -113,7 +113,7 @@ AC_DEFUN([gl_FUNC_MALLOC_POSIX],
   fi
 ])
 
-# Test whether malloc, realloc, calloc set errno on failure.
+# Test whether malloc, realloc, calloc set errno to ENOMEM on failure.
 # Set gl_cv_func_malloc_posix to yes or no accordingly.
 AC_DEFUN([gl_CHECK_MALLOC_POSIX],
 [
@@ -129,9 +129,13 @@ AC_DEFUN([gl_CHECK_MALLOC_POSIX],
       case "$host_os" in
         mingw*)
           gl_cv_func_malloc_posix=no ;;
-        irix*)
-          dnl The three functions return NULL with errno unset when the
-          dnl argument is larger than PTRDIFF_MAX. Here is a test program:
+        irix* | solaris*)
+          dnl On IRIX 6.5, the three functions return NULL with errno unset
+          dnl when the argument is larger than PTRDIFF_MAX.
+          dnl On Solaris 11.3, the three functions return NULL with errno set
+          dnl to EAGAIN, not ENOMEM, when the argument is larger than
+          dnl PTRDIFF_MAX.
+          dnl Here is a test program:
 m4_divert_push([KILL])
 #include <errno.h>
 #include <stdio.h>
