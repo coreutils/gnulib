@@ -81,7 +81,7 @@ AC_DEFUN_ONCE([gl_VALGRIND_TESTS],
         ])
     fi
 
-    if test $gl_cv_prog_valgrind_works != yes; then
+    if test "$gl_cv_prog_valgrind_works" != yes; then
       VALGRIND=
       VALGRINDFLAGS=
       DEFAULT_VALGRINDFLAGS=
