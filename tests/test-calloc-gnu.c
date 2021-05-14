@@ -16,10 +16,13 @@
 
 #include <config.h>
 
+/* Specification.  */
 #include <stdlib.h>
 
 #include <errno.h>
 #include <stdint.h>
+
+#include "macros.h"
 
 /* Return N.
    Usual compilers are not able to infer something about the return value.  */
@@ -44,8 +47,7 @@ main ()
   /* Check that calloc (0, 0) is not a NULL pointer.  */
   {
     void * volatile p = calloc (0, 0);
-    if (p == NULL)
-      return 1;
+    ASSERT (p != NULL);
     free (p);
   }
 
@@ -58,11 +60,12 @@ main ()
     for (size_t n = 2; n != 0; n <<= 1)
       {
         void *volatile p = calloc (PTRDIFF_MAX / n + 1, identity (n));
-        if (!(p == NULL && errno == ENOMEM))
-          return 2;
-        p = calloc (SIZE_MAX / n + 1, identity (n));
-        if (!(p == NULL && errno == ENOMEM))
-          return 3;
+        ASSERT (p == NULL);
+        ASSERT (errno == ENOMEM);
+
+	p = calloc (SIZE_MAX / n + 1, identity (n));
+        ASSERT (p == NULL);
+        ASSERT (errno == ENOMEM);
       }
   }
 

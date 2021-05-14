@@ -16,18 +16,20 @@
 
 #include <config.h>
 
+/* Specification.  */
 #include <stdlib.h>
 
 #include <errno.h>
 #include <stdint.h>
+
+#include "macros.h"
 
 int
 main (int argc, char **argv)
 {
   /* Check that malloc (0) is not a NULL pointer.  */
   void *volatile p = malloc (0);
-  if (p == NULL)
-    return 1;
+  ASSERT (p != NULL);
   free (p);
 
   /* Check that malloc (n) fails when n exceeds PTRDIFF_MAX.  */
@@ -35,8 +37,8 @@ main (int argc, char **argv)
     {
       size_t one = argc != 12345;
       p = malloc (PTRDIFF_MAX + one);
-      if (!(p == NULL && errno == ENOMEM))
-        return 1;
+      ASSERT (p == NULL);
+      ASSERT (errno == ENOMEM);
     }
 
   return 0;

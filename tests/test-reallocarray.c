@@ -16,12 +16,16 @@
 
 #include <config.h>
 
+/* Specification.  */
 #include <stdlib.h>
+
 #include <errno.h>
 #include <stdint.h>
 
 #include "signature.h"
 SIGNATURE_CHECK (reallocarray, void *, (void *, size_t, size_t));
+
+#include "macros.h"
 
 int
 main ()
@@ -33,17 +37,13 @@ main ()
       void *volatile p = NULL;
 
       p = reallocarray (p, PTRDIFF_MAX / n + 1, n);
-      if (p)
-        return 1;
-      if (errno != ENOMEM)
-        return 2;
+      ASSERT (p == NULL);
+      ASSERT (errno == ENOMEM);
 
       p = reallocarray (p, SIZE_MAX / n + 1, n);
-      if (p)
-        return 3;
-      if (!(errno == ENOMEM
-            || errno == EOVERFLOW /* NetBSD */))
-        return 4;
+      ASSERT (p == NULL);
+      ASSERT (errno == ENOMEM
+              || errno == EOVERFLOW /* NetBSD */);
 
       /* Reallocarray should not crash with zero sizes.  */
       p = reallocarray (p, 0, n);

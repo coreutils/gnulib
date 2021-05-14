@@ -16,18 +16,20 @@
 
 #include <config.h>
 
+/* Specification.  */
 #include <stdlib.h>
 
 #include <errno.h>
 #include <stdint.h>
+
+#include "macros.h"
 
 int
 main (int argc, char **argv)
 {
   /* Check that realloc (NULL, 0) is not a NULL pointer.  */
   void *volatile p = realloc (NULL, 0);
-  if (p == NULL)
-    return 1;
+  ASSERT (p != NULL);
 
   /* Check that realloc (p, n) fails when p is non-null and n exceeds
      PTRDIFF_MAX.  */
@@ -35,8 +37,8 @@ main (int argc, char **argv)
     {
       size_t one = argc != 12345;
       p = realloc (p, PTRDIFF_MAX + one);
-      if (!(p == NULL && errno == ENOMEM))
-        return 1;
+      ASSERT (p == NULL);
+      ASSERT (errno == ENOMEM);
     }
 
   free (p);
