@@ -58,7 +58,7 @@ at any time.
 
 * Core POSIX utilities, including:
     [ basename cat chgrp chmod chown cp dd echo expand expr
-    false hostname install kill ln ls md5sum mkdir mkfifo
+    false hostname install join kill ln ls md5sum mkdir mkfifo
     mknod mv printenv pwd rm rmdir sleep sort tee test touch
     true uname
   + Mandatory. Using the platform's native utilities gives good portability
