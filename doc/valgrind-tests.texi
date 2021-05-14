@@ -34,7 +34,11 @@ LOG_COMPILER = $(LOG_VALGRIND)
 This will run all self-checks under valgrind.
 
 Replace @code{LOG_COMPILER} with @code{TESTS_ENVIRONMENT} if you are
-using the old serial test harness.
+using the old serial test harness.  The parallel test harness has been
+the default in automake since version 1.11.3, but if you are using an
+older automake, or put @samp{serial-tests} in
+@samp{AM_INIT_AUTOMAKE}/@samp{AUTOMAKE_OPTIONS} you would still be using
+the serial test harness.
 
 If you desire a project-wide decision that valgrind is not enabled by
 default, but still allow users to enable it with
@@ -54,13 +58,13 @@ that are passed to valgrind using the @samp{VALGRINDFLAGS} variable, for
 example:
 
 @smallexample
-./configure VALGRINDFLAGS="--suppressions=/your/local/valgrind/suppressions/file.txt"
+./configure VALGRINDFLAGS="--suppressions=~/local.supp"
 @end smallexample
 
 Alternatively during build phase:
 
 @smallexample
-make check VALGRINDFLAGS="--suppressions=/your/local/valgrind/suppressions/file.txt"
+make check VALGRINDFLAGS="--suppressions=~/local.supp"
 @end smallexample
 
 This is useful if you have a valgrind suppression files that are needed
@@ -106,6 +110,14 @@ gl_INIT
 Note that any user-supplied @code{VALGRINDFLAGS} value is preserved,
 which is usually what you want.
 
+Finally, as a developer you may want to provide additional per-directory
+options to valgrind and the @code{AM_VALGRINDFLAGS} variable can be used
+for this.  For example:
+
+@smallexample
+AM_VALGRINDFLAGS = --suppressions=$(srcdir)/local-valgrind.supp
+LOG_COMPILER = $(LOG_VALGRIND)
+@end smallexample
 
 @node Using valgrind manually
 @subsection Using valgrind at the developer's discretion
@@ -142,8 +154,8 @@ LOG_COMPILER = $(LOG_VALGRIND)
 
 Then valgrind will only be used for the non-.sh and non-.pl tests.
 
-For old automake, you will need @code{AUTOMAKE_OPTIONS = parallel-tests}
-to enable the parallel test harness.
+For old automake (before 1.11.3), you will need @code{AUTOMAKE_OPTIONS =
+parallel-tests} to enable the parallel test harness.
 
 @item
 You can make use of the @code{build-aux/run-test} script from Gnulib.

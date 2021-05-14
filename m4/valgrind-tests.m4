@@ -13,10 +13,10 @@ dnl From Simon Josefsson
 # Sets VALGRIND to command line (including options) to invoke valgrind
 # with, may be used directly in autoconf, makefiles or shell scripts.
 
-# Sets LOG_VALGRIND, suitable for use with LOG_COMPILER, that in a
-# makefile will expand to command line to invoke self-tests with,
+# Sets LOG_VALGRIND, suitable for use with LOG_COMPILER, that in
+# Makefile will expand to command line to invoke self-tests with,
 # i.e., LOG_VALGRIND = $(VALGRIND) $(DEFAULT_VALGRINDFLAGS)
-# $(VALGRINDFLAGS).
+# $(VALGRINDFLAGS) $(AM_VALGRINDFLAGS).
 
 # Whether to look for valgrind and set the variables can be influenced
 # by calling gl_VALGRIND_TESTS_DEFAULT_NO in configure.ac.
@@ -26,7 +26,8 @@ dnl From Simon Josefsson
 # You may modify the VALGRIND, DEFAULT_VALGRINDFLAGS and VALGRINDFLAGS
 # variables before calling this function to override defaults.  Either
 # as developer from configure.ac or user on the ./configure command
-# line.
+# line.  You may set the AM_VALGRINDFLAGS in Makefile.am to provide a
+# per-directory additional flag.
 
 AC_DEFUN([gl_VALGRIND_TESTS_DEFAULT_NO],
 [
@@ -43,6 +44,13 @@ AC_DEFUN_ONCE([gl_VALGRIND_TESTS],
   # Run self-tests under valgrind?
   if test "$opt_valgrind_tests" = "yes" && test "$cross_compiling" = no; then
     AC_CHECK_PROGS([VALGRIND], [valgrind])
+
+    # VALGRIND_PROGRAM contains the tool found by AC_CHECK_PROGS.  For
+    # backwards compatibility, the VALGRIND variable is later modified
+    # to also include all enabled options.  However the new variable
+    # LOG_VALGRIND needs to be able to refer to the valgrind tool
+    # without options, hence it uses this variable.
+    AC_SUBST([VALGRIND_PROGRAM], [$VALGRIND])
 
     AC_SUBST([DEFAULT_VALGRINDFLAGS])
     if test -z "$DEFAULT_VALGRINDFLAGS"; then
@@ -81,12 +89,15 @@ AC_DEFUN_ONCE([gl_VALGRIND_TESTS],
         ])
     fi
 
+    AC_SUBST([AM_VALGRINDFLAGS])
+    AC_SUBST([LOG_VALGRIND], ["\$(VALGRIND_PROGRAM) \$(DEFAULT_VALGRINDFLAGS) \$(VALGRINDFLAGS) \$(AM_VALGRINDFLAGS)"])
+
     if test "$gl_cv_prog_valgrind_works" != yes; then
+      DEFAULT_VALGRINDFLAGS=
+      LOG_VALGRIND=
       VALGRIND=
       VALGRINDFLAGS=
-      DEFAULT_VALGRINDFLAGS=
+      VALGRIND_PROGRAM=
     fi
-
-   AC_SUBST([LOG_VALGRIND], ["\$(VALGRIND) \$(DEFAULT_VALGRINDFLAGS) \$(VALGRINDFLAGS)"])
   fi
 ])
