@@ -11,6 +11,7 @@ at the discretion of the developer.
 
 @menu
 * Using valgrind automatically::
+* Valgrind options::
 * Using valgrind manually::
 * Valgrind and shell scripts::
 @end menu
@@ -19,18 +20,92 @@ at the discretion of the developer.
 @subsection Using valgrind without developer intervention
 
 The @code{valgrind-tests} module searches for Valgrind at configure time
-and declares the @code{VALGRIND} automake variable for use with automake's
-@code{TESTS_ENVIRONMENT}.
+and declares the @code{LOG_VALGRIND} automake variable for use with
+automake's @code{LOG_COMPILER}.
 
 After importing the @code{valgrind-tests} module to your project, you
 use it by adding the following to the @code{Makefile.am} that runs the
 self-tests:
 
 @smallexample
-TESTS_ENVIRONMENT = $(VALGRIND)
+LOG_COMPILER = $(LOG_VALGRIND)
 @end smallexample
 
 This will run all self-checks under valgrind.
+
+Replace @code{LOG_COMPILER} with @code{TESTS_ENVIRONMENT} if you are
+using the old serial test harness.
+
+If you desire a project-wide decision that valgrind is not enabled by
+default, but still allow users to enable it with
+@code{--enable-valgrind-tests} you may put the following in configure.ac
+before gl_INIT.
+
+@smallexample
+gl_VALGRIND_TESTS_DEFAULT_NO
+@end smallexample
+
+@node Valgrind options
+@subsection Valgrind options
+
+The @code{VALGRIND} variable holds the name of the valgrind binary and
+some options passed to valgrind.  You may provide additional options
+that are passed to valgrind using the @samp{VALGRINDFLAGS} variable, for
+example:
+
+@smallexample
+./configure VALGRINDFLAGS="--suppressions=/your/local/valgrind/suppressions/file.txt"
+@end smallexample
+
+Alternatively during build phase:
+
+@smallexample
+make check VALGRINDFLAGS="--suppressions=/your/local/valgrind/suppressions/file.txt"
+@end smallexample
+
+This is useful if you have a valgrind suppression files that are needed
+to avoid triggering errors for known errors, typically in system
+libraries.
+
+The @code{VALGRIND} variable include options that are useful when
+valgrind is run non-interactively through the test harness.  The default
+parameters are @code{-q} to silence the output,
+@code{--error-exitcode=1} to cause valgrind errors to be treated as
+fatal errors, and @code{--leak-check=full} to check for memory leaks.
+
+These options can be controlled through the @code{DEFAULT_VALGRINDFLAGS}
+variable.  For example, when configuring the package:
+
+@smallexample
+./configure DEFAULT_VALGRINDFLAGS="--quiet"
+@end smallexample
+
+Alternatively, during the build phase:
+
+@smallexample
+make check DEFAULT_VALGRINDFLAGS="--quiet"
+@end smallexample
+
+That would have the effect of removing @code{--error-exitcode=1} and
+@code{--leak-check=full} from the default options, thus causing any
+valgrind errors to be silently ignored, instead of causing fatal test
+failures.
+
+As a developer you may use the variables in @code{configure.ac} before
+calling @code{gl_INIT}, like this if your program has deeply-nested call
+chains:
+
+@smallexample
+gl_EARLY
+...
+VALGRINDFLAGS="$VALGRINDFLAGS --num-callers=42"
+...
+gl_INIT
+@end smallexample
+
+Note that any user-supplied @code{VALGRINDFLAGS} value is preserved,
+which is usually what you want.
+
 
 @node Using valgrind manually
 @subsection Using valgrind at the developer's discretion
@@ -58,24 +133,28 @@ There are two ways to avoid this:
 
 @itemize @bullet
 @item
+Using the Automake parallel-tests feature, you can use the following instead:
+
+@smallexample
+TEST_EXTENSIONS = .pl .sh
+LOG_COMPILER = $(LOG_VALGRIND)
+@end smallexample
+
+Then valgrind will only be used for the non-.sh and non-.pl tests.
+
+For old automake, you will need @code{AUTOMAKE_OPTIONS = parallel-tests}
+to enable the parallel test harness.
+
+@item
 You can make use of the @code{build-aux/run-test} script from Gnulib.
 Add these lines to your @code{Makefile.am}:
 
 @smallexample
-# This must be the last thing that gets added to TESTS_ENVIRONMENT.
-TESTS_ENVIRONMENT += $(SHELL) $(top_srcdir)/build-aux/run-test '$(VALGRIND)'
+LOG_COMPILER += $(SHELL) $(top_srcdir)/build-aux/run-test '$(LOG_VALGRIND)'
 @end smallexample
 
-@item
-Using the Automake parallel-tests feature, you can use the following instead:
-
-@smallexample
-AUTOMAKE_OPTIONS = parallel-tests
-TEST_EXTENSIONS = .pl .sh
-LOG_COMPILER = $(VALGRIND)
-@end smallexample
-
-Then valgrind will only be used for the non-.sh and non-.pl tests.
+Replace @code{LOG_COMPILER} with @code{TESTS_ENVIRONMENT} if you use the
+old serial test harness.
 @end itemize
 
 However, with this measure in place, binaries invoked through scripts will
@@ -84,7 +163,7 @@ variables in the @code{TESTS_ENVIRONMENT} variable that are then used by the
 shell scripts.  For example, add the following:
 
 @smallexample
-TESTS_ENVIRONMENT = VALGRIND='$(VALGRIND)'
+TESTS_ENVIRONMENT = VALGRIND='$(LOG_VALGRIND)'
 @end smallexample
 
 And then modify the shell scripts to invoke the binary prefixed with
