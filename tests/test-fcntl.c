@@ -415,6 +415,16 @@ main (int argc, char *argv[])
   ASSERT (close (fd) == 0);
   ASSERT (unlink (file) == 0);
 
+  /* Close file descriptors that may have been inherited from the parent
+     process and that would cause failures below.
+     Such file descriptors have been seen:
+       - with GNU make, when invoked as 'make -j N' with j > 1,
+       - in some versions of the KDE desktop environment,
+       - on NetBSD,
+       - in MacPorts with the "trace mode" enabled.
+   */
+  (void) close (10);
+
   /* Test whether F_DUPFD_CLOEXEC is effective.  */
   ASSERT (fcntl (1, F_DUPFD_CLOEXEC, 10) >= 0);
 #if defined _WIN32 && !defined __CYGWIN__

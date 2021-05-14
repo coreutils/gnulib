@@ -69,7 +69,8 @@ main (int argc, char *argv[])
          Such file descriptors have been seen:
            - with GNU make, when invoked as 'make -j N' with j > 1,
            - in some versions of the KDE desktop environment,
-           - on NetBSD.
+           - on NetBSD,
+           - in MacPorts with the "trace mode" enabled.
        */
       #if HAVE_CLOSE_RANGE
       if (close_range (3, 20 - 1, 0) < 0)
