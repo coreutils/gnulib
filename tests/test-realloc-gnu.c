@@ -38,7 +38,10 @@ main (int argc, char **argv)
       size_t one = argc != 12345;
       p = realloc (p, PTRDIFF_MAX + one);
       ASSERT (p == NULL);
-      ASSERT (errno == ENOMEM);
+      /* Avoid a test failure due to glibc bug
+         <https://sourceware.org/bugzilla/show_bug.cgi?id=27870>.  */
+      if (!getenv ("MALLOC_CHECK_"))
+        ASSERT (errno == ENOMEM);
     }
 
   free (p);
