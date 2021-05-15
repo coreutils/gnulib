@@ -199,14 +199,24 @@ int main ()
          rather than as the lowest address.])
     fi
 
+   case $host_os--$host_cpu in
+     solaris2.11--sparc*)
+        AC_DEFINE([BOGUS_SI_ADDR_UPON_STACK_OVERFLOW], [1],
+          [Define to 1 if the faulting address (info->si_addr)
+           might be incorrect on stack overflow.])
+        gl_bogus_si_addr=1;;
+     *) gl_bogus_si_addr=0;;
+   esac
+
    AC_CACHE_CHECK([for precise C stack overflow detection],
      [gl_cv_sys_xsi_stack_overflow_heuristic],
      [dnl On Linux/sparc64 (both in 32-bit and 64-bit mode), it would be wrong
       dnl to set HAVE_XSI_STACK_OVERFLOW_HEURISTIC to 1, because the third
       dnl argument passed to the segv_handler is a 'struct sigcontext *', not
       dnl an 'ucontext_t *'.  It would lead to a failure of test-c-stack2.sh.
-      case "${host_os}--${host_cpu}" in
-        linux*--sparc*)
+      dnl If $gl_bogus_si_addr is 1, there is no point to the heuristic.
+      case "${host_os}--${host_cpu}--${gl_bogus_si_addr}" in
+        linux*--sparc* | *--1)
           gl_cv_sys_xsi_stack_overflow_heuristic=no
           ;;
         *)

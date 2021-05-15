@@ -66,13 +66,18 @@ typedef struct sigaltstack stack_t;
 #include "gettext.h"
 #define _(msgid) gettext (msgid)
 
-/* Use libsigsegv only if needed; kernels like Solaris can detect
-   stack overflow without the overhead of an external library.  */
-#define USE_LIBSIGSEGV (!HAVE_XSI_STACK_OVERFLOW_HEURISTIC && HAVE_LIBSIGSEGV)
-
-#if USE_LIBSIGSEGV
+#if HAVE_LIBSIGSEGV
 # include <sigsegv.h>
 #endif
+
+/* Use libsigsegv only if needed; kernels like Solaris can detect
+   stack overflow without the overhead of an external library.
+   However, BOGUS_SI_ADDR_ON_STACK_OVERFLOW indicates a buggy
+   Solaris kernel, and a too-small LIBSIGSEGV_VERSION indicates a
+   libsigsegv so old that it does not work around the bug.  */
+#define USE_LIBSIGSEGV (!HAVE_XSI_STACK_OVERFLOW_HEURISTIC && HAVE_LIBSIGSEGV \
+                        && ! (BOGUS_SI_ADDR_UPON_STACK_OVERFLOW \
+                              && LIBSIGSEGV_VERSION < 0x020D))
 
 #include "exitfail.h"
 #include "ignore-value.h"
@@ -277,6 +282,9 @@ segv_handler (int signo, siginfo_t *info, void *context _GL_UNUSED)
      of the current stack.  */
   if (!cannot_be_stack_overflow)
     {
+#  if BOGUS_SI_ADDR_UPON_STACK_OVERFLOW
+      signo = 0;
+#  else
       /* If the faulting address is within the stack, or within one
          page of the stack, assume that it is a stack overflow.  */
       uintptr_t faulting_address = (uintptr_t) info->si_addr;
@@ -286,12 +294,12 @@ segv_handler (int signo, siginfo_t *info, void *context _GL_UNUSED)
          pages might be in the stack.  */
       void *stack_base = (void *) (uintptr_t) page_size;
       uintptr_t stack_size = 0; stack_size -= page_size;
-#  if HAVE_XSI_STACK_OVERFLOW_HEURISTIC
+#   if HAVE_XSI_STACK_OVERFLOW_HEURISTIC
       /* Tighten the stack bounds via the XSI heuristic.  */
       ucontext_t const *user_context = context;
       stack_base = user_context->uc_stack.ss_sp;
       stack_size = user_context->uc_stack.ss_size;
-#  endif
+#   endif
       uintptr_t base = (uintptr_t) stack_base,
         lo = (INT_SUBTRACT_WRAPV (base, page_size, &lo) || lo < page_size
               ? page_size : lo),
@@ -300,8 +308,9 @@ segv_handler (int signo, siginfo_t *info, void *context _GL_UNUSED)
               ? UINTPTR_MAX : hi);
       if (lo <= faulting_address && faulting_address <= hi)
         signo = 0;
+#  endif
 
-#   if DEBUG
+#  if DEBUG
       {
         char buf[1024];
         ignore_value (write (STDERR_FILENO, buf,
