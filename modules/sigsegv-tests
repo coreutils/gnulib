@@ -1,0 +1,31 @@
+Files:
+tests/test-sigsegv-catch-segv1.c
+tests/test-sigsegv-catch-segv2.c
+tests/test-sigsegv-catch-stackoverflow1.c
+tests/test-sigsegv-catch-stackoverflow2.c
+tests/altstack-util.h
+tests/mmap-anon-util.h
+m4/mmap-anon.m4
+
+Depends-on:
+stdint
+
+configure.ac:
+AC_CHECK_FUNCS_ONCE([setrlimit])
+gl_FUNC_MMAP_ANON
+
+Makefile.am:
+TESTS += \
+  test-sigsegv-catch-segv1 \
+  test-sigsegv-catch-segv2 \
+  test-sigsegv-catch-stackoverflow1 \
+  test-sigsegv-catch-stackoverflow2
+check_PROGRAMS += \
+  test-sigsegv-catch-segv1 \
+  test-sigsegv-catch-segv2 \
+  test-sigsegv-catch-stackoverflow1 \
+  test-sigsegv-catch-stackoverflow2
+test_sigsegv_catch_segv1_LDADD = $(LDADD) $(LIBSIGSEGV)
+test_sigsegv_catch_segv2_LDADD = $(LDADD) $(LIBSIGSEGV)
+test_sigsegv_catch_stackoverflow1_LDADD = $(LDADD) $(LIBSIGSEGV)
+test_sigsegv_catch_stackoverflow2_LDADD = $(LDADD) $(LIBSIGSEGV)
