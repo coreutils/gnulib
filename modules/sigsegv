@@ -1,0 +1,101 @@
+Description:
+A simplified variant of GNU libsigsegv.
+It implements the most important features of GNU libsigsegv: catching SIGSEGV
+and catching stack overflow. It does *not* implement the 'sigsegv_dispatcher'
+type (which is not multithread-safe).
+It supports all modern Unix-like platforms: Linux, Hurd, FreeBSD, NetBSD,
+OpenBSD, macOS, AIX, Solaris, Cygwin, Haiku, even IRIX. It does *not* support
+HP-UX, Minix, native Windows; on these platforms the module compiles and
+provides a <sigsegv.h> header file, but it does not define HAVE_SIGSEGV_RECOVERY
+and HAVE_STACK_OVERFLOW_RECOVERY.
+Unlike GNU libsigsegv, which consists of many .h and .c files, this module
+compiles to just two object files, rather than a library.
+
+Files:
+lib/sigsegv.in.h
+lib/sigsegv.c
+lib/stackvma.h
+lib/stackvma.c
+m4/mmap-anon.m4
+m4/sigaltstack.m4
+m4/stack-direction.m4
+m4/libsigsegv.m4
+
+Depends-on:
+havelib
+host-cpu-c-abi
+stdint
+getpagesize
+
+configure.ac:
+AC_ARG_WITH([libsigsegv],
+  [AS_HELP_STRING([--with-libsigsegv],
+     [use the GNU libsigsegv library, when present, instead of the gnulib module 'sigsegv'])])
+SIGSEGV_H=sigsegv.h
+if test "$with_libsigsegv" = yes; then
+  gl_LIBSIGSEGV
+  if test "$gl_cv_lib_sigsegv" = yes; then
+    SIGSEGV_H=
+  fi
+fi
+AC_SUBST([SIGSEGV_H])
+AM_CONDITIONAL([GL_GENERATE_SIGSEGV_H], [test -n "$SIGSEGV_H"])
+if test -n "$SIGSEGV_H"; then
+  dnl Persuade glibc <sys/ucontext.h> to declare macros designating register
+  dnl indices: REG_RSP on x86_64, REG_ESP on i386.
+  dnl Persuade Solaris OpenIndiana <ucontext.h> to include <sys/regset.h>,
+  dnl which declares macros designating register indices, such as ESP on i386.
+  dnl Persuade Solaris OpenIndiana <unistd.h> to declare mincore().
+  AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
+
+  AC_REQUIRE([AC_CANONICAL_HOST])
+  case "$host_os" in
+    solaris2.11)
+      AC_DEFINE([SOLARIS11], [1], [Define on Solaris 11 and its derivates.])
+      ;;
+  esac
+
+  gl_FUNC_MMAP_ANON
+
+  dnl Stack direction.
+  SV_STACK_DIRECTION
+
+  dnl Catching stack overflow requires an alternate signal stack.
+  dnl The old "install a guard page" trick would be unreliable, because
+  dnl we don't know where exactly to place the guard page.
+  SV_SIGALTSTACK
+
+  AC_CHECK_FUNCS_ONCE([getrlimit])
+fi
+
+Makefile.am:
+BUILT_SOURCES += $(SIGSEGV_H)
+
+if GL_GENERATE_SIGSEGV_H
+sigsegv.h: sigsegv.in.h $(top_builddir)/config.status
+	$(AM_V_GEN)rm -f $@-t $@ && \
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+	  cat $(srcdir)/sigsegv.in.h; \
+	} > $@-t && \
+	mv $@-t $@
+else
+sigsegv.h: $(top_builddir)/config.status
+	rm -f $@
+endif
+MOSTLYCLEANFILES += sigsegv.h sigsegv.h-t
+
+if GL_GENERATE_SIGSEGV_H
+lib_SOURCES += sigsegv.c stackvma.c
+endif
+
+Include:
+<sigsegv.h>
+
+Link:
+$(LTLIBSIGSEGV) when linking with libtool, $(LIBSIGSEGV) otherwise
+
+License:
+GPLv2+
+
+Maintainer:
+Bruno Haible
