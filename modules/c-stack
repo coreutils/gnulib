@@ -5,7 +5,6 @@ Files:
 lib/c-stack.h
 lib/c-stack.c
 m4/c-stack.m4
-m4/libsigsegv.m4
 
 Depends-on:
 c99
@@ -13,15 +12,10 @@ errno
 exitfail
 getprogname
 gettext-h
-havelib
 idx
 ignore-value
-intprops
-inttypes
-mempcpy
 raise
-sigaction
-stdbool
+sigsegv
 stddef
 unistd
 
