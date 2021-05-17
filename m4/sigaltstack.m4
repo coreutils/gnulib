@@ -1,4 +1,4 @@
-# sigaltstack.m4 serial 12
+# sigaltstack.m4 serial 13
 dnl Copyright (C) 2002-2021 Bruno Haible <bruno@clisp.org>
 dnl Copyright (C) 2008 Eric Blake <ebb9@byu.net>
 dnl This file is free software, distributed under the terms of the GNU
@@ -52,6 +52,16 @@ AC_DEFUN([SV_SIGALTSTACK],
 # include <sys/types.h>
 # include <sys/time.h>
 # include <sys/resource.h>
+#endif
+/* In glibc >= 2.34, when _GNU_SOURCE is defined, SIGSTKSZ is no longer a
+   compile-time constant.  But we need a simple constant here.  */
+#if __GLIBC__ >= 2
+# undef SIGSTKSZ
+# if defined __ia64__
+#  define SIGSTKSZ 262144
+# else
+#  define SIGSTKSZ 16384
+# endif
 #endif
 #ifndef SIGSTKSZ
 # define SIGSTKSZ 16384
@@ -137,6 +147,16 @@ int main ()
 #include <signal.h>
 #if HAVE_SYS_SIGNAL_H
 # include <sys/signal.h>
+#endif
+/* In glibc >= 2.34, when _GNU_SOURCE is defined, SIGSTKSZ is no longer a
+   compile-time constant.  But we need a simple constant here.  */
+#if __GLIBC__ >= 2
+# undef SIGSTKSZ
+# if defined __ia64__
+#  define SIGSTKSZ 262144
+# else
+#  define SIGSTKSZ 16384
+# endif
 #endif
 #ifndef SIGSTKSZ
 # define SIGSTKSZ 16384

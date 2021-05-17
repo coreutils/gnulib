@@ -7,7 +7,7 @@
 
 # Written by Paul Eggert.
 
-# serial 21
+# serial 22
 
 AC_DEFUN([AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC],
   [
@@ -43,6 +43,17 @@ AC_DEFUN([AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC],
             # include <sys/types.h>
             # include <sys/time.h>
             # include <sys/resource.h>
+            #endif
+            /* In glibc >= 2.34, when _GNU_SOURCE is defined, SIGSTKSZ is
+               no longer a compile-time constant.  But we need a simple
+               constant here.  */
+            #if __GLIBC__ >= 2
+            # undef SIGSTKSZ
+            # if defined __ia64__
+            #  define SIGSTKSZ 262144
+            # else
+            #  define SIGSTKSZ 16384
+            # endif
             #endif
             #ifndef SIGSTKSZ
             # define SIGSTKSZ 16384
@@ -149,6 +160,16 @@ AC_DEFUN([AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC],
 #if HAVE_SYS_SIGNAL_H
 # include <sys/signal.h>
 #endif
+/* In glibc >= 2.34, when _GNU_SOURCE is defined, SIGSTKSZ is no longer a
+   compile-time constant.  But we need a simple constant here.  */
+#if __GLIBC__ >= 2
+# undef SIGSTKSZ
+# if defined __ia64__
+#  define SIGSTKSZ 262144
+# else
+#  define SIGSTKSZ 16384
+# endif
+#endif
 #ifndef SIGSTKSZ
 # define SIGSTKSZ 16384
 #endif
@@ -232,6 +253,17 @@ int main ()
                 # include <sys/types.h>
                 # include <sys/time.h>
                 # include <sys/resource.h>
+                #endif
+                /* In glibc >= 2.34, when _GNU_SOURCE is defined, SIGSTKSZ is
+                   no longer a compile-time constant.  But we need a simple
+                   constant here.  */
+                #if __GLIBC__ >= 2
+                # undef SIGSTKSZ
+                # if defined __ia64__
+                #  define SIGSTKSZ 262144
+                # else
+                #  define SIGSTKSZ 16384
+                # endif
                 #endif
                 #ifndef SIGSTKSZ
                 # define SIGSTKSZ 16384

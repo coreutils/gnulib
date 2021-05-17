@@ -37,16 +37,25 @@
 #endif
 
 /* Correct the value of SIGSTKSZ on some systems.
+   glibc >= 2.34: When _GNU_SOURCE is defined, SIGSTKSZ is no longer a
+   compile-time constant.  But most programs need a simple constant.
    AIX 64-bit: original value 4096 is too small.
    HP-UX: original value 8192 is too small.
    Solaris 11/x86_64: original value 8192 is too small.  */
+#include <signal.h>
+#if __GLIBC__ >= 2
+# undef SIGSTKSZ
+# if defined __ia64__
+#  define SIGSTKSZ 262144
+# else
+#  define SIGSTKSZ 65536
+# endif
+#endif
 #if defined _AIX && defined _ARCH_PPC64
-# include <signal.h>
 # undef SIGSTKSZ
 # define SIGSTKSZ 8192
 #endif
 #if defined __hpux || (defined __sun && (defined __x86_64__ || defined __amd64__))
-# include <signal.h>
 # undef SIGSTKSZ
 # define SIGSTKSZ 16384
 #endif
