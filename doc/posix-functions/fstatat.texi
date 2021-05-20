@@ -36,8 +36,8 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function does not fail when the second argument is an empty string
-on some platforms:
-glibc 2.7.
+on some platforms, even when @code{AT_EMPTY_PATH} is not used:
+glibc 2.7, Linux 2.6.38.
 @item
 @xref{sys/stat.h}, for general portability problems with @code{struct stat}.
 @end itemize
