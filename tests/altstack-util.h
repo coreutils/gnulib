@@ -18,9 +18,7 @@
 #include <stdint.h> /* uintptr_t */
 #include <string.h> /* for memset */
 
-#ifndef SIGSTKSZ
-# define SIGSTKSZ 16384
-#endif
+#define MYSTACK_SIZE (1 << 24)
 
 /* glibc says: Users should use SIGSTKSZ as the size of user-supplied
    buffers.  We want to detect stack overflow of the alternate stack
@@ -29,12 +27,20 @@
    an unaligned pointer, to ensure the alternate stack still ends up
    aligned.  */
 #define MYSTACK_CRUMPLE_ZONE 8192
-char mystack_storage[SIGSTKSZ + 2 * MYSTACK_CRUMPLE_ZONE + 31];
-char *mystack; /* SIGSTKSZ bytes in the middle of storage. */
+static char mystack_storage[MYSTACK_SIZE + 2 * MYSTACK_CRUMPLE_ZONE + 31];
+static char *mystack; /* MYSTACK_SIZE bytes in the middle of storage. */
 
 static void
 prepare_alternate_stack (void)
 {
+#ifdef SIGSTKSZ
+  if (MYSTACK_SIZE < SIGSTKSZ)
+    {
+      size_t size = SIGSTKSZ;
+      printf ("SIGSTKSZ=%zu exceeds MYSTACK_SIZE=%d\n", size, MYSTACK_SIZE);
+      exit (1);
+    }
+#endif
   memset (mystack_storage, 's', sizeof mystack_storage);
   mystack = (char *) ((uintptr_t) (mystack_storage + MYSTACK_CRUMPLE_ZONE) | 31);
 }
@@ -51,7 +57,7 @@ check_alternate_stack_no_overflow (void)
         exit (1);
       }
   for (i = MYSTACK_CRUMPLE_ZONE; i > 0; i--)
-    if (*(mystack + SIGSTKSZ - 1 + i) != 's')
+    if (*(mystack + MYSTACK_SIZE - 1 + i) != 's')
       {
         printf ("Alternate stack was exceeded by %u bytes!!\n", i);
         exit (1);

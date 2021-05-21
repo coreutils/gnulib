@@ -129,7 +129,7 @@ main ()
 
   /* Install the stack overflow handler.  */
   if (stackoverflow_install_handler (&stackoverflow_handler,
-                                     mystack, SIGSTKSZ)
+                                     mystack, MYSTACK_SIZE)
       < 0)
     exit (2);
 

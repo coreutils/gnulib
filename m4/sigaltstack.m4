@@ -1,4 +1,4 @@
-# sigaltstack.m4 serial 13
+# sigaltstack.m4 serial 14
 dnl Copyright (C) 2002-2021 Bruno Haible <bruno@clisp.org>
 dnl Copyright (C) 2008 Eric Blake <ebb9@byu.net>
 dnl This file is free software, distributed under the terms of the GNU
@@ -53,19 +53,6 @@ AC_DEFUN([SV_SIGALTSTACK],
 # include <sys/time.h>
 # include <sys/resource.h>
 #endif
-/* In glibc >= 2.34, when _GNU_SOURCE is defined, SIGSTKSZ is no longer a
-   compile-time constant.  But we need a simple constant here.  */
-#if __GLIBC__ >= 2
-# undef SIGSTKSZ
-# if defined __ia64__
-#  define SIGSTKSZ 262144
-# else
-#  define SIGSTKSZ 16384
-# endif
-#endif
-#ifndef SIGSTKSZ
-# define SIGSTKSZ 16384
-#endif
 void stackoverflow_handler (int sig)
 {
   /* If we get here, the stack overflow was caught.  */
@@ -82,7 +69,7 @@ int recurse (volatile int n)
   int sum = 0;
   return *recurse_1 (n, &sum);
 }
-char mystack[2 * SIGSTKSZ];
+char mystack[2 * (1 << 24)];
 int main ()
 {
   stack_t altstack;
@@ -97,8 +84,12 @@ int main ()
 #endif
   /* Install the alternate stack.  Use the midpoint of mystack, to guard
      against a buggy interpretation of ss_sp on IRIX.  */
-  altstack.ss_sp = mystack + SIGSTKSZ;
-  altstack.ss_size = SIGSTKSZ;
+#ifdef SIGSTKSZ
+  if (sizeof mystack / 2 < SIGSTKSZ)
+    exit (3);
+#endif
+  altstack.ss_sp = mystack + sizeof mystack / 2;
+  altstack.ss_size = sizeof mystack / 2;
   altstack.ss_flags = 0; /* no SS_DISABLE */
   if (sigaltstack (&altstack, NULL) < 0)
     exit (1);
@@ -148,19 +139,6 @@ int main ()
 #if HAVE_SYS_SIGNAL_H
 # include <sys/signal.h>
 #endif
-/* In glibc >= 2.34, when _GNU_SOURCE is defined, SIGSTKSZ is no longer a
-   compile-time constant.  But we need a simple constant here.  */
-#if __GLIBC__ >= 2
-# undef SIGSTKSZ
-# if defined __ia64__
-#  define SIGSTKSZ 262144
-# else
-#  define SIGSTKSZ 16384
-# endif
-#endif
-#ifndef SIGSTKSZ
-# define SIGSTKSZ 16384
-#endif
 volatile char *stack_lower_bound;
 volatile char *stack_upper_bound;
 static void check_stack_location (volatile char *addr)
@@ -175,14 +153,14 @@ static void stackoverflow_handler (int sig)
   char dummy;
   check_stack_location (&dummy);
 }
+char mystack[2 * (1 << 24)];
 int main ()
 {
-  char mystack[2 * SIGSTKSZ];
   stack_t altstack;
   struct sigaction action;
   /* Install the alternate stack.  */
-  altstack.ss_sp = mystack + SIGSTKSZ;
-  altstack.ss_size = SIGSTKSZ;
+  altstack.ss_sp = mystack + sizeof mystack / 2;
+  altstack.ss_size = sizeof mystack / 2;
   stack_lower_bound = (char *) altstack.ss_sp;
   stack_upper_bound = (char *) altstack.ss_sp + altstack.ss_size - 1;
   altstack.ss_flags = 0; /* no SS_DISABLE */

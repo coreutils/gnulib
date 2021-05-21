@@ -105,11 +105,11 @@ main ()
 
   /* Install the stack overflow handler.  */
   if (stackoverflow_install_handler (&stackoverflow_handler,
-                                     mystack, SIGSTKSZ)
+                                     mystack, MYSTACK_SIZE)
       < 0)
     exit (2);
   stack_lower_bound = mystack;
-  stack_upper_bound = mystack + SIGSTKSZ - 1;
+  stack_upper_bound = mystack + MYSTACK_SIZE - 1;
 
   /* Save the current signal mask.  */
   sigemptyset (&emptyset);
