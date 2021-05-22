@@ -242,7 +242,7 @@ _GL_WARN_ON_USE (fclose, "fclose is not always POSIX compliant - "
 _GL_CXXALIAS_MDA (fcloseall, int, (void));
 # else
 #  if @HAVE_DECL_FCLOSEALL@
-#   if defined __FreeBSD__
+#   if defined __FreeBSD__ || defined __DragonFly__
 _GL_CXXALIAS_SYS (fcloseall, void, (void));
 #   else
 _GL_CXXALIAS_SYS (fcloseall, int, (void));
