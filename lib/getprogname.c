@@ -43,7 +43,7 @@
 # include <string.h>
 #endif
 
-#ifdef __sgi
+#if defined __sgi || defined __osf__
 # include <string.h>
 # include <unistd.h>
 # include <stdio.h>
@@ -224,11 +224,15 @@ getprogname (void)
       free (buf.ps_pathptr);
     }
   return p;
-# elif defined __sgi                                        /* IRIX */
+# elif defined __sgi || defined __osf__                     /* IRIX or Tru64 */
   char filename[50];
   int fd;
 
-  sprintf (filename, "/proc/pinfo/%d", (int) getpid ());
+  # if defined __sgi
+    sprintf (filename, "/proc/pinfo/%d", (int) getpid ());
+  # else
+    sprintf (filename, "/proc/%d", (int) getpid ());
+  # endif
   fd = open (filename, O_RDONLY | O_CLOEXEC);
   if (0 <= fd)
     {
