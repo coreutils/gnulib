@@ -33,10 +33,15 @@
 
    A null ACTION acts like an action that does nothing.
 
-   ACTION must be async-signal-safe.  ACTION together with its callees
-   must not require more than 64 KiB of stack space.  Also,
-   ACTION should not call longjmp, because this implementation does
-   not guarantee that it is safe to return to the original stack.
+   Restrictions:
+   - ACTION must be async-signal-safe.
+   - ACTION together with its callees must not require more than 64 KiB of
+     stack space.
+   - ACTION must not create and then invoke nested functions
+     <https://gcc.gnu.org/onlinedocs/gcc/Nested-Functions.html>, because
+     this implementation does not guarantee an executable stack.
+   - ACTION should not call longjmp, because this implementation does not
+     guarantee that it is safe to return to the original stack.
 
    This function may install a handler for the SIGSEGV signal or for the SIGBUS
    signal or exercise other system dependent exception handling APIs.  */
