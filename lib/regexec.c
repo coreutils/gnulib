@@ -1414,7 +1414,7 @@ set_regs (const regex_t *preg, const re_match_context_t *mctx, size_t nmatch,
       update_regs (dfa, pmatch, prev_idx_match, cur_node, idx, nmatch);
 
       if ((idx == pmatch[0].rm_eo && cur_node == mctx->last_node)
-	  || re_node_set_contains (&eps_via_nodes, cur_node))
+	  || (fs && re_node_set_contains (&eps_via_nodes, cur_node)))
 	{
 	  Idx reg_idx;
 	  cur_node = -1;
