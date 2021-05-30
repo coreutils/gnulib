@@ -5045,13 +5045,13 @@ func_import ()
           case "$lgpl" in
             yes | 3)
               case $license in
-                LGPLv2+ | 'LGPLv3+ or GPLv2' | LGPLv3+ | LGPL) ;;
+                LGPLv2+ | 'LGPLv3+ or GPLv2+' | LGPLv3+ | LGPL) ;;
                 *) func_append license_incompatibilities "$module $license$nl" ;;
               esac
               ;;
             3orGPLv2)
               case $license in
-                LGPLv2+ | 'LGPLv3+ or GPLv2') ;;
+                LGPLv2+ | 'LGPLv3+ or GPLv2+') ;;
                 *) func_append license_incompatibilities "$module $license$nl" ;;
               esac
               ;;
@@ -6246,25 +6246,25 @@ func_create_testdir ()
             case "$requested_license" in
               GPLv3+ | GPL)
                 case "$license" in
-                  LGPLv2+ | 'LGPLv3+ or GPLv2' | LGPLv3+ | LGPL | GPLv2+ | GPLv3+ | GPL) ;;
+                  LGPLv2+ | 'LGPLv3+ or GPLv2+' | LGPLv3+ | LGPL | GPLv2+ | GPLv3+ | GPL) ;;
                   *) func_warning "module $requested_module depends on a module with an incompatible license: $module" ;;
                 esac
                 ;;
               GPLv2+)
                 case "$license" in
-                  LGPLv2+ | 'LGPLv3+ or GPLv2' |                  GPLv2+) ;;
+                  LGPLv2+ | 'LGPLv3+ or GPLv2+' |                  GPLv2+) ;;
                   *) func_warning "module $requested_module depends on a module with an incompatible license: $module" ;;
                 esac
                 ;;
               LGPLv3+ | LGPL)
                 case "$license" in
-                  LGPLv2+ | 'LGPLv3+ or GPLv2' | LGPLv3+ | LGPL) ;;
+                  LGPLv2+ | 'LGPLv3+ or GPLv2+' | LGPLv3+ | LGPL) ;;
                   *) func_warning "module $requested_module depends on a module with an incompatible license: $module" ;;
                 esac
                 ;;
-              'LGPLv3+ or GPLv2')
+              'LGPLv3+ or GPLv2+')
                 case "$license" in
-                  LGPLv2+ | 'LGPLv3+ or GPLv2') ;;
+                  LGPLv2+ | 'LGPLv3+ or GPLv2+') ;;
                   *) func_warning "module $requested_module depends on a module with an incompatible license: $module" ;;
                 esac
                 ;;

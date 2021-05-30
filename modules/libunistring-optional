@@ -22,7 +22,7 @@ Link:
 $(LTLIBUNISTRING) when linking with libtool, $(LIBUNISTRING) otherwise
 
 License:
-LGPLv3+ or GPLv2
+LGPLv3+ or GPLv2+
 
 Maintainer:
 Paolo Bonzini, Daiki Ueno

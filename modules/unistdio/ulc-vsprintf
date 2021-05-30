@@ -26,7 +26,7 @@ Link:
 $(LIB_MBRTOWC)
 
 License:
-LGPLv3+ or GPLv2
+LGPLv3+ or GPLv2+
 
 Maintainer:
 all
