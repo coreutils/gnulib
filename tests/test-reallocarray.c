@@ -36,9 +36,12 @@ main ()
     {
       void *volatile p = NULL;
 
-      p = reallocarray (p, PTRDIFF_MAX / n + 1, n);
-      ASSERT (p == NULL);
-      ASSERT (errno == ENOMEM);
+      if (PTRDIFF_MAX / n + 1 <= SIZE_MAX)
+        {
+          p = reallocarray (p, PTRDIFF_MAX / n + 1, n);
+          ASSERT (p == NULL);
+          ASSERT (errno == ENOMEM);
+        }
 
       p = reallocarray (p, SIZE_MAX / n + 1, n);
       ASSERT (p == NULL);
