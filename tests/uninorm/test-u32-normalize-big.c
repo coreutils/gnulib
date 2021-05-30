@@ -118,7 +118,7 @@ read_normalization_test_file (const char *filename,
             {
               lines =
                 (struct normalization_test_line *)
-                xnrealloc (lines, lines_length, sizeof (struct normalization_test_line));
+                xreallocarray (lines, lines_length, sizeof *lines);
               file->parts[part_index].lines = lines;
               file->parts[part_index].lines_length = lines_length;
             }
@@ -158,7 +158,7 @@ read_normalization_test_file (const char *filename,
               /* Append uc to the sequence.  */
               sequence =
                 (uint32_t *)
-                xnrealloc (sequence, sequence_length + 2, sizeof (uint32_t));
+                xreallocarray (sequence, sequence_length + 2, sizeof *sequence);
               sequence[sequence_length] = uc;
               sequence_length++;
 
@@ -190,7 +190,7 @@ read_normalization_test_file (const char *filename,
             lines_allocated = 7;
           lines =
             (struct normalization_test_line *)
-            xnrealloc (lines, lines_allocated, sizeof (struct normalization_test_line));
+            xreallocarray (lines, lines_allocated, sizeof *lines);
         }
       lines[lines_length] = line;
       lines_length++;
@@ -200,7 +200,7 @@ read_normalization_test_file (const char *filename,
     {
       lines =
         (struct normalization_test_line *)
-        xnrealloc (lines, lines_length, sizeof (struct normalization_test_line));
+        xreallocarray (lines, lines_length, sizeof *lines);
       file->parts[part_index].lines = lines;
       file->parts[part_index].lines_length = lines_length;
     }

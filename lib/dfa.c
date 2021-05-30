@@ -1531,8 +1531,8 @@ addtok_mb (struct dfa *dfa, token t, char mbprop)
       dfa->tokens = xpalloc (dfa->tokens, &dfa->talloc, 1, -1,
                              sizeof *dfa->tokens);
       if (dfa->localeinfo.multibyte)
-        dfa->multibyte_prop = xnrealloc (dfa->multibyte_prop, dfa->talloc,
-                                         sizeof *dfa->multibyte_prop);
+        dfa->multibyte_prop = xreallocarray (dfa->multibyte_prop, dfa->talloc,
+                                             sizeof *dfa->multibyte_prop);
     }
   if (dfa->localeinfo.multibyte)
     dfa->multibyte_prop[dfa->tindex] = mbprop;
@@ -2850,13 +2850,13 @@ realloc_trans_if_necessary (struct dfa *d)
       realtrans[0] = realtrans[1] = NULL;
       d->trans = realtrans + 2;
       idx_t newalloc = d->tralloc = newalloc1 - 2;
-      d->fails = xnrealloc (d->fails, newalloc, sizeof *d->fails);
-      d->success = xnrealloc (d->success, newalloc, sizeof *d->success);
-      d->newlines = xnrealloc (d->newlines, newalloc, sizeof *d->newlines);
+      d->fails = xreallocarray (d->fails, newalloc, sizeof *d->fails);
+      d->success = xreallocarray (d->success, newalloc, sizeof *d->success);
+      d->newlines = xreallocarray (d->newlines, newalloc, sizeof *d->newlines);
       if (d->localeinfo.multibyte)
         {
           realtrans = d->mb_trans ? d->mb_trans - 2 : NULL;
-          realtrans = xnrealloc (realtrans, newalloc1, sizeof *realtrans);
+          realtrans = xreallocarray (realtrans, newalloc1, sizeof *realtrans);
           if (oldalloc == 0)
             realtrans[0] = realtrans[1] = NULL;
           d->mb_trans = realtrans + 2;
@@ -3938,7 +3938,7 @@ enlist (char **cpp, char *new, idx_t len)
         cpp[i] = NULL;
       }
   /* Add the new string.  */
-  cpp = xnrealloc (cpp, i + 2, sizeof *cpp);
+  cpp = xreallocarray (cpp, i + 2, sizeof *cpp);
   cpp[i] = new;
   cpp[i + 1] = NULL;
   return cpp;

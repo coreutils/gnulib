@@ -169,7 +169,7 @@ readtokens (FILE *stream,
       if (n_tokens >= sz)
         {
           tokens = x2nrealloc (tokens, &sz, sizeof *tokens);
-          lengths = xnrealloc (lengths, sz, sizeof *lengths);
+          lengths = xreallocarray (lengths, sz, sizeof *lengths);
         }
 
       if (token_length == (size_t) -1)
