@@ -16,51 +16,166 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-error=0
-for module in `./gnulib-tool --list`; do
-  module_license=`./gnulib-tool --extract-license $module`
-  if test "$module_license" = 'GPLed build tool'; then
-    module_license='GPL'
-  fi
-  for file in `./gnulib-tool --extract-filelist $module | grep '^\(lib\|build-aux\)/'`; do
-    if grep 'GNU General Public' $file > /dev/null; then
-      if grep 'version 3 or later' $file > /dev/null \
-         || grep 'either version 3' $file > /dev/null; then
-        file_license='GPL'
+# func_file_license
+# Input:
+# - file          A file name.
+# Output:
+# - file_license  The license mentioned in the file,
+#                 or a token with '??' if unknown.
+func_file_license ()
+{
+  if head -n 50 $file | grep 'the GNU LGPLv3[+] or the GNU GPLv2[+]' > /dev/null \
+     || { { head -n 50 $file | grep 'under the terms of either:' > /dev/null; } \
+          && { head -n 50 $file | grep 'GNU Lesser General Public' > /dev/null; } \
+          && { head -n 50 $file | grep 'GNU General Public' > /dev/null; } \
+          && { head -n 50 $file | grep 'either version 3' > /dev/null; } \
+          && { head -n 50 $file | grep 'either version 2' > /dev/null; }; }; then
+    file_license='LGPLv3+ or GPLv2+'
+  else
+    if head -n 50 $file | grep 'GNU General Public' > /dev/null; then
+      if { head -n 50 $file | grep 'version 3 or later' > /dev/null; } \
+         || { head -n 50 $file | grep 'either version 3' > /dev/null; }; then
+        file_license='GPL' # an alias for GPLv3+
       else
-        if grep 'version 2 or later' $file > /dev/null \
-           || grep 'either version 2' $file > /dev/null; then
+        if { head -n 50 $file | grep 'version 2 or later' > /dev/null; } \
+           || { head -n 50 $file | grep 'either version 2' > /dev/null; }; then
           file_license='GPLv2+'
         else
           file_license='GPL??'
         fi
       fi
     else
-      if grep 'Lesser General' $file > /dev/null; then
-        if grep 'version 3 or later' $file > /dev/null \
-           || grep 'either version 3' $file > /dev/null; then
-          file_license='LGPL'
+      if head -n 50 $file | grep 'Lesser General' > /dev/null; then
+        if { head -n 50 $file | grep 'version 3 or later' > /dev/null; } \
+           || { head -n 50 $file | grep 'either version 3' > /dev/null; }; then
+          file_license='LGPL' # an alias for LGPLv3+
         else
-          if grep 'version 2 or later' $file > /dev/null \
-             || grep 'version 2 of the License, or' $file > /dev/null \
-             || grep 'version 2\.1 of the License, or' $file > /dev/null; then
+          if { head -n 50 $file | grep 'version 2 or later' > /dev/null; } \
+             || { head -n 50 $file | tr -d '\n' | grep 'version 2 of the *. *License, or' > /dev/null; } \
+             || { head -n 50 $file | tr -d '\n' | grep 'version 2\.1 of the *. *License, or' > /dev/null; }; then
             file_license='LGPLv2+'
           else
             file_license='LGPL??'
           fi
         fi
       else
-        file_license='??'
+        if head -n 50 $file | grep 'unlimited permission to copy and/or distribute' > /dev/null; then
+          file_license='unlimited'
+        else
+          if head -n 50 $file | grep 'This file is in the public domain' > /dev/null; then
+            file_license='public domain'
+          else
+            file_license='??'
+          fi
+        fi
       fi
     fi
-    if test "$file_license" != "$module_license"; then
-      if test $error = 0; then
-        echo "Module License File License   File name"
-        echo "============== ============== ====================================="
+  fi
+}
+
+# func_module_license
+# Input:
+# - module          A module name.
+# Output:
+# - module_license  The license mentioned in the module.
+func_module_license ()
+{
+  module_license=`./gnulib-tool --extract-license $module`
+  if test "$module_license" = 'GPLv3+' || test "$module_license" = 'GPLed build tool'; then
+    module_license='GPL'
+  else
+    if test "$module_license" = 'GPLv2+ build tool'; then
+      module_license='GPLv2+'
+    fi
+  fi
+}
+
+# func_weaker_license license1 license2
+# Determines the weaker among the licenses license1, license2.
+# Input:
+# - license1        A license.
+# - license2        A license.
+# Output:
+# - weaker_license  The weaker among the licenses license1, license2.
+func_weaker_license ()
+{
+  if test "$1" = 'public domain' || test "$2" = 'public domain'; then
+    weaker_license='public domain'
+  else
+    if test "$1" = 'unlimited' || test "$2" = 'unlimited'; then
+      weaker_license='unlimited'
+    else
+      if test "$1" = 'LGPLv2+' || test "$2" = 'LGPLv2+'; then
+        weaker_license='LGPLv2+'
+      else
+        if test "$1" = 'LGPLv3+ or GPLv2+' || test "$2" = 'LGPLv3+ or GPLv2+'; then
+          weaker_license='LGPLv3+ or GPLv2+'
+        else
+          if { test "$1" = 'LGPL' && test "$2" != 'GPLv2+'; } \
+             || { test "$2" = 'LGPL' && test "$1" != 'GPLv2+'; }; then
+            weaker_license='LGPL'
+          else
+            if { test "$1" = 'GPLv2+' && test "$2" != 'LGPL'; } \
+               || { test "$2" = 'GPLv2+' && test "$1" != 'LGPL'; }; then
+              weaker_license='GPLv2+'
+            else
+              if test "$1" = "$2"; then
+                weaker_license="$1"
+              else
+                weaker_license='<complex>'
+              fi
+            fi
+          fi
+        fi
       fi
-      printf '%-14s %-14s %s\n' "$module_license" "$file_license" "$file"
-      error=1
+    fi
+  fi
+}
+
+# Iterate over the modules and collect the mismatch candidates.
+candidates=
+for module in `./gnulib-tool --list`; do
+  func_module_license
+  for file in `./gnulib-tool --extract-filelist "$module" | grep '^\(lib\|build-aux\)/'`; do
+    case $file in
+      *.class) # These are binary files, that don't contain a license notice.
+        ;;
+      *)
+        func_file_license
+        if test "$file_license" != "$module_license"; then
+          # This pair (module, file) is a mismatch candidate.
+          case " $candidates " in
+            *" $file "*) ;;
+            *)
+               candidates="$candidates $file" ;;
+          esac
+        fi
+        ;;
+    esac
+  done
+done
+
+# Look at the candidates in more detail.
+error=0
+for file in $candidates; do
+  func_file_license
+  weakest_license=
+  for module in `./gnulib-tool --find "$file"`; do
+    func_module_license
+    if test -z "$weakest_license"; then
+      weakest_license="$module_license"
+    else
+      func_weaker_license "$weakest_license" "$module_license"
+      weakest_license="$weaker_license"
     fi
   done
+  if test "$file_license" != "$weakest_license"; then
+    if test $error = 0; then
+      echo "Module License    File License   File name"
+      echo "================= ============== ====================================="
+    fi
+    printf '%-17s %-14s %s\n' "$weakest_license" "$file_license" "$file"
+    error=1
+  fi
 done
 exit $error
