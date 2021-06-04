@@ -284,8 +284,7 @@ Options for --import, --add/remove-import, --update,
 
 Options for --import, --add/remove-import, --update:
 
-  -S, --more-symlinks       Make symbolic links instead of copying files, and
-                            don't replace copyright notices.
+  -S, --more-symlinks       Deprecated; equivalent to --symlink.
 
 Report bugs to <bug-gnulib@gnu.org>.'''
         return(result)

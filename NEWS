@@ -3,6 +3,12 @@ Important general notes
 
 Date        Modules         Changes
 
+2021-06-04  (all)           The license notices in source files are now really
+                            stating the effective license, rather than a fake
+                            GPL notice.
+                            gnulib-tool no longer replaces GPL notices in source
+                            files by something else.
+
 2020-08-16  (all)           Automake >= 1.11 and Autoconf >= 2.64 are required.
 
 2019-12-11  Support for     These modules are now supported in C++ mode as well.

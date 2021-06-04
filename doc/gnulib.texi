@@ -494,7 +494,9 @@ field of the dependencies.
 
 @item License
 This field specifies the license that governs the source code parts of
-this module.  See @ref{Copyright} for details.
+this module.  See @ref{Copyright} for details.  Be sure to place, in every
+source code file, a copyright notice and the appropriate license notice,
+taken from the @file{etc/license-notices/} directory.
 
 @item Maintainer
 This field specifies the persons who have a definitive say about proposed
