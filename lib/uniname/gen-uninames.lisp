@@ -5,18 +5,26 @@
 ;;; Copyright (C) 2000-2021 Free Software Foundation, Inc.
 ;;; Written by Bruno Haible <bruno@clisp.org>, 2000-12-28.
 ;;;
-;;; This program is free software: you can redistribute it and/or modify
-;;; it under the terms of the GNU General Public License as published by
-;;; the Free Software Foundation; either version 3 of the License, or
-;;; (at your option) any later version.
+;;; This program is free software.
+;;; It is dual-licensed under "the GNU LGPLv3+ or the GNU GPLv2+".
+;;; You can redistribute it and/or modify it under either
+;;;   - the terms of the GNU Lesser General Public License as published
+;;;     by the Free Software Foundation; either version 3, or (at your
+;;;     option) any later version, or
+;;;   - the terms of the GNU General Public License as published by the
+;;;     Free Software Foundation; either version 2, or (at your option)
+;;;     any later version, or
+;;;   - the same dual license "the GNU LGPLv3+ or the GNU GPLv2+".
 ;;;
 ;;; This program is distributed in the hope that it will be useful,
 ;;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;;; GNU General Public License for more details.
+;;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+;;; Lesser General Public License and the GNU General Public License
+;;; for more details.
 ;;;
-;;; You should have received a copy of the GNU General Public License
-;;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
+;;; You should have received a copy of the GNU Lesser General Public
+;;; License and of the GNU General Public License along with this
+;;; program.  If not, see <https://www.gnu.org/licenses/>.
 
 (defparameter add-comments nil)
 
@@ -166,6 +174,28 @@
         (format ostream " * Unicode character name table.~%")
         (format ostream " * Generated automatically by the gen-uninames utility.~%")
         (format ostream " */~%")
+        (format ostream "/* Copyright (C) 2000-2021 Free Software Foundation, Inc.~%")
+        (format ostream "~%")
+        (format ostream "   This program is free software.~%")
+        (format ostream "   It is dual-licensed under \"the GNU LGPLv3+ or the GNU GPLv2+\".~%")
+        (format ostream "   You can redistribute it and/or modify it under either~%")
+        (format ostream "     - the terms of the GNU Lesser General Public License as published~%")
+        (format ostream "       by the Free Software Foundation; either version 3, or (at your~%")
+        (format ostream "       option) any later version, or~%")
+        (format ostream "     - the terms of the GNU General Public License as published by the~%")
+        (format ostream "       Free Software Foundation; either version 2, or (at your option)~%")
+        (format ostream "       any later version, or~%")
+        (format ostream "     - the same dual license \"the GNU LGPLv3+ or the GNU GPLv2+\".~%")
+        (format ostream "~%")
+        (format ostream "   This program is distributed in the hope that it will be useful,~%")
+        (format ostream "   but WITHOUT ANY WARRANTY; without even the implied warranty of~%")
+        (format ostream "   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU~%")
+        (format ostream "   Lesser General Public License and the GNU General Public License~%")
+        (format ostream "   for more details.~%")
+        (format ostream "~%")
+        (format ostream "   You should have received a copy of the GNU Lesser General Public~%")
+        (format ostream "   License and of the GNU General Public License along with this~%")
+        (format ostream "   program.  If not, see <https://www.gnu.org/licenses/>.  */~%")
         (format ostream "~%")
         (format ostream "static const char unicode_name_words[~D] = {~%"
                         (let ((sum 0))
