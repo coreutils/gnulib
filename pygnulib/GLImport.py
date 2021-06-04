@@ -837,7 +837,8 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         listing = list()
         compatibilities = dict()
         incompatibilities = string()
-        compatibilities['all'] = ['GPLed build tool', 'public domain', 'unlimited',
+        compatibilities['all'] = ['GPLv2+ build tool', 'GPLed build tool',
+                                  'public domain', 'unlimited',
                                   'unmodifiable license text']
         compatibilities[3] = ['LGPL', 'LGPLv2+', 'LGPLv3+']
         compatibilities[2] = ['LGPLv2+']

@@ -5039,7 +5039,7 @@ func_import ()
     for module in $main_modules; do
       license=`func_get_license $module`
       case $license in
-        'GPLed build tool') ;;
+        'GPLv2+ build tool' | 'GPLed build tool') ;;
         'public domain' | 'unlimited' | 'unmodifiable license text') ;;
         *)
           case "$lgpl" in
@@ -6240,7 +6240,7 @@ func_create_testdir ()
       for module in $modules; do
         license=`func_get_license "$module"`
         case "$license" in
-          'GPLed build tool') ;;
+          'GPLv2+ build tool' | 'GPLed build tool') ;;
           'public domain' | 'unlimited' | 'unmodifiable license text') ;;
           *)
             case "$requested_license" in
