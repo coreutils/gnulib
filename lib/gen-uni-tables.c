@@ -273,6 +273,75 @@ fill_attributes (const char *unicodedata_filename)
 
 /* ========================================================================= */
 
+/* Output the license notice for a library file.
+   This closes an open C syntax comment.  */
+static void
+output_library_license (FILE *stream, bool lgplv2plus)
+{
+  if (lgplv2plus)
+    {
+      /* These Gnulib modules are under the LGPLv2+ license.  */
+      fprintf (stream, "   This file is free software: you can redistribute it and/or modify\n");
+      fprintf (stream, "   it under the terms of the GNU Lesser General Public License as\n");
+      fprintf (stream, "   published by the Free Software Foundation; either version 2.1 of the\n");
+      fprintf (stream, "   License, or (at your option) any later version.\n");
+      fprintf (stream, "\n");
+      fprintf (stream, "   This file is distributed in the hope that it will be useful,\n");
+      fprintf (stream, "   but WITHOUT ANY WARRANTY; without even the implied warranty of\n");
+      fprintf (stream, "   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n");
+      fprintf (stream, "   GNU Lesser General Public License for more details.\n");
+      fprintf (stream, "\n");
+      fprintf (stream, "   You should have received a copy of the GNU Lesser General Public License\n");
+      fprintf (stream, "   along with this program.  If not, see <https://www.gnu.org/licenses/>.  */\n");
+    }
+  else
+    {
+      /* These Gnulib modules are under the 'LGPLv3+ or GPLv2+' license.  */
+      fprintf (stream, "   This program is free software.\n");
+      fprintf (stream, "   It is dual-licensed under \"the GNU LGPLv3+ or the GNU GPLv2+\".\n");
+      fprintf (stream, "   You can redistribute it and/or modify it under either\n");
+      fprintf (stream, "     - the terms of the GNU Lesser General Public License as published\n");
+      fprintf (stream, "       by the Free Software Foundation; either version 3, or (at your\n");
+      fprintf (stream, "       option) any later version, or\n");
+      fprintf (stream, "     - the terms of the GNU General Public License as published by the\n");
+      fprintf (stream, "       Free Software Foundation; either version 2, or (at your option)\n");
+      fprintf (stream, "       any later version, or\n");
+      fprintf (stream, "     - the same dual license \"the GNU LGPLv3+ or the GNU GPLv2+\".\n");
+      fprintf (stream, "\n");
+      fprintf (stream, "   This program is distributed in the hope that it will be useful,\n");
+      fprintf (stream, "   but WITHOUT ANY WARRANTY; without even the implied warranty of\n");
+      fprintf (stream, "   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU\n");
+      fprintf (stream, "   Lesser General Public License and the GNU General Public License\n");
+      fprintf (stream, "   for more details.\n");
+      fprintf (stream, "\n");
+      fprintf (stream, "   You should have received a copy of the GNU Lesser General Public\n");
+      fprintf (stream, "   License and of the GNU General Public License along with this\n");
+      fprintf (stream, "   program; if not, see <https://www.gnu.org/licenses/>.  */\n");
+    }
+}
+
+/* Output the license notice for a tests file.
+   This closes an open C syntax comment.  */
+static void
+output_tests_license (FILE *stream)
+{
+  /* Gnulib tests modules are under the GPLv3+ license.  */
+  fprintf (stream, "   This program is free software: you can redistribute it and/or modify\n");
+  fprintf (stream, "   it under the terms of the GNU General Public License as published by\n");
+  fprintf (stream, "   the Free Software Foundation; either version 3 of the License, or\n");
+  fprintf (stream, "   (at your option) any later version.\n");
+  fprintf (stream, "\n");
+  fprintf (stream, "   This program is distributed in the hope that it will be useful,\n");
+  fprintf (stream, "   but WITHOUT ANY WARRANTY; without even the implied warranty of\n");
+  fprintf (stream, "   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n");
+  fprintf (stream, "   GNU General Public License for more details.\n");
+  fprintf (stream, "\n");
+  fprintf (stream, "   You should have received a copy of the GNU General Public License\n");
+  fprintf (stream, "   along with this program.  If not, see <https://www.gnu.org/licenses/>.  */\n");
+}
+
+/* ========================================================================= */
+
 /* General category.  */
 /* See Unicode 3.0 book, section 4.5,
        UCD.html.  */
@@ -637,18 +706,7 @@ output_predicate_test (const char *filename, bool (*predicate) (unsigned int), c
   fprintf (stream, "/* Test the Unicode character type functions.\n");
   fprintf (stream, "   Copyright (C) 2007 Free Software Foundation, Inc.\n");
   fprintf (stream, "\n");
-  fprintf (stream, "   This program is free software: you can redistribute it and/or modify\n");
-  fprintf (stream, "   it under the terms of the GNU General Public License as published by\n");
-  fprintf (stream, "   the Free Software Foundation; either version 3 of the License, or\n");
-  fprintf (stream, "   (at your option) any later version.\n");
-  fprintf (stream, "\n");
-  fprintf (stream, "   This program is distributed in the hope that it will be useful,\n");
-  fprintf (stream, "   but WITHOUT ANY WARRANTY; without even the implied warranty of\n");
-  fprintf (stream, "   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n");
-  fprintf (stream, "   GNU General Public License for more details.\n");
-  fprintf (stream, "\n");
-  fprintf (stream, "   You should have received a copy of the GNU General Public License\n");
-  fprintf (stream, "   along with this program.  If not, see <https://www.gnu.org/licenses/>.  */\n");
+  output_tests_license (stream);
   fprintf (stream, "\n");
   fprintf (stream, "#include \"test-predicate-part1.h\"\n");
   fprintf (stream, "\n");
@@ -708,6 +766,12 @@ output_predicate (const char *filename, bool (*predicate) (unsigned int), const 
   fprintf (stream, "/* %s of Unicode characters.  */\n", comment);
   fprintf (stream, "/* Generated automatically by gen-uni-tables.c for Unicode %s.  */\n",
            version);
+  fprintf (stream, "\n");
+
+  fprintf (stream, "/* Copyright (C) 2000-2021 Free Software Foundation, Inc.\n");
+  fprintf (stream, "\n");
+  output_library_license (stream, strcmp (filename, "unictype/categ_M.h") == 0);
+  fprintf (stream, "\n");
 
   t.p = 4; /* or: 5 */
   t.q = 7; /* or: 6 */
@@ -1015,6 +1079,12 @@ output_category (const char *filename, const char *version)
   fprintf (stream, "/* Categories of Unicode characters.  */\n");
   fprintf (stream, "/* Generated automatically by gen-uni-tables.c for Unicode %s.  */\n",
            version);
+  fprintf (stream, "\n");
+
+  fprintf (stream, "/* Copyright (C) 2000-2021 Free Software Foundation, Inc.\n");
+  fprintf (stream, "\n");
+  output_library_license (stream, true);
+  fprintf (stream, "\n");
 
   t.p = 7;
   t.q = 9;
@@ -1180,6 +1250,12 @@ output_combclass (const char *filename, const char *version)
   fprintf (stream, "/* Combining class of Unicode characters.  */\n");
   fprintf (stream, "/* Generated automatically by gen-uni-tables.c for Unicode %s.  */\n",
            version);
+  fprintf (stream, "\n");
+
+  fprintf (stream, "/* Copyright (C) 2000-2021 Free Software Foundation, Inc.\n");
+  fprintf (stream, "\n");
+  output_library_license (stream, true);
+  fprintf (stream, "\n");
 
   t.p = 7;
   t.q = 9;
@@ -1548,6 +1624,12 @@ output_bidi_category (const char *filename, const char *version)
   fprintf (stream, "/* Bidi categories of Unicode characters.  */\n");
   fprintf (stream, "/* Generated automatically by gen-uni-tables.c for Unicode %s.  */\n",
            version);
+  fprintf (stream, "\n");
+
+  fprintf (stream, "/* Copyright (C) 2000-2021 Free Software Foundation, Inc.\n");
+  fprintf (stream, "\n");
+  output_library_license (stream, true);
+  fprintf (stream, "\n");
 
   t.p = 7;
   t.q = 9;
@@ -1707,6 +1789,12 @@ output_decimal_digit_test (const char *filename, const char *version)
   fprintf (stream, "/* Decimal digit values of Unicode characters.  */\n");
   fprintf (stream, "/* Generated automatically by gen-uni-tables.c for Unicode %s.  */\n",
            version);
+  fprintf (stream, "\n");
+
+  fprintf (stream, "/* Copyright (C) 2000-2021 Free Software Foundation, Inc.\n");
+  fprintf (stream, "\n");
+  output_tests_license (stream);
+  fprintf (stream, "\n");
 
   need_comma = false;
   for (ch = 0; ch < 0x110000; ch++)
@@ -1753,6 +1841,12 @@ output_decimal_digit (const char *filename, const char *version)
   fprintf (stream, "/* Decimal digit values of Unicode characters.  */\n");
   fprintf (stream, "/* Generated automatically by gen-uni-tables.c for Unicode %s.  */\n",
            version);
+  fprintf (stream, "\n");
+
+  fprintf (stream, "/* Copyright (C) 2000-2021 Free Software Foundation, Inc.\n");
+  fprintf (stream, "\n");
+  output_library_license (stream, false);
+  fprintf (stream, "\n");
 
   t.p = 7;
   t.q = 9;
@@ -1892,6 +1986,12 @@ output_digit_test (const char *filename, const char *version)
   fprintf (stream, "/* Digit values of Unicode characters.  */\n");
   fprintf (stream, "/* Generated automatically by gen-uni-tables.c for Unicode %s.  */\n",
            version);
+  fprintf (stream, "\n");
+
+  fprintf (stream, "/* Copyright (C) 2000-2021 Free Software Foundation, Inc.\n");
+  fprintf (stream, "\n");
+  output_tests_license (stream);
+  fprintf (stream, "\n");
 
   need_comma = false;
   for (ch = 0; ch < 0x110000; ch++)
@@ -1938,6 +2038,12 @@ output_digit (const char *filename, const char *version)
   fprintf (stream, "/* Digit values of Unicode characters.  */\n");
   fprintf (stream, "/* Generated automatically by gen-uni-tables.c for Unicode %s.  */\n",
            version);
+  fprintf (stream, "\n");
+
+  fprintf (stream, "/* Copyright (C) 2000-2021 Free Software Foundation, Inc.\n");
+  fprintf (stream, "\n");
+  output_library_license (stream, false);
+  fprintf (stream, "\n");
 
   t.p = 7;
   t.q = 9;
@@ -2094,6 +2200,12 @@ output_numeric_test (const char *filename, const char *version)
   fprintf (stream, "/* Numeric values of Unicode characters.  */\n");
   fprintf (stream, "/* Generated automatically by gen-uni-tables.c for Unicode %s.  */\n",
            version);
+  fprintf (stream, "\n");
+
+  fprintf (stream, "/* Copyright (C) 2000-2021 Free Software Foundation, Inc.\n");
+  fprintf (stream, "\n");
+  output_tests_license (stream);
+  fprintf (stream, "\n");
 
   need_comma = false;
   for (ch = 0; ch < 0x110000; ch++)
@@ -2150,6 +2262,12 @@ output_numeric (const char *filename, const char *version)
   fprintf (stream, "/* Numeric values of Unicode characters.  */\n");
   fprintf (stream, "/* Generated automatically by gen-uni-tables.c for Unicode %s.  */\n",
            version);
+  fprintf (stream, "\n");
+
+  fprintf (stream, "/* Copyright (C) 2000-2021 Free Software Foundation, Inc.\n");
+  fprintf (stream, "\n");
+  output_library_license (stream, false);
+  fprintf (stream, "\n");
 
   /* Create table of occurring fractions.  */
   nfractions = 0;
@@ -2432,6 +2550,12 @@ output_mirror (const char *filename, const char *version)
   fprintf (stream, "/* Mirrored Unicode characters.  */\n");
   fprintf (stream, "/* Generated automatically by gen-uni-tables.c for Unicode %s.  */\n",
            version);
+  fprintf (stream, "\n");
+
+  fprintf (stream, "/* Copyright (C) 2000-2021 Free Software Foundation, Inc.\n");
+  fprintf (stream, "\n");
+  output_library_license (stream, false);
+  fprintf (stream, "\n");
 
   t.p = 7;
   t.q = 9;
@@ -4012,6 +4136,12 @@ output_joining_type_test (const char *filename, const char *version)
   fprintf (stream, "/* Arabic joining type of Unicode characters.  */\n");
   fprintf (stream, "/* Generated automatically by gen-uni-tables.c for Unicode %s.  */\n",
            version);
+  fprintf (stream, "\n");
+
+  fprintf (stream, "/* Copyright (C) 2000-2021 Free Software Foundation, Inc.\n");
+  fprintf (stream, "\n");
+  output_tests_license (stream);
+  fprintf (stream, "\n");
 
   need_comma = false;
   for (ch = 0; ch < 0x110000; ch++)
@@ -4064,6 +4194,12 @@ output_joining_type (const char *filename, const char *version)
   fprintf (stream, "/* Arabic joining type of Unicode characters.  */\n");
   fprintf (stream, "/* Generated automatically by gen-uni-tables.c for Unicode %s.  */\n",
            version);
+  fprintf (stream, "\n");
+
+  fprintf (stream, "/* Copyright (C) 2000-2021 Free Software Foundation, Inc.\n");
+  fprintf (stream, "\n");
+  output_library_license (stream, true);
+  fprintf (stream, "\n");
 
   t.p = 7;
   t.q = 9;
@@ -4294,6 +4430,12 @@ output_joining_group_test (const char *filename, const char *version)
   fprintf (stream, "/* Arabic joining group of Unicode characters.  */\n");
   fprintf (stream, "/* Generated automatically by gen-uni-tables.c for Unicode %s.  */\n",
            version);
+  fprintf (stream, "\n");
+
+  fprintf (stream, "/* Copyright (C) 2000-2021 Free Software Foundation, Inc.\n");
+  fprintf (stream, "\n");
+  output_tests_license (stream);
+  fprintf (stream, "\n");
 
   need_comma = false;
   for (ch = 0; ch < 0x110000; ch++)
@@ -4346,6 +4488,12 @@ output_joining_group (const char *filename, const char *version)
   fprintf (stream, "/* Arabic joining group of Unicode characters.  */\n");
   fprintf (stream, "/* Generated automatically by gen-uni-tables.c for Unicode %s.  */\n",
            version);
+  fprintf (stream, "\n");
+
+  fprintf (stream, "/* Copyright (C) 2000-2021 Free Software Foundation, Inc.\n");
+  fprintf (stream, "\n");
+  output_library_license (stream, false);
+  fprintf (stream, "\n");
 
   t.p = 7;
   t.q = 9;
@@ -4578,6 +4726,12 @@ output_scripts (const char *version)
   fprintf (stream, "/* Unicode scripts.  */\n");
   fprintf (stream, "/* Generated automatically by gen-uni-tables.c for Unicode %s.  */\n",
            version);
+  fprintf (stream, "\n");
+
+  fprintf (stream, "/* Copyright (C) 2000-2021 Free Software Foundation, Inc.\n");
+  fprintf (stream, "\n");
+  output_library_license (stream, true);
+  fprintf (stream, "\n");
 
   for (s = 0; s < numscripts; s++)
     {
@@ -4755,6 +4909,13 @@ output_scripts_byname (const char *version)
   fprintf (stream, "/* Unicode scripts.  */\n");
   fprintf (stream, "/* Generated automatically by gen-uni-tables.c for Unicode %s.  */\n",
            version);
+  fprintf (stream, "\n");
+
+  fprintf (stream, "/* Copyright (C) 2000-2021 Free Software Foundation, Inc.\n");
+  fprintf (stream, "\n");
+  output_library_license (stream, true);
+  fprintf (stream, "\n");
+
   fprintf (stream, "struct named_script { int name; unsigned int index; };\n");
   fprintf (stream, "%%struct-type\n");
   fprintf (stream, "%%language=ANSI-C\n");
@@ -4895,6 +5056,12 @@ output_blocks (const char *version)
   fprintf (stream, "/* Unicode blocks.  */\n");
   fprintf (stream, "/* Generated automatically by gen-uni-tables.c for Unicode %s.  */\n",
            version);
+  fprintf (stream, "\n");
+
+  fprintf (stream, "/* Copyright (C) 2000-2021 Free Software Foundation, Inc.\n");
+  fprintf (stream, "\n");
+  output_library_license (stream, false);
+  fprintf (stream, "\n");
 
   fprintf (stream, "static const uc_block_t blocks[] =\n");
   fprintf (stream, "{\n");
@@ -5312,6 +5479,12 @@ output_ident_category (const char *filename, int (*predicate) (unsigned int), co
   fprintf (stream, "/* Language syntax properties of Unicode characters.  */\n");
   fprintf (stream, "/* Generated automatically by gen-uni-tables.c for Unicode %s.  */\n",
            version);
+  fprintf (stream, "\n");
+
+  fprintf (stream, "/* Copyright (C) 2000-2021 Free Software Foundation, Inc.\n");
+  fprintf (stream, "\n");
+  output_library_license (stream, false);
+  fprintf (stream, "\n");
 
   t.p = 7; /* or 8 */
   t.q = 5; /* or 4 */
@@ -7809,23 +7982,9 @@ output_lbrk_tables (const char *filename1, const char *filename2, const char *ve
                version);
       fprintf (stream, "\n");
 
-      /* Put a GPL header on it.  The gnulib module is under LGPL (although it
-         still carries the GPL header), and it's gnulib-tool which replaces the
-         GPL header with an LGPL header.  */
       fprintf (stream, "/* Copyright (C) 2000-2002, 2004, 2008 Free Software Foundation, Inc.\n");
       fprintf (stream, "\n");
-      fprintf (stream, "   This program is free software: you can redistribute it and/or modify\n");
-      fprintf (stream, "   it under the terms of the GNU General Public License as published by\n");
-      fprintf (stream, "   the Free Software Foundation; either version 3 of the License, or\n");
-      fprintf (stream, "   (at your option) any later version.\n");
-      fprintf (stream, "\n");
-      fprintf (stream, "   This program is distributed in the hope that it will be useful,\n");
-      fprintf (stream, "   but WITHOUT ANY WARRANTY; without even the implied warranty of\n");
-      fprintf (stream, "   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n");
-      fprintf (stream, "   GNU General Public License for more details.\n");
-      fprintf (stream, "\n");
-      fprintf (stream, "   You should have received a copy of the GNU General Public License\n");
-      fprintf (stream, "   along with this program.  If not, see <https://www.gnu.org/licenses/>.  */\n");
+      output_library_license (stream, false);
       fprintf (stream, "\n");
     }
 
@@ -8369,28 +8528,14 @@ output_wbrk_tables (const char *filename, const char *version)
     }
 
   fprintf (stream, "/* DO NOT EDIT! GENERATED AUTOMATICALLY! */\n");
-  fprintf (stream, "/* Line breaking properties of Unicode characters.  */\n");
+  fprintf (stream, "/* Word breaking properties of Unicode characters.  */\n");
   fprintf (stream, "/* Generated automatically by gen-uni-tables.c for Unicode %s.  */\n",
            version);
   fprintf (stream, "\n");
 
-  /* Put a GPL header on it.  The gnulib module is under LGPL (although it
-     still carries the GPL header), and it's gnulib-tool which replaces the
-     GPL header with an LGPL header.  */
   fprintf (stream, "/* Copyright (C) 2000-2002, 2004, 2007-2009 Free Software Foundation, Inc.\n");
   fprintf (stream, "\n");
-  fprintf (stream, "   This program is free software: you can redistribute it and/or modify\n");
-  fprintf (stream, "   it under the terms of the GNU General Public License as published by\n");
-  fprintf (stream, "   the Free Software Foundation; either version 3 of the License, or\n");
-  fprintf (stream, "   (at your option) any later version.\n");
-  fprintf (stream, "\n");
-  fprintf (stream, "   This program is distributed in the hope that it will be useful,\n");
-  fprintf (stream, "   but WITHOUT ANY WARRANTY; without even the implied warranty of\n");
-  fprintf (stream, "   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n");
-  fprintf (stream, "   GNU General Public License for more details.\n");
-  fprintf (stream, "\n");
-  fprintf (stream, "   You should have received a copy of the GNU General Public License\n");
-  fprintf (stream, "   along with this program.  If not, see <https://www.gnu.org/licenses/>.  */\n");
+  output_library_license (stream, false);
   fprintf (stream, "\n");
 
   output_wbp (stream);
@@ -8460,18 +8605,7 @@ output_gbp_test (const char *filename)
   fprintf (stream, "/* Test the Unicode grapheme break property functions.\n");
   fprintf (stream, "   Copyright (C) 2010 Free Software Foundation, Inc.\n");
   fprintf (stream, "\n");
-  fprintf (stream, "   This program is free software: you can redistribute it and/or modify\n");
-  fprintf (stream, "   it under the terms of the GNU General Public License as published by\n");
-  fprintf (stream, "   the Free Software Foundation; either version 3 of the License, or\n");
-  fprintf (stream, "   (at your option) any later version.\n");
-  fprintf (stream, "\n");
-  fprintf (stream, "   This program is distributed in the hope that it will be useful,\n");
-  fprintf (stream, "   but WITHOUT ANY WARRANTY; without even the implied warranty of\n");
-  fprintf (stream, "   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n");
-  fprintf (stream, "   GNU General Public License for more details.\n");
-  fprintf (stream, "\n");
-  fprintf (stream, "   You should have received a copy of the GNU General Public License\n");
-  fprintf (stream, "   along with this program.  If not, see <https://www.gnu.org/licenses/>.  */\n");
+  output_tests_license (stream);
   fprintf (stream, "\n");
 
   need_comma = false;
@@ -8544,6 +8678,12 @@ output_gbp_table (const char *filename, const char *version)
   fprintf (stream, "/* Grapheme break property of Unicode characters.  */\n");
   fprintf (stream, "/* Generated automatically by gen-uni-tables.c for Unicode %s.  */\n",
            version);
+  fprintf (stream, "\n");
+
+  fprintf (stream, "/* Copyright (C) 2000-2021 Free Software Foundation, Inc.\n");
+  fprintf (stream, "\n");
+  output_library_license (stream, false);
+  fprintf (stream, "\n");
 
   t.p = 7;
   t.q = 9;
@@ -9025,6 +9165,11 @@ output_decomposition_tables (const char *filename1, const char *filename2, const
       fprintf (stream, "/* Generated automatically by gen-uni-tables.c for Unicode %s.  */\n",
                version);
       fprintf (stream, "\n");
+
+      fprintf (stream, "/* Copyright (C) 2000-2021 Free Software Foundation, Inc.\n");
+      fprintf (stream, "\n");
+      output_library_license (stream, true);
+      fprintf (stream, "\n");
     }
 
   output_decomposition (streams[0], streams[1]);
@@ -9159,23 +9304,9 @@ output_composition_tables (const char *filename, const char *version)
            version);
   fprintf (stream, "\n");
 
-  /* Put a GPL header on it.  The gnulib module is under LGPL (although it
-     still carries the GPL header), and it's gnulib-tool which replaces the
-     GPL header with an LGPL header.  */
   fprintf (stream, "/* Copyright (C) 2009 Free Software Foundation, Inc.\n");
   fprintf (stream, "\n");
-  fprintf (stream, "   This program is free software: you can redistribute it and/or modify\n");
-  fprintf (stream, "   it under the terms of the GNU General Public License as published by\n");
-  fprintf (stream, "   the Free Software Foundation; either version 3 of the License, or\n");
-  fprintf (stream, "   (at your option) any later version.\n");
-  fprintf (stream, "\n");
-  fprintf (stream, "   This program is distributed in the hope that it will be useful,\n");
-  fprintf (stream, "   but WITHOUT ANY WARRANTY; without even the implied warranty of\n");
-  fprintf (stream, "   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n");
-  fprintf (stream, "   GNU General Public License for more details.\n");
-  fprintf (stream, "\n");
-  fprintf (stream, "   You should have received a copy of the GNU General Public License\n");
-  fprintf (stream, "   along with this program.  If not, see <https://www.gnu.org/licenses/>.  */\n");
+  output_library_license (stream, true);
   fprintf (stream, "\n");
 
   /* The composition table is a set of mappings (code1, code2) -> combined,
@@ -9274,18 +9405,7 @@ output_simple_mapping_test (const char *filename,
   fprintf (stream, "/* Test the Unicode character mapping functions.\n");
   fprintf (stream, "   Copyright (C) 2009 Free Software Foundation, Inc.\n");
   fprintf (stream, "\n");
-  fprintf (stream, "   This program is free software: you can redistribute it and/or modify\n");
-  fprintf (stream, "   it under the terms of the GNU General Public License as published by\n");
-  fprintf (stream, "   the Free Software Foundation; either version 3 of the License, or\n");
-  fprintf (stream, "   (at your option) any later version.\n");
-  fprintf (stream, "\n");
-  fprintf (stream, "   This program is distributed in the hope that it will be useful,\n");
-  fprintf (stream, "   but WITHOUT ANY WARRANTY; without even the implied warranty of\n");
-  fprintf (stream, "   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n");
-  fprintf (stream, "   GNU General Public License for more details.\n");
-  fprintf (stream, "\n");
-  fprintf (stream, "   You should have received a copy of the GNU General Public License\n");
-  fprintf (stream, "   along with this program.  If not, see <https://www.gnu.org/licenses/>.  */\n");
+  output_tests_license (stream);
   fprintf (stream, "\n");
   fprintf (stream, "/* Generated automatically by gen-uni-tables.c for Unicode %s.  */\n",
            version);
@@ -9351,6 +9471,12 @@ output_simple_mapping (const char *filename,
   fprintf (stream, "/* Simple character mapping of Unicode characters.  */\n");
   fprintf (stream, "/* Generated automatically by gen-uni-tables.c for Unicode %s.  */\n",
            version);
+  fprintf (stream, "\n");
+
+  fprintf (stream, "/* Copyright (C) 2000-2021 Free Software Foundation, Inc.\n");
+  fprintf (stream, "\n");
+  output_library_license (stream, false);
+  fprintf (stream, "\n");
 
   t.p = 7;
   t.q = 9;
@@ -10058,6 +10184,13 @@ output_casing_rules (const char *filename, const char *version)
   fprintf (stream, "/* Special casing rules of Unicode characters.  */\n");
   fprintf (stream, "/* Generated automatically by gen-uni-tables.c for Unicode %s.  */\n",
            version);
+  fprintf (stream, "\n");
+
+  fprintf (stream, "/* Copyright (C) 2000-2021 Free Software Foundation, Inc.\n");
+  fprintf (stream, "\n");
+  output_library_license (stream, false);
+  fprintf (stream, "\n");
+
   fprintf (stream, "struct special_casing_rule { char code[3]; };\n");
   fprintf (stream, "%%struct-type\n");
   fprintf (stream, "%%language=ANSI-C\n");
