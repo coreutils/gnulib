@@ -1,0 +1,14 @@
+This directory contains license notices, ready for copy-and-pasting into
+Gnulib source files.
+
+The wording is based on the Maintainers Guide, section "License Notices",
+<https://www.gnu.org/prep/maintain/html_node/License-Notices.html>.
+
+Instead of "this program", we write "this file", because Gnulib files
+are very often copied into other packages, and we want to avoid the
+impression that the entire package is under a weaker license than it
+actually is.
+
+The difference between 'unlimited' and 'public domain' is that 'unlimited'
+still requires the license notice to be preserved, while 'public domain'
+does not.
