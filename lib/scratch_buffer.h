@@ -110,14 +110,18 @@ extern void *scratch_buffer_dupfree (struct scratch_buffer *buffer,
 
 /* The implementation is imported from glibc.  */
 
-#include <libc-config.h>
-
 /* Avoid possible conflicts with symbols exported by the GNU libc.  */
 #define __libc_scratch_buffer_dupfree gl_scratch_buffer_dupfree
 #define __libc_scratch_buffer_grow gl_scratch_buffer_grow
 #define __libc_scratch_buffer_grow_preserve gl_scratch_buffer_grow_preserve
 #define __libc_scratch_buffer_set_array_size gl_scratch_buffer_set_array_size
 
-#include <malloc/scratch_buffer.h>
+#ifndef _GL_LIKELY
+/* Rely on __builtin_expect, as provided by the module 'builtin-expect'.  */
+# define _GL_LIKELY(cond) __builtin_expect ((cond), 1)
+# define _GL_UNLIKELY(cond) __builtin_expect ((cond), 0)
+#endif
+
+#include <malloc/scratch_buffer.gl.h>
 
 #endif /* _GL_SCRATCH_BUFFER_H */

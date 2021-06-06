@@ -11,6 +11,7 @@ lib/malloc/scratch_buffer_set_array_size.c
 
 Depends-on:
 c99
+builtin-expect
 libc-config
 stdbool
 stddef
@@ -21,6 +22,20 @@ free-posix
 configure.ac:
 
 Makefile.am:
+BUILT_SOURCES += malloc/scratch_buffer.gl.h
+
+malloc/scratch_buffer.gl.h: malloc/scratch_buffer.h
+	$(AM_V_GEN)rm -f $@-t $@ && \
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+	  sed -e 's|__always_inline|inline _GL_ATTRIBUTE_ALWAYS_INLINE|g' \
+	      -e 's|__glibc_likely|_GL_LIKELY|g' \
+	      -e 's|__glibc_unlikely|_GL_UNLIKELY|g' \
+	      -e '/libc_hidden_proto/d' \
+	      < $(srcdir)/malloc/scratch_buffer.h; \
+	} > $@-t && \
+	mv $@-t $@
+MOSTLYCLEANFILES += malloc/scratch_buffer.gl.h malloc/scratch_buffer.gl.h-t
+
 lib_SOURCES += malloc/scratch_buffer_dupfree.c \
                malloc/scratch_buffer_grow.c \
                malloc/scratch_buffer_grow_preserve.c \
