@@ -257,18 +257,22 @@ static DYNARRAY_ELEMENT *
 
 #if defined DYNARRAY_STRUCT || defined DYNARRAY_ELEMENT || defined DYNARRAY_PREFIX
 
-# include <libc-config.h>
+# ifndef _GL_LIKELY
+/* Rely on __builtin_expect, as provided by the module 'builtin-expect'.  */
+#  define _GL_LIKELY(cond) __builtin_expect ((cond), 1)
+#  define _GL_UNLIKELY(cond) __builtin_expect ((cond), 0)
+# endif
 
 /* Define auxiliary structs and declare auxiliary functions, common to all
    instantiations of dynarray.  */
-# include <malloc/dynarray.h>
+# include <malloc/dynarray.gl.h>
 
 /* Define the instantiation, specified through
      DYNARRAY_STRUCT
      DYNARRAY_ELEMENT
      DYNARRAY_PREFIX
    etc.  */
-# include <malloc/dynarray-skeleton.c>
+# include <malloc/dynarray-skeleton.gl.h>
 
 #else
 

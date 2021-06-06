@@ -13,6 +13,7 @@ lib/malloc/dynarray_resize_clear.c
 
 Depends-on:
 c99
+builtin-expect
 libc-config
 stdbool
 stddef
@@ -21,6 +22,30 @@ intprops
 configure.ac:
 
 Makefile.am:
+BUILT_SOURCES += malloc/dynarray.gl.h malloc/dynarray-skeleton.gl.h
+
+malloc/dynarray.gl.h: malloc/dynarray.h
+	$(AM_V_GEN)rm -f $@-t $@ && \
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+	  sed -e '/libc_hidden_proto/d' < $(srcdir)/malloc/dynarray.h; \
+	} > $@-t && \
+	mv $@-t $@
+MOSTLYCLEANFILES += malloc/dynarray.gl.h malloc/dynarray.gl.h-t
+
+malloc/dynarray-skeleton.gl.h: malloc/dynarray-skeleton.c
+	$(AM_V_GEN)rm -f $@-t $@ && \
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+	  sed -e 's|<malloc/dynarray\.h>|<malloc/dynarray.gl.h>|g' \
+	      -e 's|__attribute_maybe_unused__|_GL_ATTRIBUTE_MAYBE_UNUSED|g' \
+	      -e 's|__attribute_nonnull__|_GL_ATTRIBUTE_NONNULL|g' \
+	      -e 's|__attribute_warn_unused_result__|_GL_ATTRIBUTE_NODISCARD|g' \
+	      -e 's|__glibc_likely|_GL_LIKELY|g' \
+	      -e 's|__glibc_unlikely|_GL_UNLIKELY|g' \
+	      < $(srcdir)/malloc/dynarray-skeleton.c; \
+	} > $@-t && \
+	mv $@-t $@
+MOSTLYCLEANFILES += malloc/dynarray-skeleton.gl.h malloc/dynarray-skeleton.gl.h-t
+
 lib_SOURCES += malloc/dynarray_at_failure.c \
                malloc/dynarray_emplace_enlarge.c \
                malloc/dynarray_finalize.c \
