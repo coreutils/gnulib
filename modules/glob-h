@@ -59,6 +59,7 @@ glob-libc.gl.h: glob-libc.h
 	  sed -e '/__BEGIN_DECLS/{ s/__BEGIN_DECLS/#ifdef __cplusplus%extern "C" {%#endif/; y/%/\n/; }' \
 	      -e '/__END_DECLS/{ s/__END_DECLS/#ifdef __cplusplus%}%#endif/; y/%/\n/; }' \
 	      -e 's|__THROW||g' \
+	      -e 's|__restrict|restrict|g' \
 	      -e 's|defined __USE_MISC|1|' \
 	      -e 's|ifdef __USE_GNU|if 1|' \
 	      -e 's|ifdef __USE_LARGEFILE64|if 0|' \
