@@ -70,20 +70,12 @@ typedef int (*_gl_glob_errfunc_fn) (const char *, int);
 
 /* Preparations for including the standard GNU C Library header.  */
 
-# ifndef __attribute_maybe_unused__
-#  include <libc-config.h>
-# endif
-
 # include <stddef.h>
 
 /* On some systems, such as AIX 5.1, <sys/stat.h> does a "#define stat stat64".
    Make sure this definition is seen before glob-libc.h defines types that
    rely on 'struct stat'.  */
 # include <sys/stat.h>
-
-# ifndef __USE_GNU
-#  define __USE_GNU    1
-# endif
 
 # if @REPLACE_GLOB@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
@@ -102,7 +94,7 @@ typedef int (*_gl_glob_errfunc_fn) (const char *, int);
 
 
 /* Now the standard GNU C Library header should work.  */
-# include "glob-libc.h"
+# include "glob-libc.gl.h"
 
 
 #endif

@@ -51,6 +51,23 @@ glob.h: $(top_builddir)/config.status
 endif
 MOSTLYCLEANFILES += glob.h glob.h-t
 
+BUILT_SOURCES += glob-libc.gl.h
+
+glob-libc.gl.h: glob-libc.h
+	$(AM_V_GEN)rm -f $@-t $@ && \
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+	  sed -e '/__BEGIN_DECLS/{ s/__BEGIN_DECLS/#ifdef __cplusplus%extern "C" {%#endif/; y/%/\n/; }' \
+	      -e '/__END_DECLS/{ s/__END_DECLS/#ifdef __cplusplus%}%#endif/; y/%/\n/; }' \
+	      -e 's|__THROW||g' \
+	      -e 's|defined __USE_MISC|1|' \
+	      -e 's|ifdef __USE_GNU|if 1|' \
+	      -e 's|ifdef __USE_LARGEFILE64|if 0|' \
+	      < $(srcdir)/glob-libc.h; \
+	} > $@-t && \
+	mv $@-t $@
+MOSTLYCLEANFILES += glob-libc.gl.h glob-libc.gl.h-t
+
+
 Include:
 <glob.h>
 
