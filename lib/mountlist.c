@@ -169,6 +169,7 @@
    || strcmp (Fs_type, "debugfs") == 0          \
    || strcmp (Fs_type, "devpts") == 0           \
    || strcmp (Fs_type, "fusectl") == 0          \
+   || strcmp (Fs_type, "fuse.portal") == 0      \
    || strcmp (Fs_type, "mqueue") == 0           \
    || strcmp (Fs_type, "rpc_pipefs") == 0       \
    || strcmp (Fs_type, "sysfs") == 0            \
