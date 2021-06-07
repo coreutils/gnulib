@@ -151,7 +151,7 @@ main (int argc, char *argv[])
       case '2':
         /* Locale encoding is EUC-JP.  */
         {
-        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __NetBSD__)
+        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__)
           /* U+00C9 LATIN CAPITAL LETTER E WITH ACUTE */
           is = for_character ("\217\252\261", 3);
           ASSERT (is != 0);
@@ -165,7 +165,7 @@ main (int argc, char *argv[])
           /* U+00FF LATIN SMALL LETTER Y WITH DIAERESIS */
           is = for_character ("\217\253\363", 3);
           ASSERT (is == 0);
-        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __NetBSD__)
+        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__)
           /* U+0141 LATIN CAPITAL LETTER L WITH STROKE */
           is = for_character ("\217\251\250", 3);
           ASSERT (is != 0);
@@ -184,9 +184,11 @@ main (int argc, char *argv[])
           /* U+3073 HIRAGANA LETTER BI */
           is = for_character ("\244\323", 2);
           ASSERT (is == 0);
+        #if !defined __DragonFly__
           /* U+FF27 FULLWIDTH LATIN CAPITAL LETTER G */
           is = for_character ("\243\307", 2);
           ASSERT (is != 0);
+        #endif
         }
         return 0;
 
@@ -303,9 +305,11 @@ main (int argc, char *argv[])
           /* U+3162 HANGUL LETTER YI */
           is = for_character ("\201\071\256\062", 4);
           ASSERT (is == 0);
+        #if !defined __DragonFly__
           /* U+FF27 FULLWIDTH LATIN CAPITAL LETTER G */
           is = for_character ("\243\307", 2);
           ASSERT (is != 0);
+        #endif
           /* U+FFDB HALFWIDTH HANGUL LETTER YI */
           is = for_character ("\204\061\241\071", 4);
           ASSERT (is == 0);

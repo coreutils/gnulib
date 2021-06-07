@@ -102,9 +102,10 @@ main (void)
     close (fd);
   }
 
-#if defined __sun
+#if defined __sun || defined __DragonFly__
   /* Solaris has BSD-style /dev/pty[p-r][0-9a-f] files, but the function
-     ptsname() does not work on them.  */
+     ptsname() does not work on them.
+     DragonFly BSD has only /dev/ptmx.  */
   {
     int fd;
     char *result;

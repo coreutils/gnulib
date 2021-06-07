@@ -149,7 +149,7 @@ main (int argc, char *argv[])
           /* U+00D7 MULTIPLICATION SIGN */
           is = for_character ("\241\337", 2);
           ASSERT (is == 0);
-        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__)
+        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__)
           /* U+00D8 LATIN CAPITAL LETTER O WITH STROKE */
           is = for_character ("\217\251\254", 3);
           ASSERT (is != 0);
@@ -165,7 +165,7 @@ main (int argc, char *argv[])
           is = for_character ("\243\261", 2);
           ASSERT (is != 0);
         #endif
-        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __NetBSD__)
+        #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__)
           /* U+FF4D FULLWIDTH LATIN SMALL LETTER M */
           is = for_character ("\243\355", 2);
           ASSERT (is != 0);
@@ -232,9 +232,11 @@ main (int argc, char *argv[])
           is = for_character ("\243\261", 2);
           ASSERT (is != 0);
         #endif
+        #if !defined __DragonFly__
           /* U+FF4D FULLWIDTH LATIN SMALL LETTER M */
           is = for_character ("\243\355", 2);
           ASSERT (is != 0);
+        #endif
         #if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__ || defined __sun)
           /* U+10330 GOTHIC LETTER AHSA */
           is = for_character ("\220\060\322\066", 4);
