@@ -20,7 +20,6 @@
 #include <config.h>
 
 /* Specification.  */
-# define _GLTHREAD_THREAD_INLINE _GL_EXTERN_INLINE
 #include "glthread/thread.h"
 
 #include <stdlib.h>
@@ -203,3 +202,15 @@ const gl_thread_t gl_null_thread /* = { .p = NULL } */;
 #endif
 
 /* ========================================================================= */
+
+gl_thread_t
+gl_thread_create (void *(*func) (void *arg), void *arg)
+{
+  gl_thread_t thread;
+  int ret;
+
+  ret = glthread_create (&thread, func, arg);
+  if (ret != 0)
+    abort ();
+  return thread;
+}

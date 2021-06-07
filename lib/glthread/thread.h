@@ -83,14 +83,6 @@
 # endif
 #endif
 
-#ifndef _GL_INLINE_HEADER_BEGIN
- #error "Please include config.h first."
-#endif
-_GL_INLINE_HEADER_BEGIN
-#ifndef _GLTHREAD_THREAD_INLINE
-# define _GLTHREAD_THREAD_INLINE _GL_INLINE
-#endif
-
 /* ========================================================================= */
 
 #if USE_ISOC_THREADS
@@ -314,17 +306,7 @@ typedef int gl_thread_t;
 extern "C" {
 #endif
 
-_GLTHREAD_THREAD_INLINE gl_thread_t
-gl_thread_create (void *(*func) (void *arg), void *arg)
-{
-  gl_thread_t thread;
-  int ret;
-
-  ret = glthread_create (&thread, func, arg);
-  if (ret != 0)
-    abort ();
-  return thread;
-}
+extern gl_thread_t gl_thread_create (void *(*func) (void *arg), void *arg);
 #define gl_thread_sigmask(HOW, SET, OSET)     \
    do                                         \
      {                                        \
@@ -350,7 +332,5 @@ gl_thread_create (void *(*func) (void *arg), void *arg)
 #ifdef __cplusplus
 }
 #endif
-
-_GL_INLINE_HEADER_END
 
 #endif /* _GLTHREAD_THREAD_H */
