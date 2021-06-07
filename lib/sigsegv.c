@@ -1056,7 +1056,7 @@ sigsegv_handler (SIGSEGV_FAULT_HANDLER_ARGLIST)
           /* Handler declined responsibility for real.  */
 
           /* Remove ourselves and dump core.  */
-          SIGSEGV_FOR_ALL_SIGNALS (sig, signal (sig, SIG_DFL);)
+          SIGSEGV_FOR_ALL_SIGNALS (signo, signal (signo, SIG_DFL);)
         }
 
 # if HAVE_STACK_OVERFLOW_RECOVERY
@@ -1151,7 +1151,7 @@ sigsegv_handler (int sig)
     }
 
   /* Remove ourselves and dump core.  */
-  SIGSEGV_FOR_ALL_SIGNALS (sig, signal (sig, SIG_DFL);)
+  SIGSEGV_FOR_ALL_SIGNALS (signo, signal (signo, SIG_DFL);)
 }
 
 #endif
