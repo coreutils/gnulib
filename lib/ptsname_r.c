@@ -70,6 +70,10 @@
 # include <stdio.h>
 #endif
 
+#if defined __DragonFly__
+/* Get fdevname_r().  */
+# include <stdlib.h>
+#endif
 
 /* Store at most BUFLEN characters of the pathname of the slave pseudo
    terminal associated with the master FD is open on in BUF.
@@ -84,6 +88,36 @@ __ptsname_r (int fd, char *buf, size_t buflen)
     return 0;
   else
     return errno;
+#elif defined __DragonFly__
+  int save_errno = errno;
+  char tmpbuf[5 + 4 + 10 + 1];
+  int ret;
+  int n;
+  if (buf == NULL)
+    {
+      errno = EINVAL;
+      return errno;
+    }
+  /* The result of fdevname_r is typically of the form ptm/N.  */
+  ret = fdevname_r (fd, tmpbuf + 5, sizeof (tmpbuf) - 5);
+  if (ret < 0 || strncmp (tmpbuf + 5, "ptm/", 4) != 0)
+    {
+      errno = ENOTTY;
+      return errno;
+    }
+  /* Turn it into /dev/pts/N.  */
+  memcpy (tmpbuf, "/dev/pts/", 5 + 4);
+  n = strlen (tmpbuf);
+  if (n >= buflen)
+    {
+      errno = ERANGE;
+      return errno;
+    }
+  memcpy (buf, tmpbuf, n + 1);
+  /* Don't do a final stat(), since the file name /dev/pts/N does not actually
+     exist.  */
+  errno = save_errno;
+  return 0;
 #else
   int save_errno = errno;
   struct stat st;
