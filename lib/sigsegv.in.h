@@ -186,7 +186,7 @@ extern int sigsegv_leave_handler (void (*continuation) (void*, void*, void*), vo
      || defined __CYGWIN__ || defined __HAIKU__
 typedef ucontext_t *stackoverflow_context_t;
 # elif defined __GNU__ \
-       || defined __FreeBSD_kernel__ || (defined __FreeBSD__ && !(defined __sparc__ || defined __sparc64__)) \
+       || defined __FreeBSD_kernel__ || (defined __FreeBSD__ && !(defined __sparc__ || defined __sparc64__)) || defined __DragonFly__ \
        || defined __OpenBSD__ || defined __sgi
 typedef struct sigcontext *stackoverflow_context_t;
 # else
