@@ -23,7 +23,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#if defined __linux__ || defined __ANDROID__ || (defined __FreeBSD_kernel__ && !defined __FreeBSD__) || defined __GNU__ || defined __FreeBSD__ || defined __NetBSD__ || defined __minix || defined __sun /* Linux, GNU/kFreeBSD, GNU/Hurd, FreeBSD, NetBSD, Minix, Solaris */
+#if defined __linux__ || defined __ANDROID__ || (defined __FreeBSD_kernel__ && !defined __FreeBSD__) || defined __GNU__ || defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__ || defined __minix || defined __sun /* Linux, GNU/kFreeBSD, GNU/Hurd, FreeBSD, NetBSD, Minix, Solaris */
 # include <fcntl.h>
 # include <unistd.h>
 #endif
@@ -108,7 +108,7 @@ get_ppid_of (pid_t pid)
 
 #endif
 
-#if defined __FreeBSD__ || defined __NetBSD__               /* FreeBSD, NetBSD */
+#if defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__ /* FreeBSD, NetBSD */
 
   /* Read the contents of /proc/<pid>/status into memory.  */
   char filename[6 + 10 + 7 + 1];
