@@ -20,11 +20,13 @@ stddef
 intprops
 
 configure.ac:
+AC_PROG_MKDIR_P
 
 Makefile.am:
 BUILT_SOURCES += malloc/dynarray.gl.h malloc/dynarray-skeleton.gl.h
 
 malloc/dynarray.gl.h: malloc/dynarray.h
+	$(AM_V_at)$(MKDIR_P) malloc
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  sed -e '/libc_hidden_proto/d' < $(srcdir)/malloc/dynarray.h; \
@@ -33,6 +35,7 @@ malloc/dynarray.gl.h: malloc/dynarray.h
 MOSTLYCLEANFILES += malloc/dynarray.gl.h malloc/dynarray.gl.h-t
 
 malloc/dynarray-skeleton.gl.h: malloc/dynarray-skeleton.c
+	$(AM_V_at)$(MKDIR_P) malloc
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  sed -e 's|<malloc/dynarray\.h>|<malloc/dynarray.gl.h>|g' \

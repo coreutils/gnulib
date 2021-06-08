@@ -20,11 +20,13 @@ realloc-posix
 free-posix
 
 configure.ac:
+AC_PROG_MKDIR_P
 
 Makefile.am:
 BUILT_SOURCES += malloc/scratch_buffer.gl.h
 
 malloc/scratch_buffer.gl.h: malloc/scratch_buffer.h
+	$(AM_V_at)$(MKDIR_P) malloc
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  sed -e 's|__always_inline|inline _GL_ATTRIBUTE_ALWAYS_INLINE|g' \
