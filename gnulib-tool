@@ -4275,6 +4275,14 @@ func_emit_tests_Makefile_am ()
   echo "	@echo '## You can ignore compiler warnings in this directory.  ##'"
   echo "	@echo '## ---------------------------------------------------- ##'"
   echo
+  # Arrange to print a message before executing the tests in this directory.
+  echo "check-am: check-notice"
+  echo "check-notice:"
+  echo "	@echo '## ---------------------------------------------------- ##'"
+  echo "	@echo '## ------------------- Gnulib tests ------------------- ##'"
+  echo "	@echo '## Please report test failures to <bug-gnulib@gnu.org>. ##'"
+  echo "	@echo '## ---------------------------------------------------- ##'"
+  echo
   echo "# Clean up after Solaris cc."
   echo "clean-local:"
   echo "	rm -rf SunWS_cache"
