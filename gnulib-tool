@@ -4201,6 +4201,25 @@ func_emit_tests_Makefile_am ()
     fi
   done
   echo
+  # Insert a '-Wno-error' option in the compilation commands emitted by
+  # Automake, between $(AM_CPPFLAGS) and before the reference to @CFLAGS@.
+  # Why?
+  # 1) Because parts of the Gnulib tests exercise corner cases (invalid
+  #    arguments, endless recursions, etc.) that a compiler may warn about,
+  #    even with just the normal '-Wall' option.
+  # 2) Because every package maintainer has their preferred set of warnings
+  #    that they may want to enforce in the main source code of their package.
+  #    But Gnulib tests are maintained in Gnulib and don't end up in binaries
+  #    that that package installs; therefore it does not make sense for
+  #    package maintainers to enforce the absence of warnings on these tests.
+  # Why before @CFLAGS@?
+  # - Because "the user is always right": If a user adds '-Werror' to their
+  #   CFLAGS, they have asked for errors, they will get errors. But they have
+  #   no right to complain about these errors, because Gnulib does not support
+  #   '-Werror'.
+  echo "CFLAGS = @GL_CFLAG_ALLOW_WARNINGS@ @CFLAGS@"
+  echo "CXXFLAGS = @GL_CXXFLAG_ALLOW_WARNINGS@ @CXXFLAGS@"
+  echo
   echo "AM_CPPFLAGS = \\"
   if $for_test; then
     echo "  -DGNULIB_STRICT_CHECKING=1 \\"
@@ -4248,6 +4267,14 @@ func_emit_tests_Makefile_am ()
   echo
   cat "$tmp"/main_snippets "$tmp"/longrunning_snippets \
     | sed -e 's|\$(top_srcdir)/build-aux/|$(top_srcdir)/'"$auxdir"'/|g'
+  # Arrange to print a message before compiling the files in this directory.
+  echo "all: all-notice"
+  echo "all-notice:"
+  echo "	@echo '## ---------------------------------------------------- ##'"
+  echo "	@echo '## ------------------- Gnulib tests ------------------- ##'"
+  echo "	@echo '## You can ignore compiler warnings in this directory.  ##'"
+  echo "	@echo '## ---------------------------------------------------- ##'"
+  echo
   echo "# Clean up after Solaris cc."
   echo "clean-local:"
   echo "	rm -rf SunWS_cache"
@@ -4262,9 +4289,11 @@ func_emit_tests_Makefile_am ()
   rm -f "$tmp"/main_snippets "$tmp"/longrunning_snippets
 }
 
-# func_emit_initmacro_start macro_prefix
+# func_emit_initmacro_start macro_prefix gentests
 # emits the first few statements of the gl_INIT macro to standard output.
 # - macro_prefix             prefix of gl_EARLY, gl_INIT macros to use
+# - gentests                 true if a tests Makefile.am is being generated,
+#                            false otherwise
 # - module_indicator_prefix  prefix of GNULIB_<modulename> variables to use
 func_emit_initmacro_start ()
 {
@@ -4298,6 +4327,10 @@ func_emit_initmacro_start ()
   # Scope the GNULIB_<modulename> variables.
   echo "  m4_pushdef([GL_MODULE_INDICATOR_PREFIX], [${module_indicator_prefix}])"
   echo "  gl_COMMON"
+  if "$2"; then
+    echo "  AC_REQUIRE([gl_CC_ALLOW_WARNINGS])"
+    echo "  AC_REQUIRE([gl_CXX_ALLOW_WARNINGS])"
+  fi
 }
 
 # func_emit_initmacro_end macro_prefix
@@ -5778,7 +5811,7 @@ s,//*$,/,'
       sed_replace_build_aux="$sed_noop"
     fi
     echo "  gl_m4_base='$m4base'"
-    func_emit_initmacro_start $macro_prefix
+    func_emit_initmacro_start $macro_prefix false
     echo "  gl_source_base='$sourcebase'"
     if test -n "$witness_c_macro"; then
       echo "  m4_pushdef([gl_MODULE_INDICATOR_CONDITION], [$witness_c_macro])"
@@ -5791,7 +5824,7 @@ s,//*$,/,'
     func_emit_initmacro_end $macro_prefix
     echo "  gltests_libdeps="
     echo "  gltests_ltlibdeps="
-    func_emit_initmacro_start ${macro_prefix}tests
+    func_emit_initmacro_start ${macro_prefix}tests $gentests
     echo "  gl_source_base='$testsbase'"
     # Define a tests witness macro that depends on the package.
     # PACKAGE is defined by AM_INIT_AUTOMAKE, PACKAGE_TARNAME is defined by AC_INIT.
@@ -6436,7 +6469,7 @@ func_create_testdir ()
            ba
          }'
        echo "gl_m4_base='../$m4base'"
-       func_emit_initmacro_start $macro_prefix
+       func_emit_initmacro_start $macro_prefix true
        # We don't have explicit ordering constraints between the various
        # autoconf snippets. It's cleanest to put those of the library before
        # those of the tests.
@@ -6552,7 +6585,7 @@ func_create_testdir ()
      sed_replace_build_aux="$sed_noop"
    fi
    echo "gl_m4_base='$m4base'"
-   func_emit_initmacro_start $macro_prefix
+   func_emit_initmacro_start $macro_prefix false
    echo "gl_source_base='$sourcebase'"
    if $single_configure; then
      func_emit_autoconf_snippets "$main_modules" "$main_modules" func_verify_module true false false
@@ -6563,7 +6596,7 @@ func_create_testdir ()
    if $single_configure; then
      echo "  gltests_libdeps="
      echo "  gltests_ltlibdeps="
-     func_emit_initmacro_start ${macro_prefix}tests
+     func_emit_initmacro_start ${macro_prefix}tests true
      echo "  gl_source_base='$testsbase'"
      # Define a tests witness macro.
      echo "  ${macro_prefix}tests_WITNESS=IN_GNULIB_TESTS"
