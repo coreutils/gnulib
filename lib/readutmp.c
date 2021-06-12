@@ -91,8 +91,8 @@ int
 read_utmp (char const *file, size_t *n_entries, STRUCT_UTMP **utmp_buf,
            int options)
 {
-  size_t n_read = 0;
-  size_t n_alloc = 0;
+  idx_t n_read = 0;
+  idx_t n_alloc = 0;
   STRUCT_UTMP *utmp = NULL;
   STRUCT_UTMP *u;
 
@@ -108,7 +108,7 @@ read_utmp (char const *file, size_t *n_entries, STRUCT_UTMP **utmp_buf,
     if (desirable_utmp_entry (u, options))
       {
         if (n_read == n_alloc)
-          utmp = x2nrealloc (utmp, &n_alloc, sizeof *utmp);
+          utmp = xpalloc (utmp, &n_alloc, 1, -1, sizeof *utmp);
 
         utmp[n_read++] = *u;
       }
@@ -127,8 +127,8 @@ int
 read_utmp (char const *file, size_t *n_entries, STRUCT_UTMP **utmp_buf,
            int options)
 {
-  size_t n_read = 0;
-  size_t n_alloc = 0;
+  idx_t n_read = 0;
+  idx_t n_alloc = 0;
   STRUCT_UTMP *utmp = NULL;
   int saved_errno;
   FILE *f = fopen (file, "re");
@@ -139,7 +139,7 @@ read_utmp (char const *file, size_t *n_entries, STRUCT_UTMP **utmp_buf,
   for (;;)
     {
       if (n_read == n_alloc)
-        utmp = x2nrealloc (utmp, &n_alloc, sizeof *utmp);
+        utmp = xpalloc (utmp, &n_alloc, 1, -1, sizeof *utmp);
       if (fread (&utmp[n_read], sizeof utmp[n_read], 1, f) == 0)
         break;
       n_read += desirable_utmp_entry (&utmp[n_read], options);

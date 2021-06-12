@@ -212,6 +212,8 @@ enum
   };
 
 char *extract_trimmed_name (const STRUCT_UTMP *ut);
+
+/* FIXME: This header should use idx_t, not size_t.  */
 int read_utmp (char const *file, size_t *n_entries, STRUCT_UTMP **utmp_buf,
                int options);
 
