@@ -134,10 +134,10 @@ parse_with_separator (char const *spec, char const *separator,
     }
   else
     {
-      size_t ulen = separator - spec;
+      idx_t ulen = separator - spec;
       if (ulen != 0)
         {
-          u = xmemdup (spec, ulen + 1);
+          u = ximemdup (spec, ulen + 1);
           u[ulen] = '\0';
         }
     }
