@@ -617,14 +617,14 @@ static void regexp (struct dfa *dfa);
    * PWC points to wint_t, not to wchar_t.
    * The last arg is a dfa *D instead of merely a multibyte conversion
      state D->mbs.
-   * N must be at least 1.
+   * N is idx_t not size_t, and must be at least 1.
    * S[N - 1] must be a sentinel byte.
    * Shift encodings are not supported.
    * The return value is always in the range 1..N.
    * D->mbs is always valid afterwards.
    * *PWC is always set to something.  */
 static int
-mbs_to_wchar (wint_t *pwc, char const *s, size_t n, struct dfa *d)
+mbs_to_wchar (wint_t *pwc, char const *s, idx_t n, struct dfa *d)
 {
   unsigned char uc = s[0];
   wint_t wc = d->localeinfo.sbctowc[uc];
@@ -2165,7 +2165,7 @@ state_index (struct dfa *d, position_set const *s, int context)
 
   for (i = 0; i < s->nelem; ++i)
     {
-      size_t ind = s->elems[i].index;
+      idx_t ind = s->elems[i].index;
       hash ^= ind + s->elems[i].constraint;
     }
 
@@ -2488,7 +2488,7 @@ reorder_tokens (struct dfa *d)
 static void
 dfaoptimize (struct dfa *d)
 {
-  char *flags = xzalloc (d->tindex);
+  char *flags = xizalloc (d->tindex);
 
   for (idx_t i = 0; i < d->tindex; i++)
     {
@@ -2511,7 +2511,7 @@ dfaoptimize (struct dfa *d)
   position_set *merged = &merged0;
   alloc_position_set (merged, d->nleaves);
 
-  d->constraints = xcalloc (d->tindex, sizeof *d->constraints);
+  d->constraints = xicalloc (d->tindex, sizeof *d->constraints);
 
   for (idx_t i = 0; i < d->tindex; i++)
     if (flags[i] & OPT_QUEUED)
@@ -2614,9 +2614,9 @@ dfaanalyze (struct dfa *d, bool searchflag)
 
   d->searchflag = searchflag;
   alloc_position_set (&merged, d->nleaves);
-  d->follows = xcalloc (tindex, sizeof *d->follows);
+  d->follows = xicalloc (tindex, sizeof *d->follows);
   position_set *backward
-    = d->epsilon ? xcalloc (tindex, sizeof *backward) : NULL;
+    = d->epsilon ? xicalloc (tindex, sizeof *backward) : NULL;
 
   for (idx_t i = 0; i < tindex; i++)
     {
@@ -2799,7 +2799,7 @@ dfaanalyze (struct dfa *d, bool searchflag)
 
   append (pos, &tmp);
 
-  d->separates = xcalloc (tindex, sizeof *d->separates);
+  d->separates = xicalloc (tindex, sizeof *d->separates);
 
   for (idx_t i = 0; i < tindex; i++)
     {
@@ -3900,7 +3900,7 @@ icatalloc (char *old, char const *new)
   if (newsize == 0)
     return old;
   idx_t oldsize = strlen (old);
-  char *result = xrealloc (old, oldsize + newsize + 1);
+  char *result = xirealloc (old, oldsize + newsize + 1);
   memcpy (result + oldsize, new, newsize + 1);
   return result;
 }
@@ -3915,7 +3915,7 @@ freelist (char **cpp)
 static char **
 enlist (char **cpp, char *new, idx_t len)
 {
-  new = memcpy (xmalloc (len + 1), new, len);
+  new = memcpy (ximalloc (len + 1), new, len);
   new[len] = '\0';
   /* Is there already something in the list that's new (or longer)?  */
   idx_t i;
@@ -4016,9 +4016,9 @@ allocmust (must *mp, idx_t size)
 {
   must *new_mp = xmalloc (sizeof *new_mp);
   new_mp->in = xzalloc (sizeof *new_mp->in);
-  new_mp->left = xzalloc (size);
-  new_mp->right = xzalloc (size);
-  new_mp->is = xzalloc (size);
+  new_mp->left = xizalloc (size);
+  new_mp->right = xizalloc (size);
+  new_mp->is = xizalloc (size);
   new_mp->begline = false;
   new_mp->endline = false;
   new_mp->prev = mp;
@@ -4169,7 +4169,7 @@ dfamust (struct dfa const *d)
               {
                 idx_t lrlen = strlen (lmp->right);
                 idx_t rllen = strlen (rmp->left);
-                char *tp = xmalloc (lrlen + rllen);
+                char *tp = ximalloc (lrlen + rllen);
                 memcpy (tp, lmp->right, lrlen);
                 memcpy (tp + lrlen, rmp->left, rllen);
                 lmp->in = enlist (lmp->in, tp, lrlen + rllen);
