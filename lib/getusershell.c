@@ -43,7 +43,7 @@
 # include "unlocked-io.h"
 #endif
 
-static size_t readname (char **, size_t *, FILE *);
+static idx_t readname (char **, idx_t *, FILE *);
 
 #if ! defined ADDITIONAL_DEFAULT_SHELLS && defined __MSDOS__
 # define ADDITIONAL_DEFAULT_SHELLS \
@@ -70,7 +70,7 @@ static FILE *shellstream = NULL;
 static char *line = NULL;
 
 /* Number of bytes allocated for 'line'. */
-static size_t line_size = 0;
+static idx_t line_size = 0;
 
 /* Return an entry from the shells file, ignoring comment lines.
    If the file doesn't exist, use the list in DEFAULT_SHELLS (above).
@@ -137,8 +137,8 @@ endusershell (void)
    Return the number of bytes placed in *NAME
    if some nonempty sequence was found, otherwise 0.  */
 
-static size_t
-readname (char **name, size_t *size, FILE *stream)
+static idx_t
+readname (char **name, idx_t *size, FILE *stream)
 {
   int c;
   size_t name_index = 0;
@@ -150,7 +150,7 @@ readname (char **name, size_t *size, FILE *stream)
   for (;;)
     {
       if (*size <= name_index)
-        *name = x2nrealloc (*name, size, sizeof **name);
+        *name = xpalloc (*name, size, 1, -1, sizeof **name);
       if (c == EOF || isspace (c))
         break;
       (*name)[name_index++] = c;
