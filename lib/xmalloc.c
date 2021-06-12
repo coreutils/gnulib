@@ -28,7 +28,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-static void *
+static void * _GL_ATTRIBUTE_PURE
 nonnull (void *p)
 {
   if (!p)
