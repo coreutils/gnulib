@@ -59,7 +59,7 @@ XGETANAME (void)
              specify whether a truncated name is null-terminated.  */
           idx_t actual_size = strlen (name) + 1;
           if (actual_size < size_1)
-            return alloc ? alloc : xmemdup (name, actual_size);
+            return alloc ? alloc : ximemdup (name, actual_size);
           errno = 0;
         }
       free (alloc);
