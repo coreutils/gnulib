@@ -78,7 +78,7 @@ typedef struct
 {
   GL_STACK_ELEMENT *base;
   size_t size;
-  size_t allocated;
+  idx_t allocated;
 } _GL_STACK_TYPE;
 
 /* Initialize a stack.  */
@@ -119,8 +119,8 @@ GL_STACK_STORAGECLASS void
 _GL_STACK_PREFIX (push) (_GL_STACK_TYPE *stack, GL_STACK_ELEMENT item)
 {
   if (stack->size == stack->allocated)
-    stack->base = x2nrealloc (stack->base, &stack->allocated,
-                              sizeof (GL_STACK_ELEMENT));
+    stack->base = xpalloc (stack->base, &stack->allocated, 1, -1,
+                           sizeof *stack->base);;
   stack->base [stack->size++] = item;
 }
 
