@@ -1,0 +1,29 @@
+Description:
+Memory allocation using idx_t instead of size_t
+
+Files:
+lib/ialloc.c
+lib/ialloc.h
+
+Depends-on:
+calloc-gnu
+extern-inline
+idx
+malloc-gnu
+realloc-gnu
+reallocarray
+stdint
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += ialloc.c
+
+Include:
+"ialloc.h"
+
+License:
+LGPL
+
+Maintainer:
+all
