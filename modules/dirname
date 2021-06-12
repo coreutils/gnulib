@@ -9,7 +9,6 @@ lib/stripslash.c
 Depends-on:
 dirname-lgpl
 xalloc
-xstrndup
 
 configure.ac:
 gl_MODULE_INDICATOR([dirname])
