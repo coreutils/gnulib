@@ -80,8 +80,8 @@ readlinebuffer_delim (struct linebuffer *linebuffer, FILE *stream,
         }
       if (p == end)
         {
-          size_t oldsize = linebuffer->size;
-          buffer = x2realloc (buffer, &linebuffer->size);
+          idx_t oldsize = linebuffer->size;
+          buffer = xpalloc (buffer, &linebuffer->size, 1, -1, 1);
           p = buffer + oldsize;
           linebuffer->buffer = buffer;
           end = buffer + linebuffer->size;

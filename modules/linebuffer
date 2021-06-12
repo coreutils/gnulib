@@ -6,6 +6,7 @@ lib/linebuffer.h
 lib/linebuffer.c
 
 Depends-on:
+idx
 xalloc
 
 configure.ac:
@@ -21,4 +22,3 @@ GPL
 
 Maintainer:
 Jim Meyering
-

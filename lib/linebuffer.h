@@ -19,14 +19,15 @@
 #if !defined LINEBUFFER_H
 # define LINEBUFFER_H
 
+# include "idx.h"
 # include <stdio.h>
 
 /* A 'struct linebuffer' holds a line of text. */
 
 struct linebuffer
 {
-  size_t size;                  /* Allocated. */
-  size_t length;                /* Used. */
+  idx_t size;                  /* Allocated. */
+  idx_t length;                /* Used. */
   char *buffer;
 };
 
