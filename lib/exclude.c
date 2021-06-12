@@ -219,10 +219,10 @@ string_hasher_ci (void const *data, size_t n_buckets)
       else
         wc = *m.ptr;
 
-      value = (value * 31 + wc) % n_buckets;
+      value = value * 31 + wc;
     }
 
-  return value;
+  return value % n_buckets;
 }
 
 /* compare two strings for equality */
