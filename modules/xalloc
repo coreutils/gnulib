@@ -10,6 +10,7 @@ Depends-on:
 c99
 calloc-gnu
 extern-inline
+ialloc
 idx
 intprops
 malloc-gnu

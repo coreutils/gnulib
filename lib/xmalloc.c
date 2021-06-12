@@ -21,33 +21,51 @@
 
 #include "xalloc.h"
 
+#include "ialloc.h"
 #include "intprops.h"
 #include "minmax.h"
 
 #include <stdlib.h>
 #include <string.h>
 
-/* Allocate N bytes of memory dynamically, with error checking.  */
-
-void *
-xmalloc (size_t n)
+static void *
+nonnull (void *p)
 {
-  void *p = malloc (n);
   if (!p)
     xalloc_die ();
   return p;
 }
 
-/* Change the size of an allocated block of memory P to N bytes,
+/* Allocate S bytes of memory dynamically, with error checking.  */
+
+void *
+xmalloc (size_t s)
+{
+  return nonnull (malloc (s));
+}
+
+void *
+ximalloc (idx_t s)
+{
+  return nonnull (imalloc (s));
+}
+
+/* Change the size of an allocated block of memory P to S bytes,
    with error checking.  */
 
 void *
-xrealloc (void *p, size_t n)
+xrealloc (void *p, size_t s)
 {
-  void *r = realloc (p, n);
-  if (!r && (!p || n))
+  void *r = realloc (p, s);
+  if (!r && (!p || s))
     xalloc_die ();
   return r;
+}
+
+void *
+xirealloc (void *p, idx_t s)
+{
+  return nonnull (irealloc (p, s));
 }
 
 /* Change the size of an allocated block of memory P to an array of N
@@ -62,26 +80,117 @@ xreallocarray (void *p, size_t n, size_t s)
   return r;
 }
 
-/* If P is null, allocate a block of at least *PN bytes; otherwise,
-   reallocate P so that it contains more than *PN bytes.  *PN must be
-   nonzero unless P is null.  Set *PN to the new block's size, and
-   return the pointer to the new block.  *PN is never set to zero, and
+void *
+xireallocarray (void *p, idx_t n, idx_t s)
+{
+  return nonnull (ireallocarray (p, n, s));
+}
+
+/* If P is null, allocate a block of at least *PS bytes; otherwise,
+   reallocate P so that it contains more than *PS bytes.  *PS must be
+   nonzero unless P is null.  Set *PS to the new block's size, and
+   return the pointer to the new block.  *PS is never set to zero, and
    the returned pointer is never null.  */
 
 void *
-x2realloc (void *p, size_t *pn)
+x2realloc (void *p, size_t *ps)
 {
-  return x2nrealloc (p, pn, 1);
+  return x2nrealloc (p, ps, 1);
 }
 
-/* Grow PA, which points to an array of *NITEMS items, and return the
-   location of the reallocated array, updating *NITEMS to reflect its
-   new size.  The new array will contain at least NITEMS_INCR_MIN more
-   items, but will not contain more than NITEMS_MAX items total.
-   ITEM_SIZE is the size of each item, in bytes.
+/* If P is null, allocate a block of at least *PN such objects;
+   otherwise, reallocate P so that it contains more than *PN objects
+   each of S bytes.  S must be nonzero.  Set *PN to the new number of
+   objects, and return the pointer to the new block.  *PN is never set
+   to zero, and the returned pointer is never null.
 
-   ITEM_SIZE and NITEMS_INCR_MIN must be positive.  *NITEMS must be
-   nonnegative.  If NITEMS_MAX is -1, it is treated as if it were
+   Repeated reallocations are guaranteed to make progress, either by
+   allocating an initial block with a nonzero size, or by allocating a
+   larger block.
+
+   In the following implementation, nonzero sizes are increased by a
+   factor of approximately 1.5 so that repeated reallocations have
+   O(N) overall cost rather than O(N**2) cost, but the
+   specification for this function does not guarantee that rate.
+
+   Here is an example of use:
+
+     int *p = NULL;
+     size_t used = 0;
+     size_t allocated = 0;
+
+     void
+     append_int (int value)
+       {
+         if (used == allocated)
+           p = x2nrealloc (p, &allocated, sizeof *p);
+         p[used++] = value;
+       }
+
+   This causes x2nrealloc to allocate a block of some nonzero size the
+   first time it is called.
+
+   To have finer-grained control over the initial size, set *PN to a
+   nonzero value before calling this function with P == NULL.  For
+   example:
+
+     int *p = NULL;
+     size_t used = 0;
+     size_t allocated = 0;
+     size_t allocated1 = 1000;
+
+     void
+     append_int (int value)
+       {
+         if (used == allocated)
+           {
+             p = x2nrealloc (p, &allocated1, sizeof *p);
+             allocated = allocated1;
+           }
+         p[used++] = value;
+       }
+
+   */
+
+void *
+x2nrealloc (void *p, size_t *pn, size_t s)
+{
+  size_t n = *pn;
+
+  if (! p)
+    {
+      if (! n)
+        {
+          /* The approximate size to use for initial small allocation
+             requests, when the invoking code specifies an old size of
+             zero.  This is the largest "small" request for the GNU C
+             library malloc.  */
+          enum { DEFAULT_MXFAST = 64 * sizeof (size_t) / 4 };
+
+          n = DEFAULT_MXFAST / s;
+          n += !n;
+        }
+    }
+  else
+    {
+      /* Set N = floor (1.5 * N) + 1 to make progress even if N == 0.  */
+      if (INT_ADD_WRAPV (n, (n >> 1) + 1, &n))
+        xalloc_die ();
+    }
+
+  p = xreallocarray (p, n, s);
+  *pn = n;
+  return p;
+}
+
+/* Grow PA, which points to an array of *PN items, and return the
+   location of the reallocated array, updating *PN to reflect its
+   new size.  The new array will contain at least N_INCR_MIN more
+   items, but will not contain more than N_MAX items total.
+   S is the size of each item, in bytes.
+
+   S and N_INCR_MIN must be positive.  *PN must be
+   nonnegative.  If N_MAX is -1, it is treated as if it were
    infinity.
 
    If PA is null, then allocate a new array instead of reallocating
@@ -91,10 +200,9 @@ x2realloc (void *p, size_t *pn)
    { free (A); A = xpalloc (NULL, &AITEMS, ...); }.  */
 
 void *
-xpalloc (void *pa, idx_t *nitems, idx_t nitems_incr_min,
-         ptrdiff_t nitems_max, idx_t item_size)
+xpalloc (void *pa, idx_t *pn, idx_t n_incr_min, ptrdiff_t n_max, idx_t s)
 {
-  idx_t n0 = *nitems;
+  idx_t n0 = *pn;
 
   /* The approximate size to use for initial small allocation
      requests.  This is the largest "small" request for the GNU C
@@ -103,14 +211,14 @@ xpalloc (void *pa, idx_t *nitems, idx_t nitems_incr_min,
 
   /* If the array is tiny, grow it to about (but no greater than)
      DEFAULT_MXFAST bytes.  Otherwise, grow it by about 50%.
-     Adjust the growth according to three constraints: NITEMS_INCR_MIN,
-     NITEMS_MAX, and what the C language can represent safely.  */
+     Adjust the growth according to three constraints: N_INCR_MIN,
+     N_MAX, and what the C language can represent safely.  */
 
   idx_t n;
   if (INT_ADD_WRAPV (n0, n0 >> 1, &n))
     n = IDX_MAX;
-  if (0 <= nitems_max && nitems_max < n)
-    n = nitems_max;
+  if (0 <= n_max && n_max < n)
+    n = n_max;
 
   /* NBYTES is of a type suitable for holding the count of bytes in an object.
      This is typically idx_t, but it should be size_t on (theoretical?)
@@ -122,35 +230,41 @@ xpalloc (void *pa, idx_t *nitems, idx_t nitems_incr_min,
   size_t nbytes;
 #endif
   idx_t adjusted_nbytes
-    = (INT_MULTIPLY_WRAPV (n, item_size, &nbytes)
+    = (INT_MULTIPLY_WRAPV (n, s, &nbytes)
        ? MIN (IDX_MAX, SIZE_MAX)
        : nbytes < DEFAULT_MXFAST ? DEFAULT_MXFAST : 0);
   if (adjusted_nbytes)
     {
-      n = adjusted_nbytes / item_size;
-      nbytes = adjusted_nbytes - adjusted_nbytes % item_size;
+      n = adjusted_nbytes / s;
+      nbytes = adjusted_nbytes - adjusted_nbytes % s;
     }
 
   if (! pa)
-    *nitems = 0;
-  if (n - n0 < nitems_incr_min
-      && (INT_ADD_WRAPV (n0, nitems_incr_min, &n)
-          || (0 <= nitems_max && nitems_max < n)
-          || INT_MULTIPLY_WRAPV (n, item_size, &nbytes)))
+    *pn = 0;
+  if (n - n0 < n_incr_min
+      && (INT_ADD_WRAPV (n0, n_incr_min, &n)
+          || (0 <= n_max && n_max < n)
+          || INT_MULTIPLY_WRAPV (n, s, &nbytes)))
     xalloc_die ();
   pa = xrealloc (pa, nbytes);
-  *nitems = n;
+  *pn = n;
   return pa;
 }
 
-/* Allocate N bytes of zeroed memory dynamically, with error checking.
+/* Allocate S bytes of zeroed memory dynamically, with error checking.
    There's no need for xnzalloc (N, S), since it would be equivalent
    to xcalloc (N, S).  */
 
 void *
-xzalloc (size_t n)
+xzalloc (size_t s)
 {
-  return xcalloc (n, 1);
+  return xcalloc (s, 1);
+}
+
+void *
+xizalloc (idx_t s)
+{
+  return xicalloc (s, 1);
 }
 
 /* Allocate zeroed memory for N elements of S bytes, with error
@@ -159,10 +273,13 @@ xzalloc (size_t n)
 void *
 xcalloc (size_t n, size_t s)
 {
-  void *p = calloc (n, s);
-  if (!p)
-    xalloc_die ();
-  return p;
+  return nonnull (calloc (n, s));
+}
+
+void *
+xicalloc (idx_t n, idx_t s)
+{
+  return nonnull (icalloc (n, s));
 }
 
 /* Clone an object P of size S, with error checking.  There's no need
@@ -173,6 +290,23 @@ void *
 xmemdup (void const *p, size_t s)
 {
   return memcpy (xmalloc (s), p, s);
+}
+
+void *
+ximemdup (void const *p, idx_t s)
+{
+  return memcpy (ximalloc (s), p, s);
+}
+
+/* Clone an object P of size S, with error checking.  Append
+   a terminating NUL byte.  */
+
+char *
+ximemdup0 (void const *p, idx_t s)
+{
+  char *result = ximalloc (s + 1);
+  result[s] = 0;
+  return memcpy (result, p, s);
 }
 
 /* Clone STRING.  */
