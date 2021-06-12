@@ -82,9 +82,8 @@ readtoken (FILE *stream,
            size_t n_delim,
            token_buffer *tokenbuffer)
 {
-  char *p;
   int c;
-  size_t i, n;
+  idx_t i;
   word isdelim[(UCHAR_MAX + bits_per_word) / bits_per_word];
 
   memset (isdelim, 0, sizeof isdelim);
@@ -100,8 +99,8 @@ readtoken (FILE *stream,
       /* empty */
     }
 
-  p = tokenbuffer->buffer;
-  n = tokenbuffer->size;
+  char *p = tokenbuffer->buffer;
+  idx_t n = tokenbuffer->size;
   i = 0;
   for (;;)
     {
@@ -109,7 +108,7 @@ readtoken (FILE *stream,
         return -1;
 
       if (i == n)
-        p = x2nrealloc (p, &n, sizeof *p);
+        p = xpalloc (p, &n, 1, -1, sizeof *p);
 
       if (c < 0)
         {
@@ -148,8 +147,7 @@ readtokens (FILE *stream,
   token_buffer tb, *token = &tb;
   char **tokens;
   size_t *lengths;
-  size_t sz;
-  size_t n_tokens;
+  idx_t sz, n_tokens;
 
   if (projected_n_tokens == 0)
     projected_n_tokens = 64;
@@ -168,7 +166,7 @@ readtokens (FILE *stream,
       size_t token_length = readtoken (stream, delim, n_delim, token);
       if (n_tokens >= sz)
         {
-          tokens = x2nrealloc (tokens, &sz, sizeof *tokens);
+          tokens = xpalloc (tokens, &sz, 1, -1, sizeof *tokens);
           lengths = xreallocarray (lengths, sz, sizeof *lengths);
         }
 

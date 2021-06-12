@@ -23,6 +23,8 @@
 
 # include <stdio.h>
 
+/* FIXME: This header should use idx_t, not size_t.  */
+
 struct tokenbuffer
 {
   size_t size;
