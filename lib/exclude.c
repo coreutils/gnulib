@@ -88,8 +88,8 @@ struct patopts
 struct exclude_pattern
   {
     struct patopts *exclude;
-    size_t exclude_alloc;
-    size_t exclude_count;
+    idx_t exclude_alloc;
+    idx_t exclude_count;
   };
 
 enum exclude_type
@@ -281,12 +281,10 @@ new_exclude_segment (struct exclude *ex, enum exclude_type type, int options)
 static void
 free_exclude_segment (struct exclude_segment *seg)
 {
-  size_t i;
-
   switch (seg->type)
     {
     case exclude_pattern:
-      for (i = 0; i < seg->v.pat.exclude_count; i++)
+      for (idx_t i = 0; i < seg->v.pat.exclude_count; i++)
         {
           if (seg->v.pat.exclude[i].options & EXCLUDE_REGEX)
             regfree (&seg->v.pat.exclude[i].v.re);
@@ -407,11 +405,10 @@ exclude_patopts (struct patopts const *opts, char const *f)
 static bool
 file_pattern_matches (struct exclude_segment const *seg, char const *f)
 {
-  size_t exclude_count = seg->v.pat.exclude_count;
+  idx_t exclude_count = seg->v.pat.exclude_count;
   struct patopts const *exclude = seg->v.pat.exclude;
-  size_t i;
 
-  for (i = 0; i < exclude_count; i++)
+  for (idx_t i = 0; i < exclude_count; i++)
     {
       if (exclude_patopts (exclude + i, f))
         return true;
@@ -533,8 +530,8 @@ add_exclude (struct exclude *ex, char const *pattern, int options)
 
       pat = &seg->v.pat;
       if (pat->exclude_count == pat->exclude_alloc)
-        pat->exclude = x2nrealloc (pat->exclude, &pat->exclude_alloc,
-                                   sizeof *pat->exclude);
+        pat->exclude = xpalloc (pat->exclude, &pat->exclude_alloc, 1, -1,
+                                sizeof *pat->exclude);
       patopts = &pat->exclude[pat->exclude_count++];
 
       patopts->options = options;
@@ -547,7 +544,7 @@ add_exclude (struct exclude *ex, char const *pattern, int options)
           if (options & FNM_LEADING_DIR)
             {
               char *tmp;
-              size_t len = strlen (pattern);
+              idx_t len = strlen (pattern);
 
               while (len > 0 && ISSLASH (pattern[len-1]))
                 --len;
@@ -556,7 +553,7 @@ add_exclude (struct exclude *ex, char const *pattern, int options)
                 rc = 1;
               else
                 {
-                  tmp = xmalloc (len + 7);
+                  tmp = ximalloc (len + 7);
                   memcpy (tmp, pattern, len);
                   strcpy (tmp + len, "(/.*)?");
                   rc = regcomp (&patopts->v.re, tmp, cflags);
@@ -617,22 +614,22 @@ add_exclude_fp (void (*add_func) (struct exclude *, char const *, int, void *),
   char *p;
   char *pattern;
   char const *lim;
-  size_t buf_alloc = 0;
-  size_t buf_count = 0;
+  idx_t buf_alloc = 0;
+  idx_t buf_count = 0;
   int c;
   int e = 0;
 
   while ((c = getc (fp)) != EOF)
     {
       if (buf_count == buf_alloc)
-        buf = x2realloc (buf, &buf_alloc);
+        buf = xpalloc (buf, &buf_alloc, 1, -1, 1);
       buf[buf_count++] = c;
     }
 
   if (ferror (fp))
     e = errno;
 
-  buf = xrealloc (buf, buf_count + 1);
+  buf = xirealloc (buf, buf_count + 1);
   buf[buf_count] = line_end;
   lim = buf + buf_count + ! (buf_count == 0 || buf[buf_count - 1] == line_end);
 
