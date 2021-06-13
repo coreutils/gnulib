@@ -716,8 +716,12 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                 pattern = compiler('lib_([A-Z][A-Z](?:.*?))', re.S | re.M)
                 amsnippet1 = pattern.sub('%s_%s_\\1' %
                                          (libname, libext), amsnippet1)
+                # FIXME: Use regular expression substitution instead
+                # of this hack.
+                amsnippet1 = amsnippet1.replace('$(GNULIB_$', '$(GNULIB!@#$%')
                 amsnippet1 = amsnippet1.replace(
                     '$(GNULIB_', '$(' + module_indicator_prefix + '_GNULIB_')
+                amsnippet1 = amsnippet1.replace('$(GNULIB!@#$%', '$(GNULIB_$')
                 amsnippet1 = amsnippet1.replace(
                     'lib%_LIBRARIES', 'lib_LIBRARIES')
                 amsnippet1 = amsnippet1.replace(
@@ -741,8 +745,12 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                 pattern = compiler('lib_([A-Z][A-Z](?:.*?))', re.S | re.M)
                 amsnippet2 = pattern.sub('%s_%s_\\1' %
                                          (libname, libext), amsnippet2)
+                # FIXME: Use regular expression substitution instead
+                # of this hack.
+                amsnippet2 = amsnippet2.replace('$(GNULIB_$', '$(GNULIB!@#$%')
                 amsnippet2 = amsnippet2.replace(
                     '$(GNULIB_', '$(' + module_indicator_prefix + '_GNULIB_')
+                amsnippet1 = amsnippet2.replace('$(GNULIB!@#$%', '$(GNULIB_$')
                 if type(amsnippet1) is bytes:
                     amsnippet1 = amsnippet1.decode(ENCS['default'])
                 if type(amsnippet2) is bytes:
@@ -1011,8 +1019,12 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                     snippet = pattern.sub('', snippet)
                 pattern = compiler('lib_([A-Z][A-Z](?:.*?))', re.S | re.M)
                 snippet = pattern.sub('libtests_a_\\1', snippet)
+                # FIXME: Use regular expression substitution instead
+                # of this hack.
+                snippet = snippet.replace('$(GNULIB_$', '$(GNULIB!@#$%')
                 snippet = snippet.replace(
                     '$(GNULIB_', '$(' + module_indicator_prefix + '_GNULIB_')
+                snippet = snippet.replace('$(GNULIB!@#$%', '$(GNULIB_$')
                 snippet = snippet.replace('lib%_LIBRARIES', 'lib_LIBRARIES')
                 snippet = snippet.replace(
                     'lib%_LTLIBRARIES', 'lib_LTLIBRARIES')
