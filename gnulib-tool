@@ -3700,7 +3700,7 @@ func_emit_lib_Makefile_am ()
                 -e 's,lib_LTLIBRARIES,lib%_LTLIBRARIES,g' \
                 -e "$sed_eliminate_LDFLAGS" \
                 -e 's,lib_\([A-Z][A-Z]*\),'"${libname}_${libext}"'_\1,g' \
-                -e 's,\$(\(GNULIB_[A-Z]\),$('"${module_indicator_prefix}"'_\1,' \
+                -e 's,\$(GNULIB_,$('"${module_indicator_prefix}"'_GNULIB_,' \
                 -e 's,lib%_LIBRARIES,lib_LIBRARIES,g' \
                 -e 's,lib%_LTLIBRARIES,lib_LTLIBRARIES,g' \
                 -e "$sed_transform_check_PROGRAMS" \
@@ -3714,7 +3714,7 @@ func_emit_lib_Makefile_am ()
           func_get_automake_snippet_unconditional "$module" |
             LC_ALL=C \
             sed -e 's,lib_\([A-Z][A-Z]*\),'"${libname}_${libext}"'_\1,g' \
-                -e 's,\$(\(GNULIB_[A-Z]\),$('"${module_indicator_prefix}"'_\1,'
+                -e 's,\$(GNULIB_,$('"${module_indicator_prefix}"'_GNULIB_,'
         } > "$tmp"/amsnippet2
         # Skip the contents if it's entirely empty.
         if grep '[^	 ]' "$tmp"/amsnippet1 "$tmp"/amsnippet2 > /dev/null ; then
@@ -4058,7 +4058,7 @@ func_emit_tests_Makefile_am ()
                 -e 's,lib_LTLIBRARIES,lib%_LTLIBRARIES,g' \
                 -e "$sed_eliminate_LDFLAGS" \
                 -e 's,lib_\([A-Z][A-Z]*\),libtests_a_\1,g' \
-                -e 's,\$(\(GNULIB_[A-Z]\),$('"${module_indicator_prefix}"'_\1,' \
+                -e 's,\$(GNULIB_,$('"${module_indicator_prefix}"'_GNULIB_,' \
                 -e 's,lib%_LIBRARIES,lib_LIBRARIES,g' \
                 -e 's,lib%_LTLIBRARIES,lib_LTLIBRARIES,g' \
                 -e "$sed_transform_check_PROGRAMS" \
@@ -4072,7 +4072,7 @@ func_emit_tests_Makefile_am ()
           func_get_automake_snippet_unconditional "$module" |
             LC_ALL=C \
             sed -e 's,lib_\([A-Z][A-Z]*\),libtests_a_\1,g' \
-                -e 's,\$(\(GNULIB_[A-Z]\),$('"${module_indicator_prefix}"'_\1,'
+                -e 's,\$(GNULIB_,$('"${module_indicator_prefix}"'_GNULIB_,'
         } > "$tmp"/amsnippet2
         # Skip the contents if it's entirely empty.
         if grep '[^	 ]' "$tmp"/amsnippet1 "$tmp"/amsnippet2 > /dev/null ; then

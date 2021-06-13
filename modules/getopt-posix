@@ -25,10 +25,10 @@ gl_FUNC_GETOPT_POSIX
 if test $REPLACE_GETOPT = 1; then
   AC_LIBOBJ([getopt])
   AC_LIBOBJ([getopt1])
-  dnl Arrange for unistd.h to include getopt.h.
-  GNULIB_${gl_include_guard_prefix}_UNISTD_H_GETOPT=1
+  dnl Define the substituted variable GNULIB_UNISTD_H_GETOPT to 1.
+  gl_UNISTD_H_REQUIRE_DEFAULTS
+  gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_UNISTD_H_GETOPT], [1])
 fi
-AC_SUBST([GNULIB_${gl_include_guard_prefix}_UNISTD_H_GETOPT])
 gl_UNISTD_MODULE_INDICATOR([getopt-posix])
 
 Makefile.am:
