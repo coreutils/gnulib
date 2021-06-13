@@ -120,7 +120,7 @@ _GL_STACK_PREFIX (push) (_GL_STACK_TYPE *stack, GL_STACK_ELEMENT item)
 {
   if (stack->size == stack->allocated)
     stack->base = xpalloc (stack->base, &stack->allocated, 1, -1,
-                           sizeof *stack->base);;
+                           sizeof *stack->base);
   stack->base [stack->size++] = item;
 }
 
