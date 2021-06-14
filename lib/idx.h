@@ -107,6 +107,10 @@ typedef ptrdiff_t idx_t;
 /* IDX_MAX is the maximum value of an idx_t.  */
 #define IDX_MAX PTRDIFF_MAX
 
+/* A printf/scanf length modifier for idx_t.  For example, if i is an idx_t,
+   printf ("i = %"pIDX"d\n", i) outputs i's value.  */
+#define pIDX "t"
+
 /* So far no need has been found for an IDX_WIDTH macro.
    Perhaps there should be another macro IDX_VALUE_BITS that does not
    count the sign bit and is therefore one less than PTRDIFF_WIDTH.  */
