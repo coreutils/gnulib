@@ -26,6 +26,7 @@
 #include <string.h>
 #include <signal.h>
 
+#include "binary-io.h"
 #include "full-write.h"
 #include "macros.h"
 
@@ -87,6 +88,8 @@ main (int argc, char **argv)
   const char *path[] = { NULL, NULL };
 
   ASSERT (argc == 2);
+
+  set_binary_mode (STDOUT_FILENO, O_BINARY);
 
   /* Test writing to a nonexistent program traps sooner or later.  */
   {
