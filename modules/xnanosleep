@@ -1,5 +1,5 @@
 Description:
-a more convenient interface to nanosleep
+A variant of nanosleep that takes a 'double' argument and handles EINTR.
 
 Files:
 lib/xnanosleep.h

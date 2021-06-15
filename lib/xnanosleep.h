@@ -1,4 +1,5 @@
-/* Copyright (C) 2004-2021 Free Software Foundation, Inc.
+/* A variant of nanosleep that takes a 'double' argument and handles EINTR.
+   Copyright (C) 2004-2021 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published
@@ -13,4 +14,12 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 int xnanosleep (double);
+
+#ifdef __cplusplus
+}
+#endif

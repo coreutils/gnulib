@@ -1,4 +1,4 @@
-/* xnanosleep.c -- a more convenient interface to nanosleep
+/* A variant of nanosleep that takes a 'double' argument and handles EINTR.
 
    Copyright (C) 2002-2007, 2009-2021 Free Software Foundation, Inc.
 
