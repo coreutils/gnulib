@@ -1,5 +1,5 @@
 Description:
-a wrapper for freopen
+Open a file, reusing a given stream, with error checking.
 
 Files:
 lib/xfreopen.c

@@ -1,4 +1,5 @@
-/* Copyright (C) 2009-2021 Free Software Foundation, Inc.
+/* Open a file, reusing a given stream, with error checking.
+   Copyright (C) 2009-2021 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published
@@ -15,4 +16,14 @@
 
 #include <stdio.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/* Opens the file FILENAME with mode MODE, reusing the given stream FP.
+   Upon failure, emits an error message and exits the program.  */
 void xfreopen (char const *filename, char const *mode, FILE *fp);
+
+#ifdef __cplusplus
+}
+#endif

@@ -1,4 +1,4 @@
-/* a wrapper for freopen
+/* Open a file, reusing a given stream, with error checking.
    Copyright (C) 2008-2021 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
