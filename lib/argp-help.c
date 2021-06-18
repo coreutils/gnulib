@@ -147,7 +147,8 @@ validate_uparams (const struct argp_state *state, struct uparams *upptr)
       if (*(int *)((char *)upptr + up->uparams_offs) >= upptr->rmargin)
         {
           __argp_failure (state, 0, 0,
-                          dgettext (state->root_argp->argp_domain,
+                          dgettext (state == NULL ? NULL
+                                    : state->root_argp->argp_domain,
                                     "\
 ARGP_HELP_FMT: %s value is less than or equal to %s"),
                           "rmargin", up->name);
