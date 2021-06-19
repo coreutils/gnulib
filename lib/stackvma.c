@@ -1,5 +1,5 @@
 /* Determine the virtual memory area of a given address.
-   Copyright (C) 2002-2021  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2002-2021 Free Software Foundation, Inc.
    Copyright (C) 2003-2006  Paolo Bonzini <bonzini@gnu.org>
 
    This program is free software: you can redistribute it and/or modify
@@ -14,6 +14,8 @@
 
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
+
+/* Written by Bruno Haible and Paolo Bonzini.  */
 
 #include <config.h>
 

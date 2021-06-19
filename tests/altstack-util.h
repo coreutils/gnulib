@@ -1,6 +1,6 @@
 /* Some auxiliary stuff for defining an alternate stack.
+   Copyright (C) 2010-2021 Free Software Foundation, Inc.
    Copyright (C) 2010  Eric Blake <eblake@redhat.com>
-   Copyright (C) 2010-2021  Bruno Haible <bruno@clisp.org>
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -14,6 +14,8 @@
 
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
+
+/* Written by Eric Blake and Bruno Haible.  */
 
 #include <stdint.h> /* uintptr_t */
 #include <string.h> /* for memset */

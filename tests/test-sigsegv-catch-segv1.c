@@ -1,5 +1,5 @@
 /* Test that the handler is called, with the right fault address.
-   Copyright (C) 2002-2021  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2002-2021 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -13,6 +13,8 @@
 
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
+
+/* Written by Bruno Haible.  */
 
 #include <config.h>
 
