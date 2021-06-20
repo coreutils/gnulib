@@ -120,11 +120,11 @@ test "$sed_result" = 'aaa' \
 # A sed expression that joins 'extern' declarations that are broken over
 # several lines.
 sed_join_multiline_externs='
-/^extern [^;]*$/{
+/^extern [^;"]*$/{
   :a
   N
   s/\n/ /g
-  /^extern [^;]*$/{
+  /^extern [^;"]*$/{
     ba
   }
 }'
