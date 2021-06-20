@@ -21,11 +21,7 @@
 #include <config.h>
 
 /* Specification.  */
-#ifdef IN_LIBINTL
-# include "gettextP.h"
-#else
-# include "localename.h"
-#endif
+#include "localename.h"
 
 #include <limits.h>
 #include <stdbool.h>
@@ -46,9 +42,7 @@
 # if (__GLIBC__ >= 2 && !defined __UCLIBC__) || (defined __linux__ && HAVE_LANGINFO_H) || defined __CYGWIN__
 #  include <langinfo.h>
 # endif
-# if !defined IN_LIBINTL
-#  include "glthread/lock.h"
-# endif
+# include "glthread/lock.h"
 # if defined __sun
 #  if HAVE_GETLOCALENAME_L
 /* Solaris >= 12.  */
@@ -69,9 +63,7 @@ extern char * getlocalename_l(int, locale_t);
 
 #if defined _WIN32 && !defined __CYGWIN__
 # define WINDOWS_NATIVE
-# if !defined IN_LIBINTL
-#  include "glthread/lock.h"
-# endif
+# include "glthread/lock.h"
 #endif
 
 #if defined WINDOWS_NATIVE || defined __CYGWIN__ /* Native Windows or Cygwin */
