@@ -1521,6 +1521,7 @@ _GL_WARN_ON_USE (group_member, "group_member is unportable - "
 #   undef isatty
 #   define isatty rpl_isatty
 #  endif
+#  define GNULIB_defined_isatty 1
 _GL_FUNCDECL_RPL (isatty, int, (int fd));
 _GL_CXXALIAS_RPL (isatty, int, (int fd));
 # elif defined _WIN32 && !defined __CYGWIN__
