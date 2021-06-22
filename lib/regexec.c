@@ -1220,9 +1220,13 @@ proceed_next_node (const re_match_context_t *mctx, Idx nregs, regmatch_t *regs,
     {
       re_node_set *cur_nodes = &mctx->state_log[*pidx]->nodes;
       re_node_set *edests = &dfa->edests[node];
-      bool ok = re_node_set_insert (eps_via_nodes, node);
-      if (__glibc_unlikely (! ok))
-	return -2;
+
+      if (! re_node_set_contains (eps_via_nodes, node))
+        {
+          bool ok = re_node_set_insert (eps_via_nodes, node);
+          if (__glibc_unlikely (! ok))
+            return -2;
+        }
 
       /* Pick a valid destination, or return -1 if none is found.  */
       Idx dest_node = -1;
