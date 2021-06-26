@@ -1615,24 +1615,10 @@ for your GNU package:
 
 @enumerate
 @item
-Create an account for yourself at @url{https://savannah.gnu.org}, if
-you don't already have one.  By the way, this is also needed to
-maintain the web pages at @url{https://www.gnu.org} for your project
-(@pxref{Web Pages}).
-
-@item
-In the @samp{My Account Conf} page on @code{savannah}, upload the GPG
-key (in ASCII-armored format) that you will use to sign your packages.
-If you haven't created one before, you can do so with the command
-@code{gpg --gen-key} (you can accept and/or confirm the default
-answers to its questions).  Then, to get the ASCII-armored version,
-run @samp{gpg --export --armor @var{your_key_id}}.
-
-Optional but recommended: Send your key to a GPG public key server:
-@code{gpg --keyserver keys.gnupg.net --send-keys @var{keyid}}, where
-@var{keyid} is the eight hex digits reported by @code{gpg
---list-public-keys} on the @code{pub} line before the date.  For full
-information about GPG, see @url{https://www.gnu.org/software/gpg}.
+Create an account for yourself at @url{https://savannah.gnu.org},
+and register your package there, if you haven't already done that.
+By the way, this is also needed to maintain the web pages at
+@url{https://www.gnu.org} for your project (@pxref{Web Pages}).
 
 @item
 Compose a message with the following items in some @var{msgfile}.
@@ -1656,6 +1642,18 @@ don't make all releases yourself).
 @item
 ASCII armored copies of GPG keys for any individuals listed in (3).
 @end enumerate
+
+@item
+Publish the concatenated ASCII armored copies of your GPG key
+with the GPG keys listed in the previous step in the @samp{GPG Keys Used
+for Releases} area of the @samp{Public info} of the Savannah group
+of your package.
+
+Optional but recommended: Send your keys to a GPG public key server:
+@code{gpg --keyserver keys.gnupg.net --send-keys @var{keyid}...}, where
+@var{keyid} is the eight hex digits reported by @code{gpg
+--list-public-keys} on the @code{pub} line before the date.  For full
+information about GPG, see @url{https://www.gnu.org/software/gpg}.
 @end enumerate
 
 The administrators will acknowledge your message when they have added
