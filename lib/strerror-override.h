@@ -51,6 +51,7 @@
 extern const char *strerror_override (int errnum) _GL_ATTRIBUTE_CONST;
 # else
 #  define strerror_override(ignored) NULL
+#  define GNULIB_defined_strerror_override_macro 1
 # endif
 
 #endif /* _GL_STRERROR_OVERRIDE_H */
