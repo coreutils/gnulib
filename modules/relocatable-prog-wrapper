@@ -41,7 +41,12 @@ m4/canonicalize.m4
 m4/lstat.m4
 m4/eealloc.m4
 m4/environ.m4
+m4/free.m4
+m4/malloc.m4
+m4/mempcpy.m4
+m4/rawmemchr.m4
 m4/readlink.m4
+m4/realloc.m4
 m4/relocatable-lib.m4
 m4/setenv.m4
 
