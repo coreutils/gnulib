@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate June 12, 2020
+@set lastupdate July 1, 2021
 @c %**end of header
 
 @dircategory GNU organization
@@ -1193,7 +1193,7 @@ is seen, and the program should not perform its normal function.
 @cindex bug reports
 Near the end of the @samp{--help} option's output, please place lines
 giving the email address for bug reports, the package's home page
-(normally @indicateurl{https://www.gnu.org/software/@var{pkg}}, and the
+(normally @indicateurl{https://www.gnu.org/software/@var{pkg}}), and the
 general page for help using GNU programs.  The format should be like this:
 
 @example
