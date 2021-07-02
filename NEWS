@@ -66,6 +66,10 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2021-07-01  largefile       AC_SYS_LARGEFILE now also arranges for time_t
+                            to be 64-bit on 32-bit GNU/Linux platforms
+                            that support it (glibc 2.34 or later).
+
 2021-03-21  fatal-signal    The function at_fatal_signal now returns an error
                             indicator.
 
