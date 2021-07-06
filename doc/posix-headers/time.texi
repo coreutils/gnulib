@@ -8,12 +8,6 @@ Gnulib module: time
 Portability problems fixed by Gnulib:
 @itemize
 @item
-On some platforms where @code{time_t} defaults to 32-bit but can be
-changed to 64-bit, functions like @code{stat} can fail with
-@code{errno == EOVERFLOW} when a 32-bit timestamp is out of range,
-such as with a file timestamp in the far future or past:
-glibc 2.34.
-@item
 @samp{struct timespec} is not defined on some platforms.
 @item
 The macro @code{TIME_UTC} is not defined on many platforms:
@@ -22,6 +16,16 @@ glibc 2.15, macOS 10.13, FreeBSD 11.0, NetBSD 7.1, OpenBSD 6.0, Minix 3.1.8, AIX
 Some platforms provide a @code{NULL} macro that cannot be used in arbitrary
 expressions:
 NetBSD 5.0.
+@end itemize
+
+Portability problems fixed by the Gnulib module @code{year2038}:
+@itemize
+@item
+On some platforms where @code{time_t} defaults to 32-bit but can be
+changed to 64-bit, functions like @code{stat} can fail with
+@code{errno == EOVERFLOW} when a 32-bit timestamp is out of range,
+such as with a file timestamp in the far future or past:
+glibc 2.34.
 @end itemize
 
 Portability problems not fixed by Gnulib:
