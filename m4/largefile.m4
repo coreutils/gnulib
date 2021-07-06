@@ -116,7 +116,7 @@ AS_IF([test "$enable_largefile" != no],
          [Define for large files, on AIX-style hosts.],
          [_AC_SYS_LARGEFILE_TEST_INCLUDES])],
     [64],
-      [gl_YEAR2038_BODY([false])])])
+      [gl_YEAR2038_BODY([])])])
 ])# AC_SYS_LARGEFILE
 
 # Enable large files on systems where this is implemented by Gnulib, not by the

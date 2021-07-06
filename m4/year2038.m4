@@ -1,4 +1,4 @@
-# year2038.m4 serial 4
+# year2038.m4 serial 5
 dnl Copyright (C) 2017-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -37,6 +37,10 @@ AC_DEFUN([gl_YEAR2038_TEST_INCLUDES],
 ----------------------------------
 AC_DEFUN([gl_YEAR2038_BODY],
 [
+ AC_ARG_ENABLE([year2038],
+   [  --disable-year2038      omit support for timestamps past the year 2038])
+ AS_IF([test "$enable_year2038" != no],
+ [
   dnl On many systems, time_t is already a 64-bit type.
   dnl On those systems where time_t is still 32-bit, it requires kernel
   dnl and libc support to make it 64-bit. For glibc 2.34 and later on Linux,
@@ -88,20 +92,21 @@ AC_DEFUN([gl_YEAR2038_BODY],
        # and 'touch' works with a large timestamp, then evidently 64-bit time_t
        # is desired and supported, so fail and ask the builder to fix the
        # problem.  Otherwise, just warn the builder.
-       if $1 \
-          && test $cross_compiling = no \
-          && TZ=UTC0 touch -t 210602070628.16 conftest.time 2>/dev/null; then
-         rm -f conftest.time
-         AC_MSG_FAILURE([This package requires a 64-bit 'time_t' type, which your system appears to support. You might try configuring with 'CPPFLAGS="-m64" LDFLAGS="-m64"'. To build with a 32-bit time_t anyway (not recommended), configure with 'TIME_T_32_BIT_OK=yes'.])
-       elif test "$gl_warned_about_64_bit_time_t" != yes; then
+       m4_ifval([$1],
+         [if test $cross_compiling = no \
+             && TZ=UTC0 touch -t 210602070628.16 conftest.time 2>/dev/null; then
+            rm -f conftest.time
+            AC_MSG_FAILURE([This package requires a 64-bit 'time_t' type, which your system appears to support. You might try configuring with 'CPPFLAGS="-m64" LDFLAGS="-m64"'. To build with a 32-bit time_t anyway (not recommended), configure with '--disable-year2038'.])
+          fi])
+       if test "$gl_warned_about_64_bit_time_t" != yes; then
          AC_MSG_WARN([This package requires a 64-bit 'time_t' type if there is any way to access timestamps outside the year range 1901-2038 on your platform. Perhaps you should configure with 'CPPFLAGS="-m64" LDFLAGS="-m64"'?])
          gl_warned_about_64_bit_time_t=yes
        fi
       ])
-  fi
+  fi])
 ])
 
 AC_DEFUN([gl_YEAR2038],
 [
-  gl_YEAR2038_BODY([test "${TIME_T_32_BIT_OK-no}" = no])
+  gl_YEAR2038_BODY([require-64-bit])
 ])
