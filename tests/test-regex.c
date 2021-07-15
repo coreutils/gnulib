@@ -155,7 +155,8 @@ bug_regex11 (void)
 	    if (tests[i].rm[n].rm_so == -1 && tests[i].rm[n].rm_eo == -1)
 	      break;
 	    report_error ("%s: regexec %zd match failure rm[%d] %d..%d",
-                          tests[i].pattern, i, n, rm[n].rm_so, rm[n].rm_eo);
+                          tests[i].pattern, i, n,
+                          (int) rm[n].rm_so, (int) rm[n].rm_eo);
 	    break;
 	  }
 
@@ -433,7 +434,7 @@ main (void)
                       pat_sub2, data, (int) regs.start[0], (int) regs.end[0]);
       else if (! (regs.start[1] == 0 && regs.end[1] == 0))
         report_error ("re_search '%s' on '%s' returned wrong submatch [%d,%d)",
-                      pat_sub2, data, regs.start[1], regs.end[1]);
+                      pat_sub2, data, (int) regs.start[1], (int) regs.end[1]);
       regfree (&regex);
       free (regs.start);
       free (regs.end);
@@ -466,9 +467,9 @@ main (void)
   memset (&regex, 0, sizeof regex);
   static char const pat_badback[] = "0|()0|\\1|0";
   s = re_compile_pattern (pat_badback, sizeof pat_badback, &regex);
-  if (!s)
-    s = "failed to report invalid back reference";
-  if (strcmp (s, "Invalid back reference") != 0)
+  if (!s && re_search (&regex, "x", 1, 0, 1, &regs) != -1)
+    s = "mishandled invalid back reference";
+  if (s && strcmp (s, "Invalid back reference") != 0)
     report_error ("%s: %s", pat_badback, s);
 
 #if 0
