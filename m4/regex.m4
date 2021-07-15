@@ -1,4 +1,4 @@
-# serial 71
+# serial 72
 
 # Copyright (C) 1996-2001, 2003-2021 Free Software Foundation, Inc.
 #
@@ -246,7 +246,7 @@ AC_DEFUN([gl_REGEX],
                            & ~RE_CONTEXT_INVALID_DUP
                            & ~RE_NO_EMPTY_RANGES);
             memset (&regex, 0, sizeof regex);
-            s = re_compile_pattern ("[[:alnum:]_-]\\\\+$", 16, &regex);
+            s = re_compile_pattern ("[[:alnum:]_-]\\\\+\$", 16, &regex);
             if (s)
               result |= 32;
             else
@@ -264,7 +264,7 @@ AC_DEFUN([gl_REGEX],
                back reference.  */
             re_set_syntax (RE_SYNTAX_POSIX_EGREP);
             memset (&regex, 0, sizeof regex);
-            s = re_compile_pattern ("0|()0|\\1|0", 10, &regex);
+            s = re_compile_pattern ("0|()0|\\\\1|0", 10, &regex);
             if (!s)
               result |= 64;
             else
