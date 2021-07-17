@@ -1,4 +1,4 @@
-# strstr.m4 serial 23
+# strstr.m4 serial 24
 dnl Copyright (C) 2008-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -18,7 +18,7 @@ AC_DEFUN([gl_FUNC_STRSTR_SIMPLE],
       [gl_cv_func_strstr_works_always],
       [AC_RUN_IFELSE(
          [AC_LANG_PROGRAM([[
-#include <string.h> /* for strstr */
+#include <string.h> /* for __GNU_LIBRARY__, strstr */
 #ifdef __GNU_LIBRARY__
  #include <features.h>
  #if __GLIBC__ == 2 && __GLIBC_MINOR__ == 28
@@ -40,6 +40,7 @@ AC_DEFUN([gl_FUNC_STRSTR_SIMPLE],
           dnl linear.
           AC_EGREP_CPP([Lucky user],
             [
+#include <string.h> /* for __GNU_LIBRARY__ */
 #ifdef __GNU_LIBRARY__
  #include <features.h>
  #if ((__GLIBC__ == 2 && __GLIBC_MINOR__ > 12) || (__GLIBC__ > 2)) \
