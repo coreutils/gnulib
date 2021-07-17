@@ -22,17 +22,12 @@
 
 #include "posixtm.h"
 
-#include <stdlib.h>
-#include <string.h>
+#include "c-ctype.h"
+#include "idx.h"
+#include "intprops.h"
+#include "verify.h"
 
-/* ISDIGIT differs from isdigit, as follows:
-   - Its arg may be any int or unsigned int; it need not be an unsigned char
-     or EOF.
-   - It's typically faster.
-   POSIX says that only '0' through '9' are digits.  Prefer ISDIGIT to
-   isdigit unless it's important to use the locale's definition
-   of "digit" even when the host does not conform to POSIX.  */
-#define ISDIGIT(c) ((unsigned int) (c) - '0' <= 9)
+#include <string.h>
 
 /*
   POSIX requires:
@@ -52,7 +47,7 @@
 */
 
 static bool
-year (struct tm *tm, const int *digit_pair, size_t n, unsigned int syntax_bits)
+year (struct tm *tm, const int *digit_pair, idx_t n, unsigned int syntax_bits)
 {
   switch (n)
     {
@@ -77,12 +72,9 @@ year (struct tm *tm, const int *digit_pair, size_t n, unsigned int syntax_bits)
 
     case 0:
       {
-        time_t now;
-        struct tm *tmp;
-
         /* Use current year.  */
-        time (&now);
-        tmp = localtime (&now);
+        time_t now = time (NULL);
+        struct tm *tmp = localtime (&now);
         if (! tmp)
           return false;
         tm->tm_year = tmp->tm_year;
@@ -90,7 +82,7 @@ year (struct tm *tm, const int *digit_pair, size_t n, unsigned int syntax_bits)
       break;
 
     default:
-      abort ();
+      assume (false);
     }
 
   return true;
@@ -101,11 +93,9 @@ posix_time_parse (struct tm *tm, const char *s, unsigned int syntax_bits)
 {
   const char *dot = NULL;
   int pair[6];
-  int *p;
-  size_t i;
 
-  size_t s_len = strlen (s);
-  size_t len = s_len;
+  idx_t s_len = strlen (s);
+  idx_t len = s_len;
 
   if (syntax_bits & PDS_SECONDS)
     {
@@ -121,15 +111,15 @@ posix_time_parse (struct tm *tm, const char *s, unsigned int syntax_bits)
   if (! (8 <= len && len <= 12 && len % 2 == 0))
     return false;
 
-  for (i = 0; i < len; i++)
-    if (!ISDIGIT (s[i]))
+  for (idx_t i = 0; i < len; i++)
+    if (!c_isdigit (s[i]))
       return false;
 
   len /= 2;
-  for (i = 0; i < len; i++)
+  for (idx_t i = 0; i < len; i++)
     pair[i] = 10 * (s[2*i] - '0') + s[2*i + 1] - '0';
 
-  p = pair;
+  int *p = pair;
   if (! (syntax_bits & PDS_TRAILING_YEAR))
     {
       if (! year (tm, p, len - 4, syntax_bits))
@@ -155,7 +145,7 @@ posix_time_parse (struct tm *tm, const char *s, unsigned int syntax_bits)
   /* Handle seconds.  */
   if (!dot)
     tm->tm_sec = 0;
-  else if (ISDIGIT (dot[1]) && ISDIGIT (dot[2]))
+  else if (c_isdigit (dot[1]) && c_isdigit (dot[2]))
     tm->tm_sec = 10 * (dot[1] - '0') + dot[2] - '0';
   else
     return false;
@@ -169,51 +159,50 @@ bool
 posixtime (time_t *p, const char *s, unsigned int syntax_bits)
 {
   struct tm tm0;
-  struct tm tm1;
-  time_t t;
+  bool leapsec = false;
 
   if (! posix_time_parse (&tm0, s, syntax_bits))
     return false;
 
-  tm1.tm_sec = tm0.tm_sec;
-  tm1.tm_min = tm0.tm_min;
-  tm1.tm_hour = tm0.tm_hour;
-  tm1.tm_mday = tm0.tm_mday;
-  tm1.tm_mon = tm0.tm_mon;
-  tm1.tm_year = tm0.tm_year;
-  tm1.tm_wday = -1;
-  tm1.tm_isdst = -1;
-  t = mktime (&tm1);
-
-  if (tm1.tm_wday < 0)
-    return false;
-
-  /* Reject dates like "September 31" and times like "25:61".
-     However, allow a seconds count of 60 even in time zones that do
-     not support leap seconds, treating it as the following second;
-     POSIX requires this.  */
-  if ((tm0.tm_year ^ tm1.tm_year)
-      | (tm0.tm_mon ^ tm1.tm_mon)
-      | (tm0.tm_mday ^ tm1.tm_mday)
-      | (tm0.tm_hour ^ tm1.tm_hour)
-      | (tm0.tm_min ^ tm1.tm_min)
-      | (tm0.tm_sec ^ tm1.tm_sec))
+  while (true)
     {
+      struct tm tm1;
+      tm1.tm_sec = tm0.tm_sec;
+      tm1.tm_min = tm0.tm_min;
+      tm1.tm_hour = tm0.tm_hour;
+      tm1.tm_mday = tm0.tm_mday;
+      tm1.tm_mon = tm0.tm_mon;
+      tm1.tm_year = tm0.tm_year;
+      tm1.tm_wday = -1;
+      tm1.tm_isdst = -1;
+      time_t t = mktime (&tm1);
+
+      if (tm1.tm_wday < 0)
+        return false;
+
+      /* Reject dates like "September 31" and times like "25:61".
+         However, allow a seconds count of 60 even in time zones that do
+         not support leap seconds, treating it as the following second;
+         POSIX requires this.  */
+      if (! ((tm0.tm_year ^ tm1.tm_year)
+             | (tm0.tm_mon ^ tm1.tm_mon)
+             | (tm0.tm_mday ^ tm1.tm_mday)
+             | (tm0.tm_hour ^ tm1.tm_hour)
+             | (tm0.tm_min ^ tm1.tm_min)
+             | (tm0.tm_sec ^ tm1.tm_sec)))
+        {
+          if (INT_ADD_WRAPV (t, leapsec, &t))
+            return false;
+          *p = t;
+          return true;
+        }
+
       /* Any mismatch without 60 in the tm_sec field is invalid.  */
       if (tm0.tm_sec != 60)
         return false;
 
-      {
-        /* Allow times like 01:35:60 or 23:59:60.  */
-        time_t dummy;
-        char buf[16];
-        char *b = stpcpy (buf, s);
-        strcpy (b - 2, "59");
-        if (!posixtime (&dummy, buf, syntax_bits))
-          return false;
-      }
+      /* Allow times like 01:35:60 or 23:59:60.  */
+      tm0.tm_sec = 59;
+      leapsec = true;
     }
-
-  *p = t;
-  return true;
 }

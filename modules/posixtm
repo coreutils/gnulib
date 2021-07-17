@@ -7,9 +7,12 @@ lib/posixtm.c
 m4/posixtm.m4
 
 Depends-on:
+c-ctype
+idx
+intprops
 mktime
 stdbool
-stpcpy
+verify
 
 configure.ac:
 gl_POSIXTM
