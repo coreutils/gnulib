@@ -27,6 +27,11 @@ SIGNATURE_CHECK (memrchr, void *, (void const *, int, size_t));
 #include "zerosize-ptr.h"
 #include "macros.h"
 
+/* Work around GCC bug 101494.  */
+#if 4 < __GNUC__ + (3 <= __GNUC_MINOR__)
+# pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
+#endif
+
 /* Calculating void * + int is not portable, so this wrapper converts
    to char * to make the tests easier to write.  */
 #define MEMRCHR (char *) memrchr
