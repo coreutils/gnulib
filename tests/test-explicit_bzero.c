@@ -32,6 +32,12 @@ SIGNATURE_CHECK (explicit_bzero, void, (void *, size_t));
 #include "vma-iter.h"
 #include "macros.h"
 
+/* Suppress GCC warning that do_secret_stuff (2) reads uninitialized
+   local storage.  */
+#if 4 < __GNUC__ + (3 <= __GNUC_MINOR__)
+# pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
+#endif
+
 #define SECRET "xyzzy1729"
 #define SECRET_SIZE 9
 
@@ -126,12 +132,14 @@ test_heap (void)
 /* There are two passes:
      1. Put a secret in memory and invoke explicit_bzero on it.
      2. Verify that the memory has been erased.
-   Access the memory via a volatile pointer, so the compiler
-   does not assume the pointer's value and optimize away accesses.  */
-static char *volatile stackbuf;
+   Implement them in the same function, so that they access the same memory
+   range on the stack.  That way, the test verifies that the compiler
+   does not eliminate a call to explicit_bzero, even if data flow analysis
+   reveals that the stack area is dead at the end of the function.  */
 static int _GL_ATTRIBUTE_NOINLINE
 do_secret_stuff (volatile int pass)
 {
+  char stackbuf[SECRET_SIZE];
   if (pass == 1)
     {
       memcpy (stackbuf, SECRET, SECRET_SIZE);
@@ -147,8 +155,6 @@ do_secret_stuff (volatile int pass)
 static void
 test_stack (void)
 {
-  char stack_buffer[SECRET_SIZE];
-  stackbuf = stack_buffer;
   int count = 0;
   int repeat;
 
