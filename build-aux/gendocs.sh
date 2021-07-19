@@ -2,7 +2,7 @@
 # gendocs.sh -- generate a GNU manual in many formats.  This script is
 #   mentioned in maintain.texi.  See the help message below for usage details.
 
-scriptversion=2021-01-01.00
+scriptversion=2021-07-19.18
 
 # Copyright 2003-2021 Free Software Foundation, Inc.
 #
@@ -58,7 +58,7 @@ EMAIL=webmasters@gnu.org  # please override with --email
 commonarg= # passed to all makeinfo/texi2html invcations.
 dirargs=   # passed to all tools (-I dir).
 dirs=      # -I directories.
-htmlarg="--css-ref=/software/gnulib/manual.css -c TOP_NODE_UP_URL=/manual"
+htmlarg="--css-ref=https://www.gnu.org/software/gnulib/manual.css -c TOP_NODE_UP_URL=/manual"
 default_htmlarg=true
 infoarg=--no-split
 generate_ascii=true
@@ -202,7 +202,7 @@ base=$PACKAGE
 
 if $default_htmlarg && test -n "$use_texi2html"; then
   # The legacy texi2html doesn't support TOP_NODE_UP_URL
-  htmlarg="--css-ref=/software/gnulib/manual.css"
+  htmlarg="--css-ref=https://www.gnu.org/software/gnulib/manual.css"
 fi
 
 if test -n "$srcfile"; then
