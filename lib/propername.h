@@ -51,7 +51,7 @@
    output will look like this:
       <translated name> (<original name in English>)
 
-   To use the 'propername' module requires three simple steps:
+   To use the 'propername' module requires two simple steps:
 
      1) Add it to the list of gnulib modules to import,
 
@@ -68,16 +68,6 @@
 
         (Optionally, here you can also add / * TRANSLATORS: ... * / comments
         explaining how the name is written or pronounced.)
-
-     3) If you are using GNU gettext version 0.16.1 or older, in po/Makevars,
-        in the definition of the XGETTEXT_OPTIONS variable, add:
-
-           --keyword='proper_name:1,"This is a proper name. See the gettext manual, section Names."'
-           --keyword='proper_name_utf8:1,"This is a proper name. See the gettext manual, section Names."'
-
-        This specifies automatic comments for the translator. (Requires
-        xgettext >= 0.15. The double-quotes inside the quoted string are on
-        purpose: they are part of the --keyword argument syntax.)
  */
 
 #ifndef _PROPERNAME_H
