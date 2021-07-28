@@ -1395,16 +1395,16 @@ gpg_key_ID ?=								\
 translation_project_ ?= coordinator@translationproject.org
 
 # Make info-gnu the default only for a stable release.
-announcement_Cc_stable = $(translation_project_), $(PACKAGE_BUGREPORT)
+announcement_mail_Cc_stable = $(translation_project_), $(PACKAGE_BUGREPORT)
 announcement_mail_headers_stable =		\
   To: info-gnu@gnu.org				\
-  Cc: $(announcement_Cc_)			\
+  Cc: $(announcement_mail_Cc_)			\
   Mail-Followup-To: $(PACKAGE_BUGREPORT)
 
-announcement_Cc_alpha = $(translation_project_)
+announcement_mail_Cc_alpha = $(translation_project_)
 announcement_mail_headers_alpha =		\
   To: $(PACKAGE_BUGREPORT)			\
-  Cc: $(announcement_Cc_)
+  Cc: $(announcement_mail_Cc_)
 
 announcement_mail_Cc_beta = $(announcement_mail_Cc_alpha)
 announcement_mail_headers_beta = $(announcement_mail_headers_alpha)
