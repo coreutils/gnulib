@@ -1395,21 +1395,21 @@ gpg_key_ID ?=								\
 translation_project_ ?= coordinator@translationproject.org
 
 # Make info-gnu the default only for a stable release.
-announcement_mail_Cc_stable = $(translation_project_), $(PACKAGE_BUGREPORT)
+announcement_Cc_stable = $(translation_project_), $(PACKAGE_BUGREPORT)
 announcement_mail_headers_stable =		\
   To: info-gnu@gnu.org				\
-  Cc: $(announcement_mail_Cc_)			\
+  Cc: $(announcement_Cc_)			\
   Mail-Followup-To: $(PACKAGE_BUGREPORT)
 
-announcement_mail_Cc_alpha = $(translation_project_)
+announcement_Cc_alpha = $(translation_project_)
 announcement_mail_headers_alpha =		\
   To: $(PACKAGE_BUGREPORT)			\
-  Cc: $(announcement_mail_Cc_)
+  Cc: $(announcement_Cc_)
 
 announcement_mail_Cc_beta = $(announcement_mail_Cc_alpha)
 announcement_mail_headers_beta = $(announcement_mail_headers_alpha)
 
-announcement_mail_Cc_ ?= $(announcement_mail_Cc_$(release-type))
+announcement_Cc_ ?= $(announcement_Cc_$(release-type))
 announcement_mail_headers_ ?= $(announcement_mail_headers_$(release-type))
 announcement: NEWS ChangeLog $(rel-files)
 # Not $(AM_V_GEN) since the output of this command serves as
