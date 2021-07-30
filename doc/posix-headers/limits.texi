@@ -17,6 +17,10 @@ glibc 2.11 without @code{-D_GNU_SOURCE}, Cygwin, mingw, MSVC 14.
 @item
 Macros like @code{CHAR_WIDTH} are not defined on some platforms:
 glibc 2.24, NetBSD 9.0, many others.
+@item
+The macros @code{BOOL_MAX} and @code{BOOL_WIDTH} are not defined on
+some platforms:
+glibc 2.32, many others.
 @end itemize
 
 Portability problems fixed by Gnulib module @code{gethostname}:
