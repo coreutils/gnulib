@@ -148,6 +148,18 @@ AC_DEFUN([gl_COMMON_BODY], [
 # define _GL_ATTRIBUTE_CONST
 #endif
 
+/* _GL_ATTRIBUTE_DEALLOC (F, I) is for functions returning pointers
+   that can be freed by passing them as the Ith argument to the
+   function F.  _GL_ATTRIBUTE_DEALLOC_FREE is for functions that
+   return pointers that can be freed via 'free'; it can be used
+   only after including stdlib.h.  */
+#if _GL_GNUC_PREREQ (11, 0)
+# define _GL_ATTRIBUTE_DEALLOC(f, i) __attribute__ ((__malloc__ (f, i)))
+#else
+# define _GL_ATTRIBUTE_DEALLOC(f, i)
+#endif
+#define _GL_ATTRIBUTE_DEALLOC_FREE _GL_ATTRIBUTE_DEALLOC (free, 1)
+
 #if _GL_HAS_C_ATTRIBUTE (deprecated)
 # define _GL_ATTRIBUTE_DEPRECATED [[__deprecated__]]
 #elif _GL_HAS_ATTRIBUTE (deprecated)
