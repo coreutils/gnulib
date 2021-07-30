@@ -19,6 +19,7 @@
 #define XALLOC_H_
 
 #include <stddef.h>
+#include <stdlib.h>
 #include <stdint.h>
 
 #if GNULIB_XALLOC
@@ -53,28 +54,50 @@ extern "C" {
 
 #if GNULIB_XALLOC
 
-void *xmalloc (size_t s) _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_ALLOC_SIZE ((1));
-void *ximalloc (idx_t s) _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_ALLOC_SIZE ((1));
-void *xzalloc (size_t s) _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_ALLOC_SIZE ((1));
-void *xizalloc (idx_t s) _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_ALLOC_SIZE ((1));
+void *xmalloc (size_t s)
+  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE
+  _GL_ATTRIBUTE_ALLOC_SIZE ((1)) _GL_ATTRIBUTE_RETURNS_NONNULL;
+void *ximalloc (idx_t s)
+  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE
+  _GL_ATTRIBUTE_ALLOC_SIZE ((1)) _GL_ATTRIBUTE_RETURNS_NONNULL;
+void *xzalloc (size_t s)
+  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE
+  _GL_ATTRIBUTE_ALLOC_SIZE ((1)) _GL_ATTRIBUTE_RETURNS_NONNULL;
+void *xizalloc (idx_t s)
+  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE
+  _GL_ATTRIBUTE_ALLOC_SIZE ((1)) _GL_ATTRIBUTE_RETURNS_NONNULL;
 void *xcalloc (size_t n, size_t s)
-  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_ALLOC_SIZE ((1, 2));
+  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE
+  _GL_ATTRIBUTE_ALLOC_SIZE ((1, 2)) _GL_ATTRIBUTE_RETURNS_NONNULL;
 void *xicalloc (idx_t n, idx_t s)
-  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_ALLOC_SIZE ((1, 2));
-void *xrealloc (void *p, size_t s) _GL_ATTRIBUTE_ALLOC_SIZE ((2));
-void *xirealloc (void *p, idx_t s) _GL_ATTRIBUTE_ALLOC_SIZE ((2));
+  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE
+  _GL_ATTRIBUTE_ALLOC_SIZE ((1, 2)) _GL_ATTRIBUTE_RETURNS_NONNULL;
+void *xrealloc (void *p, size_t s)
+  _GL_ATTRIBUTE_ALLOC_SIZE ((2));
+void *xirealloc (void *p, idx_t s)
+  _GL_ATTRIBUTE_ALLOC_SIZE ((2)) _GL_ATTRIBUTE_RETURNS_NONNULL;
 void *xreallocarray (void *p, size_t n, size_t s)
-      _GL_ATTRIBUTE_ALLOC_SIZE ((2, 3));
+  _GL_ATTRIBUTE_ALLOC_SIZE ((2, 3));
 void *xireallocarray (void *p, idx_t n, idx_t s)
-      _GL_ATTRIBUTE_ALLOC_SIZE ((2, 3));
-void *x2realloc (void *p, size_t *ps); /* superseded by xpalloc */
-void *x2nrealloc (void *p, size_t *pn, size_t s); /* superseded by xpalloc */
-void *xpalloc (void *pa, idx_t *pn, idx_t n_incr_min, ptrdiff_t n_max, idx_t s);
-void *xmemdup (void const *p, size_t s) _GL_ATTRIBUTE_ALLOC_SIZE ((2));
-void *ximemdup (void const *p, idx_t s) _GL_ATTRIBUTE_ALLOC_SIZE ((2));
-char *ximemdup0 (void const *p, idx_t s) _GL_ATTRIBUTE_MALLOC;
+  _GL_ATTRIBUTE_ALLOC_SIZE ((2, 3)) _GL_ATTRIBUTE_RETURNS_NONNULL;
+void *x2realloc (void *p, size_t *ps) /* superseded by xpalloc */
+  _GL_ATTRIBUTE_RETURNS_NONNULL;
+void *x2nrealloc (void *p, size_t *pn, size_t s) /* superseded by xpalloc */
+  _GL_ATTRIBUTE_RETURNS_NONNULL;
+void *xpalloc (void *pa, idx_t *pn, idx_t n_incr_min, ptrdiff_t n_max, idx_t s)
+  _GL_ATTRIBUTE_RETURNS_NONNULL;
+void *xmemdup (void const *p, size_t s)
+  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE
+  _GL_ATTRIBUTE_ALLOC_SIZE ((2)) _GL_ATTRIBUTE_RETURNS_NONNULL;
+void *ximemdup (void const *p, idx_t s)
+  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE
+  _GL_ATTRIBUTE_ALLOC_SIZE ((2)) _GL_ATTRIBUTE_RETURNS_NONNULL;
+char *ximemdup0 (void const *p, idx_t s)
+  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE
+  _GL_ATTRIBUTE_RETURNS_NONNULL;
 char *xstrdup (char const *str)
-      _GL_ATTRIBUTE_MALLOC;
+  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE
+  _GL_ATTRIBUTE_RETURNS_NONNULL;
 
 /* In the following macros, T must be an elementary or structure/union or
    typedef'ed type, or a pointer to such a type.  To apply one of the
@@ -106,7 +129,8 @@ char *xstrdup (char const *str)
    dynamically, with error checking.  S must be nonzero.  */
 
 XALLOC_INLINE void *xnmalloc (size_t n, size_t s)
-                    _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_ALLOC_SIZE ((1, 2));
+  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE
+  _GL_ATTRIBUTE_ALLOC_SIZE ((1, 2)) _GL_ATTRIBUTE_RETURNS_NONNULL;
 XALLOC_INLINE void *
 xnmalloc (size_t n, size_t s)
 {
@@ -118,7 +142,7 @@ xnmalloc (size_t n, size_t s)
    objects each of S bytes, with error checking.  S must be nonzero.  */
 
 XALLOC_INLINE void *xnrealloc (void *p, size_t n, size_t s)
-                    _GL_ATTRIBUTE_ALLOC_SIZE ((2, 3));
+  _GL_ATTRIBUTE_ALLOC_SIZE ((2, 3));
 XALLOC_INLINE void *
 xnrealloc (void *p, size_t n, size_t s)
 {
@@ -129,7 +153,8 @@ xnrealloc (void *p, size_t n, size_t s)
    except it returns char *.  */
 
 XALLOC_INLINE char *xcharalloc (size_t n)
-                    _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_ALLOC_SIZE ((1));
+  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE
+  _GL_ATTRIBUTE_ALLOC_SIZE ((1)) _GL_ATTRIBUTE_RETURNS_NONNULL;
 XALLOC_INLINE char *
 xcharalloc (size_t n)
 {
