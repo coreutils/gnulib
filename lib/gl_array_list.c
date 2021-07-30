@@ -527,7 +527,7 @@ gl_array_iterator_next (gl_list_iterator_t *iterator,
 }
 
 static void
-gl_array_iterator_free (gl_list_iterator_t *iterator _GL_ATTRIBUTE_MAYBE_UNUSED)
+gl_array_iterator_free (_GL_ATTRIBUTE_MAYBE_UNUSED gl_list_iterator_t *iterator)
 {
 }
 

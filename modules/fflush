@@ -8,7 +8,6 @@ m4/fflush.m4
 
 Depends-on:
 stdio
-snippet/unused-parameter  [test $REPLACE_FFLUSH = 1]
 fpurge                    [test $REPLACE_FFLUSH = 1]
 ftello                    [test $REPLACE_FFLUSH = 1]
 freading                  [test $REPLACE_FFLUSH = 1]

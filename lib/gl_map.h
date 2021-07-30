@@ -145,8 +145,8 @@ extern bool gl_map_search (gl_map_t map, const void *key, const void **valuep);
 /* declared in gl_xmap.h */
 extern bool gl_map_put (gl_map_t map, const void *key, const void *value);
 /* Likewise.  Returns -1 upon out-of-memory.  */
-extern int gl_map_nx_put (gl_map_t map, const void *key, const void *value)
-  _GL_ATTRIBUTE_NODISCARD;
+_GL_ATTRIBUTE_NODISCARD
+extern int gl_map_nx_put (gl_map_t map, const void *key, const void *value);
 
 /* Adds a pair to a map and retrieves the previous value.
    Returns true if a pair with the given key was not already in the map and so
@@ -157,9 +157,9 @@ extern int gl_map_nx_put (gl_map_t map, const void *key, const void *value)
 extern bool gl_map_getput (gl_map_t map, const void *key, const void *value,
                            const void **oldvaluep);
 /* Likewise.  Returns -1 upon out-of-memory.  */
+_GL_ATTRIBUTE_NODISCARD
 extern int gl_map_nx_getput (gl_map_t map, const void *key, const void *value,
-                             const void **oldvaluep)
-  _GL_ATTRIBUTE_NODISCARD;
+                             const void **oldvaluep);
 
 /* Removes a pair from a map.
    Returns true if the key was found and its pair removed.
@@ -280,7 +280,7 @@ gl_map_search (gl_map_t map, const void *key, const void **valuep)
          ->search (map, key, valuep);
 }
 
-GL_MAP_INLINE _GL_ATTRIBUTE_NODISCARD int
+_GL_ATTRIBUTE_NODISCARD GL_MAP_INLINE int
 gl_map_nx_getput (gl_map_t map, const void *key, const void *value,
                    const void **oldvaluep)
 {
@@ -331,7 +331,7 @@ gl_map_get (gl_map_t map, const void *key)
   return value;
 }
 
-GL_MAP_INLINE _GL_ATTRIBUTE_NODISCARD int
+_GL_ATTRIBUTE_NODISCARD GL_MAP_INLINE int
 gl_map_nx_put (gl_map_t map, const void *key, const void *value)
 {
   const void *oldvalue;

@@ -139,14 +139,15 @@ typedef void (Hamt_freer) (Hamt_entry *elt);
 /****************************/
 
 /* Create and return a new and empty hash array mapped trie.  */
+_GL_ATTRIBUTE_NODISCARD
 extern Hamt *hamt_create (Hamt_hasher *hasher, Hamt_comparator *comparator,
-                          Hamt_freer *freer)
-  _GL_ATTRIBUTE_NODISCARD;
+                          Hamt_freer *freer);
 
 /* Return a copy of HAMT, which is not the same in the sense above.
    This procedure can be used, for example, so that two threads can
    access the same data independently.  */
-extern Hamt *hamt_copy (Hamt *hamt) _GL_ATTRIBUTE_NODISCARD;
+_GL_ATTRIBUTE_NODISCARD
+extern Hamt *hamt_copy (Hamt *hamt);
 
 /* Free the resources solely allocated by HAMT and all elements solely
    contained in it.  */
@@ -167,20 +168,20 @@ extern Hamt_entry *hamt_lookup (const Hamt *hamt, const void *elt);
 /* If *ELT_PTR matches an element already in HAMT, set *ELT_PTR to the
    existing element and return the original hamt.  Otherwise, insert
    *ELT_PTR into a copy of the hamt and return the copy.  */
-extern Hamt *hamt_insert (Hamt *hamt, Hamt_entry **elt_ptr)
-  _GL_ATTRIBUTE_NODISCARD;
+_GL_ATTRIBUTE_NODISCARD
+extern Hamt *hamt_insert (Hamt *hamt, Hamt_entry **elt_ptr);
 
 /* If *ELT_PTR matches an element already in HAMT, set *ELT_PTR to the
 existing element, remove the element from a copy of the hamt and
 return the copy.  Otherwise, return the original hamt.  */
-extern Hamt *hamt_remove (Hamt *hamt, Hamt_entry **elt_ptr)
-  _GL_ATTRIBUTE_NODISCARD;
+_GL_ATTRIBUTE_NODISCARD
+extern Hamt *hamt_remove (Hamt *hamt, Hamt_entry **elt_ptr);
 
 /* Insert *ELT_PTR into a copy of HAMT and return the copy.  If an
    existing element was replaced, set *ELT_PTR to this element, and to
    NULL otherwise.  */
-extern Hamt *hamt_replace (Hamt *hamt, Hamt_entry **elt_ptr)
-  _GL_ATTRIBUTE_NODISCARD;
+_GL_ATTRIBUTE_NODISCARD
+extern Hamt *hamt_replace (Hamt *hamt, Hamt_entry **elt_ptr);
 
 /*************/
 /* Iteration */

@@ -38,8 +38,6 @@ _GL_INLINE_HEADER_BEGIN
 #   define SE_SELINUX_INLINE _GL_INLINE
 #  endif
 
-/* The definition of _GL_UNUSED_PARAMETER is copied here.  */
-
 #  if !GNULIB_defined_security_types
 
 typedef unsigned short security_class_t;
@@ -47,67 +45,67 @@ struct selinux_opt;
 #   define is_selinux_enabled() 0
 
 SE_SELINUX_INLINE int
-getcon (char **con _GL_UNUSED_PARAMETER)
+getcon (_GL_ATTRIBUTE_MAYBE_UNUSED char **con)
   { errno = ENOTSUP; return -1; }
 SE_SELINUX_INLINE void
-freecon (char *con _GL_UNUSED_PARAMETER) {}
+freecon (_GL_ATTRIBUTE_MAYBE_UNUSED char *con) {}
 
 SE_SELINUX_INLINE int
-getfscreatecon (char **con _GL_UNUSED_PARAMETER)
+getfscreatecon (_GL_ATTRIBUTE_MAYBE_UNUSED char **con)
   { errno = ENOTSUP; return -1; }
 SE_SELINUX_INLINE int
-setfscreatecon (char const *con _GL_UNUSED_PARAMETER)
+setfscreatecon (_GL_ATTRIBUTE_MAYBE_UNUSED char const *con)
   { errno = ENOTSUP; return -1; }
 SE_SELINUX_INLINE int
-matchpathcon (char const *file _GL_UNUSED_PARAMETER,
-              mode_t m _GL_UNUSED_PARAMETER,
-              char **con _GL_UNUSED_PARAMETER)
+matchpathcon (_GL_ATTRIBUTE_MAYBE_UNUSED char const *file,
+              _GL_ATTRIBUTE_MAYBE_UNUSED mode_t m,
+              _GL_ATTRIBUTE_MAYBE_UNUSED char **con)
   { errno = ENOTSUP; return -1; }
 SE_SELINUX_INLINE int
-getfilecon (char const *file _GL_UNUSED_PARAMETER,
-            char **con _GL_UNUSED_PARAMETER)
+getfilecon (_GL_ATTRIBUTE_MAYBE_UNUSED char const *file,
+            _GL_ATTRIBUTE_MAYBE_UNUSED char **con)
   { errno = ENOTSUP; return -1; }
 SE_SELINUX_INLINE int
-lgetfilecon (char const *file _GL_UNUSED_PARAMETER,
-             char **con _GL_UNUSED_PARAMETER)
+lgetfilecon (_GL_ATTRIBUTE_MAYBE_UNUSED char const *file,
+             _GL_ATTRIBUTE_MAYBE_UNUSED char **con)
   { errno = ENOTSUP; return -1; }
 SE_SELINUX_INLINE int
-fgetfilecon (int fd, char **con _GL_UNUSED_PARAMETER)
+fgetfilecon (int fd,_GL_ATTRIBUTE_MAYBE_UNUSED char **con)
   { errno = ENOTSUP; return -1; }
 SE_SELINUX_INLINE int
-setfilecon (char const *file _GL_UNUSED_PARAMETER,
-            char const *con _GL_UNUSED_PARAMETER)
+setfilecon (_GL_ATTRIBUTE_MAYBE_UNUSED char const *file,
+            _GL_ATTRIBUTE_MAYBE_UNUSED char const *con)
   { errno = ENOTSUP; return -1; }
 SE_SELINUX_INLINE int
-lsetfilecon (char const *file _GL_UNUSED_PARAMETER,
-             char const *con _GL_UNUSED_PARAMETER)
+lsetfilecon (_GL_ATTRIBUTE_MAYBE_UNUSED char const *file,
+             _GL_ATTRIBUTE_MAYBE_UNUSED char const *con)
   { errno = ENOTSUP; return -1; }
 SE_SELINUX_INLINE int
-fsetfilecon (int fd _GL_UNUSED_PARAMETER,
-             char const *con _GL_UNUSED_PARAMETER)
+fsetfilecon (_GL_ATTRIBUTE_MAYBE_UNUSED int fd,
+             _GL_ATTRIBUTE_MAYBE_UNUSED char const *con)
   { errno = ENOTSUP; return -1; }
 
 SE_SELINUX_INLINE int
-security_check_context (char const *con _GL_UNUSED_PARAMETER)
+security_check_context (_GL_ATTRIBUTE_MAYBE_UNUSED char const *con)
   { errno = ENOTSUP; return -1; }
 SE_SELINUX_INLINE int
-security_check_context_raw (char const *con _GL_UNUSED_PARAMETER)
+security_check_context_raw (_GL_ATTRIBUTE_MAYBE_UNUSED char const *con)
   { errno = ENOTSUP; return -1; }
 SE_SELINUX_INLINE int
-setexeccon (char const *con _GL_UNUSED_PARAMETER)
+setexeccon (_GL_ATTRIBUTE_MAYBE_UNUSED char const *con)
   { errno = ENOTSUP; return -1; }
 SE_SELINUX_INLINE int
-security_compute_create (char const *scon _GL_UNUSED_PARAMETER,
-                         char const *tcon _GL_UNUSED_PARAMETER,
-                         security_class_t tclass _GL_UNUSED_PARAMETER,
-                         char **newcon _GL_UNUSED_PARAMETER)
+security_compute_create (_GL_ATTRIBUTE_MAYBE_UNUSED char const *scon,
+                         _GL_ATTRIBUTE_MAYBE_UNUSED char const *tcon,
+                         _GL_ATTRIBUTE_MAYBE_UNUSED security_class_t tclass,
+                         _GL_ATTRIBUTE_MAYBE_UNUSED char **newcon)
   { errno = ENOTSUP; return -1; }
 SE_SELINUX_INLINE security_class_t
 string_to_security_class (char const *name)
   { errno = ENOTSUP; return 0; }
 SE_SELINUX_INLINE int
-matchpathcon_init_prefix (char const *path _GL_UNUSED_PARAMETER,
-                          char const *prefix _GL_UNUSED_PARAMETER)
+matchpathcon_init_prefix (_GL_ATTRIBUTE_MAYBE_UNUSED char const *path,
+                          _GL_ATTRIBUTE_MAYBE_UNUSED char const *prefix)
   { errno = ENOTSUP; return -1; }
 
 #   define GNULIB_defined_security_types 1

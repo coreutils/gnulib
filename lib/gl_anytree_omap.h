@@ -300,6 +300,6 @@ gl_tree_iterator_next (gl_omap_iterator_t *iterator,
 }
 
 static void
-gl_tree_iterator_free (gl_omap_iterator_t *iterator _GL_ATTRIBUTE_MAYBE_UNUSED)
+gl_tree_iterator_free (_GL_ATTRIBUTE_MAYBE_UNUSED gl_omap_iterator_t *iterator)
 {
 }

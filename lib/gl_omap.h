@@ -155,8 +155,8 @@ extern bool gl_omap_search_atleast (gl_omap_t map,
 /* declared in gl_xomap.h */
 extern bool gl_omap_put (gl_omap_t map, const void *key, const void *value);
 /* Likewise.  Returns -1 upon out-of-memory.  */
-extern int gl_omap_nx_put (gl_omap_t map, const void *key, const void *value)
-  _GL_ATTRIBUTE_NODISCARD;
+_GL_ATTRIBUTE_NODISCARD
+extern int gl_omap_nx_put (gl_omap_t map, const void *key, const void *value);
 
 /* Adds a pair to an ordered map and retrieves the previous value.
    Returns true if a pair with the given key was not already in the map and so
@@ -167,9 +167,9 @@ extern int gl_omap_nx_put (gl_omap_t map, const void *key, const void *value)
 extern bool gl_omap_getput (gl_omap_t map, const void *key, const void *value,
                             const void **oldvaluep);
 /* Likewise.  Returns -1 upon out-of-memory.  */
+_GL_ATTRIBUTE_NODISCARD
 extern int gl_omap_nx_getput (gl_omap_t map, const void *key, const void *value,
-                              const void **oldvaluep)
-  _GL_ATTRIBUTE_NODISCARD;
+                              const void **oldvaluep);
 
 /* Removes a pair from an ordered map.
    Returns true if the key was found and its pair removed.
@@ -298,7 +298,7 @@ gl_omap_search_atleast (gl_omap_t map,
          ->search_atleast (map, threshold_fn, threshold, keyp, valuep);
 }
 
-GL_OMAP_INLINE _GL_ATTRIBUTE_NODISCARD int
+_GL_ATTRIBUTE_NODISCARD GL_OMAP_INLINE int
 gl_omap_nx_getput (gl_omap_t map, const void *key, const void *value,
                    const void **oldvaluep)
 {
@@ -349,7 +349,7 @@ gl_omap_get (gl_omap_t map, const void *key)
   return value;
 }
 
-GL_OMAP_INLINE _GL_ATTRIBUTE_NODISCARD int
+_GL_ATTRIBUTE_NODISCARD GL_OMAP_INLINE int
 gl_omap_nx_put (gl_omap_t map, const void *key, const void *value)
 {
   const void *oldvalue;

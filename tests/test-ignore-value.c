@@ -26,11 +26,11 @@
 #include "attribute.h"
 
 struct s { int i; };
-static char doChar (void) NODISCARD;
-static int doInt (void) NODISCARD;
-static off_t doOff (void) NODISCARD;
-static void *doPtr (void) NODISCARD;
-static struct s doStruct (void) NODISCARD;
+NODISCARD static char doChar (void);
+NODISCARD static int doInt (void);
+NODISCARD static off_t doOff (void);
+NODISCARD static void *doPtr (void);
+NODISCARD static struct s doStruct (void);
 
 static char
 doChar (void)

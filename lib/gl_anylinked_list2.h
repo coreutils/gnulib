@@ -170,14 +170,14 @@ gl_linked_size (gl_list_t list)
 }
 
 static const void * _GL_ATTRIBUTE_PURE
-gl_linked_node_value (gl_list_t list _GL_ATTRIBUTE_MAYBE_UNUSED,
+gl_linked_node_value (_GL_ATTRIBUTE_MAYBE_UNUSED gl_list_t list,
                       gl_list_node_t node)
 {
   return node->value;
 }
 
 static int
-gl_linked_node_nx_set_value (gl_list_t list _GL_ATTRIBUTE_MAYBE_UNUSED,
+gl_linked_node_nx_set_value (_GL_ATTRIBUTE_MAYBE_UNUSED gl_list_t list,
                              gl_list_node_t node,
                              const void *elt)
 {
@@ -1041,7 +1041,7 @@ gl_linked_iterator_next (gl_list_iterator_t *iterator,
 }
 
 static void
-gl_linked_iterator_free (gl_list_iterator_t *iterator _GL_ATTRIBUTE_MAYBE_UNUSED)
+gl_linked_iterator_free (_GL_ATTRIBUTE_MAYBE_UNUSED gl_list_iterator_t *iterator)
 {
 }
 

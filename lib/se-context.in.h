@@ -29,34 +29,42 @@ _GL_INLINE_HEADER_BEGIN
 # define SE_CONTEXT_INLINE _GL_INLINE
 #endif
 
-/* The definition of _GL_UNUSED_PARAMETER is copied here.  */
-
 typedef int context_t;
-SE_CONTEXT_INLINE context_t context_new (char const *s _GL_UNUSED_PARAMETER)
+SE_CONTEXT_INLINE context_t
+context_new (_GL_ATTRIBUTE_MAYBE_UNUSED char const *s)
   { errno = ENOTSUP; return 0; }
-SE_CONTEXT_INLINE char *context_str (context_t con _GL_UNUSED_PARAMETER)
+SE_CONTEXT_INLINE char *
+context_str (_GL_ATTRIBUTE_MAYBE_UNUSED context_t con)
   { errno = ENOTSUP; return (void *) 0; }
-SE_CONTEXT_INLINE void context_free (context_t c _GL_UNUSED_PARAMETER) {}
+SE_CONTEXT_INLINE void context_free (_GL_ATTRIBUTE_MAYBE_UNUSED context_t c) {}
 
-SE_CONTEXT_INLINE int context_user_set (context_t sc _GL_UNUSED_PARAMETER,
-                                        char const *s _GL_UNUSED_PARAMETER)
+SE_CONTEXT_INLINE int
+context_user_set (_GL_ATTRIBUTE_MAYBE_UNUSED context_t sc,
+                  _GL_ATTRIBUTE_MAYBE_UNUSED char const *s)
   { errno = ENOTSUP; return -1; }
-SE_CONTEXT_INLINE int context_role_set (context_t sc _GL_UNUSED_PARAMETER,
-                                        char const *s _GL_UNUSED_PARAMETER)
+SE_CONTEXT_INLINE int
+context_role_set (_GL_ATTRIBUTE_MAYBE_UNUSED context_t sc,
+                  _GL_ATTRIBUTE_MAYBE_UNUSED char const *s)
   { errno = ENOTSUP; return -1; }
-SE_CONTEXT_INLINE int context_range_set (context_t sc _GL_UNUSED_PARAMETER,
-                                         char const *s _GL_UNUSED_PARAMETER)
+SE_CONTEXT_INLINE int
+context_range_set (_GL_ATTRIBUTE_MAYBE_UNUSED context_t sc,
+                   _GL_ATTRIBUTE_MAYBE_UNUSED char const *s)
   { errno = ENOTSUP; return -1; }
-SE_CONTEXT_INLINE int context_type_set (context_t sc _GL_UNUSED_PARAMETER,
-                                        char const *s _GL_UNUSED_PARAMETER)
+SE_CONTEXT_INLINE int
+context_type_set (_GL_ATTRIBUTE_MAYBE_UNUSED context_t sc,
+                  _GL_ATTRIBUTE_MAYBE_UNUSED char const *s)
   { errno = ENOTSUP; return -1; }
-SE_CONTEXT_INLINE char *context_type_get (context_t sc _GL_UNUSED_PARAMETER)
+SE_CONTEXT_INLINE char *
+context_type_get (_GL_ATTRIBUTE_MAYBE_UNUSED context_t sc)
   { errno = ENOTSUP; return (void *) 0; }
-SE_CONTEXT_INLINE char *context_range_get (context_t sc _GL_UNUSED_PARAMETER)
+SE_CONTEXT_INLINE char *
+context_range_get (_GL_ATTRIBUTE_MAYBE_UNUSED context_t sc)
   { errno = ENOTSUP; return (void *) 0; }
-SE_CONTEXT_INLINE char *context_role_get (context_t sc _GL_UNUSED_PARAMETER)
+SE_CONTEXT_INLINE char *
+context_role_get (_GL_ATTRIBUTE_MAYBE_UNUSED context_t sc)
   { errno = ENOTSUP; return (void *) 0; }
-SE_CONTEXT_INLINE char *context_user_get (context_t sc _GL_UNUSED_PARAMETER)
+SE_CONTEXT_INLINE char *
+context_user_get (_GL_ATTRIBUTE_MAYBE_UNUSED context_t sc)
   { errno = ENOTSUP; return (void *) 0; }
 
 _GL_INLINE_HEADER_END

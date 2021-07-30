@@ -32,7 +32,7 @@
    INT_BUFSIZE_BOUND (INTTYPE) bytes long.  Return the address of the
    printable string, which need not start at BUF.  */
 
-char * _GL_ATTRIBUTE_NODISCARD
+_GL_ATTRIBUTE_NODISCARD char *
 anytostr (inttype i, char *buf)
 {
   char *p = buf + INT_STRLEN_BOUND (inttype);

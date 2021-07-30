@@ -38,7 +38,7 @@ safe_alloc_realloc_n (void *ptr, size_t count, size_t size)
     count = size = 1;
   return reallocarray (ptr, count, size);
 }
-SAFE_ALLOC_INLINE int _GL_ATTRIBUTE_NODISCARD
+_GL_ATTRIBUTE_NODISCARD SAFE_ALLOC_INLINE int
 safe_alloc_check (void *ptr)
 {
   /* Return 0 if the allocation was successful, -1 otherwise.  */

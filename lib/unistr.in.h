@@ -19,9 +19,6 @@
 
 #include "unitypes.h"
 
-/* Get common macros for C.  */
-#include "unused-parameter.h"
-
 /* Get bool.  */
 #include <stdbool.h>
 
@@ -193,7 +190,7 @@ extern int
 # else
 static inline int
 u32_mbtouc_unsafe (ucs4_t *puc,
-                   const uint32_t *s, size_t n _GL_UNUSED_PARAMETER)
+                   const uint32_t *s, _GL_ATTRIBUTE_MAYBE_UNUSED size_t n)
 {
   uint32_t c = *s;
 
@@ -259,7 +256,8 @@ extern int
        u32_mbtouc (ucs4_t *puc, const uint32_t *s, size_t n);
 # else
 static inline int
-u32_mbtouc (ucs4_t *puc, const uint32_t *s, size_t n _GL_UNUSED_PARAMETER)
+u32_mbtouc (ucs4_t *puc, const uint32_t *s,
+            _GL_ATTRIBUTE_MAYBE_UNUSED size_t n)
 {
   uint32_t c = *s;
 

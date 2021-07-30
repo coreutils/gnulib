@@ -134,9 +134,10 @@ extern bool gl_oset_search_atleast (gl_oset_t set,
    Returns true if it was not already in the set and added, false otherwise.  */
 /* declared in gl_xoset.h */
 extern bool gl_oset_add (gl_oset_t set, const void *elt);
+
 /* Likewise.  Returns -1 upon out-of-memory.  */
-extern int gl_oset_nx_add (gl_oset_t set, const void *elt)
-  _GL_ATTRIBUTE_NODISCARD;
+_GL_ATTRIBUTE_NODISCARD
+extern int gl_oset_nx_add (gl_oset_t set, const void *elt);
 
 /* Removes an element from an ordered set.
    Returns true if it was found and removed.  */
@@ -272,7 +273,7 @@ gl_oset_search_atleast (gl_oset_t set,
          ->search_atleast (set, threshold_fn, threshold, eltp);
 }
 
-GL_OSET_INLINE _GL_ATTRIBUTE_NODISCARD int
+_GL_ATTRIBUTE_NODISCARD GL_OSET_INLINE int
 gl_oset_nx_add (gl_oset_t set, const void *elt)
 {
   return ((const struct gl_oset_impl_base *) set)->vtable->nx_add (set, elt);

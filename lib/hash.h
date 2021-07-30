@@ -172,21 +172,21 @@ typedef void (*Hash_data_freer) (void *entry);
    all of your 'data' data.  This is typically the case when your data is
    simply an auxiliary struct that you have malloc'd to aggregate several
    values.  */
+_GL_ATTRIBUTE_NODISCARD
 extern Hash_table *hash_initialize (size_t candidate,
                                     const Hash_tuning *tuning,
                                     Hash_hasher hasher,
                                     Hash_comparator comparator,
-                                    Hash_data_freer data_freer)
-       _GL_ATTRIBUTE_NODISCARD;
+                                    Hash_data_freer data_freer);
 
 /* Same as hash_initialize, but invokes xalloc_die on memory exhaustion.  */
 /* This function is defined by module 'xhash'.  */
+_GL_ATTRIBUTE_NODISCARD
 extern Hash_table *hash_xinitialize (size_t candidate,
                                      const Hash_tuning *tuning,
                                      Hash_hasher hasher,
                                      Hash_comparator comparator,
-                                     Hash_data_freer data_freer)
-       _GL_ATTRIBUTE_NODISCARD;
+                                     Hash_data_freer data_freer);
 
 /* Make all buckets empty, placing any chained entries on the free list.
    Apply the user-specified function data_freer (if any) to the datas of any
@@ -210,16 +210,16 @@ extern void hash_free (Hash_table *table);
    those already in the table, before any other growth of the hash table size
    occurs.  If TUNING->IS_N_BUCKETS is true, then CANDIDATE specifies the
    exact number of buckets desired.  Return true iff the rehash succeeded.  */
-extern bool hash_rehash (Hash_table *table, size_t candidate)
-       _GL_ATTRIBUTE_NODISCARD;
+_GL_ATTRIBUTE_NODISCARD
+extern bool hash_rehash (Hash_table *table, size_t candidate);
 
 /* If ENTRY matches an entry already in the hash table, return the pointer
    to the entry from the table.  Otherwise, insert ENTRY and return ENTRY.
    Return NULL if the storage required for insertion cannot be allocated.
    This implementation does not support duplicate entries or insertion of
    NULL.  */
-extern void *hash_insert (Hash_table *table, const void *entry)
-       _GL_ATTRIBUTE_NODISCARD;
+_GL_ATTRIBUTE_NODISCARD
+extern void *hash_insert (Hash_table *table, const void *entry);
 
 /* Same as hash_insert, but invokes xalloc_die on memory exhaustion.  */
 /* This function is defined by module 'xhash'.  */
@@ -251,8 +251,8 @@ extern void *hash_remove (Hash_table *table, const void *entry);
 
 /* Same as hash_remove.  This interface is deprecated.
    FIXME: Remove in 2022.  */
-extern void *hash_delete (Hash_table *table, const void *entry)
-       _GL_ATTRIBUTE_DEPRECATED;
+_GL_ATTRIBUTE_DEPRECATED
+extern void *hash_delete (Hash_table *table, const void *entry);
 
 # ifdef __cplusplus
 }

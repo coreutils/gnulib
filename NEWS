@@ -66,6 +66,15 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2021-07-29  (all)           Due to draft C2x, the following attributes should
+                            now appear at the start of a function declaration:
+                              _GL_ATTRIBUTE_DEPRECATED
+                              _GL_ATTRIBUTE_MAYBE_UNUSED
+                              _GL_ATTRIBUTE_NODISCARD
+            attribute       Likewise for DEPRECATED, MAYBE_UNUSED, NODISCARD.
+            snippet/unused-parameter
+                            Likewise for _GL_UNUSED_PARAMETER.
+
 2021-07-01  largefile       AC_SYS_LARGEFILE now also arranges for time_t
                             to be 64-bit on 32-bit GNU/Linux platforms
                             that support it (glibc 2.34 or later).

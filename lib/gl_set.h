@@ -124,9 +124,10 @@ extern bool gl_set_search (gl_set_t set, const void *elt);
    Returns true if it was not already in the set and added, false otherwise.  */
 /* declared in gl_xset.h */
 extern bool gl_set_add (gl_set_t set, const void *elt);
+
 /* Likewise.  Returns -1 upon out-of-memory.  */
-extern int gl_set_nx_add (gl_set_t set, const void *elt)
-  _GL_ATTRIBUTE_NODISCARD;
+_GL_ATTRIBUTE_NODISCARD
+extern int gl_set_nx_add (gl_set_t set, const void *elt);
 
 /* Removes an element from a set.
    Returns true if it was found and removed.  */
@@ -230,7 +231,7 @@ gl_set_search (gl_set_t set, const void *elt)
   return ((const struct gl_set_impl_base *) set)->vtable->search (set, elt);
 }
 
-GL_SET_INLINE _GL_ATTRIBUTE_NODISCARD int
+_GL_ATTRIBUTE_NODISCARD GL_SET_INLINE int
 gl_set_nx_add (gl_set_t set, const void *elt)
 {
   return ((const struct gl_set_impl_base *) set)->vtable->nx_add (set, elt);

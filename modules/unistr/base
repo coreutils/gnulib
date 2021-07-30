@@ -7,7 +7,6 @@ m4/libunistring-base.m4
 
 Depends-on:
 unitypes
-snippet/unused-parameter
 stdbool
 inline
 

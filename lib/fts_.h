@@ -250,12 +250,21 @@ typedef struct _ftsent {
 } FTSENT;
 
 __BEGIN_DECLS
-FTSENT  *fts_children (FTS *, int) __THROW _GL_ATTRIBUTE_NODISCARD;
-int      fts_close (FTS *) __THROW _GL_ATTRIBUTE_NODISCARD;
+
+ _GL_ATTRIBUTE_NODISCARD
+FTSENT  *fts_children (FTS *, int) __THROW;
+
+_GL_ATTRIBUTE_NODISCARD
+int      fts_close (FTS *) __THROW;
+
+_GL_ATTRIBUTE_NODISCARD
 FTS     *fts_open (char * const *, int,
                    int (*)(const FTSENT **, const FTSENT **))
-  __THROW _GL_ATTRIBUTE_NODISCARD;
-FTSENT  *fts_read (FTS *) __THROW _GL_ATTRIBUTE_NODISCARD;
+  __THROW;
+
+_GL_ATTRIBUTE_NODISCARD
+FTSENT  *fts_read (FTS *) __THROW;
+
 int      fts_set (FTS *, FTSENT *, int) __THROW;
 __END_DECLS
 

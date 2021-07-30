@@ -128,7 +128,7 @@ bag_from_list (gl_list_t list)
 }
 
 /* Returns true if and only if the given bag is empty.  */
-static bool _GL_ATTRIBUTE_MAYBE_UNUSED
+_GL_ATTRIBUTE_MAYBE_UNUSED static bool
 bag_is_empty (bag_t bag)
 {
   size_t i;
@@ -165,7 +165,7 @@ bag_equals (bag_t bag1, bag_t bag2)
 
 /* Returns a bag that contains the elements of BAG1 and the elements of
    BAG2.  */
-static bag_t _GL_ATTRIBUTE_MAYBE_UNUSED
+_GL_ATTRIBUTE_MAYBE_UNUSED static bag_t
 bag_or (bag_t bag1, bag_t bag2)
 {
   bag_t bag;
@@ -192,7 +192,7 @@ bag_xor (bag_t bag1, bag_t bag2)
 }
 
 /* Returns a bag that contains the elements of BAG1 that are not in BAG2.  */
-static bag_t _GL_ATTRIBUTE_MAYBE_UNUSED
+_GL_ATTRIBUTE_MAYBE_UNUSED static bag_t
 bag_and_not (bag_t bag1, bag_t bag2)
 {
   bag_t bag;

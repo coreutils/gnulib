@@ -103,6 +103,12 @@ AC_DEFUN([gl_COMMON_BODY], [
 # define _GL_ATTR_warn_unused_result _GL_GNUC_PREREQ (3, 4)
 #endif
 
+#ifdef __has_c_attribute
+# define _GL_HAS_C_ATTRIBUTE(attr) __has_c_attribute (__##attr##__)
+#else
+# define _GL_HAS_C_ATTRIBUTE(attr) 0
+#endif
+
 ]dnl There is no _GL_ATTRIBUTE_ALIGNED; use stdalign's _Alignas instead.
 [
 #if _GL_HAS_ATTRIBUTE (alloc_size)
@@ -142,7 +148,7 @@ AC_DEFUN([gl_COMMON_BODY], [
 # define _GL_ATTRIBUTE_CONST
 #endif
 
-#if 201710L < __STDC_VERSION__
+#if _GL_HAS_C_ATTRIBUTE (deprecated)
 # define _GL_ATTRIBUTE_DEPRECATED [[__deprecated__]]
 #elif _GL_HAS_ATTRIBUTE (deprecated)
 # define _GL_ATTRIBUTE_DEPRECATED __attribute__ ((__deprecated__))
@@ -168,7 +174,7 @@ AC_DEFUN([gl_COMMON_BODY], [
 #endif
 
 /* FALLTHROUGH is special, because it always expands to something.  */
-#if 201710L < __STDC_VERSION__
+#if _GL_HAS_C_ATTRIBUTE (fallthrough)
 # define _GL_ATTRIBUTE_FALLTHROUGH [[__fallthrough__]]
 #elif _GL_HAS_ATTRIBUTE (fallthrough)
 # define _GL_ATTRIBUTE_FALLTHROUGH __attribute__ ((__fallthrough__))
@@ -195,15 +201,12 @@ AC_DEFUN([gl_COMMON_BODY], [
 # define _GL_ATTRIBUTE_MAY_ALIAS
 #endif
 
-#if 201710L < __STDC_VERSION__
+#if _GL_HAS_C_ATTRIBUTE (maybe_unused)
 # define _GL_ATTRIBUTE_MAYBE_UNUSED [[__maybe_unused__]]
-#elif _GL_HAS_ATTRIBUTE (unused)
-# define _GL_ATTRIBUTE_MAYBE_UNUSED __attribute__ ((__unused__))
 #else
-# define _GL_ATTRIBUTE_MAYBE_UNUSED
+# define _GL_ATTRIBUTE_MAYBE_UNUSED _GL_ATTRIBUTE_UNUSED
 #endif
 /* Earlier spellings of this macro.  */
-#define _GL_UNUSED _GL_ATTRIBUTE_MAYBE_UNUSED
 #define _UNUSED_PARAMETER_ _GL_ATTRIBUTE_MAYBE_UNUSED
 
 #if _GL_HAS_ATTRIBUTE (malloc)
@@ -212,7 +215,7 @@ AC_DEFUN([gl_COMMON_BODY], [
 # define _GL_ATTRIBUTE_MALLOC
 #endif
 
-#if 201710L < __STDC_VERSION__
+#if _GL_HAS_C_ATTRIBUTE (nodiscard)
 # define _GL_ATTRIBUTE_NODISCARD [[__nodiscard__]]
 #elif _GL_HAS_ATTRIBUTE (warn_unused_result)
 # define _GL_ATTRIBUTE_NODISCARD __attribute__ ((__warn_unused_result__))
@@ -270,11 +273,19 @@ AC_DEFUN([gl_COMMON_BODY], [
 # define _GL_ATTRIBUTE_SENTINEL(pos)
 #endif
 
+#if _GL_HAS_ATTRIBUTE (unused)
+# define _GL_ATTRIBUTE_UNUSED __attribute__ ((__unused__))
+#else
+# define _GL_ATTRIBUTE_UNUSED
+#endif
+/* Earlier spellings of this macro.  */
+#define _GL_UNUSED _GL_ATTRIBUTE_UNUSED
+
 ]dnl There is no _GL_ATTRIBUTE_VISIBILITY; see m4/visibility.m4 instead.
 [
 /* To support C++ as well as C, use _GL_UNUSED_LABEL with trailing ';'.  */
 #if !defined __cplusplus || _GL_GNUC_PREREQ (4, 5)
-# define _GL_UNUSED_LABEL _GL_ATTRIBUTE_MAYBE_UNUSED
+# define _GL_UNUSED_LABEL _GL_ATTRIBUTE_UNUSED
 #else
 # define _GL_UNUSED_LABEL
 #endif
