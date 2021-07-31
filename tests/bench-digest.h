@@ -82,6 +82,11 @@ main (int argc, char *argv[])
   int repeat = atoi (argv[2]);
 
   char *memblock = (char *) malloc (size);
+  if (!memblock)
+    {
+      fprintf (stderr, "%s: memory exhausted\n", argv[0]);
+      return 1;
+    }
 
   /* Fill the memory block.  */
   {
