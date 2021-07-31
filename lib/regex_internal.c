@@ -1286,7 +1286,10 @@ re_node_set_insert (re_node_set *set, Idx elem)
 
   if (__glibc_unlikely (set->nelem) == 0)
     {
-      /* We already guaranteed above that set->alloc != 0.  */
+      /* Although we already guaranteed above that set->alloc != 0 and
+         therefore set->elems != NULL, add a debug assertion to pacify
+         GCC 11.2 -fanalyzer.  */
+      DEBUG_ASSERT (set->elems);
       set->elems[0] = elem;
       ++set->nelem;
       return true;
