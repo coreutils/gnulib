@@ -13,7 +13,7 @@ Portability problems fixed by Gnulib:
 On older platforms @code{static_assert} and @code{_Static_assert} do
 not allow the second string-literal argument to be omitted.  For
 example, GCC versions before 9.1 do not support the single-argument
-@code{static_assert} that was standardized by C2X and C++17.
+@code{static_assert} that was standardized by C2x and C++17.
 @item
 Even-older platforms do not support @code{static_assert} or
 @code{_Static_assert} at all.  For example, GCC versions before 4.6 do

@@ -30,7 +30,7 @@ extern char *crypt (char const *, char const *)
 
 @noindent
 @code{NODISCARD} expands to @code{[[nodiscard]]} if the compiler
-supports this C2X syntax, otherwise to
+supports this C2x syntax, otherwise to
 @code{__attribute__ ((__warn_unused_result__))} if the compiler
 is a recent-enough GCC or GCC-like compiler, otherwise to nothing.
 @code{ATTRIBUTE_NOTHROW} expands to @code{__attribute__
@@ -41,11 +41,11 @@ compiler, and to nothing otherwise.  Similarly for
 recent-enough GCC, and to nothing otherwise.
 
 Most of these attribute names begin with @code{ATTRIBUTE_}.
-A few do not, because they are part of C2X and their
+A few do not, because they are part of C2x and their
 names are not likely to clash with other macro names.
 These macros are @code{DEPRECATED}, @code{FALLTHROUGH},
 @code{MAYBE_UNUSED}, and @code{NODISCARD}, which can
-be defined to @code{[[deprecated]]} etc.@: on C2X platforms.
+be defined to @code{[[deprecated]]} etc.@: on C2x platforms.
 Also, these exceptional macros should be placed at the start of
 function declarations, whereas the @code{ATTRIBUTE_*} macros can be
 placed at the end.
