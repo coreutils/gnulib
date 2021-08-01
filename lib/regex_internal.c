@@ -1211,6 +1211,10 @@ re_node_set_merge (re_node_set *dest, const re_node_set *src)
 
   if (__glibc_unlikely (dest->nelem == 0))
     {
+      /* Although we already guaranteed above that dest->alloc != 0 and
+         therefore dest->elems != NULL, add a debug assertion to pacify
+         GCC 11.2.1's -fanalyzer.  */
+      DEBUG_ASSERT (dest->elems);
       dest->nelem = src->nelem;
       memcpy (dest->elems, src->elems, src->nelem * sizeof (Idx));
       return REG_NOERROR;
