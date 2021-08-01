@@ -110,6 +110,11 @@ verify_width (ULONG_WIDTH, 0, ULONG_MAX);
 verify_width (LLONG_WIDTH, LLONG_MIN, LLONG_MAX);
 verify_width (ULLONG_WIDTH, 0, ULLONG_MAX);
 
+/* Macros specified by C2x.  */
+
+int bool_attrs[] = { BOOL_MAX, BOOL_WIDTH };
+verify (BOOL_MAX == (((1U << (BOOL_WIDTH - 1)) - 1) * 2) + 1);
+
 int
 main (void)
 {
