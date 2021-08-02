@@ -20,6 +20,12 @@
 
 # include <stddef.h>
 
+/* Free a memory block.
+   PTR must be a non-NULL pointer returned by pagealign_alloc or
+   pagealign_xalloc.  */
+extern void pagealign_free (void *ptr)
+  _GL_ATTRIBUTE_NONNULL ((1));
+
 /* Allocate a block of memory of SIZE bytes, aligned on a system page
    boundary.
    If SIZE is not a multiple of the system page size, it will be rounded up
@@ -27,16 +33,13 @@
    Return a pointer to the start of the memory block. Upon allocation failure,
    return NULL and set errno.  */
 extern void *pagealign_alloc (size_t size)
-     _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_ALLOC_SIZE ((1));
+  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC (pagealign_free, 1)
+  _GL_ATTRIBUTE_ALLOC_SIZE ((1));
 
 /* Like pagealign_alloc, except it exits the program if the allocation
    fails.  */
 extern void *pagealign_xalloc (size_t size)
-     _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_ALLOC_SIZE ((1));
-
-/* Free a memory block.
-   PTR must be a non-NULL pointer returned by pagealign_alloc or
-   pagealign_xalloc.  */
-extern void pagealign_free (void *ptr);
+  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC (pagealign_free, 1)
+  _GL_ATTRIBUTE_ALLOC_SIZE ((1)) _GL_ATTRIBUTE_RETURNS_NONNULL;
 
 #endif /* _PAGEALIGN_ALLOC_H */
