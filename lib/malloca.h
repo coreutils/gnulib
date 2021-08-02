@@ -65,7 +65,6 @@ extern "C" {
 # define malloca(N) \
   mmalloca (N)
 #endif
-extern void * mmalloca (size_t n);
 
 /* Free a block of memory allocated through malloca().  */
 #if HAVE_ALLOCA
@@ -73,6 +72,10 @@ extern void freea (void *p);
 #else
 # define freea free
 #endif
+
+extern void *mmalloca (size_t n)
+  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC (freea, 1)
+  _GL_ATTRIBUTE_ALLOC_SIZE ((1));
 
 /* nmalloca(N,S) is an overflow-safe variant of malloca (N * S).
    It allocates an array of N objects, each with S bytes of memory,

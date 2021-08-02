@@ -47,7 +47,8 @@ mmalloca (size_t n)
 #if HAVE_ALLOCA
   /* Allocate one more word, used to determine the address to pass to freea(),
      and room for the alignment ≡ sa_alignment_max mod 2*sa_alignment_max.  */
-  int plus = sizeof (small_t) + 2 * sa_alignment_max - 1;
+  uintptr_t alignment2_mask = 2 * sa_alignment_max - 1;
+  int plus = sizeof (small_t) + alignment2_mask;
   idx_t nplus;
   if (!INT_ADD_WRAPV (n, plus, &nplus) && !xalloc_oversized (nplus, 1))
     {
@@ -55,16 +56,21 @@ mmalloca (size_t n)
 
       if (mem != NULL)
         {
-          char *p =
-            (char *)((((uintptr_t)mem + sizeof (small_t) + sa_alignment_max - 1)
-                      & ~(uintptr_t)(2 * sa_alignment_max - 1))
-                     + sa_alignment_max);
+          uintptr_t umem = (uintptr_t)mem, umemplus;
+          /* The INT_ADD_WRAPV avoids signed integer overflow on
+             theoretical platforms where UINTPTR_MAX <= INT_MAX.  */
+          INT_ADD_WRAPV (umem, sizeof (small_t) + sa_alignment_max - 1,
+                         &umemplus);
+          idx_t offset = ((umemplus & ~alignment2_mask)
+                          + sa_alignment_max - umem);
+          void *vp = mem + offset;
+          small_t *p = vp;
           /* Here p >= mem + sizeof (small_t),
              and p <= mem + sizeof (small_t) + 2 * sa_alignment_max - 1
              hence p + n <= mem + nplus.
              So, the memory range [p, p+n) lies in the allocated memory range
              [mem, mem + nplus).  */
-          ((small_t *) p)[-1] = p - mem;
+          p[-1] = offset;
           /* p ≡ sa_alignment_max mod 2*sa_alignment_max.  */
           return p;
         }
