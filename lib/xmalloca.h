@@ -39,7 +39,9 @@ extern "C" {
                 + (2 * sa_alignment_max - 1))                                \
                & ~(uintptr_t)(2 * sa_alignment_max - 1))                     \
    : xmmalloca (N))
-extern void * xmmalloca (size_t n);
+extern void * xmmalloca (size_t n)
+  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC (freea, 1)
+  _GL_ATTRIBUTE_ALLOC_SIZE ((1)) _GL_ATTRIBUTE_RETURNS_NONNULL;
 #else
 # define xmalloca(N) \
   xmalloc (N)
