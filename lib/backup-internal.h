@@ -17,5 +17,7 @@
 
 #include "backupfile.h"
 #include <stdbool.h>
+#include <stdlib.h>
 
-extern char *backupfile_internal (int, char const *, enum backup_type, bool);
+extern char *backupfile_internal (int, char const *, enum backup_type, bool)
+  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE;

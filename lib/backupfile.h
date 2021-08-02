@@ -22,6 +22,8 @@
 /* Get AT_FDCWD, as a convenience for users of this file.  */
 #include <fcntl.h>
 
+#include <stdlib.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -50,8 +52,11 @@ enum backup_type
 extern char const *simple_backup_suffix;
 
 void set_simple_backup_suffix (char const *);
-char *backup_file_rename (int, char const *, enum backup_type);
-char *find_backup_file_name (int, char const *, enum backup_type);
+char *backup_file_rename (int, char const *, enum backup_type)
+  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE;
+char *find_backup_file_name (int, char const *, enum backup_type)
+  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE
+  _GL_ATTRIBUTE_RETURNS_NONNULL;
 enum backup_type get_version (char const *context, char const *arg);
 enum backup_type xget_version (char const *context, char const *arg);
 
