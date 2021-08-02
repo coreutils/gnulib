@@ -23,6 +23,7 @@
    "$", '*', '?' etc. in a special way.  */
 
 #include <stddef.h>
+#include <stdlib.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -36,11 +37,15 @@ extern size_t shell_quote_length (const char *string);
 extern char * shell_quote_copy (char *restrict p, const char *string);
 
 /* Returns the freshly allocated quoted string.  */
-extern char * shell_quote (const char *string);
+extern char * shell_quote (const char *string)
+  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE
+  _GL_ATTRIBUTE_RETURNS_NONNULL;
 
 /* Returns a freshly allocated string containing all argument strings, quoted,
    separated through spaces.  */
-extern char * shell_quote_argv (const char * const *argv);
+extern char * shell_quote_argv (const char * const *argv)
+  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE
+  _GL_ATTRIBUTE_RETURNS_NONNULL;
 
 #ifdef __cplusplus
 }
