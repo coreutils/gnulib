@@ -48,7 +48,8 @@ typedef enum canonicalize_mode_t canonicalize_mode_t;
    Whether components must exist or not depends on canonicalize mode.
    The result is malloc'd.
    Upon failure, return NULL with errno set.  */
-char *canonicalize_filename_mode (const char *, canonicalize_mode_t);
+char *canonicalize_filename_mode (const char *, canonicalize_mode_t)
+  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE;
 
 #ifdef __cplusplus
 }
