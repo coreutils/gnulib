@@ -21,6 +21,7 @@
 
 # include <stdbool.h>
 # include <stddef.h>
+# include <stdlib.h>
 # include "filename.h"
 # include "basename-lgpl.h"
 
@@ -33,11 +34,16 @@ extern "C" {
 #endif
 
 # if GNULIB_DIRNAME
-char *base_name (char const *file) _GL_ATTRIBUTE_MALLOC;
-char *dir_name (char const *file);
+char *base_name (char const *file)
+  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE
+  _GL_ATTRIBUTE_RETURNS_NONNULL;
+char *dir_name (char const *file)
+  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE
+  _GL_ATTRIBUTE_RETURNS_NONNULL;
 # endif
 
-char *mdir_name (char const *file);
+char *mdir_name (char const *file)
+  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE;
 size_t dir_len (char const *file) _GL_ATTRIBUTE_PURE;
 
 bool strip_trailing_slashes (char *file);
