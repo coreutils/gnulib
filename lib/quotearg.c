@@ -787,7 +787,6 @@ quotearg_buffer (char *buffer, size_t buffersize,
   return r;
 }
 
-/* Equivalent to quotearg_alloc (ARG, ARGSIZE, NULL, O).  */
 char *
 quotearg_alloc (char const *arg, size_t argsize,
                 struct quoting_options const *o)
