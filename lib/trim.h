@@ -16,6 +16,8 @@
 
 /* Written by Davide Angelocola <davide.angelocola@gmail.com> */
 
+#include <stdlib.h>
+
 /* Trim mode. */
 #define TRIM_TRAILING 0
 #define TRIM_LEADING 1
@@ -30,4 +32,6 @@
 /* Removes leading whitespaces. */
 #define trim_leading(s) trim2(s, TRIM_LEADING)
 
-char *trim2 (const char *, int);
+char *trim2 (const char *, int)
+  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE
+  _GL_ATTRIBUTE_RETURNS_NONNULL;
