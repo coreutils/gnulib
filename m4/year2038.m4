@@ -24,7 +24,8 @@ AC_DEFUN([gl_YEAR2038_TEST_INCLUDES],
 [[
   #include <time.h>
   /* Check that time_t can represent 2**32 - 1 correctly.  */
-  #define LARGE_TIME_T (((time_t) 1 << 30) - 1 + 3 * ((time_t) 1 << 30))
+  #define LARGE_TIME_T \\
+    ((time_t) (((time_t) 1 << 30) - 1 + 3 * ((time_t) 1 << 30)))
   int verify_time_t_range[(LARGE_TIME_T / 65537 == 65535
                            && LARGE_TIME_T % 65537 == 0)
                           ? 1 : -1];
