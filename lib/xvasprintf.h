@@ -23,6 +23,9 @@
 /* Get _GL_ATTRIBUTE_SPEC_PRINTF_STANDARD.  */
 #include <stdio.h>
 
+/* Get 'free'.  */
+#include <stdlib.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -35,8 +38,10 @@ extern "C" {
      - [EILSEQ] error during conversion between wide and multibyte characters,
    return NULL.  */
 extern char *xasprintf (const char *format, ...)
+       _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE
        _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_STANDARD, 1, 2));
 extern char *xvasprintf (const char *format, va_list args)
+       _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE
        _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_STANDARD, 1, 0));
 
 #ifdef __cplusplus
