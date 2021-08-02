@@ -48,8 +48,11 @@ struct exclude;
 
 bool fnmatch_pattern_has_wildcards (const char *, int) _GL_ATTRIBUTE_PURE;
 
-struct exclude *new_exclude (void) _GL_ATTRIBUTE_MALLOC;
-void free_exclude (struct exclude *);
+void free_exclude (struct exclude *)
+  _GL_ATTRIBUTE_NONNULL ((1));
+struct exclude *new_exclude (void)
+  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_RETURNS_NONNULL
+  _GL_ATTRIBUTE_DEALLOC (free_exclude, 1);
 void add_exclude (struct exclude *, char const *, int);
 int add_exclude_file (void (*) (struct exclude *, char const *, int),
                       struct exclude *, char const *, int, char);
