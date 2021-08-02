@@ -3921,10 +3921,8 @@ freelist (char **cpp)
 }
 
 static char **
-enlist (char **cpp, char *new, idx_t len)
+enlistnew (char **cpp, char *new)
 {
-  new = memcpy (ximalloc (len + 1), new, len);
-  new[len] = '\0';
   /* Is there already something in the list that's new (or longer)?  */
   idx_t i;
   for (i = 0; cpp[i] != NULL; i++)
@@ -3950,6 +3948,12 @@ enlist (char **cpp, char *new, idx_t len)
   cpp[i] = new;
   cpp[i + 1] = NULL;
   return cpp;
+}
+
+static char **
+enlist (char **cpp, char const *str, idx_t len)
+{
+  return enlistnew (cpp, ximemdup0 (str, len));
 }
 
 /* Given pointers to two strings, return a pointer to an allocated
@@ -3982,7 +3986,7 @@ static char **
 addlists (char **old, char **new)
 {
   for (; *new; new++)
-    old = enlist (old, *new, strlen (*new));
+    old = enlistnew (old, xstrdup (*new));
   return old;
 }
 
@@ -4184,11 +4188,10 @@ dfamust (struct dfa const *d)
               {
                 idx_t lrlen = strlen (lmp->right);
                 idx_t rllen = strlen (rmp->left);
-                char *tp = ximalloc (lrlen + rllen);
+                char *tp = ximalloc (lrlen + rllen + 1);
+                memcpy (tp + lrlen, rmp->left, rllen + 1);
                 memcpy (tp, lmp->right, lrlen);
-                memcpy (tp + lrlen, rmp->left, rllen);
-                lmp->in = enlist (lmp->in, tp, lrlen + rllen);
-                free (tp);
+                lmp->in = enlistnew (lmp->in, tp);
               }
             /* Left-hand */
             if (lmp->is[0] != '\0')
