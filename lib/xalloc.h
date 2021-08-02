@@ -128,14 +128,9 @@ char *xstrdup (char const *str)
 /* Allocate an array of N objects, each with S bytes of memory,
    dynamically, with error checking.  S must be nonzero.  */
 
-XALLOC_INLINE void *xnmalloc (size_t n, size_t s)
+void *xnmalloc (size_t n, size_t s)
   _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE
   _GL_ATTRIBUTE_ALLOC_SIZE ((1, 2)) _GL_ATTRIBUTE_RETURNS_NONNULL;
-XALLOC_INLINE void *
-xnmalloc (size_t n, size_t s)
-{
-  return xreallocarray (NULL, n, s);
-}
 
 /* FIXME: Deprecate this in favor of xreallocarray?  */
 /* Change the size of an allocated block of memory P to an array of N
@@ -152,14 +147,9 @@ xnrealloc (void *p, size_t n, size_t s)
 /* Return a pointer to a new buffer of N bytes.  This is like xmalloc,
    except it returns char *.  */
 
-XALLOC_INLINE char *xcharalloc (size_t n)
+char *xcharalloc (size_t n)
   _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE
   _GL_ATTRIBUTE_ALLOC_SIZE ((1)) _GL_ATTRIBUTE_RETURNS_NONNULL;
-XALLOC_INLINE char *
-xcharalloc (size_t n)
-{
-  return XNMALLOC (n, char);
-}
 
 #endif /* GNULIB_XALLOC */
 

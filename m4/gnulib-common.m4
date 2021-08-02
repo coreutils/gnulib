@@ -152,7 +152,8 @@ AC_DEFUN([gl_COMMON_BODY], [
    that can be freed by passing them as the Ith argument to the
    function F.  _GL_ATTRIBUTE_DEALLOC_FREE is for functions that
    return pointers that can be freed via 'free'; it can be used
-   only after including stdlib.h.  */
+   only after including stdlib.h.  These macros cannot be used on
+   inline functions.  */
 #if _GL_GNUC_PREREQ (11, 0)
 # define _GL_ATTRIBUTE_DEALLOC(f, i) __attribute__ ((__malloc__ (f, i)))
 #else

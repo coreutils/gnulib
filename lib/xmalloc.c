@@ -50,6 +50,12 @@ ximalloc (idx_t s)
   return nonnull (imalloc (s));
 }
 
+char *
+xcharalloc (size_t n)
+{
+  return XNMALLOC (n, char);
+}
+
 /* Change the size of an allocated block of memory P to S bytes,
    with error checking.  */
 
@@ -84,6 +90,15 @@ void *
 xireallocarray (void *p, idx_t n, idx_t s)
 {
   return nonnull (ireallocarray (p, n, s));
+}
+
+/* Allocate an array of N objects, each with S bytes of memory,
+   dynamically, with error checking.  S must be nonzero.  */
+
+void *
+xnmalloc (size_t n, size_t s)
+{
+  return xreallocarray (NULL, n, s);
 }
 
 /* If P is null, allocate a block of at least *PS bytes; otherwise,
