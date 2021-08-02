@@ -18,8 +18,12 @@
 
 /* Written by Jim Meyering <jim@meyering.net>  */
 
-extern char *xreadlink (char const *filename);
+#include <stdlib.h>
+
+extern char *xreadlink (char const *filename)
+  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE;
 
 #if GNULIB_XREADLINKAT
-extern char *xreadlinkat (int fd, char const *filename);
+extern char *xreadlinkat (int fd, char const *filename)
+  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE;
 #endif
