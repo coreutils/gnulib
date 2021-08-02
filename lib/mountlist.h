@@ -37,7 +37,8 @@ struct mount_entry
   struct mount_entry *me_next;
 };
 
-struct mount_entry *read_file_system_list (bool need_fs_type);
+struct mount_entry *read_file_system_list (bool need_fs_type)
+  _GL_ATTRIBUTE_MALLOC;
 void free_mount_entry (struct mount_entry *entry);
 
 #endif
