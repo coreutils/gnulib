@@ -22,6 +22,7 @@
 #define _GL_SAVEDIR_H
 
 #include <dirent.h>
+#include <stdlib.h>
 
 enum savedir_option
   {
@@ -35,7 +36,9 @@ enum savedir_option
 #endif
   };
 
-char *streamsavedir (DIR *, enum savedir_option);
-char *savedir (char const *, enum savedir_option);
+char *streamsavedir (DIR *, enum savedir_option)
+  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE;
+char *savedir (char const *, enum savedir_option)
+  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE;
 
 #endif
