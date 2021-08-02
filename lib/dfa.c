@@ -26,6 +26,7 @@
 
 #include "flexmember.h"
 #include "idx.h"
+#include "verify.h"
 
 #include <assert.h>
 #include <ctype.h>
@@ -34,6 +35,13 @@
 #include <stdlib.h>
 #include <limits.h>
 #include <string.h>
+
+/* Pacify gcc -Wanalyzer-null-dereference in areas where GCC
+   understandably cannot deduce that the input comes from a
+   well-formed regular expression.  There's little point to the
+   runtime overhead of 'assert' instead of 'assume_nonnull' when the
+   MMU will check anyway.  */
+#define assume_nonnull(x) assume ((x) != NULL)
 
 static bool
 streq (char const *a, char const *b)
@@ -4090,6 +4098,7 @@ dfamust (struct dfa const *d)
 
         case STAR:
         case QMARK:
+          assume_nonnull (mp);
           resetmust (mp);
           break;
 
@@ -4097,7 +4106,9 @@ dfamust (struct dfa const *d)
           {
             char **new;
             must *rmp = mp;
+            assume_nonnull (rmp);
             must *lmp = mp = mp->prev;
+            assume_nonnull (lmp);
             idx_t j, ln, rn, n;
 
             /* Guaranteed to be.  Unlikely, but ...  */
@@ -4138,10 +4149,12 @@ dfamust (struct dfa const *d)
           break;
 
         case PLUS:
+          assume_nonnull (mp);
           mp->is[0] = '\0';
           break;
 
         case END:
+          assume_nonnull (mp);
           assert (!mp->prev);
           for (idx_t i = 0; mp->in[i] != NULL; i++)
             if (strlen (mp->in[i]) > strlen (result))
@@ -4159,7 +4172,9 @@ dfamust (struct dfa const *d)
         case CAT:
           {
             must *rmp = mp;
+            assume_nonnull (rmp);
             must *lmp = mp = mp->prev;
+            assume_nonnull (lmp);
 
             /* In.  Everything in left, plus everything in
                right, plus concatenation of

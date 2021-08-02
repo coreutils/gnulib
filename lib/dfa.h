@@ -24,6 +24,7 @@
 #include <regex.h>
 #include <stdbool.h>
 #include <stddef.h>
+#include <stdlib.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -46,7 +47,9 @@ struct dfa;
 
 /* Needed when Gnulib is not used.  */
 #ifndef _GL_ATTRIBUTE_MALLOC
-# define  _GL_ATTRIBUTE_MALLOC
+# define _GL_ATTRIBUTE_MALLOC
+# define _GL_ATTRIBUTE_DEALLOC_FREE
+# define _GL_ATTRIBUTE_RETURNS_NONNULL
 #endif
 
 /* Entry points. */
@@ -55,7 +58,9 @@ struct dfa;
    It should be initialized via dfasyntax or dfacopysyntax before other use.
    The returned pointer should be passed directly to free() after
    calling dfafree() on it. */
-extern struct dfa *dfaalloc (void) _GL_ATTRIBUTE_MALLOC;
+extern struct dfa *dfaalloc (void)
+  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE
+  _GL_ATTRIBUTE_RETURNS_NONNULL;
 
 /* DFA options that can be ORed together, for dfasyntax's 4th arg.  */
 enum
