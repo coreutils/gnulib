@@ -35,7 +35,7 @@
 eval 'exec perl -wSx "$0" "$@"'
      if 0;
 
-my $VERSION = '2021-04-11 8:42'; # UTC
+my $VERSION = '2021-08-03 15:13'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -51,12 +51,6 @@ use POSIX qw(strftime);
 
 my %valid_release_types = map {$_ => 1} qw (alpha beta stable);
 my @archive_suffixes = qw (tar.gz tar.bz2 tar.lz tar.lzma tar.xz);
-my %digest_classes =
-  (
-   'md5' => (eval { require Digest::MD5; } and 'Digest::MD5'),
-   'sha1' => ((eval { require Digest::SHA; } and 'Digest::SHA')
-              or (eval { require Digest::SHA1; } and 'Digest::SHA1'))
-  );
 my $srcdir = '.';
 
 sub usage ($)
@@ -96,7 +90,7 @@ The following are optional:
                                 VERSION is the result of running git describe
                                 in the gnulib source directory.
                                 required if gnulib is in TOOL_LIST.
-   --no-print-checksums         do not emit MD5 or SHA1 checksums
+   --no-print-checksums         do not emit SHA1 or SHA256 checksums
    --archive-suffix=SUF         add SUF to the list of archive suffixes
    --mail-headers=HEADERS       a space-separated list of mail headers, e.g.,
                                 To: x\@example.com Cc: y-announce\@example.com,...
@@ -163,7 +157,7 @@ sub print_locations ($\@\%@)
 
 =item C<print_checksums (@file)
 
-Print the MD5 and SHA1 signature section for each C<@file>.
+Print the SHA1 and SHA256 signature section for each C<@file>.
 
 =cut
 
@@ -171,23 +165,18 @@ sub print_checksums (@)
 {
   my (@file) = @_;
 
-  print "Here are the MD5 and SHA1 checksums:\n";
+  print "Here are the SHA1 and SHA256 checksums:\n";
   print "\n";
 
-  foreach my $meth (qw (md5 sha1))
+  use Digest::file qw(digest_file_hex digest_file_base64);
+
+  foreach my $f (@file)
     {
-      my $class = $digest_classes{$meth} or next;
-      foreach my $f (@file)
-        {
-          open IN, '<', $f
-            or die "$ME: $f: cannot open for reading: $!\n";
-          binmode IN;
-          my $dig = $class->new->addfile(*IN)->hexdigest;
-          close IN;
-          print "$dig  $f\n";
-        }
+      print digest_file_hex($f, "SHA-1"), "  $f\n";
+      print digest_file_base64($f, "SHA-256"), "  $f\n";
     }
-  print "\n";
+  print "\nPlease note that the SHA256 checksum is base64 encoded and not\n";
+  print "hexadecimal (which is the default for most checksum tools).\n\n";
 }
 
 =item C<print_news_deltas ($news_file, $prev_version, $curr_version)
