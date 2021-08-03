@@ -1426,7 +1426,6 @@ announcement: NEWS ChangeLog $(rel-files)
 	    --bootstrap-tools=$(bootstrap-tools)			\
 	    $$(case ,$(bootstrap-tools), in (*,gnulib,*)		\
 	       echo --gnulib-version=$(gnulib-version);; esac)		\
-	    --no-print-checksums					\
 	    $(addprefix --url-dir=, $(url_dir_list))
 
 .PHONY: release-commit
