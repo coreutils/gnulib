@@ -18,6 +18,8 @@
 #ifndef _XGETDOMAINNAME_H
 #define _XGETDOMAINNAME_H
 
+#include <stdlib.h>
+
 /* Return the NIS domain name of the machine, in malloc'd storage.
    WARNING! The NIS domain name is unrelated to the fully qualified host name
             of the machine.  It is also unrelated to email addresses.
@@ -25,6 +27,7 @@
             not using NIS.
    If malloc fails, exit.
    Upon any other failure, set errno and return NULL.  */
-extern char *xgetdomainname (void);
+extern char *xgetdomainname (void)
+  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE;
 
 #endif /* _XGETDOMAINNAME_H */
