@@ -18,6 +18,8 @@
 #ifndef _RELOCATABLE_H
 #define _RELOCATABLE_H
 
+#include <stdlib.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -83,7 +85,8 @@ extern const char * relocate2 (const char *pathname, char **allocatedp);
    Returns it, freshly allocated.  Returns NULL upon failure.  */
 extern char * compute_curr_prefix (const char *orig_installprefix,
                                    const char *orig_installdir,
-                                   const char *curr_pathname);
+                                   const char *curr_pathname)
+  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE;
 
 #else
 
