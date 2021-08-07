@@ -20,6 +20,7 @@
 
 #include <stdbool.h>
 #include <stdint.h>
+#include <stdlib.h>
 
 /* Get declarations of the native Windows API functions.  */
 #define WIN32_LEAN_AND_MEAN
@@ -72,14 +73,16 @@ extern const char ** prepare_spawn (const char * const *argv,
    prepare_spawn.
    Returns a freshly allocated string.  In case of memory allocation failure,
    NULL is returned, with errno set.  */
-extern char * compose_command (const char * const *argv);
+extern char * compose_command (const char * const *argv)
+  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE;
 
 /* Composes the block of memory that contains the environment variables.
    ENVP must contain an environment (a NULL-terminated array of string of the
    form VARIABLE=VALUE).
    Returns a freshly allocated block of memory.  In case of memory allocation
    failure, NULL is returned, with errno set.  */
-extern char * compose_envblock (const char * const *envp);
+extern char * compose_envblock (const char * const *envp)
+  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE;
 
 
 /* This struct keeps track of which handles to pass to a subprocess, and with
