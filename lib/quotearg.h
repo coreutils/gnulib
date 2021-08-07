@@ -21,7 +21,6 @@
 #ifndef QUOTEARG_H_
 # define QUOTEARG_H_ 1
 
-# include <stddef.h>
 # include <stdlib.h>
 
 /* Basic quoting styles.  For each style, an example is given on the
@@ -279,6 +278,7 @@ struct quoting_options;
 struct quoting_options *clone_quoting_options (struct quoting_options *o)
   _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE
   _GL_ATTRIBUTE_RETURNS_NONNULL;
+
 /* Get the value of O's quoting style.  If O is null, use the default.  */
 enum quoting_style get_quoting_style (struct quoting_options const *o);
 
@@ -347,7 +347,6 @@ char *quotearg_alloc_mem (char const *arg, size_t argsize,
                           size_t *size, struct quoting_options const *o)
   _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE
   _GL_ATTRIBUTE_RETURNS_NONNULL;
-;
 
 /* Use storage slot N to return a quoted version of the string ARG.
    Use the default quoting options.
