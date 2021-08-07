@@ -43,7 +43,8 @@ _GL_INLINE_HEADER_BEGIN
 # define eemalloc malloc
 #else
 EEALLOC_INLINE void *eemalloc (size_t n)
-     _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_ALLOC_SIZE ((1));
+     _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_ALLOC_SIZE ((1))
+     _GL_ATTRIBUTE_DEALLOC_FREE;
 EEALLOC_INLINE void *
 eemalloc (size_t n)
 {
