@@ -17,6 +17,8 @@
 #ifndef _CONCAT_FILENAME_H
 #define _CONCAT_FILENAME_H
 
+#include <stdlib.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -26,12 +28,15 @@ extern "C" {
    suffix.  Return a freshly allocated filename.  Return NULL and set errno
    upon memory allocation failure.  */
 extern char *concatenated_filename (const char *directory,
-                                    const char *filename, const char *suffix);
+                                    const char *filename, const char *suffix)
+  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE;
 
 /* Concatenate a directory filename, a relative filename and an optional
    suffix.  Return a freshly allocated filename.  */
 extern char *xconcatenated_filename (const char *directory,
-                                     const char *filename, const char *suffix);
+                                     const char *filename, const char *suffix)
+  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE
+  _GL_ATTRIBUTE_RETURNS_NONNULL;
 
 
 #ifdef __cplusplus
