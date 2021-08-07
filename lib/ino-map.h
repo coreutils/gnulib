@@ -23,8 +23,13 @@
 
 # define INO_MAP_INSERT_FAILURE ((size_t) -1)
 
-struct ino_map *ino_map_alloc (size_t);
+struct ino_map;
+
 void ino_map_free (struct ino_map *) _GL_ATTRIBUTE_NONNULL ((1));
+
+struct ino_map *ino_map_alloc (size_t)
+  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC (ino_map_free, 1);
+
 size_t ino_map_insert (struct ino_map *, ino_t) _GL_ATTRIBUTE_NONNULL ((1));
 
 #endif
