@@ -23,7 +23,8 @@
 extern "C" {
 #endif
 
-DIR *opendir_safer (const char *name);
+DIR *opendir_safer (const char *name)
+  _GL_ATTRIBUTE_DEALLOC (closedir, 1);
 
 #ifdef __cplusplus
 }

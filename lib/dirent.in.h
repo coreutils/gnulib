@@ -74,6 +74,30 @@ typedef struct gl_directory DIR;
 
 /* Declare overridden functions.  */
 
+#if @GNULIB_CLOSEDIR@
+# if @REPLACE_CLOSEDIR@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef closedir
+#   define closedir rpl_closedir
+#   define GNULIB_defined_closedir 1
+#  endif
+_GL_FUNCDECL_RPL (closedir, int, (DIR *dirp) _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_RPL (closedir, int, (DIR *dirp));
+# else
+#  if !@HAVE_CLOSEDIR@
+_GL_FUNCDECL_SYS (closedir, int, (DIR *dirp) _GL_ARG_NONNULL ((1)));
+#  endif
+_GL_CXXALIAS_SYS (closedir, int, (DIR *dirp));
+# endif
+_GL_CXXALIASWARN (closedir);
+#elif defined GNULIB_POSIXCHECK
+# undef closedir
+# if HAVE_RAW_DECL_CLOSEDIR
+_GL_WARN_ON_USE (closedir, "closedir is not portable - "
+                 "use gnulib module closedir for portability");
+# endif
+#endif
+
 #if @GNULIB_OPENDIR@
 # if @REPLACE_OPENDIR@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
@@ -81,11 +105,17 @@ typedef struct gl_directory DIR;
 #   define opendir rpl_opendir
 #   define GNULIB_defined_opendir 1
 #  endif
-_GL_FUNCDECL_RPL (opendir, DIR *, (const char *dir_name) _GL_ARG_NONNULL ((1)));
+_GL_FUNCDECL_RPL (opendir, DIR *,
+                  (const char *dir_name)
+                  _GL_ARG_NONNULL ((1))
+                  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC (closedir, 1));
 _GL_CXXALIAS_RPL (opendir, DIR *, (const char *dir_name));
 # else
 #  if !@HAVE_OPENDIR@
-_GL_FUNCDECL_SYS (opendir, DIR *, (const char *dir_name) _GL_ARG_NONNULL ((1)));
+_GL_FUNCDECL_SYS (opendir, DIR *,
+                  (const char *dir_name)
+                  _GL_ARG_NONNULL ((1))
+                  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC (closedir, 1));
 #  endif
 _GL_CXXALIAS_SYS (opendir, DIR *, (const char *dir_name));
 # endif
@@ -123,30 +153,6 @@ _GL_CXXALIASWARN (rewinddir);
 # if HAVE_RAW_DECL_REWINDDIR
 _GL_WARN_ON_USE (rewinddir, "rewinddir is not portable - "
                  "use gnulib module rewinddir for portability");
-# endif
-#endif
-
-#if @GNULIB_CLOSEDIR@
-# if @REPLACE_CLOSEDIR@
-#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
-#   undef closedir
-#   define closedir rpl_closedir
-#   define GNULIB_defined_closedir 1
-#  endif
-_GL_FUNCDECL_RPL (closedir, int, (DIR *dirp) _GL_ARG_NONNULL ((1)));
-_GL_CXXALIAS_RPL (closedir, int, (DIR *dirp));
-# else
-#  if !@HAVE_CLOSEDIR@
-_GL_FUNCDECL_SYS (closedir, int, (DIR *dirp) _GL_ARG_NONNULL ((1)));
-#  endif
-_GL_CXXALIAS_SYS (closedir, int, (DIR *dirp));
-# endif
-_GL_CXXALIASWARN (closedir);
-#elif defined GNULIB_POSIXCHECK
-# undef closedir
-# if HAVE_RAW_DECL_CLOSEDIR
-_GL_WARN_ON_USE (closedir, "closedir is not portable - "
-                 "use gnulib module closedir for portability");
 # endif
 #endif
 
@@ -200,11 +206,15 @@ _GL_WARN_ON_USE (dirfd, "dirfd is unportable - "
 #   undef fdopendir
 #   define fdopendir rpl_fdopendir
 #  endif
-_GL_FUNCDECL_RPL (fdopendir, DIR *, (int fd));
+_GL_FUNCDECL_RPL (fdopendir, DIR *,
+                  (int fd)
+                  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC (closedir, 1));
 _GL_CXXALIAS_RPL (fdopendir, DIR *, (int fd));
 # else
 #  if !@HAVE_FDOPENDIR@ || !@HAVE_DECL_FDOPENDIR@
-_GL_FUNCDECL_SYS (fdopendir, DIR *, (int fd));
+_GL_FUNCDECL_SYS (fdopendir, DIR *,
+                  (int fd)
+                  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC (closedir, 1));
 #  endif
 _GL_CXXALIAS_SYS (fdopendir, DIR *, (int fd));
 # endif

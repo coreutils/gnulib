@@ -17,4 +17,5 @@
 
 #include <dirent.h>
 
-DIR *opendirat (int, char const *, int, int *);
+DIR *opendirat (int, char const *, int, int *)
+  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC (closedir, 1);
