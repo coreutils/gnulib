@@ -51,6 +51,13 @@ extern "C" {
 # define safe_alloca(N) ((void) (N), NULL)
 #endif
 
+/* Free a block of memory allocated through malloca().  */
+#if HAVE_ALLOCA
+extern void freea (void *p);
+#else
+# define freea free
+#endif
+
 /* malloca(N) is a safe variant of alloca(N).  It allocates N bytes of
    memory allocated on the stack, that must be freed using freea() before
    the function returns.  Upon failure, it returns NULL.  */
@@ -65,14 +72,6 @@ extern "C" {
 # define malloca(N) \
   mmalloca (N)
 #endif
-
-/* Free a block of memory allocated through malloca().  */
-#if HAVE_ALLOCA
-extern void freea (void *p);
-#else
-# define freea free
-#endif
-
 extern void *mmalloca (size_t n)
   _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC (freea, 1)
   _GL_ATTRIBUTE_ALLOC_SIZE ((1));
