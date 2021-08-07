@@ -260,7 +260,7 @@ int      fts_close (FTS *) __THROW;
 _GL_ATTRIBUTE_NODISCARD
 FTS     *fts_open (char * const *, int,
                    int (*)(const FTSENT **, const FTSENT **))
-  __THROW;
+  _GL_ATTRIBUTE_DEALLOC (fts_close, 1) __THROW;
 
 _GL_ATTRIBUTE_NODISCARD
 FTSENT  *fts_read (FTS *) __THROW;
