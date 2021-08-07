@@ -37,7 +37,10 @@ extern "C" {
 /* These functions are thin wrappers around the corresponding functions with
    _nx_ infix from gl_sublist.h.  Upon out-of-memory, they invoke
    xalloc_die (), instead of returning an error indicator.  */
-GL_XSUBLIST_INLINE gl_list_t
+GL_XSUBLIST_INLINE
+/*_GL_ATTRIBUTE_DEALLOC (gl_list_free, 1)*/
+_GL_ATTRIBUTE_RETURNS_NONNULL
+gl_list_t
 gl_sublist_create (gl_list_t whole_list, size_t start_index, size_t end_index)
 {
   gl_list_t result = gl_sublist_nx_create (whole_list, start_index, end_index);

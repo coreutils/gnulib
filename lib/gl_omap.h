@@ -117,12 +117,15 @@ typedef const struct gl_omap_implementation * gl_omap_implementation_t;
 extern gl_omap_t gl_omap_create_empty (gl_omap_implementation_t implementation,
                                        gl_mapkey_compar_fn compar_fn,
                                        gl_mapkey_dispose_fn kdispose_fn,
-                                       gl_mapvalue_dispose_fn vdispose_fn);
+                                       gl_mapvalue_dispose_fn vdispose_fn)
+  /*_GL_ATTRIBUTE_DEALLOC (gl_omap_free, 1)*/
+  _GL_ATTRIBUTE_RETURNS_NONNULL;
 /* Likewise.  Returns NULL upon out-of-memory.  */
 extern gl_omap_t gl_omap_nx_create_empty (gl_omap_implementation_t implementation,
                                           gl_mapkey_compar_fn compar_fn,
                                           gl_mapkey_dispose_fn kdispose_fn,
-                                          gl_mapvalue_dispose_fn vdispose_fn);
+                                          gl_mapvalue_dispose_fn vdispose_fn)
+  /*_GL_ATTRIBUTE_DEALLOC (gl_omap_free, 1)*/;
 
 /* Returns the current number of pairs in an ordered map.  */
 extern size_t gl_omap_size (gl_omap_t map);
@@ -265,7 +268,9 @@ struct gl_omap_impl_base
 /* Define most functions of this file as accesses to the
    struct gl_omap_implementation.  */
 
-GL_OMAP_INLINE gl_omap_t
+GL_OMAP_INLINE
+/*_GL_ATTRIBUTE_DEALLOC (gl_omap_free, 1)*/
+gl_omap_t
 gl_omap_nx_create_empty (gl_omap_implementation_t implementation,
                          gl_mapkey_compar_fn compar_fn,
                          gl_mapkey_dispose_fn kdispose_fn,

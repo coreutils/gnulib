@@ -117,13 +117,16 @@ extern gl_map_t gl_map_create_empty (gl_map_implementation_t implementation,
                                      gl_mapkey_equals_fn equals_fn,
                                      gl_mapkey_hashcode_fn hashcode_fn,
                                      gl_mapkey_dispose_fn kdispose_fn,
-                                     gl_mapvalue_dispose_fn vdispose_fn);
+                                     gl_mapvalue_dispose_fn vdispose_fn)
+  /*_GL_ATTRIBUTE_DEALLOC (gl_map_free, 1)*/
+  _GL_ATTRIBUTE_RETURNS_NONNULL;
 /* Likewise.  Returns NULL upon out-of-memory.  */
 extern gl_map_t gl_map_nx_create_empty (gl_map_implementation_t implementation,
                                         gl_mapkey_equals_fn equals_fn,
                                         gl_mapkey_hashcode_fn hashcode_fn,
                                         gl_mapkey_dispose_fn kdispose_fn,
-                                        gl_mapvalue_dispose_fn vdispose_fn);
+                                        gl_mapvalue_dispose_fn vdispose_fn)
+  /*_GL_ATTRIBUTE_DEALLOC (gl_map_free, 1)*/;
 
 /* Returns the current number of pairs in a map.  */
 extern size_t gl_map_size (gl_map_t map);
@@ -255,7 +258,9 @@ struct gl_map_impl_base
 /* Define most functions of this file as accesses to the
    struct gl_map_implementation.  */
 
-GL_MAP_INLINE gl_map_t
+GL_MAP_INLINE
+/*_GL_ATTRIBUTE_DEALLOC (gl_map_free, 1)*/
+gl_map_t
 gl_map_nx_create_empty (gl_map_implementation_t implementation,
                         gl_mapkey_equals_fn equals_fn,
                         gl_mapkey_hashcode_fn hashcode_fn,

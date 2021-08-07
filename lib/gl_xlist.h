@@ -41,13 +41,17 @@ extern gl_list_t gl_list_create_empty (gl_list_implementation_t implementation,
                                        gl_listelement_equals_fn equals_fn,
                                        gl_listelement_hashcode_fn hashcode_fn,
                                        gl_listelement_dispose_fn dispose_fn,
-                                       bool allow_duplicates);
+                                       bool allow_duplicates)
+  /*_GL_ATTRIBUTE_DEALLOC (gl_list_free, 1)*/
+  _GL_ATTRIBUTE_RETURNS_NONNULL;
 extern gl_list_t gl_list_create (gl_list_implementation_t implementation,
                                  gl_listelement_equals_fn equals_fn,
                                  gl_listelement_hashcode_fn hashcode_fn,
                                  gl_listelement_dispose_fn dispose_fn,
                                  bool allow_duplicates,
-                                 size_t count, const void **contents);
+                                 size_t count, const void **contents)
+  /*_GL_ATTRIBUTE_DEALLOC (gl_list_free, 1)*/
+  _GL_ATTRIBUTE_RETURNS_NONNULL;
 extern void gl_list_node_set_value (gl_list_t list, gl_list_node_t node,
                                     const void *elt);
 extern gl_list_node_t gl_list_set_at (gl_list_t list, size_t position,
@@ -67,7 +71,10 @@ extern gl_list_node_t gl_sortedlist_add (gl_list_t list,
                                          const void *elt);
 #endif
 
-GL_XLIST_INLINE gl_list_t
+GL_XLIST_INLINE
+/*_GL_ATTRIBUTE_DEALLOC (gl_list_free, 1)*/
+_GL_ATTRIBUTE_RETURNS_NONNULL
+gl_list_t
 gl_list_create_empty (gl_list_implementation_t implementation,
                       gl_listelement_equals_fn equals_fn,
                       gl_listelement_hashcode_fn hashcode_fn,
@@ -82,7 +89,10 @@ gl_list_create_empty (gl_list_implementation_t implementation,
   return result;
 }
 
-GL_XLIST_INLINE gl_list_t
+GL_XLIST_INLINE
+/*_GL_ATTRIBUTE_DEALLOC (gl_list_free, 1)*/
+_GL_ATTRIBUTE_RETURNS_NONNULL
+gl_list_t
 gl_list_create (gl_list_implementation_t implementation,
                 gl_listelement_equals_fn equals_fn,
                 gl_listelement_hashcode_fn hashcode_fn,

@@ -107,11 +107,14 @@ typedef const struct gl_oset_implementation * gl_oset_implementation_t;
 /* declared in gl_xoset.h */
 extern gl_oset_t gl_oset_create_empty (gl_oset_implementation_t implementation,
                                        gl_setelement_compar_fn compar_fn,
-                                       gl_setelement_dispose_fn dispose_fn);
+                                       gl_setelement_dispose_fn dispose_fn)
+  /*_GL_ATTRIBUTE_DEALLOC (gl_oset_free, 1)*/
+  _GL_ATTRIBUTE_RETURNS_NONNULL;
 /* Likewise.  Returns NULL upon out-of-memory.  */
 extern gl_oset_t gl_oset_nx_create_empty (gl_oset_implementation_t implementation,
                                           gl_setelement_compar_fn compar_fn,
-                                          gl_setelement_dispose_fn dispose_fn);
+                                          gl_setelement_dispose_fn dispose_fn)
+  /*_GL_ATTRIBUTE_DEALLOC (gl_oset_free, 1)*/;
 
 /* Returns the current number of elements in an ordered set.  */
 extern size_t gl_oset_size (gl_oset_t set);
@@ -243,7 +246,9 @@ struct gl_oset_impl_base
 /* Define all functions of this file as accesses to the
    struct gl_oset_implementation.  */
 
-GL_OSET_INLINE gl_oset_t
+GL_OSET_INLINE
+/*_GL_ATTRIBUTE_DEALLOC (gl_oset_free, 1)*/
+gl_oset_t
 gl_oset_nx_create_empty (gl_oset_implementation_t implementation,
                          gl_setelement_compar_fn compar_fn,
                          gl_setelement_dispose_fn dispose_fn)

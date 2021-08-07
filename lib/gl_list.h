@@ -152,13 +152,16 @@ extern gl_list_t gl_list_create_empty (gl_list_implementation_t implementation,
                                        gl_listelement_equals_fn equals_fn,
                                        gl_listelement_hashcode_fn hashcode_fn,
                                        gl_listelement_dispose_fn dispose_fn,
-                                       bool allow_duplicates);
+                                       bool allow_duplicates)
+  /*_GL_ATTRIBUTE_DEALLOC (gl_list_free, 1)*/
+  _GL_ATTRIBUTE_RETURNS_NONNULL;
 /* Likewise.  Returns NULL upon out-of-memory.  */
 extern gl_list_t gl_list_nx_create_empty (gl_list_implementation_t implementation,
                                           gl_listelement_equals_fn equals_fn,
                                           gl_listelement_hashcode_fn hashcode_fn,
                                           gl_listelement_dispose_fn dispose_fn,
-                                          bool allow_duplicates);
+                                          bool allow_duplicates)
+  /*_GL_ATTRIBUTE_DEALLOC (gl_list_free, 1)*/;
 
 /* Creates a list with given contents.
    IMPLEMENTATION is one of GL_ARRAY_LIST, GL_CARRAY_LIST, GL_LINKED_LIST,
@@ -177,14 +180,17 @@ extern gl_list_t gl_list_create (gl_list_implementation_t implementation,
                                  gl_listelement_hashcode_fn hashcode_fn,
                                  gl_listelement_dispose_fn dispose_fn,
                                  bool allow_duplicates,
-                                 size_t count, const void **contents);
+                                 size_t count, const void **contents)
+  /*_GL_ATTRIBUTE_DEALLOC (gl_list_free, 1)*/
+  _GL_ATTRIBUTE_RETURNS_NONNULL;
 /* Likewise.  Returns NULL upon out-of-memory.  */
 extern gl_list_t gl_list_nx_create (gl_list_implementation_t implementation,
                                     gl_listelement_equals_fn equals_fn,
                                     gl_listelement_hashcode_fn hashcode_fn,
                                     gl_listelement_dispose_fn dispose_fn,
                                     bool allow_duplicates,
-                                    size_t count, const void **contents);
+                                    size_t count, const void **contents)
+  /*_GL_ATTRIBUTE_DEALLOC (gl_list_free, 1)*/;
 
 /* Returns the current number of elements in a list.  */
 extern size_t gl_list_size (gl_list_t list);
@@ -591,7 +597,9 @@ struct gl_list_impl_base
 /* Define all functions of this file as accesses to the
    struct gl_list_implementation.  */
 
-GL_LIST_INLINE gl_list_t
+GL_LIST_INLINE
+/*_GL_ATTRIBUTE_DEALLOC (gl_list_free, 1)*/
+gl_list_t
 gl_list_nx_create_empty (gl_list_implementation_t implementation,
                          gl_listelement_equals_fn equals_fn,
                          gl_listelement_hashcode_fn hashcode_fn,
@@ -603,7 +611,9 @@ gl_list_nx_create_empty (gl_list_implementation_t implementation,
                                           allow_duplicates);
 }
 
-GL_LIST_INLINE gl_list_t
+GL_LIST_INLINE
+/*_GL_ATTRIBUTE_DEALLOC (gl_list_free, 1)*/
+gl_list_t
 gl_list_nx_create (gl_list_implementation_t implementation,
                    gl_listelement_equals_fn equals_fn,
                    gl_listelement_hashcode_fn hashcode_fn,

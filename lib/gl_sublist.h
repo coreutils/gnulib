@@ -35,11 +35,14 @@ extern "C" {
  */
 #if 0 /* declared in gl_xsublist.h */
 extern gl_list_t gl_sublist_create (gl_list_t whole_list,
-                                    size_t start_index, size_t end_index);
+                                    size_t start_index, size_t end_index)
+  /*_GL_ATTRIBUTE_DEALLOC (gl_list_free, 1)*/
+  _GL_ATTRIBUTE_RETURNS_NONNULL;
 #endif
 /* Likewise.  Returns NULL upon out-of-memory.  */
 extern gl_list_t gl_sublist_nx_create (gl_list_t whole_list,
-                                       size_t start_index, size_t end_index);
+                                       size_t start_index, size_t end_index)
+  /*_GL_ATTRIBUTE_DEALLOC (gl_list_free, 1)*/;
 
 
 #ifdef __cplusplus

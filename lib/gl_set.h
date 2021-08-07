@@ -106,12 +106,15 @@ typedef const struct gl_set_implementation * gl_set_implementation_t;
 extern gl_set_t gl_set_create_empty (gl_set_implementation_t implementation,
                                      gl_setelement_equals_fn equals_fn,
                                      gl_setelement_hashcode_fn hashcode_fn,
-                                     gl_setelement_dispose_fn dispose_fn);
+                                     gl_setelement_dispose_fn dispose_fn)
+  /*_GL_ATTRIBUTE_DEALLOC (gl_set_free, 1)*/
+  _GL_ATTRIBUTE_RETURNS_NONNULL;
 /* Likewise.  Returns NULL upon out-of-memory.  */
 extern gl_set_t gl_set_nx_create_empty (gl_set_implementation_t implementation,
                                         gl_setelement_equals_fn equals_fn,
                                         gl_setelement_hashcode_fn hashcode_fn,
-                                        gl_setelement_dispose_fn dispose_fn);
+                                        gl_setelement_dispose_fn dispose_fn)
+  /*_GL_ATTRIBUTE_DEALLOC (gl_set_free, 1)*/;
 
 /* Returns the current number of elements in a set.  */
 extern size_t gl_set_size (gl_set_t set);
@@ -209,7 +212,9 @@ struct gl_set_impl_base
 /* Define all functions of this file as accesses to the
    struct gl_set_implementation.  */
 
-GL_SET_INLINE gl_set_t
+GL_SET_INLINE
+/*_GL_ATTRIBUTE_DEALLOC (gl_set_free, 1)*/
+gl_set_t
 gl_set_nx_create_empty (gl_set_implementation_t implementation,
                         gl_setelement_equals_fn equals_fn,
                         gl_setelement_hashcode_fn hashcode_fn,

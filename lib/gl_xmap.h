@@ -42,13 +42,18 @@ extern gl_map_t gl_map_create_empty (gl_map_implementation_t implementation,
                                      gl_mapkey_equals_fn equals_fn,
                                      gl_mapkey_hashcode_fn hashcode_fn,
                                      gl_mapkey_dispose_fn kdispose_fn,
-                                     gl_mapvalue_dispose_fn vdispose_fn);
+                                     gl_mapvalue_dispose_fn vdispose_fn)
+  /*_GL_ATTRIBUTE_DEALLOC (gl_map_free, 1)*/
+  _GL_ATTRIBUTE_RETURNS_NONNULL;
 extern bool gl_map_put (gl_map_t map, const void *key, const void *value);
 extern bool gl_map_getput (gl_map_t map, const void *key, const void *value,
                            const void **oldvaluep);
 #endif
 
-GL_XMAP_INLINE gl_map_t
+GL_XMAP_INLINE
+/*_GL_ATTRIBUTE_DEALLOC (gl_map_free, 1)*/
+_GL_ATTRIBUTE_RETURNS_NONNULL
+gl_map_t
 gl_map_create_empty (gl_map_implementation_t implementation,
                      gl_mapkey_equals_fn equals_fn,
                      gl_mapkey_hashcode_fn hashcode_fn,

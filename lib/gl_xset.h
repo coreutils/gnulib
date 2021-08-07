@@ -41,11 +41,16 @@ extern "C" {
 extern gl_set_t gl_set_create_empty (gl_set_implementation_t implementation,
                                      gl_setelement_equals_fn equals_fn,
                                      gl_setelement_hashcode_fn hashcode_fn,
-                                     gl_setelement_dispose_fn dispose_fn);
+                                     gl_setelement_dispose_fn dispose_fn)
+  /*_GL_ATTRIBUTE_DEALLOC (gl_set_free, 1)*/
+  _GL_ATTRIBUTE_RETURNS_NONNULL;
 extern bool gl_set_add (gl_set_t set, const void *elt);
 #endif
 
-GL_XSET_INLINE gl_set_t
+GL_XSET_INLINE
+/*_GL_ATTRIBUTE_DEALLOC (gl_set_free, 1)*/
+_GL_ATTRIBUTE_RETURNS_NONNULL
+gl_set_t
 gl_set_create_empty (gl_set_implementation_t implementation,
                      gl_setelement_equals_fn equals_fn,
                      gl_setelement_hashcode_fn hashcode_fn,

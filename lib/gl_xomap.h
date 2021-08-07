@@ -41,13 +41,18 @@ extern "C" {
 extern gl_omap_t gl_omap_create_empty (gl_omap_implementation_t implementation,
                                        gl_mapkey_compar_fn compar_fn,
                                        gl_mapkey_dispose_fn kdispose_fn,
-                                       gl_mapvalue_dispose_fn vdispose_fn);
+                                       gl_mapvalue_dispose_fn vdispose_fn)
+  /*_GL_ATTRIBUTE_DEALLOC (gl_omap_free, 1)*/
+  _GL_ATTRIBUTE_RETURNS_NONNULL;
 extern bool gl_omap_put (gl_omap_t map, const void *key, const void *value);
 extern bool gl_omap_getput (gl_omap_t map, const void *key, const void *value,
                             const void **oldvaluep);
 #endif
 
-GL_XOMAP_INLINE gl_omap_t
+GL_XOMAP_INLINE
+/*_GL_ATTRIBUTE_DEALLOC (gl_omap_free, 1)*/
+_GL_ATTRIBUTE_RETURNS_NONNULL
+gl_omap_t
 gl_omap_create_empty (gl_omap_implementation_t implementation,
                       gl_mapkey_compar_fn compar_fn,
                       gl_mapkey_dispose_fn kdispose_fn,

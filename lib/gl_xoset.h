@@ -40,11 +40,16 @@ extern "C" {
 #if 0 /* These are defined inline below.  */
 extern gl_oset_t gl_oset_create_empty (gl_oset_implementation_t implementation,
                                        gl_setelement_compar_fn compar_fn,
-                                       gl_setelement_dispose_fn dispose_fn);
+                                       gl_setelement_dispose_fn dispose_fn)
+  /*_GL_ATTRIBUTE_DEALLOC (gl_oset_free, 1)*/
+  _GL_ATTRIBUTE_RETURNS_NONNULL;
 extern bool gl_oset_add (gl_oset_t set, const void *elt);
 #endif
 
-GL_XOSET_INLINE gl_oset_t
+GL_XOSET_INLINE
+/*_GL_ATTRIBUTE_DEALLOC (gl_oset_free, 1)*/
+_GL_ATTRIBUTE_RETURNS_NONNULL
+gl_oset_t
 gl_oset_create_empty (gl_oset_implementation_t implementation,
                       gl_setelement_compar_fn compar_fn,
                       gl_setelement_dispose_fn dispose_fn)
