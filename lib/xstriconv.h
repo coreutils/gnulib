@@ -18,7 +18,6 @@
 #ifndef _XSTRICONV_H
 #define _XSTRICONV_H
 
-#include <stddef.h>
 #include <stdlib.h>
 #if HAVE_ICONV
 #include <iconv.h>
@@ -71,6 +70,7 @@ extern char * xstr_cd_iconv (const char *src, iconv_t cd)
 extern char * xstr_iconv (const char *src,
                           const char *from_codeset, const char *to_codeset)
   _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE;
+
 
 #ifdef __cplusplus
 }

@@ -20,7 +20,6 @@
 # define DIRNAME_H_ 1
 
 # include <stdbool.h>
-# include <stddef.h>
 # include <stdlib.h>
 # include "filename.h"
 # include "basename-lgpl.h"

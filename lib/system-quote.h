@@ -46,7 +46,6 @@
       is to truncate the entire command line.
  */
 
-#include <stddef.h>
 #include <stdlib.h>
 
 #ifdef __cplusplus

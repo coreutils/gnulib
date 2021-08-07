@@ -22,7 +22,6 @@
    arguments, since Unix shells interpret characters like " ", "'", "<", ">",
    "$", '*', '?' etc. in a special way.  */
 
-#include <stddef.h>
 #include <stdlib.h>
 
 #ifdef __cplusplus
