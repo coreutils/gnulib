@@ -138,20 +138,22 @@ typedef void (Hamt_freer) (Hamt_entry *elt);
 /* Creation and Destruction */
 /****************************/
 
+/* Free the resources solely allocated by HAMT and all elements solely
+   contained in it.  */
+extern void hamt_free (Hamt *hamt);
+
 /* Create and return a new and empty hash array mapped trie.  */
 _GL_ATTRIBUTE_NODISCARD
 extern Hamt *hamt_create (Hamt_hasher *hasher, Hamt_comparator *comparator,
-                          Hamt_freer *freer);
+                          Hamt_freer *freer)
+  _GL_ATTRIBUTE_DEALLOC (hamt_free, 1);
 
 /* Return a copy of HAMT, which is not the same in the sense above.
    This procedure can be used, for example, so that two threads can
    access the same data independently.  */
 _GL_ATTRIBUTE_NODISCARD
-extern Hamt *hamt_copy (Hamt *hamt);
-
-/* Free the resources solely allocated by HAMT and all elements solely
-   contained in it.  */
-extern void hamt_free (Hamt *hamt);
+extern Hamt *hamt_copy (Hamt *hamt)
+  _GL_ATTRIBUTE_DEALLOC (hamt_free, 1);
 
 /**********/
 /* Lookup */
