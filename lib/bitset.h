@@ -96,6 +96,9 @@ typedef struct
 } bitset_iterator;
 
 
+/* Free bitset.  Do nothing if NULL.  */
+void bitset_free (bitset);
+
 /* Return bytes required for bitset of desired type and size.  */
 size_t bitset_bytes (enum bitset_type, bitset_bindex);
 
@@ -107,21 +110,21 @@ bitset bitset_init (bitset, bitset_bindex, enum bitset_type);
 enum bitset_type bitset_type_choose (bitset_bindex, bitset_attrs);
 
 /* Create a bitset of desired type and size.  The bitset is zeroed.  */
-bitset bitset_alloc (bitset_bindex, enum bitset_type);
-
-/* Free bitset.  Do nothing if NULL.  */
-void bitset_free (bitset);
-
-/* Create a bitset of desired type and size using an obstack.  The
-   bitset is zeroed.  */
-bitset bitset_obstack_alloc (struct obstack *bobstack,
-                             bitset_bindex, enum bitset_type);
+bitset bitset_alloc (bitset_bindex, enum bitset_type)
+  _GL_ATTRIBUTE_DEALLOC (bitset_free, 1);
 
 /* Free bitset allocated on obstack.  Do nothing if NULL.  */
 void bitset_obstack_free (bitset);
 
+/* Create a bitset of desired type and size using an obstack.  The
+   bitset is zeroed.  */
+bitset bitset_obstack_alloc (struct obstack *bobstack,
+                             bitset_bindex, enum bitset_type)
+  _GL_ATTRIBUTE_DEALLOC (bitset_obstack_free, 1);
+
 /* Create a bitset of desired size and attributes.  The bitset is zeroed.  */
-bitset bitset_create (bitset_bindex, bitset_attrs);
+bitset bitset_create (bitset_bindex, bitset_attrs)
+  _GL_ATTRIBUTE_DEALLOC (bitset_free, 1);
 
 /* Return bitset type.  */
 enum bitset_type bitset_type_get (bitset);
