@@ -78,6 +78,11 @@ struct temp_dir
   /* More fields are present here, but not public.  */
 };
 
+/* Remove all registered files and subdirectories inside DIR and DIR itself.
+   DIR cannot be used any more after this call.
+   Return 0 upon success, or -1 if there was some problem.  */
+extern int cleanup_temp_dir (struct temp_dir *dir);
+
 /* Create a temporary directory.
    PREFIX is used as a prefix for the name of the temporary directory. It
    should be short and still give an indication about the program.
@@ -89,7 +94,8 @@ struct temp_dir
    is shown and NULL is returned.  */
 extern struct temp_dir * create_temp_dir (const char *prefix,
                                           const char *parentdir,
-                                          bool cleanup_verbose);
+                                          bool cleanup_verbose)
+  _GL_ATTRIBUTE_DEALLOC (cleanup_temp_dir, 1);
 
 /* Register the given ABSOLUTE_FILE_NAME as being a file inside DIR, that
    needs to be removed before DIR can be removed.
@@ -129,11 +135,6 @@ extern int cleanup_temp_subdir (struct temp_dir *dir,
 /* Remove all registered files and subdirectories inside DIR.
    Return 0 upon success, or -1 if there was some problem.  */
 extern int cleanup_temp_dir_contents (struct temp_dir *dir);
-
-/* Remove all registered files and subdirectories inside DIR and DIR itself.
-   DIR cannot be used any more after this call.
-   Return 0 upon success, or -1 if there was some problem.  */
-extern int cleanup_temp_dir (struct temp_dir *dir);
 
 /* ================== Opening and closing temporary files ================== */
 
