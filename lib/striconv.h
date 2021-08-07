@@ -18,7 +18,7 @@
 #ifndef _STRICONV_H
 #define _STRICONV_H
 
-#include <stddef.h>
+#include <stdlib.h>
 #if HAVE_ICONV
 #include <iconv.h>
 #endif
@@ -52,7 +52,8 @@ extern int mem_cd_iconv (const char *src, size_t srclen, iconv_t cd,
    Allocate a malloced memory block for the result.
    Return value: the freshly allocated resulting NUL-terminated string if
    successful, otherwise NULL and errno set.  */
-extern char * str_cd_iconv (const char *src, iconv_t cd);
+extern char * str_cd_iconv (const char *src, iconv_t cd)
+  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE;
 
 #endif
 
@@ -64,7 +65,8 @@ extern char * str_cd_iconv (const char *src, iconv_t cd);
    Return value: the freshly allocated resulting NUL-terminated string if
    successful, otherwise NULL and errno set.  */
 extern char * str_iconv (const char *src,
-                         const char *from_codeset, const char *to_codeset);
+                         const char *from_codeset, const char *to_codeset)
+  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE;
 
 
 #ifdef __cplusplus
