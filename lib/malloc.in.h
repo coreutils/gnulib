@@ -21,6 +21,10 @@
 #endif
 @PRAGMA_COLUMNS@
 
+#if @GNULIB_MEMALIGN@
+# include <stdlib.h> /* for free() */
+#endif
+
 /* The include_next requires a split double-inclusion guard.  */
 #if @HAVE_MALLOC_H@
 # @INCLUDE_NEXT@ @NEXT_MALLOC_H@
@@ -46,7 +50,9 @@
 #   undef memalign
 #   define memalign rpl_memalign
 #  endif
-_GL_FUNCDECL_RPL (memalign, void *, (size_t alignment, size_t size));
+_GL_FUNCDECL_RPL (memalign, void *,
+                  (size_t alignment, size_t size)
+                  _GL_ATTRIBUTE_DEALLOC_FREE);
 _GL_CXXALIAS_RPL (memalign, void *, (size_t alignment, size_t size));
 # else
 #  if @HAVE_MEMALIGN@
