@@ -88,12 +88,15 @@ extern void dfacopysyntax (struct dfa *, struct dfa const *);
 /* Parse the given string of given length into the given struct dfa.  */
 extern void dfaparse (char const *, ptrdiff_t, struct dfa *);
 
-/* Allocate and return a struct dfamust from a struct dfa that was
-   initialized by dfaparse and not yet given to dfacomp.  */
-extern struct dfamust *dfamust (struct dfa const *);
+struct dfamust;
 
 /* Free the storage held by the components of a struct dfamust. */
 extern void dfamustfree (struct dfamust *);
+
+/* Allocate and return a struct dfamust from a struct dfa that was
+   initialized by dfaparse and not yet given to dfacomp.  */
+extern struct dfamust *dfamust (struct dfa const *)
+  _GL_ATTRIBUTE_DEALLOC (dfamustfree, 1);
 
 /* Compile the given string of the given length into the given struct dfa.
    The last argument says whether to build a searching or an exact matcher.
