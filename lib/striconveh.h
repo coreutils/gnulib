@@ -18,7 +18,7 @@
 #ifndef _STRICONVEH_H
 #define _STRICONVEH_H
 
-#include <stddef.h>
+#include <stdlib.h>
 #if HAVE_ICONV
 #include <iconv.h>
 #endif
@@ -95,7 +95,8 @@ extern int
 extern char *
        str_cd_iconveh (const char *src,
                        const iconveh_t *cd,
-                       enum iconv_ilseq_handler handler);
+                       enum iconv_ilseq_handler handler)
+       _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE;
 
 #endif
 
@@ -129,7 +130,8 @@ extern int
 extern char *
        str_iconveh (const char *src,
                     const char *from_codeset, const char *to_codeset,
-                    enum iconv_ilseq_handler handler);
+                    enum iconv_ilseq_handler handler)
+       _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE;
 
 
 #ifdef __cplusplus
