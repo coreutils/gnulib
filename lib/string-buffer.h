@@ -21,7 +21,7 @@
 
 #include <stdarg.h>
 #include <stdbool.h>
-#include <stddef.h>
+#include <stdlib.h>
 
 #include "attribute.h"
 
@@ -76,7 +76,8 @@ extern void sb_free (struct string_buffer *buffer);
 /* Returns the contents of BUFFER, and frees all other memory held
    by BUFFER.  Returns NULL upon failure or if there was an error earlier.
    It is the responsibility of the caller to free() the result.  */
-extern char * sb_dupfree (struct string_buffer *buffer);
+extern char * sb_dupfree (struct string_buffer *buffer)
+  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE;
 
 #ifdef __cplusplus
 }
