@@ -1,4 +1,4 @@
-# year2038.m4 serial 6
+# year2038.m4 serial 7
 dnl Copyright (C) 2017-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -100,7 +100,7 @@ AC_DEFUN([gl_YEAR2038_BODY],
                 AC_MSG_FAILURE(
                   [The 'time_t' type stops working after January 2038,
                    and your system appears to support a wider 'time_t'.
-                   Try configuring with 'CPPFLAGS="-m64" LDFLAGS="-m64"'.
+                   Try configuring with 'CC="${CC} -m64"'.
                    To build with a 32-bit time_t anyway (not recommended),
                    configure with '--disable-year2038'.]);;
             esac
@@ -111,7 +111,7 @@ AC_DEFUN([gl_YEAR2038_BODY],
            [The 'time_t' type stops working after January 2038,
             and this package needs a wider 'time_t' type
             if there is any way to access timestamps after that.
-            Configure with 'CPPFLAGS="-m64" LDFLAGS="-m64"' perhaps?])
+            Configure with 'CC="${CC} -m64"' perhaps?])
          gl_warned_about_y2038=yes
        fi
       ])
