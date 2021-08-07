@@ -4,10 +4,12 @@ Return machine's domainname, without size limitations.
 Files:
 lib/xgetdomainname.h
 lib/xgetdomainname.c
+lib/xgetaname-impl.h
 
 Depends-on:
+free-posix
 getdomainname
-xgethostname
+xalloc
 
 configure.ac:
 

@@ -15,8 +15,11 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
+#include <config.h>
+
+/* Specification.  */
 #include "xgetdomainname.h"
 
 #define GETANAME getdomainname
 #define XGETANAME xgetdomainname
-#include "xgethostname.c"
+#include "xgetaname-impl.h"

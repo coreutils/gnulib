@@ -4,6 +4,7 @@ Return machine's hostname, without size limitations.
 Files:
 lib/xgethostname.h
 lib/xgethostname.c
+lib/xgetaname-impl.h
 
 Depends-on:
 free-posix
