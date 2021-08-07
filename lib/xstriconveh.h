@@ -18,7 +18,7 @@
 #ifndef _XSTRICONVEH_H
 #define _XSTRICONVEH_H
 
-#include <stddef.h>
+#include <stdlib.h>
 
 /* Get the 'enum iconv_ilseq_handler' and iconveh_t types, and the
    iconveh_open, iconveh_close declarations.  */
@@ -68,7 +68,8 @@ extern int
 extern char *
        xstr_cd_iconveh (const char *src,
                         const iconveh_t *cd,
-                        enum iconv_ilseq_handler handler);
+                        enum iconv_ilseq_handler handler)
+       _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE;
 
 #endif
 
@@ -104,7 +105,8 @@ extern int
 extern char *
        xstr_iconveh (const char *src,
                      const char *from_codeset, const char *to_codeset,
-                     enum iconv_ilseq_handler handler);
+                     enum iconv_ilseq_handler handler)
+       _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE;
 
 
 #ifdef __cplusplus
