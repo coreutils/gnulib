@@ -260,8 +260,9 @@ _GL_CXXALIASWARN (fcloseall);
 #   undef fdopen
 #   define fdopen rpl_fdopen
 #  endif
-_GL_FUNCDECL_RPL (fdopen, FILE *, (int fd, const char *mode)
-                                  _GL_ARG_NONNULL ((2)));
+_GL_FUNCDECL_RPL (fdopen, FILE *,
+                  (int fd, const char *mode)
+                  _GL_ARG_NONNULL ((2)) _GL_ATTRIBUTE_DEALLOC (fclose, 1));
 _GL_CXXALIAS_RPL (fdopen, FILE *, (int fd, const char *mode));
 # elif defined _WIN32 && !defined __CYGWIN__
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
@@ -380,7 +381,7 @@ _GL_CXXALIASWARN (fileno);
 #  endif
 _GL_FUNCDECL_RPL (fopen, FILE *,
                   (const char *restrict filename, const char *restrict mode)
-                  _GL_ARG_NONNULL ((1, 2)));
+                  _GL_ARG_NONNULL ((1, 2)) _GL_ATTRIBUTE_DEALLOC (fclose, 1));
 _GL_CXXALIAS_RPL (fopen, FILE *,
                   (const char *restrict filename, const char *restrict mode));
 # else
@@ -1009,13 +1010,15 @@ _GL_WARN_ON_USE (perror, "perror is not always POSIX compliant - "
 #   undef popen
 #   define popen rpl_popen
 #  endif
-_GL_FUNCDECL_RPL (popen, FILE *, (const char *cmd, const char *mode)
-                                 _GL_ARG_NONNULL ((1, 2)));
+_GL_FUNCDECL_RPL (popen, FILE *,
+                  (const char *cmd, const char *mode)
+                  _GL_ARG_NONNULL ((1, 2)) _GL_ATTRIBUTE_DEALLOC (pclose, 1));
 _GL_CXXALIAS_RPL (popen, FILE *, (const char *cmd, const char *mode));
 # else
 #  if !@HAVE_POPEN@
-_GL_FUNCDECL_SYS (popen, FILE *, (const char *cmd, const char *mode)
-                                 _GL_ARG_NONNULL ((1, 2)));
+_GL_FUNCDECL_SYS (popen, FILE *,
+                  (const char *cmd, const char *mode)
+                  _GL_ARG_NONNULL ((1, 2)) _GL_ATTRIBUTE_DEALLOC (pclose, 1));
 #  endif
 _GL_CXXALIAS_SYS (popen, FILE *, (const char *cmd, const char *mode));
 # endif
@@ -1346,7 +1349,8 @@ _GL_CXXALIASWARN (tempnam);
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define tmpfile rpl_tmpfile
 #  endif
-_GL_FUNCDECL_RPL (tmpfile, FILE *, (void));
+_GL_FUNCDECL_RPL (tmpfile, FILE *, (void)
+                                   _GL_ATTRIBUTE_DEALLOC (fclose, 1));
 _GL_CXXALIAS_RPL (tmpfile, FILE *, (void));
 # else
 _GL_CXXALIAS_SYS (tmpfile, FILE *, (void));
