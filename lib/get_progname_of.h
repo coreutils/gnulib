@@ -18,6 +18,7 @@
 #ifndef _GET_PROGNAME_OF_H
 #define _GET_PROGNAME_OF_H
 
+#include <stdlib.h>
 #include <sys/types.h>
 
 #ifdef __cplusplus
@@ -27,7 +28,8 @@ extern "C" {
 /* Returns the base name of the program that executes the given process,
    possibly truncated, as a freshly allocated string, or NULL if it cannot
    be determined.  */
-extern char *get_progname_of (pid_t pid);
+extern char *get_progname_of (pid_t pid)
+  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE;
 
 #ifdef __cplusplus
 }
