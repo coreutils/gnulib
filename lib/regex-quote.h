@@ -18,8 +18,8 @@
 #ifndef _REGEX_QUOTE_H
 #define _REGEX_QUOTE_H
 
-#include <stddef.h>
 #include <stdbool.h>
+#include <stdlib.h>
 
 
 /* Specifies a quotation task for converting a fixed string to a regular
@@ -82,7 +82,9 @@ extern char *
 
 /* Returns the freshly allocated quoted string.  */
 extern char *
-       regex_quote (const char *string, const struct regex_quote_spec *spec);
+       regex_quote (const char *string, const struct regex_quote_spec *spec)
+       _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE
+       _GL_ATTRIBUTE_RETURNS_NONNULL;
 
 
 #endif /* _REGEX_QUOTE_H */
