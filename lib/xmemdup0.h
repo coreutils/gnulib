@@ -18,14 +18,16 @@
 #ifndef XMEMDUP_H_
 # define XMEMDUP_H_
 
-# include <stddef.h>
+# include <stdlib.h>
 
 
 # ifdef __cplusplus
 extern "C" {
 # endif
 
-char *xmemdup0 (void const *p, size_t s);
+char *xmemdup0 (void const *p, size_t s)
+  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE
+  _GL_ATTRIBUTE_RETURNS_NONNULL;
 
 # ifdef __cplusplus
 }
