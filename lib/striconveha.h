@@ -19,7 +19,7 @@
 #define _STRICONVEHA_H
 
 #include <stdbool.h>
-#include <stddef.h>
+#include <stdlib.h>
 
 #include "iconveh.h"
 
@@ -69,7 +69,8 @@ extern char *
        str_iconveha (const char *src,
                      const char *from_codeset, const char *to_codeset,
                      bool transliterate,
-                     enum iconv_ilseq_handler handler);
+                     enum iconv_ilseq_handler handler)
+       _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE;
 
 
 /* In the above, FROM_CODESET can also be one of the following values:
