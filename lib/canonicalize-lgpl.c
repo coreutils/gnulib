@@ -74,7 +74,6 @@
 # define __pathconf pathconf
 # define __rawmemchr rawmemchr
 # define __readlink readlink
-# define __stat stat
 # if IN_RELOCWRAPPER
     /* When building the relocatable program wrapper, use the system's memmove
        function, not the gnulib override, otherwise we would get a link error.
@@ -105,7 +104,7 @@ file_accessible (char const *file)
   return __faccessat (AT_FDCWD, file, F_OK, AT_EACCESS) == 0;
 # else
   struct stat st;
-  return __stat (file, &st) == 0 || errno == EOVERFLOW;
+  return stat (file, &st) == 0 || errno == EOVERFLOW;
 # endif
 }
 
