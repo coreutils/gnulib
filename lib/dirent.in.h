@@ -111,7 +111,7 @@ _GL_FUNCDECL_RPL (opendir, DIR *,
                   _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC (closedir, 1));
 _GL_CXXALIAS_RPL (opendir, DIR *, (const char *dir_name));
 # else
-#  if !@HAVE_OPENDIR@
+#  if !@HAVE_OPENDIR@ || __GNUC__ >= 11
 _GL_FUNCDECL_SYS (opendir, DIR *,
                   (const char *dir_name)
                   _GL_ARG_NONNULL ((1))
@@ -120,11 +120,21 @@ _GL_FUNCDECL_SYS (opendir, DIR *,
 _GL_CXXALIAS_SYS (opendir, DIR *, (const char *dir_name));
 # endif
 _GL_CXXALIASWARN (opendir);
-#elif defined GNULIB_POSIXCHECK
-# undef opendir
-# if HAVE_RAW_DECL_OPENDIR
+#else
+# if @GNULIB_CLOSEDIR@ && __GNUC__ >= 11 && !defined opendir
+/* For -Wmismatched-dealloc: Associate opendir with closedir or
+   rpl_closedir.  */
+_GL_FUNCDECL_SYS (opendir, DIR *,
+                  (const char *dir_name)
+                  _GL_ARG_NONNULL ((1))
+                  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC (closedir, 1));
+# endif
+# if defined GNULIB_POSIXCHECK
+#  undef opendir
+#  if HAVE_RAW_DECL_OPENDIR
 _GL_WARN_ON_USE (opendir, "opendir is not portable - "
                  "use gnulib module opendir for portability");
+#  endif
 # endif
 #endif
 
@@ -211,7 +221,7 @@ _GL_FUNCDECL_RPL (fdopendir, DIR *,
                   _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC (closedir, 1));
 _GL_CXXALIAS_RPL (fdopendir, DIR *, (int fd));
 # else
-#  if !@HAVE_FDOPENDIR@ || !@HAVE_DECL_FDOPENDIR@
+#  if !@HAVE_FDOPENDIR@ || !@HAVE_DECL_FDOPENDIR@ || __GNUC__ >= 11
 _GL_FUNCDECL_SYS (fdopendir, DIR *,
                   (int fd)
                   _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC (closedir, 1));
@@ -219,11 +229,20 @@ _GL_FUNCDECL_SYS (fdopendir, DIR *,
 _GL_CXXALIAS_SYS (fdopendir, DIR *, (int fd));
 # endif
 _GL_CXXALIASWARN (fdopendir);
-#elif defined GNULIB_POSIXCHECK
-# undef fdopendir
-# if HAVE_RAW_DECL_FDOPENDIR
+#else
+# if @GNULIB_CLOSEDIR@ && __GNUC__ >= 11 && !defined fdopendir
+/* For -Wmismatched-dealloc: Associate fdopendir with closedir or
+   rpl_closedir.  */
+_GL_FUNCDECL_SYS (fdopendir, DIR *,
+                  (int fd)
+                  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC (closedir, 1));
+# endif
+# if defined GNULIB_POSIXCHECK
+#  undef fdopendir
+#  if HAVE_RAW_DECL_FDOPENDIR
 _GL_WARN_ON_USE (fdopendir, "fdopendir is unportable - "
                  "use gnulib module fdopendir for portability");
+#  endif
 # endif
 #endif
 
