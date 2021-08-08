@@ -209,6 +209,12 @@ extern int
    sequence to the encapsulated stream of Unicode characters.  */
 struct uninorm_filter;
 
+/* Bring data buffered in the filter to its destination, the encapsulated
+   stream, then close and free the filter.
+   Return 0 if successful, or -1 with errno set upon failure.  */
+extern int
+       uninorm_filter_free (struct uninorm_filter *filter);
+
 /* Create and return a normalization filter for Unicode characters.
    The pair (stream_func, stream_data) is the encapsulated stream.
    stream_func (stream_data, uc) receives the Unicode character uc
@@ -217,7 +223,8 @@ struct uninorm_filter;
 extern struct uninorm_filter *
        uninorm_filter_create (uninorm_t nf,
                               int (*stream_func) (void *stream_data, ucs4_t uc),
-                              void *stream_data);
+                              void *stream_data)
+       _GL_ATTRIBUTE_DEALLOC (uninorm_filter_free, 1);
 
 /* Stuff a Unicode character into a normalizing filter.
    Return 0 if successful, or -1 with errno set upon failure.  */
@@ -232,12 +239,6 @@ extern int
    will not necessarily be normalized.  */
 extern int
        uninorm_filter_flush (struct uninorm_filter *filter);
-
-/* Bring data buffered in the filter to its destination, the encapsulated
-   stream, then close and free the filter.
-   Return 0 if successful, or -1 with errno set upon failure.  */
-extern int
-       uninorm_filter_free (struct uninorm_filter *filter);
 
 
 #ifdef __cplusplus
