@@ -1,13 +1,13 @@
---- test-driver.bak	2019-01-23 03:22:06.672283432 +0100
-+++ test-driver	2019-01-23 04:23:21.201060757 +0100
-@@ -106,7 +106,10 @@
- trap "st=143; $do_exit" 15
-
- # Test script is run here.
--"$@" >$log_file 2>&1
+--- test-driver.bak	2021-08-04 11:12:04.399976745 +0200
++++ test-driver	2021-08-04 11:17:17.646343985 +0200
+@@ -109,7 +109,10 @@
+ # to ameliorate tests themselves also writing to the log file. Our tests
+ # don't, but others can (automake bug#35762).
+ : >"$log_file"
+-"$@" >>"$log_file" 2>&1
 +case "$1" in
-+  *.sh) sh "$@" >$log_file 2>&1 ;;
-+  *)    "$@" >$log_file 2>&1 ;;
++  *.sh) sh "$@" >>"$log_file" 2>&1 ;;
++  *)    "$@" >>"$log_file" 2>&1 ;;
 +esac
  estatus=$?
 
