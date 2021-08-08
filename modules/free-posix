@@ -7,6 +7,8 @@ m4/free.m4
 
 Depends-on:
 stdlib
+string
+wchar
 
 configure.ac:
 gl_FUNC_FREE

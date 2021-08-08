@@ -21,10 +21,6 @@
 #endif
 @PRAGMA_COLUMNS@
 
-#if @GNULIB_MEMALIGN@
-# include <stdlib.h> /* for free() */
-#endif
-
 /* The include_next requires a split double-inclusion guard.  */
 #if @HAVE_MALLOC_H@
 # @INCLUDE_NEXT@ @NEXT_MALLOC_H@
@@ -34,7 +30,7 @@
 #define _@GUARD_PREFIX@_MALLOC_H
 
 /* Solaris declares memalign() in <stdlib.h>, not in <malloc.h>.
-   Also get size_t.  */
+   Also get size_t and free().  */
 #include <stdlib.h>
 
 /* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
@@ -56,17 +52,31 @@ _GL_FUNCDECL_RPL (memalign, void *,
 _GL_CXXALIAS_RPL (memalign, void *, (size_t alignment, size_t size));
 # else
 #  if @HAVE_MEMALIGN@
+#   if __GNUC__ >= 11
+/* For -Wmismatched-dealloc: Associate memalign with free or rpl_free.  */
+_GL_FUNCDECL_SYS (memalign, void *,
+                  (size_t alignment, size_t size)
+                  _GL_ATTRIBUTE_DEALLOC_FREE);
+#   endif
 _GL_CXXALIAS_SYS (memalign, void *, (size_t alignment, size_t size));
 #  endif
 # endif
 # if @HAVE_MEMALIGN@
 _GL_CXXALIASWARN (memalign);
 # endif
-#elif defined GNULIB_POSIXCHECK
-# undef memalign
-# if HAVE_RAW_DECL_MEMALIGN
+#else
+# if __GNUC__ >= 11 && !defined memalign
+/* For -Wmismatched-dealloc: Associate memalign with free or rpl_free.  */
+_GL_FUNCDECL_SYS (memalign, void *,
+                  (size_t alignment, size_t size)
+                  _GL_ATTRIBUTE_DEALLOC_FREE);
+# endif
+# if defined GNULIB_POSIXCHECK
+#  undef memalign
+#  if HAVE_RAW_DECL_MEMALIGN
 _GL_WARN_ON_USE (memalign, "memalign is not portable - "
                  "use gnulib module memalign for portability");
+#  endif
 # endif
 #endif
 
