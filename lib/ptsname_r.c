@@ -16,6 +16,7 @@
 
 #include <config.h>
 
+/* Specification.  */
 #include <stdlib.h>
 
 #include <errno.h>
@@ -24,27 +25,11 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-#ifdef _LIBC
-# include <paths.h>
-#else
-# ifndef _PATH_TTY
-#  define _PATH_TTY "/dev/tty"
-# endif
-# ifndef _PATH_DEV
-#  define _PATH_DEV "/dev/"
-# endif
-
-# undef __set_errno
-# undef __stat
-# undef __ttyname_r
-# undef __ptsname_r
-
-# define __set_errno(e) errno = (e)
-# define __isatty isatty
-# define __stat stat
-# define __ttyname_r ttyname_r
-# define __ptsname_r ptsname_r
-
+#ifndef _PATH_TTY
+# define _PATH_TTY "/dev/tty"
+#endif
+#ifndef _PATH_DEV
+# define _PATH_DEV "/dev/"
 #endif
 
 /* Get the major, minor macros.  */
@@ -79,7 +64,7 @@
    terminal associated with the master FD is open on in BUF.
    Return 0 on success, otherwise an error number.  */
 int
-__ptsname_r (int fd, char *buf, size_t buflen)
+ptsname_r (int fd, char *buf, size_t buflen)
 #undef ptsname_r
 {
 #if HAVE_ESSENTIALLY_WORKING_PTSNAME_R
@@ -89,7 +74,7 @@ __ptsname_r (int fd, char *buf, size_t buflen)
   else
     return errno;
 #elif defined __DragonFly__
-  int save_errno = errno;
+  int saved_errno = errno;
   char tmpbuf[5 + 4 + 10 + 1];
   int ret;
   int n;
@@ -116,16 +101,16 @@ __ptsname_r (int fd, char *buf, size_t buflen)
   memcpy (buf, tmpbuf, n + 1);
   /* Don't do a final stat(), since the file name /dev/pts/N does not actually
      exist.  */
-  errno = save_errno;
+  errno = saved_errno;
   return 0;
 #else
-  int save_errno = errno;
+  int saved_errno = errno;
   struct stat st;
 
   if (buf == NULL)
     {
-      __set_errno (EINVAL);
-      return EINVAL;
+      errno = EINVAL;
+      return errno;
     }
 
 # if defined __sun /* Solaris */
@@ -202,7 +187,7 @@ __ptsname_r (int fd, char *buf, size_t buflen)
     memcpy (buf, tmpbuf, n + 1);
   }
 # else
-  if (!__isatty (fd))
+  if (!isatty (fd))
     {
 #  if ISATTY_FAILS_WITHOUT_SETTING_ERRNO && defined F_GETFL /* IRIX, Solaris */
       /* Set errno.  */
@@ -216,14 +201,14 @@ __ptsname_r (int fd, char *buf, size_t buflen)
 
   if (buflen < strlen (_PATH_TTY) + 3)
     {
-      __set_errno (ERANGE);
-      return ERANGE;
+      errno = ERANGE;
+      return errno;
     }
 
-  int err = __ttyname_r (fd, buf, buflen);
+  int err = ttyname_r (fd, buf, buflen);
   if (err != 0)
     {
-      __set_errno (err);
+      errno = err;
       return errno;
     }
 
@@ -231,10 +216,10 @@ __ptsname_r (int fd, char *buf, size_t buflen)
     buf[sizeof (_PATH_DEV) - 1] = 't';
 # endif
 
-  if (__stat (buf, &st) < 0 && errno != EOVERFLOW)
+  if (stat (buf, &st) < 0 && errno != EOVERFLOW)
     return errno;
 
-  __set_errno (save_errno);
+  errno = saved_errno;
   return 0;
 #endif
 }
