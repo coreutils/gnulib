@@ -161,8 +161,6 @@ $LIBCSRC time/mktime-internal.h		lib
 #$LIBCSRC sysdeps/posix/dup2.c		lib gpl
 #$LIBCSRC sysdeps/posix/euidaccess.c	lib gpl
 #$LIBCSRC sysdeps/posix/tempname.c	lib gpl
-#$LIBCSRC sysdeps/unix/bsd/poll.c	lib gpl
-#$LIBCSRC sysdeps/unix/bsd/ptsname.c	lib gpl
 #$LIBCSRC sysdeps/unix/bsd/unlockpt.c	lib gpl
 #$LIBCSRC sysdeps/unix/dirfd.c		lib gpl
 #$LIBCSRC sysdeps/unix/grantpt.c	lib gpl
