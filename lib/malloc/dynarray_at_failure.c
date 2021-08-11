@@ -18,11 +18,11 @@
 
 #ifndef _LIBC
 # include <libc-config.h>
+# include <stdlib.h>
 #endif
 
 #include <dynarray.h>
 #include <stdio.h>
-#include <stdlib.h>
 
 void
 __libc_dynarray_at_failure (size_t size, size_t index)
@@ -32,6 +32,7 @@ __libc_dynarray_at_failure (size_t size, size_t index)
   __snprintf (buf, sizeof (buf), "Fatal glibc error: "
               "array index %zu not less than array length %zu\n",
               index, size);
+  __libc_fatal (buf);
 #else
  abort ();
 #endif
