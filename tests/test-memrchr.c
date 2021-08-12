@@ -28,7 +28,7 @@ SIGNATURE_CHECK (memrchr, void *, (void const *, int, size_t));
 #include "macros.h"
 
 /* Work around GCC bug 101494.  */
-#if 4 < __GNUC__ + (3 <= __GNUC_MINOR__)
+#if 4 < __GNUC__ + (3 <= __GNUC_MINOR__) && __GNUC__ < 12
 # pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
 #endif
 
