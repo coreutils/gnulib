@@ -1,0 +1,18 @@
+@node res_hnok
+@subsection @code{res_hnok}
+@findex res_hnok
+
+Documentation:@* @uref{https://nixdoc.net/man-pages/IRIX/man3c/res_hnok.3c.html,,man res_hnok}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+macOS 11.1, FreeBSD 13.0, NetBSD 9.0, OpenBSD 6.7, Minix 3.3.0, HP-UX 11.11, Cygwin 2.9, mingw, MSVC 14, Android 9.0.
+@end itemize

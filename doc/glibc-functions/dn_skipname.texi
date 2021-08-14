@@ -1,0 +1,18 @@
+@node dn_skipname
+@subsection @code{dn_skipname}
+@findex dn_skipname
+
+Documentation:@* @uref{https://nixdoc.net/man-pages/FreeBSD/man3/dn_skipname.3.html,,man dn_skipname}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+macOS 11.1, FreeBSD 13.0, NetBSD 9.0, OpenBSD 6.7, Minix 3.3.0, Cygwin 1.5.x, mingw, MSVC 14, Android 9.0.
+@end itemize

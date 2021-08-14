@@ -1,0 +1,34 @@
+@node closefrom
+@subsection @code{closefrom}
+@findex closefrom
+
+Documentation:@*
+@ifinfo
+@ref{Opening and Closing Files,,Opening and Closing Files,libc}
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Opening-and-Closing-Files.html}
+@end ifnotinfo
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+glibc 2.33, macOS 11.1, FreeBSD 7.2, Minix 3.3.0, AIX 7.1, HP-UX 11.31, IRIX 6.5, Cygwin 2.9, mingw, MSVC 14, Android 9.0.
+@end itemize
+
+Note (quoted from
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/close.3p.html,,man close}):
+``The [POSIX] standard developers rejected a proposal to add
+@code{closefrom()} to the [POSIX] standard.  Because the standard
+permits implementations to use inherited file descriptors as a means of
+providing a conforming environment for the child process, it is not
+possible to standardize an interface that closes arbitrary file
+descriptors above a certain value while still guaranteeing a conforming
+environment.''

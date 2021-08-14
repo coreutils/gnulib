@@ -4,10 +4,7 @@
 Defines the types @code{res_sendhookact}, @code{res_send_qhook},
 @code{res_send_rhook}, @code{res_state}, @code{struct res_sym} and the
 macros @code{_PATH_RESCONF}, @code{RES_*}, and declares the functions
-@code{fp_nquery}, @code{fp_query},
-@code{hostalias},
-@code{p_query},
-@code{res_close}, @code{res_init}, @code{res_isourserver},
+@code{res_close}, @code{res_init},
 @code{res_mkquery}, @code{res_query}, @code{res_querydomain},
 @code{res_search}, @code{res_send}.
 

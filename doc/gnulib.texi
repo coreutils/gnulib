@@ -2209,6 +2209,7 @@ problems are not worked around by Gnulib.
 * timer_gettime::
 * timer_settime::
 * times::
+* timespec_getres::
 * timezone::
 * tmpfile::
 * tmpnam::
@@ -3500,6 +3501,7 @@ problems are not worked around by Gnulib.
 @include posix-functions/timer_gettime.texi
 @include posix-functions/timer_settime.texi
 @include posix-functions/times.texi
+@include posix-functions/timespec_getres.texi
 @include posix-functions/timezone.texi
 @include posix-functions/tmpfile.texi
 @include posix-functions/tmpnam.texi
@@ -4030,7 +4032,6 @@ This list of functions is sorted according to the header that declares them.
 * inet_makeaddr::
 * inet_net_ntop::
 * inet_net_pton::
-* inet_neta::
 * inet_netof::
 * inet_network::
 * inet_nsap_addr::
@@ -4042,7 +4043,6 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/inet_makeaddr.texi
 @include glibc-functions/inet_net_ntop.texi
 @include glibc-functions/inet_net_pton.texi
-@include glibc-functions/inet_neta.texi
 @include glibc-functions/inet_netof.texi
 @include glibc-functions/inet_network.texi
 @include glibc-functions/inet_nsap_addr.texi
@@ -4449,8 +4449,6 @@ This list of functions is sorted according to the header that declares them.
 @menu
 * mallinfo::
 * mallinfo2::
-* malloc_get_state::
-* malloc_set_state::
 * malloc_info::
 * malloc_stats::
 * malloc_trim::
@@ -4462,8 +4460,6 @@ This list of functions is sorted according to the header that declares them.
 
 @include glibc-functions/mallinfo.texi
 @include glibc-functions/mallinfo2.texi
-@include glibc-functions/malloc_get_state.texi
-@include glibc-functions/malloc_set_state.texi
 @include glibc-functions/malloc_info.texi
 @include glibc-functions/malloc_stats.texi
 @include glibc-functions/malloc_trim.texi
@@ -4826,9 +4822,6 @@ This list of functions is sorted according to the header that declares them.
 * pthread_getname_np::
 * pthread_kill_other_threads_np::
 * pthread_mutex_clocklock::
-* pthread_mutex_consistent_np::
-* pthread_mutexattr_getrobust_np::
-* pthread_mutexattr_setrobust_np::
 * pthread_rwlock_clockrdlock::
 * pthread_rwlock_clockwrlock::
 * pthread_rwlockattr_getkind_np::
@@ -4839,7 +4832,6 @@ This list of functions is sorted according to the header that declares them.
 * pthread_sigqueue::
 * pthread_timedjoin_np::
 * pthread_tryjoin_np::
-* pthread_yield::
 @end menu
 
 @include glibc-functions/pthread_attr_getaffinity_np.texi
@@ -4854,9 +4846,6 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/pthread_getname_np.texi
 @include glibc-functions/pthread_kill_other_threads_np.texi
 @include glibc-functions/pthread_mutex_clocklock.texi
-@include glibc-functions/pthread_mutex_consistent_np.texi
-@include glibc-functions/pthread_mutexattr_getrobust_np.texi
-@include glibc-functions/pthread_mutexattr_setrobust_np.texi
 @include glibc-functions/pthread_rwlock_clockrdlock.texi
 @include glibc-functions/pthread_rwlock_clockwrlock.texi
 @include glibc-functions/pthread_rwlockattr_getkind_np.texi
@@ -4867,7 +4856,6 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/pthread_sigqueue.texi
 @include glibc-functions/pthread_timedjoin_np.texi
 @include glibc-functions/pthread_tryjoin_np.texi
-@include glibc-functions/pthread_yield.texi
 
 @node Glibc pty.h
 @section Glibc @code{<pty.h>}
@@ -4947,20 +4935,44 @@ This list of functions is sorted according to the header that declares them.
 @section Glibc @code{<resolv.h>}
 
 @menu
+* dn_comp::
 * dn_expand::
+* dn_skipname::
+* res_dnok::
+* res_hnok::
 * res_init::
+* res_mailok::
 * res_mkquery::
+* res_nmkquery::
+* res_nquery::
+* res_nquerydomain::
+* res_nsearch::
+* res_nsend::
+* res_ownok::
 * res_query::
 * res_querydomain::
 * res_search::
+* res_send::
 @end menu
 
+@include glibc-functions/dn_comp.texi
 @include glibc-functions/dn_expand.texi
+@include glibc-functions/dn_skipname.texi
+@include glibc-functions/res_dnok.texi
+@include glibc-functions/res_hnok.texi
 @include glibc-functions/res_init.texi
+@include glibc-functions/res_mailok.texi
 @include glibc-functions/res_mkquery.texi
+@include glibc-functions/res_nmkquery.texi
+@include glibc-functions/res_nquery.texi
+@include glibc-functions/res_nquerydomain.texi
+@include glibc-functions/res_nsearch.texi
+@include glibc-functions/res_nsend.texi
+@include glibc-functions/res_ownok.texi
 @include glibc-functions/res_query.texi
 @include glibc-functions/res_querydomain.texi
 @include glibc-functions/res_search.texi
+@include glibc-functions/res_send.texi
 
 @node Glibc rpc/auth.h
 @section Glibc @code{<rpc/auth.h>}
@@ -5680,10 +5692,12 @@ This list of functions is sorted according to the header that declares them.
 
 @menu
 * posix_spawn_file_actions_addchdir_np::
+* posix_spawn_file_actions_addclosefrom_np::
 * posix_spawn_file_actions_addfchdir_np::
 @end menu
 
 @include glibc-functions/posix_spawn_file_actions_addchdir_np.texi
+@include glibc-functions/posix_spawn_file_actions_addclosefrom_np.texi
 @include glibc-functions/posix_spawn_file_actions_addfchdir_np.texi
 
 @c @node Glibc stdarg.h
@@ -6514,15 +6528,18 @@ This list of functions is sorted according to the header that declares them.
 @section Glibc Extensions to @code{<unistd.h>}
 
 @menu
+* _Fork::
 * acct::
 * brk::
 * chroot::
+* closefrom::
 * copy_file_range::
 * daemon::
 * dup3::
 * eaccess::
 * endusershell::
 * euidaccess::
+* execveat::
 * execvpe::
 * get_current_dir_name::
 * getdomainname::
@@ -6551,15 +6568,18 @@ This list of functions is sorted according to the header that declares them.
 * vhangup::
 @end menu
 
+@include glibc-functions/_Fork.texi
 @include glibc-functions/acct.texi
 @include glibc-functions/brk.texi
 @include glibc-functions/chroot.texi
+@include glibc-functions/closefrom.texi
 @include glibc-functions/copy_file_range.texi
 @include glibc-functions/daemon.texi
 @include glibc-functions/dup3.texi
 @include glibc-functions/eaccess.texi
 @include glibc-functions/endusershell.texi
 @include glibc-functions/euidaccess.texi
+@include glibc-functions/execveat.texi
 @include glibc-functions/execvpe.texi
 @include glibc-functions/get_current_dir_name.texi
 @include glibc-functions/getdomainname.texi
@@ -7056,7 +7076,7 @@ library.  See @ref{Exported Symbols of Shared Libraries}.
 This file is a test driver that supports running a test under
 @code{valgrind}.
 @item build-aux/test-driver.diff
-This is a patch, against Automake's test driver, that support running a
+This is a patch, against Automake's test driver, that supports running a
 test suite on Android.
 @end table
 
