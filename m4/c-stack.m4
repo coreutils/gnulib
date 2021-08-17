@@ -7,12 +7,13 @@
 
 # Written by Paul Eggert.
 
-# serial 23
+# serial 24
 
 AC_DEFUN([gl_C_STACK],
 [
   dnl 'c-stack' needs -lsigsegv if and only if the 'sigsegv' module needs it.
   if test "$with_libsigsegv" = yes; then
+    gl_LIBSIGSEGV
     if test "$gl_cv_lib_sigsegv" = yes; then
       AC_SUBST([LIBCSTACK], [$LIBSIGSEGV])
       AC_SUBST([LTLIBCSTACK], [$LTLIBSIGSEGV])
