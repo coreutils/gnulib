@@ -20,6 +20,7 @@ m4/mmap-anon.m4
 m4/sigaltstack.m4
 m4/stack-direction.m4
 m4/libsigsegv.m4
+m4/sigsegv.m4
 
 Depends-on:
 havelib
@@ -28,15 +29,11 @@ stdint
 getpagesize
 
 configure.ac:
-AC_ARG_WITH([libsigsegv],
-  [AS_HELP_STRING([--with-libsigsegv],
-     [use the GNU libsigsegv library, when present, instead of the gnulib module 'sigsegv'])])
-SIGSEGV_H=sigsegv.h
-if test "$with_libsigsegv" = yes; then
-  gl_LIBSIGSEGV
-  if test "$gl_cv_lib_sigsegv" = yes; then
-    SIGSEGV_H=
-  fi
+AC_REQUIRE([gl_SIGSEGV])
+if test $gl_sigsegv_uses_libsigsegv = yes; then
+  SIGSEGV_H=
+else
+  SIGSEGV_H=sigsegv.h
 fi
 AC_SUBST([SIGSEGV_H])
 AM_CONDITIONAL([GL_GENERATE_SIGSEGV_H], [test -n "$SIGSEGV_H"])
