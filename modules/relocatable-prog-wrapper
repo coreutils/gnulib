@@ -64,6 +64,7 @@ largefile
 libc-config
 pathmax
 ssize_t
+stdalign
 stdbool
 stddef
 stdint
