@@ -31,6 +31,19 @@ _GL_INLINE_HEADER_BEGIN
 # define SE_LABEL_INLINE _GL_INLINE
 #endif
 
+/* _GL_ATTRIBUTE_MAYBE_UNUSED declares that it is not a programming mistake if
+   the entity is not used.  The compiler should not warn if the entity is not
+   used.  */
+#ifndef _GL_ATTRIBUTE_MAYBE_UNUSED
+# if 0 /* no GCC or clang version supports this yet */
+#  define _GL_ATTRIBUTE_MAYBE_UNUSED [[__maybe_unused__]]
+# elif defined __GNUC__ || defined __clang__
+#  define _GL_ATTRIBUTE_MAYBE_UNUSED __attribute__ ((__unused__))
+# else
+#  define _GL_ATTRIBUTE_MAYBE_UNUSED
+# endif
+#endif
+
 #define SELABEL_CTX_FILE 0
 
 struct selabel_handle;

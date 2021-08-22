@@ -56,6 +56,16 @@ _GL_INLINE_HEADER_BEGIN
 # define _GL_MATH_INLINE _GL_INLINE
 #endif
 
+/* The __attribute__ feature is available in gcc versions 2.5 and later.
+   The attribute __const__ was added in gcc 2.95.  */
+#ifndef _GL_ATTRIBUTE_CONST
+# if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 95) || defined __clang__
+#  define _GL_ATTRIBUTE_CONST __attribute__ ((__const__))
+# else
+#  define _GL_ATTRIBUTE_CONST /* empty */
+# endif
+#endif
+
 /* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
 
 /* The definition of _GL_ARG_NONNULL is copied here.  */
