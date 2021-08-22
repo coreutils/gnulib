@@ -113,7 +113,7 @@ static int initialized_sockets_version /* = 0 */;
 #endif /* WINDOWS_SOCKETS */
 
 int
-gl_sockets_startup (int version _GL_UNUSED)
+gl_sockets_startup (_GL_UNUSED int version)
 {
 #if WINDOWS_SOCKETS
   if (version > initialized_sockets_version)

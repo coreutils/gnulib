@@ -48,7 +48,7 @@
 /* This function is required at least for NetBSD 1.5.2.  */
 
 int
-rpl_mkdir (char const *dir, mode_t mode maybe_unused)
+rpl_mkdir (char const *dir, maybe_unused mode_t mode)
 {
   int ret_val;
   char *tmp_dir;

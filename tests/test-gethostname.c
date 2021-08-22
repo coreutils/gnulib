@@ -33,7 +33,7 @@ SIGNATURE_CHECK (gethostname, int, (char *, size_t));
 #define NOHOSTNAME "magic-gnulib-test-string"
 
 int
-main (int argc, char *argv[] _GL_UNUSED)
+main (int argc, _GL_UNUSED char *argv[])
 {
   char buf[HOST_NAME_MAX];
   int rc;

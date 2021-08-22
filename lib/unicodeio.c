@@ -192,7 +192,7 @@ fwrite_success_callback (const char *buf, size_t buflen, void *callback_arg)
 /* Simple failure callback that displays an error and exits.  */
 static long
 exit_failure_callback (unsigned int code, const char *msg,
-                       void *callback_arg _GL_UNUSED)
+                       _GL_UNUSED void *callback_arg)
 {
   if (msg == NULL)
     error (1, 0, _("cannot convert U+%04X to local character set"), code);
@@ -206,7 +206,7 @@ exit_failure_callback (unsigned int code, const char *msg,
    ASCII, using the same notation as ISO C99 strings.  */
 static long
 fallback_failure_callback (unsigned int code,
-                           const char *msg _GL_UNUSED,
+                           _GL_UNUSED const char *msg,
                            void *callback_arg)
 {
   FILE *stream = (FILE *) callback_arg;

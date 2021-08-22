@@ -57,7 +57,7 @@ pthread_attr_setdetachstate (pthread_attr_t *attr, int detachstate)
 }
 
 int
-pthread_attr_destroy (pthread_attr_t *attr _GL_UNUSED)
+pthread_attr_destroy (_GL_UNUSED pthread_attr_t *attr)
 {
   return 0;
 }

@@ -111,7 +111,7 @@ gmt_offset (time_t s)
 }
 
 int
-main (int argc _GL_UNUSED, char **argv)
+main (_GL_UNUSED int argc, char **argv)
 {
   struct timespec result;
   struct timespec result2;

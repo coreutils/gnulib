@@ -302,6 +302,8 @@ AC_DEFUN([gl_COMMON_BODY], [
 #else
 # define _GL_ATTRIBUTE_MAYBE_UNUSED _GL_ATTRIBUTE_UNUSED
 #endif
+/* Alternative spelling of this macro, for convenience.  */
+#define _GL_UNUSED _GL_ATTRIBUTE_MAYBE_UNUSED
 /* Earlier spellings of this macro.  */
 #define _UNUSED_PARAMETER_ _GL_ATTRIBUTE_MAYBE_UNUSED
 
@@ -409,8 +411,6 @@ AC_DEFUN([gl_COMMON_BODY], [
 #else
 # define _GL_ATTRIBUTE_UNUSED
 #endif
-/* Alternative spelling of this macro, for convenience.  */
-#define _GL_UNUSED _GL_ATTRIBUTE_UNUSED
 
 ]dnl There is no _GL_ATTRIBUTE_VISIBILITY; see m4/visibility.m4 instead.
 [

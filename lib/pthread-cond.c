@@ -40,7 +40,7 @@ pthread_condattr_init (pthread_condattr_t *attr)
 }
 
 int
-pthread_condattr_destroy (pthread_condattr_t *attr _GL_UNUSED)
+pthread_condattr_destroy (_GL_UNUSED pthread_condattr_t *attr)
 {
   return 0;
 }
@@ -52,7 +52,7 @@ pthread_condattr_destroy (pthread_condattr_t *attr _GL_UNUSED)
 
 int
 pthread_cond_init (pthread_cond_t *cond,
-                   const pthread_condattr_t *attr _GL_UNUSED)
+                   _GL_UNUSED const pthread_condattr_t *attr)
 {
   return glwthread_cond_init (cond);
 }
@@ -100,16 +100,16 @@ pthread_cond_destroy (pthread_cond_t *cond)
 /* Provide a dummy implementation for single-threaded applications.  */
 
 int
-pthread_cond_init (pthread_cond_t *cond _GL_UNUSED,
-                   const pthread_condattr_t *attr _GL_UNUSED)
+pthread_cond_init (_GL_UNUSED pthread_cond_t *cond,
+                   _GL_UNUSED const pthread_condattr_t *attr)
 {
   /* COND is never seriously used.  */
   return 0;
 }
 
 int
-pthread_cond_wait (pthread_cond_t *cond _GL_UNUSED,
-                   pthread_mutex_t *mutex _GL_UNUSED)
+pthread_cond_wait (_GL_UNUSED pthread_cond_t *cond,
+                   _GL_UNUSED pthread_mutex_t *mutex)
 {
   /* No other thread can signal this condition variable.
      Wait endlessly.  */
@@ -124,8 +124,8 @@ pthread_cond_wait (pthread_cond_t *cond _GL_UNUSED,
 }
 
 int
-pthread_cond_timedwait (pthread_cond_t *cond _GL_UNUSED,
-                        pthread_mutex_t *mutex _GL_UNUSED,
+pthread_cond_timedwait (_GL_UNUSED pthread_cond_t *cond,
+                        _GL_UNUSED pthread_mutex_t *mutex,
                         const struct timespec *abstime)
 {
   /* No other thread can signal this condition variable.
@@ -176,21 +176,21 @@ pthread_cond_timedwait (pthread_cond_t *cond _GL_UNUSED,
 }
 
 int
-pthread_cond_signal (pthread_cond_t *cond _GL_UNUSED)
+pthread_cond_signal (_GL_UNUSED pthread_cond_t *cond)
 {
   /* No threads can currently be blocked on COND.  */
   return 0;
 }
 
 int
-pthread_cond_broadcast (pthread_cond_t *cond _GL_UNUSED)
+pthread_cond_broadcast (_GL_UNUSED pthread_cond_t *cond)
 {
   /* No threads can currently be blocked on COND.  */
   return 0;
 }
 
 int
-pthread_cond_destroy (pthread_cond_t *cond _GL_UNUSED)
+pthread_cond_destroy (_GL_UNUSED pthread_cond_t *cond)
 {
   /* COND is never seriously used.  */
   return 0;

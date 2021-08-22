@@ -32,7 +32,7 @@
 
 int
 pthread_spin_init (pthread_spinlock_t *lock,
-                   int shared_across_processes _GL_UNUSED)
+                   _GL_UNUSED int shared_across_processes)
 {
   glwthread_spin_init (lock);
   return 0;
@@ -81,7 +81,7 @@ pthread_spin_destroy (pthread_spinlock_t *lock)
 
 int
 pthread_spin_init (pthread_spinlock_t *lock,
-                   int shared_across_processes _GL_UNUSED)
+                   _GL_UNUSED int shared_across_processes)
 {
   __atomic_store_n ((unsigned int *) lock, 0, __ATOMIC_SEQ_CST);
   return 0;
@@ -127,7 +127,7 @@ pthread_spin_unlock (pthread_spinlock_t *lock)
 
 int
 pthread_spin_init (pthread_spinlock_t *lock,
-                   int shared_across_processes _GL_UNUSED)
+                   _GL_UNUSED int shared_across_processes)
 {
   __atomic_clear (lock, __ATOMIC_SEQ_CST);
   return 0;
@@ -173,7 +173,7 @@ pthread_spin_destroy (pthread_spinlock_t *lock)
 
 int
 pthread_spin_init (pthread_spinlock_t *lock,
-                   int shared_across_processes _GL_UNUSED)
+                   _GL_UNUSED int shared_across_processes)
 {
   * (volatile unsigned int *) lock = 0;
   __sync_synchronize ();
@@ -217,7 +217,7 @@ pthread_spin_destroy (pthread_spinlock_t *lock)
 
 int
 pthread_spin_init (pthread_spinlock_t *lock,
-                   int shared_across_processes _GL_UNUSED)
+                   _GL_UNUSED int shared_across_processes)
 {
   return pthread_mutex_init (lock, NULL);
 }
@@ -252,32 +252,32 @@ pthread_spin_destroy (pthread_spinlock_t *lock)
 /* Provide a dummy implementation for single-threaded applications.  */
 
 int
-pthread_spin_init (pthread_spinlock_t *lock _GL_UNUSED,
-                   int shared_across_processes _GL_UNUSED)
+pthread_spin_init (_GL_UNUSED pthread_spinlock_t *lock,
+                   _GL_UNUSED int shared_across_processes)
 {
   return 0;
 }
 
 int
-pthread_spin_lock (pthread_spinlock_t *lock _GL_UNUSED)
+pthread_spin_lock (_GL_UNUSED pthread_spinlock_t *lock)
 {
   return 0;
 }
 
 int
-pthread_spin_trylock (pthread_spinlock_t *lock _GL_UNUSED)
+pthread_spin_trylock (_GL_UNUSED pthread_spinlock_t *lock)
 {
   return 0;
 }
 
 int
-pthread_spin_unlock (pthread_spinlock_t *lock _GL_UNUSED)
+pthread_spin_unlock (_GL_UNUSED pthread_spinlock_t *lock)
 {
   return 0;
 }
 
 int
-pthread_spin_destroy (pthread_spinlock_t *lock _GL_UNUSED)
+pthread_spin_destroy (_GL_UNUSED pthread_spinlock_t *lock)
 {
   return 0;
 }

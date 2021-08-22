@@ -106,7 +106,7 @@ decimal_point_char (void)
  #undef LDEXP
  #define LDEXP dummy_ldexp
  /* A dummy definition that will never be invoked.  */
- static DOUBLE LDEXP (DOUBLE x _GL_UNUSED, int exponent _GL_UNUSED)
+ static DOUBLE LDEXP (_GL_UNUSED DOUBLE x, _GL_UNUSED int exponent)
  {
    abort ();
    return L_(0.0);

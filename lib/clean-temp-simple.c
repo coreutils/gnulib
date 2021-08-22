@@ -184,7 +184,7 @@ clean_temp_init_asyncsafe_close (void)
 
 /* The signal handler.  It gets called asynchronously.  */
 static _GL_ASYNC_SAFE void
-cleanup_action (int sig _GL_UNUSED)
+cleanup_action (_GL_UNUSED int sig)
 {
   size_t i;
 

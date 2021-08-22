@@ -34,7 +34,7 @@
   OVERLOADED_CHECK (func, rettype2, parameters2, _2); \
   OVERLOADED_CHECK (func, rettype3, parameters3, _3)
 #define OVERLOADED_CHECK(func, rettype, parameters, suffix) \
-  static rettype (* _GL_UNUSED signature_check_ ## func ## suffix) parameters \
+  _GL_UNUSED static rettype (* signature_check_ ## func ## suffix) parameters \
     = static_cast<rettype(*)parameters>(GNULIB_NAMESPACE::func)
 
 

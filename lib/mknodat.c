@@ -66,8 +66,8 @@ rpl_mknodat (int fd, char const *file, mode_t mode, dev_t dev)
 /* Mingw lacks mknod, so this wrapper is trivial.  */
 
 int
-mknodat (int fd _GL_UNUSED, char const *path _GL_UNUSED,
-         mode_t mode _GL_UNUSED, dev_t dev _GL_UNUSED)
+mknodat (_GL_UNUSED int fd, _GL_UNUSED char const *path,
+         _GL_UNUSED mode_t mode, _GL_UNUSED dev_t dev)
 {
   errno = ENOSYS;
   return -1;

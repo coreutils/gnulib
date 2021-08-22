@@ -31,7 +31,7 @@
 
 
 int
-main (int argc _GL_UNUSED, char *argv[])
+main (_GL_UNUSED int argc, char *argv[])
 {
   static char const *const tests[][3] =
     {

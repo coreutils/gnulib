@@ -126,7 +126,7 @@ die (int signo)
 }
 
 static _GL_ASYNC_SAFE void
-null_action (int signo _GL_UNUSED)
+null_action (_GL_UNUSED int signo)
 {
 }
 
@@ -142,7 +142,7 @@ static volatile int segv_handler_missing;
    overflow.  This function is async-signal-safe.  */
 
 static _GL_ASYNC_SAFE int
-segv_handler (void *address _GL_UNUSED, int serious)
+segv_handler (_GL_UNUSED void *address, int serious)
 {
 # if DEBUG
   {
@@ -165,7 +165,7 @@ segv_handler (void *address _GL_UNUSED, int serious)
    overflow and exit.  This function is async-signal-safe.  */
 
 static _GL_ASYNC_SAFE _Noreturn void
-overflow_handler (int emergency, stackoverflow_context_t context _GL_UNUSED)
+overflow_handler (int emergency, _GL_UNUSED stackoverflow_context_t context)
 {
 # if DEBUG
   {
@@ -205,7 +205,7 @@ c_stack_action (_GL_ASYNC_SAFE void (*action) (int))
 #else /* !HAVE_STACK_OVERFLOW_RECOVERY */
 
 int
-c_stack_action (_GL_ASYNC_SAFE void (*action) (int)  _GL_UNUSED)
+c_stack_action (_GL_ASYNC_SAFE void (*action) (_GL_UNUSED int) )
 {
   errno = ENOTSUP;
   return -1;

@@ -67,7 +67,7 @@ do_lstat (char const *name, struct stat *st)
 }
 
 int
-main (int argc _GL_UNUSED, char *argv[])
+main (_GL_UNUSED int argc, char *argv[])
 {
   int result;
 

@@ -41,7 +41,7 @@ dummy (float f)
 }
 
 int
-main (int argc, char **argv _GL_UNUSED)
+main (int argc, _GL_UNUSED char **argv)
 {
   float (*my_ceilf) (float) = argc ? ceilf : dummy;
 

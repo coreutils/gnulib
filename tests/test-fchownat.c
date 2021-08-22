@@ -68,7 +68,7 @@ do_lchown (char const *name, uid_t user, gid_t group)
 }
 
 int
-main (int argc _GL_UNUSED, char *argv[])
+main (_GL_UNUSED int argc, char *argv[])
 {
   int result1; /* Skip because of no chown/symlink support.  */
   int result2; /* Skip because of no lchown support.  */

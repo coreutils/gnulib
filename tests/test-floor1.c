@@ -30,7 +30,7 @@ SIGNATURE_CHECK (floor, double, (double));
 #include "macros.h"
 
 int
-main (int argc, char **argv _GL_UNUSED)
+main (int argc, _GL_UNUSED char **argv)
 {
   /* Zero.  */
   ASSERT (floor (0.0) == 0.0);

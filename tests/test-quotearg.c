@@ -60,7 +60,7 @@ static struct result_groups locale_results[] = {
 #endif /* ENABLE_NLS */
 
 int
-main (int argc _GL_UNUSED, char *argv[])
+main (_GL_UNUSED int argc, char *argv[])
 {
 #if ENABLE_NLS
   /* Clean up environment.  */

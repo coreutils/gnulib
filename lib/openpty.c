@@ -37,10 +37,10 @@ rpl_openpty (int *amaster, int *aslave, char *name,
 # include <errno.h>
 
 int
-openpty (int *amaster _GL_UNUSED, int *aslave _GL_UNUSED,
-         char *name _GL_UNUSED,
-         struct termios const *termp _GL_UNUSED,
-         struct winsize const *winp _GL_UNUSED)
+openpty (_GL_UNUSED int *amaster, _GL_UNUSED int *aslave,
+         _GL_UNUSED char *name,
+         _GL_UNUSED struct termios const *termp,
+         _GL_UNUSED struct winsize const *winp)
 {
   /* Mingw lacks pseudo-terminals altogether.  */
   errno = ENOSYS;

@@ -77,7 +77,7 @@ pthread_mutexattr_setrobust (pthread_mutexattr_t *attr, int robust)
 }
 
 int
-pthread_mutexattr_destroy (pthread_mutexattr_t *attr _GL_UNUSED)
+pthread_mutexattr_destroy (_GL_UNUSED pthread_mutexattr_t *attr)
 {
   return 0;
 }
@@ -207,15 +207,15 @@ pthread_mutex_destroy (pthread_mutex_t *mutex)
 /* Provide a dummy implementation for single-threaded applications.  */
 
 int
-pthread_mutex_init (pthread_mutex_t *mutex _GL_UNUSED,
-                    const pthread_mutexattr_t *attr _GL_UNUSED)
+pthread_mutex_init (_GL_UNUSED pthread_mutex_t *mutex,
+                    _GL_UNUSED const pthread_mutexattr_t *attr)
 {
   /* MUTEX is never seriously used.  */
   return 0;
 }
 
 int
-pthread_mutex_lock (pthread_mutex_t *mutex _GL_UNUSED)
+pthread_mutex_lock (_GL_UNUSED pthread_mutex_t *mutex)
 {
   /* There is only one thread, so it always gets the lock.  This
      implementation does not support PTHREAD_MUTEX_ERRORCHECK.  */
@@ -223,7 +223,7 @@ pthread_mutex_lock (pthread_mutex_t *mutex _GL_UNUSED)
 }
 
 int
-pthread_mutex_trylock (pthread_mutex_t *mutex _GL_UNUSED)
+pthread_mutex_trylock (_GL_UNUSED pthread_mutex_t *mutex)
 {
   /* There is only one thread, so it always gets the lock.  This
      implementation does not support PTHREAD_MUTEX_ERRORCHECK.  */
@@ -231,8 +231,8 @@ pthread_mutex_trylock (pthread_mutex_t *mutex _GL_UNUSED)
 }
 
 int
-pthread_mutex_timedlock (pthread_mutex_t *mutex _GL_UNUSED,
-                         const struct timespec *abstime _GL_UNUSED)
+pthread_mutex_timedlock (_GL_UNUSED pthread_mutex_t *mutex,
+                         _GL_UNUSED const struct timespec *abstime)
 {
   /* There is only one thread, so it always gets the lock.  This
      implementation does not support PTHREAD_MUTEX_ERRORCHECK.  */
@@ -240,7 +240,7 @@ pthread_mutex_timedlock (pthread_mutex_t *mutex _GL_UNUSED,
 }
 
 int
-pthread_mutex_unlock (pthread_mutex_t *mutex _GL_UNUSED)
+pthread_mutex_unlock (_GL_UNUSED pthread_mutex_t *mutex)
 {
   /* There is only one thread, so it always unlocks successfully.
      This implementation does not support robust mutexes or
@@ -249,7 +249,7 @@ pthread_mutex_unlock (pthread_mutex_t *mutex _GL_UNUSED)
 }
 
 int
-pthread_mutex_destroy (pthread_mutex_t *mutex _GL_UNUSED)
+pthread_mutex_destroy (_GL_UNUSED pthread_mutex_t *mutex)
 {
   /* MUTEX is never seriously used.  */
   return 0;

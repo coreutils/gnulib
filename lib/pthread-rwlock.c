@@ -40,7 +40,7 @@ pthread_rwlockattr_init (pthread_rwlockattr_t *attr)
 }
 
 int
-pthread_rwlockattr_destroy (pthread_rwlockattr_t *attr _GL_UNUSED)
+pthread_rwlockattr_destroy (_GL_UNUSED pthread_rwlockattr_t *attr)
 {
   return 0;
 }
@@ -52,7 +52,7 @@ pthread_rwlockattr_destroy (pthread_rwlockattr_t *attr _GL_UNUSED)
 
 int
 pthread_rwlock_init (pthread_rwlock_t *lock,
-                     const pthread_rwlockattr_t *attr _GL_UNUSED)
+                     _GL_UNUSED const pthread_rwlockattr_t *attr)
 {
   glwthread_timedrwlock_init (lock);
   return 0;
@@ -115,7 +115,7 @@ pthread_rwlock_destroy (pthread_rwlock_t *lock)
 
 int
 pthread_rwlock_init (pthread_rwlock_t *lock,
-                     const pthread_rwlockattr_t *attr _GL_UNUSED)
+                     _GL_UNUSED const pthread_rwlockattr_t *attr)
 {
   int err;
 
@@ -485,7 +485,7 @@ pthread_rwlock_timedwrlock (pthread_rwlock_t *lock,
 
 int
 pthread_rwlock_init (pthread_rwlock_t *lock,
-                     const pthread_rwlockattr_t *attr _GL_UNUSED)
+                     _GL_UNUSED const pthread_rwlockattr_t *attr)
 {
   *lock = 0;
   return 0;
@@ -523,14 +523,14 @@ pthread_rwlock_trywrlock (pthread_rwlock_t *lock)
 
 int
 pthread_rwlock_timedrdlock (pthread_rwlock_t *lock,
-                            const struct timespec *abstime _GL_UNUSED)
+                            _GL_UNUSED const struct timespec *abstime)
 {
   return pthread_rwlock_rdlock (lock);
 }
 
 int
 pthread_rwlock_timedwrlock (pthread_rwlock_t *lock,
-                            const struct timespec *abstime _GL_UNUSED)
+                            _GL_UNUSED const struct timespec *abstime)
 {
   return pthread_rwlock_wrlock (lock);
 }

@@ -32,7 +32,7 @@ SIGNATURE_CHECK (getdomainname, int, (char *, size_t));
 #define NODOMAINNAME "magic-gnulib-test-string"
 
 int
-main (int argc, char *argv[] _GL_UNUSED)
+main (int argc, _GL_UNUSED char *argv[])
 {
   char buf[YPMAXDOMAIN];
   int rc;

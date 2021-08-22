@@ -27,7 +27,7 @@
 /* Mingw lacks mkfifo; always fail with ENOSYS.  */
 
 int
-mkfifo (char const *name _GL_UNUSED, mode_t mode _GL_UNUSED)
+mkfifo (_GL_UNUSED char const *name, _GL_UNUSED mode_t mode)
 {
   errno = ENOSYS;
   return -1;

@@ -29,7 +29,7 @@
 #include "test-printf-posix.h"
 
 int
-main (int argc _GL_UNUSED, char *argv[])
+main (_GL_UNUSED int argc, char *argv[])
 {
   test_function (xprintf);
   return 0;

@@ -34,7 +34,7 @@ SIGNATURE_CHECK (ftello, off_t, (FILE *));
 #endif
 
 int
-main (int argc, char **argv _GL_UNUSED)
+main (int argc, _GL_UNUSED char **argv)
 {
   int ch;
   /* Assume stdin is seekable iff argc > 1.  */

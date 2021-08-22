@@ -66,8 +66,8 @@ rpl_mkfifoat (int fd, char const *file, mode_t mode)
 /* Mingw lacks mkfifo, so this wrapper is trivial.  */
 
 int
-mkfifoat (int fd _GL_UNUSED, char const *path _GL_UNUSED,
-          mode_t mode _GL_UNUSED)
+mkfifoat (_GL_UNUSED int fd, _GL_UNUSED char const *path,
+          _GL_UNUSED mode_t mode)
 {
   errno = ENOSYS;
   return -1;

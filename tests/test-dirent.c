@@ -21,7 +21,7 @@
 #include <dirent.h>
 
 /* Check for existence of required types.  */
-static DIR *dir _GL_UNUSED;
+_GL_UNUSED static DIR *dir;
 static struct dirent d;
 static ino_t i;
 

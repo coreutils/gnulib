@@ -105,7 +105,7 @@ cleanup_slaves (void)
 /* The cleanup action, taking a signal argument.
    It gets called asynchronously.  */
 static _GL_ASYNC_SAFE void
-cleanup_slaves_action (int sig _GL_UNUSED)
+cleanup_slaves_action (_GL_UNUSED int sig)
 {
   cleanup_slaves ();
 }

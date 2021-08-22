@@ -90,7 +90,7 @@ sendfd (int sock, int fd)
 }
 #else
 int
-sendfd (int sock _GL_UNUSED, int fd _GL_UNUSED)
+sendfd (_GL_UNUSED int sock, _GL_UNUSED int fd)
 {
   errno = ENOSYS;
   return -1;
@@ -201,7 +201,7 @@ recvfd (int sock, int flags)
 }
 #else
 int
-recvfd (int sock _GL_UNUSED, int flags _GL_UNUSED)
+recvfd (_GL_UNUSED int sock, _GL_UNUSED int flags)
 {
   errno = ENOSYS;
   return -1;

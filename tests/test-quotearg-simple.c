@@ -255,7 +255,7 @@ use_quote_double_quotes (const char *str, size_t *len)
 }
 
 int
-main (int argc _GL_UNUSED, char *argv[])
+main (_GL_UNUSED int argc, char *argv[])
 {
   int i;
   bool ascii_only = MB_CUR_MAX == 1 && !isprint ((unsigned char) LQ[0]);

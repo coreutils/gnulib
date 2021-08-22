@@ -30,7 +30,7 @@
 /* Provide a stub that fails with ENOSYS, since there is no group
    information available on mingw.  */
 int
-getgroups (int n _GL_UNUSED, GETGROUPS_T *groups _GL_UNUSED)
+getgroups (_GL_UNUSED int n, _GL_UNUSED GETGROUPS_T *groups)
 {
   errno = ENOSYS;
   return -1;

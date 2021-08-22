@@ -202,7 +202,7 @@
 /* All cygwin mount points include ':' or start with '//'; so it
    requires a native Windows call to determine remote disks.  */
 static bool
-me_remote (char const *fs_name, char const *fs_type _GL_UNUSED)
+me_remote (char const *fs_name, _GL_UNUSED char const *fs_type)
 {
   if (fs_name[0] && fs_name[1] == ':')
     {

@@ -52,8 +52,8 @@ rpl_symlinkat (char const *contents, int fd, char const *name)
    wrapper than to go through at-func.c to call rpl_symlink.  */
 
 int
-symlinkat (char const *path1 _GL_UNUSED, int fd _GL_UNUSED,
-           char const *path2 _GL_UNUSED)
+symlinkat (_GL_UNUSED char const *path1, _GL_UNUSED int fd,
+           _GL_UNUSED char const *path2)
 {
   errno = ENOSYS;
   return -1;

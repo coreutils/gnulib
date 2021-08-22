@@ -40,7 +40,7 @@ static int dfd = AT_FDCWD;
 
 /* Wrapper for testing areadlinkat.  */
 static char *
-do_areadlinkat (char const *name, size_t ignored _GL_UNUSED)
+do_areadlinkat (char const *name, _GL_UNUSED size_t ignored)
 {
   return areadlinkat (dfd, name);
 }

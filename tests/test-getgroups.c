@@ -40,7 +40,7 @@ SIGNATURE_CHECK (getgroups, int, (int, gid_t[]));
 #endif
 
 int
-main (int argc, char **argv _GL_UNUSED)
+main (int argc, _GL_UNUSED char **argv)
 {
   int result;
   gid_t *groups;

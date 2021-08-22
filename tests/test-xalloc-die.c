@@ -21,7 +21,7 @@
 #include "xalloc.h"
 
 int
-main (int argc _GL_UNUSED, char **argv)
+main (_GL_UNUSED int argc, char **argv)
 {
   xalloc_die ();
   return 0;

@@ -30,7 +30,7 @@
 #include "test-fprintf-posix.h"
 
 int
-main (int argc _GL_UNUSED, char *argv[])
+main (_GL_UNUSED int argc, char *argv[])
 {
   test_function (xfprintf);
   return 0;

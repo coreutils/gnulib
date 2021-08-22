@@ -813,13 +813,13 @@ leaf_optimization (FTSENT const *p, int dir_fd)
 
 #else
 static bool
-dirent_inode_sort_may_be_useful (FTSENT const *p _GL_UNUSED,
-                                 int dir_fd _GL_UNUSED)
+dirent_inode_sort_may_be_useful (_GL_UNUSED FTSENT const *p,
+                                 _GL_UNUSED int dir_fd)
 {
   return true;
 }
 static enum leaf_optimization
-leaf_optimization (FTSENT const *p _GL_UNUSED, int dir_fd _GL_UNUSED)
+leaf_optimization (_GL_UNUSED FTSENT const *p, _GL_UNUSED int dir_fd)
 {
   return NO_LEAF_OPTIMIZATION;
 }
@@ -1093,7 +1093,7 @@ cd_dot_dot:
  */
 /* ARGSUSED */
 int
-fts_set(FTS *sp _GL_UNUSED, FTSENT *p, int instr)
+fts_set(_GL_UNUSED FTS *sp, FTSENT *p, int instr)
 {
         if (instr != 0 && instr != FTS_AGAIN && instr != FTS_FOLLOW &&
             instr != FTS_NOINSTR && instr != FTS_SKIP) {

@@ -34,7 +34,7 @@ SIGNATURE_CHECK (fseeko, int, (FILE *, off_t, int));
 #endif
 
 int
-main (int argc, char **argv _GL_UNUSED)
+main (int argc, _GL_UNUSED char **argv)
 {
   /* Assume stdin is non-empty, seekable, and starts with '#!/bin/sh'
      iff argc > 1.  */

@@ -36,10 +36,10 @@
    defined in the library.  */
 
 int
-getugroups (int maxcount _GL_UNUSED,
-            gid_t *grouplist _GL_UNUSED,
-            char const *username _GL_UNUSED,
-            gid_t gid _GL_UNUSED)
+getugroups (_GL_UNUSED int maxcount,
+            _GL_UNUSED gid_t *grouplist,
+            _GL_UNUSED char const *username,
+            _GL_UNUSED gid_t gid)
 {
   errno = ENOSYS;
   return -1;

@@ -43,6 +43,6 @@
 # define SIGNATURE_CHECK1(fn, ret, args, id) \
   SIGNATURE_CHECK2 (fn, ret, args, id) /* macroexpand line */
 # define SIGNATURE_CHECK2(fn, ret, args, id) \
-  static ret (* _GL_UNUSED signature_check ## id) args = fn
+  _GL_UNUSED static ret (*signature_check ## id) args = fn
 
 #endif /* SIGNATURE_CHECK */
