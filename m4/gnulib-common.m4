@@ -418,7 +418,7 @@ AC_DEFUN([gl_COMMON_BODY], [
    immediately preceding label is not used.  The compiler should not warn
    if the label is not used.  */
 /* Applies to: label (both in C and C++).  */
-#if !defined __cplusplus || _GL_GNUC_PREREQ (4, 5)
+#if (!defined __cplusplus || _GL_GNUC_PREREQ (4, 5)) || defined __clang__
 # define _GL_UNUSED_LABEL _GL_ATTRIBUTE_UNUSED
 #else
 # define _GL_UNUSED_LABEL
