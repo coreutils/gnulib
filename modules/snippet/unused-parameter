@@ -1,6 +1,12 @@
 Description:
 A C macro for declaring that specific function parameters are not used.
 
+Status:
+obsolete
+
+Notice:
+This module is obsolete.
+
 Applicability:
 all
 
