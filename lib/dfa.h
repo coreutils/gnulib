@@ -21,6 +21,7 @@
 #ifndef DFA_H_
 #define DFA_H_
 
+#include "idx.h"
 #include <regex.h>
 #include <stdbool.h>
 #include <stddef.h>
@@ -86,7 +87,7 @@ extern void dfasyntax (struct dfa *, struct localeinfo const *,
 extern void dfacopysyntax (struct dfa *, struct dfa const *);
 
 /* Parse the given string of given length into the given struct dfa.  */
-extern void dfaparse (char const *, ptrdiff_t, struct dfa *);
+extern void dfaparse (char const *, idx_t, struct dfa *);
 
 struct dfamust;
 
@@ -102,7 +103,7 @@ extern struct dfamust *dfamust (struct dfa const *)
    The last argument says whether to build a searching or an exact matcher.
    A null first argument means the struct dfa has already been
    initialized by dfaparse; the second argument is ignored.  */
-extern void dfacomp (char const *, ptrdiff_t, struct dfa *, bool);
+extern void dfacomp (char const *, idx_t, struct dfa *, bool);
 
 /* Search through a buffer looking for a match to the given struct dfa.
    Find the first occurrence of a string matching the regexp in the
@@ -117,7 +118,7 @@ extern void dfacomp (char const *, ptrdiff_t, struct dfa *, bool);
    encountered a back-reference.  The caller can use this to decide
    whether to fall back on a backtracking matcher.  */
 extern char *dfaexec (struct dfa *d, char const *begin, char *end,
-                      bool allow_nl, ptrdiff_t *count, bool *backref);
+                      bool allow_nl, idx_t *count, bool *backref);
 
 /* Return a superset for D.  The superset matches everything that D
    matches, along with some other strings (though the latter should be

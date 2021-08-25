@@ -590,7 +590,7 @@ struct dfa
 
   /* dfaexec implementation.  */
   char *(*dfaexec) (struct dfa *, char const *, char *,
-                    bool, ptrdiff_t *, bool *);
+                    bool, idx_t *, bool *);
 
   /* Other cached information derived from the locale.  */
   struct localeinfo localeinfo;
@@ -3352,7 +3352,7 @@ skip_remains_mb (struct dfa *d, unsigned char const *p,
 
 static inline char *
 dfaexec_main (struct dfa *d, char const *begin, char *end, bool allow_nl,
-              ptrdiff_t *count, bool multibyte)
+              idx_t *count, bool multibyte)
 {
   if (MAX_TRCOUNT <= d->sindex)
     {
@@ -3535,14 +3535,14 @@ dfaexec_main (struct dfa *d, char const *begin, char *end, bool allow_nl,
 
 static char *
 dfaexec_mb (struct dfa *d, char const *begin, char *end,
-            bool allow_nl, ptrdiff_t *count, bool *backref)
+            bool allow_nl, idx_t *count, bool *backref)
 {
   return dfaexec_main (d, begin, end, allow_nl, count, true);
 }
 
 static char *
 dfaexec_sb (struct dfa *d, char const *begin, char *end,
-            bool allow_nl, ptrdiff_t *count, bool *backref)
+            bool allow_nl, idx_t *count, bool *backref)
 {
   return dfaexec_main (d, begin, end, allow_nl, count, false);
 }
@@ -3551,7 +3551,7 @@ dfaexec_sb (struct dfa *d, char const *begin, char *end,
    any regexp that uses a construct not supported by this code.  */
 static char *
 dfaexec_noop (struct dfa *d, char const *begin, char *end,
-              bool allow_nl, ptrdiff_t *count, bool *backref)
+              bool allow_nl, idx_t *count, bool *backref)
 {
   *backref = true;
   return (char *) begin;
@@ -3563,7 +3563,7 @@ dfaexec_noop (struct dfa *d, char const *begin, char *end,
 
 char *
 dfaexec (struct dfa *d, char const *begin, char *end,
-         bool allow_nl, ptrdiff_t *count, bool *backref)
+         bool allow_nl, idx_t *count, bool *backref)
 {
   return d->dfaexec (d, begin, end, allow_nl, count, backref);
 }
