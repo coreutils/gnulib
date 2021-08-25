@@ -22,4 +22,5 @@ test_system_quote_main_LDADD = $(LDADD) @LIBINTL@ $(LIB_MBRTOWC)
 # The test-system-quote-child program must be a real executable, not a libtool
 # wrapper script, and should link against as few libraries as possible.
 # Therefore don't link it against any libraries other than -lc.
+test_system_quote_child_LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 test_system_quote_child_LDADD =
