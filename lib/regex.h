@@ -680,9 +680,8 @@ extern int regcomp (regex_t *_Restrict_ __preg,
 
 extern int regexec (const regex_t *_Restrict_ __preg,
 		    const char *_Restrict_ __String, size_t __nmatch,
-		    regmatch_t __pmatch[_Restrict_arr_],
-		    int __eflags)
-    _Attr_access_ ((__write_only__, 4, 3));
+		    regmatch_t __pmatch[_Restrict_arr_ _ARG_NELTS_ (__nmatch)],
+		    int __eflags);
 
 extern size_t regerror (int __errcode, const regex_t *_Restrict_ __preg,
 			char *_Restrict_ __errbuf, size_t __errbuf_size)
