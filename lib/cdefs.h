@@ -634,4 +634,13 @@ _Static_assert (0, "IEEE 128-bits long double requires redirection on this platf
 # define __attribute_returns_twice__ /* Ignore.  */
 #endif
 
+/* Specify the number of elements of a function's array parameter,
+   as in 'int f (int n, int a[__ARG_NELTS (n)]);'.  */
+#if (defined __STDC_VERSION__ && 199901L <= __STDC_VERSION__ \
+     && !defined __STDC_NO_VLA__)
+# define __ARG_NELTS(n) n
+#else
+# define __ARG_NELTS(n)
+#endif
+
 #endif	 /* sys/cdefs.h */
