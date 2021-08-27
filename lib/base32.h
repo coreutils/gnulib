@@ -18,8 +18,8 @@
 #ifndef BASE32_H
 # define BASE32_H
 
-/* Get size_t. */
-# include <stddef.h>
+/* Get idx_t. */
+# include <idx.h>
 
 /* Get bool. */
 # include <stdbool.h>
@@ -30,26 +30,26 @@
 
 struct base32_decode_context
 {
-  unsigned int i;
+  int i;
   char buf[8];
 };
 
 extern bool isbase32 (char ch) _GL_ATTRIBUTE_CONST;
 
-extern void base32_encode (const char *restrict in, size_t inlen,
-                           char *restrict out, size_t outlen);
+extern void base32_encode (const char *restrict in, idx_t inlen,
+                           char *restrict out, idx_t outlen);
 
-extern size_t base32_encode_alloc (const char *in, size_t inlen, char **out);
+extern idx_t base32_encode_alloc (const char *in, idx_t inlen, char **out);
 
 extern void base32_decode_ctx_init (struct base32_decode_context *ctx);
 
 extern bool base32_decode_ctx (struct base32_decode_context *ctx,
-                               const char *restrict in, size_t inlen,
-                               char *restrict out, size_t *outlen);
+                               const char *restrict in, idx_t inlen,
+                               char *restrict out, idx_t *outlen);
 
 extern bool base32_decode_alloc_ctx (struct base32_decode_context *ctx,
-                                     const char *in, size_t inlen,
-                                     char **out, size_t *outlen);
+                                     const char *in, idx_t inlen,
+                                     char **out, idx_t *outlen);
 
 #define base32_decode(in, inlen, out, outlen) \
         base32_decode_ctx (NULL, in, inlen, out, outlen)

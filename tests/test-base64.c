@@ -33,7 +33,7 @@ main (void)
   const char *in = "abcdefghijklmnop";
   const char *b64in = "YWJjZGVmZw==";
   char out[255];
-  size_t len;
+  idx_t len;
   bool ok;
   char *p;
 

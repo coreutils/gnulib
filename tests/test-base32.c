@@ -34,7 +34,7 @@ main (void)
   const char *in = "abcdefghijklmnop";
   const char *b32in = "MFRGGZDFMZTWQ2LKNNWG23TPOA======";
   char out[255];
-  size_t len;
+  idx_t len;
   bool ok;
   char *p;
 
