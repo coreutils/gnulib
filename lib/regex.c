@@ -24,7 +24,6 @@
 
 # if __GNUC_PREREQ (4, 6)
 #  pragma GCC diagnostic ignored "-Wsuggest-attribute=pure"
-#  pragma GCC diagnostic ignored "-Wvla"
 # endif
 # if __GNUC_PREREQ (4, 3)
 #  pragma GCC diagnostic ignored "-Wold-style-definition"
