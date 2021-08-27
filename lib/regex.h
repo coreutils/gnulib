@@ -522,14 +522,12 @@ typedef struct
 
 /* Declarations for routines.  */
 
-#ifndef _ARG_NELTS_
-# ifdef __ARG_NELTS
-#  define _ARG_NELTS_(arg) __ARG_NELTS (arg)
-# elif (defined __STDC_VERSION__ && 199901L <= __STDC_VERSION__ \
+#ifndef _REGEX_NELTS
+# if (defined __STDC_VERSION__ && 199901L <= __STDC_VERSION__ \
 	&& !defined __STDC_NO_VLA__)
-#  define _ARG_NELTS_(n) n
+#  define _REGEX_NELTS(n) n
 # else
-#  define _ARG_NELTS_(n)
+#  define _REGEX_NELTS(n)
 # endif
 #endif
 
@@ -680,7 +678,8 @@ extern int regcomp (regex_t *_Restrict_ __preg,
 
 extern int regexec (const regex_t *_Restrict_ __preg,
 		    const char *_Restrict_ __String, size_t __nmatch,
-		    regmatch_t __pmatch[_Restrict_arr_ _ARG_NELTS_ (__nmatch)],
+		    regmatch_t __pmatch[_Restrict_arr_
+					_REGEX_NELTS (__nmatch)],
 		    int __eflags);
 
 extern size_t regerror (int __errcode, const regex_t *_Restrict_ __preg,

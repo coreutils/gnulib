@@ -31,11 +31,11 @@ static re_sub_match_last_t * match_ctx_add_sublast (re_sub_match_top_t *subtop,
 static void sift_ctx_init (re_sift_context_t *sctx, re_dfastate_t **sifted_sts,
 			   re_dfastate_t **limited_sts, Idx last_node,
 			   Idx last_str_idx);
-static reg_errcode_t
-re_search_internal (const regex_t *preg, const char *string, Idx length,
-		    Idx start, Idx last_start, Idx stop, size_t nmatch,
-		    regmatch_t pmatch[__ARG_NELTS (static nmatch)],
-		    int eflags);
+static reg_errcode_t re_search_internal (const regex_t *preg,
+					 const char *string, Idx length,
+					 Idx start, Idx last_start, Idx stop,
+					 size_t nmatch, regmatch_t pmatch[],
+					 int eflags);
 static regoff_t re_search_2_stub (struct re_pattern_buffer *bufp,
 				  const char *string1, Idx length1,
 				  const char *string2, Idx length2,
@@ -47,29 +47,23 @@ static regoff_t re_search_stub (struct re_pattern_buffer *bufp,
 				regoff_t range, Idx stop,
 				struct re_registers *regs,
 				bool ret_len);
-static unsigned re_copy_regs (struct re_registers *regs, Idx nregs,
-			      regmatch_t pmatch[__ARG_NELTS (static nregs)],
-			      int regs_allocated);
+static unsigned re_copy_regs (struct re_registers *regs, regmatch_t *pmatch,
+                              Idx nregs, int regs_allocated);
 static reg_errcode_t prune_impossible_nodes (re_match_context_t *mctx);
 static Idx check_matching (re_match_context_t *mctx, bool fl_longest_match,
 			   Idx *p_match_first);
 static Idx check_halt_state_context (const re_match_context_t *mctx,
 				     const re_dfastate_t *state, Idx idx);
-static void
-update_regs (const re_dfa_t *dfa, Idx nmatch,
-	     regmatch_t pmatch[__ARG_NELTS (static nmatch)],
-	     regmatch_t prev_idx_match[__ARG_NELTS (static nmatch)],
-	     Idx cur_node, Idx cur_idx);
-static reg_errcode_t
-push_fail_stack (struct re_fail_stack_t *fs,
-		 Idx str_idx, Idx dest_node, Idx nregs,
-		 regmatch_t regs[__ARG_NELTS (static nregs)],
-		 regmatch_t prevregs[__ARG_NELTS (static nregs)],
-		 re_node_set *eps_via_nodes);
+static void update_regs (const re_dfa_t *dfa, regmatch_t *pmatch,
+			 regmatch_t *prev_idx_match, Idx cur_node,
+			 Idx cur_idx, Idx nmatch);
+static reg_errcode_t push_fail_stack (struct re_fail_stack_t *fs,
+				      Idx str_idx, Idx dest_node, Idx nregs,
+				      regmatch_t *regs, regmatch_t *prevregs,
+				      re_node_set *eps_via_nodes);
 static reg_errcode_t set_regs (const regex_t *preg,
 			       const re_match_context_t *mctx,
-			       size_t nmatch,
-			       regmatch_t pmatch[__ARG_NELTS (static nmatch)],
+			       size_t nmatch, regmatch_t *pmatch,
 			       bool fl_backtrack);
 static reg_errcode_t free_fail_stack_return (struct re_fail_stack_t *fs);
 
@@ -197,7 +191,7 @@ static reg_errcode_t extend_buffers (re_match_context_t *mctx, int min_len);
 
 int
 regexec (const regex_t *__restrict preg, const char *__restrict string,
-	 size_t nmatch, regmatch_t pmatch[__ARG_NELTS (nmatch)], int eflags)
+	 size_t nmatch, regmatch_t pmatch[_REGEX_NELTS (nmatch)], int eflags)
 {
   reg_errcode_t err;
   Idx start, length;
@@ -218,8 +212,12 @@ regexec (const regex_t *__restrict preg, const char *__restrict string,
     }
 
   lock_lock (dfa->lock);
-  err = re_search_internal (preg, string, length, start, length,
-			    length, preg->no_sub ? 0 : nmatch, pmatch, eflags);
+  if (preg->no_sub)
+    err = re_search_internal (preg, string, length, start, length,
+			      length, 0, NULL, eflags);
+  else
+    err = re_search_internal (preg, string, length, start, length,
+			      length, nmatch, pmatch, eflags);
   lock_unlock (dfa->lock);
   return err != REG_NOERROR;
 }
@@ -237,7 +235,7 @@ int
 attribute_compat_text_section
 __compat_regexec (const regex_t *__restrict preg,
 		  const char *__restrict string, size_t nmatch,
-		  regmatch_t pmatch[__ARG_NELTS (nmatch)], int eflags)
+		  regmatch_t pmatch[_REGEX_NELTS (nmatch)], int eflags)
 {
   return regexec (preg, string, nmatch, pmatch,
 		  eflags & (REG_NOTBOL | REG_NOTEOL));
@@ -436,7 +434,7 @@ re_search_stub (struct re_pattern_buffer *bufp, const char *string, Idx length,
   else if (regs != NULL)
     {
       /* If caller wants register contents data back, copy them.  */
-      bufp->regs_allocated = re_copy_regs (regs, nregs, pmatch,
+      bufp->regs_allocated = re_copy_regs (regs, pmatch, nregs,
 					   bufp->regs_allocated);
       if (__glibc_unlikely (bufp->regs_allocated == REGS_UNALLOCATED))
 	rval = -2;
@@ -459,8 +457,7 @@ re_search_stub (struct re_pattern_buffer *bufp, const char *string, Idx length,
 }
 
 static unsigned
-re_copy_regs (struct re_registers *regs, Idx nregs,
-	      regmatch_t pmatch[__ARG_NELTS (static nregs)],
+re_copy_regs (struct re_registers *regs, regmatch_t *pmatch, Idx nregs,
 	      int regs_allocated)
 {
   int rval = REGS_REALLOCATE;
@@ -588,8 +585,7 @@ static reg_errcode_t
 __attribute_warn_unused_result__
 re_search_internal (const regex_t *preg, const char *string, Idx length,
 		    Idx start, Idx last_start, Idx stop, size_t nmatch,
-		    regmatch_t pmatch[__ARG_NELTS (static nmatch)],
-		    int eflags)
+		    regmatch_t pmatch[], int eflags)
 {
   reg_errcode_t err;
   const re_dfa_t *dfa = preg->buffer;
@@ -1214,9 +1210,8 @@ check_halt_state_context (const re_match_context_t *mctx,
    return -1 on match failure, -2 on error.  */
 
 static Idx
-proceed_next_node (const re_match_context_t *mctx, Idx nregs,
-		   regmatch_t regs[__ARG_NELTS (static nregs)],
-		   regmatch_t prevregs[__ARG_NELTS (static nregs)],
+proceed_next_node (const re_match_context_t *mctx, Idx nregs, regmatch_t *regs,
+		   regmatch_t *prevregs,
 		   Idx *pidx, Idx node, re_node_set *eps_via_nodes,
 		   struct re_fail_stack_t *fs)
 {
@@ -1326,9 +1321,7 @@ proceed_next_node (const re_match_context_t *mctx, Idx nregs,
 static reg_errcode_t
 __attribute_warn_unused_result__
 push_fail_stack (struct re_fail_stack_t *fs, Idx str_idx, Idx dest_node,
-		 Idx nregs,
-		 regmatch_t regs[__ARG_NELTS (static nregs)],
-		 regmatch_t prevregs[__ARG_NELTS (static nregs)],
+		 Idx nregs, regmatch_t *regs, regmatch_t *prevregs,
 		 re_node_set *eps_via_nodes)
 {
   reg_errcode_t err;
@@ -1356,8 +1349,7 @@ push_fail_stack (struct re_fail_stack_t *fs, Idx str_idx, Idx dest_node,
 
 static Idx
 pop_fail_stack (struct re_fail_stack_t *fs, Idx *pidx, Idx nregs,
-		regmatch_t regs[__ARG_NELTS (static nregs)],
-		regmatch_t prevregs[__ARG_NELTS (static nregs)],
+		regmatch_t *regs, regmatch_t *prevregs,
 		re_node_set *eps_via_nodes)
 {
   if (fs == NULL || fs->num == 0)
@@ -1387,7 +1379,7 @@ pop_fail_stack (struct re_fail_stack_t *fs, Idx *pidx, Idx nregs,
 static reg_errcode_t
 __attribute_warn_unused_result__
 set_regs (const regex_t *preg, const re_match_context_t *mctx, size_t nmatch,
-	  regmatch_t pmatch[__ARG_NELTS (static nmatch)], bool fl_backtrack)
+	  regmatch_t *pmatch, bool fl_backtrack)
 {
   const re_dfa_t *dfa = preg->buffer;
   Idx idx, cur_node;
@@ -1423,7 +1415,7 @@ set_regs (const regex_t *preg, const re_match_context_t *mctx, size_t nmatch,
 
   for (idx = pmatch[0].rm_so; idx <= pmatch[0].rm_eo ;)
     {
-      update_regs (dfa, nmatch, pmatch, prev_idx_match, cur_node, idx);
+      update_regs (dfa, pmatch, prev_idx_match, cur_node, idx, nmatch);
 
       if ((idx == pmatch[0].rm_eo && cur_node == mctx->last_node)
 	  || (fs && re_node_set_contains (&eps_via_nodes, cur_node)))
@@ -1495,10 +1487,8 @@ free_fail_stack_return (struct re_fail_stack_t *fs)
 }
 
 static void
-update_regs (const re_dfa_t *dfa, Idx nmatch,
-	     regmatch_t pmatch[__ARG_NELTS (static nmatch)],
-	     regmatch_t prev_idx_match[__ARG_NELTS (static nmatch)],
-	     Idx cur_node, Idx cur_idx)
+update_regs (const re_dfa_t *dfa, regmatch_t *pmatch,
+	     regmatch_t *prev_idx_match, Idx cur_node, Idx cur_idx, Idx nmatch)
 {
   int type = dfa->nodes[cur_node].type;
   if (type == OP_OPEN_SUBEXP)
