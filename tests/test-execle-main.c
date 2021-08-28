@@ -25,22 +25,53 @@
 SIGNATURE_CHECK (execle, int, (const char *, const char *, ...));
 
 #include <stdio.h>
+#include <string.h>
+
+/* Looks up the NAME=VALUE assignment among the environment variables.
+   Returns it, or NULL if not found.  */
+static const char *
+get_environ_assignment (const char *name)
+{
+  size_t name_len = strlen (name);
+  char **p;
+  for (p = environ; *p != NULL; p++)
+    {
+      const char *assignment = *p;
+      if (strncmp (assignment, name, name_len) == 0
+          && assignment[name_len] == '=')
+        return assignment;
+    }
+  return NULL;
+}
+
+/* Creates a minimal environment.  */
+static void
+create_minimal_env (const char *env[5])
+{
+  const char **p = env;
+  *p++ =
+    #ifdef __CYGWIN__
+    /* The Cygwin DLLs needed by the program are in /bin.  */
+    "PATH=.:/bin";
+    #else
+    "PATH=.";
+    #endif
+  *p = get_environ_assignment ("QEMU_LD_PREFIX");
+  if (*p != NULL)
+    p++;
+  *p = get_environ_assignment ("QEMU_CPU");
+  if (*p != NULL)
+    p++;
+  *p++ = "Hommingberg=Gepardenforelle";
+  *p = NULL;
+}
 
 int
 main ()
 {
   const char *progname = "./test-exec-child";
-  const char *env[3] =
-    {
-      #ifdef __CYGWIN__
-      /* The Cygwin DLLs needed by the program are in /bin.  */
-      "PATH=.:/bin",
-      #else
-      "PATH=.",
-      #endif
-      "Hommingberg=Gepardenforelle",
-      NULL
-    };
+  const char *env[5];
+  create_minimal_env (env);
   execle (progname,
           progname,
           "abc def",
