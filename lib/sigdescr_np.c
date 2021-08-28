@@ -189,7 +189,7 @@ sigdescr_np (int sig)
       return "Instruction emulation needed";
     #endif
     /* Mac OS X, FreeBSD, NetBSD, OpenBSD, Minix */
-    #if defined SIGINFO
+    #if defined SIGINFO && SIGINFO != SIGPWR
     case SIGINFO:
       return "Information request";
     #endif

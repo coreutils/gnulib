@@ -131,7 +131,7 @@ main (void)
   ASSERT (strcmp (sigdescr_np (SIGEMT), "Instruction emulation needed") == 0);
   #endif
   /* Mac OS X, FreeBSD, NetBSD, OpenBSD, Minix */
-  #ifdef SIGINFO
+  #ifdef SIGINFO && SIGINFO != SIGPWR
   ASSERT (strcmp (sigdescr_np (SIGINFO), "Information request") == 0);
   #endif
   /* AIX */

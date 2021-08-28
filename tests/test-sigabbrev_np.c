@@ -129,7 +129,7 @@ main (void)
   ASSERT (strcmp (sigabbrev_np (SIGEMT), "EMT") == 0);
   #endif
   /* Mac OS X, FreeBSD, NetBSD, OpenBSD, Minix */
-  #ifdef SIGINFO
+  #ifdef SIGINFO && SIGINFO != SIGPWR
   ASSERT (strcmp (sigabbrev_np (SIGINFO), "INFO") == 0);
   #endif
   /* AIX */

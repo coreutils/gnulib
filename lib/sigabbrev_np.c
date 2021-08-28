@@ -131,7 +131,7 @@ sigabbrev_np (int sig)
     case SIGEMT:      return "EMT";
     #endif
     /* Mac OS X, FreeBSD, NetBSD, OpenBSD, Minix */
-    #if defined SIGINFO
+    #if defined SIGINFO && SIGINFO != SIGPWR
     case SIGINFO:     return "INFO";
     #endif
     /* Linux, Mac OS X, FreeBSD, NetBSD, OpenBSD, Minix, AIX, IRIX, Cygwin */
