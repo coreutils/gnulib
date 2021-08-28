@@ -1,9 +1,11 @@
 Files:
 tests/test-get-rusage-data.c
+tests/qemu.h
 tests/macros.h
 m4/musl.m4
 
 Depends-on:
+stdbool
 
 configure.ac:
 gl_MUSL_LIBC

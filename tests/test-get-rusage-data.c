@@ -21,6 +21,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "qemu.h"
 #include "macros.h"
 
 void *memchunk1;
@@ -44,6 +45,11 @@ main ()
   if (value1 == 0 && value2 == 0 && value3 == 0)
     {
       fprintf (stderr, "Skipping test: no way to determine data segment size\n");
+      return 77;
+    }
+  else if (is_running_under_qemu_user ())
+    {
+      fprintf (stderr, "Skipping test: running under QEMU\n");
       return 77;
     }
   else

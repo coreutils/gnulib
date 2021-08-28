@@ -1,8 +1,10 @@
 Files:
 tests/test-get-rusage-as.c
+tests/qemu.h
 tests/macros.h
 
 Depends-on:
+stdbool
 
 configure.ac:
 

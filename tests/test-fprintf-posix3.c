@@ -48,6 +48,7 @@ main ()
 # include <sys/resource.h>
 #endif
 
+#include "qemu.h"
 #include "resource-ext.h"
 
 /* Test against a memory leak in the fprintf replacement.  */
@@ -69,6 +70,12 @@ main (int argc, char *argv[])
   uintptr_t initial_rusage_as;
   int arg;
   int result;
+
+  if (is_running_under_qemu_user ())
+    {
+      fprintf (stderr, "Skipping test: cannot trust address space size when running under QEMU\n");
+      return 79;
+    }
 
   /* Limit the amount of malloc()ed memory to MAX_ALLOC_TOTAL or less.  */
 

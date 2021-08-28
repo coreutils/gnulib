@@ -8,10 +8,12 @@ tests/test-fprintf-posix2.c
 tests/test-fprintf-posix3.sh
 tests/test-fprintf-posix3.c
 tests/infinity.h
+tests/qemu.h
 tests/signature.h
 tests/macros.h
 
 Depends-on:
+stdbool
 stdint
 get-rusage-as
 

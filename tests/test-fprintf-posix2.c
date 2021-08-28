@@ -32,12 +32,17 @@
 #include <string.h>
 #include <errno.h>
 
+#include "qemu.h"
+
 int
 main (int argc, char *argv[])
 {
   struct rlimit limit;
   int arg;
   int ret;
+
+  if (is_running_under_qemu_user ())
+    return 77;
 
   /* Some printf implementations allocate temporary space with malloc.  */
   /* On BSD systems, malloc() is limited by RLIMIT_DATA.  */
