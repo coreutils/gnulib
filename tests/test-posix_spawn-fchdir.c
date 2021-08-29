@@ -32,6 +32,9 @@
 #include <sys/wait.h>
 
 #include "findprog.h"
+#include "qemu.h"
+
+static bool is_qemu;
 
 static int
 fd_safer (int fd)
@@ -135,10 +138,17 @@ test (const char *pwd_prog)
       fprintf (stderr, "could not read expected output\n");
       exit (1);
     }
-  if (memcmp (line, "/\n", 2) != 0)
+  /* For a process running under QEMU user-mode, rootfd points to the directory
+     that is the value of the QEMU_LD_PREFIX environment variable or of the -L
+     command-line option, and the line produced by 'pwd' is that directory, not
+     "/".  */
+  if (!is_qemu)
     {
-      fprintf (stderr, "read output is not the expected output\n");
-      exit (1);
+      if (memcmp (line, "/\n", 2) != 0)
+        {
+          fprintf (stderr, "read output is not the expected output\n");
+          exit (1);
+        }
     }
   fclose (fp);
   status = 0;
@@ -160,19 +170,22 @@ test (const char *pwd_prog)
 int
 main ()
 {
+  is_qemu = is_running_under_qemu_user ();
+
   test ("pwd");
 
   /* Verify that if a program is given as a relative file name with at least one
      slash, it is interpreted w.r.t. the current directory after fchdir has been
      executed.  */
-  {
-    const char *abs_pwd_prog = find_in_path ("pwd");
+  if (!is_qemu)
+    {
+      const char *abs_pwd_prog = find_in_path ("pwd");
 
-    if (abs_pwd_prog != NULL
-        && abs_pwd_prog[0] == '/'
-        && abs_pwd_prog[1] != '0' && abs_pwd_prog[1] != '/')
-      test (&abs_pwd_prog[1]);
-  }
+      if (abs_pwd_prog != NULL
+          && abs_pwd_prog[0] == '/'
+          && abs_pwd_prog[1] != '0' && abs_pwd_prog[1] != '/')
+        test (&abs_pwd_prog[1]);
+    }
 
   return 0;
 }

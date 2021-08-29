@@ -2,12 +2,14 @@ Files:
 tests/test-posix_spawn_file_actions_addfchdir.c
 tests/test-posix_spawn-fchdir.c
 tests/signature.h
+tests/qemu.h
 tests/macros.h
 
 Depends-on:
 posix_spawn_file_actions_init
 posix_spawn_file_actions_destroy
 posix_spawnp-tests
+stdbool
 findprog
 
 configure.ac:
