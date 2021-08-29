@@ -48,7 +48,6 @@
 #include <ialloc.h>
 
 #include <intprops.h>
-#include <verify.h>
 
 /* Get UCHAR_MAX. */
 #include <limits.h>
@@ -148,7 +147,6 @@ idx_t
 base64_encode_alloc (const char *in, idx_t inlen, char **out)
 {
   /* Check for overflow in outlen computation.  */
-  assume (0 <= inlen);
   idx_t in_over_3 = inlen / 3 + (inlen % 3 != 0), outlen;
   if (! INT_MULTIPLY_OK (in_over_3, 4, &outlen))
     {

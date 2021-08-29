@@ -127,7 +127,7 @@ main (void)
   ASSERT (strcmp (p, "YWJjZGVmZ2hpamtsbW5vcA==") == 0);
   free (p);
 
-  len = base64_encode_alloc (in, SIZE_MAX - 5, &p);
+  len = base64_encode_alloc (in, IDX_MAX - 5, &p);
   ASSERT (len == 0);
 
   /* Decode context function */

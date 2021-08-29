@@ -10,7 +10,6 @@ Depends-on:
 ialloc
 stdbool
 memchr
-verify
 
 configure.ac:
 gl_FUNC_BASE64

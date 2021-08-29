@@ -150,7 +150,7 @@ main (void)
   ASSERT (strcmp (p, "MFRGGZDFMZTWQ2LKNNWG23TPOA======") == 0);
   free (p);
 
-  len = base32_encode_alloc (in, SIZE_MAX - 5, &p);
+  len = base32_encode_alloc (in, IDX_MAX - 5, &p);
   ASSERT (len == 0);
 
   /* Decode context function */
