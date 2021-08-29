@@ -23,7 +23,7 @@ Include:
 "ialloc.h"
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 all
