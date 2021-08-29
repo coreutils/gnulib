@@ -725,10 +725,14 @@ FUNC (DOUBLE x, DOUBLE y, DOUBLE z)
                     int rounding_mode = fegetround ();
                     if (rounding_mode == FE_TOWARDZERO)
                       round_up = 0;
+# if defined FE_DOWNWARD /* not defined on sh4 */
                     else if (rounding_mode == FE_DOWNWARD)
                       round_up = sign;
+# endif
+# if defined FE_UPWARD /* not defined on sh4 */
                     else if (rounding_mode == FE_UPWARD)
                       round_up = !sign;
+# endif
 #else
                     /* Cf. <https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/float.h.html> */
                     int rounding_mode = FLT_ROUNDS;
