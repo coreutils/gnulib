@@ -139,16 +139,22 @@ test_heap (void)
 static int _GL_ATTRIBUTE_NOINLINE
 do_secret_stuff (volatile int pass)
 {
+  static char *last_stackbuf;
   char stackbuf[SECRET_SIZE];
   if (pass == 1)
     {
       memcpy (stackbuf, SECRET, SECRET_SIZE);
       explicit_bzero (stackbuf, SECRET_SIZE);
+      last_stackbuf = stackbuf;
       return 0;
     }
   else /* pass == 2 */
     {
-      return memcmp (zero, stackbuf, SECRET_SIZE) != 0;
+      /* Use last_stackbuf here, because stackbuf may be allocated at a
+         different address than last_stackbuf.  This can happen
+         when the compiler splits this function into different functions,
+         one for pass == 1 and one for pass != 1.  */
+      return memcmp (zero, last_stackbuf, SECRET_SIZE) != 0;
     }
 }
 
@@ -158,10 +164,17 @@ test_stack (void)
   int count = 0;
   int repeat;
 
-  for (repeat = 1000; repeat > 0; repeat--)
+  for (repeat = 2 * 1000; repeat > 0; repeat--)
     {
-      do_secret_stuff (1);
-      count += do_secret_stuff (2);
+      /* This odd way of writing two consecutive statements
+           do_secret_stuff (1);
+           count += do_secret_stuff (2);
+         ensures that the two do_secret_stuff calls are performed with the same
+         stack pointer value, on m68k.  */
+      if ((repeat % 2) == 0)
+        do_secret_stuff (1);
+      else
+        count += do_secret_stuff (2);
     }
   /* If explicit_bzero works, count is near 0.  (It may be > 0 if there were
      some asynchronous signal invocations between the two calls of
