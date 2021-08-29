@@ -49,6 +49,7 @@ struct dfa;
 /* Needed when Gnulib is not used.  */
 #ifndef _GL_ATTRIBUTE_MALLOC
 # define _GL_ATTRIBUTE_MALLOC
+# define _GL_ATTRIBUTE_DEALLOC(f, i)
 # define _GL_ATTRIBUTE_DEALLOC_FREE
 # define _GL_ATTRIBUTE_RETURNS_NONNULL
 #endif
