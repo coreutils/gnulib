@@ -1,12 +1,14 @@
 Files:
-tests/test-getcwd.c
 tests/test-getcwd.sh
+tests/test-getcwd.c
+tests/qemu.h
 
 Depends-on:
 errno
 fcntl-h
 getcwd-lgpl
 pathmax
+stdbool
 sys_stat
 test-framework-sh
 

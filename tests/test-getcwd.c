@@ -27,6 +27,7 @@
 #include <sys/stat.h>
 
 #include "pathmax.h"
+#include "qemu.h"
 #include "macros.h"
 
 #if !(HAVE_GETPAGESIZE || defined getpagesize)
@@ -138,6 +139,13 @@ test_long_name (void)
      this should be done in a compile test.  */
   return 0;
 #else
+  /* For a process running under QEMU user-mode, the "/" directory is not
+     really the root directory, but the value of the QEMU_LD_PREFIX environment
+     variable or of the -L command-line option.  This causes the logic from
+     glibc/sysdeps/posix/getcwd.c to fail.  In this case, skip the test.  */
+  if (is_running_under_qemu_user ())
+    return 77;
+
   char buf[PATH_MAX * (DIR_NAME_SIZE / DOTDOTSLASH_LEN + 1)
            + DIR_NAME_SIZE + BUF_SLOP];
   char *cwd = getcwd (buf, PATH_MAX);
@@ -256,5 +264,7 @@ test_long_name (void)
 int
 main (int argc, char **argv)
 {
-  return test_abort_bug () * 10 + test_long_name ();
+  int err1 = test_abort_bug ();
+  int err2 = test_long_name ();
+  return err1 * 10 + (err1 != 0 && err2 == 77 ? 0 : err2);
 }
