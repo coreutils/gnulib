@@ -141,9 +141,11 @@ base32_encode (const char *restrict in, idx_t inlen,
 idx_t
 base32_encode_alloc (const char *in, idx_t inlen, char **out)
 {
-  /* Check for overflow in outlen computation.  */
+  /* Check for overflow in outlen computation.
+     Treat negative INLEN as overflow, for better compatibility with
+     pre-2021-08-27 API, which used size_t.  */
   idx_t in_over_5 = inlen / 5 + (inlen % 5 != 0), outlen;
-  if (! INT_MULTIPLY_OK (in_over_5, 8, &outlen))
+  if (! INT_MULTIPLY_OK (in_over_5, 8, &outlen) || inlen < 0)
     {
       *out = NULL;
       return 0;
