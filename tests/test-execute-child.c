@@ -41,6 +41,7 @@ is_device (int fd)
 /* Now include the other header files.  */
 #include <fcntl.h>
 #include <signal.h>
+#include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -57,6 +58,7 @@ is_device (int fd)
 
 /* In this file, we use only system functions, no overrides from gnulib.  */
 #undef atoi
+#undef close
 #undef fcntl
 #undef fflush
 #undef fgetc
@@ -64,12 +66,17 @@ is_device (int fd)
 #undef fputs
 #undef getcwd
 #undef isatty
+#undef open
 #undef raise
 #undef read
 #undef sprintf
+#undef strcasestr
 #undef strcmp
 #undef strlen
+#undef strstr
 #undef write
+
+#include "qemu.h"
 
 #if HAVE_MSVC_INVALID_PARAMETER_HANDLER
 static void __cdecl
@@ -166,12 +173,15 @@ main (int argc, char *argv[])
       _set_invalid_parameter_handler (gl_msvc_invalid_parameter_handler);
       #endif
       {
+        /* QEMU 6.1 in user-mode passes an open fd = 3, that references
+           /dev/urandom.  We need to ignore this fd.  */
+        bool is_qemu = is_running_under_qemu_user ();
         char buf[300];
         buf[0] = '\0';
         char *p = buf;
         int fd;
         for (fd = 0; fd < 20; fd++)
-          if (is_open (fd))
+          if (is_open (fd) && !(is_qemu && fd == 3))
             {
               sprintf (p, "%d ", fd);
               p += strlen (p);

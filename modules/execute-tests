@@ -6,6 +6,7 @@ tests/test-execute-script.c
 tests/executable-script
 tests/executable-script.sh
 tests/executable-shell-script
+tests/qemu.h
 tests/macros.h
 
 Depends-on:
@@ -14,6 +15,7 @@ fcntl
 mkdir
 msvc-inval
 read-file
+stdbool
 stdint
 unistd
 
