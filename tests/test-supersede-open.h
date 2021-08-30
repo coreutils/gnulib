@@ -90,7 +90,9 @@ test_open_supersede (bool supersede_if_exists, bool supersede_if_does_not_exist)
         /* Verify that the file now has a different inode number, on the same
            device.  */
 #if !(defined _WIN32 && !defined __CYGWIN__)
-        ASSERT (memcmp (&orig_dev, &statbuf.st_dev, sizeof (dev_t)) == 0);
+        /* Note: On Linux/mips, statbuf.st_dev is smaller than a dev_t!  */
+        dev_t new_dev = statbuf.st_dev;
+        ASSERT (memcmp (&orig_dev, &new_dev, sizeof (dev_t)) == 0);
         ASSERT (memcmp (&orig_ino, &statbuf.st_ino, sizeof (ino_t)) != 0);
 #endif
       }
@@ -159,7 +161,9 @@ test_open_supersede (bool supersede_if_exists, bool supersede_if_does_not_exist)
             /* Verify that the file now has a different inode number, on the
                same device.  */
 #if !(defined _WIN32 && !defined __CYGWIN__)
-            ASSERT (memcmp (&orig_dev, &statbuf.st_dev, sizeof (dev_t)) == 0);
+            /* Note: On Linux/mips, statbuf.st_dev is smaller than a dev_t!  */
+            dev_t new_dev = statbuf.st_dev;
+            ASSERT (memcmp (&orig_dev, &new_dev, sizeof (dev_t)) == 0);
             ASSERT (memcmp (&orig_ino, &statbuf.st_ino, sizeof (ino_t)) != 0);
 #endif
           }
