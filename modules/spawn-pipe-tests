@@ -6,11 +6,13 @@ tests/test-spawn-pipe-script.c
 tests/executable-script
 tests/executable-script.sh
 tests/executable-shell-script
+tests/qemu.h
 tests/macros.h
 
 Depends-on:
 close
 msvc-inval
+stdbool
 stdint
 
 configure.ac:
