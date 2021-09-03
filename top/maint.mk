@@ -1631,12 +1631,32 @@ refresh-po:
 	ls $(PODIR)/*.po | $(SED) 's/\.po//;s,$(PODIR)/,,' | \
 	  sort >> $(PODIR)/LINGUAS
 
- # Running indent once is not idempotent, but running it twice is.
+# Indentation
+
+indent_args ?= -ppi 1
+C_SOURCES ?= $$($(VC_LIST_EXCEPT) | grep '\.[ch]\(.in\)\?$$')
 INDENT_SOURCES ?= $(C_SOURCES)
+exclude_file_name_regexp--indent ?= $(exclude_file_name_regexp--sc_indent)
+
 .PHONY: indent
-indent:
-	indent $(INDENT_SOURCES)
-	indent $(INDENT_SOURCES)
+indent: # Running indent once is not idempotent, but running it twice is.
+	$(AM_V_GEN)indent $(indent_args) $(INDENT_SOURCES) && \
+	indent $(indent_args) $(INDENT_SOURCES)
+
+sc_indent:
+	@if ! command -v indent > /dev/null; then			\
+	    echo 1>&2 '$(ME): sc_indent: indent is missing';		\
+	else								\
+	  fail=0; files="$(INDENT_SOURCES)";				\
+	  for f in $$files; do						\
+	    indent $(indent_args) -st $$f				\
+		| indent $(indent_args) -st -				\
+		| diff -u $$f - || fail=1;				\
+	  done;								\
+	  test $$fail = 1 &&						\
+	    { echo 1>&2 '$(ME): code format error, try "make indent"';	\
+	      exit 1; } || :;						\
+	fi
 
 # If you want to set UPDATE_COPYRIGHT_* environment variables,
 # put the assignments in this variable.
