@@ -50,7 +50,7 @@ $GNUORG Copyright/request-assign.program	doc/Copyright
 $GNUORG Copyright/request-disclaim.changes	doc/Copyright
 
 $LIBCSRC include/filename.h		lib
-$LIBCSRC include/idx.h			lib
+#$LIBCSRC include/idx.h			lib
 #$LIBCSRC malloc/dynarray-skeleton.c	lib/malloc
 #$LIBCSRC malloc/dynarray.h		lib/malloc
 #$LIBCSRC malloc/dynarray_at_failure.c	lib/malloc
