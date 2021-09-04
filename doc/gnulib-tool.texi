@@ -875,7 +875,7 @@ functions will not be affected.
 
 
 @node VCS Issues
-@section Issues with Version Control Systems
+@section Integration with Version Control Systems
 
 If a project stores its source files in a version control system (VCS),
 such as CVS, Subversion, or Git, one needs to decide which files to commit.
@@ -938,36 +938,45 @@ add because they were missing.
 @end itemize
 
 Gnulib includes the file @file{build-aux/bootstrap} to aid a developer
-in using this setup.  Furthermore, in projects that use git for
-version control, it is possible to use a git submodule containing the
-precise commit of the gnulib repository, so that each developer
-running @file{bootstrap} will get the same version of all
-gnulib-provided files.  The location of the submodule can be chosen to
-fit the package's needs; here's how to initially create the submodule
-in the directory @file{.gnulib}:
+in using this setup.  You would copy this file and add it to your
+project's VCS.  It can be customized using @file{bootstrap.conf} which
+is also put under VCS in your project.  Read the script for further
+information, and look at how other projects are using it (see links in
+@url{https://git.savannah.gnu.org/gitweb/?p=gnulib.git;a=blob;f=users.txt;hb=HEAD}).
+
+In projects that use git for version control, it is possible to use a
+git submodule containing the precise commit of the gnulib repository, so
+that each developer running @file{bootstrap} will get the same version
+of all gnulib-provided files.  The location of the submodule can be
+chosen to fit the package's needs; here's how to initially create the
+submodule in the directory @file{gnulib}:
 
 @smallexample
-$ dir=.gnulib
-$ git submodule add -- https://git.savannah.gnu.org/git/gnulib.git $dir
-$ git config alias.syncsub "submodule foreach git pull origin master"
+$ git submodule add -- https://git.savannah.gnu.org/git/gnulib.git gnulib
 @end smallexample
 
 @noindent
-Thereafter, @file{bootstrap} can run this command to update the
+Thereafter, @file{bootstrap} will run this command to update the
 submodule to the recorded checkout level:
 
 @smallexample
-git submodule update --init $dir
+$ git submodule update --init gnulib
 @end smallexample
 
 @noindent
-and a developer can use this sequence to update to a newer version of
-gnulib:
+Use this sequence to update to a newer version of gnulib:
 
 @smallexample
+$ git submodule update --remote gnulib
+$ git add gnulib
+$ ./bootstrap --bootstrap-sync
+@end smallexample
+
+If multiple submodules are used, the following may be useful:
+
+@smallexample
+$ git config alias.syncsub "submodule foreach git pull origin master"
 $ git syncsub
-$ git add $dir
-$ ./bootstrap
 @end smallexample
 
 @item
