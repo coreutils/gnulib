@@ -81,12 +81,12 @@ Example usage:
 
 @example
 #include <intprops.h>
-#include <time.h>
+#include <sys/types.h>
 
 enum
 @{
-  time_t_is_signed_integer =
-    TYPE_IS_INTEGER (time_t) && TYPE_SIGNED (time_t)
+  clock_t_is_integer = TYPE_IS_INTEGER (clock_t),
+  uid_t_is_signed = TYPE_SIGNED (uid_t)
 @};
 
 int
@@ -135,17 +135,16 @@ leading @code{-} character.  This is one less than
 @code{TYPE_MINIMUM (@var{t})} and @code{TYPE_MAXIMUM (@var{t})} are
 integer constant expressions equal to the minimum and maximum
 values of the integer type @var{t}.  These expressions are of the type
-@var{t} (or more precisely, the type @var{t} after integer
-promotions).
+@var{t}.
 
 Example usage:
 
 @example
-#include <stdint.h>
+#include <stdbool.h>
 #include <sys/types.h>
 #include <intprops.h>
-int
-in_off_t_range (intmax_t a)
+bool
+in_off_t_range (long long int a)
 @{
   return TYPE_MINIMUM (off_t) <= a && a <= TYPE_MAXIMUM (off_t);
 @}
@@ -195,7 +194,7 @@ void
 print_product (long int a, long int b)
 @{
   long int r;
-  if (INT_MULTIPLY_OK (a, b, r))
+  if (INT_MULTIPLY_OK (a, b, &r))
     printf ("result is %ld\n", r);
   else
     printf ("overflow\n");
