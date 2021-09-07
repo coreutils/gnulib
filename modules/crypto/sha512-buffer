@@ -2,6 +2,7 @@ Description:
 Compute SHA384 and SHA512 checksums.
 
 Files:
+lib/af_alg.h
 lib/gl_openssl.h
 lib/sha512.h
 lib/sha512.c

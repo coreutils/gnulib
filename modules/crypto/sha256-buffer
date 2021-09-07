@@ -2,6 +2,7 @@ Description:
 Compute SHA224 and SHA256 checksums.
 
 Files:
+lib/af_alg.h
 lib/gl_openssl.h
 lib/sha256.h
 lib/sha256.c
