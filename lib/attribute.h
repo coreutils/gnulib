@@ -80,7 +80,7 @@
    that can be freed by passing them as the Ith argument to the
    function F.
    ATTRIBUTE_DEALLOC_FREE declares that the function returns pointers that
-   can be freed via 'free'; it can be used only after including <stdlib.h>.  */
+   can be freed via 'free'; it can be used only after declaring 'free'.  */
 /* Applies to: functions.  Cannot be used on inline functions.  */
 #define ATTRIBUTE_DEALLOC(f, i) _GL_ATTRIBUTE_DEALLOC(f, i)
 #define ATTRIBUTE_DEALLOC_FREE _GL_ATTRIBUTE_DEALLOC_FREE
