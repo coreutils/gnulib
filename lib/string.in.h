@@ -86,6 +86,7 @@
 /* Declare 'free' if needed for _GL_ATTRIBUTE_DEALLOC_FREE.  */
 #if (@REPLACE_FREE@ && !defined free \
      && !(defined __cplusplus && defined GNULIB_NAMESPACE))
+_GL_EXTERN_C void free (void *);
 # define free rpl_free
 #endif
 _GL_EXTERN_C void free (void *);
