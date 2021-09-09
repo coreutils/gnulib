@@ -1,4 +1,4 @@
-#serial 14
+#serial 15
 
 # Copyright (C) 1996-1998, 2001-2004, 2009-2021 Free Software Foundation, Inc.
 #
@@ -22,6 +22,10 @@ AC_DEFUN([gl_ERROR],
 # Prerequisites of lib/error.c.
 AC_DEFUN([gl_PREREQ_ERROR],
 [
+  dnl Use system extensions on Android, so that AC_FUNC_STRERROR_R
+  dnl discovers the GNU API for strerror_r on Android API level 23 and later.
+  AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
+
   AC_REQUIRE([AC_FUNC_STRERROR_R])
   :
 ])
