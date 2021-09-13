@@ -58,8 +58,10 @@ so public header files should avoid these types.
 Macros are used instead of typedefs.
 @item
 Some C preprocessors mishandle constants that do not fit in @code{long int}.
-For example, as of 2007, Sun C mishandles @code{#if LLONG_MIN < 0} on
-a platform with 32-bit @code{long int} and 64-bit @code{long long int}.
+For example, as of 2007, Sun C mishandled @code{#if LLONG_MIN < 0} on
+a platform with 32-bit @code{long int} and 64-bit @code{long long int};
+this bug was fixed on or before Oracle Developer Studio 12.6
+(Sun C 5.15 SunOS_sparc 2017/05/30).
 Some older preprocessors mishandle constants ending in @code{LL}.
 To work around these problems, compute the value of expressions like
 @code{LONG_MAX < LLONG_MAX} at @code{configure}-time rather than at

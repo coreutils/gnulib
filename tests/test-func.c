@@ -27,8 +27,8 @@ main ()
 {
   ASSERT (strlen (__func__) > 0);
 
-  /* On SunPRO C 5.9, sizeof __func__ evaluates to 0.  The compiler warns:
-     "warning: null dimension: sizeof()".  */
+  /* On Oracle Developer Studio 12.6 and earlier, sizeof __func__ yields 0.
+     The compiler warns: "warning: null dimension: sizeof()".  */
 #if !defined __SUNPRO_C
   ASSERT (strlen (__func__) + 1 == sizeof __func__);
 #endif
