@@ -27,6 +27,10 @@
 # include <sys/atomic_op.h>
 #endif
 
+#if 0x590 <= __SUNPRO_C && __STDC__
+# define asm __asm
+#endif
+
 #if defined _WIN32 && ! defined __CYGWIN__
 /* Use Windows threads.  */
 
