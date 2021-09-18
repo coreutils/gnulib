@@ -1,0 +1,16 @@
+Files:
+tests/bench-sha384.c
+tests/bench-sha512.c
+tests/bench-digest.h
+
+Depends-on:
+c99
+getrusage
+gettimeofday
+
+configure.ac:
+
+Makefile.am:
+noinst_PROGRAMS += bench-sha384 bench-sha512
+bench_sha384_LDADD = $(LDADD) @LIB_CRYPTO@
+bench_sha512_LDADD = $(LDADD) @LIB_CRYPTO@
