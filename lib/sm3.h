@@ -90,6 +90,7 @@ extern void *sm3_buffer (const char *buffer, size_t len,
                          void *restrict resblock);
 
 # endif
+
 /* Compute SM3 message digest for bytes read from STREAM.  The
    resulting message digest number will be written into the 32 bytes
    beginning at RESBLOCK.  */

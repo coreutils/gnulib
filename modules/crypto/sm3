@@ -2,22 +2,15 @@ Description:
 Compute SM3 checksums.
 
 Files:
-lib/sm3.h
-lib/sm3.c
-m4/sm3.m4
+lib/sm3-stream.c
 
 Depends-on:
-byteswap
-c99
-extern-inline
-stdalign
-stdint
+crypto/sm3-buffer
 
 configure.ac:
-gl_SM3
 
 Makefile.am:
-lib_SOURCES += sm3.c
+lib_SOURCES += sm3-stream.c
 
 Include:
 "sm3.h"
