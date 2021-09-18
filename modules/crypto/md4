@@ -2,21 +2,15 @@ Description:
 Compute MD4 checksum.
 
 Files:
-lib/md4.h
-lib/md4.c
-m4/md4.m4
+lib/md4-stream.c
 
 Depends-on:
-byteswap
-stdalign
-stdint
+crypto/md4-buffer
 
 configure.ac:
-AC_REQUIRE([AC_C_RESTRICT])
-gl_MD4
 
 Makefile.am:
-lib_SOURCES += md4.c
+lib_SOURCES += md4-stream.c
 
 Include:
 "md4.h"
