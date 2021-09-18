@@ -1,0 +1,11 @@
+Files:
+tests/test-sm3-buffer.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-sm3-buffer
+check_PROGRAMS += test-sm3-buffer
+test_sm3_buffer_LDADD = $(LDADD) @LIB_CRYPTO@
