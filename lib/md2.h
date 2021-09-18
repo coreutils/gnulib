@@ -66,17 +66,19 @@ extern void *md2_finish_ctx (struct md2_ctx *ctx, void *restrict resbuf);
 extern void *md2_read_ctx (const struct md2_ctx *ctx, void *restrict resbuf);
 
 
-/* Compute MD2 message digest for bytes read from STREAM.  The
-   resulting message digest number will be written into the 16 bytes
-   beginning at RESBLOCK.  */
-extern int md2_stream (FILE *stream, void *resblock);
-
 /* Compute MD2 message digest for LEN bytes beginning at BUFFER.  The
    result is always in little endian byte order, so that a byte-wise
    output yields to the wanted ASCII representation of the message
    digest.  */
 extern void *md2_buffer (const char *buffer, size_t len,
                          void *restrict resblock);
+
+
+/* Compute MD2 message digest for bytes read from STREAM.  The
+   resulting message digest number will be written into the 16 bytes
+   beginning at RESBLOCK.  */
+extern int md2_stream (FILE *stream, void *resblock);
+
 
 # ifdef __cplusplus
 }

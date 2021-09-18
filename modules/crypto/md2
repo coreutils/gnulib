@@ -2,17 +2,15 @@ Description:
 Compute MD2 checksum.
 
 Files:
-lib/md2.h
-lib/md2.c
+lib/md2-stream.c
 
 Depends-on:
-minmax
+crypto/md2-buffer
 
 configure.ac:
-AC_REQUIRE([AC_C_RESTRICT])
 
 Makefile.am:
-lib_SOURCES += md2.c
+lib_SOURCES += md2-stream.c
 
 Include:
 "md2.h"
