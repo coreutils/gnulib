@@ -124,6 +124,7 @@ extern void *__md5_buffer (const char *buffer, size_t len,
                            void *restrict resblock) __THROW;
 
 # endif
+
 /* Compute MD5 message digest for bytes read from STREAM.
    STREAM is an open file stream.  Regular files are handled more efficiently.
    The contents of STREAM from its current position to its end will be read.

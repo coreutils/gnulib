@@ -2,18 +2,22 @@ Description:
 Compute MD5 checksum.
 
 Files:
+lib/md5-stream.c
 
 Depends-on:
 crypto/af_alg
 crypto/md5-buffer
 
 configure.ac:
-AC_DEFINE([GL_COMPILE_CRYPTO_STREAM], 1, [Compile Gnulib crypto stream ops.])
 
 Makefile.am:
+lib_SOURCES += md5-stream.c
 
 Include:
 "md5.h"
+
+Link:
+$(LIB_CRYPTO)
 
 License:
 LGPLv2+
