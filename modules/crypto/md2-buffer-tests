@@ -1,0 +1,10 @@
+Files:
+tests/test-md2-buffer.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-md2-buffer
+check_PROGRAMS += test-md2-buffer
