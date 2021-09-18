@@ -1,0 +1,18 @@
+Files:
+tests/test-sha1-buffer.c
+tests/bench-sha1.c
+tests/bench-digest.h
+
+Depends-on:
+c99
+getrusage
+gettimeofday
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-sha1-buffer
+check_PROGRAMS += test-sha1-buffer
+noinst_PROGRAMS += bench-sha1
+test_sha1_buffer_LDADD = $(LDADD) @LIB_CRYPTO@
+bench_sha1_LDADD = $(LDADD) @LIB_CRYPTO@
