@@ -96,6 +96,7 @@ extern void *sha384_buffer (const char *buffer, size_t len,
                             void *restrict resblock);
 
 # endif
+
 /* Compute SHA512 (SHA384) message digest for bytes read from STREAM.
    STREAM is an open file stream.  Regular files are handled more efficiently.
    The contents of STREAM from its current position to its end will be read.
