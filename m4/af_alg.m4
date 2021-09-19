@@ -1,4 +1,4 @@
-# af_alg.m4 serial 5
+# af_alg.m4 serial 6
 dnl Copyright 2018-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -35,7 +35,8 @@ AC_DEFUN_ONCE([gl_AF_ALG],
   use_af_alg=no
   AC_ARG_WITH([linux-crypto],
     [AS_HELP_STRING([[--with-linux-crypto]],
-       [use Linux kernel cryptographic API (if available)])],
+       [use Linux kernel cryptographic API (if available) for the hash functions
+        MD5, SHA-1, SHA-224, SHA-256, SHA-384, SHA-512 on files])],
     [use_af_alg=$withval],
     [use_af_alg=no])
   dnl We cannot use it if it is not available.
