@@ -385,13 +385,7 @@ as a unit of collation.''
 
 This generalizes the notion of a character in
 two ways.  First, a single character can map into two or more collating
-elements.  For example, the German
-@tex
-``\ss''
-@end tex
-@ifinfo
-``es-zet''
-@end ifinfo
+elements.  For example, the German ``ß''
 collates as the collating element @samp{s} followed by another collating
 element @samp{s}.  Second, two or more characters can map into one
 collating element.  For example, the Spanish @samp{ll} collates after
