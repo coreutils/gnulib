@@ -388,8 +388,8 @@ two ways.  First, a single character can map into two or more collating
 elements.  For example, the German ``ß''
 collates as the collating element @samp{s} followed by another collating
 element @samp{s}.  Second, two or more characters can map into one
-collating element.  For example, the Spanish @samp{ll} collates after
-@samp{l} and before @samp{m}.
+collating element.  For example, the Czech @samp{ch} collates after
+@samp{h} and before @samp{i}.
 
 Since POSIX's ``collating element'' preserves the essential idea of
 a ``character,'' we use the latter, more familiar, term in this document.
