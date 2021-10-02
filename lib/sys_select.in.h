@@ -21,7 +21,7 @@
 
 /* On OSF/1 and Solaris 2.6, <sys/types.h> and <sys/time.h>
    both include <sys/select.h>.
-   On Cygwin, <sys/time.h> includes <sys/select.h>.
+   On Cygwin and OpenBSD, <sys/time.h> includes <sys/select.h>.
    Simply delegate to the system's header in this case.  */
 #if (@HAVE_SYS_SELECT_H@                                                \
      && !defined _GL_SYS_SELECT_H_REDIRECT_FROM_SYS_TYPES_H             \
@@ -39,6 +39,7 @@
            || (!defined _GL_SYS_SELECT_H_REDIRECT_FROM_SYS_TIME_H       \
                && ((defined __osf__ && defined _SYS_TIME_H_             \
                     && defined _OSF_SOURCE)                             \
+                   || (defined __OpenBSD__ && defined _SYS_TIME_H_)     \
                    || (defined __sun && defined _SYS_TIME_H             \
                        && (! (defined _XOPEN_SOURCE                     \
                               || defined _POSIX_C_SOURCE)               \
