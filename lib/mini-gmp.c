@@ -148,6 +148,7 @@ see https://www.gnu.org/licenses/.  */
       mp_limb_t __x0, __x1, __x2, __x3;					\
       unsigned __ul, __vl, __uh, __vh;					\
       mp_limb_t __u = (u), __v = (v);					\
+      assert (sizeof (unsigned) * 2 >= sizeof (mp_limb_t));		\
 									\
       __ul = __u & GMP_LLIMB_MASK;					\
       __uh = __u >> (GMP_LIMB_BITS / 2);				\
@@ -783,6 +784,7 @@ mpn_invert_3by2 (mp_limb_t u1, mp_limb_t u0)
     mp_limb_t p, ql;
     unsigned ul, uh, qh;
 
+    assert (sizeof (unsigned) * 2 >= sizeof (mp_limb_t));
     /* For notation, let b denote the half-limb base, so that B = b^2.
        Split u1 = b uh + ul. */
     ul = u1 & GMP_LLIMB_MASK;
