@@ -310,12 +310,19 @@ num_processors_ignoring_omp (enum nproc_query query)
   { /* This works on Mac OS X, FreeBSD, NetBSD, OpenBSD.  */
     int nprocs;
     size_t len = sizeof (nprocs);
-    static int mib[2] = { CTL_HW, HW_NCPU };
-
-    if (sysctl (mib, ARRAY_SIZE (mib), &nprocs, &len, NULL, 0) == 0
-        && len == sizeof (nprocs)
-        && 0 < nprocs)
-      return nprocs;
+    static int const mib[][2] = {
+# ifdef HW_NCPUONLINE
+      { CTL_HW, HW_NCPUONLINE },
+# endif
+      { CTL_HW, HW_NCPU }
+    };
+    for (int i = 0; i < ARRAY_SIZE (mib); i++)
+      {
+        if (sysctl (mib[i], ARRAY_SIZE (mib[i]), &nprocs, &len, NULL, 0) == 0
+            && len == sizeof (nprocs)
+            && 0 < nprocs)
+          return nprocs;
+      }
   }
 #endif
 
