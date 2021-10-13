@@ -1,4 +1,4 @@
-# stack-direction.m4 serial 8
+# stack-direction.m4 serial 9
 dnl Copyright (C) 2002-2021 Free Software Foundation, Inc.
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
@@ -79,7 +79,7 @@ find_stack_direction (int *addr, int depth)
   return dir + dummy;
 }
 int
-main (int argc, char *argv[])
+main (int argc, char *argv[[]])
 {
   printf ("%d\n", find_stack_direction (NULL, argc + 20));
   return 0;
