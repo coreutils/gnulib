@@ -760,7 +760,7 @@ re_search_internal (const regex_t *preg, const char *string, Idx length,
 		}
 	      /* If MATCH_FIRST is out of the buffer, leave it as '\0'.
 		 Note that MATCH_FIRST must not be smaller than 0.  */
-	      ch = (match_first >= length
+	      ch = (mctx.input.valid_len <= offset
 		    ? 0 : re_string_byte_at (&mctx.input, offset));
 	      if (fastmap[ch])
 		break;
