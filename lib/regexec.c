@@ -758,8 +758,7 @@ re_search_internal (const regex_t *preg, const char *string, Idx length,
 
 		  offset = match_first - mctx.input.raw_mbs_idx;
 		}
-	      /* If MATCH_FIRST is out of the buffer, leave it as '\0'.
-		 Note that MATCH_FIRST must not be smaller than 0.  */
+	      /* If OFFSET is out of the buffer, leave CH as '\0'.  */
 	      ch = (mctx.input.valid_len <= offset
 		    ? 0 : re_string_byte_at (&mctx.input, offset));
 	      if (fastmap[ch])
