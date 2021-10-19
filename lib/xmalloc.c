@@ -101,6 +101,12 @@ xnmalloc (size_t n, size_t s)
   return xreallocarray (NULL, n, s);
 }
 
+void *
+xinmalloc (idx_t n, idx_t s)
+{
+  return xireallocarray (NULL, n, s);
+}
+
 /* If P is null, allocate a block of at least *PS bytes; otherwise,
    reallocate P so that it contains more than *PS bytes.  *PS must be
    nonzero unless P is null.  Set *PS to the new block's size, and
