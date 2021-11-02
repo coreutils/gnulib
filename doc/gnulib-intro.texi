@@ -251,10 +251,11 @@ integers use a ones'-complement representation.  On these machines,
 requirement that it be one less than a power of two.  Although
 compiler options can raise @code{UINT_MAX} to be @math{2^{36} - 1},
 this can break system code that uses @math{-0} as a flag value.
-This platform's architecture descends from the UNIVAC 1107 (1962).
+This platform's architecture descends from the UNIVAC 1103 (1953).
 
 @item
-The Unisys ClearPath Libra's machine word is 48 bits.  Its
+The Unisys ClearPath Libra's machine word is 48 bits
+with a 4-bit tag and a 4-bit data extension.  Its
 @code{unsigned int} uses the low-order 40 bits of the word, and
 @code{int} uses the low-order 41 bits of the word with a
 signed-magnitude representation.  On these machines, @code{INT_MAX ==
