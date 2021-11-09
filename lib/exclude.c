@@ -675,12 +675,12 @@ add_exclude_file (void (*add_func) (struct exclude *, char const *, int),
                   char line_end)
 {
   if (strcmp (file_name, "-") == 0)
-    return add_exclude_fp (call_addfn, ex, stdin, options, line_end, add_func);
+    return add_exclude_fp (call_addfn, ex, stdin, options, line_end, &add_func);
 
   FILE *in = fopen (file_name, "re");
   if (!in)
     return -1;
-  int rc = add_exclude_fp (call_addfn, ex, in, options, line_end, add_func);
+  int rc = add_exclude_fp (call_addfn, ex, in, options, line_end, &add_func);
   int e = errno;
   if (fclose (in) != 0)
     return -1;
