@@ -45,6 +45,7 @@ AC_DEFUN([SV_STACK_DIRECTION],
       nios2 | \
       nds32* | \
       ns32k | \
+      or1k | \
       pdp11 | \
       pj* | \
       powerpc* | rs6000 | \
