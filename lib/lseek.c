@@ -52,6 +52,22 @@ rpl_lseek (int fd, off_t offset, int whence)
       errno = ESPIPE;
       return -1;
     }
+#elif defined __APPLE__ && defined __MACH__ && defined SEEK_DATA
+  if (whence == SEEK_DATA)
+    {
+      /* If OFFSET points to data, macOS lseek+SEEK_DATA returns the
+         start S of the first data region that begins *after* OFFSET,
+         where the region from OFFSET to S consists of possibly-empty
+         data followed by a possibly-empty hole.  To work around this
+         portability glitch, check whether OFFSET is within data by
+         using lseek+SEEK_HOLE, and if so return to OFFSET by using
+         lseek+SEEK_SET.  */
+      off_t next_hole = lseek (fd, offset, SEEK_HOLE);
+      if (next_hole < 0)
+        return next_hole;
+      if (next_hole != offset)
+        whence = SEEK_SET;
+    }
 #else
   /* BeOS lseek mistakenly succeeds on pipes...  */
   struct stat statbuf;
