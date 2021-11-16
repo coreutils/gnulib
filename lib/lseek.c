@@ -61,10 +61,12 @@ rpl_lseek (int fd, off_t offset, int whence)
          data followed by a possibly-empty hole.  To work around this
          portability glitch, check whether OFFSET is within data by
          using lseek+SEEK_HOLE, and if so return to OFFSET by using
-         lseek+SEEK_SET.  */
+         lseek+SEEK_SET.  Also, contrary to the macOS documentation,
+         lseek+SEEK_HOLE can fail with ENXIO if there are no holes on
+         or after OFFSET.  What a mess!  */
       off_t next_hole = lseek (fd, offset, SEEK_HOLE);
       if (next_hole < 0)
-        return next_hole;
+        return errno == ENXIO ? offset : next_hole;
       if (next_hole != offset)
         whence = SEEK_SET;
     }
