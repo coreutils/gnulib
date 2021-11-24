@@ -146,6 +146,11 @@
 # define __regfree regfree
 #endif /* not _LIBC */
 
+/* Types related to integers.  Unless protected by #ifdef _LIBC, the
+   regex code should avoid exact-width types like int32_t and uint64_t
+   as some non-GCC platforms lack them, an issue when this code is
+   used in Gnulib.  */
+
 #ifndef SSIZE_MAX
 # define SSIZE_MAX ((ssize_t) (SIZE_MAX / 2))
 #endif
