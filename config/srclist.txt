@@ -68,8 +68,8 @@ $LIBCSRC misc/sys/cdefs.h		lib
 #$LIBCSRC posix/regcomp.c		lib
 $LIBCSRC posix/regex.c			lib
 $LIBCSRC posix/regex.h			lib
-$LIBCSRC posix/regex_internal.c		lib
-$LIBCSRC posix/regex_internal.h		lib
+#$LIBCSRC posix/regex_internal.c	lib
+#$LIBCSRC posix/regex_internal.h	lib
 #$LIBCSRC posix/regexec.c		lib
 #$LIBCSRC stdlib/canonicalize           lib/canonicalize-lgpl.c
 #$LIBCSRC sysdeps/generic/eloop-threshold.h	lib
