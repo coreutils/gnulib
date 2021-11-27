@@ -5,6 +5,7 @@ Files:
 lib/gettext.h
 
 Depends-on:
+vararrays
 
 configure.ac:
 AC_SUBST([LIBINTL])
