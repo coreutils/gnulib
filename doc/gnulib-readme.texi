@@ -402,8 +402,19 @@ feature should require the corresponding module.
 
 @itemize
 @item
-Variable length arrays, unless @code{__STDC_NO_VLA__} is defined.
-See the @code{vararrays} module.
+Variable length arrays (VLAs) or variably modified types,
+without checking whether @code{__STDC_NO_VLA__} is defined.
+See the @code{vararrays} and @code{vla} modules.
+
+@item
+Block-scope variable length arrays, without checking whether either
+@code{GNULIB_NO_VLA} or @code{__STDC_NO_VLA__} is defined.
+This lets you define @code{GNULIB_NO_VLA} to pacify GCC when
+using its @option{-Wvla-larger-than warnings} option,
+and to avoid large stack usage that may have security implications.
+@code{GNULIB_NO_VLA} does not affect Gnulib's other uses of VLAs and
+variably modified types, such as array declarations in function
+prototype scope.
 
 @item
 @code{extern inline} functions, without checking whether they are
