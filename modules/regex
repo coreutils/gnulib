@@ -16,6 +16,7 @@ Depends-on:
 c99
 extensions
 ssize_t
+vararrays
 attribute       [test $ac_use_included_regex = yes]
 btowc           [test $ac_use_included_regex = yes]
 builtin-expect  [test $ac_use_included_regex = yes]
