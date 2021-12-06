@@ -1,4 +1,4 @@
-# stack-direction.m4 serial 9
+# stack-direction.m4 serial 10
 dnl Copyright (C) 2002-2021 Free Software Foundation, Inc.
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
@@ -24,15 +24,23 @@ AC_DEFUN([SV_STACK_DIRECTION],
       bfin | \
       c1 | c2 | c32 | c34 | c38 | \
       clipper | \
+      cr16 | \
       cris | \
+      csky | \
       d30v | \
+      epiphany | \
       elxsi | \
       fr30 | \
+      frv | \
+      ft32 | \
       h8300 | \
       i?86 | x86_64 | \
       i860 | \
       ia64 | \
+      iq2000 | \
+      lm32 | \
       loongarch* | \
+      m32c | \
       m32r | \
       m68* | \
       m88k | \
@@ -42,20 +50,30 @@ AC_DEFUN([SV_STACK_DIRECTION],
       mmix | \
       mn10200 | \
       mn10300 | \
-      nios2 | \
+      moxie | \
+      msp430 | \
       nds32* | \
+      nios2 | nios2eb | nios2el | \
       ns32k | \
+      nvptx | \
       or1k | \
       pdp11 | \
       pj* | \
       powerpc* | rs6000 | \
+      pru | \
       riscv* | \
+      rl78 | \
       romp | \
+      rx | \
       s390* | \
       sh* | \
       sparc* | \
+      tic6x | \
+      tilegx | \
+      tilepro | \
       v850 | \
       vax | \
+      visium | \
       xtensa)
         sv_cv_stack_direction=-1 ;;
       c4x | \
