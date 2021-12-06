@@ -249,11 +249,12 @@
 
 /* True if __builtin_add_overflow_p (A, B, C) works, and similarly for
    __builtin_sub_overflow_p and __builtin_mul_overflow_p.  */
-#if defined __clang__ || defined __ICC
+#if defined __clang__ || defined __ICC || defined __EDG__
 /* Clang 11 lacks __builtin_mul_overflow_p, and even if it did it
-   would presumably run afoul of Clang bug 16404.  ICC 2021.1's
-   __builtin_add_overflow_p etc. are not treated as integral constant
-   expressions even when all arguments are.  */
+   would presumably run afoul of Clang bug 16404.  In ICC 2021.1 and
+   the EDG-based MCST Elbrus LCC compiler, __builtin_add_overflow_p etc.
+   are not treated as integral constant expressions even when all
+   arguments are.  */
 # define _GL_HAS_BUILTIN_OVERFLOW_P 0
 #elif defined __has_builtin
 # define _GL_HAS_BUILTIN_OVERFLOW_P __has_builtin (__builtin_mul_overflow_p)
