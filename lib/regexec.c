@@ -1670,6 +1670,7 @@ clean_state_log_if_needed (re_match_context_t *mctx, Idx next_state_log_idx)
 
   if (top < next_state_log_idx)
     {
+      DEBUG_ASSERT (mctx->state_log != NULL);
       memset (mctx->state_log + top + 1, '\0',
 	      sizeof (re_dfastate_t *) * (next_state_log_idx - top));
       mctx->state_log_top = next_state_log_idx;
