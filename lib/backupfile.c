@@ -211,10 +211,8 @@ numbered_backup (int dir_fd, char **buffer, idx_t buffer_size, idx_t filelen,
 {
   enum numbered_backup_result result = BACKUP_IS_NEW;
   DIR *dirp = *dirpp;
-  struct dirent *dp;
   char *buf = *buffer;
   idx_t versionlenmax = 1;
-  char *base = buf + base_offset;
   idx_t baselen = filelen - base_offset;
 
   if (dirp)
@@ -224,6 +222,7 @@ numbered_backup (int dir_fd, char **buffer, idx_t buffer_size, idx_t filelen,
       /* Temporarily modify the buffer into its parent directory name,
          open the directory, and then restore the buffer.  */
       char tmp[sizeof "."];
+      char *base = buf + base_offset;
       memcpy (tmp, base, sizeof ".");
       strcpy (base, ".");
       dirp = opendirat (dir_fd, buf, 0, pnew_fd);
@@ -236,20 +235,15 @@ numbered_backup (int dir_fd, char **buffer, idx_t buffer_size, idx_t filelen,
       *dirpp = dirp;
     }
 
-  while ((dp = readdir (dirp)) != NULL)
+  for (struct dirent *dp; (dp = readdir (dirp)) != NULL; )
     {
-      char const *p;
-      char *q;
-      bool all_9s;
-      idx_t versionlen;
-
       if (_D_EXACT_NAMLEN (dp) < baselen + 4)
         continue;
 
       if (memcmp (buf + base_offset, dp->d_name, baselen + 2) != 0)
         continue;
 
-      p = dp->d_name + baselen + 2;
+      char const *p = dp->d_name + baselen + 2;
 
       /* Check whether this file has a version number and if so,
          whether it is larger.  Use string operations rather than
@@ -257,7 +251,8 @@ numbered_backup (int dir_fd, char **buffer, idx_t buffer_size, idx_t filelen,
 
       if (! ('1' <= *p && *p <= '9'))
         continue;
-      all_9s = (*p == '9');
+      bool all_9s = (*p == '9');
+      idx_t versionlen;
       for (versionlen = 1; ISDIGIT (p[versionlen]); versionlen++)
         all_9s &= (p[versionlen] == '9');
 
@@ -288,7 +283,7 @@ numbered_backup (int dir_fd, char **buffer, idx_t buffer_size, idx_t filelen,
           buf = new_buf;
           buffer_size = new_buffer_size;
         }
-      q = buf + filelen;
+      char *q = buf + filelen;
       *q++ = '.';
       *q++ = '~';
       *q = '0';
