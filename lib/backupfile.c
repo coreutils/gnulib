@@ -33,7 +33,7 @@
 
 #include "attribute.h"
 #include "basename-lgpl.h"
-#include "idx.h"
+#include "ialloc.h"
 #include "intprops.h"
 #include "opendirat.h"
 #include "renameatu.h"
@@ -99,12 +99,12 @@ set_simple_backup_suffix (char const *s)
    FILE's parent's _PC_NAME_MAX.  */
 
 static bool
-check_extension (char *file, size_t filelen, char e,
-                 int dir_fd, size_t *base_max)
+check_extension (char *file, idx_t filelen, char e,
+                 int dir_fd, idx_t *base_max)
 {
   char *base = last_component (file);
-  size_t baselen = base_len (base);
-  size_t baselen_max = HAVE_LONG_FILE_NAMES ? 255 : NAME_MAX_MINIMUM;
+  idx_t baselen = base_len (base);
+  idx_t baselen_max = HAVE_LONG_FILE_NAMES ? 255 : NAME_MAX_MINIMUM;
 
   if (HAVE_DOS_FILE_NAMES || NAME_MAX_MINIMUM < baselen)
     {
@@ -206,16 +206,16 @@ enum numbered_backup_result
    and its file descriptor into *PNEW_FD without closing the stream.  */
 
 static enum numbered_backup_result
-numbered_backup (int dir_fd, char **buffer, size_t buffer_size, size_t filelen,
+numbered_backup (int dir_fd, char **buffer, idx_t buffer_size, idx_t filelen,
                  idx_t base_offset, DIR **dirpp, int *pnew_fd)
 {
   enum numbered_backup_result result = BACKUP_IS_NEW;
   DIR *dirp = *dirpp;
   struct dirent *dp;
   char *buf = *buffer;
-  size_t versionlenmax = 1;
+  idx_t versionlenmax = 1;
   char *base = buf + base_offset;
-  size_t baselen = filelen - base_offset;
+  idx_t baselen = filelen - base_offset;
 
   if (dirp)
     rewinddir (dirp);
@@ -241,7 +241,7 @@ numbered_backup (int dir_fd, char **buffer, size_t buffer_size, size_t filelen,
       char const *p;
       char *q;
       bool all_9s;
-      size_t versionlen;
+      idx_t versionlen;
 
       if (_D_EXACT_NAMLEN (dp) < baselen + 4)
         continue;
@@ -273,13 +273,13 @@ numbered_backup (int dir_fd, char **buffer, size_t buffer_size, size_t filelen,
 
       versionlenmax = all_9s + versionlen;
       result = (all_9s ? BACKUP_IS_LONGER : BACKUP_IS_SAME_LENGTH);
-      size_t new_buffer_size = filelen + 2 + versionlenmax + 2;
+      idx_t new_buffer_size = filelen + 2 + versionlenmax + 2;
       if (buffer_size < new_buffer_size)
         {
-          size_t grown;
+          idx_t grown;
           if (! INT_ADD_WRAPV (new_buffer_size, new_buffer_size >> 1, &grown))
             new_buffer_size = grown;
-          char *new_buf = realloc (buf, new_buffer_size);
+          char *new_buf = irealloc (buf, new_buffer_size);
           if (!new_buf)
             {
               *buffer = buf;
@@ -318,27 +318,27 @@ backupfile_internal (int dir_fd, char const *file,
                      enum backup_type backup_type, bool rename)
 {
   idx_t base_offset = last_component (file) - file;
-  size_t filelen = base_offset + base_len (file + base_offset);
+  idx_t filelen = base_offset + base_len (file + base_offset);
 
   if (! simple_backup_suffix)
     set_simple_backup_suffix (NULL);
 
   /* Allow room for simple or ".~N~" backups.  The guess must be at
      least sizeof ".~1~", but otherwise will be adjusted as needed.  */
-  size_t simple_backup_suffix_size = strlen (simple_backup_suffix) + 1;
-  size_t backup_suffix_size_guess = simple_backup_suffix_size;
+  idx_t simple_backup_suffix_size = strlen (simple_backup_suffix) + 1;
+  idx_t backup_suffix_size_guess = simple_backup_suffix_size;
   enum { GUESS = sizeof ".~12345~" };
   if (backup_suffix_size_guess < GUESS)
     backup_suffix_size_guess = GUESS;
 
-  ssize_t ssize = filelen + backup_suffix_size_guess + 1;
-  char *s = malloc (ssize);
+  idx_t ssize = filelen + backup_suffix_size_guess + 1;
+  char *s = imalloc (ssize);
   if (!s)
     return s;
 
   DIR *dirp = NULL;
   int sdir = -1;
-  size_t base_max = 0;
+  idx_t base_max = 0;
   while (true)
     {
       bool extended = true;

@@ -16,7 +16,7 @@ c99
 closedir
 d-ino
 fcntl-h
-idx
+ialloc
 intprops
 memcmp
 opendirat
