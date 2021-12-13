@@ -5844,11 +5844,11 @@ s,//*$,/,'
     # _AC_LIBOBJ_ALLOCA, invoked from AC_FUNC_ALLOCA.
     # All the m4_pushdef/m4_popdef logic in func_emit_initmacro_start/_end
     # does not help to avoid this error.
-    if grep '	lib/alloca\.c$' "$tmp"/new-files; then
+    if grep '	lib/alloca\.c$' "$tmp"/new-files >/dev/null; then
       # alloca.c will be present in $sourcebase.
       echo "  AC_CONFIG_LIBOBJ_DIR([$sourcebase])"
     else
-      if grep '	tests=lib/alloca\.c$' "$tmp"/new-files; then
+      if grep '	tests=lib/alloca\.c$' "$tmp"/new-files >/dev/null; then
         # alloca.c will be present in $testsbase.
         echo "  AC_CONFIG_LIBOBJ_DIR([$testsbase])"
       fi
