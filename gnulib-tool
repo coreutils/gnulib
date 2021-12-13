@@ -5837,6 +5837,22 @@ s,//*$,/,'
     echo "# \"Check for header files, types and library functions\"."
     echo "AC_DEFUN([${macro_prefix}_INIT],"
     echo "["
+    # This AC_CONFIG_LIBOBJ_DIR invocation silences an error from the automake
+    # front end:
+    #   error: required file './alloca.c' not found
+    # It is needed because of the last remaining use of AC_LIBSOURCES in
+    # _AC_LIBOBJ_ALLOCA, invoked from AC_FUNC_ALLOCA.
+    # All the m4_pushdef/m4_popdef logic in func_emit_initmacro_start/_end
+    # does not help to avoid this error.
+    if grep '	lib/alloca\.c$' "$tmp"/new-files; then
+      # alloca.c will be present in $sourcebase.
+      echo "  AC_CONFIG_LIBOBJ_DIR([$sourcebase])"
+    else
+      if grep '	tests=lib/alloca\.c$' "$tmp"/new-files; then
+        # alloca.c will be present in $testsbase.
+        echo "  AC_CONFIG_LIBOBJ_DIR([$testsbase])"
+      fi
+    fi
     if test "$libtool" = true; then
       echo "  AM_CONDITIONAL([GL_COND_LIBTOOL], [true])"
       echo "  gl_cond_libtool=true"
