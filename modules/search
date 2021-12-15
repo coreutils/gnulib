@@ -14,6 +14,7 @@ snippet/warn-on-use
 configure.ac:
 gl_SEARCH_H
 gl_SEARCH_H_REQUIRE_DEFAULTS
+AC_PROG_MKDIR_P
 
 Makefile.am:
 BUILT_SOURCES += search.h
@@ -22,6 +23,7 @@ BUILT_SOURCES += search.h
 # doesn't have one that works with the given compiler.
 search.h: search.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
 	$(AM_V_GEN)rm -f $@-t $@ && \
+	$(MKDIR_P) '%reldir%' && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
 	  sed -e 's|@''GUARD_PREFIX''@|${gl_include_guard_prefix}|g' \
 	      -e 's|@''HAVE_SEARCH_H''@|$(HAVE_SEARCH_H)|g' \

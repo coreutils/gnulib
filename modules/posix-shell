@@ -8,14 +8,16 @@ Depends-on:
 
 configure.ac:
 gl_POSIX_SHELL
+AC_PROG_MKDIR_P
 
 Makefile.am:
 ##Sample usage of posix-shell module:
 #script: script.in
 #	rm -f $@-t $@
+#	$(MKDIR_P) '%reldir%'
 #	sed -e 's#@''PREFERABLY_POSIX_SHELL''@#$(PREFERABLY_POSIX_SHELL)#g' \
 #	    -e 's#@''POSIX_SHELL''@#$(POSIX_SHELL)#g' \
-#	    -e $(srcdir)/$@.in >$@-t
+#	    -e $(srcdir)/$@.in > $@-t
 #	chmod a+x $@-t
 #	mv $@-t $@
 #EXTRA_DIST += script.in

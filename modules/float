@@ -12,6 +12,7 @@ include_next
 
 configure.ac:
 gl_FLOAT_H
+AC_PROG_MKDIR_P
 if test $REPLACE_FLOAT_LDBL = 1; then
   AC_LIBOBJ([float])
 fi
@@ -27,6 +28,7 @@ BUILT_SOURCES += $(FLOAT_H)
 if GL_GENERATE_FLOAT_H
 float.h: float.in.h $(top_builddir)/config.status
 	$(AM_V_GEN)rm -f $@-t $@ && \
+	$(MKDIR_P) '%reldir%' && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
 	  sed -e 's|@''GUARD_PREFIX''@|${gl_include_guard_prefix}|g' \
 	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \

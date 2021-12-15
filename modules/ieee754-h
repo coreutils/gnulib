@@ -9,6 +9,7 @@ Depends-on:
 
 configure.ac:
 gl_IEEE754_H
+AC_PROG_MKDIR_P
 
 Makefile.am:
 BUILT_SOURCES += $(IEEE754_H)
@@ -18,6 +19,7 @@ BUILT_SOURCES += $(IEEE754_H)
 if GL_GENERATE_IEEE754_H
 ieee754.h: ieee754.in.h $(top_builddir)/config.status
 	$(AM_V_GEN)rm -f $@-t && \
+	$(MKDIR_P) '%reldir%' && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  sed -e 's/ifndef _GL_GNULIB_HEADER/if 0/g' \
 	    $(srcdir)/ieee754.in.h; \

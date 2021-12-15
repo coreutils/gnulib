@@ -11,6 +11,7 @@ Depends-on:
 
 configure.ac:
 gl_FUNC_ALLOCA
+AC_PROG_MKDIR_P
 
 Makefile.am:
 BUILT_SOURCES += $(ALLOCA_H)
@@ -20,6 +21,7 @@ BUILT_SOURCES += $(ALLOCA_H)
 if GL_GENERATE_ALLOCA_H
 alloca.h: alloca.in.h $(top_builddir)/config.status
 	$(AM_V_GEN)rm -f $@-t $@ && \
+	$(MKDIR_P) '%reldir%' && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  sed -e 's|@''HAVE_ALLOCA_H''@|$(HAVE_ALLOCA_H)|g' < $(srcdir)/alloca.in.h; \
 	} > $@-t && \

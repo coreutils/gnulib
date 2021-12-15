@@ -11,6 +11,7 @@ Depends-on:
 
 configure.ac:
 gl_LIBGMP
+AC_PROG_MKDIR_P
 if test $HAVE_LIBGMP != yes; then
   AC_LIBOBJ([mini-gmp-gnulib])
 fi
@@ -21,13 +22,15 @@ BUILT_SOURCES += $(GMP_H)
 if GL_GENERATE_MINI_GMP_H
 # Build gmp.h as a wrapper for mini-gmp.h when using mini-gmp.
 gmp.h: $(top_builddir)/config.status
-	echo '#include "mini-gmp.h"' >$@-t
+	$(MKDIR_P) '%reldir%'
+	echo '#include "mini-gmp.h"' > $@-t
 	mv $@-t $@
 else
 if GL_GENERATE_GMP_GMP_H
 # Build gmp.h as a wrapper for gmp/gmp.h.
 gmp.h: $(top_builddir)/config.status
-	echo '#include <gmp/gmp.h>' >$@-t
+	$(MKDIR_P) '%reldir%'
+	echo '#include <gmp/gmp.h>' > $@-t
 	mv $@-t $@
 else
 gmp.h: $(top_builddir)/config.status

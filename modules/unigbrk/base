@@ -11,12 +11,14 @@ stdbool
 
 configure.ac:
 gl_LIBUNISTRING_LIBHEADER([0.9.8], [unigbrk.h])
+AC_PROG_MKDIR_P
 
 Makefile.am:
 BUILT_SOURCES += $(LIBUNISTRING_UNIGBRK_H)
 
 unigbrk.h: unigbrk.in.h
 	$(AM_V_GEN)rm -f $@-t $@ && \
+	$(MKDIR_P) '%reldir%' && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  cat $(srcdir)/unigbrk.in.h; \
 	} > $@-t && \

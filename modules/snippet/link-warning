@@ -11,6 +11,7 @@ Depends-on:
 
 configure.ac:
 AC_REQUIRE([gl_FEATURES_H])
+AC_PROG_MKDIR_P
 
 Makefile.am:
 # The BUILT_SOURCES created by this Makefile snippet are not used via #include
@@ -25,6 +26,7 @@ Makefile.am:
 BUILT_SOURCES += link-warning.h
 link-warning.h: $(top_srcdir)/build-aux/snippet/link-warning.h
 	$(AM_V_GEN)rm -f $@-t $@ && \
+	$(MKDIR_P) '%reldir%' && \
 	sed -n -e '/HAVE_FEATURES_H/,$$p' \
 	  < $(top_srcdir)/build-aux/snippet/link-warning.h \
 	| sed -e 's|@''HAVE_FEATURES_H''@|$(HAVE_FEATURES_H)|g' \

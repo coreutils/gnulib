@@ -11,6 +11,7 @@ extern-inline
 
 configure.ac:
 gl_EXECINFO_H
+AC_PROG_MKDIR_P
 
 Makefile.am:
 BUILT_SOURCES += $(EXECINFO_H)
@@ -20,6 +21,7 @@ BUILT_SOURCES += $(EXECINFO_H)
 if GL_GENERATE_EXECINFO_H
 execinfo.h: execinfo.in.h $(top_builddir)/config.status
 	$(AM_V_GEN)rm -f $@-t $@ && \
+	$(MKDIR_P) '%reldir%' && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  cat $(srcdir)/execinfo.in.h; \
 	} > $@-t && \

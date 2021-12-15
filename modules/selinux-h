@@ -21,6 +21,7 @@ configure.ac:
 gl_HEADERS_SELINUX_SELINUX_H
 gl_HEADERS_SELINUX_CONTEXT_H
 gl_HEADERS_SELINUX_LABEL_H
+AC_PROG_MKDIR_P
 if test "$with_selinux" != no && test "$ac_cv_header_selinux_selinux_h" = yes; then
   AC_LIBOBJ([getfilecon])
 fi
@@ -31,7 +32,7 @@ lib_SOURCES += se-context.in.h se-label.in.h se-selinux.in.h \
 
 BUILT_SOURCES += selinux/selinux.h
 selinux/selinux.h: se-selinux.in.h $(top_builddir)/config.status
-	$(AM_V_at)$(MKDIR_P) selinux
+	$(AM_V_at)$(MKDIR_P) '%reldir%/selinux'
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
 	  sed -e 's|@''GUARD_PREFIX''@|${gl_include_guard_prefix}|g' \
@@ -47,7 +48,7 @@ MOSTLYCLEANFILES += selinux/selinux.h selinux/selinux.h-t
 BUILT_SOURCES += $(SELINUX_CONTEXT_H)
 if GL_GENERATE_SELINUX_CONTEXT_H
 selinux/context.h: se-context.in.h $(top_builddir)/config.status
-	$(AM_V_at)$(MKDIR_P) selinux
+	$(AM_V_at)$(MKDIR_P) '%reldir%/selinux'
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
 	  cat $(srcdir)/se-context.in.h; \
@@ -62,7 +63,7 @@ MOSTLYCLEANFILES += selinux/context.h selinux/context.h-t
 BUILT_SOURCES += $(SELINUX_LABEL_H)
 if GL_GENERATE_SELINUX_LABEL_H
 selinux/label.h: se-label.in.h $(top_builddir)/config.status
-	$(AM_V_at)$(MKDIR_P) selinux
+	$(AM_V_at)$(MKDIR_P) '%reldir%/selinux'
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
 	  cat $(srcdir)/se-label.in.h; \

@@ -37,6 +37,7 @@ else
 fi
 AC_SUBST([SIGSEGV_H])
 AM_CONDITIONAL([GL_GENERATE_SIGSEGV_H], [test -n "$SIGSEGV_H"])
+AC_PROG_MKDIR_P
 if test -n "$SIGSEGV_H"; then
   dnl Persuade glibc <sys/ucontext.h> to declare macros designating register
   dnl indices: REG_RSP on x86_64, REG_ESP on i386.
@@ -71,6 +72,7 @@ BUILT_SOURCES += $(SIGSEGV_H)
 if GL_GENERATE_SIGSEGV_H
 sigsegv.h: sigsegv.in.h $(top_builddir)/config.status
 	$(AM_V_GEN)rm -f $@-t $@ && \
+	$(MKDIR_P) '%reldir%' && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  cat $(srcdir)/sigsegv.in.h; \
 	} > $@-t && \

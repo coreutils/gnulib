@@ -10,6 +10,7 @@ stdint
 
 configure.ac:
 gl_LIBUNISTRING_LIBHEADER([0.9.11], [unitypes.h])
+AC_PROG_MKDIR_P
 
 AH_VERBATIM([unitypes_restrict], [
 /* This definition is a duplicate of the one in unitypes.h.
@@ -32,6 +33,7 @@ BUILT_SOURCES += $(LIBUNISTRING_UNITYPES_H)
 
 unitypes.h: unitypes.in.h
 	$(AM_V_GEN)rm -f $@-t $@ && \
+	$(MKDIR_P) '%reldir%' && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  cat $(srcdir)/unitypes.in.h; \
 	} > $@-t && \

@@ -18,6 +18,7 @@ sys_types
 configure.ac:
 gl_STDIO_H
 gl_STDIO_H_REQUIRE_DEFAULTS
+AC_PROG_MKDIR_P
 
 dnl No need to create extra modules for these functions. Everyone who uses
 dnl <stdio.h> likely needs them.
@@ -51,6 +52,7 @@ BUILT_SOURCES += stdio.h
 # doesn't have one that works with the given compiler.
 stdio.h: stdio.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
 	$(AM_V_GEN)rm -f $@-t $@ && \
+	$(MKDIR_P) '%reldir%' && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
 	  sed -e 's|@''GUARD_PREFIX''@|${gl_include_guard_prefix}|g' \
 	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \

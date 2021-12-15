@@ -8,6 +8,7 @@ Depends-on:
 
 configure.ac:
 gl_CONFIGMAKE_PREP
+AC_PROG_MKDIR_P
 
 Makefile.am:
 # Listed in the same order as the GNU makefile conventions, and
@@ -16,6 +17,7 @@ Makefile.am:
 # listed in the Automake 1.10a+ documentation.
 configmake.h: Makefile
 	$(AM_V_GEN)rm -f $@-t && \
+	$(MKDIR_P) '%reldir%' && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  echo '#if HAVE_WINSOCK2_H'; \
 	  echo '# include <winsock2.h> /* avoid mingw pollution on DATADIR */'; \

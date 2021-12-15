@@ -19,6 +19,7 @@ sys_stat
 configure.ac:
 gl_GLOB_H
 gl_GLOB_H_REQUIRE_DEFAULTS
+AC_PROG_MKDIR_P
 
 Makefile.am:
 BUILT_SOURCES += $(GLOB_H)
@@ -27,6 +28,7 @@ BUILT_SOURCES += $(GLOB_H)
 if GL_GENERATE_GLOB_H
 glob.h: glob.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
 	$(AM_V_GEN)rm -f $@-t $@ && \
+	$(MKDIR_P) '%reldir%' && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
 	  sed -e 's|@''GUARD_PREFIX''@|${gl_include_guard_prefix}|g' \
 	      -e 's|@''HAVE_GLOB_H''@|$(HAVE_GLOB_H)|g' \

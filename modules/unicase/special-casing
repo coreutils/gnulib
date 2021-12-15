@@ -10,6 +10,7 @@ Depends-on:
 gperf
 
 configure.ac:
+AC_PROG_MKDIR_P
 
 Makefile.am:
 lib_SOURCES += unicase/special-casing.c
@@ -24,7 +25,7 @@ EXTRA_DIST           += unicase/special-casing-table.h
 
 # Generate special-casing.h with a declaration that depends on the gperf version.
 unicase/special-casing.h: unicase/special-casing.in.h unicase/special-casing-table.h
-	$(AM_V_at)$(MKDIR_P) unicase
+	$(AM_V_at)$(MKDIR_P) '%reldir%/unicase'
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	declaration=`grep '^gl_unicase_special_lookup' $(srcdir)/unicase/special-casing-table.h | sed -e 's/register //g'` && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \

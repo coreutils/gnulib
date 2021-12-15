@@ -3737,9 +3737,9 @@ func_emit_lib_Makefile_am ()
           echo "## begin gnulib module $module"
           if $gnu_make; then
             echo "ifeq (,\$(OMIT_GNULIB_MODULE_$module))"
-            convert_to_gnu_make='s/^if \(.*\)/ifneq (,$(\1))/'
-          else
-            convert_to_gnu_make=
+            convert_to_gnu_make_1='s/^if \(.*\)/ifneq (,$(\1))/'
+            convert_to_gnu_make_2='s|%reldir%/||g'
+            convert_to_gnu_make_3='s|%reldir%|.|g'
           fi
           echo
           if test "$cond_dependencies" = true; then
@@ -3752,13 +3752,27 @@ func_emit_lib_Makefile_am ()
               fi
             fi
           fi
-          sed "$convert_to_gnu_make" "$tmp"/amsnippet1
+          if $gnu_make; then
+            sed -e "$convert_to_gnu_make_1" \
+                -e "$convert_to_gnu_make_2" \
+                -e "$convert_to_gnu_make_3" \
+                "$tmp"/amsnippet1
+          else
+            cat "$tmp"/amsnippet1
+          fi
           if test "$cond_dependencies" = true; then
             if func_cond_module_p "$module"; then
               echo "endif"
             fi
           fi
-          sed "$convert_to_gnu_make" "$tmp"/amsnippet2
+          if $gnu_make; then
+            sed -e "$convert_to_gnu_make_1" \
+                -e "$convert_to_gnu_make_2" \
+                -e "$convert_to_gnu_make_3" \
+                "$tmp"/amsnippet2
+          else
+            cat "$tmp"/amsnippet2
+          fi
           if $gnu_make; then
             echo "endif"
           fi

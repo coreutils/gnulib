@@ -31,6 +31,7 @@ gl_ANYTHREADLIB_EARLY
 configure.ac:
 gl_THREADS_H
 gl_THREADS_H_REQUIRE_DEFAULTS
+AC_PROG_MKDIR_P
 
 Makefile.am:
 BUILT_SOURCES += threads.h
@@ -39,6 +40,7 @@ BUILT_SOURCES += threads.h
 # doesn't have one.
 threads.h: threads.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(_NORETURN_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
 	$(AM_V_GEN)rm -f $@-t $@ && \
+	$(MKDIR_P) '%reldir%' && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
 	  sed -e 's|@''GUARD_PREFIX''@|${gl_include_guard_prefix}|g' \
 	      -e 's|@''HAVE_THREADS_H''@|$(HAVE_THREADS_H)|g' \

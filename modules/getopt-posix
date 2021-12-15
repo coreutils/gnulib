@@ -22,6 +22,7 @@ snippet/arg-nonnull
 
 configure.ac:
 gl_FUNC_GETOPT_POSIX
+AC_PROG_MKDIR_P
 if test $REPLACE_GETOPT = 1; then
   AC_LIBOBJ([getopt])
   AC_LIBOBJ([getopt1])
@@ -38,6 +39,7 @@ BUILT_SOURCES += $(GETOPT_H) $(GETOPT_CDEFS_H)
 # doesn't have one that works with the given compiler.
 getopt.h: getopt.in.h $(top_builddir)/config.status $(ARG_NONNULL_H)
 	$(AM_V_GEN)rm -f $@-t $@ && \
+	$(MKDIR_P) '%reldir%' && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  sed -e 's|@''GUARD_PREFIX''@|${gl_include_guard_prefix}|g' \
 	      -e 's|@''HAVE_GETOPT_H''@|$(HAVE_GETOPT_H)|g' \

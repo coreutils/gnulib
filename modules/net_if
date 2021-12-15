@@ -20,7 +20,7 @@ BUILT_SOURCES += $(NET_IF_H)
 # doesn't have one.
 if GL_GENERATE_NET_IF_H
 net/if.h: net_if.in.h $(top_builddir)/config.status
-	$(AM_V_at)$(MKDIR_P) net
+	$(AM_V_at)$(MKDIR_P) '%reldir%/net'
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  sed -e 's|@''GUARD_PREFIX''@|${gl_include_guard_prefix}|g' \

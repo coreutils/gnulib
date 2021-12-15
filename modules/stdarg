@@ -15,6 +15,7 @@ gl_PROG_CC_C99
 
 configure.ac:
 gl_STDARG_H
+AC_PROG_MKDIR_P
 
 Makefile.am:
 BUILT_SOURCES += $(STDARG_H)
@@ -24,6 +25,7 @@ BUILT_SOURCES += $(STDARG_H)
 if GL_GENERATE_STDARG_H
 stdarg.h: stdarg.in.h $(top_builddir)/config.status
 	$(AM_V_GEN)rm -f $@-t $@ && \
+	$(MKDIR_P) '%reldir%' && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
 	  sed -e 's|@''GUARD_PREFIX''@|${gl_include_guard_prefix}|g' \
 	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \

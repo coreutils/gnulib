@@ -10,12 +10,14 @@ unitypes
 
 configure.ac:
 gl_LIBUNISTRING_LIBHEADER([0.9.11], [unistdio.h])
+AC_PROG_MKDIR_P
 
 Makefile.am:
 BUILT_SOURCES += $(LIBUNISTRING_UNISTDIO_H)
 
 unistdio.h: unistdio.in.h
 	$(AM_V_GEN)rm -f $@-t $@ && \
+	$(MKDIR_P) '%reldir%' && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  cat $(srcdir)/unistdio.in.h; \
 	} > $@-t && \
