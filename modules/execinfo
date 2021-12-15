@@ -11,7 +11,11 @@ extern-inline
 
 configure.ac:
 gl_EXECINFO_H
+gl_CONDITIONAL_HEADER([execinfo.h])
 AC_PROG_MKDIR_P
+if $GL_GENERATE_EXECINFO_H; then
+  AC_LIBOBJ([execinfo])
+fi
 
 Makefile.am:
 BUILT_SOURCES += $(EXECINFO_H)

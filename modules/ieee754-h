@@ -9,6 +9,7 @@ Depends-on:
 
 configure.ac:
 gl_IEEE754_H
+gl_CONDITIONAL_HEADER([ieee754.h])
 AC_PROG_MKDIR_P
 
 Makefile.am:

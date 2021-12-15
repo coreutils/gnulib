@@ -1,4 +1,4 @@
-# strerror_r.m4 serial 23
+# strerror_r.m4 serial 24
 dnl Copyright (C) 2002, 2007-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -17,7 +17,7 @@ AC_DEFUN([gl_FUNC_STRERROR_R],
   fi
 
   if test $ac_cv_func_strerror_r = yes; then
-    if test "$ERRNO_H:$REPLACE_STRERROR_0" = :0; then
+    if test "$GL_GENERATE_ERRNO_H:$REPLACE_STRERROR_0" = false:0; then
       if test $gl_cv_func_strerror_r_posix_signature = yes; then
         case "$gl_cv_func_strerror_r_works" in
           dnl The system's strerror_r has bugs.  Replace it.
@@ -59,7 +59,7 @@ AC_DEFUN([gl_FUNC_STRERROR_R_WORKS],
 
   AC_CHECK_FUNCS_ONCE([strerror_r])
   if test $ac_cv_func_strerror_r = yes; then
-    if test "$ERRNO_H:$REPLACE_STRERROR_0" = :0; then
+    if test "$GL_GENERATE_ERRNO_H:$REPLACE_STRERROR_0" = false:0; then
       dnl The POSIX prototype is:  int strerror_r (int, char *, size_t);
       dnl glibc, Cygwin:           char *strerror_r (int, char *, size_t);
       dnl AIX 5.1, OSF/1 5.1:      int strerror_r (int, char *, int);

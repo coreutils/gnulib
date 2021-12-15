@@ -11,6 +11,7 @@ stdlib
 
 configure.ac:
 gl_SYSEXITS
+gl_CONDITIONAL_HEADER([sysexits.h])
 AC_PROG_MKDIR_P
 
 Makefile.am:

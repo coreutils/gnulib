@@ -15,6 +15,10 @@ vasprintf-posix
 
 configure.ac:
 # You need to invoke gl_LIBTEXTSTYLE_OPTIONAL yourself, possibly with arguments.
+if test -z "$GL_GENERATE_TEXTSTYLE_H"; then
+  GL_GENERATE_TEXTSTYLE_H=false
+fi
+gl_CONDITIONAL_HEADER([textstyle.h])
 AC_PROG_MKDIR_P
 
 Makefile.am:

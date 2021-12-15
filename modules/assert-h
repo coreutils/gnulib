@@ -11,6 +11,7 @@ include_next
 
 configure.ac:
 gl_ASSERT_H
+gl_CONDITIONAL_HEADER([assert.h])
 AC_PROG_MKDIR_P
 
 Makefile.am:

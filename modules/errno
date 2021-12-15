@@ -10,6 +10,7 @@ include_next
 
 configure.ac:
 gl_HEADER_ERRNO_H
+gl_CONDITIONAL_HEADER([errno.h])
 AC_PROG_MKDIR_P
 
 Makefile.am:

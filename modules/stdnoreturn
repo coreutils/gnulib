@@ -10,6 +10,7 @@ snippet/_Noreturn
 
 configure.ac:
 gl_STDNORETURN_H
+gl_CONDITIONAL_HEADER([stdnoreturn.h])
 AC_PROG_MKDIR_P
 
 Makefile.am:

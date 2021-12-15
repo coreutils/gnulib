@@ -13,6 +13,7 @@ extensions
 configure.ac:
 gl_STDDEF_H
 gl_STDDEF_H_REQUIRE_DEFAULTS
+gl_CONDITIONAL_HEADER([stddef.h])
 AC_PROG_MKDIR_P
 
 Makefile.am:

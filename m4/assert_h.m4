@@ -8,7 +8,7 @@ dnl From Paul Eggert.
 
 AC_DEFUN([gl_ASSERT_H],
 [
-  ASSERT_H=
+  GL_GENERATE_ASSERT_H=false
   AC_CACHE_CHECK([for static_assert], [gl_cv_static_assert],
     [AC_COMPILE_IFELSE(
        [AC_LANG_PROGRAM(
@@ -23,9 +23,7 @@ AC_DEFUN([gl_ASSERT_H],
        [gl_cv_static_assert=yes],
        [gl_cv_static_assert=no])])
   if test $gl_cv_static_assert = no; then
-    ASSERT_H=assert.h
+    GL_GENERATE_ASSERT_H=true
     gl_NEXT_HEADERS([assert.h])
   fi
-  AC_SUBST([ASSERT_H])
-  AM_CONDITIONAL([GL_GENERATE_ASSERT_H], [test -n "$ASSERT_H"])
 ])

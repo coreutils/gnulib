@@ -12,6 +12,7 @@ include_next
 
 configure.ac:
 gl_FLOAT_H
+gl_CONDITIONAL_HEADER([float.h])
 AC_PROG_MKDIR_P
 if test $REPLACE_FLOAT_LDBL = 1; then
   AC_LIBOBJ([float])

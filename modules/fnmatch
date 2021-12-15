@@ -33,6 +33,8 @@ mbsinit         [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
 
 configure.ac:
 gl_FUNC_FNMATCH_POSIX
+dnl Because of gl_REPLACE_FNMATCH_H:
+gl_CONDITIONAL_HEADER([fnmatch.h])
 if test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1; then
   AC_LIBOBJ([fnmatch])
   gl_PREREQ_FNMATCH

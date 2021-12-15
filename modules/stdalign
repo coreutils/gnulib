@@ -9,6 +9,7 @@ Depends-on:
 
 configure.ac:
 gl_STDALIGN_H
+gl_CONDITIONAL_HEADER([stdalign.h])
 AC_PROG_MKDIR_P
 
 Makefile.am:

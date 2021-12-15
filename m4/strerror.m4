@@ -1,4 +1,4 @@
-# strerror.m4 serial 22
+# strerror.m4 serial 23
 dnl Copyright (C) 2002, 2007-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -13,7 +13,7 @@ AC_DEFUN([gl_FUNC_STRERROR],
   m4_ifdef([gl_FUNC_STRERROR_R_WORKS], [
     AC_REQUIRE([gl_FUNC_STRERROR_R_WORKS])
   ])
-  if test "$ERRNO_H:$REPLACE_STRERROR_0" = :0; then
+  if test "$GL_GENERATE_ERRNO_H:$REPLACE_STRERROR_0" = false:0; then
     AC_CACHE_CHECK([for working strerror function],
      [gl_cv_func_working_strerror],
      [AC_RUN_IFELSE(

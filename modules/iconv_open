@@ -25,6 +25,8 @@ unistr/u8-uctomb  [test $REPLACE_ICONV_UTF = 1]
 
 configure.ac:
 gl_FUNC_ICONV_OPEN
+dnl Because of gl_REPLACE_ICONV_H:
+gl_CONDITIONAL_HEADER([iconv.h])
 if test $REPLACE_ICONV_OPEN = 1; then
   AC_LIBOBJ([iconv_open])
 fi

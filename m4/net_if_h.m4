@@ -1,4 +1,4 @@
-# net_if_h.m4 serial 1
+# net_if_h.m4 serial 2
 dnl Copyright (C) 2006-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -15,9 +15,9 @@ AC_DEFUN([gl_HEADER_NET_IF],
         [gl_cv_header_net_if_h_selfcontained=no])
     ])
   if test $gl_cv_header_net_if_h_selfcontained = yes; then
-    NET_IF_H=''
+    GL_GENERATE_NET_IF_H=false
   else
-    NET_IF_H='net/if.h'
+    GL_GENERATE_NET_IF_H=true
     AC_CHECK_HEADERS([net/if.h], [], [], [[#include <sys/socket.h>]])
     gl_NEXT_HEADERS([net/if.h])
     if test $ac_cv_header_net_if_h = yes; then
@@ -27,6 +27,4 @@ AC_DEFUN([gl_HEADER_NET_IF],
     fi
     AC_SUBST([HAVE_NET_IF_H])
   fi
-  AC_SUBST([NET_IF_H])
-  AM_CONDITIONAL([GL_GENERATE_NET_IF_H], [test -n "$NET_IF_H"])
 ])

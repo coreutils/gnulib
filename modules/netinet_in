@@ -11,6 +11,7 @@ sys_socket
 
 configure.ac:
 gl_HEADER_NETINET_IN
+gl_CONDITIONAL_HEADER([netinet/in.h])
 AC_PROG_MKDIR_P
 
 Makefile.am:

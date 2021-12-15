@@ -11,6 +11,7 @@ sys_socket
 
 configure.ac:
 gl_HEADER_NET_IF
+gl_CONDITIONAL_HEADER([net/if.h])
 AC_PROG_MKDIR_P
 
 Makefile.am:

@@ -10,6 +10,7 @@ include_next
 
 configure.ac:
 gl_LIMITS_H
+gl_CONDITIONAL_HEADER([limits.h])
 AC_PROG_MKDIR_P
 
 Makefile.am:

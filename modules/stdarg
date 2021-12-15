@@ -15,6 +15,7 @@ gl_PROG_CC_C99
 
 configure.ac:
 gl_STDARG_H
+gl_CONDITIONAL_HEADER([stdarg.h])
 AC_PROG_MKDIR_P
 
 Makefile.am:

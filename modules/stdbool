@@ -9,7 +9,8 @@ m4/stdbool.m4
 Depends-on:
 
 configure.ac:
-AM_STDBOOL_H
+gl_STDBOOL_H
+gl_CONDITIONAL_HEADER([stdbool.h])
 AC_PROG_MKDIR_P
 
 Makefile.am:

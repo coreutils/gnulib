@@ -11,6 +11,7 @@ Depends-on:
 
 configure.ac:
 gl_FUNC_ALLOCA
+gl_CONDITIONAL_HEADER([alloca.h])
 AC_PROG_MKDIR_P
 
 Makefile.am:

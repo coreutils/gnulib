@@ -22,6 +22,7 @@ snippet/arg-nonnull
 
 configure.ac:
 gl_FUNC_GETOPT_POSIX
+gl_CONDITIONAL_HEADER([getopt.h])
 AC_PROG_MKDIR_P
 if test $REPLACE_GETOPT = 1; then
   AC_LIBOBJ([getopt])

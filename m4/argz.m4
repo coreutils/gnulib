@@ -7,7 +7,7 @@
 # unlimited permission to copy and/or distribute it, with or without
 # modifications, as long as this notice is preserved.
 
-# serial 13 argz.m4
+# serial 14 argz.m4
 
 AC_DEFUN([gl_FUNC_ARGZ],
 [gl_PREREQ_ARGZ
@@ -27,8 +27,8 @@ AC_CHECK_TYPES([error_t],
 #  include <argz.h>
 #endif])
 
-ARGZ_H=
-AC_CHECK_FUNC([argz_replace], [], [ARGZ_H=argz.h])
+GL_GENERATE_ARGZ_H=false
+AC_CHECK_FUNC([argz_replace], [], [GL_GENERATE_ARGZ_H=true])
 
 dnl if have system argz functions, allow forced use of
 dnl libltdl-supplied implementation (and default to do so
@@ -39,7 +39,7 @@ dnl     provides them, yet they are broken, is cygwin
 dnl     releases prior to 5-May-2007 (1.5.24 and earlier)
 dnl So, it's more straightforward simply to special case
 dnl this for known bad systems.
-AS_IF([test -z "$ARGZ_H"],
+AS_IF([! $GL_GENERATE_ARGZ_H],
     [AC_CACHE_CHECK(
         [if argz actually works],
         [lt_cv_sys_argz_works],
@@ -71,10 +71,7 @@ AS_IF([test -z "$ARGZ_H"],
      AS_IF([test "$lt_cv_sys_argz_works" = yes],
         [AC_DEFINE([HAVE_WORKING_ARGZ], [1],
                    [This value is set to 1 to indicate that the system argz facility works])],
-        [ARGZ_H=argz.h])])
-
-AC_SUBST([ARGZ_H])
-AM_CONDITIONAL([GL_GENERATE_ARGZ_H], [test -n "$ARGZ_H"])
+        [GL_GENERATE_ARGZ_H=true])])
 ])
 
 # Prerequisites of lib/argz.c.

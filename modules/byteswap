@@ -9,6 +9,7 @@ Depends-on:
 
 configure.ac:
 gl_BYTESWAP
+gl_CONDITIONAL_HEADER([byteswap.h])
 AC_PROG_MKDIR_P
 
 Makefile.am:

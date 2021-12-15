@@ -9,11 +9,9 @@
 AC_DEFUN([gl_HEADERS_SELINUX_LABEL_H],
 [
   AC_REQUIRE([gl_LIBSELINUX])
-  SELINUX_LABEL_H=selinux/label.h
+  GL_GENERATE_SELINUX_LABEL_H=true
   if test "$with_selinux" != no; then
     AC_CHECK_HEADERS([selinux/label.h],
-                     [SELINUX_LABEL_H=])
+                     [GL_GENERATE_SELINUX_LABEL_H=false])
   fi
-  AC_SUBST([SELINUX_LABEL_H])
-  AM_CONDITIONAL([GL_GENERATE_SELINUX_LABEL_H], [test -n "$SELINUX_LABEL_H"])
 ])

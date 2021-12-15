@@ -1,4 +1,4 @@
-# libtextstyle-optional.m4 serial 2
+# libtextstyle-optional.m4 serial 3
 dnl Copyright (C) 2019-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -23,12 +23,10 @@ AC_DEFUN([gl_LIBTEXTSTYLE_OPTIONAL],
 [
   gl_LIBTEXTSTYLE([$1])
   if test $HAVE_LIBTEXTSTYLE = yes; then
-    TEXTSTYLE_H=
+    GL_GENERATE_TEXTSTYLE_H=false
   else
-    TEXTSTYLE_H=textstyle.h
+    GL_GENERATE_TEXTSTYLE_H=true
     AC_REQUIRE([AC_C_INLINE])
     AC_CHECK_FUNCS_ONCE([tcdrain])
   fi
-  AC_SUBST([TEXTSTYLE_H])
-  AM_CONDITIONAL([GL_GENERATE_TEXTSTYLE_H], [test -n "$TEXTSTYLE_H"])
 ])

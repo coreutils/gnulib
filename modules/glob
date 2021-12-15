@@ -35,6 +35,8 @@ malloc-posix    [test $HAVE_GLOB = 0 || test $REPLACE_GLOB = 1]
 
 configure.ac:
 gl_GLOB
+dnl Because of gl_REPLACE_GLOB_H:
+gl_CONDITIONAL_HEADER([glob.h])
 if test $HAVE_GLOB = 0 || test $REPLACE_GLOB = 1; then
   AC_LIBOBJ([glob])
   AC_LIBOBJ([globfree])

@@ -14,6 +14,7 @@ snippet/warn-on-use
 configure.ac:
 gl_ICONV_H
 gl_ICONV_H_REQUIRE_DEFAULTS
+gl_CONDITIONAL_HEADER([iconv.h])
 AC_PROG_MKDIR_P
 
 Makefile.am:

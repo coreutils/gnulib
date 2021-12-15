@@ -19,6 +19,7 @@ sys_stat
 configure.ac:
 gl_GLOB_H
 gl_GLOB_H_REQUIRE_DEFAULTS
+gl_CONDITIONAL_HEADER([glob.h])
 AC_PROG_MKDIR_P
 
 Makefile.am:
