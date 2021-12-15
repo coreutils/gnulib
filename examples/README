@@ -1,0 +1,3 @@
+This directory contains small packages that
+1) show how to use Gnulib and gnulib-tool (working examples),
+2) can be used for doing regression tests, e.g. when modifying gnulib-tool.
