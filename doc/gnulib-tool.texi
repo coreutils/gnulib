@@ -46,6 +46,7 @@ a real run without changing anything.
 * Link-time requirements::      Which libraries to link against
 * Finding POSIX substitutes::   Determining additional suitable Gnulib modules
 * Modified build rules::        Modifying the build rules of a Gnulib import
+* Non-recursive make::          Building directly from the top-level directory
 * Multiple instances::          Using Gnulib for both a library and a program
 * gettextize and autopoint::    Caveat: @code{gettextize} and @code{autopoint} users!
 * Localization::                Handling Gnulib's own message translations.
@@ -599,6 +600,50 @@ to achieve the desired customization.
 
 The other approach, the kitchen-sink module, is more advanced.  See
 chapter @ref{Extending Gnulib}.
+
+
+@node Non-recursive make
+@section Building directly from the top-level directory
+
+By default, the Gnulib import directory will contain a generated
+@code{Makefile.am} file.  After configuring, this produces a generated
+@code{Makefile} in this directory.  As a consequence, the build from the
+top-level directory will use a recursive @code{make} invocation for this
+directory.
+
+Some people prefer a build system where the @code{Makefile} in the
+top-level directory directly builds the artifacts in the subdirectories,
+without an intermediate @code{make} invocation.  This is called
+``non-recursive make'' and is supported by Automake.  For more details,
+see @url{https://autotools.io/automake/nonrecursive.html}.
+
+Gnulib supports this flavour of build system too.  To use it, pass two
+options to @code{gnulib-tool}: @samp{--makefile-name} and
+@samp{--automake-subdir}.
+
+With the @code{gnulib-tool} option @samp{--makefile-name}, you are
+telling @code{gnulib-tool} to generate an includable @code{Makefile.am}
+portion in the Gnulib import directory, rather than a self-contained
+@code{Makefile.am}.  For example, when you use
+@samp{--makefile-name=Makefile.gnulib}, @code{gnulib-tool} will generate
+@code{Makefile.gnulib}.
+
+With the option @samp{--automake-subdir}, you are telling
+@code{gnulib-tool} that you will include the generated file from the
+@code{Makefile.am} in the top-level directory, rather than from a
+@code{Makefile.am} in the same directory.  For example, the top-level
+@code{Makefile.am} might contain this directive:
+
+@smallexample
+include lib/Makefile.gnulib
+@end smallexample
+
+The option @samp{--automake-subdir} is also supported in combination
+with @samp{--with-tests} (@pxref{Unit tests}).  Note that in this case,
+however, the generated unit tests directory will contains a
+@code{Makefile.am} and thus use a recursive @code{make} invocation.
+This is not a problem, since the built artifacts of your package have
+no dependencies towards the Gnulib unit tests, nor vice versa.
 
 
 @node Multiple instances

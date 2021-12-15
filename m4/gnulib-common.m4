@@ -1,4 +1,4 @@
-# gnulib-common.m4 serial 68
+# gnulib-common.m4 serial 69
 dnl Copyright (C) 2007-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -893,7 +893,13 @@ AC_DEFUN([gl_CONDITIONAL_HEADER],
   m4_pushdef([gl_generate_cond], [GL_GENERATE_]AS_TR_SH(m4_toupper($1)))
   case "$gl_generate_var" in
     false) gl_header_name='' ;;
-    true) gl_header_name='$1' ;;
+    true)
+      dnl It is OK to use a .h file in lib/ from within tests/, but not vice
+      dnl versa.
+      if test -z "$gl_header_name"; then
+        gl_header_name="${gl_source_base_prefix}$1"
+      fi
+      ;;
     *) echo "*** gl_generate_var is not set correctly" 1>&2; exit 1 ;;
   esac
   AC_SUBST(gl_header_name)

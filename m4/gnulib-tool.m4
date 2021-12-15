@@ -1,4 +1,4 @@
-# gnulib-tool.m4 serial 3
+# gnulib-tool.m4 serial 4
 dnl Copyright (C) 2004-2005, 2009-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -46,6 +46,9 @@ AC_DEFUN([gl_MAKEFILE_NAME], [])
 
 dnl Usage: gl_TESTS_MAKEFILE_NAME([FILENAME])
 AC_DEFUN([gl_TESTS_MAKEFILE_NAME], [])
+
+dnl Usage: gl_AUTOMAKE_SUBDIR
+AC_DEFUN([gl_AUTOMAKE_SUBDIR], [])
 
 dnl Usage: gl_LIBTOOL
 AC_DEFUN([gl_LIBTOOL], [])

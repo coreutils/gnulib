@@ -307,7 +307,10 @@ Options for --import, --add/remove-import:
                             \"Makefile.in\" if --gnu-make).
       --tests-makefile-name=NAME
                             Name of makefile in the tests-base directory
-                            (default as specified through --makefile-name)
+                            (default as specified through --makefile-name).
+      --automake-subdir     Specify that the makefile in the source-base
+                            directory be generated in such a way that it can
+                            be 'include'd from the toplevel Makefile.am.
       --macro-prefix=PREFIX  Specify the prefix of the macros 'gl_EARLY' and
                             'gl_INIT'. Default is 'gl'.
       --po-domain=NAME      Specify the prefix of the i18n domain. Usually use
@@ -1115,6 +1118,7 @@ func_determine_path_separator
 # - gnu_make        true if --gnu-make was given, false otherwise
 # - makefile_name   from --makefile-name
 # - tests_makefile_name  from --tests-makefile-name
+# - automake_subdir  true if --automake-subdir was given, false otherwise
 # - libtool         true if --libtool was given, false if --no-libtool was
 #                   given, blank otherwise
 # - macro_prefix    from --macro-prefix
@@ -1162,6 +1166,7 @@ func_determine_path_separator
   gnu_make=false
   makefile_name=
   tests_makefile_name=
+  automake_subdir=false
   libtool=
   macro_prefix=
   po_domain=
@@ -1406,6 +1411,9 @@ func_determine_path_separator
       --tests-makefile-name=* )
         tests_makefile_name=`echo "X$1" | sed -e 's/^X--tests-makefile-name=//'`
         shift ;;
+      --automake-subdir )
+        automake_subdir=true
+        shift ;;
       --libtool )
         libtool=true
         shift ;;
@@ -1518,7 +1526,7 @@ func_determine_path_separator
        || test -n "$excl_cxx_tests" || test -n "$excl_longrunning_tests" \
        || test -n "$excl_privileged_tests" || test -n "$excl_unportable_tests" \
        || test -n "$avoidlist" || test -n "$lgpl" || test -n "$makefile_name" \
-       || test -n "$tests_makefile_name" \
+       || test -n "$tests_makefile_name" || test "$automake_subdir" != false \
        || test -n "$macro_prefix" || test -n "$po_domain" \
        || test -n "$witness_c_macro" || test -n "$vc_files"; then
       echo "gnulib-tool: invalid options for 'update' mode" 1>&2
@@ -1609,6 +1617,22 @@ func_determine_path_separator
     1.* | 2.[0-5]* | 2.6[0-3]*)
       func_fatal_error "minimum supported autoconf version is 2.64. Try adding AC_PREREQ([$DEFAULT_AUTOCONF_MINVERSION]) to your configure.ac." ;;
   esac
+
+  # Determine whether --automake-subdir is supported.
+  if $automake_subdir; then
+    found_subdir_objects=false
+    if test -f "${destdir:-.}"/Makefile.am; then
+      automake_options=`sed -n -e 's/^AUTOMAKE_OPTIONS[	 ]*=\(.*\)$/\1/p' "${destdir:-.}"/Makefile.am`
+      for arg in $automake_options; do
+        case "$arg" in
+          subdir-objects ) found_subdir_objects=true ;;
+        esac
+      done
+    fi
+    if ! $found_subdir_objects; then
+      func_fatal_error "Option --automake-subdir is only supported if the definition of AUTOMAKE_OPTIONS in Makefile.am contains 'subdir-objects'."
+    fi
+  fi
 
   # Remove trailing slashes from the directory names. This is necessary for
   # m4base (to avoid an error in func_import) and optional for the others.
@@ -4372,9 +4396,12 @@ func_emit_initmacro_start ()
   fi
 }
 
-# func_emit_initmacro_end macro_prefix
+# func_emit_initmacro_end macro_prefix gentests
 # emits the last few statements of the gl_INIT macro to standard output.
 # - macro_prefix             prefix of gl_EARLY, gl_INIT macros to use
+# - gentests                 true if a tests Makefile.am is being generated,
+#                            false otherwise
+# - automake_subdir  true if --automake-subdir was given, false otherwise
 func_emit_initmacro_end ()
 {
   macro_prefix_arg="$1"
@@ -4406,9 +4433,14 @@ func_emit_initmacro_end ()
   echo "    if test -n \"\$${macro_prefix_arg}_LIBOBJS\"; then"
   echo "      # Remove the extension."
   echo "      sed_drop_objext='s/\\.o\$//;s/\\.obj\$//'"
+  if $automake_subdir && ! "$2" && test -n "$sourcebase" && test "$sourcebase" != '.'; then
+    subdir="$sourcebase/"
+  else
+    subdir=
+  fi
   echo "      for i in \`for i in \$${macro_prefix_arg}_LIBOBJS; do echo \"\$i\"; done | sed -e \"\$sed_drop_objext\" | sort | uniq\`; do"
-  echo "        ${macro_prefix_arg}_libobjs=\"\$${macro_prefix_arg}_libobjs \$i.\$ac_objext\""
-  echo "        ${macro_prefix_arg}_ltlibobjs=\"\$${macro_prefix_arg}_ltlibobjs \$i.lo\""
+  echo "        ${macro_prefix_arg}_libobjs=\"\$${macro_prefix_arg}_libobjs ${subdir}\$i.\$ac_objext\""
+  echo "        ${macro_prefix_arg}_ltlibobjs=\"\$${macro_prefix_arg}_ltlibobjs ${subdir}\$i.lo\""
   echo "      done"
   echo "    fi"
   echo "    AC_SUBST([${macro_prefix_arg}_LIBOBJS], [\$${macro_prefix_arg}_libobjs])"
@@ -4451,6 +4483,24 @@ func_emit_initmacro_done ()
   echo "    ])"
   echo "  ])"
   echo "])"
+}
+
+# func_emit_shellvars_init gentests base
+# emits some shell variable assignments to standard output.
+# - gentests                 true if a tests Makefile.am is being generated,
+#                            false otherwise
+# - base             base directory, relative to the top-level directory
+# - automake_subdir  true if --automake-subdir was given, false otherwise
+func_emit_shellvars_init ()
+{
+  # Define the base directory, relative to the top-level directory.
+  echo "  gl_source_base='$2'"
+  # Define the prefix for the file name of generated files.
+  if $automake_subdir && ! $1; then
+    echo "  gl_source_base_prefix='\$(top_build_prefix)$2/'"
+  else
+    echo "  gl_source_base_prefix="
+  fi
 }
 
 # func_emit_autoconf_snippet indentation
@@ -4782,6 +4832,7 @@ func_import ()
   cached_lgpl=
   cached_makefile_name=
   cached_tests_makefile_name=
+  cached_automake_subdir=
   cached_cond_dependencies=
   cached_libtool=
   cached_macro_prefix=
@@ -4861,6 +4912,9 @@ func_import ()
       }
       /gl_TESTS_MAKEFILE_NAME(/ {
         s,^.*gl_TESTS_MAKEFILE_NAME([[ ]*\([^]"$`\\)]*\).*$,cached_tests_makefile_name="\1",p
+      }
+      /gl_AUTOMAKE_SUBDIR/ {
+        s,^.*$,cached_automake_subdir=true,p
       }
       /gl_CONDITIONAL_DEPENDENCIES/ {
         s,^.*$,cached_cond_dependencies=true,p
@@ -5036,6 +5090,13 @@ func_import ()
     # The tests_makefile_name defaults to the cached one.
     if test -z "$tests_makefile_name"; then
       tests_makefile_name="$cached_tests_makefile_name"
+    fi
+    # Use automake-subdir mode if specified either way.
+    if ! $automake_subdir; then
+      automake_subdir="$cached_automake_subdir"
+      if test -z "$automake_subdir"; then
+        automake_subdir=false
+      fi
     fi
     # Use conditional dependencies if specified either way.
     if test -z "$cond_dependencies"; then
@@ -5429,6 +5490,9 @@ s,^\(.................................................[^ ]*\) *,                
   if test -n "$tests_makefile_name"; then
     func_append_actionarg "--tests-makefile-name=$tests_makefile_name"
   fi
+  if $automake_subdir; then
+    func_append_actionarg "--automake-subdir"
+  fi
   if test "$cond_dependencies" = true; then
     func_append_actionarg "--conditional-dependencies"
   else
@@ -5539,7 +5603,11 @@ s,//*$,/,'
   func_dest_tmpfilename $sourcebase/$source_makefile_am
   destfile="$sourcebase/$source_makefile_am"
   modules="$main_modules"
-  func_emit_lib_Makefile_am > "$tmpfile"
+  if $automake_subdir; then
+    func_emit_lib_Makefile_am | "$gnulib_dir"/build-aux/prefix-gnulib-mk --from-gnulib-tool --lib-name="$libname" --prefix="$sourcebase/" > "$tmpfile"
+  else
+    func_emit_lib_Makefile_am > "$tmpfile"
+  fi
   if test -f "$destdir"/$sourcebase/$source_makefile_am; then
     if cmp -s "$destdir"/$sourcebase/$source_makefile_am "$tmpfile"; then
       rm -f "$tmpfile"
@@ -5767,6 +5835,9 @@ s,//*$,/,'
     if test -n "$tests_makefile_name"; then
       echo "gl_TESTS_MAKEFILE_NAME([$tests_makefile_name])"
     fi
+    if test "$automake_subdir" = true; then
+      echo "gl_AUTOMAKE_SUBDIR"
+    fi
     if test "$cond_dependencies" = true; then
       echo "gl_CONDITIONAL_DEPENDENCIES"
     fi
@@ -5888,7 +5959,7 @@ s,//*$,/,'
     fi
     echo "  gl_m4_base='$m4base'"
     func_emit_initmacro_start $macro_prefix false
-    echo "  gl_source_base='$sourcebase'"
+    func_emit_shellvars_init false "$sourcebase"
     if test -n "$witness_c_macro"; then
       echo "  m4_pushdef([gl_MODULE_INDICATOR_CONDITION], [$witness_c_macro])"
     fi
@@ -5897,11 +5968,11 @@ s,//*$,/,'
       echo "  m4_popdef([gl_MODULE_INDICATOR_CONDITION])"
     fi
     echo "  # End of code from modules"
-    func_emit_initmacro_end $macro_prefix
+    func_emit_initmacro_end $macro_prefix false
     echo "  gltests_libdeps="
     echo "  gltests_ltlibdeps="
     func_emit_initmacro_start ${macro_prefix}tests $gentests
-    echo "  gl_source_base='$testsbase'"
+    func_emit_shellvars_init true "$testsbase"
     # Define a tests witness macro that depends on the package.
     # PACKAGE is defined by AM_INIT_AUTOMAKE, PACKAGE_TARNAME is defined by AC_INIT.
     # See <https://lists.gnu.org/r/automake/2009-05/msg00145.html>.
@@ -5913,7 +5984,7 @@ s,//*$,/,'
     echo "  m4_pushdef([gl_MODULE_INDICATOR_CONDITION], [\$gl_module_indicator_condition])"
     func_emit_autoconf_snippets "$testsrelated_modules" "$main_modules $testsrelated_modules" func_verify_module true true true
     echo "  m4_popdef([gl_MODULE_INDICATOR_CONDITION])"
-    func_emit_initmacro_end ${macro_prefix}tests
+    func_emit_initmacro_end ${macro_prefix}tests $gentests
     # _LIBDEPS and _LTLIBDEPS variables are not needed if this library is
     # created using libtool, because libtool already handles the dependencies.
     if test "$libtool" != true; then
@@ -6549,11 +6620,11 @@ func_create_testdir ()
        # We don't have explicit ordering constraints between the various
        # autoconf snippets. It's cleanest to put those of the library before
        # those of the tests.
-       echo "gl_source_base='../$sourcebase'"
+       func_emit_shellvars_init true "../$sourcebase"
        func_emit_autoconf_snippets "$modules" "$modules" func_verify_nontests_module false false false
-       echo "gl_source_base='.'"
+       func_emit_shellvars_init true '.'
        func_emit_autoconf_snippets "$modules" "$modules" func_verify_tests_module false false false
-       func_emit_initmacro_end $macro_prefix
+       func_emit_initmacro_end $macro_prefix true
        # _LIBDEPS and _LTLIBDEPS variables are not needed if this library is
        # created using libtool, because libtool already handles the dependencies.
        if test "$libtool" != true; then
@@ -6662,18 +6733,18 @@ func_create_testdir ()
    fi
    echo "gl_m4_base='$m4base'"
    func_emit_initmacro_start $macro_prefix false
-   echo "gl_source_base='$sourcebase'"
+   func_emit_shellvars_init false "$sourcebase"
    if $single_configure; then
      func_emit_autoconf_snippets "$main_modules" "$main_modules" func_verify_module true false false
    else
      func_emit_autoconf_snippets "$modules" "$modules" func_verify_nontests_module true false false
    fi
-   func_emit_initmacro_end $macro_prefix
+   func_emit_initmacro_end $macro_prefix false
    if $single_configure; then
      echo "  gltests_libdeps="
      echo "  gltests_ltlibdeps="
      func_emit_initmacro_start ${macro_prefix}tests true
-     echo "  gl_source_base='$testsbase'"
+     func_emit_shellvars_init true "$testsbase"
      # Define a tests witness macro.
      echo "  ${macro_prefix}tests_WITNESS=IN_GNULIB_TESTS"
      echo "  AC_SUBST([${macro_prefix}tests_WITNESS])"
@@ -7123,8 +7194,8 @@ s/\([.*$]\)/[\1]/g'
                 #   inc_longrunning_tests, inc_privileged_tests,
                 #   inc_unportable_tests, inc_all_tests, avoidlist, sourcebase,
                 #   m4base, pobase, docbase, testsbase, inctests, libname, lgpl,
-                #   makefile_name, tests_makefile_name, libtool, macro_prefix,
-                #   po_domain, witness_c_macro, vc_files
+                #   makefile_name, tests_makefile_name, automake_subdir, libtool,
+                #   macro_prefix, po_domain, witness_c_macro, vc_files
                 # don't propagate from one directory to another.
                 (func_import) || func_exit 1
               done

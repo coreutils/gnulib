@@ -74,15 +74,24 @@ EOF
   exit $exit_code;
 }
 
-# contents ($FILE_NAME)
-# ---------------------
-sub contents ($)
+# contents_of_file ($FILE_NAME)
+# -----------------------------
+sub contents_of_file ($)
 {
   my ($file) = @_;
   local $/;                     # Turn on slurp-mode.
   my $f = new IO::File "< $file" or die "$file";
   my $contents = $f->getline or die "$file";
   $f->close;
+  return $contents;
+}
+
+# contents_of_stdin
+# -----------------
+sub contents_of_stdin ()
+{
+  local $/;                     # Turn on slurp-mode.
+  my $contents = <STDIN>;
   return $contents;
 }
 
@@ -202,46 +211,58 @@ sub prefix ($)
   return $_;
 }
 
-# process ($IN)
-# -------------
-sub process ($)
 {
-  my ($file) = @_;
-  my ($bak) = "$file.bak";
-  rename ($file, $bak) or die "$ME: rename $file $bak failed: $!\n";
-  my $contents = contents ($bak);
-  $contents = prefix ($contents);
-  my $out = new IO::File(">$file")
-    or die "$ME: $file: failed to open for writing: $!\n";
-  print $out $contents;
-}
+  my $from_gnulib_tool = 0;
 
-{
   GetOptions
     (
      'lib-name=s' => \$lib_name,
      help => sub { usage 0 },
      version => sub { print "$ME version $VERSION\n"; exit },
+     # Undocumented options:
+     'from-gnulib-tool' => \$from_gnulib_tool,
+     'prefix=s' => \$prefix,
     ) or usage 1;
 
   my $fail = 0;
   defined $lib_name
     or (warn "$ME: no library name; use --lib-name=NAME\n"), $fail = 1;
 
-  # There must be exactly one argument.
-  @ARGV == 0
-    and (warn "$ME: missing FILE argument\n"), $fail = 1;
-  1 < @ARGV
-    and (warn "$ME: too many arguments:\n", join ("\n", @ARGV), "\n"),
-      $fail = 1;
-  $fail
-    and usage 1;
+  if ($from_gnulib_tool != 0)
+    {
+      0 < @ARGV
+        and (warn "$ME: too many arguments:\n", join ("\n", @ARGV), "\n"),
+          $fail = 1;
+      $fail
+        and usage 1;
 
-  my $file = $ARGV[0];
-  $prefix = (dirname $file) . '/';
-  warn "prefix=$prefix\n";
+      my $contents = contents_of_stdin ();
+      $contents = prefix ($contents);
+      print STDOUT $contents;
+    }
+  else
+    {
+      # There must be exactly one argument.
+      @ARGV == 0
+        and (warn "$ME: missing FILE argument\n"), $fail = 1;
+      1 < @ARGV
+        and (warn "$ME: too many arguments:\n", join ("\n", @ARGV), "\n"),
+          $fail = 1;
+      $fail
+        and usage 1;
 
-  process $file;
+      my $file = $ARGV[0];
+      $prefix = (dirname $file) . '/';
+      warn "prefix=$prefix\n";
+
+      my ($bak) = "$file.bak";
+      rename ($file, $bak) or die "$ME: rename $file $bak failed: $!\n";
+      my $contents = contents_of_file ($bak);
+      $contents = prefix ($contents);
+      my $out = new IO::File(">$file")
+        or die "$ME: $file: failed to open for writing: $!\n";
+      print $out $contents;
+    }
 }
 
 ### Setup "GNU" style for perl-mode and cperl-mode.
