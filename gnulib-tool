@@ -1594,7 +1594,6 @@ func_determine_path_separator
     # "autoconf --trace=AC_PREREQ" fails with an error message like this:
     #   m4: aclocal.m4:851: Cannot open m4/absolute-header.m4: No such file or directory
     #   autom4te: m4 failed with exit status: 1
-    prereqs=
     my_sed_traces='
       s,#.*$,,
       s,^dnl .*$,,
@@ -1621,10 +1620,25 @@ func_determine_path_separator
   # Determine whether --automake-subdir is supported.
   if $automake_subdir; then
     found_subdir_objects=false
+    if test -n "$configure_ac"; then
+      my_sed_traces='
+        s,#.*$,,
+        s,^dnl .*$,,
+        s, dnl .*$,,
+        /AM_INIT_AUTOMAKE/ {
+          s,^.*AM_INIT_AUTOMAKE([[ ]*\([^])]*\).*$,\1,p
+        }'
+      automake_options=`sed -n -e "$my_sed_traces" < "$configure_ac"`
+      for option in $automake_options; do
+        case "$option" in
+          subdir-objects ) found_subdir_objects=true ;;
+        esac
+      done
+    fi
     if test -f "${destdir:-.}"/Makefile.am; then
       automake_options=`sed -n -e 's/^AUTOMAKE_OPTIONS[	 ]*=\(.*\)$/\1/p' "${destdir:-.}"/Makefile.am`
-      for arg in $automake_options; do
-        case "$arg" in
+      for option in $automake_options; do
+        case "$option" in
           subdir-objects ) found_subdir_objects=true ;;
         esac
       done
