@@ -193,10 +193,6 @@ sub prefix ($)
   #   test '$(srcdir)' = . || rm -f $(top_builddir)/GNUmakefile
   s{\$\(srcdir\)/}{\$(top_srcdir)/$prefix}g;
 
-  # Sometimes, t-$@ is used instead of $@-t, which, of course, does
-  # not work when we have a $@ with a directory in it.
-  s{t-\$\@}{\$\@-t}g;
-
   # Some AC_SUBST patterns remain and would better be Make macros.
   s{\@(MKDIR_P)\@}{\$($1)}g;
 
