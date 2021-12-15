@@ -40,6 +40,7 @@ use File::Basename; # for dirname
 (my $ME = $0) =~ s|.*/||;
 
 my $prefix;
+my $canon_prefix;
 my $lib_name;
 
 sub usage ($)
@@ -171,7 +172,7 @@ sub prefix_assignment ($$)
 
   # Variables whose name depend on the location: libbison_a_SOURCES =>
   # lib_libbison_a_SOURCES.
-  $lhs_and_assign_op =~ s/($lib_name)/lib_$1/g;
+  $lhs_and_assign_op =~ s/($lib_name)/$canon_prefix$1/g;
 
   $lhs_and_assign_op . $rhs;
 }
@@ -186,6 +187,12 @@ sub prefix ($)
 {
   # Work on $_.
   local ($_) = @_;
+
+  # $canon_prefix is derived from $prefix in the same way as Automake
+  # derives %canon_reldir% from %reldir%. See
+  # <https://www.gnu.org/software/automake/manual/html_node/Include.html>.
+  $canon_prefix = $prefix;
+  $canon_prefix =~ s/[^a-zA-Z0-9_]/_/g;
 
   # Prefix all the occurrence of files in rules.  If there is nothing
   # after in the :, it's probably a phony target, or a suffix rule.
