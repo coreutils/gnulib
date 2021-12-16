@@ -38,6 +38,7 @@ BUILT_SOURCES += $(GETOPT_H) $(GETOPT_CDEFS_H)
 
 # We need the following in order to create <getopt.h> when the system
 # doesn't have one that works with the given compiler.
+if GL_GENERATE_GETOPT_H
 getopt.h: getopt.in.h $(top_builddir)/config.status $(ARG_NONNULL_H)
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	$(MKDIR_P) '%reldir%' && \
@@ -60,6 +61,10 @@ getopt-cdefs.h: getopt-cdefs.in.h $(top_builddir)/config.status
 	      < $(srcdir)/getopt-cdefs.in.h; \
 	} > $@-t && \
 	mv -f $@-t $@
+else
+getopt.h getopt-cdefs.h: $(top_builddir)/config.status
+	rm -f $@
+endif
 
 MOSTLYCLEANFILES += getopt.h getopt.h-t getopt-cdefs.h getopt-cdefs.h-t
 
