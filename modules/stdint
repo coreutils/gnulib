@@ -21,8 +21,6 @@ sys_types
 configure.ac:
 gl_STDINT_H
 gl_CONDITIONAL_HEADER([stdint.h])
-dnl Because of gl_REPLACE_LIMITS_H:
-gl_CONDITIONAL_HEADER([limits.h])
 AC_PROG_MKDIR_P
 
 Makefile.am:
