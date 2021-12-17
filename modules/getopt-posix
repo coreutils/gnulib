@@ -23,6 +23,7 @@ snippet/arg-nonnull
 configure.ac:
 gl_FUNC_GETOPT_POSIX
 gl_CONDITIONAL_HEADER([getopt.h])
+gl_CONDITIONAL_HEADER([getopt-cdefs.h])
 AC_PROG_MKDIR_P
 if test $REPLACE_GETOPT = 1; then
   AC_LIBOBJ([getopt])
@@ -53,7 +54,12 @@ getopt.h: getopt.in.h $(top_builddir)/config.status $(ARG_NONNULL_H)
 	      < $(srcdir)/getopt.in.h; \
 	} > $@-t && \
 	mv -f $@-t $@
+else
+getopt.h: $(top_builddir)/config.status
+	rm -f $@
+endif
 
+if GL_GENERATE_GETOPT_CDEFS_H
 getopt-cdefs.h: getopt-cdefs.in.h $(top_builddir)/config.status
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
@@ -62,7 +68,7 @@ getopt-cdefs.h: getopt-cdefs.in.h $(top_builddir)/config.status
 	} > $@-t && \
 	mv -f $@-t $@
 else
-getopt.h getopt-cdefs.h: $(top_builddir)/config.status
+getopt-cdefs.h: $(top_builddir)/config.status
 	rm -f $@
 endif
 
