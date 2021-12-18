@@ -1,4 +1,4 @@
-# libtextstyle-optional.m4 serial 3
+# libtextstyle-optional.m4 serial 4
 dnl Copyright (C) 2019-2021 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -29,4 +29,11 @@ AC_DEFUN([gl_LIBTEXTSTYLE_OPTIONAL],
     AC_REQUIRE([AC_C_INLINE])
     AC_CHECK_FUNCS_ONCE([tcdrain])
   fi
+
+  dnl Update the value of the TEXTSTYLE_H variable and the
+  dnl GL_GENERATE_TEXTSTYLE_H conditional.
+  dnl In most modules, the gl_CONDITIONAL_HEADER invocation belongs in the
+  dnl module description, not the .m4 file. But here it's OK, because it does
+  dnl not make sense to AC_REQUIRE([gl_LIBTEXTSTYLE_OPTIONAL]).
+  gl_CONDITIONAL_HEADER([textstyle.h])
 ])
