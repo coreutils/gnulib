@@ -13,6 +13,7 @@ c99
 errno
 extensions
 intprops
+libc-config
 stdbool
 time_rz
 
