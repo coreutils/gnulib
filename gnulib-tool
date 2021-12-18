@@ -3775,7 +3775,7 @@ func_emit_lib_Makefile_am ()
           echo "## begin gnulib module $module"
           if $gnu_make; then
             echo "ifeq (,\$(OMIT_GNULIB_MODULE_$module))"
-            convert_to_gnu_make_1='s/^if \(.*\)/ifneq (,$(\1))/'
+            convert_to_gnu_make_1='s/^if \(.*\)/ifneq (,$(\1_CONDITION))/'
             convert_to_gnu_make_2='s|%reldir%/||g'
             convert_to_gnu_make_3='s|%reldir%|.|g'
           fi
@@ -3784,7 +3784,7 @@ func_emit_lib_Makefile_am ()
             if func_cond_module_p "$module"; then
               func_module_conditional_name "$module"
               if $gnu_make; then
-                echo "ifneq (,\$($conditional))"
+                echo "ifneq (,\$(${conditional}_CONDITION))"
               else
                 echo "if $conditional"
               fi
@@ -4156,7 +4156,7 @@ func_emit_tests_Makefile_am ()
           { echo "## begin gnulib module $module"
             if $gnu_make; then
               echo "ifeq (,\$(OMIT_GNULIB_MODULE_$module))"
-              convert_to_gnu_make_1='s/^if \(.*\)/ifneq (,$(\1))/'
+              convert_to_gnu_make_1='s/^if \(.*\)/ifneq (,$(\1_CONDITION))/'
               convert_to_gnu_make_2='s|%reldir%/||g'
               convert_to_gnu_make_3='s|%reldir%|.|g'
             fi
@@ -4165,7 +4165,7 @@ func_emit_tests_Makefile_am ()
               if func_cond_module_p "$module"; then
                 func_module_conditional_name "$module"
                 if $gnu_make; then
-                  echo "ifneq (,\$($conditional))"
+                  echo "ifneq (,\$(${conditional}_CONDITION))"
                 else
                   echo "if $conditional"
                 fi
