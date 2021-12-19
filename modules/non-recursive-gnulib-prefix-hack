@@ -2,6 +2,15 @@ Description:
 Adjust a gnulib-generated gnulib.mk file and configure script so
 that they are usable in a non-recursive make framework.
 
+Status:
+deprecated
+
+Notice:
+This module is deprecated. Instead,
+  - use the gnulib-tool option '--automake-subdir',
+  - remove the explicit invocation of build-aux/prefix-gnulib-mk from your build
+    system.
+
 Files:
 build-aux/prefix-gnulib-mk
 m4/non-recursive-gnulib-prefix-hack.m4
