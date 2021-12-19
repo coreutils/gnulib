@@ -5606,7 +5606,7 @@ s,^\(.................................................[^ ]*\) *,                
       func_note_Makefile_am_edit "$testsbase_dir" SUBDIRS "$testsbase_base" true
     fi
   fi
-  func_note_Makefile_am_edit "" ACLOCAL_AMFLAGS "-I ${m4base}"
+  func_note_Makefile_am_edit "" ACLOCAL_AMFLAGS "${m4base}"
   {
     # Find the first parent directory of $m4base that contains or will contain
     # a Makefile.am.
@@ -6267,7 +6267,12 @@ s,//*$,/,'
     eval var=\"\$makefile_am_edit${edit}_var\"
     eval val=\"\$makefile_am_edit${edit}_val\"
     if test -n "$var"; then
-      echo "  - mention \"${val}\" in ${var} in ${dir}Makefile.am,"
+      if test "$var" = ACLOCAL_AMFLAGS; then
+        echo "  - mention \"-I ${val}\" in ${var} in ${dir}Makefile.am"
+        echo "    or add an AC_CONFIG_MACRO_DIRS([${val}]) invocation in $configure_ac,"
+      else
+        echo "  - mention \"${val}\" in ${var} in ${dir}Makefile.am,"
+      fi
     fi
   done
   if grep '^ *AC_PROG_CC_STDC' "$configure_ac" > /dev/null; then
@@ -7110,6 +7115,7 @@ s/\([.*$]\)/[\1]/g'
     # Analyze configure.ac.
     guessed_auxdir="."
     guessed_libtool=false
+    guessed_m4dirs=
     my_sed_traces='
       s,#.*$,,
       s,^dnl .*$,,
@@ -7119,6 +7125,12 @@ s/\([.*$]\)/[\1]/g'
       }
       /A[CM]_PROG_LIBTOOL/ {
         s,^.*$,guessed_libtool=true,p
+      }
+      /AC_CONFIG_MACRO_DIR/ {
+        s,^.*AC_CONFIG_MACRO_DIR([[ ]*\([^]"$`\\)]*\).*$,guessed_m4dirs="${guessed_m4dirs} \1",p
+      }
+      /AC_CONFIG_MACRO_DIRS/ {
+        s,^.*AC_CONFIG_MACRO_DIRS([[ ]*\([^]"$`\\)]*\).*$,guessed_m4dirs="${guessed_m4dirs} \1",p
       }'
     eval `sed -n -e "$my_sed_traces" < "$configure_ac"`
 
@@ -7182,6 +7194,18 @@ s/\([.*$]\)/[\1]/g'
                 m4dir_is_next=
               fi
             fi
+          done
+          for arg in $guessed_m4dirs; do
+            # Ignore absolute directory pathnames, like /usr/local/share/aclocal.
+            case "$arg" in
+              /*) ;;
+              *)
+                if test -f "$destdir/$arg"/gnulib-cache.m4; then
+                  func_append m4dirs " $arg"
+                  m4dirs_count=`expr $m4dirs_count + 1`
+                fi
+                ;;
+            esac
           done
         else
           # No Makefile.am! Oh well. Look at the last generated aclocal.m4.
