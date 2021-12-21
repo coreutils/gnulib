@@ -39,6 +39,12 @@
 # include <AvailabilityMacros.h>
 # if MAC_OS_X_VERSION_MAX_ALLOWED >= 1050
 #  include <libproc.h>
+#  if MAC_OS_X_VERSION_MIN_REQUIRED < 1050
+/* Mac OS X versions < 10.5 don't have this function.  Therefore declare it as
+   weak, in order to avoid a runtime error when the binaries are run on these
+   older versions.  */
+extern int proc_pidinfo (int, int, uint64_t, void *, int) WEAK_IMPORT_ATTRIBUTE;
+#  endif
 # endif
 #endif
 
@@ -236,11 +242,16 @@ get_ppid_of (pid_t pid)
 
   /* Mac OS X >= 10.7 has PROC_PIDT_SHORTBSDINFO.  */
 #  if defined PROC_PIDT_SHORTBSDINFO
-  struct proc_bsdshortinfo info;
+#   if MAC_OS_X_VERSION_MIN_REQUIRED < 1050
+  if (proc_pidinfo != NULL) /* at runtime Mac OS X >= 10.5 ? */
+#   endif
+    {
+      struct proc_bsdshortinfo info;
 
-  if (proc_pidinfo (pid, PROC_PIDT_SHORTBSDINFO, 0, &info, sizeof (info))
-      == sizeof (info))
-    return info.pbsi_ppid;
+      if (proc_pidinfo (pid, PROC_PIDT_SHORTBSDINFO, 0, &info, sizeof (info))
+          == sizeof (info))
+        return info.pbsi_ppid;
+    }
 #  endif
 
 #  if MAC_OS_X_VERSION_MIN_REQUIRED < 1070
@@ -249,10 +260,15 @@ get_ppid_of (pid_t pid)
      32-bit and 64-bit environments, and the kernel of Mac OS X 10.5 knows
      only about the 32-bit 'struct proc_bsdinfo'.  Fortunately all the info
      we need is in the first part, which is the same in 32-bit and 64-bit.  */
-  struct proc_bsdinfo info;
+#   if MAC_OS_X_VERSION_MIN_REQUIRED < 1050
+  if (proc_pidinfo != NULL) /* at runtime Mac OS X >= 10.5 ? */
+#   endif
+    {
+      struct proc_bsdinfo info;
 
-  if (proc_pidinfo (pid, PROC_PIDTBSDINFO, 0, &info, 128) == 128)
-    return info.pbi_ppid;
+      if (proc_pidinfo (pid, PROC_PIDTBSDINFO, 0, &info, 128) == 128)
+        return info.pbi_ppid;
+    }
 #  endif
 
 # endif
