@@ -33,7 +33,7 @@ BUILT_SOURCES += $(LIBUNISTRING_UNITYPES_H)
 
 unitypes.h: unitypes.in.h
 	$(AM_V_GEN)rm -f $@-t $@ && \
-	$(MKDIR_P) '%reldir%' && \
+@NMD@	$(MKDIR_P) '%reldir%' && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  cat $(srcdir)/unitypes.in.h; \
 	} > $@-t && \

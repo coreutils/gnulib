@@ -22,7 +22,7 @@ BUILT_SOURCES += $(SYSEXITS_H)
 if GL_GENERATE_SYSEXITS_H
 sysexits.h: sysexits.in.h $(top_builddir)/config.status
 	$(AM_V_GEN)rm -f $@-t $@ && \
-	$(MKDIR_P) '%reldir%' && \
+@NMD@	$(MKDIR_P) '%reldir%' && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  sed -e 's|@''GUARD_PREFIX''@|${gl_include_guard_prefix}|g' \
 	      -e 's|@''HAVE_SYSEXITS_H''@|$(HAVE_SYSEXITS_H)|g' \

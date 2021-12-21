@@ -21,7 +21,7 @@ BUILT_SOURCES += $(STDNORETURN_H)
 if GL_GENERATE_STDNORETURN_H
 stdnoreturn.h: stdnoreturn.in.h $(top_builddir)/config.status $(_NORETURN_H)
 	$(AM_V_GEN)rm -f $@-t $@ && \
-	$(MKDIR_P) '%reldir%' && \
+@NMD@	$(MKDIR_P) '%reldir%' && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
 	  sed -e '/definition of _Noreturn/r $(_NORETURN_H)' \
               < $(srcdir)/stdnoreturn.in.h; \

@@ -25,7 +25,7 @@ BUILT_SOURCES += $(EXECINFO_H)
 if GL_GENERATE_EXECINFO_H
 execinfo.h: execinfo.in.h $(top_builddir)/config.status
 	$(AM_V_GEN)rm -f $@-t $@ && \
-	$(MKDIR_P) '%reldir%' && \
+@NMD@	$(MKDIR_P) '%reldir%' && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  cat $(srcdir)/execinfo.in.h; \
 	} > $@-t && \

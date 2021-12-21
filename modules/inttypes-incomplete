@@ -25,7 +25,7 @@ BUILT_SOURCES += inttypes.h
 # doesn't have one that works with the given compiler.
 inttypes.h: inttypes.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(WARN_ON_USE_H) $(ARG_NONNULL_H)
 	$(AM_V_GEN)rm -f $@-t $@ && \
-	$(MKDIR_P) '%reldir%' && \
+@NMD@	$(MKDIR_P) '%reldir%' && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  sed -e 's/@''HAVE_INTTYPES_H''@/$(HAVE_INTTYPES_H)/g' \
 	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \

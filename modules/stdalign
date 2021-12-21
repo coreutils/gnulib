@@ -20,7 +20,7 @@ BUILT_SOURCES += $(STDALIGN_H)
 if GL_GENERATE_STDALIGN_H
 stdalign.h: stdalign.in.h $(top_builddir)/config.status
 	$(AM_V_GEN)rm -f $@-t $@ && \
-	$(MKDIR_P) '%reldir%' && \
+@NMD@	$(MKDIR_P) '%reldir%' && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  cat $(srcdir)/stdalign.in.h; \
 	} > $@-t && \

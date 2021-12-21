@@ -20,7 +20,7 @@ BUILT_SOURCES += $(LIBUNISTRING_UNICONV_H)
 
 uniconv.h: uniconv.in.h
 	$(AM_V_GEN)rm -f $@-t $@ && \
-	$(MKDIR_P) '%reldir%' && \
+@NMD@	$(MKDIR_P) '%reldir%' && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  cat $(srcdir)/uniconv.in.h; \
 	} > $@-t && \

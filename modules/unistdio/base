@@ -17,7 +17,7 @@ BUILT_SOURCES += $(LIBUNISTRING_UNISTDIO_H)
 
 unistdio.h: unistdio.in.h
 	$(AM_V_GEN)rm -f $@-t $@ && \
-	$(MKDIR_P) '%reldir%' && \
+@NMD@	$(MKDIR_P) '%reldir%' && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  cat $(srcdir)/unistdio.in.h; \
 	} > $@-t && \

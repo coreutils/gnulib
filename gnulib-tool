@@ -3692,6 +3692,7 @@ func_update_file ()
 # - auxdir          directory relative to destdir where to place build aux files
 # - gnu_make        true if --gnu-make was given, false otherwise
 # - makefile_name   from --makefile-name
+# - automake_subdir  true if --automake-subdir was given, false otherwise
 # - libtool         true if libtool will be used, false or blank otherwise
 # - macro_prefix    prefix of gl_LIBOBJS macros to use
 # - module_indicator_prefix  prefix of GNULIB_<modulename> variables to use
@@ -3725,6 +3726,13 @@ func_emit_lib_Makefile_am ()
     perhapsLT=
     sed_eliminate_LDFLAGS='/^lib_LDFLAGS[	 ]*+=/d'
   fi
+  # Replace NMD, so as to remove redundant "$(MKDIR_P) '.'" invocations.
+  # The logic is similar to how we define gl_source_base_prefix.
+  if $automake_subdir; then
+    sed_eliminate_NMD='s/@NMD@//'
+  else
+    sed_eliminate_NMD='/@NMD@/d'
+  fi
   if $for_test; then
     # When creating a package for testing: Attempt to provoke failures,
     # especially link errors, already during "make" rather than during
@@ -3735,8 +3743,9 @@ func_emit_lib_Makefile_am ()
     sed_transform_check_PROGRAMS="$sed_noop"
   fi
   echo "## DO NOT EDIT! GENERATED AUTOMATICALLY!"
-  $gnu_make ||
-      echo "## Process this file with automake to produce Makefile.in."
+  if ! $gnu_make; then
+    echo "## Process this file with automake to produce Makefile.in."
+  fi
   func_emit_copyright_notice
   if test -n "$actioncmd"; then
     printf '# Reproduce by:\n%s\n' "$actioncmd"
@@ -3753,6 +3762,7 @@ func_emit_lib_Makefile_am ()
             sed -e 's,lib_LIBRARIES,lib%_LIBRARIES,g' \
                 -e 's,lib_LTLIBRARIES,lib%_LTLIBRARIES,g' \
                 -e "$sed_eliminate_LDFLAGS" \
+                -e "$sed_eliminate_NMD" \
                 -e 's,lib_\([A-Z][A-Z]*\),'"${libname}_${libext}"'_\1,g' \
                 -e 's,\$(GNULIB_,$('"${module_indicator_prefix}"'_GNULIB_,' \
                 -e 's,lib%_LIBRARIES,lib_LIBRARIES,g' \
@@ -4097,6 +4107,9 @@ func_emit_tests_Makefile_am ()
     perhapsLT=
     sed_eliminate_LDFLAGS='/^lib_LDFLAGS[	 ]*+=/d'
   fi
+  # Replace NMD, so as to remove redundant "$(MKDIR_P) '.'" invocations.
+  # The logic is similar to how we define gl_source_base_prefix.
+  sed_eliminate_NMD='/@NMD@/d'
   if $for_test; then
     # When creating a package for testing: Attempt to provoke failures,
     # especially link errors, already during "make" rather than during
@@ -4126,6 +4139,7 @@ func_emit_tests_Makefile_am ()
             sed -e 's,lib_LIBRARIES,lib%_LIBRARIES,g' \
                 -e 's,lib_LTLIBRARIES,lib%_LTLIBRARIES,g' \
                 -e "$sed_eliminate_LDFLAGS" \
+                -e "$sed_eliminate_NMD" \
                 -e 's,lib_\([A-Z][A-Z]*\),libtests_a_\1,g' \
                 -e 's,\$(GNULIB_,$('"${module_indicator_prefix}"'_GNULIB_,' \
                 -e 's,lib%_LIBRARIES,lib_LIBRARIES,g' \

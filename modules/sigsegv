@@ -71,7 +71,7 @@ BUILT_SOURCES += $(SIGSEGV_H)
 if GL_GENERATE_SIGSEGV_H
 sigsegv.h: sigsegv.in.h $(top_builddir)/config.status
 	$(AM_V_GEN)rm -f $@-t $@ && \
-	$(MKDIR_P) '%reldir%' && \
+@NMD@	$(MKDIR_P) '%reldir%' && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  cat $(srcdir)/sigsegv.in.h; \
 	} > $@-t && \

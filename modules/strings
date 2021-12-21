@@ -24,7 +24,7 @@ BUILT_SOURCES += strings.h
 # doesn't have one that works with the given compiler.
 strings.h: strings.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(WARN_ON_USE_H) $(ARG_NONNULL_H)
 	$(AM_V_GEN)rm -f $@-t $@ && \
-	$(MKDIR_P) '%reldir%' && \
+@NMD@	$(MKDIR_P) '%reldir%' && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
 	  sed -e 's|@''GUARD_PREFIX''@|${gl_include_guard_prefix}|g' \
 	      -e 's|@''HAVE_STRINGS_H''@|$(HAVE_STRINGS_H)|g' \
