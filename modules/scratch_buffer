@@ -26,8 +26,8 @@ Makefile.am:
 BUILT_SOURCES += malloc/scratch_buffer.gl.h
 
 malloc/scratch_buffer.gl.h: malloc/scratch_buffer.h
-	$(AM_V_at)$(MKDIR_P) '%reldir%/malloc'
-	$(AM_V_GEN)rm -f $@-t $@ && \
+	$(AM_V_GEN)$(MKDIR_P) '%reldir%/malloc'
+	$(AM_V_at)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  sed -e 's|__always_inline|inline _GL_ATTRIBUTE_ALWAYS_INLINE|g' \
 	      -e 's|__glibc_likely|_GL_LIKELY|g' \

@@ -1522,7 +1522,7 @@ alpha beta stable: $(local-check) writable-files $(submodule-checks)
 
 release:
 	$(AM_V_GEN)$(MAKE) _version
-	$(AM_V_GEN)$(MAKE) $(release-type)
+	$(AM_V_at)$(MAKE) $(release-type)
 
 # Override this in cfg.mk if you follow different procedures.
 release-prep-hook ?= release-prep

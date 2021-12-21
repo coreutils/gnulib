@@ -21,8 +21,8 @@ BUILT_SOURCES += sys/utsname.h
 # We need the following in order to create <sys/utsname.h> when the system
 # does not have one.
 sys/utsname.h: sys_utsname.in.h $(top_builddir)/config.status $(WARN_ON_USE_H) $(ARG_NONNULL_H)
-	$(AM_V_at)$(MKDIR_P) '%reldir%/sys'
-	$(AM_V_GEN)rm -f $@-t $@ && \
+	$(AM_V_GEN)$(MKDIR_P) '%reldir%/sys'
+	$(AM_V_at)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  sed -e 's|@''GUARD_PREFIX''@|${gl_include_guard_prefix}|g' \
 	      -e 's/@''HAVE_SYS_UTSNAME_H''@/$(HAVE_SYS_UTSNAME_H)/g' \
