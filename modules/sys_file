@@ -21,8 +21,7 @@ BUILT_SOURCES += sys/file.h
 # has one that is incomplete.
 sys/file.h: sys_file.in.h $(top_builddir)/config.status $(WARN_ON_USE_H)
 	$(AM_V_GEN)$(MKDIR_P) '%reldir%/sys'
-	$(AM_V_at)rm -f $@-t $@ && \
-	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+	$(AM_V_at){ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  sed -e 's|@''GUARD_PREFIX''@|${gl_include_guard_prefix}|g' \
 	      -e 's/@''HAVE_SYS_FILE_H''@/$(HAVE_SYS_FILE_H)/g' \
 	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \

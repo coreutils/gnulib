@@ -19,13 +19,13 @@ BUILT_SOURCES += $(IEEE754_H)
 # doesn't have one that works with the given compiler.
 if GL_GENERATE_IEEE754_H
 ieee754.h: ieee754.in.h $(top_builddir)/config.status
-	$(AM_V_GEN)rm -f $@-t && \
-@NMD@	$(MKDIR_P) '%reldir%' && \
-	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+	$(AM_V_GEN)
+@NMD@	$(AM_V_at)$(MKDIR_P) '%reldir%'
+	$(AM_V_at){ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  sed -e 's/ifndef _GL_GNULIB_HEADER/if 0/g' \
 	    $(srcdir)/ieee754.in.h; \
 	} > $@-t && \
-	mv -f $@-t $@
+	mv $@-t $@
 else
 ieee754.h: $(top_builddir)/config.status
 	rm -f $@

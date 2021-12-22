@@ -19,12 +19,12 @@ BUILT_SOURCES += $(BYTESWAP_H)
 # doesn't have one.
 if GL_GENERATE_BYTESWAP_H
 byteswap.h: byteswap.in.h $(top_builddir)/config.status
-	$(AM_V_GEN)rm -f $@-t $@ && \
-@NMD@	$(MKDIR_P) '%reldir%' && \
-	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+	$(AM_V_GEN)
+@NMD@	$(AM_V_at)$(MKDIR_P) '%reldir%'
+	$(AM_V_at){ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  cat $(srcdir)/byteswap.in.h; \
 	} > $@-t && \
-	mv -f $@-t $@
+	mv $@-t $@
 else
 byteswap.h: $(top_builddir)/config.status
 	rm -f $@

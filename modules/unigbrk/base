@@ -17,12 +17,12 @@ Makefile.am:
 BUILT_SOURCES += $(LIBUNISTRING_UNIGBRK_H)
 
 unigbrk.h: unigbrk.in.h
-	$(AM_V_GEN)rm -f $@-t $@ && \
-@NMD@	$(MKDIR_P) '%reldir%' && \
-	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+	$(AM_V_GEN)
+@NMD@	$(AM_V_at)$(MKDIR_P) '%reldir%'
+	$(AM_V_at){ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  cat $(srcdir)/unigbrk.in.h; \
 	} > $@-t && \
-	mv -f $@-t $@
+	mv $@-t $@
 MOSTLYCLEANFILES += unigbrk.h unigbrk.h-t
 
 Include:

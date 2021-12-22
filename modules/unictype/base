@@ -17,12 +17,12 @@ Makefile.am:
 BUILT_SOURCES += $(LIBUNISTRING_UNICTYPE_H)
 
 unictype.h: unictype.in.h
-	$(AM_V_GEN)rm -f $@-t $@ && \
-@NMD@	$(MKDIR_P) '%reldir%' && \
-	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+	$(AM_V_GEN)
+@NMD@	$(AM_V_at)$(MKDIR_P) '%reldir%'
+	$(AM_V_at){ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  cat $(srcdir)/unictype.in.h; \
 	} > $@-t && \
-	mv -f $@-t $@
+	mv $@-t $@
 MOSTLYCLEANFILES += unictype.h unictype.h-t
 
 Include:

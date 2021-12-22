@@ -28,9 +28,9 @@ BUILT_SOURCES += $(GLOB_H)
 # We need the following in order to create <glob.h>.
 if GL_GENERATE_GLOB_H
 glob.h: glob.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
-	$(AM_V_GEN)rm -f $@-t $@ && \
-@NMD@	$(MKDIR_P) '%reldir%' && \
-	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
+	$(AM_V_GEN)
+@NMD@	$(AM_V_at)$(MKDIR_P) '%reldir%'
+	$(AM_V_at){ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
 	  sed -e 's|@''GUARD_PREFIX''@|${gl_include_guard_prefix}|g' \
 	      -e 's|@''HAVE_GLOB_H''@|$(HAVE_GLOB_H)|g' \
 	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
@@ -57,8 +57,7 @@ MOSTLYCLEANFILES += glob.h glob.h-t
 BUILT_SOURCES += glob-libc.gl.h
 
 glob-libc.gl.h: glob-libc.h
-	$(AM_V_GEN)rm -f $@-t $@ && \
-	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+	$(AM_V_GEN){ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  sed -e '/__BEGIN_DECLS/{ s/__BEGIN_DECLS/#ifdef __cplusplus%extern "C" {%#endif/; y/%/\n/; }' \
 	      -e '/__END_DECLS/{ s/__END_DECLS/#ifdef __cplusplus%}%#endif/; y/%/\n/; }' \
 	      -e 's|__THROWNL||g' \

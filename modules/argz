@@ -29,12 +29,12 @@ BUILT_SOURCES += $(ARGZ_H)
 # doesn't have one that works with the given compiler.
 if GL_GENERATE_ARGZ_H
 argz.h: argz.in.h $(top_builddir)/config.status
-	$(AM_V_GEN)rm -f $@-t $@ && \
-@NMD@	$(MKDIR_P) '%reldir%' && \
-	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+	$(AM_V_GEN)
+@NMD@	$(AM_V_at)$(MKDIR_P) '%reldir%'
+	$(AM_V_at){ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  cat $(srcdir)/argz.in.h; \
 	} > $@-t && \
-	mv -f $@-t $@
+	mv $@-t $@
 else
 argz.h: $(top_builddir)/config.status
 	rm -f $@

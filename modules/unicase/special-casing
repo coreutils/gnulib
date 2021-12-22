@@ -26,12 +26,11 @@ EXTRA_DIST           += unicase/special-casing-table.h
 # Generate special-casing.h with a declaration that depends on the gperf version.
 unicase/special-casing.h: unicase/special-casing.in.h unicase/special-casing-table.h
 	$(AM_V_GEN)$(MKDIR_P) '%reldir%/unicase'
-	$(AM_V_at)rm -f $@-t $@ && \
-	declaration=`grep '^gl_unicase_special_lookup' $(srcdir)/unicase/special-casing-table.h | sed -e 's/register //g'` && \
+	$(AM_V_at)declaration=`grep '^gl_unicase_special_lookup' $(srcdir)/unicase/special-casing-table.h | sed -e 's/register //g'` && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  sed -e "/gl_unicase_special_lookup/s/gl_unicase_special_lookup.*/$${declaration};/" $(srcdir)/unicase/special-casing.in.h; \
 	} > $@-t && \
-	mv -f $@-t $@
+	mv $@-t $@
 BUILT_SOURCES        += unicase/special-casing.h
 MOSTLYCLEANFILES     += unicase/special-casing.h unicase/special-casing.h-t
 

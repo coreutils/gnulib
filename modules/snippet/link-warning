@@ -25,9 +25,9 @@ Makefile.am:
 
 BUILT_SOURCES += link-warning.h
 link-warning.h: $(top_srcdir)/build-aux/snippet/link-warning.h
-	$(AM_V_GEN)rm -f $@-t $@ && \
-@NMD@	$(MKDIR_P) '%reldir%' && \
-	sed -n -e '/HAVE_FEATURES_H/,$$p' \
+	$(AM_V_GEN)
+@NMD@	$(AM_V_at)$(MKDIR_P) '%reldir%'
+	$(AM_V_at)sed -n -e '/HAVE_FEATURES_H/,$$p' \
 	  < $(top_srcdir)/build-aux/snippet/link-warning.h \
 	| sed -e 's|@''HAVE_FEATURES_H''@|$(HAVE_FEATURES_H)|g' \
 	  > $@-t && \

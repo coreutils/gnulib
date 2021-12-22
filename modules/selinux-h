@@ -35,8 +35,7 @@ lib_SOURCES += se-context.in.h se-label.in.h se-selinux.in.h \
 BUILT_SOURCES += selinux/selinux.h
 selinux/selinux.h: se-selinux.in.h $(top_builddir)/config.status
 	$(AM_V_GEN)$(MKDIR_P) '%reldir%/selinux'
-	$(AM_V_at)rm -f $@-t $@ && \
-	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
+	$(AM_V_at){ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
 	  sed -e 's|@''GUARD_PREFIX''@|${gl_include_guard_prefix}|g' \
 	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
 	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
@@ -51,8 +50,7 @@ BUILT_SOURCES += $(SELINUX_CONTEXT_H)
 if GL_GENERATE_SELINUX_CONTEXT_H
 selinux/context.h: se-context.in.h $(top_builddir)/config.status
 	$(AM_V_GEN)$(MKDIR_P) '%reldir%/selinux'
-	$(AM_V_at)rm -f $@-t $@ && \
-	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
+	$(AM_V_at){ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
 	  cat $(srcdir)/se-context.in.h; \
 	} > $@-t && \
 	mv $@-t $@
@@ -66,8 +64,7 @@ BUILT_SOURCES += $(SELINUX_LABEL_H)
 if GL_GENERATE_SELINUX_LABEL_H
 selinux/label.h: se-label.in.h $(top_builddir)/config.status
 	$(AM_V_GEN)$(MKDIR_P) '%reldir%/selinux'
-	$(AM_V_at)rm -f $@-t $@ && \
-	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
+	$(AM_V_at){ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
 	  cat $(srcdir)/se-label.in.h; \
 	} > $@-t && \
 	mv $@-t $@
