@@ -348,7 +348,8 @@ test_iterator (void)
 {
   Hamt *hamt = test_hamt_create ();
   ASSERT (insert_values (&hamt, 10, val_array1, true) == 10);
-  Hamt_iterator iter [1] = {hamt_iterator (hamt)};
+  Hamt_iterator iter[1];
+  iter[0] = hamt_iterator (hamt);
   size_t cnt = 0;
   bool found [10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
   Hamt_entry *p;
