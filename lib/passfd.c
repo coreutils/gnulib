@@ -52,7 +52,7 @@ sendfd (int sock, int fd)
   char byte = 0;
   struct iovec iov;
   struct msghdr msg;
-# ifdef CMSG_FIRSTHDR
+# if defined CMSG_FIRSTHDR && !defined __sgi
   struct cmsghdr *cmsg;
   char buf[CMSG_SPACE (sizeof fd)];
 # endif
@@ -66,7 +66,7 @@ sendfd (int sock, int fd)
   msg.msg_name = NULL;
   msg.msg_namelen = 0;
 
-# ifdef CMSG_FIRSTHDR
+# if defined CMSG_FIRSTHDR && !defined __sgi
   msg.msg_control = buf;
   msg.msg_controllen = sizeof buf;
   cmsg = CMSG_FIRSTHDR (&msg);
@@ -112,7 +112,7 @@ recvfd (int sock, int flags)
   struct msghdr msg;
   int fd = -1;
   ssize_t len;
-# ifdef CMSG_FIRSTHDR
+# if defined CMSG_FIRSTHDR && !defined __sgi
   struct cmsghdr *cmsg;
   char buf[CMSG_SPACE (sizeof fd)];
   int flags_recvmsg = flags & O_CLOEXEC ? MSG_CMSG_CLOEXEC : 0;
@@ -133,7 +133,7 @@ recvfd (int sock, int flags)
   msg.msg_name = NULL;
   msg.msg_namelen = 0;
 
-# ifdef CMSG_FIRSTHDR
+# if defined CMSG_FIRSTHDR && !defined __sgi
   msg.msg_control = buf;
   msg.msg_controllen = sizeof buf;
   cmsg = CMSG_FIRSTHDR (&msg);
@@ -193,6 +193,9 @@ recvfd (int sock, int flags)
           return -1;
         }
     }
+
+  if (fd < 0 && errno == 0)
+    errno = ENOTCONN;
 # else
   errno = ENOSYS;
 # endif
