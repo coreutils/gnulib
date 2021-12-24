@@ -828,29 +828,35 @@ _GL_CXXALIASWARN (putenv);
 /* Sort an array of NMEMB elements, starting at address BASE, each element
    occupying SIZE bytes, in ascending order according to the comparison
    function COMPARE.  */
+# ifdef __cplusplus
+extern "C" {
+# endif
+# if !GNULIB_defined_qsort_r_fn_types
+typedef int (*_gl_qsort_r_compar_fn) (void const *, void const *, void *);
+#  define GNULIB_defined_qsort_r_fn_types 1
+# endif
+# ifdef __cplusplus
+}
+# endif
 # if @REPLACE_QSORT_R@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   undef qsort_r
 #   define qsort_r rpl_qsort_r
 #  endif
 _GL_FUNCDECL_RPL (qsort_r, void, (void *base, size_t nmemb, size_t size,
-                                  int (*compare) (void const *, void const *,
-                                                  void *),
+                                  _gl_qsort_r_compar_fn compare,
                                   void *arg) _GL_ARG_NONNULL ((1, 4)));
 _GL_CXXALIAS_RPL (qsort_r, void, (void *base, size_t nmemb, size_t size,
-                                  int (*compare) (void const *, void const *,
-                                                  void *),
+                                  _gl_qsort_r_compar_fn compare,
                                   void *arg));
 # else
 #  if !@HAVE_QSORT_R@
 _GL_FUNCDECL_SYS (qsort_r, void, (void *base, size_t nmemb, size_t size,
-                                  int (*compare) (void const *, void const *,
-                                                  void *),
+                                  _gl_qsort_r_compar_fn compare,
                                   void *arg) _GL_ARG_NONNULL ((1, 4)));
 #  endif
 _GL_CXXALIAS_SYS (qsort_r, void, (void *base, size_t nmemb, size_t size,
-                                  int (*compare) (void const *, void const *,
-                                                  void *),
+                                  _gl_qsort_r_compar_fn compare,
                                   void *arg));
 # endif
 _GL_CXXALIASWARN (qsort_r);

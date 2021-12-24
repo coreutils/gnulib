@@ -114,7 +114,7 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::ptsname_r, int, (int, char *, size_t));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::putenv, int, (char *));
 #endif
 
-#if GNULIB_TEST_QSORT_R
+#if GNULIB_TEST_QSORT_R && !defined __SUNPRO_CC
 SIGNATURE_CHECK (GNULIB_NAMESPACE::qsort_r, void,
                  (void *, size_t, size_t,
                   int (*) (void const *, void const *, void *), void *));
