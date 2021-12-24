@@ -38,6 +38,17 @@
 /* The definition of _GL_WARN_ON_USE is copied here.  */
 
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+#if !GNULIB_defined_lsearch_fn_types
+typedef int (*_gl_lsearch_compar_fn) (const void *, const void *);
+# define GNULIB_defined_lsearch_fn_types 1
+#endif
+#ifdef __cplusplus
+}
+#endif
+
 #if @GNULIB_MDA_LFIND@
 /* On native Windows, map 'lfind' to '_lfind', so that -loldnames is not
    required.  In C++ with GNULIB_NAMESPACE, avoid differences between
@@ -50,12 +61,12 @@
 _GL_CXXALIAS_MDA (lfind, void *,
                   (const void *key, const void *base, unsigned int *nmemb,
                    unsigned int size,
-                   int (*compar) (const void *, const void *)));
+                   _gl_lsearch_compar_fn compar));
 # else
 _GL_CXXALIAS_SYS (lfind, void *,
                   (const void *key, const void *base, size_t *nmemb,
                    size_t size,
-                   int (*compar) (const void *, const void *)));
+                   _gl_lsearch_compar_fn compar));
 # endif
 _GL_CXXALIASWARN (lfind);
 #endif
@@ -72,12 +83,12 @@ _GL_CXXALIASWARN (lfind);
 _GL_CXXALIAS_MDA (lsearch, void *,
                   (const void *key, void *base, unsigned int *nmemb,
                    unsigned int size,
-                   int (*compar) (const void *, const void *)));
+                   _gl_lsearch_compar_fn compar));
 # else
 _GL_CXXALIAS_SYS (lsearch, void *,
                   (const void *key, void *base, size_t *nmemb,
                    size_t size,
-                   int (*compar) (const void *, const void *)));
+                   _gl_lsearch_compar_fn compar));
 # endif
 _GL_CXXALIASWARN (lsearch);
 #endif
