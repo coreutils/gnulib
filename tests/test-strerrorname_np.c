@@ -466,7 +466,7 @@ main (void)
   ASSERT (strcmp (strerrorname_np (EDIED), "EDIED") == 0);
   #endif
   /* IRIX */
-  #if defined EDIRCORRUPTED
+  #if defined EDIRCORRUPTED && EDIRCORRUPTED != EFSCORRUPTED
   ASSERT (strcmp (strerrorname_np (EDIRCORRUPTED), "EDIRCORRUPTED") == 0);
   #endif
   /* FreeBSD */

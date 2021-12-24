@@ -464,7 +464,7 @@ strerrorname_np (int errnum)
     case EDIED:           return "EDIED";
     #endif
     /* IRIX */
-    #if defined EDIRCORRUPTED
+    #if defined EDIRCORRUPTED && EDIRCORRUPTED != EFSCORRUPTED
     case EDIRCORRUPTED:   return "EDIRCORRUPTED";
     #endif
     /* FreeBSD */
