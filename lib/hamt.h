@@ -56,13 +56,16 @@ _GL_INLINE_HEADER_BEGIN
 /* The GL_HAMT_THREAD_SAFE flag is set if the implementation of hamts
    is thread-safe as long as two threads do not simultaneously access
    the same hamt.  This is non-trivial as different hamts may share
-   some structure.  */
+   some structure.
+   We can define it only when the compiler supports _Atomic.  For GCC,
+   it is supported starting with GCC 4.9.  */
 
-#if (__STDC_VERSION__ < 201112 || defined __STD_NO_ATOMICS__) \
-  && __GNUC__ + (__GNUC_MINOR >= 9) <= 4
-# define GL_HAMT_THREAD_SAFE 0
-#else
+#if (__GNUC__ + (__GNUC_MINOR >= 9) > 4) \
+    && __STDC_VERSION__ >= 201112L && !defined __STD_NO_ATOMICS__ \
+    && !defined __cplusplus
 # define GL_HAMT_THREAD_SAFE 1
+#else
+# define GL_HAMT_THREAD_SAFE 0
 #endif
 
 #include <stdbool.h>
