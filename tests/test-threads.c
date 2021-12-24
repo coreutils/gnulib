@@ -46,6 +46,7 @@ main (void)
     case thrd_busy:
     case thrd_nomem:
     case thrd_error:
+    default:
       ;
     }
 
@@ -56,6 +57,7 @@ main (void)
     case mtx_timed:
     case mtx_plain | mtx_recursive:
     case mtx_timed | mtx_recursive:
+    default:
       ;
     }
 
