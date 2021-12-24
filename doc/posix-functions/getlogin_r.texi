@@ -25,7 +25,7 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function has an incompatible declaration on some platforms:
-MidnightBSD 2.0, Solaris 11.4 (when @code{_POSIX_PTHREAD_SEMANTICS} is not defined).
+FreeBSD 12.0, MidnightBSD 2.0, Solaris 11.4 (when @code{_POSIX_PTHREAD_SEMANTICS} is not defined).
 @item
 This function fails even when standard input is a tty on some platforms:
 HP-UX 11.11.
