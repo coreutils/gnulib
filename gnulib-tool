@@ -2797,6 +2797,27 @@ func_verify_tests_module ()
   fi
 }
 
+# func_repeat_module_in_tests
+# tests whether, when the tests have their own configure.ac script, a given
+# module should be repeated in the tests, although it was already among the main
+# modules.
+# Input:
+# - module          module name argument
+func_repeat_module_in_tests ()
+{
+  case "$module" in
+    libtextstyle-optional)
+      # This module is special because it relies on a gl_LIBTEXTSTYLE_OPTIONAL
+      # invocation that it does not itself do or require. Therefore if the
+      # tests contain such an invocation, the module - as part of tests -
+      # will produce different AC_SUBSTed variable values than the same module
+      # - as part of the main configure.ac -.
+      echo true ;;
+    *)
+      echo false ;;
+  esac
+}
+
 # func_get_dependencies_recursively module
 # Input:
 # - local_gnulib_path  from --local-dir
@@ -4132,7 +4153,11 @@ func_emit_tests_Makefile_am ()
   {
     for module in $modules; do
       if $for_test && ! $single_configure; then
-        func_verify_tests_module
+        if `func_repeat_module_in_tests`; then
+          func_verify_module
+        else
+          func_verify_tests_module
+        fi
       else
         func_verify_module
       fi
@@ -6478,11 +6503,15 @@ func_create_testdir ()
   if $single_configure; then
     func_modules_to_filelist_separately
   else
-    func_modules_to_filelist
-    if test $verbose -ge 0; then
-      echo "File list:"
-      echo "$files" | sed -e 's/^/  /'
-    fi
+    main_modules="$modules"
+    testsrelated_modules=`for module in $modules; do
+                            if \`func_repeat_module_in_tests\`; then
+                              echo $module
+                            fi
+                          done`
+    saved_modules="$modules"
+    func_modules_to_filelist_separately
+    modules="$saved_modules"
   fi
   # Add files for which the copy in gnulib is newer than the one that
   # "automake --add-missing --copy" would provide.
