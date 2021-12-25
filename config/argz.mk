@@ -46,7 +46,8 @@ argz.c: $(argz_files)
 	   perl -pe 's/__(argz_|st|mem)/$$1/g' $$i			\
 	     | perl -0x0 -pe 's,/\*(.|\n)+?\*/\n,,'			\
 	     | grep -vE '^(#include|INTDEF|weak_alias|libc_hidden_def)'; \
-	 done) > $@-t && mv $@-t $@
+	 done) > $@-t
+	mv $@-t $@
 
 argz.in.h: $(glibc_dir)/string/argz.h
 	perl -pe 's/__(restrict|const|st|mem)/$$1/g;'			\
@@ -57,7 +58,8 @@ argz.in.h: $(glibc_dir)/string/argz.h
 	    '/^(#include <features\.h>|__(?:BEGIN|END)_DECLS)/ or print' \
 	  | perl -0x3b -pe 's/extern \S+ \*?__argz_(.|\n)*?\)\n*;//'	\
 	  | perl -pe 's/__(argz_next)/$$1/g;'				\
-	  > $@-t && mv $@-t $@
+	  > $@-t
+	mv $@-t $@
 
 clean:
 	rm -f $(targets)

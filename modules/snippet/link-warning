@@ -30,8 +30,8 @@ link-warning.h: $(top_srcdir)/build-aux/snippet/link-warning.h
 	$(AM_V_at)sed -n -e '/HAVE_FEATURES_H/,$$p' \
 	  < $(top_srcdir)/build-aux/snippet/link-warning.h \
 	| sed -e 's|@''HAVE_FEATURES_H''@|$(HAVE_FEATURES_H)|g' \
-	  > $@-t && \
-	mv $@-t $@
+	  > $@-t
+	$(AM_V_at)mv $@-t $@
 MOSTLYCLEANFILES += link-warning.h link-warning.h-t
 
 LINK_WARNING_H=link-warning.h

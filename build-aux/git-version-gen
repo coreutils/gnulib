@@ -1,6 +1,6 @@
 #!/bin/sh
 # Print a version string.
-scriptversion=2019-10-13.15; # UTC
+scriptversion=2021-12-22.22; # UTC
 
 # Copyright (C) 2007-2021 Free Software Foundation, Inc.
 #
@@ -65,9 +65,10 @@ scriptversion=2019-10-13.15; # UTC
 # EXTRA_DIST = $(top_srcdir)/.version
 # BUILT_SOURCES = $(top_srcdir)/.version
 # $(top_srcdir)/.version:
-#	echo $(VERSION) > $@-t && mv $@-t $@
+#	echo '$(VERSION)' > $@-t
+#	mv $@-t $@
 # dist-hook:
-#	echo $(VERSION) > $(distdir)/.tarball-version
+#	echo '$(VERSION)' > $(distdir)/.tarball-version
 
 
 me=$0

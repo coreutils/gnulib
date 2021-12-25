@@ -42,16 +42,14 @@ check_PROGRAMS += \
 
 BUILT_SOURCES += test-posix_spawn-dup2-stdout.sh
 test-posix_spawn-dup2-stdout.sh: test-posix_spawn-dup2-stdout.in.sh
-	$(AM_V_GEN)
-	cp $(srcdir)/test-posix_spawn-dup2-stdout.in.sh $@-t && \
-	mv $@-t $@
+	$(AM_V_GEN)cp $(srcdir)/test-posix_spawn-dup2-stdout.in.sh $@-t
+	$(AM_V_at)mv $@-t $@
 MOSTLYCLEANFILES += test-posix_spawn-dup2-stdout.sh test-posix_spawn-dup2-stdout.sh-t
 
 BUILT_SOURCES += test-posix_spawn-dup2-stdin.sh
 test-posix_spawn-dup2-stdin.sh: test-posix_spawn-dup2-stdin.in.sh
-	$(AM_V_GEN)
-	cp $(srcdir)/test-posix_spawn-dup2-stdin.in.sh $@-t && \
-	mv $@-t $@
+	$(AM_V_GEN)cp $(srcdir)/test-posix_spawn-dup2-stdin.in.sh $@-t
+	$(AM_V_at)mv $@-t $@
 MOSTLYCLEANFILES += test-posix_spawn-dup2-stdin.sh test-posix_spawn-dup2-stdin.sh-t
 
 test_posix_spawnp_script_CPPFLAGS = $(AM_CPPFLAGS) -DSRCDIR=\"$(srcdir)/\"

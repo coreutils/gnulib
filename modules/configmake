@@ -50,8 +50,8 @@ configmake.h: Makefile
 	  echo '#define PKGINCLUDEDIR "$(pkgincludedir)"'; \
 	  echo '#define PKGLIBDIR "$(pkglibdir)"'; \
 	  echo '#define PKGLIBEXECDIR "$(pkglibexecdir)"'; \
-	} | sed '/""/d' > $@-t && \
-	mv $@-t $@
+	} | sed '/""/d' > $@-t
+	$(AM_V_at)mv $@-t $@
 
 BUILT_SOURCES += configmake.h
 CLEANFILES += configmake.h configmake.h-t
