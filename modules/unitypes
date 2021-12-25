@@ -33,9 +33,8 @@ Makefile.am:
 BUILT_SOURCES += $(LIBUNISTRING_UNITYPES_H)
 
 unitypes.h: unitypes.in.h
-	$(AM_V_GEN)
-@NMD@	$(AM_V_at)$(MKDIR_P) '%reldir%'
-	$(AM_V_at)$(SED_HEADER_TO_AT_t) $(srcdir)/unitypes.in.h
+@NMD@	$(AM_V_GEN)$(MKDIR_P) '%reldir%'
+	$(gl_V_at)$(SED_HEADER_TO_AT_t) $(srcdir)/unitypes.in.h
 	$(AM_V_at)mv $@-t $@
 MOSTLYCLEANFILES += unitypes.h unitypes.h-t
 

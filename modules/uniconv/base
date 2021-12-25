@@ -20,9 +20,8 @@ Makefile.am:
 BUILT_SOURCES += $(LIBUNISTRING_UNICONV_H)
 
 uniconv.h: uniconv.in.h
-	$(AM_V_GEN)
-@NMD@	$(AM_V_at)$(MKDIR_P) '%reldir%'
-	$(AM_V_at)$(SED_HEADER_TO_AT_t) $(srcdir)/uniconv.in.h
+@NMD@	$(AM_V_GEN)$(MKDIR_P) '%reldir%'
+	$(gl_V_at)$(SED_HEADER_TO_AT_t) $(srcdir)/uniconv.in.h
 	$(AM_V_at)mv $@-t $@
 MOSTLYCLEANFILES += uniconv.h uniconv.h-t
 

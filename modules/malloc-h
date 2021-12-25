@@ -21,9 +21,8 @@ BUILT_SOURCES += malloc.h
 
 # We need the following in order to create <malloc.h> when we add workarounds.
 malloc.h: malloc.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(WARN_ON_USE_H)
-	$(AM_V_GEN)
-@NMD@	$(AM_V_at)$(MKDIR_P) '%reldir%'
-	$(AM_V_at)$(SED_HEADER_STDOUT) \
+@NMD@	$(AM_V_GEN)$(MKDIR_P) '%reldir%'
+	$(gl_V_at)$(SED_HEADER_STDOUT) \
 	      -e 's|@''GUARD_PREFIX''@|${gl_include_guard_prefix}|g' \
 	      -e 's|@''HAVE_MALLOC_H''@|$(HAVE_MALLOC_H)|g' \
 	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \

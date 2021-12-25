@@ -19,9 +19,8 @@ Makefile.am:
 BUILT_SOURCES += $(LIBUNISTRING_UNICASE_H)
 
 unicase.h: unicase.in.h
-	$(AM_V_GEN)
-@NMD@	$(AM_V_at)$(MKDIR_P) '%reldir%'
-	$(AM_V_at)$(SED_HEADER_TO_AT_t) $(srcdir)/unicase.in.h
+@NMD@	$(AM_V_GEN)$(MKDIR_P) '%reldir%'
+	$(gl_V_at)$(SED_HEADER_TO_AT_t) $(srcdir)/unicase.in.h
 	$(AM_V_at)mv $@-t $@
 MOSTLYCLEANFILES += unicase.h unicase.h-t
 

@@ -5,6 +5,7 @@ Files:
 m4/posix-shell.m4
 
 Depends-on:
+gen-header
 
 configure.ac:
 gl_POSIX_SHELL
@@ -13,9 +14,8 @@ AC_PROG_MKDIR_P
 Makefile.am:
 ##Sample usage of posix-shell module:
 #script: script.in
-#	$(AM_V_GEN)
-#@NMD@	$(AM_V_at)$(MKDIR_P) '%reldir%'
-#	$(AM_V_at)sed \
+#@NMD@	$(AM_V_GEN)$(MKDIR_P) '%reldir%'
+#	$(gl_V_at)sed \
 #	    -e 's#@''PREFERABLY_POSIX_SHELL''@#$(PREFERABLY_POSIX_SHELL)#g' \
 #	    -e 's#@''POSIX_SHELL''@#$(POSIX_SHELL)#g' \
 #	    -e $(srcdir)/$@.in > $@-t

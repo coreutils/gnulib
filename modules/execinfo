@@ -25,9 +25,8 @@ BUILT_SOURCES += $(EXECINFO_H)
 # doesn't have one that works.
 if GL_GENERATE_EXECINFO_H
 execinfo.h: execinfo.in.h $(top_builddir)/config.status
-	$(AM_V_GEN)
-@NMD@	$(AM_V_at)$(MKDIR_P) '%reldir%'
-	$(AM_V_at)$(SED_HEADER_TO_AT_t) $(srcdir)/execinfo.in.h
+@NMD@	$(AM_V_GEN)$(MKDIR_P) '%reldir%'
+	$(gl_V_at)$(SED_HEADER_TO_AT_t) $(srcdir)/execinfo.in.h
 	$(AM_V_at)mv $@-t $@
 else
 execinfo.h: $(top_builddir)/config.status
