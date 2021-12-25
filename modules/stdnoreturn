@@ -6,6 +6,7 @@ lib/stdnoreturn.in.h
 m4/stdnoreturn.m4
 
 Depends-on:
+gen-header
 snippet/_Noreturn
 
 configure.ac:
@@ -22,11 +23,10 @@ if GL_GENERATE_STDNORETURN_H
 stdnoreturn.h: stdnoreturn.in.h $(top_builddir)/config.status $(_NORETURN_H)
 	$(AM_V_GEN)
 @NMD@	$(AM_V_at)$(MKDIR_P) '%reldir%'
-	$(AM_V_at){ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
-	  sed -e '/definition of _Noreturn/r $(_NORETURN_H)' \
-              < $(srcdir)/stdnoreturn.in.h; \
-	} > $@-t && \
-	mv $@-t $@
+	$(AM_V_at)$(SED_HEADER_STDOUT) \
+	  -e '/definition of _Noreturn/r $(_NORETURN_H)' \
+	  $(srcdir)/stdnoreturn.in.h > $@-t
+	$(AM_V_at)mv $@-t $@
 else
 stdnoreturn.h: $(top_builddir)/config.status
 	rm -f $@

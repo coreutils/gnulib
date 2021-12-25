@@ -6,6 +6,7 @@ lib/uninorm.in.h
 m4/libunistring-base.m4
 
 Depends-on:
+gen-header
 unitypes
 
 configure.ac:
@@ -18,10 +19,8 @@ BUILT_SOURCES += $(LIBUNISTRING_UNINORM_H)
 uninorm.h: uninorm.in.h
 	$(AM_V_GEN)
 @NMD@	$(AM_V_at)$(MKDIR_P) '%reldir%'
-	$(AM_V_at){ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
-	  cat $(srcdir)/uninorm.in.h; \
-	} > $@-t && \
-	mv $@-t $@
+	$(AM_V_at)$(SED_HEADER_TO_AT_t) $(srcdir)/uninorm.in.h
+	$(AM_V_at)mv $@-t $@
 MOSTLYCLEANFILES += uninorm.h uninorm.h-t
 
 Include:

@@ -6,6 +6,7 @@ lib/search.in.h
 m4/search_h.m4
 
 Depends-on:
+gen-header
 include_next
 snippet/arg-nonnull
 snippet/c++defs
@@ -24,8 +25,8 @@ BUILT_SOURCES += search.h
 search.h: search.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
 	$(AM_V_GEN)
 @NMD@	$(AM_V_at)$(MKDIR_P) '%reldir%'
-	$(AM_V_at){ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
-	  sed -e 's|@''GUARD_PREFIX''@|${gl_include_guard_prefix}|g' \
+	$(AM_V_at)$(SED_HEADER_STDOUT) \
+	      -e 's|@''GUARD_PREFIX''@|${gl_include_guard_prefix}|g' \
 	      -e 's|@''HAVE_SEARCH_H''@|$(HAVE_SEARCH_H)|g' \
 	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
 	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
@@ -41,9 +42,8 @@ search.h: search.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H
 	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
 	      -e '/definition of _GL_ARG_NONNULL/r $(ARG_NONNULL_H)' \
 	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
-	      < $(srcdir)/search.in.h; \
-	} > $@-t && \
-	mv $@-t $@
+	      $(srcdir)/search.in.h > $@-t
+	$(AM_V_at)mv $@-t $@
 MOSTLYCLEANFILES += search.h search.h-t
 
 Include:

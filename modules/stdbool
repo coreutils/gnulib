@@ -7,6 +7,7 @@ lib/stdbool.in.h
 m4/stdbool.m4
 
 Depends-on:
+gen-header
 
 configure.ac:
 gl_STDBOOL_H
@@ -22,10 +23,10 @@ if GL_GENERATE_STDBOOL_H
 stdbool.h: stdbool.in.h $(top_builddir)/config.status
 	$(AM_V_GEN)
 @NMD@	$(AM_V_at)$(MKDIR_P) '%reldir%'
-	$(AM_V_at){ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
-	  sed -e 's/@''HAVE__BOOL''@/$(HAVE__BOOL)/g' < $(srcdir)/stdbool.in.h; \
-	} > $@-t && \
-	mv $@-t $@
+	$(AM_V_at)$(SED_HEADER_STDOUT) \
+	  -e 's/@''HAVE__BOOL''@/$(HAVE__BOOL)/g' \
+	  $(srcdir)/stdbool.in.h > $@-t
+	$(AM_V_at)mv $@-t $@
 else
 stdbool.h: $(top_builddir)/config.status
 	rm -f $@

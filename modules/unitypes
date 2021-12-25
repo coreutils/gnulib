@@ -6,6 +6,7 @@ lib/unitypes.in.h
 m4/libunistring-base.m4
 
 Depends-on:
+gen-header
 stdint
 
 configure.ac:
@@ -34,10 +35,8 @@ BUILT_SOURCES += $(LIBUNISTRING_UNITYPES_H)
 unitypes.h: unitypes.in.h
 	$(AM_V_GEN)
 @NMD@	$(AM_V_at)$(MKDIR_P) '%reldir%'
-	$(AM_V_at){ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
-	  cat $(srcdir)/unitypes.in.h; \
-	} > $@-t && \
-	mv $@-t $@
+	$(AM_V_at)$(SED_HEADER_TO_AT_t) $(srcdir)/unitypes.in.h
+	$(AM_V_at)mv $@-t $@
 MOSTLYCLEANFILES += unitypes.h unitypes.h-t
 
 Include:

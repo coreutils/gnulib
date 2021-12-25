@@ -16,6 +16,7 @@ m4/selinux-selinux-h.m4
 Depends-on:
 errno
 extern-inline
+gen-header
 
 configure.ac:
 gl_HEADERS_SELINUX_SELINUX_H
@@ -35,25 +36,22 @@ lib_SOURCES += se-context.in.h se-label.in.h se-selinux.in.h \
 BUILT_SOURCES += selinux/selinux.h
 selinux/selinux.h: se-selinux.in.h $(top_builddir)/config.status
 	$(AM_V_GEN)$(MKDIR_P) '%reldir%/selinux'
-	$(AM_V_at){ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
-	  sed -e 's|@''GUARD_PREFIX''@|${gl_include_guard_prefix}|g' \
+	$(AM_V_at)$(SED_HEADER_STDOUT) \
+	      -e 's|@''GUARD_PREFIX''@|${gl_include_guard_prefix}|g' \
 	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
 	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
 	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
 	      -e 's|@''NEXT_SELINUX_SELINUX_H''@|$(NEXT_SELINUX_SELINUX_H)|g' \
-	      < $(srcdir)/se-selinux.in.h; \
-	} > $@-t && \
-	mv $@-t $@
+	      $(srcdir)/se-selinux.in.h > $@-t
+	$(AM_V_at)mv $@-t $@
 MOSTLYCLEANFILES += selinux/selinux.h selinux/selinux.h-t
 
 BUILT_SOURCES += $(SELINUX_CONTEXT_H)
 if GL_GENERATE_SELINUX_CONTEXT_H
 selinux/context.h: se-context.in.h $(top_builddir)/config.status
 	$(AM_V_GEN)$(MKDIR_P) '%reldir%/selinux'
-	$(AM_V_at){ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
-	  cat $(srcdir)/se-context.in.h; \
-	} > $@-t && \
-	mv $@-t $@
+	$(AM_V_at)$(SED_HEADER_TO_AT_t) $(srcdir)/se-context.in.h
+	$(AM_V_at)mv $@-t $@
 else
 selinux/context.h: $(top_builddir)/config.status
 	rm -f $@
@@ -64,10 +62,8 @@ BUILT_SOURCES += $(SELINUX_LABEL_H)
 if GL_GENERATE_SELINUX_LABEL_H
 selinux/label.h: se-label.in.h $(top_builddir)/config.status
 	$(AM_V_GEN)$(MKDIR_P) '%reldir%/selinux'
-	$(AM_V_at){ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
-	  cat $(srcdir)/se-label.in.h; \
-	} > $@-t && \
-	mv $@-t $@
+	$(AM_V_at)$(SED_HEADER_TO_AT_t) $(srcdir)/se-label.in.h
+	$(AM_V_at)mv $@-t $@
 else
 selinux/label.h: $(top_builddir)/config.status
 	rm -f $@

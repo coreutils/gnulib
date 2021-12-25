@@ -8,6 +8,7 @@ m4/glob_h.m4
 
 Depends-on:
 extensions
+gen-header
 include_next
 snippet/arg-nonnull
 snippet/c++defs
@@ -30,8 +31,8 @@ if GL_GENERATE_GLOB_H
 glob.h: glob.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
 	$(AM_V_GEN)
 @NMD@	$(AM_V_at)$(MKDIR_P) '%reldir%'
-	$(AM_V_at){ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
-	  sed -e 's|@''GUARD_PREFIX''@|${gl_include_guard_prefix}|g' \
+	$(AM_V_at)$(SED_HEADER_STDOUT) \
+	      -e 's|@''GUARD_PREFIX''@|${gl_include_guard_prefix}|g' \
 	      -e 's|@''HAVE_GLOB_H''@|$(HAVE_GLOB_H)|g' \
 	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
 	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
@@ -45,9 +46,8 @@ glob.h: glob.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
 	      -e '/definition of _GL_ARG_NONNULL/r $(ARG_NONNULL_H)' \
 	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
-	      < $(srcdir)/glob.in.h; \
-	} > $@-t && \
-	mv $@-t $@
+	      $(srcdir)/glob.in.h > $@-t
+	$(AM_V_at)mv $@-t $@
 else
 glob.h: $(top_builddir)/config.status
 	rm -f $@
@@ -57,8 +57,8 @@ MOSTLYCLEANFILES += glob.h glob.h-t
 BUILT_SOURCES += glob-libc.gl.h
 
 glob-libc.gl.h: glob-libc.h
-	$(AM_V_GEN){ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
-	  sed -e '/__BEGIN_DECLS/{ s/__BEGIN_DECLS/#ifdef __cplusplus%extern "C" {%#endif/; y/%/\n/; }' \
+	$(AM_V_GEN)$(SED_HEADER_STDOUT) \
+	      -e '/__BEGIN_DECLS/{ s/__BEGIN_DECLS/#ifdef __cplusplus%extern "C" {%#endif/; y/%/\n/; }' \
 	      -e '/__END_DECLS/{ s/__END_DECLS/#ifdef __cplusplus%}%#endif/; y/%/\n/; }' \
 	      -e 's|__THROWNL||g' \
 	      -e 's|__THROW||g' \
@@ -66,9 +66,8 @@ glob-libc.gl.h: glob-libc.h
 	      -e 's|defined __USE_MISC|1|' \
 	      -e 's|ifdef __USE_GNU|if 1|' \
 	      -e 's|ifdef __USE_LARGEFILE64|if 0|' \
-	      < $(srcdir)/glob-libc.h; \
-	} > $@-t && \
-	mv $@-t $@
+	      $(srcdir)/glob-libc.h > $@-t
+	$(AM_V_at)mv $@-t $@
 MOSTLYCLEANFILES += glob-libc.gl.h glob-libc.gl.h-t
 
 

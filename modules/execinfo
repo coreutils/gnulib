@@ -8,6 +8,7 @@ m4/execinfo.m4
 
 Depends-on:
 extern-inline
+gen-header
 
 configure.ac:
 gl_EXECINFO_H
@@ -26,10 +27,8 @@ if GL_GENERATE_EXECINFO_H
 execinfo.h: execinfo.in.h $(top_builddir)/config.status
 	$(AM_V_GEN)
 @NMD@	$(AM_V_at)$(MKDIR_P) '%reldir%'
-	$(AM_V_at){ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
-	  cat $(srcdir)/execinfo.in.h; \
-	} > $@-t && \
-	mv $@-t $@
+	$(AM_V_at)$(SED_HEADER_TO_AT_t) $(srcdir)/execinfo.in.h
+	$(AM_V_at)mv $@-t $@
 else
 execinfo.h: $(top_builddir)/config.status
 	rm -f $@

@@ -6,6 +6,7 @@ lib/sys_resource.in.h
 m4/sys_resource_h.m4
 
 Depends-on:
+gen-header
 include_next
 snippet/arg-nonnull
 snippet/c++defs
@@ -24,8 +25,8 @@ BUILT_SOURCES += sys/resource.h
 # doesn't have one.
 sys/resource.h: sys_resource.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
 	$(AM_V_GEN)$(MKDIR_P) '%reldir%/sys'
-	$(AM_V_at){ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
-	  sed -e 's|@''GUARD_PREFIX''@|${gl_include_guard_prefix}|g' \
+	$(AM_V_at)$(SED_HEADER_STDOUT) \
+	      -e 's|@''GUARD_PREFIX''@|${gl_include_guard_prefix}|g' \
 	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
 	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
 	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
@@ -36,9 +37,8 @@ sys/resource.h: sys_resource.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(A
 	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
 	      -e '/definition of _GL_ARG_NONNULL/r $(ARG_NONNULL_H)' \
 	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
-	      < $(srcdir)/sys_resource.in.h; \
-	} > $@-t && \
-	mv $@-t $@
+	      $(srcdir)/sys_resource.in.h > $@-t
+	$(AM_V_at)mv $@-t $@
 MOSTLYCLEANFILES += sys/resource.h sys/resource.h-t
 MOSTLYCLEANDIRS += sys
 

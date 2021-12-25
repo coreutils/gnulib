@@ -6,6 +6,7 @@ lib/unilbrk.in.h
 m4/libunistring-base.m4
 
 Depends-on:
+gen-header
 unitypes
 localcharset
 
@@ -19,10 +20,8 @@ BUILT_SOURCES += $(LIBUNISTRING_UNILBRK_H)
 unilbrk.h: unilbrk.in.h
 	$(AM_V_GEN)
 @NMD@	$(AM_V_at)$(MKDIR_P) '%reldir%'
-	$(AM_V_at){ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
-	  cat $(srcdir)/unilbrk.in.h; \
-	} > $@-t && \
-	mv $@-t $@
+	$(AM_V_at)$(SED_HEADER_TO_AT_t) $(srcdir)/unilbrk.in.h
+	$(AM_V_at)mv $@-t $@
 MOSTLYCLEANFILES += unilbrk.h unilbrk.h-t
 
 Include:

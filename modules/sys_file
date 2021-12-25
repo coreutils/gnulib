@@ -6,6 +6,7 @@ lib/sys_file.in.h
 m4/sys_file_h.m4
 
 Depends-on:
+gen-header
 include_next
 snippet/warn-on-use
 
@@ -21,8 +22,8 @@ BUILT_SOURCES += sys/file.h
 # has one that is incomplete.
 sys/file.h: sys_file.in.h $(top_builddir)/config.status $(WARN_ON_USE_H)
 	$(AM_V_GEN)$(MKDIR_P) '%reldir%/sys'
-	$(AM_V_at){ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
-	  sed -e 's|@''GUARD_PREFIX''@|${gl_include_guard_prefix}|g' \
+	$(AM_V_at)$(SED_HEADER_STDOUT) \
+	      -e 's|@''GUARD_PREFIX''@|${gl_include_guard_prefix}|g' \
 	      -e 's/@''HAVE_SYS_FILE_H''@/$(HAVE_SYS_FILE_H)/g' \
 	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
 	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
@@ -31,9 +32,8 @@ sys/file.h: sys_file.in.h $(top_builddir)/config.status $(WARN_ON_USE_H)
 	      -e 's/@''HAVE_FLOCK''@/$(HAVE_FLOCK)/g' \
 	      -e 's/@''GNULIB_FLOCK''@/$(GNULIB_FLOCK)/g' \
 	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
-	      < $(srcdir)/sys_file.in.h; \
-	} > $@-t && \
-	mv $@-t $@
+	      $(srcdir)/sys_file.in.h > $@-t
+	$(AM_V_at)mv $@-t $@
 MOSTLYCLEANFILES += sys/file.h sys/file.h-t
 MOSTLYCLEANDIRS += sys
 

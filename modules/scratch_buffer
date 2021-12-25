@@ -12,6 +12,7 @@ lib/malloc/scratch_buffer_set_array_size.c
 Depends-on:
 c99
 builtin-expect
+gen-header
 libc-config
 stdbool
 stddef
@@ -27,14 +28,13 @@ BUILT_SOURCES += malloc/scratch_buffer.gl.h
 
 malloc/scratch_buffer.gl.h: malloc/scratch_buffer.h
 	$(AM_V_GEN)$(MKDIR_P) '%reldir%/malloc'
-	$(AM_V_at){ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
-	  sed -e 's|__always_inline|inline _GL_ATTRIBUTE_ALWAYS_INLINE|g' \
+	$(AM_V_at)$(SED_HEADER_STDOUT) \
+	      -e 's|__always_inline|inline _GL_ATTRIBUTE_ALWAYS_INLINE|g' \
 	      -e 's|__glibc_likely|_GL_LIKELY|g' \
 	      -e 's|__glibc_unlikely|_GL_UNLIKELY|g' \
 	      -e '/libc_hidden_proto/d' \
-	      < $(srcdir)/malloc/scratch_buffer.h; \
-	} > $@-t && \
-	mv $@-t $@
+	      $(srcdir)/malloc/scratch_buffer.h > $@-t
+	$(AM_V_at)mv $@-t $@
 MOSTLYCLEANFILES += malloc/scratch_buffer.gl.h malloc/scratch_buffer.gl.h-t
 
 lib_SOURCES += malloc/scratch_buffer_dupfree.c \

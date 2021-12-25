@@ -9,6 +9,7 @@ lib/localcharset.h
 m4/libunistring-base.m4
 
 Depends-on:
+gen-header
 unitypes
 
 configure.ac:
@@ -21,10 +22,8 @@ BUILT_SOURCES += $(LIBUNISTRING_UNICONV_H)
 uniconv.h: uniconv.in.h
 	$(AM_V_GEN)
 @NMD@	$(AM_V_at)$(MKDIR_P) '%reldir%'
-	$(AM_V_at){ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
-	  cat $(srcdir)/uniconv.in.h; \
-	} > $@-t && \
-	mv $@-t $@
+	$(AM_V_at)$(SED_HEADER_TO_AT_t) $(srcdir)/uniconv.in.h
+	$(AM_V_at)mv $@-t $@
 MOSTLYCLEANFILES += uniconv.h uniconv.h-t
 
 Include:

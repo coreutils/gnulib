@@ -6,6 +6,7 @@ lib/ieee754.in.h
 m4/ieee754-h.m4
 
 Depends-on:
+gen-header
 
 configure.ac:
 gl_IEEE754_H
@@ -21,11 +22,10 @@ if GL_GENERATE_IEEE754_H
 ieee754.h: ieee754.in.h $(top_builddir)/config.status
 	$(AM_V_GEN)
 @NMD@	$(AM_V_at)$(MKDIR_P) '%reldir%'
-	$(AM_V_at){ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
-	  sed -e 's/ifndef _GL_GNULIB_HEADER/if 0/g' \
-	    $(srcdir)/ieee754.in.h; \
-	} > $@-t && \
-	mv $@-t $@
+	$(AM_V_at)$(SED_HEADER_STDOUT) \
+	  -e 's/ifndef _GL_GNULIB_HEADER/if 0/g' \
+	  $(srcdir)/ieee754.in.h > $@-t
+	$(AM_V_at)mv $@-t $@
 else
 ieee754.h: $(top_builddir)/config.status
 	rm -f $@
