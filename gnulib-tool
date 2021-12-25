@@ -1894,19 +1894,6 @@ func_verify_nontests_module ()
   esac
 }
 
-# func_verify_tests_module
-# verifies a module name, considering only tests modules
-# Input:
-# - local_gnulib_path  from --local-dir
-# - module          module name argument
-func_verify_tests_module ()
-{
-  case "$module" in
-    *-tests ) func_verify_module ;;
-    * ) module= ;;
-  esac
-}
-
 # Suffix of a sed expression that extracts a particular field from a
 # module description.
 # A field starts with a line that contains a keyword, such as 'Description',
@@ -2790,6 +2777,23 @@ func_get_tests_module ()
   if test -f "$gnulib_dir/modules/$1"-tests \
      || func_path_foreach "$local_gnulib_path" func_exists_local_module %dir% "$1-tests"; then
     echo "$1"-tests
+  fi
+}
+
+# func_verify_tests_module
+# verifies a module name, considering only tests modules and modules with
+# applicability 'all'.
+# Input:
+# - local_gnulib_path  from --local-dir
+# - modcache          true or false, from --cache-modules/--no-cache-modules
+# - module          module name argument
+func_verify_tests_module ()
+{
+  func_verify_module
+  if test -n "$module"; then
+    if test `func_get_applicability $module` = main; then
+      module=
+    fi
   fi
 }
 
