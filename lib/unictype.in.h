@@ -691,6 +691,7 @@ extern const uc_property_t UC_PROPERTY_NUMERIC;
 extern const uc_property_t UC_PROPERTY_DIACRITIC;
 extern const uc_property_t UC_PROPERTY_EXTENDER;
 extern const uc_property_t UC_PROPERTY_IGNORABLE_CONTROL;
+extern const uc_property_t UC_PROPERTY_REGIONAL_INDICATOR;
 
 /* Return the property given by name, e.g. "White space".  */
 extern uc_property_t
@@ -873,6 +874,8 @@ extern bool uc_is_property_diacritic (ucs4_t uc)
 extern bool uc_is_property_extender (ucs4_t uc)
        _UC_ATTRIBUTE_CONST;
 extern bool uc_is_property_ignorable_control (ucs4_t uc)
+       _UC_ATTRIBUTE_CONST;
+extern bool uc_is_property_regional_indicator (ucs4_t uc)
        _UC_ATTRIBUTE_CONST;
 
 /* ========================================================================= */
