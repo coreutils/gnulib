@@ -6599,8 +6599,9 @@ get_lbp (unsigned int ch)
           || ch == 0x26F9 /* PERSON WITH BALL */
           || (ch >= 0x270A && ch <= 0x270D) /* RAISED FIST..WRITING HAND */
           || ch == 0x1F385 /* FATHER CHRISTMAS */
-          || (ch >= 0x1F3C3 && ch <= 0x1F3C4) /* RUNNER..SURFER */
-          || (ch >= 0x1F3CA && ch <= 0x1F3CB) /* SWIMMER..WEIGHT LIFTER */
+          || (ch >= 0x1F3C2 && ch <= 0x1F3C4) /* SNOWBOARDER..SURFER */
+          || ch == 0x1F3C7 /* HORSE RACING */
+          || (ch >= 0x1F3CA && ch <= 0x1F3CC) /* SWIMMER..GOLFER */
           || (ch >= 0x1F442 && ch <= 0x1F443) /* EAR..NOSE */
           || (ch >= 0x1F446 && ch <= 0x1F450) /* WHITE UP POINTING BACKHAND INDEX..OPEN HANDS SIGN */
           || (ch >= 0x1F466 && ch <= 0x1F469) /* BOY..WOMAN */
@@ -6610,7 +6611,7 @@ get_lbp (unsigned int ch)
           || (ch >= 0x1F481 && ch <= 0x1F483) /* INFORMATION DESK PERSON..DANCER */
           || (ch >= 0x1F485 && ch <= 0x1F487) /* NAIL POLISH..HAIRCUT */
           || ch == 0x1F4AA /* FLEXED BICEPS */
-          || ch == 0x1F575 /* SLEUTH OR SPY */
+          || (ch >= 0x1F574 && ch <= 0x1F575) /* MAN IN BUSINESS SUIT LEVITATING..SLEUTH OR SPY */
           || ch == 0x1F57A /* MAN DANCING */
           || ch == 0x1F590 /* RAISED HAND WITH FINGERS SPLAYED */
           || (ch >= 0x1F595 && ch <= 0x1F596) /* REVERSED HAND WITH MIDDLE FINGER EXTENDED..RAISED HAND WITH PART BETWEEN MIDDLE AND RING FINGERS */
@@ -6619,11 +6620,13 @@ get_lbp (unsigned int ch)
           || ch == 0x1F6A3 /* ROWBOAT */
           || (ch >= 0x1F6B4 && ch <= 0x1F6B6) /* BICYCLIST..PEDESTRIAN */
           || ch == 0x1F6C0 /* BATH */
-          || (ch >= 0x1F918 && ch <= 0x1F91E) /* SIGN OF THE HORNS..HAND WITH INDEX AND MIDDLE FINGERS CROSSED */
+          || ch == 0x1F6CC /* SLEEPING ACCOMMODATION */
+          || (ch >= 0x1F918 && ch <= 0x1F91C) /* SIGN OF THE HORNS..RIGHT-FACING FIST */
+          || (ch >= 0x1F91E && ch <= 0x1F91F) /* HAND WITH INDEX AND MIDDLE FINGERS CROSSED..I LOVE YOU HAND SIGN */
           || ch == 0x1F926 /* FACE PALM */
-          || ch == 0x1F930 /* PREGNANT WOMAN */
-          || (ch >= 0x1F933 && ch <= 0x1F939) /* SELFIE..JUGGLING */
-          || (ch >= 0x1F93C && ch <= 0x1F93E) /* WRESTLERS..HANDBALL */)
+          || (ch >= 0x1F930 && ch <= 0x1F939) /* PREGNANT WOMAN..JUGGLING */
+          || (ch >= 0x1F93D && ch <= 0x1F93E) /* WRESTLERS..HANDBALL */
+          || (ch >= 0x1F9D1 && ch <= 0x1F9DD) /* ADULT..ELF */)
         attr |= (int64_t) 1 << LBP_EB;
 
       if ((ch >= 0x1F3FB && ch <= 0x1F3FF) /* EMOJI MODIFIER FITZPATRICK TYPE-1-2..EMOJI MODIFIER FITZPATRICK TYPE-6 */)
@@ -6762,13 +6765,18 @@ get_lbp (unsigned int ch)
           || ch == 0x2CFF /* COPTIC MORPHOLOGICAL DIVIDER */
           || (ch >= 0x2E0E && ch <= 0x2E15) /* EDITORIAL CORONIS .. UPWARDS ANCORA */
           || ch == 0x2E17 /* DOUBLE OBLIQUE HYPHEN */
-          || ch == 0x2E43 /* DASH WITH LEFT UPTURN */
-          || ch == 0x2E44 /* DOUBLE SUSPENSION MARK */
           || ch == 0x2E3C /* STENOGRAPHIC FULL STOP */
           || ch == 0x2E3D /* VERTICAL SIX DOTS */
           || ch == 0x2E3E /* WIGGLY VERTICAL LINE */
           || ch == 0x2E40 /* DOUBLE HYPHEN */
           || ch == 0x2E41 /* REVERSED COMMA */
+          || ch == 0x2E43 /* DASH WITH LEFT UPTURN */
+          || ch == 0x2E44 /* DOUBLE SUSPENSION MARK */
+          || ch == 0x2E45 /* INVERTED LOW KAVYKA */
+          || ch == 0x2E46 /* INVERTED LOW KAVYKA WITH KAVYKA ABOVE */
+          || ch == 0x2E47 /* LOW KAVYKA */
+          || ch == 0x2E48 /* LOW KAVYKA WITH DOT */
+          || ch == 0x2E49 /* DOUBLE STACKED COMMA */
           || ch == 0xA60D /* VAI COMMA */
           || ch == 0xA60F /* VAI QUESTION MARK */
           || ch == 0xA92E /* KAYAH LI SIGN CWI */
@@ -6830,6 +6838,15 @@ get_lbp (unsigned int ch)
           || ch == 0x11641 /* MODI DANDA */
           || ch == 0x11642 /* MODI DOUBLE DANDA */
           || (ch >= 0x1173C && ch <= 0x1173E) /* AHOM SIGN SMALL SECTION..AHOM SIGN RULAI */
+          || ch == 0x11A41 /* ZANABAZAR SQUARE MARK TSHEG */
+          || ch == 0x11A42 /* ZANABAZAR SQUARE MARK SHAD */
+          || ch == 0x11A43 /* ZANABAZAR SQUARE MARK DOUBLE SHAD */
+          || ch == 0x11A44 /* ZANABAZAR SQUARE MARK LONG TSHEG */
+          || ch == 0x11A9A /* SOYOMBO MARK TSHEG */
+          || ch == 0x11A9B /* SOYOMBO MARK SHAD */
+          || ch == 0x11A9C /* SOYOMBO MARK DOUBLE SHAD */
+          || ch == 0x11AA1 /* SOYOMBO TERMINAL MARK-1 */
+          || ch == 0x11AA2 /* SOYOMBO TERMINAL MARK-2 */
           || (ch >= 0x11C41 && ch <= 0x11C45) /* BHAIKSUKI DANDA..BHAIKSUKI GAP FILLER-2 */
           || ch == 0x12471 /* CUNEIFORM PUNCTUATION SIGN VERTICAL COLON */
           || ch == 0x12472 /* CUNEIFORM PUNCTUATION SIGN DIAGONAL COLON */
@@ -6871,6 +6888,11 @@ get_lbp (unsigned int ch)
           || ch == 0x111DB /* SHARADA SIGN SIDDHAM */
           || ch == 0x115C1 /* SIDDHAM SIGN SIDDHAM */
           || (ch >= 0x11660 && ch <= 0x1166C) /* MONGOLIAN BIRGA WITH ORNAMENT..MONGOLIAN TURNED SWIRL BIRGA WITH DOUBLE ORNAMENT */
+          || ch == 0x11A3F /* ZANABAZAR SQUARE INITIAL HEAD MARK */
+          || ch == 0x11A45 /* ZANABAZAR SQUARE INITIAL DOUBLE-LINED HEAD MARK */
+          || ch == 0x11A9E /* SOYOMBO HEAD MARK WITH MOON AND SUN AND TRIPLE FLAME */
+          || ch == 0x11A9F /* SOYOMBO HEAD MARK WITH MOON AND SUN AND FLAME */
+          || ch == 0x11AA0 /* SOYOMBO HEAD MARK WITH MOON AND SUN */
           || ch == 0x11C70 /* MARCHEN HEAD MARK */)
         attr |= (int64_t) 1 << LBP_BB;
 
@@ -6992,6 +7014,7 @@ get_lbp (unsigned int ch)
           || ch == 0xFF9E /* HALFWIDTH KATAKANA VOICED SOUND MARK */
           || ch == 0xFF9F /* HALFWIDTH KATAKANA SEMI-VOICED SOUND MARK */
           || ch == 0x16FE0 /* TANGUT ITERATION MARK */
+          || ch == 0x16FE1 /* NUSHU ITERATION MARK */
           || ch == 0x1F679 /* HEAVY INTERROBANG ORNAMENT */
           || ch == 0x1F67A /* SANS-SERIF INTERROBANG ORNAMENT */
           || ch == 0x1F67B /* HEAVY SANS-SERIF INTERROBANG ORNAMENT */
@@ -7132,8 +7155,7 @@ get_lbp (unsigned int ch)
       if ((ch >= 0x11A8 && ch <= 0x11FF) || (ch >= 0xD7CB && ch <= 0xD7FB))
         attr |= (int64_t) 1 << LBP_JT;
 
-      /* regional indicator */
-      if (ch >= 0x1F1E6 && ch <= 0x1F1FF)
+      if (is_property_regional_indicator (ch))
         attr |= (int64_t) 1 << LBP_RI;
 
       /* complex context (South East Asian) */
@@ -7334,11 +7356,14 @@ get_lbp (unsigned int ch)
           || (ch >= 0x17000 && ch <= 0x187EC) /* Tangut Ideograph */
           || (ch >= 0x18800 && ch <= 0x18AF2) /* Tangut Ideograph */
           || (ch >= 0x1B000 && ch <= 0x1B001) /* Kana Supplement */
+          || (ch >= 0x1B002 && ch <= 0x1B11E) /* Hentaigana */
+          || (ch >= 0x1B170 && ch <= 0x1B2FB) /* Nushu */
           || (ch >= 0x1F000 && ch <= 0x1F02B) /* Mahjong Tiles */
           || (ch >= 0x1F030 && ch <= 0x1F093) /* Domino Tiles */
           || (ch >= 0x1F0A0 && ch <= 0x1F0F5) /* Playing Cards */
           || (ch >= 0x1F200 && ch <= 0x1F248) /* Enclosed Ideographic Supplement */
           || (ch >= 0x1F250 && ch <= 0x1F251) /* Enclosed Ideographic Supplement */
+          || (ch >= 0x1F260 && ch <= 0x1F265) /* Rounded Symbols */
           || (ch >= 0x1F300 && ch <= 0x1F5FF /* Miscellaneous Symbols and Pictographs */
               && ch != 0x1F3B5 && ch != 0x1F3B6 && ch != 0x1F3BC
               && ch != 0x1F4A0 && ch != 0x1F4A2 && ch != 0x1F4A4
@@ -7353,11 +7378,12 @@ get_lbp (unsigned int ch)
           || (ch >= 0x1F600 && ch <= 0x1F64F) /* Emoticons */
           || (ch >= 0x1F680 && ch <= 0x1F6DF) /* Transport and Map Symbols */
           || (ch >= 0x1F6E0 && ch <= 0x1F6EC) /* Transport and Map Symbols */
-          || (ch >= 0x1F6F0 && ch <= 0x1F6F6) /* Transport and Map Symbols */
-          || (ch >= 0x1F900 && ch <= 0x1F9FF) /* Supplemental Symbols and Pictographs */
+          || (ch >= 0x1F6F0 && ch <= 0x1F6F8) /* Transport and Map Symbols */
+          || (ch >= 0x1F90C && ch <= 0x1F9FF) /* Supplemental Symbols and Pictographs */
           || (ch >= 0x2A700 && ch <= 0x2B734) /* CJK Ideograph Extension C */
           || (ch >= 0x2B740 && ch <= 0x2B81D) /* CJK Ideograph Extension D */
-          || (ch >= 0x2B820 && ch <= 0x2CEAF) /* CJK Ideograph Extension E */)
+          || (ch >= 0x2B820 && ch <= 0x2CEAF) /* CJK Ideograph Extension E */
+          || (ch >= 0x2CEB0 && ch <= 0x2EBE0) /* CJK Ideograph Extension F */)
         if (!(attr & (((int64_t) 1 << LBP_NS) | ((int64_t) 1 << LBP_CM) | ((int64_t) 1 << LBP_EB))))
           {
             /* ambiguous (ideograph) ? */
@@ -8119,7 +8145,15 @@ get_wbp (unsigned int ch)
         attr |= 1 << WBP_HL;
 
       if ((((unicode_properties[ch] >> PROP_ALPHABETIC) & 1) != 0
-           || ch == 0x05F3)
+           || (ch >= 0x02C2 && ch <= 0x02C5)
+           || (ch >= 0x02D2 && ch <= 0x02D7)
+           || (ch >= 0x02DE && ch <= 0x02DF)
+           || ch == 0x02ED
+           || (ch >= 0x02EF && ch <= 0x02FF)
+           || ch == 0x05F3
+           || (ch >= 0xA720 && ch <= 0xA721)
+           || (ch >= 0xA789 && ch <= 0xA78A)
+           || ch == 0xAB5B)
           && ((unicode_properties[ch] >> PROP_IDEOGRAPHIC) & 1) == 0
           && (attr & (1 << WBP_KATAKANA)) == 0
           && ((get_lbp (ch) >> LBP_SA) & 1) == 0
@@ -8132,7 +8166,7 @@ get_wbp (unsigned int ch)
       if (is_WBP_MIDNUMLET (ch))
         attr |= 1 << WBP_MIDNUMLET;
 
-      if (is_WBP_MIDLETTER (ch))
+      if (is_WBP_MIDLETTER (ch) && ch != 0x02D7)
         attr |= 1 << WBP_MIDLETTER;
 
       if ((((get_lbp (ch) >> LBP_IS) & 1) != 0
@@ -8150,7 +8184,7 @@ get_wbp (unsigned int ch)
           || ch == 0x202F /* NARROW NO-BREAK SPACE */)
         attr |= 1 << WBP_EXTENDNUMLET;
 
-      if (((get_lbp (ch) >> LBP_RI) & 1) != 0)
+      if (is_property_regional_indicator (ch))
         attr |= 1 << WBP_RI;
 
       if (ch == 0x0022)
@@ -8170,7 +8204,28 @@ get_wbp (unsigned int ch)
       if (((get_lbp (ch) >> LBP_EM) & 1) != 0)
         attr |= 1 << WBP_EM;
 
-      if (ch == 0x2764 || ch == 0x1F48B || ch == 0x1F5E8)
+      if (ch == 0x2640 /* FEMALE SIGN */
+          || ch == 0x2642 /* MALE SIGN */
+          || ch == 0x2695 /* STAFF OF AESCULAPIUS */
+          || ch == 0x2696 /* SCALES */
+          || ch == 0x2708 /* AIRPLANE */
+          || ch == 0x2764 /* HEAVY BLACK HEART */
+          || ch == 0x1F308 /* RAINBOW */
+          || ch == 0x1F33E /* EAR OF RICE */
+          || ch == 0x1F373 /* COOKING */
+          || ch == 0x1F393 /* GRADUATION CAP */
+          || ch == 0x1F3A4 /* MICROPHONE */
+          || ch == 0x1F3A8 /* ARTIST PALETTE */
+          || ch == 0x1F3EB /* SCHOOL */
+          || ch == 0x1F3ED /* FACTORY */
+          || ch == 0x1F48B /* KISS MARK */
+          || ch == 0x1F4BB /* PERSONAL COMPUTER */
+          || ch == 0x1F4BC /* BRIEFCASE */
+          || ch == 0x1F527 /* WRENCH */
+          || ch == 0x1F52C /* MICROSCOPE */
+          || ch == 0x1F5E8 /* LEFT SPEECH BUBBLE */
+          || ch == 0x1F680 /* ROCKET */
+          || ch == 0x1F692 /* FIRE ENGINE */)
         attr |= 1 << WBP_GAZ;
     }
 
@@ -10575,6 +10630,10 @@ main (int argc, char * argv[])
  *        10.0.0                                                         \\
  *   && diff unilbrk/lbrkprop_org.txt unilbrk/lbrkprop.txt              \\
  *   && diff uniwbrk/wbrkprop_org.txt uniwbrk/wbrkprop.txt              \\
+ *   && clisp -C uniname/gen-uninames.lisp                              \\
+ *            /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/10.0.0/ucd/UnicodeData.txt \\
+ *            uniname/uninames.h                                        \\
+ *            /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/10.0.0/ucd/NameAliases.txt \\
  *   && cp /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/10.0.0/ucd/NameAliases.txt ../tests/uniname/NameAliases.txt \\
  *   && cp /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/10.0.0/ucd/UnicodeData.txt ../tests/uniname/UnicodeData.txt \\
  *   && cp /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/10.0.0/ucd/NormalizationTest.txt ../tests/uninorm/NormalizationTest.txt \\

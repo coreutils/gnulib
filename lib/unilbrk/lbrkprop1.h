@@ -34,8 +34,8 @@
 typedef struct
   {
     int level1[15];
-    int level2[5 << 9];
-    unsigned char level3[217 << 7];
+    int level2[4 << 9];
+    unsigned char level3[214 << 7];
   }
 lbrkprop_t;
 extern const lbrkprop_t unilbrkprop;

@@ -81,11 +81,12 @@
                   (unless (or (<= #xFE00 code #xFE0F) (<= #xE0100 code #xE01EF))
                     (push (make-unicode-char :index name-index
                                              :name name-string)
-                          all-chars)
+                          all-chars
+                    )
                     (setf (gethash code all-chars-hashed) (car all-chars))
                     ;; Update the contiguous range, or start a new range.
                     (if (and range (= (1+ (range-end-code range)) code))
-                        (setf (range-end-code range) code)
+                      (setf (range-end-code range) code)
                       (progn
                         (when range
                           (push range all-ranges))
@@ -93,32 +94,33 @@
                                                 :start-code code
                                                 :end-code code))))
                     (incf name-index)
-                    (setq last-code code)
-                  ) ) ) )
+            ) ) ) )
     ) ) ) )
     (setq all-chars (nreverse all-chars))
     (if range
-        (push range all-ranges))
+      (push range all-ranges))
     (setq all-ranges (nreverse all-ranges))
     (when aliasfile
       ;; Read all characters and names from the alias file.
       (with-open-file (istream aliasfile :direction :input)
         (loop
-         (let ((line (read-line istream nil nil)))
-           (unless line (return))
-           (let* ((i1 (position #\; line))
-                  (i2 (position #\; line :start (1+ i1)))
-                  (code-string (subseq line 0 i1))
-                  (code (parse-integer code-string :radix 16))
-                  (name-string (subseq line (1+ i1) i2))
-                  (uc (gethash code all-chars-hashed)))
-             (when uc
-               (push (make-unicode-char :index (unicode-char-index uc)
-                                        :name name-string)
-                     all-aliases)
-             ) ) ) ) ) )
+          (let ((line (read-line istream nil nil)))
+            (unless line (return))
+            (unless (or (equal line "") (equal (subseq line 0 1) "#"))
+              (let* ((i1 (position #\; line))
+                     (i2 (position #\; line :start (1+ i1)))
+                     (code-string (subseq line 0 i1))
+                     (code (parse-integer code-string :radix 16))
+                     (name-string (subseq line (1+ i1) i2))
+                     (uc (gethash code all-chars-hashed)))
+                (when uc
+                  (push (make-unicode-char :index (unicode-char-index uc)
+                                           :name name-string)
+                        all-aliases
+    ) ) ) ) ) ) ) )
     (setq all-aliases (nreverse all-aliases)
-          all-chars-and-aliases (append all-chars all-aliases))
+          all-chars-and-aliases (append all-chars all-aliases)
+    )
     ;; Split into words.
     (let ((words-by-length (make-array 0 :adjustable t)))
       (dolist (name (list* "HANGUL SYLLABLE" "CJK COMPATIBILITY" "VARIATION"
