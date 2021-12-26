@@ -78,6 +78,7 @@ unictype/property-private-use
 unictype/property-punctuation
 unictype/property-quotation-mark
 unictype/property-radical
+unictype/property-regional-indicator
 unictype/property-sentence-terminal
 unictype/property-soft-dotted
 unictype/property-space

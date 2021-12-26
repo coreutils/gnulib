@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Arabic joining type of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 9.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 10.0.0.  */
 
 /* Copyright (C) 2000-2021 Free Software Foundation, Inc.
 
@@ -318,6 +318,17 @@
     { 0x0856, UC_JOINING_TYPE_U },
     { 0x0857, UC_JOINING_TYPE_U },
     { 0x0858, UC_JOINING_TYPE_U },
+    { 0x0860, UC_JOINING_TYPE_D },
+    { 0x0861, UC_JOINING_TYPE_U },
+    { 0x0862, UC_JOINING_TYPE_D },
+    { 0x0863, UC_JOINING_TYPE_D },
+    { 0x0864, UC_JOINING_TYPE_D },
+    { 0x0865, UC_JOINING_TYPE_D },
+    { 0x0866, UC_JOINING_TYPE_U },
+    { 0x0867, UC_JOINING_TYPE_R },
+    { 0x0868, UC_JOINING_TYPE_D },
+    { 0x0869, UC_JOINING_TYPE_R },
+    { 0x086A, UC_JOINING_TYPE_R },
     { 0x08A0, UC_JOINING_TYPE_D },
     { 0x08A1, UC_JOINING_TYPE_D },
     { 0x08A2, UC_JOINING_TYPE_D },

@@ -554,7 +554,18 @@ enum
   UC_JOINING_GROUP_MANICHAEAN_HUNDRED,    /* Manichaean_Hundred */
   UC_JOINING_GROUP_AFRICAN_FEH,           /* African_Feh */
   UC_JOINING_GROUP_AFRICAN_QAF,           /* African_Qaf */
-  UC_JOINING_GROUP_AFRICAN_NOON           /* African_Noon */
+  UC_JOINING_GROUP_AFRICAN_NOON,          /* African_Noon */
+  UC_JOINING_GROUP_MALAYALAM_NGA,         /* Malayalam_Nga */
+  UC_JOINING_GROUP_MALAYALAM_JA,          /* Malayalam_Ja */
+  UC_JOINING_GROUP_MALAYALAM_NYA,         /* Malayalam_Nya */
+  UC_JOINING_GROUP_MALAYALAM_TTA,         /* Malayalam_Tta */
+  UC_JOINING_GROUP_MALAYALAM_NNA,         /* Malayalam_Nna */
+  UC_JOINING_GROUP_MALAYALAM_NNNA,        /* Malayalam_Nnna */
+  UC_JOINING_GROUP_MALAYALAM_BHA,         /* Malayalam_Bha */
+  UC_JOINING_GROUP_MALAYALAM_RA,          /* Malayalam_Ra */
+  UC_JOINING_GROUP_MALAYALAM_LLA,         /* Malayalam_Lla */
+  UC_JOINING_GROUP_MALAYALAM_LLLA,        /* Malayalam_Llla */
+  UC_JOINING_GROUP_MALAYALAM_SSA          /* Malayalam_Ssa */
 };
 
 /* Return the name of a joining group.  */

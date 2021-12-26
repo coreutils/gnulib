@@ -18,21 +18,21 @@
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 /* Usage example:
-     $ gen-uni-tables /usr/local/share/www.unicode.org/Public/9.0.0/ucd/UnicodeData.txt \
-                      /usr/local/share/www.unicode.org/Public/9.0.0/ucd/PropList.txt \
-                      /usr/local/share/www.unicode.org/Public/9.0.0/ucd/DerivedCoreProperties.txt \
-                      /usr/local/share/www.unicode.org/Public/9.0.0/ucd/ArabicShaping.txt \
-                      /usr/local/share/www.unicode.org/Public/9.0.0/ucd/Scripts.txt \
-                      /usr/local/share/www.unicode.org/Public/9.0.0/ucd/Blocks.txt \
+     $ gen-uni-tables /usr/local/share/www.unicode.org/Public/10.0.0/ucd/UnicodeData.txt \
+                      /usr/local/share/www.unicode.org/Public/10.0.0/ucd/PropList.txt \
+                      /usr/local/share/www.unicode.org/Public/10.0.0/ucd/DerivedCoreProperties.txt \
+                      /usr/local/share/www.unicode.org/Public/10.0.0/ucd/ArabicShaping.txt \
+                      /usr/local/share/www.unicode.org/Public/10.0.0/ucd/Scripts.txt \
+                      /usr/local/share/www.unicode.org/Public/10.0.0/ucd/Blocks.txt \
                       /usr/local/share/www.unicode.org/Public/3.0-Update1/PropList-3.0.1.txt \
-                      /usr/local/share/www.unicode.org/Public/9.0.0/ucd/EastAsianWidth.txt \
-                      /usr/local/share/www.unicode.org/Public/9.0.0/ucd/LineBreak.txt \
-                      /usr/local/share/www.unicode.org/Public/9.0.0/ucd/auxiliary/WordBreakProperty.txt \
-                      /usr/local/share/www.unicode.org/Public/9.0.0/ucd/auxiliary/GraphemeBreakProperty.txt \
-                      /usr/local/share/www.unicode.org/Public/9.0.0/ucd/CompositionExclusions.txt \
-                      /usr/local/share/www.unicode.org/Public/9.0.0/ucd/SpecialCasing.txt \
-                      /usr/local/share/www.unicode.org/Public/9.0.0/ucd/CaseFolding.txt \
-                      9.0.0
+                      /usr/local/share/www.unicode.org/Public/10.0.0/ucd/EastAsianWidth.txt \
+                      /usr/local/share/www.unicode.org/Public/10.0.0/ucd/LineBreak.txt \
+                      /usr/local/share/www.unicode.org/Public/10.0.0/ucd/auxiliary/WordBreakProperty.txt \
+                      /usr/local/share/www.unicode.org/Public/10.0.0/ucd/auxiliary/GraphemeBreakProperty.txt \
+                      /usr/local/share/www.unicode.org/Public/10.0.0/ucd/CompositionExclusions.txt \
+                      /usr/local/share/www.unicode.org/Public/10.0.0/ucd/SpecialCasing.txt \
+                      /usr/local/share/www.unicode.org/Public/10.0.0/ucd/CaseFolding.txt \
+                      10.0.0
  */
 
 #include <assert.h>
@@ -2716,6 +2716,7 @@ enum
   PROP_PATTERN_WHITE_SPACE,
   PROP_PATTERN_SYNTAX,
   PROP_PREPENDED_CONCATENATION_MARK,
+  PROP_REGIONAL_INDICATOR,
   /* DerivedCoreProperties.txt */
   PROP_MATH,
   PROP_ALPHABETIC,
@@ -2822,6 +2823,7 @@ fill_properties (const char *proplist_filename)
       PROP ("Pattern_White_Space", PROP_PATTERN_WHITE_SPACE)
       PROP ("Pattern_Syntax", PROP_PATTERN_SYNTAX)
       PROP ("Prepended_Concatenation_Mark", PROP_PREPENDED_CONCATENATION_MARK)
+      PROP ("Regional_Indicator", PROP_REGIONAL_INDICATOR)
       /* DerivedCoreProperties.txt */
       PROP ("Math", PROP_MATH)
       PROP ("Alphabetic", PROP_ALPHABETIC)
@@ -3712,6 +3714,13 @@ is_property_ignorable_control (unsigned int ch)
          && ch != 0x0000;
 }
 
+/* See PropList.txt, UCD.html.  */
+static bool
+is_property_regional_indicator (unsigned int ch)
+{
+  return ((unicode_properties[ch] & (1ULL << PROP_REGIONAL_INDICATOR)) != 0);
+}
+
 /* ------------------------------------------------------------------------- */
 
 /* Output all properties.  */
@@ -3808,6 +3817,7 @@ output_properties (const char *version)
   PROPERTY(diacritic)
   PROPERTY(extender)
   PROPERTY(ignorable_control)
+  PROPERTY(regional_indicator)
 #undef PROPERTY
 }
 
@@ -3917,7 +3927,18 @@ enum
   UC_JOINING_GROUP_MANICHAEAN_HUNDRED,    /* Manichaean_Hundred */
   UC_JOINING_GROUP_AFRICAN_FEH,           /* African_Feh */
   UC_JOINING_GROUP_AFRICAN_QAF,           /* African_Qaf */
-  UC_JOINING_GROUP_AFRICAN_NOON           /* African_Noon */
+  UC_JOINING_GROUP_AFRICAN_NOON,          /* African_Noon */
+  UC_JOINING_GROUP_MALAYALAM_NGA,         /* Malayalam_Nga */
+  UC_JOINING_GROUP_MALAYALAM_JA,          /* Malayalam_Ja */
+  UC_JOINING_GROUP_MALAYALAM_NYA,         /* Malayalam_Nya */
+  UC_JOINING_GROUP_MALAYALAM_TTA,         /* Malayalam_Tta */
+  UC_JOINING_GROUP_MALAYALAM_NNA,         /* Malayalam_Nna */
+  UC_JOINING_GROUP_MALAYALAM_NNNA,        /* Malayalam_Nnna */
+  UC_JOINING_GROUP_MALAYALAM_BHA,         /* Malayalam_Bha */
+  UC_JOINING_GROUP_MALAYALAM_RA,          /* Malayalam_Ra */
+  UC_JOINING_GROUP_MALAYALAM_LLA,         /* Malayalam_Lla */
+  UC_JOINING_GROUP_MALAYALAM_LLLA,        /* Malayalam_Llla */
+  UC_JOINING_GROUP_MALAYALAM_SSA          /* Malayalam_Ssa */
 };
 
 static uint8_t unicode_joining_group[0x110000];
@@ -4084,6 +4105,17 @@ fill_arabicshaping (const char *arabicshaping_filename)
       TRY(UC_JOINING_GROUP_AFRICAN_FEH,           "AFRICAN FEH")
       TRY(UC_JOINING_GROUP_AFRICAN_QAF,           "AFRICAN QAF")
       TRY(UC_JOINING_GROUP_AFRICAN_NOON,          "AFRICAN NOON")
+      TRY(UC_JOINING_GROUP_MALAYALAM_NGA,         "MALAYALAM NGA")
+      TRY(UC_JOINING_GROUP_MALAYALAM_JA,          "MALAYALAM JA")
+      TRY(UC_JOINING_GROUP_MALAYALAM_NYA,         "MALAYALAM NYA")
+      TRY(UC_JOINING_GROUP_MALAYALAM_TTA,         "MALAYALAM TTA")
+      TRY(UC_JOINING_GROUP_MALAYALAM_NNA,         "MALAYALAM NNA")
+      TRY(UC_JOINING_GROUP_MALAYALAM_NNNA,        "MALAYALAM NNNA")
+      TRY(UC_JOINING_GROUP_MALAYALAM_BHA,         "MALAYALAM BHA")
+      TRY(UC_JOINING_GROUP_MALAYALAM_RA,          "MALAYALAM RA")
+      TRY(UC_JOINING_GROUP_MALAYALAM_LLA,         "MALAYALAM LLA")
+      TRY(UC_JOINING_GROUP_MALAYALAM_LLLA,        "MALAYALAM LLLA")
+      TRY(UC_JOINING_GROUP_MALAYALAM_SSA,         "MALAYALAM SSA")
 #undef TRY
       else
         {
@@ -4408,6 +4440,17 @@ joining_group_as_c_identifier (int joining_group)
   TRY(UC_JOINING_GROUP_AFRICAN_FEH)
   TRY(UC_JOINING_GROUP_AFRICAN_QAF)
   TRY(UC_JOINING_GROUP_AFRICAN_NOON)
+  TRY(UC_JOINING_GROUP_MALAYALAM_NGA)
+  TRY(UC_JOINING_GROUP_MALAYALAM_JA)
+  TRY(UC_JOINING_GROUP_MALAYALAM_NYA)
+  TRY(UC_JOINING_GROUP_MALAYALAM_TTA)
+  TRY(UC_JOINING_GROUP_MALAYALAM_NNA)
+  TRY(UC_JOINING_GROUP_MALAYALAM_NNNA)
+  TRY(UC_JOINING_GROUP_MALAYALAM_BHA)
+  TRY(UC_JOINING_GROUP_MALAYALAM_RA)
+  TRY(UC_JOINING_GROUP_MALAYALAM_LLA)
+  TRY(UC_JOINING_GROUP_MALAYALAM_LLLA)
+  TRY(UC_JOINING_GROUP_MALAYALAM_SSA)
 #undef TRY
   abort ();
 }
@@ -10515,22 +10558,27 @@ main (int argc, char * argv[])
  * compile-command: "\
  *   gcc -O -Wall gen-uni-tables.c -Iunictype -o gen-uni-tables &&      \\
  *   ./gen-uni-tables                                                   \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/9.0.0/ucd/UnicodeData.txt \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/9.0.0/ucd/PropList.txt \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/9.0.0/ucd/DerivedCoreProperties.txt \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/9.0.0/ucd/ArabicShaping.txt \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/9.0.0/ucd/Scripts.txt \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/9.0.0/ucd/Blocks.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/10.0.0/ucd/UnicodeData.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/10.0.0/ucd/PropList.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/10.0.0/ucd/DerivedCoreProperties.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/10.0.0/ucd/ArabicShaping.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/10.0.0/ucd/Scripts.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/10.0.0/ucd/Blocks.txt \\
  *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/3.0.1/PropList-3.0.1.txt \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/9.0.0/ucd/EastAsianWidth.txt \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/9.0.0/ucd/LineBreak.txt \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/9.0.0/ucd/auxiliary/WordBreakProperty.txt \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/9.0.0/ucd/auxiliary/GraphemeBreakProperty.txt \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/9.0.0/ucd/CompositionExclusions.txt \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/9.0.0/ucd/SpecialCasing.txt \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/9.0.0/ucd/CaseFolding.txt \\
- *        9.0.0                                                         \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/10.0.0/ucd/EastAsianWidth.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/10.0.0/ucd/LineBreak.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/10.0.0/ucd/auxiliary/WordBreakProperty.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/10.0.0/ucd/auxiliary/GraphemeBreakProperty.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/10.0.0/ucd/CompositionExclusions.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/10.0.0/ucd/SpecialCasing.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/10.0.0/ucd/CaseFolding.txt \\
+ *        10.0.0                                                         \\
  *   && diff unilbrk/lbrkprop_org.txt unilbrk/lbrkprop.txt              \\
- *   && diff uniwbrk/wbrkprop_org.txt uniwbrk/wbrkprop.txt"
+ *   && diff uniwbrk/wbrkprop_org.txt uniwbrk/wbrkprop.txt              \\
+ *   && cp /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/10.0.0/ucd/NameAliases.txt ../tests/uniname/NameAliases.txt \\
+ *   && cp /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/10.0.0/ucd/UnicodeData.txt ../tests/uniname/UnicodeData.txt \\
+ *   && cp /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/10.0.0/ucd/NormalizationTest.txt ../tests/uninorm/NormalizationTest.txt \\
+ *   && cp /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/10.0.0/ucd/auxiliary/GraphemeBreakTest.txt ../tests/unigbrk/GraphemeBreakTest.txt \\
+ *   && cp /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/10.0.0/ucd/auxiliary/WordBreakTest.txt ../tests/uniwbrk/WordBreakTest.txt"
  * End:
  */

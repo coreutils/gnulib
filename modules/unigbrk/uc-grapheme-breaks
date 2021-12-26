@@ -11,7 +11,7 @@ unigbrk/uc-gbrk-prop
 
 configure.ac:
 gl_MODULE_INDICATOR([unigbrk/uc-grapheme-breaks])
-gl_LIBUNISTRING_MODULE([0.9.8], [unigbrk/uc-grapheme-breaks])
+gl_LIBUNISTRING_MODULE([0.9.11], [unigbrk/uc-grapheme-breaks])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNIGBRK_UC_GRAPHEME_BREAKS

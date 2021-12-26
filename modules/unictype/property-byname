@@ -80,6 +80,7 @@ unictype/property-private-use
 unictype/property-punctuation
 unictype/property-quotation-mark
 unictype/property-radical
+unictype/property-regional-indicator
 unictype/property-sentence-terminal
 unictype/property-soft-dotted
 unictype/property-space
@@ -96,7 +97,7 @@ unictype/property-zero-width
 gperf
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([0.9.8], [unictype/property-byname])
+gl_LIBUNISTRING_MODULE([0.9.11], [unictype/property-byname])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNICTYPE_PROPERTY_BYNAME

@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Numeric values of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 9.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 10.0.0.  */
 
 /* Copyright (C) 2000-2021 Free Software Foundation, Inc.
 
@@ -1278,6 +1278,16 @@
     { 0x11C6A, 80, 1 },
     { 0x11C6B, 90, 1 },
     { 0x11C6C, 100, 1 },
+    { 0x11D50, 0, 1 },
+    { 0x11D51, 1, 1 },
+    { 0x11D52, 2, 1 },
+    { 0x11D53, 3, 1 },
+    { 0x11D54, 4, 1 },
+    { 0x11D55, 5, 1 },
+    { 0x11D56, 6, 1 },
+    { 0x11D57, 7, 1 },
+    { 0x11D58, 8, 1 },
+    { 0x11D59, 9, 1 },
     { 0x12400, 2, 1 },
     { 0x12401, 3, 1 },
     { 0x12402, 4, 1 },

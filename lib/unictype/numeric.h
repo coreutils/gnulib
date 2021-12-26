@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Numeric values of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 9.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 10.0.0.  */
 
 /* Copyright (C) 2000-2021 Free Software Foundation, Inc.
 
@@ -258,7 +258,7 @@ u_numeric =
      7040,   384,  7168,  7296,    -1,   384,    -1,    -1,
      1408,  1408,    -1,    -1,  1408,   512,  7424,    -1,
        -1,  7552,    -1,    -1,    -1,    -1,    -1,    -1,
-     7680,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+     7680,    -1,  1408,    -1,    -1,    -1,    -1,    -1,
        -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
      7808,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
        -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,

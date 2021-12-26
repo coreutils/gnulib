@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Properties of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 9.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 10.0.0.  */
 
 /* Copyright (C) 2000-2021 Free Software Foundation, Inc.
 
@@ -201,7 +201,7 @@ u_property_bidi_eur_num_terminator =
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x08000000U, 0x00000000U,
     0x00000000U, 0x001F0000U, 0x00000000U, 0x00000000U,
-    0x00000000U, 0x7FFFFFFFU, 0x00000000U, 0x00000000U,
+    0x00000000U, 0xFFFFFFFFU, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00004000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00080000U, 0x00000000U, 0x00000000U, 0x00000000U,

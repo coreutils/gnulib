@@ -9,7 +9,7 @@ Depends-on:
 uninorm/base
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([0.9.5], [uninorm/decomposing-form])
+gl_LIBUNISTRING_MODULE([0.9.11], [uninorm/decomposing-form])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNINORM_DECOMPOSING_FORM

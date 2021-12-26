@@ -11,7 +11,7 @@ unitypes
 stdbool
 
 configure.ac:
-gl_LIBUNISTRING_LIBHEADER([0.9.8], [unictype.h])
+gl_LIBUNISTRING_LIBHEADER([0.9.11], [unictype.h])
 AC_PROG_MKDIR_P
 
 Makefile.am:

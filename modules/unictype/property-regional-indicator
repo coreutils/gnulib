@@ -1,0 +1,26 @@
+Description:
+Test whether a Unicode character is "regional indicator".
+
+Files:
+lib/unictype/pr_regional_indicator.c
+
+Depends-on:
+unictype/base
+
+configure.ac:
+AC_REQUIRE([AC_C_INLINE])
+gl_LIBUNISTRING_MODULE([0.9.11], [unictype/property-regional-indicator])
+
+Makefile.am:
+if LIBUNISTRING_COMPILE_UNICTYPE_PROPERTY_REGIONAL_INDICATOR
+lib_SOURCES += unictype/pr_regional_indicator.c
+endif
+
+Include:
+"unictype.h"
+
+License:
+LGPLv3+ or GPLv2+
+
+Maintainer:
+all

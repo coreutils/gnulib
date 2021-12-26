@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Unicode scripts.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 9.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 10.0.0.  */
 
 /* Copyright (C) 2000-2021 Free Software Foundation, Inc.
 
@@ -165,3 +165,7 @@ Marchen, 133
 Newa, 134
 Osage, 135
 Tangut, 136
+Masaram_Gondi, 137
+Nushu, 138
+Soyombo, 139
+Zanabazar_Square, 140

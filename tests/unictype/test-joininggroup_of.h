@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Arabic joining group of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 9.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 10.0.0.  */
 
 /* Copyright (C) 2000-2021 Free Software Foundation, Inc.
 
@@ -247,6 +247,17 @@
     { 0x077D, UC_JOINING_GROUP_SEEN },
     { 0x077E, UC_JOINING_GROUP_SEEN },
     { 0x077F, UC_JOINING_GROUP_KAF },
+    { 0x0860, UC_JOINING_GROUP_MALAYALAM_NGA },
+    { 0x0861, UC_JOINING_GROUP_MALAYALAM_JA },
+    { 0x0862, UC_JOINING_GROUP_MALAYALAM_NYA },
+    { 0x0863, UC_JOINING_GROUP_MALAYALAM_TTA },
+    { 0x0864, UC_JOINING_GROUP_MALAYALAM_NNA },
+    { 0x0865, UC_JOINING_GROUP_MALAYALAM_NNNA },
+    { 0x0866, UC_JOINING_GROUP_MALAYALAM_BHA },
+    { 0x0867, UC_JOINING_GROUP_MALAYALAM_RA },
+    { 0x0868, UC_JOINING_GROUP_MALAYALAM_LLA },
+    { 0x0869, UC_JOINING_GROUP_MALAYALAM_LLLA },
+    { 0x086A, UC_JOINING_GROUP_MALAYALAM_SSA },
     { 0x08A0, UC_JOINING_GROUP_BEH },
     { 0x08A1, UC_JOINING_GROUP_BEH },
     { 0x08A2, UC_JOINING_GROUP_HAH },

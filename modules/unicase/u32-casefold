@@ -12,7 +12,7 @@ unicase/empty-prefix-context
 unicase/empty-suffix-context
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([0.9.8], [unicase/u32-casefold])
+gl_LIBUNISTRING_MODULE([0.9.11], [unicase/u32-casefold])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNICASE_U32_CASEFOLD

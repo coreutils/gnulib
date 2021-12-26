@@ -13,7 +13,7 @@ memcmp
 c99
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([0.9.8], [uniname/uniname])
+gl_LIBUNISTRING_MODULE([0.9.11], [uniname/uniname])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNINAME_UNINAME

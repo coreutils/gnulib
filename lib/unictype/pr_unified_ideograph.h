@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Properties of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 9.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 10.0.0.  */
 
 /* Copyright (C) 2000-2021 Free Software Foundation, Inc.
 
@@ -35,7 +35,7 @@ struct
     int header[1];
     int level1[3];
     short level2[2 << 7];
-    unsigned int level3[8 << 4];
+    unsigned int level3[9 << 4];
   }
 u_property_unified_ideograph =
 {
@@ -278,20 +278,20 @@ u_property_unified_ideograph =
         4 +   256 * sizeof (short) / sizeof (int) +     0,
         4 +   256 * sizeof (short) / sizeof (int) +     0,
         4 +   256 * sizeof (short) / sizeof (int) +   112,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
+        4 +   256 * sizeof (short) / sizeof (int) +     0,
+        4 +   256 * sizeof (short) / sizeof (int) +     0,
+        4 +   256 * sizeof (short) / sizeof (int) +     0,
+        4 +   256 * sizeof (short) / sizeof (int) +     0,
+        4 +   256 * sizeof (short) / sizeof (int) +     0,
+        4 +   256 * sizeof (short) / sizeof (int) +     0,
+        4 +   256 * sizeof (short) / sizeof (int) +     0,
+        4 +   256 * sizeof (short) / sizeof (int) +     0,
+        4 +   256 * sizeof (short) / sizeof (int) +     0,
+        4 +   256 * sizeof (short) / sizeof (int) +     0,
+        4 +   256 * sizeof (short) / sizeof (int) +     0,
+        4 +   256 * sizeof (short) / sizeof (int) +     0,
+        4 +   256 * sizeof (short) / sizeof (int) +     0,
+        4 +   256 * sizeof (short) / sizeof (int) +   128,
        -1,
        -1,
        -1,
@@ -315,7 +315,7 @@ u_property_unified_ideograph =
     0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU,
     0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU,
     0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU,
-    0xFFFFFFFFU, 0xFFFFFFFFU, 0x003FFFFFU, 0x00000000U,
+    0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU, 0x000007FFU,
     0x801AC000U, 0x0000039AU, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
@@ -333,8 +333,12 @@ u_property_unified_ideograph =
     0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU,
     0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU,
     0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU,
-    0xFFFFFFFFU, 0x00000003U, 0x00000000U, 0x00000000U,
-    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
-    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U
+    0xFFFFFFFFU, 0xFFFF0003U, 0xFFFFFFFFU, 0xFFFFFFFFU,
+    0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU,
+    0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU,
+    0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU,
+    0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU,
+    0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU,
+    0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU, 0x00000001U
   }
 };
