@@ -20,6 +20,9 @@ FreeBSD 8.2.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
+This function has a slightly incompatible declaration on some platforms:
+AIX 7.1 (when @code{_ALL_SOURCE} is defined).
+@item
 When the @var{sigmask} argument is nonnull on platforms that do not
 natively support this function, race conditions are possible when its
 gnulib implementation temporarily modifies the signal mask, and the
