@@ -23,6 +23,9 @@
    License and of the GNU General Public License along with this
    program.  If not, see <https://www.gnu.org/licenses/>.  */
 
+/* This file implements section 4 "Word Boundaries"
+   of Unicode Standard Annex #29 <https://www.unicode.org/reports/tr29/>.  */
+
 void
 FUNC (const UNIT *s, size_t n, char *p)
 {
@@ -47,6 +50,8 @@ FUNC (const UNIT *s, size_t n, char *p)
          -1 at the very beginning of the string.  */
       int secondlast_compchar_prop = -1;
 
+      /* Number of consecutive regional indicator (RI) characters seen
+         immediately before the current point.  */
       size_t ri_count = 0;
 
       /* Don't break inside multibyte characters.  */
@@ -73,11 +78,15 @@ FUNC (const UNIT *s, size_t n, char *p)
                            || prop == WBP_NEWLINE))
                 *p = 1;
               /* No break within emoji zwj sequence (WB3c).  */
-              else if (last_char_prop == WBP_ZWJ &&
-                       (prop == WBP_GAZ || prop == WBP_EBG))
+              else if (last_char_prop == WBP_ZWJ
+                       && (prop == WBP_GAZ || prop == WBP_EBG))
                 /* *p = 0 */;
-              /* Ignore Format and Extend characters.  */
-              else if (!(prop == WBP_EXTEND || prop == WBP_FORMAT || prop == WBP_ZWJ))
+              /* Ignore Format and Extend characters (WB4).  */
+              else if (prop == WBP_EXTEND
+                       || prop == WBP_FORMAT
+                       || prop == WBP_ZWJ)
+                /* *p = 0 */;
+              else
                 {
                   /* No break in these situations (see UAX #29):
 
@@ -146,7 +155,7 @@ FUNC (const UNIT *s, size_t n, char *p)
           last_char_prop = prop;
 
           /* Ignore Format and Extend characters, except at the
-             start of the line.  */
+             start of the line (WB4).  */
           if (last_compchar_prop < 0
               || last_compchar_prop == WBP_CR
               || last_compchar_prop == WBP_LF

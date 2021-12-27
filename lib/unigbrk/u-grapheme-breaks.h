@@ -23,6 +23,9 @@
    License and of the GNU General Public License along with this
    program.  If not, see <https://www.gnu.org/licenses/>.  */
 
+/* This file implements section 3 "Grapheme Cluster Boundaries"
+   of Unicode Standard Annex #29 <https://www.unicode.org/reports/tr29/>.  */
+
 void
 FUNC (const UNIT *s, size_t n, char *p)
 {
@@ -38,6 +41,8 @@ FUNC (const UNIT *s, size_t n, char *p)
          -1 at the very beginning of the string.  */
       int last_compchar_prop = -1;
 
+      /* Number of consecutive regional indicator (RI) characters seen
+         immediately before the current point.  */
       size_t ri_count = 0;
 
       /* Don't break inside multibyte characters.  */
@@ -106,7 +111,7 @@ FUNC (const UNIT *s, size_t n, char *p)
                     *p = 1;
                   /* else *p = 0; */
                 }
-              /* Break everywhere (GBP999).  */
+              /* Break everywhere (GB999).  */
               else
                 *p = 1;
             }

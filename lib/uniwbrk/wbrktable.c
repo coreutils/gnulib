@@ -58,16 +58,16 @@ const int uniwbrk_prop_index[22] =
 
                            last         current
 
-                     (ALetter | HL) × (ALetter | HL)                  (WB5)
-                     (ALetter | HL) × Numeric                         (WB9)
-                                 HL × SQ                              (WB7a)
-                            Numeric × (ALetter | HL)                  (WB10)
-                            Numeric × Numeric                         (WB8)
-                           Katakana × Katakana                        (WB13)
-(ALetter | HL | Numeric | Katakana) × ExtendNumLet                    (WB13a)
-                       ExtendNumLet × ExtendNumLet                    (WB13a)
-                   ExtendNumLet × (ALetter | HL | Numeric | Katakana) (WB13b)
-                     (E_Base | EBG) × E_Modifier                      (WB14)
+                     (ALetter | HL) × (ALetter | HL)                       (WB5)
+                     (ALetter | HL) × Numeric                              (WB9)
+                                 HL × SQ                                   (WB7a)
+                            Numeric × (ALetter | HL)                       (WB10)
+                            Numeric × Numeric                              (WB8)
+                           Katakana × Katakana                             (WB13)
+(ALetter | HL | Numeric | Katakana) × ExtendNumLet                         (WB13a)
+                       ExtendNumLet × ExtendNumLet                         (WB13a)
+                       ExtendNumLet × (ALetter | HL | Numeric | Katakana)  (WB13b)
+                     (E_Base | EBG) × E_Modifier                           (WB14)
 
    Note that the following rules are not handled here but in the loop in u-wordbreaks.h:
    - The rules need to look back or look ahead the second character (WB6, WB7, WB7b, WB7c, WB11, WB12)
