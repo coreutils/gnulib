@@ -104,5 +104,23 @@ main ()
     free (p);
   }
 
+  /* Test line breaking of combining marks.  */
+  {
+    static const uint8_t input[24] =
+      "a\314\200\314\201e\314\200 \314\201o \314\200 o\302\240\314\200\n"
+      "\314\200";
+    char *p = (char *) malloc (SIZEOF (input));
+    size_t i;
+
+    u8_possible_linebreaks (input, SIZEOF (input), "UTF-8", p);
+    for (i = 0; i < 24; i++)
+      {
+        ASSERT (p[i] == (i == 21 ? UC_BREAK_MANDATORY :
+                         i == 9 || i == 13 || i == 16 ? UC_BREAK_POSSIBLE :
+                         UC_BREAK_PROHIBITED));
+      }
+    free (p);
+  }
+
   return 0;
 }

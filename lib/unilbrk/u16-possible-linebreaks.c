@@ -44,7 +44,6 @@ u16_possible_linebreaks (const uint16_t *s, size_t n, const char *encoding, char
       const uint16_t *s_end = s + n;
       int last_prop = LBP_BK; /* line break property of last non-space character */
       char *seen_space = NULL; /* Was a space seen after the last non-space character? */
-      char *seen_space2 = NULL; /* At least two spaces after the last non-space? */
 
       /* Don't break inside multibyte characters.  */
       memset (p, UC_BREAK_PROHIBITED, n);
@@ -57,16 +56,13 @@ u16_possible_linebreaks (const uint16_t *s, size_t n, const char *encoding, char
 
           if (prop == LBP_BK)
             {
-              /* Mandatory break.  */
+              /* (LB4,LB5,LB6) Mandatory break.  */
               *p = UC_BREAK_MANDATORY;
               last_prop = LBP_BK;
               seen_space = NULL;
-              seen_space2 = NULL;
             }
           else
             {
-              char *q;
-
               /* Resolve property values whose behaviour is not fixed.  */
               switch (prop)
                 {
@@ -88,75 +84,78 @@ u16_possible_linebreaks (const uint16_t *s, size_t n, const char *encoding, char
                 }
 
               /* Deal with spaces and combining characters.  */
-              q = p;
               if (prop == LBP_SP)
                 {
-                  /* Don't break just before a space.  */
+                  /* (LB7) Don't break just before a space.  */
                   *p = UC_BREAK_PROHIBITED;
-                  seen_space2 = seen_space;
                   seen_space = p;
                 }
               else if (prop == LBP_ZW)
                 {
-                  /* Don't break just before a zero-width space.  */
+                  /* (LB7) Don't break just before a zero-width space.  */
                   *p = UC_BREAK_PROHIBITED;
                   last_prop = LBP_ZW;
                   seen_space = NULL;
-                  seen_space2 = NULL;
                 }
               else if (prop == LBP_CM)
                 {
-                  /* Don't break just before a combining character, except immediately
-                     after a zero-width space.  */
-                  if (last_prop == LBP_ZW)
+                  /* (LB9) Don't break just before a combining character, except
+                     immediately after a mandatory break character, space, or
+                     zero-width space.  */
+                  if (last_prop == LBP_BK)
                     {
-                      /* Break after zero-width space.  */
+                      /* (LB4,LB5,LB6) Don't break at the beginning of a line.  */
+                      *p = UC_BREAK_PROHIBITED;
+                      /* Treat CM as AL.  */
+                      last_prop = LBP_AL;
+                      seen_space = NULL;
+                    }
+                  else if (last_prop == LBP_ZW || seen_space != NULL)
+                    {
+                      /* (LB8) Break after zero-width space.  */
+                      /* (LB18) Break after spaces.
+                         We do *not* implement the "legacy support for space
+                         character as base for combining marks" because now the
+                         NBSP CM sequence is recommended instead of SP CM.  */
                       *p = UC_BREAK_POSSIBLE;
-                      /* A combining character turns a preceding space into LBP_ID.  */
-                      last_prop = LBP_ID;
+                      /* Treat CM as AL.  */
+                      last_prop = LBP_AL;
+                      seen_space = NULL;
                     }
                   else
                     {
+                      /* Treat X CM as if it were X.  */
                       *p = UC_BREAK_PROHIBITED;
-                      /* A combining character turns a preceding space into LBP_ID.  */
-                      if (seen_space != NULL)
-                        {
-                          q = seen_space;
-                          seen_space = seen_space2;
-                          prop = LBP_ID;
-                          goto lookup_via_table;
-                        }
                     }
                 }
               else
                 {
-                 lookup_via_table:
                   /* prop must be usable as an index for table 7.3 of UTR #14.  */
                   if (!(prop >= 0 && prop < sizeof (unilbrk_table) / sizeof (unilbrk_table[0])))
                     abort ();
 
                   if (last_prop == LBP_BK)
                     {
-                      /* Don't break at the beginning of a line.  */
-                      *q = UC_BREAK_PROHIBITED;
+                      /* (LB4,LB5,LB6) Don't break at the beginning of a line.  */
+                      *p = UC_BREAK_PROHIBITED;
                     }
                   else if (last_prop == LBP_ZW)
                     {
-                      /* Break after zero-width space.  */
-                      *q = UC_BREAK_POSSIBLE;
+                      /* (LB8) Break after zero-width space.  */
+                      *p = UC_BREAK_POSSIBLE;
                     }
                   else
                     {
                       switch (unilbrk_table [last_prop] [prop])
                         {
                         case D:
-                          *q = UC_BREAK_POSSIBLE;
+                          *p = UC_BREAK_POSSIBLE;
                           break;
                         case I:
-                          *q = (seen_space != NULL ? UC_BREAK_POSSIBLE : UC_BREAK_PROHIBITED);
+                          *p = (seen_space != NULL ? UC_BREAK_POSSIBLE : UC_BREAK_PROHIBITED);
                           break;
                         case P:
-                          *q = UC_BREAK_PROHIBITED;
+                          *p = UC_BREAK_PROHIBITED;
                           break;
                         default:
                           abort ();
@@ -164,7 +163,6 @@ u16_possible_linebreaks (const uint16_t *s, size_t n, const char *encoding, char
                     }
                   last_prop = prop;
                   seen_space = NULL;
-                  seen_space2 = NULL;
                 }
             }
 

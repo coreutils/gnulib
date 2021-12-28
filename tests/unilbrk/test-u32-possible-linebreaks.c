@@ -114,5 +114,26 @@ main ()
     free (p);
   }
 
+  /* Test line breaking of combining marks.  */
+  {
+    static const uint32_t input[16] =
+      {
+        'a', 0x0300, 0x0301, 'e', 0x0300, ' ', 0x0301, 'o', ' ', 0x0300, ' ',
+        'o', 0x0A00, 0x0300, '\n',
+        0x0300
+      };
+    char *p = (char *) malloc (SIZEOF (input));
+    size_t i;
+
+    u32_possible_linebreaks (input, SIZEOF (input), "UTF-8", p);
+    for (i = 0; i < 16; i++)
+      {
+        ASSERT (p[i] == (i == 14 ? UC_BREAK_MANDATORY :
+                         i == 6 || i == 9 || i == 11 ? UC_BREAK_POSSIBLE :
+                         UC_BREAK_PROHIBITED));
+      }
+    free (p);
+  }
+
   return 0;
 }
