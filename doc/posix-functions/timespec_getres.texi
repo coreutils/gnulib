@@ -15,4 +15,12 @@ glibc 2.33, macOS 12, FreeBSD 13.0, NetBSD 9.2, OpenBSD 7.0, Minix 3.3.0, AIX 7.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+On some platforms, this function returns a value other than the clock
+resolution of @code{timespec_get}, i.e., the minimum distance between
+differing timestamps.  For example, on GNU/Linux it typically returns
+1 nanosecond regardless of the actual clock resolution.
 @end itemize
+
+The Gnulib module @code{gettime-res} is a partial substitute; it implements
+the @code{TIME_UTC} functionality of @code{timespec_getres}.
