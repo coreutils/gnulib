@@ -57,7 +57,7 @@ gettime_res (void)
   /* On some platforms, clock_getres (CLOCK_REALTIME, ...) yields a
      too-large resolution, under the mistaken theory that it should
      return the timer interval.  For example, on AIX 7.2 POWER8
-     clock_getres yields 1 cs even though clock_gettime yields 1 µs
+     clock_getres yields 10 ms even though clock_gettime yields 1 µs
      resolution.  Work around the problem with high probability by
      trying clock_gettime several times and observing the resulting
      bounds on resolution.  */
