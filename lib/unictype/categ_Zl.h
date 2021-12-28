@@ -4,7 +4,7 @@
 
 /* Copyright (C) 2000-2021 Free Software Foundation, Inc.
 
-   This program is free software.
+   This file is free software.
    It is dual-licensed under "the GNU LGPLv3+ or the GNU GPLv2+".
    You can redistribute it and/or modify it under either
      - the terms of the GNU Lesser General Public License as published
@@ -15,7 +15,7 @@
        any later version, or
      - the same dual license "the GNU LGPLv3+ or the GNU GPLv2+".
 
-   This program is distributed in the hope that it will be useful,
+   This file is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
    Lesser General Public License and the GNU General Public License
@@ -23,7 +23,7 @@
 
    You should have received a copy of the GNU Lesser General Public
    License and of the GNU General Public License along with this
-   program; if not, see <https://www.gnu.org/licenses/>.  */
+   program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 #define header_0 16
 #define header_2 9

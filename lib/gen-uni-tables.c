@@ -297,7 +297,7 @@ output_library_license (FILE *stream, bool lgplv2plus)
   else
     {
       /* These Gnulib modules are under the 'LGPLv3+ or GPLv2+' license.  */
-      fprintf (stream, "   This program is free software.\n");
+      fprintf (stream, "   This file is free software.\n");
       fprintf (stream, "   It is dual-licensed under \"the GNU LGPLv3+ or the GNU GPLv2+\".\n");
       fprintf (stream, "   You can redistribute it and/or modify it under either\n");
       fprintf (stream, "     - the terms of the GNU Lesser General Public License as published\n");
@@ -308,7 +308,7 @@ output_library_license (FILE *stream, bool lgplv2plus)
       fprintf (stream, "       any later version, or\n");
       fprintf (stream, "     - the same dual license \"the GNU LGPLv3+ or the GNU GPLv2+\".\n");
       fprintf (stream, "\n");
-      fprintf (stream, "   This program is distributed in the hope that it will be useful,\n");
+      fprintf (stream, "   This file is distributed in the hope that it will be useful,\n");
       fprintf (stream, "   but WITHOUT ANY WARRANTY; without even the implied warranty of\n");
       fprintf (stream, "   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU\n");
       fprintf (stream, "   Lesser General Public License and the GNU General Public License\n");
@@ -316,7 +316,7 @@ output_library_license (FILE *stream, bool lgplv2plus)
       fprintf (stream, "\n");
       fprintf (stream, "   You should have received a copy of the GNU Lesser General Public\n");
       fprintf (stream, "   License and of the GNU General Public License along with this\n");
-      fprintf (stream, "   program; if not, see <https://www.gnu.org/licenses/>.  */\n");
+      fprintf (stream, "   program.  If not, see <https://www.gnu.org/licenses/>.  */\n");
     }
 }
 
@@ -326,12 +326,12 @@ static void
 output_tests_license (FILE *stream)
 {
   /* Gnulib tests modules are under the GPLv3+ license.  */
-  fprintf (stream, "   This program is free software: you can redistribute it and/or modify\n");
-  fprintf (stream, "   it under the terms of the GNU General Public License as published by\n");
-  fprintf (stream, "   the Free Software Foundation; either version 3 of the License, or\n");
-  fprintf (stream, "   (at your option) any later version.\n");
+  fprintf (stream, "   This file is free software: you can redistribute it and/or modify\n");
+  fprintf (stream, "   it under the terms of the GNU General Public License as published\n");
+  fprintf (stream, "   by the Free Software Foundation; either version 3 of the License,\n");
+  fprintf (stream, "   or (at your option) any later version.\n");
   fprintf (stream, "\n");
-  fprintf (stream, "   This program is distributed in the hope that it will be useful,\n");
+  fprintf (stream, "   This file is distributed in the hope that it will be useful,\n");
   fprintf (stream, "   but WITHOUT ANY WARRANTY; without even the implied warranty of\n");
   fprintf (stream, "   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n");
   fprintf (stream, "   GNU General Public License for more details.\n");
