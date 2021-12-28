@@ -99,5 +99,10 @@ main (void)
   test_u16_grapheme_breaks ("#_#", 'e', ACUTE, 'x', -1);
   test_u16_grapheme_breaks ("#_#_", 'e', ACUTE, 'e', GRAVE, -1);
 
+  /* Regional indicators. */
+  test_u16_grapheme_breaks ("##___#___#",
+                            '.', 0xD83C, 0xDDE9, 0xD83C, 0xDDEA, 0xD83C, 0xDDEB, 0xD83C, 0xDDF7, '.',
+                            -1);
+
   return 0;
 }

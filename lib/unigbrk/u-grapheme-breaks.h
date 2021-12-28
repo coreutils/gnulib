@@ -105,12 +105,8 @@ FUNC (const UNIT *s, size_t n, char *p)
                 /* *p = 0 */;
               /* No break between RI if there is an odd number of RI
                  characters before (GB12, GB13).  */
-              else if (prop == GBP_RI)
-                {
-                  if (ri_count % 2 == 0)
-                    *p = 1;
-                  /* else *p = 0; */
-                }
+              else if (prop == GBP_RI && (ri_count % 2) != 0)
+                /* *p = 0 */;
               /* Break everywhere (GB999).  */
               else
                 *p = 1;

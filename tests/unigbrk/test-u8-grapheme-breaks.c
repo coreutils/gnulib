@@ -91,5 +91,9 @@ main (void)
   test_u8_grapheme_breaks ("e"ACUTE"x", "#__#");
   test_u8_grapheme_breaks ("e"ACUTE "e"ACUTE, "#__#__");
 
+  /* Regional indicators. */
+  test_u8_grapheme_breaks (".\360\237\207\251\360\237\207\252\360\237\207\253\360\237\207\267.",
+                           "##_______#_______#");
+
   return 0;
 }
