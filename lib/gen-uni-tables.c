@@ -7856,6 +7856,59 @@ debug_output_org_lbrk_tables (const char *filename)
     }
 }
 
+/* Given an enum value LBP_..., returns its name "LBP_..." as a string.  */
+static const char *
+lbp_value_to_string (unsigned int value)
+{
+  const char *value_string;
+  switch (value)
+    {
+#define CASE(x) case x: value_string = #x; break;
+      CASE(LBP_BK);
+      CASE(LBP_CM);
+      CASE(LBP_WJ);
+      CASE(LBP_ZW);
+      CASE(LBP_GL);
+      CASE(LBP_SP);
+      CASE(LBP_B2);
+      CASE(LBP_BA);
+      CASE(LBP_BB);
+      CASE(LBP_HY);
+      CASE(LBP_CB);
+      CASE(LBP_CL);
+      CASE(LBP_CP);
+      CASE(LBP_EX);
+      CASE(LBP_IN);
+      CASE(LBP_NS);
+      CASE(LBP_OP);
+      CASE(LBP_QU);
+      CASE(LBP_IS);
+      CASE(LBP_NU);
+      CASE(LBP_PO);
+      CASE(LBP_PR);
+      CASE(LBP_SY);
+      CASE(LBP_AI);
+      CASE(LBP_AL);
+      CASE(LBP_H2);
+      CASE(LBP_H3);
+      CASE(LBP_HL);
+      CASE(LBP_ID);
+      CASE(LBP_JL);
+      CASE(LBP_JV);
+      CASE(LBP_JT);
+      CASE(LBP_RI);
+      CASE(LBP_SA);
+      CASE(LBP_ZWJ);
+      CASE(LBP_EB);
+      CASE(LBP_EM);
+      CASE(LBP_XX);
+#undef CASE
+      default:
+        abort ();
+    }
+  return value_string;
+}
+
 /* Construction of sparse 3-level tables.  */
 #define TABLE lbp_table
 #define ELEMENT unsigned char
@@ -7964,55 +8017,9 @@ output_lbp (FILE *stream1, FILE *stream2)
   for (i = 0; i < t.level3_size << t.p; i++)
     {
       unsigned char value = ((unsigned char *) (t.result + level3_offset))[i];
-      const char *value_string;
-      switch (value)
-        {
-#define CASE(x) case x: value_string = #x; break;
-          CASE(LBP_BK);
-          CASE(LBP_CM);
-          CASE(LBP_WJ);
-          CASE(LBP_ZW);
-          CASE(LBP_GL);
-          CASE(LBP_SP);
-          CASE(LBP_B2);
-          CASE(LBP_BA);
-          CASE(LBP_BB);
-          CASE(LBP_HY);
-          CASE(LBP_CB);
-          CASE(LBP_CL);
-          CASE(LBP_CP);
-          CASE(LBP_EX);
-          CASE(LBP_IN);
-          CASE(LBP_NS);
-          CASE(LBP_OP);
-          CASE(LBP_QU);
-          CASE(LBP_IS);
-          CASE(LBP_NU);
-          CASE(LBP_PO);
-          CASE(LBP_PR);
-          CASE(LBP_SY);
-          CASE(LBP_AI);
-          CASE(LBP_AL);
-          CASE(LBP_H2);
-          CASE(LBP_H3);
-          CASE(LBP_HL);
-          CASE(LBP_ID);
-          CASE(LBP_JL);
-          CASE(LBP_JV);
-          CASE(LBP_JT);
-          CASE(LBP_RI);
-          CASE(LBP_SA);
-          CASE(LBP_ZWJ);
-          CASE(LBP_EB);
-          CASE(LBP_EM);
-          CASE(LBP_XX);
-#undef CASE
-          default:
-            abort ();
-        }
       if (i > 0 && (i % 8) == 0)
         fprintf (stream2, "\n   ");
-      fprintf (stream2, " %s%s", value_string,
+      fprintf (stream2, " %s%s", lbp_value_to_string (value),
                (i+1 < t.level3_size << t.p ? "," : ""));
     }
   if (t.level3_size << t.p > 8)
@@ -8066,6 +8073,346 @@ output_lbrk_tables (const char *filename1, const char *filename2, const char *ve
           fprintf (stderr, "error writing to '%s'\n", filenames[i]);
           exit (1);
         }
+    }
+}
+
+static void
+output_lbrk_rules_as_tables (const char *filename, const char *version)
+{
+  FILE *stream;
+
+  stream = fopen (filename, "w");
+  if (stream == NULL)
+    {
+      fprintf (stderr, "cannot open '%s' for writing\n", filename);
+      exit (1);
+    }
+
+  fprintf (stream, "/* DO NOT EDIT! GENERATED AUTOMATICALLY! */\n");
+  fprintf (stream, "/* Table that encodes several line breaking rules.  */\n");
+  fprintf (stream, "/* Generated automatically by gen-uni-tables.c for Unicode %s.  */\n",
+           version);
+  fprintf (stream, "\n");
+
+  fprintf (stream, "/* Copyright (C) 2001-2021 Free Software Foundation, Inc.\n");
+  fprintf (stream, "\n");
+  output_library_license (stream, false);
+  fprintf (stream, "\n");
+
+  fprintf (stream, "#include <config.h>\n");
+  fprintf (stream, "\n");
+  fprintf (stream, "/* Specification.  */\n");
+  fprintf (stream, "#include \"unilbrk/lbrktables.h\"\n");
+  fprintf (stream, "\n");
+  fprintf (stream, "/* Define unilbrkprop, table of line breaking properties.  */\n");
+  fprintf (stream, "#include \"unilbrk/lbrkprop2.h\"\n");
+  fprintf (stream, "\n");
+
+  /* LBP_* table indices are in the range 0 .. NLBP-1.  */
+  const unsigned int NLBP = 30;
+
+  unsigned int before;
+  unsigned int after;
+  /* Describe the table cell (before, after).  */
+  struct table_cell
+  {
+    /* Break prohibited when no spaces, i.e. in    before ÷ after  */
+    bool prohibited_no_sp;
+    /* Break prohibited with spaces, i.e. in   before SP+ ÷ after  */
+    bool prohibited_with_sp;
+  };
+  struct table_cell table[NLBP][NLBP];
+
+  /* Fill the table.
+     If we were to apply the rules in top-down order (high precedence rules
+     first), the table_cell fields have to support values false/true/unknown.
+     If we apply the rules in the opposite order (high precedence order last),
+     the table_cell fields need to support only the values false/true.
+     So, that's what we do here.  */
+
+  /* (LB31) Break everywhere.  */
+  for (before = 0; before < NLBP; before++)
+    for (after = 0; after < NLBP; after++)
+      table[before][after].prohibited_no_sp = false;
+
+  /* (LB30b) Do not break between an emoji base and an emoji modifier.  */
+  before = LBP_EB; after = LBP_EM; table[before][after].prohibited_no_sp = true;
+
+  /* (LB30) Do not break between letters, numbers, or ordinary symbols and
+     opening or closing parentheses.  */
+  before = LBP_AL; after = LBP_OP; table[before][after].prohibited_no_sp = true;
+  before = LBP_HL; after = LBP_OP; table[before][after].prohibited_no_sp = true;
+  before = LBP_NU; after = LBP_OP; table[before][after].prohibited_no_sp = true;
+  before = LBP_CP; after = LBP_AL; table[before][after].prohibited_no_sp = true;
+  before = LBP_CP; after = LBP_HL; table[before][after].prohibited_no_sp = true;
+  before = LBP_CP; after = LBP_NU; table[before][after].prohibited_no_sp = true;
+
+  /* (LB29) Do not break between numeric punctuation and alphabetics
+     ("e.g.").  */
+  before = LBP_IS; after = LBP_AL; table[before][after].prohibited_no_sp = true;
+  before = LBP_IS; after = LBP_HL; table[before][after].prohibited_no_sp = true;
+
+  /* (LB28) Do not break between alphabetics ("at").  */
+  before = LBP_AL; after = LBP_AL; table[before][after].prohibited_no_sp = true;
+  before = LBP_AL; after = LBP_HL; table[before][after].prohibited_no_sp = true;
+  before = LBP_HL; after = LBP_AL; table[before][after].prohibited_no_sp = true;
+  before = LBP_HL; after = LBP_HL; table[before][after].prohibited_no_sp = true;
+
+  /* (LB27) Korean Syllable Block.  */
+  before = LBP_JL; after = LBP_IN; table[before][after].prohibited_no_sp = true;
+  before = LBP_JV; after = LBP_IN; table[before][after].prohibited_no_sp = true;
+  before = LBP_JT; after = LBP_IN; table[before][after].prohibited_no_sp = true;
+  before = LBP_H2; after = LBP_IN; table[before][after].prohibited_no_sp = true;
+  before = LBP_H3; after = LBP_IN; table[before][after].prohibited_no_sp = true;
+  before = LBP_JL; after = LBP_PO; table[before][after].prohibited_no_sp = true;
+  before = LBP_JV; after = LBP_PO; table[before][after].prohibited_no_sp = true;
+  before = LBP_JT; after = LBP_PO; table[before][after].prohibited_no_sp = true;
+  before = LBP_H2; after = LBP_PO; table[before][after].prohibited_no_sp = true;
+  before = LBP_H3; after = LBP_PO; table[before][after].prohibited_no_sp = true;
+  before = LBP_PR; after = LBP_JL; table[before][after].prohibited_no_sp = true;
+  before = LBP_PR; after = LBP_JV; table[before][after].prohibited_no_sp = true;
+  before = LBP_PR; after = LBP_JT; table[before][after].prohibited_no_sp = true;
+  before = LBP_PR; after = LBP_H2; table[before][after].prohibited_no_sp = true;
+  before = LBP_PR; after = LBP_H3; table[before][after].prohibited_no_sp = true;
+
+  /* (LB26) Do not break a Korean syllable.  */
+  before = LBP_JL; after = LBP_JL; table[before][after].prohibited_no_sp = true;
+  before = LBP_JL; after = LBP_JV; table[before][after].prohibited_no_sp = true;
+  before = LBP_JL; after = LBP_H2; table[before][after].prohibited_no_sp = true;
+  before = LBP_JL; after = LBP_H3; table[before][after].prohibited_no_sp = true;
+  before = LBP_JV; after = LBP_JV; table[before][after].prohibited_no_sp = true;
+  before = LBP_JV; after = LBP_JT; table[before][after].prohibited_no_sp = true;
+  before = LBP_H2; after = LBP_JV; table[before][after].prohibited_no_sp = true;
+  before = LBP_H2; after = LBP_JT; table[before][after].prohibited_no_sp = true;
+  before = LBP_JT; after = LBP_JT; table[before][after].prohibited_no_sp = true;
+  before = LBP_H3; after = LBP_JT; table[before][after].prohibited_no_sp = true;
+
+  /* (LB25) Do not break between the following pairs of classes relevant to
+     numbers.  */
+  before = LBP_CL; after = LBP_PO; table[before][after].prohibited_no_sp = true;
+  before = LBP_CP; after = LBP_PO; table[before][after].prohibited_no_sp = true;
+  before = LBP_CL; after = LBP_PR; table[before][after].prohibited_no_sp = true;
+  before = LBP_CP; after = LBP_PR; table[before][after].prohibited_no_sp = true;
+  before = LBP_NU; after = LBP_PO; table[before][after].prohibited_no_sp = true;
+  before = LBP_NU; after = LBP_PR; table[before][after].prohibited_no_sp = true;
+  before = LBP_PO; after = LBP_OP; table[before][after].prohibited_no_sp = true;
+  before = LBP_PO; after = LBP_NU; table[before][after].prohibited_no_sp = true;
+  before = LBP_PR; after = LBP_OP; table[before][after].prohibited_no_sp = true;
+  before = LBP_PR; after = LBP_NU; table[before][after].prohibited_no_sp = true;
+  before = LBP_HY; after = LBP_NU; table[before][after].prohibited_no_sp = true;
+  before = LBP_IS; after = LBP_NU; table[before][after].prohibited_no_sp = true;
+  before = LBP_NU; after = LBP_NU; table[before][after].prohibited_no_sp = true;
+  before = LBP_SY; after = LBP_NU; table[before][after].prohibited_no_sp = true;
+
+  /* (LB24) Do not break between numeric prefix/postfix and letters, or between
+     letters and prefix/postfix.  */
+  before = LBP_PR; after = LBP_AL; table[before][after].prohibited_no_sp = true;
+  before = LBP_PR; after = LBP_HL; table[before][after].prohibited_no_sp = true;
+  before = LBP_PO; after = LBP_AL; table[before][after].prohibited_no_sp = true;
+  before = LBP_PO; after = LBP_HL; table[before][after].prohibited_no_sp = true;
+  before = LBP_AL; after = LBP_PR; table[before][after].prohibited_no_sp = true;
+  before = LBP_AL; after = LBP_PO; table[before][after].prohibited_no_sp = true;
+  before = LBP_HL; after = LBP_PR; table[before][after].prohibited_no_sp = true;
+  before = LBP_HL; after = LBP_PO; table[before][after].prohibited_no_sp = true;
+
+  /* (LB23a) Do not break between numeric prefixes and ideographs, or between
+     ideographs and numeric postfixes.  */
+  before = LBP_PR; after = LBP_ID; table[before][after].prohibited_no_sp = true;
+  before = LBP_PR; after = LBP_EB; table[before][after].prohibited_no_sp = true;
+  before = LBP_PR; after = LBP_EM; table[before][after].prohibited_no_sp = true;
+  before = LBP_ID; after = LBP_PO; table[before][after].prohibited_no_sp = true;
+  before = LBP_EB; after = LBP_PO; table[before][after].prohibited_no_sp = true;
+  before = LBP_EM; after = LBP_PO; table[before][after].prohibited_no_sp = true;
+
+  /* (LB23) Do not break between digits and letters.  */
+  before = LBP_AL; after = LBP_NU; table[before][after].prohibited_no_sp = true;
+  before = LBP_HL; after = LBP_NU; table[before][after].prohibited_no_sp = true;
+  before = LBP_NU; after = LBP_AL; table[before][after].prohibited_no_sp = true;
+  before = LBP_NU; after = LBP_HL; table[before][after].prohibited_no_sp = true;
+
+  /* (LB22) Do not break between two ellipses, or between letters, numbers or
+     exclamations and ellipsis.  */
+  before = LBP_AL; after = LBP_IN; table[before][after].prohibited_no_sp = true;
+  before = LBP_HL; after = LBP_IN; table[before][after].prohibited_no_sp = true;
+  before = LBP_EX; after = LBP_IN; table[before][after].prohibited_no_sp = true;
+  before = LBP_ID; after = LBP_IN; table[before][after].prohibited_no_sp = true;
+  before = LBP_EB; after = LBP_IN; table[before][after].prohibited_no_sp = true;
+  before = LBP_EM; after = LBP_IN; table[before][after].prohibited_no_sp = true;
+  before = LBP_IN; after = LBP_IN; table[before][after].prohibited_no_sp = true;
+  before = LBP_NU; after = LBP_IN; table[before][after].prohibited_no_sp = true;
+
+  /* (LB21b) Don’t break between Solidus and Hebrew letters.  */
+  before = LBP_SY; after = LBP_HL; table[before][after].prohibited_no_sp = true;
+
+  /* (LB21) Do not break before hyphen-minus, other hyphens, fixed-width spaces,
+     small kana, and other non-starters, or after acute accents.  */
+  for (before = 0; before < NLBP; before++)
+    {
+      after = LBP_BA; table[before][after].prohibited_no_sp = true;
+      after = LBP_HY; table[before][after].prohibited_no_sp = true;
+      after = LBP_NS; table[before][after].prohibited_no_sp = true;
+    }
+  for (after = 0; after < NLBP; after++)
+    {
+      before = LBP_BB; table[before][after].prohibited_no_sp = true;
+    }
+
+  /* (LB19) Do not break before or after quotation marks, such as '”'.  */
+  for (before = 0; before < NLBP; before++)
+    {
+      after = LBP_QU; table[before][after].prohibited_no_sp = true;
+    }
+  for (after = 0; after < NLBP; after++)
+    {
+      before = LBP_QU; table[before][after].prohibited_no_sp = true;
+    }
+
+  /* (LB18) Break after spaces.  */
+  for (before = 0; before < NLBP; before++)
+    for (after = 0; after < NLBP; after++)
+      table[before][after].prohibited_with_sp = false;
+
+  /* (LB17) Do not break within '——', even with intervening spaces.  */
+  before = LBP_B2; after = LBP_B2; table[before][after].prohibited_no_sp = true;
+                                   table[before][after].prohibited_with_sp = true;
+
+  /* (LB16) Do not break between closing punctuation and a nonstarter (lb=NS),
+     even with intervening spaces.  */
+  before = LBP_CL; after = LBP_NS; table[before][after].prohibited_no_sp = true;
+                                   table[before][after].prohibited_with_sp = true;
+  before = LBP_CL; after = LBP_CP; table[before][after].prohibited_no_sp = true;
+                                   table[before][after].prohibited_with_sp = true;
+
+  /* (LB15) Do not break within '”[', even with intervening spaces.  */
+  before = LBP_QU; after = LBP_OP; table[before][after].prohibited_no_sp = true;
+                                   table[before][after].prohibited_with_sp = true;
+
+  /* (LB14) Do not break after '[', even after spaces.  */
+  for (after = 0; after < NLBP; after++)
+    {
+      before = LBP_OP; table[before][after].prohibited_no_sp = true;
+                       table[before][after].prohibited_with_sp = true;
+    }
+
+  /* (LB13) Do not break before ‘]’ or ‘!’ or ‘;’ or ‘/’, even after spaces.  */
+  for (before = 0; before < NLBP; before++)
+    {
+      after = LBP_CL; table[before][after].prohibited_no_sp = true;
+                      table[before][after].prohibited_with_sp = true;
+      after = LBP_CP; table[before][after].prohibited_no_sp = true;
+                      table[before][after].prohibited_with_sp = true;
+      after = LBP_EX; table[before][after].prohibited_no_sp = true;
+                      table[before][after].prohibited_with_sp = true;
+      after = LBP_IS; table[before][after].prohibited_no_sp = true;
+                      table[before][after].prohibited_with_sp = true;
+      after = LBP_SY; table[before][after].prohibited_no_sp = true;
+                      table[before][after].prohibited_with_sp = true;
+    }
+
+  /* (LB12a) Do not break before NBSP and related characters, except after
+     spaces and hyphens.  */
+  for (before = 0; before < NLBP; before++)
+    if (before != LBP_BA && before != LBP_HY)
+      {
+        after = LBP_GL; table[before][after].prohibited_no_sp = true;
+      }
+
+  /* (LB12) Do not break after NBSP and related characters.  */
+  for (after = 0; after < NLBP; after++)
+    {
+      before = LBP_GL; table[before][after].prohibited_no_sp = true;
+    }
+
+  /* (LB11) Do not break before or after Word joiner and related characters.  */
+  for (before = 0; before < NLBP; before++)
+    {
+      after = LBP_WJ; table[before][after].prohibited_no_sp = true;
+                      table[before][after].prohibited_with_sp = true;
+    }
+  for (after = 0; after < NLBP; after++)
+    {
+      before = LBP_WJ; table[before][after].prohibited_no_sp = true;
+    }
+
+  /* (LB10) Treat any remaining combining mark or ZWJ as AL.  */
+  /* We resolve LBP_CM at runtime, before accessing the table.  */
+  for (before = 0; before < NLBP; before++)
+    table[before][LBP_ZWJ] = table[before][LBP_AL];
+  for (after = 0; after < NLBP; after++)
+    table[LBP_ZWJ][after] = table[LBP_AL][after];
+  table[LBP_ZWJ][LBP_ZWJ] = table[LBP_AL][LBP_AL];
+
+  /* (LB8a) Do not break between a zero width joiner and an ideograph, emoji
+     base or emoji modifier.  */
+  before = LBP_ZWJ; after = LBP_ID; table[before][after].prohibited_no_sp = true;
+  before = LBP_ZWJ; after = LBP_EB; table[before][after].prohibited_no_sp = true;
+  before = LBP_ZWJ; after = LBP_EM; table[before][after].prohibited_no_sp = true;
+
+  /* Not reflected in the table:
+  (LB30a) Break between two regional indicator symbols if and only if there are
+          an even number of regional indicators preceding the position of the
+          break.
+  (LB21a) Don't break after Hebrew + Hyphen.
+  (LB20) Break before and after unresolved CB.
+         We resolve LBP_CB at runtime, before accessing the table.
+  (LB9) Do not break a combining character sequence; treat it as if it has the
+        line breaking class of the base character in all of the following rules.
+        Treat ZWJ as if it were CM.
+  (LB8) Break before any character following a zero-width space, even if one
+        or more spaces intervene.
+        We handle LBP_ZW at runtime, before accessing the table.
+  (LB7) Do not break before spaces or zero width space.
+        We handle LBP_ZW at runtime, before accessing the table.
+  (LB6) Do not break before hard line breaks.
+        We handle LBP_BK at runtime, before accessing the table.
+  (LB5) Treat CR followed by LF, as well as CR, LF, and NL as hard line breaks.
+  (LB4) Always break after hard line breaks.
+  (LB3) Always break at the end of text.
+  (LB2) Never break at the start of text.
+  */
+
+  fprintf (stream, "const unsigned char unilbrk_table[%u][%u] =\n", NLBP, NLBP);
+  fprintf (stream, "{\n");
+  fprintf (stream, "                                /* after */\n");
+
+  fprintf (stream, "        /* ");
+  for (after = 0; after < NLBP; after++)
+    fprintf (stream, " %-3s", lbp_value_to_string (after) + 4);
+  fprintf (stream, " */\n");
+
+  for (before = 0; before < NLBP; before++)
+    {
+      fprintf (stream, "/* %3s */ {", lbp_value_to_string (before) + 4);
+      for (after = 0; after < NLBP; after++)
+        {
+          if (table[before][after].prohibited_no_sp)
+            {
+              if (table[before][after].prohibited_with_sp)
+                /* Prohibited break.  */
+                fprintf (stream, "  P,");
+              else
+                /* Indirect break.  */
+                fprintf (stream, "  I,");
+            }
+          else
+            {
+              if (table[before][after].prohibited_with_sp)
+                abort ();
+              else
+                /* Direct break.  */
+                fprintf (stream, "  D,");
+            }
+        }
+      fprintf (stream, " },\n");
+    }
+  fprintf (stream, "/* \"\" */\n");
+  fprintf (stream, "/* before */\n");
+  fprintf (stream, "};\n");
+
+  if (ferror (stream) || fclose (stream))
+    {
+      fprintf (stderr, "error writing to '%s'\n", filename);
+      exit (1);
     }
 }
 
@@ -10582,6 +10929,7 @@ main (int argc, char * argv[])
   debug_output_lbrk_tables ("unilbrk/lbrkprop.txt");
   debug_output_org_lbrk_tables ("unilbrk/lbrkprop_org.txt");
   output_lbrk_tables ("unilbrk/lbrkprop1.h", "unilbrk/lbrkprop2.h", version);
+  output_lbrk_rules_as_tables ("unilbrk/lbrktables.c", version);
 
   debug_output_wbrk_tables ("uniwbrk/wbrkprop.txt");
   debug_output_org_wbrk_tables ("uniwbrk/wbrkprop_org.txt");
