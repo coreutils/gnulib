@@ -1,0 +1,78 @@
+/* Get the system clock resolution.
+
+   Copyright 2021 Free Software Foundation, Inc.
+
+   This file is free software: you can redistribute it and/or modify
+   it under the terms of the GNU Lesser General Public License as
+   published by the Free Software Foundation; either version 3 of the
+   License, or (at your option) any later version.
+
+   This file is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Lesser General Public License for more details.
+
+   You should have received a copy of the GNU Lesser General Public License
+   along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
+
+/* Written by Paul Eggert.  */
+
+#include <config.h>
+
+#include "timespec.h"
+
+static long int
+gcd (long int a, long int b)
+{
+  while (b != 0)
+    {
+      long int r = a % b;
+      a = b;
+      b = r;
+    }
+  return a;
+}
+
+/* Return the system time resolution in nanoseconds.  */
+
+long int
+gettime_res (void)
+{
+  struct timespec res;
+#if defined CLOCK_REALTIME && HAVE_CLOCK_GETRES
+  clock_getres (CLOCK_REALTIME, &res);
+#elif defined HAVE_TIMESPEC_GETRES
+  timespec_getres (&res, TIME_UTC);
+#else
+  /* Guess high and let the later code deduce better.  */
+  res.tv_sec = 1;
+  res.tv_nsec = 0;
+#endif
+
+  /* On all Gnulib platforms the following calculations do not overflow.  */
+
+  long int hz = TIMESPEC_HZ;
+  long int r = hz * res.tv_sec + res.tv_nsec;
+
+  /* On some platforms, clock_getres (CLOCK_REALTIME, ...) yields a
+     too-large resolution, under the mistaken theory that it should
+     return the timer interval.  For example, on AIX 7.2 POWER8
+     clock_getres yields 1 cs even though clock_gettime yields 1 µs
+     resolution.  Work around the problem with high probability by
+     trying clock_gettime several times and observing the resulting
+     bounds on resolution.  */
+  for (int i = 0; 1 < r && i < 32; i++)
+    {
+      struct timespec now = current_timespec ();
+      r = gcd (r, now.tv_nsec ? now.tv_nsec : hz * now.tv_sec);
+    }
+
+  return r;
+}
+
+/*
+ * Hey Emacs!
+ * Local Variables:
+ * coding: utf-8
+ * End:
+ */

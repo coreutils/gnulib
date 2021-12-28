@@ -16,3 +16,6 @@ Portability problems not fixed by Gnulib:
 This function is missing on some platforms:
 Mac OS X 10.11, Minix 3.1.8, mingw, MSVC 14.
 @end itemize
+
+The Gnulib module @code{gettime-res} is a partial substitute; it implements
+the @code{CLOCK_REALTIME} functionality of @code{clock_getres}.

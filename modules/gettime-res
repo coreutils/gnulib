@@ -1,0 +1,30 @@
+Description:
+Return current time resolution
+
+Files:
+lib/gettime-res.c
+m4/gettime.m4
+
+Depends-on:
+clock-time
+gettime
+timespec
+extensions
+
+configure.ac:
+gl_GETTIME_RES
+
+Makefile.am:
+lib_SOURCES += gettime-res.c
+
+Include:
+"timespec.h"
+
+Link:
+$(LIB_CLOCK_GETTIME)
+
+License:
+LGPL
+
+Maintainer:
+Paul Eggert, Jim Meyering
