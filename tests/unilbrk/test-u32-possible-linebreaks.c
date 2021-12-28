@@ -164,5 +164,20 @@ main ()
     free (p);
   }
 
+  /* Test line breaking of regional indicators.  */
+  {
+    static const uint32_t input[4] =
+      { 0x1F1E9, 0x1F1EA, 0x1F1EB, 0x1F1F7 };
+    char *p = (char *) malloc (SIZEOF (input));
+    size_t i;
+
+    u32_possible_linebreaks (input, SIZEOF (input), "UTF-8", p);
+    for (i = 0; i < 4; i++)
+      {
+        ASSERT (p[i] == (i == 2 ? UC_BREAK_POSSIBLE : UC_BREAK_PROHIBITED));
+      }
+    free (p);
+  }
+
   return 0;
 }

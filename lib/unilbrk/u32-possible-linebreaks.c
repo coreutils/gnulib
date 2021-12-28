@@ -44,6 +44,10 @@ u32_possible_linebreaks (const uint32_t *s, size_t n, const char *encoding, char
       int last_prop = LBP_BK; /* line break property of last non-space character */
       char *seen_space = NULL; /* Was a space seen after the last non-space character? */
 
+      /* Number of consecutive regional indicator (RI) characters seen
+         immediately before the current point.  */
+      size_t ri_count = 0;
+
       do
         {
           ucs4_t uc = *s;
@@ -146,6 +150,15 @@ u32_possible_linebreaks (const uint32_t *s, size_t n, const char *encoding, char
                       /* (LB8a) Don't break right after a zero-width joiner.  */
                       *p = UC_BREAK_PROHIBITED;
                     }
+                  else if (last_prop == LBP_RI && prop == LBP_RI)
+                    {
+                      /* (LB30a) Break between two regional indicator symbols
+                         if and only if there are an even number of regional
+                         indicators preceding the position of the break.  */
+                      *p = (seen_space != NULL || (ri_count % 2) == 0
+                            ? UC_BREAK_POSSIBLE
+                            : UC_BREAK_PROHIBITED);
+                    }
                   else
                     {
                       switch (unilbrk_table [last_prop] [prop])
@@ -169,6 +182,11 @@ u32_possible_linebreaks (const uint32_t *s, size_t n, const char *encoding, char
 
               prev_prop = prop;
             }
+
+          if (prop == LBP_RI)
+            ri_count++;
+          else
+            ri_count = 0;
 
           s++;
           p++;
