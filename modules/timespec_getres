@@ -1,0 +1,32 @@
+Description:
+timespec_getres: return the timestamp resolution
+
+Files:
+lib/timespec_getres.c
+m4/timespec_getres.m4
+
+Depends-on:
+extensions
+time
+gettime-res     [test $HAVE_TIMESPEC_GETRES = 0]
+
+configure.ac:
+AC_REQUIRE([gl_FUNC_TIMESPEC_GETRES])
+if test $HAVE_TIMESPEC_GETRES = 0; then
+  AC_LIBOBJ([timespec_getres])
+fi
+gl_TIME_MODULE_INDICATOR([timespec_getres])
+
+Makefile.am:
+
+Include:
+<time.h>
+
+Link:
+$(LIB_CLOCK_GETTIME)
+
+License:
+LGPL
+
+Maintainer:
+all
