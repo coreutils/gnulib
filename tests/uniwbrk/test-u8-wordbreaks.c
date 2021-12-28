@@ -81,5 +81,20 @@ main ()
     free (p);
   }
 
+  /* Test regional indicators.  */
+  {
+    static const uint8_t input[18] =
+      ".\360\237\207\251\360\237\207\252\360\237\207\253\360\237\207\267.";
+    char *p = (char *) malloc (SIZEOF (input));
+    size_t i;
+
+    u8_wordbreaks (input, SIZEOF (input), p);
+    for (i = 0; i < 18; i++)
+      {
+        ASSERT (p[i] == (i == 1 || i == 9 || i == 17 ? 1 : 0));
+      }
+    free (p);
+  }
+
   return 0;
 }

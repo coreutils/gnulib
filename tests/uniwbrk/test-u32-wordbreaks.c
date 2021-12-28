@@ -90,5 +90,20 @@ main ()
     free (p);
   }
 
+  /* Test regional indicators.  */
+  {
+    static const uint32_t input[6] =
+      { '.', 0x1F1E9, 0x1F1EA, 0x1F1EB, 0x1F1F7, '.' };
+    char *p = (char *) malloc (SIZEOF (input));
+    size_t i;
+
+    u32_wordbreaks (input, SIZEOF (input), p);
+    for (i = 0; i < 6; i++)
+      {
+        ASSERT (p[i] == (i == 1 || i == 3 || i == 5 ? 1 : 0));
+      }
+    free (p);
+  }
+
   return 0;
 }
