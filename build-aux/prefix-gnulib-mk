@@ -133,8 +133,8 @@ sub prefix_assignment ($$)
     {
       # Do not change the RHS, which specifies the GPERF program.
     }
-  # Don't change variables such as HAVE_INCLUDE_NEXT.
-  elsif ($lhs_and_assign_op =~ /^HAVE_/)
+  # Don't change variables such as HAVE_INCLUDE_NEXT or SED_HEADER_STDOUT.
+  elsif ($lhs_and_assign_op =~ /^(HAVE_|SED_HEADER_)/)
     {
     }
   elsif ($lhs_and_assign_op =~
