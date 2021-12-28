@@ -21,7 +21,7 @@
 
 #include "timespec.h"
 
-static long int
+static long int _GL_ATTRIBUTE_CONST
 gcd (long int a, long int b)
 {
   while (b != 0)
