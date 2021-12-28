@@ -95,5 +95,24 @@ main ()
     free (p);
   }
 
+  /* Test line breaking in a string with HTML markup.  */
+  {
+    static const uint16_t input[21] =
+      {
+        '<', 'P', '>', 'S', 'o', 'm', 'e', ' ', 's', 'e', 'n', 't',
+        'e', 'n', 'c', 'e', '.', '<', '/', 'P', '>'
+      };
+    char *p = (char *) malloc (SIZEOF (input));
+    size_t i;
+
+    u16_possible_linebreaks (input, SIZEOF (input), "UTF-8", p);
+    for (i = 0; i < 21; i++)
+      {
+        ASSERT (p[i] == (i == 8 || i == 17 || i == 19 ? UC_BREAK_POSSIBLE :
+                         UC_BREAK_PROHIBITED));
+      }
+    free (p);
+  }
+
   return 0;
 }

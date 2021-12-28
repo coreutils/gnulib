@@ -82,9 +82,24 @@ main ()
     size_t i;
 
     u8_possible_linebreaks (input, SIZEOF (input), "UTF-8", p);
-    for (i = 0; i < 4; i++)
+    for (i = 0; i < 6; i++)
       {
         ASSERT (p[i] == (i == 5 ? UC_BREAK_POSSIBLE : UC_BREAK_PROHIBITED));
+      }
+    free (p);
+  }
+
+  /* Test line breaking in a string with HTML markup.  */
+  {
+    static const uint8_t input[21] = "<P>Some sentence.</P>";
+    char *p = (char *) malloc (SIZEOF (input));
+    size_t i;
+
+    u8_possible_linebreaks (input, SIZEOF (input), "UTF-8", p);
+    for (i = 0; i < 21; i++)
+      {
+        ASSERT (p[i] == (i == 8 || i == 17 || i == 19 ? UC_BREAK_POSSIBLE :
+                         UC_BREAK_PROHIBITED));
       }
     free (p);
   }

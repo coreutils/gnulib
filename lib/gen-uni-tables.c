@@ -8149,8 +8149,12 @@ output_lbrk_rules_as_tables (const char *filename, const char *version)
 
   /* (LB29) Do not break between numeric punctuation and alphabetics
      ("e.g.").  */
+  /* We don't implement this rule, because we find it desirable to break before
+     the HTML tag "</P>" in strings like "<P>Some sentence.</P>".  */
+#if 0
   before = LBP_IS; after = LBP_AL; table[before][after].prohibited_no_sp = true;
   before = LBP_IS; after = LBP_HL; table[before][after].prohibited_no_sp = true;
+#endif
 
   /* (LB28) Do not break between alphabetics ("at").  */
   before = LBP_AL; after = LBP_AL; table[before][after].prohibited_no_sp = true;

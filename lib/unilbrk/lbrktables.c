@@ -50,7 +50,7 @@ const unsigned char unilbrk_table[30][30] =
 /*  NS */ {  P,  I,  D,  I,  D,  I,  P,  P,  P,  D,  I,  D,  I,  P,  D,  D,  D,  P,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D, },
 /*  OP */ {  P,  P,  P,  P,  P,  P,  P,  P,  P,  P,  P,  P,  P,  P,  P,  P,  P,  P,  P,  P,  P,  P,  P,  P,  P,  P,  P,  P,  P,  P, },
 /*  QU */ {  P,  I,  I,  I,  I,  I,  P,  P,  P,  I,  I,  P,  I,  P,  I,  I,  I,  P,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I, },
-/*  IS */ {  P,  I,  D,  I,  D,  I,  P,  P,  P,  D,  I,  D,  I,  P,  I,  D,  D,  P,  I,  D,  D,  D,  D,  D,  D,  I,  D,  I,  D,  D, },
+/*  IS */ {  P,  I,  D,  I,  D,  I,  P,  P,  P,  D,  I,  D,  I,  P,  I,  D,  D,  P,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D, },
 /*  NU */ {  P,  I,  D,  I,  D,  I,  P,  P,  P,  I,  I,  I,  I,  P,  I,  I,  I,  P,  I,  D,  D,  D,  D,  D,  D,  I,  D,  I,  D,  D, },
 /*  PO */ {  P,  I,  D,  I,  D,  I,  P,  P,  P,  D,  I,  I,  I,  P,  I,  D,  D,  P,  I,  D,  D,  D,  D,  D,  D,  I,  D,  I,  D,  D, },
 /*  PR */ {  P,  I,  D,  I,  D,  I,  P,  P,  P,  D,  I,  I,  I,  P,  I,  D,  D,  P,  I,  I,  I,  I,  I,  I,  I,  I,  D,  I,  I,  I, },
