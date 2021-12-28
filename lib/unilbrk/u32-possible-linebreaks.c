@@ -40,6 +40,7 @@ u32_possible_linebreaks (const uint32_t *s, size_t n, const char *encoding, char
     {
       int LBP_AI_REPLACEMENT = (is_cjk_encoding (encoding) ? LBP_ID : LBP_AL);
       const uint32_t *s_end = s + n;
+      int prev_prop = LBP_BK; /* line break property of last character */
       int last_prop = LBP_BK; /* line break property of last non-space character */
       char *seen_space = NULL; /* Was a space seen after the last non-space character? */
 
@@ -52,6 +53,7 @@ u32_possible_linebreaks (const uint32_t *s, size_t n, const char *encoding, char
             {
               /* (LB4,LB5,LB6) Mandatory break.  */
               *p = UC_BREAK_MANDATORY;
+              prev_prop = LBP_BK;
               last_prop = LBP_BK;
               seen_space = NULL;
             }
@@ -91,16 +93,16 @@ u32_possible_linebreaks (const uint32_t *s, size_t n, const char *encoding, char
                   last_prop = LBP_ZW;
                   seen_space = NULL;
                 }
-              else if (prop == LBP_CM)
+              else if (prop == LBP_CM || prop == LBP_ZWJ)
                 {
-                  /* (LB9) Don't break just before a combining character, except
-                     immediately after a mandatory break character, space, or
-                     zero-width space.  */
+                  /* (LB9) Don't break just before a combining character or
+                     zero-width joiner, except immediately after a mandatory
+                     break character, space, or zero-width space.  */
                   if (last_prop == LBP_BK)
                     {
                       /* (LB4,LB5,LB6) Don't break at the beginning of a line.  */
                       *p = UC_BREAK_PROHIBITED;
-                      /* Treat CM as AL.  */
+                      /* (LB10) Treat CM or ZWJ as AL.  */
                       last_prop = LBP_AL;
                       seen_space = NULL;
                     }
@@ -112,7 +114,7 @@ u32_possible_linebreaks (const uint32_t *s, size_t n, const char *encoding, char
                          character as base for combining marks" because now the
                          NBSP CM sequence is recommended instead of SP CM.  */
                       *p = UC_BREAK_POSSIBLE;
-                      /* Treat CM as AL.  */
+                      /* (LB10) Treat CM or ZWJ as AL.  */
                       last_prop = LBP_AL;
                       seen_space = NULL;
                     }
@@ -138,6 +140,12 @@ u32_possible_linebreaks (const uint32_t *s, size_t n, const char *encoding, char
                       /* (LB8) Break after zero-width space.  */
                       *p = UC_BREAK_POSSIBLE;
                     }
+                  else if (prev_prop == LBP_ZWJ
+                           && (prop == LBP_ID || prop == LBP_EB || prop == LBP_EM))
+                    {
+                      /* (LB8a) Don't break right after a zero-width joiner.  */
+                      *p = UC_BREAK_PROHIBITED;
+                    }
                   else
                     {
                       switch (unilbrk_table [last_prop] [prop])
@@ -158,6 +166,8 @@ u32_possible_linebreaks (const uint32_t *s, size_t n, const char *encoding, char
                   last_prop = prop;
                   seen_space = NULL;
                 }
+
+              prev_prop = prop;
             }
 
           s++;

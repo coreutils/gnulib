@@ -135,5 +135,34 @@ main ()
     free (p);
   }
 
+  /* Test line breaking of zero-width joiners (U+200D).  */
+  {
+    static const uint32_t input[37] =
+      {
+        0x6709, 0x7121, 0x7AAE, 0x591A, 0x500B, 0x7D20, 0x6578, 0x3002, '\n',
+        0x6709, 0x200D, 0x7121, 0x200D, 0x7AAE, 0x591A, 0x500B, 0x7D20, 0x200D, 0x6578, 0x3002, '\n',
+        0x4F60, 0x2014, 0x4E0D, '\n',
+        0x4F60, 0x2014, 0x200D, 0x4E0D, '\n',
+        0x261D, 0x1F3FF, '\n',
+        0x261D, 0x200D, 0x1F3FF, '\n',
+      };
+    char *p = (char *) malloc (SIZEOF (input));
+    size_t i;
+
+    u32_possible_linebreaks (input, SIZEOF (input), "UTF-8", p);
+    for (i = 0; i < 37; i++)
+      {
+        ASSERT (p[i] == (i == 8 || i == 20
+                         || i == 24 || i == 29
+                         || i == 32 || i == 36 ? UC_BREAK_MANDATORY :
+                         i == 1 || i == 2 || i == 3 || i == 4 || i == 5 || i == 6
+                         || i == 14 || i == 15 || i == 16
+                         || i == 22 || i == 23
+                         || i == 26 ? UC_BREAK_POSSIBLE :
+                         UC_BREAK_PROHIBITED));
+      }
+    free (p);
+  }
+
   return 0;
 }
