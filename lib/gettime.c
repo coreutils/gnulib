@@ -30,6 +30,8 @@ gettime (struct timespec *ts)
 {
 #if defined CLOCK_REALTIME && HAVE_CLOCK_GETTIME
   clock_gettime (CLOCK_REALTIME, ts);
+#elif defined HAVE_TIMESPEC_GET
+  timespec_get (ts, TIME_UTC);
 #else
   struct timeval tv;
   gettimeofday (&tv, NULL);
