@@ -450,20 +450,99 @@ uc_width (ucs4_t uc, const char *encoding)
         }
     }
   /* Test for double-width character.
-   * Generated from "grep '^[^;]\{4,5\};[WF]' EastAsianWidth.txt"
-   * and            "grep '^[^;]\{4,5\};[^WF]' EastAsianWidth.txt"
+   * Generated from "grep '^[^;]\+;[WF]' EastAsianWidth.txt"
+   * and            "grep '^[^;]\+;[^WF]' EastAsianWidth.txt"
    */
   if (uc >= 0x1100
       && ((uc < 0x1160) /* Hangul Jamo */
-          || (uc >= 0x2329 && uc < 0x232b) /* Angle Brackets */
+          || ((uc >> 9) == 0x11
+              && ((uc >= 0x231a && uc < 0x231c) /* Watch, Hourglass */
+                  || (uc >= 0x2329 && uc < 0x232b) /* Angle Brackets */
+                  || (uc >= 0x23e9 && uc < 0x23ed) /* Black double triangles */
+                  || uc == 0x23f0 /* Alarm clock */
+                  || uc == 0x23f3)) /* Hourglass */
+          || ((uc >> 9) == 0x12
+              && (uc >= 0x25fd && uc < 0x25ff)) /* Medium small squares */
+          || ((uc >> 9) == 0x13 /* Miscellaneous symbols, dingbats */
+              && ((uc >= 0x2614 && uc < 0x2616)
+                  || (uc >= 0x2648 && uc < 0x2654)
+                  || uc == 0x267f
+                  || uc == 0x2693
+                  || uc == 0x26a1
+                  || (uc >= 0x26aa && uc < 0x26ac)
+                  || (uc >= 0x26bd && uc < 0x26bf)
+                  || (uc >= 0x26c4 && uc < 0x26c6)
+                  || uc == 0x26ce
+                  || uc == 0x26d4
+                  || uc == 0x26ea
+                  || (uc >= 0x26f2 && uc < 0x26f4)
+                  || uc == 0x26f5
+                  || uc == 0x26fa
+                  || uc == 0x26fd
+                  || uc == 0x2705
+                  || (uc >= 0x270a && uc < 0x270c)
+                  || uc == 0x2728
+                  || uc == 0x274c
+                  || uc == 0x274e
+                  || (uc >= 0x2753 && uc < 0x2756)
+                  || uc == 0x2757
+                  || (uc >= 0x2795 && uc < 0x2798)
+                  || uc == 0x27b0
+                  || uc == 0x27bf))
+          || ((uc >> 9) == 0x15
+              && ((uc >= 0x2b1b && uc < 0x2b1d) /* Large squares */
+                  || uc == 0x2b50
+                  || uc == 0x2b55))
           || (uc >= 0x2e80 && uc < 0xa4d0  /* CJK ... Yi */
-              && !(uc == 0x303f) && !(uc >= 0x4dc0 && uc < 0x4e00))
+              && !(uc == 0x303f)
+              && !(uc >= 0x3248 && uc < 0x3250)
+              && !(uc >= 0x4dc0 && uc < 0x4e00))
+          || (uc >= 0xa960 && uc < 0xa97d) /* Hangul Jamo Extended-A */
           || (uc >= 0xac00 && uc < 0xd7a4) /* Hangul Syllables */
           || (uc >= 0xf900 && uc < 0xfb00) /* CJK Compatibility Ideographs */
           || (uc >= 0xfe10 && uc < 0xfe20) /* Presentation Forms for Vertical */
           || (uc >= 0xfe30 && uc < 0xfe70) /* CJK Compatibility Forms */
           || (uc >= 0xff00 && uc < 0xff61) /* Fullwidth Forms */
           || (uc >= 0xffe0 && uc < 0xffe7) /* Fullwidth Signs */
+          || (uc >= 0x16fe0 && uc < 0x16fe2) /* Tangut mark, Nushu mark */
+          || (uc >= 0x17000 && uc < 0x187ed) /* Tangut */
+          || (uc >= 0x18800 && uc < 0x18af3) /* Tangut components */
+          || (uc >= 0x1b000 && uc < 0x1b120) /* Kana supplement, Kana Extended-A */
+          || (uc >= 0x1b170 && uc < 0x1b2fc) /* Nushu */
+          || ((uc >> 9) == 0xf8
+              && (uc == 0x1f004
+                  || uc == 0x1f0cf
+                  || uc == 0x1f18e
+                  || (uc >= 0x1f191 && uc < 0x1f19b)))
+          || ((uc >> 9) == 0xf9 /* Miscellaneous symbols and pictographs */
+              && ((uc >= 0x1f200 && uc < 0x1f321)
+                  || (uc >= 0x1f32d && uc < 0x1f336)
+                  || (uc >= 0x1f337 && uc < 0x1f37d)
+                  || (uc >= 0x1f37e && uc < 0x1f394)
+                  || (uc >= 0x1f3a0 && uc < 0x1f3cb)
+                  || (uc >= 0x1f3cf && uc < 0x1f3d4)
+                  || (uc >= 0x1f3e0 && uc < 0x1f3f1)
+                  || uc == 0x1f3f4
+                  || uc >= 0x1f3f8))
+          || ((uc >> 9) == 0xfa
+              && (uc < 0x1f43f
+                  || uc == 0x1f440
+                  || (uc >= 0x1f442 && uc < 0x1f4fd)
+                  || (uc >= 0x1f4ff && uc < 0x1f53e)
+                  || (uc >= 0x1f54b && uc < 0x1f54f)
+                  || (uc >= 0x1f550 && uc < 0x1f568)
+                  || uc == 0x1f57a
+                  || (uc >= 0x1f595 && uc < 0x1f597)
+                  || uc == 0x1f5a4
+                  || uc >= 0x1f5fb))
+          || ((uc >> 9) == 0xfb
+              && (uc < 0x1f650
+                  || (uc >= 0x1f680 && uc < 0x1f6c6)
+                  || uc == 0x1f6cc
+                  || (uc >= 0x1f6d0 && uc < 0x1f6d3)
+                  || (uc >= 0x1f6eb && uc < 0x1f6ed)
+                  || (uc >= 0x1f6f4 && uc < 0x1f6f9)))
+          || (uc >= 0x1f910 && uc < 0x1f9e7)
           || (uc >= 0x20000 && uc <= 0x2ffff) /* Supplementary Ideographic Plane */
           || (uc >= 0x30000 && uc <= 0x3ffff) /* Tertiary Ideographic Plane */
      )   )
