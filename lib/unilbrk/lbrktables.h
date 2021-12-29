@@ -31,20 +31,20 @@ enum
 {
   /* Values >= 30 are resolved at run time. */
   LBP_BK = 30, /* mandatory break */
-/*LBP_CR,         carriage return - not used here because it's a DOSism */
-/*LBP_LF,         line feed - not used here because it's a DOSism */
-  LBP_CM = 31, /* attached characters and combining marks */
+  LBP_CR = 31, /* carriage return */
+  LBP_LF = 32, /* line feed */
+  LBP_CM = 33, /* attached characters and combining marks */
 /*LBP_NL,         next line - not used here because it's equivalent to LBP_BK */
 /*LBP_SG,         surrogates - not used here because they are not characters */
   LBP_WJ =  0, /* word joiner */
-  LBP_ZW = 32, /* zero width space */
+  LBP_ZW = 34, /* zero width space */
   LBP_GL =  1, /* non-breaking (glue) */
-  LBP_SP = 33, /* space */
+  LBP_SP = 35, /* space */
   LBP_B2 =  2, /* break opportunity before and after */
   LBP_BA =  3, /* break opportunity after */
   LBP_BB =  4, /* break opportunity before */
   LBP_HY =  5, /* hyphen */
-  LBP_CB = 34, /* contingent break opportunity */
+  LBP_CB = 36, /* contingent break opportunity */
   LBP_CL =  6, /* closing punctuation */
   LBP_CP =  7, /* closing parenthesis */
   LBP_EX =  8, /* exclamation/interrogation */
@@ -57,7 +57,7 @@ enum
   LBP_PO = 15, /* postfix (numeric) */
   LBP_PR = 16, /* prefix (numeric) */
   LBP_SY = 17, /* symbols allowing breaks */
-  LBP_AI = 35, /* ambiguous (alphabetic or ideograph) */
+  LBP_AI = 37, /* ambiguous (alphabetic or ideograph) */
   LBP_AL = 18, /* ordinary alphabetic and symbol characters */
 /*LBP_CJ,         conditional Japanese starters, resolved to NS */
   LBP_H2 = 19, /* Hangul LV syllable */
@@ -68,11 +68,11 @@ enum
   LBP_JV = 23, /* Hangul V Jamo */
   LBP_JT = 24, /* Hangul T Jamo */
   LBP_RI = 26, /* regional indicator */
-  LBP_SA = 36, /* complex context (South East Asian) */
+  LBP_SA = 38, /* complex context (South East Asian) */
   LBP_ZWJ = 27, /* zero width joiner */
   LBP_EB = 28, /* emoji base */
   LBP_EM = 29, /* emoji modifier */
-  LBP_XX = 37, /* unknown */
+  LBP_XX = 39, /* unknown */
   /* Artificial values that exist only at runtime, not in the tables. */
   LBP_HL_BA = 100
 };

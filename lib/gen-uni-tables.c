@@ -6518,20 +6518,20 @@ enum
 {
   /* Values >= 30 are resolved at run time. */
   LBP_BK = 30, /* mandatory break */
-/*LBP_CR,         carriage return - not used here because it's a DOSism */
-/*LBP_LF,         line feed - not used here because it's a DOSism */
-  LBP_CM = 31, /* attached characters and combining marks */
+  LBP_CR = 31, /* carriage return */
+  LBP_LF = 32, /* line feed */
+  LBP_CM = 33, /* attached characters and combining marks */
 /*LBP_NL,         next line - not used here because it's equivalent to LBP_BK */
 /*LBP_SG,         surrogates - not used here because they are not characters */
   LBP_WJ =  0, /* word joiner */
-  LBP_ZW = 32, /* zero width space */
+  LBP_ZW = 34, /* zero width space */
   LBP_GL =  1, /* non-breaking (glue) */
-  LBP_SP = 33, /* space */
+  LBP_SP = 35, /* space */
   LBP_B2 =  2, /* break opportunity before and after */
   LBP_BA =  3, /* break opportunity after */
   LBP_BB =  4, /* break opportunity before */
   LBP_HY =  5, /* hyphen */
-  LBP_CB = 34, /* contingent break opportunity */
+  LBP_CB = 36, /* contingent break opportunity */
   LBP_CL =  6, /* closing punctuation */
   LBP_CP =  7, /* closing parenthesis */
   LBP_EX =  8, /* exclamation/interrogation */
@@ -6544,7 +6544,7 @@ enum
   LBP_PO = 15, /* postfix (numeric) */
   LBP_PR = 16, /* prefix (numeric) */
   LBP_SY = 17, /* symbols allowing breaks */
-  LBP_AI = 35, /* ambiguous (alphabetic or ideograph) */
+  LBP_AI = 37, /* ambiguous (alphabetic or ideograph) */
   LBP_AL = 18, /* ordinary alphabetic and symbol characters */
 /*LBP_CJ,         conditional Japanese starter, resolved to NS */
   LBP_H2 = 19, /* Hangul LV syllable */
@@ -6555,11 +6555,11 @@ enum
   LBP_JV = 23, /* Hangul V Jamo */
   LBP_JT = 24, /* Hangul T Jamo */
   LBP_RI = 26, /* regional indicator */
-  LBP_SA = 36, /* complex context (South East Asian) */
+  LBP_SA = 38, /* complex context (South East Asian) */
   LBP_ZWJ = 27, /* zero width joiner */
   LBP_EB = 28, /* emoji base */
   LBP_EM = 29, /* emoji modifier */
-  LBP_XX = 37  /* unknown */
+  LBP_XX = 39  /* unknown */
 };
 
 /* Returns the line breaking classification for ch, as a bit mask.  */
@@ -6575,7 +6575,11 @@ get_lbp (unsigned int ch)
   if (unicode_attributes[ch].name != NULL)
     {
       /* mandatory break */
-      if (ch == 0x000A || ch == 0x000D || ch == 0x0085 /* newline */
+      if (ch == 0x000A)
+        attr |= (int64_t) 1 << LBP_LF;
+      if (ch == 0x000D)
+        attr |= (int64_t) 1 << LBP_CR;
+      if (ch == 0x0085 /* newline */
           || ch == 0x000C /* form feed */
           || ch == 0x000B /* line tabulation */
           || ch == 0x2028 /* LINE SEPARATOR */
@@ -7206,7 +7210,7 @@ get_lbp (unsigned int ch)
               && ch != 0x110BD /* KAITHI NUMBER SIGN */
               && ch != 0x08E2 /* ARABIC DISPUTED END OF AYAH */)
           || ch == 0x3035 /* VERTICAL KANA REPEAT MARK LOWER HALF */)
-        if (!(attr & (((int64_t) 1 << LBP_BK) | ((int64_t) 1 << LBP_BA) | ((int64_t) 1 << LBP_GL) | ((int64_t) 1 << LBP_SA) | ((int64_t) 1 << LBP_WJ) | ((int64_t) 1 << LBP_ZW) | ((int64_t) 1 << LBP_ZWJ))))
+        if (!(attr & (((int64_t) 1 << LBP_BK) | ((int64_t) 1 << LBP_CR) | ((int64_t) 1 << LBP_LF) | ((int64_t) 1 << LBP_BA) | ((int64_t) 1 << LBP_GL) | ((int64_t) 1 << LBP_SA) | ((int64_t) 1 << LBP_WJ) | ((int64_t) 1 << LBP_ZW) | ((int64_t) 1 << LBP_ZWJ))))
           attr |= (int64_t) 1 << LBP_CM;
 
       /* ideographic */
@@ -7587,6 +7591,8 @@ debug_output_lbp (FILE *stream)
 #define PRINT_BIT(attr,bit) \
   if (attr & ((int64_t) 1 << bit)) fprintf (stream, " " #bit);
           PRINT_BIT(attr,LBP_BK);
+          PRINT_BIT(attr,LBP_CR);
+          PRINT_BIT(attr,LBP_LF);
           PRINT_BIT(attr,LBP_CM);
           PRINT_BIT(attr,LBP_WJ);
           PRINT_BIT(attr,LBP_ZW);
@@ -7706,6 +7712,8 @@ fill_org_lbp (const char *linebreak_filename)
 #define TRY(bit) else if (strcmp (field1, #bit + 4) == 0) value = bit;
       if (false) {}
       TRY(LBP_BK)
+      TRY(LBP_CR)
+      TRY(LBP_LF)
       TRY(LBP_CM)
       TRY(LBP_WJ)
       TRY(LBP_ZW)
@@ -7744,8 +7752,6 @@ fill_org_lbp (const char *linebreak_filename)
       TRY(LBP_EM)
       TRY(LBP_XX)
 #undef TRY
-      else if (strcmp (field1, "LF") == 0) value = LBP_BK;
-      else if (strcmp (field1, "CR") == 0) value = LBP_BK;
       else if (strcmp (field1, "NL") == 0) value = LBP_BK;
       else if (strcmp (field1, "SG") == 0) value = LBP_XX;
       else if (strcmp (field1, "CJ") == 0) value = LBP_NS;
@@ -7792,6 +7798,8 @@ debug_output_org_lbp (FILE *stream)
 #define PRINT_BIT(attr,bit) \
   if (attr == bit) fprintf (stream, " " #bit);
           PRINT_BIT(attr,LBP_BK);
+          PRINT_BIT(attr,LBP_CR);
+          PRINT_BIT(attr,LBP_LF);
           PRINT_BIT(attr,LBP_CM);
           PRINT_BIT(attr,LBP_WJ);
           PRINT_BIT(attr,LBP_ZW);
@@ -7865,6 +7873,8 @@ lbp_value_to_string (unsigned int value)
     {
 #define CASE(x) case x: value_string = #x; break;
       CASE(LBP_BK);
+      CASE(LBP_CR);
+      CASE(LBP_LF);
       CASE(LBP_CM);
       CASE(LBP_WJ);
       CASE(LBP_ZW);

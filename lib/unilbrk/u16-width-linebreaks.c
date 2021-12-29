@@ -28,21 +28,23 @@
 /* Specification.  */
 #include "unilbrk.h"
 
+#include "unilbrk/internal.h"
+#include "unilbrk/lbrktables.h"
 #include "unistr.h"
 #include "uniwidth.h"
 
-int
-u16_width_linebreaks (const uint16_t *s, size_t n,
-                      int width, int start_column, int at_end_columns,
-                      const char *o, const char *encoding,
-                      char *p)
+static int
+u16_width_linebreaks_internal (const uint16_t *s, size_t n,
+                               int width, int start_column, int at_end_columns,
+                               const char *o, const char *encoding, int cr,
+                               char *p)
 {
   const uint16_t *s_end;
   char *last_p;
   int last_column;
   int piece_width;
 
-  u16_possible_linebreaks (s, n, encoding, p);
+  u16_possible_linebreaks_loop (s, n, encoding, cr, p);
 
   s_end = s + n;
   last_p = NULL;
@@ -57,7 +59,8 @@ u16_width_linebreaks (const uint16_t *s, size_t n,
       if (o != NULL && *o != UC_BREAK_UNDEFINED)
         *p = *o;
 
-      if (*p == UC_BREAK_POSSIBLE || *p == UC_BREAK_MANDATORY)
+      if (*p == UC_BREAK_POSSIBLE
+          || *p == UC_BREAK_MANDATORY || *p == UC_BREAK_CR_BEFORE_LF)
         {
           /* An atomic piece of text ends here.  */
           if (last_p != NULL && last_column + piece_width > width)
@@ -68,7 +71,7 @@ u16_width_linebreaks (const uint16_t *s, size_t n,
             }
         }
 
-      if (*p == UC_BREAK_MANDATORY)
+      if (*p == UC_BREAK_MANDATORY || *p == UC_BREAK_CR_BEFORE_LF)
         {
           /* uc is a line break character.  */
           /* Start a new piece at column 0.  */
@@ -113,4 +116,28 @@ u16_width_linebreaks (const uint16_t *s, size_t n,
     }
 
   return last_column + piece_width;
+}
+
+#undef u16_width_linebreaks
+
+int
+u16_width_linebreaks (const uint16_t *s, size_t n,
+                      int width, int start_column, int at_end_columns,
+                      const char *o, const char *encoding,
+                      char *p)
+{
+  return u16_width_linebreaks_internal (s, n,
+                                        width, start_column, at_end_columns,
+                                        o, encoding, -1, p);
+}
+
+int
+u16_width_linebreaks_v2 (const uint16_t *s, size_t n,
+                         int width, int start_column, int at_end_columns,
+                         const char *o, const char *encoding,
+                         char *p)
+{
+  return u16_width_linebreaks_internal (s, n,
+                                        width, start_column, at_end_columns,
+                                        o, encoding, LBP_CR, p);
 }

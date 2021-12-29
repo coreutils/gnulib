@@ -2,6 +2,7 @@ Description:
 Line breaking of UTF-8 strings.
 
 Files:
+lib/unilbrk/internal.h
 lib/unilbrk/u8-width-linebreaks.c
 
 Depends-on:

@@ -24,11 +24,12 @@
 
 #include "macros.h"
 
-int
-main ()
+static void
+test_function (int (*my_u16_width_linebreaks) (const uint16_t *, size_t, int, int, int, const char *, const char *, char *_UC_RESTRICT),
+               int version)
 {
   /* Test case n = 0.  */
-  u16_width_linebreaks (NULL, 0, 80, 0, 0, NULL, "GB18030", NULL);
+  my_u16_width_linebreaks (NULL, 0, 80, 0, 0, NULL, "GB18030", NULL);
 
   {
     static const uint16_t input[61] =
@@ -45,7 +46,7 @@ main ()
       char *p = (char *) malloc (SIZEOF (input));
       size_t i;
 
-      u16_width_linebreaks (input, SIZEOF (input), 25, 0, 0, NULL, "GB18030", p);
+      my_u16_width_linebreaks (input, SIZEOF (input), 25, 0, 0, NULL, "GB18030", p);
       for (i = 0; i < 61; i++)
         {
           ASSERT (p[i] == (i == 60 ? UC_BREAK_MANDATORY :
@@ -59,7 +60,7 @@ main ()
       char *p = (char *) malloc (SIZEOF (input));
       size_t i;
 
-      u16_width_linebreaks (input, SIZEOF (input), 25, 0, 0, NULL, "GB2312", p);
+      my_u16_width_linebreaks (input, SIZEOF (input), 25, 0, 0, NULL, "GB2312", p);
       for (i = 0; i < 61; i++)
         {
           ASSERT (p[i] == (i == 60 ? UC_BREAK_MANDATORY :
@@ -69,6 +70,14 @@ main ()
       free (p);
     }
   }
+}
+
+int
+main ()
+{
+  test_function (u16_width_linebreaks, 2);
+#undef u16_width_linebreaks
+  test_function (u16_width_linebreaks, 1);
 
   return 0;
 }

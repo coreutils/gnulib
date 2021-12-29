@@ -27,22 +27,24 @@
 
 /* Specification.  */
 #include "unilbrk.h"
+#include "unilbrk/internal.h"
 
+#include "unilbrk/lbrktables.h"
 #include "unistr.h"
 #include "uniwidth.h"
 
 int
-u8_width_linebreaks (const uint8_t *s, size_t n,
-                     int width, int start_column, int at_end_columns,
-                     const char *o, const char *encoding,
-                     char *p)
+u8_width_linebreaks_internal (const uint8_t *s, size_t n,
+                              int width, int start_column, int at_end_columns,
+                              const char *o, const char *encoding, int cr,
+                              char *p)
 {
   const uint8_t *s_end;
   char *last_p;
   int last_column;
   int piece_width;
 
-  u8_possible_linebreaks (s, n, encoding, p);
+  u8_possible_linebreaks_loop (s, n, encoding, cr, p);
 
   s_end = s + n;
   last_p = NULL;
@@ -57,7 +59,8 @@ u8_width_linebreaks (const uint8_t *s, size_t n,
       if (o != NULL && *o != UC_BREAK_UNDEFINED)
         *p = *o;
 
-      if (*p == UC_BREAK_POSSIBLE || *p == UC_BREAK_MANDATORY)
+      if (*p == UC_BREAK_POSSIBLE
+          || *p == UC_BREAK_MANDATORY || *p == UC_BREAK_CR_BEFORE_LF)
         {
           /* An atomic piece of text ends here.  */
           if (last_p != NULL && last_column + piece_width > width)
@@ -68,7 +71,7 @@ u8_width_linebreaks (const uint8_t *s, size_t n,
             }
         }
 
-      if (*p == UC_BREAK_MANDATORY)
+      if (*p == UC_BREAK_MANDATORY || *p == UC_BREAK_CR_BEFORE_LF)
         {
           /* uc is a line break character.  */
           /* Start a new piece at column 0.  */
@@ -113,6 +116,30 @@ u8_width_linebreaks (const uint8_t *s, size_t n,
     }
 
   return last_column + piece_width;
+}
+
+#undef u8_width_linebreaks
+
+int
+u8_width_linebreaks (const uint8_t *s, size_t n,
+                     int width, int start_column, int at_end_columns,
+                     const char *o, const char *encoding,
+                     char *p)
+{
+  return u8_width_linebreaks_internal (s, n,
+                                       width, start_column, at_end_columns,
+                                       o, encoding, -1, p);
+}
+
+int
+u8_width_linebreaks_v2 (const uint8_t *s, size_t n,
+                        int width, int start_column, int at_end_columns,
+                        const char *o, const char *encoding,
+                        char *p)
+{
+  return u8_width_linebreaks_internal (s, n,
+                                       width, start_column, at_end_columns,
+                                       o, encoding, LBP_CR, p);
 }
 
 
@@ -182,7 +209,7 @@ main (int argc, char * argv[])
       char *breaks = malloc (length);
       int i;
 
-      u8_width_linebreaks ((uint8_t *) input, length, width, 0, 0, NULL, "UTF-8", breaks);
+      u8_width_linebreaks_v2 ((uint8_t *) input, length, width, 0, 0, NULL, "UTF-8", breaks);
 
       for (i = 0; i < length; i++)
         {
@@ -192,6 +219,8 @@ main (int argc, char * argv[])
               putc ('\n', stdout);
               break;
             case UC_BREAK_MANDATORY:
+              break;
+            case UC_BREAK_CR_BEFORE_LF:
               break;
             case UC_BREAK_PROHIBITED:
               break;

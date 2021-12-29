@@ -27,6 +27,7 @@
 
 /* Specification.  */
 #include "unilbrk.h"
+#include "unilbrk/internal.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -36,7 +37,8 @@
 #include "unistr.h"
 
 void
-u8_possible_linebreaks (const uint8_t *s, size_t n, const char *encoding, char *p)
+u8_possible_linebreaks_loop (const uint8_t *s, size_t n, const char *encoding,
+                             int cr, char *p)
 {
   if (n > 0)
     {
@@ -59,11 +61,15 @@ u8_possible_linebreaks (const uint8_t *s, size_t n, const char *encoding, char *
           int count = u8_mbtouc_unsafe (&uc, s, s_end - s);
           int prop = unilbrkprop_lookup (uc);
 
-          if (prop == LBP_BK)
+          if (prop == LBP_BK || prop == LBP_LF || prop == LBP_CR)
             {
               /* (LB4,LB5,LB6) Mandatory break.  */
               *p = UC_BREAK_MANDATORY;
-              prev_prop = LBP_BK;
+              /* cr is either LBP_CR or -1.  In the first case, recognize
+                 a CR-LF sequence.  */
+              if (prev_prop == cr && prop == LBP_LF)
+                p[-1] = UC_BREAK_CR_BEFORE_LF;
+              prev_prop = prop;
               last_prop = LBP_BK;
               seen_space = NULL;
             }
@@ -208,6 +214,22 @@ u8_possible_linebreaks (const uint8_t *s, size_t n, const char *encoding, char *
     }
 }
 
+#undef u8_possible_linebreaks
+
+void
+u8_possible_linebreaks (const uint8_t *s, size_t n, const char *encoding,
+                        char *p)
+{
+  u8_possible_linebreaks_loop (s, n, encoding, -1, p);
+}
+
+void
+u8_possible_linebreaks_v2 (const uint8_t *s, size_t n, const char *encoding,
+                           char *p)
+{
+  u8_possible_linebreaks_loop (s, n, encoding, LBP_CR, p);
+}
+
 
 #ifdef TEST
 
@@ -273,7 +295,7 @@ main (int argc, char * argv[])
       char *breaks = malloc (length);
       int i;
 
-      u8_possible_linebreaks ((uint8_t *) input, length, "UTF-8", breaks);
+      u8_possible_linebreaks_v2 ((uint8_t *) input, length, "UTF-8", breaks);
 
       for (i = 0; i < length; i++)
         {
@@ -286,6 +308,10 @@ main (int argc, char * argv[])
             case UC_BREAK_MANDATORY:
               /* U+21B2 (or U+21B5) in UTF-8 encoding */
               putc (0xe2, stdout); putc (0x86, stdout); putc (0xb2, stdout);
+              break;
+            case UC_BREAK_CR_BEFORE_LF:
+              /* U+21E4 in UTF-8 encoding */
+              putc (0xe2, stdout); putc (0x87, stdout); putc (0xa4, stdout);
               break;
             case UC_BREAK_PROHIBITED:
               break;

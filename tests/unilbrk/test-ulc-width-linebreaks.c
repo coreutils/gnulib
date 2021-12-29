@@ -24,11 +24,12 @@
 
 #include "macros.h"
 
-int
-main ()
+static void
+test_function (int (*my_ulc_width_linebreaks) (const char *, size_t, int, int, int, const char *, const char *, char *_UC_RESTRICT),
+               int version)
 {
   /* Test case n = 0.  */
-  ulc_width_linebreaks (NULL, 0, 80, 0, 0, NULL, "GB18030", NULL);
+  my_ulc_width_linebreaks (NULL, 0, 80, 0, 0, NULL, "GB18030", NULL);
 
 #if HAVE_ICONV
   {
@@ -38,7 +39,7 @@ main ()
     char *p = (char *) malloc (SIZEOF (input));
     size_t i;
 
-    ulc_width_linebreaks (input, SIZEOF (input), 12, 0, 0, NULL, "ISO-8859-1", p);
+    my_ulc_width_linebreaks (input, SIZEOF (input), 12, 0, 0, NULL, "ISO-8859-1", p);
     for (i = 0; i < 36; i++)
       {
         ASSERT (p[i] == (i == 35 ? UC_BREAK_MANDATORY :
@@ -48,6 +49,14 @@ main ()
     free (p);
   }
 #endif
+}
+
+int
+main ()
+{
+  test_function (ulc_width_linebreaks, 2);
+#undef ulc_width_linebreaks
+  test_function (ulc_width_linebreaks, 1);
 
   return 0;
 }

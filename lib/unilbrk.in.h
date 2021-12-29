@@ -52,11 +52,14 @@ enum
   UC_BREAK_PROHIBITED,
   UC_BREAK_POSSIBLE,
   UC_BREAK_MANDATORY,
-  UC_BREAK_HYPHENATION
+  UC_BREAK_HYPHENATION,
+  UC_BREAK_CR_BEFORE_LF /* only used in _v2 or later */
 };
 
 /* Determine the line break points in S, and store the result at p[0..n-1].
    p[i] = UC_BREAK_MANDATORY means that s[i] is a line break character.
+   p[i] = UC_BREAK_CR_BEFORE_LF means that s[i] and s[i+1] is the CR-LF
+          character sequence.  (Only used in _v2 or later.)
    p[i] = UC_BREAK_POSSIBLE means that a line break may be inserted between
           s[i-1] and s[i].
    p[i] = UC_BREAK_HYPHENATION means that a hyphen and a line break may be
@@ -68,14 +71,33 @@ extern void
        u8_possible_linebreaks (const uint8_t *s, size_t n,
                                const char *encoding, char *_UC_RESTRICT p);
 extern void
+       u8_possible_linebreaks_v2 (const uint8_t *s, size_t n,
+                                  const char *encoding, char *_UC_RESTRICT p);
+#define u8_possible_linebreaks u8_possible_linebreaks_v2
+
+extern void
        u16_possible_linebreaks (const uint16_t *s, size_t n,
                                 const char *encoding, char *_UC_RESTRICT p);
+extern void
+       u16_possible_linebreaks_v2 (const uint16_t *s, size_t n,
+                                   const char *encoding, char *_UC_RESTRICT p);
+#define u16_possible_linebreaks u16_possible_linebreaks_v2
+
 extern void
        u32_possible_linebreaks (const uint32_t *s, size_t n,
                                 const char *encoding, char *_UC_RESTRICT p);
 extern void
+       u32_possible_linebreaks_v2 (const uint32_t *s, size_t n,
+                                   const char *encoding, char *_UC_RESTRICT p);
+#define u32_possible_linebreaks u32_possible_linebreaks_v2
+
+extern void
        ulc_possible_linebreaks (const char *s, size_t n,
                                 const char *encoding, char *_UC_RESTRICT p);
+extern void
+       ulc_possible_linebreaks_v2 (const char *s, size_t n,
+                                   const char *encoding, char *_UC_RESTRICT p);
+#define ulc_possible_linebreaks ulc_possible_linebreaks_v2
 
 /* Choose the best line breaks, assuming the uc_width function.
    The string is s[0..n-1].  The maximum number of columns per line is given
@@ -94,20 +116,47 @@ extern int
                             const char *o, const char *encoding,
                             char *_UC_RESTRICT p);
 extern int
+       u8_width_linebreaks_v2 (const uint8_t *s, size_t n, int width,
+                               int start_column, int at_end_columns,
+                               const char *o, const char *encoding,
+                               char *_UC_RESTRICT p);
+#define u8_width_linebreaks u8_width_linebreaks_v2
+
+extern int
        u16_width_linebreaks (const uint16_t *s, size_t n, int width,
                              int start_column, int at_end_columns,
                              const char *o, const char *encoding,
                              char *_UC_RESTRICT p);
+extern int
+       u16_width_linebreaks_v2 (const uint16_t *s, size_t n, int width,
+                                int start_column, int at_end_columns,
+                                const char *o, const char *encoding,
+                                char *_UC_RESTRICT p);
+#define u16_width_linebreaks u16_width_linebreaks_v2
+
 extern int
        u32_width_linebreaks (const uint32_t *s, size_t n, int width,
                              int start_column, int at_end_columns,
                              const char *o, const char *encoding,
                              char *_UC_RESTRICT p);
 extern int
+       u32_width_linebreaks_v2 (const uint32_t *s, size_t n, int width,
+                                int start_column, int at_end_columns,
+                                const char *o, const char *encoding,
+                                char *_UC_RESTRICT p);
+#define u32_width_linebreaks u32_width_linebreaks_v2
+
+extern int
        ulc_width_linebreaks (const char *s, size_t n, int width,
                              int start_column, int at_end_columns,
                              const char *o, const char *encoding,
                              char *_UC_RESTRICT p);
+extern int
+       ulc_width_linebreaks_v2 (const char *s, size_t n, int width,
+                                int start_column, int at_end_columns,
+                                const char *o, const char *encoding,
+                                char *_UC_RESTRICT p);
+#define ulc_width_linebreaks ulc_width_linebreaks_v2
 
 
 #ifdef __cplusplus

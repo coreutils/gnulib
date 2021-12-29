@@ -24,11 +24,12 @@
 
 #include "macros.h"
 
-int
-main ()
+static void
+test_function (void (*my_u32_possible_linebreaks) (const uint32_t *, size_t, const char *, char *_UC_RESTRICT),
+               int version)
 {
   /* Test case n = 0.  */
-  u32_possible_linebreaks (NULL, 0, "GB18030", NULL);
+  my_u32_possible_linebreaks (NULL, 0, "GB18030", NULL);
 
   {
     static const uint32_t input[61] =
@@ -45,7 +46,7 @@ main ()
       char *p = (char *) malloc (SIZEOF (input));
       size_t i;
 
-      u32_possible_linebreaks (input, SIZEOF (input), "GB18030", p);
+      my_u32_possible_linebreaks (input, SIZEOF (input), "GB18030", p);
       for (i = 0; i < 61; i++)
         {
           ASSERT (p[i] == (i == 60 ? UC_BREAK_MANDATORY :
@@ -64,7 +65,7 @@ main ()
       char *p = (char *) malloc (SIZEOF (input));
       size_t i;
 
-      u32_possible_linebreaks (input, SIZEOF (input), "GB2312", p);
+      my_u32_possible_linebreaks (input, SIZEOF (input), "GB2312", p);
       for (i = 0; i < 61; i++)
         {
           ASSERT (p[i] == (i == 60 ? UC_BREAK_MANDATORY :
@@ -80,6 +81,23 @@ main ()
     }
   }
 
+  /* CR LF handling.  */
+  {
+    static const uint32_t input[8] =
+      { 'a', '\n', 'b', '\r', 'c', '\r', '\n', 'd' };
+    char *p = (char *) malloc (SIZEOF (input));
+    size_t i;
+
+    my_u32_possible_linebreaks (input, SIZEOF (input), "UTF-8", p);
+    for (i = 0; i < 8; i++)
+      {
+        ASSERT (p[i] == (i == 1 || i == 3 || i == 6 ? UC_BREAK_MANDATORY :
+                         i == 5 ? (version < 2 ? UC_BREAK_MANDATORY : UC_BREAK_CR_BEFORE_LF) :
+                         UC_BREAK_PROHIBITED));
+      }
+    free (p);
+  }
+
   /* Test that a break is possible after a zero-width space followed by some
      regular spaces (rule LB8 in Unicode TR#14 revision 26).  */
   {
@@ -87,7 +105,7 @@ main ()
     char *p = (char *) malloc (SIZEOF (input));
     size_t i;
 
-    u32_possible_linebreaks (input, SIZEOF (input), "UTF-8", p);
+    my_u32_possible_linebreaks (input, SIZEOF (input), "UTF-8", p);
     for (i = 0; i < 4; i++)
       {
         ASSERT (p[i] == (i == 3 ? UC_BREAK_POSSIBLE : UC_BREAK_PROHIBITED));
@@ -105,7 +123,7 @@ main ()
     char *p = (char *) malloc (SIZEOF (input));
     size_t i;
 
-    u32_possible_linebreaks (input, SIZEOF (input), "UTF-8", p);
+    my_u32_possible_linebreaks (input, SIZEOF (input), "UTF-8", p);
     for (i = 0; i < 21; i++)
       {
         ASSERT (p[i] == (i == 8 || i == 17 || i == 19 ? UC_BREAK_POSSIBLE :
@@ -125,7 +143,7 @@ main ()
     char *p = (char *) malloc (SIZEOF (input));
     size_t i;
 
-    u32_possible_linebreaks (input, SIZEOF (input), "UTF-8", p);
+    my_u32_possible_linebreaks (input, SIZEOF (input), "UTF-8", p);
     for (i = 0; i < 16; i++)
       {
         ASSERT (p[i] == (i == 14 ? UC_BREAK_MANDATORY :
@@ -149,7 +167,7 @@ main ()
     char *p = (char *) malloc (SIZEOF (input));
     size_t i;
 
-    u32_possible_linebreaks (input, SIZEOF (input), "UTF-8", p);
+    my_u32_possible_linebreaks (input, SIZEOF (input), "UTF-8", p);
     for (i = 0; i < 37; i++)
       {
         ASSERT (p[i] == (i == 8 || i == 20
@@ -171,7 +189,7 @@ main ()
     char *p = (char *) malloc (SIZEOF (input));
     size_t i;
 
-    u32_possible_linebreaks (input, SIZEOF (input), "UTF-8", p);
+    my_u32_possible_linebreaks (input, SIZEOF (input), "UTF-8", p);
     for (i = 0; i < 4; i++)
       {
         ASSERT (p[i] == (i == 2 ? UC_BREAK_POSSIBLE : UC_BREAK_PROHIBITED));
@@ -187,7 +205,7 @@ main ()
     char *p = (char *) malloc (SIZEOF (input));
     size_t i;
 
-    u32_possible_linebreaks (input, SIZEOF (input), "UTF-8", p);
+    my_u32_possible_linebreaks (input, SIZEOF (input), "UTF-8", p);
     for (i = 0; i < 10; i++)
       {
         ASSERT (p[i] == (i == 3 || i == 9 ? UC_BREAK_POSSIBLE :
@@ -195,6 +213,14 @@ main ()
       }
     free (p);
   }
+}
+
+int
+main ()
+{
+  test_function (u32_possible_linebreaks, 2);
+#undef u32_possible_linebreaks
+  test_function (u32_possible_linebreaks, 1);
 
   return 0;
 }

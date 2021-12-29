@@ -27,6 +27,7 @@
 
 /* Specification.  */
 #include "unilbrk.h"
+#include "unilbrk/internal.h"
 
 #include <stdlib.h>
 
@@ -34,7 +35,8 @@
 #include "uniwidth/cjk.h"
 
 void
-u32_possible_linebreaks (const uint32_t *s, size_t n, const char *encoding, char *p)
+u32_possible_linebreaks_loop (const uint32_t *s, size_t n, const char *encoding,
+                              int cr, char *p)
 {
   if (n > 0)
     {
@@ -53,11 +55,15 @@ u32_possible_linebreaks (const uint32_t *s, size_t n, const char *encoding, char
           ucs4_t uc = *s;
           int prop = unilbrkprop_lookup (uc);
 
-          if (prop == LBP_BK)
+          if (prop == LBP_BK || prop == LBP_LF || prop == LBP_CR)
             {
               /* (LB4,LB5,LB6) Mandatory break.  */
               *p = UC_BREAK_MANDATORY;
-              prev_prop = LBP_BK;
+              /* cr is either LBP_CR or -1.  In the first case, recognize
+                 a CR-LF sequence.  */
+              if (prev_prop == cr && prop == LBP_LF)
+                p[-1] = UC_BREAK_CR_BEFORE_LF;
+              prev_prop = prop;
               last_prop = LBP_BK;
               seen_space = NULL;
             }
@@ -200,4 +206,20 @@ u32_possible_linebreaks (const uint32_t *s, size_t n, const char *encoding, char
         }
       while (s < s_end);
     }
+}
+
+#undef u32_possible_linebreaks
+
+void
+u32_possible_linebreaks (const uint32_t *s, size_t n, const char *encoding,
+                         char *p)
+{
+  u32_possible_linebreaks_loop (s, n, encoding, -1, p);
+}
+
+void
+u32_possible_linebreaks_v2 (const uint32_t *s, size_t n, const char *encoding,
+                            char *p)
+{
+  u32_possible_linebreaks_loop (s, n, encoding, LBP_CR, p);
 }
