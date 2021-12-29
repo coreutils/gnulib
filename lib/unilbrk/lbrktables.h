@@ -72,7 +72,9 @@ enum
   LBP_ZWJ = 27, /* zero width joiner */
   LBP_EB = 28, /* emoji base */
   LBP_EM = 29, /* emoji modifier */
-  LBP_XX = 37  /* unknown */
+  LBP_XX = 37, /* unknown */
+  /* Artificial values that exist only at runtime, not in the tables. */
+  LBP_HL_BA = 100
 };
 
 #include "lbrkprop1.h"

@@ -179,5 +179,22 @@ main ()
     free (p);
   }
 
+  /* Test special behaviour of hyphen/break-after character after
+     Hebrew letter.  */
+  {
+    static const uint32_t input[10] = /* "ab-אב-αβ-ω" */
+      { 'a', 'b', '-', 0x05D0, 0x05D1, '-', 0x03B1, 0x03B2, '-', 0x03C9 };
+    char *p = (char *) malloc (SIZEOF (input));
+    size_t i;
+
+    u32_possible_linebreaks (input, SIZEOF (input), "UTF-8", p);
+    for (i = 0; i < 10; i++)
+      {
+        ASSERT (p[i] == (i == 3 || i == 9 ? UC_BREAK_POSSIBLE :
+                         UC_BREAK_PROHIBITED));
+      }
+    free (p);
+  }
+
   return 0;
 }

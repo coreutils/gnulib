@@ -165,6 +165,11 @@ u16_possible_linebreaks (const uint16_t *s, size_t n, const char *encoding, char
                             ? UC_BREAK_POSSIBLE
                             : UC_BREAK_PROHIBITED);
                     }
+                  else if (prev_prop == LBP_HL_BA)
+                    {
+                      /* (LB21a) Don't break after Hebrew + Hyphen/Break-After.  */
+                      *p = UC_BREAK_PROHIBITED;
+                    }
                   else
                     {
                       switch (unilbrk_table [last_prop] [prop])
@@ -186,7 +191,9 @@ u16_possible_linebreaks (const uint16_t *s, size_t n, const char *encoding, char
                   seen_space = NULL;
                 }
 
-              prev_prop = prop;
+              prev_prop = (prev_prop == LBP_HL && (prop == LBP_HY || prop == LBP_BA)
+                           ? LBP_HL_BA
+                           : prop);
             }
 
           if (prop == LBP_RI)
