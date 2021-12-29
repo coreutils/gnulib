@@ -81,6 +81,22 @@ main ()
     free (p);
   }
 
+  /* CR LF handling.  */
+  {
+    static const uint8_t input[8] = "a\nb\rc\r\nd";
+    char *p = (char *) malloc (SIZEOF (input));
+    size_t i;
+
+    u8_wordbreaks (input, SIZEOF (input), p);
+    for (i = 0; i < 8; i++)
+      {
+        ASSERT (p[i] == (i == 1 || i == 2 || i == 3 || i == 4 || i == 5
+                         || i == 7 ? 1 :
+                         0));
+      }
+    free (p);
+  }
+
   /* Test regional indicators.  */
   {
     static const uint8_t input[18] =
