@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Table that encodes several line breaking rules.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 12.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 12.1.0.  */
 
 /* Copyright (C) 2001-2021 Free Software Foundation, Inc.
 

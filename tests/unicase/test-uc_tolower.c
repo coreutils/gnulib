@@ -15,7 +15,7 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
-/* Generated automatically by gen-uni-tables.c for Unicode 12.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 12.1.0.  */
 
 #include "test-mapping-part1.h"
 

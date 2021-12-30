@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* ISO C <ctype.h> like properties of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 12.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 12.1.0.  */
 
 /* Copyright (C) 2000-2021 Free Software Foundation, Inc.
 
@@ -791,7 +791,7 @@ u_is_graph =
     0xFFFFFFE0U, 0xFFFEFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU,
     0xFFFF7FFFU, 0x07FFFFFFU, 0xFFFFFFFFU, 0xFFFF000FU,
     0x7FFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU,
-    0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU, 0x7FFFFFFFU,
+    0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU,
     0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU,
     0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU,
     0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU,

@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Unicode scripts.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 12.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 12.1.0.  */
 
 /* Copyright (C) 2000-2021 Free Software Foundation, Inc.
 
@@ -87,6 +87,7 @@ static const uc_interval_t script_common_intervals[] =
   { 0x31C0, 1, 0 }, { 0x31E3, 0, 1 },
   { 0x3220, 1, 0 }, { 0x325F, 0, 1 },
   { 0x327F, 1, 0 }, { 0x32CF, 0, 1 },
+  { 0x32FF, 1, 1 },
   { 0x3358, 1, 0 }, { 0x33FF, 0, 1 },
   { 0x4DC0, 1, 0 }, { 0x4DFF, 0, 1 },
   { 0xA700, 1, 0 }, { 0xA721, 0, 1 },
@@ -3656,7 +3657,7 @@ u_script =
      33,  33,  33,  33,  33,  33,  33,  33,
      33,  33,  33,  33,  33,  33,  33,  33,
      33,  33,  33,  33,  33,  33,  33,  33,
-     33,  33,  33,  33,  33,  33,  33, 255,
+     33,  33,  33,  33,  33,  33,  33,   0,
      33,  33,  33,  33,  33,  33,  33,  33,
      33,  33,  33,  33,  33,  33,  33,  33,
      33,  33,  33,  33,  33,  33,  33,  33,

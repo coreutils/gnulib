@@ -18,22 +18,22 @@
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 /* Usage example:
-     $ gen-uni-tables /usr/local/share/www.unicode.org/Public/12.0.0/ucd/UnicodeData.txt \
-                      /usr/local/share/www.unicode.org/Public/12.0.0/ucd/PropList.txt \
-                      /usr/local/share/www.unicode.org/Public/12.0.0/ucd/DerivedCoreProperties.txt \
+     $ gen-uni-tables /usr/local/share/www.unicode.org/Public/12.1.0/ucd/UnicodeData.txt \
+                      /usr/local/share/www.unicode.org/Public/12.1.0/ucd/PropList.txt \
+                      /usr/local/share/www.unicode.org/Public/12.1.0/ucd/DerivedCoreProperties.txt \
                       /usr/local/share/www.unicode.org/Public/emoji/12.0/emoji-data.txt \
-                      /usr/local/share/www.unicode.org/Public/12.0.0/ucd/ArabicShaping.txt \
-                      /usr/local/share/www.unicode.org/Public/12.0.0/ucd/Scripts.txt \
-                      /usr/local/share/www.unicode.org/Public/12.0.0/ucd/Blocks.txt \
+                      /usr/local/share/www.unicode.org/Public/12.1.0/ucd/ArabicShaping.txt \
+                      /usr/local/share/www.unicode.org/Public/12.1.0/ucd/Scripts.txt \
+                      /usr/local/share/www.unicode.org/Public/12.1.0/ucd/Blocks.txt \
                       /usr/local/share/www.unicode.org/Public/3.0-Update1/PropList-3.0.1.txt \
-                      /usr/local/share/www.unicode.org/Public/12.0.0/ucd/EastAsianWidth.txt \
-                      /usr/local/share/www.unicode.org/Public/12.0.0/ucd/LineBreak.txt \
-                      /usr/local/share/www.unicode.org/Public/12.0.0/ucd/auxiliary/WordBreakProperty.txt \
-                      /usr/local/share/www.unicode.org/Public/12.0.0/ucd/auxiliary/GraphemeBreakProperty.txt \
-                      /usr/local/share/www.unicode.org/Public/12.0.0/ucd/CompositionExclusions.txt \
-                      /usr/local/share/www.unicode.org/Public/12.0.0/ucd/SpecialCasing.txt \
-                      /usr/local/share/www.unicode.org/Public/12.0.0/ucd/CaseFolding.txt \
-                      12.0.0
+                      /usr/local/share/www.unicode.org/Public/12.1.0/ucd/EastAsianWidth.txt \
+                      /usr/local/share/www.unicode.org/Public/12.1.0/ucd/LineBreak.txt \
+                      /usr/local/share/www.unicode.org/Public/12.1.0/ucd/auxiliary/WordBreakProperty.txt \
+                      /usr/local/share/www.unicode.org/Public/12.1.0/ucd/auxiliary/GraphemeBreakProperty.txt \
+                      /usr/local/share/www.unicode.org/Public/12.1.0/ucd/CompositionExclusions.txt \
+                      /usr/local/share/www.unicode.org/Public/12.1.0/ucd/SpecialCasing.txt \
+                      /usr/local/share/www.unicode.org/Public/12.1.0/ucd/CaseFolding.txt \
+                      12.1.0
  */
 
 #include <assert.h>
@@ -11052,32 +11052,32 @@ main (int argc, char * argv[])
  * compile-command: "\
  *   gcc -O -Wall gen-uni-tables.c -Iunictype -o gen-uni-tables &&      \\
  *   ./gen-uni-tables                                                   \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.0.0/ucd/UnicodeData.txt \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.0.0/ucd/PropList.txt \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.0.0/ucd/DerivedCoreProperties.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.1.0/ucd/UnicodeData.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.1.0/ucd/PropList.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.1.0/ucd/DerivedCoreProperties.txt \\
  *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/emoji/12.0/emoji-data.txt \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.0.0/ucd/ArabicShaping.txt \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.0.0/ucd/Scripts.txt \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.0.0/ucd/Blocks.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.1.0/ucd/ArabicShaping.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.1.0/ucd/Scripts.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.1.0/ucd/Blocks.txt \\
  *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/3.0.1/PropList-3.0.1.txt \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.0.0/ucd/EastAsianWidth.txt \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.0.0/ucd/LineBreak.txt \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.0.0/ucd/auxiliary/WordBreakProperty.txt \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.0.0/ucd/auxiliary/GraphemeBreakProperty.txt \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.0.0/ucd/CompositionExclusions.txt \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.0.0/ucd/SpecialCasing.txt \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.0.0/ucd/CaseFolding.txt \\
- *        12.0.0                                                         \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.1.0/ucd/EastAsianWidth.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.1.0/ucd/LineBreak.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.1.0/ucd/auxiliary/WordBreakProperty.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.1.0/ucd/auxiliary/GraphemeBreakProperty.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.1.0/ucd/CompositionExclusions.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.1.0/ucd/SpecialCasing.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.1.0/ucd/CaseFolding.txt \\
+ *        12.1.0                                                         \\
  *   && diff unilbrk/lbrkprop_org.txt unilbrk/lbrkprop.txt              \\
  *   && diff uniwbrk/wbrkprop_org.txt uniwbrk/wbrkprop.txt              \\
  *   && clisp -C uniname/gen-uninames.lisp                              \\
- *            /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.0.0/ucd/UnicodeData.txt \\
+ *            /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.1.0/ucd/UnicodeData.txt \\
  *            uniname/uninames.h                                        \\
- *            /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.0.0/ucd/NameAliases.txt \\
- *   && cp /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.0.0/ucd/NameAliases.txt ../tests/uniname/NameAliases.txt \\
- *   && cp /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.0.0/ucd/UnicodeData.txt ../tests/uniname/UnicodeData.txt \\
- *   && cp /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.0.0/ucd/NormalizationTest.txt ../tests/uninorm/NormalizationTest.txt \\
- *   && cp /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.0.0/ucd/auxiliary/GraphemeBreakTest.txt ../tests/unigbrk/GraphemeBreakTest.txt \\
- *   && cp /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.0.0/ucd/auxiliary/WordBreakTest.txt ../tests/uniwbrk/WordBreakTest.txt"
+ *            /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.1.0/ucd/NameAliases.txt \\
+ *   && cp /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.1.0/ucd/NameAliases.txt ../tests/uniname/NameAliases.txt \\
+ *   && cp /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.1.0/ucd/UnicodeData.txt ../tests/uniname/UnicodeData.txt \\
+ *   && cp /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.1.0/ucd/NormalizationTest.txt ../tests/uninorm/NormalizationTest.txt \\
+ *   && cp /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.1.0/ucd/auxiliary/GraphemeBreakTest.txt ../tests/unigbrk/GraphemeBreakTest.txt \\
+ *   && cp /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.1.0/ucd/auxiliary/WordBreakTest.txt ../tests/uniwbrk/WordBreakTest.txt"
  * End:
  */
