@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Simple character mapping of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 11.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 12.0.0.  */
 
 /* Copyright (C) 2000-2021 Free Software Foundation, Inc.
 
@@ -578,8 +578,8 @@ u_mapping =
         1,     0,     1,     0,     1,     0,     1,     0,
         1,     0, -42308, -42319, -42315, -42305, -42308,     0,
     -42258, -42282, -42261,   928,     1,     0,     1,     0,
-        1,     0,     0,     0,     0,     0,     0,     0,
-        0,     0,     0,     0,     0,     0,     0,     0,
+        1,     0,     1,     0,     1,     0,     1,     0,
+        0,     0,     1,     0,   -48, -42307, -35384,     0,
         0,     0,     0,     0,     0,     0,     0,     0,
         0,     0,     0,     0,     0,     0,     0,     0,
         0,     0,     0,     0,     0,     0,     0,     0,

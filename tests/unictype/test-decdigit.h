@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Decimal digit values of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 11.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 12.0.0.  */
 
 /* Copyright (C) 2000-2021 Free Software Foundation, Inc.
 
@@ -617,6 +617,26 @@
     { 0x1D7FD, 7 },
     { 0x1D7FE, 8 },
     { 0x1D7FF, 9 },
+    { 0x1E140, 0 },
+    { 0x1E141, 1 },
+    { 0x1E142, 2 },
+    { 0x1E143, 3 },
+    { 0x1E144, 4 },
+    { 0x1E145, 5 },
+    { 0x1E146, 6 },
+    { 0x1E147, 7 },
+    { 0x1E148, 8 },
+    { 0x1E149, 9 },
+    { 0x1E2F0, 0 },
+    { 0x1E2F1, 1 },
+    { 0x1E2F2, 2 },
+    { 0x1E2F3, 3 },
+    { 0x1E2F4, 4 },
+    { 0x1E2F5, 5 },
+    { 0x1E2F6, 6 },
+    { 0x1E2F7, 7 },
+    { 0x1E2F8, 8 },
+    { 0x1E2F9, 9 },
     { 0x1E950, 0 },
     { 0x1E951, 1 },
     { 0x1E952, 2 },

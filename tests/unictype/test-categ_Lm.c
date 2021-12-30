@@ -73,7 +73,10 @@
     { 0xFF9E, 0xFF9F },
     { 0x16B40, 0x16B43 },
     { 0x16F93, 0x16F9F },
-    { 0x16FE0, 0x16FE1 }
+    { 0x16FE0, 0x16FE1 },
+    { 0x16FE3, 0x16FE3 },
+    { 0x1E137, 0x1E13D },
+    { 0x1E94B, 0x1E94B }
 
 #define PREDICATE(c) uc_is_general_category (c, UC_CATEGORY_Lm)
 #include "test-predicate-part2.h"

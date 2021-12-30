@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Properties of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 11.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 12.0.0.  */
 
 /* Copyright (C) 2000-2021 Free Software Foundation, Inc.
 
@@ -409,7 +409,7 @@ u_property_composite =
     0x00000000U, 0xF8000000U, 0x00000001U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
-    0xFFFF07FFU, 0x000067FFU, 0x0000FC00U, 0x00000C00U,
+    0xFFFF07FFU, 0x000067FFU, 0x0000FC00U, 0x00001C00U,
     0x00010000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000003U, 0x00000000U, 0x000001FFU, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,

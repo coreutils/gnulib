@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Properties of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 11.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 12.0.0.  */
 
 /* Copyright (C) 2000-2021 Free Software Foundation, Inc.
 
@@ -35,7 +35,7 @@ struct
     int header[1];
     int level1[2];
     short level2[2 << 7];
-    unsigned int level3[19 << 4];
+    unsigned int level3[20 << 4];
   }
 u_property_extender =
 {
@@ -285,11 +285,11 @@ u_property_extender =
        -1,
        -1,
        -1,
-       -1,
-       -1,
-       -1,
-       -1,
         3 +   256 * sizeof (short) / sizeof (int) +   288,
+       -1,
+       -1,
+       -1,
+        3 +   256 * sizeof (short) / sizeof (int) +   304,
        -1,
        -1,
        -1,
@@ -374,7 +374,11 @@ u_property_extender =
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
-    0x00000000U, 0x00000000U, 0x00000000U, 0x00000003U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x0000000BU,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x30000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000070U, 0x00000000U,

@@ -38,7 +38,9 @@
     { 0xFE69, 0xFE6A },
     { 0xFF03, 0xFF05 },
     { 0xFFE0, 0xFFE1 },
-    { 0xFFE5, 0xFFE6 }
+    { 0xFFE5, 0xFFE6 },
+    { 0x11FDD, 0x11FE0 },
+    { 0x1E2FF, 0x1E2FF }
 
 #define PREDICATE(c) uc_is_property_bidi_eur_num_terminator (c)
 #include "test-predicate-part2.h"

@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Decimal digit values of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 11.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 12.0.0.  */
 
 /* Copyright (C) 2000-2021 Free Software Foundation, Inc.
 
@@ -161,7 +161,7 @@ u_decdigit =
        -1,    -1,    -1,    -1,    -1,    -1,    -1,  1792,
        -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
        -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-       -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+       -1,    -1,   384,    -1,    -1,   256,    -1,    -1,
        -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
        -1,    -1,   640,    -1,    -1,    -1,    -1,    -1,
        -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,

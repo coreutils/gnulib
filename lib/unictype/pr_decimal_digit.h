@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Properties of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 11.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 12.0.0.  */
 
 /* Copyright (C) 2000-2021 Free Software Foundation, Inc.
 
@@ -35,7 +35,7 @@ struct
     int header[1];
     int level1[2];
     short level2[2 << 7];
-    unsigned int level3[25 << 4];
+    unsigned int level3[26 << 4];
   }
 u_property_decimal_digit =
 {
@@ -285,11 +285,11 @@ u_property_decimal_digit =
        -1,
        -1,
        -1,
-       -1,
-       -1,
-       -1,
-       -1,
         3 +   256 * sizeof (short) / sizeof (int) +   384,
+        3 +   256 * sizeof (short) / sizeof (int) +   272,
+       -1,
+       -1,
+        3 +   256 * sizeof (short) / sizeof (int) +   400,
        -1,
        -1,
        -1,
@@ -399,6 +399,10 @@ u_property_decimal_digit =
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0xFFFFC000U, 0xFFFFFFFFU,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x000003FFU, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x03FF0000U, 0x00000000U,

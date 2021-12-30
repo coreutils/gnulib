@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Properties of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 11.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 12.0.0.  */
 
 /* Copyright (C) 2000-2021 Free Software Foundation, Inc.
 
@@ -35,7 +35,7 @@ struct
     int header[1];
     int level1[2];
     short level2[2 << 7];
-    unsigned int level3[14 << 4];
+    unsigned int level3[15 << 4];
   }
 u_property_emoji =
 {
@@ -298,7 +298,7 @@ u_property_emoji =
         3 +   256 * sizeof (short) / sizeof (int) +   176,
         3 +   256 * sizeof (short) / sizeof (int) +   192,
         3 +   256 * sizeof (short) / sizeof (int) +   208,
-       -1,
+        3 +   256 * sizeof (short) / sizeof (int) +   224,
        -1,
        -1
   },
@@ -352,12 +352,16 @@ u_property_emoji =
     0xFFFFFFFFU, 0x3FFFFFFFU, 0xFFFF7E00U, 0x07F980FFU,
     0x00613C80U, 0x10060130U, 0x700E001CU, 0xFC08810AU,
     0xFFFFFFFFU, 0xFFFFFFFFU, 0x0000FFFFU, 0x00000000U,
-    0xFFFFFFFFU, 0xFFFFFFFFU, 0x0007F83FU, 0x03F91A3FU,
+    0xFFFFFFFFU, 0xFFFFFFFFU, 0x0027F83FU, 0x07F91A3FU,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000FFFU,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0xFFFFE000U, 0xF7FFFFFFU, 0xFFFFFFBFU, 0xFC7BFFFFU,
+    0xFFFFFFFFU, 0xFFFFC7E7U, 0xFFFFE7FFU, 0xFFFFFFFFU,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x070F0000U,
+    0x003F0007U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
-    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
-    0xFFFF0000U, 0x77FFFFFFU, 0xFFFFFFBFU, 0xF479FFFFU,
-    0xFFFFFFFFU, 0x03FF0007U, 0xFFFF0007U, 0xFFFFFFFFU
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U
   }
 };

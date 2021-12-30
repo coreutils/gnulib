@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Properties of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 11.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 12.0.0.  */
 
 /* Copyright (C) 2000-2021 Free Software Foundation, Inc.
 
@@ -337,7 +337,7 @@ u_property_bidi_arabic_right_to_left =
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0xFFFE0000U,
     0xFFFFFFFFU, 0x001FFFFFU, 0x00000000U, 0x00000000U,
-    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0xFFFFFFFEU, 0x3FFFFFFFU, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0xFFFFFFEFU, 0x0AF7FE96U, 0xAA96EA84U, 0x5EF7F796U,
     0x0FFFFBFFU, 0x0FFFFBEEU, 0x00000000U, 0x00000000U,

@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Unicode scripts.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 11.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 12.0.0.  */
 
 /* Copyright (C) 2000-2021 Free Software Foundation, Inc.
 
@@ -176,3 +176,7 @@ Medefaidrin, 144
 Hanifi_Rohingya, 145
 Sogdian, 146
 Old_Sogdian, 147
+Elymaic, 148
+Nandinagari, 149
+Nyiakeng_Puachue_Hmong, 150
+Wancho, 151
