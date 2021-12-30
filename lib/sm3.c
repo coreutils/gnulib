@@ -323,8 +323,8 @@ sm3_process_block (const void *buffer, size_t len, struct sm3_ctx *ctx)
       j = -1;
 
       dbg_printf (" j    A        B        C        D        E  "
-                  "      F        G        H\n");
-      dbg_printf ("   %08x %08x %08x %08x %08x %08x %08x %08x\n",
+                  "      F        G        H\n"
+                  "   %08x %08x %08x %08x %08x %08x %08x %08x\n",
                   a, b, c, d, e, f, g, h);
 
       R1( a, b, c, d, e, f, g, h, T( 0), W1( 0), W1( 4) );
