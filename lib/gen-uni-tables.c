@@ -6289,12 +6289,27 @@ fill_width (const char *width_filename)
 /* Non-spacing attribute and width.  */
 
 /* The non-spacing attribute table consists of:
-   - Non-spacing characters; generated from PropList.txt or
+   * Non-spacing characters; generated from PropList.txt or
      "grep '^[^;]*;[^;]*;[^;]*;[^;]*;NSM;' UnicodeData.txt"
-   - Format control characters; generated from
+   * Format control characters; generated from
      "grep '^[^;]*;[^;]*;Cf;' UnicodeData.txt"
-   - Zero width characters; generated from
+   * Zero width characters; generated from
      "grep '^[^;]*;ZERO WIDTH ' UnicodeData.txt"
+   * Hangul Jamo characters that have conjoining behaviour:
+       - jungseong = syllable-middle vowels
+       - jongseong = syllable-final consonants
+     Rationale:
+     1) These characters act like combining characters. They have no
+     equivalent in legacy character sets. Therefore the EastAsianWidth.txt
+     file does not really matter for them; UAX #11 East Asian Width
+     <https://www.unicode.org/reports/tr11/> makes it clear that it focus
+     is on compatibility with traditional Japanese layout.
+     By contrast, the same glyphs without conjoining behaviour are available
+     in the U+3130..U+318F block, and these characters are mapped to legacy
+     character sets, and traditional Japanese layout matters for them.
+     2) glibc does the same thing, see
+     <https://sourceware.org/bugzilla/show_bug.cgi?id=21750>
+     <https://sourceware.org/bugzilla/show_bug.cgi?id=26120>
  */
 
 static bool
@@ -6303,7 +6318,10 @@ is_nonspacing (unsigned int ch)
   return (unicode_attributes[ch].name != NULL
           && (get_bidi_category (ch) == UC_BIDI_NSM
               || is_category_Cc (ch) || is_category_Cf (ch)
-              || strncmp (unicode_attributes[ch].name, "ZERO WIDTH ", 11) == 0));
+              || strncmp (unicode_attributes[ch].name, "ZERO WIDTH ", 11) == 0
+              || (ch >= 0x1160 && ch <= 0x11A7) || (ch >= 0xD7B0 && ch <= 0xD7C6) /* jungseong */
+              || (ch >= 0x11A8 && ch <= 0x11FF) || (ch >= 0xD7CB && ch <= 0xD7FB) /* jongseong */
+         )   );
 }
 
 static void
