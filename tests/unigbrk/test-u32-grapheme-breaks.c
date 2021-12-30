@@ -104,6 +104,11 @@ main (void)
                             'a', '\n', 'b', '\r', 'c', '\r', '\n', 'd',
                             -1);
 
+  /* Emoji modifier / ZWJ sequence. */
+  test_u32_grapheme_breaks ("#____",
+                            0x2605, 0x0305, 0x0347, 0x200D, 0x2600,
+                            -1);
+
   /* Regional indicators. */
   test_u32_grapheme_breaks ("##_#_#",
                             '.', 0x1F1E9, 0x1F1EA, 0x1F1EB, 0x1F1F7, '.',

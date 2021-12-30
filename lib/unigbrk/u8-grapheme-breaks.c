@@ -29,8 +29,10 @@
 /* Specification.  */
 #include "unigbrk.h"
 
+#include <stdbool.h>
 #include <string.h>
 
+#include "unictype.h"
 #include "unistr.h"
 
 #define FUNC u8_grapheme_breaks

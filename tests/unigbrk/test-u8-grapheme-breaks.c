@@ -94,6 +94,10 @@ main (void)
   /* CR LF handling.  */
   test_u8_grapheme_breaks ("a\nb\rc\r\nd", "######_#");
 
+  /* Emoji modifier / ZWJ sequence. */
+  test_u8_grapheme_breaks ("\342\230\205\314\205\315\207\342\200\215\342\230\200",
+                           "#____________");
+
   /* Regional indicators. */
   test_u8_grapheme_breaks (".\360\237\207\251\360\237\207\252\360\237\207\253\360\237\207\267.",
                            "##_______#_______#");

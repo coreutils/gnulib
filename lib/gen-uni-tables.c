@@ -18,22 +18,22 @@
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 /* Usage example:
-     $ gen-uni-tables /usr/local/share/www.unicode.org/Public/10.0.0/ucd/UnicodeData.txt \
-                      /usr/local/share/www.unicode.org/Public/10.0.0/ucd/PropList.txt \
-                      /usr/local/share/www.unicode.org/Public/10.0.0/ucd/DerivedCoreProperties.txt \
+     $ gen-uni-tables /usr/local/share/www.unicode.org/Public/11.0.0/ucd/UnicodeData.txt \
+                      /usr/local/share/www.unicode.org/Public/11.0.0/ucd/PropList.txt \
+                      /usr/local/share/www.unicode.org/Public/11.0.0/ucd/DerivedCoreProperties.txt \
                       /usr/local/share/www.unicode.org/Public/emoji/11.0/emoji-data.txt \
-                      /usr/local/share/www.unicode.org/Public/10.0.0/ucd/ArabicShaping.txt \
-                      /usr/local/share/www.unicode.org/Public/10.0.0/ucd/Scripts.txt \
-                      /usr/local/share/www.unicode.org/Public/10.0.0/ucd/Blocks.txt \
+                      /usr/local/share/www.unicode.org/Public/11.0.0/ucd/ArabicShaping.txt \
+                      /usr/local/share/www.unicode.org/Public/11.0.0/ucd/Scripts.txt \
+                      /usr/local/share/www.unicode.org/Public/11.0.0/ucd/Blocks.txt \
                       /usr/local/share/www.unicode.org/Public/3.0-Update1/PropList-3.0.1.txt \
-                      /usr/local/share/www.unicode.org/Public/10.0.0/ucd/EastAsianWidth.txt \
-                      /usr/local/share/www.unicode.org/Public/10.0.0/ucd/LineBreak.txt \
-                      /usr/local/share/www.unicode.org/Public/10.0.0/ucd/auxiliary/WordBreakProperty.txt \
-                      /usr/local/share/www.unicode.org/Public/10.0.0/ucd/auxiliary/GraphemeBreakProperty.txt \
-                      /usr/local/share/www.unicode.org/Public/10.0.0/ucd/CompositionExclusions.txt \
-                      /usr/local/share/www.unicode.org/Public/10.0.0/ucd/SpecialCasing.txt \
-                      /usr/local/share/www.unicode.org/Public/10.0.0/ucd/CaseFolding.txt \
-                      10.0.0
+                      /usr/local/share/www.unicode.org/Public/11.0.0/ucd/EastAsianWidth.txt \
+                      /usr/local/share/www.unicode.org/Public/11.0.0/ucd/LineBreak.txt \
+                      /usr/local/share/www.unicode.org/Public/11.0.0/ucd/auxiliary/WordBreakProperty.txt \
+                      /usr/local/share/www.unicode.org/Public/11.0.0/ucd/auxiliary/GraphemeBreakProperty.txt \
+                      /usr/local/share/www.unicode.org/Public/11.0.0/ucd/CompositionExclusions.txt \
+                      /usr/local/share/www.unicode.org/Public/11.0.0/ucd/SpecialCasing.txt \
+                      /usr/local/share/www.unicode.org/Public/11.0.0/ucd/CaseFolding.txt \
+                      11.0.0
  */
 
 #include <assert.h>
@@ -3030,11 +3030,7 @@ is_property_default_ignorable_code_point (unsigned int ch)
   bool result1 =
     (is_category_Cf (ch)
      && !(ch >= 0xFFF9 && ch <= 0xFFFB) /* Annotations */
-     && !((ch >= 0x0600 && ch <= 0x0605) || ch == 0x06DD || ch == 0x070F)
-     /* For some reason, the following are not listed as having property
-        Default_Ignorable_Code_Point.  */
-     && !(ch == 0x110BD)
-     && !(ch == 0x8E2))
+     && ((unicode_properties[ch] & (1ULL << PROP_PREPENDED_CONCATENATION_MARK)) == 0))
     || ((unicode_properties[ch] & (1ULL << PROP_OTHER_DEFAULT_IGNORABLE_CODE_POINT)) != 0)
     || ((unicode_properties[ch] & (1ULL << PROP_VARIATION_SELECTOR)) != 0);
   bool result2 =
@@ -3902,106 +3898,108 @@ static uint8_t unicode_joining_type[0x110000];
 
 enum
 {
-  UC_JOINING_GROUP_NONE,                  /* No_Joining_Group */
-  UC_JOINING_GROUP_AIN,                   /* Ain */
-  UC_JOINING_GROUP_ALAPH,                 /* Alaph */
-  UC_JOINING_GROUP_ALEF,                  /* Alef */
-  UC_JOINING_GROUP_BEH,                   /* Beh */
-  UC_JOINING_GROUP_BETH,                  /* Beth */
-  UC_JOINING_GROUP_BURUSHASKI_YEH_BARREE, /* Burushaski_Yeh_Barree */
-  UC_JOINING_GROUP_DAL,                   /* Dal */
-  UC_JOINING_GROUP_DALATH_RISH,           /* Dalath_Rish */
-  UC_JOINING_GROUP_E,                     /* E */
-  UC_JOINING_GROUP_FARSI_YEH,             /* Farsi_Yeh */
-  UC_JOINING_GROUP_FE,                    /* Fe */
-  UC_JOINING_GROUP_FEH,                   /* Feh */
-  UC_JOINING_GROUP_FINAL_SEMKATH,         /* Final_Semkath */
-  UC_JOINING_GROUP_GAF,                   /* Gaf */
-  UC_JOINING_GROUP_GAMAL,                 /* Gamal */
-  UC_JOINING_GROUP_HAH,                   /* Hah */
-  UC_JOINING_GROUP_HE,                    /* He */
-  UC_JOINING_GROUP_HEH,                   /* Heh */
-  UC_JOINING_GROUP_HEH_GOAL,              /* Heh_Goal */
-  UC_JOINING_GROUP_HETH,                  /* Heth */
-  UC_JOINING_GROUP_KAF,                   /* Kaf */
-  UC_JOINING_GROUP_KAPH,                  /* Kaph */
-  UC_JOINING_GROUP_KHAPH,                 /* Khaph */
-  UC_JOINING_GROUP_KNOTTED_HEH,           /* Knotted_Heh */
-  UC_JOINING_GROUP_LAM,                   /* Lam */
-  UC_JOINING_GROUP_LAMADH,                /* Lamadh */
-  UC_JOINING_GROUP_MEEM,                  /* Meem */
-  UC_JOINING_GROUP_MIM,                   /* Mim */
-  UC_JOINING_GROUP_NOON,                  /* Noon */
-  UC_JOINING_GROUP_NUN,                   /* Nun */
-  UC_JOINING_GROUP_NYA,                   /* Nya */
-  UC_JOINING_GROUP_PE,                    /* Pe */
-  UC_JOINING_GROUP_QAF,                   /* Qaf */
-  UC_JOINING_GROUP_QAPH,                  /* Qaph */
-  UC_JOINING_GROUP_REH,                   /* Reh */
-  UC_JOINING_GROUP_REVERSED_PE,           /* Reversed_Pe */
-  UC_JOINING_GROUP_SAD,                   /* Sad */
-  UC_JOINING_GROUP_SADHE,                 /* Sadhe */
-  UC_JOINING_GROUP_SEEN,                  /* Seen */
-  UC_JOINING_GROUP_SEMKATH,               /* Semkath */
-  UC_JOINING_GROUP_SHIN,                  /* Shin */
-  UC_JOINING_GROUP_SWASH_KAF,             /* Swash_Kaf */
-  UC_JOINING_GROUP_SYRIAC_WAW,            /* Syriac_Waw */
-  UC_JOINING_GROUP_TAH,                   /* Tah */
-  UC_JOINING_GROUP_TAW,                   /* Taw */
-  UC_JOINING_GROUP_TEH_MARBUTA,           /* Teh_Marbuta */
-  UC_JOINING_GROUP_TEH_MARBUTA_GOAL,      /* Teh_Marbuta_Goal */
-  UC_JOINING_GROUP_TETH,                  /* Teth */
-  UC_JOINING_GROUP_WAW,                   /* Waw */
-  UC_JOINING_GROUP_YEH,                   /* Yeh */
-  UC_JOINING_GROUP_YEH_BARREE,            /* Yeh_Barree */
-  UC_JOINING_GROUP_YEH_WITH_TAIL,         /* Yeh_With_Tail */
-  UC_JOINING_GROUP_YUDH,                  /* Yudh */
-  UC_JOINING_GROUP_YUDH_HE,               /* Yudh_He */
-  UC_JOINING_GROUP_ZAIN,                  /* Zain */
-  UC_JOINING_GROUP_ZHAIN,                 /* Zhain */
-  UC_JOINING_GROUP_ROHINGYA_YEH,          /* Rohingya_Yeh */
-  UC_JOINING_GROUP_STRAIGHT_WAW,          /* Straight_Waw */
-  UC_JOINING_GROUP_MANICHAEAN_ALEPH,      /* Manichaean_Aleph */
-  UC_JOINING_GROUP_MANICHAEAN_BETH,       /* Manichaean_Beth */
-  UC_JOINING_GROUP_MANICHAEAN_GIMEL,      /* Manichaean_Gimel */
-  UC_JOINING_GROUP_MANICHAEAN_DALETH,     /* Manichaean_Daleth */
-  UC_JOINING_GROUP_MANICHAEAN_WAW,        /* Manichaean_Waw */
-  UC_JOINING_GROUP_MANICHAEAN_ZAYIN,      /* Manichaean_Zayin */
-  UC_JOINING_GROUP_MANICHAEAN_HETH,       /* Manichaean_Heth */
-  UC_JOINING_GROUP_MANICHAEAN_TETH,       /* Manichaean_Teth */
-  UC_JOINING_GROUP_MANICHAEAN_YODH,       /* Manichaean_Yodh */
-  UC_JOINING_GROUP_MANICHAEAN_KAPH,       /* Manichaean_Kaph */
-  UC_JOINING_GROUP_MANICHAEAN_LAMEDH,     /* Manichaean_Lamedh */
-  UC_JOINING_GROUP_MANICHAEAN_DHAMEDH,    /* Manichaean_Dhamedh */
-  UC_JOINING_GROUP_MANICHAEAN_THAMEDH,    /* Manichaean_Thamedh */
-  UC_JOINING_GROUP_MANICHAEAN_MEM,        /* Manichaean_Mem */
-  UC_JOINING_GROUP_MANICHAEAN_NUN,        /* Manichaean_Nun */
-  UC_JOINING_GROUP_MANICHAEAN_SAMEKH,     /* Manichaean_Aleph */
-  UC_JOINING_GROUP_MANICHAEAN_AYIN,       /* Manichaean_Ayin */
-  UC_JOINING_GROUP_MANICHAEAN_PE,         /* Manichaean_Pe */
-  UC_JOINING_GROUP_MANICHAEAN_SADHE,      /* Manichaean_Sadhe */
-  UC_JOINING_GROUP_MANICHAEAN_QOPH,       /* Manichaean_Qoph */
-  UC_JOINING_GROUP_MANICHAEAN_RESH,       /* Manichaean_Resh */
-  UC_JOINING_GROUP_MANICHAEAN_TAW,        /* Manichaean_Taw */
-  UC_JOINING_GROUP_MANICHAEAN_ONE,        /* Manichaean_One */
-  UC_JOINING_GROUP_MANICHAEAN_FIVE,       /* Manichaean_Five */
-  UC_JOINING_GROUP_MANICHAEAN_TEN,        /* Manichaean_Ten */
-  UC_JOINING_GROUP_MANICHAEAN_TWENTY,     /* Manichaean_Twenty */
-  UC_JOINING_GROUP_MANICHAEAN_HUNDRED,    /* Manichaean_Hundred */
-  UC_JOINING_GROUP_AFRICAN_FEH,           /* African_Feh */
-  UC_JOINING_GROUP_AFRICAN_QAF,           /* African_Qaf */
-  UC_JOINING_GROUP_AFRICAN_NOON,          /* African_Noon */
-  UC_JOINING_GROUP_MALAYALAM_NGA,         /* Malayalam_Nga */
-  UC_JOINING_GROUP_MALAYALAM_JA,          /* Malayalam_Ja */
-  UC_JOINING_GROUP_MALAYALAM_NYA,         /* Malayalam_Nya */
-  UC_JOINING_GROUP_MALAYALAM_TTA,         /* Malayalam_Tta */
-  UC_JOINING_GROUP_MALAYALAM_NNA,         /* Malayalam_Nna */
-  UC_JOINING_GROUP_MALAYALAM_NNNA,        /* Malayalam_Nnna */
-  UC_JOINING_GROUP_MALAYALAM_BHA,         /* Malayalam_Bha */
-  UC_JOINING_GROUP_MALAYALAM_RA,          /* Malayalam_Ra */
-  UC_JOINING_GROUP_MALAYALAM_LLA,         /* Malayalam_Lla */
-  UC_JOINING_GROUP_MALAYALAM_LLLA,        /* Malayalam_Llla */
-  UC_JOINING_GROUP_MALAYALAM_SSA          /* Malayalam_Ssa */
+  UC_JOINING_GROUP_NONE,                     /* No_Joining_Group */
+  UC_JOINING_GROUP_AIN,                      /* Ain */
+  UC_JOINING_GROUP_ALAPH,                    /* Alaph */
+  UC_JOINING_GROUP_ALEF,                     /* Alef */
+  UC_JOINING_GROUP_BEH,                      /* Beh */
+  UC_JOINING_GROUP_BETH,                     /* Beth */
+  UC_JOINING_GROUP_BURUSHASKI_YEH_BARREE,    /* Burushaski_Yeh_Barree */
+  UC_JOINING_GROUP_DAL,                      /* Dal */
+  UC_JOINING_GROUP_DALATH_RISH,              /* Dalath_Rish */
+  UC_JOINING_GROUP_E,                        /* E */
+  UC_JOINING_GROUP_FARSI_YEH,                /* Farsi_Yeh */
+  UC_JOINING_GROUP_FE,                       /* Fe */
+  UC_JOINING_GROUP_FEH,                      /* Feh */
+  UC_JOINING_GROUP_FINAL_SEMKATH,            /* Final_Semkath */
+  UC_JOINING_GROUP_GAF,                      /* Gaf */
+  UC_JOINING_GROUP_GAMAL,                    /* Gamal */
+  UC_JOINING_GROUP_HAH,                      /* Hah */
+  UC_JOINING_GROUP_HE,                       /* He */
+  UC_JOINING_GROUP_HEH,                      /* Heh */
+  UC_JOINING_GROUP_HEH_GOAL,                 /* Heh_Goal */
+  UC_JOINING_GROUP_HETH,                     /* Heth */
+  UC_JOINING_GROUP_KAF,                      /* Kaf */
+  UC_JOINING_GROUP_KAPH,                     /* Kaph */
+  UC_JOINING_GROUP_KHAPH,                    /* Khaph */
+  UC_JOINING_GROUP_KNOTTED_HEH,              /* Knotted_Heh */
+  UC_JOINING_GROUP_LAM,                      /* Lam */
+  UC_JOINING_GROUP_LAMADH,                   /* Lamadh */
+  UC_JOINING_GROUP_MEEM,                     /* Meem */
+  UC_JOINING_GROUP_MIM,                      /* Mim */
+  UC_JOINING_GROUP_NOON,                     /* Noon */
+  UC_JOINING_GROUP_NUN,                      /* Nun */
+  UC_JOINING_GROUP_NYA,                      /* Nya */
+  UC_JOINING_GROUP_PE,                       /* Pe */
+  UC_JOINING_GROUP_QAF,                      /* Qaf */
+  UC_JOINING_GROUP_QAPH,                     /* Qaph */
+  UC_JOINING_GROUP_REH,                      /* Reh */
+  UC_JOINING_GROUP_REVERSED_PE,              /* Reversed_Pe */
+  UC_JOINING_GROUP_SAD,                      /* Sad */
+  UC_JOINING_GROUP_SADHE,                    /* Sadhe */
+  UC_JOINING_GROUP_SEEN,                     /* Seen */
+  UC_JOINING_GROUP_SEMKATH,                  /* Semkath */
+  UC_JOINING_GROUP_SHIN,                     /* Shin */
+  UC_JOINING_GROUP_SWASH_KAF,                /* Swash_Kaf */
+  UC_JOINING_GROUP_SYRIAC_WAW,               /* Syriac_Waw */
+  UC_JOINING_GROUP_TAH,                      /* Tah */
+  UC_JOINING_GROUP_TAW,                      /* Taw */
+  UC_JOINING_GROUP_TEH_MARBUTA,              /* Teh_Marbuta */
+  UC_JOINING_GROUP_TEH_MARBUTA_GOAL,         /* Teh_Marbuta_Goal */
+  UC_JOINING_GROUP_TETH,                     /* Teth */
+  UC_JOINING_GROUP_WAW,                      /* Waw */
+  UC_JOINING_GROUP_YEH,                      /* Yeh */
+  UC_JOINING_GROUP_YEH_BARREE,               /* Yeh_Barree */
+  UC_JOINING_GROUP_YEH_WITH_TAIL,            /* Yeh_With_Tail */
+  UC_JOINING_GROUP_YUDH,                     /* Yudh */
+  UC_JOINING_GROUP_YUDH_HE,                  /* Yudh_He */
+  UC_JOINING_GROUP_ZAIN,                     /* Zain */
+  UC_JOINING_GROUP_ZHAIN,                    /* Zhain */
+  UC_JOINING_GROUP_ROHINGYA_YEH,             /* Rohingya_Yeh */
+  UC_JOINING_GROUP_STRAIGHT_WAW,             /* Straight_Waw */
+  UC_JOINING_GROUP_MANICHAEAN_ALEPH,         /* Manichaean_Aleph */
+  UC_JOINING_GROUP_MANICHAEAN_BETH,          /* Manichaean_Beth */
+  UC_JOINING_GROUP_MANICHAEAN_GIMEL,         /* Manichaean_Gimel */
+  UC_JOINING_GROUP_MANICHAEAN_DALETH,        /* Manichaean_Daleth */
+  UC_JOINING_GROUP_MANICHAEAN_WAW,           /* Manichaean_Waw */
+  UC_JOINING_GROUP_MANICHAEAN_ZAYIN,         /* Manichaean_Zayin */
+  UC_JOINING_GROUP_MANICHAEAN_HETH,          /* Manichaean_Heth */
+  UC_JOINING_GROUP_MANICHAEAN_TETH,          /* Manichaean_Teth */
+  UC_JOINING_GROUP_MANICHAEAN_YODH,          /* Manichaean_Yodh */
+  UC_JOINING_GROUP_MANICHAEAN_KAPH,          /* Manichaean_Kaph */
+  UC_JOINING_GROUP_MANICHAEAN_LAMEDH,        /* Manichaean_Lamedh */
+  UC_JOINING_GROUP_MANICHAEAN_DHAMEDH,       /* Manichaean_Dhamedh */
+  UC_JOINING_GROUP_MANICHAEAN_THAMEDH,       /* Manichaean_Thamedh */
+  UC_JOINING_GROUP_MANICHAEAN_MEM,           /* Manichaean_Mem */
+  UC_JOINING_GROUP_MANICHAEAN_NUN,           /* Manichaean_Nun */
+  UC_JOINING_GROUP_MANICHAEAN_SAMEKH,        /* Manichaean_Aleph */
+  UC_JOINING_GROUP_MANICHAEAN_AYIN,          /* Manichaean_Ayin */
+  UC_JOINING_GROUP_MANICHAEAN_PE,            /* Manichaean_Pe */
+  UC_JOINING_GROUP_MANICHAEAN_SADHE,         /* Manichaean_Sadhe */
+  UC_JOINING_GROUP_MANICHAEAN_QOPH,          /* Manichaean_Qoph */
+  UC_JOINING_GROUP_MANICHAEAN_RESH,          /* Manichaean_Resh */
+  UC_JOINING_GROUP_MANICHAEAN_TAW,           /* Manichaean_Taw */
+  UC_JOINING_GROUP_MANICHAEAN_ONE,           /* Manichaean_One */
+  UC_JOINING_GROUP_MANICHAEAN_FIVE,          /* Manichaean_Five */
+  UC_JOINING_GROUP_MANICHAEAN_TEN,           /* Manichaean_Ten */
+  UC_JOINING_GROUP_MANICHAEAN_TWENTY,        /* Manichaean_Twenty */
+  UC_JOINING_GROUP_MANICHAEAN_HUNDRED,       /* Manichaean_Hundred */
+  UC_JOINING_GROUP_AFRICAN_FEH,              /* African_Feh */
+  UC_JOINING_GROUP_AFRICAN_QAF,              /* African_Qaf */
+  UC_JOINING_GROUP_AFRICAN_NOON,             /* African_Noon */
+  UC_JOINING_GROUP_MALAYALAM_NGA,            /* Malayalam_Nga */
+  UC_JOINING_GROUP_MALAYALAM_JA,             /* Malayalam_Ja */
+  UC_JOINING_GROUP_MALAYALAM_NYA,            /* Malayalam_Nya */
+  UC_JOINING_GROUP_MALAYALAM_TTA,            /* Malayalam_Tta */
+  UC_JOINING_GROUP_MALAYALAM_NNA,            /* Malayalam_Nna */
+  UC_JOINING_GROUP_MALAYALAM_NNNA,           /* Malayalam_Nnna */
+  UC_JOINING_GROUP_MALAYALAM_BHA,            /* Malayalam_Bha */
+  UC_JOINING_GROUP_MALAYALAM_RA,             /* Malayalam_Ra */
+  UC_JOINING_GROUP_MALAYALAM_LLA,            /* Malayalam_Lla */
+  UC_JOINING_GROUP_MALAYALAM_LLLA,           /* Malayalam_Llla */
+  UC_JOINING_GROUP_MALAYALAM_SSA,            /* Malayalam_Ssa */
+  UC_JOINING_GROUP_HANIFI_ROHINGYA_PA,       /* Hanifi_Rohingya_Pa */
+  UC_JOINING_GROUP_HANIFI_ROHINGYA_KINNA_YA  /* Hanifi_Rohingya_Kinna_Ya */
 };
 
 static uint8_t unicode_joining_group[0x110000];
@@ -4079,106 +4077,108 @@ fill_arabicshaping (const char *arabicshaping_filename)
 
 #define TRY(value,name) else if (strcmp (joining_group_name, name) == 0) joining_group = value;
       if (false) {}
-      TRY(UC_JOINING_GROUP_NONE,                  "No_Joining_Group")
-      TRY(UC_JOINING_GROUP_AIN,                   "AIN")
-      TRY(UC_JOINING_GROUP_ALAPH,                 "ALAPH")
-      TRY(UC_JOINING_GROUP_ALEF,                  "ALEF")
-      TRY(UC_JOINING_GROUP_BEH,                   "BEH")
-      TRY(UC_JOINING_GROUP_BETH,                  "BETH")
-      TRY(UC_JOINING_GROUP_BURUSHASKI_YEH_BARREE, "BURUSHASKI YEH BARREE")
-      TRY(UC_JOINING_GROUP_DAL,                   "DAL")
-      TRY(UC_JOINING_GROUP_DALATH_RISH,           "DALATH RISH")
-      TRY(UC_JOINING_GROUP_E,                     "E")
-      TRY(UC_JOINING_GROUP_FARSI_YEH,             "FARSI YEH")
-      TRY(UC_JOINING_GROUP_FE,                    "FE")
-      TRY(UC_JOINING_GROUP_FEH,                   "FEH")
-      TRY(UC_JOINING_GROUP_FINAL_SEMKATH,         "FINAL SEMKATH")
-      TRY(UC_JOINING_GROUP_GAF,                   "GAF")
-      TRY(UC_JOINING_GROUP_GAMAL,                 "GAMAL")
-      TRY(UC_JOINING_GROUP_HAH,                   "HAH")
-      TRY(UC_JOINING_GROUP_HE,                    "HE")
-      TRY(UC_JOINING_GROUP_HEH,                   "HEH")
-      TRY(UC_JOINING_GROUP_HEH_GOAL,              "HEH GOAL")
-      TRY(UC_JOINING_GROUP_HETH,                  "HETH")
-      TRY(UC_JOINING_GROUP_KAF,                   "KAF")
-      TRY(UC_JOINING_GROUP_KAPH,                  "KAPH")
-      TRY(UC_JOINING_GROUP_KHAPH,                 "KHAPH")
-      TRY(UC_JOINING_GROUP_KNOTTED_HEH,           "KNOTTED HEH")
-      TRY(UC_JOINING_GROUP_LAM,                   "LAM")
-      TRY(UC_JOINING_GROUP_LAMADH,                "LAMADH")
-      TRY(UC_JOINING_GROUP_MEEM,                  "MEEM")
-      TRY(UC_JOINING_GROUP_MIM,                   "MIM")
-      TRY(UC_JOINING_GROUP_NOON,                  "NOON")
-      TRY(UC_JOINING_GROUP_NUN,                   "NUN")
-      TRY(UC_JOINING_GROUP_NYA,                   "NYA")
-      TRY(UC_JOINING_GROUP_PE,                    "PE")
-      TRY(UC_JOINING_GROUP_QAF,                   "QAF")
-      TRY(UC_JOINING_GROUP_QAPH,                  "QAPH")
-      TRY(UC_JOINING_GROUP_REH,                   "REH")
-      TRY(UC_JOINING_GROUP_REVERSED_PE,           "REVERSED PE")
-      TRY(UC_JOINING_GROUP_SAD,                   "SAD")
-      TRY(UC_JOINING_GROUP_SADHE,                 "SADHE")
-      TRY(UC_JOINING_GROUP_SEEN,                  "SEEN")
-      TRY(UC_JOINING_GROUP_SEMKATH,               "SEMKATH")
-      TRY(UC_JOINING_GROUP_SHIN,                  "SHIN")
-      TRY(UC_JOINING_GROUP_SWASH_KAF,             "SWASH KAF")
-      TRY(UC_JOINING_GROUP_SYRIAC_WAW,            "SYRIAC WAW")
-      TRY(UC_JOINING_GROUP_TAH,                   "TAH")
-      TRY(UC_JOINING_GROUP_TAW,                   "TAW")
-      TRY(UC_JOINING_GROUP_TEH_MARBUTA,           "TEH MARBUTA")
-      TRY(UC_JOINING_GROUP_TEH_MARBUTA_GOAL,      "TEH MARBUTA GOAL")
-      TRY(UC_JOINING_GROUP_TETH,                  "TETH")
-      TRY(UC_JOINING_GROUP_WAW,                   "WAW")
-      TRY(UC_JOINING_GROUP_YEH,                   "YEH")
-      TRY(UC_JOINING_GROUP_YEH_BARREE,            "YEH BARREE")
-      TRY(UC_JOINING_GROUP_YEH_WITH_TAIL,         "YEH WITH TAIL")
-      TRY(UC_JOINING_GROUP_YUDH,                  "YUDH")
-      TRY(UC_JOINING_GROUP_YUDH_HE,               "YUDH HE")
-      TRY(UC_JOINING_GROUP_ZAIN,                  "ZAIN")
-      TRY(UC_JOINING_GROUP_ZHAIN,                 "ZHAIN")
-      TRY(UC_JOINING_GROUP_ROHINGYA_YEH,          "ROHINGYA YEH")
-      TRY(UC_JOINING_GROUP_STRAIGHT_WAW,          "STRAIGHT WAW")
-      TRY(UC_JOINING_GROUP_MANICHAEAN_ALEPH,      "MANICHAEAN ALEPH")
-      TRY(UC_JOINING_GROUP_MANICHAEAN_BETH,       "MANICHAEAN BETH")
-      TRY(UC_JOINING_GROUP_MANICHAEAN_GIMEL,      "MANICHAEAN GIMEL")
-      TRY(UC_JOINING_GROUP_MANICHAEAN_DALETH,     "MANICHAEAN DALETH")
-      TRY(UC_JOINING_GROUP_MANICHAEAN_WAW,        "MANICHAEAN WAW")
-      TRY(UC_JOINING_GROUP_MANICHAEAN_ZAYIN,      "MANICHAEAN ZAYIN")
-      TRY(UC_JOINING_GROUP_MANICHAEAN_HETH,       "MANICHAEAN HETH")
-      TRY(UC_JOINING_GROUP_MANICHAEAN_TETH,       "MANICHAEAN TETH")
-      TRY(UC_JOINING_GROUP_MANICHAEAN_YODH,       "MANICHAEAN YODH")
-      TRY(UC_JOINING_GROUP_MANICHAEAN_KAPH,       "MANICHAEAN KAPH")
-      TRY(UC_JOINING_GROUP_MANICHAEAN_LAMEDH,     "MANICHAEAN LAMEDH")
-      TRY(UC_JOINING_GROUP_MANICHAEAN_DHAMEDH,    "MANICHAEAN DHAMEDH")
-      TRY(UC_JOINING_GROUP_MANICHAEAN_THAMEDH,    "MANICHAEAN THAMEDH")
-      TRY(UC_JOINING_GROUP_MANICHAEAN_MEM,        "MANICHAEAN MEM")
-      TRY(UC_JOINING_GROUP_MANICHAEAN_NUN,        "MANICHAEAN NUN")
-      TRY(UC_JOINING_GROUP_MANICHAEAN_SAMEKH,     "MANICHAEAN SAMEKH")
-      TRY(UC_JOINING_GROUP_MANICHAEAN_AYIN,       "MANICHAEAN AYIN")
-      TRY(UC_JOINING_GROUP_MANICHAEAN_PE,         "MANICHAEAN PE")
-      TRY(UC_JOINING_GROUP_MANICHAEAN_SADHE,      "MANICHAEAN SADHE")
-      TRY(UC_JOINING_GROUP_MANICHAEAN_QOPH,       "MANICHAEAN QOPH")
-      TRY(UC_JOINING_GROUP_MANICHAEAN_RESH,       "MANICHAEAN RESH")
-      TRY(UC_JOINING_GROUP_MANICHAEAN_TAW,        "MANICHAEAN TAW")
-      TRY(UC_JOINING_GROUP_MANICHAEAN_ONE,        "MANICHAEAN ONE")
-      TRY(UC_JOINING_GROUP_MANICHAEAN_FIVE,       "MANICHAEAN FIVE")
-      TRY(UC_JOINING_GROUP_MANICHAEAN_TEN,        "MANICHAEAN TEN")
-      TRY(UC_JOINING_GROUP_MANICHAEAN_TWENTY,     "MANICHAEAN TWENTY")
-      TRY(UC_JOINING_GROUP_MANICHAEAN_HUNDRED,    "MANICHAEAN HUNDRED")
-      TRY(UC_JOINING_GROUP_AFRICAN_FEH,           "AFRICAN FEH")
-      TRY(UC_JOINING_GROUP_AFRICAN_QAF,           "AFRICAN QAF")
-      TRY(UC_JOINING_GROUP_AFRICAN_NOON,          "AFRICAN NOON")
-      TRY(UC_JOINING_GROUP_MALAYALAM_NGA,         "MALAYALAM NGA")
-      TRY(UC_JOINING_GROUP_MALAYALAM_JA,          "MALAYALAM JA")
-      TRY(UC_JOINING_GROUP_MALAYALAM_NYA,         "MALAYALAM NYA")
-      TRY(UC_JOINING_GROUP_MALAYALAM_TTA,         "MALAYALAM TTA")
-      TRY(UC_JOINING_GROUP_MALAYALAM_NNA,         "MALAYALAM NNA")
-      TRY(UC_JOINING_GROUP_MALAYALAM_NNNA,        "MALAYALAM NNNA")
-      TRY(UC_JOINING_GROUP_MALAYALAM_BHA,         "MALAYALAM BHA")
-      TRY(UC_JOINING_GROUP_MALAYALAM_RA,          "MALAYALAM RA")
-      TRY(UC_JOINING_GROUP_MALAYALAM_LLA,         "MALAYALAM LLA")
-      TRY(UC_JOINING_GROUP_MALAYALAM_LLLA,        "MALAYALAM LLLA")
-      TRY(UC_JOINING_GROUP_MALAYALAM_SSA,         "MALAYALAM SSA")
+      TRY(UC_JOINING_GROUP_NONE,                     "No_Joining_Group")
+      TRY(UC_JOINING_GROUP_AIN,                      "AIN")
+      TRY(UC_JOINING_GROUP_ALAPH,                    "ALAPH")
+      TRY(UC_JOINING_GROUP_ALEF,                     "ALEF")
+      TRY(UC_JOINING_GROUP_BEH,                      "BEH")
+      TRY(UC_JOINING_GROUP_BETH,                     "BETH")
+      TRY(UC_JOINING_GROUP_BURUSHASKI_YEH_BARREE,    "BURUSHASKI YEH BARREE")
+      TRY(UC_JOINING_GROUP_DAL,                      "DAL")
+      TRY(UC_JOINING_GROUP_DALATH_RISH,              "DALATH RISH")
+      TRY(UC_JOINING_GROUP_E,                        "E")
+      TRY(UC_JOINING_GROUP_FARSI_YEH,                "FARSI YEH")
+      TRY(UC_JOINING_GROUP_FE,                       "FE")
+      TRY(UC_JOINING_GROUP_FEH,                      "FEH")
+      TRY(UC_JOINING_GROUP_FINAL_SEMKATH,            "FINAL SEMKATH")
+      TRY(UC_JOINING_GROUP_GAF,                      "GAF")
+      TRY(UC_JOINING_GROUP_GAMAL,                    "GAMAL")
+      TRY(UC_JOINING_GROUP_HAH,                      "HAH")
+      TRY(UC_JOINING_GROUP_HE,                       "HE")
+      TRY(UC_JOINING_GROUP_HEH,                      "HEH")
+      TRY(UC_JOINING_GROUP_HEH_GOAL,                 "HEH GOAL")
+      TRY(UC_JOINING_GROUP_HETH,                     "HETH")
+      TRY(UC_JOINING_GROUP_KAF,                      "KAF")
+      TRY(UC_JOINING_GROUP_KAPH,                     "KAPH")
+      TRY(UC_JOINING_GROUP_KHAPH,                    "KHAPH")
+      TRY(UC_JOINING_GROUP_KNOTTED_HEH,              "KNOTTED HEH")
+      TRY(UC_JOINING_GROUP_LAM,                      "LAM")
+      TRY(UC_JOINING_GROUP_LAMADH,                   "LAMADH")
+      TRY(UC_JOINING_GROUP_MEEM,                     "MEEM")
+      TRY(UC_JOINING_GROUP_MIM,                      "MIM")
+      TRY(UC_JOINING_GROUP_NOON,                     "NOON")
+      TRY(UC_JOINING_GROUP_NUN,                      "NUN")
+      TRY(UC_JOINING_GROUP_NYA,                      "NYA")
+      TRY(UC_JOINING_GROUP_PE,                       "PE")
+      TRY(UC_JOINING_GROUP_QAF,                      "QAF")
+      TRY(UC_JOINING_GROUP_QAPH,                     "QAPH")
+      TRY(UC_JOINING_GROUP_REH,                      "REH")
+      TRY(UC_JOINING_GROUP_REVERSED_PE,              "REVERSED PE")
+      TRY(UC_JOINING_GROUP_SAD,                      "SAD")
+      TRY(UC_JOINING_GROUP_SADHE,                    "SADHE")
+      TRY(UC_JOINING_GROUP_SEEN,                     "SEEN")
+      TRY(UC_JOINING_GROUP_SEMKATH,                  "SEMKATH")
+      TRY(UC_JOINING_GROUP_SHIN,                     "SHIN")
+      TRY(UC_JOINING_GROUP_SWASH_KAF,                "SWASH KAF")
+      TRY(UC_JOINING_GROUP_SYRIAC_WAW,               "SYRIAC WAW")
+      TRY(UC_JOINING_GROUP_TAH,                      "TAH")
+      TRY(UC_JOINING_GROUP_TAW,                      "TAW")
+      TRY(UC_JOINING_GROUP_TEH_MARBUTA,              "TEH MARBUTA")
+      TRY(UC_JOINING_GROUP_TEH_MARBUTA_GOAL,         "TEH MARBUTA GOAL")
+      TRY(UC_JOINING_GROUP_TETH,                     "TETH")
+      TRY(UC_JOINING_GROUP_WAW,                      "WAW")
+      TRY(UC_JOINING_GROUP_YEH,                      "YEH")
+      TRY(UC_JOINING_GROUP_YEH_BARREE,               "YEH BARREE")
+      TRY(UC_JOINING_GROUP_YEH_WITH_TAIL,            "YEH WITH TAIL")
+      TRY(UC_JOINING_GROUP_YUDH,                     "YUDH")
+      TRY(UC_JOINING_GROUP_YUDH_HE,                  "YUDH HE")
+      TRY(UC_JOINING_GROUP_ZAIN,                     "ZAIN")
+      TRY(UC_JOINING_GROUP_ZHAIN,                    "ZHAIN")
+      TRY(UC_JOINING_GROUP_ROHINGYA_YEH,             "ROHINGYA YEH")
+      TRY(UC_JOINING_GROUP_STRAIGHT_WAW,             "STRAIGHT WAW")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_ALEPH,         "MANICHAEAN ALEPH")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_BETH,          "MANICHAEAN BETH")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_GIMEL,         "MANICHAEAN GIMEL")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_DALETH,        "MANICHAEAN DALETH")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_WAW,           "MANICHAEAN WAW")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_ZAYIN,         "MANICHAEAN ZAYIN")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_HETH,          "MANICHAEAN HETH")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_TETH,          "MANICHAEAN TETH")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_YODH,          "MANICHAEAN YODH")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_KAPH,          "MANICHAEAN KAPH")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_LAMEDH,        "MANICHAEAN LAMEDH")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_DHAMEDH,       "MANICHAEAN DHAMEDH")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_THAMEDH,       "MANICHAEAN THAMEDH")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_MEM,           "MANICHAEAN MEM")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_NUN,           "MANICHAEAN NUN")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_SAMEKH,        "MANICHAEAN SAMEKH")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_AYIN,          "MANICHAEAN AYIN")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_PE,            "MANICHAEAN PE")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_SADHE,         "MANICHAEAN SADHE")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_QOPH,          "MANICHAEAN QOPH")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_RESH,          "MANICHAEAN RESH")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_TAW,           "MANICHAEAN TAW")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_ONE,           "MANICHAEAN ONE")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_FIVE,          "MANICHAEAN FIVE")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_TEN,           "MANICHAEAN TEN")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_TWENTY,        "MANICHAEAN TWENTY")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_HUNDRED,       "MANICHAEAN HUNDRED")
+      TRY(UC_JOINING_GROUP_AFRICAN_FEH,              "AFRICAN FEH")
+      TRY(UC_JOINING_GROUP_AFRICAN_QAF,              "AFRICAN QAF")
+      TRY(UC_JOINING_GROUP_AFRICAN_NOON,             "AFRICAN NOON")
+      TRY(UC_JOINING_GROUP_MALAYALAM_NGA,            "MALAYALAM NGA")
+      TRY(UC_JOINING_GROUP_MALAYALAM_JA,             "MALAYALAM JA")
+      TRY(UC_JOINING_GROUP_MALAYALAM_NYA,            "MALAYALAM NYA")
+      TRY(UC_JOINING_GROUP_MALAYALAM_TTA,            "MALAYALAM TTA")
+      TRY(UC_JOINING_GROUP_MALAYALAM_NNA,            "MALAYALAM NNA")
+      TRY(UC_JOINING_GROUP_MALAYALAM_NNNA,           "MALAYALAM NNNA")
+      TRY(UC_JOINING_GROUP_MALAYALAM_BHA,            "MALAYALAM BHA")
+      TRY(UC_JOINING_GROUP_MALAYALAM_RA,             "MALAYALAM RA")
+      TRY(UC_JOINING_GROUP_MALAYALAM_LLA,            "MALAYALAM LLA")
+      TRY(UC_JOINING_GROUP_MALAYALAM_LLLA,           "MALAYALAM LLLA")
+      TRY(UC_JOINING_GROUP_MALAYALAM_SSA,            "MALAYALAM SSA")
+      TRY(UC_JOINING_GROUP_HANIFI_ROHINGYA_PA,       "HANIFI ROHINGYA PA")
+      TRY(UC_JOINING_GROUP_HANIFI_ROHINGYA_KINNA_YA, "HANIFI ROHINGYA KINNA YA")
 #undef TRY
       else
         {
@@ -4514,6 +4514,8 @@ joining_group_as_c_identifier (int joining_group)
   TRY(UC_JOINING_GROUP_MALAYALAM_LLA)
   TRY(UC_JOINING_GROUP_MALAYALAM_LLLA)
   TRY(UC_JOINING_GROUP_MALAYALAM_SSA)
+  TRY(UC_JOINING_GROUP_HANIFI_ROHINGYA_PA)
+  TRY(UC_JOINING_GROUP_HANIFI_ROHINGYA_KINNA_YA)
 #undef TRY
   abort ();
 }
@@ -6711,6 +6713,8 @@ get_lbp (unsigned int ch)
           || ch == 0x1F926 /* FACE PALM */
           || (ch >= 0x1F930 && ch <= 0x1F939) /* PREGNANT WOMAN..JUGGLING */
           || (ch >= 0x1F93D && ch <= 0x1F93E) /* WRESTLERS..HANDBALL */
+          || (ch >= 0x1F9B5 && ch <= 0x1F9B6) /* LEG..FOOT */
+          || (ch >= 0x1F9B8 && ch <= 0x1F9B9) /* SUPERHERO..SUPERVILLAIN */
           || (ch >= 0x1F9D1 && ch <= 0x1F9DD) /* ADULT..ELF */)
         attr |= (int64_t) 1 << LBP_EB;
 
@@ -6862,6 +6866,9 @@ get_lbp (unsigned int ch)
           || ch == 0x2E47 /* LOW KAVYKA */
           || ch == 0x2E48 /* LOW KAVYKA WITH DOT */
           || ch == 0x2E49 /* DOUBLE STACKED COMMA */
+          || ch == 0x2E4A /* DOTTED SOLIDUS */
+          || ch == 0x2E4C /* MEDIEVAL COMMA */
+          || ch == 0x2E4E /* PUNCTUS ELEVATUS MARK */
           || ch == 0xA60D /* VAI COMMA */
           || ch == 0xA60F /* VAI QUESTION MARK */
           || ch == 0xA92E /* KAYAH LI SIGN CWI */
@@ -6944,6 +6951,8 @@ get_lbp (unsigned int ch)
           || ch == 0x16B38 /* PAHAWH HMONG SIGN VOS TSHAB CEEB */
           || ch == 0x16B39 /* PAHAWH HMONG SIGN CIM CHEEM */
           || ch == 0x16B44 /* PAHAWH HMONG SIGN XAUS */
+          || ch == 0x16E97 /* MEDEFAIDRIN COMMA */
+          || ch == 0x16E98 /* MEDEFAIDRIN FULL STOP */
           || ch == 0x1BC9F /* DUPLOYAN PUNCTUATION CHINOOK FULL STOP */
           || (ch >= 0x1DA87 && ch <= 0x1DA8A) /* SIGNWRITING COMMA..SIGNWRITING COLON */)
         attr |= (int64_t) 1 << LBP_BA;
@@ -6954,6 +6963,7 @@ get_lbp (unsigned int ch)
           || ch == 0x02DF /* MODIFIER LETTER CROSS ACCENT */
           || ch == 0x02C8 /* MODIFIER LETTER VERTICAL LINE */
           || ch == 0x02CC /* MODIFIER LETTER LOW VERTICAL LINE */
+          || ch == 0x0C84 /* KANNADA SIGN SIDDHAM */
           || ch == 0x0F01 /* TIBETAN MARK GTER YIG MGO TRUNCATED A */
           || ch == 0x0F02 /* TIBETAN MARK GTER YIG MGO -UM RNAM BCAD MA */
           || ch == 0x0F03 /* TIBETAN MARK GTER YIG MGO -UM GTER TSHEG MA */
@@ -7202,7 +7212,9 @@ get_lbp (unsigned int ch)
           || ch == 0x0D79 /* MALAYALAM DATE MARK */
           || ch == 0x20B6 /* LIVRE TOURNOIS SIGN */
           || ch == 0x20BE /* LARI SIGN */
-          || ch == 0xA838 /* NORTH INDIC RUPEE MARK */)
+          || ch == 0xA838 /* NORTH INDIC RUPEE MARK */
+          || ch == 0x1ECAC /* INDIC SIYAQ PLACEHOLDER */
+          || ch == 0x1ECB0 /* INDIC SIYAQ RUPEE MARK */)
         attr |= (int64_t) 1 << LBP_PO;
 
       /* prefix (numeric) */
@@ -7274,7 +7286,7 @@ get_lbp (unsigned int ch)
               || (ch >= 0xA9E0 && ch <= 0xA9EF) /* Myanmar */
               || (ch >= 0xA9FA && ch <= 0xA9FE) /* Myanmar */
               || (ch >= 0xAA60 && ch <= 0xAADF) /* Myanmar Extended-A, Tai Viet */
-              || (ch >= 0x11700 && ch <= 0x11719) /* Ahom */
+              || (ch >= 0x11700 && ch <= 0x1171A) /* Ahom */
               || (ch >= 0x1171D && ch <= 0x1172B) /* Ahom */
               || (ch >= 0x1173A && ch <= 0x1173B) /* Ahom */
               || ch == 0x1173F /* Ahom */))
@@ -7288,8 +7300,9 @@ get_lbp (unsigned int ch)
           || (unicode_attributes[ch].category[0] == 'C'
               && (unicode_attributes[ch].category[1] == 'c'
                   || unicode_attributes[ch].category[1] == 'f')
+              && ch != 0x08E2 /* ARABIC DISPUTED END OF AYAH */
               && ch != 0x110BD /* KAITHI NUMBER SIGN */
-              && ch != 0x08E2 /* ARABIC DISPUTED END OF AYAH */)
+              && ch != 0x110CD /* KAITHI NUMBER SIGN ABOVE */)
           || ch == 0x3035 /* VERTICAL KANA REPEAT MARK LOWER HALF */)
         if (!(attr & (((int64_t) 1 << LBP_BK) | ((int64_t) 1 << LBP_CR) | ((int64_t) 1 << LBP_LF) | ((int64_t) 1 << LBP_BA) | ((int64_t) 1 << LBP_GL) | ((int64_t) 1 << LBP_SA) | ((int64_t) 1 << LBP_WJ) | ((int64_t) 1 << LBP_ZW) | ((int64_t) 1 << LBP_ZWJ))))
           attr |= (int64_t) 1 << LBP_CM;
@@ -7438,7 +7451,7 @@ get_lbp (unsigned int ch)
           || (ch >= 0xFFCA && ch <= 0xFFCF) /* Halfwidth Hangul */
           || (ch >= 0xFFD2 && ch <= 0xFFD7) /* Halfwidth Hangul */
           || (ch >= 0xFFDA && ch <= 0xFFDC) /* Halfwidth Hangul */
-          || (ch >= 0x17000 && ch <= 0x187EC) /* Tangut Ideograph */
+          || (ch >= 0x17000 && ch <= 0x187F1) /* Tangut Ideograph */
           || (ch >= 0x18800 && ch <= 0x18AF2) /* Tangut Ideograph */
           || (ch >= 0x1B000 && ch <= 0x1B001) /* Kana Supplement */
           || (ch >= 0x1B002 && ch <= 0x1B11E) /* Hentaigana */
@@ -7463,8 +7476,10 @@ get_lbp (unsigned int ch)
           || (ch >= 0x1F600 && ch <= 0x1F64F) /* Emoticons */
           || (ch >= 0x1F680 && ch <= 0x1F6DF) /* Transport and Map Symbols */
           || (ch >= 0x1F6E0 && ch <= 0x1F6EC) /* Transport and Map Symbols */
-          || (ch >= 0x1F6F0 && ch <= 0x1F6F8) /* Transport and Map Symbols */
+          || (ch >= 0x1F6F0 && ch <= 0x1F6F9) /* Transport and Map Symbols */
+          || (ch >= 0x1F7D5 && ch <= 0x1F7D8) /* Circled polygons */
           || (ch >= 0x1F90C && ch <= 0x1F9FF) /* Supplemental Symbols and Pictographs */
+          || (ch >= 0x1FA60 && ch <= 0x1FA6D) /* Xiangqi pieces */
           || (ch >= 0x2A700 && ch <= 0x2B734) /* CJK Ideograph Extension C */
           || (ch >= 0x2B740 && ch <= 0x2B81D) /* CJK Ideograph Extension D */
           || (ch >= 0x2B820 && ch <= 0x2CEAF) /* CJK Ideograph Extension E */
@@ -7538,7 +7553,8 @@ get_lbp (unsigned int ch)
           || ch == 0x2063 /* INVISIBLE SEPARATOR */
           || ch == 0x2064 /* INVISIBLE PLUS */
           /* Extra characters for compatibility with Unicode LineBreak.txt.  */
-          || ch == 0x110BD /* KAITHI NUMBER SIGN */)
+          || ch == 0x110BD /* KAITHI NUMBER SIGN */
+          || ch == 0x110CD /* KAITHI NUMBER SIGN ABOVE */)
         if (!(attr & (((int64_t) 1 << LBP_GL) | ((int64_t) 1 << LBP_B2) | ((int64_t) 1 << LBP_BA) | ((int64_t) 1 << LBP_BB) | ((int64_t) 1 << LBP_HY) | ((int64_t) 1 << LBP_CB) | ((int64_t) 1 << LBP_CL) | ((int64_t) 1 << LBP_CP) | ((int64_t) 1 << LBP_EX) | ((int64_t) 1 << LBP_IN) | ((int64_t) 1 << LBP_NS) | ((int64_t) 1 << LBP_OP) | ((int64_t) 1 << LBP_QU) | ((int64_t) 1 << LBP_IS) | ((int64_t) 1 << LBP_NU) | ((int64_t) 1 << LBP_PO) | ((int64_t) 1 << LBP_PR) | ((int64_t) 1 << LBP_SY) | ((int64_t) 1 << LBP_H2) | ((int64_t) 1 << LBP_H3) | ((int64_t) 1 << LBP_HL) | ((int64_t) 1 << LBP_JL) | ((int64_t) 1 << LBP_JV) | ((int64_t) 1 << LBP_JT) | ((int64_t) 1 << LBP_RI) | ((int64_t) 1 << LBP_SA) | ((int64_t) 1 << LBP_ID) | ((int64_t) 1 << LBP_EB) | ((int64_t) 1 << LBP_EM)))
             && ch != 0x3035 /* VERTICAL KANA REPEAT MARK LOWER HALF */)
           {
@@ -8537,10 +8553,7 @@ enum
   WBP_SQ           = 15,
   WBP_HL           = 16,
   WBP_ZWJ          = 17,
-  WBP_EB           = 18,
-  WBP_EM           = 19,
-  WBP_GAZ          = 20,
-  WBP_EBG          = 21
+  WBP_WSS          = 22
 };
 
 /* Returns the word breaking property for ch, as a bit mask.  */
@@ -8565,7 +8578,8 @@ get_wbp (unsigned int ch)
       if (((unicode_properties[ch] >> PROP_GRAPHEME_EXTEND) & 1) != 0
           || ((unicode_properties[ch] >> PROP_OTHER_GRAPHEME_EXTEND) & 1) != 0
           || (unicode_attributes[ch].category != NULL
-              && strcmp (unicode_attributes[ch].category, "Mc") == 0))
+              && strcmp (unicode_attributes[ch].category, "Mc") == 0)
+          || ((unicode_properties[ch] >> PROP_EMOJI_MODIFIER) & 1) != 0 /* Emoji modifier */)
         attr |= 1 << WBP_EXTEND;
 
       if (unicode_attributes[ch].category != NULL
@@ -8592,6 +8606,8 @@ get_wbp (unsigned int ch)
            || (ch >= 0x02DE && ch <= 0x02DF)
            || ch == 0x02ED
            || (ch >= 0x02EF && ch <= 0x02FF)
+           || (ch >= 0x055B && ch <= 0x055C)
+           || ch == 0x055E
            || ch == 0x05F3
            || (ch >= 0xA720 && ch <= 0xA721)
            || (ch >= 0xA789 && ch <= 0xA78A)
@@ -8638,37 +8654,8 @@ get_wbp (unsigned int ch)
       if (ch == 0x200D)
         attr |= 1 << WBP_ZWJ;
 
-      if (ch >= 0x1F466 && ch <= 0x1F469)
-        attr |= 1 << WBP_EBG;
-      else if (((get_lbp (ch) >> LBP_EB) & 1) != 0)
-        attr |= 1 << WBP_EB;
-
-      if (((get_lbp (ch) >> LBP_EM) & 1) != 0)
-        attr |= 1 << WBP_EM;
-
-      if (ch == 0x2640 /* FEMALE SIGN */
-          || ch == 0x2642 /* MALE SIGN */
-          || ch == 0x2695 /* STAFF OF AESCULAPIUS */
-          || ch == 0x2696 /* SCALES */
-          || ch == 0x2708 /* AIRPLANE */
-          || ch == 0x2764 /* HEAVY BLACK HEART */
-          || ch == 0x1F308 /* RAINBOW */
-          || ch == 0x1F33E /* EAR OF RICE */
-          || ch == 0x1F373 /* COOKING */
-          || ch == 0x1F393 /* GRADUATION CAP */
-          || ch == 0x1F3A4 /* MICROPHONE */
-          || ch == 0x1F3A8 /* ARTIST PALETTE */
-          || ch == 0x1F3EB /* SCHOOL */
-          || ch == 0x1F3ED /* FACTORY */
-          || ch == 0x1F48B /* KISS MARK */
-          || ch == 0x1F4BB /* PERSONAL COMPUTER */
-          || ch == 0x1F4BC /* BRIEFCASE */
-          || ch == 0x1F527 /* WRENCH */
-          || ch == 0x1F52C /* MICROSCOPE */
-          || ch == 0x1F5E8 /* LEFT SPEECH BUBBLE */
-          || ch == 0x1F680 /* ROCKET */
-          || ch == 0x1F692 /* FIRE ENGINE */)
-        attr |= 1 << WBP_GAZ;
+      if (is_category_Zs (ch) && ((get_lbp (ch) >> LBP_GL) & 1) == 0)
+        attr |= 1 << WBP_WSS;
     }
 
   if (attr == 0)
@@ -8724,15 +8711,9 @@ debug_output_wbp (FILE *stream)
             fprintf (stream, " Hebrew_Letter");
           if (attr & (1 << WBP_ZWJ))
             fprintf (stream, " ZWJ");
-          if (attr & (1 << WBP_EB))
-            fprintf (stream, " E_Base");
-          if (attr & (1 << WBP_EM))
-            fprintf (stream, " E_Modifier");
-          if (attr & (1 << WBP_GAZ))
-            fprintf (stream, " Glue_After_Zwj");
-          if (attr & (1 << WBP_EBG))
-            fprintf (stream, " E_Base_GAZ");
-         fprintf (stream, "\n");
+          if (attr & (1 << WBP_WSS))
+            fprintf (stream, " WSegSpace");
+          fprintf (stream, "\n");
         }
     }
 }
@@ -8822,10 +8803,7 @@ fill_org_wbp (const char *wordbreakproperty_filename)
       PROP ("Single_Quote", WBP_SQ)
       PROP ("Hebrew_Letter", WBP_HL)
       PROP ("ZWJ", WBP_ZWJ)
-      PROP ("E_Base", WBP_EB)
-      PROP ("E_Modifier", WBP_EM)
-      PROP ("Glue_After_Zwj", WBP_GAZ)
-      PROP ("E_Base_GAZ", WBP_EBG)
+      PROP ("WSegSpace", WBP_WSS)
 #undef PROP
         {
           fprintf (stderr, "unknown property value '%s' in '%s'\n", propname,
@@ -8876,10 +8854,7 @@ debug_output_org_wbp (FILE *stream)
           PROP ("Single_Quote", WBP_SQ)
           PROP ("Hebrew_Letter", WBP_HL)
           PROP ("ZWJ", WBP_ZWJ)
-          PROP ("E_Base", WBP_EB)
-          PROP ("E_Modifier", WBP_EM)
-          PROP ("Glue_After_Zwj", WBP_GAZ)
-          PROP ("E_Base_GAZ", WBP_EBG)
+          PROP ("WSegSpace", WBP_WSS)
 #undef PROP
           fprintf (stream, " ??");
           fprintf (stream, "\n");
@@ -9036,10 +9011,7 @@ output_wbp (FILE *stream)
           CASE(WBP_SQ);
           CASE(WBP_HL);
           CASE(WBP_ZWJ);
-          CASE(WBP_EB);
-          CASE(WBP_EM);
-          CASE(WBP_GAZ);
-          CASE(WBP_EBG);
+          CASE(WBP_WSS);
 #undef CASE
           default:
             abort ();
@@ -11059,32 +11031,32 @@ main (int argc, char * argv[])
  * compile-command: "\
  *   gcc -O -Wall gen-uni-tables.c -Iunictype -o gen-uni-tables &&      \\
  *   ./gen-uni-tables                                                   \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/10.0.0/ucd/UnicodeData.txt \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/10.0.0/ucd/PropList.txt \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/10.0.0/ucd/DerivedCoreProperties.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/11.0.0/ucd/UnicodeData.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/11.0.0/ucd/PropList.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/11.0.0/ucd/DerivedCoreProperties.txt \\
  *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/emoji/11.0/emoji-data.txt \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/10.0.0/ucd/ArabicShaping.txt \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/10.0.0/ucd/Scripts.txt \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/10.0.0/ucd/Blocks.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/11.0.0/ucd/ArabicShaping.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/11.0.0/ucd/Scripts.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/11.0.0/ucd/Blocks.txt \\
  *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/3.0.1/PropList-3.0.1.txt \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/10.0.0/ucd/EastAsianWidth.txt \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/10.0.0/ucd/LineBreak.txt \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/10.0.0/ucd/auxiliary/WordBreakProperty.txt \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/10.0.0/ucd/auxiliary/GraphemeBreakProperty.txt \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/10.0.0/ucd/CompositionExclusions.txt \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/10.0.0/ucd/SpecialCasing.txt \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/10.0.0/ucd/CaseFolding.txt \\
- *        10.0.0                                                         \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/11.0.0/ucd/EastAsianWidth.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/11.0.0/ucd/LineBreak.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/11.0.0/ucd/auxiliary/WordBreakProperty.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/11.0.0/ucd/auxiliary/GraphemeBreakProperty.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/11.0.0/ucd/CompositionExclusions.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/11.0.0/ucd/SpecialCasing.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/11.0.0/ucd/CaseFolding.txt \\
+ *        11.0.0                                                         \\
  *   && diff unilbrk/lbrkprop_org.txt unilbrk/lbrkprop.txt              \\
  *   && diff uniwbrk/wbrkprop_org.txt uniwbrk/wbrkprop.txt              \\
  *   && clisp -C uniname/gen-uninames.lisp                              \\
- *            /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/10.0.0/ucd/UnicodeData.txt \\
+ *            /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/11.0.0/ucd/UnicodeData.txt \\
  *            uniname/uninames.h                                        \\
- *            /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/10.0.0/ucd/NameAliases.txt \\
- *   && cp /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/10.0.0/ucd/NameAliases.txt ../tests/uniname/NameAliases.txt \\
- *   && cp /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/10.0.0/ucd/UnicodeData.txt ../tests/uniname/UnicodeData.txt \\
- *   && cp /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/10.0.0/ucd/NormalizationTest.txt ../tests/uninorm/NormalizationTest.txt \\
- *   && cp /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/10.0.0/ucd/auxiliary/GraphemeBreakTest.txt ../tests/unigbrk/GraphemeBreakTest.txt \\
- *   && cp /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/10.0.0/ucd/auxiliary/WordBreakTest.txt ../tests/uniwbrk/WordBreakTest.txt"
+ *            /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/11.0.0/ucd/NameAliases.txt \\
+ *   && cp /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/11.0.0/ucd/NameAliases.txt ../tests/uniname/NameAliases.txt \\
+ *   && cp /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/11.0.0/ucd/UnicodeData.txt ../tests/uniname/UnicodeData.txt \\
+ *   && cp /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/11.0.0/ucd/NormalizationTest.txt ../tests/uninorm/NormalizationTest.txt \\
+ *   && cp /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/11.0.0/ucd/auxiliary/GraphemeBreakTest.txt ../tests/unigbrk/GraphemeBreakTest.txt \\
+ *   && cp /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/11.0.0/ucd/auxiliary/WordBreakTest.txt ../tests/uniwbrk/WordBreakTest.txt"
  * End:
  */

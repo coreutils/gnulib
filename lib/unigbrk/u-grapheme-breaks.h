@@ -37,9 +37,12 @@ FUNC (const UNIT *s, size_t n, char *p)
          -1 at the very beginning of the string.  */
       int last_char_prop = -1;
 
-      /* Grapheme Cluster break property of the last complex character.
-         -1 at the very beginning of the string.  */
-      int last_compchar_prop = -1;
+      /* True if the last character ends an emoji modifier sequence
+         \p{Extended_Pictographic} Extend*.  */
+      bool emoji_modifier_sequence = false;
+      /* True if the last character was immediately preceded by an
+         emoji modifier sequence   \p{Extended_Pictographic} Extend*.  */
+      bool emoji_modifier_sequence_before_last_char = false;
 
       /* Number of consecutive regional indicator (RI) characters seen
          immediately before the current point.  */
@@ -93,15 +96,11 @@ FUNC (const UNIT *s, size_t n, char *p)
               /* No break after Prepend characters (GB9b).  */
               else if (last_char_prop == GBP_PREPEND)
                 /* *p = 0 */;
-              /* No break within emoji modifier sequences (GB10).  */
-              else if ((last_compchar_prop == GBP_EB
-                        || last_compchar_prop == GBP_EBG)
-                       && prop == GBP_EM)
-                /* *p = 0 */;
-              /* No break within emoji zwj sequences (GB11).  */
+              /* No break within emoji modifier sequences or emoji zwj sequences
+                 (GB11).  */
               else if (last_char_prop == GBP_ZWJ
-                       && (prop == GBP_GAZ
-                           || prop == GBP_EBG))
+                       && emoji_modifier_sequence_before_last_char
+                       && uc_is_property_extended_pictographic (uc))
                 /* *p = 0 */;
               /* No break between RI if there is an odd number of RI
                  characters before (GB12, GB13).  */
@@ -112,12 +111,12 @@ FUNC (const UNIT *s, size_t n, char *p)
                 *p = 1;
             }
 
-          last_char_prop = prop;
+          emoji_modifier_sequence_before_last_char = emoji_modifier_sequence;
+          emoji_modifier_sequence =
+            (emoji_modifier_sequence && prop == GBP_EXTEND)
+            || uc_is_property_extended_pictographic (uc);
 
-          if (!(prop == GBP_EXTEND
-                && (last_compchar_prop == GBP_EB
-                    || last_compchar_prop == GBP_EBG)))
-            last_compchar_prop = prop;
+          last_char_prop = prop;
 
           if (prop == GBP_RI)
             ri_count++;

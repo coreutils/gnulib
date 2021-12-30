@@ -30,6 +30,7 @@
 
 #include <string.h>
 
+#include "unictype.h"
 #include "unistr.h"
 #include "uniwbrk/wbrktable.h"
 

@@ -63,10 +63,11 @@ enum
   WBP_SQ           = 15,
   WBP_HL           = 16,
   WBP_ZWJ          = 17,
-  WBP_EB           = 18,
-  WBP_EM           = 19,
-  WBP_GAZ          = 20,
-  WBP_EBG          = 21
+  WBP_EB           = 18, /* obsolete */
+  WBP_EM           = 19, /* obsolete */
+  WBP_GAZ          = 20, /* obsolete */
+  WBP_EBG          = 21, /* obsolete */
+  WBP_WSS          = 22
 };
 
 /* Return the Word_Break property of a Unicode character.  */

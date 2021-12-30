@@ -28,8 +28,10 @@
 /* Specification.  */
 #include "unigbrk.h"
 
+#include <stdbool.h>
 #include <string.h>
 
+#include "unictype.h"
 #include "unistr.h"
 
 #define FUNC u16_grapheme_breaks

@@ -22,6 +22,7 @@
     { 0x066B, 0x066C },
     { 0x06DD, 0x06DD },
     { 0x08E2, 0x08E2 },
+    { 0x10D30, 0x10D39 },
     { 0x10E60, 0x10E7E }
 
 #define PREDICATE(c) uc_is_property_bidi_arabic_digit (c)

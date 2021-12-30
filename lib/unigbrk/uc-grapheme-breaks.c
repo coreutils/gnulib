@@ -28,7 +28,10 @@
 /* Specification.  */
 #include "unigbrk.h"
 
+#include <stdbool.h>
 #include <string.h>
+
+#include "unictype.h"
 
 /* This is similar to u32_mbtouc_unsafe(), but doesn't check invalid
    characters.  */

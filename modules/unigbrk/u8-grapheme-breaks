@@ -8,7 +8,9 @@ lib/unigbrk/u-grapheme-breaks.h
 Depends-on:
 unigbrk/base
 unigbrk/uc-gbrk-prop
+unictype/property-extended-pictographic
 unistr/u8-mbtouc
+stdbool
 
 configure.ac:
 gl_MODULE_INDICATOR([unigbrk/u8-grapheme-breaks])

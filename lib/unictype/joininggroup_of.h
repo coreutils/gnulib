@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Arabic joining group of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 10.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 11.0.0.  */
 
 /* Copyright (C) 2000-2021 Free Software Foundation, Inc.
 
@@ -35,7 +35,7 @@ struct
   {
     int level1[2];
     short level2[2 << 9];
-    unsigned short level3[6 * 56 + 1];
+    unsigned short level3[7 * 56 + 1];
   }
 u_joining_group =
 {
@@ -108,7 +108,7 @@ u_joining_group =
        -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
        -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
        -1,    -1,    -1,    -1,    -1,   640,    -1,    -1,
-       -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+       -1,    -1,   768,    -1,    -1,    -1,    -1,    -1,
        -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
        -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
        -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
@@ -213,6 +213,13 @@ u_joining_group =
     0x1020, 0x0800, 0x870a, 0x2244, 0x68b1, 0x223c, 0xca93, 0x92e5,
     0x6cc9, 0x9d3a, 0x27ce, 0x0000, 0x0005, 0x0000, 0x2000, 0x9d2a,
     0xab52, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x0000, 0x0019, 0x0000, 0x0000, 0x0032, 0x0000, 0x0000, 0x0000,
+    0x0000, 0x0000, 0x8000, 0x0032, 0x0640, 0x0194, 0x0065, 0x0ca0,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
     0x0000
   }
 };

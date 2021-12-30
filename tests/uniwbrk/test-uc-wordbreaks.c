@@ -56,6 +56,7 @@ wordbreakproperty_to_string (int wbp)
       CASE(EM)
       CASE(GAZ)
       CASE(EBG)
+      CASE(WSS)
     }
   abort ();
 }

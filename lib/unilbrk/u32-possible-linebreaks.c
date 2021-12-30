@@ -34,6 +34,9 @@
 #include "unilbrk/lbrktables.h"
 #include "uniwidth/cjk.h"
 
+/* This file implements
+   Unicode Standard Annex #14 <https://www.unicode.org/reports/tr14/>.  */
+
 void
 u32_possible_linebreaks_loop (const uint32_t *s, size_t n, const char *encoding,
                               int cr, char *p)
@@ -150,8 +153,7 @@ u32_possible_linebreaks_loop (const uint32_t *s, size_t n, const char *encoding,
                       /* (LB8) Break after zero-width space.  */
                       *p = UC_BREAK_POSSIBLE;
                     }
-                  else if (prev_prop == LBP_ZWJ
-                           && (prop == LBP_ID || prop == LBP_EB || prop == LBP_EM))
+                  else if (prev_prop == LBP_ZWJ)
                     {
                       /* (LB8a) Don't break right after a zero-width joiner.  */
                       *p = UC_BREAK_PROHIBITED;

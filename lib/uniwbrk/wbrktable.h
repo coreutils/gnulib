@@ -23,5 +23,5 @@
    License and of the GNU General Public License along with this
    program.  If not, see <https://www.gnu.org/licenses/>.  */
 
-extern const int uniwbrk_prop_index[22];
-extern const unsigned char uniwbrk_table[14][14];
+extern const int uniwbrk_prop_index[23];
+extern const unsigned char uniwbrk_table[12][12];

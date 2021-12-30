@@ -79,7 +79,10 @@ FUNC (const UNIT *s, size_t n, char *p)
                 *p = 1;
               /* No break within emoji zwj sequence (WB3c).  */
               else if (last_char_prop == WBP_ZWJ
-                       && (prop == WBP_GAZ || prop == WBP_EBG))
+                       && uc_is_property_extended_pictographic (uc))
+                /* *p = 0 */;
+              /* Keep horizontal whitespace together (WB3d).  */
+              else if (last_char_prop == WBP_WSS && prop == WBP_WSS)
                 /* *p = 0 */;
               /* Ignore Format and Extend characters (WB4).  */
               else if (prop == WBP_EXTEND

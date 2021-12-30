@@ -9,6 +9,7 @@ Depends-on:
 uniwbrk/base
 uniwbrk/wordbreak-property
 uniwbrk/table
+unictype/property-extended-pictographic
 unistr/u16-mbtouc-unsafe
 
 configure.ac:
