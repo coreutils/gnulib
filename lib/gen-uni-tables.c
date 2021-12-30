@@ -2672,8 +2672,7 @@ static bool
 is_WBP_MIDLETTER (unsigned int ch)
 {
   return (ch == 0x00B7 || ch == 0x05F4 || ch == 0x2027 || ch == 0x003A
-          || ch == 0x0387 || ch == 0xFE13 || ch == 0xFE55 || ch == 0xFF1A
-          || ch == 0x02D7);
+          || ch == 0x0387 || ch == 0xFE13 || ch == 0xFE55 || ch == 0xFF1A);
 }
 
 /* ========================================================================= */
