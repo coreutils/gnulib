@@ -1,0 +1,15 @@
+Files:
+tests/unictype/test-pr_emoji_modifier.c
+tests/unictype/test-predicate-part1.h
+tests/unictype/test-predicate-part2.h
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-pr_emoji_modifier
+check_PROGRAMS += test-pr_emoji_modifier
+test_pr_emoji_modifier_SOURCES = unictype/test-pr_emoji_modifier.c
+test_pr_emoji_modifier_LDADD = $(LDADD) $(LIBUNISTRING)

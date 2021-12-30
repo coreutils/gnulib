@@ -21,6 +21,7 @@
      $ gen-uni-tables /usr/local/share/www.unicode.org/Public/10.0.0/ucd/UnicodeData.txt \
                       /usr/local/share/www.unicode.org/Public/10.0.0/ucd/PropList.txt \
                       /usr/local/share/www.unicode.org/Public/10.0.0/ucd/DerivedCoreProperties.txt \
+                      /usr/local/share/www.unicode.org/Public/emoji/11.0/emoji-data.txt \
                       /usr/local/share/www.unicode.org/Public/10.0.0/ucd/ArabicShaping.txt \
                       /usr/local/share/www.unicode.org/Public/10.0.0/ucd/Scripts.txt \
                       /usr/local/share/www.unicode.org/Public/10.0.0/ucd/Blocks.txt \
@@ -2736,7 +2737,14 @@ enum
   PROP_DEFAULT_IGNORABLE_CODE_POINT,
   PROP_GRAPHEME_EXTEND,
   PROP_GRAPHEME_BASE,
-  PROP_GRAPHEME_LINK
+  PROP_GRAPHEME_LINK,
+  /* emoji-data.txt */
+  PROP_EMOJI,
+  PROP_EMOJI_PRESENTATION,
+  PROP_EMOJI_MODIFIER,
+  PROP_EMOJI_MODIFIER_BASE,
+  PROP_EMOJI_COMPONENT,
+  PROP_EXTENDED_PICTOGRAPHIC
 };
 unsigned long long unicode_properties[0x110000];
 
@@ -2778,9 +2786,9 @@ fill_properties (const char *proplist_filename)
       if (buf[0] == '\0' || buf[0] == '#')
         continue;
 
-      if (sscanf (buf, "%X..%X%[ ;]%[^ ]", &i1, &i2, padding, propname) != 4)
+      if (sscanf (buf, "%X..%X%[ ;]%[^ #]", &i1, &i2, padding, propname) != 4)
         {
-          if (sscanf (buf, "%X%[ ;]%[^ ]", &i1, padding, propname) != 3)
+          if (sscanf (buf, "%X%[ ;]%[^ #]", &i1, padding, propname) != 3)
             {
               fprintf (stderr, "parse error in '%s'\n", proplist_filename);
               exit (1);
@@ -2844,6 +2852,13 @@ fill_properties (const char *proplist_filename)
       PROP ("Grapheme_Extend", PROP_GRAPHEME_EXTEND)
       PROP ("Grapheme_Base", PROP_GRAPHEME_BASE)
       PROP ("Grapheme_Link", PROP_GRAPHEME_LINK)
+      /* emoji-data.txt */
+      PROP ("Emoji", PROP_EMOJI)
+      PROP ("Emoji_Presentation", PROP_EMOJI_PRESENTATION)
+      PROP ("Emoji_Modifier", PROP_EMOJI_MODIFIER)
+      PROP ("Emoji_Modifier_Base", PROP_EMOJI_MODIFIER_BASE)
+      PROP ("Emoji_Component", PROP_EMOJI_COMPONENT)
+      PROP ("Extended_Pictographic", PROP_EXTENDED_PICTOGRAPHIC)
 #undef PROP
         {
           fprintf (stderr, "unknown property named '%s' in '%s'\n", propname,
@@ -3721,6 +3736,48 @@ is_property_regional_indicator (unsigned int ch)
   return ((unicode_properties[ch] & (1ULL << PROP_REGIONAL_INDICATOR)) != 0);
 }
 
+/* See emoji-data.txt, UTS #51.  */
+static bool
+is_property_emoji (unsigned int ch)
+{
+  return ((unicode_properties[ch] & (1ULL << PROP_EMOJI)) != 0);
+}
+
+/* See emoji-data.txt, UTS #51.  */
+static bool
+is_property_emoji_presentation (unsigned int ch)
+{
+  return ((unicode_properties[ch] & (1ULL << PROP_EMOJI_PRESENTATION)) != 0);
+}
+
+/* See emoji-data.txt, UTS #51.  */
+static bool
+is_property_emoji_modifier (unsigned int ch)
+{
+  return ((unicode_properties[ch] & (1ULL << PROP_EMOJI_MODIFIER)) != 0);
+}
+
+/* See emoji-data.txt, UTS #51.  */
+static bool
+is_property_emoji_modifier_base (unsigned int ch)
+{
+  return ((unicode_properties[ch] & (1ULL << PROP_EMOJI_MODIFIER_BASE)) != 0);
+}
+
+/* See emoji-data.txt, UTS #51.  */
+static bool
+is_property_emoji_component (unsigned int ch)
+{
+  return ((unicode_properties[ch] & (1ULL << PROP_EMOJI_COMPONENT)) != 0);
+}
+
+/* See emoji-data.txt, UTS #51.  */
+static bool
+is_property_extended_pictographic (unsigned int ch)
+{
+  return ((unicode_properties[ch] & (1ULL << PROP_EXTENDED_PICTOGRAPHIC)) != 0);
+}
+
 /* ------------------------------------------------------------------------- */
 
 /* Output all properties.  */
@@ -3818,6 +3875,12 @@ output_properties (const char *version)
   PROPERTY(extender)
   PROPERTY(ignorable_control)
   PROPERTY(regional_indicator)
+  PROPERTY(emoji)
+  PROPERTY(emoji_presentation)
+  PROPERTY(emoji_modifier)
+  PROPERTY(emoji_modifier_base)
+  PROPERTY(emoji_component)
+  PROPERTY(extended_pictographic)
 #undef PROPERTY
 }
 
@@ -6651,7 +6714,7 @@ get_lbp (unsigned int ch)
           || (ch >= 0x1F9D1 && ch <= 0x1F9DD) /* ADULT..ELF */)
         attr |= (int64_t) 1 << LBP_EB;
 
-      if ((ch >= 0x1F3FB && ch <= 0x1F3FF) /* EMOJI MODIFIER FITZPATRICK TYPE-1-2..EMOJI MODIFIER FITZPATRICK TYPE-6 */)
+      if (((unicode_properties[ch] >> PROP_EMOJI_MODIFIER) & 1) != 0) /* EMOJI MODIFIER */
         attr |= (int64_t) 1 << LBP_EM;
 
       /* non-breaking (glue) */
@@ -10879,6 +10942,7 @@ main (int argc, char * argv[])
   const char *unicodedata_filename;
   const char *proplist_filename;
   const char *derivedproplist_filename;
+  const char *emojidata_filename;
   const char *arabicshaping_filename;
   const char *scripts_filename;
   const char *blocks_filename;
@@ -10892,9 +10956,9 @@ main (int argc, char * argv[])
   const char *casefolding_filename;
   const char *version;
 
-  if (argc != 16)
+  if (argc != 17)
     {
-      fprintf (stderr, "Usage: %s UnicodeData.txt PropList.txt DerivedCoreProperties.txt ArabicShaping.txt Scripts.txt Blocks.txt PropList-3.0.1.txt EastAsianWidth.txt LineBreak.txt WordBreakProperty.txt GraphemeBreakProperty.txt CompositionExclusions.txt SpecialCasing.txt CaseFolding.txt version\n",
+      fprintf (stderr, "Usage: %s UnicodeData.txt PropList.txt DerivedCoreProperties.txt emoji-data.txt ArabicShaping.txt Scripts.txt Blocks.txt PropList-3.0.1.txt EastAsianWidth.txt LineBreak.txt WordBreakProperty.txt GraphemeBreakProperty.txt CompositionExclusions.txt SpecialCasing.txt CaseFolding.txt version\n",
                argv[0]);
       exit (1);
     }
@@ -10902,23 +10966,25 @@ main (int argc, char * argv[])
   unicodedata_filename = argv[1];
   proplist_filename = argv[2];
   derivedproplist_filename = argv[3];
-  arabicshaping_filename = argv[4];
-  scripts_filename = argv[5];
-  blocks_filename = argv[6];
-  proplist30_filename = argv[7];
-  eastasianwidth_filename = argv[8];
-  linebreak_filename = argv[9];
-  wordbreakproperty_filename = argv[10];
-  graphemebreakproperty_filename = argv[11];
-  compositionexclusions_filename = argv[12];
-  specialcasing_filename = argv[13];
-  casefolding_filename = argv[14];
-  version = argv[15];
+  emojidata_filename = argv[4];
+  arabicshaping_filename = argv[5];
+  scripts_filename = argv[6];
+  blocks_filename = argv[7];
+  proplist30_filename = argv[8];
+  eastasianwidth_filename = argv[9];
+  linebreak_filename = argv[10];
+  wordbreakproperty_filename = argv[11];
+  graphemebreakproperty_filename = argv[12];
+  compositionexclusions_filename = argv[13];
+  specialcasing_filename = argv[14];
+  casefolding_filename = argv[15];
+  version = argv[16];
 
   fill_attributes (unicodedata_filename);
   clear_properties ();
   fill_properties (proplist_filename);
   fill_properties (derivedproplist_filename);
+  fill_properties (emojidata_filename);
   fill_properties30 (proplist30_filename);
   fill_arabicshaping (arabicshaping_filename);
   fill_scripts (scripts_filename);
@@ -10996,6 +11062,7 @@ main (int argc, char * argv[])
  *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/10.0.0/ucd/UnicodeData.txt \\
  *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/10.0.0/ucd/PropList.txt \\
  *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/10.0.0/ucd/DerivedCoreProperties.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/emoji/11.0/emoji-data.txt \\
  *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/10.0.0/ucd/ArabicShaping.txt \\
  *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/10.0.0/ucd/Scripts.txt \\
  *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/10.0.0/ucd/Blocks.txt \\

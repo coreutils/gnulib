@@ -665,6 +665,13 @@ extern const uc_property_t UC_PROPERTY_UNIFIED_IDEOGRAPH;
 extern const uc_property_t UC_PROPERTY_RADICAL;
 extern const uc_property_t UC_PROPERTY_IDS_BINARY_OPERATOR;
 extern const uc_property_t UC_PROPERTY_IDS_TRINARY_OPERATOR;
+/* Emoji.  */
+extern const uc_property_t UC_PROPERTY_EMOJI;
+extern const uc_property_t UC_PROPERTY_EMOJI_PRESENTATION;
+extern const uc_property_t UC_PROPERTY_EMOJI_MODIFIER;
+extern const uc_property_t UC_PROPERTY_EMOJI_MODIFIER_BASE;
+extern const uc_property_t UC_PROPERTY_EMOJI_COMPONENT;
+extern const uc_property_t UC_PROPERTY_EXTENDED_PICTOGRAPHIC;
 /* Misc.  */
 extern const uc_property_t UC_PROPERTY_ZERO_WIDTH;
 extern const uc_property_t UC_PROPERTY_SPACE;
@@ -824,6 +831,18 @@ extern bool uc_is_property_radical (ucs4_t uc)
 extern bool uc_is_property_ids_binary_operator (ucs4_t uc)
        _UC_ATTRIBUTE_CONST;
 extern bool uc_is_property_ids_trinary_operator (ucs4_t uc)
+       _UC_ATTRIBUTE_CONST;
+extern bool uc_is_property_emoji (ucs4_t uc)
+       _UC_ATTRIBUTE_CONST;
+extern bool uc_is_property_emoji_presentation (ucs4_t uc)
+       _UC_ATTRIBUTE_CONST;
+extern bool uc_is_property_emoji_modifier (ucs4_t uc)
+       _UC_ATTRIBUTE_CONST;
+extern bool uc_is_property_emoji_modifier_base (ucs4_t uc)
+       _UC_ATTRIBUTE_CONST;
+extern bool uc_is_property_emoji_component (ucs4_t uc)
+       _UC_ATTRIBUTE_CONST;
+extern bool uc_is_property_extended_pictographic (ucs4_t uc)
        _UC_ATTRIBUTE_CONST;
 extern bool uc_is_property_zero_width (ucs4_t uc)
        _UC_ATTRIBUTE_CONST;

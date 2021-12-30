@@ -1,0 +1,15 @@
+Files:
+tests/unictype/test-pr_extended_pictographic.c
+tests/unictype/test-predicate-part1.h
+tests/unictype/test-predicate-part2.h
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-pr_extended_pictographic
+check_PROGRAMS += test-pr_extended_pictographic
+test_pr_extended_pictographic_SOURCES = unictype/test-pr_extended_pictographic.c
+test_pr_extended_pictographic_LDADD = $(LDADD) $(LIBUNISTRING)

@@ -1,0 +1,28 @@
+Description:
+Test whether a Unicode character is "emoji modifier base".
+
+Files:
+lib/unictype/pr_emoji_modifier_base.c
+lib/unictype/pr_emoji_modifier_base.h
+lib/unictype/bitmap.h
+
+Depends-on:
+unictype/base
+
+configure.ac:
+AC_REQUIRE([AC_C_INLINE])
+gl_LIBUNISTRING_MODULE([0.9.11], [unictype/property-emoji-modifier-base])
+
+Makefile.am:
+if LIBUNISTRING_COMPILE_UNICTYPE_PROPERTY_EMOJI_MODIFIER_BASE
+lib_SOURCES += unictype/pr_emoji_modifier_base.c
+endif
+
+Include:
+"unictype.h"
+
+License:
+LGPLv3+ or GPLv2+
+
+Maintainer:
+all
