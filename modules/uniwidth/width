@@ -4,6 +4,9 @@ Determine display width of Unicode character.
 Files:
 lib/uniwidth/width.c
 lib/uniwidth/cjk.h
+lib/uniwidth/width0.h
+lib/uniwidth/width2.h
+lib/unictype/bitmap.h
 
 Depends-on:
 uniwidth/base

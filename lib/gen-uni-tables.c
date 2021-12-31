@@ -6397,7 +6397,7 @@ is_nonspacing (unsigned int ch)
 }
 
 static void
-output_nonspacing_property (const char *filename)
+output_nonspacing_property (const char *filename, const char *version)
 {
   FILE *stream;
   int ind[0x110000 / 0x200];
@@ -6411,6 +6411,17 @@ output_nonspacing_property (const char *filename)
       fprintf (stderr, "cannot open '%s' for writing\n", filename);
       exit (1);
     }
+
+  fprintf (stream, "/* DO NOT EDIT! GENERATED AUTOMATICALLY! */\n");
+  fprintf (stream, "/* Table of non-spacing or control characters.  */\n");
+  fprintf (stream, "/* Generated automatically by gen-uni-tables.c for Unicode %s.  */\n",
+           version);
+  fprintf (stream, "\n");
+
+  fprintf (stream, "/* Copyright (C) 2000-2021 Free Software Foundation, Inc.\n");
+  fprintf (stream, "\n");
+  output_library_license (stream, false);
+  fprintf (stream, "\n");
 
   next_ind = 0;
   for (i = 0; i < 0x110000 / 0x200; i++)
@@ -6499,6 +6510,125 @@ output_nonspacing_property (const char *filename)
       fprintf (stderr, "error writing to '%s'\n", filename);
       exit (1);
     }
+}
+
+/* Determines whether a character has width 2, regardless of context.
+   Generated from "grep '^[^;]\+;[WF]' EastAsianWidth.txt"
+   and            "grep '^[^;]\+;[^WF]' EastAsianWidth.txt"
+ */
+static bool
+is_width2 (unsigned int ch)
+{
+  return ((ch >= 0x1100 && ch <= 0x115F) /* Hangul Jamo */
+          || (ch >= 0x231A && ch <= 0x231B) /* Watch, Hourglass */
+          || (ch >= 0x2329 && ch <= 0x232A) /* Angle Brackets */
+          || (ch >= 0x23E9 && ch <= 0x23EC) /* Black double triangles */
+          || ch == 0x23F0 /* Alarm clock */
+          || ch == 0x23F3 /* Hourglass */
+          || (ch >= 0x25FD && ch <= 0x25FE) /* Medium small squares */
+          /* Miscellaneous symbols, dingbats */
+          || (ch >= 0x2614 && ch <= 0x2615)
+          || (ch >= 0x2648 && ch <= 0x2653)
+          || ch == 0x267F
+          || ch == 0x2693
+          || ch == 0x26A1
+          || (ch >= 0x26AA && ch <= 0x26AB)
+          || (ch >= 0x26BD && ch <= 0x26BE)
+          || (ch >= 0x26C4 && ch <= 0x26C5)
+          || ch == 0x26CE
+          || ch == 0x26D4
+          || ch == 0x26EA
+          || (ch >= 0x26F2 && ch <= 0x26F3)
+          || ch == 0x26F5
+          || ch == 0x26FA
+          || ch == 0x26FD
+          || ch == 0x2705
+          || (ch >= 0x270A && ch <= 0x270B)
+          || ch == 0x2728
+          || ch == 0x274C
+          || ch == 0x274E
+          || (ch >= 0x2753 && ch <= 0x2755)
+          || ch == 0x2757
+          || (ch >= 0x2795 && ch <= 0x2797)
+          || ch == 0x27B0
+          || ch == 0x27BF
+          || (ch >= 0x2B1B && ch <= 0x2B1C) /* Large squares */
+          || ch == 0x2B50
+          || ch == 0x2B55
+          || (ch >= 0x2E80 && ch <= 0xA4CF  /* CJK ... Yi */
+              && !(ch == 0x303F)
+              && !(ch >= 0x3248 && ch <= 0x324F)
+              && !(ch >= 0x4DC0 && ch <= 0x4DFF))
+          || (ch >= 0xA960 && ch <= 0xA97C) /* Hangul Jamo Extended-A */
+          || (ch >= 0xAC00 && ch <= 0xD7A3) /* Hangul Syllables */
+          || (ch >= 0xF900 && ch <= 0xFAFF) /* CJK Compatibility Ideographs */
+          || (ch >= 0xFE10 && ch <= 0xFE1F) /* Presentation Forms for Vertical */
+          || (ch >= 0xFE30 && ch <= 0xFE6F) /* CJK Compatibility Forms */
+          || (ch >= 0xFF00 && ch <= 0xFF60) /* Fullwidth Forms */
+          || (ch >= 0xFFE0 && ch <= 0xFFE6) /* Fullwidth Signs */
+          || (ch >= 0x16FE0 && ch <= 0x16FE3) /* Tangut mark, Nushu mark */
+          || (ch >= 0x16FF0 && ch <= 0x16FF1) /* Vietnamese alternate reading marks */
+          || (ch >= 0x17000 && ch <= 0x187F7) /* Tangut */
+          || (ch >= 0x18800 && ch <= 0x18CD5) /* Tangut components */
+          || (ch >= 0x18D00 && ch <= 0x18D08) /* Tangul Ideograph Supplement */
+          || ((ch >= 0x1AFF0 && ch <= 0x1AFFE) /* Katakana letter Minnan */
+              && ch != 0x1AFF4 && ch != 0x1AFFC)
+          || (ch >= 0x1B000 && ch <= 0x1B122) /* Kana supplement, Kana Extended-A */
+          || (ch >= 0x1B150 && ch <= 0x1B152) /* Small Hiragana */
+          || (ch >= 0x1B164 && ch <= 0x1B167) /* Small Katakana */
+          || (ch >= 0x1B170 && ch <= 0x1B2FB) /* Nushu */
+          || ch == 0x1F004
+          || ch == 0x1F0CF
+          || ch == 0x1F18E
+          || (ch >= 0x1F191 && ch <= 0x1F19A)
+          /* Miscellaneous symbols and pictographs */
+          || (ch >= 0x1F200 && ch <= 0x1F320)
+          || (ch >= 0x1F32D && ch <= 0x1F335)
+          || (ch >= 0x1F337 && ch <= 0x1F37C)
+          || (ch >= 0x1F37E && ch <= 0x1F393)
+          || (ch >= 0x1F3A0 && ch <= 0x1F3CA)
+          || (ch >= 0x1F3CF && ch <= 0x1F3D3)
+          || (ch >= 0x1F3E0 && ch <= 0x1F3F0)
+          || ch == 0x1F3F4
+          || (ch >= 0x1F3F8 && ch <= 0x1F43E)
+          || ch == 0x1F440
+          || (ch >= 0x1F442 && ch <= 0x1F4FC)
+          || (ch >= 0x1F4FF && ch <= 0x1F53D)
+          || (ch >= 0x1F54B && ch <= 0x1F54E)
+          || (ch >= 0x1F550 && ch <= 0x1F567)
+          || ch == 0x1F57A
+          || (ch >= 0x1F595 && ch <= 0x1F596)
+          || ch == 0x1F5A4
+          || (ch >= 0x1F5FB && ch <= 0x1F64F)
+          || (ch >= 0x1F680 && ch <= 0x1F6C5)
+          || ch == 0x1F6CC
+          || (ch >= 0x1F6D0 && ch <= 0x1F6D2)
+          || (ch >= 0x1F6D5 && ch <= 0x1F6D7)
+          || (ch >= 0x1F6DD && ch <= 0x1F6DF)
+          || (ch >= 0x1F6EB && ch <= 0x1F6EC)
+          || (ch >= 0x1F6F4 && ch <= 0x1F6FC)
+          || (ch >= 0x1F7E0 && ch <= 0x1F7EB)
+          || ch == 0x1F7F0
+          || ((ch >= 0x1F90C && ch <= 0x1F9FF)
+              && ch != 0x1F93B && ch != 0x1F946)
+          || (ch >= 0x1FA70 && ch <= 0x1FA74)
+          || (ch >= 0x1FA78 && ch <= 0x1FA7C)
+          || (ch >= 0x1FA80 && ch <= 0x1FA86)
+          || (ch >= 0x1FA90 && ch <= 0x1FAAC)
+          || (ch >= 0x1FAB0 && ch <= 0x1FABA)
+          || (ch >= 0x1FAC0 && ch <= 0x1FAC5)
+          || (ch >= 0x1FAD0 && ch <= 0x1FAD9)
+          || (ch >= 0x1FAE0 && ch <= 0x1FAE7)
+          || (ch >= 0x1FAF0 && ch <= 0x1FAF6)
+          || (ch >= 0x20000 && ch <= 0x2FFFF) /* Supplementary Ideographic Plane */
+          || (ch >= 0x30000 && ch <= 0x3FFFF) /* Tertiary Ideographic Plane */
+         );
+}
+
+static void
+output_width2_property (const char *filename, const char *version)
+{
+  output_predicate (filename, is_width2, "u_width2", "Width 2 property", version);
 }
 
 /* Returns the width of ch as one of 0, '0', '1', '2', 'A'.  */
@@ -11099,7 +11229,8 @@ main (int argc, char * argv[])
   output_scripts_byname (version);
   output_blocks (version);
   output_ident_properties (version);
-  output_nonspacing_property ("uniwidth/width.c.part");
+  output_nonspacing_property ("uniwidth/width0.h", version);
+  output_width2_property ("uniwidth/width2.h", version);
   output_width_property_test ("../tests/uniwidth/test-uc_width2.sh.part");
   output_old_ctype (version);
 
