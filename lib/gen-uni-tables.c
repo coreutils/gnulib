@@ -18,22 +18,22 @@
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 /* Usage example:
-     $ gen-uni-tables /usr/local/share/www.unicode.org/Public/12.1.0/ucd/UnicodeData.txt \
-                      /usr/local/share/www.unicode.org/Public/12.1.0/ucd/PropList.txt \
-                      /usr/local/share/www.unicode.org/Public/12.1.0/ucd/DerivedCoreProperties.txt \
-                      /usr/local/share/www.unicode.org/Public/emoji/12.0/emoji-data.txt \
-                      /usr/local/share/www.unicode.org/Public/12.1.0/ucd/ArabicShaping.txt \
-                      /usr/local/share/www.unicode.org/Public/12.1.0/ucd/Scripts.txt \
-                      /usr/local/share/www.unicode.org/Public/12.1.0/ucd/Blocks.txt \
+     $ gen-uni-tables /usr/local/share/www.unicode.org/Public/13.0.0/ucd/UnicodeData.txt \
+                      /usr/local/share/www.unicode.org/Public/13.0.0/ucd/PropList.txt \
+                      /usr/local/share/www.unicode.org/Public/13.0.0/ucd/DerivedCoreProperties.txt \
+                      /usr/local/share/www.unicode.org/Public/13.0.0/ucd/emoji/emoji-data.txt \
+                      /usr/local/share/www.unicode.org/Public/13.0.0/ucd/ArabicShaping.txt \
+                      /usr/local/share/www.unicode.org/Public/13.0.0/ucd/Scripts.txt \
+                      /usr/local/share/www.unicode.org/Public/13.0.0/ucd/Blocks.txt \
                       /usr/local/share/www.unicode.org/Public/3.0-Update1/PropList-3.0.1.txt \
-                      /usr/local/share/www.unicode.org/Public/12.1.0/ucd/EastAsianWidth.txt \
-                      /usr/local/share/www.unicode.org/Public/12.1.0/ucd/LineBreak.txt \
-                      /usr/local/share/www.unicode.org/Public/12.1.0/ucd/auxiliary/WordBreakProperty.txt \
-                      /usr/local/share/www.unicode.org/Public/12.1.0/ucd/auxiliary/GraphemeBreakProperty.txt \
-                      /usr/local/share/www.unicode.org/Public/12.1.0/ucd/CompositionExclusions.txt \
-                      /usr/local/share/www.unicode.org/Public/12.1.0/ucd/SpecialCasing.txt \
-                      /usr/local/share/www.unicode.org/Public/12.1.0/ucd/CaseFolding.txt \
-                      12.1.0
+                      /usr/local/share/www.unicode.org/Public/13.0.0/ucd/EastAsianWidth.txt \
+                      /usr/local/share/www.unicode.org/Public/13.0.0/ucd/LineBreak.txt \
+                      /usr/local/share/www.unicode.org/Public/13.0.0/ucd/auxiliary/WordBreakProperty.txt \
+                      /usr/local/share/www.unicode.org/Public/13.0.0/ucd/auxiliary/GraphemeBreakProperty.txt \
+                      /usr/local/share/www.unicode.org/Public/13.0.0/ucd/CompositionExclusions.txt \
+                      /usr/local/share/www.unicode.org/Public/13.0.0/ucd/SpecialCasing.txt \
+                      /usr/local/share/www.unicode.org/Public/13.0.0/ucd/CaseFolding.txt \
+                      13.0.0
  */
 
 #include <assert.h>
@@ -2672,7 +2672,8 @@ static bool
 is_WBP_MIDLETTER (unsigned int ch)
 {
   return (ch == 0x00B7 || ch == 0x05F4 || ch == 0x2027 || ch == 0x003A
-          || ch == 0x0387 || ch == 0xFE13 || ch == 0xFE55 || ch == 0xFF1A);
+          || ch == 0x0387 || ch == 0xFE13 || ch == 0xFE55 || ch == 0xFF1A
+          || ch == 0x055F);
 }
 
 /* ========================================================================= */
@@ -6599,50 +6600,56 @@ output_width_property_test (const char *filename)
 
 enum
 {
-  /* Values >= 30 are resolved at run time. */
-  LBP_BK = 30, /* mandatory break */
-  LBP_CR = 31, /* carriage return */
-  LBP_LF = 32, /* line feed */
-  LBP_CM = 33, /* attached characters and combining marks */
-/*LBP_NL,         next line - not used here because it's equivalent to LBP_BK */
-/*LBP_SG,         surrogates - not used here because they are not characters */
-  LBP_WJ =  0, /* word joiner */
-  LBP_ZW = 34, /* zero width space */
-  LBP_GL =  1, /* non-breaking (glue) */
-  LBP_SP = 35, /* space */
-  LBP_B2 =  2, /* break opportunity before and after */
-  LBP_BA =  3, /* break opportunity after */
-  LBP_BB =  4, /* break opportunity before */
-  LBP_HY =  5, /* hyphen */
-  LBP_CB = 36, /* contingent break opportunity */
-  LBP_CL =  6, /* closing punctuation */
-  LBP_CP =  7, /* closing parenthesis */
-  LBP_EX =  8, /* exclamation/interrogation */
-  LBP_IN =  9, /* inseparable */
-  LBP_NS = 10, /* non starter */
-  LBP_OP = 11, /* opening punctuation */
-  LBP_QU = 12, /* ambiguous quotation */
-  LBP_IS = 13, /* infix separator (numeric) */
-  LBP_NU = 14, /* numeric */
-  LBP_PO = 15, /* postfix (numeric) */
-  LBP_PR = 16, /* prefix (numeric) */
-  LBP_SY = 17, /* symbols allowing breaks */
-  LBP_AI = 37, /* ambiguous (alphabetic or ideograph) */
-  LBP_AL = 18, /* ordinary alphabetic and symbol characters */
-/*LBP_CJ,         conditional Japanese starter, resolved to NS */
-  LBP_H2 = 19, /* Hangul LV syllable */
-  LBP_H3 = 20, /* Hangul LVT syllable */
-  LBP_HL = 25, /* Hebrew letter */
-  LBP_ID = 21, /* ideographic */
-  LBP_JL = 22, /* Hangul L Jamo */
-  LBP_JV = 23, /* Hangul V Jamo */
-  LBP_JT = 24, /* Hangul T Jamo */
-  LBP_RI = 26, /* regional indicator */
-  LBP_SA = 38, /* complex context (South East Asian) */
-  LBP_ZWJ = 27, /* zero width joiner */
-  LBP_EB = 28, /* emoji base */
-  LBP_EM = 29, /* emoji modifier */
-  LBP_XX = 39  /* unknown */
+  /* Values >= 32 are resolved at run time. */
+  /* Values >= 100 are shorthands for several values. */
+  LBP_BK  = 32, /* mandatory break */
+  LBP_CR  = 33, /* carriage return */
+  LBP_LF  = 34, /* line feed */
+  LBP_CM  = 35, /* attached characters and combining marks */
+/*LBP_NL,          next line - not used here because it's equivalent to LBP_BK */
+/*LBP_SG,          surrogates - not used here because they are not characters */
+  LBP_WJ  =  0, /* word joiner */
+  LBP_ZW  = 36, /* zero width space */
+  LBP_GL  =  1, /* non-breaking (glue) */
+  LBP_SP  = 37, /* space */
+  LBP_B2  =  2, /* break opportunity before and after */
+  LBP_BA  =  3, /* break opportunity after */
+  LBP_BB  =  4, /* break opportunity before */
+  LBP_HY  =  5, /* hyphen */
+  LBP_CB  = 38, /* contingent break opportunity */
+  LBP_CL  =  6, /* closing punctuation */
+  LBP_CP1 =  7, /* closing parenthesis, non-EastAsian character */
+  LBP_CP2 =  8, /* closing parenthesis, EastAsian character */
+  LBP_EX  =  9, /* exclamation/interrogation */
+  LBP_IN  = 10, /* inseparable */
+  LBP_NS  = 11, /* non starter */
+  LBP_OP1 = 12, /* opening punctuation, non-EastAsian character */
+  LBP_OP2 = 13, /* opening punctuation, EastAsian character */
+  LBP_QU  = 14, /* ambiguous quotation */
+  LBP_IS  = 15, /* infix separator (numeric) */
+  LBP_NU  = 16, /* numeric */
+  LBP_PO  = 17, /* postfix (numeric) */
+  LBP_PR  = 18, /* prefix (numeric) */
+  LBP_SY  = 19, /* symbols allowing breaks */
+  LBP_AI  = 39, /* ambiguous (alphabetic or ideograph) */
+  LBP_AL  = 20, /* ordinary alphabetic and symbol characters */
+/*LBP_CJ,          conditional Japanese starter, resolved to NS */
+  LBP_H2  = 21, /* Hangul LV syllable */
+  LBP_H3  = 22, /* Hangul LVT syllable */
+  LBP_HL  = 27, /* Hebrew letter */
+  LBP_ID  = 23, /* ideographic */
+  LBP_JL  = 24, /* Hangul L Jamo */
+  LBP_JV  = 25, /* Hangul V Jamo */
+  LBP_JT  = 26, /* Hangul T Jamo */
+  LBP_RI  = 28, /* regional indicator */
+  LBP_SA  = 40, /* complex context (South East Asian) */
+  LBP_ZWJ = 29, /* zero width joiner */
+  LBP_EB  = 30, /* emoji base */
+  LBP_EM  = 31, /* emoji modifier */
+  LBP_XX  = 41, /* unknown */
+  /* Artificial values that exist only in this file, not in the tables. */
+  LBP_OP  = 100, /* LBP_OP1 or LBP_OP2 */
+  LBP_CP  = 101  /* LBP_CP1 or LBP_CP2 */
 };
 
 /* Returns the line breaking classification for ch, as a bit mask.  */
@@ -6708,11 +6715,13 @@ get_lbp (unsigned int ch)
           || (ch >= 0x1F6B4 && ch <= 0x1F6B6) /* BICYCLIST..PEDESTRIAN */
           || ch == 0x1F6C0 /* BATH */
           || ch == 0x1F6CC /* SLEEPING ACCOMMODATION */
+          || ch == 0x1F90C /* PINCHED FINGERS */
           || ch == 0x1F90F /* PINCHING HAND */
           || (ch >= 0x1F918 && ch <= 0x1F91F) /* SIGN OF THE HORNS..I LOVE YOU HAND SIGN */
           || ch == 0x1F926 /* FACE PALM */
           || (ch >= 0x1F930 && ch <= 0x1F939) /* PREGNANT WOMAN..JUGGLING */
           || (ch >= 0x1F93C && ch <= 0x1F93E) /* WRESTLERS..HANDBALL */
+          || ch == 0x1F977 /* NINJA */
           || (ch >= 0x1F9B5 && ch <= 0x1F9B6) /* LEG..FOOT */
           || (ch >= 0x1F9B8 && ch <= 0x1F9B9) /* SUPERHERO..SUPERVILLAIN */
           || ch == 0x1F9BB /* EAR WITH HEARING AID */
@@ -6737,7 +6746,8 @@ get_lbp (unsigned int ch)
           /* Extra characters for compatibility with Unicode LineBreak.txt.  */
           || ch == 0x0FD9 /* TIBETAN MARK LEADING MCHAN RTAGS */
           || ch == 0x0FDA /* TIBETAN MARK TRAILING MCHAN RTAGS */
-          || (ch >= 0x13430 && ch <= 0x13436) /* EGYPTIAN HIEROGLYPH VERTICAL JOINER..EGYPTIAN HIEROGLYPH OVERLAY MIDDLE */)
+          || (ch >= 0x13430 && ch <= 0x13436) /* EGYPTIAN HIEROGLYPH VERTICAL JOINER..EGYPTIAN HIEROGLYPH OVERLAY MIDDLE */
+          || ch == 0x16FE4 /* KHITAN SMALL SCRIPT FILLER */)
         attr |= (int64_t) 1 << LBP_GL;
 
       /* space */
@@ -6907,6 +6917,7 @@ get_lbp (unsigned int ch)
           || ch == 0x10B3D /* LARGE ONE DOT OVER TWO DOTS PUNCTUATION */
           || ch == 0x10B3E /* LARGE TWO RINGS OVER ONE RING PUNCTUATION */
           || ch == 0x10B3F /* LARGE ONE RING OVER TWO RINGS PUNCTUATION */
+          || ch == 0x10EAD /* YEZIDI HYPHENATION MARK */
           || ch == 0x11047 /* BRAHMI DANDA */
           || ch == 0x11048 /* BRAHMI DOUBLE DANDA */
           || ch == 0x110BE /* KAITHI SECTION MARK */
@@ -6927,6 +6938,7 @@ get_lbp (unsigned int ch)
           || ch == 0x1123C /* KHOJKI DOUBLE SECTION MARK */
           || ch == 0x112A9 /* MULTANI SECTION MARK */
           || (ch >= 0x1144B && ch <= 0x1144E) /* NEWA DANDA..NEWA GAP FILLER */
+          || ch == 0x1145A /* NEWA DOUBLE COMMA */
           || ch == 0x1145B /* NEWA PLACEHOLDER MARK */
           || ch == 0x115C2 /* SIDDHAM DANDA */
           || ch == 0x115C3 /* SIDDHAM DOUBLE DANDA */
@@ -6934,6 +6946,7 @@ get_lbp (unsigned int ch)
           || ch == 0x11641 /* MODI DANDA */
           || ch == 0x11642 /* MODI DOUBLE DANDA */
           || (ch >= 0x1173C && ch <= 0x1173E) /* AHOM SIGN SMALL SECTION..AHOM SIGN RULAI */
+          || (ch >= 0x11944 && ch <= 0x11946) /* DIVES AKURU DOUBLE DANDA..DIVES AKURU END OF TEXT MARK */
           || ch == 0x11A41 /* ZANABAZAR SQUARE MARK TSHEG */
           || ch == 0x11A42 /* ZANABAZAR SQUARE MARK SHAD */
           || ch == 0x11A43 /* ZANABAZAR SQUARE MARK DOUBLE SHAD */
@@ -7009,12 +7022,20 @@ get_lbp (unsigned int ch)
       /* closing parenthesis */
       if (ch == 0x0029 /* RIGHT PARENTHESIS */
           || ch == 0x005D /* RIGHT SQUARE BRACKET */)
-        attr |= (int64_t) 1 << LBP_CP;
+        {
+          if (unicode_width[ch] != NULL
+              && (strcmp (unicode_width[ch], "W") == 0
+                  || strcmp (unicode_width[ch], "F") == 0
+                  || strcmp (unicode_width[ch], "H") == 0))
+            attr |= (int64_t) 1 << LBP_CP2;
+          else
+            attr |= (int64_t) 1 << LBP_CP1;
+        }
 
       /* closing punctuation */
       if ((unicode_attributes[ch].category[0] == 'P'
            && unicode_attributes[ch].category[1] == 'e'
-           && !(attr & ((int64_t) 1 << LBP_CP)))
+           && !(attr & (((int64_t) 1 << LBP_CP1) | ((int64_t) 1 << LBP_CP2))))
           || ch == 0x3001 /* IDEOGRAPHIC COMMA */
           || ch == 0x3002 /* IDEOGRAPHIC FULL STOP */
           || ch == 0xFE11 /* PRESENTATION FORM FOR VERTICAL IDEOGRAPHIC COMMA */
@@ -7143,7 +7164,15 @@ get_lbp (unsigned int ch)
           || ch == 0x13437 /* EGYPTIAN HIEROGLYPH BEGIN SEGMENT */
           || ch == 0x145CE /* ANATOLIAN HIEROGLYPH A410 BEGIN LOGOGRAM MARK */
           || (ch >= 0x1E95E && ch <= 0x1E95F) /* ADLAM INITIAL EXCLAMATION MARK..ADLAM INITIAL QUESTION MARK */)
-        attr |= (int64_t) 1 << LBP_OP;
+        {
+          if (unicode_width[ch] != NULL
+              && (strcmp (unicode_width[ch], "W") == 0
+                  || strcmp (unicode_width[ch], "F") == 0
+                  || strcmp (unicode_width[ch], "H") == 0))
+            attr |= (int64_t) 1 << LBP_OP2;
+          else
+            attr |= (int64_t) 1 << LBP_OP1;
+        }
 
       /* ambiguous quotation */
       if ((unicode_attributes[ch].category[0] == 'P'
@@ -7413,7 +7442,7 @@ get_lbp (unsigned int ch)
           || (ch >= 0x2F800 && ch <= 0x2FA1D) /* CJK COMPATIBILITY IDEOGRAPH */
           || strstr (unicode_attributes[ch].name, "FULLWIDTH LATIN ") != NULL
           || (ch >= 0x3000 && ch <= 0x33FF
-              && !(attr & (((int64_t) 1 << LBP_BA) | ((int64_t) 1 << LBP_CM) | ((int64_t) 1 << LBP_NS) | ((int64_t) 1 << LBP_OP) | ((int64_t) 1 << LBP_CL) | ((int64_t) 1 << LBP_CP))))
+              && !(attr & (((int64_t) 1 << LBP_BA) | ((int64_t) 1 << LBP_CM) | ((int64_t) 1 << LBP_NS) | ((int64_t) 1 << LBP_OP1) | ((int64_t) 1 << LBP_OP2) | ((int64_t) 1 << LBP_CL) | ((int64_t) 1 << LBP_CP1) | ((int64_t) 1 << LBP_CP2))))
           /* Extra characters for compatibility with Unicode LineBreak.txt.  */
           || ch == 0xFE30 /* PRESENTATION FORM FOR VERTICAL TWO DOT LEADER */
           || ch == 0xFE31 /* PRESENTATION FORM FOR VERTICAL EM DASH */
@@ -7466,13 +7495,17 @@ get_lbp (unsigned int ch)
           || (ch >= 0xFFD2 && ch <= 0xFFD7) /* Halfwidth Hangul */
           || (ch >= 0xFFDA && ch <= 0xFFDC) /* Halfwidth Hangul */
           || (ch >= 0x17000 && ch <= 0x187F7) /* Tangut Ideograph */
-          || (ch >= 0x18800 && ch <= 0x18AF2) /* Tangut Ideograph */
+          || (ch >= 0x18800 && ch <= 0x18AFF) /* Tangut Ideograph */
+          || (ch >= 0x18D00 && ch <= 0x18D08) /* Tangut Ideograph Supplement */
           || (ch >= 0x1B000 && ch <= 0x1B001) /* Kana Supplement */
           || (ch >= 0x1B002 && ch <= 0x1B11E) /* Hentaigana */
           || (ch >= 0x1B170 && ch <= 0x1B2FB) /* Nushu */
           || (ch >= 0x1F000 && ch <= 0x1F02B) /* Mahjong Tiles */
           || (ch >= 0x1F030 && ch <= 0x1F093) /* Domino Tiles */
           || (ch >= 0x1F0A0 && ch <= 0x1F0F5) /* Playing Cards */
+          || (ch >= 0x1F10D && ch <= 0x1F10F) /* Circled Symbols */
+          || (ch >= 0x1F16D && ch <= 0x1F16F) /* Circled Symbols */
+          || ch == 0x1F1AD /* MASK WORK SYMBOL */
           || (ch >= 0x1F200 && ch <= 0x1F248) /* Enclosed Ideographic Supplement */
           || (ch >= 0x1F250 && ch <= 0x1F251) /* Enclosed Ideographic Supplement */
           || (ch >= 0x1F260 && ch <= 0x1F265) /* Rounded Symbols */
@@ -7490,19 +7523,25 @@ get_lbp (unsigned int ch)
           || (ch >= 0x1F600 && ch <= 0x1F64F) /* Emoticons */
           || (ch >= 0x1F680 && ch <= 0x1F6DF) /* Transport and Map Symbols */
           || (ch >= 0x1F6E0 && ch <= 0x1F6EC) /* Transport and Map Symbols */
-          || (ch >= 0x1F6F0 && ch <= 0x1F6FA) /* Transport and Map Symbols */
+          || (ch >= 0x1F6F0 && ch <= 0x1F6FC) /* Transport and Map Symbols */
           || (ch >= 0x1F7D5 && ch <= 0x1F7D8) /* Circled polygons */
           || (ch >= 0x1F7E0 && ch <= 0x1F7EB) /* Large circles */
+          || (ch >= 0x1F8B0 && ch <= 0x1F8B1) /* Curved arrows */
           || (ch >= 0x1F90C && ch <= 0x1F9FF) /* Supplemental Symbols and Pictographs */
           || (ch >= 0x1FA60 && ch <= 0x1FA6D) /* Xiangqi pieces */
-          || (ch >= 0x1FA70 && ch <= 0x1FA73) /* Emoticons */
+          || (ch >= 0x1FA70 && ch <= 0x1FA74) /* Emoticons */
           || (ch >= 0x1FA78 && ch <= 0x1FA7A) /* Medical pictographs */
-          || (ch >= 0x1FA80 && ch <= 0x1FA82) /* Pictographs */
-          || (ch >= 0x1FA90 && ch <= 0x1FA95) /* Pictographs */
+          || (ch >= 0x1FA80 && ch <= 0x1FA86) /* Pictographs */
+          || (ch >= 0x1FA90 && ch <= 0x1FAA8) /* Pictographs */
+          || (ch >= 0x1FAB0 && ch <= 0x1FAB6) /* Pictographs */
+          || (ch >= 0x1FAC0 && ch <= 0x1FAC2) /* Pictographs */
+          || (ch >= 0x1FAD0 && ch <= 0x1FAD6) /* Pictographs */
+          || (ch >= 0x2A6D7 && ch <= 0x2A6DD) /* CJK Ideograph Extension B */
           || (ch >= 0x2A700 && ch <= 0x2B734) /* CJK Ideograph Extension C */
           || (ch >= 0x2B740 && ch <= 0x2B81D) /* CJK Ideograph Extension D */
           || (ch >= 0x2B820 && ch <= 0x2CEAF) /* CJK Ideograph Extension E */
-          || (ch >= 0x2CEB0 && ch <= 0x2EBE0) /* CJK Ideograph Extension F */)
+          || (ch >= 0x2CEB0 && ch <= 0x2EBE0) /* CJK Ideograph Extension F */
+          || (ch >= 0x30000 && ch <= 0x3134A) /* CJK Ideograph Extension G */)
         if (!(attr & (((int64_t) 1 << LBP_NS) | ((int64_t) 1 << LBP_CM) | ((int64_t) 1 << LBP_EB))))
           {
             /* ambiguous (ideograph) ? */
@@ -7574,7 +7613,7 @@ get_lbp (unsigned int ch)
           /* Extra characters for compatibility with Unicode LineBreak.txt.  */
           || ch == 0x110BD /* KAITHI NUMBER SIGN */
           || ch == 0x110CD /* KAITHI NUMBER SIGN ABOVE */)
-        if (!(attr & (((int64_t) 1 << LBP_GL) | ((int64_t) 1 << LBP_B2) | ((int64_t) 1 << LBP_BA) | ((int64_t) 1 << LBP_BB) | ((int64_t) 1 << LBP_HY) | ((int64_t) 1 << LBP_CB) | ((int64_t) 1 << LBP_CL) | ((int64_t) 1 << LBP_CP) | ((int64_t) 1 << LBP_EX) | ((int64_t) 1 << LBP_IN) | ((int64_t) 1 << LBP_NS) | ((int64_t) 1 << LBP_OP) | ((int64_t) 1 << LBP_QU) | ((int64_t) 1 << LBP_IS) | ((int64_t) 1 << LBP_NU) | ((int64_t) 1 << LBP_PO) | ((int64_t) 1 << LBP_PR) | ((int64_t) 1 << LBP_SY) | ((int64_t) 1 << LBP_H2) | ((int64_t) 1 << LBP_H3) | ((int64_t) 1 << LBP_HL) | ((int64_t) 1 << LBP_JL) | ((int64_t) 1 << LBP_JV) | ((int64_t) 1 << LBP_JT) | ((int64_t) 1 << LBP_RI) | ((int64_t) 1 << LBP_SA) | ((int64_t) 1 << LBP_ID) | ((int64_t) 1 << LBP_EB) | ((int64_t) 1 << LBP_EM)))
+        if (!(attr & (((int64_t) 1 << LBP_GL) | ((int64_t) 1 << LBP_B2) | ((int64_t) 1 << LBP_BA) | ((int64_t) 1 << LBP_BB) | ((int64_t) 1 << LBP_HY) | ((int64_t) 1 << LBP_CB) | ((int64_t) 1 << LBP_CL) | ((int64_t) 1 << LBP_CP1) | ((int64_t) 1 << LBP_CP2) | ((int64_t) 1 << LBP_EX) | ((int64_t) 1 << LBP_IN) | ((int64_t) 1 << LBP_NS) | ((int64_t) 1 << LBP_OP1) | ((int64_t) 1 << LBP_OP2) | ((int64_t) 1 << LBP_QU) | ((int64_t) 1 << LBP_IS) | ((int64_t) 1 << LBP_NU) | ((int64_t) 1 << LBP_PO) | ((int64_t) 1 << LBP_PR) | ((int64_t) 1 << LBP_SY) | ((int64_t) 1 << LBP_H2) | ((int64_t) 1 << LBP_H3) | ((int64_t) 1 << LBP_HL) | ((int64_t) 1 << LBP_JL) | ((int64_t) 1 << LBP_JV) | ((int64_t) 1 << LBP_JT) | ((int64_t) 1 << LBP_RI) | ((int64_t) 1 << LBP_SA) | ((int64_t) 1 << LBP_ID) | ((int64_t) 1 << LBP_EB) | ((int64_t) 1 << LBP_EM)))
             && ch != 0x3035 /* VERTICAL KANA REPEAT MARK LOWER HALF */)
           {
             /* ambiguous (alphabetic) ? */
@@ -7675,7 +7714,10 @@ get_lbp (unsigned int ch)
           || (ch >= 0x1F94C && ch <= 0x1F94F) /* reserved */
           || (ch >= 0x1F95F && ch <= 0x1F97F) /* reserved */
           || (ch >= 0x1F992 && ch <= 0x1F9BF) /* reserved */
-          || (ch >= 0x1F9C1 && ch <= 0x1FFFD) /* reserved */
+          || (ch >= 0x1F9C1 && ch <= 0x1FB92) /* reserved */
+          || (ch >= 0x1FB94 && ch <= 0x1FBCA) /* reserved */
+          || (ch >= 0x1FBF0 && ch <= 0x1FBF9) /* reserved */
+          || (ch >= 0x1FC00 && ch <= 0x1FFFD) /* reserved */
           || (ch >= 0x20000 && ch <= 0x2A6FF) /* CJK Unified Ideographs Extension B */
           || (ch >= 0x2A700 && ch <= 0x2F7FF) /* CJK Unified Ideographs Extension C,
                                                  Supplementary Ideographic Plane (Plane 2) outside of blocks */
@@ -7706,6 +7748,8 @@ debug_output_lbp (FILE *stream)
           fprintf (stream, "0x%04X", i);
 #define PRINT_BIT(attr,bit) \
   if (attr & ((int64_t) 1 << bit)) fprintf (stream, " " #bit);
+#define PRINT_BIT_ALT(attr,bit,name) \
+  if (attr & ((int64_t) 1 << bit)) fprintf (stream, " " #name);
           PRINT_BIT(attr,LBP_BK);
           PRINT_BIT(attr,LBP_CR);
           PRINT_BIT(attr,LBP_LF);
@@ -7720,11 +7764,13 @@ debug_output_lbp (FILE *stream)
           PRINT_BIT(attr,LBP_HY);
           PRINT_BIT(attr,LBP_CB);
           PRINT_BIT(attr,LBP_CL);
-          PRINT_BIT(attr,LBP_CP);
+          PRINT_BIT_ALT(attr,LBP_CP1,LBP_CP);
+          PRINT_BIT_ALT(attr,LBP_CP2,LBP_CP);
           PRINT_BIT(attr,LBP_EX);
           PRINT_BIT(attr,LBP_IN);
           PRINT_BIT(attr,LBP_NS);
-          PRINT_BIT(attr,LBP_OP);
+          PRINT_BIT_ALT(attr,LBP_OP1,LBP_OP);
+          PRINT_BIT_ALT(attr,LBP_OP2,LBP_OP);
           PRINT_BIT(attr,LBP_QU);
           PRINT_BIT(attr,LBP_IS);
           PRINT_BIT(attr,LBP_NU);
@@ -7746,6 +7792,7 @@ debug_output_lbp (FILE *stream)
           PRINT_BIT(attr,LBP_EB);
           PRINT_BIT(attr,LBP_EM);
           PRINT_BIT(attr,LBP_XX);
+#undef PRINT_BIT_ALT
 #undef PRINT_BIT
           fprintf (stream, "\n");
         }
@@ -8002,11 +8049,13 @@ lbp_value_to_string (unsigned int value)
       CASE(LBP_HY);
       CASE(LBP_CB);
       CASE(LBP_CL);
-      CASE(LBP_CP);
+      CASE(LBP_CP1);
+      CASE(LBP_CP2);
       CASE(LBP_EX);
       CASE(LBP_IN);
       CASE(LBP_NS);
-      CASE(LBP_OP);
+      CASE(LBP_OP1);
+      CASE(LBP_OP2);
       CASE(LBP_QU);
       CASE(LBP_IS);
       CASE(LBP_NU);
@@ -8235,7 +8284,7 @@ output_lbrk_rules_as_tables (const char *filename, const char *version)
   fprintf (stream, "\n");
 
   /* LBP_* table indices are in the range 0 .. NLBP-1.  */
-  const unsigned int NLBP = 30;
+  const unsigned int NLBP = 32;
 
   unsigned int before;
   unsigned int after;
@@ -8248,6 +8297,17 @@ output_lbrk_rules_as_tables (const char *filename, const char *version)
     bool prohibited_with_sp;
   };
   struct table_cell table[NLBP][NLBP];
+  /* Sets table[before][after].field to value.  */
+  #define set_table_cell(field,value)  \
+    (before == LBP_CP ? (set_table_cell_1 (LBP_CP1, field, value), set_table_cell_1 (LBP_CP2, field, value)) : \
+     before == LBP_OP ? (set_table_cell_1 (LBP_OP1, field, value), set_table_cell_1 (LBP_OP2, field, value)) : \
+     set_table_cell_1 (before, field, value))
+  #define set_table_cell_1(row,field,value) \
+    (after == LBP_CP ? (set_table_cell_2 (row, LBP_CP1, field, value), set_table_cell_2 (row, LBP_CP2, field, value)) : \
+     after == LBP_OP ? (set_table_cell_2 (row, LBP_OP1, field, value), set_table_cell_2 (row, LBP_OP2, field, value)) : \
+     set_table_cell_2 (row, after, field, value))
+  #define set_table_cell_2(row,column,field,value) \
+    (table[row][column].field = (value))
 
   /* Fill the table.
      If we were to apply the rules in top-down order (high precedence rules
@@ -8259,184 +8319,179 @@ output_lbrk_rules_as_tables (const char *filename, const char *version)
   /* (LB31) Break everywhere.  */
   for (before = 0; before < NLBP; before++)
     for (after = 0; after < NLBP; after++)
-      table[before][after].prohibited_no_sp = false;
+      set_table_cell (prohibited_no_sp, false);
 
   /* (LB30b) Do not break between an emoji base and an emoji modifier.  */
-  before = LBP_EB; after = LBP_EM; table[before][after].prohibited_no_sp = true;
+  before = LBP_EB; after = LBP_EM; set_table_cell (prohibited_no_sp, true);
 
   /* (LB30) Do not break between letters, numbers, or ordinary symbols and
-     opening or closing parentheses.  */
-  before = LBP_AL; after = LBP_OP; table[before][after].prohibited_no_sp = true;
-  before = LBP_HL; after = LBP_OP; table[before][after].prohibited_no_sp = true;
-  before = LBP_NU; after = LBP_OP; table[before][after].prohibited_no_sp = true;
-  before = LBP_CP; after = LBP_AL; table[before][after].prohibited_no_sp = true;
-  before = LBP_CP; after = LBP_HL; table[before][after].prohibited_no_sp = true;
-  before = LBP_CP; after = LBP_NU; table[before][after].prohibited_no_sp = true;
+     opening or closing parentheses (except for East Asian parentheses).  */
+  before = LBP_AL; after = LBP_OP1; set_table_cell (prohibited_no_sp, true);
+  before = LBP_HL; after = LBP_OP1; set_table_cell (prohibited_no_sp, true);
+  before = LBP_NU; after = LBP_OP1; set_table_cell (prohibited_no_sp, true);
+  before = LBP_CP1; after = LBP_AL; set_table_cell (prohibited_no_sp, true);
+  before = LBP_CP1; after = LBP_HL; set_table_cell (prohibited_no_sp, true);
+  before = LBP_CP1; after = LBP_NU; set_table_cell (prohibited_no_sp, true);
 
   /* (LB29) Do not break between numeric punctuation and alphabetics
      ("e.g.").  */
   /* We don't implement this rule, because we find it desirable to break before
      the HTML tag "</P>" in strings like "<P>Some sentence.</P>".  */
 #if 0
-  before = LBP_IS; after = LBP_AL; table[before][after].prohibited_no_sp = true;
-  before = LBP_IS; after = LBP_HL; table[before][after].prohibited_no_sp = true;
+  before = LBP_IS; after = LBP_AL; set_table_cell (prohibited_no_sp, true);
+  before = LBP_IS; after = LBP_HL; set_table_cell (prohibited_no_sp, true);
 #endif
 
   /* (LB28) Do not break between alphabetics ("at").  */
-  before = LBP_AL; after = LBP_AL; table[before][after].prohibited_no_sp = true;
-  before = LBP_AL; after = LBP_HL; table[before][after].prohibited_no_sp = true;
-  before = LBP_HL; after = LBP_AL; table[before][after].prohibited_no_sp = true;
-  before = LBP_HL; after = LBP_HL; table[before][after].prohibited_no_sp = true;
+  before = LBP_AL; after = LBP_AL; set_table_cell (prohibited_no_sp, true);
+  before = LBP_AL; after = LBP_HL; set_table_cell (prohibited_no_sp, true);
+  before = LBP_HL; after = LBP_AL; set_table_cell (prohibited_no_sp, true);
+  before = LBP_HL; after = LBP_HL; set_table_cell (prohibited_no_sp, true);
 
   /* (LB27) Korean Syllable Block.  */
-  before = LBP_JL; after = LBP_IN; table[before][after].prohibited_no_sp = true;
-  before = LBP_JV; after = LBP_IN; table[before][after].prohibited_no_sp = true;
-  before = LBP_JT; after = LBP_IN; table[before][after].prohibited_no_sp = true;
-  before = LBP_H2; after = LBP_IN; table[before][after].prohibited_no_sp = true;
-  before = LBP_H3; after = LBP_IN; table[before][after].prohibited_no_sp = true;
-  before = LBP_JL; after = LBP_PO; table[before][after].prohibited_no_sp = true;
-  before = LBP_JV; after = LBP_PO; table[before][after].prohibited_no_sp = true;
-  before = LBP_JT; after = LBP_PO; table[before][after].prohibited_no_sp = true;
-  before = LBP_H2; after = LBP_PO; table[before][after].prohibited_no_sp = true;
-  before = LBP_H3; after = LBP_PO; table[before][after].prohibited_no_sp = true;
-  before = LBP_PR; after = LBP_JL; table[before][after].prohibited_no_sp = true;
-  before = LBP_PR; after = LBP_JV; table[before][after].prohibited_no_sp = true;
-  before = LBP_PR; after = LBP_JT; table[before][after].prohibited_no_sp = true;
-  before = LBP_PR; after = LBP_H2; table[before][after].prohibited_no_sp = true;
-  before = LBP_PR; after = LBP_H3; table[before][after].prohibited_no_sp = true;
+  before = LBP_JL; after = LBP_IN; set_table_cell (prohibited_no_sp, true);
+  before = LBP_JV; after = LBP_IN; set_table_cell (prohibited_no_sp, true);
+  before = LBP_JT; after = LBP_IN; set_table_cell (prohibited_no_sp, true);
+  before = LBP_H2; after = LBP_IN; set_table_cell (prohibited_no_sp, true);
+  before = LBP_H3; after = LBP_IN; set_table_cell (prohibited_no_sp, true);
+  before = LBP_JL; after = LBP_PO; set_table_cell (prohibited_no_sp, true);
+  before = LBP_JV; after = LBP_PO; set_table_cell (prohibited_no_sp, true);
+  before = LBP_JT; after = LBP_PO; set_table_cell (prohibited_no_sp, true);
+  before = LBP_H2; after = LBP_PO; set_table_cell (prohibited_no_sp, true);
+  before = LBP_H3; after = LBP_PO; set_table_cell (prohibited_no_sp, true);
+  before = LBP_PR; after = LBP_JL; set_table_cell (prohibited_no_sp, true);
+  before = LBP_PR; after = LBP_JV; set_table_cell (prohibited_no_sp, true);
+  before = LBP_PR; after = LBP_JT; set_table_cell (prohibited_no_sp, true);
+  before = LBP_PR; after = LBP_H2; set_table_cell (prohibited_no_sp, true);
+  before = LBP_PR; after = LBP_H3; set_table_cell (prohibited_no_sp, true);
 
   /* (LB26) Do not break a Korean syllable.  */
-  before = LBP_JL; after = LBP_JL; table[before][after].prohibited_no_sp = true;
-  before = LBP_JL; after = LBP_JV; table[before][after].prohibited_no_sp = true;
-  before = LBP_JL; after = LBP_H2; table[before][after].prohibited_no_sp = true;
-  before = LBP_JL; after = LBP_H3; table[before][after].prohibited_no_sp = true;
-  before = LBP_JV; after = LBP_JV; table[before][after].prohibited_no_sp = true;
-  before = LBP_JV; after = LBP_JT; table[before][after].prohibited_no_sp = true;
-  before = LBP_H2; after = LBP_JV; table[before][after].prohibited_no_sp = true;
-  before = LBP_H2; after = LBP_JT; table[before][after].prohibited_no_sp = true;
-  before = LBP_JT; after = LBP_JT; table[before][after].prohibited_no_sp = true;
-  before = LBP_H3; after = LBP_JT; table[before][after].prohibited_no_sp = true;
+  before = LBP_JL; after = LBP_JL; set_table_cell (prohibited_no_sp, true);
+  before = LBP_JL; after = LBP_JV; set_table_cell (prohibited_no_sp, true);
+  before = LBP_JL; after = LBP_H2; set_table_cell (prohibited_no_sp, true);
+  before = LBP_JL; after = LBP_H3; set_table_cell (prohibited_no_sp, true);
+  before = LBP_JV; after = LBP_JV; set_table_cell (prohibited_no_sp, true);
+  before = LBP_JV; after = LBP_JT; set_table_cell (prohibited_no_sp, true);
+  before = LBP_H2; after = LBP_JV; set_table_cell (prohibited_no_sp, true);
+  before = LBP_H2; after = LBP_JT; set_table_cell (prohibited_no_sp, true);
+  before = LBP_JT; after = LBP_JT; set_table_cell (prohibited_no_sp, true);
+  before = LBP_H3; after = LBP_JT; set_table_cell (prohibited_no_sp, true);
 
   /* (LB25) Do not break between the following pairs of classes relevant to
      numbers.  */
-  before = LBP_CL; after = LBP_PO; table[before][after].prohibited_no_sp = true;
-  before = LBP_CP; after = LBP_PO; table[before][after].prohibited_no_sp = true;
-  before = LBP_CL; after = LBP_PR; table[before][after].prohibited_no_sp = true;
-  before = LBP_CP; after = LBP_PR; table[before][after].prohibited_no_sp = true;
-  before = LBP_NU; after = LBP_PO; table[before][after].prohibited_no_sp = true;
-  before = LBP_NU; after = LBP_PR; table[before][after].prohibited_no_sp = true;
-  before = LBP_PO; after = LBP_OP; table[before][after].prohibited_no_sp = true;
-  before = LBP_PO; after = LBP_NU; table[before][after].prohibited_no_sp = true;
-  before = LBP_PR; after = LBP_OP; table[before][after].prohibited_no_sp = true;
-  before = LBP_PR; after = LBP_NU; table[before][after].prohibited_no_sp = true;
-  before = LBP_HY; after = LBP_NU; table[before][after].prohibited_no_sp = true;
-  before = LBP_IS; after = LBP_NU; table[before][after].prohibited_no_sp = true;
-  before = LBP_NU; after = LBP_NU; table[before][after].prohibited_no_sp = true;
-  before = LBP_SY; after = LBP_NU; table[before][after].prohibited_no_sp = true;
+  before = LBP_CL; after = LBP_PO; set_table_cell (prohibited_no_sp, true);
+  before = LBP_CP; after = LBP_PO; set_table_cell (prohibited_no_sp, true);
+  before = LBP_CL; after = LBP_PR; set_table_cell (prohibited_no_sp, true);
+  before = LBP_CP; after = LBP_PR; set_table_cell (prohibited_no_sp, true);
+  before = LBP_NU; after = LBP_PO; set_table_cell (prohibited_no_sp, true);
+  before = LBP_NU; after = LBP_PR; set_table_cell (prohibited_no_sp, true);
+  before = LBP_PO; after = LBP_OP; set_table_cell (prohibited_no_sp, true);
+  before = LBP_PO; after = LBP_NU; set_table_cell (prohibited_no_sp, true);
+  before = LBP_PR; after = LBP_OP; set_table_cell (prohibited_no_sp, true);
+  before = LBP_PR; after = LBP_NU; set_table_cell (prohibited_no_sp, true);
+  before = LBP_HY; after = LBP_NU; set_table_cell (prohibited_no_sp, true);
+  before = LBP_IS; after = LBP_NU; set_table_cell (prohibited_no_sp, true);
+  before = LBP_NU; after = LBP_NU; set_table_cell (prohibited_no_sp, true);
+  before = LBP_SY; after = LBP_NU; set_table_cell (prohibited_no_sp, true);
 
   /* (LB24) Do not break between numeric prefix/postfix and letters, or between
      letters and prefix/postfix.  */
-  before = LBP_PR; after = LBP_AL; table[before][after].prohibited_no_sp = true;
-  before = LBP_PR; after = LBP_HL; table[before][after].prohibited_no_sp = true;
-  before = LBP_PO; after = LBP_AL; table[before][after].prohibited_no_sp = true;
-  before = LBP_PO; after = LBP_HL; table[before][after].prohibited_no_sp = true;
-  before = LBP_AL; after = LBP_PR; table[before][after].prohibited_no_sp = true;
-  before = LBP_AL; after = LBP_PO; table[before][after].prohibited_no_sp = true;
-  before = LBP_HL; after = LBP_PR; table[before][after].prohibited_no_sp = true;
-  before = LBP_HL; after = LBP_PO; table[before][after].prohibited_no_sp = true;
+  before = LBP_PR; after = LBP_AL; set_table_cell (prohibited_no_sp, true);
+  before = LBP_PR; after = LBP_HL; set_table_cell (prohibited_no_sp, true);
+  before = LBP_PO; after = LBP_AL; set_table_cell (prohibited_no_sp, true);
+  before = LBP_PO; after = LBP_HL; set_table_cell (prohibited_no_sp, true);
+  before = LBP_AL; after = LBP_PR; set_table_cell (prohibited_no_sp, true);
+  before = LBP_AL; after = LBP_PO; set_table_cell (prohibited_no_sp, true);
+  before = LBP_HL; after = LBP_PR; set_table_cell (prohibited_no_sp, true);
+  before = LBP_HL; after = LBP_PO; set_table_cell (prohibited_no_sp, true);
 
   /* (LB23a) Do not break between numeric prefixes and ideographs, or between
      ideographs and numeric postfixes.  */
-  before = LBP_PR; after = LBP_ID; table[before][after].prohibited_no_sp = true;
-  before = LBP_PR; after = LBP_EB; table[before][after].prohibited_no_sp = true;
-  before = LBP_PR; after = LBP_EM; table[before][after].prohibited_no_sp = true;
-  before = LBP_ID; after = LBP_PO; table[before][after].prohibited_no_sp = true;
-  before = LBP_EB; after = LBP_PO; table[before][after].prohibited_no_sp = true;
-  before = LBP_EM; after = LBP_PO; table[before][after].prohibited_no_sp = true;
+  before = LBP_PR; after = LBP_ID; set_table_cell (prohibited_no_sp, true);
+  before = LBP_PR; after = LBP_EB; set_table_cell (prohibited_no_sp, true);
+  before = LBP_PR; after = LBP_EM; set_table_cell (prohibited_no_sp, true);
+  before = LBP_ID; after = LBP_PO; set_table_cell (prohibited_no_sp, true);
+  before = LBP_EB; after = LBP_PO; set_table_cell (prohibited_no_sp, true);
+  before = LBP_EM; after = LBP_PO; set_table_cell (prohibited_no_sp, true);
 
   /* (LB23) Do not break between digits and letters.  */
-  before = LBP_AL; after = LBP_NU; table[before][after].prohibited_no_sp = true;
-  before = LBP_HL; after = LBP_NU; table[before][after].prohibited_no_sp = true;
-  before = LBP_NU; after = LBP_AL; table[before][after].prohibited_no_sp = true;
-  before = LBP_NU; after = LBP_HL; table[before][after].prohibited_no_sp = true;
+  before = LBP_AL; after = LBP_NU; set_table_cell (prohibited_no_sp, true);
+  before = LBP_HL; after = LBP_NU; set_table_cell (prohibited_no_sp, true);
+  before = LBP_NU; after = LBP_AL; set_table_cell (prohibited_no_sp, true);
+  before = LBP_NU; after = LBP_HL; set_table_cell (prohibited_no_sp, true);
 
-  /* (LB22) Do not break between two ellipses, or between letters, numbers or
-     exclamations and ellipsis.  */
-  before = LBP_AL; after = LBP_IN; table[before][after].prohibited_no_sp = true;
-  before = LBP_HL; after = LBP_IN; table[before][after].prohibited_no_sp = true;
-  before = LBP_EX; after = LBP_IN; table[before][after].prohibited_no_sp = true;
-  before = LBP_ID; after = LBP_IN; table[before][after].prohibited_no_sp = true;
-  before = LBP_EB; after = LBP_IN; table[before][after].prohibited_no_sp = true;
-  before = LBP_EM; after = LBP_IN; table[before][after].prohibited_no_sp = true;
-  before = LBP_IN; after = LBP_IN; table[before][after].prohibited_no_sp = true;
-  before = LBP_NU; after = LBP_IN; table[before][after].prohibited_no_sp = true;
+  /* (LB22) Do not break before ellipses.  */
+  for (before = 0; before < NLBP; before++)
+    {
+      after = LBP_IN; set_table_cell (prohibited_no_sp, true);
+    }
 
   /* (LB21b) Don’t break between Solidus and Hebrew letters.  */
-  before = LBP_SY; after = LBP_HL; table[before][after].prohibited_no_sp = true;
+  before = LBP_SY; after = LBP_HL; set_table_cell (prohibited_no_sp, true);
 
   /* (LB21) Do not break before hyphen-minus, other hyphens, fixed-width spaces,
      small kana, and other non-starters, or after acute accents.  */
   for (before = 0; before < NLBP; before++)
     {
-      after = LBP_BA; table[before][after].prohibited_no_sp = true;
-      after = LBP_HY; table[before][after].prohibited_no_sp = true;
-      after = LBP_NS; table[before][after].prohibited_no_sp = true;
+      after = LBP_BA; set_table_cell (prohibited_no_sp, true);
+      after = LBP_HY; set_table_cell (prohibited_no_sp, true);
+      after = LBP_NS; set_table_cell (prohibited_no_sp, true);
     }
   for (after = 0; after < NLBP; after++)
     {
-      before = LBP_BB; table[before][after].prohibited_no_sp = true;
+      before = LBP_BB; set_table_cell (prohibited_no_sp, true);
     }
 
   /* (LB19) Do not break before or after quotation marks, such as '”'.  */
   for (before = 0; before < NLBP; before++)
     {
-      after = LBP_QU; table[before][after].prohibited_no_sp = true;
+      after = LBP_QU; set_table_cell (prohibited_no_sp, true);
     }
   for (after = 0; after < NLBP; after++)
     {
-      before = LBP_QU; table[before][after].prohibited_no_sp = true;
+      before = LBP_QU; set_table_cell (prohibited_no_sp, true);
     }
 
   /* (LB18) Break after spaces.  */
   for (before = 0; before < NLBP; before++)
     for (after = 0; after < NLBP; after++)
-      table[before][after].prohibited_with_sp = false;
+      set_table_cell (prohibited_with_sp, false);
 
   /* (LB17) Do not break within '——', even with intervening spaces.  */
-  before = LBP_B2; after = LBP_B2; table[before][after].prohibited_no_sp = true;
-                                   table[before][after].prohibited_with_sp = true;
+  before = LBP_B2; after = LBP_B2; set_table_cell (prohibited_no_sp, true);
+                                   set_table_cell (prohibited_with_sp, true);
 
   /* (LB16) Do not break between closing punctuation and a nonstarter (lb=NS),
      even with intervening spaces.  */
-  before = LBP_CL; after = LBP_NS; table[before][after].prohibited_no_sp = true;
-                                   table[before][after].prohibited_with_sp = true;
-  before = LBP_CL; after = LBP_CP; table[before][after].prohibited_no_sp = true;
-                                   table[before][after].prohibited_with_sp = true;
+  before = LBP_CL; after = LBP_NS; set_table_cell (prohibited_no_sp, true);
+                                   set_table_cell (prohibited_with_sp, true);
+  before = LBP_CL; after = LBP_CP; set_table_cell (prohibited_no_sp, true);
+                                   set_table_cell (prohibited_with_sp, true);
 
   /* (LB15) Do not break within '”[', even with intervening spaces.  */
-  before = LBP_QU; after = LBP_OP; table[before][after].prohibited_no_sp = true;
-                                   table[before][after].prohibited_with_sp = true;
+  before = LBP_QU; after = LBP_OP; set_table_cell (prohibited_no_sp, true);
+                                   set_table_cell (prohibited_with_sp, true);
 
   /* (LB14) Do not break after '[', even after spaces.  */
   for (after = 0; after < NLBP; after++)
     {
-      before = LBP_OP; table[before][after].prohibited_no_sp = true;
-                       table[before][after].prohibited_with_sp = true;
+      before = LBP_OP; set_table_cell (prohibited_no_sp, true);
+                       set_table_cell (prohibited_with_sp, true);
     }
 
   /* (LB13) Do not break before ‘]’ or ‘!’ or ‘;’ or ‘/’, even after spaces.  */
   for (before = 0; before < NLBP; before++)
     {
-      after = LBP_CL; table[before][after].prohibited_no_sp = true;
-                      table[before][after].prohibited_with_sp = true;
-      after = LBP_CP; table[before][after].prohibited_no_sp = true;
-                      table[before][after].prohibited_with_sp = true;
-      after = LBP_EX; table[before][after].prohibited_no_sp = true;
-                      table[before][after].prohibited_with_sp = true;
-      after = LBP_IS; table[before][after].prohibited_no_sp = true;
-                      table[before][after].prohibited_with_sp = true;
-      after = LBP_SY; table[before][after].prohibited_no_sp = true;
-                      table[before][after].prohibited_with_sp = true;
+      after = LBP_CL; set_table_cell (prohibited_no_sp, true);
+                      set_table_cell (prohibited_with_sp, true);
+      after = LBP_CP; set_table_cell (prohibited_no_sp, true);
+                      set_table_cell (prohibited_with_sp, true);
+      after = LBP_EX; set_table_cell (prohibited_no_sp, true);
+                      set_table_cell (prohibited_with_sp, true);
+      after = LBP_IS; set_table_cell (prohibited_no_sp, true);
+                      set_table_cell (prohibited_with_sp, true);
+      after = LBP_SY; set_table_cell (prohibited_no_sp, true);
+                      set_table_cell (prohibited_with_sp, true);
     }
 
   /* (LB12a) Do not break before NBSP and related characters, except after
@@ -8444,24 +8499,24 @@ output_lbrk_rules_as_tables (const char *filename, const char *version)
   for (before = 0; before < NLBP; before++)
     if (before != LBP_BA && before != LBP_HY)
       {
-        after = LBP_GL; table[before][after].prohibited_no_sp = true;
+        after = LBP_GL; set_table_cell (prohibited_no_sp, true);
       }
 
   /* (LB12) Do not break after NBSP and related characters.  */
   for (after = 0; after < NLBP; after++)
     {
-      before = LBP_GL; table[before][after].prohibited_no_sp = true;
+      before = LBP_GL; set_table_cell (prohibited_no_sp, true);
     }
 
   /* (LB11) Do not break before or after Word joiner and related characters.  */
   for (before = 0; before < NLBP; before++)
     {
-      after = LBP_WJ; table[before][after].prohibited_no_sp = true;
-                      table[before][after].prohibited_with_sp = true;
+      after = LBP_WJ; set_table_cell (prohibited_no_sp, true);
+                      set_table_cell (prohibited_with_sp, true);
     }
   for (after = 0; after < NLBP; after++)
     {
-      before = LBP_WJ; table[before][after].prohibited_no_sp = true;
+      before = LBP_WJ; set_table_cell (prohibited_no_sp, true);
     }
 
   /* (LB10) Treat any remaining combining mark or ZWJ as AL.  */
@@ -8474,9 +8529,9 @@ output_lbrk_rules_as_tables (const char *filename, const char *version)
 
   /* (LB8a) Do not break between a zero width joiner and an ideograph, emoji
      base or emoji modifier.  */
-  before = LBP_ZWJ; after = LBP_ID; table[before][after].prohibited_no_sp = true;
-  before = LBP_ZWJ; after = LBP_EB; table[before][after].prohibited_no_sp = true;
-  before = LBP_ZWJ; after = LBP_EM; table[before][after].prohibited_no_sp = true;
+  before = LBP_ZWJ; after = LBP_ID; set_table_cell (prohibited_no_sp, true);
+  before = LBP_ZWJ; after = LBP_EB; set_table_cell (prohibited_no_sp, true);
+  before = LBP_ZWJ; after = LBP_EM; set_table_cell (prohibited_no_sp, true);
 
   /* Not reflected in the table:
   (LB30a) Break between two regional indicator symbols if and only if there are
@@ -8623,11 +8678,14 @@ get_wbp (unsigned int ch)
            || (ch >= 0x02C2 && ch <= 0x02C5)
            || (ch >= 0x02D2 && ch <= 0x02D7)
            || (ch >= 0x02DE && ch <= 0x02DF)
+           || (ch >= 0x02E5 && ch <= 0x02EB)
            || ch == 0x02ED
            || (ch >= 0x02EF && ch <= 0x02FF)
-           || (ch >= 0x055B && ch <= 0x055C)
+           || (ch >= 0x055A && ch <= 0x055C)
            || ch == 0x055E
+           || ch == 0x058A
            || ch == 0x05F3
+           || (ch >= 0xA708 && ch <= 0xA716)
            || (ch >= 0xA720 && ch <= 0xA721)
            || (ch >= 0xA789 && ch <= 0xA78A)
            || ch == 0xAB5B)
@@ -11051,32 +11109,32 @@ main (int argc, char * argv[])
  * compile-command: "\
  *   gcc -O -Wall gen-uni-tables.c -Iunictype -o gen-uni-tables &&      \\
  *   ./gen-uni-tables                                                   \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.1.0/ucd/UnicodeData.txt \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.1.0/ucd/PropList.txt \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.1.0/ucd/DerivedCoreProperties.txt \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/emoji/12.0/emoji-data.txt \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.1.0/ucd/ArabicShaping.txt \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.1.0/ucd/Scripts.txt \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.1.0/ucd/Blocks.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/13.0.0/ucd/UnicodeData.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/13.0.0/ucd/PropList.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/13.0.0/ucd/DerivedCoreProperties.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/13.0.0/ucd/emoji/emoji-data.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/13.0.0/ucd/ArabicShaping.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/13.0.0/ucd/Scripts.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/13.0.0/ucd/Blocks.txt \\
  *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/3.0.1/PropList-3.0.1.txt \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.1.0/ucd/EastAsianWidth.txt \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.1.0/ucd/LineBreak.txt \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.1.0/ucd/auxiliary/WordBreakProperty.txt \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.1.0/ucd/auxiliary/GraphemeBreakProperty.txt \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.1.0/ucd/CompositionExclusions.txt \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.1.0/ucd/SpecialCasing.txt \\
- *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.1.0/ucd/CaseFolding.txt \\
- *        12.1.0                                                         \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/13.0.0/ucd/EastAsianWidth.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/13.0.0/ucd/LineBreak.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/13.0.0/ucd/auxiliary/WordBreakProperty.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/13.0.0/ucd/auxiliary/GraphemeBreakProperty.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/13.0.0/ucd/CompositionExclusions.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/13.0.0/ucd/SpecialCasing.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/13.0.0/ucd/CaseFolding.txt \\
+ *        13.0.0                                                         \\
  *   && diff unilbrk/lbrkprop_org.txt unilbrk/lbrkprop.txt              \\
  *   && diff uniwbrk/wbrkprop_org.txt uniwbrk/wbrkprop.txt              \\
  *   && clisp -C uniname/gen-uninames.lisp                              \\
- *            /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.1.0/ucd/UnicodeData.txt \\
+ *            /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/13.0.0/ucd/UnicodeData.txt \\
  *            uniname/uninames.h                                        \\
- *            /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.1.0/ucd/NameAliases.txt \\
- *   && cp /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.1.0/ucd/NameAliases.txt ../tests/uniname/NameAliases.txt \\
- *   && cp /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.1.0/ucd/UnicodeData.txt ../tests/uniname/UnicodeData.txt \\
- *   && cp /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.1.0/ucd/NormalizationTest.txt ../tests/uninorm/NormalizationTest.txt \\
- *   && cp /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.1.0/ucd/auxiliary/GraphemeBreakTest.txt ../tests/unigbrk/GraphemeBreakTest.txt \\
- *   && cp /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/12.1.0/ucd/auxiliary/WordBreakTest.txt ../tests/uniwbrk/WordBreakTest.txt"
+ *            /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/13.0.0/ucd/NameAliases.txt \\
+ *   && cp /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/13.0.0/ucd/NameAliases.txt ../tests/uniname/NameAliases.txt \\
+ *   && cp /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/13.0.0/ucd/UnicodeData.txt ../tests/uniname/UnicodeData.txt \\
+ *   && cp /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/13.0.0/ucd/NormalizationTest.txt ../tests/uninorm/NormalizationTest.txt \\
+ *   && cp /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/13.0.0/ucd/auxiliary/GraphemeBreakTest.txt ../tests/unigbrk/GraphemeBreakTest.txt \\
+ *   && cp /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/13.0.0/ucd/auxiliary/WordBreakTest.txt ../tests/uniwbrk/WordBreakTest.txt"
  * End:
  */

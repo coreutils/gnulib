@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Canonical composition of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 12.1.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 13.0.0.  */
 
 /* Copyright (C) 2009 Free Software Foundation, Inc.
 
@@ -968,3 +968,4 @@ struct composition_rule { char codes[6]; };
 "\x01\x14\xb9\x01\x14\xbd", 0x114be
 "\x01\x15\xb8\x01\x15\xaf", 0x115ba
 "\x01\x15\xb9\x01\x15\xaf", 0x115bb
+"\x01\x19\x35\x01\x19\x30", 0x11938

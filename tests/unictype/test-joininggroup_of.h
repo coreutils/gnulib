@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Arabic joining group of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 12.1.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 13.0.0.  */
 
 /* Copyright (C) 2000-2021 Free Software Foundation, Inc.
 
@@ -286,6 +286,16 @@
     { 0x08BB, UC_JOINING_GROUP_AFRICAN_FEH },
     { 0x08BC, UC_JOINING_GROUP_AFRICAN_QAF },
     { 0x08BD, UC_JOINING_GROUP_AFRICAN_NOON },
+    { 0x08BE, UC_JOINING_GROUP_BEH },
+    { 0x08BF, UC_JOINING_GROUP_BEH },
+    { 0x08C0, UC_JOINING_GROUP_BEH },
+    { 0x08C1, UC_JOINING_GROUP_HAH },
+    { 0x08C2, UC_JOINING_GROUP_GAF },
+    { 0x08C3, UC_JOINING_GROUP_AIN },
+    { 0x08C4, UC_JOINING_GROUP_AFRICAN_QAF },
+    { 0x08C5, UC_JOINING_GROUP_HAH },
+    { 0x08C6, UC_JOINING_GROUP_HAH },
+    { 0x08C7, UC_JOINING_GROUP_LAM },
     { 0x10AC0, UC_JOINING_GROUP_MANICHAEAN_ALEPH },
     { 0x10AC1, UC_JOINING_GROUP_MANICHAEAN_BETH },
     { 0x10AC2, UC_JOINING_GROUP_MANICHAEAN_BETH },

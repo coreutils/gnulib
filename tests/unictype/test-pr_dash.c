@@ -37,7 +37,8 @@
     { 0xFE31, 0xFE32 },
     { 0xFE58, 0xFE58 },
     { 0xFE63, 0xFE63 },
-    { 0xFF0D, 0xFF0D }
+    { 0xFF0D, 0xFF0D },
+    { 0x10EAD, 0x10EAD }
 
 #define PREDICATE(c) uc_is_property_dash (c)
 #include "test-predicate-part2.h"

@@ -15,7 +15,7 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
-/* Generated automatically by gen-uni-tables.c for Unicode 12.1.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 13.0.0.  */
 
 #include "test-mapping-part1.h"
 
@@ -1048,6 +1048,9 @@
     { 0xA7BD, 0xA7BC },
     { 0xA7BF, 0xA7BE },
     { 0xA7C3, 0xA7C2 },
+    { 0xA7C8, 0xA7C7 },
+    { 0xA7CA, 0xA7C9 },
+    { 0xA7F6, 0xA7F5 },
     { 0xAB53, 0xA7B3 },
     { 0xAB70, 0x13A0 },
     { 0xAB71, 0x13A1 },

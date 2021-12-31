@@ -197,6 +197,27 @@ test_function (void (*my_u8_possible_linebreaks) (const uint8_t *, size_t, const
       }
     free (p);
   }
+
+  /* Test special behaviour before East Asian opening parenthesis (LB30).  */
+  {
+    static const uint8_t input[49] = /* "日中韓統合漢字拡張G「ユニコード」" */
+      "\346\227\245\344\270\255\351\237\223\347\265\261\345\220\210\346\274\242"
+      "\345\255\227\346\213\241\345\274\265G\343\200\214\343\203\246"
+      "\343\203\213\343\202\263\343\203\274\343\203\211\343\200\215";
+    char *p = (char *) malloc (SIZEOF (input));
+    size_t i;
+
+    my_u8_possible_linebreaks (input, SIZEOF (input), "UTF-8", p);
+    for (i = 0; i < 49; i++)
+      {
+        ASSERT (p[i] == (i == 3 || i == 6 || i == 9 || i == 12 || i == 15
+                         || i == 18 || i == 21 || i == 24 || i == 27
+                         || i == 28 /* This is the desired break position.  */
+                         || i == 34 || i == 37 || i == 43 ? UC_BREAK_POSSIBLE :
+                         UC_BREAK_PROHIBITED));
+      }
+    free (p);
+  }
 }
 
 int

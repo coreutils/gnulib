@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Digit values of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 12.1.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 13.0.0.  */
 
 /* Copyright (C) 2000-2021 Free Software Foundation, Inc.
 
@@ -111,7 +111,7 @@ u_digit =
        -1,    -1,     0,    -1,  2816,    -1,    -1,    -1,
      2944,   384,  3072,   768,    -1,   384,    -1,    -1,
       768,   768,    -1,    -1,   768,   512,     0,    -1,
-       -1,   256,    -1,    -1,    -1,    -1,    -1,    -1,
+       -1,   256,   768,    -1,    -1,    -1,    -1,    -1,
       768,    -1,   768,   896,    -1,    -1,    -1,    -1,
        -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
        -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
@@ -167,7 +167,7 @@ u_digit =
        -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
        -1,    -1,  3328,    -1,    -1,    -1,    -1,    -1,
        -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-       -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+       -1,    -1,    -1,    -1,    -1,    -1,    -1,   384,
        -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1
   },
   {

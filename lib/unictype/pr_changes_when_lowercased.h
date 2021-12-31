@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Properties of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 12.1.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 13.0.0.  */
 
 /* Copyright (C) 2000-2021 Free Software Foundation, Inc.
 
@@ -346,7 +346,7 @@ u_property_changes_when_lowercased =
     0x00000000U, 0x00000000U, 0x55555555U, 0x00001555U,
     0x05555555U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x55545554U, 0x55555555U, 0x6A005555U,
-    0x55452855U, 0x555F7D55U, 0x00000074U, 0x00000000U,
+    0x55452855U, 0x555F7D55U, 0x000002F4U, 0x00200000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x07FFFFFEU, 0x00000000U, 0x00000000U,

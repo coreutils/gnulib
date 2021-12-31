@@ -33,7 +33,8 @@
     { 0xFE31, 0xFE32 },
     { 0xFE58, 0xFE58 },
     { 0xFE63, 0xFE63 },
-    { 0xFF0D, 0xFF0D }
+    { 0xFF0D, 0xFF0D },
+    { 0x10EAD, 0x10EAD }
 
 #define PREDICATE(c) uc_is_general_category (c, UC_CATEGORY_Pd)
 #include "test-predicate-part2.h"

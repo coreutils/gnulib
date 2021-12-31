@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Properties of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 12.1.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 13.0.0.  */
 
 /* Copyright (C) 2000-2021 Free Software Foundation, Inc.
 
@@ -342,7 +342,7 @@ u_property_changes_when_titlecased =
     0x00000000U, 0x00000000U, 0xAAAAAAAAU, 0x00002AAAU,
     0x0AAAAAAAU, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0xAAA8AAA8U, 0xAAAAAAAAU, 0x9400AAAAU,
-    0xAA9A10AAU, 0xAAA002AAU, 0x00000008U, 0x00000000U,
+    0xAA9A10AAU, 0xAAA002AAU, 0x00000508U, 0x00400000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00080000U, 0xFFFF0000U,

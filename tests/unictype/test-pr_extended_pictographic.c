@@ -93,7 +93,8 @@
     { 0x1F8AE, 0x1F8FF },
     { 0x1F90C, 0x1F93A },
     { 0x1F93C, 0x1F945 },
-    { 0x1F947, 0x1FFFD }
+    { 0x1F947, 0x1FAFF },
+    { 0x1FC00, 0x1FFFD }
 
 #define PREDICATE(c) uc_is_property_extended_pictographic (c)
 #include "test-predicate-part2.h"
