@@ -11,7 +11,7 @@ fseterr
 errno
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([0.9.8], [unistdio/ulc-vfprintf])
+gl_LIBUNISTRING_MODULE([0.9.11], [unistdio/ulc-vfprintf])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNISTDIO_ULC_VFPRINTF

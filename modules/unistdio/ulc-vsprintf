@@ -12,7 +12,7 @@ stdint
 errno
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([0.9.8], [unistdio/ulc-vsprintf])
+gl_LIBUNISTRING_MODULE([0.9.11], [unistdio/ulc-vsprintf])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNISTDIO_ULC_VSPRINTF

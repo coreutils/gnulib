@@ -10,7 +10,7 @@ unistdio/base
 unistdio/ulc-vsnprintf
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([0.9.8], [unistdio/ulc-snprintf])
+gl_LIBUNISTRING_MODULE([0.9.11], [unistdio/ulc-snprintf])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNISTDIO_ULC_SNPRINTF
