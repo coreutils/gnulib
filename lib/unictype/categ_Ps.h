@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Categories of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 13.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 14.0.0.  */
 
 /* Copyright (C) 2000-2021 Free Software Foundation, Inc.
 
@@ -200,7 +200,7 @@ u_categ_Ps =
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00AAAAA8U, 0x00000000U, 0x05000000U, 0x10000000U,
-    0x00000000U, 0x00000154U, 0x00000004U, 0x00000000U,
+    0x00000000U, 0x00000154U, 0x0AA00004U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,

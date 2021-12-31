@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Mirrored Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 13.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 14.0.0.  */
 
 /* Copyright (C) 2000-2021 Free Software Foundation, Inc.
 
@@ -437,8 +437,8 @@ u_mirror =
         0,     0,     0,     0,     0,     0,     0,     0,
         0,     0,     0,     0,     0,     0,     0,     0,
         0,     0,     0,     0,     0,     0,     0,     0,
-        0,     0,     0,     0,     0,     0,     0,     0,
-        0,     0,     0,     0,     0,     0,     0,     0,
+        0,     0,     0,     0,     0, 53672, 53671, 53670,
+    53669, 53668, 53667, 53666, 53665,     0,     0,     0,
         0,     0,     0,     0,     0,     0,     0,     0,
         0,     0,     0,     0,     0,     0,     0,     0,
         0,     0,     0,     0,     0,     0,     0,     0,

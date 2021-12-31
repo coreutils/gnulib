@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Properties of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 13.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 14.0.0.  */
 
 /* Copyright (C) 2000-2021 Free Software Foundation, Inc.
 
@@ -35,7 +35,7 @@ struct
     int header[1];
     int level1[2];
     short level2[2 << 7];
-    unsigned int level3[5 << 4];
+    unsigned int level3[6 << 4];
   }
 u_property_emoji_modifier_base =
 {
@@ -298,7 +298,7 @@ u_property_emoji_modifier_base =
         3 +   256 * sizeof (short) / sizeof (int) +    32,
         3 +   256 * sizeof (short) / sizeof (int) +    48,
         3 +   256 * sizeof (short) / sizeof (int) +    64,
-       -1,
+        3 +   256 * sizeof (short) / sizeof (int) +    80,
        -1,
        -1
   },
@@ -322,6 +322,10 @@ u_property_emoji_modifier_base =
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0xFF009000U, 0x73FF0040U, 0x00000000U, 0x00800000U,
-    0x00000000U, 0x0B600000U, 0x3FFEE000U, 0x00000000U
+    0x00000000U, 0x0B600000U, 0x3FFEE000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000038U, 0x007F0000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U
   }
 };

@@ -218,6 +218,20 @@ test_function (void (*my_u8_possible_linebreaks) (const uint8_t *, size_t, const
       }
     free (p);
   }
+
+  /* Test special behaviour of potential future emoji (LB30b).  */
+  {
+    static const uint8_t input[8] = "\360\237\277\274\360\237\217\277";
+    char *p = (char *) malloc (SIZEOF (input));
+    size_t i;
+
+    my_u8_possible_linebreaks (input, SIZEOF (input), "UTF-8", p);
+    for (i = 0; i < 8; i++)
+      {
+        ASSERT (p[i] == UC_BREAK_PROHIBITED);
+      }
+    free (p);
+  }
 }
 
 int

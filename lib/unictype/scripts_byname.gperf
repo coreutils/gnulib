@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Unicode scripts.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 13.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 14.0.0.  */
 
 /* Copyright (C) 2000-2021 Free Software Foundation, Inc.
 
@@ -184,3 +184,8 @@ Chorasmian, 152
 Dives_Akuru, 153
 Khitan_Small_Script, 154
 Yezidi, 155
+Cypro_Minoan, 156
+Old_Uyghur, 157
+Tangsa, 158
+Toto, 159
+Vithkuqi, 160

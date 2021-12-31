@@ -29,22 +29,22 @@
 
 enum
 {
-  /* Values >= 32 are resolved at run time. */
-  LBP_BK  = 32, /* mandatory break */
-  LBP_CR  = 33, /* carriage return */
-  LBP_LF  = 34, /* line feed */
-  LBP_CM  = 35, /* attached characters and combining marks */
+  /* Values >= 33 are resolved at run time. */
+  LBP_BK  = 33, /* mandatory break */
+  LBP_CR  = 34, /* carriage return */
+  LBP_LF  = 35, /* line feed */
+  LBP_CM  = 36, /* attached characters and combining marks */
 /*LBP_NL,          next line - not used here because it's equivalent to LBP_BK */
 /*LBP_SG,          surrogates - not used here because they are not characters */
   LBP_WJ  =  0, /* word joiner */
-  LBP_ZW  = 36, /* zero width space */
+  LBP_ZW  = 37, /* zero width space */
   LBP_GL  =  1, /* non-breaking (glue) */
-  LBP_SP  = 37, /* space */
+  LBP_SP  = 38, /* space */
   LBP_B2  =  2, /* break opportunity before and after */
   LBP_BA  =  3, /* break opportunity after */
   LBP_BB  =  4, /* break opportunity before */
   LBP_HY  =  5, /* hyphen */
-  LBP_CB  = 38, /* contingent break opportunity */
+  LBP_CB  = 39, /* contingent break opportunity */
   LBP_CL  =  6, /* closing punctuation */
   LBP_CP1 =  7, /* closing parenthesis, non-EastAsian character */
   LBP_CP2 =  8, /* closing parenthesis, EastAsian character */
@@ -59,22 +59,23 @@ enum
   LBP_PO  = 17, /* postfix (numeric) */
   LBP_PR  = 18, /* prefix (numeric) */
   LBP_SY  = 19, /* symbols allowing breaks */
-  LBP_AI  = 39, /* ambiguous (alphabetic or ideograph) */
+  LBP_AI  = 40, /* ambiguous (alphabetic or ideograph) */
   LBP_AL  = 20, /* ordinary alphabetic and symbol characters */
-/*LBP_CJ,          conditional Japanese starters, resolved to NS */
+/*LBP_CJ,          conditional Japanese starter, resolved to NS */
   LBP_H2  = 21, /* Hangul LV syllable */
   LBP_H3  = 22, /* Hangul LVT syllable */
-  LBP_HL  = 27, /* Hebrew letter */
-  LBP_ID  = 23, /* ideographic */
-  LBP_JL  = 24, /* Hangul L Jamo */
-  LBP_JV  = 25, /* Hangul V Jamo */
-  LBP_JT  = 26, /* Hangul T Jamo */
-  LBP_RI  = 28, /* regional indicator */
-  LBP_SA  = 40, /* complex context (South East Asian) */
-  LBP_ZWJ = 29, /* zero width joiner */
-  LBP_EB  = 30, /* emoji base */
-  LBP_EM  = 31, /* emoji modifier */
-  LBP_XX  = 41, /* unknown */
+  LBP_HL  = 28, /* Hebrew letter */
+  LBP_ID1 = 23, /* ideographic */
+  LBP_ID2 = 24, /* ideographic and potential future emoji */
+  LBP_JL  = 25, /* Hangul L Jamo */
+  LBP_JV  = 26, /* Hangul V Jamo */
+  LBP_JT  = 27, /* Hangul T Jamo */
+  LBP_RI  = 29, /* regional indicator */
+  LBP_SA  = 41, /* complex context (South East Asian) */
+  LBP_ZWJ = 30, /* zero width joiner */
+  LBP_EB  = 31, /* emoji base */
+  LBP_EM  = 32, /* emoji modifier */
+  LBP_XX  = 42, /* unknown */
   /* Artificial values that exist only at runtime, not in the tables. */
   LBP_HL_BA = 100
 };
@@ -107,7 +108,7 @@ unilbrkprop_lookup (ucs4_t uc)
 #define I 2  /* indirect break opportunity, '%' in table 7.3 of UTR #14 */
 #define P 3  /* prohibited break,           '^' in table 7.3 of UTR #14 */
 
-extern const unsigned char unilbrk_table[32][32];
+extern const unsigned char unilbrk_table[33][33];
 
 /* We don't support line breaking of complex-context dependent characters
    (Thai, Lao, Myanmar, Khmer) yet, because it requires dictionary lookup. */

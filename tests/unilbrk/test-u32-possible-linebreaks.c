@@ -235,6 +235,20 @@ test_function (void (*my_u32_possible_linebreaks) (const uint32_t *, size_t, con
       }
     free (p);
   }
+
+  /* Test special behaviour of potential future emoji (LB30b).  */
+  {
+    static const uint32_t input[2] = { 0x1FFFC, 0x1F3FF };
+    char *p = (char *) malloc (SIZEOF (input));
+    size_t i;
+
+    my_u32_possible_linebreaks (input, SIZEOF (input), "UTF-8", p);
+    for (i = 0; i < 2; i++)
+      {
+        ASSERT (p[i] == UC_BREAK_PROHIBITED);
+      }
+    free (p);
+  }
 }
 
 int

@@ -47,7 +47,8 @@
     { 0x1D5F6, 0x1D5F7 },
     { 0x1D62A, 0x1D62B },
     { 0x1D65E, 0x1D65F },
-    { 0x1D692, 0x1D693 }
+    { 0x1D692, 0x1D693 },
+    { 0x1DF1A, 0x1DF1A }
 
 #define PREDICATE(c) uc_is_property_soft_dotted (c)
 #include "test-predicate-part2.h"

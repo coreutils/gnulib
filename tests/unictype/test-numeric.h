@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Numeric values of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 13.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 14.0.0.  */
 
 /* Copyright (C) 2000-2021 Free Software Foundation, Inc.
 
@@ -1482,6 +1482,16 @@
     { 0x16A67, 7, 1 },
     { 0x16A68, 8, 1 },
     { 0x16A69, 9, 1 },
+    { 0x16AC0, 0, 1 },
+    { 0x16AC1, 1, 1 },
+    { 0x16AC2, 2, 1 },
+    { 0x16AC3, 3, 1 },
+    { 0x16AC4, 4, 1 },
+    { 0x16AC5, 5, 1 },
+    { 0x16AC6, 6, 1 },
+    { 0x16AC7, 7, 1 },
+    { 0x16AC8, 8, 1 },
+    { 0x16AC9, 9, 1 },
     { 0x16B50, 0, 1 },
     { 0x16B51, 1, 1 },
     { 0x16B52, 2, 1 },
