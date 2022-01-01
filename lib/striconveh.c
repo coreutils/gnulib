@@ -457,13 +457,18 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
                 if (cd2 == (iconv_t)(-1))
                   {
                     /* TO_CODESET is UTF-8.  */
-                    /* Error handling can produce up to 1 byte of output.  */
-                    if (length + 1 + extra_alloc > allocated)
+                    /* Error handling can produce up to 1 or 3 bytes of
+                       output.  */
+                    size_t extra_need =
+                      (handler == iconveh_replacement_character ? 3 : 1);
+                    if (length + extra_need + extra_alloc > allocated)
                       {
                         char *memory;
 
                         allocated = 2 * allocated;
-                        if (length + 1 + extra_alloc > allocated)
+                        if (length + extra_need + extra_alloc > allocated)
+                          allocated = 2 * allocated;
+                        if (length + extra_need + extra_alloc > allocated)
                           abort ();
                         if (result == initial_result)
                           memory = (char *) malloc (allocated);
@@ -482,7 +487,7 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
                         grow = false;
                       }
                     /* The input is invalid in FROM_CODESET.  Eat up one byte
-                       and emit a question mark.  */
+                       and emit a replacement character or a question mark.  */
                     if (!incremented)
                       {
                         if (insize == 0)
@@ -490,8 +495,19 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
                         inptr++;
                         insize--;
                       }
-                    result[length] = '?';
-                    length++;
+                    if (handler == iconveh_replacement_character)
+                      {
+                        /* U+FFFD in UTF-8 encoding.  */
+                        result[length+0] = '\357';
+                        result[length+1] = '\277';
+                        result[length+2] = '\275';
+                        length += 3;
+                      }
+                    else
+                      {
+                        result[length] = '?';
+                        length++;
+                      }
                   }
                 else
                   goto indirectly;
@@ -594,7 +610,7 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
   {
     const bool slowly = (offsets != NULL || handler == iconveh_error);
 # define utf8bufsize 4096 /* may also be smaller or larger than tmpbufsize */
-    char utf8buf[utf8bufsize + 1];
+    char utf8buf[utf8bufsize + 3];
     size_t utf8len = 0;
     const char *in1ptr = src;
     size_t in1size = srclen;
@@ -682,8 +698,8 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
             && errno == EILSEQ && handler != iconveh_error)
           {
             /* The input is invalid in FROM_CODESET.  Eat up one byte and
-               emit a question mark.  Room for the question mark was allocated
-               at the end of utf8buf.  */
+               emit a U+FFFD character or a question mark.  Room for this
+               character was allocated at the end of utf8buf.  */
             if (!incremented1)
               {
                 if (in1size == 0)
@@ -691,7 +707,16 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
                 in1ptr++;
                 in1size--;
               }
-            *out1ptr++ = '?';
+            if (handler == iconveh_replacement_character)
+              {
+                /* U+FFFD in UTF-8 encoding.  */
+                out1ptr[0] = '\357';
+                out1ptr[1] = '\277';
+                out1ptr[2] = '\275';
+                out1ptr += 3;
+              }
+            else
+              *out1ptr++ = '?';
             res1 = 0;
           }
         errno1 = errno;
@@ -756,7 +781,7 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
                       break;
                     else if (errno == EILSEQ && handler != iconveh_error)
                       {
-                        /* Error handling can produce up to 10 bytes of ASCII
+                        /* Error handling can produce up to 10 bytes of UTF-8
                            output.  But TO_CODESET may be UCS-2, UTF-16 or
                            UCS-4, so use CD2 here as well.  */
                         char scratchbuf[10];
@@ -804,6 +829,14 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
                             scratchbuf[scratchlen++] = hex[(uc>>4) & 15];
                             scratchbuf[scratchlen++] = hex[uc & 15];
                           }
+                        else if (handler == iconveh_replacement_character)
+                          {
+                            /* U+FFFD in UTF-8 encoding.  */
+                            scratchbuf[0] = '\357';
+                            scratchbuf[1] = '\277';
+                            scratchbuf[2] = '\275';
+                            scratchlen = 3;
+                          }
                         else
                           {
                             scratchbuf[0] = '?';
@@ -813,9 +846,24 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
                         inptr = scratchbuf;
                         insize = scratchlen;
                         if (cd2 != (iconv_t)(-1))
-                          res = iconv (cd2,
-                                       (ICONV_CONST char **) &inptr, &insize,
-                                       &out2ptr, &out2size);
+                          {
+                            res = iconv (cd2,
+                                         (ICONV_CONST char **) &inptr, &insize,
+                                         &out2ptr, &out2size);
+                            if (handler == iconveh_replacement_character
+                                && res == (size_t)(-1) && errno == EILSEQ)
+                              {
+                                 /* U+FFFD can't be converted to TO_CODESET.
+                                    Use '?' instead.  */
+                                scratchbuf[0] = '?';
+                                scratchlen = 1;
+                                inptr = scratchbuf;
+                                insize = scratchlen;
+                                res = iconv (cd2,
+                                             (ICONV_CONST char **) &inptr, &insize,
+                                             &out2ptr, &out2size);
+                              }
+                          }
                         else
                           {
                             /* TO_CODESET is UTF-8.  */

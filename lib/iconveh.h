@@ -29,7 +29,10 @@ enum iconv_ilseq_handler
 {
   iconveh_error,                /* return and set errno = EILSEQ */
   iconveh_question_mark,        /* use one '?' per unconvertible character */
-  iconveh_escape_sequence       /* use escape sequence \uxxxx or \Uxxxxxxxx */
+  iconveh_escape_sequence,      /* use escape sequence \uxxxx or \Uxxxxxxxx */
+  iconveh_replacement_character /* use one U+FFFD per unconvertible character
+                                   if that fits in the target encoding,
+                                   otherwise one '?' */
 };
 
 
