@@ -2,7 +2,7 @@
 /* Word breaking properties of Unicode characters.  */
 /* Generated automatically by gen-uni-tables.c for Unicode 14.0.0.  */
 
-/* Copyright (C) 2000-2002, 2004, 2007-2009 Free Software Foundation, Inc.
+/* Copyright (C) 2000-2022 Free Software Foundation, Inc.
 
    This file is free software.
    It is dual-licensed under "the GNU LGPLv3+ or the GNU GPLv2+".

@@ -2,7 +2,7 @@
 /* Arabic joining type of Unicode characters.  */
 /* Generated automatically by gen-uni-tables.c for Unicode 14.0.0.  */
 
-/* Copyright (C) 2000-2021 Free Software Foundation, Inc.
+/* Copyright (C) 2000-2022 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published
