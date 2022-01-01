@@ -1,6 +1,6 @@
 /* gethostname emulation for SysV and POSIX.1.
 
-   Copyright (C) 1992, 2003, 2006, 2008-2021 Free Software Foundation, Inc.
+   Copyright (C) 1992, 2003, 2006, 2008-2022 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as

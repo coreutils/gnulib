@@ -1,5 +1,5 @@
 /* Abstract map data type, with out-of-memory checking.
-   Copyright (C) 2009-2021 Free Software Foundation, Inc.
+   Copyright (C) 2009-2022 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2018.
 
    This program is free software: you can redistribute it and/or modify

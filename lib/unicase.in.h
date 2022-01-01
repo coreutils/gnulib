@@ -1,5 +1,5 @@
 /* Unicode character case mappings.
-   Copyright (C) 2002, 2009-2021 Free Software Foundation, Inc.
+   Copyright (C) 2002, 2009-2022 Free Software Foundation, Inc.
 
    This file is free software.
    It is dual-licensed under "the GNU LGPLv3+ or the GNU GPLv2+".

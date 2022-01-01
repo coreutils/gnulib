@@ -1,5 +1,5 @@
 /* Convert UTF-16 string to UTF-32 string.
-   Copyright (C) 2002, 2006-2007, 2009-2021 Free Software Foundation, Inc.
+   Copyright (C) 2002, 2006-2007, 2009-2022 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2002.
 
    This file is free software.

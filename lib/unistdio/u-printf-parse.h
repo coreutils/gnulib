@@ -1,5 +1,5 @@
 /* Parse printf format string.
-   Copyright (C) 1999, 2002, 2005, 2007, 2009-2021 Free Software Foundation,
+   Copyright (C) 1999, 2002, 2005, 2007, 2009-2022 Free Software Foundation,
    Inc.
 
    This file is free software.

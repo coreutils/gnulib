@@ -1,5 +1,5 @@
 /* Test whether an UTF-32 string is entirely upper case.
-   Copyright (C) 2009-2021 Free Software Foundation, Inc.
+   Copyright (C) 2009-2022 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2009.
 
    This file is free software.

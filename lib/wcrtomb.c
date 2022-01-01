@@ -1,5 +1,5 @@
 /* Convert wide character to multibyte character.
-   Copyright (C) 2008-2021 Free Software Foundation, Inc.
+   Copyright (C) 2008-2022 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2008.
 
    This file is free software: you can redistribute it and/or modify
