@@ -173,6 +173,9 @@ update-copyright:
 	    done > $$exempt;						\
 	git ls-files tests/unictype >> $$exempt;			\
 	git ls-files doc/INSTALL* >> $$exempt;				\
+	for file in $$(git ls-files); do				\
+	  test ! -h $$file || echo $$file;				\
+	done >> $$exempt;						\
 	git ls-files | grep -vFf $$exempt				\
 	  | xargs grep -L '^/\*.*GENERATED AUTOMATICALLY'		\
 	  | UPDATE_COPYRIGHT_MAX_LINE_LENGTH=79				\
