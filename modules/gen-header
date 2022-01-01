@@ -11,24 +11,17 @@ Depends-on:
 configure.ac:
 
 Makefile.am:
-# In 'sed', prepend a "DO NOT EDIT" comment to the pattern space.
-SED_HEADER_NOEDIT = s,^,/* DO NOT EDIT! GENERATED AUTOMATICALLY! */,
+# In 'sed', replace the pattern space with a "DO NOT EDIT" comment.
+SED_HEADER_NOEDIT = s,.*,/* DO NOT EDIT! GENERATED AUTOMATICALLY! */,
 
 # '$(SED_HEADER_STDOUT) -e "..."' runs 'sed' but first outputs "DO NOT EDIT".
-SED_HEADER_STDOUT = sed \
-  -e x \
-  -e '1$(SED_HEADER_NOEDIT)p' \
-  -e x
+SED_HEADER_STDOUT = sed -e 1h -e '1$(SED_HEADER_NOEDIT)' -e 1G
 
 # '$(SED_HEADER_TO_AT_t) FILE' copies FILE to $@-t, prepending a leading
 # "DO_NOT_EDIT".  Although this could be done more simply via:
 #	SED_HEADER_TO_AT_t = $(SED_HEADER_STDOUT) > $@-t
-# the -n and 'w's avoid a fork+exec, at least when GNU Make is used.
-SED_HEADER_TO_AT_t = sed -n \
-  -e x \
-  -e '1$(SED_HEADER_NOEDIT)w $@-t' \
-  -e x \
-  -e 'w $@-t'
+# the -n and 'w' avoid a fork+exec, at least when GNU Make is used.
+SED_HEADER_TO_AT_t = $(SED_HEADER_STDOUT) -n -e 'w $@-t'
 
 # Use $(gl_V_at) instead of $(AM_V_GEN) or $(AM_V_at) on a line that
 # is its recipe's first line if and only if @NMD@ lines are absent.
