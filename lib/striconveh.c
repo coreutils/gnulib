@@ -847,14 +847,27 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
                         insize = scratchlen;
                         if (cd2 != (iconv_t)(-1))
                           {
+                            char *out2ptr_try = out2ptr;
+                            size_t out2size_try = out2size;
                             res = iconv (cd2,
                                          (ICONV_CONST char **) &inptr, &insize,
-                                         &out2ptr, &out2size);
+                                         &out2ptr_try, &out2size_try);
                             if (handler == iconveh_replacement_character
-                                && res == (size_t)(-1) && errno == EILSEQ)
+                                && ((res == (size_t)(-1) && errno == EILSEQ)
+                                    /* FreeBSD iconv(), NetBSD iconv(), and
+                                       Solaris 11 iconv() insert a '?' if they
+                                       cannot convert.  This is what we want.
+                                       But IRIX iconv() inserts a NUL byte if it
+                                       cannot convert.
+                                       And musl libc iconv() inserts a '*' if it
+                                       cannot convert.  */
+                                    || (res > 0
+                                        && !(out2ptr_try - out2ptr == 1
+                                             && *out2ptr == '?'))))
                               {
-                                 /* U+FFFD can't be converted to TO_CODESET.
-                                    Use '?' instead.  */
+                                /* The iconv() call failed.
+                                   U+FFFD can't be converted to TO_CODESET.
+                                   Use '?' instead.  */
                                 scratchbuf[0] = '?';
                                 scratchlen = 1;
                                 inptr = scratchbuf;
@@ -862,6 +875,12 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
                                 res = iconv (cd2,
                                              (ICONV_CONST char **) &inptr, &insize,
                                              &out2ptr, &out2size);
+                              }
+                            else
+                              {
+                                /* Accept the results of the iconv() call.  */
+                                out2ptr = out2ptr_try;
+                                out2size = out2size_try;
                               }
                           }
                         else
