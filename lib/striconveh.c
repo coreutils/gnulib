@@ -853,7 +853,8 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
                                          (ICONV_CONST char **) &inptr, &insize,
                                          &out2ptr_try, &out2size_try);
                             if (handler == iconveh_replacement_character
-                                && ((res == (size_t)(-1) && errno == EILSEQ)
+                                && (res == (size_t)(-1)
+                                    ? errno == EILSEQ
                                     /* FreeBSD iconv(), NetBSD iconv(), and
                                        Solaris 11 iconv() insert a '?' if they
                                        cannot convert.  This is what we want.
@@ -861,9 +862,9 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
                                        cannot convert.
                                        And musl libc iconv() inserts a '*' if it
                                        cannot convert.  */
-                                    || (res > 0
-                                        && !(out2ptr_try - out2ptr == 1
-                                             && *out2ptr == '?'))))
+                                    : (res > 0
+                                       && !(out2ptr_try - out2ptr == 1
+                                            && *out2ptr == '?'))))
                               {
                                 /* The iconv() call failed.
                                    U+FFFD can't be converted to TO_CODESET.
@@ -881,6 +882,7 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
                                 /* Accept the results of the iconv() call.  */
                                 out2ptr = out2ptr_try;
                                 out2size = out2size_try;
+                                res = 0;
                               }
                           }
                         else
@@ -947,9 +949,10 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
                             length = out2ptr - result;
                           }
 # if !defined _LIBICONV_VERSION && !(defined __GLIBC__ && !defined __UCLIBC__)
-                        /* Irix iconv() inserts a NUL byte if it cannot convert.
-                           NetBSD iconv() inserts a question mark if it cannot
-                           convert.
+                        /* IRIX iconv() inserts a NUL byte if it cannot convert.
+                           FreeBSD iconv(), NetBSD iconv(), and Solaris 11
+                           iconv() insert a '?' if they cannot convert.
+                           musl libc iconv() inserts a '*' if it cannot convert.
                            Only GNU libiconv and GNU libc are known to prefer
                            to fail rather than doing a lossy conversion.  */
                         if (res != (size_t)(-1) && res > 0)
