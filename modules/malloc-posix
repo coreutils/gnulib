@@ -7,11 +7,11 @@ m4/malloc.m4
 
 Depends-on:
 stdlib
-xalloc-oversized     [test $REPLACE_MALLOC = 1]
+xalloc-oversized     [test $REPLACE_MALLOC_FOR_MALLOC_POSIX = 1]
 
 configure.ac:
 AC_REQUIRE([gl_FUNC_MALLOC_POSIX])
-if test $REPLACE_MALLOC = 1; then
+if test $REPLACE_MALLOC_FOR_MALLOC_POSIX = 1; then
   AC_LIBOBJ([malloc])
 fi
 gl_STDLIB_MODULE_INDICATOR([malloc-posix])

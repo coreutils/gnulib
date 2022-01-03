@@ -474,7 +474,8 @@ _GL_WARN_ON_USE (grantpt, "grantpt is not portable - "
    by never specifying a zero size), so it does not need malloc or
    realloc to be redefined.  */
 #if @GNULIB_MALLOC_POSIX@
-# if @REPLACE_MALLOC@
+# if (@GNULIB_MALLOC_POSIX@ && @REPLACE_MALLOC_FOR_MALLOC_POSIX@) \
+     || (@GNULIB_MALLOC_GNU@ && @REPLACE_MALLOC_FOR_MALLOC_GNU@)
 #  if !((defined __cplusplus && defined GNULIB_NAMESPACE) \
         || _GL_USE_STDLIB_ALLOC)
 #   undef malloc
