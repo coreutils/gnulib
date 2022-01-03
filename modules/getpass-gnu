@@ -11,11 +11,11 @@ getpass
 
 configure.ac:
 gl_FUNC_GETPASS_GNU
-if test $HAVE_GETPASS = 0 || test $REPLACE_GETPASS = 1; then
+if test $HAVE_GETPASS = 0 || test $REPLACE_GETPASS_FOR_GETPASS_GNU = 1; then
   AC_LIBOBJ([getpass])
   gl_PREREQ_GETPASS
 fi
-gl_UNISTD_MODULE_INDICATOR([getpass])
+gl_UNISTD_MODULE_INDICATOR([getpass-gnu])
 
 Makefile.am:
 
