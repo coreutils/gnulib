@@ -6,11 +6,16 @@ lib/fopen.c
 
 Depends-on:
 fopen
-open            [test $REPLACE_FOPEN = 1]
+open            [test $REPLACE_FOPEN_FOR_FOPEN_GNU = 1]
+fcntl-h         [test $REPLACE_FOPEN_FOR_FOPEN_GNU = 1]
+stdbool         [test $REPLACE_FOPEN_FOR_FOPEN_GNU = 1]
+unistd          [test $REPLACE_FOPEN_FOR_FOPEN_GNU = 1]
+close           [test $REPLACE_FOPEN_FOR_FOPEN_GNU = 1]
+fstat           [test $REPLACE_FOPEN_FOR_FOPEN_GNU = 1]
 
 configure.ac:
 gl_FUNC_FOPEN_GNU
-if test $REPLACE_FOPEN = 1; then
+if test $REPLACE_FOPEN_FOR_FOPEN_GNU = 1; then
   AC_LIBOBJ([fopen])
   gl_PREREQ_FOPEN
 fi
