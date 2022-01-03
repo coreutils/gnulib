@@ -9,7 +9,7 @@
 ;;; It is dual-licensed under "the GNU LGPLv3+ or the GNU GPLv2+".
 ;;; You can redistribute it and/or modify it under either
 ;;;   - the terms of the GNU Lesser General Public License as published
-;;;     by the Free Software Foundation; either version 3, or (at your
+;;;     by the Free Software Foundation, either version 3, or (at your
 ;;;     option) any later version, or
 ;;;   - the terms of the GNU General Public License as published by the
 ;;;     Free Software Foundation; either version 2, or (at your option)
@@ -182,7 +182,7 @@
         (format ostream "   It is dual-licensed under \"the GNU LGPLv3+ or the GNU GPLv2+\".~%")
         (format ostream "   You can redistribute it and/or modify it under either~%")
         (format ostream "     - the terms of the GNU Lesser General Public License as published~%")
-        (format ostream "       by the Free Software Foundation; either version 3, or (at your~%")
+        (format ostream "       by the Free Software Foundation, either version 3, or (at your~%")
         (format ostream "       option) any later version, or~%")
         (format ostream "     - the terms of the GNU General Public License as published by the~%")
         (format ostream "       Free Software Foundation; either version 2, or (at your option)~%")

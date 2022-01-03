@@ -6,7 +6,7 @@
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 3 of the License, or
+   the Free Software Foundation, either version 3 of the License, or
    (at your option) any later version.
 
    This program is distributed in the hope that it will be useful,
@@ -302,7 +302,7 @@ output_library_license (FILE *stream, bool lgplv2plus)
       fprintf (stream, "   It is dual-licensed under \"the GNU LGPLv3+ or the GNU GPLv2+\".\n");
       fprintf (stream, "   You can redistribute it and/or modify it under either\n");
       fprintf (stream, "     - the terms of the GNU Lesser General Public License as published\n");
-      fprintf (stream, "       by the Free Software Foundation; either version 3, or (at your\n");
+      fprintf (stream, "       by the Free Software Foundation, either version 3, or (at your\n");
       fprintf (stream, "       option) any later version, or\n");
       fprintf (stream, "     - the terms of the GNU General Public License as published by the\n");
       fprintf (stream, "       Free Software Foundation; either version 2, or (at your option)\n");
@@ -329,7 +329,7 @@ output_tests_license (FILE *stream)
   /* Gnulib tests modules are under the GPLv3+ license.  */
   fprintf (stream, "   This file is free software: you can redistribute it and/or modify\n");
   fprintf (stream, "   it under the terms of the GNU General Public License as published\n");
-  fprintf (stream, "   by the Free Software Foundation; either version 3 of the License,\n");
+  fprintf (stream, "   by the Free Software Foundation, either version 3 of the License,\n");
   fprintf (stream, "   or (at your option) any later version.\n");
   fprintf (stream, "\n");
   fprintf (stream, "   This file is distributed in the hope that it will be useful,\n");

@@ -4,7 +4,7 @@
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 3 of the License, or
+# the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
@@ -391,7 +391,7 @@ func_emit_copyright_notice ()
   echo "#"
   echo "# This file is free software; you can redistribute it and/or modify"
   echo "# it under the terms of the GNU General Public License as published by"
-  echo "# the Free Software Foundation; either version 3 of the License, or"
+  echo "# the Free Software Foundation, either version 3 of the License, or"
   echo "# (at your option) any later version."
   echo "#"
   echo "# This file is distributed in the hope that it will be useful,"
