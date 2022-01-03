@@ -1,4 +1,4 @@
-# getpass.m4 serial 16
+# getpass.m4 serial 17
 dnl Copyright (C) 2002-2003, 2005-2006, 2009-2022 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -42,7 +42,7 @@ AC_DEFUN([gl_FUNC_GETPASS_GNU],
          [gl_cv_func_getpass_good=no])
       ])
     if test $gl_cv_func_getpass_good != yes; then
-      REPLACE_GETPASS=1
+      REPLACE_GETPASS_FOR_GETPASS_GNU=1
     fi
   fi
 ])
