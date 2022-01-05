@@ -3974,6 +3974,9 @@ func_emit_lib_Makefile_am ()
   fi
   echo
   echo "${libname}_${libext}_SOURCES ="
+  if ! $for_test; then
+    echo "${libname}_${libext}_CFLAGS = \$(AM_CFLAGS) \$(GL_CFLAG_GNULIB_WARNINGS)"
+  fi
   # Here we use $(LIBOBJS), not @LIBOBJS@. The value is the same. However,
   # automake during its analysis looks for $(LIBOBJS), not for @LIBOBJS@.
   echo "${libname}_${libext}_LIBADD = \$(${macro_prefix}_${perhapsLT}LIBOBJS)"
@@ -4343,7 +4346,12 @@ func_emit_tests_Makefile_am ()
   #   CFLAGS, they have asked for errors, they will get errors. But they have
   #   no right to complain about these errors, because Gnulib does not support
   #   '-Werror'.
-  echo "CFLAGS = @GL_CFLAG_ALLOW_WARNINGS@ @CFLAGS@"
+  cflags_for_gnulib_code=
+  if ! $for_test; then
+    # Enable or disable warnings as suitable for the Gnulib coding style.
+    cflags_for_gnulib_code=" \$(GL_CFLAG_GNULIB_WARNINGS)"
+  fi
+  echo "CFLAGS = @GL_CFLAG_ALLOW_WARNINGS@${cflags_for_gnulib_code} @CFLAGS@"
   echo "CXXFLAGS = @GL_CXXFLAG_ALLOW_WARNINGS@ @CXXFLAGS@"
   echo
   echo "AM_CPPFLAGS = \\"
@@ -6056,6 +6064,7 @@ s,//*$,/,'
     func_emit_autoconf_snippets "$testsrelated_modules" "$main_modules $testsrelated_modules" func_verify_module true true true
     echo "  m4_popdef([gl_MODULE_INDICATOR_CONDITION])"
     func_emit_initmacro_end ${macro_prefix}tests $gentests
+    echo "  AC_REQUIRE([gl_CC_GNULIB_WARNINGS])"
     # _LIBDEPS and _LTLIBDEPS variables are not needed if this library is
     # created using libtool, because libtool already handles the dependencies.
     if test "$libtool" != true; then
