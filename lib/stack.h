@@ -77,7 +77,7 @@
 typedef struct
 {
   GL_STACK_ELEMENT *base;
-  size_t size;
+  idx_t size;
   idx_t allocated;
 } _GL_STACK_TYPE;
 
