@@ -896,7 +896,7 @@ AC_DEFUN([gl_CC_GNULIB_WARNINGS],
     dnl -Wno-conversion                       >= 3            >= 3.9
     dnl -Wno-float-conversion                 >= 4.9          >= 3.9
     dnl -Wno-float-equal                      >= 3            >= 3.9
-    dnl -Wimplicit-fallthrough                >= 3            >= 3.9
+    dnl -Wimplicit-fallthrough                >= 7            >= 3.9
     dnl -Wno-pedantic                         >= 4.8          >= 3.9
     dnl -Wno-sign-compare                     >= 3            >= 3.9
     dnl -Wno-sign-conversion                  >= 4.3          >= 3.9
@@ -911,7 +911,6 @@ AC_DEFUN([gl_CC_GNULIB_WARNINGS],
       -Wno-cast-qual
       -Wno-conversion
       -Wno-float-equal
-      -Wimplicit-fallthrough
       -Wno-sign-compare
       -Wno-undef
       -Wno-unused-function
@@ -919,6 +918,9 @@ AC_DEFUN([gl_CC_GNULIB_WARNINGS],
       #endif
       #if __GNUC__ + (__GNUC_MINOR__ >= 9) > 4 || (__clang_major__ + (__clang_minor__ >= 9) > 3)
       -Wno-float-conversion
+      #endif
+      #if __GNUC__ >= 7 || (__clang_major__ + (__clang_minor__ >= 9) > 3)
+      -Wimplicit-fallthrough
       #endif
       #if __GNUC__ + (__GNUC_MINOR__ >= 8) > 4 || (__clang_major__ + (__clang_minor__ >= 9) > 3)
       -Wno-pedantic
