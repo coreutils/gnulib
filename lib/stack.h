@@ -17,7 +17,7 @@
 /* Written by Marc Nieper-Wißkirchen <marc@nieper-wisskirchen.de>, 2020.  */
 
 /* This header file does not have include-guards as it is meant to be
-   includeable multiple times as long as the necessary defines have
+   includable multiple times as long as the necessary defines have
    been set up.
 
    A stack is implemented with a homogenous array of elements in
@@ -36,7 +36,7 @@
      Popping:            ELEMENT element = stack_pop (&stack);
      Discarding:         stack_discard (&stack);
      Top-of-stack:       ELEMENT element = stack_top (&stack);
-     Size:               size_t size = stack_size (&stack);
+     Size:               idx_t size = stack_size (&stack);
 
    Here, ELEMENT is the type to which GL_STACK_ELEMENT was defined when
    this file was included.
@@ -152,7 +152,7 @@ _GL_STACK_PREFIX (top) (const _GL_STACK_TYPE *stack)
 }
 
 /* Return the currently stored number of elements in the stack.  */
-GL_STACK_STORAGECLASS _GL_ATTRIBUTE_PURE size_t
+GL_STACK_STORAGECLASS _GL_ATTRIBUTE_PURE idx_t
 _GL_STACK_PREFIX (size) (const _GL_STACK_TYPE *stack)
 {
   return stack->size;

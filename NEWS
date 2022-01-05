@@ -66,6 +66,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2022-01-05  stack           This module now uses idx_t instead of size_t
+                            for indexes and counts.
+
 2021-08-27  base32          These modules now use idx_t instead of size_t
             base64          for indexes and counts.
 
