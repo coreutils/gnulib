@@ -168,6 +168,15 @@ int libsigsegv_version = LIBSIGSEGV_VERSION;
    because $bsp and $bspstore never differ by more than ca. 1 KB.  */
 #  define SIGSEGV_FAULT_BSP_POINTER  ((ucontext_t *) ucp)->uc_mcontext.sc_ar_bsp
 
+# elif defined __loongarch__
+
+/* See <sys/ucontext.h>.
+   Note that the 'mcontext_t' defined in <sys/ucontext.h>
+   and the 'struct sigcontext' defined in <bits/sigcontext.h>
+   (see also <asm/sigcontext.h>) are effectively the same.  */
+
+#  define SIGSEGV_FAULT_STACKPOINTER  ((ucontext_t *) ucp)->uc_mcontext.__gregs[3]
+
 # elif defined __m68k__
 
 /* See glibc/sysdeps/unix/sysv/linux/m68k/sys/ucontext.h
