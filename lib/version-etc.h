@@ -22,6 +22,11 @@
 # include <stdarg.h>
 # include <stdio.h>
 
+# ifdef __cplusplus
+extern "C"
+{
+# endif
+
 extern const char version_etc_copyright[];
 
 /* The three functions below display the --version information in the
@@ -65,5 +70,9 @@ extern void version_etc (FILE *stream,
 
 /* Display the usual "Report bugs to" stanza.  */
 extern void emit_bug_reporting_address (void);
+
+# ifdef __cplusplus
+}
+# endif
 
 #endif /* VERSION_ETC_H */
