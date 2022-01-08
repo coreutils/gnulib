@@ -15,6 +15,10 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
 
 /* Set up ACTION so that it is invoked on C stack overflow and on other,
    stack-unrelated, segmentation violation.
@@ -47,3 +51,7 @@
    signal or exercise other system dependent exception handling APIs.  */
 
 extern int c_stack_action (_GL_ASYNC_SAFE void (* /*action*/) (int));
+
+# ifdef __cplusplus
+}
+# endif
