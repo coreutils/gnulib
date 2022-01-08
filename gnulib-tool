@@ -6325,7 +6325,7 @@ s,//*$,/,'
   if test "$source_makefile_am" = Makefile.am; then
     echo "  - add \"$sourcebase/Makefile\" to AC_CONFIG_FILES in $configure_ac,"
   else
-    echo "  - \"include $source_makefile_name\" from within \"$sourcebase/Makefile.am\","
+    echo "  - \"include $source_makefile_am\" from within \"$sourcebase/Makefile.am\","
   fi
   if test -n "$pobase"; then
     echo "  - add \"$pobase/Makefile.in\" to AC_CONFIG_FILES in $configure_ac,"
@@ -6334,7 +6334,7 @@ s,//*$,/,'
     if test "$tests_makefile_am" = Makefile.am; then
       echo "  - add \"$testsbase/Makefile\" to AC_CONFIG_FILES in $configure_ac,"
     else
-      echo "  - \"include $tests_makefile_name\" from within \"$testsbase/Makefile.am\","
+      echo "  - \"include $tests_makefile_am\" from within \"$testsbase/Makefile.am\","
     fi
   fi
   edit=0
