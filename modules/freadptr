@@ -11,11 +11,12 @@ Depends-on:
 
 configure.ac:
 gl_FUNC_FREADPTR
-if test $ac_cv_func___freadptr = no; then
-  AC_LIBOBJ([freadptr])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_FREADPTR], [test $ac_cv_func___freadptr = no])
 
 Makefile.am:
+if GL_COND_OBJ_FREADPTR
+lib_SOURCES += freadptr.c
+endif
 
 Include:
 "freadptr.h"

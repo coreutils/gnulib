@@ -19,13 +19,17 @@ verify          [test $HAVE_NANOSLEEP = 0 || test $REPLACE_NANOSLEEP = 1]
 
 configure.ac:
 gl_FUNC_NANOSLEEP
-if test $HAVE_NANOSLEEP = 0 || test $REPLACE_NANOSLEEP = 1; then
-  AC_LIBOBJ([nanosleep])
+gl_CONDITIONAL([GL_COND_OBJ_NANOSLEEP],
+               [test $HAVE_NANOSLEEP = 0 || test $REPLACE_NANOSLEEP = 1])
+AM_COND_IF([GL_COND_OBJ_NANOSLEEP], [
   gl_PREREQ_NANOSLEEP
-fi
+])
 gl_TIME_MODULE_INDICATOR([nanosleep])
 
 Makefile.am:
+if GL_COND_OBJ_NANOSLEEP
+lib_SOURCES += nanosleep.c
+endif
 
 Include:
 <time.h>

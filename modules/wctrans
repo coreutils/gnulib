@@ -11,12 +11,13 @@ wctype-h
 
 configure.ac:
 gl_FUNC_WCTRANS
-if test $HAVE_WCTRANS = 0; then
-  AC_LIBOBJ([wctrans])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_WCTRANS], [test $HAVE_WCTRANS = 0])
 gl_WCTYPE_MODULE_INDICATOR([wctrans])
 
 Makefile.am:
+if GL_COND_OBJ_WCTRANS
+lib_SOURCES += wctrans.c
+endif
 
 Include:
 <wctype.h>

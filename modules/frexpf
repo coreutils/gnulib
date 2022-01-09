@@ -13,12 +13,14 @@ frexp           [test $HAVE_FREXPF = 0 || test $REPLACE_FREXPF = 1]
 
 configure.ac:
 gl_FUNC_FREXPF
-if test $HAVE_FREXPF = 0 || test $REPLACE_FREXPF = 1; then
-  AC_LIBOBJ([frexpf])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_FREXPF],
+               [test $HAVE_FREXPF = 0 || test $REPLACE_FREXPF = 1])
 gl_MATH_MODULE_INDICATOR([frexpf])
 
 Makefile.am:
+if GL_COND_OBJ_FREXPF
+lib_SOURCES += frexpf.c
+endif
 
 Include:
 <math.h>

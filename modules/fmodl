@@ -23,12 +23,14 @@ isinf           [{ test $HAVE_FMODL = 0 || test $REPLACE_FMODL = 1; } && test $H
 
 configure.ac:
 gl_FUNC_FMODL
-if test $HAVE_FMODL = 0 || test $REPLACE_FMODL = 1; then
-  AC_LIBOBJ([fmodl])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_FMODL],
+               [test $HAVE_FMODL = 0 || test $REPLACE_FMODL = 1])
 gl_MATH_MODULE_INDICATOR([fmodl])
 
 Makefile.am:
+if GL_COND_OBJ_FMODL
+lib_SOURCES += fmodl.c
+endif
 
 Include:
 <math.h>

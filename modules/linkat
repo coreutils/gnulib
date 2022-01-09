@@ -34,13 +34,17 @@ fstatat          [test $REPLACE_LINKAT = 1]
 
 configure.ac:
 gl_FUNC_LINKAT
-if test $HAVE_LINKAT = 0 || test $REPLACE_LINKAT = 1; then
-  AC_LIBOBJ([linkat])
+gl_CONDITIONAL([GL_COND_OBJ_LINKAT],
+               [test $HAVE_LINKAT = 0 || test $REPLACE_LINKAT = 1])
+AM_COND_IF([GL_COND_OBJ_LINKAT], [
   AC_LIBOBJ([at-func2])
-fi
+])
 gl_UNISTD_MODULE_INDICATOR([linkat])
 
 Makefile.am:
+if GL_COND_OBJ_LINKAT
+lib_SOURCES += linkat.c
+endif
 
 Include:
 <fcntl.h>

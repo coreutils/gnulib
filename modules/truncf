@@ -13,12 +13,14 @@ float           [test $HAVE_DECL_TRUNCF = 0 || test $REPLACE_TRUNCF = 1]
 
 configure.ac:
 gl_FUNC_TRUNCF
-if test $HAVE_DECL_TRUNCF = 0 || test $REPLACE_TRUNCF = 1; then
-  AC_LIBOBJ([truncf])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_TRUNCF],
+               [test $HAVE_DECL_TRUNCF = 0 || test $REPLACE_TRUNCF = 1])
 gl_MATH_MODULE_INDICATOR([truncf])
 
 Makefile.am:
+if GL_COND_OBJ_TRUNCF
+lib_SOURCES += truncf.c
+endif
 
 Include:
 <math.h>

@@ -12,12 +12,13 @@ exp             [test $HAVE_EXPF = 0]
 
 configure.ac:
 gl_FUNC_EXPF
-if test $HAVE_EXPF = 0; then
-  AC_LIBOBJ([expf])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_EXPF], [test $HAVE_EXPF = 0])
 gl_MATH_MODULE_INDICATOR([expf])
 
 Makefile.am:
+if GL_COND_OBJ_EXPF
+lib_SOURCES += expf.c
+endif
 
 Include:
 <math.h>

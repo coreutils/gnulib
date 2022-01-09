@@ -20,12 +20,13 @@ strdup            [test $REPLACE_RENAME = 1]
 
 configure.ac:
 gl_FUNC_RENAME
-if test $REPLACE_RENAME = 1; then
-  AC_LIBOBJ([rename])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_RENAME], [test $REPLACE_RENAME = 1])
 gl_STDIO_MODULE_INDICATOR([rename])
 
 Makefile.am:
+if GL_COND_OBJ_RENAME
+lib_SOURCES += rename.c
+endif
 
 Include:
 <stdio.h>

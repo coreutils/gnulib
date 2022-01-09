@@ -25,16 +25,20 @@ mknod           [test $HAVE_MKNODAT = 0]
 
 configure.ac:
 gl_FUNC_MKFIFOAT
-if test $HAVE_MKFIFOAT = 0 || test $REPLACE_MKFIFOAT = 1; then
-  AC_LIBOBJ([mkfifoat])
-fi
-if test $HAVE_MKNODAT = 0 || test $REPLACE_MKNODAT = 1; then
-  AC_LIBOBJ([mknodat])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_MKFIFOAT],
+               [test $HAVE_MKFIFOAT = 0 || test $REPLACE_MKFIFOAT = 1])
+gl_CONDITIONAL([GL_COND_OBJ_MKNODAT],
+               [test $HAVE_MKNODAT = 0 || test $REPLACE_MKNODAT = 1])
 gl_SYS_STAT_MODULE_INDICATOR([mkfifoat])
 gl_SYS_STAT_MODULE_INDICATOR([mknodat])
 
 Makefile.am:
+if GL_COND_OBJ_MKFIFOAT
+lib_SOURCES += mkfifoat.c
+endif
+if GL_COND_OBJ_MKNODAT
+lib_SOURCES += mknodat.c
+endif
 
 Include:
 <fcntl.h>

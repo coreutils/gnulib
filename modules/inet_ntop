@@ -15,13 +15,17 @@ netinet_in      [test $HAVE_INET_NTOP = 0 || test $REPLACE_INET_NTOP = 1]
 
 configure.ac:
 gl_FUNC_INET_NTOP
-if test $HAVE_INET_NTOP = 0 || test $REPLACE_INET_NTOP = 1; then
-  AC_LIBOBJ([inet_ntop])
+gl_CONDITIONAL([GL_COND_OBJ_INET_NTOP],
+               [test $HAVE_INET_NTOP = 0 || test $REPLACE_INET_NTOP = 1])
+AM_COND_IF([GL_COND_OBJ_INET_NTOP], [
   gl_PREREQ_INET_NTOP
-fi
+])
 gl_ARPA_INET_MODULE_INDICATOR([inet_ntop])
 
 Makefile.am:
+if GL_COND_OBJ_INET_NTOP
+lib_SOURCES += inet_ntop.c
+endif
 
 License:
 LGPLv2+

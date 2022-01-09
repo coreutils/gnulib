@@ -16,12 +16,14 @@ ldexpl          [{ test $HAVE_SQRTL = 0 || test $REPLACE_SQRTL = 1; } && test $H
 
 configure.ac:
 gl_FUNC_SQRTL
-if test $HAVE_SQRTL = 0 || test $REPLACE_SQRTL = 1; then
-  AC_LIBOBJ([sqrtl])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_SQRTL],
+               [test $HAVE_SQRTL = 0 || test $REPLACE_SQRTL = 1])
 gl_MATH_MODULE_INDICATOR([sqrtl])
 
 Makefile.am:
+if GL_COND_OBJ_SQRTL
+lib_SOURCES += sqrtl.c
+endif
 
 Include:
 <math.h>

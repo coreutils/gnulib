@@ -11,12 +11,14 @@ string
 
 configure.ac:
 gl_FUNC_STRERRORNAME_NP
-if test $HAVE_STRERRORNAME_NP = 0 || test $REPLACE_STRERRORNAME_NP = 1; then
-  AC_LIBOBJ([strerrorname_np])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_STRERRORNAME_NP],
+               [test $HAVE_STRERRORNAME_NP = 0 || test $REPLACE_STRERRORNAME_NP = 1])
 gl_STRING_MODULE_INDICATOR([strerrorname_np])
 
 Makefile.am:
+if GL_COND_OBJ_STRERRORNAME_NP
+lib_SOURCES += strerrorname_np.c
+endif
 
 Include:
 <string.h>

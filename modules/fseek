@@ -11,12 +11,13 @@ fseeko          [test $REPLACE_FSEEK = 1]
 
 configure.ac:
 gl_FUNC_FSEEK
-if test $REPLACE_FSEEK = 1; then
-  AC_LIBOBJ([fseek])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_FSEEK], [test $REPLACE_FSEEK = 1])
 gl_STDIO_MODULE_INDICATOR([fseek])
 
 Makefile.am:
+if GL_COND_OBJ_FSEEK
+lib_SOURCES += fseek.c
+endif
 
 Include:
 <stdio.h>

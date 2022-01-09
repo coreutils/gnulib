@@ -28,12 +28,15 @@ strdup
 
 configure.ac:
 gl_RELOCATABLE([$gl_source_base])
-if test $RELOCATABLE = yes; then
-  AC_LIBOBJ([progreloc])
+gl_CONDITIONAL([GL_COND_OBJ_PROGRELOC], [test $RELOCATABLE = yes])
+AM_COND_IF([GL_COND_OBJ_PROGRELOC], [
   AC_LIBOBJ([relocatable])
-fi
+])
 
 Makefile.am:
+if GL_COND_OBJ_PROGRELOC
+lib_SOURCES += progreloc.c
+endif
 DEFS += -DEXEEXT=\"@EXEEXT@\"
 if RELOCATABLE_VIA_WRAPPER
 uninstall-hook: uninstall-relocwrapper

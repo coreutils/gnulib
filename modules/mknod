@@ -13,12 +13,14 @@ stat            [test $HAVE_MKNOD = 0 || test $REPLACE_MKNOD = 1]
 
 configure.ac:
 gl_FUNC_MKNOD
-if test $HAVE_MKNOD = 0 || test $REPLACE_MKNOD = 1; then
-  AC_LIBOBJ([mknod])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_MKNOD],
+               [test $HAVE_MKNOD = 0 || test $REPLACE_MKNOD = 1])
 gl_UNISTD_MODULE_INDICATOR([mknod])
 
 Makefile.am:
+if GL_COND_OBJ_MKNOD
+lib_SOURCES += mknod.c
+endif
 
 Include:
 <sys/stat.h>

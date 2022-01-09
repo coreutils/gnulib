@@ -12,13 +12,17 @@ environ         [test $HAVE_UNSETENV = 0 || test $REPLACE_UNSETENV = 1]
 
 configure.ac:
 gl_FUNC_UNSETENV
-if test $HAVE_UNSETENV = 0 || test $REPLACE_UNSETENV = 1; then
-  AC_LIBOBJ([unsetenv])
+gl_CONDITIONAL([GL_COND_OBJ_UNSETENV],
+               [test $HAVE_UNSETENV = 0 || test $REPLACE_UNSETENV = 1])
+AM_COND_IF([GL_COND_OBJ_UNSETENV], [
   gl_PREREQ_UNSETENV
-fi
+])
 gl_STDLIB_MODULE_INDICATOR([unsetenv])
 
 Makefile.am:
+if GL_COND_OBJ_UNSETENV
+lib_SOURCES += unsetenv.c
+endif
 
 Include:
 <stdlib.h>

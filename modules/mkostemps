@@ -14,13 +14,14 @@ tempname        [test $HAVE_MKOSTEMPS = 0]
 
 configure.ac:
 gl_FUNC_MKOSTEMPS
-if test $HAVE_MKOSTEMPS = 0; then
-  AC_LIBOBJ([mkostemps])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_MKOSTEMPS], [test $HAVE_MKOSTEMPS = 0])
 gl_MODULE_INDICATOR([mkostemps])
 gl_STDLIB_MODULE_INDICATOR([mkostemps])
 
 Makefile.am:
+if GL_COND_OBJ_MKOSTEMPS
+lib_SOURCES += mkostemps.c
+endif
 
 Include:
 <stdlib.h>

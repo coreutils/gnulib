@@ -11,12 +11,13 @@ float           [test $REPLACE_CEIL = 1]
 
 configure.ac:
 gl_FUNC_CEIL
-if test $REPLACE_CEIL = 1; then
-  AC_LIBOBJ([ceil])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_CEIL], [test $REPLACE_CEIL = 1])
 gl_MATH_MODULE_INDICATOR([ceil])
 
 Makefile.am:
+if GL_COND_OBJ_CEIL
+lib_SOURCES += ceil.c
+endif
 
 Include:
 <math.h>

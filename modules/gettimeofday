@@ -10,13 +10,17 @@ sys_time
 
 configure.ac:
 gl_FUNC_GETTIMEOFDAY
-if test $HAVE_GETTIMEOFDAY = 0 || test $REPLACE_GETTIMEOFDAY = 1; then
-  AC_LIBOBJ([gettimeofday])
+gl_CONDITIONAL([GL_COND_OBJ_GETTIMEOFDAY],
+               [test $HAVE_GETTIMEOFDAY = 0 || test $REPLACE_GETTIMEOFDAY = 1])
+AM_COND_IF([GL_COND_OBJ_GETTIMEOFDAY], [
   gl_PREREQ_GETTIMEOFDAY
-fi
+])
 gl_SYS_TIME_MODULE_INDICATOR([gettimeofday])
 
 Makefile.am:
+if GL_COND_OBJ_GETTIMEOFDAY
+lib_SOURCES += gettimeofday.c
+endif
 
 Include:
 <sys/time.h>

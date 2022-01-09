@@ -19,18 +19,21 @@ msvc-nothrow    [test $REPLACE_FSTAT = 1]
 
 configure.ac:
 gl_FUNC_FSTAT
-if test $REPLACE_FSTAT = 1; then
-  AC_LIBOBJ([fstat])
+gl_CONDITIONAL([GL_COND_OBJ_FSTAT], [test $REPLACE_FSTAT = 1])
+AM_COND_IF([GL_COND_OBJ_FSTAT], [
   case "$host_os" in
     mingw*)
       AC_LIBOBJ([stat-w32])
       ;;
   esac
   gl_PREREQ_FSTAT
-fi
+])
 gl_SYS_STAT_MODULE_INDICATOR([fstat])
 
 Makefile.am:
+if GL_COND_OBJ_FSTAT
+lib_SOURCES += fstat.c
+endif
 
 Include:
 <sys/stat.h>

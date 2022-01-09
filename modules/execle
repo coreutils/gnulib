@@ -12,12 +12,13 @@ malloca         [test $REPLACE_EXECLE = 1]
 
 configure.ac:
 gl_FUNC_EXECLE
-if test $REPLACE_EXECLE = 1; then
-  AC_LIBOBJ([execle])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_EXECLE], [test $REPLACE_EXECLE = 1])
 gl_UNISTD_MODULE_INDICATOR([execle])
 
 Makefile.am:
+if GL_COND_OBJ_EXECLE
+lib_SOURCES += execle.c
+endif
 
 Include:
 <unistd.h>

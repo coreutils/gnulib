@@ -10,13 +10,13 @@ windows-once
 
 configure.ac:
 AC_REQUIRE([AC_CANONICAL_HOST])
-case "$host_os" in
-  mingw*)
-    AC_LIBOBJ([windows-tls])
-    ;;
-esac
+gl_CONDITIONAL([GL_COND_OBJ_WINDOWS_TLS],
+               [case "$host_os" in mingw*) true;; *) false;; esac])
 
 Makefile.am:
+if GL_COND_OBJ_WINDOWS_TLS
+lib_SOURCES += windows-tls.c
+endif
 
 Include:
 "windows-tls.h"

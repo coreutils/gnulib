@@ -16,12 +16,15 @@ string
 
 configure.ac:
 gl_FUNC_MEMMOVE
-if test $ac_cv_func_memmove = no; then
-  AC_LIBOBJ([memmove])
+gl_CONDITIONAL([GL_COND_OBJ_MEMMOVE], [test $ac_cv_func_memmove = no])
+AM_COND_IF([GL_COND_OBJ_MEMMOVE], [
   gl_PREREQ_MEMMOVE
-fi
+])
 
 Makefile.am:
+if GL_COND_OBJ_MEMMOVE
+lib_SOURCES += memmove.c
+endif
 
 Include:
 <string.h>

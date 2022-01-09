@@ -15,12 +15,14 @@ msvc-nothrow    [test $HAVE_IOCTL = 0 || test $REPLACE_IOCTL = 1]
 
 configure.ac:
 gl_FUNC_IOCTL
-if test $HAVE_IOCTL = 0 || test $REPLACE_IOCTL = 1; then
-  AC_LIBOBJ([ioctl])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_IOCTL],
+               [test $HAVE_IOCTL = 0 || test $REPLACE_IOCTL = 1])
 gl_SYS_IOCTL_MODULE_INDICATOR([ioctl])
 
 Makefile.am:
+if GL_COND_OBJ_IOCTL
+lib_SOURCES += ioctl.c
+endif
 
 Include:
 <sys/ioctl.h>

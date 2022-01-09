@@ -26,13 +26,17 @@ save-cwd        [test $HAVE_FCHMODAT = 0]
 
 configure.ac:
 gl_FUNC_FCHMODAT
-if test $HAVE_FCHMODAT = 0 || test $REPLACE_FCHMODAT = 1; then
-  AC_LIBOBJ([fchmodat])
+gl_CONDITIONAL([GL_COND_OBJ_FCHMODAT],
+               [test $HAVE_FCHMODAT = 0 || test $REPLACE_FCHMODAT = 1])
+AM_COND_IF([GL_COND_OBJ_FCHMODAT], [
   gl_PREREQ_FCHMODAT
-fi
+])
 gl_SYS_STAT_MODULE_INDICATOR([fchmodat])
 
 Makefile.am:
+if GL_COND_OBJ_FCHMODAT
+lib_SOURCES += fchmodat.c
+endif
 
 Include:
 <sys/stat.h>

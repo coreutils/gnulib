@@ -19,16 +19,19 @@ floorl          [test $HAVE_COSL = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 
 
 configure.ac:
 gl_FUNC_COSL
-if test $HAVE_COSL = 0; then
-  AC_LIBOBJ([cosl])
+gl_CONDITIONAL([GL_COND_OBJ_COSL], [test $HAVE_COSL = 0])
+AM_COND_IF([GL_COND_OBJ_COSL], [
   if test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0; then
     AC_LIBOBJ([sincosl])
     AC_LIBOBJ([trigl])
   fi
-fi
+])
 gl_MATH_MODULE_INDICATOR([cosl])
 
 Makefile.am:
+if GL_COND_OBJ_COSL
+lib_SOURCES += cosl.c
+endif
 
 Include:
 <math.h>

@@ -14,12 +14,13 @@ signbit         [test $HAVE_COPYSIGNL = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUB
 
 configure.ac:
 gl_FUNC_COPYSIGNL
-if test $HAVE_COPYSIGNL = 0; then
-  AC_LIBOBJ([copysignl])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_COPYSIGNL], [test $HAVE_COPYSIGNL = 0])
 gl_MATH_MODULE_INDICATOR([copysignl])
 
 Makefile.am:
+if GL_COND_OBJ_COPYSIGNL
+lib_SOURCES += copysignl.c
+endif
 
 Include:
 <math.h>

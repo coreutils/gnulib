@@ -14,12 +14,14 @@ rint            [{ test $HAVE_RINTL = 0 || test $REPLACE_RINTL = 1; } && test $H
 
 configure.ac:
 gl_FUNC_RINTL
-if test $HAVE_RINTL = 0 || test $REPLACE_RINTL = 1; then
-  AC_LIBOBJ([rintl])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_RINTL],
+               [test $HAVE_RINTL = 0 || test $REPLACE_RINTL = 1])
 gl_MATH_MODULE_INDICATOR([rintl])
 
 Makefile.am:
+if GL_COND_OBJ_RINTL
+lib_SOURCES += rintl.c
+endif
 
 Include:
 <math.h>

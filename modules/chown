@@ -16,15 +16,19 @@ sys_stat        [test $HAVE_CHOWN = 0 || test $REPLACE_CHOWN = 1]
 
 configure.ac:
 gl_FUNC_CHOWN
-if test $HAVE_CHOWN = 0 || test $REPLACE_CHOWN = 1; then
-  AC_LIBOBJ([chown])
-fi
-if test $REPLACE_CHOWN = 1 && test $ac_cv_func_fchown = no; then
-  AC_LIBOBJ([fchown-stub])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_CHOWN],
+               [test $HAVE_CHOWN = 0 || test $REPLACE_CHOWN = 1])
+gl_CONDITIONAL([GL_COND_OBJ_FCHOWN_STUB],
+               [test $REPLACE_CHOWN = 1 && test $ac_cv_func_fchown = no])
 gl_UNISTD_MODULE_INDICATOR([chown])
 
 Makefile.am:
+if GL_COND_OBJ_CHOWN
+lib_SOURCES += chown.c
+endif
+if GL_COND_OBJ_FCHOWN_STUB
+lib_SOURCES += fchown-stub.c
+endif
 
 Include:
 <unistd.h>

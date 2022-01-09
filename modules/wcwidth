@@ -17,13 +17,17 @@ uniwidth/width  [test $HAVE_WCWIDTH = 0 || test $REPLACE_WCWIDTH = 1]
 
 configure.ac:
 gl_FUNC_WCWIDTH
-if test $HAVE_WCWIDTH = 0 || test $REPLACE_WCWIDTH = 1; then
-  AC_LIBOBJ([wcwidth])
+gl_CONDITIONAL([GL_COND_OBJ_WCWIDTH],
+               [test $HAVE_WCWIDTH = 0 || test $REPLACE_WCWIDTH = 1])
+AM_COND_IF([GL_COND_OBJ_WCWIDTH], [
   gl_PREREQ_WCWIDTH
-fi
+])
 gl_WCHAR_MODULE_INDICATOR([wcwidth])
 
 Makefile.am:
+if GL_COND_OBJ_WCWIDTH
+lib_SOURCES += wcwidth.c
+endif
 
 Include:
 <wchar.h>

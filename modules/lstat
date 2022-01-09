@@ -13,13 +13,16 @@ stat-time       [test $REPLACE_LSTAT = 1]
 
 configure.ac:
 gl_FUNC_LSTAT
-if test $REPLACE_LSTAT = 1; then
-  AC_LIBOBJ([lstat])
+gl_CONDITIONAL([GL_COND_OBJ_LSTAT], [test $REPLACE_LSTAT = 1])
+AM_COND_IF([GL_COND_OBJ_LSTAT], [
   gl_PREREQ_LSTAT
-fi
+])
 gl_SYS_STAT_MODULE_INDICATOR([lstat])
 
 Makefile.am:
+if GL_COND_OBJ_LSTAT
+lib_SOURCES += lstat.c
+endif
 
 Include:
 <sys/stat.h>

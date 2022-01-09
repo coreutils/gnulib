@@ -17,12 +17,14 @@ ldexpf          [test $HAVE_CBRTF = 0 || test $REPLACE_CBRTF = 1]
 
 configure.ac:
 gl_FUNC_CBRTF
-if test $HAVE_CBRTF = 0 || test $REPLACE_CBRTF = 1; then
-  AC_LIBOBJ([cbrtf])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_CBRTF],
+               [test $HAVE_CBRTF = 0 || test $REPLACE_CBRTF = 1])
 gl_MATH_MODULE_INDICATOR([cbrtf])
 
 Makefile.am:
+if GL_COND_OBJ_CBRTF
+lib_SOURCES += cbrtf.c
+endif
 
 Include:
 <math.h>

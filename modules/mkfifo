@@ -11,12 +11,14 @@ stat            [test $HAVE_MKFIFO = 0 || test $REPLACE_MKFIFO = 1]
 
 configure.ac:
 gl_FUNC_MKFIFO
-if test $HAVE_MKFIFO = 0 || test $REPLACE_MKFIFO = 1; then
-  AC_LIBOBJ([mkfifo])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_MKFIFO],
+               [test $HAVE_MKFIFO = 0 || test $REPLACE_MKFIFO = 1])
 gl_UNISTD_MODULE_INDICATOR([mkfifo])
 
 Makefile.am:
+if GL_COND_OBJ_MKFIFO
+lib_SOURCES += mkfifo.c
+endif
 
 Include:
 <sys/stat.h>

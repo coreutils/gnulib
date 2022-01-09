@@ -14,12 +14,14 @@ float           [{ test $HAVE_DECL_FLOORL = 0 || test $REPLACE_FLOORL = 1; } && 
 
 configure.ac:
 AC_REQUIRE([gl_FUNC_FLOORL])
-if test $HAVE_DECL_FLOORL = 0 || test $REPLACE_FLOORL = 1; then
-  AC_LIBOBJ([floorl])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_FLOORL],
+               [test $HAVE_DECL_FLOORL = 0 || test $REPLACE_FLOORL = 1])
 gl_MATH_MODULE_INDICATOR([floorl])
 
 Makefile.am:
+if GL_COND_OBJ_FLOORL
+lib_SOURCES += floorl.c
+endif
 
 Include:
 <math.h>

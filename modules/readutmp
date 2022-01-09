@@ -16,11 +16,13 @@ unlocked-io-internal
 
 configure.ac:
 gl_READUTMP
-if test $ac_cv_header_utmp_h = yes || test $ac_cv_header_utmpx_h = yes; then
-  AC_LIBOBJ([readutmp])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_READUTMP],
+               [test $ac_cv_header_utmp_h = yes || test $ac_cv_header_utmpx_h = yes])
 
 Makefile.am:
+if GL_COND_OBJ_READUTMP
+lib_SOURCES += readutmp.c
+endif
 
 Include:
 "readutmp.h"

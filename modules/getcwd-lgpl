@@ -12,12 +12,13 @@ strdup          [test $REPLACE_GETCWD = 1]
 
 configure.ac:
 gl_FUNC_GETCWD_LGPL
-if test $REPLACE_GETCWD = 1; then
-  AC_LIBOBJ([getcwd-lgpl])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_GETCWD_LGPL], [test $REPLACE_GETCWD = 1])
 gl_UNISTD_MODULE_INDICATOR([getcwd])
 
 Makefile.am:
+if GL_COND_OBJ_GETCWD_LGPL
+lib_SOURCES += getcwd-lgpl.c
+endif
 
 Include:
 <unistd.h>

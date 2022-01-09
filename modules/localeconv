@@ -11,13 +11,16 @@ locale
 
 configure.ac:
 gl_FUNC_LOCALECONV
-if test $REPLACE_LOCALECONV = 1; then
-  AC_LIBOBJ([localeconv])
+gl_CONDITIONAL([GL_COND_OBJ_LOCALECONV], [test $REPLACE_LOCALECONV = 1])
+AM_COND_IF([GL_COND_OBJ_LOCALECONV], [
   gl_PREREQ_LOCALECONV
-fi
+])
 gl_LOCALE_MODULE_INDICATOR([localeconv])
 
 Makefile.am:
+if GL_COND_OBJ_LOCALECONV
+lib_SOURCES += localeconv.c
+endif
 
 Include:
 <locale.h>

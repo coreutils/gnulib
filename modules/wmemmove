@@ -11,12 +11,13 @@ wchar
 
 configure.ac:
 gl_FUNC_WMEMMOVE
-if test $HAVE_WMEMMOVE = 0; then
-  AC_LIBOBJ([wmemmove])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_WMEMMOVE], [test $HAVE_WMEMMOVE = 0])
 gl_WCHAR_MODULE_INDICATOR([wmemmove])
 
 Makefile.am:
+if GL_COND_OBJ_WMEMMOVE
+lib_SOURCES += wmemmove.c
+endif
 
 Include:
 <wchar.h>

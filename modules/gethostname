@@ -15,13 +15,16 @@ msvc-nothrow    [test $HAVE_GETHOSTNAME = 0]
 
 configure.ac:
 gl_FUNC_GETHOSTNAME
-if test $HAVE_GETHOSTNAME = 0; then
-  AC_LIBOBJ([gethostname])
+gl_CONDITIONAL([GL_COND_OBJ_GETHOSTNAME], [test $HAVE_GETHOSTNAME = 0])
+AM_COND_IF([GL_COND_OBJ_GETHOSTNAME], [
   gl_PREREQ_GETHOSTNAME
-fi
+])
 gl_UNISTD_MODULE_INDICATOR([gethostname])
 
 Makefile.am:
+if GL_COND_OBJ_GETHOSTNAME
+lib_SOURCES += gethostname.c
+endif
 
 Include:
 <unistd.h>

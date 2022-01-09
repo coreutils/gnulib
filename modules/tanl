@@ -18,15 +18,18 @@ floorl          [test $HAVE_TANL = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 
 
 configure.ac:
 gl_FUNC_TANL
-if test $HAVE_TANL = 0; then
-  AC_LIBOBJ([tanl])
+gl_CONDITIONAL([GL_COND_OBJ_TANL], [test $HAVE_TANL = 0])
+AM_COND_IF([GL_COND_OBJ_TANL], [
   if test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0; then
     AC_LIBOBJ([trigl])
   fi
-fi
+])
 gl_MATH_MODULE_INDICATOR([tanl])
 
 Makefile.am:
+if GL_COND_OBJ_TANL
+lib_SOURCES += tanl.c
+endif
 
 Include:
 <math.h>

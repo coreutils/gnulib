@@ -13,13 +13,16 @@ msvc-nothrow    [test $REPLACE_WRITE = 1]
 
 configure.ac:
 gl_FUNC_WRITE
-if test $REPLACE_WRITE = 1; then
-  AC_LIBOBJ([write])
+gl_CONDITIONAL([GL_COND_OBJ_WRITE], [test $REPLACE_WRITE = 1])
+AM_COND_IF([GL_COND_OBJ_WRITE], [
   gl_PREREQ_WRITE
-fi
+])
 gl_UNISTD_MODULE_INDICATOR([write])
 
 Makefile.am:
+if GL_COND_OBJ_WRITE
+lib_SOURCES += write.c
+endif
 
 Include:
 <unistd.h>

@@ -14,13 +14,17 @@ verify          [test $HAVE_MBSINIT = 0 || test $REPLACE_MBSINIT = 1]
 
 configure.ac:
 gl_FUNC_MBSINIT
-if test $HAVE_MBSINIT = 0 || test $REPLACE_MBSINIT = 1; then
-  AC_LIBOBJ([mbsinit])
+gl_CONDITIONAL([GL_COND_OBJ_MBSINIT],
+               [test $HAVE_MBSINIT = 0 || test $REPLACE_MBSINIT = 1])
+AM_COND_IF([GL_COND_OBJ_MBSINIT], [
   gl_PREREQ_MBSINIT
-fi
+])
 gl_WCHAR_MODULE_INDICATOR([mbsinit])
 
 Makefile.am:
+if GL_COND_OBJ_MBSINIT
+lib_SOURCES += mbsinit.c
+endif
 
 Include:
 <wchar.h>

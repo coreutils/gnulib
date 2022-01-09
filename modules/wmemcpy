@@ -11,12 +11,13 @@ wchar
 
 configure.ac:
 gl_FUNC_WMEMCPY
-if test $HAVE_WMEMCPY = 0; then
-  AC_LIBOBJ([wmemcpy])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_WMEMCPY], [test $HAVE_WMEMCPY = 0])
 gl_WCHAR_MODULE_INDICATOR([wmemcpy])
 
 Makefile.am:
+if GL_COND_OBJ_WMEMCPY
+lib_SOURCES += wmemcpy.c
+endif
 
 Include:
 <wchar.h>

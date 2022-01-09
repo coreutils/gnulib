@@ -20,14 +20,17 @@ AC_REQUIRE([gl_SET_LARGEFILE_SOURCE])
 
 configure.ac:
 gl_FUNC_FFLUSH
-if test $REPLACE_FFLUSH = 1; then
-  AC_LIBOBJ([fflush])
+gl_CONDITIONAL([GL_COND_OBJ_FFLUSH], [test $REPLACE_FFLUSH = 1])
+AM_COND_IF([GL_COND_OBJ_FFLUSH], [
   gl_PREREQ_FFLUSH
-fi
+])
 gl_MODULE_INDICATOR([fflush])
 gl_STDIO_MODULE_INDICATOR([fflush])
 
 Makefile.am:
+if GL_COND_OBJ_FFLUSH
+lib_SOURCES += fflush.c
+endif
 
 Include:
 <stdio.h>

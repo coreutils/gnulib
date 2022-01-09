@@ -13,13 +13,17 @@ stdlib
 
 configure.ac:
 gl_FUNC_STRTOULL
-if test $HAVE_STRTOULL = 0 || test $REPLACE_STRTOULL = 1; then
-  AC_LIBOBJ([strtoull])
+gl_CONDITIONAL([GL_COND_OBJ_STRTOULL],
+               [test $HAVE_STRTOULL = 0 || test $REPLACE_STRTOULL = 1])
+AM_COND_IF([GL_COND_OBJ_STRTOULL], [
   gl_PREREQ_STRTOULL
-fi
+])
 gl_STDLIB_MODULE_INDICATOR([strtoull])
 
 Makefile.am:
+if GL_COND_OBJ_STRTOULL
+lib_SOURCES += strtoull.c
+endif
 
 Include:
 <stdlib.h>

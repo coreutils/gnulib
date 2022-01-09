@@ -17,14 +17,18 @@ strnlen1        [test $HAVE_MBSNRTOWCS = 0 || test $REPLACE_MBSNRTOWCS = 1]
 
 configure.ac:
 gl_FUNC_MBSNRTOWCS
-if test $HAVE_MBSNRTOWCS = 0 || test $REPLACE_MBSNRTOWCS = 1; then
-  AC_LIBOBJ([mbsnrtowcs])
+gl_CONDITIONAL([GL_COND_OBJ_MBSNRTOWCS],
+               [test $HAVE_MBSNRTOWCS = 0 || test $REPLACE_MBSNRTOWCS = 1])
+AM_COND_IF([GL_COND_OBJ_MBSNRTOWCS], [
   AC_LIBOBJ([mbsrtowcs-state])
   gl_PREREQ_MBSNRTOWCS
-fi
+])
 gl_WCHAR_MODULE_INDICATOR([mbsnrtowcs])
 
 Makefile.am:
+if GL_COND_OBJ_MBSNRTOWCS
+lib_SOURCES += mbsnrtowcs.c
+endif
 
 Include:
 <wchar.h>

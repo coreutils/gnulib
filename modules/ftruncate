@@ -14,13 +14,17 @@ msvc-inval      [test $HAVE_FTRUNCATE = 0 || test $REPLACE_FTRUNCATE = 1]
 
 configure.ac:
 gl_FUNC_FTRUNCATE
-if test $HAVE_FTRUNCATE = 0 || test $REPLACE_FTRUNCATE = 1; then
-  AC_LIBOBJ([ftruncate])
+gl_CONDITIONAL([GL_COND_OBJ_FTRUNCATE],
+               [test $HAVE_FTRUNCATE = 0 || test $REPLACE_FTRUNCATE = 1])
+AM_COND_IF([GL_COND_OBJ_FTRUNCATE], [
   gl_PREREQ_FTRUNCATE
-fi
+])
 gl_UNISTD_MODULE_INDICATOR([ftruncate])
 
 Makefile.am:
+if GL_COND_OBJ_FTRUNCATE
+lib_SOURCES += ftruncate.c
+endif
 
 Include:
 <unistd.h>

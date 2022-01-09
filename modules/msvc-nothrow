@@ -12,12 +12,14 @@ msvc-inval
 
 configure.ac:
 AC_REQUIRE([gl_MSVC_NOTHROW])
-if test $HAVE_MSVC_INVALID_PARAMETER_HANDLER = 1; then
-  AC_LIBOBJ([msvc-nothrow])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_MSVC_NOTHROW],
+               [test $HAVE_MSVC_INVALID_PARAMETER_HANDLER = 1])
 gl_MODULE_INDICATOR([msvc-nothrow])
 
 Makefile.am:
+if GL_COND_OBJ_MSVC_NOTHROW
+lib_SOURCES += msvc-nothrow.c
+endif
 
 Include:
 #if GNULIB_MSVC_NOTHROW

@@ -21,12 +21,14 @@ isinf           [{ test $HAVE_REMAINDERL = 0 || test $REPLACE_REMAINDERL = 1; } 
 
 configure.ac:
 gl_FUNC_REMAINDERL
-if test $HAVE_REMAINDERL = 0 || test $REPLACE_REMAINDERL = 1; then
-  AC_LIBOBJ([remainderl])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_REMAINDERL],
+               [test $HAVE_REMAINDERL = 0 || test $REPLACE_REMAINDERL = 1])
 gl_MATH_MODULE_INDICATOR([remainderl])
 
 Makefile.am:
+if GL_COND_OBJ_REMAINDERL
+lib_SOURCES += remainderl.c
+endif
 
 Include:
 <math.h>

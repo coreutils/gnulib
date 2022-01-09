@@ -14,16 +14,14 @@ wctype-h
 
 configure.ac:
 gl_FUNC_ISWDIGIT
-if test $HAVE_ISWCNTRL = 0 || test $REPLACE_ISWCNTRL = 1; then
-  :
-else
-  if test $REPLACE_ISWDIGIT = 1; then
-    AC_LIBOBJ([iswdigit])
-  fi
-fi
+gl_CONDITIONAL([GL_COND_OBJ_ISWDIGIT],
+               [! { test $HAVE_ISWCNTRL = 0 || test $REPLACE_ISWCNTRL = 1; } && test $REPLACE_ISWDIGIT = 1])
 gl_WCTYPE_MODULE_INDICATOR([iswdigit])
 
 Makefile.am:
+if GL_COND_OBJ_ISWDIGIT
+lib_SOURCES += iswdigit.c
+endif
 
 Include:
 <wctype.h>

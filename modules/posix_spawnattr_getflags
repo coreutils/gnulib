@@ -11,12 +11,14 @@ spawn
 
 configure.ac:
 gl_POSIX_SPAWN
-if test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1; then
-  AC_LIBOBJ([spawnattr_getflags])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_SPAWNATTR_GETFLAGS],
+               [test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1])
 gl_SPAWN_MODULE_INDICATOR([posix_spawnattr_getflags])
 
 Makefile.am:
+if GL_COND_OBJ_SPAWNATTR_GETFLAGS
+lib_SOURCES += spawnattr_getflags.c
+endif
 
 Include:
 <spawn.h>

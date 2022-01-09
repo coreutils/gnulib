@@ -11,13 +11,17 @@ extensions
 
 configure.ac:
 gl_FUNC_TTYNAME_R
-if test $HAVE_TTYNAME_R = 0 || test $REPLACE_TTYNAME_R = 1; then
-  AC_LIBOBJ([ttyname_r])
+gl_CONDITIONAL([GL_COND_OBJ_TTYNAME_R],
+               [test $HAVE_TTYNAME_R = 0 || test $REPLACE_TTYNAME_R = 1])
+AM_COND_IF([GL_COND_OBJ_TTYNAME_R], [
   gl_PREREQ_TTYNAME_R
-fi
+])
 gl_UNISTD_MODULE_INDICATOR([ttyname_r])
 
 Makefile.am:
+if GL_COND_OBJ_TTYNAME_R
+lib_SOURCES += ttyname_r.c
+endif
 
 Include:
 <unistd.h>

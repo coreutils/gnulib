@@ -11,13 +11,16 @@ malloc-posix    [test $REPLACE_STRDUP = 1]
 
 configure.ac:
 gl_FUNC_STRDUP_POSIX
-if test $REPLACE_STRDUP = 1; then
-  AC_LIBOBJ([strdup])
+gl_CONDITIONAL([GL_COND_OBJ_STRDUP], [test $REPLACE_STRDUP = 1])
+AM_COND_IF([GL_COND_OBJ_STRDUP], [
   gl_PREREQ_STRDUP
-fi
+])
 gl_STRING_MODULE_INDICATOR([strdup])
 
 Makefile.am:
+if GL_COND_OBJ_STRDUP
+lib_SOURCES += strdup.c
+endif
 
 Include:
 <string.h>

@@ -14,12 +14,13 @@ windows-timedrecmutex
 
 configure.ac:
 AC_REQUIRE([gl_THREADS_H])
-if test $HAVE_THREADS_H = 0; then
-  AC_LIBOBJ([mtx])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_MTX], [test $HAVE_THREADS_H = 0])
 gl_THREADS_MODULE_INDICATOR([mtx])
 
 Makefile.am:
+if GL_COND_OBJ_MTX
+lib_SOURCES += mtx.c
+endif
 
 Include:
 <threads.h>

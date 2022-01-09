@@ -12,13 +12,16 @@ setlocale-null  [test $NEED_SETLOCALE_MTSAFE = 1]
 
 configure.ac:
 gl_FUNC_SETLOCALE
-if test $REPLACE_SETLOCALE = 1; then
-  AC_LIBOBJ([setlocale])
+gl_CONDITIONAL([GL_COND_OBJ_SETLOCALE], [test $REPLACE_SETLOCALE = 1])
+AM_COND_IF([GL_COND_OBJ_SETLOCALE], [
   gl_PREREQ_SETLOCALE
-fi
+])
 gl_LOCALE_MODULE_INDICATOR([setlocale])
 
 Makefile.am:
+if GL_COND_OBJ_SETLOCALE
+lib_SOURCES += setlocale.c
+endif
 
 Include:
 <locale.h>

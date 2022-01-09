@@ -12,12 +12,13 @@ execvpe         [test $REPLACE_EXECVP = 1]
 
 configure.ac:
 gl_FUNC_EXECVP
-if test $REPLACE_EXECVP = 1; then
-  AC_LIBOBJ([execvp])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_EXECVP], [test $REPLACE_EXECVP = 1])
 gl_UNISTD_MODULE_INDICATOR([execvp])
 
 Makefile.am:
+if GL_COND_OBJ_EXECVP
+lib_SOURCES += execvp.c
+endif
 
 Include:
 <unistd.h>

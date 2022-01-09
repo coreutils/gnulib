@@ -18,12 +18,13 @@ isinf           [test $REPLACE_HYPOT = 1]
 
 configure.ac:
 gl_FUNC_HYPOT
-if test $REPLACE_HYPOT = 1; then
-  AC_LIBOBJ([hypot])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_HYPOT], [test $REPLACE_HYPOT = 1])
 gl_MATH_MODULE_INDICATOR([hypot])
 
 Makefile.am:
+if GL_COND_OBJ_HYPOT
+lib_SOURCES += hypot.c
+endif
 
 Include:
 <math.h>

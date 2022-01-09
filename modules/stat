@@ -19,18 +19,21 @@ verify          [test $REPLACE_STAT = 1]
 
 configure.ac:
 gl_FUNC_STAT
-if test $REPLACE_STAT = 1; then
-  AC_LIBOBJ([stat])
+gl_CONDITIONAL([GL_COND_OBJ_STAT], [test $REPLACE_STAT = 1])
+AM_COND_IF([GL_COND_OBJ_STAT], [
   case "$host_os" in
     mingw*)
       AC_LIBOBJ([stat-w32])
       ;;
   esac
   gl_PREREQ_STAT
-fi
+])
 gl_SYS_STAT_MODULE_INDICATOR([stat])
 
 Makefile.am:
+if GL_COND_OBJ_STAT
+lib_SOURCES += stat.c
+endif
 
 Include:
 <sys/stat.h>

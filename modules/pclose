@@ -10,13 +10,16 @@ stdio
 
 configure.ac:
 gl_FUNC_PCLOSE
-if test $HAVE_PCLOSE = 0; then
-  AC_LIBOBJ([pclose])
+gl_CONDITIONAL([GL_COND_OBJ_PCLOSE], [test $HAVE_PCLOSE = 0])
+AM_COND_IF([GL_COND_OBJ_PCLOSE], [
   gl_PREREQ_PCLOSE
-fi
+])
 gl_STDIO_MODULE_INDICATOR([pclose])
 
 Makefile.am:
+if GL_COND_OBJ_PCLOSE
+lib_SOURCES += pclose.c
+endif
 
 Include:
 <stdio.h>

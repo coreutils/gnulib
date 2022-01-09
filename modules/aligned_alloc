@@ -11,12 +11,13 @@ stdlib
 
 configure.ac:
 gl_FUNC_ALIGNED_ALLOC
-if test $REPLACE_ALIGNED_ALLOC = 1; then
-  AC_LIBOBJ([aligned_alloc])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_ALIGNED_ALLOC], [test $REPLACE_ALIGNED_ALLOC = 1])
 gl_STDLIB_MODULE_INDICATOR([aligned_alloc])
 
 Makefile.am:
+if GL_COND_OBJ_ALIGNED_ALLOC
+lib_SOURCES += aligned_alloc.c
+endif
 
 Include:
 <stdlib.h>

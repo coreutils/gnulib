@@ -9,12 +9,16 @@ Depends-on:
 
 configure.ac:
 gl_FILEBLOCKS
-if test $ac_cv_member_struct_stat_st_blocks = no; then
-  AC_LIBOBJ([fileblocks])
+gl_CONDITIONAL([GL_COND_OBJ_FILEBLOCKS],
+               [test $ac_cv_member_struct_stat_st_blocks = no])
+AM_COND_IF([GL_COND_OBJ_FILEBLOCKS], [
   gl_PREREQ_FILEBLOCKS
-fi
+])
 
 Makefile.am:
+if GL_COND_OBJ_FILEBLOCKS
+lib_SOURCES += fileblocks.c
+endif
 
 Include:
 

@@ -13,12 +13,13 @@ open            [test $ac_cv_func_login_tty = no]
 
 configure.ac:
 gl_FUNC_LOGIN_TTY
-if test $ac_cv_func_login_tty = no; then
-  AC_LIBOBJ([login_tty])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_LOGIN_TTY], [test $ac_cv_func_login_tty = no])
 gl_PTY_MODULE_INDICATOR([login_tty])
 
 Makefile.am:
+if GL_COND_OBJ_LOGIN_TTY
+lib_SOURCES += login_tty.c
+endif
 
 Include:
 extern int login_tty (int);

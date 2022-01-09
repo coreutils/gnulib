@@ -11,13 +11,16 @@ string
 
 configure.ac:
 gl_FUNC_STRNCAT
-if test $REPLACE_STRNCAT = 1; then
-  AC_LIBOBJ([strncat])
+gl_CONDITIONAL([GL_COND_OBJ_STRNCAT], [test $REPLACE_STRNCAT = 1])
+AM_COND_IF([GL_COND_OBJ_STRNCAT], [
   gl_PREREQ_STRNCAT
-fi
+])
 gl_STRING_MODULE_INDICATOR([strncat])
 
 Makefile.am:
+if GL_COND_OBJ_STRNCAT
+lib_SOURCES += strncat.c
+endif
 
 Include:
 <string.h>

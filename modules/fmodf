@@ -12,12 +12,14 @@ fmod            [test $HAVE_FMODF = 0 || test $REPLACE_FMODF = 1]
 
 configure.ac:
 gl_FUNC_FMODF
-if test $HAVE_FMODF = 0 || test $REPLACE_FMODF = 1; then
-  AC_LIBOBJ([fmodf])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_FMODF],
+               [test $HAVE_FMODF = 0 || test $REPLACE_FMODF = 1])
 gl_MATH_MODULE_INDICATOR([fmodf])
 
 Makefile.am:
+if GL_COND_OBJ_FMODF
+lib_SOURCES += fmodf.c
+endif
 
 Include:
 <math.h>

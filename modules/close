@@ -12,12 +12,13 @@ msvc-inval      [test $REPLACE_CLOSE = 1]
 
 configure.ac:
 gl_FUNC_CLOSE
-if test $REPLACE_CLOSE = 1; then
-  AC_LIBOBJ([close])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_CLOSE], [test $REPLACE_CLOSE = 1])
 gl_UNISTD_MODULE_INDICATOR([close])
 
 Makefile.am:
+if GL_COND_OBJ_CLOSE
+lib_SOURCES += close.c
+endif
 
 Include:
 <unistd.h>

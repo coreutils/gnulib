@@ -16,12 +16,14 @@ dirfd           [test $HAVE_OPENDIR = 0 || test $REPLACE_OPENDIR = 1]
 
 configure.ac:
 gl_FUNC_OPENDIR
-if test $HAVE_OPENDIR = 0 || test $REPLACE_OPENDIR = 1; then
-  AC_LIBOBJ([opendir])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_OPENDIR],
+               [test $HAVE_OPENDIR = 0 || test $REPLACE_OPENDIR = 1])
 gl_DIRENT_MODULE_INDICATOR([opendir])
 
 Makefile.am:
+if GL_COND_OBJ_OPENDIR
+lib_SOURCES += opendir.c
+endif
 
 Include:
 <dirent.h>

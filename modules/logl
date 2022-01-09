@@ -15,12 +15,14 @@ floorl          [{ test $HAVE_LOGL = 0 || test $REPLACE_LOGL = 1; } && test $HAV
 
 configure.ac:
 gl_FUNC_LOGL
-if test $HAVE_LOGL = 0 || test $REPLACE_LOGL = 1; then
-  AC_LIBOBJ([logl])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_LOGL],
+               [test $HAVE_LOGL = 0 || test $REPLACE_LOGL = 1])
 gl_MATH_MODULE_INDICATOR([logl])
 
 Makefile.am:
+if GL_COND_OBJ_LOGL
+lib_SOURCES += logl.c
+endif
 
 Include:
 <math.h>

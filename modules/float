@@ -15,12 +15,8 @@ configure.ac:
 gl_FLOAT_H
 gl_CONDITIONAL_HEADER([float.h])
 AC_PROG_MKDIR_P
-if test $REPLACE_FLOAT_LDBL = 1; then
-  AC_LIBOBJ([float])
-fi
-if test $REPLACE_ITOLD = 1; then
-  AC_LIBOBJ([itold])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_FLOAT], [test $REPLACE_FLOAT_LDBL = 1])
+gl_CONDITIONAL([GL_COND_OBJ_ITOLD], [test $REPLACE_ITOLD = 1])
 
 Makefile.am:
 BUILT_SOURCES += $(FLOAT_H)
@@ -44,6 +40,13 @@ float.h: $(top_builddir)/config.status
 	rm -f $@
 endif
 MOSTLYCLEANFILES += float.h float.h-t
+
+if GL_COND_OBJ_FLOAT
+lib_SOURCES += float.c
+endif
+if GL_COND_OBJ_ITOLD
+lib_SOURCES += itold.c
+endif
 
 Include:
 <float.h>

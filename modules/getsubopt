@@ -13,13 +13,16 @@ memchr          [test $HAVE_GETSUBOPT = 0]
 
 configure.ac:
 gl_FUNC_GETSUBOPT
-if test $HAVE_GETSUBOPT = 0; then
-  AC_LIBOBJ([getsubopt])
+gl_CONDITIONAL([GL_COND_OBJ_GETSUBOPT], [test $HAVE_GETSUBOPT = 0])
+AM_COND_IF([GL_COND_OBJ_GETSUBOPT], [
   gl_PREREQ_GETSUBOPT
-fi
+])
 gl_STDLIB_MODULE_INDICATOR([getsubopt])
 
 Makefile.am:
+if GL_COND_OBJ_GETSUBOPT
+lib_SOURCES += getsubopt.c
+endif
 
 Include:
 <stdlib.h>

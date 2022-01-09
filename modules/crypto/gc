@@ -14,17 +14,18 @@ open
 
 configure.ac:
 gl_GC
-if test "$ac_cv_libgcrypt" = yes; then
-  AC_LIBOBJ([gc-libgcrypt])
-else
-  AC_LIBOBJ([gc-gnulib])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_GC_LIBGCRYPT], [test "$ac_cv_libgcrypt" = yes])
 if test $gl_cond_libtool = false; then
   gl_ltlibdeps="$gl_ltlibdeps $LTLIBGCRYPT"
   gl_libdeps="$gl_libdeps $LIBGCRYPT"
 fi
 
 Makefile.am:
+if GL_COND_OBJ_GC_LIBGCRYPT
+lib_SOURCES += gc-libgcrypt.c
+else
+lib_SOURCES += gc-gnulib.c
+endif
 if GL_COND_LIBTOOL
 lib_LDFLAGS += $(LTLIBGCRYPT)
 endif

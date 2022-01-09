@@ -14,13 +14,16 @@ stdbool         [test $REPLACE_STRFMON_L = 1]
 
 configure.ac:
 gl_FUNC_STRFMON_L
-if test $REPLACE_STRFMON_L = 1; then
-  AC_LIBOBJ([strfmon_l])
+gl_CONDITIONAL([GL_COND_OBJ_STRFMON_L], [test $REPLACE_STRFMON_L = 1])
+AM_COND_IF([GL_COND_OBJ_STRFMON_L], [
   gl_PREREQ_STRFMON_L
-fi
+])
 gl_MONETARY_MODULE_INDICATOR([strfmon_l])
 
 Makefile.am:
+if GL_COND_OBJ_STRFMON_L
+lib_SOURCES += strfmon_l.c
+endif
 
 Include:
 #if HAVE_MONETARY_H

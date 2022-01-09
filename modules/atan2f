@@ -12,12 +12,13 @@ atan2           [test $HAVE_ATAN2F = 0]
 
 configure.ac:
 gl_FUNC_ATAN2F
-if test $HAVE_ATAN2F = 0; then
-  AC_LIBOBJ([atan2f])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_ATAN2F], [test $HAVE_ATAN2F = 0])
 gl_MATH_MODULE_INDICATOR([atan2f])
 
 Makefile.am:
+if GL_COND_OBJ_ATAN2F
+lib_SOURCES += atan2f.c
+endif
 
 Include:
 <math.h>

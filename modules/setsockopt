@@ -14,12 +14,14 @@ msvc-nothrow    [test "$ac_cv_header_winsock2_h" = yes]
 
 configure.ac:
 AC_REQUIRE([gl_SYS_SOCKET_H])
-if test "$ac_cv_header_winsock2_h" = yes; then
-  AC_LIBOBJ([setsockopt])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_SETSOCKOPT],
+               [test "$ac_cv_header_winsock2_h" = yes])
 gl_SYS_SOCKET_MODULE_INDICATOR([setsockopt])
 
 Makefile.am:
+if GL_COND_OBJ_SETSOCKOPT
+lib_SOURCES += setsockopt.c
+endif
 
 Include:
 <sys/socket.h>

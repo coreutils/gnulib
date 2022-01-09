@@ -32,14 +32,17 @@ strdup-posix    [test $REPLACE_GETCWD = 1]
 
 configure.ac:
 gl_FUNC_GETCWD
-if test $REPLACE_GETCWD = 1; then
-  AC_LIBOBJ([getcwd])
+gl_CONDITIONAL([GL_COND_OBJ_GETCWD], [test $REPLACE_GETCWD = 1])
+AM_COND_IF([GL_COND_OBJ_GETCWD], [
   gl_PREREQ_GETCWD
-fi
+])
 gl_MODULE_INDICATOR([getcwd])
 gl_UNISTD_MODULE_INDICATOR([getcwd])
 
 Makefile.am:
+if GL_COND_OBJ_GETCWD
+lib_SOURCES += getcwd.c
+endif
 
 Include:
 <unistd.h>

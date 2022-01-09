@@ -10,12 +10,13 @@ time
 
 configure.ac:
 gl_FUNC_TZSET
-if test $REPLACE_TZSET = 1; then
-  AC_LIBOBJ([tzset])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_TZSET], [test $REPLACE_TZSET = 1])
 gl_TIME_MODULE_INDICATOR([tzset])
 
 Makefile.am:
+if GL_COND_OBJ_TZSET
+lib_SOURCES += tzset.c
+endif
 
 Include:
 <time.h>

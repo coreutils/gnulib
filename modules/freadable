@@ -12,11 +12,12 @@ stdbool
 
 configure.ac:
 gl_FUNC_FREADABLE
-if test $ac_cv_func___freadable = no; then
-  AC_LIBOBJ([freadable])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_FREADABLE], [test $ac_cv_func___freadable = no])
 
 Makefile.am:
+if GL_COND_OBJ_FREADABLE
+lib_SOURCES += freadable.c
+endif
 
 Include:
 "freadable.h"

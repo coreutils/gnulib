@@ -18,13 +18,17 @@ mbsinit         [test $HAVE_WCRTOMB = 0 || test $REPLACE_WCRTOMB = 1]
 
 configure.ac:
 gl_FUNC_WCRTOMB
-if test $HAVE_WCRTOMB = 0 || test $REPLACE_WCRTOMB = 1; then
-  AC_LIBOBJ([wcrtomb])
+gl_CONDITIONAL([GL_COND_OBJ_WCRTOMB],
+               [test $HAVE_WCRTOMB = 0 || test $REPLACE_WCRTOMB = 1])
+AM_COND_IF([GL_COND_OBJ_WCRTOMB], [
   gl_PREREQ_WCRTOMB
-fi
+])
 gl_WCHAR_MODULE_INDICATOR([wcrtomb])
 
 Makefile.am:
+if GL_COND_OBJ_WCRTOMB
+lib_SOURCES += wcrtomb.c
+endif
 
 Include:
 <wchar.h>

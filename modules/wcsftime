@@ -10,12 +10,13 @@ wchar
 
 configure.ac:
 gl_FUNC_WCSFTIME
-if test $REPLACE_WCSFTIME = 1; then
-  AC_LIBOBJ([wcsftime])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_WCSFTIME], [test $REPLACE_WCSFTIME = 1])
 gl_WCHAR_MODULE_INDICATOR([wcsftime])
 
 Makefile.am:
+if GL_COND_OBJ_WCSFTIME
+lib_SOURCES += wcsftime.c
+endif
 
 Include:
 <wchar.h>

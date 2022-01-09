@@ -19,13 +19,17 @@ msvc-nothrow    [test $HAVE_POLL = 0 || test $REPLACE_POLL = 1]
 
 configure.ac:
 gl_FUNC_POLL
-if test $HAVE_POLL = 0 || test $REPLACE_POLL = 1; then
-  AC_LIBOBJ([poll])
+gl_CONDITIONAL([GL_COND_OBJ_POLL],
+               [test $HAVE_POLL = 0 || test $REPLACE_POLL = 1])
+AM_COND_IF([GL_COND_OBJ_POLL], [
   gl_PREREQ_POLL
-fi
+])
 gl_POLL_MODULE_INDICATOR([poll])
 
 Makefile.am:
+if GL_COND_OBJ_POLL
+lib_SOURCES += poll.c
+endif
 
 Include:
 <poll.h>

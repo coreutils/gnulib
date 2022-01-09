@@ -12,11 +12,12 @@ Depends-on:
 
 configure.ac:
 gl_FUNC_FREADAHEAD
-if test $ac_cv_func___freadahead = no; then
-  AC_LIBOBJ([freadahead])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_FREADAHEAD], [test $ac_cv_func___freadahead = no])
 
 Makefile.am:
+if GL_COND_OBJ_FREADAHEAD
+lib_SOURCES += freadahead.c
+endif
 
 Include:
 "freadahead.h"

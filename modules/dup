@@ -11,13 +11,16 @@ msvc-inval      [test $REPLACE_DUP = 1]
 
 configure.ac:
 gl_FUNC_DUP
-if test $REPLACE_DUP = 1; then
-  AC_LIBOBJ([dup])
+gl_CONDITIONAL([GL_COND_OBJ_DUP], [test $REPLACE_DUP = 1])
+AM_COND_IF([GL_COND_OBJ_DUP], [
   gl_PREREQ_DUP
-fi
+])
 gl_UNISTD_MODULE_INDICATOR([dup])
 
 Makefile.am:
+if GL_COND_OBJ_DUP
+lib_SOURCES += dup.c
+endif
 
 Include:
 <unistd.h>

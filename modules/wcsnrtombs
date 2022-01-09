@@ -19,14 +19,18 @@ wcrtomb         [test $HAVE_WCSNRTOMBS = 0 || test $REPLACE_WCSNRTOMBS = 1]
 
 configure.ac:
 gl_FUNC_WCSNRTOMBS
-if test $HAVE_WCSNRTOMBS = 0 || test $REPLACE_WCSNRTOMBS = 1; then
-  AC_LIBOBJ([wcsnrtombs])
+gl_CONDITIONAL([GL_COND_OBJ_WCSNRTOMBS],
+               [test $HAVE_WCSNRTOMBS = 0 || test $REPLACE_WCSNRTOMBS = 1])
+AM_COND_IF([GL_COND_OBJ_WCSNRTOMBS], [
   AC_LIBOBJ([wcsrtombs-state])
   gl_PREREQ_WCSNRTOMBS
-fi
+])
 gl_WCHAR_MODULE_INDICATOR([wcsnrtombs])
 
 Makefile.am:
+if GL_COND_OBJ_WCSNRTOMBS
+lib_SOURCES += wcsnrtombs.c
+endif
 
 Include:
 <wchar.h>

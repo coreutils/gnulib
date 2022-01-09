@@ -12,13 +12,16 @@ msvc-nothrow    [test $REPLACE_READ = 1]
 
 configure.ac:
 gl_FUNC_READ
-if test $REPLACE_READ = 1; then
-  AC_LIBOBJ([read])
+gl_CONDITIONAL([GL_COND_OBJ_READ], [test $REPLACE_READ = 1])
+AM_COND_IF([GL_COND_OBJ_READ], [
   gl_PREREQ_READ
-fi
+])
 gl_UNISTD_MODULE_INDICATOR([read])
 
 Makefile.am:
+if GL_COND_OBJ_READ
+lib_SOURCES += read.c
+endif
 
 Include:
 <unistd.h>

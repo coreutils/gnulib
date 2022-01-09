@@ -12,12 +12,13 @@ wctype-h        [test $HAVE_WCSNCASECMP = 0]
 
 configure.ac:
 gl_FUNC_WCSNCASECMP
-if test $HAVE_WCSNCASECMP = 0; then
-  AC_LIBOBJ([wcsncasecmp])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_WCSNCASECMP], [test $HAVE_WCSNCASECMP = 0])
 gl_WCHAR_MODULE_INDICATOR([wcsncasecmp])
 
 Makefile.am:
+if GL_COND_OBJ_WCSNCASECMP
+lib_SOURCES += wcsncasecmp.c
+endif
 
 Include:
 <wchar.h>

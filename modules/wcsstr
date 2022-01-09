@@ -12,12 +12,13 @@ wcschr          [test $HAVE_WCSSTR = 0]
 
 configure.ac:
 gl_FUNC_WCSSTR
-if test $HAVE_WCSSTR = 0; then
-  AC_LIBOBJ([wcsstr])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_WCSSTR], [test $HAVE_WCSSTR = 0])
 gl_WCHAR_MODULE_INDICATOR([wcsstr])
 
 Makefile.am:
+if GL_COND_OBJ_WCSSTR
+lib_SOURCES += wcsstr.c
+endif
 
 Include:
 <wchar.h>

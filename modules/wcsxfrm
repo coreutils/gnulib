@@ -13,12 +13,13 @@ wchar
 
 configure.ac:
 gl_FUNC_WCSXFRM
-if test $HAVE_WCSXFRM = 0; then
-  AC_LIBOBJ([wcsxfrm])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_WCSXFRM], [test $HAVE_WCSXFRM = 0])
 gl_WCHAR_MODULE_INDICATOR([wcsxfrm])
 
 Makefile.am:
+if GL_COND_OBJ_WCSXFRM
+lib_SOURCES += wcsxfrm.c
+endif
 
 Include:
 <wchar.h>

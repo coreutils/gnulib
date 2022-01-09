@@ -10,12 +10,13 @@ malloc-h
 
 configure.ac:
 gl_FUNC_MEMALIGN
-if test $REPLACE_MEMALIGN = 1; then
-  AC_LIBOBJ([memalign])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_MEMALIGN], [test $REPLACE_MEMALIGN = 1])
 gl_MALLOC_MODULE_INDICATOR([memalign])
 
 Makefile.am:
+if GL_COND_OBJ_MEMALIGN
+lib_SOURCES += memalign.c
+endif
 
 Include:
 #include <malloc.h>

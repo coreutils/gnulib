@@ -10,11 +10,13 @@ Depends-on:
 
 configure.ac:
 AC_REQUIRE([gl_MSVC_INVAL])
-if test $HAVE_MSVC_INVALID_PARAMETER_HANDLER = 1; then
-  AC_LIBOBJ([msvc-inval])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_MSVC_INVAL],
+               [test $HAVE_MSVC_INVALID_PARAMETER_HANDLER = 1])
 
 Makefile.am:
+if GL_COND_OBJ_MSVC_INVAL
+lib_SOURCES += msvc-inval.c
+endif
 
 Include:
 #if HAVE_MSVC_INVALID_PARAMETER_HANDLER

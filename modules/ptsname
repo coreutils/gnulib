@@ -12,13 +12,17 @@ ptsname_r       [test $HAVE_PTSNAME = 0]
 
 configure.ac:
 gl_FUNC_PTSNAME
-if test $HAVE_PTSNAME = 0 || test $REPLACE_PTSNAME = 1; then
-  AC_LIBOBJ([ptsname])
+gl_CONDITIONAL([GL_COND_OBJ_PTSNAME],
+               [test $HAVE_PTSNAME = 0 || test $REPLACE_PTSNAME = 1])
+AM_COND_IF([GL_COND_OBJ_PTSNAME], [
   gl_PREREQ_PTSNAME
-fi
+])
 gl_STDLIB_MODULE_INDICATOR([ptsname])
 
 Makefile.am:
+if GL_COND_OBJ_PTSNAME
+lib_SOURCES += ptsname.c
+endif
 
 Include:
 <stdlib.h>

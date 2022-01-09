@@ -14,12 +14,14 @@ read            [test $HAVE_PREAD = 0 || test $REPLACE_PREAD = 1]
 
 configure.ac:
 gl_FUNC_PREAD
-if test $HAVE_PREAD = 0 || test $REPLACE_PREAD = 1; then
-  AC_LIBOBJ([pread])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_PREAD],
+               [test $HAVE_PREAD = 0 || test $REPLACE_PREAD = 1])
 gl_UNISTD_MODULE_INDICATOR([pread])
 
 Makefile.am:
+if GL_COND_OBJ_PREAD
+lib_SOURCES += pread.c
+endif
 
 Include:
 <unistd.h>

@@ -11,13 +11,17 @@ string
 
 configure.ac:
 gl_FUNC_STPNCPY
-if test $HAVE_STPNCPY = 0 || test $REPLACE_STPNCPY = 1; then
-  AC_LIBOBJ([stpncpy])
+gl_CONDITIONAL([GL_COND_OBJ_STPNCPY],
+               [test $HAVE_STPNCPY = 0 || test $REPLACE_STPNCPY = 1])
+AM_COND_IF([GL_COND_OBJ_STPNCPY], [
   gl_PREREQ_STPNCPY
-fi
+])
 gl_STRING_MODULE_INDICATOR([stpncpy])
 
 Makefile.am:
+if GL_COND_OBJ_STPNCPY
+lib_SOURCES += stpncpy.c
+endif
 
 Include:
 <string.h>

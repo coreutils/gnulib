@@ -11,12 +11,13 @@ stdlib
 
 configure.ac:
 gl_FUNC_POSIX_MEMALIGN
-if test $REPLACE_POSIX_MEMALIGN = 1; then
-  AC_LIBOBJ([posix_memalign])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_POSIX_MEMALIGN], [test $REPLACE_POSIX_MEMALIGN = 1])
 gl_STDLIB_MODULE_INDICATOR([posix_memalign])
 
 Makefile.am:
+if GL_COND_OBJ_POSIX_MEMALIGN
+lib_SOURCES += posix_memalign.c
+endif
 
 Include:
 <stdlib.h>

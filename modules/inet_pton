@@ -15,13 +15,17 @@ netinet_in      [test $HAVE_INET_PTON = 0 || test $REPLACE_INET_PTON = 1]
 
 configure.ac:
 gl_FUNC_INET_PTON
-if test $HAVE_INET_PTON = 0 || test $REPLACE_INET_PTON = 1; then
-  AC_LIBOBJ([inet_pton])
+gl_CONDITIONAL([GL_COND_OBJ_INET_PTON],
+               [test $HAVE_INET_PTON = 0 || test $REPLACE_INET_PTON = 1])
+AM_COND_IF([GL_COND_OBJ_INET_PTON], [
   gl_PREREQ_INET_PTON
-fi
+])
 gl_ARPA_INET_MODULE_INDICATOR([inet_pton])
 
 Makefile.am:
+if GL_COND_OBJ_INET_PTON
+lib_SOURCES += inet_pton.c
+endif
 
 License:
 LGPLv2+

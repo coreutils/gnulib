@@ -16,13 +16,16 @@ readdir
 
 configure.ac:
 gl_FUNC_SCANDIR
-if test $HAVE_SCANDIR = 0; then
-  AC_LIBOBJ([scandir])
+gl_CONDITIONAL([GL_COND_OBJ_SCANDIR], [test $HAVE_SCANDIR = 0])
+AM_COND_IF([GL_COND_OBJ_SCANDIR], [
   gl_PREREQ_SCANDIR
-fi
+])
 gl_DIRENT_MODULE_INDICATOR([scandir])
 
 Makefile.am:
+if GL_COND_OBJ_SCANDIR
+lib_SOURCES += scandir.c
+endif
 
 Include:
 <dirent.h>

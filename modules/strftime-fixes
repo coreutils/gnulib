@@ -10,12 +10,13 @@ time
 
 configure.ac:
 gl_FUNC_STRFTIME
-if test $REPLACE_STRFTIME = 1; then
-  AC_LIBOBJ([strftime-fixes])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_STRFTIME_FIXES], [test $REPLACE_STRFTIME = 1])
 gl_TIME_MODULE_INDICATOR([strftime])
 
 Makefile.am:
+if GL_COND_OBJ_STRFTIME_FIXES
+lib_SOURCES += strftime-fixes.c
+endif
 
 Include:
 <time.h>

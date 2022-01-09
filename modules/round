@@ -16,12 +16,14 @@ floor           [test $HAVE_ROUND = 0 || test $REPLACE_ROUND = 1]
 
 configure.ac:
 gl_FUNC_ROUND
-if test $HAVE_ROUND = 0 || test $REPLACE_ROUND = 1; then
-  AC_LIBOBJ([round])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_ROUND],
+               [test $HAVE_ROUND = 0 || test $REPLACE_ROUND = 1])
 gl_MATH_MODULE_INDICATOR([round])
 
 Makefile.am:
+if GL_COND_OBJ_ROUND
+lib_SOURCES += round.c
+endif
 
 Include:
 <math.h>

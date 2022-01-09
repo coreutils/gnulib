@@ -14,12 +14,14 @@ signbit         [{ test $HAVE_FABSL = 0 || test $REPLACE_FABSL = 1; } && test $H
 
 configure.ac:
 gl_FUNC_FABSL
-if test $HAVE_FABSL = 0 || test $REPLACE_FABSL = 1; then
-  AC_LIBOBJ([fabsl])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_FABSL],
+               [test $HAVE_FABSL = 0 || test $REPLACE_FABSL = 1])
 gl_MATH_MODULE_INDICATOR([fabsl])
 
 Makefile.am:
+if GL_COND_OBJ_FABSL
+lib_SOURCES += fabsl.c
+endif
 
 Include:
 <math.h>

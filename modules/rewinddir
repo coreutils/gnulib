@@ -13,12 +13,13 @@ largefile
 
 configure.ac:
 gl_FUNC_REWINDDIR
-if test $HAVE_REWINDDIR = 0; then
-  AC_LIBOBJ([rewinddir])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_REWINDDIR], [test $HAVE_REWINDDIR = 0])
 gl_DIRENT_MODULE_INDICATOR([rewinddir])
 
 Makefile.am:
+if GL_COND_OBJ_REWINDDIR
+lib_SOURCES += rewinddir.c
+endif
 
 Include:
 <dirent.h>

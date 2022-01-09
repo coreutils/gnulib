@@ -11,13 +11,16 @@ msvc-nothrow    [test $HAVE_FSYNC = 0]
 
 configure.ac:
 gl_FUNC_FSYNC
-if test $HAVE_FSYNC = 0; then
-  AC_LIBOBJ([fsync])
+gl_CONDITIONAL([GL_COND_OBJ_FSYNC], [test $HAVE_FSYNC = 0])
+AM_COND_IF([GL_COND_OBJ_FSYNC], [
   gl_PREREQ_FSYNC
-fi
+])
 gl_UNISTD_MODULE_INDICATOR([fsync])
 
 Makefile.am:
+if GL_COND_OBJ_FSYNC
+lib_SOURCES += fsync.c
+endif
 
 Include:
 <unistd.h>

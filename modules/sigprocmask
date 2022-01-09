@@ -13,13 +13,16 @@ msvc-inval      [test $HAVE_POSIX_SIGNALBLOCKING = 0]
 
 configure.ac:
 gl_SIGNALBLOCKING
-if test $HAVE_POSIX_SIGNALBLOCKING = 0; then
-  AC_LIBOBJ([sigprocmask])
+gl_CONDITIONAL([GL_COND_OBJ_SIGPROCMASK], [test $HAVE_POSIX_SIGNALBLOCKING = 0])
+AM_COND_IF([GL_COND_OBJ_SIGPROCMASK], [
   gl_PREREQ_SIGPROCMASK
-fi
+])
 gl_SIGNAL_MODULE_INDICATOR([sigprocmask])
 
 Makefile.am:
+if GL_COND_OBJ_SIGPROCMASK
+lib_SOURCES += sigprocmask.c
+endif
 
 Include:
 <signal.h>

@@ -13,12 +13,16 @@ errno
 configure.ac:
 AC_REQUIRE([gl_HEADER_ERRNO_H])
 AC_REQUIRE([gl_FUNC_STRERROR_0])
-if test -n "$ERRNO_H" || test $REPLACE_STRERROR_0 = 1; then
-  AC_LIBOBJ([strerror-override])
+gl_CONDITIONAL([GL_COND_OBJ_STRERROR_OVERRIDE],
+               [test -n "$ERRNO_H" || test $REPLACE_STRERROR_0 = 1])
+AM_COND_IF([GL_COND_OBJ_STRERROR_OVERRIDE], [
   gl_PREREQ_SYS_H_WINSOCK2
-fi
+])
 
 Makefile.am:
+if GL_COND_OBJ_STRERROR_OVERRIDE
+lib_SOURCES += strerror-override.c
+endif
 
 Include:
 "strerror-override.h"

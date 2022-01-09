@@ -26,13 +26,12 @@ gl_FUNC_GETOPT_POSIX
 gl_CONDITIONAL_HEADER([getopt.h])
 gl_CONDITIONAL_HEADER([getopt-cdefs.h])
 AC_PROG_MKDIR_P
-if test $REPLACE_GETOPT = 1; then
-  AC_LIBOBJ([getopt])
-  AC_LIBOBJ([getopt1])
+gl_CONDITIONAL([GL_COND_OBJ_GETOPT], [test $REPLACE_GETOPT = 1])
+AM_COND_IF([GL_COND_OBJ_GETOPT], [
   dnl Define the substituted variable GNULIB_UNISTD_H_GETOPT to 1.
   gl_UNISTD_H_REQUIRE_DEFAULTS
   gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_UNISTD_H_GETOPT], [1])
-fi
+])
 gl_UNISTD_MODULE_INDICATOR([getopt-posix])
 
 Makefile.am:
@@ -70,6 +69,10 @@ getopt-cdefs.h: $(top_builddir)/config.status
 endif
 
 MOSTLYCLEANFILES += getopt.h getopt.h-t getopt-cdefs.h getopt-cdefs.h-t
+
+if GL_COND_OBJ_GETOPT
+lib_SOURCES += getopt.c getopt1.c
+endif
 
 Include:
 <unistd.h>

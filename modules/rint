@@ -11,12 +11,13 @@ math
 
 configure.ac:
 gl_FUNC_RINT
-if test $HAVE_RINT = 0; then
-  AC_LIBOBJ([rint])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_RINT], [test $HAVE_RINT = 0])
 gl_MATH_MODULE_INDICATOR([rint])
 
 Makefile.am:
+if GL_COND_OBJ_RINT
+lib_SOURCES += rint.c
+endif
 
 Include:
 <math.h>

@@ -10,13 +10,16 @@ strtoll         [test $HAVE_ATOLL = 0]
 
 configure.ac:
 gl_FUNC_ATOLL
-if test $HAVE_ATOLL = 0; then
-  AC_LIBOBJ([atoll])
+gl_CONDITIONAL([GL_COND_OBJ_ATOLL], [test $HAVE_ATOLL = 0])
+AM_COND_IF([GL_COND_OBJ_ATOLL], [
   gl_PREREQ_ATOLL
-fi
+])
 gl_STDLIB_MODULE_INDICATOR([atoll])
 
 Makefile.am:
+if GL_COND_OBJ_ATOLL
+lib_SOURCES += atoll.c
+endif
 
 Include:
 <stdlib.h>

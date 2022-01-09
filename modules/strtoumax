@@ -14,13 +14,17 @@ strtoull        [{ test $HAVE_DECL_STRTOUMAX = 0 || test $REPLACE_STRTOUMAX = 1;
 
 configure.ac:
 gl_FUNC_STRTOUMAX
-if test $HAVE_DECL_STRTOUMAX = 0 || test $REPLACE_STRTOUMAX = 1; then
-  AC_LIBOBJ([strtoumax])
+gl_CONDITIONAL([GL_COND_OBJ_STRTOUMAX],
+               [test $HAVE_DECL_STRTOUMAX = 0 || test $REPLACE_STRTOUMAX = 1])
+AM_COND_IF([GL_COND_OBJ_STRTOUMAX], [
   gl_PREREQ_STRTOUMAX
-fi
+])
 gl_INTTYPES_MODULE_INDICATOR([strtoumax])
 
 Makefile.am:
+if GL_COND_OBJ_STRTOUMAX
+lib_SOURCES += strtoumax.c
+endif
 
 Include:
 <inttypes.h>

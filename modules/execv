@@ -12,12 +12,13 @@ execve          [test $REPLACE_EXECV = 1]
 
 configure.ac:
 gl_FUNC_EXECV
-if test $REPLACE_EXECV = 1; then
-  AC_LIBOBJ([execv])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_EXECV], [test $REPLACE_EXECV = 1])
 gl_UNISTD_MODULE_INDICATOR([execv])
 
 Makefile.am:
+if GL_COND_OBJ_EXECV
+lib_SOURCES += execv.c
+endif
 
 Include:
 <unistd.h>

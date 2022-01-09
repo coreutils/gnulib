@@ -15,12 +15,14 @@ ldexp           [test $HAVE_EXP2 = 0 || test $REPLACE_EXP2 = 1]
 
 configure.ac:
 gl_FUNC_EXP2
-if test $HAVE_EXP2 = 0 || test $REPLACE_EXP2 = 1; then
-  AC_LIBOBJ([exp2])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_EXP2],
+               [test $HAVE_EXP2 = 0 || test $REPLACE_EXP2 = 1])
 gl_MATH_MODULE_INDICATOR([exp2])
 
 Makefile.am:
+if GL_COND_OBJ_EXP2
+lib_SOURCES += exp2.c
+endif
 
 Include:
 <math.h>

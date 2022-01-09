@@ -16,12 +16,15 @@ stdint          [test $gl_func_memcmp = no]
 
 configure.ac:
 gl_FUNC_MEMCMP
-if test $gl_func_memcmp = no; then
-  AC_LIBOBJ([memcmp])
+gl_CONDITIONAL([GL_COND_OBJ_MEMCMP], [test $gl_func_memcmp = no])
+AM_COND_IF([GL_COND_OBJ_MEMCMP], [
   gl_PREREQ_MEMCMP
-fi
+])
 
 Makefile.am:
+if GL_COND_OBJ_MEMCMP
+lib_SOURCES += memcmp.c
+endif
 
 Include:
 <string.h>

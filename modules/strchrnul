@@ -14,13 +14,17 @@ rawmemchr       [test $HAVE_STRCHRNUL = 0 || test $REPLACE_STRCHRNUL = 1]
 
 configure.ac:
 gl_FUNC_STRCHRNUL
-if test $HAVE_STRCHRNUL = 0 || test $REPLACE_STRCHRNUL = 1; then
-  AC_LIBOBJ([strchrnul])
+gl_CONDITIONAL([GL_COND_OBJ_STRCHRNUL],
+               [test $HAVE_STRCHRNUL = 0 || test $REPLACE_STRCHRNUL = 1])
+AM_COND_IF([GL_COND_OBJ_STRCHRNUL], [
   gl_PREREQ_STRCHRNUL
-fi
+])
 gl_STRING_MODULE_INDICATOR([strchrnul])
 
 Makefile.am:
+if GL_COND_OBJ_STRCHRNUL
+lib_SOURCES += strchrnul.c
+endif
 
 Include:
 <string.h>

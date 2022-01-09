@@ -15,12 +15,14 @@ logf            [test $HAVE_LOG2F = 0 || test $REPLACE_LOG2F = 1]
 
 configure.ac:
 gl_FUNC_LOG2F
-if test $HAVE_LOG2F = 0 || test $REPLACE_LOG2F = 1; then
-  AC_LIBOBJ([log2f])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_LOG2F],
+               [test $HAVE_LOG2F = 0 || test $REPLACE_LOG2F = 1])
 gl_MATH_MODULE_INDICATOR([log2f])
 
 Makefile.am:
+if GL_COND_OBJ_LOG2F
+lib_SOURCES += log2f.c
+endif
 
 Include:
 <math.h>

@@ -37,17 +37,22 @@ configure.ac:
 gl_GLOB
 dnl Because of gl_REPLACE_GLOB_H:
 gl_CONDITIONAL_HEADER([glob.h])
-if test $HAVE_GLOB = 0 || test $REPLACE_GLOB = 1; then
-  AC_LIBOBJ([glob])
-  AC_LIBOBJ([globfree])
+gl_CONDITIONAL([GL_COND_OBJ_GLOB],
+               [test $HAVE_GLOB = 0 || test $REPLACE_GLOB = 1])
+AM_COND_IF([GL_COND_OBJ_GLOB], [
   gl_PREREQ_GLOB
-fi
-if test $HAVE_GLOB_PATTERN_P = 0 || test $REPLACE_GLOB_PATTERN_P = 1; then
-  AC_LIBOBJ([glob_pattern_p])
-fi
+])
+gl_CONDITIONAL([GL_COND_OBJ_GLOB_PATTERN_P],
+               [test $HAVE_GLOB_PATTERN_P = 0 || test $REPLACE_GLOB_PATTERN_P = 1])
 gl_GLOB_MODULE_INDICATOR([glob])
 
 Makefile.am:
+if GL_COND_OBJ_GLOB
+lib_SOURCES += glob.c globfree.c
+endif
+if GL_COND_OBJ_GLOB_PATTERN_P
+lib_SOURCES += glob_pattern_p.c
+endif
 
 Include:
 <glob.h>

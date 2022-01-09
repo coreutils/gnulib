@@ -14,13 +14,16 @@ ptsname         [test $HAVE_UNLOCKPT = 0]
 
 configure.ac:
 gl_FUNC_UNLOCKPT
-if test $HAVE_UNLOCKPT = 0; then
-  AC_LIBOBJ([unlockpt])
+gl_CONDITIONAL([GL_COND_OBJ_UNLOCKPT], [test $HAVE_UNLOCKPT = 0])
+AM_COND_IF([GL_COND_OBJ_UNLOCKPT], [
   gl_PREREQ_UNLOCKPT
-fi
+])
 gl_STDLIB_MODULE_INDICATOR([unlockpt])
 
 Makefile.am:
+if GL_COND_OBJ_UNLOCKPT
+lib_SOURCES += unlockpt.c
+endif
 
 Include:
 <stdlib.h>

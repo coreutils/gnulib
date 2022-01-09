@@ -10,12 +10,13 @@ sys_wait
 
 configure.ac:
 gl_FUNC_WAITPID
-if test $HAVE_WAITPID = 0; then
-  AC_LIBOBJ([waitpid])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_WAITPID], [test $HAVE_WAITPID = 0])
 gl_SYS_WAIT_MODULE_INDICATOR([waitpid])
 
 Makefile.am:
+if GL_COND_OBJ_WAITPID
+lib_SOURCES += waitpid.c
+endif
 
 Include:
 <sys/wait.h>

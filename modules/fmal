@@ -23,13 +23,17 @@ ldexpl          [{ test $HAVE_FMAL = 0 || test $REPLACE_FMAL = 1; } && test $HAV
 
 configure.ac:
 gl_FUNC_FMAL
-if test $HAVE_FMAL = 0 || test $REPLACE_FMAL = 1; then
-  AC_LIBOBJ([fmal])
+gl_CONDITIONAL([GL_COND_OBJ_FMAL],
+               [test $HAVE_FMAL = 0 || test $REPLACE_FMAL = 1])
+AM_COND_IF([GL_COND_OBJ_FMAL], [
   gl_PREREQ_FMAL
-fi
+])
 gl_MATH_MODULE_INDICATOR([fmal])
 
 Makefile.am:
+if GL_COND_OBJ_FMAL
+lib_SOURCES += fmal.c
+endif
 
 Include:
 <math.h>

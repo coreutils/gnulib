@@ -11,12 +11,13 @@ fcntl
 
 configure.ac:
 gl_FUNC_ACCESS
-if test $REPLACE_ACCESS = 1; then
-  AC_LIBOBJ([access])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_ACCESS], [test $REPLACE_ACCESS = 1])
 gl_UNISTD_MODULE_INDICATOR([access])
 
 Makefile.am:
+if GL_COND_OBJ_ACCESS
+lib_SOURCES += access.c
+endif
 
 Include:
 <unistd.h>

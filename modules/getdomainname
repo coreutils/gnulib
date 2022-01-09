@@ -13,13 +13,17 @@ sys_socket      [test $HAVE_DECL_GETDOMAINNAME = 0 || test $REPLACE_GETDOMAINNAM
 
 configure.ac:
 gl_FUNC_GETDOMAINNAME
-if test $HAVE_DECL_GETDOMAINNAME = 0 || test $REPLACE_GETDOMAINNAME = 1; then
-  AC_LIBOBJ([getdomainname])
+gl_CONDITIONAL([GL_COND_OBJ_GETDOMAINNAME],
+               [test $HAVE_DECL_GETDOMAINNAME = 0 || test $REPLACE_GETDOMAINNAME = 1])
+AM_COND_IF([GL_COND_OBJ_GETDOMAINNAME], [
   gl_PREREQ_GETDOMAINNAME
-fi
+])
 gl_UNISTD_MODULE_INDICATOR([getdomainname])
 
 Makefile.am:
+if GL_COND_OBJ_GETDOMAINNAME
+lib_SOURCES += getdomainname.c
+endif
 
 Include:
 <unistd.h>

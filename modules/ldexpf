@@ -13,12 +13,13 @@ ldexp           [test $HAVE_LDEXPF = 0]
 
 configure.ac:
 gl_FUNC_LDEXPF
-if test $HAVE_LDEXPF = 0; then
-  AC_LIBOBJ([ldexpf])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_LDEXPF], [test $HAVE_LDEXPF = 0])
 gl_MATH_MODULE_INDICATOR([ldexpf])
 
 Makefile.am:
+if GL_COND_OBJ_LDEXPF
+lib_SOURCES += ldexpf.c
+endif
 
 Include:
 <math.h>

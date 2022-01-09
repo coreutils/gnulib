@@ -41,12 +41,15 @@ wctype          [test $ac_use_included_regex = yes]
 
 configure.ac:
 gl_REGEX
-if test $ac_use_included_regex = yes; then
-  AC_LIBOBJ([regex])
+gl_CONDITIONAL([GL_COND_OBJ_REGEX], [test $ac_use_included_regex = yes])
+AM_COND_IF([GL_COND_OBJ_REGEX], [
   gl_PREREQ_REGEX
-fi
+])
 
 Makefile.am:
+if GL_COND_OBJ_REGEX
+lib_SOURCES += regex.c
+endif
 
 Include:
 <regex.h>

@@ -16,13 +16,16 @@ string
 
 configure.ac:
 gl_FUNC_STRPBRK
-if test $HAVE_STRPBRK = 0; then
-  AC_LIBOBJ([strpbrk])
+gl_CONDITIONAL([GL_COND_OBJ_STRPBRK], [test $HAVE_STRPBRK = 0])
+AM_COND_IF([GL_COND_OBJ_STRPBRK], [
   gl_PREREQ_STRPBRK
-fi
+])
 gl_STRING_MODULE_INDICATOR([strpbrk])
 
 Makefile.am:
+if GL_COND_OBJ_STRPBRK
+lib_SOURCES += strpbrk.c
+endif
 
 Include:
 <string.h>

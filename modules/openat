@@ -27,14 +27,18 @@ save-cwd        [test $HAVE_OPENAT = 0]
 
 configure.ac:
 gl_FUNC_OPENAT
-if test $HAVE_OPENAT = 0 || test $REPLACE_OPENAT = 1; then
-  AC_LIBOBJ([openat])
+gl_CONDITIONAL([GL_COND_OBJ_OPENAT],
+               [test $HAVE_OPENAT = 0 || test $REPLACE_OPENAT = 1])
+AM_COND_IF([GL_COND_OBJ_OPENAT], [
   gl_PREREQ_OPENAT
-fi
+])
 gl_MODULE_INDICATOR([openat]) dnl for lib/getcwd.c
 gl_FCNTL_MODULE_INDICATOR([openat])
 
 Makefile.am:
+if GL_COND_OBJ_OPENAT
+lib_SOURCES += openat.c
+endif
 
 Include:
 <fcntl.h>

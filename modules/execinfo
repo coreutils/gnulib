@@ -14,9 +14,7 @@ configure.ac:
 gl_EXECINFO_H
 gl_CONDITIONAL_HEADER([execinfo.h])
 AC_PROG_MKDIR_P
-if $GL_GENERATE_EXECINFO_H; then
-  AC_LIBOBJ([execinfo])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_EXECINFO], [$GL_GENERATE_EXECINFO_H])
 
 Makefile.am:
 BUILT_SOURCES += $(EXECINFO_H)
@@ -33,6 +31,10 @@ execinfo.h: $(top_builddir)/config.status
 	rm -f $@
 endif
 MOSTLYCLEANFILES += execinfo.h execinfo.h-t
+
+if GL_COND_OBJ_EXECINFO
+lib_SOURCES += execinfo.c
+endif
 
 Include:
 <execinfo.h>

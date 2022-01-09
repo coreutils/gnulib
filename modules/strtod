@@ -15,13 +15,17 @@ stdbool         [test $HAVE_STRTOD = 0 || test $REPLACE_STRTOD = 1]
 
 configure.ac:
 gl_FUNC_STRTOD
-if test $HAVE_STRTOD = 0 || test $REPLACE_STRTOD = 1; then
-  AC_LIBOBJ([strtod])
+gl_CONDITIONAL([GL_COND_OBJ_STRTOD],
+               [test $HAVE_STRTOD = 0 || test $REPLACE_STRTOD = 1])
+AM_COND_IF([GL_COND_OBJ_STRTOD], [
   gl_PREREQ_STRTOD
-fi
+])
 gl_STDLIB_MODULE_INDICATOR([strtod])
 
 Makefile.am:
+if GL_COND_OBJ_STRTOD
+lib_SOURCES += strtod.c
+endif
 
 Include:
 <stdlib.h>

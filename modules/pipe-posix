@@ -10,12 +10,13 @@ unistd
 
 configure.ac:
 gl_FUNC_PIPE
-if test $HAVE_PIPE = 0; then
-  AC_LIBOBJ([pipe])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_PIPE], [test $HAVE_PIPE = 0])
 gl_UNISTD_MODULE_INDICATOR([pipe])
 
 Makefile.am:
+if GL_COND_OBJ_PIPE
+lib_SOURCES += pipe.c
+endif
 
 Include:
 <unistd.h>

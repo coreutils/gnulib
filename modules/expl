@@ -17,13 +17,17 @@ ldexpl          [{ test $HAVE_EXPL = 0 || test $REPLACE_EXPL = 1; } && test $HAV
 
 configure.ac:
 gl_FUNC_EXPL
-if test $HAVE_EXPL = 0 || test $REPLACE_EXPL = 1; then
-  AC_LIBOBJ([expl])
+gl_CONDITIONAL([GL_COND_OBJ_EXPL],
+               [test $HAVE_EXPL = 0 || test $REPLACE_EXPL = 1])
+AM_COND_IF([GL_COND_OBJ_EXPL], [
   AC_LIBOBJ([expl-table])
-fi
+])
 gl_MATH_MODULE_INDICATOR([expl])
 
 Makefile.am:
+if GL_COND_OBJ_EXPL
+lib_SOURCES += expl.c
+endif
 
 Include:
 <math.h>

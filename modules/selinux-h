@@ -25,14 +25,10 @@ gl_HEADERS_SELINUX_LABEL_H
 gl_CONDITIONAL_HEADER([selinux/context.h])
 gl_CONDITIONAL_HEADER([selinux/label.h])
 AC_PROG_MKDIR_P
-if test "$with_selinux" != no && test "$ac_cv_header_selinux_selinux_h" = yes; then
-  AC_LIBOBJ([getfilecon])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_GETFILECON],
+               [test "$with_selinux" != no && test "$ac_cv_header_selinux_selinux_h" = yes])
 
 Makefile.am:
-lib_SOURCES += se-context.in.h se-label.in.h se-selinux.in.h \
-  se-context.c se-label.c se-selinux.c
-
 BUILT_SOURCES += selinux/selinux.h
 selinux/selinux.h: se-selinux.in.h $(top_builddir)/config.status
 	$(AM_V_GEN)$(MKDIR_P) '%reldir%/selinux'
@@ -71,6 +67,12 @@ endif
 MOSTLYCLEANFILES += selinux/label.h selinux/label.h-t
 
 MOSTLYCLEANDIRS += selinux
+
+if GL_COND_OBJ_GETFILECON
+lib_SOURCES += getfilecon.c
+endif
+lib_SOURCES += se-context.in.h se-label.in.h se-selinux.in.h \
+  se-context.c se-label.c se-selinux.c
 
 Include:
 <selinux/selinux.h>

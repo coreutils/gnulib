@@ -11,12 +11,13 @@ gettimeofday
 
 configure.ac:
 AC_REQUIRE([gl_THREADS_H])
-if test $HAVE_THREADS_H = 0; then
-  AC_LIBOBJ([cnd])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_CND], [test $HAVE_THREADS_H = 0])
 gl_THREADS_MODULE_INDICATOR([cnd])
 
 Makefile.am:
+if GL_COND_OBJ_CND
+lib_SOURCES += cnd.c
+endif
 
 Include:
 <threads.h>

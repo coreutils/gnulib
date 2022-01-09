@@ -11,13 +11,16 @@ extensions
 
 configure.ac:
 gl_FUNC_ALPHASORT
-if test $HAVE_ALPHASORT = 0; then
-  AC_LIBOBJ([alphasort])
+gl_CONDITIONAL([GL_COND_OBJ_ALPHASORT], [test $HAVE_ALPHASORT = 0])
+AM_COND_IF([GL_COND_OBJ_ALPHASORT], [
   gl_PREREQ_ALPHASORT
-fi
+])
 gl_DIRENT_MODULE_INDICATOR([alphasort])
 
 Makefile.am:
+if GL_COND_OBJ_ALPHASORT
+lib_SOURCES += alphasort.c
+endif
 
 Include:
 <dirent.h>

@@ -15,12 +15,14 @@ sys_stat        [test $HAVE_LCHOWN = 0 || test $REPLACE_LCHOWN = 1]
 
 configure.ac:
 gl_FUNC_LCHOWN
-if test $HAVE_LCHOWN = 0 || test $REPLACE_LCHOWN = 1; then
-  AC_LIBOBJ([lchown])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_LCHOWN],
+               [test $HAVE_LCHOWN = 0 || test $REPLACE_LCHOWN = 1])
 gl_UNISTD_MODULE_INDICATOR([lchown])
 
 Makefile.am:
+if GL_COND_OBJ_LCHOWN
+lib_SOURCES += lchown.c
+endif
 
 Include:
 <unistd.h>

@@ -18,12 +18,13 @@ wcschr          [test $HAVE_WCSSPN = 0]
 
 configure.ac:
 gl_FUNC_WCSSPN
-if test $HAVE_WCSSPN = 0; then
-  AC_LIBOBJ([wcsspn])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_WCSSPN], [test $HAVE_WCSSPN = 0])
 gl_WCHAR_MODULE_INDICATOR([wcsspn])
 
 Makefile.am:
+if GL_COND_OBJ_WCSSPN
+lib_SOURCES += wcsspn.c
+endif
 
 Include:
 <wchar.h>

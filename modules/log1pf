@@ -12,12 +12,14 @@ log1p           [test $HAVE_LOG1PF = 0 || test $REPLACE_LOG1PF = 1]
 
 configure.ac:
 gl_FUNC_LOG1PF
-if test $HAVE_LOG1PF = 0 || test $REPLACE_LOG1PF = 1; then
-  AC_LIBOBJ([log1pf])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_LOG1PF],
+               [test $HAVE_LOG1PF = 0 || test $REPLACE_LOG1PF = 1])
 gl_MATH_MODULE_INDICATOR([log1pf])
 
 Makefile.am:
+if GL_COND_OBJ_LOG1PF
+lib_SOURCES += log1pf.c
+endif
 
 Include:
 <math.h>

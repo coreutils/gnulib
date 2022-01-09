@@ -11,12 +11,13 @@ math
 
 configure.ac:
 gl_FUNC_LOG10
-if test $REPLACE_LOG10 = 1; then
-  AC_LIBOBJ([log10])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_LOG10], [test $REPLACE_LOG10 = 1])
 gl_MATH_MODULE_INDICATOR([log10])
 
 Makefile.am:
+if GL_COND_OBJ_LOG10
+lib_SOURCES += log10.c
+endif
 
 Include:
 <math.h>

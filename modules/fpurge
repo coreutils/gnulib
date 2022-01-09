@@ -11,12 +11,14 @@ stdio
 
 configure.ac:
 gl_FUNC_FPURGE
-if test $HAVE_FPURGE = 0 || test $REPLACE_FPURGE = 1; then
-  AC_LIBOBJ([fpurge])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_FPURGE],
+               [test $HAVE_FPURGE = 0 || test $REPLACE_FPURGE = 1])
 gl_STDIO_MODULE_INDICATOR([fpurge])
 
 Makefile.am:
+if GL_COND_OBJ_FPURGE
+lib_SOURCES += fpurge.c
+endif
 
 Include:
 <stdio.h>

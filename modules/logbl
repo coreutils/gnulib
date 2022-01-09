@@ -17,12 +17,14 @@ isnanl          [{ test $HAVE_LOGBL = 0 || test $REPLACE_LOGBL = 1; } && test $H
 
 configure.ac:
 gl_FUNC_LOGBL
-if test $HAVE_LOGBL = 0 || test $REPLACE_LOGBL = 1; then
-  AC_LIBOBJ([logbl])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_LOGBL],
+               [test $HAVE_LOGBL = 0 || test $REPLACE_LOGBL = 1])
 gl_MATH_MODULE_INDICATOR([logbl])
 
 Makefile.am:
+if GL_COND_OBJ_LOGBL
+lib_SOURCES += logbl.c
+endif
 
 Include:
 <math.h>

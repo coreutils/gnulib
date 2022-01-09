@@ -13,13 +13,17 @@ wchar           [test $HAVE_MBTOWC = 0 || test $REPLACE_MBTOWC = 1]
 
 configure.ac:
 gl_FUNC_MBTOWC
-if test $HAVE_MBTOWC = 0 || test $REPLACE_MBTOWC = 1; then
-  AC_LIBOBJ([mbtowc])
+gl_CONDITIONAL([GL_COND_OBJ_MBTOWC],
+               [test $HAVE_MBTOWC = 0 || test $REPLACE_MBTOWC = 1])
+AM_COND_IF([GL_COND_OBJ_MBTOWC], [
   gl_PREREQ_MBTOWC
-fi
+])
 gl_STDLIB_MODULE_INDICATOR([mbtowc])
 
 Makefile.am:
+if GL_COND_OBJ_MBTOWC
+lib_SOURCES += mbtowc.c
+endif
 
 Include:
 <stdlib.h>

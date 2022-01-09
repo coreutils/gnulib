@@ -12,12 +12,13 @@ sys_stat        [test $REPLACE_RMDIR = 1]
 
 configure.ac:
 gl_FUNC_RMDIR
-if test $REPLACE_RMDIR = 1; then
-  AC_LIBOBJ([rmdir])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_RMDIR], [test $REPLACE_RMDIR = 1])
 gl_UNISTD_MODULE_INDICATOR([rmdir])
 
 Makefile.am:
+if GL_COND_OBJ_RMDIR
+lib_SOURCES += rmdir.c
+endif
 
 Include:
 <unistd.h>

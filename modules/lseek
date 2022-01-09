@@ -14,12 +14,13 @@ fstat           [test "$gl_cv_func_lseek_pipe" = no]
 
 configure.ac:
 gl_FUNC_LSEEK
-if test $REPLACE_LSEEK = 1; then
-  AC_LIBOBJ([lseek])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_LSEEK], [test $REPLACE_LSEEK = 1])
 gl_UNISTD_MODULE_INDICATOR([lseek])
 
 Makefile.am:
+if GL_COND_OBJ_LSEEK
+lib_SOURCES += lseek.c
+endif
 
 Include:
 <unistd.h>

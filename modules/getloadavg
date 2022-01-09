@@ -15,13 +15,16 @@ stdlib    [test $HAVE_GETLOADAVG = 0]
 configure.ac:
 AC_REQUIRE([AC_CANONICAL_HOST])
 gl_GETLOADAVG
-if test $HAVE_GETLOADAVG = 0; then
-  AC_LIBOBJ([getloadavg])
+gl_CONDITIONAL([GL_COND_OBJ_GETLOADAVG], [test $HAVE_GETLOADAVG = 0])
+AM_COND_IF([GL_COND_OBJ_GETLOADAVG], [
   gl_PREREQ_GETLOADAVG
-fi
+])
 gl_STDLIB_MODULE_INDICATOR([getloadavg])
 
 Makefile.am:
+if GL_COND_OBJ_GETLOADAVG
+lib_SOURCES += getloadavg.c
+endif
 
 Include:
 <stdlib.h>

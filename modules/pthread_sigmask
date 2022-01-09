@@ -12,13 +12,17 @@ sigprocmask     [test $HAVE_PTHREAD_SIGMASK = 0 || test $REPLACE_PTHREAD_SIGMASK
 
 configure.ac:
 gl_FUNC_PTHREAD_SIGMASK
-if test $HAVE_PTHREAD_SIGMASK = 0 || test $REPLACE_PTHREAD_SIGMASK = 1; then
-  AC_LIBOBJ([pthread_sigmask])
+gl_CONDITIONAL([GL_COND_OBJ_PTHREAD_SIGMASK],
+               [test $HAVE_PTHREAD_SIGMASK = 0 || test $REPLACE_PTHREAD_SIGMASK = 1])
+AM_COND_IF([GL_COND_OBJ_PTHREAD_SIGMASK], [
   gl_PREREQ_PTHREAD_SIGMASK
-fi
+])
 gl_SIGNAL_MODULE_INDICATOR([pthread_sigmask])
 
 Makefile.am:
+if GL_COND_OBJ_PTHREAD_SIGMASK
+lib_SOURCES += pthread_sigmask.c
+endif
 
 Include:
 <signal.h>

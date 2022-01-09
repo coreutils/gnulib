@@ -14,9 +14,7 @@ msvc-nothrow    [test "$ac_cv_header_winsock2_h" = yes]
 
 configure.ac:
 AC_REQUIRE([gl_SYS_SOCKET_H])
-if test "$ac_cv_header_winsock2_h" = yes; then
-  AC_LIBOBJ([socket])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_SOCKET], [test "$ac_cv_header_winsock2_h" = yes])
 # When this module is used, sockets may actually occur as file descriptors,
 # hence it is worth warning if the modules 'close' and 'ioctl' are not used.
 m4_ifdef([gl_UNISTD_H_DEFAULTS], [gl_UNISTD_H_REQUIRE_DEFAULTS])
@@ -29,6 +27,9 @@ fi
 gl_SYS_SOCKET_MODULE_INDICATOR([socket])
 
 Makefile.am:
+if GL_COND_OBJ_SOCKET
+lib_SOURCES += socket.c
+endif
 
 Include:
 <sys/socket.h>

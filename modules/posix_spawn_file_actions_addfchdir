@@ -13,12 +13,14 @@ posix_spawn_file_actions_init [test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX
 
 configure.ac:
 gl_FUNC_POSIX_SPAWN_FILE_ACTIONS_ADDFCHDIR
-if test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1 || test $HAVE_POSIX_SPAWN_FILE_ACTIONS_ADDFCHDIR = 0 || test $REPLACE_POSIX_SPAWN_FILE_ACTIONS_ADDFCHDIR = 1; then
-  AC_LIBOBJ([spawn_faction_addfchdir])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_SPAWN_FACTION_ADDFCHDIR],
+               [test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1 || test $HAVE_POSIX_SPAWN_FILE_ACTIONS_ADDFCHDIR = 0 || test $REPLACE_POSIX_SPAWN_FILE_ACTIONS_ADDFCHDIR = 1])
 gl_SPAWN_MODULE_INDICATOR([posix_spawn_file_actions_addfchdir])
 
 Makefile.am:
+if GL_COND_OBJ_SPAWN_FACTION_ADDFCHDIR
+lib_SOURCES += spawn_faction_addfchdir.c
+endif
 
 Include:
 <spawn.h>

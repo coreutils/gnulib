@@ -13,13 +13,17 @@ random_r        [test $HAVE_RANDOM = 0 || test $REPLACE_RANDOM = 1 || test $REPL
 
 configure.ac:
 gl_FUNC_RANDOM
-if test $HAVE_RANDOM = 0 || test $REPLACE_RANDOM = 1 || test $REPLACE_INITSTATE = 1 || test $REPLACE_SETSTATE = 1; then
-  AC_LIBOBJ([random])
+gl_CONDITIONAL([GL_COND_OBJ_RANDOM],
+               [test $HAVE_RANDOM = 0 || test $REPLACE_RANDOM = 1 || test $REPLACE_INITSTATE = 1 || test $REPLACE_SETSTATE = 1])
+AM_COND_IF([GL_COND_OBJ_RANDOM], [
   gl_PREREQ_RANDOM
-fi
+])
 gl_STDLIB_MODULE_INDICATOR([random])
 
 Makefile.am:
+if GL_COND_OBJ_RANDOM
+lib_SOURCES += random.c
+endif
 
 Include:
 <stdlib.h>

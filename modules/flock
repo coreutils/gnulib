@@ -11,13 +11,16 @@ msvc-nothrow    [test $HAVE_FLOCK = 0]
 
 configure.ac:
 gl_FUNC_FLOCK
-if test $HAVE_FLOCK = 0; then
-  AC_LIBOBJ([flock])
+gl_CONDITIONAL([GL_COND_OBJ_FLOCK], [test $HAVE_FLOCK = 0])
+AM_COND_IF([GL_COND_OBJ_FLOCK], [
   gl_PREREQ_FLOCK
-fi
+])
 gl_SYS_FILE_MODULE_INDICATOR([flock])
 
 Makefile.am:
+if GL_COND_OBJ_FLOCK
+lib_SOURCES += flock.c
+endif
 
 Include:
 <sys/file.h>

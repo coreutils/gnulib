@@ -24,12 +24,16 @@ windows-spawn   [test $HAVE_POSIX_SPAWN = 0]
 
 configure.ac:
 gl_POSIX_SPAWN
-if test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1; then
-  AC_LIBOBJ([spawni])
+gl_CONDITIONAL([GL_COND_OBJ_SPAWNI],
+               [test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1])
+AM_COND_IF([GL_COND_OBJ_SPAWNI], [
   gl_PREREQ_POSIX_SPAWN_INTERNAL
-fi
+])
 
 Makefile.am:
+if GL_COND_OBJ_SPAWNI
+lib_SOURCES += spawni.c
+endif
 
 Include:
 

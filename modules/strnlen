@@ -11,14 +11,18 @@ extensions
 
 configure.ac:
 gl_FUNC_STRNLEN
-if test $HAVE_DECL_STRNLEN = 0 || test $REPLACE_STRNLEN = 1; then
-  AC_LIBOBJ([strnlen])
+gl_CONDITIONAL([GL_COND_OBJ_STRNLEN],
+               [test $HAVE_DECL_STRNLEN = 0 || test $REPLACE_STRNLEN = 1])
+AM_COND_IF([GL_COND_OBJ_STRNLEN], [
   gl_PREREQ_STRNLEN
-fi
+])
 
 gl_STRING_MODULE_INDICATOR([strnlen])
 
 Makefile.am:
+if GL_COND_OBJ_STRNLEN
+lib_SOURCES += strnlen.c
+endif
 
 Include:
 <string.h>

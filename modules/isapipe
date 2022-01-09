@@ -15,12 +15,15 @@ fstat           [test $HAVE_ISAPIPE = 0]
 
 configure.ac:
 gl_ISAPIPE
-if test $HAVE_ISAPIPE = 0; then
-  AC_LIBOBJ([isapipe])
+gl_CONDITIONAL([GL_COND_OBJ_ISAPIPE], [test $HAVE_ISAPIPE = 0])
+AM_COND_IF([GL_COND_OBJ_ISAPIPE], [
   gl_PREREQ_ISAPIPE
-fi
+])
 
 Makefile.am:
+if GL_COND_OBJ_ISAPIPE
+lib_SOURCES += isapipe.c
+endif
 
 Include:
 "isapipe.h"

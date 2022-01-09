@@ -11,12 +11,14 @@ lstat           [test $HAVE_SYMLINK = 0 || test $REPLACE_SYMLINK = 1]
 
 configure.ac:
 gl_FUNC_SYMLINK
-if test $HAVE_SYMLINK = 0 || test $REPLACE_SYMLINK = 1; then
-  AC_LIBOBJ([symlink])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_SYMLINK],
+               [test $HAVE_SYMLINK = 0 || test $REPLACE_SYMLINK = 1])
 gl_UNISTD_MODULE_INDICATOR([symlink])
 
 Makefile.am:
+if GL_COND_OBJ_SYMLINK
+lib_SOURCES += symlink.c
+endif
 
 Include:
 <unistd.h>

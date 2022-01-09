@@ -16,12 +16,14 @@ isinf           [{ test $HAVE_MODFL = 0 || test $REPLACE_MODFL = 1; } && test $H
 
 configure.ac:
 gl_FUNC_MODFL
-if test $HAVE_MODFL = 0 || test $REPLACE_MODFL = 1; then
-  AC_LIBOBJ([modfl])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_MODFL],
+               [test $HAVE_MODFL = 0 || test $REPLACE_MODFL = 1])
 gl_MATH_MODULE_INDICATOR([modfl])
 
 Makefile.am:
+if GL_COND_OBJ_MODFL
+lib_SOURCES += modfl.c
+endif
 
 Include:
 <math.h>

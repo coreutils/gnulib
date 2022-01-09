@@ -17,12 +17,13 @@ wchar
 
 configure.ac:
 gl_FUNC_WCSCPY
-if test $HAVE_WCSCPY = 0; then
-  AC_LIBOBJ([wcscpy])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_WCSCPY], [test $HAVE_WCSCPY = 0])
 gl_WCHAR_MODULE_INDICATOR([wcscpy])
 
 Makefile.am:
+if GL_COND_OBJ_WCSCPY
+lib_SOURCES += wcscpy.c
+endif
 
 Include:
 <wchar.h>

@@ -15,13 +15,16 @@ tmpdir          [test $REPLACE_TMPFILE = 1]
 
 configure.ac:
 gl_FUNC_TMPFILE
-if test $REPLACE_TMPFILE = 1; then
-  AC_LIBOBJ([tmpfile])
+gl_CONDITIONAL([GL_COND_OBJ_TMPFILE], [test $REPLACE_TMPFILE = 1])
+AM_COND_IF([GL_COND_OBJ_TMPFILE], [
   gl_PREREQ_TMPFILE
-fi
+])
 gl_STDIO_MODULE_INDICATOR([tmpfile])
 
 Makefile.am:
+if GL_COND_OBJ_TMPFILE
+lib_SOURCES += tmpfile.c
+endif
 
 Include:
 <stdio.h>

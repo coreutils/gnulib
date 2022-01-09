@@ -15,12 +15,14 @@ round           [test $HAVE_LOG1P = 0 || test $REPLACE_LOG1P = 1]
 
 configure.ac:
 gl_FUNC_LOG1P
-if test $HAVE_LOG1P = 0 || test $REPLACE_LOG1P = 1; then
-  AC_LIBOBJ([log1p])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_LOG1P],
+               [test $HAVE_LOG1P = 0 || test $REPLACE_LOG1P = 1])
 gl_MATH_MODULE_INDICATOR([log1p])
 
 Makefile.am:
+if GL_COND_OBJ_LOG1P
+lib_SOURCES += log1p.c
+endif
 
 Include:
 <math.h>

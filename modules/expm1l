@@ -17,12 +17,14 @@ ldexpl          [{ test $HAVE_EXPM1L = 0 || test $REPLACE_EXPM1L = 1; } && test 
 
 configure.ac:
 gl_FUNC_EXPM1L
-if test $HAVE_EXPM1L = 0 || test $REPLACE_EXPM1L = 1; then
-  AC_LIBOBJ([expm1l])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_EXPM1L],
+               [test $HAVE_EXPM1L = 0 || test $REPLACE_EXPM1L = 1])
 gl_MATH_MODULE_INDICATOR([expm1l])
 
 Makefile.am:
+if GL_COND_OBJ_EXPM1L
+lib_SOURCES += expm1l.c
+endif
 
 Include:
 <math.h>

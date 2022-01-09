@@ -12,12 +12,14 @@ verify          [test $HAVE_SLEEP = 0 || test $REPLACE_SLEEP = 1]
 
 configure.ac:
 gl_FUNC_SLEEP
-if test $HAVE_SLEEP = 0 || test $REPLACE_SLEEP = 1; then
-  AC_LIBOBJ([sleep])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_SLEEP],
+               [test $HAVE_SLEEP = 0 || test $REPLACE_SLEEP = 1])
 gl_UNISTD_MODULE_INDICATOR([sleep])
 
 Makefile.am:
+if GL_COND_OBJ_SLEEP
+lib_SOURCES += sleep.c
+endif
 
 Include:
 <unistd.h>

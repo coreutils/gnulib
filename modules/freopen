@@ -13,13 +13,16 @@ largefile
 
 configure.ac:
 gl_FUNC_FREOPEN
-if test $REPLACE_FREOPEN = 1; then
-  AC_LIBOBJ([freopen])
+gl_CONDITIONAL([GL_COND_OBJ_FREOPEN], [test $REPLACE_FREOPEN = 1])
+AM_COND_IF([GL_COND_OBJ_FREOPEN], [
   gl_PREREQ_FREOPEN
-fi
+])
 gl_STDIO_MODULE_INDICATOR([freopen])
 
 Makefile.am:
+if GL_COND_OBJ_FREOPEN
+lib_SOURCES += freopen.c
+endif
 
 Include:
 <stdio.h>

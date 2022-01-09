@@ -11,13 +11,16 @@ extensions
 
 configure.ac:
 gl_FUNC_SECURE_GETENV
-if test $HAVE_SECURE_GETENV = 0; then
-  AC_LIBOBJ([secure_getenv])
+gl_CONDITIONAL([GL_COND_OBJ_SECURE_GETENV], [test $HAVE_SECURE_GETENV = 0])
+AM_COND_IF([GL_COND_OBJ_SECURE_GETENV], [
   gl_PREREQ_SECURE_GETENV
-fi
+])
 gl_STDLIB_MODULE_INDICATOR([secure_getenv])
 
 Makefile.am:
+if GL_COND_OBJ_SECURE_GETENV
+lib_SOURCES += secure_getenv.c
+endif
 
 Include:
 <stdlib.h>

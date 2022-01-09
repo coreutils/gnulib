@@ -14,12 +14,15 @@ stdint
 
 configure.ac:
 gl_FSUSAGE
-if test $gl_cv_fs_space = yes; then
-  AC_LIBOBJ([fsusage])
+gl_CONDITIONAL([GL_COND_OBJ_FSUSAGE], [test $gl_cv_fs_space = yes])
+AM_COND_IF([GL_COND_OBJ_FSUSAGE], [
   gl_PREREQ_FSUSAGE_EXTRA
-fi
+])
 
 Makefile.am:
+if GL_COND_OBJ_FSUSAGE
+lib_SOURCES += fsusage.c
+endif
 
 Include:
 "fsusage.h"

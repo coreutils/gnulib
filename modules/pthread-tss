@@ -11,12 +11,14 @@ windows-tls     [test $gl_threads_api = windows]
 
 configure.ac:
 gl_PTHREAD_TSS
-if test $HAVE_PTHREAD_KEY_CREATE = 0 || test $REPLACE_PTHREAD_KEY_CREATE = 1; then
-  AC_LIBOBJ([pthread-tss])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_PTHREAD_TSS],
+               [test $HAVE_PTHREAD_KEY_CREATE = 0 || test $REPLACE_PTHREAD_KEY_CREATE = 1])
 gl_PTHREAD_MODULE_INDICATOR([pthread-tss])
 
 Makefile.am:
+if GL_COND_OBJ_PTHREAD_TSS
+lib_SOURCES += pthread-tss.c
+endif
 
 Include:
 <pthread.h>

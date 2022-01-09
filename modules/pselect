@@ -13,12 +13,14 @@ dup2            [test $REPLACE_PSELECT = 1]
 
 configure.ac:
 gl_FUNC_PSELECT
-if test $HAVE_PSELECT = 0 || test $REPLACE_PSELECT = 1; then
-  AC_LIBOBJ([pselect])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_PSELECT],
+               [test $HAVE_PSELECT = 0 || test $REPLACE_PSELECT = 1])
 gl_SYS_SELECT_MODULE_INDICATOR([pselect])
 
 Makefile.am:
+if GL_COND_OBJ_PSELECT
+lib_SOURCES += pselect.c
+endif
 
 Include:
 <sys/select.h>

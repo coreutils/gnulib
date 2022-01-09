@@ -20,13 +20,17 @@ AC_REQUIRE([gl_SET_LARGEFILE_SOURCE])
 
 configure.ac:
 gl_FUNC_FSEEKO
-if test $HAVE_FSEEKO = 0 || test $REPLACE_FSEEKO = 1; then
-  AC_LIBOBJ([fseeko])
+gl_CONDITIONAL([GL_COND_OBJ_FSEEKO],
+               [test $HAVE_FSEEKO = 0 || test $REPLACE_FSEEKO = 1])
+AM_COND_IF([GL_COND_OBJ_FSEEKO], [
   gl_PREREQ_FSEEKO
-fi
+])
 gl_STDIO_MODULE_INDICATOR([fseeko])
 
 Makefile.am:
+if GL_COND_OBJ_FSEEKO
+lib_SOURCES += fseeko.c
+endif
 
 Include:
 <stdio.h>

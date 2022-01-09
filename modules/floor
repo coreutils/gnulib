@@ -11,12 +11,13 @@ float           [test $REPLACE_FLOOR = 1]
 
 configure.ac:
 AC_REQUIRE([gl_FUNC_FLOOR])
-if test $REPLACE_FLOOR = 1; then
-  AC_LIBOBJ([floor])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_FLOOR], [test $REPLACE_FLOOR = 1])
 gl_MATH_MODULE_INDICATOR([floor])
 
 Makefile.am:
+if GL_COND_OBJ_FLOOR
+lib_SOURCES += floor.c
+endif
 
 Include:
 <math.h>

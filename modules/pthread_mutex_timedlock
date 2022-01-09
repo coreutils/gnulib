@@ -11,12 +11,14 @@ nanosleep       [test $HAVE_PTHREAD_T = 1 && test $HAVE_PTHREAD_MUTEX_TIMEDLOCK 
 
 configure.ac:
 gl_FUNC_PTHREAD_MUTEX_TIMEDLOCK
-if test $HAVE_PTHREAD_T = 1 && test $HAVE_PTHREAD_MUTEX_TIMEDLOCK = 0; then
-  AC_LIBOBJ([pthread_mutex_timedlock])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_PTHREAD_MUTEX_TIMEDLOCK],
+               [test $HAVE_PTHREAD_T = 1 && test $HAVE_PTHREAD_MUTEX_TIMEDLOCK = 0])
 gl_PTHREAD_MODULE_INDICATOR([pthread_mutex_timedlock])
 
 Makefile.am:
+if GL_COND_OBJ_PTHREAD_MUTEX_TIMEDLOCK
+lib_SOURCES += pthread_mutex_timedlock.c
+endif
 
 Include:
 <pthread.h>

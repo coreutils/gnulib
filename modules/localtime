@@ -10,12 +10,13 @@ time
 
 configure.ac:
 gl_FUNC_LOCALTIME
-if test $REPLACE_LOCALTIME = 1; then
-  AC_LIBOBJ([localtime])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_LOCALTIME], [test $REPLACE_LOCALTIME = 1])
 gl_TIME_MODULE_INDICATOR([localtime])
 
 Makefile.am:
+if GL_COND_OBJ_LOCALTIME
+lib_SOURCES += localtime.c
+endif
 
 Include:
 <time.h>

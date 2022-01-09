@@ -15,12 +15,14 @@ isnand          [test $HAVE_LOGB = 0 || test $REPLACE_LOGB = 1]
 
 configure.ac:
 gl_FUNC_LOGB
-if test $HAVE_LOGB = 0 || test $REPLACE_LOGB = 1; then
-  AC_LIBOBJ([logb])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_LOGB],
+               [test $HAVE_LOGB = 0 || test $REPLACE_LOGB = 1])
 gl_MATH_MODULE_INDICATOR([logb])
 
 Makefile.am:
+if GL_COND_OBJ_LOGB
+lib_SOURCES += logb.c
+endif
 
 Include:
 <math.h>

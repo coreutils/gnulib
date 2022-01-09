@@ -25,12 +25,14 @@ unlink          [test $HAVE_UNLINKAT = 0]
 
 configure.ac:
 gl_FUNC_UNLINKAT
-if test $HAVE_UNLINKAT = 0 || test $REPLACE_UNLINKAT = 1; then
-  AC_LIBOBJ([unlinkat])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_UNLINKAT],
+               [test $HAVE_UNLINKAT = 0 || test $REPLACE_UNLINKAT = 1])
 gl_UNISTD_MODULE_INDICATOR([unlinkat])
 
 Makefile.am:
+if GL_COND_OBJ_UNLINKAT
+lib_SOURCES += unlinkat.c
+endif
 
 Include:
 <unistd.h>

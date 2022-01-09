@@ -13,13 +13,17 @@ tempname        [test $HAVE_MKSTEMP = 0 || test $REPLACE_MKSTEMP = 1]
 
 configure.ac:
 gl_FUNC_MKSTEMP
-if test $HAVE_MKSTEMP = 0 || test $REPLACE_MKSTEMP = 1; then
-  AC_LIBOBJ([mkstemp])
+gl_CONDITIONAL([GL_COND_OBJ_MKSTEMP],
+               [test $HAVE_MKSTEMP = 0 || test $REPLACE_MKSTEMP = 1])
+AM_COND_IF([GL_COND_OBJ_MKSTEMP], [
   gl_PREREQ_MKSTEMP
-fi
+])
 gl_STDLIB_MODULE_INDICATOR([mkstemp])
 
 Makefile.am:
+if GL_COND_OBJ_MKSTEMP
+lib_SOURCES += mkstemp.c
+endif
 
 Include:
 <stdlib.h>

@@ -16,14 +16,18 @@ snippet/arg-nonnull
 
 configure.ac:
 gl_FUNC_SETLOCALE_NULL
-if test $SETLOCALE_NULL_ALL_MTSAFE = 0 || test $SETLOCALE_NULL_ONE_MTSAFE = 0; then
-  AC_LIBOBJ([setlocale-lock])
+gl_CONDITIONAL([GL_COND_OBJ_SETLOCALE_LOCK],
+               [test $SETLOCALE_NULL_ALL_MTSAFE = 0 || test $SETLOCALE_NULL_ONE_MTSAFE = 0])
+AM_COND_IF([GL_COND_OBJ_SETLOCALE_LOCK], [
   gl_PREREQ_SETLOCALE_LOCK
-fi
+])
 gl_LOCALE_MODULE_INDICATOR([setlocale_null])
 
 Makefile.am:
 lib_SOURCES += setlocale_null.c
+if GL_COND_OBJ_SETLOCALE_LOCK
+lib_SOURCES += setlocale-lock.c
+endif
 
 Include:
 #include "setlocale_null.h" or #include <locale.h>

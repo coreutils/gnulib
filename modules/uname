@@ -11,13 +11,16 @@ gethostname     [test $HAVE_UNAME = 0]
 
 configure.ac:
 gl_FUNC_UNAME
-if test $HAVE_UNAME = 0; then
-  AC_LIBOBJ([uname])
+gl_CONDITIONAL([GL_COND_OBJ_UNAME], [test $HAVE_UNAME = 0])
+AM_COND_IF([GL_COND_OBJ_UNAME], [
   gl_PREREQ_UNAME
-fi
+])
 gl_SYS_UTSNAME_MODULE_INDICATOR([uname])
 
 Makefile.am:
+if GL_COND_OBJ_UNAME
+lib_SOURCES += uname.c
+endif
 
 Include:
 <sys/utsname.h>

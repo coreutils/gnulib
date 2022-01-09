@@ -15,8 +15,8 @@ msvc-nothrow    [test $ac_cv_lib_error_at_line = no]
 
 configure.ac:
 gl_ERROR
-AS_IF([test "$ac_cv_lib_error_at_line" = no], [
-  AC_LIBOBJ([error])
+gl_CONDITIONAL([GL_COND_OBJ_ERROR], [test "$ac_cv_lib_error_at_line" = no])
+AM_COND_IF([GL_COND_OBJ_ERROR], [
   gl_PREREQ_ERROR
 ])
 m4_ifdef([AM_XGETTEXT_OPTION],
@@ -24,6 +24,9 @@ m4_ifdef([AM_XGETTEXT_OPTION],
    AM_][XGETTEXT_OPTION([--flag=error_at_line:5:c-format])])
 
 Makefile.am:
+if GL_COND_OBJ_ERROR
+lib_SOURCES += error.c
+endif
 
 Include:
 "error.h"

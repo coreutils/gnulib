@@ -13,9 +13,7 @@ configure.ac:
 gl_LIBGMP
 gl_CONDITIONAL_HEADER([gmp.h])
 AC_PROG_MKDIR_P
-if test $HAVE_LIBGMP != yes; then
-  AC_LIBOBJ([mini-gmp-gnulib])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_MINI_GMP_GNULIB], [test $HAVE_LIBGMP != yes])
 
 Makefile.am:
 BUILT_SOURCES += $(GMP_H)
@@ -40,6 +38,10 @@ gmp.h: $(top_builddir)/config.status
 	rm -f $@
 endif
 MOSTLYCLEANFILES += gmp.h gmp.h-t
+
+if GL_COND_OBJ_MINI_GMP_GNULIB
+lib_SOURCES += mini-gmp-gnulib.c
+endif
 
 Include:
 <gmp.h>

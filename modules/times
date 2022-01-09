@@ -10,12 +10,13 @@ sys_times
 
 configure.ac:
 gl_FUNC_TIMES
-if test $HAVE_TIMES = 0; then
-  AC_LIBOBJ([times])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_TIMES], [test $HAVE_TIMES = 0])
 gl_SYS_TIMES_MODULE_INDICATOR([times])
 
 Makefile.am:
+if GL_COND_OBJ_TIMES
+lib_SOURCES += times.c
+endif
 
 Include:
 <sys/times.h>

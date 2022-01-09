@@ -12,13 +12,16 @@ getdelim        [test $REPLACE_GETLINE = 1]
 
 configure.ac:
 gl_FUNC_GETLINE
-if test $REPLACE_GETLINE = 1; then
-  AC_LIBOBJ([getline])
+gl_CONDITIONAL([GL_COND_OBJ_GETLINE], [test $REPLACE_GETLINE = 1])
+AM_COND_IF([GL_COND_OBJ_GETLINE], [
   gl_PREREQ_GETLINE
-fi
+])
 gl_STDIO_MODULE_INDICATOR([getline])
 
 Makefile.am:
+if GL_COND_OBJ_GETLINE
+lib_SOURCES += getline.c
+endif
 
 Include:
 <stdio.h>

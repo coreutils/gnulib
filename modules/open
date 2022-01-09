@@ -17,13 +17,16 @@ stat            [test $REPLACE_OPEN = 1]
 
 configure.ac:
 gl_FUNC_OPEN
-if test $REPLACE_OPEN = 1; then
-  AC_LIBOBJ([open])
+gl_CONDITIONAL([GL_COND_OBJ_OPEN], [test $REPLACE_OPEN = 1])
+AM_COND_IF([GL_COND_OBJ_OPEN], [
   gl_PREREQ_OPEN
-fi
+])
 gl_FCNTL_MODULE_INDICATOR([open])
 
 Makefile.am:
+if GL_COND_OBJ_OPEN
+lib_SOURCES += open.c
+endif
 
 Include:
 <fcntl.h>

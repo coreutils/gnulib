@@ -11,12 +11,13 @@ stdlib
 
 configure.ac:
 gl_FUNC_POSIX_OPENPT
-if test $HAVE_POSIX_OPENPT = 0; then
-  AC_LIBOBJ([posix_openpt])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_POSIX_OPENPT], [test $HAVE_POSIX_OPENPT = 0])
 gl_STDLIB_MODULE_INDICATOR([posix_openpt])
 
 Makefile.am:
+if GL_COND_OBJ_POSIX_OPENPT
+lib_SOURCES += posix_openpt.c
+endif
 
 Include:
 <stdlib.h>

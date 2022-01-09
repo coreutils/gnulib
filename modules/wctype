@@ -20,12 +20,13 @@ iswxdigit       [test $HAVE_WCTYPE = 0]
 
 configure.ac:
 gl_FUNC_WCTYPE
-if test $HAVE_WCTYPE = 0; then
-  AC_LIBOBJ([wctype])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_WCTYPE], [test $HAVE_WCTYPE = 0])
 gl_WCTYPE_MODULE_INDICATOR([wctype])
 
 Makefile.am:
+if GL_COND_OBJ_WCTYPE
+lib_SOURCES += wctype.c
+endif
 
 Include:
 <wctype.h>

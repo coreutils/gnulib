@@ -15,13 +15,16 @@ strdup          [test $HAVE_RPMATCH = 0]
 
 configure.ac:
 gl_FUNC_RPMATCH
-if test $HAVE_RPMATCH = 0; then
-  AC_LIBOBJ([rpmatch])
+gl_CONDITIONAL([GL_COND_OBJ_RPMATCH], [test $HAVE_RPMATCH = 0])
+AM_COND_IF([GL_COND_OBJ_RPMATCH], [
   gl_PREREQ_RPMATCH
-fi
+])
 gl_STDLIB_MODULE_INDICATOR([rpmatch])
 
 Makefile.am:
+if GL_COND_OBJ_RPMATCH
+lib_SOURCES += rpmatch.c
+endif
 
 Include:
 <stdlib.h>

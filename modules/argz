@@ -19,9 +19,7 @@ configure.ac:
 gl_FUNC_ARGZ
 gl_CONDITIONAL_HEADER([argz.h])
 AC_PROG_MKDIR_P
-if test -n "$ARGZ_H"; then
-  AC_LIBOBJ([argz])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_ARGZ], [test -n "$ARGZ_H"])
 
 Makefile.am:
 BUILT_SOURCES += $(ARGZ_H)
@@ -38,6 +36,10 @@ argz.h: $(top_builddir)/config.status
 	rm -f $@
 endif
 MOSTLYCLEANFILES += argz.h argz.h-t
+
+if GL_COND_OBJ_ARGZ
+lib_SOURCES += argz.c
+endif
 
 Include:
 <argz.h>

@@ -15,11 +15,12 @@ stdlib
 
 configure.ac:
 gl_FUNC_OBSTACK
-if test "$gl_cv_func_obstack" != yes; then
-  AC_LIBOBJ([obstack])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_OBSTACK], [test "$gl_cv_func_obstack" != yes])
 
 Makefile.am:
+if GL_COND_OBJ_OBSTACK
+lib_SOURCES += obstack.c
+endif
 
 Include:
 "obstack.h"

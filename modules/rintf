@@ -13,12 +13,13 @@ extensions
 
 configure.ac:
 gl_FUNC_RINTF
-if test $HAVE_RINTF = 0; then
-  AC_LIBOBJ([rintf])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_RINTF], [test $HAVE_RINTF = 0])
 gl_MATH_MODULE_INDICATOR([rintf])
 
 Makefile.am:
+if GL_COND_OBJ_RINTF
+lib_SOURCES += rintf.c
+endif
 
 Include:
 <math.h>

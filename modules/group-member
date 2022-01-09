@@ -14,13 +14,16 @@ realloc-gnu      [test $HAVE_GROUP_MEMBER = 0]
 
 configure.ac:
 gl_FUNC_GROUP_MEMBER
-if test $HAVE_GROUP_MEMBER = 0; then
-  AC_LIBOBJ([group-member])
+gl_CONDITIONAL([GL_COND_OBJ_GROUP_MEMBER], [test $HAVE_GROUP_MEMBER = 0])
+AM_COND_IF([GL_COND_OBJ_GROUP_MEMBER], [
   gl_PREREQ_GROUP_MEMBER
-fi
+])
 gl_UNISTD_MODULE_INDICATOR([group-member])
 
 Makefile.am:
+if GL_COND_OBJ_GROUP_MEMBER
+lib_SOURCES += group-member.c
+endif
 
 Include:
 <unistd.h>

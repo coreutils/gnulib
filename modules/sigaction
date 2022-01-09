@@ -14,13 +14,16 @@ sigprocmask     [test $HAVE_SIGACTION = 0]
 
 configure.ac:
 gl_SIGACTION
-if test $HAVE_SIGACTION = 0; then
-  AC_LIBOBJ([sigaction])
+gl_CONDITIONAL([GL_COND_OBJ_SIGACTION], [test $HAVE_SIGACTION = 0])
+AM_COND_IF([GL_COND_OBJ_SIGACTION], [
   gl_PREREQ_SIGACTION
-fi
+])
 gl_SIGNAL_MODULE_INDICATOR([sigaction])
 
 Makefile.am:
+if GL_COND_OBJ_SIGACTION
+lib_SOURCES += sigaction.c
+endif
 lib_SOURCES += sig-handler.c
 
 Include:

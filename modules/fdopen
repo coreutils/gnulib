@@ -11,13 +11,16 @@ msvc-inval      [test $REPLACE_FDOPEN = 1]
 
 configure.ac:
 gl_FUNC_FDOPEN
-if test $REPLACE_FDOPEN = 1; then
-  AC_LIBOBJ([fdopen])
+gl_CONDITIONAL([GL_COND_OBJ_FDOPEN], [test $REPLACE_FDOPEN = 1])
+AM_COND_IF([GL_COND_OBJ_FDOPEN], [
   gl_PREREQ_FDOPEN
-fi
+])
 gl_STDIO_MODULE_INDICATOR([fdopen])
 
 Makefile.am:
+if GL_COND_OBJ_FDOPEN
+lib_SOURCES += fdopen.c
+endif
 
 Include:
 <stdio.h>

@@ -11,13 +11,16 @@ string
 
 configure.ac:
 gl_FUNC_EXPLICIT_BZERO
-if test $HAVE_EXPLICIT_BZERO = 0; then
-  AC_LIBOBJ([explicit_bzero])
+gl_CONDITIONAL([GL_COND_OBJ_EXPLICIT_BZERO], [test $HAVE_EXPLICIT_BZERO = 0])
+AM_COND_IF([GL_COND_OBJ_EXPLICIT_BZERO], [
   gl_PREREQ_EXPLICIT_BZERO
-fi
+])
 gl_STRING_MODULE_INDICATOR([explicit_bzero])
 
 Makefile.am:
+if GL_COND_OBJ_EXPLICIT_BZERO
+lib_SOURCES += explicit_bzero.c
+endif
 
 Include:
 <string.h>

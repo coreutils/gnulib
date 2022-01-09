@@ -16,12 +16,14 @@ float           [test $HAVE_ROUNDF = 0 || test $REPLACE_ROUNDF = 1]
 
 configure.ac:
 gl_FUNC_ROUNDF
-if test $HAVE_ROUNDF = 0 || test $REPLACE_ROUNDF = 1; then
-  AC_LIBOBJ([roundf])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_ROUNDF],
+               [test $HAVE_ROUNDF = 0 || test $REPLACE_ROUNDF = 1])
 gl_MATH_MODULE_INDICATOR([roundf])
 
 Makefile.am:
+if GL_COND_OBJ_ROUNDF
+lib_SOURCES += roundf.c
+endif
 
 Include:
 <math.h>

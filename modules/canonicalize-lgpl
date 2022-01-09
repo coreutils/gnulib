@@ -32,14 +32,16 @@ unistd            [test $HAVE_CANONICALIZE_FILE_NAME = 0 || test $REPLACE_CANONI
 
 configure.ac:
 gl_CANONICALIZE_LGPL
-if test $HAVE_CANONICALIZE_FILE_NAME = 0 || test $REPLACE_CANONICALIZE_FILE_NAME = 1; then
-  AC_LIBOBJ([canonicalize-lgpl])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_CANONICALIZE_LGPL],
+               [test $HAVE_CANONICALIZE_FILE_NAME = 0 || test $REPLACE_CANONICALIZE_FILE_NAME = 1])
 gl_MODULE_INDICATOR([canonicalize-lgpl])
 gl_STDLIB_MODULE_INDICATOR([canonicalize_file_name])
 gl_STDLIB_MODULE_INDICATOR([realpath])
 
 Makefile.am:
+if GL_COND_OBJ_CANONICALIZE_LGPL
+lib_SOURCES += canonicalize-lgpl.c
+endif
 
 Include:
 <stdlib.h>

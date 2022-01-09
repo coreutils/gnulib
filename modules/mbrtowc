@@ -32,18 +32,22 @@ verify          [test $HAVE_MBRTOWC = 0 || test $REPLACE_MBRTOWC = 1]
 
 configure.ac:
 gl_FUNC_MBRTOWC
-if test $HAVE_MBRTOWC = 0 || test $REPLACE_MBRTOWC = 1; then
-  AC_LIBOBJ([mbrtowc])
+gl_CONDITIONAL([GL_COND_OBJ_MBRTOWC],
+               [test $HAVE_MBRTOWC = 0 || test $REPLACE_MBRTOWC = 1])
+AM_COND_IF([GL_COND_OBJ_MBRTOWC], [
   if test $REPLACE_MBSTATE_T = 1; then
     AC_LIBOBJ([lc-charset-dispatch])
     AC_LIBOBJ([mbtowc-lock])
     gl_PREREQ_MBTOWC_LOCK
   fi
   gl_PREREQ_MBRTOWC
-fi
+])
 gl_WCHAR_MODULE_INDICATOR([mbrtowc])
 
 Makefile.am:
+if GL_COND_OBJ_MBRTOWC
+lib_SOURCES += mbrtowc.c
+endif
 
 Include:
 <wchar.h>

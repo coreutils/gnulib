@@ -17,12 +17,14 @@ ldexpl          [{ test $HAVE_CBRTL = 0 || test $REPLACE_CBRTL = 1; } && test $H
 
 configure.ac:
 gl_FUNC_CBRTL
-if test $HAVE_CBRTL = 0 || test $REPLACE_CBRTL = 1; then
-  AC_LIBOBJ([cbrtl])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_CBRTL],
+               [test $HAVE_CBRTL = 0 || test $REPLACE_CBRTL = 1])
 gl_MATH_MODULE_INDICATOR([cbrtl])
 
 Makefile.am:
+if GL_COND_OBJ_CBRTL
+lib_SOURCES += cbrtl.c
+endif
 
 Include:
 <math.h>
