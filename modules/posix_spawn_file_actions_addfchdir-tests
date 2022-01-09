@@ -20,7 +20,7 @@ AC_EGREP_CPP([notposix], [[
   ]],
   [posix_spawn_ported=no],
   [posix_spawn_ported=yes])
-AM_CONDITIONAL([POSIX_SPAWN_PORTED], [test $posix_spawn_ported = yes])
+gl_CONDITIONAL([POSIX_SPAWN_PORTED], [test $posix_spawn_ported = yes])
 
 Makefile.am:
 TESTS += test-posix_spawn_file_actions_addfchdir

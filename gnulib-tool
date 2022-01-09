@@ -3114,17 +3114,6 @@ func_modules_transitive_closure ()
         if func_acceptable $module; then
           func_append outmodules " $module"
           if test "$cond_dependencies" = true; then
-            if ! $gnu_make \
-               && func_get_automake_snippet_conditional $module \
-                  | grep '^if ' > /dev/null; then
-              # A module whose Makefile.am snippet contains a reference to an
-              # automake conditional. If we were to use it conditionally, we
-              # would get an error
-              #   configure: error: conditional "..." was never defined.
-              # because automake 1.11.1 does not handle nested conditionals
-              # correctly. As a workaround, make the module unconditional.
-              func_uncond_add_module $module
-            fi
             if func_cond_module_p $module; then
               conditional=true
             else

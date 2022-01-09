@@ -813,6 +813,24 @@ AC_DEFUN([gl_CACHE_VAL_SILENT],
   ])
 ])
 
+# gl_CONDITIONAL(conditional, condition)
+# is like AM_CONDITIONAL(conditional, condition), except that it does not
+# produce an error
+#   configure: error: conditional "..." was never defined.
+#   Usually this means the macro was only invoked conditionally.
+# when only invoked conditionally. Instead, in that case, both the _TRUE
+# and the _FALSE case are disabled.
+AC_DEFUN([gl_CONDITIONAL],
+[
+  pushdef([AC_CONFIG_COMMANDS_PRE], [:])dnl
+  AM_CONDITIONAL([$1], [$2])
+  popdef([AC_CONFIG_COMMANDS_PRE])dnl
+  if test -z "${[$1]_TRUE}" && test -z "${[$1]_FALSE}"; then
+    [$1]_TRUE='#'
+    [$1]_FALSE='#'
+  fi
+])
+
 # gl_CC_ALLOW_WARNINGS
 # sets and substitutes a variable GL_CFLAG_ALLOW_WARNINGS, to a $(CC) option
 # that reverts a preceding '-Werror' option, if available.
@@ -969,7 +987,7 @@ AC_DEFUN([gl_CONDITIONAL_HEADER],
     *) echo "*** gl_generate_var is not set correctly" 1>&2; exit 1 ;;
   esac
   AC_SUBST(gl_header_name)
-  AM_CONDITIONAL(gl_generate_cond, [$gl_generate_var])
+  gl_CONDITIONAL(gl_generate_cond, [$gl_generate_var])
   m4_popdef([gl_generate_cond])
   m4_popdef([gl_generate_var])
   m4_popdef([gl_header_name])

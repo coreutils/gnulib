@@ -29,7 +29,7 @@ if test "$CXX" != no; then
 else
   gl_cv_cxxheader_cuchar=no
 fi
-AM_CONDITIONAL([CXX_HAVE_CUCHAR], [test $gl_cv_cxxheader_cuchar != no])
+gl_CONDITIONAL([CXX_HAVE_CUCHAR], [test $gl_cv_cxxheader_cuchar != no])
 
 Makefile.am:
 if ANSICXX
