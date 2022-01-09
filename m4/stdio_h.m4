@@ -1,4 +1,4 @@
-# stdio_h.m4 serial 57
+# stdio_h.m4 serial 58
 dnl Copyright (C) 2007-2022 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -49,7 +49,6 @@ AC_DEFUN_ONCE([gl_STDIO_H],
     gl_NONBLOCKING_IO
     if test $gl_cv_have_nonblocking != yes; then
       REPLACE_STDIO_READ_FUNCS=1
-      AC_LIBOBJ([stdio-read])
     fi
   ])
 
@@ -62,7 +61,6 @@ AC_DEFUN_ONCE([gl_STDIO_H],
     gl_SIGNAL_SIGPIPE
     if test $gl_cv_header_signal_h_SIGPIPE != yes; then
       REPLACE_STDIO_WRITE_FUNCS=1
-      AC_LIBOBJ([stdio-write])
     fi
   ])
   dnl This ifdef is necessary to avoid an error "missing file lib/stdio-write.c"
@@ -74,7 +72,6 @@ AC_DEFUN_ONCE([gl_STDIO_H],
     gl_NONBLOCKING_IO
     if test $gl_cv_have_nonblocking != yes; then
       REPLACE_STDIO_WRITE_FUNCS=1
-      AC_LIBOBJ([stdio-write])
     fi
   ])
 

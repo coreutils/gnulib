@@ -20,6 +20,12 @@ configure.ac:
 gl_STDIO_H
 gl_STDIO_H_REQUIRE_DEFAULTS
 AC_PROG_MKDIR_P
+if test $REPLACE_STDIO_READ_FUNCS = 1; then
+  AC_LIBOBJ([stdio-read])
+fi
+if test $REPLACE_STDIO_WRITE_FUNCS = 1; then
+  AC_LIBOBJ([stdio-write])
+fi
 
 dnl No need to create extra modules for these functions. Everyone who uses
 dnl <stdio.h> likely needs them.
