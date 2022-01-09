@@ -3,6 +3,8 @@ A GNU-like <stdio.h>.
 
 Files:
 lib/stdio.in.h
+lib/stdio-read.c
+lib/stdio-write.c
 m4/stdio_h.m4
 
 Depends-on:
