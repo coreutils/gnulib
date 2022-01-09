@@ -14,8 +14,10 @@ stdint
 stdlib
 
 configure.ac:
-AC_FUNC_OBSTACK
-dnl Note: AC_FUNC_OBSTACK does AC_LIBSOURCES([obstack.h, obstack.c]).
+gl_FUNC_OBSTACK
+if test "$gl_cv_func_obstack" != yes; then
+  AC_LIBOBJ([obstack])
+fi
 
 Makefile.am:
 
