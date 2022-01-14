@@ -1,4 +1,4 @@
-# libunistring-base.m4 serial 6
+# libunistring-base.m4 serial 7
 dnl Copyright (C) 2010-2022 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -24,7 +24,7 @@ AC_DEFUN([gl_LIBUNISTRING_MODULE],
   AC_REQUIRE([gl_LIBUNISTRING_LIB_PREPARE])
   dnl Use the variables HAVE_LIBUNISTRING, LIBUNISTRING_VERSION from
   dnl gl_LIBUNISTRING_CORE if that macro has been run.
-  AM_CONDITIONAL(AS_TR_CPP([LIBUNISTRING_COMPILE_$2]),
+  gl_CONDITIONAL(AS_TR_CPP([LIBUNISTRING_COMPILE_$2]),
     [gl_LIBUNISTRING_VERSION_CMP([$1])])
 ])
 
