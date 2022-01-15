@@ -40,14 +40,14 @@ test_sys_wait_macros (void)
     }
   i = WEXITSTATUS (i) + WSTOPSIG (i) + WTERMSIG (i);
 
+#if 0
   switch (i)
     {
-#if 0
   /* Gnulib doesn't guarantee these, yet.  */
     case WNOHANG:
     case WUNTRACED:
-#endif
       break;
     }
+#endif
   return 0;
 }
