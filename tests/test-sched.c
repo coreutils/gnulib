@@ -29,7 +29,7 @@ int b[] = { SCHED_FIFO, SCHED_RR, SCHED_OTHER };
 /* Check that the types are all defined.  */
 pid_t t1;
 
-static int f1;
+int f1;
 
 int
 main ()

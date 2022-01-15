@@ -28,29 +28,27 @@ SIGNATURE_CHECK (fnmatch, int, (char const *, char const *, int));
 int
 main ()
 {
-  int res;
+  ASSERT (fnmatch ("", "", 0) == 0);
 
-  ASSERT (res = fnmatch ("", "", 0) == 0);
+  ASSERT (fnmatch ("*", "", 0) == 0);
+  ASSERT (fnmatch ("*", "foo", 0) == 0);
+  ASSERT (fnmatch ("*", "bar", 0) == 0);
+  ASSERT (fnmatch ("*", "*", 0) == 0);
+  ASSERT (fnmatch ("**", "f", 0) == 0);
+  ASSERT (fnmatch ("**", "foo.txt", 0) == 0);
+  ASSERT (fnmatch ("*.*", "foo.txt", 0) == 0);
 
-  ASSERT (res = fnmatch ("*", "", 0) == 0);
-  ASSERT (res = fnmatch ("*", "foo", 0) == 0);
-  ASSERT (res = fnmatch ("*", "bar", 0) == 0);
-  ASSERT (res = fnmatch ("*", "*", 0) == 0);
-  ASSERT (res = fnmatch ("**", "f", 0) == 0);
-  ASSERT (res = fnmatch ("**", "foo.txt", 0) == 0);
-  ASSERT (res = fnmatch ("*.*", "foo.txt", 0) == 0);
+  ASSERT (fnmatch ("foo*.txt", "foobar.txt", 0) == 0);
 
-  ASSERT (res = fnmatch ("foo*.txt", "foobar.txt", 0) == 0);
-
-  ASSERT (res = fnmatch ("foo.txt", "foo.txt", 0) == 0);
-  ASSERT (res = fnmatch ("foo\\.txt", "foo.txt", 0) == 0);
-  ASSERT (res = fnmatch ("foo\\.txt", "foo.txt", FNM_NOESCAPE) == FNM_NOMATCH);
+  ASSERT (fnmatch ("foo.txt", "foo.txt", 0) == 0);
+  ASSERT (fnmatch ("foo\\.txt", "foo.txt", 0) == 0);
+  ASSERT (fnmatch ("foo\\.txt", "foo.txt", FNM_NOESCAPE) == FNM_NOMATCH);
 
   /* Verify that an unmatched [ is treated as a literal, as POSIX
      requires.  This test ensures that glibc Bugzilla bug #12378 stays
      fixed.
    */
-  ASSERT (res = fnmatch ("[/b", "[/b", 0) == 0);
+  ASSERT (fnmatch ("[/b", "[/b", 0) == 0);
 
   ASSERT (fnmatch ("[[:alpha:]'[:alpha:]\0]", "a", 0) == FNM_NOMATCH);
   ASSERT (fnmatch ("[a[.\0.]]", "a", 0) == FNM_NOMATCH);
