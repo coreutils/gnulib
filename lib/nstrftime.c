@@ -1158,7 +1158,6 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
 
         case L_('q'):           /* GNU extension.  */
           DO_SIGNED_NUMBER (1, false, ((tp->tm_mon * 11) >> 5) + 1);
-          break;
 
         case L_('R'):
           subfmt = L_("%H:%M");
