@@ -54,7 +54,13 @@ test_function (void)
 #else
        L_(3.0)
 #endif
-       : L_(3.0));
+       :
+#if defined __x86_64__ && defined __EDG__
+       L_(5.0)
+#else
+       L_(3.0)
+#endif
+      );
 
     for (i = 0; i < SIZEOF (RANDOM); i++)
       {
