@@ -41,23 +41,20 @@
 #include <string.h>
 
 #include "assure.h"
-
-#define TYPE_SIGNED(t) (! ((t) 0 < (t) -1))
+#include "intprops.h"
 
 static strtol_error
 bkm_scale (__strtol_t *x, int scale_factor)
 {
-  if (TYPE_SIGNED (__strtol_t) && *x < STRTOL_T_MINIMUM / scale_factor)
+  __strtol_t scaled;
+  if (INT_MULTIPLY_WRAPV (*x, scale_factor, &scaled))
     {
-      *x = STRTOL_T_MINIMUM;
+      *x = *x < 0 ? TYPE_MINIMUM (__strtol_t) : TYPE_MAXIMUM (__strtol_t);
       return LONGINT_OVERFLOW;
     }
-  if (STRTOL_T_MAXIMUM / scale_factor < *x)
-    {
-      *x = STRTOL_T_MAXIMUM;
-      return LONGINT_OVERFLOW;
-    }
-  *x *= scale_factor;
+  else
+    *x = scaled;
+
   return LONGINT_OK;
 }
 
