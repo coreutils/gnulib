@@ -19,7 +19,8 @@
 #ifndef XSTRTOL_H_
 # define XSTRTOL_H_ 1
 
-# include <inttypes.h>
+/* Get intmax_t, uintmax_t.  */
+# include <stdint.h>
 
 # ifndef _STRTOL_ERROR
 enum strtol_error
