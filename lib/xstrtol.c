@@ -52,8 +52,8 @@ bkm_scale (__strtol_t *x, int scale_factor)
       *x = *x < 0 ? TYPE_MINIMUM (__strtol_t) : TYPE_MAXIMUM (__strtol_t);
       return LONGINT_OVERFLOW;
     }
-  else
-    *x = scaled;
+
+  *x = scaled;
 
   return LONGINT_OK;
 }
