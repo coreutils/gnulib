@@ -40,6 +40,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+#if XSTRTOL_INCLUDE_INTTYPES_H
+# include <inttypes.h>
+#endif
+
 #include "assure.h"
 #include "intprops.h"
 
