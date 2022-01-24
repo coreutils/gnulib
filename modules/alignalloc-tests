@@ -1,0 +1,14 @@
+Files:
+tests/test-alignalloc.c
+tests/signature.h
+tests/macros.h
+
+Depends-on:
+intprops
+stdint
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-alignalloc
+check_PROGRAMS += test-alignalloc

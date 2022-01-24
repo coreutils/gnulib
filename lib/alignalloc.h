@@ -1,0 +1,98 @@
+/* aligned memory allocation
+
+   Copyright 2022 Free Software Foundation, Inc.
+
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
+
+/* Written by Paul Eggert.  */
+
+#ifndef ALIGNALLOC_H_
+#define ALIGNALLOC_H_
+
+#include <errno.h>
+#include <stdlib.h>
+#include "idx.h"
+
+#ifndef _GL_INLINE_HEADER_BEGIN
+ #error "Please include config.h first."
+#endif
+_GL_INLINE_HEADER_BEGIN
+#ifndef ALIGNALLOC_INLINE
+# define ALIGNALLOC_INLINE _GL_INLINE
+#endif
+
+/* Whether aligned_alloc supports any power-of-two alignment,
+   returns a nonnull pointer for size-zero allocations,
+   and sets errno on failure.  */
+#if 2 < __GLIBC__ + (15 <= __GLIBC_MINOR__)
+# define ALIGNALLOC_VIA_ALIGNED_ALLOC 1
+#else
+# define ALIGNALLOC_VIA_ALIGNED_ALLOC 0
+#endif
+
+#if ALIGNALLOC_VIA_ALIGNED_ALLOC || HAVE_POSIX_MEMALIGN
+
+/* Free storage allocated via alignalloc.  Do nothing if PTR is null.  */
+
+ALIGNALLOC_INLINE void
+alignfree (void *ptr)
+{
+  free (ptr);
+}
+
+/* Return an ALIGNMENT-aligned pointer to new storage of size SIZE,
+   or a null pointer (setting errno) if memory is exhausted.
+   ALIGNMENT must be a power of two.
+   If SIZE is zero, on success return a unique pointer each time.
+   To free storage later, call alignfree.  */
+
+ALIGNALLOC_INLINE
+_GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_ALLOC_SIZE ((2))
+/* _GL_ATTRIBUTE_DEALLOC (alignfree, 1) */
+void *
+alignalloc (idx_t alignment, idx_t size)
+{
+  if ((size_t) -1 < alignment)
+    alignment = (size_t) -1;
+  if ((size_t) -1 < size)
+    size = (size_t) -1;
+
+# if ALIGNALLOC_VIA_ALIGNED_ALLOC
+  return aligned_alloc (alignment, size);
+# else
+  void *ptr = NULL;
+  if (alignment < sizeof (void *))
+    alignment = sizeof (void *);
+  errno = posix_memalign (&ptr, alignment, size | !size);
+  return ptr;
+# endif
+}
+
+#else /* ! (ALIGNALLOC_VIA_ALIGNED_ALLOC || HAVE_POSIX_MEMALIGN) */
+
+void alignfree (void *);
+void *alignalloc (idx_t, idx_t)
+  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_ALLOC_SIZE ((2))
+  _GL_ATTRIBUTE_DEALLOC (alignfree, 1);
+
+#endif
+
+/* Like alignalloc, but die instead of returning a null pointer.  */
+void *xalignalloc (idx_t, idx_t)
+  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_ALLOC_SIZE ((2))
+  _GL_ATTRIBUTE_RETURNS_NONNULL /* _GL_ATTRIBUTE_DEALLOC (alignfree, 1) */;
+
+_GL_INLINE_HEADER_END
+
+#endif /* !ALIGNALLOC_H_ */

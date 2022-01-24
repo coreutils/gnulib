@@ -1,0 +1,23 @@
+Description:
+Checked aligned memory allocation
+
+Files:
+lib/xalignalloc.c
+
+Depends-on:
+alignalloc
+xalloc-die
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += xalignalloc.c
+
+Include:
+"alignalloc.h"
+
+License:
+GPL
+
+Maintainer:
+bug-gnulib@gnu.org

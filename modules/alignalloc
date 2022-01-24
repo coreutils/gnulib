@@ -1,0 +1,32 @@
+Description:
+Aligned memory allocation
+
+Files:
+lib/alignalloc.h
+lib/alignalloc.c
+m4/alignalloc.m4
+
+Depends-on:
+extensions
+extern-inline
+idx
+intprops
+posix_memalign
+stdalign
+stdint
+verify
+
+configure.ac:
+gl_ALIGNALLOC
+
+Makefile.am:
+lib_SOURCES += alignalloc.c
+
+Include:
+"alignalloc.h"
+
+License:
+LGPLv2+
+
+Maintainer:
+bug-gnulib@gnu.org
