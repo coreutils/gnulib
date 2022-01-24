@@ -20,4 +20,5 @@
 #define __xstrtol xstrtoumax
 #define STRTOL_T_MINIMUM 0
 #define STRTOL_T_MAXIMUM UINTMAX_MAX
+#define XSTRTOL_INCLUDE_INTTYPES_H 1
 #include "xstrtol.c"
