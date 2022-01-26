@@ -1,6 +1,6 @@
 #! /bin/sh
 # Print a version string.
-scriptversion=2021-04-11.09; # UTC
+scriptversion=2022-01-26.05; # UTC
 
 # Bootstrap this package from checked-out sources.
 
@@ -1109,7 +1109,7 @@ bootstrap_epilogue
 
 echo "$0: done.  Now you can run './configure'."
 
-# Local variables:
+# Local Variables:
 # eval: (add-hook 'before-save-hook 'time-stamp)
 # time-stamp-start: "scriptversion="
 # time-stamp-format: "%:y-%02m-%02d.%02H"
