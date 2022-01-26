@@ -6,6 +6,7 @@ lib/close-stream.h
 lib/close-stream.c
 
 Depends-on:
+fclose
 fpending
 stdbool
 
