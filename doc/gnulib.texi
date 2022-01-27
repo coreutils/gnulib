@@ -2,6 +2,7 @@
 @comment %**start of header
 @setfilename gnulib.info
 @settitle GNU Gnulib
+@documentencoding UTF-8
 @c These two require Texinfo 5.0 or later, so we use the older
 @c equivalent @set variables supported in 4.11 and hence
 @ignore
