@@ -35,13 +35,13 @@
 eval 'exec perl -wSx "$0" "$@"'
      if 0;
 
-my $VERSION = '2021-08-04 09:17'; # UTC
+my $VERSION = '2022-01-27 18:48'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
 # do its job.  Otherwise, update this string manually.
 
-my $copyright_year = '2021';
+my $copyright_year = '2022';
 
 use strict;
 use Getopt::Long;

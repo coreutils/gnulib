@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-scriptversion=2021-04-11
+scriptversion=2022-01-27
 
 copyright_year=`echo "$scriptversion" | sed -e 's/[^0-9].*//'`
 copyright="Copyright (C) ${copyright_year} Free Software Foundation, Inc.

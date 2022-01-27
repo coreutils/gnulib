@@ -2,7 +2,7 @@
 # Run this after each non-alpha release, to update the web documentation at
 # https://www.gnu.org/software/$pkg/manual/
 
-VERSION=2021-01-09.09; # UTC
+VERSION=2022-01-27.18; # UTC
 
 # Copyright (C) 2009-2022 Free Software Foundation, Inc.
 
