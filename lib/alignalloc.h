@@ -41,6 +41,21 @@ _GL_INLINE_HEADER_BEGIN
 # define ALIGNALLOC_VIA_ALIGNED_ALLOC 0
 #endif
 
+/* Work around AddressSanitizer bug.
+   https://gcc.gnu.org/bugzilla/show_bug.cgi?id=104262
+   https://lists.llvm.org/pipermail/llvm-commits/Week-of-Mon-20220124/1001910.html
+   */
+#ifdef __SANITIZE_ADDRESS__
+# undef ALIGNALLOC_VIA_ALIGNED_ALLOC
+# define ALIGNALLOC_VIA_ALIGNED_ALLOC 0
+#endif
+#ifdef __has_feature
+# if __has_feature (address_sanitizer)
+#  undef ALIGNALLOC_VIA_ALIGNED_ALLOC
+#  define ALIGNALLOC_VIA_ALIGNED_ALLOC 0
+# endif
+#endif
+
 #if ALIGNALLOC_VIA_ALIGNED_ALLOC || HAVE_POSIX_MEMALIGN
 
 /* Free storage allocated via alignalloc.  Do nothing if PTR is null.  */

@@ -29,26 +29,32 @@ SIGNATURE_CHECK (alignfree, void, (void *));
 
 #include "macros.h"
 
+static void
+test_alignalloc (idx_t alignment, idx_t size)
+{
+  void *p = alignalloc (alignment, size);
+  if (p)
+    {
+      memset (p, 0, size);
+      ASSERT ((uintptr_t) p % alignment == 0);
+    }
+  alignfree (p);
+}
+
 int
 main ()
 {
-  /* Check that alignalloc returns properly aligned storage,
-     when it succeeds.  */
-  for (idx_t alignment = 1; ; )
-    {
-      for (idx_t size = 0; size <= 1024; size = size ? 2 * size : 1)
-        {
-          void *p = alignalloc (alignment, size);
-          if (p)
-            {
-              memset (p, 0, size);
-              ASSERT ((uintptr_t) p % alignment == 0);
-            }
-          alignfree (p);
-        }
-      if (INT_MULTIPLY_WRAPV (alignment, 2, &alignment))
-        break;
-    }
+  /* Check that alignalloc returns properly aligned storage when it succeeds.
+     Stop at 16 MiB alignments because circa-2022 AddressSanitizer goes
+     catatonic with large alignments in posix_memalign,
+     and there seems to be little point to testing them.  */
+  for (idx_t alignment = 1; alignment <= 16 * 1024 * 1024; alignment *= 2)
+    for (idx_t size = 1; size <= 1024; size *= 2)
+      {
+        test_alignalloc (alignment, size - 1);
+        test_alignalloc (alignment, size);
+        test_alignalloc (alignment, size + 1);
+      }
 
   /* Check that alignfree is a no-op on null pointers.  */
   alignfree (NULL);

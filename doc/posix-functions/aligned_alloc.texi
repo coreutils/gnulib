@@ -17,12 +17,30 @@ macOS 11.1, AIX 7.2.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
-This function is missing on all non-glibc platforms:
+On some platforms, @code{aligned_alloc} crashes if the requested size is
+not a multiple of the alignment:
+AddressSanitizer (gcc 11.2 or clang 13).
+
+@item
+This function is missing on many older platforms:
 glibc 2.15, macOS 10.13, FreeBSD 6.4, NetBSD 7.1, OpenBSD 6.0, Minix 3.1.8, AIX 7.1, HP-UX 11.31, IRIX 6.5, Solaris 11.3, Cygwin 1.7.x, mingw, MSVC 14, Android 8.1.
 @end itemize
 
+Gnulib has partial substitutes for @code{aligned_alloc}
+that do not crash even if the AddressSanitizer bug is present:
+
+@itemize
+@item
+The Gnulib module @code{alignalloc} provides a portable function
+@code{alignalloc} that is a near-substitute for for glibc
+@code{aligned_alloc}, except that the result must be freed
+with @code{alignfree} rather than plain @code{free}.
+
+@item
 The Gnulib module @code{aligned-malloc} provides functions for
 allocating and freeing blocks of suitably aligned memory.
 
+@item
 The Gnulib module @code{pagealign_alloc} provides a similar API for
 allocating and freeing blocks of memory aligned on a system page boundary.
+@end itemize
