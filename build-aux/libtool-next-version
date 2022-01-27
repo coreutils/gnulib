@@ -42,7 +42,7 @@
 #   - It does not enforce that applying the third or fourth rule is only
 #     possible after applying the second rule.
 
-scriptversion=2021-04-11
+scriptversion=2022-01-27
 
 # func_usage
 # outputs to stdout the --help usage message.
