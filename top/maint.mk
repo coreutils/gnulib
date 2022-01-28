@@ -473,7 +473,7 @@ sc_error_message_uppercase:
 	@$(VC_LIST_EXCEPT)						\
 	  | xargs $(GREP) -nEA2 '[^rp]error *\(' /dev/null		\
 	  | $(GREP) -E '"[A-Z]'						\
-	  | $(GREP) -vE '"FATAL|"WARNING|"Java|"C#|PRIuMAX'		\
+	  | $(GREP) -vE '"FATAL|"WARNING|"Java|"C#|"PRI'		\
 	  && { echo '$(ME): found capitalized error message' 1>&2;	\
 	       exit 1; }						\
 	  || :
