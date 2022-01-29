@@ -158,7 +158,8 @@ GNU Hurd 0.7 is rarely tested.
 @item
 Native Windows, with MSVC as compiler, is rarely tested and low priority.
 The versions of MSVC that are supported are MSVC 14 (Visual Studio 2015) or
-newer.
+newer.  Furthermore only ``release'' builds (compiler option @samp{-MD}) are
+supported, not ``debug'' builds (compiler option @samp{-MDd}).
 @item
 @c There is musl-gcc on Ubuntu, and Alpine Linux 3.3.3.
 musl libc is rarely tested.
