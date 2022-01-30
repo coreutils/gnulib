@@ -62,7 +62,7 @@ __argmatch_die (void)
   ARGMATCH_DIE;
 }
 
-/* Used by XARGMATCH and XARGCASEMATCH.  See description in argmatch.h.
+/* Used by XARGMATCH.  See description in argmatch.h.
    Default to __argmatch_die, but allow caller to change this at run-time. */
 argmatch_exit_fn argmatch_die = __argmatch_die;
 
