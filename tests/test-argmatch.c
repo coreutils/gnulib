@@ -125,38 +125,63 @@ main (int argc, char *argv[])
       }                                                                 \
   } while (0)
 
+#define CHECK_EXACT(Input, Output)                                      \
+  do {                                                                  \
+    ASSERT (ARGMATCH_EXACT (Input, backup_args) == Output);             \
+  } while (0)
+
   /* Not found.  */
   CHECK ("klingon", -1);
+  CHECK_EXACT ("klingon", -1);
 
   /* Exact match.  */
   CHECK ("none", 1);
+  CHECK_EXACT ("none", 1);
   CHECK ("nil", 7);
+  CHECK_EXACT ("nil", 7);
 
   /* Too long.  */
   CHECK ("nilpotent", -1);
+  CHECK_EXACT ("nilpotent", -1);
 
   /* Abbreviated.  */
   CHECK ("simpl", 3);
+  CHECK_EXACT ("simpl", -1);
   CHECK ("simp", 3);
+  CHECK_EXACT ("simp", -1);
   CHECK ("sim", 3);
+  CHECK_EXACT ("sim", -1);
 
   /* Exact match and abbreviated.  */
   CHECK ("numbered", 9);
+  CHECK_EXACT ("numbered", 9);
   CHECK ("numbere", -2);
+  CHECK_EXACT ("numbere", -1);
   CHECK ("number", -2);
+  CHECK_EXACT ("number", -1);
   CHECK ("numbe", -2);
+  CHECK_EXACT ("numbe", -1);
   CHECK ("numb", -2);
+  CHECK_EXACT ("numb", -1);
   CHECK ("num", -2);
+  CHECK_EXACT ("num", -1);
   CHECK ("nu", -2);
+  CHECK_EXACT ("nu", -1);
   CHECK ("n", -2);
+  CHECK_EXACT ("n", -1);
 
   /* Ambiguous abbreviated.  */
   CHECK ("ne", -2);
+  CHECK_EXACT ("ne", -1);
 
   /* Ambiguous abbreviated, but same value ("single" and "simple").  */
   CHECK ("si", 3);
+  CHECK_EXACT ("si", -1);
   CHECK ("s", 3);
+  CHECK_EXACT ("s", -1);
+
 #undef CHECK
+#undef CHECK_EXACT
 
   argmatch_backup_usage (stdout);
 
