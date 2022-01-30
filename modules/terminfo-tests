@@ -1,0 +1,13 @@
+Files:
+tests/test-terminfo.c
+
+Depends-on:
+terminfo-h
+unistd
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-terminfo
+check_PROGRAMS += test-terminfo
+test_terminfo_LDADD = $(LDADD) @LIBTERMINFO@
