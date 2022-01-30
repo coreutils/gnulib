@@ -40,7 +40,7 @@ main (int argc, char *argv[])
       {
         #if HAVE_TERMINFO
         int err = 1;
-        if (setupterm (term, STDOUT_FILENO, &err) || err == 1)
+        if (setupterm (term, STDOUT_FILENO, &err) == 0 || err == 1)
           {
             underline_on = tigetstr ("smul");
             underline_off = tigetstr ("rmul");
