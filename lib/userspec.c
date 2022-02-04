@@ -161,6 +161,7 @@ parse_with_separator (char const *spec, char const *separator,
       pwd = (*u == '+' ? NULL : getpwnam (u));
       if (pwd == NULL)
         {
+          username = NULL;
           bool use_login_group = (separator != NULL && g == NULL);
           if (use_login_group)
             {
@@ -202,6 +203,7 @@ parse_with_separator (char const *spec, char const *separator,
       grp = (*g == '+' ? NULL : getgrnam (g));
       if (grp == NULL)
         {
+          groupname = NULL;
           unsigned long int tmp;
           if (xstrtoul (g, NULL, 10, &tmp, "") == LONGINT_OK
               && tmp <= MAXGID && (gid_t) tmp != (gid_t) -1)
