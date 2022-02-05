@@ -2076,21 +2076,20 @@ parse_datetime_body (struct timespec *result, char const *p,
       if (pc.days_seen && ! pc.dates_seen)
         {
           intmax_t dayincr;
-          if (INT_MULTIPLY_WRAPV ((pc.day_ordinal
-                                   - (0 < pc.day_ordinal
-                                      && tm.tm_wday != pc.day_number)),
-                                  7, &dayincr)
-              || INT_ADD_WRAPV ((pc.day_number - tm.tm_wday + 7) % 7,
-                                dayincr, &dayincr)
-              || INT_ADD_WRAPV (dayincr, tm.tm_mday, &tm.tm_mday))
-            Start = -1;
-          else
+          tm.tm_yday = -1;
+          if (! (INT_MULTIPLY_WRAPV ((pc.day_ordinal
+                                      - (0 < pc.day_ordinal
+                                         && tm.tm_wday != pc.day_number)),
+                                     7, &dayincr)
+                 || INT_ADD_WRAPV ((pc.day_number - tm.tm_wday + 7) % 7,
+                                   dayincr, &dayincr)
+                 || INT_ADD_WRAPV (dayincr, tm.tm_mday, &tm.tm_mday)))
             {
               tm.tm_isdst = -1;
               Start = mktime_z (tz, &tm);
             }
 
-          if (Start == (time_t) -1)
+          if (tm.tm_yday < 0)
             {
               if (debugging (&pc))
                 dbg_printf (_("error: day '%s' "
@@ -2156,8 +2155,9 @@ parse_datetime_body (struct timespec *result, char const *p,
           tm.tm_min = tm0.tm_min;
           tm.tm_sec = tm0.tm_sec;
           tm.tm_isdst = tm0.tm_isdst;
+          tm.tm_wday = -1;
           Start = mktime_z (tz, &tm);
-          if (Start == (time_t) -1)
+          if (tm.tm_wday < 0)
             {
               if (debugging (&pc))
                 dbg_printf (_("error: adding relative date resulted "
