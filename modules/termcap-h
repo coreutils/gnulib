@@ -1,6 +1,13 @@
 Description:
 Information about terminal capabilities.
 
+Status:
+deprecated
+
+Notice:
+This module is deprecated. Use the module 'terminfo-h' instead;
+it avoids buffer overflow problems when possible.
+
 Files:
 lib/termcap.h
 
