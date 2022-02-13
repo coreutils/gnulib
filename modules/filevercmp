@@ -7,8 +7,9 @@ lib/filevercmp.c
 
 Depends-on:
 c-ctype
+idx
 stdbool
-string
+verify
 
 configure.ac:
 

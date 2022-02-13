@@ -19,6 +19,7 @@
 #include "filevercmp.h"
 
 #include <stddef.h>
+#include <string.h>
 
 #include "macros.h"
 
@@ -28,8 +29,6 @@ static const char *const examples[] =
   "",
   ".",
   "..",
-  ".0",
-  ".9",
   ".A",
   ".Z",
   ".a~",
@@ -40,7 +39,14 @@ static const char *const examples[] =
   ".zz~",
   ".zz",
   ".zz.~1~",
+  ".0",
+  ".9",
   ".zz.0",
+  ".\1",
+  ".\1.txt",
+  ".\1x",
+  ".\1x\1",
+  ".\1.0",
   "0",
   "9",
   "A",
@@ -51,6 +57,10 @@ static const char *const examples[] =
   "a.b",
   "a.bc~",
   "a.bc",
+  "a+",
+  "a.",
+  "a..a",
+  "a.+",
   "b~",
   "b",
   "gcc-c++-10.fc9.tar.gz",
@@ -80,9 +90,78 @@ static const char *const examples[] =
   "zz",
   "zz.~1~",
   "zz.0",
+  "zz.0.txt",
+  "\1",
+  "\1.txt",
+  "\1x",
+  "\1x\1",
+  "\1.0",
+  "#\1.b#",
   "#.b#",
   NULL
 };
+
+/* Sets of examples that should all sort equally.  Each set is
+   terminated by NULL.  */
+static char const *const equals[] =
+  {
+    "a",
+    "a0",
+    "a0000",
+    NULL,
+    "a\1c-27.txt",
+    "a\1c-027.txt",
+    "a\1c-00000000000000000000000000000000000000000000000000000027.txt",
+    NULL,
+    ".a\1c-27.txt",
+    ".a\1c-027.txt",
+    ".a\1c-00000000000000000000000000000000000000000000000000000027.txt",
+    NULL,
+    "a\1c-",
+    "a\1c-0",
+    "a\1c-00",
+    NULL,
+    ".a\1c-",
+    ".a\1c-0",
+    ".a\1c-00",
+    NULL,
+    "a\1c-0.txt",
+    "a\1c-00.txt",
+    NULL,
+    ".a\1c-1\1.txt",
+    ".a\1c-001\1.txt",
+    NULL,
+  };
+
+static int
+sign (int i)
+{
+  return i < 0 ? -1 : 0 < i;
+}
+
+/* Return filevercmp (A, B), checking that a similar result is gotten
+   after replacing all '\1's with '\0's and calling filenvercmp with
+   the embedded '\0's.  */
+static int
+test_filevercmp (char const *a, char const *b)
+{
+  int result = filevercmp (a, b);
+
+  char buffer[1000];
+
+  ptrdiff_t alen = strlen (a), blen = strlen (b);
+  ASSERT (alen + blen <= sizeof buffer);
+  memcpy (buffer, a, alen);
+  memcpy (buffer + alen, b, blen);
+  for (ptrdiff_t i = 0; i < alen + blen; i++)
+    if (buffer[i] == '\1')
+      buffer[i] = '\0';
+
+  int nresult = filenvercmp (buffer, alen, buffer + alen, blen);
+  ASSERT (sign (nresult) == sign (result));
+
+  return result;
+}
 
 int
 main (void)
@@ -94,7 +173,6 @@ main (void)
   ASSERT (filevercmp ("a", "a") == 0);
   ASSERT (filevercmp ("a", "b") < 0);
   ASSERT (filevercmp ("b", "a") > 0);
-  ASSERT (filevercmp ("a0", "a") > 0);
   ASSERT (filevercmp ("00", "01") < 0);
   ASSERT (filevercmp ("01", "010") < 0);
   ASSERT (filevercmp ("9", "10") < 0);
@@ -106,7 +184,7 @@ main (void)
       const char *const *j;
       for (j = examples; *j; j++)
         {
-          int result = filevercmp (*i, *j);
+          int result = test_filevercmp (*i, *j);
           if (result < 0)
             ASSERT (i < j);
           else if (0 < result)
@@ -115,6 +193,14 @@ main (void)
             ASSERT (i == j);
         }
     }
+
+  for (i = equals; i < equals + sizeof equals / sizeof *equals; i++)
+    for (; *i; i++)
+      for (char const *const *j = i; *j; j++)
+        {
+          ASSERT (test_filevercmp (*i, *j) == 0);
+          ASSERT (test_filevercmp (*j, *i) == 0);
+        }
 
   return 0;
 }
