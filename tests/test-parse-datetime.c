@@ -126,7 +126,7 @@ main (_GL_UNUSED int argc, char **argv)
      should disable any leap second support.  Otherwise, there will be
      a problem with glibc on sites that default to leap seconds; see
      <https://bugs.gnu.org/12206>.  */
-  setenv ("TZ", "EST5EDT,M3.2.0,M11.1.0", 1);
+  ASSERT (setenv ("TZ", "EST5EDT,M3.2.0,M11.1.0", 1) == 0);
 
   gmtoff = gmt_offset (ref_time);
 
@@ -375,8 +375,25 @@ main (_GL_UNUSED int argc, char **argv)
   ASSERT (result.tv_sec == result2.tv_sec
           && result.tv_nsec == result2.tv_nsec);
 
+  /* If this platform has TZDB, check for GNU Bug#48085.  */
+  ASSERT (setenv ("TZ", "America/Indiana/Indianapolis", 1) == 0);
+  now.tv_sec = 1619641490;
+  now.tv_nsec = 0;
+  struct tm *tm = localtime (&now.tv_sec);
+  if (tm && tm->tm_year == 2021 - 1900 && tm->tm_mon == 4 - 1
+      && tm->tm_mday == 28 && tm->tm_hour == 16 && tm->tm_min == 24
+      && 0 < tm->tm_isdst)
+    {
+      int has_leap_seconds = tm->tm_sec != now.tv_sec % 60;
+      p = "now - 35 years";
+      ASSERT (parse_datetime (&result, p, &now));
+      LOG (p, now, result);
+      ASSERT (result.tv_sec
+              == 515107490 - 60 * 60 + (has_leap_seconds ? 13 : 0));
+    }
+
   /* Check that some "next Monday", "last Wednesday", etc. are correct.  */
-  setenv ("TZ", "UTC0", 1);
+  ASSERT (setenv ("TZ", "UTC0", 1) == 0);
   for (i = 0; day_table[i]; i++)
     {
       unsigned int thur2 = 7 * 24 * 3600; /* 2nd thursday */
