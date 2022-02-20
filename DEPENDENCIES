@@ -41,7 +41,7 @@ at any time.
   + Download:
     https://ftp.gnu.org/gnu/autoconf/
 
-* Automake 1.11.1 or newer.
+* Automake 1.14 or newer.
   + Mandatory.
   + Homepage:
     https://www.gnu.org/software/automake/
