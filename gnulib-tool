@@ -3872,7 +3872,7 @@ func_emit_lib_Makefile_am ()
     if test -n "$uses_subdirs"; then
       subdir_options=' subdir-objects'
     fi
-    echo "AUTOMAKE_OPTIONS = 1.11 gnits${subdir_options}"
+    echo "AUTOMAKE_OPTIONS = 1.14 gnits${subdir_options}"
   fi
   echo
   if test -z "$makefile_name"; then
@@ -4262,7 +4262,7 @@ func_emit_tests_Makefile_am ()
   if test -n "$uses_subdirs"; then
     subdir_options=' subdir-objects'
   fi
-  echo "AUTOMAKE_OPTIONS = 1.11 foreign${subdir_options}"
+  echo "AUTOMAKE_OPTIONS = 1.14 foreign${subdir_options}"
   echo
   if $for_test && ! $single_configure; then
     echo "ACLOCAL_AMFLAGS = -I ${testsbase_inverse}/${m4base}"
