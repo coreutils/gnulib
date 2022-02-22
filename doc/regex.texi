@@ -118,7 +118,7 @@ order:
 
 @cnindex RE_BACKSLASH_ESCAPE_IN_LIST
 @item RE_BACKSLASH_ESCAPE_IN_LISTS
-If this bit is set, then @samp{\} inside a list (@pxref{List Operators}
+If this bit is set, then @samp{\} inside a list (@pxref{List Operators})
 quotes (makes ordinary, if it's special) the following character; if
 this bit isn't set, then @samp{\} is an ordinary character inside lists.
 (@xref{The Backslash Character}, for what @samp{\} does outside of lists.)
@@ -2122,7 +2122,7 @@ With Berkeley Unix, you can only search for a given regular
 expression; you can't match one.  To search for it, you must first
 compile it.  Before you compile it, you must indicate the regular
 expression syntax you want it compiled according to by setting the
-variable @code{re_syntax_options} (declared in @file{regex.h} to some
+variable @code{re_syntax_options} (declared in @file{regex.h}) to some
 syntax (@pxref{Regular Expression Syntax}).
 
 To compile a regular expression use:
