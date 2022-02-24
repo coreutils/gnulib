@@ -103,10 +103,6 @@ parse_with_separator (char const *spec, char const *separator,
                       uid_t *uid, gid_t *gid,
                       char **username, char **groupname)
 {
-  static const char *E_invalid_user = N_("invalid user");
-  static const char *E_invalid_group = N_("invalid group");
-  static const char *E_bad_spec = N_("invalid spec");
-
   const char *error_msg;
   struct passwd *pwd;
   struct group *grp;
@@ -167,7 +163,7 @@ parse_with_separator (char const *spec, char const *separator,
             {
               /* If there is no group,
                  then there may not be a trailing ":", either.  */
-              error_msg = E_bad_spec;
+              error_msg = N_("invalid spec");
             }
           else
             {
@@ -176,7 +172,7 @@ parse_with_separator (char const *spec, char const *separator,
                   && tmp <= MAXUID && (uid_t) tmp != (uid_t) -1)
                 unum = tmp;
               else
-                error_msg = E_invalid_user;
+                error_msg = N_("invalid user");
             }
         }
       else
@@ -209,7 +205,7 @@ parse_with_separator (char const *spec, char const *separator,
               && tmp <= MAXGID && (gid_t) tmp != (gid_t) -1)
             gnum = tmp;
           else
-            error_msg = E_invalid_group;
+            error_msg = N_("invalid group");
         }
       else
         gnum = grp->gr_gid;
