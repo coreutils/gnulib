@@ -28,7 +28,7 @@ EXTRA_DIST           += unicase/special-casing-table.h
 unicase/special-casing.h: unicase/special-casing.in.h unicase/special-casing-table.h
 	$(AM_V_GEN)$(MKDIR_P) '%reldir%/unicase'
 	$(AM_V_at)declaration=`grep '^gl_unicase_special_lookup' $(srcdir)/unicase/special-casing-table.h | sed -e 's/register //g'` && \
-	$(AM_V_at)$(SED_HEADER_STDOUT) \
+	$(SED_HEADER_STDOUT) \
 	  -e "/gl_unicase_special_lookup/s/gl_unicase_special_lookup.*/$${declaration};/" \
 	  $(srcdir)/unicase/special-casing.in.h > $@-t
 	$(AM_V_at)mv $@-t $@
