@@ -35,7 +35,7 @@
 
 struct test
 {
-  const char *in;
+  char in[100];
   uid_t uid;
   gid_t gid;
   const char *user_name;
@@ -47,6 +47,7 @@ static struct test T[] =
   {
     { "",                       -1, -1, "",   "",   NULL},
     { ":",                      -1, -1, "",   "",   NULL},
+    { "+0:+0",                   0,  0, "",   "",   NULL},
     { "+0:+0",                   0,  0, "",   "",   NULL},
     { ":+1",                    -1,  1, "",   "",   NULL},
     { "+1",                      1, -1, "",   "",   NULL},
@@ -73,9 +74,7 @@ static struct test T[] =
     /* "username:" must expand to UID:GID where GID is username's login group */
     /* Add an entry like the following to the table, if possible.
     { "U_NAME:",              UID,GID, U_NAME, G_NAME, NULL}, */
-    { NULL,                     0,  0, NULL, NULL, ""},  /* place-holder */
-
-    { NULL,                     0,  0, NULL, NULL, ""}
+    { "" /* placeholder */,    -1, -1,     "",     "", NULL},
   };
 
 #define STREQ(a, b) (strcmp (a, b) == 0)
@@ -114,19 +113,14 @@ main (void)
         size_t len;
         if (!pw || !pw->pw_name || !(gr = getgrgid (pw->pw_gid)) || !gr->gr_name)
           continue;
-        j = ARRAY_CARDINALITY (T) - 2;
-        assert (T[j].in == NULL);
-        assert (T[j+1].in == NULL);
+        j = ARRAY_CARDINALITY (T) - 1;
         len = strlen (pw->pw_name);
+        if (sizeof T[j].in - 2 < len)
+          continue;
 
         /* Store "username:" in T[j].in.  */
-        {
-          char *t = xmalloc (len + 1 + 1);
-          memcpy (t, pw->pw_name, len);
-          t[len] = ':';
-          t[len+1] = '\0';
-          T[j].in = t;
-        }
+        memcpy(T[j].in, pw->pw_name, len);
+        strcpy(T[j].in + len, ":");
 
         T[j].uid = uid;
         T[j].gid = gr->gr_gid;
@@ -137,16 +131,17 @@ main (void)
       }
   }
 
-  for (i = 0; T[i].in; i++)
+  char *user_name = NULL;
+  char *group_name = NULL;
+
+  for (i = 0; i < ARRAY_CARDINALITY (T); i++)
     {
       uid_t uid = (uid_t) -1;
       gid_t gid = (gid_t) -1;
-      char *user_name;
-      char *group_name;
-      char const *diag = parse_user_spec (T[i].in, &uid, &gid,
-                                          &user_name, &group_name);
       free (user_name);
       free (group_name);
+      char const *diag = parse_user_spec (T[i].in, &uid, &gid,
+                                          &user_name, &group_name);
       if (!same_diag (diag, T[i].result))
         {
           printf ("%s return value mismatch: got %s, expected %s\n",
@@ -170,14 +165,42 @@ main (void)
           fail = 1;
         }
 
-      if (!T[i].result)
-        continue;
+      if (T[i].result)
+        {
+          /* Expected a non-NULL result diagnostic, yet got NULL.  */
+          diag = "NULL";
+          printf ("%s diagnostic mismatch (-: expected diagnostic; +:actual)\n"
+                  "-%s\n+%s\n", T[i].in, T[i].result, diag);
+          fail = 1;
+        }
+      else
+        {
+          /* Should get the same result, but with a warning, if replacing
+             ':' with '.'.  */
+          char *colon = strchr (T[i].in, ':');
+          if (colon)
+            {
+              *colon = '.';
+              uid_t uid2 = -1;
+              gid_t gid2 = -1;
+              char *user_name2 = NULL;
+              char *group_name2 = NULL;
+              bool warn;
+              if (! (parse_user_spec_warn (T[i].in, &uid2, &gid2,
+                                           &user_name2, &group_name2, &warn)
+                     && warn))
+                printf ("%s did not warn\n", T[i].in);
+              else if (! (uid == uid2 && gid == gid2
+                          && !!user_name == !!user_name2
+                          && (!user_name || STREQ (user_name, user_name2))
+                          && !!group_name == !!group_name2
+                          && (!group_name || STREQ (group_name, group_name2))))
+                printf ("%s treated differently than with colon\n", T[i].in);
 
-      /* Expected a non-NULL result diagnostic, yet got NULL.  */
-      diag = "NULL";
-      printf ("%s diagnostic mismatch (-: expected diagnostic; +:actual)\n"
-              "-%s\n+%s\n", T[i].in, T[i].result, diag);
-      fail = 1;
+              free (user_name2);
+              free (group_name2);
+            }
+        }
     }
 
   /* Ensure NULL parameters are ignored.  */

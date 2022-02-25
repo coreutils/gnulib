@@ -22,7 +22,6 @@
 /* Specification.  */
 #include "userspec.h"
 
-#include <stdbool.h>
 #include <stdio.h>
 #include <sys/types.h>
 #include <pwd.h>
@@ -251,15 +250,18 @@ parse_with_separator (char const *spec, char const *separator,
    Either one might be NULL instead, indicating that it was not
    given and the corresponding numeric ID was left unchanged.
 
-   Return NULL if successful, a static error message string if not.  */
+   Return NULL if successful, a static error message string if not.
+   If PWARN is null, return NULL instead of a warning;
+   otherwise, set *PWARN to true depending on whether returning a warning.  */
 
 char const *
-parse_user_spec (char const *spec, uid_t *uid, gid_t *gid,
-                 char **username, char **groupname)
+parse_user_spec_warn (char const *spec, uid_t *uid, gid_t *gid,
+                      char **username, char **groupname, bool *pwarn)
 {
   char const *colon = gid ? strchr (spec, ':') : NULL;
   char const *error_msg =
     parse_with_separator (spec, colon, uid, gid, username, groupname);
+  bool warn = false;
 
   if (gid && !colon && error_msg)
     {
@@ -272,10 +274,24 @@ parse_user_spec (char const *spec, uid_t *uid, gid_t *gid,
       char const *dot = strchr (spec, '.');
       if (dot
           && ! parse_with_separator (spec, dot, uid, gid, username, groupname))
-        error_msg = NULL;
+        {
+          warn = true;
+          error_msg = pwarn ? N_("warning: '.' should be ':'") : NULL;
+        }
     }
 
+  if (pwarn)
+    *pwarn = warn;
   return error_msg;
+}
+
+/* Like parse_user_spec_warn, but generate only errors; no warnings.  */
+
+char const *
+parse_user_spec (char const *spec, uid_t *uid, gid_t *gid,
+                 char **username, char **groupname)
+{
+  return parse_user_spec_warn (spec, uid, gid, username, groupname, NULL);
 }
 
 #ifdef TEST
