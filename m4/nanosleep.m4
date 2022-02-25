@@ -1,4 +1,4 @@
-# serial 40
+# serial 41
 
 dnl From Jim Meyering.
 dnl Check for the nanosleep function.
@@ -18,9 +18,6 @@ AC_DEFUN([gl_FUNC_NANOSLEEP],
 
  dnl Persuade glibc and Solaris <time.h> to declare nanosleep.
  AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
-
- AC_CHECK_HEADERS_ONCE([sys/time.h])
- AC_REQUIRE([gl_FUNC_SELECT])
 
  AC_CHECK_DECLS_ONCE([alarm])
 
@@ -53,9 +50,6 @@ AC_DEFUN([gl_FUNC_NANOSLEEP],
           #include <errno.h>
           #include <limits.h>
           #include <signal.h>
-          #if HAVE_SYS_TIME_H
-           #include <sys/time.h>
-          #endif
           #include <time.h>
           #include <unistd.h>
           #define TYPE_SIGNED(t) (! ((t) 0 < (t) -1))
@@ -135,15 +129,6 @@ AC_DEFUN([gl_FUNC_NANOSLEEP],
            AC_DEFINE([HAVE_BUG_BIG_NANOSLEEP], [1],
              [Define to 1 if nanosleep mishandles large arguments.])
            ;;
-         *)
-           # The replacement uses select(). Add $LIBSOCKET to $LIB_NANOSLEEP.
-           for ac_lib in $LIBSOCKET; do
-             case " $LIB_NANOSLEEP " in
-               *" $ac_lib "*) ;;
-               *) LIB_NANOSLEEP="$LIB_NANOSLEEP $ac_lib";;
-             esac
-           done
-           ;;
        esac
        ;;
    esac
@@ -151,11 +136,4 @@ AC_DEFUN([gl_FUNC_NANOSLEEP],
    HAVE_NANOSLEEP=0
  fi
  LIBS=$nanosleep_save_libs
-])
-
-# Prerequisites of lib/nanosleep.c.
-AC_DEFUN([gl_PREREQ_NANOSLEEP],
-[
-  AC_CHECK_HEADERS_ONCE([sys/select.h])
-  gl_PREREQ_SIG_HANDLER_H
 ])

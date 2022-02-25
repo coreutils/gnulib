@@ -10,20 +10,15 @@ time
 extensions
 multiarch
 intprops        [test $HAVE_NANOSLEEP = 0 || test $REPLACE_NANOSLEEP = 1]
-select          [test $HAVE_NANOSLEEP = 0 || test $REPLACE_NANOSLEEP = 1]
-sigaction       [test $HAVE_NANOSLEEP = 0 || test $REPLACE_NANOSLEEP = 1]
+pselect         [test $HAVE_NANOSLEEP = 0 || test $REPLACE_NANOSLEEP = 1]
 stdbool         [test $HAVE_NANOSLEEP = 0 || test $REPLACE_NANOSLEEP = 1]
 sys_select      [test $HAVE_NANOSLEEP = 0 || test $REPLACE_NANOSLEEP = 1]
-sys_time        [test $HAVE_NANOSLEEP = 0 || test $REPLACE_NANOSLEEP = 1]
 verify          [test $HAVE_NANOSLEEP = 0 || test $REPLACE_NANOSLEEP = 1]
 
 configure.ac:
 gl_FUNC_NANOSLEEP
 gl_CONDITIONAL([GL_COND_OBJ_NANOSLEEP],
                [test $HAVE_NANOSLEEP = 0 || test $REPLACE_NANOSLEEP = 1])
-AM_COND_IF([GL_COND_OBJ_NANOSLEEP], [
-  gl_PREREQ_NANOSLEEP
-])
 gl_TIME_MODULE_INDICATOR([nanosleep])
 
 Makefile.am:
