@@ -355,7 +355,7 @@ are reasonably portable nowadays include:
 
 @itemize
 @item
-A declarations after a statement, or as the first clause in a
+A declaration after a statement, or as the first clause in a
 @code{for} statement.
 
 @item
