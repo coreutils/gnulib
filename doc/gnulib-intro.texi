@@ -236,6 +236,17 @@ all practical POSIX or C platforms.
 
 @itemize @bullet
 @item
+Clang's @option{-fsanitize=undefined} option causes the program to
+crash if it adds zero to a null pointer -- behavior that is undefined
+in strict C, but which yields a null pointer on all practical porting
+targets and which the Gnulib portability guidelines allow.
+
+If you use Clang with @option{-fsanitize=undefined}, you can work
+around the problem by also using @samp{-fno-sanitize=pointer-overflow},
+although this may also disable some unrelated and useful pointer checks.
+Perhaps someday the Clang developers will fix the infelicity.
+
+@item
 The IBM i's pointers are 128 bits wide and it lacks the two types
 @code{intptr_t} and @code{uintptr_t}, which are optional in the C and
 POSIX standards.  However, these two types are required for the XSI
