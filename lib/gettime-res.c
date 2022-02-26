@@ -64,7 +64,7 @@ gettime_res (void)
   for (int i = 0; 1 < r && i < 32; i++)
     {
       struct timespec now = current_timespec ();
-      r = gcd (r, now.tv_nsec ? now.tv_nsec : hz * now.tv_sec);
+      r = gcd (r, now.tv_nsec ? now.tv_nsec : hz);
     }
 
   return r;
