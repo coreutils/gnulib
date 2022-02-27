@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate August 23, 2020
+@set lastupdate February 26, 2022
 @c %**end of header
 @documentencoding UTF-8
 
@@ -25,8 +25,8 @@ Information for maintainers of GNU software, last updated @value{lastupdate}.
 
 Copyright @copyright{} 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999,
 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009,
-2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2019 Free Software Foundation,
-Inc.
+2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2019, 2022
+Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -63,6 +63,7 @@ Texts.  A copy of the license is included in the section entitled
 * Legal Matters::
 * Clean Ups::
 * Platforms::
+* Patches Not to Accept::
 * Mail::
 * Old Versions::
 * Distributions::
@@ -76,6 +77,7 @@ Texts.  A copy of the license is included in the section entitled
 * Donations::
 * Free Software Directory::
 * Using the Proofreaders List::
+* Suggested Responses::
 * GNU Free Documentation License::
 * Index::
 @end menu
@@ -780,7 +782,7 @@ is optional.
 
 Every nontrivial file needs a license notice as well as the copyright
 notice.  (Without a license notice giving permission to copy and
-change the file, the file is non-free.)
+change the file, the file is nonfree.)
 
 The package itself should contain a full copy of GPL in plain text
 (conventionally in a file named @file{COPYING}) and the GNU Free
@@ -833,7 +835,7 @@ GNU @var{package} is free software: you can redistribute it and/or
 modify it under the terms of either:
 
   * the GNU Lesser General Public License as published by the Free
-    Software Foundation, either version 3 of the License, or (at your
+    Software Foundation; either version 3 of the License, or (at your
     option) any later version.
 
 or
@@ -911,7 +913,7 @@ this instead:
 @quotation
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
+the Free Software Foundation; either version 3 of the License, or
 (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
@@ -1142,39 +1144,37 @@ Reference Manual}).
 @chapter Platforms to Support
 
 Most GNU packages run on a wide range of platforms.  These platforms
-are not equally important.  Please resist requests to implement or add
-features that would function only on some non-GNU systems and not on
-GNU itself.
+are not equally important.  The most important platforms for a GNU
+package to support are the free variants of the GNU operating system,
+regardless of which kernel it uses.
 
-The most important platforms for a GNU package to support are GNU and
-GNU/Linux.  Developing the GNU operating system is the whole point of
-the GNU Project; a GNU package exists to make the whole GNU system
-more powerful.  So please keep that goal in mind and let it shape your
-work.  For instance, every new feature you add should work on GNU, and
-GNU/Linux if possible too.  If a new feature only runs on GNU and
-GNU/Linux, it could still be acceptable.  However, a feature that runs
-only on other systems and not on GNU or GNU/Linux would undermine that
-purpose, as it would promote the non-GNU system at the expense of GNU
-itself.  If the feature functions only on some nonfree systems, it
-would work against our goal of freedom for the users.
+The GNU Project's practical work is developing the GNU operating
+system; a GNU package should make the whole GNU system more powerful
+and encourage people to switch to that system.
 
-Please say no when asked to implement such a feature, citing
-these reasnos, and ask the contributors to implement the feature
-for the GNU system as well.
+Please keep those goals in mind in your work.  For instance, every new
+feature you add should work on GNU.  If a new feature runs only on GNU
+(for instance, on GNU/Linux), it is acceptable.  However, a feature
+that runs only on other systems, and not on GNU, would undermine the
+goal.
+
+Therefore, please say no when asked to implement such a feature,
+citing these reasons, and ask the contributors to implement the
+feature for the GNU system as well.  @xref{Patches Not to Accept}.
 
 You will naturally want to keep the program running on all the platforms
 it supports.  But you personally will not have access to most of these
-platforms---so how should you do it?
+platforms---so how should you handle them?
 
-Don't worry about trying to get access to all of these platforms.  Even
-if you did have access to all the platforms, it would be inefficient for
-you to test the program on each platform yourself.  Instead, you should
-test the program on a few platforms, including GNU or GNU/Linux, and let
-the users test it on the other platforms.  You can do this through a
-pretest phase before the real release; when there is no reason to expect
-problems, in a package that is mostly portable, you can just make a
-release and let the users tell you if anything unportable was
-introduced.
+Don't worry about trying to get access to all of these platforms.
+Even if you did have access to all of them, it would be inefficient
+for you to test the program on each platform yourself.  Instead, you
+should test the program on a few platforms, including some free
+variants of GNU, and let the users test it on the other platforms.
+You can do this through a pretest phase before the real release; when
+there is no reason to expect problems, especially in a package that is
+mostly portable, you can just make a release and let the users tell
+you if anything unportable was introduced.
 
 It is important to test the program personally on GNU or GNU/Linux,
 because these are the most important platforms for a GNU package.  If
@@ -1191,8 +1191,239 @@ install them, but you don't have to.  If you feel the changes are
 complex and ugly, if you think that they will increase the burden of
 future maintenance, you can and should reject them.  This includes
 both free or mainly-free platforms such as OpenBSD, FreeBSD, and
-NetBSD, and non-free platforms such as Windows.
+NetBSD, and nonfree platforms such as Windows.
 
+@node Patches Not to Accept
+@chapter Patches Not to Accept
+
+Maintaining a program includes receiving suggested patches from users
+and deciding which of them to install.  For the most part that is a
+matter of technical benefits and drawbacks, which you as maintainer
+will weigh and judge.
+
+However, there are certain patches which have fundamental moral
+problems, so you should not accept them unless/until those problems
+are fixed.
+
+@menu
+* Non-GNU-only Features::    Every feature in a GNU package should work on GNU.
+* Interoperation with Nonfree::    Don't interoperate better with nonfree
+                                    than with free software.
+* Uninstalled Code in Repo:: Putting code in the package repo without
+                               installing it.
+@end menu
+
+@node Non-GNU-only Features
+@section Don't Install a Feature Till It Works on GNU
+
+Please @emph{don't} write or install code for features that would have
+worse or less functionality (or none) on the GNU system than on some
+non-GNU systems.
+
+The primary purpose of any GNU program is to enhance the capability of
+the GNU system to give users freedom, so every feature of a GNU
+package should be usable and useful on free distributions of the GNU
+operating system (@uref{https://www.gnu.org/distros/}).  For this
+purpose, a ``feature'' is an operation which does something
+substantially useful for the user and not the technical details of an
+implementation.  We explain this point further below.
+
+A feature that functions only on, or functions better on, some non-GNU
+operating system would undermine that primary purpose; worse, it would
+promote that non-GNU system at the expense of GNU.  Such a situation
+would work directly against the goal of liberating users from those
+systems, even though installing features that create such a situation
+would be seen as desirable in terms of the ``open source'' philosophy.
+
+Since freedom in use of computing is the overall purpose, we need to
+aim clearly for that freedom.  We need to show with our practical
+decisions---and with our explanations of them---that we're working for
+something deeper and more important than ``better software'' and
+``more convenience.''  That will give users a chance to reflect about
+our reasons for taking a path different from what most programmers
+would do.  See
+@uref{https://www.gnu.org/philosophy/open-source-misses-the-point.html}.
+
+Therefore, when you as a GNU maintainer receive contributions of
+features that do not work on the GNU system, please explain this rule
+and why it is necessary.  Explain that we need all features in GNU
+packages to work properly on the GNU system, so that they potentiate
+each other and make the GNU system better.  Thus, the change should
+not be installed in its present form.
+
+That doesn't mean the change can't be installed @emph{ever}.  It could
+be installed later, if and when equally good support on the GNU system
+for the same feature can be installed at the same time.  Explaining
+this is a good opportunity to ask people to help write the code to
+support the feature on GNU.  Also inform the contributor about
+resources to learn about how to support this feature on GNU, so perse
+could consider doing that job---or recruiting others to help.
+
+If parts of the code are system-independent, and will do part of the
+job of supporting the feature on the GNU system, you can install them
+right away.  Or you can put them in the package repo without actually
+installing them, in a @samp{wip-@var{name}} branch.  Having them in
+the repository may help and encourage people to finish implementing
+the feature on GNU.
+
+If you think it is very important, you can implement the support for
+that feature on the GNU system yourself.  If you think it is highly
+desirable to have that feature on GNU someday, you can make special
+arrangements to put the non-GNU system-specific code in the package
+repo but not install it---see @ref{Uninstalled Code in Repo}.
+
+It is ok to implement or support a feature for non-GNU systems if the
+feature works at least as well on GNU, even if it is implemented
+differently on different systems, uses different system facilities in
+its implementation, or looks different to the user in some details.
+It is ok to implement those little details, on each system, in the way
+that is convenient or conventional for making the features work.  The
+point is that the program and the feature should ``run best on GNU.''
+
+If system facilities on some other system provide, without any special
+application code, a feature not available on GNU, there is no need
+to do work to prevent it from functioning.  In that case, we should
+work to implement that feature in GNU.
+
+We don't consider the little details of interfaces to control or
+configure specific operations, or details of implementing operations,
+as ``features.''  Likewise, a system facility (including libraries
+that come with the system) is a means for implementing features but
+use of the facility is not in itself a feature.
+
+For instance, a programming platform often offers an interface to
+control the computer or the operating system at a low level.  It is OK
+to support the feature of low-level control on a non-GNU system
+provided the package supports the same capabilities on the GNU system
+also, even if the details of how to invoke the feature vary from
+system to system.  But do undertake to make the invocation of this
+feature consistent across systems, for the specific actions that are
+supported on multiple systems.
+
+Features mainly for communicating with other users' computers, or
+between computers not set up for tightly-coupled use as a group, are a
+different matter entirely.  A communication feature is truly ``the
+same feature'' as on GNU only if it interoperates with a free distribution
+of the GNU system---as, for instance, TCP/IP does.  Unportable,
+system-specific communication facilities for non-GNU systems are abuse
+of the community, so don't install support for them.  This point also
+applies to file formats used for communication between programs, if
+there is ever an occasion to move those files between unrelated
+computers.  (Exception: it is admirable to write code to extract the user's
+data from such a file, if you can do it.)
+
+Finally, please be careful not to let installing or supporting
+system-specific code for non-GNU systems consume much of your own
+time.  @xref{System Portability, GNU Coding Standards, , standards,
+GNU Coding Standards}.
+
+Suppose people ask for support for feature F on some non-GNU system,
+and feature F does work on GNU.  You can say yes if you wish, but you
+have no obligation to write or maintain that code.  You can tell them
+that it's their responsibility to write it and maintain it.  If they
+write good clean code for it, you can approve its installation, but
+that doesn't mean you or anyone else is obliged to support it.  If
+someday the code suffers from bitrot, you can delete it if users don't
+fix it.
+
+@xref{Suggested Responses}, for some text you can use or adapt, if you
+like, to say no to these patches.  It aims to invite them to support
+the GNU system equally well in the new feature.  If there is no hope
+of that, just ``No thanks'' is enough.
+
+@node Interoperation with Nonfree
+@section Interoperation with Nonfree Applications
+
+It is quite usual to implement features in GNU programs to make them
+work conveniently with widely used nonfree tools and applications.
+But there are situations where you should not implement cooperation
+with a nonfree program, which we can refer to here as ShackleMe.
+
+@itemize @bullet
+@item
+If ShackleMe is not well-known, reject the idea.  GNU packages should
+not even @emph{mention} an obscure nonfree program
+(@pxref{References,,, standards, GNU Coding Standards}).
+
+@item
+If ShackleMe imposes something particularly nasty or dangerous, such
+as effective DRM or monopolistic file formats, you should refuse to
+give it any specific support.  But don't cripple general features so
+that they refuse to work with ShackleMe; that would be excessive.  It
+is ok to write code to extract the user's data from such files, if
+that is possible.
+
+@item
+If ShackleMe does not run on the GNU operating system, and there is no
+comparable free program that people could use on the GNU system to do
+the same job, special support for ShackleMe would be a feature that
+works on non-GNU systems only.  Thus, you should refuse to support it.
+@xref{Non-GNU-only Features}.
+
+@item
+If ShackleMe runs on GNU systems also, you can include support for it
+if you wish, but you don't have an obligation to include that, let
+alone ever to @emph{run} it.  If you do include support for it, make
+sure the support for communicating with it works as well on the GNU
+system as it does on non-GNU systems.
+
+@item
+If there are free programs that can replace ShackleMe, or try to, make
+sure your program works with them as well as it is reported to work
+with ShackleMe, or better.
+
+@item
+You never have an obligation to write, install or maintain any sort of
+support for a nonfree program.  If it is unmaintained and breaks, and
+nobody else wants to maintain it you can delete it.  Don't feel
+trapped into working on it!
+@end itemize
+
+@xref{Suggested Responses}, for text you can use, if you wish, to
+state your refusal to support ShackleMe without equally good support
+for ShackleMe's free competitors.  Its purpose is to invite the
+contributors to support those.  You can modify it as needed to fit the
+situation.
+
+@node Uninstalled Code in Repo
+@section Uninstalled Code in Repo
+
+When you want to put system-dependent code for a non-GNU feature into
+the package repository, without actually installing it, you need to make
+special arrangements with the GNU Project.
+
+To do that, you write to @email{maintainers@@gnu.org} and explain the
+feature, its dependance on some other system, and the obstacle that
+has prevented supporting it on GNU.  They will make sure you
+understand the situation and the arrangements, and get your commitment
+to make the branch fade away later, in the proper way, if the feature
+goes unfinished.
+
+Practically speaking, these special arrangements mean you put the code
+in the package repository in a @dfn{discouraged branch} to show it is
+@emph{not} installed, that you have no commitment to finish it, and
+that it might fade away.  Name the branch
+@samp{ungnu-temp/@var{name}}.  (If that name doesn't fit with the
+version control system you use, we will work out a solution.)
+
+Put in the branch a @file{README} file saying this:
+
+@smallexample
+This code partially implements the @var{what is it} feature.  We can't
+install it now because it needs to be finished, so that it runs on the
+GNU system.
+
+We invite you to write the missing code to implement this feature on
+GNU, so we can install the feature.  Until then, this branch must not
+be merged into any branch that might ever be released.
+
+See the section "Don't Install a Feature Until It Works on GNU", in the
+GNU Maintainer's Guide, for explanation of the reasons for this.
+@end smallexample
+
+The discouraged branch ``fades away'' because you don't merge in
+changes from the program's trunk of development.  If the branch gets
+too obsolete to work at all, you simply delete it.
 
 @node Mail
 @chapter Dealing With Mail
@@ -1233,7 +1464,7 @@ move away from using @email{bug-gnu-utils}.
 reports.
 
 @cindex help for users, mailing list for
-Some GNU programs with many users have another mailing list,
+Some GNU programs with many users have a help list,
 @samp{help-@var{package}@@gnu.org}, for people to ask other users for
 help.  If your program has many users, you should create such a list
 for it.  For a fairly new program, which doesn't have a large user
@@ -1501,7 +1732,7 @@ Please do not let anyone make you feel you have an obligation to do
 this.
 
 If you distribute them, please inform their users prominently that
-those non-free platforms trample their freedom.  It is useful to refer
+those nonfree platforms trample their freedom.  It is useful to refer
 them to
 @url{https://www.gnu.org/philosophy/free-software-even-more-important.html}.
 You can say, ``This program respects your freedom, but Windows does
@@ -2107,9 +2338,8 @@ of the @code{gnulib} project at
 @chapter Web Pages
 @cindex web pages
 
-As soon as a new package is dubbed GNU, its home page
-(@indicateurl{https://www.gnu.org/software/@var{package}/})
-is listed on
+When we dub a program a GNU package, we list its GNU home page, named
+@var{package} in @indicateurl{https://www.gnu.org/software/}, on
 @url{https://www.gnu.org/software/software.html} and
 @url{https://www.gnu.org/manual/manual.html}.  To avoid broken links,
 the webmasters create a temporary home page as follows:
@@ -2196,8 +2426,8 @@ If you use a site other than @code{www.gnu.org}, please make sure that
 the site runs on free software alone.  (It is ok if the site uses
 unreleased custom software, since that is free in a trivial sense:
 there's only one user and it has the four freedoms.)  If the web site
-for a GNU package runs on non-free software, the public will see this,
-and it will have the effect of granting legitimacy to the non-free
+for a GNU package runs on nonfree software, the public will see this,
+and it will have the effect of granting legitimacy to the nonfree
 program.
 
 If you use multiple sites, they should all follow that criterion.
@@ -2432,24 +2662,24 @@ safe from patents, so we use the Ogg Theora and WebM formats for which
 no licensing consortium has been set up.  GNU programs and their web
 sites should not distribute video in MPEG-2 or MPEG 4 formats.
 
-A GNU package should not recommend use of any non-free program, nor
-should it require a non-free program (such as a non-free compiler or
+A GNU package should not recommend use of any nonfree program, nor
+should it require a nonfree program (such as a nonfree compiler or
 IDE) to build.  Thus, a GNU package cannot be written in a programming
 language that does not have a free software implementation.  Now that
 GNU/Linux systems are widely available, all GNU packages should
 provide full functionality on a 100% free GNU/Linux system, and should
-not require any non-free software to build or function.
+not require any nonfree software to build or function.
 The GNU Coding Standards say a lot more about this issue.
 
-Similarly, a GNU package should not require the use of non-free
+Similarly, a GNU package should not require the use of nonfree
 software, including JavaScript, for the coordination of its
 development.  For example, please don't use Transifex for translation
-of your software because it requires your translators to use non-free,
+of your software because it requires your translators to use nonfree,
 JavaScript-based editing tools.  Instead, a service without any
 ethical concerns should be used, such as The Translation Project
 (@url{https://translationproject.org}).
 
-A GNU package should not refer the user to any non-free documentation
+A GNU package should not refer the user to any nonfree documentation
 for free software.  The need for free documentation to come with free
 software is now a major focus of the GNU project; to show that we are
 serious about the need for free documentation, we must not contradict
@@ -2520,7 +2750,10 @@ internet; opposing censorship, for instance.
 
 A GNU package should not seriously advocate any other political
 causes.  Not that the GNU Project opposes those other causes.  Rather,
-it is neutral on them, and GNU packages should be neutral too.
+it is neutral on them, and GNU packages should be neutral too.  For
+example, if you are (say) a pacifist, you must not advocate pacifism
+in the GNU package you develop.  Contrariwise, if you want to launch a
+war, the GNU package you develop shouldn't advocate that either.
 
 @node Terminology
 @chapter Terminology Issues
@@ -2858,6 +3091,58 @@ When you get enough volunteers, send another message to the list saying
 ``I have enough volunteers, no more please.''
 @end itemize
 
+
+@node Suggested Responses
+@appendix Suggested Responses
+
+Here are some responses you can use when appropriate, if you want to.
+
+Here's a way to say no to installing code to make your package
+work on a proprietary operating system, ShackleOS.
+
+@quotation
+You've asked us to install support for doing XYZ on ShackleOS.  We can't
+do that until we have support for XYZ on the GNU system.  GNU Project
+policy is not to add special support for a nonfree operating system
+until we have equivalent support for the GNU system.
+
+A nonfree system subjugates users.  You may not notice this if you
+have become accustomed to such subjugation, but we do.  The Free Software
+Movement aims to liberate those users by replacing nonfree systems
+with free software such as the GNU system.
+
+This program does not aim to replace ShackleOS, but the GNU system does.
+We must support the effort to supplant ShackleOS, not weaken it.  If
+we were to implement more or better support for ShackleOS than for GNU, we
+would score an own goal.
+
+So please make this feature work on GNU, and then we can install it.
+@end quotation
+
+Here's a way to say no to installing code to make your package
+work with a proprietary program, ShackleMe.
+
+@quotation
+You've asked us to install a feature specifically to work with
+ShackleMe, but that program is nonfree.  GNU Project policy is not to
+add special support for interoperation with a nonfree program until we
+support interoperation with comparable free programs equally well or
+better.
+
+A nonfree program subjugates users.  You may not notice this if you
+have become accustomed to such subjugation, but we do.  The mission of
+the GNU Project is to liberate those users by replacing the nonfree
+programs with free programs.
+
+This program does not aim to replace ShackleMe, but other free
+programs do or should.  We must support their effort to supplant
+ShackleMe.  If we were to implement interoperability with ShackleMe
+more than with them, this program would become an additional obstacle
+to their success.  We would score an own goal.
+
+So please make this feature work well with those free replacements
+first.  Once we support them, we can support ShackleMe too.
+@end quotation
 
 @node GNU Free Documentation License
 @appendix GNU Free Documentation License
