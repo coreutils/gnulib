@@ -5692,39 +5692,6 @@ s,//*$,/,'
     func_note_Makefile_am_edit "$dir1" EXTRA_DIST "${dir2}gnulib-cache.m4"
   }
 
-  # Create library makefile.
-  func_dest_tmpfilename $sourcebase/$source_makefile_am
-  destfile="$sourcebase/$source_makefile_am"
-  modules="$main_modules"
-  if $automake_subdir; then
-    func_emit_lib_Makefile_am | "$gnulib_dir"/build-aux/prefix-gnulib-mk --from-gnulib-tool --lib-name="$libname" --prefix="$sourcebase/" > "$tmpfile"
-  else
-    func_emit_lib_Makefile_am > "$tmpfile"
-  fi
-  if test -f "$destdir"/$sourcebase/$source_makefile_am; then
-    if cmp -s "$destdir"/$sourcebase/$source_makefile_am "$tmpfile"; then
-      rm -f "$tmpfile"
-    else
-      if $doit; then
-        echo "Updating $sourcebase/$source_makefile_am (backup in $sourcebase/$source_makefile_am~)"
-        mv -f "$destdir"/$sourcebase/$source_makefile_am "$destdir"/$sourcebase/$source_makefile_am~
-        mv -f "$tmpfile" "$destdir"/$sourcebase/$source_makefile_am
-      else
-        echo "Update $sourcebase/$source_makefile_am (backup in $sourcebase/$source_makefile_am~)"
-        rm -f "$tmpfile"
-      fi
-    fi
-  else
-    if $doit; then
-      echo "Creating $sourcebase/$source_makefile_am"
-      mv -f "$tmpfile" "$destdir"/$sourcebase/$source_makefile_am
-    else
-      echo "Create $sourcebase/$source_makefile_am"
-      rm -f "$tmpfile"
-    fi
-    func_append added_files "$sourcebase/$source_makefile_am$nl"
-  fi
-
   # Create po/ directory.
   if test -n "$pobase"; then
     # Create po makefile and auxiliary files.
@@ -6129,6 +6096,41 @@ s,//*$,/,'
       cat "$tmpfile"
       rm -f "$tmpfile"
     fi
+  fi
+
+  # Create library makefile.
+  # Do this after creating gnulib-comp.m4, because func_emit_lib_Makefile_am
+  # can run 'autoconf -t', which reads gnulib-comp.m4.
+  func_dest_tmpfilename $sourcebase/$source_makefile_am
+  destfile="$sourcebase/$source_makefile_am"
+  modules="$main_modules"
+  if $automake_subdir; then
+    func_emit_lib_Makefile_am | "$gnulib_dir"/build-aux/prefix-gnulib-mk --from-gnulib-tool --lib-name="$libname" --prefix="$sourcebase/" > "$tmpfile"
+  else
+    func_emit_lib_Makefile_am > "$tmpfile"
+  fi
+  if test -f "$destdir"/$sourcebase/$source_makefile_am; then
+    if cmp -s "$destdir"/$sourcebase/$source_makefile_am "$tmpfile"; then
+      rm -f "$tmpfile"
+    else
+      if $doit; then
+        echo "Updating $sourcebase/$source_makefile_am (backup in $sourcebase/$source_makefile_am~)"
+        mv -f "$destdir"/$sourcebase/$source_makefile_am "$destdir"/$sourcebase/$source_makefile_am~
+        mv -f "$tmpfile" "$destdir"/$sourcebase/$source_makefile_am
+      else
+        echo "Update $sourcebase/$source_makefile_am (backup in $sourcebase/$source_makefile_am~)"
+        rm -f "$tmpfile"
+      fi
+    fi
+  else
+    if $doit; then
+      echo "Creating $sourcebase/$source_makefile_am"
+      mv -f "$tmpfile" "$destdir"/$sourcebase/$source_makefile_am
+    else
+      echo "Create $sourcebase/$source_makefile_am"
+      rm -f "$tmpfile"
+    fi
+    func_append added_files "$sourcebase/$source_makefile_am$nl"
   fi
 
   if $gentests; then
