@@ -1766,7 +1766,8 @@ fts_stat(FTS *sp, register FTSENT *p, bool follow)
 {
         struct stat *sbp = p->fts_statp;
 
-        if (p->fts_level == FTS_ROOTLEVEL && ISSET(FTS_COMFOLLOW))
+        if (ISSET (FTS_LOGICAL)
+            || (ISSET (FTS_COMFOLLOW) && p->fts_level == FTS_ROOTLEVEL))
                 follow = true;
 
         /*
@@ -1774,22 +1775,21 @@ fts_stat(FTS *sp, register FTSENT *p, bool follow)
          * a stat(2).  If that fails, check for a non-existent symlink.  If
          * fail, set the errno from the stat call.
          */
-        if (ISSET(FTS_LOGICAL) || follow) {
-                if (stat(p->fts_accpath, sbp)) {
-                        if (errno == ENOENT
-                            && lstat(p->fts_accpath, sbp) == 0) {
-                                __set_errno (0);
-                                return (FTS_SLNONE);
-                        }
-                        p->fts_errno = errno;
-                        goto err;
-                }
-        } else if (fstatat(sp->fts_cwd_fd, p->fts_accpath, sbp,
-                           AT_SYMLINK_NOFOLLOW)) {
-                p->fts_errno = errno;
-err:            memset(sbp, 0, sizeof(struct stat));
-                return (FTS_NS);
-        }
+        int flags = (follow ? 0 : AT_SYMLINK_NOFOLLOW) | AT_NO_AUTOMOUNT;
+        if (fstatat (sp->fts_cwd_fd, p->fts_accpath, sbp, flags) < 0)
+          {
+            if (follow && errno == ENOENT
+                && 0 <= fstatat (sp->fts_cwd_fd, p->fts_accpath, sbp,
+                                 AT_SYMLINK_NOFOLLOW | AT_NO_AUTOMOUNT))
+              {
+                __set_errno (0);
+                return FTS_SLNONE;
+              }
+
+            p->fts_errno = errno;
+            memset (sbp, 0, sizeof *sbp);
+            return FTS_NS;
+          }
 
         if (S_ISDIR(sbp->st_mode)) {
                 if (ISDOT(p->fts_name)) {
