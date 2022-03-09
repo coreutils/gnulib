@@ -133,12 +133,13 @@ renameatu (int fd1, char const *src, int fd2, char const *dst,
       break;
 
     case RENAME_NOREPLACE:
-      /* This has a race between the call to lstatat and the calls to
-         renameat below.  This lstatat is needed even if RENAME_EXCL
+      /* This has a race between the call to fstatat and the calls to
+         renameat below.  This fstatat is needed even if RENAME_EXCL
          is defined, because RENAME_EXCL is buggy on macOS 11.2:
          renameatx_np (fd, "X", fd, "X", RENAME_EXCL) incorrectly
          succeeds when X exists.  */
-      if (lstatat (fd2, dst, &dst_st) == 0 || errno == EOVERFLOW)
+      if (fstatat (fd2, dst, &dst_st, AT_SYMLINK_NOFOLLOW) == 0
+          || errno == EOVERFLOW)
         return errno_fail (EEXIST);
       if (errno != ENOENT)
         return -1;
@@ -164,14 +165,14 @@ renameatu (int fd1, char const *src, int fd2, char const *dst,
      the source does not exist, or if the destination cannot be turned
      into a directory, give up now.  Otherwise, strip trailing slashes
      before calling rename.  */
-  if (lstatat (fd1, src, &src_st))
+  if (fstatat (fd1, src, &src_st, AT_SYMLINK_NOFOLLOW))
     return -1;
   if (dst_found_nonexistent)
     {
       if (!S_ISDIR (src_st.st_mode))
         return errno_fail (ENOENT);
     }
-  else if (lstatat (fd2, dst, &dst_st))
+  else if (fstatat (fd2, dst, &dst_st, AT_SYMLINK_NOFOLLOW))
     {
       if (errno != ENOENT || !S_ISDIR (src_st.st_mode))
         return -1;
@@ -196,7 +197,7 @@ renameatu (int fd1, char const *src, int fd2, char const *dst,
           goto out;
         }
       strip_trailing_slashes (src_temp);
-      if (lstatat (fd1, src_temp, &src_st))
+      if (fstatat (fd1, src_temp, &src_st, AT_SYMLINK_NOFOLLOW))
         {
           rename_errno = errno;
           goto out;
@@ -213,7 +214,7 @@ renameatu (int fd1, char const *src, int fd2, char const *dst,
           goto out;
         }
       strip_trailing_slashes (dst_temp);
-      if (lstatat (fd2, dst_temp, &dst_st))
+      if (fstatat (fd2, dst_temp, &dst_st, AT_SYMLINK_NOFOLLOW))
         {
           if (errno != ENOENT)
             {

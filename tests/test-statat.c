@@ -18,6 +18,10 @@
 
 #include "openat.h"
 
+#if 4 < __GNUC__ + (3 <= __GNUC_MINOR__)
+# pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#endif
+
 #include "signature.h"
 SIGNATURE_CHECK (statat, int, (int, char const *, struct stat *));
 SIGNATURE_CHECK (lstatat, int, (int, char const *, struct stat *));

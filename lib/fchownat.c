@@ -103,7 +103,7 @@ rpl_fchownat (int fd, char const *file, uid_t owner, gid_t group, int flag)
     struct stat st;
     if (len && file[len - 1] == '/')
       {
-        if (statat (fd, file, &st))
+        if (fstatat (fd, file, &st, 0))
           return -1;
         if (flag == AT_SYMLINK_NOFOLLOW)
           return fchownat (fd, file, owner, group, 0);

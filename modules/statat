@@ -1,6 +1,13 @@
 Description:
 statat() and lstatat() functions: Return info about a file at a directory.
 
+Status:
+obsolete
+
+Notice:
+This module is obsolete.  Please use fstatat instead, and decide
+whether you want AT_NO_AUTOMOUNT in each fstatat call.
+
 Files:
 lib/statat.c
 

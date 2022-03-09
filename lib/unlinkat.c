@@ -58,7 +58,7 @@ rpl_unlinkat (int fd, char const *name, int flag)
          rule of letting unlink("link-to-dir/") attempt to unlink a
          directory.  */
       struct stat st;
-      result = lstatat (fd, name, &st);
+      result = fstatat (fd, name, &st, AT_SYMLINK_NOFOLLOW);
       if (result == 0 || errno == EOVERFLOW)
         {
           /* Trailing NUL will overwrite the trailing slash.  */
@@ -71,7 +71,8 @@ rpl_unlinkat (int fd, char const *name, int flag)
           memcpy (short_name, name, len);
           while (len && ISSLASH (short_name[len - 1]))
             short_name[--len] = '\0';
-          if (len && (lstatat (fd, short_name, &st) || S_ISLNK (st.st_mode)))
+          if (len && (fstatat (fd, short_name, &st, AT_SYMLINK_NOFOLLOW)
+                      || S_ISLNK (st.st_mode)))
             {
               free (short_name);
               errno = EPERM;
