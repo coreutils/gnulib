@@ -1775,12 +1775,12 @@ fts_stat(FTS *sp, register FTSENT *p, bool follow)
          * a stat(2).  If that fails, check for a non-existent symlink.  If
          * fail, set the errno from the stat call.
          */
-        int flags = (follow ? 0 : AT_SYMLINK_NOFOLLOW) | AT_NO_AUTOMOUNT;
+        int flags = follow ? 0 : AT_SYMLINK_NOFOLLOW;
         if (fstatat (sp->fts_cwd_fd, p->fts_accpath, sbp, flags) < 0)
           {
             if (follow && errno == ENOENT
                 && 0 <= fstatat (sp->fts_cwd_fd, p->fts_accpath, sbp,
-                                 AT_SYMLINK_NOFOLLOW | AT_NO_AUTOMOUNT))
+                                 AT_SYMLINK_NOFOLLOW))
               {
                 __set_errno (0);
                 return FTS_SLNONE;

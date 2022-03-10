@@ -66,8 +66,7 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
-2022-03-09  statat          This module is deprecated.  Use fstatat instead,
-                            to specify whether you want AT_NO_AUTOMOUNT.
+2022-03-09  statat          This module is deprecated.  Use fstatat instead.
 
 2022-01-05  stack           This module now uses idx_t instead of size_t
                             for indexes and counts.
