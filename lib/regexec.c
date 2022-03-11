@@ -1309,7 +1309,7 @@ push_fail_stack (struct re_fail_stack_t *fs, Idx str_idx, Idx dest_node,
 {
   reg_errcode_t err;
   Idx num = fs->num;
-  if (num + 1 == fs->alloc)
+  if (num == fs->alloc)
     {
       struct re_fail_stack_ent_t *new_array;
       new_array = re_realloc (fs->stack, struct re_fail_stack_ent_t,
