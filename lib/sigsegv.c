@@ -227,11 +227,28 @@ int libsigsegv_version = LIBSIGSEGV_VERSION;
 #  if defined __powerpc64__ || defined __powerpc64_elfv2__ /* 64-bit */
 #   define SIGSEGV_FAULT_STACKPOINTER  ((ucontext_t *) ucp)->uc_mcontext.gp_regs[1]
 #  else /* 32-bit */
-/* both should be equivalent */
-#   if 0
-#    define SIGSEGV_FAULT_STACKPOINTER  ((ucontext_t *) ucp)->uc_mcontext.regs->gpr[1]
+#   if MUSL_LIBC
+/* musl libc has a different structure of ucontext_t in
+   musl/arch/powerpc/bits/signal.h.  */
+/* The glibc comments say:
+     "Different versions of the kernel have stored the registers on signal
+      delivery at different offsets from the ucontext struct.  Programs should
+      thus use the uc_mcontext.uc_regs pointer to find where the registers are
+      actually stored."  */
+#    if 0
+#     define SIGSEGV_FAULT_STACKPOINTER  ((ucontext_t *) ucp)->uc_mcontext.gregs[1]
+#    else
+#     define SIGSEGV_FAULT_STACKPOINTER  ((ucontext_t *) ucp)->uc_regs->gregs[1]
+#    endif
 #   else
-#    define SIGSEGV_FAULT_STACKPOINTER  ((ucontext_t *) ucp)->uc_mcontext.uc_regs->gregs[1]
+/* Assume the structure of ucontext_t in
+   glibc/sysdeps/unix/sysv/linux/powerpc/sys/ucontext.h.  */
+/* Because of the union, both definitions should be equivalent.  */
+#    if 0
+#     define SIGSEGV_FAULT_STACKPOINTER  ((ucontext_t *) ucp)->uc_mcontext.regs->gpr[1]
+#    else
+#     define SIGSEGV_FAULT_STACKPOINTER  ((ucontext_t *) ucp)->uc_mcontext.uc_regs->gregs[1]
+#    endif
 #   endif
 #  endif
 
