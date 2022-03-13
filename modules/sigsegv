@@ -17,6 +17,7 @@ lib/sigsegv.c
 lib/stackvma.h
 lib/stackvma.c
 m4/mmap-anon.m4
+m4/musl.m4
 m4/sigaltstack.m4
 m4/stack-direction.m4
 m4/libsigsegv.m4
@@ -45,6 +46,8 @@ if $GL_GENERATE_SIGSEGV_H; then
   dnl which declares macros designating register indices, such as ESP on i386.
   dnl Persuade Solaris OpenIndiana <unistd.h> to declare mincore().
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
+
+  gl_MUSL_LIBC
 
   AC_REQUIRE([AC_CANONICAL_HOST])
   case "$host_os" in
