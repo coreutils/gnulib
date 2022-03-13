@@ -3,6 +3,8 @@ Important general notes
 
 Date        Modules         Changes
 
+2022-02-20  (all)           Automake >= 1.14 and Autoconf >= 2.64 are required.
+
 2021-06-04  (all)           The license notices in source files are now really
                             stating the effective license, rather than a fake
                             GPL notice.
