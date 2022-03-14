@@ -35,7 +35,7 @@
 eval 'exec perl -wSx "$0" "$@"'
      if 0;
 
-my $VERSION = '2022-01-27 18:48'; # UTC
+my $VERSION = '2022-03-14 10:08'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -90,6 +90,10 @@ The following are optional:
                                 VERSION is the result of running git describe
                                 in the gnulib source directory.
                                 required if gnulib is in TOOL_LIST.
+   --gpg-key-email=EMAIL        The email address of the key used to
+                                sign the tarballs
+   --gpg-keyring-url=URL        URL pointing to keyring containing the key used
+                                to sign the tarballs
    --no-print-checksums         do not emit SHA1 or SHA256 checksums
    --archive-suffix=SUF         add SUF to the list of archive suffixes
    --mail-headers=HEADERS       a space-separated list of mail headers, e.g.,
@@ -377,6 +381,8 @@ sub get_tool_versions ($$)
   my $bootstrap_tools;
   my $gnulib_version;
   my $print_checksums_p = 1;
+  my $gpg_key_email;
+  my $gpg_keyring_url;
 
   # Reformat the warnings before displaying them.
   local $SIG{__WARN__} = sub
@@ -395,6 +401,8 @@ sub get_tool_versions ($$)
      'previous-version=s' => \$prev_version,
      'current-version=s'  => \$curr_version,
      'gpg-key-id=s'       => \$gpg_key_id,
+     'gpg-key-email=s'    => \$gpg_key_email,
+     'gpg-keyring-url=s'  => \$gpg_keyring_url,
      'url-directory=s'    => \@url_dir_list,
      'news=s'             => \@news_file,
      'srcdir=s'           => \$srcdir,
@@ -534,12 +542,25 @@ and the corresponding tarball.  Then, run a command like this:
   gpg --verify $tarballs[0].sig
 
 If that command fails because you don't have the required public key,
-then run this command to import it:
-
-  gpg --keyserver keys.gnupg.net --recv-keys $gpg_key_id
-
-and rerun the 'gpg --verify' command.
+or that public key has expired, try the following commands to update
+or refresh it, and then rerun the 'gpg --verify' command.
 EOF
+  if ($gpg_key_email) {
+    print <<EOF;
+
+  gpg --locate-external-key $gpg_key_email
+EOF
+    }
+  print <<EOF;
+
+  gpg --recv-keys $gpg_key_id
+EOF
+    if ($gpg_keyring_url) {
+      print <<EOF;
+
+  wget -q -O- '$gpg_keyring_url' | gpg --import -
+EOF
+    }
 
   my @tool_versions = get_tool_versions (\@tool_list, $gnulib_version);
   @tool_versions
