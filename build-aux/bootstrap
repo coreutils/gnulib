@@ -1,6 +1,6 @@
 #! /bin/sh
 # Print a version string.
-scriptversion=2022-01-26.05; # UTC
+scriptversion=2022-03-21.01; # UTC
 
 # Bootstrap this package from checked-out sources.
 
@@ -776,7 +776,8 @@ if $use_gnulib; then
         # not be performed because we do not know what the depth of the commit
         # is without fetching all commits. So fallback to fetching all commits.
         git -C "$gnulib_path" init
-        git -C "$gnulib_path" remote add origin ${GNULIB_URL:-$default_gnulib_url}
+        git -C "$gnulib_path" remote add origin \
+            ${GNULIB_URL:-$default_gnulib_url}
         git -C "$gnulib_path" fetch $shallow origin "$GNULIB_REVISION" \
           || git -C "$gnulib_path" fetch origin \
           || cleanup_gnulib
