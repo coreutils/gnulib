@@ -1381,7 +1381,33 @@ glob_in_dir (const char *pattern, const char *directory, int flags,
               if (flags & GLOB_ONLYDIR)
                 switch (readdir_result_type (d))
                   {
-                  case DT_DIR: case DT_LNK: case DT_UNKNOWN: break;
+                  case DT_DIR: case DT_LNK: break;
+                  case DT_UNKNOWN:
+                    {
+                      /* The filesystem was too lazy to give us a hint,
+                         so we have to do it the hard way.  */
+                      char *fullpath, *p;
+                      bool isdir;
+                      int need = strlen (directory) + strlen (d.name) + 2;
+                      int use_alloca = glob_use_alloca (alloca_used, need);
+                      if (use_alloca)
+                        fullpath = alloca_account (need, alloca_used);
+                      else
+                        {
+                          fullpath = malloc (need);
+                          if (fullpath == NULL)
+                            goto memory_error;
+                        }
+                      p = stpcpy (fullpath, directory);
+                      *p++ = '/';
+                      strcpy (p, d.name);
+                      isdir = is_dir (fullpath, flags, pglob);
+                      if (!use_alloca)
+                        free (fullpath);
+                      if (isdir)
+                        break;
+                      continue;
+                    }
                   default: continue;
                   }
 
