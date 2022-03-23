@@ -17,8 +17,10 @@ alloca          [test $HAVE_GLOB = 0 || test $REPLACE_GLOB = 1]
 builtin-expect  [test $HAVE_GLOB = 0 || test $REPLACE_GLOB = 1]
 closedir        [test $HAVE_GLOB = 0 || test $REPLACE_GLOB = 1]
 d-type          [test $HAVE_GLOB = 0 || test $REPLACE_GLOB = 1]
+dirfd           [test $HAVE_GLOB = 0 || test $REPLACE_GLOB = 1]
 flexmember      [test $HAVE_GLOB = 0 || test $REPLACE_GLOB = 1]
 fnmatch         [test $HAVE_GLOB = 0 || test $REPLACE_GLOB = 1]
+fstatat         [test $HAVE_GLOB = 0 || test $REPLACE_GLOB = 1]
 getlogin_r      [test $HAVE_GLOB = 0 || test $REPLACE_GLOB = 1]
 libc-config     [test $HAVE_GLOB = 0 || test $REPLACE_GLOB = 1]
 memchr          [test $HAVE_GLOB = 0 || test $REPLACE_GLOB = 1]
@@ -26,7 +28,6 @@ mempcpy         [test $HAVE_GLOB = 0 || test $REPLACE_GLOB = 1]
 opendir         [test $HAVE_GLOB = 0 || test $REPLACE_GLOB = 1]
 readdir         [test $HAVE_GLOB = 0 || test $REPLACE_GLOB = 1]
 scratch_buffer  [test $HAVE_GLOB = 0 || test $REPLACE_GLOB = 1]
-stat            [test $HAVE_GLOB = 0 || test $REPLACE_GLOB = 1]
 stdbool         [test $HAVE_GLOB = 0 || test $REPLACE_GLOB = 1]
 stdint          [test $HAVE_GLOB = 0 || test $REPLACE_GLOB = 1]
 strdup          [test $HAVE_GLOB = 0 || test $REPLACE_GLOB = 1]
@@ -61,7 +62,7 @@ Link:
 $(LIB_MBRTOWC)
 
 License:
-LGPLv2+
+GPL
 
 Maintainer:
 all, glibc
