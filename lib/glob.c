@@ -57,9 +57,8 @@
 # define sysconf(id) __sysconf (id)
 # define closedir(dir) __closedir (dir)
 # define opendir(name) __opendir (name)
-# ifndef dirfd
-#  define dirfd(str) __dirfd (str)
-# endif
+# undef dirfd
+# define dirfd(str) __dirfd (str)
 # define readdir(str) __readdir64 (str)
 # define getpwnam_r(name, bufp, buf, len, res) \
     __getpwnam_r (name, bufp, buf, len, res)
