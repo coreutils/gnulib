@@ -2433,6 +2433,7 @@ _GL_MATH_CXX_REAL_FLOATING_DECL_1 (isfinite)
      functions.  */
 _GL_MATH_CXX_REAL_FLOATING_DECL_2 (isfinite, rpl_isfinite, bool)
 #    define isfinite rpl_isfinite
+#    define GNULIB_NAMESPACE_LACKS_ISFINITE 1
 #   else
 _GL_MATH_CXX_REAL_FLOATING_DECL_2 (isfinite, isfinite, bool)
 #   endif
@@ -2467,6 +2468,7 @@ _GL_MATH_CXX_REAL_FLOATING_DECL_1 (isinf)
      functions.  */
 _GL_MATH_CXX_REAL_FLOATING_DECL_2 (isinf, rpl_isinf, bool)
 #    define isinf rpl_isinf
+#    define GNULIB_NAMESPACE_LACKS_ISINF 1
 #   else
 _GL_MATH_CXX_REAL_FLOATING_DECL_2 (isinf, isinf, bool)
 #   endif
@@ -2594,6 +2596,7 @@ _GL_MATH_CXX_REAL_FLOATING_DECL_1 (isnan)
      functions.  */
 _GL_MATH_CXX_REAL_FLOATING_DECL_2 (isnan, rpl_isnan, bool)
 #    define isnan rpl_isnan
+#    define GNULIB_NAMESPACE_LACKS_ISNAN 1
 #   else
 _GL_MATH_CXX_REAL_FLOATING_DECL_2 (isnan, isnan, bool)
 #   endif
@@ -2677,6 +2680,7 @@ _GL_MATH_CXX_REAL_FLOATING_DECL_1 (signbit)
      functions.  */
 _GL_MATH_CXX_REAL_FLOATING_DECL_2 (signbit, rpl_signbit, bool)
 #    define signbit rpl_signbit
+#    define GNULIB_NAMESPACE_LACKS_SIGNBIT 1
 #   else
 _GL_MATH_CXX_REAL_FLOATING_DECL_2 (signbit, signbit, bool)
 #   endif

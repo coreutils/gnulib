@@ -385,28 +385,36 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::truncl, long double, (long double));
 # ifdef isfinite
 #  warning "isfinite should not be a macro in C++"
 # endif
+# if !GNULIB_NAMESPACE_LACKS_ISFINITE
 REAL_FLOATING_CHECK (isfinite, bool, (float), bool, (double), bool, (long double));
+# endif
 #endif
 
 #if GNULIB_TEST_ISINF
 # ifdef isinf
 #  warning "isinf should not be a macro in C++"
 # endif
+# if !GNULIB_NAMESPACE_LACKS_ISINF
 REAL_FLOATING_CHECK (isinf, bool, (float), bool, (double), bool, (long double));
+# endif
 #endif
 
 #if GNULIB_TEST_ISNAN
 # ifdef isnan
 #  warning "isnan should not be a macro in C++"
 # endif
+# if !GNULIB_NAMESPACE_LACKS_ISNAN
 REAL_FLOATING_CHECK (isnan, bool, (float), bool, (double), bool, (long double));
+# endif
 #endif
 
 #if GNULIB_TEST_SIGNBIT
 # ifdef signbit
 #  warning "signbit should not be a macro in C++"
 # endif
+# if !GNULIB_NAMESPACE_LACKS_SIGNBIT
 REAL_FLOATING_CHECK (signbit, bool, (float), bool, (double), bool, (long double));
+# endif
 #endif
 
 
