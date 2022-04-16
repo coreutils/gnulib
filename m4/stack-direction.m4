@@ -1,4 +1,4 @@
-# stack-direction.m4 serial 10
+# stack-direction.m4 serial 11
 dnl Copyright (C) 2002-2022 Free Software Foundation, Inc.
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
@@ -18,7 +18,7 @@ AC_DEFUN([SV_STACK_DIRECTION],
       a29k | \
       aarch64* | \
       alpha* | \
-      arc | \
+      arc | arceb | arc32 | arc64 | \
       arm* | strongarm* | xscale* | \
       avr | avr32 | \
       bfin | \
