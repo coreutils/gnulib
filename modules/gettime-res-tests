@@ -1,0 +1,12 @@
+Files:
+tests/signature.h
+tests/test-gettime-res.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-gettime-res
+check_PROGRAMS += test-gettime-res
+test_gettime_res_LDADD = $(LDADD) $(LIB_CLOCK_GETTIME)
