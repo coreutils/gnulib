@@ -53,6 +53,8 @@ gettime_res (void)
 
   long int hz = TIMESPEC_HZ;
   long int r = hz * res.tv_sec + res.tv_nsec;
+  struct timespec earlier;
+  earlier.tv_nsec = -1;
 
   /* On some platforms, clock_getres (CLOCK_REALTIME, ...) yields a
      too-large resolution, under the mistaken theory that it should
@@ -61,9 +63,22 @@ gettime_res (void)
      resolution.  Work around the problem with high probability by
      trying clock_gettime several times and observing the resulting
      bounds on resolution.  */
-  for (int i = 0; 1 < r && i < 32; i++)
+  int nsamples = 32;
+  for (int i = 0; 1 < r && i < nsamples; i++)
     {
-      struct timespec now = current_timespec ();
+      /* If successive timestamps disagree the clock resolution must
+         be small, so exit the inner loop to check this sample.
+         Otherwise, arrange for the outer loop to exit but continue
+         the inner-loop search for a differing timestamp sample.  */
+      struct timespec now;
+      for (;; i = nsamples)
+        {
+          now = current_timespec ();
+          if (earlier.tv_nsec != now.tv_nsec || earlier.tv_sec != now.tv_sec)
+            break;
+        }
+      earlier = now;
+
       r = gcd (r, now.tv_nsec ? now.tv_nsec : hz);
     }
 
