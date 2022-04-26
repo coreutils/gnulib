@@ -18,8 +18,9 @@ Portability problems not fixed by Gnulib:
 @item
 This function always fails on some platforms:
 mingw.
-@end itemize
 
-With the @code{dirfd} module, this functions always sets @code{errno} when it
-fails. (POSIX does not require that @code{dirfd} sets @code{errno} when it
-fails.)
+@item
+There is a @code{dirfd} macro but no function, and the macro does not
+work with an argument of type @code{void *}, as a function would:
+NetBSD 9.2.
+@end itemize
