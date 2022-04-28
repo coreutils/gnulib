@@ -12,3 +12,8 @@ Makefile.am:
 TESTS += test-glob
 check_PROGRAMS += test-glob
 test_glob_LDADD = $(LDADD) $(LIB_MBRTOWC)
+MOSTLYCLEANFILES += \
+  test-glob.tglobfile \
+  test-glob.tgloblink1 \
+  test-glob.tgloblink2 \
+  test-glob.tgloblink3
