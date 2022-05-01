@@ -1912,19 +1912,12 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
         buf_malloced = buf;
       }
 
-    if (resultbuf != NULL)
-      {
-        result = resultbuf;
-        allocated = *lengthp;
-      }
-    else
-      {
-        result = NULL;
-        allocated = 0;
-      }
+    result = resultbuf;
+    allocated = (resultbuf != NULL ? *lengthp : 0);
     length = 0;
     /* Invariants:
-       result is either == resultbuf or == NULL or malloc-allocated.
+       result is either == resultbuf or malloc-allocated.
+       If result == NULL, resultbuf is == NULL as well.
        If length > 0, then result != NULL.  */
 
     /* Ensures that allocated >= needed.  Aborts through a jump to
@@ -1941,7 +1934,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
         memory_size = xtimes (allocated, sizeof (DCHAR_T));                  \
         if (size_overflow_p (memory_size))                                   \
           oom_statement                                                      \
-        if (result == resultbuf || result == NULL)                           \
+        if (result == resultbuf)                                             \
           memory = (DCHAR_T *) malloc (memory_size);                         \
         else                                                                 \
           memory = (DCHAR_T *) realloc (result, memory_size);                \
@@ -2112,7 +2105,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                 break;
                               if (count < 0)
                                 {
-                                  if (!(result == resultbuf || result == NULL))
+                                  if (result != resultbuf)
                                     free (result);
                                   if (buf_malloced != NULL)
                                     free (buf_malloced);
@@ -2137,7 +2130,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                 break;
                               if (count < 0)
                                 {
-                                  if (!(result == resultbuf || result == NULL))
+                                  if (result != resultbuf)
                                     free (result);
                                   if (buf_malloced != NULL)
                                     free (buf_malloced);
@@ -2191,7 +2184,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 #  endif
                         if (converted == NULL)
                           {
-                            if (!(result == resultbuf || result == NULL))
+                            if (result != resultbuf)
                               free (result);
                             if (buf_malloced != NULL)
                               free (buf_malloced);
@@ -2237,7 +2230,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                 break;
                               if (count < 0)
                                 {
-                                  if (!(result == resultbuf || result == NULL))
+                                  if (result != resultbuf)
                                     free (result);
                                   if (buf_malloced != NULL)
                                     free (buf_malloced);
@@ -2262,7 +2255,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                 break;
                               if (count < 0)
                                 {
-                                  if (!(result == resultbuf || result == NULL))
+                                  if (result != resultbuf)
                                     free (result);
                                   if (buf_malloced != NULL)
                                     free (buf_malloced);
@@ -2316,7 +2309,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 #  endif
                         if (converted == NULL)
                           {
-                            if (!(result == resultbuf || result == NULL))
+                            if (result != resultbuf)
                               free (result);
                             if (buf_malloced != NULL)
                               free (buf_malloced);
@@ -2362,7 +2355,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                 break;
                               if (count < 0)
                                 {
-                                  if (!(result == resultbuf || result == NULL))
+                                  if (result != resultbuf)
                                     free (result);
                                   if (buf_malloced != NULL)
                                     free (buf_malloced);
@@ -2387,7 +2380,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                 break;
                               if (count < 0)
                                 {
-                                  if (!(result == resultbuf || result == NULL))
+                                  if (result != resultbuf)
                                     free (result);
                                   if (buf_malloced != NULL)
                                     free (buf_malloced);
@@ -2441,7 +2434,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 #  endif
                         if (converted == NULL)
                           {
-                            if (!(result == resultbuf || result == NULL))
+                            if (result != resultbuf)
                               free (result);
                             if (buf_malloced != NULL)
                               free (buf_malloced);
@@ -2591,7 +2584,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                           if (count < 0)
                             {
                               /* Invalid or incomplete multibyte character.  */
-                              if (!(result == resultbuf || result == NULL))
+                              if (result != resultbuf)
                                 free (result);
                               if (buf_malloced != NULL)
                                 free (buf_malloced);
@@ -2627,7 +2620,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                           if (count < 0)
                             {
                               /* Invalid or incomplete multibyte character.  */
-                              if (!(result == resultbuf || result == NULL))
+                              if (result != resultbuf)
                                 free (result);
                               if (buf_malloced != NULL)
                                 free (buf_malloced);
@@ -2753,7 +2746,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                           if (count < 0)
                             {
                               /* Cannot convert.  */
-                              if (!(result == resultbuf || result == NULL))
+                              if (result != resultbuf)
                                 free (result);
                               if (buf_malloced != NULL)
                                 free (buf_malloced);
@@ -2794,7 +2787,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                           if (count < 0)
                             {
                               /* Cannot convert.  */
-                              if (!(result == resultbuf || result == NULL))
+                              if (result != resultbuf)
                                 free (result);
                               if (buf_malloced != NULL)
                                 free (buf_malloced);
@@ -2858,7 +2851,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                   if (tmpdst == NULL)
                     {
                       free (tmpsrc);
-                      if (!(result == resultbuf || result == NULL))
+                      if (result != resultbuf)
                         free (result);
                       if (buf_malloced != NULL)
                         free (buf_malloced);
@@ -2939,7 +2932,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                           if (count <= 0)
                             {
                               /* Cannot convert.  */
-                              if (!(result == resultbuf || result == NULL))
+                              if (result != resultbuf)
                                 free (result);
                               if (buf_malloced != NULL)
                                 free (buf_malloced);
@@ -3083,7 +3076,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                               NULL, &tmpdst_len);
                   if (tmpdst == NULL)
                     {
-                      if (!(result == resultbuf || result == NULL))
+                      if (result != resultbuf)
                         free (result);
                       if (buf_malloced != NULL)
                         free (buf_malloced);
@@ -5462,7 +5455,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                               errno = EINVAL;
                           }
 
-                        if (!(result == resultbuf || result == NULL))
+                        if (result != resultbuf)
                           free (result);
                         if (buf_malloced != NULL)
                           free (buf_malloced);
@@ -5603,7 +5596,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                                     NULL, &tmpdst_len);
                         if (tmpdst == NULL)
                           {
-                            if (!(result == resultbuf || result == NULL))
+                            if (result != resultbuf)
                               free (result);
                             if (buf_malloced != NULL)
                               free (buf_malloced);
@@ -5834,7 +5827,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 
 #if USE_SNPRINTF
   overflow:
-    if (!(result == resultbuf || result == NULL))
+    if (result != resultbuf)
       free (result);
     if (buf_malloced != NULL)
       free (buf_malloced);
@@ -5844,7 +5837,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 #endif
 
   out_of_memory:
-    if (!(result == resultbuf || result == NULL))
+    if (result != resultbuf)
       free (result);
     if (buf_malloced != NULL)
       free (buf_malloced);
