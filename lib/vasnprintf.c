@@ -915,8 +915,7 @@ divide (mpn_t a, mpn_t b, mpn_t *q)
       q_ptr[q_len++] = 1;
     }
   keep_q:
-  if (tmp_roomptr != NULL)
-    free (tmp_roomptr);
+  free (tmp_roomptr);
   q->limbs = q_ptr;
   q->nlimbs = q_len;
   return roomptr;
