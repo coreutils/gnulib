@@ -1,5 +1,8 @@
 Description:
 Regular expression matching.
+This matches the current GNU C Library, so its interface differs from
+the standalone GNU regex library which has long been decommissioned in
+favor of the GNU C Library interface.
 
 Files:
 lib/regex.h
