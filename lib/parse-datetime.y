@@ -52,16 +52,6 @@
 #define YYMAXDEPTH 20
 #define YYINITDEPTH YYMAXDEPTH
 
-/* Since the code of parse-datetime.y is not included in the Emacs executable
-   itself, there is no need to #define static in this file.  Even if
-   the code were included in the Emacs executable, it probably
-   wouldn't do any harm to #undef it here; this will only cause
-   problems if we try to write to a static variable, which I don't
-   think this code needs to do.  */
-#ifdef emacs
-# undef static
-#endif
-
 #include <inttypes.h>
 #include <c-ctype.h>
 #include <stdarg.h>
