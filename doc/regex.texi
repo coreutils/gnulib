@@ -108,8 +108,8 @@ Compiling}, for more information on compiling.
 Regex considers the current syntax to be a collection of bits; we refer
 to these bits as @dfn{syntax bits}.  In most cases, they affect what
 characters represent what operators.  We describe the meanings of the
-operators to which we refer in @ref{Common Operators}, @ref{GNU
-Operators}, and @ref{GNU Emacs Operators}.
+operators to which we refer in @ref{Common Operators} and @ref{GNU
+Operators}.
 
 For reference, here is the complete list of syntax bits, in alphabetical
 order:
@@ -467,15 +467,17 @@ cases @code{RE_BK_PLUS_QM}, @code{RE_NO_BK_BRACES}, @code{RE_NO_BK_VAR},
 (@pxref{Match-non-word-constituent Operator}).
 
 @item
-@samp{\`} represents the match-beginning-of-buffer
-operator and @samp{\'} represents the match-end-of-buffer operator
-(@pxref{Buffer Operators}).
+@samp{\s@var{class}} is equivalent to @code{[[:space:]]}
+(@pxref{Match-space Operator}).
 
 @item
-If Regex was compiled with the C preprocessor symbol @code{emacs}
-defined, then @samp{\s@var{class}} represents the match-syntactic-class
-operator and @samp{\S@var{class}} represents the
-match-not-syntactic-class operator (@pxref{Syntactic Class Operators}).
+@samp{\S@var{class}} is equivalent to @code{[^[:space]]}
+(@pxref{Match-non-space Operator}).
+
+@item
+@samp{\`} represents the match-beginning-of-string
+operator and @samp{\'} represents the match-end-of-string operator
+(@pxref{Whole-string Operators}).
 
 @end itemize
 
@@ -1243,22 +1245,25 @@ exactly the dual of @samp{^}'s; see the previous section.  (That is,
 @node GNU Operators
 @chapter GNU Operators
 
-Following are operators that GNU defines (and POSIX doesn't).
+The following are operators that GNU defines (and POSIX doesn't) that
+you can use unless the syntax bit @code{RE_NO_GNU_OPS} is set.
 
 @menu
 * Word Operators::
-* Buffer Operators::
+* Whole-string Operators::
+* Space Operators::
 @end menu
 
 @node Word Operators
 @section Word Operators
 
 The operators in this section require Regex to recognize parts of words.
-Regex uses a syntax table to determine whether or not a character is
-part of a word, i.e., whether or not it is @dfn{word-constituent}.
+Characters that are part of words, which are called
+@dfn{word-constituent}, are letters, digits, and the underscore
+(@samp{_}); more precisely, any character in the POSIX class
+@code{alnum} in the current locale, or underscore.
 
 @menu
-* Non-Emacs Syntax Tables::
 * Match-word-boundary Operator::        \b
 * Match-within-word Operator::          \B
 * Match-beginning-of-word Operator::    \<
@@ -1266,34 +1271,6 @@ part of a word, i.e., whether or not it is @dfn{word-constituent}.
 * Match-word-constituent Operator::     \w
 * Match-non-word-constituent Operator:: \W
 @end menu
-
-@node Non-Emacs Syntax Tables
-@subsection Non-Emacs Syntax Tables
-
-A @dfn{syntax table} is an array indexed by the characters in your
-character set.  In the ASCII encoding, therefore, a syntax table
-has 256 elements.  Regex always uses a @code{char *} variable
-@code{re_syntax_table} as its syntax table.  In some cases, it
-initializes this variable and in others it expects you to initialize it.
-
-@itemize @bullet
-@item
-If Regex is compiled with the preprocessor symbols @code{emacs} and
-@code{SYNTAX_TABLE} both undefined, then Regex allocates
-@code{re_syntax_table} and initializes an element @var{i} either to
-@code{Sword} (which it defines) if @var{i} is a letter, number, or
-@samp{_}, or to zero if it's not.
-
-@item
-If Regex is compiled with @code{emacs} undefined but @code{SYNTAX_TABLE}
-defined, then Regex expects you to define a @code{char *} variable
-@code{re_syntax_table} to be a valid syntax table.
-
-@item
-@xref{Emacs Syntax Tables}, for what happens when Regex is compiled with
-the preprocessor symbol @code{emacs} defined.
-
-@end itemize
 
 @node Match-word-boundary Operator
 @subsection The Match-word-boundary Operator (@code{\b})
@@ -1347,97 +1324,52 @@ This operator (represented by @samp{\W}) matches any character that is
 not word-constituent.
 
 
-@node Buffer Operators
-@section Buffer Operators
+@node Space Operators
+@section Space Operators
 
-Following are operators which work on buffers.  In Emacs, a @dfn{buffer}
-is, naturally, an Emacs buffer.  For other programs, Regex considers the
-entire string to be matched as the buffer.
+@node Match-space Operator
+@subsection The Match-space Operator (@code{\s})
+
+@cindex @samp{\s}
+
+This operator (represented by @samp{\s}) matches any space
+character (that is, in the POSIX class @code{[:space:]}).
+
+@node Match-non-space Operator
+@subsection The Match-non-space Operator (@code{\S})
+
+@cindex @samp{\S}
+
+This operator (represented by @samp{\S}) matches any character
+that is not a space (that is, in the POSIX class @code{[:space:]}).
+
+
+@node Whole-string Operators
+@section Whole-string Operators
+
+Following are operators which work on the whole string.
 
 @menu
-* Match-beginning-of-buffer Operator::  \`
-* Match-end-of-buffer Operator::        \'
+* Match-beginning-of-string Operator::  \`
+* Match-end-of-string Operator::        \'
 @end menu
 
 
-@node Match-beginning-of-buffer Operator
-@subsection The Match-beginning-of-buffer Operator (@code{\`})
+@node Match-beginning-of-string Operator
+@subsection The Match-beginning-of-string Operator (@code{\`})
 
 @cindex @samp{\`}
 
 This operator (represented by @samp{\`}) matches the empty string at the
-beginning of the buffer.
+beginning of the string.
 
-@node Match-end-of-buffer Operator
-@subsection The Match-end-of-buffer Operator (@code{\'})
+@node Match-end-of-string Operator
+@subsection The Match-end-of-string Operator (@code{\'})
 
 @cindex @samp{\'}
 
 This operator (represented by @samp{\'}) matches the empty string at the
-end of the buffer.
-
-
-@node GNU Emacs Operators
-@chapter GNU Emacs Operators
-
-Following are operators that GNU defines (and POSIX doesn't)
-that you can use only when Regex is compiled with the preprocessor
-symbol @code{emacs} defined.
-
-@menu
-* Syntactic Class Operators::
-@end menu
-
-
-@node Syntactic Class Operators
-@section Syntactic Class Operators
-
-The operators in this section require Regex to recognize the syntactic
-classes of characters.  Regex uses a syntax table to determine this.
-
-@menu
-* Emacs Syntax Tables::
-* Match-syntactic-class Operator::      \sCLASS
-* Match-not-syntactic-class Operator::  \SCLASS
-@end menu
-
-@node Emacs Syntax Tables
-@subsection Emacs Syntax Tables
-
-A @dfn{syntax table} is an array indexed by the characters in your
-character set.  In the ASCII encoding, therefore, a syntax table
-has 256 elements.
-
-If Regex is compiled with the preprocessor symbol @code{emacs} defined,
-then Regex expects you to define and initialize the variable
-@code{re_syntax_table} to be an Emacs syntax table.  Emacs' syntax
-tables are more complicated than Regex's own (@pxref{Non-Emacs Syntax
-Tables}).  @xref{Syntax, , Syntax, emacs, The GNU Emacs User's Manual},
-for a description of Emacs' syntax tables.
-
-@node Match-syntactic-class Operator
-@subsection The Match-syntactic-class Operator (@code{\s}@var{class})
-
-@cindex @samp{\s}
-
-This operator matches any character whose syntactic class is represented
-by a specified character.  @samp{\s@var{class}} represents this operator
-where @var{class} is the character representing the syntactic class you
-want.  For example, @samp{w} represents the syntactic
-class of word-constituent characters, so @samp{\sw} matches any
-word-constituent character.
-
-@node Match-not-syntactic-class Operator
-@subsection The Match-not-syntactic-class Operator (@code{\S}@var{class})
-
-@cindex @samp{\S}
-
-This operator is similar to the match-syntactic-class operator except
-that it matches any character whose syntactic class is @emph{not}
-represented by the specified character.  @samp{\S@var{class}} represents
-this operator.  For example, @samp{w} represents the syntactic class of
-word-constituent characters, so @samp{\Sw} matches any character that is
-not word-constituent.
+end of the string.
 
 
 @node What Gets Matched?
