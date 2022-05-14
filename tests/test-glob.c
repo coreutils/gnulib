@@ -26,6 +26,7 @@ SIGNATURE_CHECK (glob, int, (char const *, int, int (*) (char const *, int),
 SIGNATURE_CHECK (globfree, void, (glob_t *));
 
 #include <errno.h>
+#include <fcntl.h>
 #include <string.h>
 #include <unistd.h>
 
