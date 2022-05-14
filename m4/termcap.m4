@@ -1,4 +1,4 @@
-# termcap.m4 serial 8
+# termcap.m4 serial 9
 dnl Copyright (C) 2000-2022 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -119,6 +119,11 @@ AC_DEFUN([gl_TERMCAP_BODY],
       INCTERMCAP="$INCNCURSES"
       ;;
     libtermcap)
+      ;;
+    "not found"*)
+      LIBTERMCAP=
+      LTLIBTERMCAP=
+      INCTERMCAP=
       ;;
   esac
   case "$gl_cv_termcap" in
