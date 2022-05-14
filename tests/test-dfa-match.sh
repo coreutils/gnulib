@@ -42,4 +42,15 @@ in=$(printf "bb\nbb")
 $timeout_10 ${CHECKER} test-dfa-match-aux a "$in" 1 > out || fail=1
 compare /dev/null out || fail=1
 
+# If the platform supports U+00E9 LATIN SMALL LETTER E WITH ACUTE,
+# test U+D45C HANGUL SYLLABLE PYO.
+U_00E9=$(printf '\303\251\n')
+U_D45C=$(printf '\355\221\234\n')
+if testout=$(LC_ALL=en_US.UTF-8 $CHECKER test-dfa-match-aux '^.$' "$U_00E9") &&
+   test "$testout" = 2
+then
+  testout=$(LC_ALL=en_US.UTF-8 $CHECKER test-dfa-match-aux '^.$' "$U_D45C") &&
+  test "$testout" = 3 || fail=1
+fi
+
 Exit $fail

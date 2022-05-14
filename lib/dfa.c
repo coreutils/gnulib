@@ -1704,7 +1704,7 @@ add_utf8_anychar (struct dfa *dfa)
     /* G. ed (just a token).  */
 
     /* H. 80-9f: 2nd byte of a "GHC" sequence.  */
-    CHARCLASS_INIT (0, 0, 0, 0, 0xffff, 0, 0, 0),
+    CHARCLASS_INIT (0, 0, 0, 0, 0xffffffff, 0, 0, 0),
 
     /* I. f0 (just a token).  */
 
@@ -1717,7 +1717,7 @@ add_utf8_anychar (struct dfa *dfa)
     /* L. f4 (just a token).  */
 
     /* M. 80-8f: 2nd byte of a "LMCC" sequence.  */
-    CHARCLASS_INIT (0, 0, 0, 0, 0xff, 0, 0, 0),
+    CHARCLASS_INIT (0, 0, 0, 0, 0xffff, 0, 0, 0),
   };
 
   /* Define the character classes that are needed below.  */
