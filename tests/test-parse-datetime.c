@@ -151,6 +151,16 @@ main (_GL_UNUSED int argc, char **argv)
   ASSERT (expected.tv_sec == result.tv_sec
           && expected.tv_nsec == result.tv_nsec);
 
+  /* ISO 8601 extended date and time of day representation,
+     ' ' separator, 'J' (local) time zone */
+  p = "2011-05-01 11:55:18J";
+  expected.tv_sec = ref_time - gmtoff;
+  expected.tv_nsec = 0;
+  ASSERT (parse_datetime (&result, p, 0));
+  LOG (p, expected, result);
+  ASSERT (expected.tv_sec == result.tv_sec
+          && expected.tv_nsec == result.tv_nsec);
+
 
   /* ISO 8601, extended date and time of day representation,
      'T' separator, UTC */

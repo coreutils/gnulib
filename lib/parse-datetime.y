@@ -205,6 +205,7 @@ typedef struct
   bool rels_seen;
   idx_t dates_seen;
   idx_t days_seen;
+  idx_t J_zones_seen;
   idx_t local_zones_seen;
   idx_t dsts_seen;
   idx_t times_seen;
@@ -623,6 +624,11 @@ item:
       {
         pc->local_zones_seen++;
         debug_print_current_time (_("local_zone"), pc);
+      }
+  | 'J'
+      {
+        pc->J_zones_seen++;
+        debug_print_current_time ("J", pc);
       }
   | zone
       {
@@ -1153,7 +1159,8 @@ static table const time_zone_table[] =
    RFC 822 got these backwards, but RFC 5322 makes the incorrect
    treatment optional, so do them the right way here.
 
-   Note 'T' is a special case, as it is used as the separator in ISO
+   'J' is special, as it is local time.
+   'T' is also special, as it is the separator in ISO
    8601 date and time of day representation.  */
 static table const military_table[] =
 {
@@ -1166,6 +1173,7 @@ static table const military_table[] =
   { "G", tZONE,  HOUR ( 7) },
   { "H", tZONE,  HOUR ( 8) },
   { "I", tZONE,  HOUR ( 9) },
+  { "J", 'J',    0 },
   { "K", tZONE,  HOUR (10) },
   { "L", tZONE,  HOUR (11) },
   { "M", tZONE,  HOUR (12) },
@@ -1816,6 +1824,7 @@ parse_datetime_body (struct timespec *result, char const *p,
   pc.dates_seen = 0;
   pc.days_seen = 0;
   pc.times_seen = 0;
+  pc.J_zones_seen = 0;
   pc.local_zones_seen = 0;
   pc.dsts_seen = 0;
   pc.zones_seen = 0;
@@ -1941,7 +1950,7 @@ parse_datetime_body (struct timespec *result, char const *p,
   else
     {
       if (1 < (pc.times_seen | pc.dates_seen | pc.days_seen | pc.dsts_seen
-               | (pc.local_zones_seen + pc.zones_seen)))
+               | (pc.J_zones_seen + pc.local_zones_seen + pc.zones_seen)))
         {
           if (debugging (&pc))
             {
@@ -1953,7 +1962,7 @@ parse_datetime_body (struct timespec *result, char const *p,
                 dbg_printf ("error: seen multiple days parts\n");
               if (pc.dsts_seen > 1)
                 dbg_printf ("error: seen multiple daylight-saving parts\n");
-              if ((pc.local_zones_seen + pc.zones_seen) > 1)
+              if ((pc.J_zones_seen + pc.local_zones_seen + pc.zones_seen) > 1)
                 dbg_printf ("error: seen multiple time-zone parts\n");
             }
           goto fail;

@@ -304,7 +304,7 @@ Time zone items other than @samp{UTC} and @samp{Z}
 are obsolescent and are not recommended, because they
 are ambiguous; for example, @samp{EST} has a different meaning in
 Australia than in the United States, and @samp{A} has different
-meaning as a military time zone than as an obsolescent
+meaning as a military time zone than as an obsolete
 RFC 822 time zone.  Instead, it's better to use
 unambiguous numeric time zone corrections like @samp{-0500}, as
 described in the previous section.
