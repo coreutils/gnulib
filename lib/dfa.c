@@ -44,13 +44,13 @@
 #define assume_nonnull(x) assume ((x) != NULL)
 
 static bool
-streq (char const *a, char const *b)
+str_eq (char const *a, char const *b)
 {
   return strcmp (a, b) == 0;
 }
 
 static bool
-isasciidigit (char c)
+c_isdigit (char c)
 {
   return '0' <= c && c <= '9';
 }
@@ -930,7 +930,7 @@ static const struct dfa_ctype *_GL_ATTRIBUTE_PURE
 find_pred (const char *str)
 {
   for (int i = 0; prednames[i].name; i++)
-    if (streq (str, prednames[i].name))
+    if (str_eq (str, prednames[i].name))
       return &prednames[i];
   return NULL;
 }
@@ -1009,8 +1009,8 @@ parse_bracket_exp (struct dfa *dfa)
                    worry about that possibility.  */
                 {
                   char const *class
-                    = (dfa->syntax.case_fold && (streq (str, "upper")
-                                                 || streq (str, "lower"))
+                    = (dfa->syntax.case_fold && (str_eq (str, "upper")
+                                                 || str_eq (str, "lower"))
                        ? "alpha" : str);
                   const struct dfa_ctype *pred = find_pred (class);
                   if (!pred)
@@ -1090,7 +1090,7 @@ parse_bracket_exp (struct dfa *dfa)
               if (wc != wc2 || wc == WEOF)
                 {
                   if (dfa->localeinfo.simple
-                      || (isasciidigit (c) & isasciidigit (c2)))
+                      || (c_isdigit (c) & c_isdigit (c2)))
                     {
                       for (int ci = c; ci <= c2; ci++)
                         if (dfa->syntax.case_fold && isalpha (ci))
@@ -1339,7 +1339,7 @@ lex (struct dfa *dfa)
             char const *p = dfa->lex.ptr;
             char const *lim = p + dfa->lex.left;
             dfa->lex.minrep = dfa->lex.maxrep = -1;
-            for (; p != lim && isasciidigit (*p); p++)
+            for (; p != lim && c_isdigit (*p); p++)
               dfa->lex.minrep = (dfa->lex.minrep < 0
                                  ? *p - '0'
                                  : MIN (RE_DUP_MAX + 1,
@@ -1352,7 +1352,7 @@ lex (struct dfa *dfa)
                   {
                     if (dfa->lex.minrep < 0)
                       dfa->lex.minrep = 0;
-                    while (++p != lim && isasciidigit (*p))
+                    while (++p != lim && c_isdigit (*p))
                       dfa->lex.maxrep
                         = (dfa->lex.maxrep < 0
                            ? *p - '0'
@@ -4116,7 +4116,7 @@ dfamust (struct dfa const *d)
             idx_t j, ln, rn, n;
 
             /* Guaranteed to be.  Unlikely, but ...  */
-            if (streq (lmp->is, rmp->is))
+            if (str_eq (lmp->is, rmp->is))
               {
                 lmp->begline &= rmp->begline;
                 lmp->endline &= rmp->endline;
@@ -4163,7 +4163,7 @@ dfamust (struct dfa const *d)
           for (idx_t i = 0; mp->in[i] != NULL; i++)
             if (strlen (mp->in[i]) > strlen (result))
               result = mp->in[i];
-          if (streq (result, mp->is))
+          if (str_eq (result, mp->is))
             {
               if ((!need_begline || mp->begline) && (!need_endline
                                                      || mp->endline))
