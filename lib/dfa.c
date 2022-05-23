@@ -59,6 +59,7 @@ c_isdigit (char c)
 #define _(str) gettext (str)
 
 #include <wchar.h>
+#include <wctype.h>
 
 #include "xalloc.h"
 #include "localeinfo.h"
@@ -1192,8 +1193,7 @@ lex (struct dfa *dfa)
      we set the backslash flag and go through the loop again.
      On the plus side, this avoids having a duplicate of the
      main switch inside the backslash case.  On the minus side,
-     it means that just about every case begins with
-     "if (backslash) ...".  */
+     it means that just about every case tests the backslash flag.  */
   for (int i = 0; i < 2; ++i)
     {
       if (! dfa->lex.left)
@@ -1248,52 +1248,67 @@ lex (struct dfa *dfa)
         case '7':
         case '8':
         case '9':
-          if (backslash && !(dfa->syntax.syntax_bits & RE_NO_BK_REFS))
-            {
-              dfa->lex.laststart = false;
-              return dfa->lex.lasttok = BACKREF;
-            }
-          goto normal_char;
+          if (!backslash)
+            goto normal_char;
+          if (dfa->syntax.syntax_bits & RE_NO_BK_REFS)
+            goto stray_backslash;
+
+          dfa->lex.laststart = false;
+          return dfa->lex.lasttok = BACKREF;
 
         case '`':
-          if (backslash && !(dfa->syntax.syntax_bits & RE_NO_GNU_OPS))
-            {
-              /* FIXME: should be beginning of string */
-              return dfa->lex.lasttok = BEGLINE;
-            }
-          goto normal_char;
+          if (!backslash)
+            goto normal_char;
+          if (dfa->syntax.syntax_bits & RE_NO_GNU_OPS)
+            goto stray_backslash;
+
+          /* FIXME: should be beginning of string */
+          return dfa->lex.lasttok = BEGLINE;
 
         case '\'':
-          if (backslash && !(dfa->syntax.syntax_bits & RE_NO_GNU_OPS))
-            {
-              /* FIXME: should be end of string */
-              return dfa->lex.lasttok = ENDLINE;
-            }
-          goto normal_char;
+          if (!backslash)
+            goto normal_char;
+          if (dfa->syntax.syntax_bits & RE_NO_GNU_OPS)
+            goto stray_backslash;
+
+          /* FIXME: should be end of string */
+          return dfa->lex.lasttok = ENDLINE;
 
         case '<':
-          if (backslash && !(dfa->syntax.syntax_bits & RE_NO_GNU_OPS))
-            return dfa->lex.lasttok = BEGWORD;
-          goto normal_char;
+          if (!backslash)
+            goto normal_char;
+          if (dfa->syntax.syntax_bits & RE_NO_GNU_OPS)
+            goto stray_backslash;
+
+          return dfa->lex.lasttok = BEGWORD;
 
         case '>':
-          if (backslash && !(dfa->syntax.syntax_bits & RE_NO_GNU_OPS))
-            return dfa->lex.lasttok = ENDWORD;
-          goto normal_char;
+          if (!backslash)
+            goto normal_char;
+          if (dfa->syntax.syntax_bits & RE_NO_GNU_OPS)
+            goto stray_backslash;
+
+          return dfa->lex.lasttok = ENDWORD;
 
         case 'b':
-          if (backslash && !(dfa->syntax.syntax_bits & RE_NO_GNU_OPS))
-            return dfa->lex.lasttok = LIMWORD;
-          goto normal_char;
+          if (!backslash)
+            goto normal_char;
+          if (dfa->syntax.syntax_bits & RE_NO_GNU_OPS)
+            goto stray_backslash;
+
+          return dfa->lex.lasttok = LIMWORD;
 
         case 'B':
-          if (backslash && !(dfa->syntax.syntax_bits & RE_NO_GNU_OPS))
-            return dfa->lex.lasttok = NOTLIMWORD;
-          goto normal_char;
+          if (!backslash)
+            goto normal_char;
+          if (dfa->syntax.syntax_bits & RE_NO_GNU_OPS)
+            goto stray_backslash;
+
+          return dfa->lex.lasttok = NOTLIMWORD;
 
         case '?':
           if (dfa->syntax.syntax_bits & RE_LIMITED_OPS)
-            goto normal_char;
+            goto default_case;
           if (backslash != ((dfa->syntax.syntax_bits & RE_BK_PLUS_QM) != 0))
             goto normal_char;
           if (!(dfa->syntax.syntax_bits & RE_CONTEXT_INDEP_OPS)
@@ -1311,7 +1326,7 @@ lex (struct dfa *dfa)
 
         case '+':
           if (dfa->syntax.syntax_bits & RE_LIMITED_OPS)
-            goto normal_char;
+            goto default_case;
           if (backslash != ((dfa->syntax.syntax_bits & RE_BK_PLUS_QM) != 0))
             goto normal_char;
           if (!(dfa->syntax.syntax_bits & RE_CONTEXT_INDEP_OPS)
@@ -1321,7 +1336,7 @@ lex (struct dfa *dfa)
 
         case '{':
           if (!(dfa->syntax.syntax_bits & RE_INTERVALS))
-            goto normal_char;
+            goto default_case;
           if (backslash != ((dfa->syntax.syntax_bits & RE_NO_BK_BRACES) == 0))
             goto normal_char;
           if (!(dfa->syntax.syntax_bits & RE_CONTEXT_INDEP_OPS)
@@ -1379,7 +1394,7 @@ lex (struct dfa *dfa)
 
         case '|':
           if (dfa->syntax.syntax_bits & RE_LIMITED_OPS)
-            goto normal_char;
+            goto default_case;
           if (backslash != ((dfa->syntax.syntax_bits & RE_NO_BK_VBAR) == 0))
             goto normal_char;
           dfa->lex.laststart = true;
@@ -1387,7 +1402,9 @@ lex (struct dfa *dfa)
 
         case '\n':
           if (dfa->syntax.syntax_bits & RE_LIMITED_OPS
-              || backslash || !(dfa->syntax.syntax_bits & RE_NEWLINE_ALT))
+              || !(dfa->syntax.syntax_bits & RE_NEWLINE_ALT))
+            goto default_case;
+          if (backslash)
             goto normal_char;
           dfa->lex.laststart = true;
           return dfa->lex.lasttok = OR;
@@ -1433,8 +1450,11 @@ lex (struct dfa *dfa)
 
         case 's':
         case 'S':
-          if (!backslash || (dfa->syntax.syntax_bits & RE_NO_GNU_OPS))
+          if (!backslash)
             goto normal_char;
+          if (dfa->syntax.syntax_bits & RE_NO_GNU_OPS)
+            goto stray_backslash;
+
           if (!dfa->localeinfo.multibyte)
             {
               charclass ccl;
@@ -1466,8 +1486,10 @@ lex (struct dfa *dfa)
 
         case 'w':
         case 'W':
-          if (!backslash || (dfa->syntax.syntax_bits & RE_NO_GNU_OPS))
+          if (!backslash)
             goto normal_char;
+          if (dfa->syntax.syntax_bits & RE_NO_GNU_OPS)
+            goto stray_backslash;
 
           if (!dfa->localeinfo.multibyte)
             {
@@ -1505,6 +1527,26 @@ lex (struct dfa *dfa)
           return dfa->lex.lasttok = parse_bracket_exp (dfa);
 
         default:
+        default_case:
+          if (!backslash)
+            goto normal_char;
+        stray_backslash:
+          if (dfa->syntax.dfaopts & DFA_STRAY_BACKSLASH_WARN)
+            {
+              char const *msg;
+              char msgbuf[100];
+              if (!iswprint (dfa->lex.wctok))
+                msg = _("stray \\ before unprintable character");
+              else if (iswspace (dfa->lex.wctok))
+                msg = _("stray \\ before white space");
+              else
+                {
+                  int n = snprintf (msgbuf, sizeof msgbuf,
+                                    _("stray \\ before %lc"), dfa->lex.wctok);
+                  msg = 0 <= n && n < sizeof msgbuf ? msgbuf : _("stray \\");
+                }
+              dfawarn (msg);
+            }
         normal_char:
           dfa->lex.laststart = false;
           /* For multibyte character sets, folding is done in atom.  Always
