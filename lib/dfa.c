@@ -399,14 +399,11 @@ struct regex_syntax
 {
   /* Syntax bits controlling the behavior of the lexical analyzer.  */
   reg_syntax_t syntax_bits;
+  int dfaopts;
   bool syntax_bits_set;
 
   /* Flag for case-folding letters into sets.  */
   bool case_fold;
-
-  /* True if ^ and $ match only the start and end of data, and do not match
-     end-of-line within data.  */
-  bool anchor;
 
   /* End-of-line byte in data.  */
   unsigned char eolbyte;
@@ -836,7 +833,7 @@ unibyte_word_constituent (struct dfa const *dfa, unsigned char c)
 static int
 char_context (struct dfa const *dfa, unsigned char c)
 {
-  if (c == dfa->syntax.eolbyte && !dfa->syntax.anchor)
+  if (c == dfa->syntax.eolbyte && !(dfa->syntax.dfaopts & DFA_ANCHOR))
     return CTX_NEWLINE;
   if (unibyte_word_constituent (dfa, c))
     return CTX_LETTER;
@@ -1140,7 +1137,9 @@ parse_bracket_exp (struct dfa *dfa)
   while ((wc = wc1, (c = c1) != ']'));
 
   if (colon_warning_state == 7)
-    dfawarn (_("character class syntax is [[:space:]], not [:space:]"));
+    ((dfa->syntax.dfaopts & DFA_CONFUSING_BRACKETS_ERROR
+      ? dfaerror : dfawarn)
+     (_("character class syntax is [[:space:]], not [:space:]")));
 
   if (! known_bracket_exp)
     return BACKREF;
@@ -4327,9 +4326,9 @@ dfasyntax (struct dfa *dfa, struct localeinfo const *linfo,
   dfa->canychar = -1;
   dfa->syntax.syntax_bits_set = true;
   dfa->syntax.case_fold = (bits & RE_ICASE) != 0;
-  dfa->syntax.anchor = (dfaopts & DFA_ANCHOR) != 0;
   dfa->syntax.eolbyte = dfaopts & DFA_EOL_NUL ? '\0' : '\n';
   dfa->syntax.syntax_bits = bits;
+  dfa->syntax.dfaopts = dfaopts;
 
   for (int i = CHAR_MIN; i <= CHAR_MAX; ++i)
     {
