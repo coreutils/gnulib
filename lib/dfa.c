@@ -1401,8 +1401,7 @@ lex (struct dfa *dfa)
           return dfa->lex.lasttok = OR;
 
         case '\n':
-          if (dfa->syntax.syntax_bits & RE_LIMITED_OPS
-              || !(dfa->syntax.syntax_bits & RE_NEWLINE_ALT))
+          if (!(dfa->syntax.syntax_bits & RE_NEWLINE_ALT))
             goto default_case;
           if (backslash)
             goto normal_char;
