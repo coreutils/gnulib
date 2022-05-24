@@ -1311,17 +1311,25 @@ lex (struct dfa *dfa)
             goto default_case;
           if (backslash != ((dfa->syntax.syntax_bits & RE_BK_PLUS_QM) != 0))
             goto normal_char;
-          if (!(dfa->syntax.syntax_bits & RE_CONTEXT_INDEP_OPS)
-              && dfa->lex.laststart)
-            goto normal_char;
+          if (dfa->lex.laststart)
+            {
+              if (!(dfa->syntax.syntax_bits & RE_CONTEXT_INDEP_OPS))
+                goto default_case;
+              if (dfa->syntax.dfaopts & DFA_PLUS_WARN)
+                dfawarn (_("? at start of expression"));
+            }
           return dfa->lex.lasttok = QMARK;
 
         case '*':
           if (backslash)
             goto normal_char;
-          if (!(dfa->syntax.syntax_bits & RE_CONTEXT_INDEP_OPS)
-              && dfa->lex.laststart)
-            goto normal_char;
+          if (dfa->lex.laststart)
+            {
+              if (!(dfa->syntax.syntax_bits & RE_CONTEXT_INDEP_OPS))
+                goto default_case;
+              if (dfa->syntax.dfaopts & DFA_STAR_WARN)
+                dfawarn (_("* at start of expression"));
+            }
           return dfa->lex.lasttok = STAR;
 
         case '+':
@@ -1329,18 +1337,19 @@ lex (struct dfa *dfa)
             goto default_case;
           if (backslash != ((dfa->syntax.syntax_bits & RE_BK_PLUS_QM) != 0))
             goto normal_char;
-          if (!(dfa->syntax.syntax_bits & RE_CONTEXT_INDEP_OPS)
-              && dfa->lex.laststart)
-            goto normal_char;
+          if (dfa->lex.laststart)
+            {
+              if (!(dfa->syntax.syntax_bits & RE_CONTEXT_INDEP_OPS))
+                goto default_case;
+              if (dfa->syntax.dfaopts & DFA_PLUS_WARN)
+                dfawarn (_("+ at start of expression"));
+            }
           return dfa->lex.lasttok = PLUS;
 
         case '{':
           if (!(dfa->syntax.syntax_bits & RE_INTERVALS))
             goto default_case;
           if (backslash != ((dfa->syntax.syntax_bits & RE_NO_BK_BRACES) == 0))
-            goto normal_char;
-          if (!(dfa->syntax.syntax_bits & RE_CONTEXT_INDEP_OPS)
-              && dfa->lex.laststart)
             goto normal_char;
 
           /* Cases:
@@ -1374,16 +1383,24 @@ lex (struct dfa *dfa)
                                   dfa->lex.maxrep * 10 + *p - '0'));
                   }
               }
-            if (! ((! backslash || (p != lim && *p++ == '\\'))
+            bool invalid_content
+              = ! ((! backslash || (p != lim && *p++ == '\\'))
                    && p != lim && *p++ == '}'
                    && 0 <= dfa->lex.minrep
                    && (dfa->lex.maxrep < 0
-                       || dfa->lex.minrep <= dfa->lex.maxrep)))
+                       || dfa->lex.minrep <= dfa->lex.maxrep));
+            if (invalid_content
+                && (dfa->syntax.syntax_bits & RE_INVALID_INTERVAL_ORD))
+              goto normal_char;
+            if (dfa->lex.laststart)
               {
-                if (dfa->syntax.syntax_bits & RE_INVALID_INTERVAL_ORD)
-                  goto normal_char;
-                dfaerror (_("invalid content of \\{\\}"));
+                if (!(dfa->syntax.syntax_bits & RE_CONTEXT_INDEP_OPS))
+                  goto default_case;
+                if (dfa->syntax.dfaopts & DFA_PLUS_WARN)
+                  dfawarn (_("{...} at start of expression"));
               }
+            if (invalid_content)
+              dfaerror (_("invalid content of \\{\\}"));
             if (RE_DUP_MAX < dfa->lex.maxrep)
               dfaerror (_("regular expression too big"));
             dfa->lex.ptr = p;

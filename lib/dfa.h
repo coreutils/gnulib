@@ -81,6 +81,14 @@ enum
 
     /* Warn about stray backslashes before ordinary characters.  */
     DFA_STRAY_BACKSLASH_WARN = 1 << 3,
+
+    /* Warn about * appearing out of context at the start of an
+       expression or subexpression.  */
+    DFA_STAR_WARN = 1 << 4,
+
+    /* Warn about +, ?, {...} appearing out of context at the start of
+       an expression or subexpression.  */
+    DFA_PLUS_WARN = 1 << 5,
   };
 
 /* Initialize or reinitialize a DFA.  The arguments are:
