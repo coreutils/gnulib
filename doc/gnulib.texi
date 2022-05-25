@@ -6845,7 +6845,6 @@ to POSIX that it can be treated like any other Unix-like platform.
 * Regular Expression Syntax::
 * Common Operators::
 * GNU Operators::
-* GNU Emacs Operators::
 * What Gets Matched?::
 * Programming with Regex::
 * Regular expression syntaxes::
