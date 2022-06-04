@@ -20,7 +20,7 @@
 exitcode=0
 for module in `./gnulib-tool --list`; do
   f=modules/$module
-  for g in `sed -n -e 's/^ *AC_LIBOBJ(\[\(.*\)\]).*/\1/p' < $f`; do
+  for g in `sed -n -e 's/^ *AC_LIBOBJ(\[\(.*\)]).*/\1/p' < $f`; do
     if grep "^lib/$g\.c\$" $f >/dev/null; then
       :
     else

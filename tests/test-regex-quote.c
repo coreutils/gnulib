@@ -78,14 +78,14 @@ static void
 test_bre (void)
 {
   check ("aBc", 0, "aBc");
-  check ("(foo[$HOME])", 0, "(foo\\[\\$HOME\\])");
+  check ("(foo[$HOME])", 0, "(foo\\[\\$HOME])");
 }
 
 static void
 test_ere (void)
 {
   check ("aBc", REG_EXTENDED, "aBc");
-  check ("(foo[$HOME])", REG_EXTENDED, "\\(foo\\[\\$HOME\\]\\)");
+  check ("(foo[$HOME])", REG_EXTENDED, "\\(foo\\[\\$HOME]\\)");
 }
 
 int

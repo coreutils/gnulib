@@ -3178,8 +3178,8 @@ func_modules_transitive_closure ()
                 sed_extract_condition1='/^ *'"$escaped_dep"' *$/{
                   s/^.*$/true/p
                 }'
-                sed_extract_condition2='/^ *'"$escaped_dep"' *\[.*\] *$/{
-                  s/^ *'"$escaped_dep"' *\[\(.*\)\] *$/\1/p
+                sed_extract_condition2='/^ *'"$escaped_dep"' *\[.*] *$/{
+                  s/^ *'"$escaped_dep"' *\[\(.*\)] *$/\1/p
                 }'
                 condition=`func_get_dependencies $module | sed -n -e "$sed_extract_condition1" -e "$sed_extract_condition2"`
                 if test "$condition" = true; then
@@ -4637,7 +4637,7 @@ func_emit_autoconf_snippet ()
           fi
         } \
       | { if $disable_gettext; then
-            sed -e 's/AM_GNU_GETTEXT(\[external\])/dnl you must add AM_GNU_GETTEXT([external]) or similar to configure.ac./'
+            sed -e 's/AM_GNU_GETTEXT(\[external])/dnl you must add AM_GNU_GETTEXT([external]) or similar to configure.ac./'
           else
             # Don't indent AM_GNU_GETTEXT_VERSION line, as that confuses
             # autopoint through at least GNU gettext version 0.18.2.
@@ -5033,12 +5033,12 @@ func_import ()
         s,#.*$,,
         s,^dnl .*$,,
         s, dnl .*$,,
-        /AC_DEFUN(\['"${cached_macro_prefix}"'_FILE_LIST\], \[/ {
+        /AC_DEFUN(\['"${cached_macro_prefix}"'_FILE_LIST], \[/ {
           s,^.*$,cached_files=",p
           n
           ta
           :a
-          s,^\]).*$,",
+          s,^]).*$,",
           tb
           s,["$`\\],,g
           p
@@ -6694,7 +6694,7 @@ func_create_testdir ()
            esac
          fi
        done \
-         | sed -e '/^$/d;' -e 's/AC_REQUIRE(\[\([^()]*\)\])/\1/'
+         | sed -e '/^$/d;' -e 's/AC_REQUIRE(\[\([^()]*\)])/\1/'
        if test "$libtool" = true; then
          echo "LT_INIT([win32-dll])"
          echo "LT_LANG([C++])"
@@ -6806,7 +6806,7 @@ func_create_testdir ()
        func_get_autoconf_early_snippet "$module"
      fi
    done \
-     | sed -e '/^$/d;' -e 's/AC_REQUIRE(\[\([^()]*\)\])/\1/'
+     | sed -e '/^$/d;' -e 's/AC_REQUIRE(\[\([^()]*\)])/\1/'
    if test "$libtool" = true; then
      echo "LT_INIT([win32-dll])"
      echo "LT_LANG([C++])"

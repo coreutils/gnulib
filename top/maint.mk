@@ -823,7 +823,7 @@ sc_trailing_blank:
 # Match lines like the following, but where there is only one space
 # between the options and the description:
 #   -D, --all-repeated[=delimit-method]  print all duplicate lines\n
-longopt_re = --[a-z][0-9A-Za-z-]*(\[?=[0-9A-Za-z-]*\]?)?
+longopt_re = --[a-z][0-9A-Za-z-]*(\[?=[0-9A-Za-z-]*]?)?
 sc_two_space_separator_in_usage:
 	@prohibit='^   *(-[A-Za-z],)? $(longopt_re) [^ ].*\\$$'		\
 	halt='help2man requires at least two spaces between an option and its description'\
@@ -1390,7 +1390,7 @@ gpg_key_ID ?=								\
   $$(cd $(srcdir)							\
      && git cat-file tag v$(VERSION)					\
         | $(gpgv) --status-fd 1 --keyring /dev/null - - 2>/dev/null	\
-        | $(AWK) '/^\[GNUPG:\] ERRSIG / {print $$3; exit}')
+        | $(AWK) '/^\[GNUPG:] ERRSIG / {print $$3; exit}')
 gpg_key_email ?=							\
   $$(gpg --list-key --with-colons $(gpg_key_ID) 2>/dev/null		\
 	| $(AWK) -F: '/^uid/ {print $$10; exit}'			\
@@ -1743,8 +1743,8 @@ _gl_TS_unmarked_extern_vars ?=
 # a macro like this: GLOBAL(type, var_name, initializer), then you
 # can override this definition to automatically extract those names:
 # export _gl_TS_var_match = \
-#   /^(?:$(_gl_TS_extern)) .*?\**(\w+)(\[.*?\])?;/ || /\bGLOBAL\(.*?,\s*(.*?),/
-_gl_TS_var_match ?= /^(?:$(_gl_TS_extern)) .*?(\w+)(\[.*?\])?;/
+#   /^(?:$(_gl_TS_extern)) .*?\**(\w+)(\[.*?])?;/ || /\bGLOBAL\(.*?,\s*(.*?),/
+_gl_TS_var_match ?= /^(?:$(_gl_TS_extern)) .*?(\w+)(\[.*?])?;/
 
 # The names of object files in (or relative to) $(_gl_TS_dir).
 _gl_TS_obj_files ?= *.$(OBJEXT)
