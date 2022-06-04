@@ -29,7 +29,7 @@
 static const char bre_special[] = "$^.*[\\";
 
 /* Characters that are special in an ERE.  */
-static const char ere_special[] = "$^.*[\\+?{}()|";
+static const char ere_special[] = "$^.*[\\+?{()|";
 
 struct regex_quote_spec
 regex_quote_spec_posix (int cflags, bool anchored)
