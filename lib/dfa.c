@@ -1563,6 +1563,8 @@ lex (struct dfa *dfa)
                 }
               dfawarn (msg);
             }
+          FALLTHROUGH;
+        case ']': case '}':
         normal_char:
           dfa->lex.laststart = false;
           /* For multibyte character sets, folding is done in atom.  Always

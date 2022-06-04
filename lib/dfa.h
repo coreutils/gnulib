@@ -79,7 +79,11 @@ enum
        merely a warning.  */
     DFA_CONFUSING_BRACKETS_ERROR = 1 << 2,
 
-    /* Warn about stray backslashes before ordinary characters.  */
+    /* Warn about stray backslashes before ordinary characters other
+       than ] and } which are special because even though POSIX
+       says \] and \} have undefined interpretation, platforms
+       reliably ignore those stray backlashes and warning about them
+       would likely cause more trouble than it's worth.  */
     DFA_STRAY_BACKSLASH_WARN = 1 << 3,
 
     /* Warn about * appearing out of context at the start of an
