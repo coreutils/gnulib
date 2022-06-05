@@ -1250,8 +1250,8 @@ you can use unless the syntax bit @code{RE_NO_GNU_OPS} is set.
 
 @menu
 * Word Operators::
-* Whole-string Operators::
 * Space Operators::
+* Whole-string Operators::
 @end menu
 
 @node Word Operators
