@@ -20,6 +20,7 @@ if test $REPLACE_FOPEN_FOR_FOPEN_GNU = 1; then
   gl_PREREQ_FOPEN
 fi
 gl_MODULE_INDICATOR([fopen-gnu])
+gl_STDIO_MODULE_INDICATOR([fopen-gnu])
 
 Makefile.am:
 
