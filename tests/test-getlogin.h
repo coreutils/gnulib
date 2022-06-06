@@ -18,6 +18,7 @@
 
 #include <errno.h>
 #include <stdio.h>
+#include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
@@ -42,11 +43,34 @@ test_getlogin_result (const char *buf, int err)
           exit (77);
         }
 
-      /* It fails when stdin is not connected to a tty.  */
       ASSERT (err == ENOTTY
               || err == EINVAL /* seen on Linux/SPARC */
               || err == ENXIO
              );
+
+#if defined __linux__
+      /* On Linux, it is possible to set up a chroot environment in such a way
+         that stdin is connected to a tty and nervertheless /proc/self/loginuid
+         contains "-1".  In this situation, getlogin() and getlogin_r() fail;
+         this is expected.  */
+      bool loginuid_undefined = false;
+      /* Does the special file /proc/self/loginuid contain "-1"?  */
+      FILE *fp = fopen ("/proc/self/loginuid", "r");
+      if (fp != NULL)
+        {
+          char buf[3];
+          loginuid_undefined =
+            (fread (buf, 1, 3, fp) == 2 && buf[0] == '-' && buf[1] == '1');
+          fclose (fp);
+        }
+      if (loginuid_undefined)
+        {
+          fprintf (stderr, "Skipping test: loginuid is undefined.\n");
+          exit (77);
+        }
+#endif
+
+      /* It fails when stdin is not connected to a tty.  */
 #if !defined __hpux /* On HP-UX 11.11 it fails anyway.  */
       ASSERT (! isatty (0));
 #endif
@@ -63,8 +87,10 @@ test_getlogin_result (const char *buf, int err)
 
     if (!isatty (STDIN_FILENO))
       {
-         fprintf (stderr, "Skipping test: stdin is not a tty.\n");
-         exit (77);
+        /* We get here, for example, when running under 'nohup' or as part of a
+           non-interactive ssh command.  */
+        fprintf (stderr, "Skipping test: stdin is not a tty.\n");
+        exit (77);
       }
 
     ASSERT (fstat (STDIN_FILENO, &stat_buf) == 0);
