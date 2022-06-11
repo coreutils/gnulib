@@ -45,7 +45,7 @@
 int
 lchmod (char const *file, mode_t mode)
 {
-#if defined O_PATH && defined AT_EMPTY_PATH
+#ifdef O_PATH
   /* Open a file descriptor with O_NOFOLLOW, to make sure we don't
      follow symbolic links, if /proc is mounted.  O_PATH is used to
      avoid a failure if the file is not readable.
@@ -54,46 +54,30 @@ lchmod (char const *file, mode_t mode)
   if (fd < 0)
     return fd;
 
-  /* Up to Linux 5.3 at least, when FILE refers to a symbolic link, the
-     chmod call below will change the permissions of the symbolic link
-     - which is undesired - and on many file systems (ext4, btrfs, jfs,
-     xfs, ..., but not reiserfs) fail with error EOPNOTSUPP - which is
-     misleading.  Therefore test for a symbolic link explicitly.
-     Use fstatat because fstat does not work on O_PATH descriptors
-     before Linux 3.6.  */
-  struct stat st;
-  if (fstatat (fd, "", &st, AT_EMPTY_PATH) != 0)
+  int err;
+  char buf[1];
+  if (0 <= readlinkat (fd, "", buf, sizeof buf))
+    err = EOPNOTSUPP;
+  else if (errno == EINVAL)
     {
-      int stat_errno = errno;
-      close (fd);
-      errno = stat_errno;
-      return -1;
+      static char const fmt[] = "/proc/self/fd/%d";
+      char buf[sizeof fmt - sizeof "%d" + INT_BUFSIZE_BOUND (int)];
+      sprintf (buf, fmt, fd);
+      err = chmod (buf, mode) == 0 ? 0 : errno == ENOENT ? -1 : errno;
     }
-  if (S_ISLNK (st.st_mode))
-    {
-      close (fd);
-      errno = EOPNOTSUPP;
-      return -1;
-    }
+  else
+    err = errno == ENOENT ? -1 : errno;
 
-# if defined __linux__ || defined __ANDROID__ || defined __CYGWIN__
-  static char const fmt[] = "/proc/self/fd/%d";
-  char buf[sizeof fmt - sizeof "%d" + INT_BUFSIZE_BOUND (int)];
-  sprintf (buf, fmt, fd);
-  int chmod_result = chmod (buf, mode);
-  int chmod_errno = errno;
   close (fd);
-  if (chmod_result == 0)
-    return chmod_result;
-  if (chmod_errno != ENOENT)
-    {
-      errno = chmod_errno;
-      return chmod_result;
-    }
-# endif
-  /* /proc is not mounted or would not work as in GNU/Linux.  */
 
-#elif HAVE_LSTAT
+  errno = err;
+  if (0 <= err)
+    return err == 0 ? 0 : -1;
+#endif
+
+  /* O_PATH + /proc is not supported.  */
+
+#if HAVE_LSTAT
   struct stat st;
   int lstat_result = lstat (file, &st);
   if (lstat_result != 0)
