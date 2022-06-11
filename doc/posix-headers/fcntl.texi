@@ -86,6 +86,12 @@ Solaris 11.3.
 
 Portability problems not fixed by Gnulib:
 @itemize
+
+@item
+@samp{O_PATH} is not defined on some platforms:
+AIX 7.3, FreeBSD 9.3, IRIX 6.5, macOS 13, mingw, Minix 3.3.0, MSVC 14,
+NetBSD 9.2, OpenBSD 7.1, Solaris 11.4.
+
 @item
 @samp{F_SETFD}, @samp{F_GETFL}, @samp{F_SETFL}, @samp{F_GETLK},
 @samp{F_SETLK}, @samp{F_SETLKW}, @samp{F_GETOWN}, and @samp{F_SETOWN}
