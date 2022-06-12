@@ -83,9 +83,10 @@ fchmodat (int dir, char const *file, mode_t mode, int flags)
 # if NEED_FCHMODAT_NONSYMLINK_FIX
   if (flags == AT_SYMLINK_NOFOLLOW)
     {
-      struct stat st;
+#  if HAVE_READLINKAT
+      char readlink_buf[1];
 
-#  ifdef O_PATH
+#   ifdef O_PATH
       /* Open a file descriptor with O_NOFOLLOW, to make sure we don't
          follow symbolic links, if /proc is mounted.  O_PATH is used to
          avoid a failure if the file is not readable.
@@ -96,7 +97,7 @@ fchmodat (int dir, char const *file, mode_t mode, int flags)
 
       int err;
       char buf[1];
-      if (0 <= readlinkat (fd, "", buf, sizeof buf))
+      if (0 <= readlinkat (fd, "", readlink_buf, sizeof readlink_buf))
         err = EOPNOTSUPP;
       else if (errno == EINVAL)
         {
@@ -113,17 +114,16 @@ fchmodat (int dir, char const *file, mode_t mode, int flags)
       errno = err;
       if (0 <= err)
         return err == 0 ? 0 : -1;
-#  endif
+#   endif
 
       /* O_PATH + /proc is not supported.  */
-      int fstatat_result = fstatat (dir, file, &st, AT_SYMLINK_NOFOLLOW);
-      if (fstatat_result != 0)
-        return fstatat_result;
-      if (S_ISLNK (st.st_mode))
+
+      if (0 <= readlinkat (dir, file, readlink_buf, sizeof readlink_buf))
         {
           errno = EOPNOTSUPP;
           return -1;
         }
+#  endif
 
       /* Fall back on orig_fchmodat with no flags, despite a possible race.  */
       flags = 0;

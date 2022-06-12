@@ -213,15 +213,16 @@ renameatu (int fd1, char const *src, int fd2, char const *dst,
           goto out;
         }
       strip_trailing_slashes (dst_temp);
-      if (lstatat (fd2, dst_temp, &dst_st))
+      char readlink_buf[1];
+      if (readlinkat (fd2, dst_temp, readlink_buf, sizeof readlink_buf) < 0)
         {
-          if (errno != ENOENT)
+          if (errno != ENOENT && errno != EINVAL)
             {
               rename_errno = errno;
               goto out;
             }
         }
-      else if (S_ISLNK (dst_st.st_mode))
+      else
         goto out;
     }
 # endif /* RENAME_TRAILING_SLASH_SOURCE_BUG */

@@ -45,9 +45,9 @@ lchown (const char *file, uid_t uid, gid_t gid)
 {
 # if HAVE_CHOWN
 #  if ! CHOWN_MODIFIES_SYMLINK
-  struct stat stats;
+  char readlink_buf[1];
 
-  if (lstat (file, &stats) == 0 && S_ISLNK (stats.st_mode))
+  if (0 <= readlink (file, readlink_buf, sizeof readlink_buf))
     {
       errno = EOPNOTSUPP;
       return -1;
