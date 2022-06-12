@@ -45,7 +45,10 @@
 int
 lchmod (char const *file, mode_t mode)
 {
-#ifdef O_PATH
+#if HAVE_READLINK
+  char readlink_buf[1];
+
+# ifdef O_PATH
   /* Open a file descriptor with O_NOFOLLOW, to make sure we don't
      follow symbolic links, if /proc is mounted.  O_PATH is used to
      avoid a failure if the file is not readable.
@@ -55,8 +58,7 @@ lchmod (char const *file, mode_t mode)
     return fd;
 
   int err;
-  char buf[1];
-  if (0 <= readlinkat (fd, "", buf, sizeof buf))
+  if (0 <= readlinkat (fd, "", readlink_buf, sizeof readlink_buf))
     err = EOPNOTSUPP;
   else if (errno == EINVAL)
     {
@@ -73,16 +75,11 @@ lchmod (char const *file, mode_t mode)
   errno = err;
   if (0 <= err)
     return err == 0 ? 0 : -1;
-#endif
+# endif
 
   /* O_PATH + /proc is not supported.  */
 
-#if HAVE_LSTAT
-  struct stat st;
-  int lstat_result = lstat (file, &st);
-  if (lstat_result != 0)
-    return lstat_result;
-  if (S_ISLNK (st.st_mode))
+  if (0 <= readlink (file, readlink_buf, sizeof readlink_buf))
     {
       errno = EOPNOTSUPP;
       return -1;
