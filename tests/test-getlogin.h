@@ -51,16 +51,25 @@ test_getlogin_result (const char *buf, int err)
 #if defined __linux__
       /* On Linux, it is possible to set up a chroot environment in such a way
          that stdin is connected to a tty and nervertheless /proc/self/loginuid
-         contains "-1".  In this situation, getlogin() and getlogin_r() fail;
-         this is expected.  */
+         contains the value (uid_t)(-1).  In this situation, getlogin() and
+         getlogin_r() fail; this is expected.  */
       bool loginuid_undefined = false;
-      /* Does the special file /proc/self/loginuid contain "-1"?  */
+      /* Does the special file /proc/self/loginuid contain the value
+         (uid_t)(-1)?  */
       FILE *fp = fopen ("/proc/self/loginuid", "r");
       if (fp != NULL)
         {
-          char buf[3];
-          loginuid_undefined =
-            (fread (buf, 1, 3, fp) == 2 && buf[0] == '-' && buf[1] == '1');
+          char buf[21];
+          size_t n = fread (buf, 1, sizeof buf, fp);
+          if (n > 0 && n < sizeof buf)
+            {
+              buf[n] = '\0';
+              errno = 0;
+              char *endptr;
+              unsigned long value = strtoul (buf, &endptr, 10);
+              if (*endptr == '\0' && errno == 0)
+                loginuid_undefined = ((uid_t) value == (uid_t)(-1));
+            }
           fclose (fp);
         }
       if (loginuid_undefined)
