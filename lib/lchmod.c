@@ -25,6 +25,7 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <stdio.h>
+#include <string.h>
 #include <unistd.h>
 
 #ifdef __osf__
@@ -45,10 +46,9 @@
 int
 lchmod (char const *file, mode_t mode)
 {
-#if HAVE_READLINK
   char readlink_buf[1];
 
-# ifdef O_PATH
+#ifdef O_PATH
   /* Open a file descriptor with O_NOFOLLOW, to make sure we don't
      follow symbolic links, if /proc is mounted.  O_PATH is used to
      avoid a failure if the file is not readable.
@@ -75,7 +75,20 @@ lchmod (char const *file, mode_t mode)
   errno = err;
   if (0 <= err)
     return err == 0 ? 0 : -1;
-# endif
+#endif
+
+  size_t len = strlen (file);
+  if (len && file[len - 1] == '/')
+    {
+      struct stat st;
+      if (lstat (file, &st) < 0)
+        return -1;
+      if (!S_ISDIR (st.st_mode))
+        {
+          errno = ENOTDIR;
+          return -1;
+        }
+    }
 
   /* O_PATH + /proc is not supported.  */
 
@@ -84,7 +97,6 @@ lchmod (char const *file, mode_t mode)
       errno = EOPNOTSUPP;
       return -1;
     }
-#endif
 
   /* Fall back on chmod, despite a possible race.  */
   return chmod (file, mode);

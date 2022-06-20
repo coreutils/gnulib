@@ -12,4 +12,8 @@ Portability problems fixed by Gnulib:
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+This function does not fail when the file name argument ends in a slash
+and (without the slash) names a non-directory, on some platforms:
+AIX 7.2.
 @end itemize
