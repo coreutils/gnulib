@@ -96,7 +96,6 @@ fchmodat (int dir, char const *file, mode_t mode, int flags)
         return fd;
 
       int err;
-      char buf[1];
       if (0 <= readlinkat (fd, "", readlink_buf, sizeof readlink_buf))
         err = EOPNOTSUPP;
       else if (errno == EINVAL)
