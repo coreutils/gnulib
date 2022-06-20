@@ -16,6 +16,10 @@ HP-UX 11.31.
 This function always fails with @code{errno} set to @code{ENOSYS},
 even when the file is not a symbolic link:
 GNU/Linux with glibc 2.31.
+@item
+This function does not fail when the file name argument ends in a slash
+and (without the slash) names a non-directory, on some platforms:
+AIX 7.2.
 @end itemize
 
 Portability problems not fixed by Gnulib:
