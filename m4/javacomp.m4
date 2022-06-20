@@ -1,4 +1,4 @@
-# javacomp.m4 serial 18
+# javacomp.m4 serial 19
 dnl Copyright (C) 2001-2003, 2006-2007, 2009-2022 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -731,6 +731,21 @@ changequote([,])dnl
   AC_SUBST([CONF_JAVAC])
   AC_SUBST([CLASSPATH])
   AC_SUBST([CLASSPATH_SEPARATOR])
+  AC_SUBST([HAVE_JAVAC_ENVVAR])
+  AC_SUBST([HAVE_GCJ_C])
+  AC_SUBST([HAVE_JAVAC])
+  AC_SUBST([HAVE_JIKES])
+])
+
+# Simulates gt_JAVACOMP when no Java support is desired.
+AC_DEFUN([gt_JAVACOMP_DISABLED],
+[
+  CONF_JAVAC=
+  HAVE_JAVAC_ENVVAR=
+  HAVE_GCJ_C=
+  HAVE_JAVAC=
+  HAVE_JIKES=
+  AC_SUBST([CONF_JAVAC])
   AC_SUBST([HAVE_JAVAC_ENVVAR])
   AC_SUBST([HAVE_GCJ_C])
   AC_SUBST([HAVE_JAVAC])
