@@ -28,15 +28,6 @@
 #include <string.h>
 #include <unistd.h>
 
-#ifdef __osf__
-/* Write "sys/stat.h" here, not <sys/stat.h>, otherwise OSF/1 5.1 DTK cc
-   eliminates this include because of the preliminary #include <sys/stat.h>
-   above.  */
-# include "sys/stat.h"
-#else
-# include <sys/stat.h>
-#endif
-
 #include <intprops.h>
 
 /* Work like chmod, except when FILE is a symbolic link.
