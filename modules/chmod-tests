@@ -1,0 +1,13 @@
+Files:
+tests/test-chmod.c
+tests/signature.h
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-chmod
+check_PROGRAMS += test-chmod
+test_chmod_LDADD = $(LDADD) $(LIBINTL)
