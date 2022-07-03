@@ -106,6 +106,24 @@ It defines a Makefile variable @code{@@CFLAG_VISIBILITY@@} containing
 as a substituted variable: @@HAVE_VISIBILITY@@.  Its value is 1 when symbol
 visibility control is supported, and 0 otherwise.
 
+As of 2022, symbol visibility control is supported on
+@itemize @bullet
+@item
+ELF platforms (glibc, Linux, *BSD, Solaris) with GCC or clang,
+@item
+macOS,
+@item
+AIX with gcc or xlclang.
+@end itemize
+@noindent
+It is not supprted on
+@itemize @bullet
+@item
+Other compilers on ELF platforms or AIX,
+@item
+Windows.
+@end itemize
+
 To use this module in a library, say libfoo, you will do these steps:
 
 @enumerate
@@ -121,7 +139,7 @@ for the compilation of the sources that make up the library.
 @item
 Define a macro specific to your library like this.
 @smallexample
-#if BUILDING_LIBFOO && HAVE_VISIBILITY
+#if HAVE_VISIBILITY && BUILDING_LIBFOO
 #define LIBFOO_DLL_EXPORTED __attribute__((__visibility__("default")))
 #else
 #define LIBFOO_DLL_EXPORTED
@@ -149,13 +167,17 @@ your library.
 Note about other compilers: MSVC support can be added easily, by extending
 the definition of the macro mentioned above, to something like this:
 @smallexample
-#if BUILDING_LIBFOO && HAVE_VISIBILITY
+#if HAVE_VISIBILITY && BUILDING_LIBFOO
 #define LIBFOO_DLL_EXPORTED __attribute__((__visibility__("default")))
-#elif BUILDING_LIBFOO && defined _MSC_VER
+#elif (defined _WIN32 && !defined __CYGWIN__) && BUILDING_SHARED && BUILDING_LIBFOO
 #define LIBFOO_DLL_EXPORTED __declspec(dllexport)
-#elif defined _MSC_VER
+#elif (defined _WIN32 && !defined __CYGWIN__) && BUILDING_SHARED
 #define LIBFOO_DLL_EXPORTED __declspec(dllimport)
 #else
 #define LIBFOO_DLL_EXPORTED
 #endif
 @end smallexample
+@noindent
+Here @code{BUILDING_SHARED} is a C macro that you have to define.  It
+ought to evaluate to 1 in a build configured with @samp{--enable-shared},
+or to 0 in a build configured with @samp{--disable-shared}.
