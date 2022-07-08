@@ -35,7 +35,7 @@
 eval 'exec perl -wSx "$0" "$@"'
      if 0;
 
-my $VERSION = '2022-03-14 10:08'; # UTC
+my $VERSION = '2022-07-08 22:28'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -498,7 +498,7 @@ EOF
     {
       # When there's only one tarball and one URL, use a more concise form.
       my $m = "$url_dir_list[0]/$tarballs[0]";
-      print "Here are the compressed sources and a GPG detached signature[*]:\n"
+      print "Here are the compressed sources and a GPG detached signature:\n"
         . "  $m\n"
         . "  $m.sig\n\n";
     }
@@ -510,7 +510,7 @@ EOF
                              . "please tell bug-gnulib\@gnu.org)",
                              @url_dir_list, %size, $xd);
       my @sig_files = map { "$_.sig" } @tarballs;
-      print_locations ("GPG detached signatures[*]", @url_dir_list, %size,
+      print_locations ("GPG detached signatures", @url_dir_list, %size,
                        @sig_files);
     }
 
@@ -535,14 +535,29 @@ EOF
     and print_checksums (@sizable);
 
   print <<EOF;
-[*] Use a .sig file to verify that the corresponding file (without the
+Use a .sig file to verify that the corresponding file (without the
 .sig suffix) is intact.  First, be sure to download both the .sig file
 and the corresponding tarball.  Then, run a command like this:
 
   gpg --verify $tarballs[0].sig
 
+EOF
+  my $gpg_fingerprint = `LANG=C gpg --fingerprint $gpg_key_id | grep -v ^sub`;
+  if ($gpg_fingerprint =~ /^pub/)
+    {
+      chop $gpg_fingerprint;
+      $gpg_fingerprint =~ s/ \[expires:.*//mg;
+      $gpg_fingerprint =~ s/^uid           \[ultimate\]/uid  /mg;
+      $gpg_fingerprint =~ s/^/  /mg;
+      print<<EOF
+The signature should match the fingerprint of the following key:
+
+$gpg_fingerprint
+EOF
+    }
+  print <<EOF;
 If that command fails because you don't have the required public key,
-or that public key has expired, try the following commands to update
+or that public key has expired, try the following commands to retrieve
 or refresh it, and then rerun the 'gpg --verify' command.
 EOF
   if ($gpg_key_email) {
@@ -560,7 +575,16 @@ EOF
 
   wget -q -O- '$gpg_keyring_url' | gpg --import -
 EOF
-    }
+      }
+  print <<EOF;
+
+As a last resort to find the key, you can try the official GNU
+keyring:
+
+  wget -q https://ftp.gnu.org/gnu/gnu-keyring.gpg
+  gpg --keyring gnu-keyring.gpg --verify $tarballs[0].sig
+
+EOF
 
   my @tool_versions = get_tool_versions (\@tool_list, $gnulib_version);
   @tool_versions
