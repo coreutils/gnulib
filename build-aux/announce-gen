@@ -546,7 +546,7 @@ and the corresponding tarball.  Then, run a command like this:
   gpg --verify $tarballs[0].sig
 
 EOF
-  my $gpg_fingerprint = `LANG=C gpg --fingerprint $gpg_key_id | grep -v ^sub`;
+  my $gpg_fingerprint = `LC_ALL=C gpg --fingerprint $gpg_key_id | grep -v ^sub`;
   if ($gpg_fingerprint =~ /^pub/)
     {
       chop $gpg_fingerprint;
