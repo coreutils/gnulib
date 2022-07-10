@@ -894,10 +894,10 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
 
 #elif defined _AIX /* AIX */
 
-/* On AIX, there is a /proc/$pic/map file, that contains records of type
-   prmap_t, defined in <sys/procfs.h>.  In older versions of AIX, it lists
-   only the virtual memory areas that are connected to a file, not the
-   anonymous ones.  But at least since AIX 7.1, it is well usable.  */
+  /* On AIX, there is a /proc/$pic/map file, that contains records of type
+     prmap_t, defined in <sys/procfs.h>.  In older versions of AIX, it lists
+     only the virtual memory areas that are connected to a file, not the
+     anonymous ones.  But at least since AIX 7.1, it is well usable.  */
 
   size_t pagesize;
   char fnamebuf[6+10+4+1];
