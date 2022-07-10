@@ -164,10 +164,10 @@ supported, not ``debug'' builds (compiler option @samp{-MDd}).
 @c There is musl-gcc on Ubuntu, and Alpine Linux 3.3.3.
 musl libc is rarely tested.
 @item
-Minix 3.3.0 is rarely tested.
-@item
 @c IRIX 6.5 cc has no option for C99 support. You would need to use gcc instead.
 IRIX 6.5 is very rarely tested.
+@item
+Minix 3.3.0 is no longer tested.
 @item
 Haiku is no longer tested.
 @item
