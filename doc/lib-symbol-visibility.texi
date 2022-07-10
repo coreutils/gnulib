@@ -185,9 +185,10 @@ You may use the following @samp{configure.ac} snippet:
 
 @smallexample
   if test "$enable_shared" = yes; then
-    shared=1
+    building_shared=1
   else
-    shared=0
+    building_shared=0
   fi
-  AC_DEFINE_UNQUOTED([BUILDING_SHARED], [$shared], [Define when --enable-shared is used.])
+  AC_DEFINE_UNQUOTED([BUILDING_SHARED], [$building_shared],
+    [Define when --enable-shared is used.])
 @end smallexample
