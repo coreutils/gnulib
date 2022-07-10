@@ -77,7 +77,7 @@
 
    AIX:
      a) setrlimit with RLIMIT_DATA works.
-     b) No VMA iteration API exists.
+     b) The /proc/$pid/map file contains a list of the virtual memory areas.
 
    HP-UX:
      a) setrlimit with RLIMIT_DATA works, except on HP-UX 11.00, where it

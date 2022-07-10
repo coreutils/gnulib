@@ -84,7 +84,7 @@
      a) setrlimit with RLIMIT_AS succeeds but does not really work: The OS
         apparently ignores RLIMIT_AS. mmap() of a page always succeeds,
         therefore get_rusage_as_via_setrlimit() is always 0.
-     b) No VMA iteration API exists.
+     b) The /proc/$pid/map file contains a list of the virtual memory areas.
 
    HP-UX:
      a) setrlimit with RLIMIT_AS works.

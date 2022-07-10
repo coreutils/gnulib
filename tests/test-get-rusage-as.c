@@ -62,7 +62,13 @@ main ()
       ASSERT (value3 >= value2);
 
       /* Allocating 2.5 MB of memory should increase the address space size.  */
-      ASSERT (value3 > value1);
+      #ifdef _AIX
+      /* Except on AIX in 32-bit mode, where a single interval is used for
+         malloc and for the stack.  malloc() blocks are taken from the bottom
+         of this interval.  The stack sits at its top.  */
+      if (sizeof (void *) > 4)
+      #endif
+        ASSERT (value3 > value1);
 
       return 0;
     }

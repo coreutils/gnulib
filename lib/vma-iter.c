@@ -64,6 +64,13 @@
 # include <sys/sysctl.h> /* sysctl, struct kinfo_vmentry */
 #endif
 
+#if defined _AIX /* AIX */
+# include <string.h> /* memcpy */
+# include <sys/types.h>
+# include <sys/mman.h> /* mmap, munmap */
+# include <sys/procfs.h> /* prmap_t */
+#endif
+
 #if defined __sgi || defined __osf__ /* IRIX, OSF/1 */
 # include <string.h> /* memcpy */
 # include <sys/types.h>
@@ -104,10 +111,6 @@
 # include <sys/types.h>
 # include <sys/mman.h> /* mquery */
 #endif
-
-/* Note: On AIX, there is a /proc/$pic/map file, that contains records of type
-   prmap_t, defined in <sys/procfs.h>.  But it lists only the virtual memory
-   areas that are connected to a file, not the anonymous ones.  */
 
 
 /* Support for reading text files in the /proc file system.  */
@@ -888,6 +891,218 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
 
   return vma_iterate_bsd (callback, data);
 # endif
+
+#elif defined _AIX /* AIX */
+
+/* On AIX, there is a /proc/$pic/map file, that contains records of type
+   prmap_t, defined in <sys/procfs.h>.  In older versions of AIX, it lists
+   only the virtual memory areas that are connected to a file, not the
+   anonymous ones.  But at least since AIX 7.1, it is well usable.  */
+
+  size_t pagesize;
+  char fnamebuf[6+10+4+1];
+  char *fname;
+  int fd;
+  size_t memneed;
+
+  pagesize = getpagesize ();
+
+  /* Construct fname = sprintf (fnamebuf+i, "/proc/%u/map", getpid ()).  */
+  fname = fnamebuf + sizeof (fnamebuf) - (4+1);
+  memcpy (fname, "/map", 4+1);
+  {
+    unsigned int value = getpid ();
+    do
+      *--fname = (value % 10) + '0';
+    while ((value = value / 10) > 0);
+  }
+  fname -= 6;
+  memcpy (fname, "/proc/", 6);
+
+  fd = open (fname, O_RDONLY | O_CLOEXEC);
+  if (fd < 0)
+    return -1;
+
+  /* The contents of /proc/<pid>/map contains a number of prmap_t entries,
+     then an entirely null prmap_t entry, then a heap of NUL terminated
+     strings.
+     Documentation: https://www.ibm.com/docs/en/aix/7.1?topic=files-proc-file
+     We read the entire contents, but look only at the prmap_t entries and
+     ignore the tail part.  */
+
+  for (memneed = 2 * pagesize; ; memneed = 2 * memneed)
+    {
+      /* Allocate memneed bytes of memory.
+         We cannot use alloca here, because not much stack space is guaranteed.
+         We also cannot use malloc here, because a malloc() call may call mmap()
+         and thus pre-allocate available memory.
+         So use mmap(), and ignore the resulting VMA if it occurs among the
+         resulting VMAs.  (Normally it doesn't, because it was allocated after
+         the open() call.)  */
+      void *auxmap;
+      unsigned long auxmap_start;
+      unsigned long auxmap_end;
+      ssize_t nbytes;
+
+      auxmap = (void *) mmap ((void *) 0, memneed, PROT_READ | PROT_WRITE,
+                              MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
+      if (auxmap == (void *) -1)
+        {
+          close (fd);
+          return -1;
+        }
+      auxmap_start = (unsigned long) auxmap;
+      auxmap_end = auxmap_start + memneed;
+
+      /* Read the contents of /proc/<pid>/map in a single system call.
+         This guarantees a consistent result (no duplicated or omitted
+         entries).  */
+     retry:
+      do
+        nbytes = read (fd, auxmap, memneed);
+      while (nbytes < 0 && errno == EINTR);
+      if (nbytes <= 0)
+        {
+          munmap (auxmap, memneed);
+          close (fd);
+          return -1;
+        }
+      if (nbytes == memneed)
+        {
+          /* Need more memory.  */
+          munmap (auxmap, memneed);
+          if (lseek (fd, 0, SEEK_SET) < 0)
+            {
+              close (fd);
+              return -1;
+            }
+        }
+      else
+        {
+          if (read (fd, (char *) auxmap + nbytes, 1) > 0)
+            {
+              /* Oops, we had a short read.  Retry.  */
+              if (lseek (fd, 0, SEEK_SET) < 0)
+                {
+                  munmap (auxmap, memneed);
+                  close (fd);
+                  return -1;
+                }
+              goto retry;
+            }
+
+          /* We now have the entire contents of /proc/<pid>/map in memory.  */
+          prmap_t* maps = (prmap_t *) auxmap;
+
+          /* The entries are not sorted by address.  Therefore
+             1. Extract the relevant information into an array.
+             2. Sort the array in ascending order.
+             3. Invoke the callback.  */
+          typedef struct
+            {
+              uintptr_t start;
+              uintptr_t end;
+              unsigned int flags;
+            }
+          vma_t;
+          /* Since 2 * sizeof (vma_t) <= sizeof (prmap_t), we can reuse the
+             same memory.  */
+          vma_t *vmas = (vma_t *) auxmap;
+
+          vma_t *vp = vmas;
+          {
+            prmap_t* mp;
+            for (mp = maps;;)
+              {
+                unsigned long start, end;
+
+                start = (unsigned long) mp->pr_vaddr;
+                end = start + mp->pr_size;
+                if (start == 0 && end == 0 && mp->pr_mflags == 0)
+                  break;
+                /* Discard empty VMAs and kernel VMAs.  */
+                if (start < end && (mp->pr_mflags & MA_KERNTEXT) == 0)
+                  {
+                    unsigned int flags;
+                    flags = 0;
+                    if (mp->pr_mflags & MA_READ)
+                      flags |= VMA_PROT_READ;
+                    if (mp->pr_mflags & MA_WRITE)
+                      flags |= VMA_PROT_WRITE;
+                    if (mp->pr_mflags & MA_EXEC)
+                      flags |= VMA_PROT_EXECUTE;
+
+                    if (start <= auxmap_start && auxmap_end - 1 <= end - 1)
+                      {
+                        /* Consider [start,end-1] \ [auxmap_start,auxmap_end-1]
+                           = [start,auxmap_start-1] u [auxmap_end,end-1].  */
+                        if (start < auxmap_start)
+                          {
+                            vp->start = start;
+                            vp->end = auxmap_start;
+                            vp->flags = flags;
+                            vp++;
+                          }
+                        if (auxmap_end - 1 < end - 1)
+                          {
+                            vp->start = auxmap_end;
+                            vp->end = end;
+                            vp->flags = flags;
+                            vp++;
+                          }
+                      }
+                    else
+                      {
+                        vp->start = start;
+                        vp->end = end;
+                        vp->flags = flags;
+                        vp++;
+                      }
+                  }
+                mp++;
+              }
+          }
+
+          size_t nvmas = vp - vmas;
+          /* Sort the array in ascending order.
+             Better not call qsort(), since it may call malloc().
+             Insertion-sort is OK in this case, despite its worst-case running
+             time of O(N²), since the number of VMAs will rarely be larger than
+             1000.  */
+          {
+            size_t i;
+            for (i = 1; i < nvmas; i++)
+              {
+                /* Invariant: Here vmas[0..i-1] is sorted.  */
+                size_t j;
+                for (j = i; j > 0 && vmas[j - 1].start > vmas[j].start; j--)
+                  {
+                    vma_t tmp = vmas[j - 1];
+                    vmas[j - 1] = vmas[j];
+                    vmas[j] = tmp;
+                  }
+                /* Invariant: Here vmas[0..i] is sorted.  */
+              }
+          }
+
+          /* Invoke the callback.  */
+          {
+            size_t i;
+            for (i = 0; i < nvmas; i++)
+              {
+                vma_t *vpi = &vmas[i];
+                if (callback (data, vpi->start, vpi->end, vpi->flags))
+                  break;
+              }
+          }
+
+          munmap (auxmap, memneed);
+          break;
+        }
+    }
+
+  close (fd);
+  return 0;
 
 #elif defined __sgi || defined __osf__ /* IRIX, OSF/1 */
 
