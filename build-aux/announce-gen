@@ -35,7 +35,7 @@
 eval 'exec perl -wSx "$0" "$@"'
      if 0;
 
-my $VERSION = '2022-07-08 22:28'; # UTC
+my $VERSION = '2022-07-10 01:47'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -445,10 +445,14 @@ sub get_tool_versions ($$)
   my @tool_list = split ',', $bootstrap_tools
     if $bootstrap_tools;
 
-  grep (/^gnulib$/, @tool_list) ^ defined $gnulib_version
+  grep (/^gnulib$/, @tool_list) && ! defined $gnulib_version
     and (warn "when specifying gnulib as a tool, you must also specify\n"
         . "--gnulib-version=V, where V is the result of running git describe\n"
         . "in the gnulib source directory.\n"), $fail = 1;
+
+  ! grep (/^gnulib$/, @tool_list) && defined $gnulib_version
+    and (warn "with --gnulib-version=V you must use --bootstrap-tools=...\n"
+         . "including gnulib in that list"), $fail = 1;
 
   !$release_type || exists $valid_release_types{$release_type}
     or (warn "'$release_type': invalid release type\n"), $fail = 1;
