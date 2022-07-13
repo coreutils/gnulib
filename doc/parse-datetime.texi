@@ -554,9 +554,27 @@ The @samp{tz} database includes a wide variety of locations ranging
 from @samp{Arctic/Longyearbyen} to @samp{Antarctica/South_Pole}, but
 if you are at sea and have your own private time zone, or if you are
 using a non-GNU host that does not support the @samp{tz}
-database, you may need to use a POSIX rule instead.  Simple
-POSIX rules like @samp{UTC0} specify a time zone without
-daylight saving time; other rules can specify simple daylight saving
+database, you may need to use a POSIX rule instead.
+The previously-mentioned POSIX rule @samp{UTC0} says that the time zone
+abbreviation is @samp{UTC}, the zone is zero hours away from
+Greenwich, and there is no daylight saving time.
+Simple POSIX rules like this can also specify nonzero Greenwich offsets.
+For example, the following shell transcript answers the question
+``What time is it five and a half hours east of Greenwich when a clock
+seven hours west of Greenwich shows 9:50pm on July 12, 2022?''
+
+@example
+$ TZ="<+0530>-5:30" date --date='TZ="<-07>7" 2022-07-12 21:50'
+Wed Jul 13 10:20:00 +0530 2022
+@end example
+
+@noindent
+This example uses the somewhat-confusing POSIX convention for TZ strings.
+@samp{TZ="<-07>7"} says that the time zone abbreviation is @samp{-07}
+and the time zone is 7 hours west of Greenwich, and
+@samp{TZ="<+0530>-5:30"} says that the time zone abbreviation is @samp{+0530}
+and the time zone is 5 hours 30 minutes east of Greenwich.
+More-complex POSIX TZ strings can specify simple daylight saving
 regimes.  @xref{TZ Variable,, Specifying the Time Zone with @code{TZ},
 libc, The GNU C Library}.
 
