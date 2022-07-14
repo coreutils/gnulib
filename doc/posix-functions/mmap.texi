@@ -25,7 +25,7 @@ To get anonymous memory, on some platforms, you can use the flags
 on others you have to use a read-only file descriptor of @file{/dev/zero}.
 @item
 On HP-UX, passing a non-NULL first argument, as a hint for the address (even
-without @code{MAP_FIXED}, often causes @code{mmap} to fail.  Better pass NULL
+without @code{MAP_FIXED}), often causes @code{mmap} to fail.  Better pass NULL
 in this case.
 @item
 On HP-UX, @code{MAP_FIXED} basically never works.  On other platforms, it depends
