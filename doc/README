@@ -12,9 +12,10 @@ How to update gnulib manual on www.gnu.org
          checkout gnulib
 
 2) Get familiar with the instructions for web page maintainers.
-   https://www.gnu.org/server/standards/readme_index.html
-   https://www.gnu.org/server/standards/README.software.html
+   https://www.gnu.org/server/standards/gnu-website-guidelines.html
    especially the note about symlinks.
+   Some of this page may also be relevant:
+   https://www.gnu.org/server/standards/README.webmastering.html
 
 3) Assuming GNULIB_CHECKOUT refers to a checkout of the gnulib dir,
    and      GNULIB_WWW_CHECKOUT refers to the other directory created above (1),
@@ -51,3 +52,7 @@ How to update gnulib manual on www.gnu.org
 
 There is a problem with 'index.html' being written twice (once for POSIX
 function 'index', once for the table of contents); you can ignore this issue.
+
+Note: For updating the www.gnu.org pages of *other* GNU packages, package
+specific scripts can be used, or build-aux/gnu-web-doc-update may possibly
+work.
