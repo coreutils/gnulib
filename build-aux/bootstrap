@@ -1,6 +1,6 @@
 #! /bin/sh
 # Print a version string.
-scriptversion=2022-06-04.00; # UTC
+scriptversion=2022-07-18.17; # UTC
 
 # Bootstrap this package from checked-out sources.
 
@@ -151,6 +151,7 @@ die() { warn_ "$@"; exit 1; }
 # Configuration.
 
 # Name of the Makefile.am
+# XXX Not used.
 gnulib_mk=gnulib.mk
 
 # List of gnulib modules needed.
@@ -247,6 +248,7 @@ COPYRIGHT_HOLDER='Free Software Foundation, Inc.'
 MSGID_BUGS_ADDRESS=bug-$package@gnu.org
 
 # Files we don't want to import.
+# XXX Not used.
 excluded_files=
 
 # File that should exist in the top directory of a checked out hierarchy,
