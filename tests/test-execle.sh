@@ -39,7 +39,7 @@ argv[10] = ||
 Hommingberg = |Gepardenforelle|
 EOF
 
-: ${DIFF=diff}
+: "${DIFF=diff}"
 ${DIFF} test-execle.ok test-execle.out
 result=$?
 

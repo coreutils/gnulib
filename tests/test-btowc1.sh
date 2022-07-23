@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Test in an ISO-8859-1 or ISO-8859-15 locale.
-: ${LOCALE_FR=fr_FR}
+: "${LOCALE_FR=fr_FR}"
 if test $LOCALE_FR = none; then
   if test -f /usr/bin/localedef; then
     echo "Skipping test: no traditional french locale is installed"

@@ -1,7 +1,7 @@
 #!/bin/sh
 
-: ${LOCALE_FR=fr_FR}
-: ${LOCALE_FR_UTF8=fr_FR.UTF-8}
+: "${LOCALE_FR=fr_FR}"
+: "${LOCALE_FR_UTF8=fr_FR.UTF-8}"
 
 if test $LOCALE_FR = none && test $LOCALE_FR_UTF8 = none; then
   if test -f /usr/bin/localedef; then

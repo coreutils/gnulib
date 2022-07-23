@@ -41,14 +41,14 @@ scripturl="https://git.savannah.gnu.org/cgit/gnulib.git/plain/build-aux/gendocs.
 templateurl="https://git.savannah.gnu.org/cgit/gnulib.git/plain/doc/gendocs_template"
 
 : ${SETLANG="env LANG= LC_MESSAGES= LC_ALL= LANGUAGE="}
-: ${MAKEINFO="makeinfo"}
-: ${TEXI2DVI="texi2dvi"}
-: ${DOCBOOK2HTML="docbook2html"}
-: ${DOCBOOK2PDF="docbook2pdf"}
-: ${DOCBOOK2TXT="docbook2txt"}
-: ${GENDOCS_TEMPLATE_DIR="."}
-: ${PERL='perl'}
-: ${TEXI2HTML="texi2html"}
+: "${MAKEINFO="makeinfo"}"
+: "${TEXI2DVI="texi2dvi"}"
+: "${DOCBOOK2HTML="docbook2html"}"
+: "${DOCBOOK2PDF="docbook2pdf"}"
+: "${DOCBOOK2TXT="docbook2txt"}"
+: "${GENDOCS_TEMPLATE_DIR="."}"
+: "${PERL='perl'}"
+: "${TEXI2HTML="texi2html"}"
 unset CDPATH
 unset use_texi2html
 
