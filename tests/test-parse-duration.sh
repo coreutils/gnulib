@@ -5,8 +5,6 @@ test -z "$VERBOSE" || set -x
 prog=test-parse-duration
 
 exe=`pwd`/${prog}${EXEEXT}
-nl='
-'
 
 # func_tmpdir
 # creates a temporary directory.

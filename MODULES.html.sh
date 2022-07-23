@@ -41,7 +41,6 @@ repo_url_suffix_repl=`echo "$repo_url_suffix" | sed -e 's,[&],\\\&,'`
 sed_lt='s,<,\&lt;,g'
 sed_gt='s,>,\&gt;,g'
 sed_escape_dot='s,\.,\\.,g'
-sed_escape_slash='s,/,\\/,g'
 trnl='\012'
 sed_alt1='s,$,\\|,'
 sed_alt2='s,^\\|,\\(,'

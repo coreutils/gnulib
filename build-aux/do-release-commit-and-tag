@@ -125,7 +125,7 @@ prev_ver=$(cat .prev-version) \
   || die 'failed to determine previous version number from .prev-version'
 
 # Verify that $ver is sensible (> .prev-version).
-case $(printf "$prev_ver\n$ver\n"|sort -V -u|tr '\n' ':') in
+case $(printf "%s\n%s\n" "$prev_ver" "$ver"|sort -V -u|tr '\n' ':') in
   "$prev_ver:$ver:") ;;
   *) die "invalid version: $ver (<= $prev_ver)";;
 esac
@@ -165,7 +165,7 @@ perl -MPOSIX -ni -e 'my $today = strftime "%F", localtime time;' \
  -e 'print $.==3 ? "$pfx $ver ($today) [$type]\n" : $_' \
      NEWS || die 'failed to update NEWS'
 
-printf "version $ver\n\n* NEWS: Record release date.\n" \
+printf "version %s\n\n* NEWS: Record release date.\n" "$ver" \
     | git commit -F -  -a || die 'git commit failed'
 git tag -s -m "$pkg $ver" v$ver HEAD || die 'git tag failed'
 

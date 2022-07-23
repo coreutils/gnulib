@@ -40,7 +40,7 @@ srcdir=`pwd`
 scripturl="https://git.savannah.gnu.org/cgit/gnulib.git/plain/build-aux/gendocs.sh"
 templateurl="https://git.savannah.gnu.org/cgit/gnulib.git/plain/doc/gendocs_template"
 
-: ${SETLANG="env LANG= LC_MESSAGES= LC_ALL= LANGUAGE="}
+: "${SETLANG="env LANG= LC_MESSAGES= LC_ALL= LANGUAGE="}"
 : "${MAKEINFO="makeinfo"}"
 : "${TEXI2DVI="texi2dvi"}"
 : "${DOCBOOK2HTML="docbook2html"}"
@@ -304,7 +304,7 @@ fi  # end info
 # 
 if $generate_tex; then
   cmd="$SETLANG $TEXI2DVI $dirargs $texarg \"$srcfile\""
-  printf "\nGenerating dvi... ($cmd)\n"
+  printf "\nGenerating dvi... (%s)\n" "$cmd"
   eval "$cmd"
   # compress/finish dvi:
   gzip -f -9 $PACKAGE.dvi
@@ -313,7 +313,7 @@ if $generate_tex; then
   ls -l "$outdir/$PACKAGE.dvi.gz"
 
   cmd="$SETLANG $TEXI2DVI --pdf $dirargs $texarg \"$srcfile\""
-  printf "\nGenerating pdf... ($cmd)\n"
+  printf "\nGenerating pdf... (%s)\n" "$cmd"
   eval "$cmd"
   pdf_size=`calcsize $PACKAGE.pdf`
   mv $PACKAGE.pdf "$outdir/"
@@ -324,7 +324,7 @@ fi # end tex (dvi + pdf)
 if $generate_ascii; then
   opt="-o $PACKAGE.txt --no-split --no-headers $commonarg"
   cmd="$SETLANG $MAKEINFO $opt \"$srcfile\""
-  printf "\nGenerating ascii... ($cmd)\n"
+  printf "\nGenerating ascii... (%s)\n" "$cmd"
   eval "$cmd"
   ascii_size=`calcsize $PACKAGE.txt`
   gzip -f -9 -c $PACKAGE.txt >"$outdir/$PACKAGE.txt.gz"
@@ -341,7 +341,7 @@ html_split()
 {
   opt="--split=$1 --node-files $commonarg $htmlarg"
   cmd="$SETLANG $TEXI2HTML --output $PACKAGE.html $opt \"$srcfile\""
-  printf "\nGenerating html by $1... ($cmd)\n"
+  printf "\nGenerating html by %s... (%s)\n" "$1" "$cmd"
   eval "$cmd"
   split_html_dir=$PACKAGE.html
   (
@@ -359,7 +359,7 @@ html_split()
 if test -z "$use_texi2html"; then
   opt="--no-split --html -o $PACKAGE.html $commonarg $htmlarg"
   cmd="$SETLANG $MAKEINFO $opt \"$srcfile\""
-  printf "\nGenerating monolithic html... ($cmd)\n"
+  printf "\nGenerating monolithic html... (%s)\n" "$cmd"
   rm -rf $PACKAGE.html  # in case a directory is left over
   eval "$cmd"
   html_mono_size=`calcsize $PACKAGE.html`
@@ -380,7 +380,7 @@ if test -z "$use_texi2html"; then
   #
   opt="--html -o $PACKAGE.html $split_arg $commonarg $htmlarg"
   cmd="$SETLANG $MAKEINFO $opt \"$srcfile\""
-  printf "\nGenerating html by $split... ($cmd)\n"
+  printf "\nGenerating html by %s... (%s)\n" "$split" "$cmd"
   eval "$cmd"
   split_html_dir=$PACKAGE.html
   copy_images $split_html_dir/ $split_html_dir/*.html
@@ -398,7 +398,7 @@ if test -z "$use_texi2html"; then
 else # use texi2html:
   opt="--output $PACKAGE.html $commonarg $htmlarg"
   cmd="$SETLANG $TEXI2HTML $opt \"$srcfile\""
-  printf "\nGenerating monolithic html with texi2html... ($cmd)\n"
+  printf "\nGenerating monolithic html with texi2html... (%s)\n" "$cmd"
   rm -rf $PACKAGE.html  # in case a directory is left over
   eval "$cmd"
   html_mono_size=`calcsize $PACKAGE.html`
@@ -428,7 +428,7 @@ texi_tgz_size=`calcsize "$outdir/$PACKAGE.texi.tar.gz"`
 if test -n "$docbook"; then
   opt="-o - --docbook $commonarg"
   cmd="$SETLANG $MAKEINFO $opt \"$srcfile\" >${srcdir}/$PACKAGE-db.xml"
-  printf "\nGenerating docbook XML... ($cmd)\n"
+  printf "\nGenerating docbook XML... (%s)\n" "$cmd"
   eval "$cmd"
   docbook_xml_size=`calcsize $PACKAGE-db.xml`
   gzip -f -9 -c $PACKAGE-db.xml >"$outdir/$PACKAGE-db.xml.gz"
@@ -438,7 +438,7 @@ if test -n "$docbook"; then
   split_html_db_dir=html_node_db
   opt="$commonarg -o $split_html_db_dir"
   cmd="$DOCBOOK2HTML $opt \"${outdir}/$PACKAGE-db.xml\""
-  printf "\nGenerating docbook HTML... ($cmd)\n"
+  printf "\nGenerating docbook HTML... (%s)\n" "$cmd"
   eval "$cmd"
   (
     cd ${split_html_db_dir} || exit 1
@@ -451,20 +451,20 @@ if test -n "$docbook"; then
   rmdir ${split_html_db_dir}
 
   cmd="$DOCBOOK2TXT \"${outdir}/$PACKAGE-db.xml\""
-  printf "\nGenerating docbook ASCII... ($cmd)\n"
+  printf "\nGenerating docbook ASCII... (%s)\n" "$cmd"
   eval "$cmd"
   docbook_ascii_size=`calcsize $PACKAGE-db.txt`
   mv $PACKAGE-db.txt "$outdir/"
 
   cmd="$DOCBOOK2PDF \"${outdir}/$PACKAGE-db.xml\""
-  printf "\nGenerating docbook PDF... ($cmd)\n"
+  printf "\nGenerating docbook PDF... (%s)\n" "$cmd"
   eval "$cmd"
   docbook_pdf_size=`calcsize $PACKAGE-db.pdf`
   mv $PACKAGE-db.pdf "$outdir/"
 fi
 
 # 
-printf "\nMaking index.html for $PACKAGE...\n"
+printf "\nMaking index.html for %s...\n" "$PACKAGE"
 if test -z "$use_texi2html"; then
   CONDS="/%%IF  *HTML_SECTION%%/,/%%ENDIF  *HTML_SECTION%%/d;\
          /%%IF  *HTML_CHAPTER%%/,/%%ENDIF  *HTML_CHAPTER%%/d"

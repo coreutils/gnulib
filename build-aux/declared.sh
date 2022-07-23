@@ -75,7 +75,7 @@ while test $# -gt 0; do
     -- )      # Stop option processing
       shift; break ;;
     -* )
-      func_fatal_error "unrecognized option: $option"
+      func_fatal_error "unrecognized option: $1"
       ;;
     * )
       break ;;

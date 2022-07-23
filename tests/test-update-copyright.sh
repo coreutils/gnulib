@@ -68,7 +68,7 @@ echo a > $TMP-in
 # Skip this test if Perl is too old.  FIXME: 5.8.0 is just a guess.
 # We have a report that 5.6.1 is inadequate and that 5.8.0 works.
 perl -e 'require 5.8.0' || {
-  echo '$0: skipping this test; Perl version is too old' 1>&2
+  echo "$0: skipping this test; Perl version is too old" 1>&2
   exit 77
 }
 

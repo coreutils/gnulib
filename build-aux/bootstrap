@@ -1,6 +1,6 @@
 #! /bin/sh
 # Print a version string.
-scriptversion=2022-07-18.17; # UTC
+scriptversion=2022-07-23.11; # UTC
 
 # Bootstrap this package from checked-out sources.
 
@@ -533,7 +533,7 @@ sort_ver() { # sort -V is not generally available
       elif [ "$p2" -gt "$p1" ] 2>/dev/null; then # numeric comparison
         echo "$1 $2"
       else # numeric, then lexicographic comparison
-        lp=$(printf "$p1\n$p2\n" | LANG=C sort -n | tail -n1)
+        lp=$(printf "%s\n%s\n" "$p1" "$p2" | LANG=C sort -n | tail -n1)
         if [ "$lp" = "$p2" ]; then
           echo "$1 $2"
         else
@@ -697,7 +697,7 @@ $buildreq" ;;
   esac
 fi
 
-if ! printf "$buildreq" | check_versions; then
+if ! printf '%s' "$buildreq" | check_versions; then
   echo >&2
   if test -f README-prereq; then
     die "See README-prereq for how to get the prerequisite programs"

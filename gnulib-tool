@@ -1176,8 +1176,6 @@ func_determine_path_separator
   copymode=
   lcopymode=
 
-  supplied_opts="$@"
-
   while test $# -gt 0; do
     case "$1" in
       --list | --lis )
@@ -1357,7 +1355,7 @@ func_determine_path_separator
       --without-unportable-tests | --without-unportable-test | --without-unportable-tes | --without-unportable-te | --without-unportable-t | --without-unportable- | --without-unportable | --without-unportabl | --without-unportab | --without-unporta | --without-unport | --without-unpor | --without-unpo | --without-unp | --without-un | --without-u)
         excl_unportable_tests=true
         shift ;;
-      --single-configure | --single-configur | --single-configu | --single-config | --single-confi | --single-conf | --single-con | --single-con | --single-co | --single-c | --single- | --single | --singl | --sing | --sin | --si)
+      --single-configure | --single-configur | --single-configu | --single-config | --single-confi | --single-conf | --single-con | --single-co | --single-c | --single- | --single | --singl | --sing | --sin | --si)
         single_configure=true
         shift ;;
       --avoid )
