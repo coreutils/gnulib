@@ -159,8 +159,8 @@ gnulib_modules=
 # Any gnulib files needed that are not in modules.
 gnulib_files=
 
-: ${AUTOPOINT=autopoint}
-: ${AUTORECONF=autoreconf}
+: "${AUTOPOINT=autopoint}"
+: "${AUTORECONF=autoreconf}"
 
 # A function to be called for each unrecognized option.  Returns 0 if
 # the option in $1 has been processed by the function.  Returns 1 if

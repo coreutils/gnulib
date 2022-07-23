@@ -1,5 +1,5 @@
 #!/bin/sh
-: ${srcdir=.}
+: "${srcdir=.}"
 . "$srcdir/init.sh"; path_prepend_ .
 
 # Test NULL prefix. Result should not contain a number, except in lines that

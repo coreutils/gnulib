@@ -912,7 +912,7 @@ E0100..E01EF	0
 E01F0..10FFFF	1
 EOF
 
-: ${DIFF=diff}
+: "${DIFF=diff}"
 ${DIFF} uc_width.ok uc_width.out
 result=$?
 

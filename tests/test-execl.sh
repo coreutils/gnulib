@@ -38,7 +38,7 @@ argv[9] = |foo|
 argv[10] = ||
 EOF
 
-: ${DIFF=diff}
+: "${DIFF=diff}"
 ${DIFF} test-execl.ok test-execl.out
 result=$?
 
