@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Test in an ISO-8859-1 or ISO-8859-15 locale.
-: ${LOCALE_FR=fr_FR}
+: "${LOCALE_FR=fr_FR}"
 if test $LOCALE_FR != none; then
   LC_ALL=$LOCALE_FR \
   ${CHECKER} ./test-wcrtomb${EXEEXT} 1 \
@@ -9,7 +9,7 @@ if test $LOCALE_FR != none; then
 fi
 
 # Test whether a specific UTF-8 locale is installed.
-: ${LOCALE_FR_UTF8=fr_FR.UTF-8}
+: "${LOCALE_FR_UTF8=fr_FR.UTF-8}"
 if test $LOCALE_FR_UTF8 != none; then
   LC_ALL=$LOCALE_FR_UTF8 \
   ${CHECKER} ./test-wcrtomb${EXEEXT} 2 \
@@ -17,7 +17,7 @@ if test $LOCALE_FR_UTF8 != none; then
 fi
 
 # Test whether a specific EUC-JP locale is installed.
-: ${LOCALE_JA=ja_JP}
+: "${LOCALE_JA=ja_JP}"
 if test $LOCALE_JA != none; then
   LC_ALL=$LOCALE_JA \
   ${CHECKER} ./test-wcrtomb${EXEEXT} 3 \
@@ -25,7 +25,7 @@ if test $LOCALE_JA != none; then
 fi
 
 # Test whether a specific GB18030 locale is installed.
-: ${LOCALE_ZH_CN=zh_CN.GB18030}
+: "${LOCALE_ZH_CN=zh_CN.GB18030}"
 if test $LOCALE_ZH_CN != none; then
   LC_ALL=$LOCALE_ZH_CN \
   ${CHECKER} ./test-wcrtomb${EXEEXT} 4 \

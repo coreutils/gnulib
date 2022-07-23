@@ -48,7 +48,7 @@ fi
 verbose=false
 #chicken="echo (would)"
 
-: ${TMPDIR=/tmp}
+: "${TMPDIR=/tmp}"
 dsttmp=$TMPDIR/srclist.dst
 
 # Source `dirname $0`/srclistvars.sh first, if it exists.

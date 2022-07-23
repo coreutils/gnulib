@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Test whether a traditional french locale is installed.
-: ${LOCALE_FR=fr_FR}
+: "${LOCALE_FR=fr_FR}"
 if test $LOCALE_FR != none; then
   testlocale=$LOCALE_FR
 else

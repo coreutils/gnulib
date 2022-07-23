@@ -1,5 +1,5 @@
 #!/bin/sh
-: ${srcdir=.}
+: "${srcdir=.}"
 . "$srcdir/init.sh"; path_prepend_ .
 
 # Check that an atexit handler is called when main() returns normally.

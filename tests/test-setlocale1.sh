@@ -1,9 +1,9 @@
 #!/bin/sh
 
-: ${LOCALE_FR=fr_FR}
-: ${LOCALE_FR_UTF8=fr_FR.UTF-8}
-: ${LOCALE_JA=ja_JP}
-: ${LOCALE_ZH_CN=zh_CN.GB18030}
+: "${LOCALE_FR=fr_FR}"
+: "${LOCALE_FR_UTF8=fr_FR.UTF-8}"
+: "${LOCALE_JA=ja_JP}"
+: "${LOCALE_ZH_CN=zh_CN.GB18030}"
 
 if test $LOCALE_FR = none && test $LOCALE_FR_UTF8 = none \
    && test $LOCALE_JA = none && test $LOCALE_ZH_CN = none; then

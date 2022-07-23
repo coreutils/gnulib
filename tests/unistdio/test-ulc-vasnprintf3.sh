@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Test whether a french Unicode locale is installed.
-: ${LOCALE_FR_UTF8=fr_FR.UTF-8}
+: "${LOCALE_FR_UTF8=fr_FR.UTF-8}"
 if test $LOCALE_FR_UTF8 != none; then
   testlocale=$LOCALE_FR_UTF8
 else

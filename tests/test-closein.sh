@@ -1,5 +1,5 @@
 #!/bin/sh
-: ${srcdir=.}
+: "${srcdir=.}"
 . "$srcdir/init.sh"; path_prepend_ .
 
 echo Hello world > in.tmp
