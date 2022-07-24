@@ -142,7 +142,13 @@ sc_check_copyright:
 	@./check-copyright
 
 # Regenerate some files that are stored in the repository.
-regen: MODULES.html
+regen: build-aux/bootstrap MODULES.html
+
+# build-aux/bootstrap needs to be regenerated from top/bootstrap*.
+build-aux/bootstrap: top/gen-bootstrap.sed top/bootstrap top/bootstrap-funclib.sh
+	sed -f top/gen-bootstrap.sed < top/bootstrap > build-aux/bootstrap-tmp
+	chmod a+x build-aux/bootstrap-tmp
+	mv build-aux/bootstrap-tmp build-aux/bootstrap
 
 # MODULES.html is periodically being generated and copied to the web pages at
 # :ext:USER@cvs.savannah.gnu.org:/web/gnulib/gnulib/

@@ -1,0 +1,219 @@
+#! /bin/sh
+# Bootstrap this package from checked-out sources.
+
+# Copyright (C) 2003-2022 Free Software Foundation, Inc.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+# Originally written by Paul Eggert.  The canonical version of this
+# script is maintained as build-aux/bootstrap in gnulib. However,
+# to be useful to your package, you should place a copy of it under
+# version control in the top-level directory of your package.  The
+# intent is that all customization can be done with a bootstrap.conf
+# file also maintained in your version control; gnulib comes with a
+# template build-aux/bootstrap.conf to get you started.
+
+# Please report bugs or propose patches to bug-gnulib@gnu.org.
+
+scriptversion=2022-07-24.15; # UTC
+
+me="$0"
+medir=`dirname "$me"`
+
+# Read the function library and the configuration.
+. "$medir"/bootstrap-funclib.sh
+
+usage() {
+  cat <<EOF
+Usage: $me [OPTION]...
+Bootstrap this package from the checked-out sources.
+
+Optional environment variables:
+  GNULIB_SRCDIR            Specifies the local directory where gnulib
+                           sources reside.  Use this if you already
+                           have gnulib sources on your machine, and
+                           do not want to waste your bandwidth downloading
+                           them again.
+  GNULIB_URL               Cloneable URL of the gnulib repository.
+
+Options:
+  --gnulib-srcdir=DIRNAME  specify the local directory where gnulib
+                           sources reside.  Use this if you already
+                           have gnulib sources on your machine, and
+                           you want to use these sources.  Defaults
+                           to \$GNULIB_SRCDIR
+  --gnulib-refdir=DIRNAME  specify the local directory where a gnulib
+                           repository (with a .git subdirectory) resides.
+                           Use this if you already have gnulib sources
+                           and history on your machine, and do not want
+                           to waste your bandwidth downloading them again.
+                           Defaults to \$GNULIB_REFDIR
+  --bootstrap-sync         if this bootstrap script is not identical to
+                           the version in the local gnulib sources,
+                           update this script, and then restart it with
+
+  --bootstrap-sync         if this bootstrap script is not identical to
+                           the version in the local gnulib sources,
+                           update this script, and then restart it with
+                           /bin/sh or the shell \$CONFIG_SHELL
+  --no-bootstrap-sync      do not check whether bootstrap is out of sync
+  --copy                   copy files instead of creating symbolic links
+  --force                  attempt to bootstrap even if the sources seem
+                           not to have been checked out
+  --no-git                 do not use git to update gnulib.  Requires that
+                           \$GNULIB_SRCDIR or the --gnulib-srcdir option
+                           points to a gnulib repository with the correct
+                           revision
+  --skip-po                do not download po files
+EOF
+  bootstrap_print_option_usage_hook
+  cat <<EOF
+If the file bootstrap.conf exists in the same directory as this script, its
+contents are read as shell variables to configure the bootstrap.
+
+For build prerequisites, environment variables like \$AUTOCONF and \$AMTAR
+are honored.
+
+Gnulib sources can be fetched in various ways:
+
+ * If the environment variable GNULIB_SRCDIR is set (either as an
+   environment variable or via the --gnulib-srcdir option), then sources
+   are fetched from that local directory.  If it is a git repository and
+   the configuration variable GNULIB_REVISION is set in bootstrap.conf,
+   then that revision is checked out.
+
+ * Otherwise, if this package is in a git repository with a 'gnulib'
+   submodule configured, then that submodule is initialized and updated
+   and sources are fetched from there.  If GNULIB_REFDIR is set (either
+   as an environment variable or via the --gnulib-refdir option) and is
+   a git repository, then it is used as a reference.
+
+ * Otherwise, if the 'gnulib' directory does not exist, Gnulib sources
+   are cloned into that directory using git from \$GNULIB_URL, defaulting
+   to $default_gnulib_url.
+   If the configuration variable GNULIB_REVISION is set in bootstrap.conf,
+   then that revision is checked out.
+
+ * Otherwise, the existing Gnulib sources in the 'gnulib' directory are
+   used.  If it is a git repository and the configuration variable
+   GNULIB_REVISION is set in bootstrap.conf, then that revision is
+   checked out.
+
+If you maintain a package and want to pin a particular revision of the
+Gnulib sources that has been tested with your package, then there are
+two possible approaches: either configure a 'gnulib' submodule with the
+appropriate revision, or set GNULIB_REVISION (and if necessary
+GNULIB_URL) in bootstrap.conf.
+
+Running without arguments will suffice in most cases.
+EOF
+}
+
+# Parse options.
+
+# Whether to use copies instead of symlinks.
+copy=false
+
+# Use git to update gnulib sources
+use_git=true
+
+for option
+do
+  case $option in
+  --help)
+    usage
+    exit;;
+  --version)
+    set -e
+    echo "bootstrap $scriptversion"
+    echo "$copyright"
+    exit 0
+    ;;
+  --gnulib-srcdir=*)
+    GNULIB_SRCDIR=${option#--gnulib-srcdir=};;
+  --gnulib-refdir=*)
+    GNULIB_REFDIR=${option#--gnulib-refdir=};;
+  --skip-po)
+    SKIP_PO=t;;
+  --force)
+    checkout_only_file=;;
+  --copy)
+    copy=true;;
+  --bootstrap-sync)
+    bootstrap_sync=true;;
+  --no-bootstrap-sync)
+    if test -f "$medir"/bootstrap-funclib.sh; then
+      bootstrap_sync=false
+    else
+      # We have only completed the first phase of an upgrade from a bootstrap
+      # version < 2022-07-24. Need to do the second phase now.
+      bootstrap_sync=true
+    fi
+    ;;
+  --no-git)
+    use_git=false;;
+  *)
+    bootstrap_option_hook $option || die "$option: unknown option";;
+  esac
+done
+
+$use_git || test -n "$GNULIB_SRCDIR" \
+  || die "Error: --no-git requires \$GNULIB_SRCDIR environment variable or --gnulib-srcdir option"
+test -z "$GNULIB_SRCDIR" || test -d "$GNULIB_SRCDIR" \
+  || die "Error: \$GNULIB_SRCDIR environment variable or --gnulib-srcdir option is specified, but does not denote a directory"
+
+if test -n "$checkout_only_file" && test ! -r "$checkout_only_file"; then
+  die "Bootstrapping from a non-checked-out distribution is risky."
+fi
+
+check_build_prerequisites $use_git
+
+if $bootstrap_sync; then
+  prepare_GNULIB_SRCDIR
+  upgrade_bootstrap
+  # Since we have now upgraded if needed, no need to try it a second time below.
+  bootstrap_sync=false
+fi
+
+echo "$0: Bootstrapping from checked-out $package sources..."
+
+# Pass GNULIB_SRCDIR to autopull.sh and autogen.sh.
+export GNULIB_SRCDIR
+
+# Pass GNULIB_REFDIR to autopull.sh.
+export GNULIB_REFDIR
+
+if $use_git || test -z "$SKIP_PO"; then
+  "$medir"/autopull.sh \
+      `if $bootstrap_sync; then echo ' --bootstrap-sync'; else echo ' --no-bootstrap-sync'; fi` \
+      `if test -z "$checkout_only_file"; then echo ' --force'; fi` \
+      `if ! $use_git; then echo ' --no-git'; fi` \
+      `if test -n "$SKIP_PO"; then echo ' --skip-po'; fi` \
+    || die "autopull.sh failed."
+fi
+
+"$medir"/autogen.sh \
+    `if $copy; then echo ' --copy'; fi` \
+    `if test -z "$checkout_only_file"; then echo ' --force'; fi` \
+  || die "autogen.sh failed."
+
+# ----------------------------------------------------------------------------
+
+# Local Variables:
+# eval: (add-hook 'before-save-hook 'time-stamp)
+# time-stamp-start: "scriptversion="
+# time-stamp-format: "%:y-%02m-%02d.%02H"
+# time-stamp-time-zone: "UTC0"
+# time-stamp-end: "; # UTC"
+# End:
