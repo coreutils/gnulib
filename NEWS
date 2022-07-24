@@ -3,6 +3,12 @@ Important general notes
 
 Date        Modules         Changes
 
+2022-07-24  bootstrap       To specify a reference directory for the 'gnulib'
+                            submodule, use the environment variable
+                            GNULIB_REFDIR instead of GNULIB_SRCDIR or the
+                            command-line option --gnulib-refdir instead of
+                            --gnulib-srcdir.
+
 2022-02-20  (all)           Automake >= 1.14 and Autoconf >= 2.64 are required.
 
 2021-06-04  (all)           The license notices in source files are now really

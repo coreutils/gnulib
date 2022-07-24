@@ -1,6 +1,6 @@
 #! /bin/sh
 # Print a version string.
-scriptversion=2022-07-23.11; # UTC
+scriptversion=2022-07-24.10; # UTC
 
 # Bootstrap this package from checked-out sources.
 
@@ -58,8 +58,14 @@ Options:
  --gnulib-srcdir=DIRNAME  specify the local directory where gnulib
                           sources reside.  Use this if you already
                           have gnulib sources on your machine, and
-                          do not want to waste your bandwidth downloading
-                          them again.  Defaults to \$GNULIB_SRCDIR
+                          you want to use these sources.  Defaults
+                          to \$GNULIB_SRCDIR
+ --gnulib-refdir=DIRNAME  specify the local directory where a gnulib
+                          repository (with a .git subdirectory) resides.
+                          Use this if you already have gnulib sources
+                          and history on your machine, and do not want
+                          to waste your bandwidth downloading them again.
+                          Defaults to \$GNULIB_REFDIR
  --bootstrap-sync         if this bootstrap script is not identical to
                           the version in the local gnulib sources,
                           update this script, and then restart it with
@@ -82,19 +88,16 @@ are honored.
 
 Gnulib sources can be fetched in various ways:
 
- * If this package is in a git repository with a 'gnulib' submodule
-   configured, then that submodule is initialized and updated and sources
-   are fetched from there.  If \$GNULIB_SRCDIR is set (directly or via
-   --gnulib-srcdir) and is a git repository, then it is used as a reference.
-
- * Otherwise, if \$GNULIB_SRCDIR is set (directly or via --gnulib-srcdir),
-   then sources are fetched from that local directory.  If it is a git
-   repository and \$GNULIB_REVISION is set, then that revision is checked
-   out.
+ * If \$GNULIB_SRCDIR is set (directly or via --gnulib-srcdir), then
+   sources are fetched from that local directory.  If it is a git
+   repository and \$GNULIB_REVISION is set, then that revision is
+   checked out.
 
  * Otherwise, if this package is in a git repository with a 'gnulib'
-   submodule configured, then that submodule is initialized and updated and
-   sources are fetched from there.
+   submodule configured, then that submodule is initialized and updated
+   and sources are fetched from there.  If \$GNULIB_REFDIR is set
+   (directly or via --gnulib-refdir) and is a git repository, then it
+   is used as a reference.
 
  * Otherwise, if the 'gnulib' directory does not exist, Gnulib sources are
    cloned into that directory using git from \$GNULIB_URL, defaulting to
@@ -463,6 +466,8 @@ do
     ;;
   --gnulib-srcdir=*)
     GNULIB_SRCDIR=${option#--gnulib-srcdir=};;
+  --gnulib-refdir=*)
+    GNULIB_REFDIR=${option#--gnulib-refdir=};;
   --skip-po)
     SKIP_PO=t;;
   --force)
@@ -480,8 +485,10 @@ do
   esac
 done
 
-$use_git || test -d "$GNULIB_SRCDIR" \
-  || die "Error: --no-git requires --gnulib-srcdir"
+$use_git || test -n "$GNULIB_SRCDIR" \
+  || die "Error: --no-git requires --gnulib-srcdir or \$GNULIB_SRCDIR"
+test -z "$GNULIB_SRCDIR" || test -d "$GNULIB_SRCDIR" \
+  || die "Error: --gnulib-srcdir or \$GNULIB_SRCDIR is specified, but does not denote a directory"
 
 if test -n "$checkout_only_file" && test ! -r "$checkout_only_file"; then
   die "Bootstrapping from a non-checked-out distribution is risky."
@@ -732,6 +739,8 @@ fi
 
 cleanup_gnulib() {
   status=$?
+  # XXX It's a bad idea to erase the submodule directory if it contains local
+  #     modifications.
   rm -fr "$gnulib_path"
   exit $status
 }
@@ -741,63 +750,26 @@ git_modules_config () {
 }
 
 if $use_gnulib; then
-  if $use_git; then
+  if test -n "$GNULIB_SRCDIR"; then
+    # Use GNULIB_SRCDIR directly.
+    # We already checked that $GNULIB_SRCDIR references a directory.
+    # Verify that it contains a gnulib checkout.
+    test -f "$GNULIB_SRCDIR/gnulib-tool" \
+      || die "Error: --gnulib-srcdir or \$GNULIB_SRCDIR is specified, but does not contain gnulib-tool"
+  elif $use_git; then
     gnulib_path=$(git_modules_config submodule.gnulib.path)
     test -z "$gnulib_path" && gnulib_path=gnulib
-  fi
 
-  # Get gnulib files.  Populate $GNULIB_SRCDIR, possibly updating a
-  # submodule, for use in the rest of the script.
+    # Get gnulib files.  Populate $gnulib_path, possibly updating a
+    # submodule, for use in the rest of the script.
 
-  case ${GNULIB_SRCDIR--} in
-  -)
-    # Note that $use_git is necessarily true in this case.
-    if git_modules_config submodule.gnulib.url >/dev/null; then
-      echo "$0: getting gnulib files..."
-      git submodule init -- "$gnulib_path" || exit $?
-      git submodule update -- "$gnulib_path" || exit $?
-
-    elif [ ! -d "$gnulib_path" ]; then
-      echo "$0: getting gnulib files..."
-
-      trap cleanup_gnulib 1 2 13 15
-
-      shallow=
-      if test -z "$GNULIB_REVISION"; then
-        git clone -h 2>&1 | grep -- --depth > /dev/null && shallow='--depth 2'
-        git clone $shallow ${GNULIB_URL:-$default_gnulib_url} "$gnulib_path" \
-          || cleanup_gnulib
-      else
-        git fetch -h 2>&1 | grep -- --depth > /dev/null && shallow='--depth 2'
-        mkdir -p "$gnulib_path"
-        # Only want a shallow checkout of $GNULIB_REVISION, but git does not
-        # support cloning by commit hash. So attempt a shallow fetch by commit
-        # hash to minimize the amount of data downloaded and changes needed to
-        # be processed, which can drastically reduce download and processing
-        # time for checkout. If the fetch by commit fails, a shallow fetch can
-        # not be performed because we do not know what the depth of the commit
-        # is without fetching all commits. So fallback to fetching all commits.
-        git -C "$gnulib_path" init
-        git -C "$gnulib_path" remote add origin \
-            ${GNULIB_URL:-$default_gnulib_url}
-        git -C "$gnulib_path" fetch $shallow origin "$GNULIB_REVISION" \
-          || git -C "$gnulib_path" fetch origin \
-          || cleanup_gnulib
-        git -C "$gnulib_path" reset --hard FETCH_HEAD
-      fi
-
-      trap - 1 2 13 15
-    fi
-    GNULIB_SRCDIR=$gnulib_path
-    ;;
-  *)
-    # Use GNULIB_SRCDIR directly or as a reference.
-    if $use_git && test -d "$GNULIB_SRCDIR"/.git && \
-          git_modules_config submodule.gnulib.url >/dev/null; then
+    if test -n "$GNULIB_REFDIR" && test -d "$GNULIB_REFDIR"/.git \
+       && git_modules_config submodule.gnulib.url >/dev/null; then
+      # Use GNULIB_REFDIR as a reference.
       echo "$0: getting gnulib files..."
       if git submodule -h|grep -- --reference > /dev/null; then
         # Prefer the one-liner available in git 1.6.4 or newer.
-        git submodule update --init --reference "$GNULIB_SRCDIR" \
+        git submodule update --init --reference "$GNULIB_REFDIR" \
           "$gnulib_path" || exit $?
       else
         # This fallback allows at least git 1.5.5.
@@ -807,18 +779,59 @@ if $use_gnulib; then
         else
           # Older git can't clone into an empty directory.
           rmdir "$gnulib_path" 2>/dev/null
-          git clone --reference "$GNULIB_SRCDIR" \
+          git clone --reference "$GNULIB_REFDIR" \
             "$(git_modules_config submodule.gnulib.url)" "$gnulib_path" \
             && git submodule init -- "$gnulib_path" \
             && git submodule update -- "$gnulib_path" \
             || exit $?
         fi
       fi
-      GNULIB_SRCDIR=$gnulib_path
-    fi
-    ;;
-  esac
+    else
+      # GNULIB_REFDIR is not set or not usable. Ignore it.
+      if git_modules_config submodule.gnulib.url >/dev/null; then
+        echo "$0: getting gnulib files..."
+        git submodule init -- "$gnulib_path" || exit $?
+        git submodule update -- "$gnulib_path" || exit $?
 
+      elif [ ! -d "$gnulib_path" ]; then
+        echo "$0: getting gnulib files..."
+
+        trap cleanup_gnulib 1 2 13 15
+
+        shallow=
+        if test -z "$GNULIB_REVISION"; then
+          git clone -h 2>&1 | grep -- --depth > /dev/null && shallow='--depth 2'
+          git clone $shallow ${GNULIB_URL:-$default_gnulib_url} "$gnulib_path" \
+            || cleanup_gnulib
+        else
+          git fetch -h 2>&1 | grep -- --depth > /dev/null && shallow='--depth 2'
+          mkdir -p "$gnulib_path"
+          # Only want a shallow checkout of $GNULIB_REVISION, but git does not
+          # support cloning by commit hash. So attempt a shallow fetch by commit
+          # hash to minimize the amount of data downloaded and changes needed to
+          # be processed, which can drastically reduce download and processing
+          # time for checkout. If the fetch by commit fails, a shallow fetch can
+          # not be performed because we do not know what the depth of the commit
+          # is without fetching all commits. So fallback to fetching all commits.
+          git -C "$gnulib_path" init
+          git -C "$gnulib_path" remote add origin \
+              ${GNULIB_URL:-$default_gnulib_url}
+          git -C "$gnulib_path" fetch $shallow origin "$GNULIB_REVISION" \
+            || git -C "$gnulib_path" fetch origin \
+            || cleanup_gnulib
+          git -C "$gnulib_path" reset --hard FETCH_HEAD
+        fi
+
+        trap - 1 2 13 15
+      fi
+    fi
+    GNULIB_SRCDIR=$gnulib_path
+    # Verify that the submodule contains a gnulib checkout.
+    test -f "$gnulib_path/gnulib-tool" \
+      || die "Error: $gnulib_path is supposed to contain a gnulib checkout, but does not contain gnulib-tool"
+  fi
+
+  # XXX Should this be done if $use_git is false?
   if test -d "$GNULIB_SRCDIR"/.git && test -n "$GNULIB_REVISION" \
      && ! git_modules_config submodule.gnulib.url >/dev/null; then
     (cd "$GNULIB_SRCDIR" && git checkout "$GNULIB_REVISION") || cleanup_gnulib
@@ -1018,7 +1031,7 @@ bootstrap_post_import_hook \
 # Uninitialized submodules are listed with an initial dash.
 if $use_git && git submodule | grep '^-' >/dev/null; then
   die "some git submodules are not initialized. "     \
-      "Run 'git submodule update --init' and bootstrap again."
+      "Either use option '--no-git', or run 'git submodule update --init' and bootstrap again."
 fi
 
 # Remove any dangling symlink matching "*.m4" or "*.[ch]" in some
