@@ -18,12 +18,12 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 # Originally written by Paul Eggert.  The canonical version of this
-# script is maintained as build-aux/autopull.sh in gnulib.  However,
-# to be useful to your package, you should place a copy of it under
-# version control in the top-level directory of your package.  The
-# intent is that all customization can be done with a bootstrap.conf
-# file also maintained in your version control; gnulib comes with a
-# template build-aux/bootstrap.conf to get you started.
+# script is maintained as top/autopull.sh in gnulib.  However, to be
+# useful to your package, you should place a copy of it under version
+# control in the top-level directory of your package.  The intent is
+# that all customization can be done with a bootstrap.conf file also
+# maintained in your version control; gnulib comes with a template
+# build-aux/bootstrap.conf to get you started.
 #
 # Alternatively, you can use an autopull.sh script that is specific
 # to your package.
