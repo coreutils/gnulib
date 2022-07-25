@@ -153,14 +153,7 @@ do
   --bootstrap-sync)
     bootstrap_sync=true;;
   --no-bootstrap-sync)
-    if test -f "$medir"/bootstrap-funclib.sh; then
-      bootstrap_sync=false
-    else
-      # We have only completed the first phase of an upgrade from a bootstrap
-      # version < 2022-07-24. Need to do the second phase now.
-      bootstrap_sync=true
-    fi
-    ;;
+    bootstrap_sync=false;;
   --no-git)
     use_git=false;;
   *)
@@ -178,6 +171,12 @@ if test -n "$checkout_only_file" && test ! -r "$checkout_only_file"; then
 fi
 
 check_build_prerequisites $use_git
+
+if ! test -f "$medir"/bootstrap-funclib.sh; then
+  # We have only completed the first phase of an upgrade from a bootstrap
+  # version < 2022-07-24. Need to do the second phase now.
+  bootstrap_sync=true
+fi
 
 if $bootstrap_sync; then
   prepare_GNULIB_SRCDIR

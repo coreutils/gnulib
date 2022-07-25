@@ -1,4 +1,8 @@
 #! /bin/sh
+# DO NOT EDIT! GENERATED AUTOMATICALLY!
+# This script is only a trampoline that fetches the companion scripts
+# (bootstrap-funclib.sh, autopull.sh, autogen.sh).
+
 # Bootstrap this package from checked-out sources.
 
 # Copyright (C) 2003-2022 Free Software Foundation, Inc.
@@ -17,12 +21,12 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 # Originally written by Paul Eggert.  The canonical version of this
-# script is maintained as build-aux/bootstrap in gnulib. However,
-# to be useful to your package, you should place a copy of it under
-# version control in the top-level directory of your package.  The
-# intent is that all customization can be done with a bootstrap.conf
-# file also maintained in your version control; gnulib comes with a
-# template build-aux/bootstrap.conf to get you started.
+# script is maintained as top/bootstrap in gnulib. However, to be
+# useful to your package, you should place a copy of it under version
+# control in the top-level directory of your package.  The intent is
+# that all customization can be done with a bootstrap.conf file also
+# maintained in your version control; gnulib comes with a template
+# build-aux/bootstrap.conf to get you started.
 
 # Please report bugs or propose patches to bug-gnulib@gnu.org.
 
@@ -51,9 +55,9 @@ medir=`dirname "$me"`
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 # Originally written by Paul Eggert.  The canonical version of this
-# script is maintained as build-aux/bootstrap-funclib.sh in gnulib.
-# However, to be useful to your package, you should place a copy of it
-# under version control in the top-level directory of your package.  The
+# script is maintained as top/bootstrap-funclib.sh in gnulib.  However,
+# to be useful to your package, you should place a copy of it under
+# version control in the top-level directory of your package.  The
 # intent is that all customization can be done with a bootstrap.conf
 # file also maintained in your version control; gnulib comes with a
 # template build-aux/bootstrap.conf to get you started.
@@ -747,14 +751,7 @@ do
   --bootstrap-sync)
     bootstrap_sync=true;;
   --no-bootstrap-sync)
-    if test -f "$medir"/bootstrap-funclib.sh; then
-      bootstrap_sync=false
-    else
-      # We have only completed the first phase of an upgrade from a bootstrap
-      # version < 2022-07-24. Need to do the second phase now.
-      bootstrap_sync=true
-    fi
-    ;;
+    bootstrap_sync=false;;
   --no-git)
     use_git=false;;
   *)
@@ -772,6 +769,12 @@ if test -n "$checkout_only_file" && test ! -r "$checkout_only_file"; then
 fi
 
 check_build_prerequisites $use_git
+
+if ! test -f "$medir"/bootstrap-funclib.sh; then
+  # We have only completed the first phase of an upgrade from a bootstrap
+  # version < 2022-07-24. Need to do the second phase now.
+  bootstrap_sync=true
+fi
 
 if $bootstrap_sync; then
   prepare_GNULIB_SRCDIR
