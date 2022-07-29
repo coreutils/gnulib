@@ -152,7 +152,7 @@ class GLTestDir(object):
                 path = file
             result += [os.path.normpath(path)]
         result = sorted(set(result))
-        return(list(result))
+        return list(result)
 
     def execute(self):
         '''GLTestDir.execute()

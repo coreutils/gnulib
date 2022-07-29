@@ -67,12 +67,12 @@ class GLInfo(object):
     def __repr__(self):
         '''x.__repr__ <==> repr(x)'''
         result = '<pygnulib.GLInfo %s>' % hex(id(self))
-        return(result)
+        return result
 
     def package(self):
         '''Return formatted string which contains name of the package.'''
         result = 'GNU gnulib'
-        return(result)
+        return result
 
     def authors(self):
         '''Return formatted string which contains authors.
@@ -85,7 +85,7 @@ class GLInfo(object):
                 result += 'and %s' % item
             else:
                 result += '%s, ' % item
-        return(result)
+        return result
 
     def license(self):
         '''Return formatted string which contains license and its description.'''
@@ -94,13 +94,13 @@ class GLInfo(object):
         result += 'This is free software: you are free'
         result += ' to change and redistribute it.\n'
         result += 'There is NO WARRANTY, to the extent permitted by law.'
-        return(result)
+        return result
 
     def copyright(self):
         '''Return formatted string which contains copyright.
         The special __copyright__ variable is used (type is str).'''
         result = 'Copyright (C) %s' % __copyright__
-        return(result)
+        return result
 
     def date(self):
         '''Return formatted string which contains date and time in GMT format.'''
@@ -120,7 +120,7 @@ class GLInfo(object):
             proc = sp.check_output(args)
             result = string(proc, "UTF-8")
             result = result.rstrip(os.linesep)
-            return(result)
+            return result
 
     def usage(self):
         '''Show help message.'''
@@ -299,7 +299,7 @@ Options for --import, --add/remove-import, --update:
   -S, --more-symlinks       Deprecated; equivalent to --symlink.
 
 Report bugs to <bug-gnulib@gnu.org>.'''
-        return(result)
+        return result
 
     def version(self):
         '''Return formatted string which contains git version.'''
@@ -310,4 +310,4 @@ Report bugs to <bug-gnulib@gnu.org>.'''
             result = result.strip()
             if result == 'UNKNOWN':
                 result = string()
-            return(result)
+            return result

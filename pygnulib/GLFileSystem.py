@@ -78,7 +78,7 @@ class GLFileSystem(object):
     def __repr__(self):
         '''x.__repr__ <==> repr(x)'''
         result = '<pygnulib.GLFileSystem %s>' % hex(id(self))
-        return(result)
+        return result
 
     def lookup(self, name):
         '''GLFileSystem.lookup(name) -> tuple
@@ -121,7 +121,7 @@ class GLFileSystem(object):
                     result = (path_gnulib, False)
             else:  # if path_gnulib does not exist
                 raise(GLError(1, name))
-        return(result)
+        return result
 
 
 #===============================================================================
@@ -160,7 +160,7 @@ class GLFileAssistant(object):
     def __repr__(self):
         '''x.__repr__() <==> repr(x)'''
         result = '<pygnulib.GLFileAssistant %s>' % hex(id(self))
-        return(result)
+        return result
 
     def tmpfilename(self, path):
         '''GLFileAssistant.tmpfilename() -> string
@@ -189,7 +189,7 @@ class GLFileAssistant(object):
                 os.makedirs(dirname)
         if type(result) is bytes:
             result = bytes.decode(ENCS['default'])
-        return(result)
+        return result
 
     def setOriginal(self, original):
         '''GLFileAssistant.setOriginal(original)
@@ -231,7 +231,7 @@ class GLFileAssistant(object):
 
     def getFiles(self):
         '''Return list of the added files.'''
-        return(list(self.added))
+        return list(self.added)
 
     def add(self, lookedup, tmpflag, tmpfile):
         '''GLFileAssistant.add(lookedup, tmpflag, tmpfile)
@@ -415,4 +415,4 @@ class GLFileAssistant(object):
             else:  # if self.config['dryrun']
                 os.remove(tmpfile)
         result = tuple([basename, backupname, result_flag])
-        return(result)
+        return result

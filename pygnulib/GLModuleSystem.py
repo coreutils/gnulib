@@ -82,7 +82,7 @@ class GLModuleSystem(object):
     def __repr__(self):
         '''x.__repr__ <==> repr(x)'''
         result = '<pygnulib.GLModuleSystem %s>' % hex(id(self))
-        return(result)
+        return result
 
     def exists(self, module):
         '''GLModuleSystem.exists(module) -> bool
@@ -107,7 +107,7 @@ class GLModuleSystem(object):
                 ]):  # Close all(iterable) function
             if module not in badnames:
                 result = True
-        return(result)
+        return result
 
     def find(self, module):
         '''GLModuleSystem.find(module) -> GLModule
@@ -122,7 +122,7 @@ class GLModuleSystem(object):
         if self.exists(module):
             path, istemp = self.filesystem.lookup(joinpath('modules', module))
             result = GLModule(self.config, path, istemp)
-            return(result)
+            return result
         else:  # if not self.exists(module)
             if self.config['errors']:
                 raise(GLError(3, module))
@@ -184,7 +184,7 @@ class GLModuleSystem(object):
         os.remove(path)
         listing = [line for line in result.split('\n') if line.strip()]
         listing = sorted(set(listing))
-        return(listing)
+        return listing
 
 
 #===============================================================================
@@ -233,7 +233,7 @@ Include:|Link:|License:|Maintainer:)'
         if type(module) is GLModule:
             if self.module == module.module:
                 result = True
-        return(result)
+        return result
 
     def __ne__(self, module):
         '''x.__ne__(y) <==> x!=y'''
@@ -241,7 +241,7 @@ Include:|Link:|License:|Maintainer:)'
         if type(module) is GLModule:
             if self.module != module.module:
                 result = True
-        return(result)
+        return result
 
     def __ge__(self, module):
         '''x.__ge__(y) <==> x>=y'''
@@ -249,7 +249,7 @@ Include:|Link:|License:|Maintainer:)'
         if type(module) is GLModule:
             if self.module >= module.module:
                 result = True
-        return(result)
+        return result
 
     def __gt__(self, module):
         '''x.__gt__(y) <==> x>y'''
@@ -257,14 +257,14 @@ Include:|Link:|License:|Maintainer:)'
         if type(module) is GLModule:
             if self.module > module.module:
                 result = True
-        return(result)
+        return result
 
     def __hash__(self):
         '''x.__hash__() <==> hash(x)'''
         module = hash(self.module)
         patched = hash(self.patched)
         result = module ^ patched
-        return(result)
+        return result
 
     def __le__(self, module):
         '''x.__le__(y) <==> x<=y'''
@@ -272,7 +272,7 @@ Include:|Link:|License:|Maintainer:)'
         if type(module) is GLModule:
             if self.module <= module.module:
                 result = True
-        return(result)
+        return result
 
     def __lt__(self, module):
         '''x.__lt__(y) <==> x<y'''
@@ -280,18 +280,18 @@ Include:|Link:|License:|Maintainer:)'
         if type(module) is GLModule:
             if self.module < module.module:
                 result = True
-        return(result)
+        return result
 
     def __str__(self):
         '''x.__str__() <==> str(x)'''
         result = self.getName()
-        return(result)
+        return result
 
     def __repr__(self):
         '''x.__repr__ <==> repr(x)'''
         result = '<pygnulib.GLModule %s %s>' % \
             (repr(self.getName()), hex(id(self)))
-        return(result)
+        return result
 
     def getName(self):
         '''GLModule.getName() -> string
@@ -299,39 +299,39 @@ Include:|Link:|License:|Maintainer:)'
         Return the name of the module.'''
         pattern = compiler(joinpath('modules', '(.*?)$'))
         result = pattern.findall(self.module)[0]
-        return(result)
+        return result
 
     def isPatched(self):
         '''GLModule.isPatched() -> bool
 
         Check whether module was created after applying patch.'''
-        return(self.patched)
+        return self.patched
 
     def isTests(self):
         '''GLModule.isTests() -> bool
 
         Check whether module is a -tests version of module.'''
         result = self.getName().endswith('-tests')
-        return(result)
+        return result
 
     def isNonTests(self):
         '''GLModule.isTests() -> bool
 
         Check whether module is not a -tests version of module.'''
         result = not(self.isTests())
-        return(result)
+        return result
 
     def getTestsName(self):
         '''Return -tests version of the module name.'''
         result = self.getName()
         if not result.endswith('-tests'):
             result += '-tests'
-        return(result)
+        return result
 
     def getTestsModule(self):
         '''Return -tests version of the module as GLModule.'''
         result = self.modulesystem.find(self.getTestsName())
-        return(result)
+        return result
 
     def getShellFunc(self):
         '''GLModule.getShellFunc() -> string
@@ -354,7 +354,7 @@ Include:|Link:|License:|Maintainer:)'
         result = 'func_%s_gnulib_m4code_%s' % (macro_prefix, module)
         if type(result) is bytes:
             result = result.decode(ENCS['default'])
-        return(result)
+        return result
 
     def getShellVar(self):
         '''GLModule.getShellVar() -> string
@@ -377,7 +377,7 @@ Include:|Link:|License:|Maintainer:)'
         result = '%s_gnulib_enabled_%s' % (macro_prefix, module)
         if type(result) is bytes:
             result = result.decode(ENCS['default'])
-        return(result)
+        return result
 
     def getConditionalName(self):
         '''GLModule.getConditionalName() -> string
@@ -398,7 +398,7 @@ Include:|Link:|License:|Maintainer:)'
             result = '%s_GNULIB_ENABLED_%s' % (macro_prefix, name)
         if type(result) is bytes:
             result = result.decode(ENCS['default'])
-        return(result)
+        return result
 
     def getDescription(self):
         '''GLModule.getDescription() -> string
@@ -419,7 +419,7 @@ Include:|Link:|License:|Maintainer:)'
                         result = result[-1]
             result = result.strip()
             self.cache['description'] = result
-        return(self.cache['description'])
+        return self.cache['description']
 
     def getComment(self):
         '''GLModule.getComment() -> string
@@ -440,7 +440,7 @@ Include:|Link:|License:|Maintainer:)'
                         result = result[-1]
             result = result.strip()
             self.cache['comment'] = result
-        return(self.cache['comment'])
+        return self.cache['comment']
 
     def getStatus(self):
         '''GLModule.getStatus() -> string
@@ -466,7 +466,7 @@ Include:|Link:|License:|Maintainer:)'
                     parts += [line]
                 result = [part.strip() for part in parts if part.strip()]
             self.cache['status'] = list(result)
-        return(list(self.cache['status']))
+        return list(self.cache['status'])
 
     def getNotice(self):
         '''GLModule.getNotice() -> string
@@ -492,7 +492,7 @@ Include:|Link:|License:|Maintainer:)'
                     parts += [line]
                 result = ''.join(parts)
             self.cache['notice'] = result
-        return(self.cache['notice'])
+        return self.cache['notice']
 
     def getApplicability(self):
         '''GLModule.getApplicability() -> string
@@ -527,7 +527,7 @@ Include:|Link:|License:|Maintainer:)'
                 result = result.decode(ENCS['default'])
             result = result.strip()
             self.cache['applicability'] = result
-        return(self.cache['applicability'])
+        return self.cache['applicability']
 
     def getFiles(self):
         '''GLModule.getFiles() -> list
@@ -559,7 +559,7 @@ Include:|Link:|License:|Maintainer:)'
             result += [joinpath('m4', 'zzgnulib.m4')]
             result += [joinpath('m4', 'gnulib-common.m4')]
             self.cache['files'] = list(result)
-        return(list(self.cache['files']))
+        return list(self.cache['files'])
 
     def getDependencies(self):
         '''GLModule.getDependencies() -> list
@@ -603,7 +603,7 @@ Include:|Link:|License:|Maintainer:)'
                             condition = condition.decode(ENCS['default'])
                     result += [tuple([self.modulesystem.find(module), condition])]
             self.cache['dependencies'] = result
-        return(list(self.cache['dependencies']))
+        return list(self.cache['dependencies'])
 
     def getAutoconfSnippet_Early(self):
         '''GLModule.getAutoconfSnippet_Early() -> string
@@ -629,7 +629,7 @@ Include:|Link:|License:|Maintainer:)'
                     parts += [line]
                 result = ''.join(parts)
             self.cache['autoconf-early'] = result
-        return(self.cache['autoconf-early'])
+        return self.cache['autoconf-early']
 
     def getAutoconfSnippet(self):
         '''GLModule.getAutoconfSnippet() -> string
@@ -655,7 +655,7 @@ Include:|Link:|License:|Maintainer:)'
                     parts += [line]
                 result = ''.join(parts)
             self.cache['autoconf'] = result
-        return(self.cache['autoconf'])
+        return self.cache['autoconf']
 
     def getAutomakeSnippet(self):
         '''getAutomakeSnippet() -> string
@@ -669,7 +669,7 @@ Include:|Link:|License:|Maintainer:)'
         else:  # if not conditional.strip()
             result += '\n'
         result += self.getAutomakeSnippet_Unconditional()
-        return(result)
+        return result
 
     def getAutomakeSnippet_Conditional(self):
         '''GLModule.getAutomakeSnippet_Conditional() -> string
@@ -695,7 +695,7 @@ Include:|Link:|License:|Maintainer:)'
                     parts += [line]
                 result = ''.join(parts)
             self.cache['makefile-conditional'] = result
-        return(self.cache['makefile-conditional'])
+        return self.cache['makefile-conditional']
 
     def getAutomakeSnippet_Unconditional(self):
         '''GLModule.getAutomakeSnippet_Unconditional() -> string
@@ -767,7 +767,7 @@ Include:|Link:|License:|Maintainer:)'
                     result += '\n\n'
             result = constants.nlconvert(result)
             self.cache['makefile-unconditional'] = result
-        return(self.cache['makefile-unconditional'])
+        return self.cache['makefile-unconditional']
 
     def getInclude(self):
         '''GLModule.getInclude() -> string
@@ -796,7 +796,7 @@ Include:|Link:|License:|Maintainer:)'
             pattern = compiler('^(["<].*?[>"])', re.S | re.M)
             result = pattern.sub('#include \\1', result)
             self.cache['include'] = result
-        return(self.cache['include'])
+        return self.cache['include']
 
     def getLink(self):
         '''GLModule.getLink() -> string
@@ -821,7 +821,7 @@ Include:|Link:|License:|Maintainer:)'
                 parts = [part.strip() for part in parts if part.strip()]
                 # result = ' '.join(parts)
             self.cache['link'] = parts
-        return(self.cache['link'])
+        return self.cache['link']
 
     def getLicense(self):
         '''GLModule.getLicense(self) -> string
@@ -837,7 +837,7 @@ Include:|Link:|License:|Maintainer:)'
                     sys.stderr.write('module %s lacks a license\n' % str(self))
         if not license:
             license = 'GPL'
-        return(license)
+        return license
 
     def getLicense_Raw(self):
         '''GLModule.getLicense_Raw() -> string
@@ -858,7 +858,7 @@ Include:|Link:|License:|Maintainer:)'
                         result = result[-1]
             result = result.strip()
             self.cache['license'] = result
-        return(self.cache['license'])
+        return self.cache['license']
 
     def getMaintainer(self):
         '''GLModule.getMaintainer() -> string
@@ -885,7 +885,7 @@ Include:|Link:|License:|Maintainer:)'
                 result = ''.join(parts)
             result = result.strip()
             self.cache['maintainer'] = result
-        return(self.cache['maintainer'])
+        return self.cache['maintainer']
 
 
 #===============================================================================
@@ -927,21 +927,21 @@ class GLModuleTable(object):
     def __repr__(self):
         '''x.__repr__() <==> repr(x)'''
         result = '<pygnulib.GLModuleTable %s>' % hex(id(self))
-        return(result)
+        return result
 
     def __getitem__(self, y):
         '''x.__getitem__(y) <==> x[y]'''
         if y in ['base', 'final', 'main', 'tests', 'avoids']:
             if y == 'base':
-                return(self.getBaseModules())
+                return self.getBaseModules()
             elif y == 'final':
-                return(self.getFinalModules())
+                return self.getFinalModules()
             elif y == 'main':
-                return(self.getMainModules())
+                return self.getMainModules()
             elif y == 'tests':
-                return(self.getTestsModules())
+                return self.getTestsModules()
             else:  # if y == 'avoids'
-                return(self.getAvoids())
+                return self.getAvoids()
         else:  # if y is not in list
             raise(KeyError('GLModuleTable does not contain key: %s' % repr(y)))
 
@@ -988,7 +988,7 @@ class GLModuleTable(object):
             raise(TypeError('module must be a GLModule, not %s' %
                             type(module).__name__))
         result = str(module) in self.dependers
-        return(result)
+        return result
 
     def getCondition(self, parent, module):
         '''GLModuleTable.getCondition(module) -> string or True
@@ -1005,7 +1005,7 @@ class GLModuleTable(object):
         result = None
         if key in self.conditionals:
             result = self.conditionals[key]
-        return(result)
+        return result
 
     def transitive_closure(self, modules):
         '''GLModuleTable.transitive_closure(modules) -> list
@@ -1101,7 +1101,7 @@ class GLModuleTable(object):
             inmodules = sorted(set(inmodules))
         modules = sorted(set(outmodules))
         self.modules = modules
-        return(list(modules))
+        return list(modules)
 
     def transitive_closure_separately(self, basemodules, finalmodules):
         '''GLModuleTable.transitive_closure_separately(*args, **kwargs) -> tuple
@@ -1143,7 +1143,7 @@ class GLModuleTable(object):
                 set(self.config['testflags'] + [TESTS['tests']]))
             self.config.setTestFlags(testflags)
         result = tuple([main_modules, tests_modules])
-        return(result)
+        return result
 
     def add_dummy(self, modules):
         '''GLModuleTable.add_dummy(modules) -> list
@@ -1171,7 +1171,7 @@ class GLModuleTable(object):
         if not have_lib_sources:
             dummy = self.modulesystem.find('dummy')
             modules = sorted(set(modules + [dummy]))
-        return(list(modules))
+        return list(modules)
 
     def filelist(self, modules):
         '''GLModuleTable.filelist(modules) -> list
@@ -1189,7 +1189,7 @@ class GLModuleTable(object):
             for file in listing:
                 if file not in filelist:
                     filelist += [file]
-        return(filelist)
+        return filelist
 
     def filelist_separately(self, main_modules, tests_modules):
         '''GLModuleTable.filelist_separately(**kwargs) -> list
@@ -1208,13 +1208,13 @@ class GLModuleTable(object):
                 for file in tests_filelist
             ]  # Finish to sort filelist
         result = tuple([main_filelist, tests_filelist])
-        return(result)
+        return result
 
     def getAvoids(self):
         '''GLModuleTable.getAvoids() -> list
 
         Return list of avoids.'''
-        return(list(self.avoids))
+        return list(self.avoids)
 
     def setAvoids(self, modules):
         '''GLModuleTable.setAvoids(modules)
@@ -1229,7 +1229,7 @@ class GLModuleTable(object):
         '''GLModuleTable.getBaseModules() -> list
 
         Return list of base modules.'''
-        return(list(self.base_modules))
+        return list(self.base_modules)
 
     def setBaseModules(self, modules):
         '''GLModuleTable.setBaseModules(modules)
@@ -1244,7 +1244,7 @@ class GLModuleTable(object):
         '''GLModuleTable.getFinalModules() -> list
 
         Return list of final modules.'''
-        return(list(self.final_modules))
+        return list(self.final_modules)
 
     def setFinalModules(self, modules):
         '''GLModuleTable.setFinalModules(modules)
@@ -1259,7 +1259,7 @@ class GLModuleTable(object):
         '''GLModuleTable.getMainModules() -> list
 
         Return list of main modules.'''
-        return(list(self.main_modules))
+        return list(self.main_modules)
 
     def setMainModules(self, modules):
         '''GLModuleTable.setMainModules(modules)
@@ -1274,7 +1274,7 @@ class GLModuleTable(object):
         '''GLModuleTable.getTestsModules() -> list
 
         Return list of tests modules.'''
-        return(list(self.tests_modules))
+        return list(self.tests_modules)
 
     def setTestsModules(self, modules):
         '''GLModuleTable.setTestsModules(modules)

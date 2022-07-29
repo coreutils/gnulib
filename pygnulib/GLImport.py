@@ -286,7 +286,7 @@ class GLImport(object):
     def __repr__(self):
         '''x.__repr__ <==> repr(x)'''
         result = '<pygnulib.GLImport %s>' % hex(id(self))
-        return(result)
+        return result
 
     def rewrite_old_files(self, files):
         '''GLImport.rewrite_old_files(files) -> list
@@ -333,7 +333,7 @@ class GLImport(object):
                 path = file
             result += [os.path.normpath(path)]
         result = sorted(set(result))
-        return(list(result))
+        return list(result)
 
     def rewrite_new_files(self, files):
         '''GLImport.rewrite_new_files(files)
@@ -379,7 +379,7 @@ class GLImport(object):
                 path = file
             result += [os.path.normpath(path)]
         result = sorted(set(result))
-        return(list(result))
+        return list(result)
 
     def actioncmd(self):
         '''Return command-line invocation comment.'''
@@ -460,7 +460,7 @@ class GLImport(object):
             actioncmd += ' --no-vc-files'
         actioncmd += ' '  # Add a space
         actioncmd += ' '.join(modules)
-        return(actioncmd)
+        return actioncmd
 
     def gnulib_cache(self):
         '''GLImport.gnulib_cache() -> string
@@ -547,7 +547,7 @@ gnulib-tool.m4 macro invocations:\n''' % actioncmd
             emit += 'gl_VC_FILES([%s])\n' % vc_files
         if type(emit) is bytes:
             emit = emit.decode(ENCS['default'])
-        return(constants.nlconvert(emit))
+        return constants.nlconvert(emit)
 
     def gnulib_comp(self, files):
         '''GLImport.gnulib_comp(files) -> string
@@ -692,7 +692,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         emit += '])\n'
         if type(emit) is bytes:
             emit = emit.decode(ENCS['default'])
-        return(emit)
+        return emit
 
     def _done_dir_(self, directory, dirs_added, dirs_removed):
         '''GLImport._done_dir_(directory, dirs_added, dirs_removed)
@@ -973,7 +973,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
 
         # Return the result.
         result = tuple([filetable, transformers])
-        return(result)
+        return result
 
     def execute(self, filetable, transformers):
         '''Perform operations on the lists of files, which are given in a special

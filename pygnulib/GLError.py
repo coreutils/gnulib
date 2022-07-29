@@ -124,4 +124,4 @@ class GLError(Exception):
         else:  # if PYTHON3
             self.message = ('[Errno %d] %s' %
                             (self.errno, errors[self.errno - 1]))
-        return(self.message)
+        return self.message

@@ -284,7 +284,7 @@ class GLConfig(object):
     # Define special methods.
     def __repr__(self):
         '''x.__repr__() <==> repr(x)'''
-        return('<pygnulib.GLConfig>')
+        return '<pygnulib.GLConfig>'
 
     def __getitem__(self, y):
         '''x.__getitem__(y) <==> x[y]'''
@@ -296,18 +296,18 @@ class GLConfig(object):
                 if self.table['auxdir']:
                     return self.table['auxdir']
                 return "build-aux"
-            return(self.table[y])
+            return self.table[y]
         else:  # if y not in self.table
             raise(KeyError('GLConfig does not contain key: %s' % repr(y)))
 
     def dictionary(self):
         '''Return the configuration as a dict object.'''
-        return(dict(self.table))
+        return dict(self.table)
 
     def copy(self):
         '''Return the copy of the configuration.'''
         table = copy.deepcopy(self)
-        return(table)
+        return table
 
     def update(self, dictionary):
         '''Specify the dictionary whose keys will be used to update config.'''
@@ -346,28 +346,28 @@ class GLConfig(object):
         '''Return default value for the given key.'''
         if key in self.table:
             if key == 'libname':
-                return(string('libgnu'))
+                return string('libgnu')
             elif key == 'macro_prefix':
-                return(string('gl'))
+                return string('gl')
             elif key == 'include_guard_prefix':
-                return(string('GL'))
+                return string('GL')
             elif key == 'ac_version':
-                return(2.59)
+                return 2.59
             elif key == 'verbosity':
-                return(0)
+                return 0
             elif key == 'copyrights':
-                return(True)
+                return True
             elif key in ['modules', 'avoids', 'tests', 'testflags']:
-                return(list())
+                return list()
             elif key in ['libtool', 'lgpl', 'conddeps', 'modcache', 'symbolic',
                          'lsymbolic', 'libtests', 'dryrun']:
-                return(False)
+                return False
             if key == 'vc_files':
-                return(None)
+                return None
             elif key == 'errors':
-                return(True)
+                return True
             else:  # otherwise
-                return(string())
+                return string()
         else:  # if key not in self.table
             raise(KeyError('GLConfig does not contain key: %s' % repr(key)))
 
@@ -375,23 +375,23 @@ class GLConfig(object):
         '''Check whether the value for the given key is a default value.'''
         if key in self.table:
             default = self.default(key)
-            return(value == default)
+            return value == default
         else:  # if key not in self.table
             raise(KeyError('GLConfig does not contain key: %s' % repr(key)))
 
     def keys(self):
         '''Return list of keys.'''
-        return(list(self.table.keys()))
+        return list(self.table.keys())
 
     def values(self):
         '''Return list of values.'''
-        return(list(self.table.values()))
+        return list(self.table.values())
 
     # Define destdir methods.
     def getDestDir(self):
         '''Return the target directory. For --import, this specifies where your
         configure.ac can be found. Defaults to current directory.'''
-        return(self.table['destdir'])
+        return self.table['destdir']
 
     def setDestDir(self, destdir):
         '''Specify the target directory. For --import, this specifies where your
@@ -414,7 +414,7 @@ class GLConfig(object):
     def getLocalDir(self):
         '''Return a local override directory where to look up files before looking
         in gnulib's directory.'''
-        return(self.table['localdir'])
+        return self.table['localdir']
 
     def setLocalDir(self, localdir):
         '''Specify a local override directory where to look up files before looking
@@ -461,7 +461,7 @@ class GLConfig(object):
     # Define sourcebase methods.
     def getSourceBase(self):
         '''Return directory relative to destdir where source code is placed.'''
-        return(self.table['sourcebase'])
+        return self.table['sourcebase']
 
     def setSourceBase(self, sourcebase):
         '''Specify directory relative to destdir where source code is placed.'''
@@ -481,7 +481,7 @@ class GLConfig(object):
     # Define m4base methods.
     def getM4Base(self):
         '''Return directory relative to destdir where *.m4 macros are placed.'''
-        return(self.table['m4base'])
+        return self.table['m4base']
 
     def setM4Base(self, m4base):
         '''Specify directory relative to destdir where *.m4 macros are placed.'''
@@ -501,7 +501,7 @@ class GLConfig(object):
     # Define pobase methods.
     def getPoBase(self):
         '''Return directory relative to destdir where *.po files are placed.'''
-        return(self.table['pobase'])
+        return self.table['pobase']
 
     def setPoBase(self, pobase):
         '''Specify directory relative to destdir where *.po files are placed.'''
@@ -522,7 +522,7 @@ class GLConfig(object):
     def getDocBase(self):
         '''Return directory relative to destdir where doc files are placed.
         Default value for this variable is 'doc').'''
-        return(self.table['docbase'])
+        return self.table['docbase']
 
     def setDocBase(self, docbase):
         '''Specify directory relative to destdir where doc files are placed.
@@ -545,7 +545,7 @@ class GLConfig(object):
     def getTestsBase(self):
         '''Return directory relative to destdir where unit tests are placed.
         Default value for this variable is 'tests').'''
-        return(self.table['testsbase'])
+        return self.table['testsbase']
 
     def setTestsBase(self, testsbase):
         '''Specify directory relative to destdir where unit tests are placed.
@@ -589,7 +589,7 @@ class GLConfig(object):
 
     def getModules(self):
         '''Return the modules list.'''
-        return(list(self.table['modules']))
+        return list(self.table['modules'])
 
     def setModules(self, modules):
         '''Set the modules list.'''
@@ -639,7 +639,7 @@ class GLConfig(object):
 
     def getAvoids(self):
         '''Return the list of the avoided modules.'''
-        return(list(self.table['avoids']))
+        return list(self.table['avoids'])
 
     def setAvoids(self, modules):
         '''Specify the modules which will be avoided.'''
@@ -688,7 +688,7 @@ class GLConfig(object):
 
     def getFiles(self):
         '''Return the list of the fileed files.'''
-        return(list(self.table['files']))
+        return list(self.table['files'])
 
     def setFiles(self, files):
         '''Specify the list of files.'''
@@ -716,7 +716,7 @@ class GLConfig(object):
     def checkTestFlag(self, flag):
         '''Return the status of the test flag.'''
         if flag in TESTS.values():
-            return(flag in self.table['testflags'])
+            return flag in self.table['testflags']
         else:  # if flag is not in TESTS
             raise(TypeError('unknown flag: %s' % repr(flag)))
 
@@ -738,7 +738,7 @@ class GLConfig(object):
 
     def getTestFlags(self):
         '''Return test flags. You can get flags from TESTS variable.'''
-        return(list(self.table['testflags']))
+        return list(self.table['testflags'])
 
     def setTestFlags(self, testflags):
         '''Specify test flags. You can get flags from TESTS variable.'''
@@ -763,7 +763,7 @@ class GLConfig(object):
     # Define libname methods.
     def getLibName(self):
         '''Return the library name.'''
-        return(self.table['libname'])
+        return self.table['libname']
 
     def setLibName(self, libname):
         '''Specify the library name.'''
@@ -783,7 +783,7 @@ class GLConfig(object):
     # Define libtool methods.
     def checkLibtool(self):
         '''Check if user enabled libtool rules.'''
-        return(self.table['libtool'])
+        return self.table['libtool']
 
     def enableLibtool(self):
         '''Enable libtool rules.'''
@@ -800,7 +800,7 @@ class GLConfig(object):
     # Define conddeps methods.
     def checkCondDeps(self):
         '''Check if user enabled cond. dependencies.'''
-        return(self.table['conddeps'])
+        return self.table['conddeps']
 
     def enableCondDeps(self):
         '''Enable cond. dependencies (may save configure time and object code).'''
@@ -818,7 +818,7 @@ class GLConfig(object):
     def getLGPL(self):
         '''Check for abort if modules aren't available under the LGPL.
         Default value is False, which means that lgpl is disabled.'''
-        return(self.table['lgpl'])
+        return self.table['lgpl']
 
     def setLGPL(self, lgpl):
         '''Abort if modules aren't available under the LGPL.
@@ -835,17 +835,17 @@ class GLConfig(object):
 
     def getIncludeGuardPrefix(self):
         '''Return include_guard_prefix to use inside GLEmiter class.'''
-        return(self.table['include_guard_prefix'])
+        return self.table['include_guard_prefix']
 
     def getModuleIndicatorPrefix(self):
         '''Return module_indicator_prefix to use inside GLEmiter class.'''
-        return(self.getIncludeGuardPrefix())
+        return self.getIncludeGuardPrefix()
 
     # Define macro_prefix methods.
     def getMacroPrefix(self):
         '''Return the prefix of the macros 'gl_EARLY' and 'gl_INIT'.
         Default macro_prefix is 'gl'.'''
-        return(self.table['macro_prefix'])
+        return self.table['macro_prefix']
 
     def setMacroPrefix(self, macro_prefix):
         '''Specify the prefix of the macros 'gl_EARLY' and 'gl_INIT'.
@@ -879,7 +879,7 @@ class GLConfig(object):
     def getMakefile(self):
         '''Return the name of makefile in automake syntax in the source-base and
         tests-base directories. Default is 'Makefile.am'.'''
-        return(self.table['makefile'])
+        return self.table['makefile']
 
     def setMakefile(self, makefile):
         '''Specify the name of makefile in automake syntax in the source-base and
@@ -902,7 +902,7 @@ class GLConfig(object):
     def getPoDomain(self):
         '''Return the prefix of the i18n domain. Usually use the package name.
         A suffix '-gnulib' is appended.'''
-        return(self.table['podomain'])
+        return self.table['podomain']
 
     def setPoDomain(self, podomain):
         '''Specify the prefix of the i18n domain. Usually use the package name.
@@ -925,7 +925,7 @@ class GLConfig(object):
     def getWitnessCMacro(self):
         '''Return the C macro that is defined when the sources in this directory
         are compiled or used.'''
-        return(self.table['witness_c_macro'])
+        return self.table['witness_c_macro']
 
     def setWitnessCMacro(self, witness_c_macro):
         '''Specify the C macro that is defined when the sources in this directory
@@ -947,7 +947,7 @@ class GLConfig(object):
     # Define vc_files methods.
     def checkVCFiles(self):
         '''Check if update of the version control files is enabled or disabled.'''
-        return(self.table['vc_files'])
+        return self.table['vc_files']
 
     def enableVCFiles(self):
         '''Enable update of the version control files.'''
@@ -964,7 +964,7 @@ class GLConfig(object):
     # Define modcache methods.
     def checkModuleCaching(self):
         '''Get status of module caching optimization.'''
-        return(self.table['modcache'])
+        return self.table['modcache']
 
     def enableModuleCaching(self):
         '''Enable module caching optimization.'''
@@ -981,7 +981,7 @@ class GLConfig(object):
     # Define configure_ac methods.
     def getAutoconfFile(self):
         '''Return path of autoconf file relative to destdir.'''
-        return(self.table['configure_ac'])
+        return self.table['configure_ac']
 
     def setAutoconfFile(self, configure_ac):
         '''Specify path of autoconf file relative to destdir.'''
@@ -1007,7 +1007,7 @@ class GLConfig(object):
     # Define ac_version methods.
     def getAutoconfVersion(self):
         '''Return preferred autoconf version. Default value is 2.59.'''
-        return(self.table['ac_version'])
+        return self.table['ac_version']
 
     def setAutoconfVersion(self, ac_version):
         '''Specify preferred autoconf version. Default value is 2.59.'''
@@ -1024,11 +1024,11 @@ class GLConfig(object):
     # Define symbolic methods.
     def checkCopyrights(self):
         '''Check if copyright notices in files should be replaced.'''
-        return(self.table['copyrights'])
+        return self.table['copyrights']
 
     def checkSymbolic(self):
         '''Check if pygnulib will make symbolic links instead of copying files.'''
-        return(self.table['symbolic'])
+        return self.table['symbolic']
 
     def enableSymbolic(self):
         '''Enable creation of the symbolic links instead of copying files.'''
@@ -1049,7 +1049,7 @@ class GLConfig(object):
     def checkLSymbolic(self):
         '''Check if pygnulib will make symbolic links instead of copying files, only
         for files from the local override directory.'''
-        return(self.table['lsymbolic'])
+        return self.table['lsymbolic']
 
     def enableLSymbolic(self):
         '''Enable creation of symbolic links instead of copying files, only for
@@ -1069,7 +1069,7 @@ class GLConfig(object):
     # Define verbosity methods.
     def getVerbosity(self):
         '''Get verbosity level.'''
-        return(self.table['verbosity'])
+        return self.table['verbosity']
 
     def decreaseVerbosity(self):
         '''Decrease verbosity level.'''
@@ -1103,7 +1103,7 @@ class GLConfig(object):
     # Define libtests methods.
     def checkLibtests(self):
         '''Return True if a testsbase/libtests.a is needed.'''
-        return(self.table['libtests'])
+        return self.table['libtests']
 
     def enableLibtests(self):
         '''If libtests is enabled, then testsbase/libtests.a is needed.'''
@@ -1120,7 +1120,7 @@ class GLConfig(object):
     # Define single_configure methods.
     def checkSingleConfigure(self):
         '''Check whether single configure file should be generated.'''
-        return(self.table['single_configure'])
+        return self.table['single_configure']
 
     def enableSingleConfigure(self):
         '''Enable generation of the single configure file.'''
@@ -1137,7 +1137,7 @@ class GLConfig(object):
     # Define dryrun methods.
     def checkDryRun(self):
         '''Check whether dryrun is enabled.'''
-        return(self.table['dryrun'])
+        return self.table['dryrun']
 
     def enableDryRun(self):
         '''Enable dryrun mode.'''
@@ -1154,7 +1154,7 @@ class GLConfig(object):
     # Define errors methods.
     def checkErrors(self):
         '''Check if GLError will be raised in non-critical situations.'''
-        return(self.table['errors'])
+        return self.table['errors']
 
     def enableErrors(self):
         '''Raise GLError in non-critical situations.'''

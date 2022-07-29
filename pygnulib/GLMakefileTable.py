@@ -82,7 +82,7 @@ class GLMakefileTable(object):
             raise(TypeError('indices must be integers, not %s' %
                             type(y).__name__))
         result = self.table[y]
-        return(dict(result))
+        return dict(result)
 
     def editor(self, dir, var, val):
         '''GLMakefileTable.editor(dir, var, val)
@@ -140,4 +140,4 @@ class GLMakefileTable(object):
         '''GLMakefileTable.count() -> int
 
         Count number of edits which were applied.'''
-        return(len(self.table))
+        return len(self.table)

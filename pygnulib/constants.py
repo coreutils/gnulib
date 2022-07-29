@@ -269,7 +269,7 @@ def compiler(pattern, flags=0):
         pattern = re.compile(pattern, re.UNICODE | flags)
     else:  # if PYTHON3
         pattern = re.compile(pattern, flags)
-    return(pattern)
+    return pattern
 
 
 def cleaner(sequence):
@@ -285,7 +285,7 @@ def cleaner(sequence):
         sequence = [False if value == 'false' else value for value in sequence]
         sequence = [True if value == 'true' else value for value in sequence]
         sequence = [value.strip() for value in sequence]
-    return(sequence)
+    return sequence
 
 
 def joinpath(head, *tail):
@@ -304,7 +304,7 @@ def joinpath(head, *tail):
     result = os.path.normpath(os.path.join(head, *tail))
     if type(result) is bytes:
         result = result.decode(ENCS['default'])
-    return(result)
+    return result
 
 
 def relativize(dir1, dir2):
@@ -338,7 +338,7 @@ def relativize(dir1, dir2):
                 dir0 = joinpath(dir0, first)
         dir1 = dir1[dir1.find(os.path.sep) + 1:]
     result = os.path.normpath(dir2)
-    return(result)
+    return result
 
 
 def link_relative(src, dest):
@@ -405,7 +405,7 @@ def filter_filelist(separator, filelist,
                                  (added_prefix, added_suffix), filename)
             listing += [result]
     result = separator.join(listing)
-    return(result)
+    return result
 
 
 def substart(orig, repl, data):
@@ -416,7 +416,7 @@ def substart(orig, repl, data):
     result = data
     if data.startswith(orig):
         result = repl + data[len(orig):]
-    return(result)
+    return result
 
 
 def subend(orig, repl, data):
@@ -427,7 +427,7 @@ def subend(orig, repl, data):
     result = data
     if data.endswith(orig):
         result = data[:-len(orig)] + repl
-    return(result)
+    return result
 
 
 def nlconvert(text):
@@ -436,7 +436,7 @@ def nlconvert(text):
     text = text.replace('\r\n', '\n')
     if system == 'windows':
         text = text.replace('\n', '\r\n')
-    return(text)
+    return text
 
 
 def nlremove(text):
@@ -446,7 +446,7 @@ def nlremove(text):
     lines = [line for line in text.split('\n') if line != '']
     text = '\n'.join(lines)
     text = nlconvert(text)
-    return(text)
+    return text
 
 
 def remove_backslash_newline(text):
