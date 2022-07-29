@@ -383,7 +383,7 @@ Include:|Link:|License:|Maintainer:)'
             name = hashlib.md5(name).hexdigest()
             conditional = '%s_GNULIB_ENABLED_%s' % (macro_prefix, name)
         else:  # if not nonascii
-            result = '%s_GNULIB_ENABLED_%s' (macro_prefix, name)
+            result = '%s_GNULIB_ENABLED_%s' % (macro_prefix, name)
         if type(result) is bytes:
             result = result.decode(ENCS['default'])
         return(result)
