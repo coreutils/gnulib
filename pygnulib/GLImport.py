@@ -105,7 +105,7 @@ class GLImport(object):
             self.config.setAuxDir(self.cache['auxdir'])
 
         # Guess autoconf version.
-        pattern = compiler('.*AC_PREREQ\((.*?)\)', re.S | re.M)
+        pattern = compiler(r'.*AC_PREREQ\((.*?)\)', re.S | re.M)
         versions = cleaner(pattern.findall(data))
         if versions:
             version = sorted(set([float(version) for version in versions]))[-1]

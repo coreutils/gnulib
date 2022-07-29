@@ -516,7 +516,7 @@ USE_MSGCTXT = no\n"""
         # arguments. The check is performed only when autoconf is run from the
         # directory where the configure.ac resides; if it is run from a different
         # directory, the check is skipped.
-        emit += """\
+        emit += r"""\
   m4_ifval(%V1%_LIBSOURCES_LIST, [
     m4_syscmd([test ! -d ]m4_defn([%V1%_LIBSOURCES_DIR])[ ||
       for gl_file in ]%V1%_LIBSOURCES_LIST[ ; do
@@ -733,8 +733,8 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                     amsnippet1 += '%s_%s_DEPENDENCIES += @%sALLOCA@\n' % \
                         (libname, libext, perhapsLT)
                 amsnippet1 = constants.combine_lines_matching(
-                                 compiler('%s_%s_SOURCES' % (libname, libext)),
-                                 amsnippet1)
+                    compiler('%s_%s_SOURCES' % (libname, libext)),
+                    amsnippet1)
 
                 # Get unconditional snippet, edit it and save to amsnippet2.
                 amsnippet2 = module.getAutomakeSnippet_Unconditional()

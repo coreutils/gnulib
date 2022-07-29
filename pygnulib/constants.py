@@ -13,6 +13,7 @@ import sys
 import platform
 import tempfile
 import subprocess as sp
+import __main__ as interpreter
 
 
 #===============================================================================
@@ -68,7 +69,6 @@ ABCDEFGHIJKLMNOPQRSTUVWXYZ\
 0123456789'  # Alphanumeric characters
 
 # Set ENCS dictionary
-import __main__ as interpreter
 if not hasattr(interpreter, '__file__'):
     if sys.stdout.encoding != None:
         ENCS['default'] = sys.stdout.encoding
@@ -443,11 +443,13 @@ def remove_backslash_newline(text):
     line to it.'''
     return text.replace('\\\n', '')
 
+
 def combine_lines(text):
     '''Given a multiline string text, join lines by spaces:
     When a line ends in a backslash, remove the backslash and join the next
     line to it, inserting a space between them.'''
     return text.replace('\\\n', ' ')
+
 
 def combine_lines_matching(pattern, text):
     '''Given a multiline string text, join lines by spaces, when the first
@@ -461,9 +463,9 @@ def combine_lines_matching(pattern, text):
     while match:
         (startpos, pos) = match.span()
         # Look how far the continuation lines extend.
-        pos = text.find('\n',pos)
-        while pos > 0 and text[pos-1] == '\\':
-            pos = text.find('\n',pos+1)
+        pos = text.find('\n', pos)
+        while pos > 0 and text[pos - 1] == '\\':
+            pos = text.find('\n', pos + 1)
         if pos < 0:
             pos = len(text)
         # Perform a combine_lines throughout the continuation lines.

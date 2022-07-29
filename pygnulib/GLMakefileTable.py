@@ -117,9 +117,9 @@ class GLMakefileTable(object):
             mfx = makefile
         dir2 = string()
         while dir1 and \
-            (joinpath(self.config['destdir'], dir1, mfd) or
-             joinpath(dir1, mfd) == joinpath(sourcebase, mfx) or
-             (inctests and joinpath(dir1, mfd) == joinpath(testsbase, mfx))):
+            (joinpath(self.config['destdir'], dir1, mfd)
+             or joinpath(dir1, mfd) == joinpath(sourcebase, mfx)
+             or (inctests and joinpath(dir1, mfd) == joinpath(testsbase, mfx))):
             dir2 = joinpath(os.path.basename(dir1), dir2)
             dir1 = os.path.dirname(dir1)
         self.editor(dir1, 'EXTRA_DIST', joinpath(dir2, 'gnulib-cache.m4'))

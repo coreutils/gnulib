@@ -19,6 +19,13 @@
 # This program is meant for authors or maintainers which want to import
 # modules from gnulib into their packages.
 
+# CODING STYLE for this file and its companions:
+# Like PEP 8 <https://peps.python.org/pep-0008/>, except
+# - Line length is not limited to 79 characters.
+# - Line breaking before or after binary operators? Better before, like in GNU.
+# You can use this command to check the style:
+#   $ pycodestyle --max-line-length=128 --ignore=E265,W503,E241,E711,E712 gnulib-tool.py pygnulib/*.py
+
 
 #===============================================================================
 # Define global imports
@@ -993,8 +1000,7 @@ if __name__ == '__main__':
                 with codecs.open(tempname, 'wb', 'UTF-8') as file:
                     file.write(incompatibilities)
                 sed_table = 's,^\\([^ ]*\\) ,\\1' + ' ' * 51 + ',\n'
-                sed_table += 's,^\\(' + '.' * 49 + \
-                    '[^ ]*\) *,' + ' ' * 17 + '\\1 ,'
+                sed_table += 's,^\\(' + '.' * 49 + '[^ ]*\\) *,' + ' ' * 17 + '\\1 ,'
                 args = ['sed', '-e', sed_table, tempname]
                 incompatibilities = sp.check_output(
                     args).decode(ENCS['default'])
