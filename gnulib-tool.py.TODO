@@ -1121,19 +1121,6 @@ Date:   Sat Nov 21 14:09:15 2015 +0100
 
 --------------------------------------------------------------------------------
 
-commit 63ce1a2103dd4452f7bd5bc873a982e03ed52427
-Author: Pavel Raiskup <praiskup@redhat.com>
-Date:   Tue Oct 6 13:20:05 2015 +0200
-
-    gnulib-tool: fix tests of 'extensions' module
-
-    This complements f8fe25fab60e3c687a124 commit.
-
-    * gnulib-tool (func_emit_pre_early_macros): New function, it wraps
-    emitting of initial gl_EARLY macros.
-    (func_import, func_create_testdir): All dumps of gl_PROG_AR_RANLIB
-    replaced with func_emit_pre_early_macros call.
-
 commit 9bdf6c8a0cdeb13c12e4b65dee9538c5468dbe1d
 Author: Bruno Haible <bruno@clisp.org>
 Date:   Sun Aug 19 14:06:50 2012 +0200

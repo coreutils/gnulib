@@ -373,6 +373,31 @@ add AM_GNU_GETTEXT([external]) or similar to configure.ac.')
             emit = emit.decode(ENCS['default'])
         return emit
 
+    def preEarlyMacros(self, require, indentation, modules):
+        '''GLEmiter.preEarlyMacros(require, indentation, modules) -> string
+
+        Collect and emit the pre-early section.
+
+        require parameter can be True (AC_REQUIRE) or False (direct call).
+        indentation parameter is a string.
+        modules argument represents list of modules; every module in this list must
+          be a GLModule instance.'''
+        emit = string()
+        emit += '\n' + indentation + '# Pre-early section.\n'
+        # We need to call gl_USE_SYSTEM_EXTENSIONS before gl_PROG_AR_RANLIB.
+        # Doing AC_REQUIRE in configure-ac.early is not early enough.
+        if any(str(module) == 'extensions' for module in modules):
+            if require:
+                emit += indentation + 'AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])\n'
+            else:
+                emit += indentation + 'gl_USE_SYSTEM_EXTENSIONS\n'
+        if require:
+            emit += indentation + 'AC_REQUIRE([gl_PROG_AR_RANLIB])\n'
+        else:
+            emit += indentation + 'gl_PROG_AR_RANLIB\n'
+        emit += '\n'
+        return emit
+
     def po_Makevars(self):
         '''GLEmiter.po_Makevars() -> string
 

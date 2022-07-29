@@ -441,7 +441,7 @@ class GLTestDir(object):
                 emit += 'AC_PROG_CC\n'
                 emit += 'AC_PROG_INSTALL\n'
                 emit += 'AC_PROG_MAKE_SET\n'
-                emit += 'gl_PROG_AR_RANLIB\n\n'
+                emit += self.emiter.preEarlyMacros(False, '', modules)
                 if uses_subdirs:
                     emit += 'AM_PROG_CC_C_O\n\n'
                 snippets = list()
@@ -561,8 +561,8 @@ class GLTestDir(object):
         emit += 'm4_pattern_forbid([^gl_[A-Z]])dnl the gnulib macro namespace\n'
         emit += 'm4_pattern_allow([^gl_ES$])dnl a valid locale name\n'
         emit += 'm4_pattern_allow([^gl_LIBOBJS$])dnl a variable\n'
-        emit += 'm4_pattern_allow([^gl_LTLIBOBJS$])dnl a variable\n\n'
-        emit += 'gl_PROG_AR_RANLIB\n\n'
+        emit += 'm4_pattern_allow([^gl_LTLIBOBJS$])dnl a variable\n'
+        emit += self.emiter.preEarlyMacros(False, '', modules)
         if any_uses_subdirs:
             emit += 'AM_PROG_CC_C_O\n'
         snippets = list()
