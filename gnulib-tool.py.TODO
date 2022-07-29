@@ -15,6 +15,626 @@ The following commits to gnulib-tool have not yet been reflected in
 
 --------------------------------------------------------------------------------
 
+commit 762bd0aa660b0c1c02597e0d2e5c5fbf9bab1b91
+Author: Paul Eggert <eggert@cs.ucla.edu>
+Date:   Fri Jun 3 17:52:19 2022 -0700
+
+    regex-quote: \] -> ] in EREs and BREs
+
+    * build-aux/bootstrap:
+    * build-aux/bootstrap.conf (gettext_external):
+    * check-AC_LIBOBJ:
+    * lib/regex-quote.c (bre_special, ere_special):
+    * gnulib-tool (func_modules_transitive_closure)
+    (func_emit_autoconf_snippet, func_import, func_create_testdir):
+    * tests/test-regex-quote.c (test_bre, test_ere):
+    * top/maint.mk (longopt_re, gpg_key_ID):
+    Don’t use \] in BREs and EREs, as POSIX says the interpretation is
+    undefined.
+
+--------------------------------------------------------------------------------
+
+commit 8c4f4d7a3c28f88b64fce2fb1d0dc0e570d1a482
+Author: Paul Eggert <eggert@cs.ucla.edu>
+Date:   Tue Mar 1 10:01:22 2022 -0800
+
+    Create lib/Makefile.am after gnulib-comp.m4
+
+    * gnulib-tool (func_import): Create library makefile after
+    creating gnulib-comp.m4.  With --gnu-make, the latter depends on
+    the former.  See <https://bugs.gnu.org/32452#109>.
+
+--------------------------------------------------------------------------------
+
+commit 3a24ff8a1045d8d38824088c0984bb59d0192e65
+Author: Simon Josefsson <simon@josefsson.org>
+Date:   Tue Feb 22 12:47:14 2022 +0100
+
+    gnulib-tool: Bump automake dependency.
+
+    * gnulib-tool (func_emit_lib_Makefile_am)
+    (func_emit_tests_Makefile_am): Demand Automake ≥ 1.14, for
+    %reldir%.
+
+--------------------------------------------------------------------------------
+
+commit 4bf9c96497946ce6f7b84f6527ed0291657cf728
+Author: Bruno Haible <bruno@clisp.org>
+Date:   Sun Jan 9 15:38:51 2022 +0100
+
+    Remove influence of Automake conditionals on conditional dependencies.
+
+    * m4/gnulib-common.m4 (gl_CONDITIONAL): New macro.
+    (gl_CONDITIONAL_HEADER): Use it instead of AM_CONDITIONAL.
+    * m4/libgmp.m4 (gl_LIBGMP): Likewise.
+    * modules/posix_spawn_file_actions_addfchdir-tests (configure.ac):
+    Likewise.
+    * modules/uchar-c++-tests (configure.ac): Likewise.
+    * gnulib-tool (func_modules_transitive_closure): Don't inhibit
+    conditional dependencies processing on a module that uses an Automake
+    conditional.
+
+--------------------------------------------------------------------------------
+
+commit 9abc30c383303fab68aa5ed2841113876bfa90d1
+Author: Bruno Haible <bruno@clisp.org>
+Date:   Sat Jan 8 22:10:54 2022 +0100
+
+    gnulib-tool: Remove all *.Po files upon distclean (regr. 2022-01-05).
+
+    Reported by Mohammad Akhlaghi <mohammad@akhlaghi.org> in
+    <https://lists.gnu.org/archive/html/bug-gnulib/2022-01/msg00061.html>.
+
+    * gnulib-tool (func_emit_initmacro_end): Collect the *.Po or *.Plo files
+    to remove into an AC_SUBSTed variable gl_LIBOBJDEPS.
+    (func_emit_lib_Makefile_am): Extend the distclean and maintainer-clean
+    rules.
+
+commit 0c8a563f65d44752b33aec42cceec25bd485f2d5
+Author: Bruno Haible <bruno@clisp.org>
+Date:   Wed Jan 5 18:21:55 2022 +0100
+
+    gnulib-tool: Avoid known warnings that reflect Gnulib's coding style.
+
+    * m4/gnulib-common.m4 (gl_CC_GNULIB_WARNINGS): New macro.
+    * gnulib-tool (func_emit_lib_Makefile_am): Add the
+    GL_CFLAG_GNULIB_WARNINGS to the CFLAGS of all the compilation units of
+    the library.
+    (func_emit_tests_Makefile_am): Add the GL_CFLAG_GNULIB_WARNINGS to the
+    CFLAGS.
+    (func_import): Emit an invocation of gl_CC_GNULIB_WARNINGS.
+
+--------------------------------------------------------------------------------
+
+commit 87e6634b28df65084321fed22f60d114a0931d21
+Author: Bernhard Voelker <mail@bernhard-voelker.de>
+Date:   Tue Jan 4 00:16:50 2022 +0100
+
+    license: fix GPLv3 texts to use a comma instead of semicolon.
+
+    See: https://www.gnu.org/licenses/gpl-3.0.html#howto
+    Run:
+      $ git grep -l 'Foundation; either version 3' \
+          | xargs sed -i '/Foundation; either version 3/ s/n; e/n, e/'
+
+    * All files using GPLv3: Adjust via the above command.
+
+--------------------------------------------------------------------------------
+
+commit 9af17c55629c4cbe2facdc9edb5242136567ebba
+Author: Bruno Haible <bruno@clisp.org>
+Date:   Sat Dec 25 14:30:57 2021 +0100
+
+    gnulib-tool: Fix handling of module libtextstyle-optional.
+
+    Reported by Paul Eggert in
+    <https://lists.gnu.org/archive/html/bug-gnulib/2021-12/msg00152.html>.
+
+    * gnulib-tool (func_repeat_module_in_tests): New function.
+    (func_emit_tests_Makefile_am, func_create_testdir): Use it for the file
+    list and when creating tests/Makefile.am.
+
+--------------------------------------------------------------------------------
+
+commit 83948c64d10c77fb964e6523a9524729d6a66f32
+Author: Bruno Haible <bruno@clisp.org>
+Date:   Sat Dec 25 12:19:13 2021 +0100
+
+    gnulib-tool: Respect applicability 'all' without --single-configure.
+
+    * gnulib-tool (func_verify_tests_module): Treat modules with
+    applicability 'all' like 'tests' modules, not like 'main' modules.
+
+--------------------------------------------------------------------------------
+
+commit b4c57b4240992832fa89a02dc620c4fa5ac36973
+Author: Paul Eggert <eggert@cs.ucla.edu>
+Date:   Fri Dec 24 17:22:00 2021 -0800
+
+    maint: avoid empty lines in recipes
+
+    AIX 7.2 ‘make’ complains about recipe lines that are empty after
+    macro expansion, and I suppose there’s a good chance some
+    non-POSIX ‘make’ would prohibit them.  Rework macros so
+    that we can avoid them.
+    * gnulib-tool (func_emit_lib_Makefile_am)
+    (func_emit_lib_Makefile_am): Support @!NMD@ too.
+    * modules/gen-header (@gl_V_at): New macro.
+    * modules/alloca-opt, modules/argz, modules/assert-h:
+    * modules/byteswap, modules/configmake, modules/ctype:
+    * modules/dirent, modules/errno, modules/execinfo, modules/fcntl-h:
+    * modules/float, modules/fnmatch-h, modules/getopt-posix:
+    * modules/glob-h, modules/iconv-h, modules/ieee754-h:
+    * modules/inttypes-incomplete, modules/langinfo:
+    * modules/libtextstyle-optional, modules/limits-h, modules/locale:
+    * modules/malloc-h, modules/math, modules/monetary, modules/netdb:
+    * modules/openmp-init, modules/poll-h, modules/posix-shell:
+    * modules/pthread-h, modules/pty, modules/sched, modules/search:
+    * modules/signal-h, modules/sigsegv, modules/snippet/link-warning:
+    * modules/spawn, modules/stdalign, modules/stdarg, modules/stdbool:
+    * modules/stddef, modules/stdint, modules/stdio, modules/stdlib:
+    * modules/stdnoreturn, modules/string, modules/strings:
+    * modules/sysexits, modules/termios, modules/threads-h:
+    * modules/time, modules/uchar, modules/unicase/base:
+    * modules/uniconv/base, modules/unictype/base, modules/unigbrk/base:
+    * modules/unilbrk/base, modules/uniname/base, modules/uninorm/base:
+    * modules/unistd, modules/unistdio/base, modules/unistr/base:
+    * modules/unitypes, modules/uniwbrk/base, modules/uniwidth/base:
+    * modules/utime-h, modules/wchar, modules/wctype-h:
+    Use it.
+
+--------------------------------------------------------------------------------
+
+commit 83a0d5891db50c00e283e70df694b6003b1f485d
+Author: Bruno Haible <bruno@clisp.org>
+Date:   Tue Dec 21 09:59:17 2021 +0100
+
+    Optimize redundant 'mkdir -p .' invocations.
+
+    Reported by Paul Eggert.
+
+    * gnulib-tool (func_emit_lib_Makefile_am, func_emit_tests_Makefile_am):
+    Eliminate @NMD@ tokens.
+    * modules/alloca-opt (Makefile.am): Prefix the "$(MKDIR_P) '%reldir%'"
+    line with @NMD@.
+    * modules/argz (Makefile.am): Likewise.
+    * modules/assert-h (Makefile.am): Likewise.
+    * modules/byteswap (Makefile.am): Likewise.
+    * modules/configmake (Makefile.am): Likewise.
+    * modules/ctype (Makefile.am): Likewise.
+    * modules/dirent (Makefile.am): Likewise.
+    * modules/errno (Makefile.am): Likewise.
+    * modules/execinfo (Makefile.am): Likewise.
+    * modules/fcntl-h (Makefile.am): Likewise.
+    * modules/float (Makefile.am): Likewise.
+    * modules/fnmatch-h (Makefile.am): Likewise.
+    * modules/getopt-posix (Makefile.am): Likewise.
+    * modules/glob-h (Makefile.am): Likewise.
+    * modules/iconv-h (Makefile.am): Likewise.
+    * modules/ieee754-h (Makefile.am): Likewise.
+    * modules/inttypes-incomplete (Makefile.am): Likewise.
+    * modules/langinfo (Makefile.am): Likewise.
+    * modules/libtextstyle-optional (Makefile.am): Likewise.
+    * modules/limits-h (Makefile.am): Likewise.
+    * modules/locale (Makefile.am): Likewise.
+    * modules/malloc-h (Makefile.am): Likewise.
+    * modules/math (Makefile.am): Likewise.
+    * modules/monetary (Makefile.am): Likewise.
+    * modules/netdb (Makefile.am): Likewise.
+    * modules/openmp-init (Makefile.am): Likewise.
+    * modules/poll-h (Makefile.am): Likewise.
+    * modules/posix-shell (Makefile.am): Likewise.
+    * modules/pthread-h (Makefile.am): Likewise.
+    * modules/pty (Makefile.am): Likewise.
+    * modules/sched (Makefile.am): Likewise.
+    * modules/search (Makefile.am): Likewise.
+    * modules/signal-h (Makefile.am): Likewise.
+    * modules/sigsegv (Makefile.am): Likewise.
+    * modules/snippet/link-warning (Makefile.am): Likewise.
+    * modules/spawn (Makefile.am): Likewise.
+    * modules/stdalign (Makefile.am): Likewise.
+    * modules/stdarg (Makefile.am): Likewise.
+    * modules/stdbool (Makefile.am): Likewise.
+    * modules/stddef (Makefile.am): Likewise.
+    * modules/stdint (Makefile.am): Likewise.
+    * modules/stdio (Makefile.am): Likewise.
+    * modules/stdlib (Makefile.am): Likewise.
+    * modules/stdnoreturn (Makefile.am): Likewise.
+    * modules/string (Makefile.am): Likewise.
+    * modules/strings (Makefile.am): Likewise.
+    * modules/sysexits (Makefile.am): Likewise.
+    * modules/termios (Makefile.am): Likewise.
+    * modules/threads-h (Makefile.am): Likewise.
+    * modules/time (Makefile.am): Likewise.
+    * modules/uchar (Makefile.am): Likewise.
+    * modules/unicase/base (Makefile.am): Likewise.
+    * modules/uniconv/base (Makefile.am): Likewise.
+    * modules/unictype/base (Makefile.am): Likewise.
+    * modules/unigbrk/base (Makefile.am): Likewise.
+    * modules/unilbrk/base (Makefile.am): Likewise.
+    * modules/uniname/base (Makefile.am): Likewise.
+    * modules/uninorm/base (Makefile.am): Likewise.
+    * modules/unistd (Makefile.am): Likewise.
+    * modules/unistdio/base (Makefile.am): Likewise.
+    * modules/unistr/base (Makefile.am): Likewise.
+    * modules/unitypes (Makefile.am): Likewise.
+    * modules/uniwbrk/base (Makefile.am): Likewise.
+    * modules/uniwidth/base (Makefile.am): Likewise.
+    * modules/utime-h (Makefile.am): Likewise.
+    * modules/wchar (Makefile.am): Likewise.
+    * modules/wctype-h (Makefile.am): Likewise.
+
+--------------------------------------------------------------------------------
+
+commit 4bdc327dbda59dcdbfa0f983a4f35c4a4ec3578c
+Author: Bruno Haible <bruno@clisp.org>
+Date:   Sun Dec 19 12:49:16 2021 +0100
+
+    gnulib-tool: Don't insist on ACLOCAL_AMFLAGS.
+
+    Reported by Bjarni Ingi Gislason <bjarniig@rhi.hi.is> in
+    <https://lists.gnu.org/archive/html/bug-gnulib/2021-12/msg00112.html>.
+
+    * gnulib-tool (func_import): Mention an AC_CONFIG_MACRO_DIRS invocation
+    as an alternative to augmenting ACLOCAL_AMFLAGS.
+    (--import, --add-import, --remove-import, --update): To find the m4
+    directories, look also for AC_CONFIG_MACRO_DIR and AC_CONFIG_MACRO_DIRS
+    invocations in configure.ac.
+
+--------------------------------------------------------------------------------
+
+commit 415fae8ddcb39d33f364c81b0f199e28c65bb539
+Author: Bruno Haible <bruno@clisp.org>
+Date:   Sat Dec 18 11:43:20 2021 -0800
+
+    stdint: Fix handling of limits.h (regression 2021-12-16).
+
+    * modules/stdint (configure.ac): Revert last change.
+    * gnulib-tool (func_emit_lib_Makefile_am, func_emit_tests_Makefile_am):
+    If --gnu-make is used, assume that AC_SUBSTed variables for conditionals
+    are constructed by appending the suffix '_CONDITION'.
+
+--------------------------------------------------------------------------------
+
+commit b8124d982f454b8526b5e11934a2f71faac2b600
+Author: Bruno Haible <bruno@clisp.org>
+Date:   Wed Dec 15 21:49:41 2021 +0100
+
+    automake-subdir support: Look for 'subdir-objects' also in configure.ac.
+
+    * gnulib-tool: Look for the automake options also in the first argument
+    of the AM_INIT_AUTOMAKE invocation in configure.ac.
+
+--------------------------------------------------------------------------------
+
+commit b2bd0a9041ed7401fb69f59f7450abb8b3249ecb
+Author: Bruno Haible <bruno@clisp.org>
+Date:   Wed Dec 15 19:18:31 2021 +0100
+
+    Accommodate non-recursive Automake in a less hacky way.
+
+    * gnulib-tool: New option --automake-subdir.
+    (automake_subdir): New variable.
+    (func_emit_initmacro_end): Add a second argument. Use it to prefix each
+    object file name in *_LIBOBJS and *_LTLIBOBJS.
+    (func_emit_shellvars_init): New function.
+    (func_import): Add support for --automake-subdir. Invoke
+    prefix-gnulib-mk. Update calls to func_emit_initmacro_end. Call
+    func_emit_shellvars_init.
+    (func_create_testdir): Update calls to func_emit_initmacro_end. Call
+    func_emit_shellvars_init.
+    * m4/gnulib-tool.m4 (gl_AUTOMAKE_SUBDIR): New macro.
+    * m4/gnulib-common.m4 (gl_CONDITIONAL_HEADER): Use the value of the
+    gl_source_base_prefix variable.
+    * build-aux/prefix-gnulib-mk: New options --from-gnulib-tool, --prefix.
+    (contents_of_file): Renamed from contents.
+    (contents_of_stdin): New function.
+    (process): Inline and remove function.
+    * doc/gnulib-tool.texi (Non-recursive make): New section.
+
+--------------------------------------------------------------------------------
+
+commit eafd9cd7bf13be7e99a30188b3675aa4047b9307
+Author: Bruno Haible <bruno@clisp.org>
+Date:   Sat Dec 18 14:10:19 2021 +0100
+
+    Fix support for --gnu-make in tests (regression 2021-12-15).
+
+    * gnulib-tool (func_emit_tests_Makefile_am): When producing output for
+    GNU make, eliminate %reldir% tokens.
+
+commit 766ec17a90f67e8cda78394e58a7fffb00f5a4b7
+Author: Bruno Haible <bruno@clisp.org>
+Date:   Wed Dec 15 19:18:20 2021 +0100
+
+    Fix creation of build directories with non-recursive-gnulib-prefix-hack.
+
+    This is necessary for executing "make" in a VPATH build of a package
+    that uses prefix-gnulib-mk and a module such as alloca-opt.
+
+    * modules/alloca-opt (Makefile.am): Before generating the .h-t file,
+    ensure that the directory in which we want to create it exists.
+    (configure.ac): Invoke AC_PROG_MKDIR_P.
+    * modules/argz: Likewise.
+    * modules/arpa_inet: Likewise.
+    * modules/assert-h: Likewise.
+    * modules/byteswap: Likewise.
+    * modules/configmake: Likewise.
+    * modules/ctype: Likewise.
+    * modules/dirent: Likewise.
+    * modules/dynarray: Likewise.
+    * modules/errno: Likewise.
+    * modules/execinfo: Likewise.
+    * modules/fcntl-h: Likewise.
+    * modules/float: Likewise.
+    * modules/fnmatch-h: Likewise.
+    * modules/getopt-posix: Likewise.
+    * modules/glob-h: Likewise.
+    * modules/iconv-h: Likewise.
+    * modules/ieee754-h: Likewise.
+    * modules/inttypes-incomplete: Likewise.
+    * modules/langinfo: Likewise.
+    * modules/libgmp: Likewise.
+    * modules/libtextstyle-optional: Likewise.
+    * modules/limits-h: Likewise.
+    * modules/locale: Likewise.
+    * modules/malloc-h: Likewise.
+    * modules/math: Likewise.
+    * modules/monetary: Likewise.
+    * modules/net_if: Likewise.
+    * modules/netdb: Likewise.
+    * modules/netinet_in: Likewise.
+    * modules/openmp-init: Likewise.
+    * modules/poll-h: Likewise.
+    * modules/posix-shell: Likewise.
+    * modules/pthread-h: Likewise.
+    * modules/pty: Likewise.
+    * modules/sched: Likewise.
+    * modules/scratch_buffer: Likewise.
+    * modules/search: Likewise.
+    * modules/selinux-h: Likewise.
+    * modules/signal-h: Likewise.
+    * modules/sigsegv: Likewise.
+    * modules/snippet/link-warning: Likewise.
+    * modules/spawn: Likewise.
+    * modules/stdalign: Likewise.
+    * modules/stdarg: Likewise.
+    * modules/stdbool: Likewise.
+    * modules/stddef: Likewise.
+    * modules/stdint: Likewise.
+    * modules/stdio: Likewise.
+    * modules/stdlib: Likewise.
+    * modules/stdnoreturn: Likewise.
+    * modules/string: Likewise.
+    * modules/strings: Likewise.
+    * modules/sys_file: Likewise.
+    * modules/sys_ioctl: Likewise.
+    * modules/sys_random: Likewise.
+    * modules/sys_resource: Likewise.
+    * modules/sys_select: Likewise.
+    * modules/sys_socket: Likewise.
+    * modules/sys_stat: Likewise.
+    * modules/sys_time: Likewise.
+    * modules/sys_times: Likewise.
+    * modules/sys_types: Likewise.
+    * modules/sys_uio: Likewise.
+    * modules/sys_utsname: Likewise.
+    * modules/sys_wait: Likewise.
+    * modules/sysexits: Likewise.
+    * modules/termios: Likewise.
+    * modules/threads-h: Likewise.
+    * modules/time: Likewise.
+    * modules/uchar: Likewise.
+    * modules/unicase/base: Likewise.
+    * modules/unicase/special-casing: Likewise.
+    * modules/uniconv/base: Likewise.
+    * modules/unictype/base: Likewise.
+    * modules/unigbrk/base: Likewise.
+    * modules/unilbrk/base: Likewise.
+    * modules/uniname/base: Likewise.
+    * modules/uninorm/base: Likewise.
+    * modules/unistd: Likewise.
+    * modules/unistdio/base: Likewise.
+    * modules/unistr/base: Likewise.
+    * modules/unitypes: Likewise.
+    * modules/uniwbrk/base: Likewise.
+    * modules/uniwidth/base: Likewise.
+    * modules/utime-h: Likewise.
+    * modules/wchar: Likewise.
+    * modules/wctype-h: Likewise.
+    * gnulib-tool (func_emit_lib_Makefile_am): When producing output for
+    GNU make, eliminate %reldir% tokens.
+
+--------------------------------------------------------------------------------
+
+commit dc08febea1fc0a8c902dfa89d0abc2952873529b
+Author: Bruno Haible <bruno@clisp.org>
+Date:   Mon Dec 13 03:03:13 2021 +0100
+
+    gnulib-tool: Fix mistake in last commit.
+
+commit 4e7b4cc6fb3e3b659c98baf6db26d8a06099fbee
+Author: Bruno Haible <bruno@clisp.org>
+Date:   Mon Dec 13 02:43:21 2021 +0100
+
+    gnulib-tool: Support non-recursive-gnulib-prefix-hack with tests.
+
+    * gnulib-tool (func_import): Synthesize an AC_CONFIG_LIBOBJ_DIR
+    invocation.
+    * m4/non-recursive-gnulib-prefix-hack.m4
+    (gl_NON_RECURSIVE_GNULIB_PREFIX_HACK): Don't invoke
+    AC_CONFIG_LIBOBJ_DIR.
+
+--------------------------------------------------------------------------------
+
+commit 1cc82c4280bb76f677f3604bdef7116922d77511
+Author: Bruno Haible <bruno@clisp.org>
+Date:   Sat Jan 8 23:28:29 2022 +0100
+
+    gnulib-tool: Fix "Don't forget" messages (regression 2021-12-12).
+
+    * gnulib-tool (func_import): Fix variable references in "Don't forget"
+    messages.
+
+commit 9e8aac033ffe63761ca6ddc8a3f672d1b7104cb5
+Author: Bruno Haible <bruno@clisp.org>
+Date:   Sun Dec 12 21:13:54 2021 +0100
+
+    gnulib-tool: Support different basenames for the lib/,tests/ Makefiles.
+
+    * gnulib-tool: New option --tests-makefile-name.
+    (tests_makefile_name): New variable.
+    (func_import): Add support for --tests-makefile-name. Replace local
+    variable makefile_am with two local variables source_makefile_am,
+    tests_makefile_am.
+
+--------------------------------------------------------------------------------
+
+commit 6ccfbd6495f2849b1aeea84f73327f6ced0080a7
+Author: Bruno Haible <bruno@clisp.org>
+Date:   Sun Aug 8 03:52:01 2021 +0200
+
+    gnulib-tool: Add support for Automake 1.16.4.
+
+    Reported by <shoober420@gmail.com> in
+    <https://lists.gnu.org/archive/html/bug-libunistring/2021-08/msg00000.html>.
+
+    * build-aux/test-driver-1.16.3.diff: Renamed from build-aux/test-driver.diff.
+    * build-aux/test-driver.diff: Update to match Automake 1.16.4.
+    * gnulib-tool (func_create_testdir, func_create_megatestdir): Try both
+    .diff files.
+
+--------------------------------------------------------------------------------
+
+commit 39d08c09b444db57f45804bfe86ee17203c45a8a
+Author: Bruno Haible <bruno@clisp.org>
+Date:   Fri Jun 11 15:55:33 2021 +0200
+
+    Make message in last commit more precise.
+
+    Suggested by Eric Blake.
+
+    * gnulib-tool (func_emit_tests_Makefile_am): Add more precision to
+    'check-notice' message.
+
+commit d465dd70e1ec5fe332160780eb66511028f5897b
+Author: Bruno Haible <bruno@clisp.org>
+Date:   Thu Jun 10 21:43:59 2021 +0200
+
+    Clarify where to report test failures from Gnulib tests.
+
+    * gnulib-tool (func_emit_tests_Makefile_am): Emit a dependency of
+    'check-am' on 'check-notice' that prints a notice.
+
+--------------------------------------------------------------------------------
+
+commit 16c3e1868a15a5946c0f0f7df6e107e9b3c6389d
+Author: Bruno Haible <bruno@clisp.org>
+Date:   Thu Jun 10 21:26:53 2021 +0200
+
+    Clarify that compiler warnings in the Gnulib tests can be ignored.
+
+    * gnulib-tool (func_emit_tests_Makefile_am): Emit overrides for CFLAGS
+    and CXXFLAGS. Emit a dependency of 'all' on 'all-notice' that prints a
+    notice.
+    (func_emit_initmacro_start): Add a second argument. If it is true, emit
+    code to require gl_CC_ALLOW_WARNINGS and gl_CXX_ALLOW_WARNINGS.
+    (func_import, func_create_testdir): All callers updated.
+    * m4/gnulib-common.m4 (gl_CC_ALLOW_WARNINGS, gl_CXX_ALLOW_WARNINGS): New
+    macros.
+
+--------------------------------------------------------------------------------
+
+commit 6d1cba373a8387aa2131e9dc3e94954c5669ca52
+Author: Bruno Haible <bruno@clisp.org>
+Date:   Sun May 30 14:37:06 2021 +0200
+
+    Write 'LGPLv3+ or GPLv2+' instead of 'LGPLv3+ or GPLv2'.
+
+    * modules/* (License): Change.
+    * gnulib-tool (func_import, func_create_testdir): Likewise.
+
+--------------------------------------------------------------------------------
+
+commit 4b071c115309079528db7b60e8d2ffb22b129088
+Author: Paul Eggert <eggert@cs.ucla.edu>
+Date:   Mon Apr 26 23:31:29 2021 -0700
+
+    gnulib-tool: port better to current Autoconf
+
+    * doc/gnulib-tool.texi (Initial import): Don’t mention
+    AC_PROG_CC_STDC as it’s deprecated in current Autoconf.
+    * gnulib-tool (func_done_dir): Suggest replacing
+    AC_PROG_CC_STDC and AC_PROG_CC_C99, as per current Autoconf.
+
+--------------------------------------------------------------------------------
+
+commit 487b9551b63ef936a6be6df38d1c9484cd97810c
+Author: Paul Eggert <eggert@cs.ucla.edu>
+Date:   Sat Mar 6 08:23:48 2021 -0800
+
+    parse-datetime2: fix licensing
+
+    Problem reported by Bruno Haible in:
+    https://lists.gnu.org/r/bug-gnulib/2021-03/msg00017.html
+    * gnulib-tool (func_get_license): Treat parse-datetime2
+    (actually, anything starting with "parse-datetime")
+    like parse-datetime, as far as licenses go.
+
+--------------------------------------------------------------------------------
+
+commit 0be855ee827bf7e9043eeb626c4fd847704be2e6
+Author: Bruno Haible <bruno@clisp.org>
+Date:   Tue Dec 29 02:48:31 2020 +0100
+
+    gnulib-tool: Fix logic whether to add a dummy.c.
+
+    * gnulib-tool (func_remove_if_blocks): New function.
+    (func_modules_add_dummy): Use it to eliminate all conditional statements
+    from the automake snippet.
+
+--------------------------------------------------------------------------------
+
+commit 9f0ade083bf3250281cbf454da656a28270a0be5
+Author: Bruno Haible <bruno@clisp.org>
+Date:   Sun Dec 27 01:21:22 2020 +0100
+
+    gnulib-tool: Make --conditional-dependencies work with --with-tests.
+
+    Reported by Paul Eggert in
+    <https://lists.gnu.org/archive/html/bug-gnulib/2020-12/msg00236.html>.
+
+    * gnulib-tool (func_emit_tests_Makefile_am): Handle conditional
+    dependencies like func_emit_lib_Makefile_am.
+
+--------------------------------------------------------------------------------
+
+commit 15ce5a630b02af7c7104650dfb18e443b4111564
+Author: Bruno Haible <bruno@clisp.org>
+Date:   Sun Aug 16 12:12:32 2020 +0200
+
+    Assume autoconf >= 2.64.
+
+    * gnulib-tool (DEFAULT_AUTOCONF_MINVERSION): Set to 2.64.
+    * DEPENDENCIES: Require Autoconf 2.64 or newer.
+    * NEWS: Mention the changed requirement.
+    * m4/00gnulib.m4 (_m4_divert_diversion, AC_DEFUN_ONCE): Remove macros.
+    * m4/gnulib-common.m4 (AS_VAR_IF, AS_VAR_COPY): Remove macros.
+    * m4/absolute-header.m4 (gl_ABSOLUTE_HEADER): Quote pushdef'ed
+    variables.
+    * m4/include_next.m4 (gl_NEXT_HEADERS_INTERNAL): Likewise.
+    * m4/warn-on-use.m4 (gl_WARN_ON_USE_PREPARE): Likewise.
+    * m4/warnings.m4 (gl_COMPILER_OPTION_IF): Likewise.
+    (gl_UNKNOWN_WARNINGS_ARE_ERRORS(C), gl_UNKNOWN_WARNINGS_ARE_ERRORS(C++),
+    gl_UNKNOWN_WARNINGS_ARE_ERRORS(Objective C)): Define through AC_DEFUN.
+    * m4/manywarnings.m4 (gl_MANYWARN_ALL_GCC(C), gl_MANYWARN_ALL_GCC(C++)):
+    Likewise.
+    * m4/iconv.m4 (AM_ICONV): Define through AC_DEFUN_ONCE directly.
+    * m4/libunistring.m4 (gl_LIBUNISTRING): Likewise.
+    * m4/configmake.m4: Update comment.
+
+--------------------------------------------------------------------------------
+
 commit baec1bac1602ba8534320c295e120f7b658400f4
 Author: Bruno Haible <bruno@clisp.org>
 Date:   Sat Feb 22 15:15:01 2020 +0100
