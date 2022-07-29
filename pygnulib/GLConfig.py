@@ -827,7 +827,7 @@ class GLConfig(object):
 
     def getModuleIndicatorPrefix(self):
         '''Return module_indicator_prefix to use inside GLEmiter class.'''
-        return(getIncludeGuardPrefix(self))
+        return(self.getIncludeGuardPrefix())
 
     # Define macro_prefix methods.
     def getMacroPrefix(self):
