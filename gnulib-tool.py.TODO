@@ -1134,34 +1134,6 @@ Date:   Tue Oct 6 13:20:05 2015 +0200
     (func_import, func_create_testdir): All dumps of gl_PROG_AR_RANLIB
     replaced with func_emit_pre_early_macros call.
 
-commit f8fe25fab60e3c687a12446984bb475342956bb8
-Author: Pavel Raiskup <praiskup@redhat.com>
-Date:   Fri Sep 25 11:25:03 2015 -0700
-
-    gnulib-common.m4: fix gl_PROG_AR_RANLIB/AM_PROG_AR clash
-
-    The gl_PROG_AR_RANLIB (it is always called by gl_EARLY) sets AR
-    and ARFLAGS variables.  Doing this unconditionally could break
-    later Automake's AM_PROG_AR invocation (at least it's
-    AC_CHECK_TOOLS call to detect correct 'ar' binary).
-
-    Original purpose of the gl_PROG_AR_RANLIB was only to handle the
-    Amsterdam Compiler Kit, so make the previous code to have effects
-    only on ACK, and rather automatically call the Automake's
-    AM_PROG_AR as soon as possible to decide other cases.
-
-    References:
-    http://lists.gnu.org/archive/html/bug-gnulib/2015-07/msg00001.html
-
-    * m4/gnulib-common.m4 (gl_PROG_AR_RANLIB): AC_BEFORE AM_PROG_AR.
-    Set the AR/ARFLAGS to ACK defaults OR call AM_PROG_AR.  If neither
-    is possible, keep setting AR/ARFLAGS to reasonable defaults.
-    * gnulib-tool (func_import): Put the gl_USE_SYSTEM_EXTENSIONS
-    right before gl_PROG_AR_RANLIB into gnulib-comp.m4 (if the
-    'extensions' module is used.
-    * modules/extensions (configure.ac-early): Remove as this snippet
-    is added to gnulib-comp.m4 earlier anyway.
-
 commit 9bdf6c8a0cdeb13c12e4b65dee9538c5468dbe1d
 Author: Bruno Haible <bruno@clisp.org>
 Date:   Sun Aug 19 14:06:50 2012 +0200

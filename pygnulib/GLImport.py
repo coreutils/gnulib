@@ -598,8 +598,10 @@ AC_DEFUN([%s_EARLY],
   m4_pattern_forbid([^gl_[A-Z]])dnl the gnulib macro namespace
   m4_pattern_allow([^gl_ES$])dnl a valid locale name
   m4_pattern_allow([^gl_LIBOBJS$])dnl a variable
-  m4_pattern_allow([^gl_LTLIBOBJS$])dnl a variable
-  AC_REQUIRE([gl_PROG_AR_RANLIB])\n''' % (configure_ac, macro_prefix)
+  m4_pattern_allow([^gl_LTLIBOBJS$])dnl a variable\n''' % (configure_ac, macro_prefix)
+        if any(str(module) == 'extensions' for module in moduletable['final']):
+            emit += '  AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])\n'
+        emit += '  AC_REQUIRE([gl_PROG_AR_RANLIB])\n'
         uses_subdirs = False
         for module in moduletable['main']:
             # Test whether there are some source files in subdirectories.
