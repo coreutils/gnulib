@@ -47,10 +47,6 @@ __copyright__ = constants.__copyright__
 #===============================================================================
 # Define global constants
 #===============================================================================
-NoneType = type(None)
-APP = constants.APP
-DIRS = constants.DIRS
-UTILS = constants.UTILS
 MODES = constants.MODES
 TESTS = constants.TESTS
 compiler = constants.compiler

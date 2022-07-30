@@ -48,19 +48,15 @@ from pygnulib import classes
 # Define global constants
 #===============================================================================
 APP = constants.APP
-DIRS = constants.DIRS
 ENCS = constants.ENCS
 UTILS = constants.UTILS
 MODES = constants.MODES
 TESTS = constants.TESTS
 compiler = constants.compiler
 joinpath = constants.joinpath
-cleaner = constants.cleaner
 isabs = os.path.isabs
 isdir = os.path.isdir
 isfile = os.path.isfile
-normpath = os.path.normpath
-relpath = os.path.relpath
 
 
 #===============================================================================
