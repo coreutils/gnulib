@@ -44,7 +44,6 @@ __copyright__ = constants.__copyright__
 #===============================================================================
 # Define global constants
 #===============================================================================
-PYTHON3 = constants.PYTHON3
 NoneType = type(None)
 APP = constants.APP
 DIRS = constants.DIRS
@@ -55,7 +54,6 @@ TESTS = constants.TESTS
 compiler = constants.compiler
 joinpath = constants.joinpath
 cleaner = constants.cleaner
-string = constants.string
 isabs = os.path.isabs
 isdir = os.path.isdir
 isfile = os.path.isfile
@@ -85,11 +83,10 @@ class GLEmiter(object):
         return result
 
     def copyright_notice(self):
-        '''GLEmiter.copyright_notice() -> string
+        '''GLEmiter.copyright_notice() -> str
 
         Emit a header for a generated file.'''
-        emit = string()
-        emit += "# %s" % self.info.copyright()
+        emit = "# %s" % self.info.copyright()
         emit += """
 #
 # This file is free software; you can redistribute it and/or modify
@@ -119,7 +116,7 @@ class GLEmiter(object):
                         disable_libtool, disable_gettext, replace_auxdir, indentation):
         '''GLEmiter.autoconfSnippet(module, toplevel,
           disable_libtool, disable_gettext, replace_auxdir,
-          indentation) -> string
+          indentation) -> str
 
         Emit the autoconf snippet of a module.
         GLConfig: include_guard_prefix.
@@ -135,7 +132,7 @@ class GLEmiter(object):
         replace_auxdir is a bool variable; it tells whether to replace
           'build-aux' directory in AC_CONFIG_FILES.
         indentation is a string which contain spaces to prepend on each line.'''
-        emit = string()
+        emit = ''
         if type(module) is not GLModule:
             raise TypeError('module must be a GLModule, not %s' %
                             type(module).__name__)
@@ -151,10 +148,10 @@ class GLEmiter(object):
         if type(disable_gettext) is not bool:
             raise TypeError('disable_gettext must be a bool, not %s' %
                             type(disable_gettext).__name__)
-        if type(indentation) is bytes or type(indentation) is string:
+        if type(indentation) is bytes or type(indentation) is str:
             if type(indentation) is bytes:
                 indentation = indentation.decode(ENCS['default'])
-        else:  # if indentation has not bytes or string type
+        else:  # if indentation has not bytes or str type
             raise TypeError('indentation must be a string, not %s' %
                             type(indentation).__name__)
         if not indentation.isspace():
@@ -219,7 +216,7 @@ add AM_GNU_GETTEXT([external]) or similar to configure.ac.')
                          verifier, toplevel, disable_libtool, disable_gettext, replace_auxdir):
         '''GLEmiter.autoconfSnippets(modules, fileassistant,
           verifier, toplevel, disable_libtool, disable_gettext,
-          replace_auxdir) -> string
+          replace_auxdir) -> str
 
         Collect and emit the autoconf snippets of a set of modules.
         GLConfig: conddeps.
@@ -244,7 +241,7 @@ add AM_GNU_GETTEXT([external]) or similar to configure.ac.')
           AM_GNU_GETTEXT invocations.
         replace_auxdir is a bool variable; it tells whether to replace
           'build-aux' directory in AC_CONFIG_FILES.'''
-        emit = string()
+        emit = ''
         for module in modules:
             if type(module) is not GLModule:
                 raise TypeError('each module must be a GLModule instance')
@@ -374,7 +371,7 @@ add AM_GNU_GETTEXT([external]) or similar to configure.ac.')
         return emit
 
     def preEarlyMacros(self, require, indentation, modules):
-        '''GLEmiter.preEarlyMacros(require, indentation, modules) -> string
+        '''GLEmiter.preEarlyMacros(require, indentation, modules) -> str
 
         Collect and emit the pre-early section.
 
@@ -382,8 +379,7 @@ add AM_GNU_GETTEXT([external]) or similar to configure.ac.')
         indentation parameter is a string.
         modules argument represents list of modules; every module in this list must
           be a GLModule instance.'''
-        emit = string()
-        emit += '\n' + indentation + '# Pre-early section.\n'
+        emit = '\n' + indentation + '# Pre-early section.\n'
         # We need to call gl_USE_SYSTEM_EXTENSIONS before gl_PROG_AR_RANLIB.
         # Doing AC_REQUIRE in configure-ac.early is not early enough.
         if any(str(module) == 'extensions' for module in modules):
@@ -399,14 +395,14 @@ add AM_GNU_GETTEXT([external]) or similar to configure.ac.')
         return emit
 
     def po_Makevars(self):
-        '''GLEmiter.po_Makevars() -> string
+        '''GLEmiter.po_Makevars() -> str
 
         Emit the contents of po/ makefile parameterization.
         GLConfig: pobase, podomain.'''
-        emit = string()
+        emit = ''
         pobase = self.config['pobase']
         podomain = self.config['podomain']
-        top_subdir = string()
+        top_subdir = ''
         source = '%s/' % os.path.normpath(pobase)
         if os.path.sep in source:
             for directory in source.split(os.path.sep):
@@ -466,11 +462,11 @@ USE_MSGCTXT = no\n"""
         return constants.nlconvert(emit)
 
     def po_POTFILES_in(self, files):
-        '''GLEmiter.po_POTFILES_in(files) -> string
+        '''GLEmiter.po_POTFILES_in(files) -> str
 
         Emit the file list to be passed to xgettext.
         GLConfig: sourcebase.'''
-        emit = string()
+        emit = ''
         sourcebase = self.config['sourcebase']
         sourcebase = '%s%s' % (self.sourcebase, os.path.sep)
         if type(sourcebase) is bytes:
@@ -487,14 +483,14 @@ USE_MSGCTXT = no\n"""
         return constants.nlconvert(emit)
 
     def initmacro_start(self, macro_prefix_arg):
-        '''GLEmiter.initmacro_start(macro_prefix_arg) -> string
+        '''GLEmiter.initmacro_start(macro_prefix_arg) -> str
 
         Emit the first few statements of the gl_INIT macro.'''
-        emit = string()
-        if type(macro_prefix_arg) is bytes or type(macro_prefix_arg) is string:
+        emit = ''
+        if type(macro_prefix_arg) is bytes or type(macro_prefix_arg) is str:
             if type(macro_prefix_arg) is bytes:
                 macro_prefix_arg = macro_prefix_arg.decode(ENCS['default'])
-        else:  # if macro_prefix_arg has not bytes or string type
+        else:  # if macro_prefix_arg has not bytes or str type
             raise TypeError('macro_prefix_arg must be a string, not %s' %
                             type(macro_prefix_arg).__name__)
         module_indicator_prefix = self.config.getModuleIndicatorPrefix()
@@ -539,14 +535,14 @@ USE_MSGCTXT = no\n"""
         return constants.nlconvert(emit)
 
     def initmacro_end(self, macro_prefix_arg):
-        '''GLEmiter.initmacro_end(macro_prefix_arg) -> string
+        '''GLEmiter.initmacro_end(macro_prefix_arg) -> str
 
         Emit the last few statements of the gl_INIT macro.'''
-        emit = string()
-        if type(macro_prefix_arg) is bytes or type(macro_prefix_arg) is string:
+        emit = ''
+        if type(macro_prefix_arg) is bytes or type(macro_prefix_arg) is str:
             if type(macro_prefix_arg) is bytes:
                 macro_prefix_arg = macro_prefix_arg.decode(ENCS['default'])
-        else:  # if macro_prefix_arg has not bytes or string type
+        else:  # if macro_prefix_arg has not bytes or str type
             raise TypeError('macro_prefix_arg must be a string, not %s' %
                             type(macro_prefix_arg).__name__)
         # Check the presence of files that are mentioned as AC_LIBSOURCES
@@ -594,21 +590,21 @@ found])])
         return constants.nlconvert(emit)
 
     def initmacro_done(self, macro_prefix_arg, sourcebase_arg):
-        '''GLEmiter.initmacro_done(macro_prefix_arg, sourcebase_arg) -> string
+        '''GLEmiter.initmacro_done(macro_prefix_arg, sourcebase_arg) -> str
 
         Emit a few statements after the gl_INIT macro.
         GLConfig: sourcebase.'''
-        emit = string()
-        if type(macro_prefix_arg) is bytes or type(macro_prefix_arg) is string:
+        emit = ''
+        if type(macro_prefix_arg) is bytes or type(macro_prefix_arg) is str:
             if type(macro_prefix_arg) is bytes:
                 macro_prefix_arg = macro_prefix_arg.decode(ENCS['default'])
-        else:  # if macro_prefix_arg has not bytes or string type
+        else:  # if macro_prefix_arg has not bytes or str type
             raise TypeError('macro_prefix_arg must be a string, not %s' %
                             type(macro_prefix_arg).__name__)
-        if type(sourcebase_arg) is bytes or type(sourcebase_arg) is string:
+        if type(sourcebase_arg) is bytes or type(sourcebase_arg) is str:
             if type(sourcebase_arg) is bytes:
                 sourcebase_arg = sourcebase_arg.decode(ENCS['default'])
-        else:  # if sourcebase_arg has not bytes or string type
+        else:  # if sourcebase_arg has not bytes or str type
             raise TypeError('sourcebase_arg must be a string, not %s' %
                             type(sourcebase_arg).__name__)
         emit += """\
@@ -648,9 +644,9 @@ AC_DEFUN([%V1%_LIBSOURCES], [
     def lib_Makefile_am(self, destfile, modules,
                         moduletable, makefiletable, actioncmd, for_test):
         '''GLEmiter.lib_Makefile_am(destfile, modules, moduletable, makefiletable,
-             actioncmd, for_test) -> tuple of string and bool
+             actioncmd, for_test) -> tuple of str and bool
 
-        Emit the contents of the library Makefile. Returns string and a bool
+        Emit the contents of the library Makefile. Returns str and a bool
         variable which shows if subdirectories are used.
         GLConfig: localdir, sourcebase, libname, pobase, auxdir, makefile, libtool,
         macro_prefix, podomain, conddeps, witness_c_macro.
@@ -663,10 +659,10 @@ AC_DEFUN([%V1%_LIBSOURCES], [
           an empty string e.g. when user wants to generate files for GLTestDir.
         for_test is a bool variable; it must be set to True if creating a package
           for testing, False otherwise.'''
-        if type(destfile) is bytes or type(destfile) is string:
+        if type(destfile) is bytes or type(destfile) is str:
             if type(destfile) is bytes:
                 destfile = destfile.decode(ENCS['default'])
-        else:  # if destfile has not bytes or string type
+        else:  # if destfile has not bytes or str type
             raise TypeError('destfile must be a string, not %s' %
                             type(destfile).__name__)
         for module in modules:
@@ -678,16 +674,16 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         if type(makefiletable) is not GLMakefileTable:
             raise TypeError('makefiletable must be a GLMakefileTable, not %s' %
                             type(makefiletable).__name__)
-        if type(actioncmd) is bytes or type(actioncmd) is string:
+        if type(actioncmd) is bytes or type(actioncmd) is str:
             if type(actioncmd) is bytes:
                 actioncmd = actioncmd.decode(ENCS['default'])
-        else:  # if actioncmd has not bytes or string type
+        else:  # if actioncmd has not bytes or str type
             raise TypeError('actioncmd must be a string, not %s' %
                             type(actioncmd).__name__)
         if type(for_test) is not bool:
             raise TypeError('for_test must be a bool, not %s' %
                             type(for_test).__name__)
-        emit = string()
+        emit = ''
         localdir = self.config['localdir']
         sourcebase = self.config['sourcebase']
         modcache = self.config['modcache']
@@ -737,7 +733,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         uses_subdirs = False
 
         # Modify allsnippets variable.
-        allsnippets = string()
+        allsnippets = ''
         for module in modules:
             if not module.isTests():
                 # Get conditional snippet, edit it and save to amsnippet1.
@@ -804,11 +800,11 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                             uses_subdirs = True
                             break
         if not makefile:
-            subdir_options = string()
+            subdir_options = ''
             # If there are source files in subdirectories, prevent collision of the
             # object files (example: hash.c and libxml/hash.c).
             if uses_subdirs:
-                subdir_options = string(' subdir-objects')
+                subdir_options = ' subdir-objects'
             emit += 'AUTOMAKE_OPTIONS = 1.9.6 gnits%s\n' % subdir_options
         emit += '\n'
         if not makefile:
@@ -853,8 +849,8 @@ AC_DEFUN([%V1%_LIBSOURCES], [
 
         # Define two parts of cppflags variable.
         emit += '\n'
-        cppflags_part1 = string()
-        cppflags_part2 = string()
+        cppflags_part1 = ''
+        cppflags_part2 = ''
         if witness_c_macro:
             cppflags_part1 = ' -D%s=1' % witness_c_macro
         if for_test:
@@ -942,7 +938,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         '''GLEmiter.tests_Makefile_am(destfile, modules, makefiletable,
              witness_c_macro, for_test) -> tuple of string and bool
 
-        Emit the contents of the tests Makefile. Returns string and a bool variable
+        Emit the contents of the tests Makefile. Returns str and a bool variable
         which shows if subdirectories are used.
         GLConfig: localdir, modules, libname, auxdir, makefile, libtool,
         sourcebase, m4base, testsbase, macro_prefix, witness_c_macro,
@@ -957,10 +953,10 @@ AC_DEFUN([%V1%_LIBSOURCES], [
           an empty string e.g. when user wants to generate files for GLTestDir.
         for_test is a bool variable; it must be set to True if creating a package
           for testing, False otherwise.'''
-        if type(destfile) is bytes or type(destfile) is string:
+        if type(destfile) is bytes or type(destfile) is str:
             if type(destfile) is bytes:
                 destfile = destfile.decode(ENCS['default'])
-        else:  # if destfile has not bytes or string type
+        else:  # if destfile has not bytes or str type
             raise TypeError('destfile must be a string, not %s' %
                             type(destfile).__name__)
         for module in modules:
@@ -969,16 +965,16 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         if type(makefiletable) is not GLMakefileTable:
             raise TypeError('makefiletable must be a GLMakefileTable, not %s' %
                             type(makefiletable).__name__)
-        if type(witness_macro) is bytes or type(witness_macro) is string:
+        if type(witness_macro) is bytes or type(witness_macro) is str:
             if type(witness_macro) is bytes:
                 witness_macro = witness_macro.decode(ENCS['default'])
-        else:  # if witness_macro has not bytes or string type
+        else:  # if witness_macro has not bytes or str type
             raise TypeError('witness_macro must be a string, not %s' %
                             type(witness_macro).__name__)
         if type(for_test) is not bool:
             raise TypeError('for_test must be a bool, not %s' %
                             type(for_test).__name__)
-        emit = string()
+        emit = ''
         localdir = self.config['localdir']
         auxdir = self.config['auxdir']
         sourcebase = self.config['sourcebase']
@@ -1018,7 +1014,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
 
         # Calculate testsbase_inverse
         counter = int()
-        testsbase_inverse = string()
+        testsbase_inverse = ''
         while counter < len(testsbase.split('/')):
             testsbase_inverse += '../'
             counter += 1
@@ -1030,8 +1026,8 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         emit += '%s\n' % self.copyright_notice()
 
         uses_subdirs = False
-        main_snippets = string()
-        longrun_snippets = string()
+        main_snippets = ''
+        longrun_snippets = ''
         for module in modules:
             if for_test and not single_configure:
                 flag = module.isTests()
@@ -1099,9 +1095,9 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         # Generate dependencies here, since it eases the debugging of test failures.
         # If there are source files in subdirectories, prevent collision of the
         # object files (example: hash.c and libxml/hash.c).
-        subdir_options = string()
+        subdir_options = ''
         if uses_subdirs:
-            subdir_options = string(' subdir-objects')
+            subdir_options = ' subdir-objects'
         emit += 'AUTOMAKE_OPTIONS = 1.9.6 foreign%s\n\n' % subdir_options
         if for_test and not single_configure:
             emit += 'ACLOCAL_AMFLAGS = -I %s/%s\n\n' % (

@@ -39,7 +39,6 @@ __copyright__ = constants.__copyright__
 #===============================================================================
 # Define global constants
 #===============================================================================
-PYTHON3 = constants.PYTHON3
 NoneType = type(None)
 APP = constants.APP
 DIRS = constants.DIRS
@@ -50,7 +49,6 @@ TESTS = constants.TESTS
 compiler = constants.compiler
 joinpath = constants.joinpath
 cleaner = constants.cleaner
-string = constants.string
 isabs = os.path.isabs
 isdir = os.path.isdir
 isfile = os.path.isfile
@@ -89,22 +87,22 @@ class GLMakefileTable(object):
 
         This method is used to remember that ${dir}Makefile.am needs to be edited
         to that ${var} mentions ${val}.'''
-        if type(dir) is bytes or type(dir) is string:
+        if type(dir) is bytes or type(dir) is str:
             if type(dir) is bytes:
                 dir = dir.decode(ENCS['default'])
-        else:  # if dir has not bytes or string type
+        else:  # if dir has not bytes or str type
             raise TypeError(
                 'dir must be a string, not %s' % (type(dir).__name__))
-        if type(var) is bytes or type(var) is string:
+        if type(var) is bytes or type(var) is str:
             if type(var) is bytes:
                 var = var.decode(ENCS['default'])
-        else:  # if var has not bytes or string type
+        else:  # if var has not bytes or str type
             raise TypeError(
                 'var must be a string, not %s' % (type(var).__name__))
-        if type(val) is bytes or type(val) is string:
+        if type(val) is bytes or type(val) is str:
             if type(val) is bytes:
                 val = val.decode(ENCS['default'])
-        else:  # if val has not bytes or string type
+        else:  # if val has not bytes or str type
             raise TypeError(
                 'val must be a string, not %s' % (type(val).__name__))
         dictionary = {'dir': dir, 'var': var, 'val': val}
@@ -121,13 +119,13 @@ class GLMakefileTable(object):
         testsbase = self.config['testsbase']
         makefile = self.config['makefile']
         inctests = self.config.checkTestFlag(TESTS['tests'])
-        dir1 = string('%s%s' % (m4base, os.path.sep))
-        mfd = string('Makefile.am')
+        dir1 = '%s%s' % (m4base, os.path.sep)
+        mfd = 'Makefile.am'
         if not makefile:
-            mfx = string('Makefile.am')
+            mfx = 'Makefile.am'
         else:  # if makefile
             mfx = makefile
-        dir2 = string()
+        dir2 = ''
         while dir1 and \
             (joinpath(self.config['destdir'], dir1, mfd)
              or joinpath(dir1, mfd) == joinpath(sourcebase, mfx)

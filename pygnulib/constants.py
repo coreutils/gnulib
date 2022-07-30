@@ -44,27 +44,6 @@ __copyright__ = '2002-2017 Free Software Foundation, Inc.'
 
 
 #===============================================================================
-# Backward compatibility
-#===============================================================================
-# Check for Python version
-if sys.version_info.major == 2:
-    PYTHON3 = False
-else:
-    PYTHON3 = True
-
-# Create string compatibility
-if not PYTHON3:
-    string = unicode
-else:  # if PYTHON3
-    string = str
-
-# Current working directory
-if not PYTHON3:
-    os.getcwdb = os.getcwd
-    os.getcwd = os.getcwdu
-
-
-#===============================================================================
 # Define global constants
 #===============================================================================
 # Declare necessary variables
@@ -99,9 +78,9 @@ if not APP['name']:
     APP['name'] = 'gnulib-tool.py'
 APP['path'] = os.path.realpath(sys.argv[0])
 if type(APP['name']) is bytes:
-    APP['name'] = string(APP['name'], ENCS['system'])
+    APP['name'] = str(APP['name'], ENCS['system'])
 if type(APP['path']) is bytes:
-    APP['path'] = string(APP['path'], ENCS['system'])
+    APP['path'] = str(APP['path'], ENCS['system'])
 
 # Set DIRS dictionary
 DIRS['root'] = os.path.dirname(APP['path'])
@@ -265,16 +244,13 @@ def execute(args, verbose):
 
 def compiler(pattern, flags=0):
     '''Compile regex pattern depending on version of Python.'''
-    if not PYTHON3:
-        pattern = re.compile(pattern, re.UNICODE | flags)
-    else:  # if PYTHON3
-        pattern = re.compile(pattern, flags)
+    pattern = re.compile(pattern, flags)
     return pattern
 
 
 def cleaner(sequence):
     '''Clean string or list of strings after using regex.'''
-    if type(sequence) is string:
+    if type(sequence) is str:
         sequence = sequence.replace('[', '')
         sequence = sequence.replace(']', '')
     elif type(sequence) is list:
@@ -289,7 +265,7 @@ def cleaner(sequence):
 
 
 def joinpath(head, *tail):
-    '''joinpath(head, *tail) -> string
+    '''joinpath(head, *tail) -> str
 
     Join two or more pathname components, inserting '/' as needed. If any
     component is an absolute path, all previous path components will be
@@ -344,26 +320,23 @@ def relativize(dir1, dir2):
 def link_relative(src, dest):
     '''Like ln -s, except that src is given relative to the current directory
     (or absolute), not given relative to the directory of dest.'''
-    if type(src) is bytes or type(src) is string:
+    if type(src) is bytes or type(src) is str:
         if type(src) is bytes:
             src = src.decode(ENCS['default'])
-    else:  # if src has not bytes or string type
+    else:  # if src has not bytes or str type
         raise TypeError(
             'src must be a string, not %s' % (type(src).__name__))
-    if type(dest) is bytes or type(dest) is string:
+    if type(dest) is bytes or type(dest) is str:
         if type(dest) is bytes:
             dest = dest.decode(ENCS['default'])
-    else:  # if dest has not bytes or string type
+    else:  # if dest has not bytes or str type
         raise TypeError(
             'dest must be a string, not %s' % (type(dest).__name__))
     if src.startswith('/') or (len(src) >= 2 and src[1] == ':'):
         os.symlink(src, dest)
     else:  # if src is not absolute
         if dest.startswith('/') or (len(dest) >= 2 and dest[1] == ':'):
-            if not constants.PYTHON3:
-                cwd = os.getcwdu()
-            else:  # if constants.PYTHON3
-                cwd = os.getcwd()
+            cwd = os.getcwd()
             os.symlink(joinpath(cwd, src), dest)
         else:  # if dest is not absolute
             destdir = os.path.dirname(dest)
@@ -389,7 +362,7 @@ def link_if_changed(src, dest):
 
 def filter_filelist(separator, filelist,
                     prefix, suffix, removed_prefix, removed_suffix,
-                    added_prefix=string(), added_suffix=string()):
+                    added_prefix='', added_suffix=''):
     '''filter_filelist(*args) -> list
 
     Filter the given list of files. Filtering: Only the elements starting with

@@ -47,7 +47,6 @@ __copyright__ = constants.__copyright__
 #===============================================================================
 # Define global constants
 #===============================================================================
-PYTHON3 = constants.PYTHON3
 NoneType = type(None)
 APP = constants.APP
 DIRS = constants.DIRS
@@ -59,7 +58,6 @@ compiler = constants.compiler
 joinpath = constants.joinpath
 cleaner = constants.cleaner
 relpath = constants.relativize
-string = constants.string
 isabs = os.path.isabs
 isdir = os.path.isdir
 isfile = os.path.isfile
@@ -80,7 +78,7 @@ class GLTestDir(object):
         if type(config) is not GLConfig:
             raise TypeError('config must be a GLConfig, not %s' %
                             type(config).__name__)
-        if type(testdir) is bytes or type(testdir) is string:
+        if type(testdir) is bytes or type(testdir) is str:
             if type(testdir) is bytes:
                 testdir = testdir.decode(ENCS['default'])
         self.config = config
@@ -123,7 +121,7 @@ class GLTestDir(object):
                 for file in files
             ]  # Finish to convert bytes to string
         for file in files:
-            if type(file) is not string:
+            if type(file) is not str:
                 raise TypeError('each file must be a string instance')
         files = sorted(set(files))
         auxdir = self.config['auxdir']
@@ -378,8 +376,7 @@ class GLTestDir(object):
         if not isdir(directory):
             os.mkdir(directory)
         destfile = joinpath(directory, 'Makefile.am')
-        emit = string()
-        emit += '## Process this file with automake to produce Makefile.in.\n\n'
+        emit = '## Process this file with automake to produce Makefile.in.\n\n'
         emit += 'EXTRA_DIST =\n'
         for file in filelist:
             if file.startswith('m4/'):
@@ -419,11 +416,11 @@ class GLTestDir(object):
                 with codecs.open(destfile, 'wb', 'UTF-8') as file:
                     file.write(emit)
                 # Viewed from the $testsbase subdirectory, $auxdir is different.
-                emit = string()
+                emit = ''
                 saved_auxdir = self.config['auxdir']
                 testsbase = '%s/' % os.path.normpath(testsbase)
                 counter = int()
-                auxdir = string()
+                auxdir = ''
                 finish = (len(testsbase.split('/')) - 1)
                 while counter < finish:
                     auxdir += '../'
@@ -531,8 +528,7 @@ class GLTestDir(object):
             testsbase_appened = True
 
         # Create Makefile.am.
-        emit = string()
-        emit += '## Process this file with automake to produce Makefile.in.\n\n'
+        emit = '## Process this file with automake to produce Makefile.in.\n\n'
         emit += 'AUTOMAKE_OPTIONS = 1.9.6 foreign\n\n'
         emit += 'SUBDIRS = %s\n\n' % ' '.join(subdirs)
         emit += 'ACLOCAL_AMFLAGS = -I %s\n' % m4base
@@ -544,8 +540,7 @@ class GLTestDir(object):
             file.write(emit)
 
         # Create configure.ac
-        emit = string()
-        emit += '# Process this file with autoconf '
+        emit = '# Process this file with autoconf '
         emit += 'to produce a configure script.\n'
         emit += 'AC_INIT([dummy], [0])\n'
         if auxdir != '.':
@@ -862,7 +857,7 @@ class GLMegaTestDir(object):
         if type(config) is not GLConfig:
             raise TypeError('config must be a GLConfig, not %s' %
                             type(config).__name__)
-        if type(megatestdir) is bytes or type(megatestdir) is string:
+        if type(megatestdir) is bytes or type(megatestdir) is str:
             if type(megatestdir) is bytes:
                 megatestdir = megatestdir.decode(ENCS['default'])
         self.config = config
@@ -905,7 +900,7 @@ class GLMegaTestDir(object):
         megasubdirs += ['ALL']
 
         # Create autobuild.
-        emit = string()
+        emit = ''
         repdict = dict()
         repdict['Jan'] = repdict['January'] = '01'
         repdict['Feb'] = repdict['February'] = '02'
@@ -959,8 +954,7 @@ class GLMegaTestDir(object):
             file.write(emit)
 
         # Create Makefile.am.
-        emit = string()
-        emit += '## Process this file with automake to produce Makefile.in.\n\n'
+        emit = '## Process this file with automake to produce Makefile.in.\n\n'
         emit += 'AUTOMAKE_OPTIONS = 1.9.6 foreign\n\n'
         emit += 'SUBDIRS = %s\n\n' % ' '.join(megasubdirs)
         emit += 'EXTRA_DIST = do-autobuild\n'
@@ -971,8 +965,7 @@ class GLMegaTestDir(object):
         with codecs.open(path, 'wb', 'UTF-8') as file:
             file.write(emit)
 
-        emit = string()
-        emit += '# Process this file with autoconf '
+        emit = '# Process this file with autoconf '
         emit += 'to produce a configure script.\n'
         emit += 'AC_INIT([dummy], [0])\n\n'
         if auxdir != '.':

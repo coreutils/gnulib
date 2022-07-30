@@ -47,7 +47,6 @@ __copyright__ = constants.__copyright__
 #===============================================================================
 # Define global constants
 #===============================================================================
-PYTHON3 = constants.PYTHON3
 NoneType = type(None)
 APP = constants.APP
 DIRS = constants.DIRS
@@ -59,7 +58,6 @@ compiler = constants.compiler
 joinpath = constants.joinpath
 cleaner = constants.cleaner
 relpath = constants.relativize
-string = constants.string
 isabs = os.path.isabs
 isdir = os.path.isdir
 isfile = os.path.isfile
@@ -303,7 +301,7 @@ class GLImport(object):
                 for file in files
             ]  # Finish to convert bytes to string
         for file in files:
-            if type(file) is not string:
+            if type(file) is not str:
                 raise TypeError('each file must be a string instance')
         files = sorted(set(files))
         files = ['%s%s' % (file, os.path.sep) for file in files]
@@ -350,7 +348,7 @@ class GLImport(object):
                 for file in files
             ]  # Finish to convert bytes to string
         for file in files:
-            if type(file) is not string:
+            if type(file) is not str:
                 raise TypeError('each file must be a string instance')
         files = sorted(set(files))
         auxdir = self.config['auxdir']
@@ -463,12 +461,12 @@ class GLImport(object):
         return actioncmd
 
     def gnulib_cache(self):
-        '''GLImport.gnulib_cache() -> string
+        '''GLImport.gnulib_cache() -> str
 
         Emit the contents of generated $m4base/gnulib-cache.m4 file.
         GLConfig: destdir, localdir, tests, sourcebase, m4base, pobase, docbase,
         testsbase, conddeps, libtool, macro_prefix, podomain, vc_files.'''
-        emit = string()
+        emit = ''
         moduletable = self.moduletable
         actioncmd = self.actioncmd()
         destdir = self.config['destdir']
@@ -550,12 +548,12 @@ gnulib-tool.m4 macro invocations:\n''' % actioncmd
         return constants.nlconvert(emit)
 
     def gnulib_comp(self, files):
-        '''GLImport.gnulib_comp(files) -> string
+        '''GLImport.gnulib_comp(files) -> str
 
         Emit the contents of generated $m4base/gnulib-comp.m4 file.
         GLConfig: destdir, localdir, tests, sourcebase, m4base, pobase, docbase,
         testsbase, conddeps, libtool, macro_prefix, podomain, vc_files.'''
-        emit = string()
+        emit = ''
         assistant = self.assistant
         moduletable = self.moduletable
         destdir = self.config['destdir']
@@ -714,7 +712,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         '''GLImport._update_ignorelist_(directory, ignore, dirs_added, dirs_removed)
 
         Update .gitignore or .cvsignore files.'''
-        result = string()
+        result = ''
         destdir = self.config['destdir']
         if ignore == '.gitignore':
             anchor = '/'
@@ -739,7 +737,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                         print('Updating %s (backup in %s)' %
                               (srcpath, backupname))
                         shutil.copy2(srcpath, backupname)
-                        result = string()
+                        result = ''
                         with codecs.open(srcpath, 'ab', 'UTF-8') as file:
                             file.write(destdata)
                     else:  # if self.config['dryrun']
@@ -848,7 +846,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         # Check license incompatibilities.
         listing = list()
         compatibilities = dict()
-        incompatibilities = string()
+        incompatibilities = ''
         compatibilities['all'] = ['GPLv2+ build tool', 'GPLed build tool',
                                   'public domain', 'unlimited',
                                   'unmodifiable license text']
@@ -884,7 +882,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
       s/GNU Library General/GNU General/g
       s/Library General Public License/General Public License/g
       s/version 2\\(.1\\)\\{0,1\\}\\([ ,]\\)/version 3\\2/g'''
-        sed_transform_lib_file = string()
+        sed_transform_lib_file = ''
         if 'config-h' in [str(module) for module in main_modules]:
             sed_transform_lib_file += '''
         s/^#ifdef[\t ]*HAVE_CONFIG_H[\t ]*$/#if 1/
@@ -909,7 +907,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                 sed_transform_main_lib_file += lgpl2gpl
 
         # Determine script to apply to auxiliary files that go into $auxdir/.
-        sed_transform_build_aux_file = string()
+        sed_transform_build_aux_file = ''
         if copyrights:
             sed_transform_build_aux_file += lgpl2gpl
 
@@ -922,7 +920,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         main_filelist, tests_filelist = \
             self.moduletable.filelist_separately(main_modules, tests_modules)
         filelist = sorted(
-            set(main_filelist + tests_filelist), key=string.lower)
+            set(main_filelist + tests_filelist), key=str.lower)
         if not filelist:
             raise GLError(12, None)
 
@@ -946,10 +944,10 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
 
         # Construct tables and transformers.
         transformers = dict()
-        transformers['lib'] = string(sed_transform_lib_file)
-        transformers['aux'] = string(sed_transform_build_aux_file)
-        transformers['main'] = string(sed_transform_main_lib_file)
-        transformers['tests'] = string(sed_transform_testsrelated_lib_file)
+        transformers['lib'] = sed_transform_lib_file
+        transformers['aux'] = sed_transform_build_aux_file
+        transformers['main'] = sed_transform_main_lib_file
+        transformers['tests'] = sed_transform_testsrelated_lib_file
         old_table = list()
         new_table = list()
         for src in old_files:
@@ -1043,7 +1041,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
             path = joinpath(destdir, file)
             if isfile(path) or os.path.islink(path):
                 if not self.config['dryrun']:
-                    backup = string('%s~' % path)
+                    backup = '%s~' % path
                     print('Removing file %s (backup in )' % (path, backup))
                     try:  # Try to move file
                         if os.path.exists(backup):
@@ -1088,7 +1086,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
 
         # Determine makefile name.
         if not makefile:
-            makefile_am = string('Makefile.am')
+            makefile_am = 'Makefile.am'
         else:  # if makefile
             makefile_am = makefile
 
@@ -1226,7 +1224,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
             basename = joinpath(pobase, 'LINGUAS')
             if not self.config['dryrun']:
                 tmpfile = self.assistant.tmpfilename(basename)
-                data = string('# Set of available languages.\n')
+                data = '# Set of available languages.\n'
                 files = [constants.subend('.po', '', file)
                          for file in os.listdir(joinpath(destdir, pobase))]
                 files = [file.decode(ENCS['default']) if type(file) is bytes
@@ -1336,7 +1334,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         for file in filetable['removed']:
             directory, basename = os.path.split(file)
             ignorelist += [tuple([directory, '|R|', basename])]
-        last_dir = string()
+        last_dir = ''
         last_dirs_added = list()
         last_dirs_removed = list()
         for row in ignorelist:

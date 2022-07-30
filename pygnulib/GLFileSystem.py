@@ -39,7 +39,6 @@ __copyright__ = constants.__copyright__
 #===============================================================================
 # Define global constants
 #===============================================================================
-PYTHON3 = constants.PYTHON3
 NoneType = type(None)
 APP = constants.APP
 DIRS = constants.DIRS
@@ -50,7 +49,6 @@ TESTS = constants.TESTS
 compiler = constants.compiler
 joinpath = constants.joinpath
 cleaner = constants.cleaner
-string = constants.string
 isabs = os.path.isabs
 isdir = os.path.isdir
 isfile = os.path.isfile
@@ -88,10 +86,10 @@ class GLFileSystem(object):
         GLError telling that file was not found. Function also returns flag which
         indicates whether file is a temporary file.
         GLConfig: localdir.'''
-        if type(name) is bytes or type(name) is string:
+        if type(name) is bytes or type(name) is str:
             if type(name) is bytes:
                 name = name.decode(ENCS['default'])
-        else:  # if name has not bytes or string type
+        else:  # if name has not bytes or str type
             raise TypeError(
                 'name must be a string, not %s' % type(module).__name__)
         # If name exists in localdir, then we use it
@@ -143,10 +141,10 @@ class GLFileAssistant(object):
                 transformers[key] = 's,x,x,'
             else:  # if key in transformers
                 value = transformers[key]
-                if type(value) is bytes or type(value) is string:
+                if type(value) is bytes or type(value) is str:
                     if type(value) is bytes:
                         transformers[key] = value.decode(ENCS['default'])
-                else:  # if value has not bytes or string type
+                else:  # if value has not bytes or str type
                     raise TypeError('transformers[%s] must be a string, not %s' %
                                     (key, type(value).__name__))
         self.original = None
@@ -163,13 +161,13 @@ class GLFileAssistant(object):
         return result
 
     def tmpfilename(self, path):
-        '''GLFileAssistant.tmpfilename() -> string
+        '''GLFileAssistant.tmpfilename() -> str
 
         Return the name of a temporary file (file is relative to destdir).'''
-        if type(path) is bytes or type(path) is string:
+        if type(path) is bytes or type(path) is str:
             if type(path) is bytes:
                 path = path.decode(ENCS['default'])
-        else:  # if path has not bytes or string type
+        else:  # if path has not bytes or str type
             raise TypeError(
                 'path must be a string, not %s' % (type(path).__name__))
         if not self.config['dryrun']:
@@ -195,10 +193,10 @@ class GLFileAssistant(object):
         '''GLFileAssistant.setOriginal(original)
 
         Set the name of the original file which will be used.'''
-        if type(original) is bytes or type(original) is string:
+        if type(original) is bytes or type(original) is str:
             if type(original) is bytes:
                 original = original.decode(ENCS['default'])
-        else:  # if original has not bytes or string type
+        else:  # if original has not bytes or str type
             raise TypeError(
                 'original must be a string, not %s' % (type(original).__name__))
         self.original = original
@@ -207,10 +205,10 @@ class GLFileAssistant(object):
         '''GLFileAssistant.setRewritten(rewritten)
 
         Set the name of the rewritten file which will be used.'''
-        if type(rewritten) is bytes or type(rewritten) is string:
+        if type(rewritten) is bytes or type(rewritten) is str:
             if type(rewritten) is bytes:
                 rewritten = rewritten.decode(ENCS['default'])
-        else:  # if rewritten has not bytes or string type
+        else:  # if rewritten has not bytes or str type
             raise TypeError(
                 'rewritten must be a string, not %s' % type(rewritten).__name__)
         self.rewritten = rewritten
@@ -278,17 +276,17 @@ class GLFileAssistant(object):
             raise TypeError('original must be set before applying the method')
         elif rewritten == None:
             raise TypeError('rewritten must be set before applying the method')
-        if type(lookedup) is bytes or type(lookedup) is string:
+        if type(lookedup) is bytes or type(lookedup) is str:
             if type(lookedup) is bytes:
                 lookedup = lookedup.decode(ENCS['default'])
-        else:  # if lookedup has not bytes or string type
+        else:  # if lookedup has not bytes or str type
             raise TypeError('lookedup must be a string, not %s' %
                             type(lookedup).__name__)
         if type(already_present) is not bool:
             raise TypeError('already_present must be a bool, not %s' %
                             type(already_present).__name__)
         basename = rewritten
-        backupname = string('%s~' % basename)
+        backupname = '%s~' % basename
         basepath = joinpath(destdir, basename)
         backuppath = joinpath(destdir, backupname)
         if not filecmp.cmp(basepath, tmpfile):
@@ -355,7 +353,7 @@ class GLFileAssistant(object):
             raise GLError(15, lookedup)
         # Don't process binary files with sed.
         if not (original.endswith(".class") or original.endswith(".mo")):
-            transformer = string()
+            transformer = ''
             if original.startswith('lib/'):
                 if sed_transform_main_lib_file:
                     transformer = sed_transform_main_lib_file

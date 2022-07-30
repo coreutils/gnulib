@@ -36,7 +36,6 @@ __copyright__ = constants.__copyright__
 #===============================================================================
 # Define global constants
 #===============================================================================
-PYTHON3 = constants.PYTHON3
 NoneType = type(None)
 APP = constants.APP
 DIRS = constants.DIRS
@@ -47,7 +46,6 @@ TESTS = constants.TESTS
 compiler = constants.compiler
 joinpath = constants.joinpath
 cleaner = constants.cleaner
-string = constants.string
 isabs = os.path.isabs
 isdir = os.path.isdir
 isfile = os.path.isfile
@@ -77,7 +75,7 @@ class GLInfo(object):
     def authors(self):
         '''Return formatted string which contains authors.
         The special __author__ variable is used (type is list).'''
-        result = string()
+        result = ''
         for item in __author__:
             if item == __author__[-2]:
                 result += '%s ' % item
@@ -106,7 +104,7 @@ class GLInfo(object):
         '''Return formatted string which contains date and time in GMT format.'''
         if isdir(DIRS['git']):
             counter = int()  # Create counter
-            result = string()  # Create string
+            result = ''  # Create string
             args = ['git', 'log']
             result = sp.check_output(args).decode("UTF-8")
             # Get date as "Fri Mar 21 07:16:51 2008 -0600" from string
@@ -118,7 +116,7 @@ class GLInfo(object):
             # Use GNU date to compute the time in GMT
             args = ['date', '-d', result, '-u', '+%Y-%m-%d %H:%M:%S']
             proc = sp.check_output(args)
-            result = string(proc, "UTF-8")
+            result = str(proc, "UTF-8")
             result = result.rstrip(os.linesep)
             return result
 
@@ -309,5 +307,5 @@ Report bugs to <bug-gnulib@gnu.org>.'''
             result = sp.check_output(args).decode("UTF-8")
             result = result.strip()
             if result == 'UNKNOWN':
-                result = string()
+                result = ''
             return result

@@ -39,7 +39,6 @@ __copyright__ = constants.__copyright__
 #===============================================================================
 # Define global constants
 #===============================================================================
-PYTHON3 = constants.PYTHON3
 NoneType = type(None)
 APP = constants.APP
 DIRS = constants.DIRS
@@ -50,7 +49,6 @@ TESTS = constants.TESTS
 compiler = constants.compiler
 joinpath = constants.joinpath
 cleaner = constants.cleaner
-string = constants.string
 isabs = os.path.isabs
 isdir = os.path.isdir
 isfile = os.path.isfile
@@ -89,10 +87,10 @@ class GLModuleSystem(object):
 
         Check whether the given module exists.
         GLConfig: localdir.'''
-        if type(module) is bytes or string:
+        if type(module) is bytes or str:
             if type(module) is bytes:
                 module = module.decode(ENCS['default'])
-        else:  # if module has not bytes or string type
+        else:  # if module has not bytes or str type
             raise TypeError(
                 'module must be a string, not %s' % type(module).__name__)
         result = bool()
@@ -113,10 +111,10 @@ class GLModuleSystem(object):
         '''GLModuleSystem.find(module) -> GLModule
 
         Find the given module.'''
-        if type(module) is bytes or string:
+        if type(module) is bytes or str:
             if type(module) is bytes:
                 module = module.decode(ENCS['default'])
-        else:  # if module has not bytes or string type
+        else:  # if module has not bytes or str type
             raise TypeError(
                 'module must be a string, not %s' % type(module).__name__)
         if self.exists(module):
@@ -136,7 +134,7 @@ class GLModuleSystem(object):
         Return the available module names as tuple. We could use a combination
         of os.walk() function and re module. However, it takes too much time to
         complete, so this version uses subprocess to run shell commands.'''
-        result = string()
+        result = ''
         listing = list()
         localdir = self.config['localdir']
         find_args = ['find', 'modules', '-type', 'f', '-print']
@@ -203,14 +201,14 @@ class GLModule(object):
         bool indicating that module was created after applying patch.'''
         self.args = dict()
         self.cache = dict()
-        self.content = string()
+        self.content = ''
         if type(config) is not GLConfig:
             raise TypeError('config must be a GLConfig, not %s' %
                             type(config).__name__)
-        if type(module) is bytes or type(module) is string:
+        if type(module) is bytes or type(module) is str:
             if type(module) is bytes:
                 module = module.decode(ENCS['default'])
-        else:  # if module has not bytes or string type
+        else:  # if module has not bytes or str type
             raise TypeError('module must be a string, not %s' %
                             type(module).__name__)
         if type(patched) is not bool:
@@ -294,7 +292,7 @@ Include:|Link:|License:|Maintainer:)'
         return result
 
     def getName(self):
-        '''GLModule.getName() -> string
+        '''GLModule.getName() -> str
 
         Return the name of the module.'''
         pattern = compiler(joinpath('modules', '(.*?)$'))
@@ -334,7 +332,7 @@ Include:|Link:|License:|Maintainer:)'
         return result
 
     def getShellFunc(self):
-        '''GLModule.getShellFunc() -> string
+        '''GLModule.getShellFunc() -> str
 
         Computes the shell function name that will contain the m4 macros for the
         module.'''
@@ -348,7 +346,7 @@ Include:|Link:|License:|Maintainer:)'
             module = str(self)
         else:  # if not isalnum
             module = '%s\n' % str(self)
-            if type(module) is string:
+            if type(module) is str:
                 module = module.encode(ENCS['default'])
             module = hashlib.md5(module).hexdigest()
         result = 'func_%s_gnulib_m4code_%s' % (macro_prefix, module)
@@ -357,7 +355,7 @@ Include:|Link:|License:|Maintainer:)'
         return result
 
     def getShellVar(self):
-        '''GLModule.getShellVar() -> string
+        '''GLModule.getShellVar() -> str
 
         Compute the shell variable name the will be set to true once the m4 macros
         for the module have been executed.'''
@@ -371,7 +369,7 @@ Include:|Link:|License:|Maintainer:)'
             module = str(self)
         else:  # if not isalnum
             module = '%s\n' % str(self)
-            if type(module) is string:
+            if type(module) is str:
                 module = module.encode(ENCS['default'])
             module = hashlib.md5(module).hexdigest()
         result = '%s_gnulib_enabled_%s' % (macro_prefix, module)
@@ -380,7 +378,7 @@ Include:|Link:|License:|Maintainer:)'
         return result
 
     def getConditionalName(self):
-        '''GLModule.getConditionalName() -> string
+        '''GLModule.getConditionalName() -> str
 
         Return the automake conditional name.
         GLConfig: macro_prefix.'''
@@ -401,20 +399,20 @@ Include:|Link:|License:|Maintainer:)'
         return result
 
     def getDescription(self):
-        '''GLModule.getDescription() -> string
+        '''GLModule.getDescription() -> str
 
         Return description of the module.'''
         section = 'Description:'
         if 'description' not in self.cache:
             if section not in self.content:
-                result = string()
+                result = ''
             else:  # if section in self.content
                 pattern = '^%s[\t ]*(.*?)%s' % (section, self.regex)
                 pattern = compiler(pattern, re.S | re.M)
                 result = pattern.findall(self.content)
                 if type(result) is list:
                     if not result:
-                        result = string()
+                        result = ''
                     else:  # if result
                         result = result[-1]
             result = result.strip()
@@ -422,20 +420,20 @@ Include:|Link:|License:|Maintainer:)'
         return self.cache['description']
 
     def getComment(self):
-        '''GLModule.getComment() -> string
+        '''GLModule.getComment() -> str
 
         Return comment to module.'''
         section = 'Comment:'
         if 'comment' not in self.cache:
             if section not in self.content:
-                result = string()
+                result = ''
             else:  # if section in self.content
                 pattern = '^%s[\t ]*(.*?)%s' % (section, self.regex)
                 pattern = compiler(pattern, re.S | re.M)
                 result = pattern.findall(self.content)
                 if type(result) is list:
                     if not result:
-                        result = string()
+                        result = ''
                     else:  # if result
                         result = result[-1]
             result = result.strip()
@@ -443,13 +441,13 @@ Include:|Link:|License:|Maintainer:)'
         return self.cache['comment']
 
     def getStatus(self):
-        '''GLModule.getStatus() -> string
+        '''GLModule.getStatus() -> str
 
         Return module status.'''
         section = 'Status:'
         if 'status' not in self.cache:
             if section not in self.content:
-                result = string()
+                result = ''
             else:  # if section in self.content
                 snippet = self.content.split(section)[-1]
                 snippet = snippet.replace('\r\n', '\n')
@@ -469,13 +467,13 @@ Include:|Link:|License:|Maintainer:)'
         return list(self.cache['status'])
 
     def getNotice(self):
-        '''GLModule.getNotice() -> string
+        '''GLModule.getNotice() -> str
 
         Return notice to module.'''
         section = 'Notice:'
         if 'notice' not in self.cache:
             if section not in self.content:
-                result = string()
+                result = ''
             else:  # if section in self.content
                 snippet = self.content.split(section)[-1]
                 snippet = snippet.replace('\r\n', '\n')
@@ -495,13 +493,13 @@ Include:|Link:|License:|Maintainer:)'
         return self.cache['notice']
 
     def getApplicability(self):
-        '''GLModule.getApplicability() -> string
+        '''GLModule.getApplicability() -> str
 
         Return applicability of module.'''
         section = 'Applicability:'
         if 'applicability' not in self.cache:
             if section not in self.content:
-                result = string()
+                result = ''
             else:  # if section in self.content
                 snippet = self.content.split(section)[-1]
                 snippet = snippet.replace('\r\n', '\n')
@@ -606,13 +604,13 @@ Include:|Link:|License:|Maintainer:)'
         return list(self.cache['dependencies'])
 
     def getAutoconfSnippet_Early(self):
-        '''GLModule.getAutoconfSnippet_Early() -> string
+        '''GLModule.getAutoconfSnippet_Early() -> str
 
         Return autoconf-early snippet.'''
         section = 'configure.ac-early:'
         if 'autoconf-early' not in self.cache:
             if section not in self.content:
-                result = string()
+                result = ''
             else:  # if section in self.content
                 snippet = self.content.split(section)[-1]
                 snippet = snippet.replace('\r\n', '\n')
@@ -632,13 +630,13 @@ Include:|Link:|License:|Maintainer:)'
         return self.cache['autoconf-early']
 
     def getAutoconfSnippet(self):
-        '''GLModule.getAutoconfSnippet() -> string
+        '''GLModule.getAutoconfSnippet() -> str
 
         Return autoconf snippet.'''
         section = 'configure.ac:'
         if 'autoconf' not in self.cache:
             if section not in self.content:
-                result = string()
+                result = ''
             else:  # if section in self.content
                 snippet = self.content.split(section)[-1]
                 snippet = snippet.replace('\r\n', '\n')
@@ -658,11 +656,11 @@ Include:|Link:|License:|Maintainer:)'
         return self.cache['autoconf']
 
     def getAutomakeSnippet(self):
-        '''getAutomakeSnippet() -> string
+        '''getAutomakeSnippet() -> str
 
         Get automake snippet.
         GLConfig: auxdir, ac_version.'''
-        result = string()  # Define stack variable
+        result = ''
         conditional = self.getAutomakeSnippet_Conditional()
         if conditional.strip():
             result += self.getAutomakeSnippet_Conditional()
@@ -672,13 +670,13 @@ Include:|Link:|License:|Maintainer:)'
         return result
 
     def getAutomakeSnippet_Conditional(self):
-        '''GLModule.getAutomakeSnippet_Conditional() -> string
+        '''GLModule.getAutomakeSnippet_Conditional() -> str
 
         Return conditional automake snippet.'''
         section = 'Makefile.am:'
         if 'makefile-conditional' not in self.cache:
             if section not in self.content:
-                result = string()
+                result = ''
             else:  # if section in self.content
                 snippet = self.content.split(section)[-1]
                 snippet = snippet.replace('\r\n', '\n')
@@ -698,13 +696,13 @@ Include:|Link:|License:|Maintainer:)'
         return self.cache['makefile-conditional']
 
     def getAutomakeSnippet_Unconditional(self):
-        '''GLModule.getAutomakeSnippet_Unconditional() -> string
+        '''GLModule.getAutomakeSnippet_Unconditional() -> str
 
         Return unconditional automake snippet.
         GLConfig: auxdir, ac_version.'''
         auxdir = self.config['auxdir']
         ac_version = self.config['ac_version']
-        result = string()
+        result = ''
         if 'makefile-unconditional' not in self.cache:
             if self.isTests():
                 files = self.getFiles()
@@ -712,8 +710,7 @@ Include:|Link:|License:|Maintainer:)'
                                               'tests/', '', 'tests/', '').split(constants.NL)
                 extra_files = sorted(set(extra_files))
                 if extra_files:
-                    result += string('EXTRA_DIST += %s' %
-                                     ' '.join(extra_files))
+                    result += 'EXTRA_DIST += %s' % ' '.join(extra_files)
                     result += constants.NL * 2
             else:  # if not tests module
                 # TODO: unconditional automake snippet for nontests modules
@@ -734,8 +731,7 @@ Include:|Link:|License:|Maintainer:)'
                     f for f in lib_files if f not in mentioned_files]
                 extra_files = sorted(set(extra_files))
                 if extra_files != [''] and extra_files:
-                    result += string('EXTRA_DIST += %s' %
-                                     ' '.join(extra_files))
+                    result += 'EXTRA_DIST += %s' % ' '.join(extra_files)
                     result += '\n\n'
                 # Synthesize also an EXTRA_lib_SOURCES augmentation
                 if str(self) != 'relocatable-prog-wrapper' and str(self) != 'pt_chown':
@@ -743,8 +739,7 @@ Include:|Link:|License:|Maintainer:)'
                                                   '', '.c', '', '').split(constants.NL)
                     extra_files = sorted(set(extra_files))
                     if extra_files != ['']:
-                        result += string('EXTRA_lib_SOURCES += %s' %
-                                         ' '.join(extra_files))
+                        result += 'EXTRA_lib_SOURCES += %s' % ' '.join(extra_files)
                         result += '\n\n'
                 # Synthesize an EXTRA_DIST augmentation also for the files in build-aux
                 buildaux_files = filter_filelist(constants.NL, all_files,
@@ -754,7 +749,7 @@ Include:|Link:|License:|Maintainer:)'
                     buildaux_files = ''.join(buildaux_files)
                     buildaux_files = joinpath(
                         '$(top_srcdir)', auxdir, buildaux_files)
-                    result += string('EXTRA_DIST += %s' % buildaux_files)
+                    result += 'EXTRA_DIST += %s' % buildaux_files
                     result += '\n\n'
                 # Synthesize an EXTRA_DIST augmentation also for the files from top/.
                 top_files = filter_filelist(constants.NL, all_files,
@@ -763,20 +758,20 @@ Include:|Link:|License:|Maintainer:)'
                 if top_files != ['']:
                     top_files = ''.join(top_files)
                     top_files = joinpath('$(top_srcdir)', top_files)
-                    result += string('EXTRA_DIST += %s' % top_files)
+                    result += 'EXTRA_DIST += %s' % top_files
                     result += '\n\n'
             result = constants.nlconvert(result)
             self.cache['makefile-unconditional'] = result
         return self.cache['makefile-unconditional']
 
     def getInclude(self):
-        '''GLModule.getInclude() -> string
+        '''GLModule.getInclude() -> str
 
         Return include directive.'''
         section = 'Include:'
         if 'include' not in self.cache:
             if section not in self.content:
-                result = string()
+                result = ''
             else:  # if section in self.content
                 snippet = self.content.split(section)[-1]
                 snippet = snippet.replace('\r\n', '\n')
@@ -799,7 +794,7 @@ Include:|Link:|License:|Maintainer:)'
         return self.cache['include']
 
     def getLink(self):
-        '''GLModule.getLink() -> string
+        '''GLModule.getLink() -> str
 
         Return link directive.'''
         section = 'Link:'
@@ -824,14 +819,14 @@ Include:|Link:|License:|Maintainer:)'
         return self.cache['link']
 
     def getLicense(self):
-        '''GLModule.getLicense(self) -> string
+        '''GLModule.getLicense(self) -> str
 
         Get license and warn user if module lacks a license.'''
         license = self.getLicense_Raw()
         if not self.isTests():
             if not license:
                 if self.config['errors']:
-                    raise GLError(18, string(self))
+                    raise GLError(18, str(self))
                 else:  # if not self.config['errors']
                     sys.stderr.write('gnulib-tool: warning: ')
                     sys.stderr.write('module %s lacks a license\n' % str(self))
@@ -840,20 +835,20 @@ Include:|Link:|License:|Maintainer:)'
         return license
 
     def getLicense_Raw(self):
-        '''GLModule.getLicense_Raw() -> string
+        '''GLModule.getLicense_Raw() -> str
 
         Return module license.'''
         section = 'License:'
         if 'license' not in self.cache:
             if section not in self.content:
-                result = string()
+                result = ''
             else:  # if section in self.content
                 pattern = '^%s[\t ]*(.*?)%s' % (section, self.regex)
                 pattern = compiler(pattern, re.S | re.M)
                 result = pattern.findall(self.content)
                 if type(result) is list:
                     if not result:
-                        result = string()
+                        result = ''
                     else:  # if result
                         result = result[-1]
             result = result.strip()
@@ -861,13 +856,13 @@ Include:|Link:|License:|Maintainer:)'
         return self.cache['license']
 
     def getMaintainer(self):
-        '''GLModule.getMaintainer() -> string
+        '''GLModule.getMaintainer() -> str
 
         Return maintainer directive.'''
         section = 'Maintainer:'
         if 'maintainer' not in self.cache:
             if section not in self.content:
-                result = string()
+                result = ''
             else:  # if section in self.content
                 snippet = self.content.split(section)[-1]
                 snippet = snippet.replace('\r\n', '\n')
@@ -955,11 +950,11 @@ class GLModuleTable(object):
         if type(module) is not GLModule:
             raise TypeError('module must be a GLModule, not %s' %
                             type(module).__name__)
-        if type(condition) is bytes or type(condition) is string \
+        if type(condition) is bytes or type(condition) is str \
                 or condition == True:
             if type(condition) is bytes:
                 condition = condition.decode(ENCS['default'])
-        else:  # if condition has not bytes or string type or is not True
+        else:  # if condition has not bytes or str type or is not True
             raise TypeError('condition must be a string or True, not %s' %
                             type(condition).__name__)
         if not str(module) in self.unconditionals:
@@ -991,7 +986,7 @@ class GLModuleTable(object):
         return result
 
     def getCondition(self, parent, module):
-        '''GLModuleTable.getCondition(module) -> string or True
+        '''GLModuleTable.getCondition(module) -> str or True
 
         Return condition from parent to module. Condition can be string or True.
         If module is not in the list of conddeps, method returns None.'''

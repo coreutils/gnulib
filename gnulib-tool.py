@@ -47,7 +47,6 @@ from pygnulib import classes
 #===============================================================================
 # Define global constants
 #===============================================================================
-PYTHON3 = constants.PYTHON3
 APP = constants.APP
 DIRS = constants.DIRS
 ENCS = constants.ENCS
@@ -57,7 +56,6 @@ TESTS = constants.TESTS
 compiler = constants.compiler
 joinpath = constants.joinpath
 cleaner = constants.cleaner
-string = constants.string
 isabs = os.path.isabs
 isdir = os.path.isdir
 isfile = os.path.isfile
@@ -801,7 +799,7 @@ def main():
             print('\n'.join(files))
 
     elif mode == 'extract-dependencies':
-        result = string()
+        result = ''
         if avoids:
             message = '%s: *** ' % constants.APP['name']
             message += 'cannot combine --avoid and --extract-dependencies\n'
@@ -891,7 +889,7 @@ def main():
         filesystem = classes.GLFileSystem(config)
         lookedup, flag = filesystem.lookup(srcpath)
         if isdir(dest):
-            destdir = string(dest)
+            destdir = str(dest)
             if srcpath.startswith('build-aux/'):
                 destpath = constants.substart(
                     'build-aux/', '%s/' % auxdir, srcpath)
@@ -960,7 +958,7 @@ if __name__ == '__main__':
         if errmode == 0:
             message = '%s: *** ' % constants.APP['name']
             if errinfo == None:
-                errinfo = string()
+                errinfo = ''
             if errno == 1:
                 message += 'file %s not found' % errinfo
             elif errno == 2:
@@ -990,7 +988,7 @@ if __name__ == '__main__':
                 message = 'gnulib-tool: option --conditional-dependencies is not '
                 message += 'supported with --with-tests\n'
             elif errno == 11:
-                incompatibilities = string()
+                incompatibilities = ''
                 message += 'incompatible license on modules:%s' % constants.NL
                 for pair in errinfo:
                     incompatibilities += pair[0]

@@ -35,7 +35,6 @@ __copyright__ = constants.__copyright__
 #===============================================================================
 # Define global constants
 #===============================================================================
-PYTHON3 = constants.PYTHON3
 NoneType = type(None)
 APP = constants.APP
 DIRS = constants.DIRS
@@ -46,7 +45,6 @@ TESTS = constants.TESTS
 compiler = constants.compiler
 joinpath = constants.joinpath
 cleaner = constants.cleaner
-string = constants.string
 isabs = os.path.isabs
 isdir = os.path.isdir
 isfile = os.path.isfile
@@ -118,10 +116,5 @@ class GLError(Exception):
                 "module lacks a license: %s" % repr(errinfo),
                 "error when running subprocess: %s" % repr(errinfo),
             ]  # Complete list of errors
-        if not PYTHON3:
-            self.message = (b'[Errno %d] %s' %
-                            (self.errno, errors[self.errno - 1].encode(ENCS['default'])))
-        else:  # if PYTHON3
-            self.message = ('[Errno %d] %s' %
-                            (self.errno, errors[self.errno - 1]))
+        self.message = '[Errno %d] %s' % (self.errno, errors[self.errno - 1])
         return self.message

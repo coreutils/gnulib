@@ -38,7 +38,6 @@ __copyright__ = constants.__copyright__
 #===============================================================================
 # Define global constants
 #===============================================================================
-PYTHON3 = constants.PYTHON3
 NoneType = type(None)
 APP = constants.APP
 DIRS = constants.DIRS
@@ -50,7 +49,6 @@ compiler = constants.compiler
 joinpath = constants.joinpath
 cleaner = constants.cleaner
 relpath = constants.relativize
-string = constants.string
 isabs = os.path.isabs
 isdir = os.path.isdir
 isfile = os.path.isfile
@@ -346,11 +344,11 @@ class GLConfig(object):
         '''Return default value for the given key.'''
         if key in self.table:
             if key == 'libname':
-                return string('libgnu')
+                return 'libgnu'
             elif key == 'macro_prefix':
-                return string('gl')
+                return 'gl'
             elif key == 'include_guard_prefix':
-                return string('GL')
+                return 'GL'
             elif key == 'ac_version':
                 return 2.59
             elif key == 'verbosity':
@@ -367,7 +365,7 @@ class GLConfig(object):
             elif key == 'errors':
                 return True
             else:  # otherwise
-                return string()
+                return ''
         else:  # if key not in self.table
             raise KeyError('GLConfig does not contain key: %s' % repr(key))
 
@@ -396,19 +394,19 @@ class GLConfig(object):
     def setDestDir(self, destdir):
         '''Specify the target directory. For --import, this specifies where your
         configure.ac can be found. Defaults to current directory.'''
-        if type(destdir) is bytes or type(destdir) is string:
+        if type(destdir) is bytes or type(destdir) is str:
             if type(destdir) is bytes:
-                destdir = string(destdir, ENCS['system'])
+                destdir = str(destdir, ENCS['system'])
             if destdir:
                 self.table['destdir'] = os.path.normpath(destdir)
-        else:  # if destdir has not bytes/string type
+        else:  # if destdir has not bytes/str type
             raise TypeError('destdir must be a string, not %s' %
                             type(destdir).__name__)
 
     def resetDestDir(self):
         '''Reset the target directory. For --import, this specifies where your
         configure.ac can be found. Defaults to current directory.'''
-        self.table['destdir'] = string()
+        self.table['destdir'] = ''
 
     # Define localdir methods.
     def getLocalDir(self):
@@ -419,19 +417,19 @@ class GLConfig(object):
     def setLocalDir(self, localdir):
         '''Specify a local override directory where to look up files before looking
         in gnulib's directory.'''
-        if type(localdir) is bytes or type(localdir) is string:
+        if type(localdir) is bytes or type(localdir) is str:
             if type(localdir) is bytes:
-                localdir = string(localdir, ENCS['system'])
+                localdir = str(localdir, ENCS['system'])
             if localdir:
                 self.table['localdir'] = localdir
-        else:  # if localdir has not bytes/string type
+        else:  # if localdir has not bytes/str type
             raise TypeError('localdir must be a string, not %s' %
                             type(localdir).__name__)
 
     def resetLocalDir(self):
         '''Reset a local override directory where to look up files before looking
         in gnulib's directory.'''
-        self.table['localdir'] = string()
+        self.table['localdir'] = ''
 
     # Define auxdir methods.
     def getAuxDir(self):
@@ -444,19 +442,19 @@ class GLConfig(object):
     def setAuxDir(self, auxdir):
         '''Specify directory relative to --dir where auxiliary build tools are
         placed. Default comes from configure.ac or configure.in.'''
-        if type(auxdir) is bytes or type(auxdir) is string:
+        if type(auxdir) is bytes or type(auxdir) is str:
             if type(auxdir) is bytes:
-                auxdir = string(auxdir, ENCS['system'])
+                auxdir = str(auxdir, ENCS['system'])
             if auxdir:
                 self.table['auxdir'] = auxdir
-        else:  # if type of auxdir is not bytes or string
+        else:  # if type of auxdir is not bytes or str
             raise TypeError('auxdir must be a string, not %s' %
                             type(auxdir).__name__)
 
     def resetAuxDir(self):
         '''Reset directory relative to --dir where auxiliary build tools are
         placed. Default comes from configure.ac or configure.in.'''
-        self.table['auxdir'] = string()
+        self.table['auxdir'] = ''
 
     # Define sourcebase methods.
     def getSourceBase(self):
@@ -465,18 +463,18 @@ class GLConfig(object):
 
     def setSourceBase(self, sourcebase):
         '''Specify directory relative to destdir where source code is placed.'''
-        if type(sourcebase) is bytes or type(sourcebase) is string:
+        if type(sourcebase) is bytes or type(sourcebase) is str:
             if type(sourcebase) is bytes:
-                sourcebase = string(sourcebase, ENCS['system'])
+                sourcebase = str(sourcebase, ENCS['system'])
             if sourcebase:
                 self.table['sourcebase'] = sourcebase
-        else:  # if type of sourcebase is not bytes or string
+        else:  # if type of sourcebase is not bytes or str
             raise TypeError('sourcebase must be a string, not %s' %
                             type(sourcebase).__name__)
 
     def resetSourceBase(self):
         '''Return directory relative to destdir where source code is placed.'''
-        self.table['sourcebase'] = string()
+        self.table['sourcebase'] = ''
 
     # Define m4base methods.
     def getM4Base(self):
@@ -485,18 +483,18 @@ class GLConfig(object):
 
     def setM4Base(self, m4base):
         '''Specify directory relative to destdir where *.m4 macros are placed.'''
-        if type(m4base) is bytes or type(m4base) is string:
+        if type(m4base) is bytes or type(m4base) is str:
             if type(m4base) is bytes:
-                m4base = string(m4base, ENCS['system'])
+                m4base = str(m4base, ENCS['system'])
             if m4base:
                 self.table['m4base'] = m4base
-        else:  # if type of m4base is not bytes or string
+        else:  # if type of m4base is not bytes or str
             raise TypeError('m4base must be a string, not %s' %
                             type(m4base).__name__)
 
     def resetM4Base(self):
         '''Reset directory relative to destdir where *.m4 macros are placed.'''
-        self.table['m4base'] = string()
+        self.table['m4base'] = ''
 
     # Define pobase methods.
     def getPoBase(self):
@@ -505,18 +503,18 @@ class GLConfig(object):
 
     def setPoBase(self, pobase):
         '''Specify directory relative to destdir where *.po files are placed.'''
-        if type(pobase) is bytes or type(pobase) is string:
+        if type(pobase) is bytes or type(pobase) is str:
             if type(pobase) is bytes:
-                pobase = string(pobase, ENCS['system'])
+                pobase = str(pobase, ENCS['system'])
             if pobase:
                 self.table['pobase'] = pobase
-        else:  # if type of pobase is not bytes or string
+        else:  # if type of pobase is not bytes or str
             raise TypeError('pobase must be a string, not %s' %
                             type(pobase).__name__)
 
     def resetPoBase(self):
         '''Reset directory relative to destdir where *.po files are placed.'''
-        self.table['pobase'] = string()
+        self.table['pobase'] = ''
 
     # Define docbase methods.
     def getDocBase(self):
@@ -527,19 +525,19 @@ class GLConfig(object):
     def setDocBase(self, docbase):
         '''Specify directory relative to destdir where doc files are placed.
         Default value for this variable is 'doc').'''
-        if type(docbase) is bytes or type(docbase) is string:
+        if type(docbase) is bytes or type(docbase) is str:
             if type(docbase) is bytes:
-                docbase = string(docbase, ENCS['system'])
+                docbase = str(docbase, ENCS['system'])
             if docbase:
                 self.table['docbase'] = docbase
-        else:  # if type of docbase is not bytes or string
+        else:  # if type of docbase is not bytes or str
             raise TypeError('docbase must be a string, not %s' %
                             type(docbase).__name__)
 
     def resetDocBase(self):
         '''Reset directory relative to destdir where doc files are placed.
         Default value for this variable is 'doc').'''
-        self.table['docbase'] = string()
+        self.table['docbase'] = ''
 
     # Define testsbase methods.
     def getTestsBase(self):
@@ -550,40 +548,40 @@ class GLConfig(object):
     def setTestsBase(self, testsbase):
         '''Specify directory relative to destdir where unit tests are placed.
         Default value for this variable is 'tests').'''
-        if type(testsbase) is bytes or type(testsbase) is string:
+        if type(testsbase) is bytes or type(testsbase) is str:
             if type(testsbase) is bytes:
-                testsbase = string(testsbase, ENCS['system'])
+                testsbase = str(testsbase, ENCS['system'])
             if testsbase:
                 self.table['testsbase'] = testsbase
-        else:  # if type of testsbase is not bytes or string
+        else:  # if type of testsbase is not bytes or str
             raise TypeError('testsbase must be a string, not %s' %
                             type(testsbase).__name__)
 
     def resetTestsBase(self):
         '''Reset directory relative to destdir where unit tests are placed.
         Default value for this variable is 'tests').'''
-        self.table['testsbase'] = string()
+        self.table['testsbase'] = ''
 
     # Define modules methods.
     def addModule(self, module):
         '''Add the module to the modules list.'''
-        if type(module) is bytes or type(module) is string:
+        if type(module) is bytes or type(module) is str:
             if type(module) is bytes:
                 module = module.decode(ENCS['default'])
             if module not in self.table['modules']:
                 self.table['modules'] += [module]
-        else:  # if module has not bytes or string type
+        else:  # if module has not bytes or str type
             raise TypeError('module must be a string, not %s' %
                             type(module).__name__)
 
     def removeModule(self, module):
         '''Remove the module from the modules list.'''
-        if type(module) is bytes or type(module) is string:
+        if type(module) is bytes or type(module) is str:
             if type(module) is bytes:
                 module = module.decode(ENCS['default'])
             if module in self.table['modules']:
                 self.table['modules'].remove(module)
-        else:  # if module has not bytes or string type
+        else:  # if module has not bytes or str type
             raise TypeError('module must be a string, not %s' %
                             type(module).__name__)
 
@@ -617,23 +615,23 @@ class GLConfig(object):
     def addAvoid(self, module):
         '''Avoid including the given module. Useful if you have code that provides
         equivalent functionality.'''
-        if type(module) is bytes or type(module) is string:
+        if type(module) is bytes or type(module) is str:
             if type(module) is bytes:
                 module = module.decode(ENCS['default'])
             if module not in self.table['avoids']:
                 self.table['avoids'].append(module)
-        else:  # if module has not bytes or string type
+        else:  # if module has not bytes or str type
             raise TypeError('avoid must be a string, not %s' %
                             type(module).__name__)
 
     def removeAvoid(self, module):
         '''Remove the given module from the list of avoided modules.'''
-        if type(module) is bytes or type(module) is string:
+        if type(module) is bytes or type(module) is str:
             if type(module) is bytes:
                 module = module.decode(ENCS['default'])
             if module in self.table['avoids']:
                 self.table['avoids'].remove(module)
-        else:  # if module has not bytes or string type
+        else:  # if module has not bytes or str type
             raise TypeError('avoid must be a string, not %s' %
                             type(module).__name__)
 
@@ -666,23 +664,23 @@ class GLConfig(object):
     # Define files methods.
     def addFile(self, file):
         '''Add file to the list of files.'''
-        if type(file) is bytes or type(file) is string:
+        if type(file) is bytes or type(file) is str:
             if type(file) is bytes:
                 file = file.decode(ENCS['default'])
             if file not in self.table['files']:
                 self.table['files'].append(file)
-        else:  # if file has not bytes or string type
+        else:  # if file has not bytes or str type
             raise TypeError('file must be a string, not %s' %
                             type(file).__name__)
 
     def removeFile(self, file):
         '''Remove the given file from the list of files.'''
-        if type(file) is bytes or type(file) is string:
+        if type(file) is bytes or type(file) is str:
             if type(file) is bytes:
                 file = file.decode(ENCS['default'])
             if file in self.table['files']:
                 self.table['files'].remove(file)
-        else:  # if file has not bytes or string type
+        else:  # if file has not bytes or str type
             raise TypeError('file must be a string, not %s' %
                             type(file).__name__)
 
@@ -767,18 +765,18 @@ class GLConfig(object):
 
     def setLibName(self, libname):
         '''Specify the library name.'''
-        if type(libname) is bytes or type(libname) is string:
+        if type(libname) is bytes or type(libname) is str:
             if type(libname) is bytes:
-                libname = string(libname, ENCS['system'])
+                libname = str(libname, ENCS['system'])
             if libname:
                 self.table['libname'] = libname
-        else:  # if type of libname is not bytes or string
+        else:  # if type of libname is not bytes or str
             raise TypeError('libname must be a string, not %s' %
                             type(module).__name__)
 
     def resetLibName(self):
         '''Reset the library name to 'libgnu'.'''
-        self.table['libname'] = string('libgnu')
+        self.table['libname'] = 'libgnu'
 
     # Define libtool methods.
     def checkLibtool(self):
@@ -850,12 +848,12 @@ class GLConfig(object):
     def setMacroPrefix(self, macro_prefix):
         '''Specify the prefix of the macros 'gl_EARLY' and 'gl_INIT'.
         Default macro_prefix is 'gl'.'''
-        if type(macro_prefix) is bytes or type(macro_prefix) is string:
+        if type(macro_prefix) is bytes or type(macro_prefix) is str:
             if type(macro_prefix) is bytes:
-                macro_prefix = string(macro_prefix, ENCS['system'])
+                macro_prefix = str(macro_prefix, ENCS['system'])
             if macro_prefix:
                 self.table['macro_prefix'] = macro_prefix
-        else:  # if type of macro_prefix is not bytes or string
+        else:  # if type of macro_prefix is not bytes or str
             raise TypeError('macro_prefix must be a string, not %s' %
                             type(macro_prefix).__name__)
         if macro_prefix == 'gl':
@@ -869,8 +867,8 @@ class GLConfig(object):
     def resetMacroPrefix(self):
         '''Reset the prefix of the macros 'gl_EARLY' and 'gl_INIT'.
         Default macro_prefix is 'gl'.'''
-        self.table['macro_prefix'] = string('gl')
-        include_guard_prefix = string('GL')
+        self.table['macro_prefix'] = 'gl'
+        include_guard_prefix = 'GL'
         if type(include_guard_prefix) is bytes:
             include_guard_prefix = include_guard_prefix.decode(ENCS['default'])
         self.table['include_guard_prefix'] = include_guard_prefix
@@ -884,19 +882,19 @@ class GLConfig(object):
     def setMakefile(self, makefile):
         '''Specify the name of makefile in automake syntax in the source-base and
         tests-base directories. Default is 'Makefile.am'.'''
-        if type(makefile) is bytes or type(makefile) is string:
+        if type(makefile) is bytes or type(makefile) is str:
             if type(makefile) is bytes:
-                makefile = string(makefile, ENCS['system'])
+                makefile = str(makefile, ENCS['system'])
             if makefile:
                 self.table['makefile'] = makefile
-        else:  # if type of makefile is not bytes or string
+        else:  # if type of makefile is not bytes or str
             raise TypeError('makefile must be a string, not %s' %
                             type(makefile).__name__)
 
     def resetMakefile(self):
         '''Reset the name of makefile in automake syntax in the source-base and
         tests-base directories. Default is 'Makefile.am'.'''
-        self.table['makefile'] = string()
+        self.table['makefile'] = ''
 
     # Define podomain methods.
     def getPoDomain(self):
@@ -907,19 +905,19 @@ class GLConfig(object):
     def setPoDomain(self, podomain):
         '''Specify the prefix of the i18n domain. Usually use the package name.
         A suffix '-gnulib' is appended.'''
-        if type(podomain) is bytes or type(podomain) is string:
+        if type(podomain) is bytes or type(podomain) is str:
             if type(podomain) is bytes:
-                podomain = string(podomain, ENCS['system'])
+                podomain = str(podomain, ENCS['system'])
             if podomain:
                 self.table['podomain'] = podomain
-        else:  # if type of podomain is not bytes or string
+        else:  # if type of podomain is not bytes or str
             raise TypeError('podomain must be a string, not %s' %
                             type(podomain).__name__)
 
     def resetPoDomain(self):
         '''Reset the prefix of the i18n domain. Usually use the package name.
         A suffix '-gnulib' is appended.'''
-        self.table['podomain'] = string()
+        self.table['podomain'] = ''
 
     # Define witness_c_macro methods.
     def getWitnessCMacro(self):
@@ -930,19 +928,19 @@ class GLConfig(object):
     def setWitnessCMacro(self, witness_c_macro):
         '''Specify the C macro that is defined when the sources in this directory
         are compiled or used.'''
-        if type(witness_c_macro) is bytes or type(witness_c_macro) is string:
+        if type(witness_c_macro) is bytes or type(witness_c_macro) is str:
             if type(witness_c_macro) is bytes:
-                witness_c_macro = string(witness_c_macro, ENCS['system'])
+                witness_c_macro = str(witness_c_macro, ENCS['system'])
             if witness_c_macro:
                 self.table['witness_c_macro'] = witness_c_macro
-        else:  # if type of witness_c_macro is not bytes or string
+        else:  # if type of witness_c_macro is not bytes or str
             raise TypeError('witness_c_macro must be a string, not %s' %
                             type(witness_c_macro).__name__)
 
     def resetWitnessCMacro(self):
         '''Return the C macro that is defined when the sources in this directory
         are compiled or used.'''
-        self.table['witness_c_macro'] = string()
+        self.table['witness_c_macro'] = ''
 
     # Define vc_files methods.
     def checkVCFiles(self):
@@ -985,19 +983,19 @@ class GLConfig(object):
 
     def setAutoconfFile(self, configure_ac):
         '''Specify path of autoconf file relative to destdir.'''
-        if type(configure_ac) is bytes or type(configure_ac) is string:
+        if type(configure_ac) is bytes or type(configure_ac) is str:
             if type(configure_ac) is bytes:
-                configure_ac = string(configure_ac, ENCS['system'])
+                configure_ac = str(configure_ac, ENCS['system'])
             if configure_ac:
                 self.table['configure_ac'] = \
                     relpath(self.table['destdir'], configure_ac)
-        else:  # if type of configure_ac is not bytes or string
+        else:  # if type of configure_ac is not bytes or str
             raise TypeError('configure_ac must be a string, not %s' %
                             type(configure_ac).__name__)
 
     def resetAutoconfFile(self):
         '''Reset path of autoconf file relative to destdir.'''
-        configure_ac = string()
+        configure_ac = ''
         if isfile(joinpath(self.table['destdir'], 'configure.ac')):
             configure_ac = joinpath(self.table['destdir'], 'configure.ac')
         elif isfile(joinpath(self.table['destdir'], 'configure.in')):
