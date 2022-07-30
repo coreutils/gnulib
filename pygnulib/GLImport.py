@@ -50,7 +50,6 @@ __copyright__ = constants.__copyright__
 NoneType = type(None)
 APP = constants.APP
 DIRS = constants.DIRS
-ENCS = constants.ENCS
 UTILS = constants.UTILS
 MODES = constants.MODES
 TESTS = constants.TESTS
@@ -294,12 +293,6 @@ class GLImport(object):
         if type(files) is not list:
             raise TypeError(
                 'files argument must has list type, not %s' % type(files).__name__)
-        files = \
-            [  # Begin to convert bytes to string
-                file.decode(ENCS['default']) \
-                if type(file) is bytes else file \
-                for file in files
-            ]  # Finish to convert bytes to string
         for file in files:
             if type(file) is not str:
                 raise TypeError('each file must be a string instance')
@@ -341,12 +334,6 @@ class GLImport(object):
         if type(files) is not list:
             raise TypeError(
                 'files argument must has list type, not %s' % type(files).__name__)
-        files = \
-            [  # Begin to convert bytes to string
-                file.decode(ENCS['default']) \
-                if type(file) is bytes else file \
-                for file in files
-            ]  # Finish to convert bytes to string
         for file in files:
             if type(file) is not str:
                 raise TypeError('each file must be a string instance')
@@ -543,8 +530,6 @@ gnulib-tool.m4 macro invocations:\n''' % actioncmd
         emit += 'gl_WITNESS_C_MACRO([%s])\n' % witness_c_macro
         if vc_files:
             emit += 'gl_VC_FILES([%s])\n' % vc_files
-        if type(emit) is bytes:
-            emit = emit.decode(ENCS['default'])
         return constants.nlconvert(emit)
 
     def gnulib_comp(self, files):
@@ -688,8 +673,6 @@ abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ | LC_ALL=C sed -e \
 AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         emit += '  %s\n' % '\n  '.join(files)
         emit += '])\n'
-        if type(emit) is bytes:
-            emit = emit.decode(ENCS['default'])
         return emit
 
     def _done_dir_(self, directory, dirs_added, dirs_removed):
@@ -1227,8 +1210,6 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                 data = '# Set of available languages.\n'
                 files = [constants.subend('.po', '', file)
                          for file in os.listdir(joinpath(destdir, pobase))]
-                files = [file.decode(ENCS['default']) if type(file) is bytes
-                         else file for file in files]
                 data += '\n'.join(files)
                 with codecs.open(tmpfile, 'wb', 'UTF-8') as file:
                     file.write(data)

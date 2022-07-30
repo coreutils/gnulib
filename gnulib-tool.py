@@ -867,10 +867,6 @@ def main():
             dest = files[1]
         else:  # if len(files) != 2
             dest = '.'
-        if type(srcpath) is bytes:
-            srcpath = srcpath.decode(ENCS['default'])
-        if type(dest) is bytes:
-            dest = dest.decode(ENCS['default'])
         if not auxdir:
             auxdir = 'build-aux'
         if not sourcebase:

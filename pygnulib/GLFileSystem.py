@@ -42,7 +42,6 @@ __copyright__ = constants.__copyright__
 NoneType = type(None)
 APP = constants.APP
 DIRS = constants.DIRS
-ENCS = constants.ENCS
 UTILS = constants.UTILS
 MODES = constants.MODES
 TESTS = constants.TESTS
@@ -86,10 +85,7 @@ class GLFileSystem(object):
         GLError telling that file was not found. Function also returns flag which
         indicates whether file is a temporary file.
         GLConfig: localdir.'''
-        if type(name) is bytes or type(name) is str:
-            if type(name) is bytes:
-                name = name.decode(ENCS['default'])
-        else:  # if name has not bytes or str type
+        if type(name) is not str:
             raise TypeError(
                 'name must be a string, not %s' % type(module).__name__)
         # If name exists in localdir, then we use it
@@ -141,10 +137,7 @@ class GLFileAssistant(object):
                 transformers[key] = 's,x,x,'
             else:  # if key in transformers
                 value = transformers[key]
-                if type(value) is bytes or type(value) is str:
-                    if type(value) is bytes:
-                        transformers[key] = value.decode(ENCS['default'])
-                else:  # if value has not bytes or str type
+                if type(value) is not str:
                     raise TypeError('transformers[%s] must be a string, not %s' %
                                     (key, type(value).__name__))
         self.original = None
@@ -164,10 +157,7 @@ class GLFileAssistant(object):
         '''GLFileAssistant.tmpfilename() -> str
 
         Return the name of a temporary file (file is relative to destdir).'''
-        if type(path) is bytes or type(path) is str:
-            if type(path) is bytes:
-                path = path.decode(ENCS['default'])
-        else:  # if path has not bytes or str type
+        if type(path) is not str:
             raise TypeError(
                 'path must be a string, not %s' % (type(path).__name__))
         if not self.config['dryrun']:
@@ -185,18 +175,13 @@ class GLFileAssistant(object):
             dirname = os.path.dirname(result)
             if not isdir(dirname):
                 os.makedirs(dirname)
-        if type(result) is bytes:
-            result = bytes.decode(ENCS['default'])
         return result
 
     def setOriginal(self, original):
         '''GLFileAssistant.setOriginal(original)
 
         Set the name of the original file which will be used.'''
-        if type(original) is bytes or type(original) is str:
-            if type(original) is bytes:
-                original = original.decode(ENCS['default'])
-        else:  # if original has not bytes or str type
+        if type(original) is not str:
             raise TypeError(
                 'original must be a string, not %s' % (type(original).__name__))
         self.original = original
@@ -205,10 +190,7 @@ class GLFileAssistant(object):
         '''GLFileAssistant.setRewritten(rewritten)
 
         Set the name of the rewritten file which will be used.'''
-        if type(rewritten) is bytes or type(rewritten) is str:
-            if type(rewritten) is bytes:
-                rewritten = rewritten.decode(ENCS['default'])
-        else:  # if rewritten has not bytes or str type
+        if type(rewritten) is not str:
             raise TypeError(
                 'rewritten must be a string, not %s' % type(rewritten).__name__)
         self.rewritten = rewritten
@@ -276,10 +258,7 @@ class GLFileAssistant(object):
             raise TypeError('original must be set before applying the method')
         elif rewritten == None:
             raise TypeError('rewritten must be set before applying the method')
-        if type(lookedup) is bytes or type(lookedup) is str:
-            if type(lookedup) is bytes:
-                lookedup = lookedup.decode(ENCS['default'])
-        else:  # if lookedup has not bytes or str type
+        if type(lookedup) is not str:
             raise TypeError('lookedup must be a string, not %s' %
                             type(lookedup).__name__)
         if type(already_present) is not bool:

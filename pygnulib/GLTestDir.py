@@ -50,7 +50,6 @@ __copyright__ = constants.__copyright__
 NoneType = type(None)
 APP = constants.APP
 DIRS = constants.DIRS
-ENCS = constants.ENCS
 UTILS = constants.UTILS
 MODES = constants.MODES
 TESTS = constants.TESTS
@@ -78,9 +77,9 @@ class GLTestDir(object):
         if type(config) is not GLConfig:
             raise TypeError('config must be a GLConfig, not %s' %
                             type(config).__name__)
-        if type(testdir) is bytes or type(testdir) is str:
-            if type(testdir) is bytes:
-                testdir = testdir.decode(ENCS['default'])
+        if type(testdir) is not str:
+            raise TypeError('testdir must be a string, not %s' %
+                            type(testdir).__name__)
         self.config = config
         self.testdir = os.path.normpath(testdir)
         if not os.path.exists(self.testdir):
@@ -114,12 +113,6 @@ class GLTestDir(object):
         if type(files) is not list:
             raise TypeError(
                 'files argument must has list type, not %s' % type(files).__name__)
-        files = \
-            [  # Begin to convert bytes to string
-                file.decode(ENCS['default']) \
-                if type(file) is bytes else file \
-                for file in files
-            ]  # Finish to convert bytes to string
         for file in files:
             if type(file) is not str:
                 raise TypeError('each file must be a string instance')
@@ -383,8 +376,6 @@ class GLTestDir(object):
                 file = constants.substart('m4/', '', file)
                 emit += 'EXTRA_DIST += %s\n' % file
         emit = constants.nlconvert(emit)
-        if type(emit) is bytes:
-            emit = emit.decode(ENCS['default'])
         with codecs.open(destfile, 'wb', 'UTF-8') as file:
             file.write(emit)
 
@@ -513,8 +504,6 @@ class GLTestDir(object):
                 emit += 'AC_CONFIG_FILES([Makefile])\n'
                 emit += 'AC_OUTPUT\n'
                 emit = constants.nlconvert(emit)
-                if type(emit) is bytes:
-                    emit = emit.decode(ENCS['default'])
                 path = joinpath(self.testdir, testsbase, 'configure.ac')
                 with codecs.open(path, 'wb', 'UTF-8') as file:
                     file.write(emit)
@@ -533,8 +522,6 @@ class GLTestDir(object):
         emit += 'SUBDIRS = %s\n\n' % ' '.join(subdirs)
         emit += 'ACLOCAL_AMFLAGS = -I %s\n' % m4base
         emit = constants.nlconvert(emit)
-        if type(emit) is bytes:
-            emit = emit.decode(ENCS['default'])
         path = joinpath(self.testdir, 'Makefile.am')
         with codecs.open(path, 'wb', 'UTF-8') as file:
             file.write(emit)
@@ -857,9 +844,9 @@ class GLMegaTestDir(object):
         if type(config) is not GLConfig:
             raise TypeError('config must be a GLConfig, not %s' %
                             type(config).__name__)
-        if type(megatestdir) is bytes or type(megatestdir) is str:
-            if type(megatestdir) is bytes:
-                megatestdir = megatestdir.decode(ENCS['default'])
+        if type(megatestdir) is not str:
+            raise TypeError('megatestdir must be a string, not %s' %
+                            type(megatestdir).__name__)
         self.config = config
         self.megatestdir = os.path.normpath(megatestdir)
         if not os.path.exists(self.megatestdir):
@@ -947,8 +934,6 @@ class GLMegaTestDir(object):
         emit += 'sed -e "$AUTOBUILD_SUBST"; else cat; fi; } > logs/$safemodule\n'
         emit += 'done\n'
         emit = constants.nlconvert(emit)
-        if type(emit) is bytes:
-            emit = emit.decode(ENCS['default'])
         path = joinpath(self.megatestdir, 'do-autobuild')
         with codecs.open(path, 'wb', 'UTF-8') as file:
             file.write(emit)
@@ -959,8 +944,6 @@ class GLMegaTestDir(object):
         emit += 'SUBDIRS = %s\n\n' % ' '.join(megasubdirs)
         emit += 'EXTRA_DIST = do-autobuild\n'
         emit = constants.nlconvert(emit)
-        if type(emit) is bytes:
-            emit = emit.decode(ENCS['default'])
         path = joinpath(self.megatestdir, 'Makefile.am')
         with codecs.open(path, 'wb', 'UTF-8') as file:
             file.write(emit)
@@ -976,8 +959,6 @@ class GLMegaTestDir(object):
         emit += 'AC_CONFIG_FILES([Makefile])\n'
         emit += 'AC_OUTPUT\n'
         emit = constants.nlconvert(emit)
-        if type(emit) is bytes:
-            emit = emit.decode(ENCS['default'])
         path = joinpath(self.megatestdir, 'Makefile.am')
         with codecs.open(path, 'wb', 'UTF-8') as file:
             file.write(emit)

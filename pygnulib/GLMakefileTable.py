@@ -42,7 +42,6 @@ __copyright__ = constants.__copyright__
 NoneType = type(None)
 APP = constants.APP
 DIRS = constants.DIRS
-ENCS = constants.ENCS
 UTILS = constants.UTILS
 MODES = constants.MODES
 TESTS = constants.TESTS
@@ -87,22 +86,13 @@ class GLMakefileTable(object):
 
         This method is used to remember that ${dir}Makefile.am needs to be edited
         to that ${var} mentions ${val}.'''
-        if type(dir) is bytes or type(dir) is str:
-            if type(dir) is bytes:
-                dir = dir.decode(ENCS['default'])
-        else:  # if dir has not bytes or str type
+        if type(dir) is not str:
             raise TypeError(
                 'dir must be a string, not %s' % (type(dir).__name__))
-        if type(var) is bytes or type(var) is str:
-            if type(var) is bytes:
-                var = var.decode(ENCS['default'])
-        else:  # if var has not bytes or str type
+        if type(var) is not str:
             raise TypeError(
                 'var must be a string, not %s' % (type(var).__name__))
-        if type(val) is bytes or type(val) is str:
-            if type(val) is bytes:
-                val = val.decode(ENCS['default'])
-        else:  # if val has not bytes or str type
+        if type(val) is not str:
             raise TypeError(
                 'val must be a string, not %s' % (type(val).__name__))
         dictionary = {'dir': dir, 'var': var, 'val': val}

@@ -77,10 +77,6 @@ APP['name'] = sys.argv[0]
 if not APP['name']:
     APP['name'] = 'gnulib-tool.py'
 APP['path'] = os.path.realpath(sys.argv[0])
-if type(APP['name']) is bytes:
-    APP['name'] = str(APP['name'], ENCS['system'])
-if type(APP['path']) is bytes:
-    APP['path'] = str(APP['path'], ENCS['system'])
 
 # Set DIRS dictionary
 DIRS['root'] = os.path.dirname(APP['path'])
@@ -223,8 +219,6 @@ def execute(args, verbose):
         # Commands like automake produce output to stderr even when they succeed.
         # Turn this output off if the command succeeds.
         temp = tempfile.mktemp()
-        if type(temp) is bytes:
-            temp = temp.decode(ENCS['system'])
         xargs = '%s > %s 2>&1' % (' '.join(args), temp)
         try:  # Try to run
             retcode = sp.call(xargs, shell=True)
@@ -271,25 +265,15 @@ def joinpath(head, *tail):
     component is an absolute path, all previous path components will be
     discarded. The second argument may be string or list of strings.'''
     newtail = list()
-    if type(head) is bytes:
-        head = head.decode(ENCS['default'])
     for item in tail:
-        if type(item) is bytes:
-            item = item.decode(ENCS['default'])
         newtail += [item]
     result = os.path.normpath(os.path.join(head, *tail))
-    if type(result) is bytes:
-        result = result.decode(ENCS['default'])
     return result
 
 
 def relativize(dir1, dir2):
     '''Compute a relative pathname reldir such that dir1/reldir = dir2.'''
     dir0 = os.getcwd()
-    if type(dir1) is bytes:
-        dir1 = dir1.decode(ENCS['default'])
-    if type(dir2) is bytes:
-        dir2 = dir2.decode(ENCS['default'])
     while dir1:
         dir1 = '%s%s' % (os.path.normpath(dir1), os.path.sep)
         dir2 = '%s%s' % (os.path.normpath(dir2), os.path.sep)
@@ -320,16 +304,10 @@ def relativize(dir1, dir2):
 def link_relative(src, dest):
     '''Like ln -s, except that src is given relative to the current directory
     (or absolute), not given relative to the directory of dest.'''
-    if type(src) is bytes or type(src) is str:
-        if type(src) is bytes:
-            src = src.decode(ENCS['default'])
-    else:  # if src has not bytes or str type
+    if type(src) is not str:
         raise TypeError(
             'src must be a string, not %s' % (type(src).__name__))
-    if type(dest) is bytes or type(dest) is str:
-        if type(dest) is bytes:
-            dest = dest.decode(ENCS['default'])
-    else:  # if dest has not bytes or str type
+    if type(dest) is not str:
         raise TypeError(
             'dest must be a string, not %s' % (type(dest).__name__))
     if src.startswith('/') or (len(src) >= 2 and src[1] == ':'):
@@ -342,18 +320,12 @@ def link_relative(src, dest):
             destdir = os.path.dirname(dest)
             if not destdir:
                 destdir = '.'
-            if type(destdir) is bytes:
-                destdir = destdir.decode(ENCS['default'])
             src = relativize(destdir, src)
             os.symlink(src, dest)
 
 
 def link_if_changed(src, dest):
     '''Create a symlink, but avoids munging timestamps if the link is correct.'''
-    if type(src) is bytes:
-        src = src.decode(ENCS['default'])
-    if type(dest) is bytes:
-        dest = dest.decode(ENCS['default'])
     ln_target = os.path.realpath(src)
     if not (os.path.islink(dest) and src == ln_target):
         os.remove(dest)

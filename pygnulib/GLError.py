@@ -38,7 +38,6 @@ __copyright__ = constants.__copyright__
 NoneType = type(None)
 APP = constants.APP
 DIRS = constants.DIRS
-ENCS = constants.ENCS
 UTILS = constants.UTILS
 MODES = constants.MODES
 TESTS = constants.TESTS

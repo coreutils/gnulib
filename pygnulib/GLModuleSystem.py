@@ -87,10 +87,7 @@ class GLModuleSystem(object):
 
         Check whether the given module exists.
         GLConfig: localdir.'''
-        if type(module) is bytes or str:
-            if type(module) is bytes:
-                module = module.decode(ENCS['default'])
-        else:  # if module has not bytes or str type
+        if type(module) is not str:
             raise TypeError(
                 'module must be a string, not %s' % type(module).__name__)
         result = bool()
@@ -111,10 +108,7 @@ class GLModuleSystem(object):
         '''GLModuleSystem.find(module) -> GLModule
 
         Find the given module.'''
-        if type(module) is bytes or str:
-            if type(module) is bytes:
-                module = module.decode(ENCS['default'])
-        else:  # if module has not bytes or str type
+        if type(module) is not str:
             raise TypeError(
                 'module must be a string, not %s' % type(module).__name__)
         if self.exists(module):
@@ -205,10 +199,7 @@ class GLModule(object):
         if type(config) is not GLConfig:
             raise TypeError('config must be a GLConfig, not %s' %
                             type(config).__name__)
-        if type(module) is bytes or type(module) is str:
-            if type(module) is bytes:
-                module = module.decode(ENCS['default'])
-        else:  # if module has not bytes or str type
+        if type(module) is not str:
             raise TypeError('module must be a string, not %s' %
                             type(module).__name__)
         if type(patched) is not bool:
@@ -350,8 +341,6 @@ Include:|Link:|License:|Maintainer:)'
                 module = module.encode(ENCS['default'])
             module = hashlib.md5(module).hexdigest()
         result = 'func_%s_gnulib_m4code_%s' % (macro_prefix, module)
-        if type(result) is bytes:
-            result = result.decode(ENCS['default'])
         return result
 
     def getShellVar(self):
@@ -373,8 +362,6 @@ Include:|Link:|License:|Maintainer:)'
                 module = module.encode(ENCS['default'])
             module = hashlib.md5(module).hexdigest()
         result = '%s_gnulib_enabled_%s' % (macro_prefix, module)
-        if type(result) is bytes:
-            result = result.decode(ENCS['default'])
         return result
 
     def getConditionalName(self):
@@ -394,8 +381,6 @@ Include:|Link:|License:|Maintainer:)'
             conditional = '%s_GNULIB_ENABLED_%s' % (macro_prefix, name)
         else:  # if not nonascii
             result = '%s_GNULIB_ENABLED_%s' % (macro_prefix, name)
-        if type(result) is bytes:
-            result = result.decode(ENCS['default'])
         return result
 
     def getDescription(self):
@@ -521,8 +506,6 @@ Include:|Link:|License:|Maintainer:)'
                     result = 'tests'
                 else:  # if not self.getName().endswith('-tests')
                     result = 'main'
-            if type(result) is bytes:
-                result = result.decode(ENCS['default'])
             result = result.strip()
             self.cache['applicability'] = result
         return self.cache['applicability']
@@ -597,8 +580,6 @@ Include:|Link:|License:|Maintainer:)'
                     else:  # if len(split) != 1
                         module = split[0]
                         condition = split[1]
-                        if type(condition) is bytes:
-                            condition = condition.decode(ENCS['default'])
                     result += [tuple([self.modulesystem.find(module), condition])]
             self.cache['dependencies'] = result
         return list(self.cache['dependencies'])
@@ -950,11 +931,7 @@ class GLModuleTable(object):
         if type(module) is not GLModule:
             raise TypeError('module must be a GLModule, not %s' %
                             type(module).__name__)
-        if type(condition) is bytes or type(condition) is str \
-                or condition == True:
-            if type(condition) is bytes:
-                condition = condition.decode(ENCS['default'])
-        else:  # if condition has not bytes or str type or is not True
+        if not (type(condition) is str or condition == True):
             raise TypeError('condition must be a string or True, not %s' %
                             type(condition).__name__)
         if not str(module) in self.unconditionals:
