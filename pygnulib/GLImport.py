@@ -82,14 +82,14 @@ class GLImport(object):
         object, which is accessible from constants module. The second one, config,
         must be a GLConfig object.'''
         if type(config) is not GLConfig:
-            raise(TypeError('config must have GLConfig type, not %s' %
-                            repr(config)))
+            raise TypeError('config must have GLConfig type, not %s' %
+                            repr(config))
         if type(mode) is int and \
                 MODES['import'] <= mode <= MODES['update']:
             self.mode = mode
         else:  # if mode is not int or is not 0-3
-            raise(TypeError('mode must be 0 <= mode <= 3, not %s' %
-                            repr(mode)))
+            raise TypeError('mode must be 0 <= mode <= 3, not %s' %
+                            repr(mode))
 
         # Initialize some values.
         self.cache = GLConfig()
@@ -102,7 +102,7 @@ class GLImport(object):
         if not isfile(path):
             path = joinpath(self.config['destdir'], 'configure.in')
             if not isfile(path):
-                raise(GLError(3, path))
+                raise GLError(3, path)
         self.config.setAutoconfFile(path)
         with codecs.open(path, 'rb', 'UTF-8') as file:
             data = file.read()
@@ -123,7 +123,7 @@ class GLImport(object):
             version = sorted(set([float(version) for version in versions]))[-1]
             self.config.setAutoconfVersion(version)
             if version < 2.59:
-                raise(GLError(4, version))
+                raise GLError(4, version)
 
         # Get other cached variables.
         path = joinpath(self.config['m4base'], 'gnulib-cache.m4')
@@ -245,7 +245,7 @@ class GLImport(object):
         if self.mode != MODES['import']:
             if self.cache['m4base'] and \
                     (self.config['m4base'] != self.cache['m4base']):
-                raise(GLError(5, m4base))
+                raise GLError(5, m4base)
 
             # Perform actions with modules. In --add-import, append each given module
             # to the list of cached modules; in --remove-import, remove each given
@@ -261,7 +261,7 @@ class GLImport(object):
 
             # If user tries to apply conddeps and testflag['tests'] together.
             if self.config['tests'] and self.config['conddeps']:
-                raise(GLError(10, None))
+                raise GLError(10, None)
 
             # Update configuration dictionary.
             self.config.update(self.cache)
@@ -274,7 +274,7 @@ class GLImport(object):
         # Check if conddeps is enabled together with inctests.
         inctests = self.config.checkTestFlag(TESTS['tests'])
         if self.config['conddeps'] and inctests:
-            raise(GLError(10, None))
+            raise GLError(10, None)
 
         # Define GLImport attributes.
         self.emiter = GLEmiter(self.config)
@@ -294,8 +294,8 @@ class GLImport(object):
         Replace auxdir, docbase, sourcebase, m4base and testsbase from default
         to their version from cached config.'''
         if type(files) is not list:
-            raise(TypeError(
-                'files argument must has list type, not %s' % type(files).__name__))
+            raise TypeError(
+                'files argument must has list type, not %s' % type(files).__name__)
         files = \
             [  # Begin to convert bytes to string
                 file.decode(ENCS['default']) \
@@ -304,7 +304,7 @@ class GLImport(object):
             ]  # Finish to convert bytes to string
         for file in files:
             if type(file) is not string:
-                raise(TypeError('each file must be a string instance'))
+                raise TypeError('each file must be a string instance')
         files = sorted(set(files))
         files = ['%s%s' % (file, os.path.sep) for file in files]
         auxdir = self.cache['auxdir']
@@ -341,8 +341,8 @@ class GLImport(object):
         Replace auxdir, docbase, sourcebase, m4base and testsbase from default
         to their version from config.'''
         if type(files) is not list:
-            raise(TypeError(
-                'files argument must has list type, not %s' % type(files).__name__))
+            raise TypeError(
+                'files argument must has list type, not %s' % type(files).__name__)
         files = \
             [  # Begin to convert bytes to string
                 file.decode(ENCS['default']) \
@@ -351,7 +351,7 @@ class GLImport(object):
             ]  # Finish to convert bytes to string
         for file in files:
             if type(file) is not string:
-                raise(TypeError('each file must be a string instance'))
+                raise TypeError('each file must be a string instance')
         files = sorted(set(files))
         auxdir = self.config['auxdir']
         docbase = self.config['docbase']
@@ -865,7 +865,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                         if license not in compatibilities[2]:
                             listing.append(tuple([str(module), license]))
             if listing:
-                raise(GLError(11, listing))
+                raise GLError(11, listing)
 
         # Print notices from modules.
         for module in main_modules:
@@ -924,7 +924,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         filelist = sorted(
             set(main_filelist + tests_filelist), key=string.lower)
         if not filelist:
-            raise(GLError(12, None))
+            raise GLError(12, None)
 
         # Print list of files.
         if verbose >= 0:
@@ -980,11 +980,11 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         format except filelist argument. Such lists of files can be created using
         GLImport.prepare() function.'''
         if type(filetable) is not dict:
-            raise(TypeError('filetable must be a dict, not %s' %
-                            type(filetable).__name__))
+            raise TypeError('filetable must be a dict, not %s' %
+                            type(filetable).__name__)
         for key in ['all', 'old', 'new', 'added', 'removed']:
             if key not in filetable:
-                raise(KeyError('filetable must contain key %s' % repr(key)))
+                raise KeyError('filetable must contain key %s' % repr(key))
         destdir = self.config['destdir']
         localdir = self.config['localdir']
         auxdir = self.config['auxdir']
@@ -1027,7 +1027,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                     try:  # Try to create directory
                         os.makedirs(directory)
                     except Exception as error:
-                        raise(GLError(13, directory))
+                        raise GLError(13, directory)
                 else:  # if self.config['dryrun']
                     print('Create directory %s' % directory)
 
@@ -1050,7 +1050,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                             os.remove(backup)
                         shutil.move(path, '%s~' % path)
                     except Exception as error:
-                        raise(GLError(14, file))
+                        raise GLError(14, file)
                 else:  # if self.config['dryrun']
                     print('Remove file %s (backup in %s~)' % (path, path))
                 filetable['removed'] += [file]

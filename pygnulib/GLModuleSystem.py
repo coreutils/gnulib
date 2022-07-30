@@ -74,8 +74,8 @@ class GLModuleSystem(object):
         'patch' utility.'''
         self.args = dict()
         if type(config) is not GLConfig:
-            raise(TypeError('config must be a GLConfig, not %s' %
-                            type(config).__name__))
+            raise TypeError('config must be a GLConfig, not %s' %
+                            type(config).__name__)
         self.config = config
         self.filesystem = GLFileSystem(self.config)
 
@@ -93,8 +93,8 @@ class GLModuleSystem(object):
             if type(module) is bytes:
                 module = module.decode(ENCS['default'])
         else:  # if module has not bytes or string type
-            raise(TypeError(
-                'module must be a string, not %s' % type(module).__name__))
+            raise TypeError(
+                'module must be a string, not %s' % type(module).__name__)
         result = bool()
         badnames = ['ChangeLog', 'COPYING', 'README', 'TEMPLATE',
                     'TEMPLATE-EXTENDED', 'TEMPLATE-TESTS']
@@ -117,15 +117,15 @@ class GLModuleSystem(object):
             if type(module) is bytes:
                 module = module.decode(ENCS['default'])
         else:  # if module has not bytes or string type
-            raise(TypeError(
-                'module must be a string, not %s' % type(module).__name__))
+            raise TypeError(
+                'module must be a string, not %s' % type(module).__name__)
         if self.exists(module):
             path, istemp = self.filesystem.lookup(joinpath('modules', module))
             result = GLModule(self.config, path, istemp)
             return result
         else:  # if not self.exists(module)
             if self.config['errors']:
-                raise(GLError(3, module))
+                raise GLError(3, module)
             else:  # if not self.config['errors']
                 sys.stderr.write('gnulib-tool: warning: ')
                 sys.stderr.write('file %s does not exist\n' % str(module))
@@ -205,17 +205,17 @@ class GLModule(object):
         self.cache = dict()
         self.content = string()
         if type(config) is not GLConfig:
-            raise(TypeError('config must be a GLConfig, not %s' %
-                            type(config).__name__))
+            raise TypeError('config must be a GLConfig, not %s' %
+                            type(config).__name__)
         if type(module) is bytes or type(module) is string:
             if type(module) is bytes:
                 module = module.decode(ENCS['default'])
         else:  # if module has not bytes or string type
-            raise(TypeError('module must be a string, not %s' %
-                            type(module).__name__))
+            raise TypeError('module must be a string, not %s' %
+                            type(module).__name__)
         if type(patched) is not bool:
-            raise(TypeError('patched must be a bool, not %s' %
-                            type(module).__name__))
+            raise TypeError('patched must be a bool, not %s' %
+                            type(module).__name__)
         self.module = module
         self.patched = patched
         self.config = config
@@ -831,7 +831,7 @@ Include:|Link:|License:|Maintainer:)'
         if not self.isTests():
             if not license:
                 if self.config['errors']:
-                    raise(GLError(18, string(self)))
+                    raise GLError(18, string(self))
                 else:  # if not self.config['errors']
                     sys.stderr.write('gnulib-tool: warning: ')
                     sys.stderr.write('module %s lacks a license\n' % str(self))
@@ -914,11 +914,11 @@ class GLModuleTable(object):
         self.tests_modules = list()  # Tests modules
         self.final_modules = list()  # Final modules
         if type(config) is not GLConfig:
-            raise(TypeError('config must be a GLConfig, not %s' %
-                            type(config).__name__))
+            raise TypeError('config must be a GLConfig, not %s' %
+                            type(config).__name__)
         for avoid in avoids:
             if type(avoid) is not GLModule:
-                raise(TypeError('each avoid must be a GLModule instance'))
+                raise TypeError('each avoid must be a GLModule instance')
             self.avoids += [avoids]
         self.config = config
         self.filesystem = GLFileSystem(self.config)
@@ -943,25 +943,25 @@ class GLModuleTable(object):
             else:  # if y == 'avoids'
                 return self.getAvoids()
         else:  # if y is not in list
-            raise(KeyError('GLModuleTable does not contain key: %s' % repr(y)))
+            raise KeyError('GLModuleTable does not contain key: %s' % repr(y))
 
     def addConditional(self, parent, module, condition):
         '''GLModuleTable.addConditional(module, condition)
 
         Add new conditional dependency from parent to module with condition.'''
         if type(parent) is not GLModule:
-            raise(TypeError('parent must be a GLModule, not %s' %
-                            type(parent).__name__))
+            raise TypeError('parent must be a GLModule, not %s' %
+                            type(parent).__name__)
         if type(module) is not GLModule:
-            raise(TypeError('module must be a GLModule, not %s' %
-                            type(module).__name__))
+            raise TypeError('module must be a GLModule, not %s' %
+                            type(module).__name__)
         if type(condition) is bytes or type(condition) is string \
                 or condition == True:
             if type(condition) is bytes:
                 condition = condition.decode(ENCS['default'])
         else:  # if condition has not bytes or string type or is not True
-            raise(TypeError('condition must be a string or True, not %s' %
-                            type(condition).__name__))
+            raise TypeError('condition must be a string or True, not %s' %
+                            type(condition).__name__)
         if not str(module) in self.unconditionals:
             if str(module) not in self.dependers:
                 self.dependers[module] = list()
@@ -974,8 +974,8 @@ class GLModuleTable(object):
 
         Add module as unconditional dependency.'''
         if type(module) is not GLModule:
-            raise(TypeError('module must be a GLModule, not %s' %
-                            type(module).__name__))
+            raise TypeError('module must be a GLModule, not %s' %
+                            type(module).__name__)
         if str(module) in self.dependers:
             self.dependers.pop(str(module))
         self.unconditionals[str(module)] = True
@@ -985,8 +985,8 @@ class GLModuleTable(object):
 
         Check whether module is unconditional.'''
         if type(module) is not GLModule:
-            raise(TypeError('module must be a GLModule, not %s' %
-                            type(module).__name__))
+            raise TypeError('module must be a GLModule, not %s' %
+                            type(module).__name__)
         result = str(module) in self.dependers
         return result
 
@@ -996,11 +996,11 @@ class GLModuleTable(object):
         Return condition from parent to module. Condition can be string or True.
         If module is not in the list of conddeps, method returns None.'''
         if type(parent) is not GLModule:
-            raise(TypeError('parent must be a GLModule, not %s' %
-                            type(parent).__name__))
+            raise TypeError('parent must be a GLModule, not %s' %
+                            type(parent).__name__)
         if type(module) is not GLModule:
-            raise(TypeError('module must be a GLModule, not %s' %
-                            type(module).__name__))
+            raise TypeError('module must be a GLModule, not %s' %
+                            type(module).__name__)
         key = '%s---%s' % (str(parent), str(module))
         result = None
         if key in self.conditionals:
@@ -1019,7 +1019,7 @@ class GLModuleTable(object):
         GLConfig: testflags.'''
         for module in modules:
             if type(module) is not GLModule:
-                raise(TypeError('each module must be a GLModule instance'))
+                raise TypeError('each module must be a GLModule instance')
         handledmodules = list()
         inmodules = modules
         outmodules = list()
@@ -1129,10 +1129,10 @@ class GLModuleTable(object):
             inctests = True
         for module in basemodules:
             if type(module) is not GLModule:
-                raise(TypeError('each module must be a GLModule instance'))
+                raise TypeError('each module must be a GLModule instance')
         for module in finalmodules:
             if type(module) is not GLModule:
-                raise(TypeError('each module must be a GLModule instance'))
+                raise TypeError('each module must be a GLModule instance')
         main_modules = self.transitive_closure(basemodules)
         tests_modules = \
             [m for m in finalmodules if m not in main_modules] + \
@@ -1156,7 +1156,7 @@ class GLModuleTable(object):
         have_lib_sources = False
         for module in modules:
             if type(module) is not GLModule:
-                raise(TypeError('each module must be a GLModule instance'))
+                raise TypeError('each module must be a GLModule instance')
             snippet = module.getAutomakeSnippet()
             snippet = constants.remove_backslash_newline(snippet)
             pattern = compiler(
@@ -1183,7 +1183,7 @@ class GLModuleTable(object):
         filelist = list()
         for module in modules:
             if type(module) is not GLModule:
-                raise(TypeError('each module must be a GLModule instance'))
+                raise TypeError('each module must be a GLModule instance')
         listings = [module.getFiles() for module in modules]
         for listing in listings:
             for file in listing:
@@ -1222,7 +1222,7 @@ class GLModuleTable(object):
         Specify list of avoids.'''
         for module in modules:
             if type(module) is not GLModule:
-                raise(TypeError('each module must be a GLModule instance'))
+                raise TypeError('each module must be a GLModule instance')
         self.avoids = sorted(set(modules))
 
     def getBaseModules(self):
@@ -1237,7 +1237,7 @@ class GLModuleTable(object):
         Specify list of base modules.'''
         for module in modules:
             if type(module) is not GLModule:
-                raise(TypeError('each module must be a GLModule instance'))
+                raise TypeError('each module must be a GLModule instance')
         self.base_modules = sorted(set(modules))
 
     def getFinalModules(self):
@@ -1252,7 +1252,7 @@ class GLModuleTable(object):
         Specify list of final modules.'''
         for module in modules:
             if type(module) is not GLModule:
-                raise(TypeError('each module must be a GLModule instance'))
+                raise TypeError('each module must be a GLModule instance')
         self.final_modules = sorted(set(modules))
 
     def getMainModules(self):
@@ -1267,7 +1267,7 @@ class GLModuleTable(object):
         Specify list of main modules.'''
         for module in modules:
             if type(module) is not GLModule:
-                raise(TypeError('each module must be a GLModule instance'))
+                raise TypeError('each module must be a GLModule instance')
         self.main_modules = sorted(set(modules))
 
     def getTestsModules(self):
@@ -1282,5 +1282,5 @@ class GLModuleTable(object):
         Specify list of tests modules.'''
         for module in modules:
             if type(module) is not GLModule:
-                raise(TypeError('each module must be a GLModule instance'))
+                raise TypeError('each module must be a GLModule instance')
         self.tests_modules = sorted(set(modules))

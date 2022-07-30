@@ -71,8 +71,8 @@ class GLFileSystem(object):
         '''Create new GLFileSystem instance. The only argument is localdir,
         which can be an empty string too.'''
         if type(config) is not GLConfig:
-            raise(TypeError('config must be a GLConfig, not %s' %
-                            type(config).__name__))
+            raise TypeError('config must be a GLConfig, not %s' %
+                            type(config).__name__)
         self.config = config
 
     def __repr__(self):
@@ -92,8 +92,8 @@ class GLFileSystem(object):
             if type(name) is bytes:
                 name = name.decode(ENCS['default'])
         else:  # if name has not bytes or string type
-            raise(TypeError(
-                'name must be a string, not %s' % type(module).__name__))
+            raise TypeError(
+                'name must be a string, not %s' % type(module).__name__)
         # If name exists in localdir, then we use it
         path_gnulib = joinpath(DIRS['root'], name)
         path_local = joinpath(self.config['localdir'], name)
@@ -115,12 +115,12 @@ class GLFileSystem(object):
                     try:  # Try to apply patch
                         sp.check_call(command, shell=True)
                     except sp.CalledProcessError as error:
-                        raise(GLError(2, name))
+                        raise GLError(2, name)
                     result = (path_temp, True)
                 else:  # if path_diff does not exist
                     result = (path_gnulib, False)
             else:  # if path_gnulib does not exist
-                raise(GLError(1, name))
+                raise GLError(1, name)
         return result
 
 
@@ -133,11 +133,11 @@ class GLFileAssistant(object):
     def __init__(self, config, transformers=dict()):
         '''Create GLFileAssistant instance.'''
         if type(config) is not GLConfig:
-            raise(TypeError('config must be a GLConfig, not %s' %
-                            type(config).__name__))
+            raise TypeError('config must be a GLConfig, not %s' %
+                            type(config).__name__)
         if type(transformers) is not dict:
-            raise(TypeError('transformers must be a dict, not %s' %
-                            type(transformers).__name__))
+            raise TypeError('transformers must be a dict, not %s' %
+                            type(transformers).__name__)
         for key in ['lib', 'aux', 'main', 'tests']:
             if key not in transformers:
                 transformers[key] = 's,x,x,'
@@ -147,8 +147,8 @@ class GLFileAssistant(object):
                     if type(value) is bytes:
                         transformers[key] = value.decode(ENCS['default'])
                 else:  # if value has not bytes or string type
-                    raise(TypeError('transformers[%s] must be a string, not %s' %
-                                    (key, type(value).__name__)))
+                    raise TypeError('transformers[%s] must be a string, not %s' %
+                                    (key, type(value).__name__))
         self.original = None
         self.rewritten = None
         self.added = list()
@@ -170,8 +170,8 @@ class GLFileAssistant(object):
             if type(path) is bytes:
                 path = path.decode(ENCS['default'])
         else:  # if path has not bytes or string type
-            raise(TypeError(
-                'path must be a string, not %s' % (type(path).__name__)))
+            raise TypeError(
+                'path must be a string, not %s' % (type(path).__name__))
         if not self.config['dryrun']:
             # Put the new contents of $file in a file in the same directory (needed
             # to guarantee that an 'mv' to "$destdir/$file" works).
@@ -199,8 +199,8 @@ class GLFileAssistant(object):
             if type(original) is bytes:
                 original = original.decode(ENCS['default'])
         else:  # if original has not bytes or string type
-            raise(TypeError(
-                'original must be a string, not %s' % (type(original).__name__)))
+            raise TypeError(
+                'original must be a string, not %s' % (type(original).__name__))
         self.original = original
 
     def setRewritten(self, rewritten):
@@ -211,8 +211,8 @@ class GLFileAssistant(object):
             if type(rewritten) is bytes:
                 rewritten = rewritten.decode(ENCS['default'])
         else:  # if rewritten has not bytes or string type
-            raise(TypeError(
-                'rewritten must be a string, not %s' % type(rewritten).__name__))
+            raise TypeError(
+                'rewritten must be a string, not %s' % type(rewritten).__name__)
         self.rewritten = rewritten
 
     def addFile(self, file):
@@ -245,9 +245,9 @@ class GLFileAssistant(object):
         symbolic = self.config['symbolic']
         lsymbolic = self.config['lsymbolic']
         if original == None:
-            raise(TypeError('original must be set before applying the method'))
+            raise TypeError('original must be set before applying the method')
         elif rewritten == None:
-            raise(TypeError('rewritten must be set before applying the method'))
+            raise TypeError('rewritten must be set before applying the method')
         if not self.config['dryrun']:
             print('Copying file %s' % rewritten)
             loriginal = joinpath(self.config['localdir'], original)
@@ -259,7 +259,7 @@ class GLFileAssistant(object):
                 try:  # Try to move file
                     shutil.move(tmpfile, joinpath(destdir, rewritten))
                 except Exception as error:
-                    raise(GLError(17, original))
+                    raise GLError(17, original)
         else:  # if self.config['dryrun']
             print('Copy file %s' % rewritten)
 
@@ -275,18 +275,18 @@ class GLFileAssistant(object):
         symbolic = self.config['symbolic']
         lsymbolic = self.config['lsymbolic']
         if original == None:
-            raise(TypeError('original must be set before applying the method'))
+            raise TypeError('original must be set before applying the method')
         elif rewritten == None:
-            raise(TypeError('rewritten must be set before applying the method'))
+            raise TypeError('rewritten must be set before applying the method')
         if type(lookedup) is bytes or type(lookedup) is string:
             if type(lookedup) is bytes:
                 lookedup = lookedup.decode(ENCS['default'])
         else:  # if lookedup has not bytes or string type
-            raise(TypeError('lookedup must be a string, not %s' %
-                            type(lookedup).__name__))
+            raise TypeError('lookedup must be a string, not %s' %
+                            type(lookedup).__name__)
         if type(already_present) is not bool:
-            raise(TypeError('already_present must be a bool, not %s' %
-                            type(already_present).__name__))
+            raise TypeError('already_present must be a bool, not %s' %
+                            type(already_present).__name__)
         basename = rewritten
         backupname = string('%s~' % basename)
         basepath = joinpath(destdir, basename)
@@ -306,7 +306,7 @@ class GLFileAssistant(object):
                 try:  # Try to replace the given file
                     shutil.move(basepath, backuppath)
                 except Exception as error:
-                    raise(GLError(17, original))
+                    raise GLError(17, original)
                 loriginal = joinpath(self.config['localdir'], original)
                 if (symbolic or (lsymbolic and lookedup == loriginal)) \
                         and not tmpflag and filecmp.cmp(lookedup, tmpfile):
@@ -317,7 +317,7 @@ class GLFileAssistant(object):
                             os.remove(basepath)
                         shutil.copy(tmpfile, rewritten)
                     except Exception as error:
-                        raise(GLError(17, original))
+                        raise GLError(17, original)
             else:  # if self.config['dryrun']
                 if already_present:
                     print('Update file %s (backup in %s)' %
@@ -333,12 +333,12 @@ class GLFileAssistant(object):
         original = self.original
         rewritten = self.rewritten
         if original == None:
-            raise(TypeError('original must be set before applying the method'))
+            raise TypeError('original must be set before applying the method')
         elif rewritten == None:
-            raise(TypeError('rewritten must be set before applying the method'))
+            raise TypeError('rewritten must be set before applying the method')
         if type(already_present) is not bool:
-            raise(TypeError('already_present must be a bool, not %s' %
-                            type(already_present).__name__))
+            raise TypeError('already_present must be a bool, not %s' %
+                            type(already_present).__name__)
         xoriginal = original
         if original.startswith('tests=lib/'):
             xoriginal = constants.substart('tests=lib/', 'lib/', original)
@@ -352,7 +352,7 @@ class GLFileAssistant(object):
         try:  # Try to copy lookedup file to tmpfile
             shutil.copy(lookedup, tmpfile)
         except Exception as error:
-            raise(GLError(15, lookedup))
+            raise GLError(15, lookedup)
         # Don't process binary files with sed.
         if not (original.endswith(".class") or original.endswith(".mo")):
             transformer = string()
@@ -372,7 +372,7 @@ class GLFileAssistant(object):
                     data = sp.check_output(args, stdin=stdin, shell=False)
                     data = data.decode("UTF-8")
                 except Exception as error:
-                    raise(GLError(16, lookedup))
+                    raise GLError(16, lookedup)
                 with codecs.open(tmpfile, 'wb', 'UTF-8') as file:
                     file.write(data)
         path = joinpath(self.config['destdir'], rewritten)

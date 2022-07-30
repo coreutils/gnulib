@@ -78,8 +78,8 @@ class GLTestDir(object):
 
         Create new GLTestDir instance.'''
         if type(config) is not GLConfig:
-            raise(TypeError('config must be a GLConfig, not %s' %
-                            type(config).__name__))
+            raise TypeError('config must be a GLConfig, not %s' %
+                            type(config).__name__)
         if type(testdir) is bytes or type(testdir) is string:
             if type(testdir) is bytes:
                 testdir = testdir.decode(ENCS['default'])
@@ -89,7 +89,7 @@ class GLTestDir(object):
             try:  # Try to create directory
                 os.mkdir(self.testdir)
             except Exception as error:
-                raise(GLError(19, self.testdir))
+                raise GLError(19, self.testdir)
         self.emiter = GLEmiter(self.config)
         self.filesystem = GLFileSystem(self.config)
         self.modulesystem = GLModuleSystem(self.config)
@@ -114,8 +114,8 @@ class GLTestDir(object):
         Replace auxdir, docbase, sourcebase, m4base and testsbase from default
         to their version from config.'''
         if type(files) is not list:
-            raise(TypeError(
-                'files argument must has list type, not %s' % type(files).__name__))
+            raise TypeError(
+                'files argument must has list type, not %s' % type(files).__name__)
         files = \
             [  # Begin to convert bytes to string
                 file.decode(ENCS['default']) \
@@ -124,7 +124,7 @@ class GLTestDir(object):
             ]  # Finish to convert bytes to string
         for file in files:
             if type(file) is not string:
-                raise(TypeError('each file must be a string instance'))
+                raise TypeError('each file must be a string instance')
         files = sorted(set(files))
         auxdir = self.config['auxdir']
         docbase = self.config['docbase']
@@ -860,8 +860,8 @@ class GLMegaTestDir(object):
 
         Create new GLTestDir instance.'''
         if type(config) is not GLConfig:
-            raise(TypeError('config must be a GLConfig, not %s' %
-                            type(config).__name__))
+            raise TypeError('config must be a GLConfig, not %s' %
+                            type(config).__name__)
         if type(megatestdir) is bytes or type(megatestdir) is string:
             if type(megatestdir) is bytes:
                 megatestdir = megatestdir.decode(ENCS['default'])
@@ -871,7 +871,7 @@ class GLMegaTestDir(object):
             try:  # Try to create directory
                 os.mkdir(self.megatestdir)
             except Exception as error:
-                raise(GLError(19, self.megatestdir))
+                raise GLError(19, self.megatestdir)
         self.emiter = GLEmiter(self.config)
         self.filesystem = GLFileSystem(self.config)
         self.modulesystem = GLModuleSystem(self.config)

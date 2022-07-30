@@ -71,16 +71,16 @@ class GLMakefileTable(object):
 
         Create GLMakefileTable instance.'''
         if type(config) is not GLConfig:
-            raise(TypeError('config must be a GLConfig, not %s' %
-                            type(config).__name__))
+            raise TypeError('config must be a GLConfig, not %s' %
+                            type(config).__name__)
         self.config = config
         self.table = list()
 
     def __getitem__(self, y):
         '''x.__getitem__(y) = x[y]'''
         if type(y) is not int:
-            raise(TypeError('indices must be integers, not %s' %
-                            type(y).__name__))
+            raise TypeError('indices must be integers, not %s' %
+                            type(y).__name__)
         result = self.table[y]
         return dict(result)
 
@@ -93,20 +93,20 @@ class GLMakefileTable(object):
             if type(dir) is bytes:
                 dir = dir.decode(ENCS['default'])
         else:  # if dir has not bytes or string type
-            raise(TypeError(
-                'dir must be a string, not %s' % (type(dir).__name__)))
+            raise TypeError(
+                'dir must be a string, not %s' % (type(dir).__name__))
         if type(var) is bytes or type(var) is string:
             if type(var) is bytes:
                 var = var.decode(ENCS['default'])
         else:  # if var has not bytes or string type
-            raise(TypeError(
-                'var must be a string, not %s' % (type(var).__name__)))
+            raise TypeError(
+                'var must be a string, not %s' % (type(var).__name__))
         if type(val) is bytes or type(val) is string:
             if type(val) is bytes:
                 val = val.decode(ENCS['default'])
         else:  # if val has not bytes or string type
-            raise(TypeError(
-                'val must be a string, not %s' % (type(val).__name__)))
+            raise TypeError(
+                'val must be a string, not %s' % (type(val).__name__))
         dictionary = {'dir': dir, 'var': var, 'val': val}
         self.table += [dictionary]
 

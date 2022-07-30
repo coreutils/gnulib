@@ -348,14 +348,14 @@ def link_relative(src, dest):
         if type(src) is bytes:
             src = src.decode(ENCS['default'])
     else:  # if src has not bytes or string type
-        raise(TypeError(
-            'src must be a string, not %s' % (type(src).__name__)))
+        raise TypeError(
+            'src must be a string, not %s' % (type(src).__name__))
     if type(dest) is bytes or type(dest) is string:
         if type(dest) is bytes:
             dest = dest.decode(ENCS['default'])
     else:  # if dest has not bytes or string type
-        raise(TypeError(
-            'dest must be a string, not %s' % (type(dest).__name__)))
+        raise TypeError(
+            'dest must be a string, not %s' % (type(dest).__name__))
     if src.startswith('/') or (len(src) >= 2 and src[1] == ':'):
         os.symlink(src, dest)
     else:  # if src is not absolute

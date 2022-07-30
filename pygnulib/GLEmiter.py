@@ -75,8 +75,8 @@ class GLEmiter(object):
         Create GLEmiter instance.'''
         self.info = GLInfo()
         if type(config) is not GLConfig:
-            raise(TypeError('config must be a GLConfig, not %s' %
-                            type(config).__name__))
+            raise TypeError('config must be a GLConfig, not %s' %
+                            type(config).__name__)
         self.config = config
 
     def __repr__(self):
@@ -137,28 +137,28 @@ class GLEmiter(object):
         indentation is a string which contain spaces to prepend on each line.'''
         emit = string()
         if type(module) is not GLModule:
-            raise(TypeError('module must be a GLModule, not %s' %
-                            type(module).__name__))
+            raise TypeError('module must be a GLModule, not %s' %
+                            type(module).__name__)
         if type(fileassistant) is not GLFileAssistant:
-            raise(TypeError('fileassistant must be a GLFileAssistant, not %s' %
-                            type(fileassistant).__name__))
+            raise TypeError('fileassistant must be a GLFileAssistant, not %s' %
+                            type(fileassistant).__name__)
         if type(toplevel) is not bool:
-            raise(TypeError('toplevel must be a bool, not %s' %
-                            type(toplevel).__name__))
+            raise TypeError('toplevel must be a bool, not %s' %
+                            type(toplevel).__name__)
         if type(disable_libtool) is not bool:
-            raise(TypeError('disable_libtool must be a bool, not %s' %
-                            type(disable_libtool).__name__))
+            raise TypeError('disable_libtool must be a bool, not %s' %
+                            type(disable_libtool).__name__)
         if type(disable_gettext) is not bool:
-            raise(TypeError('disable_gettext must be a bool, not %s' %
-                            type(disable_gettext).__name__))
+            raise TypeError('disable_gettext must be a bool, not %s' %
+                            type(disable_gettext).__name__)
         if type(indentation) is bytes or type(indentation) is string:
             if type(indentation) is bytes:
                 indentation = indentation.decode(ENCS['default'])
         else:  # if indentation has not bytes or string type
-            raise(TypeError('indentation must be a string, not %s' %
-                            type(indentation).__name__))
+            raise TypeError('indentation must be a string, not %s' %
+                            type(indentation).__name__)
         if not indentation.isspace():
-            raise(ValueError('indentation must contain only whitespaces'))
+            raise ValueError('indentation must contain only whitespaces')
         auxdir = self.config['auxdir']
         libtool = self.config['libtool']
         include_guard_prefix = self.config['include_guard_prefix']
@@ -247,30 +247,30 @@ add AM_GNU_GETTEXT([external]) or similar to configure.ac.')
         emit = string()
         for module in modules:
             if type(module) is not GLModule:
-                raise(TypeError('each module must be a GLModule instance'))
+                raise TypeError('each module must be a GLModule instance')
         if type(moduletable) is not GLModuleTable:
-            raise(TypeError('moduletable must be a GLFileAssistant, not %s' %
-                            type(moduletable).__name__))
+            raise TypeError('moduletable must be a GLFileAssistant, not %s' %
+                            type(moduletable).__name__)
         if type(fileassistant) is not GLFileAssistant:
-            raise(TypeError('fileassistant must be a GLFileAssistant, not %s' %
-                            type(fileassistant).__name__))
+            raise TypeError('fileassistant must be a GLFileAssistant, not %s' %
+                            type(fileassistant).__name__)
         if type(verifier) is not int:
-            raise(TypeError('verifier must be an int, not %s' %
-                            type(verifier).__name__))
+            raise TypeError('verifier must be an int, not %s' %
+                            type(verifier).__name__)
         if not (0 <= verifier <= 2):
-            raise(ValueError('verifier must be 0, 1 or 2, not %d' % verifier))
+            raise ValueError('verifier must be 0, 1 or 2, not %d' % verifier)
         if type(toplevel) is not bool:
-            raise(TypeError('toplevel must be a bool, not %s' %
-                            type(toplevel).__name__))
+            raise TypeError('toplevel must be a bool, not %s' %
+                            type(toplevel).__name__)
         if type(disable_libtool) is not bool:
-            raise(TypeError('disable_libtool must be a bool, not %s' %
-                            type(disable_libtool).__name__))
+            raise TypeError('disable_libtool must be a bool, not %s' %
+                            type(disable_libtool).__name__)
         if type(disable_gettext) is not bool:
-            raise(TypeError('disable_gettext must be a bool, not %s' %
-                            type(disable_gettext).__name__))
+            raise TypeError('disable_gettext must be a bool, not %s' %
+                            type(disable_gettext).__name__)
         if type(replace_auxdir) is not bool:
-            raise(TypeError('replace_auxdir must be a bool, not %s' %
-                            type(replace_auxdir).__name__))
+            raise TypeError('replace_auxdir must be a bool, not %s' %
+                            type(replace_auxdir).__name__)
         auxdir = self.config['auxdir']
         conddeps = self.config['conddeps']
         macro_prefix = self.config['macro_prefix']
@@ -495,8 +495,8 @@ USE_MSGCTXT = no\n"""
             if type(macro_prefix_arg) is bytes:
                 macro_prefix_arg = macro_prefix_arg.decode(ENCS['default'])
         else:  # if macro_prefix_arg has not bytes or string type
-            raise(TypeError('macro_prefix_arg must be a string, not %s' %
-                            type(macro_prefix_arg).__name__))
+            raise TypeError('macro_prefix_arg must be a string, not %s' %
+                            type(macro_prefix_arg).__name__)
         module_indicator_prefix = self.config.getModuleIndicatorPrefix()
         # Overriding AC_LIBOBJ and AC_REPLACE_FUNCS has the effect of storing
         # platform-dependent object files in ${macro_prefix_arg}_LIBOBJS instead
@@ -547,8 +547,8 @@ USE_MSGCTXT = no\n"""
             if type(macro_prefix_arg) is bytes:
                 macro_prefix_arg = macro_prefix_arg.decode(ENCS['default'])
         else:  # if macro_prefix_arg has not bytes or string type
-            raise(TypeError('macro_prefix_arg must be a string, not %s' %
-                            type(macro_prefix_arg).__name__))
+            raise TypeError('macro_prefix_arg must be a string, not %s' %
+                            type(macro_prefix_arg).__name__)
         # Check the presence of files that are mentioned as AC_LIBSOURCES
         # arguments. The check is performed only when autoconf is run from the
         # directory where the configure.ac resides; if it is run from a different
@@ -603,14 +603,14 @@ found])])
             if type(macro_prefix_arg) is bytes:
                 macro_prefix_arg = macro_prefix_arg.decode(ENCS['default'])
         else:  # if macro_prefix_arg has not bytes or string type
-            raise(TypeError('macro_prefix_arg must be a string, not %s' %
-                            type(macro_prefix_arg).__name__))
+            raise TypeError('macro_prefix_arg must be a string, not %s' %
+                            type(macro_prefix_arg).__name__)
         if type(sourcebase_arg) is bytes or type(sourcebase_arg) is string:
             if type(sourcebase_arg) is bytes:
                 sourcebase_arg = sourcebase_arg.decode(ENCS['default'])
         else:  # if sourcebase_arg has not bytes or string type
-            raise(TypeError('sourcebase_arg must be a string, not %s' %
-                            type(sourcebase_arg).__name__))
+            raise TypeError('sourcebase_arg must be a string, not %s' %
+                            type(sourcebase_arg).__name__)
         emit += """\
 
 # Like AC_LIBOBJ, except that the module name goes
@@ -667,26 +667,26 @@ AC_DEFUN([%V1%_LIBSOURCES], [
             if type(destfile) is bytes:
                 destfile = destfile.decode(ENCS['default'])
         else:  # if destfile has not bytes or string type
-            raise(TypeError('destfile must be a string, not %s' %
-                            type(destfile).__name__))
+            raise TypeError('destfile must be a string, not %s' %
+                            type(destfile).__name__)
         for module in modules:
             if type(module) is not GLModule:
-                raise(TypeError('each module must be a GLModule instance'))
+                raise TypeError('each module must be a GLModule instance')
         if type(moduletable) is not GLModuleTable:
-            raise(TypeError('moduletable must be a GLModuleTable, not %s' %
-                            type(moduletable).__name__))
+            raise TypeError('moduletable must be a GLModuleTable, not %s' %
+                            type(moduletable).__name__)
         if type(makefiletable) is not GLMakefileTable:
-            raise(TypeError('makefiletable must be a GLMakefileTable, not %s' %
-                            type(makefiletable).__name__))
+            raise TypeError('makefiletable must be a GLMakefileTable, not %s' %
+                            type(makefiletable).__name__)
         if type(actioncmd) is bytes or type(actioncmd) is string:
             if type(actioncmd) is bytes:
                 actioncmd = actioncmd.decode(ENCS['default'])
         else:  # if actioncmd has not bytes or string type
-            raise(TypeError('actioncmd must be a string, not %s' %
-                            type(actioncmd).__name__))
+            raise TypeError('actioncmd must be a string, not %s' %
+                            type(actioncmd).__name__)
         if type(for_test) is not bool:
-            raise(TypeError('for_test must be a bool, not %s' %
-                            type(for_test).__name__))
+            raise TypeError('for_test must be a bool, not %s' %
+                            type(for_test).__name__)
         emit = string()
         localdir = self.config['localdir']
         sourcebase = self.config['sourcebase']
@@ -961,23 +961,23 @@ AC_DEFUN([%V1%_LIBSOURCES], [
             if type(destfile) is bytes:
                 destfile = destfile.decode(ENCS['default'])
         else:  # if destfile has not bytes or string type
-            raise(TypeError('destfile must be a string, not %s' %
-                            type(destfile).__name__))
+            raise TypeError('destfile must be a string, not %s' %
+                            type(destfile).__name__)
         for module in modules:
             if type(module) is not GLModule:
-                raise(TypeError('each module must be a GLModule instance'))
+                raise TypeError('each module must be a GLModule instance')
         if type(makefiletable) is not GLMakefileTable:
-            raise(TypeError('makefiletable must be a GLMakefileTable, not %s' %
-                            type(makefiletable).__name__))
+            raise TypeError('makefiletable must be a GLMakefileTable, not %s' %
+                            type(makefiletable).__name__)
         if type(witness_macro) is bytes or type(witness_macro) is string:
             if type(witness_macro) is bytes:
                 witness_macro = witness_macro.decode(ENCS['default'])
         else:  # if witness_macro has not bytes or string type
-            raise(TypeError('witness_macro must be a string, not %s' %
-                            type(witness_macro).__name__))
+            raise TypeError('witness_macro must be a string, not %s' %
+                            type(witness_macro).__name__)
         if type(for_test) is not bool:
-            raise(TypeError('for_test must be a bool, not %s' %
-                            type(for_test).__name__))
+            raise TypeError('for_test must be a bool, not %s' %
+                            type(for_test).__name__)
         emit = string()
         localdir = self.config['localdir']
         auxdir = self.config['auxdir']
