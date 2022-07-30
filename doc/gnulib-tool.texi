@@ -797,7 +797,7 @@ at the time the Gnulib snapshot was taken.
 After running @code{gettextize}, invoke @code{gnulib-tool} and import
 the @code{gettext} module.  Also, copy the latest version of gnulib's
 @file{build-aux/po/Makefile.in.in} to your @file{po/} directory (this
-is done for you if you use gnulib's @file{bootstrap} script).
+is done for you if you use gnulib's @file{autogen.sh} script).
 
 @item
 If you get an error message like
@@ -828,7 +828,7 @@ Invoke @code{gnulib-tool}, and import the @code{gettext-h} module.
 
 Regardless of which approach you used to get the infrastructure in
 place, the following steps must then be used to preserve that
-infrastructure (gnulib's @file{bootstrap} script follows these rules):
+infrastructure (gnulib's @file{autogen.sh} script follows these rules):
 
 @enumerate
 @item
@@ -982,26 +982,32 @@ add because they were missing.
 
 @end itemize
 
-Gnulib includes the file @file{build-aux/bootstrap} to aid a developer
-in using this setup.  You would copy this file and add it to your
-project's VCS.  It can be customized using @file{bootstrap.conf} which
-is also put under VCS in your project.  Read the script for further
-information, and look at how other projects are using it (see links in
-@url{https://git.savannah.gnu.org/gitweb/?p=gnulib.git;a=blob;f=users.txt;hb=HEAD}).
+Most packages nowadays use the first among these two approaches.  Over
+time, three ways of handling version control have evolved.
 
-In projects that use git for version control, it is possible to use a
-git submodule containing the precise commit of the gnulib repository, so
-that each developer running @file{bootstrap} will get the same version
-of all gnulib-provided files.  The location of the submodule can be
-chosen to fit the package's needs; here's how to initially create the
-submodule in the directory @file{gnulib}:
+In the cases (A) and (B), a ``git submodule'' is used to reference
+the precise commit of the gnulib repository, so that each developer
+running @file{autopull.sh} will get the same version of all gnulib-provided
+files.
+
+The alternative is to always follow the newest Gnulib automatically.
+Note that this can cause breakages at unexpected moments, namely
+when a broken commit is pushed in Gnulib.  It does not happen often,
+but it does happen.
+
+@itemize
+@item (A)
+In this approach, the developers use a git submodule manually.
+
+The location of the submodule can be chosen to fit the package's needs;
+here's how to initially create the submodule in the directory @file{gnulib}:
 
 @smallexample
 $ git submodule add -- https://git.savannah.gnu.org/git/gnulib.git gnulib
 @end smallexample
 
 @noindent
-Thereafter, @file{bootstrap} will run this command to update the
+Thereafter, the developer will run this command to update the
 submodule to the recorded checkout level:
 
 @smallexample
@@ -1023,6 +1029,37 @@ If multiple submodules are used, the following may be useful:
 $ git config alias.syncsub "submodule foreach git pull origin master"
 $ git syncsub
 @end smallexample
+
+@item (B)
+In this approach, the @code{autopull.sh} program (see @ref{Developer tools})
+is used to aid a developer in using this setup.  You copy this program and
+its companion files into your package and place them under version control.
+It can be customized using @file{bootstrap.conf} which you also put under
+version control.
+
+@item (C)
+In this approach, you write the @code{autopull.sh} and @code{autogen.sh}
+files by hand.
+
+@code{autopull.sh} is most easily written as a script that
+invokes
+@smallexample
+./gitsub.sh pull || exit 1
+@end smallexample
+@noindent
+where @code{gitsub.sh} is described in @ref{Developer tools}.
+
+@code{autogen.sh} typically contains an explicit @code{gnulib-tool}
+invocation, followed by
+@smallexample
+aclocal -I m4 \
+  && autoconf \
+  && autoheader && touch config.h.in \
+  && automake --add-missing --copy \
+  && rm -rf autom4te.cache \
+  || exit $?
+@end smallexample
+@end itemize
 
 @item
 Some projects take a ``middle road'': they do commit Gnulib source

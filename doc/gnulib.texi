@@ -7026,16 +7026,42 @@ tools right away.
 @item top/gitsub.sh
 This program manages the subdirectories of a Git checkout that come from
 other packages, including Gnulib.
-@item build-aux/bootstrap
-This program manages the Git submodules, including Gnulib, and is also a
-wrapper around @code{gnulib-tool} and @code{automake}, that generates
-files from other files.@*
+
+@item top/bootstrap
+@itemx top/autopull.sh
+@itemx top/autogen.sh
+@itemx top/bootstrap-funclib.sh
+This is a set of three programs and a function library, that manage
+the source directory of a package, preparing for the state where
+@samp{./configure} can be used.
+
+@code{autopull.sh} is a program for fetching dependencies that may
+require network accesses.  It manages the Git submodules, including
+Gnulib --- assuming that Gnulib is a Git submodule. It also can fetch
+the PO files for internationalized packages.
+
+@code{autogen.sh} is a program that is meant to be run after
+@code{autopull.sh}.  It generates all autogeneratable files that are
+omitted from version control.  Usually this means that it invokes
+@code{gnulib-tool} and @code{automake}, that generate files from other
+files.
+
+@code{bootstrap} is a wrapper around both: It invokes @code{autopull.sh}
+and then immediately @code{autogen.sh}.@*
 Note: Because this program mixes version control management and
 generation of files in non-obvious ways, it has a number of usability
 issues for the advanced developer.
+
+@code{bootstrap-funclib.sh} is a function library for these three
+programs.  It is not meant to be used directly.
+
+All three programs make use of a configuration file, called
+@code{bootstrap.conf}.
+
 @item build-aux/bootstrap.conf
-This is the template configuration file.  After copying it into your
-package, you need to customize it.
+This is the template configuration file.  After copying it into the
+top-level directory of your package, you need to customize it.
+
 @item build-aux/po/Makefile.in.in
 @itemx build-aux/po/remove-potcdate.sin
 These are auxiliary files used by @code{bootstrap}.  You don't have to
