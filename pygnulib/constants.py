@@ -330,7 +330,10 @@ def link_if_changed(src, dest):
     '''Create a symlink, but avoids munging timestamps if the link is correct.'''
     ln_target = os.path.realpath(src)
     if not (os.path.islink(dest) and src == ln_target):
-        os.remove(dest)
+        try:
+            os.remove(dest)
+        except FileNotFoundError:
+            pass
         link_relative(src, dest)
 
 

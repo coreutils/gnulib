@@ -337,6 +337,16 @@ def main():
                         dest="makefile",
                         default=None,
                         type=str)
+    # symlink
+    parser.add_argument('-s', '--symbolic', '--symlink',
+                        dest='symlink',
+                        default=None,
+                        action='store_true')
+    # local-symlink
+    parser.add_argument('--local-symlink',
+                        dest='lsymlink',
+                        default=None,
+                        action='store_true')
     # All other arguments are collected.
     parser.add_argument("non_option_arguments",
                         nargs='*')
@@ -543,6 +553,8 @@ def main():
         avoids = [ module
                    for list1 in avoids
                    for module in list1 ]
+    symlink = cmdargs.symlink == True
+    lsymlink = cmdargs.lsymlink == True
 
     # Create pygnulib configuration.
     config = classes.GLConfig(
@@ -566,6 +578,8 @@ def main():
         podomain=podomain,
         witness_c_macro=witness_c_macro,
         vc_files=vc_files,
+        symbolic=symlink,
+        lsymbolic=lsymlink,
         modcache=modcache,
         verbose=verbose,
         dryrun=dryrun,
