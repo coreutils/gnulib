@@ -213,7 +213,7 @@ def execute(args, verbose):
         try:  # Try to run
             retcode = sp.call(args)
         except Exception as error:
-            print(error)
+            sys.stderr.write(str(error) + '\n')
             sys.exit(1)
     else:
         # Commands like automake produce output to stderr even when they succeed.
@@ -223,7 +223,7 @@ def execute(args, verbose):
         try:  # Try to run
             retcode = sp.call(xargs, shell=True)
         except Exception as error:
-            print(error)
+            sys.stderr.write(str(error) + '\n')
             sys.exit(1)
         if retcode == 0:
             os.remove(temp)
