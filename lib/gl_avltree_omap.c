@@ -48,6 +48,7 @@
 #include "gl_anytree_omap.h"
 
 /* For debugging.  */
+extern void gl_avltree_omap_check_invariants (gl_omap_t);
 void
 gl_avltree_omap_check_invariants (gl_omap_t map)
 {

@@ -37,8 +37,6 @@
 #include "gl_anytree_list2.h"
 
 /* For debugging.  */
-extern void gl_rbtree_list_check_invariants (gl_list_t list);
-
 static unsigned int
 check_invariants (gl_list_node_t node, gl_list_node_t parent)
 {
@@ -62,6 +60,7 @@ check_invariants (gl_list_node_t node, gl_list_node_t parent)
 
   return left_blackheight + (node->color == BLACK ? 1 : 0);
 }
+extern void gl_rbtree_list_check_invariants (gl_list_t list);
 void
 gl_rbtree_list_check_invariants (gl_list_t list)
 {
