@@ -394,6 +394,18 @@ def nlremove(text):
     return text
 
 
+def remove_trailing_slashes(text):
+    '''Remove trailing slashes from a file name, except when the file name
+    consists only of slashes.'''
+    result = text
+    while result.endswith('/'):
+        result = result[:-1]
+        if result == '':
+            result = text
+            break
+    return result
+
+
 def remove_backslash_newline(text):
     '''Given a multiline string text, join lines:
     When a line ends in a backslash, remove the backslash and join the next

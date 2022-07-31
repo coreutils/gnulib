@@ -42,6 +42,7 @@ MODES = constants.MODES
 TESTS = constants.TESTS
 joinpath = constants.joinpath
 relpath = constants.relativize
+remove_trailing_slashes = constants.remove_trailing_slashes
 isfile = os.path.isfile
 normpath = os.path.normpath
 
@@ -68,6 +69,10 @@ class GLConfig(object):
         Create new GLConfig instance.'''
         self.table = dict()
         self.table['tempdir'] = tempfile.mkdtemp()
+        # Check and store the attributes.
+        # Remove trailing slashes from the directory names. This is necessary
+        # for m4base (to avoid an error in func_import) and optional for the
+        # others.
         # destdir
         self.resetDestDir()
         if destdir != None:
@@ -408,7 +413,7 @@ class GLConfig(object):
         in gnulib's directory.'''
         if type(localdir) is str:
             if localdir:
-                self.table['localdir'] = localdir
+                self.table['localdir'] = remove_trailing_slashes(localdir)
         else:  # if localdir has not str type
             raise TypeError('localdir must be a string, not %s' %
                             type(localdir).__name__)
@@ -431,7 +436,7 @@ class GLConfig(object):
         placed. Default comes from configure.ac or configure.in.'''
         if type(auxdir) is str:
             if auxdir:
-                self.table['auxdir'] = auxdir
+                self.table['auxdir'] = remove_trailing_slashes(auxdir)
         else:  # if type of auxdir is not str
             raise TypeError('auxdir must be a string, not %s' %
                             type(auxdir).__name__)
@@ -450,7 +455,7 @@ class GLConfig(object):
         '''Specify directory relative to destdir where source code is placed.'''
         if type(sourcebase) is str:
             if sourcebase:
-                self.table['sourcebase'] = sourcebase
+                self.table['sourcebase'] = remove_trailing_slashes(sourcebase)
         else:  # if type of sourcebase is not str
             raise TypeError('sourcebase must be a string, not %s' %
                             type(sourcebase).__name__)
@@ -468,7 +473,7 @@ class GLConfig(object):
         '''Specify directory relative to destdir where *.m4 macros are placed.'''
         if type(m4base) is str:
             if m4base:
-                self.table['m4base'] = m4base
+                self.table['m4base'] = remove_trailing_slashes(m4base)
         else:  # if type of m4base is not str
             raise TypeError('m4base must be a string, not %s' %
                             type(m4base).__name__)
@@ -486,7 +491,7 @@ class GLConfig(object):
         '''Specify directory relative to destdir where *.po files are placed.'''
         if type(pobase) is str:
             if pobase:
-                self.table['pobase'] = pobase
+                self.table['pobase'] = remove_trailing_slashes(pobase)
         else:  # if type of pobase is not str
             raise TypeError('pobase must be a string, not %s' %
                             type(pobase).__name__)
@@ -506,7 +511,7 @@ class GLConfig(object):
         Default value for this variable is 'doc').'''
         if type(docbase) is str:
             if docbase:
-                self.table['docbase'] = docbase
+                self.table['docbase'] = remove_trailing_slashes(docbase)
         else:  # if type of docbase is not str
             raise TypeError('docbase must be a string, not %s' %
                             type(docbase).__name__)
@@ -527,7 +532,7 @@ class GLConfig(object):
         Default value for this variable is 'tests').'''
         if type(testsbase) is str:
             if testsbase:
-                self.table['testsbase'] = testsbase
+                self.table['testsbase'] = remove_trailing_slashes(testsbase)
         else:  # if type of testsbase is not str
             raise TypeError('testsbase must be a string, not %s' %
                             type(testsbase).__name__)
