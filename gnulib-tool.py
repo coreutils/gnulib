@@ -351,7 +351,6 @@ def main():
         cmdargs.mode_create_megatestdir,
         cmdargs.mode_test,
         cmdargs.mode_megatest,
-        cmdargs.mode_copy_file,
         cmdargs.mode_xdescription,
         cmdargs.mode_xcomment,
         cmdargs.mode_xstatus,
@@ -365,8 +364,9 @@ def main():
         cmdargs.mode_xlink,
         cmdargs.mode_xlicense,
         cmdargs.mode_xmaintainer,
+        cmdargs.mode_copy_file,
     ]
-    overflow = [arg for arg in args if arg]
+    overflow = [arg for arg in args if arg != None]
     if len(overflow) > 1:
         message = 'gnulib-tool: Unable to combine different modes of work.\n'
         message += 'Try \'gnulib-tool --help\' for more information.\n'
