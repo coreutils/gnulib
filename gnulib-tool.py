@@ -117,12 +117,12 @@ def main():
     parser.add_argument('--add-import',
                         dest='mode_add_import',
                         default=None,
-                        nargs='+')
+                        nargs='*')
     # remove-import
     parser.add_argument('--remove-import',
                         dest='mode_remove_import',
                         default=None,
-                        nargs='+')
+                        nargs='*')
     # update
     parser.add_argument('--update',
                         dest='mode_update',
