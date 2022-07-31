@@ -702,7 +702,7 @@ def main():
 
     elif mode == 'test':
         if not destdir:
-            destdir = 'testdir %04d' % random.randrange(0, 9999)
+            destdir = 'testdir%04d' % random.randrange(0, 9999)
         if not auxdir:
             auxdir = 'build-aux'
         config.setAuxDir(auxdir)
