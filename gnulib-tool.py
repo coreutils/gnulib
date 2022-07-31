@@ -95,8 +95,119 @@ def main():
         prog=constants.APP['name'],
         usage='gnulib-tool.py --help',
         add_help=False)
+
+    # Here we list the options in the order they are listed in the --help output.
+
+    # list
+    parser.add_argument('--list',
+                        dest='mode_list',
+                        default=None,
+                        action='store_true')
+    # find
+    parser.add_argument('--find',
+                        dest='mode_find',
+                        default=None,
+                        nargs='*')
+    # import
+    parser.add_argument('--import',
+                        dest='mode_import',
+                        default=None,
+                        nargs='*')
+    # add-import
+    parser.add_argument('--add-import',
+                        dest='mode_add_import',
+                        default=None,
+                        nargs='+')
+    # remove-import
+    parser.add_argument('--remove-import',
+                        dest='mode_remove_import',
+                        default=None,
+                        nargs='+')
+    # update
+    parser.add_argument('--update',
+                        dest='mode_update',
+                        default=None,
+                        action='store_true')
+    # create-testdir
+    parser.add_argument('--create-testdir',
+                        dest='mode_create_testdir',
+                        default=None,
+                        nargs='*')
+    # create-megatestdir
+    parser.add_argument('--create-megatestdir',
+                        dest='mode_create_megatestdir',
+                        default=None,
+                        nargs='*')
+    # test
+    parser.add_argument('--test',
+                        dest='mode_test',
+                        default=None,
+                        nargs='*')
+    # megatest
+    parser.add_argument('--megatest',
+                        dest='mode_megatest',
+                        default=None,
+                        nargs='*')
+    # extract-*
+    parser.add_argument('--extract-description',
+                        dest='mode_xdescription',
+                        default=None,
+                        nargs='*')
+    parser.add_argument('--extract-comment',
+                        dest='mode_xcomment',
+                        default=None,
+                        nargs='*')
+    parser.add_argument('--extract-status',
+                        dest='mode_xstatus',
+                        default=None,
+                        nargs='*')
+    parser.add_argument('--extract-notice',
+                        dest='mode_xnotice',
+                        default=None,
+                        nargs='*')
+    parser.add_argument('--extract-applicability',
+                        dest='mode_xapplicability',
+                        default=None,
+                        nargs='*')
+    parser.add_argument('--extract-filelist',
+                        dest='mode_xfilelist',
+                        default=None,
+                        nargs='*')
+    parser.add_argument('--extract-dependencies',
+                        dest='mode_xdependencies',
+                        default=None,
+                        nargs='*')
+    parser.add_argument('--extract-autoconf-snippet',
+                        dest='mode_xautoconf',
+                        default=None,
+                        nargs='*')
+    parser.add_argument('--extract-automake-snippet',
+                        dest='mode_xautomake',
+                        default=None,
+                        nargs='*')
+    parser.add_argument('--extract-include-directive',
+                        dest='mode_xinclude',
+                        default=None,
+                        nargs='*')
+    parser.add_argument('--extract-link-directive',
+                        dest='mode_xlink',
+                        default=None,
+                        nargs='*')
+    parser.add_argument('--extract-license',
+                        dest='mode_xlicense',
+                        default=None,
+                        nargs='*')
+    parser.add_argument('--extract-maintainer',
+                        dest='mode_xmaintainer',
+                        default=None,
+                        nargs='*')
+    # copy-file
+    parser.add_argument('--copy-file',
+                        dest='mode_copy_file',
+                        default=None,
+                        nargs='+')
     # help
-    parser.add_argument('-h', '--help', '--hel', '--he', '--h',
+    parser.add_argument('--help', '--hel', '--he', '--h',
                         dest='help',
                         default=None,
                         action='store_true')
@@ -105,137 +216,28 @@ def main():
                         dest='version',
                         default=None,
                         action='store_true')
-    # list
-    parser.add_argument('-l', '--list', '--lis',
-                        dest='mode_list',
-                        default=None,
-                        action='store_true')
-    # find
-    parser.add_argument('-f', '--find', '--fin', '--fi', '--f',
-                        dest='mode_find',
-                        default=None,
-                        nargs='*')
-    # import
-    parser.add_argument('-i', '--import',
-                        dest='mode_import',
-                        default=None,
-                        nargs='*')
-    # add-import
-    parser.add_argument('-a', '--add-import',
-                        dest='mode_add_import',
-                        default=None,
-                        nargs='+')
-    # remove-import
-    parser.add_argument('-r', '--remove-import',
-                        dest='mode_remove_import',
-                        default=None,
-                        nargs='+')
-    # update
-    parser.add_argument('-u', '--update',
-                        dest='mode_update',
-                        default=None,
-                        action='store_true')
-    # create-testdir
-    parser.add_argument('-td', '--create-testdir',
-                        dest='mode_create_testdir',
-                        default=None,
-                        nargs='*')
-    # create-megatestdir
-    parser.add_argument('-mtd', '--create-megatestdir',
-                        dest='mode_create_megatestdir',
-                        default=None,
-                        nargs='*')
-    # test
-    parser.add_argument('-t', '--test',
-                        dest='mode_test',
-                        default=None,
-                        nargs='*')
-    # megatest
-    parser.add_argument('-mt', '--megatest', '--megates', '--megate', '--megat',
-                        '--mega', '--meg', '--me', '--m',
-                        dest='mode_megatest',
-                        default=None,
-                        nargs='*')
-    # copy-file
-    parser.add_argument('-c', '--copy-file',
-                        dest='mode_copy_file',
-                        default=None,
-                        nargs='+')
-    # extract-*
-    parser.add_argument('-xD', '--extract-description',
-                        dest='mode_xdescription',
-                        default=None,
-                        nargs='*')
-    parser.add_argument('-xc', '--extract-comment',
-                        dest='mode_xcomment',
-                        default=None,
-                        nargs='*')
-    parser.add_argument('-xs', '--extract-status',
-                        dest='mode_xstatus',
-                        default=None,
-                        nargs='*')
-    parser.add_argument('-xn', '--extract-notice',
-                        dest='mode_xnotice',
-                        default=None,
-                        nargs='*')
-    parser.add_argument('-xa', '--extract-applicability',
-                        dest='mode_xapplicability',
-                        default=None,
-                        nargs='*')
-    parser.add_argument('-xf', '--extract-filelist',
-                        dest='mode_xfilelist',
-                        default=None,
-                        nargs='*')
-    parser.add_argument('-xd', '--extract-dependencies',
-                        dest='mode_xdependencies',
-                        default=None,
-                        nargs='*')
-    parser.add_argument('-xac', '--extract-autoconf-snippet',
-                        dest='mode_xautoconf',
-                        default=None,
-                        nargs='*')
-    parser.add_argument('-xam', '--extract-automake-snippet',
-                        dest='mode_xautomake',
-                        default=None,
-                        nargs='*')
-    parser.add_argument('-xi', '--extract-include-directive',
-                        dest='mode_xinclude',
-                        default=None,
-                        nargs='*')
-    parser.add_argument('-xl', '--extract-link-directive',
-                        dest='mode_xlink',
-                        default=None,
-                        nargs='*')
-    parser.add_argument('-xL', '--extract-license',
-                        dest='mode_xlicense',
-                        default=None,
-                        nargs='*')
-    parser.add_argument('-xm', '--extract-maintainer',
-                        dest='mode_xmaintainer',
-                        default=None,
-                        nargs='*')
     # no-changelog: a no-op for backward compatibility
     parser.add_argument('--no-changelog',
                         dest='changelog',
                         default=None,
                         action='store_false')
     # destdir
-    parser.add_argument('-d', '--dir',
+    parser.add_argument('--dir',
                         dest='destdir',
                         default=None,
                         nargs=1)
     # localpath
-    parser.add_argument('-ld', '--local-dir',
+    parser.add_argument('--local-dir',
                         action='append',
                         dest='localpath',
                         default=None,
                         nargs='?')
     # verbose
-    parser.add_argument('-v', '--verbose',
+    parser.add_argument('--verbose',
                         default=0,
                         action='count')
     # quiet
-    parser.add_argument('-q', '--quiet',
+    parser.add_argument('--quiet',
                         default=0,
                         action='count')
     # dryrun
@@ -248,11 +250,6 @@ def main():
                         dest='inctests',
                         default=None,
                         action='store_true')
-    # makefile
-    parser.add_argument("--makefile-name",
-                        dest="makefile",
-                        default=None,
-                        type=str)
     # obsolete
     parser.add_argument('--with-obsolete',
                         dest='obsolete',
@@ -283,44 +280,49 @@ def main():
                         dest='alltests',
                         default=None,
                         action='store_true')
-    # auxdir
-    parser.add_argument('--aux-dir',
-                        dest='auxdir',
+    # avoids
+    parser.add_argument('--avoid',
+                        dest='avoids',
                         default=None,
-                        nargs=1)
-    # libname
-    parser.add_argument('--lib',
-                        dest='libname',
-                        default=None,
-                        nargs=1)
+                        nargs='+')
     # libtool
     parser.add_argument("--libtool",
                         dest=libtool,
                         default=False,
                         action="store_true")
+    # libname
+    parser.add_argument('--lib',
+                        dest='libname',
+                        default=None,
+                        nargs=1)
     # sourcebase
-    parser.add_argument('-sb', '--source-base',
+    parser.add_argument('--source-base',
                         dest='sourcebase',
                         default=None,
                         nargs=1)
     # m4base
-    parser.add_argument('-mb', '--m4-base',
+    parser.add_argument('--m4-base',
                         dest='m4base',
                         default=None,
                         nargs=1)
     # pobase
-    parser.add_argument('-pb', '--po-base',
+    parser.add_argument('--po-base',
                         dest='pobase',
                         default=None,
                         nargs=1)
     # docbase
-    parser.add_argument('-db', '--doc-base',
+    parser.add_argument('--doc-base',
                         dest='docbase',
                         default=None,
                         nargs=1)
     # testsbase
-    parser.add_argument('-tb', '--tests-base',
+    parser.add_argument('--tests-base',
                         dest='testsbase',
+                        default=None,
+                        nargs=1)
+    # auxdir
+    parser.add_argument('--aux-dir',
+                        dest='auxdir',
                         default=None,
                         nargs=1)
     # lgpl
@@ -329,11 +331,11 @@ def main():
                         default=False,
                         type=int,
                         nargs='?')
-    # avoids
-    parser.add_argument('--avoid',
-                        dest='avoids',
+    # makefile
+    parser.add_argument("--makefile-name",
+                        dest="makefile",
                         default=None,
-                        nargs='+')
+                        type=str)
 
     # Parse the given arguments.
     cmdargs = parser.parse_args()

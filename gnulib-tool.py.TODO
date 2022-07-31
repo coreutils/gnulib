@@ -17,6 +17,9 @@ The following commits to gnulib-tool have not yet been reflected in
 
 Implement the options:
   --find
+  --extract-recursive-dependencies
+  --extract-recursive-link-directive
+  --extract-tests-module
   --without-tests
   --without-c++-tests
   --without-longrunning-tests
@@ -34,7 +37,6 @@ Implement the options:
   --witness-c-macro
   --vc-files
   --no-vc-files
-  --no-changelog
   -s | --symbolic
   --local-symlink
   -h | --hardlink
