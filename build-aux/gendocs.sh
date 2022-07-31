@@ -47,7 +47,7 @@ templateurl="https://git.savannah.gnu.org/cgit/gnulib.git/plain/doc/gendocs_temp
 : "${DOCBOOK2PDF="docbook2pdf"}"
 : "${DOCBOOK2TXT="docbook2txt"}"
 : "${GENDOCS_TEMPLATE_DIR="."}"
-: "${PERL='perl'}"
+: "${PERL="perl"}"
 : "${TEXI2HTML="texi2html"}"
 unset CDPATH
 unset use_texi2html
