@@ -119,7 +119,7 @@ Usage: gnulib-tool --list
        gnulib-tool --update
        gnulib-tool --create-testdir --dir=directory [module1 ... moduleN]
        gnulib-tool --create-megatestdir --dir=directory [module1 ... moduleN]
-       gnulib-tool --test --dir=directory module1 ... moduleN
+       gnulib-tool --test --dir=directory [module1 ... moduleN]
        gnulib-tool --megatest --dir=directory [module1 ... moduleN]
        gnulib-tool --extract-description module
        gnulib-tool --extract-comment module
