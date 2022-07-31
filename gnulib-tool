@@ -4846,12 +4846,13 @@ func_reconstruct_cached_dir ()
 {
   cached_dir=$1
   if test -n "$cached_dir"; then
-    case "$destdir" in
+    case "$cached_dir" in
       /*)
-        func_path_append local_gnulib_path "$destdir/$cached_dir" ;;
+        func_path_append local_gnulib_path "$cached_dir" ;;
       *)
-        case "$cached_dir" in
+        case "$destdir" in
           /*)
+            # XXX This doesn't look right.
             func_path_append local_gnulib_path "$destdir/$cached_dir" ;;
           *)
             func_relconcat "$destdir" "$cached_dir"
@@ -5835,14 +5836,14 @@ s,//*$,/,'
     fi
   fi
 
-  # func_count_relative_local_gnulib_path
+  # func_compute_relative_local_gnulib_path
   # gl_LOCAL_DIR requires local_gnulib_path to be set relatively to destdir
   # Input:
   # - local_gnulib_path  from --local-dir
   # - destdir           from --dir
   # Output:
   # - relative_local_dir  path to be stored into gl_LOCAL_DIR
-  func_count_relative_local_gnulib_path ()
+  func_compute_relative_local_gnulib_path ()
   {
     relative_local_gnulib_path=
     save_IFS="$IFS"
@@ -5856,7 +5857,9 @@ s,//*$,/,'
           relative_local_dir="$local_dir" ;;
         * )
           case "$destdir" in
-            /*) relative_local_dir="$local_dir" ;;
+            /*)
+              # XXX This doesn't look right.
+              relative_local_dir="$local_dir" ;;
             *)
               # destdir, local_dir are both relative.
               func_relativize "$destdir" "$local_dir"
@@ -5883,7 +5886,7 @@ s,//*$,/,'
     printf '%s\n' "$actioncmd"
     echo
     echo "# Specification in the form of a few gnulib-tool.m4 macro invocations:"
-    func_count_relative_local_gnulib_path
+    func_compute_relative_local_gnulib_path
     echo "gl_LOCAL_DIR([$relative_local_gnulib_path])"
     echo "gl_MODULES(["
     echo "$specified_modules" | sed -e 's/^/  /g'

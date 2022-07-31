@@ -24,7 +24,7 @@
 # - Line length is not limited to 79 characters.
 # - Line breaking before or after binary operators? Better before, like in GNU.
 # You can use this command to check the style:
-#   $ pycodestyle --max-line-length=128 --ignore=E265,W503,E241,E711,E712 gnulib-tool.py pygnulib/*.py
+#   $ pycodestyle --max-line-length=128 --ignore=E265,W503,E241,E711,E712,E201,E202 gnulib-tool.py pygnulib/*.py
 
 
 #===============================================================================
@@ -66,7 +66,7 @@ def main():
     # Reset arguments
     mode = None
     destdir = None
-    localdir = None
+    localpath = None
     modcache = None
     verbose = None
     auxdir = None
@@ -224,11 +224,12 @@ def main():
                         dest='destdir',
                         default=None,
                         nargs=1)
-    # localdir
+    # localpath
     parser.add_argument('-ld', '--local-dir',
-                        dest='localdir',
+                        action='append',
+                        dest='localpath',
                         default=None,
-                        nargs=1)
+                        nargs='?')
     # verbose
     parser.add_argument('-v', '--verbose',
                         default=0,
@@ -458,9 +459,7 @@ def main():
     destdir = cmdargs.destdir
     if destdir != None:
         destdir = cmdargs.destdir[0]
-    localdir = cmdargs.localdir
-    if localdir != None:
-        localdir = cmdargs.localdir[0]
+    localpath = cmdargs.localpath
     libname = cmdargs.libname
     if libname != None:
         libname = cmdargs.libname[0]
@@ -514,7 +513,7 @@ def main():
     # Create pygnulib configuration.
     config = classes.GLConfig(
         destdir=destdir,
-        localdir=localdir,
+        localpath=localpath,
         m4base=m4base,
         auxdir=auxdir,
         modules=modules,

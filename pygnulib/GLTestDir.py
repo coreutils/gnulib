@@ -30,6 +30,7 @@ from .GLConfig import GLConfig
 from .GLModuleSystem import GLModule
 from .GLModuleSystem import GLModuleTable
 from .GLModuleSystem import GLModuleSystem
+from .GLFileSystem import CopyAction
 from .GLFileSystem import GLFileSystem
 from .GLFileSystem import GLFileAssistant
 from .GLMakefileTable import GLMakefileTable
@@ -143,7 +144,6 @@ class GLTestDir(object):
         '''GLTestDir.execute()
 
         Create a scratch package with the given modules.'''
-        localdir = self.config['localdir']
         auxdir = self.config['auxdir']
         testflags = list(self.config['testflags'])
         sourcebase = self.config['sourcebase']
@@ -154,8 +154,6 @@ class GLTestDir(object):
         libname = self.config['libname']
         libtool = self.config['libtool']
         witness_c_macro = self.config['witness_c_macro']
-        symbolic = self.config['symbolic']
-        lsymbolic = self.config['lsymbolic']
         single_configure = self.config['single_configure']
         include_guard_prefix = self.config['include_guard_prefix']
         macro_prefix = self.config['macro_prefix']
@@ -337,7 +335,7 @@ class GLTestDir(object):
             if flag:
                 shutil.copy(lookedup, destpath)
             else:  # if not flag
-                if symbolic or (lsymbolic and lookedup == joinpath(localdir, src)):
+                if self.filesystem.shouldLink(src, lookedup) == CopyAction.Symlink:
                     constants.link_relative(lookedup, destpath)
                 else:
                     shutil.copy(lookedup, destpath)

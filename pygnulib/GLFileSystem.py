@@ -23,6 +23,7 @@ import codecs
 import shutil
 import filecmp
 import subprocess as sp
+from enum import Enum
 from . import constants
 from .GLError import GLError
 from .GLConfig import GLConfig
@@ -46,17 +47,25 @@ isfile = os.path.isfile
 
 
 #===============================================================================
+# Define CopyAction class
+#===============================================================================
+class CopyAction(Enum):
+    Copy = 0
+    Symlink = 1
+
+
+#===============================================================================
 # Define GLFileSystem class
 #===============================================================================
 class GLFileSystem(object):
-    '''GLFileSystem class is used to create virtual filesystem, which is based on
-    the gnulib directory and directory specified by localdir argument. Its main
-    method lookup(file) is used to find file in these directories or combine it
-    using Linux 'patch' utility.'''
+    '''GLFileSystem class is used to create virtual filesystem, which is based
+    on the gnulib directory and directories specified by localpath argument.
+    Its main method lookup(file) is used to find file in these directories or
+    combine it using Linux 'patch' utility.'''
 
     def __init__(self, config):
-        '''Create new GLFileSystem instance. The only argument is localdir,
-        which can be an empty string too.'''
+        '''Create new GLFileSystem instance. The only argument is localpath,
+        which can be an empty list.'''
         if type(config) is not GLConfig:
             raise TypeError('config must be a GLConfig, not %s' %
                             type(config).__name__)
@@ -70,42 +79,74 @@ class GLFileSystem(object):
     def lookup(self, name):
         '''GLFileSystem.lookup(name) -> tuple
 
-        Lookup a file in gnulib and localdir directories or combine it using Linux
+        Lookup a file in gnulib and localpath directories or combine it using
         'patch' utility. If file was found, method returns string, else it raises
         GLError telling that file was not found. Function also returns flag which
         indicates whether file is a temporary file.
-        GLConfig: localdir.'''
+        GLConfig: localpath.'''
         if type(name) is not str:
             raise TypeError(
                 'name must be a string, not %s' % type(module).__name__)
-        # If name exists in localdir, then we use it
-        path_gnulib = joinpath(DIRS['root'], name)
-        path_local = joinpath(self.config['localdir'], name)
-        path_diff = joinpath(self.config['localdir'], '%s.diff' % name)
-        path_temp = joinpath(self.config['tempdir'], name)
-        try:  # Try to create directories
-            os.makedirs(os.path.dirname(path_temp))
-        except OSError as error:
-            pass  # Skip errors if directory exists
-        if isfile(path_temp):
-            os.remove(path_temp)
-        if self.config['localdir'] and isfile(path_local):
-            result = (path_local, False)
-        else:  # if path_local does not exist
-            if isfile(path_gnulib):
-                if self.config['localdir'] and isfile(path_diff):
-                    shutil.copy(path_gnulib, path_temp)
-                    command = 'patch -s "%s" < "%s" >&2' % (path_temp, path_diff)
+        localpath = self.config['localpath']
+        # Each element in localpath is a directory whose contents overrides
+        # or amends the result of the lookup in the rest of localpath and
+        # the gnulib dir. So, the first element of localpath is the highest
+        # priority one.
+        lookedupFile = None
+        lookedupPatches = []
+        for localdir in localpath:
+            file_in_localdir = joinpath(localdir, name)
+            if isfile(file_in_localdir):
+                lookedupFile = file_in_localdir
+                break
+            diff_in_localdir = joinpath(localdir, '%s.diff' % name)
+            if isfile(diff_in_localdir):
+                lookedupPatches.append(diff_in_localdir)
+        # Treat the gnulib dir like a lowest-priority --local-dir, except that
+        # here we don't look for .diff files.
+        if lookedupFile == None:
+            file_in_localdir = joinpath(DIRS['root'], name)
+            if isfile(file_in_localdir):
+                lookedupFile = file_in_localdir
+        if lookedupFile != None:
+            if len(lookedupPatches) > 0:
+                # Apply the patches, from lowest-priority to highest-priority.
+                tempFile = joinpath(self.config['tempdir'], name)
+                try:  # Try to create directories
+                    os.makedirs(os.path.dirname(tempFile))
+                except OSError as error:
+                    pass  # Skip errors if directory exists
+                if isfile(tempFile):
+                    os.remove(tempFile)
+                shutil.copy(lookedupFile, tempFile)
+                for diff_in_localdir in reversed(lookedupPatches):
+                    command = 'patch -s "%s" < "%s" >&2' % (tempFile, diff_in_localdir)
                     try:  # Try to apply patch
                         sp.check_call(command, shell=True)
                     except sp.CalledProcessError as error:
                         raise GLError(2, name)
-                    result = (path_temp, True)
-                else:  # if path_diff does not exist
-                    result = (path_gnulib, False)
-            else:  # if path_gnulib does not exist
-                raise GLError(1, name)
+                result = (tempFile, True)
+            else:
+                result = (lookedupFile, False)
+        else:
+            raise GLError(1, name)
         return result
+
+    def shouldLink(self, original, lookedup):
+        '''GLFileSystem.shouldLink(original, lookedup)
+
+        Determines whether the original file should be copied or symlinked.
+        Returns a CopyAction.'''
+        symbolic = self.config['symbolic']
+        lsymbolic = self.config['lsymbolic']
+        localpath = self.config['localpath']
+        if symbolic:
+            return CopyAction.Symlink
+        if lsymbolic:
+            for localdir in localpath:
+                if lookedup == joinpath(localdir, original):
+                    return CopyAction.Symlink
+        return CopyAction.Copy
 
 
 #===============================================================================
@@ -212,16 +253,13 @@ class GLFileAssistant(object):
         original = self.original
         rewritten = self.rewritten
         destdir = self.config['destdir']
-        symbolic = self.config['symbolic']
-        lsymbolic = self.config['lsymbolic']
         if original == None:
             raise TypeError('original must be set before applying the method')
-        elif rewritten == None:
+        if rewritten == None:
             raise TypeError('rewritten must be set before applying the method')
         if not self.config['dryrun']:
             print('Copying file %s' % rewritten)
-            loriginal = joinpath(self.config['localdir'], original)
-            if (symbolic or (lsymbolic and lookedup == loriginal)) \
+            if self.filesystem.shouldLink(original, lookedup) == CopyAction.Symlink \
                     and not tmpflag and filecmp.cmp(lookedup, tmpfile):
                 constants.link_if_changed(
                     lookedup, joinpath(destdir, rewritten))
@@ -242,11 +280,9 @@ class GLFileAssistant(object):
         original = self.original
         rewritten = self.rewritten
         destdir = self.config['destdir']
-        symbolic = self.config['symbolic']
-        lsymbolic = self.config['lsymbolic']
         if original == None:
             raise TypeError('original must be set before applying the method')
-        elif rewritten == None:
+        if rewritten == None:
             raise TypeError('rewritten must be set before applying the method')
         if type(lookedup) is not str:
             raise TypeError('lookedup must be a string, not %s' %
@@ -274,8 +310,7 @@ class GLFileAssistant(object):
                     shutil.move(basepath, backuppath)
                 except Exception as error:
                     raise GLError(17, original)
-                loriginal = joinpath(self.config['localdir'], original)
-                if (symbolic or (lsymbolic and lookedup == loriginal)) \
+                if self.filesystem.shouldLink(original, lookedup) == CopyAction.Symlink \
                         and not tmpflag and filecmp.cmp(lookedup, tmpfile):
                     constants.link_if_changed(lookedup, basepath)
                 else:  # if any of these conditions is not met

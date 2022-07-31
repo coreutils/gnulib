@@ -15,6 +15,37 @@ The following commits to gnulib-tool have not yet been reflected in
 
 --------------------------------------------------------------------------------
 
+Implement the options:
+  --find
+  --without-tests
+  --without-c++-tests
+  --without-longrunning-tests
+  --without-privileged-tests
+  --without-unportable-tests
+  --single-configure
+  --conditional-dependencies
+  --no-conditional-dependencies
+  --gnu-make
+  --tests-makefile-name
+  --automake-subdir
+  --no-libtool
+  --macro-prefix
+  --po-domain
+  --witness-c-macro
+  --vc-files
+  --no-vc-files
+  --no-changelog
+  -s | --symbolic
+  --local-symlink
+  -h | --hardlink
+  --local-hardlink
+  -S | --more-symlinks
+  -H | --more-hardlinks
+  --help (same output)
+  --version
+
+--------------------------------------------------------------------------------
+
 commit 76c7703cb2e9e0e803d1296618d8ab9e86e13d6c
 Author: Akim Demaille <akim.demaille@gmail.com>
 Date:   Mon Jul 4 07:18:07 2022 +0200
@@ -1076,65 +1107,6 @@ Date:   Wed May 1 13:39:22 2013 +0900
 
     * gnulib-tool (func_ln_s): New function.
     (func_ln): Use it.
-
---------------------------------------------------------------------------------
-
-commit 49137e3bc6a2b3fd83c502a514e4a3b89fc1571c
-Author: Bruno Haible <bruno@clisp.org>
-Date:   Thu Feb 14 20:50:57 2019 +0100
-
-    gnulib-tool: Improve handling of multiple --local-dir options.
-
-    * doc/gnulib.texi (Extending Gnulib): Explain how multiple --local-dir
-    options work.
-    * gnulib-tool (func_path_prepend): Remove function.
-    (func_path_foreach): Make IFS handling more robust.
-    (local_gnulib_path): Collect --local-dir values using func_path_append,
-    not func_path_prepend.
-    (func_determine_path_separator): Make IFS handling more robust.
-    (func_lookup_file_cb): New function.
-    (func_lookup_file): Rewritten to use func_lookup_file_cb instead of
-    func_lookup_local_file. Apply the patches in the reverse order of their
-    origin in $local_gnulib_path.
-    (func_count_relative_local_gnulib_path): Make IFS handling more robust.
-    * NEWS: Mention that the first --local-dir option is the one with
-    highest priority.
-
-commit 55c6f22b8043843aa7cf6843326eb4abed4de75c
-Author: Pavel Raiskup <praiskup@redhat.com>
-Date:   Sat Nov 21 14:09:15 2015 +0100
-
-    gnulib-tool: allow multiple --local-dir usage
-
-    * gnulib-tool: Use --local-dir to construct compound
-    $local_gnulib_path path instead of $local_gnulib_dir.  Determine
-    PATH_SEPARATOR early.
-    (local_gnulib_dir): Rename into $local_gnulib_path everywhere.
-    (func_gnulib_dir): Cut out PATH_SEPARATOR detection code into
-    func_determine_path_separator because that needs to be detected
-    earlier now.
-    (func_determine_path_separator): New function.
-    (func_path_foreach, func_path_foreach_inner): New functions.
-    (func_path_prepend, func_path_append): Likewise.
-    (func_lookup_local_file, func_lookup_local_file_cb): Likewise.
-    (func_lookup_file, func_all_modules): Use new functions to work
-    with local_gnulib_path.
-    (func_modules_in_dir, func_exists_module): New callbacks for
-    func_path_foreach.
-    (func_exists_module, func_get_tests_module): Likewise.
-    (func_is_local_file, func_should_symlink): New helper methods.
-    (func_add_file, func_update_file): Use new func_should_symlink
-    instead, DRY.
-    (func_reconstruct_cached_local_gnulib_path): New helper.
-    (func_reconstruct_cached_dir): New callback.
-    (func_import): The cached_local_gnulib_dir renamed to
-    cached_local_gnulib_path similarly to local_gnulib_dir.
-    Use new func_reconstruct_cached_local_gnulib_path.
-    (func_count_relative_local_gnulib_path): New sub-method.
-    (func_create_testdir): Use func_should_symlink, DRY.
-    (func_create_megatestdir): Use new functions to work with
-    local_gnulib_path correctly.
-    (func_append_local_dir): New helper.
 
 --------------------------------------------------------------------------------
 

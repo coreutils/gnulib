@@ -52,7 +52,6 @@ TESTS = constants.TESTS
 compiler = constants.compiler
 joinpath = constants.joinpath
 cleaner = constants.cleaner
-relpath = constants.relativize
 isabs = os.path.isabs
 isdir = os.path.isdir
 isfile = os.path.isfile
@@ -181,7 +180,7 @@ class GLImport(object):
             if tempdict['gl_LIB']:
                 self.cache.setLibName(cleaner(tempdict['gl_LIB']))
             if tempdict['gl_LOCAL_DIR']:
-                self.cache.setLocalDir(cleaner(tempdict['gl_LOCAL_DIR']))
+                self.cache.setLocalPath(cleaner(tempdict['gl_LOCAL_DIR']).split(':'))
             if tempdict['gl_MODULES']:
                 self.cache.setModules(cleaner(tempdict['gl_MODULES'].split()))
             if tempdict['gl_AVOID']:
@@ -217,23 +216,14 @@ class GLImport(object):
                 pattern = compiler(regex, re.S | re.M)
                 self.cache.setFiles(pattern.findall(data)[-1].strip().split())
 
-        # The self.config['localdir'] defaults to the cached one. Recall that the
-        # cached one is relative to $destdir, whereas the one we use is relative
-        # to . or absolute.
-        if not self.config['localdir']:
-            if self.cache['localdir']:
-                if isabs(self.config['destdir']):
-                    localdir = joinpath(
-                        self.config['destdir'], self.cache['localdir'])
-                else:  # if not isabs(self.config['destdir'])
-                    if isabs(self.cache['localdir']):
-                        localdir = joinpath(
-                            self.config['destdir'], self.cache['localdir'])
-                    else:  # if not isabs(self.cache['localdir'])
-                        # NOTE: I NEED TO IMPLEMENT RELATIVE_CONCAT
-                        localdir = os.path.relpath(joinpath(self.config['destdir'],
-                                                            self.cache['localdir']))
-                self.config.setLocalDir(localdir)
+        # The self.config['localpath'] defaults to the cached one. Recall that
+        # the cached one is relative to self.config['destdir'], whereas the one
+        # we use is relative to . or absolute.
+        if len(self.config['localpath']) == 0:
+            if len(self.cache['localpath']) > 0:
+                localpath = [ self.relative_to_currdir(localdir)
+                              for localdir in self.cache['localpath'] ]
+                self.config.setLocalPath(localpath)
 
         if self.mode != MODES['import']:
             if self.cache['m4base'] and \
@@ -367,7 +357,7 @@ class GLImport(object):
         modules = self.config.getModules()
         avoids = self.config.getAvoids()
         destdir = self.config.getDestDir()
-        localdir = self.config.getLocalDir()
+        localpath = self.config.getLocalPath()
         auxdir = self.config.getAuxDir()
         sourcebase = self.config.getSourceBase()
         m4base = self.config.getM4Base()
@@ -389,7 +379,7 @@ class GLImport(object):
         # Create command-line invocation comment.
         actioncmd = 'gnulib-tool --import'
         actioncmd += ' --dir=%s' % destdir
-        if localdir:
+        for localdir in localpath:
             actioncmd += ' --local-dir=%s' % localdir
         actioncmd += ' --lib=%s' % libname
         actioncmd += ' --source-base=%s' % sourcebase
@@ -443,17 +433,49 @@ class GLImport(object):
         actioncmd += ' '.join(modules)
         return actioncmd
 
+    def relative_to_destdir(self, dir):
+        '''GLImport.relative_to_destdir(dir) -> str
+
+        Convert a filename that represents dir, relative to the current directory,
+        to a filename relative to destdir.
+        GLConfig: destdir.'''
+        destdir = self.config['destdir']
+        if dir.startswith('/'):
+            return dir
+        else:
+            if destdir.startswith('/'):
+                # XXX This doesn't look right.
+                return dir
+            else:
+                return constants.relativize(destdir, dir)
+
+    def relative_to_currdir(self, dir):
+        '''GLImport.relative_to_currdir(dir) -> str
+
+        The opposite of GLImport.relative_to_destdir:
+        Convert a filename that represents dir, relative to destdir,
+        to a filename relative to the current directory.
+        GLConfig: destdir.'''
+        destdir = self.config['destdir']
+        if dir.startswith('/'):
+            return dir
+        else:
+            if destdir.startswith('/'):
+                # XXX This doesn't look right.
+                return joinpath(destdir, dir)
+            else:
+                return constants.relconcat(destdir, dir)
+
     def gnulib_cache(self):
         '''GLImport.gnulib_cache() -> str
 
         Emit the contents of generated $m4base/gnulib-cache.m4 file.
-        GLConfig: destdir, localdir, tests, sourcebase, m4base, pobase, docbase,
+        GLConfig: destdir, localpath, tests, sourcebase, m4base, pobase, docbase,
         testsbase, conddeps, libtool, macro_prefix, podomain, vc_files.'''
         emit = ''
         moduletable = self.moduletable
         actioncmd = self.actioncmd()
-        destdir = self.config['destdir']
-        localdir = self.config['localdir']
+        localpath = self.config['localpath']
         testflags = list(self.config['testflags'])
         sourcebase = self.config['sourcebase']
         m4base = self.config['m4base']
@@ -482,13 +504,11 @@ class GLImport(object):
 # Specification in the form of a command-line invocation:
 #   %s
 
-# Specification in the form of a few \
-gnulib-tool.m4 macro invocations:\n''' % actioncmd
-        if not localdir or localdir.startswith('/'):
-            relative_localdir = localdir
-        else:  # if localdir or not localdir.startswith('/')
-            relative_localdir = constants.relativize(destdir, localdir)
-        emit += 'gl_LOCAL_DIR([%s])\n' % relative_localdir
+# Specification in the form of a few gnulib-tool.m4 macro invocations:\n''' % actioncmd
+        # Store the localpath relative to destdir.
+        relative_localpath = [ self.relative_to_destdir(localdir)
+                               for localdir in localpath ]
+        emit += 'gl_LOCAL_DIR([%s])\n' % ':'.join(relative_localpath)
         emit += 'gl_MODULES([\n'
         emit += '  %s\n' % '\n  '.join(modules)
         emit += '])\n'
@@ -532,13 +552,12 @@ gnulib-tool.m4 macro invocations:\n''' % actioncmd
         '''GLImport.gnulib_comp(files) -> str
 
         Emit the contents of generated $m4base/gnulib-comp.m4 file.
-        GLConfig: destdir, localdir, tests, sourcebase, m4base, pobase, docbase,
+        GLConfig: destdir, localpath, tests, sourcebase, m4base, pobase, docbase,
         testsbase, conddeps, libtool, macro_prefix, podomain, vc_files.'''
         emit = ''
         assistant = self.assistant
         moduletable = self.moduletable
         destdir = self.config['destdir']
-        localdir = self.config['localdir']
         auxdir = self.config['auxdir']
         testflags = list(self.config['testflags'])
         sourcebase = self.config['sourcebase']
@@ -740,7 +759,6 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         '''Make all preparations before the execution of the code.
         Returns filetable and sed transformers, which change the license.'''
         destdir = self.config['destdir']
-        localdir = self.config['localdir']
         auxdir = self.config['auxdir']
         modules = list(self.config['modules'])
         avoids = list(self.config['avoids'])
@@ -963,7 +981,6 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
             if key not in filetable:
                 raise KeyError('filetable must contain key %s' % repr(key))
         destdir = self.config['destdir']
-        localdir = self.config['localdir']
         auxdir = self.config['auxdir']
         modules = list(self.config['modules'])
         avoids = list(self.config['avoids'])

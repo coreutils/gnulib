@@ -60,7 +60,7 @@ class GLModuleSystem(object):
         '''GLModuleSystem.__init__(config) -> GLModuleSystem
 
         Create new GLModuleSystem instance. Some functions use GLFileSystem class
-        to look up a file in localdir or gnulib directories, or combine it through
+        to look up a file in localpath or gnulib directories, or combine it through
         'patch' utility.'''
         self.args = dict()
         if type(config) is not GLConfig:
@@ -78,22 +78,22 @@ class GLModuleSystem(object):
         '''GLModuleSystem.exists(module) -> bool
 
         Check whether the given module exists.
-        GLConfig: localdir.'''
+        GLConfig: localpath.'''
         if type(module) is not str:
             raise TypeError(
                 'module must be a string, not %s' % type(module).__name__)
-        result = bool()
+        localpath = self.config['localpath']
+        result = False
         badnames = ['ChangeLog', 'COPYING', 'README', 'TEMPLATE',
                     'TEMPLATE-EXTENDED', 'TEMPLATE-TESTS']
-        if isfile(joinpath(DIRS['modules'], module)) or \
-                all([  # Begin all(iterable) function
-                    self.config['localdir'],
-                    isdir(joinpath(self.config['localdir'], 'modules')),
-                    isfile(
-                        joinpath(self.config['localdir'], 'modules', module))
-                ]):  # Close all(iterable) function
-            if module not in badnames:
-                result = True
+        if module not in badnames:
+            result = isfile(joinpath(DIRS['modules'], module))
+            if not result:
+                for localdir in localpath:
+                    if isdir(joinpath(localdir, 'modules')) \
+                       and isfile(joinpath(localdir, 'modules', module)):
+                        result = True
+                        break
         return result
 
     def find(self, module):
@@ -122,7 +122,7 @@ class GLModuleSystem(object):
         complete, so this version uses subprocess to run shell commands.'''
         result = ''
         listing = list()
-        localdir = self.config['localdir']
+        localpath = self.config['localpath']
         find_args = ['find', 'modules', '-type', 'f', '-print']
         sed_args = \
             [
@@ -146,16 +146,18 @@ class GLModuleSystem(object):
         os.chdir(constants.DIRS['root'])
         find = sp.Popen(find_args, stdout=sp.PIPE)
         result += find.stdout.read().decode("UTF-8")
+        os.chdir(DIRS['cwd'])
 
-        # Read modules from local directory.
-        if localdir and isdir(joinpath(localdir, 'modules')):
-            os.chdir(localdir)
-            find = sp.Popen(find_args, stdout=sp.PIPE)
-            result += find.stdout.read().decode("UTF-8")
+        # Read modules from local directories.
+        if len(localpath) > 0:
+            for localdir in localpath:
+                os.chdir(localdir)
+                find = sp.Popen(find_args, stdout=sp.PIPE)
+                result += find.stdout.read().decode("UTF-8")
+                os.chdir(DIRS['cwd'])
             sed_args += ['-e', r's,\.diff$,,']
 
         # Save the list of the modules to file.
-        os.chdir(DIRS['cwd'])
         path = joinpath(self.config['tempdir'], 'list')
         with codecs.open(path, 'wb', 'UTF-8') as file:
             file.write(result)
@@ -538,8 +540,7 @@ Include:|Link:|License:|Maintainer:)'
         '''GLModule.getDependencies() -> list
 
         Return list of dependencies.
-        GLConfig: localdir.'''
-        localdir = self.config['localdir']
+        GLConfig: localpath.'''
         result = list()
         section = 'Depends-on:'
         if 'dependencies' not in self.cache:
@@ -871,7 +872,7 @@ class GLModuleTable(object):
         included in the final modules list. If testflags iterable is enabled, then
         don't add module which status is in the testflags. If conddeps are enabled,
         then store condition for each dependency if it has a condition.
-        The only necessary argument is localdir, which is needed just to create
+        The only necessary argument is localpath, which is needed just to create
         modulesystem instance to look for dependencies.'''
         self.avoids = list()  # Avoids
         self.dependers = dict()  # Dependencies

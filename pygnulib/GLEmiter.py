@@ -605,7 +605,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
 
         Emit the contents of the library Makefile. Returns str and a bool
         variable which shows if subdirectories are used.
-        GLConfig: localdir, sourcebase, libname, pobase, auxdir, makefile, libtool,
+        GLConfig: localpath, sourcebase, libname, pobase, auxdir, makefile, libtool,
         macro_prefix, podomain, conddeps, witness_c_macro.
 
         destfile is a filename relative to destdir of Makefile being generated.
@@ -635,7 +635,6 @@ AC_DEFUN([%V1%_LIBSOURCES], [
             raise TypeError('for_test must be a bool, not %s' %
                             type(for_test).__name__)
         emit = ''
-        localdir = self.config['localdir']
         sourcebase = self.config['sourcebase']
         modcache = self.config['modcache']
         libname = self.config['libname']
@@ -885,7 +884,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
 
         Emit the contents of the tests Makefile. Returns str and a bool variable
         which shows if subdirectories are used.
-        GLConfig: localdir, modules, libname, auxdir, makefile, libtool,
+        GLConfig: localpath, modules, libname, auxdir, makefile, libtool,
         sourcebase, m4base, testsbase, macro_prefix, witness_c_macro,
         single_configure, libtests.
 
@@ -914,7 +913,6 @@ AC_DEFUN([%V1%_LIBSOURCES], [
             raise TypeError('for_test must be a bool, not %s' %
                             type(for_test).__name__)
         emit = ''
-        localdir = self.config['localdir']
         auxdir = self.config['auxdir']
         sourcebase = self.config['sourcebase']
         modcache = self.config['modcache']

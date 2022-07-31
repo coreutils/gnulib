@@ -56,7 +56,7 @@ class GLConfig(object):
     By default all attributes are set to empty string, empty list or zero.
     The most common value, however, is a None value.'''
 
-    def __init__(self, destdir=None, localdir=None, auxdir=None,
+    def __init__(self, destdir=None, localpath=None, auxdir=None,
                  sourcebase=None, m4base=None, pobase=None, docbase=None, testsbase=None,
                  modules=None, avoids=None, files=None, testflags=None, libname=None,
                  lgpl=None, makefile=None, libtool=None, conddeps=None, macro_prefix=None,
@@ -77,10 +77,10 @@ class GLConfig(object):
         self.resetDestDir()
         if destdir != None:
             self.setDestDir(destdir)
-        # localdir
-        self.resetLocalDir()
-        if localdir != None:
-            self.setLocalDir(localdir)
+        # localpath
+        self.resetLocalPath()
+        if localpath != None:
+            self.setLocalPath(localpath)
         # auxdir
         self.resetAuxDir()
         if auxdir != None:
@@ -402,26 +402,29 @@ class GLConfig(object):
         configure.ac can be found. Defaults to current directory.'''
         self.table['destdir'] = ''
 
-    # Define localdir methods.
-    def getLocalDir(self):
-        '''Return a local override directory where to look up files before looking
-        in gnulib's directory.'''
-        return self.table['localdir']
+    # Define localpath methods.
+    def getLocalPath(self):
+        '''Return a list of local override directories where to look up files
+        before looking in gnulib's directory. The first one has the highest
+        priority.'''
+        return self.table['localpath']
 
-    def setLocalDir(self, localdir):
-        '''Specify a local override directory where to look up files before looking
-        in gnulib's directory.'''
-        if type(localdir) is str:
-            if localdir:
-                self.table['localdir'] = remove_trailing_slashes(localdir)
-        else:  # if localdir has not str type
-            raise TypeError('localdir must be a string, not %s' %
-                            type(localdir).__name__)
+    def setLocalPath(self, localpath):
+        '''Specify a list of local override directories where to look up files
+        before looking in gnulib's directory. The first one has the highest
+        priority.'''
+        if type(localpath) is list:
+            for dir in localpath:
+                if type(dir) is not str:
+                    raise TypeError('localpath element must be a string, not %s' % type(dir).__name__)
+        else:
+            raise TypeError('localpath must be a list, not %s' % type(localpath).__name__)
+        self.table['localpath'] = [ remove_trailing_slashes(dir) for dir in localpath ]
 
-    def resetLocalDir(self):
-        '''Reset a local override directory where to look up files before looking
-        in gnulib's directory.'''
-        self.table['localdir'] = ''
+    def resetLocalPath(self):
+        '''Reset a list of local override directories where to look up files
+        before looking in gnulib's directory.'''
+        self.table['localpath'] = []
 
     # Define auxdir methods.
     def getAuxDir(self):
@@ -998,22 +1001,22 @@ class GLConfig(object):
     # Define lsymbolic methods.
     def checkLSymbolic(self):
         '''Check if pygnulib will make symbolic links instead of copying files, only
-        for files from the local override directory.'''
+        for files from the local override directories.'''
         return self.table['lsymbolic']
 
     def enableLSymbolic(self):
         '''Enable creation of symbolic links instead of copying files, only for
-        files from the local override directory.'''
+        files from the local override directories.'''
         self.table['lsymbolic'] = True
 
     def disableLSymbolic(self):
         '''Disable creation of symbolic links instead of copying files, only for
-        files from the local override directory.'''
+        files from the local override directories.'''
         self.table['lsymbolic'] = False
 
     def resetLSymbolic(self):
         '''Reset creation of symbolic links instead of copying files, only for
-        files from the local override directory.'''
+        files from the local override directories.'''
         self.table['lsymbolic'] = False
 
     # Define verbosity methods.
