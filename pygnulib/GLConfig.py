@@ -579,9 +579,9 @@ class GLConfig(object):
                 except TypeError as error:
                     self.table['modules'] = old_modules
                     raise TypeError('each module must be a string')
-                except GLError as error:
+                except GLError:
                     self.table['modules'] = old_modules
-                    raise GLError(error.errno, error.errinfo)
+                    raise
         else:  # if type of modules is not list or tuple
             raise TypeError('modules must be a list or a tuple, not %s' %
                             type(modules).__name__)
@@ -625,9 +625,9 @@ class GLConfig(object):
                 except TypeError as error:
                     self.table['avoids'] = old_avoids
                     raise TypeError('each module must be a string')
-                except GLError as error:
+                except GLError:
                     self.table['avoids'] = old_avoids
-                    raise GLError(error.errno, error.errinfo)
+                    raise
         else:  # if type of modules is not list or tuple
             raise TypeError('modules must be a list or a tuple, not %s' %
                             type(modules).__name__)
@@ -670,9 +670,9 @@ class GLConfig(object):
                 except TypeError as error:
                     self.table['files'] = old_files
                     raise TypeError('each file must be a string')
-                except GLError as error:
+                except GLError:
                     self.table['files'] = old_files
-                    raise GLError(error.errno, error.errinfo)
+                    raise
         else:  # if type of files is not list or tuple
             raise TypeError('files must be a list or a tuple, not %s' %
                             type(files).__name__)
