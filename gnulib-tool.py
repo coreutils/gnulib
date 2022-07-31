@@ -340,6 +340,17 @@ def main():
     # Parse the given arguments.
     cmdargs = parser.parse_args()
 
+    # Handle --help and --version, ignoring all other options.
+    if cmdargs.help != None:
+        print(info.usage())
+        sys.exit(0)
+    if cmdargs.version != None:
+        message = '''gnulib-tool (%s %s)%s\n%s\n%s\n\nWritten by %s.''' % \
+            (info.package(), info.date(), info.version(), info.copyright(),
+             info.license(), info.authors())
+        print(message)
+        sys.exit(0)
+
     # Determine when user tries to combine modes.
     args = [
         cmdargs.mode_list,
@@ -374,15 +385,6 @@ def main():
         sys.exit(1)
 
     # Determine selected mode.
-    if cmdargs.help != None:
-        print(info.usage())
-        sys.exit(0)
-    if cmdargs.version != None:
-        message = '''gnulib-tool (%s %s)%s\n%s\n%s\n\nWritten by %s.''' % \
-            (info.package(), info.date(), info.version(), info.copyright(),
-             info.license(), info.authors())
-        print(message)
-        sys.exit(0)
     if cmdargs.mode_list != None:
         mode = 'list'
     if cmdargs.mode_import != None:
