@@ -272,25 +272,20 @@ def joinpath(head, *tail):
 
 
 def relativize(dir1, dir2):
-    '''Compute a relative pathname reldir such that dir1/reldir = dir2.'''
+    '''Compute a relative pathname reldir such that dir1/reldir = dir2.
+    dir1 and dir2 must be relative pathnames.'''
     dir0 = os.getcwd()
     while dir1:
         dir1 = '%s%s' % (os.path.normpath(dir1), os.path.sep)
         dir2 = '%s%s' % (os.path.normpath(dir2), os.path.sep)
-        if dir1.startswith(os.path.sep):
-            first = dir1[:dir1.find(os.path.sep, 1)]
-        else:  # if not dir1.startswith('/')
-            first = dir1[:dir1.find(os.path.sep)]
+        first = dir1[:dir1.find(os.path.sep)]
         if first != '.':
             if first == '..':
-                dir2 = os.path.basename(joinpath(dir0, dir2))
+                dir2 = joinpath(os.path.basename(dir0), dir2)
                 dir0 = os.path.dirname(dir0)
             else:  # if first != '..'
                 # Get first component of dir2
-                if dir2.startswith(os.path.sep):
-                    first2 = dir2[:dir2.find(os.path.sep, 1)]
-                else:  # if not dir1.startswith('/')
-                    first2 = dir2[:dir2.find(os.path.sep)]
+                first2 = dir2[:dir2.find(os.path.sep)]
                 if first == first2:
                     dir2 = dir2[dir2.find(os.path.sep) + 1:]
                 else:  # if first != first2
@@ -299,6 +294,13 @@ def relativize(dir1, dir2):
         dir1 = dir1[dir1.find(os.path.sep) + 1:]
     result = os.path.normpath(dir2)
     return result
+
+
+def relconcat(dir1, dir2):
+    '''Compute a relative pathname dir1/dir2, with obvious simplifications.
+    dir1 and dir2 must be relative pathnames.
+    dir2 is considered to be relative to dir1.'''
+    return os.path.normpath(os.path.join(dir1, dir2))
 
 
 def link_relative(src, dest):
