@@ -107,22 +107,22 @@ def main():
     parser.add_argument('--find',
                         dest='mode_find',
                         default=None,
-                        nargs='*')
+                        action='store_true')
     # import
     parser.add_argument('--import',
                         dest='mode_import',
                         default=None,
-                        nargs='*')
+                        action='store_true')
     # add-import
     parser.add_argument('--add-import',
                         dest='mode_add_import',
                         default=None,
-                        nargs='*')
+                        action='store_true')
     # remove-import
     parser.add_argument('--remove-import',
                         dest='mode_remove_import',
                         default=None,
-                        nargs='*')
+                        action='store_true')
     # update
     parser.add_argument('--update',
                         dest='mode_update',
@@ -132,80 +132,80 @@ def main():
     parser.add_argument('--create-testdir',
                         dest='mode_create_testdir',
                         default=None,
-                        nargs='*')
+                        action='store_true')
     # create-megatestdir
     parser.add_argument('--create-megatestdir',
                         dest='mode_create_megatestdir',
                         default=None,
-                        nargs='*')
+                        action='store_true')
     # test
     parser.add_argument('--test',
                         dest='mode_test',
                         default=None,
-                        nargs='*')
+                        action='store_true')
     # megatest
     parser.add_argument('--megatest',
                         dest='mode_megatest',
                         default=None,
-                        nargs='*')
+                        action='store_true')
     # extract-*
     parser.add_argument('--extract-description',
                         dest='mode_xdescription',
                         default=None,
-                        nargs='*')
+                        action='store_true')
     parser.add_argument('--extract-comment',
                         dest='mode_xcomment',
                         default=None,
-                        nargs='*')
+                        action='store_true')
     parser.add_argument('--extract-status',
                         dest='mode_xstatus',
                         default=None,
-                        nargs='*')
+                        action='store_true')
     parser.add_argument('--extract-notice',
                         dest='mode_xnotice',
                         default=None,
-                        nargs='*')
+                        action='store_true')
     parser.add_argument('--extract-applicability',
                         dest='mode_xapplicability',
                         default=None,
-                        nargs='*')
+                        action='store_true')
     parser.add_argument('--extract-filelist',
                         dest='mode_xfilelist',
                         default=None,
-                        nargs='*')
+                        action='store_true')
     parser.add_argument('--extract-dependencies',
                         dest='mode_xdependencies',
                         default=None,
-                        nargs='*')
+                        action='store_true')
     parser.add_argument('--extract-autoconf-snippet',
                         dest='mode_xautoconf',
                         default=None,
-                        nargs='*')
+                        action='store_true')
     parser.add_argument('--extract-automake-snippet',
                         dest='mode_xautomake',
                         default=None,
-                        nargs='*')
+                        action='store_true')
     parser.add_argument('--extract-include-directive',
                         dest='mode_xinclude',
                         default=None,
-                        nargs='*')
+                        action='store_true')
     parser.add_argument('--extract-link-directive',
                         dest='mode_xlink',
                         default=None,
-                        nargs='*')
+                        action='store_true')
     parser.add_argument('--extract-license',
                         dest='mode_xlicense',
                         default=None,
-                        nargs='*')
+                        action='store_true')
     parser.add_argument('--extract-maintainer',
                         dest='mode_xmaintainer',
                         default=None,
-                        nargs='*')
+                        action='store_true')
     # copy-file
     parser.add_argument('--copy-file',
                         dest='mode_copy_file',
                         default=None,
-                        nargs='+')
+                        action='store_true')
     # help
     parser.add_argument('--help', '--hel', '--he', '--h',
                         dest='help',
@@ -231,7 +231,7 @@ def main():
                         action='append',
                         dest='localpath',
                         default=None,
-                        nargs='?')
+                        nargs=1)
     # verbose
     parser.add_argument('--verbose',
                         default=0,
@@ -282,9 +282,10 @@ def main():
                         action='store_true')
     # avoids
     parser.add_argument('--avoid',
+                        action='append',
                         dest='avoids',
                         default=None,
-                        nargs='+')
+                        nargs=1)
     # libtool
     parser.add_argument("--libtool",
                         dest=libtool,
@@ -336,9 +337,13 @@ def main():
                         dest="makefile",
                         default=None,
                         type=str)
+    # All other arguments are collected.
+    parser.add_argument("non_option_arguments",
+                        nargs='*')
 
-    # Parse the given arguments.
-    cmdargs = parser.parse_args()
+    # Parse the given arguments. Don't signal an error if non-option arguments
+    # occur between or after options.
+    (cmdargs, unhandled) = parser.parse_known_args()
 
     # Handle --help and --version, ignoring all other options.
     if cmdargs.help != None:
@@ -350,6 +355,16 @@ def main():
              info.license(), info.authors())
         print(message)
         sys.exit(0)
+
+    # Report unhandled arguments.
+    for arg in unhandled:
+        if arg.startswith('-'):
+            message = '%s: Unrecognized option \'%s\'.\n' % (constants.APP['name'], arg)
+            message += 'Try \'gnulib-tool --help\' for more information.\n'
+            sys.stderr.write(message)
+            sys.exit(1)
+    # By now, all unhandled arguments were non-options.
+    cmdargs.non_option_arguments += unhandled
 
     # Determine when user tries to combine modes.
     args = [
@@ -379,7 +394,7 @@ def main():
     ]
     overflow = [arg for arg in args if arg != None]
     if len(overflow) > 1:
-        message = 'gnulib-tool: Unable to combine different modes of work.\n'
+        message = '%s: Unable to combine different modes of work.\n' % constants.APP['name']
         message += 'Try \'gnulib-tool --help\' for more information.\n'
         sys.stderr.write(message)
         sys.exit(1)
@@ -389,81 +404,92 @@ def main():
         mode = 'list'
     if cmdargs.mode_import != None:
         mode = 'import'
-        modules = list(cmdargs.mode_import)
+        modules = list(cmdargs.non_option_arguments)
     if cmdargs.mode_add_import != None:
         mode = 'add-import'
-        modules = list(cmdargs.mode_add_import)
+        modules = list(cmdargs.non_option_arguments)
     if cmdargs.mode_remove_import != None:
         mode = 'remove-import'
-        modules = list(cmdargs.mode_remove_import)
+        modules = list(cmdargs.non_option_arguments)
     if cmdargs.mode_update != None:
         mode = 'update'
+        if len(cmdargs.non_option_arguments) > 0:
+            message = '%s: too many arguments in \'update\' mode\n'
+            message += 'Try \'gnulib-tool --help\' for more information.\n'
+            message += 'If you really want to modify the gnulib configuration of your project,\n'
+            message += 'you need to use \'gnulib-tool --import\' - at your own risk!\n'
+            sys.stderr.write(message)
+            sys.exit(1)
     if cmdargs.mode_create_testdir != None:
         mode = 'create-testdir'
-        modules = list(cmdargs.mode_create_testdir)
+        modules = list(cmdargs.non_option_arguments)
     if cmdargs.mode_create_megatestdir != None:
         mode = 'create-megatestdir'
-        modules = list(cmdargs.mode_create_megatestdir)
+        modules = list(cmdargs.non_option_arguments)
     if cmdargs.mode_test != None:
         mode = 'test'
-        modules = list(cmdargs.mode_test)
+        modules = list(cmdargs.non_option_arguments)
     if cmdargs.mode_megatest != None:
         mode = 'megatest'
-        modules = list(cmdargs.mode_megatest)
+        modules = list(cmdargs.non_option_arguments)
     if cmdargs.mode_xdescription != None:
         mode = 'extract-description'
-        modules = list(cmdargs.mode_xdescription)
+        modules = list(cmdargs.non_option_arguments)
     if cmdargs.mode_xcomment != None:
         mode = 'extract-comment'
-        modules = list(cmdargs.mode_xcomment)
+        modules = list(cmdargs.non_option_arguments)
     if cmdargs.mode_xstatus != None:
         mode = 'extract-status'
-        modules = list(cmdargs.mode_xstatus)
+        modules = list(cmdargs.non_option_arguments)
     if cmdargs.mode_xnotice != None:
         mode = 'extract-notice'
-        modules = list(cmdargs.mode_xnotice)
+        modules = list(cmdargs.non_option_arguments)
     if cmdargs.mode_xapplicability != None:
         mode = 'extract-applicability'
-        modules = list(cmdargs.mode_xapplicability)
+        modules = list(cmdargs.non_option_arguments)
     if cmdargs.mode_xfilelist != None:
         mode = 'extract-filelist'
-        modules = list(cmdargs.mode_xfilelist)
+        modules = list(cmdargs.non_option_arguments)
     if cmdargs.mode_xautoconf != None:
         mode = 'extract-autoconf-snippet'
-        modules = list(cmdargs.mode_xautoconf)
+        modules = list(cmdargs.non_option_arguments)
     if cmdargs.mode_xautomake != None:
         mode = 'extract-automake-snippet'
-        modules = list(cmdargs.mode_xautomake)
+        modules = list(cmdargs.non_option_arguments)
     if cmdargs.mode_xdependencies != None:
         mode = 'extract-dependencies'
-        modules = list(cmdargs.mode_xdependencies)
+        modules = list(cmdargs.non_option_arguments)
     if cmdargs.mode_xinclude != None:
         mode = 'extract-include-directive'
-        modules = list(cmdargs.mode_xinclude)
+        modules = list(cmdargs.non_option_arguments)
     if cmdargs.mode_xlink != None:
         mode = 'extract-link-directive'
-        modules = list(cmdargs.mode_xlink)
+        modules = list(cmdargs.non_option_arguments)
     if cmdargs.mode_xlicense != None:
         mode = 'extract-license'
-        modules = list(cmdargs.mode_xlicense)
+        modules = list(cmdargs.non_option_arguments)
     if cmdargs.mode_xmaintainer != None:
         mode = 'extract-maintainer'
-        modules = list(cmdargs.mode_xmaintainer)
+        modules = list(cmdargs.non_option_arguments)
     if cmdargs.mode_copy_file != None:
         mode = 'copy-file'
-        if len(cmdargs.mode_copy_file) > 2:
+        if len(cmdargs.non_option_arguments) < 1 or len(cmdargs.non_option_arguments) > 2:
             message = '%s: *** ' % constants.APP['name']
             message += 'invalid number of arguments for --%s' % mode
             message += '\n%s: *** Exit.\n' % constants.APP['name']
             sys.stderr.write(message)
             sys.exit(1)
-        files = list(cmdargs.mode_copy_file)
+        files = list(cmdargs.non_option_arguments)
 
     # Determine specific settings.
     destdir = cmdargs.destdir
     if destdir != None:
         destdir = cmdargs.destdir[0]
     localpath = cmdargs.localpath
+    if localpath != None:
+        localpath = [ dir
+                      for list1 in localpath
+                      for dir in list1 ]
     libname = cmdargs.libname
     if libname != None:
         libname = cmdargs.libname[0]
@@ -513,6 +539,10 @@ def main():
     if lgpl == None:
         lgpl = True
     avoids = cmdargs.avoids
+    if avoids != None:
+        avoids = [ module
+                   for list1 in avoids
+                   for module in list1 ]
 
     # Create pygnulib configuration.
     config = classes.GLConfig(
