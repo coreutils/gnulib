@@ -65,41 +65,53 @@ class GLError(Exception):
          17: cannot update the given file: <file>
          18: module lacks a license: <module>
          19: could not create destination directory: <directory>
-        errinfo: additional information;
-        style: 0 or 1, whether old-style'''
+        errinfo: additional information'''
         self.errno = errno
         self.errinfo = errinfo
         self.args = (self.errno, self.errinfo)
 
     def __repr__(self):
+        errno = self.errno
         errinfo = self.errinfo
-        errors = \
-            [  # Begin list of errors
-                "file does not exist in GLFileSystem: %s" % repr(errinfo),
-                "cannot patch file inside GLFileSystem: %s" % repr(errinfo),
-                "configure file does not exist: %s" % repr(errinfo),
-                "minimum supported autoconf version is 2.59, not %s" % repr(
-                    errinfo),
-                "%s is expected to contain gl_M4_BASE([%s])" % \
-                (repr(os.path.join(errinfo, 'gnulib-comp.m4')), repr(errinfo)),
-                "missing sourcebase argument; cache file doesn't contain it,"
-                + " so you might have to set this argument",
-                "missing docbase argument; you might have to create GLImport" \
-                + " instance with mode 0 and docbase argument",
-                "missing testsbase argument; cache file doesn't contain it,"
-                + " so you might have to set this argument"
-                "missing libname argument; cache file doesn't contain it,"
-                + " so you might have to set this argument",
-                "conddeps are not supported with inctests",
-                "incompatible licenses on modules: %s" % repr(errinfo),
-                "cannot process empty filelist",
-                "cannot create the given directory: %s" % repr(errinfo),
-                "cannot remove the given file: %s" % repr(errinfo),
-                "cannot create the given file: %s" % repr(errinfo),
-                "cannot transform the given file: %s" % repr(errinfo),
-                "cannot update/replace the given file: %s" % repr(errinfo),
-                "module lacks a license: %s" % repr(errinfo),
-                "error when running subprocess: %s" % repr(errinfo),
-            ]  # Complete list of errors
-        self.message = '[Errno %d] %s' % (self.errno, errors[self.errno - 1])
+        if self.message == None:
+            message = None
+            if errno == 1:
+                message = "file does not exist in GLFileSystem: %s" % repr(errinfo)
+            elif errno == 2:
+                message = "cannot patch file inside GLFileSystem: %s" % repr(errinfo)
+            elif errno == 3:
+                message = "configure file does not exist: %s" % repr(errinfo)
+            elif errno == 4:
+                message = "minimum supported autoconf version is 2.59, not %s" % repr(errinfo)
+            elif errno == 5:
+                message = "%s is expected to contain gl_M4_BASE([%s])" % (repr(os.path.join(errinfo, 'gnulib-comp.m4')), repr(errinfo))
+            elif errno == 6:
+                message = "missing sourcebase argument; cache file doesn't contain it, so you might have to set this argument"
+            elif errno == 7:
+                message = "missing docbase argument; you might have to create GLImport instance with mode 0 and docbase argument"
+            elif errno == 8:
+                message = "missing testsbase argument; cache file doesn't contain it, so you might have to set this argument"
+            elif errno == 9:
+                message = "missing libname argument; cache file doesn't contain it, so you might have to set this argument"
+            elif errno == 10:
+                message = "conddeps are not supported with inctests"
+            elif errno == 11:
+                message = "incompatible licenses on modules: %s" % repr(errinfo)
+            elif errno == 12:
+                message = "cannot process empty filelist"
+            elif errno == 13:
+                message = "cannot create the given directory: %s" % repr(errinfo)
+            elif errno == 14:
+                message = "cannot remove the given file: %s" % repr(errinfo)
+            elif errno == 15:
+                message = "cannot create the given file: %s" % repr(errinfo)
+            elif errno == 16:
+                message = "cannot transform the given file: %s" % repr(errinfo)
+            elif errno == 17:
+                message = "cannot update/replace the given file: %s" % repr(errinfo)
+            elif errno == 18:
+                message = "module lacks a license: %s" % repr(errinfo)
+            elif errno == 19:
+                message = "error when running subprocess: %s" % repr(errinfo)
+            self.message = '[Errno %d] %s' % (errno, message)
         return self.message

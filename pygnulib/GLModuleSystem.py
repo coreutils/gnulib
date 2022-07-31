@@ -802,8 +802,7 @@ Include:|Link:|License:|Maintainer:)'
                 if self.config['errors']:
                     raise GLError(18, str(self))
                 else:  # if not self.config['errors']
-                    sys.stderr.write('gnulib-tool: warning: ')
-                    sys.stderr.write('module %s lacks a license\n' % str(self))
+                    sys.stderr.write('gnulib-tool: warning: module %s lacks a license\n' % str(self))
         if not license:
             license = 'GPL'
         return license

@@ -486,7 +486,7 @@ def main():
         if len(cmdargs.non_option_arguments) < 1 or len(cmdargs.non_option_arguments) > 2:
             message = '%s: *** ' % constants.APP['name']
             message += 'invalid number of arguments for --%s' % mode
-            message += '\n%s: *** Exit.\n' % constants.APP['name']
+            message += '\n%s: *** Stop.\n' % constants.APP['name']
             sys.stderr.write(message)
             sys.exit(1)
         files = list(cmdargs.non_option_arguments)
@@ -722,7 +722,7 @@ def main():
         if not destdir:
             message = '%s: *** ' % constants.APP['name']
             message += 'please specify --dir option'
-            message += '\n%s: *** Exit.\n' % constants.APP['name']
+            message += '\n%s: *** Stop.\n' % constants.APP['name']
             sys.stderr.write(message)
             sys.exit(1)
         if not auxdir:
@@ -735,7 +735,7 @@ def main():
         if not destdir:
             message = '%s: *** ' % constants.APP['name']
             message += 'please specify --dir option'
-            message += '\n%s: *** Exit.\n' % constants.APP['name']
+            message += '\n%s: *** Stop.\n' % constants.APP['name']
             sys.stderr.write(message)
             sys.exit(1)
         if not auxdir:
@@ -846,7 +846,7 @@ def main():
         if avoids:
             message = '%s: *** ' % constants.APP['name']
             message += 'cannot combine --avoid and --extract-dependencies\n'
-            message += '%s: *** Exit.\n' % constants.APP['name']
+            message += '%s: *** Stop.\n' % constants.APP['name']
             sys.stderr.write(message)
             sys.exit(1)
         modulesystem = classes.GLModuleSystem(config)
@@ -978,7 +978,7 @@ def main():
     else:
         message = '%s: *** ' % constants.APP['name']
         message += 'no mode specified'
-        message += '\n%s: *** Exit.\n' % constants.APP['name']
+        message += '\n%s: *** Stop.\n' % constants.APP['name']
         sys.stderr.write(message)
         sys.exit(1)
 
@@ -999,15 +999,13 @@ if __name__ == '__main__':
             elif errno == 2:
                 message += 'patch file %s didn\'t apply cleanly' % errinfo
             elif errno == 3:
-                message += 'cannot find %s - make sure ' % errinfo
-                message += 'you run gnulib-tool from within your package\'s directory'
+                message += 'cannot find %s - make sure you run gnulib-tool from within your package\'s directory' % errinfo
             elif errno == 4:
                 message += 'minimum supported autoconf version is 2.59. Try adding'
                 message += 'AC_PREREQ([%s])' % constants.DEFAULT_AUTOCONF_MINVERSION
                 message += ' to your configure.ac.'
             elif errno == 5:
-                "%s is expected to contain gl_M4_BASE([%s])" % \
-                    (repr(os.path.join(errinfo, 'gnulib-comp.m4')), repr(errinfo))
+                message += '%s is expected to contain gl_M4_BASE([%s])' % (repr(os.path.join(errinfo, 'gnulib-comp.m4')), repr(errinfo))
             elif errno == 6:
                 message += 'missing --source-base option'
             elif errno == 7:
@@ -1020,8 +1018,7 @@ if __name__ == '__main__':
             elif errno == 9:
                 message += 'missing --lib option'
             elif errno == 10:
-                message = 'gnulib-tool: option --conditional-dependencies is not '
-                message += 'supported with --with-tests\n'
+                message = 'gnulib-tool: option --conditional-dependencies is not supported with --with-tests'
             elif errno == 11:
                 incompatibilities = ''
                 message += 'incompatible license on modules:%s' % constants.NL
@@ -1035,17 +1032,25 @@ if __name__ == '__main__':
                 sed_table = 's,^\\([^ ]*\\) ,\\1' + ' ' * 51 + ',\n'
                 sed_table += 's,^\\(' + '.' * 49 + '[^ ]*\\) *,' + ' ' * 17 + '\\1 ,'
                 args = ['sed', '-e', sed_table, tempname]
-                incompatibilities = sp.check_output(
-                    args).decode(ENCS['default'])
+                incompatibilities = sp.check_output(args).decode(ENCS['default'])
                 message += incompatibilities
                 os.remove(tempname)
             elif errno == 12:
                 message += 'refusing to do nothing'
-            elif errno in [13, 14, 15, 16, 17]:
-                message += 'failed'
+            elif errno == 13:
+                message += 'could not create directory %s' % errinfo
+            elif errno == 14:
+                message += 'could not delete file %s' % errinfo
+            elif errno == 15:
+                message += 'could not create file %s' % errinfo
+            elif errno == 16:
+                message += 'could not transform file %s' % errinfo
+            elif errno == 17:
+                message += 'could not update file %s' % errinfo
+            elif errno == 18:
+                message += 'module %s lacks a license' % errinfo
             elif errno == 19:
                 message += 'could not create destination directory: %s' % errinfo
-            if errno != 10:
-                message += '\n%s: *** Exit.\n' % constants.APP['name']
+            message += '\n%s: *** Stop.\n' % constants.APP['name']
             sys.stderr.write(message)
             sys.exit(1)
