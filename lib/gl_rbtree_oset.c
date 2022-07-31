@@ -46,6 +46,7 @@
 #include "gl_anytree_oset.h"
 
 /* For debugging.  */
+extern void gl_rbtree_oset_check_invariants (gl_oset_t);
 void
 gl_rbtree_oset_check_invariants (gl_oset_t set)
 {

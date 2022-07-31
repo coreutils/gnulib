@@ -84,6 +84,7 @@ check_invariants (gl_list_node_t node, gl_list_node_t parent)
 
   return left_blackheight + (node->color == BLACK ? 1 : 0);
 }
+extern void gl_rbtreehash_list_check_invariants (gl_list_t);
 void
 gl_rbtreehash_list_check_invariants (gl_list_t list)
 {
