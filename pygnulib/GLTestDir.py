@@ -961,7 +961,7 @@ class GLMegaTestDir(object):
         constants.execute(args, verbose)
         try:  # Try to make a directory
             if not isdir('build-aux'):
-                os, mkdir('build-aux')
+                os.mkdir('build-aux')
         except Exception as error:
             pass
         args = [UTILS['autoconf']]
