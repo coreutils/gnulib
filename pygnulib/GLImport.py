@@ -102,7 +102,7 @@ class GLImport(object):
         match = pattern.findall(data)
         if match:
             result = cleaner(match)[0]
-            self.cache.setAuxDir(joinpath(result, self.config['destdir']))
+            self.cache.setAuxDir(joinpath(self.config['destdir'], result))
         pattern = compiler(r'A[CM]_PROG_LIBTOOL', re.S | re.M)
         guessed_libtool = bool(pattern.findall(data))
         if self.config['auxdir'] == None:
