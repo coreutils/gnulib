@@ -1056,17 +1056,6 @@ Date:   Sun Nov 13 04:12:26 2016 +0100
 
 --------------------------------------------------------------------------------
 
-commit ff9debcf75301805b1db925cdcdfb248541c576d
-Author: Bruno Haible <bruno@clisp.org>
-Date:   Sat Oct 15 15:51:20 2016 +0200
-
-    Avoid gnulib-tool warnings about the dependencies of 'parse-datetime'.
-
-    * gnulib-tool (func_get_license): Special-case the 'parse-datetime'
-    module.
-
---------------------------------------------------------------------------------
-
 commit 9bdf6c8a0cdeb13c12e4b65dee9538c5468dbe1d
 Author: Bruno Haible <bruno@clisp.org>
 Date:   Sun Aug 19 14:06:50 2012 +0200
