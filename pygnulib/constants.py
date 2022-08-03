@@ -325,6 +325,19 @@ def copyfile2(src, dest):
         pass
 
 
+def movefile(src, dest):
+    '''Move/rename file src to file dest. Like shutil.move, but gracefully
+    handle common errors.'''
+    try:
+        shutil.move(src, dest)
+    except PermissionError:
+        # shutil.move invokes os.rename, catches the resulting OSError for
+        # errno=EXDEV, attempts a copy instead, and encounters a PermissionError
+        # while doing that.
+        copyfile2(src, dest)
+        os.remove(src)
+
+
 def link_relative(src, dest):
     '''Like ln -s, except that src is given relative to the current directory
     (or absolute), not given relative to the directory of dest.'''

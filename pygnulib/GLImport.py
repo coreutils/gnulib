@@ -53,6 +53,7 @@ compiler = constants.compiler
 joinpath = constants.joinpath
 cleaner = constants.cleaner
 copyfile2 = constants.copyfile2
+movefile = constants.movefile
 isabs = os.path.isabs
 isdir = os.path.isdir
 isfile = os.path.isfile
@@ -1043,7 +1044,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                     try:  # Try to move file
                         if os.path.exists(backup):
                             os.remove(backup)
-                        shutil.move(path, '%s~' % path)
+                        movefile(path, '%s~' % path)
                     except Exception as error:
                         raise GLError(14, file)
                 else:  # if self.config['dryrun']
@@ -1143,7 +1144,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                 tmpfile = self.assistant.tmpfilename(joinpath(pobase, file))
                 path = joinpath('build-aux', 'po', file)
                 lookedup, flag = filesystem.lookup(path)
-                shutil.move(lookedup, tmpfile)
+                movefile(lookedup, tmpfile)
                 basename = joinpath(pobase, file)
                 filename, backup, flag = self.assistant.super_update(
                     basename, tmpfile)

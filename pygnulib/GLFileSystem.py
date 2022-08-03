@@ -43,6 +43,7 @@ __copyright__ = constants.__copyright__
 DIRS = constants.DIRS
 joinpath = constants.joinpath
 copyfile = constants.copyfile
+movefile = constants.movefile
 isdir = os.path.isdir
 isfile = os.path.isfile
 
@@ -266,7 +267,7 @@ class GLFileAssistant(object):
                     lookedup, joinpath(destdir, rewritten))
             else:  # if any of these conditions is not met
                 try:  # Try to move file
-                    shutil.move(tmpfile, joinpath(destdir, rewritten))
+                    movefile(tmpfile, joinpath(destdir, rewritten))
                 except Exception as error:
                     raise GLError(17, original)
         else:  # if self.config['dryrun']
@@ -308,7 +309,7 @@ class GLFileAssistant(object):
                 if isfile(backuppath):
                     os.remove(backuppath)
                 try:  # Try to replace the given file
-                    shutil.move(basepath, backuppath)
+                    movefile(basepath, backuppath)
                 except Exception as error:
                     raise GLError(17, original)
                 if self.filesystem.shouldLink(original, lookedup) == CopyAction.Symlink \
@@ -405,8 +406,8 @@ class GLFileAssistant(object):
                 if not self.config['dryrun']:
                     if isfile(backuppath):
                         os.remove(backuppath)
-                    shutil.move(basepath, backuppath)
-                    shutil.move(tmpfile, basepath)
+                    movefile(basepath, backuppath)
+                    movefile(tmpfile, basepath)
                 else:  # if self.config['dryrun']
                     os.remove(tmpfile)
         else:  # if not isfile(basepath)
@@ -414,7 +415,7 @@ class GLFileAssistant(object):
             if not self.config['dryrun']:
                 if isfile(basepath):
                     os.remove(basepath)
-                shutil.move(tmpfile, basepath)
+                movefile(tmpfile, basepath)
             else:  # if self.config['dryrun']
                 os.remove(tmpfile)
         result = tuple([basename, backupname, result_flag])

@@ -54,6 +54,7 @@ TESTS = constants.TESTS
 compiler = constants.compiler
 joinpath = constants.joinpath
 copyfile = constants.copyfile
+movefile = constants.movefile
 isdir = os.path.isdir
 isfile = os.path.isfile
 normpath = os.path.normpath
@@ -658,7 +659,7 @@ class GLTestDir(object):
                     dest = src[:-1]
                     if isfile(dest):
                         os.remove(dest)
-                    shutil.move(src, dest)
+                    movefile(src, dest)
         # libtoolize
         if libtool:
             args = [UTILS['libtoolize'], '--copy']
@@ -692,7 +693,7 @@ class GLTestDir(object):
                         dest = src[:-1]
                         if isfile(dest):
                             os.remove(dest)
-                        shutil.move(src, dest)
+                        movefile(src, dest)
             # aclocal
             args = [UTILS['aclocal'], '-I', joinpath('..', m4base)]
             constants.execute(args, verbose)
