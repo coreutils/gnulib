@@ -712,7 +712,6 @@ class GLConfig(object):
     def setTestFlags(self, testflags):
         '''Specify test flags. You can get flags from TESTS variable.'''
         if type(testflags) is list or type(testflags) is tuple:
-            old_testflags = self.table['testflags']
             self.table['testflags'] = list()
             for flag in testflags:
                 try:  # Try to enable each flag

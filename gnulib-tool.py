@@ -523,28 +523,27 @@ def main():
     dryrun = cmdargs.dryrun
     verbose = -cmdargs.quiet + cmdargs.verbose
     inctests = cmdargs.inctests
-    flags = [cmdargs.inctests, cmdargs.obsolete, cmdargs.cxx,
-             cmdargs.longrunning, cmdargs.privileged, cmdargs.unportable,
-             cmdargs.alltests]
-    testflags = list()
-    for flag in flags:
-        index = flags.index(flag)
-        if flag != None:
-            if flag:
-                if index == 0:
-                    testflags += [constants.TESTS['tests']]
-                elif index == 1:
-                    testflags += [constants.TESTS['obsolete']]
-                elif index == 2:
-                    testflags += [constants.TESTS['cxx-tests']]
-                elif index == 3:
-                    testflags += [constants.TESTS['longrunning-tests']]
-                elif index == 4:
-                    testflags += [constants.TESTS['privileged-tests']]
-                elif index == 5:
-                    testflags += [constants.TESTS['unportable-tests']]
-                elif index == 6:
-                    testflags += [constants.TESTS['all-tests']]
+    # Canonicalize the inctests variable.
+    if inctests == None:
+        if mode in ['import', 'add-import', 'remove-import', 'update']:
+            inctests = False
+        elif mode in ['create-testdir', 'create-megatestdir', 'test', 'megatest']:
+            inctests = True
+    testflags = []
+    if inctests:
+        testflags += [constants.TESTS['tests']]
+    if cmdargs.obsolete:
+        testflags += [constants.TESTS['obsolete']]
+    if cmdargs.cxx:
+        testflags += [constants.TESTS['cxx-tests']]
+    if cmdargs.longrunning:
+        testflags += [constants.TESTS['longrunning-tests']]
+    if cmdargs.privileged:
+        testflags += [constants.TESTS['privileged-tests']]
+    if cmdargs.unportable:
+        testflags += [constants.TESTS['unportable-tests']]
+    if cmdargs.alltests:
+        testflags += [constants.TESTS['all-tests']]
     lgpl = cmdargs.lgpl
     if lgpl != None:
         lgpl = lgpl[-1]
@@ -588,13 +587,6 @@ def main():
         verbose=verbose,
         dryrun=dryrun,
     )
-
-    # Canonicalize the inctests variable.
-    if inctests == None:
-        if mode in ['import', 'add-import', 'remove-import', 'update']:
-            config.disableTestFlag(TESTS['tests'])
-        elif mode in ['create-testdir', 'create-megatestdir', 'test', 'megatest']:
-            config.enableTestFlag(TESTS['tests'])
 
     # Work in the given mode.
     if mode in ['list']:
