@@ -168,11 +168,14 @@ class GLTestDir(object):
             base_modules = [self.modulesystem.find(m) for m in base_modules]
         # All modules together.
         # Except config-h, which breaks all modules which use HAVE_CONFIG_H.
+        # Except non-recursive-gnulib-prefix-hack, which represents a
+        # nonstandard way of using Automake.
         # Except ftruncate, mountlist, which abort the configuration on mingw.
         # Except lib-ignore, which leads to link errors when Sun C++ is used.
         base_modules = sorted(set(base_modules))
-        base_modules = [module for module in base_modules if str(module) not in
-                        ['config-h', 'ftruncate', 'mountlist', 'lib-ignore']]
+        base_modules = [module
+                        for module in base_modules
+                        if str(module) not in ['config-h', 'non-recursive-gnulib-prefix-hack', 'ftruncate', 'mountlist', 'lib-ignore']]
 
         # When computing transitive closures, don't consider $module to depend on
         # $module-tests. Need this because tests are implicitly GPL and may depend
