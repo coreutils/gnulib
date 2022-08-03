@@ -868,18 +868,23 @@ Include:|Link:|License:|Maintainer:)'
 class GLModuleTable(object):
     '''GLModuleTable is used to work with the list of the modules.'''
 
-    def __init__(self, config, avoids=list()):
-        '''GLModuleTable.__init__(config, avoids) -> GLModuleTable
+    def __init__(self, config, inc_all_direct_tests, inc_all_indirect_tests):
+        '''GLModuleTable.__init__(config, inc_all_direct_tests, inc_all_indirect_tests) -> GLModuleTable
 
         Create new GLModuleTable instance. If modules are specified, then add
         every module from iterable as unconditional module. If avoids is specified,
         then in transitive_closure every dependency which is in avoids won't be
-        included in the final modules list. If testflags iterable is enabled, then
-        don't add module which status is in the testflags. If conddeps are enabled,
+        included in the final modules list. If conddeps are enabled,
         then store condition for each dependency if it has a condition.
         The only necessary argument is localpath, which is needed just to create
-        modulesystem instance to look for dependencies.'''
-        self.avoids = list()  # Avoids
+        modulesystem instance to look for dependencies.
+        inc_all_direct_tests = True if all kinds of problematic unit tests among
+                                    the unit tests of the specified modules
+                                    should be included
+        inc_all_indirect_tests = True if all kinds of problematic unit tests
+                                    among the unit tests of the dependencies
+                                    should be included
+        '''
         self.dependers = dict()  # Dependencies
         self.conditionals = dict()  # Conditional modules
         self.unconditionals = dict()  # Unconditional modules
@@ -890,11 +895,16 @@ class GLModuleTable(object):
         if type(config) is not GLConfig:
             raise TypeError('config must be a GLConfig, not %s' %
                             type(config).__name__)
-        for avoid in avoids:
+        self.config = config
+        if type(inc_all_direct_tests) is not bool:
+            raise TypeError('inc_all_direct_tests must be a bool, not %s' %
+                            type(inc_all_direct_tests).__name__)
+        self.inc_all_direct_tests = inc_all_direct_tests
+        self.inc_all_indirect_tests = inc_all_indirect_tests
+        self.avoids = list()  # Avoids
+        for avoid in self.avoids:
             if type(avoid) is not GLModule:
                 raise TypeError('each avoid must be a GLModule instance')
-            self.avoids += [avoids]
-        self.config = config
         self.filesystem = GLFileSystem(self.config)
         self.modulesystem = GLModuleSystem(self.config)
 
@@ -982,14 +992,16 @@ class GLModuleTable(object):
 
         Use transitive closure to add module and its dependencies. Add every
         module and its dependencies from modules list, but do not add dependencies
-        which contain in avoids list. If any testflag is enabled, then do not add
-        dependencies which have the status as this flag. If conddeps are enabled,
+        which contain in avoids list. If any incl_test_categories is enabled, then
+        add dependencies which are in these categories. If any excl_test_categories,
+        then do not add dependencies which are in these categories. If conddeps are enabled,
         then store condition for each dependency if it has a condition. This method
         is used to update final list of modules. Method returns list of modules.
-        GLConfig: testflags.'''
+        GLConfig: incl_test_categories, excl_test_categories.'''
         for module in modules:
             if type(module) is not GLModule:
                 raise TypeError('each module must be a GLModule instance')
+        inc_all_tests = self.inc_all_direct_tests
         handledmodules = list()
         inmodules = modules
         outmodules = list()
@@ -1011,7 +1023,7 @@ class GLModuleTable(object):
                 dependencies = module.getDependencies()
                 depmodules = [pair[0] for pair in dependencies]
                 conditions = [pair[1] for pair in dependencies]
-                if TESTS['tests'] in self.config['testflags']:
+                if self.config.checkInclTestCategory(TESTS['tests']):
                     testsname = module.getTestsName()
                     if self.modulesystem.exists(testsname):
                         testsmodule = self.modulesystem.find(testsname)
@@ -1019,34 +1031,34 @@ class GLModuleTable(object):
                         conditions += [None]
                 for depmodule in depmodules:
                     include = True
-                    includes = list()
                     status = depmodule.getStatus()
                     for word in status:
                         if word == 'obsolete':
-                            if TESTS['obsolete'] in self.config['testflags'] or \
-                                    TESTS['all-test'] in self.config['testflags']:
-                                includes += [False]
+                            if not self.config.checkInclTestCategory(TESTS['obsolete']):
+                                include = False
                         elif word == 'c++-test':
-                            if TESTS['c++-test'] in self.config['testflags'] or \
-                                    TESTS['all-test'] in self.config['testflags']:
-                                includes += [False]
+                            if self.config.checkExclTestCategory(TESTS['c++-test']):
+                                include = False
+                            if not (inc_all_tests or self.config.checkInclTestCategory(TESTS['c++-test'])):
+                                include = False
                         elif word == 'longrunning-test':
-                            if TESTS['longrunning-test'] in self.config['testflags'] or \
-                                    TESTS['all-test'] in self.config['testflags']:
-                                includes += [False]
+                            if self.config.checkExclTestCategory(TESTS['longrunning-test']):
+                                include = False
+                            if not (inc_all_tests or self.config.checkInclTestCategory(TESTS['longrunning-test'])):
+                                include = False
                         elif word == 'privileged-test':
-                            if TESTS['privileged-test'] in self.config['testflags'] or \
-                                    TESTS['all-test'] in self.config['testflags']:
-                                includes += [False]
-                        elif word == 'all-test':
-                            if TESTS['all-test'] in self.config['testflags'] or \
-                                    TESTS['all-test'] in self.config['testflags']:
-                                includes += [False]
-                        else:  # if any other word
-                            if word.endswith('-tests'):
-                                if TESTS['all-test'] in self.config['testflags']:
-                                    includes += [False]
-                        include = any(includes)
+                            if self.config.checkExclTestCategory(TESTS['privileged-test']):
+                                include = False
+                            if not (inc_all_tests or self.config.checkInclTestCategory(TESTS['privileged-test'])):
+                                include = False
+                        elif word == 'unportable-test':
+                            if self.config.checkExclTestCategory(TESTS['unportable-test']):
+                                include = False
+                            if not (inc_all_tests or self.config.checkInclTestCategory(TESTS['unportable-test'])):
+                                include = False
+                        elif word.endswith('-test'):
+                            if not inc_all_tests:
+                                include = False
                     if include and depmodule not in self.avoids:
                         inmodules += [depmodule]
                         if self.config['conddeps']:
@@ -1064,11 +1076,12 @@ class GLModuleTable(object):
             listing = list()  # Create empty list
             inmodules = sorted(set(inmodules))
             handledmodules = sorted(set(handledmodules + inmodules_this_round))
-            inmodules = \
-                [  # Begin to filter inmodules
-                    module for module in inmodules if module not in handledmodules
-                ]  # Finish to filter inmodules
+            # Remove handledmodules from inmodules.
+            inmodules = [module
+                         for module in inmodules
+                         if module not in handledmodules]
             inmodules = sorted(set(inmodules))
+            inc_all_tests = self.inc_all_indirect_tests
         modules = sorted(set(outmodules))
         self.modules = modules
         return list(modules)
@@ -1090,28 +1103,21 @@ class GLModuleTable(object):
         list after previous transitive_closure.
         Method returns tuple which contains two lists: the list of main modules and
         the list of tests-related modules. Both lists contain dependencies.
-        GLConfig: testflags.'''
-        inctests = False
-        main_modules = list()
-        tests_modules = list()
-        if TESTS['tests'] in self.config['testflags']:
-            self.config['testflags'].pop(TESTS['tests'])
-            inctests = True
+        GLConfig: incl_test_categories, excl_test_categories.'''
         for module in basemodules:
             if type(module) is not GLModule:
                 raise TypeError('each module must be a GLModule instance')
         for module in finalmodules:
             if type(module) is not GLModule:
                 raise TypeError('each module must be a GLModule instance')
+        saved_inctests = self.config.checkInclTestCategory(TESTS['tests'])
+        self.config.disableInclTestCategory(TESTS['tests'])
         main_modules = self.transitive_closure(basemodules)
+        self.config.setInclTestCategory(TESTS['tests'], saved_inctests)
         tests_modules = \
             [m for m in finalmodules if m not in main_modules] + \
             [m for m in main_modules if m.getApplicability() != 'main']
         tests_modules = sorted(set(tests_modules))
-        if inctests:
-            testflags = sorted(
-                set(self.config['testflags'] + [TESTS['tests']]))
-            self.config.setTestFlags(testflags)
         result = tuple([main_modules, tests_modules])
         return result
 

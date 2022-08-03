@@ -104,7 +104,7 @@ MODES['verbose-min'] = -2
 MODES['verbose-default'] = 0
 MODES['verbose-max'] = 2
 
-# Set TESTS dictionary
+# Define TESTS categories
 TESTS = \
     {
         'tests':             0,

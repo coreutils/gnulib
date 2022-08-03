@@ -149,25 +149,25 @@ class GLImport(object):
                 self.cache.enableVCFiles()
                 data = data.replace('gl_VC_FILES', '')
             if 'gl_WITH_TESTS' in data:
-                self.cache.enableTestFlag(TESTS['tests'])
+                self.cache.enableInclTestCategory(TESTS['tests'])
                 data = data.replace('gl_WITH_TESTS', '')
             if 'gl_WITH_OBSOLETE' in data:
-                self.cache.enableTestFlag(TESTS['obsolete'])
+                self.cache.enableInclTestCategory(TESTS['obsolete'])
                 data = data.replace('gl_WITH_OBSOLETE', '')
             if 'gl_WITH_CXX_TESTS' in data:
-                self.cache.enableTestFlag(TESTS['c++-test'])
+                self.cache.enableInclTestCategory(TESTS['c++-test'])
                 data = data.replace('gl_WITH_CXX_TESTS', '')
             if 'gl_WITH_LONGRUNNING_TESTS' in data:
-                self.cache.enableTestFlag(TESTS['longrunning-test'])
+                self.cache.enableInclTestCategory(TESTS['longrunning-test'])
                 data = data.replace('gl_WITH_LONGRUNNING_TESTS', '')
             if 'gl_WITH_PRIVILEGED_TESTS' in data:
-                self.cache.enableTestFlag(TESTS['privileged-test'])
+                self.cache.enableInclTestCategory(TESTS['privileged-test'])
                 data = data.replace('gl_WITH_PRIVILEGED_TESTS', '')
             if 'gl_WITH_UNPORTABLE_TESTS' in data:
-                self.cache.enableTestFlag(TESTS['unportable-test'])
+                self.cache.enableInclTestCategory(TESTS['unportable-test'])
                 data = data.replace('gl_WITH_UNPORTABLE_TESTS', '')
             if 'gl_WITH_ALL_TESTS' in data:
-                self.cache.enableTestFlag(TESTS['all-test'])
+                self.cache.enableInclTestCategory(TESTS['all-test'])
                 data = data.replace('gl_WITH_ALL_TESTS', '')
             # Find string values
             result = dict(pattern.findall(data))
@@ -244,8 +244,8 @@ class GLImport(object):
             elif self.mode == MODES['update']:
                 modules = self.cache.getModules()
 
-            # If user tries to apply conddeps and testflag['tests'] together.
-            if self.config['tests'] and self.config['conddeps']:
+            # If user tries to apply conddeps and TESTS['tests'] together.
+            if self.checkInclTestCategory(TESTS['tests']) and self.config['conddeps']:
                 raise GLError(10, None)
 
             # Update configuration dictionary.
@@ -257,7 +257,7 @@ class GLImport(object):
             self.config.setModules(modules)
 
         # Check if conddeps is enabled together with inctests.
-        inctests = self.config.checkTestFlag(TESTS['tests'])
+        inctests = self.config.checkInclTestCategory(TESTS['tests'])
         if self.config['conddeps'] and inctests:
             raise GLError(10, None)
 
@@ -265,7 +265,9 @@ class GLImport(object):
         self.emiter = GLEmiter(self.config)
         self.filesystem = GLFileSystem(self.config)
         self.modulesystem = GLModuleSystem(self.config)
-        self.moduletable = GLModuleTable(self.config, list())
+        self.moduletable = GLModuleTable(self.config,
+                                         self.config.checkInclTestCategory(TESTS['all-tests']),
+                                         self.config.checkInclTestCategory(TESTS['all-tests']))
         self.makefiletable = GLMakefileTable(self.config)
 
     def __repr__(self):
@@ -366,7 +368,6 @@ class GLImport(object):
         docbase = self.config.getDocBase()
         pobase = self.config.getPoBase()
         testsbase = self.config.getTestsBase()
-        testflags = self.config.getTestFlags()
         conddeps = self.config.checkCondDeps()
         libname = self.config.getLibName()
         lgpl = self.config.getLGPL()
@@ -391,19 +392,19 @@ class GLImport(object):
         actioncmd += ' --doc-base=%s' % docbase
         actioncmd += ' --tests-base=%s' % testsbase
         actioncmd += ' --aux-dir=%s' % auxdir
-        if self.config.checkTestFlag(TESTS['tests']):
+        if self.config.checkInclTestCategory(TESTS['tests']):
             actioncmd += ' --with-tests'
-        if self.config.checkTestFlag(TESTS['obsolete']):
+        if self.config.checkInclTestCategory(TESTS['obsolete']):
             actioncmd += ' --with-obsolete'
-        if self.config.checkTestFlag(TESTS['c++-test']):
+        if self.config.checkInclTestCategory(TESTS['c++-test']):
             actioncmd += ' --with-c++-tests'
-        if self.config.checkTestFlag(TESTS['longrunning-test']):
+        if self.config.checkInclTestCategory(TESTS['longrunning-test']):
             actioncmd += ' --with-longrunning-tests'
-        if self.config.checkTestFlag(TESTS['privileged-test']):
+        if self.config.checkInclTestCategory(TESTS['privileged-test']):
             actioncmd += ' --with-privileged-test'
-        if self.config.checkTestFlag(TESTS['unportable-test']):
+        if self.config.checkInclTestCategory(TESTS['unportable-test']):
             actioncmd += ' --with-unportable-tests'
-        if self.config.checkTestFlag(TESTS['all-test']):
+        if self.config.checkInclTestCategory(TESTS['all-test']):
             actioncmd += ' --with-all-tests'
         for module in avoids:
             actioncmd += ' --avoid=%s' % module
@@ -478,7 +479,6 @@ class GLImport(object):
         moduletable = self.moduletable
         actioncmd = self.actioncmd()
         localpath = self.config['localpath']
-        testflags = list(self.config['testflags'])
         sourcebase = self.config['sourcebase']
         m4base = self.config['m4base']
         pobase = self.config['pobase']
@@ -514,15 +514,15 @@ class GLImport(object):
         emit += 'gl_MODULES([\n'
         emit += '  %s\n' % '\n  '.join(modules)
         emit += '])\n'
-        if self.config.checkTestFlag(TESTS['obsolete']):
+        if self.config.checkInclTestCategory(TESTS['obsolete']):
             emit += 'gl_WITH_OBSOLETE\n'
-        if self.config.checkTestFlag(TESTS['cxx-tests']):
+        if self.config.checkInclTestCategory(TESTS['cxx-tests']):
             emit += 'gl_WITH_CXX_TESTS\n'
-        if self.config.checkTestFlag(TESTS['privileged-tests']):
+        if self.config.checkInclTestCategory(TESTS['privileged-tests']):
             emit += 'gl_WITH_PRIVILEGED_TESTS\n'
-        if self.config.checkTestFlag(TESTS['unportable-tests']):
+        if self.config.checkInclTestCategory(TESTS['unportable-tests']):
             emit += 'gl_WITH_UNPORTABLE_TESTS\n'
-        if self.config.checkTestFlag(TESTS['all-tests']):
+        if self.config.checkInclTestCategory(TESTS['all-tests']):
             emit += 'gl_WITH_ALL_TESTS\n'
         emit += 'gl_AVOID([%s])\n' % ' '.join(avoids)
         emit += 'gl_SOURCE_BASE([%s])\n' % sourcebase
@@ -530,7 +530,7 @@ class GLImport(object):
         emit += 'gl_PO_BASE([%s])\n' % pobase
         emit += 'gl_DOC_BASE([%s])\n' % docbase
         emit += 'gl_TESTS_BASE([%s])\n' % testsbase
-        if self.config.checkTestFlag(TESTS['tests']):
+        if self.config.checkInclTestCategory(TESTS['tests']):
             emit += 'gl_WITH_TESTS\n'
         emit += 'gl_LIB([%s])\n' % libname
         if lgpl != None:
@@ -561,7 +561,6 @@ class GLImport(object):
         moduletable = self.moduletable
         destdir = self.config['destdir']
         auxdir = self.config['auxdir']
-        testflags = list(self.config['testflags'])
         sourcebase = self.config['sourcebase']
         m4base = self.config['m4base']
         pobase = self.config['pobase']
@@ -764,7 +763,6 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         auxdir = self.config['auxdir']
         modules = list(self.config['modules'])
         avoids = list(self.config['avoids'])
-        testflags = list(self.config['testflags'])
         sourcebase = self.config['sourcebase']
         m4base = self.config['m4base']
         pobase = self.config['pobase']
@@ -1004,7 +1002,6 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         auxdir = self.config['auxdir']
         modules = list(self.config['modules'])
         avoids = list(self.config['avoids'])
-        testflags = list(self.config['testflags'])
         sourcebase = self.config['sourcebase']
         m4base = self.config['m4base']
         pobase = self.config['pobase']
@@ -1122,7 +1119,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
             pobase_dir = os.path.dirname(pobase)
             pobase_base = os.path.basename(pobase)
             self.makefiletable.editor(pobase_dir, 'SUBDIRS', pobase_base)
-        if self.config.checkTestFlag(TESTS['tests']):
+        if self.config.checkInclTestCategory(TESTS['tests']):
             if makefile_am == 'Makefile.am':
                 testsbase_dir = os.path.dirname(testsbase)
                 testsbase_base = os.path.basename(testsbase)
@@ -1313,7 +1310,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
             os.remove(tmpfile)
 
         # Create tests Makefile.
-        inctests = self.config.checkTestFlag(TESTS['tests'])
+        inctests = self.config.checkInclTestCategory(TESTS['tests'])
         if inctests:
             basename = joinpath(testsbase, makefile_am)
             tmpfile = self.assistant.tmpfilename(basename)

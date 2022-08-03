@@ -262,22 +262,38 @@ def main():
                         action='store_true')
     # c++-tests
     parser.add_argument('--with-c++-tests',
-                        dest='cxx',
+                        dest='inc_cxx_tests',
+                        default=None,
+                        action='store_true')
+    parser.add_argument('--without-c++-tests',
+                        dest='excl_cxx_tests',
                         default=None,
                         action='store_true')
     # longrunning-tests
     parser.add_argument('--with-longrunning-tests',
-                        dest='longrunning',
+                        dest='inc_longrunning_tests',
+                        default=None,
+                        action='store_true')
+    parser.add_argument('--without-longrunning-tests',
+                        dest='excl_longrunning_tests',
                         default=None,
                         action='store_true')
     # privileged-tests
     parser.add_argument('--with-privileged-tests',
-                        dest='privileged',
+                        dest='inc_privileged_tests',
+                        default=None,
+                        action='store_true')
+    parser.add_argument('--without-privileged-tests',
+                        dest='excl_privileged_tests',
                         default=None,
                         action='store_true')
     # unportable-tests
     parser.add_argument('--with-unportable-tests',
-                        dest='unportable',
+                        dest='inc_unportable_tests',
+                        default=None,
+                        action='store_true')
+    parser.add_argument('--without-unportable-tests',
+                        dest='excl_unportable_tests',
                         default=None,
                         action='store_true')
     # all-tests
@@ -491,11 +507,39 @@ def main():
         mode = 'copy-file'
         if len(cmdargs.non_option_arguments) < 1 or len(cmdargs.non_option_arguments) > 2:
             message = '%s: *** ' % constants.APP['name']
-            message += 'invalid number of arguments for --%s' % mode
-            message += '\n%s: *** Stop.\n' % constants.APP['name']
+            message += 'invalid number of arguments for --%s\n' % mode
+            message += 'Try \'gnulib-tool --help\' for more information.\n'
+            message += '%s: *** Stop.\n' % constants.APP['name']
             sys.stderr.write(message)
             sys.exit(1)
         files = list(cmdargs.non_option_arguments)
+
+    if ((mode in ['import', 'add-import', 'remove-import']
+         and (cmdargs.excl_cxx_tests or cmdargs.excl_longrunning_tests
+              or cmdargs.excl_privileged_tests or cmdargs.excl_unportable_tests))
+        or (mode == 'update'
+            and (cmdargs.localpath != None or cmdargs.libname != None
+                 or cmdargs.sourcebase != None or cmdargs.m4base != None
+                 or cmdargs.pobase != None or cmdargs.docbase != None
+                 or cmdargs.testsbase != None or cmdargs.auxdir != None
+                 or cmdargs.inctests != None or cmdargs.obsolete != None
+                 or cmdargs.inc_cxx_tests != None
+                 or cmdargs.inc_longrunning_tests != None
+                 or cmdargs.inc_privileged_tests != None
+                 or cmdargs.inc_unportable_tests != None
+                 or cmdargs.alltests != None
+                 or cmdargs.excl_cxx_tests != None
+                 or cmdargs.excl_longrunning_tests != None
+                 or cmdargs.excl_privileged_tests != None
+                 or cmdargs.excl_unportable_tests != None
+                 or cmdargs.avoids != None or cmdargs.lgpl != None
+                 or cmdargs.makefile != None))):
+        message = '%s: *** ' % constants.APP['name']
+        message += 'invalid options for --%s mode\n' % mode
+        message += 'Try \'gnulib-tool --help\' for more information.\n'
+        message += '%s: *** Stop.\n' % constants.APP['name']
+        sys.stderr.write(message)
+        sys.exit(1)
 
     # Determine specific settings.
     destdir = cmdargs.destdir
@@ -533,21 +577,30 @@ def main():
             inctests = False
         elif mode in ['create-testdir', 'create-megatestdir', 'test', 'megatest']:
             inctests = True
-    testflags = []
+    incl_test_categories = []
     if inctests:
-        testflags += [constants.TESTS['tests']]
+        incl_test_categories += [constants.TESTS['tests']]
     if cmdargs.obsolete:
-        testflags += [constants.TESTS['obsolete']]
-    if cmdargs.cxx:
-        testflags += [constants.TESTS['cxx-tests']]
-    if cmdargs.longrunning:
-        testflags += [constants.TESTS['longrunning-tests']]
-    if cmdargs.privileged:
-        testflags += [constants.TESTS['privileged-tests']]
-    if cmdargs.unportable:
-        testflags += [constants.TESTS['unportable-tests']]
+        incl_test_categories += [constants.TESTS['obsolete']]
+    if cmdargs.inc_cxx_tests:
+        incl_test_categories += [constants.TESTS['cxx-tests']]
+    if cmdargs.inc_longrunning_tests:
+        incl_test_categories += [constants.TESTS['longrunning-tests']]
+    if cmdargs.inc_privileged_tests:
+        incl_test_categories += [constants.TESTS['privileged-tests']]
+    if cmdargs.inc_unportable_tests:
+        incl_test_categories += [constants.TESTS['unportable-tests']]
     if cmdargs.alltests:
-        testflags += [constants.TESTS['all-tests']]
+        incl_test_categories += [constants.TESTS['all-tests']]
+    excl_test_categories = []
+    if cmdargs.excl_cxx_tests:
+        excl_test_categories += [constants.TESTS['cxx-tests']]
+    if cmdargs.excl_longrunning_tests:
+        excl_test_categories += [constants.TESTS['longrunning-tests']]
+    if cmdargs.excl_privileged_tests:
+        excl_test_categories += [constants.TESTS['privileged-tests']]
+    if cmdargs.excl_unportable_tests:
+        excl_test_categories += [constants.TESTS['unportable-tests']]
     lgpl = cmdargs.lgpl
     if lgpl != None:
         lgpl = lgpl[-1]
@@ -575,7 +628,8 @@ def main():
         pobase=pobase,
         docbase=docbase,
         testsbase=testsbase,
-        testflags=testflags,
+        incl_test_categories=incl_test_categories,
+        excl_test_categories=excl_test_categories,
         libname=libname,
         lgpl=lgpl,
         makefile=makefile,
@@ -721,8 +775,8 @@ def main():
     elif mode == 'create-testdir':
         if not destdir:
             message = '%s: *** ' % constants.APP['name']
-            message += 'please specify --dir option'
-            message += '\n%s: *** Stop.\n' % constants.APP['name']
+            message += 'please specify --dir option\n'
+            message += '%s: *** Stop.\n' % constants.APP['name']
             sys.stderr.write(message)
             sys.exit(1)
         if not auxdir:
@@ -734,8 +788,8 @@ def main():
     elif mode == 'create-megatestdir':
         if not destdir:
             message = '%s: *** ' % constants.APP['name']
-            message += 'please specify --dir option'
-            message += '\n%s: *** Stop.\n' % constants.APP['name']
+            message += 'please specify --dir option\n'
+            message += '%s: *** Stop.\n' % constants.APP['name']
             sys.stderr.write(message)
             sys.exit(1)
         if not auxdir:
@@ -977,8 +1031,8 @@ def main():
 
     else:
         message = '%s: *** ' % constants.APP['name']
-        message += 'no mode specified'
-        message += '\n%s: *** Stop.\n' % constants.APP['name']
+        message += 'no mode specified\n'
+        message += '%s: *** Stop.\n' % constants.APP['name']
         sys.stderr.write(message)
         sys.exit(1)
 

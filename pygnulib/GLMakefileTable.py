@@ -90,12 +90,13 @@ class GLMakefileTable(object):
 
         Add a special row to Makefile.am table with the first parent directory
         which contains or will contain Makefile.am file.
-        GLConfig: sourcebase, m4base, testsbase, testflags, makefile.'''
+        GLConfig: sourcebase, m4base, testsbase, incl_test_categories,
+        excl_test_categories, makefile.'''
         m4base = self.config['m4base']
         sourcebase = self.config['sourcebase']
         testsbase = self.config['testsbase']
         makefile = self.config['makefile']
-        inctests = self.config.checkTestFlag(TESTS['tests'])
+        inctests = self.config.checkInclTestCategory(TESTS['tests'])
         dir1 = '%s%s' % (m4base, os.path.sep)
         mfd = 'Makefile.am'
         if not makefile:

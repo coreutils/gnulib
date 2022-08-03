@@ -87,7 +87,9 @@ class GLTestDir(object):
         self.emiter = GLEmiter(self.config)
         self.filesystem = GLFileSystem(self.config)
         self.modulesystem = GLModuleSystem(self.config)
-        self.moduletable = GLModuleTable(self.config)
+        self.moduletable = GLModuleTable(self.config,
+                                         True,
+                                         self.config.checkInclTestCategory(TESTS['all-tests']))
         self.assistant = GLFileAssistant(self.config)
         self.makefiletable = GLMakefileTable(self.config)
 
@@ -147,7 +149,6 @@ class GLTestDir(object):
 
         Create a scratch package with the given modules.'''
         auxdir = self.config['auxdir']
-        testflags = list(self.config['testflags'])
         sourcebase = self.config['sourcebase']
         m4base = self.config['m4base']
         pobase = self.config['pobase']
@@ -180,8 +181,8 @@ class GLTestDir(object):
         # When computing transitive closures, don't consider $module to depend on
         # $module-tests. Need this because tests are implicitly GPL and may depend
         # on GPL modules - therefore we don't want a warning in this case.
-        saved_testflags = list(self.config['testflags'])
-        self.config.disableTestFlag(TESTS['tests'])
+        saved_inctests = self.config.checkInclTestCategory(TESTS['tests'])
+        self.config.disableInclTestCategory(TESTS['tests'])
         for requested_module in base_modules:
             requested_licence = requested_module.getLicense()
             if requested_licence != 'GPL':
@@ -213,7 +214,7 @@ class GLTestDir(object):
                         if incompatible:
                             errormsg = 'module %s depends on a module with an incompatible license: %s\n' % (requested_module, module)
                             sys.stderr.write(errormsg)
-        self.config.setTestFlags(saved_testflags)
+        self.config.setInclTestCategory(TESTS['tests'], saved_inctests)
 
         # Determine final module list.
         modules = self.moduletable.transitive_closure(base_modules)
@@ -389,7 +390,7 @@ class GLTestDir(object):
         subdirs_with_configure_ac = list()
 
         testsbase_appened = False
-        inctests = self.config.checkTestFlag(TESTS['tests'])
+        inctests = self.config.checkInclTestCategory(TESTS['tests'])
         if inctests:
             directory = joinpath(self.testdir, testsbase)
             if not isdir(directory):
@@ -863,7 +864,9 @@ class GLMegaTestDir(object):
         self.emiter = GLEmiter(self.config)
         self.filesystem = GLFileSystem(self.config)
         self.modulesystem = GLModuleSystem(self.config)
-        self.moduletable = GLModuleTable(self.config)
+        self.moduletable = GLModuleTable(self.config,
+                                         True,
+                                         self.config.checkInclTestCategory(TESTS['all-tests']))
         self.assistant = GLFileAssistant(self.config)
         self.makefiletable = GLMakefileTable(self.config)
 

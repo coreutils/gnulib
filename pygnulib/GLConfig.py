@@ -58,7 +58,8 @@ class GLConfig(object):
 
     def __init__(self, destdir=None, localpath=None, auxdir=None,
                  sourcebase=None, m4base=None, pobase=None, docbase=None, testsbase=None,
-                 modules=None, avoids=None, files=None, testflags=None, libname=None,
+                 modules=None, avoids=None, files=None,
+                 incl_test_categories=None, excl_test_categories=None, libname=None,
                  lgpl=None, makefile=None, libtool=None, conddeps=None, macro_prefix=None,
                  podomain=None, witness_c_macro=None, vc_files=None, symbolic=None,
                  lsymbolic=None, modcache=None, configure_ac=None, ac_version=None,
@@ -117,10 +118,14 @@ class GLConfig(object):
         self.resetFiles()
         if files != None:
             self.setFiles(files)
-        # testflags
-        self.resetTestFlags()
-        if testflags != None:
-            self.setTestFlags(testflags)
+        # test categories to include
+        self.resetInclTestCategories
+        if incl_test_categories != None:
+            self.setInclTestCategories(incl_test_categories)
+        # test categories to exclude
+        self.resetExclTestCategories
+        if excl_test_categories != None:
+            self.setExclTestCategories(excl_test_categories)
         # libname
         self.resetLibName()
         if libname != None:
@@ -351,7 +356,7 @@ class GLConfig(object):
                 return 0
             elif key == 'copyrights':
                 return True
-            elif key in ['modules', 'avoids', 'tests', 'testflags']:
+            elif key in ['modules', 'avoids', 'tests', 'incl_test_categories', 'excl_test_categories']:
                 return list()
             elif key in ['libtool', 'lgpl', 'conddeps', 'modcache', 'symbolic',
                          'lsymbolic', 'libtests', 'dryrun']:
@@ -681,52 +686,104 @@ class GLConfig(object):
         '''Reset the list of files.'''
         self.table['files'] = list()
 
-    # Define tests/testflags methods
-    def checkTestFlag(self, flag):
-        '''Return the status of the test flag.'''
-        if flag in TESTS.values():
-            return flag in self.table['testflags']
-        else:  # if flag is not in TESTS
-            raise TypeError('unknown flag: %s' % repr(flag))
+    # Define incl_test_categories methods
+    def checkInclTestCategory(self, category):
+        '''Tests whether the given test category is included.'''
+        if category in TESTS.values():
+            return category in self.table['incl_test_categories']
+        else:  # if category is not in TESTS
+            raise TypeError('unknown category: %s' % repr(category))
 
-    def enableTestFlag(self, flag):
-        '''Enable test flag. You can get flags from TESTS variable.'''
-        if flag in TESTS.values():
-            if flag not in self.table['testflags']:
-                self.table['testflags'].append(flag)
-        else:  # if flag is not in TESTS
-            raise TypeError('unknown flag: %s' % repr(flag))
+    def enableInclTestCategory(self, category):
+        '''Enable the given test category.'''
+        if category in TESTS.values():
+            if category not in self.table['incl_test_categories']:
+                self.table['incl_test_categories'].append(category)
+        else:  # if category is not in TESTS
+            raise TypeError('unknown category: %s' % repr(category))
 
-    def disableTestFlag(self, flag):
-        '''Disable test flag. You can get flags from TESTS variable.'''
-        if flag in TESTS.values():
-            if flag in self.table['testflags']:
-                self.table['testflags'].remove(flag)
-        else:  # if flag is not in TESTS
-            raise TypeError('unknown flag: %s' % repr(flag))
+    def disableInclTestCategory(self, category):
+        '''Disable the given test category.'''
+        if category in TESTS.values():
+            if category in self.table['incl_test_categories']:
+                self.table['incl_test_categories'].remove(category)
+        else:  # if category is not in TESTS
+            raise TypeError('unknown category: %s' % repr(category))
 
-    def getTestFlags(self):
-        '''Return test flags. You can get flags from TESTS variable.'''
-        return list(self.table['testflags'])
+    def setInclTestCategory(self, category, enable):
+        '''Enable or disable the given test category.'''
+        if (enable):
+            self.enableInclTestCategory(category)
+        else:
+            self.disableInclTestCategory(category)
 
-    def setTestFlags(self, testflags):
-        '''Specify test flags. You can get flags from TESTS variable.'''
-        if type(testflags) is list or type(testflags) is tuple:
-            self.table['testflags'] = list()
-            for flag in testflags:
-                try:  # Try to enable each flag
-                    self.enableTestFlag(flag)
+    def getInclTestCategories(self):
+        '''Return the test categories that should be included.
+        To get the list of all test categories, use the TESTS variable.'''
+        return list(self.table['incl_test_categories'])
+
+    def setInclTestCategories(self, categories):
+        '''Specify the test categories that should be included.'''
+        if type(categories) is list or type(categories) is tuple:
+            self.table['incl_test_categories'] = list()
+            for category in categories:
+                try:  # Try to enable each category
+                    self.enableInclTestCategory(category)
                 except TypeError as error:
-                    raise TypeError('each flag must be one of TESTS integers')
-            self.table['testflags'] = testflags
-        else:  # if type of testflags is not list or tuple
-            raise TypeError('testflags must be a list or a tuple, not %s' %
-                            type(testflags).__name__)
+                    raise TypeError('each category must be one of TESTS integers')
+        else:  # if type of categories is not list or tuple
+            raise TypeError('categories must be a list or a tuple, not %s' %
+                            type(categories).__name__)
 
-    def resetTestFlags(self):
-        '''Reset test flags (only default flag will be enabled).'''
-        self.table['testflags'] = list()
-        self.table['tests'] = self.table['testflags']
+    def resetInclTestCategories(self):
+        '''Reset test categories.'''
+        self.table['incl_test_categories'] = list()
+
+    # Define excl_test_categories methods
+    def checkExclTestCategory(self, category):
+        '''Tests whether the given test category is excluded.'''
+        if category in TESTS.values():
+            return category in self.table['excl_test_categories']
+        else:  # if category is not in TESTS
+            raise TypeError('unknown category: %s' % repr(category))
+
+    def enableExclTestCategory(self, category):
+        '''Enable the given test category.'''
+        if category in TESTS.values():
+            if category not in self.table['excl_test_categories']:
+                self.table['excl_test_categories'].append(category)
+        else:  # if category is not in TESTS
+            raise TypeError('unknown category: %s' % repr(category))
+
+    def disableExclTestCategory(self, category):
+        '''Disable the given test category.'''
+        if category in TESTS.values():
+            if category in self.table['excl_test_categories']:
+                self.table['excl_test_categories'].remove(category)
+        else:  # if category is not in TESTS
+            raise TypeError('unknown category: %s' % repr(category))
+
+    def getExclTestCategories(self):
+        '''Return the test categories that should be excluded.
+        To get the list of all test categories, use the TESTS variable.'''
+        return list(self.table['excl_test_categories'])
+
+    def setExclTestCategories(self, categories):
+        '''Specify the test categories that should be excluded.'''
+        if type(categories) is list or type(categories) is tuple:
+            self.table['excl_test_categories'] = list()
+            for category in categories:
+                try:  # Try to enable each category
+                    self.enableExclTestCategory(category)
+                except TypeError as error:
+                    raise TypeError('each category must be one of TESTS integers')
+        else:  # if type of categories is not list or tuple
+            raise TypeError('categories must be a list or a tuple, not %s' %
+                            type(categories).__name__)
+
+    def resetExclTestCategories(self):
+        '''Reset test categories.'''
+        self.table['excl_test_categories'] = list()
 
     # Define libname methods.
     def getLibName(self):
