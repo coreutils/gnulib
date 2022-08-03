@@ -251,6 +251,10 @@ def main():
                         dest='inctests',
                         default=None,
                         action='store_true')
+    parser.add_argument('--without-tests',
+                        dest='inctests',
+                        default=None,
+                        action='store_false')
     # obsolete
     parser.add_argument('--with-obsolete',
                         dest='obsolete',
