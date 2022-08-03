@@ -184,25 +184,28 @@ class GLTestDir(object):
         self.config.disableTestFlag(TESTS['tests'])
         for requested_module in base_modules:
             requested_licence = requested_module.getLicense()
-            # Here we use self.moduletable.transitive_closure([module]), not just
-            # module.getDependencies, so that we also detect weird situations like
-            # an LGPL module which depends on a GPLed build tool module which depends
-            # on a GPL module.
             if requested_licence != 'GPL':
-                modules = self.moduletable.transitive_closure(
-                    [requested_module])
+                # Here we use self.moduletable.transitive_closure([module]), not
+                # just module.getDependencies, so that we also detect weird
+                # situations like an LGPL module which depends on a GPLed build
+                # tool module which depends on a GPL module.
+                modules = self.moduletable.transitive_closure([requested_module])
                 for module in modules:
                     license = module.getLicense()
-                    errormsg = 'module %s depends on a module ' % requested_module
-                    errormsg += 'with an incompatible license: %s\n' % module
-                    if requested_licence == 'GPLv2+':
-                        if license not in ['GPLv2+', 'LGPLv2+']:
-                            sys.stderr.write(errormsg)
-                    elif requested_licence in ['LGPL']:
-                        if license not in ['LGPL', 'LGPLv2+']:
-                            sys.stderr.write(errormsg)
-                    elif requested_licence in ['LGPLv2+']:
-                        if license not in ['LGPLv2+']:
+                    if license not in ['GPLv2+ build tool', 'GPLed build tool',
+                                       'public domain', 'unlimited', 'unmodifiable license text']:
+                        incompatible = False
+                        if requested_licence == 'GPLv2+':
+                            if license not in ['GPLv2+', 'LGPLv2+']:
+                                incompatible = True
+                        elif requested_licence in ['LGPL']:
+                            if license not in ['LGPL', 'LGPLv2+']:
+                                incompatible = True
+                        elif requested_licence in ['LGPLv2+']:
+                            if license not in ['LGPLv2+']:
+                                incompatible = True
+                        if incompatible:
+                            errormsg = 'module %s depends on a module with an incompatible license: %s\n' % (requested_module, module)
                             sys.stderr.write(errormsg)
         self.config.setTestFlags(saved_testflags)
 

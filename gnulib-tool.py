@@ -24,7 +24,7 @@
 # - Line length is not limited to 79 characters.
 # - Line breaking before or after binary operators? Better before, like in GNU.
 # You can use this command to check the style:
-#   $ pycodestyle --max-line-length=128 --ignore=E265,W503,E241,E711,E712,E201,E202 gnulib-tool.py pygnulib/*.py
+#   $ pycodestyle --max-line-length=136 --ignore=E265,W503,E241,E711,E712,E201,E202 gnulib-tool.py pygnulib/*.py
 
 
 #===============================================================================
