@@ -15,6 +15,10 @@ The following commits to gnulib-tool have not yet been reflected in
 
 --------------------------------------------------------------------------------
 
+Inline all 'sed' invocations.
+
+--------------------------------------------------------------------------------
+
 Implement the options:
   --find
   --extract-recursive-dependencies
@@ -37,8 +41,6 @@ Implement the options:
   --witness-c-macro
   --vc-files
   --no-vc-files
-  -s | --symbolic
-  --local-symlink
   -h | --hardlink
   --local-hardlink
   -S | --more-symlinks
@@ -1073,42 +1075,6 @@ Date:   Sun Oct 16 14:11:18 2016 +0200
 
     * gnulib-tool (func_create_testdir): Don't include the
     non-recursive-gnulib-prefix-hack module.
-
---------------------------------------------------------------------------------
-
-commit c09c24932066ecee81756adf2fca840b7c146e9d
-Author: Bruno Haible <bruno@clisp.org>
-Date:   Thu Jun 8 14:45:39 2017 +0200
-
-    gnulib-tool: Fix bug in func_ln_s, from 2016-01-15.
-
-    * gnulib-tool (func_ln_s): Determine cp_src correctly.
-
-commit d9958eb1eb951f950f9b321419965001b1368a38
-Author: Paul Eggert <eggert@cs.ucla.edu>
-Date:   Sun Jan 24 14:24:35 2016 -0800
-
-    gnulib-tool: don't give up on ln -s so easily
-
-    * gnulib-tool (func_ln_s): Don't give up on a later ln -s merely
-    because an earlier one failed.  The targets could be on different
-    file systems.  Problem reported by KO Myung-Hun in:
-    http://lists.gnu.org/archive/html/bug-gnulib/2016-01/msg00081.html
-
-commit 350f2c6fb569f42f0a8ff47fd5b7442f24f0e658
-Author: Paul Eggert <eggert@cs.ucla.edu>
-Date:   Fri Jan 15 10:12:41 2016 -0800
-
-    * gnulib-tool: fix stray debug line in previous patch
-
-commit 0e50dd0071be89825810dbf4c2310663dcb77767
-Author: Paul Eggert <eggert@cs.ucla.edu>
-Date:   Wed May 1 13:39:22 2013 +0900
-
-    gnulib-tool: don't assume ln -s works
-
-    * gnulib-tool (func_ln_s): New function.
-    (func_ln): Use it.
 
 --------------------------------------------------------------------------------
 

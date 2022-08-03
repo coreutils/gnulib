@@ -338,6 +338,26 @@ def movefile(src, dest):
         os.remove(src)
 
 
+def symlink_relative(src, dest):
+    '''Like ln -s, except use cp -p if ln -s fails.
+    src is either absolute or relative to the directory of dest.'''
+    try:
+        os.symlink(src, dest)
+    except PermissionError:
+        sys.stderr.write('%s: ln -s failed; falling back on cp -p\n' % APP['name'])
+        if src.startswith('/') or (len(src) >= 2 and src[1] == ':'):
+            # src is absolute.
+            cp_src = src
+        else:
+            # src is relative to the directory of dest.
+            last_slash = dest.rfind('/')
+            if last_slash >= 0:
+                cp_src = joinpath(dest[0:last_slash-1], src)
+            else:
+                cp_src = src
+        copyfile2(cp_src, dest)
+
+
 def link_relative(src, dest):
     '''Like ln -s, except that src is given relative to the current directory
     (or absolute), not given relative to the directory of dest.'''
@@ -348,17 +368,17 @@ def link_relative(src, dest):
         raise TypeError(
             'dest must be a string, not %s' % (type(dest).__name__))
     if src.startswith('/') or (len(src) >= 2 and src[1] == ':'):
-        os.symlink(src, dest)
+        symlink_relative(src, dest)
     else:  # if src is not absolute
         if dest.startswith('/') or (len(dest) >= 2 and dest[1] == ':'):
             cwd = os.getcwd()
-            os.symlink(joinpath(cwd, src), dest)
+            symlink_relative(joinpath(cwd, src), dest)
         else:  # if dest is not absolute
             destdir = os.path.dirname(dest)
             if not destdir:
                 destdir = '.'
             src = relativize(destdir, src)
-            os.symlink(src, dest)
+            symlink_relative(src, dest)
 
 
 def link_if_changed(src, dest):
