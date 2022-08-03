@@ -359,6 +359,11 @@ def main():
                         dest="makefile",
                         default=None,
                         type=str)
+    # single-configure
+    parser.add_argument('--single-configure',
+                        dest='single_configure',
+                        default=None,
+                        action='store_true')
     # symlink
     parser.add_argument('-s', '--symbolic', '--symlink',
                         dest='symlink',
@@ -516,7 +521,8 @@ def main():
 
     if ((mode in ['import', 'add-import', 'remove-import']
          and (cmdargs.excl_cxx_tests or cmdargs.excl_longrunning_tests
-              or cmdargs.excl_privileged_tests or cmdargs.excl_unportable_tests))
+              or cmdargs.excl_privileged_tests or cmdargs.excl_unportable_tests
+              or cmdargs.single_configure))
         or (mode == 'update'
             and (cmdargs.localpath != None or cmdargs.libname != None
                  or cmdargs.sourcebase != None or cmdargs.m4base != None
@@ -615,6 +621,7 @@ def main():
                    for module in list1 ]
     symlink = cmdargs.symlink == True
     lsymlink = cmdargs.lsymlink == True
+    single_configure = cmdargs.single_configure
 
     # Create pygnulib configuration.
     config = classes.GLConfig(
@@ -642,6 +649,7 @@ def main():
         symbolic=symlink,
         lsymbolic=lsymlink,
         modcache=modcache,
+        single_configure=single_configure,
         verbose=verbose,
         dryrun=dryrun,
     )

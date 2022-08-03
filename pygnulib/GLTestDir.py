@@ -398,7 +398,6 @@ class GLTestDir(object):
             if single_configure:
                 # Create $testsbase/Makefile.am.
                 destfile = joinpath(directory, 'Makefile.am')
-                print(repr(destfile))
                 witness_macro = '%stests_WITNESS' % macro_prefix
                 emit, uses_subdirs = self.emiter.tests_Makefile_am(destfile,
                                                                    tests_modules, self.makefiletable, witness_macro, for_test)

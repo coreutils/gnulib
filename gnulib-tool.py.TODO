@@ -24,7 +24,6 @@ Implement the options:
   --extract-recursive-dependencies
   --extract-recursive-link-directive
   --extract-tests-module
-  --single-configure
   --conditional-dependencies
   --no-conditional-dependencies
   --gnu-make
