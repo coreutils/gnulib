@@ -251,7 +251,8 @@ Options for --import, --add/remove-import:
                             placed (default \"tests\").
       --aux-dir=DIRECTORY   Directory relative to --dir where auxiliary build
                             tools are placed (default comes from configure.ac).
-      --lgpl[=2|=3]         Abort if modules aren't available under the LGPL.
+      --lgpl[=2|=3orGPLv2|=3]
+                            Abort if modules aren't available under the LGPL.
                             Also modify license template from GPL to LGPL.
                             The version number of the LGPL can be specified;
                             the default is currently LGPLv3.

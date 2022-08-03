@@ -24,7 +24,7 @@
 # - Line length is not limited to 79 characters.
 # - Line breaking before or after binary operators? Better before, like in GNU.
 # You can use this command to check the style:
-#   $ pycodestyle --max-line-length=136 --ignore=E265,W503,E241,E711,E712,E201,E202 gnulib-tool.py pygnulib/*.py
+#   $ pycodestyle --max-line-length=136 --ignore=E265,W503,E241,E711,E712,E201,E202,E221 gnulib-tool.py pygnulib/*.py
 
 
 #===============================================================================
@@ -330,8 +330,9 @@ def main():
     # lgpl
     parser.add_argument('--lgpl',
                         dest='lgpl',
-                        default=False,
-                        type=int,
+                        default=None,
+                        action='append',
+                        choices=['2', '3orGPLv2', '3'],
                         nargs='?')
     # makefile
     parser.add_argument("--makefile-name",
@@ -545,10 +546,12 @@ def main():
                 elif index == 6:
                     testflags += [constants.TESTS['all-tests']]
     lgpl = cmdargs.lgpl
+    if lgpl != None:
+        lgpl = lgpl[-1]
+        if lgpl == None:
+            lgpl = True
     libtool = cmdargs.libtool
     makefile = cmdargs.makefile
-    if lgpl == None:
-        lgpl = True
     avoids = cmdargs.avoids
     if avoids != None:
         avoids = [ module

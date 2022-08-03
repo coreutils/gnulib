@@ -195,13 +195,19 @@ class GLTestDir(object):
                     if license not in ['GPLv2+ build tool', 'GPLed build tool',
                                        'public domain', 'unlimited', 'unmodifiable license text']:
                         incompatible = False
-                        if requested_licence == 'GPLv2+':
-                            if license not in ['GPLv2+', 'LGPLv2+']:
+                        if requested_licence == 'GPLv3+' or requested_licence == 'GPL':
+                            if license not in ['LGPLv2+', 'LGPLv3+ or GPLv2', 'LGPLv3+', 'LGPL', 'GPLv2+', 'GPLv3+', 'GPL']:
                                 incompatible = True
-                        elif requested_licence in ['LGPL']:
-                            if license not in ['LGPL', 'LGPLv2+']:
+                        elif requested_licence == 'GPLv2+':
+                            if license not in ['LGPLv2+', 'LGPLv3+ or GPLv2', 'GPLv2+']:
                                 incompatible = True
-                        elif requested_licence in ['LGPLv2+']:
+                        elif requested_licence == 'LGPLv3+' or requested_licence == 'LGPL':
+                            if license not in ['LGPLv2+', 'LGPLv3+ or GPLv2', 'LGPLv3+', 'LGPL']:
+                                incompatible = True
+                        elif requested_licence == 'LGPLv3+ or GPLv2':
+                            if license not in ['LGPLv2+', 'LGPLv3+ or GPLv2']:
+                                incompatible = True
+                        elif requested_licence == 'LGPLv2+':
                             if license not in ['LGPLv2+']:
                                 incompatible = True
                         if incompatible:

@@ -784,21 +784,21 @@ class GLConfig(object):
     # Define lgpl methods.
     def getLGPL(self):
         '''Check for abort if modules aren't available under the LGPL.
-        Default value is False, which means that lgpl is disabled.'''
+        Default value is None, which means that lgpl is disabled.'''
         return self.table['lgpl']
 
     def setLGPL(self, lgpl):
         '''Abort if modules aren't available under the LGPL.
-        Default value is False, which means that lgpl is disabled.'''
-        if (type(lgpl) is int and 2 <= lgpl <= 3) or type(lgpl) is bool:
+        Default value is None, which means that lgpl is disabled.'''
+        if lgpl in [None, True, '2', '3orGPLv2', '3']:
             self.table['lgpl'] = lgpl
-        else:  # if lgpl is not False, 2 or 3
+        else:
             raise TypeError('invalid LGPL version: %s' % repr(lgpl))
 
     def resetLGPL(self):
         '''Disable abort if modules aren't available under the LGPL.
-        Default value is False, which means that lgpl is disabled.'''
-        self.table['lgpl'] = False
+        Default value is None, which means that lgpl is disabled.'''
+        self.table['lgpl'] = None
 
     def getIncludeGuardPrefix(self):
         '''Return include_guard_prefix to use inside GLEmiter class.'''

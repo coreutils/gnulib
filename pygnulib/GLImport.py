@@ -175,10 +175,10 @@ class GLImport(object):
             tempdict = dict(zip(keys, values))
             if 'gl_LGPL' in tempdict:
                 lgpl = cleaner(tempdict['gl_LGPL'])
-                if lgpl.isdecimal():
-                    self.cache.setLGPL(int(self.cache['lgpl']))
+                if lgpl != '':
+                    self.cache.setLGPL(lgpl)
             else:  # if 'gl_LGPL' not in tempdict
-                self.cache.setLGPL(False)
+                self.cache.setLGPL(None)
             if tempdict['gl_LIB']:
                 self.cache.setLibName(cleaner(tempdict['gl_LIB']))
             if tempdict['gl_LOCAL_DIR']:
@@ -533,11 +533,11 @@ class GLImport(object):
         if self.config.checkTestFlag(TESTS['tests']):
             emit += 'gl_WITH_TESTS\n'
         emit += 'gl_LIB([%s])\n' % libname
-        if lgpl != False:
+        if lgpl != None:
             if lgpl == True:
                 emit += 'gl_LGPL\n'
             else:  # if lgpl != True
-                emit += 'gl_LGPL([%d])\n' % lgpl
+                emit += 'gl_LGPL([%s])\n' % lgpl
         emit += 'gl_MAKEFILE_NAME([%s])\n' % makefile
         if conddeps:
             emit += 'gl_CONDITIONAL_DEPENDENCIES\n'
@@ -849,17 +849,18 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         compatibilities['all'] = ['GPLv2+ build tool', 'GPLed build tool',
                                   'public domain', 'unlimited',
                                   'unmodifiable license text']
-        compatibilities[3] = ['LGPL', 'LGPLv2+', 'LGPLv3+']
-        compatibilities[2] = ['LGPLv2+']
+        compatibilities['3']        = ['LGPLv2+', 'LGPLv3+ or GPLv2', 'LGPLv3+', 'LGPL']
+        compatibilities['3orGPLv2'] = ['LGPLv2+', 'LGPLv3+ or GPLv2']
+        compatibilities['2']        = ['LGPLv2+']
         if lgpl:
             for module in main_modules:
                 license = module.getLicense()
                 if license not in compatibilities['all']:
-                    if lgpl == 3 or lgpl == True:
-                        if license not in compatibilities[3]:
+                    if lgpl == True:
+                        if license not in compatibilities['3']:
                             listing.append(tuple([str(module), license]))
-                    elif lgpl == 2:
-                        if license not in compatibilities[2]:
+                    else:
+                        if license not in compatibilities[lgpl]:
                             listing.append(tuple([str(module), license]))
             if listing:
                 raise GLError(11, listing)
@@ -889,18 +890,35 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         sed_transform_main_lib_file = sed_transform_lib_file
         if copyrights:
             if lgpl:  # if lgpl is enabled
-                if lgpl == 3:
+                if lgpl == True or lgpl == '3':
                     sed_transform_main_lib_file += '''
             s/GNU General/GNU Lesser General/g
             s/General Public License/Lesser General Public License/g
-            s/Lesser Lesser General Public License/Lesser General Public''' \
-                        + ' License/g'
-                elif lgpl == 2:
+            s/Lesser Lesser General Public License/Lesser General Public License/g'''
+                elif lgpl == '3orGPLv2':
+                    sed_transform_main_lib_file += '''
+            /^ *This program is free software/i\\
+   This program is free software: you can redistribute it and\\/or\\
+   modify it under the terms of either:\\
+\\
+     * the GNU Lesser General Public License as published by the Free\\
+       Software Foundation; either version 3 of the License, or (at your\\
+       option) any later version.\\
+\\
+   or\\
+\\
+     * the GNU General Public License as published by the Free\\
+       Software Foundation; either version 2 of the License, or (at your\\
+       option) any later version.\\
+\\
+   or both in parallel, as here.
+            /^ *This program is free software/,/^$/d
+            '''
+                elif lgpl == '2':
                     sed_transform_main_lib_file += '''
             s/GNU General/GNU Lesser General/g
             s/General Public License/Lesser General Public License/g
-            s/Lesser Lesser General Public License/Lesser General Public''' \
-                        + '''License/g
+            s/Lesser Lesser General Public License/Lesser General Public License/g
             s/version [23]\\([ ,]\\)/version 2.1\\1/g'''
             else:  # if lgpl is disabled
                 sed_transform_main_lib_file += lgpl2gpl

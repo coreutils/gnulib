@@ -1015,47 +1015,6 @@ Date:   Sun Feb 19 15:15:11 2017 +0100
 
 --------------------------------------------------------------------------------
 
-commit 31a08abd323ebffea3d4fb2d5a66f801fe8b3031
-Author: Daiki Ueno <ueno@gnu.org>
-Date:   Fri Dec 2 17:16:50 2016 +0100
-
-    gnulib-tool: fix the previous change
-
-    * gnulib-tool (func_import): Relax the regex used for "LGPLv3+ or
-    GPLv2" rewriting.
-
-commit 27d1d32a202b6b2115d5c2e287e3f5f1090032e5
-Author: Daiki Ueno <ueno@gnu.org>
-Date:   Fri Dec 2 16:56:11 2016 +0100
-
-    gnulib-tool: fix the previous change
-
-    * gnulib-tool (func_import): Relax the regex for the end marker of
-    original license text.
-
-commit 1aa6e23bd2487a7c3bd07cf693e6d968f74d951a
-Author: Nikos Mavrogiannopoulos <nmav@gnutls.org>
-Date:   Mon Nov 21 21:15:25 2016 +0100
-
-    gnulib-tool: properly list the LGPL3orGPLv2 license
-
-    * gnulib-tool (func_import): Adhere to the license guideline when
-    rewriting the license text to "LGPLv3+ or GPLv2":
-    https://www.gnu.org/prep/maintain/maintain.html#Licensing-of-GNU-Packages
-
-commit 567bbf7b7b14b31385801b1fee47acfc5b6d2b01
-Author: Bruno Haible <bruno@clisp.org>
-Date:   Sun Nov 13 04:12:26 2016 +0100
-
-    gnulib-tool: Support for the dual "LGPLv3+ or GPLv2" license.
-
-    * gnulib-tool (--lgpl): Accept value 3orGPLv2.
-    (func_import): Extend determination of license_incompatibilities.
-    (func_create_testdir): Extend table of license compatibility. Handle
-    also the licenses GPLv3+, GPL, LGPLv3+.
-
---------------------------------------------------------------------------------
-
 commit 9bdf6c8a0cdeb13c12e4b65dee9538c5468dbe1d
 Author: Bruno Haible <bruno@clisp.org>
 Date:   Sun Aug 19 14:06:50 2012 +0200
