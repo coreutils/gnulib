@@ -53,6 +53,7 @@ UTILS = constants.UTILS
 TESTS = constants.TESTS
 compiler = constants.compiler
 joinpath = constants.joinpath
+copyfile = constants.copyfile
 isdir = os.path.isdir
 isfile = os.path.isfile
 normpath = os.path.normpath
@@ -333,12 +334,12 @@ class GLTestDir(object):
             if isfile(destpath):
                 os.remove(destpath)
             if flag:
-                shutil.copy(lookedup, destpath)
+                copyfile(lookedup, destpath)
             else:  # if not flag
                 if self.filesystem.shouldLink(src, lookedup) == CopyAction.Symlink:
                     constants.link_relative(lookedup, destpath)
                 else:
-                    shutil.copy(lookedup, destpath)
+                    copyfile(lookedup, destpath)
 
         # Create $sourcebase/Makefile.am.
         for_test = True

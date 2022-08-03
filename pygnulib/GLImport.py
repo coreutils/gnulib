@@ -52,6 +52,7 @@ TESTS = constants.TESTS
 compiler = constants.compiler
 joinpath = constants.joinpath
 cleaner = constants.cleaner
+copyfile2 = constants.copyfile2
 isabs = os.path.isabs
 isdir = os.path.isdir
 isfile = os.path.isfile
@@ -734,7 +735,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                     if not self.config['dryrun']:
                         print('Updating %s (backup in %s)' %
                               (srcpath, backupname))
-                        shutil.copy2(srcpath, backupname)
+                        copyfile2(srcpath, backupname)
                         result = ''
                         with codecs.open(srcpath, 'ab', 'UTF-8') as file:
                             file.write(destdata)

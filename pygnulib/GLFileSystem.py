@@ -42,6 +42,7 @@ __copyright__ = constants.__copyright__
 #===============================================================================
 DIRS = constants.DIRS
 joinpath = constants.joinpath
+copyfile = constants.copyfile
 isdir = os.path.isdir
 isfile = os.path.isfile
 
@@ -118,7 +119,7 @@ class GLFileSystem(object):
                     pass  # Skip errors if directory exists
                 if isfile(tempFile):
                     os.remove(tempFile)
-                shutil.copy(lookedupFile, tempFile)
+                copyfile(lookedupFile, tempFile)
                 for diff_in_localdir in reversed(lookedupPatches):
                     command = 'patch -s "%s" < "%s" >&2' % (tempFile, diff_in_localdir)
                     try:  # Try to apply patch
@@ -317,7 +318,7 @@ class GLFileAssistant(object):
                     try:  # Try to move file
                         if os.path.exists(basepath):
                             os.remove(basepath)
-                        shutil.copy(tmpfile, rewritten)
+                        copyfile(tmpfile, rewritten)
                     except Exception as error:
                         raise GLError(17, original)
             else:  # if self.config['dryrun']
@@ -352,7 +353,7 @@ class GLFileAssistant(object):
         sed_transform_testsrelated_lib_file = self.transformers.get(
             'tests', '')
         try:  # Try to copy lookedup file to tmpfile
-            shutil.copy(lookedup, tmpfile)
+            copyfile(lookedup, tmpfile)
         except Exception as error:
             raise GLError(15, lookedup)
         # Don't process binary files with sed.

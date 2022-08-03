@@ -23,6 +23,7 @@ import re
 import os
 import sys
 import platform
+import shutil
 import tempfile
 import subprocess as sp
 import __main__ as interpreter
@@ -301,6 +302,27 @@ def relconcat(dir1, dir2):
     dir1 and dir2 must be relative pathnames.
     dir2 is considered to be relative to dir1.'''
     return os.path.normpath(os.path.join(dir1, dir2))
+
+
+def copyfile(src, dest):
+    '''Copy file src to file dest. Like shutil.copy, but ignore errors e.g. on
+    VFAT file systems.'''
+    shutil.copyfile(src, dest)
+    try:
+        shutil.copymode(src, dest)
+    except PermissionError:
+        pass
+
+
+def copyfile2(src, dest):
+    '''Copy file src to file dest, preserving modification time. Like
+    shutil.copy2, but ignore errors e.g. on VFAT file systems. This function
+    is to be used for backup files.'''
+    shutil.copyfile(src, dest)
+    try:
+        shutil.copystat(src, dest)
+    except PermissionError:
+        pass
 
 
 def link_relative(src, dest):

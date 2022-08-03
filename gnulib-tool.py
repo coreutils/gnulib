@@ -54,6 +54,7 @@ MODES = constants.MODES
 TESTS = constants.TESTS
 compiler = constants.compiler
 joinpath = constants.joinpath
+copyfile = constants.copyfile
 isabs = os.path.isabs
 isdir = os.path.isdir
 isfile = os.path.isfile
@@ -959,7 +960,7 @@ def main():
         # Copy the file.
         assistant = classes.GLFileAssistant(config)
         tmpfile = assistant.tmpfilename(destpath)
-        shutil.copy(lookedup, tmpfile)
+        copyfile(lookedup, tmpfile)
         assistant.setOriginal(srcpath)
         assistant.config.setDestDir(destdir)
         assistant.setRewritten(destpath)
