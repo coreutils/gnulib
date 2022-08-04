@@ -140,13 +140,13 @@ class GLImport(object):
                 keys.append('gl_LGPL')
                 self.cache.setLGPL(True)
             if 'gl_LIBTOOL' in data:
-                self.cache.enableLibtool()
+                self.cache.setLibtool(True)
                 data = data.replace('gl_LIBTOOL', '')
             if 'gl_CONDITIONAL_DEPENDENCIES' in data:
-                self.cache.enableCondDeps()
+                self.cache.setCondDeps(True)
                 data = data.replace('gl_CONDITIONAL_DEPENDENCIES', '')
             if 'gl_VC_FILES' in data:
-                self.cache.enableVCFiles()
+                self.cache.setVCFiles(True)
                 data = data.replace('gl_VC_FILES', '')
             if 'gl_WITH_TESTS' in data:
                 self.cache.enableInclTestCategory(TESTS['tests'])
@@ -825,7 +825,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                     libtests = True
                     break
         if libtests:
-            self.config.enableLibtests()
+            self.config.setLibtests(True)
 
         # Add dummy package if it is needed.
         main_modules = self.moduletable.add_dummy(main_modules)

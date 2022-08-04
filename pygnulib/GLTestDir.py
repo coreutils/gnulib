@@ -266,7 +266,7 @@ class GLTestDir(object):
                         libtests = True
                         break
             if libtests:
-                self.config.enableLibtests()
+                self.config.setLibtests(True)
 
         if single_configure:
             # Add dummy package if it is needed.
@@ -414,7 +414,7 @@ class GLTestDir(object):
                 # Create $testsbase/Makefile.am.
                 destfile = joinpath(directory, 'Makefile.am')
                 libtests = False
-                self.config.disableLibtests()
+                self.config.setLibtests(False)
                 emit, uses_subdirs = self.emiter.tests_Makefile_am(destfile,
                                                                    modules, self.makefiletable, '', for_test)
                 with codecs.open(destfile, 'wb', 'UTF-8') as file:

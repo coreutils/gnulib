@@ -142,10 +142,7 @@ class GLConfig(object):
         self.resetLibtool()
         if libtool != None:
             if type(libtool) is bool:
-                if not libtool:
-                    self.disableLibtool()
-                else:  # if libtool
-                    self.enableLibtool()
+                self.setLibtool(libtool)
             else:  # if type(libtool) is not bool
                 raise TypeError('libtool must be a bool, not %s'
                                 % type(libtool).__name__)
@@ -153,10 +150,7 @@ class GLConfig(object):
         self.resetCondDeps()
         if conddeps != None:
             if type(conddeps) is bool:
-                if not conddeps:
-                    self.disableCondDeps()
-                else:  # if conddeps
-                    self.enableCondDeps()
+                self.setCondDeps(conddeps)
             else:  # if type(conddeps) is not bool
                 raise TypeError('conddeps must be a bool, not %s'
                                 % type(conddeps).__name__)
@@ -183,10 +177,7 @@ class GLConfig(object):
         self.resetVCFiles()
         if vc_files != None:
             if type(vc_files) is bool:
-                if not vc_files:
-                    self.disableVCFiles()
-                else:  # if vc_files
-                    self.enableVCFiles()
+                self.setVCFiles(vc_files)
             else:  # if type(vc_files) is not bool
                 raise TypeError('vc_files must be a bool, not %s'
                                 % type(vc_files).__name__)
@@ -194,10 +185,7 @@ class GLConfig(object):
         self.resetSymbolic()
         if symbolic != None:
             if type(symbolic) is bool:
-                if not symbolic:
-                    self.disableSymbolic()
-                else:  # if symbolic
-                    self.enableSymbolic()
+                self.setSymbolic(symbolic)
             else:  # if type(symbolic) is not bool
                 raise TypeError('symbolic must be a bool, not %s'
                                 % type(symbolic).__name__)
@@ -205,10 +193,7 @@ class GLConfig(object):
         self.resetLSymbolic()
         if lsymbolic != None:
             if type(lsymbolic) is bool:
-                if not lsymbolic:
-                    self.disableLSymbolic()
-                else:  # if lsymbolic
-                    self.enableLSymbolic()
+                self.setLSymbolic(lsymbolic)
             else:  # if type(lsymbolic) is not bool
                 raise TypeError('lsymbolic must be a bool, not %s'
                                 % type(lsymbolic).__name__)
@@ -224,10 +209,7 @@ class GLConfig(object):
         self.resetLibtests()
         if libtests != None:
             if type(libtests) is bool:
-                if not libtests:
-                    self.disableLibtests()
-                else:  # if libtests
-                    self.enableLibtests()
+                self.setLibtests(libtests)
             else:  # if type(libtests) is not bool
                 raise TypeError('libtests must be a bool, not %s'
                                 % type(libtests).__name__)
@@ -235,10 +217,7 @@ class GLConfig(object):
         self.resetSingleConfigure()
         if single_configure != None:
             if type(single_configure) is bool:
-                if not single_configure:
-                    self.disableSingleConfigure()
-                else:  # if single_configure
-                    self.enableSingleConfigure()
+                self.setSingleConfigure(single_configure)
             else:  # if type(single_configure) is not bool
                 raise TypeError('single_configure must be a bool, not %s'
                                 % type(single_configure).__name__)
@@ -250,10 +229,7 @@ class GLConfig(object):
         self.resetDryRun()
         if dryrun != None:
             if type(dryrun) is bool:
-                if not dryrun:
-                    self.disableDryRun()
-                else:  # if dryrun
-                    self.enableDryRun()
+                self.setDryRun(dryrun)
             else:  # if type(dryrun) is not bool
                 raise TypeError('dryrun must be a bool, not %s'
                                 % type(dryrun).__name__)
@@ -261,10 +237,7 @@ class GLConfig(object):
         self.resetErrors()
         if errors != None:
             if type(errors) is bool:
-                if not errors:
-                    self.disableErrors()
-                else:  # if errors
-                    self.enableErrors()
+                self.setErrors(errors)
             else:  # if type(errors) is not bool
                 raise TypeError('errors must be a bool, not %s'
                                 % type(errors).__name__)
@@ -801,13 +774,13 @@ class GLConfig(object):
         '''Check if user enabled libtool rules.'''
         return self.table['libtool']
 
-    def enableLibtool(self):
-        '''Enable libtool rules.'''
-        self.table['libtool'] = True
-
-    def disableLibtool(self):
-        '''Disable libtool rules.'''
-        self.table['libtool'] = False
+    def setLibtool(self, value):
+        '''Enable / disable libtool rules.'''
+        if type(value) is bool:
+            self.table['libtool'] = value
+        else:  # if type(value) is not bool
+            raise TypeError('value must be a bool, not %s'
+                            % type(value).__name__)
 
     def resetLibtool(self):
         '''Reset libtool rules.'''
@@ -815,19 +788,19 @@ class GLConfig(object):
 
     # Define conddeps methods.
     def checkCondDeps(self):
-        '''Check if user enabled cond. dependencies.'''
+        '''Check if user enabled conditional dependencies.'''
         return self.table['conddeps']
 
-    def enableCondDeps(self):
-        '''Enable cond. dependencies (may save configure time and object code).'''
-        self.table['conddeps'] = True
-
-    def disableCondDeps(self):
-        '''Disable cond. dependencies (may save configure time and object code).'''
-        self.table['conddeps'] = False
+    def setCondDeps(self, value):
+        '''Enable / disable conditional dependencies (may save configure time and object code).'''
+        if type(value) is bool:
+            self.table['conddeps'] = value
+        else:  # if type(value) is not bool
+            raise TypeError('value must be a bool, not %s'
+                            % type(value).__name__)
 
     def resetCondDeps(self):
-        '''Reset cond. dependencies (may save configure time and object code).'''
+        '''Reset conditional dependencies (may save configure time and object code).'''
         self.table['conddeps'] = False
 
     # Define lgpl methods.
@@ -953,13 +926,13 @@ class GLConfig(object):
         '''Check if update of the version control files is enabled or disabled.'''
         return self.table['vc_files']
 
-    def enableVCFiles(self):
-        '''Enable update of the version control files.'''
-        self.table['vc_files'] = True
-
-    def disableVCFiles(self):
-        '''Disable update of the version control files.'''
-        self.table['vc_files'] = False
+    def setVCFiles(self, value):
+        '''Enable /disable update of the version control files.'''
+        if type(value) is bool:
+            self.table['vc_files'] = value
+        else:  # if type(value) is not bool
+            raise TypeError('value must be a bool, not %s'
+                            % type(value).__name__)
 
     def resetVCFiles(self):
         '''Reset update of the version control files and set it to None.'''
@@ -1015,15 +988,14 @@ class GLConfig(object):
         '''Check if pygnulib will make symbolic links instead of copying files.'''
         return self.table['symbolic']
 
-    def enableSymbolic(self):
-        '''Enable creation of the symbolic links instead of copying files.'''
-        self.table['symbolic'] = True
-        self.table['copyrights'] = False
-
-    def disableSymbolic(self):
-        '''Enable creation of the symbolic links instead of copying files.'''
-        self.table['symbolic'] = False
-        self.table['copyrights'] = True
+    def setSymbolic(self, value):
+        '''Enable / disable creation of the symbolic links instead of copying files.'''
+        if type(value) is bool:
+            self.table['symbolic'] = value
+            self.table['copyrights'] = not value
+        else:  # if type(value) is not bool
+            raise TypeError('value must be a bool, not %s'
+                            % type(value).__name__)
 
     def resetSymbolic(self):
         '''Reset creation of the symbolic links instead of copying files.'''
@@ -1032,19 +1004,18 @@ class GLConfig(object):
 
     # Define lsymbolic methods.
     def checkLSymbolic(self):
-        '''Check if pygnulib will make symbolic links instead of copying files, only
-        for files from the local override directories.'''
+        '''Check if pygnulib will make symbolic links instead of copying files,
+        only for files from the local override directories.'''
         return self.table['lsymbolic']
 
-    def enableLSymbolic(self):
-        '''Enable creation of symbolic links instead of copying files, only for
-        files from the local override directories.'''
-        self.table['lsymbolic'] = True
-
-    def disableLSymbolic(self):
-        '''Disable creation of symbolic links instead of copying files, only for
-        files from the local override directories.'''
-        self.table['lsymbolic'] = False
+    def setLSymbolic(self, value):
+        '''Enable / disable creation of symbolic links instead of copying files,
+        only for files from the local override directories.'''
+        if type(value) is bool:
+            self.table['lsymbolic'] = value
+        else:  # if type(value) is not bool
+            raise TypeError('value must be a bool, not %s'
+                            % type(value).__name__)
 
     def resetLSymbolic(self):
         '''Reset creation of symbolic links instead of copying files, only for
@@ -1090,13 +1061,13 @@ class GLConfig(object):
         '''Return True if a testsbase/libtests.a is needed.'''
         return self.table['libtests']
 
-    def enableLibtests(self):
-        '''If libtests is enabled, then testsbase/libtests.a is needed.'''
-        self.table['libtests'] = True
-
-    def disableLibtests(self):
-        '''If libtests is disabled, then testsbase/libtests.a is not needed.'''
-        self.table['libtests'] = False
+    def setLibtests(self, value):
+        '''Specifies whether testsbase/libtests.a is needed.'''
+        if type(value) is bool:
+            self.table['libtests'] = value
+        else:  # if type(value) is not bool
+            raise TypeError('value must be a bool, not %s'
+                            % type(value).__name__)
 
     def resetLibtests(self):
         '''Reset status of testsbase/libtests.a.'''
@@ -1107,13 +1078,13 @@ class GLConfig(object):
         '''Check whether single configure file should be generated.'''
         return self.table['single_configure']
 
-    def enableSingleConfigure(self):
-        '''Enable generation of the single configure file.'''
-        self.table['single_configure'] = True
-
-    def disableSingleConfigure(self):
-        '''Disable generation of the single configure file.'''
-        self.table['single_configure'] = False
+    def setSingleConfigure(self, value):
+        '''Enable / disable generation of the single configure file.'''
+        if type(value) is bool:
+            self.table['single_configure'] = value
+        else:  # if type(value) is not bool
+            raise TypeError('value must be a bool, not %s'
+                            % type(value).__name__)
 
     def resetSingleConfigure(self):
         '''Reset status of the single configure file generation.'''
@@ -1124,13 +1095,13 @@ class GLConfig(object):
         '''Check whether dryrun is enabled.'''
         return self.table['dryrun']
 
-    def enableDryRun(self):
-        '''Enable dryrun mode.'''
-        self.table['dryrun'] = True
-
-    def disableDryRun(self):
-        '''Disable dryrun mode.'''
-        self.table['dryrun'] = False
+    def setDryRun(self, value):
+        '''Enable / disable dryrun mode.'''
+        if type(value) is bool:
+            self.table['dryrun'] = value
+        else:  # if type(value) is not bool
+            raise TypeError('value must be a bool, not %s'
+                            % type(value).__name__)
 
     def resetDryRun(self):
         '''Reset status of dryrun mode.'''
@@ -1141,13 +1112,13 @@ class GLConfig(object):
         '''Check if GLError will be raised in non-critical situations.'''
         return self.table['errors']
 
-    def enableErrors(self):
-        '''Raise GLError in non-critical situations.'''
-        self.table['errors'] = True
-
-    def disableErrors(self):
-        '''Do not raise GLError in non-critical situations.'''
-        self.table['errors'] = False
+    def setErrors(self, value):
+        '''Enable / disable raising GLError in non-critical situations.'''
+        if type(value) is bool:
+            self.table['errors'] = value
+        else:  # if type(value) is not bool
+            raise TypeError('value must be a bool, not %s'
+                            % type(value).__name__)
 
     def resetErrors(self):
         '''Reset status of raising GLError in non-critical situations.'''
