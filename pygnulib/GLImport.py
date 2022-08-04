@@ -1053,7 +1053,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         # They will be removed and added to filetable['removed'] list.
         pairs = [ f
                   for f in filetable['old']
-                  if f not in filetable['old'] ]
+                  if f not in filetable['new'] ]
         pairs = sorted(set(pairs), key=lambda t: tuple(t[0].lower()))
         files = sorted(set(pair[0] for pair in pairs))
         for file in files:
