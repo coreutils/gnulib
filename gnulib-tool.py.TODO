@@ -998,17 +998,6 @@ Date:   Sun Mar 12 19:18:53 2017 -0700
 
 --------------------------------------------------------------------------------
 
-commit f42ee040afd2e142951a9809b1d14550c29330e8
-Author: Bruno Haible <bruno@clisp.org>
-Date:   Sun Feb 19 15:15:11 2017 +0100
-
-    gnulib-tool: Avoid conflict of havelib-tests with --single-configure.
-
-    * gnulib_tool (func_create_testdir): Avoid havelib-tests when
-    --with-tests --single-configure is specified.
-
---------------------------------------------------------------------------------
-
 commit 9bdf6c8a0cdeb13c12e4b65dee9538c5468dbe1d
 Author: Bruno Haible <bruno@clisp.org>
 Date:   Sun Aug 19 14:06:50 2012 +0200

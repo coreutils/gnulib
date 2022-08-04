@@ -87,9 +87,6 @@ class GLTestDir(object):
         self.emiter = GLEmiter(self.config)
         self.filesystem = GLFileSystem(self.config)
         self.modulesystem = GLModuleSystem(self.config)
-        self.moduletable = GLModuleTable(self.config,
-                                         True,
-                                         self.config.checkInclTestCategory(TESTS['all-tests']))
         self.assistant = GLFileAssistant(self.config)
         self.makefiletable = GLMakefileTable(self.config)
 
@@ -179,6 +176,17 @@ class GLTestDir(object):
         specified_modules = sorted(set(specified_modules))
         specified_modules = [self.modulesystem.find(m) for m in specified_modules]
 
+        # Test modules which invoke AC_CONFIG_FILES cannot be used with
+        # --with-tests --single-configure. Avoid them.
+        inctests = self.config.checkInclTestCategory(TESTS['tests'])
+        if inctests and self.config.checkSingleConfigure():
+            self.config.addAvoid('havelib-tests')
+
+        # Now it's time to create the GLModuleTable.
+        moduletable = GLModuleTable(self.config,
+                                    True,
+                                    self.config.checkInclTestCategory(TESTS['all-tests']))
+
         # When computing transitive closures, don't consider $module to depend on
         # $module-tests. Need this because tests are implicitly GPL and may depend
         # on GPL modules - therefore we don't want a warning in this case.
@@ -187,11 +195,11 @@ class GLTestDir(object):
         for requested_module in specified_modules:
             requested_licence = requested_module.getLicense()
             if requested_licence != 'GPL':
-                # Here we use self.moduletable.transitive_closure([module]), not
+                # Here we use moduletable.transitive_closure([module]), not
                 # just module.getDependencies, so that we also detect weird
                 # situations like an LGPL module which depends on a GPLed build
                 # tool module which depends on a GPL module.
-                modules = self.moduletable.transitive_closure([requested_module])
+                modules = moduletable.transitive_closure([requested_module])
                 for module in modules:
                     license = module.getLicense()
                     if license not in ['GPLv2+ build tool', 'GPLed build tool',
@@ -218,7 +226,7 @@ class GLTestDir(object):
         self.config.setInclTestCategory(TESTS['tests'], saved_inctests)
 
         # Determine final module list.
-        modules = self.moduletable.transitive_closure(specified_modules)
+        modules = moduletable.transitive_closure(specified_modules)
         final_modules = list(modules)
 
         # Show final module list.
@@ -240,7 +248,7 @@ class GLTestDir(object):
         if single_configure:
             # Determine main module list and tests-related module list separately.
             main_modules, tests_modules = \
-                self.moduletable.transitive_closure_separately(
+                moduletable.transitive_closure_separately(
                     specified_modules, final_modules)
             # Print main_modules and tests_modules.
             if verbose >= 1:
@@ -263,20 +271,20 @@ class GLTestDir(object):
 
         if single_configure:
             # Add dummy package if it is needed.
-            main_modules = self.moduletable.add_dummy(main_modules)
+            main_modules = moduletable.add_dummy(main_modules)
             if 'dummy' in [str(module) for module in main_modules]:
                 main_modules = [m for m in main_modules if str(m) != 'dummy']
                 dummy = self.modulesystem.find('dummy')
                 main_modules = sorted(set(main_modules)) + [dummy]
             if libtests:  # if we need to use libtests.a
-                tests_modules = self.moduletable.add_dummy(tests_modules)
+                tests_modules = moduletable.add_dummy(tests_modules)
                 if 'dummy' in [str(module) for module in tests_modules]:
                     tests_modules = [
                         m for m in tests_modules if str(m) != 'dummy']
                     dummy = self.modulesystem.find('dummy')
                     tests_modules = sorted(set(tests_modules)) + [dummy]
         else:  # if not single_configure
-            modules = self.moduletable.add_dummy(modules)
+            modules = moduletable.add_dummy(modules)
             if 'dummy' in [str(module) for module in modules]:
                 modules = [m for m in modules if str(m) != 'dummy']
                 dummy = self.modulesystem.find('dummy')
@@ -303,11 +311,10 @@ class GLTestDir(object):
         # Determine final file list.
         if single_configure:
             main_filelist, tests_filelist = \
-                self.moduletable.filelist_separately(
-                    main_modules, tests_modules)
+                moduletable.filelist_separately(main_modules, tests_modules)
             filelist = sorted(set(main_filelist + tests_filelist))
         else:  # if not single_configure
-            filelist = self.moduletable.filelist(modules)
+            filelist = moduletable.filelist(modules)
 
         filelist = sorted(set(filelist))
 
@@ -364,10 +371,10 @@ class GLTestDir(object):
         destfile = joinpath(directory, 'Makefile.am')
         if single_configure:
             emit, uses_subdirs = self.emiter.lib_Makefile_am(destfile, main_modules,
-                                                             self.moduletable, self.makefiletable, '', for_test)
+                                                             moduletable, self.makefiletable, '', for_test)
         else:  # if not single_configure
             emit, uses_subdirs = self.emiter.lib_Makefile_am(destfile, modules,
-                                                             self.moduletable, self.makefiletable, '', for_test)
+                                                             moduletable, self.makefiletable, '', for_test)
         with codecs.open(destfile, 'wb', 'UTF-8') as file:
             file.write(emit)
         any_uses_subdirs = uses_subdirs
@@ -484,11 +491,11 @@ class GLTestDir(object):
                 # those of the tests.
                 emit += "gl_source_base='../%s'\n" % sourcebase
                 emit += self.emiter.autoconfSnippets(modules,
-                                                     self.moduletable, self.assistant, 1, False, False, False,
+                                                     moduletable, self.assistant, 1, False, False, False,
                                                      replace_auxdir)
                 emit += "gl_source_base='.'"
                 emit += self.emiter.autoconfSnippets(modules,
-                                                     self.moduletable, self.assistant, 2, False, False, False,
+                                                     moduletable, self.assistant, 2, False, False, False,
                                                      replace_auxdir)
                 emit += self.emiter.initmacro_end(macro_prefix)
                 # _LIBDEPS and _LTLIBDEPS variables are not needed if this library is
@@ -598,10 +605,10 @@ class GLTestDir(object):
         emit += self.emiter.initmacro_start(macro_prefix)
         emit += 'gl_source_base=\'%s\'\n' % sourcebase
         if single_configure:
-            emit += self.emiter.autoconfSnippets(main_modules, self.moduletable,
+            emit += self.emiter.autoconfSnippets(main_modules, moduletable,
                                                  self.assistant, 0, False, False, False, replace_auxdir)
         else:  # if not single_configure
-            emit += self.emiter.autoconfSnippets(modules, self.moduletable,
+            emit += self.emiter.autoconfSnippets(modules, moduletable,
                                                  self.assistant, 1, False, False, False, replace_auxdir)
         emit += self.emiter.initmacro_end(macro_prefix)
         if single_configure:
@@ -616,7 +623,7 @@ class GLTestDir(object):
                 macro_prefix
             emit += '  m4_pushdef([gl_MODULE_INDICATOR_CONDITION], '
             emit += '[$gl_module_indicator_condition])\n'
-            snippets = self.emiter.autoconfSnippets(tests_modules, self.moduletable,
+            snippets = self.emiter.autoconfSnippets(tests_modules, moduletable,
                                                     self.assistant, 1, True, False, False, replace_auxdir)
             emit += snippets.strip()
             emit += '  m4_popdef([gl_MODULE_INDICATOR_CONDITION])\n'
@@ -864,9 +871,6 @@ class GLMegaTestDir(object):
         self.emiter = GLEmiter(self.config)
         self.filesystem = GLFileSystem(self.config)
         self.modulesystem = GLModuleSystem(self.config)
-        self.moduletable = GLModuleTable(self.config,
-                                         True,
-                                         self.config.checkInclTestCategory(TESTS['all-tests']))
         self.assistant = GLFileAssistant(self.config)
         self.makefiletable = GLMakefileTable(self.config)
 
