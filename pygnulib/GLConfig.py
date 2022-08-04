@@ -119,11 +119,11 @@ class GLConfig(object):
         if files != None:
             self.setFiles(files)
         # test categories to include
-        self.resetInclTestCategories
+        self.resetInclTestCategories()
         if incl_test_categories != None:
             self.setInclTestCategories(incl_test_categories)
         # test categories to exclude
-        self.resetExclTestCategories
+        self.resetExclTestCategories()
         if excl_test_categories != None:
             self.setExclTestCategories(excl_test_categories)
         # libname
@@ -725,11 +725,13 @@ class GLConfig(object):
     def setInclTestCategories(self, categories):
         '''Specify the test categories that should be included.'''
         if type(categories) is list or type(categories) is tuple:
+            old_categories = self.table['incl_test_categories']
             self.table['incl_test_categories'] = list()
             for category in categories:
                 try:  # Try to enable each category
                     self.enableInclTestCategory(category)
                 except TypeError as error:
+                    self.table['incl_test_categories'] = old_categories
                     raise TypeError('each category must be one of TESTS integers')
         else:  # if type of categories is not list or tuple
             raise TypeError('categories must be a list or a tuple, not %s' %
@@ -771,11 +773,13 @@ class GLConfig(object):
     def setExclTestCategories(self, categories):
         '''Specify the test categories that should be excluded.'''
         if type(categories) is list or type(categories) is tuple:
+            old_categories = self.table['excl_test_categories']
             self.table['excl_test_categories'] = list()
             for category in categories:
                 try:  # Try to enable each category
                     self.enableExclTestCategory(category)
                 except TypeError as error:
+                    self.table['excl_test_categories'] = old_categories
                     raise TypeError('each category must be one of TESTS integers')
         else:  # if type of categories is not list or tuple
             raise TypeError('categories must be a list or a tuple, not %s' %
