@@ -162,28 +162,29 @@ class GLTestDir(object):
         macro_prefix = self.config['macro_prefix']
         verbose = self.config['verbosity']
 
-        base_modules = [self.modulesystem.find(
-            m) for m in self.config['modules']]
-        if not base_modules:
-            base_modules = self.modulesystem.list()
-            base_modules = [self.modulesystem.find(m) for m in base_modules]
-        # All modules together.
-        # Except config-h, which breaks all modules which use HAVE_CONFIG_H.
-        # Except non-recursive-gnulib-prefix-hack, which represents a
-        # nonstandard way of using Automake.
-        # Except ftruncate, mountlist, which abort the configuration on mingw.
-        # Except lib-ignore, which leads to link errors when Sun C++ is used.
-        base_modules = sorted(set(base_modules))
-        base_modules = [module
-                        for module in base_modules
-                        if str(module) not in ['config-h', 'non-recursive-gnulib-prefix-hack', 'ftruncate', 'mountlist', 'lib-ignore']]
+        specified_modules = self.config['modules']
+        if len(specified_modules) == 0:
+            # All modules together.
+            # Except config-h, which breaks all modules which use HAVE_CONFIG_H.
+            # Except non-recursive-gnulib-prefix-hack, which represents a
+            # nonstandard way of using Automake.
+            # Except ftruncate, mountlist, which abort the configuration on mingw.
+            # Except lib-ignore, which leads to link errors when Sun C++ is used.
+            specified_modules = self.modulesystem.list()
+            specified_modules = [module
+                                 for module in specified_modules
+                                 if module not in ['config-h', 'non-recursive-gnulib-prefix-hack', 'ftruncate', 'mountlist', 'lib-ignore']]
+
+        # Canonicalize the list of specified modules.
+        specified_modules = sorted(set(specified_modules))
+        specified_modules = [self.modulesystem.find(m) for m in specified_modules]
 
         # When computing transitive closures, don't consider $module to depend on
         # $module-tests. Need this because tests are implicitly GPL and may depend
         # on GPL modules - therefore we don't want a warning in this case.
         saved_inctests = self.config.checkInclTestCategory(TESTS['tests'])
         self.config.disableInclTestCategory(TESTS['tests'])
-        for requested_module in base_modules:
+        for requested_module in specified_modules:
             requested_licence = requested_module.getLicense()
             if requested_licence != 'GPL':
                 # Here we use self.moduletable.transitive_closure([module]), not
@@ -217,7 +218,7 @@ class GLTestDir(object):
         self.config.setInclTestCategory(TESTS['tests'], saved_inctests)
 
         # Determine final module list.
-        modules = self.moduletable.transitive_closure(base_modules)
+        modules = self.moduletable.transitive_closure(specified_modules)
         final_modules = list(modules)
 
         # Show final module list.
@@ -240,7 +241,7 @@ class GLTestDir(object):
             # Determine main module list and tests-related module list separately.
             main_modules, tests_modules = \
                 self.moduletable.transitive_closure_separately(
-                    base_modules, final_modules)
+                    specified_modules, final_modules)
             # Print main_modules and tests_modules.
             if verbose >= 1:
                 print('Main module list:')
