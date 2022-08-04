@@ -68,7 +68,6 @@ def main():
     mode = None
     destdir = None
     localpath = None
-    modcache = None
     verbose = None
     auxdir = None
     modules = None
@@ -233,6 +232,15 @@ def main():
                         dest='localpath',
                         default=None,
                         nargs=1)
+    # cache-modules: a no-op for backward compatibility
+    parser.add_argument('--cache-modules',
+                        dest='cache_modules',
+                        default=None,
+                        action='store_true')
+    parser.add_argument('--no-cache-modules',
+                        dest='cache_modules',
+                        default=None,
+                        action='store_false')
     # verbose
     parser.add_argument('--verbose',
                         default=0,
@@ -648,7 +656,6 @@ def main():
         vc_files=vc_files,
         symbolic=symlink,
         lsymbolic=lsymlink,
-        modcache=modcache,
         single_configure=single_configure,
         verbose=verbose,
         dryrun=dryrun,

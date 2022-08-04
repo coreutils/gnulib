@@ -62,7 +62,7 @@ class GLConfig(object):
                  incl_test_categories=None, excl_test_categories=None, libname=None,
                  lgpl=None, makefile=None, libtool=None, conddeps=None, macro_prefix=None,
                  podomain=None, witness_c_macro=None, vc_files=None, symbolic=None,
-                 lsymbolic=None, modcache=None, configure_ac=None, ac_version=None,
+                 lsymbolic=None, configure_ac=None, ac_version=None,
                  libtests=None, single_configure=None, verbose=None, dryrun=None,
                  errors=None):
         '''GLConfig.__init__(arguments) -> GLConfig
@@ -212,17 +212,6 @@ class GLConfig(object):
             else:  # if type(lsymbolic) is not bool
                 raise TypeError('lsymbolic must be a bool, not %s'
                                 % type(lsymbolic).__name__)
-        # modcache
-        self.resetModuleCaching()
-        if modcache != None:
-            if type(modcache) is bool:
-                if not modcache:
-                    self.disableModuleCaching()
-                else:  # if modcache
-                    self.enableModuleCaching()
-            else:  # if type(modcache) is not bool
-                raise TypeError('modcache must be a bool, not %s'
-                                % type(modcache).__name__)
         # configure_ac
         self.resetAutoconfFile()
         if configure_ac != None:
@@ -358,8 +347,8 @@ class GLConfig(object):
                 return True
             elif key in ['modules', 'avoids', 'tests', 'incl_test_categories', 'excl_test_categories']:
                 return list()
-            elif key in ['libtool', 'lgpl', 'conddeps', 'modcache', 'symbolic',
-                         'lsymbolic', 'libtests', 'dryrun']:
+            elif key in ['libtool', 'lgpl', 'conddeps', 'symbolic', 'lsymbolic',
+                         'libtests', 'dryrun']:
                 return False
             if key == 'vc_files':
                 return None
@@ -975,23 +964,6 @@ class GLConfig(object):
     def resetVCFiles(self):
         '''Reset update of the version control files and set it to None.'''
         self.table['vc_files'] = None
-
-    # Define modcache methods.
-    def checkModuleCaching(self):
-        '''Get status of module caching optimization.'''
-        return self.table['modcache']
-
-    def enableModuleCaching(self):
-        '''Enable module caching optimization.'''
-        self.table['modcache'] = True
-
-    def disableModuleCaching(self):
-        '''Disable module caching optimization.'''
-        self.table['modcache'] = False
-
-    def resetModuleCaching(self):
-        '''Reset module caching optimization.'''
-        self.table['modcache'] = False
 
     # Define configure_ac methods.
     def getAutoconfFile(self):

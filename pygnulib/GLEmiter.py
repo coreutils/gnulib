@@ -636,7 +636,6 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                             % type(for_test).__name__)
         emit = ''
         sourcebase = self.config['sourcebase']
-        modcache = self.config['modcache']
         libname = self.config['libname']
         pobase = self.config['pobase']
         auxdir = self.config['auxdir']
@@ -908,7 +907,6 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         emit = ''
         auxdir = self.config['auxdir']
         sourcebase = self.config['sourcebase']
-        modcache = self.config['modcache']
         libname = self.config['libname']
         m4base = self.config['m4base']
         pobase = self.config['pobase']
