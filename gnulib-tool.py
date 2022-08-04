@@ -23,6 +23,9 @@
 # Like PEP 8 <https://peps.python.org/pep-0008/>, except
 # - Line length is not limited to 79 characters.
 # - Line breaking before or after binary operators? Better before, like in GNU.
+# - Place line breaks to help reading the code:
+#   Avoid line breaks inside expressions, if they can be avoided.
+#   Do use line breaks to separate the parts of [ ... for ... ] iterations.
 # You can use this command to check the style:
 #   $ pycodestyle --max-line-length=136 --ignore=E265,W503,E241,E711,E712,E201,E202,E221 gnulib-tool.py pygnulib/*.py
 
@@ -388,7 +391,7 @@ def main():
 
     # Parse the given arguments. Don't signal an error if non-option arguments
     # occur between or after options.
-    (cmdargs, unhandled) = parser.parse_known_args()
+    cmdargs, unhandled = parser.parse_known_args()
 
     # Handle --help and --version, ignoring all other options.
     if cmdargs.help != None:
@@ -437,7 +440,9 @@ def main():
         cmdargs.mode_xmaintainer,
         cmdargs.mode_copy_file,
     ]
-    overflow = [arg for arg in args if arg != None]
+    overflow = [ arg
+                 for arg in args
+                 if arg != None ]
     if len(overflow) > 1:
         message = '%s: Unable to combine different modes of work.\n' % constants.APP['name']
         message += 'Try \'gnulib-tool --help\' for more information.\n'
@@ -740,16 +745,14 @@ def main():
                 else:  # if not isfile(filepath)
                     filepath = joinpath(destdir, 'aclocal.m4')
                     if isfile(filepath):
-                        pattern = constants.compiler(
-                            r'm4_include\(\[(.*?)\]\)')
+                        pattern = constants.compiler(r'm4_include\(\[(.*?)\]\)')
                         with codecs.open(filepath, 'rb', 'UTF-8') as file:
                             m4dirs = pattern.findall(file.read())
-                        m4dirs = [os.path.dirname(m4dir) for m4dir in m4dirs]
-                        m4dirs = \
-                            [  # Begin filtering
-                                m4dir for m4dir in m4dirs \
-                                if isfile(joinpath(destdir, m4dir, 'gnulib-cache.m4'))
-                            ]  # Finish filtering
+                        m4dirs = [ os.path.dirname(m4dir)
+                                   for m4dir in m4dirs ]
+                        m4dirs = [ m4dir
+                                   for m4dir in m4dirs
+                                   if isfile(joinpath(destdir, m4dir, 'gnulib-cache.m4')) ]
                         m4dirs = sorted(set(m4dirs))
                 if len(m4dirs) == 0:
                     # First use of gnulib in a package.
@@ -833,8 +836,9 @@ def main():
             sys.exit(1)
         args = ['find', '.', '-type', 'f', '-print']
         remaining = sp.check_output(args).decode(ENCS['shell'])
-        lines = [line.strip()
-                 for line in remaining.split('\n') if line.strip()]
+        lines = [ line.strip()
+                  for line in remaining.split('\n')
+                  if line.strip() ]
         remaining = ' '.join(lines)
         if remaining:
             message = 'Remaining files: %s\n' % remaining
@@ -861,8 +865,9 @@ def main():
         sp.call([UTILS['make'], 'distclean'])
         args = ['find', '.', '-type', 'f', '-print']
         remaining = sp.check_output(args).decode(ENCS['shell'])
-        lines = [line.strip()
-                 for line in remaining.split('\n') if line.strip()]
+        lines = [ line.strip()
+                  for line in remaining.split('\n')
+                  if line.strip() ]
         remaining = ' '.join(lines)
         if remaining:
             message = 'Remaining files: %s\n' % remaining
@@ -874,38 +879,44 @@ def main():
 
     elif mode == 'extract-description':
         modulesystem = classes.GLModuleSystem(config)
-        modules = [modulesystem.find(module) for module in modules]
+        modules = [ modulesystem.find(module)
+                    for module in modules ]
         for module in modules:
             print(module.getDescription())
 
     elif mode == 'extract-comment':
         modulesystem = classes.GLModuleSystem(config)
-        modules = [modulesystem.find(module) for module in modules]
+        modules = [ modulesystem.find(module)
+                    for module in modules ]
         for module in modules:
             print(module.getComment())
 
     elif mode == 'extract-status':
         modulesystem = classes.GLModuleSystem(config)
-        modules = [modulesystem.find(module) for module in modules]
+        modules = [ modulesystem.find(module)
+                    for module in modules ]
         for module in modules:
             status = module.getStatus()
             print('\n'.join(status))
 
     elif mode == 'extract-notice':
         modulesystem = classes.GLModuleSystem(config)
-        modules = [modulesystem.find(module) for module in modules]
+        modules = [ modulesystem.find(module)
+                    for module in modules ]
         for module in modules:
             print(module.getNotice())
 
     elif mode == 'extract-applicability':
         modulesystem = classes.GLModuleSystem(config)
-        modules = [modulesystem.find(module) for module in modules]
+        modules = [ modulesystem.find(module)
+                    for module in modules ]
         for module in modules:
             print(module.getApplicability())
 
     elif mode == 'extract-filelist':
         modulesystem = classes.GLModuleSystem(config)
-        modules = [modulesystem.find(module) for module in modules]
+        modules = [ modulesystem.find(module)
+                    for module in modules ]
         for module in modules:
             files = module.getFiles()
             print('\n'.join(files))
@@ -919,7 +930,8 @@ def main():
             sys.stderr.write(message)
             sys.exit(1)
         modulesystem = classes.GLModuleSystem(config)
-        modules = [modulesystem.find(module) for module in modules]
+        modules = [ modulesystem.find(module)
+                    for module in modules ]
         for module in modules:
             dependencies = module.getDependencies()
             if dependencies:
@@ -932,43 +944,50 @@ def main():
 
     elif mode == 'extract-autoconf-snippet':
         modulesystem = classes.GLModuleSystem(config)
-        modules = [modulesystem.find(module) for module in modules]
+        modules = [ modulesystem.find(module)
+                    for module in modules ]
         for module in modules:
             print(module.getAutoconfSnippet())
 
     elif mode == 'extract-automake-snippet':
         modulesystem = classes.GLModuleSystem(config)
-        modules = [modulesystem.find(module) for module in modules]
+        modules = [ modulesystem.find(module)
+                    for module in modules ]
         for module in modules:
             print(module.getAutomakeSnippet())
 
     elif mode == 'extract-include-directive':
         modulesystem = classes.GLModuleSystem(config)
-        modules = [modulesystem.find(module) for module in modules]
+        modules = [ modulesystem.find(module)
+                    for module in modules ]
         for module in modules:
             print(module.getInclude())
 
     elif mode == 'extract-link-directive':
         modulesystem = classes.GLModuleSystem(config)
-        modules = [modulesystem.find(module) for module in modules]
+        modules = [ modulesystem.find(module)
+                    for module in modules ]
         for module in modules:
             print(module.getLink())
 
     elif mode == 'extract-license':
         modulesystem = classes.GLModuleSystem(config)
-        modules = [modulesystem.find(module) for module in modules]
+        modules = [ modulesystem.find(module)
+                    for module in modules ]
         for module in modules:
             print(module.getLicense())
 
     elif mode == 'extract-maintainer':
         modulesystem = classes.GLModuleSystem(config)
-        modules = [modulesystem.find(module) for module in modules]
+        modules = [ modulesystem.find(module)
+                    for module in modules ]
         for module in modules:
             print(module.getMaintainer())
 
     elif mode == 'extract-tests-module':
         modulesystem = classes.GLModuleSystem(config)
-        modules = [modulesystem.find(module) for module in modules]
+        modules = [ modulesystem.find(module)
+                    for module in modules ]
         for module in modules:
             if module.getTestsModule():
                 print(module.getTestsName())

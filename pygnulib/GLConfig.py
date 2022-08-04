@@ -386,7 +386,8 @@ class GLConfig(object):
                     raise TypeError('localpath element must be a string, not %s' % type(dir).__name__)
         else:
             raise TypeError('localpath must be a list, not %s' % type(localpath).__name__)
-        self.table['localpath'] = [ remove_trailing_slashes(dir) for dir in localpath ]
+        self.table['localpath'] = [ remove_trailing_slashes(dir)
+                                    for dir in localpath ]
 
     def resetLocalPath(self):
         '''Reset a list of local override directories where to look up files

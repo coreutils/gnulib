@@ -80,8 +80,8 @@ class GLModuleSystem(object):
         Check whether the given module exists.
         GLConfig: localpath.'''
         if type(module) is not str:
-            raise TypeError(
-                'module must be a string, not %s' % type(module).__name__)
+            raise TypeError('module must be a string, not %s'
+                            % type(module).__name__)
         localpath = self.config['localpath']
         result = False
         badnames = ['ChangeLog', 'COPYING', 'README', 'TEMPLATE',
@@ -90,8 +90,8 @@ class GLModuleSystem(object):
             result = isfile(joinpath(DIRS['modules'], module))
             if not result:
                 for localdir in localpath:
-                    if isdir(joinpath(localdir, 'modules')) \
-                       and isfile(joinpath(localdir, 'modules', module)):
+                    if (isdir(joinpath(localdir, 'modules'))
+                            and isfile(joinpath(localdir, 'modules', module))):
                         result = True
                         break
         return result
@@ -101,8 +101,8 @@ class GLModuleSystem(object):
 
         Find the given module.'''
         if type(module) is not str:
-            raise TypeError(
-                'module must be a string, not %s' % type(module).__name__)
+            raise TypeError('module must be a string, not %s'
+                            % type(module).__name__)
         if self.exists(module):
             path, istemp = self.filesystem.lookup(joinpath('modules', module))
             result = GLModule(self.config, path, istemp)
@@ -168,7 +168,9 @@ class GLModuleSystem(object):
         result = sed.stdout.read().decode("UTF-8")
         stdin.close()
         os.remove(path)
-        listing = [line for line in result.split('\n') if line.strip()]
+        listing = [ line
+                    for line in result.split('\n')
+                    if line.strip() ]
         listing = sorted(set(listing))
         return listing
 
@@ -363,11 +365,9 @@ Include:|Link:|License:|Maintainer:)'
         Return the automake conditional name.
         GLConfig: macro_prefix.'''
         macro_prefix = self.config['macro_prefix']
-        nonascii = \
-            [  # Begin to filter non-ascii chars
-                char for char in self.getName() if char not in \
-                'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_'
-            ]  # Finish to filter non-ascii chars
+        nonascii = [ char
+                     for char in self.getName()
+                     if char not in 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_' ]
         if nonascii:
             name = self.getName().encode(ENCS['default'])
             name = hashlib.md5(name).hexdigest()
@@ -429,7 +429,8 @@ Include:|Link:|License:|Maintainer:)'
             else:  # if section in self.content
                 snippet = self.content.split(section)[-1]
                 snippet = snippet.replace('\r\n', '\n')
-                lines = ['%s\n' % line for line in snippet.split('\n')]
+                lines = [ '%s\n' % line
+                          for line in snippet.split('\n') ]
                 parts = list()
                 for line in lines:
                     regex = '^(Description|Comment|Status|Notice|Applicability|'
@@ -440,7 +441,9 @@ Include:|Link:|License:|Maintainer:)'
                     if findflag:
                         break
                     parts += [line]
-                result = [part.strip() for part in parts if part.strip()]
+                result = [ part.strip()
+                           for part in parts
+                           if part.strip() ]
             self.cache['status'] = list(result)
         return list(self.cache['status'])
 
@@ -455,7 +458,8 @@ Include:|Link:|License:|Maintainer:)'
             else:  # if section in self.content
                 snippet = self.content.split(section)[-1]
                 snippet = snippet.replace('\r\n', '\n')
-                lines = ['%s\n' % line for line in snippet.split('\n')]
+                lines = [ '%s\n' % line
+                          for line in snippet.split('\n') ]
                 parts = list()
                 for line in lines:
                     regex = '^(Description|Comment|Status|Notice|Applicability|'
@@ -481,7 +485,8 @@ Include:|Link:|License:|Maintainer:)'
             else:  # if section in self.content
                 snippet = self.content.split(section)[-1]
                 snippet = snippet.replace('\r\n', '\n')
-                lines = ['%s\n' % line for line in snippet.split('\n')]
+                lines = [ '%s\n' % line
+                          for line in snippet.split('\n') ]
                 parts = list()
                 for line in lines:
                     regex = '^(Description|Comment|Status|Notice|Applicability|'
@@ -492,7 +497,8 @@ Include:|Link:|License:|Maintainer:)'
                     if findflag:
                         break
                     parts += [line]
-                parts = [part.strip() for part in parts]
+                parts = [ part.strip()
+                          for part in parts ]
                 result = ''.join(parts)
             if not result.strip():
                 if self.getName().endswith('-tests'):
@@ -517,7 +523,8 @@ Include:|Link:|License:|Maintainer:)'
             else:  # if section in self.content
                 snippet = self.content.split(section)[-1]
                 snippet = snippet.replace('\r\n', '\n')
-                lines = ['%s\n' % line for line in snippet.split('\n')]
+                lines = [ '%s\n' % line
+                          for line in snippet.split('\n') ]
                 parts = list()
                 for line in lines:
                     regex = '^(Description|Comment|Status|Notice|Applicability|'
@@ -528,7 +535,9 @@ Include:|Link:|License:|Maintainer:)'
                     if findflag:
                         break
                     parts += [line]
-                result = [part.strip() for part in parts if part.strip()]
+                result = [ part.strip()
+                           for part in parts
+                           if part.strip() ]
             result += [joinpath('m4', '00gnulib.m4')]
             result += [joinpath('m4', 'zzgnulib.m4')]
             result += [joinpath('m4', 'gnulib-common.m4')]
@@ -548,7 +557,8 @@ Include:|Link:|License:|Maintainer:)'
             else:  # if section in self.content
                 snippet = self.content.split(section)[-1]
                 snippet = snippet.replace('\r\n', '\n')
-                lines = ['%s\n' % line for line in snippet.split('\n')]
+                lines = [ '%s\n' % line
+                          for line in snippet.split('\n') ]
                 parts = list()
                 for line in lines:
                     regex = '^(Description|Comment|Status|Notice|Applicability|'
@@ -560,12 +570,16 @@ Include:|Link:|License:|Maintainer:)'
                         break
                     parts += [line]
                 modules = ''.join(parts)
-                modules = [line for line in modules.split(
-                    '\n') if line.strip()]
-                modules = [
-                    module for module in modules if not module.startswith('#')]
+                modules = [ line
+                            for line in modules.split('\n')
+                            if line.strip() ]
+                modules = [ module
+                            for module in modules
+                            if not module.startswith('#') ]
                 for line in modules:
-                    split = [part for part in line.split(' ') if part.strip()]
+                    split = [ part
+                              for part in line.split(' ')
+                              if part.strip() ]
                     if len(split) == 1:
                         module = line.strip()
                         condition = None
@@ -587,7 +601,8 @@ Include:|Link:|License:|Maintainer:)'
             else:  # if section in self.content
                 snippet = self.content.split(section)[-1]
                 snippet = snippet.replace('\r\n', '\n')
-                lines = ['%s\n' % line for line in snippet.split('\n')]
+                lines = [ '%s\n' % line
+                          for line in snippet.split('\n') ]
                 parts = list()
                 for line in lines:
                     regex = '^(Description|Comment|Status|Notice|Applicability|'
@@ -613,7 +628,8 @@ Include:|Link:|License:|Maintainer:)'
             else:  # if section in self.content
                 snippet = self.content.split(section)[-1]
                 snippet = snippet.replace('\r\n', '\n')
-                lines = ['%s\n' % line for line in snippet.split('\n')]
+                lines = [ '%s\n' % line
+                          for line in snippet.split('\n') ]
                 parts = list()
                 for line in lines:
                     regex = '^(Description|Comment|Status|Notice|Applicability|'
@@ -653,7 +669,8 @@ Include:|Link:|License:|Maintainer:)'
             else:  # if section in self.content
                 snippet = self.content.split(section)[-1]
                 snippet = snippet.replace('\r\n', '\n')
-                lines = ['%s\n' % line for line in snippet.split('\n')]
+                lines = [ '%s\n' % line
+                          for line in snippet.split('\n') ]
                 parts = list()
                 for line in lines:
                     regex = '^(Description|Comment|Status|Notice|Applicability|'
@@ -689,19 +706,22 @@ Include:|Link:|License:|Maintainer:)'
                 # TODO: unconditional automake snippet for nontests modules
                 snippet = self.getAutomakeSnippet_Conditional()
                 snippet = constants.combine_lines(snippet)
-                pattern = compiler(
-                    '^lib_SOURCES[\t ]*\\+=[\t ]*(.*?)$', re.S | re.M)
+                pattern = compiler('^lib_SOURCES[\t ]*\\+=[\t ]*(.*?)$', re.S | re.M)
                 mentioned_files = pattern.findall(snippet)
                 if mentioned_files != list():
                     mentioned_files = mentioned_files[-1].split(' ')
-                    mentioned_files = [f.strip() for f in mentioned_files]
-                    mentioned_files = [f for f in mentioned_files if f != '']
+                    mentioned_files = [ f.strip()
+                                        for f in mentioned_files ]
+                    mentioned_files = [ f
+                                        for f in mentioned_files
+                                        if f != '' ]
                     mentioned_files = sorted(set(mentioned_files))
                 all_files = self.getFiles()
                 lib_files = filter_filelist(constants.NL, all_files,
                                             'lib/', '', 'lib/', '').split(constants.NL)
-                extra_files = [
-                    f for f in lib_files if f not in mentioned_files]
+                extra_files = [ f
+                                for f in lib_files
+                                if f not in mentioned_files ]
                 extra_files = sorted(set(extra_files))
                 if extra_files != [''] and extra_files:
                     result += 'EXTRA_DIST += %s' % ' '.join(extra_files)
@@ -720,8 +740,7 @@ Include:|Link:|License:|Maintainer:)'
                 buildaux_files = sorted(set(buildaux_files))
                 if buildaux_files != ['']:
                     buildaux_files = ''.join(buildaux_files)
-                    buildaux_files = joinpath(
-                        '$(top_srcdir)', auxdir, buildaux_files)
+                    buildaux_files = joinpath('$(top_srcdir)', auxdir, buildaux_files)
                     result += 'EXTRA_DIST += %s' % buildaux_files
                     result += '\n\n'
                 # Synthesize an EXTRA_DIST augmentation also for the files from top/.
@@ -748,7 +767,8 @@ Include:|Link:|License:|Maintainer:)'
             else:  # if section in self.content
                 snippet = self.content.split(section)[-1]
                 snippet = snippet.replace('\r\n', '\n')
-                lines = ['%s\n' % line for line in snippet.split('\n')]
+                lines = [ '%s\n' % line
+                          for line in snippet.split('\n') ]
                 parts = list()
                 for line in lines:
                     regex = '^(Description|Comment|Status|Notice|Applicability|'
@@ -776,7 +796,8 @@ Include:|Link:|License:|Maintainer:)'
             if section in self.content:
                 snippet = self.content.split(section)[-1]
                 snippet = snippet.replace('\r\n', '\n')
-                lines = ['%s\n' % line for line in snippet.split('\n')]
+                lines = [ '%s\n' % line
+                          for line in snippet.split('\n') ]
                 for line in lines:
                     regex = '^(Description|Comment|Status|Notice|Applicability|'
                     regex += 'Files|Depends-on|configure\\.ac-early|configure\\.ac|'
@@ -786,7 +807,9 @@ Include:|Link:|License:|Maintainer:)'
                     if findflag:
                         break
                     parts += [line]
-                parts = [part.strip() for part in parts if part.strip()]
+                parts = [ part.strip()
+                          for part in parts
+                          if part.strip() ]
                 # result = ' '.join(parts)
             self.cache['link'] = parts
         return self.cache['link']
@@ -844,7 +867,8 @@ Include:|Link:|License:|Maintainer:)'
             else:  # if section in self.content
                 snippet = self.content.split(section)[-1]
                 snippet = snippet.replace('\r\n', '\n')
-                lines = ['%s\n' % line for line in snippet.split('\n')]
+                lines = [ '%s\n' % line
+                          for line in snippet.split('\n') ]
                 parts = list()
                 for line in lines:
                     regex = '^(Description|Comment|Status|Notice|Applicability|'
@@ -1023,8 +1047,10 @@ class GLModuleTable(object):
                             self.addUnconditional(module)
                         conditional = self.isConditional(module)
                     dependencies = module.getDependencies()
-                    depmodules = [pair[0] for pair in dependencies]
-                    conditions = [pair[1] for pair in dependencies]
+                    depmodules = [ pair[0]
+                                   for pair in dependencies ]
+                    conditions = [ pair[1]
+                                   for pair in dependencies ]
                     if self.config.checkInclTestCategory(TESTS['tests']):
                         testsname = module.getTestsName()
                         if self.modulesystem.exists(testsname):
@@ -1067,12 +1093,10 @@ class GLModuleTable(object):
                                 index = depmodules.index(depmodule)
                                 condition = conditions[index]
                                 if condition:
-                                    self.addConditional(
-                                        module, depmodule, condition)
+                                    self.addConditional(module, depmodule, condition)
                                 else:  # if condition
                                     if conditional:
-                                        self.addConditional(
-                                            module, depmodule, True)
+                                        self.addConditional(module, depmodule, True)
                                     else:  # if not conditional
                                         self.addUnconditional(module)
             listing = list()  # Create empty list
@@ -1117,8 +1141,12 @@ class GLModuleTable(object):
         main_modules = self.transitive_closure(basemodules)
         self.config.setInclTestCategory(TESTS['tests'], saved_inctests)
         tests_modules = \
-            [m for m in finalmodules if m not in main_modules] \
-            + [m for m in main_modules if m.getApplicability() != 'main']
+            [ m
+              for m in finalmodules
+              if m not in main_modules ] \
+            + [ m
+                for m in main_modules
+                if m.getApplicability() != 'main' ]
         tests_modules = sorted(set(tests_modules))
         result = tuple([main_modules, tests_modules])
         return result
@@ -1137,8 +1165,7 @@ class GLModuleTable(object):
                 raise TypeError('each module must be a GLModule instance')
             snippet = module.getAutomakeSnippet()
             snippet = constants.remove_backslash_newline(snippet)
-            pattern = compiler(
-                '^lib_SOURCES[\t ]*\\+=[\t ]*(.*?)$', re.S | re.M)
+            pattern = compiler('^lib_SOURCES[\t ]*\\+=[\t ]*(.*?)$', re.S | re.M)
             files = pattern.findall(snippet)
             if files:  # if source files were found
                 files = files[-1].split(' ')
@@ -1163,7 +1190,8 @@ class GLModuleTable(object):
         for module in modules:
             if type(module) is not GLModule:
                 raise TypeError('each module must be a GLModule instance')
-        listings = [module.getFiles() for module in modules]
+        listings = [ module.getFiles()
+                     for module in modules ]
         for listing in listings:
             for file in listing:
                 if file not in filelist:
@@ -1180,12 +1208,8 @@ class GLModuleTable(object):
         ac_version = self.config['ac_version']
         main_filelist = self.filelist(main_modules)
         tests_filelist = self.filelist(tests_modules)
-        tests_filelist = \
-            [  # Begin to sort filelist
-                file.replace('lib/', 'tests=lib/', 1) \
-                if file.startswith('lib/') else file
-                for file in tests_filelist
-            ]  # Finish to sort filelist
+        tests_filelist = [ file.replace('lib/', 'tests=lib/', 1) if file.startswith('lib/') else file
+                           for file in tests_filelist ]
         result = tuple([main_filelist, tests_filelist])
         return result
 

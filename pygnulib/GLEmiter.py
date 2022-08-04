@@ -153,7 +153,9 @@ class GLEmiter(object):
             snippet = module.getAutoconfSnippet()
             snippet = snippet.replace('${gl_include_guard_prefix}',
                                       include_guard_prefix)
-            lines = [line for line in snippet.split('\n') if line.strip()]
+            lines = [ line
+                      for line in snippet.split('\n')
+                      if line.strip() ]
             snippet = '%s\n' % '\n'.join(lines)
             transformer = fileassistant.transformers.get('aux', '')
             pattern = compiler('(^.*?$)', re.S | re.M)
@@ -172,8 +174,8 @@ class GLEmiter(object):
                 snippet = snippet.replace('gl_libdeps', 'gltests_libdeps')
                 snippet = snippet.replace('gl_ltlibdeps', 'gltests_ltlibdeps')
             if disable_gettext:
-                snippet = snippet.replace('AM_GNU_GETTEXT([external])', 'dnl you must \
-add AM_GNU_GETTEXT([external]) or similar to configure.ac.')
+                snippet = snippet.replace('AM_GNU_GETTEXT([external])',
+                                          'dnl you must add AM_GNU_GETTEXT([external]) or similar to configure.ac.')
             else:
                 # Don't indent AM_GNU_GETTEXT_VERSION line, as that confuses
                 # autopoint through at least GNU gettext version 0.18.2.
@@ -181,8 +183,7 @@ add AM_GNU_GETTEXT([external]) or similar to configure.ac.')
             emit += snippet
             if str(module) == 'alloca' and libtool and not disable_libtool:
                 emit += 'changequote(,)dnl\n'
-                emit += "LTALLOCA=`echo \"$ALLOCA\" | sed -e 's/\\.[^.]* /.lo \
-/g;s/\\.[^.]*$/.lo/'`\n"
+                emit += "LTALLOCA=`echo \"$ALLOCA\" | sed -e 's/\\.[^.]* /.lo /g;s/\\.[^.]*$/.lo/'`\n"
                 emit += 'changequote([, ])dnl\n'
                 emit += 'AC_SUBST([LTALLOCA])'
         if replace_auxdir:
@@ -190,7 +191,9 @@ add AM_GNU_GETTEXT([external]) or similar to configure.ac.')
             repl = 'AC_CONFIG_FILES([\\1:%s/\\2])' % auxdir
             pattern = compiler(regex, re.S | re.M)
             emit = pattern.sub(repl, emit)
-        lines = [line for line in emit.split('\n') if line.strip()]
+        lines = [ line
+                  for line in emit.split('\n')
+                  if line.strip() ]
         emit = '%s\n' % '\n'.join(lines)
         emit = constants.nlconvert(emit)
         return emit
@@ -312,15 +315,16 @@ add AM_GNU_GETTEXT([external]) or similar to configure.ac.')
                                                      disable_libtool, disable_gettext, replace_auxdir, '      ')
                         emit += '      %s=true\n' % shellvar
                         dependencies = module.getDependencies()
-                        depmodules = [pair[0] for pair in dependencies]
+                        depmodules = [ pair[0]
+                                       for pair in dependencies ]
                         # Intersect dependencies with the modules list.
-                        depmodules = [
-                            dep for dep in depmodules if dep in modules]
+                        depmodules = [ dep
+                                       for dep in depmodules
+                                       if dep in modules ]
                         for depmodule in depmodules:
                             if moduletable.isConditional(depmodule):
                                 shellfunc = depmodule.getShellFunc()
-                                condition = moduletable.getCondition(
-                                    module, depmodule)
+                                condition = moduletable.getCondition(module, depmodule)
                                 if condition != None:
                                     emit += '  if %s; then\n' % condition
                                     emit += '    %s\n' % shellfunc
@@ -344,9 +348,10 @@ add AM_GNU_GETTEXT([external]) or similar to configure.ac.')
                 if solution:
                     condname = module.getConditionalName()
                     shellvar = module.getShellVar()
-                    emit += '  AM_CONDITIONAL([%s], [$%s])\n' % (
-                        condname, shellvar)
-        lines = [line for line in emit.split('\n') if line.strip()]
+                    emit += '  AM_CONDITIONAL([%s], [$%s])\n' % (condname, shellvar)
+        lines = [ line
+                  for line in emit.split('\n')
+                  if line.strip() ]
         emit = '%s\n' % '\n'.join(lines)
         emit = constants.nlconvert(emit)
         return emit
@@ -403,10 +408,8 @@ add AM_GNU_GETTEXT([external]) or similar to configure.ac.')
 XGETTEXT_OPTIONS = \\
   --keyword=_ --flag=_:1:pass-c-format \\
   --keyword=N_ --flag=N_:1:pass-c-format \\
-  --keyword='proper_name:1,"This is a proper name. See the gettext manual, \
-section Names."' \\
-  --keyword='proper_name_utf8:1,"This is a proper name. See the gettext \
-manual, section Names."' \\
+  --keyword='proper_name:1,"This is a proper name. See the gettext manual, section Names."' \\
+  --keyword='proper_name_utf8:1,"This is a proper name. See the gettext manual, section Names."' \\
   --flag=error:3:c-format --flag=error_at_line:5:c-format
 
 # This is the copyright holder that gets inserted into the header of the
@@ -448,8 +451,11 @@ USE_MSGCTXT = no\n"""
         emit = ''
         sourcebase = self.config['sourcebase']
         sourcebase = '%s%s' % (self.sourcebase, os.path.sep)
-        files = [substart('lib/', sourcebase, file) for file in files]
-        files = [file for file in files if file.startswith(sourcebase)]
+        files = [ substart('lib/', sourcebase, file)
+                  for file in files ]
+        files = [ file
+                  for file in files
+                  if file.startswith(sourcebase) ]
         emit += "## DO NOT EDIT! GENERATED AUTOMATICALLY!\n"
         emit += "%s\n" % self.copyright_notice()
         emit += "# List of files which contain translatable strings.\n"
@@ -526,8 +532,7 @@ USE_MSGCTXT = no\n"""
         fi
       done])dnl
       m4_if(m4_sysval, [0], [],
-        [AC_FATAL([expected source file, required through AC_LIBSOURCES, not \
-found])])
+        [AC_FATAL([expected source file, required through AC_LIBSOURCES, not found])])
   ])
   m4_popdef([GL_MODULE_INDICATOR_PREFIX])
   m4_popdef([GL_MACRO_PREFIX])
@@ -542,8 +547,7 @@ found])])
     if test -n "$%V1%_LIBOBJS"; then
       # Remove the extension.
       sed_drop_objext='s/\.o$//;s/\.obj$//'
-      for i in `for i in $%V1%_LIBOBJS; do echo "$i"; done | sed -e \
-"$sed_drop_objext" | sort | uniq`; do
+      for i in `for i in $%V1%_LIBOBJS; do echo "$i"; done | sed -e "$sed_drop_objext" | sort | uniq`; do
         %V1%_libobjs="$%V1%_libobjs $i.$ac_objext"
         %V1%_ltlibobjs="$%V1%_ltlibobjs $i.lo"
       done
@@ -687,42 +691,34 @@ AC_DEFUN([%V1%_LIBSOURCES], [
             if not module.isTests():
                 # Get conditional snippet, edit it and save to amsnippet1.
                 amsnippet1 = module.getAutomakeSnippet_Conditional()
-                amsnippet1 = amsnippet1.replace(
-                    'lib_LIBRARIES', 'lib%_LIBRARIES')
-                amsnippet1 = amsnippet1.replace(
-                    'lib_LTLIBRARIES', 'lib%_LTLIBRARIES')
+                amsnippet1 = amsnippet1.replace('lib_LIBRARIES', 'lib%_LIBRARIES')
+                amsnippet1 = amsnippet1.replace('lib_LTLIBRARIES', 'lib%_LTLIBRARIES')
                 if LD_flags:
-                    pattern = compiler(
-                        'lib_LDFLAGS[\t ]*\\+=(.*?)$', re.S | re.M)
+                    pattern = compiler('lib_LDFLAGS[\t ]*\\+=(.*?)$', re.S | re.M)
                     amsnippet1 = pattern.sub('', amsnippet1)
                 pattern = compiler('lib_([A-Z][A-Z](?:.*?))', re.S | re.M)
                 amsnippet1 = pattern.sub('%s_%s_\\1' % (libname, libext),
                                          amsnippet1)
-                amsnippet1 = amsnippet1.replace(
-                    '$(GNULIB_', '$(' + module_indicator_prefix + '_GNULIB_')
-                amsnippet1 = amsnippet1.replace(
-                    'lib%_LIBRARIES', 'lib_LIBRARIES')
-                amsnippet1 = amsnippet1.replace(
-                    'lib%_LTLIBRARIES', 'lib_LTLIBRARIES')
+                amsnippet1 = amsnippet1.replace('$(GNULIB_', '$(' + module_indicator_prefix + '_GNULIB_')
+                amsnippet1 = amsnippet1.replace('lib%_LIBRARIES', 'lib_LIBRARIES')
+                amsnippet1 = amsnippet1.replace('lib%_LTLIBRARIES', 'lib_LTLIBRARIES')
                 if check_PROGRAMS:
-                    amsnippet1 = amsnippet1.replace(
-                        'check_PROGRAMS', 'noinst_PROGRAMS')
+                    amsnippet1 = amsnippet1.replace('check_PROGRAMS', 'noinst_PROGRAMS')
                 amsnippet1 = amsnippet1.replace('${gl_include_guard_prefix}',
                                                 include_guard_prefix)
                 if str(module) == 'alloca':
                     amsnippet1 += '%s_%s_LIBADD += @%sALLOCA@\n' % (libname, libext, perhapsLT)
                     amsnippet1 += '%s_%s_DEPENDENCIES += @%sALLOCA@\n' % (libname, libext, perhapsLT)
-                amsnippet1 = constants.combine_lines_matching(
-                    compiler('%s_%s_SOURCES' % (libname, libext)),
-                    amsnippet1)
+                amsnippet1 = constants.combine_lines_matching(compiler('%s_%s_SOURCES' % (libname, libext)),
+                                                              amsnippet1)
 
                 # Get unconditional snippet, edit it and save to amsnippet2.
                 amsnippet2 = module.getAutomakeSnippet_Unconditional()
                 pattern = compiler('lib_([A-Z][A-Z](?:.*?))', re.S | re.M)
                 amsnippet2 = pattern.sub('%s_%s_\\1' % (libname, libext),
                                          amsnippet2)
-                amsnippet2 = amsnippet2.replace(
-                    '$(GNULIB_', '$(' + module_indicator_prefix + '_GNULIB_')
+                amsnippet2 = amsnippet2.replace('$(GNULIB_',
+                                                '$(' + module_indicator_prefix + '_GNULIB_')
                 if not (amsnippet1 + amsnippet2).isspace():
                     allsnippets += '## begin gnulib module %s\n' % str(module)
                     if conddeps:
@@ -733,13 +729,12 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                     if conddeps:
                         allsnippets += 'endif\n'
                     allsnippets += amsnippet2
-                    allsnippets += '## end   gnulib module %s\n\n' % str(
-                        module)
+                    allsnippets += '## end   gnulib module %s\n\n' % str(module)
 
                     # Test whether there are some source files in subdirectories.
                     for file in module.getFiles():
-                        if file.startswith('lib/') and file.endswith('.c') and \
-                                file.count('/') > 1:
+                        if (file.startswith('lib/') and file.endswith('.c')
+                                and file.count('/') > 1):
                             uses_subdirs = True
                             break
         if not makefile:
@@ -964,22 +959,17 @@ AC_DEFUN([%V1%_LIBSOURCES], [
             if flag:
                 snippet = module.getAutomakeSnippet()
                 snippet = snippet.replace('lib_LIBRARIES', 'lib%_LIBRARIES')
-                snippet = snippet.replace(
-                    'lib_LTLIBRARIES', 'lib%_LTLIBRARIES')
+                snippet = snippet.replace('lib_LTLIBRARIES', 'lib%_LTLIBRARIES')
                 if LD_flags:
-                    pattern = compiler(
-                        'lib_LDFLAGS[\t ]*\\+=(.*?)$', re.S | re.M)
+                    pattern = compiler('lib_LDFLAGS[\t ]*\\+=(.*?)$', re.S | re.M)
                     snippet = pattern.sub('', snippet)
                 pattern = compiler('lib_([A-Z][A-Z](?:.*?))', re.S | re.M)
                 snippet = pattern.sub('libtests_a_\\1', snippet)
-                snippet = snippet.replace(
-                    '$(GNULIB_', '$(' + module_indicator_prefix + '_GNULIB_')
+                snippet = snippet.replace('$(GNULIB_', '$(' + module_indicator_prefix + '_GNULIB_')
                 snippet = snippet.replace('lib%_LIBRARIES', 'lib_LIBRARIES')
-                snippet = snippet.replace(
-                    'lib%_LTLIBRARIES', 'lib_LTLIBRARIES')
+                snippet = snippet.replace('lib%_LTLIBRARIES', 'lib_LTLIBRARIES')
                 if check_PROGRAMS:
-                    snippet = snippet.replace(
-                        'check_PROGRAMS', 'noinst_PROGRAMS')
+                    snippet = snippet.replace('check_PROGRAMS', 'noinst_PROGRAMS')
                 snippet = snippet.replace('${gl_include_guard_prefix}',
                                           include_guard_prefix)
                 # Check if module is 'alloca'.
@@ -997,26 +987,20 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                             islongrun = True
                             break
                     if not islongrun:
-                        snippet = snippet.replace(
-                            '\n\nEXTRA_DIST', '\nEXTRA_DIST')
-                        main_snippets += '## begin gnulib module %s\n' % str(
-                            module)
+                        snippet = snippet.replace('\n\nEXTRA_DIST', '\nEXTRA_DIST')
+                        main_snippets += '## begin gnulib module %s\n' % str(module)
                         main_snippets += snippet
-                        main_snippets += '## end   gnulib module %s\n\n' % str(
-                            module)
+                        main_snippets += '## end   gnulib module %s\n\n' % str(module)
                     else:  # if islongrunning
-                        snippet = snippet.replace(
-                            '\n\nEXTRA_DIST', '\nEXTRA_DIST')
-                        longrun_snippets += '## begin gnulib module %s\n' % str(
-                            module)
+                        snippet = snippet.replace('\n\nEXTRA_DIST', '\nEXTRA_DIST')
+                        longrun_snippets += '## begin gnulib module %s\n' % str(module)
                         longrun_snippets += snippet
-                        longrun_snippets += '## end gnulib module %s\n' % str(
-                            module)
+                        longrun_snippets += '## end gnulib module %s\n' % str(module)
 
                     # Test whether there are some source files in subdirectories.
                     for file in module.getFiles():
-                        if file.startswith('lib/') and file.endswith('.c') and \
-                                file.count('/') > 1:
+                        if (file.startswith('lib/') and file.endswith('.c')
+                                and file.count('/') > 1):
                             uses_subdirs = True
                             break
 
@@ -1028,8 +1012,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
             subdir_options = ' subdir-objects'
         emit += 'AUTOMAKE_OPTIONS = 1.9.6 foreign%s\n\n' % subdir_options
         if for_test and not single_configure:
-            emit += 'ACLOCAL_AMFLAGS = -I %s/%s\n\n' % (
-                testsbase_inverse, m4base)
+            emit += 'ACLOCAL_AMFLAGS = -I %s/%s\n\n' % (testsbase_inverse, m4base)
 
         # Nothing is being added to SUBDIRS; nevertheless the existence of this
         # variable is needed to avoid an error from automake:
@@ -1056,8 +1039,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         #  * https://debbugs.gnu.org/11030
         # So we need this workaround.
         pattern = compiler('^pkgdata_DATA *\\+=', re.S | re.M)
-        if bool(pattern.findall(main_snippets)) or \
-                bool(pattern.findall(longrun_snippets)):
+        if bool(pattern.findall(main_snippets)) or bool(pattern.findall(longrun_snippets)):
             emit += 'pkgdata_DATA =\n'
 
         emit += 'EXTRA_DIST =\n'

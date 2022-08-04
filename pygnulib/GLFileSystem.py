@@ -191,8 +191,8 @@ class GLFileAssistant(object):
 
         Return the name of a temporary file (file is relative to destdir).'''
         if type(path) is not str:
-            raise TypeError(
-                'path must be a string, not %s' % (type(path).__name__))
+            raise TypeError('path must be a string, not %s'
+                            % (type(path).__name__))
         if not self.config['dryrun']:
             # Put the new contents of $file in a file in the same directory (needed
             # to guarantee that an 'mv' to "$destdir/$file" works).
@@ -215,8 +215,8 @@ class GLFileAssistant(object):
 
         Set the name of the original file which will be used.'''
         if type(original) is not str:
-            raise TypeError(
-                'original must be a string, not %s' % (type(original).__name__))
+            raise TypeError('original must be a string, not %s'
+                            % (type(original).__name__))
         self.original = original
 
     def setRewritten(self, rewritten):
@@ -224,8 +224,8 @@ class GLFileAssistant(object):
 
         Set the name of the rewritten file which will be used.'''
         if type(rewritten) is not str:
-            raise TypeError(
-                'rewritten must be a string, not %s' % type(rewritten).__name__)
+            raise TypeError('rewritten must be a string, not %s'
+                            % type(rewritten).__name__)
         self.rewritten = rewritten
 
     def addFile(self, file):
@@ -263,8 +263,7 @@ class GLFileAssistant(object):
             print('Copying file %s' % rewritten)
             if self.filesystem.shouldLink(original, lookedup) == CopyAction.Symlink \
                     and not tmpflag and filecmp.cmp(lookedup, tmpfile):
-                constants.link_if_changed(
-                    lookedup, joinpath(destdir, rewritten))
+                constants.link_if_changed(lookedup, joinpath(destdir, rewritten))
             else:  # if any of these conditions is not met
                 try:  # Try to move file
                     movefile(tmpfile, joinpath(destdir, rewritten))
@@ -348,8 +347,7 @@ class GLFileAssistant(object):
         sed_transform_lib_file = self.transformers.get('lib', '')
         sed_transform_build_aux_file = self.transformers.get('aux', '')
         sed_transform_main_lib_file = self.transformers.get('main', '')
-        sed_transform_testsrelated_lib_file = self.transformers.get(
-            'tests', '')
+        sed_transform_testsrelated_lib_file = self.transformers.get('tests', '')
         try:  # Try to copy lookedup file to tmpfile
             copyfile(lookedup, tmpfile)
         except Exception as error:

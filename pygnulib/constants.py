@@ -253,9 +253,12 @@ def cleaner(sequence):
                     for value in sequence]
         sequence = [value.replace('(', '').replace(')', '')
                     for value in sequence]
-        sequence = [False if value == 'false' else value for value in sequence]
-        sequence = [True if value == 'true' else value for value in sequence]
-        sequence = [value.strip() for value in sequence]
+        sequence = [ False if value == 'false' else value
+                     for value in sequence ]
+        sequence = [ True if value == 'true' else value
+                     for value in sequence ]
+        sequence = [ value.strip()
+                     for value in sequence ]
     return sequence
 
 
@@ -362,11 +365,9 @@ def link_relative(src, dest):
     '''Like ln -s, except that src is given relative to the current directory
     (or absolute), not given relative to the directory of dest.'''
     if type(src) is not str:
-        raise TypeError(
-            'src must be a string, not %s' % (type(src).__name__))
+        raise TypeError('src must be a string, not %s' % (type(src).__name__))
     if type(dest) is not str:
-        raise TypeError(
-            'dest must be a string, not %s' % (type(dest).__name__))
+        raise TypeError('dest must be a string, not %s' % (type(dest).__name__))
     if src.startswith('/') or (len(src) >= 2 and src[1] == ':'):
         symlink_relative(src, dest)
     else:  # if src is not absolute
@@ -448,7 +449,9 @@ def nlremove(text):
     '''Remove empty lines from the source text.'''
     text = nlconvert(text)
     text = text.replace('\r\n', '\n')
-    lines = [line for line in text.split('\n') if line != '']
+    lines = [ line
+              for line in text.split('\n')
+              if line != '' ]
     text = '\n'.join(lines)
     text = nlconvert(text)
     return text

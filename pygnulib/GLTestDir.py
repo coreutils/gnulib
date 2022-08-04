@@ -107,8 +107,8 @@ class GLTestDir(object):
         Replace auxdir, docbase, sourcebase, m4base and testsbase from default
         to their version from config.'''
         if type(files) is not list:
-            raise TypeError(
-                'files argument must has list type, not %s' % type(files).__name__)
+            raise TypeError('files argument must have list type, not %s'
+                            % type(files).__name__)
         for file in files:
             if type(file) is not str:
                 raise TypeError('each file must be a string instance')
@@ -131,8 +131,7 @@ class GLTestDir(object):
             elif file.startswith('tests/'):
                 path = constants.substart('tests/', '%s/' % testsbase, file)
             elif file.startswith('tests=lib/'):
-                path = constants.substart(
-                    'tests=lib/', '%s/' % testsbase, file)
+                path = constants.substart('tests=lib/', '%s/' % testsbase, file)
             elif file.startswith('top/'):
                 path = constants.substart('top/', '', file)
             else:  # file is not a special file
@@ -170,11 +169,13 @@ class GLTestDir(object):
             specified_modules = self.modulesystem.list()
             specified_modules = [module
                                  for module in specified_modules
-                                 if module not in ['config-h', 'non-recursive-gnulib-prefix-hack', 'ftruncate', 'mountlist', 'lib-ignore']]
+                                 if module not in ['config-h', 'non-recursive-gnulib-prefix-hack',
+                                                   'ftruncate', 'mountlist', 'lib-ignore']]
 
         # Canonicalize the list of specified modules.
         specified_modules = sorted(set(specified_modules))
-        specified_modules = [self.modulesystem.find(m) for m in specified_modules]
+        specified_modules = [ self.modulesystem.find(m)
+                              for m in specified_modules ]
 
         # Test modules which invoke AC_CONFIG_FILES cannot be used with
         # --with-tests --single-configure. Avoid them.
@@ -271,21 +272,29 @@ class GLTestDir(object):
         if single_configure:
             # Add dummy package if it is needed.
             main_modules = moduletable.add_dummy(main_modules)
-            if 'dummy' in [str(module) for module in main_modules]:
-                main_modules = [m for m in main_modules if str(m) != 'dummy']
+            if 'dummy' in [ str(module)
+                            for module in main_modules ]:
+                main_modules = [ m
+                                 for m in main_modules
+                                 if str(m) != 'dummy' ]
                 dummy = self.modulesystem.find('dummy')
                 main_modules = sorted(set(main_modules)) + [dummy]
             if libtests:  # if we need to use libtests.a
                 tests_modules = moduletable.add_dummy(tests_modules)
-                if 'dummy' in [str(module) for module in tests_modules]:
-                    tests_modules = [
-                        m for m in tests_modules if str(m) != 'dummy']
+                if 'dummy' in [ str(module)
+                                for module in tests_modules ]:
+                    tests_modules = [ m
+                                      for m in tests_modules
+                                      if str(m) != 'dummy' ]
                     dummy = self.modulesystem.find('dummy')
                     tests_modules = sorted(set(tests_modules)) + [dummy]
         else:  # if not single_configure
             modules = moduletable.add_dummy(modules)
-            if 'dummy' in [str(module) for module in modules]:
-                modules = [m for m in modules if str(m) != 'dummy']
+            if 'dummy' in [ str(module)
+                            for module in modules ]:
+                modules = [ m
+                            for m in modules
+                            if str(m) != 'dummy' ]
                 dummy = self.modulesystem.find('dummy')
                 modules = sorted(set(modules)) + [dummy]
 
@@ -453,15 +462,17 @@ class GLTestDir(object):
                     # if str(module) not in ['gnumakefile', 'maintainer-makefile']
                     else:
                         snippet = module.getAutoconfSnippet_Early()
-                        lines = [line for line in snippet.split(
-                            '\n') if line.strip()]
+                        lines = [ line
+                                  for line in snippet.split('\n')
+                                  if line.strip() ]
                         snippet = '\n'.join(lines)
-                        pattern = compiler(
-                            'AC_REQUIRE\\(\\[([^()].*?)\\]\\)', re.S | re.M)
+                        pattern = compiler('AC_REQUIRE\\(\\[([^()].*?)\\]\\)', re.S | re.M)
                         snippet = pattern.sub('\\1', snippet)
                         snippet = snippet.strip()
                         snippets += [snippet]
-                snippets = [snippet for snippet in snippets if snippet.strip()]
+                snippets = [ snippet
+                             for snippet in snippets
+                             if snippet.strip()]
                 emit += '%s\n' % '\n'.join(snippets)
                 if libtool:
                     emit += 'LT_INIT([win32-dll])\n'
@@ -568,14 +579,17 @@ class GLTestDir(object):
                 solution = module.isNonTests()
             if solution:
                 snippet = module.getAutoconfSnippet_Early()
-                lines = [line for line in snippet.split('\n') if line.strip()]
+                lines = [ line
+                          for line in snippet.split('\n')
+                          if line.strip() ]
                 snippet = '\n'.join(lines)
-                pattern = compiler(
-                    'AC_REQUIRE\\(\\[([^()].*?)\\]\\)', re.S | re.M)
+                pattern = compiler('AC_REQUIRE\\(\\[([^()].*?)\\]\\)', re.S | re.M)
                 snippet = pattern.sub('\\1', snippet)
                 snippet = snippet.strip()
                 snippets += [snippet]
-        snippets = [snippet for snippet in snippets if snippet.strip()]
+        snippets = [ snippet
+                     for snippet in snippets
+                     if snippet.strip() ]
         emit += '%s\n' % '\n'.join(snippets)
         if libtool:
             emit += 'LT_INIT([win32-dll])\n'
@@ -744,24 +758,34 @@ class GLTestDir(object):
         regex_find += pattern.findall(snippet)
         pattern = compiler('^MOSTLYCLEANFILES[\t ]*\\+=(.*?)$', re.S | re.M)
         regex_find += pattern.findall(snippet)
-        regex_find = [line.strip() for line in regex_find if line.strip()]
+        regex_find = [ line.strip()
+                       for line in regex_find
+                       if line.strip() ]
         for part in regex_find:
             cleaned_files += \
-                [line.strip() for line in part.split(' ') if line.strip()]
+                [ line.strip()
+                  for line in part.split(' ')
+                  if line.strip() ]
 
         # Extract the value of "BUILT_SOURCES += ...". Remove variable references
         # such $(FOO_H) because they don't refer to distributed files.
         regex_find = list()
         pattern = compiler('^BUILT_SOURCES[\t ]*\\+=(.*?)$', re.S | re.M)
         regex_find += pattern.findall(snippet)
-        regex_find = [line.strip() for line in regex_find if line.strip()]
+        regex_find = [ line.strip()
+                       for line in regex_find
+                       if line.strip()]
         for part in regex_find:
             built_sources += \
-                [line.strip() for line in part.split(' ') if line.strip()]
-        built_sources = [line for line in built_sources
-                         if not bool(compiler('[$]\\([A-Za-z0-9_]*\\)$').findall(line))]
-        distributed_built_sources = [file for file in built_sources
-                                     if file not in cleaned_files]
+                [ line.strip()
+                  for line in part.split(' ')
+                  if line.strip()]
+        built_sources = [ line
+                          for line in built_sources
+                          if not bool(compiler('[$]\\([A-Za-z0-9_]*\\)$').findall(line)) ]
+        distributed_built_sources = [ file
+                                      for file in built_sources
+                                      if file not in cleaned_files ]
 
         if inctests:
             # Likewise for built files in the $testsbase directory.
@@ -774,13 +798,16 @@ class GLTestDir(object):
             regex_find = list()
             pattern = compiler('^CLEANFILES[\t ]*\\+=(.*?)$', re.S | re.M)
             regex_find += pattern.findall(snippet)
-            pattern = compiler(
-                '^MOSTLYCLEANFILES[\t ]*\\+=(.*?)$', re.S | re.M)
+            pattern = compiler('^MOSTLYCLEANFILES[\t ]*\\+=(.*?)$', re.S | re.M)
             regex_find += pattern.findall(snippet)
-            regex_find = [line.strip() for line in regex_find if line.strip()]
+            regex_find = [ line.strip()
+                           for line in regex_find
+                           if line.strip() ]
             for part in regex_find:
                 tests_cleaned_files += \
-                    [line.strip() for line in part.split(' ') if line.strip()]
+                    [ line.strip()
+                      for line in part.split(' ')
+                      if line.strip() ]
 
             # Extract the value of "BUILT_SOURCES += ...". Remove variable references
             # such $(FOO_H) because they don't refer to distributed files.
@@ -788,14 +815,20 @@ class GLTestDir(object):
             tests_built_sources = list()
             pattern = compiler('^BUILT_SOURCES[\t ]*\\+=(.*?)$', re.S | re.M)
             regex_find += pattern.findall(snippet)
-            regex_find = [line.strip() for line in regex_find if line.strip()]
+            regex_find = [ line.strip()
+                           for line in regex_find
+                           if line.strip() ]
             for part in regex_find:
                 tests_built_sources += \
-                    [line.strip() for line in part.split(' ') if line.strip()]
-            tests_built_sources = [line for line in tests_built_sources
-                                   if not bool(compiler('[$]\\([A-Za-z0-9_]*\\)$').findall(line))]
-            tests_distributed_built_sources = [file for file in tests_built_sources
-                                               if file not in cleaned_files]
+                    [ line.strip()
+                      for line in part.split(' ')
+                      if line.strip() ]
+            tests_built_sources = [ line
+                                    for line in tests_built_sources
+                                    if not bool(compiler('[$]\\([A-Za-z0-9_]*\\)$').findall(line)) ]
+            tests_distributed_built_sources = [ file
+                                                for file in tests_built_sources
+                                                if file not in cleaned_files]
 
         if distributed_built_sources or tests_distributed_built_sources:
             os.chdir(self.testdir)
@@ -875,10 +908,12 @@ class GLMegaTestDir(object):
         Create a mega scratch package with the given modules one by one and all
         together.'''
         megasubdirs = list()
-        modules = [self.modulesystem.find(m) for m in self.config['modules']]
+        modules = [ self.modulesystem.find(m)
+                    for m in self.config['modules'] ]
         if not modules:
             modules = self.modulesystem.list()
-            modules = [self.modulesystem.find(m) for m in modules]
+            modules = [ self.modulesystem.find(m)
+                        for m in modules ]
         modules = sorted(set(modules))
 
         # First, all modules one by one.
@@ -889,8 +924,11 @@ class GLMegaTestDir(object):
 
         # Then, all modules all together.
         # Except config-h, which breaks all modules which use HAVE_CONFIG_H.
-        modules = [module for module in modules if str(module) != 'config-h']
-        self.config.setModules([str(module) for module in modules])
+        modules = [ module
+                    for module in modules
+                    if str(module) != 'config-h' ]
+        self.config.setModules([ str(module)
+                                 for module in modules ])
         #GLTestDir(self.config, self.megatestdir).execute()
         megasubdirs += ['ALL']
 
@@ -918,8 +956,9 @@ class GLMegaTestDir(object):
                 cvsdate = cvsdate.replace(key, repdict[key])
         for key in repdict:
             cvsdate = cvsdate.replace(key, repdict[key])
-        cvsdate = ''.join(
-            [date for date in cvsdate.split(' ') if date.strip()])
+        cvsdate = ''.join([ date
+                            for date in cvsdate.split(' ')
+                            if date.strip() ])
         cvsdate = '%s%s%s' % (cvsdate[4:], cvsdate[2:4], cvsdate[:2])
         emit += '#!/bin/sh\n'
         emit += 'CVSDATE=%s\n' % cvsdate
