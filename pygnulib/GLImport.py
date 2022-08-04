@@ -494,7 +494,7 @@ class GLImport(object):
         witness_c_macro = self.config['witness_c_macro']
         vc_files = self.config['vc_files']
         modules = [str(module) for module in moduletable['base']]
-        avoids = [str(avoid) for avoid in moduletable['avoids']]
+        avoids = self.config['avoids']
         emit += self.emiter.copyright_notice()
         emit += '''#
 # This file represents the specification of how gnulib-tool is used.
@@ -578,7 +578,6 @@ class GLImport(object):
         vc_files = self.config['vc_files']
         libtests = self.config['libtests']
         modules = [str(module) for module in moduletable['base']]
-        avoids = [str(avoid) for avoid in moduletable['avoids']]
         emit += '# DO NOT EDIT! GENERATED AUTOMATICALLY!\n'
         emit += self.emiter.copyright_notice()
         emit += '''#
@@ -762,7 +761,6 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         destdir = self.config['destdir']
         auxdir = self.config['auxdir']
         modules = list(self.config['modules'])
-        avoids = list(self.config['avoids'])
         sourcebase = self.config['sourcebase']
         m4base = self.config['m4base']
         pobase = self.config['pobase']
@@ -783,10 +781,8 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         verbose = self.config['verbosity']
         base_modules = sorted(
             set([self.modulesystem.find(m) for m in modules]))
-        avoids = sorted(set([self.modulesystem.find(a) for a in avoids]))
 
         # Perform transitive closure.
-        self.moduletable.setAvoids(avoids)
         final_modules = self.moduletable.transitive_closure(base_modules)
 
         # Show final module list.
@@ -1001,7 +997,6 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         destdir = self.config['destdir']
         auxdir = self.config['auxdir']
         modules = list(self.config['modules'])
-        avoids = list(self.config['avoids'])
         sourcebase = self.config['sourcebase']
         m4base = self.config['m4base']
         pobase = self.config['pobase']

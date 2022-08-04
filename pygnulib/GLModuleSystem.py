@@ -896,17 +896,18 @@ class GLModuleTable(object):
             raise TypeError('config must be a GLConfig, not %s' %
                             type(config).__name__)
         self.config = config
+        self.filesystem = GLFileSystem(self.config)
+        self.modulesystem = GLModuleSystem(self.config)
         if type(inc_all_direct_tests) is not bool:
             raise TypeError('inc_all_direct_tests must be a bool, not %s' %
                             type(inc_all_direct_tests).__name__)
         self.inc_all_direct_tests = inc_all_direct_tests
         self.inc_all_indirect_tests = inc_all_indirect_tests
         self.avoids = list()  # Avoids
-        for avoid in self.avoids:
-            if type(avoid) is not GLModule:
-                raise TypeError('each avoid must be a GLModule instance')
-        self.filesystem = GLFileSystem(self.config)
-        self.modulesystem = GLModuleSystem(self.config)
+        for avoid in self.config.getAvoids():
+            module = self.modulesystem.find(avoid)
+            if module:
+                self.avoids.append(module)
 
     def __repr__(self):
         '''x.__repr__() <==> repr(x)'''
@@ -1007,72 +1008,74 @@ class GLModuleTable(object):
         outmodules = list()
         if self.config['conddeps']:
             for module in modules:
-                self.addUnconditional(module)
+                if module not in self.avoids:
+                    self.addUnconditional(module)
         while inmodules:
             inmodules_this_round = inmodules
             inmodules = list()
             for module in inmodules_this_round:
-                outmodules += [module]
-                if self.config['conddeps']:
-                    automake_snippet = \
-                        module.getAutomakeSnippet_Conditional()
-                    pattern = compiler('^if')
-                    if not pattern.findall(automake_snippet):
-                        self.addUnconditional(module)
-                    conditional = self.isConditional(module)
-                dependencies = module.getDependencies()
-                depmodules = [pair[0] for pair in dependencies]
-                conditions = [pair[1] for pair in dependencies]
-                if self.config.checkInclTestCategory(TESTS['tests']):
-                    testsname = module.getTestsName()
-                    if self.modulesystem.exists(testsname):
-                        testsmodule = self.modulesystem.find(testsname)
-                        depmodules += [testsmodule]
-                        conditions += [None]
-                for depmodule in depmodules:
-                    include = True
-                    status = depmodule.getStatus()
-                    for word in status:
-                        if word == 'obsolete':
-                            if not self.config.checkInclTestCategory(TESTS['obsolete']):
-                                include = False
-                        elif word == 'c++-test':
-                            if self.config.checkExclTestCategory(TESTS['c++-test']):
-                                include = False
-                            if not (inc_all_tests or self.config.checkInclTestCategory(TESTS['c++-test'])):
-                                include = False
-                        elif word == 'longrunning-test':
-                            if self.config.checkExclTestCategory(TESTS['longrunning-test']):
-                                include = False
-                            if not (inc_all_tests or self.config.checkInclTestCategory(TESTS['longrunning-test'])):
-                                include = False
-                        elif word == 'privileged-test':
-                            if self.config.checkExclTestCategory(TESTS['privileged-test']):
-                                include = False
-                            if not (inc_all_tests or self.config.checkInclTestCategory(TESTS['privileged-test'])):
-                                include = False
-                        elif word == 'unportable-test':
-                            if self.config.checkExclTestCategory(TESTS['unportable-test']):
-                                include = False
-                            if not (inc_all_tests or self.config.checkInclTestCategory(TESTS['unportable-test'])):
-                                include = False
-                        elif word.endswith('-test'):
-                            if not inc_all_tests:
-                                include = False
-                    if include and depmodule not in self.avoids:
-                        inmodules += [depmodule]
-                        if self.config['conddeps']:
-                            index = depmodules.index(depmodule)
-                            condition = conditions[index]
-                            if condition:
-                                self.addConditional(
-                                    module, depmodule, condition)
-                            else:  # if condition
-                                if conditional:
+                if module not in self.avoids:
+                    outmodules += [module]
+                    if self.config['conddeps']:
+                        automake_snippet = \
+                            module.getAutomakeSnippet_Conditional()
+                        pattern = compiler('^if')
+                        if not pattern.findall(automake_snippet):
+                            self.addUnconditional(module)
+                        conditional = self.isConditional(module)
+                    dependencies = module.getDependencies()
+                    depmodules = [pair[0] for pair in dependencies]
+                    conditions = [pair[1] for pair in dependencies]
+                    if self.config.checkInclTestCategory(TESTS['tests']):
+                        testsname = module.getTestsName()
+                        if self.modulesystem.exists(testsname):
+                            testsmodule = self.modulesystem.find(testsname)
+                            depmodules += [testsmodule]
+                            conditions += [None]
+                    for depmodule in depmodules:
+                        include = True
+                        status = depmodule.getStatus()
+                        for word in status:
+                            if word == 'obsolete':
+                                if not self.config.checkInclTestCategory(TESTS['obsolete']):
+                                    include = False
+                            elif word == 'c++-test':
+                                if self.config.checkExclTestCategory(TESTS['c++-test']):
+                                    include = False
+                                if not (inc_all_tests or self.config.checkInclTestCategory(TESTS['c++-test'])):
+                                    include = False
+                            elif word == 'longrunning-test':
+                                if self.config.checkExclTestCategory(TESTS['longrunning-test']):
+                                    include = False
+                                if not (inc_all_tests or self.config.checkInclTestCategory(TESTS['longrunning-test'])):
+                                    include = False
+                            elif word == 'privileged-test':
+                                if self.config.checkExclTestCategory(TESTS['privileged-test']):
+                                    include = False
+                                if not (inc_all_tests or self.config.checkInclTestCategory(TESTS['privileged-test'])):
+                                    include = False
+                            elif word == 'unportable-test':
+                                if self.config.checkExclTestCategory(TESTS['unportable-test']):
+                                    include = False
+                                if not (inc_all_tests or self.config.checkInclTestCategory(TESTS['unportable-test'])):
+                                    include = False
+                            elif word.endswith('-test'):
+                                if not inc_all_tests:
+                                    include = False
+                        if include and depmodule not in self.avoids:
+                            inmodules += [depmodule]
+                            if self.config['conddeps']:
+                                index = depmodules.index(depmodule)
+                                condition = conditions[index]
+                                if condition:
                                     self.addConditional(
-                                        module, depmodule, True)
-                                else:  # if not conditional
-                                    self.addUnconditional(module)
+                                        module, depmodule, condition)
+                                else:  # if condition
+                                    if conditional:
+                                        self.addConditional(
+                                            module, depmodule, True)
+                                    else:  # if not conditional
+                                        self.addUnconditional(module)
             listing = list()  # Create empty list
             inmodules = sorted(set(inmodules))
             handledmodules = sorted(set(handledmodules + inmodules_this_round))
@@ -1146,7 +1149,8 @@ class GLModuleTable(object):
                         break
         if not have_lib_sources:
             dummy = self.modulesystem.find('dummy')
-            modules = sorted(set(modules + [dummy]))
+            if dummy not in self.avoids:
+                modules = sorted(set(modules + [dummy]))
         return list(modules)
 
     def filelist(self, modules):
