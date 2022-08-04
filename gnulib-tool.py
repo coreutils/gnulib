@@ -387,9 +387,9 @@ def main():
         print(info.usage())
         sys.exit(0)
     if cmdargs.version != None:
-        message = '''gnulib-tool (%s %s)%s\n%s\n%s\n\nWritten by %s.''' % \
-            (info.package(), info.date(), info.version(), info.copyright(),
-             info.license(), info.authors())
+        message = '''gnulib-tool (%s %s)%s\n%s\n%s\n\nWritten by %s.''' \
+            % (info.package(), info.date(), info.version(), info.copyright(),
+               info.license(), info.authors())
         print(message)
         sys.exit(0)
 

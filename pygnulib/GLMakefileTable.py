@@ -55,16 +55,16 @@ class GLMakefileTable(object):
 
         Create GLMakefileTable instance.'''
         if type(config) is not GLConfig:
-            raise TypeError('config must be a GLConfig, not %s' %
-                            type(config).__name__)
+            raise TypeError('config must be a GLConfig, not %s'
+                            % type(config).__name__)
         self.config = config
         self.table = list()
 
     def __getitem__(self, y):
         '''x.__getitem__(y) = x[y]'''
         if type(y) is not int:
-            raise TypeError('indices must be integers, not %s' %
-                            type(y).__name__)
+            raise TypeError('indices must be integers, not %s'
+                            % type(y).__name__)
         result = self.table[y]
         return dict(result)
 

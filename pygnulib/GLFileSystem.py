@@ -69,8 +69,8 @@ class GLFileSystem(object):
         '''Create new GLFileSystem instance. The only argument is localpath,
         which can be an empty list.'''
         if type(config) is not GLConfig:
-            raise TypeError('config must be a GLConfig, not %s' %
-                            type(config).__name__)
+            raise TypeError('config must be a GLConfig, not %s'
+                            % type(config).__name__)
         self.config = config
 
     def __repr__(self):
@@ -87,8 +87,8 @@ class GLFileSystem(object):
         indicates whether file is a temporary file.
         GLConfig: localpath.'''
         if type(name) is not str:
-            raise TypeError(
-                'name must be a string, not %s' % type(module).__name__)
+            raise TypeError('name must be a string, not %s'
+                            % type(module).__name__)
         localpath = self.config['localpath']
         # Each element in localpath is a directory whose contents overrides
         # or amends the result of the lookup in the rest of localpath and
@@ -160,19 +160,19 @@ class GLFileAssistant(object):
     def __init__(self, config, transformers=dict()):
         '''Create GLFileAssistant instance.'''
         if type(config) is not GLConfig:
-            raise TypeError('config must be a GLConfig, not %s' %
-                            type(config).__name__)
+            raise TypeError('config must be a GLConfig, not %s'
+                            % type(config).__name__)
         if type(transformers) is not dict:
-            raise TypeError('transformers must be a dict, not %s' %
-                            type(transformers).__name__)
+            raise TypeError('transformers must be a dict, not %s'
+                            % type(transformers).__name__)
         for key in ['lib', 'aux', 'main', 'tests']:
             if key not in transformers:
                 transformers[key] = 's,x,x,'
             else:  # if key in transformers
                 value = transformers[key]
                 if type(value) is not str:
-                    raise TypeError('transformers[%s] must be a string, not %s' %
-                                    (key, type(value).__name__))
+                    raise TypeError('transformers[%s] must be a string, not %s'
+                                    % (key, type(value).__name__))
         self.original = None
         self.rewritten = None
         self.added = list()
@@ -287,11 +287,11 @@ class GLFileAssistant(object):
         if rewritten == None:
             raise TypeError('rewritten must be set before applying the method')
         if type(lookedup) is not str:
-            raise TypeError('lookedup must be a string, not %s' %
-                            type(lookedup).__name__)
+            raise TypeError('lookedup must be a string, not %s'
+                            % type(lookedup).__name__)
         if type(already_present) is not bool:
-            raise TypeError('already_present must be a bool, not %s' %
-                            type(already_present).__name__)
+            raise TypeError('already_present must be a bool, not %s'
+                            % type(already_present).__name__)
         basename = rewritten
         backupname = '%s~' % basename
         basepath = joinpath(destdir, basename)
@@ -299,8 +299,7 @@ class GLFileAssistant(object):
         if not filecmp.cmp(basepath, tmpfile):
             if not self.config['dryrun']:
                 if already_present:
-                    print('Updating file %s (backup in %s)' %
-                          (basename, backupname))
+                    print('Updating file %s (backup in %s)' % (basename, backupname))
                 else:  # if not already_present
                     message = 'Replacing file '
                     message += '%s (non-gnulib code backed up in ' % basename
@@ -324,11 +323,9 @@ class GLFileAssistant(object):
                         raise GLError(17, original)
             else:  # if self.config['dryrun']
                 if already_present:
-                    print('Update file %s (backup in %s)' %
-                          (rewritten, backup))
+                    print('Update file %s (backup in %s)' % (rewritten, backup))
                 else:  # if not already_present
-                    print('Replace file %s (backup in %s)' %
-                          (rewritten, backup))
+                    print('Replace file %s (backup in %s)' % (rewritten, backup))
 
     def add_or_update(self, already_present):
         '''GLFileAssistant.add_or_update(already_present)
@@ -341,8 +338,8 @@ class GLFileAssistant(object):
         elif rewritten == None:
             raise TypeError('rewritten must be set before applying the method')
         if type(already_present) is not bool:
-            raise TypeError('already_present must be a bool, not %s' %
-                            type(already_present).__name__)
+            raise TypeError('already_present must be a bool, not %s'
+                            % type(already_present).__name__)
         xoriginal = original
         if original.startswith('tests=lib/'):
             xoriginal = constants.substart('tests=lib/', 'lib/', original)

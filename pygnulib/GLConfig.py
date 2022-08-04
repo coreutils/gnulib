@@ -147,8 +147,8 @@ class GLConfig(object):
                 else:  # if libtool
                     self.enableLibtool()
             else:  # if type(libtool) is not bool
-                raise TypeError('libtool must be a bool, not %s' %
-                                type(libtool).__name__)
+                raise TypeError('libtool must be a bool, not %s'
+                                % type(libtool).__name__)
         # conddeps
         self.resetCondDeps()
         if conddeps != None:
@@ -158,8 +158,8 @@ class GLConfig(object):
                 else:  # if conddeps
                     self.enableCondDeps()
             else:  # if type(conddeps) is not bool
-                raise TypeError('conddeps must be a bool, not %s' %
-                                type(conddeps).__name__)
+                raise TypeError('conddeps must be a bool, not %s'
+                                % type(conddeps).__name__)
         # macro_prefix
         self.resetMacroPrefix()
         if macro_prefix != None:
@@ -177,8 +177,8 @@ class GLConfig(object):
                 else:  # if witness_c_macro
                     self.resetWitnessCMacro()
             else:  # if type(witness_c_macro) is not bool
-                raise TypeError('witness_c_macro must be a bool, not %s' %
-                                type(witness_c_macro).__name__)
+                raise TypeError('witness_c_macro must be a bool, not %s'
+                                % type(witness_c_macro).__name__)
         # vc_files
         self.resetVCFiles()
         if vc_files != None:
@@ -188,8 +188,8 @@ class GLConfig(object):
                 else:  # if vc_files
                     self.enableVCFiles()
             else:  # if type(vc_files) is not bool
-                raise TypeError('vc_files must be a bool, not %s' %
-                                type(vc_files).__name__)
+                raise TypeError('vc_files must be a bool, not %s'
+                                % type(vc_files).__name__)
         # symbolic
         self.resetSymbolic()
         if symbolic != None:
@@ -199,8 +199,8 @@ class GLConfig(object):
                 else:  # if symbolic
                     self.enableSymbolic()
             else:  # if type(symbolic) is not bool
-                raise TypeError('symbolic must be a bool, not %s' %
-                                type(symbolic).__name__)
+                raise TypeError('symbolic must be a bool, not %s'
+                                % type(symbolic).__name__)
         # lsymbolic
         self.resetLSymbolic()
         if lsymbolic != None:
@@ -210,8 +210,8 @@ class GLConfig(object):
                 else:  # if lsymbolic
                     self.enableLSymbolic()
             else:  # if type(lsymbolic) is not bool
-                raise TypeError('lsymbolic must be a bool, not %s' %
-                                type(lsymbolic).__name__)
+                raise TypeError('lsymbolic must be a bool, not %s'
+                                % type(lsymbolic).__name__)
         # modcache
         self.resetModuleCaching()
         if modcache != None:
@@ -221,8 +221,8 @@ class GLConfig(object):
                 else:  # if modcache
                     self.enableModuleCaching()
             else:  # if type(modcache) is not bool
-                raise TypeError('modcache must be a bool, not %s' %
-                                type(modcache).__name__)
+                raise TypeError('modcache must be a bool, not %s'
+                                % type(modcache).__name__)
         # configure_ac
         self.resetAutoconfFile()
         if configure_ac != None:
@@ -240,8 +240,8 @@ class GLConfig(object):
                 else:  # if libtests
                     self.enableLibtests()
             else:  # if type(libtests) is not bool
-                raise TypeError('libtests must be a bool, not %s' %
-                                type(libtests).__name__)
+                raise TypeError('libtests must be a bool, not %s'
+                                % type(libtests).__name__)
         # single_configure
         self.resetSingleConfigure()
         if single_configure != None:
@@ -251,8 +251,8 @@ class GLConfig(object):
                 else:  # if single_configure
                     self.enableSingleConfigure()
             else:  # if type(single_configure) is not bool
-                raise TypeError('single_configure must be a bool, not %s' %
-                                type(single_configure).__name__)
+                raise TypeError('single_configure must be a bool, not %s'
+                                % type(single_configure).__name__)
         # verbose
         self.resetVerbosity()
         if verbose != None:
@@ -266,8 +266,8 @@ class GLConfig(object):
                 else:  # if dryrun
                     self.enableDryRun()
             else:  # if type(dryrun) is not bool
-                raise TypeError('dryrun must be a bool, not %s' %
-                                type(dryrun).__name__)
+                raise TypeError('dryrun must be a bool, not %s'
+                                % type(dryrun).__name__)
         # errors
         self.resetErrors()
         if errors != None:
@@ -277,8 +277,8 @@ class GLConfig(object):
                 else:  # if errors
                     self.enableErrors()
             else:  # if type(errors) is not bool
-                raise TypeError('errors must be a bool, not %s' %
-                                type(errors).__name__)
+                raise TypeError('errors must be a bool, not %s'
+                                % type(errors).__name__)
 
     # Define special methods.
     def __repr__(self):
@@ -311,8 +311,8 @@ class GLConfig(object):
     def update(self, dictionary):
         '''Specify the dictionary whose keys will be used to update config.'''
         if type(dictionary) is not GLConfig:
-            raise TypeError('dictionary must be a GLConfig, not %s' %
-                            type(dictionary).__name__)
+            raise TypeError('dictionary must be a GLConfig, not %s'
+                            % type(dictionary).__name__)
         dictionary = dict(dictionary.table)
         result = dict()
         for key in dictionary:
@@ -334,8 +334,8 @@ class GLConfig(object):
         '''Update the given key using value from the given dictionary.'''
         if key in self.table:
             if type(dictionary) is not GLConfig:
-                raise TypeError('dictionary must be a GLConfig, not %s' %
-                                type(dictionary).__name__)
+                raise TypeError('dictionary must be a GLConfig, not %s'
+                                % type(dictionary).__name__)
             dictionary = dict(dictionary.table)
             self.table[key] = dictionary[key]
         else:  # if key not in self.table
@@ -399,8 +399,8 @@ class GLConfig(object):
             if destdir:
                 self.table['destdir'] = os.path.normpath(destdir)
         else:  # if destdir has not str type
-            raise TypeError('destdir must be a string, not %s' %
-                            type(destdir).__name__)
+            raise TypeError('destdir must be a string, not %s'
+                            % type(destdir).__name__)
 
     def resetDestDir(self):
         '''Reset the target directory. For --import, this specifies where your
@@ -446,8 +446,8 @@ class GLConfig(object):
             if auxdir:
                 self.table['auxdir'] = remove_trailing_slashes(auxdir)
         else:  # if type of auxdir is not str
-            raise TypeError('auxdir must be a string, not %s' %
-                            type(auxdir).__name__)
+            raise TypeError('auxdir must be a string, not %s'
+                            % type(auxdir).__name__)
 
     def resetAuxDir(self):
         '''Reset directory relative to --dir where auxiliary build tools are
@@ -465,8 +465,8 @@ class GLConfig(object):
             if sourcebase:
                 self.table['sourcebase'] = remove_trailing_slashes(sourcebase)
         else:  # if type of sourcebase is not str
-            raise TypeError('sourcebase must be a string, not %s' %
-                            type(sourcebase).__name__)
+            raise TypeError('sourcebase must be a string, not %s'
+                            % type(sourcebase).__name__)
 
     def resetSourceBase(self):
         '''Return directory relative to destdir where source code is placed.'''
@@ -483,8 +483,8 @@ class GLConfig(object):
             if m4base:
                 self.table['m4base'] = remove_trailing_slashes(m4base)
         else:  # if type of m4base is not str
-            raise TypeError('m4base must be a string, not %s' %
-                            type(m4base).__name__)
+            raise TypeError('m4base must be a string, not %s'
+                            % type(m4base).__name__)
 
     def resetM4Base(self):
         '''Reset directory relative to destdir where *.m4 macros are placed.'''
@@ -501,8 +501,8 @@ class GLConfig(object):
             if pobase:
                 self.table['pobase'] = remove_trailing_slashes(pobase)
         else:  # if type of pobase is not str
-            raise TypeError('pobase must be a string, not %s' %
-                            type(pobase).__name__)
+            raise TypeError('pobase must be a string, not %s'
+                            % type(pobase).__name__)
 
     def resetPoBase(self):
         '''Reset directory relative to destdir where *.po files are placed.'''
@@ -521,8 +521,8 @@ class GLConfig(object):
             if docbase:
                 self.table['docbase'] = remove_trailing_slashes(docbase)
         else:  # if type of docbase is not str
-            raise TypeError('docbase must be a string, not %s' %
-                            type(docbase).__name__)
+            raise TypeError('docbase must be a string, not %s'
+                            % type(docbase).__name__)
 
     def resetDocBase(self):
         '''Reset directory relative to destdir where doc files are placed.
@@ -542,8 +542,8 @@ class GLConfig(object):
             if testsbase:
                 self.table['testsbase'] = remove_trailing_slashes(testsbase)
         else:  # if type of testsbase is not str
-            raise TypeError('testsbase must be a string, not %s' %
-                            type(testsbase).__name__)
+            raise TypeError('testsbase must be a string, not %s'
+                            % type(testsbase).__name__)
 
     def resetTestsBase(self):
         '''Reset directory relative to destdir where unit tests are placed.
@@ -557,8 +557,8 @@ class GLConfig(object):
             if module not in self.table['modules']:
                 self.table['modules'] += [module]
         else:  # if module has not str type
-            raise TypeError('module must be a string, not %s' %
-                            type(module).__name__)
+            raise TypeError('module must be a string, not %s'
+                            % type(module).__name__)
 
     def removeModule(self, module):
         '''Remove the module from the modules list.'''
@@ -566,8 +566,8 @@ class GLConfig(object):
             if module in self.table['modules']:
                 self.table['modules'].remove(module)
         else:  # if module has not str type
-            raise TypeError('module must be a string, not %s' %
-                            type(module).__name__)
+            raise TypeError('module must be a string, not %s'
+                            % type(module).__name__)
 
     def getModules(self):
         '''Return the modules list.'''
@@ -588,8 +588,8 @@ class GLConfig(object):
                     self.table['modules'] = old_modules
                     raise
         else:  # if type of modules is not list or tuple
-            raise TypeError('modules must be a list or a tuple, not %s' %
-                            type(modules).__name__)
+            raise TypeError('modules must be a list or a tuple, not %s'
+                            % type(modules).__name__)
 
     def resetModules(self):
         '''Reset the list of the modules.'''
@@ -603,8 +603,8 @@ class GLConfig(object):
             if module not in self.table['avoids']:
                 self.table['avoids'].append(module)
         else:  # if module has not str type
-            raise TypeError('avoid must be a string, not %s' %
-                            type(module).__name__)
+            raise TypeError('avoid must be a string, not %s'
+                            % type(module).__name__)
 
     def removeAvoid(self, module):
         '''Remove the given module from the list of avoided modules.'''
@@ -612,8 +612,8 @@ class GLConfig(object):
             if module in self.table['avoids']:
                 self.table['avoids'].remove(module)
         else:  # if module has not str type
-            raise TypeError('avoid must be a string, not %s' %
-                            type(module).__name__)
+            raise TypeError('avoid must be a string, not %s'
+                            % type(module).__name__)
 
     def getAvoids(self):
         '''Return the list of the avoided modules.'''
@@ -634,8 +634,8 @@ class GLConfig(object):
                     self.table['avoids'] = old_avoids
                     raise
         else:  # if type of modules is not list or tuple
-            raise TypeError('modules must be a list or a tuple, not %s' %
-                            type(modules).__name__)
+            raise TypeError('modules must be a list or a tuple, not %s'
+                            % type(modules).__name__)
 
     def resetAvoids(self):
         '''Reset the list of the avoided modules.'''
@@ -648,8 +648,8 @@ class GLConfig(object):
             if file not in self.table['files']:
                 self.table['files'].append(file)
         else:  # if file has not str type
-            raise TypeError('file must be a string, not %s' %
-                            type(file).__name__)
+            raise TypeError('file must be a string, not %s'
+                            % type(file).__name__)
 
     def removeFile(self, file):
         '''Remove the given file from the list of files.'''
@@ -657,8 +657,8 @@ class GLConfig(object):
             if file in self.table['files']:
                 self.table['files'].remove(file)
         else:  # if file has not str type
-            raise TypeError('file must be a string, not %s' %
-                            type(file).__name__)
+            raise TypeError('file must be a string, not %s'
+                            % type(file).__name__)
 
     def getFiles(self):
         '''Return the list of the fileed files.'''
@@ -679,8 +679,8 @@ class GLConfig(object):
                     self.table['files'] = old_files
                     raise
         else:  # if type of files is not list or tuple
-            raise TypeError('files must be a list or a tuple, not %s' %
-                            type(files).__name__)
+            raise TypeError('files must be a list or a tuple, not %s'
+                            % type(files).__name__)
 
     def resetFiles(self):
         '''Reset the list of files.'''
@@ -734,8 +734,8 @@ class GLConfig(object):
                     self.table['incl_test_categories'] = old_categories
                     raise TypeError('each category must be one of TESTS integers')
         else:  # if type of categories is not list or tuple
-            raise TypeError('categories must be a list or a tuple, not %s' %
-                            type(categories).__name__)
+            raise TypeError('categories must be a list or a tuple, not %s'
+                            % type(categories).__name__)
 
     def resetInclTestCategories(self):
         '''Reset test categories.'''
@@ -782,8 +782,8 @@ class GLConfig(object):
                     self.table['excl_test_categories'] = old_categories
                     raise TypeError('each category must be one of TESTS integers')
         else:  # if type of categories is not list or tuple
-            raise TypeError('categories must be a list or a tuple, not %s' %
-                            type(categories).__name__)
+            raise TypeError('categories must be a list or a tuple, not %s'
+                            % type(categories).__name__)
 
     def resetExclTestCategories(self):
         '''Reset test categories.'''
@@ -800,8 +800,8 @@ class GLConfig(object):
             if libname:
                 self.table['libname'] = libname
         else:  # if type of libname is not str
-            raise TypeError('libname must be a string, not %s' %
-                            type(module).__name__)
+            raise TypeError('libname must be a string, not %s'
+                            % type(module).__name__)
 
     def resetLibName(self):
         '''Reset the library name to 'libgnu'.'''
@@ -881,8 +881,8 @@ class GLConfig(object):
             if macro_prefix:
                 self.table['macro_prefix'] = macro_prefix
         else:  # if type of macro_prefix is not str
-            raise TypeError('macro_prefix must be a string, not %s' %
-                            type(macro_prefix).__name__)
+            raise TypeError('macro_prefix must be a string, not %s'
+                            % type(macro_prefix).__name__)
         if macro_prefix == 'gl':
             include_guard_prefix = 'GL'
         else:  # macro_prefix != 'gl'
@@ -909,8 +909,8 @@ class GLConfig(object):
             if makefile:
                 self.table['makefile'] = makefile
         else:  # if type of makefile is not str
-            raise TypeError('makefile must be a string, not %s' %
-                            type(makefile).__name__)
+            raise TypeError('makefile must be a string, not %s'
+                            % type(makefile).__name__)
 
     def resetMakefile(self):
         '''Reset the name of makefile in automake syntax in the source-base and
@@ -930,8 +930,8 @@ class GLConfig(object):
             if podomain:
                 self.table['podomain'] = podomain
         else:  # if type of podomain is not str
-            raise TypeError('podomain must be a string, not %s' %
-                            type(podomain).__name__)
+            raise TypeError('podomain must be a string, not %s'
+                            % type(podomain).__name__)
 
     def resetPoDomain(self):
         '''Reset the prefix of the i18n domain. Usually use the package name.
@@ -951,8 +951,8 @@ class GLConfig(object):
             if witness_c_macro:
                 self.table['witness_c_macro'] = witness_c_macro
         else:  # if type of witness_c_macro is not str
-            raise TypeError('witness_c_macro must be a string, not %s' %
-                            type(witness_c_macro).__name__)
+            raise TypeError('witness_c_macro must be a string, not %s'
+                            % type(witness_c_macro).__name__)
 
     def resetWitnessCMacro(self):
         '''Return the C macro that is defined when the sources in this directory
@@ -1005,8 +1005,8 @@ class GLConfig(object):
                 self.table['configure_ac'] = \
                     relpath(self.table['destdir'], configure_ac)
         else:  # if type of configure_ac is not str
-            raise TypeError('configure_ac must be a string, not %s' %
-                            type(configure_ac).__name__)
+            raise TypeError('configure_ac must be a string, not %s'
+                            % type(configure_ac).__name__)
 
     def resetAutoconfFile(self):
         '''Reset path of autoconf file relative to destdir.'''
@@ -1027,8 +1027,8 @@ class GLConfig(object):
         if type(ac_version) is float or type(ac_version) is int:
             self.table['ac_version'] = float(ac_version)
         else:  # if ac_version has not int or float type
-            raise TypeError('ac_version must be an int or a float, not %s' %
-                            type(ac_version).__name__)
+            raise TypeError('ac_version must be an int or a float, not %s'
+                            % type(ac_version).__name__)
 
     def resetAutoconfVersion(self):
         '''Specify preferred autoconf version. Default value is 2.59.'''
@@ -1106,8 +1106,8 @@ class GLConfig(object):
             elif verbose > MODES['verbose-max']:
                 self.table['verbosity'] = MODES['verbose-max']
         else:  # if type(verbose) is not int
-            raise TypeError('verbosity must be an int, not %s' %
-                            type(verbose).__name__)
+            raise TypeError('verbosity must be an int, not %s'
+                            % type(verbose).__name__)
 
     def resetVerbosity(self):
         '''Reset verbosity level.'''

@@ -63,8 +63,8 @@ class GLEmiter(object):
         Create GLEmiter instance.'''
         self.info = GLInfo()
         if type(config) is not GLConfig:
-            raise TypeError('config must be a GLConfig, not %s' %
-                            type(config).__name__)
+            raise TypeError('config must be a GLConfig, not %s'
+                            % type(config).__name__)
         self.config = config
 
     def __repr__(self):
@@ -122,23 +122,23 @@ class GLEmiter(object):
         indentation is a string which contain spaces to prepend on each line.'''
         emit = ''
         if type(module) is not GLModule:
-            raise TypeError('module must be a GLModule, not %s' %
-                            type(module).__name__)
+            raise TypeError('module must be a GLModule, not %s'
+                            % type(module).__name__)
         if type(fileassistant) is not GLFileAssistant:
-            raise TypeError('fileassistant must be a GLFileAssistant, not %s' %
-                            type(fileassistant).__name__)
+            raise TypeError('fileassistant must be a GLFileAssistant, not %s'
+                            % type(fileassistant).__name__)
         if type(toplevel) is not bool:
-            raise TypeError('toplevel must be a bool, not %s' %
-                            type(toplevel).__name__)
+            raise TypeError('toplevel must be a bool, not %s'
+                            % type(toplevel).__name__)
         if type(disable_libtool) is not bool:
-            raise TypeError('disable_libtool must be a bool, not %s' %
-                            type(disable_libtool).__name__)
+            raise TypeError('disable_libtool must be a bool, not %s'
+                            % type(disable_libtool).__name__)
         if type(disable_gettext) is not bool:
-            raise TypeError('disable_gettext must be a bool, not %s' %
-                            type(disable_gettext).__name__)
+            raise TypeError('disable_gettext must be a bool, not %s'
+                            % type(disable_gettext).__name__)
         if type(indentation) is not str:
-            raise TypeError('indentation must be a string, not %s' %
-                            type(indentation).__name__)
+            raise TypeError('indentation must be a string, not %s'
+                            % type(indentation).__name__)
         if not indentation.isspace():
             raise ValueError('indentation must contain only whitespaces')
         auxdir = self.config['auxdir']
@@ -229,28 +229,28 @@ add AM_GNU_GETTEXT([external]) or similar to configure.ac.')
             if type(module) is not GLModule:
                 raise TypeError('each module must be a GLModule instance')
         if type(moduletable) is not GLModuleTable:
-            raise TypeError('moduletable must be a GLFileAssistant, not %s' %
-                            type(moduletable).__name__)
+            raise TypeError('moduletable must be a GLFileAssistant, not %s'
+                            % type(moduletable).__name__)
         if type(fileassistant) is not GLFileAssistant:
-            raise TypeError('fileassistant must be a GLFileAssistant, not %s' %
-                            type(fileassistant).__name__)
+            raise TypeError('fileassistant must be a GLFileAssistant, not %s'
+                            % type(fileassistant).__name__)
         if type(verifier) is not int:
-            raise TypeError('verifier must be an int, not %s' %
-                            type(verifier).__name__)
+            raise TypeError('verifier must be an int, not %s'
+                            % type(verifier).__name__)
         if not (0 <= verifier <= 2):
             raise ValueError('verifier must be 0, 1 or 2, not %d' % verifier)
         if type(toplevel) is not bool:
-            raise TypeError('toplevel must be a bool, not %s' %
-                            type(toplevel).__name__)
+            raise TypeError('toplevel must be a bool, not %s'
+                            % type(toplevel).__name__)
         if type(disable_libtool) is not bool:
-            raise TypeError('disable_libtool must be a bool, not %s' %
-                            type(disable_libtool).__name__)
+            raise TypeError('disable_libtool must be a bool, not %s'
+                            % type(disable_libtool).__name__)
         if type(disable_gettext) is not bool:
-            raise TypeError('disable_gettext must be a bool, not %s' %
-                            type(disable_gettext).__name__)
+            raise TypeError('disable_gettext must be a bool, not %s'
+                            % type(disable_gettext).__name__)
         if type(replace_auxdir) is not bool:
-            raise TypeError('replace_auxdir must be a bool, not %s' %
-                            type(replace_auxdir).__name__)
+            raise TypeError('replace_auxdir must be a bool, not %s'
+                            % type(replace_auxdir).__name__)
         auxdir = self.config['auxdir']
         conddeps = self.config['conddeps']
         macro_prefix = self.config['macro_prefix']
@@ -463,8 +463,8 @@ USE_MSGCTXT = no\n"""
         Emit the first few statements of the gl_INIT macro.'''
         emit = ''
         if type(macro_prefix_arg) is not str:
-            raise TypeError('macro_prefix_arg must be a string, not %s' %
-                            type(macro_prefix_arg).__name__)
+            raise TypeError('macro_prefix_arg must be a string, not %s'
+                            % type(macro_prefix_arg).__name__)
         module_indicator_prefix = self.config.getModuleIndicatorPrefix()
         # Overriding AC_LIBOBJ and AC_REPLACE_FUNCS has the effect of storing
         # platform-dependent object files in ${macro_prefix_arg}_LIBOBJS instead
@@ -510,8 +510,8 @@ USE_MSGCTXT = no\n"""
         Emit the last few statements of the gl_INIT macro.'''
         emit = ''
         if type(macro_prefix_arg) is not str:
-            raise TypeError('macro_prefix_arg must be a string, not %s' %
-                            type(macro_prefix_arg).__name__)
+            raise TypeError('macro_prefix_arg must be a string, not %s'
+                            % type(macro_prefix_arg).__name__)
         # Check the presence of files that are mentioned as AC_LIBSOURCES
         # arguments. The check is performed only when autoconf is run from the
         # directory where the configure.ac resides; if it is run from a different
@@ -561,11 +561,11 @@ found])])
         GLConfig: sourcebase.'''
         emit = ''
         if type(macro_prefix_arg) is not str:
-            raise TypeError('macro_prefix_arg must be a string, not %s' %
-                            type(macro_prefix_arg).__name__)
+            raise TypeError('macro_prefix_arg must be a string, not %s'
+                            % type(macro_prefix_arg).__name__)
         if type(sourcebase_arg) is not str:
-            raise TypeError('sourcebase_arg must be a string, not %s' %
-                            type(sourcebase_arg).__name__)
+            raise TypeError('sourcebase_arg must be a string, not %s'
+                            % type(sourcebase_arg).__name__)
         emit += """\
 
 # Like AC_LIBOBJ, except that the module name goes
@@ -617,23 +617,23 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         for_test is a bool variable; it must be set to True if creating a package
           for testing, False otherwise.'''
         if type(destfile) is not str:
-            raise TypeError('destfile must be a string, not %s' %
-                            type(destfile).__name__)
+            raise TypeError('destfile must be a string, not %s'
+                            % type(destfile).__name__)
         for module in modules:
             if type(module) is not GLModule:
                 raise TypeError('each module must be a GLModule instance')
         if type(moduletable) is not GLModuleTable:
-            raise TypeError('moduletable must be a GLModuleTable, not %s' %
-                            type(moduletable).__name__)
+            raise TypeError('moduletable must be a GLModuleTable, not %s'
+                            % type(moduletable).__name__)
         if type(makefiletable) is not GLMakefileTable:
-            raise TypeError('makefiletable must be a GLMakefileTable, not %s' %
-                            type(makefiletable).__name__)
+            raise TypeError('makefiletable must be a GLMakefileTable, not %s'
+                            % type(makefiletable).__name__)
         if type(actioncmd) is not str:
-            raise TypeError('actioncmd must be a string, not %s' %
-                            type(actioncmd).__name__)
+            raise TypeError('actioncmd must be a string, not %s'
+                            % type(actioncmd).__name__)
         if type(for_test) is not bool:
-            raise TypeError('for_test must be a bool, not %s' %
-                            type(for_test).__name__)
+            raise TypeError('for_test must be a bool, not %s'
+                            % type(for_test).__name__)
         emit = ''
         sourcebase = self.config['sourcebase']
         modcache = self.config['modcache']
@@ -697,8 +697,8 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                         'lib_LDFLAGS[\t ]*\\+=(.*?)$', re.S | re.M)
                     amsnippet1 = pattern.sub('', amsnippet1)
                 pattern = compiler('lib_([A-Z][A-Z](?:.*?))', re.S | re.M)
-                amsnippet1 = pattern.sub('%s_%s_\\1' %
-                                         (libname, libext), amsnippet1)
+                amsnippet1 = pattern.sub('%s_%s_\\1' % (libname, libext),
+                                         amsnippet1)
                 amsnippet1 = amsnippet1.replace(
                     '$(GNULIB_', '$(' + module_indicator_prefix + '_GNULIB_')
                 amsnippet1 = amsnippet1.replace(
@@ -711,10 +711,8 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                 amsnippet1 = amsnippet1.replace('${gl_include_guard_prefix}',
                                                 include_guard_prefix)
                 if str(module) == 'alloca':
-                    amsnippet1 += '%s_%s_LIBADD += @%sALLOCA@\n' % \
-                        (libname, libext, perhapsLT)
-                    amsnippet1 += '%s_%s_DEPENDENCIES += @%sALLOCA@\n' % \
-                        (libname, libext, perhapsLT)
+                    amsnippet1 += '%s_%s_LIBADD += @%sALLOCA@\n' % (libname, libext, perhapsLT)
+                    amsnippet1 += '%s_%s_DEPENDENCIES += @%sALLOCA@\n' % (libname, libext, perhapsLT)
                 amsnippet1 = constants.combine_lines_matching(
                     compiler('%s_%s_SOURCES' % (libname, libext)),
                     amsnippet1)
@@ -722,8 +720,8 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                 # Get unconditional snippet, edit it and save to amsnippet2.
                 amsnippet2 = module.getAutomakeSnippet_Unconditional()
                 pattern = compiler('lib_([A-Z][A-Z](?:.*?))', re.S | re.M)
-                amsnippet2 = pattern.sub('%s_%s_\\1' %
-                                         (libname, libext), amsnippet2)
+                amsnippet2 = pattern.sub('%s_%s_\\1' % (libname, libext),
+                                         amsnippet2)
                 amsnippet2 = amsnippet2.replace(
                     '$(GNULIB_', '$(' + module_indicator_prefix + '_GNULIB_')
                 if not (amsnippet1 + amsnippet2).isspace():
@@ -785,8 +783,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
             if dictionary['var']:
                 paths = list()
                 paths += [joinpath(dictionary['dir'], 'Makefile.am')]
-                paths += [os.path.normpath('./%s/Makefile.am' %
-                                           dictionary['dir'])]
+                paths += [os.path.normpath('./%s/Makefile.am' % dictionary['dir'])]
                 paths = sorted(set(paths))
                 if destfile in paths:
                     emit += '%s += %s\n' % (dictionary['var'],
@@ -816,8 +813,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         # First test if allsnippets already specify an installation location.
         insnippets = False
         inmakefile = False
-        regex = '^[a-zA-Z0-9_]*_%sLIBRARIES *\\+{0,1}= *%s.%s' % \
-            (perhapsLT, libname, libext)
+        regex = '^[a-zA-Z0-9_]*_%sLIBRARIES *\\+{0,1}= *%s.%s' % (perhapsLT, libname, libext)
         pattern = compiler(regex, re.S | re.M)
         insnippets = bool(pattern.findall(allsnippets))
         # Then test if $sourcebase/Makefile.am (if it exists) specifies it.
@@ -828,17 +824,14 @@ AC_DEFUN([%V1%_LIBSOURCES], [
             inmakefile = bool(pattern.findall(data))
         if not any([insnippets, inmakefile]):
             # By default, the generated library should not be installed.
-            emit += 'noinst_%sLIBRARIES += %s.%s\n' % (
-                perhapsLT, libname, libext)
+            emit += 'noinst_%sLIBRARIES += %s.%s\n' % (perhapsLT, libname, libext)
 
         emit += '\n'
         emit += '%s_%s_SOURCES =\n' % (libname, libext)
         # Here we use $(LIBOBJS), not @LIBOBJS@. The value is the same. However,
         # automake during its analysis looks for $(LIBOBJS), not for @LIBOBJS@.
-        emit += '%s_%s_LIBADD = $(%s_%sLIBOBJS)\n' % \
-            (libname, libext, macro_prefix, perhapsLT)
-        emit += '%s_%s_DEPENDENCIES = $(%s_%sLIBOBJS)\n' % \
-            (libname, libext, macro_prefix, perhapsLT)
+        emit += '%s_%s_LIBADD = $(%s_%sLIBOBJS)\n' % (libname, libext, macro_prefix, perhapsLT)
+        emit += '%s_%s_DEPENDENCIES = $(%s_%sLIBOBJS)\n' % (libname, libext, macro_prefix, perhapsLT)
         emit += 'EXTRA_%s_%s_SOURCES =\n' % (libname, libext)
         if libtool:
             emit += '%s_%s_LDFLAGS = $(AM_LDFLAGS)\n' % (libname, libext)
@@ -898,20 +891,20 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         for_test is a bool variable; it must be set to True if creating a package
           for testing, False otherwise.'''
         if type(destfile) is not str:
-            raise TypeError('destfile must be a string, not %s' %
-                            type(destfile).__name__)
+            raise TypeError('destfile must be a string, not %s'
+                            % type(destfile).__name__)
         for module in modules:
             if type(module) is not GLModule:
                 raise TypeError('each module must be a GLModule instance')
         if type(makefiletable) is not GLMakefileTable:
-            raise TypeError('makefiletable must be a GLMakefileTable, not %s' %
-                            type(makefiletable).__name__)
+            raise TypeError('makefiletable must be a GLMakefileTable, not %s'
+                            % type(makefiletable).__name__)
         if type(witness_macro) is not str:
-            raise TypeError('witness_macro must be a string, not %s' %
-                            type(witness_macro).__name__)
+            raise TypeError('witness_macro must be a string, not %s'
+                            % type(witness_macro).__name__)
         if type(for_test) is not bool:
-            raise TypeError('for_test must be a bool, not %s' %
-                            type(for_test).__name__)
+            raise TypeError('for_test must be a bool, not %s'
+                            % type(for_test).__name__)
         emit = ''
         auxdir = self.config['auxdir']
         sourcebase = self.config['sourcebase']
@@ -1087,8 +1080,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
             if dictionary['var']:
                 paths = list()
                 paths += [joinpath(dictionary['dir'], 'Makefile.am')]
-                paths += [os.path.normpath('./%s/Makefile.am' %
-                                           dictionary['dir'])]
+                paths += [os.path.normpath('./%s/Makefile.am' % dictionary['dir'])]
                 paths = sorted(set(paths))
                 if destfile in paths:
                     emit += '%s += %s\n' % (dictionary['var'],
@@ -1103,10 +1095,8 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         if witness_macro:
             emit += '  -D@%s@=1 \\\n' % witness_macro
         emit += '  -I. -I$(srcdir) \\\n'
-        emit += '  -I%s -I$(srcdir)/%s \\\n' % \
-            (testsbase_inverse, testsbase_inverse)
-        emit += '  -I%s/%s -I$(srcdir)/%s/%s\n' % \
-            (testsbase_inverse, sourcebase, testsbase_inverse, sourcebase)
+        emit += '  -I%s -I$(srcdir)/%s \\\n' % (testsbase_inverse, testsbase_inverse)
+        emit += '  -I%s/%s -I$(srcdir)/%s/%s\n' % (testsbase_inverse, sourcebase, testsbase_inverse, sourcebase)
         emit += '\n'
 
         if libtests:
@@ -1119,12 +1109,11 @@ AC_DEFUN([%V1%_LIBSOURCES], [
             # voluntarily omitted).
             # The LIBTESTS_LIBDEPS can be passed to the linker once or twice, it
             # does not matter.
-            emit += 'LDADD = libtests.a %s/%s/%s.%s libtests.a %s/%s/%s.%s libtests.a $(LIBTESTS_LIBDEPS)\n\n' % \
-                (testsbase_inverse, sourcebase, libname, libext,
-                 testsbase_inverse, sourcebase, libname, libext)
+            emit += 'LDADD = libtests.a %s/%s/%s.%s libtests.a %s/%s/%s.%s libtests.a $(LIBTESTS_LIBDEPS)\n\n' \
+                    % (testsbase_inverse, sourcebase, libname, libext,
+                       testsbase_inverse, sourcebase, libname, libext)
         else:
-            emit += 'LDADD = %s/%s/%s.%s\n\n' % \
-                (testsbase_inverse, sourcebase, libname, libext)
+            emit += 'LDADD = %s/%s/%s.%s\n\n' % (testsbase_inverse, sourcebase, libname, libext)
         if libtests:
             emit += 'libtests_a_SOURCES =\n'
             # Here we use $(LIBOBJS), not @LIBOBJS@. The value is the same. However,

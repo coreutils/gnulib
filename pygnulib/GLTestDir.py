@@ -72,11 +72,11 @@ class GLTestDir(object):
 
         Create new GLTestDir instance.'''
         if type(config) is not GLConfig:
-            raise TypeError('config must be a GLConfig, not %s' %
-                            type(config).__name__)
+            raise TypeError('config must be a GLConfig, not %s'
+                            % type(config).__name__)
         if type(testdir) is not str:
-            raise TypeError('testdir must be a string, not %s' %
-                            type(testdir).__name__)
+            raise TypeError('testdir must be a string, not %s'
+                            % type(testdir).__name__)
         self.config = config
         self.testdir = os.path.normpath(testdir)
         if not os.path.exists(self.testdir):
@@ -248,8 +248,7 @@ class GLTestDir(object):
         if single_configure:
             # Determine main module list and tests-related module list separately.
             main_modules, tests_modules = \
-                moduletable.transitive_closure_separately(
-                    specified_modules, final_modules)
+                moduletable.transitive_closure_separately(specified_modules, final_modules)
             # Print main_modules and tests_modules.
             if verbose >= 1:
                 print('Main module list:')
@@ -619,8 +618,7 @@ class GLTestDir(object):
             # Define a tests witness macro.
             emit += '  %stests_WITNESS=IN_GNULIB_TESTS\n' % macro_prefix
             emit += '  AC_SUBST([%stests_WITNESS])\n' % macro_prefix
-            emit += '  gl_module_indicator_condition=$%stests_WITNESS\n' % \
-                macro_prefix
+            emit += '  gl_module_indicator_condition=$%stests_WITNESS\n' % macro_prefix
             emit += '  m4_pushdef([gl_MODULE_INDICATOR_CONDITION], '
             emit += '[$gl_module_indicator_condition])\n'
             snippets = self.emiter.autoconfSnippets(tests_modules, moduletable,
@@ -642,16 +640,13 @@ class GLTestDir(object):
         emit += '])\n'
         emit += self.emiter.initmacro_done(macro_prefix, sourcebase)
         if single_configure:
-            emit += self.emiter.initmacro_done('%stests' %
-                                               macro_prefix, testsbase)
+            emit += self.emiter.initmacro_done('%stests' % macro_prefix, testsbase)
         emit += '\ngl_INIT\n\n'
         if subdirs_with_configure_ac:
             if single_configure:
-                emit += 'AC_CONFIG_SUBDIRS([%s])\n' % \
-                    ' '.join(subdirs_with_configure_ac[:-1])
+                emit += 'AC_CONFIG_SUBDIRS([%s])\n' % ' '.join(subdirs_with_configure_ac[:-1])
             else:  # if not single_configure
-                emit += 'AC_CONFIG_SUBDIRS([%s])\n' % \
-                    ' '.join(subdirs_with_configure_ac)
+                emit += 'AC_CONFIG_SUBDIRS([%s])\n' % ' '.join(subdirs_with_configure_ac)
         makefiles = ['Makefile']
         for directory in subdirs:
             # For subdirs that have a configure.ac by their own, it's the subdir's
@@ -856,11 +851,11 @@ class GLMegaTestDir(object):
 
         Create new GLTestDir instance.'''
         if type(config) is not GLConfig:
-            raise TypeError('config must be a GLConfig, not %s' %
-                            type(config).__name__)
+            raise TypeError('config must be a GLConfig, not %s'
+                            % type(config).__name__)
         if type(megatestdir) is not str:
-            raise TypeError('megatestdir must be a string, not %s' %
-                            type(megatestdir).__name__)
+            raise TypeError('megatestdir must be a string, not %s'
+                            % type(megatestdir).__name__)
         self.config = config
         self.megatestdir = os.path.normpath(megatestdir)
         if not os.path.exists(self.megatestdir):

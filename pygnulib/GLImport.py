@@ -76,14 +76,14 @@ class GLImport(object):
         object, which is accessible from constants module. The second one, config,
         must be a GLConfig object.'''
         if type(config) is not GLConfig:
-            raise TypeError('config must have GLConfig type, not %s' %
-                            repr(config))
+            raise TypeError('config must have GLConfig type, not %s'
+                            % repr(config))
         if type(mode) is int and \
                 MODES['import'] <= mode <= MODES['update']:
             self.mode = mode
         else:  # if mode is not int or is not 0-3
-            raise TypeError('mode must be 0 <= mode <= 3, not %s' %
-                            repr(mode))
+            raise TypeError('mode must be 0 <= mode <= 3, not %s'
+                            % repr(mode))
 
         # Initialize some values.
         self.cache = GLConfig()
@@ -213,8 +213,7 @@ class GLImport(object):
             if isfile(path):
                 with codecs.open(path, 'rb', 'UTF-8') as file:
                     data = file.read()
-                regex = 'AC_DEFUN\\(\\[%s_FILE_LIST\\], \\[(.*?)\\]\\)' % \
-                    self.cache['macro_prefix']
+                regex = 'AC_DEFUN\\(\\[%s_FILE_LIST\\], \\[(.*?)\\]\\)' % self.cache['macro_prefix']
                 pattern = compiler(regex, re.S | re.M)
                 self.cache.setFiles(pattern.findall(data)[-1].strip().split())
 
@@ -636,8 +635,7 @@ AC_DEFUN([%s_INIT],
         emit += self.emiter.initmacro_start(macro_prefix)
         emit += '  gl_source_base=\'%s\'\n' % sourcebase
         if witness_c_macro:
-            emit += '  m4_pushdef([gl_MODULE_INDICATOR_CONDITION], [%s])\n' % \
-                witness_c_macro
+            emit += '  m4_pushdef([gl_MODULE_INDICATOR_CONDITION], [%s])\n' % witness_c_macro
         # Emit main autoconf snippets.
         emit += self.emiter.autoconfSnippets(moduletable['main'],
                                              moduletable, assistant, 0, True, False, True, replace_auxdir)
@@ -732,15 +730,13 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                 destdata = '\n'.join(sorted(set(dirs_ignore))).strip()
                 if srcdata != destdata:
                     if not self.config['dryrun']:
-                        print('Updating %s (backup in %s)' %
-                              (srcpath, backupname))
+                        print('Updating %s (backup in %s)' % (srcpath, backupname))
                         copyfile2(srcpath, backupname)
                         result = ''
                         with codecs.open(srcpath, 'ab', 'UTF-8') as file:
                             file.write(destdata)
                     else:  # if self.config['dryrun']
-                        print('Updating %s (backup in %s)' %
-                              (srcpath, backupname))
+                        print('Updating %s (backup in %s)' % (srcpath, backupname))
         else:  # if not isfile(srcpath)
             if dirs_added:
                 if not self.config['dryrun']:
@@ -989,8 +985,8 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         format except filelist argument. Such lists of files can be created using
         GLImport.prepare() function.'''
         if type(filetable) is not dict:
-            raise TypeError('filetable must be a dict, not %s' %
-                            type(filetable).__name__)
+            raise TypeError('filetable must be a dict, not %s'
+                            % type(filetable).__name__)
         for key in ['all', 'old', 'new', 'added', 'removed']:
             if key not in filetable:
                 raise KeyError('filetable must contain key %s' % repr(key))
@@ -1160,8 +1156,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                     basename, tmpfile)
                 if flag == 1:
                     if not self.config['dryrun']:
-                        print('Updating %s (backup in %s)' %
-                              (filename, backup))
+                        print('Updating %s (backup in %s)' % (filename, backup))
                     else:  # if self.config['dryrun']
                         print('Update %s (backup in %s)' % (filename, backup))
                 elif flag == 2:
@@ -1408,30 +1403,24 @@ in <library>_a_LDFLAGS or <library>_la_LDFLAGS when linking a library.''')
         print('')
         print('Don\'t forget to')
         if makefile_am == 'Makefile.am':
-            print('  - add "%s/Makefile" to AC_CONFIG_FILES in %s,' %
-                  (sourcebase, configure_ac))
+            print('  - add "%s/Makefile" to AC_CONFIG_FILES in %s,' % (sourcebase, configure_ac))
         else:  # if makefile_am != 'Makefile.am'
-            print('  - "include %s" from within "%s/Makefile.am",' %
-                  (makefile, sourcebase))
+            print('  - "include %s" from within "%s/Makefile.am",' % (makefile, sourcebase))
         if pobase:
-            print('  - add "%s/Makefile.in to AC_CONFIG_FILES in %s,' %
-                  (pobase, configure_ac))
+            print('  - add "%s/Makefile.in to AC_CONFIG_FILES in %s,' % (pobase, configure_ac))
         if inctests:
             if makefile_am == 'Makefile.am':
-                print('  - add "%s/Makefile" to AC_CONFIG_FILES in %s,' %
-                      (testsbase, configure_ac))
+                print('  - add "%s/Makefile" to AC_CONFIG_FILES in %s,' % (testsbase, configure_ac))
             else:  # if makefile_am != 'Makefile.am'
-                print('  - "include %s" from within "%s/Makefile.am",' %
-                      (makefile, testsbase))
+                print('  - "include %s" from within "%s/Makefile.am",' % (makefile, testsbase))
         # Print makefile edits.
         current_edit = int()
         makefile_am_edits = self.makefiletable.count()
         while current_edit != makefile_am_edits:
             dictionary = self.makefiletable[current_edit]
             if dictionary['var']:
-                print('  - mention "%s" in %s in %s,' %
-                      (dictionary['val'], dictionary['var'],
-                       joinpath(dictionary['dir'], 'Makefile.am')))
+                print('  - mention "%s" in %s in %s,'
+                      % (dictionary['val'], dictionary['var'], joinpath(dictionary['dir'], 'Makefile.am')))
             current_edit += 1
 
         # Detect position_early_after.
@@ -1447,8 +1436,6 @@ in <library>_a_LDFLAGS or <library>_la_LDFLAGS when linking a library.''')
             position_early_after = 'AC_PROG_CC_C99'
         else:  # if not any([match_result1, match_result2])
             position_early_after = 'AC_PROG_CC'
-        print('  - invoke %s_EARLY in %s, right after %s,' %
-              (macro_prefix, configure_ac, position_early_after))
-        print('  - invoke %s_INIT in %s.' %
-              (macro_prefix, configure_ac))
+        print('  - invoke %s_EARLY in %s, right after %s,' % (macro_prefix, configure_ac, position_early_after))
+        print('  - invoke %s_INIT in %s.' % (macro_prefix, configure_ac))
         sp.call(['rm', '-rf', self.config['tempdir']], shell=False)

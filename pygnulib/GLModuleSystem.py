@@ -64,8 +64,8 @@ class GLModuleSystem(object):
         'patch' utility.'''
         self.args = dict()
         if type(config) is not GLConfig:
-            raise TypeError('config must be a GLConfig, not %s' %
-                            type(config).__name__)
+            raise TypeError('config must be a GLConfig, not %s'
+                            % type(config).__name__)
         self.config = config
         self.filesystem = GLFileSystem(self.config)
 
@@ -191,14 +191,14 @@ class GLModule(object):
         self.cache = dict()
         self.content = ''
         if type(config) is not GLConfig:
-            raise TypeError('config must be a GLConfig, not %s' %
-                            type(config).__name__)
+            raise TypeError('config must be a GLConfig, not %s'
+                            % type(config).__name__)
         if type(module) is not str:
-            raise TypeError('module must be a string, not %s' %
-                            type(module).__name__)
+            raise TypeError('module must be a string, not %s'
+                            % type(module).__name__)
         if type(patched) is not bool:
-            raise TypeError('patched must be a bool, not %s' %
-                            type(module).__name__)
+            raise TypeError('patched must be a bool, not %s'
+                            % type(module).__name__)
         self.module = module
         self.patched = patched
         self.config = config
@@ -272,8 +272,7 @@ Include:|Link:|License:|Maintainer:)'
 
     def __repr__(self):
         '''x.__repr__ <==> repr(x)'''
-        result = '<pygnulib.GLModule %s %s>' % \
-            (repr(self.getName()), hex(id(self)))
+        result = '<pygnulib.GLModule %s %s>' % (repr(self.getName()), hex(id(self)))
         return result
 
     def getName(self):
@@ -893,14 +892,14 @@ class GLModuleTable(object):
         self.tests_modules = list()  # Tests modules
         self.final_modules = list()  # Final modules
         if type(config) is not GLConfig:
-            raise TypeError('config must be a GLConfig, not %s' %
-                            type(config).__name__)
+            raise TypeError('config must be a GLConfig, not %s'
+                            % type(config).__name__)
         self.config = config
         self.filesystem = GLFileSystem(self.config)
         self.modulesystem = GLModuleSystem(self.config)
         if type(inc_all_direct_tests) is not bool:
-            raise TypeError('inc_all_direct_tests must be a bool, not %s' %
-                            type(inc_all_direct_tests).__name__)
+            raise TypeError('inc_all_direct_tests must be a bool, not %s'
+                            % type(inc_all_direct_tests).__name__)
         self.inc_all_direct_tests = inc_all_direct_tests
         self.inc_all_indirect_tests = inc_all_indirect_tests
         self.avoids = list()  # Avoids
@@ -935,14 +934,14 @@ class GLModuleTable(object):
 
         Add new conditional dependency from parent to module with condition.'''
         if type(parent) is not GLModule:
-            raise TypeError('parent must be a GLModule, not %s' %
-                            type(parent).__name__)
+            raise TypeError('parent must be a GLModule, not %s'
+                            % type(parent).__name__)
         if type(module) is not GLModule:
-            raise TypeError('module must be a GLModule, not %s' %
-                            type(module).__name__)
+            raise TypeError('module must be a GLModule, not %s'
+                            % type(module).__name__)
         if not (type(condition) is str or condition == True):
-            raise TypeError('condition must be a string or True, not %s' %
-                            type(condition).__name__)
+            raise TypeError('condition must be a string or True, not %s'
+                            % type(condition).__name__)
         if not str(module) in self.unconditionals:
             if str(module) not in self.dependers:
                 self.dependers[module] = list()
@@ -955,8 +954,8 @@ class GLModuleTable(object):
 
         Add module as unconditional dependency.'''
         if type(module) is not GLModule:
-            raise TypeError('module must be a GLModule, not %s' %
-                            type(module).__name__)
+            raise TypeError('module must be a GLModule, not %s'
+                            % type(module).__name__)
         if str(module) in self.dependers:
             self.dependers.pop(str(module))
         self.unconditionals[str(module)] = True
@@ -966,8 +965,8 @@ class GLModuleTable(object):
 
         Check whether module is unconditional.'''
         if type(module) is not GLModule:
-            raise TypeError('module must be a GLModule, not %s' %
-                            type(module).__name__)
+            raise TypeError('module must be a GLModule, not %s'
+                            % type(module).__name__)
         result = str(module) in self.dependers
         return result
 
@@ -977,11 +976,11 @@ class GLModuleTable(object):
         Return condition from parent to module. Condition can be string or True.
         If module is not in the list of conddeps, method returns None.'''
         if type(parent) is not GLModule:
-            raise TypeError('parent must be a GLModule, not %s' %
-                            type(parent).__name__)
+            raise TypeError('parent must be a GLModule, not %s'
+                            % type(parent).__name__)
         if type(module) is not GLModule:
-            raise TypeError('module must be a GLModule, not %s' %
-                            type(module).__name__)
+            raise TypeError('module must be a GLModule, not %s'
+                            % type(module).__name__)
         key = '%s---%s' % (str(parent), str(module))
         result = None
         if key in self.conditionals:
@@ -1118,8 +1117,8 @@ class GLModuleTable(object):
         main_modules = self.transitive_closure(basemodules)
         self.config.setInclTestCategory(TESTS['tests'], saved_inctests)
         tests_modules = \
-            [m for m in finalmodules if m not in main_modules] + \
-            [m for m in main_modules if m.getApplicability() != 'main']
+            [m for m in finalmodules if m not in main_modules] \
+            + [m for m in main_modules if m.getApplicability() != 'main']
         tests_modules = sorted(set(tests_modules))
         result = tuple([main_modules, tests_modules])
         return result
