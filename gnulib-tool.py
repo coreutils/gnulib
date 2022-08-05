@@ -314,9 +314,9 @@ def main():
                         action='store_true')
     # avoids
     parser.add_argument('--avoid',
-                        action='append',
                         dest='avoids',
                         default=None,
+                        action='append',
                         nargs=1)
     # libtool
     parser.add_argument('--libtool',
@@ -370,10 +370,10 @@ def main():
                         choices=['2', '3orGPLv2', '3'],
                         nargs='?')
     # makefile-name
-    parser.add_argument("--makefile-name",
-                        dest="makefile_name",
+    parser.add_argument('--makefile-name',
+                        dest='makefile_name',
                         default=None,
-                        type=str)
+                        nargs=1)
     # single-configure
     parser.add_argument('--single-configure',
                         dest='single_configure',
@@ -634,6 +634,8 @@ def main():
             lgpl = True
     libtool = cmdargs.libtool
     makefile_name = cmdargs.makefile_name
+    if makefile_name != None:
+        makefile_name = makefile_name[0]
     avoids = cmdargs.avoids
     if avoids != None:
         avoids = [ module
