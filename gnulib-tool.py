@@ -319,10 +319,14 @@ def main():
                         default=None,
                         nargs=1)
     # libtool
-    parser.add_argument("--libtool",
-                        dest=libtool,
-                        default=False,
+    parser.add_argument('--libtool',
+                        dest='libtool',
+                        default=None,
                         action="store_true")
+    parser.add_argument('--no-libtool',
+                        dest='libtool',
+                        default=None,
+                        action="store_false")
     # libname
     parser.add_argument('--lib',
                         dest='libname',
