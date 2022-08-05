@@ -18,16 +18,11 @@
 #===============================================================================
 import os
 import re
-import sys
-import locale
 import codecs
-import shutil
-import filecmp
 import subprocess as sp
 from . import constants
 from .GLError import GLError
 from .GLConfig import GLConfig
-from .GLModuleSystem import GLModule
 from .GLModuleSystem import GLModuleTable
 from .GLModuleSystem import GLModuleSystem
 from .GLFileSystem import GLFileSystem

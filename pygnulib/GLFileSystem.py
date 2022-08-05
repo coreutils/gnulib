@@ -17,10 +17,7 @@
 # Define global imports
 #===============================================================================
 import os
-import re
-import sys
 import codecs
-import shutil
 import filecmp
 import subprocess as sp
 from enum import Enum

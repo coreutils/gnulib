@@ -17,12 +17,8 @@
 # Define global imports
 #===============================================================================
 import os
-import re
-import sys
 import copy
-import codecs
 import tempfile
-import subprocess as sp
 from . import constants
 from .GLError import GLError
 

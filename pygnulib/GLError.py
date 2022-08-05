@@ -17,10 +17,6 @@
 # Define global imports
 #===============================================================================
 import os
-import re
-import sys
-import locale
-import codecs
 from . import constants
 
 

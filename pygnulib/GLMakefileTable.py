@@ -17,15 +17,8 @@
 # Define global imports
 #===============================================================================
 import os
-import re
-import sys
-import codecs
-import hashlib
-import subprocess as sp
 from . import constants
-from .GLError import GLError
 from .GLConfig import GLConfig
-from .GLFileSystem import GLFileSystem
 
 
 #===============================================================================

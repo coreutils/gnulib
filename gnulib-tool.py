@@ -29,6 +29,9 @@
 # You can use this command to check the style:
 #   $ pycodestyle --max-line-length=136 --ignore=E265,W503,E241,E711,E712,E201,E202,E221 gnulib-tool.py pygnulib/*.py
 
+# You can use this command to check for mistakes:
+#   $ pylint --disable=C0103,C0114,C0121,C0209,C0301,C0302,R0902,R0912,R0913,R0914,R0915,R1705,R1702,R1720 gnulib-tool.py pygnulib/*.py
+
 
 #===============================================================================
 # Define global imports
@@ -38,11 +41,9 @@ import re
 import sys
 import codecs
 import random
-import shutil
 import argparse
 import subprocess as sp
 from tempfile import mktemp
-from pprint import pprint
 from pygnulib import constants
 from pygnulib import classes
 

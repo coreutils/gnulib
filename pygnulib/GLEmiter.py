@@ -18,19 +18,15 @@
 #===============================================================================
 import os
 import re
-import sys
 import codecs
-import shutil
 import subprocess as sp
 from . import constants
 from .GLInfo import GLInfo
-from .GLError import GLError
 from .GLConfig import GLConfig
 from .GLModuleSystem import GLModule
 from .GLModuleSystem import GLModuleTable
 from .GLMakefileTable import GLMakefileTable
 from .GLFileSystem import GLFileAssistant
-from pprint import pprint
 
 
 #===============================================================================

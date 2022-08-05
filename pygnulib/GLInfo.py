@@ -18,8 +18,6 @@
 #===============================================================================
 import os
 import re
-import sys
-import locale
 import codecs
 import subprocess as sp
 from . import constants
