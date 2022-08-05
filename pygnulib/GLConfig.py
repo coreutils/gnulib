@@ -137,19 +137,11 @@ class GLConfig(object):
         # libtool
         self.resetLibtool()
         if libtool != None:
-            if type(libtool) is bool:
-                self.setLibtool(libtool)
-            else:  # if type(libtool) is not bool
-                raise TypeError('libtool must be a bool, not %s'
-                                % type(libtool).__name__)
+            self.setLibtool(libtool)
         # conddeps
         self.resetCondDeps()
         if conddeps != None:
-            if type(conddeps) is bool:
-                self.setCondDeps(conddeps)
-            else:  # if type(conddeps) is not bool
-                raise TypeError('conddeps must be a bool, not %s'
-                                % type(conddeps).__name__)
+            self.setCondDeps(conddeps)
         # macro_prefix
         self.resetMacroPrefix()
         if macro_prefix != None:
@@ -172,27 +164,15 @@ class GLConfig(object):
         # vc_files
         self.resetVCFiles()
         if vc_files != None:
-            if type(vc_files) is bool:
-                self.setVCFiles(vc_files)
-            else:  # if type(vc_files) is not bool
-                raise TypeError('vc_files must be a bool, not %s'
-                                % type(vc_files).__name__)
+            self.setVCFiles(vc_files)
         # symbolic
         self.resetSymbolic()
         if symbolic != None:
-            if type(symbolic) is bool:
-                self.setSymbolic(symbolic)
-            else:  # if type(symbolic) is not bool
-                raise TypeError('symbolic must be a bool, not %s'
-                                % type(symbolic).__name__)
+            self.setSymbolic(symbolic)
         # lsymbolic
         self.resetLSymbolic()
         if lsymbolic != None:
-            if type(lsymbolic) is bool:
-                self.setLSymbolic(lsymbolic)
-            else:  # if type(lsymbolic) is not bool
-                raise TypeError('lsymbolic must be a bool, not %s'
-                                % type(lsymbolic).__name__)
+            self.setLSymbolic(lsymbolic)
         # configure_ac
         self.resetAutoconfFile()
         if configure_ac != None:
@@ -204,19 +184,11 @@ class GLConfig(object):
         # libtests
         self.resetLibtests()
         if libtests != None:
-            if type(libtests) is bool:
-                self.setLibtests(libtests)
-            else:  # if type(libtests) is not bool
-                raise TypeError('libtests must be a bool, not %s'
-                                % type(libtests).__name__)
+            self.setLibtests(libtests)
         # single_configure
         self.resetSingleConfigure()
         if single_configure != None:
-            if type(single_configure) is bool:
-                self.setSingleConfigure(single_configure)
-            else:  # if type(single_configure) is not bool
-                raise TypeError('single_configure must be a bool, not %s'
-                                % type(single_configure).__name__)
+            self.setSingleConfigure(single_configure)
         # verbose
         self.resetVerbosity()
         if verbose != None:
@@ -224,19 +196,11 @@ class GLConfig(object):
         # dryrun
         self.resetDryRun()
         if dryrun != None:
-            if type(dryrun) is bool:
-                self.setDryRun(dryrun)
-            else:  # if type(dryrun) is not bool
-                raise TypeError('dryrun must be a bool, not %s'
-                                % type(dryrun).__name__)
+            self.setDryRun(dryrun)
         # errors
         self.resetErrors()
         if errors != None:
-            if type(errors) is bool:
-                self.setErrors(errors)
-            else:  # if type(errors) is not bool
-                raise TypeError('errors must be a bool, not %s'
-                                % type(errors).__name__)
+            self.setErrors(errors)
 
     # Define special methods.
     def __repr__(self):
@@ -819,19 +783,21 @@ class GLConfig(object):
         Default value is None, which means that lgpl is disabled.'''
         self.table['lgpl'] = None
 
-    def getIncludeGuardPrefix(self):
-        '''Return include_guard_prefix to use inside GLEmiter class.'''
-        return self.table['include_guard_prefix']
-
     def getModuleIndicatorPrefix(self):
         '''Return module_indicator_prefix to use inside GLEmiter class.'''
         return self.getIncludeGuardPrefix()
 
-    # Define macro_prefix methods.
+    # Define macro_prefix and include_guard_prefix methods.
+    # The include_guard_prefix is a replacement for ${gl_include_guard_prefix}.
+    # It is determined from the macro_prefix.
     def getMacroPrefix(self):
         '''Return the prefix of the macros 'gl_EARLY' and 'gl_INIT'.
         Default macro_prefix is 'gl'.'''
         return self.table['macro_prefix']
+
+    def getIncludeGuardPrefix(self):
+        '''Return the replacement for ${gl_include_guard_prefix}.'''
+        return self.table['include_guard_prefix']
 
     def setMacroPrefix(self, macro_prefix):
         '''Specify the prefix of the macros 'gl_EARLY' and 'gl_INIT'.
@@ -852,8 +818,7 @@ class GLConfig(object):
         '''Reset the prefix of the macros 'gl_EARLY' and 'gl_INIT'.
         Default macro_prefix is 'gl'.'''
         self.table['macro_prefix'] = 'gl'
-        include_guard_prefix = 'GL'
-        self.table['include_guard_prefix'] = include_guard_prefix
+        self.table['include_guard_prefix'] = 'GL'
 
     # Define makefile_name methods.
     def getMakefileName(self):
@@ -976,11 +941,11 @@ class GLConfig(object):
         '''Specify preferred autoconf version. Default value is 2.59.'''
         self.table['ac_version'] = 2.59
 
-    # Define symbolic methods.
     def checkCopyrights(self):
         '''Check if copyright notices in files should be replaced.'''
         return self.table['copyrights']
 
+    # Define symbolic methods.
     def checkSymbolic(self):
         '''Check if pygnulib will make symbolic links instead of copying files.'''
         return self.table['symbolic']
