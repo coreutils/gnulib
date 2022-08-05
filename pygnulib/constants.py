@@ -244,10 +244,10 @@ def cleaner(sequence):
         sequence = sequence.replace('[', '')
         sequence = sequence.replace(']', '')
     elif type(sequence) is list:
-        sequence = [value.replace('[', '').replace(']', '')
-                    for value in sequence]
-        sequence = [value.replace('(', '').replace(')', '')
-                    for value in sequence]
+        sequence = [ value.replace('[', '').replace(']', '')
+                     for value in sequence]
+        sequence = [ value.replace('(', '').replace(')', '')
+                     for value in sequence]
         sequence = [ False if value == 'false' else value
                      for value in sequence ]
         sequence = [ True if value == 'true' else value
@@ -262,7 +262,7 @@ def joinpath(head, *tail):
 
     Join two or more pathname components, inserting '/' as needed. If any
     component is an absolute path, all previous path components will be
-    discarded. The second argument may be string or list of strings.'''
+    discarded.'''
     newtail = list()
     for item in tail:
         newtail += [item]
@@ -356,6 +356,27 @@ def symlink_relative(src, dest):
         copyfile2(cp_src, dest)
 
 
+def as_link_value_at_dest(src, dest):
+    '''Compute the symbolic link value to place at dest, such that the
+    resulting symbolic link points to src. src is given relative to the
+    current directory (or absolute).'''
+    if type(src) is not str:
+        raise TypeError('src must be a string, not %s' % (type(src).__name__))
+    if type(dest) is not str:
+        raise TypeError('dest must be a string, not %s' % (type(dest).__name__))
+    if src.startswith('/') or (len(src) >= 2 and src[1] == ':'):
+        return src
+    else:  # if src is not absolute
+        if dest.startswith('/') or (len(dest) >= 2 and dest[1] == ':'):
+            cwd = os.getcwd()
+            return joinpath(cwd, src)
+        else:  # if dest is not absolute
+            destdir = os.path.dirname(dest)
+            if not destdir:
+                destdir = '.'
+            return relativize(destdir, src)
+
+
 def link_relative(src, dest):
     '''Like ln -s, except that src is given relative to the current directory
     (or absolute), not given relative to the directory of dest.'''
@@ -363,29 +384,20 @@ def link_relative(src, dest):
         raise TypeError('src must be a string, not %s' % (type(src).__name__))
     if type(dest) is not str:
         raise TypeError('dest must be a string, not %s' % (type(dest).__name__))
-    if src.startswith('/') or (len(src) >= 2 and src[1] == ':'):
-        symlink_relative(src, dest)
-    else:  # if src is not absolute
-        if dest.startswith('/') or (len(dest) >= 2 and dest[1] == ':'):
-            cwd = os.getcwd()
-            symlink_relative(joinpath(cwd, src), dest)
-        else:  # if dest is not absolute
-            destdir = os.path.dirname(dest)
-            if not destdir:
-                destdir = '.'
-            src = relativize(destdir, src)
-            symlink_relative(src, dest)
+    link_value = as_link_value_at_dest(src, dest)
+    symlink_relative(link_value, dest)
 
 
 def link_if_changed(src, dest):
     '''Create a symlink, but avoids munging timestamps if the link is correct.'''
-    ln_target = os.path.realpath(src)
-    if not (os.path.islink(dest) and src == ln_target):
+    link_value = as_link_value_at_dest(src, dest)
+    if not (os.path.islink(dest) and os.readlink(dest) == link_value):
         try:
             os.remove(dest)
         except FileNotFoundError:
             pass
-        link_relative(src, dest)
+        # Equivalent to link_relative(src, dest):
+        symlink_relative(link_value, dest)
 
 
 def filter_filelist(separator, filelist,
