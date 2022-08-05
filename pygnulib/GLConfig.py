@@ -764,7 +764,7 @@ class GLConfig(object):
                 self.table['libname'] = libname
         else:  # if type of libname is not str
             raise TypeError('libname must be a string, not %s'
-                            % type(module).__name__)
+                            % type(libname).__name__)
 
     def resetLibName(self):
         '''Reset the library name to 'libgnu'.'''

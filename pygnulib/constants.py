@@ -25,6 +25,7 @@ import sys
 import platform
 import shutil
 import tempfile
+import codecs
 import subprocess as sp
 import __main__ as interpreter
 

@@ -906,6 +906,9 @@ class GLMegaTestDir(object):
 
         Create a mega scratch package with the given modules one by one and all
         together.'''
+        auxdir = self.config['auxdir']
+        verbose = self.config['verbosity']
+
         megasubdirs = list()
         modules = [ self.modulesystem.find(m)
                     for m in self.config['modules'] ]

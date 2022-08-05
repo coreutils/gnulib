@@ -450,7 +450,7 @@ USE_MSGCTXT = no\n"""
         emit = ''
         sourcebase = self.config['sourcebase']
         sourcebase = '%s%s' % (self.sourcebase, os.path.sep)
-        files = [ substart('lib/', sourcebase, file)
+        files = [ constants.substart('lib/', sourcebase, file)
                   for file in files ]
         files = [ file
                   for file in files

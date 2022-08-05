@@ -88,7 +88,7 @@ class GLFileSystem(object):
         GLConfig: localpath.'''
         if type(name) is not str:
             raise TypeError('name must be a string, not %s'
-                            % type(module).__name__)
+                            % type(name).__name__)
         localpath = self.config['localpath']
         # Each element in localpath is a directory whose contents overrides
         # or amends the result of the lookup in the rest of localpath and
@@ -322,9 +322,9 @@ class GLFileAssistant(object):
                         raise GLError(17, original)
             else:  # if self.config['dryrun']
                 if already_present:
-                    print('Update file %s (backup in %s)' % (rewritten, backup))
+                    print('Update file %s (backup in %s)' % (rewritten, backupname))
                 else:  # if not already_present
-                    print('Replace file %s (backup in %s)' % (rewritten, backup))
+                    print('Replace file %s (backup in %s)' % (rewritten, backupname))
 
     def add_or_update(self, already_present):
         '''GLFileAssistant.add_or_update(already_present)
