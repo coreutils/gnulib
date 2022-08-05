@@ -45,7 +45,6 @@ __copyright__ = constants.__copyright__
 # Define global constants
 #===============================================================================
 TESTS = constants.TESTS
-compiler = constants.compiler
 joinpath = constants.joinpath
 isfile = os.path.isfile
 normpath = os.path.normpath
@@ -158,7 +157,7 @@ class GLEmiter(object):
                       if line.strip() ]
             snippet = '%s\n' % '\n'.join(lines)
             transformer = fileassistant.transformers.get('aux', '')
-            pattern = compiler('(^.*?$)', re.S | re.M)
+            pattern = re.compile('(^.*?$)', re.S | re.M)
             snippet = pattern.sub('%s\\1' % indentation, snippet)
             if transformer:
                 args = ['sed', '-e', transformer]
@@ -179,7 +178,7 @@ class GLEmiter(object):
             else:
                 # Don't indent AM_GNU_GETTEXT_VERSION line, as that confuses
                 # autopoint through at least GNU gettext version 0.18.2.
-                snippet = compiler('^ *AM_GNU_GETTEXT_VERSION').sub('AM_GNU_GETTEXT_VERSION', snippet)
+                snippet = re.compile('^ *AM_GNU_GETTEXT_VERSION').sub('AM_GNU_GETTEXT_VERSION', snippet)
             emit += snippet
             if str(module) == 'alloca' and libtool and not disable_libtool:
                 emit += 'changequote(,)dnl\n'
@@ -189,7 +188,7 @@ class GLEmiter(object):
         if replace_auxdir:
             regex = 'AC_CONFIG_FILES\\(\\[(.*?)\\:build-aux/(.*?)\\]\\)'
             repl = 'AC_CONFIG_FILES([\\1:%s/\\2])' % auxdir
-            pattern = compiler(regex, re.S | re.M)
+            pattern = re.compile(regex, re.S | re.M)
             emit = pattern.sub(repl, emit)
         lines = [ line
                   for line in emit.split('\n')
@@ -694,9 +693,9 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                 amsnippet1 = amsnippet1.replace('lib_LIBRARIES', 'lib%_LIBRARIES')
                 amsnippet1 = amsnippet1.replace('lib_LTLIBRARIES', 'lib%_LTLIBRARIES')
                 if LD_flags:
-                    pattern = compiler('lib_LDFLAGS[\t ]*\\+=(.*?)$', re.S | re.M)
+                    pattern = re.compile('lib_LDFLAGS[\t ]*\\+=(.*?)$', re.S | re.M)
                     amsnippet1 = pattern.sub('', amsnippet1)
-                pattern = compiler('lib_([A-Z][A-Z](?:.*?))', re.S | re.M)
+                pattern = re.compile('lib_([A-Z][A-Z](?:.*?))', re.S | re.M)
                 amsnippet1 = pattern.sub('%s_%s_\\1' % (libname, libext),
                                          amsnippet1)
                 amsnippet1 = amsnippet1.replace('$(GNULIB_', '$(' + module_indicator_prefix + '_GNULIB_')
@@ -709,12 +708,12 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                 if str(module) == 'alloca':
                     amsnippet1 += '%s_%s_LIBADD += @%sALLOCA@\n' % (libname, libext, perhapsLT)
                     amsnippet1 += '%s_%s_DEPENDENCIES += @%sALLOCA@\n' % (libname, libext, perhapsLT)
-                amsnippet1 = constants.combine_lines_matching(compiler('%s_%s_SOURCES' % (libname, libext)),
+                amsnippet1 = constants.combine_lines_matching(re.compile('%s_%s_SOURCES' % (libname, libext)),
                                                               amsnippet1)
 
                 # Get unconditional snippet, edit it and save to amsnippet2.
                 amsnippet2 = module.getAutomakeSnippet_Unconditional()
-                pattern = compiler('lib_([A-Z][A-Z](?:.*?))', re.S | re.M)
+                pattern = re.compile('lib_([A-Z][A-Z](?:.*?))', re.S | re.M)
                 amsnippet2 = pattern.sub('%s_%s_\\1' % (libname, libext),
                                          amsnippet2)
                 amsnippet2 = amsnippet2.replace('$(GNULIB_',
@@ -756,7 +755,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
             #  * https://debbugs.gnu.org/10997
             #  * https://debbugs.gnu.org/11030
             # So we need this workaround.
-            pattern = compiler('^pkgdata_DATA *\\+=', re.S | re.M)
+            pattern = re.compile('^pkgdata_DATA *\\+=', re.S | re.M)
             if pattern.findall(allsnippets):
                 emit += 'pkgdata_DATA =\n'
             emit += 'EXTRA_DIST =\n'
@@ -808,7 +807,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         insnippets = False
         inmakefile = False
         regex = '^[a-zA-Z0-9_]*_%sLIBRARIES *\\+{0,1}= *%s.%s' % (perhapsLT, libname, libext)
-        pattern = compiler(regex, re.S | re.M)
+        pattern = re.compile(regex, re.S | re.M)
         insnippets = bool(pattern.findall(allsnippets))
         # Then test if $sourcebase/Makefile.am (if it exists) specifies it.
         path = joinpath(sourcebase, 'Makefile.am')
@@ -961,9 +960,9 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                 snippet = snippet.replace('lib_LIBRARIES', 'lib%_LIBRARIES')
                 snippet = snippet.replace('lib_LTLIBRARIES', 'lib%_LTLIBRARIES')
                 if LD_flags:
-                    pattern = compiler('lib_LDFLAGS[\t ]*\\+=(.*?)$', re.S | re.M)
+                    pattern = re.compile('lib_LDFLAGS[\t ]*\\+=(.*?)$', re.S | re.M)
                     snippet = pattern.sub('', snippet)
-                pattern = compiler('lib_([A-Z][A-Z](?:.*?))', re.S | re.M)
+                pattern = re.compile('lib_([A-Z][A-Z](?:.*?))', re.S | re.M)
                 snippet = pattern.sub('libtests_a_\\1', snippet)
                 snippet = snippet.replace('$(GNULIB_', '$(' + module_indicator_prefix + '_GNULIB_')
                 snippet = snippet.replace('lib%_LIBRARIES', 'lib_LIBRARIES')
@@ -1038,7 +1037,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         #  * https://debbugs.gnu.org/10997
         #  * https://debbugs.gnu.org/11030
         # So we need this workaround.
-        pattern = compiler('^pkgdata_DATA *\\+=', re.S | re.M)
+        pattern = re.compile('^pkgdata_DATA *\\+=', re.S | re.M)
         if bool(pattern.findall(main_snippets)) or bool(pattern.findall(longrun_snippets)):
             emit += 'pkgdata_DATA =\n'
 

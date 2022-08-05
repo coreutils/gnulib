@@ -55,7 +55,6 @@ ENCS = constants.ENCS
 UTILS = constants.UTILS
 MODES = constants.MODES
 TESTS = constants.TESTS
-compiler = constants.compiler
 joinpath = constants.joinpath
 copyfile = constants.copyfile
 isabs = os.path.isabs
@@ -745,7 +744,7 @@ def main():
                 else:  # if not isfile(filepath)
                     filepath = joinpath(destdir, 'aclocal.m4')
                     if isfile(filepath):
-                        pattern = constants.compiler(r'm4_include\(\[(.*?)\]\)')
+                        pattern = re.compile(r'm4_include\(\[(.*?)\]\)')
                         with codecs.open(filepath, 'rb', 'UTF-8') as file:
                             m4dirs = pattern.findall(file.read())
                         m4dirs = [ os.path.dirname(m4dir)

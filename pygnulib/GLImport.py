@@ -49,7 +49,6 @@ __copyright__ = constants.__copyright__
 #===============================================================================
 MODES = constants.MODES
 TESTS = constants.TESTS
-compiler = constants.compiler
 joinpath = constants.joinpath
 cleaner = constants.cleaner
 copyfile2 = constants.copyfile2
@@ -99,18 +98,18 @@ class GLImport(object):
         self.config.setAutoconfFile(path)
         with codecs.open(path, 'rb', 'UTF-8') as file:
             data = file.read()
-        pattern = compiler(r'^AC_CONFIG_AUX_DIR\((.*?)\)$', re.S | re.M)
+        pattern = re.compile(r'^AC_CONFIG_AUX_DIR\((.*?)\)$', re.S | re.M)
         match = pattern.findall(data)
         if match:
             result = cleaner(match)[0]
             self.cache.setAuxDir(joinpath(self.config['destdir'], result))
-        pattern = compiler(r'A[CM]_PROG_LIBTOOL', re.S | re.M)
+        pattern = re.compile(r'A[CM]_PROG_LIBTOOL', re.S | re.M)
         guessed_libtool = bool(pattern.findall(data))
         if self.config['auxdir'] == None:
             self.config.setAuxDir(self.cache['auxdir'])
 
         # Guess autoconf version.
-        pattern = compiler(r'.*AC_PREREQ\((.*?)\)', re.S | re.M)
+        pattern = re.compile(r'.*AC_PREREQ\((.*?)\)', re.S | re.M)
         versions = cleaner(pattern.findall(data))
         if versions:
             version = sorted(set([ float(version)
@@ -126,7 +125,7 @@ class GLImport(object):
                 data = file.read()
 
             # Create regex object and keys.
-            pattern = compiler('^(gl_.*?)\\((.*?)\\)$', re.S | re.M)
+            pattern = re.compile('^(gl_.*?)\\((.*?)\\)$', re.S | re.M)
             keys = \
                 [
                     'gl_LOCAL_DIR', 'gl_MODULES', 'gl_AVOID', 'gl_SOURCE_BASE',
@@ -214,7 +213,7 @@ class GLImport(object):
                 with codecs.open(path, 'rb', 'UTF-8') as file:
                     data = file.read()
                 regex = 'AC_DEFUN\\(\\[%s_FILE_LIST\\], \\[(.*?)\\]\\)' % self.cache['macro_prefix']
-                pattern = compiler(regex, re.S | re.M)
+                pattern = re.compile(regex, re.S | re.M)
                 self.cache.setFiles(pattern.findall(data)[-1].strip().split())
 
         # The self.config['localpath'] defaults to the cached one. Recall that
@@ -870,7 +869,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
             notice = notice.strip()
             if notice:
                 print('Notice from module %s:' % str(module))
-                pattern = compiler('^(.*?)$', re.S | re.M)
+                pattern = re.compile('^(.*?)$', re.S | re.M)
                 notice = pattern.sub('  \\1', notice)
                 print(notice)
 
@@ -1442,9 +1441,9 @@ in <library>_a_LDFLAGS or <library>_la_LDFLAGS when linking a library.''')
         with codecs.open(configure_ac, 'rb', 'UTF-8') as file:
             data = file.read()
         match_result1 = \
-            bool(compiler('^ *AC_PROG_CC_STDC', re.S | re.M).findall(data))
+            bool(re.compile('^ *AC_PROG_CC_STDC', re.S | re.M).findall(data))
         match_result2 = \
-            bool(compiler('^ *AC_PROG_CC_C99', re.S | re.M).findall(data))
+            bool(re.compile('^ *AC_PROG_CC_C99', re.S | re.M).findall(data))
         if match_result1:
             position_early_after = 'AC_PROG_CC_STDC'
         elif match_result2:

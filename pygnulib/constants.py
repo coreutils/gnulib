@@ -237,12 +237,6 @@ def execute(args, verbose):
             sys.exit(retcode)
 
 
-def compiler(pattern, flags=0):
-    '''Compile regex pattern depending on version of Python.'''
-    pattern = re.compile(pattern, flags)
-    return pattern
-
-
 def cleaner(sequence):
     '''Clean string or list of strings after using regex.'''
     if type(sequence) is str:
@@ -405,8 +399,8 @@ def filter_filelist(separator, filelist,
     listing = list()
     for filename in filelist:
         if filename.startswith(prefix) and filename.endswith(suffix):
-            pattern = compiler('^%s(.*?)%s$'
-                               % (removed_prefix, removed_suffix))
+            pattern = re.compile('^%s(.*?)%s$'
+                                 % (removed_prefix, removed_suffix))
             result = pattern.sub('%s\\1%s'
                                  % (added_prefix, added_suffix), filename)
             listing += [result]

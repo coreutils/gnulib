@@ -42,7 +42,6 @@ __copyright__ = constants.__copyright__
 DIRS = constants.DIRS
 ENCS = constants.ENCS
 TESTS = constants.TESTS
-compiler = constants.compiler
 joinpath = constants.joinpath
 isdir = os.path.isdir
 isfile = os.path.isfile
@@ -281,7 +280,7 @@ Include:|Link:|License:|Maintainer:)'
         '''GLModule.getName() -> str
 
         Return the name of the module.'''
-        pattern = compiler(joinpath('modules', '(.*?)$'))
+        pattern = re.compile(joinpath('modules', '(.*?)$'))
         result = pattern.findall(self.module)[0]
         return result
 
@@ -386,7 +385,7 @@ Include:|Link:|License:|Maintainer:)'
                 result = ''
             else:  # if section in self.content
                 pattern = '^%s[\t ]*(.*?)%s' % (section, self.regex)
-                pattern = compiler(pattern, re.S | re.M)
+                pattern = re.compile(pattern, re.S | re.M)
                 result = pattern.findall(self.content)
                 if type(result) is list:
                     if not result:
@@ -407,7 +406,7 @@ Include:|Link:|License:|Maintainer:)'
                 result = ''
             else:  # if section in self.content
                 pattern = '^%s[\t ]*(.*?)%s' % (section, self.regex)
-                pattern = compiler(pattern, re.S | re.M)
+                pattern = re.compile(pattern, re.S | re.M)
                 result = pattern.findall(self.content)
                 if type(result) is list:
                     if not result:
@@ -436,7 +435,7 @@ Include:|Link:|License:|Maintainer:)'
                     regex = '^(Description|Comment|Status|Notice|Applicability|'
                     regex += 'Files|Depends-on|configure\\.ac-early|configure\\.ac|'
                     regex += 'Makefile\\.am|Include|Link|License|Maintainer):$'
-                    pattern = compiler(regex)
+                    pattern = re.compile(regex)
                     findflag = pattern.findall(line)
                     if findflag:
                         break
@@ -465,7 +464,7 @@ Include:|Link:|License:|Maintainer:)'
                     regex = '^(Description|Comment|Status|Notice|Applicability|'
                     regex += 'Files|Depends-on|configure\\.ac-early|configure\\.ac|'
                     regex += 'Makefile\\.am|Include|Link|License|Maintainer):$'
-                    pattern = compiler(regex)
+                    pattern = re.compile(regex)
                     findflag = pattern.findall(line)
                     if findflag:
                         break
@@ -492,7 +491,7 @@ Include:|Link:|License:|Maintainer:)'
                     regex = '^(Description|Comment|Status|Notice|Applicability|'
                     regex += 'Files|Depends-on|configure\\.ac-early|configure\\.ac|'
                     regex += 'Makefile\\.am|Include|Link|License|Maintainer):$'
-                    pattern = compiler(regex)
+                    pattern = re.compile(regex)
                     findflag = pattern.findall(line)
                     if findflag:
                         break
@@ -530,7 +529,7 @@ Include:|Link:|License:|Maintainer:)'
                     regex = '^(Description|Comment|Status|Notice|Applicability|'
                     regex += 'Files|Depends-on|configure\\.ac-early|configure\\.ac|'
                     regex += 'Makefile\\.am|Include|Link|License|Maintainer):$'
-                    pattern = compiler(regex)
+                    pattern = re.compile(regex)
                     findflag = pattern.findall(line)
                     if findflag:
                         break
@@ -564,7 +563,7 @@ Include:|Link:|License:|Maintainer:)'
                     regex = '^(Description|Comment|Status|Notice|Applicability|'
                     regex += 'Files|Depends-on|configure\\.ac-early|configure\\.ac|'
                     regex += 'Makefile\\.am|Include|Link|License|Maintainer):$'
-                    pattern = compiler(regex)
+                    pattern = re.compile(regex)
                     findflag = pattern.findall(line)
                     if findflag:
                         break
@@ -608,7 +607,7 @@ Include:|Link:|License:|Maintainer:)'
                     regex = '^(Description|Comment|Status|Notice|Applicability|'
                     regex += 'Files|Depends-on|configure\\.ac-early|configure\\.ac|'
                     regex += 'Makefile\\.am|Include|Link|License|Maintainer):$'
-                    pattern = compiler(regex)
+                    pattern = re.compile(regex)
                     findflag = pattern.findall(line)
                     if findflag:
                         break
@@ -635,7 +634,7 @@ Include:|Link:|License:|Maintainer:)'
                     regex = '^(Description|Comment|Status|Notice|Applicability|'
                     regex += 'Files|Depends-on|configure\\.ac-early|configure\\.ac|'
                     regex += 'Makefile\\.am|Include|Link|License|Maintainer):$'
-                    pattern = compiler(regex)
+                    pattern = re.compile(regex)
                     findflag = pattern.findall(line)
                     if findflag:
                         break
@@ -676,7 +675,7 @@ Include:|Link:|License:|Maintainer:)'
                     regex = '^(Description|Comment|Status|Notice|Applicability|'
                     regex += 'Files|Depends-on|configure\\.ac-early|configure\\.ac|'
                     regex += 'Makefile\\.am|Include|Link|License|Maintainer):$'
-                    pattern = compiler(regex)
+                    pattern = re.compile(regex)
                     findflag = pattern.findall(line)
                     if findflag:
                         break
@@ -706,7 +705,7 @@ Include:|Link:|License:|Maintainer:)'
                 # TODO: unconditional automake snippet for nontests modules
                 snippet = self.getAutomakeSnippet_Conditional()
                 snippet = constants.combine_lines(snippet)
-                pattern = compiler('^lib_SOURCES[\t ]*\\+=[\t ]*(.*?)$', re.S | re.M)
+                pattern = re.compile('^lib_SOURCES[\t ]*\\+=[\t ]*(.*?)$', re.S | re.M)
                 mentioned_files = pattern.findall(snippet)
                 if mentioned_files != list():
                     mentioned_files = mentioned_files[-1].split(' ')
@@ -774,14 +773,14 @@ Include:|Link:|License:|Maintainer:)'
                     regex = '^(Description|Comment|Status|Notice|Applicability|'
                     regex += 'Files|Depends-on|configure\\.ac-early|configure\\.ac|'
                     regex += 'Makefile\\.am|Include|Link|License|Maintainer):$'
-                    pattern = compiler(regex)
+                    pattern = re.compile(regex)
                     findflag = pattern.findall(line)
                     if findflag:
                         break
                     parts += [line]
                 result = ''.join(parts)
             result = result.strip()
-            pattern = compiler('^(["<].*?[>"])', re.S | re.M)
+            pattern = re.compile('^(["<].*?[>"])', re.S | re.M)
             result = pattern.sub('#include \\1', result)
             self.cache['include'] = result
         return self.cache['include']
@@ -802,7 +801,7 @@ Include:|Link:|License:|Maintainer:)'
                     regex = '^(Description|Comment|Status|Notice|Applicability|'
                     regex += 'Files|Depends-on|configure\\.ac-early|configure\\.ac|'
                     regex += 'Makefile\\.am|Include|Link|License|Maintainer):$'
-                    pattern = compiler(regex)
+                    pattern = re.compile(regex)
                     findflag = pattern.findall(line)
                     if findflag:
                         break
@@ -845,7 +844,7 @@ Include:|Link:|License:|Maintainer:)'
                 result = ''
             else:  # if section in self.content
                 pattern = '^%s[\t ]*(.*?)%s' % (section, self.regex)
-                pattern = compiler(pattern, re.S | re.M)
+                pattern = re.compile(pattern, re.S | re.M)
                 result = pattern.findall(self.content)
                 if type(result) is list:
                     if not result:
@@ -874,7 +873,7 @@ Include:|Link:|License:|Maintainer:)'
                     regex = '^(Description|Comment|Status|Notice|Applicability|'
                     regex += 'Files|Depends-on|configure\\.ac-early|configure\\.ac|'
                     regex += 'Makefile\\.am|Include|Link|License|Maintainer):$'
-                    pattern = compiler(regex)
+                    pattern = re.compile(regex)
                     findflag = pattern.findall(line)
                     if findflag:
                         break
@@ -1042,7 +1041,7 @@ class GLModuleTable(object):
                     if self.config['conddeps']:
                         automake_snippet = \
                             module.getAutomakeSnippet_Conditional()
-                        pattern = compiler('^if')
+                        pattern = re.compile('^if')
                         if not pattern.findall(automake_snippet):
                             self.addUnconditional(module)
                         conditional = self.isConditional(module)
@@ -1165,7 +1164,7 @@ class GLModuleTable(object):
                 raise TypeError('each module must be a GLModule instance')
             snippet = module.getAutomakeSnippet()
             snippet = constants.remove_backslash_newline(snippet)
-            pattern = compiler('^lib_SOURCES[\t ]*\\+=[\t ]*(.*?)$', re.S | re.M)
+            pattern = re.compile('^lib_SOURCES[\t ]*\\+=[\t ]*(.*?)$', re.S | re.M)
             files = pattern.findall(snippet)
             if files:  # if source files were found
                 files = files[-1].split(' ')
