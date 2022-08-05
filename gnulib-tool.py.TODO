@@ -40,7 +40,6 @@ Implement the options:
   -S | --more-symlinks
   -H | --more-hardlinks
   --help (same output)
-  --version
 
 --------------------------------------------------------------------------------
 

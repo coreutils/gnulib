@@ -65,9 +65,7 @@ class GLInfo(object):
         The special __author__ variable is used (type is list).'''
         result = ''
         for item in __author__:
-            if item == __author__[-2]:
-                result += '%s ' % item
-            elif item == __author__[-1]:
+            if item == __author__[-1]:
                 result += 'and %s' % item
             else:
                 result += '%s, ' % item
@@ -75,38 +73,58 @@ class GLInfo(object):
 
     def license(self):
         '''Return formatted string which contains license and its description.'''
-        result = 'License GPLv3+: GNU GPL version 3 or later'
-        result += ' <https://gnu.org/licenses/gpl.html>\n'
-        result += 'This is free software: you are free'
-        result += ' to change and redistribute it.\n'
+        result = 'License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>\n'
+        result += 'This is free software: you are free to change and redistribute it.\n'
         result += 'There is NO WARRANTY, to the extent permitted by law.'
         return result
 
     def copyright(self):
         '''Return formatted string which contains copyright.
         The special __copyright__ variable is used (type is str).'''
-        result = 'Copyright (C) %s' % __copyright__
+        copyright = __copyright__
+        # Per the GNU Coding Standards, show only the last year.
+        copyright = re.compile('^[0-9]*-').sub('', copyright)
+        result = 'Copyright (C) %s' % copyright
         return result
 
     def date(self):
         '''Return formatted string which contains date and time in GMT format.'''
         if isdir(DIRS['git']):
-            counter = int()  # Create counter
-            result = ''  # Create string
-            args = ['git', 'log']
-            result = sp.check_output(args).decode("UTF-8")
-            # Get date as "Fri Mar 21 07:16:51 2008 -0600" from string
-            pattern = re.compile('Date:[\t ]*(.*?)$', re.S | re.M)
-            result = pattern.findall(result)[0]
-            # Turn "Fri Mar 21 07:16:51 2008 -0600" into "Mar 21 2008 07:16:51 -0600"
-            pattern = re.compile('^[^ ]* ([^ ]*) ([0-9]*) ([0-9:]*) ([0-9]*) ')
-            result = pattern.sub('\\1 \\2 \\4 \\3 ', result)
-            # Use GNU date to compute the time in GMT
-            args = ['date', '-d', result, '-u', '+%Y-%m-%d %H:%M:%S']
-            proc = sp.check_output(args)
-            result = str(proc, "UTF-8")
-            result = result.rstrip(os.linesep)
-            return result
+            have_git = None
+            try:
+                sp.check_call(['git', '--version'], stdout=sp.DEVNULL)
+                have_git = True
+            except:
+                have_git = False
+            if have_git:
+                have_GNU_date = None
+                try:
+                    sp.check_call(['date', '--version'], stdout=sp.DEVNULL)
+                    have_GNU_date = True
+                except:
+                    have_GNU_date = False
+                if have_GNU_date:
+                    args = ['git', 'log', '-n', '1', 'ChangeLog']
+                    result = sp.check_output(args, cwd=DIRS['root']).decode("UTF-8")
+                    # Get date as "Fri Mar 21 07:16:51 2008 -0600" from string
+                    pattern = re.compile('^Date:[\t ]*(.*?)$', re.M)
+                    result = pattern.findall(result)[0]
+                    # Turn "Fri Mar 21 07:16:51 2008 -0600" into "Mar 21 2008 07:16:51 -0600"
+                    pattern = re.compile('^[^ ]* ([^ ]*) ([0-9]*) ([0-9:]*) ([0-9]*) ')
+                    result = pattern.sub('\\1 \\2 \\4 \\3 ', result)
+                    # Use GNU date to compute the time in GMT
+                    args = ['date', '-d', result, '-u', '+%Y-%m-%d %H:%M:%S']
+                    proc = sp.check_output(args)
+                    result = str(proc, "UTF-8")
+                    result = result.rstrip(os.linesep)
+                    return result
+        # gnulib copy without versioning information.
+        first_changelog_line = None
+        with codecs.open(os.path.join(DIRS['root'], 'ChangeLog'), 'rb', 'UTF-8') as file:
+            line = file.readline()
+            first_changelog_line = line.rstrip()
+        result = re.compile(' .*').sub('', first_changelog_line)
+        return result
 
     def usage(self):
         '''Show help message.'''
@@ -289,10 +307,20 @@ Report bugs to <bug-gnulib@gnu.org>.'''
     def version(self):
         '''Return formatted string which contains git version.'''
         if isdir(DIRS['git']):
-            version_gen = joinpath(DIRS['build-aux'], 'git-version-gen')
-            args = [version_gen, DIRS['root']]
-            result = sp.check_output(args).decode("UTF-8")
-            result = result.strip()
-            if result == 'UNKNOWN':
-                result = ''
-            return result
+            have_git = None
+            try:
+                sp.check_call(['git', '--version'], stdout=sp.DEVNULL)
+                have_git = True
+            except:
+                have_git = False
+            if have_git:
+                version_gen = joinpath(DIRS['build-aux'], 'git-version-gen')
+                args = [version_gen, '/dev/null']
+                result = sp.check_output(args, cwd=DIRS['root']).decode("UTF-8")
+                result = result.strip()
+                result = result.replace('-dirty', '-modified')
+                if result == 'UNKNOWN':
+                    result = ''
+                return result
+        # gnulib copy without versioning information.
+        return ''
