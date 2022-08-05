@@ -83,7 +83,7 @@ def main():
     tests = None
     libname = None
     lgpl = None
-    makefile = None
+    makefile_name = None
     libtool = None
     conddeps = None
     macro_prefix = None
@@ -365,9 +365,9 @@ def main():
                         action='append',
                         choices=['2', '3orGPLv2', '3'],
                         nargs='?')
-    # makefile
+    # makefile-name
     parser.add_argument("--makefile-name",
-                        dest="makefile",
+                        dest="makefile_name",
                         default=None,
                         type=str)
     # single-configure
@@ -555,7 +555,7 @@ def main():
                  or cmdargs.excl_privileged_tests != None
                  or cmdargs.excl_unportable_tests != None
                  or cmdargs.avoids != None or cmdargs.lgpl != None
-                 or cmdargs.makefile != None))):
+                 or cmdargs.makefile_name != None))):
         message = '%s: *** ' % constants.APP['name']
         message += 'invalid options for --%s mode\n' % mode
         message += 'Try \'gnulib-tool --help\' for more information.\n'
@@ -629,7 +629,7 @@ def main():
         if lgpl == None:
             lgpl = True
     libtool = cmdargs.libtool
-    makefile = cmdargs.makefile
+    makefile_name = cmdargs.makefile_name
     avoids = cmdargs.avoids
     if avoids != None:
         avoids = [ module
@@ -655,7 +655,7 @@ def main():
         excl_test_categories=excl_test_categories,
         libname=libname,
         lgpl=lgpl,
-        makefile=makefile,
+        makefile_name=makefile_name,
         libtool=libtool,
         conddeps=conddeps,
         macro_prefix=macro_prefix,

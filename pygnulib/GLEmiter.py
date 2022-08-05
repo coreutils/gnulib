@@ -604,7 +604,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
 
         Emit the contents of the library Makefile. Returns str and a bool
         variable which shows if subdirectories are used.
-        GLConfig: localpath, sourcebase, libname, pobase, auxdir, makefile, libtool,
+        GLConfig: localpath, sourcebase, libname, pobase, auxdir, makefile_name, libtool,
         macro_prefix, podomain, conddeps, witness_c_macro.
 
         destfile is a filename relative to destdir of Makefile being generated.
@@ -638,7 +638,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         libname = self.config['libname']
         pobase = self.config['pobase']
         auxdir = self.config['auxdir']
-        makefile = self.config['makefile']
+        makefile_name = self.config['makefile_name']
         libtool = self.config['libtool']
         macro_prefix = self.config['macro_prefix']
         podomain = self.config['podomain']
@@ -651,9 +651,9 @@ AC_DEFUN([%V1%_LIBSOURCES], [
 
         # When creating an includable Makefile.am snippet, augment variables with
         # += instead of assigning them.
-        if makefile:
+        if makefile_name:
             assign = '+='
-        else:  # if not makefile
+        else:  # if not makefile_name
             assign = '='
         if libtool:
             libext = 'la'
@@ -732,7 +732,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                                 and file.count('/') > 1):
                             uses_subdirs = True
                             break
-        if not makefile:
+        if not makefile_name:
             subdir_options = ''
             # If there are source files in subdirectories, prevent collision of the
             # object files (example: hash.c and libxml/hash.c).
@@ -740,7 +740,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                 subdir_options = ' subdir-objects'
             emit += 'AUTOMAKE_OPTIONS = 1.9.6 gnits%s\n' % subdir_options
         emit += '\n'
-        if not makefile:
+        if not makefile_name:
             emit += 'SUBDIRS =\n'
             emit += 'noinst_HEADERS =\n'
             emit += 'noinst_LIBRARIES =\n'
@@ -758,7 +758,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
             emit += 'BUILT_SOURCES =\n'
             emit += 'SUFFIXES =\n'
         emit += 'MOSTLYCLEANFILES %s core *.stackdump\n' % assign
-        if not makefile:
+        if not makefile_name:
             emit += 'MOSTLYCLEANDIRS =\n'
             emit += 'CLEANFILES =\n'
             emit += 'DISTCLEANFILES =\n'
@@ -788,10 +788,10 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         if for_test:
             cppflags_part2 = ' -DGNULIB_STRICT_CHECKING=1'
         cppflags = '%s%s' % (cppflags_part1, cppflags_part2)
-        if not makefile:
+        if not makefile_name:
             emit += 'AM_CPPFLAGS =%s\n' % cppflags
             emit += 'AM_CFLAGS =\n'
-        else:  # if makefile
+        else:  # if makefile_name
             if cppflags:
                 emit += 'AM_CPPFLAGS +=%s\n' % cppflags
         emit += '\n'
@@ -807,7 +807,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         insnippets = bool(pattern.findall(allsnippets))
         # Then test if $sourcebase/Makefile.am (if it exists) specifies it.
         path = joinpath(sourcebase, 'Makefile.am')
-        if makefile and isfile(path):
+        if makefile_name and isfile(path):
             with codecs.open(path, 'rb', 'UTF-8') as file:
                 data = file.read()
             inmakefile = bool(pattern.findall(data))
@@ -866,7 +866,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
 
         Emit the contents of the tests Makefile. Returns str and a bool variable
         which shows if subdirectories are used.
-        GLConfig: localpath, modules, libname, auxdir, makefile, libtool,
+        GLConfig: localpath, modules, libname, auxdir, makefile_name, libtool,
         sourcebase, m4base, testsbase, macro_prefix, witness_c_macro,
         single_configure, libtests.
 
@@ -901,7 +901,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         m4base = self.config['m4base']
         pobase = self.config['pobase']
         testsbase = self.config['testsbase']
-        makefile = self.config['makefile']
+        makefile_name = self.config['makefile_name']
         libtool = self.config['libtool']
         macro_prefix = self.config['macro_prefix']
         podomain = self.config['podomain']

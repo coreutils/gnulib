@@ -56,7 +56,7 @@ class GLConfig(object):
                  sourcebase=None, m4base=None, pobase=None, docbase=None, testsbase=None,
                  modules=None, avoids=None, files=None,
                  incl_test_categories=None, excl_test_categories=None, libname=None,
-                 lgpl=None, makefile=None, libtool=None, conddeps=None, macro_prefix=None,
+                 lgpl=None, makefile_name=None, libtool=None, conddeps=None, macro_prefix=None,
                  podomain=None, witness_c_macro=None, vc_files=None, symbolic=None,
                  lsymbolic=None, configure_ac=None, ac_version=None,
                  libtests=None, single_configure=None, verbose=None, dryrun=None,
@@ -130,10 +130,10 @@ class GLConfig(object):
         self.resetLGPL()
         if lgpl != None:
             self.setLGPL(lgpl)
-        # makefile
-        self.resetMakefile()
-        if makefile != None:
-            self.setMakefile(makefile)
+        # makefile_name
+        self.resetMakefileName()
+        if makefile_name != None:
+            self.setMakefileName(makefile_name)
         # libtool
         self.resetLibtool()
         if libtool != None:
@@ -671,7 +671,7 @@ class GLConfig(object):
 
     def setInclTestCategory(self, category, enable):
         '''Enable or disable the given test category.'''
-        if (enable):
+        if enable:
             self.enableInclTestCategory(category)
         else:
             self.disableInclTestCategory(category)
@@ -855,26 +855,26 @@ class GLConfig(object):
         include_guard_prefix = 'GL'
         self.table['include_guard_prefix'] = include_guard_prefix
 
-    # Define makefile methods.
-    def getMakefile(self):
+    # Define makefile_name methods.
+    def getMakefileName(self):
         '''Return the name of makefile in automake syntax in the source-base and
         tests-base directories. Default is 'Makefile.am'.'''
-        return self.table['makefile']
+        return self.table['makefile_name']
 
-    def setMakefile(self, makefile):
+    def setMakefileName(self, makefile_name):
         '''Specify the name of makefile in automake syntax in the source-base and
         tests-base directories. Default is 'Makefile.am'.'''
-        if type(makefile) is str:
-            if makefile:
-                self.table['makefile'] = makefile
-        else:  # if type of makefile is not str
-            raise TypeError('makefile must be a string, not %s'
-                            % type(makefile).__name__)
+        if type(makefile_name) is str:
+            if makefile_name:
+                self.table['makefile_name'] = makefile_name
+        else:  # if type of makefile_name is not str
+            raise TypeError('makefile_name must be a string, not %s'
+                            % type(makefile_name).__name__)
 
-    def resetMakefile(self):
+    def resetMakefileName(self):
         '''Reset the name of makefile in automake syntax in the source-base and
         tests-base directories. Default is 'Makefile.am'.'''
-        self.table['makefile'] = ''
+        self.table['makefile_name'] = ''
 
     # Define podomain methods.
     def getPoDomain(self):

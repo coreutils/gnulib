@@ -173,7 +173,6 @@ class GLFileAssistant(object):
         self.original = None
         self.rewritten = None
         self.added = list()
-        self.makefile = list()
         self.config = config
         self.transformers = transformers
         self.filesystem = GLFileSystem(self.config)
