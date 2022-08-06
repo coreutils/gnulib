@@ -379,6 +379,11 @@ def main():
                         dest='macro_prefix',
                         default=None,
                         nargs=1)
+    # po-domain
+    parser.add_argument('--po-domain',
+                        dest='podomain',
+                        default=None,
+                        nargs=1)
     # single-configure
     parser.add_argument('--single-configure',
                         dest='single_configure',
@@ -565,13 +570,23 @@ def main():
                  or cmdargs.excl_unportable_tests != None
                  or cmdargs.avoids != None or cmdargs.lgpl != None
                  or cmdargs.makefile_name != None
-                 or cmdargs.macro_prefix != None))):
+                 or cmdargs.macro_prefix != None or cmdargs.podomain != None))):
         message = '%s: *** ' % constants.APP['name']
         message += 'invalid options for --%s mode\n' % mode
         message += 'Try \'gnulib-tool --help\' for more information.\n'
         message += '%s: *** Stop.\n' % constants.APP['name']
         sys.stderr.write(message)
         sys.exit(1)
+    if cmdargs.pobase != None and cmdargs.podomain == None:
+        message = '%s: *** ' % constants.APP['name']
+        message += 'together with --po-base, you need to specify --po-domain\n'
+        message += 'Try \'gnulib-tool --help\' for more information.\n'
+        message += '%s: *** Stop.\n' % constants.APP['name']
+        sys.stderr.write(message)
+        sys.exit(1)
+    if cmdargs.pobase == None and cmdargs.podomain != None:
+        message = '%s: warning: --po-domain has no effect without a --po-base option\n' % constants.APP['name']
+        sys.stderr.write(message)
 
     # Determine specific settings.
     destdir = cmdargs.destdir
@@ -645,6 +660,9 @@ def main():
     macro_prefix = cmdargs.macro_prefix
     if macro_prefix != None:
         macro_prefix = macro_prefix[0]
+    podomain = cmdargs.podomain
+    if podomain != None:
+        podomain = podomain[0]
     avoids = cmdargs.avoids
     if avoids != None:
         avoids = [ module

@@ -42,10 +42,12 @@ __copyright__ = constants.__copyright__
 #===============================================================================
 # Define global constants
 #===============================================================================
+DIRS = constants.DIRS
 MODES = constants.MODES
 TESTS = constants.TESTS
 joinpath = constants.joinpath
 cleaner = constants.cleaner
+copyfile = constants.copyfile
 copyfile2 = constants.copyfile2
 movefile = constants.movefile
 isabs = os.path.isabs
@@ -1161,7 +1163,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                 tmpfile = self.assistant.tmpfilename(joinpath(pobase, file))
                 path = joinpath('build-aux', 'po', file)
                 lookedup, flag = filesystem.lookup(path)
-                movefile(lookedup, tmpfile)
+                copyfile(lookedup, tmpfile)
                 basename = joinpath(pobase, file)
                 filename, backup, flag = self.assistant.super_update(basename, tmpfile)
                 if flag == 1:
@@ -1227,7 +1229,8 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                 os.chdir(joinpath(destdir, pobase))
                 args = ['wget', '--no-verbose', '--mirror', '--level=1', '-nd', '-A.po', '-P', '.',
                         '%sgnulib/' % TP_URL]
-                sp.call(args, shell=True)
+                sp.call(args)
+                os.chdir(DIRS['cwd'])
             else:  # if self.config['dryrun']
                 print('Fetch gnulib PO files from %s' % TP_URL)
 
@@ -1236,8 +1239,8 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
             if not self.config['dryrun']:
                 tmpfile = self.assistant.tmpfilename(basename)
                 data = '# Set of available languages.\n'
-                files = [constants.subend('.po', '', file)
-                         for file in os.listdir(joinpath(destdir, pobase))]
+                files = [ constants.subend('.po', '', file)
+                          for file in os.listdir(joinpath(destdir, pobase)) ]
                 data += '\n'.join(files)
                 with codecs.open(tmpfile, 'wb', 'UTF-8') as file:
                     file.write(data)
