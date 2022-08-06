@@ -739,7 +739,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                         with codecs.open(srcpath, 'ab', 'UTF-8') as file:
                             file.write(destdata)
                     else:  # if self.config['dryrun']
-                        print('Updating %s (backup in %s)' % (srcpath, backupname))
+                        print('Update %s (backup in %s)' % (srcpath, backupname))
         else:  # if not isfile(srcpath)
             if dirs_added:
                 if not self.config['dryrun']:
