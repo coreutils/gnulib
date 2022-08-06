@@ -710,11 +710,11 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
             anchor = '/'
         else:
             anchor = ''
-        srcpath = joinpath(destdir, directory, ignore)
+        srcpath = joinpath(directory, ignore)
         backupname = '%s~' % srcpath
-        if isfile(srcpath):
+        if isfile(joinpath(destdir, srcpath)):
             if dirs_added or dirs_removed:
-                with codecs.open(srcpath, 'rb', 'UTF-8') as file:
+                with codecs.open(joinpath(destdir, srcpath), 'rb', 'UTF-8') as file:
                     srcdata = file.read()
                 dirs_ignore = sorted(set(srcdata.split('\n')))
                 dirs_ignore = [ line
@@ -734,13 +734,13 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                 if srcdata != destdata:
                     if not self.config['dryrun']:
                         print('Updating %s (backup in %s)' % (srcpath, backupname))
-                        copyfile2(srcpath, backupname)
+                        copyfile2(joinpath(destdir, srcpath), joinpath(destdir, backupname))
                         result = ''
-                        with codecs.open(srcpath, 'ab', 'UTF-8') as file:
+                        with codecs.open(joinpath(destdir, srcpath), 'ab', 'UTF-8') as file:
                             file.write(destdata)
                     else:  # if self.config['dryrun']
                         print('Update %s (backup in %s)' % (srcpath, backupname))
-        else:  # if not isfile(srcpath)
+        else:  # if not isfile(joinpath(destdir, srcpath))
             if dirs_added:
                 if not self.config['dryrun']:
                     print('Creating %s' % srcpath)
@@ -749,7 +749,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                                    for d in dirs_added ]
                     if ignore == '.cvsignore':
                         dirs_added = ['.deps', '.dirstamp'] + dirs_added
-                    with codecs.open(srcpath, 'wb', 'UTF-8') as file:
+                    with codecs.open(joinpath(destdir, srcpath), 'wb', 'UTF-8') as file:
                         file.write('\n'.join(dirs_added))
                         file.write('\n')
                 else:  # if self.config['dryrun']

@@ -6221,7 +6221,7 @@ s,//*$,/,'
             )
             if test -s "$tmp"/ignore-added || test -s "$tmp"/ignore-removed; then
               if $doit; then
-                echo "Updating $destdir/$dir$ignore (backup in $destdir/$dir${ignore}~)"
+                echo "Updating $dir$ignore (backup in $dir${ignore}~)"
                 mv -f "$destdir/$dir$ignore" "$destdir/$dir$ignore"~
                 { sed -e 's,/,\\/,g' -e 's,^,/^,' -e 's,$,\$/d,' < "$tmp"/ignore-removed
                   if test -n "$anchor"; then sed -e 's,/,\\/,g' -e "s,^,/^${doubly_escaped_anchor}," -e 's,$,$/d,' < "$tmp"/ignore-removed; fi
@@ -6231,14 +6231,14 @@ s,//*$,/,'
                 } | sed -f "$tmp"/sed-ignore-removed \
                   > "$destdir/$dir$ignore"
               else
-                echo "Update $destdir/$dir$ignore (backup in $destdir/$dir${ignore}~)"
+                echo "Update $dir$ignore (backup in $dir${ignore}~)"
               fi
             fi
           fi
         else
           if test -n "$dir_added"; then
             if $doit; then
-              echo "Creating $destdir/$dir$ignore"
+              echo "Creating $dir$ignore"
               {
                 if test "$ignore" = .cvsignore; then
                   echo ".deps"
@@ -6248,7 +6248,7 @@ s,//*$,/,'
                 echo "$dir_added" | sed -e '/^$/d' -e "s|^|$anchor|" | LC_ALL=C sort -u
               } > "$destdir/$dir$ignore"
             else
-              echo "Create $destdir/$dir$ignore"
+              echo "Create $dir$ignore"
             fi
           fi
         fi
