@@ -276,7 +276,7 @@ class GLConfig(object):
             elif key in ['libtool', 'lgpl', 'conddeps', 'symbolic', 'lsymbolic',
                          'libtests', 'dryrun']:
                 return False
-            if key == 'vc_files':
+            elif key == 'vc_files':
                 return None
             elif key == 'errors':
                 return True

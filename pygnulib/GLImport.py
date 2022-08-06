@@ -141,9 +141,6 @@ class GLImport(object):
             if 'gl_CONDITIONAL_DEPENDENCIES' in data:
                 self.cache.setCondDeps(True)
                 data = data.replace('gl_CONDITIONAL_DEPENDENCIES', '')
-            if 'gl_VC_FILES' in data:
-                self.cache.setVCFiles(True)
-                data = data.replace('gl_VC_FILES', '')
             if 'gl_WITH_TESTS' in data:
                 self.cache.enableInclTestCategory(TESTS['tests'])
                 data = data.replace('gl_WITH_TESTS', '')
@@ -202,6 +199,8 @@ class GLImport(object):
                 self.cache.setPoDomain(cleaner(tempdict['gl_PO_DOMAIN']))
             if tempdict['gl_WITNESS_C_MACRO']:
                 self.cache.setWitnessCMacro(cleaner(tempdict['gl_WITNESS_C_MACRO']))
+            if tempdict['gl_VC_FILES']:
+                self.cache.setVCFiles(cleaner(tempdict['gl_VC_FILES']))
 
             # Get cached filelist from gnulib-comp.m4.
             destdir, m4base = self.config.getDestDir(), self.config.getM4Base()
@@ -542,7 +541,7 @@ class GLImport(object):
         emit += 'gl_MACRO_PREFIX([%s])\n' % macro_prefix
         emit += 'gl_PO_DOMAIN([%s])\n' % podomain
         emit += 'gl_WITNESS_C_MACRO([%s])\n' % witness_c_macro
-        if vc_files:
+        if vc_files != None:
             emit += 'gl_VC_FILES([%s])\n' % vc_files
         return constants.nlconvert(emit)
 
@@ -1334,33 +1333,34 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
             if isfile(tmpfile):
                 os.remove(tmpfile)
 
-        # Update the .cvsignore and .gitignore files.
-        ignorelist = list()
-        filetable['added'] = sorted(set(filetable['added']))
-        filetable['removed'] = sorted(set(filetable['added']))
-        for file in filetable['added']:
-            directory, basename = os.path.split(file)
-            ignorelist += [tuple([directory, '|A|', basename])]
-        for file in filetable['removed']:
-            directory, basename = os.path.split(file)
-            ignorelist += [tuple([directory, '|R|', basename])]
-        last_dir = ''
-        last_dirs_added = list()
-        last_dirs_removed = list()
-        for row in ignorelist:
-            next_dir = row[0]
-            operand = row[1]
-            filename = row[2]
-            if next_dir != last_dir:
-                self._done_dir_(last_dir, last_dirs_added, last_dirs_removed)
-                last_dir = next_dir
-                last_dirs_added = list()
-                last_dirs_removed = list()
-            if operand == '|A|':
-                last_dirs_added += [filename]
-            elif operand == '|R|':
-                last_dirs_removed += [filename]
-        self._done_dir_(last_dir, last_dirs_added, last_dirs_removed)
+        if vc_files != False:
+            # Update the .cvsignore and .gitignore files.
+            ignorelist = list()
+            filetable['added'] = sorted(set(filetable['added']))
+            filetable['removed'] = sorted(set(filetable['added']))
+            for file in filetable['added']:
+                directory, basename = os.path.split(file)
+                ignorelist += [tuple([directory, '|A|', basename])]
+            for file in filetable['removed']:
+                directory, basename = os.path.split(file)
+                ignorelist += [tuple([directory, '|R|', basename])]
+            last_dir = ''
+            last_dirs_added = list()
+            last_dirs_removed = list()
+            for row in ignorelist:
+                next_dir = row[0]
+                operand = row[1]
+                filename = row[2]
+                if next_dir != last_dir:
+                    self._done_dir_(last_dir, last_dirs_added, last_dirs_removed)
+                    last_dir = next_dir
+                    last_dirs_added = list()
+                    last_dirs_removed = list()
+                if operand == '|A|':
+                    last_dirs_added += [filename]
+                elif operand == '|R|':
+                    last_dirs_removed += [filename]
+            self._done_dir_(last_dir, last_dirs_added, last_dirs_removed)
         exit()
 
         # Finish the work.

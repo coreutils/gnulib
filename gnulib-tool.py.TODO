@@ -29,13 +29,13 @@ Implement the options:
   --gnu-make
   --tests-makefile-name
   --automake-subdir
-  --vc-files
-  --no-vc-files
   -h | --hardlink
   --local-hardlink
   -S | --more-symlinks
   -H | --more-hardlinks
   --help (same output)
+
+Remove exit() in GLImport.py.
 
 --------------------------------------------------------------------------------
 

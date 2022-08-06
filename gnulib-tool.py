@@ -363,6 +363,15 @@ def main():
                         dest='witness_c_macro',
                         default=None,
                         nargs=1)
+    # vc-files
+    parser.add_argument('--vc-files',
+                        dest='vc_files',
+                        default=None,
+                        action='store_true')
+    parser.add_argument('--no-vc-files',
+                        dest='vc_files',
+                        default=None,
+                        action='store_false')
     # single-configure
     parser.add_argument('--single-configure',
                         dest='single_configure',
@@ -553,7 +562,7 @@ def main():
                  or cmdargs.avoids != None or cmdargs.lgpl != None
                  or cmdargs.makefile_name != None
                  or cmdargs.macro_prefix != None or cmdargs.podomain != None
-                 or cmdargs.witness_c_macro != None))):
+                 or cmdargs.witness_c_macro != None or cmdargs.vc_files != None))):
         message = '%s: *** ' % constants.APP['name']
         message += 'invalid options for --%s mode\n' % mode
         message += 'Try \'gnulib-tool --help\' for more information.\n'
@@ -649,6 +658,7 @@ def main():
     witness_c_macro = cmdargs.witness_c_macro
     if witness_c_macro != None:
         witness_c_macro = witness_c_macro[0]
+    vc_files = cmdargs.vc_files
     avoids = cmdargs.avoids
     if avoids != None:
         avoids = [ module
@@ -659,7 +669,6 @@ def main():
     single_configure = cmdargs.single_configure
     docbase = None
     conddeps = None
-    vc_files = None
 
     # Create pygnulib configuration.
     config = classes.GLConfig(
