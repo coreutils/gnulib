@@ -358,6 +358,11 @@ def main():
                         dest='podomain',
                         default=None,
                         nargs=1)
+    # witness-c-macro
+    parser.add_argument('--witness-c-macro',
+                        dest='witness_c_macro',
+                        default=None,
+                        nargs=1)
     # single-configure
     parser.add_argument('--single-configure',
                         dest='single_configure',
@@ -547,7 +552,8 @@ def main():
                  or cmdargs.excl_unportable_tests != None
                  or cmdargs.avoids != None or cmdargs.lgpl != None
                  or cmdargs.makefile_name != None
-                 or cmdargs.macro_prefix != None or cmdargs.podomain != None))):
+                 or cmdargs.macro_prefix != None or cmdargs.podomain != None
+                 or cmdargs.witness_c_macro != None))):
         message = '%s: *** ' % constants.APP['name']
         message += 'invalid options for --%s mode\n' % mode
         message += 'Try \'gnulib-tool --help\' for more information.\n'
@@ -640,6 +646,9 @@ def main():
     podomain = cmdargs.podomain
     if podomain != None:
         podomain = podomain[0]
+    witness_c_macro = cmdargs.witness_c_macro
+    if witness_c_macro != None:
+        witness_c_macro = witness_c_macro[0]
     avoids = cmdargs.avoids
     if avoids != None:
         avoids = [ module
@@ -650,7 +659,6 @@ def main():
     single_configure = cmdargs.single_configure
     docbase = None
     conddeps = None
-    witness_c_macro = None
     vc_files = None
 
     # Create pygnulib configuration.

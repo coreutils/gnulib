@@ -153,14 +153,7 @@ class GLConfig(object):
         # witness_c_macro
         self.resetWitnessCMacro()
         if witness_c_macro != None:
-            if type(witness_c_macro) is bool:
-                if not witness_c_macro:
-                    self.setWitnessCMacro()
-                else:  # if witness_c_macro
-                    self.resetWitnessCMacro()
-            else:  # if type(witness_c_macro) is not bool
-                raise TypeError('witness_c_macro must be a bool, not %s'
-                                % type(witness_c_macro).__name__)
+            self.setWitnessCMacro(witness_c_macro)
         # vc_files
         self.resetVCFiles()
         if vc_files != None:
