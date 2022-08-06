@@ -29,7 +29,6 @@ Implement the options:
   --gnu-make
   --tests-makefile-name
   --automake-subdir
-  --macro-prefix
   --po-domain
   --witness-c-macro
   --vc-files
