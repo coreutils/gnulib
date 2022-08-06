@@ -67,32 +67,6 @@ isfile = os.path.isfile
 # Define main part
 #===============================================================================
 def main():
-    # Reset arguments
-    mode = None
-    destdir = None
-    localpath = None
-    verbose = None
-    auxdir = None
-    modules = None
-    avoids = None
-    sourcebase = None
-    m4base = None
-    pobase = None
-    docbase = None
-    testsbase = None
-    tests = None
-    libname = None
-    lgpl = None
-    makefile_name = None
-    libtool = None
-    conddeps = None
-    macro_prefix = None
-    podomain = None
-    witness_c_macro = None
-    vc_files = None
-    dryrun = None
-    errors = None
-
     info = classes.GLInfo()
     parser = argparse.ArgumentParser(
         prog=constants.APP['name'],
@@ -467,6 +441,9 @@ def main():
         sys.exit(1)
 
     # Determine selected mode.
+    mode = None
+    modules = None
+    files = None
     if cmdargs.mode_list != None:
         mode = 'list'
     if cmdargs.mode_import != None:
@@ -671,6 +648,10 @@ def main():
     symlink = cmdargs.symlink == True
     lsymlink = cmdargs.lsymlink == True
     single_configure = cmdargs.single_configure
+    docbase = None
+    conddeps = None
+    witness_c_macro = None
+    vc_files = None
 
     # Create pygnulib configuration.
     config = classes.GLConfig(
