@@ -180,6 +180,10 @@ def main():
                         dest='mode_xmaintainer',
                         default=None,
                         action='store_true')
+    parser.add_argument('--extract-tests-module',
+                        dest='mode_xtests',
+                        default=None,
+                        action='store_true')
     # copy-file
     parser.add_argument('--copy-file',
                         dest='mode_copy_file',
@@ -446,6 +450,7 @@ def main():
         cmdargs.mode_xlink,
         cmdargs.mode_xlicense,
         cmdargs.mode_xmaintainer,
+        cmdargs.mode_xtests,
         cmdargs.mode_copy_file,
     ]
     overflow = [ arg
@@ -534,6 +539,9 @@ def main():
         modules = list(cmdargs.non_option_arguments)
     if cmdargs.mode_xmaintainer != None:
         mode = 'extract-maintainer'
+        modules = list(cmdargs.non_option_arguments)
+    if cmdargs.mode_xtests != None:
+        mode = 'extract-tests-module'
         modules = list(cmdargs.non_option_arguments)
     if cmdargs.mode_copy_file != None:
         mode = 'copy-file'
