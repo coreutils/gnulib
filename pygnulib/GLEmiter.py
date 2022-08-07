@@ -750,7 +750,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
             #  * https://debbugs.gnu.org/10997
             #  * https://debbugs.gnu.org/11030
             # So we need this workaround.
-            pattern = re.compile('^pkgdata_DATA *\\+=', re.S | re.M)
+            pattern = re.compile('^pkgdata_DATA *\\+=', re.M)
             if pattern.findall(allsnippets):
                 emit += 'pkgdata_DATA =\n'
             emit += 'EXTRA_DIST =\n'
@@ -1032,7 +1032,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         #  * https://debbugs.gnu.org/10997
         #  * https://debbugs.gnu.org/11030
         # So we need this workaround.
-        pattern = re.compile('^pkgdata_DATA *\\+=', re.S | re.M)
+        pattern = re.compile('^pkgdata_DATA *\\+=', re.M)
         if bool(pattern.findall(main_snippets)) or bool(pattern.findall(longrun_snippets)):
             emit += 'pkgdata_DATA =\n'
 

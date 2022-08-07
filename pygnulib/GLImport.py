@@ -100,7 +100,7 @@ class GLImport(object):
         if match:
             result = cleaner(match)[0]
             self.cache.setAuxDir(joinpath(self.config['destdir'], result))
-        pattern = re.compile(r'A[CM]_PROG_LIBTOOL', re.S | re.M)
+        pattern = re.compile(r'A[CM]_PROG_LIBTOOL', re.M)
         guessed_libtool = bool(pattern.findall(data))
         if self.config['auxdir'] == None:
             self.config.setAuxDir(self.cache['auxdir'])
@@ -1439,9 +1439,9 @@ in <library>_a_LDFLAGS or <library>_la_LDFLAGS when linking a library.''')
         with codecs.open(configure_ac, 'rb', 'UTF-8') as file:
             data = file.read()
         match_result1 = \
-            bool(re.compile('^ *AC_PROG_CC_STDC', re.S | re.M).findall(data))
+            bool(re.compile('^ *AC_PROG_CC_STDC', re.M).findall(data))
         match_result2 = \
-            bool(re.compile('^ *AC_PROG_CC_C99', re.S | re.M).findall(data))
+            bool(re.compile('^ *AC_PROG_CC_C99', re.M).findall(data))
         if match_result1:
             position_early_after = 'AC_PROG_CC_STDC'
         elif match_result2:
