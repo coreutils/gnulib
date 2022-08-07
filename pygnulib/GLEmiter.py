@@ -174,7 +174,7 @@ class GLEmiter(object):
             else:
                 # Don't indent AM_GNU_GETTEXT_VERSION line, as that confuses
                 # autopoint through at least GNU gettext version 0.18.2.
-                snippet = re.compile('^ *AM_GNU_GETTEXT_VERSION').sub('AM_GNU_GETTEXT_VERSION', snippet)
+                snippet = re.compile('^ *AM_GNU_GETTEXT_VERSION', re.M).sub('AM_GNU_GETTEXT_VERSION', snippet)
             emit += snippet
             if str(module) == 'alloca' and libtool and not disable_libtool:
                 emit += 'changequote(,)dnl\n'

@@ -1041,7 +1041,7 @@ class GLModuleTable(object):
                     if self.config['conddeps']:
                         automake_snippet = \
                             module.getAutomakeSnippet_Conditional()
-                        pattern = re.compile('^if')
+                        pattern = re.compile('^if', re.M)
                         if not pattern.findall(automake_snippet):
                             self.addUnconditional(module)
                         conditional = self.isConditional(module)
