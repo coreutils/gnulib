@@ -309,9 +309,7 @@ class GLEmiter(object):
                         emit += self.autoconfSnippet(module, fileassistant, toplevel,
                                                      disable_libtool, disable_gettext, replace_auxdir, '      ')
                         emit += '      %s=true\n' % shellvar
-                        dependencies = module.getDependencies()
-                        depmodules = [ pair[0]
-                                       for pair in dependencies ]
+                        depmodules = module.getDependenciesWithoutConditions()
                         # Intersect dependencies with the modules list.
                         depmodules = [ dep
                                        for dep in depmodules

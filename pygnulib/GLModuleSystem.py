@@ -452,32 +452,73 @@ class GLModule(object):
         return self.cache['files']
 
     def getDependencies(self):
-        '''GLModule.getDependencies() -> list
+        '''GLModule.getDependencies() -> str
 
-        Return list of dependencies.
+        Return list of dependencies, as a snippet.
         GLConfig: localpath.'''
         if 'dependencies' not in self.cache:
+            result = ''
+            # ${module}-tests implicitly depends on ${module}, if that module exists.
+            if self.isTests():
+                main_module = subend('-tests', '', self.getName())
+                if self.modulesystem.exists(main_module):
+                    result += '%s\n' % main_module
+            # Then the explicit dependencies listed in the module description.
             snippet = self.sections.get('Depends-on', '')
-            modules = [ line.strip()
-                        for line in snippet.split('\n')
-                        if line.strip() ]
-            modules = [ module
-                        for module in modules
-                        if not module.startswith('#') ]
-            result = list()
-            for line in modules:
-                split = [ part
-                          for part in line.split(' ')
-                          if part.strip() ]
-                if len(split) == 1:
-                    module = line.strip()
-                    condition = None
-                else:  # if len(split) != 1
-                    module = split[0]
-                    condition = split[1]
-                result += [tuple([self.modulesystem.find(module), condition])]
+            # Remove comment lines.
+            snippet = re.compile('^#.*$[\n]', re.M).sub('', snippet)
+            result += snippet
             self.cache['dependencies'] = result
         return self.cache['dependencies']
+
+    def getDependenciesWithoutConditions(self):
+        '''GLModule.getDependenciesWithoutConditions() -> list
+
+        Return list of dependencies, as a list of GLModule objects.
+        GLConfig: localpath.'''
+        if 'dependenciesWithoutCond' not in self.cache:
+            snippet = self.getDependencies()
+            lines = [ line.strip()
+                      for line in snippet.split('\n')
+                      if line.strip() ]
+            pattern = re.compile(' *\\[.*$')
+            lines = [ pattern.sub('', line)
+                      for line in lines ]
+            result = [ self.modulesystem.find(module)
+                       for module in lines
+                       if module != '' ]
+            self.cache['dependenciesWithoutCond'] = result
+        return self.cache['dependenciesWithoutCond']
+
+    def getDependenciesWithConditions(self):
+        '''GLModule.getDependenciesWithConditions() -> list
+
+        Return list of dependencies, as a list of pairs (GLModule object, condition).
+        The "true" condition is denoted by None.
+        GLConfig: localpath.'''
+
+        if 'dependenciesWithCond' not in self.cache:
+            snippet = self.getDependencies()
+            lines = [ line.strip()
+                      for line in snippet.split('\n')
+                      if line.strip() ]
+            pattern = re.compile(' *\\[')
+            result = []
+            for line in lines:
+                match = pattern.search(line)
+                if match:
+                    module = line[0 : match.start()]
+                    condition = line[match.end() :]
+                    condition = subend(']', '', condition)
+                else:
+                    module = line
+                    condition = None
+                if module != '':
+                    if condition == 'true':
+                        condition = None
+                    result.append(tuple([self.modulesystem.find(module), condition]))
+            self.cache['dependenciesWithCond'] = result
+        return self.cache['dependenciesWithCond']
 
     def getAutoconfEarlySnippet(self):
         '''GLModule.getAutoconfEarlySnippet() -> str
@@ -798,7 +839,7 @@ class GLModuleTable(object):
                         if not pattern.findall(automake_snippet):
                             self.addUnconditional(module)
                         conditional = self.isConditional(module)
-                    dependencies = module.getDependencies()
+                    dependencies = module.getDependenciesWithConditions()
                     depmodules = [ pair[0]
                                    for pair in dependencies ]
                     conditions = [ pair[1]

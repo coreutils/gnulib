@@ -1013,7 +1013,6 @@ def main():
             print('\n'.join(files))
 
     elif mode == 'extract-dependencies':
-        result = ''
         if avoids:
             message = '%s: *** ' % constants.APP['name']
             message += 'cannot combine --avoid and --extract-dependencies\n'
@@ -1024,14 +1023,7 @@ def main():
         modules = [ modulesystem.find(module)
                     for module in modules ]
         for module in modules:
-            dependencies = module.getDependencies()
-            if dependencies:
-                for depmodule, condition in dependencies:
-                    if condition == None:
-                        result += '%s\n' % str(depmodule)
-                    else:  # if condition != None
-                        result += '%s\t%s' % (str(depmodule), condition)
-        print(result)
+            sys.stdout.write(module.getDependencies())
 
     elif mode == 'extract-autoconf-snippet':
         modulesystem = classes.GLModuleSystem(config)
