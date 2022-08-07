@@ -7162,6 +7162,12 @@ case $mode in
 s/\[/\\[/g
 s/\^/\\^/g
 s/\([.*$]\)/[\1]/g'
+    # func_prefixed_modules_in_dir dir
+    # outputs all module files in dir to standard output, with dir as prefix.
+    func_prefixed_modules_in_dir ()
+    {
+      (test -d "$1" && cd "$1" && find modules -type f -print | sed -e "s|^|$1/|")
+    }
     for filename
     do
       if test -f "$gnulib_dir/$filename" \
@@ -7171,7 +7177,7 @@ s/\([.*$]\)/[\1]/g'
         module_candidates=`
           {
             (cd "$gnulib_dir" && find modules -type f -print | xargs -n 100 grep -l "$filename_line_regex" /dev/null | sed -e 's,^modules/,,')
-            func_path_foreach "$local_gnulib_path" func_modules_in_dir %dir% | xargs -n 100 grep -l "$filename_anywhere_regex" /dev/null | sed -e 's,^modules/,,' -e 's,\.diff$,,'
+            func_path_foreach "$local_gnulib_path" func_prefixed_modules_in_dir %dir% | xargs -n 100 grep -l "$filename_anywhere_regex" /dev/null | sed -e 's,^.*/modules/,,' -e 's,\.diff$,,'
           } \
             | func_sanitize_modulelist \
             | LC_ALL=C sort -u
