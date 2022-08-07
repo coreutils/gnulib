@@ -299,7 +299,7 @@ class GLTestDir(object):
                 notice = module.getNotice()
                 if notice:
                     print('Notice from module %s:' % str(module))
-                    pattern = re.compile('^(.*?)$', re.S | re.M)
+                    pattern = re.compile('^(.*)$', re.M)
                     notice = pattern.sub('  \\1', notice)
                     print(notice)
         else:  # if not single_configure
@@ -307,7 +307,7 @@ class GLTestDir(object):
                 notice = module.getNotice()
                 if notice:
                     print('Notice from module %s:' % str(module))
-                    pattern = re.compile('^(.*?)$', re.S | re.M)
+                    pattern = re.compile('^(.*)$', re.M)
                     notice = pattern.sub('  \\1', notice)
                     print(notice)
 
@@ -461,7 +461,7 @@ class GLTestDir(object):
                                   for line in snippet.split('\n')
                                   if line.strip() ]
                         snippet = '\n'.join(lines)
-                        pattern = re.compile('AC_REQUIRE\\(\\[([^()].*?)\\]\\)', re.S | re.M)
+                        pattern = re.compile('AC_REQUIRE\\(\\[([^()].*)\\]\\)', re.M)
                         snippet = pattern.sub('\\1', snippet)
                         snippet = snippet.strip()
                         snippets += [snippet]
@@ -578,7 +578,7 @@ class GLTestDir(object):
                           for line in snippet.split('\n')
                           if line.strip() ]
                 snippet = '\n'.join(lines)
-                pattern = re.compile('AC_REQUIRE\\(\\[([^()].*?)\\]\\)', re.S | re.M)
+                pattern = re.compile('AC_REQUIRE\\(\\[([^()].*)\\]\\)', re.M)
                 snippet = pattern.sub('\\1', snippet)
                 snippet = snippet.strip()
                 snippets += [snippet]
@@ -749,9 +749,9 @@ class GLTestDir(object):
 
         # Extract the value of "CLEANFILES += ..." and "MOSTLYCLEANFILES += ...".
         regex_find = list()
-        pattern = re.compile('^CLEANFILES[\t ]*\\+=(.*?)$', re.S | re.M)
+        pattern = re.compile('^CLEANFILES[\t ]*\\+=(.*)$', re.M)
         regex_find += pattern.findall(snippet)
-        pattern = re.compile('^MOSTLYCLEANFILES[\t ]*\\+=(.*?)$', re.S | re.M)
+        pattern = re.compile('^MOSTLYCLEANFILES[\t ]*\\+=(.*)$', re.M)
         regex_find += pattern.findall(snippet)
         regex_find = [ line.strip()
                        for line in regex_find
@@ -765,7 +765,7 @@ class GLTestDir(object):
         # Extract the value of "BUILT_SOURCES += ...". Remove variable references
         # such $(FOO_H) because they don't refer to distributed files.
         regex_find = list()
-        pattern = re.compile('^BUILT_SOURCES[\t ]*\\+=(.*?)$', re.S | re.M)
+        pattern = re.compile('^BUILT_SOURCES[\t ]*\\+=(.*)$', re.M)
         regex_find += pattern.findall(snippet)
         regex_find = [ line.strip()
                        for line in regex_find
@@ -791,9 +791,9 @@ class GLTestDir(object):
 
             # Extract the value of "CLEANFILES += ..." and "MOSTLYCLEANFILES += ...".
             regex_find = list()
-            pattern = re.compile('^CLEANFILES[\t ]*\\+=(.*?)$', re.S | re.M)
+            pattern = re.compile('^CLEANFILES[\t ]*\\+=(.*)$', re.M)
             regex_find += pattern.findall(snippet)
-            pattern = re.compile('^MOSTLYCLEANFILES[\t ]*\\+=(.*?)$', re.S | re.M)
+            pattern = re.compile('^MOSTLYCLEANFILES[\t ]*\\+=(.*)$', re.M)
             regex_find += pattern.findall(snippet)
             regex_find = [ line.strip()
                            for line in regex_find
@@ -808,7 +808,7 @@ class GLTestDir(object):
             # such $(FOO_H) because they don't refer to distributed files.
             regex_find = list()
             tests_built_sources = list()
-            pattern = re.compile('^BUILT_SOURCES[\t ]*\\+=(.*?)$', re.S | re.M)
+            pattern = re.compile('^BUILT_SOURCES[\t ]*\\+=(.*)$', re.M)
             regex_find += pattern.findall(snippet)
             regex_find = [ line.strip()
                            for line in regex_find

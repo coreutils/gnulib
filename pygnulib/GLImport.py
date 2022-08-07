@@ -95,7 +95,7 @@ class GLImport(object):
         self.config.setAutoconfFile(path)
         with codecs.open(path, 'rb', 'UTF-8') as file:
             data = file.read()
-        pattern = re.compile(r'^AC_CONFIG_AUX_DIR\((.*?)\)$', re.S | re.M)
+        pattern = re.compile(r'^AC_CONFIG_AUX_DIR\((.*)\)$', re.M)
         match = pattern.findall(data)
         if match:
             result = cleaner(match)[0]
@@ -106,7 +106,7 @@ class GLImport(object):
             self.config.setAuxDir(self.cache['auxdir'])
 
         # Guess autoconf version.
-        pattern = re.compile(r'.*AC_PREREQ\((.*?)\)', re.S | re.M)
+        pattern = re.compile(r'.*AC_PREREQ\((.*)\)', re.M)
         versions = cleaner(pattern.findall(data))
         if versions:
             version = sorted(set([ float(version)

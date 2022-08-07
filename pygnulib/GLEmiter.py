@@ -153,7 +153,7 @@ class GLEmiter(object):
                       if line.strip() ]
             snippet = '%s\n' % '\n'.join(lines)
             transformer = fileassistant.transformers.get('aux', '')
-            pattern = re.compile('(^.*?$)', re.S | re.M)
+            pattern = re.compile('^(.*)$', re.M)
             snippet = pattern.sub('%s\\1' % indentation, snippet)
             if transformer:
                 args = ['sed', '-e', transformer]
@@ -182,9 +182,9 @@ class GLEmiter(object):
                 emit += 'changequote([, ])dnl\n'
                 emit += 'AC_SUBST([LTALLOCA])'
         if replace_auxdir:
-            regex = 'AC_CONFIG_FILES\\(\\[(.*?)\\:build-aux/(.*?)\\]\\)'
+            regex = 'AC_CONFIG_FILES\\(\\[(.*)\\:build-aux/(.*)\\]\\)'
             repl = 'AC_CONFIG_FILES([\\1:%s/\\2])' % auxdir
-            pattern = re.compile(regex, re.S | re.M)
+            pattern = re.compile(regex, re.M)
             emit = pattern.sub(repl, emit)
         lines = [ line
                   for line in emit.split('\n')
@@ -688,9 +688,9 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                 amsnippet1 = amsnippet1.replace('lib_LIBRARIES', 'lib%_LIBRARIES')
                 amsnippet1 = amsnippet1.replace('lib_LTLIBRARIES', 'lib%_LTLIBRARIES')
                 if LD_flags:
-                    pattern = re.compile('lib_LDFLAGS[\t ]*\\+=(.*?)$', re.S | re.M)
+                    pattern = re.compile('lib_LDFLAGS[\t ]*\\+=(.*)$', re.M)
                     amsnippet1 = pattern.sub('', amsnippet1)
-                pattern = re.compile('lib_([A-Z][A-Z](?:.*?))', re.S | re.M)
+                pattern = re.compile('lib_([A-Z][A-Z](?:.*))', re.M)
                 amsnippet1 = pattern.sub('%s_%s_\\1' % (libname, libext),
                                          amsnippet1)
                 amsnippet1 = amsnippet1.replace('$(GNULIB_', '$(' + module_indicator_prefix + '_GNULIB_')
@@ -708,7 +708,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
 
                 # Get unconditional snippet, edit it and save to amsnippet2.
                 amsnippet2 = module.getAutomakeSnippet_Unconditional()
-                pattern = re.compile('lib_([A-Z][A-Z](?:.*?))', re.S | re.M)
+                pattern = re.compile('lib_([A-Z][A-Z](?:.*))', re.M)
                 amsnippet2 = pattern.sub('%s_%s_\\1' % (libname, libext),
                                          amsnippet2)
                 amsnippet2 = amsnippet2.replace('$(GNULIB_',
@@ -802,7 +802,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         insnippets = False
         inmakefile = False
         regex = '^[a-zA-Z0-9_]*_%sLIBRARIES *\\+{0,1}= *%s.%s' % (perhapsLT, libname, libext)
-        pattern = re.compile(regex, re.S | re.M)
+        pattern = re.compile(regex, re.M)
         insnippets = bool(pattern.findall(allsnippets))
         # Then test if $sourcebase/Makefile.am (if it exists) specifies it.
         path = joinpath(sourcebase, 'Makefile.am')
@@ -955,9 +955,9 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                 snippet = snippet.replace('lib_LIBRARIES', 'lib%_LIBRARIES')
                 snippet = snippet.replace('lib_LTLIBRARIES', 'lib%_LTLIBRARIES')
                 if LD_flags:
-                    pattern = re.compile('lib_LDFLAGS[\t ]*\\+=(.*?)$', re.S | re.M)
+                    pattern = re.compile('lib_LDFLAGS[\t ]*\\+=(.*)$', re.M)
                     snippet = pattern.sub('', snippet)
-                pattern = re.compile('lib_([A-Z][A-Z](?:.*?))', re.S | re.M)
+                pattern = re.compile('lib_([A-Z][A-Z](?:.*))', re.M)
                 snippet = pattern.sub('libtests_a_\\1', snippet)
                 snippet = snippet.replace('$(GNULIB_', '$(' + module_indicator_prefix + '_GNULIB_')
                 snippet = snippet.replace('lib%_LIBRARIES', 'lib_LIBRARIES')

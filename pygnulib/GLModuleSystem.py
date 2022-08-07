@@ -705,7 +705,7 @@ Include:|Link:|License:|Maintainer:)'
                 # TODO: unconditional automake snippet for nontests modules
                 snippet = self.getAutomakeSnippet_Conditional()
                 snippet = constants.combine_lines(snippet)
-                pattern = re.compile('^lib_SOURCES[\t ]*\\+=[\t ]*(.*?)$', re.S | re.M)
+                pattern = re.compile('^lib_SOURCES[\t ]*\\+=[\t ]*(.*)$', re.M)
                 mentioned_files = pattern.findall(snippet)
                 if mentioned_files != list():
                     mentioned_files = mentioned_files[-1].split(' ')
@@ -780,7 +780,7 @@ Include:|Link:|License:|Maintainer:)'
                     parts += [line]
                 result = ''.join(parts)
             result = result.strip()
-            pattern = re.compile('^(["<].*?[>"])', re.S | re.M)
+            pattern = re.compile('^(["<].*[>"])', re.M)
             result = pattern.sub('#include \\1', result)
             self.cache['include'] = result
         return self.cache['include']
@@ -1164,7 +1164,7 @@ class GLModuleTable(object):
                 raise TypeError('each module must be a GLModule instance')
             snippet = module.getAutomakeSnippet()
             snippet = constants.remove_backslash_newline(snippet)
-            pattern = re.compile('^lib_SOURCES[\t ]*\\+=[\t ]*(.*?)$', re.S | re.M)
+            pattern = re.compile('^lib_SOURCES[\t ]*\\+=[\t ]*(.*)$', re.M)
             files = pattern.findall(snippet)
             if files:  # if source files were found
                 files = files[-1].split(' ')
