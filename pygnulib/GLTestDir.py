@@ -456,7 +456,7 @@ class GLTestDir(object):
                         pass
                     # if str(module) not in ['gnumakefile', 'maintainer-makefile']
                     else:
-                        snippet = module.getAutoconfSnippet_Early()
+                        snippet = module.getAutoconfEarlySnippet()
                         lines = [ line
                                   for line in snippet.split('\n')
                                   if line.strip() ]
@@ -573,7 +573,7 @@ class GLTestDir(object):
             else:  # if not single_configure
                 solution = module.isNonTests()
             if solution:
-                snippet = module.getAutoconfSnippet_Early()
+                snippet = module.getAutoconfEarlySnippet()
                 lines = [ line
                           for line in snippet.split('\n')
                           if line.strip() ]

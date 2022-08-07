@@ -606,7 +606,7 @@ AC_DEFUN([%s_EARLY],
             emit += '  AC_REQUIRE([AM_PROG_CC_C_O])\n'
         for module in moduletable['final']:
             emit += '  # Code from module %s:\n' % str(module)
-            snippet = module.getAutoconfSnippet_Early()
+            snippet = module.getAutoconfEarlySnippet()
             lines = [ line
                       for line in snippet.split(constants.NL)
                       if line != '' ]

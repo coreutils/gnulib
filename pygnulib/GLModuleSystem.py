@@ -479,8 +479,8 @@ class GLModule(object):
             self.cache['dependencies'] = result
         return self.cache['dependencies']
 
-    def getAutoconfSnippet_Early(self):
-        '''GLModule.getAutoconfSnippet_Early() -> str
+    def getAutoconfEarlySnippet(self):
+        '''GLModule.getAutoconfEarlySnippet() -> str
 
         Return autoconf-early snippet.'''
         return self.sections.get('configure.ac-early', '')
