@@ -210,7 +210,7 @@ Include:|Link:|License:|Maintainer:)'
         self.filesystem = GLFileSystem(self.config)
         self.modulesystem = GLModuleSystem(self.config)
         with codecs.open(module, 'rb', 'UTF-8') as file:
-            self.content = file.read()
+            self.content = file.read().replace('\r\n', '\n')
 
     def __eq__(self, module):
         '''x.__eq__(y) <==> x==y'''
@@ -428,7 +428,6 @@ Include:|Link:|License:|Maintainer:)'
                 result = ''
             else:  # if section in self.content
                 snippet = self.content.split(section)[-1]
-                snippet = snippet.replace('\r\n', '\n')
                 lines = [ '%s\n' % line
                           for line in snippet.split('\n') ]
                 parts = list()
@@ -453,7 +452,6 @@ Include:|Link:|License:|Maintainer:)'
                 result = ''
             else:  # if section in self.content
                 snippet = self.content.split(section)[-1]
-                snippet = snippet.replace('\r\n', '\n')
                 lines = [ '%s\n' % line
                           for line in snippet.split('\n') ]
                 parts = list()
@@ -476,7 +474,6 @@ Include:|Link:|License:|Maintainer:)'
                 result = ''
             else:  # if section in self.content
                 snippet = self.content.split(section)[-1]
-                snippet = snippet.replace('\r\n', '\n')
                 lines = [ '%s\n' % line
                           for line in snippet.split('\n') ]
                 parts = list()
@@ -510,7 +507,6 @@ Include:|Link:|License:|Maintainer:)'
                 result = list()
             else:  # if section in self.content
                 snippet = self.content.split(section)[-1]
-                snippet = snippet.replace('\r\n', '\n')
                 lines = [ '%s\n' % line
                           for line in snippet.split('\n') ]
                 parts = list()
@@ -540,7 +536,6 @@ Include:|Link:|License:|Maintainer:)'
                 depmodules = list()
             else:  # if section in self.content
                 snippet = self.content.split(section)[-1]
-                snippet = snippet.replace('\r\n', '\n')
                 lines = [ '%s\n' % line
                           for line in snippet.split('\n') ]
                 parts = list()
@@ -580,7 +575,6 @@ Include:|Link:|License:|Maintainer:)'
                 result = ''
             else:  # if section in self.content
                 snippet = self.content.split(section)[-1]
-                snippet = snippet.replace('\r\n', '\n')
                 lines = [ '%s\n' % line
                           for line in snippet.split('\n') ]
                 parts = list()
@@ -603,7 +597,6 @@ Include:|Link:|License:|Maintainer:)'
                 result = ''
             else:  # if section in self.content
                 snippet = self.content.split(section)[-1]
-                snippet = snippet.replace('\r\n', '\n')
                 lines = [ '%s\n' % line
                           for line in snippet.split('\n') ]
                 parts = list()
@@ -640,7 +633,6 @@ Include:|Link:|License:|Maintainer:)'
                 result = ''
             else:  # if section in self.content
                 snippet = self.content.split(section)[-1]
-                snippet = snippet.replace('\r\n', '\n')
                 lines = [ '%s\n' % line
                           for line in snippet.split('\n') ]
                 parts = list()
@@ -734,7 +726,6 @@ Include:|Link:|License:|Maintainer:)'
                 result = ''
             else:  # if section in self.content
                 snippet = self.content.split(section)[-1]
-                snippet = snippet.replace('\r\n', '\n')
                 lines = [ '%s\n' % line
                           for line in snippet.split('\n') ]
                 parts = list()
@@ -759,7 +750,6 @@ Include:|Link:|License:|Maintainer:)'
             parts = list()
             if section in self.content:
                 snippet = self.content.split(section)[-1]
-                snippet = snippet.replace('\r\n', '\n')
                 lines = [ '%s\n' % line
                           for line in snippet.split('\n') ]
                 for line in lines:
@@ -826,7 +816,6 @@ Include:|Link:|License:|Maintainer:)'
                 result = ''
             else:  # if section in self.content
                 snippet = self.content.split(section)[-1]
-                snippet = snippet.replace('\r\n', '\n')
                 lines = [ '%s\n' % line
                           for line in snippet.split('\n') ]
                 parts = list()
