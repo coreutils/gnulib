@@ -47,7 +47,6 @@ import shlex
 from tempfile import mktemp
 from pygnulib import constants
 from pygnulib import classes
-from pygnulib import GLError
 
 
 #===============================================================================
@@ -716,8 +715,6 @@ def main():
         print(result)
 
     elif mode == 'find':
-        # Prepare GLModuleSystem.find to throw an exception.
-        config.setErrors(True)
         modulesystem = classes.GLModuleSystem(config)
         for filename in files:
             if (isfile(joinpath(DIRS['root'], filename))
@@ -754,14 +751,12 @@ def main():
                 listing = [ line
                             for line in listing
                             if modulesystem.file_is_module(line) ]
-                module_candidates = sorted(set(listing))
-                for module in module_candidates:
-                    try:
-                        if filename in modulesystem.find(module).getFiles():
-                            print(module)
-                    except GLError:
-                        # Ignore module candidates that don't actually exist.
-                        pass
+                candidates = sorted(set(listing))
+                for name in candidates:
+                    module = modulesystem.find(name)
+                    if module:  # Ignore module candidates that don't actually exist.
+                        if module.getFiles():
+                            print(name)
             else:
                 message = '%s: warning: file %s does not exist\n' % (constants.APP['name'], filename)
                 sys.stderr.write(message)
@@ -971,46 +966,46 @@ def main():
 
     elif mode == 'extract-description':
         modulesystem = classes.GLModuleSystem(config)
-        modules = [ modulesystem.find(module)
-                    for module in modules ]
-        for module in modules:
-            sys.stdout.write(module.getDescription())
+        for name in modules:
+            module = modulesystem.find(name)
+            if module:
+                sys.stdout.write(module.getDescription())
 
     elif mode == 'extract-comment':
         modulesystem = classes.GLModuleSystem(config)
-        modules = [ modulesystem.find(module)
-                    for module in modules ]
-        for module in modules:
-            sys.stdout.write(module.getComment())
+        for name in modules:
+            module = modulesystem.find(name)
+            if module:
+                sys.stdout.write(module.getComment())
 
     elif mode == 'extract-status':
         modulesystem = classes.GLModuleSystem(config)
-        modules = [ modulesystem.find(module)
-                    for module in modules ]
-        for module in modules:
-            sys.stdout.write(module.getStatus())
+        for name in modules:
+            module = modulesystem.find(name)
+            if module:
+                sys.stdout.write(module.getStatus())
 
     elif mode == 'extract-notice':
         modulesystem = classes.GLModuleSystem(config)
-        modules = [ modulesystem.find(module)
-                    for module in modules ]
-        for module in modules:
-            sys.stdout.write(module.getNotice())
+        for name in modules:
+            module = modulesystem.find(name)
+            if module:
+                sys.stdout.write(module.getNotice())
 
     elif mode == 'extract-applicability':
         modulesystem = classes.GLModuleSystem(config)
-        modules = [ modulesystem.find(module)
-                    for module in modules ]
-        for module in modules:
-            print(module.getApplicability())
+        for name in modules:
+            module = modulesystem.find(name)
+            if module:
+                print(module.getApplicability())
 
     elif mode == 'extract-filelist':
         modulesystem = classes.GLModuleSystem(config)
-        modules = [ modulesystem.find(module)
-                    for module in modules ]
-        for module in modules:
-            files = module.getFiles()
-            print('\n'.join(files))
+        for name in modules:
+            module = modulesystem.find(name)
+            if module:
+                files = module.getFiles()
+                print('\n'.join(files))
 
     elif mode == 'extract-dependencies':
         if avoids:
@@ -1020,60 +1015,60 @@ def main():
             sys.stderr.write(message)
             sys.exit(1)
         modulesystem = classes.GLModuleSystem(config)
-        modules = [ modulesystem.find(module)
-                    for module in modules ]
-        for module in modules:
-            sys.stdout.write(module.getDependencies())
+        for name in modules:
+            module = modulesystem.find(name)
+            if module:
+                sys.stdout.write(module.getDependencies())
 
     elif mode == 'extract-autoconf-snippet':
         modulesystem = classes.GLModuleSystem(config)
-        modules = [ modulesystem.find(module)
-                    for module in modules ]
-        for module in modules:
-            sys.stdout.write(module.getAutoconfSnippet())
+        for name in modules:
+            module = modulesystem.find(name)
+            if module:
+                sys.stdout.write(module.getAutoconfSnippet())
 
     elif mode == 'extract-automake-snippet':
         modulesystem = classes.GLModuleSystem(config)
-        modules = [ modulesystem.find(module)
-                    for module in modules ]
-        for module in modules:
-            sys.stdout.write(module.getAutomakeSnippet())
+        for name in modules:
+            module = modulesystem.find(name)
+            if module:
+                sys.stdout.write(module.getAutomakeSnippet())
 
     elif mode == 'extract-include-directive':
         modulesystem = classes.GLModuleSystem(config)
-        modules = [ modulesystem.find(module)
-                    for module in modules ]
-        for module in modules:
-            sys.stdout.write(module.getInclude())
+        for name in modules:
+            module = modulesystem.find(name)
+            if module:
+                sys.stdout.write(module.getInclude())
 
     elif mode == 'extract-link-directive':
         modulesystem = classes.GLModuleSystem(config)
-        modules = [ modulesystem.find(module)
-                    for module in modules ]
-        for module in modules:
-            sys.stdout.write(module.getLink())
+        for name in modules:
+            module = modulesystem.find(name)
+            if module:
+                sys.stdout.write(module.getLink())
 
     elif mode == 'extract-license':
         modulesystem = classes.GLModuleSystem(config)
-        modules = [ modulesystem.find(module)
-                    for module in modules ]
-        for module in modules:
-            print(module.getLicense())
+        for name in modules:
+            module = modulesystem.find(name)
+            if module:
+                print(module.getLicense())
 
     elif mode == 'extract-maintainer':
         modulesystem = classes.GLModuleSystem(config)
-        modules = [ modulesystem.find(module)
-                    for module in modules ]
-        for module in modules:
-            sys.stdout.write(module.getMaintainer())
+        for name in modules:
+            module = modulesystem.find(name)
+            if module:
+                sys.stdout.write(module.getMaintainer())
 
     elif mode == 'extract-tests-module':
         modulesystem = classes.GLModuleSystem(config)
-        modules = [ modulesystem.find(module)
-                    for module in modules ]
-        for module in modules:
-            if module.getTestsModule():
-                print(module.getTestsName())
+        for name in modules:
+            module = modulesystem.find(name)
+            if module:
+                if module.getTestsModule():
+                    print(module.getTestsName())
 
     elif mode == 'copy-file':
         srcpath = files[0]
