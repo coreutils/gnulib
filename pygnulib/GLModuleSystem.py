@@ -43,6 +43,7 @@ DIRS = constants.DIRS
 ENCS = constants.ENCS
 TESTS = constants.TESTS
 joinpath = constants.joinpath
+subend = constants.subend
 isdir = os.path.isdir
 isfile = os.path.isfile
 filter_filelist = constants.filter_filelist
@@ -113,6 +114,18 @@ class GLModuleSystem(object):
                 sys.stderr.write('gnulib-tool: warning: ')
                 sys.stderr.write('file %s does not exist\n' % str(module))
 
+    def file_is_module(self, filename):
+        '''Given the name of a file in the modules/ directory, return true
+        if should be viewed as a module description file.'''
+        return not (filename == 'ChangeLog' or filename.endswith('/ChangeLog')
+                    or filename == 'COPYING' or filename.endswith('/COPYING')
+                    or filename == 'README' or filename.endswith('/README')
+                    or filename == 'TEMPLATE'
+                    or filename == 'TEMPLATE-EXTENDED'
+                    or filename == 'TEMPLATE-TESTS'
+                    or filename.startswith('.')
+                    or filename.endswith('~'))
+
     def list(self):
         '''GLModuleSystem.list() -> list
 
@@ -123,23 +136,6 @@ class GLModuleSystem(object):
         listing = list()
         localpath = self.config['localpath']
         find_args = ['find', 'modules', '-type', 'f', '-print']
-        sed_args = \
-            [
-                'sed',
-                '-e', r's,^modules/,,',
-                '-e', r'/^ChangeLog$/d',
-                '-e', r'/\/ChangeLog$/d',
-                '-e', r'/^COPYING$/d',
-                '-e', r'/\/COPYING$/d',
-                '-e', r'/^README$/d',
-                '-e', r'/\/README$/d',
-                '-e', r'/^TEMPLATE$/d',
-                '-e', r'/^TEMPLATE-EXTENDED$/d',
-                '-e', r'/^TEMPLATE-TESTS$/d',
-                '-e', r'/^\..*/d',
-                '-e', r'/~$/d',
-                '-e', r'/-tests$/d',
-            ]
 
         # Read modules from gnulib root directory.
         os.chdir(constants.DIRS['root'])
@@ -154,24 +150,23 @@ class GLModuleSystem(object):
                 find = sp.Popen(find_args, stdout=sp.PIPE)
                 result += find.stdout.read().decode("UTF-8")
                 os.chdir(DIRS['cwd'])
-            sed_args += ['-e', r's,\.diff$,,']
 
-        # Save the list of the modules to file.
-        path = joinpath(self.config['tempdir'], 'list')
-        with codecs.open(path, 'wb', 'UTF-8') as file:
-            file.write(result)
-
-        # Filter the list of the modules.
-        stdin = codecs.open(path, 'rb', 'UTF-8')
-        sed = sp.Popen(sed_args, stdin=stdin, stdout=sp.PIPE)
-        result = sed.stdout.read().decode("UTF-8")
-        stdin.close()
-        os.remove(path)
         listing = [ line
                     for line in result.split('\n')
                     if line.strip() ]
-        listing = sorted(set(listing))
-        return listing
+        if len(localpath) > 0:
+            listing = [ subend('.diff', '', line)
+                        for line in listing ]
+        # Remove modules/ prefix from each file name.
+        pattern = re.compile('^modules/')
+        listing = [ pattern.sub('', line)
+                    for line in listing ]
+        # Filter out undesired file names.
+        listing = [ line
+                    for line in listing
+                    if self.file_is_module(line) and not line.endswith('-tests') ]
+        modules = sorted(set(listing))
+        return modules
 
 
 #===============================================================================

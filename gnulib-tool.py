@@ -43,15 +43,18 @@ import codecs
 import random
 import argparse
 import subprocess as sp
+import shlex
 from tempfile import mktemp
 from pygnulib import constants
 from pygnulib import classes
+from pygnulib import GLError
 
 
 #===============================================================================
 # Define global constants
 #===============================================================================
 APP = constants.APP
+DIRS = constants.DIRS
 ENCS = constants.ENCS
 UTILS = constants.UTILS
 MODES = constants.MODES
@@ -422,6 +425,7 @@ def main():
     # Determine when user tries to combine modes.
     args = [
         cmdargs.mode_list,
+        cmdargs.mode_find,
         cmdargs.mode_import,
         cmdargs.mode_add_import,
         cmdargs.mode_remove_import,
@@ -460,6 +464,9 @@ def main():
     files = None
     if cmdargs.mode_list != None:
         mode = 'list'
+    if cmdargs.mode_find != None:
+        mode = 'find'
+        files = list(cmdargs.non_option_arguments)
     if cmdargs.mode_import != None:
         mode = 'import'
         modules = list(cmdargs.non_option_arguments)
@@ -701,12 +708,63 @@ def main():
     )
 
     # Work in the given mode.
-    if mode in ['list']:
+    if mode == 'list':
         modulesystem = classes.GLModuleSystem(config)
         listing = modulesystem.list()
         result = '\n'.join(listing)
         os.rmdir(config['tempdir'])
         print(result)
+
+    elif mode == 'find':
+        # Prepare GLModuleSystem.find to throw an exception.
+        config.setErrors(True)
+        modulesystem = classes.GLModuleSystem(config)
+        for filename in files:
+            if (isfile(joinpath(DIRS['root'], filename))
+                    or (localpath != None
+                        and any([ isfile(joinpath(localdir, filename))
+                                  for localdir in localpath ]))):
+                # Convert the file name to a POSIX basic regex.
+                # Needs to handle . [ \ * ^ $.
+                filename_regex = filename.replace('\\', '\\\\').replace('[', '\\[').replace('^', '\\^')
+                filename_regex = re.compile('([.*$])').sub('[\\1]', filename_regex)
+                filename_line_regex = '^' + filename_regex + '$'
+                # Read module candidates from gnulib root directory.
+                command = "find modules -type f -print | xargs -n 100 grep -l %s /dev/null | sed -e 's,^modules/,,'" % shlex.quote(filename_line_regex)
+                os.chdir(constants.DIRS['root'])
+                with sp.Popen(command, shell=True, stdout=sp.PIPE) as proc:
+                    result = proc.stdout.read().decode("UTF-8")
+                os.chdir(DIRS['cwd'])
+                # Read module candidates from local directories.
+                if localpath != None and len(localpath) > 0:
+                    command = "find modules -type f -print | xargs -n 100 grep -l %s /dev/null | sed -e 's,^modules/,,' -e 's,\\.diff$,,'" % shlex.quote(filename_line_regex)
+                    for localdir in localpath:
+                        os.chdir(localdir)
+                        with sp.Popen(command, shell=True, stdout=sp.PIPE) as proc:
+                            result += proc.stdout.read().decode("UTF-8")
+                        os.chdir(DIRS['cwd'])
+                listing = [ line
+                            for line in result.split('\n')
+                            if line.strip() ]
+                # Remove modules/ prefix from each file name.
+                pattern = re.compile('^modules/')
+                listing = [ pattern.sub('', line)
+                            for line in listing ]
+                # Filter out undesired file names.
+                listing = [ line
+                            for line in listing
+                            if modulesystem.file_is_module(line) ]
+                module_candidates = sorted(set(listing))
+                for module in module_candidates:
+                    try:
+                        if filename in modulesystem.find(module).getFiles():
+                            print(module)
+                    except GLError:
+                        # Ignore module candidates that don't actually exist.
+                        pass
+            else:
+                message = '%s: warning: file %s does not exist\n' % (constants.APP['name'], filename)
+                sys.stderr.write(message)
 
     elif mode in ['import', 'add-import', 'remove-import', 'update']:
         mode = MODES[mode]

@@ -20,7 +20,6 @@ Inline all 'sed' invocations.
 --------------------------------------------------------------------------------
 
 Implement the options:
-  --find
   --extract-recursive-dependencies
   --extract-recursive-link-directive
   --extract-tests-module
@@ -36,6 +35,10 @@ Implement the options:
   --help (same output)
 
 Remove exit() in GLImport.py.
+
+Optimize:
+  - GLModuleSystem: Parse each module description only once.
+  - os.chdir around subprocess creation -> cwd=... argument instead.
 
 --------------------------------------------------------------------------------
 
