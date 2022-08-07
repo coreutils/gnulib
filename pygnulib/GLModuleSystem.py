@@ -186,11 +186,11 @@ Include:|Link:|License:|Maintainer:)'
                    + 'Files|Depends-on|configure\\.ac-early|configure\\.ac|'
                    + 'Makefile\\.am|Include|Link|License|Maintainer):$')
 
-    def __init__(self, config, module, patched=False):
-        '''GLModule.__init__(config, module[, patched]) -> GLModule
+    def __init__(self, config, path, patched=False):
+        '''GLModule.__init__(config, path[, patched]) -> GLModule
 
-        Create new GLModule instance. Arguments are module and patched, where
-        module is a string representing the path to the module and patched is a
+        Create new GLModule instance. Arguments are path and patched, where
+        path is a string representing the path to the module and patched is a
         bool indicating that module was created after applying patch.'''
         self.args = dict()
         self.cache = dict()
@@ -198,25 +198,25 @@ Include:|Link:|License:|Maintainer:)'
         if type(config) is not GLConfig:
             raise TypeError('config must be a GLConfig, not %s'
                             % type(config).__name__)
-        if type(module) is not str:
-            raise TypeError('module must be a string, not %s'
-                            % type(module).__name__)
+        if type(path) is not str:
+            raise TypeError('path must be a string, not %s'
+                            % type(path).__name__)
         if type(patched) is not bool:
             raise TypeError('patched must be a bool, not %s'
-                            % type(module).__name__)
-        self.module = module
+                            % type(patched).__name__)
+        self.path = path
         self.patched = patched
         self.config = config
         self.filesystem = GLFileSystem(self.config)
         self.modulesystem = GLModuleSystem(self.config)
-        with codecs.open(module, 'rb', 'UTF-8') as file:
+        with codecs.open(path, 'rb', 'UTF-8') as file:
             self.content = file.read().replace('\r\n', '\n')
 
     def __eq__(self, module):
         '''x.__eq__(y) <==> x==y'''
         result = bool()
         if type(module) is GLModule:
-            if self.module == module.module:
+            if self.path == module.path:
                 result = True
         return result
 
@@ -224,7 +224,7 @@ Include:|Link:|License:|Maintainer:)'
         '''x.__ne__(y) <==> x!=y'''
         result = bool()
         if type(module) is GLModule:
-            if self.module != module.module:
+            if self.path != module.path:
                 result = True
         return result
 
@@ -232,7 +232,7 @@ Include:|Link:|License:|Maintainer:)'
         '''x.__ge__(y) <==> x>=y'''
         result = bool()
         if type(module) is GLModule:
-            if self.module >= module.module:
+            if self.path >= module.path:
                 result = True
         return result
 
@@ -240,22 +240,20 @@ Include:|Link:|License:|Maintainer:)'
         '''x.__gt__(y) <==> x>y'''
         result = bool()
         if type(module) is GLModule:
-            if self.module > module.module:
+            if self.path > module.path:
                 result = True
         return result
 
     def __hash__(self):
         '''x.__hash__() <==> hash(x)'''
-        module = hash(self.module)
-        patched = hash(self.patched)
-        result = module ^ patched
+        result = hash(self.path) ^ hash(self.patched)
         return result
 
     def __le__(self, module):
         '''x.__le__(y) <==> x<=y'''
         result = bool()
         if type(module) is GLModule:
-            if self.module <= module.module:
+            if self.path <= module.path:
                 result = True
         return result
 
@@ -263,7 +261,7 @@ Include:|Link:|License:|Maintainer:)'
         '''x.__lt__(y) <==> x<y'''
         result = bool()
         if type(module) is GLModule:
-            if self.module < module.module:
+            if self.path < module.path:
                 result = True
         return result
 
@@ -282,7 +280,7 @@ Include:|Link:|License:|Maintainer:)'
 
         Return the name of the module.'''
         pattern = re.compile(joinpath('modules', '(.*)$'))
-        result = pattern.findall(self.module)[0]
+        result = pattern.findall(self.path)[0]
         return result
 
     def isPatched(self):
