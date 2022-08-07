@@ -801,7 +801,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         # First test if allsnippets already specify an installation location.
         insnippets = False
         inmakefile = False
-        regex = '^[a-zA-Z0-9_]*_%sLIBRARIES *\\+{0,1}= *%s.%s' % (perhapsLT, libname, libext)
+        regex = '^[a-zA-Z0-9_]*_%sLIBRARIES *\\+{0,1}= *%s\\.%s' % (perhapsLT, libname, libext)
         pattern = re.compile(regex, re.M)
         insnippets = bool(pattern.findall(allsnippets))
         # Then test if $sourcebase/Makefile.am (if it exists) specifies it.

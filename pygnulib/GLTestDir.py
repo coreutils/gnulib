@@ -461,7 +461,7 @@ class GLTestDir(object):
                                   for line in snippet.split('\n')
                                   if line.strip() ]
                         snippet = '\n'.join(lines)
-                        pattern = re.compile('AC_REQUIRE\\(\\[([^()].*)\\]\\)', re.M)
+                        pattern = re.compile('AC_REQUIRE\\(\\[([^()]*)\\]\\)', re.M)
                         snippet = pattern.sub('\\1', snippet)
                         snippet = snippet.strip()
                         snippets += [snippet]
@@ -578,7 +578,7 @@ class GLTestDir(object):
                           for line in snippet.split('\n')
                           if line.strip() ]
                 snippet = '\n'.join(lines)
-                pattern = re.compile('AC_REQUIRE\\(\\[([^()].*)\\]\\)', re.M)
+                pattern = re.compile('AC_REQUIRE\\(\\[([^()]*)\\]\\)', re.M)
                 snippet = pattern.sub('\\1', snippet)
                 snippet = snippet.strip()
                 snippets += [snippet]
