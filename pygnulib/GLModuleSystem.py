@@ -177,6 +177,15 @@ class GLModule(object):
     path. GLModule can get all information about module, get its dependencies,
     files, etc.'''
 
+    section_label_regex = '(?:Description:|Comment:|Status:|Notice:|Applicability:|\
+Files:|Depends-on:|configure\\.ac-early:|configure\\.ac:|Makefile\\.am:|\
+Include:|Link:|License:|Maintainer:)'
+
+    section_label_pattern = \
+        re.compile('^(Description|Comment|Status|Notice|Applicability|'
+                   + 'Files|Depends-on|configure\\.ac-early|configure\\.ac|'
+                   + 'Makefile\\.am|Include|Link|License|Maintainer):$')
+
     def __init__(self, config, module, patched=False):
         '''GLModule.__init__(config, module[, patched]) -> GLModule
 
@@ -202,9 +211,6 @@ class GLModule(object):
         self.modulesystem = GLModuleSystem(self.config)
         with codecs.open(module, 'rb', 'UTF-8') as file:
             self.content = file.read()
-        self.regex = '(?:Description:|Comment:|Status:|Notice:|Applicability:|\
-Files:|Depends-on:|configure\\.ac-early:|configure\\.ac:|Makefile\\.am:|\
-Include:|Link:|License:|Maintainer:)'
 
     def __eq__(self, module):
         '''x.__eq__(y) <==> x==y'''
@@ -379,7 +385,7 @@ Include:|Link:|License:|Maintainer:)'
             if section not in self.content:
                 result = ''
             else:  # if section in self.content
-                pattern = '^%s[\t ]*(.*?)%s' % (section, self.regex)
+                pattern = '^%s[\t ]*(.*?)%s' % (section, GLModule.section_label_regex)
                 pattern = re.compile(pattern, re.S | re.M)
                 result = pattern.findall(self.content)
                 if type(result) is list:
@@ -400,7 +406,7 @@ Include:|Link:|License:|Maintainer:)'
             if section not in self.content:
                 result = ''
             else:  # if section in self.content
-                pattern = '^%s[\t ]*(.*?)%s' % (section, self.regex)
+                pattern = '^%s[\t ]*(.*?)%s' % (section, GLModule.section_label_regex)
                 pattern = re.compile(pattern, re.S | re.M)
                 result = pattern.findall(self.content)
                 if type(result) is list:
@@ -427,11 +433,7 @@ Include:|Link:|License:|Maintainer:)'
                           for line in snippet.split('\n') ]
                 parts = list()
                 for line in lines:
-                    regex = '^(Description|Comment|Status|Notice|Applicability|'
-                    regex += 'Files|Depends-on|configure\\.ac-early|configure\\.ac|'
-                    regex += 'Makefile\\.am|Include|Link|License|Maintainer):$'
-                    pattern = re.compile(regex)
-                    findflag = pattern.findall(line)
+                    findflag = GLModule.section_label_pattern.findall(line)
                     if findflag:
                         break
                     parts += [line]
@@ -456,11 +458,7 @@ Include:|Link:|License:|Maintainer:)'
                           for line in snippet.split('\n') ]
                 parts = list()
                 for line in lines:
-                    regex = '^(Description|Comment|Status|Notice|Applicability|'
-                    regex += 'Files|Depends-on|configure\\.ac-early|configure\\.ac|'
-                    regex += 'Makefile\\.am|Include|Link|License|Maintainer):$'
-                    pattern = re.compile(regex)
-                    findflag = pattern.findall(line)
+                    findflag = GLModule.section_label_pattern.findall(line)
                     if findflag:
                         break
                     parts += [line]
@@ -483,11 +481,7 @@ Include:|Link:|License:|Maintainer:)'
                           for line in snippet.split('\n') ]
                 parts = list()
                 for line in lines:
-                    regex = '^(Description|Comment|Status|Notice|Applicability|'
-                    regex += 'Files|Depends-on|configure\\.ac-early|configure\\.ac|'
-                    regex += 'Makefile\\.am|Include|Link|License|Maintainer):$'
-                    pattern = re.compile(regex)
-                    findflag = pattern.findall(line)
+                    findflag = GLModule.section_label_pattern.findall(line)
                     if findflag:
                         break
                     parts += [line]
@@ -521,11 +515,7 @@ Include:|Link:|License:|Maintainer:)'
                           for line in snippet.split('\n') ]
                 parts = list()
                 for line in lines:
-                    regex = '^(Description|Comment|Status|Notice|Applicability|'
-                    regex += 'Files|Depends-on|configure\\.ac-early|configure\\.ac|'
-                    regex += 'Makefile\\.am|Include|Link|License|Maintainer):$'
-                    pattern = re.compile(regex)
-                    findflag = pattern.findall(line)
+                    findflag = GLModule.section_label_pattern.findall(line)
                     if findflag:
                         break
                     parts += [line]
@@ -555,11 +545,7 @@ Include:|Link:|License:|Maintainer:)'
                           for line in snippet.split('\n') ]
                 parts = list()
                 for line in lines:
-                    regex = '^(Description|Comment|Status|Notice|Applicability|'
-                    regex += 'Files|Depends-on|configure\\.ac-early|configure\\.ac|'
-                    regex += 'Makefile\\.am|Include|Link|License|Maintainer):$'
-                    pattern = re.compile(regex)
-                    findflag = pattern.findall(line)
+                    findflag = GLModule.section_label_pattern.findall(line)
                     if findflag:
                         break
                     parts += [line]
@@ -599,11 +585,7 @@ Include:|Link:|License:|Maintainer:)'
                           for line in snippet.split('\n') ]
                 parts = list()
                 for line in lines:
-                    regex = '^(Description|Comment|Status|Notice|Applicability|'
-                    regex += 'Files|Depends-on|configure\\.ac-early|configure\\.ac|'
-                    regex += 'Makefile\\.am|Include|Link|License|Maintainer):$'
-                    pattern = re.compile(regex)
-                    findflag = pattern.findall(line)
+                    findflag = GLModule.section_label_pattern.findall(line)
                     if findflag:
                         break
                     parts += [line]
@@ -626,11 +608,7 @@ Include:|Link:|License:|Maintainer:)'
                           for line in snippet.split('\n') ]
                 parts = list()
                 for line in lines:
-                    regex = '^(Description|Comment|Status|Notice|Applicability|'
-                    regex += 'Files|Depends-on|configure\\.ac-early|configure\\.ac|'
-                    regex += 'Makefile\\.am|Include|Link|License|Maintainer):$'
-                    pattern = re.compile(regex)
-                    findflag = pattern.findall(line)
+                    findflag = GLModule.section_label_pattern.findall(line)
                     if findflag:
                         break
                     parts += [line]
@@ -667,11 +645,7 @@ Include:|Link:|License:|Maintainer:)'
                           for line in snippet.split('\n') ]
                 parts = list()
                 for line in lines:
-                    regex = '^(Description|Comment|Status|Notice|Applicability|'
-                    regex += 'Files|Depends-on|configure\\.ac-early|configure\\.ac|'
-                    regex += 'Makefile\\.am|Include|Link|License|Maintainer):$'
-                    pattern = re.compile(regex)
-                    findflag = pattern.findall(line)
+                    findflag = GLModule.section_label_pattern.findall(line)
                     if findflag:
                         break
                     parts += [line]
@@ -765,11 +739,7 @@ Include:|Link:|License:|Maintainer:)'
                           for line in snippet.split('\n') ]
                 parts = list()
                 for line in lines:
-                    regex = '^(Description|Comment|Status|Notice|Applicability|'
-                    regex += 'Files|Depends-on|configure\\.ac-early|configure\\.ac|'
-                    regex += 'Makefile\\.am|Include|Link|License|Maintainer):$'
-                    pattern = re.compile(regex)
-                    findflag = pattern.findall(line)
+                    findflag = GLModule.section_label_pattern.findall(line)
                     if findflag:
                         break
                     parts += [line]
@@ -793,11 +763,7 @@ Include:|Link:|License:|Maintainer:)'
                 lines = [ '%s\n' % line
                           for line in snippet.split('\n') ]
                 for line in lines:
-                    regex = '^(Description|Comment|Status|Notice|Applicability|'
-                    regex += 'Files|Depends-on|configure\\.ac-early|configure\\.ac|'
-                    regex += 'Makefile\\.am|Include|Link|License|Maintainer):$'
-                    pattern = re.compile(regex)
-                    findflag = pattern.findall(line)
+                    findflag = GLModule.section_label_pattern.findall(line)
                     if findflag:
                         break
                     parts += [line]
@@ -838,7 +804,7 @@ Include:|Link:|License:|Maintainer:)'
             if section not in self.content:
                 result = ''
             else:  # if section in self.content
-                pattern = '^%s[\t ]*(.*?)%s' % (section, self.regex)
+                pattern = '^%s[\t ]*(.*?)%s' % (section, GLModule.section_label_regex)
                 pattern = re.compile(pattern, re.S | re.M)
                 result = pattern.findall(self.content)
                 if type(result) is list:
@@ -865,11 +831,7 @@ Include:|Link:|License:|Maintainer:)'
                           for line in snippet.split('\n') ]
                 parts = list()
                 for line in lines:
-                    regex = '^(Description|Comment|Status|Notice|Applicability|'
-                    regex += 'Files|Depends-on|configure\\.ac-early|configure\\.ac|'
-                    regex += 'Makefile\\.am|Include|Link|License|Maintainer):$'
-                    pattern = re.compile(regex)
-                    findflag = pattern.findall(line)
+                    findflag = GLModule.section_label_pattern.findall(line)
                     if findflag:
                         break
                     parts += [line]
