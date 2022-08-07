@@ -412,7 +412,7 @@ def filter_filelist(separator, filelist,
     listing = list()
     for filename in filelist:
         if filename.startswith(prefix) and filename.endswith(suffix):
-            pattern = re.compile('^%s(.*?)%s$'
+            pattern = re.compile('^%s(.*)%s$'
                                  % (removed_prefix, removed_suffix))
             result = pattern.sub('%s\\1%s'
                                  % (added_prefix, added_suffix), filename)

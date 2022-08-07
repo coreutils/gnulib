@@ -280,7 +280,7 @@ Include:|Link:|License:|Maintainer:)'
         '''GLModule.getName() -> str
 
         Return the name of the module.'''
-        pattern = re.compile(joinpath('modules', '(.*?)$'))
+        pattern = re.compile(joinpath('modules', '(.*)$'))
         result = pattern.findall(self.module)[0]
         return result
 
