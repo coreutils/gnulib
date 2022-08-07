@@ -974,29 +974,28 @@ def main():
         modules = [ modulesystem.find(module)
                     for module in modules ]
         for module in modules:
-            print(module.getDescription())
+            sys.stdout.write(module.getDescription())
 
     elif mode == 'extract-comment':
         modulesystem = classes.GLModuleSystem(config)
         modules = [ modulesystem.find(module)
                     for module in modules ]
         for module in modules:
-            print(module.getComment())
+            sys.stdout.write(module.getComment())
 
     elif mode == 'extract-status':
         modulesystem = classes.GLModuleSystem(config)
         modules = [ modulesystem.find(module)
                     for module in modules ]
         for module in modules:
-            status = module.getStatus()
-            print('\n'.join(status))
+            sys.stdout.write(module.getStatus())
 
     elif mode == 'extract-notice':
         modulesystem = classes.GLModuleSystem(config)
         modules = [ modulesystem.find(module)
                     for module in modules ]
         for module in modules:
-            print(module.getNotice())
+            sys.stdout.write(module.getNotice())
 
     elif mode == 'extract-applicability':
         modulesystem = classes.GLModuleSystem(config)
@@ -1039,28 +1038,28 @@ def main():
         modules = [ modulesystem.find(module)
                     for module in modules ]
         for module in modules:
-            print(module.getAutoconfSnippet())
+            sys.stdout.write(module.getAutoconfSnippet())
 
     elif mode == 'extract-automake-snippet':
         modulesystem = classes.GLModuleSystem(config)
         modules = [ modulesystem.find(module)
                     for module in modules ]
         for module in modules:
-            print(module.getAutomakeSnippet())
+            sys.stdout.write(module.getAutomakeSnippet())
 
     elif mode == 'extract-include-directive':
         modulesystem = classes.GLModuleSystem(config)
         modules = [ modulesystem.find(module)
                     for module in modules ]
         for module in modules:
-            print(module.getInclude())
+            sys.stdout.write(module.getInclude())
 
     elif mode == 'extract-link-directive':
         modulesystem = classes.GLModuleSystem(config)
         modules = [ modulesystem.find(module)
                     for module in modules ]
         for module in modules:
-            print(module.getLink())
+            sys.stdout.write(module.getLink())
 
     elif mode == 'extract-license':
         modulesystem = classes.GLModuleSystem(config)
@@ -1074,7 +1073,7 @@ def main():
         modules = [ modulesystem.find(module)
                     for module in modules ]
         for module in modules:
-            print(module.getMaintainer())
+            sys.stdout.write(module.getMaintainer())
 
     elif mode == 'extract-tests-module':
         modulesystem = classes.GLModuleSystem(config)

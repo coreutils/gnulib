@@ -177,14 +177,11 @@ class GLModule(object):
     path. GLModule can get all information about module, get its dependencies,
     files, etc.'''
 
-    section_label_regex = '(?:Description:|Comment:|Status:|Notice:|Applicability:|\
-Files:|Depends-on:|configure\\.ac-early:|configure\\.ac:|Makefile\\.am:|\
-Include:|Link:|License:|Maintainer:)'
-
     section_label_pattern = \
         re.compile('^(Description|Comment|Status|Notice|Applicability|'
                    + 'Files|Depends-on|configure\\.ac-early|configure\\.ac|'
-                   + 'Makefile\\.am|Include|Link|License|Maintainer):$')
+                   + 'Makefile\\.am|Include|Link|License|Maintainer):$',
+                   re.M)
 
     def __init__(self, config, path, patched=False):
         '''GLModule.__init__(config, path[, patched]) -> GLModule
@@ -209,8 +206,20 @@ Include:|Link:|License:|Maintainer:)'
         self.config = config
         self.filesystem = GLFileSystem(self.config)
         self.modulesystem = GLModuleSystem(self.config)
+        # Read the module description file into memory.
         with codecs.open(path, 'rb', 'UTF-8') as file:
             self.content = file.read().replace('\r\n', '\n')
+        # Dissect it into sections.
+        self.sections = dict()
+        last_section_label = None
+        last_section_start = 0
+        for match in GLModule.section_label_pattern.finditer(self.content):
+            if last_section_label != None:
+                self.sections[last_section_label] = self.content[last_section_start : match.start()]
+            last_section_label = match.group(1)
+            last_section_start = match.end() + 1
+        if last_section_label != None:
+            self.sections[last_section_label] = self.content[last_section_start:]
 
     def __eq__(self, module):
         '''x.__eq__(y) <==> x==y'''
@@ -378,117 +387,51 @@ Include:|Link:|License:|Maintainer:)'
         '''GLModule.getDescription() -> str
 
         Return description of the module.'''
-        section = 'Description:'
-        if 'description' not in self.cache:
-            if section not in self.content:
-                result = ''
-            else:  # if section in self.content
-                pattern = '^%s[\t ]*(.*?)%s' % (section, GLModule.section_label_regex)
-                pattern = re.compile(pattern, re.S | re.M)
-                result = pattern.findall(self.content)
-                if type(result) is list:
-                    if not result:
-                        result = ''
-                    else:  # if result
-                        result = result[-1]
-            result = result.strip()
-            self.cache['description'] = result
-        return self.cache['description']
+        return self.sections.get('Description', '')
 
     def getComment(self):
         '''GLModule.getComment() -> str
 
         Return comment to module.'''
-        section = 'Comment:'
-        if 'comment' not in self.cache:
-            if section not in self.content:
-                result = ''
-            else:  # if section in self.content
-                pattern = '^%s[\t ]*(.*?)%s' % (section, GLModule.section_label_regex)
-                pattern = re.compile(pattern, re.S | re.M)
-                result = pattern.findall(self.content)
-                if type(result) is list:
-                    if not result:
-                        result = ''
-                    else:  # if result
-                        result = result[-1]
-            result = result.strip()
-            self.cache['comment'] = result
-        return self.cache['comment']
+        return self.sections.get('Comment', '')
 
     def getStatus(self):
         '''GLModule.getStatus() -> str
 
         Return module status.'''
-        section = 'Status:'
-        if 'status' not in self.cache:
-            if section not in self.content:
-                result = ''
-            else:  # if section in self.content
-                snippet = self.content.split(section)[-1]
-                lines = [ '%s\n' % line
-                          for line in snippet.split('\n') ]
-                parts = list()
-                for line in lines:
-                    findflag = GLModule.section_label_pattern.findall(line)
-                    if findflag:
-                        break
-                    parts += [line]
-                result = [ part.strip()
-                           for part in parts
-                           if part.strip() ]
-            self.cache['status'] = list(result)
-        return list(self.cache['status'])
+        return self.sections.get('Status', '')
+
+    def getStatuses(self):
+        '''GLModule.getStatuses() -> list
+
+        Return module status.'''
+        if 'statuses' not in self.cache:
+            snippet = self.getStatus()
+            result = [ line.strip()
+                       for line in snippet.split('\n')
+                       if line.strip() ]
+            self.cache['statuses'] = result
+        return self.cache['statuses']
 
     def getNotice(self):
         '''GLModule.getNotice() -> str
 
         Return notice to module.'''
-        section = 'Notice:'
-        if 'notice' not in self.cache:
-            if section not in self.content:
-                result = ''
-            else:  # if section in self.content
-                snippet = self.content.split(section)[-1]
-                lines = [ '%s\n' % line
-                          for line in snippet.split('\n') ]
-                parts = list()
-                for line in lines:
-                    findflag = GLModule.section_label_pattern.findall(line)
-                    if findflag:
-                        break
-                    parts += [line]
-                result = ''.join(parts)
-            self.cache['notice'] = result
-        return self.cache['notice']
+        return self.sections.get('Notice', '')
 
     def getApplicability(self):
         '''GLModule.getApplicability() -> str
 
         Return applicability of module.'''
-        section = 'Applicability:'
         if 'applicability' not in self.cache:
-            if section not in self.content:
-                result = ''
-            else:  # if section in self.content
-                snippet = self.content.split(section)[-1]
-                lines = [ '%s\n' % line
-                          for line in snippet.split('\n') ]
-                parts = list()
-                for line in lines:
-                    findflag = GLModule.section_label_pattern.findall(line)
-                    if findflag:
-                        break
-                    parts += [line]
-                parts = [ part.strip()
-                          for part in parts ]
-                result = ''.join(parts)
-            if not result.strip():
-                if self.getName().endswith('-tests'):
-                    result = 'tests'
-                else:  # if not self.getName().endswith('-tests')
-                    result = 'main'
+            result = self.sections.get('Applicability', '')
             result = result.strip()
+            if not result:
+                # The default is 'main' or 'tests', depending on the module's name.
+                if self.isTests():
+                    result = 'tests'
+                else:
+                    result = 'main'
             self.cache['applicability'] = result
         return self.cache['applicability']
 
@@ -497,115 +440,56 @@ Include:|Link:|License:|Maintainer:)'
 
         Return list of files.
         GLConfig: ac_version.'''
-        ac_version = self.config['ac_version']
-        section = 'Files:'
-        result = list()
         if 'files' not in self.cache:
-            if section not in self.content:
-                result = list()
-            else:  # if section in self.content
-                snippet = self.content.split(section)[-1]
-                lines = [ '%s\n' % line
-                          for line in snippet.split('\n') ]
-                parts = list()
-                for line in lines:
-                    findflag = GLModule.section_label_pattern.findall(line)
-                    if findflag:
-                        break
-                    parts += [line]
-                result = [ part.strip()
-                           for part in parts
-                           if part.strip() ]
-            result += [joinpath('m4', '00gnulib.m4')]
-            result += [joinpath('m4', 'zzgnulib.m4')]
-            result += [joinpath('m4', 'gnulib-common.m4')]
-            self.cache['files'] = list(result)
-        return list(self.cache['files'])
+            snippet = self.sections.get('Files', '')
+            result = [ line.strip()
+                       for line in snippet.split('\n')
+                       if line.strip() ]
+            result.append(joinpath('m4', '00gnulib.m4'))
+            result.append(joinpath('m4', 'zzgnulib.m4'))
+            result.append(joinpath('m4', 'gnulib-common.m4'))
+            self.cache['files'] = result
+        return self.cache['files']
 
     def getDependencies(self):
         '''GLModule.getDependencies() -> list
 
         Return list of dependencies.
         GLConfig: localpath.'''
-        result = list()
-        section = 'Depends-on:'
         if 'dependencies' not in self.cache:
-            if section not in self.content:
-                depmodules = list()
-            else:  # if section in self.content
-                snippet = self.content.split(section)[-1]
-                lines = [ '%s\n' % line
-                          for line in snippet.split('\n') ]
-                parts = list()
-                for line in lines:
-                    findflag = GLModule.section_label_pattern.findall(line)
-                    if findflag:
-                        break
-                    parts += [line]
-                modules = ''.join(parts)
-                modules = [ line
-                            for line in modules.split('\n')
-                            if line.strip() ]
-                modules = [ module
-                            for module in modules
-                            if not module.startswith('#') ]
-                for line in modules:
-                    split = [ part
-                              for part in line.split(' ')
-                              if part.strip() ]
-                    if len(split) == 1:
-                        module = line.strip()
-                        condition = None
-                    else:  # if len(split) != 1
-                        module = split[0]
-                        condition = split[1]
-                    result += [tuple([self.modulesystem.find(module), condition])]
+            snippet = self.sections.get('Depends-on', '')
+            modules = [ line.strip()
+                        for line in snippet.split('\n')
+                        if line.strip() ]
+            modules = [ module
+                        for module in modules
+                        if not module.startswith('#') ]
+            result = list()
+            for line in modules:
+                split = [ part
+                          for part in line.split(' ')
+                          if part.strip() ]
+                if len(split) == 1:
+                    module = line.strip()
+                    condition = None
+                else:  # if len(split) != 1
+                    module = split[0]
+                    condition = split[1]
+                result += [tuple([self.modulesystem.find(module), condition])]
             self.cache['dependencies'] = result
-        return list(self.cache['dependencies'])
+        return self.cache['dependencies']
 
     def getAutoconfSnippet_Early(self):
         '''GLModule.getAutoconfSnippet_Early() -> str
 
         Return autoconf-early snippet.'''
-        section = 'configure.ac-early:'
-        if 'autoconf-early' not in self.cache:
-            if section not in self.content:
-                result = ''
-            else:  # if section in self.content
-                snippet = self.content.split(section)[-1]
-                lines = [ '%s\n' % line
-                          for line in snippet.split('\n') ]
-                parts = list()
-                for line in lines:
-                    findflag = GLModule.section_label_pattern.findall(line)
-                    if findflag:
-                        break
-                    parts += [line]
-                result = ''.join(parts)
-            self.cache['autoconf-early'] = result
-        return self.cache['autoconf-early']
+        return self.sections.get('configure.ac-early', '')
 
     def getAutoconfSnippet(self):
         '''GLModule.getAutoconfSnippet() -> str
 
         Return autoconf snippet.'''
-        section = 'configure.ac:'
-        if 'autoconf' not in self.cache:
-            if section not in self.content:
-                result = ''
-            else:  # if section in self.content
-                snippet = self.content.split(section)[-1]
-                lines = [ '%s\n' % line
-                          for line in snippet.split('\n') ]
-                parts = list()
-                for line in lines:
-                    findflag = GLModule.section_label_pattern.findall(line)
-                    if findflag:
-                        break
-                    parts += [line]
-                result = ''.join(parts)
-            self.cache['autoconf'] = result
-        return self.cache['autoconf']
+        return self.sections.get('configure.ac', '')
 
     def getAutomakeSnippet(self):
         '''getAutomakeSnippet() -> str
@@ -625,23 +509,7 @@ Include:|Link:|License:|Maintainer:)'
         '''GLModule.getAutomakeSnippet_Conditional() -> str
 
         Return conditional automake snippet.'''
-        section = 'Makefile.am:'
-        if 'makefile-conditional' not in self.cache:
-            if section not in self.content:
-                result = ''
-            else:  # if section in self.content
-                snippet = self.content.split(section)[-1]
-                lines = [ '%s\n' % line
-                          for line in snippet.split('\n') ]
-                parts = list()
-                for line in lines:
-                    findflag = GLModule.section_label_pattern.findall(line)
-                    if findflag:
-                        break
-                    parts += [line]
-                result = ''.join(parts)
-            self.cache['makefile-conditional'] = result
-        return self.cache['makefile-conditional']
+        return self.sections.get('Makefile.am', '')
 
     def getAutomakeSnippet_Unconditional(self):
         '''GLModule.getAutomakeSnippet_Unconditional() -> str
@@ -718,24 +586,10 @@ Include:|Link:|License:|Maintainer:)'
         '''GLModule.getInclude() -> str
 
         Return include directive.'''
-        section = 'Include:'
         if 'include' not in self.cache:
-            if section not in self.content:
-                result = ''
-            else:  # if section in self.content
-                snippet = self.content.split(section)[-1]
-                lines = [ '%s\n' % line
-                          for line in snippet.split('\n') ]
-                parts = list()
-                for line in lines:
-                    findflag = GLModule.section_label_pattern.findall(line)
-                    if findflag:
-                        break
-                    parts += [line]
-                result = ''.join(parts)
-            result = result.strip()
-            pattern = re.compile('^(["<].*[>"])', re.M)
-            result = pattern.sub('#include \\1', result)
+            snippet = self.sections.get('Include', '')
+            pattern = re.compile('^(["<])', re.M)
+            result = pattern.sub('#include \\1', snippet)
             self.cache['include'] = result
         return self.cache['include']
 
@@ -743,64 +597,36 @@ Include:|Link:|License:|Maintainer:)'
         '''GLModule.getLink() -> str
 
         Return link directive.'''
-        section = 'Link:'
-        if 'link' not in self.cache:
-            parts = list()
-            if section in self.content:
-                snippet = self.content.split(section)[-1]
-                lines = [ '%s\n' % line
-                          for line in snippet.split('\n') ]
-                for line in lines:
-                    findflag = GLModule.section_label_pattern.findall(line)
-                    if findflag:
-                        break
-                    parts += [line]
-                parts = [ part.strip()
-                          for part in parts
-                          if part.strip() ]
-                # result = ' '.join(parts)
-            self.cache['link'] = parts
-        return self.cache['link']
-
-    def getLicense(self):
-        '''GLModule.getLicense(self) -> str
-
-        Get license and warn user if module lacks a license.'''
-        if str(self) == 'parse-datetime':
-            # This module is under a weaker license only for the purpose of some
-            # users who hand-edit it and don't use gnulib-tool. For the regular
-            # gnulib users they are under a stricter license.
-            return 'GPL'
-        else:
-            license = self.getLicense_Raw()
-            if not self.isTests():
-                if not license:
-                    if self.config['errors']:
-                        raise GLError(18, str(self))
-                    else:  # if not self.config['errors']
-                        sys.stderr.write('gnulib-tool: warning: module %s lacks a license\n' % str(self))
-            if not license:
-                license = 'GPL'
-            return license
+        return self.sections.get('Link', '')
 
     def getLicense_Raw(self):
         '''GLModule.getLicense_Raw() -> str
 
         Return module license.'''
-        section = 'License:'
+        return self.sections.get('License', '')
+
+    def getLicense(self):
+        '''GLModule.getLicense(self) -> str
+
+        Get license and warn user if module lacks a license.'''
         if 'license' not in self.cache:
-            if section not in self.content:
-                result = ''
-            else:  # if section in self.content
-                pattern = '^%s[\t ]*(.*?)%s' % (section, GLModule.section_label_regex)
-                pattern = re.compile(pattern, re.S | re.M)
-                result = pattern.findall(self.content)
-                if type(result) is list:
-                    if not result:
-                        result = ''
-                    else:  # if result
-                        result = result[-1]
-            result = result.strip()
+            result = None
+            if str(self) == 'parse-datetime':
+                # This module is under a weaker license only for the purpose of some
+                # users who hand-edit it and don't use gnulib-tool. For the regular
+                # gnulib users they are under a stricter license.
+                result = 'GPL'
+            else:
+                license = self.getLicense_Raw().strip()
+                if not self.isTests():
+                    if not license:
+                        if self.config['errors']:
+                            raise GLError(18, str(self))
+                        else:  # if not self.config['errors']
+                            sys.stderr.write('gnulib-tool: warning: module %s lacks a license\n' % str(self))
+                if not license:
+                    license = 'GPL'
+                result = license
             self.cache['license'] = result
         return self.cache['license']
 
@@ -808,24 +634,7 @@ Include:|Link:|License:|Maintainer:)'
         '''GLModule.getMaintainer() -> str
 
         Return maintainer directive.'''
-        section = 'Maintainer:'
-        if 'maintainer' not in self.cache:
-            if section not in self.content:
-                result = ''
-            else:  # if section in self.content
-                snippet = self.content.split(section)[-1]
-                lines = [ '%s\n' % line
-                          for line in snippet.split('\n') ]
-                parts = list()
-                for line in lines:
-                    findflag = GLModule.section_label_pattern.findall(line)
-                    if findflag:
-                        break
-                    parts += [line]
-                result = ''.join(parts)
-            result = result.strip()
-            self.cache['maintainer'] = result
-        return self.cache['maintainer']
+        return self.sections.get('Maintainer', '')
 
 
 #===============================================================================
@@ -1002,8 +811,8 @@ class GLModuleTable(object):
                             conditions += [None]
                     for depmodule in depmodules:
                         include = True
-                        status = depmodule.getStatus()
-                        for word in status:
+                        statuses = depmodule.getStatuses()
+                        for word in statuses:
                             if word == 'obsolete':
                                 if not self.config.checkInclTestCategory(TESTS['obsolete']):
                                     include = False

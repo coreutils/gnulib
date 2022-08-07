@@ -974,9 +974,9 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                 # Skip the contents if it's entirely empty.
                 if snippet.strip():
                     # Check status of the module.
-                    status = module.getStatus()
+                    statuses = module.getStatuses()
                     islongrun = False
-                    for word in status:
+                    for word in statuses:
                         if word == 'longrunning-test':
                             islongrun = True
                             break

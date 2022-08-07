@@ -37,7 +37,6 @@ Implement the options:
 Remove exit() in GLImport.py.
 
 Optimize:
-  - GLModuleSystem: Parse each module description only once.
   - os.chdir around subprocess creation -> cwd=... argument instead.
 
 --------------------------------------------------------------------------------
