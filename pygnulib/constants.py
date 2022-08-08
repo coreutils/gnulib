@@ -57,9 +57,6 @@ MODES = dict()  # Modes
 TESTS = dict()  # Tests
 NL = '''
 '''  # Newline character
-ALPHANUMERIC = 'abcdefghijklmnopqrstuvwxyz\
-ABCDEFGHIJKLMNOPQRSTUVWXYZ\
-0123456789'  # Alphanumeric characters
 
 # Set ENCS dictionary
 if not hasattr(interpreter, '__file__'):

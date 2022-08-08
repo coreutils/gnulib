@@ -183,6 +183,9 @@ class GLModule(object):
                    + 'Makefile\\.am|Include|Link|License|Maintainer):$',
                    re.M)
 
+    # List of characters allowed in shell identifiers.
+    shell_id_chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_'
+
     def __init__(self, config, path, patched=False):
         '''GLModule.__init__(config, path[, patched]) -> GLModule
 
@@ -329,20 +332,19 @@ class GLModule(object):
 
         Computes the shell function name that will contain the m4 macros for the
         module.'''
-        isalnum = True
         macro_prefix = self.config['macro_prefix']
-        for char in str(module):
-            if char not in constants.ALPHANUMERIC:
-                isalnum = False
+        valid_shell_id = True
+        for char in self.getName():
+            if char not in GLModule.shell_id_chars:
+                valid_shell_id = False
                 break
-        if isalnum:
-            module = str(self)
-        else:  # if not isalnum
-            module = '%s\n' % str(self)
-            if type(module) is str:
-                module = module.encode(ENCS['default'])
-            module = hashlib.md5(module).hexdigest()
-        result = 'func_%s_gnulib_m4code_%s' % (macro_prefix, module)
+        identifier = None
+        if valid_shell_id:
+            identifier = self.getName()
+        else:
+            hash_input = '%s\n' % self.getName()
+            identifier = hashlib.md5(hash_input.encode(ENCS['default'])).hexdigest()
+        result = 'func_%s_gnulib_m4code_%s' % (macro_prefix, identifier)
         return result
 
     def getShellVar(self):
@@ -350,20 +352,19 @@ class GLModule(object):
 
         Compute the shell variable name the will be set to true once the m4 macros
         for the module have been executed.'''
-        isalnum = True
         macro_prefix = self.config['macro_prefix']
-        for char in str(module):
-            if char not in constants.ALPHANUMERIC:
-                isalnum = False
+        valid_shell_id = True
+        for char in self.getName():
+            if char not in GLModule.shell_id_chars:
+                valid_shell_id = False
                 break
-        if isalnum:
-            module = str(self)
-        else:  # if not isalnum
-            module = '%s\n' % str(self)
-            if type(module) is str:
-                module = module.encode(ENCS['default'])
-            module = hashlib.md5(module).hexdigest()
-        result = '%s_gnulib_enabled_%s' % (macro_prefix, module)
+        identifier = None
+        if valid_shell_id:
+            identifier = self.getName()
+        else:
+            hash_input = '%s\n' % self.getName()
+            identifier = hashlib.md5(hash_input.encode(ENCS['default'])).hexdigest()
+        result = '%s_gnulib_enabled_%s' % (macro_prefix, identifier)
         return result
 
     def getConditionalName(self):
@@ -372,15 +373,18 @@ class GLModule(object):
         Return the automake conditional name.
         GLConfig: macro_prefix.'''
         macro_prefix = self.config['macro_prefix']
-        nonascii = [ char
-                     for char in self.getName()
-                     if char not in 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_' ]
-        if nonascii:
-            name = self.getName().encode(ENCS['default'])
-            name = hashlib.md5(name).hexdigest()
-            conditional = '%s_GNULIB_ENABLED_%s' % (macro_prefix, name)
-        else:  # if not nonascii
-            result = '%s_GNULIB_ENABLED_%s' % (macro_prefix, name)
+        valid_shell_id = True
+        for char in self.getName():
+            if char not in GLModule.shell_id_chars:
+                valid_shell_id = False
+                break
+        identifier = None
+        if valid_shell_id:
+            identifier = self.getName()
+        else:
+            hash_input = '%s\n' % self.getName()
+            identifier = hashlib.md5(hash_input.encode(ENCS['default'])).hexdigest()
+        result = '%s_GNULIB_ENABLED_%s' % (macro_prefix, identifier)
         return result
 
     def getDescription(self):
