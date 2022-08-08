@@ -651,23 +651,24 @@ class GLModule(object):
 
         Get license and warn user if module lacks a license.'''
         if 'license' not in self.cache:
-            result = None
+            license = self.getLicense_Raw().strip()
+            # Warn if the License field is missing.
+            if not self.isTests():
+                if not license:
+                    if self.config['errors']:
+                        raise GLError(18, str(self))
+                    else:  # if not self.config['errors']
+                        sys.stderr.write('gnulib-tool: warning: module %s lacks a License\n' % str(self))
             if str(self) == 'parse-datetime':
                 # This module is under a weaker license only for the purpose of some
                 # users who hand-edit it and don't use gnulib-tool. For the regular
                 # gnulib users they are under a stricter license.
                 result = 'GPL'
             else:
-                license = self.getLicense_Raw().strip()
-                if not self.isTests():
-                    if not license:
-                        if self.config['errors']:
-                            raise GLError(18, str(self))
-                        else:  # if not self.config['errors']
-                            sys.stderr.write('gnulib-tool: warning: module %s lacks a license\n' % str(self))
-                if not license:
-                    license = 'GPL'
                 result = license
+                # The default is GPL.
+                if not result:
+                    result = 'GPL'
             self.cache['license'] = result
         return self.cache['license']
 
