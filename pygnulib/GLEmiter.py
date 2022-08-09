@@ -655,29 +655,34 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         if libtool:
             libext = 'la'
             perhapsLT = 'LT'
-            LD_flags = False
+            eliminate_LDFLAGS = False
         else:  # if not libtool
             libext = 'a'
             perhapsLT = ''
-            LD_flags = True
+            eliminate_LDFLAGS = True
         if for_test:
             # When creating a package for testing: Attempt to provoke failures,
             # especially link errors, already during "make" rather than during
             # "make check", because "make check" is not possible in a cross-compiling
             # situation. Turn check_PROGRAMS into noinst_PROGRAMS.
-            check_PROGRAMS = True
+            edit_check_PROGRAMS = True
         else:  # if not for_test
-            check_PROGRAMS = False
+            edit_check_PROGRAMS = False
         emit += "## DO NOT EDIT! GENERATED AUTOMATICALLY!\n"
         emit += "## Process this file with automake to produce Makefile.in.\n"
         emit += self.copyright_notice()
         if actioncmd:
+            # The maximum line length (excluding the terminating newline) of
+            # any file that is to be preprocessed by config.status is 3070.
+            # config.status uses awk, and the HP-UX 11.00 awk fails if a line
+            # has length >= 3071; similarly, the IRIX 6.5 awk fails if a line
+            # has length >= 3072.
             if len(actioncmd) <= 3000:
                 emit += "# Reproduce by: %s\n" % actioncmd
         emit += '\n'
         uses_subdirs = False
 
-        # Modify allsnippets variable.
+        # Compute allsnippets variable.
         allsnippets = ''
         for module in modules:
             if not module.isTests():
@@ -685,16 +690,16 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                 amsnippet1 = module.getAutomakeSnippet_Conditional()
                 amsnippet1 = amsnippet1.replace('lib_LIBRARIES', 'lib%_LIBRARIES')
                 amsnippet1 = amsnippet1.replace('lib_LTLIBRARIES', 'lib%_LTLIBRARIES')
-                if LD_flags:
-                    pattern = re.compile('lib_LDFLAGS[\t ]*\\+=(.*)$', re.M)
+                if eliminate_LDFLAGS:
+                    pattern = re.compile('^(lib_LDFLAGS[\t ]*\\+=.*$\n)', re.M)
                     amsnippet1 = pattern.sub('', amsnippet1)
-                pattern = re.compile('lib_([A-Z][A-Z](?:.*))', re.M)
+                pattern = re.compile('lib_([A-Z][A-Z]*)', re.M)
                 amsnippet1 = pattern.sub('%s_%s_\\1' % (libname, libext),
                                          amsnippet1)
                 amsnippet1 = amsnippet1.replace('$(GNULIB_', '$(' + module_indicator_prefix + '_GNULIB_')
                 amsnippet1 = amsnippet1.replace('lib%_LIBRARIES', 'lib_LIBRARIES')
                 amsnippet1 = amsnippet1.replace('lib%_LTLIBRARIES', 'lib_LTLIBRARIES')
-                if check_PROGRAMS:
+                if edit_check_PROGRAMS:
                     amsnippet1 = amsnippet1.replace('check_PROGRAMS', 'noinst_PROGRAMS')
                 amsnippet1 = amsnippet1.replace('${gl_include_guard_prefix}',
                                                 include_guard_prefix)
@@ -706,29 +711,33 @@ AC_DEFUN([%V1%_LIBSOURCES], [
 
                 # Get unconditional snippet, edit it and save to amsnippet2.
                 amsnippet2 = module.getAutomakeSnippet_Unconditional()
-                pattern = re.compile('lib_([A-Z][A-Z](?:.*))', re.M)
+                pattern = re.compile('lib_([A-Z][A-Z]*)', re.M)
                 amsnippet2 = pattern.sub('%s_%s_\\1' % (libname, libext),
                                          amsnippet2)
                 amsnippet2 = amsnippet2.replace('$(GNULIB_',
                                                 '$(' + module_indicator_prefix + '_GNULIB_')
+                # Skip the contents if it's entirely empty.
                 if not (amsnippet1 + amsnippet2).isspace():
-                    allsnippets += '## begin gnulib module %s\n' % str(module)
+                    allsnippets += '## begin gnulib module %s\n\n' % str(module)
                     if conddeps:
                         if moduletable.isConditional(module):
                             name = module.getConditionalName()
                             allsnippets += 'if %s\n' % name
                     allsnippets += amsnippet1
                     if conddeps:
-                        allsnippets += 'endif\n'
+                        if moduletable.isConditional(module):
+                            allsnippets += 'endif\n'
                     allsnippets += amsnippet2
                     allsnippets += '## end   gnulib module %s\n\n' % str(module)
 
                     # Test whether there are some source files in subdirectories.
                     for file in module.getFiles():
-                        if (file.startswith('lib/') and file.endswith('.c')
+                        if (file.startswith('lib/')
+                                and file.endswith('.c')
                                 and file.count('/') > 1):
                             uses_subdirs = True
                             break
+
         if not makefile_name:
             subdir_options = ''
             # If there are source files in subdirectories, prevent collision of the
@@ -762,53 +771,50 @@ AC_DEFUN([%V1%_LIBSOURCES], [
             emit += 'MAINTAINERCLEANFILES =\n'
 
         # Execute edits that apply to the Makefile.am being generated.
-        current_edit = int()
-        makefile_am_edits = makefiletable.count()
-        while current_edit != makefile_am_edits:
+        for current_edit in range(0, makefiletable.count()):
             dictionary = makefiletable[current_edit]
             if dictionary['var']:
-                paths = list()
-                paths += [joinpath(dictionary['dir'], 'Makefile.am')]
-                paths += [os.path.normpath('./%s/Makefile.am' % dictionary['dir'])]
-                paths = sorted(set(paths))
-                if destfile in paths:
-                    emit += '%s += %s\n' % (dictionary['var'],
-                                            dictionary['val'])
-            current_edit += 1
+                if destfile == joinpath(dictionary['dir'], 'Makefile.am'):
+                    emit += '%s += %s\n' % (dictionary['var'], dictionary['val'])
+                    dictionary.pop('var')
 
         # Define two parts of cppflags variable.
-        emit += '\n'
         cppflags_part1 = ''
-        cppflags_part2 = ''
         if witness_c_macro:
             cppflags_part1 = ' -D%s=1' % witness_c_macro
+        cppflags_part2 = ''
         if for_test:
             cppflags_part2 = ' -DGNULIB_STRICT_CHECKING=1'
         cppflags = '%s%s' % (cppflags_part1, cppflags_part2)
         if not makefile_name:
+            emit += '\n'
             emit += 'AM_CPPFLAGS =%s\n' % cppflags
             emit += 'AM_CFLAGS =\n'
         else:  # if makefile_name
             if cppflags:
+                emit += '\n'
                 emit += 'AM_CPPFLAGS +=%s\n' % cppflags
         emit += '\n'
 
-        # One of the snippets or the user's Makefile.am already specifies an
+        # Test if one of the snippets or the user's Makefile.am already specifies an
         # installation location for the library. Don't confuse automake by saying
         # it should not be installed.
         # First test if allsnippets already specify an installation location.
-        insnippets = False
-        inmakefile = False
+        lib_gets_installed = False
         regex = '^[a-zA-Z0-9_]*_%sLIBRARIES *\\+{0,1}= *%s\\.%s' % (perhapsLT, libname, libext)
         pattern = re.compile(regex, re.M)
-        insnippets = bool(pattern.findall(allsnippets))
-        # Then test if $sourcebase/Makefile.am (if it exists) specifies it.
-        path = joinpath(sourcebase, 'Makefile.am')
-        if makefile_name and isfile(path):
-            with codecs.open(path, 'rb', 'UTF-8') as file:
-                data = file.read()
-            inmakefile = bool(pattern.findall(data))
-        if not any([insnippets, inmakefile]):
+        if pattern.findall(allsnippets):
+            lib_gets_installed = True
+        else:
+            # Then test if $sourcebase/Makefile.am (if it exists) specifies it.
+            if makefile_name:
+                path = joinpath(sourcebase, 'Makefile.am')
+                if isfile(path):
+                    with codecs.open(path, 'rb', 'UTF-8') as file:
+                        data = file.read()
+                    if pattern.findall(data):
+                        lib_gets_installed = True
+        if not lib_gets_installed:
             # By default, the generated library should not be installed.
             emit += 'noinst_%sLIBRARIES += %s.%s\n' % (perhapsLT, libname, libext)
 
@@ -824,22 +830,22 @@ AC_DEFUN([%V1%_LIBSOURCES], [
             emit += '%s_%s_LDFLAGS += -no-undefined\n' % (libname, libext)
             # Synthesize an ${libname}_${libext}_LDFLAGS augmentation by combining
             # the link dependencies of all modules.
-            links = [module.getLink()
-                     for module in modules if not module.isTests()]
-            ulinks = list()
-            for link in links:
-                for lib in link:
-                    lib = constants.nlremove(lib)
-                    position = lib.find(' when linking with libtool')
-                    if position != -1:
-                        lib = lib[:position]
-                    ulinks += [lib]
-            ulinks = sorted(set(ulinks))
-            for link in ulinks:
-                emit += '%s_%s_LDFLAGS += %s\n' % (libname, libext, link)
+            links = [ module.getLink()
+                      for module in modules
+                      if not module.isTests() ]
+            lines = [ line
+                      for link in links
+                      for line in link.split('\n')
+                      if line != '' ]
+            pattern = re.compile(' when linking with libtool.*')
+            lines = [ pattern.sub('', line)
+                      for line in lines ]
+            lines = sorted(set(lines))
+            for line in lines:
+                emit += '%s_%s_LDFLAGS += %s\n' % (libname, libext, line)
         emit += '\n'
         if pobase:
-            emit += 'AM_CPPFLAGS += -DDEFAULT_TEXT_DOMAIN="%s-gnulib"\n' % podomain
+            emit += 'AM_CPPFLAGS += -DDEFAULT_TEXT_DOMAIN=\\"%s-gnulib\\"\n' % podomain
             emit += '\n'
         allsnippets = allsnippets.replace('$(top_srcdir)/build-aux/',
                                           '$(top_srcdir)/%s/' % auxdir)
@@ -852,7 +858,6 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         emit += '\t  fi; \\\n'
         emit += '\tdone; \\\n'
         emit += '\t:\n'
-        emit = constants.nlconvert(emit)
         result = tuple([emit, uses_subdirs])
         return result
 
@@ -913,19 +918,19 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         if libtool:
             libext = 'la'
             perhapsLT = 'LT'
-            LD_flags = False
+            eliminate_LDFLAGS = False
         else:  # if not libtool
             libext = 'a'
             perhapsLT = ''
-            LD_flags = True
+            eliminate_LDFLAGS = True
         if for_test:
             # When creating a package for testing: Attempt to provoke failures,
             # especially link errors, already during "make" rather than during
             # "make check", because "make check" is not possible in a cross-compiling
             # situation. Turn check_PROGRAMS into noinst_PROGRAMS.
-            check_PROGRAMS = True
+            edit_check_PROGRAMS = True
         else:  # if not for_test
-            check_PROGRAMS = False
+            edit_check_PROGRAMS = False
 
         # Calculate testsbase_inverse
         counter = int()
@@ -945,22 +950,22 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         longrun_snippets = ''
         for module in modules:
             if for_test and not single_configure:
-                flag = module.isTests()
+                accept = module.isTests()
             else:  # if for_test and not single_configure
-                flag = True
-            if flag:
+                accept = True
+            if accept:
                 snippet = module.getAutomakeSnippet()
                 snippet = snippet.replace('lib_LIBRARIES', 'lib%_LIBRARIES')
                 snippet = snippet.replace('lib_LTLIBRARIES', 'lib%_LTLIBRARIES')
-                if LD_flags:
-                    pattern = re.compile('lib_LDFLAGS[\t ]*\\+=(.*)$', re.M)
-                    snippet = pattern.sub('', snippet)
-                pattern = re.compile('lib_([A-Z][A-Z](?:.*))', re.M)
+                if eliminate_LDFLAGS:
+                    pattern = re.compile('^(lib_LDFLAGS[\t ]*\\+=.*$\n)', re.M)
+                    amsnippet1 = pattern.sub('', snippet)
+                pattern = re.compile('lib_([A-Z][A-Z]*)', re.M)
                 snippet = pattern.sub('libtests_a_\\1', snippet)
                 snippet = snippet.replace('$(GNULIB_', '$(' + module_indicator_prefix + '_GNULIB_')
                 snippet = snippet.replace('lib%_LIBRARIES', 'lib_LIBRARIES')
                 snippet = snippet.replace('lib%_LTLIBRARIES', 'lib_LTLIBRARIES')
-                if check_PROGRAMS:
+                if edit_check_PROGRAMS:
                     snippet = snippet.replace('check_PROGRAMS', 'noinst_PROGRAMS')
                 snippet = snippet.replace('${gl_include_guard_prefix}',
                                           include_guard_prefix)
@@ -970,28 +975,20 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                     snippet += 'libtests_a_DEPENDENCIES += @%sALLOCA@\n' % perhapsLT
 
                 # Skip the contents if it's entirely empty.
-                if snippet.strip():
-                    # Check status of the module.
-                    statuses = module.getStatuses()
-                    islongrun = False
-                    for word in statuses:
-                        if word == 'longrunning-test':
-                            islongrun = True
-                            break
-                    if not islongrun:
-                        snippet = snippet.replace('\n\nEXTRA_DIST', '\nEXTRA_DIST')
-                        main_snippets += '## begin gnulib module %s\n' % str(module)
-                        main_snippets += snippet
-                        main_snippets += '## end   gnulib module %s\n\n' % str(module)
-                    else:  # if islongrunning
-                        snippet = snippet.replace('\n\nEXTRA_DIST', '\nEXTRA_DIST')
-                        longrun_snippets += '## begin gnulib module %s\n' % str(module)
+                if not snippet.isspace():
+                    snippet = ('## begin gnulib module %s\n\n' % str(module)
+                               + snippet
+                               + '## end   gnulib module %s\n\n' % str(module))
+                    # Mention long-running tests at the end.
+                    if 'longrunning-test' in module.getStatuses():
                         longrun_snippets += snippet
-                        longrun_snippets += '## end gnulib module %s\n' % str(module)
+                    else:
+                        main_snippets += snippet
 
                     # Test whether there are some source files in subdirectories.
                     for file in module.getFiles():
-                        if (file.startswith('lib/') and file.endswith('.c')
+                        if ((file.startswith('lib/') or file.startswith('tests/'))
+                                and file.endswith('.c')
                                 and file.count('/') > 1):
                             uses_subdirs = True
                             break
@@ -1031,7 +1028,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         #  * https://debbugs.gnu.org/11030
         # So we need this workaround.
         pattern = re.compile('^pkgdata_DATA *\\+=', re.M)
-        if bool(pattern.findall(main_snippets)) or bool(pattern.findall(longrun_snippets)):
+        if pattern.findall(main_snippets) or pattern.findall(longrun_snippets):
             emit += 'pkgdata_DATA =\n'
 
         emit += 'EXTRA_DIST =\n'
@@ -1044,20 +1041,12 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         emit += 'MAINTAINERCLEANFILES =\n'
 
         # Execute edits that apply to the Makefile.am being generated.
-        # Execute edits that apply to the Makefile.am being generated.
-        current_edit = int()
-        makefile_am_edits = makefiletable.count()
-        while current_edit != makefile_am_edits:
+        for current_edit in range(0, makefiletable.count()):
             dictionary = makefiletable[current_edit]
             if dictionary['var']:
-                paths = list()
-                paths += [joinpath(dictionary['dir'], 'Makefile.am')]
-                paths += [os.path.normpath('./%s/Makefile.am' % dictionary['dir'])]
-                paths = sorted(set(paths))
-                if destfile in paths:
-                    emit += '%s += %s\n' % (dictionary['var'],
-                                            dictionary['val'])
-            current_edit += 1
+                if destfile == joinpath(dictionary['dir'], 'Makefile.am'):
+                    emit += '%s += %s\n' % (dictionary['var'], dictionary['val'])
+                    dictionary.pop('var')
 
         emit += '\nAM_CPPFLAGS = \\\n'
         if for_test:
@@ -1071,6 +1060,8 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         emit += '  -I%s/%s -I$(srcdir)/%s/%s\n' % (testsbase_inverse, sourcebase, testsbase_inverse, sourcebase)
         emit += '\n'
 
+        ldadd_before = ''
+        ldadd_after = ''
         if libtests:
             # All test programs need to be linked with libtests.a.
             # It needs to be passed to the linker before ${libname}.${libext},
@@ -1081,11 +1072,13 @@ AC_DEFUN([%V1%_LIBSOURCES], [
             # voluntarily omitted).
             # The LIBTESTS_LIBDEPS can be passed to the linker once or twice, it
             # does not matter.
-            emit += 'LDADD = libtests.a %s/%s/%s.%s libtests.a %s/%s/%s.%s libtests.a $(LIBTESTS_LIBDEPS)\n\n' \
-                    % (testsbase_inverse, sourcebase, libname, libext,
-                       testsbase_inverse, sourcebase, libname, libext)
-        else:
-            emit += 'LDADD = %s/%s/%s.%s\n\n' % (testsbase_inverse, sourcebase, libname, libext)
+            ldadd_before = ' libtests.a'
+            ldadd_after = ' libtests.a $(LIBTESTS_LIBDEPS)'
+        emit += 'LDADD =%s %s/%s/%s.%s libtests.a %s/%s/%s.%s%s\n\n' \
+                % (ldadd_before,
+                   testsbase_inverse, sourcebase, libname, libext,
+                   testsbase_inverse, sourcebase, libname, libext,
+                   ldadd_after)
         if libtests:
             emit += 'libtests_a_SOURCES =\n'
             # Here we use $(LIBOBJS), not @LIBOBJS@. The value is the same. However,
@@ -1099,11 +1092,10 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         # EXEEXT is defined by AC_PROG_CC through autoconf.
         # srcdir is defined by autoconf and automake.
         emit += "TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@' srcdir='$(srcdir)'\n\n"
-        main_snippets = main_snippets.replace('$(top_srcdir)/build-aux/',
-                                              '$(top_srcdir)/%s/' % auxdir)
-        longrun_snippets = longrun_snippets.replace('$(top_srcdir)/build-aux/',
-                                                    '$(top_srcdir)/%s/' % auxdir)
-        emit += main_snippets + longrun_snippets
+        all_snippets = main_snippets + longrun_snippets
+        all_snippets = all_snippets.replace('$(top_srcdir)/build-aux/',
+                                            '$(top_srcdir)/%s/' % auxdir)
+        emit += all_snippets
         emit += '# Clean up after Solaris cc.\n'
         emit += 'clean-local:\n'
         emit += '\trm -rf SunWS_cache\n\n'
@@ -1114,6 +1106,5 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         emit += '\t  fi; \\\n'
         emit += '\tdone; \\\n'
         emit += '\t:\n'
-        emit = constants.nlconvert(emit)
         result = tuple([emit, uses_subdirs])
         return result

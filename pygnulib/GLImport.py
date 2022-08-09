@@ -1398,18 +1398,18 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         # Get link directives.
         links = [ module.getLink()
                   for module in self.moduletable['main'] ]
-        ulinks = list()
-        for link in links:
-            for lib in link:
-                ulinks += [lib]
-        ulinks = sorted(set(ulinks))
-        if ulinks:
+        lines = [ line
+                  for link in links
+                  for line in link.split('\n')
+                  if line != '' ]
+        lines = sorted(set(lines))
+        if lines:
             print('''
 You may need to use the following Makefile variables when linking.
 Use them in <program>_LDADD when linking a program, or
 in <library>_a_LDFLAGS or <library>_la_LDFLAGS when linking a library.''')
-            for link in ulinks:
-                print('  %s' % link)
+            for line in lines:
+                print('  %s' % line)
 
         # Print reminders.
         print('')
