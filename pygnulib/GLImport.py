@@ -636,7 +636,7 @@ AC_DEFUN([%s_INIT],
             emit += '  m4_pushdef([gl_MODULE_INDICATOR_CONDITION], [%s])\n' % witness_c_macro
         # Emit main autoconf snippets.
         emit += self.emiter.autoconfSnippets(moduletable['main'],
-                                             moduletable, assistant, 0, True, False, True, replace_auxdir)
+                                             moduletable, 0, True, False, True, replace_auxdir)
         if witness_c_macro:
             emit += '  m4_popdef([gl_MODULE_INDICATOR_CONDITION])\n'
         emit += '  # End of code from modules\n'
@@ -659,7 +659,7 @@ AC_DEFUN([%s_INIT],
         emit += '[$gl_module_indicator_condition])\n'
         # Emit tests autoconf snippets.
         emit += self.emiter.autoconfSnippets(moduletable['tests'],
-                                             moduletable, assistant, 0, True, True, True, replace_auxdir)
+                                             moduletable, 0, True, True, True, replace_auxdir)
         emit += '  m4_popdef([gl_MODULE_INDICATOR_CONDITION])\n'
         emit += self.emiter.initmacro_end('%stests' % macro_prefix)
         # _LIBDEPS and _LTLIBDEPS variables are not needed if this library is

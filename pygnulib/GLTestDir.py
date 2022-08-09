@@ -496,11 +496,11 @@ class GLTestDir(object):
                 # those of the tests.
                 emit += "gl_source_base='../%s'\n" % sourcebase
                 emit += self.emiter.autoconfSnippets(modules,
-                                                     moduletable, self.assistant, 1, False, False, False,
+                                                     moduletable, 1, False, False, False,
                                                      replace_auxdir)
                 emit += "gl_source_base='.'"
                 emit += self.emiter.autoconfSnippets(modules,
-                                                     moduletable, self.assistant, 2, False, False, False,
+                                                     moduletable, 2, False, False, False,
                                                      replace_auxdir)
                 emit += self.emiter.initmacro_end(macro_prefix)
                 # _LIBDEPS and _LTLIBDEPS variables are not needed if this library is
@@ -614,10 +614,10 @@ class GLTestDir(object):
         emit += 'gl_source_base=\'%s\'\n' % sourcebase
         if single_configure:
             emit += self.emiter.autoconfSnippets(main_modules, moduletable,
-                                                 self.assistant, 0, False, False, False, replace_auxdir)
+                                                 0, False, False, False, replace_auxdir)
         else:  # if not single_configure
             emit += self.emiter.autoconfSnippets(modules, moduletable,
-                                                 self.assistant, 1, False, False, False, replace_auxdir)
+                                                 1, False, False, False, replace_auxdir)
         emit += self.emiter.initmacro_end(macro_prefix)
         if single_configure:
             emit += '  gltests_libdeps=\n'
@@ -631,7 +631,7 @@ class GLTestDir(object):
             emit += '  m4_pushdef([gl_MODULE_INDICATOR_CONDITION], '
             emit += '[$gl_module_indicator_condition])\n'
             snippets = self.emiter.autoconfSnippets(tests_modules, moduletable,
-                                                    self.assistant, 1, True, False, False, replace_auxdir)
+                                                    1, True, False, False, replace_auxdir)
             emit += snippets.strip()
             emit += '  m4_popdef([gl_MODULE_INDICATOR_CONDITION])\n'
             emit += self.emiter.initmacro_end('%stests' % macro_prefix)
