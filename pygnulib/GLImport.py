@@ -831,9 +831,10 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         if libtests:
             self.config.setLibtests(True)
 
-        # Add dummy package if it is needed.
+        # Add the dummy module to the main module list if needed.
         main_modules = self.moduletable.add_dummy(main_modules)
         if libtests:  # if we need to use libtests.a
+            # Add the dummy module to the tests-related module list if needed.
             tests_modules = self.moduletable.add_dummy(tests_modules)
 
         # Check license incompatibilities.

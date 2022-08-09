@@ -265,33 +265,13 @@ class GLTestDir(object):
                 self.config.setLibtests(True)
 
         if single_configure:
-            # Add dummy package if it is needed.
+            # Add the dummy module to the main module list if needed.
             main_modules = moduletable.add_dummy(main_modules)
-            if 'dummy' in [ str(module)
-                            for module in main_modules ]:
-                main_modules = [ m
-                                 for m in main_modules
-                                 if str(m) != 'dummy' ]
-                dummy = self.modulesystem.find('dummy')
-                main_modules = sorted(set(main_modules)) + [dummy]
             if libtests:  # if we need to use libtests.a
+                # Add the dummy module to the tests-related module list if needed.
                 tests_modules = moduletable.add_dummy(tests_modules)
-                if 'dummy' in [ str(module)
-                                for module in tests_modules ]:
-                    tests_modules = [ m
-                                      for m in tests_modules
-                                      if str(m) != 'dummy' ]
-                    dummy = self.modulesystem.find('dummy')
-                    tests_modules = sorted(set(tests_modules)) + [dummy]
         else:  # if not single_configure
             modules = moduletable.add_dummy(modules)
-            if 'dummy' in [ str(module)
-                            for module in modules ]:
-                modules = [ m
-                            for m in modules
-                            if str(m) != 'dummy' ]
-                dummy = self.modulesystem.find('dummy')
-                modules = sorted(set(modules)) + [dummy]
 
         # Show banner notice of every module.
         if single_configure:

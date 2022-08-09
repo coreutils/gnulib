@@ -298,6 +298,15 @@ def main():
                         default=None,
                         action='append',
                         nargs=1)
+    # conditional-dependencies
+    parser.add_argument('--conditional-dependencies',
+                        dest='cond_dependencies',
+                        default=None,
+                        action="store_true")
+    parser.add_argument('--no-conditional-dependencies',
+                        dest='cond_dependencies',
+                        default=None,
+                        action="store_false")
     # libtool
     parser.add_argument('--libtool',
                         dest='libtool',
@@ -659,6 +668,7 @@ def main():
         lgpl = lgpl[-1]
         if lgpl == None:
             lgpl = True
+    cond_dependencies = cmdargs.cond_dependencies
     libtool = cmdargs.libtool
     makefile_name = cmdargs.makefile_name
     if makefile_name != None:
@@ -682,7 +692,6 @@ def main():
     lsymlink = cmdargs.lsymlink == True
     single_configure = cmdargs.single_configure
     docbase = None
-    conddeps = None
 
     # Create pygnulib configuration.
     config = classes.GLConfig(
@@ -702,7 +711,7 @@ def main():
         lgpl=lgpl,
         makefile_name=makefile_name,
         libtool=libtool,
-        conddeps=conddeps,
+        conddeps=cond_dependencies,
         macro_prefix=macro_prefix,
         podomain=podomain,
         witness_c_macro=witness_c_macro,

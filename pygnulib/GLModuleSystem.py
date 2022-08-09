@@ -705,6 +705,18 @@ class GLModuleTable(object):
         inc_all_indirect_tests = True if all kinds of problematic unit tests
                                     among the unit tests of the dependencies
                                     should be included
+
+        Methods for conditional dependencies:
+        - addUnconditional(B)
+          notes the presence of B as an unconditional module.
+        - addConditional(A, B. cond)
+          notes the presence of a conditional dependency from module A to module B,
+          subject to the condition that A is enabled and cond is true.
+        - isConditional(B)
+          tests whether module B is conditional.
+        - getCondition(A, B)
+          returns the condition when B should be enabled as a dependency of A,
+          once the m4 code for A has been executed.
         '''
         self.dependers = dict()  # Dependencies
         self.conditionals = dict()  # Conditional modules
@@ -765,9 +777,11 @@ class GLModuleTable(object):
             raise TypeError('condition must be a string or True, not %s'
                             % type(condition).__name__)
         if not str(module) in self.unconditionals:
+            # No unconditional dependency to the given module is known at this point.
             if str(module) not in self.dependers:
-                self.dependers[module] = list()
-            self.dependers[module] += [module]
+                self.dependers[str(module)] = list()
+            if str(parent) not in self.dependers[str(module)]:
+                self.dependers[str(module)].append(str(parent))
             key = '%s---%s' % (str(parent), str(module))
             self.conditionals[key] = condition
 
@@ -778,9 +792,9 @@ class GLModuleTable(object):
         if type(module) is not GLModule:
             raise TypeError('module must be a GLModule, not %s'
                             % type(module).__name__)
+        self.unconditionals[str(module)] = True
         if str(module) in self.dependers:
             self.dependers.pop(str(module))
-        self.unconditionals[str(module)] = True
 
     def isConditional(self, module):
         '''GLModuleTable.isConditional(module) -> bool
@@ -804,9 +818,7 @@ class GLModuleTable(object):
             raise TypeError('module must be a GLModule, not %s'
                             % type(module).__name__)
         key = '%s---%s' % (str(parent), str(module))
-        result = None
-        if key in self.conditionals:
-            result = self.conditionals[key]
+        result = self.conditionals.get(key, None)
         return result
 
     def transitive_closure(self, modules):
@@ -823,6 +835,11 @@ class GLModuleTable(object):
         for module in modules:
             if type(module) is not GLModule:
                 raise TypeError('each module must be a GLModule instance')
+        # In order to process every module only once (for speed), process an
+        # "input list" of modules, producing an "output list" of modules. During
+        # each round, more modules can be queued in the input list. Once a
+        # module on the input list has been processed, it is added to the
+        # "handled list", so we can avoid to process it again.
         inc_all_tests = self.inc_all_direct_tests
         handledmodules = list()
         inmodules = modules
@@ -833,7 +850,7 @@ class GLModuleTable(object):
                     self.addUnconditional(module)
         while inmodules:
             inmodules_this_round = inmodules
-            inmodules = list()
+            inmodules = list()               # Accumulator, queue for next round
             for module in inmodules_this_round:
                 if module not in self.avoids:
                     outmodules += [module]
@@ -842,6 +859,13 @@ class GLModuleTable(object):
                             module.getAutomakeSnippet_Conditional()
                         pattern = re.compile('^if', re.M)
                         if not pattern.findall(automake_snippet):
+                            # A module whose Makefile.am snippet contains a
+                            # reference to an automake conditional. If we were
+                            # to use it conditionally, we would get an error
+                            #   configure: error: conditional "..." was never defined.
+                            # because automake 1.11.1 does not handle nested
+                            # conditionals correctly. As a workaround, make the
+                            # module unconditional.
                             self.addUnconditional(module)
                         conditional = self.isConditional(module)
                     dependencies = module.getDependenciesWithConditions()
@@ -849,6 +873,16 @@ class GLModuleTable(object):
                                    for pair in dependencies ]
                     conditions = [ pair[1]
                                    for pair in dependencies ]
+                    # Duplicate dependencies are harmless, but Jim wants a warning.
+                    duplicate_depmodules = [ depmodule
+                                             for depmodule in set(depmodules)
+                                             if depmodules.count(depmodule) > 1 ]
+                    if duplicate_depmodules:
+                        duplicate_depmodule_names = [ str(depmodule)
+                                                      for depmodule in duplicate_depmodules ]
+                        message = ('gnulib-tool: warning: module %s has duplicated dependencies: %s\n'
+                                   % (module, duplicate_depmodule_names))
+                        sys.stderr.write(message)
                     if self.config.checkInclTestCategory(TESTS['tests']):
                         testsname = module.getTestsName()
                         if self.modulesystem.exists(testsname):
@@ -856,6 +890,7 @@ class GLModuleTable(object):
                             depmodules += [testsmodule]
                             conditions += [None]
                     for depmodule in depmodules:
+                        # Determine whether to include the dependency or tests module.
                         include = True
                         statuses = depmodule.getStatuses()
                         for word in statuses:
@@ -890,15 +925,15 @@ class GLModuleTable(object):
                             if self.config['conddeps']:
                                 index = depmodules.index(depmodule)
                                 condition = conditions[index]
+                                if condition == True:
+                                    condition = None
                                 if condition:
                                     self.addConditional(module, depmodule, condition)
                                 else:  # if condition
                                     if conditional:
                                         self.addConditional(module, depmodule, True)
                                     else:  # if not conditional
-                                        self.addUnconditional(module)
-            listing = list()  # Create empty list
-            inmodules = sorted(set(inmodules))
+                                        self.addUnconditional(depmodule)
             handledmodules = sorted(set(handledmodules + inmodules_this_round))
             # Remove handledmodules from inmodules.
             inmodules = [module
@@ -934,17 +969,24 @@ class GLModuleTable(object):
         for module in finalmodules:
             if type(module) is not GLModule:
                 raise TypeError('each module must be a GLModule instance')
+        # Determine main module list.
         saved_inctests = self.config.checkInclTestCategory(TESTS['tests'])
         self.config.disableInclTestCategory(TESTS['tests'])
         main_modules = self.transitive_closure(basemodules)
         self.config.setInclTestCategory(TESTS['tests'], saved_inctests)
+        # Determine tests-related module list.
         tests_modules = \
             [ m
               for m in finalmodules
-              if m not in main_modules ] \
-            + [ m
-                for m in main_modules
-                if m.getApplicability() != 'main' ]
+              if not (m in main_modules and m.getApplicability() == 'main') ]
+        # Note: Since main_modules is (hopefully) a subset of finalmodules, this
+        # ought to be the same as
+        #   [ m
+        #     for m in finalmodules
+        #     if m not in main_modules ] \
+        #   + [ m
+        #       for m in main_modules
+        #       if m.getApplicability() != 'main' ]
         tests_modules = sorted(set(tests_modules))
         result = tuple([main_modules, tests_modules])
         return result
@@ -957,24 +999,30 @@ class GLModuleTable(object):
         GLConfig: auxdir, ac_version.'''
         auxdir = self.config['auxdir']
         ac_version = self.config['ac_version']
-        have_lib_sources = False
         for module in modules:
             if type(module) is not GLModule:
                 raise TypeError('each module must be a GLModule instance')
-            snippet = module.getAutomakeSnippet()
-            snippet = constants.remove_backslash_newline(snippet)
-            pattern = re.compile('^lib_SOURCES[\t ]*\\+=[\t ]*(.*)$', re.M)
-            files = pattern.findall(snippet)
-            if files:  # if source files were found
-                files = files[-1].split(' ')
-                for file in files:
-                    if not file.endswith('.h'):
-                        have_lib_sources = True
-                        break
+        # Determine whether any module provides a lib_SOURCES augmentation.
+        have_lib_sources = False
+        for module in modules:
+            if not module.isTests():
+                snippet = module.getAutomakeSnippet()
+                # Extract the value of "lib_SOURCES += ...".
+                snippet = constants.remove_backslash_newline(snippet)
+                pattern = re.compile('^lib_SOURCES[\t ]*\\+=([^#]*).*$', re.M)
+                for matching_rhs in pattern.findall(snippet):
+                    files = matching_rhs.split(' ')
+                    for file in files:
+                        # Ignore .h files since they are not compiled.
+                        if not file.endswith('.h'):
+                            have_lib_sources = True
+                            break
+        # Add the dummy module, to make sure the library will be non-empty.
         if not have_lib_sources:
             dummy = self.modulesystem.find('dummy')
             if dummy not in self.avoids:
-                modules = sorted(set(modules + [dummy]))
+                if dummy not in modules:
+                    modules = sorted(set(modules)) + [dummy]
         return list(modules)
 
     def filelist(self, modules):

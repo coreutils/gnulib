@@ -202,7 +202,6 @@ class GLEmiter(object):
           AM_GNU_GETTEXT invocations.
         replace_auxdir is a bool variable; it tells whether to replace
           'build-aux' directory in AC_CONFIG_FILES.'''
-        emit = ''
         for module in modules:
             if type(module) is not GLModule:
                 raise TypeError('each module must be a GLModule instance')
@@ -229,6 +228,7 @@ class GLEmiter(object):
         auxdir = self.config['auxdir']
         conddeps = self.config['conddeps']
         macro_prefix = self.config['macro_prefix']
+        emit = ''
         if not conddeps:
             # Ignore the conditions, and enable all modules unconditionally.
             for module in modules:
@@ -290,7 +290,39 @@ class GLEmiter(object):
                         # Intersect dependencies with the modules list.
                         depmodules = [ dep
                                        for dep in depmodules
-                                       if dep in modules ]
+                                       if dep in modules ]   # TODO should this be basemodules or modules?
+                        for depmodule in depmodules:
+                            if moduletable.isConditional(depmodule):
+                                shellfunc = depmodule.getShellFunc()
+                                condition = moduletable.getCondition(module, depmodule)
+                                if condition != None:
+                                    emit += '  if %s; then\n' % condition
+                                    emit += '    %s\n' % shellfunc
+                                    emit += '  fi\n'
+                                else:  # if condition == None
+                                    emit += '  %s\n' % shellfunc
+                            # if not moduletable.isConditional(depmodule)
+                            else:
+                                # The autoconf code for $dep has already been emitted above and
+                                # therefore is already executed when this code is run.
+                                pass
+                        emit += '    fi\n'
+                        emit += '  }\n'
+            # Emit the dependencies from the unconditional to the conditional modules.
+            for module in modules:
+                if verifier == 0:
+                    solution = True
+                elif verifier == 1:
+                    solution = module.isNonTests()
+                elif verifier == 2:
+                    solution = module.isTests()
+                if solution:
+                    if not moduletable.isConditional(module):
+                        depmodules = module.getDependenciesWithoutConditions()
+                        # Intersect dependencies with the modules list.
+                        depmodules = [ dep
+                                       for dep in depmodules
+                                       if dep in modules ]   # TODO should this be basemodules or modules?
                         for depmodule in depmodules:
                             if moduletable.isConditional(depmodule):
                                 shellfunc = depmodule.getShellFunc()
@@ -316,14 +348,14 @@ class GLEmiter(object):
                 elif verifier == 2:
                     solution = module.isTests()
                 if solution:
-                    condname = module.getConditionalName()
-                    shellvar = module.getShellVar()
-                    emit += '  AM_CONDITIONAL([%s], [$%s])\n' % (condname, shellvar)
+                    if moduletable.isConditional(module):
+                        condname = module.getConditionalName()
+                        shellvar = module.getShellVar()
+                        emit += '  AM_CONDITIONAL([%s], [$%s])\n' % (condname, shellvar)
         lines = [ line
                   for line in emit.split('\n')
                   if line.strip() ]
         emit = '%s\n' % '\n'.join(lines)
-        emit = constants.nlconvert(emit)
         return emit
 
     def preEarlyMacros(self, require, indentation, modules):
