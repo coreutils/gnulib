@@ -3,6 +3,7 @@ Properties of integer types
 
 Files:
 lib/intprops.h
+lib/intprops-internal.h
 
 Depends-on:
 
