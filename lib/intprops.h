@@ -129,12 +129,11 @@
 /* Range overflow checks.
 
    The INT_<op>_RANGE_OVERFLOW macros return 1 if the corresponding C
-   operators might not yield numerically correct answers due to
-   arithmetic overflow.  They do not rely on undefined or
-   implementation-defined behavior.  Their implementations are simple
-   and straightforward, but they are harder to use and may be less
-   efficient than the INT_<op>_WRAPV, INT_<op>_OK, and
-   INT_<op>_OVERFLOW macros described below.
+   operators overflow arithmetically when given the same arguments.
+   These macros do not rely on undefined or implementation-defined behavior.
+   Although their implementations are simple and straightforward,
+   they are harder to use and may be less efficient than the
+   INT_<op>_WRAPV, INT_<op>_OK, and INT_<op>_OVERFLOW macros described below.
 
    Example usage:
 
@@ -365,7 +364,8 @@
 #define INT_SUBTRACT_OVERFLOW(a, b) \
   _GL_BINARY_OP_OVERFLOW (a, b, _GL_SUBTRACT_OVERFLOW)
 #if _GL_HAS_BUILTIN_OVERFLOW_P
-# define INT_NEGATE_OVERFLOW(a) INT_SUBTRACT_OVERFLOW (0, a)
+# define INT_NEGATE_OVERFLOW(a) \
+   __builtin_sub_overflow_p (0, a, (__typeof__ (- (a))) 0)
 #else
 # define INT_NEGATE_OVERFLOW(a) \
    INT_NEGATE_RANGE_OVERFLOW (a, _GL_INT_MINIMUM (a), _GL_INT_MAXIMUM (a))
