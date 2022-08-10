@@ -92,8 +92,8 @@
 #endif
 
 /* Return 1 if - A would overflow in [MIN,MAX] arithmetic.
-   Arguments should not have side effects, and A's type should have
-   minimum value MIN and maximum MAX.  */
+   A should not have side effects, and A's type should be an
+   integer with minimum value MIN and maximum MAX.  */
 #define _GL_INT_NEGATE_RANGE_OVERFLOW(a, min, max) \
   ((min) < 0 ? (a) < - (max) : 0 < (a))
 
@@ -134,11 +134,21 @@
 # define _GL_HAS_BUILTIN_OVERFLOW_P (7 <= __GNUC__)
 #endif
 
+#if (!defined _GL_STDCKDINT_H && 202311 <= __STDC_VERSION__ \
+     && ! (_GL_HAS_BUILTIN_ADD_OVERFLOW && _GL_HAS_BUILTIN_MUL_OVERFLOW))
+# include <stdckdint.h>
+#endif
+
 /* Store the low-order bits of A + B, A - B, A * B, respectively, into *R.
-   Return 1 if the result overflows.  See above for restrictions.  */
+   Return 1 if the result overflows.  Arguments should not have side
+   effects and A, B and *R can be of any integer type other than char,
+   bool, a bit-precise integer type, or an enumeration type.  */
 #if _GL_HAS_BUILTIN_ADD_OVERFLOW
 # define _GL_INT_ADD_WRAPV(a, b, r) __builtin_add_overflow (a, b, r)
 # define _GL_INT_SUBTRACT_WRAPV(a, b, r) __builtin_sub_overflow (a, b, r)
+#elif defined ckd_add && defined ckd_sub && !defined _GL_STDCKDINT_H
+# define _GL_INT_ADD_WRAPV(a, b, r) ckd_add (r, + (a), + (b))
+# define _GL_INT_SUBTRACT_WRAPV(a, b, r) ckd_sub (r, + (a), + (b))
 #else
 # define _GL_INT_ADD_WRAPV(a, b, r) \
    _GL_INT_OP_WRAPV (a, b, r, +, _GL_INT_ADD_RANGE_OVERFLOW)
@@ -158,6 +168,8 @@
      ? ((void) __builtin_mul_overflow (a, b, r), 1) \
      : __builtin_mul_overflow (a, b, r))
 # endif
+#elif defined ckd_mul && !defined _GL_STDCKDINT_H
+# define _GL_INT_MULTIPLY_WRAPV(a, b, r) ckd_mul (r, + (a), + (b))
 #else
 # define _GL_INT_MULTIPLY_WRAPV(a, b, r) \
    _GL_INT_OP_WRAPV (a, b, r, *, _GL_INT_MULTIPLY_RANGE_OVERFLOW)
@@ -177,7 +189,9 @@
 
 /* Store the low-order bits of A <op> B into *R, where OP specifies
    the operation and OVERFLOW the overflow predicate.  Return 1 if the
-   result overflows.  See above for restrictions.  */
+   result overflows.  Arguments should not have side effects,
+   and A, B and *R can be of any integer type other than char, bool, a
+   bit-precise integer type, or an enumeration type.  */
 #if 201112 <= __STDC_VERSION__ && !_GL__GENERIC_BOGUS
 # define _GL_INT_OP_WRAPV(a, b, r, op, overflow) \
    (_Generic \
@@ -217,7 +231,9 @@
    the operation and OVERFLOW the overflow predicate.  If *R is
    signed, its type is ST with bounds SMIN..SMAX; otherwise its type
    is UT with bounds U..UMAX.  ST and UT are narrower than int.
-   Return 1 if the result overflows.  See above for restrictions.  */
+   Return 1 if the result overflows.  Arguments should not have side
+   effects, and A, B and *R can be of any integer type other than
+   char, bool, a bit-precise integer type, or an enumeration type.  */
 # if _GL_HAVE___TYPEOF__
 #  define _GL_INT_OP_WRAPV_SMALLISH(a,b,r,op,overflow,st,smin,smax,ut,umax) \
     (_GL_TYPE_SIGNED (__typeof__ (*(r))) \
@@ -276,14 +292,18 @@
 /* Store the low-order bits of A <op> B into *R, where the operation
    is given by OP.  Use the unsigned type UT for calculation to avoid
    overflow problems.  *R's type is T, with extrema TMIN and TMAX.
-   T must be a signed integer type.  Return 1 if the result overflows.  */
+   T can be any signed integer type other than char, bool, a
+   bit-precise integer type, or an enumeration type.
+   Return 1 if the result overflows.  */
 #define _GL_INT_OP_CALC(a, b, r, op, overflow, ut, t, tmin, tmax) \
   (overflow (a, b, tmin, tmax) \
    ? (*(r) = _GL_INT_OP_WRAPV_VIA_UNSIGNED (a, b, op, ut, t), 1) \
    : (*(r) = _GL_INT_OP_WRAPV_VIA_UNSIGNED (a, b, op, ut, t), 0))
 
 /* Return 1 if the integer expressions A - B and -A would overflow,
-   respectively.  Arguments should not have side effects.
+   respectively.  Arguments should not have side effects,
+   and can be any signed integer type other than char, bool, a
+   bit-precise integer type, or an enumeration type.
    These macros are tuned for their last input argument being a constant.  */
 
 #if _GL_HAS_BUILTIN_OVERFLOW_P
@@ -315,8 +335,10 @@
   ((t) ((ut) (a) op (ut) (b)))
 
 /* Return true if the numeric values A + B, A - B, A * B fall outside
-   the range TMIN..TMAX.  Arguments should be integer expressions
-   without side effects.  TMIN should be signed and nonpositive.
+   the range TMIN..TMAX.  Arguments should not have side effects
+   and can be any integer type other than char, bool,
+   a bit-precise integer type, or an enumeration type.
+   TMIN should be signed and nonpositive.
    TMAX should be positive, and should be signed unless TMIN is zero.  */
 #define _GL_INT_ADD_RANGE_OVERFLOW(a, b, tmin, tmax) \
   ((b) < 0 \

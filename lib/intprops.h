@@ -256,12 +256,17 @@
    Because the WRAPV macros convert the result, they report overflow
    in different circumstances than the OVERFLOW macros do.  For
    example, in the typical case with 16-bit 'short' and 32-bit 'int',
-   if A, B and R are all of type 'short' then INT_ADD_OVERFLOW (A, B)
+   if A, B and *R are all of type 'short' then INT_ADD_OVERFLOW (A, B)
    returns false because the addition cannot overflow after A and B
-   are converted to 'int', whereas INT_ADD_WRAPV (A, B, &R) returns
+   are converted to 'int', whereas INT_ADD_WRAPV (A, B, R) returns
    true or false depending on whether the sum fits into 'short'.
 
    These macros are tuned for their last input argument being a constant.
+
+   A, B, and *R should be integers; they need not be the same type,
+   and they need not be all signed or all unsigned.
+   However, none of the integer types should be bit-precise,
+   and *R's type should not be char, bool, or an enumeration type.
 
    Return 1 if the integer expressions A * B, A - B, -A, A * B, A / B,
    A % B, and A << B would overflow, respectively.  */
@@ -310,6 +315,8 @@
 
    A, B, and *R should be integers; they need not be the same type,
    and they need not be all signed or all unsigned.
+   However, none of the integer types should be bit-precise,
+   and *R's type should not be char, bool, or an enumeration type.
 
    These macros work correctly on all known practical hosts, and do not rely
    on undefined behavior due to signed arithmetic overflow.

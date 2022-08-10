@@ -2371,6 +2371,21 @@ func_all_modules ()
   func_module limits-h
   func_end_table
 
+  element="Support for systems lacking draft ISO C 23"
+  func_section_wrap c23_ext
+  func_wrap H2
+  func_echo "$element"
+
+  element="Core language properties"
+  element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
+  func_section_wrap c23_core_properties
+  func_wrap H3
+  func_echo "$element"
+
+  func_begin_table
+  func_module stdckdint
+  func_end_table
+
   element="Support for GNU multiple precision arithmetic"
   func_section_wrap gmp
   func_wrap H2
