@@ -98,7 +98,7 @@ CloseHandle (HANDLE h)
 # define _endthreadex(x) return (x)
 # define TerminateThread(h, e) DosKillThread (h->tid)
 
-# define GetLastError()  -1
+# define GetLastError()  (-1)
 
 # ifndef ERROR_NO_DATA
 #  define ERROR_NO_DATA 232

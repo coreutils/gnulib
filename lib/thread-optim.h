@@ -52,7 +52,7 @@
 
 #if HAVE_SYS_SINGLE_THREADED_H /* glibc >= 2.32 */
 # include <sys/single_threaded.h>
-# define gl_multithreaded()  !__libc_single_threaded
+# define gl_multithreaded()  (!__libc_single_threaded)
 #else
 # define gl_multithreaded()  1
 #endif

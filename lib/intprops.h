@@ -328,8 +328,8 @@
 
    These macros are tuned for B being a constant.  */
 
-#define INT_ADD_OK(a, b, r) ! INT_ADD_WRAPV (a, b, r)
-#define INT_SUBTRACT_OK(a, b, r) ! INT_SUBTRACT_WRAPV (a, b, r)
-#define INT_MULTIPLY_OK(a, b, r) ! INT_MULTIPLY_WRAPV (a, b, r)
+#define INT_ADD_OK(a, b, r) (! INT_ADD_WRAPV (a, b, r))
+#define INT_SUBTRACT_OK(a, b, r) (! INT_SUBTRACT_WRAPV (a, b, r))
+#define INT_MULTIPLY_OK(a, b, r) (! INT_MULTIPLY_WRAPV (a, b, r))
 
 #endif /* _GL_INTPROPS_H */
