@@ -19,16 +19,15 @@
 
 #include <config.h>
 
+#include <stdckdint.h>
 #include <stdlib.h>
 #include <errno.h>
-
-#include "intprops.h"
 
 void *
 reallocarray (void *ptr, size_t nmemb, size_t size)
 {
   size_t nbytes;
-  if (INT_MULTIPLY_WRAPV (nmemb, size, &nbytes))
+  if (ckd_mul (&nbytes, nmemb, size))
     {
       errno = ENOMEM;
       return NULL;

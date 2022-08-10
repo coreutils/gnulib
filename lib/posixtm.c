@@ -24,9 +24,9 @@
 
 #include "c-ctype.h"
 #include "idx.h"
-#include "intprops.h"
 #include "verify.h"
 
+#include <stdckdint.h>
 #include <string.h>
 
 /*
@@ -191,7 +191,7 @@ posixtime (time_t *p, const char *s, unsigned int syntax_bits)
              | (tm0.tm_min ^ tm1.tm_min)
              | (tm0.tm_sec ^ tm1.tm_sec)))
         {
-          if (INT_ADD_WRAPV (t, leapsec, &t))
+          if (ckd_add (&t, t, leapsec))
             return false;
           *p = t;
           return true;

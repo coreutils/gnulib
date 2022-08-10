@@ -17,12 +17,12 @@ closedir
 d-ino
 fcntl-h
 ialloc
-intprops
 memcmp
 opendirat
 readdir
 renameatu
 stdbool
+stdckdint
 stdint
 xalloc-oversized
 

@@ -24,8 +24,8 @@
 
 #include <limits.h>
 #include <stdalign.h>
+#include <stdckdint.h>
 #include <stdint.h>
-#include "intprops.h"
 #include "verify.h"
 
 #if !ALIGNALLOC_VIA_ALIGNED_ALLOC
@@ -82,7 +82,7 @@ alignalloc (idx_t alignment, idx_t size)
 
   size_t malloc_size;
   unsigned char *q;
-  if (INT_ADD_WRAPV (size, alignment, &malloc_size)
+  if (ckd_add (&malloc_size, size, alignment)
       || ! (q = malloc (malloc_size)))
     {
       errno = ENOMEM;

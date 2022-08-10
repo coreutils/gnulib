@@ -12,11 +12,11 @@ calloc-gnu
 extern-inline
 ialloc
 idx
-intprops
 malloc-gnu
 minmax
 realloc-gnu
 reallocarray
+stdckdint
 stdint
 xalloc-die
 

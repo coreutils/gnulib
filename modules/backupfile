@@ -17,13 +17,13 @@ closedir
 d-ino
 fcntl-h
 ialloc
-intprops
 memcmp
 opendirat
 readdir
 realloc-gnu
 renameatu
 stdbool
+stdckdint
 stdint
 xalloc-die
 

@@ -30,6 +30,7 @@
 #include <errno.h>
 #include <ctype.h>
 #include <string.h>
+#include <stdckdint.h>
 #include <stdlib.h>
 #if defined _LIBC || HAVE_ALLOCA
 # include <alloca.h>
@@ -73,7 +74,6 @@ extern int fnmatch (const char *pattern, const char *string, int flags);
 # include "attribute.h"
 #endif
 
-#include <intprops.h>
 #include <flexmember.h>
 
 #ifdef _LIBC

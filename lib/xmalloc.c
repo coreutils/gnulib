@@ -22,9 +22,9 @@
 #include "xalloc.h"
 
 #include "ialloc.h"
-#include "intprops.h"
 #include "minmax.h"
 
+#include <stdckdint.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -195,7 +195,7 @@ x2nrealloc (void *p, size_t *pn, size_t s)
   else
     {
       /* Set N = floor (1.5 * N) + 1 to make progress even if N == 0.  */
-      if (INT_ADD_WRAPV (n, (n >> 1) + 1, &n))
+      if (ckd_add (&n, n, (n >> 1) + 1))
         xalloc_die ();
     }
 
@@ -236,7 +236,7 @@ xpalloc (void *pa, idx_t *pn, idx_t n_incr_min, ptrdiff_t n_max, idx_t s)
      N_MAX, and what the C language can represent safely.  */
 
   idx_t n;
-  if (INT_ADD_WRAPV (n0, n0 >> 1, &n))
+  if (ckd_add (&n, n0, n0 >> 1))
     n = IDX_MAX;
   if (0 <= n_max && n_max < n)
     n = n_max;
@@ -251,7 +251,7 @@ xpalloc (void *pa, idx_t *pn, idx_t n_incr_min, ptrdiff_t n_max, idx_t s)
   size_t nbytes;
 #endif
   idx_t adjusted_nbytes
-    = (INT_MULTIPLY_WRAPV (n, s, &nbytes)
+    = (ckd_mul (&nbytes, n, s)
        ? MIN (IDX_MAX, SIZE_MAX)
        : nbytes < DEFAULT_MXFAST ? DEFAULT_MXFAST : 0);
   if (adjusted_nbytes)
@@ -263,9 +263,9 @@ xpalloc (void *pa, idx_t *pn, idx_t n_incr_min, ptrdiff_t n_max, idx_t s)
   if (! pa)
     *pn = 0;
   if (n - n0 < n_incr_min
-      && (INT_ADD_WRAPV (n0, n_incr_min, &n)
+      && (ckd_add (&n, n0, n_incr_min)
           || (0 <= n_max && n_max < n)
-          || INT_MULTIPLY_WRAPV (n, s, &nbytes)))
+          || ckd_mul (&nbytes, n, s)))
     xalloc_die ();
   pa = xrealloc (pa, nbytes);
   *pn = n;

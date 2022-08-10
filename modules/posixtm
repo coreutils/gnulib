@@ -9,9 +9,9 @@ m4/posixtm.m4
 Depends-on:
 c-ctype
 idx
-intprops
 mktime
 stdbool
+stdckdint
 verify
 
 configure.ac:

@@ -21,8 +21,9 @@
 /* Specification.  */
 #include "malloca.h"
 
+#include <stdckdint.h>
+
 #include "idx.h"
-#include "intprops.h"
 #include "verify.h"
 
 /* The speed critical point in this file is freea() applied to an alloca()
@@ -50,17 +51,16 @@ mmalloca (size_t n)
   uintptr_t alignment2_mask = 2 * sa_alignment_max - 1;
   int plus = sizeof (small_t) + alignment2_mask;
   idx_t nplus;
-  if (!INT_ADD_WRAPV (n, plus, &nplus) && !xalloc_oversized (nplus, 1))
+  if (!ckd_add (&nplus, n, plus) && !xalloc_oversized (nplus, 1))
     {
       char *mem = (char *) malloc (nplus);
 
       if (mem != NULL)
         {
           uintptr_t umem = (uintptr_t)mem, umemplus;
-          /* The INT_ADD_WRAPV avoids signed integer overflow on
+          /* The ckd_add avoids signed integer overflow on
              theoretical platforms where UINTPTR_MAX <= INT_MAX.  */
-          INT_ADD_WRAPV (umem, sizeof (small_t) + sa_alignment_max - 1,
-                         &umemplus);
+          ckd_add (&umemplus, umem, sizeof (small_t) + sa_alignment_max - 1);
           idx_t offset = ((umemplus & ~alignment2_mask)
                           + sa_alignment_max - umem);
           void *vp = mem + offset;

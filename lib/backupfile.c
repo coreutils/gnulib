@@ -26,6 +26,7 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <stdbool.h>
+#include <stdckdint.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
@@ -34,7 +35,6 @@
 #include "attribute.h"
 #include "basename-lgpl.h"
 #include "ialloc.h"
-#include "intprops.h"
 #include "opendirat.h"
 #include "renameatu.h"
 
@@ -272,7 +272,7 @@ numbered_backup (int dir_fd, char **buffer, idx_t buffer_size, idx_t filelen,
       if (buffer_size < new_buffer_size)
         {
           idx_t grown;
-          if (! INT_ADD_WRAPV (new_buffer_size, new_buffer_size >> 1, &grown))
+          if (! ckd_add (&grown, new_buffer_size, new_buffer_size >> 1))
             new_buffer_size = grown;
           char *new_buf = irealloc (buf, new_buffer_size);
           if (!new_buf)

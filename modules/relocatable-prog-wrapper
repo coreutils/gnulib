@@ -67,6 +67,7 @@ ssize_t
 stdalign
 stdbool
 stddef
+stdckdint
 stdint
 stdlib
 string

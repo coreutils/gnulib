@@ -10,9 +10,9 @@ Depends-on:
 extensions
 extern-inline
 idx
-intprops
 posix_memalign
 stdalign
+stdckdint
 stdint
 verify
 
