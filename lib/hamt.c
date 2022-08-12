@@ -680,6 +680,11 @@ entry_insert (const struct function_table *functions, Hamt_entry *entry,
       Hamt_entry *new_entry = copy_entry (*elt_ptr);
       if (replace)
         *elt_ptr = NULL;
+      /* We have to take this shortcut as shifting an integer of N
+        bits by N or more bits triggers undefined behavior.
+        See: https://lists.gnu.org/archive/html/bug-gnulib/2022-04/msg00023.html.  */
+      if (depth >= _GL_HAMT_MAX_DEPTH)
+       return (Hamt_entry *) create_populated_bucket (new_entry, copy_entry (entry));
       return create_populated_subtrie (new_entry, copy_entry (entry), hash,
                                        (hash_element (functions, entry)
                                         >> (5 * depth)), depth);
