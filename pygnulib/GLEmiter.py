@@ -42,6 +42,7 @@ __copyright__ = constants.__copyright__
 #===============================================================================
 TESTS = constants.TESTS
 joinpath = constants.joinpath
+relinverse = constants.relinverse
 isfile = os.path.isfile
 normpath = os.path.normpath
 
@@ -390,13 +391,7 @@ class GLEmiter(object):
         emit = ''
         pobase = self.config['pobase']
         podomain = self.config['podomain']
-        top_subdir = ''
-        source = '%s/' % os.path.normpath(pobase)
-        if os.path.sep in source:
-            for directory in source.split(os.path.sep):
-                if directory != '':
-                    top_subdir += '../'
-        top_subdir = os.path.normpath(top_subdir)
+        top_subdir = relinverse(pobase)
         emit += "## DO NOT EDIT! GENERATED AUTOMATICALLY!\n"
         emit += "%s\n" % self.copyright_notice()
         emit += "# Usually the message domain is the same as the package name.\n"
@@ -941,13 +936,8 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         else:  # if not for_test
             edit_check_PROGRAMS = False
 
-        # Calculate testsbase_inverse
-        counter = int()
-        testsbase_inverse = ''
-        while counter < len(testsbase.split('/')):
-            testsbase_inverse += '../'
-            counter += 1
-        testsbase_inverse = os.path.normpath(testsbase_inverse)
+        # Compute testsbase_inverse
+        testsbase_inverse = relinverse(testsbase)
 
         # Begin the generation.
         emit += "## DO NOT EDIT! GENERATED AUTOMATICALLY!\n"

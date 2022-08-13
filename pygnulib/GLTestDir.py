@@ -48,6 +48,7 @@ DIRS = constants.DIRS
 UTILS = constants.UTILS
 TESTS = constants.TESTS
 joinpath = constants.joinpath
+relinverse = constants.relinverse
 copyfile = constants.copyfile
 movefile = constants.movefile
 isdir = os.path.isdir
@@ -405,16 +406,7 @@ class GLTestDir(object):
                     file.write(emit)
                 # Viewed from the $testsbase subdirectory, $auxdir is different.
                 emit = ''
-                saved_auxdir = self.config['auxdir']
-                testsbase = '%s/' % os.path.normpath(testsbase)
-                counter = int()
-                auxdir = ''
-                finish = (len(testsbase.split('/')) - 1)
-                while counter < finish:
-                    auxdir += '../'
-                    counter += 1
-                auxdir = os.path.normpath(joinpath(auxdir, saved_auxdir))
-                testsbase = os.path.normpath(testsbase)
+                auxdir = os.path.normpath(joinpath(relinverse(testsbase), auxdir))
                 self.config.setAuxDir(auxdir)
                 # Create $testsbase/configure.ac.
                 emit += '# Process this file with autoconf '

@@ -299,6 +299,21 @@ def relconcat(dir1, dir2):
     return os.path.normpath(os.path.join(dir1, dir2))
 
 
+def relinverse(dir):
+    '''Compute the inverse of dir. Namely, a relative pathname consisting only
+    of '..' components, such that dir/relinverse = '.'.
+    dir must be a relative pathname.'''
+    if False:
+        # This should work too.
+        return relativize(dir, '.')
+    else:
+        inverse = ''
+        for component in dir.split('/'):
+            if component != '':
+                inverse += '../'
+        return os.path.normpath(inverse)
+
+
 def copyfile(src, dest):
     '''Copy file src to file dest. Like shutil.copy, but ignore errors e.g. on
     VFAT file systems.'''
