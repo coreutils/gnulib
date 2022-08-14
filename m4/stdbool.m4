@@ -43,75 +43,76 @@ AC_DEFUN([gl_STDBOOL_H],
   AC_SUBST([HAVE__BOOL])
 ])
 
-# This version of the macro is needed in autoconf <= 2.68.
+m4_version_prereq([2.72], [], [
 
 AC_DEFUN([AC_CHECK_HEADER_STDBOOL],
-  [AC_CACHE_CHECK([for stdbool.h that conforms to C99],
+  [AC_CHECK_TYPES([_Bool])
+   AC_CACHE_CHECK([for stdbool.h that conforms to C99 or later],
      [ac_cv_header_stdbool_h],
      [AC_COMPILE_IFELSE(
         [AC_LANG_PROGRAM(
-           [[
-             #include <stdbool.h>
+           [[#include <stdbool.h>
 
-             #ifdef __cplusplus
-              typedef bool Bool;
-             #else
-              typedef _Bool Bool;
-              #ifndef bool
-               "error: bool is not defined"
-              #endif
-              #ifndef false
-               "error: false is not defined"
-              #endif
-              #if false
-               "error: false is not 0"
-              #endif
-              #ifndef true
-               "error: true is not defined"
-              #endif
-              #if true != 1
-               "error: true is not 1"
-              #endif
+             /* "true" and "false" should be usable in #if expressions and
+                integer constant expressions, and "bool" should be a valid
+                type name.
+
+                Although C 1999 requires bool, true, and false to be macros,
+                C 2023 and C++ 2011 overrule that, so do not test for that.
+                Although C 1999 requires __bool_true_false_are_defined and
+                _Bool, C 2023 says they are obsolescent, so do not require
+                them.  */
+
+             #if !true
+               #error "'true' is not true"
              #endif
-
-             #ifndef __bool_true_false_are_defined
-              "error: __bool_true_false_are_defined is not defined"
+             #if true != 1
+               #error "'true' is not equal to 1"
              #endif
+             char b[true == 1 ? 1 : -1];
+             char c[true];
 
-             struct s { Bool s: 1; Bool t; bool u: 1; bool v; } s;
+             #if false
+               #error "'false' is not false"
+             #endif
+             #if false != 0
+               #error "'false' is not equal to 0"
+             #endif
+             char d[false == 0 ? 1 : -1];
 
-             char a[true == 1 ? 1 : -1];
-             char b[false == 0 ? 1 : -1];
-             char c[__bool_true_false_are_defined == 1 ? 1 : -1];
-             char d[(bool) 0.5 == true ? 1 : -1];
-             /* See body of main program for 'e'.  */
-             char f[(Bool) 0.0 == false ? 1 : -1];
-             char g[true];
-             char h[sizeof (Bool)];
-             char i[sizeof s.t];
-             enum { j = false, k = true, l = false * true, m = true * 256 };
+             enum { e = false, f = true, g = false * true, h = true * 256 };
+
+             char i[(bool) 0.5 == true ? 1 : -1];
+             char j[(bool) 0.0 == false ? 1 : -1];
+             char k[sizeof (bool) > 0 ? 1 : -1];
+
+             struct sb { bool s: 1; bool t; } s;
+             char l[sizeof s.t > 0 ? 1 : -1];
+
              /* The following fails for
                 HP aC++/ANSI C B3910B A.05.55 [Dec 04 2003]. */
-             Bool n[m];
-             char o[sizeof n == m * sizeof n[0] ? 1 : -1];
-             char p[-1 - (Bool) 0 < 0 && -1 - (bool) 0 < 0 ? 1 : -1];
+             bool m[h];
+             char n[sizeof m == h * sizeof m[0] ? 1 : -1];
+             char o[-1 - (bool) 0 < 0 ? 1 : -1];
              /* Catch a bug in an HP-UX C compiler.  See
                 https://gcc.gnu.org/ml/gcc-patches/2003-12/msg02303.html
                 https://lists.gnu.org/r/bug-coreutils/2005-11/msg00161.html
               */
-             Bool q = true;
-             Bool *pq = &q;
-             bool *qq = &q;
+             bool p = true;
+             bool *pp = &p;
            ]],
            [[
-             bool e = &s;
-             *pq |= q; *pq |= ! q;
-             *qq |= q; *qq |= ! q;
-             /* Refer to every declared value, to avoid compiler optimizations.  */
-             return (!a + !b + !c + !d + !e + !f + !g + !h + !i + !!j + !k + !!l
-                     + !m + !n + !o + !p + !q + !pq + !qq);
+             bool ps = &s;
+             *pp |= p;
+             *pp |= ! p;
+
+             /* Refer to every declared value, so they cannot be
+                discarded as unused.  */
+             return (!a + !b + !c + !d + !e + !f + !g + !h + !i + !j + !k
+                     + !l + !m + !n + !o + !p + !pp + !ps);
            ]])],
         [ac_cv_header_stdbool_h=yes],
         [ac_cv_header_stdbool_h=no])])
-   AC_CHECK_TYPES([_Bool])
-])
+])# AC_CHECK_HEADER_STDBOOL
+
+]) # m4_version_prereq 2.72
