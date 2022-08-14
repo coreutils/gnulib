@@ -35,35 +35,30 @@
 
 #include <stdbool.h>
 
-#ifndef bool
- "error: bool is not defined"
-#endif
-#ifndef false
- "error: false is not defined"
-#endif
 #if false
  "error: false is not 0"
-#endif
-#ifndef true
- "error: true is not defined"
 #endif
 #if true != 1
  "error: true is not 1"
 #endif
-#ifndef __bool_true_false_are_defined
- "error: __bool_true_false_are_defined is not defined"
-#endif
 
 /* Several tests cannot be guaranteed with gnulib's <stdbool.h>, at
    least, not for all compilers and compiler options.  */
-#if HAVE_STDBOOL_H || 3 <= __GNUC__ || 4 <= __clang_major__
-struct s { _Bool s: 1; _Bool t; } s;
+#if (202311 <= __STDC_VERSION__ || defined __cplusplus \
+     || HAVE_STDBOOL_H || 3 <= __GNUC__ || 4 <= __clang_major__)
+# define WORKING_BOOL 1
+#else
+# define WORKING_BOOL 0
+#endif
+
+#if WORKING_BOOL
+struct s { bool s: 1; bool t; } s;
 #endif
 
 char a[true == 1 ? 1 : -1];
 char b[false == 0 ? 1 : -1];
 char c[__bool_true_false_are_defined == 1 ? 1 : -1];
-#if HAVE_STDBOOL_H || 3 <= __GNUC__ || 4 <= __clang_major__ /* See above.  */
+#if WORKING_BOOL
 char d[(bool) 0.5 == true ? 1 : -1];
 # ifdef ADDRESS_CHECK_OKAY /* Avoid gcc warning.  */
 /* C99 may plausibly be interpreted as not requiring support for a cast from
@@ -73,30 +68,30 @@ char d[(bool) 0.5 == true ? 1 : -1];
 bool e = &s;
 #  endif
 # endif
-char f[(_Bool) 0.0 == false ? 1 : -1];
+char f[(bool) 0.0 == false ? 1 : -1];
 #endif
 char g[true];
-char h[sizeof (_Bool)];
-#if HAVE_STDBOOL_H || 3 <= __GNUC__ || 4 <= __clang_major__ /* See above.  */
+char h[sizeof (bool)];
+#if WORKING_BOOL
 char i[sizeof s.t];
 #endif
 enum { j = false, k = true, l = false * true, m = true * 256 };
-_Bool n[m];
+bool n[m];
 char o[sizeof n == m * sizeof n[0] ? 1 : -1];
-char p[-1 - (_Bool) 0 < 0 && -1 - (bool) 0 < 0 ? 1 : -1];
+char p[-1 - (bool) 0 < 0 && -1 - (bool) 0 < 0 ? 1 : -1];
 /* Catch a bug in an HP-UX C compiler.  See
    https://gcc.gnu.org/ml/gcc-patches/2003-12/msg02303.html
    https://lists.gnu.org/r/bug-coreutils/2005-11/msg00161.html
  */
-_Bool q = true;
-_Bool *pq = &q;
+bool q = true;
+bool *pq = &q;
 
 int
 main ()
 {
   int error = 0;
 
-#if HAVE_STDBOOL_H || 3 <= __GNUC_ || 4 <= __clang_major___ /* See above.  */
+#if WORKING_BOOL
 # ifdef ADDRESS_CHECK_OKAY /* Avoid gcc warning.  */
   /* A cast from a variable's address to bool is valid in expressions.  */
   {
