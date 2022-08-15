@@ -213,7 +213,7 @@ static const char letters[] =
                         and return a read-write fd.  The file is mode 0600.
    __GT_DIR:            create a directory, which will be mode 0700.
 
-   We use a clever algorithm to get hard-to-predict names. */
+   */
 #ifdef _LIBC
 static
 #endif
