@@ -273,7 +273,7 @@ try_tempname_len (char *tmpl, int suffixlen, void *args,
   /* Whether to consume entropy when acquiring random bits.  On the
      first try it's worth the entropy cost with __GT_NOCREATE, which
      is inherently insecure and can use the entropy to make it a bit
-     less secure.  On the (rare) second and later attempts it might
+     more secure.  On the (rare) second and later attempts it might
      help against DoS attacks.  */
   bool use_getrandom = tryfunc == try_nocreate;
 
