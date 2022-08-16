@@ -2,6 +2,9 @@ Files:
 tests/test-tempname.c
 tests/macros.h
 
+Status:
+unportable-test
+
 Depends-on:
 unlink
 

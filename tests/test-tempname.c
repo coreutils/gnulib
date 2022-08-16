@@ -34,24 +34,53 @@ main ()
   char filename1[18 + 1];
   char filename2[18 + 1];
 
-  strcpy (filename1, templ18);
-  int fd1 = gen_tempname (filename1, strlen (".xyz"), 0, GT_FILE);
-  ASSERT (fd1 >= 0);
+  /* Case 1: The first file still exists while gen_tempname is called a second
+     time.  */
+  {
+    strcpy (filename1, templ18);
+    int fd1 = gen_tempname (filename1, strlen (".xyz"), 0, GT_FILE);
+    ASSERT (fd1 >= 0);
 
-  strcpy (filename2, templ18);
-  int fd2 = gen_tempname (filename2, strlen (".xyz"), 0, GT_FILE);
-  ASSERT (fd2 >= 0);
+    strcpy (filename2, templ18);
+    int fd2 = gen_tempname (filename2, strlen (".xyz"), 0, GT_FILE);
+    ASSERT (fd2 >= 0);
 
-  /* With 6 'X' and a good pseudo-random number generator behind the scenes,
-     the probability of getting the same file name twice in a row should be
-     1/62^6 < 1/10^10.  */
-  ASSERT (strcmp (filename1, filename2) != 0);
+    /* gen_tempname arranges (via O_EXCL) to not return the name of an existing
+       file.  */
+    ASSERT (strcmp (filename1, filename2) != 0);
 
-  /* Clean up.  */
-  close (fd1);
-  close (fd2);
-  unlink (filename1);
-  unlink (filename2);
+    /* Clean up.  */
+    close (fd1);
+    close (fd2);
+    unlink (filename1);
+    unlink (filename2);
+  }
+
+  /* Case 2: The first file is deleted before gen_tempname is called a second
+     time.  */
+  {
+    strcpy (filename1, templ18);
+    int fd1 = gen_tempname (filename1, strlen (".xyz"), 0, GT_FILE);
+    ASSERT (fd1 >= 0);
+
+    /* Clean up.  */
+    close (fd1);
+    unlink (filename1);
+
+    strcpy (filename2, templ18);
+    int fd2 = gen_tempname (filename2, strlen (".xyz"), 0, GT_FILE);
+    ASSERT (fd2 >= 0);
+
+    /* With 6 'X' and a good pseudo-random number generator behind the scenes,
+       the probability of getting the same file name twice in a row should be
+       1/62^6 < 1/10^10.
+       But on 64-bit native Windows, this probability is ca. 0.1% to 0.3%.  */
+    ASSERT (strcmp (filename1, filename2) != 0);
+
+    /* Clean up.  */
+    close (fd2);
+    unlink (filename2);
+  }
 
   return 0;
 }
