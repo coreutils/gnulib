@@ -1256,6 +1256,12 @@ sc_makefile_path_separator_check:
 	halt=$(msg)							\
 	  $(_sc_search_regexp)
 
+sc_makefile_DISTCHECK_CONFIGURE_FLAGS:
+	@prohibit='^DISTCHECK_CONFIGURE_FLAGS'				\
+	in_vc_files='akefile|\.mk$$'					\
+	halt="use AM_DISTCHECK_CONFIGURE_FLAGS"				\
+	  $(_sc_search_regexp)
+
 # Check that 'make alpha' will not fail at the end of the process,
 # i.e., when pkg-M.N.tar.xz already exists (either in "." or in ../release)
 # and is read-only.
