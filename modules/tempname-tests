@@ -1,0 +1,13 @@
+Files:
+tests/test-tempname.c
+tests/macros.h
+
+Depends-on:
+unlink
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-tempname
+check_PROGRAMS += test-tempname
+test_tempname_LDADD = $(LDADD) $(LIB_GETRANDOM) $(LIB_CLOCK_GETTIME)
