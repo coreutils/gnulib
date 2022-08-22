@@ -114,7 +114,7 @@ random_bits (random_value *r, random_value s)
 
      Of course we are in a state of sin here.  */
 
-  random_value v = 0;
+  random_value v = s;
 
 #if _LIBC || (defined CLOCK_REALTIME && HAVE_CLOCK_GETTIME)
   struct __timespec64 tv;
@@ -298,7 +298,9 @@ try_tempname_len (char *tmpl, int suffixlen, void *args,
   /* A random variable.  */
   random_value v = 0;
 
-  /* How many random base-62 digits can currently be extracted from V.  */
+  /* A value derived from the random variable, and how many random
+     base-62 digits can currently be extracted from VDIGBUF.  */
+  random_value vdigbuf;
   int vdigits = 0;
 
   /* Least biased value for V.  If V is less than this, V can generate
@@ -327,11 +329,12 @@ try_tempname_len (char *tmpl, int suffixlen, void *args,
               while (random_bits (&v, v) && biased_min <= v)
                 continue;
 
+              vdigbuf = v;
               vdigits = BASE_62_DIGITS;
             }
 
-          XXXXXX[i] = letters[v % 62];
-          v /= 62;
+          XXXXXX[i] = letters[vdigbuf % 62];
+          vdigbuf /= 62;
           vdigits--;
         }
 
