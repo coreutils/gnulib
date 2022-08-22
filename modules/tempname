@@ -16,7 +16,6 @@ getrandom
 libc-config
 lstat
 mkdir
-stdalign
 stdbool
 stdint
 sys_stat

@@ -48,7 +48,6 @@
 #include <string.h>
 
 #include <fcntl.h>
-#include <stdalign.h>
 #include <stdint.h>
 #include <sys/random.h>
 #include <sys/stat.h>
@@ -77,26 +76,55 @@ typedef uint_fast64_t random_value;
 #define BASE_62_DIGITS 10 /* 62**10 < UINT_FAST64_MAX */
 #define BASE_62_POWER (62LL * 62 * 62 * 62 * 62 * 62 * 62 * 62 * 62 * 62)
 
-#if _LIBC || (defined CLOCK_MONOTONIC && HAVE_CLOCK_GETTIME)
-# define HAS_CLOCK_ENTROPY true
-#else
-# define HAS_CLOCK_ENTROPY false
-#endif
+/* Return the result of mixing the entropy from R and S.
+   Assume that R and S are not particularly random,
+   and that the result should look randomish to an untrained eye.  */
 
 static random_value
-random_bits (random_value var, bool use_getrandom)
+mix_random_values (random_value r, random_value s)
 {
-  random_value r;
+  /* As this code is used only when high-quality randomness is neither
+     available nor necessary, there is no need for fancier polynomials
+     such as those in the Linux kernel's 'random' driver.  */
+  return (2862933555777941757 * r + 3037000493) ^ s;
+}
+
+/* Set *R to a random value.
+   Return true if *R is set to high-quality value taken from getrandom.
+   Otherwise return false, falling back to a low-quality *R that might
+   depend on S.
+
+   This function returns false only when getrandom fails.
+   On GNU systems this should happen only early in the boot process,
+   when the fallback should be good enough for programs using tempname
+   because any attacker likely has root privileges already.  */
+
+static bool
+random_bits (random_value *r, random_value s)
+{
   /* Without GRND_NONBLOCK it can be blocked for minutes on some systems.  */
-  if (use_getrandom && __getrandom (&r, sizeof r, GRND_NONBLOCK) == sizeof r)
-    return r;
-#if HAS_CLOCK_ENTROPY
-  /* Add entropy if getrandom did not work.  */
+  if (__getrandom (r, sizeof *r, GRND_NONBLOCK) == sizeof *r)
+    return true;
+
+  /* If getrandom did not work, use ersatz entropy based on low-order
+     clock bits.  On GNU systems getrandom should fail only
+     early in booting, when ersatz should be good enough.
+     Do not use ASLR-based entropy, as that would leak ASLR info into
+     the resulting file name which is typically public.
+
+     Of course we are in a state of sin here.  */
+
+  random_value v = 0;
+
+#if _LIBC || (defined CLOCK_REALTIME && HAVE_CLOCK_GETTIME)
   struct __timespec64 tv;
-  __clock_gettime64 (CLOCK_MONOTONIC, &tv);
-  var ^= tv.tv_nsec;
+  __clock_gettime64 (CLOCK_REALTIME, &tv);
+  v = mix_random_values (v, tv.tv_sec);
+  v = mix_random_values (v, tv.tv_nsec);
 #endif
-  return 2862933555777941757 * var + 3037000493;
+
+  *r = mix_random_values (v, clock ());
+  return false;
 }
 
 #if _LIBC
@@ -267,32 +295,15 @@ try_tempname_len (char *tmpl, int suffixlen, void *args,
   unsigned int attempts = ATTEMPTS_MIN;
 #endif
 
-  /* A random variable.  The initial value is used only the for fallback path
-     on 'random_bits' on 'getrandom' failure.  Its initial value tries to use
-     some entropy from the ASLR and ignore possible bits from the stack
-     alignment.  */
-  random_value v = ((uintptr_t) &v) / alignof (max_align_t);
-
-#if !HAS_CLOCK_ENTROPY
-  /* Arrange gen_tempname to return less predictable file names on
-     systems lacking clock entropy <https://bugs.gnu.org/57129>.  */
-  static random_value prev_v;
-  v ^= prev_v;
-#endif
+  /* A random variable.  */
+  random_value v = 0;
 
   /* How many random base-62 digits can currently be extracted from V.  */
   int vdigits = 0;
 
-  /* Whether to consume entropy when acquiring random bits.  On the
-     first try it's worth the entropy cost with __GT_NOCREATE, which
-     is inherently insecure and can use the entropy to make it a bit
-     more secure.  On the (rare) second and later attempts it might
-     help against DoS attacks.  */
-  bool use_getrandom = tryfunc == try_nocreate;
-
-  /* Least unfair value for V.  If V is less than this, V can generate
-     BASE_62_DIGITS digits fairly.  Otherwise it might be biased.  */
-  random_value const unfair_min
+  /* Least biased value for V.  If V is less than this, V can generate
+     BASE_62_DIGITS unbiased digits.  Otherwise the digits are biased.  */
+  random_value const biased_min
     = RANDOM_VALUE_MAX - RANDOM_VALUE_MAX % BASE_62_POWER;
 
   len = strlen (tmpl);
@@ -312,12 +323,9 @@ try_tempname_len (char *tmpl, int suffixlen, void *args,
         {
           if (vdigits == 0)
             {
-              do
-                {
-                  v = random_bits (v, use_getrandom);
-                  use_getrandom = true;
-                }
-              while (unfair_min <= v);
+              /* Worry about bias only if the bits are high quality.  */
+              while (random_bits (&v, v) && biased_min <= v)
+                continue;
 
               vdigits = BASE_62_DIGITS;
             }
@@ -331,9 +339,6 @@ try_tempname_len (char *tmpl, int suffixlen, void *args,
       if (fd >= 0)
         {
           __set_errno (save_errno);
-#if !HAS_CLOCK_ENTROPY
-          prev_v = v;
-#endif
           return fd;
         }
       else if (errno != EEXIST)
