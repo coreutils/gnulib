@@ -20,16 +20,10 @@
 # include "tempname.h"
 #endif
 
-#include <sys/types.h>
-#include <assert.h>
 #include <stdbool.h>
-
 #include <errno.h>
 
 #include <stdio.h>
-#ifndef P_tmpdir
-# define P_tmpdir "/tmp"
-#endif
 #ifndef TMP_MAX
 # define TMP_MAX 238328
 #endif
@@ -43,7 +37,6 @@
 # error report this to bug-gnulib@gnu.org
 #endif
 
-#include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -55,14 +48,12 @@
 
 #if _LIBC
 # define struct_stat64 struct __stat64_t64
-# define __secure_getenv __libc_secure_getenv
 #else
 # define struct_stat64 struct stat
 # define __gen_tempname gen_tempname
 # define __mkdir mkdir
 # define __open open
 # define __lstat64_time64(file, buf) lstat (file, buf)
-# define __stat64(file, buf) stat (file, buf)
 # define __getrandom getrandom
 # define __clock_gettime64 clock_gettime
 # define __timespec64 timespec
@@ -126,79 +117,6 @@ random_bits (random_value *r, random_value s)
   *r = mix_random_values (v, clock ());
   return false;
 }
-
-#if _LIBC
-/* Return nonzero if DIR is an existent directory.  */
-static int
-direxists (const char *dir)
-{
-  struct_stat64 buf;
-  return __stat64_time64 (dir, &buf) == 0 && S_ISDIR (buf.st_mode);
-}
-
-/* Path search algorithm, for tmpnam, tmpfile, etc.  If DIR is
-   non-null and exists, uses it; otherwise uses the first of $TMPDIR,
-   P_tmpdir, /tmp that exists.  Copies into TMPL a template suitable
-   for use with mk[s]temp.  Will fail (-1) if DIR is non-null and
-   doesn't exist, none of the searched dirs exists, or there's not
-   enough space in TMPL. */
-int
-__path_search (char *tmpl, size_t tmpl_len, const char *dir, const char *pfx,
-               int try_tmpdir)
-{
-  const char *d;
-  size_t dlen, plen;
-
-  if (!pfx || !pfx[0])
-    {
-      pfx = "file";
-      plen = 4;
-    }
-  else
-    {
-      plen = strlen (pfx);
-      if (plen > 5)
-        plen = 5;
-    }
-
-  if (try_tmpdir)
-    {
-      d = __secure_getenv ("TMPDIR");
-      if (d != NULL && direxists (d))
-        dir = d;
-      else if (dir != NULL && direxists (dir))
-        /* nothing */ ;
-      else
-        dir = NULL;
-    }
-  if (dir == NULL)
-    {
-      if (direxists (P_tmpdir))
-        dir = P_tmpdir;
-      else if (strcmp (P_tmpdir, "/tmp") != 0 && direxists ("/tmp"))
-        dir = "/tmp";
-      else
-        {
-          __set_errno (ENOENT);
-          return -1;
-        }
-    }
-
-  dlen = strlen (dir);
-  while (dlen > 1 && dir[dlen - 1] == '/')
-    dlen--;                     /* remove trailing slashes */
-
-  /* check we have room for "${dir}/${pfx}XXXXXX\0" */
-  if (tmpl_len < dlen + 1 + plen + 6 + 1)
-    {
-      __set_errno (EINVAL);
-      return -1;
-    }
-
-  sprintf (tmpl, "%.*s/%.*sXXXXXX", (int) dlen, dir, (int) plen, pfx);
-  return 0;
-}
-#endif /* _LIBC */
 
 #if _LIBC
 static int try_tempname_len (char *, int, void *, int (*) (char *, void *),
