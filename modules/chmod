@@ -11,16 +11,13 @@ lstat           [test $REPLACE_CHMOD = 1]
 
 configure.ac:
 gl_FUNC_CHMOD
-gl_CONDITIONAL([GL_COND_OBJ_CHMOD], [test $REPLACE_CHMOD = 1])
-AM_COND_IF([GL_COND_OBJ_CHMOD], [
+if test $REPLACE_CHMOD = 1; then
+  AC_LIBOBJ([chmod])
   gl_PREREQ_CHMOD
-])
+fi
 gl_SYS_STAT_MODULE_INDICATOR([chmod])
 
 Makefile.am:
-if GL_COND_OBJ_CHMOD
-lib_SOURCES += chmod.c
-endif
 
 Include:
 <sys/stat.h>
