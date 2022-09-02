@@ -1,4 +1,4 @@
-# terminfo.m4 serial 4
+# terminfo.m4 serial 5
 dnl Copyright (C) 2000-2022 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -44,6 +44,11 @@ AC_DEFUN([gl_TERMINFO_BODY],
   dnl Prerequisites of AC_LIB_LINKFLAGS_BODY.
   AC_REQUIRE([AC_LIB_PREPARE_PREFIX])
   AC_REQUIRE([AC_LIB_RPATH])
+
+  dnl Avoid disturbing the gl_TERMCAP_BODY macro.
+  gl_save_LIBTERMCAP="$LIBTERMCAP"
+  gl_save_LTLIBTERMCAP="$LTLIBTERMCAP"
+  gl_save_INCTERMCAP="$INCTERMCAP"
 
   if test "$gl_curses_allowed" != no; then
 
@@ -398,4 +403,9 @@ AC_DEFUN([gl_TERMINFO_BODY],
       LIBS="$gl_save_LIBS"
     ])
   fi
+
+  dnl Avoid disturbing the gl_TERMCAP_BODY macro.
+  LIBTERMCAP="$gl_save_LIBTERMCAP"
+  LTLIBTERMCAP="$gl_save_LTLIBTERMCAP"
+  INCTERMCAP="$gl_save_INCTERMCAP"
 ])
