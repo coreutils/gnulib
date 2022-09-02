@@ -226,7 +226,7 @@ _GL_FUNCDECL_SYS (aligned_alloc, void *,
 _GL_CXXALIAS_SYS (aligned_alloc, void *, (size_t alignment, size_t size));
 #  endif
 # endif
-# if @HAVE_ALIGNED_ALLOC@
+# if (__GLIBC__ >= 2) && @HAVE_ALIGNED_ALLOC@
 _GL_CXXALIASWARN (aligned_alloc);
 # endif
 #else
