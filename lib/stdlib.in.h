@@ -1363,7 +1363,9 @@ _GL_CXXALIAS_SYS (strtol, long,
                   (const char *restrict string, char **restrict endptr,
                    int base));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (strtol);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef strtol
 # if HAVE_RAW_DECL_STRTOL
@@ -1444,7 +1446,9 @@ _GL_CXXALIAS_SYS (strtoul, unsigned long,
                   (const char *restrict string, char **restrict endptr,
                    int base));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (strtoul);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef strtoul
 # if HAVE_RAW_DECL_STRTOUL
