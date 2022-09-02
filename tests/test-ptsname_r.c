@@ -210,6 +210,39 @@ main (void)
     close (fd);
   }
 
+#elif defined __GNU__ /* Hurd */
+
+  /* Try various master names of Hurd: /dev/pty[p-q][0-9a-v]  */
+  {
+    int char1;
+    int char2;
+
+    for (char1 = 'p'; char1 <= 'q'; char1++)
+      for (char2 = '0'; char2 <= 'v'; (char2 == '9' ? char2 = 'a' : char2++))
+        {
+          char master_name[32];
+          int fd;
+
+          sprintf (master_name, "/dev/pty%c%c", char1, char2);
+          fd = open (master_name, O_RDONLY);
+          if (fd >= 0)
+            {
+              char buffer[256];
+              int result;
+              char slave_name[32];
+
+              result = ptsname_r (fd, buffer, sizeof buffer);
+              ASSERT (result == 0);
+              sprintf (slave_name, "/dev/tty%c%c", char1, char2);
+              ASSERT (same_slave (buffer, slave_name));
+
+              test_errors (fd, buffer);
+
+              close (fd);
+            }
+        }
+  }
+
 #else
 
   /* Try various master names of Mac OS X: /dev/pty[p-w][0-9a-f]  */
