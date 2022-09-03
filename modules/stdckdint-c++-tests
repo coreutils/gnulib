@@ -1,0 +1,17 @@
+Files:
+tests/test-stdckdint-c++.cc
+
+Status:
+c++-test
+
+Depends-on:
+ansi-c++-opt
+
+configure.ac:
+
+Makefile.am:
+if ANSICXX
+TESTS += test-stdckdint-c++
+check_PROGRAMS += test-stdckdint-c++
+test_stdckdint_c___SOURCES = test-stdckdint-c++.cc
+endif
