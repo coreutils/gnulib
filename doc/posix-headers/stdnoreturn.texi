@@ -22,6 +22,9 @@ MSVC/clang.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
+@code{<stdnoreturn.h>} cannot be #included in C++ mode on some platforms:
+FreeBSD 13.1.
+@item
 @code{<stdnoreturn.h>} should be #included before @samp{_Noreturn} is used.
 @item
 You cannot assume that @code{_Noreturn} is a reserved word;
