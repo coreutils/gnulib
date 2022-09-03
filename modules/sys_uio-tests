@@ -2,6 +2,7 @@ Files:
 tests/test-sys_uio.c
 
 Depends-on:
+sys_uio-c++-tests
 
 configure.ac:
 
