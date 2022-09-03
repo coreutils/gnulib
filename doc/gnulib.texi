@@ -3755,6 +3755,7 @@ not worked around by Gnulib.
 * pty.h::
 * resolv.h::
 * shadow.h::
+* sys/file.h::
 * sys/ioctl.h::
 * sys/random.h::
 * sysexits.h::
@@ -3792,6 +3793,7 @@ not worked around by Gnulib.
 @include glibc-headers/pty.texi
 @include glibc-headers/resolv.texi
 @include glibc-headers/shadow.texi
+@include glibc-headers/sys_file.texi
 @include glibc-headers/sys_ioctl.texi
 @include glibc-headers/sys_random.texi
 @include glibc-headers/sysexits.texi
