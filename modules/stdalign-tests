@@ -5,6 +5,7 @@ tests/macros.h
 Depends-on:
 verify
 stdint
+stdalign-c++-tests
 
 configure.ac:
 

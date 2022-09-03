@@ -1,0 +1,17 @@
+Files:
+tests/test-stdalign-c++.cc
+
+Status:
+c++-test
+
+Depends-on:
+ansi-c++-opt
+
+configure.ac:
+
+Makefile.am:
+if ANSICXX
+TESTS += test-stdalign-c++
+check_PROGRAMS += test-stdalign-c++
+test_stdalign_c___SOURCES = test-stdalign-c++.cc
+endif
