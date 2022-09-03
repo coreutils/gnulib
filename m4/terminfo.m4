@@ -30,7 +30,7 @@ AC_DEFUN([gl_TERMINFO_BODY],
   dnl tgetflag(), e.g. Linux (in libncurses) or Solaris (in libtermcap =
   dnl libncurses).
   dnl Some systems have them in a different library, e.g. OSF/1 (in libcurses,
-  dnl not in libtermcap) or HP-UX (in libxcurses, not in libtermcap).
+  dnl not in libtermcap) or AIX, HP-UX (in libxcurses, not in libtermcap).
   dnl Some systems, like NetBSD or BeOS, don't have these functions at all;
   dnl they have only a libtermcap.
   dnl Some systems, like BeOS, use GNU termcap, which has tparam() instead of

@@ -1,4 +1,4 @@
-# termcap.m4 serial 9
+# termcap.m4 serial 10
 dnl Copyright (C) 2000-2022 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -52,6 +52,14 @@ AC_DEFUN([gl_TERMCAP_BODY],
     dnl accordingly.
     AC_LIB_LINKFLAGS_BODY([termcap])
 
+    dnl Search for libxcurses and define LIBXCURSES, LTLIBXCURSES and INCXCURSES
+    dnl accordingly.
+    AC_LIB_LINKFLAGS_BODY([xcurses])
+
+    dnl Search for libcurses and define LIBCURSES, LTLIBCURSES and INCCURSES
+    dnl accordingly.
+    AC_LIB_LINKFLAGS_BODY([curses])
+
   else
 
     LIBNCURSES=
@@ -61,6 +69,14 @@ AC_DEFUN([gl_TERMCAP_BODY],
     LIBTERMCAP=
     LTLIBTERMCAP=
     INCTERMCAP=
+
+    LIBXCURSES=
+    LTLIBXCURSES=
+    INCXCURSES=
+
+    LIBCURSES=
+    LTLIBCURSES=
+    INCCURSES=
 
   fi
 
@@ -104,6 +120,36 @@ AC_DEFUN([gl_TERMCAP_BODY],
              [[return tgetent ((char *) 0, "xterm");]])],
           [gl_cv_termcap=libtermcap])
         LIBS="$gl_save_LIBS"
+        if test "$gl_cv_termcap" != libtermcap; then
+          gl_save_LIBS="$LIBS"
+          LIBS="$LIBS $LIBXCURSES"
+          AC_LINK_IFELSE(
+            [AC_LANG_PROGRAM(
+               [[extern
+                 #ifdef __cplusplus
+                 "C"
+                 #endif
+                 int tgetent (char *, const char *);
+               ]],
+               [[return tgetent ((char *) 0, "xterm");]])],
+            [gl_cv_termcap=libxcurses])
+          LIBS="$gl_save_LIBS"
+          if test "$gl_cv_termcap" != libxcurses; then
+            gl_save_LIBS="$LIBS"
+            LIBS="$LIBS $LIBCURSES"
+            AC_LINK_IFELSE(
+              [AC_LANG_PROGRAM(
+                 [[extern
+                   #ifdef __cplusplus
+                   "C"
+                   #endif
+                   int tgetent (char *, const char *);
+                 ]],
+                 [[return tgetent ((char *) 0, "xterm");]])],
+              [gl_cv_termcap=libcurses])
+            LIBS="$gl_save_LIBS"
+          fi
+        fi
       fi
     fi
   ])
@@ -120,6 +166,16 @@ AC_DEFUN([gl_TERMCAP_BODY],
       ;;
     libtermcap)
       ;;
+    libxcurses)
+      LIBTERMCAP="$LIBXCURSES"
+      LTLIBTERMCAP="$LTLIBXCURSES"
+      INCTERMCAP="$INCXCURSES"
+      ;;
+    libcurses)
+      LIBTERMCAP="$LIBCURSES"
+      LTLIBTERMCAP="$LTLIBCURSES"
+      INCTERMCAP="$INCCURSES"
+      ;;
     "not found"*)
       LIBTERMCAP=
       LTLIBTERMCAP=
@@ -127,7 +183,7 @@ AC_DEFUN([gl_TERMCAP_BODY],
       ;;
   esac
   case "$gl_cv_termcap" in
-    libc | libncurses | libtermcap)
+    libc | libncurses | libtermcap | libxcurses | libcurses)
       AC_DEFINE([HAVE_TERMCAP], 1,
         [Define if tgetent(), tgetnum(), tgetstr(), tgetflag()
          are among the termcap library functions.])
