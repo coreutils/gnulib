@@ -2,6 +2,7 @@ Files:
 tests/test-sys_utsname.c
 
 Depends-on:
+sys_utsname-c++-tests
 
 configure.ac:
 

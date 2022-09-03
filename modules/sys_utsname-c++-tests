@@ -1,0 +1,17 @@
+Files:
+tests/test-sys_utsname-c++.cc
+
+Status:
+c++-test
+
+Depends-on:
+ansi-c++-opt
+
+configure.ac:
+
+Makefile.am:
+if ANSICXX
+TESTS += test-sys_utsname-c++
+check_PROGRAMS += test-sys_utsname-c++
+test_sys_utsname_c___SOURCES = test-sys_utsname-c++.cc
+endif
