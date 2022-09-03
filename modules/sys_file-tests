@@ -2,6 +2,7 @@ Files:
 tests/test-sys_file.c
 
 Depends-on:
+sys_file-c++-tests
 
 configure.ac:
 
