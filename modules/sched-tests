@@ -2,6 +2,7 @@ Files:
 tests/test-sched.c
 
 Depends-on:
+sched-c++-tests
 
 configure.ac:
 
