@@ -8,6 +8,9 @@ Gnulib module: net_if
 Portability problems fixed by Gnulib:
 @itemize
 @item
+This header file is missing on some platforms:
+mingw, MSVC 14.
+@item
 This header file is not self-contained on some platforms (needing
 <sys/socket.h> to be included first):
 Mac OS X 10.5, FreeBSD 8.2, OpenBSD 5.2.
@@ -15,7 +18,4 @@ Mac OS X 10.5, FreeBSD 8.2, OpenBSD 5.2.
 
 Portability problems not fixed by Gnulib:
 @itemize
-@item
-This header file is missing on some platforms:
-mingw, MSVC 14.
 @end itemize

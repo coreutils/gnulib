@@ -3,6 +3,7 @@ tests/test-net_if.c
 tests/signature.h
 
 Depends-on:
+net_if-c++-tests
 
 configure.ac:
 NET_IF_LIB=

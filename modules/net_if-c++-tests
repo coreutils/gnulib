@@ -1,0 +1,19 @@
+Files:
+tests/test-net_if-c++.cc
+
+Status:
+c++-test
+
+Depends-on:
+ansi-c++-opt
+net_if-tests
+
+configure.ac:
+
+Makefile.am:
+if ANSICXX
+TESTS += test-net_if-c++
+check_PROGRAMS += test-net_if-c++
+test_net_if_c___SOURCES = test-net_if-c++.cc
+test_net_if_c___LDADD = $(LDADD) @NET_IF_LIB@
+endif
