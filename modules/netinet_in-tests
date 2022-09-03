@@ -2,6 +2,7 @@ Files:
 tests/test-netinet_in.c
 
 Depends-on:
+netinet_in-c++-tests
 
 configure.ac:
 

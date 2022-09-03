@@ -1,0 +1,17 @@
+Files:
+tests/test-netinet_in-c++.cc
+
+Status:
+c++-test
+
+Depends-on:
+ansi-c++-opt
+
+configure.ac:
+
+Makefile.am:
+if ANSICXX
+TESTS += test-netinet_in-c++
+check_PROGRAMS += test-netinet_in-c++
+test_netinet_in_c___SOURCES = test-netinet_in-c++.cc
+endif
