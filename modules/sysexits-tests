@@ -2,6 +2,7 @@ Files:
 tests/test-sysexits.c
 
 Depends-on:
+sysexits-c++-tests
 
 configure.ac:
 
