@@ -1,0 +1,17 @@
+Files:
+tests/test-sys_times-c++.cc
+
+Status:
+c++-test
+
+Depends-on:
+ansi-c++-opt
+
+configure.ac:
+
+Makefile.am:
+if ANSICXX
+TESTS += test-sys_times-c++
+check_PROGRAMS += test-sys_times-c++
+test_sys_times_c___SOURCES = test-sys_times-c++.cc
+endif
