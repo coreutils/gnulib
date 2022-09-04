@@ -1,4 +1,4 @@
-# fmal.m4 serial 7
+# fmal.m4 serial 8
 dnl Copyright (C) 2011-2022 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -65,7 +65,8 @@ AC_DEFUN([gl_FUNC_FMAL],
   AC_SUBST([FMAL_LIBM])
 ])
 
-dnl Test whether fmal() has any of the 15 known bugs of glibc 2.11.3 on x86_64.
+dnl Test whether fmal() has any of the 15 known bugs of glibc 2.11.3 on x86_64
+dnl or the known bug of glibc 2.17 on x86_64.
 AC_DEFUN([gl_FUNC_FMAL_WORKS],
 [
   AC_REQUIRE([AC_PROG_CC])
@@ -364,6 +365,20 @@ int main()
     volatile long double result = fmal (x, y, z);
     if (result != expected)
       failed_tests |= 32;
+  }
+  /* This test fails on glibc 2.17 x86_64.  */
+  {
+    volatile long double x = 1.0L;
+    volatile long double y = x;
+    volatile long double z = - ldexpl (1.0L, -1 - LDBL_MANT_DIG); /* - 2^-65 */
+    /* x * y + z with infinite precision: 2^0 - 2^-65.
+       Lies between 2^0 - 2^-64 and 2^0 and is at the same distance from each.
+       According to the round-to-even rule, the rounding must round up and
+       produce 2^0.  */
+    volatile long double expected = 1.0L;
+    volatile long double result = fmal (x, y, z);
+    if (result != expected)
+      failed_tests |= 64;
   }
   return failed_tests;
 }]])],
