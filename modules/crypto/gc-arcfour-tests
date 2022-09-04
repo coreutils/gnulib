@@ -8,3 +8,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-gc-arcfour
 check_PROGRAMS += test-gc-arcfour
+test_gc_arcfour_LDADD = $(LDADD) $(LIB_GETRANDOM)
