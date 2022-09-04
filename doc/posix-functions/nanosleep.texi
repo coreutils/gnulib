@@ -18,6 +18,10 @@ Linux 64-bit, Solaris 64-bit.
 @item
 This function cannot sleep longer than 49.7 days on some platforms:
 Cygwin 1.5.x.
+@item
+This function does not fail when passed a negative nanosecond value on some
+platforms:
+newer 32-bit mingw.
 @end itemize
 
 Portability problems not fixed by Gnulib:
