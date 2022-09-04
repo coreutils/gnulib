@@ -170,11 +170,13 @@ _GL_FUNCDECL_SYS (c32rtomb, size_t, (char *s, char32_t wc, mbstate_t *ps));
 #  endif
 _GL_CXXALIAS_SYS (c32rtomb, size_t, (char *s, char32_t wc, mbstate_t *ps));
 # endif
+# if __GLIBC__ + (__GLIBC_MINOR__ >= 16) > 2
 _GL_CXXALIASWARN (c32rtomb);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef c32rtomb
 # if HAVE_RAW_DECL_C32RTOMB
-_GL_WARN_ON_USE (mbrtoc32, "c32rtomb is not portable - "
+_GL_WARN_ON_USE (c32rtomb, "c32rtomb is not portable - "
                  "use gnulib module c32rtomb for portability");
 # endif
 #endif
@@ -245,7 +247,9 @@ _GL_FUNCDECL_SYS (mbrtoc32, size_t,
 _GL_CXXALIAS_SYS (mbrtoc32, size_t,
                   (char32_t *pc, const char *s, size_t n, mbstate_t *ps));
 # endif
+# if __GLIBC__ + (__GLIBC_MINOR__ >= 16) > 2
 _GL_CXXALIASWARN (mbrtoc32);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef mbrtoc32
 # if HAVE_RAW_DECL_MBRTOC32
