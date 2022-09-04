@@ -59,8 +59,10 @@
 /* 7.16. Boolean type and values */
 
 #ifdef __cplusplus
-# define _Bool bool
-# define bool bool
+# if !defined _MSC_VER
+#  define _Bool bool
+#  define bool bool
+# endif
 #else
 # if !defined __GNUC__
    /* If @HAVE__BOOL@:
@@ -103,8 +105,10 @@ typedef enum { _Bool_must_promote_to_int = -1, false = 0, true = 1 } _Bool;
 
 /* The other macros must be usable in preprocessor directives.  */
 #ifdef __cplusplus
-# define false false
-# define true true
+# if !defined _MSC_VER
+#  define false false
+#  define true true
+# endif
 #else
 # define false 0
 # define true 1
