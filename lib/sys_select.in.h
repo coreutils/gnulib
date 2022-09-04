@@ -288,7 +288,9 @@ _GL_CXXALIAS_SYS_CAST (pselect, int,
                         struct timespec const *restrict,
                         const sigset_t *restrict));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pselect);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pselect
 # if HAVE_RAW_DECL_PSELECT
