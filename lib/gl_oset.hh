@@ -153,7 +153,7 @@ public:
     ~iterator ()
       { gl_oset_iterator_free (&_state); }
 
-  #if defined __xlC__ || defined __HP_aCC || defined __SUNPRO_CC || defined __EDG__
+  #if defined __xlC__ || defined __HP_aCC || defined __SUNPRO_CC || defined __EDG__ || (defined _MSC_VER && !defined __clang__)
   public:
   #else
   private:
