@@ -1968,6 +1968,35 @@ _GL_WARN_ON_USE (pthread_spin_destroy, "pthread_spin_destroy is not portable - "
 #endif
 
 
+#if defined __cplusplus && defined GNULIB_NAMESPACE && !@HAVE_PTHREAD_H@ && defined __MINGW32__
+/* Provide the symbols required by mingw's <bits/gthr-default.h>.  */
+using GNULIB_NAMESPACE::pthread_create;
+using GNULIB_NAMESPACE::pthread_self;
+using GNULIB_NAMESPACE::pthread_equal;
+using GNULIB_NAMESPACE::pthread_detach;
+using GNULIB_NAMESPACE::pthread_join;
+using GNULIB_NAMESPACE::pthread_once;
+using GNULIB_NAMESPACE::pthread_mutex_init;
+using GNULIB_NAMESPACE::pthread_mutexattr_init;
+using GNULIB_NAMESPACE::pthread_mutexattr_settype;
+using GNULIB_NAMESPACE::pthread_mutexattr_destroy;
+using GNULIB_NAMESPACE::pthread_mutex_lock;
+using GNULIB_NAMESPACE::pthread_mutex_trylock;
+using GNULIB_NAMESPACE::pthread_mutex_timedlock;
+using GNULIB_NAMESPACE::pthread_mutex_unlock;
+using GNULIB_NAMESPACE::pthread_mutex_destroy;
+using GNULIB_NAMESPACE::pthread_cond_wait;
+using GNULIB_NAMESPACE::pthread_cond_timedwait;
+using GNULIB_NAMESPACE::pthread_cond_signal;
+using GNULIB_NAMESPACE::pthread_cond_broadcast;
+using GNULIB_NAMESPACE::pthread_cond_destroy;
+using GNULIB_NAMESPACE::pthread_key_create;
+using GNULIB_NAMESPACE::pthread_setspecific;
+using GNULIB_NAMESPACE::pthread_getspecific;
+using GNULIB_NAMESPACE::pthread_key_delete;
+#endif
+
+
 #endif /* _@GUARD_PREFIX@_PTHREAD_H_ */
 #endif /* _@GUARD_PREFIX@_PTHREAD_H_ */
 #endif
