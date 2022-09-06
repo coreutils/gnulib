@@ -174,3 +174,12 @@ at any time.
     https://www.gnu.org/software/libtool/
   + Download:
     https://ftp.gnu.org/gnu/libtool/
+
+* GNU tar 1.28 or newer.
+  + Recommended.
+    Needed if you use the 'gnumakefile' module, which sets TAR_OPTIONS
+    to --sort=names (added in version 1.28) in GNUmakefile for 'make dist'.
+  + Homepage:
+    https://www.gnu.org/software/tar/
+  + Download:
+    https://ftp.gnu.org/gnu/tar/

@@ -26,7 +26,7 @@ _gl-Makefile := $(wildcard [M]akefile)
 ifneq ($(_gl-Makefile),)
 
 # Make tar archive easier to reproduce.
-export TAR_OPTIONS = --owner=0 --group=0 --numeric-owner
+export TAR_OPTIONS = --owner=0 --group=0 --numeric-owner --sort=name
 
 # Allow the user to add to this in the Makefile.
 ALL_RECURSIVE_TARGETS =
