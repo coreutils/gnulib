@@ -20,10 +20,15 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
+
+#include "binary-io.h"
 
 int
 main ()
 {
+  set_binary_mode (STDOUT_FILENO, O_BINARY);
+
   /* Repeatedly: Read two integers i and j, then output all integers in the
      range i..j, one per line.  */
   for (;;)
