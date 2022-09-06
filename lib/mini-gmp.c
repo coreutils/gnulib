@@ -3098,7 +3098,7 @@ mpz_powm (mpz_t r, const mpz_t b, const mpz_t e, const mpz_t m)
 
   if (en == 0)
     {
-      mpz_set_ui (r, 1);
+      mpz_set_ui (r, mpz_cmpabs_ui (m, 1));
       return;
     }
 
