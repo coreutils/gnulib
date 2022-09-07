@@ -55,12 +55,14 @@ main (void)
     ASSERT (posix_spawn_file_actions_addclose (&actions, -1) == EBADF);
   }
   /* This behaviour is not mandated by POSIX, but happens to pass on all
-     platforms.  */
+     platforms except musl libc.  */
+#if !defined MUSL_LIBC
   {
     int bad_fd = big_fd ();
     errno = 0;
     ASSERT (posix_spawn_file_actions_addclose (&actions, bad_fd) == EBADF);
   }
+#endif
 
   posix_spawn_file_actions_destroy (&actions);
 
