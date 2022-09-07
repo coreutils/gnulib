@@ -9,6 +9,7 @@ posix_spawn_file_actions_init
 posix_spawn_file_actions_destroy
 
 configure.ac:
+gl_MUSL_LIBC
 
 Makefile.am:
 TESTS += test-posix_spawn_file_actions_addclose
