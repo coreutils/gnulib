@@ -57,7 +57,6 @@ struct s { bool s: 1; bool t; } s;
 
 char a[true == 1 ? 1 : -1];
 char b[false == 0 ? 1 : -1];
-char c[__bool_true_false_are_defined == 1 ? 1 : -1];
 #if WORKING_BOOL
 char d[(bool) 0.5 == true ? 1 : -1];
 # ifdef ADDRESS_CHECK_OKAY /* Avoid gcc warning.  */
