@@ -129,9 +129,9 @@ grow_inheritable_handles (struct inheritable_handles *inh_handles, int newfd)
           errno = ENOMEM;
           return -1;
         }
-      unsigned char *new_flags_array =
-        (unsigned char *)
-        realloc (inh_handles->flags, new_allocated * sizeof (unsigned char));
+      unsigned short *new_flags_array =
+        (unsigned short *)
+        realloc (inh_handles->flags, new_allocated * sizeof (unsigned short));
       if (new_flags_array == NULL)
         {
           free (new_handles_array);
@@ -151,15 +151,33 @@ grow_inheritable_handles (struct inheritable_handles *inh_handles, int newfd)
   return 0;
 }
 
-/* Reduces inh_handles->count to the minimum needed.  */
+/* Closes the handles in inh_handles that are not meant to be preserved in the
+   child process, and reduces inh_handles->count to the minimum needed.  */
 static void
 shrink_inheritable_handles (struct inheritable_handles *inh_handles)
 {
   HANDLE *handles = inh_handles->handles;
+  unsigned short *flags = inh_handles->flags;
+  size_t handles_count = inh_handles->count;
+  unsigned int fd;
 
-  while (inh_handles->count > 3
-         && handles[inh_handles->count - 1] == INVALID_HANDLE_VALUE)
-    inh_handles->count--;
+  for (fd = 0; fd < handles_count; fd++)
+    {
+      HANDLE handle = handles[fd];
+
+      if (handle != INVALID_HANDLE_VALUE
+          && (flags[fd] & KEEP_OPEN_IN_CHILD) == 0)
+        {
+          CloseHandle (handle);
+          handles[fd] = INVALID_HANDLE_VALUE;
+        }
+    }
+
+  while (handles_count > 3
+         && handles[handles_count - 1] == INVALID_HANDLE_VALUE)
+    handles_count--;
+
+  inh_handles->count = handles_count;
 }
 
 /* Closes all handles in inh_handles.  */
@@ -411,7 +429,8 @@ do_open (struct inheritable_handles *inh_handles, int newfd,
       errno = EBADF; /* arbitrary */
       return -1;
     }
-  inh_handles->flags[newfd] = ((flags & O_APPEND) != 0 ? 32 : 0);
+  inh_handles->flags[newfd] =
+    ((flags & O_APPEND) != 0 ? 32 : 0) | KEEP_OPEN_IN_CHILD;
   return 0;
 }
 
@@ -443,7 +462,7 @@ do_dup2 (struct inheritable_handles *inh_handles, int oldfd, int newfd,
           errno = EIO;
           return -1;
         }
-      /* Duplicate the handle, so that it a forthcoming do_close action on oldfd
+      /* Duplicate the handle, so that a forthcoming do_close action on oldfd
          has no effect on newfd.  */
       if (!DuplicateHandle (curr_process, inh_handles->handles[oldfd],
                             curr_process, &inh_handles->handles[newfd],
@@ -452,7 +471,7 @@ do_dup2 (struct inheritable_handles *inh_handles, int oldfd, int newfd,
           errno = EBADF; /* arbitrary */
           return -1;
         }
-      inh_handles->flags[newfd] = 0;
+      inh_handles->flags[newfd] = KEEP_OPEN_IN_CHILD;
     }
   return 0;
 }
@@ -624,7 +643,8 @@ __spawni (pid_t *pid, const char *prog_filename,
         }
     }
 
-  /* Reduce inh_handles.count to the minimum needed.  */
+  /* Close the handles in inh_handles that are not meant to be preserved in the
+     child process, and reduce inh_handles.count to the minimum needed.  */
   shrink_inheritable_handles (&inh_handles);
 
   /* CreateProcess

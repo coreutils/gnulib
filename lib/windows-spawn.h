@@ -85,10 +85,12 @@ extern char * compose_envblock (const char * const *envp)
   _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE;
 
 
-/* This struct keeps track of which handles to pass to a subprocess, and with
-   which flags.  All of the handles here are inheritable.
+/* This struct keeps track of which handles to potentially pass to a subprocess,
+   and with which flags.  All of the handles here are inheritable.
    Regarding handle inheritance, see
-   <https://docs.microsoft.com/en-us/windows/win32/sysinfo/handle-inheritance>  */
+   <https://docs.microsoft.com/en-us/windows/win32/sysinfo/handle-inheritance>.
+   Whether a handle is actually scheduled for being preserved in the child
+   process is determined by the KEEP_OPEN_IN_CHILD bit in the flags.  */
 struct inheritable_handles
 {
   /* The number of occupied entries in the two arrays below.
@@ -103,13 +105,19 @@ struct inheritable_handles
      flags[fd] is only relevant if handles[fd] != INVALID_HANDLE_VALUE.
      It is a bit mask consisting of:
        - 32 for O_APPEND.
+       - KEEP_OPEN_IN_CHILD if handles[fd] is scheduled to be preserved in the
+         child process.
    */
-  unsigned char *flags;
+  unsigned short *flags;
+  #define KEEP_OPEN_IN_CHILD 0x100
 };
 
-/* Initializes a set of inheritable handles, filling in all inheritable handles
-   assigned to file descriptors.
-   If DUPLICATE is true, the handles stored in the set are duplicates.
+/* Initializes a set of inheritable handles, filling in all or part of the
+   file descriptors of the current process.
+   If DUPLICATE is true, the handles stored are those of all file descriptors,
+   and we use DuplicateHandle to make sure that they are all inheritable.
+   If DUPLICATE is false, the handles stored are only the inheritables ones;
+   this is a shortcut for spawnpvech().
    Returns 0 upon success.  In case of failure, -1 is returned, with errno set.
  */
 extern int init_inheritable_handles (struct inheritable_handles *inh_handles,

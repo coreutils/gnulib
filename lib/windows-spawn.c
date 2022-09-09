@@ -324,14 +324,21 @@ init_inheritable_handles (struct inheritable_handles *inh_handles,
         HANDLE handle = (HANDLE) _get_osfhandle (fd);
         if (handle != INVALID_HANDLE_VALUE)
           {
-            DWORD hflags;
-            /* GetHandleInformation
-               <https://docs.microsoft.com/en-us/windows/win32/api/handleapi/nf-handleapi-gethandleinformation>  */
-            if (GetHandleInformation (handle, &hflags))
+            if (duplicate)
+              /* We will add fd to the array, regardless of whether it is
+                 inheritable or not.  */
+              break;
+            else
               {
-                if ((hflags & HANDLE_FLAG_INHERIT) != 0)
-                  /* fd denotes an inheritable descriptor.  */
-                  break;
+                DWORD hflags;
+                /* GetHandleInformation
+                   <https://docs.microsoft.com/en-us/windows/win32/api/handleapi/nf-handleapi-gethandleinformation>  */
+                if (GetHandleInformation (handle, &hflags))
+                  {
+                    if ((hflags & HANDLE_FLAG_INHERIT) != 0)
+                      /* fd denotes an inheritable descriptor.  */
+                      break;
+                  }
               }
           }
       }
@@ -348,8 +355,8 @@ init_inheritable_handles (struct inheritable_handles *inh_handles,
       errno = ENOMEM;
       return -1;
     }
-  unsigned char *flags_array =
-    (unsigned char *) malloc (handles_allocated * sizeof (unsigned char));
+  unsigned short *flags_array =
+    (unsigned short *) malloc (handles_allocated * sizeof (unsigned short));
   if (flags_array == NULL)
     {
       free (handles_array);
@@ -374,29 +381,34 @@ init_inheritable_handles (struct inheritable_handles *inh_handles,
                <https://docs.microsoft.com/en-us/windows/win32/api/handleapi/nf-handleapi-gethandleinformation>  */
             if (GetHandleInformation (handle, &hflags))
               {
-                if ((hflags & HANDLE_FLAG_INHERIT) != 0)
+                if (duplicate)
                   {
-                    /* fd denotes an inheritable descriptor.  */
-                    if (duplicate)
+                    /* Add fd to the array, regardless of whether it is
+                       inheritable or not.  */
+                    if (!DuplicateHandle (curr_process, handle,
+                                          curr_process, &handles_array[fd],
+                                          0, TRUE, DUPLICATE_SAME_ACCESS))
                       {
-                        if (!DuplicateHandle (curr_process, handle,
-                                              curr_process, &handles_array[fd],
-                                              0, TRUE, DUPLICATE_SAME_ACCESS))
-                          {
-                            unsigned int i;
-                            for (i = 0; i < fd; i++)
-                              if (handles_array[i] != INVALID_HANDLE_VALUE)
-                                CloseHandle (handles_array[i]);
-                            free (flags_array);
-                            free (handles_array);
-                            errno = EBADF; /* arbitrary */
-                            return -1;
-                          }
+                        unsigned int i;
+                        for (i = 0; i < fd; i++)
+                          if (handles_array[i] != INVALID_HANDLE_VALUE)
+                            CloseHandle (handles_array[i]);
+                        free (flags_array);
+                        free (handles_array);
+                        errno = EBADF; /* arbitrary */
+                        return -1;
                       }
-                    else
-                      handles_array[fd] = handle;
-
-                    flags_array[fd] = 0;
+                    flags_array[fd] =
+                      ((hflags & HANDLE_FLAG_INHERIT) != 0 ? KEEP_OPEN_IN_CHILD : 0);
+                  }
+                else
+                  {
+                    if ((hflags & HANDLE_FLAG_INHERIT) != 0)
+                      {
+                        /* fd denotes an inheritable descriptor.  */
+                        handles_array[fd] = handle;
+                        flags_array[fd] = KEEP_OPEN_IN_CHILD;
+                      }
                   }
               }
           }
@@ -475,7 +487,7 @@ compose_handles_block (const struct inheritable_handles *inh_handles,
         if (handle != INVALID_HANDLE_VALUE
             /* The first three are possibly already passed above.
                But they need to passed here as well, if they have some flags.  */
-            && (fd >= 3 || inh_handles->flags[fd] != 0))
+            && (fd >= 3 || (unsigned char) inh_handles->flags[fd] != 0))
           {
             DWORD hflags;
             /* GetHandleInformation
@@ -490,7 +502,7 @@ compose_handles_block (const struct inheritable_handles *inh_handles,
                        flags[fd] = 1.  But on ReactOS or Wine, adding the bit
                        that indicates the handle type may be necessary.  So,
                        just do it everywhere.  */
-                    flags[fd] = 1 | inh_handles->flags[fd];
+                    flags[fd] = 1 | (unsigned char) inh_handles->flags[fd];
                     switch (GetFileType (handle))
                       {
                       case FILE_TYPE_CHAR:
@@ -619,9 +631,12 @@ spawnpvech (int mode,
       errno = saved_errno;
       return -1;
     }
-  inh_handles.handles[0] = stdin_handle;  inh_handles.flags[0] = 0;
-  inh_handles.handles[1] = stdout_handle; inh_handles.flags[1] = 0;
-  inh_handles.handles[2] = stderr_handle; inh_handles.flags[2] = 0;
+  inh_handles.handles[0] = stdin_handle;
+  inh_handles.flags[0] = KEEP_OPEN_IN_CHILD;
+  inh_handles.handles[1] = stdout_handle;
+  inh_handles.flags[1] = KEEP_OPEN_IN_CHILD;
+  inh_handles.handles[2] = stderr_handle;
+  inh_handles.flags[2] = KEEP_OPEN_IN_CHILD;
 
   /* CreateProcess
      <https://docs.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-createprocessa>  */
