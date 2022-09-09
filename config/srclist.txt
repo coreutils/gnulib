@@ -74,7 +74,7 @@ $LIBCSRC posix/regex.h			lib
 #$LIBCSRC stdlib/canonicalize           lib/canonicalize-lgpl.c
 #$LIBCSRC sysdeps/generic/eloop-threshold.h	lib
 $LIBCSRC time/timegm.c			lib
-#$LIBCSRC time/mktime.c			lib
+$LIBCSRC time/mktime.c			lib
 $LIBCSRC time/mktime-internal.h		lib
 
 # 
