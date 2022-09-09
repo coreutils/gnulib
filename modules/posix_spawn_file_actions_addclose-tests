@@ -2,6 +2,7 @@ Files:
 tests/test-posix_spawn_file_actions_addclose.c
 tests/signature.h
 tests/macros.h
+m4/musl.m4
 
 Depends-on:
 getdtablesize
