@@ -107,9 +107,12 @@ struct inheritable_handles
        - 32 for O_APPEND.
        - KEEP_OPEN_IN_CHILD if handles[fd] is scheduled to be preserved in the
          child process.
+       - KEEP_OPEN_IN_PARENT if handles[fd] is shared with (and needs to be kept
+         open in) the parent process.
    */
   unsigned short *flags;
   #define KEEP_OPEN_IN_CHILD 0x100
+  #define KEEP_OPEN_IN_PARENT 0x200
 };
 
 /* Initializes a set of inheritable handles, filling in all or part of the

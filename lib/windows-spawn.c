@@ -385,21 +385,30 @@ init_inheritable_handles (struct inheritable_handles *inh_handles,
                   {
                     /* Add fd to the array, regardless of whether it is
                        inheritable or not.  */
-                    if (!DuplicateHandle (curr_process, handle,
-                                          curr_process, &handles_array[fd],
-                                          0, TRUE, DUPLICATE_SAME_ACCESS))
+                    if ((hflags & HANDLE_FLAG_INHERIT) != 0)
                       {
-                        unsigned int i;
-                        for (i = 0; i < fd; i++)
-                          if (handles_array[i] != INVALID_HANDLE_VALUE)
-                            CloseHandle (handles_array[i]);
-                        free (flags_array);
-                        free (handles_array);
-                        errno = EBADF; /* arbitrary */
-                        return -1;
+                        /* Instead of duplicating it, just mark it as shared.  */
+                        handles_array[fd] = handle;
+                        flags_array[fd] = KEEP_OPEN_IN_PARENT | KEEP_OPEN_IN_CHILD;
                       }
-                    flags_array[fd] =
-                      ((hflags & HANDLE_FLAG_INHERIT) != 0 ? KEEP_OPEN_IN_CHILD : 0);
+                    else
+                      {
+                        if (!DuplicateHandle (curr_process, handle,
+                                              curr_process, &handles_array[fd],
+                                              0, TRUE, DUPLICATE_SAME_ACCESS))
+                          {
+                            unsigned int i;
+                            for (i = 0; i < fd; i++)
+                              if (handles_array[i] != INVALID_HANDLE_VALUE
+                                  && !(flags_array[i] & KEEP_OPEN_IN_PARENT))
+                                CloseHandle (handles_array[i]);
+                            free (flags_array);
+                            free (handles_array);
+                            errno = EBADF; /* arbitrary */
+                            return -1;
+                          }
+                        flags_array[fd] = 0;
+                      }
                   }
                 else
                   {
