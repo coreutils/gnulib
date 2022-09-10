@@ -219,7 +219,7 @@ sigisempty (const sigset_t *s)
   return memiszero (s, sizeof (sigset_t));
 }
 
-/* Opens a HANDLE to a file.
+/* Opens an inheritable HANDLE to a file.
    Upon failure, returns INVALID_HANDLE_VALUE with errno set.  */
 static HANDLE
 open_handle (const char *name, int flags, mode_t mode)
@@ -295,13 +295,17 @@ open_handle (const char *name, int flags, mode_t mode)
      CreateFile
      <https://docs.microsoft.com/en-us/windows/desktop/api/fileapi/nf-fileapi-createfilea>
      <https://docs.microsoft.com/en-us/windows/desktop/FileIO/creating-and-opening-files>  */
+  SECURITY_ATTRIBUTES sec_attr;
+  sec_attr.nLength = sizeof (SECURITY_ATTRIBUTES);
+  sec_attr.lpSecurityDescriptor = NULL;
+  sec_attr.bInheritHandle = TRUE;
   HANDLE handle =
     CreateFile (rname,
                 ((flags & (O_WRONLY | O_RDWR)) != 0
                  ? GENERIC_READ | GENERIC_WRITE
                  : GENERIC_READ),
                 FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
-                NULL,
+                &sec_attr,
                 ((flags & O_CREAT) != 0
                  ? ((flags & O_EXCL) != 0
                     ? CREATE_NEW
@@ -384,7 +388,7 @@ open_handle (const char *name, int flags, mode_t mode)
 static int
 do_open (struct inheritable_handles *inh_handles, int newfd,
          const char *filename, const char *directory,
-         int flags, mode_t mode, HANDLE curr_process)
+         int flags, mode_t mode)
 {
   if (!(newfd >= 0 && newfd < _getmaxstdio ()))
     {
@@ -424,15 +428,7 @@ do_open (struct inheritable_handles *inh_handles, int newfd,
       return -1;
     }
   free (filename_to_free);
-  /* Duplicate the handle, so that it becomes inheritable.  */
-  if (!DuplicateHandle (curr_process, handle,
-                        curr_process, &inh_handles->handles[newfd],
-                        0, TRUE,
-                        DUPLICATE_CLOSE_SOURCE | DUPLICATE_SAME_ACCESS))
-    {
-      errno = EBADF; /* arbitrary */
-      return -1;
-    }
+  inh_handles->handles[newfd] = handle;
   inh_handles->flags[newfd] =
     ((flags & O_APPEND) != 0 ? 32 : 0) | KEEP_OPEN_IN_CHILD;
   return 0;
@@ -611,7 +607,7 @@ __spawni (pid_t *pid, const char *prog_filename,
                 int flags = action->action.open_action.oflag;
                 mode_t mode = action->action.open_action.mode;
                 if (do_open (&inh_handles, newfd, filename, directory,
-                             flags, mode, curr_process)
+                             flags, mode)
                     < 0)
                   goto failed_2;
               }
