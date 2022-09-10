@@ -33,7 +33,7 @@
  "error: true is not 1"
 #endif
 
-struct s { bool s: 1; bool t; } s;
+struct s { bool u: 1; bool v; } s;
 
 char a[true == 1 ? 1 : -1];
 char b[false == 0 ? 1 : -1];
