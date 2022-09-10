@@ -28,6 +28,14 @@
 @PRAGMA_COLUMNS@
 
 #if @HAVE_UCHAR_H@
+/* On AIX 7.2 with xlclang++, /usr/include/uchar.h produces compilation errors
+   because it contains typedef definitions of char16_t and char32_t, however
+   char16_t and char32_t are keywords in this situation.  To work around it,
+   define char16_t and char32_t as macros.  */
+# if defined __cplusplus && defined _AIX && defined __ibmxl__ && defined __clang__
+#  define char16_t gl_char16_t
+#  define char32_t gl_char32_t
+# endif
 # @INCLUDE_NEXT@ @NEXT_UCHAR_H@
 #endif
 
