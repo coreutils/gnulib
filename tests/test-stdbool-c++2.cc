@@ -17,7 +17,7 @@
 #define GNULIB_NAMESPACE gnulib
 #include <config.h>
 
-#if __cplusplus >= 201103
+#if __cplusplus >= 201103 && __cplusplus < 202002
 
 # include <cstdbool>
 
