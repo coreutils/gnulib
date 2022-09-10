@@ -89,6 +89,12 @@
 #if defined _WIN32 && ! defined __CYGWIN__
 /* Native Windows API.  */
 
+/* Define to 1 to enable DuplicateHandle optimization.
+   Define to 0 to disable this optimization.  */
+# ifndef SPAWN_INTERNAL_OPTIMIZE_DUPLICATEHANDLE
+#  define SPAWN_INTERNAL_OPTIMIZE_DUPLICATEHANDLE 1
+# endif
+
 /* Get declarations of the native Windows API functions.  */
 # define WIN32_LEAN_AND_MEAN
 # include <windows.h>
@@ -141,6 +147,57 @@ grow_inheritable_handles (struct inheritable_handles *inh_handles, int newfd)
   return 0;
 }
 
+# if SPAWN_INTERNAL_OPTIMIZE_DUPLICATEHANDLE
+
+/* Assuming inh_handles->ih[newfd].handle != INVALID_HANDLE_VALUE
+   and      (inh_handles->ih[newfd].flags & DELAYED_DUP2_NEWFD) != 0,
+   actually performs the delayed dup2 (oldfd, newfd).
+   Returns 0 upon success.  In case of failure, -1 is returned, with errno set.
+ */
+static int
+do_delayed_dup2 (int newfd, struct inheritable_handles *inh_handles,
+                 HANDLE curr_process)
+{
+  int oldfd = inh_handles->ih[newfd].linked_fd;
+  /* Check invariants.  */
+  if (!((inh_handles->ih[oldfd].flags & DELAYED_DUP2_OLDFD) != 0
+        && newfd == inh_handles->ih[oldfd].linked_fd
+        && inh_handles->ih[newfd].handle == inh_handles->ih[oldfd].handle))
+    abort ();
+  /* Duplicate the handle now.  */
+  if (!DuplicateHandle (curr_process, inh_handles->ih[oldfd].handle,
+                        curr_process, &inh_handles->ih[newfd].handle,
+                        0, TRUE, DUPLICATE_SAME_ACCESS))
+    {
+      errno = EBADF; /* arbitrary */
+      return -1;
+    }
+  inh_handles->ih[oldfd].flags &= ~DELAYED_DUP2_OLDFD;
+  inh_handles->ih[newfd].flags =
+    (unsigned char) inh_handles->ih[oldfd].flags | KEEP_OPEN_IN_CHILD;
+  return 0;
+}
+
+/* Performs the remaining delayed dup2 (oldfd, newfd).
+   Returns 0 upon success.  In case of failure, -1 is returned, with errno set.
+ */
+static int
+do_remaining_delayed_dup2 (struct inheritable_handles *inh_handles,
+                           HANDLE curr_process)
+{
+  size_t handles_count = inh_handles->count;
+  int newfd;
+
+  for (newfd = 0; newfd < handles_count; newfd++)
+    if (inh_handles->ih[newfd].handle != INVALID_HANDLE_VALUE
+        && (inh_handles->ih[newfd].flags & DELAYED_DUP2_NEWFD) != 0)
+      if (do_delayed_dup2 (newfd, inh_handles, curr_process) < 0)
+        return -1;
+  return 0;
+}
+
+# endif
+
 /* Closes the handles in inh_handles that are not meant to be preserved in the
    child process, and reduces inh_handles->count to the minimum needed.  */
 static void
@@ -183,6 +240,7 @@ close_inheritable_handles (struct inheritable_handles *inh_handles)
       HANDLE handle = ih[fd].handle;
 
       if (handle != INVALID_HANDLE_VALUE
+          && !(ih[fd].flags & DELAYED_DUP2_NEWFD)
           && !(ih[fd].flags & KEEP_OPEN_IN_PARENT))
         CloseHandle (handle);
     }
@@ -205,6 +263,64 @@ static bool
 sigisempty (const sigset_t *s)
 {
   return memiszero (s, sizeof (sigset_t));
+}
+
+/* Executes a 'close' action.
+   Returns 0 upon success.  In case of failure, -1 is returned, with errno set.
+ */
+static int
+do_close (struct inheritable_handles *inh_handles, int fd, bool ignore_EBADF)
+{
+  if (!(fd >= 0 && fd < inh_handles->count
+        && inh_handles->ih[fd].handle != INVALID_HANDLE_VALUE))
+    {
+      if (ignore_EBADF)
+        return 0;
+      else
+        {
+          errno = EBADF;
+          return -1;
+        }
+    }
+
+# if SPAWN_INTERNAL_OPTIMIZE_DUPLICATEHANDLE
+  if ((inh_handles->ih[fd].flags & DELAYED_DUP2_NEWFD) != 0)
+    {
+      int dup2_oldfd = inh_handles->ih[fd].linked_fd;
+      /* Check invariants.  */
+      if (!((inh_handles->ih[dup2_oldfd].flags & DELAYED_DUP2_OLDFD) != 0
+            && fd == inh_handles->ih[dup2_oldfd].linked_fd
+            && inh_handles->ih[fd].handle == inh_handles->ih[dup2_oldfd].handle))
+        abort ();
+      /* Annihilate a delayed dup2 (..., fd) call.  */
+      inh_handles->ih[dup2_oldfd].flags &= ~DELAYED_DUP2_OLDFD;
+    }
+  else if ((inh_handles->ih[fd].flags & DELAYED_DUP2_OLDFD) != 0)
+    {
+      int dup2_newfd = inh_handles->ih[fd].linked_fd;
+      /* Check invariants.  */
+      if (!((inh_handles->ih[dup2_newfd].flags & DELAYED_DUP2_NEWFD) != 0
+            && fd == inh_handles->ih[dup2_newfd].linked_fd
+            && inh_handles->ih[fd].handle == inh_handles->ih[dup2_newfd].handle))
+        abort ();
+      /* Optimize a delayed dup2 (fd, ...) call.  */
+      inh_handles->ih[dup2_newfd].flags =
+        (inh_handles->ih[fd].flags & ~DELAYED_DUP2_OLDFD) | KEEP_OPEN_IN_CHILD;
+    }
+  else
+# endif
+    {
+      if (!(inh_handles->ih[fd].flags & KEEP_OPEN_IN_PARENT)
+          && !CloseHandle (inh_handles->ih[fd].handle))
+        {
+          inh_handles->ih[fd].handle = INVALID_HANDLE_VALUE;
+          errno = EIO;
+          return -1;
+        }
+    }
+  inh_handles->ih[fd].handle = INVALID_HANDLE_VALUE;
+
+  return 0;
 }
 
 /* Opens an inheritable HANDLE to a file.
@@ -385,13 +501,8 @@ do_open (struct inheritable_handles *inh_handles, int newfd,
     }
   if (grow_inheritable_handles (inh_handles, newfd) < 0)
     return -1;
-  if (inh_handles->ih[newfd].handle != INVALID_HANDLE_VALUE
-      && !(inh_handles->ih[newfd].flags & KEEP_OPEN_IN_PARENT)
-      && !CloseHandle (inh_handles->ih[newfd].handle))
-    {
-      errno = EIO;
-      return -1;
-    }
+  if (do_close (inh_handles, newfd, true) < 0)
+    return -1;
   if (filename == NULL)
     {
       errno = EINVAL;
@@ -444,15 +555,45 @@ do_dup2 (struct inheritable_handles *inh_handles, int oldfd, int newfd,
     {
       if (grow_inheritable_handles (inh_handles, newfd) < 0)
         return -1;
-      if (inh_handles->ih[newfd].handle != INVALID_HANDLE_VALUE
-          && !(inh_handles->ih[newfd].flags & KEEP_OPEN_IN_PARENT)
-          && !CloseHandle (inh_handles->ih[newfd].handle))
-        {
-          errno = EIO;
+      if (do_close (inh_handles, newfd, true) < 0)
+        return -1;
+      /* We may need to duplicate the handle, so that a forthcoming do_close
+         action on oldfd has no effect on newfd.  */
+# if SPAWN_INTERNAL_OPTIMIZE_DUPLICATEHANDLE
+      /* But try to not do it now; delay it if possible.  In many cases, the
+         DuplicateHandle call can be optimized away.  */
+      if ((inh_handles->ih[oldfd].flags & DELAYED_DUP2_NEWFD) != 0)
+        if (do_delayed_dup2 (oldfd, inh_handles, curr_process) < 0)
           return -1;
+      if ((inh_handles->ih[oldfd].flags & DELAYED_DUP2_OLDFD) != 0)
+        {
+          /* Check invariants.  */
+          int dup2_newfd = inh_handles->ih[oldfd].linked_fd;
+          if (!((inh_handles->ih[dup2_newfd].flags & DELAYED_DUP2_NEWFD) != 0
+                && oldfd == inh_handles->ih[dup2_newfd].linked_fd
+                && inh_handles->ih[oldfd].handle == inh_handles->ih[dup2_newfd].handle))
+            abort ();
+          /* We can't delay two or more dup2 calls from the same oldfd.  */
+          if (!DuplicateHandle (curr_process, inh_handles->ih[oldfd].handle,
+                                curr_process, &inh_handles->ih[newfd].handle,
+                                0, TRUE, DUPLICATE_SAME_ACCESS))
+            {
+              errno = EBADF; /* arbitrary */
+              return -1;
+            }
+          inh_handles->ih[newfd].flags =
+            (unsigned char) inh_handles->ih[oldfd].flags | KEEP_OPEN_IN_CHILD;
         }
-      /* Duplicate the handle, so that a forthcoming do_close action on oldfd
-         has no effect on newfd.  */
+      else
+        {
+          /* Delay the dup2 (oldfd, newfd) action.  */
+          inh_handles->ih[oldfd].flags |= DELAYED_DUP2_OLDFD;
+          inh_handles->ih[oldfd].linked_fd = newfd;
+          inh_handles->ih[newfd].handle = inh_handles->ih[oldfd].handle;
+          inh_handles->ih[newfd].flags = DELAYED_DUP2_NEWFD;
+          inh_handles->ih[newfd].linked_fd = oldfd;
+        }
+# else
       if (!DuplicateHandle (curr_process, inh_handles->ih[oldfd].handle,
                             curr_process, &inh_handles->ih[newfd].handle,
                             0, TRUE, DUPLICATE_SAME_ACCESS))
@@ -462,29 +603,8 @@ do_dup2 (struct inheritable_handles *inh_handles, int oldfd, int newfd,
         }
       inh_handles->ih[newfd].flags =
         (unsigned char) inh_handles->ih[oldfd].flags | KEEP_OPEN_IN_CHILD;
+# endif
     }
-  return 0;
-}
-
-/* Executes a 'close' action.
-   Returns 0 upon success.  In case of failure, -1 is returned, with errno set.
- */
-static int
-do_close (struct inheritable_handles *inh_handles, int fd)
-{
-  if (!(fd >= 0 && fd < inh_handles->count
-        && inh_handles->ih[fd].handle != INVALID_HANDLE_VALUE))
-    {
-      errno = EBADF;
-      return -1;
-    }
-  if (!(inh_handles->ih[fd].flags & KEEP_OPEN_IN_PARENT)
-      && !CloseHandle (inh_handles->ih[fd].handle))
-    {
-      errno = EIO;
-      return -1;
-    }
-  inh_handles->ih[fd].handle = INVALID_HANDLE_VALUE;
   return 0;
 }
 
@@ -583,7 +703,7 @@ __spawni (pid_t *pid, const char *prog_filename,
             case spawn_do_close:
               {
                 int fd = action->action.close_action.fd;
-                if (do_close (&inh_handles, fd) < 0)
+                if (do_close (&inh_handles, fd, false) < 0)
                   goto failed_2;
               }
               break;
@@ -632,6 +752,12 @@ __spawni (pid_t *pid, const char *prog_filename,
               goto failed_2;
             }
         }
+
+# if SPAWN_INTERNAL_OPTIMIZE_DUPLICATEHANDLE
+      /* Do the remaining delayed dup2 invocations.  */
+      if (do_remaining_delayed_dup2 (&inh_handles, curr_process) < 0)
+        goto failed_2;
+# endif
     }
 
   /* Close the handles in inh_handles that are not meant to be preserved in the

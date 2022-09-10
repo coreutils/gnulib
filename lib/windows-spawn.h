@@ -97,10 +97,23 @@ struct IHANDLE
          child process.
        - KEEP_OPEN_IN_PARENT if the handle is shared with (and needs to be kept
          open in) the parent process.
-   */
+       - DELAYED_DUP2_OLDFD if there is a delayed dup2 (oldfd, newfd) and
+         this IHANDLE is at position oldfd.
+       - DELAYED_DUP2_NEWFD if there is a delayed dup2 (oldfd, newfd) and
+         this IHANDLE is at position newfd.
+     Note that DELAYED_DUP2_OLDFD and DELAYED_DUP2_NEWFD cannot be set in the
+     same IHANDLE.  */
   unsigned short flags;
   #define KEEP_OPEN_IN_CHILD 0x100
   #define KEEP_OPEN_IN_PARENT 0x200
+  #define DELAYED_DUP2_OLDFD 0x400
+  #define DELAYED_DUP2_NEWFD 0x800
+  /* Only relevant if handle != INVALID_HANDLE_VALUE and flags contains
+     either DELAYED_DUP2_OLDFD or DELAYED_DUP2_NEWFD.
+     It is the other fd of the delayed dup2 (oldfd, newfd), i.e.
+       - for DELAYED_DUP2_OLDFD, the newfd,
+       - for DELAYED_DUP2_NEWFD, the oldfd.  */
+  int linked_fd;
 };
 
 /* This struct keeps track of which handles to potentially pass to a subprocess,
