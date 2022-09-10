@@ -539,18 +539,78 @@ We develop and maintain a testsuite for Gnulib.  The goal is to have a
 code in git at @emph{any} time and know that their application will not
 break.  This means that before any change can be committed to the
 repository, a test suite program must be produced that exposes the bug
-for regression testing.  All experimental work should be done on
-branches to help promote this.
+for regression testing.
+
+@node Stable Branches
+@subsection Stable Branches
+
+In Gnulib, we don't use topic branches for experimental work.
+Therefore, occasionally a broken commit may be pushed in Gnulib.
+It does not happen often, but it does happen.
+
+To compensate for this, Gnulib offers ``stable branches''.  These
+are branches of the Gnulib code that are maintained over some
+longer period (a year, for example) and include
+@itemize
+@item
+bug fixes,
+@item
+portability enhancements (to existing as well as to new platforms),
+@item
+updates to @code{config.guess} and @code{config.sub}.
+@end itemize
+
+@noindent
+Not included in the stable branches are:
+@itemize
+@item
+new features, such as new modules,
+@item
+optimizations,
+@item
+refactorings,
+@item
+complex or risky changes in general,
+@item
+updates to @code{texinfo.tex},
+@item
+documentation updates.
+@end itemize
+
+So far, we have two stable branches:
+@table @code
+@item stable-202207
+A stable branch that starts at the beginning of July 2022.
+@item stable-202201
+A stable branch that starts at the beginning of January 2022.
+@end table
+
+The two use-cases of stable branches are thus:
+@itemize
+@item
+You want to protect yourself from occasional breakage in Gnulib.
+@item
+When making a bug-fix release of your code, you can incorporate
+bug fixes in Gnulib, by pulling in the newest commits from the
+same stable branch that you were already using for the previous
+release.
+@end itemize
+
+@node Writing reliable code
+@subsection Writing reliable code
 
 When compiling and testing Gnulib and Gnulib-using programs, certain
-compiler options can help improve reliability.  The
-@code{manywarnings} module enables several forms of static checking in
-GCC and related compilers (@pxref{manywarnings}).  For dynamic checking,
-you can run @code{configure} with @code{CFLAGS} options appropriate
-for your compiler.  For example:
+compiler options can help improve reliability.  First of all, make it
+a habit to use @samp{-Wall} in all compilation commands. Beyond that,
+the @code{manywarnings} module enables several forms of static checking in
+GCC and related compilers (@pxref{manywarnings}).
+
+For dynamic checking, you can run @code{configure} with @code{CFLAGS}
+options appropriate for your compiler.  For example:
 
 @example
 ./configure \
+ CPPFLAGS='-Wall'\
  CFLAGS='-g3 -O2'\
 ' -D_FORTIFY_SOURCE=2'\
 ' -fsanitize=undefined'\
@@ -584,5 +644,8 @@ libraries (@code{libstdc++} and @code{libubsan}) to be linked
 statically rather than dynamically, though this typically bloats the
 executable and the remaining extra libraries are still linked
 dynamically.
+
+It is also good to occasionally run the programs under @code{valgrind}
+(@pxref{Running self-tests under valgrind}).
 
 @include join-gnu.texi
