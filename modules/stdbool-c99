@@ -1,0 +1,51 @@
+Description:
+A <stdbool.h> that nearly conforms to C99.
+(Nearly: casts to bool may not work.)
+
+Status:
+obsolete
+
+Notice:
+This module is obsolete.  It is present only for programs that
+formerly used the old stdbool module for C99 compatibility,
+and that for some reason cannot use the current stdbool module
+for C23 compatibility.
+
+Files:
+lib/stdbool.in.h
+m4/stdbool.m4
+
+Depends-on:
+gen-header
+
+configure.ac:
+gl_STDBOOL_H
+gl_CONDITIONAL_HEADER([stdbool.h])
+AC_PROG_MKDIR_P
+
+Makefile.am:
+BUILT_SOURCES += $(STDBOOL_H)
+
+# We need the following in order to create <stdbool.h> when the system
+# doesn't have one that works.
+if GL_GENERATE_STDBOOL_H
+stdbool.h: stdbool.in.h $(top_builddir)/config.status
+@NMD@	$(AM_V_GEN)$(MKDIR_P) '%reldir%'
+	$(gl_V_at)$(SED_HEADER_STDOUT) \
+	  -e 's/@''HAVE__BOOL''@/$(HAVE__BOOL)/g' \
+	  $(srcdir)/stdbool.in.h > $@-t
+	$(AM_V_at)mv $@-t $@
+else
+stdbool.h: $(top_builddir)/config.status
+	rm -f $@
+endif
+MOSTLYCLEANFILES += stdbool.h stdbool.h-t
+
+Include:
+<stdbool.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+all

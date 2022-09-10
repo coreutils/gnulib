@@ -74,6 +74,7 @@ Documentation License''.
 * Extending Gnulib::
 * Miscellaneous Notes::
 * POSIX Substitutes Library::       Building as a separate substitutes library.
+* Keyword Substitutes::             Replacing language keywords.
 * Header File Substitutes::         Overriding system headers.
 * Function Substitutes::            Replacing system functions.
 * Legacy Function Substitutes::     Replacing system functions.
@@ -856,6 +857,37 @@ This way of using Gnulib is useful when you don't want to modify the program's
 source code, or when the program uses a mix between C and C++ sources
 (requiring separate builds of the @code{posixlib} for the C compiler and
 for the C++ compiler).
+
+@node Keyword Substitutes
+@chapter ISO C Keyword Substitutes
+
+This chapter describes which keywords specified by ISO C are
+substituted by Gnulib.
+
+@menu
+* bool::  @code{bool}, @code{false}, and @code{true}
+@end menu
+
+@node bool
+@section @code{bool}
+
+Gnulib module: stdbool
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+The keywords @code{bool}, @code{true}, and @code{false} are not available:
+gcc 12 and other compilers predating C23.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+On pre-C23 platforms, the keyword substitutes are macros.
+
+@item
+On pre-C23 platforms, the keyword substitutes assume C99 or later.
+@end itemize
 
 @node Header File Substitutes
 @chapter ISO C and POSIX Header File Substitutes

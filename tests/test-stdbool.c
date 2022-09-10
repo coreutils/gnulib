@@ -1,4 +1,4 @@
-/* Test of <stdbool.h> substitute.
+/* Test bool.
    Copyright (C) 2002-2007, 2009-2022 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -33,7 +33,9 @@
 
 #include <config.h>
 
-#include <stdbool.h>
+#ifdef TEST_STDBOOL_H
+# include <stdbool.h>
+#endif
 
 #if false
  "error: false is not 0"
@@ -44,7 +46,7 @@
 
 /* Several tests cannot be guaranteed with gnulib's <stdbool.h>, at
    least, not for all compilers and compiler options.  */
-#if (202311 <= __STDC_VERSION__ || defined __cplusplus \
+#if (HAVE_C_BOOL || defined __cplusplus \
      || HAVE_STDBOOL_H || 3 <= __GNUC__ || 4 <= __clang_major__)
 # define WORKING_BOOL 1
 #else
