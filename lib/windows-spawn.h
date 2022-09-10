@@ -85,6 +85,24 @@ extern char * compose_envblock (const char * const *envp)
   _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE;
 
 
+/* An inheritable handle with some additional information.  */
+struct IHANDLE
+{
+  /* Either INVALID_HANDLE_VALUE or an inheritable handle.  */
+  HANDLE handle;
+  /* Only relevant if handle != INVALID_HANDLE_VALUE.
+     It is a bit mask consisting of:
+       - 32 for O_APPEND.
+       - KEEP_OPEN_IN_CHILD if the handle is scheduled to be preserved in the
+         child process.
+       - KEEP_OPEN_IN_PARENT if the handle is shared with (and needs to be kept
+         open in) the parent process.
+   */
+  unsigned short flags;
+  #define KEEP_OPEN_IN_CHILD 0x100
+  #define KEEP_OPEN_IN_PARENT 0x200
+};
+
 /* This struct keeps track of which handles to potentially pass to a subprocess,
    and with which flags.  All of the handles here are inheritable.
    Regarding handle inheritance, see
@@ -98,21 +116,8 @@ struct inheritable_handles
   size_t count;
   /* The number of allocated entries in the two arrays below.  */
   size_t allocated;
-  /* handles[0..count-1] are the occupied entries.
-     handles[fd] is either INVALID_HANDLE_VALUE or an inheritable handle.  */
-  HANDLE *handles;
-  /* flags[0..count-1] are the occupied entries.
-     flags[fd] is only relevant if handles[fd] != INVALID_HANDLE_VALUE.
-     It is a bit mask consisting of:
-       - 32 for O_APPEND.
-       - KEEP_OPEN_IN_CHILD if handles[fd] is scheduled to be preserved in the
-         child process.
-       - KEEP_OPEN_IN_PARENT if handles[fd] is shared with (and needs to be kept
-         open in) the parent process.
-   */
-  unsigned short *flags;
-  #define KEEP_OPEN_IN_CHILD 0x100
-  #define KEEP_OPEN_IN_PARENT 0x200
+  /* ih[0..count-1] are the occupied entries.  */
+  struct IHANDLE *ih;
 };
 
 /* Initializes a set of inheritable handles, filling in all or part of the

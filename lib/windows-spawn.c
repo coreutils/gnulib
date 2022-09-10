@@ -346,31 +346,23 @@ init_inheritable_handles (struct inheritable_handles *inh_handles,
   }
   /* Note: handles_count >= 3.  */
 
-  /* Allocate the arrays.  */
+  /* Allocate the array.  */
   size_t handles_allocated = handles_count;
-  HANDLE *handles_array =
-    (HANDLE *) malloc (handles_allocated * sizeof (HANDLE));
-  if (handles_array == NULL)
+  struct IHANDLE *ih =
+    (struct IHANDLE *) malloc (handles_allocated * sizeof (struct IHANDLE));
+  if (ih == NULL)
     {
-      errno = ENOMEM;
-      return -1;
-    }
-  unsigned short *flags_array =
-    (unsigned short *) malloc (handles_allocated * sizeof (unsigned short));
-  if (flags_array == NULL)
-    {
-      free (handles_array);
       errno = ENOMEM;
       return -1;
     }
 
-  /* Fill in the two arrays.  */
+  /* Fill in the array.  */
   {
     HANDLE curr_process = (duplicate ? GetCurrentProcess () : INVALID_HANDLE_VALUE);
     unsigned int fd;
     for (fd = 0; fd < handles_count; fd++)
       {
-        handles_array[fd] = INVALID_HANDLE_VALUE;
+        ih[fd].handle = INVALID_HANDLE_VALUE;
         /* _get_osfhandle
            <https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/get-osfhandle>  */
         HANDLE handle = (HANDLE) _get_osfhandle (fd);
@@ -388,26 +380,25 @@ init_inheritable_handles (struct inheritable_handles *inh_handles,
                     if ((hflags & HANDLE_FLAG_INHERIT) != 0)
                       {
                         /* Instead of duplicating it, just mark it as shared.  */
-                        handles_array[fd] = handle;
-                        flags_array[fd] = KEEP_OPEN_IN_PARENT | KEEP_OPEN_IN_CHILD;
+                        ih[fd].handle = handle;
+                        ih[fd].flags = KEEP_OPEN_IN_PARENT | KEEP_OPEN_IN_CHILD;
                       }
                     else
                       {
                         if (!DuplicateHandle (curr_process, handle,
-                                              curr_process, &handles_array[fd],
+                                              curr_process, &ih[fd].handle,
                                               0, TRUE, DUPLICATE_SAME_ACCESS))
                           {
                             unsigned int i;
                             for (i = 0; i < fd; i++)
-                              if (handles_array[i] != INVALID_HANDLE_VALUE
-                                  && !(flags_array[i] & KEEP_OPEN_IN_PARENT))
-                                CloseHandle (handles_array[i]);
-                            free (flags_array);
-                            free (handles_array);
+                              if (ih[i].handle != INVALID_HANDLE_VALUE
+                                  && !(ih[i].flags & KEEP_OPEN_IN_PARENT))
+                                CloseHandle (ih[i].handle);
+                            free (ih);
                             errno = EBADF; /* arbitrary */
                             return -1;
                           }
-                        flags_array[fd] = 0;
+                        ih[fd].flags = 0;
                       }
                   }
                 else
@@ -415,8 +406,8 @@ init_inheritable_handles (struct inheritable_handles *inh_handles,
                     if ((hflags & HANDLE_FLAG_INHERIT) != 0)
                       {
                         /* fd denotes an inheritable descriptor.  */
-                        handles_array[fd] = handle;
-                        flags_array[fd] = KEEP_OPEN_IN_CHILD;
+                        ih[fd].handle = handle;
+                        ih[fd].flags = KEEP_OPEN_IN_CHILD;
                       }
                   }
               }
@@ -427,8 +418,7 @@ init_inheritable_handles (struct inheritable_handles *inh_handles,
   /* Return the result.  */
   inh_handles->count = handles_count;
   inh_handles->allocated = handles_allocated;
-  inh_handles->handles = handles_array;
-  inh_handles->flags = flags_array;
+  inh_handles->ih = ih;
   return 0;
 }
 
@@ -439,9 +429,9 @@ compose_handles_block (const struct inheritable_handles *inh_handles,
   /* STARTUPINFO
      <https://docs.microsoft.com/en-us/windows/win32/api/processthreadsapi/ns-processthreadsapi-startupinfoa>  */
   sinfo->dwFlags = STARTF_USESTDHANDLES;
-  sinfo->hStdInput  = inh_handles->handles[0];
-  sinfo->hStdOutput = inh_handles->handles[1];
-  sinfo->hStdError  = inh_handles->handles[2];
+  sinfo->hStdInput  = inh_handles->ih[0].handle;
+  sinfo->hStdOutput = inh_handles->ih[1].handle;
+  sinfo->hStdError  = inh_handles->ih[2].handle;
 
   /* On newer versions of Windows, more file descriptors / handles than the
      first three can be passed.
@@ -492,11 +482,11 @@ compose_handles_block (const struct inheritable_handles *inh_handles,
         handles_aligned[fd] = INVALID_HANDLE_VALUE;
         flags[fd] = 0;
 
-        HANDLE handle = inh_handles->handles[fd];
+        HANDLE handle = inh_handles->ih[fd].handle;
         if (handle != INVALID_HANDLE_VALUE
             /* The first three are possibly already passed above.
                But they need to passed here as well, if they have some flags.  */
-            && (fd >= 3 || (unsigned char) inh_handles->flags[fd] != 0))
+            && (fd >= 3 || (unsigned char) inh_handles->ih[fd].flags != 0))
           {
             DWORD hflags;
             /* GetHandleInformation
@@ -511,7 +501,7 @@ compose_handles_block (const struct inheritable_handles *inh_handles,
                        flags[fd] = 1.  But on ReactOS or Wine, adding the bit
                        that indicates the handle type may be necessary.  So,
                        just do it everywhere.  */
-                    flags[fd] = 1 | (unsigned char) inh_handles->flags[fd];
+                    flags[fd] = 1 | (unsigned char) inh_handles->ih[fd].flags;
                     switch (GetFileType (handle))
                       {
                       case FILE_TYPE_CHAR:
@@ -543,8 +533,7 @@ compose_handles_block (const struct inheritable_handles *inh_handles,
 void
 free_inheritable_handles (struct inheritable_handles *inh_handles)
 {
-  free (inh_handles->flags);
-  free (inh_handles->handles);
+  free (inh_handles->ih);
 }
 
 int
@@ -640,12 +629,12 @@ spawnpvech (int mode,
       errno = saved_errno;
       return -1;
     }
-  inh_handles.handles[0] = stdin_handle;
-  inh_handles.flags[0] = KEEP_OPEN_IN_CHILD;
-  inh_handles.handles[1] = stdout_handle;
-  inh_handles.flags[1] = KEEP_OPEN_IN_CHILD;
-  inh_handles.handles[2] = stderr_handle;
-  inh_handles.flags[2] = KEEP_OPEN_IN_CHILD;
+  inh_handles.ih[0].handle = stdin_handle;
+  inh_handles.ih[0].flags = KEEP_OPEN_IN_CHILD;
+  inh_handles.ih[1].handle = stdout_handle;
+  inh_handles.ih[1].flags = KEEP_OPEN_IN_CHILD;
+  inh_handles.ih[2].handle = stderr_handle;
+  inh_handles.ih[2].flags = KEEP_OPEN_IN_CHILD;
 
   /* CreateProcess
      <https://docs.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-createprocessa>  */

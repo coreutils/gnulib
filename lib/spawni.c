@@ -121,32 +121,22 @@ grow_inheritable_handles (struct inheritable_handles *inh_handles, int newfd)
       size_t new_allocated = 2 * inh_handles->allocated + 1;
       if (new_allocated <= newfd)
         new_allocated = newfd + 1;
-      HANDLE *new_handles_array =
-        (HANDLE *)
-        realloc (inh_handles->handles, new_allocated * sizeof (HANDLE));
-      if (new_handles_array == NULL)
+      struct IHANDLE *new_ih =
+        (struct IHANDLE *)
+        realloc (inh_handles->ih, new_allocated * sizeof (struct IHANDLE));
+      if (new_ih == NULL)
         {
-          errno = ENOMEM;
-          return -1;
-        }
-      unsigned short *new_flags_array =
-        (unsigned short *)
-        realloc (inh_handles->flags, new_allocated * sizeof (unsigned short));
-      if (new_flags_array == NULL)
-        {
-          free (new_handles_array);
           errno = ENOMEM;
           return -1;
         }
       inh_handles->allocated = new_allocated;
-      inh_handles->handles = new_handles_array;
-      inh_handles->flags = new_flags_array;
+      inh_handles->ih = new_ih;
     }
 
-  HANDLE *handles = inh_handles->handles;
+  struct IHANDLE *ih = inh_handles->ih;
 
   for (; inh_handles->count <= newfd; inh_handles->count++)
-    handles[inh_handles->count] = INVALID_HANDLE_VALUE;
+    ih[inh_handles->count].handle = INVALID_HANDLE_VALUE;
 
   return 0;
 }
@@ -156,26 +146,25 @@ grow_inheritable_handles (struct inheritable_handles *inh_handles, int newfd)
 static void
 shrink_inheritable_handles (struct inheritable_handles *inh_handles)
 {
-  HANDLE *handles = inh_handles->handles;
-  unsigned short *flags = inh_handles->flags;
+  struct IHANDLE *ih = inh_handles->ih;
   size_t handles_count = inh_handles->count;
   unsigned int fd;
 
   for (fd = 0; fd < handles_count; fd++)
     {
-      HANDLE handle = handles[fd];
+      HANDLE handle = ih[fd].handle;
 
       if (handle != INVALID_HANDLE_VALUE
-          && (flags[fd] & KEEP_OPEN_IN_CHILD) == 0)
+          && (ih[fd].flags & KEEP_OPEN_IN_CHILD) == 0)
         {
-          if (!(flags[fd] & KEEP_OPEN_IN_PARENT))
+          if (!(ih[fd].flags & KEEP_OPEN_IN_PARENT))
             CloseHandle (handle);
-          handles[fd] = INVALID_HANDLE_VALUE;
+          ih[fd].handle = INVALID_HANDLE_VALUE;
         }
     }
 
   while (handles_count > 3
-         && handles[handles_count - 1] == INVALID_HANDLE_VALUE)
+         && ih[handles_count - 1].handle == INVALID_HANDLE_VALUE)
     handles_count--;
 
   inh_handles->count = handles_count;
@@ -185,17 +174,16 @@ shrink_inheritable_handles (struct inheritable_handles *inh_handles)
 static void
 close_inheritable_handles (struct inheritable_handles *inh_handles)
 {
-  HANDLE *handles = inh_handles->handles;
-  unsigned short *flags = inh_handles->flags;
+  struct IHANDLE *ih = inh_handles->ih;
   size_t handles_count = inh_handles->count;
   unsigned int fd;
 
   for (fd = 0; fd < handles_count; fd++)
     {
-      HANDLE handle = handles[fd];
+      HANDLE handle = ih[fd].handle;
 
       if (handle != INVALID_HANDLE_VALUE
-          && !(flags[fd] & KEEP_OPEN_IN_PARENT))
+          && !(ih[fd].flags & KEEP_OPEN_IN_PARENT))
         CloseHandle (handle);
     }
 }
@@ -397,9 +385,9 @@ do_open (struct inheritable_handles *inh_handles, int newfd,
     }
   if (grow_inheritable_handles (inh_handles, newfd) < 0)
     return -1;
-  if (inh_handles->handles[newfd] != INVALID_HANDLE_VALUE
-      && !(inh_handles->flags[newfd] & KEEP_OPEN_IN_PARENT)
-      && !CloseHandle (inh_handles->handles[newfd]))
+  if (inh_handles->ih[newfd].handle != INVALID_HANDLE_VALUE
+      && !(inh_handles->ih[newfd].flags & KEEP_OPEN_IN_PARENT)
+      && !CloseHandle (inh_handles->ih[newfd].handle))
     {
       errno = EIO;
       return -1;
@@ -428,8 +416,8 @@ do_open (struct inheritable_handles *inh_handles, int newfd,
       return -1;
     }
   free (filename_to_free);
-  inh_handles->handles[newfd] = handle;
-  inh_handles->flags[newfd] =
+  inh_handles->ih[newfd].handle = handle;
+  inh_handles->ih[newfd].flags =
     ((flags & O_APPEND) != 0 ? 32 : 0) | KEEP_OPEN_IN_CHILD;
   return 0;
 }
@@ -442,7 +430,7 @@ do_dup2 (struct inheritable_handles *inh_handles, int oldfd, int newfd,
          HANDLE curr_process)
 {
   if (!(oldfd >= 0 && oldfd < inh_handles->count
-        && inh_handles->handles[oldfd] != INVALID_HANDLE_VALUE))
+        && inh_handles->ih[oldfd].handle != INVALID_HANDLE_VALUE))
     {
       errno = EBADF;
       return -1;
@@ -456,24 +444,24 @@ do_dup2 (struct inheritable_handles *inh_handles, int oldfd, int newfd,
     {
       if (grow_inheritable_handles (inh_handles, newfd) < 0)
         return -1;
-      if (inh_handles->handles[newfd] != INVALID_HANDLE_VALUE
-          && !(inh_handles->flags[newfd] & KEEP_OPEN_IN_PARENT)
-          && !CloseHandle (inh_handles->handles[newfd]))
+      if (inh_handles->ih[newfd].handle != INVALID_HANDLE_VALUE
+          && !(inh_handles->ih[newfd].flags & KEEP_OPEN_IN_PARENT)
+          && !CloseHandle (inh_handles->ih[newfd].handle))
         {
           errno = EIO;
           return -1;
         }
       /* Duplicate the handle, so that a forthcoming do_close action on oldfd
          has no effect on newfd.  */
-      if (!DuplicateHandle (curr_process, inh_handles->handles[oldfd],
-                            curr_process, &inh_handles->handles[newfd],
+      if (!DuplicateHandle (curr_process, inh_handles->ih[oldfd].handle,
+                            curr_process, &inh_handles->ih[newfd].handle,
                             0, TRUE, DUPLICATE_SAME_ACCESS))
         {
           errno = EBADF; /* arbitrary */
           return -1;
         }
-      inh_handles->flags[newfd] =
-        (unsigned char) inh_handles->flags[oldfd] | KEEP_OPEN_IN_CHILD;
+      inh_handles->ih[newfd].flags =
+        (unsigned char) inh_handles->ih[oldfd].flags | KEEP_OPEN_IN_CHILD;
     }
   return 0;
 }
@@ -485,18 +473,18 @@ static int
 do_close (struct inheritable_handles *inh_handles, int fd)
 {
   if (!(fd >= 0 && fd < inh_handles->count
-        && inh_handles->handles[fd] != INVALID_HANDLE_VALUE))
+        && inh_handles->ih[fd].handle != INVALID_HANDLE_VALUE))
     {
       errno = EBADF;
       return -1;
     }
-  if (!(inh_handles->flags[fd] & KEEP_OPEN_IN_PARENT)
-      && !CloseHandle (inh_handles->handles[fd]))
+  if (!(inh_handles->ih[fd].flags & KEEP_OPEN_IN_PARENT)
+      && !CloseHandle (inh_handles->ih[fd].handle))
     {
       errno = EIO;
       return -1;
     }
-  inh_handles->handles[fd] = INVALID_HANDLE_VALUE;
+  inh_handles->ih[fd].handle = INVALID_HANDLE_VALUE;
   return 0;
 }
 
