@@ -471,7 +471,8 @@ do_dup2 (struct inheritable_handles *inh_handles, int oldfd, int newfd,
           errno = EBADF; /* arbitrary */
           return -1;
         }
-      inh_handles->flags[newfd] = KEEP_OPEN_IN_CHILD;
+      inh_handles->flags[newfd] =
+        (unsigned char) inh_handles->flags[oldfd] | KEEP_OPEN_IN_CHILD;
     }
   return 0;
 }
