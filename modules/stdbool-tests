@@ -2,6 +2,7 @@ Files:
 tests/test-stdbool.c
 
 Depends-on:
+stdbool-c++-tests
 
 configure.ac:
 

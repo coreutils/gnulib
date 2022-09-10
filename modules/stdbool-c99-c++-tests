@@ -1,0 +1,19 @@
+Files:
+tests/test-stdbool-c99-c++.cc
+tests/test-stdbool-c++.cc
+tests/test-stdbool-c++2.cc
+
+Status:
+c++-test
+
+Depends-on:
+ansi-c++-opt
+
+configure.ac:
+
+Makefile.am:
+if ANSICXX
+TESTS += test-stdbool-c99-c++
+check_PROGRAMS += test-stdbool-c99-c++
+test_stdbool_c99_c___SOURCES = test-stdbool-c99-c++.cc test-stdbool-c++2.cc
+endif

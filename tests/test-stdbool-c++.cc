@@ -19,7 +19,26 @@
 #define GNULIB_NAMESPACE gnulib
 #include <config.h>
 
-#include <stdbool.h>
+#ifdef TEST_STDBOOL_H
+# include <stdbool.h>
+#endif
+
+
+/* These tests are a subset of the C language tests in test-stdbool.c.  */
+
+#if false
+ "error: false is not 0"
+#endif
+#if true != 1
+ "error: true is not 1"
+#endif
+
+struct s { bool s: 1; bool t; } s;
+
+char a[true == 1 ? 1 : -1];
+char b[false == 0 ? 1 : -1];
+char c[(unsigned char) true == 1 ? 1 : -1];
+char d[(unsigned char) false == 0 ? 1 : -1];
 
 
 int

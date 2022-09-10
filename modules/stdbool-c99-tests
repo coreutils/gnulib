@@ -1,9 +1,9 @@
 Files:
-tests/test-stdbool.c
 tests/test-stdbool-c99.c
+tests/test-stdbool.c
 
 Depends-on:
-stdbool-c++-tests
+stdbool-c99-c++-tests
 
 configure.ac:
 
