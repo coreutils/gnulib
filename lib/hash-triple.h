@@ -21,7 +21,6 @@
 
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <stdbool.h>
 
 /* Describe a just-created or just-renamed destination file.  */
 struct F_triple

@@ -19,7 +19,6 @@
 #ifndef _GL_EXCLUDE_H
 #define _GL_EXCLUDE_H 1
 
-#include <stdbool.h>
 #include <stdio.h>
 
 /* Written by Paul Eggert <eggert@twinsun.com>

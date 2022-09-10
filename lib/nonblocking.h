@@ -17,8 +17,6 @@
 #ifndef _NONBLOCKING_H
 #define _NONBLOCKING_H
 
-#include <stdbool.h>
-
 /* Non-blocking I/O is an I/O mode by which read(), write() calls avoid
    blocking the current thread.  When non-blocking is enabled:
    - A read() call returns -1 with errno set to EAGAIN when no data or EOF

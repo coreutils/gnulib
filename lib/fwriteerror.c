@@ -21,7 +21,6 @@
 #include "fwriteerror.h"
 
 #include <errno.h>
-#include <stdbool.h>
 
 static int
 do_fwriteerror (FILE *fp, bool ignore_ebadf)

@@ -27,7 +27,6 @@ SIGNATURE_CHECK (fcntl, int, (int, int, ...));
 /* Helpers.  */
 #include <errno.h>
 #include <stdarg.h>
-#include <stdbool.h>
 #include <unistd.h>
 
 #if defined _WIN32 && ! defined __CYGWIN__

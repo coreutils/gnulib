@@ -19,9 +19,7 @@
 #ifndef _PIPE_FILTER_H
 #define _PIPE_FILTER_H
 
-#include <stdbool.h>
 #include <stddef.h>
-
 
 #ifdef __cplusplus
 extern "C" {

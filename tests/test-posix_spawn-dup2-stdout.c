@@ -45,7 +45,6 @@ SIGNATURE_CHECK (posix_spawn_file_actions_adddup2, int,
 #include <errno.h>
 #include <fcntl.h>
 #include <signal.h>
-#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

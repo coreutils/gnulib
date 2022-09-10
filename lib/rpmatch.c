@@ -22,7 +22,6 @@
 /* Specification.  */
 #include <stdlib.h>
 
-#include <stdbool.h>
 #include <stddef.h>
 
 #if ENABLE_NLS

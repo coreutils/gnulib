@@ -39,8 +39,6 @@
 /* Get snprintf. */
 #include <stdio.h>
 
-#include <stdbool.h>
-
 #include "gettext.h"
 #define _(String) gettext (String)
 #define N_(String) String

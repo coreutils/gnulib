@@ -18,7 +18,6 @@
 #ifndef _WINDOWS_SPAWN_H
 #define _WINDOWS_SPAWN_H
 
-#include <stdbool.h>
 #include <stdint.h>
 #include <stdlib.h>
 

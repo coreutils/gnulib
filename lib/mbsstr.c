@@ -20,7 +20,6 @@
 /* Specification.  */
 #include <string.h>
 
-#include <stdbool.h>
 #include <stddef.h>  /* for NULL, in case a nonstandard string.h lacks it */
 #include <stdlib.h>
 

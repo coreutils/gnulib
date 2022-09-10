@@ -24,7 +24,6 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdlib.h>
-#include <stdbool.h>
 #include <sys/ioctl.h>
 #include <errno.h>
 

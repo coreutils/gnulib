@@ -20,7 +20,6 @@
 #include "closein.h"
 
 #include <errno.h>
-#include <stdbool.h>
 #include <stdio.h>
 #include <unistd.h>
 

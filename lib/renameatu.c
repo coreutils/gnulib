@@ -38,7 +38,6 @@ errno_fail (int e)
 
 #if HAVE_RENAMEAT
 
-# include <stdbool.h>
 # include <stdlib.h>
 # include <string.h>
 

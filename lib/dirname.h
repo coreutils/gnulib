@@ -19,7 +19,6 @@
 #ifndef DIRNAME_H_
 # define DIRNAME_H_ 1
 
-# include <stdbool.h>
 # include <stdlib.h>
 # include "filename.h"
 # include "basename-lgpl.h"

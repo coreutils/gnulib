@@ -26,9 +26,6 @@
 #ifndef _UNIGBRK_H
 #define _UNIGBRK_H
 
-/* Get bool.  */
-#include <stdbool.h>
-
 /* Get size_t. */
 #include <stddef.h>
 

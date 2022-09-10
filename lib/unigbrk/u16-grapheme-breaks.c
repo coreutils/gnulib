@@ -28,7 +28,6 @@
 /* Specification.  */
 #include "unigbrk.h"
 
-#include <stdbool.h>
 #include <string.h>
 
 #include "unictype.h"

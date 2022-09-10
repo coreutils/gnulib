@@ -29,7 +29,6 @@ SIGNATURE_CHECK (renameatu, int,
 #include <dirent.h>
 #include <fcntl.h>
 #include <errno.h>
-#include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>

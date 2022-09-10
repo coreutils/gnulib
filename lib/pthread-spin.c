@@ -21,8 +21,6 @@
 /* Specification.  */
 #include <pthread.h>
 
-#include <stdbool.h>
-
 #if (defined _WIN32 && ! defined __CYGWIN__) && USE_WINDOWS_THREADS
 # include "windows-spin.h"
 #endif

@@ -18,7 +18,6 @@
 
 /* Written by Paul Eggert, David MacKenzie, and Jim Meyering.  */
 
-#include <stdbool.h>
 #include <sys/types.h>
 
 struct savewd;

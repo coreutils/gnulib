@@ -144,7 +144,6 @@
 #ifndef _MBCHAR_H
 #define _MBCHAR_H 1
 
-#include <stdbool.h>
 #include <string.h>
 #include <wchar.h>
 #include <wctype.h>

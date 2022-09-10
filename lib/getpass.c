@@ -28,8 +28,6 @@
 
 #if !(defined _WIN32 && !defined __CYGWIN__)
 
-# include <stdbool.h>
-
 # if HAVE_DECL___FSETLOCKING && HAVE___FSETLOCKING
 #  if HAVE_STDIO_EXT_H
 #   include <stdio_ext.h>

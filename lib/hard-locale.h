@@ -18,8 +18,6 @@
 #ifndef HARD_LOCALE_H_
 # define HARD_LOCALE_H_ 1
 
-# include <stdbool.h>
-
 /* Return true if the specified CATEGORY of the current locale is hard, i.e.
    different from the C or POSIX locale that has a fixed behavior.
    CATEGORY must be one of the LC_* values, but not LC_ALL.  */

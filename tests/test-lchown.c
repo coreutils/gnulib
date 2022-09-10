@@ -25,7 +25,6 @@ SIGNATURE_CHECK (lchown, int, (char const *, uid_t, gid_t));
 
 #include <fcntl.h>
 #include <errno.h>
-#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>

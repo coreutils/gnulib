@@ -18,8 +18,6 @@
 #ifndef _TERM_STYLE_CONTROL_H
 #define _TERM_STYLE_CONTROL_H
 
-#include <stdbool.h>
-
 /* The user of this file will define a macro 'term_style_user_data', such that
    'struct term_style_user_data' is a user-defined struct.  */
 

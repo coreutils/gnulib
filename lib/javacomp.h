@@ -18,8 +18,6 @@
 #ifndef _JAVACOMP_H
 #define _JAVACOMP_H
 
-#include <stdbool.h>
-
 /* Compile a Java source file to bytecode.
    java_sources is an array of source file names.
    classpaths is a list of pathnames to be prepended to the CLASSPATH.

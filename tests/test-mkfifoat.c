@@ -26,7 +26,6 @@ SIGNATURE_CHECK (mknodat, int, (int, char const *, mode_t, dev_t));
 
 #include <fcntl.h>
 #include <errno.h>
-#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

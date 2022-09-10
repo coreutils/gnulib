@@ -20,7 +20,6 @@
 #include <config.h>
 #include "filevercmp.h"
 
-#include <stdbool.h>
 #include <c-ctype.h>
 #include <limits.h>
 #include <idx.h>

@@ -19,9 +19,6 @@
 
 #include "unitypes.h"
 
-/* Get bool.  */
-#include <stdbool.h>
-
 /* Get size_t.  */
 #include <stddef.h>
 

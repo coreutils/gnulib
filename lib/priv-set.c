@@ -26,7 +26,6 @@
 #if HAVE_GETPPRIV && HAVE_PRIV_H
 
 # include <errno.h>
-# include <stdbool.h>
 # include <priv.h>
 
 /* Holds a (cached) copy of the effective set.  */

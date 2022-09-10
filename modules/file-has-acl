@@ -10,6 +10,7 @@ Depends-on:
 acl-permissions
 free-posix
 stat
+stdbool
 
 configure.ac:
 gl_FILE_HAS_ACL

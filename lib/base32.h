@@ -21,9 +21,6 @@
 /* Get idx_t. */
 # include <idx.h>
 
-/* Get bool. */
-# include <stdbool.h>
-
 /* This uses that the expression (n+(k-1))/k means the smallest
    integer >= n/k, i.e., the ceiling of n/k.  */
 # define BASE32_LENGTH(inlen) ((((inlen) + 4) / 5) * 8)

@@ -20,7 +20,6 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <string.h>
-#include <stdbool.h>
 #include <fnmatch.h>
 
 #include "exclude.h"

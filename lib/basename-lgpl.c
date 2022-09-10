@@ -21,7 +21,6 @@
 /* Specification.  */
 #include "basename-lgpl.h"
 
-#include <stdbool.h>
 #include <string.h>
 
 #include "filename.h"

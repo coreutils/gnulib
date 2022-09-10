@@ -21,7 +21,6 @@
 #include <string.h>
 
 #include <ctype.h>
-#include <stdbool.h>
 #include <strings.h>
 
 #define TOLOWER(Ch) (isupper (Ch) ? tolower (Ch) : (Ch))

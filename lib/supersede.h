@@ -20,7 +20,6 @@
 #ifndef _GL_SUPERSEDE_H
 #define _GL_SUPERSEDE_H
 
-#include <stdbool.h>
 #include <stdio.h>
 #include <sys/types.h>
 

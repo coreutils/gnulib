@@ -27,7 +27,6 @@
 #include <limits.h>     /* LONG_{MIN,MAX} */
 #include <locale.h>     /* localeconv() */
 #include <math.h>       /* NAN */
-#include <stdbool.h>
 #include <stdio.h>      /* sprintf() */
 #include <string.h>     /* strdup() */
 #if HAVE_NL_LANGINFO

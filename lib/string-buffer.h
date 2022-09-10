@@ -20,7 +20,6 @@
 #define _STRING_BUFFER_H
 
 #include <stdarg.h>
-#include <stdbool.h>
 #include <stdlib.h>
 
 #include "attribute.h"

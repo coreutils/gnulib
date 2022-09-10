@@ -31,7 +31,6 @@ SIGNATURE_CHECK (poll, int, (struct pollfd[], nfds_t, int));
 #include <arpa/inet.h>
 #include <fcntl.h>
 #include <stdlib.h>
-#include <stdbool.h>
 #include <sys/ioctl.h>
 #include <errno.h>
 

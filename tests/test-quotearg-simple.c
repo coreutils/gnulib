@@ -21,7 +21,6 @@
 #include "quotearg.h"
 
 #include <ctype.h>
-#include <stdbool.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>

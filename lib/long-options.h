@@ -20,8 +20,6 @@
 #ifndef LONG_OPTIONS_H_
 # define LONG_OPTIONS_H_ 1
 
-# include <stdbool.h>
-
 void parse_long_options (int _argc,
                          char **_argv,
                          const char *_command_name,

@@ -21,7 +21,6 @@
 #ifndef POSIXTM_H_
 # define POSIXTM_H_
 
-# include <stdbool.h>
 # include <time.h>
 
 /* POSIX Date Syntax flags.  */

@@ -29,9 +29,9 @@
 #include <limits.h>
 #include <string.h>
 #include <strings.h>
-#include <stdbool.h>
 
 #ifdef _LIBC
+# include <stdbool.h>
 # include "../locale/localeinfo.h"
 #endif
 

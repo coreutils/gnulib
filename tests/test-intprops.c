@@ -37,7 +37,6 @@
 #endif
 #include "verify.h"
 
-#include <stdbool.h>
 #include <inttypes.h>
 #include <limits.h>
 

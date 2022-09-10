@@ -21,9 +21,6 @@
 /* Get idx_t.  */
 # include <idx.h>
 
-/* Get bool. */
-# include <stdbool.h>
-
 # ifdef __cplusplus
 extern "C" {
 # endif

@@ -31,7 +31,6 @@ SIGNATURE_CHECK (posix_spawn, int, (pid_t *, char const *,
 #include <errno.h>
 #include <fcntl.h>
 #include <signal.h>
-#include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>

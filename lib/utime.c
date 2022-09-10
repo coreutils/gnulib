@@ -24,7 +24,6 @@
 #if defined _WIN32 && ! defined __CYGWIN__
 
 # include <errno.h>
-# include <stdbool.h>
 # include <windows.h>
 # include "filename.h"
 # include "malloca.h"

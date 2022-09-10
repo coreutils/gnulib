@@ -25,7 +25,6 @@ SIGNATURE_CHECK (readlinkat, ssize_t, (int, char const *, char *, size_t));
 
 #include <fcntl.h>
 #include <errno.h>
-#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

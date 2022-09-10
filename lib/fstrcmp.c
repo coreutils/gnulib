@@ -22,7 +22,6 @@
 #include "fstrcmp.h"
 
 #include <string.h>
-#include <stdbool.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <stdint.h>

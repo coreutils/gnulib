@@ -17,8 +17,6 @@
 #ifndef YESNO_H_
 # define YESNO_H_
 
-# include <stdbool.h>
-
 bool yesno (void);
 
 #endif

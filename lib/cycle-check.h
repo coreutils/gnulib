@@ -21,7 +21,6 @@
 # define CYCLE_CHECK_H 1
 
 # include <stdint.h>
-# include <stdbool.h>
 # include "dev-ino.h"
 # include "same-inode.h"
 

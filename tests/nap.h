@@ -20,7 +20,6 @@
 # define GLTEST_NAP_H
 
 # include <limits.h>
-# include <stdbool.h>
 
 # include <intprops.h>
 

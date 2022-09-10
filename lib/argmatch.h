@@ -23,7 +23,6 @@
 # define ARGMATCH_H_ 1
 
 # include <limits.h>
-# include <stdbool.h>
 # include <stddef.h>
 # include <stdio.h>
 # include <string.h> /* memcmp */

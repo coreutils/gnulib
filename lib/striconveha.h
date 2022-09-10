@@ -18,7 +18,6 @@
 #ifndef _STRICONVEHA_H
 #define _STRICONVEHA_H
 
-#include <stdbool.h>
 #include <stdlib.h>
 
 #include "iconveh.h"

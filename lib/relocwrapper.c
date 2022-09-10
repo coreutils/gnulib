@@ -29,10 +29,10 @@
           -> readlink
              -> stat
        -> canonicalize-lgpl
+          -> c-bool
           -> libc-config
           -> errno
           -> fcntl-h
-          -> stdbool
           -> sys_stat
           -> unistd
           -> eloop-threshold

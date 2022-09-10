@@ -23,7 +23,6 @@
 /* Get _open_osfhandle().  */
 #include <io.h>
 
-#include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>

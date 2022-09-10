@@ -24,7 +24,6 @@
 #include <math.h>
 
 #include <limits.h>
-#include <stdbool.h>
 #include <stdlib.h>
 
 #if HAVE_FEGETROUND

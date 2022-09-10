@@ -20,7 +20,6 @@
 /* Written by Paul Eggert.  */
 
 #include <limits.h>
-#include <stdbool.h>
 #include <wchar.h>
 
 struct localeinfo

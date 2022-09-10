@@ -16,7 +16,6 @@
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 #include "backupfile.h"
-#include <stdbool.h>
 #include <stdlib.h>
 
 extern char *backupfile_internal (int, char const *, enum backup_type, bool)

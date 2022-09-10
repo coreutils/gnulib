@@ -22,7 +22,6 @@
 
 # include <stdio.h>
 # include <sys/types.h>
-# include <stdbool.h>
 # include "obstack.h"
 
 struct Tokens

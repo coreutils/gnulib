@@ -19,7 +19,6 @@
 #ifndef USERSPEC_H
 # define USERSPEC_H 1
 
-# include <stdbool.h>
 # include <sys/types.h>
 
 char const *

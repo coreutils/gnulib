@@ -29,7 +29,6 @@
 #include "unicase.h"
 
 #include <errno.h>
-#include <stdbool.h>
 #include <stddef.h>
 #include <stdlib.h>
 

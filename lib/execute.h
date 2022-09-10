@@ -18,8 +18,6 @@
 #ifndef _EXECUTE_H
 #define _EXECUTE_H
 
-#include <stdbool.h>
-
 /* Execute a command, optionally redirecting any of the three standard file
    descriptors to /dev/null.  Return its exit code.
    If it didn't terminate correctly, exit if exit_on_error is true, otherwise

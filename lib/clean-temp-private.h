@@ -17,7 +17,6 @@
 #ifndef _CLEAN_TEMP_PRIVATE_H
 #define _CLEAN_TEMP_PRIVATE_H
 
-#include <stdbool.h>
 #include <stddef.h>
 #include "gl_list.h"
 #include "asyncsafe-spin.h"

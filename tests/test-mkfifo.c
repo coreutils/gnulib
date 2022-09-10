@@ -25,7 +25,6 @@ SIGNATURE_CHECK (mkfifo, int, (char const *, mode_t));
 
 #include <fcntl.h>
 #include <errno.h>
-#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>

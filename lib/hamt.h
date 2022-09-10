@@ -68,7 +68,6 @@ _GL_INLINE_HEADER_BEGIN
 # define GL_HAMT_THREAD_SAFE 0
 #endif
 
-#include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 

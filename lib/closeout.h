@@ -19,8 +19,6 @@
 #ifndef CLOSEOUT_H
 # define CLOSEOUT_H 1
 
-# include <stdbool.h>
-
 # ifdef __cplusplus
 extern "C" {
 # endif

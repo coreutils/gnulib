@@ -39,7 +39,6 @@ orig_fopen (const char *filename, const char *mode)
 
 #include <errno.h>
 #include <fcntl.h>
-#include <stdbool.h>
 #include <string.h>
 #include <unistd.h>
 #include <sys/types.h>

@@ -20,7 +20,6 @@
 #include <config.h>
 
 #include <fcntl.h>
-#include <stdbool.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>

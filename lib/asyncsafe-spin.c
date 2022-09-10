@@ -21,12 +21,10 @@
 /* Specification.  */
 #include "asyncsafe-spin.h"
 
-#include <stdbool.h>
 #include <stdlib.h>
 #if defined _AIX
 # include <sys/atomic_op.h>
 #endif
-
 #if 0x590 <= __SUNPRO_C && __STDC__
 # define asm __asm
 #endif

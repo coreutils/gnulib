@@ -17,8 +17,6 @@
 
 /* Written by Paul Eggert and Jim Meyering.  */
 
-#include <stdbool.h>
-
 #if UNLINK_CANNOT_UNLINK_DIR
 # define cannot_unlink_dir() true
 #else

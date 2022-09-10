@@ -389,7 +389,7 @@ making use of @code{foo} could end up residing in a shared library, and
 the executable program using this library could be defining @code{foo}
 itself).
 
-For header files, such as @code{stdbool.h} or @code{stdint.h}, we provide
+For header files, such as @code{stdint.h}, we provide
 the substitute only if the system doesn't provide a correct one.  The
 template of this replacement is distributed in a slightly different name,
 with @samp{.in} inserted before the @samp{.h} extension, so that on

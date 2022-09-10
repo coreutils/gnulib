@@ -48,7 +48,6 @@
 #define _MBFILE_H 1
 
 #include <assert.h>
-#include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
 #include <wchar.h>

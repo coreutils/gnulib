@@ -22,7 +22,6 @@
 SIGNATURE_CHECK (pipe2, int, (int[2], int));
 
 #include <fcntl.h>
-#include <stdbool.h>
 
 #if defined _WIN32 && ! defined __CYGWIN__
 /* Get declarations of the native Windows API functions.  */

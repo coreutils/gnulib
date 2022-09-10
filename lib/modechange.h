@@ -19,7 +19,6 @@
 #if ! defined MODECHANGE_H_
 # define MODECHANGE_H_
 
-# include <stdbool.h>
 # include <stdlib.h>
 # include <sys/types.h>
 

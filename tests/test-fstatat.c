@@ -25,7 +25,6 @@ SIGNATURE_CHECK (fstatat, int, (int, char const *, struct stat *, int));
 
 #include <fcntl.h>
 #include <errno.h>
-#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>

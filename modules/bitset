@@ -24,6 +24,7 @@ fopen-gnu
 gettext-h
 integer_length_l
 obstack
+stdbool
 xalloc
 
 configure.ac:

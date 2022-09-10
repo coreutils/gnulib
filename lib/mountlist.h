@@ -19,7 +19,6 @@
 #ifndef MOUNTLIST_H_
 # define MOUNTLIST_H_
 
-# include <stdbool.h>
 # include <sys/types.h>
 
 /* A mount table entry. */

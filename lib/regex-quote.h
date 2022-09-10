@@ -18,9 +18,7 @@
 #ifndef _REGEX_QUOTE_H
 #define _REGEX_QUOTE_H
 
-#include <stdbool.h>
 #include <stdlib.h>
-
 
 /* Specifies a quotation task for converting a fixed string to a regular
    expression pattern.  */

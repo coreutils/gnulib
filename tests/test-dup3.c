@@ -26,7 +26,6 @@ SIGNATURE_CHECK (dup3, int, (int, int, int));
 
 #include <errno.h>
 #include <fcntl.h>
-#include <stdbool.h>
 
 #if defined _WIN32 && ! defined __CYGWIN__
 /* Get declarations of the native Windows API functions.  */

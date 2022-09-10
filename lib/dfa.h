@@ -23,7 +23,6 @@
 
 #include "idx.h"
 #include <regex.h>
-#include <stdbool.h>
 #include <stddef.h>
 #include <stdlib.h>
 

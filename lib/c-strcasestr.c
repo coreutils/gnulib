@@ -20,7 +20,6 @@
 /* Specification.  */
 #include "c-strcasestr.h"
 
-#include <stdbool.h>
 #include <string.h>
 
 #include "c-ctype.h"

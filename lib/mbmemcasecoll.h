@@ -19,7 +19,6 @@
 #ifndef MBMEMCASECOLL_H
 #define MBMEMCASECOLL_H
 
-#include <stdbool.h>
 #include <stddef.h>
 
 #ifdef __cplusplus

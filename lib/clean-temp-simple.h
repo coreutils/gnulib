@@ -18,8 +18,6 @@
 #ifndef _CLEAN_TEMP_SIMPLE_H
 #define _CLEAN_TEMP_SIMPLE_H
 
-#include <stdbool.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif

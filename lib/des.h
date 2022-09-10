@@ -23,7 +23,6 @@
 
 #include <stddef.h>
 #include <stdint.h>
-#include <stdbool.h>
 
 /*
  * Encryption/Decryption context of DES

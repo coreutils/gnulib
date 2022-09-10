@@ -28,7 +28,6 @@
 #include <errno.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <stdbool.h>
 #include <stddef.h>
 
 #include <fcntl.h> /* For AT_FDCWD on Solaris 9.  */

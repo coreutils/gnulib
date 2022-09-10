@@ -61,7 +61,7 @@ but it does not assume that signed integer arithmetic wraps around.
 @findex TYPE_IS_INTEGER
 @code{TYPE_IS_INTEGER (@var{t})} is an arithmetic constant
 expression that is 1 if the arithmetic type @var{t} is an integer type.
-@code{_Bool} counts as an integer type.
+@code{bool} counts as an integer type.
 
 @findex TYPE_SIGNED
 @code{TYPE_SIGNED (@var{t})} is an arithmetic constant expression
@@ -140,7 +140,6 @@ values of the integer type @var{t}.  These expressions are of the type
 Example usage:
 
 @example
-#include <stdbool.h>
 #include <sys/types.h>
 #include <intprops.h>
 bool

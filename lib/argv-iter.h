@@ -15,7 +15,6 @@
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 #include <stdio.h>
-#include <stdbool.h>
 
 /* Definition of _GL_ARG_NONNULL.  */
 #include "arg-nonnull.h"

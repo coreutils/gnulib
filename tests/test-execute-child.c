@@ -41,7 +41,6 @@ is_device (int fd)
 /* Now include the other header files.  */
 #include <fcntl.h>
 #include <signal.h>
-#include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>

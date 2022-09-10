@@ -18,7 +18,6 @@
 #ifndef _GL_SET_H
 #define _GL_SET_H
 
-#include <stdbool.h>
 #include <stddef.h>
 
 #ifndef _GL_INLINE_HEADER_BEGIN

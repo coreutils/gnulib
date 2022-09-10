@@ -20,7 +20,6 @@
 
 #include "fstrcmp.h"
 
-#include <stdbool.h>
 
 #include "macros.h"
 

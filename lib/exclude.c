@@ -23,8 +23,6 @@
 
 #include <config.h>
 
-#include <stdbool.h>
-
 #include <ctype.h>
 #include <errno.h>
 #include <stddef.h>

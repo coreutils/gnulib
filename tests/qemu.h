@@ -16,7 +16,6 @@
 
 /* Written by Bruno Haible <bruno@clisp.org>, 2021.  */
 
-#include <stdbool.h>
 #ifdef __linux__
 # include <fcntl.h>
 # include <string.h>

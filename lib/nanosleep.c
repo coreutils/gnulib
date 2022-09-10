@@ -25,7 +25,6 @@
 #include "intprops.h"
 #include "verify.h"
 
-#include <stdbool.h>
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/select.h>

@@ -24,7 +24,6 @@
 #include "signature.h"
 SIGNATURE_CHECK (explicit_bzero, void, (void *, size_t));
 
-#include <stdbool.h>
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>

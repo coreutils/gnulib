@@ -21,7 +21,6 @@
 
 #include <errno.h>
 #include <error.h>
-#include <stdbool.h>
 #include "exitfail.h"
 #include "verify.h"
 

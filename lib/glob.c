@@ -31,7 +31,6 @@
 #include <fcntl.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <assert.h>

@@ -25,7 +25,6 @@ SIGNATURE_CHECK (openat, int, (int, char const *, int, ...));
 
 #include <errno.h>
 #include <stdarg.h>
-#include <stdbool.h>
 #include <stdio.h>
 #include <unistd.h>
 

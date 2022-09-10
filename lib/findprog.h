@@ -18,8 +18,6 @@
 #ifndef _FINDPROG_H
 #define _FINDPROG_H
 
-#include <stdbool.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif

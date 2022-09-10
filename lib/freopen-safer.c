@@ -25,7 +25,6 @@
 
 #include <errno.h>
 #include <fcntl.h>
-#include <stdbool.h>
 #include <unistd.h>
 
 /* Guarantee that FD is open; all smaller FDs must already be open.

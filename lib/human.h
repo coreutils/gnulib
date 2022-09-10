@@ -21,7 +21,6 @@
 # define HUMAN_H_ 1
 
 # include <limits.h>
-# include <stdbool.h>
 # include <stdint.h>
 # include <unistd.h>
 

@@ -32,6 +32,7 @@ extensions
 vsnprintf
 sleep
 stdalign
+stdbool
 stdio
 strerror
 memchr

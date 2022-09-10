@@ -18,8 +18,6 @@
 #ifndef SAME_H_
 # define SAME_H_ 1
 
-# include <stdbool.h>
-
 bool same_name (const char *source, const char *dest);
 bool same_nameat (int, char const *, int, char const *);
 

@@ -18,8 +18,6 @@
 #ifndef _JAVAEXEC_H
 #define _JAVAEXEC_H
 
-#include <stdbool.h>
-
 typedef bool execute_fn (const char *progname,
                          const char *prog_path, const char * const *prog_argv,
                          void *private_data);

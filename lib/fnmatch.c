@@ -38,7 +38,6 @@
 #include <wchar.h>
 #include <wctype.h>
 #include <stddef.h>
-#include <stdbool.h>
 
 /* We need some of the locale data (the collation sequence information)
    but there is no interface to get this information in general.  Therefore

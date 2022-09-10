@@ -23,7 +23,6 @@
 #include "intprops.h"
 #include "macros.h"
 
-#include <stdbool.h>
 #include <limits.h>
 
 static struct { int s; int ns; } const prototype[] =
