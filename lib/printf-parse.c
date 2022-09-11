@@ -48,7 +48,16 @@
 #include <stddef.h>
 
 /* Get intmax_t.  */
-#include <stdint.h>
+#if defined IN_LIBINTL || defined IN_LIBASPRINTF
+# if HAVE_STDINT_H_WITH_UINTMAX
+#  include <stdint.h>
+# endif
+# if HAVE_INTTYPES_H_WITH_UINTMAX
+#  include <inttypes.h>
+# endif
+#else
+# include <stdint.h>
+#endif
 
 /* malloc(), realloc(), free().  */
 #include <stdlib.h>

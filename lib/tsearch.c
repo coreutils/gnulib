@@ -92,7 +92,11 @@
 #include <config.h>
 
 /* Specification.  */
-#include <search.h>
+#ifdef IN_LIBINTL
+# include "tsearch.h"
+#else
+# include <search.h>
+#endif
 
 #include <stdlib.h>
 

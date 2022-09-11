@@ -68,7 +68,9 @@
 # pragma GCC diagnostic ignored "-Wanalyzer-null-argument"
 #endif
 
-#include <alloca.h>
+#ifndef IN_LIBINTL
+# include <alloca.h>
+#endif
 
 /* Specification.  */
 #ifndef VASNPRINTF

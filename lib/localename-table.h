@@ -21,7 +21,11 @@
 # include <stddef.h>
 # include <locale.h>
 
-# include "glthread/lock.h"
+# ifdef IN_LIBINTL
+#  include "lock.h"
+# else
+#  include "glthread/lock.h"
+# endif
 
 struct locale_categories_names
   {
