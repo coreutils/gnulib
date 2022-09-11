@@ -51,17 +51,14 @@ integer constant expression, then a compiler might reject a usage like
 @samp{verify (@var{V});} even when @var{V} is
 nonzero.
 
-Although the standard @code{assert} macro is a runtime test, C2x
-specifies a builtin @code{_Static_assert (@var{V})},
-its @file{assert.h} header has a similar macro
-named @code{static_assert}, and C++17 has a similar
-@code{static_assert} builtin.  These builtins and macros differ
-from @code{verify} in two major ways.  First, they can also be used
+Although the standard @code{assert} macro is a runtime test, C23 and C++17
+specify a builtin @code{static_assert (@var{V})}, which differs
+from @code{verify} in two major ways.  First, it can also be used
 within a @code{struct} or @code{union} specifier, in place of an
-ordinary member declaration.  Second, they allow the programmer to
+ordinary member declaration.  Second, it allows the programmer to
 specify, as an optional second argument, a compile-time diagnostic as
 a string literal.  If your program is not intended to be portable to
-compilers that lack C2x or C++17 @code{static_assert}, the only
+compilers that lack C23 or C++17 @code{static_assert}, the only
 advantage of @code{verify} is that its name is a bit shorter.
 
 The @file{verify.h} header defines one more macro, @code{assume
