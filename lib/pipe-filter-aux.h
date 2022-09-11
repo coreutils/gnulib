@@ -23,6 +23,17 @@ _GL_INLINE_HEADER_BEGIN
 # define PIPE_FILTER_AUX_INLINE _GL_INLINE
 #endif
 
+#if defined _WIN32 && ! defined __CYGWIN__
+/* In the pipe-filter-* modules we want to use the write() function that is
+   not overridden to emulate SIGPIPE behaviour, because we don't want force
+   the caller to do
+     signal (SIGPIPE, SIG_DFL);
+   To reproduce the problem, use a gnulib testdir for the modules
+   'pipe-filter-gi', 'write', 'sigpipe'.  */
+# undef write
+# define write _write
+#endif
+
 #ifndef SSIZE_MAX
 # define SSIZE_MAX ((ssize_t) (SIZE_MAX / 2))
 #endif
