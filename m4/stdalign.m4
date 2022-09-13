@@ -30,7 +30,7 @@ AC_DEFUN([gl_STDALIGN_H],
             char test_long[ao (long int) % _Alignof (long int) == 0 ? 1 : -1];
             char test_alignof[alignof (double) == _Alignof (double) ? 1 : -1];
 
-            /* Test _Alignas only on platforms where gnulib can help.  */
+            /* Test alignas only on platforms where gnulib can help.  */
             #if \
                 ((defined __cplusplus && 201103 <= __cplusplus) \
                  || (__TINYC__ && defined __attribute__) \
