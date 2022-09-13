@@ -21,7 +21,6 @@
 #endif
 
 #include <alloca.h>
-#include <stdalign.h>
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>

@@ -23,7 +23,6 @@
 #include "alignalloc.h"
 
 #include <limits.h>
-#include <stdalign.h>
 #include <stdckdint.h>
 #include <stdint.h>
 

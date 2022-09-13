@@ -24,7 +24,6 @@
 /* Specification.  */
 #include "md4.h"
 
-#include <stdalign.h>
 #include <stdint.h>
 #include <string.h>
 #include <sys/types.h>

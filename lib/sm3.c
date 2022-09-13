@@ -31,7 +31,6 @@
 #endif
 #include "sm3.h"
 
-#include <stdalign.h>
 #include <stdint.h>
 #include <string.h>
 

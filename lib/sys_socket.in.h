@@ -97,7 +97,6 @@ typedef unsigned char   sa_family_t;
 #  endif
 # endif
 #else
-# include <stdalign.h>
 /* Code taken from glibc sysdeps/unix/sysv/linux/bits/socket.h on
    2009-05-08, licensed under LGPLv2.1+, plus portability fixes. */
 # define __ss_aligntype unsigned long int

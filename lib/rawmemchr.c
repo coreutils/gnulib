@@ -23,7 +23,6 @@
 #if !HAVE_RAWMEMCHR
 
 # include <limits.h>
-# include <stdalign.h>
 # include <stdint.h>
 
 
