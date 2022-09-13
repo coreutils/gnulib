@@ -22,8 +22,7 @@
 /* alignof_slot (TYPE)
    Determine the alignment of a structure slot (field) of a given type,
    at compile time.  Note that the result depends on the ABI.
-   This is the same as alignof (TYPE) and _Alignof (TYPE), defined in
-   <stdalign.h> if __alignof_is_defined is 1.
+   This is the same as alignof (TYPE) and _Alignof (TYPE).
    Note: The result cannot be used as a value for an 'enum' constant,
    due to bugs in HP-UX 10.20 cc and AIX 3.2.5 xlc.  */
 #if defined __cplusplus

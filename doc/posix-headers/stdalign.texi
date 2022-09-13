@@ -35,10 +35,9 @@ On most pre-C11 platforms, the operand of
 @code{alignof}/@code{_Alignof} cannot be a structure type containing a
 flexible array member.
 @item
-@code{_Alignas} and @code{alignas} are not always supported;
-on platforms lacking support, the
-macro @code{__alignas_is_defined} is not defined.
-Supported compilers include GCC, IBM C, Sun C 5.9 and later,
+@code{_Alignas} and @code{alignas} are not always supported.
+Supported compilers include any compiler supporting C11 or later,
+which includes GCC, IBM C, Sun C 5.9 and later,
 and MSVC 7.0 and later.
 @item
 Some compilers do not support alignment via
@@ -62,6 +61,11 @@ also known as Oracle Developer Studio 12.6.
 @item
 @code{<stdalign.h>} must be #included before @code{_Alignas} and
 @code{_Alignof} can be used.
+@item
+In C11 and C17, @code{<stdalign.h>} defines the macros
+@code{__alignas_is_defined} and
+@code{__alignof_is_defined} to 1.
+In C23, these macros are not defined.
 @item
 You cannot assume that @code{_Alignas} and @code{_Alignof} are reserved words;
 they might be macros.
