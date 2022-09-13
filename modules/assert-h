@@ -1,5 +1,5 @@
 Description:
-An <assert.h> that conforms to C11.
+An <assert.h> and static_assert that are like C23.
 
 Files:
 lib/assert.in.h

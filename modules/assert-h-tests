@@ -1,7 +1,10 @@
 Files:
+tests/test-assert.c
 
 Depends-on:
 
 configure.ac:
 
 Makefile.am:
+TESTS += test-assert
+check_PROGRAMS += test-assert

@@ -865,7 +865,8 @@ This chapter describes which keywords specified by ISO C are
 substituted by Gnulib.
 
 @menu
-* bool::  @code{bool}, @code{false}, and @code{true}
+* bool::           @code{bool}, @code{false}, and @code{true}
+* static_assert::  @code{static_assert}
 @end menu
 
 @node bool
@@ -887,6 +888,30 @@ On pre-C23 platforms, the keyword substitutes are macros.
 
 @item
 On pre-C23 platforms, the keyword substitutes assume C99 or later.
+@end itemize
+
+@node static_assert
+@section @code{static_assert}
+
+Gnulib module: assert-h
+
+The @code{assert-h} module arranges for both @code{static_assert} and
+@code{<assert.h>} to be like standard C@.  @xref{assert.h}.
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+Pre-C11 platforms lack @code{static_assert}.
+
+@item
+On pre-C23 platforms, @code{<assert.h>} must be included before
+using @code{static_assert}.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+On pre-C23 platforms, @code{static_assert} is a macro.
 @end itemize
 
 @node Header File Substitutes
