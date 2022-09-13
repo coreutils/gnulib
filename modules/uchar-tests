@@ -2,7 +2,7 @@ Files:
 tests/test-uchar.c
 
 Depends-on:
-verify
+assert-h
 uchar-c++-tests
 
 configure.ac:

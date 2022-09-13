@@ -20,8 +20,6 @@
 
 #include <stdlib.h>
 
-#include "verify.h"
-
 /* Check that EXIT_SUCCESS is 0, per POSIX.  */
 static int exitcode = EXIT_SUCCESS;
 #if EXIT_SUCCESS
@@ -36,7 +34,7 @@ static int exitcode = EXIT_SUCCESS;
 
 /* Check that NULL can be passed through varargs as a pointer type,
    per POSIX 2008.  */
-verify (sizeof NULL == sizeof (void *));
+static_assert (sizeof NULL == sizeof (void *));
 
 #if GNULIB_TEST_SYSTEM_POSIX
 # include "test-sys_wait.h"

@@ -2,7 +2,7 @@ Files:
 tests/test-sys_stat.c
 
 Depends-on:
-verify
+assert-h
 sys_stat-c++-tests
 
 configure.ac:

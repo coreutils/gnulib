@@ -35,7 +35,6 @@
 #else
 # include "intprops.h"
 #endif
-#include "verify.h"
 
 #include <inttypes.h>
 #include <limits.h>
@@ -44,7 +43,7 @@
 
 /* Compile-time verification of expression X.
    In this file, we need it as a statement, rather than as a declaration.  */
-#define verify_stmt(x) do { verify (x); } while (0)
+#define verify_stmt(x) do { static_assert (x); } while (0)
 
 /* VERIFY (X) uses a static assertion for compilers that are known to work,
    and falls back on a dynamic assertion for other compilers.

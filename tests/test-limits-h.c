@@ -20,14 +20,12 @@
 
 #include <limits.h>
 
-#include "verify.h"
-
 #if 4 < __GNUC__ + (3 <= __GNUC_MINOR__)
 # pragma GCC diagnostic ignored "-Woverlength-strings"
 #endif
 
 #define verify_width(width, min, max) \
-  verify ((max) >> ((width) - 1 - ((min) < 0)) == 1)
+  static_assert ((max) >> ((width) - 1 - ((min) < 0)) == 1)
 
 /* Macros borrowed from intprops.h.  */
 #define TYPE_SIGNED(t) (! ((t) 0 < (t) -1))
@@ -53,48 +51,48 @@ verify_width (LONG_BIT, LONG_MIN, LONG_MAX);
 /* Numerical limit macros.  */
 
 char               limits1[]  = { CHAR_MIN, CHAR_MAX };
-verify (TYPE_MINIMUM (char) == CHAR_MIN);
-verify (TYPE_MAXIMUM (char) == CHAR_MAX);
+static_assert (TYPE_MINIMUM (char) == CHAR_MIN);
+static_assert (TYPE_MAXIMUM (char) == CHAR_MAX);
 
 signed char        limits2[]  = { SCHAR_MIN, SCHAR_MAX };
-verify (TYPE_MINIMUM (signed char) == SCHAR_MIN);
-verify (TYPE_MAXIMUM (signed char) == SCHAR_MAX);
+static_assert (TYPE_MINIMUM (signed char) == SCHAR_MIN);
+static_assert (TYPE_MAXIMUM (signed char) == SCHAR_MAX);
 
 unsigned char      limits3[]  = { UCHAR_MAX };
-verify (TYPE_MINIMUM (unsigned char) == 0);
-verify (TYPE_MAXIMUM (unsigned char) == UCHAR_MAX);
+static_assert (TYPE_MINIMUM (unsigned char) == 0);
+static_assert (TYPE_MAXIMUM (unsigned char) == UCHAR_MAX);
 
 short              limits4[]  = { SHRT_MIN, SHRT_MAX };
-verify (TYPE_MINIMUM (short int) == SHRT_MIN);
-verify (TYPE_MAXIMUM (short int) == SHRT_MAX);
+static_assert (TYPE_MINIMUM (short int) == SHRT_MIN);
+static_assert (TYPE_MAXIMUM (short int) == SHRT_MAX);
 
 unsigned short     limits5[]  = { USHRT_MAX };
-verify (TYPE_MINIMUM (unsigned short int) == 0);
-verify (TYPE_MAXIMUM (unsigned short int) == USHRT_MAX);
+static_assert (TYPE_MINIMUM (unsigned short int) == 0);
+static_assert (TYPE_MAXIMUM (unsigned short int) == USHRT_MAX);
 
 int                limits6[]  = { INT_MIN, INT_MAX };
-verify (TYPE_MINIMUM (int) == INT_MIN);
-verify (TYPE_MAXIMUM (int) == INT_MAX);
+static_assert (TYPE_MINIMUM (int) == INT_MIN);
+static_assert (TYPE_MAXIMUM (int) == INT_MAX);
 
 unsigned int       limits7[]  = { UINT_MAX };
-verify (TYPE_MINIMUM (unsigned int) == 0);
-verify (TYPE_MAXIMUM (unsigned int) == UINT_MAX);
+static_assert (TYPE_MINIMUM (unsigned int) == 0);
+static_assert (TYPE_MAXIMUM (unsigned int) == UINT_MAX);
 
 long               limits8[]  = { LONG_MIN, LONG_MAX };
-verify (TYPE_MINIMUM (long int) == LONG_MIN);
-verify (TYPE_MAXIMUM (long int) == LONG_MAX);
+static_assert (TYPE_MINIMUM (long int) == LONG_MIN);
+static_assert (TYPE_MAXIMUM (long int) == LONG_MAX);
 
 unsigned long      limits9[]  = { ULONG_MAX };
-verify (TYPE_MINIMUM (unsigned long int) == 0);
-verify (TYPE_MAXIMUM (unsigned long int) == ULONG_MAX);
+static_assert (TYPE_MINIMUM (unsigned long int) == 0);
+static_assert (TYPE_MAXIMUM (unsigned long int) == ULONG_MAX);
 
 long long          limits10[] = { LLONG_MIN, LLONG_MAX };
-verify (TYPE_MINIMUM (long long int) == LLONG_MIN);
-verify (TYPE_MAXIMUM (long long int) == LLONG_MAX);
+static_assert (TYPE_MINIMUM (long long int) == LLONG_MIN);
+static_assert (TYPE_MAXIMUM (long long int) == LLONG_MAX);
 
 unsigned long long limits11[] = { ULLONG_MAX };
-verify (TYPE_MINIMUM (unsigned long long int) == 0);
-verify (TYPE_MAXIMUM (unsigned long long int) == ULLONG_MAX);
+static_assert (TYPE_MINIMUM (unsigned long long int) == 0);
+static_assert (TYPE_MAXIMUM (unsigned long long int) == ULLONG_MAX);
 
 /* Macros specified by ISO/IEC TS 18661-1:2014.  */
 
@@ -113,7 +111,7 @@ verify_width (ULLONG_WIDTH, 0, ULLONG_MAX);
 /* Macros specified by C2x.  */
 
 int bool_attrs[] = { BOOL_MAX, BOOL_WIDTH };
-verify (BOOL_MAX == (((1U << (BOOL_WIDTH - 1)) - 1) * 2) + 1);
+static_assert (BOOL_MAX == (((1U << (BOOL_WIDTH - 1)) - 1) * 2) + 1);
 
 int
 main (void)

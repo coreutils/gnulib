@@ -3,9 +3,9 @@ tests/test-intprops.c
 tests/macros.h
 
 Depends-on:
+assert-h
 inttypes
 stdbool
-verify
 
 configure.ac:
 

@@ -21,7 +21,6 @@
 #include "ino-map.h"
 
 #include "hash.h"
-#include "verify.h"
 
 #include <limits.h>
 #include <stdlib.h>
@@ -151,7 +150,7 @@ ino_map_insert (struct ino_map *im, ino_t ino)
          overflow to zero, then it must equal INO_MAP_INSERT_FAILURE,
          which is the value that should be returned in that case.
          Verify that this works.  */
-      verify (INO_MAP_INSERT_FAILURE + 1 == 0);
+      static_assert (INO_MAP_INSERT_FAILURE + 1 == 0);
 
       /* Prepare to allocate a new probe next time; this one is in use.  */
       im->probe = NULL;

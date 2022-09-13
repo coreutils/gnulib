@@ -37,7 +37,6 @@
 #endif
 
 #include "unictype.h"
-#include "verify.h"
 
 int
 FUNC (wint_t wc)
@@ -96,7 +95,7 @@ FUNC (wint_t wc)
 
 #else /* macOS, FreeBSD, NetBSD, OpenBSD, HP-UX, Solaris, Minix, Android */
   /* char32_t and wchar_t are equivalent.  */
-  verify (sizeof (char32_t) == sizeof (wchar_t));
+  static_assert (sizeof (char32_t) == sizeof (wchar_t));
 
   return WCHAR_FUNC (wc);
 #endif

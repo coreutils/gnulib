@@ -3,8 +3,8 @@ tests/macros.h
 tests/test-libgmp.c
 
 Depends-on:
+assert-h
 c99
-verify
 
 configure.ac:
 

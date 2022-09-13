@@ -14,10 +14,9 @@
    You should have received a copy of the GNU Lesser General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
-#include "verify.h"
 
 enum { I_RING_SIZE = 4 };
-verify (1 <= I_RING_SIZE);
+static_assert (1 <= I_RING_SIZE);
 
 /* When ir_empty is true, the ring is empty.
    Otherwise, ir_data[B..F] are defined, where B..F is the contiguous

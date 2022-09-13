@@ -2,7 +2,7 @@ Files:
 tests/test-time.c
 
 Depends-on:
-verify
+assert-h
 time-c++-tests
 
 configure.ac:

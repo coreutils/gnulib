@@ -20,8 +20,6 @@
 
 #include <locale.h>
 
-#include "verify.h"
-
 int a[] =
   {
     LC_ALL,
@@ -39,7 +37,7 @@ int ls;
 
 /* Check that NULL can be passed through varargs as a pointer type,
    per POSIX 2008.  */
-verify (sizeof NULL == sizeof (void *));
+static_assert (sizeof NULL == sizeof (void *));
 
 int
 main ()

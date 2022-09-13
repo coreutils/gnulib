@@ -32,7 +32,6 @@
 
 #include "float+.h"
 #include "integer_length.h"
-#include "verify.h"
 
 #ifdef USE_LONG_DOUBLE
 # define FUNC fmal
@@ -94,11 +93,11 @@
 
 typedef unsigned int mp_limb_t;
 #define GMP_LIMB_BITS 32
-verify (sizeof (mp_limb_t) * CHAR_BIT == GMP_LIMB_BITS);
+static_assert (sizeof (mp_limb_t) * CHAR_BIT == GMP_LIMB_BITS);
 
 typedef unsigned long long mp_twolimb_t;
 #define GMP_TWOLIMB_BITS 64
-verify (sizeof (mp_twolimb_t) * CHAR_BIT == GMP_TWOLIMB_BITS);
+static_assert (sizeof (mp_twolimb_t) * CHAR_BIT == GMP_TWOLIMB_BITS);
 
 /* Number of limbs needed for a single DOUBLE.  */
 #define NLIMBS1 ((MANT_BIT + GMP_LIMB_BITS - 1) / GMP_LIMB_BITS)

@@ -30,7 +30,7 @@ stdint
 xsize
 errno
 memchr
-verify
+assert-h
 wchar
 
 configure.ac:

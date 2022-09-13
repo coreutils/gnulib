@@ -2,7 +2,7 @@ Files:
 tests/test-stdio.c
 
 Depends-on:
-verify
+assert-h
 stdio-c++-tests
 fgetc-tests
 fputc-tests

@@ -9,6 +9,7 @@ m4/tm_gmtoff.m4
 m4/parse-datetime.m4
 
 Depends-on:
+assert-h
 bison
 c99
 c-ctype
@@ -26,7 +27,6 @@ time
 time_r
 time_rz
 timegm
-verify
 
 configure.ac:
 gl_PARSE_DATETIME

@@ -51,6 +51,7 @@ m4/relocatable-lib.m4
 m4/setenv.m4
 
 Depends-on:
+assert-h
 c99
 double-slash-root
 eloop-threshold
@@ -73,7 +74,6 @@ stdlib
 string
 sys_stat
 unistd
-verify
 xalloc-oversized
 
 configure.ac-early:

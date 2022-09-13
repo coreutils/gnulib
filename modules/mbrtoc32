@@ -22,9 +22,9 @@ attribute       [test $HAVE_MBRTOC32 = 0 || test $REPLACE_MBRTOC32 = 1]
 c99             [{ test $HAVE_MBRTOC32 = 0 || test $REPLACE_MBRTOC32 = 1; } && test $REPLACE_MBSTATE_T = 0]
 hard-locale     [{ test $HAVE_MBRTOC32 = 0 || test $REPLACE_MBRTOC32 = 1; } && test $REPLACE_MBSTATE_T = 0]
 mbrtowc         [{ test $HAVE_MBRTOC32 = 0 || test $REPLACE_MBRTOC32 = 1; } && test $REPLACE_MBSTATE_T = 0]
+assert-h        [test $HAVE_MBRTOC32 = 0 || test $REPLACE_MBRTOC32 = 1]
 localcharset    [test $HAVE_MBRTOC32 = 0 || test $REPLACE_MBRTOC32 = 1]
 streq           [test $HAVE_MBRTOC32 = 0 || test $REPLACE_MBRTOC32 = 1]
-verify          [test $HAVE_MBRTOC32 = 0 || test $REPLACE_MBRTOC32 = 1]
 
 configure.ac:
 gl_FUNC_MBRTOC32

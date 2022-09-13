@@ -4,9 +4,9 @@ tests/test-intprops.c
 tests/test-stdckdint.c
 
 Depends-on:
+assert-h
 inttypes
 stdbool
-verify
 stdckdint-c++-tests
 
 configure.ac:

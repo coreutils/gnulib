@@ -6,8 +6,8 @@ lib/ino-map.c
 lib/ino-map.h
 
 Depends-on:
+assert-h
 hash
-verify
 
 configure.ac:
 

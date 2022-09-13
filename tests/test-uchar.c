@@ -20,8 +20,6 @@
 
 #include <uchar.h>
 
-#include "verify.h"
-
 /* Check that the types are defined.  */
 mbstate_t a = { 0 };
 size_t b = 5;
@@ -29,19 +27,19 @@ char16_t c = 'x';
 char32_t d = 'y';
 
 /* Check that char16_t and char32_t are unsigned types.  */
-verify ((char16_t)(-1) >= 0);
+static_assert ((char16_t)(-1) >= 0);
 #if !defined __HP_cc
-verify ((char32_t)(-1) >= 0);
+static_assert ((char32_t)(-1) >= 0);
 #endif
 
 /* Check that char32_t is at least 31 bits wide.  */
-verify ((char32_t)0x7FFFFFFF != (char32_t)0x3FFFFFFF);
+static_assert ((char32_t)0x7FFFFFFF != (char32_t)0x3FFFFFFF);
 
 /* Check that _GL_LARGE_CHAR32_T is correctly defined.  */
 #if _GL_LARGE_CHAR32_T
-verify (sizeof (char32_t) > sizeof (wchar_t));
+static_assert (sizeof (char32_t) > sizeof (wchar_t));
 #else
-verify (sizeof (char32_t) == sizeof (wchar_t));
+static_assert (sizeof (char32_t) == sizeof (wchar_t));
 #endif
 
 int

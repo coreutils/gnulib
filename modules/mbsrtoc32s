@@ -9,7 +9,7 @@ lib/mbsrtoc32s-state.c
 Depends-on:
 uchar
 wchar
-verify
+assert-h
 mbrtoc32
 strnlen1
 mbsrtowcs       [test $SMALL_WCHAR_T = 0]

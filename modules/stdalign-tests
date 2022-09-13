@@ -3,7 +3,7 @@ tests/test-stdalign.c
 tests/macros.h
 
 Depends-on:
-verify
+assert-h
 stdint
 stdalign-c++-tests
 

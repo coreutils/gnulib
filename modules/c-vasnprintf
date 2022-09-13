@@ -22,6 +22,7 @@ m4/math_h.m4
 m4/exponentd.m4
 
 Depends-on:
+assert-h
 attribute
 stdio
 isnand-nolibm
@@ -39,7 +40,6 @@ xsize
 errno
 memchr
 multiarch
-verify
 
 configure.ac:
 AC_REQUIRE([AC_C_RESTRICT])

@@ -22,14 +22,12 @@
 #include <limits.h>
 #include <string.h>
 
-#include "verify.h"
-
 #include "macros.h"
 
 #ifndef MINI_GMP_LIMB_TYPE
 /* Verify that the gmp.h header file was generated for the same
    machine word size as we are using.  */
-verify (GMP_NUMB_BITS == sizeof (mp_limb_t) * CHAR_BIT);
+static_assert (GMP_NUMB_BITS == sizeof (mp_limb_t) * CHAR_BIT);
 #endif
 
 int

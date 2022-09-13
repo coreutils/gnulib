@@ -34,8 +34,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "verify.h"
-
 #ifdef USE_LONG_DOUBLE
 # error Long double not supported.
 #elif ! defined USE_FLOAT
@@ -99,7 +97,7 @@ main (void)
         /* Combine highbits and lowbits into a floating-point number,
            sign-extending the lowbits to DOUBLE_BITS-NUM_HIGHBITS bits.  */
         union { DOUBLE f; DOUBLE_UINT i; } janus;
-        verify (sizeof janus.f == sizeof janus.i);
+        static_assert (sizeof janus.f == sizeof janus.i);
         janus.i = lowbits | (highbits << (DOUBLE_BITS - NUM_HIGHBITS));
         if (lowbits >> (NUM_LOWBITS - 1))
           janus.i |= ((DOUBLE_UINT) -1

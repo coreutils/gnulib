@@ -6,6 +6,7 @@ lib/argmatch.h
 lib/argmatch.c
 
 Depends-on:
+assert-h
 c99
 error
 exitfail
@@ -16,7 +17,6 @@ quote
 quotearg
 stdbool
 stdlib
-verify
 
 configure.ac:
 

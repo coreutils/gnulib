@@ -22,8 +22,6 @@
 
 #include <limits.h>
 
-#include "verify.h"
-
 #if defined _WIN32 && ! defined __CYGWIN__
 
 # define WIN32_LEAN_AND_MEAN  /* avoid including junk */
@@ -56,7 +54,7 @@ unsigned int
 rpl_sleep (unsigned int seconds)
 {
   /* This requires int larger than 16 bits.  */
-  verify (UINT_MAX / 24 / 24 / 60 / 60);
+  static_assert (UINT_MAX / 24 / 24 / 60 / 60);
   const unsigned int limit = 24 * 24 * 60 * 60;
   while (limit < seconds)
     {

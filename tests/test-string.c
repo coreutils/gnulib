@@ -20,11 +20,9 @@
 
 #include <string.h>
 
-#include "verify.h"
-
 /* Check that NULL can be passed through varargs as a pointer type,
    per POSIX 2008.  */
-verify (sizeof NULL == sizeof (void *));
+static_assert (sizeof NULL == sizeof (void *));
 
 int
 main (void)

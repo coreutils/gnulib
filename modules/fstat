@@ -14,7 +14,7 @@ pathmax         [test $REPLACE_FSTAT = 1]
 stat            [test $REPLACE_FSTAT = 1]
 stat-time       [test $REPLACE_FSTAT = 1]
 unistd          [test $REPLACE_FSTAT = 1]
-verify          [test $REPLACE_FSTAT = 1]
+assert-h        [test $REPLACE_FSTAT = 1]
 msvc-nothrow    [test $REPLACE_FSTAT = 1]
 
 configure.ac:

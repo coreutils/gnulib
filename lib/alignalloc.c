@@ -26,7 +26,6 @@
 #include <stdalign.h>
 #include <stdckdint.h>
 #include <stdint.h>
-#include "verify.h"
 
 #if !ALIGNALLOC_VIA_ALIGNED_ALLOC
 # if HAVE_POSIX_MEMALIGN
@@ -37,7 +36,7 @@
    sizeof (void *) is a power of two, which is true on all known platforms.
    This check is here rather than in alignalloc.h to save the compiler
    the trouble of checking it each time alignalloc.h is included.  */
-verify (! (sizeof (void *) & (sizeof (void *) - 1)));
+static_assert (! (sizeof (void *) & (sizeof (void *) - 1)));
 
 # else /* !HAVE_POSIX_MEMALIGN */
 
@@ -62,7 +61,7 @@ address_of_pointer_to_malloced (unsigned char *r)
      for a 0 byte at R - 1.  This approach assumes UCHAR_MAX is large
      enough so that there is room for P; although true on all
      plausible platforms, check the assumption to be safe.  */
-  verify (sizeof (void *) + alignof (void *) - 1 <= UCHAR_MAX);
+  static_assert (sizeof (void *) + alignof (void *) - 1 <= UCHAR_MAX);
 
   return align_down (r - 1 - sizeof (void *), alignof (void *));
 }

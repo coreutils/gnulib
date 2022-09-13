@@ -23,8 +23,6 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include "verify.h"
-
 #include "macros.h"
 
 typedef long double longdouble;
@@ -45,7 +43,7 @@ typedef struct { char a[4]; } struct4;
 
 #define CHECK_STATIC(type) \
   typedef struct { char slot1; type slot2; } type##_helper; \
-  verify (alignof (type) == offsetof (type##_helper, slot2)); \
+  static_assert (alignof (type) == offsetof (type##_helper, slot2)); \
   const int type##_alignment = alignof (type); \
   type alignas (TEST_ALIGNMENT) static_##type##_alignas
 

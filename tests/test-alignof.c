@@ -23,8 +23,6 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include "verify.h"
-
 typedef long double longdouble;
 typedef struct { char a[1]; } struct1;
 typedef struct { char a[2]; } struct2;
@@ -33,7 +31,7 @@ typedef struct { char a[4]; } struct4;
 
 #define CHECK(type) \
   typedef struct { char slot1; type slot2; } type##_helper; \
-  verify (alignof_slot (type) == offsetof (type##_helper, slot2)); \
+  static_assert (alignof_slot (type) == offsetof (type##_helper, slot2)); \
   const int type##_slot_alignment = alignof_slot (type); \
   const int type##_type_alignment = alignof_type (type);
 

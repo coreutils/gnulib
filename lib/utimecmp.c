@@ -33,7 +33,6 @@
 #include "hash.h"
 #include "intprops.h"
 #include "stat-time.h"
-#include "verify.h"
 
 #ifndef MAX
 # define MAX(a, b) ((a) > (b) ? (a) : (b))
@@ -146,7 +145,7 @@ utimecmpat (int dfd, char const *dst_name,
 
      time_t might be unsigned.  */
 
-  verify (TYPE_IS_INTEGER (time_t));
+  static_assert (TYPE_IS_INTEGER (time_t));
 
   /* Destination and source timestamps.  */
   time_t dst_s = dst_stat->st_mtime;

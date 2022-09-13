@@ -14,7 +14,7 @@ iswdigit
 localcharset    [test $REPLACE_MBSTATE_T = 1]
 streq           [test $REPLACE_MBSTATE_T = 1]
 unictype/ctype-digit
-verify
+assert-h
 
 configure.ac:
 AC_REQUIRE([gl_UCHAR_H])

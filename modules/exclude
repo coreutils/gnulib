@@ -6,6 +6,7 @@ lib/exclude.h
 lib/exclude.c
 
 Depends-on:
+assert-h
 filename
 fnmatch
 fopen-gnu
@@ -15,7 +16,6 @@ mbuiter
 regex
 stdbool
 unlocked-io-internal
-verify
 xalloc
 
 configure.ac:

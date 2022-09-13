@@ -20,8 +20,6 @@
 
 #include <pthread.h>
 
-#include "verify.h"
-
 /* Check that the types are all defined.  */
 
 pthread_t t1;

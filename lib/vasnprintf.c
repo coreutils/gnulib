@@ -101,7 +101,6 @@
 #include "xsize.h"
 
 #include "attribute.h"
-#include "verify.h"
 
 #if (NEED_PRINTF_DOUBLE || NEED_PRINTF_LONG_DOUBLE) && !defined IN_LIBINTL
 # include <math.h>
@@ -408,11 +407,11 @@ is_infinite_or_zerol (long double x)
 
 typedef unsigned int mp_limb_t;
 # define GMP_LIMB_BITS 32
-verify (sizeof (mp_limb_t) * CHAR_BIT == GMP_LIMB_BITS);
+static_assert (sizeof (mp_limb_t) * CHAR_BIT == GMP_LIMB_BITS);
 
 typedef unsigned long long mp_twolimb_t;
 # define GMP_TWOLIMB_BITS 64
-verify (sizeof (mp_twolimb_t) * CHAR_BIT == GMP_TWOLIMB_BITS);
+static_assert (sizeof (mp_twolimb_t) * CHAR_BIT == GMP_TWOLIMB_BITS);
 
 /* Representation of a bignum >= 0.  */
 typedef struct
@@ -2628,7 +2627,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                   size_t characters;
 #  if !DCHAR_IS_TCHAR
                   /* This code assumes that TCHAR_T is 'char'.  */
-                  verify (sizeof (TCHAR_T) == 1);
+                  static_assert (sizeof (TCHAR_T) == 1);
                   TCHAR_T *tmpsrc;
                   DCHAR_T *tmpdst;
                   size_t tmpdst_len;
@@ -2894,7 +2893,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                   size_t characters;
 # if !DCHAR_IS_TCHAR
                   /* This code assumes that TCHAR_T is 'char'.  */
-                  verify (sizeof (TCHAR_T) == 1);
+                  static_assert (sizeof (TCHAR_T) == 1);
                   TCHAR_T tmpsrc[64]; /* Assume MB_CUR_MAX <= 64.  */
                   DCHAR_T *tmpdst;
                   size_t tmpdst_len;
@@ -5451,7 +5450,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                         DCHAR_T *tmpdst;
                         size_t tmpdst_len;
                         /* This code assumes that TCHAR_T is 'char'.  */
-                        verify (sizeof (TCHAR_T) == 1);
+                        static_assert (sizeof (TCHAR_T) == 1);
 # if USE_SNPRINTF
                         tmpsrc = (TCHAR_T *) (result + length);
 # else

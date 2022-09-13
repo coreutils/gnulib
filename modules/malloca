@@ -9,10 +9,10 @@ m4/eealloc.m4
 
 Depends-on:
 alloca-opt
+assert-h
 idx
 stdckdint
 stdint
-verify
 xalloc-oversized
 
 configure.ac:

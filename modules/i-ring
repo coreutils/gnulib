@@ -7,8 +7,8 @@ lib/i-ring.c
 m4/i-ring.m4
 
 Depends-on:
+assert-h
 stdbool
-verify
 
 configure.ac:
 gl_I_RING

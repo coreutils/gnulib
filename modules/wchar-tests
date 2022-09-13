@@ -2,7 +2,7 @@ Files:
 tests/test-wchar.c
 
 Depends-on:
-verify
+assert-h
 wchar-c++-tests
 
 configure.ac:

@@ -47,7 +47,7 @@ errno
 free-posix
 memchr
 multiarch
-verify
+assert-h
 
 configure.ac:
 gl_PREREQ_VASNPRINTF_WITH_EXTRAS

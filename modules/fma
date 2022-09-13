@@ -12,7 +12,7 @@ Depends-on:
 math
 float           [test $HAVE_FMA = 0 || test $REPLACE_FMA = 1]
 stdbool         [test $HAVE_FMA = 0 || test $REPLACE_FMA = 1]
-verify          [test $HAVE_FMA = 0 || test $REPLACE_FMA = 1]
+assert-h        [test $HAVE_FMA = 0 || test $REPLACE_FMA = 1]
 isfinite        [test $HAVE_FMA = 0 || test $REPLACE_FMA = 1]
 integer_length  [test $HAVE_FMA = 0 || test $REPLACE_FMA = 1]
 frexp           [test $HAVE_FMA = 0 || test $REPLACE_FMA = 1]

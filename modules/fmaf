@@ -14,7 +14,7 @@ math
 extensions
 float           [test $HAVE_FMAF = 0 || test $REPLACE_FMAF = 1]
 stdbool         [test $HAVE_FMAF = 0 || test $REPLACE_FMAF = 1]
-verify          [test $HAVE_FMAF = 0 || test $REPLACE_FMAF = 1]
+assert-h         [test $HAVE_FMAF = 0 || test $REPLACE_FMAF = 1]
 isfinite        [test $HAVE_FMAF = 0 || test $REPLACE_FMAF = 1]
 integer_length  [test $HAVE_FMAF = 0 || test $REPLACE_FMAF = 1]
 frexpf          [test $HAVE_FMAF = 0 || test $REPLACE_FMAF = 1]

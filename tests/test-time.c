@@ -20,8 +20,6 @@
 
 #include <time.h>
 
-#include "verify.h"
-
 /* Check that the types are all defined.  */
 struct timespec t1;
 #if 0
@@ -32,11 +30,11 @@ pid_t t2;
 
 /* Check that NULL can be passed through varargs as a pointer type,
    per POSIX 2008.  */
-verify (sizeof NULL == sizeof (void *));
+static_assert (sizeof NULL == sizeof (void *));
 
 /* Check that TIME_UTC is defined and a positive integer.  */
 int t3 = TIME_UTC;
-verify (TIME_UTC > 0);
+static_assert (TIME_UTC > 0);
 
 int
 main (void)

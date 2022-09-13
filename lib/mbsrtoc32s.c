@@ -43,9 +43,7 @@ extern mbstate_t _gl_mbsrtoc32s_state;
 #else
 /* char32_t and wchar_t are equivalent.  */
 
-# include "verify.h"
-
-verify (sizeof (char32_t) == sizeof (wchar_t));
+static_assert (sizeof (char32_t) == sizeof (wchar_t));
 
 size_t
 mbsrtoc32s (char32_t *dest, const char **srcp, size_t len, mbstate_t *ps)

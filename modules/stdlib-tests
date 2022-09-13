@@ -3,7 +3,7 @@ tests/test-stdlib.c
 tests/test-sys_wait.h
 
 Depends-on:
-verify
+assert-h
 stdlib-c++-tests
 
 configure.ac:

@@ -2,7 +2,7 @@ Files:
 tests/test-unistd.c
 
 Depends-on:
-verify
+assert-h
 unistd-c++-tests
 
 configure.ac:

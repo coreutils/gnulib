@@ -58,7 +58,6 @@ orig_stat (const char *filename, struct stat *buf)
 #include <string.h>
 #include "filename.h"
 #include "malloca.h"
-#include "verify.h"
 
 #ifdef WINDOWS_NATIVE
 # define WIN32_LEAN_AND_MEAN

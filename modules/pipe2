@@ -10,7 +10,7 @@ unistd
 fcntl-h
 binary-io
 extensions
-verify
+assert-h
 
 configure.ac:
 gl_FUNC_PIPE2

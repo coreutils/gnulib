@@ -37,7 +37,6 @@
 #include "mbuiter.h"
 #include "fnmatch.h"
 #include "xalloc.h"
-#include "verify.h"
 #include "filename.h"
 
 #if GNULIB_EXCLUDE_SINGLE_THREAD
@@ -55,10 +54,10 @@
 # define FNM_LEADING_DIR 0
 #endif
 
-verify (((EXCLUDE_ANCHORED | EXCLUDE_INCLUDE | EXCLUDE_WILDCARDS)
-         & (FNM_PATHNAME | FNM_NOESCAPE | FNM_PERIOD | FNM_LEADING_DIR
-            | FNM_CASEFOLD | FNM_EXTMATCH))
-        == 0);
+static_assert (((EXCLUDE_ANCHORED | EXCLUDE_INCLUDE | EXCLUDE_WILDCARDS)
+                & (FNM_PATHNAME | FNM_NOESCAPE | FNM_PERIOD | FNM_LEADING_DIR
+                   | FNM_CASEFOLD | FNM_EXTMATCH))
+               == 0);
 
 
 /* Exclusion patterns are grouped into a singly-linked list of

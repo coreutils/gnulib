@@ -27,7 +27,6 @@
 
 #include "intprops.h"
 #include "strerror-override.h"
-#include "verify.h"
 
 /* Use the system functions, not the gnulib overrides in this file.  */
 #undef sprintf
@@ -55,7 +54,7 @@ strerror (int n)
   if (!msg || !*msg)
     {
       static char const fmt[] = "Unknown error %d";
-      verify (sizeof buf >= sizeof (fmt) + INT_STRLEN_BOUND (n));
+      static_assert (sizeof buf >= sizeof (fmt) + INT_STRLEN_BOUND (n));
       sprintf (buf, fmt, n);
       errno = EINVAL;
       return buf;

@@ -29,7 +29,6 @@
 
 # include "gettext.h"
 # include "quote.h"
-# include "verify.h"
 
 # ifdef  __cplusplus
 extern "C" {
@@ -41,7 +40,8 @@ extern "C" {
    (argument list ends with a NULL guard).  */
 
 # define ARGMATCH_VERIFY(Arglist, Vallist) \
-    verify (ARRAY_CARDINALITY (Arglist) == ARRAY_CARDINALITY (Vallist) + 1)
+    static_assert (ARRAY_CARDINALITY (Arglist) \
+                   == ARRAY_CARDINALITY (Vallist) + 1)
 
 /* Return the index of the element of ARGLIST (NULL terminated) that
    matches with ARG.  If VALLIST is not NULL, then use it to resolve

@@ -20,15 +20,13 @@
 
 #include <wchar.h>
 
-#include "verify.h"
-
 /* Check that the types wchar_t and wint_t are defined.  */
 wchar_t a = 'c';
 wint_t b = 'x';
 
 /* Check that NULL can be passed through varargs as a pointer type,
    per POSIX 2008.  */
-verify (sizeof NULL == sizeof (void *));
+static_assert (sizeof NULL == sizeof (void *));
 
 int
 main (void)

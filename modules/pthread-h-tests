@@ -2,7 +2,7 @@ Files:
 tests/test-pthread.c
 
 Depends-on:
-verify
+assert-h
 pthread-h-c++-tests
 
 configure.ac:

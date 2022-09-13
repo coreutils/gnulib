@@ -8,10 +8,10 @@ tests/signature.h
 tests/macros.h
 
 Depends-on:
+assert-h
 isnand-nolibm
 stdbool
 stdint
-verify
 
 configure.ac:
 

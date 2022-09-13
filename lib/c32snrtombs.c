@@ -42,9 +42,7 @@ extern mbstate_t _gl_c32srtombs_state;
 #else
 /* char32_t and wchar_t are equivalent.  */
 
-# include "verify.h"
-
-verify (sizeof (char32_t) == sizeof (wchar_t));
+static_assert (sizeof (char32_t) == sizeof (wchar_t));
 
 size_t
 c32snrtombs (char *dest, const char32_t **srcp, size_t srclen, size_t len,
