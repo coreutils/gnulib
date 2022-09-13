@@ -1,5 +1,5 @@
 Description:
-A <stdalign.h> that nearly conforms to ISO C11 and C++11.
+alignas and alignof that are like C23 and C++11.
 
 Files:
 lib/stdalign.in.h
@@ -30,7 +30,6 @@ endif
 MOSTLYCLEANFILES += stdalign.h stdalign.h-t
 
 Include:
-<stdalign.h>
 
 License:
 LGPLv2+

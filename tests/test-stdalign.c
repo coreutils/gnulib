@@ -18,8 +18,6 @@
 
 #include <config.h>
 
-#include <stdalign.h>
-
 #include <stddef.h>
 #include <stdint.h>
 

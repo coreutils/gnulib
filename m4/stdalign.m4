@@ -1,4 +1,4 @@
-# Check for stdalign.h that conforms to C11.
+# Check for alignas and alignof that conform to C23.
 
 dnl Copyright 2011-2022 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
@@ -9,12 +9,18 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_STDALIGN_H],
 [
-  AC_CACHE_CHECK([for working stdalign.h],
+  AC_CACHE_CHECK([for alignas and alignof],
     [gl_cv_header_working_stdalign_h],
-    [AC_COMPILE_IFELSE(
+    [gl_save_CFLAGS=$CFLAGS
+     for gl_working in "yes, keywords" "yes, <stdalign.h> macros"; do
+      AS_CASE([$gl_working],
+        [*stdalign.h*], [CFLAGS="$gl_save_CFLAGS -DINCLUDE_STDALIGN_H"])
+      AC_COMPILE_IFELSE(
        [AC_LANG_PROGRAM(
           [[#include <stdint.h>
-            #include <stdalign.h>
+            #ifdef INCLUDE_STDALIGN_H
+             #include <stdalign.h>
+            #endif
             #include <stddef.h>
 
             /* Test that alignof yields a result consistent with offsetof.
@@ -45,12 +51,25 @@ AC_DEFUN([gl_STDALIGN_H],
                                 ? 1 : -1];
             #endif
           ]])],
-       [gl_cv_header_working_stdalign_h=yes],
-       [gl_cv_header_working_stdalign_h=no])])
+       [gl_cv_header_working_stdalign_h=$gl_working],
+       [gl_cv_header_working_stdalign_h=no])
 
-  if test $gl_cv_header_working_stdalign_h = yes; then
-    GL_GENERATE_STDALIGN_H=false
-  else
-    GL_GENERATE_STDALIGN_H=true
-  fi
+      CFLAGS=$gl_save_CFLAGS
+      test "$gl_cv_header_working_stdalign_h" != no && break
+     done])
+
+  GL_GENERATE_STDALIGN_H=false
+  AS_CASE([$gl_cv_header_working_stdalign_h],
+    [no],
+      [GL_GENERATE_STDALIGN_H=true],
+    [yes*keyword*],
+      [AC_DEFINE([HAVE_C_ALIGNASOF], [1],
+         [Define to 1 if the alignas and alignof keywords work.])])
+
+  dnl The "zz" puts this toward config.h's end, to avoid potential
+  dnl collisions with other definitions.
+  AH_VERBATIM([zzalignas],
+[#if !defined HAVE_C_ALIGNASOF && __cplusplus < 201103 && !defined alignof
+ #include <stdalign.h>
+#endif])
 ])

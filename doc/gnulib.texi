@@ -865,9 +865,34 @@ This chapter describes which keywords specified by ISO C are
 substituted by Gnulib.
 
 @menu
+* alignof::        @code{alignas} and @code{alignof}
 * bool::           @code{bool}, @code{false}, and @code{true}
 * static_assert::  @code{static_assert}
 @end menu
+
+@node alignof
+@section @code{alignof} and @code{alignas}
+
+Gnulib module: stdalign
+
+The @code{stdalign} module arranges for @code{alignas}, @code{alignof}, and
+@code{<stdalign.h>} to be more like standard C@.  @xref{stdalign.h}.
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+Pre-C11 platforms lack @code{alignas} and @code{alignof}.
+
+@item
+On pre-C23 platforms, @code{<stdalign.h>} must be included before
+using @code{alignas} or @code{alignof}.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+On pre-C23 platforms, @code{alignas} and @code{alignof} are macros.
+@end itemize
 
 @node bool
 @section @code{bool}
