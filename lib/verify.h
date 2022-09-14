@@ -227,7 +227,8 @@ template <int w>
      _GL_VERIFY (__VA_ARGS__, "static assertion failed", -)
 # endif
 # if (!defined static_assert \
-      && __STDC_VERSION__ < 202311 && __cpp_static_assert < 201411)
+      && __STDC_VERSION__ < 202311 \
+      && __cpp_static_assert < 201411 && __GNUG__ < 6)
 #  define static_assert _Static_assert /* C11 requires this #define.  */
 # endif
 #endif
