@@ -47,7 +47,8 @@ AC_DEFUN([gl_ASSERT_H],
   dnl including assert.h.  Break the #undef apart with a comment
   dnl so that 'configure' does not comment it out.
   AH_VERBATIM([zzstatic_assert],
-[#if !defined HAVE_C_STATIC_ASSERT && __cpp_static_assert < 201411
+[#if (!defined HAVE_C_STATIC_ASSERT \
+     && __cpp_static_assert < 201411 && __GNUG__ < 6)
  #include <assert.h>
  #undef/**/assert
 #endif])
