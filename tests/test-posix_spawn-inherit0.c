@@ -31,7 +31,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-#define CHILD_PROGRAM_FILENAME "test-posix_spawn-inherit0"
+#define CHILD_PROGRAM_FILENAME "test-posix_spawn-inherit0" EXEEXT
 #define DATA_FILENAME "test-posix_spawn-inh0-data.tmp"
 
 static int
