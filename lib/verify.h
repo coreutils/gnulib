@@ -228,7 +228,9 @@ template <int w>
 # endif
 # if (!defined static_assert \
       && __STDC_VERSION__ < 202311 \
-      && __cpp_static_assert < 201411 && __GNUG__ < 6)
+      && (!defined __cplusplus \
+          || (__cpp_static_assert < 201411 \
+              && __GNUG__ < 6 && __clang_major__ < 6)))
 #  if defined __cplusplus && _MSC_VER >= 1900 && !defined __clang__
 /* MSVC 14 in C++ mode supports the two-arguments static_assert but not
    the one-argument static_assert, and it does not support _Static_assert.

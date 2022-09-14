@@ -48,7 +48,9 @@ AC_DEFUN([gl_ASSERT_H],
   dnl so that 'configure' does not comment it out.
   AH_VERBATIM([zzstatic_assert],
 [#if (!defined HAVE_C_STATIC_ASSERT && !defined assert \
-     && __cpp_static_assert < 201411 && __GNUG__ < 6)
+     && (!defined __cplusplus \
+         || (__cpp_static_assert < 201411 \
+             && __GNUG__ < 6 && __clang_major__ < 6)))
  #include <assert.h>
  #undef/**/assert
 #endif])
