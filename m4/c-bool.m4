@@ -23,11 +23,21 @@ AC_DEFUN([gl_C_BOOL],
   fi
 
   dnl The "zz" puts this toward config.h's end, to avoid potential
-  dnl collisions with other definitions.  Check
-  dnl __bool_true_false_are_defined to avoid re-including <stdbool.h>.
+  dnl collisions with other definitions.
+  dnl In C++ mode 'bool', 'true', 'false' are keywords and thus we don't need
+  dnl <stdbool.h>.  But in C mode, we do.
+  dnl Check __bool_true_false_are_defined to avoid re-including <stdbool.h>.
+  dnl In Sun C++ 5.11 (Solaris Studio 12.2) and older, 'true' as a preprocessor
+  dnl expression evaluates to 0, not 1.  Fix this by overriding 'true'.  Note
+  dnl that the replacement has to be of type 'bool'.
   AH_VERBATIM([zzbool],
-[#if (!defined HAVE_C_BOOL && !defined __cplusplus \
-     && !defined __bool_true_false_are_defined)
- #include <stdbool.h>
+[#if !defined HAVE_C_BOOL
+# if !defined __cplusplus && !defined __bool_true_false_are_defined
+#  include <stdbool.h>
+# endif
+# if defined __SUNPRO_CC && true != 1
+#  undef true
+#  define true (!false)
+# endif
 #endif])
 ])
