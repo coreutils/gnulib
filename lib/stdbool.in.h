@@ -126,6 +126,13 @@ typedef enum { _Bool_must_promote_to_int = -1, false = 0, true = 1 } _Bool;
 #  define false false
 #  define true true
 # endif
+/* In Sun C++ 5.11 (Solaris Studio 12.2) and older, 'true' as a preprocessor
+   expression evaluates to 0, not 1.  Fix this by overriding 'true'.  Note that
+   the replacement has to be of type 'bool'.  */
+# if defined __SUNPRO_CC && true != 1
+#  undef true
+#  define true (!false)
+# endif
 #else
 # define false 0
 # define true 1
