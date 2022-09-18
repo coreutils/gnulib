@@ -224,7 +224,22 @@ template <int w>
      _GL_VERIFY ((R), "static assertion failed", -)
 # endif
 # if __cpp_static_assert < 201411 && __GNUG__ < 6 && !defined static_assert
-#  define static_assert _Static_assert /* C11 requires this #define.  */
+#  if defined __cplusplus && _MSC_VER >= 1900 && !defined __clang__
+/* MSVC 14 in C++ mode supports the two-arguments static_assert but not
+   the one-argument static_assert, and it does not support _Static_assert.
+   We have to play preprocessor tricks to distinguish the two cases.
+   Since the MSVC preprocessor is not ISO C compliant (cf.
+   <https://stackoverflow.com/questions/5134523/>), the solution is specific
+   to MSVC.  */
+#   define _GL_EXPAND(x) x
+#   define _GL_SA1(a1) static_assert ((a1), "static assertion failed")
+#   define _GL_SA2 static_assert
+#   define _GL_SA3 static_assert
+#   define _GL_SA_PICK(x1,x2,x3,x4,...) x4
+#   define static_assert(...) _GL_EXPAND(_GL_SA_PICK(__VA_ARGS__,_GL_SA3,_GL_SA2,_GL_SA1)) (__VA_ARGS__)
+#  else
+#   define static_assert _Static_assert /* C11 requires this #define. */
+#  endif
 # endif
 #endif
 
