@@ -220,8 +220,8 @@ template <int w>
 /* _GL_STATIC_ASSERT_H is defined if this code is copied into assert.h.  */
 #ifdef _GL_STATIC_ASSERT_H
 # if !defined _GL_HAVE__STATIC_ASSERT1 && !defined _Static_assert
-#  define _Static_assert(...) \
-     _GL_VERIFY (__VA_ARGS__, "static assertion failed", -)
+#  define _Static_assert(R, ...) \
+     _GL_VERIFY ((R), "static assertion failed", -)
 # endif
 # if __cpp_static_assert < 201411 && __GNUG__ < 6 && !defined static_assert
 #  define static_assert _Static_assert /* C11 requires this #define.  */
