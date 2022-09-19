@@ -46,8 +46,9 @@
 
 /* Several tests cannot be guaranteed with gnulib's <stdbool.h>, at
    least, not for all compilers and compiler options.  */
-#if (HAVE_C_BOOL || defined __cplusplus \
-     || HAVE_STDBOOL_H || 3 <= __GNUC__ || 4 <= __clang_major__)
+#if ((HAVE_C_BOOL || defined __cplusplus \
+      || HAVE_STDBOOL_H || 3 <= __GNUC__ || 4 <= __clang_major__) \
+     && !defined _MSC_VER)
 # define WORKING_BOOL 1
 #else
 # define WORKING_BOOL 0
