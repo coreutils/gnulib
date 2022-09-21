@@ -16,7 +16,10 @@ AC_DEFUN([gl_ASSERT_H],
 
       AC_COMPILE_IFELSE(
        [AC_LANG_PROGRAM(
-          [[#ifdef INCLUDE_ASSERT_H
+          [[#if defined __clang__ && __STDC_VERSION__ < 202311
+             #pragma clang diagnostic error "-Wc2x-extensions"
+            #endif
+            #ifdef INCLUDE_ASSERT_H
              #include <assert.h>
             #endif
             static_assert (2 + 2 == 4, "arithmetic does not work");
