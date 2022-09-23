@@ -32,7 +32,7 @@ go through the list of warnings. You will likely deactivate warnings that
 occur often and don't point to mistakes in the code, by adding them to the
 @samp{nw} variable, then reconfiguring and recompiling. When warnings point
 to real mistakes and bugs in the code, you will of course not disable
-them.
+them but fix your code to silence the warning instead.
 
 There are also many GCC warning options which usually don't point to mistakes
 in the code; these warnings enforce a certain programming style. It is a
@@ -44,3 +44,15 @@ When a new version of GCC is released, you can add the new warning options
 that it introduces into the @code{gl_MANYWARN_ALL_GCC} macro (and submit your
 modification to the Gnulib maintainers :-)), and enjoy the benefits of the
 new warnings, while adding the undesired ones to the @samp{nw} variable.
+
+Comments on particular warning flags:
+
+@table @samp
+
+@item -Wsign-compare
+Clang generates too many false alarms with -Wsign-compare, and we don't
+recommend that warning.  Programs using Gnulib generally don't enable
+that warning when compiling Gnulib code.  If you happen to find a real
+bug with that warning we'd like to know it.
+
+@end table
