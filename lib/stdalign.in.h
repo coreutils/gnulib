@@ -58,7 +58,7 @@
          && !defined __clang__) \
      || (defined __clang__ && __clang_major__ < 8))
 # ifdef __cplusplus
-#  if 201103 <= __cplusplus
+#  if (201103 <= __cplusplus || defined _MSC_VER)
 #   define _Alignof(type) alignof (type)
 #  else
    template <class __t> struct __alignof_helper { char __a; __t __b; };
@@ -70,7 +70,7 @@
 #  define _GL_STDALIGN_NEEDS_STDDEF 1
 # endif
 #endif
-#if ! (defined __cplusplus && 201103 <= __cplusplus)
+#if ! (defined __cplusplus && (201103 <= __cplusplus || defined _MSC_VER))
 # define alignof _Alignof
 #endif
 #define __alignof_is_defined 1
@@ -101,7 +101,7 @@
    */
 
 #if !defined __STDC_VERSION__ || __STDC_VERSION__ < 201112
-# if defined __cplusplus && 201103 <= __cplusplus
+# if defined __cplusplus && (201103 <= __cplusplus || defined _MSC_VER)
 #  define _Alignas(a) alignas (a)
 # elif (!defined __attribute__ \
         && ((defined __APPLE__ && defined __MACH__ \
@@ -115,11 +115,13 @@
 #  define _Alignas(a) __declspec (align (a))
 # endif
 #endif
-#if ((defined _Alignas && ! (defined __cplusplus && 201103 <= __cplusplus)) \
+#if ((defined _Alignas \
+      && !(defined __cplusplus && (201103 <= __cplusplus || defined _MSC_VER))) \
      || (defined __STDC_VERSION__ && 201112 <= __STDC_VERSION__))
 # define alignas _Alignas
 #endif
-#if defined alignas || (defined __cplusplus && 201103 <= __cplusplus)
+#if (defined alignas \
+     || (defined __cplusplus && (201103 <= __cplusplus || defined _MSC_VER)))
 # define __alignas_is_defined 1
 #endif
 

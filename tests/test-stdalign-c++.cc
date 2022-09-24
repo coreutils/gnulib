@@ -21,6 +21,10 @@
 
 #include <stdalign.h>
 
+/* Check against conflicts between <stdalign.h> and the C++ header files.  */
+#include <stddef.h>
+#include <iostream>
+
 
 int
 main ()
