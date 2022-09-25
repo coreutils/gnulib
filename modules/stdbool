@@ -3,7 +3,6 @@ A bool that is like C23.
 
 Files:
 m4/c-bool.m4
-m4/stdbool.m4
 
 Depends-on:
 c99

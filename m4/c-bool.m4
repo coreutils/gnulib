@@ -23,8 +23,6 @@ AC_DEFUN([gl_C_BOOL],
   fi
 
   AC_CHECK_HEADERS_ONCE([stdbool.h])
-  AC_REQUIRE([AC_CHECK_HEADER_STDBOOL])
-  AC_DEFINE_UNQUOTED([HAVE__BOOL],[$HAVE__BOOL])
 
   dnl The "zz" puts this toward config.h's end, to avoid potential
   dnl collisions with other definitions.
@@ -39,39 +37,11 @@ AC_DEFUN([gl_C_BOOL],
 #  if HAVE_STDBOOL_H
 #   include <stdbool.h>
 #  else
-    /* Substitute.  Keep consistent with gnulib/lib/stdbool.in.h.  */
-#   ifndef _GL_STDBOOL_H
-#    define _GL_STDBOOL_H
-#    ifdef __cplusplus
-#     if !defined _MSC_VER
-#      define _Bool bool
-#      define bool bool
-#     endif
-#    else
-#     if !defined __GNUC__
-#      define _Bool signed char
-#     else
-#      if !HAVE__BOOL
-typedef enum { _Bool_must_promote_to_int = -1, false = 0, true = 1 } _Bool;
-#      endif
-#     endif
-#     define bool _Bool
-#    endif
-#    ifdef __cplusplus
-#     if !defined _MSC_VER
-#      define false false
-#      define true true
-#     endif
-#     if defined __SUNPRO_CC && true != 1
-#      undef true
-#      define true (!false)
-#     endif
-#    else
-#     define false 0
-#     define true 1
-#    endif
-#    define __bool_true_false_are_defined 1
-#   endif /* _GL_STDBOOL_H */
+#   if defined __SUNPRO_C
+#    error "<stdbool.h> is not usable with this configuration. To make it usable, add -D_STDC_C99= to $CC."
+#   else
+#    error "<stdbool.h> does not exist on this platform. Use gnulib module 'stdbool-c99' instead of gnulib module 'stdbool'."
+#   endif
 #  endif
 # endif
 # if !true
