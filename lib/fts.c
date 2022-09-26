@@ -1292,11 +1292,12 @@ fts_build (register FTS *sp, int type)
             dir_fd = dirfd (dp);
             if (dir_fd < 0)
               {
+                int dirfd_errno = errno;
                 closedir_and_clear (cur->fts_dirp);
                 if (type == BREAD)
                   {
                     cur->fts_info = FTS_DNR;
-                    cur->fts_errno = errno;
+                    cur->fts_errno = dirfd_errno;
                   }
                 return NULL;
               }
