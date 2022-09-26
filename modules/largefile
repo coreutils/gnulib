@@ -13,8 +13,8 @@ m4/year2038.m4
 Depends-on:
 
 configure.ac-early:
-AC_REQUIRE([AC_SYS_LARGEFILE])
 AC_REQUIRE([gl_YEAR2038_EARLY])
+AC_REQUIRE([AC_SYS_LARGEFILE])
 
 configure.ac:
 AC_REQUIRE([gl_LARGEFILE])
