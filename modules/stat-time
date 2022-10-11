@@ -11,7 +11,7 @@ time
 errno
 extensions
 extern-inline
-intprops
+stdckdint
 
 configure.ac:
 gl_STAT_TIME
