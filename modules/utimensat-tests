@@ -9,8 +9,8 @@ tests/macros.h
 
 Depends-on:
 ignore-value
-intprops
 nanosleep
+stdckdint
 timespec
 utimecmp
 

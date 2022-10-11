@@ -8,8 +8,8 @@ Depends-on:
 dup
 gettext-h
 ignore-value
-intprops
 nanosleep
+stdckdint
 symlink
 timespec
 utimecmp

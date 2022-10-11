@@ -9,11 +9,11 @@ tests/macros.h
 Depends-on:
 errno
 ignore-value
-intprops
 mgetgroups
 nanosleep
 openat-h
 stat-time
+stdckdint
 symlink
 
 configure.ac:

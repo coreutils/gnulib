@@ -21,7 +21,7 @@
 
 # include <limits.h>
 
-# include <intprops.h>
+# include <stdckdint.h>
 
 /* Avoid a conflict with a function called nap() on UnixWare.  */
 # if defined _SCO_DS || (defined __SCO_VERSION__ || defined __sysv5__)  /* OpenServer, UnixWare */
@@ -54,9 +54,9 @@ diff_timespec (struct timespec a, struct timespec b)
   if (! (bs < as || (bs == as && bns < ans)))
     return 0;
 
-  if (INT_SUBTRACT_WRAPV (as, bs, &sdiff)
-      || INT_MULTIPLY_WRAPV (sdiff, 1000000000, &sdiff)
-      || INT_ADD_WRAPV (sdiff, ans - bns, &sdiff))
+  if (ckd_sub (&sdiff, as, bs)
+      || ckd_mul (&sdiff, sdiff, 1000000000)
+      || ckd_add (&sdiff, sdiff, ans - bns))
     return INT_MAX;
 
   return sdiff;

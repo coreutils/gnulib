@@ -7,12 +7,12 @@ tests/macros.h
 
 Depends-on:
 ignore-value
-intprops
 lstat
 mgetgroups
 nanosleep
 stat-time
 stdbool
+stdckdint
 symlink
 
 configure.ac:

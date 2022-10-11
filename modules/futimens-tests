@@ -10,8 +10,8 @@ Depends-on:
 gettext-h
 fcntl-h
 ignore-value
-intprops
 nanosleep
+stdckdint
 timespec
 dup
 utimecmp

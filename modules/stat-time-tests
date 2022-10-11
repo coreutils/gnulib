@@ -4,8 +4,8 @@ tests/macros.h
 tests/nap.h
 
 Depends-on:
-intprops
 nanosleep
+stdckdint
 time
 unistd
 

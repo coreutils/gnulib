@@ -8,9 +8,9 @@ tests/macros.h
 Depends-on:
 errno
 ignore-value
-intprops
 mgetgroups
 nanosleep
+stdckdint
 stat-time
 stdbool
 symlink
