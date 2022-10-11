@@ -10,7 +10,6 @@ error
 extern-inline
 gettext-h
 exitfail
-stdint
 
 configure.ac:
 gl_MODULE_INDICATOR([xalloc-die])

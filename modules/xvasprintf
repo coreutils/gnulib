@@ -15,7 +15,6 @@ xalloc
 xalloc-die
 xsize
 stdarg
-stdint
 errno
 
 configure.ac:

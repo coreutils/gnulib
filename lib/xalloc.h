@@ -20,11 +20,9 @@
 
 #include <stddef.h>
 #include <stdlib.h>
-#include <stdint.h>
 
 #if GNULIB_XALLOC
 # include "idx.h"
-# include "intprops.h"
 #endif
 
 #ifndef _GL_INLINE_HEADER_BEGIN

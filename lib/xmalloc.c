@@ -26,6 +26,7 @@
 
 #include <stdckdint.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include <string.h>
 
 static void * _GL_ATTRIBUTE_PURE
