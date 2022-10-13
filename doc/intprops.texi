@@ -60,18 +60,20 @@ but it does not assume that signed integer arithmetic wraps around.
 
 @findex TYPE_IS_INTEGER
 @code{TYPE_IS_INTEGER (@var{t})} is an arithmetic constant
-expression that is 1 if the arithmetic type @var{t} is an integer type.
+expression that yields 1 if the arithmetic type @var{t} is an integer type,
+0 otherwise.
 @code{bool} counts as an integer type.
 
 @findex TYPE_SIGNED
 @code{TYPE_SIGNED (@var{t})} is an arithmetic constant expression
-that is 1 if the real type @var{t} is a signed integer type or a
-floating type.  If @var{t} is an integer type, @code{TYPE_SIGNED (@var{t})}
+that yields 1 if the real type @var{t} is a signed integer type or a
+floating type, 0 otherwise.
+If @var{t} is an integer type, @code{TYPE_SIGNED (@var{t})}
 is an integer constant expression.
 
 @findex EXPR_SIGNED
-@code{EXPR_SIGNED (@var{e})} is 1 if the real expression @var{e}
-has a signed integer type or a floating type.  If @var{e} is an
+@code{EXPR_SIGNED (@var{e})} yields 1 if the real expression @var{e}
+has a signed integer type or a floating type, 0 otherwise.  If @var{e} is an
 integer constant expression or an arithmetic constant expression,
 @code{EXPR_SIGNED (@var{e})} is likewise.  The expression
 @var{e} is not evaluated, and @code{EXPR_SIGNED
@@ -175,12 +177,12 @@ treat the entire @code{if} expression as if it were true.  And even if
 @code{a} is unsigned, the expression might not work as expected if
 @code{b} is negative or is wider than @code{a}.
 
-The following macros work around this problem by returning an overflow
+The following macros work around this problem by yielding an overflow
 indication while computing the sum, difference, or product of two
 integers.  For example, if @code{i} is of type @code{int},
 @code{INT_ADD_OK (INT_MAX - 1, 1, &i)} sets @code{i} to
-@code{INT_MAX} and returns true, whereas @code{INT_ADD_OK (INT_MAX, 1,
-&i)} returns false.
+@code{INT_MAX} and yields 1, whereas @code{INT_ADD_OK (INT_MAX, 1,
+&i)} yields 0.
 
 Example usage:
 
@@ -226,22 +228,22 @@ arguments are constant expressions.
 @item INT_ADD_OK (@var{a}, @var{b}, @var{r})
 @findex INT_ADD_OK
 Compute the sum of @var{a} and @var{b}.  If it fits into
-@code{*@var{r}}, store it there and return true.  Otherwise return
-false, possibly modifying @code{*@var{r}} to an unspecified value.
+@code{*@var{r}}, store it there and yield 1.  Otherwise yield
+0, possibly modifying @code{*@var{r}} to an unspecified value.
 See above for restrictions.
 
 @item INT_SUBTRACT_OK (@var{a}, @var{b}, @var{r})
 @findex INT_SUBTRACT_OK
 Compute the difference between @var{a} and @var{b}.  If it fits into
-@code{*@var{r}}, store it there and return true.  Otherwise return
-false, possibly modifying @code{*@var{r}} to an unspecified value.
+@code{*@var{r}}, store it there and yield 1.  Otherwise yield
+0, possibly modifying @code{*@var{r}} to an unspecified value.
 See above for restrictions.
 
 @item INT_MULTIPLY_OK (@var{a}, @var{b}, @var{r})
 @findex INT_MULTIPLY_OK
 Compute the product of @var{a} and @var{b}.  If it fits into
-@code{*@var{r}}, store it there and return true.  Otherwise return
-false, possibly modifying @code{*@var{r}} to an unspecified value.
+@code{*@var{r}}, store it there and yield 1.  Otherwise yield
+0, possibly modifying @code{*@var{r}} to an unspecified value.
 See above for restrictions.
 @end table
 
@@ -268,9 +270,9 @@ traps on signed integer overflow.
 
 The following macros work around this problem by storing the
 wraparound value, i.e., the low-order bits of the correct answer, and
-by returning an overflow indication.  For example, if @code{i} is of
+by yielding an overflow indication.  For example, if @code{i} is of
 type @code{int}, @code{INT_ADD_WRAPV (INT_MAX, 1, &i)} sets @code{i}
-to @code{INT_MIN} and returns 1 on a two's complement machine.
+to @code{INT_MIN} and yields 1 on a two's complement machine.
 @xref{Integer Type Overflow}.
 
 Example usage:
@@ -319,24 +321,30 @@ arguments are constant expressions.
 @item INT_ADD_WRAPV (@var{a}, @var{b}, @var{r})
 @findex INT_ADD_WRAPV
 Store the low-order bits of the sum of @var{a} and @var{b} into
-@code{*@var{r}}.  Return true if overflow occurred, false if the
+@code{*@var{r}}.  Yield 1 if overflow occurred, 0 if the
 low-order bits are the mathematically-correct sum.  See above for
 restrictions.
 
 @item INT_SUBTRACT_WRAPV (@var{a}, @var{b}, @var{r})
 @findex INT_SUBTRACT_WRAPV
 Store the low-order bits of the difference between @var{a} and @var{b}
-into @code{*@var{r}}.  Return true if overflow occurred, false if the
+into @code{*@var{r}}.  Yield 1 if overflow occurred, 0 if the
 low-order bits are the mathematically-correct difference.  See above
 for restrictions.
 
 @item INT_MULTIPLY_WRAPV (@var{a}, @var{b}, @var{r})
 @findex INT_MULTIPLY_WRAPV
 Store the low-order bits of the product of @var{a} and @var{b} into
-@code{*@var{r}}.  Return true if overflow occurred, false if the
+@code{*@var{r}}.  Yield 1 if overflow occurred, 0 if the
 low-order bits are the mathematically-correct product.  See above for
 restrictions.
 @end table
+
+If your code includes @code{<intprops.h>} only for these @code{_WRAPV}
+macros, you may prefer to use Gnulib's @code{stdckdint} module
+instead, as it supports similar macros that were standardized in C23
+and are therefore independent of Gnulib if your code can assume C23 or
+later.  @xref{stdckdint.h}.
 
 Other macros are available if you do not need wrapped-around results
 when overflow occurs (@pxref{Checking Integer Overflow}), or if you
@@ -361,15 +369,26 @@ whether @code{a + b} overflows, because a compiler can assume that
 signed overflow cannot occur and treat the entire expression as if it
 were false.
 
-These macros yield 1 if the corresponding C operators might not yield
-numerically correct answers due to arithmetic overflow of an integer
-type.  They work correctly on all known practical hosts, and do not
+These macros yield 1 if the corresponding C operators overflow, 0 otherwise.
+They work correctly on all known practical hosts, and do not
 rely on undefined behavior due to signed arithmetic overflow.  They
 are integer constant expressions if their arguments are.  They
 are typically easier to use than the integer range overflow macros
 (@pxref{Integer Range Overflow}), and they support more operations and
-evaluation contexts than the wraparound macros (@pxref{Wraparound
-Arithmetic}).
+evaluation contexts than the integer overflow checking macros
+(@pxref{Checking Integer Overflow}) or the wraparound macros
+(@pxref{Wraparound Arithmetic}).
+
+These macros can be tricky to use with arguments narrower than
+@code{int}.  For example, in the common case with 16-bit @code{short
+int} and 32-bit @code{int}, if @code{a} and @code{b} are of type
+@code{short int} then @code{INT_MULTIPLY_OVERFLOW (a, b)} always
+yields 0, as @code{a * b} cannot overflow due to C's rule that
+@code{a} and @code{b} are widened to @code{int} before multiplying.
+For this reason, often it is better to use the integer overflow
+checking macros (@pxref{Checking Integer Overflow}) or the wraparound
+macros (@pxref{Wraparound Arithmetic}) when checking for overflow in
+addition, subtraction, or multiplication.
 
 Example usage:
 
@@ -416,33 +435,34 @@ These macros are tuned for their last argument being a constant.
 @table @code
 @item INT_ADD_OVERFLOW (@var{a}, @var{b})
 @findex INT_ADD_OVERFLOW
-Yield 1 if @code{@var{a} + @var{b}} would overflow.  See above for
+Yield 1 if @code{@var{a} + @var{b}} would overflow, 0 otherwise.  See above for
 restrictions.
 
 @item INT_SUBTRACT_OVERFLOW (@var{a}, @var{b})
 @findex INT_SUBTRACT_OVERFLOW
-Yield 1 if @code{@var{a} - @var{b}} would overflow.  See above for
+Yield 1 if @code{@var{a} - @var{b}} would overflow, 0 otherwise.  See above for
 restrictions.
 
 @item INT_NEGATE_OVERFLOW (@var{a})
 @findex INT_NEGATE_OVERFLOW
-Yields 1 if @code{-@var{a}} would overflow.  See above for restrictions.
+Yields 1 if @code{-@var{a}} would overflow, 0 otherwise.
+See above for restrictions.
 
 @item INT_MULTIPLY_OVERFLOW (@var{a}, @var{b})
 @findex INT_MULTIPLY_OVERFLOW
-Yield 1 if @code{@var{a} * @var{b}} would overflow.  See above for
+Yield 1 if @code{@var{a} * @var{b}} would overflow, 0 otherwise.  See above for
 restrictions.
 
 @item INT_DIVIDE_OVERFLOW (@var{a}, @var{b})
 @findex INT_DIVIDE_OVERFLOW
-Yields 1 if @code{@var{a} / @var{b}} would overflow.  See above for
+Yield 1 if @code{@var{a} / @var{b}} would overflow, 0 otherwise.  See above for
 restrictions.  Division overflow can happen on two's complement hosts
 when dividing the most negative integer by @minus{}1.  This macro does
 not check for division by zero.
 
 @item INT_REMAINDER_OVERFLOW (@var{a}, @var{b})
 @findex INT_REMAINDER_OVERFLOW
-Yield 1 if @code{@var{a} % @var{b}} would overflow.  See above for
+Yield 1 if @code{@var{a} % @var{b}} would overflow, 0 otherwise.  See above for
 restrictions.  Remainder overflow can happen on two's complement hosts
 when dividing the most negative integer by @minus{}1; although the
 mathematical result is always 0, in practice some implementations
@@ -451,7 +471,7 @@ division by zero.
 
 @item INT_LEFT_SHIFT_OVERFLOW (@var{a}, @var{b})
 @findex INT_LEFT_SHIFT_OVERFLOW
-Yield 1 if @code{@var{a} << @var{b}} would overflow.  See above for
+Yield 1 if @code{@var{a} << @var{b}} would overflow, 0 otherwise.  See above for
 restrictions.  The C standard says that behavior is undefined for
 shifts unless 0@leq{}@var{b}<@var{w} where @var{w} is @var{a}'s word
 width, and that when @var{a} is negative then @code{@var{a} <<
@@ -466,7 +486,8 @@ other restrictions.
 @cindex overflow, integer range
 
 These macros yield 1 if the corresponding C operators might not yield
-numerically correct answers due to arithmetic overflow.  They do not
+numerically correct answers due to arithmetic overflow, and 0 if if
+the operators do not overflow.  They do not
 rely on undefined or implementation-defined behavior.  They are
 integer constant expressions if their arguments are.  Their
 implementations are simple and straightforward, but they are typically
@@ -537,27 +558,31 @@ tuned for constant @var{b}.
 @item INT_ADD_RANGE_OVERFLOW (@var{a}, @var{b}, @var{min}, @var{max})
 @findex INT_ADD_RANGE_OVERFLOW
 Yield 1 if @code{@var{a} + @var{b}} would overflow in
-[@var{min},@var{max}] integer arithmetic.  See above for restrictions.
+[@var{min},@var{max}] integer arithmetic, 0 otherwise.
+See above for restrictions.
 
 @item INT_SUBTRACT_RANGE_OVERFLOW (@var{a}, @var{b}, @var{min}, @var{max})
 @findex INT_SUBTRACT_RANGE_OVERFLOW
 Yield 1 if @code{@var{a} - @var{b}} would overflow in
-[@var{min},@var{max}] integer arithmetic.  See above for restrictions.
+[@var{min},@var{max}] integer arithmetic, 0 otherwise.
+See above for restrictions.
 
 @item INT_NEGATE_RANGE_OVERFLOW (@var{a}, @var{min}, @var{max})
 @findex INT_NEGATE_RANGE_OVERFLOW
 Yield 1 if @code{-@var{a}} would overflow in [@var{min},@var{max}]
-integer arithmetic.  See above for restrictions.
+integer arithmetic, 0 otherwise.  See above for restrictions.
 
 @item INT_MULTIPLY_RANGE_OVERFLOW (@var{a}, @var{b}, @var{min}, @var{max})
 @findex INT_MULTIPLY_RANGE_OVERFLOW
 Yield 1 if @code{@var{a} * @var{b}} would overflow in
-[@var{min},@var{max}] integer arithmetic.  See above for restrictions.
+[@var{min},@var{max}] integer arithmetic, 0 otherwise.
+See above for restrictions.
 
 @item INT_DIVIDE_RANGE_OVERFLOW (@var{a}, @var{b}, @var{min}, @var{max})
 @findex INT_DIVIDE_RANGE_OVERFLOW
 Yield 1 if @code{@var{a} / @var{b}} would overflow in
-[@var{min},@var{max}] integer arithmetic.  See above for restrictions.
+[@var{min},@var{max}] integer arithmetic, 0 otherwise.
+See above for restrictions.
 Division overflow can happen on two's complement hosts when dividing
 the most negative integer by @minus{}1.  This macro does not check for
 division by zero.
@@ -565,7 +590,8 @@ division by zero.
 @item INT_REMAINDER_RANGE_OVERFLOW (@var{a}, @var{b}, @var{min}, @var{max})
 @findex INT_REMAINDER_RANGE_OVERFLOW
 Yield 1 if @code{@var{a} % @var{b}} would overflow in
-[@var{min},@var{max}] integer arithmetic.  See above for restrictions.
+[@var{min},@var{max}] integer arithmetic, 0 otherwise.
+See above for restrictions.
 Remainder overflow can happen on two's complement hosts when dividing
 the most negative integer by @minus{}1; although the mathematical
 result is always 0, in practice some implementations trap, so this
@@ -575,7 +601,8 @@ zero.
 @item INT_LEFT_SHIFT_RANGE_OVERFLOW (@var{a}, @var{b}, @var{min}, @var{max})
 @findex INT_LEFT_SHIFT_RANGE_OVERFLOW
 Yield 1 if @code{@var{a} << @var{b}} would overflow in
-[@var{min},@var{max}] integer arithmetic.  See above for restrictions.
+[@var{min},@var{max}] integer arithmetic, 0 otherwise.
+See above for restrictions.
 Here, @var{min} and @var{max} are for @var{a} only, and @var{b} need
 not be of the same type as the other arguments.  The C standard says
 that behavior is undefined for shifts unless 0@leq{}@var{b}<@var{w}
