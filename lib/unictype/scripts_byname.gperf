@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Unicode scripts.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 14.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 15.0.0.  */
 
 /* Copyright (C) 2000-2022 Free Software Foundation, Inc.
 
@@ -189,3 +189,5 @@ Old_Uyghur, 157
 Tangsa, 158
 Toto, 159
 Vithkuqi, 160
+Kawi, 161
+Nag_Mundari, 162

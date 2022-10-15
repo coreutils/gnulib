@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Properties of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 14.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 15.0.0.  */
 
 /* Copyright (C) 2000-2022 Free Software Foundation, Inc.
 
@@ -35,7 +35,7 @@ struct
     int header[1];
     int level1[2];
     short level2[2 << 7];
-    unsigned int level3[18 << 4];
+    unsigned int level3[19 << 4];
   }
 u_property_grapheme_link =
 {
@@ -188,7 +188,7 @@ u_property_grapheme_link =
         3 +   256 * sizeof (short) / sizeof (int) +   240,
         3 +   256 * sizeof (short) / sizeof (int) +   256,
         3 +   256 * sizeof (short) / sizeof (int) +   272,
-       -1,
+        3 +   256 * sizeof (short) / sizeof (int) +   288,
        -1,
        -1,
        -1,
@@ -374,6 +374,10 @@ u_property_grapheme_link =
     0x00000000U, 0x80000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000030U, 0x00000000U,
-    0x00800000U, 0x00000000U, 0x00000000U, 0x00000000U
+    0x00800000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000006U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U
   }
 };

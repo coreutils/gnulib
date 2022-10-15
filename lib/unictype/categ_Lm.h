@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Categories of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 14.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 15.0.0.  */
 
 /* Copyright (C) 2000-2022 Free Software Foundation, Inc.
 
@@ -35,7 +35,7 @@ struct
     int header[1];
     int level1[2];
     short level2[2 << 7];
-    unsigned int level3[26 << 4];
+    unsigned int level3[27 << 4];
   }
 u_categ_Lm =
 {
@@ -287,9 +287,9 @@ u_categ_Lm =
        -1,
         3 +   256 * sizeof (short) / sizeof (int) +   384,
        -1,
-       -1,
-       -1,
         3 +   256 * sizeof (short) / sizeof (int) +   400,
+       -1,
+        3 +   256 * sizeof (short) / sizeof (int) +   416,
        -1,
        -1,
        -1,
@@ -399,9 +399,13 @@ u_categ_Lm =
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x6FEF0000U,
-    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0xFFFF0000U, 0xFFFFFFFFU, 0x00003FFFU,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x3F800000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000800U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,

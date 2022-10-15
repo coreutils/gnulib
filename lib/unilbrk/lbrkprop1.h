@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Line breaking properties of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 14.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 15.0.0.  */
 
 /* Copyright (C) 2000-2022 Free Software Foundation, Inc.
 
@@ -35,7 +35,7 @@ typedef struct
   {
     int level1[15];
     int level2[4 << 9];
-    unsigned char level3[246 << 7];
+    unsigned char level3[250 << 7];
   }
 lbrkprop_t;
 extern const lbrkprop_t unilbrkprop;

@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Properties of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 14.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 15.0.0.  */
 
 /* Copyright (C) 2000-2022 Free Software Foundation, Inc.
 
@@ -288,7 +288,7 @@ u_property_numeric =
        -1,
         4 +   384 * sizeof (short) / sizeof (int) +   672,
         4 +   384 * sizeof (short) / sizeof (int) +   496,
-       -1,
+        4 +   384 * sizeof (short) / sizeof (int) +   496,
        -1,
         4 +   384 * sizeof (short) / sizeof (int) +   688,
        -1,
@@ -578,7 +578,7 @@ u_property_numeric =
     0x00000000U, 0x000003FFU, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
-    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x03FF0000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x001FFFFFU, 0x00000000U,
     0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU, 0x00007FFFU,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
@@ -593,7 +593,7 @@ u_property_numeric =
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
-    0x00000000U, 0x00000000U, 0x00000000U, 0x000FFFFFU,
+    0x00000000U, 0x00000000U, 0x000FFFFFU, 0x000FFFFFU,
     0x00000000U, 0x00000000U, 0x00000000U, 0x01FFFFFFU,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,

@@ -56,7 +56,7 @@
     { 0x1F9CD, 0x1F9CF },
     { 0x1F9D1, 0x1F9DD },
     { 0x1FAC3, 0x1FAC5 },
-    { 0x1FAF0, 0x1FAF6 }
+    { 0x1FAF0, 0x1FAF8 }
 
 #define PREDICATE(c) uc_is_property_emoji_modifier_base (c)
 #include "test-predicate-part2.h"

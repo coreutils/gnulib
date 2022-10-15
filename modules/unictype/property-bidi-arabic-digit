@@ -12,7 +12,7 @@ unictype/bidiclass-of
 
 configure.ac:
 AC_REQUIRE([AC_C_INLINE])
-gl_LIBUNISTRING_MODULE([0.9.11], [unictype/property-bidi-arabic-digit])
+gl_LIBUNISTRING_MODULE([1.1], [unictype/property-bidi-arabic-digit])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNICTYPE_PROPERTY_BIDI_ARABIC_DIGIT

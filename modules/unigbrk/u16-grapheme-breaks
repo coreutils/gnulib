@@ -14,7 +14,7 @@ stdbool
 
 configure.ac:
 gl_MODULE_INDICATOR([unigbrk/u16-grapheme-breaks])
-gl_LIBUNISTRING_MODULE([0.9.11], [unigbrk/u16-grapheme-breaks])
+gl_LIBUNISTRING_MODULE([1.1], [unigbrk/u16-grapheme-breaks])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNIGBRK_U16_GRAPHEME_BREAKS

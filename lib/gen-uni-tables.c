@@ -3032,7 +3032,7 @@ is_property_default_ignorable_code_point (unsigned int ch)
   bool result1 =
     (is_category_Cf (ch)
      && !(ch >= 0xFFF9 && ch <= 0xFFFB) /* Annotations */
-     && !(ch >= 0x13430 && ch <= 0x13438) /* Egyptian Hieroglyph */
+     && !(ch >= 0x13430 && ch <= 0x1343F) /* Egyptian Hieroglyph */
      && ((unicode_properties[ch] & (1ULL << PROP_PREPENDED_CONCATENATION_MARK)) == 0))
     || ((unicode_properties[ch] & (1ULL << PROP_OTHER_DEFAULT_IGNORABLE_CODE_POINT)) != 0)
     || ((unicode_properties[ch] & (1ULL << PROP_VARIATION_SELECTOR)) != 0);
@@ -6868,7 +6868,7 @@ get_lbp (unsigned int ch)
           || (ch >= 0x1F9CD && ch <= 0x1F9CF) /* STANDING PERSON..DEAF PERSON */
           || (ch >= 0x1F9D1 && ch <= 0x1F9DD) /* ADULT..ELF */
           || (ch >= 0x1FAC3 && ch <= 0x1FAC5) /* PREGNANT MAN..PERSON WITH CROWN */
-          || (ch >= 0x1FAF0 && ch <= 0x1FAF6) /* HAND WITH INDEX FINGER AND THUMB CROSSED..HEART HANDS */)
+          || (ch >= 0x1FAF0 && ch <= 0x1FAF8) /* HAND WITH INDEX FINGER AND THUMB CROSSED..RIGHTWARDS PUSHING HAND */)
         attr |= (int64_t) 1 << LBP_EB;
 
       if (((unicode_properties[ch] >> PROP_EMOJI_MODIFIER) & 1) != 0) /* EMOJI MODIFIER */
@@ -6888,7 +6888,10 @@ get_lbp (unsigned int ch)
           /* Extra characters for compatibility with Unicode LineBreak.txt.  */
           || ch == 0x0FD9 /* TIBETAN MARK LEADING MCHAN RTAGS */
           || ch == 0x0FDA /* TIBETAN MARK TRAILING MCHAN RTAGS */
+          || ch == 0x1DCD /* COMBINING DOUBLE CIRCUMFLEX ABOVE */
+          || ch == 0x1DFC /* COMBINING DOUBLE INVERTED BREVE BELOW */
           || (ch >= 0x13430 && ch <= 0x13436) /* EGYPTIAN HIEROGLYPH VERTICAL JOINER..EGYPTIAN HIEROGLYPH OVERLAY MIDDLE */
+          || (ch >= 0x13439 && ch <= 0x1343B) /* EGYPTIAN HIEROGLYPH INSERT AT MIDDLE..EGYPTIAN HIEROGLYPH INSERT AT BOTTOM */
           || ch == 0x16FE4 /* KHITAN SMALL SCRIPT FILLER */)
         attr |= (int64_t) 1 << LBP_GL;
 
@@ -7102,6 +7105,8 @@ get_lbp (unsigned int ch)
           || ch == 0x11AA1 /* SOYOMBO TERMINAL MARK-1 */
           || ch == 0x11AA2 /* SOYOMBO TERMINAL MARK-2 */
           || (ch >= 0x11C41 && ch <= 0x11C45) /* BHAIKSUKI DANDA..BHAIKSUKI GAP FILLER-2 */
+          || ch == 0x11F43 /* KAWI DANDA */
+          || ch == 0x11F44 /* KAWI DOUBLE DANDA */
           || ch == 0x11FFF /* TAMIL PUNCTUATION END OF TEXT */
           || ch == 0x12471 /* CUNEIFORM PUNCTUATION SIGN VERTICAL COLON */
           || ch == 0x12472 /* CUNEIFORM PUNCTUATION SIGN DIAGONAL COLON */
@@ -7153,6 +7158,7 @@ get_lbp (unsigned int ch)
           || ch == 0x11A9E /* SOYOMBO HEAD MARK WITH MOON AND SUN AND TRIPLE FLAME */
           || ch == 0x11A9F /* SOYOMBO HEAD MARK WITH MOON AND SUN AND FLAME */
           || ch == 0x11AA0 /* SOYOMBO HEAD MARK WITH MOON AND SUN */
+          || (ch >= 0x11B00 && ch <= 0x11B09) /* DEVANAGARI HEAD MARK..DEVANAGARI SIGN MINDU */
           || ch == 0x11C70 /* MARCHEN HEAD MARK */)
         attr |= (int64_t) 1 << LBP_BB;
 
@@ -7201,6 +7207,8 @@ get_lbp (unsigned int ch)
           || ch == 0x1337A /* EGYPTIAN HIEROGLYPH V011B */
           || ch == 0x1337B /* EGYPTIAN HIEROGLYPH V011C */
           || ch == 0x13438 /* EGYPTIAN HIEROGLYPH END SEGMENT */
+          || ch == 0x1343D /* EGYPTIAN HIEROGLYPH END ENCLOSURE */
+          || ch == 0x1343F /* EGYPTIAN HIEROGLYPH END WALLED ENCLOSURE */
           || ch == 0x145CF /* ANATOLIAN HIEROGLYPH A410A END LOGOGRAM MARK */)
         attr |= (int64_t) 1 << LBP_CL;
 
@@ -7310,6 +7318,8 @@ get_lbp (unsigned int ch)
           || ch == 0x13288 /* EGYPTIAN HIEROGLYPH O036C */
           || ch == 0x13379 /* EGYPTIAN HIEROGLYPH V011A */
           || ch == 0x13437 /* EGYPTIAN HIEROGLYPH BEGIN SEGMENT */
+          || ch == 0x1343C /* EGYPTIAN HIEROGLYPH BEGIN ENCLOSURE */
+          || ch == 0x1343E /* EGYPTIAN HIEROGLYPH BEGIN WALLED ENCLOSURE */
           || ch == 0x145CE /* ANATOLIAN HIEROGLYPH A410 BEGIN LOGOGRAM MARK */
           || (ch >= 0x1E95E && ch <= 0x1E95F) /* ADLAM INITIAL EXCLAMATION MARK..ADLAM INITIAL QUESTION MARK */)
         {
@@ -7398,6 +7408,7 @@ get_lbp (unsigned int ch)
           || ch == 0x09F3 /* BENGALI RUPEE SIGN */
           || ch == 0x09F9 /* BENGALI CURRENCY DENOMINATOR SIXTEEN */
           || ch == 0x0D79 /* MALAYALAM DATE MARK */
+          || ch == 0x2057 /* QUADRUPLE PRIME */
           || ch == 0x20B6 /* LIVRE TOURNOIS SIGN */
           || ch == 0x20BE /* LARI SIGN */
           || ch == 0x20C0 /* SOM SIGN */
@@ -7496,7 +7507,11 @@ get_lbp (unsigned int ch)
               && ch != 0x110BD /* KAITHI NUMBER SIGN */
               && ch != 0x110CD /* KAITHI NUMBER SIGN ABOVE */
               && ch != 0x13437 /* EGYPTIAN HIEROGLYPH BEGIN SEGMENT */
-              && ch != 0x13438 /* EGYPTIAN HIEROGLYPH END SEGMENT */)
+              && ch != 0x13438 /* EGYPTIAN HIEROGLYPH END SEGMENT */
+              && ch != 0x1343C /* EGYPTIAN HIEROGLYPH BEGIN ENCLOSURE */
+              && ch != 0x1343D /* EGYPTIAN HIEROGLYPH END ENCLOSURE */
+              && ch != 0x1343E /* EGYPTIAN HIEROGLYPH BEGIN WALLED ENCLOSURE */
+              && ch != 0x1343F /* EGYPTIAN HIEROGLYPH END WALLED ENCLOSURE */)
           || ch == 0x3035 /* VERTICAL KANA REPEAT MARK LOWER HALF */)
         if (!(attr & (((int64_t) 1 << LBP_BK) | ((int64_t) 1 << LBP_CR) | ((int64_t) 1 << LBP_LF) | ((int64_t) 1 << LBP_BA) | ((int64_t) 1 << LBP_GL) | ((int64_t) 1 << LBP_SA) | ((int64_t) 1 << LBP_WJ) | ((int64_t) 1 << LBP_ZW) | ((int64_t) 1 << LBP_ZWJ))))
           attr |= (int64_t) 1 << LBP_CM;
@@ -7645,6 +7660,7 @@ get_lbp (unsigned int ch)
           || (ch >= 0xFFCA && ch <= 0xFFCF) /* Halfwidth Hangul */
           || (ch >= 0xFFD2 && ch <= 0xFFD7) /* Halfwidth Hangul */
           || (ch >= 0xFFDA && ch <= 0xFFDC) /* Halfwidth Hangul */
+          || (ch >= 0x11F45 && ch <= 0x11F4F) /* Kawi Punctuation */
           || (ch >= 0x17000 && ch <= 0x187F7) /* Tangut Ideograph */
           || (ch >= 0x18800 && ch <= 0x18AFF) /* Tangut Ideograph */
           || (ch >= 0x18D00 && ch <= 0x18D08) /* Tangut Ideograph Supplement */
@@ -7675,26 +7691,37 @@ get_lbp (unsigned int ch)
           || (ch >= 0x1F680 && ch <= 0x1F6DF) /* Transport and Map Symbols */
           || (ch >= 0x1F6E0 && ch <= 0x1F6EC) /* Transport and Map Symbols */
           || (ch >= 0x1F6F0 && ch <= 0x1F6FC) /* Transport and Map Symbols */
+          || ch == 0x1F774 /* LOT OF FORTUNE */
+          || ch == 0x1F775 /* OCCULTATION */
+          || ch == 0x1F776 /* LUNAR ECLIPSE */
+          || ch == 0x1F77B /* HAUMEA */
+          || ch == 0x1F77C /* MAKEMAKE */
+          || ch == 0x1F77D /* GONGGONG */
+          || ch == 0x1F77E /* QUAOAR */
+          || ch == 0x1F77F /* ORCUS */
           || (ch >= 0x1F7D5 && ch <= 0x1F7D8) /* Circled polygons */
+          || ch == 0x1F7D9 /* NINE POINTED WHITE STAR */
           || (ch >= 0x1F7E0 && ch <= 0x1F7EB) /* Large circles */
           || ch == 0x1F7F0 /* Heavy equals sign */
           || (ch >= 0x1F8B0 && ch <= 0x1F8B1) /* Curved arrows */
           || (ch >= 0x1F90C && ch <= 0x1F9FF) /* Supplemental Symbols and Pictographs */
           || (ch >= 0x1FA60 && ch <= 0x1FA6D) /* Xiangqi pieces */
           || (ch >= 0x1FA70 && ch <= 0x1FA74) /* Emoticons */
+          || (ch >= 0x1FA75 && ch <= 0x1FA77) /* Colored heart symbols */
           || (ch >= 0x1FA78 && ch <= 0x1FA7C) /* Medical pictographs */
-          || (ch >= 0x1FA80 && ch <= 0x1FA86) /* Pictographs */
-          || (ch >= 0x1FA90 && ch <= 0x1FAAC) /* Pictographs */
-          || (ch >= 0x1FAB0 && ch <= 0x1FABA) /* Pictographs */
-          || (ch >= 0x1FAC0 && ch <= 0x1FAC2) /* Pictographs */
-          || (ch >= 0x1FAD0 && ch <= 0x1FAD9) /* Pictographs */
-          || (ch >= 0x1FAE0 && ch <= 0x1FAE7) /* Pictographs */
+          || (ch >= 0x1FA80 && ch <= 0x1FA88) /* Pictographs */
+          || (ch >= 0x1FA90 && ch <= 0x1FABD) /* Pictographs */
+          || (ch >= 0x1FABF && ch <= 0x1FAC2) /* Pictographs */
+          || (ch >= 0x1FACE && ch <= 0x1FADB) /* Pictographs */
+          || (ch >= 0x1FAE0 && ch <= 0x1FAE8) /* Pictographs */
+          || (ch >= 0x1FAF7 && ch <= 0x1FAF8) /* Pictographs */
           || (ch >= 0x2A6D7 && ch <= 0x2A6DF) /* CJK Ideograph Extension B */
-          || (ch >= 0x2A700 && ch <= 0x2B738) /* CJK Ideograph Extension C */
+          || (ch >= 0x2A700 && ch <= 0x2B739) /* CJK Ideograph Extension C */
           || (ch >= 0x2B740 && ch <= 0x2B81D) /* CJK Ideograph Extension D */
           || (ch >= 0x2B820 && ch <= 0x2CEAF) /* CJK Ideograph Extension E */
           || (ch >= 0x2CEB0 && ch <= 0x2EBE0) /* CJK Ideograph Extension F */
-          || (ch >= 0x30000 && ch <= 0x3134A) /* CJK Ideograph Extension G */)
+          || (ch >= 0x30000 && ch <= 0x3134A) /* CJK Ideograph Extension G */
+          || (ch >= 0x31350 && ch <= 0x323AF) /* CJK Ideograph Extension H */)
         if (!(attr & (((int64_t) 1 << LBP_NS) | ((int64_t) 1 << LBP_CM) | ((int64_t) 1 << LBP_EB))))
           {
             /* ambiguous (ideograph) ? */

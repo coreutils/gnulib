@@ -673,6 +673,7 @@
     { 0x1D7CB, 0x1D7CB },
     { 0x1DF00, 0x1DF09 },
     { 0x1DF0B, 0x1DF1E },
+    { 0x1DF25, 0x1DF2A },
     { 0x1E922, 0x1E943 }
 
 #define PREDICATE(c) uc_is_general_category (c, UC_CATEGORY_Ll)
