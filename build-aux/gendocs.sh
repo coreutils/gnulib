@@ -2,7 +2,7 @@
 # gendocs.sh -- generate a GNU manual in many formats.  This script is
 #   mentioned in maintain.texi.  See the help message below for usage details.
 
-scriptversion=2022-01-01.00
+scriptversion=2022-10-25.23
 
 # Copyright 2003-2022 Free Software Foundation, Inc.
 #
@@ -40,7 +40,7 @@ srcdir=`pwd`
 scripturl="https://git.savannah.gnu.org/cgit/gnulib.git/plain/build-aux/gendocs.sh"
 templateurl="https://git.savannah.gnu.org/cgit/gnulib.git/plain/doc/gendocs_template"
 
-: "${SETLANG="env LANG= LC_MESSAGES= LC_ALL= LANGUAGE="}"
+: "${SETLANG="env LANG= LC_TIME= LC_MESSAGES= LC_ALL= LANGUAGE="}"
 : "${MAKEINFO="makeinfo"}"
 : "${TEXI2DVI="texi2dvi"}"
 : "${DOCBOOK2HTML="docbook2html"}"
