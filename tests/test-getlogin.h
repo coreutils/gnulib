@@ -58,14 +58,14 @@ test_getlogin_result (const char *buf, int err)
       FILE *fp = fopen ("/proc/self/loginuid", "r");
       if (fp != NULL)
         {
-          char buf[21];
-          size_t n = fread (buf, 1, sizeof buf, fp);
-          if (n > 0 && n < sizeof buf)
+          char fread_buf[21];
+          size_t n = fread (fread_buf, 1, sizeof fread_buf, fp);
+          if (n > 0 && n < sizeof fread_buf)
             {
-              buf[n] = '\0';
+              fread_buf[n] = '\0';
               errno = 0;
               char *endptr;
-              unsigned long value = strtoul (buf, &endptr, 10);
+              unsigned long value = strtoul (fread_buf, &endptr, 10);
               if (*endptr == '\0' && errno == 0)
                 loginuid_undefined = ((uid_t) value == (uid_t)(-1));
             }
