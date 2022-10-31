@@ -1653,8 +1653,8 @@ indent: # Running indent once is not idempotent, but running it twice is.
 	indent $(indent_args) $(INDENT_SOURCES)
 
 sc_indent:
-	@if ! command -v indent > /dev/null; then			\
-	    echo 1>&2 '$(ME): sc_indent: indent is missing';		\
+	@if ! indent --version 2> /dev/null | grep -q 'GNU indent'; then\
+	    echo 1>&2 '$(ME): sc_indent: GNU indent is missing';	\
 	else								\
 	  fail=0; files="$(INDENT_SOURCES)";				\
 	  for f in $$files; do						\
