@@ -19,7 +19,7 @@ Makefile.am:
 Include:
 
 License:
-GPL
+GPLv2+
 
 Maintainer:
 Ben Pfaff
