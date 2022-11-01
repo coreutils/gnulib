@@ -1373,6 +1373,10 @@ sc_vulnerable_makefile_CVE-2012-3386:
 	  '  see https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-3386 for details') \
 	  $(_sc_search_regexp)
 
+sc_unportable_grep_q:
+	@prohibit='grep -q' halt="unportable 'grep -q', use >/dev/null instead" \
+	  $(_sc_search_regexp)
+
 vc-diff-check:
 	$(AM_V_GEN)(unset CDPATH; cd $(srcdir) && $(VC) diff) > vc-diffs || :
 	$(AM_V_at)if test -s vc-diffs; then			\
