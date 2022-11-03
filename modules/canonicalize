@@ -24,7 +24,7 @@ mempcpy
 nocrash
 rawmemchr
 readlink
-scratch_buffer
+glibc-internal/scratch_buffer
 stat
 stdbool
 sys_stat
