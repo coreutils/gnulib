@@ -74,6 +74,10 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2022-11-03  dynarray        These modules are renamed to glibc-internal/dynarray
+            scratch_buffer  and glibc-internal/scratch_buffer, respectively.
+                            They are not meant for general use.
+
 2022-11-02  scratch_buffer  The function 'gl_scratch_buffer_dupfree' is removed.
 
 2022-09-10  stdbool         This module now assumes C99 and provides C23,
