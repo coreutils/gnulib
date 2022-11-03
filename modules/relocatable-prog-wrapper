@@ -19,7 +19,6 @@ lib/stat.c
 lib/canonicalize-lgpl.c
 lib/scratch_buffer.h
 lib/malloc/scratch_buffer.h
-lib/malloc/scratch_buffer_dupfree.c
 lib/malloc/scratch_buffer_grow.c
 lib/malloc/scratch_buffer_grow_preserve.c
 lib/malloc/scratch_buffer_set_array_size.c

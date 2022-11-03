@@ -237,7 +237,6 @@ func_create_wrapper ()
                "$srcdir"/readlink.c \
                "$srcdir"/stat.c \
                "$srcdir"/canonicalize-lgpl.c \
-               "$srcdir"/malloc/scratch_buffer_dupfree.c \
                "$srcdir"/malloc/scratch_buffer_grow.c \
                "$srcdir"/malloc/scratch_buffer_grow_preserve.c \
                "$srcdir"/malloc/scratch_buffer_set_array_size.c \
@@ -263,7 +262,6 @@ func_create_wrapper ()
         readlink.o \
         stat.o \
         canonicalize-lgpl.o \
-        scratch_buffer_dupfree.o \
         scratch_buffer_grow.o \
         scratch_buffer_grow_preserve.o \
         scratch_buffer_set_array_size.o \

@@ -59,7 +59,6 @@ $LIBCSRC include/filename.h		lib
 #$LIBCSRC malloc/dynarray_resize.c	lib/malloc
 #$LIBCSRC malloc/dynarray_resize_clear.c	lib/malloc
 $LIBCSRC include/scratch_buffer.h	lib/malloc
-$LIBCSRC malloc/scratch_buffer_dupfree.c	lib/malloc
 $LIBCSRC malloc/scratch_buffer_grow.c	lib/malloc
 $LIBCSRC malloc/scratch_buffer_grow_preserve.c	lib/malloc
 $LIBCSRC malloc/scratch_buffer_set_array_size.c	lib/malloc

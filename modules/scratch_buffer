@@ -4,7 +4,6 @@ Variable-sized buffer with on-stack default allocation.
 Files:
 lib/scratch_buffer.h
 lib/malloc/scratch_buffer.h
-lib/malloc/scratch_buffer_dupfree.c
 lib/malloc/scratch_buffer_grow.c
 lib/malloc/scratch_buffer_grow_preserve.c
 lib/malloc/scratch_buffer_set_array_size.c
@@ -37,8 +36,7 @@ malloc/scratch_buffer.gl.h: malloc/scratch_buffer.h
 	$(AM_V_at)mv $@-t $@
 MOSTLYCLEANFILES += malloc/scratch_buffer.gl.h malloc/scratch_buffer.gl.h-t
 
-lib_SOURCES += malloc/scratch_buffer_dupfree.c \
-               malloc/scratch_buffer_grow.c \
+lib_SOURCES += malloc/scratch_buffer_grow.c \
                malloc/scratch_buffer_grow_preserve.c \
                malloc/scratch_buffer_set_array_size.c
 
