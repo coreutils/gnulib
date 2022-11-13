@@ -160,7 +160,7 @@ installation should not use any utilities directly except these:
 @c mkfifo mknod tee uname
 
 @example
-awk cat cmp cp diff echo egrep expr false grep install-info ln ls
+awk cat cmp cp diff echo expr false grep install-info ln ls
 mkdir mv printf pwd rm rmdir sed sleep sort tar test touch tr true
 @end example
 
@@ -1135,7 +1135,7 @@ programs except for these:
 
 @example
 [ basename bash cat chgrp chmod chown cmp cp dd diff echo
-egrep expand expr false fgrep find getopt grep gunzip gzip
+expand expr false find getopt grep gunzip gzip
 hostname install install-info kill ldconfig ln ls md5sum
 mkdir mkfifo mknod mv printenv pwd rm rmdir sed sort tee
 test touch true uname xargs yes
