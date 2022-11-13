@@ -22,6 +22,13 @@
 tmpdir=vc-git-$$
 GIT_DIR= GIT_WORK_TREE=; unset GIT_DIR GIT_WORK_TREE
 
+# Ignore local git configurations that may interact badly with
+# commands below.  For example, if the user has set
+# commit.gpgsign=true in ~/.gitconfig the 'git commit' below will
+# require a OpenPGP private key operation which trigger PIN prompts
+# and unwanted hardware access on the developer's machine.
+GIT_CONFIG_GLOBAL=/dev/null; export GIT_CONFIG_GLOBAL
+
 fail=1
 mkdir $tmpdir && cd $tmpdir &&
   # without git, skip the test
