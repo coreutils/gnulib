@@ -24,6 +24,7 @@ waitpid
 configure.ac:
 
 Makefile.am:
+DEFS += -DEXEEXT=\"@EXEEXT@\"
 TESTS += \
   test-posix_spawn-open1 \
   test-posix_spawn-open2 \
