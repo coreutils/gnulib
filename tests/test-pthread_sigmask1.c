@@ -24,6 +24,7 @@
 SIGNATURE_CHECK (pthread_sigmask, int, (int, const sigset_t *, sigset_t *));
 
 #include <errno.h>
+#include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -44,8 +45,14 @@ int
 main (int argc, char *argv[])
 {
   sigset_t set;
-  int pid = getpid ();
+  pid_t pid = getpid ();
   char command[80];
+
+  if (LONG_MAX < pid)
+    {
+      fputs ("Skipping test: pid too large\n", stderr);
+      return 77;
+    }
 
   signal (SIGINT, sigint_handler);
 
@@ -59,7 +66,7 @@ main (int argc, char *argv[])
   ASSERT (pthread_sigmask (SIG_BLOCK, &set, NULL) == 0);
 
   /* Request a SIGINT signal from outside.  */
-  sprintf (command, "sh -c 'sleep 1; kill -%d %d' &", SIGINT, pid);
+  sprintf (command, "sh -c 'sleep 1; kill -INT %ld' &", (long) pid);
   ASSERT (system (command) == 0);
 
   /* Wait.  */

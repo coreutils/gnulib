@@ -64,7 +64,7 @@ main ()
         abort ();
     for (fd = 0; fd < 3; fd++)
       {
-        int sid = tcgetsid (fd);
+        pid_t sid = tcgetsid (fd);
         if (!(sid == -1 ? errno == ENOSYS : sid == getpid ()))
           abort ();
       }
