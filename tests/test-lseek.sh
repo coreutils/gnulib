@@ -1,7 +1,7 @@
 #!/bin/sh
 
 tmpfiles=
-trap 'rm -fr $tmpfiles' 1 2 3 15
+trap 'rm -fr $tmpfiles' HUP INT QUIT TERM
 
 tmpfiles=t-lseek.tmp
 # seekable files

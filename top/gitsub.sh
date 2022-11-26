@@ -354,9 +354,9 @@ func_pull ()
         fi
       else
         # The subdir does not yet exist. Create a plain checkout.
-        trap func_cleanup_current_git_clone 1 2 13 15
+        trap func_cleanup_current_git_clone HUP INT PIPE TERM
         git clone $2 "$url" "$path" || func_cleanup_current_git_clone
-        trap - 1 2 13 15
+        trap - HUP INT PIPE TERM
       fi
       ;;
     esac

@@ -1,7 +1,7 @@
 #!/bin/sh
 
 tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
+trap 'rm -fr $tmpfiles' HUP INT QUIT TERM
 
 tmpfiles="$tmpfiles uc_width.out"
 ${CHECKER} ./test-uc_width2${EXEEXT} | LC_ALL=C tr -d '\r' > uc_width.out

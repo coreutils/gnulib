@@ -501,7 +501,7 @@ prepare_GNULIB_SRCDIR ()
       elif [ ! -d "$gnulib_path" ]; then
         echo "$0: getting gnulib files..."
 
-        trap cleanup_gnulib 1 2 13 15
+        trap cleanup_gnulib HUP INT PIPE TERM
 
         shallow=
         if test -z "$GNULIB_REVISION"; then
@@ -531,7 +531,7 @@ prepare_GNULIB_SRCDIR ()
           git -C "$gnulib_path" reset --hard FETCH_HEAD
         fi
 
-        trap - 1 2 13 15
+        trap - HUP INT PIPE TERM
       fi
     fi
     GNULIB_SRCDIR=$gnulib_path

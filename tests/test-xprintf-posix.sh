@@ -1,7 +1,7 @@
 #!/bin/sh
 
 tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
+trap 'rm -fr $tmpfiles' HUP INT QUIT TERM
 
 tmpfiles="$tmpfiles t-xprintf-posix.tmp t-xprintf-posix.out"
 ${CHECKER} ./test-xprintf-posix${EXEEXT} > t-xprintf-posix.tmp || exit 1

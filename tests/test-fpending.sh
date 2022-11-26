@@ -1,7 +1,7 @@
 #!/bin/sh
 
 tmpfile=
-trap 'rm -fr $tmpfile' 1 2 3 15
+trap 'rm -fr $tmpfile' HUP INT QUIT TERM
 
 tmpfile=test-fpending.t
 

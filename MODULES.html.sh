@@ -3627,15 +3627,15 @@ func_all_modules ()
 
 func_tmpdir
 trap 'exit_status=$?
-      if test "$signal" != 0; then
-        echo "caught signal $signal" >&2
+      if test "$signal" != EXIT; then
+        echo "caught signal SIG$signal" >&2
       fi
       rm -rf "$tmp"
-      exit $exit_status' 0
-for signal in 1 2 3 13 15; do
+      exit $exit_status' EXIT
+for signal in HUP INT QUIT PIPE TERM; do
   trap '{ signal='$signal'; func_exit 1; }' $signal
 done
-signal=0
+signal=EXIT
 
 echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">'
 func_begin HTML
@@ -3736,8 +3736,8 @@ func_end HTML
 
 rm -rf "$tmp"
 # Undo the effect of the previous 'trap' command.
-trap '' 0
-trap 'func_exit $?' 1 2 3 13 15
+trap '' EXIT
+trap 'func_exit $?' HUP INT QUIT PIPE TERM
 
 exit 0
 

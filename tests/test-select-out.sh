@@ -2,7 +2,7 @@
 # Test select() on file descriptors opened for writing.
 
 tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
+trap 'rm -fr $tmpfiles' HUP INT QUIT TERM
 
 tmpfiles="$tmpfiles t-select-out.out t-select-out.tmp"
 

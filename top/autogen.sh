@@ -305,7 +305,7 @@ grep '^[	 ]*AM_GNU_GETTEXT_VERSION(' configure.ac >/dev/null || \
 if test $with_gettext = yes || test $use_libtool = 1; then
 
   tempbase=.bootstrap$$
-  trap "rm -f $tempbase.0 $tempbase.1" 1 2 13 15
+  trap "rm -f $tempbase.0 $tempbase.1" HUP INT PIPE TERM
 
   > $tempbase.0 > $tempbase.1 &&
   find . ! -type d -print | sort > $tempbase.0 || exit
@@ -348,7 +348,7 @@ if test $with_gettext = yes || test $use_libtool = 1; then
   IFS=$old_IFS
 
   rm -f $tempbase.0 $tempbase.1
-  trap - 1 2 13 15
+  trap - HUP INT PIPE TERM
 fi
 
 # Import from gnulib.

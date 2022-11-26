@@ -702,4 +702,4 @@ test -f "$srcdir/init.cfg" \
 setup_ "$@"
 # This trap is here, rather than in the setup_ function, because some
 # shells run the exit trap at shell function exit, rather than script exit.
-trap remove_tmp_ 0
+trap remove_tmp_ EXIT
