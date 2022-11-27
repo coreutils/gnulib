@@ -57,7 +57,7 @@ explicit_bzero (void *s, size_t len)
 #elif defined __GNUC__ && !defined __clang__
   memset (s, '\0', len);
   /* Compiler barrier.  */
-  asm volatile ("" ::: "memory");
+  __asm__ volatile ("" ::: "memory");
 #elif defined __clang__
   memset (s, '\0', len);
   /* Compiler barrier.  */
