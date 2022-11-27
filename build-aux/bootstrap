@@ -30,7 +30,7 @@
 
 # Please report bugs or propose patches to bug-gnulib@gnu.org.
 
-scriptversion=2022-07-24.15; # UTC
+scriptversion=2022-07-29.23; # UTC
 
 me="$0"
 medir=`dirname "$me"`
@@ -657,10 +657,6 @@ Options:
                            and history on your machine, and do not want
                            to waste your bandwidth downloading them again.
                            Defaults to \$GNULIB_REFDIR
-  --bootstrap-sync         if this bootstrap script is not identical to
-                           the version in the local gnulib sources,
-                           update this script, and then restart it with
-
   --bootstrap-sync         if this bootstrap script is not identical to
                            the version in the local gnulib sources,
                            update this script, and then restart it with
