@@ -2386,6 +2386,14 @@ func_all_modules ()
   func_module stdckdint
   func_end_table
 
+  element="String handling <string.h>"
+  element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
+  func_section_wrap c23_ext_string
+  func_wrap H3
+  func_echo "$element"
+
+  func_module memset_explicit
+
   element="Support for GNU multiple precision arithmetic"
   func_section_wrap gmp
   func_wrap H2

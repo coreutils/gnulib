@@ -1744,6 +1744,7 @@ problems are not worked around by Gnulib.
 * memcpy::
 * memmove::
 * memset::
+* memset_explicit::
 * mkdir::
 * mkdirat::
 * mkdtemp::
@@ -3036,6 +3037,7 @@ problems are not worked around by Gnulib.
 @include posix-functions/memcpy.texi
 @include posix-functions/memmove.texi
 @include posix-functions/memset.texi
+@include posix-functions/memset_explicit.texi
 @include posix-functions/mkdir.texi
 @include posix-functions/mkdirat.texi
 @include posix-functions/mkdtemp.texi

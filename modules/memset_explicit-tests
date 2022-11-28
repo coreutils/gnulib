@@ -1,0 +1,14 @@
+Files:
+tests/test-memset_explicit.c
+tests/signature.h
+tests/macros.h
+
+Depends-on:
+stdint
+vma-iter
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-memset_explicit
+check_PROGRAMS += test-memset_explicit

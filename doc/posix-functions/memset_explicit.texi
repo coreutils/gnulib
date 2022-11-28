@@ -1,0 +1,43 @@
+@node memset_explicit
+@subsection @code{memset_explicit}
+@findex memset_explicit
+
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Erasing Sensitive Data,,Erasing Sensitive Data,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Erasing-Sensitive-Data.html},
+@end ifnotinfo
+@c Not yet present:
+@c @item
+@c @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/memset_explicit.3.html,,man memset_explicit}.
+@end itemize
+
+Gnulib module: memset_explicit
+
+The @code{memset_explicit} function is an approximation to what is
+needed, and does not suffice in general to erase information.
+Although calling @code{memset_explicit} should clear the memory in
+question, the information that was in memory may still be available
+elsewhere on the machine.  Proper implementation of information
+erasure requires support from levels below C code.
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+glibc 2.36, FreeBSD 13.1, NetBSD 9.3, OpenBSD 7.2, macOS 13, Solaris 11.4, Android 13,
+and many other systems.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+Although the module's implementation should set the memory on
+platforms compatible with GCC and on platforms using traditional
+linkers, it may not set the memory on non-GCC platforms that use
+whole-program optimization.
+@end itemize
