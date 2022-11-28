@@ -24,6 +24,10 @@ question, the information that was in memory may still be available
 elsewhere on the machine.  Proper implementation of information
 erasure requires support from levels below C code.
 
+C23 specifies the function @code{memset_explicit}, which should be
+preferred to @code{explicit_bzero} in new code.
+@xref{memset_explicit}.
+
 Portability problems fixed by Gnulib:
 @itemize
 @item
