@@ -31,7 +31,7 @@
 /* Get malloc, realloc, free. */
 #include <stdlib.h>
 
-/* Get explicit_bzero, memcpy. */
+/* Get memcpy, memset_explicit. */
 #include <string.h>
 
 /* Get errno. */
@@ -107,11 +107,11 @@ fread_file (FILE *stream, int flags, size_t *length)
                   {
                     char *smaller_buf = malloc (size + 1);
                     if (smaller_buf == NULL)
-                      explicit_bzero (buf + size, alloc - size);
+                      memset_explicit (buf + size, 0, alloc - size);
                     else
                       {
                         memcpy (smaller_buf, buf, size);
-                        explicit_bzero (buf, alloc);
+                        memset_explicit (buf, 0, alloc);
                         free (buf);
                         buf = smaller_buf;
                       }
@@ -154,7 +154,7 @@ fread_file (FILE *stream, int flags, size_t *length)
                   break;
                 }
               memcpy (new_buf, buf, save_alloc);
-              explicit_bzero (buf, save_alloc);
+              memset_explicit (buf, 0, save_alloc);
               free (buf);
             }
           else if (!(new_buf = realloc (buf, alloc)))
@@ -168,7 +168,7 @@ fread_file (FILE *stream, int flags, size_t *length)
       }
 
     if (flags & RF_SENSITIVE)
-      explicit_bzero (buf, alloc);
+      memset_explicit (buf, 0, alloc);
 
     free (buf);
     errno = save_errno;
@@ -206,7 +206,7 @@ read_file (const char *filename, int flags, size_t *length)
       if (out)
         {
           if (flags & RF_SENSITIVE)
-            explicit_bzero (out, *length);
+            memset_explicit (out, 0, *length);
           free (out);
         }
       return NULL;
