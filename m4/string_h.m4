@@ -21,7 +21,8 @@ AC_DEFUN_ONCE([gl_STRING_H],
   dnl guaranteed by C89.
   gl_WARN_ON_USE_PREPARE([[#include <string.h>
     ]],
-    [ffsl ffsll memmem mempcpy memrchr rawmemchr stpcpy stpncpy strchrnul
+    [explicit_bzero ffsl ffsll memmem mempcpy memrchr
+     rawmemchr stpcpy stpncpy strchrnul
      strdup strncat strndup strnlen strpbrk strsep strcasestr strtok_r
      strerror_r strerrorname_np sigabbrev_np sigdescr_np strsignal strverscmp])
 
