@@ -140,7 +140,7 @@ __xstrtol (const char *s, char **ptr, int strtol_base,
       switch (**p)
         {
         case 'E': case 'G': case 'g': case 'k': case 'K': case 'M': case 'm':
-        case 'P': case 'T': case 't': case 'Y': case 'Z':
+        case 'P': case 'Q': case 'R': case 'T': case 't': case 'Y': case 'Z':
 
           /* The "valid suffix" '0' is a special flag meaning that
              an optional second suffix is allowed, which can change
@@ -203,6 +203,14 @@ __xstrtol (const char *s, char **ptr, int strtol_base,
 
         case 'P': /* peta or pebi */
           overflow = bkm_scale_by_power (&tmp, base, 5);
+          break;
+
+        case 'Q': /* quetta or 2**100 */
+          overflow = bkm_scale_by_power (&tmp, base, 10);
+          break;
+
+        case 'R': /* ronna or 2**90 */
+          overflow = bkm_scale_by_power (&tmp, base, 9);
           break;
 
         case 'T': /* tera or tebi */

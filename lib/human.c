@@ -43,7 +43,9 @@ static const char power_letter[] =
   'P',  /* peta or pebi */
   'E',  /* exa or exbi */
   'Z',  /* zetta or 2**70 */
-  'Y'   /* yotta or 2**80 */
+  'Y',  /* yotta or 2**80 */
+  'R',  /* ronna or 2**90 */
+  'Q'   /* quetta or 2**100 */
 };
 
 
