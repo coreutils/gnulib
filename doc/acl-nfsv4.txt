@@ -1,0 +1,17 @@
+General introduction:
+   https://linux.die.net/man/5/nfs4_acl
+
+The NFSv4 acls are defined in RFC7530 and as such, every NFSv4 server supporting ACLs
+will support this kind of ACLs (note the difference from POSIX draft ACLs)
+
+The ACLs can be obtained via the nfsv4-acl-tools, i.e.
+
+$ nfs4_getfacl <file>
+
+# file: <file>
+A::OWNER@:rwaDxtTnNcCy
+A::GROUP@:rwaDxtTnNcy
+A::EVERYONE@:rwaDxtTnNcy
+
+Gnulib is aiming to only provide a basic support of these, i.e. recognize trivial
+and non-trivial ACLs

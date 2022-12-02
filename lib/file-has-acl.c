@@ -32,6 +32,11 @@
 #if GETXATTR_WITH_POSIX_ACLS
 # include <sys/xattr.h>
 # include <linux/xattr.h>
+# include <arpa/inet.h>
+# ifndef XATTR_NAME_NFSV4_ACL
+#  define XATTR_NAME_NFSV4_ACL "system.nfs4_acl"
+# endif
+# define TRIVIAL_NFS4_ACL_MAX_LENGTH 128
 #endif
 
 /* Return 1 if NAME has a nontrivial access control list,
@@ -67,6 +72,22 @@ file_has_acl (char const *name, struct stat const *sb)
             return 1;
         }
 
+      if (ret < 0)
+        { /* we might be on NFS, so try to check NFSv4 ACLs too */
+          char xattr[TRIVIAL_NFS4_ACL_MAX_LENGTH];
+
+          errno = 0; /* we need to reset errno set by the previous getxattr() */
+          ret = getxattr (name, XATTR_NAME_NFSV4_ACL, xattr, TRIVIAL_NFS4_ACL_MAX_LENGTH);
+          if (ret < 0 && errno == ENODATA)
+            ret = 0;
+          else
+            if (ret < 0 && errno == ERANGE)
+              return 1;  /* we won't fit into the buffer, so non-trivial ACL is presented */
+            else
+              if (ret > 0)
+                /* looks like trivial ACL, but we need to investigate further */
+                return acl_nfs4_nontrivial (xattr, ret);
+        }
       if (ret < 0)
         return - acl_errno_valid (errno);
       return ret;
