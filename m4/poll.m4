@@ -15,7 +15,7 @@ AC_DEFUN([gl_FUNC_POLL],
   else
     AC_CHECK_FUNC([poll],
       [# Check whether poll() works on special files (like /dev/null) and
-       # and ttys (like /dev/tty). On Mac OS X 10.4.0 and AIX 5.3, it doesn't.
+       # and ttys (like /dev/tty). On macOS 10.15 and AIX 5.3, it doesn't.
        AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <fcntl.h>
 #include <poll.h>
