@@ -1433,6 +1433,7 @@ fts_build (register FTS *sp, int type)
                                 cur->fts_info = (continue_readdir || nitems)
                                                 ? FTS_ERR : FTS_DNR;
                         }
+                        closedir_and_clear(cur->fts_dirp);
                         break;
                 }
                 if (!ISSET(FTS_SEEDOT) && ISDOT(dp->d_name))
@@ -1553,14 +1554,9 @@ mem1:                           saved_errno = errno;
                         /* When there are too many dir entries, leave
                            fts_dirp open, so that a subsequent fts_read
                            can take up where we leave off.  */
-                        goto break_without_closedir;
+                        break;
                 }
         }
-
-        if (cur->fts_dirp)
-                closedir_and_clear(cur->fts_dirp);
-
- break_without_closedir:
 
         /*
          * If realloc() changed the address of the file name, adjust the
