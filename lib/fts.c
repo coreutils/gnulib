@@ -235,7 +235,7 @@ static int      fts_safe_changedir (FTS *, FTSENT *, int, const char *)
 #define STREQ(a, b)     (strcmp (a, b) == 0)
 
 #define CLR(opt)        (sp->fts_options &= ~(opt))
-#define ISSET(opt)      (sp->fts_options & (opt))
+#define ISSET(opt)      ((sp->fts_options & (opt)) != 0)
 #define SET(opt)        (sp->fts_options |= (opt))
 
 /* FIXME: FTS_NOCHDIR is now misnamed.
