@@ -59,6 +59,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   iwhd            https://github.com/markmc/iwhd
   jugtail         https://cvs.savannah.gnu.org/viewvc/jugtail/jugtail/
   jwhois          https://git.savannah.gnu.org/gitweb/?p=jwhois.git;a=tree
+  lbzip2          https://github.com/kjn/lbzip2
   libdap          https://github.com/OPENDAP/libdap
   libffcall       https://git.savannah.gnu.org/gitweb/?p=libffcall.git;a=tree
   libgnupdf       https://bzr.savannah.gnu.org/lh/pdf/libgnupdf/trunk/files
