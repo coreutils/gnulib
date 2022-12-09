@@ -252,13 +252,13 @@ static int      fts_safe_changedir (FTS *, FTSENT *, int, const char *)
 #define BNAMES          2               /* fts_children, names only */
 #define BREAD           3               /* fts_read */
 
-#if FTS_DEBUG
+#if GNULIB_FTS_DEBUG
 # include <inttypes.h>
-# include <stdint.h>
 # include <stdio.h>
-# include "getcwdat.h"
 bool fts_debug = false;
 # define Dprintf(x) do { if (fts_debug) printf x; } while (false)
+static void fd_ring_check (FTS const *);
+static void fd_ring_print (FTS const *, FILE *, char const *);
 #else
 # define Dprintf(x)
 # define fd_ring_check(x)
@@ -1629,7 +1629,23 @@ mem1:                           saved_errno = errno;
         return (head);
 }
 
-#if FTS_DEBUG
+#if GNULIB_FTS_DEBUG
+
+struct devino {
+  intmax_t dev, ino;
+};
+#define PRINT_DEVINO "(%jd,%jd)"
+
+static struct devino
+getdevino (int fd)
+{
+  struct stat st;
+  return (fd == AT_FDCWD
+          ? (struct devino) { -1, 0 }
+          : fstat (fd, &st) == 0
+          ? (struct devino) { st.st_dev, st.st_ino }
+          : (struct devino) { -1, errno });
+}
 
 /* Walk ->fts_parent links starting at E_CURR, until the root of the
    current hierarchy.  There should be a directory with dev/inode
@@ -1703,26 +1719,26 @@ same_fd (int fd1, int fd2)
 static void
 fd_ring_print (FTS const *sp, FILE *stream, char const *msg)
 {
+  if (!fts_debug)
+    return;
   I_ring const *fd_ring = &sp->fts_fd_ring;
-  unsigned int i = fd_ring->fts_front;
-  char *cwd = getcwdat (sp->fts_cwd_fd, NULL, 0);
-  fprintf (stream, "=== %s ========== %s\n", msg, cwd);
-  free (cwd);
+  unsigned int i = fd_ring->ir_front;
+  struct devino cwd = getdevino (sp->fts_cwd_fd);
+  fprintf (stream, "=== %s ========== "PRINT_DEVINO"\n", msg, cwd.dev, cwd.ino);
   if (i_ring_empty (fd_ring))
     return;
 
   while (true)
     {
-      int fd = fd_ring->fts_fd_ring[i];
+      int fd = fd_ring->ir_data[i];
       if (fd < 0)
         fprintf (stream, "%d: %d:\n", i, fd);
       else
         {
-          char *wd = getcwdat (fd, NULL, 0);
-          fprintf (stream, "%d: %d: %s\n", i, fd, wd);
-          free (wd);
+          struct devino wd = getdevino (fd);
+          fprintf (stream, "%d: %d: "PRINT_DEVINO"\n", i, fd, wd.dev, wd.ino);
         }
-      if (i == fd_ring->fts_back)
+      if (i == fd_ring->ir_back)
         break;
       i = (i + I_RING_SIZE - 1) % I_RING_SIZE;
     }
@@ -1741,9 +1757,9 @@ fd_ring_check (FTS const *sp)
 
   int cwd_fd = sp->fts_cwd_fd;
   cwd_fd = fcntl (cwd_fd, F_DUPFD_CLOEXEC, STDERR_FILENO + 1);
-  char *dot = getcwdat (cwd_fd, NULL, 0);
-  error (0, 0, "===== check ===== cwd: %s", dot);
-  free (dot);
+  struct devino dot = getdevino (cwd_fd);
+  fprintf (stderr, "===== check ===== cwd: "PRINT_DEVINO"\n",
+           dot.dev, dot.ino);
   while ( ! i_ring_empty (&fd_w))
     {
       int fd = i_ring_pop (&fd_w);
@@ -1758,12 +1774,10 @@ fd_ring_check (FTS const *sp)
             }
           if (!same_fd (fd, parent_fd))
             {
-              char *cwd = getcwdat (fd, NULL, 0);
-              error (0, errno, "ring  : %s", cwd);
-              char *c2 = getcwdat (parent_fd, NULL, 0);
-              error (0, errno, "parent: %s", c2);
-              free (cwd);
-              free (c2);
+              struct devino cwd = getdevino (fd);
+              fprintf (stderr, "ring  : "PRINT_DEVINO"\n", cwd.dev, cwd.ino);
+              struct devino c2 = getdevino (parent_fd);
+              fprintf (stderr, "parent: "PRINT_DEVINO"\n", c2.dev, c2.ino);
               fts_assert (0);
             }
           close (cwd_fd);
