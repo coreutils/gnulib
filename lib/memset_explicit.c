@@ -23,20 +23,11 @@
 
 #include <string.h>
 
-#if defined _WIN32 && !defined __CYGWIN__
-# define WIN32_LEAN_AND_MEAN
-# include <windows.h>
-#endif
-
 /* Set S's bytes to C, where S has LEN bytes.  The compiler will not
    optimize effects away, even if S is dead after the call.  */
 void *
 memset_explicit (void *s, int c, size_t len)
 {
-#if defined _WIN32 && !defined __CYGWIN__
-  if (!c)
-    return SecureZeroMemory (s, len);
-#endif
 #if HAVE_EXPLICIT_MEMSET
   return explicit_memset (s, c, len);
 #elif HAVE_MEMSET_S
