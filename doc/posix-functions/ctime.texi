@@ -16,6 +16,10 @@ when the environment variable @code{TZ} has been set by Cygwin.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
+This function is deprecated in C23.
+Portable applications can use @code{localtime_r} and @code{strftime}
+(or even @code{sprintf}) instead.
+@item
 This function may overflow its internal buffer if an invalid year is passed.
 @item
 The @code{ctime} function need not be reentrant, and consequently is

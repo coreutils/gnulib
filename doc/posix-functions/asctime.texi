@@ -13,5 +13,8 @@ Portability problems fixed by Gnulib:
 Portability problems not fixed by Gnulib:
 @itemize
 @item
+This function is deprecated in C23.
+Portable applications can use @code{strftime} (or even @code{sprintf}) instead.
+@item
 This function may overflow its internal buffer if an invalid year is passed.
 @end itemize

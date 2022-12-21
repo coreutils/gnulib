@@ -1,6 +1,12 @@
 Description:
 ctime() function: convert time to string.
 
+Status:
+obsolete
+
+Notice:
+This module is obsolete.
+
 Files:
 lib/ctime.c
 m4/ctime.m4
