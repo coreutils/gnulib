@@ -28,7 +28,7 @@
 
 #include "macros.h"
 
-#define DATA_FILENAME "test-posix_spawn-script.tmp"
+#define DATA_FILENAME "test-posix_spawnp-script.tmp"
 
 int
 main ()
