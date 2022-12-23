@@ -25,9 +25,6 @@
 
 #if USE_ACL && HAVE_ACL_GET_FILE /* Linux, FreeBSD, Mac OS X, IRIX, Tru64, Cygwin >= 2.5 */
 
-# include <string.h>
-# include <arpa/inet.h>
-
 # if HAVE_ACL_TYPE_EXTENDED /* Mac OS X */
 
 /* ACL is an ACL, from a file, stored as type ACL_TYPE_EXTENDED.
@@ -123,103 +120,6 @@ acl_default_nontrivial (acl_t acl)
 {
   /* acl is non-trivial if it is non-empty.  */
   return (acl_entries (acl) > 0);
-}
-
-#  define ACE4_WHO_OWNER    "OWNER@"
-#  define ACE4_WHO_GROUP    "GROUP@"
-#  define ACE4_WHO_EVERYONE "EVERYONE@"
-
-#  define ACE4_ACCESS_ALLOWED_ACE_TYPE   0
-#  define ACE4_ACCESS_DENIED_ACE_TYPE    1
-
-/* ACE flag values */
-#  define ACE4_IDENTIFIER_GROUP          0x00000040
-#  define ROUNDUP(x, y)                  (((x) + (y) - 1) & - (y))
-
-int
-acl_nfs4_nontrivial (char *xattr, int len)
-{
-  int      bufs = len;
-  uint32_t num_aces = ntohl (*((uint32_t*)(xattr))), /* Grab the number of aces in the acl */
-           num_a_aces = 0,
-           num_d_aces = 0;
-  char *bufp = xattr;
-
-  bufp += 4;  /* sizeof(uint32_t); */
-  bufs -= 4;
-
-  for (uint32_t ace_n = 0; num_aces > ace_n ; ace_n++)
-    {
-      int      d_ptr;
-      uint32_t flag,
-               wholen,
-               type;
-
-      /* Get the acl type */
-      if (bufs <= 0)
-        return -1;
-
-      type = ntohl (*((uint32_t*)bufp));
-
-      bufp += 4;
-      bufs -= 4;
-      if (bufs <= 0)
-        return -1;
-
-      flag = ntohl (*((uint32_t*)bufp));
-      /* As per RFC 7530, the flag should be 0, but we are just generous to Netapp
-       * and also accept the Group flag
-       */
-      if (flag & ~ACE4_IDENTIFIER_GROUP)
-        return 1;
-
-      /* we skip mask -
-       * it's too risky to test it and it does not seem to be actually needed */
-      bufp += 2*4;
-      bufs -= 2*4;
-
-      if (bufs <= 0)
-        return -1;
-
-      wholen = ntohl (*((uint32_t*)bufp));
-
-      bufp += 4;
-      bufs -= 4;
-
-      /* Get the who string */
-      if (bufs <= 0)
-        return -1;
-
-      /* for trivial ACL, we expect max 5 (typically 3) ACES, 3 Allow, 2 deny */
-      if (((strncmp (bufp, ACE4_WHO_OWNER, wholen) == 0)
-          || (strncmp (bufp, ACE4_WHO_GROUP, wholen) == 0))
-          &&  wholen == 6)
-        {
-          if (type == ACE4_ACCESS_ALLOWED_ACE_TYPE)
-            num_a_aces++;
-          if (type == ACE4_ACCESS_DENIED_ACE_TYPE)
-            num_d_aces++;
-        }
-      else
-        if ((strncmp (bufp, ACE4_WHO_EVERYONE, wholen) == 0)
-            && (type == ACE4_ACCESS_ALLOWED_ACE_TYPE)
-            && (wholen == 9))
-          num_a_aces++;
-        else
-          return 1;
-
-      d_ptr = ROUNDUP (wholen, 4);
-      bufp += d_ptr;
-      bufs -= d_ptr;
-
-      /* Make sure we aren't outside our domain */
-      if (bufs < 0)
-        return -1;
-
-    }
-  return !((num_a_aces <= 3) && (num_d_aces <= 2)
-         && (num_a_aces + num_d_aces == num_aces));
-
 }
 
 # endif

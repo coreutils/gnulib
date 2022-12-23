@@ -146,9 +146,6 @@ rpl_acl_set_fd (int fd, acl_t acl)
 #   define acl_entries rpl_acl_entries
 extern int acl_entries (acl_t);
 #  endif
-/* Return 1 if given ACL in XDR format is non-trivial
- * Return 0 if it is trivial */
-extern int acl_nfs4_nontrivial (char *, int);
 
 #  if HAVE_ACL_TYPE_EXTENDED /* Mac OS X */
 /* ACL is an ACL, from a file, stored as type ACL_TYPE_EXTENDED.
