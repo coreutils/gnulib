@@ -74,6 +74,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2022-12-24  stdnoreturn     This module is deprecated.  Use _Noreturn
+                            or the noreturn module instead.
+
 2022-12-21  ctime           This module is deprecated.  Use localtime_r
                             and strftime (or even sprintf) instead.
 

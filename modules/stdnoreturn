@@ -1,6 +1,12 @@
 Description:
 A <stdnoreturn.h> that nearly conforms to ISO C11.
 
+Status:
+obsolete
+
+Notice:
+This module is obsolete.
+
 Files:
 lib/stdnoreturn.in.h
 m4/stdnoreturn.m4
