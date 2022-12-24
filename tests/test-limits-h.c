@@ -94,7 +94,7 @@ unsigned long long limits11[] = { ULLONG_MAX };
 static_assert (TYPE_MINIMUM (unsigned long long int) == 0);
 static_assert (TYPE_MAXIMUM (unsigned long long int) == ULLONG_MAX);
 
-/* Macros specified by ISO/IEC TS 18661-1:2014.  */
+/* Macros specified by C23 and by ISO/IEC TS 18661-1:2014.  */
 
 verify_width (CHAR_WIDTH, CHAR_MIN, CHAR_MAX);
 verify_width (SCHAR_WIDTH, SCHAR_MIN, SCHAR_MAX);
@@ -108,7 +108,7 @@ verify_width (ULONG_WIDTH, 0, ULONG_MAX);
 verify_width (LLONG_WIDTH, LLONG_MIN, LLONG_MAX);
 verify_width (ULLONG_WIDTH, 0, ULLONG_MAX);
 
-/* Macros specified by C2x.  */
+/* Macros specified by C23.  */
 
 int bool_attrs[] = { BOOL_MAX, BOOL_WIDTH };
 static_assert (BOOL_MAX == (((1U << (BOOL_WIDTH - 1)) - 1) * 2) + 1);

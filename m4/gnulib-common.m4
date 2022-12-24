@@ -309,7 +309,7 @@ AC_DEFUN([gl_COMMON_BODY], [
      - enumeration, enumeration item,
      - typedef,
    in C++ also: class.  */
-/* In C++ and C2x, this is spelled [[__maybe_unused__]].
+/* In C++ and C23, this is spelled [[__maybe_unused__]].
    GCC's syntax is __attribute__ ((__unused__)).
    clang supports both syntaxes.  */
 #ifdef __has_c_attribute
