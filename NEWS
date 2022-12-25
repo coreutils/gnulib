@@ -74,6 +74,11 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2022-12-25  largefile       configure no longer enables year-2038 support,
+                            unless you configure with --enable-year2038
+                            or use the year2038 module.  This temporary
+                            hack should go away before the year 2038.
+
 2022-12-24  stdnoreturn     This module is deprecated.  Use _Noreturn
                             or the noreturn module instead.
 
