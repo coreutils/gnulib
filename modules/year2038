@@ -1,5 +1,5 @@
 Description:
-Attempt to ensure that 'time_t' is a 64-bit type.
+Attempt to ensure that 'time_t' can go past the year 2038.
 
 Comment:
 This module should not be used as a dependency from a test module,
@@ -7,15 +7,12 @@ otherwise when this module occurs as a tests-related module, it will
 have side effects on the compilation of the main modules in lib/.
 
 Files:
-m4/year2038.m4
 
 Depends-on:
-
-configure.ac-early:
-AC_REQUIRE([gl_YEAR2038_EARLY])
+largefile
 
 configure.ac:
-AC_REQUIRE([gl_YEAR2038])
+AC_REQUIRE([AC_SYS_YEAR2038])
 
 Makefile.am:
 

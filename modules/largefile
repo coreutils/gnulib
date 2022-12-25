@@ -1,5 +1,5 @@
 Description:
-Support for files larger than 2 GB.
+Support for files 2 GiB and larger.
 
 Comment:
 This module should not be used as a dependency from a test module,
@@ -8,12 +8,10 @@ have side effects on the compilation of the main modules in lib/.
 
 Files:
 m4/largefile.m4
-m4/year2038.m4
 
 Depends-on:
 
 configure.ac-early:
-AC_REQUIRE([gl_YEAR2038_EARLY])
 AC_REQUIRE([AC_SYS_LARGEFILE])
 
 configure.ac:
