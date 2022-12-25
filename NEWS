@@ -68,6 +68,11 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2022-12-25  largefile       configure no longer enables year-2038 support,
+                            unless you configure with --enable-year2038
+                            or use the year2038 module.  This temporary
+                            hack should go away before the year 2038.
+
 2021-08-27  base32          These modules now use idx_t instead of size_t
             base64          for indexes and counts.
 
