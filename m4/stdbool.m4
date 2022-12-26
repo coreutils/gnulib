@@ -5,7 +5,7 @@ dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 
-#serial 9
+#serial 10
 
 # Prepare for substituting <stdbool.h> if it is not supported.
 
@@ -57,10 +57,10 @@ AC_DEFUN([AC_CHECK_HEADER_STDBOOL],
                 integer constant expressions, and "bool" should be a valid
                 type name.
 
-                Although C 1999 requires bool, true, and false to be macros,
-                C 2023 and C++ 2011 overrule that, so do not test for that.
-                Although C 1999 requires __bool_true_false_are_defined and
-                _Bool, C 2023 says they are obsolescent, so do not require
+                Although C99 requires bool, true, and false to be macros,
+                C23 and C++11 overrule that, so do not test for that.
+                Although C99 requires __bool_true_false_are_defined and
+                _Bool, C23 says they are obsolescent, so do not require
                 them.  */
 
              #if !true
@@ -108,7 +108,7 @@ AC_DEFUN([AC_CHECK_HEADER_STDBOOL],
 
              /* Refer to every declared value, so they cannot be
                 discarded as unused.  */
-             return (!a + !b + !c + !d + !e + !f + !g + !h + !i + !j + !k
+             return (!b + !c + !d + !e + !f + !g + !h + !i + !j + !k
                      + !l + !m + !n + !o + !p + !pp + !ps);
            ]])],
         [ac_cv_header_stdbool_h=yes],
