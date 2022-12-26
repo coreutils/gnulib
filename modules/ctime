@@ -1,11 +1,9 @@
 Description:
 ctime() function: convert time to string.
 
-Status:
-obsolete
-
 Notice:
-This module is obsolete.
+The function 'ctime' is deprecated.
+New code should use 'localtime_r' and 'strftime' (or even 'sprintf') instead.
 
 Files:
 lib/ctime.c
