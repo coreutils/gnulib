@@ -1,4 +1,4 @@
-# fdatasync.m4 serial 5
+# fdatasync.m4 serial 6
 dnl Copyright (C) 2008-2022 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -25,7 +25,8 @@ AC_DEFUN([gl_FUNC_FDATASYNC],
     case "$host_os" in
       solaris*)
         dnl Solaris <= 2.6 has fdatasync() in libposix4.
-        dnl Solaris 7..10 has it in librt.
+        dnl Solaris 7..9 has it in librt.
+        dnl Solaris 10 sometimes has it in librt <https://bugs.gnu.org/21059>.
         gl_saved_libs=$LIBS
         AC_SEARCH_LIBS([fdatasync], [rt posix4],
           [test "$ac_cv_search_fdatasync" = "none required" ||
