@@ -4,6 +4,8 @@
 # also regenerates all aclocal.m4, config.h.in, Makefile.in, configure files
 # with new versions of autoconf or automake.
 
+scriptversion=2022-12-27.03; # UTC
+
 # Copyright (C) 2003-2022 Free Software Foundation, Inc.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -29,8 +31,6 @@
 #
 # Alternatively, you can use an autogen.sh script that is specific
 # to your package.
-
-scriptversion=2022-07-24.15; # UTC
 
 me="$0"
 medir=`dirname "$me"`

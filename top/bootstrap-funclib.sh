@@ -1,5 +1,7 @@
 # A library of shell functions for autopull.sh, autogen.sh, and bootstrap.
 
+scriptversion=2022-12-27.03; # UTC
+
 # Copyright (C) 2003-2022 Free Software Foundation, Inc.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -22,8 +24,6 @@
 # intent is that all customization can be done with a bootstrap.conf
 # file also maintained in your version control; gnulib comes with a
 # template build-aux/bootstrap.conf to get you started.
-
-scriptversion=2022-07-24.15; # UTC
 
 nl='
 '
