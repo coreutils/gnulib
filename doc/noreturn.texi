@@ -25,7 +25,7 @@ data-flow analysis, to declare which functions are non-returning.
 It can also help generate more-efficient code, as there is no need
 to save a return address when calling a non-returning function.
 
-Gnulib has multiple ways to support such a declaration''
+Gnulib has multiple ways to support such a declaration:
 
 @itemize @bullet
 @item
