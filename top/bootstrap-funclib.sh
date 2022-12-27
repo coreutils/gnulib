@@ -1,6 +1,6 @@
 # A library of shell functions for autopull.sh, autogen.sh, and bootstrap.
 
-scriptversion=2022-12-27.16; # UTC
+scriptlibversion=2022-12-27.16; # UTC
 
 # Copyright (C) 2003-2022 Free Software Foundation, Inc.
 #
@@ -38,7 +38,7 @@ PERL="${PERL-perl}"
 default_gnulib_url=https://git.savannah.gnu.org/git/gnulib.git
 
 # Copyright year, for the --version output.
-copyright_year=`echo "$scriptversion" | sed -e 's/[^0-9].*//'`
+copyright_year=`echo "$scriptlibversion" | sed -e 's/[^0-9].*//'`
 copyright="Copyright (C) ${copyright_year} Free Software Foundation, Inc.
 License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.
 This is free software: you are free to change and redistribute it.
@@ -554,18 +554,28 @@ prepare_GNULIB_SRCDIR ()
 
 upgrade_bootstrap ()
 {
-  { cmp -s "$medir"/bootstrap "$GNULIB_SRCDIR/top/bootstrap" \
-    && cmp -s "$medir"/bootstrap-funclib.sh "$GNULIB_SRCDIR/top/bootstrap-funclib.sh" \
-    && cmp -s "$medir"/autopull.sh "$GNULIB_SRCDIR/top/autopull.sh" \
-    && cmp -s "$medir"/autogen.sh "$GNULIB_SRCDIR/top/autogen.sh"; \
-  } || {
-    echo "$0: updating bootstrap & companions and restarting..."
+  if test -f "$medir"/bootstrap-funclib.sh; then
+    update_lib=true
+    { cmp -s "$medir"/bootstrap "$GNULIB_SRCDIR/top/bootstrap" \
+      && cmp -s "$medir"/bootstrap-funclib.sh "$GNULIB_SRCDIR/top/bootstrap-funclib.sh" \
+      && cmp -s "$medir"/autopull.sh "$GNULIB_SRCDIR/top/autopull.sh" \
+      && cmp -s "$medir"/autogen.sh "$GNULIB_SRCDIR/top/autogen.sh"; \
+    }
+  else
+    update_lib=false
+    cmp -s "$medir"/bootstrap "$GNULIB_SRCDIR/build-aux/bootstrap"
+  fi || {
+    if $update_lib; then
+      echo "$0: updating bootstrap & companions and restarting..."
+    else
+      echo "$0: updating bootstrap and restarting..."
+    fi
     case $(sh -c 'echo "$1"' -- a) in
       a) ignored=--;;
       *) ignored=ignored;;
     esac
     exec sh -c \
-      '{ if test -f "$1"; then cp "$1" "$3"; else cp "$2" "$3"; fi; } && { if test -f "$4"; then cp "$4" "$5"; else rm -f "$5"; fi; } && { if test -f "$6"; then cp "$6" "$7"; else rm -f "$7"; fi; } && { if test -f "$8"; then cp "$8" "$9"; else rm -f "$9"; fi; } && shift && shift && shift && shift && shift && shift && shift && shift && shift && exec "${CONFIG_SHELL-/bin/sh}" "$@"' \
+      '{ if '$update_lib' && test -f "$1"; then cp "$1" "$3"; else cp "$2" "$3"; fi; } && { if '$update_lib' && test -f "$4"; then cp "$4" "$5"; else rm -f "$5"; fi; } && { if '$update_lib' && test -f "$6"; then cp "$6" "$7"; else rm -f "$7"; fi; } && { if '$update_lib' && test -f "$8"; then cp "$8" "$9"; else rm -f "$9"; fi; } && shift && shift && shift && shift && shift && shift && shift && shift && shift && exec "${CONFIG_SHELL-/bin/sh}" "$@"' \
       $ignored \
       "$GNULIB_SRCDIR/top/bootstrap" "$GNULIB_SRCDIR/build-aux/bootstrap" "$medir/bootstrap" \
       "$GNULIB_SRCDIR/top/bootstrap-funclib.sh" "$medir/bootstrap-funclib.sh" \
@@ -680,7 +690,7 @@ autopull()
       return;;
     --version)
       set -e
-      echo "autopull.sh $scriptversion"
+      echo "autopull.sh $scriptlibversion"
       echo "$copyright"
       return 0
       ;;
@@ -1012,7 +1022,7 @@ autogen()
       return;;
     --version)
       set -e
-      echo "autogen.sh $scriptversion"
+      echo "autogen.sh $scriptlibversion"
       echo "$copyright"
       return 0
       ;;
@@ -1268,7 +1278,7 @@ autogen()
 
 # Local Variables:
 # eval: (add-hook 'before-save-hook 'time-stamp)
-# time-stamp-start: "scriptversion="
+# time-stamp-start: "scriptlibversion="
 # time-stamp-format: "%:y-%02m-%02d.%02H"
 # time-stamp-time-zone: "UTC0"
 # time-stamp-end: "; # UTC"

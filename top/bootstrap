@@ -1,7 +1,7 @@
 #! /bin/sh
 # Bootstrap this package from checked-out sources.
 
-scriptversion=2022-12-27.04; # UTC
+scriptversion=2022-12-27.05; # UTC
 
 # Copyright (C) 2003-2022 Free Software Foundation, Inc.
 #
@@ -132,7 +132,7 @@ do
     exit;;
   --version)
     set -e
-    echo "bootstrap $scriptversion"
+    echo "bootstrap $scriptversion lib $scriptlibversion"
     echo "$copyright"
     exit 0
     ;;
@@ -167,12 +167,6 @@ if test -n "$checkout_only_file" && test ! -r "$checkout_only_file"; then
 fi
 
 check_build_prerequisites $use_git
-
-if ! test -f "$medir"/bootstrap-funclib.sh; then
-  # We have only completed the first phase of an upgrade from a bootstrap
-  # version < 2022-07-24. Need to do the second phase now.
-  bootstrap_sync=true
-fi
 
 if $bootstrap_sync; then
   prepare_GNULIB_SRCDIR
