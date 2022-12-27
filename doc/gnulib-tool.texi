@@ -987,7 +987,8 @@ time, three ways of handling version control have evolved.
 
 In the cases (A) and (B), a ``git submodule'' is used to reference
 the precise commit of the gnulib repository, so that each developer
-running @file{autopull.sh} will get the same version of all gnulib-provided
+running @samp{./bootstrap --pull} or @file{autopull.sh}
+will get the same version of all gnulib-provided
 files.
 
 The alternative is to always follow the newest Gnulib automatically.
@@ -1031,10 +1032,12 @@ $ git syncsub
 @end smallexample
 
 @item (B)
-In this approach, the @code{autopull.sh} program (see @ref{Developer tools})
-is used to aid a developer in using this setup.  You copy this program and
-its companion files into your package and place them under version control.
-It can be customized using @file{bootstrap.conf} which you also put under
+In this approach, the @code{build-aux/bootstrap} or @code{autopull.sh}
+program (see @ref{Developer tools}) is used to aid a developer in
+using this setup.  You copy this program (and if it's
+@code{autopull.sh}, its companion files) into your package and place
+the copy or copies under version control.  The program can be
+customized using @file{bootstrap.conf} which you also put under
 version control.
 
 @item (C)

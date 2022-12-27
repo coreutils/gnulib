@@ -7055,7 +7055,7 @@ otherwise have a hard time building your package.
 @node Utilities for Makefiles
 @section Utilities for Makefiles
 
-These are a couple of programs that are often useful in Makefiles.  Some
+These programs can be used in Makefiles.  Some
 of them are also described in
 @ifinfo
 @ref{Auxiliary Programs,,,automake}.
@@ -7105,7 +7105,7 @@ targets depend upon.
 @node Developer tools
 @section Programs for developing in Git checkouts
 
-These are a couple of programs that help when developing in a Git
+These programs can help when developing in a Git
 checkout.  The maintainer of the package copies these programs into the
 version control of the package, so that co-developers can use these
 tools right away.
@@ -7134,9 +7134,12 @@ omitted from version control.  Usually this means that it invokes
 @code{gnulib-tool} and @code{automake}, that generate files from other
 files.
 
-@code{bootstrap} is a wrapper around both: It invokes @code{autopull.sh}
-and then immediately @code{autogen.sh}.@*
-Note: Because this program mixes version control management and
+@code{bootstrap} is a wrapper around both:
+@code{./bootstrap --pull} is equivalent to @code{./autopull.sh},
+@code{./bootstrap --gen} is equivalent to @code{./autogen.sh}.
+Plain @code{./bootstrap} is equivalent to @code{./autopull.sh}
+immediately followed by @code{./autogen.sh}; however, because plain
+@code{./bootstrap} mixes version control management and
 generation of files in non-obvious ways, it has a number of usability
 issues for the advanced developer.
 
@@ -7145,6 +7148,16 @@ programs.  It is not meant to be used directly.
 
 All three programs make use of a configuration file, called
 @code{bootstrap.conf}.
+
+@item build-aux/bootstrap
+This acts like @code{top/bootstrap}, except it does not
+need the companion files @code{autogen.sh},
+@code{autopull.sh}, and @code{bootstrap-funclib.sh}
+so it avoids some clutter in your project's top level directory.
+With this approach, you update via @code{./bootstrap --pull} and
+@code{./bootstrap --gen} instead of via @code{./autopull.sh} and
+@code{./autogen.sh}.  Otherwise this approach acts similarly, and
+uses the same @code{bootstrap.conf} file.
 
 @item build-aux/bootstrap.conf
 This is the template configuration file.  After copying it into the
