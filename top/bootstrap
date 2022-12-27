@@ -1,7 +1,7 @@
 #! /bin/sh
 # Bootstrap this package from checked-out sources.
 
-scriptversion=2022-12-27.03; # UTC
+scriptversion=2022-12-27.04; # UTC
 
 # Copyright (C) 2003-2022 Free Software Foundation, Inc.
 #
@@ -183,25 +183,23 @@ fi
 
 echo "$0: Bootstrapping from checked-out $package sources..."
 
-# Pass GNULIB_SRCDIR to autopull.sh and autogen.sh.
+# Pass GNULIB_SRCDIR and GNULIB_REFDIR to any subsidiary commands that care.
 export GNULIB_SRCDIR
-
-# Pass GNULIB_REFDIR to autopull.sh.
 export GNULIB_REFDIR
 
 if $use_git || test -z "$SKIP_PO"; then
-  "$medir"/autopull.sh \
+  autopull \
       `if $bootstrap_sync; then echo ' --bootstrap-sync'; else echo ' --no-bootstrap-sync'; fi` \
       `if test -z "$checkout_only_file"; then echo ' --force'; fi` \
       `if ! $use_git; then echo ' --no-git'; fi` \
       `if test -n "$SKIP_PO"; then echo ' --skip-po'; fi` \
-    || die "autopull.sh failed."
+    || die "could not fetch auxiliary files"
 fi
 
-"$medir"/autogen.sh \
+autogen \
     `if $copy; then echo ' --copy'; fi` \
     `if test -z "$checkout_only_file"; then echo ' --force'; fi` \
-  || die "autogen.sh failed."
+  || die "could not generate auxiliary files"
 
 # ----------------------------------------------------------------------------
 
