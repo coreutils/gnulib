@@ -159,6 +159,9 @@ MODULES.html: MODULES.html.sh
 # A perl BEGIN block to set Y to the current year number and W to Y-1.
 _year_and_prev = BEGIN{@t=localtime(time); $$y=$$t[5]+1900; $$w=$$y-1}
 
+# Which TZ setting to use when updating copyright.
+COPYRIGHT_TZ = UTC0
+
 # Run this rule once per year (usually early in January)
 # to update all FSF copyright year lists here.
 # We exclude the files listed in srclist.txt (maintained elsewhere)
@@ -170,6 +173,7 @@ _year_and_prev = BEGIN{@t=localtime(time); $$y=$$t[5]+1900; $$w=$$y-1}
 # (the current) year number in some places.
 # Also adjust version-etc.c and and gendocs.sh.
 update-copyright:
+	export TZ='$(COPYRIGHT_TZ)';					\
 	exempt=$$(mktemp);						\
 	grep -v '^#' config/srclist.txt|grep -v '^$$'			\
 	  | while read top src dst options; do				\
@@ -187,10 +191,13 @@ update-copyright:
 	  | UPDATE_COPYRIGHT_MAX_LINE_LENGTH=79				\
 	    UPDATE_COPYRIGHT_USE_INTERVALS=1				\
 	      xargs build-aux/update-copyright
+	export TZ='$(COPYRIGHT_TZ)';					\
 	perl -pi -e '$(_year_and_prev) s/(copyright.*)\b$$w\b/$$1$$y/i'	\
 	  lib/version-etc.c doc/gnulib.texi build-aux/gendocs.sh
+	export TZ='$(COPYRIGHT_TZ)';					\
 	perl -pi -e '$(_year_and_prev) s/ $$w-$$y / $$y /g'		\
 	  doc/gendocs_template* build-aux/gendocs.sh
+	export TZ='$(COPYRIGHT_TZ)';					\
 	perl -pi -e							\
           '$(_year_and_prev) s/^(scriptversion=)$$w.*/$$1$$y-01-01.00/i' \
 	  build-aux/gendocs.sh
