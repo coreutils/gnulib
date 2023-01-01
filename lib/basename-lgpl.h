@@ -1,6 +1,6 @@
 /* Extract the last component (base name) of a file name.
 
-   Copyright (C) 1998, 2001, 2003-2006, 2009-2022 Free Software Foundation,
+   Copyright (C) 1998, 2001, 2003-2006, 2009-2023 Free Software Foundation,
    Inc.
 
    This file is free software: you can redistribute it and/or modify

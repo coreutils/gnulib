@@ -1,5 +1,5 @@
 /* Decomposed printf argument list.
-   Copyright (C) 1999, 2002-2003, 2006-2007, 2011-2022 Free Software
+   Copyright (C) 1999, 2002-2003, 2006-2007, 2011-2023 Free Software
    Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify

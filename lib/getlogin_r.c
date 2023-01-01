@@ -1,6 +1,6 @@
 /* Provide a working getlogin_r for systems which lack it.
 
-   Copyright (C) 2005-2007, 2010-2022 Free Software Foundation, Inc.
+   Copyright (C) 2005-2007, 2010-2023 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as
