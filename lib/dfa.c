@@ -1,5 +1,5 @@
 /* dfa.c - deterministic extended regexp routines for GNU
-   Copyright (C) 1988, 1998, 2000, 2002, 2004-2005, 2007-2022 Free Software
+   Copyright (C) 1988, 1998, 2000, 2002, 2004-2005, 2007-2023 Free Software
    Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
@@ -1138,9 +1138,14 @@ parse_bracket_exp (struct dfa *dfa)
   while ((wc = wc1, (c = c1) != ']'));
 
   if (colon_warning_state == 7)
-    ((dfa->syntax.dfaopts & DFA_CONFUSING_BRACKETS_ERROR
-      ? dfaerror : dfawarn)
-     (_("character class syntax is [[:space:]], not [:space:]")));
+    {
+      char const *msg
+        = _("character class syntax is [[:space:]], not [:space:]");
+      if (dfa->syntax.dfaopts & DFA_CONFUSING_BRACKETS_ERROR)
+        dfaerror (msg);
+      else
+        dfawarn (msg);
+    }
 
   if (! known_bracket_exp)
     return BACKREF;
