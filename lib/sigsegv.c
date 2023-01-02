@@ -1,5 +1,5 @@
 /* Page fault handling library.
-   Copyright (C) 1993-2022 Free Software Foundation, Inc.
+   Copyright (C) 1993-2023 Free Software Foundation, Inc.
    Copyright (C) 2018  Nylon Chen <nylon7@andestech.com>
 
    This program is free software: you can redistribute it and/or modify
@@ -61,7 +61,7 @@ int libsigsegv_version = LIBSIGSEGV_VERSION;
           occurred.
  */
 
-#if defined __linux__ || defined __ANDROID__ /* Linux */
+#if defined __linux__ && !defined __ANDROID__ /* Linux */
 
 # define SIGSEGV_FAULT_HANDLER_ARGLIST  int sig, siginfo_t *sip, void *ucp
 # define SIGSEGV_FAULT_ADDRESS  sip->si_addr
@@ -345,6 +345,17 @@ int libsigsegv_version = LIBSIGSEGV_VERSION;
    glibc/sysdeps/unix/sysv/linux/<cpu>/sigcontextinfo.h.  */
 
 # endif
+
+#endif
+
+#if defined __ANDROID__ /* Android */
+/* A platform that supports the POSIX:2008 (XPG 7) way, without
+   'struct sigcontext' nor 'ucontext_t'.  */
+
+# define SIGSEGV_FAULT_HANDLER_ARGLIST  int sig, siginfo_t *sip, void *context
+# define SIGSEGV_FAULT_ADDRESS  sip->si_addr
+# define SIGSEGV_FAULT_CONTEXT  context
+# define SIGSEGV_FAULT_ADDRESS_FROM_SIGINFO
 
 #endif
 
