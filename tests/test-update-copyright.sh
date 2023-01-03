@@ -115,6 +115,10 @@ Copyright (C) 1990-2005, 2007-2009 Acme, Inc.
 # Copyright (C) 1990-2005, 2007-2009 Free Software
 # Foundation, Inc.
 EOF
+cat > $TMP.8 <<EOF
+Copyright (C) 2008 Free Software Foundation, Inc.
+Copyright (C) 2008 Free Software Foundation, Inc.
+EOF
 
 UPDATE_COPYRIGHT_YEAR=2009 \
   update-copyright $TMP.? 1> $TMP-stdout 2> $TMP-stderr
@@ -156,6 +160,10 @@ Copyright (C) 1990-2005, 2007-2009 Acme, Inc.
 
 # Copyright (C) 1990-2005, 2007-2009 Free Software
 # Foundation, Inc.
+EOF
+compare - $TMP.8 <<EOF || exit 1
+Copyright (C) 2008, 2009 Free Software Foundation, Inc.
+Copyright (C) 2008, 2009 Free Software Foundation, Inc.
 EOF
 
 UPDATE_COPYRIGHT_YEAR=2010 UPDATE_COPYRIGHT_USE_INTERVALS=1 \
