@@ -1,4 +1,4 @@
-# ffsll.m4 serial 3
+# ffsll.m4 serial 4
 dnl Copyright (C) 2011-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -12,8 +12,26 @@ AC_DEFUN([gl_FUNC_FFSLL],
   dnl Persuade glibc <string.h> and AIX <strings.h> to declare ffsll().
   AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
 
-  AC_CHECK_FUNCS_ONCE([ffsll])
-  if test $ac_cv_func_ffsll = yes; then
+  dnl We can't use AC_CHECK_FUNC here, because ffsll() is defined as a
+  dnl static inline function when compiling for Android 13 or older.
+  dnl But require that ffsll() is declared; otherwise we may be using
+  dnl the GCC built-in function, which leads to warnings
+  dnl "warning: implicit declaration of function 'ffsll'".
+  AC_CACHE_CHECK([for ffsll], [gl_cv_func_ffsll],
+    [AC_LINK_IFELSE(
+       [AC_LANG_PROGRAM(
+          [[#include <string.h>
+            #include <strings.h>
+            long long x;
+          ]],
+          [[int (*func) (long long) = ffsll;
+            return func (x);
+          ]])
+       ],
+       [gl_cv_func_ffsll=yes],
+       [gl_cv_func_ffsll=no])
+    ])
+  if test $gl_cv_func_ffsll = yes; then
     dnl Test whether ffsll works.
     dnl On AIX 7.2 in 32-bit mode it is completely broken.
     AC_CACHE_CHECK([whether ffsll works],

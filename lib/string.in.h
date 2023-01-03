@@ -59,10 +59,11 @@
 # include <unistd.h>
 #endif
 
-/* AIX 7.2 declares ffsl and ffsll in <strings.h>, not in <string.h>.  */
+/* AIX 7.2 and Android 13 declare ffsl and ffsll in <strings.h>, not in
+   <string.h>.  */
 /* But in any case avoid namespace pollution on glibc systems.  */
 #if ((@GNULIB_FFSL@ || @GNULIB_FFSLL@ || defined GNULIB_POSIXCHECK) \
-     && defined _AIX) \
+     && (defined _AIX || defined __ANDROID__)) \
     && ! defined __GLIBC__
 # include <strings.h>
 #endif
