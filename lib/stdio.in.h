@@ -951,9 +951,13 @@ _GL_WARN_ON_USE (gets, "gets is a security hole - use fgets instead");
 #  endif
 _GL_CXXALIAS_MDA (getw, int, (FILE *restrict stream));
 # else
+#  if @HAVE_DECL_GETW@
 _GL_CXXALIAS_SYS (getw, int, (FILE *restrict stream));
+#  endif
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (getw);
+# endif
 #endif
 
 #if @GNULIB_OBSTACK_PRINTF@ || @GNULIB_OBSTACK_PRINTF_POSIX@
