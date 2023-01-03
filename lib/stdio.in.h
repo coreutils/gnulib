@@ -1194,9 +1194,13 @@ _GL_CXXALIASWARN (puts);
 #  endif
 _GL_CXXALIAS_MDA (putw, int, (int w, FILE *restrict stream));
 # else
+#  if @HAVE_DECL_PUTW@
 _GL_CXXALIAS_SYS (putw, int, (int w, FILE *restrict stream));
+#  endif
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (putw);
+# endif
 #endif
 
 #if @GNULIB_REMOVE@

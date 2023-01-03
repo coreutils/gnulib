@@ -23,4 +23,7 @@ Portability problems fixed by Gnulib:
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+This function is not declared on some platforms:
+Android 9.0.
 @end itemize
