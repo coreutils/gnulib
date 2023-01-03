@@ -15,4 +15,7 @@ mingw, MSVC 14.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+This function is only defined as an inline function on some platforms:
+Android 13.
 @end itemize

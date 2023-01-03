@@ -1,4 +1,4 @@
-# ffs.m4 serial 5
+# ffs.m4 serial 6
 dnl Copyright (C) 2011-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,7 +9,7 @@ AC_DEFUN([gl_FUNC_FFS],
   AC_REQUIRE([gl_STRINGS_H_DEFAULTS])
 
   dnl We can't use AC_CHECK_FUNC here, because ffs() is defined as a
-  dnl static inline function when compiling for Android 4.2 or older.
+  dnl static inline function when compiling for Android 13 or older.
   dnl But require that ffs() is declared; otherwise we may be using
   dnl the GCC built-in function, which leads to warnings
   dnl "warning: implicit declaration of function 'ffs'".
