@@ -3,11 +3,13 @@ Copy access control list from one file to another.  (Unportable.)
 
 Files:
 lib/qcopy-acl.c
+m4/xattr.m4
 
 Depends-on:
 acl-permissions
 
 configure.ac:
+gl_FUNC_XATTR
 
 Makefile.am:
 lib_SOURCES += qcopy-acl.c
