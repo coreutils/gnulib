@@ -15,15 +15,13 @@ Portability problems fixed by Gnulib:
 @item
 This function is missing on some platforms:
 Android LP64, mingw, MSVC 14, Android 9.0.
-
 @item
 This function is not declared on some platforms:
-Android LP32.
-
+Android 13 (LP32?).
 @item
 This function does not represent the true @code{RLIMIT_NOFILE} soft
 limit on some platforms:
-Android LP32, Cygwin 1.7.25.
+Android 13 (LP32?), Cygwin 1.7.25.
 @end itemize
 
 Portability problems not fixed by Gnulib:

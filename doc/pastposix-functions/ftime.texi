@@ -16,6 +16,9 @@ Portability problems not fixed by Gnulib:
 This function is missing on some platforms:
 macOS 11.1, FreeBSD 13.0, NetBSD 9.0, OpenBSD 6.7, Android 9.0.
 @item
+This function is not declared on some platforms:
+Android 13.
+@item
 On native Windows platforms (mingw, MSVC), this function works incorrectly
 when the environment variable @code{TZ} has been set by Cygwin.
 @item

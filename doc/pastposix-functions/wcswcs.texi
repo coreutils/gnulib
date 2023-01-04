@@ -16,6 +16,9 @@ Portability problems not fixed by Gnulib:
 This function is missing on some platforms:
 macOS 11.1, FreeBSD 13.0, Cygwin 2.9, mingw, MSVC 14, Android 9.0.
 @item
+This function is not declared on some platforms:
+Android 13.
+@item
 On Windows and 32-bit AIX platforms, @code{wchar_t} is a 16-bit type and therefore cannot
 accommodate all Unicode characters.
 @item
