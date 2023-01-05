@@ -22,7 +22,7 @@ Include:
 "acl.h"
 
 Link:
-$(LIB_HAS_ACL)
+$(FILE_HAS_ACL_LIB)
 
 License:
 GPL
