@@ -1,4 +1,4 @@
-# getpass.m4 serial 17
+# getpass.m4 serial 18
 dnl Copyright (C) 2002-2003, 2005-2006, 2009-2023 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -12,6 +12,9 @@ AC_DEFUN_ONCE([gl_FUNC_GETPASS],
 
   dnl Persuade Solaris <unistd.h> and <stdlib.h> to declare getpass().
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
+
+  dnl Persuade Android <unistd.h> to not define getpass() as an inline function.
+  AC_DEFINE([NO_INLINE_GETPASS], [1], [Define to 1 on Android.])
 
   AC_CHECK_FUNCS_ONCE([getpass])
   if test $ac_cv_func_getpass = no; then

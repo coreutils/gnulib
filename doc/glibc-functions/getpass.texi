@@ -22,6 +22,10 @@ Portability problems fixed by either Gnulib module @code{getpass} or @code{getpa
 @item
 This function is missing on some platforms:
 mingw, MSVC 14, Android 9.0.
+@item
+This function cannot be called from plain inline or extern inline functions
+on some platforms:
+Android 13.
 @end itemize
 
 Portability problems fixed by Gnulib module @code{getpass-gnu}:
