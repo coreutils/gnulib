@@ -344,7 +344,7 @@ _GL_CXXALIAS_SYS_CAST2 (memrchr,
          || defined __clang__)
 _GL_CXXALIASWARN1 (memrchr, void *, (void *, int, size_t) throw ());
 _GL_CXXALIASWARN1 (memrchr, void const *, (void const *, int, size_t) throw ());
-# else
+# elif __GLIBC__ >= 2
 _GL_CXXALIASWARN (memrchr);
 # endif
 #elif defined GNULIB_POSIXCHECK
@@ -499,7 +499,7 @@ _GL_CXXALIAS_SYS_CAST2 (strchrnul,
 _GL_CXXALIASWARN1 (strchrnul, char *, (char *__s, int __c_in) throw ());
 _GL_CXXALIASWARN1 (strchrnul, char const *,
                    (char const *__s, int __c_in) throw ());
-# else
+# elif __GLIBC__ >= 2
 _GL_CXXALIASWARN (strchrnul);
 # endif
 #elif defined GNULIB_POSIXCHECK
@@ -864,7 +864,7 @@ _GL_CXXALIASWARN1 (strcasestr, char *,
                    (char *haystack, const char *needle) throw ());
 _GL_CXXALIASWARN1 (strcasestr, const char *,
                    (const char *haystack, const char *needle) throw ());
-# else
+# elif __GLIBC__ >= 2
 _GL_CXXALIASWARN (strcasestr);
 # endif
 #elif defined GNULIB_POSIXCHECK
