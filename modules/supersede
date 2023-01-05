@@ -34,6 +34,7 @@ Include:
 "supersede.h"
 
 Link:
+$(LIB_ACL)
 $(LIB_GETRANDOM)
 $(LIB_CLOCK_GETTIME)
 $(LIBTHREAD)
