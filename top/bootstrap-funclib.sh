@@ -1,6 +1,6 @@
 # A library of shell functions for autopull.sh, autogen.sh, and bootstrap.
 
-scriptlibversion=2022-12-27.16; # UTC
+scriptlibversion=2023-01-06.19; # UTC
 
 # Copyright (C) 2003-2023 Free Software Foundation, Inc.
 #
@@ -778,7 +778,9 @@ autopull()
     fi
   fi
 
-  echo "$0: done.  Now you can run './autogen.sh'."
+  if test -f "$medir"/autogen.sh; then
+    echo "$0: done.  Now you can run '$medir/autogen.sh'."
+  fi
 }
 
 # ----------------------------- Get translations. -----------------------------
