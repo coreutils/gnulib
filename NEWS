@@ -74,6 +74,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2023-01-07  setlocale-null  Link with $(SETLOCALE_NULL_LIB) instead of
+                            $(LIB_SETLOCALE_NULL).
+
 2023-01-07  setlocale       Link with $(SETLOCALE_LIB) instead of
                             $(LIB_SETLOCALE).
 

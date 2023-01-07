@@ -27,6 +27,6 @@ static char buf[SETLOCALE_NULL_ALL_MAX];
 int
 main ()
 {
-  /* Check that setlocale_null_r() can be used with $(LIB_SETLOCALE_NULL).  */
+  /* Check that setlocale_null_r() can be used with $(SETLOCALE_NULL_LIB).  */
   return setlocale_null_r (LC_ALL, buf, sizeof (buf)) != 0;
 }

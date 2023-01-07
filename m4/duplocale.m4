@@ -1,4 +1,4 @@
-# duplocale.m4 serial 13
+# duplocale.m4 serial 14
 dnl Copyright (C) 2009-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -111,7 +111,7 @@ int main ()
     HAVE_DUPLOCALE=0
   fi
   if test $REPLACE_DUPLOCALE = 1; then
-    DUPLOCALE_LIB="$LIB_SETLOCALE_NULL"
+    DUPLOCALE_LIB="$SETLOCALE_NULL_LIB"
   else
     DUPLOCALE_LIB=
   fi

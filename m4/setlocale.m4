@@ -1,4 +1,4 @@
-# setlocale.m4 serial 8
+# setlocale.m4 serial 9
 dnl Copyright (C) 2011-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -66,7 +66,7 @@ int main ()
   fi
 
   if test $NEED_SETLOCALE_MTSAFE = 1; then
-    SETLOCALE_LIB="$LIB_SETLOCALE_NULL"
+    SETLOCALE_LIB="$SETLOCALE_NULL_LIB"
   else
     SETLOCALE_LIB=
   fi
