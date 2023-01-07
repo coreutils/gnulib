@@ -24,7 +24,7 @@ Include:
 <spawn.h>
 
 Link:
-$(LIB_POSIX_SPAWN)
+$(POSIX_SPAWN_LIB)
 
 License:
 LGPLv2+
