@@ -11,7 +11,10 @@ setlocale-null
 
 configure.ac:
 AC_REQUIRE([gl_FUNC_SETLOCALE_NULL])
-LIB_HARD_LOCALE="$LIB_SETLOCALE_NULL"
+HARD_LOCALE_LIB="$LIB_SETLOCALE_NULL"
+AC_SUBST([HARD_LOCALE_LIB])
+dnl For backward compatibility.
+LIB_HARD_LOCALE="$HARD_LOCALE_LIB"
 AC_SUBST([LIB_HARD_LOCALE])
 
 Makefile.am:
@@ -21,7 +24,7 @@ Include:
 "hard-locale.h"
 
 Link:
-$(LIB_HARD_LOCALE)
+$(HARD_LOCALE_LIB)
 
 License:
 LGPLv2+

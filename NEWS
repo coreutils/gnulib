@@ -74,6 +74,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2023-01-07  hard-locale     Link with $(HARD_LOCALE_LIB) instead of
+                            $(LIB_HARD_LOCALE).
+
 2023-01-07  getrandom       Link with $(GETRANDOM_LIB) instead of
                             $(LIB_GETRANDOM).
 
