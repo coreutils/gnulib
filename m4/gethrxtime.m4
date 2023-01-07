@@ -1,4 +1,4 @@
-# gethrxtime.m4 serial 13
+# gethrxtime.m4 serial 14
 dnl Copyright (C) 2005-2006, 2008-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -34,7 +34,7 @@ AC_DEFUN([gl_GETHRXTIME],
           [gl_cv_have_clock_gettime_macro=yes],
           [gl_cv_have_clock_gettime_macro=no])])
       if test $gl_cv_have_clock_gettime_macro = yes; then
-        LIB_GETHRXTIME=$LIB_CLOCK_GETTIME
+        LIB_GETHRXTIME=$CLOCK_TIME_LIB
       fi
     fi
   fi

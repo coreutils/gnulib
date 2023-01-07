@@ -10,4 +10,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-timespec_get
 check_PROGRAMS += test-timespec_get
-test_timespec_get_LDADD = $(LDADD) @LIB_CLOCK_GETTIME@
+test_timespec_get_LDADD = $(LDADD) @CLOCK_TIME_LIB@

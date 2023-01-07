@@ -31,7 +31,7 @@ Include:
 
 Link:
 $(LIB_GETRANDOM)
-$(LIB_CLOCK_GETTIME)
+$(CLOCK_TIME_LIB)
 
 License:
 LGPL

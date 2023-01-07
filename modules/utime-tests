@@ -19,4 +19,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-utime
 check_PROGRAMS += test-utime
-test_utime_LDADD = $(LDADD) $(LIB_CLOCK_GETTIME) $(LIB_NANOSLEEP) @LIBINTL@
+test_utime_LDADD = $(LDADD) $(CLOCK_TIME_LIB) $(LIB_NANOSLEEP) @LIBINTL@

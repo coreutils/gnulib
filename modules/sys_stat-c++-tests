@@ -15,5 +15,5 @@ if ANSICXX
 TESTS += test-sys_stat-c++
 check_PROGRAMS += test-sys_stat-c++
 test_sys_stat_c___SOURCES = test-sys_stat-c++.cc
-test_sys_stat_c___LDADD = $(LDADD) $(LIBINTL) $(LIB_CLOCK_GETTIME) $(LIB_MBRTOWC) $(LIB_GETRANDOM)
+test_sys_stat_c___LDADD = $(LDADD) $(LIBINTL) $(CLOCK_TIME_LIB) $(LIB_MBRTOWC) $(LIB_GETRANDOM)
 endif

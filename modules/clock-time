@@ -15,7 +15,7 @@ Makefile.am:
 Include:
 
 Link:
-$(LIB_CLOCK_GETTIME)
+$(CLOCK_TIME_LIB)
 
 License:
 LGPLv2+

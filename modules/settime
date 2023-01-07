@@ -22,7 +22,7 @@ Include:
 "timespec.h"
 
 Link:
-$(LIB_CLOCK_GETTIME)
+$(CLOCK_TIME_LIB)
 
 License:
 GPL

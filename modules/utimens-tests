@@ -22,4 +22,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-utimens
 check_PROGRAMS += test-utimens
-test_utimens_LDADD = $(LDADD) $(LIB_CLOCK_GETTIME) $(LIB_NANOSLEEP) @LIBINTL@
+test_utimens_LDADD = $(LDADD) $(CLOCK_TIME_LIB) $(LIB_NANOSLEEP) @LIBINTL@

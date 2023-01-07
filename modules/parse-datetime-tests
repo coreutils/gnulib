@@ -10,4 +10,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-parse-datetime
 check_PROGRAMS += test-parse-datetime
-test_parse_datetime_LDADD = $(LDADD) @LIBINTL@ $(LIB_CLOCK_GETTIME)
+test_parse_datetime_LDADD = $(LDADD) @LIBINTL@ $(CLOCK_TIME_LIB)
