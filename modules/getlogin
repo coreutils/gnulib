@@ -23,7 +23,7 @@ Include:
 <unistd.h>
 
 Link:
-$(LIB_GETLOGIN)
+$(GETLOGIN_LIB)
 
 License:
 LGPLv2+

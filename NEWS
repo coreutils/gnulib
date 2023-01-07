@@ -74,6 +74,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2023-01-07  getlogin        Link with $(GETLOGIN_LIB) instead of
+            getlogin_r      $(LIB_GETLOGIN).
+
 2023-01-07  gethrxtime      Link with $(GETHRXTIME_LIB) instead of
                             $(LIB_GETHRXTIME).
 

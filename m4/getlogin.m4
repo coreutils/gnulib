@@ -1,4 +1,4 @@
-# getlogin.m4 serial 5
+# getlogin.m4 serial 6
 dnl Copyright (C) 2010-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -24,9 +24,12 @@ AC_DEFUN([gl_LIB_GETLOGIN],
   AC_REQUIRE([AC_CANONICAL_HOST])
   case $host_os in
     mingw*)
-      LIB_GETLOGIN='-ladvapi32' ;;
+      GETLOGIN_LIB='-ladvapi32' ;;
     *)
-      LIB_GETLOGIN= ;;
+      GETLOGIN_LIB= ;;
   esac
+  AC_SUBST([GETLOGIN_LIB])
+  dnl For backward compatibility.
+  LIB_GETLOGIN="$GETLOGIN_LIB"
   AC_SUBST([LIB_GETLOGIN])
 ])
