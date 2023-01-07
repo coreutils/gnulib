@@ -1,4 +1,4 @@
-# poll.m4 serial 20
+# poll.m4 serial 21
 dnl Copyright (c) 2003, 2005-2007, 2009-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -76,7 +76,7 @@ This is MacOSX or AIX
   fi
 
   dnl Determine the needed libraries.
-  LIB_POLL="$LIBSOCKET"
+  POLL_LIB="$LIBSOCKET"
   if test $HAVE_POLL = 0 || test $REPLACE_POLL = 1; then
     case "$host_os" in
       mingw*)
@@ -94,10 +94,13 @@ main ()
   return 0;
 }]])],
           [],
-          [LIB_POLL="$LIB_POLL -luser32"])
+          [POLL_LIB="$POLL_LIB -luser32"])
         ;;
     esac
   fi
+  AC_SUBST([POLL_LIB])
+  dnl For backward compatibility.
+  LIB_POLL="$POLL_LIB"
   AC_SUBST([LIB_POLL])
 ])
 

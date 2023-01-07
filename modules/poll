@@ -35,7 +35,7 @@ Include:
 <poll.h>
 
 Link:
-$(LIB_POLL)
+$(POLL_LIB)
 
 License:
 LGPLv2+

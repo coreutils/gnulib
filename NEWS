@@ -74,6 +74,8 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2023-01-07  poll            Link with $(POLL_LIB) instead of $(LIB_POLL).
+
 2023-01-07  nanosleep       Link with $(NANOSLEEP_LIB) instead of
                             $(LIB_NANOSLEEP).
 
