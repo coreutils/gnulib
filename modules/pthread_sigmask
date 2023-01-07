@@ -28,7 +28,7 @@ Include:
 <signal.h>
 
 Link:
-$(LIB_PTHREAD_SIGMASK)
+$(PTHREAD_SIGMASK_LIB)
 
 License:
 LGPLv2+

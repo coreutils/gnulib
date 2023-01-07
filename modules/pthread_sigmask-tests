@@ -13,5 +13,5 @@ configure.ac:
 Makefile.am:
 TESTS += test-pthread_sigmask1 test-pthread_sigmask2
 check_PROGRAMS += test-pthread_sigmask1 test-pthread_sigmask2
-test_pthread_sigmask1_LDADD = $(LDADD) @LIB_PTHREAD_SIGMASK@
-test_pthread_sigmask2_LDADD = $(LDADD) @LIB_PTHREAD_SIGMASK@ @LIBMULTITHREAD@
+test_pthread_sigmask1_LDADD = $(LDADD) @PTHREAD_SIGMASK_LIB@
+test_pthread_sigmask2_LDADD = $(LDADD) @PTHREAD_SIGMASK_LIB@ @LIBMULTITHREAD@

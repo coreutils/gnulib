@@ -16,5 +16,5 @@ if ANSICXX
 TESTS += test-signal-h-c++
 check_PROGRAMS += test-signal-h-c++
 test_signal_h_c___SOURCES = test-signal-h-c++.cc test-signal-h-c++2.cc
-test_signal_h_c___LDADD = $(LDADD) $(LIBINTL) $(NANOSLEEP_LIB) $(LIB_PTHREAD_SIGMASK)
+test_signal_h_c___LDADD = $(LDADD) $(LIBINTL) $(NANOSLEEP_LIB) $(PTHREAD_SIGMASK_LIB)
 endif

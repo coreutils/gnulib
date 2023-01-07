@@ -74,6 +74,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2023-01-07  pthread_sigmask  Link with $(PTHREAD_SIGMASK_LIB) instead of
+                             $(LIB_PTHREAD_SIGMASK).
+
 2023-01-07  posix_spawn     Link with $(POSIX_SPAWN_LIB) instead of
                             $(LIB_POSIX_SPAWN).
 

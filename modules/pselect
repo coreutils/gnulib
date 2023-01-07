@@ -27,7 +27,7 @@ Include:
 
 Link:
 $(LIB_SELECT)
-$(LIB_PTHREAD_SIGMASK)
+$(PTHREAD_SIGMASK_LIB)
 
 License:
 LGPLv2+
