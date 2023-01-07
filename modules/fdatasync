@@ -23,7 +23,7 @@ Include:
 <unistd.h>
 
 Link:
-$(LIB_FDATASYNC)
+$(FDATASYNC_LIB)
 
 License:
 LGPLv2+

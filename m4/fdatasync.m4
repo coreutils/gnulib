@@ -1,4 +1,4 @@
-# fdatasync.m4 serial 6
+# fdatasync.m4 serial 7
 dnl Copyright (C) 2008-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -11,8 +11,8 @@ AC_DEFUN([gl_FUNC_FDATASYNC],
 
   dnl Using AC_CHECK_FUNCS_ONCE would break our subsequent AC_SEARCH_LIBS
   AC_CHECK_DECLS_ONCE([fdatasync])
-  LIB_FDATASYNC=
-  AC_SUBST([LIB_FDATASYNC])
+  FDATASYNC_LIB=
+  AC_SUBST([FDATASYNC_LIB])
 
   if test $ac_cv_have_decl_fdatasync = no; then
     HAVE_DECL_FDATASYNC=0
@@ -30,7 +30,7 @@ AC_DEFUN([gl_FUNC_FDATASYNC],
         gl_saved_libs=$LIBS
         AC_SEARCH_LIBS([fdatasync], [rt posix4],
           [test "$ac_cv_search_fdatasync" = "none required" ||
-           LIB_FDATASYNC=$ac_cv_search_fdatasync])
+           FDATASYNC_LIB=$ac_cv_search_fdatasync])
         LIBS=$gl_saved_libs
         ;;
       *)
@@ -42,4 +42,8 @@ AC_DEFUN([gl_FUNC_FDATASYNC],
         ;;
     esac
   fi
+
+  dnl For backward compatibility.
+  LIB_FDATASYNC="$FDATASYNC_LIB"
+  AC_SUBST([LIB_FDATASYNC])
 ])

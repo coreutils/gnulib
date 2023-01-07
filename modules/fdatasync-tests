@@ -11,4 +11,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-fdatasync
 check_PROGRAMS += test-fdatasync
-test_fdatasync_LDADD = $(LDADD) $(LIB_FDATASYNC)
+test_fdatasync_LDADD = $(LDADD) $(FDATASYNC_LIB)
