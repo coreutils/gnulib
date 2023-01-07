@@ -38,7 +38,7 @@ Include:
 "clean-temp.h"
 
 Link:
-$(LIB_GETRANDOM)
+$(GETRANDOM_LIB)
 $(LIBTHREAD)
 
 License:

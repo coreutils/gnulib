@@ -24,7 +24,7 @@ Include:
 <unistd.h>
 
 Link:
-$(LIB_GETRANDOM)
+$(GETRANDOM_LIB)
 
 License:
 LGPL

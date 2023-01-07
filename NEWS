@@ -74,6 +74,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2023-01-07  getrandom       Link with $(GETRANDOM_LIB) instead of
+                            $(LIB_GETRANDOM).
+
 2023-01-07  getlogin        Link with $(GETLOGIN_LIB) instead of
             getlogin_r      $(LIB_GETLOGIN).
 

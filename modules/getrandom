@@ -28,7 +28,7 @@ Include:
 <sys/random.h>
 
 Link:
-$(LIB_GETRANDOM)
+$(GETRANDOM_LIB)
 
 License:
 LGPLv2+

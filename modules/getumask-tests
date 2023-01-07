@@ -10,4 +10,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-getumask
 check_PROGRAMS += test-getumask
-test_getumask_LDADD = $(LDADD) $(CLOCK_TIME_LIB) $(LIB_GETRANDOM) $(LIBINTL) $(LIBTHREAD)
+test_getumask_LDADD = $(LDADD) $(CLOCK_TIME_LIB) $(GETRANDOM_LIB) $(LIBINTL) $(LIBTHREAD)

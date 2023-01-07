@@ -21,7 +21,7 @@ Include:
 "stdlib-safer.h"
 
 Link:
-$(LIB_GETRANDOM)
+$(GETRANDOM_LIB)
 
 License:
 GPL

@@ -10,4 +10,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-getrandom
 check_PROGRAMS += test-getrandom
-test_getrandom_LDADD = $(LDADD) @LIB_GETRANDOM@
+test_getrandom_LDADD = $(LDADD) @GETRANDOM_LIB@

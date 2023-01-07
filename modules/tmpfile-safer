@@ -21,7 +21,7 @@ Include:
 "stdio-safer.h"
 
 Link:
-$(LIB_GETRANDOM)
+$(GETRANDOM_LIB)
 $(CLOCK_TIME_LIB)
 
 License:

@@ -43,7 +43,7 @@ Include:
 
 Link:
 $(LIB_MBRTOWC)
-$(LIB_GETRANDOM)
+$(GETRANDOM_LIB)
 $(LIBTHREAD)
 
 License:

@@ -10,4 +10,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-argv-iter
 check_PROGRAMS += test-argv-iter
-test_argv_iter_LDADD = $(LDADD) $(LIB_GETRANDOM)
+test_argv_iter_LDADD = $(LDADD) $(GETRANDOM_LIB)

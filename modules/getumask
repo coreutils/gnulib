@@ -30,7 +30,7 @@ Include:
 <sys/stat.h>
 
 Link:
-$(LIB_GETRANDOM)
+$(GETRANDOM_LIB)
 $(CLOCK_TIME_LIB)
 $(LIBTHREAD)
 

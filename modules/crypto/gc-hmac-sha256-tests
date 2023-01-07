@@ -8,4 +8,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-gc-hmac-sha256
 check_PROGRAMS += test-gc-hmac-sha256
-test_gc_hmac_sha256_LDADD = $(LDADD) @LIB_CRYPTO@ $(LIB_GETRANDOM)
+test_gc_hmac_sha256_LDADD = $(LDADD) @LIB_CRYPTO@ $(GETRANDOM_LIB)

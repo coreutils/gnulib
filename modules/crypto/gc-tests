@@ -8,4 +8,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-gc
 check_PROGRAMS += test-gc
-test_gc_LDADD = $(LDADD) @LIB_CRYPTO@ $(LIB_GETRANDOM)
+test_gc_LDADD = $(LDADD) @LIB_CRYPTO@ $(GETRANDOM_LIB)
