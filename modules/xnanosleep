@@ -24,7 +24,7 @@ Include:
 "xnanosleep.h"
 
 Link:
-$(LIB_NANOSLEEP)
+$(NANOSLEEP_LIB)
 
 License:
 GPL

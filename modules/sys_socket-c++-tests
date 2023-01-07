@@ -15,5 +15,5 @@ if ANSICXX
 TESTS += test-sys_socket-c++
 check_PROGRAMS += test-sys_socket-c++
 test_sys_socket_c___SOURCES = test-sys_socket-c++.cc
-test_sys_socket_c___LDADD = $(LDADD) $(LIBINTL) $(LIBSOCKET) $(LIB_NANOSLEEP)
+test_sys_socket_c___LDADD = $(LDADD) $(LIBINTL) $(LIBSOCKET) $(NANOSLEEP_LIB)
 endif

@@ -74,6 +74,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2023-01-07  nanosleep       Link with $(NANOSLEEP_LIB) instead of
+                            $(LIB_NANOSLEEP).
+
 2023-01-07  mbrtowc         Link with $(MBRTOWC_LIB) instead of $(LIB_MBRTOWC).
 
 2023-01-07  hard-locale     Link with $(HARD_LOCALE_LIB) instead of

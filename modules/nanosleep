@@ -30,7 +30,7 @@ Include:
 <time.h>
 
 Link:
-$(LIB_NANOSLEEP)
+$(NANOSLEEP_LIB)
 
 License:
 LGPLv2+

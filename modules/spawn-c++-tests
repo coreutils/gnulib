@@ -15,5 +15,5 @@ if ANSICXX
 TESTS += test-spawn-c++
 check_PROGRAMS += test-spawn-c++
 test_spawn_c___SOURCES = test-spawn-c++.cc
-test_spawn_c___LDADD = $(LDADD) $(LIBINTL) $(LIB_NANOSLEEP)
+test_spawn_c___LDADD = $(LDADD) $(LIBINTL) $(NANOSLEEP_LIB)
 endif

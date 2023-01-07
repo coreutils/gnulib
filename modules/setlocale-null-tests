@@ -19,5 +19,5 @@ check_PROGRAMS += \
   test-setlocale_null-mt-one \
   test-setlocale_null-mt-all
 test_setlocale_null_LDADD = $(LDADD) @LIB_SETLOCALE_NULL@
-test_setlocale_null_mt_one_LDADD = $(LDADD) @LIB_SETLOCALE_NULL@ $(LIBMULTITHREAD) $(LIB_NANOSLEEP)
-test_setlocale_null_mt_all_LDADD = $(LDADD) @LIB_SETLOCALE_NULL@ $(LIBMULTITHREAD) $(LIB_NANOSLEEP)
+test_setlocale_null_mt_one_LDADD = $(LDADD) @LIB_SETLOCALE_NULL@ $(LIBMULTITHREAD) $(NANOSLEEP_LIB)
+test_setlocale_null_mt_all_LDADD = $(LDADD) @LIB_SETLOCALE_NULL@ $(LIBMULTITHREAD) $(NANOSLEEP_LIB)

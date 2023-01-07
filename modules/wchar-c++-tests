@@ -17,5 +17,5 @@ if ANSICXX
 TESTS += test-wchar-c++
 check_PROGRAMS += test-wchar-c++
 test_wchar_c___SOURCES = test-wchar-c++.cc test-wchar-c++2.cc test-wchar-c++3.cc
-test_wchar_c___LDADD = $(LDADD) $(LIBUNISTRING) $(LIBINTL) $(LIB_NANOSLEEP) $(EUIDACCESS_LIBGEN) $(LIBTHREAD)
+test_wchar_c___LDADD = $(LDADD) $(LIBUNISTRING) $(LIBINTL) $(NANOSLEEP_LIB) $(EUIDACCESS_LIBGEN) $(LIBTHREAD)
 endif

@@ -15,5 +15,5 @@ if ANSICXX
 TESTS += test-sys_time-c++
 check_PROGRAMS += test-sys_time-c++
 test_sys_time_c___SOURCES = test-sys_time-c++.cc
-test_sys_time_c___LDADD = $(LDADD) $(LIBINTL) $(LIB_NANOSLEEP)
+test_sys_time_c___LDADD = $(LDADD) $(LIBINTL) $(NANOSLEEP_LIB)
 endif

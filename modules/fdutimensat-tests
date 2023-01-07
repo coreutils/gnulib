@@ -23,4 +23,4 @@ Makefile.am:
 TESTS += test-fdutimensat
 check_PROGRAMS += test-fdutimensat
 test_fdutimensat_LDADD = $(LDADD) $(CLOCK_TIME_LIB) \
-  $(LIB_NANOSLEEP) @LIBINTL@
+  $(NANOSLEEP_LIB) @LIBINTL@

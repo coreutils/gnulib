@@ -15,5 +15,5 @@ if ANSICXX
 TESTS += test-search-c++
 check_PROGRAMS += test-search-c++
 test_search_c___SOURCES = test-search-c++.cc
-test_search_c___LDADD = $(LDADD) $(LIBINTL) $(LIB_NANOSLEEP)
+test_search_c___LDADD = $(LDADD) $(LIBINTL) $(NANOSLEEP_LIB)
 endif
