@@ -29,7 +29,7 @@ Include:
 <wchar.h>
 
 Link:
-$(LIB_MBRTOWC)
+$(MBRTOWC_LIB)
 
 License:
 LGPL

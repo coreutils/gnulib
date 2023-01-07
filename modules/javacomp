@@ -42,7 +42,7 @@ Include:
 "javacomp.h"
 
 Link:
-$(LIB_MBRTOWC)
+$(MBRTOWC_LIB)
 $(GETRANDOM_LIB)
 $(LIBTHREAD)
 

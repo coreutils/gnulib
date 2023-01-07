@@ -34,7 +34,7 @@ Include:
 "mkdir-p.h"
 
 Link:
-$(LIB_MBRTOWC)
+$(MBRTOWC_LIB)
 
 License:
 GPL

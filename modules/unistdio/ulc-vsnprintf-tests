@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-ulc-vsnprintf1
 check_PROGRAMS += test-ulc-vsnprintf1
 test_ulc_vsnprintf1_SOURCES = unistdio/test-ulc-vsnprintf1.c
-test_ulc_vsnprintf1_LDADD = $(LDADD) $(LIBUNISTRING) @LIBINTL@ @LIBICONV@ $(LIB_MBRTOWC)
+test_ulc_vsnprintf1_LDADD = $(LDADD) $(LIBUNISTRING) @LIBINTL@ @LIBICONV@ $(MBRTOWC_LIB)

@@ -45,4 +45,4 @@ TESTS_ENVIRONMENT += \
   LOCALE_JA='@LOCALE_JA@' \
   LOCALE_ZH_CN='@LOCALE_ZH_CN@'
 check_PROGRAMS += test-mbrtoc32 test-mbrtoc32-w32
-test_mbrtoc32_LDADD = $(LDADD) $(LIB_SETLOCALE) $(LIB_MBRTOWC)
+test_mbrtoc32_LDADD = $(LDADD) $(LIB_SETLOCALE) $(MBRTOWC_LIB)

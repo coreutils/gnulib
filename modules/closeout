@@ -23,7 +23,7 @@ Include:
 "closeout.h"
 
 Link:
-$(LIB_MBRTOWC)
+$(MBRTOWC_LIB)
 
 License:
 GPL

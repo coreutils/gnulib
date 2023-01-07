@@ -11,4 +11,4 @@ Makefile.am:
 TESTS += test-ulc-vasprintf1
 check_PROGRAMS += test-ulc-vasprintf1
 test_ulc_vasprintf1_SOURCES = unistdio/test-ulc-vasprintf1.c
-test_ulc_vasprintf1_LDADD = $(LDADD) $(LIBUNISTRING) @LIBICONV@ $(LIB_MBRTOWC)
+test_ulc_vasprintf1_LDADD = $(LDADD) $(LIBUNISTRING) @LIBICONV@ $(MBRTOWC_LIB)

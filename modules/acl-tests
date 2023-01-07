@@ -25,6 +25,6 @@ TESTS += \
   test-copy-acl.sh test-copy-acl-1.sh test-copy-acl-2.sh
 TESTS_ENVIRONMENT += USE_ACL=$(USE_ACL)
 check_PROGRAMS += test-set-mode-acl test-copy-acl test-sameacls
-test_set_mode_acl_LDADD = $(LDADD) $(LIB_ACL) @LIBINTL@ $(LIB_MBRTOWC)
-test_copy_acl_LDADD = $(LDADD) $(LIB_ACL) @LIBINTL@ $(LIB_MBRTOWC)
-test_sameacls_LDADD = $(LDADD) $(LIB_ACL) @LIBINTL@ $(LIB_MBRTOWC)
+test_set_mode_acl_LDADD = $(LDADD) $(LIB_ACL) @LIBINTL@ $(MBRTOWC_LIB)
+test_copy_acl_LDADD = $(LDADD) $(LIB_ACL) @LIBINTL@ $(MBRTOWC_LIB)
+test_sameacls_LDADD = $(LDADD) $(LIB_ACL) @LIBINTL@ $(MBRTOWC_LIB)

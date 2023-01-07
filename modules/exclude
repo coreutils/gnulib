@@ -28,7 +28,7 @@ Include:
 
 Link:
 $(LTLIBUNISTRING) when linking with libtool, $(LIBUNISTRING) otherwise
-$(LIB_MBRTOWC)
+$(MBRTOWC_LIB)
 
 License:
 GPL

@@ -37,7 +37,7 @@ Include:
 
 Link:
 $(LIB_ACL)
-$(LIB_MBRTOWC)
+$(MBRTOWC_LIB)
 
 License:
 GPL

@@ -58,7 +58,7 @@ Include:
 <regex.h>
 
 Link:
-$(LIB_MBRTOWC)
+$(MBRTOWC_LIB)
 $(LIBTHREAD)
 $(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
 

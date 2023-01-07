@@ -19,4 +19,4 @@ AC_CHECK_FUNCS_ONCE([mprotect])
 Makefile.am:
 TESTS += test-quotearg-simple
 check_PROGRAMS += test-quotearg-simple
-test_quotearg_simple_LDADD = $(LDADD) @LIBINTL@ $(LIB_MBRTOWC)
+test_quotearg_simple_LDADD = $(LDADD) @LIBINTL@ $(MBRTOWC_LIB)

@@ -28,7 +28,7 @@ Include:
 "csharpcomp.h"
 
 Link:
-$(LIB_MBRTOWC)
+$(MBRTOWC_LIB)
 $(LIBTHREAD)
 
 License:

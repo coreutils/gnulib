@@ -21,7 +21,7 @@ Include:
 "closein.h"
 
 Link:
-$(LIB_MBRTOWC)
+$(MBRTOWC_LIB)
 
 License:
 GPL

@@ -21,7 +21,7 @@ Include:
 <fnmatch.h>
 
 Link:
-$(LIB_MBRTOWC)
+$(MBRTOWC_LIB)
 
 License:
 LGPLv2+

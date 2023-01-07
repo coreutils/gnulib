@@ -21,7 +21,7 @@ Include:
 "acl.h"
 
 Link:
-$(LIB_MBRTOWC)
+$(MBRTOWC_LIB)
 
 License:
 GPL

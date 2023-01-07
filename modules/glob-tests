@@ -12,7 +12,7 @@ configure.ac:
 Makefile.am:
 TESTS += test-glob
 check_PROGRAMS += test-glob
-test_glob_LDADD = $(LDADD) $(LIBINTL) $(LIB_MBRTOWC)
+test_glob_LDADD = $(LDADD) $(LIBINTL) $(MBRTOWC_LIB)
 MOSTLYCLEANFILES += \
   test-glob.tglobfile \
   test-glob.tgloblink1 \

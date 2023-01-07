@@ -30,7 +30,7 @@ Include:
 <stdlib.h>
 
 Link:
-$(LIB_MBRTOWC)
+$(MBRTOWC_LIB)
 $(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
 
 License:
