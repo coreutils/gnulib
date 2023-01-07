@@ -16,5 +16,5 @@ if ANSICXX
 TESTS += test-wctype-h-c++
 check_PROGRAMS += test-wctype-h-c++
 test_wctype_h_c___SOURCES = test-wctype-h-c++.cc test-wctype-h-c++2.cc
-test_wctype_h_c___LDADD = $(LDADD) $(LIBINTL) $(LIB_NANOSLEEP) $(LIB_EACCESS)
+test_wctype_h_c___LDADD = $(LDADD) $(LIBINTL) $(LIB_NANOSLEEP) $(EUIDACCESS_LIBGEN)
 endif

@@ -15,5 +15,5 @@ if ANSICXX
 TESTS += test-unistd-c++
 check_PROGRAMS += test-unistd-c++
 test_unistd_c___SOURCES = test-unistd-c++.cc
-test_unistd_c___LDADD = $(LDADD) $(LIBINTL) $(CLOCK_TIME_LIB) $(LIB_EACCESS) $(LIBSOCKET) $(LIB_GETLOGIN) $(LIB_GETRANDOM)
+test_unistd_c___LDADD = $(LDADD) $(LIBINTL) $(CLOCK_TIME_LIB) $(EUIDACCESS_LIBGEN) $(LIBSOCKET) $(LIB_GETLOGIN) $(LIB_GETRANDOM)
 endif

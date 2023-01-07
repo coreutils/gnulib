@@ -40,7 +40,7 @@ Include:
 <unistd.h>
 
 Link:
-$(LIB_EACCESS)
+$(EUIDACCESS_LIBGEN)
 
 License:
 GPL

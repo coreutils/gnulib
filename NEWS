@@ -74,6 +74,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2023-01-07  euidaccess      Link with $(EUIDACCESS_LIBGEN) instead of
+                            $(LIB_EACCESS).
+
 2023-01-07  duplocale       Link with $(DUPLOCALE_LIB) instead of
                             $(LIB_DUPLOCALE).
 

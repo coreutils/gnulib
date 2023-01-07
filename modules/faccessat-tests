@@ -12,4 +12,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-faccessat
 check_PROGRAMS += test-faccessat
-test_faccessat_LDADD = $(LDADD) $(LIB_EACCESS) @LIBINTL@
+test_faccessat_LDADD = $(LDADD) $(EUIDACCESS_LIBGEN) @LIBINTL@
