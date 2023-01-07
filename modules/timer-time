@@ -18,7 +18,7 @@ Include:
 <time.h>
 
 Link:
-$(LIB_TIMER_TIME)
+$(TIMER_TIME_LIB)
 
 License:
 LGPLv2+
