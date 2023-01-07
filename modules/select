@@ -27,7 +27,7 @@ Include:
 <sys/select.h>
 
 Link:
-$(LIB_SELECT)
+$(SELECT_LIB)
 
 License:
 LGPLv2+

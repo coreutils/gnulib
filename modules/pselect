@@ -26,7 +26,7 @@ Include:
 <sys/select.h>
 
 Link:
-$(LIB_SELECT)
+$(SELECT_LIB)
 $(PTHREAD_SIGMASK_LIB)
 
 License:

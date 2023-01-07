@@ -1,4 +1,4 @@
-# select.m4 serial 13
+# select.m4 serial 14
 dnl Copyright (C) 2009-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -91,7 +91,7 @@ changequote([,])dnl
   fi
 
   dnl Determine the needed libraries.
-  LIB_SELECT="$LIBSOCKET"
+  SELECT_LIB="$LIBSOCKET"
   if test $REPLACE_SELECT = 1; then
     case "$host_os" in
       mingw*)
@@ -109,9 +109,12 @@ main ()
   return 0;
 }]])],
           [],
-          [LIB_SELECT="$LIB_SELECT -luser32"])
+          [SELECT_LIB="$SELECT_LIB -luser32"])
         ;;
     esac
   fi
+  AC_SUBST([SELECT_LIB])
+  dnl For backward compatibility.
+  LIB_SELECT="$LIB_SELECT"
   AC_SUBST([LIB_SELECT])
 ])
