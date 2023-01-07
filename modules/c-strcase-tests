@@ -19,5 +19,5 @@ Makefile.am:
 TESTS += test-c-strcase.sh
 TESTS_ENVIRONMENT += LOCALE_FR='@LOCALE_FR@' LOCALE_TR_UTF8='@LOCALE_TR_UTF8@'
 check_PROGRAMS += test-c-strcasecmp test-c-strncasecmp
-test_c_strcasecmp_LDADD = $(LDADD) $(LIB_SETLOCALE)
-test_c_strncasecmp_LDADD = $(LDADD) $(LIB_SETLOCALE)
+test_c_strcasecmp_LDADD = $(LDADD) $(SETLOCALE_LIB)
+test_c_strncasecmp_LDADD = $(LDADD) $(SETLOCALE_LIB)

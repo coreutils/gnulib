@@ -10,4 +10,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-strfmon_l
 check_PROGRAMS += test-strfmon_l
-test_strfmon_l_LDADD = $(LDADD) $(LIB_SETLOCALE)
+test_strfmon_l_LDADD = $(LDADD) $(SETLOCALE_LIB)

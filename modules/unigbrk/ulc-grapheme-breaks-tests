@@ -16,4 +16,4 @@ TESTS += unigbrk/test-ulc-grapheme-breaks.sh
 TESTS_ENVIRONMENT += LOCALE_AR='@LOCALE_AR@'
 check_PROGRAMS += test-ulc-grapheme-breaks
 test_ulc_grapheme_breaks_SOURCES = unigbrk/test-ulc-grapheme-breaks.c
-test_ulc_grapheme_breaks_LDADD = $(LDADD) $(LIB_SETLOCALE) $(LIBUNISTRING) @LIBICONV@
+test_ulc_grapheme_breaks_LDADD = $(LDADD) $(SETLOCALE_LIB) $(LIBUNISTRING) @LIBICONV@

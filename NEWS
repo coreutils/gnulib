@@ -74,6 +74,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2023-01-07  setlocale       Link with $(SETLOCALE_LIB) instead of
+                            $(LIB_SETLOCALE).
+
 2023-01-07  select          Link with $(SELECT_LIB) instead of $(LIB_SELECT).
 
 2023-01-07  sched_yield     Link with $(SCHED_YIELD_LIB) instead of

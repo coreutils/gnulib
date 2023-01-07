@@ -27,5 +27,5 @@ TESTS_ENVIRONMENT += \
   LOCALE_JA='@LOCALE_JA@' \
   LOCALE_ZH_CN='@LOCALE_ZH_CN@'
 check_PROGRAMS += test-setlocale1 test-setlocale2
-test_setlocale1_LDADD = $(LDADD) @LIB_SETLOCALE@
-test_setlocale2_LDADD = $(LDADD) @LIB_SETLOCALE@
+test_setlocale1_LDADD = $(LDADD) @SETLOCALE_LIB@
+test_setlocale2_LDADD = $(LDADD) @SETLOCALE_LIB@

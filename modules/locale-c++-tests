@@ -16,5 +16,5 @@ if ANSICXX
 TESTS += test-locale-c++
 check_PROGRAMS += test-locale-c++
 test_locale_c___SOURCES = test-locale-c++.cc test-locale-c++2.cc
-test_locale_c___LDADD = $(LDADD) $(LIB_SETLOCALE)
+test_locale_c___LDADD = $(LDADD) $(SETLOCALE_LIB)
 endif

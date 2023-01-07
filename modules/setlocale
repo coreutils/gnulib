@@ -27,7 +27,7 @@ Include:
 <locale.h>
 
 Link:
-$(LIB_SETLOCALE)
+$(SETLOCALE_LIB)
 
 License:
 LGPL

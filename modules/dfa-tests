@@ -19,4 +19,4 @@ TESTS += \
   test-dfa-match.sh
 
 check_PROGRAMS += test-dfa-match-aux
-test_dfa_match_aux_LDADD = $(LDADD) $(LIB_SETLOCALE) @LIBINTL@ $(MBRTOWC_LIB)
+test_dfa_match_aux_LDADD = $(LDADD) $(SETLOCALE_LIB) @LIBINTL@ $(MBRTOWC_LIB)

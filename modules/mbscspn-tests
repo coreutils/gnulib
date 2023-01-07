@@ -15,4 +15,4 @@ Makefile.am:
 TESTS += test-mbscspn.sh
 TESTS_ENVIRONMENT += LOCALE_FR_UTF8='@LOCALE_FR_UTF8@'
 check_PROGRAMS += test-mbscspn
-test_mbscspn_LDADD = $(LDADD) $(LIBUNISTRING) $(LIB_SETLOCALE) $(MBRTOWC_LIB)
+test_mbscspn_LDADD = $(LDADD) $(LIBUNISTRING) $(SETLOCALE_LIB) $(MBRTOWC_LIB)

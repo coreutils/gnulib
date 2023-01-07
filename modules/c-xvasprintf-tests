@@ -16,4 +16,4 @@ Makefile.am:
 TESTS += test-c-xvasprintf.sh
 TESTS_ENVIRONMENT += LOCALE_FR='@LOCALE_FR@'
 check_PROGRAMS += test-c-xvasprintf
-test_c_xvasprintf_LDADD = $(LDADD) $(LIB_SETLOCALE) @LIBINTL@
+test_c_xvasprintf_LDADD = $(LDADD) $(SETLOCALE_LIB) @LIBINTL@

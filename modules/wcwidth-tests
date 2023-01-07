@@ -12,4 +12,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-wcwidth
 check_PROGRAMS += test-wcwidth
-test_wcwidth_LDADD = $(LDADD) $(LIB_SETLOCALE) $(LIBUNISTRING)
+test_wcwidth_LDADD = $(LDADD) $(SETLOCALE_LIB) $(LIBUNISTRING)

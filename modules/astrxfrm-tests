@@ -9,4 +9,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-astrxfrm
 check_PROGRAMS += test-astrxfrm
-test_astrxfrm_LDADD = $(LDADD) $(LIB_SETLOCALE)
+test_astrxfrm_LDADD = $(LDADD) $(SETLOCALE_LIB)

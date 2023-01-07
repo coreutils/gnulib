@@ -15,4 +15,4 @@ Makefile.am:
 TESTS += test-mbsrchr.sh
 TESTS_ENVIRONMENT += LOCALE_ZH_CN='@LOCALE_ZH_CN@'
 check_PROGRAMS += test-mbsrchr
-test_mbsrchr_LDADD = $(LDADD) $(LIBUNISTRING) $(LIB_SETLOCALE) $(MBRTOWC_LIB)
+test_mbsrchr_LDADD = $(LDADD) $(LIBUNISTRING) $(SETLOCALE_LIB) $(MBRTOWC_LIB)

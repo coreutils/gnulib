@@ -15,4 +15,4 @@ Makefile.am:
 TESTS += test-c-dtoastr.sh
 TESTS_ENVIRONMENT += LOCALE_FR='@LOCALE_FR@'
 check_PROGRAMS += test-c-dtoastr
-test_c_dtoastr_LDADD = $(LDADD) $(LIB_SETLOCALE)
+test_c_dtoastr_LDADD = $(LDADD) $(SETLOCALE_LIB)

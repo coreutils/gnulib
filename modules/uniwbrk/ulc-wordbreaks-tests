@@ -16,5 +16,5 @@ TESTS += uniwbrk/test-ulc-wordbreaks.sh
 TESTS_ENVIRONMENT += LOCALE_FR='@LOCALE_FR@'
 check_PROGRAMS += test-ulc-wordbreaks
 test_ulc_wordbreaks_SOURCES = uniwbrk/test-ulc-wordbreaks.c
-test_ulc_wordbreaks_LDADD = $(LDADD) $(LIB_SETLOCALE) $(LIBUNISTRING) @LIBICONV@
+test_ulc_wordbreaks_LDADD = $(LDADD) $(SETLOCALE_LIB) $(LIBUNISTRING) @LIBICONV@
 

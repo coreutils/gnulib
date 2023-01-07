@@ -15,4 +15,4 @@ Makefile.am:
 TESTS += test-c-vasprintf.sh
 TESTS_ENVIRONMENT += LOCALE_FR='@LOCALE_FR@'
 check_PROGRAMS += test-c-vasprintf
-test_c_vasprintf_LDADD = $(LDADD) $(LIB_SETLOCALE)
+test_c_vasprintf_LDADD = $(LDADD) $(SETLOCALE_LIB)

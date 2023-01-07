@@ -23,4 +23,4 @@ TESTS += unicase/test-locale-language.sh
 TESTS_ENVIRONMENT += LOCALE_FR='@LOCALE_FR@' LOCALE_FR_UTF8='@LOCALE_FR_UTF8@' LOCALE_JA='@LOCALE_JA@' LOCALE_TR_UTF8='@LOCALE_TR_UTF8@' LOCALE_ZH_CN='@LOCALE_ZH_CN@'
 check_PROGRAMS += test-locale-language
 test_locale_language_SOURCES = unicase/test-locale-language.c
-test_locale_language_LDADD = $(LDADD) $(LIB_SETLOCALE) $(LIBUNISTRING) @INTL_MACOSX_LIBS@ $(LIBTHREAD)
+test_locale_language_LDADD = $(LDADD) $(SETLOCALE_LIB) $(LIBUNISTRING) @INTL_MACOSX_LIBS@ $(LIBTHREAD)

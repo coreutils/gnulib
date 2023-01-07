@@ -18,4 +18,4 @@ Makefile.am:
 TESTS += test-btoc32-1.sh test-btoc32-2.sh
 TESTS_ENVIRONMENT += LOCALE_FR='@LOCALE_FR@' LOCALE_FR_UTF8='@LOCALE_FR_UTF8@'
 check_PROGRAMS += test-btoc32
-test_btoc32_LDADD = $(LDADD) $(LIB_SETLOCALE)
+test_btoc32_LDADD = $(LDADD) $(SETLOCALE_LIB)

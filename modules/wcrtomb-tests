@@ -39,4 +39,4 @@ TESTS_ENVIRONMENT += \
   LOCALE_JA='@LOCALE_JA@' \
   LOCALE_ZH_CN='@LOCALE_ZH_CN@'
 check_PROGRAMS += test-wcrtomb test-wcrtomb-w32
-test_wcrtomb_LDADD = $(LDADD) $(LIB_SETLOCALE)
+test_wcrtomb_LDADD = $(LDADD) $(SETLOCALE_LIB)

@@ -15,4 +15,4 @@ Makefile.am:
 TESTS += test-c-vsnprintf.sh
 TESTS_ENVIRONMENT += LOCALE_FR='@LOCALE_FR@'
 check_PROGRAMS += test-c-vsnprintf
-test_c_vsnprintf_LDADD = $(LDADD) $(LIB_SETLOCALE)
+test_c_vsnprintf_LDADD = $(LDADD) $(SETLOCALE_LIB)
