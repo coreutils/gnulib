@@ -26,7 +26,7 @@ Include:
 <locale.h>
 
 Link:
-$(LIB_DUPLOCALE)
+$(DUPLOCALE_LIB)
 
 License:
 LGPL

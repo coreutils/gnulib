@@ -74,6 +74,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2023-01-07  duplocale       Link with $(DUPLOCALE_LIB) instead of
+                            $(LIB_DUPLOCALE).
+
 2023-01-07  clock_time      Link with $(CLOCK_TIME_LIB) instead of
                             $(LIB_CLOCK_GETTIME).
 
