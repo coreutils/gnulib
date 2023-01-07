@@ -1,4 +1,4 @@
-# gethrxtime.m4 serial 14
+# gethrxtime.m4 serial 15
 dnl Copyright (C) 2005-2006, 2008-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -12,7 +12,7 @@ AC_DEFUN([gl_GETHRXTIME],
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   AC_REQUIRE([gl_XTIME])
   AC_CHECK_DECLS([gethrtime], [], [], [[#include <time.h>]])
-  LIB_GETHRXTIME=
+  GETHRXTIME_LIB=
   if test $ac_cv_have_decl_gethrtime = no \
      || test $gl_cv_arithmetic_hrtime_t = no; then
     dnl Find libraries needed to link lib/gethrxtime.c.
@@ -34,10 +34,13 @@ AC_DEFUN([gl_GETHRXTIME],
           [gl_cv_have_clock_gettime_macro=yes],
           [gl_cv_have_clock_gettime_macro=no])])
       if test $gl_cv_have_clock_gettime_macro = yes; then
-        LIB_GETHRXTIME=$CLOCK_TIME_LIB
+        GETHRXTIME_LIB=$CLOCK_TIME_LIB
       fi
     fi
   fi
+  AC_SUBST([GETHRXTIME_LIB])
+  dnl For backward compatibility.
+  LIB_GETHRXTIME="$GETHRXTIME_LIB"
   AC_SUBST([LIB_GETHRXTIME])
 ])
 
