@@ -74,6 +74,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2023-01-07  sched_yield     Link with $(SCHED_YIELD_LIB) instead of
+                            $(LIB_SCHED_YIELD).
+
 2023-01-07  pthread_sigmask  Link with $(PTHREAD_SIGMASK_LIB) instead of
                              $(LIB_PTHREAD_SIGMASK).
 

@@ -17,4 +17,4 @@ AC_REQUIRE([gl_SEMAPHORE])
 Makefile.am:
 TESTS += test-pthread-spin
 check_PROGRAMS += test-pthread-spin
-test_pthread_spin_LDADD = $(LDADD) @LIBPMULTITHREAD@ @LIB_SCHED_YIELD@ @LIB_SEMAPHORE@
+test_pthread_spin_LDADD = $(LDADD) @LIBPMULTITHREAD@ @SCHED_YIELD_LIB@ @LIB_SEMAPHORE@

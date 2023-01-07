@@ -13,4 +13,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-pthread-rwlock
 check_PROGRAMS += test-pthread-rwlock
-test_pthread_rwlock_LDADD = $(LDADD) @LIBPMULTITHREAD@ @LIB_SCHED_YIELD@ @LIB_SEMAPHORE@
+test_pthread_rwlock_LDADD = $(LDADD) @LIBPMULTITHREAD@ @SCHED_YIELD_LIB@ @LIB_SEMAPHORE@

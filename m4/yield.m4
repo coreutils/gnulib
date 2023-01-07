@@ -1,4 +1,4 @@
-# yield.m4 serial 4
+# yield.m4 serial 5
 dnl Copyright (C) 2005-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -10,7 +10,7 @@ AC_DEFUN([gl_YIELD],
   AC_REQUIRE([gl_THREADLIB])
 
   if test $gl_threads_api = posix; then
-    YIELD_LIB="$LIB_SCHED_YIELD"
+    YIELD_LIB="$SCHED_YIELD_LIB"
   else
     YIELD_LIB=
   fi

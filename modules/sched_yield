@@ -24,7 +24,7 @@ Include:
 <sched.h>
 
 Link:
-$(LIB_SCHED_YIELD)
+$(SCHED_YIELD_LIB)
 
 License:
 LGPLv2+
