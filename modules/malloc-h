@@ -24,10 +24,12 @@ malloc.h: malloc.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(WARN_ON_USE_H
 @NMD@	$(AM_V_GEN)$(MKDIR_P) '%reldir%'
 	$(gl_V_at)$(SED_HEADER_STDOUT) \
 	      -e 's|@''GUARD_PREFIX''@|${gl_include_guard_prefix}|g' \
+	      -e 's|@''INCLUDE_NEXT_AS_FIRST_DIRECTIVE''@|$(INCLUDE_NEXT_AS_FIRST_DIRECTIVE)|g' \
 	      -e 's|@''HAVE_MALLOC_H''@|$(HAVE_MALLOC_H)|g' \
 	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
 	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
 	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
+	      -e 's|@''NEXT_AS_FIRST_DIRECTIVE_MALLOC_H''@|$(NEXT_AS_FIRST_DIRECTIVE_MALLOC_H)|g' \
 	      -e 's|@''NEXT_MALLOC_H''@|$(NEXT_MALLOC_H)|g' \
 	      -e 's/@''GNULIB_MEMALIGN''@/$(GNULIB_MEMALIGN)/g' \
 	      -e 's|@''HAVE_MEMALIGN''@|$(HAVE_MEMALIGN)|g' \
