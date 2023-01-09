@@ -14,17 +14,34 @@
    You should have received a copy of the GNU Lesser General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
-#ifndef _@GUARD_PREFIX@_MALLOC_H
-
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
 #endif
 @PRAGMA_COLUMNS@
 
+#if defined _GL_ALREADY_INCLUDING_MALLOC_H
+/* Special invocation convention:
+   - On Android we have a sequence of nested includes
+       <malloc.h> -> <stdio.h> -> <sys/stat.h> -> <time.h> -> <sys/time.h> ->
+       <sys/select.h> -> <signal.h> -> <pthread.h> -> <stdlib.h> -> "malloc.h"
+     In this situation, in C++ mode, the declaration of memalign might be used
+     before it actually occurs.  */
+
+#@INCLUDE_NEXT@ @NEXT_MALLOC_H@
+
+#else
+/* Normal invocation convention.  */
+
+#ifndef _@GUARD_PREFIX@_MALLOC_H
+
+#define _GL_ALREADY_INCLUDING_MALLOC_H
+
 /* The include_next requires a split double-inclusion guard.  */
 #if @HAVE_MALLOC_H@
 # @INCLUDE_NEXT@ @NEXT_MALLOC_H@
 #endif
+
+#undef _GL_ALREADY_INCLUDING_MALLOC_H
 
 #ifndef _@GUARD_PREFIX@_MALLOC_H
 #define _@GUARD_PREFIX@_MALLOC_H
@@ -83,3 +100,4 @@ _GL_WARN_ON_USE (memalign, "memalign is not portable - "
 
 #endif /* _@GUARD_PREFIX@_MALLOC_H */
 #endif /* _@GUARD_PREFIX@_MALLOC_H */
+#endif
