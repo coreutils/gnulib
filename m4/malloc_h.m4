@@ -1,4 +1,4 @@
-# malloc_h.m4 serial 4
+# malloc_h.m4 serial 5
 dnl Copyright (C) 2020-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -51,6 +51,8 @@ AC_DEFUN([gl_MALLOC_H_REQUIRE_DEFAULTS],
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_MEMALIGN])
   ])
   m4_require(GL_MODULE_INDICATOR_PREFIX[_MALLOC_H_MODULE_INDICATOR_DEFAULTS])
+  dnl Make sure the shell variable for GNULIB_FREE_POSIX is initialized.
+  gl_STDLIB_H_REQUIRE_DEFAULTS
   AC_REQUIRE([gl_MALLOC_H_DEFAULTS])
 ])
 

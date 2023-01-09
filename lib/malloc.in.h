@@ -46,13 +46,58 @@
 #ifndef _@GUARD_PREFIX@_MALLOC_H
 #define _@GUARD_PREFIX@_MALLOC_H
 
-/* Solaris declares memalign() in <stdlib.h>, not in <malloc.h>.
-   Also get size_t and free().  */
-#include <stdlib.h>
+/* Solaris declares memalign() in <stdlib.h>, not in <malloc.h>.  */
+#if defined __sun || defined __hpux
+# include <stdlib.h>
+#endif
+
+/* Get size_t.  */
+#include <stddef.h>
 
 /* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
 
 /* The definition of _GL_WARN_ON_USE is copied here.  */
+
+
+/* Make _GL_ATTRIBUTE_DEALLOC_FREE work, even though <stdlib.h> may not have
+   been included yet.  */
+#if @GNULIB_FREE_POSIX@
+# if (@REPLACE_FREE@ && !defined free \
+      && !(defined __cplusplus && defined GNULIB_NAMESPACE))
+/* We can't do '#define free rpl_free' here.  */
+_GL_EXTERN_C void rpl_free (void *);
+#  undef _GL_ATTRIBUTE_DEALLOC_FREE
+#  define _GL_ATTRIBUTE_DEALLOC_FREE _GL_ATTRIBUTE_DEALLOC (rpl_free, 1)
+# else
+#  if defined _MSC_VER && !defined free
+_GL_EXTERN_C
+#   if defined _DLL
+     __declspec (dllimport)
+#   endif
+     void __cdecl free (void *);
+#  else
+#   if defined __cplusplus && (__GLIBC__ + (__GLIBC_MINOR__ >= 14) > 2)
+_GL_EXTERN_C void free (void *) throw ();
+#   else
+_GL_EXTERN_C void free (void *);
+#   endif
+#  endif
+# endif
+#else
+# if defined _MSC_VER && !defined free
+_GL_EXTERN_C
+#   if defined _DLL
+     __declspec (dllimport)
+#   endif
+     void __cdecl free (void *);
+# else
+#  if defined __cplusplus && (__GLIBC__ + (__GLIBC_MINOR__ >= 14) > 2)
+_GL_EXTERN_C void free (void *) throw ();
+#  else
+_GL_EXTERN_C void free (void *);
+#  endif
+# endif
+#endif
 
 
 /* Declare overridden functions.  */
