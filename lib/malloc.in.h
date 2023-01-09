@@ -27,7 +27,7 @@
      In this situation, in C++ mode, the declaration of memalign might be used
      before it actually occurs.  */
 
-#@INCLUDE_NEXT@ @NEXT_MALLOC_H@
+#@INCLUDE_NEXT_AS_FIRST_DIRECTIVE@ @NEXT_AS_FIRST_DIRECTIVE_MALLOC_H@
 
 #else
 /* Normal invocation convention.  */
@@ -38,7 +38,7 @@
 
 /* The include_next requires a split double-inclusion guard.  */
 #if @HAVE_MALLOC_H@
-# @INCLUDE_NEXT@ @NEXT_MALLOC_H@
+# @INCLUDE_NEXT_AS_FIRST_DIRECTIVE@ @NEXT_AS_FIRST_DIRECTIVE_MALLOC_H@
 #endif
 
 #undef _GL_ALREADY_INCLUDING_MALLOC_H
