@@ -28,7 +28,7 @@
      In this situation, the functions are not yet declared, therefore we cannot
      provide the C++ aliases.  */
 
-#@INCLUDE_NEXT@ @NEXT_THREADS_H@
+#@INCLUDE_NEXT_AS_FIRST_DIRECTIVE@ @NEXT_AS_FIRST_DIRECTIVE_THREADS_H@
 
 #else
 /* Normal invocation convention.  */
@@ -39,7 +39,7 @@
 
 /* The include_next requires a split double-inclusion guard.  */
 #if @HAVE_THREADS_H@
-# @INCLUDE_NEXT@ @NEXT_THREADS_H@
+# @INCLUDE_NEXT_AS_FIRST_DIRECTIVE@ @NEXT_AS_FIRST_DIRECTIVE_THREADS_H@
 #endif
 
 #undef _GL_ALREADY_INCLUDING_THREADS_H
