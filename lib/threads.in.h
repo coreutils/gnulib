@@ -20,12 +20,29 @@
 #endif
 @PRAGMA_COLUMNS@
 
+#if defined _GL_ALREADY_INCLUDING_THREADS_H
+/* Special invocation convention:
+   - On Android we have a sequence of nested includes
+     <threads.h> -> <android/legacy_threads_inlines.h>
+     -> <bits/threads_inlines.h> -> "threads.h"
+     In this situation, the functions are not yet declared, therefore we cannot
+     provide the C++ aliases.  */
+
+#@INCLUDE_NEXT@ @NEXT_THREADS_H@
+
+#else
+/* Normal invocation convention.  */
+
 #ifndef _@GUARD_PREFIX@_THREADS_H
+
+#define _GL_ALREADY_INCLUDING_THREADS_H
 
 /* The include_next requires a split double-inclusion guard.  */
 #if @HAVE_THREADS_H@
 # @INCLUDE_NEXT@ @NEXT_THREADS_H@
 #endif
+
+#undef _GL_ALREADY_INCLUDING_THREADS_H
 
 #ifndef _@GUARD_PREFIX@_THREADS_H
 #define _@GUARD_PREFIX@_THREADS_H
@@ -662,3 +679,4 @@ _GL_WARN_ON_USE (tss_delete, "tss_delete is unportable - "
 
 #endif /* _@GUARD_PREFIX@_THREADS_H */
 #endif /* _@GUARD_PREFIX@_THREADS_H */
+#endif
