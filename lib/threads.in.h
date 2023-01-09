@@ -1,6 +1,6 @@
 /* An ISO C 11 compatible <threads.h>.
 
-   Copyright (C) 2019-2022 Free Software Foundation, Inc.
+   Copyright (C) 2019-2023 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as
@@ -24,7 +24,7 @@
 
 /* The include_next requires a split double-inclusion guard.  */
 #if @HAVE_THREADS_H@
-# @INCLUDE_NEXT@ @NEXT_THREADS_H@
+# @INCLUDE_NEXT_AS_FIRST_DIRECTIVE@ @NEXT_AS_FIRST_DIRECTIVE_THREADS_H@
 #endif
 
 #ifndef _@GUARD_PREFIX@_THREADS_H
