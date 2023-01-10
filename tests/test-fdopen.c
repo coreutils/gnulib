@@ -33,9 +33,14 @@ main (void)
      failure, since the behavior is not well-defined on invalid file
      descriptors, so try fdopen 1000 times and if that's not enough to
      fail due to EMFILE, so be it.  */
+  #if defined __ANDROID__ /* fdsan */
+    #define COUNT 1
+  #else
+    #define COUNT 1000
+  #endif
 
   int i;
-  for (i = 0; i < 1000; i++)
+  for (i = 0; i < COUNT; i++)
     {
       errno = 0;
       if (! fdopen (STDOUT_FILENO, "w"))

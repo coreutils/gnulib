@@ -148,6 +148,7 @@ main (void)
 
   /* Test that fflush() sets errno if someone else closes the stream
      fd behind the back of stdio.  */
+  #if !defined __ANDROID__ /* fdsan */
   {
     FILE *fp = fopen ("test-fflush.txt", "w");
     ASSERT (fp != NULL);
@@ -158,6 +159,7 @@ main (void)
     ASSERT (errno == EBADF);
     fclose (fp);
   }
+  #endif
 
   /* Test that fflush() sets errno if the stream was constructed with
      an invalid file descriptor.  */

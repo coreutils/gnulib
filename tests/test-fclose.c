@@ -75,6 +75,7 @@ main (int argc, char **argv)
 
   /* Test that fclose() sets errno if someone else closes the stream
      fd behind the back of stdio.  */
+  #if !defined __ANDROID__ /* fdsan */
   {
     FILE *fp = fdopen (fd, "w+");
     ASSERT (fp != NULL);
@@ -83,6 +84,7 @@ main (int argc, char **argv)
     ASSERT (fclose (fp) == EOF);
     ASSERT (errno == EBADF);
   }
+  #endif
 
   /* Test that fclose() sets errno if the stream was constructed with
      an invalid file descriptor.  */

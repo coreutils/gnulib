@@ -54,6 +54,7 @@ main (int argc, char **argv)
 
   /* Test that fgetc() sets errno if someone else closes the stream
      fd behind the back of stdio.  */
+  #if !defined __ANDROID__ /* fdsan */
   {
     FILE *fp = fopen (filename, "r");
     ASSERT (fp != NULL);
@@ -64,6 +65,7 @@ main (int argc, char **argv)
     ASSERT (ferror (fp));
     fclose (fp);
   }
+  #endif
 
   /* Test that fgetc() sets errno if the stream was constructed with
      an invalid file descriptor.  */

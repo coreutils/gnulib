@@ -33,11 +33,13 @@ main (int argc, char **argv)
   {
     FILE *fp = fopen (filename, "r");
     ASSERT (fp != NULL);
+    #if !defined __ANDROID__ /* fdsan */
     setvbuf (fp, NULL, _IONBF, 0);
     ASSERT (close (fileno (fp)) == 0);
     errno = 0;
     ASSERT (ftello (fp) == (off_t)-1);
     ASSERT (errno == EBADF);
+    #endif
     fclose (fp);
   }
 
