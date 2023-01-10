@@ -1,4 +1,4 @@
-# serial 3
+# serial 4
 # See if we need to provide renameat replacement.
 
 dnl Copyright (C) 2009-2023 Free Software Foundation, Inc.
@@ -15,11 +15,12 @@ AC_DEFUN([gl_FUNC_RENAMEAT],
   AC_REQUIRE([gl_STDIO_H_DEFAULTS])
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   AC_CHECK_HEADERS([linux/fs.h])
-  AC_CHECK_FUNCS_ONCE([renameat renameat2])
+  AC_CHECK_FUNCS_ONCE([renameat])
   if test $ac_cv_func_renameat = no; then
     HAVE_RENAMEAT=0
   elif test $REPLACE_RENAME = 1; then
     dnl Solaris 9 and 10 have the same bugs in renameat as in rename.
     REPLACE_RENAMEAT=1
   fi
+  gl_CHECK_FUNCS_ANDROID([renameat2], [[#include <stdio.h>]])
 ])
