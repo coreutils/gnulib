@@ -23,7 +23,7 @@
 #include <string.h>
 
 #include "signature.h"
-SIGNATURE_CHECK (memset_explicit, void, (void *, int, size_t));
+SIGNATURE_CHECK (memset_explicit, void *, (void *, int, size_t));
 
 #include <limits.h>
 #include <stdio.h>
