@@ -70,6 +70,12 @@ extern
 #  include <unistd.h>
 #  include <fcntl.h>
 
+/* Get PATH_MAX.  */
+#  include "pathmax.h"
+#  ifndef PATH_MAX
+#   define PATH_MAX 4096
+#  endif
+
 #  include "glthread/lock.h"
 
 # endif
@@ -116,14 +122,22 @@ static long file_length;
 static void
 do_init_mmap_file (void)
 {
-  char filename[100];
-  sprintf (filename, "%s/glimmdata-%d-%ld", "/tmp", getpid (), random ());
+  /* Use TMPDIR, except if it is too long.  */
+  const char *tmpdir = getenv ("TMPDIR");
+  if (tmpdir == NULL || strlen (tmpdir) > PATH_MAX)
+    tmpdir = "/tmp";
+  /* Now strlen (tmpdir) <= PATH_MAX.  */
+
+  char filename[PATH_MAX + 1 + 41 + 1];
+  sprintf (filename, "%s/glimmdata-%d-%ld", tmpdir, getpid (), random ());
+
   file_fd = open (filename, O_CREAT | O_TRUNC | O_RDWR | O_CLOEXEC, 0700);
   if (file_fd < 0)
     {
       fprintf (stderr, "glimm: Cannot open %s!\n", filename);
       abort ();
     }
+
   /* Remove the file from the file system as soon as possible, to make
      sure there is no leftover after this process terminates or crashes.  */
   unlink (filename);
