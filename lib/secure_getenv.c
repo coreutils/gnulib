@@ -30,7 +30,7 @@ secure_getenv (char const *name)
 {
 #if HAVE___SECURE_GETENV /* glibc */
   return __secure_getenv (name);
-#elif HAVE_ISSETUGID /* OS X, FreeBSD, NetBSD, OpenBSD */
+#elif HAVE_ISSETUGID /* musl, OS X, FreeBSD, NetBSD, OpenBSD, Solaris, Minix */
   if (issetugid ())
     return NULL;
   return getenv (name);
