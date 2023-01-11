@@ -69,7 +69,7 @@ atomic_compare_and_swap_ptr (uintptr_t volatile *vp,
 # if (((__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 1)) \
        && !defined __sparc__) \
       || __clang_major__ >= 3) \
-     && !defined __ibmxl__
+     && !defined __ibmxl__ && !defined __ANDROID__
 /* Use GCC built-ins (available in GCC >= 4.1, except on SPARC, and
    clang >= 3.0).
    Documentation:
