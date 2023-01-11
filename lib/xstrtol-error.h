@@ -28,7 +28,7 @@
    ERR is the error code returned by one of the xstrto* functions.
 
    Use OPT_IDX to decide whether to print the short option string "C"
-   or "-C" or a long option string derived from LONG_OPTION.  OPT_IDX
+   or "-C" or a long option string derived from LONG_OPTIONS.  OPT_IDX
    is -2 if the short option "C" was used, without any leading "-"; it
    is -1 if the short option "-C" was used; otherwise it is an index
    into LONG_OPTIONS, which should have a name preceded by two '-'
@@ -38,8 +38,9 @@
 
    After reporting an error, exit with a failure status.  */
 
-_Noreturn void xstrtol_fatal (enum strtol_error,
-                              int, char, struct option const *,
-                              char const *);
+_Noreturn void xstrtol_fatal (enum strtol_error /* err */,
+                              int /* opt_idx */, char /* c */,
+                              struct option const * /* long_options */,
+                              char const * /* arg */);
 
 #endif /* not XSTRTOL_ERROR_H_ */
