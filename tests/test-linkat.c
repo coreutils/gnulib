@@ -138,6 +138,11 @@ main (void)
   dfd1 = AT_FDCWD;
   ASSERT (test_link (do_link, false) == result);
 
+  /* Skip the rest of the test if the file system does not support hard links
+     and symlinks.  */
+  if (result)
+    return result;
+
   /* Create locations to manipulate.  */
   ASSERT (mkdir (BASE "sub1", 0700) == 0);
   ASSERT (mkdir (BASE "sub2", 0700) == 0);

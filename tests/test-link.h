@@ -53,11 +53,16 @@ test_link (int (*func) (char const *, char const *), bool print)
   if (ret == -1)
     {
       /* If the device does not support hard links, errno is
-         EPERM on Linux, EOPNOTSUPP on FreeBSD.  */
+         EPERM on Linux,
+         EOPNOTSUPP on FreeBSD,
+         EACCES on Android within Termux.  */
       switch (errno)
         {
         case EPERM:
         case EOPNOTSUPP:
+        #if defined __ANDROID__
+        case EACCES:
+        #endif
           if (print)
             fputs ("skipping test: "
                    "hard links not supported on this file system\n",
