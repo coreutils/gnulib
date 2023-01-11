@@ -1,5 +1,5 @@
 /* POSIX spin locks.
-   Copyright (C) 2010-2022 Free Software Foundation, Inc.
+   Copyright (C) 2010-2023 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as
@@ -164,7 +164,8 @@ pthread_spin_destroy (pthread_spinlock_t *lock)
   return 0;
 }
 
-# elif (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 1) \
+# elif (((__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 1)) \
+         && !defined __ANDROID__) \
         || __clang_major__ >= 3) \
        && !defined __ibmxl__
 /* Use GCC built-ins (available in GCC >= 4.1 and clang >= 3.0).

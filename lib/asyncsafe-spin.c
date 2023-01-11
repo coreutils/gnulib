@@ -1,5 +1,5 @@
 /* Spin locks for communication between threads and signal handlers.
-   Copyright (C) 2020-2022 Free Software Foundation, Inc.
+   Copyright (C) 2020-2023 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as
@@ -136,7 +136,7 @@ do_unlock (asyncsafe_spinlock_t *lock)
 #   endif
 
 #  elif (((__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 1)) \
-          && !defined __sparc__) \
+          && !defined __sparc__ && !defined __ANDROID__) \
          || __clang_major__ >= 3) \
         && !defined __ibmxl__
 /* Use GCC built-ins (available in GCC >= 4.1, except on SPARC, and
