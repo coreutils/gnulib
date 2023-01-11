@@ -40,16 +40,16 @@ test_link (int (*func) (char const *, char const *), bool print)
      file systems, but there, st_nlink and st_ino are reliable.  */
   ret = func (BASE "a", BASE "b");
   if (!ret)
-  {
-    struct stat st;
-    ASSERT (stat (BASE "b", &st) == 0);
-    if (st.st_ino && st.st_nlink != 2)
-      {
-        ASSERT (unlink (BASE "b") == 0);
-        errno = EPERM;
-        ret = -1;
-      }
-  }
+    {
+      struct stat st;
+      ASSERT (stat (BASE "b", &st) == 0);
+      if (st.st_ino && st.st_nlink != 2)
+        {
+          ASSERT (unlink (BASE "b") == 0);
+          errno = EPERM;
+          ret = -1;
+        }
+    }
   if (ret == -1)
     {
       /* If the device does not support hard links, errno is
