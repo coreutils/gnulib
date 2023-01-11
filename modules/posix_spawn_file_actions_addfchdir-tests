@@ -11,6 +11,7 @@ posix_spawn_file_actions_destroy
 posix_spawnp-tests
 stdbool
 findprog
+xvasprintf
 
 configure.ac:
 AC_EGREP_CPP([notposix], [[
