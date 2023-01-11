@@ -134,9 +134,9 @@ do_unlock (asyncsafe_spinlock_t *lock)
 #   endif
 
 #  elif (((__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 1)) \
-          && !defined __sparc__) \
+          && !defined __sparc__ && !defined __ANDROID__) \
          || __clang_major__ >= 3) \
-        && !defined __ibmxl__ && !defined __ANDROID__
+        && !defined __ibmxl__
 /* Use GCC built-ins (available in GCC >= 4.1, except on SPARC, and
    clang >= 3.0).
    Documentation:

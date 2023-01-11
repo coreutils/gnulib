@@ -162,9 +162,10 @@ pthread_spin_destroy (pthread_spinlock_t *lock)
   return 0;
 }
 
-# elif (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 1) \
+# elif (((__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 1)) \
+         && !defined __ANDROID__) \
         || __clang_major__ >= 3) \
-       && !defined __ibmxl__ && !defined __ANDROID__
+       && !defined __ibmxl__
 /* Use GCC built-ins (available in GCC >= 4.1 and clang >= 3.0).
    Documentation:
    <https://gcc.gnu.org/onlinedocs/gcc-4.1.2/gcc/Atomic-Builtins.html>  */
