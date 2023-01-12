@@ -109,6 +109,10 @@ main (int argc, char *argv[])
   error_print_progname = print_no_progname;
   test_zero ("hammer");
   test_zero ("boing %d%d%d is too large", 1, 2, 3);
+  #if 0
+  /* The documentation does not describe the output if the file name is NULL. */
+  test_zero_at_line (NULL, 42, "drummer too loud");
+  #endif
   test_zero_at_line ("d2/bar.c", 11, "bark too loud");
   /* Verify error_message_count.  */
   ASSERT (error_message_count == 11);
