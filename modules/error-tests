@@ -1,0 +1,12 @@
+Files:
+tests/test-error.sh
+tests/test-error.c
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-error.sh
+check_PROGRAMS += test-error
