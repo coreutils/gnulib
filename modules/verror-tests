@@ -1,0 +1,12 @@
+Files:
+tests/test-verror.sh
+tests/test-verror.c
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-verror.sh
+check_PROGRAMS += test-verror
