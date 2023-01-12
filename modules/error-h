@@ -1,0 +1,46 @@
+Description:
+Functions for error reporting.
+
+Files:
+lib/error.in.h
+m4/error_h.m4
+
+Depends-on:
+gen-header
+snippet/c++defs
+
+configure.ac:
+gl_ERROR_H
+gl_CONDITIONAL_HEADER([error.h])
+AC_PROG_MKDIR_P
+
+Makefile.am:
+BUILT_SOURCES += $(ERROR_H)
+
+# We need the following in order to create <error.h> when the system
+# doesn't have one that works.
+if GL_GENERATE_ERROR_H
+error.h: error.in.h $(top_builddir)/config.status $(CXXDEFS_H)
+@NMD@	$(AM_V_GEN)$(MKDIR_P) '%reldir%'
+	$(gl_V_at)$(SED_HEADER_STDOUT) \
+	      -e 's|@''HAVE_ERROR''@|$(HAVE_ERROR)|g' \
+	      -e 's|@''HAVE_ERROR_AT_LINE''@|$(HAVE_ERROR_AT_LINE)|g' \
+	      -e 's|@''REPLACE_ERROR''@|$(REPLACE_ERROR)|g' \
+	      -e 's|@''REPLACE_ERROR_AT_LINE''@|$(REPLACE_ERROR_AT_LINE)|g' \
+	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
+	      $(srcdir)/error.in.h > $@-t
+	$(AM_V_at)mv $@-t $@
+else
+error.h: $(top_builddir)/config.status
+	rm -f $@
+endif
+MOSTLYCLEANFILES += error.h error.h-t
+
+Include:
+"error.h"
+
+License:
+LGPLv2+
+
+Maintainer:
+all

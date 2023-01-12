@@ -18,7 +18,7 @@ Documentation:
 @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/error.3.html,,man error}.
 @end itemize
 
-Gnulib module: error
+Gnulib module: error-h
 
 Portability problems fixed by Gnulib:
 @itemize

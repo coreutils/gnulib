@@ -125,7 +125,7 @@ $LIBCSRC time/mktime-internal.h		lib
 # https://sourceware.org/bugzilla/show_bug.cgi?id=321
 #$LIBCSRC malloc/obstack.h		lib gpl
 #$LIBCSRC misc/error.c			lib gpl
-#$LIBCSRC misc/error.h			lib gpl
+#$LIBCSRC misc/error.h			lib gpl (error.in.h in gnulib)
 #$LIBCSRC misc/getpass.c		lib gpl
 #$LIBCSRC misc/mkstemp.c		lib gpl
 #$LIBCSRC posix/fnmatch.c		lib gpl
