@@ -1,5 +1,5 @@
 # xattr.m4 - check for Extended Attributes (Linux)
-# serial 4
+# serial 5
 
 # Copyright (C) 2003-2021 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -16,7 +16,7 @@ AC_DEFUN([gl_FUNC_XATTR],
   LIB_XATTR=
   AC_SUBST([LIB_XATTR])
 
-  if test "$use_xattr" = "yes"; then
+  if test "$use_xattr" = yes; then
     AC_CHECK_HEADERS([attr/error_context.h attr/libattr.h])
     use_xattr=no
     if test "$ac_cv_header_attr_libattr_h" = yes \
@@ -36,7 +36,8 @@ AC_DEFUN([gl_FUNC_XATTR],
       AC_MSG_WARN([AC_PACKAGE_NAME will be built without xattr support.])
     fi
   fi
-  if test $use_xattr = yes; then
-    AC_DEFINE_UNQUOTED([USE_XATTR], 1)
+  if test "$use_xattr" = yes; then
+    AC_DEFINE([USE_XATTR], [1],
+      [Define to 1 to use the Linux extended attributes library.])
   fi
 ])
