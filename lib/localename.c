@@ -18,6 +18,12 @@
 /* Native Windows code written by Tor Lillqvist <tml@iki.fi>.  */
 /* Mac OS X code written by Bruno Haible <bruno@clisp.org>.  */
 
+/* Don't use __attribute__ __nonnull__ in this compilation unit.  Otherwise gcc
+   optimizes away the locale == NULL tests below in duplocale() and freelocale(),
+   or xlclang reports -Wtautological-pointer-compare warnings for these tests.
+ */
+#define _GL_ARG_NONNULL(params)
+
 #include <config.h>
 
 /* Specification.  */
@@ -2967,6 +2973,10 @@ duplocale (locale_t locale)
   struct locale_hash_node *node;
   locale_t result;
 
+  if (locale == NULL)
+    /* Invalid argument.  */
+    abort ();
+
   node = (struct locale_hash_node *) malloc (sizeof (struct locale_hash_node));
   if (node == NULL)
     /* errno is set to ENOMEM.  */
@@ -3052,7 +3062,7 @@ void
 freelocale (locale_t locale)
 #undef freelocale
 {
-  if (locale == LC_GLOBAL_LOCALE)
+  if (locale == NULL || locale == LC_GLOBAL_LOCALE)
     /* Invalid argument.  */
     abort ();
 
