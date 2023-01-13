@@ -37,6 +37,7 @@ Include:
 
 Link:
 $(LIB_ACL)
+$(QCOPY_ACL_LIB)
 $(MBRTOWC_LIB)
 
 License:

@@ -6,10 +6,16 @@ lib/qcopy-acl.c
 m4/xattr.m4
 
 Depends-on:
-acl-permissions
+acl-permissions [test "$use_xattr" != yes]
 
 configure.ac:
 gl_FUNC_XATTR
+if test "$use_xattr" = yes; then
+  QCOPY_ACL_LIB="$LIB_XATTR"
+else
+  QCOPY_ACL_LIB="$LIB_ACL"
+fi
+AC_SUBST([QCOPY_ACL_LIB])
 
 Makefile.am:
 lib_SOURCES += qcopy-acl.c
@@ -18,7 +24,7 @@ Include:
 "acl.h"
 
 Link:
-$(LIB_ACL)
+$(QCOPY_ACL_LIB)
 
 License:
 GPL

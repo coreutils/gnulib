@@ -22,6 +22,8 @@ Include:
 
 Link:
 $(MBRTOWC_LIB)
+$(LIB_ACL)
+$(QCOPY_ACL_LIB)
 
 License:
 GPL
