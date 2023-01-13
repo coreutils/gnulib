@@ -2967,10 +2967,6 @@ duplocale (locale_t locale)
   struct locale_hash_node *node;
   locale_t result;
 
-  if (locale == NULL)
-    /* Invalid argument.  */
-    abort ();
-
   node = (struct locale_hash_node *) malloc (sizeof (struct locale_hash_node));
   if (node == NULL)
     /* errno is set to ENOMEM.  */
@@ -3056,7 +3052,7 @@ void
 freelocale (locale_t locale)
 #undef freelocale
 {
-  if (locale == NULL || locale == LC_GLOBAL_LOCALE)
+  if (locale == LC_GLOBAL_LOCALE)
     /* Invalid argument.  */
     abort ();
 
