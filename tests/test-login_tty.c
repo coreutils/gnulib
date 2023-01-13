@@ -53,7 +53,8 @@ main ()
   }
 
   /* From here on, we cannot use stderr for error messages any more.
-     If a test fails, just abort.  */
+     If a test fails, write error information into a file named 'err',
+     then abort.  */
 
   /* Check that fd = 0, 1, 2 are now open to the controlling terminal for the
      current process and that it is a session of its own.  */
@@ -61,12 +62,38 @@ main ()
     int fd;
     for (fd = 0; fd < 3; fd++)
       if (!(tcgetpgrp (fd) == getpid ()))
-        abort ();
+        {
+          freopen ("err", "w+", stderr);
+          fprintf (stderr, "tcgetpgrp(%d) = %ld whereas getpid() = %ld\n",
+                   fd, (long) tcgetpgrp (fd), (long) getpid ());
+          fflush (stderr);
+          abort ();
+        }
     for (fd = 0; fd < 3; fd++)
       {
         pid_t sid = tcgetsid (fd);
-        if (!(sid == -1 ? errno == ENOSYS : sid == getpid ()))
-          abort ();
+        if (sid == -1)
+          {
+            if (!(errno == ENOSYS))
+              {
+                freopen ("err", "w+", stderr);
+                fprintf (stderr, "tcgetsid(%d) = -1 and errno = %d\n",
+                         fd, errno);
+                fflush (stderr);
+                abort ();
+              }
+          }
+        else
+          {
+            if (!(sid == getpid ()))
+              {
+                freopen ("err", "w+", stderr);
+                fprintf (stderr, "tcgetsid(%d) = %ld whereas getpid() = %ld\n",
+                         fd, (long) tcgetsid (fd), (long) getpid ());
+                fflush (stderr);
+                abort ();
+              }
+          }
       }
   }
 
