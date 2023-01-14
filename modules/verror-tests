@@ -10,3 +10,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-verror.sh
 check_PROGRAMS += test-verror
+test_verror_LDADD = $(LDADD) $(LIBINTL)

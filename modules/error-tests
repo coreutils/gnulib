@@ -10,3 +10,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-error.sh
 check_PROGRAMS += test-error
+test_error_LDADD = $(LDADD) $(LIBINTL)
