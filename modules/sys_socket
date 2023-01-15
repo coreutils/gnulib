@@ -8,7 +8,7 @@ m4/sys_socket_h.m4
 m4/sockpfaf.m4
 
 Depends-on:
-alignasf
+alignasof
 errno
 extern-inline
 gen-header
