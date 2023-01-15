@@ -1,14 +1,9 @@
 Files:
-tests/test-stdalign.c
-tests/macros.h
 
 Depends-on:
-assert-h
-stdint
+alignasof-tests
 stdalign-c++-tests
 
 configure.ac:
 
 Makefile.am:
-TESTS += test-stdalign
-check_PROGRAMS += test-stdalign

@@ -2,8 +2,8 @@ Files:
 tests/test-stddef.c
 
 Depends-on:
+alignasof
 assert-h
-stdalign
 stddef-c++-tests
 
 configure.ac:

@@ -9,10 +9,10 @@ m4/gl-openssl.m4
 m4/sha256.m4
 
 Depends-on:
+alignasof
 byteswap
 c99
 extern-inline
-stdalign
 stdint
 
 configure.ac:

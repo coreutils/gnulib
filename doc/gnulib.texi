@@ -873,10 +873,10 @@ substituted by Gnulib.
 @node alignof
 @section @code{alignof} and @code{alignas}
 
-Gnulib module: stdalign
+Gnulib module: alignasof
 
-The @code{stdalign} module arranges for @code{alignas}, @code{alignof}, and
-@code{<stdalign.h>} to be more like standard C@.  @xref{stdalign.h}.
+The @code{alignasof} module arranges for @code{alignas} and @code{alignof}
+to be more like standard C@.
 
 Portability problems fixed by Gnulib:
 @itemize
@@ -886,6 +886,7 @@ Pre-C11 platforms lack @code{alignas} and @code{alignof}.
 @item
 On pre-C23 platforms, @code{<stdalign.h>} must be included before
 using @code{alignas} or @code{alignof}.
+@xref{stdalign.h}.
 @end itemize
 
 Portability problems not fixed by Gnulib:

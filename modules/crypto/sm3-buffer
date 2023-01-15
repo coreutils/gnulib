@@ -7,10 +7,10 @@ lib/sm3.c
 m4/sm3.m4
 
 Depends-on:
+alignasof
 byteswap
 c99
 extern-inline
-stdalign
 stdint
 
 configure.ac:

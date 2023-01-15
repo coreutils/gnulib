@@ -1,0 +1,18 @@
+Description:
+alignas and alignof that are like C23 and C++11.
+
+Files:
+m4/stdalign.m4
+
+configure.ac:
+gl_ALIGNASOF
+
+Makefile.am:
+
+Include:
+
+License:
+LGPLv2+
+
+Maintainer:
+all

@@ -8,6 +8,7 @@ lib/fts-cycle.c
 m4/fts.m4
 
 Depends-on:
+alignasof
 attribute
 c99
 closedir
@@ -28,7 +29,6 @@ openat-h
 opendir
 opendirat
 readdir
-stdalign
 stdbool
 stddef
 

@@ -7,8 +7,8 @@ lib/md4.c
 m4/md4.m4
 
 Depends-on:
+alignasof
 byteswap
-stdalign
 stdint
 
 configure.ac:

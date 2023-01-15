@@ -2383,6 +2383,7 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
+  func_module alignasof
   func_module stdckdint
   func_end_table
 

@@ -50,6 +50,7 @@ m4/relocatable-lib.m4
 m4/setenv.m4
 
 Depends-on:
+alignasof
 assert-h
 c99
 double-slash-root
@@ -64,7 +65,6 @@ largefile
 libc-config
 pathmax
 ssize_t
-stdalign
 stdbool
 stddef
 stdckdint

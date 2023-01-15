@@ -7,12 +7,12 @@ lib/alignalloc.c
 m4/alignalloc.m4
 
 Depends-on:
+alignasof
 assert-h
 extensions
 extern-inline
 idx
 posix_memalign
-stdalign
 stdckdint
 stdint
 

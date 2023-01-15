@@ -8,6 +8,7 @@ m4/sys_socket_h.m4
 m4/sockpfaf.m4
 
 Depends-on:
+alignasf
 errno
 extern-inline
 gen-header
@@ -17,7 +18,6 @@ snippet/c++defs
 snippet/warn-on-use
 socklen
 ssize_t
-stdalign
 sys_uio
 
 configure.ac:

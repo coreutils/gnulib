@@ -18,6 +18,7 @@ lib/argp-xinl.c
 m4/argp.m4
 
 Depends-on:
+alignasof
 alloca
 basename-lgpl
 extern-inline
@@ -31,7 +32,6 @@ strcase
 extensions
 vsnprintf
 sleep
-stdalign
 stdbool
 stdio
 strerror

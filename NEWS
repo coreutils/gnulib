@@ -74,6 +74,8 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2023-01-15  stdalign        This module is deprecated.  Use alignasof instead.
+
 2023-01-07  timer_time      Link with $(TIMER_TIME_LIB) instead of
                             $(LIB_TIMER_TIME).
 
