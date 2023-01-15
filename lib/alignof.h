@@ -22,14 +22,14 @@
 /* alignof_slot (TYPE)
    Determine the alignment of a structure slot (field) of a given type,
    at compile time.  Note that the result depends on the ABI.
-   This is the same as alignof (TYPE) and _Alignof (TYPE).
+   This is the same as alignof (TYPE).
    Note: The result cannot be used as a value for an 'enum' constant,
    due to bugs in HP-UX 10.20 cc and AIX 3.2.5 xlc.  */
 #if defined __cplusplus
   template <class type> struct alignof_helper { char __slot1; type __slot2; };
 # define alignof_slot(type) offsetof (alignof_helper<type>, __slot2)
 #else
-# define alignof_slot(type) offsetof (struct { char __slot1; type __slot2; }, __slot2)
+# define alignof_slot(type) alignof (type)
 #endif
 
 /* alignof_type (TYPE)

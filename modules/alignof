@@ -5,6 +5,7 @@ Files:
 lib/alignof.h
 
 Depends-on:
+stdalign
 
 configure.ac:
 
