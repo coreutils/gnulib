@@ -72,10 +72,6 @@ main (int argc, char *argv[])
     for (c = 0; c < 0x100; c++)
       switch (c)
         {
-        default:
-          if (! (c && 1 < argc && argv[1][0] == '5'))
-            break;
-          FALLTHROUGH;
         case '\t': case '\v': case '\f':
         case ' ': case '!': case '"': case '#': case '%':
         case '&': case '\'': case '(': case ')': case '*':
@@ -97,25 +93,23 @@ main (int argc, char *argv[])
         case 'p': case 'q': case 'r': case 's': case 't':
         case 'u': case 'v': case 'w': case 'x': case 'y':
         case 'z': case '{': case '|': case '}': case '~':
-          /* c is in the ISO C "basic character set", or argv[1] starts
-             with '5' so we are testing all nonnull bytes.  */
+          /* c is in the ISO C "basic character set".  */
+          ASSERT (c < 0x80);
+          /* c is an ASCII character.  */
           buf[0] = c;
+
           wc = (wchar_t) 0xBADFACE;
           ret = mbrtowc (&wc, buf, 1, &state);
           ASSERT (ret == 1);
-          if (c < 0x80)
-            /* c is an ASCII character.  */
-            ASSERT (wc == c);
-          else
-            /* argv[1] starts with '5', that is, we are testing the C or POSIX
-               locale.
-               On most platforms, the bytes 0x80..0xFF map to U+0080..U+00FF.
-               But on musl libc, the bytes 0x80..0xFF map to U+DF80..U+DFFF.  */
-            ASSERT (wc == (btowc (c) == 0xDF00 + c ? btowc (c) : c));
+          ASSERT (wc == c);
           ASSERT (mbsinit (&state));
+
           ret = mbrtowc (NULL, buf, 1, &state);
           ASSERT (ret == 1);
           ASSERT (mbsinit (&state));
+
+          break;
+        default:
           break;
         }
   }
@@ -349,7 +343,35 @@ main (int argc, char *argv[])
         return 0;
 
       case '5':
-        /* C locale; tested above.  */
+        /* C or POSIX locale.  */
+        {
+          int c;
+          char buf[1];
+
+          memset (&state, '\0', sizeof (mbstate_t));
+          for (c = 0; c < 0x100; c++)
+            if (c != 0)
+              {
+                /* We are testing all nonnull bytes.  */
+                buf[0] = c;
+
+                wc = (wchar_t) 0xBADFACE;
+                ret = mbrtowc (&wc, buf, 1, &state);
+                ASSERT (ret == 1);
+                if (c < 0x80)
+                  /* c is an ASCII character.  */
+                  ASSERT (wc == c);
+                else
+                  /* On most platforms, the bytes 0x80..0xFF map to U+0080..U+00FF.
+                     But on musl libc, the bytes 0x80..0xFF map to U+DF80..U+DFFF.  */
+                  ASSERT (wc == (btowc (c) == 0xDF00 + c ? btowc (c) : c));
+                ASSERT (mbsinit (&state));
+
+                ret = mbrtowc (NULL, buf, 1, &state);
+                ASSERT (ret == 1);
+                ASSERT (mbsinit (&state));
+              }
+        }
         return 0;
       }
 
