@@ -20,7 +20,6 @@
 
 #include <stddef.h>
 #include <limits.h>
-#include <stdalign.h>
 
 /* Check that appropriate types are defined.  */
 wchar_t a = 'c';
