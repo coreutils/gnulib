@@ -21,7 +21,7 @@ On Windows platforms (excluding Cygwin), @code{setlocale} understands different
 locale names, that are not based on ISO 639 language names and ISO 3166 country
 names.
 @item
-On Android 4.3, which which doesn't have locales, the @code{setlocale} function
+On Android < 5.0, which doesn't have locales, the @code{setlocale} function
 always fails.  The replacement, however, supports only the locale names
 @code{"C"} and @code{"POSIX"}.
 @end itemize
@@ -52,4 +52,10 @@ In addition any value is accepted for @code{LC_CTYPE}, and so NULL
 is never returned to indicate a failure to set locale.
 To verify category values, each category must be set individually
 with @code{setlocale(LC_COLLATE,"")} etc.
+@item
+On Android 5.0 and newer, the default locale (i.e.@: the locale in use when
+@code{setlocale} was not called) is the @code{"C.UTF-8"} locale, not the
+@code{"C"} locale.  Additionally, a @code{setlocale} call that is meant to set
+the @code{"C"} or @code{"POSIX"} locale actually sets an equivalent of the
+@code{"C.UTF-8"} locale.
 @end itemize

@@ -26,6 +26,7 @@ SIGNATURE_CHECK (mbrtoc32, size_t,
 
 #include <locale.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include "macros.h"
@@ -123,6 +124,15 @@ main (int argc, char *argv[])
     ASSERT (wc == (char32_t) 0xBADFACE);
     ASSERT (mbsinit (&state));
   }
+
+#ifdef __ANDROID__
+  /* On Android ≥ 5.0, the default locale is the "C.UTF-8" locale, not the
+     "C" locale.  Furthermore, when you attempt to set the "C" or "POSIX"
+     locale via setlocale(), what you get is a "C" locale with UTF-8 encoding,
+     that is, effectively the "C.UTF-8" locale.  */
+  if (argc > 1 && strcmp (argv[1], "5") == 0 && MB_CUR_MAX > 1)
+    argv[1] = "2";
+#endif
 
   if (argc > 1)
     switch (argv[1][0])
