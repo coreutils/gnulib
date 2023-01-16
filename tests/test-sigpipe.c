@@ -46,7 +46,7 @@ main (int argc, char **argv)
     case 'C': signal (SIGPIPE, handler); break;
     }
 
-  /* Produce infinite output.  Since it is piped into "head -1", the writes
+  /* Produce infinite output.  Since it is piped into "head -n 1", the writes
      must ultimately fail.  */
   for (;;)
     {

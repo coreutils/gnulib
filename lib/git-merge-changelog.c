@@ -1161,9 +1161,9 @@ There is NO WARRANTY, to the extent permitted by law.\n\
     {
       char buf[1000];
       printf ("First line of %%A:\n");
-      sprintf (buf, "head -1 %s", destination_file_name); system (buf);
+      sprintf (buf, "head -n 1 %s", destination_file_name); system (buf);
       printf ("First line of %%B:\n");
-      sprintf (buf, "head -1 %s", other_file_name); system (buf);
+      sprintf (buf, "head -n 1 %s", other_file_name); system (buf);
       printf ("Guessing calling convention: %s\n",
               downstream
               ? "%A = modified by user, %B = upstream"
