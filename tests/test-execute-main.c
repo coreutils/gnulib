@@ -59,17 +59,16 @@ main (int argc, char *argv[])
   const char *progname = "test-execute-child";
   int test = atoi (argv[2]);
 
-#if defined __ANDROID__
-  /* On Android 11, when this test is executed through 'make' (GNU make 4.4) and
+  /* When this test is executed through 'make' (GNU make 4.4) and
      build-aux/test-driver, i.e. through
        make check TESTS=test-execute.sh
      or
        rm -f test-execute.sh.log; make test-execute.sh.log
-     the signal handler for SIGPIPE is set to SIG_IGN.  This causes the tests
-     3 and 4 to fail.  Work around it by resetting the signal handler for
-     SIGPIPE to the default.  */
+     the signal handler for SIGPIPE is set to SIG_IGN.  This is a bug in
+     GNU make 4.4: <https://savannah.gnu.org/bugs/index.php?63307>.
+     It causes the tests 3 and 4 to fail.  Work around it by resetting
+     the signal handler for SIGPIPE to the default.  */
   signal (SIGPIPE, SIG_DFL);
-#endif
 
   switch (test)
     {
