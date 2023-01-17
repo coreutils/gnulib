@@ -28,15 +28,15 @@
 #include "gettext.h"
 #define _(msgid) gettext (msgid)
 
-
-/* Set the access control lists of a file. If DESC is a valid file
-   descriptor, use file descriptor operations where available, else use
-   filename based operations on NAME.  If access control lists are not
-   available, fchmod the target file to MODE.  Also sets the
-   non-permission bits of the destination file (S_ISUID, S_ISGID, S_ISVTX)
-   to those from MODE if any are set.
-   Return 0 if successful.  On failure, output a diagnostic, set errno and
-   return -1.  */
+/* Set the access control lists of a file to match *exactly* MODE (this might
+   remove inherited ACLs). Note chmod() tends to honor inherited/default
+   ACLs. If DESC is a valid file descriptor, use file descriptor operations
+   where available, else use filename based operations on NAME.  If access
+   control lists are not available, fchmod the target file to MODE.  Also
+   sets the non-permission bits of the destination file
+   (S_ISUID, S_ISGID, S_ISVTX) to those from MODE if any are set.
+    Return 0 if successful.  On failure, output a diagnostic, set errno and
+    return -1.  */
 
 int
 set_acl (char const *name, int desc, mode_t mode)
