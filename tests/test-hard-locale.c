@@ -38,8 +38,10 @@ test_one (const char *name, int failure_bitmask)
       /* musl libc has special code for the C.UTF-8 locale; other than that,
          all locale names are accepted and all locales are trivial.
          OpenBSD returns the locale name that was set, but we don't know how it
-         behaves under the hood.  Likewise for Haiku.  */
-#if defined MUSL_LIBC || defined __OpenBSD__ || defined __HAIKU__
+         behaves under the hood.  Likewise for Haiku.
+         On Android >= 5.0, the "C" locale may have UTF-8 encoding, and we don't
+         know how it will behave in the future.  */
+#if defined MUSL_LIBC || defined __OpenBSD__ || defined __HAIKU__ || defined __ANDROID__
       expected = true;
 #else
       expected = !all_trivial;
@@ -57,12 +59,14 @@ test_one (const char *name, int failure_bitmask)
 
       /* On NetBSD 7.0, some locales such as de_DE.ISO8859-1 and de_DE.UTF-8
          have the LC_COLLATE category set to "C".
-         Similarly, on musl libc, with the C.UTF-8 locale.  */
+         Similarly, on musl libc, with the C.UTF-8 locale.
+         On Android >= 5.0, the "C" locale may have UTF-8 encoding, and we don't
+         know how it will behave in the future.  */
 #if defined __NetBSD__
       expected = false;
 #elif defined MUSL_LIBC
       expected = strcmp (name, "C.UTF-8") != 0;
-#elif (defined __OpenBSD__ && HAVE_DUPLOCALE) || defined __HAIKU__ /* OpenBSD >= 6.2, Haiku */
+#elif (defined __OpenBSD__ && HAVE_DUPLOCALE) || defined __HAIKU__ || defined __ANDROID__ /* OpenBSD >= 6.2, Haiku, Android */
       expected = true;
 #else
       expected = !all_trivial;
@@ -86,12 +90,16 @@ main ()
 {
   int fail = 0;
 
-  /* The initial locale is the "C" or "POSIX" locale.  */
+  /* The initial locale is the "C" or "POSIX" locale.
+     On Android >= 5.0, it is equivalent to the "C.UTF-8" locale, cf.
+     <https://lists.gnu.org/archive/html/bug-gnulib/2023-01/msg00141.html>.  */
+#if ! defined __ANDROID__
   if (hard_locale (LC_CTYPE) || hard_locale (LC_COLLATE))
     {
       fprintf (stderr, "The initial locale should not be hard!\n");
       fail |= 1;
     }
+#endif
 
   all_trivial = (setlocale (LC_ALL, "foobar") != NULL);
 
