@@ -99,7 +99,7 @@ update_fpos_cache (_GL_ATTRIBUTE_MAYBE_UNUSED FILE *fp,
 {
 #  if defined __sferror || defined __DragonFly__ || defined __ANDROID__
   /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin, Minix 3, Android */
-#   if defined __CYGWIN__
+#   if defined __CYGWIN__ || defined __ANDROID__
   /* fp_->_offset is typed as an integer.  */
   fp_->_offset = pos;
 #   else

@@ -96,7 +96,7 @@
                          unsigned char _nbuf[1]; \
                          struct { unsigned char *_base; size_t _size; } _lb; \
                          int _blksize; \
-                         fpos_t _offset; \
+                         long _offset; \
                          /* More fields, not relevant here.  */ \
                        } *) fp)
 # else
