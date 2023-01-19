@@ -1,4 +1,4 @@
-# filenamecat.m4 serial 11
+# filenamecat.m4 serial 12
 dnl Copyright (C) 2002-2006, 2009-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -12,5 +12,5 @@ AC_DEFUN([gl_FILE_NAME_CONCAT],
 AC_DEFUN([gl_FILE_NAME_CONCAT_LGPL],
 [
   dnl Prerequisites of lib/filenamecat-lgpl.c.
-  AC_CHECK_FUNCS_ONCE([mempcpy])
+  gl_CHECK_FUNCS_ANDROID([mempcpy], [[#include <string.h>]])
 ])

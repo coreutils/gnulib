@@ -57,7 +57,7 @@ AC_DEFUN([gl_FUNC_STRERROR_R_WORKS],
 
   AC_REQUIRE([gl_FUNC_STRERROR_0])
 
-  AC_CHECK_FUNCS_ONCE([strerror_r])
+  gl_CHECK_FUNCS_ANDROID([strerror_r], [[#include <string.h>]])
   if test $ac_cv_func_strerror_r = yes; then
     if test "$GL_GENERATE_ERRNO_H:$REPLACE_STRERROR_0" = false:0; then
       dnl The POSIX prototype is:  int strerror_r (int, char *, size_t);

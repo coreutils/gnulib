@@ -1,4 +1,4 @@
-# getpass.m4 serial 19
+# getpass.m4 serial 20
 dnl Copyright (C) 2002-2003, 2005-2006, 2009-2023 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -53,7 +53,7 @@ AC_DEFUN([gl_FUNC_GETPASS_GNU],
 # Prerequisites of lib/getpass.c.
 AC_DEFUN([gl_PREREQ_GETPASS], [
   AC_CHECK_HEADERS_ONCE([stdio_ext.h termios.h])
-  AC_CHECK_FUNCS_ONCE([__fsetlocking])
+  gl_CHECK_FUNCS_ANDROID([__fsetlocking], [[#include <stdio_ext.h>]])
   AC_CHECK_DECLS([__fsetlocking],,,
     [[#include <stdio.h>
       #if HAVE_STDIO_EXT_H

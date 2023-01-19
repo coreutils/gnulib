@@ -1,4 +1,4 @@
-# fpurge.m4 serial 12
+# fpurge.m4 serial 13
 dnl Copyright (C) 2007, 2009-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -10,7 +10,7 @@ AC_DEFUN([gl_FUNC_FPURGE],
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CHECK_HEADERS_ONCE([stdio_ext.h])
   AC_CHECK_FUNCS_ONCE([fpurge])
-  AC_CHECK_FUNCS_ONCE([__fpurge])
+  gl_CHECK_FUNCS_ANDROID([__fpurge], [[#include <stdio_ext.h>]])
   AC_CHECK_DECLS([fpurge], , , [[#include <stdio.h>]])
   if test "x$ac_cv_func_fpurge" = xyes; then
     HAVE_FPURGE=1

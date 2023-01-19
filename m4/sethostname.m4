@@ -1,4 +1,4 @@
-# sethostname.m4 serial 1
+# sethostname.m4 serial 2
 dnl Copyright (C) 2011-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -13,7 +13,7 @@ AC_DEFUN([gl_FUNC_SETHOSTNAME],
 
   gl_PREREQ_HOST_NAME_MAX
 
-  AC_CHECK_FUNCS([sethostname])
+  gl_CHECK_FUNCS_ANDROID([sethostname], [[#include <unistd.h>]])
   if test $ac_cv_func_sethostname = no; then
     HAVE_SETHOSTNAME=0
   fi

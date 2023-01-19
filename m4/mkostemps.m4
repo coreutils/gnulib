@@ -1,4 +1,4 @@
-# mkostemps.m4 serial 2
+# mkostemps.m4 serial 3
 dnl Copyright (C) 2009-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -11,7 +11,7 @@ AC_DEFUN([gl_FUNC_MKOSTEMPS],
   dnl Persuade glibc <stdlib.h> to declare mkostemps().
   AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
 
-  AC_CHECK_FUNCS_ONCE([mkostemps])
+  gl_CHECK_FUNCS_ANDROID([mkostemps], [[#include <stdlib.h>]])
   if test $ac_cv_func_mkostemps != yes; then
     HAVE_MKOSTEMPS=0
   fi

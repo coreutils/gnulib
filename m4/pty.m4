@@ -1,4 +1,4 @@
-# pty.m4 serial 15
+# pty.m4 serial 16
 dnl Copyright (C) 2010-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -156,6 +156,6 @@ AC_DEFUN([gl_FUNC_LOGIN_TTY],
 
   gl_saved_libs="$LIBS"
   LIBS="$LIBS $PTY_LIB"
-  AC_CHECK_FUNCS([login_tty])
+  gl_CHECK_FUNCS_ANDROID([login_tty], [[#include <utmp.h>]])
   LIBS="$gl_saved_LIBS"
 ])
