@@ -1,4 +1,4 @@
-# truncate.m4 serial 3   -*- Autoconf -*-
+# truncate.m4 serial 4   -*- Autoconf -*-
 dnl Copyright (C) 2017-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,7 +9,7 @@ AC_DEFUN([gl_FUNC_TRUNCATE],
   AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
   AC_REQUIRE([AC_CANONICAL_HOST])
 
-  AC_CHECK_FUNCS_ONCE([truncate])
+  gl_CHECK_FUNCS_ANDROID([truncate], [[#include <unistd.h>]])
   dnl AC_CHECK_FUNC is not enough here, because when compiling for Android 4.4
   dnl or older with _FILE_OFFSET_BITS=64, truncate() is not declared.  There
   dnl is a function 'truncate' in libc, but it is unsuitable, because it takes

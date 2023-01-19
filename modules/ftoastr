@@ -10,7 +10,7 @@ extensions
 intprops
 
 configure.ac:
-AC_CHECK_FUNCS_ONCE([strtof])
+gl_CHECK_FUNCS_ANDROID([strtof], [[#include <stdlib.h>]])
 
 Makefile.am:
 lib_SOURCES += ftoastr.c

@@ -1,4 +1,4 @@
-#serial 22
+#serial 23
 dnl Copyright (C) 2005-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -29,7 +29,7 @@ AC_DEFUN([gl_FUNC_FTS_CORE],
     fi
   fi
 
-  AC_CHECK_FUNC([fts_open])
+  gl_CHECK_FUNCS_ANDROID([fts_open], [[#include <fts.h>]])
   if test $ac_cv_func_fts_open = yes; then
     dnl The system already has the symbols fts_open, etc.
     dnl Avoid conflicts between these symbols and ours at the linker level.

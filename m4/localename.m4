@@ -1,4 +1,4 @@
-# localename.m4 serial 8
+# localename.m4 serial 9
 dnl Copyright (C) 2007, 2009-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -13,7 +13,9 @@ AC_DEFUN([gl_LOCALENAME],
   AC_REQUIRE([gt_INTL_MACOSX])
   AC_CHECK_HEADERS_ONCE([langinfo.h])
   if test $HAVE_LOCALE_T = 1; then
-    AC_CHECK_FUNCS_ONCE([newlocale duplocale freelocale])
+    gl_CHECK_FUNCS_ANDROID([newlocale], [[#include <locale.h>]])
+    gl_CHECK_FUNCS_ANDROID([duplocale], [[#include <locale.h>]])
+    gl_CHECK_FUNCS_ANDROID([freelocale], [[#include <locale.h>]])
     gl_func_newlocale="$ac_cv_func_newlocale"
     gl_func_duplocale="$ac_cv_func_duplocale"
     gl_func_freelocale="$ac_cv_func_freelocale"

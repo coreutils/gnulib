@@ -1,4 +1,4 @@
-# intl-thread-locale.m4 serial 9
+# intl-thread-locale.m4 serial 10
 dnl Copyright (C) 2015-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -171,7 +171,7 @@ AC_DEFUN([gt_FUNC_USELOCALE],
   dnl Persuade glibc and Solaris <locale.h> to define 'locale_t'.
   AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
 
-  AC_CHECK_FUNCS_ONCE([uselocale])
+  gl_CHECK_FUNCS_ANDROID([uselocale], [[#include <locale.h>]])
 
   dnl On AIX 7.2, the uselocale() function is not documented and leads to
   dnl crashes in subsequent setlocale() invocations.

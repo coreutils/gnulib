@@ -4,6 +4,7 @@ Terminal control for outputting styled text to a terminal.
 Files:
 lib/term-style-control.h
 lib/term-style-control.c
+m4/tcgetattr.m4
 
 Depends-on:
 stdbool
@@ -17,7 +18,7 @@ xalloc-die
 
 configure.ac:
 AC_REQUIRE([AC_C_INLINE])
-AC_CHECK_FUNCS_ONCE([tcgetattr])
+gl_HAVE_TCGETATTR
 
 Makefile.am:
 lib_SOURCES += term-style-control.c

@@ -5,6 +5,7 @@ Files:
 lib/getpass.h
 lib/getpass.c
 m4/getpass.m4
+m4/tcgetattr.m4
 
 Depends-on:
 unistd

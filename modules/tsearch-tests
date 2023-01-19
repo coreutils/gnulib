@@ -20,7 +20,7 @@ AC_LINK_IFELSE(
   [],
   [TEST_TSEARCH_LIBM=-lm])
 AC_SUBST([TEST_TSEARCH_LIBM])
-AC_CHECK_FUNCS_ONCE([initstate])
+gl_CHECK_FUNCS_ANDROID([initstate], [[#include <stdlib.h>]])
 
 Makefile.am:
 TESTS += test-tsearch.sh

@@ -1,4 +1,4 @@
-# serial 10
+# serial 11
 # See if we need to provide symlinkat replacement.
 
 dnl Copyright (C) 2009-2023 Free Software Foundation, Inc.
@@ -14,7 +14,7 @@ AC_DEFUN([gl_FUNC_SYMLINKAT],
   AC_REQUIRE([gl_FUNC_OPENAT])
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
-  AC_CHECK_FUNCS_ONCE([symlinkat])
+  gl_CHECK_FUNCS_ANDROID([symlinkat], [[#include <unistd.h>]])
   if test $ac_cv_func_symlinkat = no; then
     HAVE_SYMLINKAT=0
   else

@@ -1,4 +1,4 @@
-# vdprintf-posix.m4 serial 2
+# vdprintf-posix.m4 serial 3
 dnl Copyright (C) 2007-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -21,7 +21,7 @@ AC_DEFUN([gl_FUNC_VDPRINTF_POSIX],
   AC_REQUIRE([gl_PRINTF_PRECISION])
   AC_REQUIRE([gl_PRINTF_ENOMEM])
   gl_cv_func_vdprintf_posix=no
-  AC_CHECK_FUNCS_ONCE([vdprintf])
+  gl_CHECK_FUNCS_ANDROID([vdprintf], [[#include <stdio.h>]])
   if test $ac_cv_func_vdprintf = yes; then
     case "$gl_cv_func_printf_sizes_c99" in
       *yes)

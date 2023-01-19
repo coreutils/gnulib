@@ -1,4 +1,4 @@
-# c32rtomb.m4 serial 3
+# c32rtomb.m4 serial 4
 dnl Copyright (C) 2020-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -10,21 +10,27 @@ AC_DEFUN([gl_FUNC_C32RTOMB],
 
   AC_REQUIRE([gl_MBRTOC32_SANITYCHECK])
 
-  dnl We can't use AC_CHECK_FUNC here, because c32rtomb() is defined as a
-  dnl static inline function on Haiku 2020.
-  AC_CACHE_CHECK([for c32rtomb], [gl_cv_func_c32rtomb],
-    [AC_LINK_IFELSE(
-       [AC_LANG_PROGRAM(
-          [[#include <stdlib.h>
-            #include <uchar.h>
-          ]],
-          [[char buf[8];
-            return c32rtomb (buf, 0, NULL) == 0;
-          ]])
-       ],
-       [gl_cv_func_c32rtomb=yes],
-       [gl_cv_func_c32rtomb=no])
-    ])
+  dnl Cf. gl_CHECK_FUNCS_ANDROID
+  AC_CHECK_DECL([c32rtomb], , , [[#include <uchar.h>]])
+  if test $ac_cv_have_decl_c32rtomb = yes; then
+    dnl We can't use AC_CHECK_FUNC here, because c32rtomb() is defined as a
+    dnl static inline function on Haiku 2020.
+    AC_CACHE_CHECK([for c32rtomb], [gl_cv_func_c32rtomb],
+      [AC_LINK_IFELSE(
+         [AC_LANG_PROGRAM(
+            [[#include <stdlib.h>
+              #include <uchar.h>
+            ]],
+            [[char buf[8];
+              return c32rtomb (buf, 0, NULL) == 0;
+            ]])
+         ],
+         [gl_cv_func_c32rtomb=yes],
+         [gl_cv_func_c32rtomb=no])
+      ])
+  else
+    gl_cv_func_c32rtomb=no
+  fi
   if test $gl_cv_func_c32rtomb = no; then
     HAVE_C32RTOMB=0
   else

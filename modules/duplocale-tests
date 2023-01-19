@@ -8,7 +8,8 @@ Depends-on:
 langinfo
 
 configure.ac:
-AC_CHECK_FUNCS_ONCE([duplocale strfmon_l snprintf_l nl_langinfo_l])
+AC_CHECK_FUNCS_ONCE([strfmon_l snprintf_l nl_langinfo_l])
+gl_CHECK_FUNCS_ANDROID([duplocale], [[#include <locale.h>]])
 AC_CHECK_HEADERS_ONCE([monetary.h])
 gt_FUNC_USELOCALE
 

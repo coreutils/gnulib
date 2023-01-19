@@ -1,4 +1,4 @@
-# c-strtod.m4 serial 18
+# c-strtod.m4 serial 19
 
 # Copyright (C) 2004-2006, 2009-2023 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -47,5 +47,5 @@ AC_DEFUN([gl_C_STRTOLD],
 [
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   AC_REQUIRE([gt_FUNC_USELOCALE])
-  AC_CHECK_FUNCS([strtold_l])
+  gl_CHECK_FUNCS_ANDROID([strtold_l], [[#include <stdlib.h>]])
 ])

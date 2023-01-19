@@ -5,12 +5,13 @@
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
 
-# serial 4
+# serial 5
 
 AC_DEFUN([gl_FUNC_GETPROGNAME],
 [
-  AC_CHECK_FUNCS_ONCE([getprogname getexecname])
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
+  gl_CHECK_FUNCS_ANDROID([getprogname], [[#include <stdlib.h>]])
+  AC_CHECK_FUNCS_ONCE([getexecname])
   ac_found=0
   AC_CHECK_DECLS([program_invocation_name], [ac_found=1], [],
     [#include <errno.h>])

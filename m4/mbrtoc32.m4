@@ -1,4 +1,4 @@
-# mbrtoc32.m4 serial 9
+# mbrtoc32.m4 serial 10
 dnl Copyright (C) 2014-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -44,23 +44,29 @@ AC_DEFUN([gl_FUNC_MBRTOC32],
   fi
 ])
 
-dnl We can't use AC_CHECK_FUNC here, because mbrtoc32() is defined as a
-dnl static inline function on Haiku 2020.
 AC_DEFUN([gl_CHECK_FUNC_MBRTOC32],
 [
-  AC_CACHE_CHECK([for mbrtoc32], [gl_cv_func_mbrtoc32],
-    [AC_LINK_IFELSE(
-       [AC_LANG_PROGRAM(
-          [[#include <stdlib.h>
-            #include <uchar.h>
-          ]],
-          [[char32_t c;
-            return mbrtoc32 (&c, "", 1, NULL) == 0;
-          ]])
-       ],
-       [gl_cv_func_mbrtoc32=yes],
-       [gl_cv_func_mbrtoc32=no])
-    ])
+  dnl Cf. gl_CHECK_FUNCS_ANDROID
+  AC_CHECK_DECL([mbrtoc32], , , [[#include <uchar.h>]])
+  if test $ac_cv_have_decl_mbrtoc32 = yes; then
+    dnl We can't use AC_CHECK_FUNC here, because mbrtoc32() is defined as a
+    dnl static inline function on Haiku 2020.
+    AC_CACHE_CHECK([for mbrtoc32], [gl_cv_func_mbrtoc32],
+      [AC_LINK_IFELSE(
+         [AC_LANG_PROGRAM(
+            [[#include <stdlib.h>
+              #include <uchar.h>
+            ]],
+            [[char32_t c;
+              return mbrtoc32 (&c, "", 1, NULL) == 0;
+            ]])
+         ],
+         [gl_cv_func_mbrtoc32=yes],
+         [gl_cv_func_mbrtoc32=no])
+      ])
+  else
+    gl_cv_func_mbrtoc32=no
+  fi
 ])
 
 AC_DEFUN([gl_MBRTOC32_EMPTY_INPUT],

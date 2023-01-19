@@ -1,4 +1,4 @@
-# dprintf-posix.m4 serial 2
+# dprintf-posix.m4 serial 3
 dnl Copyright (C) 2007-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -21,7 +21,7 @@ AC_DEFUN([gl_FUNC_DPRINTF_POSIX],
   AC_REQUIRE([gl_PRINTF_PRECISION])
   AC_REQUIRE([gl_PRINTF_ENOMEM])
   gl_cv_func_dprintf_posix=no
-  AC_CHECK_FUNCS_ONCE([dprintf])
+  gl_CHECK_FUNCS_ANDROID([dprintf], [[#include <stdio.h>]])
   if test $ac_cv_func_dprintf = yes; then
     case "$gl_cv_func_printf_sizes_c99" in
       *yes)

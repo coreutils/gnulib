@@ -1,4 +1,4 @@
-# libtextstyle-optional.m4 serial 4
+# libtextstyle-optional.m4 serial 5
 dnl Copyright (C) 2019-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -27,7 +27,7 @@ AC_DEFUN([gl_LIBTEXTSTYLE_OPTIONAL],
   else
     GL_GENERATE_TEXTSTYLE_H=true
     AC_REQUIRE([AC_C_INLINE])
-    AC_CHECK_FUNCS_ONCE([tcdrain])
+    gl_CHECK_FUNCS_ANDROID([tcdrain], [[#include <termios.h>]])
   fi
 
   dnl Update the value of the TEXTSTYLE_H variable and the

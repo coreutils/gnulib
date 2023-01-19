@@ -1,4 +1,4 @@
-# stpncpy.m4 serial 19
+# stpncpy.m4 serial 20
 dnl Copyright (C) 2002-2003, 2005-2007, 2009-2023 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -28,7 +28,7 @@ AC_DEFUN([gl_FUNC_STPNCPY],
   dnl Only the glibc return value is useful in practice.
 
   AC_CHECK_DECLS_ONCE([stpncpy])
-  AC_CHECK_FUNCS_ONCE([stpncpy])
+  gl_CHECK_FUNCS_ANDROID([stpncpy], [[#include <string.h>]])
   if test $ac_cv_func_stpncpy = yes; then
     AC_CACHE_CHECK([for working stpncpy], [gl_cv_func_stpncpy], [
       AC_RUN_IFELSE(

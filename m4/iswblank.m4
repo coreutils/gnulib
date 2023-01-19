@@ -1,4 +1,4 @@
-# iswblank.m4 serial 5
+# iswblank.m4 serial 6
 dnl Copyright (C) 2011-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -10,7 +10,7 @@ AC_DEFUN([gl_FUNC_ISWBLANK],
   AC_REQUIRE([gl_WCTYPE_H])
   dnl Persuade glibc <wctype.h> to declare iswblank().
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
-  AC_CHECK_FUNCS_ONCE([iswblank])
+  gl_CHECK_FUNCS_ANDROID([iswblank], [[#include <wctype.h>]])
   AC_CHECK_DECLS([iswblank], , , [[
     #include <wchar.h>
     #include <wctype.h>

@@ -1,4 +1,4 @@
-# execvpe.m4 serial 1
+# execvpe.m4 serial 2
 dnl Copyright (C) 2020-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -15,7 +15,7 @@ AC_DEFUN([gl_FUNC_EXECVPE],
   case "$host_os" in
     mingw*) REPLACE_EXECVPE=1 ;;
     *)
-      AC_CHECK_FUNCS([execvpe])
+      gl_CHECK_FUNCS_ANDROID([execvpe], [[#include <unistd.h>]])
       if test $ac_cv_func_execvpe != yes; then
         HAVE_EXECVPE=0
       fi

@@ -1,4 +1,4 @@
-# random.m4 serial 4
+# random.m4 serial 5
 dnl Copyright (C) 2012-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -24,7 +24,8 @@ AC_DEFUN([gl_FUNC_RANDOM],
     HAVE_INITSTATE=0
     HAVE_SETSTATE=0
   else
-    AC_CHECK_FUNCS([initstate setstate])
+    gl_CHECK_FUNCS_ANDROID([initstate], [[#include <stdlib.h>]])
+    gl_CHECK_FUNCS_ANDROID([setstate], [[#include <stdlib.h>]])
     if test $ac_cv_func_initstate = no; then
       HAVE_INITSTATE=0
     fi

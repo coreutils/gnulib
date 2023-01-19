@@ -9,7 +9,7 @@ Depends-on:
 unistr/base
 
 configure.ac:
-AC_CHECK_FUNCS_ONCE([stpcpy])
+gl_CHECK_FUNCS_ANDROID([stpcpy], [[#include <string.h>]])
 gl_LIBUNISTRING_MODULE([0.9], [unistr/u8-stpcpy])
 
 Makefile.am:

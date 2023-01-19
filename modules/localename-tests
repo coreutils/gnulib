@@ -10,7 +10,7 @@ setlocale
 strdup
 
 configure.ac:
-AC_CHECK_FUNCS_ONCE([newlocale])
+gl_CHECK_FUNCS_ANDROID([newlocale], [[#include <locale.h>]])
 
 Makefile.am:
 TESTS += test-localename
