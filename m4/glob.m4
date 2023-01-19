@@ -1,4 +1,4 @@
-# glob.m4 serial 28
+# glob.m4 serial 29
 dnl Copyright (C) 2005-2007, 2009-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -12,7 +12,8 @@ AC_DEFUN([gl_GLOB],
 [
   AC_REQUIRE([gl_GLOB_H])
 
-  AC_CHECK_FUNCS_ONCE([glob glob_pattern_p])
+  AC_CHECK_FUNCS_ONCE([glob_pattern_p])
+  gl_CHECK_FUNCS_ANDROID([glob], [[#include <glob.h>]])
   if test $ac_cv_func_glob = no; then
     HAVE_GLOB=0
   else
