@@ -3,7 +3,7 @@ dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 
-dnl serial 14
+dnl serial 15
 
 AC_DEFUN([gl_UTIMENS],
 [
@@ -11,9 +11,9 @@ AC_DEFUN([gl_UTIMENS],
   AC_REQUIRE([gl_FUNC_UTIMES])
   AC_REQUIRE([gl_CHECK_TYPE_STRUCT_TIMESPEC])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
-  AC_CHECK_FUNCS_ONCE([lutimes])
   gl_CHECK_FUNCS_ANDROID([futimes], [[#include <sys/time.h>]])
   gl_CHECK_FUNCS_ANDROID([futimesat], [[#include <sys/time.h>]])
+  gl_CHECK_FUNCS_ANDROID([lutimes], [[#include <sys/time.h>]])
   gl_CHECK_FUNCS_ANDROID([futimens], [[#include <sys/stat.h>]])
   gl_CHECK_FUNCS_ANDROID([utimensat], [[#include <sys/stat.h>]])
 

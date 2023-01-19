@@ -1,4 +1,4 @@
-# duplocale.m4 serial 15
+# duplocale.m4 serial 17
 dnl Copyright (C) 2009-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -19,7 +19,8 @@ AC_DEFUN([gl_FUNC_DUPLOCALE],
     dnl corresponds to the C locale.
     AC_REQUIRE([gl_LOCALE_H])
     if test $HAVE_LOCALE_T = 1; then
-      AC_CHECK_FUNCS_ONCE([snprintf_l nl_langinfo_l])
+      AC_CHECK_FUNCS_ONCE([snprintf_l])
+      gl_CHECK_FUNCS_ANDROID([nl_langinfo_l], [[#include <langinfo.h>]])
       AC_CACHE_CHECK([whether duplocale(LC_GLOBAL_LOCALE) works],
         [gl_cv_func_duplocale_works],
         [AC_RUN_IFELSE(

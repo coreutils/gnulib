@@ -1,4 +1,4 @@
-# vasnprintf.m4 serial 38
+# vasnprintf.m4 serial 39
 dnl Copyright (C) 2002-2004, 2006-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -152,7 +152,7 @@ AC_DEFUN([gl_PREREQ_VASNPRINTF_DIRECTIVE_A],
       AC_DEFINE([NEED_PRINTF_DIRECTIVE_A], [1],
         [Define if the vasnprintf implementation needs special code for
          the 'a' and 'A' directives.])
-      AC_CHECK_FUNCS([nl_langinfo])
+      gl_CHECK_FUNCS_ANDROID([nl_langinfo], [[#include <langinfo.h>]])
       ;;
   esac
 ])

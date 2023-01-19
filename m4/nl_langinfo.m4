@@ -1,4 +1,4 @@
-# nl_langinfo.m4 serial 9
+# nl_langinfo.m4 serial 10
 dnl Copyright (C) 2009-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,7 +8,7 @@ AC_DEFUN([gl_FUNC_NL_LANGINFO],
 [
   AC_REQUIRE([gl_LANGINFO_H_DEFAULTS])
   AC_REQUIRE([gl_LANGINFO_H])
-  AC_CHECK_FUNCS_ONCE([nl_langinfo])
+  gl_CHECK_FUNCS_ANDROID([nl_langinfo], [[#include <langinfo.h>]])
   AC_REQUIRE([AC_CANONICAL_HOST])
   AC_REQUIRE([gl_FUNC_SETLOCALE_NULL])
   AC_REQUIRE([gl_PTHREADLIB])

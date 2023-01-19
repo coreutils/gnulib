@@ -1,4 +1,4 @@
-# getdomainname.m4 serial 11
+# getdomainname.m4 serial 12
 dnl Copyright (C) 2002-2003, 2008-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -85,6 +85,7 @@ AC_DEFUN([gl_FUNC_GETDOMAINNAME],
     HAVE_DECL_GETDOMAINNAME=0
   fi
 
+  dnl TODO Android, cf. gl_CHECK_FUNCS_ANDROID.
   if { test $ac_cv_func_getdomainname = yes \
        && test $gl_cv_decl_getdomainname_argtype2 != size_t; \
      } \
