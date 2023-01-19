@@ -1,4 +1,4 @@
-# threadlib.m4 serial 33
+# threadlib.m4 serial 34
 dnl Copyright (C) 2005-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -352,7 +352,7 @@ AC_DEFUN([gl_STDTHREADLIB_BODY],
           dnl on libpthread (for the symbol 'pthread_mutexattr_gettype').
           dnl glibc >= 2.34, AIX >= 7.1, and Solaris >= 11.4 have thrd_create in
           dnl libc.
-          AC_CHECK_FUNCS([thrd_create])
+          gl_CHECK_FUNCS_ANDROID([thrd_create], [[#include <threads.h>]])
           if test $ac_cv_func_thrd_create = yes; then
             LIBSTDTHREAD=
           else
