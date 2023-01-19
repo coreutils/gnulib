@@ -1,4 +1,4 @@
-# pread.m4 serial 6
+# pread.m4 serial 7
 dnl Copyright (C) 2009-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -12,7 +12,7 @@ AC_DEFUN([gl_FUNC_PREAD],
   dnl Persuade glibc <unistd.h> to declare pread().
   AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
 
-  AC_CHECK_FUNCS_ONCE([pread])
+  gl_CHECK_FUNCS_ANDROID([pread], [[#include <unistd.h>]])
   if test $ac_cv_func_pread = yes; then
     dnl On HP-UX 11.11 with _FILE_OFFSET_BITS=64, pread() on a file returns 0
     dnl instead of a positive value.
