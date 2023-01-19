@@ -1,4 +1,4 @@
-# imaxdiv.m4 serial 5
+# imaxdiv.m4 serial 6
 dnl Copyright (C) 2006, 2009-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,7 +9,7 @@ AC_DEFUN([gl_FUNC_IMAXDIV],
   AC_REQUIRE([gl_INTTYPES_H_DEFAULTS])
 
   dnl On OSF/1 5.1 with cc, this function is declared but not defined.
-  AC_CHECK_FUNCS_ONCE([imaxdiv])
+  gl_CHECK_FUNCS_ANDROID([imaxdiv], [[#include <inttypes.h>]])
   AC_CHECK_DECLS_ONCE([imaxdiv])
   if test "$ac_cv_have_decl_imaxdiv" != yes; then
     HAVE_DECL_IMAXDIV=0
