@@ -1,4 +1,4 @@
-# fdatasync.m4 serial 7
+# fdatasync.m4 serial 8
 dnl Copyright (C) 2008-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -17,6 +17,7 @@ AC_DEFUN([gl_FUNC_FDATASYNC],
   if test $ac_cv_have_decl_fdatasync = no; then
     HAVE_DECL_FDATASYNC=0
     dnl Mac OS X 10.7 has fdatasync but does not declare it.
+    dnl Likewise Android with API level < 9. Cf. gl_CHECK_FUNCS_ANDROID.
     AC_CHECK_FUNCS([fdatasync])
     if test $ac_cv_func_fdatasync = no; then
       HAVE_FDATASYNC=0
