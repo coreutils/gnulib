@@ -21,7 +21,7 @@ unistd
 
 configure.ac:
 dnl Test for Linux system call close_range(), declared in <unistd.h>.
-AC_CHECK_FUNCS([close_range])
+gl_CHECK_FUNCS_ANDROID([close_range], [[#include <unistd.h>]])
 
 Makefile.am:
 TESTS += test-execute.sh
