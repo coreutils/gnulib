@@ -1,4 +1,4 @@
-# log2l.m4 serial 3
+# log2l.m4 serial 4
 dnl Copyright (C) 2010-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -17,7 +17,7 @@ AC_DEFUN([gl_FUNC_LOG2L],
   dnl defined in the same library as log2().
   save_LIBS="$LIBS"
   LIBS="$LIBS $LOG2_LIBM"
-  AC_CHECK_FUNCS([log2l])
+  gl_CHECK_FUNCS_ANDROID([log2l], [[#include <math.h>]])
   LIBS="$save_LIBS"
   if test $ac_cv_func_log2l = yes; then
     LOG2L_LIBM="$LOG2_LIBM"

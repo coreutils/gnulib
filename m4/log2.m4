@@ -1,4 +1,4 @@
-# log2.m4 serial 10
+# log2.m4 serial 11
 dnl Copyright (C) 2010-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -18,7 +18,7 @@ AC_DEFUN([gl_FUNC_LOG2],
   dnl Test whether log2() exists.
   save_LIBS="$LIBS"
   LIBS="$LIBS $LOG2_LIBM"
-  AC_CHECK_FUNCS([log2])
+  gl_CHECK_FUNCS_ANDROID([log2], [[#include <math.h>]])
   LIBS="$save_LIBS"
   if test $ac_cv_func_log2 = yes; then
     HAVE_LOG2=1

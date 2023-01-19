@@ -1,4 +1,4 @@
-# log2f.m4 serial 10
+# log2f.m4 serial 11
 dnl Copyright (C) 2010-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -19,7 +19,7 @@ AC_DEFUN([gl_FUNC_LOG2F],
   dnl Test whether log2f() exists.
   save_LIBS="$LIBS"
   LIBS="$LIBS $LOG2F_LIBM"
-  AC_CHECK_FUNCS([log2f])
+  gl_CHECK_FUNCS_ANDROID([log2f], [[#include <math.h>]])
   LIBS="$save_LIBS"
   if test $ac_cv_func_log2f = yes; then
     HAVE_LOG2F=1
