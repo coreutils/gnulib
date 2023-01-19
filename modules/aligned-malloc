@@ -14,8 +14,9 @@ memalign
 configure.ac:
 gl_MALLOC_ALIGNMENT
 AC_REQUIRE([AC_C_INLINE])
-AC_CHECK_FUNCS_ONCE([posix_memalign memalign])
+AC_CHECK_FUNCS_ONCE([memalign])
 gl_CHECK_FUNCS_ANDROID([aligned_alloc], [[#include <stdlib.h>]])
+gl_CHECK_FUNCS_ANDROID([posix_memalign], [[#include <stdlib.h>]])
 
 Makefile.am:
 

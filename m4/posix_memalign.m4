@@ -1,4 +1,4 @@
-# posix_memalign.m4 serial 1
+# posix_memalign.m4 serial 2
 dnl Copyright (C) 2020-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -12,7 +12,7 @@ AC_DEFUN([gl_FUNC_POSIX_MEMALIGN],
   dnl Persuade glibc <stdlib.h> to declare posix_memalign().
   AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
 
-  AC_CHECK_FUNCS_ONCE([posix_memalign])
+  gl_CHECK_FUNCS_ANDROID([posix_memalign], [[#include <stdlib.h>]])
   if test $ac_cv_func_posix_memalign = yes; then
     dnl On OpenBSD 6.1, posix_memalign (&p, 32, 2406) returns a pointer
     dnl that is not a multiple of 32.

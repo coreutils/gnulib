@@ -1,4 +1,4 @@
-#serial 6
+#serial 7
 dnl Copyright (C) 2005-2007, 2009-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -16,6 +16,6 @@ AC_DEFUN([gl_PAGEALIGN_ALLOC],
 AC_DEFUN([gl_PREREQ_PAGEALIGN_ALLOC],
 [
   AC_REQUIRE([gl_FUNC_MMAP_ANON])
-  AC_CHECK_FUNCS_ONCE([posix_memalign])
+  gl_CHECK_FUNCS_ANDROID([posix_memalign], [[#include <stdlib.h>]])
   AC_CHECK_HEADERS_ONCE([unistd.h])
 ])
