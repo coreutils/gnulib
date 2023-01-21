@@ -1,0 +1,19 @@
+Files:
+tests/test-utmp-c++.cc
+tests/signature.h
+
+Status:
+c++-test
+
+Depends-on:
+ansi-c++-opt
+
+configure.ac:
+
+Makefile.am:
+if ANSICXX
+TESTS += test-utmp-c++
+check_PROGRAMS += test-utmp-c++
+test_utmp_c___SOURCES = test-utmp-c++.cc
+test_utmp_c___LDADD = $(LDADD) $(PTY_LIB)
+endif

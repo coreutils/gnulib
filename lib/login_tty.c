@@ -17,7 +17,8 @@
 
 #include <config.h>
 
-/* Currently no specification header.  */
+/* Specification.  */
+#include <utmp.h>
 
 #include <fcntl.h>
 #include <unistd.h>

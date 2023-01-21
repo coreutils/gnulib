@@ -17,7 +17,7 @@
 #include <config.h>
 
 /* Specification.  */
-extern int login_tty (int);
+#include <utmp.h>
 
 #include <errno.h>
 #include <pty.h>

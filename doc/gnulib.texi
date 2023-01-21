@@ -3845,6 +3845,7 @@ not worked around by Gnulib.
 * sys/random.h::
 * sysexits.h::
 * ttyent.h::
+* utmp.h::
 @end menu
 
 @include glibc-headers/a.out.texi
@@ -3883,6 +3884,7 @@ not worked around by Gnulib.
 @include glibc-headers/sys_random.texi
 @include glibc-headers/sysexits.texi
 @include glibc-headers/ttyent.texi
+@include glibc-headers/utmp.texi
 
 @node Glibc Function Substitutes
 @chapter Glibc Function Substitutes

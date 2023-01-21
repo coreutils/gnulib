@@ -1,4 +1,4 @@
-# pty.m4 serial 17
+# pty.m4 serial 18
 dnl Copyright (C) 2010-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -148,25 +148,4 @@ AC_DEFUN([gl_FUNC_OPENPTY],
     AC_CHECK_FUNCS([_getpty])
     gl_CHECK_FUNCS_ANDROID([posix_openpt], [[#include <stdlib.h>]])
   fi
-])
-
-AC_DEFUN([gl_FUNC_LOGIN_TTY],
-[
-  AC_REQUIRE([gl_PTY_LIB])
-
-  AC_CHECK_HEADERS_ONCE([utmp.h util.h libutil.h])
-  gl_saved_libs="$LIBS"
-  LIBS="$LIBS $PTY_LIB"
-  gl_CHECK_FUNCS_ANDROID([login_tty], [[
-    #include <sys/types.h>
-    #if HAVE_UTMP_H
-    # include <utmp.h>
-    #endif
-    #if HAVE_UTIL_H
-    # include <util.h>
-    #elif HAVE_LIBUTIL_H
-    # include <libutil.h>
-    #endif
-  ]])
-  LIBS="$gl_saved_LIBS"
 ])
