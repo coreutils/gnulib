@@ -16,7 +16,8 @@
 
 #include <config.h>
 
-#include "getprogname.h"
+#include <stdlib.h>
+
 #include <string.h>
 #include <assert.h>
 

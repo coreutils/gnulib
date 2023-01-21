@@ -52,7 +52,6 @@
 #include <sigsegv.h>
 
 #include "exitfail.h"
-#include "getprogname.h"
 #include "idx.h"
 #include "ignore-value.h"
 

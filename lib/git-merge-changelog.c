@@ -176,7 +176,6 @@
 #include "minmax.h"
 #include "c-strstr.h"
 #include "fwriteerror.h"
-#include "getprogname.h"
 
 #define ASSERT(expr) \
   do                                                                         \

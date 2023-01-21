@@ -16,11 +16,10 @@
 
 #include <config.h>
 
-/* Specification.  */
-#include "getprogname.h"
+/* Specification.  Also get __argv declaration.  */
+#include <stdlib.h>
 
 #include <errno.h> /* get program_invocation_name declaration */
-#include <stdlib.h> /* get __argv declaration */
 
 #ifdef _AIX
 # include <unistd.h>
@@ -53,13 +52,12 @@
 
 #if defined __SCO_VERSION__ || defined __sysv5__
 # include <fcntl.h>
-# include <stdlib.h>
 # include <string.h>
 #endif
 
 #include "basename-lgpl.h"
 
-#ifndef HAVE_GETPROGNAME             /* not Mac OS X, FreeBSD, NetBSD, OpenBSD >= 5.4, Cygwin */
+#ifndef HAVE_GETPROGNAME  /* not Mac OS X, FreeBSD, NetBSD, OpenBSD >= 5.4, Solaris >= 11, Cygwin, Android API level >= 21 */
 char const *
 getprogname (void)
 {

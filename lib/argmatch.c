@@ -32,7 +32,6 @@
 
 #include "error.h"
 #include "quotearg.h"
-#include "getprogname.h"
 
 #if USE_UNLOCKED_IO
 # include "unlocked-io.h"

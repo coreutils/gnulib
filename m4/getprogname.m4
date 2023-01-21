@@ -5,12 +5,19 @@
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
 
-# serial 5
+# serial 6
 
 AC_DEFUN([gl_FUNC_GETPROGNAME],
 [
-  AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   gl_CHECK_FUNCS_ANDROID([getprogname], [[#include <stdlib.h>]])
+  if test $ac_cv_func_getprogname = no; then
+    HAVE_GETPROGNAME=0
+  fi
+])
+
+AC_DEFUN([gl_PREREQ_GETPROGNAME],
+[
+  AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   AC_CHECK_FUNCS_ONCE([getexecname])
   ac_found=0
   AC_CHECK_DECLS([program_invocation_name], [ac_found=1], [],

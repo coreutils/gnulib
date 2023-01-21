@@ -42,8 +42,6 @@
 # define USE_UNLOCKED_IO 0
 # define _GL_ATTRIBUTE_FORMAT_PRINTF_STANDARD(a, b)
 # define _GL_ARG_NONNULL(a)
-#else
-# include "getprogname.h"
 #endif
 
 #if USE_UNLOCKED_IO
