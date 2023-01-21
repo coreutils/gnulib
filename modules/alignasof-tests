@@ -1,5 +1,5 @@
 Files:
-tests/test-stdalign.c
+tests/test-alignasof.c
 tests/macros.h
 
 Depends-on:
@@ -9,5 +9,5 @@ stdint
 configure.ac:
 
 Makefile.am:
-TESTS += test-stdalign
-check_PROGRAMS += test-stdalign
+TESTS += test-alignasof
+check_PROGRAMS += test-alignasof

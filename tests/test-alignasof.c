@@ -1,4 +1,4 @@
-/* Test of <stdalign.h>.
+/* Test of alignasof module.
    Copyright 2009-2023 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
