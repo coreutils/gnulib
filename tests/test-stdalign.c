@@ -35,6 +35,7 @@ typedef struct { char a[4]; } struct4;
    limit the test to 8 for now.  */
 # define TEST_ALIGNMENT 8
 #else
+# undef alignas
 # define alignas(alignment)
 # define TEST_ALIGNMENT 1
 #endif
