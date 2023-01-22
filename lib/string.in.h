@@ -1244,7 +1244,7 @@ _GL_FUNCDECL_SYS (strerror_r, int, (int errnum, char *buf, size_t buflen)
 #  endif
 _GL_CXXALIAS_SYS (strerror_r, int, (int errnum, char *buf, size_t buflen));
 # endif
-# if @HAVE_DECL_STRERROR_R@
+# if __GLIBC__ >= 2 && @HAVE_DECL_STRERROR_R@
 _GL_CXXALIASWARN (strerror_r);
 # endif
 #elif defined GNULIB_POSIXCHECK

@@ -1,4 +1,4 @@
-# strerror_r.m4 serial 25
+# strerror_r.m4 serial 26
 dnl Copyright (C) 2002, 2007-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -172,5 +172,9 @@ changequote([,])dnl
         fi
       fi
     fi
+  else
+    case "$gl_cv_onwards_func_strerror_r" in
+      future*) REPLACE_STRERROR_R=1 ;;
+    esac
   fi
 ])
