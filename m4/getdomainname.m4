@@ -1,4 +1,4 @@
-# getdomainname.m4 serial 12
+# getdomainname.m4 serial 13
 dnl Copyright (C) 2002-2003, 2008-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -19,7 +19,8 @@ AC_DEFUN([gl_FUNC_GETDOMAINNAME],
   dnl   <https://web.archive.org/web/20100121182558/http://www.sun.com/software/solaris/programs/abi/appcert_faq.xml#q18>.
   dnl   We need to avoid a collision with this function.
   dnl - Otherwise it is in libc.
-  AC_CHECK_FUNCS([getdomainname], , [
+  gl_CHECK_FUNCS_ANDROID([getdomainname], [[#include <unistd.h>]])
+  if test $ac_cv_func_getdomainname = no; then
     AC_CACHE_CHECK([for getdomainname in -lnsl],
       [gl_cv_func_getdomainname_in_libnsl],
       [gl_cv_func_getdomainname_in_libnsl=no
@@ -38,7 +39,7 @@ AC_DEFUN([gl_FUNC_GETDOMAINNAME],
          [gl_cv_func_getdomainname_in_libnsl=yes])
        LIBS="$gl_save_LIBS"
       ])
-  ])
+  fi
 
   dnl What about the declaration?
   dnl - It's  int getdomainname(char *, size_t)  on glibc, NetBSD, OpenBSD.
@@ -85,10 +86,13 @@ AC_DEFUN([gl_FUNC_GETDOMAINNAME],
     HAVE_DECL_GETDOMAINNAME=0
   fi
 
-  dnl TODO Android, cf. gl_CHECK_FUNCS_ANDROID.
   if { test $ac_cv_func_getdomainname = yes \
        && test $gl_cv_decl_getdomainname_argtype2 != size_t; \
      } \
+     || case "$gl_cv_onwards_func_getdomainname" in \
+          future*) true ;; \
+          *) false ;; \
+        esac \
      || test "$gl_cv_func_getdomainname_in_libnsl" = yes; then
     REPLACE_GETDOMAINNAME=1
   fi
