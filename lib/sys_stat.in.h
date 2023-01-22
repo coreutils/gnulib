@@ -773,7 +773,9 @@ _GL_FUNCDECL_SYS (mknodat, int,
 _GL_CXXALIAS_SYS (mknodat, int,
                   (int fd, char const *file, mode_t mode, dev_t dev));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (mknodat);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef mknodat
 # if HAVE_RAW_DECL_MKNODAT
