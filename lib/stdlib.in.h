@@ -164,11 +164,22 @@ struct random_data
 #if @GNULIB__EXIT@
 /* Terminate the current process with the given return code, without running
    the 'atexit' handlers.  */
-# if !@HAVE__EXIT@
+# if @REPLACE__EXIT@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef _Exit
+#   define _Exit rpl__Exit
+#  endif
+_GL_FUNCDECL_RPL (_Exit, _Noreturn void, (int status));
+_GL_CXXALIAS_RPL (_Exit, void, (int status));
+# else
+#  if !@HAVE__EXIT@
 _GL_FUNCDECL_SYS (_Exit, _Noreturn void, (int status));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (_Exit, void, (int status));
+# endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (_Exit);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef _Exit
 # if HAVE_RAW_DECL__EXIT
@@ -433,15 +444,30 @@ _GL_WARN_ON_USE (getloadavg, "getloadavg is not portable - "
 #if @GNULIB_GETPROGNAME@
 /* Return the base name of the executing program.
    On native Windows this will usually end in ".exe" or ".EXE". */
-# if !@HAVE_GETPROGNAME@
-#  ifdef HAVE_DECL_PROGRAM_INVOCATION_NAME
-_GL_FUNCDECL_SYS (getprogname, const char *, (void) _GL_ATTRIBUTE_PURE);
-#  else
-_GL_FUNCDECL_SYS (getprogname, const char *, (void));
+# if @REPLACE_GETPROGNAME@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef getprogname
+#   define getprogname rpl_getprogname
 #  endif
-# endif
+#  ifdef HAVE_DECL_PROGRAM_INVOCATION_NAME
+_GL_FUNCDECL_RPL (getprogname, const char *, (void) _GL_ATTRIBUTE_PURE);
+#  else
+_GL_FUNCDECL_RPL (getprogname, const char *, (void));
+#  endif
+_GL_CXXALIAS_RPL (getprogname, const char *, (void));
+# else
+#  if !@HAVE_GETPROGNAME@
+#   ifdef HAVE_DECL_PROGRAM_INVOCATION_NAME
+_GL_FUNCDECL_SYS (getprogname, const char *, (void) _GL_ATTRIBUTE_PURE);
+#   else
+_GL_FUNCDECL_SYS (getprogname, const char *, (void));
+#   endif
+#  endif
 _GL_CXXALIAS_SYS (getprogname, const char *, (void));
+# endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (getprogname);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef getprogname
 # if HAVE_RAW_DECL_GETPROGNAME
@@ -747,11 +773,22 @@ _GL_WARN_ON_USE (posix_memalign, "posix_memalign is not portable - "
 #if @GNULIB_POSIX_OPENPT@
 /* Return an FD open to the master side of a pseudo-terminal.  Flags should
    include O_RDWR, and may also include O_NOCTTY.  */
-# if !@HAVE_POSIX_OPENPT@
+# if @REPLACE_POSIX_OPENPT@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef posix_openpt
+#   define posix_openpt rpl_posix_openpt
+#  endif
+_GL_FUNCDECL_RPL (posix_openpt, int, (int flags));
+_GL_CXXALIAS_RPL (posix_openpt, int, (int flags));
+# else
+#  if !@HAVE_POSIX_OPENPT@
 _GL_FUNCDECL_SYS (posix_openpt, int, (int flags));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (posix_openpt, int, (int flags));
+# endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (posix_openpt);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef posix_openpt
 # if HAVE_RAW_DECL_POSIX_OPENPT

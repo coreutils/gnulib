@@ -11,7 +11,8 @@ unistd
 
 configure.ac:
 gl_FUNC__EXIT
-gl_CONDITIONAL([GL_COND_OBJ__EXIT], [test $HAVE__EXIT = 0])
+gl_CONDITIONAL([GL_COND_OBJ__EXIT],
+               [test $HAVE__EXIT = 0 || test $REPLACE__EXIT = 1])
 AM_COND_IF([GL_COND_OBJ__EXIT], [
   gl_PREREQ__EXIT
 ])

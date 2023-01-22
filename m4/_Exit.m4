@@ -1,4 +1,4 @@
-# _Exit.m4 serial 3
+# _Exit.m4 serial 4
 dnl Copyright (C) 2010-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -10,6 +10,9 @@ AC_DEFUN([gl_FUNC__EXIT],
   gl_CHECK_FUNCS_ANDROID([_Exit], [[#include <stdlib.h>]])
   if test $ac_cv_func__Exit = no; then
     HAVE__EXIT=0
+    case "$gl_cv_onwards_func__Exit" in
+      future*) REPLACE__EXIT=1 ;;
+    esac
   fi
 ])
 
