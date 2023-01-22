@@ -1,4 +1,4 @@
-# duplocale.m4 serial 17
+# duplocale.m4 serial 18
 dnl Copyright (C) 2009-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -110,6 +110,9 @@ int main ()
     fi
   else
     HAVE_DUPLOCALE=0
+    case "$gl_cv_onwards_func_duplocale" in
+      future*) REPLACE_DUPLOCALE=1 ;;
+    esac
   fi
   if test $REPLACE_DUPLOCALE = 1; then
     DUPLOCALE_LIB="$SETLOCALE_NULL_LIB"

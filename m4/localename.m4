@@ -1,4 +1,4 @@
-# localename.m4 serial 9
+# localename.m4 serial 10
 dnl Copyright (C) 2007, 2009-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -22,18 +22,30 @@ AC_DEFUN([gl_LOCALENAME],
   else
     dnl In 2019, some versions of z/OS lack the locale_t type and have broken
     dnl newlocale, duplocale, freelocale functions.
+    gl_cv_onwards_func_newlocale='future OS version'
+    gl_cv_onwards_func_duplocale='future OS version'
+    gl_cv_onwards_func_freelocale='future OS version'
     gl_func_newlocale=no
     gl_func_duplocale=no
     gl_func_freelocale=no
   fi
   if test $gl_func_newlocale != yes; then
     HAVE_NEWLOCALE=0
+    case "$gl_cv_onwards_func_newlocale" in
+      future*) REPLACE_NEWLOCALE=1 ;;
+    esac
   fi
   if test $gl_func_duplocale != yes; then
     HAVE_DUPLOCALE=0
+    case "$gl_cv_onwards_func_duplocale" in
+      future*) REPLACE_DUPLOCALE=1 ;;
+    esac
   fi
   if test $gl_func_freelocale != yes; then
     HAVE_FREELOCALE=0
+    case "$gl_cv_onwards_func_freelocale" in
+      future*) REPLACE_FREELOCALE=1 ;;
+    esac
   fi
   if test $gt_localename_enhances_locale_funcs = yes; then
     REPLACE_NEWLOCALE=1
