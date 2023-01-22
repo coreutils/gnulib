@@ -210,7 +210,9 @@ _GL_FUNCDECL_SYS (dprintf, int, (int fd, const char *restrict format, ...)
 #  endif
 _GL_CXXALIAS_SYS (dprintf, int, (int fd, const char *restrict format, ...));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (dprintf);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef dprintf
 # if HAVE_RAW_DECL_DPRINTF

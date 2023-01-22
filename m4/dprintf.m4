@@ -1,4 +1,4 @@
-# dprintf.m4 serial 2
+# dprintf.m4 serial 3
 dnl Copyright (C) 2009-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -18,7 +18,11 @@ AC_DEFUN([gl_REPLACE_DPRINTF],
 [
   AC_REQUIRE([gl_STDIO_H_DEFAULTS])
   AC_LIBOBJ([dprintf])
-  if test $ac_cv_func_dprintf = yes; then
+  if test $ac_cv_func_dprintf = yes \
+     || case "$gl_cv_onwards_func_dprintf" in \
+          future*) true ;; \
+          *) false ;; \
+        esac; then
     REPLACE_DPRINTF=1
   fi
   gl_PREREQ_DPRINTF
