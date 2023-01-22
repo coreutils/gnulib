@@ -1013,7 +1013,9 @@ _GL_FUNCDECL_SYS (initstate, char *,
 _GL_CXXALIAS_SYS_CAST (initstate, char *,
                        (unsigned int seed, char *buf, size_t buf_size));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (initstate);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef initstate
 # if HAVE_RAW_DECL_INITSTATE
@@ -1038,7 +1040,9 @@ _GL_FUNCDECL_SYS (setstate, char *, (char *arg_state) _GL_ARG_NONNULL ((1)));
    is                                     const char *arg_state.  */
 _GL_CXXALIAS_SYS_CAST (setstate, char *, (char *arg_state));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (setstate);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef setstate
 # if HAVE_RAW_DECL_SETSTATE
