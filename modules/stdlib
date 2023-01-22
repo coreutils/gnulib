@@ -134,6 +134,7 @@ stdlib.h: stdlib.in.h $(top_builddir)/config.status $(CXXDEFS_H) \
 	      -e 's|@''REPLACE_CALLOC_FOR_CALLOC_POSIX''@|$(REPLACE_CALLOC_FOR_CALLOC_POSIX)|g' \
 	      -e 's|@''REPLACE_CANONICALIZE_FILE_NAME''@|$(REPLACE_CANONICALIZE_FILE_NAME)|g' \
 	      -e 's|@''REPLACE_FREE''@|$(REPLACE_FREE)|g' \
+	      -e 's|@''REPLACE_GETLOADAVG''@|$(REPLACE_GETLOADAVG)|g' \
 	      -e 's|@''REPLACE_GETPROGNAME''@|$(REPLACE_GETPROGNAME)|g' \
 	      -e 's|@''REPLACE_GETSUBOPT''@|$(REPLACE_GETSUBOPT)|g' \
 	      -e 's|@''REPLACE_INITSTATE''@|$(REPLACE_INITSTATE)|g' \

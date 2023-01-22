@@ -427,12 +427,24 @@ _GL_CXXALIASWARN (gcvt);
    The three numbers are the load average of the last 1 minute, the last 5
    minutes, and the last 15 minutes, respectively.
    LOADAVG is an array of NELEM numbers.  */
-# if !@HAVE_DECL_GETLOADAVG@
+# if @REPLACE_GETLOADAVG@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef getloadavg
+#   define getloadavg rpl_getloadavg
+#  endif
+_GL_FUNCDECL_RPL (getloadavg, int, (double loadavg[], int nelem)
+                                   _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_RPL (getloadavg, int, (double loadavg[], int nelem));
+# else
+#  if !@HAVE_DECL_GETLOADAVG@
 _GL_FUNCDECL_SYS (getloadavg, int, (double loadavg[], int nelem)
                                    _GL_ARG_NONNULL ((1)));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (getloadavg, int, (double loadavg[], int nelem));
+# endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (getloadavg);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef getloadavg
 # if HAVE_RAW_DECL_GETLOADAVG
