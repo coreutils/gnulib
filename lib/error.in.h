@@ -56,7 +56,9 @@ _GL_FUNCDECL_SYS (error, void,
 _GL_CXXALIAS_SYS (error, void,
                   (int __status, int __errnum, const char *__format, ...));
 #endif
+#if __GLIBC__ >= 2
 _GL_CXXALIASWARN (error);
+#endif
 
 /* Likewise.  If FILENAME is non-NULL, include FILENAME:LINENO: in the
    message.  */
