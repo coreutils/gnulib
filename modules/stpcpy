@@ -11,7 +11,8 @@ string
 
 configure.ac:
 gl_FUNC_STPCPY
-gl_CONDITIONAL([GL_COND_OBJ_STPCPY], [test $HAVE_STPCPY = 0])
+gl_CONDITIONAL([GL_COND_OBJ_STPCPY],
+               [test $HAVE_STPCPY = 0 || test $REPLACE_STPCPY = 1])
 AM_COND_IF([GL_COND_OBJ_STPCPY], [
   gl_PREREQ_STPCPY
 ])
