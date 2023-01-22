@@ -1,4 +1,4 @@
-# iswblank.m4 serial 6
+# iswblank.m4 serial 7
 dnl Copyright (C) 2011-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -17,7 +17,11 @@ AC_DEFUN([gl_FUNC_ISWBLANK],
   ]])
   if test $ac_cv_func_iswblank = no; then
     HAVE_ISWBLANK=0
-    if test $ac_cv_have_decl_iswblank = yes; then
+    if test $ac_cv_have_decl_iswblank = yes \
+       || case "$gl_cv_onwards_func_iswblank" in \
+            future*) true ;; \
+            *) false ;; \
+          esac; then
       REPLACE_ISWBLANK=1
     fi
   fi

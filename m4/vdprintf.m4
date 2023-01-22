@@ -1,4 +1,4 @@
-# vdprintf.m4 serial 2
+# vdprintf.m4 serial 3
 dnl Copyright (C) 2009-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -18,7 +18,11 @@ AC_DEFUN([gl_REPLACE_VDPRINTF],
 [
   AC_REQUIRE([gl_STDIO_H_DEFAULTS])
   AC_LIBOBJ([vdprintf])
-  if test $ac_cv_func_vdprintf = yes; then
+  if test $ac_cv_func_vdprintf = yes \
+     || case "$gl_cv_onwards_func_vdprintf" in \
+          future*) true ;; \
+          *) false ;; \
+        esac; then
     REPLACE_VDPRINTF=1
   fi
   gl_PREREQ_VDPRINTF

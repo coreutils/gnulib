@@ -1,4 +1,4 @@
-#serial 23
+#serial 24
 dnl Copyright (C) 2005-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -30,8 +30,12 @@ AC_DEFUN([gl_FUNC_FTS_CORE],
   fi
 
   gl_CHECK_FUNCS_ANDROID([fts_open], [[#include <fts.h>]])
-  if test $ac_cv_func_fts_open = yes; then
-    dnl The system already has the symbols fts_open, etc.
+  if case "$gl_cv_onwards_func_fts_open" in \
+       yes | future*) true ;; \
+       *) false ;; \
+     esac; then
+    dnl The system already has the symbols fts_open, etc. or will have them
+    dnl in a future version.
     dnl Avoid conflicts between these symbols and ours at the linker level.
     AC_DEFINE([fts_open], [rpl_fts_open],
       [Define to the overridden function name])
