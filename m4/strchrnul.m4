@@ -1,4 +1,4 @@
-# strchrnul.m4 serial 11
+# strchrnul.m4 serial 12
 dnl Copyright (C) 2003, 2007, 2009-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -13,6 +13,9 @@ AC_DEFUN([gl_FUNC_STRCHRNUL],
   gl_CHECK_FUNCS_ANDROID([strchrnul], [[#include <string.h>]])
   if test $ac_cv_func_strchrnul = no; then
     HAVE_STRCHRNUL=0
+    case "$gl_cv_onwards_func_strchrnul" in
+      future*) REPLACE_STRCHRNUL=1 ;;
+    esac
   else
     AC_CACHE_CHECK([whether strchrnul works],
       [gl_cv_func_strchrnul_works],
