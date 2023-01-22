@@ -1,4 +1,4 @@
-# pwrite.m4 serial 7
+# pwrite.m4 serial 8
 dnl Copyright (C) 2010-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -95,5 +95,8 @@ changequote([,])dnl
     esac
   else
     HAVE_PWRITE=0
+    case "$gl_cv_onwards_func_pwrite" in
+      future*) REPLACE_PWRITE=1 ;;
+    esac
   fi
 ])

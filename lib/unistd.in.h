@@ -1840,7 +1840,9 @@ _GL_FUNCDECL_SYS (pwrite, ssize_t,
 _GL_CXXALIAS_SYS (pwrite, ssize_t,
                   (int fd, const void *buf, size_t bufsize, off_t offset));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pwrite);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pwrite
 # if HAVE_RAW_DECL_PWRITE
