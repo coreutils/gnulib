@@ -120,7 +120,9 @@ _GL_CXXALIAS_SYS (glob, int, (const char *_Restrict_ __pattern, int __flags,
                               _gl_glob_errfunc_fn __errfunc,
                               glob_t *_Restrict_ __pglob));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (glob);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef glob
 # if HAVE_RAW_DECL_GLOB
