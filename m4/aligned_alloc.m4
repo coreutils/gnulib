@@ -1,4 +1,4 @@
-# aligned_alloc.m4 serial 4
+# aligned_alloc.m4 serial 5
 dnl Copyright (C) 2020-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -44,5 +44,8 @@ AC_DEFUN([gl_FUNC_ALIGNED_ALLOC],
   else
     dnl The system does not have aligned_alloc.
     HAVE_ALIGNED_ALLOC=0
+    case "$gl_cv_onwards_func_aligned_alloc" in
+      future*) REPLACE_ALIGNED_ALLOC=1 ;;
+    esac
   fi
 ])
