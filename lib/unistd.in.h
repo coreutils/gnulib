@@ -541,17 +541,22 @@ _GL_CXXALIASWARN (dup2);
    Return newfd if successful, otherwise -1 and errno set.
    See the Linux man page at
    <https://www.kernel.org/doc/man-pages/online/pages/man2/dup3.2.html>.  */
-# if @HAVE_DUP3@
+# if @REPLACE_DUP3@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef dup3
 #   define dup3 rpl_dup3
 #  endif
 _GL_FUNCDECL_RPL (dup3, int, (int oldfd, int newfd, int flags));
 _GL_CXXALIAS_RPL (dup3, int, (int oldfd, int newfd, int flags));
 # else
+#  if !@HAVE_DUP3@
 _GL_FUNCDECL_SYS (dup3, int, (int oldfd, int newfd, int flags));
+#  endif
 _GL_CXXALIAS_SYS (dup3, int, (int oldfd, int newfd, int flags));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (dup3);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef dup3
 # if HAVE_RAW_DECL_DUP3
