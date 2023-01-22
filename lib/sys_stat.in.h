@@ -937,7 +937,7 @@ _GL_FUNCDECL_SYS (utimensat, int, (int fd, char const *name,
 _GL_CXXALIAS_SYS (utimensat, int, (int fd, char const *name,
                                    struct timespec const times[2], int flag));
 # endif
-# if @HAVE_UTIMENSAT@
+# if __GLIBC__ >= 2 && @HAVE_UTIMENSAT@
 _GL_CXXALIASWARN (utimensat);
 # endif
 #elif defined GNULIB_POSIXCHECK
