@@ -1,4 +1,4 @@
-# stpncpy.m4 serial 20
+# stpncpy.m4 serial 21
 dnl Copyright (C) 2002-2003, 2005-2007, 2009-2023 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -96,6 +96,9 @@ int main ()
     esac
   else
     HAVE_STPNCPY=0
+    case "$gl_cv_onwards_func_stpncpy" in
+      future*) REPLACE_STPNCPY=1 ;;
+    esac
   fi
 ])
 

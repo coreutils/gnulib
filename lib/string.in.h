@@ -462,7 +462,9 @@ _GL_CXXALIAS_SYS (stpncpy, char *,
                   (char *restrict __dst, char const *restrict __src,
                    size_t __n));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (stpncpy);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef stpncpy
 # if HAVE_RAW_DECL_STPNCPY
