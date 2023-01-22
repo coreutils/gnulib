@@ -1,4 +1,4 @@
-# serial 22
+# serial 23
 
 # See if we need to emulate a missing ftruncate function using _chsize.
 
@@ -30,6 +30,9 @@ AC_DEFUN([gl_FUNC_FTRUNCATE],
     ])
   else
     HAVE_FTRUNCATE=0
+    case "$gl_cv_onwards_func_ftruncate" in
+      future*) REPLACE_FTRUNCATE=1 ;;
+    esac
   fi
 ])
 

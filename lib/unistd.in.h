@@ -1064,7 +1064,9 @@ _GL_FUNCDECL_SYS (ftruncate, int, (int fd, off_t length));
 #  endif
 _GL_CXXALIAS_SYS (ftruncate, int, (int fd, off_t length));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (ftruncate);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef ftruncate
 # if HAVE_RAW_DECL_FTRUNCATE
