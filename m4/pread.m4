@@ -1,4 +1,4 @@
-# pread.m4 serial 7
+# pread.m4 serial 8
 dnl Copyright (C) 2009-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -81,5 +81,8 @@ changequote([,])dnl
     esac
   else
     HAVE_PREAD=0
+    case "$gl_cv_onwards_func_pread" in
+      future*) REPLACE_PREAD=1 ;;
+    esac
   fi
 ])

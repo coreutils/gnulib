@@ -1803,7 +1803,9 @@ _GL_FUNCDECL_SYS (pread, ssize_t,
 _GL_CXXALIAS_SYS (pread, ssize_t,
                   (int fd, void *buf, size_t bufsize, off_t offset));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pread);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pread
 # if HAVE_RAW_DECL_PREAD
