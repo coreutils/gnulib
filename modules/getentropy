@@ -6,13 +6,14 @@ lib/getentropy.c
 m4/getentropy.m4
 
 Depends-on:
-getrandom      [test $HAVE_GETENTROPY = 0]
+getrandom      [test $HAVE_GETENTROPY = 0 || test $REPLACE_GETENTROPY = 1]
 extensions
 unistd
 
 configure.ac:
 gl_FUNC_GETENTROPY
-gl_CONDITIONAL([GL_COND_OBJ_GETENTROPY], [test $HAVE_GETENTROPY = 0])
+gl_CONDITIONAL([GL_COND_OBJ_GETENTROPY],
+               [test $HAVE_GETENTROPY = 0 || test $REPLACE_GETENTROPY = 1])
 gl_UNISTD_MODULE_INDICATOR([getentropy])
 
 Makefile.am:

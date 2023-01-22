@@ -1207,11 +1207,22 @@ _GL_WARN_ON_USE (getdtablesize, "getdtablesize is unportable - "
 
 #if @GNULIB_GETENTROPY@
 /* Fill a buffer with random bytes.  */
-# if !@HAVE_GETENTROPY@
+# if @REPLACE_GETENTROPY@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef getentropy
+#   define getentropy rpl_getentropy
+#  endif
+_GL_FUNCDECL_RPL (getentropy, int, (void *buffer, size_t length));
+_GL_CXXALIAS_RPL (getentropy, int, (void *buffer, size_t length));
+# else
+#  if !@HAVE_GETENTROPY@
 _GL_FUNCDECL_SYS (getentropy, int, (void *buffer, size_t length));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (getentropy, int, (void *buffer, size_t length));
+# endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (getentropy);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef getentropy
 # if HAVE_RAW_DECL_GETENTROPY

@@ -1,4 +1,4 @@
-# getentropy.m4 serial 2
+# getentropy.m4 serial 3
 dnl Copyright 2020-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -19,5 +19,8 @@ AC_DEFUN([gl_FUNC_GETENTROPY],
     ]])
   if test $ac_cv_func_getentropy = no; then
     HAVE_GETENTROPY=0
+    case "$gl_cv_onwards_func_getentropy" in
+      future*) REPLACE_GETENTROPY=1 ;;
+    esac
   fi
 ])
