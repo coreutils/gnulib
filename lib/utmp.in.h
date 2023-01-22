@@ -62,7 +62,9 @@ _GL_FUNCDECL_SYS (login_tty, int, (int fd));
 #  endif
 _GL_CXXALIAS_SYS (login_tty, int, (int fd));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (login_tty);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef login_tty
 # if HAVE_RAW_DECL_LOGIN_TTY

@@ -1,4 +1,4 @@
-# login_tty.m4 serial 1
+# login_tty.m4 serial 2
 dnl Copyright (C) 2010-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -26,5 +26,8 @@ AC_DEFUN([gl_FUNC_LOGIN_TTY],
 
   if test $ac_cv_func_login_tty = no; then
     HAVE_LOGIN_TTY=0
+    case "$gl_cv_onwards_func_login_tty" in
+      future*) REPLACE_LOGIN_TTY=1 ;;
+    esac
   fi
 ])
