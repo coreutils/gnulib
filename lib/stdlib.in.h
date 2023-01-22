@@ -625,12 +625,24 @@ _GL_WARN_ON_USE (mkdtemp, "mkdtemp is unportable - "
    implementation.
    Returns the open file descriptor if successful, otherwise -1 and errno
    set.  */
-# if !@HAVE_MKOSTEMP@
+# if @REPLACE_MKOSTEMP@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef mkostemp
+#   define mkostemp rpl_mkostemp
+#  endif
+_GL_FUNCDECL_RPL (mkostemp, int, (char * /*template*/, int /*flags*/)
+                                 _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_RPL (mkostemp, int, (char * /*template*/, int /*flags*/));
+# else
+#  if !@HAVE_MKOSTEMP@
 _GL_FUNCDECL_SYS (mkostemp, int, (char * /*template*/, int /*flags*/)
                                  _GL_ARG_NONNULL ((1)));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (mkostemp, int, (char * /*template*/, int /*flags*/));
+# endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (mkostemp);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef mkostemp
 # if HAVE_RAW_DECL_MKOSTEMP
@@ -653,14 +665,28 @@ _GL_WARN_ON_USE (mkostemp, "mkostemp is unportable - "
    implementation.
    Returns the open file descriptor if successful, otherwise -1 and errno
    set.  */
-# if !@HAVE_MKOSTEMPS@
+# if @REPLACE_MKOSTEMPS@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef mkostemps
+#   define mkostemps rpl_mkostemps
+#  endif
+_GL_FUNCDECL_RPL (mkostemps, int,
+                  (char * /*template*/, int /*suffixlen*/, int /*flags*/)
+                  _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_RPL (mkostemps, int,
+                  (char * /*template*/, int /*suffixlen*/, int /*flags*/));
+# else
+#  if !@HAVE_MKOSTEMPS@
 _GL_FUNCDECL_SYS (mkostemps, int,
                   (char * /*template*/, int /*suffixlen*/, int /*flags*/)
                   _GL_ARG_NONNULL ((1)));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (mkostemps, int,
                   (char * /*template*/, int /*suffixlen*/, int /*flags*/));
+# endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (mkostemps);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef mkostemps
 # if HAVE_RAW_DECL_MKOSTEMPS
