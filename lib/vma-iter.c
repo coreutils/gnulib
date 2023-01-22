@@ -1,5 +1,5 @@
 /* Iteration over virtual memory areas.
-   Copyright (C) 2011-2022 Free Software Foundation, Inc.
+   Copyright (C) 2011-2023 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2011-2017.
 
    This program is free software: you can redistribute it and/or modify
@@ -20,6 +20,7 @@
 /* On Solaris in 32-bit mode, when gnulib module 'largefile' is in use,
    prevent a compilation error
      "Cannot use procfs in the large file compilation environment"
+   while also preventing <sys/types.h> from not defining off_t.
    On Android, when targeting Android 4.4 or older with a GCC toolchain,
    prevent a compilation error
      "error: call to 'mmap' declared with attribute error: mmap is not
@@ -28,7 +29,11 @@
       switch to Clang."
    The files that we access in this compilation unit are less than 2 GB
    large.  */
-#if defined __sun || defined __ANDROID__
+#if defined __sun && !defined _LP64 && _FILE_OFFSET_BITS == 64
+# undef _FILE_OFFSET_BITS
+# define _FILE_OFFSET_BITS 32
+#endif
+#ifdef __ANDROID__
 # undef _FILE_OFFSET_BITS
 #endif
 
