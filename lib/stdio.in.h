@@ -882,7 +882,9 @@ _GL_CXXALIAS_SYS (getdelim, ssize_t,
                    int delimiter,
                    FILE *restrict stream));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (getdelim);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef getdelim
 # if HAVE_RAW_DECL_GETDELIM
@@ -921,7 +923,7 @@ _GL_CXXALIAS_SYS (getline, ssize_t,
                   (char **restrict lineptr, size_t *restrict linesize,
                    FILE *restrict stream));
 # endif
-# if @HAVE_DECL_GETLINE@
+# if __GLIBC__ >= 2 && @HAVE_DECL_GETLINE@
 _GL_CXXALIASWARN (getline);
 # endif
 #elif defined GNULIB_POSIXCHECK
