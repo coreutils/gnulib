@@ -488,14 +488,28 @@ _GL_WARN_ON_USE (getprogname, "getprogname is unportable - "
    Otherwise it returns -1, and *OPTIONP and *VALUEP are undefined.
    For more details see the POSIX specification.
    https://pubs.opengroup.org/onlinepubs/9699919799/functions/getsubopt.html */
-# if !@HAVE_GETSUBOPT@
+# if @REPLACE_GETSUBOPT@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef getsubopt
+#   define getsubopt rpl_getsubopt
+#  endif
+_GL_FUNCDECL_RPL (getsubopt, int,
+                  (char **optionp, char *const *tokens, char **valuep)
+                  _GL_ARG_NONNULL ((1, 2, 3)));
+_GL_CXXALIAS_RPL (getsubopt, int,
+                  (char **optionp, char *const *tokens, char **valuep));
+# else
+#  if !@HAVE_GETSUBOPT@
 _GL_FUNCDECL_SYS (getsubopt, int,
                   (char **optionp, char *const *tokens, char **valuep)
                   _GL_ARG_NONNULL ((1, 2, 3)));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (getsubopt, int,
                   (char **optionp, char *const *tokens, char **valuep));
+# endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (getsubopt);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef getsubopt
 # if HAVE_RAW_DECL_GETSUBOPT

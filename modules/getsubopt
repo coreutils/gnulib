@@ -8,12 +8,13 @@ m4/getsubopt.m4
 Depends-on:
 stdlib
 extensions
-strchrnul       [test $HAVE_GETSUBOPT = 0]
-memchr          [test $HAVE_GETSUBOPT = 0]
+strchrnul       [test $HAVE_GETSUBOPT = 0 || test $REPLACE_GETSUBOPT = 1]
+memchr          [test $HAVE_GETSUBOPT = 0 || test $REPLACE_GETSUBOPT = 1]
 
 configure.ac:
 gl_FUNC_GETSUBOPT
-gl_CONDITIONAL([GL_COND_OBJ_GETSUBOPT], [test $HAVE_GETSUBOPT = 0])
+gl_CONDITIONAL([GL_COND_OBJ_GETSUBOPT],
+               [test $HAVE_GETSUBOPT = 0 || test $REPLACE_GETSUBOPT = 1])
 AM_COND_IF([GL_COND_OBJ_GETSUBOPT], [
   gl_PREREQ_GETSUBOPT
 ])
