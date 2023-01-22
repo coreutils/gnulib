@@ -1,4 +1,4 @@
-# tsearch.m4 serial 10
+# tsearch.m4 serial 11
 dnl Copyright (C) 2006-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -53,6 +53,9 @@ main ()
     esac
   else
     HAVE_TSEARCH=0
+    case "$gl_cv_onwards_func_tsearch" in
+      future*) REPLACE_TSEARCH=1 ;;
+    esac
   fi
   if test $ac_cv_func_twalk != yes; then
     HAVE_TWALK=0

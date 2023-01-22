@@ -156,7 +156,9 @@ _GL_CXXALIAS_SYS (tsearch, void *,
                   (const void *key, void **vrootp,
                    _gl_search_compar_fn compar));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (tsearch);
+# endif
 
 /* Searches an element in the tree *VROOTP that compares equal to KEY.
    If one is found, it is returned.  Otherwise, NULL is returned.  */
@@ -181,7 +183,9 @@ _GL_CXXALIAS_SYS_CAST (tfind, void *,
                        (const void *key, void *const *vrootp,
                         _gl_search_compar_fn compar));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (tfind);
+# endif
 
 /* Searches an element in the tree *VROOTP that compares equal to KEY.
    If one is found, it is removed from the tree, and its parent node is
@@ -205,7 +209,9 @@ _GL_CXXALIAS_SYS (tdelete, void *,
                   (const void *restrict key, void **restrict vrootp,
                    _gl_search_compar_fn compar));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (tdelete);
+# endif
 
 /* Perform a depth-first, left-to-right traversal of the tree VROOT.
    The ACTION function is called:
@@ -233,7 +239,9 @@ _GL_FUNCDECL_SYS (twalk, void,
 _GL_CXXALIAS_SYS (twalk, void,
                   (const void *vroot, _gl_search_action_fn action));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (twalk);
+# endif
 
 /* Flags used by tsearch.c.  */
 # define GNULIB_defined_tsearch  (@REPLACE_TSEARCH@ || !@HAVE_TSEARCH@)
