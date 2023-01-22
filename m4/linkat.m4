@@ -1,4 +1,4 @@
-# serial 15
+# serial 16
 # See if we need to provide linkat replacement.
 
 dnl Copyright (C) 2009-2023 Free Software Foundation, Inc.
@@ -19,6 +19,9 @@ AC_DEFUN([gl_FUNC_LINKAT],
   gl_CHECK_FUNCS_ANDROID([linkat], [[#include <unistd.h>]])
   if test $ac_cv_func_linkat = no; then
     HAVE_LINKAT=0
+    case "$gl_cv_onwards_func_linkat" in
+      future*) REPLACE_LINKAT=1 ;;
+    esac
   else
     dnl OS X Yosemite has linkat() but it's not sufficient
     dnl to our needs since it doesn't support creating

@@ -1,4 +1,4 @@
-# truncate.m4 serial 4   -*- Autoconf -*-
+# truncate.m4 serial 5   -*- Autoconf -*-
 dnl Copyright (C) 2017-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -71,10 +71,10 @@ AC_DEFUN([gl_FUNC_TRUNCATE],
     fi
   else
     HAVE_DECL_TRUNCATE=0
-    if test $ac_cv_func_truncate = yes; then
+    case "$gl_cv_onwards_func_truncate" in
       dnl Avoid a conflict with the 'truncate' in libc.
-      REPLACE_TRUNCATE=1
-    fi
+      yes | future*) REPLACE_TRUNCATE=1 ;;
+    esac
   fi
 ])
 

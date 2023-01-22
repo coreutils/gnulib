@@ -1,4 +1,4 @@
-# serial 11
+# serial 12
 # See if we need to provide symlinkat replacement.
 
 dnl Copyright (C) 2009-2023 Free Software Foundation, Inc.
@@ -17,6 +17,9 @@ AC_DEFUN([gl_FUNC_SYMLINKAT],
   gl_CHECK_FUNCS_ANDROID([symlinkat], [[#include <unistd.h>]])
   if test $ac_cv_func_symlinkat = no; then
     HAVE_SYMLINKAT=0
+    case "$gl_cv_onwards_func_symlinkat" in
+      future*) REPLACE_SYMLINKAT=1 ;;
+    esac
   else
     AC_CACHE_CHECK([whether symlinkat handles trailing slash correctly],
       [gl_cv_func_symlinkat_works],

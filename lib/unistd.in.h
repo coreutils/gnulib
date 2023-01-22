@@ -875,7 +875,9 @@ _GL_FUNCDECL_SYS (execvpe, int,
 _GL_CXXALIAS_SYS (execvpe, int,
                   (const char *program, char * const *argv, char * const *env));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (execvpe);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef execvpe
 # if HAVE_RAW_DECL_EXECVPE
@@ -1681,7 +1683,9 @@ _GL_CXXALIAS_SYS (linkat, int,
                   (int fd1, const char *path1, int fd2, const char *path2,
                    int flag));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (linkat);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef linkat
 # if HAVE_RAW_DECL_LINKAT
@@ -1963,7 +1967,9 @@ _GL_CXXALIAS_SYS (readlinkat, ssize_t,
                   (int fd, char const *restrict file,
                    char *restrict buf, size_t len));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (readlinkat);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef readlinkat
 # if HAVE_RAW_DECL_READLINKAT
@@ -2140,7 +2146,9 @@ _GL_FUNCDECL_SYS (symlinkat, int,
 _GL_CXXALIAS_SYS (symlinkat, int,
                   (char const *contents, int fd, char const *file));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (symlinkat);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef symlinkat
 # if HAVE_RAW_DECL_SYMLINKAT
@@ -2170,7 +2178,9 @@ _GL_FUNCDECL_SYS (truncate, int, (const char *filename, off_t length)
 #  endif
 _GL_CXXALIAS_SYS (truncate, int, (const char *filename, off_t length));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (truncate);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef truncate
 # if HAVE_RAW_DECL_TRUNCATE
