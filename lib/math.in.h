@@ -1696,7 +1696,9 @@ _GL_FUNCDECL_SYS (log2f, float, (float x));
 #  endif
 _GL_CXXALIAS_SYS (log2f, float, (float x));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (log2f);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef log2f
 # if HAVE_RAW_DECL_LOG2F

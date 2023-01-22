@@ -1,4 +1,4 @@
-# log2l.m4 serial 4
+# log2l.m4 serial 5
 dnl Copyright (C) 2010-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -37,6 +37,9 @@ AC_DEFUN([gl_FUNC_LOG2L],
   else
     HAVE_LOG2L=0
     HAVE_DECL_LOG2L=0
+    case "$gl_cv_onwards_func_log2l" in
+      future*) REPLACE_LOG2L=1 ;;
+    esac
   fi
   if test $HAVE_LOG2L = 0 || test $REPLACE_LOG2L = 1; then
     dnl Find libraries needed to link lib/log2l.c.

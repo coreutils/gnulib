@@ -1,4 +1,4 @@
-# log2f.m4 serial 11
+# log2f.m4 serial 12
 dnl Copyright (C) 2010-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -101,6 +101,9 @@ int main (int argc, char *argv[])
   else
     HAVE_LOG2F=0
     HAVE_DECL_LOG2F=0
+    case "$gl_cv_onwards_func_log2f" in
+      future*) REPLACE_LOG2F=1 ;;
+    esac
   fi
   if test $HAVE_LOG2F = 0 || test $REPLACE_LOG2F = 1; then
     dnl Find libraries needed to link lib/log2f.c.
