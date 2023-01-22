@@ -11,7 +11,8 @@ string
 
 configure.ac:
 gl_FUNC_MEMPCPY
-gl_CONDITIONAL([GL_COND_OBJ_MEMPCPY], [test $HAVE_MEMPCPY = 0])
+gl_CONDITIONAL([GL_COND_OBJ_MEMPCPY],
+               [test $HAVE_MEMPCPY = 0 || test $REPLACE_MEMPCPY = 1])
 AM_COND_IF([GL_COND_OBJ_MEMPCPY], [
   gl_PREREQ_MEMPCPY
 ])
