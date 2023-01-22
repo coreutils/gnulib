@@ -1002,11 +1002,22 @@ _GL_WARN_ON_USE (fchownat, "fchownat is not portable - "
    Return 0 if successful, otherwise -1 and errno set.
    See POSIX:2008 specification
    <https://pubs.opengroup.org/onlinepubs/9699919799/functions/fdatasync.html>.  */
-# if !@HAVE_FDATASYNC@ || !@HAVE_DECL_FDATASYNC@
+# if @REPLACE_FDATASYNC@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef fdatasync
+#   define fdatasync rpl_fdatasync
+#  endif
+_GL_FUNCDECL_RPL (fdatasync, int, (int fd));
+_GL_CXXALIAS_RPL (fdatasync, int, (int fd));
+# else
+#  if !@HAVE_FDATASYNC@|| !@HAVE_DECL_FDATASYNC@
 _GL_FUNCDECL_SYS (fdatasync, int, (int fd));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (fdatasync, int, (int fd));
+# endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (fdatasync);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef fdatasync
 # if HAVE_RAW_DECL_FDATASYNC
@@ -1742,8 +1753,9 @@ _GL_WARN_ON_USE (pipe, "pipe is unportable - "
    Return 0 upon success, or -1 with errno set upon failure.
    See also the Linux man page at
    <https://www.kernel.org/doc/man-pages/online/pages/man2/pipe2.2.html>.  */
-# if @HAVE_PIPE2@
+# if @REPLACE_PIPE2@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef pipe2
 #   define pipe2 rpl_pipe2
 #  endif
 _GL_FUNCDECL_RPL (pipe2, int, (int fd[2], int flags) _GL_ARG_NONNULL ((1)));
@@ -1752,7 +1764,9 @@ _GL_CXXALIAS_RPL (pipe2, int, (int fd[2], int flags));
 _GL_FUNCDECL_SYS (pipe2, int, (int fd[2], int flags) _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_SYS (pipe2, int, (int fd[2], int flags));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pipe2);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pipe2
 # if HAVE_RAW_DECL_PIPE2
