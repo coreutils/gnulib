@@ -208,7 +208,9 @@ _GL_FUNCDECL_SYS (nl_langinfo, char *, (nl_item item));
 #  endif
 _GL_CXXALIAS_SYS (nl_langinfo, char *, (nl_item item));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (nl_langinfo);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef nl_langinfo
 # if HAVE_RAW_DECL_NL_LANGINFO
