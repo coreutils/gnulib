@@ -549,7 +549,7 @@ _GL_FUNCDECL_SYS (futimens, int, (int fd, struct timespec const times[2]));
 #  endif
 _GL_CXXALIAS_SYS (futimens, int, (int fd, struct timespec const times[2]));
 # endif
-# if @HAVE_FUTIMENS@
+# if __GLIBC__ >= 2 && @HAVE_FUTIMENS@
 _GL_CXXALIASWARN (futimens);
 # endif
 #elif defined GNULIB_POSIXCHECK
