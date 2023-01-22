@@ -925,7 +925,9 @@ _GL_FUNCDECL_SYS (faccessat, int,
 _GL_CXXALIAS_SYS (faccessat, int,
                   (int fd, char const *file, int mode, int flag));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (faccessat);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef faccessat
 # if HAVE_RAW_DECL_FACCESSAT
