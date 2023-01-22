@@ -733,7 +733,7 @@ _GL_CXXALIAS_SYS (posix_memalign, int,
                   (void **memptr, size_t alignment, size_t size));
 #  endif
 # endif
-# if @HAVE_POSIX_MEMALIGN@
+# if __GLIBC__ >= 2 && @HAVE_POSIX_MEMALIGN@
 _GL_CXXALIASWARN (posix_memalign);
 # endif
 #elif defined GNULIB_POSIXCHECK

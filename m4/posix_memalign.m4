@@ -1,4 +1,4 @@
-# posix_memalign.m4 serial 2
+# posix_memalign.m4 serial 3
 dnl Copyright (C) 2020-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -46,5 +46,8 @@ AC_DEFUN([gl_FUNC_POSIX_MEMALIGN],
   else
     dnl The system does not have posix_memalign.
     HAVE_POSIX_MEMALIGN=0
+    case "$gl_cv_onwards_func_posix_memalign" in
+      future*) REPLACE_POSIX_MEMALIGN=1 ;;
+    esac
   fi
 ])
