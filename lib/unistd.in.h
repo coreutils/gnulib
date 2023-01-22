@@ -1356,7 +1356,9 @@ _GL_FUNCDECL_SYS (getlogin_r, int, (char *name, size_t size)
                                                      int size.  */
 _GL_CXXALIAS_SYS_CAST (getlogin_r, int, (char *name, size_t size));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (getlogin_r);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef getlogin_r
 # if HAVE_RAW_DECL_GETLOGIN_R
