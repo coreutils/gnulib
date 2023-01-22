@@ -10,7 +10,8 @@ inttypes-incomplete
 
 configure.ac:
 gl_FUNC_IMAXDIV
-gl_CONDITIONAL([GL_COND_OBJ_IMAXDIV], [test $ac_cv_func_imaxdiv = no])
+gl_CONDITIONAL([GL_COND_OBJ_IMAXDIV],
+               [test $HAVE_IMAXDIV = 0 || test $REPLACE_IMAXDIV = 1])
 AM_COND_IF([GL_COND_OBJ_IMAXDIV], [
   gl_PREREQ_IMAXDIV
 ])
