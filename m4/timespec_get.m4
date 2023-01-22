@@ -1,4 +1,4 @@
-# timespec_get.m4 serial 3
+# timespec_get.m4 serial 4
 dnl Copyright (C) 2021-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -14,5 +14,8 @@ AC_DEFUN([gl_FUNC_TIMESPEC_GET],
   AC_REQUIRE([gl_CHECK_FUNC_TIMESPEC_GET])
   if test $gl_cv_func_timespec_get != yes; then
     HAVE_TIMESPEC_GET=0
+    case "$gl_cv_onwards_func_timespec_get" in
+      future*) REPLACE_TIMESPEC_GET=1 ;;
+    esac
   fi
 ])
