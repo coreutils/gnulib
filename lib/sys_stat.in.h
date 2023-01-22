@@ -716,7 +716,9 @@ _GL_FUNCDECL_SYS (mkfifoat, int, (int fd, char const *file, mode_t mode)
 #  endif
 _GL_CXXALIAS_SYS (mkfifoat, int, (int fd, char const *file, mode_t mode));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (mkfifoat);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef mkfifoat
 # if HAVE_RAW_DECL_MKFIFOAT

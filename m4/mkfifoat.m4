@@ -1,4 +1,4 @@
-# serial 8
+# serial 9
 # See if we need to provide mkfifoat/mknodat replacement.
 
 dnl Copyright (C) 2009-2023 Free Software Foundation, Inc.
@@ -62,6 +62,9 @@ AC_DEFUN([gl_FUNC_MKFIFOAT],
   else
     # No known system has mkfifoat but not mknodat
     HAVE_MKFIFOAT=0
+    case "$gl_cv_onwards_func_mkfifoat" in
+      future*) REPLACE_MKFIFOAT=1 ;;
+    esac
     HAVE_MKNODAT=0
     case "$gl_cv_onwards_func_mknodat" in
       future*) REPLACE_MKNODAT=1 ;;
