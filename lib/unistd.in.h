@@ -2029,15 +2029,27 @@ _GL_CXXALIASWARN (rmdir);
 
    Platforms with no ability to set the hostname return -1 and set
    errno = ENOSYS.  */
-# if !@HAVE_SETHOSTNAME@ || !@HAVE_DECL_SETHOSTNAME@
+# if @REPLACE_SETHOSTNAME@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef sethostname
+#   define sethostname rpl_sethostname
+#  endif
+_GL_FUNCDECL_RPL (sethostname, int, (const char *name, size_t len)
+                                    _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_RPL (sethostname, int, (const char *name, size_t len));
+# else
+#  if !@HAVE_SETHOSTNAME@ || !@HAVE_DECL_SETHOSTNAME@
 _GL_FUNCDECL_SYS (sethostname, int, (const char *name, size_t len)
                                     _GL_ARG_NONNULL ((1)));
-# endif
+#  endif
 /* Need to cast, because on Solaris 11 2011-10, Mac OS X 10.5, IRIX 6.5
    and FreeBSD 6.4 the second parameter is int.  On Solaris 11
    2011-10, the first parameter is not const.  */
 _GL_CXXALIAS_SYS_CAST (sethostname, int, (const char *name, size_t len));
+# endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (sethostname);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef sethostname
 # if HAVE_RAW_DECL_SETHOSTNAME
