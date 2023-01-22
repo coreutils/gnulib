@@ -100,6 +100,10 @@ _GL_CXXALIASWARN (lsearch);
 #   define tsearch rpl_tsearch
 #   define tfind rpl_tfind
 #   define tdelete rpl_tdelete
+#  endif
+# endif
+# if @REPLACE_TWALK@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define twalk rpl_twalk
 #  endif
 # endif
@@ -224,7 +228,7 @@ _GL_CXXALIASWARN (tdelete);
         pointer to the key,
      2. an indicator which visit of the node this is,
      3. the level of the node in the tree (0 for the root).  */
-# if @REPLACE_TSEARCH@
+# if @REPLACE_TWALK@
 _GL_FUNCDECL_RPL (twalk, void,
                   (const void *vroot, _gl_search_action_fn action)
                   _GL_ARG_NONNULL ((2)));
@@ -245,7 +249,7 @@ _GL_CXXALIASWARN (twalk);
 
 /* Flags used by tsearch.c.  */
 # define GNULIB_defined_tsearch  (@REPLACE_TSEARCH@ || !@HAVE_TSEARCH@)
-# define GNULIB_defined_twalk    (@REPLACE_TSEARCH@ || !@HAVE_TWALK@)
+# define GNULIB_defined_twalk    (@REPLACE_TWALK@ || !@HAVE_TWALK@)
 
 #elif defined GNULIB_POSIXCHECK
 # undef tsearch

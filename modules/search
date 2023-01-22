@@ -38,6 +38,7 @@ search.h: search.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H
 	      -e 's|@''HAVE_TSEARCH''@|$(HAVE_TSEARCH)|g' \
 	      -e 's|@''HAVE_TWALK''@|$(HAVE_TWALK)|g' \
 	      -e 's|@''REPLACE_TSEARCH''@|$(REPLACE_TSEARCH)|g' \
+	      -e 's|@''REPLACE_TWALK''@|$(REPLACE_TWALK)|g' \
 	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
 	      -e '/definition of _GL_ARG_NONNULL/r $(ARG_NONNULL_H)' \
 	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \

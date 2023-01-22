@@ -11,7 +11,7 @@ search
 configure.ac:
 gl_FUNC_TSEARCH
 gl_CONDITIONAL([GL_COND_OBJ_TSEARCH],
-               [test $HAVE_TSEARCH = 0 || test $HAVE_TWALK = 0 || test $REPLACE_TSEARCH = 1])
+               [test $HAVE_TSEARCH = 0 || test $HAVE_TWALK = 0 || test $REPLACE_TSEARCH = 1 || test $REPLACE_TWALK = 1])
 AM_COND_IF([GL_COND_OBJ_TSEARCH], [
   gl_PREREQ_TSEARCH
 ])

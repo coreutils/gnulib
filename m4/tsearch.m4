@@ -1,4 +1,4 @@
-# tsearch.m4 serial 11
+# tsearch.m4 serial 12
 dnl Copyright (C) 2006-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -49,6 +49,7 @@ main ()
     case "$gl_cv_func_tdelete_works" in
       *no)
         REPLACE_TSEARCH=1
+        REPLACE_TWALK=1
         ;;
     esac
   else
@@ -59,6 +60,9 @@ main ()
   fi
   if test $ac_cv_func_twalk != yes; then
     HAVE_TWALK=0
+    case "$gl_cv_onwards_func_twalk" in
+      future*) REPLACE_TWALK=1 ;;
+    esac
   fi
 ])
 
