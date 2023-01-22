@@ -441,7 +441,9 @@ _GL_CXXALIAS_SYS (mbsnrtowcs, size_t,
                    const char **restrict srcp, size_t srclen, size_t len,
                    mbstate_t *restrict ps));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (mbsnrtowcs);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef mbsnrtowcs
 # if HAVE_RAW_DECL_MBSNRTOWCS
