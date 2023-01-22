@@ -1280,7 +1280,9 @@ _GL_FUNCDECL_SYS (reallocarray, void *,
 _GL_CXXALIAS_SYS (reallocarray, void *,
                   (void *ptr, size_t nmemb, size_t size));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (reallocarray);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef reallocarray
 # if HAVE_RAW_DECL_REALLOCARRAY
