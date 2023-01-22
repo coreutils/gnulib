@@ -2173,7 +2173,9 @@ _GL_FUNCDECL_SYS (ttyname_r, int,
 _GL_CXXALIAS_SYS (ttyname_r, int,
                   (int fd, char *buf, size_t buflen));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (ttyname_r);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef ttyname_r
 # if HAVE_RAW_DECL_TTYNAME_R

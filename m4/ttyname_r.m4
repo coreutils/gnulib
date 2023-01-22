@@ -1,4 +1,4 @@
-# ttyname_r.m4 serial 12
+# ttyname_r.m4 serial 13
 dnl Copyright (C) 2010-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -20,6 +20,9 @@ AC_DEFUN([gl_FUNC_TTYNAME_R],
   gl_CHECK_FUNCS_ANDROID([ttyname_r], [[#include <unistd.h>]])
   if test $ac_cv_func_ttyname_r = no; then
     HAVE_TTYNAME_R=0
+    case "$gl_cv_onwards_func_ttyname_r" in
+      future*) REPLACE_TTYNAME_R=1 ;;
+    esac
   else
     HAVE_TTYNAME_R=1
     dnl On Mac OS X 10.4 (and Solaris 10 without gl_USE_SYSTEM_EXTENSIONS)
