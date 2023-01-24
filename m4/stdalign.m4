@@ -93,8 +93,12 @@ AC_DEFUN([gl_STDALIGN_H],
 #      define _GL_STDALIGN_NEEDS_STDDEF 1
 #     endif
 #    else
-#     define _Alignof(type) offsetof (struct { char __a; type __b; }, __b)
-#     define _GL_STDALIGN_NEEDS_STDDEF 1
+#     if (defined __GNUC__ && 4 <= __GNUC__) || defined __clang__
+#      define _Alignof(type) __builtin_offsetof (struct { char __a; type __b; }, __b)
+#     else
+#      define _Alignof(type) offsetof (struct { char __a; type __b; }, __b)
+#      define _GL_STDALIGN_NEEDS_STDDEF 1
+#     endif
 #    endif
 #   endif
 #   if ! (defined __cplusplus && (201103 <= __cplusplus || defined _MSC_VER))
