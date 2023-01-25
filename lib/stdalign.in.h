@@ -1,6 +1,6 @@
 /* A substitute for ISO C11 <stdalign.h>.
 
-   Copyright 2011-2022 Free Software Foundation, Inc.
+   Copyright 2011-2023 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as
@@ -68,7 +68,11 @@
 #   define _Alignof(type) offsetof (__alignof_helper<type>, __b)
 #  endif
 # else
-#  define _Alignof(type) offsetof (struct { char __a; type __b; }, __b)
+#  if (defined __GNUC__ && 4 <= __GNUC__) || defined __clang__
+#   define _Alignof(type) __builtin_offsetof (struct { char __a; type __b; }, __b)
+#  else
+#   define _Alignof(type) offsetof (struct { char __a; type __b; }, __b)
+#  endif
 # endif
 #endif
 #if ! (defined __cplusplus && (201103 <= __cplusplus || defined _MSC_VER))
