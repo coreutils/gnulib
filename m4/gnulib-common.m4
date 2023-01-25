@@ -1,4 +1,4 @@
-# gnulib-common.m4 serial 73.1
+# gnulib-common.m4 serial 73.2
 dnl Copyright (C) 2007-2022 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -128,29 +128,35 @@ AC_DEFUN([gl_COMMON_BODY], [
    by the Nth argument of the function is the size of the returned memory block.
  */
 /* Applies to: function, pointer to function, function types.  */
-#if _GL_HAS_ATTRIBUTE (alloc_size)
-# define _GL_ATTRIBUTE_ALLOC_SIZE(args) __attribute__ ((__alloc_size__ args))
-#else
-# define _GL_ATTRIBUTE_ALLOC_SIZE(args)
+#ifndef _GL_ATTRIBUTE_ALLOC_SIZE
+# if _GL_HAS_ATTRIBUTE (alloc_size)
+#  define _GL_ATTRIBUTE_ALLOC_SIZE(args) __attribute__ ((__alloc_size__ args))
+# else
+#  define _GL_ATTRIBUTE_ALLOC_SIZE(args)
+# endif
 #endif
 
 /* _GL_ATTRIBUTE_ALWAYS_INLINE tells that the compiler should always inline the
    function and report an error if it cannot do so.  */
 /* Applies to: function.  */
-#if _GL_HAS_ATTRIBUTE (always_inline)
-# define _GL_ATTRIBUTE_ALWAYS_INLINE __attribute__ ((__always_inline__))
-#else
-# define _GL_ATTRIBUTE_ALWAYS_INLINE
+#ifndef _GL_ATTRIBUTE_ALWAYS_INLINE
+# if _GL_HAS_ATTRIBUTE (always_inline)
+#  define _GL_ATTRIBUTE_ALWAYS_INLINE __attribute__ ((__always_inline__))
+# else
+#  define _GL_ATTRIBUTE_ALWAYS_INLINE
+# endif
 #endif
 
 /* _GL_ATTRIBUTE_ARTIFICIAL declares that the function is not important to show
     in stack traces when debugging.  The compiler should omit the function from
     stack traces.  */
 /* Applies to: function.  */
-#if _GL_HAS_ATTRIBUTE (artificial)
-# define _GL_ATTRIBUTE_ARTIFICIAL __attribute__ ((__artificial__))
-#else
-# define _GL_ATTRIBUTE_ARTIFICIAL
+#ifndef _GL_ATTRIBUTE_ARTIFICIAL
+# if _GL_HAS_ATTRIBUTE (artificial)
+#  define _GL_ATTRIBUTE_ARTIFICIAL __attribute__ ((__artificial__))
+# else
+#  define _GL_ATTRIBUTE_ARTIFICIAL
+# endif
 #endif
 
 /* _GL_ATTRIBUTE_COLD declares that the function is rarely executed.  */
@@ -158,14 +164,16 @@ AC_DEFUN([gl_COMMON_BODY], [
 /* Avoid __attribute__ ((cold)) on MinGW; see thread starting at
    <https://lists.gnu.org/r/emacs-devel/2019-04/msg01152.html>.
    Also, Oracle Studio 12.6 requires 'cold' not '__cold__'.  */
-#if _GL_HAS_ATTRIBUTE (cold) && !defined __MINGW32__
-# ifndef __SUNPRO_C
-#  define _GL_ATTRIBUTE_COLD __attribute__ ((__cold__))
+#ifndef _GL_ATTRIBUTE_COLD
+# if _GL_HAS_ATTRIBUTE (cold) && !defined __MINGW32__
+#  ifndef __SUNPRO_C
+#   define _GL_ATTRIBUTE_COLD __attribute__ ((__cold__))
+#  else
+#   define _GL_ATTRIBUTE_COLD __attribute__ ((cold))
+#  endif
 # else
-#  define _GL_ATTRIBUTE_COLD __attribute__ ((cold))
+#  define _GL_ATTRIBUTE_COLD
 # endif
-#else
-# define _GL_ATTRIBUTE_COLD
 #endif
 
 /* _GL_ATTRIBUTE_CONST declares that it is OK for a compiler to omit duplicate
@@ -175,10 +183,12 @@ AC_DEFUN([gl_COMMON_BODY], [
    forever, and does not call longjmp.
    (This attribute is stricter than _GL_ATTRIBUTE_PURE.)  */
 /* Applies to: functions.  */
-#if _GL_HAS_ATTRIBUTE (const)
-# define _GL_ATTRIBUTE_CONST __attribute__ ((__const__))
-#else
-# define _GL_ATTRIBUTE_CONST
+#ifndef _GL_ATTRIBUTE_CONST
+# if _GL_HAS_ATTRIBUTE (const)
+#  define _GL_ATTRIBUTE_CONST __attribute__ ((__const__))
+# else
+#  define _GL_ATTRIBUTE_CONST
+# endif
 #endif
 
 /* _GL_ATTRIBUTE_DEALLOC (F, I) declares that the function returns pointers
@@ -187,10 +197,12 @@ AC_DEFUN([gl_COMMON_BODY], [
    _GL_ATTRIBUTE_DEALLOC_FREE declares that the function returns pointers that
    can be freed via 'free'; it can be used only after declaring 'free'.  */
 /* Applies to: functions.  Cannot be used on inline functions.  */
-#if _GL_GNUC_PREREQ (11, 0)
-# define _GL_ATTRIBUTE_DEALLOC(f, i) __attribute__ ((__malloc__ (f, i)))
-#else
-# define _GL_ATTRIBUTE_DEALLOC(f, i)
+#ifndef _GL_ATTRIBUTE_DEALLOC
+# if _GL_GNUC_PREREQ (11, 0)
+#  define _GL_ATTRIBUTE_DEALLOC(f, i) __attribute__ ((__malloc__ (f, i)))
+# else
+#  define _GL_ATTRIBUTE_DEALLOC(f, i)
+# endif
 #endif
 /* If gnulib's <string.h> or <wchar.h> has already defined this macro, continue
    to use this earlier definition, since <stdlib.h> may not have been included
@@ -214,12 +226,14 @@ AC_DEFUN([gl_COMMON_BODY], [
      - enumeration, enumeration item,
      - typedef,
    in C++ also: namespace, class, template specialization.  */
-#if _GL_HAS_C_ATTRIBUTE (deprecated)
-# define _GL_ATTRIBUTE_DEPRECATED [[__deprecated__]]
-#elif _GL_HAS_ATTRIBUTE (deprecated)
-# define _GL_ATTRIBUTE_DEPRECATED __attribute__ ((__deprecated__))
-#else
-# define _GL_ATTRIBUTE_DEPRECATED
+#ifndef _GL_ATTRIBUTE_DEPRECATED
+# if _GL_HAS_C_ATTRIBUTE (deprecated)
+#  define _GL_ATTRIBUTE_DEPRECATED [[__deprecated__]]
+# elif _GL_HAS_ATTRIBUTE (deprecated)
+#  define _GL_ATTRIBUTE_DEPRECATED __attribute__ ((__deprecated__))
+# else
+#  define _GL_ATTRIBUTE_DEPRECATED
+# endif
 #endif
 
 /* _GL_ATTRIBUTE_ERROR(msg) requests an error if a function is called and
@@ -227,24 +241,28 @@ AC_DEFUN([gl_COMMON_BODY], [
    _GL_ATTRIBUTE_WARNING(msg) requests a warning if a function is called and
    the function call is not optimized away.  */
 /* Applies to: functions.  */
-#if _GL_HAS_ATTRIBUTE (error)
-# define _GL_ATTRIBUTE_ERROR(msg) __attribute__ ((__error__ (msg)))
-# define _GL_ATTRIBUTE_WARNING(msg) __attribute__ ((__warning__ (msg)))
-#elif _GL_HAS_ATTRIBUTE (diagnose_if)
-# define _GL_ATTRIBUTE_ERROR(msg) __attribute__ ((__diagnose_if__ (1, msg, "error")))
-# define _GL_ATTRIBUTE_WARNING(msg) __attribute__ ((__diagnose_if__ (1, msg, "warning")))
-#else
-# define _GL_ATTRIBUTE_ERROR(msg)
-# define _GL_ATTRIBUTE_WARNING(msg)
+#if !(defined _GL_ATTRIBUTE_ERROR && defined _GL_ATTRIBUTE_WARNING)
+# if _GL_HAS_ATTRIBUTE (error)
+#  define _GL_ATTRIBUTE_ERROR(msg) __attribute__ ((__error__ (msg)))
+#  define _GL_ATTRIBUTE_WARNING(msg) __attribute__ ((__warning__ (msg)))
+# elif _GL_HAS_ATTRIBUTE (diagnose_if)
+#  define _GL_ATTRIBUTE_ERROR(msg) __attribute__ ((__diagnose_if__ (1, msg, "error")))
+#  define _GL_ATTRIBUTE_WARNING(msg) __attribute__ ((__diagnose_if__ (1, msg, "warning")))
+# else
+#  define _GL_ATTRIBUTE_ERROR(msg)
+#  define _GL_ATTRIBUTE_WARNING(msg)
+# endif
 #endif
 
 /* _GL_ATTRIBUTE_EXTERNALLY_VISIBLE declares that the entity should remain
    visible to debuggers etc., even with '-fwhole-program'.  */
 /* Applies to: functions, variables.  */
-#if _GL_HAS_ATTRIBUTE (externally_visible)
-# define _GL_ATTRIBUTE_EXTERNALLY_VISIBLE __attribute__ ((externally_visible))
-#else
-# define _GL_ATTRIBUTE_EXTERNALLY_VISIBLE
+#ifndef _GL_ATTRIBUTE_EXTERNALLY_VISIBLE
+# if _GL_HAS_ATTRIBUTE (externally_visible)
+#  define _GL_ATTRIBUTE_EXTERNALLY_VISIBLE __attribute__ ((externally_visible))
+# else
+#  define _GL_ATTRIBUTE_EXTERNALLY_VISIBLE
+# endif
 #endif
 
 /* _GL_ATTRIBUTE_FALLTHROUGH declares that it is not a programming mistake if
@@ -252,12 +270,14 @@ AC_DEFUN([gl_COMMON_BODY], [
    'default' label.  The compiler should not warn in this case.  */
 /* Applies to: Empty statement (;), inside a 'switch' statement.  */
 /* Always expands to something.  */
-#if _GL_HAS_C_ATTRIBUTE (fallthrough)
-# define _GL_ATTRIBUTE_FALLTHROUGH [[__fallthrough__]]
-#elif _GL_HAS_ATTRIBUTE (fallthrough)
-# define _GL_ATTRIBUTE_FALLTHROUGH __attribute__ ((__fallthrough__))
-#else
-# define _GL_ATTRIBUTE_FALLTHROUGH ((void) 0)
+#ifndef _GL_ATTRIBUTE_FALLTHROUGH
+# if _GL_HAS_C_ATTRIBUTE (fallthrough)
+#  define _GL_ATTRIBUTE_FALLTHROUGH [[__fallthrough__]]
+# elif _GL_HAS_ATTRIBUTE (fallthrough)
+#  define _GL_ATTRIBUTE_FALLTHROUGH __attribute__ ((__fallthrough__))
+# else
+#  define _GL_ATTRIBUTE_FALLTHROUGH ((void) 0)
+# endif
 #endif
 
 /* _GL_ATTRIBUTE_FORMAT ((ARCHETYPE, STRING-INDEX, FIRST-TO-CHECK))
@@ -271,10 +291,12 @@ AC_DEFUN([gl_COMMON_BODY], [
    If FIRST-TO-CHECK is not 0, arguments starting at FIRST-TO_CHECK
    are suitable for the format string.  */
 /* Applies to: functions.  */
-#if _GL_HAS_ATTRIBUTE (format)
-# define _GL_ATTRIBUTE_FORMAT(spec) __attribute__ ((__format__ spec))
-#else
-# define _GL_ATTRIBUTE_FORMAT(spec)
+#ifndef _GL_ATTRIBUTE_FORMAT
+# if _GL_HAS_ATTRIBUTE (format)
+#  define _GL_ATTRIBUTE_FORMAT(spec) __attribute__ ((__format__ spec))
+# else
+#  define _GL_ATTRIBUTE_FORMAT(spec)
+# endif
 #endif
 
 /* _GL_ATTRIBUTE_LEAF declares that if the function is called from some other
@@ -282,19 +304,23 @@ AC_DEFUN([gl_COMMON_BODY], [
    exception handling.  This declaration lets the compiler optimize that unit
    more aggressively.  */
 /* Applies to: functions.  */
-#if _GL_HAS_ATTRIBUTE (leaf)
-# define _GL_ATTRIBUTE_LEAF __attribute__ ((__leaf__))
-#else
-# define _GL_ATTRIBUTE_LEAF
+#ifndef _GL_ATTRIBUTE_LEAF
+# if _GL_HAS_ATTRIBUTE (leaf)
+#  define _GL_ATTRIBUTE_LEAF __attribute__ ((__leaf__))
+# else
+#  define _GL_ATTRIBUTE_LEAF
+# endif
 #endif
 
 /* _GL_ATTRIBUTE_MALLOC declares that the function returns a pointer to freshly
    allocated memory.  */
 /* Applies to: functions.  */
-#if _GL_HAS_ATTRIBUTE (malloc)
-# define _GL_ATTRIBUTE_MALLOC __attribute__ ((__malloc__))
-#else
-# define _GL_ATTRIBUTE_MALLOC
+#ifndef _GL_ATTRIBUTE_MALLOC
+# if _GL_HAS_ATTRIBUTE (malloc)
+#  define _GL_ATTRIBUTE_MALLOC __attribute__ ((__malloc__))
+# else
+#  define _GL_ATTRIBUTE_MALLOC
+# endif
 #endif
 
 /* _GL_ATTRIBUTE_MAY_ALIAS declares that pointers to the type may point to the
@@ -302,10 +328,12 @@ AC_DEFUN([gl_COMMON_BODY], [
    strict aliasing optimization.  */
 /* Applies to: types.  */
 /* Oracle Studio 12.6 mishandles may_alias despite __has_attribute OK.  */
-#if _GL_HAS_ATTRIBUTE (may_alias) && !defined __SUNPRO_C
-# define _GL_ATTRIBUTE_MAY_ALIAS __attribute__ ((__may_alias__))
-#else
-# define _GL_ATTRIBUTE_MAY_ALIAS
+#ifndef _GL_ATTRIBUTE_MAY_ALIAS
+# if _GL_HAS_ATTRIBUTE (may_alias) && !defined __SUNPRO_C
+#  define _GL_ATTRIBUTE_MAY_ALIAS __attribute__ ((__may_alias__))
+# else
+#  define _GL_ATTRIBUTE_MAY_ALIAS
+# endif
 #endif
 
 /* _GL_ATTRIBUTE_MAYBE_UNUSED declares that it is not a programming mistake if
@@ -320,10 +348,12 @@ AC_DEFUN([gl_COMMON_BODY], [
 /* In C++ and C2x, this is spelled [[__maybe_unused__]].
    GCC's syntax is __attribute__ ((__unused__)).
    clang supports both syntaxes.  */
-#if _GL_HAS_C_ATTRIBUTE (maybe_unused)
-# define _GL_ATTRIBUTE_MAYBE_UNUSED [[__maybe_unused__]]
-#else
-# define _GL_ATTRIBUTE_MAYBE_UNUSED _GL_ATTRIBUTE_UNUSED
+#ifndef _GL_ATTRIBUTE_MAYBE_UNUSED
+# if _GL_HAS_C_ATTRIBUTE (maybe_unused)
+#  define _GL_ATTRIBUTE_MAYBE_UNUSED [[__maybe_unused__]]
+# else
+#  define _GL_ATTRIBUTE_MAYBE_UNUSED _GL_ATTRIBUTE_UNUSED
+# endif
 #endif
 /* Alternative spelling of this macro, for convenience and for
    compatibility with glibc/include/libc-symbols.h.  */
@@ -335,21 +365,25 @@ AC_DEFUN([gl_COMMON_BODY], [
    discard the return value.  The compiler may warn if the caller does not use
    the return value, unless the caller uses something like ignore_value.  */
 /* Applies to: function, enumeration, class.  */
-#if _GL_HAS_C_ATTRIBUTE (nodiscard)
-# define _GL_ATTRIBUTE_NODISCARD [[__nodiscard__]]
-#elif _GL_HAS_ATTRIBUTE (warn_unused_result)
-# define _GL_ATTRIBUTE_NODISCARD __attribute__ ((__warn_unused_result__))
-#else
-# define _GL_ATTRIBUTE_NODISCARD
+#ifndef _GL_ATTRIBUTE_NODISCARD
+# if _GL_HAS_C_ATTRIBUTE (nodiscard)
+#  define _GL_ATTRIBUTE_NODISCARD [[__nodiscard__]]
+# elif _GL_HAS_ATTRIBUTE (warn_unused_result)
+#  define _GL_ATTRIBUTE_NODISCARD __attribute__ ((__warn_unused_result__))
+# else
+#  define _GL_ATTRIBUTE_NODISCARD
+# endif
 #endif
 
 /* _GL_ATTRIBUTE_NOINLINE tells that the compiler should not inline the
    function.  */
 /* Applies to: functions.  */
-#if _GL_HAS_ATTRIBUTE (noinline)
-# define _GL_ATTRIBUTE_NOINLINE __attribute__ ((__noinline__))
-#else
-# define _GL_ATTRIBUTE_NOINLINE
+#ifndef _GL_ATTRIBUTE_NOINLINE
+# if _GL_HAS_ATTRIBUTE (noinline)
+#  define _GL_ATTRIBUTE_NOINLINE __attribute__ ((__noinline__))
+# else
+#  define _GL_ATTRIBUTE_NOINLINE
+# endif
 #endif
 
 /* _GL_ATTRIBUTE_NONNULL ((N1, N2,...)) declares that the arguments N1, N2,...
@@ -357,20 +391,24 @@ AC_DEFUN([gl_COMMON_BODY], [
    _GL_ATTRIBUTE_NONNULL () declares that all pointer arguments must not be
    null.  */
 /* Applies to: functions.  */
-#if _GL_HAS_ATTRIBUTE (nonnull)
-# define _GL_ATTRIBUTE_NONNULL(args) __attribute__ ((__nonnull__ args))
-#else
-# define _GL_ATTRIBUTE_NONNULL(args)
+#ifndef _GL_ATTRIBUTE_NONNULL
+# if _GL_HAS_ATTRIBUTE (nonnull)
+#  define _GL_ATTRIBUTE_NONNULL(args) __attribute__ ((__nonnull__ args))
+# else
+#  define _GL_ATTRIBUTE_NONNULL(args)
+# endif
 #endif
 
 /* _GL_ATTRIBUTE_NONSTRING declares that the contents of a character array is
    not meant to be NUL-terminated.  */
 /* Applies to: struct/union members and variables that are arrays of element
    type '[[un]signed] char'.  */
-#if _GL_HAS_ATTRIBUTE (nonstring)
-# define _GL_ATTRIBUTE_NONSTRING __attribute__ ((__nonstring__))
-#else
-# define _GL_ATTRIBUTE_NONSTRING
+#ifndef _GL_ATTRIBUTE_NONSTRING
+# if _GL_HAS_ATTRIBUTE (nonstring)
+#  define _GL_ATTRIBUTE_NONSTRING __attribute__ ((__nonstring__))
+# else
+#  define _GL_ATTRIBUTE_NONSTRING
+# endif
 #endif
 
 /* There is no _GL_ATTRIBUTE_NORETURN; use _Noreturn instead.  */
@@ -378,10 +416,12 @@ AC_DEFUN([gl_COMMON_BODY], [
 /* _GL_ATTRIBUTE_NOTHROW declares that the function does not throw exceptions.
  */
 /* Applies to: functions.  */
-#if _GL_HAS_ATTRIBUTE (nothrow) && !defined __cplusplus
-# define _GL_ATTRIBUTE_NOTHROW __attribute__ ((__nothrow__))
-#else
-# define _GL_ATTRIBUTE_NOTHROW
+#ifndef _GL_ATTRIBUTE_NOTHROW
+# if _GL_HAS_ATTRIBUTE (nothrow) && !defined __cplusplus
+#  define _GL_ATTRIBUTE_NOTHROW __attribute__ ((__nothrow__))
+# else
+#  define _GL_ATTRIBUTE_NOTHROW
+# endif
 #endif
 
 /* _GL_ATTRIBUTE_PACKED declares:
@@ -390,10 +430,12 @@ AC_DEFUN([gl_COMMON_BODY], [
    minimizing the memory required.  */
 /* Applies to: struct members, struct, union,
    in C++ also: class.  */
-#if _GL_HAS_ATTRIBUTE (packed)
-# define _GL_ATTRIBUTE_PACKED __attribute__ ((__packed__))
-#else
-# define _GL_ATTRIBUTE_PACKED
+#ifndef _GL_ATTRIBUTE_PACKED
+# if _GL_HAS_ATTRIBUTE (packed)
+#  define _GL_ATTRIBUTE_PACKED __attribute__ ((__packed__))
+# else
+#  define _GL_ATTRIBUTE_PACKED
+# endif
 #endif
 
 /* _GL_ATTRIBUTE_PURE declares that It is OK for a compiler to omit duplicate
@@ -403,19 +445,23 @@ AC_DEFUN([gl_COMMON_BODY], [
    observable state, and always returns exactly once.
    (This attribute is looser than _GL_ATTRIBUTE_CONST.)  */
 /* Applies to: functions.  */
-#if _GL_HAS_ATTRIBUTE (pure)
-# define _GL_ATTRIBUTE_PURE __attribute__ ((__pure__))
-#else
-# define _GL_ATTRIBUTE_PURE
+#ifndef _GL_ATTRIBUTE_PURE
+# if _GL_HAS_ATTRIBUTE (pure)
+#  define _GL_ATTRIBUTE_PURE __attribute__ ((__pure__))
+# else
+#  define _GL_ATTRIBUTE_PURE
+# endif
 #endif
 
 /* _GL_ATTRIBUTE_RETURNS_NONNULL declares that the function's return value is
    a non-NULL pointer.  */
 /* Applies to: functions.  */
-#if _GL_HAS_ATTRIBUTE (returns_nonnull)
-# define _GL_ATTRIBUTE_RETURNS_NONNULL __attribute__ ((__returns_nonnull__))
-#else
-# define _GL_ATTRIBUTE_RETURNS_NONNULL
+#ifndef _GL_ATTRIBUTE_RETURNS_NONNULL
+# if _GL_HAS_ATTRIBUTE (returns_nonnull)
+#  define _GL_ATTRIBUTE_RETURNS_NONNULL __attribute__ ((__returns_nonnull__))
+# else
+#  define _GL_ATTRIBUTE_RETURNS_NONNULL
+# endif
 #endif
 
 /* _GL_ATTRIBUTE_SENTINEL(pos) declares that the variadic function expects a
@@ -423,17 +469,21 @@ AC_DEFUN([gl_COMMON_BODY], [
    _GL_ATTRIBUTE_SENTINEL () - The last argument is NULL (requires C99).
    _GL_ATTRIBUTE_SENTINEL ((N)) - The (N+1)st argument from the end is NULL.  */
 /* Applies to: functions.  */
-#if _GL_HAS_ATTRIBUTE (sentinel)
-# define _GL_ATTRIBUTE_SENTINEL(pos) __attribute__ ((__sentinel__ pos))
-#else
-# define _GL_ATTRIBUTE_SENTINEL(pos)
+#ifndef _GL_ATTRIBUTE_SENTINEL
+# if _GL_HAS_ATTRIBUTE (sentinel)
+#  define _GL_ATTRIBUTE_SENTINEL(pos) __attribute__ ((__sentinel__ pos))
+# else
+#  define _GL_ATTRIBUTE_SENTINEL(pos)
+# endif
 #endif
 
 /* A helper macro.  Don't use it directly.  */
-#if _GL_HAS_ATTRIBUTE (unused)
-# define _GL_ATTRIBUTE_UNUSED __attribute__ ((__unused__))
-#else
-# define _GL_ATTRIBUTE_UNUSED
+#ifndef _GL_ATTRIBUTE_UNUSED
+# if _GL_HAS_ATTRIBUTE (unused)
+#  define _GL_ATTRIBUTE_UNUSED __attribute__ ((__unused__))
+# else
+#  define _GL_ATTRIBUTE_UNUSED
+# endif
 #endif
 
 ]dnl There is no _GL_ATTRIBUTE_VISIBILITY; see m4/visibility.m4 instead.
@@ -444,10 +494,12 @@ AC_DEFUN([gl_COMMON_BODY], [
 /* Applies to: label (both in C and C++).  */
 /* Note that g++ < 4.5 does not support the '__attribute__ ((__unused__)) ;'
    syntax.  But clang does.  */
-#if !(defined __cplusplus && !_GL_GNUC_PREREQ (4, 5)) || defined __clang__
-# define _GL_UNUSED_LABEL _GL_ATTRIBUTE_UNUSED
-#else
-# define _GL_UNUSED_LABEL
+#ifndef _GL_UNUSED_LABEL
+# if !(defined __cplusplus && !_GL_GNUC_PREREQ (4, 5)) || defined __clang__
+#  define _GL_UNUSED_LABEL _GL_ATTRIBUTE_UNUSED
+# else
+#  define _GL_UNUSED_LABEL
+# endif
 #endif
 ])
   AH_VERBATIM([async_safe],
