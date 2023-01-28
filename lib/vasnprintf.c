@@ -2130,7 +2130,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                           characters = 0;
                         }
 
-                      if (characters < width && !(dp->flags & FLAG_LEFT))
+                      if (characters < width && !(flags & FLAG_LEFT))
                         {
                           size_t n = width - characters;
                           ENSURE_ALLOCATION (xsum (length, n));
@@ -2175,7 +2175,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                       }
 # endif
 
-                      if (characters < width && (dp->flags & FLAG_LEFT))
+                      if (characters < width && (flags & FLAG_LEFT))
                         {
                           size_t n = width - characters;
                           ENSURE_ALLOCATION (xsum (length, n));
@@ -2232,7 +2232,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                           characters = 0;
                         }
 
-                      if (characters < width && !(dp->flags & FLAG_LEFT))
+                      if (characters < width && !(flags & FLAG_LEFT))
                         {
                           size_t n = width - characters;
                           ENSURE_ALLOCATION (xsum (length, n));
@@ -2277,7 +2277,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                       }
 # endif
 
-                      if (characters < width && (dp->flags & FLAG_LEFT))
+                      if (characters < width && (flags & FLAG_LEFT))
                         {
                           size_t n = width - characters;
                           ENSURE_ALLOCATION (xsum (length, n));
@@ -2334,7 +2334,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                           characters = 0;
                         }
 
-                      if (characters < width && !(dp->flags & FLAG_LEFT))
+                      if (characters < width && !(flags & FLAG_LEFT))
                         {
                           size_t n = width - characters;
                           ENSURE_ALLOCATION (xsum (length, n));
@@ -2379,7 +2379,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                       }
 # endif
 
-                      if (characters < width && (dp->flags & FLAG_LEFT))
+                      if (characters < width && (flags & FLAG_LEFT))
                         {
                           size_t n = width - characters;
                           ENSURE_ALLOCATION (xsum (length, n));
