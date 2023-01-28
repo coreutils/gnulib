@@ -29,6 +29,7 @@ SIGNATURE_CHECK (vsprintf, int, (char *, char const *, va_list));
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
+#include <wchar.h>
 
 #include "macros.h"
 
