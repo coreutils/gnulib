@@ -179,9 +179,17 @@ AC_DEFUN([gl_ALIGNASOF],
 AC_DEFUN([gl_STDALIGN_H],
 [
   AC_REQUIRE([gl_ALIGNASOF])
-  GL_GENERATE_STDALIGN_H=false
-  AS_IF([test "$gl_cv_header_working_stdalign_h" = no],
-    [GL_GENERATE_STDALIGN_H=true])
+  if test "$gl_cv_header_working_stdalign_h" = no; then
+    GL_GENERATE_STDALIGN_H=true
+  else
+    GL_GENERATE_STDALIGN_H=false
+  fi
 
-  AC_CHECK_HEADERS_ONCE([stdalign.h])
+  gl_CHECK_NEXT_HEADERS([stdalign.h])
+  if test $ac_cv_header_stdalign_h = yes; then
+    HAVE_STDALIGN_H=1
+  else
+    HAVE_STDALIGN_H=0
+  fi
+  AC_SUBST([HAVE_STDALIGN_H])
 ])
