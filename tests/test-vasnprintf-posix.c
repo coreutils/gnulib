@@ -353,6 +353,32 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     free (result);
   }
 
+  { /* Width given as argument.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%*a %d", 10, 1.75, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "  0x1.cp+0 33") == 0
+            || strcmp (result, "  0x3.8p-1 33") == 0
+            || strcmp (result, "    0x7p-2 33") == 0
+            || strcmp (result, "    0xep-3 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Negative width given as argument (cf. FLAG_LEFT below).  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%*a %d", -10, 1.75, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "0x1.cp+0   33") == 0
+            || strcmp (result, "0x3.8p-1   33") == 0
+            || strcmp (result, "0x7p-2     33") == 0
+            || strcmp (result, "0xep-3     33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
   { /* Small precision.  */
     size_t length;
     char *result =
@@ -753,6 +779,32 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     free (result);
   }
 
+  { /* Width given as argument.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%*La %d", 10, 1.75L, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "  0x1.cp+0 33") == 0
+            || strcmp (result, "  0x3.8p-1 33") == 0
+            || strcmp (result, "    0x7p-2 33") == 0
+            || strcmp (result, "    0xep-3 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Negative width given as argument (cf. FLAG_LEFT below).  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%*La %d", -10, 1.75L, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "0x1.cp+0   33") == 0
+            || strcmp (result, "0x3.8p-1   33") == 0
+            || strcmp (result, "0x7p-2     33") == 0
+            || strcmp (result, "0xep-3     33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
   { /* Small precision.  */
     size_t length;
     char *result =
@@ -1067,6 +1119,26 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
       my_asnprintf (NULL, &length, "%10f %d", 1.75, 33, 44, 55);
     ASSERT (result != NULL);
     ASSERT (strcmp (result, "  1.750000 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Width given as argument.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%*f %d", 10, 1.75, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "  1.750000 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Negative width given as argument (cf. FLAG_LEFT below).  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%*f %d", -10, 1.75, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "1.750000   33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
@@ -1451,6 +1523,26 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
       my_asnprintf (NULL, &length, "%10Lf %d", 1.75L, 33, 44, 55);
     ASSERT (result != NULL);
     ASSERT (strcmp (result, "  1.750000 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Width given as argument.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%*Lf %d", 10, 1.75L, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "  1.750000 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Negative width given as argument (cf. FLAG_LEFT below).  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%*Lf %d", -10, 1.75L, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "1.750000   33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
@@ -2044,6 +2136,28 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     free (result);
   }
 
+  { /* Width given as argument.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%*e %d", 15, 1.75, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "   1.750000e+00 33") == 0
+            || strcmp (result, "  1.750000e+000 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Negative width given as argument (cf. FLAG_LEFT below).  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%*e %d", -15, 1.75, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "1.750000e+00    33") == 0
+            || strcmp (result, "1.750000e+000   33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
   { /* FLAG_LEFT.  */
     size_t length;
     char *result =
@@ -2458,6 +2572,28 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     free (result);
   }
 
+  { /* Width given as argument.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%*Le %d", 15, 1.75L, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "   1.750000e+00 33") == 0
+            || strcmp (result, "  1.750000e+000 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Negative width given as argument (cf. FLAG_LEFT below).  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%*Le %d", -15, 1.75L, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "1.750000e+00    33") == 0
+            || strcmp (result, "1.750000e+000   33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
   { /* FLAG_LEFT.  */
     size_t length;
     char *result =
@@ -2785,6 +2921,26 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
       my_asnprintf (NULL, &length, "%10g %d", 1.75, 33, 44, 55);
     ASSERT (result != NULL);
     ASSERT (strcmp (result, "      1.75 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Width given as argument.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%*g %d", 10, 1.75, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "      1.75 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Negative width given as argument (cf. FLAG_LEFT below).  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%*g %d", -10, 1.75, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "1.75       33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
@@ -3191,6 +3347,26 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
       my_asnprintf (NULL, &length, "%10Lg %d", 1.75L, 33, 44, 55);
     ASSERT (result != NULL);
     ASSERT (strcmp (result, "      1.75 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Width given as argument.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%*Lg %d", 10, 1.75L, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "      1.75 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Negative width given as argument (cf. FLAG_LEFT below).  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%*Lg %d", -10, 1.75L, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "1.75       33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }

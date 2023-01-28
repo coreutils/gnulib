@@ -263,6 +263,26 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     ASSERT (retval == strlen (result));
   }
 
+  { /* Width given as argument.  */
+    int retval =
+      my_sprintf (result, "%*a %d", 10, 1.75, 33, 44, 55);
+    ASSERT (strcmp (result, "  0x1.cp+0 33") == 0
+            || strcmp (result, "  0x3.8p-1 33") == 0
+            || strcmp (result, "    0x7p-2 33") == 0
+            || strcmp (result, "    0xep-3 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Negative width given as argument (cf. FLAG_LEFT below).  */
+    int retval =
+      my_sprintf (result, "%*a %d", -10, 1.75, 33, 44, 55);
+    ASSERT (strcmp (result, "0x1.cp+0   33") == 0
+            || strcmp (result, "0x3.8p-1   33") == 0
+            || strcmp (result, "0x7p-2     33") == 0
+            || strcmp (result, "0xep-3     33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
   { /* Small precision.  */
     int retval =
       my_sprintf (result, "%.10a %d", 1.75, 33, 44, 55);
@@ -567,6 +587,26 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     ASSERT (retval == strlen (result));
   }
 
+  { /* Width given as argument.  */
+    int retval =
+      my_sprintf (result, "%*La %d", 10, 1.75L, 33, 44, 55);
+    ASSERT (strcmp (result, "  0x1.cp+0 33") == 0
+            || strcmp (result, "  0x3.8p-1 33") == 0
+            || strcmp (result, "    0x7p-2 33") == 0
+            || strcmp (result, "    0xep-3 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Negative width given as argument (cf. FLAG_LEFT below).  */
+    int retval =
+      my_sprintf (result, "%*La %d", -10, 1.75L, 33, 44, 55);
+    ASSERT (strcmp (result, "0x1.cp+0   33") == 0
+            || strcmp (result, "0x3.8p-1   33") == 0
+            || strcmp (result, "0x7p-2     33") == 0
+            || strcmp (result, "0xep-3     33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
   { /* Small precision.  */
     int retval =
       my_sprintf (result, "%.10La %d", 1.75L, 33, 44, 55);
@@ -822,6 +862,20 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     int retval =
       my_sprintf (result, "%10f %d", 1.75, 33, 44, 55);
     ASSERT (strcmp (result, "  1.750000 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Width given as argument.  */
+    int retval =
+      my_sprintf (result, "%*f %d", 10, 1.75, 33, 44, 55);
+    ASSERT (strcmp (result, "  1.750000 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Negative width given as argument (cf. FLAG_LEFT below).  */
+    int retval =
+      my_sprintf (result, "%*f %d", -10, 1.75, 33, 44, 55);
+    ASSERT (strcmp (result, "1.750000   33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -1122,6 +1176,20 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     int retval =
       my_sprintf (result, "%10Lf %d", 1.75L, 33, 44, 55);
     ASSERT (strcmp (result, "  1.750000 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Width given as argument.  */
+    int retval =
+      my_sprintf (result, "%*Lf %d", 10, 1.75L, 33, 44, 55);
+    ASSERT (strcmp (result, "  1.750000 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Negative width given as argument (cf. FLAG_LEFT below).  */
+    int retval =
+      my_sprintf (result, "%*Lf %d", -10, 1.75L, 33, 44, 55);
+    ASSERT (strcmp (result, "1.750000   33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -1573,6 +1641,22 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     ASSERT (retval == strlen (result));
   }
 
+  { /* Width given as argument.  */
+    int retval =
+      my_sprintf (result, "%*e %d", 15, 1.75, 33, 44, 55);
+    ASSERT (strcmp (result, "   1.750000e+00 33") == 0
+            || strcmp (result, "  1.750000e+000 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Negative width given as argument (cf. FLAG_LEFT below).  */
+    int retval =
+      my_sprintf (result, "%*e %d", -15, 1.75, 33, 44, 55);
+    ASSERT (strcmp (result, "1.750000e+00    33") == 0
+            || strcmp (result, "1.750000e+000   33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
   { /* FLAG_LEFT.  */
     int retval =
       my_sprintf (result, "%-15e %d", 1.75, 33, 44, 55);
@@ -1904,6 +1988,22 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     ASSERT (retval == strlen (result));
   }
 
+  { /* Width given as argument.  */
+    int retval =
+      my_sprintf (result, "%*Le %d", 15, 1.75L, 33, 44, 55);
+    ASSERT (strcmp (result, "   1.750000e+00 33") == 0
+            || strcmp (result, "  1.750000e+000 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Negative width given as argument (cf. FLAG_LEFT below).  */
+    int retval =
+      my_sprintf (result, "%*Le %d", -15, 1.75L, 33, 44, 55);
+    ASSERT (strcmp (result, "1.750000e+00    33") == 0
+            || strcmp (result, "1.750000e+000   33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
   { /* FLAG_LEFT.  */
     int retval =
       my_sprintf (result, "%-15Le %d", 1.75L, 33, 44, 55);
@@ -2166,6 +2266,20 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     int retval =
       my_sprintf (result, "%10g %d", 1.75, 33, 44, 55);
     ASSERT (strcmp (result, "      1.75 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Width given as argument.  */
+    int retval =
+      my_sprintf (result, "%*g %d", 10, 1.75, 33, 44, 55);
+    ASSERT (strcmp (result, "      1.75 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Negative width given as argument (cf. FLAG_LEFT below).  */
+    int retval =
+      my_sprintf (result, "%*g %d", -10, 1.75, 33, 44, 55);
+    ASSERT (strcmp (result, "1.75       33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -2485,6 +2599,20 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     int retval =
       my_sprintf (result, "%10Lg %d", 1.75L, 33, 44, 55);
     ASSERT (strcmp (result, "      1.75 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Width given as argument.  */
+    int retval =
+      my_sprintf (result, "%*Lg %d", 10, 1.75L, 33, 44, 55);
+    ASSERT (strcmp (result, "      1.75 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Negative width given as argument (cf. FLAG_LEFT below).  */
+    int retval =
+      my_sprintf (result, "%*Lg %d", -10, 1.75L, 33, 44, 55);
+    ASSERT (strcmp (result, "1.75       33") == 0);
     ASSERT (retval == strlen (result));
   }
 
