@@ -2872,6 +2872,66 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
 
   /* Test the support of the %s format directive.  */
 
+  { /* Width.  */
+    int retval =
+      my_sprintf (result, "%10s %d", "xyz", 33, 44, 55);
+    ASSERT (strcmp (result, "       xyz 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Width given as argument.  */
+    int retval =
+      my_sprintf (result, "%*s %d", 10, "xyz", 33, 44, 55);
+    ASSERT (strcmp (result, "       xyz 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Negative width given as argument (cf. FLAG_LEFT below).  */
+    int retval =
+      my_sprintf (result, "%*s %d", -10, "xyz", 33, 44, 55);
+    ASSERT (strcmp (result, "xyz        33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_LEFT.  */
+    int retval =
+      my_sprintf (result, "%-10s %d", "xyz", 33, 44, 55);
+    ASSERT (strcmp (result, "xyz        33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+#if HAVE_WCHAR_T
+  static wchar_t L_xyz[4] = { 'x', 'y', 'z', 0 };
+
+  { /* Width.  */
+    int retval =
+      my_sprintf (result, "%10ls %d", L_xyz, 33, 44, 55);
+    ASSERT (strcmp (result, "       xyz 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Width given as argument.  */
+    int retval =
+      my_sprintf (result, "%*ls %d", 10, L_xyz, 33, 44, 55);
+    ASSERT (strcmp (result, "       xyz 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Negative width given as argument (cf. FLAG_LEFT below).  */
+    int retval =
+      my_sprintf (result, "%*ls %d", -10, L_xyz, 33, 44, 55);
+    ASSERT (strcmp (result, "xyz        33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_LEFT.  */
+    int retval =
+      my_sprintf (result, "%-10ls %d", L_xyz, 33, 44, 55);
+    ASSERT (strcmp (result, "xyz        33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+#endif
+
   /* To verify that these tests succeed, it is necessary to run them under
      a tool that checks against invalid memory accesses, such as ElectricFence
      or "valgrind --tool=memcheck".  */

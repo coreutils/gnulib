@@ -3696,6 +3696,90 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
 
   /* Test the support of the %s format directive.  */
 
+  { /* Width.  */
+    char *result;
+    int retval =
+      my_asprintf (&result, "%10s %d", "xyz", 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "       xyz 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  { /* Width given as argument.  */
+    char *result;
+    int retval =
+      my_asprintf (&result, "%*s %d", 10, "xyz", 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "       xyz 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  { /* Negative width given as argument (cf. FLAG_LEFT below).  */
+    char *result;
+    int retval =
+      my_asprintf (&result, "%*s %d", -10, "xyz", 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "xyz        33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  { /* FLAG_LEFT.  */
+    char *result;
+    int retval =
+      my_asprintf (&result, "%-10s %d", "xyz", 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "xyz        33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+#if HAVE_WCHAR_T
+  static wchar_t L_xyz[4] = { 'x', 'y', 'z', 0 };
+
+  { /* Width.  */
+    char *result;
+    int retval =
+      my_asprintf (&result, "%10ls %d", L_xyz, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "       xyz 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  { /* Width given as argument.  */
+    char *result;
+    int retval =
+      my_asprintf (&result, "%*ls %d", 10, L_xyz, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "       xyz 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  { /* Negative width given as argument (cf. FLAG_LEFT below).  */
+    char *result;
+    int retval =
+      my_asprintf (&result, "%*ls %d", -10, L_xyz, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "xyz        33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  { /* FLAG_LEFT.  */
+    char *result;
+    int retval =
+      my_asprintf (&result, "%-10ls %d", L_xyz, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "xyz        33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+#endif
+
   /* To verify that these tests succeed, it is necessary to run them under
      a tool that checks against invalid memory accesses, such as ElectricFence
      or "valgrind --tool=memcheck".  */
