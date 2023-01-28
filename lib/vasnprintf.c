@@ -1,5 +1,5 @@
 /* vsprintf with automatic memory allocation.
-   Copyright (C) 1999, 2002-2022 Free Software Foundation, Inc.
+   Copyright (C) 1999, 2002-2023 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as
@@ -2552,7 +2552,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                       characters = 0;
                     }
 
-                  if (characters < width && !(dp->flags & FLAG_LEFT))
+                  if (characters < width && !(flags & FLAG_LEFT))
                     {
                       size_t n = width - characters;
                       ENSURE_ALLOCATION (xsum (length, n));
@@ -2613,7 +2613,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                         }
                     }
 
-                  if (characters < width && (dp->flags & FLAG_LEFT))
+                  if (characters < width && (flags & FLAG_LEFT))
                     {
                       size_t n = width - characters;
                       ENSURE_ALLOCATION (xsum (length, n));
@@ -2769,7 +2769,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                     /* w doesn't matter.  */
                     w = 0;
 
-                  if (w < width && !(dp->flags & FLAG_LEFT))
+                  if (w < width && !(flags & FLAG_LEFT))
                     {
                       size_t n = width - w;
                       ENSURE_ALLOCATION (xsum (length, n));
@@ -2837,7 +2837,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                   length += tmpdst_len;
 #  endif
 
-                  if (w < width && (dp->flags & FLAG_LEFT))
+                  if (w < width && (flags & FLAG_LEFT))
                     {
                       size_t n = width - w;
                       ENSURE_ALLOCATION (xsum (length, n));
