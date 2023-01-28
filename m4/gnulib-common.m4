@@ -1,4 +1,4 @@
-# gnulib-common.m4 serial 73.3
+# gnulib-common.m4 serial 73.4
 dnl Copyright (C) 2007-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -372,7 +372,13 @@ AC_DEFUN([gl_COMMON_BODY], [
    the return value, unless the caller uses something like ignore_value.  */
 /* Applies to: function, enumeration, class.  */
 #ifndef _GL_ATTRIBUTE_NODISCARD
-# if _GL_HAS_C_ATTRIBUTE (nodiscard)
+# if defined __clang__ && defined __cplusplus
+  /* With clang up to 15.0.6 (at least), in C++ mode, [[__nodiscard__]] produces
+     a warning.  */
+#  if __clang_major__ >= 1000
+#   define _GL_ATTRIBUTE_NODISCARD [[__nodiscard__]]
+#  endif
+# elif _GL_HAS_C_ATTRIBUTE (nodiscard)
 #  define _GL_ATTRIBUTE_NODISCARD [[__nodiscard__]]
 # elif _GL_HAS_ATTRIBUTE (warn_unused_result)
 #  define _GL_ATTRIBUTE_NODISCARD __attribute__ ((__warn_unused_result__))
