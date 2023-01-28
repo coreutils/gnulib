@@ -381,7 +381,10 @@ AC_DEFUN([gl_COMMON_BODY], [
 #ifndef _GL_ATTRIBUTE_NODISCARD
 # if defined __clang__ && defined __cplusplus
   /* With clang up to 15.0.6 (at least), in C++ mode, [[__nodiscard__]] produces
-     a warning.  */
+     a warning.
+     The 1000 below means a yet unknown threshold.  When clang++ version X
+     starts supporting [[__nodiscard__]] without warning about it, you can
+     replace the 1000 with X.  */
 #  if __clang_major__ >= 1000
 #   define _GL_ATTRIBUTE_NODISCARD [[__nodiscard__]]
 #  endif
