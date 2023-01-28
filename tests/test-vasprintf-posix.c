@@ -26,6 +26,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
+#include <wchar.h>
 
 #include "macros.h"
 #include "minus-zero.h"
@@ -3825,6 +3826,92 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
         free (result);
         free (block);
       }
+  }
+#endif
+
+  /* Test the support of the %c format directive.  */
+
+  { /* Width.  */
+    char *result;
+    int retval =
+      my_asprintf (&result, "%10c %d", (unsigned char) 'x', 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "         x 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  { /* Width given as argument.  */
+    char *result;
+    int retval =
+      my_asprintf (&result, "%*c %d", 10, (unsigned char) 'x', 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "         x 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  { /* Negative width given as argument (cf. FLAG_LEFT below).  */
+    char *result;
+    int retval =
+      my_asprintf (&result, "%*c %d", -10, (unsigned char) 'x', 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "x          33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  { /* FLAG_LEFT.  */
+    char *result;
+    int retval =
+      my_asprintf (&result, "%-10c %d", (unsigned char) 'x', 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "x          33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+#if HAVE_WCHAR_T
+  static wint_t L_x = (wchar_t) 'x';
+
+  { /* Width.  */
+    char *result;
+    int retval =
+      my_asprintf (&result, "%10lc %d", L_x, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "         x 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  { /* Width given as argument.  */
+    char *result;
+    int retval =
+      my_asprintf (&result, "%*lc %d", 10, L_x, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "         x 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  { /* Negative width given as argument (cf. FLAG_LEFT below).  */
+    char *result;
+    int retval =
+      my_asprintf (&result, "%*lc %d", -10, L_x, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "x          33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  { /* FLAG_LEFT.  */
+    char *result;
+    int retval =
+      my_asprintf (&result, "%-10lc %d", L_x, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "x          33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
   }
 #endif
 }

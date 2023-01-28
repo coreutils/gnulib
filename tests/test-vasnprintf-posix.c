@@ -27,6 +27,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
+#include <wchar.h>
 
 #include "macros.h"
 #include "minus-zero.h"
@@ -3880,6 +3881,96 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
       ASSERT (errno == EILSEQ);
     else
       free (result);
+  }
+#endif
+
+  /* Test the support of the %c format directive.  */
+
+  { /* Width.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length,
+                    "%10c %d", (unsigned char) 'x', 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "         x 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Width given as argument.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length,
+                    "%*c %d", 10, (unsigned char) 'x', 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "         x 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Negative width given as argument (cf. FLAG_LEFT below).  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length,
+                    "%*c %d", -10, (unsigned char) 'x', 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "x          33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* FLAG_LEFT.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length,
+                    "%-10c %d", (unsigned char) 'x', 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "x          33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+#if HAVE_WCHAR_T
+  static wint_t L_x = (wchar_t) 'x';
+
+  { /* Width.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%10lc %d", L_x, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "         x 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Width given as argument.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%*lc %d", 10, L_x, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "         x 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Negative width given as argument (cf. FLAG_LEFT below).  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%*lc %d", -10, L_x, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "x          33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* FLAG_LEFT.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%-10lc %d", L_x, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "x          33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
   }
 #endif
 

@@ -2987,4 +2987,70 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
       }
   }
 #endif
+
+  /* Test the support of the %c format directive.  */
+
+  { /* Width.  */
+    int retval =
+      my_snprintf (result, sizeof (result),
+                   "%10c %d", (unsigned char) 'x', 33, 44, 55);
+    ASSERT (strcmp (result, "         x 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Width given as argument.  */
+    int retval =
+      my_snprintf (result, sizeof (result),
+                   "%*c %d", 10, (unsigned char) 'x', 33, 44, 55);
+    ASSERT (strcmp (result, "         x 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Negative width given as argument (cf. FLAG_LEFT below).  */
+    int retval =
+      my_snprintf (result, sizeof (result),
+                   "%*c %d", -10, (unsigned char) 'x', 33, 44, 55);
+    ASSERT (strcmp (result, "x          33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_LEFT.  */
+    int retval =
+      my_snprintf (result, sizeof (result),
+                   "%-10c %d", (unsigned char) 'x', 33, 44, 55);
+    ASSERT (strcmp (result, "x          33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+#if HAVE_WCHAR_T
+  static wint_t L_x = (wchar_t) 'x';
+
+  { /* Width.  */
+    int retval =
+      my_snprintf (result, sizeof (result), "%10lc %d", L_x, 33, 44, 55);
+    ASSERT (strcmp (result, "         x 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Width given as argument.  */
+    int retval =
+      my_snprintf (result, sizeof (result), "%*lc %d", 10, L_x, 33, 44, 55);
+    ASSERT (strcmp (result, "         x 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Negative width given as argument (cf. FLAG_LEFT below).  */
+    int retval =
+      my_snprintf (result, sizeof (result), "%*lc %d", -10, L_x, 33, 44, 55);
+    ASSERT (strcmp (result, "x          33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_LEFT.  */
+    int retval =
+      my_snprintf (result, sizeof (result), "%-10lc %d", L_x, 33, 44, 55);
+    ASSERT (strcmp (result, "x          33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+#endif
 }
