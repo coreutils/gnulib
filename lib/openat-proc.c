@@ -123,8 +123,16 @@ openat_proc_name (char buf[OPENAT_BUFFER_SIZE], int fd, char const *file)
 # endif
 # ifdef __MVS__
     char dir[_XOPEN_PATH_MAX];
-    if (w_ioctl (fd, _IOCC_GPN, sizeof dir, dir) == 0)
-      __e2a_l (dir, sizeof dir);
+    /* Documentation:
+       https://www.ibm.com/docs/en/zos/2.2.0?topic=functions-w-ioctl-w-pioctl-control-devices */
+    if (w_ioctl (fd, _IOCC_GPN, sizeof dir, dir) < 0)
+      return NULL;
+    /* Documentation:
+       https://www.ibm.com/docs/en/zos/2.2.0?topic=functions-e2a-l-convert-characters-from-ebcdic-ascii */
+    dirlen = __e2a_l (dir, strlen (dir));
+    if (dirlen < 0 || dirlen >= sizeof dir)
+      return NULL;
+    dir[dirlen] = '\0';
 # endif
 
     dirlen = strlen (dir);
