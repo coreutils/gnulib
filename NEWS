@@ -79,6 +79,13 @@ Date        Modules         Changes
 
 2023-01-15  stdalign        This module is deprecated.  Use alignasof instead.
 
+2023-01-13  acl             Link additionally with $(QCOPY_ACL_LIB).
+            qacl
+            copy-file
+            supersede
+
+2023-01-13  qcopy-acl       Link with $(QCOPY_ACL_LIB) instead of $(LIB_ACL).
+
 2023-01-07  timer_time      Link with $(TIMER_TIME_LIB) instead of
                             $(LIB_TIMER_TIME).
 
