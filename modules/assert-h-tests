@@ -2,6 +2,7 @@ Files:
 tests/test-assert.c
 
 Depends-on:
+assert-h-c++-tests
 
 configure.ac:
 
