@@ -144,18 +144,17 @@ typedef struct
 
 /* Flags to be set in the 'posix_spawnattr_t'.  */
 #if @HAVE_POSIX_SPAWN@
-# if !@REPLACE_POSIX_SPAWN@
-/* Use the values from the system, but provide the missing ones.  */
-#  ifndef POSIX_SPAWN_SETSCHEDPARAM
-#   define POSIX_SPAWN_SETSCHEDPARAM 0
-#  endif
-#  ifndef POSIX_SPAWN_SETSCHEDULER
-#   define POSIX_SPAWN_SETSCHEDULER 0
-#  endif
-# else /* @REPLACE_POSIX_SPAWN@ */
+# if @REPLACE_POSIX_SPAWN@
 /* Use the values from the system, for better compatibility.  */
 /* But this implementation does not support AIX extensions.  */
 #   undef POSIX_SPAWN_FORK_HANDLERS
+# endif
+/* Provide the values that the system is lacking.  */
+# ifndef POSIX_SPAWN_SETSCHEDPARAM
+#  define POSIX_SPAWN_SETSCHEDPARAM 0
+# endif
+# ifndef POSIX_SPAWN_SETSCHEDULER
+#  define POSIX_SPAWN_SETSCHEDULER 0
 # endif
 #else /* !@HAVE_POSIX_SPAWN@ */
 # define POSIX_SPAWN_RESETIDS           0x01
