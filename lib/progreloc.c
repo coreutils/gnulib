@@ -133,7 +133,7 @@ static size_t
 full_read (int fd, void *buf, size_t count)
 {
   size_t total = 0;
-  const char *ptr = (const char *) buf;
+  char *ptr = (char *) buf;
 
   while (count > 0)
     {
