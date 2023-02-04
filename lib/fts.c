@@ -1993,10 +1993,10 @@ fts_padjust (FTS *sp, FTSENT *head)
            trick does not work on your platform, please report a bug.  */
 
 #define ADJUST(p) do {                                                  \
-        uintptr_t old_accpath = *(uintptr_t *) &(p)->fts_accpath;       \
+        uintptr_t old_accpath = (uintptr_t) (p)->fts_accpath;           \
         if (old_accpath != (uintptr_t) (p)->fts_name) {                 \
                 (p)->fts_accpath =                                      \
-                  addr + (old_accpath - *(uintptr_t *) &(p)->fts_path); \
+                  addr + (old_accpath - (uintptr_t) (p)->fts_path);     \
         }                                                               \
         (p)->fts_path = addr;                                           \
 } while (0)
