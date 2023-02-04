@@ -31,6 +31,7 @@ opendirat
 readdir
 stdbool
 stddef
+stdint
 
 configure.ac:
 gl_FUNC_FTS

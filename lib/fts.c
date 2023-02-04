@@ -63,6 +63,7 @@ static char sccsid[] = "@(#)fts.c       8.6 (Berkeley) 8/14/94";
 #include <fcntl.h>
 #include <errno.h>
 #include <stddef.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
@@ -1268,7 +1269,6 @@ fts_build (register FTS *sp, int type)
         register FTSENT *p, *head;
         register size_t nitems;
         FTSENT *tail;
-        void *oldaddr;
         int saved_errno;
         bool descend;
         bool doadjust;
@@ -1461,7 +1461,7 @@ fts_build (register FTS *sp, int type)
                         goto mem1;
                 if (d_namelen >= maxlen) {
                         /* include space for NUL */
-                        oldaddr = sp->fts_path;
+                        uintptr_t oldaddr = (uintptr_t) sp->fts_path;
                         if (! fts_palloc(sp, d_namelen + len + 1)) {
                                 /*
                                  * No more memory.  Save
@@ -1478,7 +1478,7 @@ mem1:                           saved_errno = errno;
                                 return (NULL);
                         }
                         /* Did realloc() change the pointer? */
-                        if (oldaddr != sp->fts_path) {
+                        if (oldaddr != (uintptr_t) sp->fts_path) {
                                 doadjust = true;
                                 if (ISSET(FTS_NOCHDIR))
                                         cp = sp->fts_path + len;
@@ -1988,10 +1988,15 @@ fts_padjust (FTS *sp, FTSENT *head)
         FTSENT *p;
         char *addr = sp->fts_path;
 
+        /* This code looks at bit-patterns of freed pointers to
+           relocate them, so it relies on undefined behavior.  If this
+           trick does not work on your platform, please report a bug.  */
+
 #define ADJUST(p) do {                                                  \
-        if ((p)->fts_accpath != (p)->fts_name) {                        \
+        uintptr_t old_accpath = *(uintptr_t *) &(p)->fts_accpath;       \
+        if (old_accpath != (uintptr_t) (p)->fts_name) {                 \
                 (p)->fts_accpath =                                      \
-                    (char *)addr + ((p)->fts_accpath - (p)->fts_path);  \
+                  addr + (old_accpath - *(uintptr_t *) &(p)->fts_path); \
         }                                                               \
         (p)->fts_path = addr;                                           \
 } while (0)
