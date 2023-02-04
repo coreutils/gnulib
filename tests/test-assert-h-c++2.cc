@@ -1,5 +1,5 @@
 /* Test of <assert.h> substitute in C++ mode.
-   Copyright (C) 2019-2022 Free Software Foundation, Inc.
+   Copyright (C) 2019-2023 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -18,3 +18,7 @@
 #include <config.h>
 
 #include <cassert>
+
+/* Check against conflicts between <cassert> and other C++ header files.  */
+#include <stddef.h>
+#include <iostream>
