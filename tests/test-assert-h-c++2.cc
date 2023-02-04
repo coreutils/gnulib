@@ -18,3 +18,7 @@
 #include <config.h>
 
 #include <cassert>
+
+/* Check against conflicts between <cassert> and other C++ header files.  */
+#include <stddef.h>
+#include <iostream>

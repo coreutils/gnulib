@@ -21,6 +21,10 @@
 
 #include <assert.h>
 
+/* Check against conflicts between <assert.h> and the C++ header files.  */
+#include <stddef.h>
+#include <iostream>
+
 
 int
 main ()
