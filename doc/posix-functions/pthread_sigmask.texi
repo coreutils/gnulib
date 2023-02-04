@@ -35,6 +35,6 @@ Portability problems not fixed by Gnulib:
 On platforms that do not natively support this function,
 it has unspecified behavior in a multi-threaded process.
 @item
-This function may not fail when the first argument is invalid on some platforms:
-NetBSD 8.0.
+In case of failure, the return value is wrong on some platforms:
+NetBSD 9.0 when libpthread is not in use.
 @end itemize
