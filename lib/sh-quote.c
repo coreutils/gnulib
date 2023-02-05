@@ -30,7 +30,7 @@ static struct quoting_options *sh_quoting_options;
 
 /* Initializes the sh_quoting_options variable.  */
 static void
-init_sh_quoting_options ()
+init_sh_quoting_options (void)
 {
   sh_quoting_options = clone_quoting_options (NULL);
   set_quoting_style (sh_quoting_options, shell_quoting_style);
