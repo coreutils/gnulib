@@ -867,6 +867,7 @@ substituted by Gnulib.
 @menu
 * alignof::        @code{alignas} and @code{alignof}
 * bool::           @code{bool}, @code{false}, and @code{true}
+* nullptr::        @code{nullptr}
 * static_assert::  @code{static_assert}
 @end menu
 
@@ -914,6 +915,47 @@ On pre-C23 platforms, the keyword substitutes are macros.
 
 @item
 On pre-C23 platforms, the keyword substitutes assume C99 or later.
+@end itemize
+
+@node nullptr
+@section @code{nullptr}
+
+Gnulib module: c-nullptr
+
+@cindex null pointer
+The @code{c-nullptr} module arranges for @code{nullptr} to act
+like standard C@.
+
+The C @code{nullptr} keyword yields a null pointer.  It differs from
+the @code{NULL} macro, in that @code{NULL} might be an integer whereas
+@code{nullptr} is of a special @code{nullptr_t} type with only one
+value, namely @code{nullptr} itself.  Using @code{nullptr} can help
+some compilers emit more sensible warnings, can avoid the need to cast
+a null pointer passed to a function prototyped with an ellipsis, and
+removes the need to include @code{<stddef.h>} merely to define
+@code{NULL}.
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+Some platforms lack @code{nullptr}:
+GCC 12, Clang 15, and other pre-2023 C compilers.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+On older platforms, @code{nullptr} is a macro instead of a keyword.
+
+@item
+On older platforms, @code{nullptr} does not have the type @code{nullptr_t}.
+In C, it has type @code{void *}; in C++ it has an integer type.
+
+@item
+On older platforms Gnulib cannot easily emulate @code{nullptr_t}, so
+null pointer type checking is more error prone, and @code{_Generic}
+expressions cannot reliably distinguish @code{nullptr}'s type from
+integer or @code{void *} types.
 @end itemize
 
 @node static_assert

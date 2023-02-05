@@ -36,6 +36,12 @@ it does not fulfil the expectations of other system header files.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
+@cindex null pointer type
+Some platforms fail to provide @code{nullptr_t},
+which Gnulib cannot usefully emulate:
+GCC 12, Clang 15, and other pre-2023 C compilers.
+
+@item
 Some platforms provide an @code{offsetof} macro that cannot be used in
 arbitrary expressions:
 Solaris 11.4
