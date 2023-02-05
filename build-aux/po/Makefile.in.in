@@ -1,13 +1,13 @@
 # Makefile for PO directory in any package using GNU gettext.
 # Copyright (C) 1995-2000 Ulrich Drepper <drepper@gnu.ai.mit.edu>
-# Copyright (C) 2000-2023 Free Software Foundation, Inc.
+# Copyright (C) 2000-2020 Free Software Foundation, Inc.
 #
 # Copying and distribution of this file, with or without modification,
 # are permitted in any medium without royalty provided the copyright
 # notice and this notice are preserved.  This file is offered as-is,
 # without any warranty.
 #
-# Origin: gettext-0.20
+# Origin: gettext-0.21
 GETTEXT_MACRO_VERSION = 0.20
 
 PACKAGE = @PACKAGE@
@@ -90,6 +90,9 @@ DISTFILESDEPS = $(DISTFILESDEPS_$(DIST_DEPENDS_ON_UPDATE_PO))
 
 # Makevars gets inserted here. (Don't remove this line!)
 
+all: all-@USE_NLS@
+
+
 .SUFFIXES:
 .SUFFIXES: .po .gmo .sed .sin .nop .po-create .po-update
 
@@ -107,7 +110,8 @@ DISTFILESDEPS = $(DISTFILESDEPS_$(DIST_DEPENDS_ON_UPDATE_PO))
 # the .pot file. This eliminates the need to update the .po files when the
 # .pot file has changed, which would be troublesome if the .po files are put
 # under version control.
-.po.gmo: $(srcdir)/$(DOMAIN).pot
+$(GMOFILES): $(srcdir)/$(DOMAIN).pot
+.po.gmo:
 	@lang=`echo $* | sed -e 's,.*/,,'`; \
 	test "$(srcdir)" = . && cdcmd="" || cdcmd="cd $(srcdir) && "; \
 	echo "$${cdcmd}rm -f $${lang}.gmo && $(MSGMERGE) $(MSGMERGE_FOR_MSGFMT_OPTION) -o $${lang}.1po $${lang}.po $(DOMAIN).pot && $(GMSGFMT) -c --statistics --verbose -o $${lang}.gmo $${lang}.1po && rm -f $${lang}.1po"; \
@@ -122,8 +126,6 @@ DISTFILESDEPS = $(DISTFILESDEPS_$(DIST_DEPENDS_ON_UPDATE_PO))
 	sed -e '/^#/d' $< > t-$@
 	mv t-$@ $@
 
-
-all: all-@USE_NLS@
 
 all-yes: $(srcdir)/stamp-po
 all-no:
@@ -413,12 +415,17 @@ dist distdir:
 	@$(MAKE) dist2
 # This is a separate target because 'update-po' must be executed before.
 dist2: $(srcdir)/stamp-po $(DISTFILES)
-	dists="$(DISTFILES)"; \
+	@dists="$(DISTFILES)"; \
 	if test "$(PACKAGE)" = "gettext-tools"; then \
 	  dists="$$dists Makevars.template"; \
 	fi; \
 	if test -f $(srcdir)/$(DOMAIN).pot; then \
 	  dists="$$dists $(DOMAIN).pot stamp-po"; \
+	else \
+	  case $(XGETTEXT) in \
+	    :) echo "Warning: Creating a tarball without '$(DOMAIN).pot', because a suitable 'xgettext' program was not found in PATH." 1>&2;; \
+	    *) echo "Warning: Creating a tarball without '$(DOMAIN).pot', because 'xgettext' found no strings to extract. Check the contents of the POTFILES.in file and the XGETTEXT_OPTIONS in the Makevars file." 1>&2;; \
+	  esac; \
 	fi; \
 	if test -f $(srcdir)/ChangeLog; then \
 	  dists="$$dists ChangeLog"; \
