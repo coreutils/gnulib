@@ -18,13 +18,25 @@ AC_DEFUN([gl_C_NULLPTR],
 ])
 
   AH_VERBATIM([nullptr],
-[#ifndef HAVE_C_NULLPTR
-# ifndef __cplusplus
-#  define nullptr ((void *) 0)
-# elif 3 <= __GNUG__
-#  define nullptr __null
+[#ifndef nullptr /* keep config.h idempotent */
+# ifdef __cplusplus
+/* For the C++ compiler the result of the configure test is irrelevant.
+   We know that at least g++ and clang with option -std=c++11 or higher, as well
+   as MSVC 14 or newer, already have nullptr.  */
+#  if !(((defined __GNUC__ || defined __clang__) && __cplusplus >= 201103L) \
+        || (defined _MSC_VER && 1900 <= _MSC_VER))
+/* Define nullptr as a macro, the best we can.  */
+#   if 3 <= __GNUG__
+#    define nullptr __null
+#   else
+#    define nullptr 0L
+#   endif
+#  endif
 # else
-#  define nullptr 0L
+/* For the C compiler, use the result of the configure test.  */
+#  ifndef HAVE_C_NULLPTR
+#   define nullptr ((void *) 0)
+#  endif
 # endif
 #endif])
 ])
