@@ -166,7 +166,7 @@ Solaris 11.0         OK
 Solaris 11.4         OK
 Solaris OpenIndiana  OK
 Haiku                crash < 1 sec
-Cygwin               crash < 1 sec
+Cygwin < 3.4.6       crash < 1 sec
 mingw                OK
 MSVC                 OK (assuming compiler option /MD !)
 */
