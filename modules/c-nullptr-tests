@@ -1,0 +1,12 @@
+Files:
+tests/test-nullptr.c
+tests/macros.h
+
+Depends-on:
+c-nullptr-c++-tests
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-nullptr
+check_PROGRAMS += test-nullptr
