@@ -3,7 +3,7 @@ tests/test-nullptr.c
 tests/macros.h
 
 Depends-on:
-c-nullptr-c++-tests
+nullptr-c++-tests
 
 configure.ac:
 

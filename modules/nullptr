@@ -2,12 +2,12 @@ Description:
 A nullptr that is like C23.
 
 Files:
-m4/c-nullptr.m4
+m4/nullptr.m4
 
 Depends-on:
 
 configure.ac:
-gl_C_NULLPTR
+gl_NULLPTR
 
 Makefile.am:
 

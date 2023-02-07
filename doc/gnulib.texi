@@ -920,13 +920,13 @@ On pre-C23 platforms, the keyword substitutes assume C99 or later.
 @node nullptr
 @section @code{nullptr}
 
-Gnulib module: c-nullptr
+Gnulib module: nullptr
 
 @cindex null pointer
-The @code{c-nullptr} module arranges for @code{nullptr} to act
-like standard C@.
+The @code{nullptr} module arranges for @code{nullptr} to act
+like standard C and C++.
 
-The C @code{nullptr} keyword yields a null pointer.  It differs from
+The @code{nullptr} keyword yields a null pointer.  It differs from
 the @code{NULL} macro, in that @code{NULL} might be an integer whereas
 @code{nullptr} is of a special @code{nullptr_t} type with only one
 value, namely @code{nullptr} itself.  Using @code{nullptr} can help
@@ -939,7 +939,8 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 Some platforms lack @code{nullptr}:
-GCC 12, Clang 15, and other pre-2023 C compilers.
+For C: GCC 12, Clang 15, and other pre-2023 C compilers.
+For C++: pre-2011 C++ compilers.
 @end itemize
 
 Portability problems not fixed by Gnulib:
