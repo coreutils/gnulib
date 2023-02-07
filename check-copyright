@@ -170,12 +170,20 @@ for file in $candidates; do
     fi
   done
   if test "$file_license" != "$weakest_license"; then
-    if test $error = 0; then
-      echo "Module License    File License      File name"
-      echo "================= ================= ====================================="
+    # The 'glob' module is a special case. It contains LGPLv2+ code (shared with
+    # glibc) but at the same time also has a dependency to a module under GPL
+    # (namely, 'fstatat'). This is not a mistake.
+    if test "$weakest_license" = GPL \
+       && case "$file" in lib/glob*) true ;; *) false ;; esac; then
+      :
+    else
+      if test $error = 0; then
+        echo "Module License    File License      File name"
+        echo "================= ================= ====================================="
+      fi
+      printf '%-17s %-17s %s\n' "$weakest_license" "$file_license" "$file"
+      error=1
     fi
-    printf '%-17s %-17s %s\n' "$weakest_license" "$file_license" "$file"
-    error=1
   fi
 done
 exit $error
