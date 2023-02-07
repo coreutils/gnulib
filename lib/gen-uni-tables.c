@@ -1,7 +1,7 @@
 /* Generate Unicode conforming character classification tables and
    line break properties tables and word break property tables and
    decomposition/composition and case mapping tables from a UnicodeData file.
-   Copyright (C) 2000-2002, 2004, 2007-2022 Free Software Foundation, Inc.
+   Copyright (C) 2000-2002, 2004, 2007-2023 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2000-2002.
 
    This program is free software: you can redistribute it and/or modify
@@ -771,7 +771,9 @@ output_predicate (const char *filename, bool (*predicate) (unsigned int), const 
 
   fprintf (stream, "/* Copyright (C) 2000-2022 Free Software Foundation, Inc.\n");
   fprintf (stream, "\n");
-  output_library_license (stream, strcmp (filename, "unictype/categ_M.h") == 0);
+  output_library_license (stream,
+                          strcmp (filename, "unictype/categ_M.h") == 0
+                          || strcmp (filename, "uniwidth/width2.h") == 0);
   fprintf (stream, "\n");
 
   t.p = 4; /* or: 5 */
@@ -6420,7 +6422,7 @@ output_nonspacing_property (const char *filename, const char *version)
 
   fprintf (stream, "/* Copyright (C) 2000-2022 Free Software Foundation, Inc.\n");
   fprintf (stream, "\n");
-  output_library_license (stream, false);
+  output_library_license (stream, true);
   fprintf (stream, "\n");
 
   next_ind = 0;
