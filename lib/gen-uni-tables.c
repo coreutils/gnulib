@@ -773,7 +773,9 @@ output_predicate (const char *filename, bool (*predicate) (unsigned int), const 
 
   fprintf (stream, "/* Copyright (C) 2000-2022 Free Software Foundation, Inc.\n");
   fprintf (stream, "\n");
-  output_library_license (stream, strcmp (filename, "unictype/categ_M.h") == 0);
+  output_library_license (stream,
+                          strcmp (filename, "unictype/categ_M.h") == 0
+                          || strcmp (filename, "uniwidth/width2.h") == 0);
   fprintf (stream, "\n");
 
   t.p = 4; /* or: 5 */
@@ -6422,7 +6424,7 @@ output_nonspacing_property (const char *filename, const char *version)
 
   fprintf (stream, "/* Copyright (C) 2000-2022 Free Software Foundation, Inc.\n");
   fprintf (stream, "\n");
-  output_library_license (stream, false);
+  output_library_license (stream, true);
   fprintf (stream, "\n");
 
   next_ind = 0;
