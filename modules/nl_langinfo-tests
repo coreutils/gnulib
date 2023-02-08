@@ -1,24 +1,31 @@
 Files:
 tests/test-nl_langinfo1.sh
+tests/test-nl_langinfo2.sh
 tests/test-nl_langinfo1.c
+tests/test-nl_langinfo2.c
 tests/test-nl_langinfo-mt.c
 tests/signature.h
 tests/macros.h
 m4/locale-fr.m4
+m4/intl-thread-locale.m4
 
 Depends-on:
 c-strcase
+c-strcasestr
 setlocale
 thread
 nanosleep
+stdbool
 
 configure.ac:
 gt_LOCALE_FR
 gt_LOCALE_FR_UTF8
+gt_FUNC_USELOCALE
 
 Makefile.am:
-TESTS += test-nl_langinfo1.sh test-nl_langinfo-mt
+TESTS += test-nl_langinfo1.sh test-nl_langinfo2.sh test-nl_langinfo-mt
 TESTS_ENVIRONMENT += LOCALE_FR='@LOCALE_FR@' LOCALE_FR_UTF8='@LOCALE_FR_UTF8@'
-check_PROGRAMS += test-nl_langinfo1 test-nl_langinfo-mt
+check_PROGRAMS += test-nl_langinfo1 test-nl_langinfo2 test-nl_langinfo-mt
 test_nl_langinfo1_LDADD = $(LDADD) $(SETLOCALE_LIB)
+test_nl_langinfo2_LDADD = $(LDADD) $(SETLOCALE_LIB)
 test_nl_langinfo_mt_LDADD = $(LDADD) $(SETLOCALE_LIB) $(LIBMULTITHREAD) $(NANOSLEEP_LIB)
