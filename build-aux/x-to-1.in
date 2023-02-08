@@ -35,7 +35,18 @@
 #
 # Options:
 #   --update    Don't overwrite the output if nothing would change.
-
+#
+# Configure-time prerequisites:
+#
+#   PERL        Can be set through
+#                 ac_aux_dir_abs=`cd $ac_aux_dir && pwd`
+#                 AC_PATH_PROG([PERL], [perl], [$ac_aux_dir_abs/missing perl])
+#               or, alternatively, by the Gnulib 'perl' module.
+#
+#   CROSS_COMPILING  Can be set through
+#                      CROSS_COMPILING=$cross_compiling
+#                      AC_SUBST([CROSS_COMPILING])
+#                    The variable 'cross_compiling' is set by AC_PROG_CC.
 
 update=
 while true; do
