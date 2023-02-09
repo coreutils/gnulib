@@ -16,6 +16,7 @@
 
 #if !_LIBC
 # include <config.h>
+# include <stdio.h>
 # include <unistd.h>
 # include "pathmax.h"
 #else
