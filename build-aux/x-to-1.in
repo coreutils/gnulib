@@ -129,7 +129,7 @@ if test @CROSS_COMPILING@ = no && test -f $executable && test $perlok = yes; the
   func_add_word_to_command "$executable"
   echo "$command_for_print > $output"
   rm -f t-$progname.1
-  eval $command_for_eval > t-$progname.1 || exit 1
+  eval "$command_for_eval" > t-$progname.1 || exit 1
   if test -n "$update"; then
     # In --update mode, don't overwrite the output if nothing would change.
     if cmp t-$progname.1 $output >/dev/null 2>&1; then
