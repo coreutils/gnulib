@@ -21,6 +21,9 @@ glibc 2.24, NetBSD 9.0, many others.
 The macros @code{BOOL_MAX} and @code{BOOL_WIDTH} are not defined on
 some platforms:
 glibc 2.32, many others.
+@item
+The macro @code{BOOL_MAX} is not defined with some compilers:
+clang 15.0.6.
 @end itemize
 
 Portability problems fixed by Gnulib module @code{gethostname}:
