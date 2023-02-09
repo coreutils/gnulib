@@ -1,4 +1,4 @@
-# gnulib-common.m4 serial 73.4
+# gnulib-common.m4 serial 73.5
 dnl Copyright (C) 2007-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -352,7 +352,7 @@ AC_DEFUN([gl_COMMON_BODY], [
    [[__maybe_unused__]] nevertheless produces a warning.  */
 #ifndef _GL_ATTRIBUTE_MAYBE_UNUSED
 # if defined __clang__ && defined __cplusplus
-#  if __clang_major__ >= 10
+#  if !defined __apple_build_version__ && __clang_major__ >= 10
 #   define _GL_ATTRIBUTE_MAYBE_UNUSED [[__maybe_unused__]]
 #  endif
 # elif _GL_HAS_C_ATTRIBUTE (maybe_unused)
