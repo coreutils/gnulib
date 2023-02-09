@@ -1,4 +1,4 @@
-/* Copyright (C) 1991-2022 Free Software Foundation, Inc.
+/* Copyright (C) 1991-2023 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    This file is free software: you can redistribute it and/or modify
@@ -16,6 +16,7 @@
 
 #if !_LIBC
 # include <config.h>
+# include <stdio.h>
 # include <unistd.h>
 # include "pathmax.h"
 #else
