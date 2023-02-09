@@ -1,6 +1,6 @@
 /* A GNU-like <math.h>.
 
-   Copyright (C) 2002-2003, 2007-2022 Free Software Foundation, Inc.
+   Copyright (C) 2002-2003, 2007-2023 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as
@@ -2617,7 +2617,7 @@ _GL_EXTERN_C int rpl_isnanl (long double x) _GL_ATTRIBUTE_CONST;
 #  if defined isnan || defined GNULIB_NAMESPACE
 _GL_MATH_CXX_REAL_FLOATING_DECL_1 (isnan)
 #   undef isnan
-#   if __GNUC__ >= 6 || (defined __clang__ && !((defined __APPLE__ && defined __MACH__ && __clang_major__ < 12) || (defined __FreeBSD__ && (__clang_major__ < 7 || __clang_major__ >= 11)) || defined __OpenBSD__ || (defined _WIN32 && !defined __CYGWIN__)))
+#   if __GNUC__ >= 6 || (defined __clang__ && !((defined __APPLE__ && defined __MACH__ && __clang_major__ != 12) || (defined __FreeBSD__ && (__clang_major__ < 7 || __clang_major__ >= 11)) || defined __OpenBSD__ || (defined _WIN32 && !defined __CYGWIN__)))
   /* This platform's <cmath> possibly defines isnan through a set of inline
      functions.  */
 _GL_MATH_CXX_REAL_FLOATING_DECL_2 (isnan, rpl_isnan, bool)
