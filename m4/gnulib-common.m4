@@ -1,5 +1,5 @@
-# gnulib-common.m4 serial 73.2
-dnl Copyright (C) 2007-2022 Free Software Foundation, Inc.
+# gnulib-common.m4 serial 73.3
+dnl Copyright (C) 2007-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -347,9 +347,15 @@ AC_DEFUN([gl_COMMON_BODY], [
    in C++ also: class.  */
 /* In C++ and C2x, this is spelled [[__maybe_unused__]].
    GCC's syntax is __attribute__ ((__unused__)).
-   clang supports both syntaxes.  */
+   clang supports both syntaxes.  Except that with clang ≥ 6, < 10, in C++ mode,
+   __has_c_attribute (__maybe_unused__) yields true but the use of
+   [[__maybe_unused__]] nevertheless produces a warning.  */
 #ifndef _GL_ATTRIBUTE_MAYBE_UNUSED
-# if _GL_HAS_C_ATTRIBUTE (maybe_unused)
+# if defined __clang__ && defined __cplusplus
+#  if __clang_major__ >= 10
+#   define _GL_ATTRIBUTE_MAYBE_UNUSED [[__maybe_unused__]]
+#  endif
+# elif _GL_HAS_C_ATTRIBUTE (maybe_unused)
 #  define _GL_ATTRIBUTE_MAYBE_UNUSED [[__maybe_unused__]]
 # else
 #  define _GL_ATTRIBUTE_MAYBE_UNUSED _GL_ATTRIBUTE_UNUSED
