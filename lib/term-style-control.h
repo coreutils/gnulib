@@ -37,7 +37,7 @@ typedef enum
                        be left in the default state when the program is
                        interrupted.  */
   TTYCTL_FULL       /* Signal handling and disabling echo and flush-upon-signal.
-                       Result: No garbled output, and the the terminal will
+                       Result: No garbled output, and the terminal will
                        be left in the default state when the program is
                        interrupted.  */
 } ttyctl_t;

@@ -67,7 +67,7 @@ FUNC (wint_t wc)
   return WCHAR_FUNC (wc);
 # else
   /* The char32_t encoding of a multibyte character is known to be UCS-4,
-     different from the the wchar_t encoding.  */
+     different from the wchar_t encoding.  */
   if (wc != WEOF)
     return UCS_FUNC (wc);
   else
