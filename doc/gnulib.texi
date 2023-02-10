@@ -954,9 +954,10 @@ In C, it has type @code{void *}; in C++ it has an integer type.
 
 @item
 On older platforms Gnulib cannot easily emulate @code{nullptr_t}, so
-null pointer type checking is more error prone, and @code{_Generic}
-expressions cannot reliably distinguish @code{nullptr}'s type from
-integer or @code{void *} types.
+null pointer type checking is more error prone.  In C, @code{_Generic}
+expressions cannot reliably distinguish the type of @code{nullptr}
+from integer or @code{void *} types.  C++ overloading has similar
+limitations.
 @end itemize
 
 @node static_assert

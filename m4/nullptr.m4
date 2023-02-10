@@ -28,20 +28,30 @@ AC_DEFUN([gl_NULLPTR],
        [AC_COMPILE_IFELSE(
           [AC_LANG_SOURCE([[int *p = nullptr;]])],
           [gl_cv_cxx_nullptr=yes],
-          [gl_cv_cxx_nullptr=no])])
-      gl_cxx_nullptr=$gl_cv_cxx_nullptr
-      AC_LANG_POP([C++])],
-     [gl_cxx_nullptr=no])
-  if test "$gl_cxx_nullptr" = yes; then
-    AC_DEFINE([HAVE_CXX_NULLPTR], [1], [Define to 1 if C++ nullptr works.])
-  fi
+          [AC_COMPILE_IFELSE(
+             [AC_LANG_SOURCE([[#include <stddef.h>
+                               int *p = nullptr;]])],
+             [gl_cv_cxx_nullptr="yes, but it is a <stddef.h> macro"],
+             [gl_cv_cxx_nullptr=no])])])
+     AS_CASE([$gl_cv_cxx_nullptr],
+       [yes],  [gl_have_cxx_nullptr=1],
+       [yes*], [gl_have_cxx_nullptr="(-1)"],
+               [gl_have_cxx_nullptr=0])
+     AC_DEFINE_UNQUOTED([HAVE_CXX_NULLPTR], [$gl_have_cxx_nullptr],
+                        [Define to 1 if C++ nullptr works, 0 if not,
+                         (-1) if it is a <stddef.h> macro.])
+     AC_LANG_POP([C++])])
 ])
 
-  AH_VERBATIM([nullptr],
-[#ifndef nullptr /* keep config.h idempotent */
+  AH_VERBATIM([zznullptr],
+[#if defined __cplusplus && HAVE_CXX_NULLPTR < 0
+# include <stddef.h>
+# undef/**/nullptr
+#endif
+#ifndef nullptr
 # if !defined __cplusplus && !defined HAVE_C_NULLPTR
 #  define nullptr ((void *) 0)
-# elif defined __cplusplus && !defined HAVE_CXX_NULLPTR
+# elif defined __cplusplus && HAVE_CXX_NULLPTR <= 0
 #  if 3 <= __GNUG__
 #   define nullptr __null
 #  else
