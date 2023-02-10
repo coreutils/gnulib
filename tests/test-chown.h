@@ -72,7 +72,10 @@ test_chown (int (*func) (char const *, uid_t, gid_t), bool print)
   ASSERT (stat (BASE "dir/file", &st1) == 0);
   ASSERT (st1.st_uid != (uid_t) -1);
   ASSERT (st1.st_gid != (gid_t) -1);
-  ASSERT (st1.st_gid == getegid ());
+  /* On macOS 12, when logged in through ssh, getgid () and getegid () are both
+     == (gid_t) -1.  */
+  if (getgid () != (gid_t) -1)
+    ASSERT (st1.st_gid == getegid ());
 
   /* Sanity check of error cases.  */
   errno = 0;
@@ -132,7 +135,8 @@ test_chown (int (*func) (char const *, uid_t, gid_t), bool print)
   if (1 < gids_count)
     {
       ASSERT (gids[1] != st1.st_gid);
-      ASSERT (gids[1] != (gid_t) -1);
+      if (getgid () != (gid_t) -1)
+        ASSERT (gids[1] != (gid_t) -1);
       ASSERT (lstat (BASE "dir/link", &st2) == 0);
       ASSERT (st1.st_uid == st2.st_uid);
       ASSERT (st1.st_gid == st2.st_gid);
@@ -156,7 +160,8 @@ test_chown (int (*func) (char const *, uid_t, gid_t), bool print)
       ASSERT (func (BASE "dir/link2", -1, gids[1]) == 0);
       ASSERT (stat (BASE "dir/file", &st2) == 0);
       ASSERT (st1.st_uid == st2.st_uid);
-      ASSERT (gids[1] == st2.st_gid);
+      if (getgid () != (gid_t) -1)
+        ASSERT (gids[1] == st2.st_gid);
       ASSERT (lstat (BASE "dir/link", &st2) == 0);
       ASSERT (st1.st_uid == st2.st_uid);
       ASSERT (st1.st_gid == st2.st_gid);
