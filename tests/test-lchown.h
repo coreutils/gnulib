@@ -1,5 +1,5 @@
 /* Tests of lchown.
-   Copyright (C) 2009-2022 Free Software Foundation, Inc.
+   Copyright (C) 2009-2023 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -80,7 +80,10 @@ test_lchown (int (*func) (char const *, uid_t, gid_t), bool print)
   ASSERT (stat (BASE "dir/file", &st1) == 0);
   ASSERT (st1.st_uid != (uid_t) -1);
   ASSERT (st1.st_gid != (gid_t) -1);
-  ASSERT (st1.st_gid == getegid ());
+  /* On macOS 12, when logged in through ssh, getgid () and getegid () are both
+     == (gid_t) -1.  */
+  if (getgid () != (gid_t) -1)
+    ASSERT (st1.st_gid == getegid ());
 
   /* Sanity check of error cases.  */
   errno = 0;
@@ -150,7 +153,8 @@ test_lchown (int (*func) (char const *, uid_t, gid_t), bool print)
   if (1 < gids_count)
     {
       ASSERT (gids[1] != st1.st_gid);
-      ASSERT (gids[1] != (gid_t) -1);
+      if (getgid () != (gid_t) -1)
+        ASSERT (gids[1] != (gid_t) -1);
       ASSERT (lstat (BASE "dir/link", &st2) == 0);
       ASSERT (st1.st_uid == st2.st_uid);
       ASSERT (st1.st_gid == st2.st_gid);
@@ -180,7 +184,8 @@ test_lchown (int (*func) (char const *, uid_t, gid_t), bool print)
       ASSERT (st1.st_gid == st2.st_gid);
       ASSERT (lstat (BASE "dir/link2", &st2) == 0);
       ASSERT (st1.st_uid == st2.st_uid);
-      ASSERT (gids[1] == st2.st_gid);
+      if (getgid () != (gid_t) -1)
+        ASSERT (gids[1] == st2.st_gid);
 
       /* Trailing slash follows through to directory.  */
       ASSERT (lstat (BASE "dir/link3", &st2) == 0);
@@ -196,7 +201,8 @@ test_lchown (int (*func) (char const *, uid_t, gid_t), bool print)
       ASSERT (st1.st_gid == st2.st_gid);
       ASSERT (lstat (BASE "dir/sub", &st2) == 0);
       ASSERT (st1.st_uid == st2.st_uid);
-      ASSERT (gids[1] == st2.st_gid);
+      if (getgid () != (gid_t) -1)
+        ASSERT (gids[1] == st2.st_gid);
     }
   else if (!CHOWN_CHANGE_TIME_BUG || HAVE_LCHMOD)
     {
