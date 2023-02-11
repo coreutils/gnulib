@@ -1,4 +1,4 @@
-# error_h.m4 serial 2
+# error_h.m4 serial 3
 dnl Copyright (C) 1996-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -10,6 +10,14 @@ dnl Provide a working "error.h".
 AC_DEFUN_ONCE([gl_ERROR_H],
 [
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+
+  gl_CHECK_NEXT_HEADERS([error.h])
+  if test $ac_cv_header_error_h = yes; then
+    HAVE_ERROR_H=1
+  else
+    HAVE_ERROR_H=0
+  fi
+  AC_SUBST([HAVE_ERROR_H])
 
   REPLACE_ERROR=0
 

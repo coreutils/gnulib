@@ -16,8 +16,19 @@
    You should have received a copy of the GNU Lesser General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
-#ifndef _ERROR_H
-#define _ERROR_H 1
+#ifndef _@GUARD_PREFIX@_ERROR_H
+
+#if __GNUC__ >= 3
+@PRAGMA_SYSTEM_HEADER@
+#endif
+
+/* The include_next requires a split double-inclusion guard.  */
+#if @HAVE_ERROR_H@
+# @INCLUDE_NEXT@ @NEXT_ERROR_H@
+#endif
+
+#ifndef _@GUARD_PREFIX@_ERROR_H
+#define _@GUARD_PREFIX@_ERROR_H
 
 /* Get _GL_ATTRIBUTE_SPEC_PRINTF_STANDARD, _GL_ATTRIBUTE_SPEC_PRINTF_SYSTEM.  */
 #include <stdio.h>
@@ -103,4 +114,5 @@ extern int error_one_per_line;
 }
 #endif
 
-#endif /* error.h */
+#endif /* _@GUARD_PREFIX@_ERROR_H */
+#endif /* _@GUARD_PREFIX@_ERROR_H */
