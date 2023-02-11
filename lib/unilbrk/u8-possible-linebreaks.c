@@ -1,5 +1,5 @@
 /* Line breaking of UTF-8 strings.
-   Copyright (C) 2001-2003, 2006-2022 Free Software Foundation, Inc.
+   Copyright (C) 2001-2003, 2006-2023 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2001.
 
    This file is free software.
@@ -216,7 +216,10 @@ u8_possible_linebreaks_loop (const uint8_t *s, size_t n, const char *encoding,
     }
 }
 
-#undef u8_possible_linebreaks
+#if defined IN_LIBUNISTRING
+/* For backward compatibility with older versions of libunistring.  */
+
+# undef u8_possible_linebreaks
 
 void
 u8_possible_linebreaks (const uint8_t *s, size_t n, const char *encoding,
@@ -224,6 +227,8 @@ u8_possible_linebreaks (const uint8_t *s, size_t n, const char *encoding,
 {
   u8_possible_linebreaks_loop (s, n, encoding, -1, p);
 }
+
+#endif
 
 void
 u8_possible_linebreaks_v2 (const uint8_t *s, size_t n, const char *encoding,

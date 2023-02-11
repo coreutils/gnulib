@@ -1,5 +1,5 @@
 /* Line breaking of UTF-32 strings.
-   Copyright (C) 2001-2003, 2006-2022 Free Software Foundation, Inc.
+   Copyright (C) 2001-2003, 2006-2023 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2001.
 
    This file is free software.
@@ -116,7 +116,10 @@ u32_width_linebreaks_internal (const uint32_t *s, size_t n,
   return last_column + piece_width;
 }
 
-#undef u32_width_linebreaks
+#if defined IN_LIBUNISTRING
+/* For backward compatibility with older versions of libunistring.  */
+
+# undef u32_width_linebreaks
 
 int
 u32_width_linebreaks (const uint32_t *s, size_t n,
@@ -128,6 +131,8 @@ u32_width_linebreaks (const uint32_t *s, size_t n,
                                         width, start_column, at_end_columns,
                                         o, encoding, -1, p);
 }
+
+#endif
 
 int
 u32_width_linebreaks_v2 (const uint32_t *s, size_t n,

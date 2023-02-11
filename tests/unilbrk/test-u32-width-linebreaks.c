@@ -1,5 +1,5 @@
 /* Test of line breaking of UTF-32 strings.
-   Copyright (C) 2008-2022 Free Software Foundation, Inc.
+   Copyright (C) 2008-2023 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -76,8 +76,10 @@ int
 main ()
 {
   test_function (u32_width_linebreaks, 2);
-#undef u32_width_linebreaks
+#ifdef IN_LIBUNISTRING_GNULIB_TESTS
+# undef u32_width_linebreaks
   test_function (u32_width_linebreaks, 1);
+#endif
 
   return 0;
 }
