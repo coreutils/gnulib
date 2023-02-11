@@ -1,4 +1,4 @@
-# terminfo.m4 serial 5
+# terminfo.m4 serial 6
 dnl Copyright (C) 2000-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -372,7 +372,7 @@ AC_DEFUN([gl_TERMINFO_BODY],
            char * tparam (const char *, void *, int, ...);
            char buf;
          ]],
-         [[return tparam ("\033\133%dm", &buf, 1, 8);]])],
+         [[return ! tparam ("\033\133%dm", &buf, 1, 8);]])],
       [gl_cv_terminfo_tparam=yes],
       [gl_cv_terminfo_tparam=no])
     CPPFLAGS="$gl_save_CPPFLAGS"
@@ -397,7 +397,7 @@ AC_DEFUN([gl_TERMINFO_BODY],
              #endif
              char * tparm (const char *, ...);
            ]],
-           [[return tparm ("\033\133%dm", 8);]])],
+           [[return ! tparm ("\033\133%dm", 8);]])],
         [gl_cv_terminfo_tparm=yes], [gl_cv_terminfo_tparm=no])
       CPPFLAGS="$gl_save_CPPFLAGS"
       LIBS="$gl_save_LIBS"
