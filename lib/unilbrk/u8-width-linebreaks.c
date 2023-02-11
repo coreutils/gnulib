@@ -118,7 +118,10 @@ u8_width_linebreaks_internal (const uint8_t *s, size_t n,
   return last_column + piece_width;
 }
 
-#undef u8_width_linebreaks
+#if defined IN_LIBUNISTRING
+/* For backward compatibility with older versions of libunistring.  */
+
+# undef u8_width_linebreaks
 
 int
 u8_width_linebreaks (const uint8_t *s, size_t n,
@@ -130,6 +133,8 @@ u8_width_linebreaks (const uint8_t *s, size_t n,
                                        width, start_column, at_end_columns,
                                        o, encoding, -1, p);
 }
+
+#endif
 
 int
 u8_width_linebreaks_v2 (const uint8_t *s, size_t n,

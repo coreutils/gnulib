@@ -216,7 +216,10 @@ u8_possible_linebreaks_loop (const uint8_t *s, size_t n, const char *encoding,
     }
 }
 
-#undef u8_possible_linebreaks
+#if defined IN_LIBUNISTRING
+/* For backward compatibility with older versions of libunistring.  */
+
+# undef u8_possible_linebreaks
 
 void
 u8_possible_linebreaks (const uint8_t *s, size_t n, const char *encoding,
@@ -224,6 +227,8 @@ u8_possible_linebreaks (const uint8_t *s, size_t n, const char *encoding,
 {
   u8_possible_linebreaks_loop (s, n, encoding, -1, p);
 }
+
+#endif
 
 void
 u8_possible_linebreaks_v2 (const uint8_t *s, size_t n, const char *encoding,
