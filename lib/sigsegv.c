@@ -1211,7 +1211,7 @@ install_for (int sig)
   struct sigaction action;
 
 # ifdef SIGSEGV_FAULT_ADDRESS_FROM_SIGINFO
-  action.sa_sigaction = &sigsegv_handler;
+  action.sa_sigaction = (void (*) (int, siginfo_t *, void *)) &sigsegv_handler;
 # else
   action.sa_handler = (void (*) (int)) &sigsegv_handler;
 # endif
