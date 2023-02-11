@@ -238,8 +238,10 @@ int
 main ()
 {
   test_function (u8_possible_linebreaks, 2);
-#undef u8_possible_linebreaks
+#ifdef IN_LIBUNISTRING_GNULIB_TESTS
+# undef u8_possible_linebreaks
   test_function (u8_possible_linebreaks, 1);
+#endif
 
   return 0;
 }

@@ -132,7 +132,10 @@ ulc_possible_linebreaks_internal (const char *s, size_t n, const char *encoding,
     }
 }
 
-#undef ulc_possible_linebreaks
+#if defined IN_LIBUNISTRING
+/* For backward compatibility with older versions of libunistring.  */
+
+# undef ulc_possible_linebreaks
 
 void
 ulc_possible_linebreaks (const char *s, size_t n, const char *encoding,
@@ -140,6 +143,8 @@ ulc_possible_linebreaks (const char *s, size_t n, const char *encoding,
 {
   ulc_possible_linebreaks_internal (s, n, encoding, -1, p);
 }
+
+#endif
 
 void
 ulc_possible_linebreaks_v2 (const char *s, size_t n, const char *encoding,

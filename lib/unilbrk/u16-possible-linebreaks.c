@@ -216,7 +216,10 @@ u16_possible_linebreaks_loop (const uint16_t *s, size_t n, const char *encoding,
     }
 }
 
-#undef u16_possible_linebreaks
+#if defined IN_LIBUNISTRING
+/* For backward compatibility with older versions of libunistring.  */
+
+# undef u16_possible_linebreaks
 
 void
 u16_possible_linebreaks (const uint16_t *s, size_t n, const char *encoding,
@@ -224,6 +227,8 @@ u16_possible_linebreaks (const uint16_t *s, size_t n, const char *encoding,
 {
   u16_possible_linebreaks_loop (s, n, encoding, -1, p);
 }
+
+#endif
 
 void
 u16_possible_linebreaks_v2 (const uint16_t *s, size_t n, const char *encoding,

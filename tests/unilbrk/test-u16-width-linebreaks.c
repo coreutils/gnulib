@@ -76,8 +76,10 @@ int
 main ()
 {
   test_function (u16_width_linebreaks, 2);
-#undef u16_width_linebreaks
+#ifdef IN_LIBUNISTRING_GNULIB_TESTS
+# undef u16_width_linebreaks
   test_function (u16_width_linebreaks, 1);
+#endif
 
   return 0;
 }

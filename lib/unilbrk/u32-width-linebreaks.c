@@ -116,7 +116,10 @@ u32_width_linebreaks_internal (const uint32_t *s, size_t n,
   return last_column + piece_width;
 }
 
-#undef u32_width_linebreaks
+#if defined IN_LIBUNISTRING
+/* For backward compatibility with older versions of libunistring.  */
+
+# undef u32_width_linebreaks
 
 int
 u32_width_linebreaks (const uint32_t *s, size_t n,
@@ -128,6 +131,8 @@ u32_width_linebreaks (const uint32_t *s, size_t n,
                                         width, start_column, at_end_columns,
                                         o, encoding, -1, p);
 }
+
+#endif
 
 int
 u32_width_linebreaks_v2 (const uint32_t *s, size_t n,
