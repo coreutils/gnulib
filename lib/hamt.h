@@ -60,7 +60,7 @@ _GL_INLINE_HEADER_BEGIN
    We can define it only when the compiler supports _Atomic.  For GCC,
    it is supported starting with GCC 4.9.  */
 
-#if (__GNUC__ + (__GNUC_MINOR >= 9) > 4) \
+#if (__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) \
     && __STDC_VERSION__ >= 201112L && !defined __STD_NO_ATOMICS__ \
     && !defined __cplusplus
 # define GL_HAMT_THREAD_SAFE 1
