@@ -1,5 +1,5 @@
 /* (Persistent) hash array mapped tries.
-   Copyright (C) 2021-2022 Free Software Foundation, Inc.
+   Copyright (C) 2021-2023 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -60,7 +60,7 @@ _GL_INLINE_HEADER_BEGIN
    We can define it only when the compiler supports _Atomic.  For GCC,
    it is supported starting with GCC 4.9.  */
 
-#if (__GNUC__ + (__GNUC_MINOR >= 9) > 4) \
+#if (__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) \
     && __STDC_VERSION__ >= 201112L && !defined __STD_NO_ATOMICS__ \
     && !defined __cplusplus
 # define GL_HAMT_THREAD_SAFE 1
