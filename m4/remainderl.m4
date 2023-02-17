@@ -1,4 +1,4 @@
-# remainderl.m4 serial 13
+# remainderl.m4 serial 14
 dnl Copyright (C) 2012-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -100,14 +100,14 @@ int main (int argc, char *argv[])
               [gl_cv_func_remainderl_ieee=yes],
               [gl_cv_func_remainderl_ieee=no],
               [case "$host_os" in
-                                # Guess yes on glibc systems.
-                 *-gnu* | gnu*) gl_cv_func_remainderl_ieee="guessing yes" ;;
-                                # Guess yes on musl systems.
-                 *-musl*)       gl_cv_func_remainderl_ieee="guessing yes" ;;
-                                # Guess yes on native Windows.
-                 mingw*)        gl_cv_func_remainderl_ieee="guessing yes" ;;
-                                # If we don't know, obey --enable-cross-guesses.
-                 *)             gl_cv_func_remainderl_ieee="$gl_cross_guess_normal" ;;
+                                     # Guess yes on glibc systems.
+                 *-gnu* | gnu*)      gl_cv_func_remainderl_ieee="guessing yes" ;;
+                                     # Guess yes on musl systems.
+                 *-musl* | midipix*) gl_cv_func_remainderl_ieee="guessing yes" ;;
+                                     # Guess yes on native Windows.
+                 mingw*)             gl_cv_func_remainderl_ieee="guessing yes" ;;
+                                     # If we don't know, obey --enable-cross-guesses.
+                 *)                  gl_cv_func_remainderl_ieee="$gl_cross_guess_normal" ;;
                esac
               ])
             LIBS="$save_LIBS"
@@ -239,16 +239,16 @@ int main (int argc, char *argv[])
         [gl_cv_func_remainderl_works=yes],
         [gl_cv_func_remainderl_works=no],
         [case "$host_os" in
-                          # Guess yes on glibc systems.
-           *-gnu* | gnu*) gl_cv_func_remainderl_works="guessing yes" ;;
-                          # Guess no on musl systems.
-           *-musl*)       gl_cv_func_remainderl_works="guessing no" ;;
-                          # Guess no on OpenBSD.
-           openbsd*)      gl_cv_func_remainderl_works="guessing no" ;;
-                          # Guess yes on native Windows.
-           mingw*)        gl_cv_func_remainderl_works="guessing yes" ;;
-                          # If we don't know, obey --enable-cross-guesses.
-           *)             gl_cv_func_remainderl_works="$gl_cross_guess_normal" ;;
+                               # Guess yes on glibc systems.
+           *-gnu* | gnu*)      gl_cv_func_remainderl_works="guessing yes" ;;
+                               # Guess no on musl systems.
+           *-musl* | midipix*) gl_cv_func_remainderl_works="guessing no" ;;
+                               # Guess no on OpenBSD.
+           openbsd*)           gl_cv_func_remainderl_works="guessing no" ;;
+                               # Guess yes on native Windows.
+           mingw*)             gl_cv_func_remainderl_works="guessing yes" ;;
+                               # If we don't know, obey --enable-cross-guesses.
+           *)                  gl_cv_func_remainderl_works="$gl_cross_guess_normal" ;;
          esac
         ])
     ])

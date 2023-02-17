@@ -1,4 +1,4 @@
-# fpurge.m4 serial 13
+# fpurge.m4 serial 14
 dnl Copyright (C) 2007, 2009-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -53,10 +53,10 @@ AC_DEFUN([gl_FUNC_FPURGE],
          [gl_cv_func_fpurge_works=yes],
          [gl_cv_func_fpurge_works=no],
          [case "$host_os" in
-                     # Guess yes on musl systems.
-            *-musl*) gl_cv_func_fpurge_works="guessing yes" ;;
-                     # Otherwise obey --enable-cross-guesses.
-            *)       gl_cv_func_fpurge_works="$gl_cross_guess_normal" ;;
+                                # Guess yes on musl systems.
+            *-musl* | midipix*) gl_cv_func_fpurge_works="guessing yes" ;;
+                                # Otherwise obey --enable-cross-guesses.
+            *)                  gl_cv_func_fpurge_works="$gl_cross_guess_normal" ;;
           esac
          ])
       ])

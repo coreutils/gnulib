@@ -1,4 +1,4 @@
-# posix_spawn.m4 serial 22
+# posix_spawn.m4 serial 23
 dnl Copyright (C) 2008-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -534,7 +534,7 @@ AC_DEFUN([gl_POSIX_SPAWN_SECURE],
        [case "$host_os" in
           # Guess yes on glibc systems (glibc >= 2.15 actually) except GNU/Hurd,
           # musl libc, NetBSD.
-          *-gnu* | *-musl* | netbsd*)
+          *-gnu* | *-musl* | midipix* | netbsd*)
             gl_cv_func_posix_spawnp_secure_exec="guessing yes" ;;
           # Guess no on GNU/Hurd, macOS, FreeBSD, OpenBSD, AIX, Solaris, Cygwin.
           gnu* | darwin* | freebsd* | dragonfly* | midnightbsd* | openbsd* | \
@@ -585,11 +585,11 @@ int main ()
          [gl_cv_func_posix_spawn_file_actions_addclose_works=no],
          [# Guess no on musl libc and Solaris, yes otherwise.
           case "$host_os" in
-            *-musl*)  gl_cv_func_posix_spawn_file_actions_addclose_works="guessing no" ;;
-            solaris*) gl_cv_func_posix_spawn_file_actions_addclose_works="guessing no" ;;
-                      # Guess no on native Windows.
-            mingw*)   gl_cv_func_posix_spawn_file_actions_addclose_works="guessing no" ;;
-            *)        gl_cv_func_posix_spawn_file_actions_addclose_works="guessing yes" ;;
+            *-musl* | midipix*) gl_cv_func_posix_spawn_file_actions_addclose_works="guessing no" ;;
+            solaris*)           gl_cv_func_posix_spawn_file_actions_addclose_works="guessing no" ;;
+                                # Guess no on native Windows.
+            mingw*)             gl_cv_func_posix_spawn_file_actions_addclose_works="guessing no" ;;
+            *)                  gl_cv_func_posix_spawn_file_actions_addclose_works="guessing yes" ;;
           esac
          ])
       ])
@@ -629,11 +629,11 @@ int main ()
          [gl_cv_func_posix_spawn_file_actions_adddup2_works=no],
          [# Guess no on musl libc and Solaris, yes otherwise.
           case "$host_os" in
-            *-musl*)  gl_cv_func_posix_spawn_file_actions_adddup2_works="guessing no";;
-            solaris*) gl_cv_func_posix_spawn_file_actions_adddup2_works="guessing no";;
-                      # Guess no on native Windows.
-            mingw*)   gl_cv_func_posix_spawn_file_actions_adddup2_works="guessing no" ;;
-            *)        gl_cv_func_posix_spawn_file_actions_adddup2_works="guessing yes";;
+            *-musl* | midipix*) gl_cv_func_posix_spawn_file_actions_adddup2_works="guessing no";;
+            solaris*)           gl_cv_func_posix_spawn_file_actions_adddup2_works="guessing no";;
+                                # Guess no on native Windows.
+            mingw*)             gl_cv_func_posix_spawn_file_actions_adddup2_works="guessing no" ;;
+            *)                  gl_cv_func_posix_spawn_file_actions_adddup2_works="guessing yes";;
           esac
          ])
       ])
@@ -675,11 +675,11 @@ int main ()
          [gl_cv_func_posix_spawn_file_actions_addopen_works=no],
          [# Guess no on musl libc and Solaris, yes otherwise.
           case "$host_os" in
-            *-musl*)  gl_cv_func_posix_spawn_file_actions_addopen_works="guessing no";;
-            solaris*) gl_cv_func_posix_spawn_file_actions_addopen_works="guessing no";;
-                      # Guess no on native Windows.
-            mingw*)   gl_cv_func_posix_spawn_file_actions_addopen_works="guessing no" ;;
-            *)        gl_cv_func_posix_spawn_file_actions_addopen_works="guessing yes";;
+            *-musl* | midipix*) gl_cv_func_posix_spawn_file_actions_addopen_works="guessing no";;
+            solaris*)           gl_cv_func_posix_spawn_file_actions_addopen_works="guessing no";;
+                                # Guess no on native Windows.
+            mingw*)             gl_cv_func_posix_spawn_file_actions_addopen_works="guessing no" ;;
+            *)                  gl_cv_func_posix_spawn_file_actions_addopen_works="guessing yes";;
           esac
          ])
       ])

@@ -1,4 +1,4 @@
-# iconv_open-utf.m4 serial 4
+# iconv_open-utf.m4 serial 5
 dnl Copyright (C) 2007-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -220,9 +220,8 @@ int main ()
            else
 changequote(,)dnl
              case "$host_os" in
-               *-musl*) gl_cv_func_iconv_supports_utf="guessing yes" ;;
-               solaris2.9 | solaris2.1[0-9])
-                        gl_cv_func_iconv_supports_utf="guessing yes" ;;
+               *-musl* | midipix*)           gl_cv_func_iconv_supports_utf="guessing yes" ;;
+               solaris2.9 | solaris2.1[0-9]) gl_cv_func_iconv_supports_utf="guessing yes" ;;
              esac
 changequote([,])dnl
            fi

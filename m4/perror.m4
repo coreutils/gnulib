@@ -1,4 +1,4 @@
-# perror.m4 serial 11
+# perror.m4 serial 12
 dnl Copyright (C) 2008-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -48,12 +48,12 @@ AC_DEFUN([gl_FUNC_PERROR],
             rm -rf conftest.txt1 conftest.txt2],
            [gl_cv_func_perror_works=no],
            [case "$host_os" in
-                       # Guess yes on musl systems.
-              *-musl*) gl_cv_func_perror_works="guessing yes" ;;
-                       # Guess yes on native Windows.
-              mingw*)  gl_cv_func_perror_works="guessing yes" ;;
-                       # Otherwise obey --enable-cross-guesses.
-              *)       gl_cv_func_perror_works="$gl_cross_guess_normal" ;;
+                                  # Guess yes on musl systems.
+              *-musl* | midipix*) gl_cv_func_perror_works="guessing yes" ;;
+                                  # Guess yes on native Windows.
+              mingw*)             gl_cv_func_perror_works="guessing yes" ;;
+                                  # Otherwise obey --enable-cross-guesses.
+              *)                  gl_cv_func_perror_works="$gl_cross_guess_normal" ;;
             esac
            ])
         ])

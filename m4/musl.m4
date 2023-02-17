@@ -1,4 +1,4 @@
-# musl.m4 serial 3
+# musl.m4 serial 4
 dnl Copyright (C) 2019-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -13,6 +13,8 @@ AC_DEFUN_ONCE([gl_MUSL_LIBC],
 [
   AC_REQUIRE([AC_CANONICAL_HOST])
   case "$host_os" in
-    *-musl*) AC_DEFINE([MUSL_LIBC], [1], [Define to 1 on musl libc.]) ;;
+    *-musl* | midipix*)
+      AC_DEFINE([MUSL_LIBC], [1], [Define to 1 on musl libc.])
+      ;;
   esac
 ])

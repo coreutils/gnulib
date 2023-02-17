@@ -1,4 +1,4 @@
-# putenv.m4 serial 25
+# putenv.m4 serial 26
 dnl Copyright (C) 2002-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -38,14 +38,14 @@ AC_DEFUN([gl_FUNC_PUTENV],
        [gl_cv_func_svid_putenv=no],
        [dnl When crosscompiling, assume putenv is broken.
         case "$host_os" in
-                         # Guess yes on glibc systems.
-          *-gnu* | gnu*) gl_cv_func_svid_putenv="guessing yes" ;;
-                         # Guess yes on musl systems.
-          *-musl*)       gl_cv_func_svid_putenv="guessing yes" ;;
-                         # Guess no on native Windows.
-          mingw*)        gl_cv_func_svid_putenv="guessing no" ;;
-                         # If we don't know, obey --enable-cross-guesses.
-          *)             gl_cv_func_svid_putenv="$gl_cross_guess_normal" ;;
+                              # Guess yes on glibc systems.
+          *-gnu* | gnu*)      gl_cv_func_svid_putenv="guessing yes" ;;
+                              # Guess yes on musl systems.
+          *-musl* | midipix*) gl_cv_func_svid_putenv="guessing yes" ;;
+                              # Guess no on native Windows.
+          mingw*)             gl_cv_func_svid_putenv="guessing no" ;;
+                              # If we don't know, obey --enable-cross-guesses.
+          *)                  gl_cv_func_svid_putenv="$gl_cross_guess_normal" ;;
         esac
        ])
     ])

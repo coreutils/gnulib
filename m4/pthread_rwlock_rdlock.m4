@@ -1,4 +1,4 @@
-# pthread_rwlock_rdlock.m4 serial 4
+# pthread_rwlock_rdlock.m4 serial 5
 dnl Copyright (C) 2017-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -156,22 +156,22 @@ main ()
        [gl_cv_pthread_rwlock_rdlock_prefer_writer=yes],
        [gl_cv_pthread_rwlock_rdlock_prefer_writer=no],
        [case "$host_os" in
-                         # Guess no on glibc systems.
-          *-gnu* | gnu*) gl_cv_pthread_rwlock_rdlock_prefer_writer="guessing no" ;;
-                         # Guess no on musl systems.
-          *-musl*)       gl_cv_pthread_rwlock_rdlock_prefer_writer="guessing no" ;;
-                         # Guess no on bionic systems.
-          *-android*)    gl_cv_pthread_rwlock_rdlock_prefer_writer="guessing no" ;;
-                         # Guess yes on native Windows with the mingw-w64 winpthreads library.
-                         # Guess no on native Windows with the gnulib windows-rwlock module.
-          mingw*)        if test "$gl_use_threads" = yes || test "$gl_use_threads" = posix; then
-                           gl_cv_pthread_rwlock_rdlock_prefer_writer="guessing yes"
-                         else
-                           gl_cv_pthread_rwlock_rdlock_prefer_writer="guessing no"
-                         fi
-                         ;;
-                         # If we don't know, obey --enable-cross-guesses.
-          *)             gl_cv_pthread_rwlock_rdlock_prefer_writer="$gl_cross_guess_normal" ;;
+                              # Guess no on glibc systems.
+          *-gnu* | gnu*)      gl_cv_pthread_rwlock_rdlock_prefer_writer="guessing no" ;;
+                              # Guess no on musl systems.
+          *-musl* | midipix*) gl_cv_pthread_rwlock_rdlock_prefer_writer="guessing no" ;;
+                              # Guess no on bionic systems.
+          *-android*)         gl_cv_pthread_rwlock_rdlock_prefer_writer="guessing no" ;;
+                              # Guess yes on native Windows with the mingw-w64 winpthreads library.
+                              # Guess no on native Windows with the gnulib windows-rwlock module.
+          mingw*)             if test "$gl_use_threads" = yes || test "$gl_use_threads" = posix; then
+                                gl_cv_pthread_rwlock_rdlock_prefer_writer="guessing yes"
+                              else
+                                gl_cv_pthread_rwlock_rdlock_prefer_writer="guessing no"
+                              fi
+                              ;;
+                              # If we don't know, obey --enable-cross-guesses.
+          *)                  gl_cv_pthread_rwlock_rdlock_prefer_writer="$gl_cross_guess_normal" ;;
          esac
        ])
      LIBS="$save_LIBS"
