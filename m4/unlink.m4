@@ -1,4 +1,4 @@
-# unlink.m4 serial 15
+# unlink.m4 serial 16
 dnl Copyright (C) 2009-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -45,6 +45,8 @@ AC_DEFUN([gl_FUNC_UNLINK],
       [case "$host_os" in
                           # Guess yes on Linux systems.
          linux-* | linux) gl_cv_func_unlink_honors_slashes="guessing yes" ;;
+                          # Guess yes on systems that emulate the Linux system calls.
+         midipix*)        gl_cv_func_unlink_honors_slashes="guessing yes" ;;
                           # Guess yes on glibc systems.
          *-gnu*)          gl_cv_func_unlink_honors_slashes="guessing yes" ;;
                           # Guess no on native Windows.

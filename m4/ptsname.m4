@@ -1,4 +1,4 @@
-# ptsname.m4 serial 8
+# ptsname.m4 serial 9
 dnl Copyright (C) 2010-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -32,6 +32,8 @@ AC_DEFUN([gl_FUNC_PTSNAME],
             *-gnu* | gnu*) gl_cv_func_ptsname_sets_errno="guessing yes" ;;
                            # Guess yes on musl systems.
             *-musl*)       gl_cv_func_ptsname_sets_errno="guessing yes" ;;
+                           # Guess yes on systems that emulate the Linux system calls.
+            midipix*)      gl_cv_func_ptsname_sets_errno="guessing yes" ;;
                            # If we don't know, obey --enable-cross-guesses.
             *)             gl_cv_func_ptsname_sets_errno="$gl_cross_guess_normal" ;;
           esac

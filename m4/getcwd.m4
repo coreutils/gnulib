@@ -6,7 +6,7 @@
 # with or without modifications, as long as this notice is preserved.
 
 # Written by Paul Eggert.
-# serial 19
+# serial 20
 
 AC_DEFUN([gl_FUNC_GETCWD_NULL],
   [
@@ -53,6 +53,8 @@ AC_DEFUN([gl_FUNC_GETCWD_NULL],
             *-gnu* | gnu*) gl_cv_func_getcwd_null="guessing yes";;
                            # Guess yes on musl systems.
             *-musl*)       gl_cv_func_getcwd_null="guessing yes";;
+                           # Guess yes on systems that emulate the Linux system calls.
+            midipix*)      gl_cv_func_getcwd_null="guessing yes";;
                            # Guess yes on Cygwin.
             cygwin*)       gl_cv_func_getcwd_null="guessing yes";;
                            # If we don't know, obey --enable-cross-guesses.

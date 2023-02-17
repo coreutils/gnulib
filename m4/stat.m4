@@ -1,4 +1,4 @@
-# serial 18
+# serial 19
 
 # Copyright (C) 2009-2023 Free Software Foundation, Inc.
 #
@@ -45,6 +45,8 @@ AC_DEFUN([gl_FUNC_STAT],
            [case "$host_os" in
                                # Guess yes on Linux systems.
               linux-* | linux) gl_cv_func_stat_file_slash="guessing yes" ;;
+                               # Guess yes on systems that emulate the Linux system calls.
+              midipix*)        gl_cv_func_stat_file_slash="guessing yes" ;;
                                # Guess yes on glibc systems.
               *-gnu* | gnu*)   gl_cv_func_stat_file_slash="guessing yes" ;;
                                # If we don't know, obey --enable-cross-guesses.

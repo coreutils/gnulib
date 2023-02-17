@@ -1,4 +1,4 @@
-# select.m4 serial 14
+# select.m4 serial 15
 dnl Copyright (C) 2009-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -77,6 +77,8 @@ changequote([,])dnl
            case "$host_os" in
                              # Guess yes on Linux systems.
             linux-* | linux) gl_cv_func_select_detects_ebadf="guessing yes" ;;
+                             # Guess yes on systems that emulate the Linux system calls.
+            midipix*)        gl_cv_func_select_detects_ebadf="guessing yes" ;;
                              # Guess yes on glibc systems.
             *-gnu* | gnu*)   gl_cv_func_select_detects_ebadf="guessing yes" ;;
                              # If we don't know, obey --enable-cross-guesses.

@@ -36,6 +36,8 @@ AC_DEFUN([gl_FUNC_RMDIR],
        [case "$host_os" in
                            # Guess yes on Linux systems.
           linux-* | linux) gl_cv_func_rmdir_works="guessing yes" ;;
+                           # Guess yes on systems that emulate the Linux system calls.
+          midipix*)        gl_cv_func_rmdir_works="guessing yes" ;;
                            # Guess yes on glibc systems.
           *-gnu* | gnu*)   gl_cv_func_rmdir_works="guessing yes" ;;
                            # Guess no on native Windows.

@@ -1,4 +1,4 @@
-# sleep.m4 serial 11
+# sleep.m4 serial 12
 dnl Copyright (C) 2007-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -50,6 +50,8 @@ handle_alarm (int sig)
          *-gnu* | gnu*) gl_cv_func_sleep_works="guessing yes" ;;
                         # Guess yes on musl systems.
          *-musl*)       gl_cv_func_sleep_works="guessing yes" ;;
+                        # Guess yes on systems that emulate the Linux system calls.
+         midipix*)      gl_cv_func_sleep_works="guessing yes" ;;
                         # Guess no on native Windows.
          mingw*)        gl_cv_func_sleep_works="guessing no" ;;
                         # If we don't know, obey --enable-cross-guesses.

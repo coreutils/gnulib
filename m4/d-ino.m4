@@ -1,4 +1,4 @@
-# serial 20
+# serial 21
 
 dnl From Jim Meyering.
 dnl
@@ -44,6 +44,8 @@ AC_DEFUN([gl_CHECK_TYPE_STRUCT_DIRENT_D_INO],
               linux*-gnu*)  gl_cv_struct_dirent_d_ino="guessing yes" ;;
                             # Guess yes on musl systems with Linux kernel.
               linux*-musl*) gl_cv_struct_dirent_d_ino="guessing yes" ;;
+                            # Guess yes on systems that emulate the Linux system calls.
+              midipix*)     gl_cv_struct_dirent_d_ino="guessing yes" ;;
                             # Guess no on native Windows.
               mingw*)       gl_cv_struct_dirent_d_ino="guessing no" ;;
                             # If we don't know, obey --enable-cross-guesses.

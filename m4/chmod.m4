@@ -1,4 +1,4 @@
-# chmod.m4 serial 1
+# chmod.m4 serial 2
 dnl Copyright (C) 2004-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -63,6 +63,9 @@ AC_DEFUN([gl_FUNC_CHMOD],
             gl_cv_func_chmod_works="guessing no" ;;
           # Guess yes on glibc, musl libc, macOS, FreeBSD, NetBSD, OpenBSD, Solaris, Haiku, Cygwin.
           *-gnu* | gnu* | *-musl* | darwin* | freebsd* | midnightbsd* | netbsd* | openbsd* | solaris* | haiku* | cygwin*)
+            gl_cv_func_chmod_works="guessing yes" ;;
+          # Guess yes on systems that emulate the Linux system calls.
+          midipix*)
             gl_cv_func_chmod_works="guessing yes" ;;
           # If we don't know, obey --enable-cross-guesses.
           *)
