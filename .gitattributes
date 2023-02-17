@@ -4,3 +4,7 @@ ChangeLog	merge=merge-changelog
 # Run this to make 'git diff' on texinfo files give nicer hunk context:
 #   git config diff.texinfo.funcname '^@node[	 ][	 ]*\\([^,][^,]*\\)'
 *.texi* diff=texinfo
+
+# Run this to make 'git diff' on .m4 files give nicer hunk context:
+#   git config diff.m4.xfuncname '^((AC_DEFUN|m4_define)[^,)]*)'
+*.m4	diff=m4
