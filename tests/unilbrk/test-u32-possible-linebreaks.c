@@ -255,8 +255,10 @@ int
 main ()
 {
   test_function (u32_possible_linebreaks, 2);
-#undef u32_possible_linebreaks
+#ifdef IN_LIBUNISTRING_GNULIB_TESTS
+# undef u32_possible_linebreaks
   test_function (u32_possible_linebreaks, 1);
+#endif
 
   return 0;
 }
