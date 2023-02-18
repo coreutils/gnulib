@@ -3,12 +3,13 @@ Access from source code to variables set by "configure" or "make".
 
 Files:
 m4/configmake.m4
+m4/build-to-host.m4
 
 Depends-on:
 gen-header
 
 configure.ac:
-gl_CONFIGMAKE_PREP
+gl_CONFIGMAKE
 AC_PROG_MKDIR_P
 
 Makefile.am:
@@ -22,34 +23,34 @@ configmake.h: Makefile
 	  echo '#if HAVE_WINSOCK2_H'; \
 	  echo '# include <winsock2.h> /* avoid mingw pollution on DATADIR */'; \
 	  echo '#endif'; \
-	  printf '#define PREFIX %s\n' \"$(prefix)\"; \
-	  printf '#define EXEC_PREFIX %s\n' \"$(exec_prefix)\"; \
-	  printf '#define BINDIR %s\n' \"$(bindir)\"; \
-	  printf '#define SBINDIR %s\n' \"$(sbindir)\"; \
-	  printf '#define LIBEXECDIR %s\n' \"$(libexecdir)\"; \
-	  printf '#define DATAROOTDIR %s\n' \"$(datarootdir)\"; \
-	  printf '#define DATADIR %s\n' \"$(datadir)\"; \
-	  printf '#define SYSCONFDIR %s\n' \"$(sysconfdir)\"; \
-	  printf '#define SHAREDSTATEDIR %s\n' \"$(sharedstatedir)\"; \
-	  printf '#define LOCALSTATEDIR %s\n' \"$(localstatedir)\"; \
-	  printf '#define RUNSTATEDIR %s\n' \"$(runstatedir)\"; \
-	  printf '#define INCLUDEDIR %s\n' \"$(includedir)\"; \
-	  printf '#define OLDINCLUDEDIR %s\n' \"$(oldincludedir)\"; \
-	  printf '#define DOCDIR %s\n' \"$(docdir)\"; \
-	  printf '#define INFODIR %s\n' \"$(infodir)\"; \
-	  printf '#define HTMLDIR %s\n' \"$(htmldir)\"; \
-	  printf '#define DVIDIR %s\n' \"$(dvidir)\"; \
-	  printf '#define PDFDIR %s\n' \"$(pdfdir)\"; \
-	  printf '#define PSDIR %s\n' \"$(psdir)\"; \
-	  printf '#define LIBDIR %s\n' \"$(libdir)\"; \
-	  printf '#define LISPDIR %s\n' \"$(lispdir)\"; \
-	  printf '#define LOCALEDIR %s\n' \"$(localedir)\"; \
-	  printf '#define MANDIR %s\n' \"$(mandir)\"; \
+	  printf '#define PREFIX %s\n' $(prefix_c_make); \
+	  printf '#define EXEC_PREFIX %s\n' $(exec_prefix_c_make); \
+	  printf '#define BINDIR %s\n' $(bindir_c_make); \
+	  printf '#define SBINDIR %s\n' $(sbindir_c_make); \
+	  printf '#define LIBEXECDIR %s\n' $(libexecdir_c_make); \
+	  printf '#define DATAROOTDIR %s\n' $(datarootdir_c_make); \
+	  printf '#define DATADIR %s\n' $(datadir_c_make); \
+	  printf '#define SYSCONFDIR %s\n' $(sysconfdir_c_make); \
+	  printf '#define SHAREDSTATEDIR %s\n' $(sharedstatedir_c_make); \
+	  printf '#define LOCALSTATEDIR %s\n' $(localstatedir_c_make); \
+	  printf '#define RUNSTATEDIR %s\n' $(runstatedir_c_make); \
+	  printf '#define INCLUDEDIR %s\n' $(includedir_c_make); \
+	  printf '#define OLDINCLUDEDIR %s\n' $(oldincludedir_c_make); \
+	  printf '#define DOCDIR %s\n' $(docdir_c_make); \
+	  printf '#define INFODIR %s\n' $(infodir_c_make); \
+	  printf '#define HTMLDIR %s\n' $(htmldir_c_make); \
+	  printf '#define DVIDIR %s\n' $(dvidir_c_make); \
+	  printf '#define PDFDIR %s\n' $(pdfdir_c_make); \
+	  printf '#define PSDIR %s\n' $(psdir_c_make); \
+	  printf '#define LIBDIR %s\n' $(libdir_c_make); \
+	  printf '#define LISPDIR %s\n' $(lispdir_c_make); \
+	  printf '#define LOCALEDIR %s\n' $(localedir_c_make); \
+	  printf '#define MANDIR %s\n' $(mandir_c_make); \
 	  printf '#define MANEXT %s\n' \"$(manext)\"; \
-	  printf '#define PKGDATADIR %s\n' \"$(pkgdatadir)\"; \
-	  printf '#define PKGINCLUDEDIR %s\n' \"$(pkgincludedir)\"; \
-	  printf '#define PKGLIBDIR %s\n' \"$(pkglibdir)\"; \
-	  printf '#define PKGLIBEXECDIR %s\n' \"$(pkglibexecdir)\"; \
+	  printf '#define PKGDATADIR %s\n' $(pkgdatadir_c_make); \
+	  printf '#define PKGINCLUDEDIR %s\n' $(pkgincludedir_c_make); \
+	  printf '#define PKGLIBDIR %s\n' $(pkglibdir_c_make); \
+	  printf '#define PKGLIBEXECDIR %s\n' $(pkglibexecdir_c_make); \
 	} | sed '/""/d' > $@-t
 	$(AM_V_at)mv $@-t $@
 
