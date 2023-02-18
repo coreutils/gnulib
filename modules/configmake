@@ -22,34 +22,34 @@ configmake.h: Makefile
 	  echo '#if HAVE_WINSOCK2_H'; \
 	  echo '# include <winsock2.h> /* avoid mingw pollution on DATADIR */'; \
 	  echo '#endif'; \
-	  echo '#define PREFIX "$(prefix)"'; \
-	  echo '#define EXEC_PREFIX "$(exec_prefix)"'; \
-	  echo '#define BINDIR "$(bindir)"'; \
-	  echo '#define SBINDIR "$(sbindir)"'; \
-	  echo '#define LIBEXECDIR "$(libexecdir)"'; \
-	  echo '#define DATAROOTDIR "$(datarootdir)"'; \
-	  echo '#define DATADIR "$(datadir)"'; \
-	  echo '#define SYSCONFDIR "$(sysconfdir)"'; \
-	  echo '#define SHAREDSTATEDIR "$(sharedstatedir)"'; \
-	  echo '#define LOCALSTATEDIR "$(localstatedir)"'; \
-	  echo '#define RUNSTATEDIR "$(runstatedir)"'; \
-	  echo '#define INCLUDEDIR "$(includedir)"'; \
-	  echo '#define OLDINCLUDEDIR "$(oldincludedir)"'; \
-	  echo '#define DOCDIR "$(docdir)"'; \
-	  echo '#define INFODIR "$(infodir)"'; \
-	  echo '#define HTMLDIR "$(htmldir)"'; \
-	  echo '#define DVIDIR "$(dvidir)"'; \
-	  echo '#define PDFDIR "$(pdfdir)"'; \
-	  echo '#define PSDIR "$(psdir)"'; \
-	  echo '#define LIBDIR "$(libdir)"'; \
-	  echo '#define LISPDIR "$(lispdir)"'; \
-	  echo '#define LOCALEDIR "$(localedir)"'; \
-	  echo '#define MANDIR "$(mandir)"'; \
-	  echo '#define MANEXT "$(manext)"'; \
-	  echo '#define PKGDATADIR "$(pkgdatadir)"'; \
-	  echo '#define PKGINCLUDEDIR "$(pkgincludedir)"'; \
-	  echo '#define PKGLIBDIR "$(pkglibdir)"'; \
-	  echo '#define PKGLIBEXECDIR "$(pkglibexecdir)"'; \
+	  printf '#define PREFIX %s\n' \"$(prefix)\"; \
+	  printf '#define EXEC_PREFIX %s\n' \"$(exec_prefix)\"; \
+	  printf '#define BINDIR %s\n' \"$(bindir)\"; \
+	  printf '#define SBINDIR %s\n' \"$(sbindir)\"; \
+	  printf '#define LIBEXECDIR %s\n' \"$(libexecdir)\"; \
+	  printf '#define DATAROOTDIR %s\n' \"$(datarootdir)\"; \
+	  printf '#define DATADIR %s\n' \"$(datadir)\"; \
+	  printf '#define SYSCONFDIR %s\n' \"$(sysconfdir)\"; \
+	  printf '#define SHAREDSTATEDIR %s\n' \"$(sharedstatedir)\"; \
+	  printf '#define LOCALSTATEDIR %s\n' \"$(localstatedir)\"; \
+	  printf '#define RUNSTATEDIR %s\n' \"$(runstatedir)\"; \
+	  printf '#define INCLUDEDIR %s\n' \"$(includedir)\"; \
+	  printf '#define OLDINCLUDEDIR %s\n' \"$(oldincludedir)\"; \
+	  printf '#define DOCDIR %s\n' \"$(docdir)\"; \
+	  printf '#define INFODIR %s\n' \"$(infodir)\"; \
+	  printf '#define HTMLDIR %s\n' \"$(htmldir)\"; \
+	  printf '#define DVIDIR %s\n' \"$(dvidir)\"; \
+	  printf '#define PDFDIR %s\n' \"$(pdfdir)\"; \
+	  printf '#define PSDIR %s\n' \"$(psdir)\"; \
+	  printf '#define LIBDIR %s\n' \"$(libdir)\"; \
+	  printf '#define LISPDIR %s\n' \"$(lispdir)\"; \
+	  printf '#define LOCALEDIR %s\n' \"$(localedir)\"; \
+	  printf '#define MANDIR %s\n' \"$(mandir)\"; \
+	  printf '#define MANEXT %s\n' \"$(manext)\"; \
+	  printf '#define PKGDATADIR %s\n' \"$(pkgdatadir)\"; \
+	  printf '#define PKGINCLUDEDIR %s\n' \"$(pkgincludedir)\"; \
+	  printf '#define PKGLIBDIR %s\n' \"$(pkglibdir)\"; \
+	  printf '#define PKGLIBEXECDIR %s\n' \"$(pkglibexecdir)\"; \
 	} | sed '/""/d' > $@-t
 	$(AM_V_at)mv $@-t $@
 
