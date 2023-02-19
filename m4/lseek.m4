@@ -1,4 +1,4 @@
-# lseek.m4 serial 12
+# lseek.m4 serial 13
 dnl Copyright (C) 2007, 2009-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -70,9 +70,29 @@ AC_DEFUN([gl_FUNC_LSEEK],
     REPLACE_LSEEK=1
   fi
 
-  dnl macOS SEEK_DATA is incompatible with other platforms.
-  case $host_os in
-    darwin*)
-      REPLACE_LSEEK=1;;
-  esac
+  AS_IF([test $REPLACE_LSEEK = 0],
+    [AC_CACHE_CHECK([whether SEEK_DATA works but is incompatible with GNU],
+       [gl_cv_func_lseek_works_but_incompatible],
+       [AC_PREPROC_IFELSE(
+          [AC_LANG_SOURCE(
+             dnl Use macOS "9999" to stand for a future fixed macOS version.
+             dnl See ../lib/unistd.in.h and <https://bugs.gnu.org/61386>.
+             [[#include <unistd.h>
+               #if defined __APPLE__ && defined __MACH__ && defined SEEK_DATA
+               # ifdef __ENVIRONMENT_MAC_OS_X_VERSION_MIN_REQUIRED__
+               #  include <AvailabilityMacros.h>
+               # endif
+               # if 99990000 <= MAC_OS_X_VERSION_MIN_REQUIRED
+               #  define LSEEK_WORKS_BUT_IS_INCOMPATIBLE_WITH_GNU
+               # endif
+               #endif
+               #ifndef LSEEK_WORKS_BUT_IS_INCOMPATIBLE_WITH_GNU
+                #error "No need to work around the bug"
+               #endif
+             ]])],
+          [gl_cv_func_lseek_works_but_incompatible=yes],
+          [gl_cv_func_lseek_works_but_incompatible=no])])
+     if test "$gl_cv_func_lseek_works_but_incompatible" = yes; then
+       REPLACE_LSEEK=1
+     fi])
 ])
