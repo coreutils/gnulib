@@ -37,4 +37,9 @@ IRIX 6.5.
 @item
 Some systems do not support @code{SEEK_DATA} and @code{SEEK_HOLE}:
 AIX, HP-UX, Microsoft Windows, NetBSD, OpenBSD.
+@item
+Some systems have a buggy @code{SEEK_DATA} and @code{SEEK_HOLE},
+and Gnulib works around the problem via @code{#undef SEEK_DATA}
+and @code{#undef SEEK_HOLE}:
+FreeBSD 13, macOS 12.
 @end itemize
