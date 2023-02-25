@@ -177,15 +177,15 @@ cvtchar (const char *sp, char *c)
    Trying to handle everything has its cost, I guess.
 
    It actually isn't to hard to figure out if a given % code is supposed
-   to be interpeted with its termcap or terminfo meaning since almost
+   to be interpreted with its termcap or terminfo meaning since almost
    all terminfo codes are invalid unless something has been pushed on
    the stack and termcap strings will never push things on the stack
    (%p isn't used by termcap). So where we have a choice we make the
-   decision by wether or not somthing has been pushed on the stack.
+   decision by whether or not somthing has been pushed on the stack.
    The static variable termcap keeps track of this; it starts out set
    to 1 and is incremented as each argument processed by a termcap % code,
    however if something is pushed on the stack it's set to 0 and the
-   rest of the % codes are interpeted as terminfo % codes. Another way
+   rest of the % codes are interpreted as terminfo % codes. Another way
    of putting it is that if termcap equals one we haven't decided either
    way yet, if it equals zero we're looking for terminfo codes, and if
    its greater than 1 we're looking for termcap codes.
@@ -198,7 +198,7 @@ cvtchar (const char *sp, char *c)
         %c      output pop as a char
         %'c'    push character constant c.
         %{n}    push decimal constant n.
-        %p[1-9] push paramter [1-9]
+        %p[1-9] push parameter [1-9]
         %g[a-z] push variable [a-z]
         %P[a-z] put pop in variable [a-z]
         %l      push the length of pop (a string)
@@ -216,7 +216,7 @@ cvtchar (const char *sp, char *c)
         %O      logical or pop and pop and push the result
         %!      push the logical not of pop
         %? condition %t if_true [%e if_false] %;
-                if condtion evaulates as true then evaluate if_true,
+                if condition evaulates as true then evaluate if_true,
                 else evaluate if_false. elseif's can be done:
         %? cond %t true [%e cond2 %t true2] ... [%e condN %t trueN] [%e false] %;
         %i      add one to parameters 1 and 2. (ANSI)
@@ -236,7 +236,7 @@ cvtchar (const char *sp, char *c)
 (UW)    %sx     subtract parameter FROM the character x
         %>xy    if parameter > character x then add character y to parameter
         %B      convert to BCD (parameter = (parameter/10)*16 + parameter%16)
-        %D      Delta Data encode (parameter = parameter - 2*(paramter%16))
+        %D      Delta Data encode (parameter = parameter - 2*(parameter%16))
         %i      increment the first two parameters by one
         %n      xor the first two parameters by 0140
 (GNU)   %m      xor the first two parameters by 0177
