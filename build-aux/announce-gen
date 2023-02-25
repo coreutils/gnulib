@@ -35,7 +35,7 @@
 eval 'exec perl -wSx "$0" "$@"'
      if 0;
 
-my $VERSION = '2022-07-10 01:47'; # UTC
+my $VERSION = '2023-02-25 21:13'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -165,6 +165,17 @@ Print the SHA1 and SHA256 signature section for each C<@file>.
 
 =cut
 
+# This digest function omits the "=" padding that is required by cksum,
+# so add the 0..2 bytes of padding required for each of Digest's algorithms.
+sub digest_file_base64_wrap ($$)
+{
+  my ($file, $alg) = @_;
+  my $h = digest_file_base64($file, $alg);
+  $alg =~ tr{-}{}d;
+  my %pad = (MD5 => 2, SHA1 => 1, SHA256 => 1, SHA384 => 0, SHA512 => 2);
+  return $h . '=' x $pad{$alg};
+}
+
 sub print_checksums (@)
 {
   my (@file) = @_;
@@ -176,11 +187,11 @@ sub print_checksums (@)
 
   foreach my $f (@file)
     {
-      print digest_file_hex($f, "SHA-1"), "  $f\n";
-      print digest_file_base64($f, "SHA-256"), "  $f\n";
+      print '  ', digest_file_hex ($f, "SHA-1"), "  $f\n";
+      print '  ', digest_file_base64_wrap ($f, "SHA-256"), "  $f\n";
     }
-  print "\nThe SHA256 checksum is base64 encoded, instead of the\n";
-  print "hexadecimal encoding that most checksum tools default to.\n\n";
+  print "\nVerify the base64 SHA256 checksum with cksum -a sha256 --check\n";
+  print "from coreutils-9.2 or openBSD's cksum since 2007.\n\n";
 }
 
 =item C<print_news_deltas ($news_file, $prev_version, $curr_version)
@@ -365,6 +376,38 @@ sub get_tool_versions ($$)
   return @tool_version_pair;
 }
 
+# Print a more human-friendly representation of $SEC seconds.
+sub readable_interval0($)
+{
+  my $sec = shift;
+  $sec < 60 and return "$sec seconds";
+
+  my $min = int($sec / 60); $sec %= 60;
+  30 < $sec and $min++;
+  $min < 60 and return "$min minutes";
+
+  my $hr = int($min / 60); $min %= 60;
+  30 < $min and $hr++;
+  $hr < 24 and return "$hr hours";
+
+  my $day = int($hr / 24); $hr %= 24;
+  12 < $hr and $day++;
+  $day < 50 and return "$day days";
+
+  my $wk = int($day / 7); $day %= 7;
+  4 < $day and $wk++;
+  return "$wk weeks";
+}
+
+# Convert e.g., "1 weeks", to "1 week".
+sub readable_interval($)
+{
+  my $interval_str = shift;
+  my $i = readable_interval0 $interval_str;
+  $i =~ m{^1 \w+s$} and chop $i;
+  return $i;
+}
+
 {
   # Use the C locale so that, for instance, "du" does not
   # print "1,2" instead of "1.2", which would confuse our regexps.
@@ -493,8 +536,46 @@ sub get_tool_versions ($$)
 ${headers}Subject: $my_distdir released [$release_type]
 
 <\#secure method=pgpmime mode=sign>
+This is to announce $package_name-$curr_version, a $release_type release.
 
 FIXME: put comments here
+
+EOF
+
+  my $v0 = $prev_version;
+  my $v1 = $curr_version;
+
+  (my $first_name = `git config --global user.name|cut -d' ' -f1`)
+    =~ m{\S} or die "no name? set user.name in ~/.gitconfig\n";
+
+  chomp (my $n_ci = `git rev-list "v$v0..v$v1" | wc -l`);
+  chomp (my $n_p = `git shortlog "v$v0..v$v1" | grep -c '^[^ ]'`);
+
+  my $prev_release_date = `git log --pretty=%ct -1 "v$v0"`;
+  my $this_release_date = `git log --pretty=%ct -1 "v$v1"`;
+  my $n_seconds = $this_release_date - $prev_release_date;
+  my $time_since_prev = readable_interval $n_seconds;
+  my $names = `git shortlog "v$v0..v$v1"|perl -lne '/^(\\w.*):/ and print "  ".\$1'`;
+
+  print <<EOF;
+There have been $n_ci commits by $n_p people in the $time_since_prev since $v0.
+
+See the NEWS below for a brief summary.
+
+Thanks to everyone who has contributed!
+The following people contributed changes to this release:
+
+$names
+$first_name [on behalf of the $package_name maintainers]
+==================================================================
+
+Here is the GNU $package_name home page:
+    http://gnu.org/s/$package_name/
+
+For a summary of changes and contributors, see:
+  http://git.sv.gnu.org/gitweb/?p=$package_name.git;a=shortlog;h=v$v1
+or run this command from a git-cloned $package_name directory:
+  git shortlog v$v0..v$v1
 
 EOF
 
@@ -587,7 +668,6 @@ keyring:
 
   wget -q https://ftp.gnu.org/gnu/gnu-keyring.gpg
   gpg --keyring gnu-keyring.gpg --verify $tarballs[0].sig
-
 EOF
 
   my @tool_versions = get_tool_versions (\@tool_list, $gnulib_version);
