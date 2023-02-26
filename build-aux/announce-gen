@@ -35,7 +35,7 @@
 eval 'exec perl -wSx "$0" "$@"'
      if 0;
 
-my $VERSION = '2023-02-25 21:13'; # UTC
+my $VERSION = '2023-02-26 17:15'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -191,7 +191,7 @@ sub print_checksums (@)
       print '  ', digest_file_base64_wrap ($f, "SHA-256"), "  $f\n";
     }
   print "\nVerify the base64 SHA256 checksum with cksum -a sha256 --check\n";
-  print "from coreutils-9.2 or openBSD's cksum since 2007.\n\n";
+  print "from coreutils-9.2 or OpenBSD's cksum since 2007.\n\n";
 }
 
 =item C<print_news_deltas ($news_file, $prev_version, $curr_version)
