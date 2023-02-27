@@ -1,6 +1,6 @@
 /* Traverse a file hierarchy.
 
-   Copyright (C) 2004-2022 Free Software Foundation, Inc.
+   Copyright (C) 2004-2023 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -980,7 +980,11 @@ next:   tmp = p;
                         }
                         free_dir(sp);
                         fts_load(sp, p);
-                        setup_dir(sp);
+                        if (! setup_dir(sp)) {
+                                free_dir(sp);
+                                __set_errno (ENOMEM);
+                                return (NULL);
+                        }
                         goto check_for_dir;
                 }
 
