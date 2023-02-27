@@ -979,7 +979,11 @@ next:   tmp = p;
                         }
                         free_dir(sp);
                         fts_load(sp, p);
-                        setup_dir(sp);
+                        if (! setup_dir(sp)) {
+                                free_dir(sp);
+                                __set_errno (ENOMEM);
+                                return (NULL);
+                        }
                         goto check_for_dir;
                 }
 
