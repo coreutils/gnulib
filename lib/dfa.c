@@ -69,7 +69,7 @@ c_isdigit (char c)
 #  define FALLTHROUGH [[__fallthrough__]]
 # elif ((__GNUC__ >= 7) \
         || (defined __apple_build_version__ \
-            ? __apple_build_version__ >= 14000000 \
+            ? __apple_build_version__ >= 12000000 \
             : __clang_major__ >= 10))
 #  define FALLTHROUGH __attribute__ ((__fallthrough__))
 # else
