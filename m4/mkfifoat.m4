@@ -1,4 +1,4 @@
-# serial 5
+# serial 5.1
 # See if we need to provide mkfifoat/mknodat replacement.
 
 dnl Copyright (C) 2009-2023 Free Software Foundation, Inc.
@@ -18,7 +18,8 @@ AC_DEFUN([gl_FUNC_MKFIFOAT],
 
   AC_REQUIRE([gl_FUNC_OPENAT])
 
-  AC_CHECK_FUNCS_ONCE([mkfifoat mknodat])
+  gl_CHECK_FUNCS_MACOS([mknodat], [[#include <sys/stat.h>]])
+  gl_CHECK_FUNCS_MACOS([mkfifoat], [[#include <sys/stat.h>]])
   if test $ac_cv_func_mkfifoat = yes; then
     dnl Check for AIX 7.2 bug with trailing slash.
     AC_CACHE_CHECK([whether mkfifoat rejects trailing slashes],
