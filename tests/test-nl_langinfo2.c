@@ -91,9 +91,9 @@ main (int argc, char *argv[])
               ASSERT (strcmp (fr_RADIXCHAR, ",") == 0);
 
               /* nl_langinfo items of the LC_TIME category */
-              /* macOS doesn't get the LC_TIME values right.
+              /* macOS and Solaris 11 don't get the LC_TIME values right.
                  Poor.  */
-              #if !(defined __APPLE__ && defined __MACH__)
+              #if !((defined __APPLE__ && defined __MACH__) || defined __sun)
               const char *fr_T_FMT_AMPM = nl_langinfo (T_FMT_AMPM);
               const char *fr_AM_STR = nl_langinfo (AM_STR);
               const char *fr_PM_STR = nl_langinfo (PM_STR);
