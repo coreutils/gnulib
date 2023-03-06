@@ -66,6 +66,9 @@ Solaris 10.
 @item
 This function can crash in out-of-memory conditions on some platforms:
 FreeBSD 13.0, NetBSD 5.0.
+@item
+The compiler warns that this function is deprecated:
+macOS 13.0.
 @end itemize
 
 Portability problems not fixed by Gnulib:
@@ -82,7 +85,4 @@ glibc and others, on x86, x86_64, IA-64 CPUs.
 When formatting an integer with grouping flag, this function inserts thousands
 separators even in the "C" locale on some platforms:
 NetBSD 5.1.
-@item
-The compiler warns that this function is deprecated:
-macOS 13.0
 @end itemize
