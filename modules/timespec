@@ -9,7 +9,7 @@ m4/timespec.m4
 Depends-on:
 extern-inline
 snippet/arg-nonnull
-time
+time-h
 
 configure.ac:
 gl_TIMESPEC

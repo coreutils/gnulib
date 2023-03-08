@@ -7,7 +7,7 @@ m4/strptime.m4
 m4/tm_gmtoff.m4
 
 Depends-on:
-time
+time-h
 extensions
 sys_time        [test $HAVE_STRPTIME = 0]
 string          [test $HAVE_STRPTIME = 0]

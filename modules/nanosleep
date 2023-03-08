@@ -6,7 +6,7 @@ lib/nanosleep.c
 m4/nanosleep.m4
 
 Depends-on:
-time
+time-h
 extensions
 multiarch
 assert-h        [test $HAVE_NANOSLEEP = 0 || test $REPLACE_NANOSLEEP = 1]

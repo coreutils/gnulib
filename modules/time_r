@@ -7,7 +7,7 @@ m4/time_r.m4
 
 Depends-on:
 extensions
-time
+time-h
 
 configure.ac:
 gl_TIME_R

@@ -23,7 +23,7 @@ snippet/c++defs
 snippet/_Noreturn
 snippet/arg-nonnull
 snippet/warn-on-use
-time
+time-h
 havelib
 
 configure.ac-early:

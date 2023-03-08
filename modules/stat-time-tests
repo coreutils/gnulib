@@ -6,7 +6,7 @@ tests/nap.h
 Depends-on:
 nanosleep
 stdckdint
-time
+time-h
 unistd
 
 configure.ac:

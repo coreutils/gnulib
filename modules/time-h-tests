@@ -1,0 +1,12 @@
+Files:
+tests/test-time-h.c
+
+Depends-on:
+assert-h
+time-h-c++-tests
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-time-h
+check_PROGRAMS += test-time-h

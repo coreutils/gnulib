@@ -11,7 +11,7 @@ c99
 dtotimespec
 intprops
 nanosleep
-time
+time-h
 unistd
 
 configure.ac:

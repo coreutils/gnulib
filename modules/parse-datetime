@@ -23,7 +23,7 @@ mktime
 nstrftime
 setenv
 unsetenv
-time
+time-h
 time_r
 time_rz
 timegm

@@ -3,7 +3,7 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/time.h.html}
 
-Gnulib module: time
+Gnulib module: time-h
 
 Portability problems fixed by Gnulib:
 @itemize

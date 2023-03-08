@@ -6,7 +6,7 @@ lib/timespec_get.c
 m4/timespec_get.m4
 
 Depends-on:
-time
+time-h
 extensions
 gettime         [test $HAVE_TIMESPEC_GET = 0 || test $REPLACE_TIMESPEC_GET = 1]
 

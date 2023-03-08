@@ -6,7 +6,7 @@ lib/tzset.c
 m4/tzset.m4
 
 Depends-on:
-time
+time-h
 
 configure.ac:
 gl_FUNC_TZSET

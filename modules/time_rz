@@ -9,7 +9,7 @@ m4/time_rz.m4
 Depends-on:
 c99
 extensions
-time
+time-h
 flexmember     [test $HAVE_TIMEZONE_T = 0]
 idx            [test $HAVE_TIMEZONE_T = 0]
 setenv         [test $HAVE_TIMEZONE_T = 0]

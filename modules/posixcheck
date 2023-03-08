@@ -40,7 +40,7 @@ sys_times
 sys_utsname
 sys_wait
 termios
-time
+time-h
 unistd
 utime-h
 wchar

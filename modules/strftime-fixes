@@ -6,7 +6,7 @@ lib/strftime-fixes.c
 m4/strftime-fixes.m4
 
 Depends-on:
-time
+time-h
 
 configure.ac:
 gl_FUNC_STRFTIME

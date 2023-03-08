@@ -7,7 +7,7 @@ m4/timespec_getres.m4
 
 Depends-on:
 extensions
-time
+time-h
 gettime-res     [test $HAVE_TIMESPEC_GETRES = 0]
 
 configure.ac:

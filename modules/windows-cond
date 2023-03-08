@@ -9,7 +9,7 @@ lib/windows-initguard.h
 Depends-on:
 stdbool
 errno
-time
+time-h
 gettimeofday
 
 configure.ac:
