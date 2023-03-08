@@ -1,6 +1,5 @@
 /*
  * Copyright (C) 2005, 2007, 2009-2023 Free Software Foundation, Inc.
- * Written by Jim Meyering.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +14,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
+/* Written by Jim Meyering and Bruno Haible.  */
+
 #include <config.h>
 
 #include <sys/time.h>
@@ -26,10 +27,13 @@ SIGNATURE_CHECK (gettimeofday, int,
 #include <time.h>
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
-int
-main (void)
+#include "macros.h"
+
+static void
+test_clobber ()
 {
   time_t t = 0;
   struct tm *lt;
@@ -41,7 +45,43 @@ main (void)
   if (memcmp (lt, &saved_lt, sizeof (struct tm)) != 0)
     {
       fprintf (stderr, "gettimeofday still clobbers the localtime buffer!\n");
-      return 1;
+      exit (1);
     }
+}
+
+static void
+test_consistency ()
+{
+  struct timeval tv1;
+  time_t tt2;
+  struct timeval tv3;
+  time_t tt4;
+
+  ASSERT (gettimeofday (&tv1, NULL) == 0);
+  tt2 = time (NULL);
+  ASSERT (gettimeofday (&tv3, NULL) == 0);
+  tt4 = time (NULL);
+
+  /* Verify monotonicity of gettimeofday().  */
+  ASSERT (tv1.tv_sec < tv3.tv_sec
+          || (tv1.tv_sec == tv3.tv_sec && tv1.tv_usec <= tv3.tv_usec));
+
+  /* Verify monotonicity of time().  */
+  ASSERT (tt2 <= tt4);
+
+  /* Verify that the tv_sec field of the result is the same as time(NULL).  */
+  /* Note: This assertion sometimes fails on glibc systems, see
+     https://sourceware.org/bugzilla/show_bug.cgi?id=30200  */
+  ASSERT (tv1.tv_sec <= tt2);
+  ASSERT (tt2 <= tv3.tv_sec);
+  ASSERT (tv3.tv_sec <= tt4);
+}
+
+int
+main (void)
+{
+  test_clobber ();
+  test_consistency ();
+
   return 0;
 }
