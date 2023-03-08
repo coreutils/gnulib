@@ -1,0 +1,31 @@
+Description:
+time() function: return current time.
+
+Files:
+lib/time.c
+m4/time.m4
+
+Depends-on:
+time-h
+
+configure.ac:
+gl_FUNC_TIME
+gl_CONDITIONAL([GL_COND_OBJ_TIME], [test $REPLACE_TIME = 1])
+AM_COND_IF([GL_COND_OBJ_TIME], [
+  gl_PREREQ_TIME
+])
+gl_TIME_MODULE_INDICATOR([time])
+
+Makefile.am:
+if GL_COND_OBJ_TIME
+lib_SOURCES += time.c
+endif
+
+Include:
+<time.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+all

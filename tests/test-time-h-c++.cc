@@ -28,6 +28,10 @@
 SIGNATURE_CHECK (GNULIB_NAMESPACE::timespec_get, int, (struct timespec *, int));
 #endif
 
+#if GNULIB_TEST_TIME
+SIGNATURE_CHECK (GNULIB_NAMESPACE::time, time_t, (time_t *));
+#endif
+
 #if GNULIB_TEST_NANOSLEEP
 SIGNATURE_CHECK (GNULIB_NAMESPACE::nanosleep, int,
                  (struct timespec const *, struct timespec *));

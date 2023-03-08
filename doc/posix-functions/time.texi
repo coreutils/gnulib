@@ -4,10 +4,18 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/time.html}
 
-Gnulib module: ---
+Gnulib module: time
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+This function is not consistent with @code{gettimeofday} and @code{timespec_get}
+on some platforms:
+@c https://sourceware.org/bugzilla/show_bug.cgi?id=30200
+glibc 2.31 or newer on Linux.
+Namely, in the first 1 to 2.5 milliseconds of every second, @code{time}
+returns a value that is one less than the @code{tv_sec} part of the return
+value of @code{gettimeofday} or @code{timespec_get}.
 @end itemize
 
 Portability problems not fixed by Gnulib:
