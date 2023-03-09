@@ -1,6 +1,6 @@
 # A library of shell functions for autopull.sh, autogen.sh, and bootstrap.
 
-scriptlibversion=2023-01-06.19; # UTC
+scriptlibversion=2023-03-09.14; # UTC
 
 # Copyright (C) 2003-2023 Free Software Foundation, Inc.
 #
@@ -1199,14 +1199,6 @@ autogen()
   # Invoke autoreconf with --force --install to ensure upgrades of tools
   # such as ylwrap.
   AUTORECONFFLAGS="--verbose --install --force -I $m4_base $ACLOCAL_FLAGS"
-
-  # Some systems (RHEL 5) are using ancient autotools, for which the
-  # --no-recursive option had not been invented.  Detect that lack and
-  # omit the option when it's not supported.  FIXME in 2017: remove this
-  # hack when RHEL 5 autotools are updated, or when they become irrelevant.
-  case $($AUTORECONF --help) in
-    *--no-recursive*) AUTORECONFFLAGS="$AUTORECONFFLAGS --no-recursive";;
-  esac
 
   # Tell autoreconf not to invoke autopoint or libtoolize; they were run above.
   echo "running: AUTOPOINT=true LIBTOOLIZE=true $AUTORECONF $AUTORECONFFLAGS"
