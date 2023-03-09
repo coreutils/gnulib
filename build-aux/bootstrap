@@ -37,7 +37,7 @@ medir=`dirname "$me"`
 
 # A library of shell functions for autopull.sh, autogen.sh, and bootstrap.
 
-scriptlibversion=2023-03-09.14; # UTC
+scriptlibversion=2023-03-09.17; # UTC
 
 # Copyright (C) 2003-2023 Free Software Foundation, Inc.
 #
@@ -1236,6 +1236,7 @@ autogen()
   # Invoke autoreconf with --force --install to ensure upgrades of tools
   # such as ylwrap.
   AUTORECONFFLAGS="--verbose --install --force -I $m4_base $ACLOCAL_FLAGS"
+  AUTORECONFFLAGS="$AUTORECONFFLAGS --no-recursive"
 
   # Tell autoreconf not to invoke autopoint or libtoolize; they were run above.
   echo "running: AUTOPOINT=true LIBTOOLIZE=true $AUTORECONF $AUTORECONFFLAGS"
