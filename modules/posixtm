@@ -12,6 +12,7 @@ idx
 mktime
 stdbool
 stdckdint
+time
 verify
 
 configure.ac:
