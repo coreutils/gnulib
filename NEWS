@@ -75,6 +75,8 @@ User visible incompatible changes
 Date        Modules         Changes
 
 2023-03-08  time            This module is renamed to 'time-h'.
+                            The new 'time' module now also works around an
+                            inconsistency in glibc 2.31+ on Linux.
 
 2023-02-07  c-nullptr       Rename this module to nullptr.
 
