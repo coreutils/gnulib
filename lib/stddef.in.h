@@ -69,6 +69,7 @@ typedef long rpl_max_align_t;
 typedef long max_align_t;
 #     define _MAX_ALIGN_T
 #    endif
+#    define __CLANG_MAX_ALIGN_T_DEFINED
 #    define GNULIB_defined_max_align_t 1
 #   endif
 #  endif
@@ -137,6 +138,7 @@ typedef union
   long int __i _GL_STDDEF_ALIGNAS (long int);
 } rpl_max_align_t;
 #   define max_align_t rpl_max_align_t
+#   define __CLANG_MAX_ALIGN_T_DEFINED
 #   define GNULIB_defined_max_align_t 1
 #  endif
 # endif
