@@ -1,5 +1,5 @@
 @node timegm
-@subsection @code{timegm}
+@section @code{timegm}
 @findex timegm
 
 Documentation:

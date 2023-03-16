@@ -2334,6 +2334,7 @@ problems are not worked around by Gnulib.
 * thrd_sleep::
 * thrd_yield::
 * time::
+* timegm::
 * timer_create::
 * timer_delete::
 * timer_getoverrun::
@@ -3627,6 +3628,7 @@ problems are not worked around by Gnulib.
 @include posix-functions/thrd_sleep.texi
 @include posix-functions/thrd_yield.texi
 @include posix-functions/time.texi
+@include posix-functions/timegm.texi
 @include posix-functions/timer_create.texi
 @include posix-functions/timer_delete.texi
 @include posix-functions/timer_getoverrun.texi
@@ -6619,7 +6621,6 @@ This list of functions is sorted according to the header that declares them.
 * getdate_r::
 * stime::
 * strptime_l::
-* timegm::
 * timelocal::
 * timespec_get::
 @end menu
@@ -6629,7 +6630,6 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/getdate_r.texi
 @include glibc-functions/stime.texi
 @include glibc-functions/strptime_l.texi
-@include glibc-functions/timegm.texi
 @include glibc-functions/timelocal.texi
 @include glibc-functions/timespec_get.texi
 
