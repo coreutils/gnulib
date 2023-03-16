@@ -239,5 +239,67 @@ main (void)
     ASSERT (errno == 0);
   }
 
+  /* Binary integer syntax.  */
+  {
+    const char input[] = "0b111010";
+    char *ptr;
+    long result;
+    errno = 0;
+    result = strtol (input, &ptr, 10);
+    ASSERT (result == 0L);
+    ASSERT (ptr == input + 1);
+    ASSERT (errno == 0);
+  }
+  {
+    const char input[] = "0b111010";
+    char *ptr;
+    long result;
+    errno = 0;
+    result = strtol (input, &ptr, 2);
+    ASSERT (result == 58L);
+    ASSERT (ptr == input + 8);
+    ASSERT (errno == 0);
+  }
+  {
+    const char input[] = "0b111010";
+    char *ptr;
+    long result;
+    errno = 0;
+    result = strtol (input, &ptr, 0);
+    ASSERT (result == 58L);
+    ASSERT (ptr == input + 8);
+    ASSERT (errno == 0);
+  }
+  {
+    const char input[] = "0b";
+    char *ptr;
+    long result;
+    errno = 0;
+    result = strtol (input, &ptr, 10);
+    ASSERT (result == 0L);
+    ASSERT (ptr == input + 1);
+    ASSERT (errno == 0);
+  }
+  {
+    const char input[] = "0b";
+    char *ptr;
+    long result;
+    errno = 0;
+    result = strtol (input, &ptr, 2);
+    ASSERT (result == 0L);
+    ASSERT (ptr == input + 1);
+    ASSERT (errno == 0);
+  }
+  {
+    const char input[] = "0b";
+    char *ptr;
+    long result;
+    errno = 0;
+    result = strtol (input, &ptr, 0);
+    ASSERT (result == 0L);
+    ASSERT (ptr == input + 1);
+    ASSERT (errno == 0);
+  }
+
   return 0;
 }

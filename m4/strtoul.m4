@@ -1,4 +1,4 @@
-# strtoul.m4 serial 6
+# strtoul.m4 serial 7
 dnl Copyright (C) 2002, 2006, 2009-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -24,15 +24,26 @@ AC_DEFUN([gl_FUNC_STRTOUL],
                 if (term != input + 1)
                   result |= 1;
               }
+              /* This test fails on pre-C23 platforms.  */
+              {
+                const char input[] = "0b1";
+                (void) strtoul (input, &term, 2);
+                if (term != input + 3)
+                  result |= 2;
+              }
               return result;
             ]])
          ],
          [gl_cv_func_strtoul_works=yes],
          [gl_cv_func_strtoul_works=no],
          [case "$host_os" in
-                    # Guess no on native Windows.
-            mingw*) gl_cv_func_strtoul_works="guessing no" ;;
-            *)      gl_cv_func_strtoul_works="$gl_cross_guess_normal" ;;
+                                # Guess no on native Windows.
+            mingw*)             gl_cv_func_strtoul_works="guessing no" ;;
+                                # Guess no on glibc systems.
+            *-gnu* | gnu*)      gl_cv_func_strtoul_works="guessing no" ;;
+                                # Guess no on musl systems.
+            *-musl* | midipix*) gl_cv_func_strtoul_works="guessing no" ;;
+            *)                  gl_cv_func_strtoul_works="$gl_cross_guess_normal" ;;
           esac
          ])
     ])

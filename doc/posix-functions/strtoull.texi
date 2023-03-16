@@ -15,6 +15,9 @@ HP-UX 11.11, MSVC 9.
 This function does not parse the leading @samp{0} when the input string is
 @code{"0x"} and the base is 16 or 0 on some platforms:
 Minix 3.3, mingw, MSVC 14.
+@item
+This function does not parse binary integers (with a @samp{0b} or @samp{0B}
+prefix) when the base is 2 or 0 on many platforms.
 @end itemize
 
 Portability problems not fixed by Gnulib:
