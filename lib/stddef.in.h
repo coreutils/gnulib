@@ -18,7 +18,7 @@
 /* Written by Eric Blake.  */
 
 /*
- * POSIX 2008 <stddef.h> for platforms that have issues.
+ * POSIX 2008 and ISO C 23 <stddef.h> for platforms that have issues.
  * <https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/stddef.h.html>
  */
 
@@ -140,6 +140,43 @@ typedef union
 #   define GNULIB_defined_max_align_t 1
 #  endif
 # endif
+#endif
+
+/* ISO C 23 § 7.21.1 The unreachable macro  */
+#ifndef unreachable
+
+/* Code borrowed from verify.h.  */
+# ifndef _GL_HAS_BUILTIN_UNREACHABLE
+#  if defined __clang_major__ && __clang_major__ < 5
+#   define _GL_HAS_BUILTIN_UNREACHABLE 0
+#  elif 4 < __GNUC__ + (5 <= __GNUC_MINOR__)
+#   define _GL_HAS_BUILTIN_UNREACHABLE 1
+#  elif defined __has_builtin
+#   define _GL_HAS_BUILTIN_UNREACHABLE __has_builtin (__builtin_unreachable)
+#  else
+#   define _GL_HAS_BUILTIN_UNREACHABLE 0
+#  endif
+# endif
+
+# if _GL_HAS_BUILTIN_UNREACHABLE
+#  define unreachable() __builtin_unreachable ()
+# elif 1200 <= _MSC_VER
+#  define unreachable() __assume (0)
+# else
+/* Declare abort(), without including <stdlib.h>.  */
+extern
+#  if defined __cplusplus
+"C"
+#  endif
+_Noreturn
+void abort (void)
+#  if defined __cplusplus && (__GLIBC__ >= 2)
+throw ()
+#  endif
+;
+#  define unreachable() abort ()
+# endif
+
 #endif
 
 #  endif /* _@GUARD_PREFIX@_STDDEF_H */

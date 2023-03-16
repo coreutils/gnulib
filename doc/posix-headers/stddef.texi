@@ -8,6 +8,10 @@ Gnulib module: stddef
 Portability problems fixed by Gnulib:
 @itemize
 @item
+Some platforms fail to provide @code{unreachable}, which was added in C23:
+GCC 13, clang 15, AIX with xlc 12.1, Solaris with Sun C 5.15, and others.
+
+@item
 Some platforms fail to provide @code{max_align_t}, which was added in C11:
 NetBSD 8.0, Solaris 11.0, and others.
 
