@@ -1,4 +1,4 @@
-# time.m4 serial 2
+# time.m4 serial 3
 dnl Copyright (C) 2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -16,6 +16,7 @@ AC_DEFUN([gl_FUNC_TIME],
      dnl   - glibc >= 2.31 with Linux. And binaries produced on glibc < 2.31
      dnl     need to run fine on newer glibc versions as well; therefore ignore
      dnl     __GLIBC_MINOR__.
+     dnl   - AIX,
      dnl   - native Windows.
      case "$host_os" in
        linux*-gnu*)
@@ -30,6 +31,7 @@ AC_DEFUN([gl_FUNC_TIME],
            [gl_cv_func_time_works="guessing no"],
            [gl_cv_func_time_works="guessing yes"])
          ;;
+       aix*)   gl_cv_func_time_works="guessing no";;
        mingw*) gl_cv_func_time_works="guessing no";;
        *) gl_cv_func_time_works="guessing yes";;
      esac
