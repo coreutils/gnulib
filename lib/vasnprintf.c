@@ -1654,13 +1654,13 @@ MAX_ROOM_NEEDED (const arguments *ap, size_t arg_index, FCHAR_T conversion,
       break;
 
     case 'o':
-      if (type == TYPE_LONGLONGINT || type == TYPE_ULONGLONGINT)
+      if (type == TYPE_ULONGLONGINT)
         tmp_length =
           (unsigned int) (sizeof (unsigned long long) * CHAR_BIT
                           * 0.333334 /* binary -> octal */
                          )
           + 1; /* turn floor into ceil */
-      else if (type == TYPE_LONGINT || type == TYPE_ULONGINT)
+      else if (type == TYPE_ULONGINT)
         tmp_length =
           (unsigned int) (sizeof (unsigned long) * CHAR_BIT
                           * 0.333334 /* binary -> octal */
@@ -1679,13 +1679,13 @@ MAX_ROOM_NEEDED (const arguments *ap, size_t arg_index, FCHAR_T conversion,
       break;
 
     case 'x': case 'X':
-      if (type == TYPE_LONGLONGINT || type == TYPE_ULONGLONGINT)
+      if (type == TYPE_ULONGLONGINT)
         tmp_length =
           (unsigned int) (sizeof (unsigned long long) * CHAR_BIT
                           * 0.25 /* binary -> hexadecimal */
                          )
           + 1; /* turn floor into ceil */
-      else if (type == TYPE_LONGINT || type == TYPE_ULONGINT)
+      else if (type == TYPE_ULONGINT)
         tmp_length =
           (unsigned int) (sizeof (unsigned long) * CHAR_BIT
                           * 0.25 /* binary -> hexadecimal */
@@ -1699,7 +1699,7 @@ MAX_ROOM_NEEDED (const arguments *ap, size_t arg_index, FCHAR_T conversion,
           + 1; /* turn floor into ceil */
       if (tmp_length < precision)
         tmp_length = precision;
-      /* Add 2, to account for a leading sign or alternate form.  */
+      /* Add 2, to account for a prefix from the alternate form.  */
       tmp_length = xsum (tmp_length, 2);
       break;
 
