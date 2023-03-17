@@ -61,7 +61,7 @@ typedef struct
   const char* precision_start;
   const char* precision_end;
   size_t precision_arg_index;
-  char conversion; /* d i o u x X f F e E g G a A c s p n U % but not C S */
+  char conversion; /* d i b o u x X f F e E g G a A c s p n U % but not C S */
   size_t arg_index;
 }
 char_directive;

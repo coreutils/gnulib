@@ -562,6 +562,8 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
     wchar_t *result =
       my_asnwprintf (NULL, &length, L"%La %d", Infinityl (), 33, 44, 55);
     ASSERT (result != NULL);
+    /* Note: This assertion fails under valgrind.
+       Reported at <https://bugs.kde.org/show_bug.cgi?id=424044>.  */
     ASSERT (wcscmp (result, L"inf 33") == 0);
     ASSERT (length == wcslen (result));
     free (result);
@@ -3981,6 +3983,97 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
     free (result);
   }
 #endif
+
+  /* Test the support of the 'b' conversion specifier for binary output of
+     integers.  */
+
+  { /* Zero.  */
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%b %d", 0, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (wcscmp (result, L"0 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  { /* A positive number.  */
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%b %d", 12345, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (wcscmp (result, L"11000000111001 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  { /* A large positive number.  */
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%b %d", 0xFFFFFFFEU, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (wcscmp (result, L"11111111111111111111111111111110 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  { /* Width.  */
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%20b %d", 12345, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (wcscmp (result, L"      11000000111001 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  { /* Width given as argument.  */
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%*b %d", 20, 12345, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (wcscmp (result, L"      11000000111001 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  { /* Negative width given as argument (cf. FLAG_LEFT below).  */
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%*b %d", -20, 12345, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (wcscmp (result, L"11000000111001       33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  { /* FLAG_LEFT.  */
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%-20b %d", 12345, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (wcscmp (result, L"11000000111001       33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  { /* FLAG_ALT with zero.  */
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%#b %d", 0, 33, 44, 55);
+    ASSERT (wcscmp (result, L"0 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  { /* FLAG_ALT with a positive number.  */
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%#b %d", 12345, 33, 44, 55);
+    ASSERT (wcscmp (result, L"0b11000000111001 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
 
 #if (__GLIBC__ > 2 || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2)) && !defined __UCLIBC__
   /* Test that the 'I' flag is supported.  */

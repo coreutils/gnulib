@@ -1653,6 +1653,25 @@ MAX_ROOM_NEEDED (const arguments *ap, size_t arg_index, FCHAR_T conversion,
       tmp_length = xsum (tmp_length, 1);
       break;
 
+    case 'b':
+      if (type == TYPE_ULONGLONGINT)
+        tmp_length =
+          (unsigned int) (sizeof (unsigned long long) * CHAR_BIT)
+          + 1; /* turn floor into ceil */
+      else if (type == TYPE_ULONGINT)
+        tmp_length =
+          (unsigned int) (sizeof (unsigned long) * CHAR_BIT)
+          + 1; /* turn floor into ceil */
+      else
+        tmp_length =
+          (unsigned int) (sizeof (unsigned int) * CHAR_BIT)
+          + 1; /* turn floor into ceil */
+      if (tmp_length < precision)
+        tmp_length = precision;
+      /* Add 2, to account for a prefix from the alternate form.  */
+      tmp_length = xsum (tmp_length, 2);
+      break;
+
     case 'o':
       if (type == TYPE_ULONGLONGINT)
         tmp_length =
@@ -3041,6 +3060,199 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                       length += n;
                     }
                 }
+              }
+#endif
+#if NEED_PRINTF_DIRECTIVE_B
+            else if (dp->conversion == 'b')
+              {
+                arg_type type = a.arg[dp->arg_index].type;
+                int flags = dp->flags;
+                size_t width;
+                int has_precision;
+                size_t precision;
+                size_t tmp_length;
+                size_t count;
+                DCHAR_T tmpbuf[700];
+                DCHAR_T *tmp;
+                DCHAR_T *tmp_end;
+                DCHAR_T *tmp_start;
+                DCHAR_T *pad_ptr;
+                DCHAR_T *p;
+
+                width = 0;
+                if (dp->width_start != dp->width_end)
+                  {
+                    if (dp->width_arg_index != ARG_NONE)
+                      {
+                        int arg;
+
+                        if (!(a.arg[dp->width_arg_index].type == TYPE_INT))
+                          abort ();
+                        arg = a.arg[dp->width_arg_index].a.a_int;
+                        width = arg;
+                        if (arg < 0)
+                          {
+                            /* "A negative field width is taken as a '-' flag
+                                followed by a positive field width."  */
+                            flags |= FLAG_LEFT;
+                            width = -width;
+                          }
+                      }
+                    else
+                      {
+                        const FCHAR_T *digitp = dp->width_start;
+
+                        do
+                          width = xsum (xtimes (width, 10), *digitp++ - '0');
+                        while (digitp != dp->width_end);
+                      }
+                  }
+
+                has_precision = 0;
+                precision = 0;
+                if (dp->precision_start != dp->precision_end)
+                  {
+                    if (dp->precision_arg_index != ARG_NONE)
+                      {
+                        int arg;
+
+                        if (!(a.arg[dp->precision_arg_index].type == TYPE_INT))
+                          abort ();
+                        arg = a.arg[dp->precision_arg_index].a.a_int;
+                        /* "A negative precision is taken as if the precision
+                            were omitted."  */
+                        if (arg >= 0)
+                          {
+                            precision = arg;
+                            has_precision = 1;
+                          }
+                      }
+                    else
+                      {
+                        const FCHAR_T *digitp = dp->precision_start + 1;
+
+                        precision = 0;
+                        while (digitp != dp->precision_end)
+                          precision = xsum (xtimes (precision, 10), *digitp++ - '0');
+                        has_precision = 1;
+                      }
+                  }
+
+                /* Allocate a temporary buffer of sufficient size.  */
+                if (type == TYPE_ULONGLONGINT)
+                  tmp_length =
+                    (unsigned int) (sizeof (unsigned long long) * CHAR_BIT)
+                    + 1; /* turn floor into ceil */
+                else if (type == TYPE_ULONGINT)
+                  tmp_length =
+                    (unsigned int) (sizeof (unsigned long) * CHAR_BIT)
+                    + 1; /* turn floor into ceil */
+                else
+                  tmp_length =
+                    (unsigned int) (sizeof (unsigned int) * CHAR_BIT)
+                    + 1; /* turn floor into ceil */
+                if (tmp_length < precision)
+                  tmp_length = precision;
+                /* Add 2, to account for a prefix from the alternate form.  */
+                tmp_length = xsum (tmp_length, 2);
+
+                if (tmp_length < width)
+                  tmp_length = width;
+
+                if (tmp_length <= sizeof (tmpbuf) / sizeof (DCHAR_T))
+                  tmp = tmpbuf;
+                else
+                  {
+                    size_t tmp_memsize = xtimes (tmp_length, sizeof (DCHAR_T));
+
+                    if (size_overflow_p (tmp_memsize))
+                      /* Overflow, would lead to out of memory.  */
+                      goto out_of_memory;
+                    tmp = (DCHAR_T *) malloc (tmp_memsize);
+                    if (tmp == NULL)
+                      /* Out of memory.  */
+                      goto out_of_memory;
+                  }
+
+                tmp_end = tmp + tmp_length;
+
+                unsigned long long arg =
+                  (type == TYPE_ULONGLONGINT ? a.arg[dp->arg_index].a.a_ulonglongint :
+                   type == TYPE_ULONGINT ? a.arg[dp->arg_index].a.a_ulongint :
+                   a.arg[dp->arg_index].a.a_uint);
+                int need_prefix = ((flags & FLAG_ALT) && arg != 0);
+
+                p = tmp_end;
+                do
+                  {
+                    *--p = '0' + (arg & 1);
+                    arg = arg >> 1;
+                  }
+                while (arg != 0);
+
+                pad_ptr = p;
+
+                if (need_prefix)
+                  {
+                    *--p = 'b'; *--p = '0';
+                  }
+                tmp_start = p;
+
+                /* The generated string now extends from tmp_start to tmp_end,
+                   with the zero padding insertion point being at pad_ptr,
+                   tmp_start <= pad_ptr <= tmp_end.  */
+                count = tmp_end - tmp_start;
+
+                if (count < width)
+                  {
+                    size_t pad = width - count;
+
+                    if (flags & FLAG_LEFT)
+                      {
+                        /* Pad with spaces on the right.  */
+                        for (p = tmp_start; p < tmp_end; p++)
+                          *(p - pad) = *p;
+                        for (p = tmp_end - pad; p < tmp_end; p++)
+                          *p = ' ';
+                      }
+                    else if (flags & FLAG_ZERO)
+                      {
+                        /* Pad with zeroes.  */
+                        for (p = tmp_start; p < pad_ptr; p++)
+                          *(p - pad) = *p;
+                        for (p = pad_ptr - pad; p < pad_ptr; p++)
+                          *p = '0';
+                      }
+                    else
+                      {
+                        /* Pad with spaces on the left.  */
+                        for (p = tmp_start - pad; p < tmp_start; p++)
+                          *p = ' ';
+                      }
+
+                    tmp_start = tmp_start - pad;
+                  }
+
+                count = tmp_end - tmp_start;
+
+                if (count > tmp_length)
+                  /* tmp_length was incorrectly calculated - fix the
+                     code above!  */
+                  abort ();
+
+                /* Make room for the result.  */
+                if (count >= allocated - length)
+                  {
+                    size_t n = xsum (length, count);
+
+                    ENSURE_ALLOCATION (n);
+                  }
+
+                /* Append the result.  */
+                memcpy (result + length, tmp_start, count * sizeof (DCHAR_T));
+                if (tmp != tmpbuf)
+                  free (tmp);
+                length += count;
               }
 #endif
 #if NEED_PRINTF_DIRECTIVE_A || NEED_PRINTF_LONG_DOUBLE || NEED_PRINTF_DOUBLE
@@ -4826,6 +5038,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                 switch (dp->conversion)
                   {
                   case 'd': case 'i': case 'u':
+                  case 'b':
                   case 'o':
                   case 'x': case 'X': case 'p':
                     prec_ourselves = has_precision && (precision > 0);

@@ -1,4 +1,4 @@
-# vsnprintf-posix.m4 serial 15
+# vsnprintf-posix.m4 serial 16
 dnl Copyright (C) 2007-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -11,6 +11,7 @@ AC_DEFUN([gl_FUNC_VSNPRINTF_POSIX],
   AC_REQUIRE([gl_PRINTF_INFINITE])
   AC_REQUIRE([gl_PRINTF_INFINITE_LONG_DOUBLE])
   AC_REQUIRE([gl_PRINTF_DIRECTIVE_A])
+  AC_REQUIRE([gl_PRINTF_DIRECTIVE_B])
   AC_REQUIRE([gl_PRINTF_DIRECTIVE_F])
   AC_REQUIRE([gl_PRINTF_DIRECTIVE_N])
   AC_REQUIRE([gl_PRINTF_DIRECTIVE_LS])
@@ -39,37 +40,41 @@ AC_DEFUN([gl_FUNC_VSNPRINTF_POSIX],
                   *yes)
                     case "$gl_cv_func_printf_directive_a" in
                       *yes)
-                        case "$gl_cv_func_printf_directive_f" in
+                        case "$gl_cv_func_printf_directive_b" in
                           *yes)
-                            case "$gl_cv_func_printf_directive_n" in
+                            case "$gl_cv_func_printf_directive_f" in
                               *yes)
-                                case "$gl_cv_func_printf_directive_ls" in
+                                case "$gl_cv_func_printf_directive_n" in
                                   *yes)
-                                    case "$gl_cv_func_printf_positions" in
+                                    case "$gl_cv_func_printf_directive_ls" in
                                       *yes)
-                                        case "$gl_cv_func_printf_flag_grouping" in
+                                        case "$gl_cv_func_printf_positions" in
                                           *yes)
-                                            case "$gl_cv_func_printf_flag_leftadjust" in
+                                            case "$gl_cv_func_printf_flag_grouping" in
                                               *yes)
-                                                case "$gl_cv_func_printf_flag_zero" in
+                                                case "$gl_cv_func_printf_flag_leftadjust" in
                                                   *yes)
-                                                    case "$gl_cv_func_printf_precision" in
+                                                    case "$gl_cv_func_printf_flag_zero" in
                                                       *yes)
-                                                        case "$gl_cv_func_printf_enomem" in
+                                                        case "$gl_cv_func_printf_precision" in
                                                           *yes)
-                                                            case "$gl_cv_func_snprintf_truncation_c99" in
+                                                            case "$gl_cv_func_printf_enomem" in
                                                               *yes)
-                                                                case "$gl_cv_func_snprintf_retval_c99" in
+                                                                case "$gl_cv_func_snprintf_truncation_c99" in
                                                                   *yes)
-                                                                    case "$gl_cv_func_snprintf_directive_n" in
+                                                                    case "$gl_cv_func_snprintf_retval_c99" in
                                                                       *yes)
-                                                                        case "$gl_cv_func_snprintf_size1" in
+                                                                        case "$gl_cv_func_snprintf_directive_n" in
                                                                           *yes)
-                                                                            case "$gl_cv_func_vsnprintf_zerosize_c99" in
+                                                                            case "$gl_cv_func_snprintf_size1" in
                                                                               *yes)
-                                                                                # vsnprintf exists and is
-                                                                                # already POSIX compliant.
-                                                                                gl_cv_func_vsnprintf_posix=yes
+                                                                                case "$gl_cv_func_vsnprintf_zerosize_c99" in
+                                                                                  *yes)
+                                                                                    # vsnprintf exists and is
+                                                                                    # already POSIX compliant.
+                                                                                    gl_cv_func_vsnprintf_posix=yes
+                                                                                    ;;
+                                                                                esac
                                                                                 ;;
                                                                             esac
                                                                             ;;
@@ -114,6 +119,7 @@ AC_DEFUN([gl_FUNC_VSNPRINTF_POSIX],
     gl_PREREQ_VASNPRINTF_INFINITE_DOUBLE
     gl_PREREQ_VASNPRINTF_INFINITE_LONG_DOUBLE
     gl_PREREQ_VASNPRINTF_DIRECTIVE_A
+    gl_PREREQ_VASNPRINTF_DIRECTIVE_B
     gl_PREREQ_VASNPRINTF_DIRECTIVE_F
     gl_PREREQ_VASNPRINTF_DIRECTIVE_LS
     gl_PREREQ_VASNPRINTF_FLAG_GROUPING

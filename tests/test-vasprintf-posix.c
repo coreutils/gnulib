@@ -543,6 +543,8 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
     int retval =
       my_asprintf (&result, "%La %d", Infinityl (), 33, 44, 55);
     ASSERT (result != NULL);
+    /* Note: This assertion fails under valgrind.
+       Reported at <https://bugs.kde.org/show_bug.cgi?id=424044>.  */
     ASSERT (strcmp (result, "inf 33") == 0);
     ASSERT (retval == strlen (result));
     free (result);
@@ -3914,6 +3916,97 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
     free (result);
   }
 #endif
+
+  /* Test the support of the 'b' conversion specifier for binary output of
+     integers.  */
+
+  { /* Zero.  */
+    char *result;
+    int retval =
+      my_asprintf (&result, "%b %d", 0, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "0 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  { /* A positive number.  */
+    char *result;
+    int retval =
+      my_asprintf (&result, "%b %d", 12345, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "11000000111001 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  { /* A large positive number.  */
+    char *result;
+    int retval =
+      my_asprintf (&result, "%b %d", 0xFFFFFFFEU, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "11111111111111111111111111111110 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  { /* Width.  */
+    char *result;
+    int retval =
+      my_asprintf (&result, "%20b %d", 12345, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "      11000000111001 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  { /* Width given as argument.  */
+    char *result;
+    int retval =
+      my_asprintf (&result, "%*b %d", 20, 12345, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "      11000000111001 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  { /* Negative width given as argument (cf. FLAG_LEFT below).  */
+    char *result;
+    int retval =
+      my_asprintf (&result, "%*b %d", -20, 12345, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "11000000111001       33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  { /* FLAG_LEFT.  */
+    char *result;
+    int retval =
+      my_asprintf (&result, "%-20b %d", 12345, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "11000000111001       33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  { /* FLAG_ALT with zero.  */
+    char *result;
+    int retval =
+      my_asprintf (&result, "%#b %d", 0, 33, 44, 55);
+    ASSERT (strcmp (result, "0 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  { /* FLAG_ALT with a positive number.  */
+    char *result;
+    int retval =
+      my_asprintf (&result, "%#b %d", 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "0b11000000111001 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
 }
 
 static int

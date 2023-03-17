@@ -24,6 +24,11 @@ This function does not support the @samp{a} and @samp{A} directives on some
 platforms:
 glibc-2.3.6, Solaris 11.4.
 @item
+This function does not support the @samp{b} directive, required by ISO C23,
+on some platforms:
+glibc 2.34, musl libc, macOS 12.5, FreeBSD 13.1, NetBSD 9.0, OpenBSD 7.2,
+AIX 7.2, Solaris 11.4, Cygwin 2.9.0.
+@item
 This function does not support the @samp{n} directive on some platforms:
 glibc when used with @code{_FORTIFY_SOURCE >= 2} (set by default on Ubuntu),
 macOS 11.1.

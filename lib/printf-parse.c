@@ -453,7 +453,7 @@ PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
                   else
                     type = TYPE_INT;
                   break;
-                case 'o': case 'u': case 'x': case 'X':
+                case 'b': case 'o': case 'u': case 'x': case 'X':
                   /* If 'unsigned long long' is larger than 'unsigned long':  */
                   if (flags >= 16 || (flags & 4))
                     type = TYPE_ULONGLONGINT;

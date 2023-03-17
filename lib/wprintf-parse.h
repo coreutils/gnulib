@@ -55,7 +55,7 @@ typedef struct
   const wchar_t* precision_start;
   const wchar_t* precision_end;
   size_t precision_arg_index;
-  wchar_t conversion; /* d i o u x X f F e E g G a A c s p n U % but not C S */
+  wchar_t conversion; /* d i b o u x X f F e E g G a A c s p n U % but not C S */
   size_t arg_index;
 }
 wchar_t_directive;

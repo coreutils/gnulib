@@ -435,6 +435,8 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   { /* Positive infinity.  */
     int retval =
       my_snprintf (result, sizeof (result), "%La %d", Infinityl (), 33, 44, 55);
+    /* Note: This assertion fails under valgrind.
+       Reported at <https://bugs.kde.org/show_bug.cgi?id=424044>.  */
     ASSERT (strcmp (result, "inf 33") == 0);
     ASSERT (retval == strlen (result));
   }
@@ -3053,4 +3055,70 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
     ASSERT (retval == strlen (result));
   }
 #endif
+
+  /* Test the support of the 'b' conversion specifier for binary output of
+     integers.  */
+
+  { /* Zero.  */
+    int retval =
+      my_snprintf (result, sizeof (result), "%b %d", 0, 33, 44, 55);
+    ASSERT (strcmp (result, "0 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* A positive number.  */
+    int retval =
+      my_snprintf (result, sizeof (result), "%b %d", 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "11000000111001 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* A large positive number.  */
+    int retval =
+      my_snprintf (result, sizeof (result), "%b %d", 0xFFFFFFFEU, 33, 44, 55);
+    ASSERT (strcmp (result, "11111111111111111111111111111110 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Width.  */
+    int retval =
+      my_snprintf (result, sizeof (result), "%20b %d", 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "      11000000111001 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Width given as argument.  */
+    int retval =
+      my_snprintf (result, sizeof (result), "%*b %d", 20, 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "      11000000111001 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Negative width given as argument (cf. FLAG_LEFT below).  */
+    int retval =
+      my_snprintf (result, sizeof (result), "%*b %d", -20, 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "11000000111001       33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_LEFT.  */
+    int retval =
+      my_snprintf (result, sizeof (result), "%-20b %d", 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "11000000111001       33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_ALT with zero.  */
+    int retval =
+      my_snprintf (result, sizeof (result), "%#b %d", 0, 33, 44, 55);
+    ASSERT (strcmp (result, "0 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_ALT with a positive number.  */
+    int retval =
+      my_snprintf (result, sizeof (result), "%#b %d", 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "0b11000000111001 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
 }

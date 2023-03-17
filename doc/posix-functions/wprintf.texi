@@ -13,10 +13,6 @@ Portability problems fixed by Gnulib:
 Portability problems not fixed by Gnulib:
 @itemize
 @item
-The @code{%m} directive is not portable, use @code{%s} mapped to an
-argument of @code{strerror(errno)} (or a version of @code{strerror_r})
-instead.
-@item
 This function is missing on some platforms:
 NetBSD 3.0, OpenBSD 3.8, Minix 3.1.8, HP-UX 11.00, IRIX 6.5.
 @item
@@ -25,6 +21,15 @@ platforms: Cygwin 1.5.x.
 @item
 On Windows and 32-bit AIX platforms, @code{wchar_t} is a 16-bit type and therefore cannot
 accommodate all Unicode characters.
+@item
+This function does not support the @samp{b} directive, required by ISO C23,
+on some platforms:
+glibc 2.34, musl libc, macOS 12.5, FreeBSD 13.1, NetBSD 9.0, OpenBSD 7.2,
+AIX 7.2, HP-UX 11, Solaris 11.4, Cygwin 2.9.0, mingw, MSVC 14.
+@item
+The @code{%m} directive is not portable, use @code{%s} mapped to an
+argument of @code{strerror(errno)} (or a version of @code{strerror_r})
+instead.
 @item
 When formatting an integer with grouping flag, this function inserts thousands
 separators even in the "C" locale on some platforms:

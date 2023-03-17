@@ -1,4 +1,4 @@
-# vasnwprintf-posix.m4 serial 1
+# vasnwprintf-posix.m4 serial 2
 dnl Copyright (C) 2007-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -11,6 +11,7 @@ AC_DEFUN([gl_FUNC_VASNWPRINTF_POSIX],
   gl_PREREQ_VASNPRINTF_INFINITE_DOUBLE
   gl_PREREQ_VASNPRINTF_INFINITE_LONG_DOUBLE
   gl_PREREQ_VASNPRINTF_DIRECTIVE_A
+  gl_PREREQ_VASNPRINTF_DIRECTIVE_B
   gl_PREREQ_VASNPRINTF_DIRECTIVE_F
   gl_PREREQ_VASNPRINTF_DIRECTIVE_LS
   gl_PREREQ_VASNPRINTF_FLAG_GROUPING
