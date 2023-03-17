@@ -103,29 +103,29 @@
 
 #include "attribute.h"
 
-#if (NEED_PRINTF_DOUBLE || NEED_PRINTF_LONG_DOUBLE) && !defined IN_LIBINTL
+#if NEED_PRINTF_DOUBLE || NEED_PRINTF_LONG_DOUBLE
 # include <math.h>
 # include "float+.h"
 #endif
 
-#if (NEED_PRINTF_DOUBLE || NEED_PRINTF_INFINITE_DOUBLE) && !defined IN_LIBINTL
+#if NEED_PRINTF_DOUBLE || NEED_PRINTF_INFINITE_DOUBLE
 # include <math.h>
 # include "isnand-nolibm.h"
 #endif
 
-#if (NEED_PRINTF_LONG_DOUBLE || NEED_PRINTF_INFINITE_LONG_DOUBLE) && !defined IN_LIBINTL
+#if NEED_PRINTF_LONG_DOUBLE || NEED_PRINTF_INFINITE_LONG_DOUBLE
 # include <math.h>
 # include "isnanl-nolibm.h"
 # include "fpucw.h"
 #endif
 
-#if (NEED_PRINTF_DIRECTIVE_A || NEED_PRINTF_DOUBLE) && !defined IN_LIBINTL
+#if NEED_PRINTF_DIRECTIVE_A || NEED_PRINTF_DOUBLE
 # include <math.h>
 # include "isnand-nolibm.h"
 # include "printf-frexp.h"
 #endif
 
-#if (NEED_PRINTF_DIRECTIVE_A || NEED_PRINTF_LONG_DOUBLE) && !defined IN_LIBINTL
+#if NEED_PRINTF_DIRECTIVE_A || NEED_PRINTF_LONG_DOUBLE
 # include <math.h>
 # include "isnanl-nolibm.h"
 # include "printf-frexpl.h"
@@ -241,7 +241,7 @@ local_strnlen (const char *string, size_t maxlen)
 # endif
 #endif
 
-#if (((!USE_SNPRINTF || WIDE_CHAR_VERSION || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF) && WIDE_CHAR_VERSION) || ((!USE_SNPRINTF || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF || (NEED_PRINTF_DIRECTIVE_LS && !defined IN_LIBINTL)) && !WIDE_CHAR_VERSION && DCHAR_IS_TCHAR)) && HAVE_WCHAR_T
+#if (((!USE_SNPRINTF || WIDE_CHAR_VERSION || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF) && WIDE_CHAR_VERSION) || ((!USE_SNPRINTF || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF || NEED_PRINTF_DIRECTIVE_LS) && !WIDE_CHAR_VERSION && DCHAR_IS_TCHAR)) && HAVE_WCHAR_T
 # if HAVE_WCSLEN
 #  define local_wcslen wcslen
 # else
@@ -283,7 +283,7 @@ local_wcsnlen (const wchar_t *s, size_t maxlen)
 # endif
 #endif
 
-#if (((!USE_SNPRINTF || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF || (NEED_PRINTF_DIRECTIVE_LS && !defined IN_LIBINTL) || ENABLE_WCHAR_FALLBACK) && HAVE_WCHAR_T) || (ENABLE_WCHAR_FALLBACK && HAVE_WINT_T)) && !WIDE_CHAR_VERSION
+#if (((!USE_SNPRINTF || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF || NEED_PRINTF_DIRECTIVE_LS || ENABLE_WCHAR_FALLBACK) && HAVE_WCHAR_T) || (ENABLE_WCHAR_FALLBACK && HAVE_WINT_T)) && !WIDE_CHAR_VERSION
 # if ENABLE_WCHAR_FALLBACK
 static size_t
 wctomb_fallback (char *s, wchar_t wc)
@@ -351,7 +351,7 @@ local_wctomb (char *s, wchar_t wc)
 # endif
 #endif
 
-#if (NEED_PRINTF_DIRECTIVE_A || NEED_PRINTF_LONG_DOUBLE || NEED_PRINTF_INFINITE_LONG_DOUBLE || NEED_PRINTF_DOUBLE || NEED_PRINTF_INFINITE_DOUBLE) && !defined IN_LIBINTL
+#if NEED_PRINTF_DIRECTIVE_A || NEED_PRINTF_LONG_DOUBLE || NEED_PRINTF_INFINITE_LONG_DOUBLE || NEED_PRINTF_DOUBLE || NEED_PRINTF_INFINITE_DOUBLE
 /* Determine the decimal-point character according to the current locale.  */
 # ifndef decimal_point_char_defined
 #  define decimal_point_char_defined 1
@@ -378,7 +378,7 @@ decimal_point_char (void)
 # endif
 #endif
 
-#if NEED_PRINTF_INFINITE_DOUBLE && !NEED_PRINTF_DOUBLE && !defined IN_LIBINTL
+#if NEED_PRINTF_INFINITE_DOUBLE && !NEED_PRINTF_DOUBLE
 
 /* Equivalent to !isfinite(x) || x == 0, but does not require libm.  */
 static int
@@ -389,7 +389,7 @@ is_infinite_or_zero (double x)
 
 #endif
 
-#if NEED_PRINTF_INFINITE_LONG_DOUBLE && !NEED_PRINTF_LONG_DOUBLE && !defined IN_LIBINTL
+#if NEED_PRINTF_INFINITE_LONG_DOUBLE && !NEED_PRINTF_LONG_DOUBLE
 
 /* Equivalent to !isfinite(x) || x == 0, but does not require libm.  */
 static int
@@ -400,7 +400,7 @@ is_infinite_or_zerol (long double x)
 
 #endif
 
-#if (NEED_PRINTF_LONG_DOUBLE || NEED_PRINTF_DOUBLE) && !defined IN_LIBINTL
+#if NEED_PRINTF_LONG_DOUBLE || NEED_PRINTF_DOUBLE
 
 /* Converting 'long double' to decimal without rare rounding bugs requires
    real bignums.  We use the naming conventions of GNU gmp, but vastly simpler
@@ -2394,7 +2394,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                   }
               }
 #endif
-#if (!USE_SNPRINTF || WIDE_CHAR_VERSION || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF || (NEED_PRINTF_DIRECTIVE_LS && !defined IN_LIBINTL) || ENABLE_WCHAR_FALLBACK) && HAVE_WCHAR_T
+#if (!USE_SNPRINTF || WIDE_CHAR_VERSION || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF || NEED_PRINTF_DIRECTIVE_LS || ENABLE_WCHAR_FALLBACK) && HAVE_WCHAR_T
             else if (dp->conversion == 's'
 # if WIDE_CHAR_VERSION
                      && a.arg[dp->arg_index].type != TYPE_WIDE_STRING
@@ -3043,7 +3043,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                 }
               }
 #endif
-#if (NEED_PRINTF_DIRECTIVE_A || NEED_PRINTF_LONG_DOUBLE || NEED_PRINTF_DOUBLE) && !defined IN_LIBINTL
+#if NEED_PRINTF_DIRECTIVE_A || NEED_PRINTF_LONG_DOUBLE || NEED_PRINTF_DOUBLE
             else if ((dp->conversion == 'a' || dp->conversion == 'A')
 # if !(NEED_PRINTF_DIRECTIVE_A || (NEED_PRINTF_LONG_DOUBLE && NEED_PRINTF_DOUBLE))
                      && (0
@@ -3533,7 +3533,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                 length += count;
               }
 #endif
-#if (NEED_PRINTF_INFINITE_DOUBLE || NEED_PRINTF_DOUBLE || NEED_PRINTF_INFINITE_LONG_DOUBLE || NEED_PRINTF_LONG_DOUBLE) && !defined IN_LIBINTL
+#if NEED_PRINTF_INFINITE_DOUBLE || NEED_PRINTF_DOUBLE || NEED_PRINTF_INFINITE_LONG_DOUBLE || NEED_PRINTF_LONG_DOUBLE
             else if ((dp->conversion == 'f' || dp->conversion == 'F'
                       || dp->conversion == 'e' || dp->conversion == 'E'
                       || dp->conversion == 'g' || dp->conversion == 'G'
@@ -5716,7 +5716,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
     errno = ENOMEM;
     goto fail_with_errno;
 
-#if ENABLE_UNISTDIO || ((!USE_SNPRINTF || WIDE_CHAR_VERSION || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF || (NEED_PRINTF_DIRECTIVE_LS && !defined IN_LIBINTL) || ENABLE_WCHAR_FALLBACK) && HAVE_WCHAR_T)
+#if ENABLE_UNISTDIO || ((!USE_SNPRINTF || WIDE_CHAR_VERSION || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF || NEED_PRINTF_DIRECTIVE_LS || ENABLE_WCHAR_FALLBACK) && HAVE_WCHAR_T)
   fail_with_EILSEQ:
     errno = EILSEQ;
     goto fail_with_errno;
