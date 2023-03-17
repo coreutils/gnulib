@@ -1,4 +1,4 @@
-# time.m4 serial 1
+# time.m4 serial 2
 dnl Copyright (C) 2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -12,9 +12,11 @@ AC_DEFUN([gl_FUNC_TIME],
   dnl glibc has the bug https://sourceware.org/bugzilla/show_bug.cgi?id=30200 .
   AC_CACHE_CHECK([whether time() works],
     [gl_cv_func_time_works],
-    [dnl Guess that it works except on glibc >= 2.31 with Linux.
-     dnl And binaries produced on glibc < 2.31 need to run fine on newer
-     dnl glibc versions as well; therefore ignore __GLIBC_MINOR__.
+    [dnl Guess that it works except on
+     dnl   - glibc >= 2.31 with Linux. And binaries produced on glibc < 2.31
+     dnl     need to run fine on newer glibc versions as well; therefore ignore
+     dnl     __GLIBC_MINOR__.
+     dnl   - native Windows.
      case "$host_os" in
        linux*-gnu*)
          AC_EGREP_CPP([Unlucky], [
@@ -28,6 +30,7 @@ AC_DEFUN([gl_FUNC_TIME],
            [gl_cv_func_time_works="guessing no"],
            [gl_cv_func_time_works="guessing yes"])
          ;;
+       mingw*) gl_cv_func_time_works="guessing no";;
        *) gl_cv_func_time_works="guessing yes";;
      esac
     ])

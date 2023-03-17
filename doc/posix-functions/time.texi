@@ -12,10 +12,11 @@ Portability problems fixed by Gnulib:
 This function is not consistent with @code{gettimeofday} and @code{timespec_get}
 on some platforms:
 @c https://sourceware.org/bugzilla/show_bug.cgi?id=30200
-glibc 2.31 or newer on Linux.
-Namely, in the first 1 to 2.5 milliseconds of every second, @code{time}
-returns a value that is one less than the @code{tv_sec} part of the return
-value of @code{gettimeofday} or @code{timespec_get}.
+glibc 2.31 or newer on Linux, native Windows.
+Namely, in the first 1 to 2.5 milliseconds of every second (or, on Windows,
+in the first 5 milliseconds of every second), @code{time} returns a value
+that is one less than the @code{tv_sec} part of the return value of
+@code{gettimeofday} or @code{timespec_get}.
 @end itemize
 
 Portability problems not fixed by Gnulib:
