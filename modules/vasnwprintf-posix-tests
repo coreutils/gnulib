@@ -1,0 +1,31 @@
+Files:
+tests/test-vasnwprintf-posix.c
+tests/test-vasnwprintf-posix2.sh
+tests/test-vasnwprintf-posix2.c
+tests/test-vasnwprintf-posix3.c
+tests/minus-zero.h
+tests/infinity.h
+tests/nan.h
+tests/macros.h
+m4/locale-fr.m4
+m4/codeset.m4
+
+Depends-on:
+stdint
+float
+setlocale
+wcscmp
+wcsspn
+wmemcpy
+
+configure.ac:
+AC_REQUIRE([gl_LONG_DOUBLE_VS_DOUBLE])
+gt_LOCALE_FR
+gt_LOCALE_FR_UTF8
+
+Makefile.am:
+TESTS += test-vasnwprintf-posix test-vasnwprintf-posix2.sh test-vasnwprintf-posix3
+TESTS_ENVIRONMENT += LOCALE_FR='@LOCALE_FR@' LOCALE_FR_UTF8='@LOCALE_FR_UTF8@'
+check_PROGRAMS += test-vasnwprintf-posix test-vasnwprintf-posix2 test-vasnwprintf-posix3
+test_vasnwprintf_posix2_LDADD = $(LDADD) $(SETLOCALE_LIB)
+test_vasnwprintf_posix3_LDADD = $(LDADD) $(SETLOCALE_LIB)
