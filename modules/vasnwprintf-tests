@@ -1,0 +1,13 @@
+Files:
+tests/test-vasnwprintf.c
+tests/macros.h
+
+Depends-on:
+wcscmp
+wmemcpy
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-vasnwprintf
+check_PROGRAMS += test-vasnwprintf
