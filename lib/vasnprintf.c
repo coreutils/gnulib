@@ -241,7 +241,7 @@ local_strnlen (const char *string, size_t maxlen)
 # endif
 #endif
 
-#if (((!USE_SNPRINTF || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF) && WIDE_CHAR_VERSION) || ((!USE_SNPRINTF || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF || (NEED_PRINTF_DIRECTIVE_LS && !defined IN_LIBINTL)) && !WIDE_CHAR_VERSION && DCHAR_IS_TCHAR)) && HAVE_WCHAR_T
+#if (((!USE_SNPRINTF || WIDE_CHAR_VERSION || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF) && WIDE_CHAR_VERSION) || ((!USE_SNPRINTF || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF || (NEED_PRINTF_DIRECTIVE_LS && !defined IN_LIBINTL)) && !WIDE_CHAR_VERSION && DCHAR_IS_TCHAR)) && HAVE_WCHAR_T
 # if HAVE_WCSLEN
 #  define local_wcslen wcslen
 # else
@@ -264,7 +264,7 @@ local_wcslen (const wchar_t *s)
 # endif
 #endif
 
-#if (!USE_SNPRINTF || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF) && HAVE_WCHAR_T && WIDE_CHAR_VERSION
+#if (!USE_SNPRINTF || WIDE_CHAR_VERSION || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF) && HAVE_WCHAR_T && WIDE_CHAR_VERSION
 # if HAVE_WCSNLEN
 #  define local_wcsnlen wcsnlen
 # else
@@ -1604,7 +1604,7 @@ is_borderline (const char *digits, size_t precision)
 
 #endif
 
-#if !USE_SNPRINTF || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF
+#if !USE_SNPRINTF || WIDE_CHAR_VERSION || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF
 
 /* Use a different function name, to make it possible that the 'wchar_t'
    parametrization and the 'char' parametrization get compiled in the same
@@ -2394,7 +2394,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                   }
               }
 #endif
-#if (!USE_SNPRINTF || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF || (NEED_PRINTF_DIRECTIVE_LS && !defined IN_LIBINTL) || ENABLE_WCHAR_FALLBACK) && HAVE_WCHAR_T
+#if (!USE_SNPRINTF || WIDE_CHAR_VERSION || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF || (NEED_PRINTF_DIRECTIVE_LS && !defined IN_LIBINTL) || ENABLE_WCHAR_FALLBACK) && HAVE_WCHAR_T
             else if (dp->conversion == 's'
 # if WIDE_CHAR_VERSION
                      && a.arg[dp->arg_index].type != TYPE_WIDE_STRING
@@ -4723,10 +4723,10 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 #if !DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_LEFTADJUST || NEED_PRINTF_FLAG_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION
                 int has_width;
 #endif
-#if !USE_SNPRINTF || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF || !DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_LEFTADJUST || NEED_PRINTF_FLAG_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION
+#if !USE_SNPRINTF || WIDE_CHAR_VERSION || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF || !DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_LEFTADJUST || NEED_PRINTF_FLAG_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION
                 size_t width;
 #endif
-#if !USE_SNPRINTF || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF || NEED_PRINTF_UNBOUNDED_PRECISION
+#if !USE_SNPRINTF || WIDE_CHAR_VERSION || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF || NEED_PRINTF_UNBOUNDED_PRECISION
                 int has_precision;
                 size_t precision;
 #endif
@@ -4755,7 +4755,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 #if !DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_LEFTADJUST || NEED_PRINTF_FLAG_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION
                 has_width = 0;
 #endif
-#if !USE_SNPRINTF || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF || !DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_LEFTADJUST || NEED_PRINTF_FLAG_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION
+#if !USE_SNPRINTF || WIDE_CHAR_VERSION || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF || !DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_LEFTADJUST || NEED_PRINTF_FLAG_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION
                 width = 0;
                 if (dp->width_start != dp->width_end)
                   {
@@ -4789,7 +4789,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                   }
 #endif
 
-#if !USE_SNPRINTF || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF || NEED_PRINTF_UNBOUNDED_PRECISION
+#if !USE_SNPRINTF || WIDE_CHAR_VERSION || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF || NEED_PRINTF_UNBOUNDED_PRECISION
                 has_precision = 0;
                 precision = 6;
                 if (dp->precision_start != dp->precision_end)
@@ -4988,47 +4988,63 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 #endif
                   *fbp = dp->conversion;
 #if USE_SNPRINTF
-# if ((HAVE_SNPRINTF_RETVAL_C99 && HAVE_SNPRINTF_TRUNCATION_C99)            \
+                /* Decide whether to pass %n in the format string
+                   to SNPRINTF.  */
+# if ((!WIDE_CHAR_VERSION                                                   \
+       && (HAVE_SNPRINTF_RETVAL_C99 && HAVE_SNPRINTF_TRUNCATION_C99))       \
       || ((__GLIBC__ > 2 || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 3))       \
           && !defined __UCLIBC__)                                           \
       || (defined __APPLE__ && defined __MACH__)                            \
       || defined __ANDROID__                                                \
       || (defined _WIN32 && ! defined __CYGWIN__))
-                /* On systems where we know that snprintf's return value
-                   conforms to ISO C 99 (HAVE_SNPRINTF_RETVAL_C99) and that
-                   snprintf always produces NUL-terminated strings
-                   (HAVE_SNPRINTF_TRUNCATION_C99), it is possible to avoid
-                   using %n.  And it is desirable to do so, because more and
-                   more platforms no longer support %n, for "security reasons".
-                   In particular, the following platforms:
+                /* We can avoid passing %n and instead rely on SNPRINTF's
+                   return value if
+                     - !WIDE_CHAR_VERSION, because if WIDE_CHAR_VERSION,
+                       snwprintf()/_snwprintf() (Windows) and swprintf() (Unix)
+                       don't return the needed buffer size, and
+                     - we're compiling for a system where we know
+                       - that snprintf's return value conforms to ISO C 99
+                         (HAVE_SNPRINTF_RETVAL_C99) and
+                       - that snprintf always produces NUL-terminated strings
+                         (HAVE_SNPRINTF_TRUNCATION_C99).
+                   And it is desirable to do so, because more and more platforms
+                   no longer support %n, for "security reasons".  */
+                /* On specific platforms, listed below, we *must* avoid %n.
+                   In the case
+                     !WIDE_CHAR_VERSION && HAVE_SNPRINTF_RETVAL_C99 && !USE_MSVC__SNPRINTF
+                   we can rely on the return value of snprintf instead.  Whereas
+                   in the opposite case
+                     WIDE_CHAR_VERSION || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF
+                   we need to make room based on an estimation, computed by
+                   MAX_ROOM_NEEDED.  */
+                /* The following platforms forbid %n:
                      - On glibc2 systems from 2004-10-18 or newer, the use of
                        %n in format strings in writable memory may crash the
                        program (if compiled with _FORTIFY_SOURCE=2).
-                     - On Mac OS X 10.13 or newer, the use of %n in format
+                     - On macOS 10.13 or newer, the use of %n in format
                        strings in writable memory by default crashes the
                        program.
                      - On Android, starting on 2018-03-07, the use of %n in
                        format strings produces a fatal error (see
                        <https://android.googlesource.com/platform/bionic/+/41398d03b7e8e0dfb951660ae713e682e9fc0336>).
-                   On these platforms, HAVE_SNPRINTF_RETVAL_C99 and
-                   HAVE_SNPRINTF_TRUNCATION_C99 are 1. We have listed them
-                   explicitly in the condition above, in case of cross-
-                   compilation (just to be sure).  */
-                /* On native Windows systems (such as mingw), we can avoid using
-                   %n because:
+                     - On native Windows systems (such as mingw) where the OS is
+                       Windows Vista, the use of %n in format strings by default
+                       crashes the program. See
+                         <https://gcc.gnu.org/ml/gcc/2007-06/msg00122.html> and
+                         <https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/set-printf-count-output>
+                   On the first three of these platforms, if !WIDE_CHAR_VERSION,
+                   it is not a big deal to avoid %n, because on these platforms,
+                   HAVE_SNPRINTF_RETVAL_C99 and HAVE_SNPRINTF_TRUNCATION_C99 are
+                   1.
+                   On native Windows, if !WIDE_CHAR_VERSION, it's not a big deal
+                   either because:
                      - Although the gl_SNPRINTF_TRUNCATION_C99 test fails,
                        snprintf does not write more than the specified number
                        of bytes. (snprintf (buf, 3, "%d %d", 4567, 89) writes
                        '4', '5', '6' into buf, not '4', '5', '\0'.)
                      - Although the gl_SNPRINTF_RETVAL_C99 test fails, snprintf
                        allows us to recognize the case of an insufficient
-                       buffer size: it returns -1 in this case.
-                   On native Windows systems (such as mingw) where the OS is
-                   Windows Vista, the use of %n in format strings by default
-                   crashes the program. See
-                     <https://gcc.gnu.org/ml/gcc/2007-06/msg00122.html> and
-                     <https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/set-printf-count-output>
-                   So we should avoid %n in this situation.  */
+                       buffer size: it returns -1 in this case.  */
                 fbp[1] = '\0';
 # else           /* AIX <= 5.1, HP-UX, IRIX, OSF/1, Solaris <= 9, BeOS */
                 fbp[1] = '%';
@@ -5271,12 +5287,15 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                             /* Look at the snprintf() return value.  */
                             if (retcount < 0)
                               {
-# if !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF
+# if WIDE_CHAR_VERSION || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF
                                 /* HP-UX 10.20 snprintf() is doubly deficient:
                                    It doesn't understand the '%n' directive,
                                    *and* it returns -1 (rather than the length
                                    that would have been required) when the
                                    buffer is too small.
+                                   Likewise, in case of WIDE_CHAR_VERSION, the
+                                   functions snwprintf()/_snwprintf() (Windows)
+                                   or swprintf() (Unix).
                                    But a failure at this point can also come
                                    from other reasons than a too small buffer,
                                    such as an invalid wide string argument to
@@ -5697,7 +5716,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
     errno = ENOMEM;
     goto fail_with_errno;
 
-#if ENABLE_UNISTDIO || ((!USE_SNPRINTF || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF || (NEED_PRINTF_DIRECTIVE_LS && !defined IN_LIBINTL) || ENABLE_WCHAR_FALLBACK) && HAVE_WCHAR_T)
+#if ENABLE_UNISTDIO || ((!USE_SNPRINTF || WIDE_CHAR_VERSION || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF || (NEED_PRINTF_DIRECTIVE_LS && !defined IN_LIBINTL) || ENABLE_WCHAR_FALLBACK) && HAVE_WCHAR_T)
   fail_with_EILSEQ:
     errno = EILSEQ;
     goto fail_with_errno;

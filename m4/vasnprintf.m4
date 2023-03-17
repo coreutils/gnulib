@@ -1,4 +1,4 @@
-# vasnprintf.m4 serial 39
+# vasnprintf.m4 serial 40
 dnl Copyright (C) 2002-2004, 2006-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -29,6 +29,15 @@ AC_DEFUN([gl_REPLACE_VASNPRINTF],
   gl_PREREQ_ASNPRINTF
 ])
 
+AC_DEFUN([gl_FUNC_VASNWPRINTF],
+[
+  AC_LIBOBJ([printf-args])
+  gl_PREREQ_PRINTF_ARGS
+  gl_PREREQ_PRINTF_PARSE
+  gl_PREREQ_VASNWPRINTF
+  gl_PREREQ_ASNPRINTF
+])
+
 # Prerequisites of lib/printf-args.h, lib/printf-args.c.
 AC_DEFUN([gl_PREREQ_PRINTF_ARGS],
 [
@@ -37,6 +46,7 @@ AC_DEFUN([gl_PREREQ_PRINTF_ARGS],
 ])
 
 # Prerequisites of lib/printf-parse.h, lib/printf-parse.c.
+# Prerequisites of lib/wprintf-parse.h, lib/wprintf-parse.c.
 AC_DEFUN([gl_PREREQ_PRINTF_PARSE],
 [
   AC_REQUIRE([gl_FEATURES_H])
@@ -50,19 +60,13 @@ AC_DEFUN([gl_PREREQ_PRINTF_PARSE],
   AC_REQUIRE([gt_AC_TYPE_INTMAX_T])
 ])
 
-# Prerequisites of lib/vasnprintf.c.
+# Prerequisites of lib/vasnprintf.c if !WIDE_CHAR_VERSION.
 AC_DEFUN_ONCE([gl_PREREQ_VASNPRINTF],
 [
-  AC_REQUIRE([AC_FUNC_ALLOCA])
-  AC_REQUIRE([gt_TYPE_WCHAR_T])
-  AC_REQUIRE([gt_TYPE_WINT_T])
-  AC_CHECK_FUNCS([snprintf strnlen wcslen wcsnlen mbrtowc wcrtomb])
+  AC_CHECK_FUNCS([snprintf strnlen wcrtomb])
   dnl Use the _snprintf function only if it is declared (because on NetBSD it
   dnl is defined as a weak alias of snprintf; we prefer to use the latter).
   AC_CHECK_DECLS([_snprintf], , , [[#include <stdio.h>]])
-  dnl Knowing DBL_EXPBIT0_WORD and DBL_EXPBIT0_BIT enables an optimization
-  dnl in the code for NEED_PRINTF_LONG_DOUBLE || NEED_PRINTF_DOUBLE.
-  AC_REQUIRE([gl_DOUBLE_EXPONENT_LOCATION])
   dnl We can avoid a lot of code by assuming that snprintf's return value
   dnl conforms to ISO C99. So check that.
   AC_REQUIRE([gl_SNPRINTF_RETVAL_C99])
@@ -84,6 +88,27 @@ AC_DEFUN_ONCE([gl_PREREQ_VASNPRINTF],
          terminated.])
       ;;
   esac
+  gl_PREREQ_VASNXPRINTF
+])
+
+# Prerequisites of lib/vasnwprintf.c.
+AC_DEFUN_ONCE([gl_PREREQ_VASNWPRINTF],
+[
+  AC_CHECK_FUNCS([wcsnlen mbrtowc])
+  AC_CHECK_DECLS([_snwprintf], , , [[#include <stdio.h>]])
+  gl_PREREQ_VASNXPRINTF
+])
+
+# Common prerequisites of lib/vasnprintf.c and lib/vasnwprintf.c.
+AC_DEFUN_ONCE([gl_PREREQ_VASNXPRINTF],
+[
+  AC_REQUIRE([AC_FUNC_ALLOCA])
+  AC_REQUIRE([gt_TYPE_WCHAR_T])
+  AC_REQUIRE([gt_TYPE_WINT_T])
+  AC_CHECK_FUNCS([wcslen])
+  dnl Knowing DBL_EXPBIT0_WORD and DBL_EXPBIT0_BIT enables an optimization
+  dnl in the code for NEED_PRINTF_LONG_DOUBLE || NEED_PRINTF_DOUBLE.
+  AC_REQUIRE([gl_DOUBLE_EXPONENT_LOCATION])
 ])
 
 # Extra prerequisites of lib/vasnprintf.c for supporting 'long double'
@@ -293,6 +318,7 @@ AC_DEFUN([gl_PREREQ_VASNPRINTF_WITH_EXTRAS],
 ])
 
 # Prerequisites of lib/asnprintf.c.
+# Prerequisites of lib/asnwprintf.c.
 AC_DEFUN([gl_PREREQ_ASNPRINTF],
 [
 ])
