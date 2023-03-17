@@ -1,0 +1,42 @@
+Description:
+POSIX compatible vswprintf with automatic memory allocation and bounded output
+size.
+
+Comment:
+This module should not be used as a dependency from a test module,
+otherwise when this module occurs as a tests-related module, it will
+have side effects on the compilation of the 'vasnwprintf' module, if
+that module occurs among the main modules in lib/.
+
+Files:
+m4/vasnwprintf-posix.m4
+m4/printf.m4
+m4/math_h.m4
+
+Depends-on:
+vasnwprintf
+isnand-nolibm
+isnanl-nolibm
+frexp-nolibm
+frexpl-nolibm
+printf-frexp
+printf-frexpl
+signbit
+fpucw
+nocrash
+printf-safe
+multiarch
+
+configure.ac:
+gl_FUNC_VASNWPRINTF_POSIX
+
+Makefile.am:
+
+Include:
+"vasnwprintf.h"
+
+License:
+LGPLv2+
+
+Maintainer:
+all
