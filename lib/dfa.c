@@ -1202,8 +1202,13 @@ lex (struct dfa *dfa)
      On the plus side, this avoids having a duplicate of the
      main switch inside the backslash case.  On the minus side,
      it means that just about every case tests the backslash flag.  */
-  for (int i = 0; i < 2; ++i)
+  for (int i = 0; ; i++)
     {
+      /* This loop should consume at most a backslash and some other
+         character.  */
+      if (2 <= i)
+        abort ();
+
       if (! dfa->lex.left)
         return dfa->lex.lasttok = END;
       int c = fetch_wc (dfa);
@@ -1591,11 +1596,6 @@ lex (struct dfa *dfa)
           return dfa->lex.lasttok = c;
         }
     }
-
-  /* The above loop should consume at most a backslash
-     and some other character.  */
-  abort ();
-  return END;                   /* keeps pedantic compilers happy.  */
 }
 
 static void
