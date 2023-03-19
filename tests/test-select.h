@@ -1,5 +1,5 @@
 /* Test of select() substitute.
-   Copyright (C) 2008-2022 Free Software Foundation, Inc.
+   Copyright (C) 2008-2023 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -37,8 +37,6 @@
 #ifdef HAVE_SYS_WAIT_H
 # include <sys/wait.h>
 #endif
-
-#define TEST_PORT       12345
 
 
 typedef int (*select_fn) (int, fd_set *, fd_set *, fd_set *, struct timeval *);
