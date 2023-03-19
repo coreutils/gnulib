@@ -1753,7 +1753,6 @@ func_all_modules ()
   func_module immutable
   func_module malloc-h
   func_module ssfmalloc
-  func_module stack
   func_module xsize
   func_module xalloc
   func_module xalloc-die
@@ -1850,7 +1849,6 @@ func_all_modules ()
   func_module trim
   func_module fstrcmp
   func_module xstrndup
-  func_module wmempcpy
   func_end_table
 
   element="Mathematics <math.h>"
@@ -1923,6 +1921,16 @@ func_all_modules ()
   func_module strsignal
   func_end_table
 
+  element="Wide-character string handling <wchar.h>"
+  element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
+  func_section_wrap ansic_ext_wchar
+  func_wrap H3
+  func_echo "$element"
+
+  func_begin_table
+  func_module wmempcpy
+  func_end_table
+
   element="Command-line arguments"
   element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
   func_section_wrap ansic_ext_argv
@@ -1961,6 +1969,7 @@ func_all_modules ()
   func_module array-oset
   func_module avltree-oset
   func_module rbtree-oset
+  func_module stack
   func_end_table
 
   element="Cryptographic computations (low-level)"
@@ -2440,8 +2449,10 @@ func_all_modules ()
   func_wrap H3
   func_echo "$element"
 
+  func_begin_table
   func_module timespec_get
   func_module timespec_getres
+  func_end_table
 
   element="Support for GNU multiple precision arithmetic"
   func_section_wrap gmp
@@ -3593,7 +3604,6 @@ func_all_modules ()
   func_module argp-version-etc
   func_module argz
   func_module attribute
-  func_module bison
   func_module bitrotate
   func_module byteswap
   func_module dfa
@@ -3639,6 +3649,7 @@ func_all_modules ()
   func_begin_table
   func_module absolute-header
   func_module snippet/arg-nonnull
+  func_module bison
   func_module config-h
   func_module configmake
   func_module dummy
