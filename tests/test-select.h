@@ -37,8 +37,6 @@
 # include <sys/wait.h>
 #endif
 
-#define TEST_PORT       12345
-
 
 typedef int (*select_fn) (int, fd_set *, fd_set *, fd_set *, struct timeval *);
 
