@@ -24,6 +24,7 @@ SIGNATURE_CHECK (pselect, int,
                  (int, fd_set *restrict, fd_set *restrict, fd_set *restrict,
                   struct timespec const *restrict, const sigset_t *restrict));
 
+#define TEST_PORT 12347
 #include "test-select.h"
 
 static int
