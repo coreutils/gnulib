@@ -1701,6 +1701,7 @@ func_all_modules ()
   func_module eealloc
   func_module free-posix
   func_module malloc-gnu
+  func_module memalign
   func_module realloc-gnu
   func_module reallocarray
   func_module pagealign_alloc
@@ -1728,6 +1729,8 @@ func_all_modules ()
   func_module fprintftime
   func_module nstrftime
   func_module strftime-fixes
+  func_module time
+  func_module time-h
   func_module time_rz
   func_module year2038
   func_end_table
@@ -1744,9 +1747,18 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
+  func_module aligned-malloc
+  func_module ialloc
+  func_module idx
+  func_module immutable
+  func_module malloc-h
+  func_module ssfmalloc
+  func_module stack
   func_module xsize
   func_module xalloc
   func_module xalloc-die
+  func_module alignalloc
+  func_module xalignalloc
   func_module alloca
   func_module alloca-opt
   func_module malloca
@@ -1824,7 +1836,9 @@ func_all_modules ()
   func_module strcasestr-simple
   func_module strchrnul
   func_module streq
+  func_module strerrorname_np
   func_module strerror_r-posix
+  func_module string-buffer
   func_module strnlen
   func_module strnlen1
   func_module strndup
@@ -1836,6 +1850,7 @@ func_all_modules ()
   func_module trim
   func_module fstrcmp
   func_module xstrndup
+  func_module wmempcpy
   func_end_table
 
   element="Mathematics <math.h>"
@@ -1873,6 +1888,7 @@ func_all_modules ()
   func_begin_table
   func_module mktime-internal
   func_module parse-datetime
+  func_module parse-datetime2
   func_module timegm
   func_module tzset
   func_end_table
@@ -1885,6 +1901,7 @@ func_all_modules ()
 
   func_begin_table
   func_module unlocked-io
+  func_module unlocked-io-internal
   func_module fwriteerror
   func_module vasnprintf
   func_module vasprintf
@@ -1901,6 +1918,8 @@ func_all_modules ()
   func_begin_table
   func_module fatal-signal
   func_module raise
+  func_module sigabbrev_np
+  func_module sigdescr_np
   func_module strsignal
   func_end_table
 
@@ -1957,13 +1976,20 @@ func_all_modules ()
   func_module crypto/hmac-md5
   func_module crypto/hmac-sha1
   func_module crypto/md2
+  func_module crypto/md2-buffer
   func_module crypto/md4
+  func_module crypto/md4-buffer
   func_module crypto/md5
+  func_module crypto/md5-buffer
   func_module crypto/rijndael
   func_module crypto/sha1
+  func_module crypto/sha1-buffer
   func_module crypto/sha256
+  func_module crypto/sha256-buffer
   func_module crypto/sha512
+  func_module crypto/sha512-buffer
   func_module crypto/sm3
+  func_module crypto/sm3-buffer
   func_end_table
 
   element="Cryptographic computations (high-level)"
@@ -2384,7 +2410,18 @@ func_all_modules ()
 
   func_begin_table
   func_module alignasof
+  func_module nullptr
   func_module stdckdint
+  func_end_table
+
+  element="Memory management functions <stdlib.h>"
+  element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
+  func_section_wrap ansic_ext_stdlib_memory
+  func_wrap H3
+  func_echo "$element"
+
+  func_begin_table
+  func_module aligned_alloc
   func_end_table
 
   element="String handling <string.h>"
@@ -2393,7 +2430,18 @@ func_all_modules ()
   func_wrap H3
   func_echo "$element"
 
+  func_begin_table
   func_module memset_explicit
+  func_end_table
+
+  element="Date and time <time.h>"
+  element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
+  func_section_wrap c23_ext_string
+  func_wrap H3
+  func_echo "$element"
+
+  func_module timespec_get
+  func_module timespec_getres
 
   element="Support for GNU multiple precision arithmetic"
   func_section_wrap gmp
@@ -2436,7 +2484,10 @@ func_all_modules ()
   func_module arpa_inet
   func_module bind
   func_module calloc-posix
+  func_module chmod
+  func_module chmodat
   func_module chown
+  func_module chownat
   func_module close
   func_module connect
   func_module dirent
@@ -2446,6 +2497,13 @@ func_all_modules ()
   func_module duplocale
   func_module environ
   func_module errno
+  func_module execl
+  func_module execle
+  func_module execlp
+  func_module execv
+  func_module execve
+  func_module execvp
+  func_module execvpe
   func_module fchdir
   func_module fclose
   func_module fcntl-h
@@ -2505,6 +2563,7 @@ func_all_modules ()
   func_module perror
   func_module poll
   func_module popen
+  func_module posix_memalign
   func_module posix_openpt
   func_module posix_spawn
   func_module posix_spawnattr_destroy
@@ -2603,6 +2662,7 @@ func_all_modules ()
   func_module vsprintf-posix
   func_module wcsnrtombs
   func_module wcwidth
+  func_module windows-spawn
   func_module windows-stat-inodes
   func_module windows-stat-override
   func_module windows-stat-timespec
@@ -2618,6 +2678,7 @@ func_all_modules ()
   func_module clock-time
   func_module d-ino
   func_module d-type
+  func_module eloop-threshold
   func_module link-follow
   func_module rmdir-errno
   func_module timer-time
@@ -2633,6 +2694,7 @@ func_all_modules ()
 
   func_begin_table
   func_module chdir-long
+  func_module basename-lgpl
   func_module dirent-safer
   func_module dirname
   func_module dirname-lgpl
@@ -2689,6 +2751,7 @@ func_all_modules ()
   func_module canonicalize
   func_module canonicalize-lgpl
   func_module clean-temp
+  func_module clean-temp-simple
   func_module concat-filename
   func_module copy-file
   func_module fsusage
@@ -2797,6 +2860,7 @@ func_all_modules ()
   func_module closein
   func_module closeout
   func_module fbufmode
+  func_module fopen-gnu
   func_module fopen-safer
   func_module fpending
   func_module fpurge
@@ -2811,6 +2875,7 @@ func_all_modules ()
   func_module getpass
   func_module getpass-gnu
   func_module popen-safer
+  func_module supersede
   func_module stdlib-safer
   func_module tmpfile-safer
   func_module xfreopen
@@ -2837,6 +2902,7 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
+  func_module getumask
   func_module idpriv-drop
   func_module idpriv-droptemp
   func_module priv-set
@@ -2851,6 +2917,7 @@ func_all_modules ()
   func_begin_table
   func_module gethrxtime
   func_module gettime
+  func_module gettime-res
   func_module posixtm
   func_module settime
   func_module usleep
@@ -2878,7 +2945,9 @@ func_all_modules ()
 
   func_begin_table
   func_module threadlib
+  func_module asyncsafe-spin
   func_module lock
+  func_module simple-atomic
   func_module tls
   func_module thread
   func_module yield
@@ -2898,6 +2967,20 @@ func_all_modules ()
   func_module sig2str
   func_module sigpipe
   func_module sigpipe-die
+  func_module sigsegv
+  func_end_table
+
+  element="Terminal I/O"
+  element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
+  func_section_wrap posix_ext_terminal_io
+  func_wrap H3
+  func_echo "$element"
+
+  func_begin_table
+  func_module termcap
+  func_module termcap-h
+  func_module terminfo
+  func_module terminfo-h
   func_end_table
 
   element="Internationalization functions"
@@ -3509,6 +3592,8 @@ func_all_modules ()
   func_module argp
   func_module argp-version-etc
   func_module argz
+  func_module attribute
+  func_module bison
   func_module bitrotate
   func_module byteswap
   func_module dfa
@@ -3541,6 +3626,7 @@ func_all_modules ()
   func_module selinux-h
   func_module selinux-at
   func_module sysexits
+  func_module sys_random
   func_module u64
   func_module verror
   func_end_table
