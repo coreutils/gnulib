@@ -138,8 +138,6 @@
 #  define VASNPRINTF vasnwprintf
 #  define FCHAR_T wchar_t
 #  define DCHAR_T wchar_t
-#  define TCHAR_T wchar_t
-#  define DCHAR_IS_TCHAR 1
 #  define DIRECTIVE wchar_t_directive
 #  define DIRECTIVES wchar_t_directives
 #  define PRINTF_PARSE wprintf_parse
@@ -159,24 +157,32 @@
 # endif
 #endif
 #if WIDE_CHAR_VERSION
-  /* TCHAR_T is wchar_t.  */
-# define USE_SNPRINTF 1
-# if HAVE_DECL__SNWPRINTF
-   /* On Windows, the function swprintf() has a different signature than
-      on Unix; we use the function _snwprintf() or - on mingw - snwprintf()
-      instead.  The mingw function snwprintf() has fewer bugs than the
-      MSVCRT function _snwprintf(), so prefer that.  */
-#  if defined __MINGW32__
-#   define SNPRINTF snwprintf
+  /* DCHAR_T is wchar_t.  */
+# if HAVE_DECL__SNWPRINTF || HAVE_SWPRINTF
+#  define TCHAR_T wchar_t
+#  define DCHAR_IS_TCHAR 1
+#  define USE_SNPRINTF 1
+#  if HAVE_DECL__SNWPRINTF
+    /* On Windows, the function swprintf() has a different signature than
+       on Unix; we use the function _snwprintf() or - on mingw - snwprintf()
+       instead.  The mingw function snwprintf() has fewer bugs than the
+       MSVCRT function _snwprintf(), so prefer that.  */
+#   if defined __MINGW32__
+#    define SNPRINTF snwprintf
+#   else
+#    define SNPRINTF _snwprintf
+#    define USE_MSVC__SNPRINTF 1
+#   endif
 #  else
-#   define SNPRINTF _snwprintf
-#   define USE_MSVC__SNPRINTF 1
+    /* Unix.  */
+#   define SNPRINTF swprintf
 #  endif
 # else
-   /* Unix.  */
-#  define SNPRINTF swprintf
+   /* Old platforms such as NetBSD 3.0, OpenBSD 3.8, HP-UX 11.00, IRIX 6.5.  */
+#   define TCHAR_T char
 # endif
-#else
+#endif
+#if !WIDE_CHAR_VERSION || !DCHAR_IS_TCHAR
   /* TCHAR_T is char.  */
   /* Use snprintf if it exists under the name 'snprintf' or '_snprintf'.
      But don't use it on BeOS, since BeOS snprintf produces no output if the
@@ -2413,6 +2419,151 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                   }
               }
 #endif
+#if WIDE_CHAR_VERSION && !DCHAR_IS_TCHAR
+            else if ((dp->conversion == 's'
+                      && a.arg[dp->arg_index].type == TYPE_WIDE_STRING)
+                     || (dp->conversion == 'c'
+                         && a.arg[dp->arg_index].type == TYPE_WIDE_CHAR))
+              {
+                /* %ls or %lc in vasnwprintf.  See the specification of
+                    fwprintf.  */
+                /* It would be silly to use snprintf ("%ls", ...) and then
+                   convert back the result from a char[] to a wchar_t[].
+                   Instead, just copy the argument wchar_t[] to the result.  */
+                int flags = dp->flags;
+                size_t width;
+                int has_precision;
+                size_t precision;
+
+                width = 0;
+                if (dp->width_start != dp->width_end)
+                  {
+                    if (dp->width_arg_index != ARG_NONE)
+                      {
+                        int arg;
+
+                        if (!(a.arg[dp->width_arg_index].type == TYPE_INT))
+                          abort ();
+                        arg = a.arg[dp->width_arg_index].a.a_int;
+                        width = arg;
+                        if (arg < 0)
+                          {
+                            /* "A negative field width is taken as a '-' flag
+                                followed by a positive field width."  */
+                            flags |= FLAG_LEFT;
+                            width = -width;
+                          }
+                      }
+                    else
+                      {
+                        const FCHAR_T *digitp = dp->width_start;
+
+                        do
+                          width = xsum (xtimes (width, 10), *digitp++ - '0');
+                        while (digitp != dp->width_end);
+                      }
+                  }
+
+                has_precision = 0;
+                precision = 6;
+                if (dp->precision_start != dp->precision_end)
+                  {
+                    if (dp->precision_arg_index != ARG_NONE)
+                      {
+                        int arg;
+
+                        if (!(a.arg[dp->precision_arg_index].type == TYPE_INT))
+                          abort ();
+                        arg = a.arg[dp->precision_arg_index].a.a_int;
+                        /* "A negative precision is taken as if the precision
+                            were omitted."  */
+                        if (arg >= 0)
+                          {
+                            precision = arg;
+                            has_precision = 1;
+                          }
+                      }
+                    else
+                      {
+                        const FCHAR_T *digitp = dp->precision_start + 1;
+
+                        precision = 0;
+                        while (digitp != dp->precision_end)
+                          precision = xsum (xtimes (precision, 10), *digitp++ - '0');
+                        has_precision = 1;
+                      }
+                  }
+
+                {
+                  const wchar_t *arg;
+                  wchar_t lc_arg[1];
+                  size_t characters;
+
+                  if (dp->conversion == 's')
+                    {
+                      arg = a.arg[dp->arg_index].a.a_wide_string;
+
+                      if (has_precision)
+                        {
+                          /* Use only at most PRECISION wide characters, from
+                             the left.  */
+                          const wchar_t *arg_end;
+
+                          arg_end = arg;
+                          characters = 0;
+                          for (; precision > 0; precision--)
+                            {
+                              if (*arg_end == 0)
+                                /* Found the terminating null wide character.  */
+                                break;
+                              arg_end++;
+                              characters++;
+                            }
+                        }
+                      else
+                        {
+                          /* Use the entire string, and count the number of wide
+                             characters.  */
+                          characters = local_wcslen (arg);
+                        }
+                    }
+                  else /* dp->conversion == 'c' */
+                    {
+                      lc_arg[0] = (wchar_t) a.arg[dp->arg_index].a.a_wide_char;
+                      arg = lc_arg;
+                      if (has_precision && precision == 0)
+                        characters = 0;
+                      else
+                        characters = 1;
+                    }
+
+                  {
+                    size_t total = (characters < width ? width : characters);
+                    ENSURE_ALLOCATION (xsum (length, total));
+
+                    if (characters < width && !(flags & FLAG_LEFT))
+                      {
+                        size_t n = width - characters;
+                        DCHAR_SET (result + length, ' ', n);
+                        length += n;
+                      }
+
+                    if (characters > 0)
+                      {
+                        DCHAR_CPY (result + length, arg, characters);
+                        length += characters;
+                      }
+
+                    if (characters < width && (flags & FLAG_LEFT))
+                      {
+                        size_t n = width - characters;
+                        DCHAR_SET (result + length, ' ', n);
+                        length += n;
+                      }
+                  }
+                }
+              }
+#endif
 #if (!USE_SNPRINTF || WIDE_CHAR_VERSION || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF || NEED_PRINTF_DIRECTIVE_LS || ENABLE_WCHAR_FALLBACK) && HAVE_WCHAR_T
             else if (dp->conversion == 's'
 # if WIDE_CHAR_VERSION
@@ -3502,7 +3653,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                 }
                               }
                               *p++ = dp->conversion - 'A' + 'P';
-#  if WIDE_CHAR_VERSION
+#  if WIDE_CHAR_VERSION && DCHAR_IS_TCHAR
                               {
                                 static const wchar_t decimal_format[] =
                                   { '%', '+', 'd', '\0' };
@@ -3653,7 +3804,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                 }
                               }
                               *p++ = dp->conversion - 'A' + 'P';
-#  if WIDE_CHAR_VERSION
+#  if WIDE_CHAR_VERSION && DCHAR_IS_TCHAR
                               {
                                 static const wchar_t decimal_format[] =
                                   { '%', '+', 'd', '\0' };
@@ -5203,7 +5354,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 #if USE_SNPRINTF
                 /* Decide whether to pass %n in the format string
                    to SNPRINTF.  */
-# if ((!WIDE_CHAR_VERSION                                                   \
+# if (((!WIDE_CHAR_VERSION || !DCHAR_IS_TCHAR)                              \
        && (HAVE_SNPRINTF_RETVAL_C99 && HAVE_SNPRINTF_TRUNCATION_C99))       \
       || ((__GLIBC__ > 2 || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 3))       \
           && !defined __UCLIBC__)                                           \
@@ -5214,9 +5365,11 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
       || (WIDE_CHAR_VERSION && MUSL_LIBC)
                 /* We can avoid passing %n and instead rely on SNPRINTF's
                    return value if
-                     - !WIDE_CHAR_VERSION, because if WIDE_CHAR_VERSION,
+                     - !WIDE_CHAR_VERSION || !DCHAR_IS_TCHAR, because otherwise,
+                       when WIDE_CHAR_VERSION && DCHAR_IS_TCHAR,
                        snwprintf()/_snwprintf() (Windows) and swprintf() (Unix)
-                       don't return the needed buffer size, and
+                       don't return the needed buffer size,
+                     and
                      - we're compiling for a system where we know
                        - that snprintf's return value conforms to ISO C 99
                          (HAVE_SNPRINTF_RETVAL_C99) and
@@ -5509,13 +5662,14 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                             /* Look at the snprintf() return value.  */
                             if (retcount < 0)
                               {
-# if WIDE_CHAR_VERSION || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF
+# if (WIDE_CHAR_VERSION && DCHAR_IS_TCHAR) || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF
                                 /* HP-UX 10.20 snprintf() is doubly deficient:
                                    It doesn't understand the '%n' directive,
                                    *and* it returns -1 (rather than the length
                                    that would have been required) when the
                                    buffer is too small.
-                                   Likewise, in case of WIDE_CHAR_VERSION, the
+                                   Likewise, in case of
+                                   WIDE_CHAR_VERSION && DCHAR_IS_TCHAR, the
                                    functions snwprintf()/_snwprintf() (Windows)
                                    or swprintf() (Unix).
                                    But a failure at this point can also come
@@ -5698,6 +5852,23 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 # else
                         tmpsrc = tmp;
 # endif
+# if WIDE_CHAR_VERSION
+                        const TCHAR_T *tmpsrc2;
+                        mbstate_t state;
+
+                        tmpsrc2 = tmpsrc;
+                        memset (&state, '\0', sizeof (mbstate_t));
+                        tmpdst_len = mbsrtowcs (NULL, &tmpsrc2, 0, &state);
+                        if (tmpdst_len == (size_t) -1)
+                          goto fail_with_errno;
+                        tmpdst =
+                          (wchar_t *) malloc ((tmpdst_len + 1) * sizeof (wchar_t));
+                        if (tmpdst == NULL)
+                          goto out_of_memory;
+                        tmpsrc2 = tmpsrc;
+                        memset (&state, '\0', sizeof (mbstate_t));
+                        (void) mbsrtowcs (tmpdst, &tmpsrc2, tmpdst_len + 1, &state);
+# else
                         tmpdst =
                           DCHAR_CONV_FROM_ENCODING (locale_charset (),
                                                     iconveh_question_mark,
@@ -5706,6 +5877,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                                     NULL, &tmpdst_len);
                         if (tmpdst == NULL)
                           goto fail_with_errno;
+# endif
                         ENSURE_ALLOCATION_ELSE (xsum (length, tmpdst_len),
                                                 { free (tmpdst); goto out_of_memory; });
                         DCHAR_CPY (result + length, tmpdst, tmpdst_len);
