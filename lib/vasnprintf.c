@@ -4932,7 +4932,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
               {
                 arg_type type = a.arg[dp->arg_index].type;
                 int flags = dp->flags;
-#if !DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_LEFTADJUST || NEED_PRINTF_FLAG_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION
+#if (WIDE_CHAR_VERSION && MUSL_LIBC) || !DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_LEFTADJUST || NEED_PRINTF_FLAG_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION
                 int has_width;
 #endif
 #if !USE_SNPRINTF || WIDE_CHAR_VERSION || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF || !DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_LEFTADJUST || NEED_PRINTF_FLAG_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION
@@ -4947,7 +4947,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 #else
 #               define prec_ourselves 0
 #endif
-#if NEED_PRINTF_FLAG_LEFTADJUST
+#if (WIDE_CHAR_VERSION && MUSL_LIBC) || NEED_PRINTF_FLAG_LEFTADJUST
 #               define pad_ourselves 1
 #elif !DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION
                 int pad_ourselves;
@@ -4964,7 +4964,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                 TCHAR_T *tmp;
 #endif
 
-#if !DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_LEFTADJUST || NEED_PRINTF_FLAG_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION
+#if (WIDE_CHAR_VERSION && MUSL_LIBC) || !DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_LEFTADJUST || NEED_PRINTF_FLAG_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION
                 has_width = 0;
 #endif
 #if !USE_SNPRINTF || WIDE_CHAR_VERSION || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF || !DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_LEFTADJUST || NEED_PRINTF_FLAG_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION
@@ -4995,7 +4995,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                           width = xsum (xtimes (width, 10), *digitp++ - '0');
                         while (digitp != dp->width_end);
                       }
-#if !DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_LEFTADJUST || NEED_PRINTF_FLAG_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION
+#if (WIDE_CHAR_VERSION && MUSL_LIBC) || !DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_LEFTADJUST || NEED_PRINTF_FLAG_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION
                     has_width = 1;
 #endif
                   }
@@ -5050,7 +5050,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 #endif
 
                 /* Decide whether to perform the padding ourselves.  */
-#if !NEED_PRINTF_FLAG_LEFTADJUST && (!DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION)
+#if !((WIDE_CHAR_VERSION && MUSL_LIBC) || NEED_PRINTF_FLAG_LEFTADJUST) && (!DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION)
                 switch (dp->conversion)
                   {
 # if !DCHAR_IS_TCHAR || ENABLE_UNISTDIO
@@ -5210,7 +5210,8 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
       || (defined __APPLE__ && defined __MACH__)                            \
       || defined __OpenBSD__                                                \
       || defined __ANDROID__                                                \
-      || (defined _WIN32 && ! defined __CYGWIN__))
+      || (defined _WIN32 && ! defined __CYGWIN__))                          \
+      || (WIDE_CHAR_VERSION && MUSL_LIBC)
                 /* We can avoid passing %n and instead rely on SNPRINTF's
                    return value if
                      - !WIDE_CHAR_VERSION, because if WIDE_CHAR_VERSION,
@@ -5263,6 +5264,9 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                      - Although the gl_SNPRINTF_RETVAL_C99 test fails, snprintf
                        allows us to recognize the case of an insufficient
                        buffer size: it returns -1 in this case.  */
+                /* Additionally, in the WIDE_CHAR_VERSION case, we cannot use %n
+                   on musl libc because we would run into an swprintf() bug.
+                   See <https://www.openwall.com/lists/musl/2023/03/19/1>.  */
                 fbp[1] = '\0';
 # else           /* AIX <= 5.1, HP-UX, IRIX, OSF/1, Solaris <= 9, BeOS */
                 fbp[1] = '%';
@@ -5768,7 +5772,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                     /* Here count <= allocated - length.  */
 
                     /* Perform padding.  */
-#if !DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_LEFTADJUST || NEED_PRINTF_FLAG_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION
+#if (WIDE_CHAR_VERSION && MUSL_LIBC) || !DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_LEFTADJUST || NEED_PRINTF_FLAG_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION
                     if (pad_ourselves && has_width)
                       {
                         size_t w;
@@ -5827,6 +5831,22 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                   if ((*pad_ptr >= 'A' && *pad_ptr <= 'Z')
                                       || (*pad_ptr >= 'a' && *pad_ptr <= 'z'))
                                     pad_ptr = NULL;
+                                  else
+                                    /* Do the zero-padding after the "0x" or
+                                       "0b" prefix, not before.  */
+                                    if (p - rp >= 2
+                                        && *rp == '0'
+                                        && (((dp->conversion == 'a'
+                                              || dp->conversion == 'x')
+                                             && rp[1] == 'x')
+                                            || ((dp->conversion == 'A'
+                                                 || dp->conversion == 'X')
+                                                && rp[1] == 'X')
+                                            || (dp->conversion == 'b'
+                                                && rp[1] == 'b')
+                                            || (dp->conversion == 'B'
+                                                && rp[1] == 'B')))
+                                      pad_ptr += 2;
                                 }
                               /* The generated string now extends from rp to p,
                                  with the zero padding insertion point being at

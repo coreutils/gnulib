@@ -26,10 +26,20 @@ This function does not support the @samp{n} directive on some platforms:
 glibc when used with @code{_FORTIFY_SOURCE >= 2} (set by default on Ubuntu),
 macOS 11.1, MSVC 14.
 @item
+This function sometimes returns a wrong value through the @samp{n} directive
+on some platforms:
+@c https://www.openwall.com/lists/musl/2023/03/19/1
+musl libc 1.2.3.
+@item
 On Windows and 32-bit AIX platforms, @code{wchar_t} is a 16-bit type and therefore cannot
 accommodate all Unicode characters.
 @item
 On Windows, this function does not take a buffer size as second argument.
+@item
+This function ignores the minimum field width in the @samp{lc} directive
+on some platforms:
+@c https://www.openwall.com/lists/musl/2023/03/20/1
+musl libc 1.2.3.
 @item
 This function does not support the @samp{b} directive, required by ISO C23,
 on some platforms:
