@@ -4,6 +4,7 @@ tests/macros.h
 
 Depends-on:
 wcscmp
+wmemcmp
 wmemcpy
 
 configure.ac:

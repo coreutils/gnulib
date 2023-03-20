@@ -16,6 +16,7 @@ float
 setlocale
 wcscmp
 wcsspn
+wmemcmp
 wmemcpy
 
 configure.ac:
