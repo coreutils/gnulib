@@ -46,7 +46,6 @@
 #define DIRECTIVES u8_directives
 #define PRINTF_PARSE u8_printf_parse
 #define DCHAR_T uint8_t
-#define DCHAR_T_IS_UINT8_T 1
 #define DCHAR_CPY u8_cpy
 #define DCHAR_SET u8_set
 #define DCHAR_MBSNLEN u8_mbsnlen

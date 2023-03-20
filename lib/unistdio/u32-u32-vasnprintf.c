@@ -46,7 +46,6 @@
 #define DIRECTIVES u32_directives
 #define PRINTF_PARSE u32_printf_parse
 #define DCHAR_T uint32_t
-#define DCHAR_T_IS_UINT32_T 1
 #define DCHAR_CPY u32_cpy
 #define DCHAR_SET u32_set
 #define DCHAR_MBSNLEN u32_mbsnlen
