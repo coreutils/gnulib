@@ -398,7 +398,7 @@ upload ()
       for f in $files $base.directive.asc
       do
         echo put $f
-      done | $dbg sftp -b - puszcza.gnu.org.ua:/incoming/$destdir_topdir
+      done | $dbg sftp -b - download.gnu.org.ua:/incoming/$destdir_topdir
       ;;
     /*)
       dest_host=`echo "$dest" | sed 's,:.*,,'`
