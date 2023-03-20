@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2022 Free Software Foundation, Inc.
+ * Copyright (C) 2008-2023 Free Software Foundation, Inc.
  * Written by Eric Blake and Bruno Haible
  *
  * This program is free software: you can redistribute it and/or modify
@@ -28,7 +28,7 @@ SIGNATURE_CHECK (memrchr, void *, (void const *, int, size_t));
 #include "macros.h"
 
 /* Work around GCC bug 101494.  */
-#if 4 < __GNUC__ + (3 <= __GNUC_MINOR__) && __GNUC__ < 12
+#if 4 < __GNUC__ + (7 <= __GNUC_MINOR__) && __GNUC__ < 12
 # pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
 #endif
 
