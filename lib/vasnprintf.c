@@ -2432,8 +2432,6 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                    Instead, just copy the argument wchar_t[] to the result.  */
                 int flags = dp->flags;
                 size_t width;
-                int has_precision;
-                size_t precision;
 
                 width = 0;
                 if (dp->width_start != dp->width_end)
@@ -2464,59 +2462,62 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                       }
                   }
 
-                has_precision = 0;
-                precision = 6;
-                if (dp->precision_start != dp->precision_end)
-                  {
-                    if (dp->precision_arg_index != ARG_NONE)
-                      {
-                        int arg;
-
-                        if (!(a.arg[dp->precision_arg_index].type == TYPE_INT))
-                          abort ();
-                        arg = a.arg[dp->precision_arg_index].a.a_int;
-                        /* "A negative precision is taken as if the precision
-                            were omitted."  */
-                        if (arg >= 0)
-                          {
-                            precision = arg;
-                            has_precision = 1;
-                          }
-                      }
-                    else
-                      {
-                        const FCHAR_T *digitp = dp->precision_start + 1;
-
-                        precision = 0;
-                        while (digitp != dp->precision_end)
-                          precision = xsum (xtimes (precision, 10), *digitp++ - '0');
-                        has_precision = 1;
-                      }
-                  }
-
                 {
-                  const wchar_t *arg;
+                  const wchar_t *ls_arg;
                   wchar_t lc_arg[1];
                   size_t characters;
 
                   if (dp->conversion == 's')
                     {
-                      arg = a.arg[dp->arg_index].a.a_wide_string;
+                      int has_precision;
+                      size_t precision;
+
+                      has_precision = 0;
+                      precision = 6;
+                      if (dp->precision_start != dp->precision_end)
+                        {
+                          if (dp->precision_arg_index != ARG_NONE)
+                            {
+                              int arg;
+
+                              if (!(a.arg[dp->precision_arg_index].type == TYPE_INT))
+                                abort ();
+                              arg = a.arg[dp->precision_arg_index].a.a_int;
+                              /* "A negative precision is taken as if the precision
+                                  were omitted."  */
+                              if (arg >= 0)
+                                {
+                                  precision = arg;
+                                  has_precision = 1;
+                                }
+                            }
+                          else
+                            {
+                              const FCHAR_T *digitp = dp->precision_start + 1;
+
+                              precision = 0;
+                              while (digitp != dp->precision_end)
+                                precision = xsum (xtimes (precision, 10), *digitp++ - '0');
+                              has_precision = 1;
+                            }
+                        }
+
+                      ls_arg = a.arg[dp->arg_index].a.a_wide_string;
 
                       if (has_precision)
                         {
                           /* Use only at most PRECISION wide characters, from
                              the left.  */
-                          const wchar_t *arg_end;
+                          const wchar_t *ls_arg_end;
 
-                          arg_end = arg;
+                          ls_arg_end = ls_arg;
                           characters = 0;
                           for (; precision > 0; precision--)
                             {
-                              if (*arg_end == 0)
+                              if (*ls_arg_end == 0)
                                 /* Found the terminating null wide character.  */
                                 break;
-                              arg_end++;
+                              ls_arg_end++;
                               characters++;
                             }
                         }
@@ -2524,17 +2525,14 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                         {
                           /* Use the entire string, and count the number of wide
                              characters.  */
-                          characters = local_wcslen (arg);
+                          characters = local_wcslen (ls_arg);
                         }
                     }
                   else /* dp->conversion == 'c' */
                     {
                       lc_arg[0] = (wchar_t) a.arg[dp->arg_index].a.a_wide_char;
-                      arg = lc_arg;
-                      if (has_precision && precision == 0)
-                        characters = 0;
-                      else
-                        characters = 1;
+                      ls_arg = lc_arg;
+                      characters = 1;
                     }
 
                   {
@@ -2550,7 +2548,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 
                     if (characters > 0)
                       {
-                        DCHAR_CPY (result + length, arg, characters);
+                        DCHAR_CPY (result + length, ls_arg, characters);
                         length += characters;
                       }
 
@@ -5854,21 +5852,59 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                         tmpsrc = tmp;
 # endif
 # if WIDE_CHAR_VERSION
-                        const TCHAR_T *tmpsrc2;
+                        /* Convert tmpsrc[0..count-1] to a freshly allocated
+                           wide character array.  */
                         mbstate_t state;
 
-                        tmpsrc2 = tmpsrc;
                         memset (&state, '\0', sizeof (mbstate_t));
-                        tmpdst_len = mbsrtowcs (NULL, &tmpsrc2, 0, &state);
-                        if (tmpdst_len == (size_t) -1)
-                          goto fail_with_errno;
+                        tmpdst_len = 0;
+                        {
+                          const TCHAR_T *src = tmpsrc;
+                          size_t srclen = count;
+
+                          for (; srclen > 0; tmpdst_len++)
+                            {
+                              /* Parse the next multibyte character.  */
+                              size_t ret = mbrtowc (NULL, src, srclen, &state);
+                              if (ret == (size_t)(-2) || ret == (size_t)(-1))
+                                goto fail_with_EILSEQ;
+                              if (ret == 0)
+                                ret = 1;
+                              src += ret;
+                              srclen -= ret;
+                            }
+                        }
+
                         tmpdst =
                           (wchar_t *) malloc ((tmpdst_len + 1) * sizeof (wchar_t));
                         if (tmpdst == NULL)
                           goto out_of_memory;
-                        tmpsrc2 = tmpsrc;
+
                         memset (&state, '\0', sizeof (mbstate_t));
-                        (void) mbsrtowcs (tmpdst, &tmpsrc2, tmpdst_len + 1, &state);
+                        {
+                          DCHAR_T *destptr = tmpdst;
+                          size_t len = tmpdst_len;
+                          const TCHAR_T *src = tmpsrc;
+                          size_t srclen = count;
+
+                          for (; srclen > 0; destptr++, len--)
+                            {
+                              /* Parse the next multibyte character.  */
+                              size_t ret = mbrtowc (destptr, src, srclen, &state);
+                              if (ret == (size_t)(-2) || ret == (size_t)(-1))
+                                /* Should already have been caught in the first
+                                   loop, above.  */
+                                abort ();
+                              if (ret == 0)
+                                ret = 1;
+                              src += ret;
+                              srclen -= ret;
+                            }
+                          /* By the way tmpdst_len was computed, len should now
+                             be 0.  */
+                          if (len != 0)
+                            abort ();
+                        }
 # else
                         tmpdst =
                           DCHAR_CONV_FROM_ENCODING (locale_charset (),

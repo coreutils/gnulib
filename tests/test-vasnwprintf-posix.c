@@ -3940,6 +3940,26 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
     free (result);
   }
 
+  { /* Precision is ignored.  */
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length,
+                     L"%.0c %d", (unsigned char) 'x', 33, 44, 55);
+    ASSERT (wcscmp (result, L"x 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  { /* NUL character.  */
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length,
+                     L"a%cz %d", '\0', 33, 44, 55);
+    ASSERT (wmemcmp (result, L"a\0z 33\0", 6 + 1) == 0);
+    ASSERT (length == 6);
+    free (result);
+  }
+
 #if HAVE_WCHAR_T
   static wint_t L_x = (wchar_t) 'x';
 
@@ -3980,6 +4000,24 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
     ASSERT (result != NULL);
     ASSERT (wcscmp (result, L"x          33") == 0);
     ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  { /* Precision is ignored.  */
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%.0lc %d", L_x, 33, 44, 55);
+    ASSERT (wcscmp (result, L"x 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  { /* NUL character.  */
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"a%lcz %d", (wint_t) L'\0', 33, 44, 55);
+    ASSERT (wmemcmp (result, L"a\0z 33\0", 6 + 1) == 0);
+    ASSERT (length == 6);
     free (result);
   }
 #endif
