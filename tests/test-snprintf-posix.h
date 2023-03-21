@@ -3024,6 +3024,22 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
     ASSERT (retval == strlen (result));
   }
 
+  { /* Precision is ignored.  */
+    int retval =
+      my_snprintf (result, sizeof (result),
+                   "%.0c %d", (unsigned char) 'x', 33, 44, 55);
+    ASSERT (strcmp (result, "x 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* NUL character.  */
+    int retval =
+      my_snprintf (result, sizeof (result),
+                   "a%cz %d", '\0', 33, 44, 55);
+    ASSERT (memcmp (result, "a\0z 33\0", 6 + 1) == 0);
+    ASSERT (retval == 6);
+  }
+
 #if HAVE_WCHAR_T
   static wint_t L_x = (wchar_t) 'x';
 
@@ -3053,6 +3069,25 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
       my_snprintf (result, sizeof (result), "%-10lc %d", L_x, 33, 44, 55);
     ASSERT (strcmp (result, "x          33") == 0);
     ASSERT (retval == strlen (result));
+  }
+
+  { /* Precision is ignored.  */
+    int retval =
+      my_snprintf (result, sizeof (result),
+                   "%.0lc %d", L_x, 33, 44, 55);
+    ASSERT (strcmp (result, "x 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* NUL character.  */
+    int retval =
+      my_snprintf (result, sizeof (result),
+                   "a%lcz %d", (wint_t) L'\0', 33, 44, 55);
+    /* No NUL byte between 'a' and 'z'.  This is surprising, but is a
+       consequence of how POSIX:2018 and ISO C 23 specify the handling
+       of %lc.  */
+    ASSERT (memcmp (result, "az 33\0", 5 + 1) == 0);
+    ASSERT (retval == 5);
   }
 #endif
 

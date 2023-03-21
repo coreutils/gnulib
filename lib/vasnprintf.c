@@ -289,7 +289,7 @@ local_wcsnlen (const wchar_t *s, size_t maxlen)
 # endif
 #endif
 
-#if (((!USE_SNPRINTF || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF || NEED_PRINTF_DIRECTIVE_LS || ENABLE_WCHAR_FALLBACK) && HAVE_WCHAR_T) || (ENABLE_WCHAR_FALLBACK && HAVE_WINT_T)) && !WIDE_CHAR_VERSION
+#if (((!USE_SNPRINTF || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF || NEED_PRINTF_DIRECTIVE_LS || ENABLE_WCHAR_FALLBACK) && HAVE_WCHAR_T) || ((NEED_PRINTF_DIRECTIVE_LC || ENABLE_WCHAR_FALLBACK) && HAVE_WINT_T)) && !WIDE_CHAR_VERSION
 # if ENABLE_WCHAR_FALLBACK
 static size_t
 wctomb_fallback (char *s, wchar_t wc)
@@ -3017,12 +3017,13 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 # endif
               }
 #endif
-#if ENABLE_WCHAR_FALLBACK && HAVE_WINT_T && !WIDE_CHAR_VERSION
+#if (NEED_PRINTF_DIRECTIVE_LC || ENABLE_WCHAR_FALLBACK) && HAVE_WINT_T && !WIDE_CHAR_VERSION
             else if (dp->conversion == 'c'
                      && a.arg[dp->arg_index].type == TYPE_WIDE_CHAR)
               {
                 /* Implement the 'lc' directive ourselves, in order to provide
-                   the fallback that avoids EILSEQ.  */
+                   a correct behaviour for the null wint_t argument and/or the
+                   fallback that avoids EILSEQ.  */
                 int flags = dp->flags;
                 int has_width;
                 size_t width;
