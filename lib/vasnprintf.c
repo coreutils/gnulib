@@ -3217,6 +3217,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
               {
                 arg_type type = a.arg[dp->arg_index].type;
                 int flags = dp->flags;
+                int has_width;
                 size_t width;
                 int has_precision;
                 size_t precision;
@@ -3229,6 +3230,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                 DCHAR_T *pad_ptr;
                 DCHAR_T *p;
 
+                has_width = 0;
                 width = 0;
                 if (dp->width_start != dp->width_end)
                   {
@@ -3256,10 +3258,11 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                           width = xsum (xtimes (width, 10), *digitp++ - '0');
                         while (digitp != dp->width_end);
                       }
+                    has_width = 1;
                   }
 
                 has_precision = 0;
-                precision = 0;
+                precision = 1;
                 if (dp->precision_start != dp->precision_end)
                   {
                     if (dp->precision_arg_index != ARG_NONE)
@@ -3333,12 +3336,24 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                 int need_prefix = ((flags & FLAG_ALT) && arg != 0);
 
                 p = tmp_end;
-                do
+                /* "The result of converting a zero value with a precision
+                   of zero is no characters."  */
+                if (!(has_precision && precision == 0 && arg == 0))
                   {
-                    *--p = '0' + (arg & 1);
-                    arg = arg >> 1;
+                    do
+                      {
+                        *--p = '0' + (arg & 1);
+                        arg = arg >> 1;
+                      }
+                    while (arg != 0);
                   }
-                while (arg != 0);
+
+                if (has_precision)
+                  {
+                    DCHAR_T *digits_start = tmp_end - precision;
+                    while (p > digits_start)
+                      *--p = '0';
+                  }
 
                 pad_ptr = p;
 
@@ -3365,7 +3380,12 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                         for (p = tmp_end - pad; p < tmp_end; p++)
                           *p = ' ';
                       }
-                    else if (flags & FLAG_ZERO)
+                    else if ((flags & FLAG_ZERO)
+                             /* Neither ISO C nor POSIX specify that the '0'
+                                flag is ignored when a width and a precision
+                                are both present.  But most implementations
+                                do so.  */
+                             && !(has_width && has_precision))
                       {
                         /* Pad with zeroes.  */
                         for (p = tmp_start; p < pad_ptr; p++)

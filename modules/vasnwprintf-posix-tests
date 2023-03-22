@@ -7,6 +7,7 @@ tests/minus-zero.h
 tests/infinity.h
 tests/nan.h
 tests/macros.h
+m4/musl.m4
 m4/locale-fr.m4
 m4/codeset.m4
 
@@ -21,6 +22,7 @@ wmemcpy
 
 configure.ac:
 AC_REQUIRE([gl_LONG_DOUBLE_VS_DOUBLE])
+gl_MUSL_LIBC
 gt_LOCALE_FR
 gt_LOCALE_FR_UTF8
 

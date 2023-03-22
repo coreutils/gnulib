@@ -4017,6 +4017,259 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   }
 #endif
 
+  /* Test the support of the 'x' conversion specifier for hexadecimal output of
+     integers.  */
+
+  { /* Zero.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%x %d", 0, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "0 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* A positive number.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%x %d", 12348, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "303c 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* A large positive number.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%x %d", 0xFFFFFFFEU, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "fffffffe 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Width.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%10x %d", 12348, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "      303c 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Width given as argument.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%*x %d", 10, 12348, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "      303c 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Negative width given as argument (cf. FLAG_LEFT below).  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%*x %d", -10, 12348, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "303c       33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Precision.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%.10x %d", 12348, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "000000303c 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Zero precision and a positive number.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%.0x %d", 12348, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "303c 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Zero precision and a zero number.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%.0x %d", 0, 33, 44, 55);
+    ASSERT (result != NULL);
+    /* ISO C and POSIX specify that "The result of converting a zero value
+       with a precision of zero is no characters."  */
+    ASSERT (strcmp (result, " 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Width and precision.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%15.10x %d", 12348, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "     000000303c 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Padding and precision.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%015.10x %d", 12348, 33, 44, 55);
+    ASSERT (result != NULL);
+    /* Neither ISO C nor POSIX specify that the '0' flag is ignored when a width
+       and a precision are both present.  But most implementations do so.  */
+    #ifdef __MINGW32__
+    ASSERT (strcmp (result, "00000000000303c 33") == 0);
+    #else
+    ASSERT (strcmp (result, "     000000303c 33") == 0);
+    #endif
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* FLAG_LEFT.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%-10x %d", 12348, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "303c       33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* FLAG_ALT with zero.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%#x %d", 0, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "0 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* FLAG_ALT with a positive number.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%#x %d", 12348, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "0x303c 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* FLAG_ALT with a positive number and width.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%#10x %d", 12348, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "    0x303c 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* FLAG_ALT with a positive number and padding.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%0#10x %d", 12348, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "0x0000303c 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* FLAG_ALT with a positive number and precision.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%0#.10x %d", 12348, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "0x000000303c 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* FLAG_ALT with a positive number and width and precision.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%#15.10x %d", 12348, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "   0x000000303c 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* FLAG_ALT with a positive number and padding and precision.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%0#15.10x %d", 12348, 33, 44, 55);
+    ASSERT (result != NULL);
+    /* Neither ISO C nor POSIX specify that the '0' flag is ignored when a width
+       and a precision are both present.  But most implementations do so.  */
+    #ifdef __MINGW32__
+    ASSERT (strcmp (result, "0x000000000303c 33") == 0);
+    #else
+    ASSERT (strcmp (result, "   0x000000303c 33") == 0);
+    #endif
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* FLAG_ALT with a zero precision and a zero number.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%#.0x %d", 0, 33, 44, 55);
+    ASSERT (result != NULL);
+    /* ISO C and POSIX specify that "The result of converting a zero value
+       with a precision of zero is no characters.", and the prefix is added
+       only for non-zero values.  */
+    ASSERT (strcmp (result, " 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Uppercase 'X'.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%X %d", 12348, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "303C 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Uppercase 'X' with FLAG_ALT.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%#X %d", 12348, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "0X303C 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Uppercase 'X' with FLAG_ALT and zero precision and a zero number.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%#.0X %d", 0, 33, 44, 55);
+    ASSERT (result != NULL);
+    /* ISO C and POSIX specify that "The result of converting a zero value
+       with a precision of zero is no characters.", and the prefix is added
+       only for non-zero values.  */
+    ASSERT (strcmp (result, " 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
   /* Test the support of the 'b' conversion specifier for binary output of
      integers.  */
 
@@ -4080,6 +4333,60 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     free (result);
   }
 
+  { /* Precision.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%.20b %d", 12345, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "00000011000000111001 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Zero precision and a positive number.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%.0b %d", 12345, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "11000000111001 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Zero precision and a zero number.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%.0b %d", 0, 33, 44, 55);
+    ASSERT (result != NULL);
+    /* ISO C and POSIX specify that "The result of converting a zero value
+       with a precision of zero is no characters."  */
+    ASSERT (strcmp (result, " 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Width and precision.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%25.20b %d", 12345, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "     00000011000000111001 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Padding and precision.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%025.20b %d", 12345, 33, 44, 55);
+    ASSERT (result != NULL);
+    /* Neither ISO C nor POSIX specify that the '0' flag is ignored when
+       a width and a precision are both present.  But implementations do so.  */
+    ASSERT (strcmp (result, "     00000011000000111001 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
   { /* FLAG_LEFT.  */
     size_t length;
     char *result =
@@ -4094,6 +4401,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     size_t length;
     char *result =
       my_asnprintf (NULL, &length, "%#b %d", 0, 33, 44, 55);
+    ASSERT (result != NULL);
     ASSERT (strcmp (result, "0 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
@@ -4103,7 +4411,73 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     size_t length;
     char *result =
       my_asnprintf (NULL, &length, "%#b %d", 12345, 33, 44, 55);
+    ASSERT (result != NULL);
     ASSERT (strcmp (result, "0b11000000111001 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* FLAG_ALT with a positive number and width.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%#20b %d", 12345, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "    0b11000000111001 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* FLAG_ALT with a positive number and padding.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%0#20b %d", 12345, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "0b000011000000111001 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* FLAG_ALT with a positive number and precision.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%0#.20b %d", 12345, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "0b00000011000000111001 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* FLAG_ALT with a positive number and width and precision.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%#25.20b %d", 12345, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "   0b00000011000000111001 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* FLAG_ALT with a positive number and padding and precision.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%0#25.20b %d", 12345, 33, 44, 55);
+    ASSERT (result != NULL);
+    /* Neither ISO C nor POSIX specify that the '0' flag is ignored when
+       a width and a precision are both present.  But implementations do so.  */
+    ASSERT (strcmp (result, "   0b00000011000000111001 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* FLAG_ALT with a zero precision and a zero number.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%#.0b %d", 0, 33, 44, 55);
+    ASSERT (result != NULL);
+    /* ISO C and POSIX specify that "The result of converting a zero value
+       with a precision of zero is no characters.", and the prefix is added
+       only for non-zero values.  */
+    ASSERT (strcmp (result, " 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
