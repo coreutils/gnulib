@@ -35,6 +35,9 @@ Makefile.am:
 Include:
 "vasnwprintf.h"
 
+Link:
+$(MBRTOWC_LIB)
+
 License:
 LGPLv2+
 

@@ -12,3 +12,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-vasnwprintf
 check_PROGRAMS += test-vasnwprintf
+test_vasnwprintf_LDADD = $(LDADD) $(MBRTOWC_LIB)

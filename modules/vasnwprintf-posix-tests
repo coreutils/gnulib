@@ -28,5 +28,6 @@ Makefile.am:
 TESTS += test-vasnwprintf-posix test-vasnwprintf-posix2.sh test-vasnwprintf-posix3
 TESTS_ENVIRONMENT += LOCALE_FR='@LOCALE_FR@' LOCALE_FR_UTF8='@LOCALE_FR_UTF8@'
 check_PROGRAMS += test-vasnwprintf-posix test-vasnwprintf-posix2 test-vasnwprintf-posix3
-test_vasnwprintf_posix2_LDADD = $(LDADD) $(SETLOCALE_LIB)
-test_vasnwprintf_posix3_LDADD = $(LDADD) $(SETLOCALE_LIB)
+test_vasnwprintf_posix_LDADD = $(LDADD) $(MBRTOWC_LIB)
+test_vasnwprintf_posix2_LDADD = $(LDADD) $(SETLOCALE_LIB) $(MBRTOWC_LIB)
+test_vasnwprintf_posix3_LDADD = $(LDADD) $(SETLOCALE_LIB) $(MBRTOWC_LIB)
