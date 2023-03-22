@@ -5448,11 +5448,13 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 
 #if !DCHAR_IS_TCHAR
                     /* Convert from TCHAR_T[] to DCHAR_T[].  */
-                    if (dp->conversion == 'c' || dp->conversion == 's')
+                    if (dp->conversion == 'c' || dp->conversion == 's'
+# if __GLIBC__ >= 2 && !defined __UCLIBC__
+                        || (flags & FLAG_LOCALIZED)
+# endif
+                       )
                       {
-                        /* type = TYPE_CHAR or TYPE_WIDE_CHAR or TYPE_STRING
-                           TYPE_WIDE_STRING.
-                           The result string is not certainly ASCII.  */
+                        /* The result string is not guaranteed to be ASCII.  */
                         const TCHAR_T *tmpsrc;
                         DCHAR_T *tmpdst;
                         size_t tmpdst_len;
