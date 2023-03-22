@@ -5595,6 +5595,22 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                   if ((*pad_ptr >= 'A' && *pad_ptr <= 'Z')
                                       || (*pad_ptr >= 'a' && *pad_ptr <= 'z'))
                                     pad_ptr = NULL;
+                                  else
+                                    /* Do the zero-padding after the "0x" or
+                                       "0b" prefix, not before.  */
+                                    if (p - rp >= 2
+                                        && *rp == '0'
+                                        && (((dp->conversion == 'a'
+                                              || dp->conversion == 'x')
+                                             && rp[1] == 'x')
+                                            || ((dp->conversion == 'A'
+                                                 || dp->conversion == 'X')
+                                                && rp[1] == 'X')
+                                            || (dp->conversion == 'b'
+                                                && rp[1] == 'b')
+                                            || (dp->conversion == 'B'
+                                                && rp[1] == 'B')))
+                                      pad_ptr += 2;
                                 }
                               /* The generated string now extends from rp to p,
                                  with the zero padding insertion point being at
