@@ -271,7 +271,7 @@ local_wcslen (const wchar_t *s)
 #endif
 
 #if (!USE_SNPRINTF || (WIDE_CHAR_VERSION && DCHAR_IS_TCHAR) || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF) && HAVE_WCHAR_T && WIDE_CHAR_VERSION
-# if HAVE_WCSNLEN
+# if HAVE_WCSNLEN && HAVE_DECL_WCSNLEN
 #  define local_wcsnlen wcsnlen
 # else
 #  ifndef local_wcsnlen_defined

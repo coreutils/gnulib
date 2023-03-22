@@ -1,4 +1,4 @@
-# vasnprintf.m4 serial 45
+# vasnprintf.m4 serial 46
 dnl Copyright (C) 2002-2004, 2006-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -96,6 +96,7 @@ AC_DEFUN_ONCE([gl_PREREQ_VASNWPRINTF],
 [
   AC_CHECK_FUNCS_ONCE([swprintf wcsnlen mbrtowc])
   AC_CHECK_DECLS([_snwprintf], , , [[#include <stdio.h>]])
+  AC_CHECK_DECLS([wcsnlen], , , [[#include <wchar.h>]])
   gl_SWPRINTF_WORKS
   case "$gl_cv_func_swprintf_works" in
     *yes)
