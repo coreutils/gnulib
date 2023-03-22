@@ -4992,6 +4992,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
       || ((__GLIBC__ > 2 || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 3))       \
           && !defined __UCLIBC__)                                           \
       || (defined __APPLE__ && defined __MACH__)                            \
+      || defined __OpenBSD__                                                \
       || defined __ANDROID__                                                \
       || (defined _WIN32 && ! defined __CYGWIN__))
                 /* On systems where we know that snprintf's return value
@@ -5007,6 +5008,10 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                      - On Mac OS X 10.13 or newer, the use of %n in format
                        strings in writable memory by default crashes the
                        program.
+                     - On OpenBSD, since 2021-08-30, the use of %n in format
+                       strings produces an abort (see
+                       <https://cvsweb.openbsd.org/cgi-bin/cvsweb/src/lib/libc/stdio/vfprintf.c.diff?r1=1.79&r2=1.80&f=h>,
+                       <https://cvsweb.openbsd.org/cgi-bin/cvsweb/src/lib/libc/stdio/vfwprintf.c.diff?r1=1.20&r2=1.21&f=h>).
                      - On Android, starting on 2018-03-07, the use of %n in
                        format strings produces a fatal error (see
                        <https://android.googlesource.com/platform/bionic/+/41398d03b7e8e0dfb951660ae713e682e9fc0336>).
