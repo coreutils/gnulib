@@ -158,7 +158,7 @@
 #endif
 #if WIDE_CHAR_VERSION
   /* DCHAR_T is wchar_t.  */
-# if HAVE_DECL__SNWPRINTF || HAVE_SWPRINTF
+# if HAVE_DECL__SNWPRINTF || (HAVE_SWPRINTF && HAVE_WORKING_SWPRINTF)
 #  define TCHAR_T wchar_t
 #  define DCHAR_IS_TCHAR 1
 #  define USE_SNPRINTF 1
@@ -4263,7 +4263,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                   }
 
                                 *p++ = dp->conversion; /* 'e' or 'E' */
-#   if WIDE_CHAR_VERSION
+#   if WIDE_CHAR_VERSION && DCHAR_IS_TCHAR
                                 {
                                   static const wchar_t decimal_format[] =
                                     { '%', '+', '.', '2', 'd', '\0' };
@@ -4444,7 +4444,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                               }
                                           }
                                         *p++ = dp->conversion - 'G' + 'E'; /* 'e' or 'E' */
-#   if WIDE_CHAR_VERSION
+#   if WIDE_CHAR_VERSION && DCHAR_IS_TCHAR
                                         {
                                           static const wchar_t decimal_format[] =
                                             { '%', '+', '.', '2', 'd', '\0' };
@@ -4721,7 +4721,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                   }
 
                                 *p++ = dp->conversion; /* 'e' or 'E' */
-#   if WIDE_CHAR_VERSION
+#   if WIDE_CHAR_VERSION && DCHAR_IS_TCHAR
                                 {
                                   static const wchar_t decimal_format[] =
                                     /* Produce the same number of exponent digits
@@ -4914,7 +4914,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                               }
                                           }
                                         *p++ = dp->conversion - 'G' + 'E'; /* 'e' or 'E' */
-#   if WIDE_CHAR_VERSION
+#   if WIDE_CHAR_VERSION && DCHAR_IS_TCHAR
                                         {
                                           static const wchar_t decimal_format[] =
                                             /* Produce the same number of exponent digits
@@ -5706,7 +5706,15 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 # endif
                               }
                             else
-                              count = retcount;
+                              {
+                                count = retcount;
+# if WIDE_CHAR_VERSION && defined __MINGW32__
+                                if (count == 0 && dp->conversion == 'c')
+                                  /* snwprintf returned 0 instead of 1.  But it
+                                     wrote a null wide character.  */
+                                  count = 1;
+# endif
+                              }
                           }
                       }
 #endif

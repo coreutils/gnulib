@@ -41,6 +41,13 @@ on some platforms:
 @c https://www.openwall.com/lists/musl/2023/03/20/1
 musl libc 1.2.3.
 @item
+This function is broken when it produces output that contains null wide
+characters on some platforms:
+@c https://www.openwall.com/lists/musl/2023/03/22/9
+musl libc 1.2.3,
+FreeBSD 13.1, NetBSD 9.0, OpenBSD 7.2, macOS 12.5, AIX 7.2,
+mingw.
+@item
 This function does not support the @samp{b} directive, required by ISO C23,
 on some platforms:
 glibc 2.34, musl libc, macOS 12.5, FreeBSD 13.1, NetBSD 9.0, OpenBSD 7.2,
