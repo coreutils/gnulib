@@ -1610,7 +1610,7 @@ is_borderline (const char *digits, size_t precision)
 
 #endif
 
-#if !USE_SNPRINTF || WIDE_CHAR_VERSION || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF
+#if !USE_SNPRINTF || (WIDE_CHAR_VERSION && DCHAR_IS_TCHAR) || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF
 
 /* Use a different function name, to make it possible that the 'wchar_t'
    parametrization and the 'char' parametrization get compiled in the same
