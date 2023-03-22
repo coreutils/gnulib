@@ -5885,11 +5885,10 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                         memset (&state, '\0', sizeof (mbstate_t));
                         {
                           DCHAR_T *destptr = tmpdst;
-                          size_t len = tmpdst_len;
                           const TCHAR_T *src = tmpsrc;
                           size_t srclen = count;
 
-                          for (; srclen > 0; destptr++, len--)
+                          for (; srclen > 0; destptr++)
                             {
                               /* Parse the next multibyte character.  */
                               size_t ret = mbrtowc (destptr, src, srclen, &state);
@@ -5902,10 +5901,6 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                               src += ret;
                               srclen -= ret;
                             }
-                          /* By the way tmpdst_len was computed, len should now
-                             be 0.  */
-                          if (len != 0)
-                            abort ();
                         }
 # else
                         tmpdst =
