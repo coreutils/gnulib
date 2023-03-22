@@ -2,7 +2,7 @@
 # Run this after each non-alpha release, to update the web documentation at
 # https://www.gnu.org/software/$pkg/manual/
 
-VERSION=2022-01-27.18; # UTC
+VERSION=2023-03-22.05; # UTC
 
 # Copyright (C) 2009-2023 Free Software Foundation, Inc.
 
@@ -179,6 +179,9 @@ tmp=$(mktemp -d web-doc-update.XXXXXX) || exit 1
 $RSYNC -avP "$builddir"/doc/manual/ $tmp/$pkg/manual
 
 (
+  cd $tmp/$pkg
+  test -d manual/CVS || $dryrun $CVS add -ko manual
+
   cd $tmp/$pkg/manual
 
   # Add all the files.  This is simpler than trying to add only the
