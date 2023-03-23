@@ -50,7 +50,7 @@ multiarch
 assert-h
 
 configure.ac:
-gl_PREREQ_VASNPRINTF_WITH_EXTRAS
+gl_PREREQ_VASNPRINTF_WITH_POSIX_EXTRAS
 gl_LIBUNISTRING_MODULE([0.9], [unistdio/u32-vasnprintf])
 
 Makefile.am:

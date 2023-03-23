@@ -1660,6 +1660,10 @@ MAX_ROOM_NEEDED (const arguments *ap, size_t arg_index, FCHAR_T conversion,
       break;
 
     case 'b':
+    #if SUPPORT_GNU_PRINTF_DIRECTIVES \
+        || (__GLIBC__ + (__GLIBC_MINOR__ >= 35) > 2)
+    case 'B':
+    #endif
       if (type == TYPE_ULONGLONGINT)
         tmp_length =
           (unsigned int) (sizeof (unsigned long long) * CHAR_BIT)
@@ -3212,8 +3216,15 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                 }
               }
 #endif
-#if NEED_PRINTF_DIRECTIVE_B
-            else if (dp->conversion == 'b')
+#if NEED_PRINTF_DIRECTIVE_B || NEED_PRINTF_DIRECTIVE_UPPERCASE_B
+            else if (0
+# if NEED_PRINTF_DIRECTIVE_B
+                     || (dp->conversion == 'b')
+# endif
+# if NEED_PRINTF_DIRECTIVE_UPPERCASE_B
+                     || (dp->conversion == 'B')
+# endif
+                    )
               {
                 arg_type type = a.arg[dp->arg_index].type;
                 int flags = dp->flags;
@@ -3359,7 +3370,14 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 
                 if (need_prefix)
                   {
-                    *--p = 'b'; *--p = '0';
+# if NEED_PRINTF_DIRECTIVE_B && !NEED_PRINTF_DIRECTIVE_UPPERCASE_B
+                    *--p = 'b';
+# elif NEED_PRINTF_DIRECTIVE_UPPERCASE_B && !NEED_PRINTF_DIRECTIVE_B
+                    *--p = 'B';
+# else
+                    *--p = dp->conversion;
+# endif
+                    *--p = '0';
                   }
                 tmp_start = p;
 
@@ -5209,6 +5227,10 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                   {
                   case 'd': case 'i': case 'u':
                   case 'b':
+                  #if SUPPORT_GNU_PRINTF_DIRECTIVES \
+                      || (__GLIBC__ + (__GLIBC_MINOR__ >= 35) > 2)
+                  case 'B':
+                  #endif
                   case 'o':
                   case 'x': case 'X': case 'p':
                     prec_ourselves = has_precision && (precision > 0);

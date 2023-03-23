@@ -454,6 +454,10 @@ PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
                     type = TYPE_INT;
                   break;
                 case 'b': case 'o': case 'u': case 'x': case 'X':
+                #if SUPPORT_GNU_PRINTF_DIRECTIVES \
+                    || (__GLIBC__ + (__GLIBC_MINOR__ >= 35) > 2)
+                case 'B':
+                #endif
                   /* If 'unsigned long long' is larger than 'unsigned long':  */
                   if (flags >= 16 || (flags & 4))
                     type = TYPE_ULONGLONGINT;

@@ -1,4 +1,4 @@
-# vasnprintf.m4 serial 46
+# vasnprintf.m4 serial 47
 dnl Copyright (C) 2002-2004, 2006-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -341,7 +341,7 @@ AC_DEFUN([gl_PREREQ_VASNPRINTF_ENOMEM],
 ])
 
 # Prerequisites of lib/vasnprintf.c including all extras for POSIX compliance.
-AC_DEFUN([gl_PREREQ_VASNPRINTF_WITH_EXTRAS],
+AC_DEFUN([gl_PREREQ_VASNPRINTF_WITH_POSIX_EXTRAS],
 [
   AC_REQUIRE([gl_PREREQ_VASNPRINTF])
   gl_PREREQ_VASNPRINTF_LONG_DOUBLE
@@ -357,6 +357,32 @@ AC_DEFUN([gl_PREREQ_VASNPRINTF_WITH_EXTRAS],
   gl_PREREQ_VASNPRINTF_FLAG_ZERO
   gl_PREREQ_VASNPRINTF_PRECISION
   gl_PREREQ_VASNPRINTF_ENOMEM
+])
+
+# Extra prerequisites of lib/vasnprintf.c for supporting the 'B' directive.
+AC_DEFUN([gl_PREREQ_VASNPRINTF_DIRECTIVE_UPPERCASE_B],
+[
+  AC_REQUIRE([gl_PRINTF_DIRECTIVE_UPPERCASE_B])
+  case "$gl_cv_func_printf_directive_uppercase_b" in
+    *yes)
+      ;;
+    *)
+      AC_DEFINE([NEED_PRINTF_DIRECTIVE_UPPERCASE_B], [1],
+        [Define if the vasnprintf implementation needs special code for
+         the 'B' directive.])
+      ;;
+  esac
+])
+
+# Prerequisites of lib/vasnprintf.c including all extras for POSIX compliance
+# and GNU compatibility.
+AC_DEFUN([gl_PREREQ_VASNPRINTF_WITH_GNU_EXTRAS],
+[
+  gl_PREREQ_VASNPRINTF_WITH_POSIX_EXTRAS
+  AC_DEFINE([SUPPORT_GNU_PRINTF_DIRECTIVES], [1],
+    [Define if the vasnprintf implementation should support GNU compatible
+     printf directives.])
+  gl_PREREQ_VASNPRINTF_DIRECTIVE_UPPERCASE_B
 ])
 
 # Prerequisites of lib/asnprintf.c.

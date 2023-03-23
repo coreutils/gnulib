@@ -43,7 +43,7 @@ multiarch
 
 configure.ac:
 AC_REQUIRE([AC_C_RESTRICT])
-gl_PREREQ_VASNPRINTF_WITH_EXTRAS
+gl_PREREQ_VASNPRINTF_WITH_POSIX_EXTRAS
 
 Makefile.am:
 lib_SOURCES += c-vasnprintf.c
