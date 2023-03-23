@@ -2,7 +2,7 @@
 # Run this after each non-alpha release, to update the web documentation at
 # https://www.gnu.org/software/$pkg/manual/
 
-VERSION=2023-03-22.05; # UTC
+VERSION=2023-03-23.02; # UTC
 
 # Copyright (C) 2009-2023 Free Software Foundation, Inc.
 
@@ -175,7 +175,7 @@ set +e
 
 tmp=$(mktemp -d web-doc-update.XXXXXX) || exit 1
 ( cd $tmp \
-    && $CVS -d $cvs_user@cvs.sv.gnu.org:/webcvs/$pkg co $pkg )
+    && $CVS -d $cvs_user@cvs.savannah.gnu.org:/webcvs/$pkg co $pkg )
 $RSYNC -avP "$builddir"/doc/manual/ $tmp/$pkg/manual
 
 (
