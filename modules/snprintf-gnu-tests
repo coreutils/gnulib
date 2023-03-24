@@ -1,0 +1,13 @@
+Files:
+tests/test-snprintf-gnu.c
+tests/test-snprintf-gnu.h
+tests/macros.h
+
+Depends-on:
+snprintf-posix-tests
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-snprintf-gnu
+check_PROGRAMS += test-snprintf-gnu
