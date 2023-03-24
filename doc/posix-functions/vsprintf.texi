@@ -4,9 +4,9 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/vsprintf.html}
 
-Gnulib module: vsprintf-posix
+Gnulib module: vsprintf-posix or vsprintf-gnu
 
-Portability problems fixed by Gnulib:
+Portability problems fixed by either Gnulib module @code{vsprintf-posix} or @code{vsprintf-gnu}:
 @itemize
 @item
 This function does not support size specifiers as in C99 (@code{hh}, @code{ll},
@@ -78,6 +78,13 @@ FreeBSD 13.0, NetBSD 5.0.
 @item
 The compiler warns that this function is deprecated:
 macOS 13.0.
+@end itemize
+
+Portability problems fixed by Gnulib module @code{vsprintf-gnu}:
+@itemize
+@item
+This function does not support the @samp{B} directive on some platforms:
+glibc 2.34, FreeBSD 13.1, NetBSD 9.0, OpenBSD 7.2, macOS 12.5, AIX 7.2, Solaris 11.4, and others.
 @end itemize
 
 Portability problems not fixed by Gnulib:

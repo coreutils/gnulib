@@ -1,0 +1,28 @@
+Description:
+POSIX and GNU compatible vsprintf() function: print formatted output to a string
+
+Comment:
+This module should not be used as a dependency from a test module,
+otherwise when this module occurs as a tests-related module, it will
+have side effects on the compilation of the 'vasnprintf' module, if
+that module occurs among the main modules in lib/.
+
+Files:
+m4/vsprintf-gnu.m4
+
+Depends-on:
+vsprintf-posix
+
+configure.ac:
+gl_FUNC_VSPRINTF_GNU
+
+Makefile.am:
+
+Include:
+<stdio.h>
+
+License:
+LGPL
+
+Maintainer:
+all
