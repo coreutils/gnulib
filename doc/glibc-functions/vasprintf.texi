@@ -17,16 +17,16 @@ Documentation:
 @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/vasprintf.3.html,,man vasprintf}.
 @end itemize
 
-Gnulib module: vasprintf or vasprintf-posix
+Gnulib module: vasprintf or vasprintf-posix or vasprintf-gnu
 
-Portability problems fixed by either Gnulib module @code{vasprintf} or @code{vasprintf-posix}:
+Portability problems fixed by either Gnulib module @code{vasprintf} or @code{vasprintf-posix} or @code{vasprintf-gnu}:
 @itemize
 @item
 This function is missing on some platforms:
 AIX 5.1, HP-UX 11, IRIX 6.5, Solaris 10, mingw, MSVC 14.
 @end itemize
 
-Portability problems fixed by Gnulib module @code{vasprintf-posix}:
+Portability problems fixed by either Gnulib module @code{vasprintf-posix} or @code{vasprintf-gnu}:
 @itemize
 @item
 This function does not support size specifiers as in C99 (@code{hh}, @code{ll},
@@ -77,6 +77,13 @@ glibc 2.35, FreeBSD 13.1, NetBSD 9.0, OpenBSD 7.2, macOS 12.5, AIX 7.2, Solaris 
 @item
 This function can crash in out-of-memory conditions on some platforms:
 FreeBSD 13.0, NetBSD 5.0.
+@end itemize
+
+Portability problems fixed by Gnulib module @code{vasprintf-gnu}:
+@itemize
+@item
+This function does not support the @samp{B} directive on some platforms:
+glibc 2.34, FreeBSD 13.1, NetBSD 9.0, OpenBSD 7.2, macOS 12.5, AIX 7.2, Solaris 11.4, and others.
 @end itemize
 
 Portability problems not fixed by Gnulib:

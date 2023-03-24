@@ -1,0 +1,28 @@
+Description:
+POSIX and GNU compatible vsprintf with automatic memory allocation.
+
+Comment:
+This module should not be used as a dependency from a test module,
+otherwise when this module occurs as a tests-related module, it will
+have side effects on the compilation of the 'vasnprintf' module, if
+that module occurs among the main modules in lib/.
+
+Files:
+m4/vasprintf-gnu.m4
+
+Depends-on:
+vasprintf-posix
+
+configure.ac:
+gl_FUNC_VASPRINTF_GNU
+
+Makefile.am:
+
+Include:
+"vasprintf.h"
+
+License:
+LGPL
+
+Maintainer:
+all
