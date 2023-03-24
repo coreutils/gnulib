@@ -1,0 +1,14 @@
+Files:
+tests/test-vasnwprintf-gnu.c
+tests/macros.h
+
+Depends-on:
+vasnwprintf-posix-tests
+wcscmp
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-vasnwprintf-gnu
+check_PROGRAMS += test-vasnwprintf-gnu
+test_vasnwprintf_gnu_LDADD = $(LDADD) $(MBRTOWC_LIB)
