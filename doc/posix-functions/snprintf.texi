@@ -4,9 +4,9 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/snprintf.html}
 
-Gnulib module: snprintf or snprintf-posix
+Gnulib module: snprintf or snprintf-posix or snprintf-gnu
 
-Portability problems fixed by either Gnulib module @code{snprintf} or @code{snprintf-posix}:
+Portability problems fixed by either Gnulib module @code{snprintf} or @code{snprintf-posix} or @code{snprintf-gnu}:
 @itemize
 @item
 This function is missing on some platforms:
@@ -21,7 +21,7 @@ platforms:
 HP-UX 11, IRIX 6.5, Solaris 9, mingw.
 @end itemize
 
-Portability problems fixed by Gnulib module @code{snprintf-posix}:
+Portability problems fixed by either Gnulib module @code{snprintf-posix} or @code{snprintf-gnu}:
 @itemize
 @item
 This function does not support size specifiers as in C99 (@code{hh}, @code{ll},
@@ -92,6 +92,13 @@ mingw, MSVC 14.
 @item
 This function does not fully support the @samp{n} directive on some platforms:
 HP-UX 11, mingw, MSVC 14.
+@end itemize
+
+Portability problems fixed by Gnulib module @code{snprintf-gnu}:
+@itemize
+@item
+This function does not support the @samp{B} directive on some platforms:
+glibc 2.34, FreeBSD 13.1, NetBSD 9.0, OpenBSD 7.2, macOS 12.5, AIX 7.2, Solaris 11.4, and others.
 @end itemize
 
 Portability problems not fixed by Gnulib:
