@@ -9,7 +9,7 @@ that module occurs among the main modules in lib/.
 
 Files:
 lib/printf.c
-m4/printf-posix-rpl.m4
+m4/printf-posix.m4
 m4/printf.m4
 m4/asm-underscore.m4
 
