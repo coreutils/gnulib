@@ -4,16 +4,16 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/vdprintf.html}
 
-Gnulib module: vdprintf or vdprintf-posix
+Gnulib module: vdprintf or vdprintf-posix or vdprintf-gnu
 
-Portability problems fixed by either Gnulib module @code{vdprintf} or @code{vdprintf-posix}:
+Portability problems fixed by either Gnulib module @code{vdprintf} or @code{vdprintf-posix} or @code{vdprintf-gnu}:
 @itemize
 @item
 This function is missing on some platforms:
 Mac OS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, HP-UX 11, IRIX 6.5, Solaris 11.3, Cygwin 1.5.x, mingw, MSVC 14.
 @end itemize
 
-Portability problems fixed by Gnulib module @code{vdprintf-posix}:
+Portability problems fixed by either Gnulib module @code{vdprintf-posix} or @code{vdprintf-gnu}:
 @itemize
 @item
 printf @code{"%f"}, @code{"%e"}, @code{"%g"} of Infinity and NaN yields an
@@ -48,6 +48,13 @@ AIX 7.1.
 This function produces wrong output for the @samp{lc} directive with a NUL
 wide character argument on some platforms:
 glibc 2.35, FreeBSD 13.1, NetBSD 9.0, OpenBSD 7.2, macOS 12.5, AIX 7.2, Solaris 11.4, and others.
+@end itemize
+
+Portability problems fixed by Gnulib module @code{vdprintf-gnu}:
+@itemize
+@item
+This function does not support the @samp{B} directive on some platforms:
+glibc 2.34, FreeBSD 13.1, NetBSD 9.0, OpenBSD 7.2, macOS 12.5, AIX 7.2, Solaris 11.4, and others.
 @end itemize
 
 Portability problems not fixed by Gnulib:
