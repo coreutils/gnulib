@@ -1,0 +1,15 @@
+Files:
+tests/test-fprintf-gnu.sh
+tests/test-fprintf-gnu.c
+tests/test-fprintf-gnu.h
+tests/test-printf-gnu.output
+tests/macros.h
+
+Depends-on:
+fprintf-posix-tests
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-fprintf-gnu.sh
+check_PROGRAMS += test-fprintf-gnu
