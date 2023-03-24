@@ -4,9 +4,9 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/vsnprintf.html}
 
-Gnulib module: vsnprintf or vsnprintf-posix
+Gnulib module: vsnprintf or vsnprintf-posix or vsnprintf-gnu
 
-Portability problems fixed by either Gnulib module @code{vsnprintf} or @code{vsnprintf-posix}:
+Portability problems fixed by either Gnulib module @code{vsnprintf} or @code{vsnprintf-posix} or @code{vsnprintf-gnu}:
 @itemize
 @item
 This function does not support format directives that access arguments in an
@@ -18,7 +18,7 @@ platforms:
 HP-UX 11, IRIX 6.5, Solaris 9, mingw, MSVC 14.
 @end itemize
 
-Portability problems fixed by Gnulib module @code{vsnprintf-posix}:
+Portability problems fixed by either Gnulib module @code{vsnprintf-posix} or @code{vsnprintf-gnu}:
 @itemize
 @item
 This function does not support size specifiers as in C99 (@code{hh}, @code{ll},
@@ -90,6 +90,13 @@ macOS 11.1, HP-UX 11, mingw, MSVC 14.
 This function overwrites memory even when a zero size argument is passed on some
 platforms:
 HP-UX 11.
+@end itemize
+
+Portability problems fixed by Gnulib module @code{vsnprintf-gnu}:
+@itemize
+@item
+This function does not support the @samp{B} directive on some platforms:
+glibc 2.34, FreeBSD 13.1, NetBSD 9.0, OpenBSD 7.2, macOS 12.5, AIX 7.2, Solaris 11.4, and others.
 @end itemize
 
 Portability problems not fixed by Gnulib:
