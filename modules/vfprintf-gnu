@@ -1,0 +1,28 @@
+Description:
+POSIX and GNU compatible vfprintf() function: print formatted output to a stream
+
+Comment:
+This module should not be used as a dependency from a test module,
+otherwise when this module occurs as a tests-related module, it will
+have side effects on the compilation of the 'vasnprintf' module, if
+that module occurs among the main modules in lib/.
+
+Files:
+m4/vfprintf-gnu.m4
+
+Depends-on:
+vfprintf-posix
+
+configure.ac:
+gl_FUNC_VFPRINTF_GNU
+
+Makefile.am:
+
+Include:
+<stdio.h>
+
+License:
+LGPL
+
+Maintainer:
+all
