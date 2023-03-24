@@ -1,10 +1,22 @@
-# dprintf-posix.m4 serial 5
+# dprintf-posix.m4 serial 6
 dnl Copyright (C) 2007-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_FUNC_DPRINTF_POSIX],
+[
+  AC_REQUIRE([gl_FUNC_DPRINTF_IS_POSIX])
+  if test $gl_cv_func_dprintf_posix = no; then
+    gl_PREREQ_VASNPRINTF_WITH_POSIX_EXTRAS
+    gl_REPLACE_VASNPRINTF
+    gl_REPLACE_DPRINTF
+  fi
+])
+
+dnl Test whether dprintf exists and is POSIX compliant.
+dnl Result is gl_cv_func_dprintf_posix.
+AC_DEFUN([gl_FUNC_DPRINTF_IS_POSIX],
 [
   AC_REQUIRE([gl_PRINTF_SIZES_C99])
   AC_REQUIRE([gl_PRINTF_LONG_DOUBLE])
@@ -92,22 +104,5 @@ AC_DEFUN([gl_FUNC_DPRINTF_POSIX],
         esac
         ;;
     esac
-  fi
-  if test $gl_cv_func_dprintf_posix = no; then
-    gl_PREREQ_VASNPRINTF_LONG_DOUBLE
-    gl_PREREQ_VASNPRINTF_INFINITE_DOUBLE
-    gl_PREREQ_VASNPRINTF_INFINITE_LONG_DOUBLE
-    gl_PREREQ_VASNPRINTF_DIRECTIVE_A
-    gl_PREREQ_VASNPRINTF_DIRECTIVE_B
-    gl_PREREQ_VASNPRINTF_DIRECTIVE_F
-    gl_PREREQ_VASNPRINTF_DIRECTIVE_LS
-    gl_PREREQ_VASNPRINTF_DIRECTIVE_LC
-    gl_PREREQ_VASNPRINTF_FLAG_GROUPING
-    gl_PREREQ_VASNPRINTF_FLAG_LEFTADJUST
-    gl_PREREQ_VASNPRINTF_FLAG_ZERO
-    gl_PREREQ_VASNPRINTF_PRECISION
-    gl_PREREQ_VASNPRINTF_ENOMEM
-    gl_REPLACE_VASNPRINTF
-    gl_REPLACE_DPRINTF
   fi
 ])
