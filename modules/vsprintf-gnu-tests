@@ -1,0 +1,13 @@
+Files:
+tests/test-vsprintf-gnu.c
+tests/test-sprintf-gnu.h
+tests/macros.h
+
+Depends-on:
+vsprintf-posix-tests
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-vsprintf-gnu
+check_PROGRAMS += test-vsprintf-gnu
