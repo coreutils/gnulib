@@ -24,6 +24,8 @@ m4/exponentd.m4
 Depends-on:
 assert-h
 attribute
+limits-h
+stdint
 stdio
 isnand-nolibm
 isnanl-nolibm

@@ -29,6 +29,7 @@ alloca-opt
 attribute
 float
 free-posix
+limits-h
 stdint
 xsize
 errno

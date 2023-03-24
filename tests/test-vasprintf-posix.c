@@ -4420,6 +4420,606 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
     ASSERT (retval == strlen (result));
     free (result);
   }
+
+  /* Test the support of argument type/size specifiers for signed integer
+     conversions.  */
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%hhd %d", (signed char) -42, 33, 44, 55);
+    ASSERT (strcmp (result, "-42 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%hd %d", (short) -12345, 33, 44, 55);
+    ASSERT (strcmp (result, "-12345 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%d %d", -12345, 33, 44, 55);
+    ASSERT (strcmp (result, "-12345 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%ld %d", (long int) -12345, 33, 44, 55);
+    ASSERT (strcmp (result, "-12345 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%lld %d", (long long int) -12345, 33, 44, 55);
+    ASSERT (strcmp (result, "-12345 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%w8d %d", (int8_t) -42, 33, 44, 55);
+    ASSERT (strcmp (result, "-42 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%w16d %d", (int16_t) -12345, 33, 44, 55);
+    ASSERT (strcmp (result, "-12345 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%w32d %d", (int32_t) -12345, 33, 44, 55);
+    ASSERT (strcmp (result, "-12345 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%w64d %d", (int64_t) -12345, 33, 44, 55);
+    ASSERT (strcmp (result, "-12345 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%wf8d %d", (int_fast8_t) -42, 33, 44, 55);
+    ASSERT (strcmp (result, "-42 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%wf16d %d", (int_fast16_t) -12345, 33, 44, 55);
+    ASSERT (strcmp (result, "-12345 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%wf32d %d", (int_fast32_t) -12345, 33, 44, 55);
+    ASSERT (strcmp (result, "-12345 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%wf64d %d", (int_fast64_t) -12345, 33, 44, 55);
+    ASSERT (strcmp (result, "-12345 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  /* Test the support of argument type/size specifiers for unsigned integer
+     conversions: %u  */
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%hhu %d", (unsigned char) 42, 33, 44, 55);
+    ASSERT (strcmp (result, "42 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%hu %d", (unsigned short) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "12345 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%u %d", (unsigned int) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "12345 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%lu %d", (unsigned long int) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "12345 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%llu %d", (unsigned long long int) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "12345 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%w8u %d", (uint8_t) 42, 33, 44, 55);
+    ASSERT (strcmp (result, "42 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%w16u %d", (uint16_t) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "12345 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%w32u %d", (uint32_t) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "12345 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%w64u %d", (uint64_t) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "12345 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%wf8u %d", (uint_fast8_t) 42, 33, 44, 55);
+    ASSERT (strcmp (result, "42 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%wf16u %d", (uint_fast16_t) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "12345 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%wf32u %d", (uint_fast32_t) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "12345 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%wf64u %d", (uint_fast64_t) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "12345 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  /* Test the support of argument type/size specifiers for unsigned integer
+     conversions: %b  */
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%hhb %d", (unsigned char) 42, 33, 44, 55);
+    ASSERT (strcmp (result, "101010 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%hb %d", (unsigned short) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "11000000111001 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%b %d", (unsigned int) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "11000000111001 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%lb %d", (unsigned long int) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "11000000111001 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%llb %d", (unsigned long long int) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "11000000111001 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%w8b %d", (uint8_t) 42, 33, 44, 55);
+    ASSERT (strcmp (result, "101010 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%w16b %d", (uint16_t) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "11000000111001 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%w32b %d", (uint32_t) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "11000000111001 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%w64b %d", (uint64_t) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "11000000111001 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%wf8b %d", (uint_fast8_t) 42, 33, 44, 55);
+    ASSERT (strcmp (result, "101010 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%wf16b %d", (uint_fast16_t) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "11000000111001 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%wf32b %d", (uint_fast32_t) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "11000000111001 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%wf64b %d", (uint_fast64_t) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "11000000111001 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  /* Test the support of argument type/size specifiers for unsigned integer
+     conversions: %o  */
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%hho %d", (unsigned char) 42, 33, 44, 55);
+    ASSERT (strcmp (result, "52 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%ho %d", (unsigned short) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "30071 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%o %d", (unsigned int) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "30071 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%lo %d", (unsigned long int) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "30071 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%llo %d", (unsigned long long int) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "30071 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%w8o %d", (uint8_t) 42, 33, 44, 55);
+    ASSERT (strcmp (result, "52 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%w16o %d", (uint16_t) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "30071 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%w32o %d", (uint32_t) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "30071 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%w64o %d", (uint64_t) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "30071 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%wf8o %d", (uint_fast8_t) 42, 33, 44, 55);
+    ASSERT (strcmp (result, "52 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%wf16o %d", (uint_fast16_t) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "30071 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%wf32o %d", (uint_fast32_t) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "30071 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%wf64o %d", (uint_fast64_t) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "30071 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  /* Test the support of argument type/size specifiers for unsigned integer
+     conversions: %x  */
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%hhX %d", (unsigned char) 42, 33, 44, 55);
+    ASSERT (strcmp (result, "2A 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%hX %d", (unsigned short) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "3039 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%X %d", (unsigned int) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "3039 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%lX %d", (unsigned long int) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "3039 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%llX %d", (unsigned long long int) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "3039 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%w8X %d", (uint8_t) 42, 33, 44, 55);
+    ASSERT (strcmp (result, "2A 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%w16X %d", (uint16_t) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "3039 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%w32X %d", (uint32_t) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "3039 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%w64X %d", (uint64_t) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "3039 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%wf8X %d", (uint_fast8_t) 42, 33, 44, 55);
+    ASSERT (strcmp (result, "2A 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%wf16X %d", (uint_fast16_t) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "3039 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%wf32X %d", (uint_fast32_t) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "3039 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%wf64X %d", (uint_fast64_t) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "3039 33") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
 }
 
 static int

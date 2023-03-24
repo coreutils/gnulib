@@ -3404,4 +3404,474 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     ASSERT (strcmp (result, " 33") == 0);
     ASSERT (retval == strlen (result));
   }
+
+  /* Test the support of argument type/size specifiers for signed integer
+     conversions.  */
+
+  {
+    int retval =
+      my_sprintf (result, "%hhd %d", (signed char) -42, 33, 44, 55);
+    ASSERT (strcmp (result, "-42 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%hd %d", (short) -12345, 33, 44, 55);
+    ASSERT (strcmp (result, "-12345 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%d %d", -12345, 33, 44, 55);
+    ASSERT (strcmp (result, "-12345 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%ld %d", (long int) -12345, 33, 44, 55);
+    ASSERT (strcmp (result, "-12345 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%lld %d", (long long int) -12345, 33, 44, 55);
+    ASSERT (strcmp (result, "-12345 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%w8d %d", (int8_t) -42, 33, 44, 55);
+    ASSERT (strcmp (result, "-42 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%w16d %d", (int16_t) -12345, 33, 44, 55);
+    ASSERT (strcmp (result, "-12345 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%w32d %d", (int32_t) -12345, 33, 44, 55);
+    ASSERT (strcmp (result, "-12345 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%w64d %d", (int64_t) -12345, 33, 44, 55);
+    ASSERT (strcmp (result, "-12345 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%wf8d %d", (int_fast8_t) -42, 33, 44, 55);
+    ASSERT (strcmp (result, "-42 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%wf16d %d", (int_fast16_t) -12345, 33, 44, 55);
+    ASSERT (strcmp (result, "-12345 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%wf32d %d", (int_fast32_t) -12345, 33, 44, 55);
+    ASSERT (strcmp (result, "-12345 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%wf64d %d", (int_fast64_t) -12345, 33, 44, 55);
+    ASSERT (strcmp (result, "-12345 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  /* Test the support of argument type/size specifiers for unsigned integer
+     conversions: %u  */
+
+  {
+    int retval =
+      my_sprintf (result, "%hhu %d", (unsigned char) 42, 33, 44, 55);
+    ASSERT (strcmp (result, "42 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%hu %d", (unsigned short) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "12345 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%u %d", (unsigned int) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "12345 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%lu %d", (unsigned long int) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "12345 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%llu %d", (unsigned long long int) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "12345 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%w8u %d", (uint8_t) 42, 33, 44, 55);
+    ASSERT (strcmp (result, "42 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%w16u %d", (uint16_t) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "12345 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%w32u %d", (uint32_t) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "12345 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%w64u %d", (uint64_t) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "12345 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%wf8u %d", (uint_fast8_t) 42, 33, 44, 55);
+    ASSERT (strcmp (result, "42 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%wf16u %d", (uint_fast16_t) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "12345 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%wf32u %d", (uint_fast32_t) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "12345 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%wf64u %d", (uint_fast64_t) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "12345 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  /* Test the support of argument type/size specifiers for unsigned integer
+     conversions: %b  */
+
+  {
+    int retval =
+      my_sprintf (result, "%hhb %d", (unsigned char) 42, 33, 44, 55);
+    ASSERT (strcmp (result, "101010 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%hb %d", (unsigned short) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "11000000111001 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%b %d", (unsigned int) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "11000000111001 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%lb %d", (unsigned long int) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "11000000111001 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%llb %d", (unsigned long long int) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "11000000111001 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%w8b %d", (uint8_t) 42, 33, 44, 55);
+    ASSERT (strcmp (result, "101010 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%w16b %d", (uint16_t) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "11000000111001 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%w32b %d", (uint32_t) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "11000000111001 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%w64b %d", (uint64_t) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "11000000111001 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%wf8b %d", (uint_fast8_t) 42, 33, 44, 55);
+    ASSERT (strcmp (result, "101010 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%wf16b %d", (uint_fast16_t) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "11000000111001 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%wf32b %d", (uint_fast32_t) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "11000000111001 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%wf64b %d", (uint_fast64_t) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "11000000111001 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  /* Test the support of argument type/size specifiers for unsigned integer
+     conversions: %o  */
+
+  {
+    int retval =
+      my_sprintf (result, "%hho %d", (unsigned char) 42, 33, 44, 55);
+    ASSERT (strcmp (result, "52 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%ho %d", (unsigned short) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "30071 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%o %d", (unsigned int) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "30071 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%lo %d", (unsigned long int) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "30071 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%llo %d", (unsigned long long int) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "30071 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%w8o %d", (uint8_t) 42, 33, 44, 55);
+    ASSERT (strcmp (result, "52 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%w16o %d", (uint16_t) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "30071 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%w32o %d", (uint32_t) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "30071 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%w64o %d", (uint64_t) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "30071 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%wf8o %d", (uint_fast8_t) 42, 33, 44, 55);
+    ASSERT (strcmp (result, "52 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%wf16o %d", (uint_fast16_t) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "30071 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%wf32o %d", (uint_fast32_t) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "30071 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%wf64o %d", (uint_fast64_t) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "30071 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  /* Test the support of argument type/size specifiers for unsigned integer
+     conversions: %x  */
+
+  {
+    int retval =
+      my_sprintf (result, "%hhX %d", (unsigned char) 42, 33, 44, 55);
+    ASSERT (strcmp (result, "2A 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%hX %d", (unsigned short) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "3039 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%X %d", (unsigned int) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "3039 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%lX %d", (unsigned long int) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "3039 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%llX %d", (unsigned long long int) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "3039 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%w8X %d", (uint8_t) 42, 33, 44, 55);
+    ASSERT (strcmp (result, "2A 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%w16X %d", (uint16_t) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "3039 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%w32X %d", (uint32_t) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "3039 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%w64X %d", (uint64_t) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "3039 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%wf8X %d", (uint_fast8_t) 42, 33, 44, 55);
+    ASSERT (strcmp (result, "2A 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%wf16X %d", (uint_fast16_t) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "3039 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%wf32X %d", (uint_fast32_t) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "3039 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    int retval =
+      my_sprintf (result, "%wf64X %d", (uint_fast64_t) 12345, 33, 44, 55);
+    ASSERT (strcmp (result, "3039 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
 }

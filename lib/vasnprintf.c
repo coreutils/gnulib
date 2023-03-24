@@ -85,7 +85,7 @@
 #include <string.h>     /* memcpy(), strlen() */
 #include <wchar.h>      /* mbstate_t, mbrtowc(), mbrlen(), wcrtomb() */
 #include <errno.h>      /* errno */
-#include <limits.h>     /* CHAR_BIT */
+#include <limits.h>     /* CHAR_BIT, INT_WIDTH, LONG_WIDTH */
 #include <float.h>      /* DBL_MAX_EXP, LDBL_MAX_EXP */
 #if HAVE_NL_LANGINFO
 # include <langinfo.h>
@@ -1633,24 +1633,155 @@ MAX_ROOM_NEEDED (const arguments *ap, size_t arg_index, FCHAR_T conversion,
   switch (conversion)
     {
     case 'd': case 'i': case 'u':
-      if (type == TYPE_LONGLONGINT || type == TYPE_ULONGLONGINT)
-        tmp_length =
-          (unsigned int) (sizeof (unsigned long long) * CHAR_BIT
-                          * 0.30103 /* binary -> decimal */
-                         )
-          + 1; /* turn floor into ceil */
-      else if (type == TYPE_LONGINT || type == TYPE_ULONGINT)
-        tmp_length =
-          (unsigned int) (sizeof (unsigned long) * CHAR_BIT
-                          * 0.30103 /* binary -> decimal */
-                         )
-          + 1; /* turn floor into ceil */
-      else
-        tmp_length =
-          (unsigned int) (sizeof (unsigned int) * CHAR_BIT
-                          * 0.30103 /* binary -> decimal */
-                         )
-          + 1; /* turn floor into ceil */
+      switch (type)
+        {
+        default:
+          tmp_length =
+            (unsigned int) (sizeof (unsigned int) * CHAR_BIT
+                            * 0.30103 /* binary -> decimal */
+                           )
+            + 1; /* turn floor into ceil */
+        case TYPE_LONGINT:
+          tmp_length =
+            (unsigned int) (sizeof (long int) * CHAR_BIT
+                            * 0.30103 /* binary -> decimal */
+                           )
+            + 1; /* turn floor into ceil */
+          break;
+        case TYPE_ULONGINT:
+          tmp_length =
+            (unsigned int) (sizeof (unsigned long int) * CHAR_BIT
+                            * 0.30103 /* binary -> decimal */
+                           )
+            + 1; /* turn floor into ceil */
+          break;
+        case TYPE_LONGLONGINT:
+          tmp_length =
+            (unsigned int) (sizeof (long long int) * CHAR_BIT
+                            * 0.30103 /* binary -> decimal */
+                           )
+            + 1; /* turn floor into ceil */
+          break;
+        case TYPE_ULONGLONGINT:
+          tmp_length =
+            (unsigned int) (sizeof (unsigned long long int) * CHAR_BIT
+                            * 0.30103 /* binary -> decimal */
+                           )
+            + 1; /* turn floor into ceil */
+          break;
+        case TYPE_INT8_T:
+          tmp_length =
+            (unsigned int) (sizeof (int8_t) * CHAR_BIT
+                            * 0.30103 /* binary -> decimal */
+                           )
+            + 1; /* turn floor into ceil */
+          break;
+        case TYPE_UINT8_T:
+          tmp_length =
+            (unsigned int) (sizeof (uint8_t) * CHAR_BIT
+                            * 0.30103 /* binary -> decimal */
+                           )
+            + 1; /* turn floor into ceil */
+          break;
+        case TYPE_INT16_T:
+          tmp_length =
+            (unsigned int) (sizeof (int16_t) * CHAR_BIT
+                            * 0.30103 /* binary -> decimal */
+                           )
+            + 1; /* turn floor into ceil */
+          break;
+        case TYPE_UINT16_T:
+          tmp_length =
+            (unsigned int) (sizeof (uint16_t) * CHAR_BIT
+                            * 0.30103 /* binary -> decimal */
+                           )
+            + 1; /* turn floor into ceil */
+          break;
+        case TYPE_INT32_T:
+          tmp_length =
+            (unsigned int) (sizeof (int32_t) * CHAR_BIT
+                            * 0.30103 /* binary -> decimal */
+                           )
+            + 1; /* turn floor into ceil */
+          break;
+        case TYPE_UINT32_T:
+          tmp_length =
+            (unsigned int) (sizeof (uint32_t) * CHAR_BIT
+                            * 0.30103 /* binary -> decimal */
+                           )
+            + 1; /* turn floor into ceil */
+          break;
+        case TYPE_INT64_T:
+          tmp_length =
+            (unsigned int) (sizeof (int64_t) * CHAR_BIT
+                            * 0.30103 /* binary -> decimal */
+                           )
+            + 1; /* turn floor into ceil */
+          break;
+        case TYPE_UINT64_T:
+          tmp_length =
+            (unsigned int) (sizeof (uint64_t) * CHAR_BIT
+                            * 0.30103 /* binary -> decimal */
+                           )
+            + 1; /* turn floor into ceil */
+          break;
+        case TYPE_INT_FAST8_T:
+          tmp_length =
+            (unsigned int) (sizeof (int_fast8_t) * CHAR_BIT
+                            * 0.30103 /* binary -> decimal */
+                           )
+            + 1; /* turn floor into ceil */
+          break;
+        case TYPE_UINT_FAST8_T:
+          tmp_length =
+            (unsigned int) (sizeof (uint_fast8_t) * CHAR_BIT
+                            * 0.30103 /* binary -> decimal */
+                           )
+            + 1; /* turn floor into ceil */
+          break;
+        case TYPE_INT_FAST16_T:
+          tmp_length =
+            (unsigned int) (sizeof (int_fast16_t) * CHAR_BIT
+                            * 0.30103 /* binary -> decimal */
+                           )
+            + 1; /* turn floor into ceil */
+          break;
+        case TYPE_UINT_FAST16_T:
+          tmp_length =
+            (unsigned int) (sizeof (uint_fast16_t) * CHAR_BIT
+                            * 0.30103 /* binary -> decimal */
+                           )
+            + 1; /* turn floor into ceil */
+          break;
+        case TYPE_INT_FAST32_T:
+          tmp_length =
+            (unsigned int) (sizeof (int_fast32_t) * CHAR_BIT
+                            * 0.30103 /* binary -> decimal */
+                           )
+            + 1; /* turn floor into ceil */
+          break;
+        case TYPE_UINT_FAST32_T:
+          tmp_length =
+            (unsigned int) (sizeof (uint_fast32_t) * CHAR_BIT
+                            * 0.30103 /* binary -> decimal */
+                           )
+            + 1; /* turn floor into ceil */
+          break;
+        case TYPE_INT_FAST64_T:
+          tmp_length =
+            (unsigned int) (sizeof (int_fast64_t) * CHAR_BIT
+                            * 0.30103 /* binary -> decimal */
+                           )
+            + 1; /* turn floor into ceil */
+          break;
+        case TYPE_UINT_FAST64_T:
+          tmp_length =
+            (unsigned int) (sizeof (uint_fast64_t) * CHAR_BIT
+                            * 0.30103 /* binary -> decimal */
+                           )
+            + 1; /* turn floor into ceil */
+          break;
+        }
       if (tmp_length < precision)
         tmp_length = precision;
       /* Multiply by 2, as an estimate for FLAG_GROUP.  */
@@ -1664,18 +1795,64 @@ MAX_ROOM_NEEDED (const arguments *ap, size_t arg_index, FCHAR_T conversion,
         || (__GLIBC__ + (__GLIBC_MINOR__ >= 35) > 2)
     case 'B':
     #endif
-      if (type == TYPE_ULONGLONGINT)
-        tmp_length =
-          (unsigned int) (sizeof (unsigned long long) * CHAR_BIT)
-          + 1; /* turn floor into ceil */
-      else if (type == TYPE_ULONGINT)
-        tmp_length =
-          (unsigned int) (sizeof (unsigned long) * CHAR_BIT)
-          + 1; /* turn floor into ceil */
-      else
-        tmp_length =
-          (unsigned int) (sizeof (unsigned int) * CHAR_BIT)
-          + 1; /* turn floor into ceil */
+      switch (type)
+        {
+        default:
+          tmp_length =
+            (unsigned int) (sizeof (unsigned int) * CHAR_BIT)
+            + 1; /* turn floor into ceil */
+          break;
+        case TYPE_ULONGINT:
+          tmp_length =
+            (unsigned int) (sizeof (unsigned long int) * CHAR_BIT)
+            + 1; /* turn floor into ceil */
+          break;
+        case TYPE_ULONGLONGINT:
+          tmp_length =
+            (unsigned int) (sizeof (unsigned long long int) * CHAR_BIT)
+            + 1; /* turn floor into ceil */
+          break;
+        case TYPE_UINT8_T:
+          tmp_length =
+            (unsigned int) (sizeof (uint8_t) * CHAR_BIT)
+            + 1; /* turn floor into ceil */
+          break;
+        case TYPE_UINT16_T:
+          tmp_length =
+            (unsigned int) (sizeof (uint16_t) * CHAR_BIT)
+            + 1; /* turn floor into ceil */
+          break;
+        case TYPE_UINT32_T:
+          tmp_length =
+            (unsigned int) (sizeof (uint32_t) * CHAR_BIT)
+            + 1; /* turn floor into ceil */
+          break;
+        case TYPE_UINT64_T:
+          tmp_length =
+            (unsigned int) (sizeof (uint64_t) * CHAR_BIT)
+            + 1; /* turn floor into ceil */
+          break;
+        case TYPE_UINT_FAST8_T:
+          tmp_length =
+            (unsigned int) (sizeof (uint_fast8_t) * CHAR_BIT)
+            + 1; /* turn floor into ceil */
+          break;
+        case TYPE_UINT_FAST16_T:
+          tmp_length =
+            (unsigned int) (sizeof (uint_fast16_t) * CHAR_BIT)
+            + 1; /* turn floor into ceil */
+          break;
+        case TYPE_UINT_FAST32_T:
+          tmp_length =
+            (unsigned int) (sizeof (uint_fast32_t) * CHAR_BIT)
+            + 1; /* turn floor into ceil */
+          break;
+        case TYPE_UINT_FAST64_T:
+          tmp_length =
+            (unsigned int) (sizeof (uint_fast64_t) * CHAR_BIT)
+            + 1; /* turn floor into ceil */
+          break;
+        }
       if (tmp_length < precision)
         tmp_length = precision;
       /* Add 2, to account for a prefix from the alternate form.  */
@@ -1683,24 +1860,86 @@ MAX_ROOM_NEEDED (const arguments *ap, size_t arg_index, FCHAR_T conversion,
       break;
 
     case 'o':
-      if (type == TYPE_ULONGLONGINT)
-        tmp_length =
-          (unsigned int) (sizeof (unsigned long long) * CHAR_BIT
-                          * 0.333334 /* binary -> octal */
-                         )
-          + 1; /* turn floor into ceil */
-      else if (type == TYPE_ULONGINT)
-        tmp_length =
-          (unsigned int) (sizeof (unsigned long) * CHAR_BIT
-                          * 0.333334 /* binary -> octal */
-                         )
-          + 1; /* turn floor into ceil */
-      else
-        tmp_length =
-          (unsigned int) (sizeof (unsigned int) * CHAR_BIT
-                          * 0.333334 /* binary -> octal */
-                         )
-          + 1; /* turn floor into ceil */
+      switch (type)
+        {
+        default:
+          tmp_length =
+            (unsigned int) (sizeof (unsigned int) * CHAR_BIT
+                            * 0.333334 /* binary -> octal */
+                           )
+            + 1; /* turn floor into ceil */
+          break;
+        case TYPE_ULONGINT:
+          tmp_length =
+            (unsigned int) (sizeof (unsigned long int) * CHAR_BIT
+                            * 0.333334 /* binary -> octal */
+                           )
+            + 1; /* turn floor into ceil */
+          break;
+        case TYPE_ULONGLONGINT:
+          tmp_length =
+            (unsigned int) (sizeof (unsigned long long int) * CHAR_BIT
+                            * 0.333334 /* binary -> octal */
+                           )
+            + 1; /* turn floor into ceil */
+          break;
+        case TYPE_UINT8_T:
+          tmp_length =
+            (unsigned int) (sizeof (uint8_t) * CHAR_BIT
+                            * 0.333334 /* binary -> octal */
+                           )
+            + 1; /* turn floor into ceil */
+          break;
+        case TYPE_UINT16_T:
+          tmp_length =
+            (unsigned int) (sizeof (uint16_t) * CHAR_BIT
+                            * 0.333334 /* binary -> octal */
+                           )
+            + 1; /* turn floor into ceil */
+          break;
+        case TYPE_UINT32_T:
+          tmp_length =
+            (unsigned int) (sizeof (uint32_t) * CHAR_BIT
+                            * 0.333334 /* binary -> octal */
+                           )
+            + 1; /* turn floor into ceil */
+          break;
+        case TYPE_UINT64_T:
+          tmp_length =
+            (unsigned int) (sizeof (uint64_t) * CHAR_BIT
+                            * 0.333334 /* binary -> octal */
+                           )
+            + 1; /* turn floor into ceil */
+          break;
+        case TYPE_UINT_FAST8_T:
+          tmp_length =
+            (unsigned int) (sizeof (uint_fast8_t) * CHAR_BIT
+                            * 0.333334 /* binary -> octal */
+                           )
+            + 1; /* turn floor into ceil */
+          break;
+        case TYPE_UINT_FAST16_T:
+          tmp_length =
+            (unsigned int) (sizeof (uint_fast16_t) * CHAR_BIT
+                            * 0.333334 /* binary -> octal */
+                           )
+            + 1; /* turn floor into ceil */
+          break;
+        case TYPE_UINT_FAST32_T:
+          tmp_length =
+            (unsigned int) (sizeof (uint_fast32_t) * CHAR_BIT
+                            * 0.333334 /* binary -> octal */
+                           )
+            + 1; /* turn floor into ceil */
+          break;
+        case TYPE_UINT_FAST64_T:
+          tmp_length =
+            (unsigned int) (sizeof (uint_fast64_t) * CHAR_BIT
+                            * 0.333334 /* binary -> octal */
+                           )
+            + 1; /* turn floor into ceil */
+          break;
+        }
       if (tmp_length < precision)
         tmp_length = precision;
       /* Add 1, to account for a leading sign.  */
@@ -1708,24 +1947,86 @@ MAX_ROOM_NEEDED (const arguments *ap, size_t arg_index, FCHAR_T conversion,
       break;
 
     case 'x': case 'X':
-      if (type == TYPE_ULONGLONGINT)
-        tmp_length =
-          (unsigned int) (sizeof (unsigned long long) * CHAR_BIT
-                          * 0.25 /* binary -> hexadecimal */
-                         )
-          + 1; /* turn floor into ceil */
-      else if (type == TYPE_ULONGINT)
-        tmp_length =
-          (unsigned int) (sizeof (unsigned long) * CHAR_BIT
-                          * 0.25 /* binary -> hexadecimal */
-                         )
-          + 1; /* turn floor into ceil */
-      else
-        tmp_length =
-          (unsigned int) (sizeof (unsigned int) * CHAR_BIT
-                          * 0.25 /* binary -> hexadecimal */
-                         )
-          + 1; /* turn floor into ceil */
+      switch (type)
+        {
+        default:
+          tmp_length =
+            (unsigned int) (sizeof (unsigned int) * CHAR_BIT
+                            * 0.25 /* binary -> hexadecimal */
+                           )
+            + 1; /* turn floor into ceil */
+          break;
+        case TYPE_ULONGINT:
+          tmp_length =
+            (unsigned int) (sizeof (unsigned long int) * CHAR_BIT
+                            * 0.25 /* binary -> hexadecimal */
+                           )
+            + 1; /* turn floor into ceil */
+          break;
+        case TYPE_ULONGLONGINT:
+          tmp_length =
+            (unsigned int) (sizeof (unsigned long long int) * CHAR_BIT
+                            * 0.25 /* binary -> hexadecimal */
+                           )
+            + 1; /* turn floor into ceil */
+          break;
+        case TYPE_UINT8_T:
+          tmp_length =
+            (unsigned int) (sizeof (uint8_t) * CHAR_BIT
+                            * 0.25 /* binary -> hexadecimal */
+                           )
+            + 1; /* turn floor into ceil */
+          break;
+        case TYPE_UINT16_T:
+          tmp_length =
+            (unsigned int) (sizeof (uint16_t) * CHAR_BIT
+                            * 0.25 /* binary -> hexadecimal */
+                           )
+            + 1; /* turn floor into ceil */
+          break;
+        case TYPE_UINT32_T:
+          tmp_length =
+            (unsigned int) (sizeof (uint32_t) * CHAR_BIT
+                            * 0.25 /* binary -> hexadecimal */
+                           )
+            + 1; /* turn floor into ceil */
+          break;
+        case TYPE_UINT64_T:
+          tmp_length =
+            (unsigned int) (sizeof (uint64_t) * CHAR_BIT
+                            * 0.25 /* binary -> hexadecimal */
+                           )
+            + 1; /* turn floor into ceil */
+          break;
+        case TYPE_UINT_FAST8_T:
+          tmp_length =
+            (unsigned int) (sizeof (uint_fast8_t) * CHAR_BIT
+                            * 0.25 /* binary -> hexadecimal */
+                           )
+            + 1; /* turn floor into ceil */
+          break;
+        case TYPE_UINT_FAST16_T:
+          tmp_length =
+            (unsigned int) (sizeof (uint_fast16_t) * CHAR_BIT
+                            * 0.25 /* binary -> hexadecimal */
+                           )
+            + 1; /* turn floor into ceil */
+          break;
+        case TYPE_UINT_FAST32_T:
+          tmp_length =
+            (unsigned int) (sizeof (uint_fast32_t) * CHAR_BIT
+                            * 0.25 /* binary -> hexadecimal */
+                           )
+            + 1; /* turn floor into ceil */
+          break;
+        case TYPE_UINT_FAST64_T:
+          tmp_length =
+            (unsigned int) (sizeof (uint_fast64_t) * CHAR_BIT
+                            * 0.25 /* binary -> hexadecimal */
+                           )
+            + 1; /* turn floor into ceil */
+          break;
+        }
       if (tmp_length < precision)
         tmp_length = precision;
       /* Add 2, to account for a prefix from the alternate form.  */
@@ -2033,6 +2334,30 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                     break;
                   case TYPE_COUNT_LONGLONGINT_POINTER:
                     *a.arg[dp->arg_index].a.a_count_longlongint_pointer = length;
+                    break;
+                  case TYPE_COUNT_INT8_T_POINTER:
+                    *a.arg[dp->arg_index].a.a_count_int8_t_pointer = length;
+                    break;
+                  case TYPE_COUNT_INT16_T_POINTER:
+                    *a.arg[dp->arg_index].a.a_count_int16_t_pointer = length;
+                    break;
+                  case TYPE_COUNT_INT32_T_POINTER:
+                    *a.arg[dp->arg_index].a.a_count_int32_t_pointer = length;
+                    break;
+                  case TYPE_COUNT_INT64_T_POINTER:
+                    *a.arg[dp->arg_index].a.a_count_int64_t_pointer = length;
+                    break;
+                  case TYPE_COUNT_INT_FAST8_T_POINTER:
+                    *a.arg[dp->arg_index].a.a_count_int_fast8_t_pointer = length;
+                    break;
+                  case TYPE_COUNT_INT_FAST16_T_POINTER:
+                    *a.arg[dp->arg_index].a.a_count_int_fast16_t_pointer = length;
+                    break;
+                  case TYPE_COUNT_INT_FAST32_T_POINTER:
+                    *a.arg[dp->arg_index].a.a_count_int_fast32_t_pointer = length;
+                    break;
+                  case TYPE_COUNT_INT_FAST64_T_POINTER:
+                    *a.arg[dp->arg_index].a.a_count_int_fast64_t_pointer = length;
                     break;
                   default:
                     abort ();
@@ -3303,18 +3628,64 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                   }
 
                 /* Allocate a temporary buffer of sufficient size.  */
-                if (type == TYPE_ULONGLONGINT)
-                  tmp_length =
-                    (unsigned int) (sizeof (unsigned long long) * CHAR_BIT)
-                    + 1; /* turn floor into ceil */
-                else if (type == TYPE_ULONGINT)
-                  tmp_length =
-                    (unsigned int) (sizeof (unsigned long) * CHAR_BIT)
-                    + 1; /* turn floor into ceil */
-                else
-                  tmp_length =
-                    (unsigned int) (sizeof (unsigned int) * CHAR_BIT)
-                    + 1; /* turn floor into ceil */
+                switch (type)
+                  {
+                  default:
+                    tmp_length =
+                      (unsigned int) (sizeof (unsigned int) * CHAR_BIT)
+                      + 1; /* turn floor into ceil */
+                    break;
+                  case TYPE_ULONGINT:
+                    tmp_length =
+                      (unsigned int) (sizeof (unsigned long int) * CHAR_BIT)
+                      + 1; /* turn floor into ceil */
+                    break;
+                  case TYPE_ULONGLONGINT:
+                    tmp_length =
+                      (unsigned int) (sizeof (unsigned long long int) * CHAR_BIT)
+                      + 1; /* turn floor into ceil */
+                    break;
+                  case TYPE_UINT8_T:
+                    tmp_length =
+                      (unsigned int) (sizeof (uint8_t) * CHAR_BIT)
+                      + 1; /* turn floor into ceil */
+                    break;
+                  case TYPE_UINT16_T:
+                    tmp_length =
+                      (unsigned int) (sizeof (uint16_t) * CHAR_BIT)
+                      + 1; /* turn floor into ceil */
+                    break;
+                  case TYPE_UINT32_T:
+                    tmp_length =
+                      (unsigned int) (sizeof (uint32_t) * CHAR_BIT)
+                      + 1; /* turn floor into ceil */
+                    break;
+                  case TYPE_UINT64_T:
+                    tmp_length =
+                      (unsigned int) (sizeof (uint64_t) * CHAR_BIT)
+                      + 1; /* turn floor into ceil */
+                    break;
+                  case TYPE_UINT_FAST8_T:
+                    tmp_length =
+                      (unsigned int) (sizeof (uint_fast8_t) * CHAR_BIT)
+                      + 1; /* turn floor into ceil */
+                    break;
+                  case TYPE_UINT_FAST16_T:
+                    tmp_length =
+                      (unsigned int) (sizeof (uint_fast16_t) * CHAR_BIT)
+                      + 1; /* turn floor into ceil */
+                    break;
+                  case TYPE_UINT_FAST32_T:
+                    tmp_length =
+                      (unsigned int) (sizeof (uint_fast32_t) * CHAR_BIT)
+                      + 1; /* turn floor into ceil */
+                    break;
+                  case TYPE_UINT_FAST64_T:
+                    tmp_length =
+                      (unsigned int) (sizeof (uint_fast64_t) * CHAR_BIT)
+                      + 1; /* turn floor into ceil */
+                    break;
+                  }
                 if (tmp_length < precision)
                   tmp_length = precision;
                 /* Add 2, to account for a prefix from the alternate form.  */
@@ -3340,10 +3711,51 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 
                 tmp_end = tmp + tmp_length;
 
-                unsigned long long arg =
-                  (type == TYPE_ULONGLONGINT ? a.arg[dp->arg_index].a.a_ulonglongint :
-                   type == TYPE_ULONGINT ? a.arg[dp->arg_index].a.a_ulongint :
-                   a.arg[dp->arg_index].a.a_uint);
+                unsigned long long arg;
+                switch (type)
+                  {
+                  case TYPE_UCHAR:
+                    arg = a.arg[dp->arg_index].a.a_uchar;
+                    break;
+                  case TYPE_USHORT:
+                    arg = a.arg[dp->arg_index].a.a_ushort;
+                    break;
+                  case TYPE_UINT:
+                    arg = a.arg[dp->arg_index].a.a_uint;
+                    break;
+                  case TYPE_ULONGINT:
+                    arg = a.arg[dp->arg_index].a.a_ulongint;
+                    break;
+                  case TYPE_ULONGLONGINT:
+                    arg = a.arg[dp->arg_index].a.a_ulonglongint;
+                    break;
+                  case TYPE_UINT8_T:
+                    arg = a.arg[dp->arg_index].a.a_uint8_t;
+                    break;
+                  case TYPE_UINT16_T:
+                    arg = a.arg[dp->arg_index].a.a_uint16_t;
+                    break;
+                  case TYPE_UINT32_T:
+                    arg = a.arg[dp->arg_index].a.a_uint32_t;
+                    break;
+                  case TYPE_UINT64_T:
+                    arg = a.arg[dp->arg_index].a.a_uint64_t;
+                    break;
+                  case TYPE_UINT_FAST8_T:
+                    arg = a.arg[dp->arg_index].a.a_uint_fast8_t;
+                    break;
+                  case TYPE_UINT_FAST16_T:
+                    arg = a.arg[dp->arg_index].a.a_uint_fast16_t;
+                    break;
+                  case TYPE_UINT_FAST32_T:
+                    arg = a.arg[dp->arg_index].a.a_uint_fast32_t;
+                    break;
+                  case TYPE_UINT_FAST64_T:
+                    arg = a.arg[dp->arg_index].a.a_uint_fast64_t;
+                    break;
+                  default:
+                    abort ();
+                  }
                 int need_prefix = ((flags & FLAG_ALT) && arg != 0);
 
                 p = tmp_end;
@@ -5361,6 +5773,54 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                   {
                   case TYPE_LONGLONGINT:
                   case TYPE_ULONGLONGINT:
+                  #if INT8_WIDTH > LONG_WIDTH
+                  case TYPE_INT8_T:
+                  #endif
+                  #if UINT8_WIDTH > LONG_WIDTH
+                  case TYPE_UINT8_T:
+                  #endif
+                  #if INT16_WIDTH > LONG_WIDTH
+                  case TYPE_INT16_T:
+                  #endif
+                  #if UINT16_WIDTH > LONG_WIDTH
+                  case TYPE_UINT16_T:
+                  #endif
+                  #if INT32_WIDTH > LONG_WIDTH
+                  case TYPE_INT32_T:
+                  #endif
+                  #if UINT32_WIDTH > LONG_WIDTH
+                  case TYPE_UINT32_T:
+                  #endif
+                  #if INT64_WIDTH > LONG_WIDTH
+                  case TYPE_INT64_T:
+                  #endif
+                  #if UINT64_WIDTH > LONG_WIDTH
+                  case TYPE_UINT64_T:
+                  #endif
+                  #if INT_FAST8_WIDTH > LONG_WIDTH
+                  case TYPE_INT_FAST8_T:
+                  #endif
+                  #if UINT_FAST8_WIDTH > LONG_WIDTH
+                  case TYPE_UINT_FAST8_T:
+                  #endif
+                  #if INT_FAST16_WIDTH > LONG_WIDTH
+                  case TYPE_INT_FAST16_T:
+                  #endif
+                  #if UINT_FAST16_WIDTH > LONG_WIDTH
+                  case TYPE_UINT_FAST16_T:
+                  #endif
+                  #if INT_FAST32_WIDTH > LONG_WIDTH
+                  case TYPE_INT3_FAST2_T:
+                  #endif
+                  #if UINT_FAST32_WIDTH > LONG_WIDTH
+                  case TYPE_UINT_FAST32_T:
+                  #endif
+                  #if INT_FAST64_WIDTH > LONG_WIDTH
+                  case TYPE_INT_FAST64_T:
+                  #endif
+                  #if UINT_FAST64_WIDTH > LONG_WIDTH
+                  case TYPE_UINT_FAST64_T:
+                  #endif
 #if defined _WIN32 && ! defined __CYGWIN__
                     *fbp++ = 'I';
                     *fbp++ = '6';
@@ -5372,12 +5832,60 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                     FALLTHROUGH;
                   case TYPE_LONGINT:
                   case TYPE_ULONGINT:
-#if HAVE_WINT_T
+                  #if INT8_WIDTH > INT_WIDTH && INT8_WIDTH <= LONG_WIDTH
+                  case TYPE_INT8_T:
+                  #endif
+                  #if UINT8_WIDTH > INT_WIDTH && UINT8_WIDTH <= LONG_WIDTH
+                  case TYPE_UINT8_T:
+                  #endif
+                  #if INT16_WIDTH > INT_WIDTH && INT16_WIDTH <= LONG_WIDTH
+                  case TYPE_INT16_T:
+                  #endif
+                  #if UINT16_WIDTH > INT_WIDTH && UINT16_WIDTH <= LONG_WIDTH
+                  case TYPE_UINT16_T:
+                  #endif
+                  #if INT32_WIDTH > INT_WIDTH && INT32_WIDTH <= LONG_WIDTH
+                  case TYPE_INT32_T:
+                  #endif
+                  #if UINT32_WIDTH > INT_WIDTH && UINT32_WIDTH <= LONG_WIDTH
+                  case TYPE_UINT32_T:
+                  #endif
+                  #if INT64_WIDTH > INT_WIDTH && INT64_WIDTH <= LONG_WIDTH
+                  case TYPE_INT64_T:
+                  #endif
+                  #if UINT64_WIDTH > INT_WIDTH && UINT64_WIDTH <= LONG_WIDTH
+                  case TYPE_UINT64_T:
+                  #endif
+                  #if INT_FAST8_WIDTH > INT_WIDTH && INT_FAST8_WIDTH <= LONG_WIDTH
+                  case TYPE_INT_FAST8_T:
+                  #endif
+                  #if UINT_FAST8_WIDTH > INT_WIDTH && UINT_FAST8_WIDTH <= LONG_WIDTH
+                  case TYPE_UINT_FAST8_T:
+                  #endif
+                  #if INT_FAST16_WIDTH > INT_WIDTH && INT_FAST16_WIDTH <= LONG_WIDTH
+                  case TYPE_INT_FAST16_T:
+                  #endif
+                  #if UINT_FAST16_WIDTH > INT_WIDTH && UINT_FAST16_WIDTH <= LONG_WIDTH
+                  case TYPE_UINT_FAST16_T:
+                  #endif
+                  #if INT_FAST32_WIDTH > INT_WIDTH && INT_FAST32_WIDTH <= LONG_WIDTH
+                  case TYPE_INT_FAST32_T:
+                  #endif
+                  #if UINT_FAST32_WIDTH > INT_WIDTH && UINT_FAST32_WIDTH <= LONG_WIDTH
+                  case TYPE_UINT_FAST32_T:
+                  #endif
+                  #if INT_FAST64_WIDTH > INT_WIDTH && INT_FAST64_WIDTH <= LONG_WIDTH
+                  case TYPE_INT_FAST64_T:
+                  #endif
+                  #if UINT_FAST64_WIDTH > INT_WIDTH && UINT_FAST64_WIDTH <= LONG_WIDTH
+                  case TYPE_UINT_FAST64_T:
+                  #endif
+                  #if HAVE_WINT_T
                   case TYPE_WIDE_CHAR:
-#endif
-#if HAVE_WCHAR_T
+                  #endif
+                  #if HAVE_WCHAR_T
                   case TYPE_WIDE_STRING:
-#endif
+                  #endif
                     *fbp++ = 'l';
                     break;
                   case TYPE_LONGDOUBLE:
@@ -5618,6 +6126,102 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                       case TYPE_ULONGLONGINT:
                         {
                           unsigned long long int arg = a.arg[dp->arg_index].a.a_ulonglongint;
+                          SNPRINTF_BUF (arg);
+                        }
+                        break;
+                      case TYPE_INT8_T:
+                        {
+                          int8_t arg = a.arg[dp->arg_index].a.a_int8_t;
+                          SNPRINTF_BUF (arg);
+                        }
+                        break;
+                      case TYPE_UINT8_T:
+                        {
+                          uint8_t arg = a.arg[dp->arg_index].a.a_uint8_t;
+                          SNPRINTF_BUF (arg);
+                        }
+                        break;
+                      case TYPE_INT16_T:
+                        {
+                          int16_t arg = a.arg[dp->arg_index].a.a_int16_t;
+                          SNPRINTF_BUF (arg);
+                        }
+                        break;
+                      case TYPE_UINT16_T:
+                        {
+                          uint16_t arg = a.arg[dp->arg_index].a.a_uint16_t;
+                          SNPRINTF_BUF (arg);
+                        }
+                        break;
+                      case TYPE_INT32_T:
+                        {
+                          int32_t arg = a.arg[dp->arg_index].a.a_int32_t;
+                          SNPRINTF_BUF (arg);
+                        }
+                        break;
+                      case TYPE_UINT32_T:
+                        {
+                          uint32_t arg = a.arg[dp->arg_index].a.a_uint32_t;
+                          SNPRINTF_BUF (arg);
+                        }
+                        break;
+                      case TYPE_INT64_T:
+                        {
+                          int64_t arg = a.arg[dp->arg_index].a.a_int64_t;
+                          SNPRINTF_BUF (arg);
+                        }
+                        break;
+                      case TYPE_UINT64_T:
+                        {
+                          uint64_t arg = a.arg[dp->arg_index].a.a_uint64_t;
+                          SNPRINTF_BUF (arg);
+                        }
+                        break;
+                      case TYPE_INT_FAST8_T:
+                        {
+                          int_fast8_t arg = a.arg[dp->arg_index].a.a_int_fast8_t;
+                          SNPRINTF_BUF (arg);
+                        }
+                        break;
+                      case TYPE_UINT_FAST8_T:
+                        {
+                          uint_fast8_t arg = a.arg[dp->arg_index].a.a_uint_fast8_t;
+                          SNPRINTF_BUF (arg);
+                        }
+                        break;
+                      case TYPE_INT_FAST16_T:
+                        {
+                          int_fast16_t arg = a.arg[dp->arg_index].a.a_int_fast16_t;
+                          SNPRINTF_BUF (arg);
+                        }
+                        break;
+                      case TYPE_UINT_FAST16_T:
+                        {
+                          uint_fast16_t arg = a.arg[dp->arg_index].a.a_uint_fast16_t;
+                          SNPRINTF_BUF (arg);
+                        }
+                        break;
+                      case TYPE_INT_FAST32_T:
+                        {
+                          int_fast32_t arg = a.arg[dp->arg_index].a.a_int_fast32_t;
+                          SNPRINTF_BUF (arg);
+                        }
+                        break;
+                      case TYPE_UINT_FAST32_T:
+                        {
+                          uint_fast32_t arg = a.arg[dp->arg_index].a.a_uint_fast32_t;
+                          SNPRINTF_BUF (arg);
+                        }
+                        break;
+                      case TYPE_INT_FAST64_T:
+                        {
+                          int_fast64_t arg = a.arg[dp->arg_index].a.a_int_fast64_t;
+                          SNPRINTF_BUF (arg);
+                        }
+                        break;
+                      case TYPE_UINT_FAST64_T:
+                        {
+                          uint_fast64_t arg = a.arg[dp->arg_index].a.a_uint_fast64_t;
                           SNPRINTF_BUF (arg);
                         }
                         break;

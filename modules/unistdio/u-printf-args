@@ -12,6 +12,8 @@ m4/stdint_h.m4
 m4/inttypes_h.m4
 
 Depends-on:
+stdint
+limits-h
 unitypes
 wchar
 

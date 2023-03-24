@@ -4487,6 +4487,606 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
     free (result);
   }
 
+  /* Test the support of argument type/size specifiers for signed integer
+     conversions.  */
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%hhd %d", (signed char) -42, 33, 44, 55);
+    ASSERT (wcscmp (result, L"-42 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%hd %d", (short) -12345, 33, 44, 55);
+    ASSERT (wcscmp (result, L"-12345 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%d %d", -12345, 33, 44, 55);
+    ASSERT (wcscmp (result, L"-12345 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%ld %d", (long int) -12345, 33, 44, 55);
+    ASSERT (wcscmp (result, L"-12345 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%lld %d", (long long int) -12345, 33, 44, 55);
+    ASSERT (wcscmp (result, L"-12345 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%w8d %d", (int8_t) -42, 33, 44, 55);
+    ASSERT (wcscmp (result, L"-42 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%w16d %d", (int16_t) -12345, 33, 44, 55);
+    ASSERT (wcscmp (result, L"-12345 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%w32d %d", (int32_t) -12345, 33, 44, 55);
+    ASSERT (wcscmp (result, L"-12345 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%w64d %d", (int64_t) -12345, 33, 44, 55);
+    ASSERT (wcscmp (result, L"-12345 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%wf8d %d", (int_fast8_t) -42, 33, 44, 55);
+    ASSERT (wcscmp (result, L"-42 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%wf16d %d", (int_fast16_t) -12345, 33, 44, 55);
+    ASSERT (wcscmp (result, L"-12345 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%wf32d %d", (int_fast32_t) -12345, 33, 44, 55);
+    ASSERT (wcscmp (result, L"-12345 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%wf64d %d", (int_fast64_t) -12345, 33, 44, 55);
+    ASSERT (wcscmp (result, L"-12345 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  /* Test the support of argument type/size specifiers for unsigned integer
+     conversions: %u  */
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%hhu %d", (unsigned char) 42, 33, 44, 55);
+    ASSERT (wcscmp (result, L"42 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%hu %d", (unsigned short) 12345, 33, 44, 55);
+    ASSERT (wcscmp (result, L"12345 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%u %d", (unsigned int) 12345, 33, 44, 55);
+    ASSERT (wcscmp (result, L"12345 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%lu %d", (unsigned long int) 12345, 33, 44, 55);
+    ASSERT (wcscmp (result, L"12345 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%llu %d", (unsigned long long int) 12345, 33, 44, 55);
+    ASSERT (wcscmp (result, L"12345 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%w8u %d", (uint8_t) 42, 33, 44, 55);
+    ASSERT (wcscmp (result, L"42 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%w16u %d", (uint16_t) 12345, 33, 44, 55);
+    ASSERT (wcscmp (result, L"12345 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%w32u %d", (uint32_t) 12345, 33, 44, 55);
+    ASSERT (wcscmp (result, L"12345 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%w64u %d", (uint64_t) 12345, 33, 44, 55);
+    ASSERT (wcscmp (result, L"12345 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%wf8u %d", (uint_fast8_t) 42, 33, 44, 55);
+    ASSERT (wcscmp (result, L"42 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%wf16u %d", (uint_fast16_t) 12345, 33, 44, 55);
+    ASSERT (wcscmp (result, L"12345 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%wf32u %d", (uint_fast32_t) 12345, 33, 44, 55);
+    ASSERT (wcscmp (result, L"12345 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%wf64u %d", (uint_fast64_t) 12345, 33, 44, 55);
+    ASSERT (wcscmp (result, L"12345 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  /* Test the support of argument type/size specifiers for unsigned integer
+     conversions: %b  */
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%hhb %d", (unsigned char) 42, 33, 44, 55);
+    ASSERT (wcscmp (result, L"101010 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%hb %d", (unsigned short) 12345, 33, 44, 55);
+    ASSERT (wcscmp (result, L"11000000111001 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%b %d", (unsigned int) 12345, 33, 44, 55);
+    ASSERT (wcscmp (result, L"11000000111001 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%lb %d", (unsigned long int) 12345, 33, 44, 55);
+    ASSERT (wcscmp (result, L"11000000111001 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%llb %d", (unsigned long long int) 12345, 33, 44, 55);
+    ASSERT (wcscmp (result, L"11000000111001 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%w8b %d", (uint8_t) 42, 33, 44, 55);
+    ASSERT (wcscmp (result, L"101010 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%w16b %d", (uint16_t) 12345, 33, 44, 55);
+    ASSERT (wcscmp (result, L"11000000111001 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%w32b %d", (uint32_t) 12345, 33, 44, 55);
+    ASSERT (wcscmp (result, L"11000000111001 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%w64b %d", (uint64_t) 12345, 33, 44, 55);
+    ASSERT (wcscmp (result, L"11000000111001 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%wf8b %d", (uint_fast8_t) 42, 33, 44, 55);
+    ASSERT (wcscmp (result, L"101010 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%wf16b %d", (uint_fast16_t) 12345, 33, 44, 55);
+    ASSERT (wcscmp (result, L"11000000111001 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%wf32b %d", (uint_fast32_t) 12345, 33, 44, 55);
+    ASSERT (wcscmp (result, L"11000000111001 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%wf64b %d", (uint_fast64_t) 12345, 33, 44, 55);
+    ASSERT (wcscmp (result, L"11000000111001 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  /* Test the support of argument type/size specifiers for unsigned integer
+     conversions: %o  */
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%hho %d", (unsigned char) 42, 33, 44, 55);
+    ASSERT (wcscmp (result, L"52 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%ho %d", (unsigned short) 12345, 33, 44, 55);
+    ASSERT (wcscmp (result, L"30071 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%o %d", (unsigned int) 12345, 33, 44, 55);
+    ASSERT (wcscmp (result, L"30071 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%lo %d", (unsigned long int) 12345, 33, 44, 55);
+    ASSERT (wcscmp (result, L"30071 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%llo %d", (unsigned long long int) 12345, 33, 44, 55);
+    ASSERT (wcscmp (result, L"30071 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%w8o %d", (uint8_t) 42, 33, 44, 55);
+    ASSERT (wcscmp (result, L"52 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%w16o %d", (uint16_t) 12345, 33, 44, 55);
+    ASSERT (wcscmp (result, L"30071 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%w32o %d", (uint32_t) 12345, 33, 44, 55);
+    ASSERT (wcscmp (result, L"30071 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%w64o %d", (uint64_t) 12345, 33, 44, 55);
+    ASSERT (wcscmp (result, L"30071 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%wf8o %d", (uint_fast8_t) 42, 33, 44, 55);
+    ASSERT (wcscmp (result, L"52 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%wf16o %d", (uint_fast16_t) 12345, 33, 44, 55);
+    ASSERT (wcscmp (result, L"30071 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%wf32o %d", (uint_fast32_t) 12345, 33, 44, 55);
+    ASSERT (wcscmp (result, L"30071 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%wf64o %d", (uint_fast64_t) 12345, 33, 44, 55);
+    ASSERT (wcscmp (result, L"30071 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  /* Test the support of argument type/size specifiers for unsigned integer
+     conversions: %x  */
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%hhX %d", (unsigned char) 42, 33, 44, 55);
+    ASSERT (wcscmp (result, L"2A 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%hX %d", (unsigned short) 12345, 33, 44, 55);
+    ASSERT (wcscmp (result, L"3039 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%X %d", (unsigned int) 12345, 33, 44, 55);
+    ASSERT (wcscmp (result, L"3039 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%lX %d", (unsigned long int) 12345, 33, 44, 55);
+    ASSERT (wcscmp (result, L"3039 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%llX %d", (unsigned long long int) 12345, 33, 44, 55);
+    ASSERT (wcscmp (result, L"3039 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%w8X %d", (uint8_t) 42, 33, 44, 55);
+    ASSERT (wcscmp (result, L"2A 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%w16X %d", (uint16_t) 12345, 33, 44, 55);
+    ASSERT (wcscmp (result, L"3039 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%w32X %d", (uint32_t) 12345, 33, 44, 55);
+    ASSERT (wcscmp (result, L"3039 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%w64X %d", (uint64_t) 12345, 33, 44, 55);
+    ASSERT (wcscmp (result, L"3039 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%wf8X %d", (uint_fast8_t) 42, 33, 44, 55);
+    ASSERT (wcscmp (result, L"2A 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%wf16X %d", (uint_fast16_t) 12345, 33, 44, 55);
+    ASSERT (wcscmp (result, L"3039 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%wf32X %d", (uint_fast32_t) 12345, 33, 44, 55);
+    ASSERT (wcscmp (result, L"3039 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%wf64X %d", (uint_fast64_t) 12345, 33, 44, 55);
+    ASSERT (wcscmp (result, L"3039 33") == 0);
+    ASSERT (length == wcslen (result));
+    free (result);
+  }
+
 #if (__GLIBC__ > 2 || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2)) && !defined __UCLIBC__
   /* Test that the 'I' flag is supported.  */
   {
