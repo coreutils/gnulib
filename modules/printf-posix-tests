@@ -6,6 +6,7 @@ tests/test-printf-posix.output
 tests/test-printf-posix2.sh
 tests/test-printf-posix2.c
 tests/infinity.h
+tests/qemu.h
 tests/signature.h
 tests/macros.h
 
