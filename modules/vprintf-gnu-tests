@@ -1,0 +1,15 @@
+Files:
+tests/test-vprintf-gnu.sh
+tests/test-vprintf-gnu.c
+tests/test-printf-gnu.h
+tests/test-printf-gnu.output
+tests/macros.h
+
+Depends-on:
+vprintf-posix-tests
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-vprintf-gnu.sh
+check_PROGRAMS += test-vprintf-gnu
