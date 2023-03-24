@@ -1,0 +1,13 @@
+Files:
+tests/test-sprintf-gnu.c
+tests/test-sprintf-gnu.h
+tests/macros.h
+
+Depends-on:
+sprintf-posix-tests
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-sprintf-gnu
+check_PROGRAMS += test-sprintf-gnu
