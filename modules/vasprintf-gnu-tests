@@ -1,0 +1,12 @@
+Files:
+tests/test-vasprintf-gnu.c
+tests/macros.h
+
+Depends-on:
+vasprintf-posix-tests
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-vasprintf-gnu
+check_PROGRAMS += test-vasprintf-gnu
