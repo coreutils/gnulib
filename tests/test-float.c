@@ -20,11 +20,47 @@
 
 #include <float.h>
 
-#include "fpucw.h"
-#include "macros.h"
-
 /* Check that FLT_RADIX is a constant expression.  */
 int a[] = { FLT_RADIX };
+
+/* ----------------------- Check macros for 'float' ----------------------- */
+
+/* Check that the FLT_* macros expand to constant expressions.  */
+int fb[] =
+  {
+    FLT_MANT_DIG, FLT_MIN_EXP, FLT_MAX_EXP,
+    FLT_DIG, FLT_MIN_10_EXP, FLT_MAX_10_EXP
+  };
+float fc[] = { FLT_EPSILON, FLT_MIN, FLT_MAX };
+
+/* ----------------------- Check macros for 'double' ----------------------- */
+
+/* Check that the DBL_* macros expand to constant expressions.  */
+int db[] =
+  {
+    DBL_MANT_DIG, DBL_MIN_EXP, DBL_MAX_EXP,
+    DBL_DIG, DBL_MIN_10_EXP, DBL_MAX_10_EXP
+  };
+double dc[] = { DBL_EPSILON, DBL_MIN, DBL_MAX };
+
+/* -------------------- Check macros for 'long double' -------------------- */
+
+/* Check that the LDBL_* macros expand to constant expressions.  */
+int lb[] =
+  {
+    LDBL_MANT_DIG, LDBL_MIN_EXP, LDBL_MAX_EXP,
+    LDBL_DIG, LDBL_MIN_10_EXP, LDBL_MAX_10_EXP
+  };
+long double lc1 = LDBL_EPSILON;
+long double lc2 = LDBL_MIN;
+#if 0 /* LDBL_MAX is not a constant expression on some platforms.  */
+long double lc3 = LDBL_MAX;
+#endif
+
+/* ------------------------------------------------------------------------- */
+
+#include "fpucw.h"
+#include "macros.h"
 
 #if FLT_RADIX == 2
 
@@ -117,14 +153,6 @@ pow2l (int n)
 
 /* ----------------------- Check macros for 'float' ----------------------- */
 
-/* Check that the FLT_* macros expand to constant expressions.  */
-int fb[] =
-  {
-    FLT_MANT_DIG, FLT_MIN_EXP, FLT_MAX_EXP,
-    FLT_DIG, FLT_MIN_10_EXP, FLT_MAX_10_EXP
-  };
-float fc[] = { FLT_EPSILON, FLT_MIN, FLT_MAX };
-
 static void
 test_float (void)
 {
@@ -196,14 +224,6 @@ test_float (void)
 
 /* ----------------------- Check macros for 'double' ----------------------- */
 
-/* Check that the DBL_* macros expand to constant expressions.  */
-int db[] =
-  {
-    DBL_MANT_DIG, DBL_MIN_EXP, DBL_MAX_EXP,
-    DBL_DIG, DBL_MIN_10_EXP, DBL_MAX_10_EXP
-  };
-double dc[] = { DBL_EPSILON, DBL_MIN, DBL_MAX };
-
 static void
 test_double (void)
 {
@@ -274,18 +294,6 @@ test_double (void)
 }
 
 /* -------------------- Check macros for 'long double' -------------------- */
-
-/* Check that the LDBL_* macros expand to constant expressions.  */
-int lb[] =
-  {
-    LDBL_MANT_DIG, LDBL_MIN_EXP, LDBL_MAX_EXP,
-    LDBL_DIG, LDBL_MIN_10_EXP, LDBL_MAX_10_EXP
-  };
-long double lc1 = LDBL_EPSILON;
-long double lc2 = LDBL_MIN;
-#if 0 /* LDBL_MAX is not a constant expression on some platforms.  */
-long double lc3 = LDBL_MAX;
-#endif
 
 static void
 test_long_double (void)

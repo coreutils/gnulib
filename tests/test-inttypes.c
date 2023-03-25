@@ -20,8 +20,6 @@
 
 #include <inttypes.h>
 
-#include <stddef.h>
-
 /* Tests for macros supposed to be defined in inttypes.h.  */
 
 const char *k = /* implicit string concatenation */

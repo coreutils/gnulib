@@ -20,8 +20,6 @@
 
 #include <glob.h>
 
-#include "macros.h"
-
 /* Check that size_t is defined.  */
 size_t a;
 
@@ -42,6 +40,8 @@ int ret[] =
     GLOB_NOMATCH,
     GLOB_NOSPACE
   };
+
+#include "macros.h"
 
 int
 main ()

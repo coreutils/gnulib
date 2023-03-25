@@ -19,7 +19,6 @@
 #include <config.h>
 
 #include <stddef.h>
-#include <limits.h>
 
 /* Check that appropriate types are defined.  */
 wchar_t a = 'c';
@@ -43,10 +42,6 @@ struct d
 /* static_assert (sizeof offsetof (struct d, e) == sizeof (size_t)); */
 static_assert (sizeof (offsetof (struct d, e)) == sizeof (size_t));
 static_assert (offsetof (struct d, f) == 1);
-
-/* offsetof promotes to an unsigned integer if and only if sizes do
-   not fit in int.  */
-static_assert ((offsetof (struct d, e) < -1) == (INT_MAX < (size_t) -1));
 
 /* Check max_align_t's alignment.  */
 static_assert (alignof (double) <= alignof (max_align_t));
@@ -91,6 +86,12 @@ test_unreachable_noreturn (void)
      This function should not elicit a warning.  */
   unreachable ();
 }
+
+#include <limits.h> /* INT_MAX */
+
+/* offsetof promotes to an unsigned integer if and only if sizes do
+   not fit in int.  */
+static_assert ((offsetof (struct d, e) < -1) == (INT_MAX < (size_t) -1));
 
 int
 main (void)

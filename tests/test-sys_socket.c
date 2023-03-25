@@ -20,8 +20,6 @@
 
 #include <sys/socket.h>
 
-#include <errno.h>
-
 #if HAVE_SHUTDOWN
 /* Check some integer constant expressions.  */
 int a[] = { SHUT_RD, SHUT_WR, SHUT_RDWR };
@@ -39,6 +37,8 @@ struct iovec io;
 
 /* Check that a minimal set of 'struct msghdr' is defined.  */
 struct msghdr msg;
+
+#include <errno.h>
 
 int
 main (void)
