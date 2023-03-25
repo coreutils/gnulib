@@ -6,6 +6,7 @@ lib/stdio.in.h
 lib/stdio-read.c
 lib/stdio-write.c
 m4/stdio_h.m4
+m4/musl.m4
 
 Depends-on:
 extensions
