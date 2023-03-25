@@ -29,6 +29,12 @@ MirBSD 10.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
+The definition of the type @code{once_flag}, of the macro
+@code{ONCE_FLAG_INIT}, and the declaration of the function
+@code{call_once}, that are required by ISO C 23, are not provided.
+To get them, import Gnulib module @code{call_once} and include
+@code{<threads.h>} rather than @code{<stdlib.h>}.
+@item
 System status macros such as @code{WEXITSTATUS} require an lvalue
 argument on some platforms.
 macOS 11.1.
