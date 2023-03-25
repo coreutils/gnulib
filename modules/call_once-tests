@@ -1,0 +1,12 @@
+Files:
+tests/test-call_once.c
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-call_once
+check_PROGRAMS += test-call_once
+test_call_once_LDADD = $(LDADD) @LIBSTDTHREAD@

@@ -50,6 +50,7 @@ threads.h: threads.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(_NORETURN_H
 	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
 	      -e 's|@''NEXT_AS_FIRST_DIRECTIVE_THREADS_H''@|$(NEXT_AS_FIRST_DIRECTIVE_THREADS_H)|g' \
 	      -e 's|@''NEXT_THREADS_H''@|$(NEXT_THREADS_H)|g' \
+	      -e 's/@''GNULIB_CALL_ONCE''@/$(GNULIB_CALL_ONCE)/g' \
 	      -e 's/@''GNULIB_CND''@/$(GNULIB_CND)/g' \
 	      -e 's/@''GNULIB_MTX''@/$(GNULIB_MTX)/g' \
 	      -e 's/@''GNULIB_THRD''@/$(GNULIB_THRD)/g' \

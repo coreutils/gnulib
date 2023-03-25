@@ -45,6 +45,9 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::mtx_timedlock, int,
                  (mtx_t *, const struct timespec *));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::mtx_unlock, int, (mtx_t *));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::mtx_destroy, void, (mtx_t *));
+#endif
+
+#if GNULIB_TEST_CALL_ONCE
 SIGNATURE_CHECK (GNULIB_NAMESPACE::call_once, void,
                  (once_flag *, void (*) (void)));
 #endif

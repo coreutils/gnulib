@@ -1,4 +1,4 @@
-# threads_h.m4 serial 10
+# threads_h.m4 serial 11
 dnl Copyright (C) 2019-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -156,6 +156,7 @@ AC_DEFUN([gl_THREADS_MODULE_INDICATOR],
 AC_DEFUN([gl_THREADS_H_REQUIRE_DEFAULTS],
 [
   m4_defun(GL_MODULE_INDICATOR_PREFIX[_THREADS_H_MODULE_INDICATOR_DEFAULTS], [
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_CALL_ONCE])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_CND])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_MTX])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_THRD])

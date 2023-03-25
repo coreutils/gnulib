@@ -459,7 +459,7 @@ typedef pthread_once_t once_flag;
 
 #endif
 
-#if @GNULIB_MTX@
+#if @GNULIB_CALL_ONCE@
 # if !@HAVE_THREADS_H@
 _GL_FUNCDECL_SYS (call_once, void, (once_flag *, void (*) (void))
                                    _GL_ARG_NONNULL ((1, 2)));

@@ -10,7 +10,7 @@ Documentation:@*
 @url{https://www.gnu.org/software/libc/manual/html_node/Call-Once.html}.
 @end ifnotinfo
 
-Gnulib module: mtx
+Gnulib module: call_once
 
 Portability problems fixed by Gnulib:
 @itemize
