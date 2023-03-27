@@ -23,14 +23,22 @@
 /* Check that the types are defined.  */
 mbstate_t a = { 0 };
 size_t b = 5;
-char16_t c = 'x';
-char32_t d = 'y';
+char8_t c = 'x';
+char16_t d = 'y';
+char32_t e = 'z';
 
-/* Check that char16_t and char32_t are unsigned types.  */
+/* Check that char8_t, char16_t, and char32_t are unsigned types.  */
+static_assert ((char8_t)(-1) >= 0);
 static_assert ((char16_t)(-1) >= 0);
 #if !defined __HP_cc
 static_assert ((char32_t)(-1) >= 0);
 #endif
+
+/* Check that char8_t is at least 8 bits wide.  */
+static_assert ((char8_t)0xFF != (char8_t)0x7F);
+
+/* Check that char16_t is at least 16 bits wide.  */
+static_assert ((char16_t)0xFFFF != (char16_t)0x7FFF);
 
 /* Check that char32_t is at least 31 bits wide.  */
 static_assert ((char32_t)0x7FFFFFFF != (char32_t)0x3FFFFFFF);

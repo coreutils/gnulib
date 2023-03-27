@@ -17,7 +17,7 @@
 /* Written by Bruno Haible <bruno@clisp.org>, 2019.  */
 
 /*
- * ISO C 11 <uchar.h> for platforms that lack it.
+ * ISO C 23 <uchar.h> for platforms that lack it.
  */
 
 #ifndef _@GUARD_PREFIX@_UCHAR_H
@@ -58,11 +58,26 @@
 /* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
 
 
+#if !(@HAVE_UCHAR_H@ || (defined __cplusplus && @CXX_HAS_CHAR8_TYPE@))
+
+/* An 8-bit variant of wchar_t.
+   Note: This type is only mandated by ISO C 23 or newer, and it does
+   denote UTF-8 units.  */
+typedef unsigned char char8_t;
+
+#elif @GNULIBHEADERS_OVERRIDE_CHAR8_T@
+
+typedef unsigned char gl_char8_t;
+# define char8_t gl_char8_t
+
+#endif
+
 #if !(@HAVE_UCHAR_H@ || (defined __cplusplus && @CXX_HAS_UCHAR_TYPES@))
 
 /* A 16-bit variant of wchar_t.
-   Note: This type does *NOT* denote UTF-16 units.  (Only on platforms
-   on which __STDC_UTF_16__ is defined.)  */
+   Note: This type is only mandated by ISO C 11 or newer.  In ISO C 23
+   and newer, it denotes UTF-16 units; in older versions of ISO C it did
+   so only on platforms on which __STDC_UTF_16__ was defined.  */
 typedef uint_least16_t char16_t;
 
 #elif @GNULIBHEADERS_OVERRIDE_CHAR16_T@
@@ -75,8 +90,9 @@ typedef uint_least16_t gl_char16_t;
 #if !(@HAVE_UCHAR_H@ || (defined __cplusplus && @CXX_HAS_UCHAR_TYPES@))
 
 /* A 32-bit variant of wchar_t.
-   Note: This type does *NOT* denote UTF-32 code points.  (Only on platforms
-   on which __STDC_UTF_32__ is defined.)  */
+   Note: This type is only mandated by ISO C 11 or newer.  In ISO C 23
+   and newer, it denotes UTF-32 code points; in older versions of ISO C
+   it did so only on platforms on which __STDC_UTF_32__ was defined.  */
 typedef uint_least32_t char32_t;
 
 #elif @GNULIBHEADERS_OVERRIDE_CHAR32_T@

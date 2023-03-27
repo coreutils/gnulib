@@ -1,4 +1,4 @@
-# uchar_h.m4 serial 20
+# uchar_h.m4 serial 21
 dnl Copyright (C) 2019-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -19,6 +19,7 @@ AC_DEFUN_ONCE([gl_UCHAR_H],
   fi
   AC_SUBST([HAVE_UCHAR_H])
 
+  gl_TYPE_CHAR8_T
   gl_TYPE_CHAR16_T
   gl_TYPE_CHAR32_T
 
@@ -26,6 +27,7 @@ AC_DEFUN_ONCE([gl_UCHAR_H],
   dnl on some platforms (e.g. OpenBSD 6.7), and as types defined by many
   dnl header files (<limits.h>, <stddef.h>, <stdint.h>, <stdio.h>, <stdlib.h>
   dnl and others) on some platforms (e.g. Mac OS X 10.13).
+  dnl The same thing may also happen for 'char8_t'; so, be prepared for it.
   m4_ifdef([gl_ANSI_CXX], [AC_REQUIRE([gl_ANSI_CXX])])
   CXX_HAS_UCHAR_TYPES=0
   if test $HAVE_UCHAR_H = 0; then
@@ -53,6 +55,31 @@ EOF
     fi
   fi
   AC_SUBST([CXX_HAS_UCHAR_TYPES])
+  CXX_HAS_CHAR8_TYPE=0
+  if test $HAVE_UCHAR_H = 0; then
+    if test "$CXX" != no; then
+      AC_CACHE_CHECK([whether the C++ compiler predefines the char8_t types],
+        [gl_cv_cxx_has_char8_type],
+        [dnl We can't use AC_LANG_PUSH([C++]) and AC_LANG_POP([C++]) here, due to
+         dnl an autoconf bug <https://savannah.gnu.org/support/?110294>.
+         cat > conftest.cpp <<\EOF
+#include <stddef.h>
+char8_t a;
+EOF
+         gl_command="$CXX $CXXFLAGS $CPPFLAGS -c conftest.cpp"
+         if AC_TRY_EVAL([gl_command]); then
+           gl_cv_cxx_has_char8_type=yes
+         else
+           gl_cv_cxx_has_char8_type=no
+         fi
+         rm -fr conftest*
+        ])
+      if test $gl_cv_cxx_has_char8_type = yes; then
+        CXX_HAS_CHAR8_TYPE=1
+      fi
+    fi
+  fi
+  AC_SUBST([CXX_HAS_CHAR8_TYPE])
 
   dnl Test whether a 'char32_t' can hold more characters than a 'wchar_t'.
   gl_STDINT_BITSIZEOF([wchar_t], [gl_STDINT_INCLUDES])
@@ -69,6 +96,28 @@ EOF
   dnl guaranteed by C11.
   gl_WARN_ON_USE_PREPARE([[#include <uchar.h>
     ]], [c32rtomb mbrtoc32])
+])
+
+AC_DEFUN_ONCE([gl_TYPE_CHAR8_T],
+[
+  dnl Determine whether gnulib's <uchar.h> would, if present, override char8_t.
+  AC_CACHE_CHECK([whether char8_t is correctly defined],
+    [gl_cv_type_char8_t_works],
+    [AC_COMPILE_IFELSE(
+       [AC_LANG_PROGRAM([[
+          #include <uchar.h>
+          int verify[(char8_t)(-1) >= 0 && sizeof (char8_t) == sizeof (unsigned char) ? 1 : -1];
+          ]])
+       ],
+       [gl_cv_type_char8_t_works=yes],
+       [gl_cv_type_char8_t_works=no])
+    ])
+  if test $gl_cv_type_char8_t_works = no; then
+    GNULIBHEADERS_OVERRIDE_CHAR8_T=1
+  else
+    GNULIBHEADERS_OVERRIDE_CHAR8_T=0
+  fi
+  AC_SUBST([GNULIBHEADERS_OVERRIDE_CHAR8_T])
 ])
 
 dnl On Haiku 2020, char16_t and char32_t are incorrectly defined.
