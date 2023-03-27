@@ -212,6 +212,14 @@ main ()
     free (haystack);
   }
 
+  /* Test case from Yves Bastide.
+     <https://www.openwall.com/lists/musl/2014/04/18/2>  */
+  {
+    const char input[] = "playing play play play always";
+    const char *result = c_strstr (input, "play play play");
+    ASSERT (result == input + 8);
+  }
+
   /* Test long needles.  */
   {
     size_t m = 1024;
