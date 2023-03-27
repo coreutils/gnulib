@@ -4,13 +4,21 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/wcsstr.html}
 
-Gnulib module: wcsstr
+Gnulib module: wcsstr or wcsstr-simple
 
-Portability problems fixed by Gnulib:
+Portability problems fixed by either Gnulib module @code{wcsstr-simple} or @code{wcsstr}:
 @itemize
 @item
 This function is missing on some platforms:
 HP-UX 11.00.
+@end itemize
+
+Portability problems fixed by Gnulib module @code{wcsstr}:
+@itemize
+@item
+This function has quadratic instead of linear worst-case complexity on some
+platforms:
+glibc 2.37, macOS 12.5, FreeBSD 13.1, NetBSD 9.0, OpenBSD 7.2, AIX 7.2, HP-UX 11, IRIX 6.5, Solaris 11.4, Cygwin 2.9.0, mingw, MSVC 14.
 @end itemize
 
 Portability problems not fixed by Gnulib:

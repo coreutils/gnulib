@@ -21,7 +21,7 @@ This function may fail to find matches on some platforms:
 glibc 2.28.
 @end itemize
 
-Portability problems fixed by Gnulib @code{strstr}:
+Portability problems fixed by Gnulib module @code{strstr}:
 @itemize
 @item
 This function has quadratic instead of linear worst-case complexity on some
