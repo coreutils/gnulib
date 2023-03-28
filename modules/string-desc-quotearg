@@ -1,0 +1,24 @@
+Description:
+Quote string descriptors for output.
+
+Files:
+lib/string-desc-quotearg.h
+lib/string-desc-quotearg.c
+
+Depends-on:
+string-desc
+quotearg
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += string-desc-quotearg.c
+
+Include:
+"string-desc-quotearg.h"
+
+License:
+GPL
+
+Maintainer:
+all
