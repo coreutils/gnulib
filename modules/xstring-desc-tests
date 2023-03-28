@@ -1,0 +1,12 @@
+Files:
+tests/test-xstring-desc.c
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-xstring-desc
+check_PROGRAMS += test-xstring-desc
+test_xstring_desc_LDADD = $(LDADD) @LIBINTL@
