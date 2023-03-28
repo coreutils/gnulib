@@ -1,0 +1,12 @@
+Files:
+tests/test-string-desc.sh
+tests/test-string-desc.c
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-string-desc.sh
+check_PROGRAMS += test-string-desc
