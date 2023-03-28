@@ -1,0 +1,103 @@
+@node Handling strings with NUL characters
+@section Handling strings with NUL characters
+
+@c Copyright (C) 2023 Free Software Foundation, Inc.
+
+@c Permission is granted to copy, distribute and/or modify this document
+@c under the terms of the GNU Free Documentation License, Version 1.3 or
+@c any later version published by the Free Software Foundation; with no
+@c Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.  A
+@c copy of the license is at <https://www.gnu.org/licenses/fdl-1.3.en.html>.
+
+@c Written by Bruno Haible.
+
+Strings in C are usually represented by a character sequence with a
+terminating NUL character.  A @samp{char *}, pointer to the first byte
+of this character sequence, is what gets passed around as function
+argument or return value.
+
+The major restriction of this string representation is that it cannot
+handle strings that contain NUL characters: such strings will appear
+shorter than they were meant to be.  In most application areas, this is
+not a problem, and the @code{char *} type is well usable.
+
+In areas where strings with embedded NUL characters need to be handled,
+the common approach is to use a @code{char *ptr} pointer variable
+together with a @code{size_t nbytes} variable (or an @code{idx_t nbytes}
+variable, if you want to avoid problems due to integer overflow).  This
+works fine in code that constructs or manipulates strings with embedded
+NUL characters.  But when it comes to @emph{storing} them, for example
+in an array or as key or value of a hash table, one needs a type that
+combines these two fields.
+
+The Gnulib modules @code{string-desc}, @code{xstring-desc}, and
+@code{string-desc-quotearg} provide such a type.  We call it a
+``string descriptor'' and name it @code{string_desc_t}.
+
+The type @code{string_desc_t} is a struct that contains a pointer to the
+first byte and the number of bytes of the memory region that make up the
+string.  An additional terminating NUL byte, that may be present in
+memory, is not included in this byte count.  This type implements the
+same concept as @code{std::string_view} in C++, or the @code{String}
+type in Java.
+
+A @code{string_desc_t} can be passed to a function as an argument, or
+can be the return value of a function.  This is type-safe: If, by
+mistake, a programmer passes a @code{string_desc_t} to a function that
+expects a @code{char *} argument, or vice versa, or assigns a
+@code{string_desc_t} value to a variable of type @code{char *}, or
+vice versa, the compiler will report an error.
+
+Functions related to string descriptors are provided:
+@itemize
+@item
+Side-effect-free operations in @code{"string-desc.h"},
+@item
+Memory-allocating operations in @code{"string-desc.h"},
+@item
+Memory-allocating operations with out-of-memory checking in
+@code{"xstring-desc.h"},
+@item
+Operations with side effects in @code{"string-desc.h"}.
+@end itemize
+
+For outputting a string descriptor, the @code{*printf} family of
+functions cannot be used directly.  A format string directive such as
+@code{"%.*s"} would not work:
+@itemize
+@item
+it would stop the output at the first encountered NUL character,
+@item
+it would require to cast the number of bytes to @code{int}, and thus
+would not work for strings longer than @code{INT_MAX} bytes.
+@end itemize
+@c @noindent Other format string directives don't work either, because
+@c the only way to produce a NUL character in @code{*printf}'s output
+@c is through a dedicated @code{%c} or @code{%lc} directive.
+
+Therefore Gnulib offers
+@itemize
+@item
+a function @code{string_desc_fwrite} that outputs a string descriptor to
+a @code{FILE} stream,
+@item
+a function @code{string_desc_write} that outputs a string descriptor to
+a file descriptor,
+@item
+and for those applications where the NUL characters should become
+visible as @samp{\0}, a family of @code{quotearg} based functions, that
+allow to specify the escaping rules in detail.
+@end itemize
+
+The functionality is thus split across three modules as follows:
+@itemize
+@item
+The module @code{string-desc}, under LGPL, defines the type and
+elementary functions.
+@item
+The module @code{xstring-desc}, under GPL, defines the memory-allocating
+functions with out-of-memory checking.
+@item
+The module @code{string-desc-quotearg}, under GPL, defines the
+@code{quotearg} based functions.
+@end itemize

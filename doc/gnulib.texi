@@ -6910,6 +6910,7 @@ to POSIX that it can be treated like any other Unix-like platform.
 * static inline::
 * extern inline::
 * Closed standard fds::
+* Handling strings with NUL characters::
 * Container data types::
 * String Functions in C Locale::
 * Recognizing Option Arguments::
@@ -6948,6 +6949,8 @@ to POSIX that it can be treated like any other Unix-like platform.
 @include extern-inline.texi
 
 @include xstdopen.texi
+
+@include string-desc.texi
 
 @include containers.texi
 
