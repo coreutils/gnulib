@@ -1,0 +1,30 @@
+Description:
+String descriptors.
+
+Files:
+lib/string-desc.h
+lib/string-desc.c
+lib/string-desc-contains.c
+
+Depends-on:
+stdbool
+idx
+ialloc
+memchr
+memrchr
+memmem
+full-write
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += string-desc.c string-desc-contains.c
+
+Include:
+"string-desc.h"
+
+License:
+LGPL
+
+Maintainer:
+all
