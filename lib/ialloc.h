@@ -43,6 +43,9 @@ _gl_alloc_nomem (void)
   return NULL;
 }
 
+/* imalloc (size) is like malloc (size).
+   It returns a non-NULL pointer to size bytes of memory.
+   Upon failure, it returns NULL with errno set.  */
 IALLOC_INLINE
 _GL_ATTRIBUTE_MALLOC /*_GL_ATTRIBUTE_DEALLOC_FREE*/
 void *
@@ -51,6 +54,9 @@ imalloc (idx_t s)
   return s <= SIZE_MAX ? malloc (s) : _gl_alloc_nomem ();
 }
 
+/* irealloc (ptr, size) is like realloc (ptr, size).
+   It returns a non-NULL pointer to size bytes of memory.
+   Upon failure, it returns NULL with errno set.  */
 IALLOC_INLINE
 /*_GL_ATTRIBUTE_DEALLOC_FREE*/
 void *
@@ -61,6 +67,9 @@ irealloc (void *p, idx_t s)
   return s <= SIZE_MAX ? realloc (p, s | !s) : _gl_alloc_nomem ();
 }
 
+/* icalloc (num, size) is like calloc (num, size).
+   It returns a non-NULL pointer to num * size bytes of memory.
+   Upon failure, it returns NULL with errno set.  */
 IALLOC_INLINE
 _GL_ATTRIBUTE_MALLOC /*_GL_ATTRIBUTE_DEALLOC_FREE*/
 void *
@@ -81,6 +90,9 @@ icalloc (idx_t n, idx_t s)
   return calloc (n, s);
 }
 
+/* ireallocarray (ptr, num, size) is like reallocarray (ptr, num, size).
+   It returns a non-NULL pointer to num * size bytes of memory.
+   Upon failure, it returns NULL with errno set.  */
 IALLOC_INLINE void *
 ireallocarray (void *p, idx_t n, idx_t s)
 {
