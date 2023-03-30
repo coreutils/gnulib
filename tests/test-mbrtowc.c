@@ -367,6 +367,8 @@ main (int argc, char *argv[])
 
                 wc = (wchar_t) 0xBADFACE;
                 ret = mbrtowc (&wc, buf, 1, &state);
+                /* POSIX:2018 says: "In the POSIX locale an [EILSEQ] error
+                   cannot occur since all byte values are valid characters."  */
                 ASSERT (ret == 1);
                 if (c < 0x80)
                   /* c is an ASCII character.  */
