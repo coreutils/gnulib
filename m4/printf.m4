@@ -1,4 +1,4 @@
-# printf.m4 serial 73
+# printf.m4 serial 73.1
 dnl Copyright (C) 2003, 2007-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -833,7 +833,7 @@ dnl Test whether the *printf family of functions supports POSIX/XSI format
 dnl strings with positions. (POSIX:2001)
 dnl Result is gl_cv_func_printf_positions.
 
-AC_DEFUN([gl_PRINTF_POSITIONS],
+AC_DEFUN_ONCE([gl_PRINTF_POSITIONS],
 [
   AC_REQUIRE([AC_PROG_CC])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
