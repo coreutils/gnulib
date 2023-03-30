@@ -57,6 +57,25 @@ main (int argc, char *argv[])
         for (c = 0x80; c < 0x100; c++)
           ASSERT (btowc (c) == WEOF);
         return 0;
+
+      case '3':
+        /* C or POSIX locale.  */
+        for (c = 0; c < 0x100; c++)
+          if (c != 0)
+            {
+              /* We are testing all nonnull bytes.  */
+              wint_t wc = btowc (c);
+              /* POSIX:2018 says: "In the POSIX locale, btowc() shall not return
+                 WEOF if c has a value in the range 0 to 255 inclusive."  */
+              if (c < 0x80)
+                /* c is an ASCII character.  */
+                ASSERT (wc == c);
+              else
+                /* On most platforms, the bytes 0x80..0xFF map to U+0080..U+00FF.
+                   But on musl libc, the bytes 0x80..0xFF map to U+DF80..U+DFFF.  */
+                ASSERT (wc == c || wc == 0xDF00 + c);
+            }
+        return 0;
       }
 
   return 1;
