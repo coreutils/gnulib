@@ -3,6 +3,7 @@ tests/test-mbsrtowcs1.sh
 tests/test-mbsrtowcs2.sh
 tests/test-mbsrtowcs3.sh
 tests/test-mbsrtowcs4.sh
+tests/test-mbsrtowcs5.sh
 tests/test-mbsrtowcs.c
 tests/signature.h
 tests/macros.h
@@ -24,7 +25,9 @@ gt_LOCALE_JA
 gt_LOCALE_ZH_CN
 
 Makefile.am:
-TESTS += test-mbsrtowcs1.sh test-mbsrtowcs2.sh test-mbsrtowcs3.sh test-mbsrtowcs4.sh
+TESTS += \
+  test-mbsrtowcs1.sh test-mbsrtowcs2.sh test-mbsrtowcs3.sh test-mbsrtowcs4.sh \
+  test-mbsrtowcs5.sh
 TESTS_ENVIRONMENT += \
   LOCALE_FR='@LOCALE_FR@' \
   LOCALE_FR_UTF8='@LOCALE_FR_UTF8@' \
