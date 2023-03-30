@@ -45,8 +45,19 @@ static_assert (sizeof NULL == sizeof (void *));
 int
 main (void)
 {
-  if (test_sys_wait_macros ())
+  /* POSIX:2018 says:
+     "In the POSIX locale the value of MB_CUR_MAX shall be 1."  */
+  /* On Android ≥ 5.0, the default locale is the "C.UTF-8" locale, not the
+     "C" locale.  Furthermore, when you attempt to set the "C" or "POSIX"
+     locale via setlocale(), what you get is a "C" locale with UTF-8 encoding,
+     that is, effectively the "C.UTF-8" locale.  */
+#ifndef __ANDROID__
+  if (MB_CUR_MAX != 1)
     return 1;
+#endif
+
+  if (test_sys_wait_macros ())
+    return 2;
 
   return exitcode;
 }
