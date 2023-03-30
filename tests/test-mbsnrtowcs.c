@@ -281,6 +281,72 @@ main (int argc, char *argv[])
               }
               break;
 
+            case '5':
+              /* C or POSIX locale.  */
+              {
+                char input[] = "n/a";
+                memset (&state, '\0', sizeof (mbstate_t));
+
+                src = input;
+                temp_state = state;
+                ret = mbsnrtowcs (NULL, &src, 4, unlimited ? BUFSIZE : 1, &temp_state);
+                ASSERT (ret == 3);
+                ASSERT (src == input);
+                ASSERT (mbsinit (&state));
+
+                src = input;
+                ret = mbsnrtowcs (buf, &src, 4, unlimited ? BUFSIZE : 1, &state);
+                ASSERT (ret == (unlimited ? 3 : 1));
+                ASSERT (src == (unlimited ? NULL : input + 1));
+                ASSERT (buf[0] == 'n');
+                if (unlimited)
+                  {
+                    ASSERT (buf[1] == '/');
+                    ASSERT (buf[2] == 'a');
+                    ASSERT (buf[3] == 0);
+                    ASSERT (buf[4] == (wchar_t) 0xBADFACE);
+                  }
+                else
+                  ASSERT (buf[1] == (wchar_t) 0xBADFACE);
+                ASSERT (mbsinit (&state));
+              }
+              {
+                int c;
+                char input[2];
+
+                memset (&state, '\0', sizeof (mbstate_t));
+                for (c = 0; c < 0x100; c++)
+                  if (c != 0)
+                    {
+                      /* We are testing all nonnull bytes.  */
+                      input[0] = c;
+                      input[1] = '\0';
+
+                      src = input;
+                      ret = mbsnrtowcs (NULL, &src, 2, unlimited ? BUFSIZE : 1, &state);
+                      ASSERT (ret == 1);
+                      ASSERT (src == input);
+                      ASSERT (mbsinit (&state));
+
+                      buf[0] = buf[1] = (wchar_t) 0xBADFACE;
+                      src = input;
+                      ret = mbsnrtowcs (buf, &src, 2, unlimited ? BUFSIZE : 1, &state);
+                      /* POSIX:2018 says: "In the POSIX locale an [EILSEQ] error
+                         cannot occur since all byte values are valid characters."  */
+                      ASSERT (ret == 1);
+                      ASSERT (src == (unlimited ? NULL : input + 1));
+                      if (c < 0x80)
+                        /* c is an ASCII character.  */
+                        ASSERT (buf[0] == c);
+                      else
+                        /* On most platforms, the bytes 0x80..0xFF map to U+0080..U+00FF.
+                           But on musl libc, the bytes 0x80..0xFF map to U+DF80..U+DFFF.  */
+                        ASSERT (buf[0] == (btowc (c) == 0xDF00 + c ? btowc (c) : c));
+                      ASSERT (mbsinit (&state));
+                    }
+              }
+              break;
+
             default:
               return 1;
             }

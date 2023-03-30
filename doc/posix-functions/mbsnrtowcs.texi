@@ -14,6 +14,10 @@ FreeBSD 5.2.1, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, HP-UX 11, IRIX 6.5, Solaris
 @item
 This function produces invalid wide characters on some platforms:
 Solaris 11.4.
+@item
+In the C or POSIX locales, this function can return @code{(size_t) -1}
+and set @code{errno} to @code{EILSEQ}:
+glibc 2.35.
 @end itemize
 
 Portability problems not fixed by Gnulib:
