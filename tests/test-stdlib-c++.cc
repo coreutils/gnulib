@@ -73,6 +73,11 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::mbtowc, int,
                  (wchar_t *, const char *, size_t));
 #endif
 
+#if GNULIB_TEST_MBSTOWCS
+SIGNATURE_CHECK (GNULIB_NAMESPACE::mbstowcs, size_t,
+                 (wchar_t *, const char *, size_t));
+#endif
+
 #if GNULIB_TEST_MKDTEMP
 SIGNATURE_CHECK (GNULIB_NAMESPACE::mkdtemp, char *, (char *));
 #endif

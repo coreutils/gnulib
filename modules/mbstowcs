@@ -1,0 +1,33 @@
+Description:
+mbstowcs() function: convert string to wide string.
+
+Files:
+lib/mbstowcs.c
+m4/mbstowcs.m4
+m4/mbrtowc.m4
+
+Depends-on:
+stdlib
+mbsrtowcs       [test $REPLACE_MBSTOWCS = 1]
+
+configure.ac:
+gl_FUNC_MBSTOWCS
+gl_CONDITIONAL([GL_COND_OBJ_MBSTOWCS], [test $REPLACE_MBSTOWCS = 1])
+AM_COND_IF([GL_COND_OBJ_MBSTOWCS], [
+  gl_PREREQ_MBSTOWCS
+])
+gl_STDLIB_MODULE_INDICATOR([mbstowcs])
+
+Makefile.am:
+if GL_COND_OBJ_MBSTOWCS
+lib_SOURCES += mbstowcs.c
+endif
+
+Include:
+<stdlib.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+all
