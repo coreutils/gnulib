@@ -3099,10 +3099,12 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 #  else
                           count = mbtowc (&wc, arg, arg_end - arg);
 #  endif
-                          if (count <= 0)
-                            /* mbrtowc not consistent with mbrlen, or mbtowc
-                               not consistent with mblen.  */
+                          if (count == 0)
+                            /* mbrtowc not consistent with strlen.  */
                             abort ();
+                          if (count < 0)
+                            /* Invalid or incomplete multibyte character.  */
+                            goto fail_with_EILSEQ;
                           ENSURE_ALLOCATION (xsum (length, 1));
                           result[length++] = wc;
                           arg += count;
