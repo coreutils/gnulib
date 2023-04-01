@@ -3543,6 +3543,77 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                 }
               }
 #endif
+#if NEED_WPRINTF_DIRECTIVE_C && WIDE_CHAR_VERSION
+            else if (dp->conversion == 'c'
+                     && a.arg[dp->arg_index].type != TYPE_WIDE_CHAR)
+              {
+                /* Implement the 'c' directive ourselves, in order to avoid
+                   EILSEQ in the "C" locale.  */
+                int flags = dp->flags;
+                size_t width;
+
+                width = 0;
+                if (dp->width_start != dp->width_end)
+                  {
+                    if (dp->width_arg_index != ARG_NONE)
+                      {
+                        int arg;
+
+                        if (!(a.arg[dp->width_arg_index].type == TYPE_INT))
+                          abort ();
+                        arg = a.arg[dp->width_arg_index].a.a_int;
+                        width = arg;
+                        if (arg < 0)
+                          {
+                            /* "A negative field width is taken as a '-' flag
+                                followed by a positive field width."  */
+                            flags |= FLAG_LEFT;
+                            width = -width;
+                          }
+                      }
+                    else
+                      {
+                        const FCHAR_T *digitp = dp->width_start;
+
+                        do
+                          width = xsum (xtimes (width, 10), *digitp++ - '0');
+                        while (digitp != dp->width_end);
+                      }
+                  }
+
+                /* %c in vasnwprintf.  See the specification of fwprintf.  */
+                {
+                  char arg = (char) a.arg[dp->arg_index].a.a_char;
+                  mbstate_t state;
+                  wchar_t wc;
+
+                  memset (&state, '\0', sizeof (mbstate_t));
+                  int count = mbrtowc (&wc, &arg, 1, &state);
+                  if (count < 0)
+                    /* Invalid or incomplete multibyte character.  */
+                    goto fail_with_EILSEQ;
+
+                  if (1 < width && !(flags & FLAG_LEFT))
+                    {
+                      size_t n = width - 1;
+                      ENSURE_ALLOCATION (xsum (length, n));
+                      DCHAR_SET (result + length, ' ', n);
+                      length += n;
+                    }
+
+                  ENSURE_ALLOCATION (xsum (length, 1));
+                  result[length++] = wc;
+
+                  if (1 < width && (flags & FLAG_LEFT))
+                    {
+                      size_t n = width - 1;
+                      ENSURE_ALLOCATION (xsum (length, n));
+                      DCHAR_SET (result + length, ' ', n);
+                      length += n;
+                    }
+                }
+              }
+#endif
 #if NEED_PRINTF_DIRECTIVE_B || NEED_PRINTF_DIRECTIVE_UPPERCASE_B
             else if (0
 # if NEED_PRINTF_DIRECTIVE_B
@@ -6816,7 +6887,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
     errno = ENOMEM;
     goto fail_with_errno;
 
-#if ENABLE_UNISTDIO || ((!USE_SNPRINTF || WIDE_CHAR_VERSION || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF || NEED_PRINTF_DIRECTIVE_LS || ENABLE_WCHAR_FALLBACK) && HAVE_WCHAR_T) || ((NEED_PRINTF_DIRECTIVE_LC || ENABLE_WCHAR_FALLBACK) && HAVE_WINT_T && !WIDE_CHAR_VERSION)
+#if ENABLE_UNISTDIO || ((!USE_SNPRINTF || WIDE_CHAR_VERSION || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF || NEED_PRINTF_DIRECTIVE_LS || ENABLE_WCHAR_FALLBACK) && HAVE_WCHAR_T) || ((NEED_PRINTF_DIRECTIVE_LC || ENABLE_WCHAR_FALLBACK) && HAVE_WINT_T && !WIDE_CHAR_VERSION) || (NEED_WPRINTF_DIRECTIVE_C && WIDE_CHAR_VERSION)
   fail_with_EILSEQ:
     errno = EILSEQ;
     goto fail_with_errno;

@@ -34,6 +34,10 @@ The @code{%m} directive is not portable, use @code{%s} mapped to an
 argument of @code{strerror(errno)} (or a version of @code{strerror_r})
 instead.
 @item
+In the C or POSIX locales, the @code{%c} and @code{%s} conversions may fail
+on some platforms:
+glibc 2.35.
+@item
 When formatting an integer with grouping flag, this function inserts thousands
 separators even in the "C" locale on some platforms:
 NetBSD 5.1.

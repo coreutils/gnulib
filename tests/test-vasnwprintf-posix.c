@@ -3757,6 +3757,28 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
     free (result);
   }
 
+  /* On Android ≥ 5.0, the default locale is the "C.UTF-8" locale, not the
+     "C" locale.  Furthermore, when you attempt to set the "C" or "POSIX"
+     locale via setlocale(), what you get is a "C" locale with UTF-8 encoding,
+     that is, effectively the "C.UTF-8" locale.  */
+#ifndef __ANDROID__
+  { /* The conversion of %s to wide characters is done as if through repeated
+       invocations of mbrtowc(), and in the "C" and "POSIX" locales, "an
+       [EILSEQ] error cannot occur since all byte values are valid characters",
+       says POSIX:2018.  */
+    int c;
+
+    for (c = 0; c < 0x100; c++)
+      {
+        char s[2] = { c, '\0' };
+        size_t length;
+        wchar_t *result = my_asnwprintf (NULL, &length, L"%s", s);
+        ASSERT (result != NULL);
+        free (result);
+      }
+  }
+#endif
+
 #if HAVE_WCHAR_T
   static wchar_t L_xyz[4] = { 'x', 'y', 'z', 0 };
 
@@ -3959,6 +3981,26 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
     ASSERT (length == 6);
     free (result);
   }
+
+  /* On Android ≥ 5.0, the default locale is the "C.UTF-8" locale, not the
+     "C" locale.  Furthermore, when you attempt to set the "C" or "POSIX"
+     locale via setlocale(), what you get is a "C" locale with UTF-8 encoding,
+     that is, effectively the "C.UTF-8" locale.  */
+#ifndef __ANDROID__
+  { /* The conversion of %c to wide character is done as if through btowc(),
+       and in the "C" and "POSIX" locales, "btowc() shall not return WEOF if
+       c has a value in the range 0 to 255 inclusive", says POSIX:2018.  */
+    int c;
+
+    for (c = 0; c < 0x100; c++)
+      {
+        size_t length;
+        wchar_t *result = my_asnwprintf (NULL, &length, L"%c", c);
+        ASSERT (result != NULL);
+        free (result);
+      }
+  }
+#endif
 
 #if HAVE_WCHAR_T
   static wint_t L_x = (wchar_t) 'x';

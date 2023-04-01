@@ -19,6 +19,7 @@ m4/stdint_h.m4
 m4/inttypes_h.m4
 m4/vasnprintf.m4
 m4/printf.m4
+m4/mbrtowc.m4
 m4/math_h.m4
 m4/exponentd.m4
 m4/musl.m4
