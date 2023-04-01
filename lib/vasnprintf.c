@@ -3418,8 +3418,8 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 
                           count = local_wcrtomb (cbuf, arg, &state);
                           if (count < 0)
-                            /* Inconsistency.  */
-                            abort ();
+                            /* Cannot convert.  */
+                            goto fail_with_EILSEQ;
                           characters = count;
                         }
                     }
@@ -3517,9 +3517,9 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 #  endif
 
                           count = local_wcrtomb (cbuf, arg, &state);
-                          if (count <= 0)
-                            /* Inconsistency.  */
-                            abort ();
+                          if (count < 0)
+                            /* Cannot convert.  */
+                            goto fail_with_EILSEQ;
                           ENSURE_ALLOCATION (xsum (length, count));
                           memcpy (result + length, cbuf, count);
                           length += count;
@@ -6816,7 +6816,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
     errno = ENOMEM;
     goto fail_with_errno;
 
-#if ENABLE_UNISTDIO || ((!USE_SNPRINTF || WIDE_CHAR_VERSION || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF || NEED_PRINTF_DIRECTIVE_LS || ENABLE_WCHAR_FALLBACK) && HAVE_WCHAR_T)
+#if ENABLE_UNISTDIO || ((!USE_SNPRINTF || WIDE_CHAR_VERSION || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF || NEED_PRINTF_DIRECTIVE_LS || ENABLE_WCHAR_FALLBACK) && HAVE_WCHAR_T) || ((NEED_PRINTF_DIRECTIVE_LC || ENABLE_WCHAR_FALLBACK) && HAVE_WINT_T && !WIDE_CHAR_VERSION)
   fail_with_EILSEQ:
     errno = EILSEQ;
     goto fail_with_errno;

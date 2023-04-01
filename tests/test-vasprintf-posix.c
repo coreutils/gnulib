@@ -3954,6 +3954,26 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
     ASSERT (retval == 5);
     free (result);
   }
+
+  static wint_t L_invalid = (wchar_t) 0x76543210;
+
+  { /* Invalid wide character.
+       The conversion may succeed or may fail, but it should not abort.  */
+    char *result;
+    int retval =
+      my_asprintf (&result, "%lc %d", L_invalid, 33, 44, 55);
+    if (retval >= 0)
+      free (result);
+  }
+
+  { /* Invalid wide character and width.
+       The conversion may succeed or may fail, but it should not abort.  */
+    char *result;
+    int retval =
+      my_asprintf (&result, "%10lc %d", L_invalid, 33, 44, 55);
+    if (retval >= 0)
+      free (result);
+  }
 #endif
 
   /* Test the support of the 'x' conversion specifier for hexadecimal output of

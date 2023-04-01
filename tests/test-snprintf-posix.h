@@ -3089,6 +3089,24 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
     ASSERT (memcmp (result, "az 33\0", 5 + 1) == 0);
     ASSERT (retval == 5);
   }
+
+  static wint_t L_invalid = (wchar_t) 0x76543210;
+
+  { /* Invalid wide character.
+       The conversion may succeed or may fail, but it should not abort.  */
+    int retval =
+      my_snprintf (result, sizeof (result),
+                   "%lc %d", L_invalid, 33, 44, 55);
+    (void) retval;
+  }
+
+  { /* Invalid wide character and width.
+       The conversion may succeed or may fail, but it should not abort.  */
+    int retval =
+      my_snprintf (result, sizeof (result),
+                   "%10lc %d", L_invalid, 33, 44, 55);
+    (void) retval;
+  }
 #endif
 
   /* Test the support of the 'x' conversion specifier for hexadecimal output of

@@ -4020,6 +4020,35 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
     ASSERT (length == 6);
     free (result);
   }
+
+  static wint_t L_invalid = (wchar_t) 0x76543210;
+
+  { /* Invalid wide character.  */
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%lc %d", L_invalid, 33, 44, 55);
+    /* No failure is allowed: ISO C says "the wint_t argument is converted
+       to wchar_t and written."  */
+    ASSERT (result != NULL);
+    ASSERT (result[0] == (wchar_t) 0x76543210);
+    ASSERT (wmemcmp (result + 1, L" 33\0", 3 + 1) == 0);
+    ASSERT (length == 4);
+    free (result);
+  }
+
+  { /* Invalid wide character and width.  */
+    size_t length;
+    wchar_t *result =
+      my_asnwprintf (NULL, &length, L"%10lc %d", L_invalid, 33, 44, 55);
+    /* No failure is allowed: ISO C says "the wint_t argument is converted
+       to wchar_t and written."  */
+    ASSERT (result != NULL);
+    ASSERT (wmemcmp (result, L"         ", 9) == 0);
+    ASSERT (result[9] == (wchar_t) 0x76543210);
+    ASSERT (wmemcmp (result + 10, L" 33\0", 3 + 1) == 0);
+    ASSERT (length == 13);
+    free (result);
+  }
 #endif
 
   /* Test the support of the 'x' conversion specifier for hexadecimal output of
