@@ -207,4 +207,42 @@ test_u_strstr (void)
     free (needle);
     free (haystack);
   }
+
+  /* Test case from Yves Bastide.
+     <https://www.openwall.com/lists/musl/2014/04/18/2>  */
+  {
+    const UNIT input[] =
+      { 'p', 'l', 'a', 'y', 'i', 'n', 'g', ' ', 'p', 'l', 'a', 'y', ' ', 'p',
+        'l', 'a', 'y', ' ', 'p', 'l', 'a', 'y', ' ', 'a', 'l', 'w', 'a', 'y',
+        's', 0
+      };
+    const UNIT needle[] =
+      { 'p', 'l', 'a', 'y', ' ', 'p', 'l', 'a', 'y', ' ', 'p', 'l', 'a', 'y',
+        0
+      };
+    const UNIT *result = U_STRSTR (input, needle);
+    ASSERT (result == input + 8);
+  }
+
+  /* Test long needles.  */
+  {
+    size_t m = 1024;
+    UNIT *haystack = (UNIT *) malloc ((2 * m + 1) * sizeof (UNIT));
+    UNIT *needle = (UNIT *) malloc ((m + 1) * sizeof (UNIT));
+    if (haystack != NULL && needle != NULL)
+      {
+        const UNIT *p;
+        haystack[0] = 'x';
+        U_SET (haystack + 1, ' ', m - 1);
+        U_SET (haystack + m, 'x', m);
+        haystack[2 * m] = '\0';
+        U_SET (needle, 'x', m);
+        needle[m] = '\0';
+        p = U_STRSTR (haystack, needle);
+        ASSERT (p);
+        ASSERT (p - haystack == m);
+      }
+    free (needle);
+    free (haystack);
+  }
 }

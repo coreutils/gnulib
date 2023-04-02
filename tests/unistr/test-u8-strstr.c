@@ -29,6 +29,7 @@
 
 #define UNIT uint8_t
 #define U_STRSTR u8_strstr
+#define U_SET u8_set
 #include "test-u-strstr.h"
 
 int

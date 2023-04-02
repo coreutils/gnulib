@@ -29,6 +29,7 @@
 
 #define UNIT uint32_t
 #define U_STRSTR u32_strstr
+#define U_SET u32_set
 #include "test-u-strstr.h"
 
 int

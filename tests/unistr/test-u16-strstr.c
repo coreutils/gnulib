@@ -29,6 +29,7 @@
 
 #define UNIT uint16_t
 #define U_STRSTR u16_strstr
+#define U_SET u16_set
 #include "test-u-strstr.h"
 
 int

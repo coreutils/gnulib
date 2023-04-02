@@ -4,6 +4,7 @@ tests/unistr/test-u-strstr.h
 tests/macros.h
 
 Depends-on:
+unistr/u32-set
 
 configure.ac:
 AC_CHECK_DECLS_ONCE([alarm])
