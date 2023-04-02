@@ -3,7 +3,6 @@ Substring test for UTF-8 strings.
 
 Files:
 lib/unistr/u8-strstr.c
-lib/unistr/u-strstr.h
 
 Depends-on:
 unistr/base

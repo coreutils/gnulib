@@ -30,11 +30,26 @@
 
 #include <string.h>
 
-/* FIXME: Maybe walking the string via u8_mblen is a win?  */
+uint8_t *
+u8_strstr (const uint8_t *haystack, const uint8_t *needle)
+{
+  uint8_t first = needle[0];
 
-#define FUNC u8_strstr
-#define UNIT uint8_t
-#define U_STRCHR u8_strchr
-#define U_STRMBTOUC u8_strmbtouc
-#define UNIT_IS_UINT8_T 1
-#include "u-strstr.h"
+  /* Is needle empty?  */
+  if (first == 0)
+    return (uint8_t *) haystack;
+
+  /* Is needle nearly empty (only one unit)?  */
+  if (needle[1] == 0)
+    return u8_strchr (haystack, first);
+
+  /* Is needle nearly empty (only one character)?  */
+  {
+    ucs4_t first_uc;
+    int count = u8_strmbtouc (&first_uc, needle);
+    if (count > 0 && needle[count] == 0)
+      return u8_strchr (haystack, first_uc);
+  }
+
+  return (uint8_t *) strstr ((const char *) haystack, (const char *) needle);
+}
