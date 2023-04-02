@@ -3,17 +3,15 @@ Substring test for UTF-16 strings.
 
 Files:
 lib/unistr/u16-strstr.c
-lib/unistr/u-strstr.h
-lib/str-kmp.h
+lib/wcsstr-impl.h
+lib/wcs-two-way.h
 
 Depends-on:
 unistr/base
+unistr/u16-chr
 unistr/u16-strchr
-unistr/u16-strmbtouc
-unistr/u16-strlen
-unistr/u16-strnlen
+unistr/u16-cmp
 stdbool
-malloca
 
 configure.ac:
 gl_LIBUNISTRING_MODULE([0.9.4], [unistr/u16-strstr])

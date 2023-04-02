@@ -18,23 +18,23 @@
 
 /* Before including this file, you need to include <config.h> and
    <string.h>, and define:
+     UNIT                    The element type of the needle and haystack.
      RETURN_TYPE             A macro that expands to the return type.
      AVAILABLE(h, h_l, j, n_l)
                              A macro that returns nonzero if there are
                              at least N_L characters left starting at H[J].
-                             H is 'wchar_t *', H_L, J, and N_L
-                             are 'size_t'; H_L is an lvalue.  For
-                             NUL-terminated searches, H_L can be
-                             modified each iteration to avoid having
-                             to compute the end of H up front.
+                             H is 'UNIT *', H_L, J, and N_L are 'size_t';
+                             H_L is an lvalue.  For NUL-terminated searches,
+                             H_L can be modified each iteration to avoid
+                             having to compute the end of H up front.
 
   For case-insensitivity, you may optionally define:
      CMP_FUNC(p1, p2, l)     A macro that returns 0 iff the first L
                              characters of P1 and P2 are equal.
      CANON_ELEMENT(c)        A macro that canonicalizes an element right after
                              it has been fetched from one of the two strings.
-                             The argument is a 'wchar_t'; the result
-                             must be a 'wchar_t' as well.
+                             The argument is a 'UNIT'; the result must be a
+                             'UNIT' as well.
 
   This file undefines the macros documented above, and defines
   LONG_NEEDLE_THRESHOLD.
@@ -88,7 +88,7 @@
    suffixes are determined by lexicographic comparison while tracking
    periodicity.  */
 static size_t
-critical_factorization (const wchar_t *needle, size_t needle_len,
+critical_factorization (const UNIT *needle, size_t needle_len,
                         size_t *period)
 {
   /* Index of last character of left half, or SIZE_MAX.  */
@@ -96,7 +96,7 @@ critical_factorization (const wchar_t *needle, size_t needle_len,
   size_t j; /* Index into NEEDLE for current candidate suffix.  */
   size_t k; /* Offset into current period.  */
   size_t p; /* Intermediate period.  */
-  wchar_t a, b; /* Current comparison characters.  */
+  UNIT a, b; /* Current comparison characters.  */
 
   /* Special case NEEDLE_LEN of 1 or 2 (all callers already filtered
      out 0-length needles.  */
@@ -215,8 +215,8 @@ critical_factorization (const wchar_t *needle, size_t needle_len,
    If AVAILABLE modifies HAYSTACK_LEN (as in strstr), then at most 3 *
    HAYSTACK_LEN - NEEDLE_LEN comparisons occur in searching.  */
 static RETURN_TYPE _GL_ATTRIBUTE_PURE
-two_way_short_needle (const wchar_t *haystack, size_t haystack_len,
-                      const wchar_t *needle, size_t needle_len)
+two_way_short_needle (const UNIT *haystack, size_t haystack_len,
+                      const UNIT *needle, size_t needle_len)
 {
   size_t i; /* Index into current character of NEEDLE.  */
   size_t j; /* Index into current window of HAYSTACK.  */
@@ -300,4 +300,3 @@ two_way_short_needle (const wchar_t *haystack, size_t haystack_len,
 #undef CANON_ELEMENT
 #undef CMP_FUNC
 #undef MAX
-#undef RETURN_TYPE

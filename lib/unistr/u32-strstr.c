@@ -28,15 +28,10 @@
 /* Specification.  */
 #include "unistr.h"
 
-#include "malloca.h"
-
 #define UNIT uint32_t
-
-#define CANON_ELEMENT(c) c
-#include "str-kmp.h"
-
 #define FUNC u32_strstr
-#define U_STRCHR u32_strchr
-#define U_STRLEN u32_strlen
-#define U_STRNLEN u32_strnlen
-#include "u-strstr.h"
+#define RETURN_TYPE uint32_t *
+#define MEMCHR0(s, n) u32_chr (s, n, 0)
+#define STRCHR u32_strchr
+#define CMP_FUNC u32_cmp
+#include "wcsstr-impl.h"

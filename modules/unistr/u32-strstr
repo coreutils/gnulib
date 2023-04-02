@@ -3,16 +3,15 @@ Substring test for UTF-32 strings.
 
 Files:
 lib/unistr/u32-strstr.c
-lib/unistr/u-strstr.h
-lib/str-kmp.h
+lib/wcsstr-impl.h
+lib/wcs-two-way.h
 
 Depends-on:
 unistr/base
+unistr/u32-chr
 unistr/u32-strchr
-unistr/u32-strlen
-unistr/u32-strnlen
+unistr/u32-cmp
 stdbool
-malloca
 
 configure.ac:
 gl_LIBUNISTRING_MODULE([0.9.4], [unistr/u32-strstr])
