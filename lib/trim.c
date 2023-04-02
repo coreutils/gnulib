@@ -30,13 +30,6 @@
 #include "mbiter.h"
 #include "xalloc.h"
 
-/* Use this to suppress gcc's "...may be used before initialized" warnings. */
-#if defined GCC_LINT || defined lint
-# define IF_LINT(Code) Code
-#else
-# define IF_LINT(Code) /* empty */
-#endif
-
 char *
 trim2 (const char *s, int how)
 {
