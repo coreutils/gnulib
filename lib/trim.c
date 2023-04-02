@@ -65,42 +65,21 @@ trim2 (const char *s, int how)
       /* Trim trailing whitespaces. */
       if (how != TRIM_LEADING)
         {
-          unsigned int state = 0;
-          char *r IF_LINT (= NULL); /* used only while state = 2 */
+          char *start_of_spaces = NULL;
 
           mbi_init (i, d, strlen (d));
 
           for (; mbi_avail (i); mbi_advance (i))
-            {
-              if (state == 0 && mb_isspace (mbi_cur (i)))
-                continue;
+            if (mb_isspace (mbi_cur (i)))
+              {
+                if (start_of_spaces == NULL)
+                  start_of_spaces = (char *) mbi_cur_ptr (i);
+              }
+            else
+              start_of_spaces = NULL;
 
-              if (state == 0 && !mb_isspace (mbi_cur (i)))
-                {
-                  state = 1;
-                  continue;
-                }
-
-              if (state == 1 && !mb_isspace (mbi_cur (i)))
-                continue;
-
-              if (state == 1 && mb_isspace (mbi_cur (i)))
-                {
-                  state = 2;
-                  r = (char *) mbi_cur_ptr (i);
-                }
-              else if (state == 2 && mb_isspace (mbi_cur (i)))
-                {
-                  /* empty */
-                }
-              else
-                {
-                  state = 1;
-                }
-            }
-
-          if (state == 2)
-            *r = '\0';
+          if (start_of_spaces != NULL)
+            *start_of_spaces = '\0';
         }
     }
   else
