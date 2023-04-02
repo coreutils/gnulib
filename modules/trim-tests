@@ -1,0 +1,22 @@
+Files:
+tests/test-trim1.sh
+tests/test-trim2.sh
+tests/test-trim3.sh
+tests/test-trim.c
+tests/macros.h
+m4/locale-fr.m4
+m4/locale-zh.m4
+m4/codeset.m4
+
+Depends-on:
+setlocale
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-trim1.sh test-trim2.sh test-trim3.sh
+TESTS_ENVIRONMENT += \
+  LOCALE_FR_UTF8='@LOCALE_FR_UTF8@' \
+  LOCALE_ZH_CN='@LOCALE_ZH_CN@'
+check_PROGRAMS += test-trim
+test_trim_LDADD = $(LDADD) $(LIBUNISTRING) $(MBRTOWC_LIB)
