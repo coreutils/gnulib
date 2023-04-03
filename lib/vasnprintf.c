@@ -1641,6 +1641,7 @@ MAX_ROOM_NEEDED (const arguments *ap, size_t arg_index, FCHAR_T conversion,
                             * 0.30103 /* binary -> decimal */
                            )
             + 1; /* turn floor into ceil */
+          break;
         case TYPE_LONGINT:
           tmp_length =
             (unsigned int) (sizeof (long int) * CHAR_BIT
