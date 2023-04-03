@@ -1,4 +1,4 @@
-# mbrtoc32.m4 serial 10
+# mbrtoc32.m4 serial 11
 dnl Copyright (C) 2014-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -100,6 +100,11 @@ changequote([,])dnl
         [:])
     ])
 ])
+
+dnl <https://pubs.opengroup.org/onlinepubs/9699919799/functions/mbrtowc.html>
+dnl POSIX:2018 says regarding mbrtowc: "In the POSIX locale an [EILSEQ] error
+dnl cannot occur since all byte values are valid characters."  It is reasonable
+dnl to expect mbrtoc32 to behave in the same way.
 
 AC_DEFUN([gl_MBRTOC32_C_LOCALE],
 [

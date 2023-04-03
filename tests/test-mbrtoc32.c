@@ -386,6 +386,10 @@ main (int argc, char *argv[])
 
                 wc = (char32_t) 0xBADFACE;
                 ret = mbrtoc32 (&wc, buf, 1, &state);
+                /* POSIX:2018 says regarding mbrtowc: "In the POSIX locale an
+                   [EILSEQ] error cannot occur since all byte values are valid
+                   characters."  It is reasonable to expect mbrtoc32 to behave
+                   in the same way.  */
                 ASSERT (ret == 1);
                 if (c < 0x80)
                   /* c is an ASCII character.  */
