@@ -331,7 +331,7 @@ backupfile_internal (int dir_fd, char const *file,
     return s;
 
   DIR *dirp = NULL;
-  int sdir = dir_fd;
+  int sdir = -1;
   idx_t base_max = 0;
   while (true)
     {
@@ -370,9 +370,10 @@ backupfile_internal (int dir_fd, char const *file,
       if (! rename)
         break;
 
-      idx_t offset = backup_type == simple_backups ? 0 : base_offset;
+      dir_fd = sdir < 0 ? dir_fd : sdir;
+      idx_t offset = sdir < 0 ? 0 : base_offset;
       unsigned flags = backup_type == simple_backups ? 0 : RENAME_NOREPLACE;
-      if (renameatu (sdir, file + offset, sdir, s + offset, flags) == 0)
+      if (renameatu (dir_fd, file + offset, dir_fd, s + offset, flags) == 0)
         break;
       int e = errno;
       if (! (e == EEXIST && extended))
