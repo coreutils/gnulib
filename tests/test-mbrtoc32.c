@@ -397,7 +397,7 @@ main (int argc, char *argv[])
                 else
                   /* On most platforms, the bytes 0x80..0xFF map to U+0080..U+00FF.
                      But on musl libc, the bytes 0x80..0xFF map to U+DF80..U+DFFF.  */
-                  ASSERT (wc == (btowc (c) == 0xDF00 + c ? btowc (c) : c));
+                  ASSERT (wc == (btoc32 (c) == 0xDF00 + c ? btoc32 (c) : c));
                 ASSERT (mbsinit (&state));
 
                 ret = mbrtoc32 (NULL, buf, 1, &state);

@@ -22,6 +22,7 @@ m4/codeset.m4
 
 Depends-on:
 mbsinit
+btoc32
 c32tob
 setlocale
 localcharset
