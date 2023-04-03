@@ -8,6 +8,7 @@ lib/string-desc-quotearg.c
 Depends-on:
 string-desc
 quotearg
+extern-inline
 
 configure.ac:
 

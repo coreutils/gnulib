@@ -57,6 +57,7 @@ double-slash-root
 eloop-threshold
 environ
 errno
+extern-inline
 fcntl-h
 filename
 idx

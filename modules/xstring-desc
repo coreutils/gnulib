@@ -8,6 +8,7 @@ lib/xstring-desc.c
 Depends-on:
 string-desc
 xalloc-die
+extern-inline
 
 configure.ac:
 

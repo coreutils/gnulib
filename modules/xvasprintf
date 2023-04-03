@@ -13,6 +13,7 @@ stdio
 vasprintf
 xalloc
 xalloc-die
+extern-inline
 xsize
 stdarg
 errno

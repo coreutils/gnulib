@@ -8,6 +8,7 @@ m4/acl.m4
 
 Depends-on:
 acl-permissions
+extern-inline
 free-posix
 stat
 stdbool
