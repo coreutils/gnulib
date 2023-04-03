@@ -6,6 +6,7 @@ lib/fdutimensat.c
 lib/utimens.h
 
 Depends-on:
+extern-inline
 futimens
 utimensat
 

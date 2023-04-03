@@ -8,6 +8,7 @@ m4/safe-alloc.m4
 
 Depends-on:
 calloc-gnu
+extern-inline
 reallocarray
 
 configure.ac:
