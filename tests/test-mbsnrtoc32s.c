@@ -72,6 +72,15 @@ main (int argc, char *argv[])
     ASSERT (mbsinit (&state));
   }
 
+#ifdef __ANDROID__
+  /* On Android ≥ 5.0, the default locale is the "C.UTF-8" locale, not the
+     "C" locale.  Furthermore, when you attempt to set the "C" or "POSIX"
+     locale via setlocale(), what you get is a "C" locale with UTF-8 encoding,
+     that is, effectively the "C.UTF-8" locale.  */
+  if (argc > 1 && strcmp (argv[1], "5") == 0 && MB_CUR_MAX > 1)
+    argv[1] = "2";
+#endif
+
   if (argc > 1)
     {
       int unlimited;
@@ -278,6 +287,74 @@ main (int argc, char *argv[])
                 else
                   ASSERT (buf[2] == (char32_t) 0xBADFACE);
                 ASSERT (mbsinit (&state));
+              }
+              break;
+
+            case '5':
+              /* C or POSIX locale.  */
+              {
+                char input[] = "n/a";
+                memset (&state, '\0', sizeof (mbstate_t));
+
+                src = input;
+                temp_state = state;
+                ret = mbsnrtoc32s (NULL, &src, 4, unlimited ? BUFSIZE : 1, &temp_state);
+                ASSERT (ret == 3);
+                ASSERT (src == input);
+                ASSERT (mbsinit (&state));
+
+                src = input;
+                ret = mbsnrtoc32s (buf, &src, 4, unlimited ? BUFSIZE : 1, &state);
+                ASSERT (ret == (unlimited ? 3 : 1));
+                ASSERT (src == (unlimited ? NULL : input + 1));
+                ASSERT (buf[0] == 'n');
+                if (unlimited)
+                  {
+                    ASSERT (buf[1] == '/');
+                    ASSERT (buf[2] == 'a');
+                    ASSERT (buf[3] == 0);
+                    ASSERT (buf[4] == (char32_t) 0xBADFACE);
+                  }
+                else
+                  ASSERT (buf[1] == (char32_t) 0xBADFACE);
+                ASSERT (mbsinit (&state));
+              }
+              {
+                int c;
+                char input[2];
+
+                memset (&state, '\0', sizeof (mbstate_t));
+                for (c = 0; c < 0x100; c++)
+                  if (c != 0)
+                    {
+                      /* We are testing all nonnull bytes.  */
+                      input[0] = c;
+                      input[1] = '\0';
+
+                      src = input;
+                      ret = mbsnrtoc32s (NULL, &src, 2, unlimited ? BUFSIZE : 1, &state);
+                      ASSERT (ret == 1);
+                      ASSERT (src == input);
+                      ASSERT (mbsinit (&state));
+
+                      buf[0] = buf[1] = (char32_t) 0xBADFACE;
+                      src = input;
+                      ret = mbsnrtoc32s (buf, &src, 2, unlimited ? BUFSIZE : 1, &state);
+                      /* POSIX:2018 says regarding mbsnrtowcs: "In the POSIX locale an
+                         [EILSEQ] error cannot occur since all byte values are valid
+                         characters."  It is reasonable to expect mbsnrtoc32s to behave
+                         in the same way.  */
+                      ASSERT (ret == 1);
+                      ASSERT (src == (unlimited ? NULL : input + 1));
+                      if (c < 0x80)
+                        /* c is an ASCII character.  */
+                        ASSERT (buf[0] == c);
+                      else
+                        /* On most platforms, the bytes 0x80..0xFF map to U+0080..U+00FF.
+                           But on musl libc, the bytes 0x80..0xFF map to U+DF80..U+DFFF.  */
+                        ASSERT (buf[0] == (btoc32 (c) == 0xDF00 + c ? btoc32 (c) : c));
+                      ASSERT (mbsinit (&state));
+                    }
               }
               break;
 

@@ -3,6 +3,7 @@ tests/test-mbsnrtoc32s-1.sh
 tests/test-mbsnrtoc32s-2.sh
 tests/test-mbsnrtoc32s-3.sh
 tests/test-mbsnrtoc32s-4.sh
+tests/test-mbsnrtoc32s-5.sh
 tests/test-mbsnrtoc32s.c
 tests/signature.h
 tests/macros.h
@@ -14,6 +15,7 @@ m4/codeset.m4
 Depends-on:
 mbrtoc32
 mbsinit
+btoc32
 c32tob
 setlocale
 
@@ -24,7 +26,9 @@ gt_LOCALE_JA
 gt_LOCALE_ZH_CN
 
 Makefile.am:
-TESTS += test-mbsnrtoc32s-1.sh test-mbsnrtoc32s-2.sh test-mbsnrtoc32s-3.sh test-mbsnrtoc32s-4.sh
+TESTS += \
+  test-mbsnrtoc32s-1.sh test-mbsnrtoc32s-2.sh test-mbsnrtoc32s-3.sh \
+  test-mbsnrtoc32s-4.sh test-mbsnrtoc32s-5.sh
 TESTS_ENVIRONMENT += \
   LOCALE_FR='@LOCALE_FR@' \
   LOCALE_FR_UTF8='@LOCALE_FR_UTF8@' \
