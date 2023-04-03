@@ -1,6 +1,7 @@
 Files:
 tests/test-btoc32-1.sh
 tests/test-btoc32-2.sh
+tests/test-btoc32-3.sh
 tests/test-btoc32.c
 tests/signature.h
 tests/macros.h
@@ -15,7 +16,7 @@ gt_LOCALE_FR
 gt_LOCALE_FR_UTF8
 
 Makefile.am:
-TESTS += test-btoc32-1.sh test-btoc32-2.sh
+TESTS += test-btoc32-1.sh test-btoc32-2.sh test-btoc32-3.sh
 TESTS_ENVIRONMENT += LOCALE_FR='@LOCALE_FR@' LOCALE_FR_UTF8='@LOCALE_FR_UTF8@'
 check_PROGRAMS += test-btoc32
 test_btoc32_LDADD = $(LDADD) $(SETLOCALE_LIB)
