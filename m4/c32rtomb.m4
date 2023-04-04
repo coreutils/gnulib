@@ -1,4 +1,4 @@
-# c32rtomb.m4 serial 3
+# c32rtomb.m4 serial 3.1
 dnl Copyright (C) 2020-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -47,6 +47,7 @@ changequote(,)dnl
 changequote([,])dnl
         AC_RUN_IFELSE(
           [AC_LANG_SOURCE([[
+#include <stddef.h>
 #include <uchar.h>
 int main ()
 {
