@@ -42,7 +42,7 @@ c32rtomb (char *s, char32_t wc, mbstate_t *ps)
 
   return c32rtomb (s, wc, ps);
 
-#elif _GL_LARGE_CHAR32_T
+#elif _GL_SMALL_WCHAR_T
 
   if (s == NULL)
     return wcrtomb (NULL, 0, ps);

@@ -41,7 +41,7 @@ c32tob (wint_t wc)
         return (unsigned char) buf[0];
     }
   return EOF;
-#elif _GL_LARGE_CHAR32_T
+#elif _GL_SMALL_WCHAR_T
   /* In all known encodings, unibyte characters correspond only to
      characters in the BMP.  */
   if (wc != WEOF && (wchar_t) wc == wc)

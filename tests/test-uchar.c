@@ -43,11 +43,11 @@ static_assert ((char16_t)0xFFFF != (char16_t)0x7FFF);
 /* Check that char32_t is at least 31 bits wide.  */
 static_assert ((char32_t)0x7FFFFFFF != (char32_t)0x3FFFFFFF);
 
-/* Check that _GL_LARGE_CHAR32_T is correctly defined.  */
-#if _GL_LARGE_CHAR32_T
-static_assert (sizeof (char32_t) > sizeof (wchar_t));
+/* Check that _GL_SMALL_WCHAR_T is correctly defined.  */
+#if _GL_SMALL_WCHAR_T
+static_assert (sizeof (wchar_t) < sizeof (char32_t));
 #else
-static_assert (sizeof (char32_t) == sizeof (wchar_t));
+static_assert (sizeof (wchar_t) == sizeof (char32_t));
 #endif
 
 int

@@ -104,7 +104,7 @@ typedef uint_least32_t gl_char32_t;
 
 /* Define if a 'char32_t' can hold more characters than a 'wchar_t'.  */
 #if @SMALL_WCHAR_T@                    /* 32-bit AIX, Cygwin, native Windows */
-# define _GL_LARGE_CHAR32_T 1
+# define _GL_SMALL_WCHAR_T 1
 #endif
 
 

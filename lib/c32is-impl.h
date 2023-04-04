@@ -74,7 +74,7 @@ FUNC (wint_t wc)
     return 0;
 # endif
 
-#elif _GL_LARGE_CHAR32_T                /* Cygwin, mingw, MSVC */
+#elif _GL_SMALL_WCHAR_T                 /* Cygwin, mingw, MSVC */
   /* The wchar_t encoding is UTF-16.
      The char32_t encoding is UCS-4.  */
 

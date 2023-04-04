@@ -94,7 +94,7 @@ mbrtoc32 (char32_t *pwc, const char *s, size_t n, mbstate_t *ps)
       n = 1;
     }
 
-# if MBRTOC32_EMPTY_INPUT_BUG || _GL_LARGE_CHAR32_T
+# if MBRTOC32_EMPTY_INPUT_BUG || _GL_SMALL_WCHAR_T
   if (n == 0)
     return (size_t) -2;
 # endif
@@ -126,7 +126,7 @@ mbrtoc32 (char32_t *pwc, const char *s, size_t n, mbstate_t *ps)
 
   return ret;
 
-# elif _GL_LARGE_CHAR32_T
+# elif _GL_SMALL_WCHAR_T
 
   /* Special-case all encodings that may produce wide character values
      > WCHAR_MAX.  */
