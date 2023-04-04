@@ -589,6 +589,21 @@ _GL_WARN_ON_USE (malloc, "malloc is not POSIX compliant everywhere - "
 # endif
 #endif
 
+/* Return maximum number of bytes of a multibyte character.  */
+#if @REPLACE_MB_CUR_MAX@
+# if !GNULIB_defined_MB_CUR_MAX
+static inline
+int gl_MB_CUR_MAX (void)
+{
+  /* Turn the value 3 to the value 4, as needed for the UTF-8 encoding.  */
+  return MB_CUR_MAX + (MB_CUR_MAX == 3);
+}
+#  undef MB_CUR_MAX
+#  define MB_CUR_MAX gl_MB_CUR_MAX ()
+#  define GNULIB_defined_MB_CUR_MAX 1
+# endif
+#endif
+
 /* Convert a string to a wide string.  */
 #if @GNULIB_MBSTOWCS@
 # if @REPLACE_MBSTOWCS@
