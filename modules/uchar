@@ -10,6 +10,8 @@ Depends-on:
 gen-header
 include_next
 snippet/c++defs
+extern-inline
+assert-h
 stdint
 wchar
 

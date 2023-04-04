@@ -18,6 +18,7 @@
 
 #include <config.h>
 
+#define IN_C32SRTOMBS
 /* Specification.  */
 #include <uchar.h>
 
@@ -44,6 +45,9 @@ extern mbstate_t _gl_c32srtombs_state;
 
 static_assert (sizeof (char32_t) == sizeof (wchar_t));
 
+# if _GL_WCHAR_T_IS_UCS4
+_GL_EXTERN_INLINE
+# endif
 size_t
 c32srtombs (char *dest, const char32_t **srcp, size_t len, mbstate_t *ps)
 {

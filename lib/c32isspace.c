@@ -24,6 +24,7 @@
 
 #include <config.h>
 
+#define IN_C32ISSPACE
 /* Specification.  */
 #include <uchar.h>
 

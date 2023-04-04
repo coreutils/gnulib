@@ -38,6 +38,9 @@
 
 #include "unictype.h"
 
+#if _GL_WCHAR_T_IS_UCS4 && !GNULIB_defined_mbstate_t
+_GL_EXTERN_INLINE
+#endif
 int
 FUNC (wint_t wc)
 {

@@ -24,6 +24,7 @@
 
 #include <config.h>
 
+#define IN_C32ISXDIGIT
 /* Specification.  */
 #include <uchar.h>
 

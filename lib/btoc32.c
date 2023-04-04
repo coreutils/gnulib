@@ -18,12 +18,16 @@
 
 #include <config.h>
 
+#define IN_BTOC32
 /* Specification.  */
 #include <uchar.h>
 
 #include <stdio.h>
 #include <string.h>
 
+#if _GL_WCHAR_T_IS_UCS4
+_GL_EXTERN_INLINE
+#endif
 wint_t
 btoc32 (int c)
 {

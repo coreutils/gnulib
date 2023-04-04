@@ -24,6 +24,7 @@
 
 #include <config.h>
 
+#define IN_C32ISDIGIT
 /* Specification.  */
 #include <uchar.h>
 

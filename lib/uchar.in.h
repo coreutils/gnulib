@@ -58,6 +58,12 @@
 /* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
 
 
+#ifndef _GL_INLINE_HEADER_BEGIN
+ #error "Please include config.h first."
+#endif
+_GL_INLINE_HEADER_BEGIN
+
+
 #if !(@HAVE_UCHAR_H@ || (defined __cplusplus && @CXX_HAS_CHAR8_TYPE@))
 
 /* An 8-bit variant of wchar_t.
@@ -123,10 +129,22 @@ typedef uint_least32_t gl_char32_t;
 /* glibc, musl libc */
 # define _GL_WCHAR_T_IS_UCS4 1
 #endif
+#if _GL_WCHAR_T_IS_UCS4
+static_assert (sizeof (char32_t) == sizeof (wchar_t));
+#endif
+
 
 /* Convert a single-byte character to a 32-bit wide character.  */
 #if @GNULIB_BTOC32@
+# if _GL_WCHAR_T_IS_UCS4 && !defined IN_BTOC32
+_GL_INLINE _GL_ATTRIBUTE_PURE wint_t
+btoc32 (int c)
+{
+  return btowc (c);
+}
+# else
 _GL_FUNCDECL_SYS (btoc32, wint_t, (int c) _GL_ATTRIBUTE_PURE);
+# endif
 _GL_CXXALIAS_SYS (btoc32, wint_t, (int c));
 _GL_CXXALIASWARN (btoc32);
 #endif
@@ -134,62 +152,158 @@ _GL_CXXALIASWARN (btoc32);
 
 /* Test a specific property of a 32-bit wide character.  */
 #if @GNULIB_C32ISALNUM@
+# if (_GL_WCHAR_T_IS_UCS4 && !GNULIB_defined_mbstate_t) && !defined IN_C32ISALNUM
+_GL_INLINE int
+c32isalnum (wint_t wc)
+{
+  return iswalnum (wc);
+}
+# else
 _GL_FUNCDECL_SYS (c32isalnum, int, (wint_t wc));
+# endif
 _GL_CXXALIAS_SYS (c32isalnum, int, (wint_t wc));
 _GL_CXXALIASWARN (c32isalnum);
 #endif
 #if @GNULIB_C32ISALPHA@
+# if (_GL_WCHAR_T_IS_UCS4 && !GNULIB_defined_mbstate_t) && !defined IN_C32ISALPHA
+_GL_INLINE int
+c32isalpha (wint_t wc)
+{
+  return iswalpha (wc);
+}
+# else
 _GL_FUNCDECL_SYS (c32isalpha, int, (wint_t wc));
+# endif
 _GL_CXXALIAS_SYS (c32isalpha, int, (wint_t wc));
 _GL_CXXALIASWARN (c32isalpha);
 #endif
 #if @GNULIB_C32ISBLANK@
+# if (_GL_WCHAR_T_IS_UCS4 && !GNULIB_defined_mbstate_t) && !defined IN_C32ISBLANK
+_GL_INLINE int
+c32isblank (wint_t wc)
+{
+  return iswblank (wc);
+}
+# else
 _GL_FUNCDECL_SYS (c32isblank, int, (wint_t wc));
+# endif
 _GL_CXXALIAS_SYS (c32isblank, int, (wint_t wc));
 _GL_CXXALIASWARN (c32isblank);
 #endif
 #if @GNULIB_C32ISCNTRL@
+# if (_GL_WCHAR_T_IS_UCS4 && !GNULIB_defined_mbstate_t) && !defined IN_C32ISCNTRL
+_GL_INLINE int
+c32iscntrl (wint_t wc)
+{
+  return iswcntrl (wc);
+}
+# else
 _GL_FUNCDECL_SYS (c32iscntrl, int, (wint_t wc));
+# endif
 _GL_CXXALIAS_SYS (c32iscntrl, int, (wint_t wc));
 _GL_CXXALIASWARN (c32iscntrl);
 #endif
 #if @GNULIB_C32ISDIGIT@
+# if (_GL_WCHAR_T_IS_UCS4 && !GNULIB_defined_mbstate_t) && !defined IN_C32ISDIGIT
+_GL_INLINE int
+c32isdigit (wint_t wc)
+{
+  return iswdigit (wc);
+}
+# else
 _GL_FUNCDECL_SYS (c32isdigit, int, (wint_t wc));
+# endif
 _GL_CXXALIAS_SYS (c32isdigit, int, (wint_t wc));
 _GL_CXXALIASWARN (c32isdigit);
 #endif
 #if @GNULIB_C32ISGRAPH@
+# if (_GL_WCHAR_T_IS_UCS4 && !GNULIB_defined_mbstate_t) && !defined IN_C32ISGRAPH
+_GL_INLINE int
+c32isgraph (wint_t wc)
+{
+  return iswgraph (wc);
+}
+# else
 _GL_FUNCDECL_SYS (c32isgraph, int, (wint_t wc));
+# endif
 _GL_CXXALIAS_SYS (c32isgraph, int, (wint_t wc));
 _GL_CXXALIASWARN (c32isgraph);
 #endif
 #if @GNULIB_C32ISLOWER@
+# if (_GL_WCHAR_T_IS_UCS4 && !GNULIB_defined_mbstate_t) && !defined IN_C32ISLOWER
+_GL_INLINE int
+c32islower (wint_t wc)
+{
+  return iswlower (wc);
+}
+# else
 _GL_FUNCDECL_SYS (c32islower, int, (wint_t wc));
+# endif
 _GL_CXXALIAS_SYS (c32islower, int, (wint_t wc));
 _GL_CXXALIASWARN (c32islower);
 #endif
 #if @GNULIB_C32ISPRINT@
+# if (_GL_WCHAR_T_IS_UCS4 && !GNULIB_defined_mbstate_t) && !defined IN_C32ISPRINT
+_GL_INLINE int
+c32isprint (wint_t wc)
+{
+  return iswprint (wc);
+}
+# else
 _GL_FUNCDECL_SYS (c32isprint, int, (wint_t wc));
+# endif
 _GL_CXXALIAS_SYS (c32isprint, int, (wint_t wc));
 _GL_CXXALIASWARN (c32isprint);
 #endif
 #if @GNULIB_C32ISPUNCT@
+# if (_GL_WCHAR_T_IS_UCS4 && !GNULIB_defined_mbstate_t) && !defined IN_C32ISPUNCT
+_GL_INLINE int
+c32ispunct (wint_t wc)
+{
+  return iswpunct (wc);
+}
+# else
 _GL_FUNCDECL_SYS (c32ispunct, int, (wint_t wc));
+# endif
 _GL_CXXALIAS_SYS (c32ispunct, int, (wint_t wc));
 _GL_CXXALIASWARN (c32ispunct);
 #endif
 #if @GNULIB_C32ISSPACE@
+# if (_GL_WCHAR_T_IS_UCS4 && !GNULIB_defined_mbstate_t) && !defined IN_C32ISSPACE
+_GL_INLINE int
+c32isspace (wint_t wc)
+{
+  return iswspace (wc);
+}
+# else
 _GL_FUNCDECL_SYS (c32isspace, int, (wint_t wc));
+# endif
 _GL_CXXALIAS_SYS (c32isspace, int, (wint_t wc));
 _GL_CXXALIASWARN (c32isspace);
 #endif
 #if @GNULIB_C32ISUPPER@
+# if (_GL_WCHAR_T_IS_UCS4 && !GNULIB_defined_mbstate_t) && !defined IN_C32ISUPPER
+_GL_INLINE int
+c32isupper (wint_t wc)
+{
+  return iswupper (wc);
+}
+# else
 _GL_FUNCDECL_SYS (c32isupper, int, (wint_t wc));
+# endif
 _GL_CXXALIAS_SYS (c32isupper, int, (wint_t wc));
 _GL_CXXALIASWARN (c32isupper);
 #endif
 #if @GNULIB_C32ISXDIGIT@
+# if (_GL_WCHAR_T_IS_UCS4 && !GNULIB_defined_mbstate_t) && !defined IN_C32ISXDIGIT
+_GL_INLINE int
+c32isxdigit (wint_t wc)
+{
+  return iswxdigit (wc);
+}
+# else
 _GL_FUNCDECL_SYS (c32isxdigit, int, (wint_t wc));
+# endif
 _GL_CXXALIAS_SYS (c32isxdigit, int, (wint_t wc));
 _GL_CXXALIASWARN (c32isxdigit);
 #endif
@@ -224,10 +338,19 @@ _GL_WARN_ON_USE (c32rtomb, "c32rtomb is not portable - "
 
 /* Convert a 32-bit wide string to a string.  */
 #if @GNULIB_C32SNRTOMBS@
+# if _GL_WCHAR_T_IS_UCS4 && !defined IN_C32SNRTOMBS
+_GL_INLINE _GL_ARG_NONNULL ((2)) size_t
+c32snrtombs (char *dest, const char32_t **srcp, size_t srclen, size_t len,
+             mbstate_t *ps)
+{
+  return wcsnrtombs (dest, (const wchar_t **) srcp, srclen, len, ps);
+}
+# else
 _GL_FUNCDECL_SYS (c32snrtombs, size_t,
                   (char *dest, const char32_t **srcp, size_t srclen, size_t len,
                    mbstate_t *ps)
                   _GL_ARG_NONNULL ((2)));
+# endif
 _GL_CXXALIAS_SYS (c32snrtombs, size_t,
                   (char *dest, const char32_t **srcp, size_t srclen, size_t len,
                    mbstate_t *ps));
@@ -237,9 +360,17 @@ _GL_CXXALIASWARN (c32snrtombs);
 
 /* Convert a 32-bit wide string to a string.  */
 #if @GNULIB_C32SRTOMBS@
+# if _GL_WCHAR_T_IS_UCS4 && !defined IN_C32SRTOMBS
+_GL_INLINE _GL_ARG_NONNULL ((2)) size_t
+c32srtombs (char *dest, const char32_t **srcp, size_t len, mbstate_t *ps)
+{
+  return wcsrtombs (dest, (const wchar_t **) srcp, len, ps);
+}
+# else
 _GL_FUNCDECL_SYS (c32srtombs, size_t,
                   (char *dest, const char32_t **srcp, size_t len, mbstate_t *ps)
                   _GL_ARG_NONNULL ((2)));
+# endif
 _GL_CXXALIAS_SYS (c32srtombs, size_t,
                   (char *dest, const char32_t **srcp, size_t len,
                    mbstate_t *ps));
@@ -249,9 +380,20 @@ _GL_CXXALIASWARN (c32srtombs);
 
 /* Convert a 32-bit wide string to a string.  */
 #if @GNULIB_C32STOMBS@
+# if _GL_WCHAR_T_IS_UCS4 && !defined IN_C32STOMBS
+_GL_INLINE _GL_ARG_NONNULL ((2)) size_t
+c32stombs (char *dest, const char32_t *src, size_t len)
+{
+  mbstate_t state;
+
+  memset (&state, '\0', sizeof (mbstate_t));
+  return c32srtombs (dest, &src, len, &state);
+}
+# else
 _GL_FUNCDECL_SYS (c32stombs, size_t,
                   (char *dest, const char32_t *src, size_t len)
                   _GL_ARG_NONNULL ((2)));
+# endif
 _GL_CXXALIAS_SYS (c32stombs, size_t,
                   (char *dest, const char32_t *src, size_t len));
 _GL_CXXALIASWARN (c32stombs);
@@ -262,7 +404,15 @@ _GL_CXXALIASWARN (c32stombs);
    Returns the single-byte representation of WC if it exists,
    or EOF otherwise.  */
 #if @GNULIB_C32TOB@
+# if _GL_WCHAR_T_IS_UCS4 && !defined IN_C32TOB
+_GL_INLINE int
+c32tob (wint_t wc)
+{
+  return wctob (wc);
+}
+# else
 _GL_FUNCDECL_SYS (c32tob, int, (wint_t wc));
+# endif
 _GL_CXXALIAS_SYS (c32tob, int, (wint_t wc));
 _GL_CXXALIASWARN (c32tob);
 #endif
@@ -301,10 +451,19 @@ _GL_WARN_ON_USE (mbrtoc32, "mbrtoc32 is not portable - "
 
 /* Convert a string to a 32-bit wide string.  */
 #if @GNULIB_MBSNRTOC32S@
+# if _GL_WCHAR_T_IS_UCS4 && !defined IN_MBSNRTOC32S
+_GL_INLINE _GL_ARG_NONNULL ((2)) size_t
+mbsnrtoc32s (char32_t *dest, const char **srcp, size_t srclen, size_t len,
+             mbstate_t *ps)
+{
+  return mbsnrtowcs ((wchar_t *) dest, srcp, srclen, len, ps);
+}
+# else
 _GL_FUNCDECL_SYS (mbsnrtoc32s, size_t,
                   (char32_t *dest, const char **srcp, size_t srclen, size_t len,
                    mbstate_t *ps)
                   _GL_ARG_NONNULL ((2)));
+# endif
 _GL_CXXALIAS_SYS (mbsnrtoc32s, size_t,
                   (char32_t *dest, const char **srcp, size_t srclen, size_t len,
                    mbstate_t *ps));
@@ -314,9 +473,17 @@ _GL_CXXALIASWARN (mbsnrtoc32s);
 
 /* Convert a string to a 32-bit wide string.  */
 #if @GNULIB_MBSRTOC32S@
+# if _GL_WCHAR_T_IS_UCS4 && !defined IN_MBSRTOC32S
+_GL_INLINE _GL_ARG_NONNULL ((2)) size_t
+mbsrtoc32s (char32_t *dest, const char **srcp, size_t len, mbstate_t *ps)
+{
+  return mbsrtowcs ((wchar_t *) dest, srcp, len, ps);
+}
+# else
 _GL_FUNCDECL_SYS (mbsrtoc32s, size_t,
                   (char32_t *dest, const char **srcp, size_t len, mbstate_t *ps)
                   _GL_ARG_NONNULL ((2)));
+# endif
 _GL_CXXALIAS_SYS (mbsrtoc32s, size_t,
                   (char32_t *dest, const char **srcp, size_t len,
                    mbstate_t *ps));
@@ -326,13 +493,26 @@ _GL_CXXALIASWARN (mbsrtoc32s);
 
 /* Convert a string to a 32-bit wide string.  */
 #if @GNULIB_MBSTOC32S@
+# if _GL_WCHAR_T_IS_UCS4 && !defined IN_MBSTOC32S
+_GL_INLINE _GL_ARG_NONNULL ((2)) size_t
+mbstoc32s (char32_t *dest, const char *src, size_t len)
+{
+  mbstate_t state;
+
+  memset (&state, '\0', sizeof (mbstate_t));
+  return mbsrtoc32s (dest, &src, len, &state);
+}
+# else
 _GL_FUNCDECL_SYS (mbstoc32s, size_t,
                   (char32_t *dest, const char *src, size_t len)
                   _GL_ARG_NONNULL ((2)));
+# endif
 _GL_CXXALIAS_SYS (mbstoc32s, size_t,
                   (char32_t *dest, const char *src, size_t len));
 _GL_CXXALIASWARN (mbstoc32s);
 #endif
 
+
+_GL_INLINE_HEADER_END
 
 #endif /* _@GUARD_PREFIX@_UCHAR_H */

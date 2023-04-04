@@ -17,6 +17,7 @@
 
 #include <config.h>
 
+#define IN_MBSNRTOC32S
 /* Specification.  */
 #include <uchar.h>
 
@@ -53,6 +54,9 @@ extern mbstate_t _gl_mbsrtoc32s_state;
 
 static_assert (sizeof (char32_t) == sizeof (wchar_t));
 
+# if _GL_WCHAR_T_IS_UCS4
+_GL_EXTERN_INLINE
+# endif
 size_t
 mbsnrtoc32s (char32_t *dest, const char **srcp, size_t srclen, size_t len,
              mbstate_t *ps)

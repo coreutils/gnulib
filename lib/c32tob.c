@@ -18,6 +18,7 @@
 
 #include <config.h>
 
+#define IN_C32TOB
 /* Specification.  */
 #include <uchar.h>
 
@@ -25,6 +26,9 @@
 #include <string.h>
 #include <wchar.h>
 
+#if _GL_WCHAR_T_IS_UCS4
+_GL_EXTERN_INLINE
+#endif
 int
 c32tob (wint_t wc)
 {
