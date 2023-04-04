@@ -51,6 +51,7 @@ uchar.h: uchar.in.h $(top_builddir)/config.status $(CXXDEFS_H)
 	      -e 's/@''GNULIB_C32ISSPACE''@/$(GNULIB_C32ISSPACE)/g' \
 	      -e 's/@''GNULIB_C32ISUPPER''@/$(GNULIB_C32ISUPPER)/g' \
 	      -e 's/@''GNULIB_C32ISXDIGIT''@/$(GNULIB_C32ISXDIGIT)/g' \
+	      -e 's/@''GNULIB_C32TOLOWER''@/$(GNULIB_C32TOLOWER)/g' \
 	      -e 's/@''GNULIB_C32RTOMB''@/$(GNULIB_C32RTOMB)/g' \
 	      -e 's/@''GNULIB_C32SNRTOMBS''@/$(GNULIB_C32SNRTOMBS)/g' \
 	      -e 's/@''GNULIB_C32SRTOMBS''@/$(GNULIB_C32SRTOMBS)/g' \
