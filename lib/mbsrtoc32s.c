@@ -22,7 +22,7 @@
 
 #include <wchar.h>
 
-#if (HAVE_WORKING_MBRTOC32 && !defined __GLIBC__) || _GL_SMALL_WCHAR_T
+#if (HAVE_WORKING_MBRTOC32 && !_GL_WCHAR_T_IS_UCS4) || _GL_SMALL_WCHAR_T
 /* The char32_t encoding of a multibyte character may be different than its
    wchar_t encoding, or char32_t is wider than wchar_t.  */
 

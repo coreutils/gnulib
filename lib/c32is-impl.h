@@ -61,7 +61,7 @@ FUNC (wint_t wc)
 #elif HAVE_WORKING_MBRTOC32             /* glibc */
   /* mbrtoc32() is essentially defined by the system libc.  */
 
-# if defined __GLIBC__
+# if _GL_WCHAR_T_IS_UCS4
   /* The char32_t encoding of a multibyte character is known to be the same as
      the wchar_t encoding.  */
   return WCHAR_FUNC (wc);

@@ -28,7 +28,7 @@
 int
 c32tob (wint_t wc)
 {
-#if HAVE_WORKING_MBRTOC32 && !defined __GLIBC__
+#if HAVE_WORKING_MBRTOC32 && !_GL_WCHAR_T_IS_UCS4
   /* The char32_t encoding of a multibyte character may be different than its
      wchar_t encoding.  */
   if (wc != WEOF)

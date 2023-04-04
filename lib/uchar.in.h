@@ -107,6 +107,22 @@ typedef uint_least32_t gl_char32_t;
 # define _GL_SMALL_WCHAR_T 1
 #endif
 
+/* Define if 'wchar_t', like 'char32_t',
+     - is a 32-bit type, and
+     - represents Unicode code points.
+   For this test, we can use __STDC_ISO_10646__ (defined by glibc, musl libc,
+   Cygwin) but need to consider _GL_SMALL_WCHAR_T, so as to exclude Cygwin.
+   We cannot use __STDC_UTF_16__ or __STDC_UTF_32__
+     - because these macros provide info about char16_t and char32_t (not
+       wchar_t!), and
+     - because GCC >= 4.9 defines these macros on all platforms, even on
+       FreeBSD and Solaris.
+   We should better not use __STD_UTF_16__, __STD_UTF_32__ either, because
+   these macros are misspellings, only defined by Android's <uchar.h>.  */
+#if defined __STDC_ISO_10646__ && !_GL_SMALL_WCHAR_T
+/* glibc, musl libc */
+# define _GL_WCHAR_T_IS_UCS4 1
+#endif
 
 /* Convert a single-byte character to a 32-bit wide character.  */
 #if @GNULIB_BTOC32@
