@@ -1,6 +1,6 @@
 /* Test of strerrorname_np() function.
 
-   Copyright (C) 2020-2022 Free Software Foundation, Inc.
+   Copyright (C) 2020-2023 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -490,7 +490,7 @@ main (void)
   ASSERT (strcmp (strerrorname_np (EDONTREPLY), "EDONTREPLY") == 0);
   #endif
   /* FreeBSD */
-  #if defined EDOOFUS
+  #if defined EDOOFUS && EDOOFUS != EINVAL
   ASSERT (strcmp (strerrorname_np (EDOOFUS), "EDOOFUS") == 0);
   #endif
   /* Linux, HP-UX, Cygwin */

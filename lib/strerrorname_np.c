@@ -1,5 +1,5 @@
 /* Name of system error code.
-   Copyright (C) 2020-2022 Free Software Foundation, Inc.
+   Copyright (C) 2020-2023 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as
@@ -488,7 +488,7 @@ strerrorname_np (int errnum)
     case EDONTREPLY:      return "EDONTREPLY";
     #endif
     /* FreeBSD */
-    #if defined EDOOFUS
+    #if defined EDOOFUS && EDOOFUS != EINVAL
     case EDOOFUS:         return "EDOOFUS";
     #endif
     /* Linux, HP-UX, Cygwin */
