@@ -63,13 +63,17 @@ main (void)
   /* Test string_desc_quotearg_n_style.  */
   {
     char *ret = string_desc_quotearg_n_style (1, clocale_quoting_style, s2);
-    ASSERT (memcmp (ret, "\"The\\0quick\\0brown\\0\\0fox\\0\"", 28 + 1) == 0);
+    ASSERT (memcmp (ret, "\"The\\0quick\\0brown\\0\\0fox\\0\"", 28 + 1) == 0
+            || /* if the locale has UTF-8 encoding */
+               memcmp (ret, "\342\200\230The\\0quick\\0brown\\0\\0fox\\0\342\200\231", 32 + 1) == 0);
   }
 
   /* Test string_desc_quotearg_style.  */
   {
     char *ret = string_desc_quotearg_style (clocale_quoting_style, s2);
-    ASSERT (memcmp (ret, "\"The\\0quick\\0brown\\0\\0fox\\0\"", 28 + 1) == 0);
+    ASSERT (memcmp (ret, "\"The\\0quick\\0brown\\0\\0fox\\0\"", 28 + 1) == 0
+            || /* if the locale has UTF-8 encoding */
+               memcmp (ret, "\342\200\230The\\0quick\\0brown\\0\\0fox\\0\342\200\231", 32 + 1) == 0);
   }
 
   /* Test string_desc_quotearg_char.  */
