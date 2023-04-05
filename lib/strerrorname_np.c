@@ -488,7 +488,7 @@ strerrorname_np (int errnum)
     case EDONTREPLY:      return "EDONTREPLY";
     #endif
     /* FreeBSD */
-    #if defined EDOOFUS
+    #if defined EDOOFUS && EDOOFUS != EINVAL
     case EDOOFUS:         return "EDOOFUS";
     #endif
     /* Linux, HP-UX, Cygwin */
