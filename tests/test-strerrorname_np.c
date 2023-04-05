@@ -490,7 +490,7 @@ main (void)
   ASSERT (strcmp (strerrorname_np (EDONTREPLY), "EDONTREPLY") == 0);
   #endif
   /* FreeBSD */
-  #if defined EDOOFUS
+  #if defined EDOOFUS && EDOOFUS != EINVAL
   ASSERT (strcmp (strerrorname_np (EDOOFUS), "EDOOFUS") == 0);
   #endif
   /* Linux, HP-UX, Cygwin */
