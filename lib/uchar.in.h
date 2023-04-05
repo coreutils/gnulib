@@ -49,6 +49,10 @@
 /* Get mbstate_t, size_t.  */
 #include <wchar.h>
 
+/* For the inline functions.  */
+#include <string.h>
+#include <wctype.h>
+
 /* The __attribute__ feature is available in gcc versions 2.5 and later.
    The attribute __pure__ was added in gcc 2.96.  */
 #ifndef _GL_ATTRIBUTE_PURE
