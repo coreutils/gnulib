@@ -1,4 +1,4 @@
-# mbrtoc32.m4 serial 11
+# mbrtoc32.m4 serial 12
 dnl Copyright (C) 2014-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -47,7 +47,12 @@ AC_DEFUN([gl_FUNC_MBRTOC32],
 AC_DEFUN([gl_CHECK_FUNC_MBRTOC32],
 [
   dnl Cf. gl_CHECK_FUNCS_ANDROID
-  AC_CHECK_DECL([mbrtoc32], , , [[#include <uchar.h>]])
+  AC_CHECK_DECL([mbrtoc32], , ,
+    [[#ifdef __HAIKU__
+       #include <stdint.h>
+      #endif
+      #include <uchar.h>
+    ]])
   if test $ac_cv_have_decl_mbrtoc32 = yes; then
     dnl We can't use AC_CHECK_FUNC here, because mbrtoc32() is defined as a
     dnl static inline function on Haiku 2020.
@@ -55,6 +60,9 @@ AC_DEFUN([gl_CHECK_FUNC_MBRTOC32],
       [AC_LINK_IFELSE(
          [AC_LANG_PROGRAM(
             [[#include <stdlib.h>
+              #ifdef __HAIKU__
+               #include <stdint.h>
+              #endif
               #include <uchar.h>
             ]],
             [[char32_t c;
@@ -87,6 +95,9 @@ changequote(,)dnl
 changequote([,])dnl
       AC_RUN_IFELSE(
         [AC_LANG_SOURCE([[
+           #ifdef __HAIKU__
+            #include <stdint.h>
+           #endif
            #include <uchar.h>
            static char32_t wc;
            static mbstate_t mbs;
@@ -120,6 +131,9 @@ AC_DEFUN([gl_MBRTOC32_C_LOCALE],
        [AC_LANG_PROGRAM(
           [[#include <limits.h>
             #include <locale.h>
+            #ifdef __HAIKU__
+             #include <stdint.h>
+            #endif
             #include <uchar.h>
           ]], [[
             int i;
@@ -185,6 +199,9 @@ changequote([,])dnl
 #include <stdlib.h>
 #include <string.h>
 #include <wchar.h>
+#ifdef __HAIKU__
+ #include <stdint.h>
+#endif
 #include <uchar.h>
 int main ()
 {

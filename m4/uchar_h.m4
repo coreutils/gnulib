@@ -1,4 +1,4 @@
-# uchar_h.m4 serial 21
+# uchar_h.m4 serial 22
 dnl Copyright (C) 2019-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -94,7 +94,11 @@ EOF
   dnl Check for declarations of anything we want to poison if the
   dnl corresponding gnulib module is not in use, and which is not
   dnl guaranteed by C11.
-  gl_WARN_ON_USE_PREPARE([[#include <uchar.h>
+  gl_WARN_ON_USE_PREPARE([[
+      #ifdef __HAIKU__
+       #include <stdint.h>
+      #endif
+      #include <uchar.h>
     ]], [c32rtomb mbrtoc32])
 ])
 
@@ -105,6 +109,9 @@ AC_DEFUN_ONCE([gl_TYPE_CHAR8_T],
     [gl_cv_type_char8_t_works],
     [AC_COMPILE_IFELSE(
        [AC_LANG_PROGRAM([[
+          #ifdef __HAIKU__
+           #include <stdint.h>
+          #endif
           #include <uchar.h>
           int verify[(char8_t)(-1) >= 0 && sizeof (char8_t) == sizeof (unsigned char) ? 1 : -1];
           ]])
@@ -129,6 +136,9 @@ AC_DEFUN_ONCE([gl_TYPE_CHAR16_T],
     [gl_cv_type_char16_t_works],
     [AC_COMPILE_IFELSE(
        [AC_LANG_PROGRAM([[
+          #ifdef __HAIKU__
+           #include <stdint.h>
+          #endif
           #include <uchar.h>
           /* For simplicity, assume that uint16_least_t is equivalent to
              'unsigned short'.  */
@@ -152,6 +162,9 @@ AC_DEFUN_ONCE([gl_TYPE_CHAR32_T],
     [gl_cv_type_char32_t_works],
     [AC_COMPILE_IFELSE(
        [AC_LANG_PROGRAM([[
+          #ifdef __HAIKU__
+           #include <stdint.h>
+          #endif
           #include <uchar.h>
           /* For simplicity, assume that uint32_least_t is equivalent to
              'unsigned int'.  */

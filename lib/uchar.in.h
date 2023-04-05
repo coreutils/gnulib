@@ -28,6 +28,10 @@
 @PRAGMA_COLUMNS@
 
 #if @HAVE_UCHAR_H@
+# if defined __HAIKU__
+/* Work around <https://dev.haiku-os.org/ticket/17040>.  */
+#  include <stdint.h>
+# endif
 /* On AIX 7.2 with xlclang++, /usr/include/uchar.h produces compilation errors
    because it contains typedef definitions of char16_t and char32_t, however
    char16_t and char32_t are keywords in this situation.  To work around it,
