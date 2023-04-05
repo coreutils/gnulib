@@ -67,9 +67,7 @@
 #  include <random.h>
 # endif
 
-# if !@HAVE_STRUCT_RANDOM_DATA@ || @REPLACE_RANDOM_R@ || !@HAVE_RANDOM_R@
-#  include <stdint.h>
-# endif
+# include <stdint.h>
 
 # if !@HAVE_STRUCT_RANDOM_DATA@
 /* Define 'struct random_data'.
