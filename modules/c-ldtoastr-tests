@@ -2,6 +2,7 @@ Files:
 tests/test-c-ldtoastr.c
 tests/test-c-ldtoastr.sh
 m4/locale-fr.m4
+m4/codeset.m4
 tests/macros.h
 
 Depends-on:

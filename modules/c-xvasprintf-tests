@@ -2,6 +2,7 @@ Files:
 tests/test-c-xvasprintf.c
 tests/test-c-xvasprintf.sh
 m4/locale-fr.m4
+m4/codeset.m4
 tests/macros.h
 
 Depends-on:

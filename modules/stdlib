@@ -5,6 +5,7 @@ Files:
 lib/stdlib.in.h
 m4/stdlib_h.m4
 m4/locale-fr.m4
+m4/codeset.m4
 
 Depends-on:
 gen-header
