@@ -5,6 +5,7 @@ tests/test-nl_langinfo-mt.c
 tests/signature.h
 tests/macros.h
 m4/locale-fr.m4
+m4/codeset.m4
 
 Depends-on:
 c-strcase

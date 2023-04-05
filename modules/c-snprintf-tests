@@ -2,6 +2,7 @@ Files:
 tests/test-c-snprintf.c
 tests/test-c-snprintf.sh
 m4/locale-fr.m4
+m4/codeset.m4
 tests/macros.h
 
 Depends-on:
