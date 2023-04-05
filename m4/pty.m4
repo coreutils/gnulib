@@ -1,5 +1,5 @@
-# pty.m4 serial 14
-dnl Copyright (C) 2010-2022 Free Software Foundation, Inc.
+# pty.m4 serial 14.1
+dnl Copyright (C) 2010-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -9,14 +9,21 @@ dnl with or without modifications, as long as this notice is preserved.
 # Define automake variable PTY_LIB to the library needed (if any).
 AC_DEFUN([gl_PTY_LIB],
 [
+  AC_REQUIRE([AC_CANONICAL_HOST])
   # Check for the library required for forkpty.
   PTY_LIB=
-  save_LIBS="$LIBS"
-  AC_SEARCH_LIBS([forkpty], [util],
-    [if test "$ac_cv_search_forkpty" != "none required"; then
-       PTY_LIB="$ac_cv_search_forkpty"
-     fi])
-  LIBS="$save_LIBS"
+  case "$host_os" in
+    haiku*) PTY_LIB='-lbsd' ;;
+    *)
+      save_LIBS="$LIBS"
+      AC_SEARCH_LIBS([forkpty], [util],
+        [if test "$ac_cv_search_forkpty" != "none required"; then
+           PTY_LIB="$ac_cv_search_forkpty"
+         fi
+        ])
+      LIBS="$save_LIBS"
+      ;;
+  esac
   AC_SUBST([PTY_LIB])
 ])
 
@@ -25,8 +32,8 @@ AC_DEFUN([gl_FUNC_FORKPTY],
   AC_REQUIRE([gl_PTY_LIB])
   AC_REQUIRE([gl_PTY_H])
 
-  dnl We assume that forkpty exists (possibly in libc, possibly in libutil)
-  dnl if and only if it is declared.
+  dnl We assume that forkpty exists (possibly in libc, possibly in libutil or
+  dnl libbsd) if and only if it is declared.
   AC_CHECK_DECLS([forkpty],,, [[
 /* <sys/types.h> is a prerequisite of <libutil.h> on FreeBSD 8.0.  */
 #include <sys/types.h>
@@ -90,8 +97,8 @@ AC_DEFUN([gl_FUNC_OPENPTY],
   dnl Persuade Solaris <stdlib.h> to declare posix_openpt().
   AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
 
-  dnl We assume that openpty exists (possibly in libc, possibly in libutil)
-  dnl if and only if it is declared.
+  dnl We assume that openpty exists (possibly in libc, possibly in libutil or
+  dnl libbsd) if and only if it is declared.
   AC_CHECK_DECLS([openpty],,, [[
 /* <sys/types.h> is a prerequisite of <libutil.h> on FreeBSD 8.0.  */
 #include <sys/types.h>
