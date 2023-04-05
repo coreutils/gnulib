@@ -1,6 +1,6 @@
 /* A GNU-like <stdlib.h>.
 
-   Copyright (C) 1995, 2001-2004, 2006-2022 Free Software Foundation, Inc.
+   Copyright (C) 1995, 2001-2004, 2006-2023 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as
@@ -67,9 +67,7 @@
 #  include <random.h>
 # endif
 
-# if !@HAVE_STRUCT_RANDOM_DATA@ || @REPLACE_RANDOM_R@ || !@HAVE_RANDOM_R@
-#  include <stdint.h>
-# endif
+# include <stdint.h>
 
 # if !@HAVE_STRUCT_RANDOM_DATA@
 /* Define 'struct random_data'.
