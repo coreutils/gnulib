@@ -25,4 +25,8 @@ MidnightBSD 2.0.
 @item
 The third parameter is @code{long} instead of @code{size_t} on some platforms:
 MidnightBSD 2.0.
+@item
+This function makes out-of-bounds writes on some platforms:
+@c https://dev.haiku-os.org/ticket/18346
+Haiku.
 @end itemize

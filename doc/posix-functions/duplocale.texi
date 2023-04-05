@@ -26,4 +26,9 @@ FreeBSD 9.0, NetBSD 5.0, OpenBSD 6.1, Minix 3.1.8, AIX 6.1, HP-UX 11, IRIX 6.5, 
 This function is useless because the @code{locale_t} type is not defined
 on some platforms:
 z/OS.
+@item
+With the argument @code{LC_GLOBAL_LOCALE}, this function returns a wrong result
+on some platforms:
+@c https://dev.haiku-os.org/ticket/18345
+Haiku.
 @end itemize

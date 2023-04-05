@@ -33,4 +33,9 @@ HP-UX 11.11.
 This function fails with error code @code{EINVAL} instead of @code{ERANGE} when
 the second argument is zero on some platforms:
 HP-UX 11.31.
+@item
+This function fails with error code @code{ENOMEM} instead of @code{ERANGE} on
+some platforms:
+@c https://dev.haiku-os.org/ticket/18349
+Haiku.
 @end itemize
