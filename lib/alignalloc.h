@@ -1,6 +1,6 @@
 /* aligned memory allocation
 
-   Copyright 2022 Free Software Foundation, Inc.
+   Copyright 2022-2023 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ _GL_INLINE_HEADER_BEGIN
 /* Whether aligned_alloc supports any power-of-two alignment,
    returns a nonnull pointer for size-zero allocations,
    and sets errno on failure.  */
-#if 2 < __GLIBC__ + (15 <= __GLIBC_MINOR__)
+#if 2 < __GLIBC__ + (16 <= __GLIBC_MINOR__)
 # define ALIGNALLOC_VIA_ALIGNED_ALLOC 1
 #else
 # define ALIGNALLOC_VIA_ALIGNED_ALLOC 0
