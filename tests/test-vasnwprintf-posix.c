@@ -4205,7 +4205,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
     ASSERT (result != NULL);
     /* Neither ISO C nor POSIX specify that the '0' flag is ignored when a width
        and a precision are both present.  But most implementations do so.  */
-    #if MUSL_LIBC || defined __MINGW32__
+    #if MUSL_LIBC
     ASSERT (wcscmp (result, L"00000000000303c 33") == 0);
     #else
     ASSERT (wcscmp (result, L"     000000303c 33") == 0);
@@ -4291,7 +4291,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
     ASSERT (result != NULL);
     /* Neither ISO C nor POSIX specify that the '0' flag is ignored when a width
        and a precision are both present.  But most implementations do so.  */
-    #if MUSL_LIBC || defined __MINGW32__
+    #if MUSL_LIBC
     ASSERT (wcscmp (result, L"0x000000000303c 33") == 0);
     #else
     ASSERT (wcscmp (result, L"   0x000000303c 33") == 0);
