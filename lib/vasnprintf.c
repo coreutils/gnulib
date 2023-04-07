@@ -103,7 +103,7 @@
 
 #include "attribute.h"
 
-#if NEED_PRINTF_DOUBLE || NEED_PRINTF_LONG_DOUBLE
+#if NEED_PRINTF_DOUBLE || NEED_PRINTF_LONG_DOUBLE || (NEED_WPRINTF_DIRECTIVE_LA && WIDE_CHAR_VERSION)
 # include <math.h>
 # include "float+.h"
 #endif
@@ -113,7 +113,7 @@
 # include "isnand-nolibm.h"
 #endif
 
-#if NEED_PRINTF_LONG_DOUBLE || NEED_PRINTF_INFINITE_LONG_DOUBLE
+#if NEED_PRINTF_LONG_DOUBLE || NEED_PRINTF_INFINITE_LONG_DOUBLE || (NEED_WPRINTF_DIRECTIVE_LA && WIDE_CHAR_VERSION)
 # include <math.h>
 # include "isnanl-nolibm.h"
 # include "fpucw.h"
@@ -125,7 +125,7 @@
 # include "printf-frexp.h"
 #endif
 
-#if NEED_PRINTF_DIRECTIVE_A || NEED_PRINTF_LONG_DOUBLE
+#if NEED_PRINTF_DIRECTIVE_A || NEED_PRINTF_LONG_DOUBLE || (NEED_WPRINTF_DIRECTIVE_LA && WIDE_CHAR_VERSION)
 # include <math.h>
 # include "isnanl-nolibm.h"
 # include "printf-frexpl.h"
@@ -357,7 +357,7 @@ local_wctomb (char *s, wchar_t wc)
 # endif
 #endif
 
-#if NEED_PRINTF_DIRECTIVE_A || NEED_PRINTF_LONG_DOUBLE || NEED_PRINTF_INFINITE_LONG_DOUBLE || NEED_PRINTF_DOUBLE || NEED_PRINTF_INFINITE_DOUBLE
+#if NEED_PRINTF_DIRECTIVE_A || NEED_PRINTF_LONG_DOUBLE || NEED_PRINTF_INFINITE_LONG_DOUBLE || NEED_PRINTF_DOUBLE || NEED_PRINTF_INFINITE_DOUBLE || (NEED_WPRINTF_DIRECTIVE_LA && WIDE_CHAR_VERSION)
 /* Determine the decimal-point character according to the current locale.  */
 # ifndef decimal_point_char_defined
 #  define decimal_point_char_defined 1
@@ -3929,14 +3929,14 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                 length += count;
               }
 #endif
-#if NEED_PRINTF_DIRECTIVE_A || NEED_PRINTF_LONG_DOUBLE || NEED_PRINTF_DOUBLE
+#if NEED_PRINTF_DIRECTIVE_A || NEED_PRINTF_LONG_DOUBLE || NEED_PRINTF_DOUBLE || (NEED_WPRINTF_DIRECTIVE_LA && WIDE_CHAR_VERSION)
             else if ((dp->conversion == 'a' || dp->conversion == 'A')
 # if !(NEED_PRINTF_DIRECTIVE_A || (NEED_PRINTF_LONG_DOUBLE && NEED_PRINTF_DOUBLE))
                      && (0
 #  if NEED_PRINTF_DOUBLE
                          || a.arg[dp->arg_index].type == TYPE_DOUBLE
 #  endif
-#  if NEED_PRINTF_LONG_DOUBLE
+#  if NEED_PRINTF_LONG_DOUBLE || (NEED_WPRINTF_DIRECTIVE_LA && WIDE_CHAR_VERSION)
                          || a.arg[dp->arg_index].type == TYPE_LONGDOUBLE
 #  endif
                         )
@@ -4056,7 +4056,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                 p = tmp;
                 if (type == TYPE_LONGDOUBLE)
                   {
-# if NEED_PRINTF_DIRECTIVE_A || NEED_PRINTF_LONG_DOUBLE
+# if NEED_PRINTF_DIRECTIVE_A || NEED_PRINTF_LONG_DOUBLE || (NEED_WPRINTF_DIRECTIVE_LA && WIDE_CHAR_VERSION)
                     long double arg = a.arg[dp->arg_index].a.a_longdouble;
 
                     if (isnanl (arg))

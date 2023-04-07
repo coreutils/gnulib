@@ -1,4 +1,4 @@
-# vasnprintf.m4 serial 48
+# vasnprintf.m4 serial 49
 dnl Copyright (C) 2002-2004, 2006-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -112,6 +112,15 @@ AC_DEFUN_ONCE([gl_PREREQ_VASNWPRINTF],
       AC_DEFINE([NEED_WPRINTF_DIRECTIVE_C], [1],
         [Define if the vasnwprintf implementation needs special code for
          the 'c' directive.])
+      ;;
+  esac
+  gl_SWPRINTF_DIRECTIVE_LA
+  case "$gl_cv_func_printf_directive_a" in
+    *yes) ;;
+    *)
+      AC_DEFINE([NEED_WPRINTF_DIRECTIVE_LA], [1],
+        [Define if the vasnwprintf implementation needs special code for
+         the 'a' directive with 'long double' arguments.])
       ;;
   esac
   gl_MUSL_LIBC

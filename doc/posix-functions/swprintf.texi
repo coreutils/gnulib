@@ -36,6 +36,12 @@ accommodate all Unicode characters.
 @item
 On Windows, this function does not take a buffer size as second argument.
 @item
+This function produces wrong values for the @samp{La} directive
+on some platforms:
+glibc 2.15,
+@c https://dev.haiku-os.org/ticket/18353
+Haiku.
+@item
 This function does not support size specifiers as in C23 (@code{w8},
 @code{w16}, @code{w32}, @code{w64}, @code{wf8}, @code{wf16}, @code{wf32},
 @code{wf64}) on some platforms:
