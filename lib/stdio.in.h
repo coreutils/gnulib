@@ -209,12 +209,11 @@
 #ifndef _PRINTF_NAN_LEN_MAX
 # if defined __FreeBSD__ || defined __DragonFly__ \
      || defined __NetBSD__ \
-     || defined __OpenBSD__ \
      || (defined __APPLE__ && defined __MACH__)
 /* On BSD systems, a NaN value prints as just "nan", without a sign.  */
 #  define _PRINTF_NAN_LEN_MAX 3
-# elif (__GLIBC__ >= 2) || MUSL_LIBC || defined __sun || defined __CYGWIN__
-/* glibc, musl libc, Solaris libc, and Cygwin produce "[-]nan".  */
+# elif (__GLIBC__ >= 2) || MUSL_LIBC || defined __OpenBSD__ || defined __sun || defined __CYGWIN__
+/* glibc, musl libc, OpenBSD, Solaris libc, and Cygwin produce "[-]nan".  */
 #  define _PRINTF_NAN_LEN_MAX 4
 # elif defined _AIX
 /* AIX produces "[-]NaNQ".  */
