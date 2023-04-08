@@ -115,7 +115,7 @@ AC_DEFUN_ONCE([gl_PREREQ_VASNWPRINTF],
       ;;
   esac
   gl_SWPRINTF_DIRECTIVE_LA
-  case "$gl_cv_func_printf_directive_a" in
+  case "$gl_cv_func_swprintf_directive_la" in
     *yes) ;;
     *)
       AC_DEFINE([NEED_WPRINTF_DIRECTIVE_LA], [1],
