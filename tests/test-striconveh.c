@@ -462,8 +462,10 @@ main ()
         }
     }
 
-# if defined _LIBICONV_VERSION || (defined __GLIBC__ && !defined __UCLIBC__)
-  /* Test conversion from ASCII to GB18030 with invalid input (EILSEQ).  */
+# if defined _LIBICONV_VERSION || ((__GLIBC__ + (__GLIBC_MINOR__ >= 16) > 2) && !defined __UCLIBC__)
+  /* Test conversion from ASCII to GB18030 with invalid input (EILSEQ).
+     Note: glibc's GB18030 converter was buggy in glibc-2.15; fixed by
+     Andreas Schwab on 2012-02-06.  */
   for (h = 0; h < SIZEOF (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
@@ -746,8 +748,10 @@ main ()
             }
         }
 
-#   if defined _LIBICONV_VERSION || (defined __GLIBC__ && !defined __UCLIBC__)
-      /* Test conversion from UTF-7 to GB18030 with EILSEQ.  */
+#   if defined _LIBICONV_VERSION || ((__GLIBC__ + (__GLIBC_MINOR__ >= 16) > 2) && !defined __UCLIBC__)
+      /* Test conversion from UTF-7 to GB18030 with EILSEQ.
+         Note: glibc's GB18030 converter was buggy in glibc-2.15; fixed by
+         Andreas Schwab on 2012-02-06.  */
       for (h = 0; h < SIZEOF (handlers); h++)
         {
           enum iconv_ilseq_handler handler = handlers[h];
@@ -985,8 +989,10 @@ main ()
         }
     }
 
-# if defined _LIBICONV_VERSION || (defined __GLIBC__ && !defined __UCLIBC__)
-  /* Test conversion from ASCII to GB18030 with invalid input (EILSEQ).  */
+# if defined _LIBICONV_VERSION || ((__GLIBC__ + (__GLIBC_MINOR__ >= 16) > 2) && !defined __UCLIBC__)
+  /* Test conversion from ASCII to GB18030 with invalid input (EILSEQ).
+     Note: glibc's GB18030 converter was buggy in glibc-2.15; fixed by
+     Andreas Schwab on 2012-02-06.  */
   for (h = 0; h < SIZEOF (handlers); h++)
     {
       enum iconv_ilseq_handler handler = handlers[h];
