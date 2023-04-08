@@ -154,7 +154,9 @@ _GL_CXXALIAS_RPL (time, time_t, (time_t *__tp));
 #  else
 _GL_CXXALIAS_SYS (time, time_t, (time_t *__tp));
 #  endif
+#  if __GLIBC__ >= 2
 _GL_CXXALIASWARN (time);
+#  endif
 # endif
 
 /* Sleep for at least RQTP seconds unless interrupted,  If interrupted,
