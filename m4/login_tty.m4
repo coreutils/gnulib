@@ -1,4 +1,4 @@
-# login_tty.m4 serial 2
+# login_tty.m4 serial 3
 dnl Copyright (C) 2010-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,7 +8,7 @@ AC_DEFUN([gl_FUNC_LOGIN_TTY],
 [
   AC_REQUIRE([gl_PTY_LIB])
 
-  AC_CHECK_HEADERS_ONCE([utmp.h util.h libutil.h])
+  AC_CHECK_HEADERS_ONCE([utmp.h util.h libutil.h termios.h])
   gl_saved_libs="$LIBS"
   LIBS="$LIBS $PTY_LIB"
   gl_CHECK_FUNCS_ANDROID([login_tty], [[
@@ -20,6 +20,8 @@ AC_DEFUN([gl_FUNC_LOGIN_TTY],
     # include <util.h>
     #elif HAVE_LIBUTIL_H
     # include <libutil.h>
+    #elif HAVE_TERMIOS_H
+    # include <termios.h>
     #endif
   ]])
   LIBS="$gl_saved_LIBS"

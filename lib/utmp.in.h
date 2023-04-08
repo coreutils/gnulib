@@ -33,13 +33,16 @@
 #define _@GUARD_PREFIX@_UTMP_H
 
 /* FreeBSD, NetBSD, OpenBSD, macOS, Minix, Haiku declare login_tty in
-   <util.h> or <libutil.h>, not in <utmp.h>.  */
+   <util.h> or <libutil.h>, not in <utmp.h>.  Solaris declares it in
+   <termios.h>, not in <utmp.h>.  */
 /* But in any case avoid namespace pollution on glibc systems.  */
 #if (@GNULIB_LOGIN_TTY@ || defined GNULIB_POSIXCHECK) && ! defined __GLIBC__
 # if HAVE_UTIL_H      /* macOS, NetBSD, OpenBSD, Minix */
 #  include <util.h>
 # elif HAVE_LIBUTIL_H /* FreeBSD, Haiku */
 #  include <libutil.h>
+# elif HAVE_TERMIOS_H /* Solaris */
+#  include <termios.h>
 # endif
 #endif
 
