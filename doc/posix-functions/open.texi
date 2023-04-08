@@ -42,6 +42,11 @@ Portability problems not fixed by Gnulib:
 The Gnulib replacement for @code{O_CLOEXEC} is not atomic, and so is
 not safe in the presence of multiple threads or signal handlers.
 @item
+@code{open ("symlink", O_CREAT ...)} fails when the argument points to a
+nonexistent file in an existing directory on some platforms:
+@c https://dev.haiku-os.org/ticket/18355
+Haiku.
+@item
 @code{open ("symlink", O_NOFOLLOW ...)} fails with @code{errno} set to
 @code{EMLINK} instead of the POSIX-required @code{ELOOP} on some
 platforms:
