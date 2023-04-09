@@ -23,4 +23,9 @@ Portability problems not fixed by Gnulib:
 @item
 On Windows and 32-bit AIX platforms, @code{wchar_t} is a 16-bit type and therefore cannot
 accommodate all Unicode characters.
+@item
+This function returns wrong values even for the ASCII characters
+in a zh_CN.GB18030 locale on some platforms:
+@c https://gnats.netbsd.org/cgi-bin/query-pr-single.pl?number=57339
+NetBSD 9.0.
 @end itemize
