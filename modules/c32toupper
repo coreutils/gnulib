@@ -1,0 +1,44 @@
+Description:
+c32toupper() function: map 32-bit wide character to uppercase.
+
+Files:
+lib/c32toupper.c
+lib/c32to-impl.h
+m4/mbrtoc32.m4
+m4/mbrtowc.m4
+m4/locale-fr.m4
+m4/locale-ja.m4
+m4/locale-zh.m4
+m4/codeset.m4
+
+Depends-on:
+uchar
+wchar
+wctype-h
+localcharset    [test $REPLACE_MBSTATE_T = 1]
+streq           [test $REPLACE_MBSTATE_T = 1]
+unicase/toupper
+assert-h
+
+configure.ac:
+AC_REQUIRE([gl_UCHAR_H])
+dnl Determine REPLACE_MBSTATE_T, from which GNULIB_defined_mbstate_t is
+dnl determined.  It describes how mbrtoc32 is implemented.
+AC_REQUIRE([gl_MBSTATE_T_BROKEN])
+AC_REQUIRE([gl_MBRTOC32_SANITYCHECK])
+gl_UCHAR_MODULE_INDICATOR([c32toupper])
+
+Makefile.am:
+lib_SOURCES += c32toupper.c
+
+Include:
+<uchar.h>
+
+Link:
+$(LTLIBUNISTRING) when linking with libtool, $(LIBUNISTRING) otherwise
+
+License:
+LGPLv3+ or GPLv2+
+
+Maintainer:
+Bruno Haible

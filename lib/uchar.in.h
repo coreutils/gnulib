@@ -359,6 +359,21 @@ _GL_FUNCDECL_SYS (c32tolower, wint_t, (wint_t wc));
 _GL_CXXALIAS_SYS (c32tolower, wint_t, (wint_t wc));
 _GL_CXXALIASWARN (c32tolower);
 #endif
+#if @GNULIB_C32TOUPPER@
+# if (_GL_WCHAR_T_IS_UCS4 && !GNULIB_defined_mbstate_t) && !defined IN_C32TOUPPER
+_GL_BEGIN_C_LINKAGE
+_GL_INLINE wint_t
+c32toupper (wint_t wc)
+{
+  return towupper (wc);
+}
+_GL_END_C_LINKAGE
+# else
+_GL_FUNCDECL_SYS (c32toupper, wint_t, (wint_t wc));
+# endif
+_GL_CXXALIAS_SYS (c32toupper, wint_t, (wint_t wc));
+_GL_CXXALIASWARN (c32toupper);
+#endif
 
 
 /* Converts a 32-bit wide character to a multibyte character.  */
