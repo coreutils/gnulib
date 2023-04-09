@@ -1,0 +1,30 @@
+Files:
+tests/test-c32toupper.sh
+tests/test-c32toupper.c
+tests/signature.h
+tests/macros.h
+m4/locale-fr.m4
+m4/locale-ja.m4
+m4/locale-zh.m4
+m4/codeset.m4
+
+Depends-on:
+mbrtoc32
+c32rtomb
+setlocale
+
+configure.ac:
+gt_LOCALE_FR
+gt_LOCALE_FR_UTF8
+gt_LOCALE_JA
+gt_LOCALE_ZH_CN
+
+Makefile.am:
+TESTS += test-c32toupper.sh
+TESTS_ENVIRONMENT += \
+  LOCALE_FR='@LOCALE_FR@' \
+  LOCALE_FR_UTF8='@LOCALE_FR_UTF8@' \
+  LOCALE_JA='@LOCALE_JA@' \
+  LOCALE_ZH_CN='@LOCALE_ZH_CN@'
+check_PROGRAMS += test-c32toupper
+test_c32toupper_LDADD = $(LDADD) $(SETLOCALE_LIB) $(MBRTOWC_LIB) $(LIBUNISTRING)
