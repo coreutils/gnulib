@@ -1,5 +1,5 @@
 /* Convert multibyte character to 32-bit wide character.
-   Copyright (C) 2020-2022 Free Software Foundation, Inc.
+   Copyright (C) 2020-2023 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as
@@ -29,6 +29,13 @@
 #if GNULIB_defined_mbstate_t /* AIX, IRIX */
 /* Implement mbrtoc32() on top of mbtowc() for the non-UTF-8 locales
    and directly for the UTF-8 locales.  */
+
+/* Note: On AIX (64-bit) we can implement mbrtoc32 in two equivalent ways:
+   - in a way that parallels the override of mbrtowc; this is the code branch
+     here;
+   - in a way that invokes the overridden mbrtowc; this would be the #else
+     branch below.
+   They are equivalent.  */
 
 # if defined _WIN32 && !defined __CYGWIN__
 
