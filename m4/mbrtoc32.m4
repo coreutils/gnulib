@@ -1,4 +1,4 @@
-# mbrtoc32.m4 serial 9.1
+# mbrtoc32.m4 serial 9.2
 dnl Copyright (C) 2014-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -12,7 +12,7 @@ AC_DEFUN([gl_FUNC_MBRTOC32],
   dnl Determine REPLACE_MBSTATE_T, from which GNULIB_defined_mbstate_t is
   dnl determined.  It describes how our overridden mbrtowc is implemented.
   dnl We then implement mbrtoc32 accordingly.
-  gl_MBSTATE_T_BROKEN
+  AC_REQUIRE([gl_MBSTATE_T_BROKEN])
 
   AC_REQUIRE([gl_TYPE_CHAR32_T])
   AC_REQUIRE([gl_MBRTOC32_SANITYCHECK])
