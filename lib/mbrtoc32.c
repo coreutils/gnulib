@@ -30,6 +30,13 @@
 /* Implement mbrtoc32() on top of mbtowc() for the non-UTF-8 locales
    and directly for the UTF-8 locales.  */
 
+/* Note: On AIX (64-bit) we can implement mbrtoc32 in two equivalent ways:
+   - in a way that parallels the override of mbrtowc; this is the code branch
+     here;
+   - in a way that invokes the overridden mbrtowc; this would be the #else
+     branch below.
+   They are equivalent.  */
+
 # if defined _WIN32 && !defined __CYGWIN__
 
 #  define WIN32_LEAN_AND_MEAN  /* avoid including junk */
