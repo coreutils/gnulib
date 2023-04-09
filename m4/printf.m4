@@ -1,4 +1,4 @@
-# printf.m4 serial 81
+# printf.m4 serial 82
 dnl Copyright (C) 2003, 2007-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -1988,7 +1988,7 @@ int main ()
              AC_EGREP_CPP([Unlucky], [
                #include <features.h>
                #ifdef __GNU_LIBRARY__
-                #if ((__GLIBC__ == 2 && __GLIBC_MINOR__ >= 17) || (__GLIBC__ > 2)) && !defined __UCLIBC__
+                #if ((__GLIBC__ == 2 && __GLIBC_MINOR__ >= 16) || (__GLIBC__ > 2)) && !defined __UCLIBC__
                  Unlucky
                 #endif
                #endif
