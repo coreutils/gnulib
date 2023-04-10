@@ -11,7 +11,7 @@ Files:
 Depends-on:
 largefile
 
-configure.ac:
+configure.ac-early:
 AC_REQUIRE([AC_SYS_YEAR2038])
 
 Makefile.am:
