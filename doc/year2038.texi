@@ -8,15 +8,39 @@ after 2038-01-19 03:14:08 UTC@.  See
 @url{https://en.wikipedia.org/wiki/Year_2038_problem, Year 2038
 problem} for details.
 
-The Gnulib module @samp{year2038-required} fixes this problem, by
-making @code{time_t} wide enough to represent timestamps after 2038.
-This has no effect on most current systems, which have timestamps that
-are already wide enough.  However, @samp{year2038-required} arranges
-for builds on legacy 32-bit x86 and ARM Linux kernels running glibc
-2.34 and later to compile with @samp{_TIME_BITS=64} to get wider
+The Gnulib module @samp{year2038} fixes this problem on some
+platforms, by making @code{time_t} wide enough to represent timestamps
+after 2038.  This has no effect on most current platforms, which have
+timestamps that are already wide enough.  However, @samp{year2038} by
+default arranges for builds on legacy 32-bit Linux kernels running
+glibc 2.34 and later to compile with @samp{_TIME_BITS=64} to get wider
 timestamps.  On older platforms that do not support timestamps after
-the year 2038, @samp{year2038-required} causes @command{configure} to
-fail.
+the year 2038, @samp{year2038} causes @command{configure} to issue a
+warning but still proceed.  On platforms that appear to support
+post-2038 timestamps but where something prevents this from working,
+@command{configure} fails.
+
+The default behavior of @samp{year2038} can be overridden by using the
+@command{configure} option @option{--disable-year2038}, which
+suppresses support for post-2038 timestamps.  This may be useful if
+the package links to other libraries whose user-facing ABIs still
+require @code{time_t} to be 32-bit on your platform.
+
+The Gnulib module @samp{year2038-required} is like @samp{year2038},
+except it rejects platforms where @code{time_t} cannot represent
+timestamps after 2038, and it lacks a @option{--disable-year2038}
+option.  If this module is used and a 32-platform cannot support
+64-bit @code{time_t}, one can still fix the year-2038 problem by using
+a 64-bit instead of a 32-bit build, as noted in the architecture list
+below.  If all else fails one can configure with
+@samp{ac_year2038_required=no}; however, the resulting programs will
+mishandle timestamps after 2038.
+
+The Gnulib module @samp{year2038-required} is
+recommended for packages intended for use on 32-bit platforms
+after the year 2038.  However, if your package needs to support
+32-bit platforms that will not be used after the year 2038,
+you can use the @samp{year2038} module instead.
 
 With the @samp{year2038-required} module, @command{configure} fails
 on the following 32-bit platforms (or ABIs in bi-arch systems):
@@ -65,26 +89,11 @@ FreeBSD/arm,
 Minix 3.3.
 @end itemize
 
-The Gnulib module @samp{year2038} is like @samp{year2038-required},
-except that it causes @command{configure} to fail only when it appears
-that the current system should support post-2038 timestamps but
-something prevents that from working.  Also, @samp{year2038} gives
-@command{configure} a @option{--disable-year2038} option, which
-suppresses support for post-2038 timestamps.  This may be useful if
-the package links to other libraries whose user-facing ABIs still
-require @code{time_t} to be 32-bit on your platform.
-
-The Gnulib module @samp{year2038-required} is
-recommended for any package that might be used after the year 2038 on
-32-bit platforms.  However, if your package needs to support
-platforms that will not be used after the year 2038,
-you can use the @samp{year2038} module instead.
-
 If the Gnulib module @samp{largefile} is used but neither
 @samp{year2038} nor @samp{year2038-required} is used,
 @command{configure} will have an option @option{--enable-year2038}
 that causes @code{configure} to behave as if @samp{year2038} was used.
 This is for packages that have long used @samp{largefile} but have not
-gotten around to upgrade their Gnulib module list to include
-@samp{year2038-required} or @samp{year2038}.
+gotten around to upgrading their Gnulib module list to include
+@samp{year2038} or @samp{year2038-required}.
 @xref{Large File Support}.
