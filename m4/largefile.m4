@@ -24,29 +24,9 @@ AC_DEFUN([gl_SET_LARGEFILE_SOURCE],
  ]])
 )
 
-# Work around a problem in autoconf <= 2.69:
-# AC_SYS_LARGEFILE does not configure for large inodes on Mac OS X 10.5,
-# or configures them incorrectly in some cases.
-m4_version_prereq([2.70], [], [
-
-# _AC_SYS_LARGEFILE_TEST_INCLUDES
-# -------------------------------
-m4_define([_AC_SYS_LARGEFILE_TEST_INCLUDES],
-[#include <sys/types.h>
- /* Check that off_t can represent 2**63 - 1 correctly.
-    We can't simply define LARGE_OFF_T to be 9223372036854775807,
-    since some C++ compilers masquerading as C compilers
-    incorrectly reject 9223372036854775807.  */
-#define LARGE_OFF_T (((off_t) 1 << 31 << 31) - 1 + ((off_t) 1 << 31 << 31))
-  int off_t_is_large[[(LARGE_OFF_T % 2147483629 == 721
-                       && LARGE_OFF_T % 2147483647 == 1)
-                      ? 1 : -1]];[]dnl
-])
-])# m4_version_prereq 2.70
-
-# Support AC_SYS_YEAR2038, even if Autoconf 2.71 or earlier.
-# This code is taken from Autoconf master.
-m4_ifndef([AC_SYS_YEAR2038], [
+m4_ifndef([AC_SYS_LARGEFILE_REQUIRED], [
+# Support AC_SYS_LARGEFILE_REQUIRED and Y2038 macros, even if
+# Autoconf 2.71 or earlier.  This code is taken from Autoconf master.
 
 # _AC_SYS_YEAR2038_TEST_CODE
 # --------------------------
@@ -118,8 +98,10 @@ AS_CASE([$ac_cv_sys_year2038_opts],
   ["none needed"], [],
   ["support not detected"],
     [ac_have_year2038=no
-     AS_CASE([$enable_year2038],
-      [yes],
+     AS_CASE([$ac_year2038_required,$enable_year2038],
+      [yes,*],
+        [AC_MSG_FAILURE([support for timestamps after Jan 2038 is required])],
+      [*,yes],
         [# If we're not cross compiling and 'touch' works with a large
         # timestamp, then we can presume the system supports wider time_t
         # *somehow* and we just weren't able to detect it.  One common
@@ -165,19 +147,24 @@ AS_CASE([$ac_cv_sys_year2038_opts],
 # --enable-year2038, or a --disable-year2038, or no option at all to
 # the configure script.  Note that this is expanded very late and
 # therefore there cannot be any code in the AC_ARG_ENABLE.  The
-# default value for enable_year2038 is emitted unconditionally
+# default value for 'enable_year2038' is emitted unconditionally
 # because the generated code always looks at this variable.
 m4_define([_AC_SYS_YEAR2038_ENABLE],
 [m4_divert_text([DEFAULTS],
+  m4_provide_if([AC_SYS_YEAR2038_REQUIRED],
+    [ac_year2038_required=yes],
+    [ac_year2038_required=no]))dnl
+m4_divert_text([DEFAULTS],
   m4_provide_if([AC_SYS_YEAR2038],
     [enable_year2038=yes],
     [enable_year2038=no]))]dnl
+[m4_provide_if([AC_SYS_YEAR2038_REQUIRED], [],
 [AC_ARG_ENABLE([year2038],
   m4_provide_if([AC_SYS_YEAR2038],
     [AS_HELP_STRING([--disable-year2038],
-      [do not support timestamps after 2038])],
+      [omit support for dates after Jan 2038])],
     [AS_HELP_STRING([--enable-year2038],
-      [support timestamps after 2038])]))])
+      [include support for dates after Jan 2038])]))])])
 
 # _AC_SYS_YEAR2038_OPT_IN
 # -----------------------
@@ -189,7 +176,8 @@ m4_define([_AC_SYS_YEAR2038_ENABLE],
 # documented macro.
 AC_DEFUN([_AC_SYS_YEAR2038_OPT_IN],
 [m4_provide_if([_AC_SYS_YEAR2038_PROBE], [], [dnl
-  AS_IF([test "$enable_year2038" != no], [_AC_SYS_YEAR2038_PROBE])
+  AS_IF([test "$ac_year2038_required,$enable_year2038" != no,no],
+    [_AC_SYS_YEAR2038_PROBE])
   AC_CONFIG_COMMANDS_PRE([_AC_SYS_YEAR2038_ENABLE])
 ])])
 
@@ -199,9 +187,26 @@ AC_DEFUN([_AC_SYS_YEAR2038_OPT_IN],
 # On systems where time_t is not always 64 bits, this probe can be
 # skipped by passing the --disable-year2038 option to configure.
 AC_DEFUN([AC_SYS_YEAR2038],
-[AC_REQUIRE([AC_SYS_LARGEFILE])]dnl
+[m4_provide_if([AC_SYS_LARGEFILE_REQUIRED], [],
+  [AC_REQUIRE([AC_SYS_LARGEFILE])])]dnl
 [m4_provide_if([_AC_SYS_YEAR2038_PROBE], [], [dnl
-  AS_IF([test "$enable_year2038" != no], [_AC_SYS_YEAR2038_PROBE])
+  AS_IF([test "$ac_year2038_required,$enable_year2038" != no,no],
+    [_AC_SYS_YEAR2038_PROBE])
+  AC_CONFIG_COMMANDS_PRE([_AC_SYS_YEAR2038_ENABLE])
+])])
+
+# AC_SYS_YEAR2038_REQUIRED
+# ------------------------
+# Same as AC_SYS_YEAR2038, but declares that this program *requires*
+# support for large time_t.  If we cannot find any way to make time_t
+# capable of representing values larger than 2**31 - 1, configure will
+# error out.  Furthermore, no --enable-year2038 nor --disable-year2038
+# option will be available.
+AC_DEFUN([AC_SYS_YEAR2038_REQUIRED],
+[m4_provide_if([AC_SYS_LARGEFILE_REQUIRED], [],
+  [AC_REQUIRE([AC_SYS_LARGEFILE])])]dnl
+[m4_provide_if([_AC_SYS_YEAR2038_PROBE], [], [dnl
+  _AC_SYS_YEAR2038_PROBE
   AC_CONFIG_COMMANDS_PRE([_AC_SYS_YEAR2038_ENABLE])
 ])])
 
@@ -219,6 +224,8 @@ m4_define([_AC_SYS_LARGEFILE_TEST_CODE],
 		       && LARGE_OFF_T % 2147483647 == 1)
 		      ? 1 : -1]];[]dnl
 ])
+# Defined by Autoconf 2.71 and circa 2022 Gnulib unwisely depended on it.
+m4_define([_AC_SYS_LARGEFILE_TEST_INCLUDES], [_AC_SYS_LARGEFILE_TEST_CODE])
 
 # _AC_SYS_LARGEFILE_OPTIONS
 # -------------------------
@@ -228,8 +235,8 @@ m4_define([_AC_SYS_LARGEFILE_TEST_CODE],
 m4_define([_AC_SYS_LARGEFILE_OPTIONS], m4_normalize(
     ["none needed"]                   dnl Most current systems
     ["-D_FILE_OFFSET_BITS=64"]        dnl X/Open LFS spec
-    ["-D_LARGE_FILES=1"]              dnl AIX (which versions?)
-    ["-n32"]                          dnl Irix 6.2 w/ SGI compiler
+    ["-D_LARGE_FILES=1"]              dnl 32-bit AIX 4.2.1+, 32-bit z/OS
+    ["-n32"]                          dnl 32-bit IRIX 6, SGI cc (obsolete)
 ))
 
 # _AC_SYS_LARGEFILE_PROBE
@@ -265,7 +272,9 @@ ac_have_largefile=yes
 AS_CASE([$ac_cv_sys_largefile_opts],
   ["none needed"], [],
   ["support not detected"],
-    [ac_have_largefile=no],
+    [ac_have_largefile=no
+     AS_IF([test $ac_largefile_required,$ac_year2038_required != no,no],
+       [AC_MSG_FAILURE([support for large files is required])])],
 
   ["-D_FILE_OFFSET_BITS=64"],
     [AC_DEFINE([_FILE_OFFSET_BITS], [64],
@@ -286,16 +295,25 @@ _AC_SYS_YEAR2038_OPT_IN
 
 # _AC_SYS_LARGEFILE_ENABLE
 # ------------------------
-# Subroutine of AC_SYS_LARGEFILE.  Note that this
+# Subroutine of AC_SYS_LARGEFILE.  If AC_SYS_LARGEFILE_REQUIRED was
+# not used at any point in this configure script, add a
+# --disable-largefile option to the configure script.  Note that this
 # is expanded very late and therefore there cannot be any code in the
-# AC_ARG_ENABLE.  The default value for enable_largefile is emitted
+# AC_ARG_ENABLE.  The default value for 'enable_largefile' is emitted
 # unconditionally because the generated shell code always looks at
 # this variable.
 m4_define([_AC_SYS_LARGEFILE_ENABLE],
 [m4_divert_text([DEFAULTS],
-  enable_largefile=yes)]dnl
-[AC_ARG_ENABLE([largefile],
-  [AS_HELP_STRING([--disable-largefile], [omit support for large files])])])
+  m4_provide_if([AC_SYS_LARGEFILE_REQUIRED],
+    [ac_largefile_required=yes],
+    [ac_largefile_required=no]))dnl
+m4_divert_text([DEFAULTS],
+  [enable_largefile=yes])]dnl
+[m4_provide_if([AC_SYS_LARGEFILE_REQUIRED], [],
+   [m4_provide_if([AC_SYS_YEAR2038_REQUIRED], [],
+      [AC_ARG_ENABLE([largefile],
+         [AS_HELP_STRING([--disable-largefile],
+	    [omit support for large files])])])])])
 
 # AC_SYS_LARGEFILE
 # ----------------
@@ -307,13 +325,29 @@ m4_define([_AC_SYS_LARGEFILE_ENABLE],
 # to have a 64-bit inode number cannot be accessed by 32-bit applications on
 # Linux x86/x86_64.  This can occur with file systems such as XFS and NFS.
 # This macro allows configuration to continue if the system doesn't support
-# large files.
+# large files; see also AC_SYS_LARGEFILE_REQUIRED.
 AC_DEFUN([AC_SYS_LARGEFILE],
 [m4_provide_if([_AC_SYS_LARGEFILE_PROBE], [], [dnl
-  AS_IF([test "$enable_largefile" != no], [_AC_SYS_LARGEFILE_PROBE])
+  AS_IF([test "$ac_largefile_required,$enable_largefile,$ac_year2038_required" != no,no,no],
+    [_AC_SYS_LARGEFILE_PROBE])
   AC_CONFIG_COMMANDS_PRE([_AC_SYS_LARGEFILE_ENABLE])
 ])])
-])# m4_ifndef AC_SYS_YEAR2038
+
+# AC_SYS_LARGEFILE_REQUIRED
+# -------------------------
+# Same as AC_SYS_LARGEFILE, but declares that this program *requires*
+# support for large files.  If we cannot find a combination of compiler
+# options and #defines that makes 'off_t' capable of representing 2**63 - 1,
+# 'configure' will error out.  Furthermore, 'configure' will not offer a
+# --disable-largefile command line option.
+# If both AC_SYS_LARGEFILE and AC_SYS_LARGEFILE_REQUIRED are used in the
+# same configure script -- in either order -- AC_SYS_LARGEFILE_REQUIRED wins.
+AC_DEFUN([AC_SYS_LARGEFILE_REQUIRED],
+[m4_provide_if([_AC_SYS_LARGEFILE_PROBE], [], [dnl
+  _AC_SYS_LARGEFILE_PROBE
+  AC_CONFIG_COMMANDS_PRE([_AC_SYS_LARGEFILE_ENABLE])
+])])
+])# m4_ifndef AC_SYS_LARGEFILE_REQUIRED
 
 # Enable large files on systems where this is implemented by Gnulib, not by the
 # system headers.

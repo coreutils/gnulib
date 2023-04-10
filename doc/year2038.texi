@@ -1,25 +1,43 @@
 @node Avoiding the year 2038 problem
 @section Avoiding the year 2038 problem
 
-The ``year 2038 problem'' denotes unpredictable behaviour of programs
-that will likely occur in the year 2038, for programs that use a 32-bit
-@samp{time_t} type.  See @url{https://en.wikipedia.org/wiki/Year_2038_problem}
-for details.
+The ``year 2038 problem'' denotes unpredictable behaviour that will
+likely occur in the year 2038, for programs that use a 32-bit signed
+integer @samp{time_t} type that cannot represent timestamps on or
+after 2038-01-19 03:14:08 UTC@.  See
+@url{https://en.wikipedia.org/wiki/Year_2038_problem, Year 2038
+problem} for details.
 
-The Gnulib module @samp{year2038} attempts to avoid this problem, by
-ensuring that @code{time_t} is a 64-bit type and by causing
-@code{configure} to fail otherwise.
+The Gnulib module @samp{year2038-required} fixes this problem, by
+making @code{time_t} wide enough to represent timestamps after 2038.
+This has no effect on most current systems, which have timestamps that
+are already wide enough.  However, @samp{year2038-required} arranges
+for builds on legacy 32-bit x86 and ARM Linux kernels running glibc
+2.34 and later to compile with @samp{_TIME_BITS=64} to get wider
+timestamps.  On older platforms that do not support timestamps after
+the year 2038, @samp{year2038-required} causes @command{configure} to
+fail.
 
-The Gnulib module @samp{largefile} also attempts to avoid this problem
-when possible, because @samp{largefile} enables the widest
-file-related types supported by the system and @code{time_t} is one of
-those types.  However, @code{largefile} does not cause
-@code{configure} to fail when the year 2038 problem is not avoidable.
+The Gnulib module @samp{year2038} is like @samp{year2038-required},
+except that it causes @command{configure} to fail only when it appears
+that the current system should support post-2038 timestamps but
+something prevents that from working.  Also, @samp{year2038} gives
+@command{configure} a @option{--disable-year2038} option, which
+suppresses support for post-2038 timestamps.  This may be useful if
+the package links to other libraries whose user-facing ABIs still
+require @code{time_t} to be 32-bit on your platform.
 
-The Gnulib @samp{largefile} and @samp{year2038} modules are
+The Gnulib module @samp{year2038-required} is
 recommended for any package that might be used after the year 2038 on
-32-bit platforms.  However, if you build such a package you can
-disable its use of 64-bit @code{time_t} by giving the
-@code{--disable-year2038} option to @code{configure}.  This may be
-useful if the package links to other libraries whose user-facing ABIs
-still require @code{time_t} to be 32-bit on your platform.
+32-bit platforms.  However, if your package needs to support
+platforms that will not be used after the year 2038,
+you can use the @samp{year2038} module instead.
+
+If the Gnulib module @samp{largefile} is used but neither
+@samp{year2038} nor @samp{year2038-required} is used,
+@command{configure} will have an option @option{--enable-year2038}
+that causes @code{configure} to behave as if @samp{year2038} was used.
+This is for packages that have long used @samp{largefile} but have not
+gotten around to upgrade their Gnulib module list to include
+@samp{year2038-required} or @samp{year2038}.
+@xref{Large File Support}.

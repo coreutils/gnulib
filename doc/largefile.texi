@@ -1,9 +1,22 @@
 @node Large File Support
 @section Large File Support
 
-The module provides support for files larger than 2 GB, or with device
-or inode numbers or timestamps exceeding 32 bits.  To this effect, it
-ensures that types like @code{off_t} and @code{time_t} are 64-bit when possible,
+The Gnulib @samp{largefile-required} module provides support for files
+2 GiB and larger, or with device or inode numbers exceeding 32 bits.
+To this effect, it ensures that types like @code{off_t} and
+@code{ino_t} are 64-bit,
 at least on the following platforms:
 glibc, Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, IRIX, Solaris,
 Cygwin, mingw, MSVC.
+
+The Gnulib @samp{largefile} module is similar, except that it gives
+@command{configure} an option @samp{--disable-largefile} that
+suppresses support for large files.  This may be useful if the package
+links to other libraries whose user-facing ABIs still require
+@code{off_t} or most other file-related types to be 32-bit on your
+platform.
+
+Both modules also add to @command{configure} an option
+@code{--enable-year2038}, needed on some platforms to access files
+with timestamps past the year 2038.  @xref{Avoiding the year 2038
+problem}.
