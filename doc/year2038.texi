@@ -18,6 +18,51 @@ timestamps.  On older platforms that do not support timestamps after
 the year 2038, @samp{year2038-required} causes @command{configure} to
 fail.
 
+With the @samp{year2038-required} module, @command{configure} fails
+on the following 32-bit platforms (or ABIs in bi-arch systems):
+@itemize
+@item
+Linux with glibc < 2.34 on
+x86, arm, mips (32-bit or n32 ABI), powerpc, sparc, s390, hppa, m68k, sh, csky, microblaze, nios2,
+@item
+Linux/riscv32,
+@item
+Mac OS X on x86 and powerpc,
+@item
+GNU/Hurd/x86,
+@item
+GNU/kFreeBSD/x86,
+@item
+FreeBSD/x86,
+@item
+MidnightBSD/x86,
+@item
+AIX/powerpc,
+@item
+Solaris 10 and 11 on x86 and sparc,
+@item
+Cygwin/x86,
+@item
+Haiku/x86.
+@end itemize
+
+Whereas no failure will occur on the following 32-bit platforms or ABIs:
+@itemize
+@item
+Linux/x86 with glibc >= 2.34 on
+x86, arm, mips (32-bit or n32 ABI), powerpc, sparc, s390, hppa, m68k, sh, csky, microblaze, nios2,
+@item
+Linux/x86_64-x32,
+@item
+NetBSD on x86 and sparc,
+@item
+OpenBSD/x86,
+@item
+FreeBSD/arm,
+@item
+Minix 3.3.
+@end itemize
+
 The Gnulib module @samp{year2038} is like @samp{year2038-required},
 except that it causes @command{configure} to fail only when it appears
 that the current system should support post-2038 timestamps but
