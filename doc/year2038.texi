@@ -25,6 +25,8 @@ on the following 32-bit platforms (or ABIs in bi-arch systems):
 Linux with glibc < 2.34 on
 x86, arm, mips (32-bit or n32 ABI), powerpc, sparc, s390, hppa, m68k, sh, csky, microblaze, nios2,
 @item
+Linux with musl libc on x86,
+@item
 Linux/riscv32,
 @item
 Mac OS X on x86 and powerpc,
