@@ -51,49 +51,53 @@ gotten around to upgrading their Gnulib module list to include
 @samp{year2038} or @samp{year2038-required}.
 @xref{Large File Support}.
 
-With the @samp{year2038-required} module, @command{configure} fails
-on the following 32-bit platforms (or ABIs in bi-arch systems):
+With the @samp{year2038-required} module, @command{configure} by
+default should work on the following 32-bit platforms (or 32-bit ABIs
+in bi-arch systems):
+
 @itemize
 @item
-Linux with glibc < 2.34 on
+Linux kernel 5.1 (2019) and later with glibc 2.34 (2021) and later on
 x86, arm, mips (32-bit or n32 ABI), powerpc, sparc, s390, hppa, m68k, sh, csky, microblaze, nios2,
 @item
-Linux with musl libc on x86,
+Linux kernel 5.1 (2019) and later with musl libc 1.2 (2020) and later on x86,
 @item
-Linux/riscv32,
+Linux on arc, loong32, riscv32 and x86_64-x32,
 @item
-Mac OS X on x86 and powerpc,
+NetBSD 6.0 (2012) and later on x86 and sparc,
+@item
+OpenBSD 5.5 (2014) and later on x86,
+@item
+FreeBSD/arm,
+@item
+Minix 3.3.
+@end itemize
+
+@noindent
+Whereas @command{configure} with @samp{year2038-required} will fail on
+earlier versions of the abovementioned platforms if a version is listed,
+and it will also fail on all versions of the following older 32-bit
+platforms or ABIs:
+
+@itemize
+@item
+Mac OS X 10.6 (2009) and earlier on x86 and powerpc,
 @item
 GNU/Hurd/x86,
 @item
 GNU/kFreeBSD/x86,
 @item
-FreeBSD/x86,
+FreeBSD/x86 (this port demoted to Tier 2 in FreeBSD 13 [2021]
+and planned to never have 64-bit @code{time_t}),
 @item
 MidnightBSD/x86,
 @item
-AIX/powerpc,
+AIX/powerpc (to fix, configure with @samp{CC='gcc -maix64' AR='ar -X64'}),
 @item
-Solaris 10 and 11 on x86 and sparc,
+Solaris 11.4 (2018) and earlier on x86 and sparc
+(to fix, configure with @samp{CC='gcc -m64'}),
 @item
-Cygwin/x86,
+Cygwin 3.3.6 (2022) and earlier on x86,
 @item
 Haiku/x86.
-@end itemize
-
-Whereas no failure will occur on the following 32-bit platforms or ABIs:
-@itemize
-@item
-Linux/x86 with glibc >= 2.34 on
-x86, arm, mips (32-bit or n32 ABI), powerpc, sparc, s390, hppa, m68k, sh, csky, microblaze, nios2,
-@item
-Linux/x86_64-x32,
-@item
-NetBSD on x86 and sparc,
-@item
-OpenBSD/x86,
-@item
-FreeBSD/arm,
-@item
-Minix 3.3.
 @end itemize
