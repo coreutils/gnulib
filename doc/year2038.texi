@@ -42,6 +42,15 @@ after the year 2038.  However, if your package needs to support
 32-bit platforms that will not be used after the year 2038,
 you can use the @samp{year2038} module instead.
 
+If the Gnulib module @samp{largefile} is used but neither
+@samp{year2038} nor @samp{year2038-required} is used,
+@command{configure} will have an option @option{--enable-year2038}
+that causes @code{configure} to behave as if @samp{year2038} was used.
+This is for packages that have long used @samp{largefile} but have not
+gotten around to upgrading their Gnulib module list to include
+@samp{year2038} or @samp{year2038-required}.
+@xref{Large File Support}.
+
 With the @samp{year2038-required} module, @command{configure} fails
 on the following 32-bit platforms (or ABIs in bi-arch systems):
 @itemize
@@ -88,12 +97,3 @@ FreeBSD/arm,
 @item
 Minix 3.3.
 @end itemize
-
-If the Gnulib module @samp{largefile} is used but neither
-@samp{year2038} nor @samp{year2038-required} is used,
-@command{configure} will have an option @option{--enable-year2038}
-that causes @code{configure} to behave as if @samp{year2038} was used.
-This is for packages that have long used @samp{largefile} but have not
-gotten around to upgrading their Gnulib module list to include
-@samp{year2038} or @samp{year2038-required}.
-@xref{Large File Support}.
