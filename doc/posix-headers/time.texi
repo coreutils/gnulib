@@ -19,7 +19,7 @@ NetBSD 5.0.
 @end itemize
 
 Portability problems fixed by the Gnulib modules
-@code{year2038-required} and @code{year-2038}:
+@code{year2038-required} and @code{year2038}:
 @itemize
 @item
 On some platforms where @code{time_t} defaults to 32-bit but can be
