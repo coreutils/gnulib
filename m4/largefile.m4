@@ -10,7 +10,7 @@
 # It does not set _LARGEFILE_SOURCE=1 on HP-UX/ia64 32-bit, although this
 # setting of _LARGEFILE_SOURCE is needed so that <stdio.h> declares fseeko
 # and ftello in C++ mode as well.
-# Fixed in Autoconf 2.72, which has AC_SYS_YEAR2038.
+# This problem occurs in Autoconf 2.71 and earlier, which lack AC_SYS_YEAR2038.
 AC_DEFUN([gl_SET_LARGEFILE_SOURCE],
  m4_ifndef([AC_SYS_YEAR2038], [[
   AC_REQUIRE([AC_CANONICAL_HOST])
