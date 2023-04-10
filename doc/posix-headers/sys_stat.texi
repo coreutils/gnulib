@@ -37,11 +37,11 @@ Portability problems fixed by Gnulib module @code{sys_stat}, together with modul
 On Windows platforms (excluding Cygwin), @code{st_ino} is always 0.
 @end itemize
 
+@xref{Avoiding the year 2038 problem}, for portability issues with the
+@code{time_t} components of @code{struct stat}.
+
 Portability problems not fixed by Gnulib:
 @itemize
-@item
-@xref{time.h}, for general portability problems with the
-@code{time_t} components of @code{struct stat}.
 @item
 The macro @code{S_IFBLK} is missing on some platforms:
 MSVC 14.

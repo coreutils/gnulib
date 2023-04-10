@@ -18,7 +18,7 @@ on some platforms:
 MSVC 14.
 @item
 On platforms where @code{off_t} is a 32-bit type, @code{lseek} does not work
-correctly with files larger than 2 GB@.  (Cf. @code{AC_SYS_LARGEFILE}.)
+correctly with files 2 GiB and larger.  @xref{Large File Support}.
 @item
 This function mistakenly succeeds on pipes on some platforms: mingw, MSVC 14.
 @end itemize

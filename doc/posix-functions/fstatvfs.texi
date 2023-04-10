@@ -8,6 +8,11 @@ Gnulib module: ---
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+On platforms where @code{f_blocks} in @samp{struct statvfs} is a 32-bit
+value, this function may not work correctly on files systems larger than
+4 TiB@.  @xref{Large File Support}.  This affects
+glibc/Hurd, HP-UX 11, Solaris.
 @end itemize
 
 Portability problems not fixed by Gnulib:
@@ -15,9 +20,4 @@ Portability problems not fixed by Gnulib:
 @item
 This function is missing on some platforms:
 OpenBSD 3.8, mingw, MSVC 14, Android 4.3.
-@item
-On platforms where @code{f_blocks} in @samp{struct statvfs} is a 32-bit
-value, this function may not work correctly on files systems larger than
-4 TiB@.  The fix is to use the @code{AC_SYS_LARGEFILE} macro.  This affects
-glibc/Hurd, HP-UX 11, Solaris.
 @end itemize

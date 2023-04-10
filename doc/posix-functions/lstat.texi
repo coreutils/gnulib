@@ -10,13 +10,13 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 On platforms where @code{off_t} is a 32-bit type, @code{lstat} may not
-correctly report the size of files or block devices larger than 2 GB.
-(Cf. @code{AC_SYS_LARGEFILE}.)
+correctly report the size of files or block devices 2 GiB and larger.
+@xref{Large File Support}.
 @item
 On Linux/x86 and Linux/x86_64, applications compiled in 32-bit mode cannot
 access files that happen to have a 64-bit inode number.  This can occur with
 file systems such as XFS (typically on large disks) and NFS.
-(Cf. @code{AC_SYS_LARGEFILE}.)
+@xref{Large File Support}.
 @item
 For symlinks, when the argument ends in a slash, some platforms don't
 dereference the argument:
