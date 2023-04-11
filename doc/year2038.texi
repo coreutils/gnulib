@@ -58,11 +58,11 @@ in bi-arch systems):
 @itemize
 @item
 Linux kernel 5.1 (2019) and later with glibc 2.34 (2021) and later on
-x86, arm, mips (32-bit or n32 ABI), powerpc, sparc, s390, hppa, m68k, sh, csky, microblaze, nios2,
+x86, arm, mips (32-bit or n32 ABI), powerpc32, sparc32, s390, hppa, m68k, sh, csky, microblaze, nios2,
 @item
 Linux kernel 5.1 (2019) and later with musl libc 1.2 (2020) and later on x86,
 @item
-Linux on arc, loong32, riscv32 and x86_64-x32,
+Linux on arc, loong32, ork1, riscv32 and x86_64-x32,
 @item
 NetBSD 6.0 (2012) and later on x86 and sparc,
 @item
@@ -80,6 +80,8 @@ and it will also fail on all versions of the following older 32-bit
 platforms or ABIs:
 
 @itemize
+@item
+Android,
 @item
 Mac OS X 10.6 (2009) and earlier on x86 and powerpc,
 @item
