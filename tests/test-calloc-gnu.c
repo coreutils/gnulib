@@ -63,7 +63,7 @@ main ()
         ASSERT (p == NULL);
         ASSERT (errno == ENOMEM);
 
-	p = calloc (SIZE_MAX / n + 1, identity (n));
+        p = calloc (SIZE_MAX / n + 1, identity (n));
         ASSERT (p == NULL);
         ASSERT (errno == ENOMEM);
       }

@@ -134,31 +134,31 @@ bug_regex11 (void)
     {
       n = regcomp (&re, tests[i].pattern, tests[i].flags);
       if (n != 0)
-	{
-	  char buf[500];
-	  regerror (n, &re, buf, sizeof (buf));
-	  report_error ("%s: regcomp %zd failed: %s", tests[i].pattern, i, buf);
-	  continue;
-	}
+        {
+          char buf[500];
+          regerror (n, &re, buf, sizeof (buf));
+          report_error ("%s: regcomp %zd failed: %s", tests[i].pattern, i, buf);
+          continue;
+        }
 
       if (regexec (&re, tests[i].string, tests[i].nmatch, rm, 0))
-	{
-	  report_error ("%s: regexec %zd failed", tests[i].pattern, i);
-	  regfree (&re);
-	  continue;
-	}
+        {
+          report_error ("%s: regexec %zd failed", tests[i].pattern, i);
+          regfree (&re);
+          continue;
+        }
 
       for (n = 0; n < tests[i].nmatch; ++n)
-	if (rm[n].rm_so != tests[i].rm[n].rm_so
+        if (rm[n].rm_so != tests[i].rm[n].rm_so
               || rm[n].rm_eo != tests[i].rm[n].rm_eo)
-	  {
-	    if (tests[i].rm[n].rm_so == -1 && tests[i].rm[n].rm_eo == -1)
-	      break;
-	    report_error ("%s: regexec %zd match failure rm[%d] %d..%d",
+          {
+            if (tests[i].rm[n].rm_so == -1 && tests[i].rm[n].rm_eo == -1)
+              break;
+            report_error ("%s: regexec %zd match failure rm[%d] %d..%d",
                           tests[i].pattern, i, n,
                           (int) rm[n].rm_so, (int) rm[n].rm_eo);
-	    break;
-	  }
+            break;
+          }
 
       regfree (&re);
     }
