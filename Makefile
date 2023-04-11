@@ -80,10 +80,12 @@ allow_AC_LIBOBJ =	\
   fcntl			\
   fprintf-posix		\
   open			\
-  printf-posix-rpl	\
+  printf-posix		\
   snprintf		\
   sprintf-posix		\
   stdio_h		\
+  termcap		\
+  terminfo		\
   vasnprintf		\
   vasprintf		\
   vdprintf		\
