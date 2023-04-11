@@ -1,5 +1,5 @@
 # GNU Makefile for gnulib central.
-# Copyright (C) 2006, 2009-2022 Free Software Foundation, Inc.
+# Copyright (C) 2006, 2009-2023 Free Software Foundation, Inc.
 #
 # Copying and distribution of this file, with or without modification,
 # in any medium, are permitted without royalty provided the copyright
@@ -65,7 +65,7 @@ sc_prohibit_sc_omitted_at:
 sc_maint:
 	@rm -f maint.mk; ln -s top/maint.mk maint.mk
 	$(MAKE) -s srcdir=. gnulib_dir=. _build-aux=build-aux \
-            -f cfg.mk -f maint.mk syntax-check
+	        -f cfg.mk -f maint.mk syntax-check
 	rm -f maint.mk
 
 # Files in m4/ that (exceptionally) may use AC_LIBOBJ.
@@ -186,5 +186,5 @@ update-copyright:
 	perl -pi -e '$(_year_and_prev) s/ $$w-$$y / $$y /g'		\
 	  doc/gendocs_template* build-aux/gendocs.sh
 	perl -pi -e							\
-          '$(_year_and_prev) s/^(scriptversion=)$$w.*/$$1$$y-01-01.00/i' \
+	  '$(_year_and_prev) s/^(scriptversion=)$$w.*/$$1$$y-01-01.00/i' \
 	  build-aux/gendocs.sh
