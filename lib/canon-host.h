@@ -20,6 +20,11 @@
 #ifndef CANON_HOST_H
 # define CANON_HOST_H 1
 
+/* This file uses _GL_ATTRIBUTE_MALLOC.  */
+# if !_GL_CONFIG_H_INCLUDED
+#  error "Please include config.h first."
+# endif
+
 # include <stdlib.h>
 
 char *canon_host (char const *host)

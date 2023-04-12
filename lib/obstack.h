@@ -103,6 +103,11 @@
 #ifndef _OBSTACK_H
 #define _OBSTACK_H 1
 
+/* This file uses _Noreturn, _GL_ATTRIBUTE_PURE.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #ifndef _OBSTACK_INTERFACE_VERSION
 # define _OBSTACK_INTERFACE_VERSION 2
 #endif

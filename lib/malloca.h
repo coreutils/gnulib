@@ -18,6 +18,12 @@
 #ifndef _MALLOCA_H
 #define _MALLOCA_H
 
+/* This file uses _GL_ATTRIBUTE_ALLOC_SIZE, _GL_ATTRIBUTE_DEALLOC,
+   _GL_ATTRIBUTE_MALLOC.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #include <alloca.h>
 #include <stddef.h>
 #include <stdlib.h>

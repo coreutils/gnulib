@@ -29,6 +29,12 @@
 #ifndef _@GUARD_PREFIX@_DIRENT_H
 #define _@GUARD_PREFIX@_DIRENT_H
 
+/* This file uses _GL_ATTRIBUTE_DEALLOC, _GL_ATTRIBUTE_MALLOC,
+   _GL_ATTRIBUTE_PURE, GNULIB_POSIXCHECK.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 /* Get ino_t.  Needed on some systems, including glibc 2.8.  */
 #include <sys/types.h>
 

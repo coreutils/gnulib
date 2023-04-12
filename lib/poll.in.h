@@ -33,6 +33,11 @@
 #ifndef _@GUARD_PREFIX@_POLL_H
 #define _@GUARD_PREFIX@_POLL_H
 
+/* This file uses GNULIB_POSIXCHECK.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 /* On native Windows, get the 'struct pollfd' type and the POLL* macro
    definitions before we override them.  mingw defines them in <winsock2.h>
    if _WIN32_WINNT >= 0x0600.  */

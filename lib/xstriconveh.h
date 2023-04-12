@@ -18,6 +18,11 @@
 #ifndef _XSTRICONVEH_H
 #define _XSTRICONVEH_H
 
+/* This file uses _GL_ATTRIBUTE_MALLOC.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #include <stdlib.h>
 
 /* Get the 'enum iconv_ilseq_handler' and iconveh_t types, and the

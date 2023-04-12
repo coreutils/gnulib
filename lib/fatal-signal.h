@@ -19,6 +19,11 @@
 #ifndef _FATAL_SIGNAL_H
 #define _FATAL_SIGNAL_H
 
+/* This file uses _GL_ASYNC_SAFE.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #include <signal.h>
 
 #ifdef __cplusplus

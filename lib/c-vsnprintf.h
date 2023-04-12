@@ -17,6 +17,11 @@
 #ifndef _C_VSNPRINTF_H
 #define _C_VSNPRINTF_H
 
+/* This file uses _GL_ATTRIBUTE_FORMAT.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 /* Get size_t.  */
 #include <stddef.h>
 

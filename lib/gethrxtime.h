@@ -20,11 +20,13 @@
 #ifndef GETHRXTIME_H_
 #define GETHRXTIME_H_ 1
 
-#include "xtime.h"
-
-#ifndef _GL_INLINE_HEADER_BEGIN
+/* This file uses _GL_INLINE_HEADER_BEGIN, _GL_INLINE.  */
+#if !_GL_CONFIG_H_INCLUDED
  #error "Please include config.h first."
 #endif
+
+#include "xtime.h"
+
 _GL_INLINE_HEADER_BEGIN
 #ifndef GETHRXTIME_INLINE
 # define GETHRXTIME_INLINE _GL_INLINE

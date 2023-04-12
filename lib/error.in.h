@@ -30,6 +30,11 @@
 #ifndef _@GUARD_PREFIX@_ERROR_H
 #define _@GUARD_PREFIX@_ERROR_H
 
+/* This file uses _GL_ATTRIBUTE_FORMAT.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 /* Get _GL_ATTRIBUTE_SPEC_PRINTF_STANDARD, _GL_ATTRIBUTE_SPEC_PRINTF_SYSTEM.  */
 #include <stdio.h>
 

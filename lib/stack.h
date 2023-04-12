@@ -58,6 +58,11 @@
      #include "xalloc.h"
 */
 
+/* This file uses _GL_ATTRIBUTE_PURE.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #ifndef GL_STACK_ELEMENT
 # error "Please define GL_STACK_ELEMENT first."
 #endif

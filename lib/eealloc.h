@@ -29,11 +29,14 @@
    and realloc() this way; on such platforms the workalikes are aliased
    to the original malloc()/realloc() functions.  */
 
-#include <stdlib.h>
-
-#ifndef _GL_INLINE_HEADER_BEGIN
+/* This file uses _GL_INLINE_HEADER_BEGIN, _GL_INLINE, _GL_ATTRIBUTE_ALLOC_SIZE,
+   _GL_ATTRIBUTE_MALLOC.  */
+#if !_GL_CONFIG_H_INCLUDED
  #error "Please include config.h first."
 #endif
+
+#include <stdlib.h>
+
 _GL_INLINE_HEADER_BEGIN
 #ifndef EEALLOC_INLINE
 # define EEALLOC_INLINE _GL_INLINE

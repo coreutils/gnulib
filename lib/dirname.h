@@ -19,6 +19,12 @@
 #ifndef DIRNAME_H_
 # define DIRNAME_H_ 1
 
+/* This file uses _GL_ATTRIBUTE_MALLOC, _GL_ATTRIBUTE_PURE,
+   _GL_ATTRIBUTE_RETURNS_NONNULL.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 # include <stdlib.h>
 # include "filename.h"
 # include "basename-lgpl.h"

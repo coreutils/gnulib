@@ -49,6 +49,11 @@
 #ifndef _FTS_H
 # define _FTS_H 1
 
+/* This file uses _GL_ATTRIBUTE_DEALLOC, _GL_ATTRIBUTE_NODISCARD.  */
+# if !_LIBC && !_GL_CONFIG_H_INCLUDED
+#  error "Please include config.h first."
+# endif
+
 # ifdef _LIBC
 #  include <features.h>
 #  if __STDC_VERSION__ < 199901L

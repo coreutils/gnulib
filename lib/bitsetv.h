@@ -21,6 +21,11 @@
 #ifndef _BITSETV_H
 #define _BITSETV_H
 
+/* This file uses _GL_ATTRIBUTE_DEALLOC.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #include "bitset.h"
 
 typedef bitset * bitsetv;

@@ -18,12 +18,15 @@
 #ifndef _GL_XMAP_H
 #define _GL_XMAP_H
 
+/* This file uses _GL_INLINE_HEADER_BEGIN, _GL_INLINE,
+   _GL_ATTRIBUTE_RETURNS_NONNULL.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #include "gl_map.h"
 #include "xalloc.h"
 
-#ifndef _GL_INLINE_HEADER_BEGIN
- #error "Please include config.h first."
-#endif
 _GL_INLINE_HEADER_BEGIN
 #ifndef GL_XMAP_INLINE
 # define GL_XMAP_INLINE _GL_INLINE

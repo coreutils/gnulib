@@ -45,6 +45,11 @@
 
 # @INCLUDE_NEXT@ @NEXT_TIME_H@
 
+/* This file uses _GL_ATTRIBUTE_DEPRECATED, GNULIB_POSIXCHECK.  */
+# if !_GL_CONFIG_H_INCLUDED
+#  error "Please include config.h first."
+# endif
+
 /* NetBSD 5.0 mis-defines NULL.  */
 # include <stddef.h>
 

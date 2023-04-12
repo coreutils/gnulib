@@ -32,6 +32,11 @@
 #ifndef _@GUARD_PREFIX@_SCHED_H
 #define _@GUARD_PREFIX@_SCHED_H
 
+/* This file uses GNULIB_POSIXCHECK.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 /* Get pid_t.
    This is needed on glibc 2.11 (see
    glibc bug <https://sourceware.org/bugzilla/show_bug.cgi?id=13198>)

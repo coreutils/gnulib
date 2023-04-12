@@ -17,6 +17,11 @@
 #ifndef _XPRINTF_H
 #define _XPRINTF_H
 
+/* This file uses _GL_ATTRIBUTE_FORMAT.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #include <stdarg.h>
 #include <stdio.h>
 

@@ -18,11 +18,13 @@
 #ifndef _GL_SIG_HANDLER_H
 #define _GL_SIG_HANDLER_H
 
-#include <signal.h>
-
-#ifndef _GL_INLINE_HEADER_BEGIN
+/* This file uses _GL_INLINE_HEADER_BEGIN, _GL_INLINE, _GL_ATTRIBUTE_PURE.  */
+#if !_GL_CONFIG_H_INCLUDED
  #error "Please include config.h first."
 #endif
+
+#include <signal.h>
+
 _GL_INLINE_HEADER_BEGIN
 #ifndef SIG_HANDLER_INLINE
 # define SIG_HANDLER_INLINE _GL_INLINE

@@ -21,6 +21,11 @@
 #ifndef _GL_SAVEDIR_H
 #define _GL_SAVEDIR_H
 
+/* This file uses _GL_ATTRIBUTE_MALLOC.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #include <dirent.h>
 #include <stdlib.h>
 

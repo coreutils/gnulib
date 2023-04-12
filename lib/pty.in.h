@@ -29,6 +29,11 @@
 #ifndef _@GUARD_PREFIX@_PTY_H
 #define _@GUARD_PREFIX@_PTY_H
 
+/* This file uses GNULIB_POSIXCHECK.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 /* Some platforms declare this in a different header than glibc.  */
 #if @HAVE_UTIL_H@
 # include <util.h>

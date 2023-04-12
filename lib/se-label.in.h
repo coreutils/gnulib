@@ -17,15 +17,17 @@
 /* Written by Paul Eggert.  */
 
 #ifndef SELINUX_LABEL_H
-
 #define SELINUX_LABEL_H
+
+/* This file uses _GL_INLINE_HEADER_BEGIN, _GL_INLINE,
+   _GL_ATTRIBUTE_MAYBE_UNUSED.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
 
 #include <selinux/selinux.h>
 #include <errno.h>
 
-#ifndef _GL_INLINE_HEADER_BEGIN
- #error "Please include config.h first."
-#endif
 _GL_INLINE_HEADER_BEGIN
 #ifndef SE_LABEL_INLINE
 # define SE_LABEL_INLINE _GL_INLINE

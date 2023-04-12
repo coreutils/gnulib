@@ -36,6 +36,11 @@
 #ifndef _@GUARD_PREFIX@_NETDB_H
 #define _@GUARD_PREFIX@_NETDB_H
 
+/* This file uses GNULIB_POSIXCHECK.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 /* Get <netdb.h> definitions such as 'socklen_t' on IRIX 6.5 and OSF/1 4.0 and
    'struct hostent' on MinGW.  */
 #include <sys/socket.h>

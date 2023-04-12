@@ -34,6 +34,11 @@
 #ifndef _@GUARD_PREFIX@_LANGINFO_H
 #define _@GUARD_PREFIX@_LANGINFO_H
 
+/* This file uses GNULIB_POSIXCHECK.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 
 #if !@HAVE_LANGINFO_H@
 

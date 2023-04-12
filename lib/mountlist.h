@@ -19,6 +19,11 @@
 #ifndef MOUNTLIST_H_
 # define MOUNTLIST_H_
 
+/* This file uses _GL_ATTRIBUTE_MALLOC.  */
+# if !_GL_CONFIG_H_INCLUDED
+#  error "Please include config.h first."
+# endif
+
 # include <sys/types.h>
 
 /* A mount table entry. */

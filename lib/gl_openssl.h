@@ -17,13 +17,15 @@
 
 /* Written by Pádraig Brady */
 
+/* This file uses _GL_INLINE_HEADER_BEGIN, _GL_INLINE.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #ifndef GL_OPENSSL_NAME
 # error "Please define GL_OPENSSL_NAME to 1,5,256 etc."
 #endif
 
-#ifndef _GL_INLINE_HEADER_BEGIN
-# error "Please include config.h first."
-#endif
 _GL_INLINE_HEADER_BEGIN
 #ifndef GL_OPENSSL_INLINE
 # define GL_OPENSSL_INLINE _GL_INLINE

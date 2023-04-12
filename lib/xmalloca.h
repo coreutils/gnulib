@@ -18,6 +18,12 @@
 #ifndef _XMALLOCA_H
 #define _XMALLOCA_H
 
+/* This file uses _GL_ATTRIBUTE_ALLOC_SIZE, _GL_ATTRIBUTE_DEALLOC,
+   _GL_ATTRIBUTE_MALLOC, _GL_ATTRIBUTE_RETURNS_NONNULL.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #include "malloca.h"
 #include "xalloc.h"
 #include "xalloc-oversized.h"

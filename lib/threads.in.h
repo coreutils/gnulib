@@ -47,6 +47,11 @@
 #ifndef _@GUARD_PREFIX@_THREADS_H
 #define _@GUARD_PREFIX@_THREADS_H
 
+/* This file uses _GL_ATTRIBUTE_PURE, GNULIB_POSIXCHECK, _Thread_local.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #if !@HAVE_THREADS_H@
 
 # include <time.h>

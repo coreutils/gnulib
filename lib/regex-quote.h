@@ -18,6 +18,11 @@
 #ifndef _REGEX_QUOTE_H
 #define _REGEX_QUOTE_H
 
+/* This file uses _GL_ATTRIBUTE_MALLOC, _GL_ATTRIBUTE_RETURNS_NONNULL.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #include <stdlib.h>
 
 /* Specifies a quotation task for converting a fixed string to a regular

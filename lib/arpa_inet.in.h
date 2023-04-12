@@ -49,6 +49,11 @@
 #ifndef _@GUARD_PREFIX@_ARPA_INET_H
 #define _@GUARD_PREFIX@_ARPA_INET_H
 
+/* This file uses GNULIB_POSIXCHECK.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 /* Get all possible declarations of inet_ntop() and inet_pton().  */
 #if (@GNULIB_INET_NTOP@ || @GNULIB_INET_PTON@ || defined GNULIB_POSIXCHECK) \
     && @HAVE_WS2TCPIP_H@

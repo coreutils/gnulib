@@ -138,6 +138,95 @@ sc_check_sym_list:
 	  <(sed -n /^_intprops_name/,/^_intprops_syms_re/p top/maint.mk \
 	    |sed '/^_/d;s/^  //;s/	*\\$$//')
 
+
+# List of C macros defined through AH_VERBATIM in m4/extern-inline.m4:
+config_h_MACROS1 = \
+  _GL_INLINE \
+  _GL_EXTERN_INLINE \
+  _GL_INLINE_HEADER_BEGIN \
+  _GL_INLINE_HEADER_END
+# List of C macros defined through AH_VERBATIM in m4/gnulib-common.m4:
+config_h_MACROS2 = \
+  _GL_GNUC_PREREQ \
+  _Noreturn \
+  _GL_ATTRIBUTE_ALLOC_SIZE \
+  _GL_ATTRIBUTE_ALWAYS_INLINE \
+  _GL_ATTRIBUTE_ARTIFICIAL \
+  _GL_ATTRIBUTE_COLD \
+  _GL_ATTRIBUTE_CONST \
+  _GL_ATTRIBUTE_DEALLOC \
+  _GL_ATTRIBUTE_DEPRECATED \
+  _GL_ATTRIBUTE_ERROR \
+  _GL_ATTRIBUTE_WARNING \
+  _GL_ATTRIBUTE_EXTERNALLY_VISIBLE \
+  _GL_ATTRIBUTE_FALLTHROUGH \
+  _GL_ATTRIBUTE_FORMAT \
+  _GL_ATTRIBUTE_LEAF \
+  _GL_ATTRIBUTE_MALLOC \
+  _GL_ATTRIBUTE_MAY_ALIAS \
+  _GL_ATTRIBUTE_MAYBE_UNUSED \
+  _GL_UNUSED \
+  _GL_ATTRIBUTE_NODISCARD \
+  _GL_ATTRIBUTE_NOINLINE \
+  _GL_ATTRIBUTE_NONNULL \
+  _GL_ATTRIBUTE_NONSTRING \
+  _GL_ATTRIBUTE_NOTHROW \
+  _GL_ATTRIBUTE_PACKED \
+  _GL_ATTRIBUTE_PURE \
+  _GL_ATTRIBUTE_RETURNS_NONNULL \
+  _GL_ATTRIBUTE_SENTINEL \
+  _GL_ATTRIBUTE_UNUSED \
+  _GL_UNUSED_LABEL \
+  _GL_BEGIN_C_LINKAGE \
+  _GL_END_C_LINKAGE \
+  _GL_ASYNC_SAFE \
+  _GL_CMP
+# List of C macros defined through AH_VERBATIM in m4/nullptr.m4:
+config_h_MACROS3 = \
+  nullptr
+# List of C macros defined through AH_VERBATIM in m4/posixcheck.m4:
+config_h_MACROS4 = \
+  GNULIB_POSIXCHECK
+# List of C macros defined through AH_VERBATIM in m4/sh-filename.m4:
+config_h_MACROS5 = \
+  BOURNE_SHELL
+# List of C macros defined through AH_VERBATIM in m4/stdalign.m4:
+config_h_MACROS6 = \
+  alignof \
+  alignas
+# List of C macros defined through AH_VERBATIM in m4/stdarg.m4:
+config_h_MACROS7 = \
+  va_copy
+# List of C macros defined through AH_VERBATIM in m4/threads_h.m4:
+config_h_MACROS8 = \
+  _Thread_local
+# List of C macros defined through AH_VERBATIM (only the most important ones):
+config_h_MACROS = \
+  $(config_h_MACROS1) $(config_h_MACROS2) $(config_h_MACROS3) \
+  $(config_h_MACROS4) $(config_h_MACROS5) $(config_h_MACROS6) \
+  $(config_h_MACROS7) $(config_h_MACROS8)
+
+# Ensure that .h files that use macros from config.h contain a reminder to
+# include <config.h>.
+sc_check_config_h_reminder:
+	fail=0; \
+	for file in `grep -l -F -w -f <(for macro in $(config_h_MACROS); do echo $$macro; done) lib/*.h lib/*/*.h`; do \
+	  : "Filter out .h files that are not public header files of their respective module."; \
+	  include_pattern='[<"]'`echo $$file | sed -e 's,^lib/,,' -e 's,[.]in[.]h,.h,' -e 's,_,[/_],g' -e 's,[.],[.],g'`'[>"]' ; \
+	  if ./gnulib-tool --extract-include-directive `./gnulib-tool --find $$file` | grep "$$include_pattern" >/dev/null; then \
+	    grep '# *error "Please include config[.]h first[.]"' $$file >/dev/null \
+	      || { echo -n "File $$file lacks a config.h reminder. Needed for:"; \
+	           for macro in $(config_h_MACROS); do \
+	             if grep -F -w $$macro $$file >/dev/null; then echo -n " $$macro"; fi; \
+	           done; \
+	           echo; \
+	           fail=1; \
+	         }; \
+	  fi; \
+	done; \
+	exit $$fail
+
+
 # Ensure that the copyright statements in files and in the module descriptions
 # are consistent.
 sc_check_copyright:

@@ -28,6 +28,11 @@
 #ifndef _@GUARD_PREFIX@_ICONV_H
 #define _@GUARD_PREFIX@_ICONV_H
 
+/* This file uses GNULIB_POSIXCHECK.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 /* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
 
 /* The definition of _GL_ARG_NONNULL is copied here.  */

@@ -15,6 +15,11 @@
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 
+/* This file uses _GL_ATTRIBUTE_PURE.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 enum { I_RING_SIZE = 4 };
 static_assert (1 <= I_RING_SIZE);
 

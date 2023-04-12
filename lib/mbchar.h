@@ -144,13 +144,15 @@
 #ifndef _MBCHAR_H
 #define _MBCHAR_H 1
 
+/* This file uses _GL_INLINE_HEADER_BEGIN, _GL_INLINE.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #include <string.h>
 #include <wchar.h>
 #include <wctype.h>
 
-#ifndef _GL_INLINE_HEADER_BEGIN
- #error "Please include config.h first."
-#endif
 _GL_INLINE_HEADER_BEGIN
 #ifndef MBCHAR_INLINE
 # define MBCHAR_INLINE _GL_INLINE

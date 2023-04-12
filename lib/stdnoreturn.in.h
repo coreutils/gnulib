@@ -17,6 +17,11 @@
 
 /* Written by Paul Eggert.  */
 
+/* This file uses _Noreturn.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #ifndef noreturn
 
 /* ISO C11 <stdnoreturn.h> for platforms that lack it.

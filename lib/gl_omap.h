@@ -18,11 +18,14 @@
 #ifndef _GL_OMAP_H
 #define _GL_OMAP_H
 
-#include <stddef.h>
-
-#ifndef _GL_INLINE_HEADER_BEGIN
+/* This file uses _GL_INLINE_HEADER_BEGIN, _GL_INLINE,
+   _GL_ATTRIBUTE_NODISCARD.  */
+#if !_GL_CONFIG_H_INCLUDED
  #error "Please include config.h first."
 #endif
+
+#include <stddef.h>
+
 _GL_INLINE_HEADER_BEGIN
 #ifndef GL_OMAP_INLINE
 # define GL_OMAP_INLINE _GL_INLINE

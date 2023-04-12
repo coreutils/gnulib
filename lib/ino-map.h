@@ -19,6 +19,12 @@
 #ifndef _GL_INO_MAP_H
 # define _GL_INO_MAP_H
 
+/* This file uses _GL_ATTRIBUTE_DEALLOC, _GL_ATTRIBUTE_MALLOC,
+   _GL_ATTRIBUTE_NONNULL.  */
+# if !_GL_CONFIG_H_INCLUDED
+#  error "Please include config.h first."
+# endif
+
 # include <sys/types.h>
 
 # define INO_MAP_INSERT_FAILURE ((size_t) -1)

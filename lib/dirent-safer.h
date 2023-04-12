@@ -17,6 +17,11 @@
 
 /* Written by Eric Blake.  */
 
+/* This file uses _GL_ATTRIBUTE_DEALLOC.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #include <dirent.h>
 
 #ifdef __cplusplus

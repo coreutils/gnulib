@@ -17,6 +17,11 @@
 #ifndef _ALIGNOF_H
 #define _ALIGNOF_H
 
+/* This file uses alignof.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #include <stddef.h>
 
 /* alignof_slot (TYPE)

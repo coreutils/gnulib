@@ -19,6 +19,11 @@
 #ifndef _PIPE_FILTER_H
 #define _PIPE_FILTER_H
 
+/* This file uses _GL_ATTRIBUTE_DEALLOC.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #include <stddef.h>
 
 #ifdef __cplusplus

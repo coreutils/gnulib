@@ -37,6 +37,11 @@
 #ifndef _@GUARD_PREFIX@_STDALIGN_H
 #define _@GUARD_PREFIX@_STDALIGN_H
 
+/* This file uses alignof, alignas.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #if (defined alignas \
      || (defined __STDC_VERSION__ && 202311 <= __STDC_VERSION__) \
      || (defined __cplusplus && (201103 <= __cplusplus || defined _MSC_VER)))

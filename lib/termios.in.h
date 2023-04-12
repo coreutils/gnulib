@@ -40,6 +40,11 @@ extern "C" {
 #ifndef _@GUARD_PREFIX@_TERMIOS_H
 #define _@GUARD_PREFIX@_TERMIOS_H
 
+/* This file uses GNULIB_POSIXCHECK.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 /* Get pid_t.  */
 #include <sys/types.h>
 

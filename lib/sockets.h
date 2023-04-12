@@ -20,6 +20,11 @@
 #ifndef SOCKETS_H
 #define SOCKETS_H 1
 
+/* This file uses _GL_ATTRIBUTE_CONST.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #define SOCKETS_1_0 0x0001
 #define SOCKETS_1_1 0x0101
 #define SOCKETS_2_0 0x0002

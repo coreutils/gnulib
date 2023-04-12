@@ -18,6 +18,11 @@
 
 /* Written by Jim Meyering.  */
 
+/* This file uses _GL_ATTRIBUTE_MALLOC, _GL_ATTRIBUTE_RETURNS_NONNULL.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #include <stdlib.h>
 
 #if GNULIB_FILENAMECAT

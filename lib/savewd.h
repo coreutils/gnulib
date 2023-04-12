@@ -18,13 +18,15 @@
 /* Written by Paul Eggert.  */
 
 #ifndef SAVEWD_H
-# define SAVEWD_H 1
+#define SAVEWD_H 1
+
+/* This file uses _GL_INLINE_HEADER_BEGIN, _GL_INLINE, _GL_ATTRIBUTE_PURE.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
 
 #include <sys/types.h>
 
-#ifndef _GL_INLINE_HEADER_BEGIN
- #error "Please include config.h first."
-#endif
 _GL_INLINE_HEADER_BEGIN
 #ifndef SAVEWD_INLINE
 # define SAVEWD_INLINE _GL_INLINE

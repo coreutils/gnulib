@@ -17,6 +17,11 @@
 
 /* Written by Paul Eggert */
 
+/* This file uses _GL_ATTRIBUTE_NODISCARD.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #include <stdint.h>
 #include <sys/types.h>
 

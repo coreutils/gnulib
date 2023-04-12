@@ -19,6 +19,11 @@
 #if ! defined MODECHANGE_H_
 # define MODECHANGE_H_
 
+/* This file uses _GL_ATTRIBUTE_MALLOC.  */
+# if !_GL_CONFIG_H_INCLUDED
+#  error "Please include config.h first."
+# endif
+
 # include <stdlib.h>
 # include <sys/types.h>
 

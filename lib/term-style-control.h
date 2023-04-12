@@ -21,6 +21,11 @@
 /* The user of this file will define a macro 'term_style_user_data', such that
    'struct term_style_user_data' is a user-defined struct.  */
 
+/* This file uses _GL_ASYNC_SAFE.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 
 /* The amount of control to take over the underlying tty in order to avoid
    garbled output on the screen, due to interleaved output of escape sequences

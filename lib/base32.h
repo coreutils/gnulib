@@ -18,6 +18,11 @@
 #ifndef BASE32_H
 # define BASE32_H
 
+/* This file uses _GL_ATTRIBUTE_CONST.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 /* Get idx_t. */
 # include <idx.h>
 

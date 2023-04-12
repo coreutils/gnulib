@@ -32,6 +32,11 @@
 
 # define _@GUARD_PREFIX@_SYS_TIMES_H
 
+/* This file uses GNULIB_POSIXCHECK.  */
+# if !_GL_CONFIG_H_INCLUDED
+#  error "Please include config.h first."
+# endif
+
 /* Get clock_t.
    But avoid namespace pollution on glibc systems.  */
 # ifndef __GLIBC__

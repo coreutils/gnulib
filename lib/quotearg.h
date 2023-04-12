@@ -21,6 +21,11 @@
 #ifndef QUOTEARG_H_
 # define QUOTEARG_H_ 1
 
+/* This file uses _GL_ATTRIBUTE_MALLOC, _GL_ATTRIBUTE_RETURNS_NONNULL.  */
+# if !_GL_CONFIG_H_INCLUDED
+#  error "Please include config.h first."
+# endif
+
 # include <stdlib.h>
 
 /* Basic quoting styles.  For each style, an example is given on the

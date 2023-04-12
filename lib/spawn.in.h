@@ -47,6 +47,11 @@
 #ifndef _@GUARD_PREFIX@_SPAWN_H
 #define _@GUARD_PREFIX@_SPAWN_H
 
+/* This file uses GNULIB_POSIXCHECK.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 /* Get definitions of 'struct sched_param' and 'sigset_t'.
    But avoid namespace pollution on glibc systems.  */
 #if !(defined __GLIBC__ && !defined __UCLIBC__)

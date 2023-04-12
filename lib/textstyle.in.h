@@ -30,6 +30,11 @@
 #ifndef _TEXTSTYLE_H
 #define _TEXTSTYLE_H
 
+/* This file uses _GL_ATTRIBUTE_MAYBE_UNUSED, HAVE_TCDRAIN.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #include <errno.h>
 #include <stdarg.h>
 #include <stddef.h>

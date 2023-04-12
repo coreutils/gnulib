@@ -41,6 +41,11 @@
 #ifndef _SIGPIPE_DIE_H
 #define _SIGPIPE_DIE_H
 
+/* This file uses _Noreturn.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif

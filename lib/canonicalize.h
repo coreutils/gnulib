@@ -17,6 +17,11 @@
 #ifndef CANONICALIZE_H_
 # define CANONICALIZE_H_
 
+/* This file uses _GL_ATTRIBUTE_MALLOC.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #include <stdlib.h> /* for canonicalize_file_name */
 
 #define CAN_MODE_MASK (CAN_EXISTING | CAN_ALL_BUT_LAST | CAN_MISSING)

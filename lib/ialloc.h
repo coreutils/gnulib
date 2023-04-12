@@ -18,15 +18,18 @@
 #ifndef IALLOC_H_
 #define IALLOC_H_
 
+/* This file uses _GL_INLINE_HEADER_BEGIN, _GL_INLINE, _GL_ATTRIBUTE_COLD,
+   _GL_ATTRIBUTE_MALLOC.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #include "idx.h"
 
 #include <errno.h>
 #include <stdint.h>
 #include <stdlib.h>
 
-#ifndef _GL_INLINE_HEADER_BEGIN
- #error "Please include config.h first."
-#endif
 _GL_INLINE_HEADER_BEGIN
 #ifndef IALLOC_INLINE
 # define IALLOC_INLINE _GL_INLINE

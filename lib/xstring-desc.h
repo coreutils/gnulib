@@ -19,14 +19,16 @@
 #ifndef _XSTRING_DESC_H
 #define _XSTRING_DESC_H 1
 
+/* This file uses _GL_INLINE_HEADER_BEGIN, _GL_INLINE.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #include <string.h>
 #include "string-desc.h"
 #include "xalloc.h"
 
 
-#ifndef _GL_INLINE_HEADER_BEGIN
- #error "Please include config.h first."
-#endif
 _GL_INLINE_HEADER_BEGIN
 #ifndef GL_XSTRING_DESC_INLINE
 # define GL_XSTRING_DESC_INLINE _GL_INLINE

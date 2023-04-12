@@ -43,6 +43,12 @@
 # @INCLUDE_NEXT@ @NEXT_UCHAR_H@
 #endif
 
+/* This file uses _GL_INLINE_HEADER_BEGIN, _GL_INLINE, _GL_BEGIN_C_LINKAGE,
+   _GL_ATTRIBUTE_PURE, GNULIB_POSIXCHECK.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 /* Get uint_least16_t, uint_least32_t.  */
 #include <stdint.h>
 
@@ -66,9 +72,6 @@
 /* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
 
 
-#ifndef _GL_INLINE_HEADER_BEGIN
- #error "Please include config.h first."
-#endif
 _GL_INLINE_HEADER_BEGIN
 
 

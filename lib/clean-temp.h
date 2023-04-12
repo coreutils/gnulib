@@ -18,6 +18,11 @@
 #ifndef _CLEAN_TEMP_H
 #define _CLEAN_TEMP_H
 
+/* This file uses _GL_ATTRIBUTE_DEALLOC.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #include <stdio.h>
 #include <sys/types.h>
 

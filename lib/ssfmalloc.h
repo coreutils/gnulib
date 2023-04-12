@@ -78,6 +78,11 @@
                         beginning of a page sequence returned by ALLOC_PAGES.
  */
 
+/* This file uses _GL_CMP.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 /* =================== Declarations of exported functions =================== */
 
 #include <stdint.h>

@@ -19,6 +19,11 @@
 #ifndef _GL_GC_H
 # define _GL_GC_H
 
+/* This file uses _GL_ATTRIBUTE_CONST.  */
+# if !_GL_CONFIG_H_INCLUDED
+#  error "Please include config.h first."
+# endif
+
 /* Get size_t. */
 # include <stddef.h>
 

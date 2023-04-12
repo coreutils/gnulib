@@ -47,6 +47,11 @@
 #ifndef _MBFILE_H
 #define _MBFILE_H 1
 
+/* This file uses _GL_INLINE_HEADER_BEGIN, _GL_INLINE.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #include <assert.h>
 #include <stdio.h>
 #include <string.h>
@@ -54,9 +59,6 @@
 
 #include "mbchar.h"
 
-#ifndef _GL_INLINE_HEADER_BEGIN
- #error "Please include config.h first."
-#endif
 _GL_INLINE_HEADER_BEGIN
 #ifndef MBFILE_INLINE
 # define MBFILE_INLINE _GL_INLINE

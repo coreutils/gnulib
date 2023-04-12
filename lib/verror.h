@@ -17,6 +17,11 @@
 #ifndef _VERROR_H
 #define _VERROR_H 1
 
+/* This file uses _GL_ATTRIBUTE_FORMAT.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #include <stdarg.h>
 
 /* Get _GL_ATTRIBUTE_SPEC_PRINTF_STANDARD.  */

@@ -20,11 +20,14 @@
 #ifndef SAFE_ALLOC_H_
 #define SAFE_ALLOC_H_
 
+/* This file uses _GL_INLINE_HEADER_BEGIN, _GL_INLINE,
+   _GL_ATTRIBUTE_NODISCARD.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #include <stdlib.h>
 
-#ifndef _GL_INLINE_HEADER_BEGIN
-   #error "Please include config.h first."
-#endif
 _GL_INLINE_HEADER_BEGIN
 #ifndef SAFE_ALLOC_INLINE
 # define SAFE_ALLOC_INLINE _GL_INLINE

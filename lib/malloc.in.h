@@ -46,6 +46,11 @@
 #ifndef _@GUARD_PREFIX@_MALLOC_H
 #define _@GUARD_PREFIX@_MALLOC_H
 
+/* This file uses _GL_ATTRIBUTE_DEALLOC, GNULIB_POSIXCHECK.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 /* Solaris declares memalign() in <stdlib.h>, not in <malloc.h>.  */
 #if defined __sun || defined __hpux
 # include <stdlib.h>

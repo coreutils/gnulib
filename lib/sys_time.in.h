@@ -41,6 +41,11 @@
 #ifndef _@GUARD_PREFIX@_SYS_TIME_H
 #define _@GUARD_PREFIX@_SYS_TIME_H
 
+/* This file uses GNULIB_POSIXCHECK.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #if ! @HAVE_SYS_TIME_H@
 # include <time.h>
 #endif

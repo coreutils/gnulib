@@ -19,6 +19,11 @@
 #ifndef XSTRTOL_ERROR_H_
 # define XSTRTOL_ERROR_H_ 1
 
+/* This file uses _Noreturn.  */
+# if !_GL_CONFIG_H_INCLUDED
+#  error "Please include config.h first."
+# endif
+
 # include "xstrtol.h"
 
 # include <getopt.h>

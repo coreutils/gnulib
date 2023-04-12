@@ -20,6 +20,11 @@
 #ifndef _WINDOWS_THREAD_H
 #define _WINDOWS_THREAD_H
 
+/* This file uses _Noreturn.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #define WIN32_LEAN_AND_MEAN  /* avoid including junk */
 #include <windows.h>
 

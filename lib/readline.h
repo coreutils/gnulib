@@ -18,6 +18,11 @@
 #ifndef GL_READLINE_H
 #define GL_READLINE_H
 
+/* This file uses _GL_ATTRIBUTE_MALLOC.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #if HAVE_READLINE_READLINE_H
 /* <readline/readline.h> makes use of the FILE type without including
    <stdio.h> itself. */

@@ -22,6 +22,11 @@
 #ifndef ARGMATCH_H_
 # define ARGMATCH_H_ 1
 
+/* This file uses _GL_ATTRIBUTE_PURE.  */
+# if !_GL_CONFIG_H_INCLUDED
+#  error "Please include config.h first."
+# endif
+
 # include <limits.h>
 # include <stddef.h>
 # include <stdio.h>

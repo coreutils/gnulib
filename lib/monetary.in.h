@@ -29,6 +29,11 @@
 #ifndef _@GUARD_PREFIX@_MONETARY_H
 #define _@GUARD_PREFIX@_MONETARY_H
 
+/* This file uses _GL_ATTRIBUTE_FORMAT, GNULIB_POSIXCHECK.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #if @GNULIB_STRFMON_L@
 # if @HAVE_XLOCALE_H@
 /* Get locale_t on Mac OS X 10.12.  */

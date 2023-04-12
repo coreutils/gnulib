@@ -18,6 +18,13 @@
 #ifndef _PAGEALIGN_ALLOC_H
 # define _PAGEALIGN_ALLOC_H
 
+/* This file uses _GL_ATTRIBUTE_ALLOC_SIZE, _GL_ATTRIBUTE_DEALLOC,
+   _GL_ATTRIBUTE_MALLOC, _GL_ATTRIBUTE_NONNULL,
+   _GL_ATTRIBUTE_RETURNS_NONNULL.  */
+# if !_GL_CONFIG_H_INCLUDED
+#  error "Please include config.h first."
+# endif
+
 # include <stddef.h>
 
 /* Free a memory block.

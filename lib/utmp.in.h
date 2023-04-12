@@ -32,6 +32,11 @@
 #ifndef _@GUARD_PREFIX@_UTMP_H
 #define _@GUARD_PREFIX@_UTMP_H
 
+/* This file uses GNULIB_POSIXCHECK.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 /* FreeBSD, NetBSD, OpenBSD, macOS, Minix, Haiku declare login_tty in
    <util.h> or <libutil.h>, not in <utmp.h>.  Solaris declares it in
    <termios.h>, not in <utmp.h>.  */

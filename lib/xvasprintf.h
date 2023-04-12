@@ -17,6 +17,11 @@
 #ifndef _XVASPRINTF_H
 #define _XVASPRINTF_H
 
+/* This file uses _GL_ATTRIBUTE_FORMAT, _GL_ATTRIBUTE_MALLOC.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 /* Get va_list.  */
 #include <stdarg.h>
 

@@ -19,12 +19,15 @@
 #ifndef _GL_XSUBLIST_H
 #define _GL_XSUBLIST_H
 
+/* This file uses _GL_INLINE_HEADER_BEGIN, _GL_INLINE,
+   _GL_ATTRIBUTE_RETURNS_NONNULL.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #include "gl_sublist.h"
 #include "xalloc.h"
 
-#ifndef _GL_INLINE_HEADER_BEGIN
- #error "Please include config.h first."
-#endif
 _GL_INLINE_HEADER_BEGIN
 #ifndef GL_XSUBLIST_INLINE
 # define GL_XSUBLIST_INLINE _GL_INLINE

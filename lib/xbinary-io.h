@@ -17,11 +17,13 @@
 #ifndef _XBINARY_IO_H
 #define _XBINARY_IO_H
 
-#include "binary-io.h"
-
-#ifndef _GL_INLINE_HEADER_BEGIN
+/* This file uses _GL_INLINE_HEADER_BEGIN, _GL_INLINE, _Noreturn.  */
+#if !_GL_CONFIG_H_INCLUDED
  #error "Please include config.h first."
 #endif
+
+#include "binary-io.h"
+
 _GL_INLINE_HEADER_BEGIN
 #ifndef XBINARY_IO_INLINE
 # define XBINARY_IO_INLINE _GL_INLINE

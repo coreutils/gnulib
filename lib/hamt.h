@@ -45,9 +45,12 @@
 #ifndef _GL_HAMT_H
 #define _GL_HAMT_H
 
-#ifndef _GL_INLINE_HEADER_BEGIN
-# error "Please include config.h first."
+/* This file uses _GL_INLINE_HEADER_BEGIN, _GL_INLINE, _GL_ATTRIBUTE_DEALLOC,
+   _GL_ATTRIBUTE_NODISCARD.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
 #endif
+
 _GL_INLINE_HEADER_BEGIN
 #ifndef _GL_HAMT_INLINE
 # define _GL_HAMT_INLINE _GL_INLINE

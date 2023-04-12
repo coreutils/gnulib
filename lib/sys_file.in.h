@@ -32,6 +32,11 @@
 #ifndef _@GUARD_PREFIX@_SYS_FILE_H
 #define _@GUARD_PREFIX@_SYS_FILE_H
 
+/* This file uses GNULIB_POSIXCHECK.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #ifndef LOCK_SH
 /* Operations for the 'flock' call (same as Linux kernel constants).  */
 # define LOCK_SH 1       /* Shared lock.  */

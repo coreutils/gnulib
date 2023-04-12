@@ -22,6 +22,11 @@
    arguments, since Unix shells interpret characters like " ", "'", "<", ">",
    "$", '*', '?' etc. in a special way.  */
 
+/* This file uses _GL_ATTRIBUTE_MALLOC, _GL_ATTRIBUTE_RETURNS_NONNULL.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #include <stdlib.h>
 
 #ifdef __cplusplus

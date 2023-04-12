@@ -29,6 +29,11 @@
 #ifndef _@GUARD_PREFIX@_SYS_IOCTL_H
 #define _@GUARD_PREFIX@_SYS_IOCTL_H
 
+/* This file uses GNULIB_POSIXCHECK.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 /* AIX 5.1 and Solaris 10 declare ioctl() in <unistd.h> and in <stropts.h>,
    but not in <sys/ioctl.h>.
    Haiku declares ioctl() in <unistd.h>, but not in <sys/ioctl.h>.

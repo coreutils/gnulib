@@ -89,6 +89,11 @@
 #ifndef _MBUITER_H
 #define _MBUITER_H 1
 
+/* This file uses _GL_INLINE_HEADER_BEGIN, _GL_INLINE.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #include <assert.h>
 #include <stddef.h>
 #include <stdlib.h>
@@ -98,9 +103,6 @@
 #include "mbchar.h"
 #include "strnlen1.h"
 
-#ifndef _GL_INLINE_HEADER_BEGIN
- #error "Please include config.h first."
-#endif
 _GL_INLINE_HEADER_BEGIN
 #ifndef MBUITER_INLINE
 # define MBUITER_INLINE _GL_INLINE

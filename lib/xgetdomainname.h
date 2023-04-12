@@ -18,6 +18,11 @@
 #ifndef _XGETDOMAINNAME_H
 #define _XGETDOMAINNAME_H
 
+/* This file uses _GL_ATTRIBUTE_MALLOC.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #include <stdlib.h>
 
 /* Return the NIS domain name of the machine, in malloc'd storage.

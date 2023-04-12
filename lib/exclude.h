@@ -19,6 +19,12 @@
 #ifndef _GL_EXCLUDE_H
 #define _GL_EXCLUDE_H 1
 
+/* This file uses _GL_ATTRIBUTE_DEALLOC, _GL_ATTRIBUTE_MALLOC,
+   _GL_ATTRIBUTE_NONNULL, _GL_ATTRIBUTE_PURE, _GL_ATTRIBUTE_RETURNS_NONNULL.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #include <stdio.h>
 
 /* Written by Paul Eggert <eggert@twinsun.com>

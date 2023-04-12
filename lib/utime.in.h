@@ -29,6 +29,11 @@
 #ifndef _@GUARD_PREFIX@_UTIME_H
 #define _@GUARD_PREFIX@_UTIME_H
 
+/* This file uses GNULIB_POSIXCHECK.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #if !@HAVE_UTIME_H@
 # include <sys/utime.h>
 #endif

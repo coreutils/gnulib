@@ -36,6 +36,11 @@
 #ifndef _@GUARD_PREFIX@_SYS_RESOURCE_H
 #define _@GUARD_PREFIX@_SYS_RESOURCE_H
 
+/* This file uses GNULIB_POSIXCHECK.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #if !@HAVE_SYS_RESOURCE_H@
 /* A platform that lacks <sys/resource.h>.  */
 

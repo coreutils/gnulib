@@ -71,6 +71,11 @@
 
 #ifndef _@GUARD_PREFIX@_SYS_SELECT_H
 
+/* This file uses GNULIB_POSIXCHECK.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 /* On many platforms, <sys/select.h> assumes prior inclusion of
    <sys/types.h>.  Also, mingw defines sigset_t there, instead of
    in <signal.h> where it belongs.  */

@@ -48,6 +48,11 @@
 #ifndef _GLTHREAD_COND_H
 #define _GLTHREAD_COND_H
 
+/* This file uses _GL_INLINE_HEADER_BEGIN, _GL_INLINE.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #include <errno.h>
 #include <stdlib.h>
 #include <time.h>
@@ -64,10 +69,6 @@
 # else
 #  define c11_threads_in_use() 0
 # endif
-#endif
-
-#ifndef _GL_INLINE_HEADER_BEGIN
- #error "Please include config.h first."
 #endif
 
 _GL_INLINE_HEADER_BEGIN

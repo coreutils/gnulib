@@ -27,12 +27,15 @@
 # if !defined _@GUARD_PREFIX@_SELINUX_SELINUX_H
 #  define _@GUARD_PREFIX@_SELINUX_SELINUX_H
 
+/* This file uses _GL_INLINE_HEADER_BEGIN, _GL_INLINE,
+   _GL_ATTRIBUTE_MAYBE_UNUSED.  */
+#  if !_GL_CONFIG_H_INCLUDED
+#   error "Please include config.h first."
+#  endif
+
 #  include <sys/types.h>
 #  include <errno.h>
 
-#  ifndef _GL_INLINE_HEADER_BEGIN
-    #error "Please include config.h first."
-#  endif
 _GL_INLINE_HEADER_BEGIN
 #  ifndef SE_SELINUX_INLINE
 #   define SE_SELINUX_INLINE _GL_INLINE

@@ -19,13 +19,16 @@
 #ifndef _STRING_DESC_QUOTEARG_H
 #define _STRING_DESC_QUOTEARG_H 1
 
+/* This file uses _GL_INLINE_HEADER_BEGIN, _GL_INLINE, _GL_ATTRIBUTE_MALLOC,
+   _GL_ATTRIBUTE_NONNULL, _GL_ATTRIBUTE_RETURNS_NONNULL.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #include "string-desc.h"
 #include "quotearg.h"
 
 
-#ifndef _GL_INLINE_HEADER_BEGIN
- #error "Please include config.h first."
-#endif
 _GL_INLINE_HEADER_BEGIN
 #ifndef GL_STRING_DESC_QUOTEARG_INLINE
 # define GL_STRING_DESC_QUOTEARG_INLINE _GL_INLINE

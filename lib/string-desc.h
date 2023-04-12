@@ -19,6 +19,12 @@
 #ifndef _STRING_DESC_H
 #define _STRING_DESC_H 1
 
+/* This file uses _GL_INLINE_HEADER_BEGIN, _GL_INLINE,
+   _GL_ATTRIBUTE_NODISCARD.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 /* Get ptrdiff_t.  */
 #include <stddef.h>
 
@@ -32,9 +38,6 @@
 #include "idx.h"
 
 
-#ifndef _GL_INLINE_HEADER_BEGIN
- #error "Please include config.h first."
-#endif
 _GL_INLINE_HEADER_BEGIN
 #ifndef GL_STRING_DESC_INLINE
 # define GL_STRING_DESC_INLINE _GL_INLINE

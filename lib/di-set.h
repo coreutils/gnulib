@@ -19,6 +19,12 @@
 #ifndef _GL_DI_SET_H
 # define _GL_DI_SET_H
 
+/* This file uses _GL_ATTRIBUTE_DEALLOC, _GL_ATTRIBUTE_MALLOC,
+   _GL_ATTRIBUTE_NONNULL.  */
+# if !_GL_CONFIG_H_INCLUDED
+#  error "Please include config.h first."
+# endif
+
 # include <sys/types.h>
 
 struct di_set;
