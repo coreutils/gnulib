@@ -1,6 +1,6 @@
 /* ialloc.h -- malloc with idx_t rather than size_t
 
-   Copyright 2021-2022 Free Software Foundation, Inc.
+   Copyright 2021-2023 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as
@@ -96,5 +96,7 @@ ireallocarray (void *p, idx_t n, idx_t s)
 #ifdef __cplusplus
 }
 #endif
+
+_GL_INLINE_HEADER_END
 
 #endif
