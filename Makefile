@@ -219,6 +219,7 @@ sc_check_config_h_reminder:
 	           for macro in $(config_h_MACROS); do \
 	             if grep -F -w $$macro $$file >/dev/null; then echo -n " $$macro"; fi; \
 	           done; \
+	           if grep -F HAVE_RAW_DECL_ $$file >/dev/null; then echo -n " HAVE_RAW_DECL_*"; fi; \
 	           echo; \
 	           fail=1; \
 	         }; \

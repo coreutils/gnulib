@@ -46,7 +46,7 @@
 #ifndef _@GUARD_PREFIX@_MALLOC_H
 #define _@GUARD_PREFIX@_MALLOC_H
 
-/* This file uses _GL_ATTRIBUTE_DEALLOC, GNULIB_POSIXCHECK.  */
+/* This file uses _GL_ATTRIBUTE_DEALLOC, GNULIB_POSIXCHECK, HAVE_RAW_DECL_*.  */
 #if !_GL_CONFIG_H_INCLUDED
  #error "Please include config.h first."
 #endif

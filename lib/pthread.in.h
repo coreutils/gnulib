@@ -51,7 +51,8 @@
 #ifndef _@GUARD_PREFIX@_PTHREAD_H_
 #define _@GUARD_PREFIX@_PTHREAD_H_
 
-/* This file uses _Noreturn, _GL_ATTRIBUTE_PURE, GNULIB_POSIXCHECK.  */
+/* This file uses _Noreturn, _GL_ATTRIBUTE_PURE, GNULIB_POSIXCHECK,
+   HAVE_RAW_DECL_*.  */
 #if !_GL_CONFIG_H_INCLUDED
  #error "Please include config.h first."
 #endif

@@ -44,7 +44,7 @@
 #endif
 
 /* This file uses _GL_INLINE_HEADER_BEGIN, _GL_INLINE, _GL_BEGIN_C_LINKAGE,
-   _GL_ATTRIBUTE_PURE, GNULIB_POSIXCHECK.  */
+   _GL_ATTRIBUTE_PURE, GNULIB_POSIXCHECK, HAVE_RAW_DECL_*.  */
 #if !_GL_CONFIG_H_INCLUDED
  #error "Please include config.h first."
 #endif

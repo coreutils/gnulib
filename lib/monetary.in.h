@@ -29,7 +29,7 @@
 #ifndef _@GUARD_PREFIX@_MONETARY_H
 #define _@GUARD_PREFIX@_MONETARY_H
 
-/* This file uses _GL_ATTRIBUTE_FORMAT, GNULIB_POSIXCHECK.  */
+/* This file uses _GL_ATTRIBUTE_FORMAT, GNULIB_POSIXCHECK, HAVE_RAW_DECL_*.  */
 #if !_GL_CONFIG_H_INCLUDED
  #error "Please include config.h first."
 #endif

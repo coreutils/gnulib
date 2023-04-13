@@ -49,7 +49,7 @@
 #define _@GUARD_PREFIX@_MATH_H
 
 /* This file uses _GL_INLINE_HEADER_BEGIN, _GL_INLINE, _GL_ATTRIBUTE_CONST,
-   GNULIB_POSIXCHECK.  */
+   GNULIB_POSIXCHECK, HAVE_RAW_DECL_*.  */
 #if !_GL_CONFIG_H_INCLUDED
  #error "Please include config.h first."
 #endif
