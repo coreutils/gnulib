@@ -465,7 +465,7 @@ _GL_WARN_ON_USE (getloadavg, "getloadavg is not portable - "
 #   undef getprogname
 #   define getprogname rpl_getprogname
 #  endif
-#  ifdef HAVE_DECL_PROGRAM_INVOCATION_NAME
+#  if @HAVE_DECL_PROGRAM_INVOCATION_NAME@
 _GL_FUNCDECL_RPL (getprogname, const char *, (void) _GL_ATTRIBUTE_PURE);
 #  else
 _GL_FUNCDECL_RPL (getprogname, const char *, (void));
@@ -473,7 +473,7 @@ _GL_FUNCDECL_RPL (getprogname, const char *, (void));
 _GL_CXXALIAS_RPL (getprogname, const char *, (void));
 # else
 #  if !@HAVE_GETPROGNAME@
-#   ifdef HAVE_DECL_PROGRAM_INVOCATION_NAME
+#   if @HAVE_DECL_PROGRAM_INVOCATION_NAME@
 _GL_FUNCDECL_SYS (getprogname, const char *, (void) _GL_ATTRIBUTE_PURE);
 #   else
 _GL_FUNCDECL_SYS (getprogname, const char *, (void));
