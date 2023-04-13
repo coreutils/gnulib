@@ -13,6 +13,7 @@ AC_C_FLEXIBLE_ARRAY_MEMBER
 Makefile.am:
 
 Include:
+"flexmember.h"
 
 License:
 LGPLv2+
