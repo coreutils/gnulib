@@ -85,4 +85,6 @@ xtime_nsec (xtime_t t)
 }
 #endif
 
+_GL_INLINE_HEADER_END
+
 #endif
