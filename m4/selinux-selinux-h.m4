@@ -1,4 +1,4 @@
-# serial 5   -*- Autoconf -*-
+# serial 6   -*- Autoconf -*-
 # Copyright (C) 2006-2007, 2009-2023 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -14,6 +14,13 @@ AC_DEFUN([gl_HEADERS_SELINUX_SELINUX_H],
   AC_REQUIRE([gl_LIBSELINUX])
   if test "$with_selinux" != no; then
     AC_CHECK_HEADERS([selinux/selinux.h])
+
+    if test $ac_cv_header_selinux_selinux_h = yes; then
+      HAVE_SELINUX_SELINUX_H=1
+    else
+      HAVE_SELINUX_SELINUX_H=0
+    fi
+    AC_SUBST([HAVE_SELINUX_SELINUX_H])
 
     if test "$ac_cv_header_selinux_selinux_h" = yes; then
       # We do have <selinux/selinux.h>, so do compile getfilecon.c
