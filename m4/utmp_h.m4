@@ -5,7 +5,7 @@
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
 
-# serial 1
+# serial 2
 
 AC_DEFUN_ONCE([gl_UTMP_H],
 [
@@ -20,6 +20,13 @@ AC_DEFUN_ONCE([gl_UTMP_H],
     HAVE_UTMP_H=0
   fi
   AC_SUBST([HAVE_UTMP_H])
+
+  gl_PTY_CHECK_UTIL_H
+
+  AC_CHECK_HEADERS_ONCE([termios.h])
+  if test $ac_cv_header_termios_h != yes; then
+    HAVE_TERMIOS_H=0
+  fi
 
   dnl Check for declarations of anything we want to poison if the
   dnl corresponding gnulib module is not in use, and which is not
@@ -58,6 +65,10 @@ AC_DEFUN([gl_UTMP_H_REQUIRE_DEFAULTS],
 
 AC_DEFUN([gl_UTMP_H_DEFAULTS],
 [
+  dnl For HAVE_UTIL_H, HAVE_LIBUTIL_H.
+  AC_REQUIRE([gl_PTY_H_DEFAULTS])
+  dnl For HAVE_TERMIOS_H.
+  AC_REQUIRE([gl_TERMIOS_H_DEFAULTS])
   dnl Assume proper GNU behavior unless another module says otherwise.
   HAVE_LOGIN_TTY=1;             AC_SUBST([HAVE_LOGIN_TTY])
   REPLACE_LOGIN_TTY=0;          AC_SUBST([REPLACE_LOGIN_TTY])

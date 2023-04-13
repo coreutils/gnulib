@@ -1,4 +1,4 @@
-# pty_h.m4 serial 14
+# pty_h.m4 serial 15
 dnl Copyright (C) 2009-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -15,13 +15,7 @@ AC_DEFUN_ONCE([gl_PTY_H],
   AC_CHECK_HEADERS_ONCE([pty.h])
   if test $ac_cv_header_pty_h != yes; then
     HAVE_PTY_H=0
-    AC_CHECK_HEADERS([util.h libutil.h])
-    if test $ac_cv_header_util_h = yes; then
-      HAVE_UTIL_H=1
-    fi
-    if test $ac_cv_header_libutil_h = yes; then
-      HAVE_LIBUTIL_H=1
-    fi
+    gl_PTY_CHECK_UTIL_H
     AC_CHECK_HEADERS_ONCE([termios.h])
   else # Have <pty.h>, assume forkpty is declared there.
     HAVE_PTY_H=1
@@ -48,6 +42,19 @@ AC_DEFUN_ONCE([gl_PTY_H],
 # include <termios.h>
 #endif
     ]], [forkpty openpty])
+])
+
+dnl Test for <util.h> and <libutil.h>.
+AC_DEFUN([gl_PTY_CHECK_UTIL_H],
+[
+  AC_REQUIRE([gl_PTY_H_DEFAULTS])
+  AC_CHECK_HEADERS([util.h libutil.h])
+  if test $ac_cv_header_util_h = yes; then
+    HAVE_UTIL_H=1
+  fi
+  if test $ac_cv_header_libutil_h = yes; then
+    HAVE_LIBUTIL_H=1
+  fi
 ])
 
 # gl_PTY_MODULE_INDICATOR([modulename])

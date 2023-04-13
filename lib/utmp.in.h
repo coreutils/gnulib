@@ -42,11 +42,11 @@
    <termios.h>, not in <utmp.h>.  */
 /* But in any case avoid namespace pollution on glibc systems.  */
 #if (@GNULIB_LOGIN_TTY@ || defined GNULIB_POSIXCHECK) && ! defined __GLIBC__
-# if HAVE_UTIL_H      /* macOS, NetBSD, OpenBSD, Minix */
+# if @HAVE_UTIL_H@      /* macOS, NetBSD, OpenBSD, Minix */
 #  include <util.h>
-# elif HAVE_LIBUTIL_H /* FreeBSD, Haiku */
+# elif @HAVE_LIBUTIL_H@ /* FreeBSD, Haiku */
 #  include <libutil.h>
-# elif HAVE_TERMIOS_H /* Solaris */
+# elif @HAVE_TERMIOS_H@ /* Solaris */
 #  include <termios.h>
 # endif
 #endif
