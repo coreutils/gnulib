@@ -21,7 +21,7 @@
 /* The user of this file will define a macro 'term_style_user_data', such that
    'struct term_style_user_data' is a user-defined struct.  */
 
-/* This file uses _GL_ASYNC_SAFE.  */
+/* This file uses _GL_ASYNC_SAFE, HAVE_TCGETATTR.  */
 #if !_GL_CONFIG_H_INCLUDED
  #error "Please include config.h first."
 #endif

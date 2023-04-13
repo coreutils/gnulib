@@ -18,7 +18,7 @@
 #ifndef GL_READLINE_H
 #define GL_READLINE_H
 
-/* This file uses _GL_ATTRIBUTE_MALLOC.  */
+/* This file uses _GL_ATTRIBUTE_MALLOC, HAVE_READLINE_READLINE_H.  */
 #if !_GL_CONFIG_H_INCLUDED
  #error "Please include config.h first."
 #endif

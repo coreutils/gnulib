@@ -21,7 +21,7 @@
 #define STAT_TIME_H 1
 
 /* This file uses _GL_INLINE_HEADER_BEGIN, _GL_INLINE, _GL_UNUSED,
-   _GL_ATTRIBUTE_PURE.  */
+   _GL_ATTRIBUTE_PURE, HAVE_STRUCT_STAT_*.  */
 #if !_GL_CONFIG_H_INCLUDED
  #error "Please include config.h first."
 #endif

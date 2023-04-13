@@ -18,7 +18,7 @@
 #ifndef _RELOCATABLE_H
 #define _RELOCATABLE_H
 
-/* This file uses _GL_ATTRIBUTE_MALLOC.  */
+/* This file uses _GL_ATTRIBUTE_MALLOC, HAVE_VISIBILITY.  */
 #if !_GL_CONFIG_H_INCLUDED
  #error "Please include config.h first."
 #endif

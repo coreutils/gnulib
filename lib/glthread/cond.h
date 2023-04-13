@@ -48,7 +48,7 @@
 #ifndef _GLTHREAD_COND_H
 #define _GLTHREAD_COND_H
 
-/* This file uses _GL_INLINE_HEADER_BEGIN, _GL_INLINE.  */
+/* This file uses _GL_INLINE_HEADER_BEGIN, _GL_INLINE, HAVE_THREADS_H.  */
 #if !_GL_CONFIG_H_INCLUDED
  #error "Please include config.h first."
 #endif

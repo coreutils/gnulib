@@ -17,7 +17,8 @@
 
    Written by David Bartley.  */
 
-/* This file uses _GL_INLINE_HEADER_BEGIN, _GL_INLINE.  */
+/* This file uses _GL_INLINE_HEADER_BEGIN, _GL_INLINE, HAVE_PRIV_H,
+   HAVE_GETPPRIV.  */
 #if !_GL_CONFIG_H_INCLUDED
  #error "Please include config.h first."
 #endif

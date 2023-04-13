@@ -17,7 +17,7 @@
 #ifndef _GL_LOCALENAME_H
 #define _GL_LOCALENAME_H
 
-/* This file uses _GL_ATTRIBUTE_CONST.  */
+/* This file uses _GL_ATTRIBUTE_CONST, HAVE_CFPREFERENCESCOPYAPPVALUE.  */
 #if !_GL_CONFIG_H_INCLUDED
  #error "Please include config.h first."
 #endif

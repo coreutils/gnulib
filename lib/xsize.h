@@ -18,7 +18,7 @@
 #ifndef _XSIZE_H
 #define _XSIZE_H
 
-/* This file uses _GL_INLINE_HEADER_BEGIN, _GL_INLINE.  */
+/* This file uses _GL_INLINE_HEADER_BEGIN, _GL_INLINE, HAVE_STDINT_H.  */
 #if !_GL_CONFIG_H_INCLUDED
  #error "Please include config.h first."
 #endif

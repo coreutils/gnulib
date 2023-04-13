@@ -14,7 +14,7 @@
    You should have received a copy of the GNU Lesser General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
-/* This file uses _GL_ATTRIBUTE_PURE.  */
+/* This file uses _GL_ATTRIBUTE_PURE, HAVE___FWRITABLE, HAVE_STDIO_EXT_H.  */
 #if !_GL_CONFIG_H_INCLUDED
  #error "Please include config.h first."
 #endif

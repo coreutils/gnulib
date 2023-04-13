@@ -18,7 +18,7 @@
 #ifndef _XSTRICONVEH_H
 #define _XSTRICONVEH_H
 
-/* This file uses _GL_ATTRIBUTE_MALLOC.  */
+/* This file uses _GL_ATTRIBUTE_MALLOC, HAVE_ICONV.  */
 #if !_GL_CONFIG_H_INCLUDED
  #error "Please include config.h first."
 #endif

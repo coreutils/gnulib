@@ -20,7 +20,8 @@
 #ifndef GETHRXTIME_H_
 #define GETHRXTIME_H_ 1
 
-/* This file uses _GL_INLINE_HEADER_BEGIN, _GL_INLINE.  */
+/* This file uses _GL_INLINE_HEADER_BEGIN, _GL_INLINE, HAVE_ARITHMETIC_HRTIME_T,
+   HAVE_DECL_GETHRTIME.  */
 #if !_GL_CONFIG_H_INCLUDED
  #error "Please include config.h first."
 #endif
