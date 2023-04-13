@@ -45,6 +45,12 @@
    returned by memalign() can be freed, but it actually can be freed with
    free().  */
 
+/* This file uses MALLOC_ALIGNMENT, HAVE_POSIX_MEMALIGN, HAVE_ALIGNED_ALLOC,
+   HAVE_MEMALIGN.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #if !defined ALIGNMENT
 # error "ALIGNMENT is not defined"
 #endif

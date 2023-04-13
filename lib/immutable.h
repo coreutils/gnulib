@@ -50,6 +50,11 @@
    functions work alike, except that the "read-only" pointers are actually
    writable.  */
 
+/* This file uses HAVE_WORKING_MPROTECT.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #include <stddef.h>
 
 #ifdef __cplusplus

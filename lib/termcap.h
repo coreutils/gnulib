@@ -19,6 +19,11 @@
 #ifndef _TERMCAP_H
 #define _TERMCAP_H
 
+/* This file uses HAVE_TERMCAP, HAVE_TERMINFO, HAVE_TPARAM.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 /* Including <curses.h> or <term.h> is dangerous, because it also declares
    a lot of junk, such as variables PC, UP, and other.  */
 

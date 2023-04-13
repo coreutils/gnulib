@@ -15,6 +15,11 @@
    You should have received a copy of the GNU Lesser General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
+/* This file uses HAVE_FIFO_PIPES.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 /* Whether pipes are FIFOs; -1 if not known.  */
 #ifndef HAVE_FIFO_PIPES
 # define HAVE_FIFO_PIPES (-1)

@@ -25,6 +25,11 @@
    This file defines wrappers that turn such an invalid parameter notification
    into an error code.  */
 
+/* This file uses HAVE_MSVC_INVALID_PARAMETER_HANDLER.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #if defined _WIN32 && ! defined __CYGWIN__
 
 /* Get original declaration of _get_osfhandle.  */

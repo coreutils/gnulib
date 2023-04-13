@@ -14,6 +14,11 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
+/* This file uses HAVE_DECL_MBSWIDTH_IN_WCHAR_H.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #include <stddef.h>
 
 /* Avoid a clash of our mbswidth() with a function of the same name defined

@@ -25,6 +25,11 @@
 #ifndef STAT_SIZE_H
 #define STAT_SIZE_H
 
+/* This file uses HAVE_SYS_PARAM_H, HAVE_STRUCT_STAT_ST_BLOCKS.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 /* sys/param.h may define DEV_BSIZE */
 #if HAVE_SYS_PARAM_H
 # include <sys/param.h>

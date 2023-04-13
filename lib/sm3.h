@@ -27,6 +27,11 @@
 #ifndef SM3_H
 # define SM3_H 1
 
+/* This file uses HAVE_OPENSSL_SM3.  */
+# if !_GL_CONFIG_H_INCLUDED
+#  error "Please include config.h first."
+# endif
+
 # include <stdio.h>
 # include <stdint.h>
 

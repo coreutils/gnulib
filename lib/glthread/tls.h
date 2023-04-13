@@ -43,6 +43,11 @@
 #ifndef _TLS_H
 #define _TLS_H
 
+/* This file uses HAVE_THREADS_H.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #include <errno.h>
 #include <stdlib.h>
 

@@ -52,6 +52,11 @@
        AC_DEFINE([MSVC_INVALID_PARAMETER_HANDLING], [SANE_LIBRARY_HANDLING])
  */
 
+/* This file uses HAVE_MSVC_INVALID_PARAMETER_HANDLER.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #define DEFAULT_HANDLING       0
 #define HAIRY_LIBRARY_HANDLING 1
 #define SANE_LIBRARY_HANDLING  2

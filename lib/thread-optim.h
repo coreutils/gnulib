@@ -50,6 +50,11 @@
    same optimization cannot be applied to locks that synchronize different
    processes (e.g. through shared memory mappings).  */
 
+/* This file uses HAVE_SYS_SINGLE_THREADED_H.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #if HAVE_SYS_SINGLE_THREADED_H /* glibc >= 2.32 */
 # include <sys/single_threaded.h>
 # define gl_multithreaded()  (!__libc_single_threaded)

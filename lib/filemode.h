@@ -18,6 +18,11 @@
 
 #ifndef FILEMODE_H_
 
+/* This file uses HAVE_DECL_STRMODE.  */
+# if !_GL_CONFIG_H_INCLUDED
+#  error "Please include config.h first."
+# endif
+
 # include <sys/types.h>
 # include <sys/stat.h>
 

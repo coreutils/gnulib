@@ -18,6 +18,11 @@
 #ifndef _VMA_ITER_H
 #define _VMA_ITER_H
 
+/* This file uses HAVE_PSTAT_GETPROCVM, HAVE_MQUERY.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #include <stdint.h>
 
 #ifdef __cplusplus
