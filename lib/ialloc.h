@@ -112,4 +112,6 @@ ireallocarray (void *p, idx_t n, idx_t s)
 }
 #endif
 
+_GL_INLINE_HEADER_END
+
 #endif

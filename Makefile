@@ -227,6 +227,19 @@ sc_check_config_h_reminder:
 	exit $$fail
 
 
+# Ensure that .h files that invoke _GL_INLINE_HEADER_BEGIN also invoke
+# _GL_INLINE_HEADER_END.  Otherwise, some GCC diagnostics remain turned off
+# for the rest of the compilation unit.
+sc_check_GL_INLINE_HEADER_use:
+	fail=0; \
+	for file in `grep -l -F -w _GL_INLINE_HEADER_BEGIN lib/*.h lib/*/*.h`; do \
+	  grep -l -F -w _GL_INLINE_HEADER_END $$file >/dev/null \
+	    || { echo "File $$file lacks an invocation of _GL_INLINE_HEADER_END."; \
+	         fail=1; \
+	       }; \
+	done; \
+	exit $$fail
+
 # Ensure that the copyright statements in files and in the module descriptions
 # are consistent.
 sc_check_copyright:
