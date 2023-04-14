@@ -2633,6 +2633,11 @@ _GL_MATH_CXX_REAL_FLOATING_DECL_1 (isnan)
 _GL_MATH_CXX_REAL_FLOATING_DECL_2 (isnan, rpl_isnan, bool)
 #    define isnan rpl_isnan
 #    define GNULIB_NAMESPACE_LACKS_ISNAN 1
+#   elif (defined __FreeBSD__ && __clang_major__ >= 14)
+  /* Neither of the two possible _GL_MATH_CXX_REAL_FLOATING_DECL_2 invocations
+     works.  Inline functions are already present in /usr/include/c++/v1/math.h,
+     which comes from LLVM.  */
+#    define GNULIB_NAMESPACE_LACKS_ISNAN 1
 #   else
 _GL_MATH_CXX_REAL_FLOATING_DECL_2 (isnan, isnan, bool)
 #   endif
