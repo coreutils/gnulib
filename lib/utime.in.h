@@ -21,6 +21,13 @@
 #endif
 @PRAGMA_COLUMNS@
 
+/* This file uses #include_next of a system file that defines time_t.
+   For the 'year2038' module to work right, <config.h> needs to have been
+   included before.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 /* The include_next requires a split double-inclusion guard.  */
 #if @HAVE_UTIME_H@
 # @INCLUDE_NEXT@ @NEXT_UTIME_H@

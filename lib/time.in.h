@@ -20,6 +20,13 @@
 #endif
 @PRAGMA_COLUMNS@
 
+/* This file uses #include_next of a system file that defines time_t.
+   For the 'year2038' module to work right, <config.h> needs to have been
+   included before.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 /* Don't get in the way of glibc when it includes time.h merely to
    declare a few standard symbols, rather than to declare all the
    symbols.  (However, skip this for MinGW as it treats __need_time_t

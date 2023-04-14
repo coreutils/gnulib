@@ -19,6 +19,13 @@
 # endif
 @PRAGMA_COLUMNS@
 
+/* This file uses #include_next of a system file that defines time_t.
+   For the 'year2038' module to work right, <config.h> needs to have been
+   included before.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 /* On OSF/1 and Solaris 2.6, <sys/types.h> and <sys/time.h>
    both include <sys/select.h>.
    On Cygwin and OpenBSD, <sys/time.h> includes <sys/select.h>.
