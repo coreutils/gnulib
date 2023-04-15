@@ -1,4 +1,4 @@
-# gnulib-common.m4 serial 75e
+# gnulib-common.m4 serial 75f
 dnl Copyright (C) 2007-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -116,6 +116,20 @@ AC_DEFUN([gl_COMMON_BODY], [
 # pragma GCC diagnostic ignored "-Wpedantic"
 #endif
 
+/* Define if, in a function declaration, the attributes in bracket syntax
+   [[...]] must come before the attributes in __attribute__((...)) syntax.
+   If this is defined, it is best to avoid the bracket syntax, so that the
+   various _GL_ATTRIBUTE_* can be cumulated on the same declaration in any
+   order.  */
+#ifdef __cplusplus
+# if defined __clang__
+#  define _GL_BRACKET_BEFORE_ATTRIBUTE 1
+# endif
+#else
+# if defined __GNUC__ && !defined __clang__
+#  define _GL_BRACKET_BEFORE_ATTRIBUTE 1
+# endif
+#endif
 ]dnl There is no _GL_ATTRIBUTE_ALIGNED; use stdalign's alignas instead.
 [
 /* _GL_ATTRIBUTE_ALLOC_SIZE ((N)) declares that the Nth argument of the function
@@ -223,9 +237,11 @@ AC_DEFUN([gl_COMMON_BODY], [
      - typedef,
    in C++ also: namespace, class, template specialization.  */
 #ifndef _GL_ATTRIBUTE_DEPRECATED
-# ifdef __has_c_attribute
-#  if __has_c_attribute (__deprecated__)
-#   define _GL_ATTRIBUTE_DEPRECATED [[__deprecated__]]
+# ifndef _GL_BRACKET_BEFORE_ATTRIBUTE
+#  ifdef __has_c_attribute
+#   if __has_c_attribute (__deprecated__)
+#    define _GL_ATTRIBUTE_DEPRECATED [[__deprecated__]]
+#   endif
 #  endif
 # endif
 # if !defined _GL_ATTRIBUTE_DEPRECATED && _GL_HAS_ATTRIBUTE (deprecated)
@@ -355,13 +371,15 @@ AC_DEFUN([gl_COMMON_BODY], [
    __has_c_attribute (__maybe_unused__) yields true but the use of
    [[__maybe_unused__]] nevertheless produces a warning.  */
 #ifndef _GL_ATTRIBUTE_MAYBE_UNUSED
-# if defined __clang__ && defined __cplusplus
-#  if !defined __apple_build_version__ && __clang_major__ >= 10
-#   define _GL_ATTRIBUTE_MAYBE_UNUSED [[__maybe_unused__]]
-#  endif
-# elif defined __has_c_attribute
-#  if __has_c_attribute (__maybe_unused__)
-#   define _GL_ATTRIBUTE_MAYBE_UNUSED [[__maybe_unused__]]
+# ifndef _GL_BRACKET_BEFORE_ATTRIBUTE
+#  if defined __clang__ && defined __cplusplus
+#   if !defined __apple_build_version__ && __clang_major__ >= 10
+#    define _GL_ATTRIBUTE_MAYBE_UNUSED [[__maybe_unused__]]
+#   endif
+#  elif defined __has_c_attribute
+#   if __has_c_attribute (__maybe_unused__)
+#    define _GL_ATTRIBUTE_MAYBE_UNUSED [[__maybe_unused__]]
+#   endif
 #  endif
 # endif
 # ifndef _GL_ATTRIBUTE_MAYBE_UNUSED
@@ -379,18 +397,20 @@ AC_DEFUN([gl_COMMON_BODY], [
    the return value, unless the caller uses something like ignore_value.  */
 /* Applies to: function, enumeration, class.  */
 #ifndef _GL_ATTRIBUTE_NODISCARD
-# if defined __clang__ && defined __cplusplus
+# ifndef _GL_BRACKET_BEFORE_ATTRIBUTE
+#  if defined __clang__ && defined __cplusplus
   /* With clang up to 15.0.6 (at least), in C++ mode, [[__nodiscard__]] produces
      a warning.
      The 1000 below means a yet unknown threshold.  When clang++ version X
      starts supporting [[__nodiscard__]] without warning about it, you can
      replace the 1000 with X.  */
-#  if __clang_major__ >= 1000
-#   define _GL_ATTRIBUTE_NODISCARD [[__nodiscard__]]
-#  endif
-# elif defined __has_c_attribute
-#  if __has_c_attribute (__nodiscard__)
-#   define _GL_ATTRIBUTE_NODISCARD [[__nodiscard__]]
+#   if __clang_major__ >= 1000
+#    define _GL_ATTRIBUTE_NODISCARD [[__nodiscard__]]
+#   endif
+#  elif defined __has_c_attribute
+#   if __has_c_attribute (__nodiscard__)
+#    define _GL_ATTRIBUTE_NODISCARD [[__nodiscard__]]
+#   endif
 #  endif
 # endif
 # if !defined _GL_ATTRIBUTE_NODISCARD && _GL_HAS_ATTRIBUTE (warn_unused_result)
