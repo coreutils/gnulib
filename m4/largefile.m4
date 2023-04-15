@@ -125,7 +125,7 @@ AS_CASE([$ac_cv_sys_year2038_opts],
     [AC_DEFINE([_TIME_BITS], [64],
       [Number of bits in time_t, on hosts where this is settable.])],
 
-  ["-D__MINGW_USE_VC2005_COMPAT=1"],
+  ["-D__MINGW_USE_VC2005_COMPAT"],
     [AC_DEFINE([__MINGW_USE_VC2005_COMPAT], [1],
       [Define to 1 on platforms where this makes time_t a 64-bit type.])],
 
