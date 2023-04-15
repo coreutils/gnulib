@@ -20,7 +20,6 @@ AC_DEFUN([gl_HEADERS_SELINUX_SELINUX_H],
     else
       HAVE_SELINUX_SELINUX_H=0
     fi
-    AC_SUBST([HAVE_SELINUX_SELINUX_H])
 
     if test "$ac_cv_header_selinux_selinux_h" = yes; then
       # We do have <selinux/selinux.h>, so do compile getfilecon.c
@@ -44,8 +43,9 @@ AC_DEFUN([gl_HEADERS_SELINUX_SELINUX_H],
   else
     # Do as if <selinux/selinux.h> does not exist, even if
     # AC_CHECK_HEADERS_ONCE has already determined that it exists.
-    AC_DEFINE([HAVE_SELINUX_SELINUX_H], [0])
+    HAVE_SELINUX_SELINUX_H=0
   fi
+  AC_SUBST([HAVE_SELINUX_SELINUX_H])
 ])
 
 AC_DEFUN([gl_LIBSELINUX],
