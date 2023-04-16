@@ -10,19 +10,11 @@ Files:
 
 Depends-on:
 largefile
-sched
-sys_msg
-sys_select
-sys_sem
-sys_shm
-sys_stat
-sys_time
-sys_types
-time-h
-utime-h
 
 configure.ac-early:
 AC_REQUIRE([AC_SYS_YEAR2038])
+
+configure.ac:
 
 Makefile.am:
 
