@@ -2,6 +2,8 @@ Files:
 tests/test-year2038.c
 
 Depends-on:
+assert-h
+intprops
 
 configure.ac:
 

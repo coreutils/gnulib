@@ -26,14 +26,13 @@
 #include <config.h>
 
 #include <sys/types.h>
+#include "intprops.h"
+
+/* Check the range of time_t.  */
+static_assert (TYPE_MAXIMUM (time_t) >> 31 != 0);
 
 int
 main (void)
 {
-  /* Check the size and sign of time_t.  */
-  if (sizeof (time_t) <= 4 && (time_t)-1 < 0)
-    /* time_t is only 32 bits wide and signed.  */
-    return 1;
-
   return 0;
 }
