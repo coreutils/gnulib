@@ -24,13 +24,49 @@ PATH=`dirname "$0"`:$PATH; export PATH
 POSIX2001_URL='https://pubs.opengroup.org/onlinepubs/009695399'
 POSIX2008_URL='https://pubs.opengroup.org/onlinepubs/9699919799'
 
+# repo_url_prefix and repo_url_suffix are chosen such that
+#   <A HREF="${repo_url_prefix}FILENAME${repo_url_suffix}">...</A>
+# will allow to open the hyperlink and thus see the contents of FILENAME
+# in the browser.
+#
+# There are two possible ways to access files in the git repository:
+#   - Through gitweb. This is the preferred UI for humans.
+#     repo_url_prefix='https://git.savannah.gnu.org/gitweb/?p=gnulib.git;a=blob_plain;f='
+#     repo_url_suffix=''
+#   - Through cgit.
+#     repo_url_prefix='https://git.savannah.gnu.org/cgit/gnulib.git/plain/'
+#     repo_url_suffix=''
+#
+# Unfortunately, the response headers of gitweb are not right.  For example, for
+# FILENAME = lib/stdlib.in.h, gitweb's response headers are:
+#   Content-Type: text/x-chdr; charset=ISO-8859-1
+#   Content-disposition: inline; filename="lib/stdlib.in.h"
+# whereas cgit's response headers are:
+#   Content-Type: text/plain; charset=UTF-8
+#   Content-Disposition: inline; filename="stdlib.in.h"
+# gitweb's response headers have three problems:
+#   * The content type for .h file is text/x-chdr, for .c files is text/x-csrc.
+#     The effect of this content type is that Firefox (on Ubuntu 22.04), by
+#     default, does not display the contents of the file but instead opens a
+#     download (save) dialog.  This is unwelcome in this context.
+#   * The charset=ISO-8859-1 causes incorrect display of non-ASCII characters
+#     for files such as m4/fnmatch.m4, since all of the gnulib repository is
+#     in UTF-8.
+#   * The filename="lib/stdlib.in.h" causes Firefox to propose a file name
+#     'lib_stdlib.in.h', if the user has chosen to download the file.
+# These problems come from the gitweb implementation, as can be seen from
+# https://repo.or.cz/git.git/blame_incremental/HEAD:/gitweb/gitweb.perl
+# procedure "sub git_blob_plain".  It ends up determining the content type
+# based on some MIME type registry, such as /etc/mime.types.
+#
+# So, we better choose cgit here.
 repo_url_prefix=
 repo_url_suffix=
 if test $# != 0; then
   case "$1" in
     --git-urls)
       # Generate URLs to the official gnulib git repository.
-      repo_url_prefix='https://git.savannah.gnu.org/gitweb/?p=gnulib.git;a=blob_plain;f='
+      repo_url_prefix='https://git.savannah.gnu.org/cgit/gnulib.git/plain/'
       repo_url_suffix=''
       ;;
   esac
