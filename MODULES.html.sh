@@ -30,7 +30,7 @@ if test $# != 0; then
   case "$1" in
     --git-urls)
       # Generate URLs to the official gnulib git repository.
-      repo_url_prefix='https://git.sv.gnu.org/gitweb/?p=gnulib.git;a=blob_plain;f='
+      repo_url_prefix='https://git.savannah.gnu.org/gitweb/?p=gnulib.git;a=blob_plain;f='
       repo_url_suffix=''
       ;;
   esac
