@@ -641,13 +641,25 @@ _GL_WARN_ON_USE (wmemchr, "wmemchr is unportable - "
 
 /* Compare N wide characters of S1 and S2.  */
 #if @GNULIB_WMEMCMP@
-# if !@HAVE_WMEMCMP@
+# if @REPLACE_WMEMCMP@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef wmemcmp
+#   define wmemcmp rpl_wmemcmp
+#  endif
+_GL_FUNCDECL_RPL (wmemcmp, int,
+                  (const wchar_t *s1, const wchar_t *s2, size_t n)
+                  _GL_ATTRIBUTE_PURE);
+_GL_CXXALIAS_RPL (wmemcmp, int,
+                  (const wchar_t *s1, const wchar_t *s2, size_t n));
+# else
+#  if !@HAVE_WMEMCMP@
 _GL_FUNCDECL_SYS (wmemcmp, int,
                   (const wchar_t *s1, const wchar_t *s2, size_t n)
                   _GL_ATTRIBUTE_PURE);
-# endif
+#  endif
 _GL_CXXALIAS_SYS (wmemcmp, int,
                   (const wchar_t *s1, const wchar_t *s2, size_t n));
+# endif
 # if __GLIBC__ >= 2
 _GL_CXXALIASWARN (wmemcmp);
 # endif
