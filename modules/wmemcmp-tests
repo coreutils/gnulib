@@ -1,0 +1,12 @@
+Files:
+tests/test-wmemcmp.c
+tests/signature.h
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-wmemcmp
+check_PROGRAMS += test-wmemcmp
