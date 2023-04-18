@@ -1,4 +1,4 @@
-# ilogbl.m4 serial 5
+# ilogbl.m4 serial 6
 dnl Copyright (C) 2010-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -72,6 +72,7 @@ AC_DEFUN([gl_FUNC_ILOGBL],
 
 dnl Test whether ilogbl() works.
 dnl On Cygwin 2.9, ilogbl(0.0L) is wrong.
+dnl On Cygwin 3.4.6, ilogbl(NaN) is wrong.
 dnl On AIX 7.1 in 64-bit mode, ilogbl(2^(LDBL_MIN_EXP-1)) is wrong.
 dnl On Haiku 2017, it returns i-2 instead of i-1 for values between
 dnl ca. 2^-16444 and ca. 2^-16382.
@@ -104,6 +105,17 @@ AC_DEFUN([gl_FUNC_ILOGBL_WORKS],
 #  define LDBL_MIN_EXP DBL_MIN_EXP
 # endif
 #endif
+/* On Irix 6.5, gcc 3.4.3 can't compute compile-time NaN, and needs the
+   runtime type conversion.  */
+#ifdef __sgi
+static long double NaNl ()
+{
+  double zero = 0.0;
+  return zero / zero;
+}
+#else
+# define NaNl() (0.0L / 0.0L)
+#endif
 volatile long double x;
 static int dummy (long double x) { return 0; }
 int main (int argc, char *argv[])
@@ -116,6 +128,12 @@ int main (int argc, char *argv[])
     if (my_ilogbl (x) != FP_ILOGB0)
       result |= 1;
   }
+  /* This test fails on Cygwin 3.4.6.  */
+  {
+    x = NaNl ();
+    if (my_ilogbl (x) != FP_ILOGBNAN)
+      result |= 2;
+  }
   /* This test fails on AIX 7.1 in 64-bit mode.  */
   {
     int i;
@@ -123,7 +141,7 @@ int main (int argc, char *argv[])
     for (i = LDBL_MIN_EXP - 1; i < 0; i++)
       x = x * 0.5L;
     if (x > 0.0L && my_ilogbl (x) != LDBL_MIN_EXP - 2)
-      result |= 2;
+      result |= 4;
   }
   /* This test fails on Haiku 2017.  */
   {
@@ -131,7 +149,7 @@ int main (int argc, char *argv[])
     for (i = 1, x = (long double)1.0; i >= LDBL_MIN_EXP-100 && x > (long double)0.0; i--, x *= (long double)0.5)
       if (my_ilogbl (x) != i - 1)
         {
-          result |= 4;
+          result |= 8;
           break;
         }
   }
