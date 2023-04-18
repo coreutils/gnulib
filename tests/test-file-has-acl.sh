@@ -73,7 +73,7 @@ cd "$builddir" ||
     # Linux, FreeBSD, Solaris, Cygwin.
     if (setfacl --help >/dev/null) 2>/dev/null; then
       # Linux, Cygwin.
-      if (LC_ALL=C setfacl --help | grep ' --set-file' >/dev/null) 2>/dev/null; then
+      if (LC_ALL=C setfacl --help | grep ' --test' >/dev/null) 2>/dev/null; then
         # Linux.
         acl_flavor=linux
       else
