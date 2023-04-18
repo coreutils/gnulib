@@ -22,8 +22,9 @@ Mac OS X 10.6, FreeBSD 8.4, NetBSD 5.1, OpenBSD 4.9, Minix 3.1.8, AIX 7.1, HP-UX
 @item
 @samp{O_DIRECTORY}, @samp{O_DSYNC}, @samp{O_NOCTTY},
 @samp{O_NOFOLLOW}, @samp{O_RSYNC}, @samp{O_SYNC},
-and @samp{O_TTY_INIT} are not defined on some platforms.  Gnulib defines
-these macros to 0, which is generally safe.
+and @samp{O_TTY_INIT} are not defined on some platforms.
+When not otherwise defined, Gnulib defines these macros to 0,
+which is generally safe.
 
 @item
 @samp{O_NONBLOCK} is not defined on some platforms.  If the
@@ -50,6 +51,8 @@ Cygwin.
 @samp{O_BINARY}, @samp{O_TEXT} (not specified by POSIX, but essential for
 portability to native Windows platforms) are defined on some platforms but
 not on others.
+Gnulib defines these macros to 0 on GNU and other platforms that do not
+distinguish between text and binary I/O@.
 
 @item
 @samp{O_CLOEXEC}, @samp{O_NOFOLLOW}, and @samp{O_TTY_INIT}
@@ -61,6 +64,8 @@ AIX 7.1 with XL C 12.1.
 @samp{O_NOATIME}, @samp{O_NOLINK}, @samp{O_NOLINKS}, and
 @samp{O_NOTRANS} (not specified by POSIX) are defined
 on some platforms but not on others.
+When not otherwise defined, Gnulib defines these macros to 0,
+which is generally safe.
 
 @item
 @samp{FD_CLOEXEC}, @samp{F_DUPFD}, and @samp{F_GETFD} are not defined
