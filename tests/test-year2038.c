@@ -28,11 +28,12 @@
 #include <sys/types.h>
 #include "intprops.h"
 
-/* Check the range of time_t.  */
-static_assert (TYPE_MAXIMUM (time_t) >> 31 != 0);
+/* Although this test could be done with static_assert, the test
+   harness prefers dynamic checking.  */
 
 int
 main (void)
 {
-  return 0;
+  /* Check the range of time_t.  */
+  return TYPE_MAXIMUM (time_t) >> 31 == 0;
 }

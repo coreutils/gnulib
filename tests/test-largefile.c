@@ -26,17 +26,26 @@
 #include <sys/stat.h>
 #include "intprops.h"
 
-/* Check the range of off_t.
-   With MSVC, this test succeeds only thanks to the 'sys_types' module.  */
-static_assert (TYPE_MAXIMUM (off_t) >> 31 >> 31 != 0);
-
-/* Check the size of the 'struct stat' field 'st_size'.
-   ,With MSVC, this test succeeds only thanks to the 'sys_stat' module.  */
-static struct stat st;
-static_assert (sizeof st.st_size == sizeof (off_t));
+/* Although these tests could be done with static_assert, the test
+   harness prefers dynamic checking.  */
 
 int
 main (void)
 {
-  return 0;
+  int result = 0;
+
+  /* Check the range of off_t.
+     With MSVC, this test succeeds only thanks to the 'sys_types' module.  */
+  if (TYPE_MAXIMUM (off_t) >> 31 >> 31 == 0)
+    result |= 1;
+
+  /* Check the size of the 'struct stat' field 'st_size'.
+     With MSVC, this test succeeds only thanks to the 'sys_stat' module.  */
+  {
+    struct stat st;
+    if (sizeof st.st_size != sizeof (off_t))
+      result |= 2;
+  }
+
+  return result;
 }
