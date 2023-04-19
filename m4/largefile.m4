@@ -266,11 +266,24 @@ AC_DEFUN([_AC_SYS_LARGEFILE_PROBE],
     test $ac_opt_found = no || break
   done
   CC="$ac_save_CC"
+  dnl Gnulib implements large file support for native Windows, based on the
+  dnl variables WINDOWS_64_BIT_OFF_T, WINDOWS_64_BIT_ST_SIZE.
+  m4_ifdef([gl_LARGEFILE], [
+    AC_REQUIRE([AC_CANONICAL_HOST])
+    if test $ac_opt_found != yes; then
+      AS_CASE([$host_os],
+        [mingw*],
+          [ac_cv_sys_largefile_opts="supported through gnulib"
+           ac_opt_found=yes]
+      )
+    fi
+  ])
   test $ac_opt_found = yes || ac_cv_sys_largefile_opts="support not detected"])
 
 ac_have_largefile=yes
 AS_CASE([$ac_cv_sys_largefile_opts],
   ["none needed"], [],
+  ["supported through gnulib"], [],
   ["support not detected"],
     [ac_have_largefile=no
      AS_IF([test $ac_largefile_required,$ac_year2038_required != no,no],
