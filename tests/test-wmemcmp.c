@@ -63,7 +63,11 @@ main (int argc, char *argv[])
     ASSERT (wmemcmp (input2, input1, 4) > 0);
   }
 
-  /* ISO C requires wmemcmp to work with all wchar_t values.  */
+  /* ISO C requires wcscmp to work with all wchar_t values.
+     ISO C 17 § 7.29.4.4 says:
+       "Unless explicitly stated otherwise, the functions described in this
+        subclause order two wide characters the same way as two integers of
+        the underlying integer type designated by wchar_t."  */
   {
     static const wchar_t input1[] = { (wchar_t) 0x76547654 };
     static const wchar_t input2[] = { (wchar_t) 0x9abc9abc };
