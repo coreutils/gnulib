@@ -4,6 +4,8 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/ctime_r.html}
 
+Future POSIX removal:@* @url{https://www.austingroupbugs.net/view.php?id=1410}
+
 Gnulib module: extensions
 
 Portability problems fixed by Gnulib:

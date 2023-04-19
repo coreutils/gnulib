@@ -4,6 +4,8 @@
 
 LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-dngettext.html}
 
+Future POSIX specification:@* @url{https://www.austingroupbugs.net/view.php?id=1122}
+
 Documentation:
 @itemize
 @item
