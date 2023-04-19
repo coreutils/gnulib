@@ -8,6 +8,14 @@ Gnulib module: wcsncmp
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+This function compares the wide characters as if they were unsigned, although
+@code{wchar_t} is signed, on some platforms:
+glibc 2.14.1 on x86 or x86_64, musl libc 1.2.3, macOS 12.5, FreeBSD 13.2, NetBSD 9.0, OpenBSD 7.2, Solaris 11.4.
+@item
+This function may return a wrong result if the two arguments are of different
+length, on some platforms:
+AIX 7.2 in 64-bit mode.
 @end itemize
 
 Portability problems not fixed by Gnulib:
