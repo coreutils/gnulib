@@ -1,12 +1,6 @@
 Description:
 wcscmp() function: compare two wide strings.
 
-Status:
-obsolete
-
-Notice:
-This module is obsolete.
-
 Files:
 lib/wcscmp.c
 lib/wcscmp-impl.h
@@ -17,7 +11,8 @@ wchar
 
 configure.ac:
 gl_FUNC_WCSCMP
-gl_CONDITIONAL([GL_COND_OBJ_WCSCMP], [test $HAVE_WCSCMP = 0])
+gl_CONDITIONAL([GL_COND_OBJ_WCSCMP],
+               [test $HAVE_WCSCMP = 0 || test $REPLACE_WCSCMP = 1])
 gl_WCHAR_MODULE_INDICATOR([wcscmp])
 
 Makefile.am:

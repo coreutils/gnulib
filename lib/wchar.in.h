@@ -938,11 +938,21 @@ _GL_WARN_ON_USE (wcsncat, "wcsncat is unportable - "
 
 /* Compare S1 and S2.  */
 #if @GNULIB_WCSCMP@
-# if !@HAVE_WCSCMP@
+# if @REPLACE_WCSCMP@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef wcscmp
+#   define wcscmp rpl_wcscmp
+#  endif
+_GL_FUNCDECL_RPL (wcscmp, int, (const wchar_t *s1, const wchar_t *s2)
+                               _GL_ATTRIBUTE_PURE);
+_GL_CXXALIAS_RPL (wcscmp, int, (const wchar_t *s1, const wchar_t *s2));
+# else
+#  if !@HAVE_WCSCMP@
 _GL_FUNCDECL_SYS (wcscmp, int, (const wchar_t *s1, const wchar_t *s2)
                                _GL_ATTRIBUTE_PURE);
-# endif
+#  endif
 _GL_CXXALIAS_SYS (wcscmp, int, (const wchar_t *s1, const wchar_t *s2));
+# endif
 # if __GLIBC__ >= 2
 _GL_CXXALIASWARN (wcscmp);
 # endif

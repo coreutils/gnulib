@@ -24,8 +24,9 @@ wcscmp (const wchar_t *s1, const wchar_t *s2)
       wchar_t wc2 = *s2++;
       if (wc1 != (wchar_t)'\0' && wc1 == wc2)
         continue;
-      /* Note that wc1 and wc2 each have at most 31 bits.  */
-      return (int)wc1 - (int)wc2;
+      /* ISO C requires wcscmp to work with all wchar_t values.
+         We cannot assume that wc1 and wc2 are in the range 0..INT_MAX.  */
+      return _GL_CMP (wc1, wc2);
              /* > 0 if wc1 > wc2, < 0 if wc1 < wc2,
                 = 0 if wc1 and wc2 are both '\0'.  */
     }
