@@ -1,4 +1,4 @@
-# threadlib.m4 serial 32a
+# threadlib.m4 serial 32b
 dnl Copyright (C) 2005-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -85,10 +85,11 @@ AC_DEFUN([gl_WEAK_SYMBOLS],
   AC_CACHE_CHECK([whether imported symbols can be declared weak],
     [gl_cv_have_weak],
     [case "$host_os" in
-       cygwin*)
-         dnl On Cygwin 3.2.0 with gcc 10.2, the test below would succeed, but
-         dnl programs that use pthread_in_use() with weak symbol references
-         dnl crash miserably at runtime.
+       cygwin* | mingw*)
+         dnl On Cygwin 3.2.0 with gcc 10.2, and likewise on mingw 10.0.0 with
+         dnl gcc 11.3, the test below would succeed, but programs that use
+         dnl pthread_in_use() with weak symbol references crash miserably at
+         dnl runtime.
          gl_cv_have_weak="guessing no"
          ;;
        *)
