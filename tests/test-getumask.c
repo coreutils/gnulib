@@ -1,5 +1,5 @@
 /* Test of retrieving the umask of the process.
-   Copyright (C) 2020-2022 Free Software Foundation, Inc.
+   Copyright (C) 2020-2023 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -24,6 +24,11 @@
 SIGNATURE_CHECK (getumask, mode_t, (void));
 
 #include "macros.h"
+
+#if defined _WIN32 && !defined __CYGWIN__
+/* On native Windows, getumask() always returns 0111.  */
+# define ASSUME_UMASK_CONSTANT 1
+#endif
 
 int
 main (void)
