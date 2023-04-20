@@ -1,5 +1,5 @@
 /* Test of execute.
-   Copyright (C) 2020-2022 Free Software Foundation, Inc.
+   Copyright (C) 2020-2023 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -68,7 +68,9 @@ main (int argc, char *argv[])
      GNU make 4.4: <https://savannah.gnu.org/bugs/index.php?63307>.
      It causes the tests 3 and 4 to fail.  Work around it by resetting
      the signal handler for SIGPIPE to the default.  */
+  #ifdef SIGPIPE
   signal (SIGPIPE, SIG_DFL);
+  #endif
 
   switch (test)
     {
