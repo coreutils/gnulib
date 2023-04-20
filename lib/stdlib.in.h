@@ -898,7 +898,9 @@ _GL_FUNCDECL_SYS (random, long, (void));
                                int.  */
 _GL_CXXALIAS_SYS_CAST (random, long, (void));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (random);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef random
 # if HAVE_RAW_DECL_RANDOM
@@ -923,7 +925,9 @@ _GL_FUNCDECL_SYS (srandom, void, (unsigned int seed));
                                        unsigned long seed.  */
 _GL_CXXALIAS_SYS_CAST (srandom, void, (unsigned int seed));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (srandom);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef srandom
 # if HAVE_RAW_DECL_SRANDOM
