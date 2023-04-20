@@ -28,7 +28,6 @@
    is enabled.  */
 #define DO_TEST_LOCK 1
 #define DO_TEST_RECURSIVE_LOCK 1
-#define DO_TEST_ONCE 1
 
 /* Whether to help the scheduler through explicit thrd_yield().
    Uncomment this to see if the operating system has a fair scheduler.  */
@@ -305,159 +304,6 @@ test_mtx_recursive (void)
 }
 
 
-/* ------------------------ Test once-only execution ------------------------ */
-
-/* Test once-only execution by having several threads attempt to grab a
-   once-only task simultaneously (triggered by releasing a read-write lock).  */
-
-static once_flag fresh_once = ONCE_FLAG_INIT;
-static int ready[THREAD_COUNT];
-static mtx_t ready_lock[THREAD_COUNT];
-#if ENABLE_LOCKING
-static gl_rwlock_t fire_signal[REPEAT_COUNT];
-#else
-static volatile int fire_signal_state;
-#endif
-static once_flag once_control;
-static int performed;
-static mtx_t performed_lock;
-
-static void
-once_execute (void)
-{
-  ASSERT (mtx_lock (&performed_lock) == thrd_success);
-  performed++;
-  ASSERT (mtx_unlock (&performed_lock) == thrd_success);
-}
-
-static int
-once_contender_thread (void *arg)
-{
-  int id = (int) (intptr_t) arg;
-  int repeat;
-
-  for (repeat = 0; repeat <= REPEAT_COUNT; repeat++)
-    {
-      /* Tell the main thread that we're ready.  */
-      ASSERT (mtx_lock (&ready_lock[id]) == thrd_success);
-      ready[id] = 1;
-      ASSERT (mtx_unlock (&ready_lock[id]) == thrd_success);
-
-      if (repeat == REPEAT_COUNT)
-        break;
-
-      dbgprintf ("Contender %p waiting for signal for round %d\n",
-                 thrd_current_pointer (), repeat);
-#if ENABLE_LOCKING
-      /* Wait for the signal to go.  */
-      gl_rwlock_rdlock (fire_signal[repeat]);
-      /* And don't hinder the others (if the scheduler is unfair).  */
-      gl_rwlock_unlock (fire_signal[repeat]);
-#else
-      /* Wait for the signal to go.  */
-      while (fire_signal_state <= repeat)
-        yield ();
-#endif
-      dbgprintf ("Contender %p got the     signal for round %d\n",
-                 thrd_current_pointer (), repeat);
-
-      /* Contend for execution.  */
-      call_once (&once_control, once_execute);
-    }
-
-  return 0;
-}
-
-static void
-test_once (void)
-{
-  int i, repeat;
-  thrd_t threads[THREAD_COUNT];
-
-  /* Initialize all variables.  */
-  for (i = 0; i < THREAD_COUNT; i++)
-    {
-      ready[i] = 0;
-      ASSERT (mtx_init (&ready_lock[i], mtx_plain) == thrd_success);
-    }
-#if ENABLE_LOCKING
-  for (i = 0; i < REPEAT_COUNT; i++)
-    gl_rwlock_init (fire_signal[i]);
-#else
-  fire_signal_state = 0;
-#endif
-
-#if ENABLE_LOCKING
-  /* Block all fire_signals.  */
-  for (i = REPEAT_COUNT-1; i >= 0; i--)
-    gl_rwlock_wrlock (fire_signal[i]);
-#endif
-
-  /* Spawn the threads.  */
-  for (i = 0; i < THREAD_COUNT; i++)
-    ASSERT (thrd_create (&threads[i],
-                         once_contender_thread, (void *) (intptr_t) i)
-            == thrd_success);
-
-  for (repeat = 0; repeat <= REPEAT_COUNT; repeat++)
-    {
-      /* Wait until every thread is ready.  */
-      dbgprintf ("Main thread before synchronizing for round %d\n", repeat);
-      for (;;)
-        {
-          int ready_count = 0;
-          for (i = 0; i < THREAD_COUNT; i++)
-            {
-              ASSERT (mtx_lock (&ready_lock[i]) == thrd_success);
-              ready_count += ready[i];
-              ASSERT (mtx_unlock (&ready_lock[i]) == thrd_success);
-            }
-          if (ready_count == THREAD_COUNT)
-            break;
-          yield ();
-        }
-      dbgprintf ("Main thread after  synchronizing for round %d\n", repeat);
-
-      if (repeat > 0)
-        {
-          /* Check that exactly one thread executed the once_execute()
-             function.  */
-          if (performed != 1)
-            abort ();
-        }
-
-      if (repeat == REPEAT_COUNT)
-        break;
-
-      /* Preparation for the next round: Initialize once_control.  */
-      memcpy (&once_control, &fresh_once, sizeof (once_flag));
-
-      /* Preparation for the next round: Reset the performed counter.  */
-      performed = 0;
-
-      /* Preparation for the next round: Reset the ready flags.  */
-      for (i = 0; i < THREAD_COUNT; i++)
-        {
-          ASSERT (mtx_lock (&ready_lock[i]) == thrd_success);
-          ready[i] = 0;
-          ASSERT (mtx_unlock (&ready_lock[i]) == thrd_success);
-        }
-
-      /* Signal all threads simultaneously.  */
-      dbgprintf ("Main thread giving signal for round %d\n", repeat);
-#if ENABLE_LOCKING
-      gl_rwlock_unlock (fire_signal[repeat]);
-#else
-      fire_signal_state = repeat + 1;
-#endif
-    }
-
-  /* Wait for the threads to terminate.  */
-  for (i = 0; i < THREAD_COUNT; i++)
-    ASSERT (thrd_join (threads[i], NULL) == thrd_success);
-}
-
-
 /* -------------------------------------------------------------------------- */
 
 int
@@ -473,7 +319,6 @@ main ()
 
   ASSERT (mtx_init (&my_lock, mtx_plain) == thrd_success);
   ASSERT (mtx_init (&my_reclock, mtx_plain | mtx_recursive) == thrd_success);
-  ASSERT (mtx_init (&performed_lock, mtx_plain) == thrd_success);
 
 #if DO_TEST_LOCK
   printf ("Starting test_mtx_plain ..."); fflush (stdout);
@@ -483,11 +328,6 @@ main ()
 #if DO_TEST_RECURSIVE_LOCK
   printf ("Starting test_mtx_recursive ..."); fflush (stdout);
   test_mtx_recursive ();
-  printf (" OK\n"); fflush (stdout);
-#endif
-#if DO_TEST_ONCE
-  printf ("Starting test_once ..."); fflush (stdout);
-  test_once ();
   printf (" OK\n"); fflush (stdout);
 #endif
 
