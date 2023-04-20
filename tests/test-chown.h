@@ -18,6 +18,10 @@
 
 #include "nap.h"
 
+#if !HAVE_GETGID
+# define getgid() ((gid_t) -1)
+#endif
+
 #if !HAVE_GETEGID
 # define getegid() ((gid_t) -1)
 #endif

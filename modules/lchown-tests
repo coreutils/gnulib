@@ -16,7 +16,7 @@ stdbool
 symlink
 
 configure.ac:
-AC_CHECK_FUNCS_ONCE([getegid])
+AC_CHECK_FUNCS_ONCE([getgid getegid])
 
 Makefile.am:
 TESTS += test-lchown
