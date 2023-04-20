@@ -25,6 +25,11 @@ SIGNATURE_CHECK (getumask, mode_t, (void));
 
 #include "macros.h"
 
+#if defined _WIN32 && !defined __CYGWIN__
+/* On native Windows, getumask() always returns 0111.  */
+# define ASSUME_UMASK_CONSTANT 1
+#endif
+
 int
 main (void)
 {

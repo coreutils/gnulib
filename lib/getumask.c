@@ -106,6 +106,16 @@ getumask (void)
     {
       /* Create a temporary file and inspect its access permissions.  */
       const char *tmpdir = getenv ("TMPDIR");
+# if defined _WIN32 && !defined __CYGWIN__
+      if (tmpdir == NULL || *tmpdir == '\0')
+        {
+          /* On native Windows, TMPDIR is typically not set, and /tmp does not
+             exist.  $TMP and $TEMP can be used instead.  */
+          tmpdir = getenv ("TMP");
+          if (tmpdir == NULL || *tmpdir == '\0')
+            tmpdir = getenv ("TEMP");
+        }
+# endif
       if (tmpdir == NULL || *tmpdir == '\0')
         tmpdir = "/tmp";
       size_t tmpdir_length = strlen (tmpdir);
