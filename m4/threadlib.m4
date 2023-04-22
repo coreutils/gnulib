@@ -1,4 +1,4 @@
-# threadlib.m4 serial 36
+# threadlib.m4 serial 37
 dnl Copyright (C) 2005-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -439,7 +439,9 @@ AC_DEFUN([gl_THREADLIB_EARLY_BODY],
   m4_ifdef([gl_THREADLIB_DEFAULT_NO],
     [m4_divert_text([DEFAULTS], [gl_use_threads_default=no])],
     [m4_divert_text([DEFAULTS], [gl_use_threads_default=])])
-  m4_divert_text([DEFAULTS], [gl_use_winpthreads_default=])
+  dnl gl_use_winpthreads_default defaults to 'no', because in mingw 10, like
+  dnl in mingw 5, the use of libwinpthread still makes test-pthread-tss crash.
+  m4_divert_text([DEFAULTS], [gl_use_winpthreads_default=no])
   AC_ARG_ENABLE([threads],
 AS_HELP_STRING([--enable-threads={isoc|posix|isoc+posix|windows}], [specify multithreading API])m4_ifdef([gl_THREADLIB_DEFAULT_NO], [], [
 AS_HELP_STRING([--disable-threads], [build without multithread safety])]),
@@ -605,7 +607,8 @@ dnl -------------------
 dnl Sets the gl_THREADLIB default so that on mingw, a dependency to the
 dnl libwinpthread DLL (mingw-w64 winpthreads library) is avoided.
 dnl The user can still override it at installation time, by using the
-dnl configure option '--enable-threads'.
+dnl configure option '--enable-threads=posix'.
+dnl As of 2023, this is now the default.
 
 AC_DEFUN([gl_AVOID_WINPTHREAD], [
   m4_divert_text([INIT_PREPARE], [gl_use_winpthreads_default=no])
