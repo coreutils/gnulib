@@ -5,6 +5,7 @@ tests/test-dfa-invalid-char-class.sh
 tests/test-dfa-invalid-merge.sh
 
 Depends-on:
+binary-io
 stdio
 stdlib
 string

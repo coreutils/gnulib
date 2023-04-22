@@ -26,6 +26,8 @@
 #include <dfa.h>
 #include <localeinfo.h>
 
+#include "binary-io.h"
+
 _Noreturn void
 dfaerror (char const *mesg)
 {
@@ -52,6 +54,11 @@ main (int argc, char **argv)
 
   if (argc < 3)
     exit (EXIT_FAILURE);
+
+  /* This test's fixture needs to compare this program's output with an expected
+     output.  On native Windows, the CR-LF newlines would cause this comparison
+     to fail.  But we don't want to postprocess this program's output.  */
+  set_binary_mode (STDOUT_FILENO, O_BINARY);
 
   setlocale (LC_ALL, "");
   init_localeinfo (&localeinfo);
