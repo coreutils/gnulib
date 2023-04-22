@@ -1,5 +1,5 @@
 /* Test that posixtime works as required.
-   Copyright (C) 2009-2022 Free Software Foundation, Inc.
+   Copyright (C) 2009-2023 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -46,7 +46,8 @@ static struct posixtm_test const T[] =
     { "12131415.16",     LY, 1,            0}, /* ??? Dec 13 14:15:16 ???? */
     { "12131415",        LY, 1,            0}, /* ??? Dec 13 14:15:00 ???? */
 
-#if !((defined __APPLE__ && defined __MACH__) || defined __sun)
+#if !((defined __APPLE__ && defined __MACH__) || defined __sun \
+      || (defined _WIN32 && !defined __CYGWIN__))
     /* These two tests fail on 64-bit Mac OS X 10.5 and on 64-bit Solaris up
        through at least Solaris 11.3, which is off by one day for timestamps
        before 0001-01-01 00:00:00 UTC.  */
@@ -55,7 +56,7 @@ static struct posixtm_test const T[] =
     { "000012312359.59", LY, 1,
                       - INT64_C (62135596801)},/* Fri Dec 31 23:59:59 0    */
 #endif
-
+#if !(defined _WIN32 && !defined __CYGWIN__)
     { "000101010000.00", LY, 1,
                       - INT64_C (62135596800)},/* Sat Jan  1 00:00:00 1    */
     { "190112132045.51", LY, 1,
@@ -68,6 +69,7 @@ static struct posixtm_test const T[] =
     { "190112142045.52", LY, 1,  -2147397248}, /* Sat Dec 14 20:45:52 1901 */
     { "190201132045.52", LY, 1,  -2144805248}, /* Mon Jan 13 20:45:52 1902 */
     { "196912312359.59", LY, 1,           -1}, /* Wed Dec 31 23:59:59 1969 */
+#endif
     { "197001010000.00", LY, 1,            0}, /* Thu Jan  1 00:00:00 1970 */
     { "197001010000.01", LY, 1,            1}, /* Thu Jan  1 00:00:01 1970 */
     { "197001010001.00", LY, 1,           60}, /* Thu Jan  1 00:01:00 1970 */
@@ -86,17 +88,23 @@ static struct posixtm_test const T[] =
     { "203801190314.07", LY, 1,   2147483647}, /* Tue Jan 19 03:14:07 2038 */
     { "203801190314.08", LY, 1,
                        INT64_C (  2147483648)},/* Tue Jan 19 03:14:08 2038 */
+#if !(defined _WIN32 && !defined __CYGWIN__)
     { "999912312359.59", LY, 1,
                        INT64_C (253402300799)},/* Fri Dec 31 23:59:59 9999 */
+#endif
     { "1112131415",      LY, 1,   1323785700}, /* Tue Dec 13 14:15:00 2011 */
     { "1112131415.16",   LY, 1,   1323785716}, /* Tue Dec 13 14:15:16 2011 */
     { "201112131415.16", LY, 1,   1323785716}, /* Tue Dec 13 14:15:16 2011 */
+#if !(defined _WIN32 && !defined __CYGWIN__)
     { "191112131415.16", LY, 1,  -1831974284}, /* Wed Dec 13 14:15:16 1911 */
+#endif
     { "203712131415.16", LY, 1,   2144326516}, /* Sun Dec 13 14:15:16 2037 */
     { "3712131415.16",   LY, 1,   2144326516}, /* Sun Dec 13 14:15:16 2037 */
     { "6812131415.16",   LY, 1,
                        INT64_C (  3122633716)},/* Thu Dec 13 14:15:16 2068 */
+#if !(defined _WIN32 && !defined __CYGWIN__)
     { "6912131415.16",   LY, 1,     -1590284}, /* Sat Dec 13 14:15:16 1969 */
+#endif
     { "7012131415.16",   LY, 1,     29945716}, /* Sun Dec 13 14:15:16 1970 */
     { "1213141599",      PDS_TRAILING_YEAR,
                              1,    945094500}, /* Mon Dec 13 14:15:00 1999 */
