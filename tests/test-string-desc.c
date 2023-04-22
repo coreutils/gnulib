@@ -20,14 +20,20 @@
 
 #include "string-desc.h"
 
+#include <fcntl.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 #include "macros.h"
 
 int
-main (void)
+main (int argc, char *argv[])
 {
+  ASSERT (argc > 1);
+  int fd3 = open (argv[1], O_RDWR | O_TRUNC | O_CREAT, 0600);
+  ASSERT (fd3 >= 0);
+
   string_desc_t s0 = string_desc_new_empty ();
   string_desc_t s1 = string_desc_from_c ("Hello world!");
   string_desc_t s2 = string_desc_new_addr (21, "The\0quick\0brown\0\0fox");
@@ -109,9 +115,9 @@ main (void)
                            string_desc_from_c ("llo")) == 0);
 
   /* Test string_desc_write.  */
-  ASSERT (string_desc_write (3, s0) == 0);
-  ASSERT (string_desc_write (3, s1) == 0);
-  ASSERT (string_desc_write (3, s2) == 0);
+  ASSERT (string_desc_write (fd3, s0) == 0);
+  ASSERT (string_desc_write (fd3, s1) == 0);
+  ASSERT (string_desc_write (fd3, s2) == 0);
 
   /* Test string_desc_fwrite.  */
   ASSERT (string_desc_fwrite (stdout, s0) == 0);
@@ -181,6 +187,8 @@ main (void)
     ASSERT (memcmp (ptr, "The\0quick\0brown\0\0fox\0", 22) == 0);
     free (ptr);
   }
+
+  close (fd3);
 
   return 0;
 }

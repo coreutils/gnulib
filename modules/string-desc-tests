@@ -4,6 +4,7 @@ tests/test-string-desc.c
 tests/macros.h
 
 Depends-on:
+close
 
 configure.ac:
 

@@ -1,7 +1,7 @@
 #!/bin/sh
 . "${srcdir=.}/init.sh"; path_prepend_ .
 
-${CHECKER} test-string-desc${EXEEXT} > test-string-desc-1.tmp 3> test-string-desc-3.tmp || Exit 1
+${CHECKER} test-string-desc${EXEEXT} test-string-desc-3.tmp > test-string-desc-1.tmp || Exit 1
 
 printf 'Hello world!The\0quick\0brown\0\0fox\0' > test-string-desc.ok
 
