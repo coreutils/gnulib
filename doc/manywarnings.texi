@@ -80,6 +80,13 @@ The @code{-fanalyzer} option generates many false alarms about
 @code{malloc} leaks, which @code{manywarnings} suppresses by also
 using @option{-Wno-analyzer-malloc-leak}.
 
+@item -fstrict-flex-arrays
+The @code{manywarnings} module by default uses GCC's
+@option{-fstrict-flex-arrays} option if available, so that GCC can
+warn about nonportable usage of flexible array members.
+In a few cases this can help GCC generate better code,
+so it is not strictly a warning option.
+
 @item -Wsign-compare
 GCC and Clang generate too many false alarms with @option{-Wsign-compare},
 and we don't recommend that warning.  You can disable it by using

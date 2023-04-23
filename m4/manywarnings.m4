@@ -109,7 +109,7 @@ AC_DEFUN([gl_MANYWARN_ALL_GCC(C)],
   #  <(LC_ALL=C gcc --help=warnings | sed -n 's/^  \(-[^ ]*\) .*/\1/p' | sort)
 
   $1=
-  for gl_manywarn_item in -fanalyzer \
+  for gl_manywarn_item in -fanalyzer -fstrict-flex-arrays \
     -Wall \
     -Warith-conversion \
     -Wbad-function-cast \
@@ -137,6 +137,7 @@ AC_DEFUN([gl_MANYWARN_ALL_GCC(C)],
     -Wpointer-arith \
     -Wshadow \
     -Wstack-protector \
+    -Wstrict-flex-arrays \
     -Wstrict-overflow \
     -Wstrict-prototypes \
     -Wsuggest-attribute=cold \
