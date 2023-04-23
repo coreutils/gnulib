@@ -1,5 +1,5 @@
-# locale-ar.m4 serial 9
-dnl Copyright (C) 2003, 2005-2022 Free Software Foundation, Inc.
+# locale-ar.m4 serial 10
+dnl Copyright (C) 2003, 2005-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -7,7 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 dnl From Ben Pfaff, based on locale-fr.m4 by Bruno Haible.
 
 dnl Determine the name of an Arabic locale with traditional encoding.
-AC_DEFUN([gt_LOCALE_AR],
+AC_DEFUN_ONCE([gt_LOCALE_AR],
 [
   AC_REQUIRE([AC_CANONICAL_HOST])
   AC_REQUIRE([AM_LANGINFO_CODESET])
