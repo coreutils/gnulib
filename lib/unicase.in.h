@@ -36,6 +36,12 @@
 /* Get uninorm_t.  */
 #include "uninorm.h"
 
+#if @HAVE_UNISTRING_WOE32DLL_H@
+# include <unistring/woe32dll.h>
+#else
+# define LIBUNISTRING_DLL_VARIABLE
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -155,7 +161,7 @@ typedef struct casing_prefix_context
         }
         casing_prefix_context_t;
 /* The case-mapping context of the empty prefix string.  */
-extern const casing_prefix_context_t unicase_empty_prefix_context;
+extern @GNULIB_UNICASE_EMPTY_PREFIX_CONTEXT_DLL_VARIABLE@ const casing_prefix_context_t unicase_empty_prefix_context;
 /* Return the case-mapping context of a given prefix string.  */
 extern casing_prefix_context_t
        u8_casing_prefix_context (const uint8_t *s, size_t n);
@@ -184,7 +190,7 @@ typedef struct casing_suffix_context
         }
         casing_suffix_context_t;
 /* The case-mapping context of the empty suffix string.  */
-extern const casing_suffix_context_t unicase_empty_suffix_context;
+extern @GNULIB_UNICASE_EMPTY_SUFFIX_CONTEXT_DLL_VARIABLE@ const casing_suffix_context_t unicase_empty_suffix_context;
 /* Return the case-mapping context of a given suffix string.  */
 extern casing_suffix_context_t
        u8_casing_suffix_context (const uint8_t *s, size_t n);

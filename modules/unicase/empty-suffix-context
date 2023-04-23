@@ -8,7 +8,8 @@ Depends-on:
 unicase/base
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([0.9.11], [unicase/empty-suffix-context])
+gl_UNICASE_H_REQUIRE_DEFAULTS
+gl_LIBUNISTRING_MODULE_WITH_VARIABLE([0.9.11], [unicase/empty-suffix-context])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNICASE_EMPTY_SUFFIX_CONTEXT

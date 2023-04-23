@@ -4,13 +4,16 @@ Base layer for normalization forms of Unicode strings.
 Files:
 lib/uninorm.in.h
 m4/libunistring-base.m4
+m4/uninorm_h.m4
 
 Depends-on:
 gen-header
 unitypes
 
 configure.ac:
-gl_LIBUNISTRING_LIBHEADER([0.9.11], [uninorm.h])
+gl_LIBUNISTRING_LIBHEADER([1.2], [uninorm.h])
+gl_UNINORM_H
+gl_UNINORM_H_REQUIRE_DEFAULTS
 AC_PROG_MKDIR_P
 
 Makefile.am:
@@ -18,7 +21,13 @@ BUILT_SOURCES += $(LIBUNISTRING_UNINORM_H)
 
 uninorm.h: uninorm.in.h
 @NMD@	$(AM_V_GEN)$(MKDIR_P) '%reldir%'
-	$(gl_V_at)$(SED_HEADER_TO_AT_t) $(srcdir)/uninorm.in.h
+	$(gl_V_at)$(SED_HEADER_STDOUT) \
+	      -e 's|@''HAVE_UNISTRING_WOE32DLL_H''@|$(HAVE_UNISTRING_WOE32DLL_H)|g' \
+	      -e 's/@''GNULIB_UNINORM_NFD_DLL_VARIABLE''@/$(GNULIB_UNINORM_NFD_DLL_VARIABLE)/g' \
+	      -e 's/@''GNULIB_UNINORM_NFC_DLL_VARIABLE''@/$(GNULIB_UNINORM_NFC_DLL_VARIABLE)/g' \
+	      -e 's/@''GNULIB_UNINORM_NFKD_DLL_VARIABLE''@/$(GNULIB_UNINORM_NFKD_DLL_VARIABLE)/g' \
+	      -e 's/@''GNULIB_UNINORM_NFKC_DLL_VARIABLE''@/$(GNULIB_UNINORM_NFKC_DLL_VARIABLE)/g' \
+	      $(srcdir)/uninorm.in.h > $@-t
 	$(AM_V_at)mv $@-t $@
 MOSTLYCLEANFILES += uninorm.h uninorm.h-t
 

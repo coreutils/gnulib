@@ -4,6 +4,7 @@ Base layer for Unicode character case mappings.
 Files:
 lib/unicase.in.h
 m4/libunistring-base.m4
+m4/unicase_h.m4
 
 Depends-on:
 gen-header
@@ -12,7 +13,9 @@ uninorm/base
 stdbool
 
 configure.ac:
-gl_LIBUNISTRING_LIBHEADER([0.9.11], [unicase.h])
+gl_LIBUNISTRING_LIBHEADER([1.2], [unicase.h])
+gl_UNICASE_H
+gl_UNICASE_H_REQUIRE_DEFAULTS
 AC_PROG_MKDIR_P
 
 Makefile.am:
@@ -20,7 +23,11 @@ BUILT_SOURCES += $(LIBUNISTRING_UNICASE_H)
 
 unicase.h: unicase.in.h
 @NMD@	$(AM_V_GEN)$(MKDIR_P) '%reldir%'
-	$(gl_V_at)$(SED_HEADER_TO_AT_t) $(srcdir)/unicase.in.h
+	$(gl_V_at)$(SED_HEADER_STDOUT) \
+	      -e 's|@''HAVE_UNISTRING_WOE32DLL_H''@|$(HAVE_UNISTRING_WOE32DLL_H)|g' \
+	      -e 's/@''GNULIB_UNICASE_EMPTY_PREFIX_CONTEXT_DLL_VARIABLE''@/$(GNULIB_UNICASE_EMPTY_PREFIX_CONTEXT_DLL_VARIABLE)/g' \
+	      -e 's/@''GNULIB_UNICASE_EMPTY_SUFFIX_CONTEXT_DLL_VARIABLE''@/$(GNULIB_UNICASE_EMPTY_SUFFIX_CONTEXT_DLL_VARIABLE)/g' \
+	      $(srcdir)/unicase.in.h > $@-t
 	$(AM_V_at)mv $@-t $@
 MOSTLYCLEANFILES += unicase.h unicase.h-t
 

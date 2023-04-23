@@ -13,7 +13,8 @@ unictype/category-Nd
 
 configure.ac:
 AC_REQUIRE([AC_C_INLINE])
-gl_LIBUNISTRING_MODULE([1.1], [unictype/property-decimal-digit])
+gl_UNICTYPE_H_REQUIRE_DEFAULTS
+gl_LIBUNISTRING_MODULE_WITH_VARIABLE([1.1], [unictype/property-decimal-digit])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNICTYPE_PROPERTY_DECIMAL_DIGIT
