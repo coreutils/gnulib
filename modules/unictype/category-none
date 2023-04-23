@@ -8,12 +8,11 @@ Depends-on:
 unictype/base
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([0.9.8], [unictype/category-none])
+dnl Since _UC_CATEGORY_NONE is not exported from an installed libunistring,
+dnl don't use gl_LIBUNISTRING_MODULE here.
 
 Makefile.am:
-if LIBUNISTRING_COMPILE_UNICTYPE_CATEGORY_NONE
 lib_SOURCES += unictype/categ_none.c
-endif
 
 Include:
 "unictype.h"
