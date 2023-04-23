@@ -109,7 +109,7 @@ AC_DEFUN([gl_MANYWARN_ALL_GCC(C)],
   #  <(LC_ALL=C gcc --help=warnings | sed -n 's/^  \(-[^ ]*\) .*/\1/p' | sort)
 
   $1=
-  for gl_manywarn_item in -fanalyzer -fno-common \
+  for gl_manywarn_item in -fanalyzer \
     -Wall \
     -Warith-conversion \
     -Wbad-function-cast \
@@ -178,12 +178,17 @@ AC_DEFUN([gl_MANYWARN_ALL_GCC(C)],
   gl_AS_VAR_APPEND([$1], [' -Wvla-larger-than=4031'])
 
   # These are needed for older GCC versions.
-  if test -n "$GCC"; then
-    case `($CC --version) 2>/dev/null` in
+  if test -n "$GCC" && gl_gcc_version=`($CC --version) 2>/dev/null`; then
+    case $gl_gcc_version in
       'gcc (GCC) '[[0-3]].* | \
       'gcc (GCC) '4.[[0-7]].*)
         gl_AS_VAR_APPEND([$1], [' -fdiagnostics-show-option'])
         gl_AS_VAR_APPEND([$1], [' -funit-at-a-time'])
+          ;;
+    esac
+    case $gl_gcc_version in
+      'gcc (GCC) '[[0-9]].*)
+        gl_AS_VAR_APPEND([$1], [' -fno-common'])
           ;;
     esac
   fi
