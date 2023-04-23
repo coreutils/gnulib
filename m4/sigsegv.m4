@@ -1,4 +1,4 @@
-# sigsegv.m4 serial 1
+# sigsegv.m4 serial 2
 dnl Copyright (C) 2021-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,7 +9,7 @@ dnl From Bruno Haible.
 AC_DEFUN_ONCE([gl_SIGSEGV],
 [
   AC_ARG_WITH([libsigsegv],
-    [AS_HELP_STRING([--with-libsigsegv],
+    [AS_HELP_STRING([[--with-libsigsegv]],
        [use the GNU libsigsegv library, when present, instead of the gnulib module 'sigsegv'])])
   if test "$with_libsigsegv" = yes; then
     gl_LIBSIGSEGV

@@ -1,4 +1,4 @@
-# serial 6   -*- Autoconf -*-
+# serial 7   -*- Autoconf -*-
 # Copyright (C) 2006-2007, 2009-2023 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -54,7 +54,7 @@ AC_DEFUN([gl_LIBSELINUX],
   AC_REQUIRE([AC_CANONICAL_BUILD])
 
   AC_ARG_WITH([selinux],
-    AS_HELP_STRING([--without-selinux], [do not use SELinux, even on systems with SELinux]),
+    AS_HELP_STRING([[--without-selinux]], [do not use SELinux, even on systems with SELinux]),
     [], [with_selinux=maybe])
 
   LIB_SELINUX=

@@ -6,7 +6,7 @@ package.  Here is an example use:
 
 @smallexample
 AC_ARG_ENABLE([gcc-warnings],
-  [AS_HELP_STRING([--enable-gcc-warnings@@<:@@=TYPE@@:>@@],
+  [AS_HELP_STRING([[--enable-gcc-warnings[=TYPE]]],
     [control generation of GCC warnings.  The TYPE 'no' disables
      warnings; 'yes' (default) generates cheap warnings;
      'expensive' in addition generates expensive warnings.])])

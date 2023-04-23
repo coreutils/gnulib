@@ -1,4 +1,4 @@
-# lib-ld.m4 serial 10
+# lib-ld.m4 serial 11
 dnl Copyright (C) 1996-2003, 2009-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -29,7 +29,7 @@ AC_DEFUN([AC_LIB_PROG_LD],
 AC_REQUIRE([AC_CANONICAL_HOST])dnl
 
 AC_ARG_WITH([gnu-ld],
-    [AS_HELP_STRING([--with-gnu-ld],
+    [AS_HELP_STRING([[--with-gnu-ld]],
         [assume the C compiler uses GNU ld [default=no]])],
     [test "$withval" = no || with_gnu_ld=yes],
     [with_gnu_ld=no])dnl

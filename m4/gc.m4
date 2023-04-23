@@ -1,4 +1,4 @@
-# gc.m4 serial 13
+# gc.m4 serial 14
 dnl Copyright (C) 2005-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -7,7 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_GC],
 [
   AC_ARG_WITH([libgcrypt],
-    AS_HELP_STRING([--with-libgcrypt], [use libgcrypt for low-level crypto]),
+    AS_HELP_STRING([[--with-libgcrypt]], [use libgcrypt for low-level crypto]),
     libgcrypt=$withval, libgcrypt=no)
   if test "$libgcrypt" != no; then
     # gc-libgcrypt.c will fail on startup if we don't have

@@ -1,4 +1,4 @@
-# ld-version-script.m4 serial 5
+# ld-version-script.m4 serial 6
 dnl Copyright (C) 2008-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -18,7 +18,7 @@ dnl From Simon Josefsson
 AC_DEFUN([gl_LD_VERSION_SCRIPT],
 [
   AC_ARG_ENABLE([ld-version-script],
-    [AS_HELP_STRING([--enable-ld-version-script],
+    [AS_HELP_STRING([[--enable-ld-version-script]],
        [enable linker version script (default is enabled when possible)])],
     [have_ld_version_script=$enableval],
     [AC_CACHE_CHECK([if LD -Wl,--version-script works],

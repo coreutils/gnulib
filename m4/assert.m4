@@ -1,4 +1,4 @@
-#serial 7
+#serial 8
 
 # Copyright (C) 1998-1999, 2001, 2004, 2008-2023 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -12,7 +12,7 @@ AC_DEFUN([gl_ASSERT],
 [
   AC_MSG_CHECKING([whether to enable assertions])
   AC_ARG_ENABLE([assert],
-    [AS_HELP_STRING([--disable-assert], [turn off assertions])],
+    [AS_HELP_STRING([[--disable-assert]], [turn off assertions])],
     [AS_IF([test "x$enableval" = xno],
       [AC_DEFINE([NDEBUG], [1],
         [Define to 1 if assertions should be disabled.])],
