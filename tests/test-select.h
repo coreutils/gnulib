@@ -37,6 +37,10 @@
 # include <sys/wait.h>
 #endif
 
+/* Tell GCC not to warn about the specific edge cases tested here.  */
+#if __GNUC__ >= 10
+# pragma GCC diagnostic ignored "-Wanalyzer-fd-use-without-check"
+#endif
 
 typedef int (*select_fn) (int, fd_set *, fd_set *, fd_set *, struct timeval *);
 

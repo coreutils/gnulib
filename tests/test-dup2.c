@@ -50,6 +50,12 @@ SIGNATURE_CHECK (dup2, int, (int, int));
 
 #include "macros.h"
 
+/* Tell GCC not to warn about the specific edge cases tested here.  */
+#if __GNUC__ >= 10
+# pragma GCC diagnostic ignored "-Wanalyzer-fd-leak"
+# pragma GCC diagnostic ignored "-Wanalyzer-fd-use-without-check"
+#endif
+
 /* Return non-zero if FD is open.  */
 static int
 is_open (int fd)

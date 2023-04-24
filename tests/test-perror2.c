@@ -22,6 +22,11 @@
 #include <string.h>
 #include <unistd.h>
 
+/* Tell GCC not to warn about myerr being leaked.  */
+#if __GNUC__ >= 10
+# pragma GCC diagnostic ignored "-Wanalyzer-fd-leak"
+#endif
+
 /* This test intentionally parses stderr.  So, we arrange to have fd 10
    (outside the range of interesting fd's during the test) set up to
    duplicate the original stderr.  */

@@ -25,6 +25,11 @@ SIGNATURE_CHECK (getdtablesize, int, (void));
 
 #include "macros.h"
 
+/* Tell GCC not to warn about the specific edge cases tested here.  */
+#if __GNUC__ >= 10
+# pragma GCC diagnostic ignored "-Wanalyzer-fd-leak"
+#endif
+
 int
 main (int argc, char *argv[])
 {

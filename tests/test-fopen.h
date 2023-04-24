@@ -23,6 +23,11 @@
 
 #include "macros.h"
 
+/* Tell GCC not to warn about the specific edge cases tested here.  */
+#if __GNUC__ >= 10
+# pragma GCC diagnostic ignored "-Wanalyzer-file-leak"
+#endif
+
 /* Test fopen.  Assumes BASE is defined.  */
 
 static int

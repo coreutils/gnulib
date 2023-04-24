@@ -16,6 +16,11 @@
 
 /* Written by Bruno Haible <bruno@clisp.org>, 2007.  */
 
+/* Tell GCC not to warn about the specific edge cases tested here.  */
+#if __GNUC__ >= 10
+# pragma GCC diagnostic ignored "-Wanalyzer-fd-leak"
+#endif
+
 /* Make test_open always inline if we're using Fortify, which defines
    __always_inline to do that.  Do nothing otherwise.  This works
    around a glibc bug whereby 'open' cannot be used as a function

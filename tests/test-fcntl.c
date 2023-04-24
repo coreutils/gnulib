@@ -44,6 +44,14 @@ SIGNATURE_CHECK (fcntl, int, (int, int, ...));
 #include "binary-io.h"
 #include "macros.h"
 
+/* Tell GCC not to warn about the specific edge cases tested here.  */
+#if __GNUC__ >= 10
+# pragma GCC diagnostic ignored "-Wanalyzer-fd-leak"
+#endif
+#if __GNUC__ >= 13
+# pragma GCC diagnostic ignored "-Wanalyzer-va-arg-type-mismatch"
+#endif
+
 #if !O_BINARY
 # define set_binary_mode(f,m) zero ()
 static int zero (void) { return 0; }

@@ -35,6 +35,10 @@
 # define freelocale(loc) ((void) (loc))
 #endif
 
+/* Suppress GCC false positive.  */
+#if __GNUC__ >= 10
+# pragma GCC diagnostic ignored "-Wanalyzer-use-of-uninitialized-value"
+#endif
 
 #if HAVE_GOOD_USELOCALE
 
