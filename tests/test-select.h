@@ -38,7 +38,7 @@
 #endif
 
 /* Tell GCC not to warn about the specific edge cases tested here.  */
-#if __GNUC__ >= 10
+#if __GNUC__ >= 13
 # pragma GCC diagnostic ignored "-Wanalyzer-fd-use-without-check"
 #endif
 
