@@ -1,6 +1,6 @@
 /* pselect - synchronous I/O multiplexing
 
-   Copyright 2011-2022 Free Software Foundation, Inc.
+   Copyright 2011-2023 Free Software Foundation, Inc.
 
    This file is part of gnulib.
 
@@ -44,6 +44,12 @@ pselect (int nfds, fd_set *restrict rfds,
   int select_result;
   sigset_t origmask;
   struct timeval tv, *tvp;
+
+  if (nfds < 0 || nfds > FD_SETSIZE)
+    {
+      errno = EINVAL;
+      return -1;
+    }
 
   if (timeout)
     {
