@@ -4148,7 +4148,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     /* Neither ISO C nor POSIX specify that the '0' flag is ignored when a width
        and a precision are both present.  But most implementations do so.  */
     #ifdef __MINGW32__
-    ASSERT (strcmp (result, "00000000000303c 33") == 0);
+    ASSERT (strcmp (result, "00000000000303c 33") == 0 /* mingw 5 */
+            || strcmp (result, "     000000303c 33") == 0 /* mingw 10 */);
     #else
     ASSERT (strcmp (result, "     000000303c 33") == 0);
     #endif
@@ -4234,7 +4235,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     /* Neither ISO C nor POSIX specify that the '0' flag is ignored when a width
        and a precision are both present.  But most implementations do so.  */
     #ifdef __MINGW32__
-    ASSERT (strcmp (result, "0x000000000303c 33") == 0);
+    ASSERT (strcmp (result, "0x000000000303c 33") == 0 /* mingw 5 */
+            || strcmp (result, "   0x000000303c 33") == 0 /* mingw 10 */);
     #else
     ASSERT (strcmp (result, "   0x000000303c 33") == 0);
     #endif
