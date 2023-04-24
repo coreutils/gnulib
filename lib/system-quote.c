@@ -257,7 +257,7 @@ system_quote (enum system_command_interpreter interpreter,
     case SCI_SYSTEM:
     case SCI_WINDOWS_CMD:
       {
-        size_t length = system_quote_length (interpreter, string);
+        size_t length = system_quote_length (interpreter, string) + 1;
         char *quoted = XNMALLOC (length, char);
         system_quote_copy (quoted, interpreter, string);
         return quoted;
