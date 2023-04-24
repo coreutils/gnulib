@@ -27,6 +27,9 @@ macOS 10.15 and newer.
 @item
 This function fails on seekable stdin, stdout, and stderr: cygwin <= 1.5.24.
 @item
+This function mistakenly succeeds on pipes on some platforms:
+mingw 10.
+@item
 On platforms where @code{off_t} is a 32-bit type, @code{ftello} does not work
 correctly with files 2 GiB and larger.  @xref{Large File Support}.
 @end itemize

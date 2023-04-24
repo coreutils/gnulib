@@ -19,4 +19,7 @@ Portability problems not fixed by Gnulib:
 @code{fflush}, @code{ftell}, @code{ftello}, @code{fgetpos} behave incorrectly
 on input streams that are opened in @code{O_TEXT} mode and whose contents
 contains Unix line terminators (LF), on some platforms: mingw, MSVC 14.
+@item
+This function mistakenly succeeds on pipes on some platforms:
+mingw 10.
 @end itemize

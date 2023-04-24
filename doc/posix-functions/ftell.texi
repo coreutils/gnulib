@@ -20,6 +20,9 @@ This function, when invoked after @code{ungetc}, throws away the @code{ungetc}
 buffer, changes the stream's file position, and returns the wrong position on
 some platforms:
 macOS 10.15 and newer.
+@item
+This function mistakenly succeeds on pipes on some platforms:
+mingw 10.
 @end itemize
 
 Portability problems not fixed by Gnulib:

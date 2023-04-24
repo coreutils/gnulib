@@ -1,4 +1,4 @@
-# lseek.m4 serial 13
+# lseek.m4 serial 14
 dnl Copyright (C) 2007, 2009-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -17,9 +17,11 @@ AC_DEFUN([gl_FUNC_LSEEK],
          dnl Native Windows.
          dnl The result of lseek (fd, (off_t)0, SEEK_CUR) or
          dnl SetFilePointer(handle, 0, NULL, FILE_CURRENT)
-         dnl for a pipe depends on the environment: In a Cygwin 1.5
-         dnl environment it succeeds (wrong); in a Cygwin 1.7 environment
-         dnl it fails with a wrong errno value.
+         dnl for a pipe depends on the environment:
+         dnl In a Cygwin 1.5 environment it succeeds (wrong);
+         dnl in a Cygwin 1.7 environment it fails with a wrong errno value;
+         dnl in a Cygwin 2.9.0 environment it fails correctly;
+         dnl in a Cygwin 3.4.6 environment it succeeds again (wrong).
          gl_cv_func_lseek_pipe=no
          ;;
        *)
