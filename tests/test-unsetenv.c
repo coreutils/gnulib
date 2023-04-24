@@ -32,7 +32,8 @@ SIGNATURE_CHECK (unsetenv, int, (char const *));
 int
 main (void)
 {
-  char entry[] = "b=2";
+  /* Static to pacify gcc -Wanalyzer-putenv-of-auto-var.  */
+  static char entry[] = "b=2";
 
   /* Test removal when multiple entries present.  */
   ASSERT (putenv ((char *) "a=1") == 0);
