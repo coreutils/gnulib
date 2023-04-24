@@ -1,6 +1,6 @@
 /* Tests for Unicode character output.
 
-   Copyright (C) 2020-2022 Free Software Foundation, Inc.
+   Copyright (C) 2020-2023 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@
 #include <locale.h>
 #include <string.h>
 
+#include "localcharset.h"
 #include "macros.h"
 
 #define TEST_CODE 0x2022
@@ -62,7 +63,27 @@ main (int argc, char *argv[])
       if (argc > 1)
         switch (argv[1][0])
           {
-          case '1': /* On some platforms, the "C" locale has UTF-8 encoding.  */
+          case '1':
+            /* On some platforms, the "C" locale has UTF-8 encoding.
+               And on native Windows, the "C" locale may have an 8-bit encoding
+               such as CP1252, that contains the U+2022 character.  */
+            {
+              const char *charset = locale_charset ();
+              if (strcmp (charset, "CP874") == 0
+                  || strcmp (charset, "CP1250") == 0
+                  || strcmp (charset, "CP1251") == 0
+                  || strcmp (charset, "CP1252") == 0
+                  || strcmp (charset, "CP1253") == 0
+                  || strcmp (charset, "CP1254") == 0
+                  || strcmp (charset, "CP1255") == 0
+                  || strcmp (charset, "CP1256") == 0
+                  || strcmp (charset, "CP1257") == 0
+                  || strcmp (charset, "CP1258") == 0)
+                ASSERT (strcmp (result, "\x95") == 0);
+              else
+                ASSERT (strcmp (result, TEST_CODE_AS_UTF8) == 0);
+            }
+            break;
           case '2':
             ASSERT (strcmp (result, TEST_CODE_AS_UTF8) == 0);
             break;
