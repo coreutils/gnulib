@@ -31,6 +31,10 @@ AC_DEFUN([gl_FUNC_FCLOSE],
       *) REPLACE_FCLOSE=1 ;;
     esac
   fi
+
+  if test $REPLACE_FCLOSE = 1; then
+    REPLACE_FOPEN=1
+  fi
 ])
 
 dnl Determine whether fclose works on input streams.
