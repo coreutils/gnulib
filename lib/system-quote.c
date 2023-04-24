@@ -1,5 +1,5 @@
 /* Quoting for a system command.
-   Copyright (C) 2012-2022 Free Software Foundation, Inc.
+   Copyright (C) 2012-2023 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2012.
 
    This program is free software: you can redistribute it and/or modify
@@ -258,7 +258,7 @@ system_quote (enum system_command_interpreter interpreter,
     case SCI_SYSTEM:
     case SCI_WINDOWS_CMD:
       {
-        size_t length = system_quote_length (interpreter, string);
+        size_t length = system_quote_length (interpreter, string) + 1;
         char *quoted = XNMALLOC (length, char);
         system_quote_copy (quoted, interpreter, string);
         return quoted;
