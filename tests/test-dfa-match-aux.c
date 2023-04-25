@@ -22,6 +22,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 #include <regex.h>
 #include <dfa.h>
 #include <localeinfo.h>

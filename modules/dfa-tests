@@ -9,6 +9,7 @@ binary-io
 stdio
 stdlib
 string
+unistd
 regex
 
 configure.ac:
