@@ -35,14 +35,10 @@ test_function (void)
 
     for (i = -1, x = L_(0.5); i >= MIN_EXP; i--, x *= L_(0.5))
       {
-        DOUBLE y;
+        volatile DOUBLE y;
 
         y = EXPM1 (x);
-#ifdef __MINGW32__ /* mingw returns a value that is slightly too small.  */
-        ASSERT (y >= x * (L_(1.0) - L_(1.0) / TWO_MANT_DIG));
-#else
         ASSERT (y >= x);
-#endif
         ASSERT (y < L_(1.5) * x);
 
         y = EXPM1 (- x);
