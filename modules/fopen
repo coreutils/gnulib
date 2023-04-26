@@ -4,6 +4,8 @@ fopen() function: open a stream to a file.
 Files:
 lib/fopen.c
 m4/fopen.m4
+m4/fclose.m4
+m4/fflush.m4
 
 Depends-on:
 stdio
