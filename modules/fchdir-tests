@@ -6,6 +6,7 @@ tests/macros.h
 Depends-on:
 cloexec
 getcwd-lgpl
+dup
 
 configure.ac:
 
