@@ -283,7 +283,7 @@ class GLEmiter(object):
                         shellvar = module.getShellVar()
                         emit += '  %s ()\n' % shellfunc
                         emit += '  {\n'
-                        emit += '    if ! $%s; then\n' % shellvar
+                        emit += '    if $%s; then :; else\n' % shellvar
                         emit += self.autoconfSnippet(module, toplevel,
                                                      disable_libtool, disable_gettext, replace_auxdir, '      ')
                         emit += '      %s=true\n' % shellvar
