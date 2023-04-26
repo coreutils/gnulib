@@ -1,6 +1,6 @@
 #! /bin/sh
 #
-# Copyright (C) 2002-2022 Free Software Foundation, Inc.
+# Copyright (C) 2002-2023 Free Software Foundation, Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -4714,7 +4714,7 @@ func_emit_autoconf_snippets ()
           func_module_shellvar_name "$module"
           echo "  $shellfunc ()"
           echo '  {'
-          echo "    if ! \$$shellvar; then"
+          echo "    if \$$shellvar; then :; else"
           func_emit_autoconf_snippet "      "
           echo "      $shellvar=true"
           deps=`func_get_dependencies $module | sed -e "$sed_dependencies_without_conditions"`
