@@ -3,6 +3,7 @@ Open a directory stream from a file descriptor.
 
 Files:
 lib/fdopendir.c
+lib/dirent-private.h
 m4/fdopendir.m4
 
 Depends-on:

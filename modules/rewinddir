@@ -13,7 +13,8 @@ largefile
 
 configure.ac:
 gl_FUNC_REWINDDIR
-gl_CONDITIONAL([GL_COND_OBJ_REWINDDIR], [test $HAVE_REWINDDIR = 0])
+gl_CONDITIONAL([GL_COND_OBJ_REWINDDIR],
+               [test $HAVE_REWINDDIR = 0 || test $REPLACE_REWINDDIR = 1])
 gl_DIRENT_MODULE_INDICATOR([rewinddir])
 
 Makefile.am:

@@ -29,11 +29,15 @@
 
 #else
 
-# include <stdlib.h>
-
-# include "dirent-private.h"
 # include "filename.h"
 
+#endif
+
+#include <stdlib.h>
+#include <string.h>
+
+#if GNULIB_defined_DIR
+# include "dirent-private.h"
 #endif
 
 #if REPLACE_FCHDIR
@@ -57,14 +61,37 @@
 
 DIR *
 opendir (const char *dir_name)
+#undef opendir
 {
-#if HAVE_OPENDIR
-# undef opendir
+#if HAVE_DIRENT_H                       /* equivalent to HAVE_OPENDIR */
   DIR *dirp;
 
+# if GNULIB_defined_DIR
+#  undef DIR
+
+  dirp = (struct gl_directory *) malloc (sizeof (struct gl_directory));
+  if (dirp == NULL)
+    {
+      errno = ENOMEM;
+      return NULL;
+    }
+
+  DIR *real_dirp = opendir (dir_name);
+  if (real_dirp == NULL)
+    {
+      int saved_errno = errno;
+      free (dirp);
+      errno = saved_errno;
+      return NULL;
+    }
+
+  dirp->fd_to_close = -1;
+  dirp->real_dirp = real_dirp;
+# else
   dirp = opendir (dir_name);
   if (dirp == NULL)
     return NULL;
+# endif
 
 # ifdef __KLIBC__
   {
@@ -82,6 +109,7 @@ opendir (const char *dir_name)
       }
   }
 # endif
+
 #else
 
   char dir_name_mask[MAX_PATH + 1 + 1 + 1];
@@ -154,6 +182,7 @@ opendir (const char *dir_name)
       errno = ENOMEM;
       return NULL;
     }
+  dirp->fd_to_close = -1;
   dirp->status = status;
   dirp->current = current;
   if (status == -1)

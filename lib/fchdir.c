@@ -48,7 +48,6 @@
 typedef struct
 {
   char *name;       /* Absolute name of the directory, or NULL.  */
-  /* FIXME - add a DIR* member to make dirfd possible on mingw?  */
 } dir_info_t;
 static dir_info_t *dirs;
 static size_t dirs_allocated;

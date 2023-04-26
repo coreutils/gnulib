@@ -21,7 +21,9 @@
 
 #include <errno.h>
 
-#include "dirent-private.h"
+#if GNULIB_defined_DIR
+# include "dirent-private.h"
+#endif
 
 /* Don't assume that UNICODE is not defined.  */
 #undef FindFirstFile
@@ -29,7 +31,11 @@
 
 void
 rewinddir (DIR *dirp)
+#undef rewinddir
 {
+#if HAVE_DIRENT_H                       /* equivalent to HAVE_REWINDDIR */
+  rewinddir (dirp->real_dirp);
+#else
   /* Like in closedir().  */
   if (dirp->current != INVALID_HANDLE_VALUE)
     FindClose (dirp->current);
@@ -50,4 +56,5 @@ rewinddir (DIR *dirp)
           break;
         }
     }
+#endif
 }

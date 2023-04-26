@@ -12,7 +12,8 @@ largefile
 
 configure.ac:
 gl_FUNC_READDIR
-gl_CONDITIONAL([GL_COND_OBJ_READDIR], [test $HAVE_READDIR = 0])
+gl_CONDITIONAL([GL_COND_OBJ_READDIR],
+               [test $HAVE_READDIR = 0 || test $REPLACE_READDIR = 1])
 gl_DIRENT_MODULE_INDICATOR([readdir])
 
 Makefile.am:
