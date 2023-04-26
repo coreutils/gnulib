@@ -4731,7 +4731,7 @@ func_emit_autoconf_snippets ()
           func_module_shellvar_name "$module"
           echo "  $shellfunc ()"
           echo '  {'
-          echo "    if ! \$$shellvar; then"
+          echo "    if \$$shellvar; then :; else"
           func_emit_autoconf_snippet "      "
           echo "      $shellvar=true"
           deps=`func_get_dependencies $module | sed -e "$sed_dependencies_without_conditions"`
