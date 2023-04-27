@@ -17,6 +17,10 @@ The @code{struct lconv} type does not contain the members
 @code{int_n_cs_precedes}, @code{int_n_sign_posn}, @code{int_n_sep_by_space}
 on some platforms:
 glibc, OpenBSD 4.9, HP-UX 11, IRIX 6.5, Solaris 11.4, Cygwin 1.5.x, mingw, MSVC 14.
+@item
+The values of fields of @code{struct lconv} of type @code{char} are -1 instead
+of CHAR_MAX on some platforms:
+mingw.
 @end itemize
 
 Portability problems not fixed by Gnulib:
