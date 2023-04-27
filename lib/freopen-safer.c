@@ -27,6 +27,11 @@
 #include <fcntl.h>
 #include <unistd.h>
 
+/* GCC 13 misunderstands the dup2 trickery in this file.  */
+#if 13 <= __GNUC__
+# pragma GCC diagnostic ignored "-Wanalyzer-fd-leak"
+#endif
+
 /* Guarantee that FD is open; all smaller FDs must already be open.
    Return true if successful.  */
 static bool
