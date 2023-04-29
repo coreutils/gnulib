@@ -1,7 +1,7 @@
 @node Avoiding the year 2038 problem
 @section Avoiding the year 2038 problem
 
-The ``year 2038 problem'' denotes unpredictable behaviour that will
+The @dfn{year 2038 problem} denotes unpredictable behaviour that will
 likely occur in the year 2038, for programs that use a 32-bit signed
 integer @samp{time_t} type that cannot represent timestamps on or
 after 2038-01-19 03:14:08 UTC@.  See
@@ -26,32 +26,32 @@ suppresses support for post-2038 timestamps.  This may be useful if
 the package links to other libraries whose user-facing ABIs still
 require @code{time_t} to be 32-bit on your platform.
 
-The Gnulib module @samp{year2038-required} is like @samp{year2038},
-except it rejects platforms where @code{time_t} cannot represent
-timestamps after 2038, and it lacks a @option{--disable-year2038}
-option.  If this module is used and a 32-platform cannot support
+The Gnulib module @samp{year2038-recommended} is like @samp{year2038},
+except it by default rejects platforms where @code{time_t} cannot represent
+timestamps after 2038.  If this module is used and a 32-platform cannot support
 64-bit @code{time_t}, one can still fix the year-2038 problem by using
 a 64-bit instead of a 32-bit build, as noted in the architecture list
 below.  If all else fails one can configure with
-@samp{ac_year2038_required=no}; however, the resulting programs will
+@option{--disable-year2038}; however, the resulting programs will
 mishandle timestamps after 2038.
 
-The Gnulib module @samp{year2038-required} is
-recommended for packages intended for use on 32-bit platforms
-after the year 2038.  However, if your package needs to support
+The Gnulib module @samp{year2038-recommended} is designed
+for packages intended for use on 32-bit platforms
+after the year 2038.  If your package is commonly built on
 32-bit platforms that will not be used after the year 2038,
-you can use the @samp{year2038} module instead.
+you can use the @samp{year2038} module instead, to save builders
+the trouble of configuring with @option{--disable-year2038}.
 
 If the Gnulib module @samp{largefile} is used but neither
-@samp{year2038} nor @samp{year2038-required} is used,
+@samp{year2038} nor @samp{year2038-recommended} is used,
 @command{configure} will have an option @option{--enable-year2038}
 that causes @code{configure} to behave as if @samp{year2038} was used.
 This is for packages that have long used @samp{largefile} but have not
 gotten around to upgrading their Gnulib module list to include
-@samp{year2038} or @samp{year2038-required}.
+@samp{year2038} or @samp{year2038-recommended}.
 @xref{Large File Support}.
 
-With the @samp{year2038-required} module, @command{configure} by
+With the @samp{year2038-recommended} module, @command{configure} by
 default should work on the following 32-bit platforms (or 32-bit ABIs
 in bi-arch systems):
 
@@ -70,18 +70,18 @@ OpenBSD 5.5 (2014) and later on x86,
 @item
 FreeBSD/arm,
 @item
-Minix 3.3.
+Minix 3.3 (2014).
 @end itemize
 
 @noindent
-Whereas @command{configure} with @samp{year2038-required} will fail on
-earlier versions of the abovementioned platforms if a version is listed,
-and it will also fail on all versions of the following older 32-bit
-platforms or ABIs:
+Whereas with @samp{year2038-recommended}, @command{configure} should
+by default fail on earlier versions of the abovementioned platforms if
+a version is listed, and it should also by default fail on all
+versions of the following older 32-bit platforms or ABIs:
 
 @itemize
 @item
-Android,
+Android on ARMv7 or x86,
 @item
 Mac OS X 10.6 (2009) and earlier on x86 and powerpc,
 @item

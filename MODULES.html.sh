@@ -1769,7 +1769,7 @@ func_all_modules ()
   func_module time-h
   func_module time_rz
   func_module year2038
-  func_module year2038-required
+  func_module year2038-recommended
   func_end_table
 
   element="Extra functions based on ANSI C 89"
@@ -2818,7 +2818,6 @@ func_all_modules ()
   func_module fts
   func_module isdir
   func_module largefile
-  func_module largefile-required
   func_module lchmod
   func_module lchown
   func_module mkancesdirs

@@ -74,6 +74,12 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2023-04-28  largefile-required
+            year2038-required
+                            Modules removed, for consistency with Autoconf
+                            master.  Use new module year2038-recommended
+                            instead of year2038-required.
+
 2023-03-25  mtx             This module no longer provides the function
                             call_once.  To get this function, use the new
                             separate module 'call_once'.

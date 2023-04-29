@@ -24,8 +24,8 @@ AC_DEFUN([gl_SET_LARGEFILE_SOURCE],
  ]])
 )
 
-m4_ifndef([AC_SYS_LARGEFILE_REQUIRED], [
-# Support AC_SYS_LARGEFILE_REQUIRED and Y2038 macros, even if
+m4_ifndef([AC_SYS_YEAR2038_RECOMMENDED], [
+# Support AC_SYS_YEAR2038_RECOMMENDED and related macros, even if
 # Autoconf 2.71 or earlier.  This code is taken from Autoconf master.
 
 # _AC_SYS_YEAR2038_TEST_CODE
@@ -58,8 +58,8 @@ m4_define([_AC_SYS_YEAR2038_OPTIONS], m4_normalize(
                                       dnl 32-bit MinGW (misconfiguration)
 ))
 
-# _AC_SYS_YEAR2038_PROBE([IF-NOT-DETECTED])
-# -----------------------------------------
+# _AC_SYS_YEAR2038_PROBE
+# ----------------------
 # Subroutine of AC_SYS_YEAR2038.  Probe for time_t that can represent
 # time points more than 2**31 - 1 seconds after the epoch (dates after
 # 2038-01-18, see above) and set the cache variable ac_cv_sys_year2038_opts
@@ -72,13 +72,10 @@ m4_define([_AC_SYS_YEAR2038_OPTIONS], m4_normalize(
 # AC_TRY_RUN.  Note also that some systems only support large time_t
 # together with large off_t.
 #
-# If support is not detected, the behavior depends on which of the
-# top-level AC_SYS_YEAR2038 macros was used (see below).
-#
 # If you change this macro you may also need to change
 # _AC_SYS_YEAR2038_OPTIONS.
 AC_DEFUN([_AC_SYS_YEAR2038_PROBE],
-[AC_CACHE_CHECK([for $CC option to enable timestamps after Jan 2038],
+[AC_CACHE_CHECK([for $CC option for timestamps after 2038],
   [ac_cv_sys_year2038_opts],
   [ac_save_CPPFLAGS="$CPPFLAGS"
   ac_opt_found=no
@@ -97,29 +94,7 @@ ac_have_year2038=yes
 AS_CASE([$ac_cv_sys_year2038_opts],
   ["none needed"], [],
   ["support not detected"],
-    [ac_have_year2038=no
-     AS_CASE([$ac_year2038_required,$enable_year2038],
-      [yes,*],
-        [AC_MSG_FAILURE([support for timestamps after Jan 2038 is required])],
-      [*,yes],
-        [# If we're not cross compiling and 'touch' works with a large
-        # timestamp, then we can presume the system supports wider time_t
-        # *somehow* and we just weren't able to detect it.  One common
-        # case that we deliberately *don't* probe for is a system that
-        # supports both 32- and 64-bit ABIs but only the 64-bit ABI offers
-        # wide time_t.  (It would be inappropriate for us to override an
-        # intentional use of -m32.)  Error out, demanding use of
-        # --disable-year2038 if this is intentional.
-        AS_IF([test $cross_compiling = no],
-          [AS_IF([TZ=UTC0 touch -t 210602070628.15 conftest.time 2>/dev/null],
-            [AS_CASE([`TZ=UTC0 LC_ALL=C ls -l conftest.time 2>/dev/null`],
-              [*'Feb  7  2106'* | *'Feb  7 17:10'*],
-              [AC_MSG_FAILURE(m4_text_wrap(
-      [this system appears to support timestamps after January 2038,
-       but no mechanism for enabling wide 'time_t' was detected.
-       Did you mean to build a 64-bit binary? (e.g. 'CC="${CC} -m64"'.)
-       To proceed with 32-bit time_t, configure with '--disable-year2038'.],
-      [], [], [55]))])])])])],
+    [ac_have_year2038=no],
 
   ["-D_TIME_BITS=64"],
     [AC_DEFINE([_TIME_BITS], [64],
@@ -132,7 +107,7 @@ AS_CASE([$ac_cv_sys_year2038_opts],
   ["-U_USE_32_BIT_TIME_T"*],
     [AC_MSG_FAILURE(m4_text_wrap(
       [the 'time_t' type is currently forced to be 32-bit.
-       It will stop working after January 2038.
+       It will stop working after mid-January 2038.
        Remove _USE_32BIT_TIME_T from the compiler flags.],
       [], [], [55]))],
 
@@ -142,44 +117,23 @@ AS_CASE([$ac_cv_sys_year2038_opts],
 
 # _AC_SYS_YEAR2038_ENABLE
 # -----------------------
-# Subroutine of AC_SYS_YEAR2038 and _AC_SYS_YEAR2038_OPT_IN.
 # Depending on which of the YEAR2038 macros was used, add either an
-# --enable-year2038, or a --disable-year2038, or no option at all to
-# the configure script.  Note that this is expanded very late and
+# --enable-year2038 or a --disable-year2038 to
+# the configure script.  This is expanded very late and
 # therefore there cannot be any code in the AC_ARG_ENABLE.  The
 # default value for 'enable_year2038' is emitted unconditionally
 # because the generated code always looks at this variable.
 m4_define([_AC_SYS_YEAR2038_ENABLE],
 [m4_divert_text([DEFAULTS],
-  m4_provide_if([AC_SYS_YEAR2038_REQUIRED],
-    [ac_year2038_required=yes],
-    [ac_year2038_required=no]))dnl
-m4_divert_text([DEFAULTS],
   m4_provide_if([AC_SYS_YEAR2038],
     [enable_year2038=yes],
     [enable_year2038=no]))]dnl
-[m4_provide_if([AC_SYS_YEAR2038_REQUIRED], [],
 [AC_ARG_ENABLE([year2038],
   m4_provide_if([AC_SYS_YEAR2038],
     [AS_HELP_STRING([--disable-year2038],
-      [omit support for dates after Jan 2038])],
+      [don't support timestamps after 2038])],
     [AS_HELP_STRING([--enable-year2038],
-      [include support for dates after Jan 2038])]))])])
-
-# _AC_SYS_YEAR2038_OPT_IN
-# -----------------------
-# If the --enable-year2038 option is given to configure, attempt to
-# detect and activate support for large time_t on 32-bit systems.
-# This macro is automatically invoked by AC_SYS_LARGEFILE when large
-# *file* support is detected.  It does not AC_REQUIRE AC_SYS_LARGEFILE
-# to avoid a dependency loop, and is therefore unsafe to expose as a
-# documented macro.
-AC_DEFUN([_AC_SYS_YEAR2038_OPT_IN],
-[m4_provide_if([_AC_SYS_YEAR2038_PROBE], [], [dnl
-  AS_IF([test "$ac_year2038_required,$enable_year2038" != no,no],
-    [_AC_SYS_YEAR2038_PROBE])
-  AC_CONFIG_COMMANDS_PRE([_AC_SYS_YEAR2038_ENABLE])
-])])
+      [support timestamps after 2038])]))])
 
 # AC_SYS_YEAR2038
 # ---------------
@@ -187,28 +141,39 @@ AC_DEFUN([_AC_SYS_YEAR2038_OPT_IN],
 # On systems where time_t is not always 64 bits, this probe can be
 # skipped by passing the --disable-year2038 option to configure.
 AC_DEFUN([AC_SYS_YEAR2038],
-[m4_provide_if([AC_SYS_LARGEFILE_REQUIRED], [],
-  [AC_REQUIRE([AC_SYS_LARGEFILE])])]dnl
-[m4_provide_if([_AC_SYS_YEAR2038_PROBE], [], [dnl
-  AS_IF([test "$ac_year2038_required,$enable_year2038" != no,no],
-    [_AC_SYS_YEAR2038_PROBE])
-  AC_CONFIG_COMMANDS_PRE([_AC_SYS_YEAR2038_ENABLE])
-])])
+[AC_REQUIRE([AC_SYS_LARGEFILE])dnl
+AS_IF([test "$enable_year2038,$ac_have_year2038,$cross_compiling" = yes,no,no],
+ [# If we're not cross compiling and 'touch' works with a large
+  # timestamp, then we can presume the system supports wider time_t
+  # *somehow* and we just weren't able to detect it.  One common
+  # case that we deliberately *don't* probe for is a system that
+  # supports both 32- and 64-bit ABIs but only the 64-bit ABI offers
+  # wide time_t.  (It would be inappropriate for us to override an
+  # intentional use of -m32.)  Error out, demanding use of
+  # --disable-year2038 if this is intentional.
+  AS_IF([TZ=UTC0 touch -t 210602070628.15 conftest.time 2>/dev/null],
+    [AS_CASE([`TZ=UTC0 LC_ALL=C ls -l conftest.time 2>/dev/null`],
+       [*'Feb  7  2106'* | *'Feb  7 17:10'*],
+       [AC_MSG_FAILURE(m4_text_wrap(
+	  [this system appears to support timestamps after mid-January 2038,
+	   but no mechanism for enabling wide 'time_t' was detected.
+	   Did you mean to build a 64-bit binary? (E.g., 'CC="${CC} -m64"'.)
+	   To proceed with 32-bit time_t, configure with '--disable-year2038'.],
+	  [], [], [55]))])])])])
 
-# AC_SYS_YEAR2038_REQUIRED
-# ------------------------
-# Same as AC_SYS_YEAR2038, but declares that this program *requires*
-# support for large time_t.  If we cannot find any way to make time_t
-# capable of representing values larger than 2**31 - 1, configure will
-# error out.  Furthermore, no --enable-year2038 nor --disable-year2038
-# option will be available.
-AC_DEFUN([AC_SYS_YEAR2038_REQUIRED],
-[m4_provide_if([AC_SYS_LARGEFILE_REQUIRED], [],
-  [AC_REQUIRE([AC_SYS_LARGEFILE])])]dnl
-[m4_provide_if([_AC_SYS_YEAR2038_PROBE], [], [dnl
-  _AC_SYS_YEAR2038_PROBE
-  AC_CONFIG_COMMANDS_PRE([_AC_SYS_YEAR2038_ENABLE])
-])])
+# AC_SYS_YEAR2038_RECOMMENDED
+# ---------------------------
+# Same as AC_SYS_YEAR2038, but recommend support for large time_t.
+# If we cannot find any way to make time_t capable of representing
+# values larger than 2**31 - 1, error out unless --disable-year2038 is given.
+AC_DEFUN([AC_SYS_YEAR2038_RECOMMENDED],
+[AC_REQUIRE([AC_SYS_YEAR2038])dnl
+AS_IF([test "$enable_year2038,$ac_have_year2038" = yes,no],
+   [AC_MSG_FAILURE(m4_text_wrap(
+      [could not enable timestamps after mid-January 2038.
+       Did you mean to build a 64-bit binary? (E.g., 'CC="${CC} -m64"'.)
+       To proceed with 32-bit time_t, configure with '--disable-year2038'.],
+      [], [], [55]))])])
 
 # _AC_SYS_LARGEFILE_TEST_CODE
 # ---------------------------
@@ -285,9 +250,7 @@ AS_CASE([$ac_cv_sys_largefile_opts],
   ["none needed"], [],
   ["supported through gnulib"], [],
   ["support not detected"],
-    [ac_have_largefile=no
-     AS_IF([test $ac_largefile_required,$ac_year2038_required != no,no],
-       [AC_MSG_FAILURE([support for large files is required])])],
+    [ac_have_largefile=no],
 
   ["-D_FILE_OFFSET_BITS=64"],
     [AC_DEFINE([_FILE_OFFSET_BITS], [64],
@@ -303,30 +266,9 @@ AS_CASE([$ac_cv_sys_largefile_opts],
   [AC_MSG_ERROR(
     [internal error: bad value for \$ac_cv_sys_largefile_opts])])
 
-_AC_SYS_YEAR2038_OPT_IN
-])
-
-# _AC_SYS_LARGEFILE_ENABLE
-# ------------------------
-# Subroutine of AC_SYS_LARGEFILE.  If AC_SYS_LARGEFILE_REQUIRED was
-# not used at any point in this configure script, add a
-# --disable-largefile option to the configure script.  Note that this
-# is expanded very late and therefore there cannot be any code in the
-# AC_ARG_ENABLE.  The default value for 'enable_largefile' is emitted
-# unconditionally because the generated shell code always looks at
-# this variable.
-m4_define([_AC_SYS_LARGEFILE_ENABLE],
-[m4_divert_text([DEFAULTS],
-  m4_provide_if([AC_SYS_LARGEFILE_REQUIRED],
-    [ac_largefile_required=yes],
-    [ac_largefile_required=no]))dnl
-m4_divert_text([DEFAULTS],
-  [enable_largefile=yes])]dnl
-[m4_provide_if([AC_SYS_LARGEFILE_REQUIRED], [],
-   [m4_provide_if([AC_SYS_YEAR2038_REQUIRED], [],
-      [AC_ARG_ENABLE([largefile],
-         [AS_HELP_STRING([--disable-largefile],
-	    [omit support for large files])])])])])
+AS_IF([test "$enable_year2038" != no],
+  [_AC_SYS_YEAR2038_PROBE])
+AC_CONFIG_COMMANDS_PRE([_AC_SYS_YEAR2038_ENABLE])])
 
 # AC_SYS_LARGEFILE
 # ----------------
@@ -337,30 +279,13 @@ m4_divert_text([DEFAULTS],
 # Additionally, on Linux file systems with 64-bit inodes a file that happens
 # to have a 64-bit inode number cannot be accessed by 32-bit applications on
 # Linux x86/x86_64.  This can occur with file systems such as XFS and NFS.
-# This macro allows configuration to continue if the system doesn't support
-# large files; see also AC_SYS_LARGEFILE_REQUIRED.
 AC_DEFUN([AC_SYS_LARGEFILE],
-[m4_provide_if([_AC_SYS_LARGEFILE_PROBE], [], [dnl
-  AS_IF([test "$ac_largefile_required,$enable_largefile,$ac_year2038_required" != no,no,no],
-    [_AC_SYS_LARGEFILE_PROBE])
-  AC_CONFIG_COMMANDS_PRE([_AC_SYS_LARGEFILE_ENABLE])
-])])
-
-# AC_SYS_LARGEFILE_REQUIRED
-# -------------------------
-# Same as AC_SYS_LARGEFILE, but declares that this program *requires*
-# support for large files.  If we cannot find a combination of compiler
-# options and #defines that makes 'off_t' capable of representing 2**63 - 1,
-# 'configure' will error out.  Furthermore, 'configure' will not offer a
-# --disable-largefile command line option.
-# If both AC_SYS_LARGEFILE and AC_SYS_LARGEFILE_REQUIRED are used in the
-# same configure script -- in either order -- AC_SYS_LARGEFILE_REQUIRED wins.
-AC_DEFUN([AC_SYS_LARGEFILE_REQUIRED],
-[m4_provide_if([_AC_SYS_LARGEFILE_PROBE], [], [dnl
-  _AC_SYS_LARGEFILE_PROBE
-  AC_CONFIG_COMMANDS_PRE([_AC_SYS_LARGEFILE_ENABLE])
-])])
-])# m4_ifndef AC_SYS_LARGEFILE_REQUIRED
+[AC_ARG_ENABLE([largefile],
+   [AS_HELP_STRING([--disable-largefile],
+      [omit support for large files])])dnl
+AS_IF([test "$enable_largefile,$enable_year2038" != no,no],
+  [_AC_SYS_LARGEFILE_PROBE])])
+])# m4_ifndef AC_SYS_YEAR2038_RECOMMENDED
 
 # Enable large files on systems where this is implemented by Gnulib, not by the
 # system headers.

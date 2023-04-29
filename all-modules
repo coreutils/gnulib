@@ -89,7 +89,7 @@ exclude_for_mingw="$exclude_for_mingw forkpty-tests forkpty login_tty-tests logi
 exclude_for_msvc="$exclude_for_mingw"
 
 # Command-line option processing.
-exclude="year2038-required"
+exclude="year2038-recommended"
 while test $# -gt 0; do
   case "$1" in
     --for-mingw | --for-ming | --for-min | --for-mi )
