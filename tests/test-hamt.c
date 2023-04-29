@@ -376,4 +376,6 @@ main (void)
   test_functional_update ();
   test_destructive_update ();
   test_iterator ();
+
+  return 0;
 }
