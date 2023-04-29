@@ -1,5 +1,5 @@
 /* Test of <stdbool.h> substitute.
-   Copyright (C) 2002-2007, 2009-2022 Free Software Foundation, Inc.
+   Copyright (C) 2002-2007, 2009-2023 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -46,7 +46,7 @@
    least, not for all compilers and compiler options.  */
 #if ((202311 <= __STDC_VERSION__ || defined __cplusplus \
       || HAVE_STDBOOL_H || 3 <= __GNUC__ || 4 <= __clang_major__) \
-     && !defined _MSC_VER)
+     && !(defined _MSC_VER || defined __SUNPRO_C))
 # define WORKING_BOOL 1
 #else
 # define WORKING_BOOL 0
