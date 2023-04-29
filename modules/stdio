@@ -19,6 +19,9 @@ ssize_t
 stddef
 sys_types
 
+configure.ac-early:
+gl_STDIO_H_EARLY
+
 configure.ac:
 gl_STDIO_H
 gl_STDIO_H_REQUIRE_DEFAULTS
