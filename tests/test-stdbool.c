@@ -48,7 +48,7 @@
    least, not for all compilers and compiler options.  */
 #if ((HAVE_C_BOOL || defined __cplusplus \
       || HAVE_STDBOOL_H || 3 <= __GNUC__ || 4 <= __clang_major__) \
-     && !defined _MSC_VER)
+     && !(defined _MSC_VER || defined __SUNPRO_C))
 # define WORKING_BOOL 1
 #else
 # define WORKING_BOOL 0
