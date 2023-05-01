@@ -17,8 +17,8 @@ builtin-expect
 gen-header
 libc-config
 stdbool
+stdckdint
 stddef
-intprops
 
 configure.ac:
 AC_PROG_MKDIR_P
