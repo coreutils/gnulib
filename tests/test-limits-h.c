@@ -113,6 +113,8 @@ verify_width (ULLONG_WIDTH, 0, ULLONG_MAX);
 int bool_attrs[] = { BOOL_MAX, BOOL_WIDTH };
 static_assert (BOOL_MAX == (((1U << (BOOL_WIDTH - 1)) - 1) * 2) + 1);
 
+static_assert (0 < MB_LEN_MAX);
+
 int
 main (void)
 {

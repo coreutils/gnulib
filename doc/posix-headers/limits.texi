@@ -12,6 +12,9 @@ The macros @code{LLONG_MIN}, @code{LLONG_MAX}, @code{ULLONG_MAX} are not
 defined on some platforms:
 older glibc systems (e.g. Fedora 1), AIX 5.1, HP-UX 11, IRIX 6.5, OpenVMS.
 @item
+The macro @code{MB_LEN_MAX} is not defined on some platforms:
+pcc 1.2.0.DEVEL 20220331.
+@item
 The macros @code{WORD_BIT}, @code{LONG_BIT} are not defined on some platforms:
 glibc 2.11 without @code{-D_GNU_SOURCE}, Cygwin, mingw, MSVC 14.
 @item
