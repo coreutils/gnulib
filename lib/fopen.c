@@ -225,5 +225,9 @@ rpl_fopen (const char *filename, const char *mode)
     }
 #endif
 
+  /* open_direction is sometimes used, sometimes unused.
+     Silence gcc's warning about this situation.  */
+  (void) open_direction;
+
   return orig_fopen (filename, mode);
 }
