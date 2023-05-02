@@ -50,6 +50,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <intprops.h>
 #include <verify.h>
 
 #ifndef NEED_MKTIME_INTERNAL
