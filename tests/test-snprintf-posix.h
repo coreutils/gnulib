@@ -3187,14 +3187,9 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   { /* Padding and precision.  */
     int retval =
       my_snprintf (result, sizeof (result), "%015.10x %d", 12348, 33, 44, 55);
-    /* Neither ISO C nor POSIX specify that the '0' flag is ignored when a width
-       and a precision are both present.  But most implementations do so.  */
-    #ifdef __MINGW32__
-    ASSERT (strcmp (result, "00000000000303c 33") == 0 /* mingw 5 */
-            || strcmp (result, "     000000303c 33") == 0 /* mingw 10 */);
-    #else
+    /* ISO C 99 § 7.19.6.1.(6) says: "For d, i, o, u, x, and X conversions, if a
+       precision is specified, the 0 flag is ignored."  */
     ASSERT (strcmp (result, "     000000303c 33") == 0);
-    #endif
     ASSERT (retval == strlen (result));
   }
 
@@ -3250,14 +3245,9 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   { /* FLAG_ALT with a positive number and padding and precision.  */
     int retval =
       my_snprintf (result, sizeof (result), "%0#15.10x %d", 12348, 33, 44, 55);
-    /* Neither ISO C nor POSIX specify that the '0' flag is ignored when a width
-       and a precision are both present.  But most implementations do so.  */
-    #ifdef __MINGW32__
-    ASSERT (strcmp (result, "0x000000000303c 33") == 0 /* mingw 5 */
-            || strcmp (result, "   0x000000303c 33") == 0 /* mingw 10 */);
-    #else
+    /* ISO C 99 § 7.19.6.1.(6) says: "For d, i, o, u, x, and X conversions, if a
+       precision is specified, the 0 flag is ignored."  */
     ASSERT (strcmp (result, "   0x000000303c 33") == 0);
-    #endif
     ASSERT (retval == strlen (result));
   }
 

@@ -4203,13 +4203,9 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
     wchar_t *result =
       my_asnwprintf (NULL, &length, L"%015.10x %d", 12348, 33, 44, 55);
     ASSERT (result != NULL);
-    /* Neither ISO C nor POSIX specify that the '0' flag is ignored when a width
-       and a precision are both present.  But most implementations do so.  */
-    #if MUSL_LIBC
-    ASSERT (wcscmp (result, L"00000000000303c 33") == 0);
-    #else
+    /* ISO C 99 § 7.24.2.1.(6) says: "For d, i, o, u, x, and X conversions, if a
+       precision is specified, the 0 flag is ignored."  */
     ASSERT (wcscmp (result, L"     000000303c 33") == 0);
-    #endif
     ASSERT (length == wcslen (result));
     free (result);
   }
@@ -4289,13 +4285,9 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
     wchar_t *result =
       my_asnwprintf (NULL, &length, L"%0#15.10x %d", 12348, 33, 44, 55);
     ASSERT (result != NULL);
-    /* Neither ISO C nor POSIX specify that the '0' flag is ignored when a width
-       and a precision are both present.  But most implementations do so.  */
-    #if MUSL_LIBC
-    ASSERT (wcscmp (result, L"0x000000000303c 33") == 0);
-    #else
+    /* ISO C 99 § 7.24.2.1.(6) says: "For d, i, o, u, x, and X conversions, if a
+       precision is specified, the 0 flag is ignored."  */
     ASSERT (wcscmp (result, L"   0x000000303c 33") == 0);
-    #endif
     ASSERT (length == wcslen (result));
     free (result);
   }
