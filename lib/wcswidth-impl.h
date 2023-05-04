@@ -1,5 +1,5 @@
 /* Determine number of screen columns needed for a size-bounded wide string.
-   Copyright (C) 1999, 2011-2022 Free Software Foundation, Inc.
+   Copyright (C) 1999, 2011-2023 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 1999.
 
    This file is free software: you can redistribute it and/or modify
@@ -35,9 +35,22 @@ wcswidth (const wchar_t *s, size_t n)
     }
   return count;
 
+  /* The total width has become > INT_MAX.
+     Continue searching for a non-printing wide character.  */
+  for (; n > 0; s++, n--)
+    {
+      wchar_t c = *s;
+      if (c == (wchar_t)'\0')
+        break;
+      {
+        int width = wcwidth (c);
+        if (width < 0)
+          goto found_nonprinting;
+      }
+     overflow: ;
+    }
+  return INT_MAX;
+
  found_nonprinting:
   return -1;
-
- overflow:
-  return INT_MAX;
 }
