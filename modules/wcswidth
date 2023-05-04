@@ -29,7 +29,7 @@ Link:
 $(LTLIBUNISTRING) when linking with libtool, $(LIBUNISTRING) otherwise
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 all
