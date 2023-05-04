@@ -1,0 +1,16 @@
+Files:
+tests/test-c32width.c
+tests/signature.h
+tests/macros.h
+
+Depends-on:
+c-ctype
+localcharset
+setlocale
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-c32width
+check_PROGRAMS += test-c32width
+test_c32width_LDADD = $(LDADD) $(SETLOCALE_LIB) $(LIBUNISTRING)
