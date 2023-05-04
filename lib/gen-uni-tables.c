@@ -771,10 +771,11 @@ output_predicate (const char *filename, bool (*predicate) (unsigned int), const 
            version);
   fprintf (stream, "\n");
 
-  fprintf (stream, "/* Copyright (C) 2000-2022 Free Software Foundation, Inc.\n");
+  fprintf (stream, "/* Copyright (C) 2000-2023 Free Software Foundation, Inc.\n");
   fprintf (stream, "\n");
   output_library_license (stream,
                           strcmp (filename, "unictype/categ_M.h") == 0
+                          || strncmp (filename, "unictype/ctype_", 15) == 0
                           || strcmp (filename, "uniwidth/width2.h") == 0);
   fprintf (stream, "\n");
 
