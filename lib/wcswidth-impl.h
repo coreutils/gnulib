@@ -16,16 +16,16 @@
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 int
-wcswidth (const wchar_t *s, size_t n)
+FUNC (const UNIT *s, size_t n)
 {
   int count = 0;
   for (; n > 0; s++, n--)
     {
-      wchar_t c = *s;
-      if (c == (wchar_t)'\0')
+      UNIT c = *s;
+      if (c == (UNIT)'\0')
         break;
       {
-        int width = wcwidth (c);
+        int width = CHARACTER_WIDTH (c);
         if (width < 0)
           goto found_nonprinting;
         if (width > INT_MAX - count)
@@ -39,11 +39,11 @@ wcswidth (const wchar_t *s, size_t n)
      Continue searching for a non-printing wide character.  */
   for (; n > 0; s++, n--)
     {
-      wchar_t c = *s;
-      if (c == (wchar_t)'\0')
+      UNIT c = *s;
+      if (c == (UNIT)'\0')
         break;
       {
-        int width = wcwidth (c);
+        int width = CHARACTER_WIDTH (c);
         if (width < 0)
           goto found_nonprinting;
       }

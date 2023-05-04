@@ -494,6 +494,25 @@ _GL_CXXALIASWARN (c32stombs);
 #endif
 
 
+/* Number of screen columns needed for a size-bounded 32-bit wide string.  */
+#if @GNULIB_C32SWIDTH@
+# if (_GL_WCHAR_T_IS_UCS4 && !GNULIB_defined_mbstate_t) && !defined IN_C32SWIDTH
+_GL_BEGIN_C_LINKAGE
+_GL_INLINE _GL_ARG_NONNULL ((1)) int
+c32swidth (const char32_t *s, size_t n)
+{
+  return wcswidth ((const wchar_t *) s, n);
+}
+_GL_END_C_LINKAGE
+# else
+_GL_FUNCDECL_SYS (c32swidth, int, (const char32_t *s, size_t n)
+                                  _GL_ARG_NONNULL ((1)));
+# endif
+_GL_CXXALIAS_SYS (c32swidth, int, (const char32_t *s, size_t n));
+_GL_CXXALIASWARN (c32swidth);
+#endif
+
+
 /* Converts a 32-bit wide character to unibyte character.
    Returns the single-byte representation of WC if it exists,
    or EOF otherwise.  */

@@ -1,0 +1,36 @@
+Description:
+c32swidth() function: Determine the number of screen columns needed for
+a size-bounded 32-bit wide string.
+
+Files:
+lib/c32swidth.c
+lib/wcswidth-impl.h
+
+Depends-on:
+uchar
+wchar
+wcswidth
+c32width
+
+configure.ac:
+AC_REQUIRE([gl_UCHAR_H])
+dnl Determine REPLACE_MBSTATE_T, from which GNULIB_defined_mbstate_t is
+dnl determined.  It describes how mbrtoc32 is implemented.
+AC_REQUIRE([gl_MBSTATE_T_BROKEN])
+AC_REQUIRE([gl_MBRTOC32_SANITYCHECK])
+gl_UCHAR_MODULE_INDICATOR([c32swidth])
+
+Makefile.am:
+lib_SOURCES += c32swidth.c
+
+Include:
+<uchar.h>
+
+Link:
+$(LTLIBUNISTRING) when linking with libtool, $(LIBUNISTRING) otherwise
+
+License:
+LGPLv2+
+
+Maintainer:
+Bruno Haible
