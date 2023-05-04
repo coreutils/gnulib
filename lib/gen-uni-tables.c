@@ -10254,9 +10254,11 @@ output_simple_mapping (const char *filename,
            version);
   fprintf (stream, "\n");
 
-  fprintf (stream, "/* Copyright (C) 2000-2022 Free Software Foundation, Inc.\n");
+  fprintf (stream, "/* Copyright (C) 2000-2023 Free Software Foundation, Inc.\n");
   fprintf (stream, "\n");
-  output_library_license (stream, false);
+  output_library_license (stream,
+                          strcmp (filename, "unicase/tolower.h") == 0
+                          || strcmp (filename, "unicase/toupper.h") == 0);
   fprintf (stream, "\n");
 
   t.p = 7;
