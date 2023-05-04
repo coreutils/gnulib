@@ -40,7 +40,7 @@ Link:
 $(LTLIBUNISTRING) when linking with libtool, $(LIBUNISTRING) otherwise
 
 License:
-LGPLv3+ or GPLv2+
+LGPLv2+
 
 Maintainer:
 Bruno Haible
