@@ -35,9 +35,22 @@ wcswidth (const wchar_t *s, size_t n)
     }
   return count;
 
+  /* The total width has become > INT_MAX.
+     Continue searching for a non-printing wide character.  */
+  for (; n > 0; s++, n--)
+    {
+      wchar_t c = *s;
+      if (c == (wchar_t)'\0')
+        break;
+      {
+        int width = wcwidth (c);
+        if (width < 0)
+          goto found_nonprinting;
+      }
+     overflow: ;
+    }
+  return INT_MAX;
+
  found_nonprinting:
   return -1;
-
- overflow:
-  return INT_MAX;
 }
