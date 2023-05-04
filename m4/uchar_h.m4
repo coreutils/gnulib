@@ -1,4 +1,4 @@
-# uchar_h.m4 serial 24
+# uchar_h.m4 serial 25
 dnl Copyright (C) 2019-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -216,6 +216,7 @@ AC_DEFUN([gl_UCHAR_H_REQUIRE_DEFAULTS],
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_C32ISXDIGIT])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_C32TOLOWER])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_C32TOUPPER])
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_C32WIDTH])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_C32RTOMB])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_C32SNRTOMBS])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_C32SRTOMBS])

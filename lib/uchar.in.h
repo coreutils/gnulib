@@ -379,6 +379,24 @@ _GL_CXXALIASWARN (c32toupper);
 #endif
 
 
+/* Number of screen columns needed for a 32-bit wide character.  */
+#if @GNULIB_C32WIDTH@
+# if (_GL_WCHAR_T_IS_UCS4 && !GNULIB_defined_mbstate_t) && !defined IN_C32WIDTH
+_GL_BEGIN_C_LINKAGE
+_GL_INLINE int
+c32width (char32_t wc)
+{
+  return wcwidth (wc);
+}
+_GL_END_C_LINKAGE
+# else
+_GL_FUNCDECL_SYS (c32width, int, (char32_t wc));
+# endif
+_GL_CXXALIAS_SYS (c32width, int, (char32_t wc));
+_GL_CXXALIASWARN (c32width);
+#endif
+
+
 /* Converts a 32-bit wide character to a multibyte character.  */
 #if @GNULIB_C32RTOMB@
 # if @REPLACE_C32RTOMB@
