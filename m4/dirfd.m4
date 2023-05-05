@@ -1,4 +1,4 @@
-# serial 27   -*- Autoconf -*-
+# serial 28   -*- Autoconf -*-
 
 dnl Find out how to get the file descriptor associated with an open DIR*.
 
@@ -40,10 +40,6 @@ AC_DEFUN([gl_FUNC_DIRFD],
     HAVE_DIRFD=0
   else
     HAVE_DIRFD=1
-    dnl Replace only if the system declares dirfd already.
-    if test $ac_cv_have_decl_dirfd = yes; then
-      REPLACE_DIRFD=1
-    fi
     dnl Replace dirfd() on native Windows, to support fdopendir().
     AC_REQUIRE([gl_DIRENT_DIR])
     if test $DIR_HAS_FD_MEMBER = 0; then
