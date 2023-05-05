@@ -1,0 +1,11 @@
+Files:
+tests/test-dirfd.c
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-dirfd
+check_PROGRAMS += test-dirfd
