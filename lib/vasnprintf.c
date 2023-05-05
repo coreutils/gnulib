@@ -4727,7 +4727,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 #if !USE_SNPRINTF || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF || !DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_LEFTADJUST || NEED_PRINTF_FLAG_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION
                 size_t width;
 #endif
-#if !USE_SNPRINTF || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF || NEED_PRINTF_UNBOUNDED_PRECISION
+#if !USE_SNPRINTF || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF || !DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_LEFTADJUST || NEED_PRINTF_FLAG_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION
                 int has_precision;
                 size_t precision;
 #endif
@@ -4784,13 +4784,13 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                           width = xsum (xtimes (width, 10), *digitp++ - '0');
                         while (digitp != dp->width_end);
                       }
-#if !DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_LEFTADJUST || NEED_PRINTF_FLAG_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION
+# if !DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_LEFTADJUST || NEED_PRINTF_FLAG_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION
                     has_width = 1;
-#endif
+# endif
                   }
 #endif
 
-#if !USE_SNPRINTF || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF || NEED_PRINTF_UNBOUNDED_PRECISION
+#if !USE_SNPRINTF || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF || !DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_LEFTADJUST || NEED_PRINTF_FLAG_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION
                 has_precision = 0;
                 precision = 6;
                 if (dp->precision_start != dp->precision_end)
@@ -5627,7 +5627,22 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                   for (; pad > 0; pad--)
                                     *p++ = ' ';
                                 }
-                              else if ((flags & FLAG_ZERO) && pad_ptr != NULL)
+                              else if ((flags & FLAG_ZERO) && pad_ptr != NULL
+                                       /* ISO C says: "For d, i, o, u, x, and X
+                                          conversions, if a precision is
+                                          specified, the 0 flag is ignored.  */
+                                       && !(has_precision
+                                            && (dp->conversion == 'd'
+                                                || dp->conversion == 'i'
+                                                || dp->conversion == 'o'
+                                                || dp->conversion == 'u'
+                                                || dp->conversion == 'x'
+                                                || dp->conversion == 'X'
+                                                /* Although ISO C does not
+                                                   require it, treat 'b' and 'B'
+                                                   like 'x' and 'X'.  */
+                                                || dp->conversion == 'b'
+                                                || dp->conversion == 'B')))
                                 {
                                   /* Pad with zeroes.  */
                                   DCHAR_T *q = end;
