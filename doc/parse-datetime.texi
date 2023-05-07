@@ -574,6 +574,9 @@ This example uses the somewhat-confusing POSIX convention for rules.
 and the time zone is 7 hours west of Greenwich, and
 @samp{TZ="<+0530>-5:30"} says that the time zone abbreviation is @samp{+0530}
 and the time zone is 5 hours 30 minutes east of Greenwich.
+(One should never use a setting like @samp{TZ="UTC-5"}, since
+this would incorrectly imply that local time is five hours east of
+Greenwich and the time zone is called ``UTC''.)
 Although trickier POSIX @env{TZ} settings like
 @samp{TZ="<-05>+5<-04>,M3.2.0/2,M11.1.0/2"} can specify some daylight
 saving regimes, location-based settings like
