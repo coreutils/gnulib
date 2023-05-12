@@ -200,11 +200,13 @@ file_has_acl (char const *name, struct stat const *sb)
               || (S_ISDIR (sb->st_mode)
                   && have_xattr (XATTR_NAME_POSIX_ACL_DEFAULT,
                                  listbuf, listsize))));
+      bool nfsv4_acl_but_no_posix_acl
+        = ret == 0 && have_xattr (XATTR_NAME_NFSV4_ACL, listbuf, listsize);
       free (heapbuf);
 
       /* If there is an NFSv4 ACL but no POSIX ACL, follow up with a
          getxattr syscall to see whether the NFSv4 ACL is nontrivial.  */
-      if (ret == 0 && have_xattr (XATTR_NAME_NFSV4_ACL, listbuf, listsize))
+      if (nfsv4_acl_but_no_posix_acl)
         {
           ret = getxattr (name, XATTR_NAME_NFSV4_ACL,
                           stackbuf.xattr, sizeof stackbuf.xattr);
