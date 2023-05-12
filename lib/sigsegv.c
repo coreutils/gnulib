@@ -365,12 +365,26 @@ int libsigsegv_version = LIBSIGSEGV_VERSION;
 # define SIGSEGV_FAULT_ADDRESS  (unsigned long) code
 # define SIGSEGV_FAULT_CONTEXT  scp
 
-# if defined __i386__
+# if defined __x86_64__
+/* 64 bit registers */
+
+/* scp points to a 'struct sigcontext' (defined in
+   glibc/sysdeps/mach/hurd/x86_64/bits/sigcontext.h).
+   The registers, at the moment the signal occurred, get pushed on the stack
+   through gnumach/x86_64/locore.S:alltraps and then copied into the struct
+   through glibc/sysdeps/mach/hurd/x86/trampoline.c.  */
+/* sc_rsp is unused (not set by gnumach/x86_64/locore.S:alltraps).  We need
+   to use sc_ursp.  */
+#  define SIGSEGV_FAULT_STACKPOINTER  scp->sc_ursp
+
+# elif defined __i386__
+/* 32 bit registers */
 
 /* scp points to a 'struct sigcontext' (defined in
    glibc/sysdeps/mach/hurd/i386/bits/sigcontext.h).
-   The registers of this struct get pushed on the stack through
-   gnumach/i386/i386/locore.S:trapall.  */
+   The registers, at the moment the signal occurred, get pushed on the stack
+   through gnumach/i386/i386/locore.S:alltraps and then copied into the struct
+   through glibc/sysdeps/mach/hurd/x86/trampoline.c.  */
 /* Both sc_esp and sc_uesp appear to have the same value.
    It appears more reliable to use sc_uesp because it is labelled as
    "old esp, if trapped from user".  */
