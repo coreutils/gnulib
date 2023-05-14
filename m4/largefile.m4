@@ -171,8 +171,9 @@ AC_DEFUN([AC_SYS_YEAR2038_RECOMMENDED],
 AS_IF([test "$enable_year2038,$ac_have_year2038" = yes,no],
    [AC_MSG_FAILURE(m4_text_wrap(
       [could not enable timestamps after mid-January 2038.
-       Did you mean to build a 64-bit binary? (E.g., 'CC="${CC} -m64"'.)
-       To proceed with 32-bit time_t, configure with '--disable-year2038'.],
+       This package recommends support for these later timestamps.
+       However, to proceed with signed 32-bit time_t even though it
+       will fail then, configure with '--disable-year2038'.],
       [], [], [55]))])])
 
 # _AC_SYS_LARGEFILE_TEST_CODE
