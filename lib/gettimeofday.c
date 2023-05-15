@@ -142,7 +142,7 @@ gettimeofday (struct timeval *restrict tv, void *restrict tz)
 #   error "Only 1-second nominal clock resolution found.  Is that intended?" \
           "If so, compile with the -DOK_TO_USE_1S_CLOCK option."
 #  endif
-  *tv = (struct timeval) { .tv_sec = time (NULL) };
+  *tv = (struct timeval) { .tv_sec = time (NULL), .tv_usec = 0 };
 
   return 0;
 

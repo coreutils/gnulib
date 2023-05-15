@@ -143,7 +143,11 @@ rpl_thrd_current (void)
             /* Memory allocation failed.  There is not much we can do.  Have to
                busy-loop, waiting for the availability of memory.  */
             {
-              struct timespec ts = { .tv_sec = 1 };
+              struct timespec ts =
+                {
+                  .tv_sec = 1,
+                  .tv_nsec = 0
+                };
               thrd_sleep (&ts, NULL);
             }
           }

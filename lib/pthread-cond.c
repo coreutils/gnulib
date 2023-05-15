@@ -115,7 +115,11 @@ pthread_cond_wait (_GL_UNUSED pthread_cond_t *cond,
      Wait endlessly.  */
   for (;;)
     {
-      struct timespec duration = { .tv_sec = 86400 };
+      struct timespec duration =
+        {
+          .tv_sec = 86400,
+          .tv_nsec = 0
+        };
       nanosleep (&duration, NULL);
     }
 }
