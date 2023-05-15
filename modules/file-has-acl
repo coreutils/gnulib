@@ -9,9 +9,11 @@ m4/acl.m4
 Depends-on:
 acl-permissions
 extern-inline
+minmax
 free-posix
 stat
 stdbool
+stdckdint
 
 configure.ac:
 gl_FILE_HAS_ACL
