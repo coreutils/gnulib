@@ -39,7 +39,6 @@ pthread_mutex_timedlock (pthread_mutex_t *mutex, const struct timespec *abstime)
       int err;
       struct timeval currtime;
       unsigned long remaining;
-      struct timespec duration;
 
       err = pthread_mutex_trylock (mutex);
       if (err != EBUSY)
@@ -78,8 +77,7 @@ pthread_mutex_timedlock (pthread_mutex_t *mutex, const struct timespec *abstime)
         return ETIMEDOUT;
 
       /* Sleep 1 ms.  */
-      duration.tv_sec = 0;
-      duration.tv_nsec = 1000000;
+      struct timespec duration = { .tv_nsec = 1000000 };
       if (duration.tv_nsec > remaining)
         duration.tv_nsec = remaining;
       nanosleep (&duration, NULL);

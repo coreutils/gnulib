@@ -396,14 +396,15 @@ poll (struct pollfd *pfd, nfds_t nfd, int timeout)
   if (timeout == 0)
     {
       ptv = &tv;
-      ptv->tv_sec = 0;
-      ptv->tv_usec = 0;
+      tv = (struct timeval) {0};
     }
   else if (timeout > 0)
     {
       ptv = &tv;
-      ptv->tv_sec = timeout / 1000;
-      ptv->tv_usec = (timeout % 1000) * 1000;
+      tv = (struct timeval) {
+        .tv_sec = timeout / 1000,
+        .tv_usec = (timeout % 1000) * 1000;
+      };
     }
   else if (timeout == INFTIM)
     /* wait forever */

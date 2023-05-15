@@ -516,7 +516,7 @@ restart:
           goto restart;
         }
       if (timeout && wait_timeout == 0 && rc == 0)
-        timeout->tv_sec = timeout->tv_usec = 0;
+        timeout = (struct timeval) {0};
     }
 
   /* Now fill in the results.  */

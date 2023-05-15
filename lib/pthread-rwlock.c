@@ -371,7 +371,6 @@ pthread_rwlock_timedrdlock (pthread_rwlock_t *lock,
       int err;
       struct timeval currtime;
       unsigned long remaining;
-      struct timespec duration;
 
       err = pthread_rwlock_tryrdlock (lock);
       if (err != EBUSY)
@@ -410,8 +409,7 @@ pthread_rwlock_timedrdlock (pthread_rwlock_t *lock,
         return ETIMEDOUT;
 
       /* Sleep 1 ms.  */
-      duration.tv_sec = 0;
-      duration.tv_nsec = 1000000;
+      struct timespec duration = { .tv_nsec = 1000000 };
       if (duration.tv_nsec > remaining)
         duration.tv_nsec = remaining;
       nanosleep (&duration, NULL);
@@ -428,7 +426,6 @@ pthread_rwlock_timedwrlock (pthread_rwlock_t *lock,
       int err;
       struct timeval currtime;
       unsigned long remaining;
-      struct timespec duration;
 
       err = pthread_rwlock_trywrlock (lock);
       if (err != EBUSY)
@@ -467,8 +464,7 @@ pthread_rwlock_timedwrlock (pthread_rwlock_t *lock,
         return ETIMEDOUT;
 
       /* Sleep 1 ms.  */
-      duration.tv_sec = 0;
-      duration.tv_nsec = 1000000;
+      struct timespec duration = { .tv_nsec = 1000000 };
       if (duration.tv_nsec > remaining)
         duration.tv_nsec = remaining;
       nanosleep (&duration, NULL);

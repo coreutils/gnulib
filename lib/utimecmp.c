@@ -319,7 +319,6 @@ utimecmpat (int dfd, char const *dst_name,
 
           if (SYSCALL_RESOLUTION < res)
             {
-              struct timespec timespec[2];
               struct stat dst_status;
 
               /* Ignore source timestamp information that must necessarily
@@ -344,10 +343,12 @@ utimecmpat (int dfd, char const *dst_name,
                  destination to the existing access time, except with
                  trailing nonzero digits.  */
 
-              timespec[0].tv_sec = dst_a_s;
-              timespec[0].tv_nsec = dst_a_ns;
-              timespec[1].tv_sec = dst_m_s | (res == 2 * BILLION);
-              timespec[1].tv_nsec = dst_m_ns + res / 9;
+              struct timespec timespec[2] = {
+                [0].tv_sec = dst_a_s,
+                [0].tv_nsec = dst_a_ns,
+                [1].tv_sec = dst_m_s | (res == 2 * BILLION),
+                [1].tv_nsec = dst_m_ns + res / 9
+              };
 
               if (utimensat (dfd, dst_name, timespec, AT_SYMLINK_NOFOLLOW))
                 return -2;

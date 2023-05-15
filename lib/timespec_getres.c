@@ -31,8 +31,8 @@ timespec_getres (struct timespec *ts, int base)
       clock_getres (CLOCK_REALTIME, ts);
 #else
       long int res = gettime_res ();
-      ts->tv_sec = res / TIMESPEC_HZ;
-      ts->tv_nsec = res % TIMESPEC_HZ;
+      *ts = (struct timespec) { .tv_sec  = res / TIMESPEC_HZ,
+                                .tv_nsec = res % TIMESPEC_HZ };
 #endif
       return base;
     }

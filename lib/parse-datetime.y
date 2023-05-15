@@ -281,8 +281,7 @@ digits_to_date_time (parser_control *pc, textint text_int)
               pc->hour = text_int.value / 100;
               pc->minutes = text_int.value % 100;
             }
-          pc->seconds.tv_sec = 0;
-          pc->seconds.tv_nsec = 0;
+          pc->seconds = (struct timespec) {0};
           pc->meridian = MER24;
         }
     }
@@ -320,8 +319,7 @@ set_hhmmss (parser_control *pc, intmax_t hour, intmax_t minutes,
 {
   pc->hour = hour;
   pc->minutes = minutes;
-  pc->seconds.tv_sec = sec;
-  pc->seconds.tv_nsec = nsec;
+  pc->seconds = (struct timespec) { .tv_sec = sec, .tv_nsec = nsec };
 }
 
 /* Return a textual representation of the day ordinal/number values
@@ -966,14 +964,14 @@ signed_seconds:
     tSDECIMAL_NUMBER
   | tSNUMBER
       { if (time_overflow ($1.value)) YYABORT;
-        $$.tv_sec = $1.value; $$.tv_nsec = 0; }
+        $$ = (struct timespec) { .tv_sec = $1.value }; }
   ;
 
 unsigned_seconds:
     tUDECIMAL_NUMBER
   | tUNUMBER
       { if (time_overflow ($1.value)) YYABORT;
-        $$.tv_sec = $1.value; $$.tv_nsec = 0; }
+        $$ = (struct timespec) { .tv_sec = $1.value }; }
   ;
 
 number:
@@ -1480,8 +1478,8 @@ yylex (union YYSTYPE *lvalp, parser_control *pc)
                   ns = BILLION - ns;
                 }
 
-              lvalp->timespec.tv_sec = s;
-              lvalp->timespec.tv_nsec = ns;
+              lvalp->timespec = (struct timespec) { .tv_sec = s,
+                                                    .tv_nsec = ns };
               pc->input = p;
               return sign ? tSDECIMAL_NUMBER : tUDECIMAL_NUMBER;
             }
@@ -1812,8 +1810,7 @@ parse_datetime_body (struct timespec *result, char const *p,
   pc.day = tmp.tm_mday;
   pc.hour = tmp.tm_hour;
   pc.minutes = tmp.tm_min;
-  pc.seconds.tv_sec = tmp.tm_sec;
-  pc.seconds.tv_nsec = Start_ns;
+  pc.seconds = (struct timespec) { .tv_sec = tmp.tm_sec, .tv_nsec = Start_ns };
   tm.tm_isdst = tmp.tm_isdst;
 
   pc.meridian = MER24;

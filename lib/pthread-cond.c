@@ -115,10 +115,7 @@ pthread_cond_wait (_GL_UNUSED pthread_cond_t *cond,
      Wait endlessly.  */
   for (;;)
     {
-      struct timespec duration;
-
-      duration.tv_sec = 86400;
-      duration.tv_nsec = 0;
+      struct timespec duration = { .tv_sec = 86400 };
       nanosleep (&duration, NULL);
     }
 }
@@ -134,7 +131,6 @@ pthread_cond_timedwait (_GL_UNUSED pthread_cond_t *cond,
     {
       struct timeval currtime;
       unsigned long remaining;
-      struct timespec duration;
 
       gettimeofday (&currtime, NULL);
 
@@ -169,8 +165,8 @@ pthread_cond_timedwait (_GL_UNUSED pthread_cond_t *cond,
         return ETIMEDOUT;
 
       /* Sleep up to REMAINING ns.  */
-      duration.tv_sec = remaining / 1000000000;
-      duration.tv_nsec = remaining % 1000000000;
+      struct timespec duration = { .tv_sec  = remaining / 1000000000,
+                                   .tv_nsec = remaining % 1000000000 };
       nanosleep (&duration, NULL);
     }
 }

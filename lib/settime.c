@@ -41,10 +41,8 @@ settime (struct timespec const *ts)
 
 #if HAVE_SETTIMEOFDAY
   {
-    struct timeval tv;
-
-    tv.tv_sec = ts->tv_sec;
-    tv.tv_usec = ts->tv_nsec / 1000;
+    struct timeval tv = { .tv_sec = ts->tv_sec,
+                          .tv_usec = ts->tv_nsec / 1000 };
     return settimeofday (&tv, 0);
   }
 #elif HAVE_STIME
