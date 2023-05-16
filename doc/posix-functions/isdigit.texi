@@ -21,7 +21,7 @@ Portability problems not fixed by Gnulib:
 Note: This function's behaviour depends on the locale, but does not support
 the multibyte characters that occur in strings in locales with
 @code{MB_CUR_MAX > 1} (this includes all the common UTF-8 locales).
-There are four alternative APIs:
+There are five alternative APIs:
 
 @table @code
 @item c_isdigit
@@ -33,6 +33,12 @@ This function operates in a locale dependent way, on wide characters.  In
 order to use it, you first have to convert from multibyte to wide characters,
 using the @code{mbrtowc} function.  It is provided by the Gnulib module
 @samp{wctype}.
+
+@item c32isdigit
+This function operates in a locale dependent way, on 32-bit wide characters.
+In order to use it, you first have to convert from multibyte to 32-bit wide
+characters, using the @code{mbrtoc32} function.  It is provided by the
+Gnulib module @samp{c32isdigit}.
 
 @item mb_isdigit
 This function operates in a locale dependent way, on multibyte characters.

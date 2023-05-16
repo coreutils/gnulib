@@ -82,6 +82,7 @@ Documentation License''.
 * Glibc Function Substitutes::      Replacing system functions.
 * Native Windows Support::          Support for the native Windows platforms.
 * Multithreading::                  Multiple threads of execution.
+* Strings and Characters::          Functions for strings and characters.
 * Particular Modules::              Documentation of individual modules.
 * Regular expressions::             The regex module.
 * Build Infrastructure Modules::    Modules that extend the GNU Build System.
@@ -90,6 +91,42 @@ Documentation License''.
 * GNU Free Documentation License::  Copying and sharing this manual.
 * Index::
 @end menu
+
+@c Location of the POSIX specification on the web.
+@set POSIXURL http://pubs.opengroup.org/onlinepubs/9699919799
+
+@c Macro for referencing a POSIX header.
+@ifinfo
+@macro posixheader{header}
+@code{<\header\>}
+@end macro
+@end ifinfo
+@ifnotinfo
+@macro posixheader{header}
+@uref{@value{POSIXURL}/basedefs/\header\.html,,@code{<\header\>}}
+@end macro
+@end ifnotinfo
+
+@c Macro for referencing a POSIX function.
+@c We don't write it as func(), see section "GNU Manuals" of the
+@c GNU coding standards.
+@ifinfo
+@macro posixfunc{func}
+@code{\func\}
+@end macro
+@end ifinfo
+@ifnotinfo
+@macro posixfunc{func}
+@uref{@value{POSIXURL}/functions/\func\.html,,@code{\func\}}
+@end macro
+@end ifnotinfo
+
+@c Macro for referencing a normal function.
+@c We don't write it as func(), see section "GNU Manuals" of the
+@c GNU coding standards.
+@macro func{func}
+@code{\func\}
+@end macro
 
 @c This is used at the beginning of four chapters.
 @macro nosuchmodulenote{thing}
@@ -6896,6 +6933,9 @@ to POSIX that it can be treated like any other Unix-like platform.
 @include multithread.texi
 
 
+@include strings.texi
+
+
 @node Particular Modules
 @chapter Particular Modules
 
@@ -6912,7 +6952,6 @@ to POSIX that it can be treated like any other Unix-like platform.
 * Closed standard fds::
 * Handling strings with NUL characters::
 * Container data types::
-* String Functions in C Locale::
 * Recognizing Option Arguments::
 * Quoting::
 * progname and getprogname::
@@ -6953,8 +6992,6 @@ to POSIX that it can be treated like any other Unix-like platform.
 @include string-desc.texi
 
 @include containers.texi
-
-@include c-locale.texi
 
 @include argmatch.texi
 

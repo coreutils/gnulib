@@ -1,0 +1,854 @@
+@node Strings and Characters
+@chapter Strings and Characters
+
+@c Copyright (C) 2009-2023 Free Software Foundation, Inc.
+
+@c Permission is granted to copy, distribute and/or modify this document
+@c under the terms of the GNU Free Documentation License, Version 1.3 or
+@c any later version published by the Free Software Foundation; with no
+@c Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.  A
+@c copy of the license is at <https://www.gnu.org/licenses/fdl-1.3.en.html>.
+
+@c Written by Bruno Haible.
+
+This chapter describes the APIs for strings and characters, provided by Gnulib.
+
+@menu
+* Strings::
+* Characters::
+@end menu
+
+@node Strings
+@section Strings
+
+Several possible representations exist for the representation of strings
+in memory of a running C program.
+
+@menu
+* C strings::
+* Strings with NUL characters::
+* Comparison of string APIs::
+@end menu
+
+@node C strings
+@subsection The C string representation
+
+The classical representation of a string in C is a sequence of
+characters, where each character takes up one or more bytes, followed by
+a terminating NUL byte.  This representation is used for strings that
+are passed by the operating system (in the @code{argv} argument of
+@code{main}, for example) and for strings that are passed to the
+operating system (in system calls such as @code{open}).  The C type to
+hold such strings is @samp{char *} or, in places where the string shall
+not be modified, @samp{const char *}.  There are many C library
+functions, standardized by ISO C and POSIX, that assume this
+representation of strings.
+
+An @emph{character encoding}, or @emph{encoding} for short, describes
+how the elements of a character set are represented as a sequence of
+bytes.  For example, in the @code{ASCII} encoding, the UNDERSCORE
+character is represented by a single byte, with value 0x5F.  As another
+example, the COPYRIGHT SIGN character is represented:
+@itemize
+@item
+in the @code{ISO-8859-1} encoding, by the single byte 0xA9,
+@item
+in the @code{UTF-8} encoding, by the two bytes 0xC2 0xA9,
+@item
+in the @code{GB18030} encoding, by the four bytes 0x81 0x30 0x84 0x38.
+@end itemize
+
+@noindent
+Note: The @samp{char} type may be signed or unsigned, depending on the
+platform.  When we talk about the "byte 0xA9" we actually mean the
+@code{char} object whose value is @code{(char) 0xA9}; we omit the cast
+to @code{char} in this documentation, for brevity.
+
+In POSIX, the character encoding is determined by the locale.  The
+locale is some environmental attribute that the user can choose.
+
+Depending on the encoding, in general, every character is represented by
+one or more bytes (up to 4 bytes in practice --- but
+use @code{MB_LEN_MAX} instead of the number 4 in the code).
+@cindex unibyte locale
+@cindex multibyte locale
+When every character is represented by only 1 byte, we speak of an
+``unibyte locale'', otherwise of a ``multibyte locale''.
+
+It is important to realize that the majority of Unix installations
+nowadays use UTF-8 or GB18030 as locale encoding; therefore, the
+majority of users are using multibyte locales.
+
+Three important facts to remember are:
+
+@cartouche
+@emph{A @samp{char} is a byte, not a character.}
+@end cartouche
+
+As a consequence:
+@itemize @bullet
+@item
+The @posixheader{ctype.h} API, that was designed only with unibyte
+encodings in mind, is useless nowadays; it does not work in
+multibyte locales.
+@item
+The @posixfunc{strlen} function does not return the number of characters
+in a string.  Nor does it return the number of screen columns occupied
+by a string after it is output.  It merely returns the number of
+@emph{bytes} occupied by a string.
+@item
+Truncating a string, for example, with @posixfunc{strncpy}, can have the
+effect of truncating it in the middle of a multibyte character.  Such
+a string will, when output, have a garbled character at its end, often
+represented by a hollow box.
+@end itemize
+
+@cartouche
+@emph{Multibyte does not imply UTF-8 encoding.}
+@end cartouche
+
+While UTF-8 is the most common multibyte encoding, GB18030 is there as
+well and will not go away within decades, because it is a Chinese
+government standard, last revised in 2022.
+
+@cartouche
+@emph{Searching for a character in a string is not the same as searching
+for a byte in the string.}
+@end cartouche
+
+Take the above example of COPYRIGHT SIGN in the @code{GB18030} encoding:
+A byte search will find the bytes @code{'0'} and @code{'8'} in this
+string.  But a search for the @emph{character} "0" or "8" in the string
+"@copyright{}" must, of course, report ``not found''.
+
+As a consequence:
+@itemize @bullet
+@item
+@posixfunc{strchr} and @posixfunc{strrchr} do not work with multibyte
+strings if the locale encoding is GB18030 and the character to be
+searched is a digit.
+@item
+@posixfunc{strstr} does not work with multibyte strings if the locale
+encoding is different from UTF-8.
+@item
+@posixfunc{strcspn}, @posixfunc{strpbrk}, @posixfunc{strspn} cannot work
+correctly in multibyte locales: they assume the second argument is a
+list of single-byte characters.  Even in this simple case, they do not
+work with multibyte strings if the locale encoding is GB18030 and one of
+the characters to be searched is a digit.
+@item
+@posixfunc{strsep} and @posixfunc{strtok_r} do not work with multibyte
+strings unless all of the delimiter characters are ASCII characters
+< 0x30.
+@item
+The @posixfunc{strcasecmp}, @posixfunc{strncasecmp}, and
+@posixfunc{strcasestr} functions do not work with multibyte strings.
+@end itemize
+
+Workarounds can be found in Gnulib, in the form of @code{mbs*} API
+functions:
+@itemize @bullet
+@item
+Gnulib has functions @func{mbslen} and @func{mbswidth} that can be used
+instead of @posixfunc{strlen} when the number of characters or the
+number of screen columns of a string is requested.
+@item
+Gnulib has functions @func{mbschr} and @func{mbsrrchr} that are like
+@posixfunc{strchr} and @posixfunc{strrchr}, but work in multibyte
+locales.
+@item
+Gnulib has a function @func{mbsstr} that is like @posixfunc{strstr}, but
+works in multibyte locales.
+@item
+Gnulib has functions @func{mbscspn}, @func{mbspbrk}, @func{mbsspn} that
+are like @posixfunc{strcspn}, @posixfunc{strpbrk}, @posixfunc{strspn},
+but work in multibyte locales.
+@item
+Gnulib has functions @func{mbssep} and @func{mbstok_r} that are like
+@posixfunc{strsep} and @posixfunc{strtok_r} but work in multibyte
+locales.
+@item
+Gnulib has functions @func{mbscasecmp}, @func{mbsncasecmp},
+@func{mbspcasecmp}, and @func{mbscasestr} that are like
+@posixfunc{strcasecmp}, @posixfunc{strncasecmp}, and
+@posixfunc{strcasestr}, but work in multibyte locales.  Still, the
+function @code{ulc_casecmp} is preferable to these functions.
+@end itemize
+
+Gnulib also has additional API.
+
+@menu
+* Iterating through strings::
+@end menu
+
+@node Iterating through strings
+@subsubsection Iterating through strings
+
+For complex string processing, the provided strings functions may not be
+enough, and what you need is a way to iterate through a string while
+processing each (possibly multibyte) character in turn.  Gnulib provides
+two modules for this purpose.  Both iterate through the string in
+forward direction.  Iteration in backward direction, that is, from the
+string's end to start, is not provided, as it is too hairy in general.
+
+@itemize
+@item
+The @code{mbiter} module.  It iterates through a C string whose length
+is already known.
+@item
+The @code{mbuiter} module.  It iterates through a C string whose length
+is not a-priori known.
+@end itemize
+
+The @code{mbuiter} module is suitable when there is a high probability
+that only the first few multibyte characters need to be inspected.
+Whereas the @code{mbiter} module is better if usually the iteration runs
+through the entire string.
+
+@node Strings with NUL characters
+@subsection Strings with NUL characters
+
+The GNU Coding Standards, section
+@ifinfo
+@ref{Semantics,,Writing Robust Programs,standards},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/prep/standards/html_node/Semantics.html},
+@end ifnotinfo
+specifies:
+@cartouche
+Utilities reading files should not drop NUL characters, or any other
+nonprinting characters.
+@end cartouche
+
+When it is a requirement to store NUL characters in strings, a variant
+of the C strings is needed.  Gnulib offers a ``string descriptor'' type
+for this purpose.  See @ref{Handling strings with NUL characters}.
+
+All remarks regarding encodings and multibyte characters in the previous
+section apply to string descriptors as well.
+
+@include c-locale.texi
+
+@node Comparison of string APIs
+@subsection Comparison of string APIs
+
+This table summarizes the API functions available for strings, in POSIX
+and in Gnulib.
+
+@multitable @columnfractions .17 .17 .17 .17 .16 .16
+@headitem unibyte strings only
+@tab assume C locale
+@tab multibyte strings
+@tab multibyte strings with NULs
+@tab wide character strings
+@tab 32-bit wide character strings
+
+@item @code{strlen}
+@tab @code{strlen}
+@tab @code{mbslen}
+@tab @code{string_desc_length}
+@tab @code{wcslen}
+@tab @code{u32_strlen}
+
+@item @code{strnlen}
+@tab @code{strnlen}
+@tab @code{mbsnlen}
+@tab --
+@tab @code{wcsnlen}
+@tab @code{u32_strnlen}, @code{u32_mbsnlen}
+
+@item @code{strcmp}
+@tab @code{strcmp}
+@tab @code{strcmp}
+@tab @code{string_desc_cmp}
+@tab @code{wcscmp}
+@tab @code{u32_strcmp}
+
+@item @code{strncmp}
+@tab @code{strncmp}
+@tab @code{strncmp}
+@tab --
+@tab @code{wcsncmp}
+@tab @code{u32_strncmp}
+
+@item @code{strcasecmp}
+@tab @code{strcasecmp}
+@tab @code{mbscasecmp}
+@tab --
+@tab @code{wcscasecmp}
+@tab @code{u32_casecmp}
+
+@item @code{strncasecmp}
+@tab @code{strncasecmp}
+@tab @code{mbsncasecmp}, @code{mbspcasecmp}
+@tab --
+@tab @code{wcsncasecmp}
+@tab @code{u32_casecmp}
+
+@item @code{strcoll}
+@tab @code{strcmp}
+@tab @code{strcoll}
+@tab --
+@tab @code{wcscoll}
+@tab @code{u32_strcoll}
+
+@item @code{strxfrm}
+@tab --
+@tab @code{strxfrm}
+@tab --
+@tab @code{wcsxfrm}
+@tab --
+
+@item @code{strchr}
+@tab @code{strchr}
+@tab @code{mbschr}
+@tab @code{string_desc_index}
+@tab @code{wcschr}
+@tab @code{u32_strchr}
+
+@item @code{strrchr}
+@tab @code{strrchr}
+@tab @code{mbsrchr}
+@tab @code{string_desc_last_index}
+@tab @code{wcsrchr}
+@tab @code{u32_strrchr}
+
+@item @code{strstr}
+@tab @code{strstr}
+@tab @code{mbsstr}
+@tab @code{string_desc_contains}
+@tab @code{wcsstr}
+@tab @code{u32_strstr}
+
+@item @code{strcasestr}
+@tab @code{strcasestr}
+@tab @code{mbscasestr}
+@tab --
+@tab --
+@tab --
+
+@item @code{strspn}
+@tab @code{strspn}
+@tab @code{mbsspn}
+@tab --
+@tab @code{wcsspn}
+@tab @code{u32_strspn}
+
+@item @code{strcspn}
+@tab @code{strcspn}
+@tab @code{mbscspn}
+@tab --
+@tab @code{wcscspn}
+@tab @code{u32_strcspn}
+
+@item @code{strpbrk}
+@tab @code{strpbrk}
+@tab @code{mbspbrk}
+@tab --
+@tab @code{wcspbrk}
+@tab @code{u32_strpbrk}
+
+@item @code{strtok_r}
+@tab @code{strtok_r}
+@tab @code{mbstok_r}
+@tab --
+@tab @code{wcstok}
+@tab @code{u32_strtok}
+
+@item @code{strsep}
+@tab @code{strsep}
+@tab @code{mbssep}
+@tab --
+@tab --
+@tab --
+
+@item @code{strcpy}
+@tab @code{strcpy}
+@tab @code{strcpy}
+@tab @code{string_desc_copy}
+@tab @code{wcscpy}
+@tab @code{u32_strcpy}
+
+@item @code{stpcpy}
+@tab @code{stpcpy}
+@tab @code{stpcpy}
+@tab --
+@tab @code{wcpcpy}
+@tab @code{u32_stpcpy}
+
+@item @code{strncpy}
+@tab @code{strncpy}
+@tab @code{strncpy}
+@tab --
+@tab @code{wcsncpy}
+@tab @code{u32_strncpy}
+
+@item @code{stpncpy}
+@tab @code{stpncpy}
+@tab @code{stpncpy}
+@tab --
+@tab @code{wcpncpy}
+@tab @code{u32_stpncpy}
+
+@item @code{strcat}
+@tab @code{strcat}
+@tab @code{strcat}
+@tab @code{string_desc_concat}
+@tab @code{wcscat}
+@tab @code{u32_strcat}
+
+@item @code{strncat}
+@tab @code{strncat}
+@tab @code{strncat}
+@tab --
+@tab @code{wcsncat}
+@tab @code{u32_strncat}
+
+@item @code{free}
+@tab @code{free}
+@tab @code{free}
+@tab @code{string_desc_free}
+@tab @code{free}
+@tab @code{free}
+
+@item @code{strdup}
+@tab @code{strdup}
+@tab @code{strdup}
+@tab @code{string_desc_copy}
+@tab @code{wcsdup}
+@tab @code{u32_strdup}
+
+@item @code{strndup}
+@tab @code{strndup}
+@tab @code{strndup}
+@tab --
+@tab --
+@tab --
+
+@item @code{mbswidth}
+@tab @code{mbswidth}
+@tab @code{mbswidth}
+@tab --
+@tab @code{wcswidth}
+@tab @code{c32swidth}, @code{u32_strwidth}
+
+@item @code{strtol}
+@tab @code{strtol}
+@tab @code{strtol}
+@tab --
+@tab --
+@tab --
+
+@item @code{strtoul}
+@tab @code{strtoul}
+@tab @code{strtoul}
+@tab --
+@tab --
+@tab --
+
+@item @code{strtoll}
+@tab @code{strtoll}
+@tab @code{strtoll}
+@tab --
+@tab --
+@tab --
+
+@item @code{strtoull}
+@tab @code{strtoull}
+@tab @code{strtoull}
+@tab --
+@tab --
+@tab --
+
+@item @code{strtoimax}
+@tab @code{strtoimax}
+@tab @code{strtoimax}
+@tab --
+@tab @code{wcstoimax}
+@tab --
+
+@item @code{strtoumax}
+@tab @code{strtoumax}
+@tab @code{strtoumax}
+@tab --
+@tab @code{wcstoumax}
+@tab --
+
+@item @code{strtof}
+@tab --
+@tab @code{strtof}
+@tab --
+@tab --
+@tab --
+
+@item @code{strtod}
+@tab @code{c_strtod}
+@tab @code{strtod}
+@tab --
+@tab --
+@tab --
+
+@item @code{strtold}
+@tab @code{c_strtold}
+@tab @code{strtold}
+@tab --
+@tab --
+@tab --
+
+@item @code{strfromf}
+@tab --
+@tab @code{strfromf}
+@tab --
+@tab --
+@tab --
+
+@item @code{strfromd}
+@tab --
+@tab @code{strfromd}
+@tab --
+@tab --
+@tab --
+
+@item @code{strfroml}
+@tab --
+@tab @code{strfroml}
+@tab --
+@tab --
+@tab --
+
+@item --
+@tab --
+@tab --
+@tab --
+@tab @code{mbstowcs}
+@tab @code{mbstoc32s}
+
+@item --
+@tab --
+@tab --
+@tab --
+@tab @code{mbsrtowcs}
+@tab @code{mbsrtoc32s}
+
+@item --
+@tab --
+@tab --
+@tab --
+@tab @code{mbsnrtowcs}
+@tab @code{mbsnrtoc32s}
+
+@item --
+@tab --
+@tab --
+@tab --
+@tab @code{wcstombs}
+@tab @code{c32stombs}
+
+@item --
+@tab --
+@tab --
+@tab --
+@tab @code{wcsrtombs}
+@tab @code{c32srtombs}
+
+@item --
+@tab --
+@tab --
+@tab --
+@tab @code{wcsnrtombs}
+@tab @code{c32snrtombs}
+
+@end multitable
+
+@node Characters
+@section Characters
+
+A @emph{character} is the elementary unit that strings are made of.
+
+What is a character?  ``A character is an element of a character set''
+is sort of a circular definition, but it highlights the fact that it is
+not merely a number.  Although many characters are visually represented
+by a single glyph, there are characters that, for example, have a
+different glyph when used at the end of a word than when used inside a
+word.  A character is also not the minimal rendered text processing
+unit; that is a grapheme cluster and in general consists of one or more
+characters.  If you want to know more about the concept of character and
+various concepts associated with characters, refer to the Unicode
+standard.
+
+For the representation in memory of a character, various types have been
+in use, and some of them were failures: @code{char} and @code{wchar_t}
+were invented for this purpose, but are not the right types.
+@code{char32_t} is the right type (successor of @code{wchar_t}); and
+@code{mbchar_t} (defined by Gnulib) is an alternative for specific kinds
+of processing.
+
+@menu
+* The char type::
+* The wchar_t type::
+* The char32_t type::
+* The mbchar_t type::
+* Comparison of character APIs::
+@end menu
+
+@node The char type
+@subsection The @code{char} type
+
+The @code{char} type is in the C language since the beginning in the
+1970ies, but --- due to its limitation of 256 possible values --- is no
+longer the adequate type for storing a character.
+
+Technically, it is still adequate in unibyte locales.  But since most
+locales nowadays are multibyte locales, it makes no sense to write a
+program that runs only in unibyte locales.
+
+ISO C and POSIX standardized an API for characters of type @code{char},
+in @code{<ctype.h>}.  This API is nowadays useless and obsolete.
+
+The important lessons to remember are:
+
+@cartouche
+@emph{A @samp{char} is just the elementary storage unit for a string,
+not a character.}
+@end cartouche
+
+@cartouche
+@emph{Never use @code{<ctype.h>}!}
+@end cartouche
+
+@node The wchar_t type
+@subsection The @code{wchar_t} type
+
+The ISO C and POSIX standard creators made an attempt to overcome the
+dead end regarding the @code{char} type.  They introduced
+@itemize @bullet
+@item
+a type @samp{wchar_t}, designed to encapsulate a character,
+@item
+a ``wide string'' type @samp{wchar_t *}, with some API functions
+declared in @posixheader{wchar.h}, and
+@item
+functions declared in @posixheader{wctype.h} that were meant to supplant
+the ones in @posixheader{ctype.h}.
+@end itemize
+
+Unfortunately, this API and its implementation has numerous problems:
+
+@itemize @bullet
+@item
+On Windows platforms and on AIX in 32-bit mode, @code{wchar_t} is a
+16-bit type.  This means that it can never accommodate an entire Unicode
+character.  Either the @code{wchar_t *} strings are limited to
+characters in UCS-2 (the ``Basic Multilingual Plane'' of Unicode), or
+--- if @code{wchar_t *} strings are encoded in UTF-16 --- a
+@code{wchar_t} represents only half of a character in the worst case,
+making the @posixheader{wctype.h} functions pointless.
+
+@item
+On Solaris and FreeBSD, the @code{wchar_t} encoding is locale dependent
+and undocumented.  This means, if you want to know any property of a
+@code{wchar_t} character, other than the properties defined by
+@posixheader{wctype.h} --- such as whether it's a dash, currency symbol,
+paragraph separator, or similar ---, you have to convert it to
+@code{char *} encoding first, by use of the function @posixfunc{wctomb}.
+
+@item
+When you read a stream of wide characters, through the functions
+@posixfunc{fgetwc} and @posixfunc{fgetws}, and when the input
+stream/file is not in the expected encoding, you have no way to
+determine the invalid byte sequence and do some corrective action.  If
+you use these functions, your program becomes ``garbage in - more
+garbage out'' or ``garbage in - abort''.
+@end itemize
+
+As a consequence, it is better to use multibyte strings.  Such multibyte
+strings can bypass limitations of the @code{wchar_t} type, if you use
+functions defined in Gnulib and GNU libunistring for text processing.
+They can also faithfully transport malformed characters that were
+present in the input, without requiring the program to produce garbage
+or abort.
+
+@node The char32_t type
+@subsection The @code{char32_t} type
+
+The ISO C and POSIX standard creators then introduced the
+@code{char32_t} type.  In ISO C 11, it was conceptually a ``32-bit wide
+character'' type.  In ISO C 23, its semantics has been further
+specified: A @code{char32_t} value is a Unicode code point.
+
+Thus, the @code{char32_t} type is not affected the problems that plague
+the @code{wchar_t} type.
+
+The @code{char32_t} type and its API are defined in the @code{<uchar.h>}
+header file.
+
+ISO C and POSIX specify only the basic functions for the @code{char32_t}
+type, namely conversion of a single character (@func{mbrtoc32} and
+@func{c32rtomb}).  For convenience, Gnulib adds API for classification
+and case conversion of characters.
+
+GNU libunistring can also be used on @code{char32_t} values.  Since
+@code{char32_t} is the same as @code{uint32_t}, all @code{u32_*}
+functions of GNU libunistring are applicable to arrays of
+@code{char32_t} values.
+
+On glibc systems, use of the 32-bit wide strings (@code{char32_t[]}) is
+exactly as efficient as the use of the older wide strings
+(@code{wchar_t[]}).  This is possible because on glibc, @code{wchar_t}
+values already always were 32-bit and Unicode code points.
+@code{mbrtoc32} is just an alias of @code{mbrtowc}.  The Gnulib
+@code{*c32*} functions are optimized so that on glibc systems they
+immediately redirect to the corresponding @code{*wc*} functions.
+
+@node The mbchar_t type
+@subsection The @code{mbchar_t} type
+
+Gnulib defines an alternate way to encode a multibyte character:
+@code{mbchar_t}.  Its main feature is the ability to process a string or
+stream with some malformed characters without reporting an error.
+
+The type @code{mbchar_t}, defined in @code{"mbchar.h"}, holds a
+character in both the multibyte and the 32-bit wide character
+representation.  In case of a malformed character only the multibyte
+representation is used.
+
+@menu
+* Reading multibyte strings::
+@end menu
+
+@node Reading multibyte strings
+@subsubsection Reading multibyte strings
+
+If you want to process (possibly multibyte) characters while reading
+them from a @code{FILE *} stream, without reading them into a string
+first, the @code{mbfile} module is made for this purpose.
+
+@node Comparison of character APIs
+@subsection Comparison of character APIs
+
+This table summarizes the API functions available for characters, in
+POSIX and in Gnulib.
+
+@multitable @columnfractions .2 .2 .2 .2 .2
+@headitem unibyte character
+@tab assume C locale
+@tab wide character
+@tab 32-bit wide character
+@tab mbchar_t character
+
+@item @code{== '\0'}
+@tab @code{== '\0'}
+@tab @code{== L'\0'}
+@tab @code{== 0}
+@tab @code{mb_isnul}
+
+@item @code{==}
+@tab @code{==}
+@tab @code{==}
+@tab @code{==}
+@tab @code{mb_equal}
+
+@item @code{isalnum}
+@tab @code{c_isalnum}
+@tab @code{iswalnum}
+@tab @code{c32isalnum}
+@tab @code{mb_isalnum}
+
+@item @code{isalpha}
+@tab @code{c_isalpha}
+@tab @code{iswalpha}
+@tab @code{c32isalpha}
+@tab @code{mb_isalpha}
+
+@item @code{isblank}
+@tab @code{c_isblank}
+@tab @code{iswblank}
+@tab @code{c32isblank}
+@tab @code{mb_isblank}
+
+@item @code{iscntrl}
+@tab @code{c_iscntrl}
+@tab @code{iswcntrl}
+@tab @code{c32iscntrl}
+@tab @code{mb_iscntrl}
+
+@item @code{isdigit}
+@tab @code{c_isdigit}
+@tab @code{iswdigit}
+@tab @code{c32isdigit}
+@tab @code{mb_isdigit}
+
+@item @code{isgraph}
+@tab @code{c_isgraph}
+@tab @code{iswgraph}
+@tab @code{c32isgraph}
+@tab @code{mb_isgraph}
+
+@item @code{islower}
+@tab @code{c_islower}
+@tab @code{iswlower}
+@tab @code{c32islower}
+@tab @code{mb_islower}
+
+@item @code{isprint}
+@tab @code{c_isprint}
+@tab @code{iswprint}
+@tab @code{c32isprint}
+@tab @code{mb_isprint}
+
+@item @code{ispunct}
+@tab @code{c_ispunct}
+@tab @code{iswpunct}
+@tab @code{c32ispunct}
+@tab @code{mb_ispunct}
+
+@item @code{isspace}
+@tab @code{c_isspace}
+@tab @code{iswspace}
+@tab @code{c32isspace}
+@tab @code{mb_isspace}
+
+@item @code{isupper}
+@tab @code{c_isupper}
+@tab @code{iswupper}
+@tab @code{c32isupper}
+@tab @code{mb_isupper}
+
+@item @code{isxdigit}
+@tab @code{c_isxdigit}
+@tab @code{iswxdigit}
+@tab @code{c32isxdigit}
+@tab @code{mb_isxdigit}
+
+@item --
+@tab --
+@tab @code{iswctype}
+@tab --
+@tab --
+
+@item @code{tolower}
+@tab @code{c_tolower}
+@tab @code{towlower}
+@tab @code{c32tolower}
+@tab --
+
+@item @code{toupper}
+@tab @code{c_toupper}
+@tab @code{towupper}
+@tab @code{c32toupper}
+@tab --
+
+@item --
+@tab --
+@tab @code{towctrans}
+@tab --
+@tab --
+
+@item --
+@tab --
+@tab @code{wcwidth}
+@tab @code{c32width}
+@tab @code{mb_width}
+
+@end multitable
