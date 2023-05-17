@@ -22,6 +22,7 @@ inttypes
 mktime
 nstrftime
 setenv
+stdckdint
 unsetenv
 time-h
 time_r
