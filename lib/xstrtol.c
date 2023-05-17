@@ -37,6 +37,7 @@
 #include <ctype.h>
 #include <errno.h>
 #include <limits.h>
+#include <stdckdint.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -51,7 +52,7 @@ static strtol_error
 bkm_scale (__strtol_t *x, int scale_factor)
 {
   __strtol_t scaled;
-  if (INT_MULTIPLY_WRAPV (*x, scale_factor, &scaled))
+  if (ckd_mul (&scaled, *x, scale_factor))
     {
       *x = *x < 0 ? TYPE_MINIMUM (__strtol_t) : TYPE_MAXIMUM (__strtol_t);
       return LONGINT_OVERFLOW;

@@ -15,6 +15,7 @@ extensions
 intprops
 libc-config
 stdbool
+stdckdint
 time_rz
 
 configure.ac:
