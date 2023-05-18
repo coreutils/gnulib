@@ -927,6 +927,14 @@ divide (mpn_t a, mpn_t b, mpn_t *q)
   return roomptr;
 }
 
+/* Avoid pointless GCC warning "argument 1 value '18446744073709551615' exceeds
+   maximum object size 9223372036854775807", triggered by the use of xsum as
+   argument of malloc.  */
+# if __GNUC__ >= 7
+#  pragma GCC diagnostic push
+#  pragma GCC diagnostic ignored "-Walloc-size-larger-than="
+# endif
+
 /* Convert a bignum a >= 0, multiplied with 10^extra_zeroes, to decimal
    representation.
    Destroys the contents of a.
@@ -982,6 +990,10 @@ convert_to_decimal (mpn_t a, size_t extra_zeroes)
     }
   return c_ptr;
 }
+
+# if __GNUC__ >= 7
+#  pragma GCC diagnostic pop
+# endif
 
 # if NEED_PRINTF_LONG_DOUBLE
 
