@@ -441,7 +441,8 @@ lbitset_copy_ (bitset dst, bitset src)
 
   lbitset_elt *prev = 0;
   lbitset_elt *tmp;
-  for (lbitset_elt *elt = head; elt; elt = elt->next)
+  lbitset_elt *elt = head;
+  do
     {
       tmp = lbitset_elt_alloc ();
       tmp->index = elt->index;
@@ -454,7 +455,10 @@ lbitset_copy_ (bitset dst, bitset src)
       prev = tmp;
 
       memcpy (tmp->words, elt->words, sizeof (elt->words));
+
+      elt = elt->next;
     }
+  while (elt);
   LBITSET_TAIL (dst) = tmp;
 
   dst->b.csize = LBITSET_ELT_WORDS;
