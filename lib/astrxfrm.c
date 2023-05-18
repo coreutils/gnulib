@@ -1,5 +1,5 @@
 /* Locale dependent string transformation for comparison.
-   Copyright (C) 2010-2022 Free Software Foundation, Inc.
+   Copyright (C) 2010-2023 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2010.
 
    This program is free software: you can redistribute it and/or modify it
@@ -155,10 +155,7 @@ astrxfrm (const char *s, char *resultbuf, size_t *lengthp)
             {
               char *memory = (char *) realloc (result, length);
               if (memory != NULL)
-                {
-                  memcpy (memory, result, length);
-                  result = memory;
-                }
+                result = memory;
             }
         }
     }
