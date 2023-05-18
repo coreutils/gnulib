@@ -276,6 +276,14 @@ extern char *tzname[];
    more reliable way to accept other sets of digits.  */
 #define ISDIGIT(Ch) ((unsigned int) (Ch) - L_('0') <= 9)
 
+/* Avoid false GCC warning "'memset' specified size 18446744073709551615 exceeds
+   maximum object size 9223372036854775807", caused by insufficient data flow
+   analysis and value propagation of the 'width_add' expansion when GCC is not
+   optimizing.  Cf. <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=88443>.  */
+#if __GNUC__ >= 7 && !__OPTIMIZE__
+# pragma GCC diagnostic ignored "-Wstringop-overflow"
+#endif
+
 #if FPRINTFTIME
 static void
 fwrite_lowcase (FILE *fp, const CHAR_T *src, size_t len)
