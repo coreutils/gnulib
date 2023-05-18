@@ -34,13 +34,6 @@
 #include "hash-triple.h"
 #include "xalloc.h"
 
-/* Suppress bogus GCC -Wmaybe-uninitialized warnings.  */
-#if defined GCC_LINT || defined lint
-# define IF_LINT(Code) Code
-#else
-# define IF_LINT(Code) /* empty */
-#endif
-
 #ifndef DOUBLE_SLASH_IS_DISTINCT_ROOT
 # define DOUBLE_SLASH_IS_DISTINCT_ROOT false
 #endif
@@ -49,6 +42,11 @@
 # define SLASHES "/\\"
 #else
 # define SLASHES "/"
+#endif
+
+/* Avoid false GCC warning "'end_idx' may be used uninitialized".  */
+#if __GNUC__ + (__GNUC_MINOR__ >= 7) > 4
+# pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
 #endif
 
 /* Return true if FILE's existence can be shown, false (setting errno)
@@ -369,7 +367,7 @@ canonicalize_filename_mode_stk (const char *name, canonicalize_mode_t can_mode,
               buf[n] = '\0';
 
               char *extra_buf = bufs->extra.data;
-              idx_t end_idx IF_LINT (= 0);
+              idx_t end_idx;
               if (end_in_extra_buffer)
                 end_idx = end - extra_buf;
               size_t len = strlen (end);
