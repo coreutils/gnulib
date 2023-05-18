@@ -50,11 +50,9 @@
 # define SSIZE_MAX ((ssize_t) (SIZE_MAX / 2))
 #endif
 
-/* Use this to suppress gcc's "...may be used before initialized" warnings. */
-#if defined GCC_LINT || defined lint
-# define IF_LINT(Code) Code
-#else
-# define IF_LINT(Code) /* empty */
+/* Avoid false GCC warning "'c' may be used uninitialized".  */
+#if __GNUC__ + (__GNUC_MINOR__ >= 7) > 4
+# pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
 #endif
 
 /* The maximum value that getndelim2 can return without suffering from
@@ -108,7 +106,7 @@ getndelim2 (char **lineptr, size_t *linesize, size_t offset, size_t nmax,
       /* Here always ptr + size == read_pos + nbytes_avail.
          Also nbytes_avail > 0 || size < nmax.  */
 
-      int c IF_LINT (= 0);
+      int c;
       const char *buffer;
       size_t buffer_len;
 
