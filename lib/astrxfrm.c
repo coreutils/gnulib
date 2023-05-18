@@ -155,10 +155,7 @@ astrxfrm (const char *s, char *resultbuf, size_t *lengthp)
             {
               char *memory = (char *) realloc (result, length);
               if (memory != NULL)
-                {
-                  memcpy (memory, result, length);
-                  result = memory;
-                }
+                result = memory;
             }
         }
     }
