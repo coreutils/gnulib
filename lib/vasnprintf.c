@@ -1177,8 +1177,6 @@ scale10_round_decimal_decoded (int e, mpn_t m, void *memory, int n)
   void *z_memory;
   char *digits;
 
-  if (memory == NULL)
-    return NULL;
   /* x = 2^e * m, hence
      y = round (2^e * 10^n * m) = round (2^(e+n) * 5^n * m)
        = round (2^s * 5^n * m).  */
@@ -1386,10 +1384,13 @@ scale10_round_decimal_decoded (int e, mpn_t m, void *memory, int n)
 static char *
 scale10_round_decimal_long_double (long double x, int n)
 {
-  int e IF_LINT(= 0);
+  int e;
   mpn_t m;
   void *memory = decode_long_double (x, &e, &m);
-  return scale10_round_decimal_decoded (e, m, memory, n);
+  if (memory != NULL)
+    return scale10_round_decimal_decoded (e, m, memory, n);
+  else
+    return NULL;
 }
 
 # endif
@@ -1404,10 +1405,13 @@ scale10_round_decimal_long_double (long double x, int n)
 static char *
 scale10_round_decimal_double (double x, int n)
 {
-  int e IF_LINT(= 0);
+  int e;
   mpn_t m;
   void *memory = decode_double (x, &e, &m);
-  return scale10_round_decimal_decoded (e, m, memory, n);
+  if (memory != NULL)
+    return scale10_round_decimal_decoded (e, m, memory, n);
+  else
+    return NULL;
 }
 
 # endif
