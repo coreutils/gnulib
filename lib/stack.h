@@ -58,7 +58,7 @@
      #include "xalloc.h"
 */
 
-/* This file uses _GL_ATTRIBUTE_PURE.  */
+/* This file uses _GL_ATTRIBUTE_MAYBE_UNUSED, _GL_ATTRIBUTE_PURE.  */
 #if !_GL_CONFIG_H_INCLUDED
  #error "Please include config.h first."
 #endif
@@ -86,6 +86,7 @@ typedef struct
 } _GL_STACK_TYPE;
 
 /* Initialize a stack.  */
+_GL_ATTRIBUTE_MAYBE_UNUSED
 GL_STACK_STORAGECLASS void
 _GL_STACK_PREFIX (init) (_GL_STACK_TYPE *stack)
 {
@@ -95,6 +96,7 @@ _GL_STACK_PREFIX (init) (_GL_STACK_TYPE *stack)
 }
 
 /* Destroy a stack by freeing the allocated space.  */
+_GL_ATTRIBUTE_MAYBE_UNUSED
 GL_STACK_STORAGECLASS void
 _GL_STACK_PREFIX (destroy) (_GL_STACK_TYPE *stack)
 {
@@ -102,7 +104,8 @@ _GL_STACK_PREFIX (destroy) (_GL_STACK_TYPE *stack)
 }
 
 /* Return true if the stack currently holds no element.  */
-GL_STACK_STORAGECLASS _GL_ATTRIBUTE_PURE bool
+_GL_ATTRIBUTE_MAYBE_UNUSED _GL_ATTRIBUTE_PURE
+GL_STACK_STORAGECLASS bool
 _GL_STACK_PREFIX (empty) (const _GL_STACK_TYPE *stack)
 {
   return stack->size == 0;
@@ -112,13 +115,15 @@ _GL_STACK_PREFIX (empty) (const _GL_STACK_TYPE *stack)
 
    The result is invalidated as soon as an element is added or removed
    from the stack.  */
-GL_STACK_STORAGECLASS _GL_ATTRIBUTE_PURE GL_STACK_ELEMENT *
+_GL_ATTRIBUTE_MAYBE_UNUSED _GL_ATTRIBUTE_PURE
+GL_STACK_STORAGECLASS GL_STACK_ELEMENT *
 _GL_STACK_PREFIX (current_base) (const _GL_STACK_TYPE *stack)
 {
   return stack->base;
 }
 
 /* Push an element to the top of the stack.  */
+_GL_ATTRIBUTE_MAYBE_UNUSED
 GL_STACK_STORAGECLASS void
 _GL_STACK_PREFIX (push) (_GL_STACK_TYPE *stack, GL_STACK_ELEMENT item)
 {
@@ -130,6 +135,7 @@ _GL_STACK_PREFIX (push) (_GL_STACK_TYPE *stack, GL_STACK_ELEMENT item)
 
 /* Pop the element from the top of the stack, which must be non-empty,
    and return it. */
+_GL_ATTRIBUTE_MAYBE_UNUSED
 GL_STACK_STORAGECLASS GL_STACK_ELEMENT
 _GL_STACK_PREFIX (pop) (_GL_STACK_TYPE *stack)
 {
@@ -139,6 +145,7 @@ _GL_STACK_PREFIX (pop) (_GL_STACK_TYPE *stack)
 
 /* Pop the element from the top of the stack, which must be
    non-empty.  */
+_GL_ATTRIBUTE_MAYBE_UNUSED
 GL_STACK_STORAGECLASS void
 _GL_STACK_PREFIX (discard) (_GL_STACK_TYPE *stack)
 {
@@ -148,6 +155,7 @@ _GL_STACK_PREFIX (discard) (_GL_STACK_TYPE *stack)
 
 /* Return the element from the top of the stack, which must be
    non-empty.  */
+_GL_ATTRIBUTE_MAYBE_UNUSED
 GL_STACK_STORAGECLASS GL_STACK_ELEMENT
 _GL_STACK_PREFIX (top) (const _GL_STACK_TYPE *stack)
 {
@@ -156,7 +164,8 @@ _GL_STACK_PREFIX (top) (const _GL_STACK_TYPE *stack)
 }
 
 /* Return the currently stored number of elements in the stack.  */
-GL_STACK_STORAGECLASS _GL_ATTRIBUTE_PURE idx_t
+_GL_ATTRIBUTE_MAYBE_UNUSED _GL_ATTRIBUTE_PURE
+GL_STACK_STORAGECLASS idx_t
 _GL_STACK_PREFIX (size) (const _GL_STACK_TYPE *stack)
 {
   return stack->size;
