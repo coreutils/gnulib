@@ -350,6 +350,7 @@ vma_iterate_callback (void *data, uintptr_t start, uintptr_t end,
   return 0;
 }
 
+_GL_ATTRIBUTE_MAYBE_UNUSED
 static uintptr_t
 get_rusage_data_via_iterator (void)
 {
