@@ -1815,6 +1815,8 @@ func_sanitize_modulelist ()
       -e '/^TEMPLATE-EXTENDED$/d' \
       -e '/^TEMPLATE-TESTS$/d' \
       -e '/^\..*/d' \
+      -e '/\.orig$/d'
+      -e '/\.rej$/d'
       -e '/~$/d'
 }
 

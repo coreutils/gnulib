@@ -124,6 +124,8 @@ class GLModuleSystem(object):
                     or filename == 'TEMPLATE-EXTENDED'
                     or filename == 'TEMPLATE-TESTS'
                     or filename.startswith('.')
+                    or filename.endswith('.orig')
+                    or filename.endswith('.rej')
                     or filename.endswith('~'))
 
     def list(self):
