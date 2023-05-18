@@ -197,6 +197,7 @@ free_element (const struct function_table *functions, Hamt_entry *elt)
 }
 
 /* Return the initialized element.  */
+_GL_ATTRIBUTE_MAYBE_UNUSED
 static Hamt_entry *
 init_element (Hamt_entry *elt)
 {
