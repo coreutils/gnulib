@@ -21,6 +21,7 @@
  */
 
 #ifndef _@GUARD_PREFIX@_UCHAR_H
+#define _@GUARD_PREFIX@_UCHAR_H
 
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
