@@ -24,6 +24,12 @@
 #include <stdlib.h>
 #include <string.h>
 
+/* Avoid false GCC warning "function may return address of local variable"
+   regarding result and tmpbuf.  */
+#if __GNUC__ + (__GNUC_MINOR__ >= 8) > 4
+# pragma GCC diagnostic ignored "-Wreturn-local-addr"
+#endif
+
 char *
 astrxfrm (const char *s, char *resultbuf, size_t *lengthp)
 {
