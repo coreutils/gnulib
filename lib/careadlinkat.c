@@ -55,7 +55,9 @@ enum { STACK_BUF_SIZE = 1024 };
    When the GCC bug is fixed this workaround should be limited to the
    broken GCC versions.  */
 #if _GL_GNUC_PREREQ (10, 1)
-# if defined GCC_LINT || defined lint
+# if _GL_GNUC_PREREQ (12, 1)
+#  pragma GCC diagnostic ignored "-Wreturn-local-addr"
+# elif defined GCC_LINT || defined lint
 __attribute__ ((__noinline__))
 # elif __OPTIMIZE__ && !__NO_INLINE__
 #  define GCC_BOGUS_WRETURN_LOCAL_ADDR
