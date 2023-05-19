@@ -37,6 +37,7 @@
 #define ELEMENT char
 #define EQUAL(x,y) ((x) == (y))
 #define OFFSET ptrdiff_t
+#define OFFSET_MAX PTRDIFF_MAX
 #define EXTRA_CONTEXT_FIELDS \
   /* The number of edits beyond which the computation can be aborted. */ \
   ptrdiff_t edit_count_limit; \

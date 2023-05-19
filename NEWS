@@ -74,6 +74,8 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2023-05-19  diffseq         Includers should now also define OFFSET_MAX.
+
 2023-04-28  largefile-required
             year2038-required
                             Modules removed, for consistency with Autoconf
