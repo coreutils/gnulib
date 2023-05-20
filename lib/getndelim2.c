@@ -46,10 +46,6 @@
 #include "freadseek.h"
 #include "memchr2.h"
 
-#ifndef SSIZE_MAX
-# define SSIZE_MAX ((ssize_t) (SIZE_MAX / 2))
-#endif
-
 /* Avoid false GCC warning "'c' may be used uninitialized".  */
 #if __GNUC__ + (__GNUC_MINOR__ >= 7) > 4
 # pragma GCC diagnostic ignored "-Wmaybe-uninitialized"

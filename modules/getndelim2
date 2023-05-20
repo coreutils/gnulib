@@ -8,6 +8,7 @@ lib/getndelim2.c
 m4/getndelim2.m4
 
 Depends-on:
+limits-h
 ssize_t
 stdbool
 stdint
