@@ -27,6 +27,9 @@ glibc 2.32, many others.
 @item
 The macro @code{BOOL_MAX} is not defined with some compilers:
 clang 15.0.6.
+@item
+The macro @code{SSIZE_MAX} is not defined on some platforms:
+MSVC 14.
 @end itemize
 
 Portability problems fixed by Gnulib module @code{gethostname}:
@@ -43,9 +46,6 @@ Portability problems not fixed by Gnulib:
 The macro @code{SSIZE_MAX} has the wrong type,
 albeit with the correct value:
 32-bit glibc 2.24 (on some architectures), Cygwin 2.5.2.
-@item
-The macro @code{SSIZE_MAX} is not defined on some platforms:
-MSVC 14.
 @end itemize
 
 For @code{PATH_MAX}, Gnulib provides a module @code{pathmax} with a header
