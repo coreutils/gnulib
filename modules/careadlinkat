@@ -8,6 +8,7 @@ lib/careadlinkat.h
 Depends-on:
 allocator
 idx
+limits-h
 minmax
 ssize_t
 unistd

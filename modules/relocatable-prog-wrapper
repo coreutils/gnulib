@@ -64,6 +64,7 @@ idx
 intprops
 largefile
 libc-config
+limits-h
 pathmax
 ssize_t
 stdbool

@@ -35,10 +35,6 @@
 # define SIZE_MAX ((size_t) -1)
 #endif
 
-#ifndef SSIZE_MAX
-# define SSIZE_MAX ((ssize_t) (SIZE_MAX / 2))
-#endif
-
 #include "allocator.h"
 
 enum { STACK_BUF_SIZE = 1024 };
