@@ -17,6 +17,7 @@ fchdir
 fcntl-h
 filename
 free-posix
+limits-h
 openat-die
 openat-h
 save-cwd
