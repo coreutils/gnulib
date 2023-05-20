@@ -29,10 +29,6 @@
 #include <string.h>
 #include <unistd.h>
 
-#ifndef SSIZE_MAX
-# define SSIZE_MAX ((ssize_t) (SIZE_MAX / 2))
-#endif
-
 /* SYMLINK_MAX is used only for an initial memory-allocation sanity
    check, so it's OK to guess too small on hosts where there is no
    arbitrary limit to symbolic link length.  */

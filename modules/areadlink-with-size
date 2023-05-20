@@ -7,6 +7,7 @@ lib/areadlink-with-size.c
 
 Depends-on:
 free-posix
+limits-h
 readlink
 ssize_t
 stdint
