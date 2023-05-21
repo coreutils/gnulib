@@ -157,6 +157,7 @@
 
 #include <getopt.h>
 #include <limits.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -372,18 +373,18 @@ struct entries_mapping
   /* Mapping from indices in FILE1 to indices in FILE2.
      A value -1 means that the entry from FILE1 is not found in FILE2.
      A value -2 means that it has not yet been computed.  */
-  ssize_t *index_mapping;
+  ptrdiff_t *index_mapping;
   /* Mapping from indices in FILE2 to indices in FILE1.
      A value -1 means that the entry from FILE2 is not found in FILE1.
      A value -2 means that it has not yet been computed.  */
-  ssize_t *index_mapping_reverse;
+  ptrdiff_t *index_mapping_reverse;
 };
 
 /* Look up (or lazily compute) the mapping of an entry in FILE1.
    i is the index in FILE1.
    Return the index in FILE2, or -1 when the entry is not found in FILE2.  */
-static ssize_t
-entries_mapping_get (struct entries_mapping *mapping, ssize_t i)
+static ptrdiff_t
+entries_mapping_get (struct entries_mapping *mapping, ptrdiff_t i)
 {
   if (mapping->index_mapping[i] < -1)
     {
@@ -392,10 +393,10 @@ entries_mapping_get (struct entries_mapping *mapping, ssize_t i)
       size_t n1 = file1->num_entries;
       size_t n2 = file2->num_entries;
       struct entry *entry_i = file1->entries[i];
-      ssize_t j;
+      ptrdiff_t j;
 
       /* Search whether it approximately occurs in file2.  */
-      ssize_t best_j = -1;
+      ptrdiff_t best_j = -1;
       double best_j_similarity = 0.0;
       for (j = n2 - 1; j >= 0; j--)
         if (mapping->index_mapping_reverse[j] < 0)
@@ -413,9 +414,9 @@ entries_mapping_get (struct entries_mapping *mapping, ssize_t i)
           /* Found a similar entry in file2.  */
           struct entry *entry_j = file2->entries[best_j];
           /* Search whether it approximately occurs in file1 at index i.  */
-          ssize_t best_i = -1;
+          ptrdiff_t best_i = -1;
           double best_i_similarity = 0.0;
-          ssize_t ii;
+          ptrdiff_t ii;
           for (ii = n1 - 1; ii >= 0; ii--)
             if (mapping->index_mapping[ii] < 0)
               {
@@ -445,8 +446,8 @@ entries_mapping_get (struct entries_mapping *mapping, ssize_t i)
 /* Look up (or lazily compute) the mapping of an entry in FILE2.
    j is the index in FILE2.
    Return the index in FILE1, or -1 when the entry is not found in FILE1.  */
-static ssize_t
-entries_mapping_reverse_get (struct entries_mapping *mapping, ssize_t j)
+static ptrdiff_t
+entries_mapping_reverse_get (struct entries_mapping *mapping, ptrdiff_t j)
 {
   if (mapping->index_mapping_reverse[j] < -1)
     {
@@ -455,10 +456,10 @@ entries_mapping_reverse_get (struct entries_mapping *mapping, ssize_t j)
       size_t n1 = file1->num_entries;
       size_t n2 = file2->num_entries;
       struct entry *entry_j = file2->entries[j];
-      ssize_t i;
+      ptrdiff_t i;
 
       /* Search whether it approximately occurs in file1.  */
-      ssize_t best_i = -1;
+      ptrdiff_t best_i = -1;
       double best_i_similarity = 0.0;
       for (i = n1 - 1; i >= 0; i--)
         if (mapping->index_mapping[i] < 0)
@@ -476,9 +477,9 @@ entries_mapping_reverse_get (struct entries_mapping *mapping, ssize_t j)
           /* Found a similar entry in file1.  */
           struct entry *entry_i = file1->entries[best_i];
           /* Search whether it approximately occurs in file2 at index j.  */
-          ssize_t best_j = -1;
+          ptrdiff_t best_j = -1;
           double best_j_similarity = 0.0;
-          ssize_t jj;
+          ptrdiff_t jj;
           for (jj = n2 - 1; jj >= 0; jj--)
             if (mapping->index_mapping_reverse[jj] < 0)
               {
@@ -519,18 +520,18 @@ compute_mapping (struct changelog_file *file1, struct changelog_file *file2,
                  struct entries_mapping *result)
 {
   /* Mapping from indices in file1 to indices in file2.  */
-  ssize_t *index_mapping;
+  ptrdiff_t *index_mapping;
   /* Mapping from indices in file2 to indices in file1.  */
-  ssize_t *index_mapping_reverse;
+  ptrdiff_t *index_mapping_reverse;
   size_t n1 = file1->num_entries;
   size_t n2 = file2->num_entries;
-  ssize_t i, j;
+  ptrdiff_t i, j;
 
-  index_mapping = XNMALLOC (n1, ssize_t);
+  index_mapping = XNMALLOC (n1, ptrdiff_t);
   for (i = 0; i < n1; i++)
     index_mapping[i] = -2;
 
-  index_mapping_reverse = XNMALLOC (n2, ssize_t);
+  index_mapping_reverse = XNMALLOC (n2, ptrdiff_t);
   for (j = 0; j < n2; j++)
     index_mapping_reverse[j] = -2;
 
@@ -556,13 +557,13 @@ compute_mapping (struct changelog_file *file1, struct changelog_file *file2,
                    as long as they pair up.  Unpaired occurrences of the same
                    entry are left without mapping.  */
                 {
-                  ssize_t curr_i = i;
-                  ssize_t curr_j = j;
+                  ptrdiff_t curr_i = i;
+                  ptrdiff_t curr_j = j;
 
                   for (;;)
                     {
-                      ssize_t next_i;
-                      ssize_t next_j;
+                      ptrdiff_t next_i;
+                      ptrdiff_t next_j;
 
                       next_i =
                         gl_list_indexof_from (file1->entries_reversed,
@@ -615,9 +616,9 @@ struct edit
 {
   enum edit_type type;
   /* Range of indices into the entries of FILE1.  */
-  ssize_t i1, i2;       /* first, last index; only used for CHANGE, REMOVAL */
+  ptrdiff_t i1, i2;       /* first, last index; only used for CHANGE, REMOVAL */
   /* Range of indices into the entries of FILE2.  */
-  ssize_t j1, j2;       /* first, last index; only used for ADDITION, CHANGE */
+  ptrdiff_t j1, j2;       /* first, last index; only used for ADDITION, CHANGE */
 };
 
 /* This structure represents the differences from one file, FILE1, to another
@@ -626,10 +627,10 @@ struct differences
 {
   /* An array mapping FILE1 indices to FILE2 indices (or -1 when the entry
      from FILE1 is not found in FILE2).  */
-  ssize_t *index_mapping;
+  ptrdiff_t *index_mapping;
   /* An array mapping FILE2 indices to FILE1 indices (or -1 when the entry
      from FILE2 is not found in FILE1).  */
-  ssize_t *index_mapping_reverse;
+  ptrdiff_t *index_mapping_reverse;
   /* The edits that transform FILE1 into FILE2.  */
   size_t num_edits;
   struct edit **edits;
@@ -638,11 +639,11 @@ struct differences
 /* Import the difference detection algorithm from GNU diff.  */
 #define ELEMENT struct entry *
 #define EQUAL entry_equals
-#define OFFSET ssize_t
-#define OFFSET_MAX SSIZE_MAX
+#define OFFSET ptrdiff_t
+#define OFFSET_MAX PTRDIFF_MAX
 #define EXTRA_CONTEXT_FIELDS \
-  ssize_t *index_mapping; \
-  ssize_t *index_mapping_reverse;
+  ptrdiff_t *index_mapping; \
+  ptrdiff_t *index_mapping_reverse;
 #define NOTE_DELETE(ctxt, xoff) \
   ctxt->index_mapping[xoff] = -1
 #define NOTE_INSERT(ctxt, yoff) \
@@ -663,19 +664,19 @@ compute_differences (struct changelog_file *file1, struct changelog_file *file2,
   struct context ctxt;
   size_t n1 = file1->num_entries;
   size_t n2 = file2->num_entries;
-  ssize_t i;
-  ssize_t j;
+  ptrdiff_t i;
+  ptrdiff_t j;
   gl_list_t /* <struct edit *> */ edits;
 
   ctxt.xvec = file1->entries;
   ctxt.yvec = file2->entries;
-  ctxt.index_mapping = XNMALLOC (n1, ssize_t);
+  ctxt.index_mapping = XNMALLOC (n1, ptrdiff_t);
   for (i = 0; i < n1; i++)
     ctxt.index_mapping[i] = 0;
-  ctxt.index_mapping_reverse = XNMALLOC (n2, ssize_t);
+  ctxt.index_mapping_reverse = XNMALLOC (n2, ptrdiff_t);
   for (j = 0; j < n2; j++)
     ctxt.index_mapping_reverse[j] = 0;
-  ctxt.fdiag = XNMALLOC (2 * (n1 + n2 + 3), ssize_t) + n2 + 1;
+  ctxt.fdiag = XNMALLOC (2 * (n1 + n2 + 3), ptrdiff_t) + n2 + 1;
   ctxt.bdiag = ctxt.fdiag + n1 + n2 + 3;
   ctxt.too_expensive = n1 + n2;
 
@@ -1222,7 +1223,7 @@ There is NO WARRANTY, to the extent permitted by law.\n\
                 {
                   /* An addition to the top of modified_file.
                      Apply it to the top of mainstream_file.  */
-                  ssize_t j;
+                  ptrdiff_t j;
                   for (j = edit->j2; j >= edit->j1; j--)
                     {
                       struct entry *added_entry = modified_file.entries[j];
@@ -1231,10 +1232,10 @@ There is NO WARRANTY, to the extent permitted by law.\n\
                 }
               else
                 {
-                  ssize_t i_before;
-                  ssize_t i_after;
-                  ssize_t k_before;
-                  ssize_t k_after;
+                  ptrdiff_t i_before;
+                  ptrdiff_t i_after;
+                  ptrdiff_t k_before;
+                  ptrdiff_t k_after;
                   i_before = diffs.index_mapping_reverse[edit->j1 - 1];
                   ASSERT (i_before >= 0);
                   i_after = (edit->j2 + 1 == modified_file.num_entries
@@ -1299,7 +1300,7 @@ There is NO WARRANTY, to the extent permitted by law.\n\
                 for (i = edit->i1; i <= edit->i2; i++)
                   {
                     struct entry *removed_entry = ancestor_file.entries[i];
-                    ssize_t k = entries_mapping_get (&mapping, i);
+                    ptrdiff_t k = entries_mapping_get (&mapping, i);
                     if (k >= 0
                         && entry_equals (removed_entry,
                                          mainstream_file.entries[k]))
@@ -1376,7 +1377,7 @@ There is NO WARRANTY, to the extent permitted by law.\n\
                                separately.  */
                             size_t num_changed = edit->i2 - edit->i1 + 1; /* > 0 */
                             size_t num_added = (edit->j2 - edit->j1 + 1) - num_changed;
-                            ssize_t j;
+                            ptrdiff_t j;
                             /* First part of the split modified_file.entries[edit->j2 - edit->i2 + edit->i1]:  */
                             gl_list_add_first (result_entries, split[0]);
                             /* The additions.  */
@@ -1393,7 +1394,7 @@ There is NO WARRANTY, to the extent permitted by law.\n\
                                    ? split[1]
                                    : modified_file.entries[j]);
                                 size_t i = j + edit->i2 - edit->j2;
-                                ssize_t k = entries_mapping_get (&mapping, i);
+                                ptrdiff_t k = entries_mapping_get (&mapping, i);
                                 if (k >= 0
                                     && entry_equals (ancestor_file.entries[i],
                                                      mainstream_file.entries[k]))
@@ -1463,7 +1464,7 @@ There is NO WARRANTY, to the extent permitted by law.\n\
                           {
                             /* A simple change at the top of modified_file.
                                Apply it to the top of mainstream_file.  */
-                            ssize_t j;
+                            ptrdiff_t j;
                             for (j = edit->j1 + num_added - 1; j >= edit->j1; j--)
                               {
                                 struct entry *added_entry = modified_file.entries[j];
@@ -1473,7 +1474,7 @@ There is NO WARRANTY, to the extent permitted by law.\n\
                               {
                                 struct entry *changed_entry = modified_file.entries[j];
                                 size_t i = j + edit->i2 - edit->j2;
-                                ssize_t k = entries_mapping_get (&mapping, i);
+                                ptrdiff_t k = entries_mapping_get (&mapping, i);
                                 if (k >= 0
                                     && entry_equals (ancestor_file.entries[i],
                                                      mainstream_file.entries[k]))
@@ -1503,8 +1504,8 @@ There is NO WARRANTY, to the extent permitted by law.\n\
                           }
                         else
                           {
-                            ssize_t i_before;
-                            ssize_t k_before;
+                            ptrdiff_t i_before;
+                            ptrdiff_t k_before;
                             bool linear;
                             i_before = diffs.index_mapping_reverse[edit->j1 - 1];
                             ASSERT (i_before >= 0);
@@ -1528,7 +1529,7 @@ There is NO WARRANTY, to the extent permitted by law.\n\
                               {
                                 gl_list_node_t node_for_insert =
                                   result_entries_pointers[k_before + 1];
-                                ssize_t j;
+                                ptrdiff_t j;
                                 for (j = edit->j1 + num_added - 1; j >= edit->j1; j--)
                                   {
                                     struct entry *added_entry = modified_file.entries[j];
@@ -1538,7 +1539,7 @@ There is NO WARRANTY, to the extent permitted by law.\n\
                                   {
                                     struct entry *changed_entry = modified_file.entries[j];
                                     size_t i = j + edit->i2 - edit->j2;
-                                    ssize_t k = entries_mapping_get (&mapping, i);
+                                    ptrdiff_t k = entries_mapping_get (&mapping, i);
                                     ASSERT (k >= 0);
                                     if (entry_equals (ancestor_file.entries[i],
                                                       mainstream_file.entries[k]))
@@ -1574,8 +1575,8 @@ There is NO WARRANTY, to the extent permitted by law.\n\
                            See whether the num_changed entries still exist
                            unchanged in mainstream_file and are still
                            consecutive.  */
-                        ssize_t i_first;
-                        ssize_t k_first;
+                        ptrdiff_t i_first;
+                        ptrdiff_t k_first;
                         bool linear_unchanged;
                         i_first = edit->i1;
                         k_first = entries_mapping_get (&mapping, i_first);
@@ -1599,7 +1600,7 @@ There is NO WARRANTY, to the extent permitted by law.\n\
                           {
                             gl_list_node_t node_for_insert =
                               result_entries_pointers[k_first];
-                            ssize_t j;
+                            ptrdiff_t j;
                             size_t i;
                             for (j = edit->j2; j >= edit->j1; j--)
                               {
@@ -1608,7 +1609,7 @@ There is NO WARRANTY, to the extent permitted by law.\n\
                               }
                             for (i = edit->i1; i <= edit->i2; i++)
                               {
-                                ssize_t k = entries_mapping_get (&mapping, i);
+                                ptrdiff_t k = entries_mapping_get (&mapping, i);
                                 ASSERT (k >= 0);
                                 ASSERT (entry_equals (ancestor_file.entries[i],
                                                       mainstream_file.entries[k]));

@@ -8,6 +8,7 @@ Depends-on:
 c99
 getopt-gnu
 stdbool
+stdint
 stdlib
 error
 read-file
