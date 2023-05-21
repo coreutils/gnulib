@@ -639,6 +639,7 @@ struct differences
 #define ELEMENT struct entry *
 #define EQUAL entry_equals
 #define OFFSET ssize_t
+#define OFFSET_MAX SSIZE_MAX
 #define EXTRA_CONTEXT_FIELDS \
   ssize_t *index_mapping; \
   ssize_t *index_mapping_reverse;
