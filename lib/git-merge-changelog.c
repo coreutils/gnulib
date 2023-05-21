@@ -238,7 +238,7 @@ entry_hashcode (const void *elt)
       size_t h = 0;
 
       for (s = entry->string, n = entry->length; n > 0; s++, n--)
-        h = (unsigned char) *s + ((h << 9) | (h >> (sizeof (size_t) * CHAR_BIT - 9)));
+        h = (unsigned char) *s + ((h << 9) | (h >> (SIZE_WIDTH - 9)));
 
       entry->hashcode = h;
       entry->hashcode_cached = true;
