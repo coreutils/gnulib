@@ -94,6 +94,10 @@ unsigned long long limits11[] = { ULLONG_MAX };
 static_assert (TYPE_MINIMUM (unsigned long long int) == 0);
 static_assert (TYPE_MAXIMUM (unsigned long long int) == ULLONG_MAX);
 
+/* Specified by POSIX, not by ISO C.  */
+
+long long limits12[] = { SSIZE_MAX };
+
 /* Macros specified by C23 and by ISO/IEC TS 18661-1:2014.  */
 
 verify_width (CHAR_WIDTH, CHAR_MIN, CHAR_MAX);
@@ -114,6 +118,13 @@ int bool_attrs[] = { BOOL_MAX, BOOL_WIDTH };
 static_assert (BOOL_MAX == (((1U << (BOOL_WIDTH - 1)) - 1) * 2) + 1);
 
 static_assert (0 < MB_LEN_MAX);
+
+/* Get ssize_t, size_t.  */
+#include <sys/types.h>
+
+static_assert (TYPE_MAXIMUM (ssize_t) == SSIZE_MAX);
+/* Verify that ssize_t has the same width as size_t.  */
+static_assert (TYPE_MAXIMUM (size_t) / 2 == SSIZE_MAX);
 
 int
 main (void)
