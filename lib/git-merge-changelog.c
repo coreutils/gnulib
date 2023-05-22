@@ -41,7 +41,7 @@
 
 /* Installation:
 
-   $ gnulib-tool --create-testdir --dir=/tmp/testdir123 git-merge-changelog
+   $ ./gnulib-tool --create-testdir --dir=/tmp/testdir123 git-merge-changelog
    $ cd /tmp/testdir123
    $ ./configure
    $ make
@@ -400,16 +400,19 @@ entries_mapping_get (struct entries_mapping *mapping, idx_t i)
       ptrdiff_t best_j = -1;
       double best_j_similarity = 0.0;
       for (j = n2; j > 0; )
-        if (mapping->index_mapping_reverse[--j] < 0)
-          {
-            double similarity =
-              entry_fstrcmp (entry_i, file2->entries[j], best_j_similarity);
-            if (similarity > best_j_similarity)
-              {
-                best_j = j;
-                best_j_similarity = similarity;
-              }
-          }
+        {
+          j--;
+          if (mapping->index_mapping_reverse[j] < 0)
+            {
+              double similarity =
+                entry_fstrcmp (entry_i, file2->entries[j], best_j_similarity);
+              if (similarity > best_j_similarity)
+                {
+                  best_j = j;
+                  best_j_similarity = similarity;
+                }
+            }
+        }
       if (best_j_similarity >= FSTRCMP_THRESHOLD)
         {
           /* Found a similar entry in file2.  */
@@ -419,17 +422,20 @@ entries_mapping_get (struct entries_mapping *mapping, idx_t i)
           double best_i_similarity = 0.0;
           idx_t ii;
           for (ii = n1; ii > 0; )
-            if (mapping->index_mapping[--ii] < 0)
-              {
-                double similarity =
-                  entry_fstrcmp (file1->entries[ii], entry_j,
-                                 best_i_similarity);
-                if (similarity > best_i_similarity)
-                  {
-                    best_i = ii;
-                    best_i_similarity = similarity;
-                  }
-              }
+            {
+              ii--;
+              if (mapping->index_mapping[ii] < 0)
+                {
+                  double similarity =
+                    entry_fstrcmp (file1->entries[ii], entry_j,
+                                   best_i_similarity);
+                  if (similarity > best_i_similarity)
+                    {
+                      best_i = ii;
+                      best_i_similarity = similarity;
+                    }
+                }
+            }
           if (best_i_similarity >= FSTRCMP_THRESHOLD && best_i == i)
             {
               mapping->index_mapping[i] = best_j;
@@ -463,16 +469,19 @@ entries_mapping_reverse_get (struct entries_mapping *mapping, idx_t j)
       ptrdiff_t best_i = -1;
       double best_i_similarity = 0.0;
       for (i = n1; i > 0; )
-        if (mapping->index_mapping[--i] < 0)
-          {
-            double similarity =
-              entry_fstrcmp (file1->entries[i], entry_j, best_i_similarity);
-            if (similarity > best_i_similarity)
-              {
-                best_i = i;
-                best_i_similarity = similarity;
-              }
-          }
+        {
+          i--;
+          if (mapping->index_mapping[i] < 0)
+            {
+              double similarity =
+                entry_fstrcmp (file1->entries[i], entry_j, best_i_similarity);
+              if (similarity > best_i_similarity)
+                {
+                  best_i = i;
+                  best_i_similarity = similarity;
+                }
+            }
+        }
       if (best_i_similarity >= FSTRCMP_THRESHOLD)
         {
           /* Found a similar entry in file1.  */
@@ -482,17 +491,20 @@ entries_mapping_reverse_get (struct entries_mapping *mapping, idx_t j)
           double best_j_similarity = 0.0;
           idx_t jj;
           for (jj = n2; jj > 0; )
-            if (mapping->index_mapping_reverse[--jj] < 0)
-              {
-                double similarity =
-                  entry_fstrcmp (entry_i, file2->entries[jj],
-                                 best_j_similarity);
-                if (similarity > best_j_similarity)
-                  {
-                    best_j = jj;
-                    best_j_similarity = similarity;
-                  }
-              }
+            {
+              jj--;
+              if (mapping->index_mapping_reverse[jj] < 0)
+                {
+                  double similarity =
+                    entry_fstrcmp (entry_i, file2->entries[jj],
+                                   best_j_similarity);
+                  if (similarity > best_j_similarity)
+                    {
+                      best_j = jj;
+                      best_j_similarity = similarity;
+                    }
+                }
+            }
           if (best_j_similarity >= FSTRCMP_THRESHOLD && best_j == j)
             {
               mapping->index_mapping_reverse[j] = best_i;
@@ -537,53 +549,56 @@ compute_mapping (struct changelog_file *file1, struct changelog_file *file2,
     index_mapping_reverse[j] = -2;
 
   for (i = n1; i > 0; )
-    /* Take an entry from file1.  */
-    if (index_mapping[--i] < -1)
-      {
-        struct entry *entry = file1->entries[i];
-        /* Search whether it occurs in file2.  */
-        size_t in2 = gl_list_indexof (file2->entries_reversed, entry);
-        if (in2 != SIZE_MAX)
-          {
-            j = n2 - 1 - in2;
-            /* Found an exact correspondence.  */
-            /* If index_mapping_reverse[j] >= 0, we have already seen other
-               copies of this entry, and there were more occurrences of it in
-               file1 than in file2.  In this case, do nothing.  */
-            if (index_mapping_reverse[j] < 0)
-              {
-                index_mapping[i] = j;
-                index_mapping_reverse[j] = i;
-                /* Look for more occurrences of the same entry.  Match them
-                   as long as they pair up.  Unpaired occurrences of the same
-                   entry are left without mapping.  */
+    {
+      i--;
+      /* Take an entry from file1.  */
+      if (index_mapping[i] < -1)
+        {
+          struct entry *entry = file1->entries[i];
+          /* Search whether it occurs in file2.  */
+          size_t jrev = gl_list_indexof (file2->entries_reversed, entry);
+          if (jrev != (size_t)(-1))
+            {
+              j = n2 - 1 - jrev;
+              /* Found an exact correspondence.  */
+              /* If index_mapping_reverse[j] >= 0, we have already seen other
+                 copies of this entry, and there were more occurrences of it in
+                 file1 than in file2.  In this case, do nothing.  */
+              if (index_mapping_reverse[j] < 0)
                 {
-                  idx_t curr_i = i;
-                  idx_t curr_j = j;
+                  index_mapping[i] = j;
+                  index_mapping_reverse[j] = i;
+                  /* Look for more occurrences of the same entry.  Match them
+                     as long as they pair up.  Unpaired occurrences of the same
+                     entry are left without mapping.  */
+                  {
+                    idx_t curr_i = i;
+                    idx_t curr_j = j;
 
-                  for (;;)
-                    {
-                      size_t next_i =
-                        gl_list_indexof_from (file1->entries_reversed,
-                                              n1 - curr_i, entry);
-                      if (next_i == SIZE_MAX)
-                        break;
-                      size_t next_j =
-                        gl_list_indexof_from (file2->entries_reversed,
-                                              n2 - curr_j, entry);
-                      if (next_j == SIZE_MAX)
-                        break;
-                      curr_i = n1 - 1 - next_i;
-                      curr_j = n2 - 1 - next_j;
-                      ASSERT (index_mapping[curr_i] < 0);
-                      ASSERT (index_mapping_reverse[curr_j] < 0);
-                      index_mapping[curr_i] = curr_j;
-                      index_mapping_reverse[curr_j] = curr_i;
-                    }
+                    for (;;)
+                      {
+                        size_t next_i =
+                          gl_list_indexof_from (file1->entries_reversed,
+                                                n1 - curr_i, entry);
+                        if (next_i == (size_t)(-1))
+                          break;
+                        size_t next_j =
+                          gl_list_indexof_from (file2->entries_reversed,
+                                                n2 - curr_j, entry);
+                        if (next_j == (size_t)(-1))
+                          break;
+                        curr_i = n1 - 1 - next_i;
+                        curr_j = n2 - 1 - next_j;
+                        ASSERT (index_mapping[curr_i] < 0);
+                        ASSERT (index_mapping_reverse[curr_j] < 0);
+                        index_mapping[curr_i] = curr_j;
+                        index_mapping_reverse[curr_j] = curr_i;
+                      }
+                  }
                 }
-              }
-          }
-      }
+            }
+        }
+    }
 
   result->file1 = file1;
   result->file2 = file2;
@@ -592,7 +607,10 @@ compute_mapping (struct changelog_file *file1, struct changelog_file *file2,
 
   if (full)
     for (i = n1; i > 0; )
-      entries_mapping_get (result, --i);
+      {
+        i--;
+        entries_mapping_get (result, i);
+      }
 }
 
 /* An "edit" is a textual modification performed by the user, that needs to
