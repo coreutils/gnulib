@@ -1392,7 +1392,7 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
                 if (len < w)
                   {
                     size_t delta = w - len;
-                    wmemmove (p + delta, p, len);
+                    __wmemmove (p + delta, p, len);
                     wchar_t wc = pad == L_('0') || pad == L_('+') ? L'0' : L' ';
                     wmemset (p, wc, delta);
                   }
