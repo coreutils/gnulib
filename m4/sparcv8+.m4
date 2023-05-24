@@ -1,4 +1,4 @@
-# sparcv8+.m4 serial 1
+# sparcv8+.m4 serial 2
 dnl Copyright (C) 2020-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -18,8 +18,8 @@ AC_DEFUN([gl_SPARC_V8PLUS],
 [
   AC_REQUIRE([AC_CANONICAL_HOST])
 
-  case "$host_cpu" in
-    sparc*)
+  case "$host" in
+    sparc*-*-solaris*)
       if test -n "$GCC"; then
         AC_CACHE_CHECK([whether SPARC v8+ instructions are supported],
           [gl_cv_sparc_v8plus],

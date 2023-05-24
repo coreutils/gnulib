@@ -67,11 +67,11 @@ atomic_compare_and_swap_ptr (uintptr_t volatile *vp,
    require to link with -latomic.  */
 
 # if (((__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 1)) \
-       && !defined __sparc__ && !defined __ANDROID__) \
+       && !(defined __sun && defined __sparc__) && !defined __ANDROID__) \
       || __clang_major__ >= 3) \
      && !defined __ibmxl__
-/* Use GCC built-ins (available in GCC >= 4.1, except on SPARC, and
-   clang >= 3.0).
+/* Use GCC built-ins (available in GCC >= 4.1, except on Solaris/SPARC and
+   Android, and clang >= 3.0).
    Documentation:
    <https://gcc.gnu.org/onlinedocs/gcc-4.1.2/gcc/Atomic-Builtins.html>  */
 
