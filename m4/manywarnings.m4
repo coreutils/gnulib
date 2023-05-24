@@ -69,11 +69,14 @@ AC_DEFUN([gl_MANYWARN_ALL_GCC(C)],
          CFLAGS="$CFLAGS -Wextra -Werror"
          AC_COMPILE_IFELSE(
            [AC_LANG_PROGRAM(
-              [[int f (void)
+              [[struct file_data { int desc, name; };
+                struct cmp { struct file_data file[1]; };
+                void f (struct cmp *r)
                 {
                   typedef struct { int a; int b; } s_t;
                   s_t s1 = { 0, };
-                  return s1.b;
+                  struct cmp cmp = { .file[0].desc = r->file[0].desc + s1.a };
+                  *r = cmp;
                 }
               ]],
               [[]])],
