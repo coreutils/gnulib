@@ -94,11 +94,17 @@
 
 /* Use this to suppress gcc's "...may be used before initialized" warnings.
    Beware: The Code argument must not contain commas.  */
+#if __GNUC__ + (__GNUC_MINOR__ >= 7) > 4
+# pragma GCC diagnostic push
+#endif
 #ifndef IF_LINT
 # if defined GCC_LINT || defined lint
 #  define IF_LINT(Code) Code
 # else
 #  define IF_LINT(Code) /* empty */
+#  if __GNUC__ + (__GNUC_MINOR__ >= 7) > 4
+#   pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
+#  endif
 # endif
 #endif
 
@@ -443,6 +449,10 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
     }
   #undef XREF_YREF_EQUAL
 }
+
+#if __GNUC__ + (__GNUC_MINOR__ >= 7) > 4
+# pragma GCC diagnostic pop
+#endif
 
 
 /* Compare in detail contiguous subsequences of the two vectors
