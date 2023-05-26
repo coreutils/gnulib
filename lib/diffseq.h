@@ -450,10 +450,6 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
   #undef XREF_YREF_EQUAL
 }
 
-#if __GNUC__ + (__GNUC_MINOR__ >= 7) > 4
-# pragma GCC diagnostic pop
-#endif
-
 
 /* Compare in detail contiguous subsequences of the two vectors
    which are known, as a whole, to match each other.
@@ -571,6 +567,10 @@ compareseq (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim,
   return false;
   #undef XREF_YREF_EQUAL
 }
+
+#if __GNUC__ + (__GNUC_MINOR__ >= 7) > 4
+# pragma GCC diagnostic pop
+#endif
 
 #undef ELEMENT
 #undef EQUAL
