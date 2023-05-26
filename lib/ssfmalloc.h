@@ -332,8 +332,8 @@ static unsigned int small_block_page_num_bitmap_words;
 struct small_page_header
 {
   struct dissected_page_header common;
-  /* Two bitmaps, each with small_block_page_num_bitmap_words. In each a bit
-     represents ALIGNMENT bytes.
+  /* Two bitmaps, each with small_block_page_num_bitmap_words words. In each
+     a bit represents ALIGNMENT bytes.
        - available_bitmap: bit set means available, bit clear means allocated.
        - blockend_bitmap: bit set means the an allocated block ends here.  */
   uint32_t bitmap_words[FLEXIBLE_ARRAY_MEMBER];
@@ -365,8 +365,8 @@ init_small_block_page_pool (struct page_pool *pool)
     {
       num_bitmap_words = (num_bits + 32 - 1) / 32;
       blocks_start =
-        (FLEXSIZEOF (struct small_page_header, bitmap_words,
-                     2 * num_bitmap_words * sizeof (uint32_t))
+        (FLEXNSIZEOF (struct small_page_header, bitmap_words,
+                      2 * num_bitmap_words)
          + ALIGNMENT - 1) & -ALIGNMENT;
       unsigned int num_bits_r = (unsigned int) (PAGESIZE - blocks_start) / ALIGNMENT;
       if (num_bits_r >= num_bits)
