@@ -9,14 +9,14 @@ Depends-on:
 error-h
 stdio
 getprogname
-strerror        [test $GL_GENERATE_ERROR_H = true]
-unistd          [test $GL_GENERATE_ERROR_H = true]
-msvc-nothrow    [test $GL_GENERATE_ERROR_H = true]
+strerror        [test $COMPILE_ERROR_C = 1]
+unistd          [test $COMPILE_ERROR_C = 1]
+msvc-nothrow    [test $COMPILE_ERROR_C = 1]
 
 configure.ac:
 AC_REQUIRE([gl_ERROR_H])
 gl_ERROR
-gl_CONDITIONAL([GL_COND_OBJ_ERROR], [test $GL_GENERATE_ERROR_H = true])
+gl_CONDITIONAL([GL_COND_OBJ_ERROR], [test $COMPILE_ERROR_C = 1])
 AM_COND_IF([GL_COND_OBJ_ERROR], [
   gl_PREREQ_ERROR
 ])

@@ -19,6 +19,7 @@
 
 #if !_LIBC
 # include <config.h>
+# define _GL_NO_INLINE_ERROR
 #endif
 
 #include "error.h"

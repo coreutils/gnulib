@@ -18,9 +18,9 @@
 
 #ifndef _@GUARD_PREFIX@_ERROR_H
 
-#if __GNUC__ >= 3
-@PRAGMA_SYSTEM_HEADER@
-#endif
+/* No @PRAGMA_SYSTEM_HEADER@ here, because it would prevent
+   -Wimplicit-fallthrough warnings for missing FALLTHROUGH after error(...)
+   or error_at_line(...) invocations.  */
 
 /* The include_next requires a split double-inclusion guard.  */
 #if @HAVE_ERROR_H@
@@ -37,6 +37,9 @@
 
 /* Get _GL_ATTRIBUTE_SPEC_PRINTF_STANDARD, _GL_ATTRIBUTE_SPEC_PRINTF_SYSTEM.  */
 #include <stdio.h>
+
+/* Get exit().  */
+#include <stdlib.h>
 
 /* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
 
@@ -63,6 +66,11 @@ _GL_FUNCDECL_RPL (error, void,
                   _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_ERROR, 3, 4)));
 _GL_CXXALIAS_RPL (error, void,
                   (int __status, int __errnum, const char *__format, ...));
+# ifndef _GL_NO_INLINE_ERROR
+#  undef error
+#  define error(status, ...) \
+     ((rpl_error)(0, __VA_ARGS__), (status) ? exit (status) : (void)0)
+# endif
 #else
 # if ! @HAVE_ERROR@
 _GL_FUNCDECL_SYS (error, void,
@@ -71,6 +79,10 @@ _GL_FUNCDECL_SYS (error, void,
 # endif
 _GL_CXXALIAS_SYS (error, void,
                   (int __status, int __errnum, const char *__format, ...));
+# ifndef _GL_NO_INLINE_ERROR
+#  define error(status, ...) \
+     ((error)(0, __VA_ARGS__), (status) ? exit (status) : (void)0)
+# endif
 #endif
 #if __GLIBC__ >= 2
 _GL_CXXALIASWARN (error);
@@ -90,6 +102,11 @@ _GL_FUNCDECL_RPL (error_at_line, void,
 _GL_CXXALIAS_RPL (error_at_line, void,
                   (int __status, int __errnum, const char *__filename,
                    unsigned int __lineno, const char *__format, ...));
+# ifndef _GL_NO_INLINE_ERROR
+#  undef error_at_line
+#  define error_at_line(status, ...) \
+     ((rpl_error_at_line)(0, __VA_ARGS__), (status) ? exit (status) : (void)0)
+# endif
 #else
 # if ! @HAVE_ERROR_AT_LINE@
 _GL_FUNCDECL_SYS (error_at_line, void,
@@ -100,6 +117,10 @@ _GL_FUNCDECL_SYS (error_at_line, void,
 _GL_CXXALIAS_SYS (error_at_line, void,
                   (int __status, int __errnum, const char *__filename,
                    unsigned int __lineno, const char *__format, ...));
+# ifndef _GL_NO_INLINE_ERROR
+#  define error_at_line(status, ...) \
+     ((error_at_line)(0, __VA_ARGS__), (status) ? exit (status) : (void)0)
+# endif
 #endif
 _GL_CXXALIASWARN (error_at_line);
 

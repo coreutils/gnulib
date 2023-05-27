@@ -180,13 +180,6 @@ qcopy_file_preserving (const char *src_filename, const char *dest_filename)
   return err;
 }
 
-/* Silence gcc warnings "this statement may fall through".
-   gcc cannot know that error(), when invoked with a non-zero status argument,
-   will not return.  */
-#if __GNUC__ >= 7
-#pragma GCC diagnostic ignored "-Wimplicit-fallthrough"
-#endif
-
 void
 copy_file_preserving (const char *src_filename, const char *dest_filename)
 {
