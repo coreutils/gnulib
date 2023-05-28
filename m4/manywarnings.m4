@@ -1,10 +1,12 @@
-# manywarnings.m4 serial 23
+# manywarnings.m4 serial 24
 dnl Copyright (C) 2008-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 
 dnl From Simon Josefsson
+
+AC_PREREQ([2.64])
 
 # gl_MANYWARN_COMPLEMENT(OUTVAR, LISTVAR, REMOVEVAR)
 # --------------------------------------------------
@@ -21,7 +23,7 @@ AC_DEFUN([gl_MANYWARN_COMPLEMENT],
       *" $gl_warn_item "*)
         ;;
       *)
-        gl_AS_VAR_APPEND([gl_warn_set], [" $gl_warn_item"])
+        AS_VAR_APPEND([gl_warn_set], [" $gl_warn_item"])
         ;;
     esac
   done
@@ -148,51 +150,51 @@ AC_DEFUN([gl_MANYWARN_ALL_GCC(C)],
     -Wwrite-strings \
     \
     ; do
-    gl_AS_VAR_APPEND([$1], [" $gl_manywarn_item"])
+    AS_VAR_APPEND([$1], [" $gl_manywarn_item"])
   done
 
   # gcc --help=warnings outputs an unusual form for these options; list
   # them here so that the above 'comm' command doesn't report a false match.
-  gl_AS_VAR_APPEND([$1], [' -Warray-bounds=2'])
-  gl_AS_VAR_APPEND([$1], [' -Wattribute-alias=2'])
-  gl_AS_VAR_APPEND([$1], [' -Wbidi-chars=any,ucn'])
-  gl_AS_VAR_APPEND([$1], [' -Wformat-overflow=2'])
-  gl_AS_VAR_APPEND([$1], [' -Wformat=2'])
-  gl_AS_VAR_APPEND([$1], [' -Wformat-truncation=2'])
-  gl_AS_VAR_APPEND([$1], [' -Wimplicit-fallthrough=5'])
-  gl_AS_VAR_APPEND([$1], [' -Wshift-overflow=2'])
-  gl_AS_VAR_APPEND([$1], [' -Wuse-after-free=3'])
-  gl_AS_VAR_APPEND([$1], [' -Wunused-const-variable=2'])
-  gl_AS_VAR_APPEND([$1], [' -Wvla-larger-than=4031'])
+  AS_VAR_APPEND([$1], [' -Warray-bounds=2'])
+  AS_VAR_APPEND([$1], [' -Wattribute-alias=2'])
+  AS_VAR_APPEND([$1], [' -Wbidi-chars=any,ucn'])
+  AS_VAR_APPEND([$1], [' -Wformat-overflow=2'])
+  AS_VAR_APPEND([$1], [' -Wformat=2'])
+  AS_VAR_APPEND([$1], [' -Wformat-truncation=2'])
+  AS_VAR_APPEND([$1], [' -Wimplicit-fallthrough=5'])
+  AS_VAR_APPEND([$1], [' -Wshift-overflow=2'])
+  AS_VAR_APPEND([$1], [' -Wuse-after-free=3'])
+  AS_VAR_APPEND([$1], [' -Wunused-const-variable=2'])
+  AS_VAR_APPEND([$1], [' -Wvla-larger-than=4031'])
 
   # These are needed for older GCC versions.
   if test -n "$GCC" && gl_gcc_version=`($CC --version) 2>/dev/null`; then
     case $gl_gcc_version in
       'gcc (GCC) '[[0-3]].* | \
       'gcc (GCC) '4.[[0-7]].*)
-        gl_AS_VAR_APPEND([$1], [' -fdiagnostics-show-option'])
-        gl_AS_VAR_APPEND([$1], [' -funit-at-a-time'])
+        AS_VAR_APPEND([$1], [' -fdiagnostics-show-option'])
+        AS_VAR_APPEND([$1], [' -funit-at-a-time'])
           ;;
     esac
     case $gl_gcc_version in
       'gcc (GCC) '[[0-9]].*)
-        gl_AS_VAR_APPEND([$1], [' -fno-common'])
+        AS_VAR_APPEND([$1], [' -fno-common'])
           ;;
     esac
   fi
 
   # Disable specific options as needed.
   if test "$gl_cv_cc_nomfi_needed" = yes; then
-    gl_AS_VAR_APPEND([$1], [' -Wno-missing-field-initializers'])
+    AS_VAR_APPEND([$1], [' -Wno-missing-field-initializers'])
   fi
 
   if test "$gl_cv_cc_uninitialized_supported" = no; then
-    gl_AS_VAR_APPEND([$1], [' -Wno-uninitialized'])
+    AS_VAR_APPEND([$1], [' -Wno-uninitialized'])
   fi
 
   # This warning have too many false alarms in GCC 11.2.1.
   # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=101713
-  gl_AS_VAR_APPEND([$1], [' -Wno-analyzer-malloc-leak'])
+  AS_VAR_APPEND([$1], [' -Wno-analyzer-malloc-leak'])
 
   AC_LANG_POP([C])
 ])
