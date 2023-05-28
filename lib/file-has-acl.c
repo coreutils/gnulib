@@ -28,7 +28,7 @@
 #include "acl.h"
 
 #include "acl-internal.h"
-
+#include "attribute.h"
 #include "minmax.h"
 
 #if USE_ACL && HAVE_LINUX_XATTR_H && HAVE_LISTXATTR
@@ -50,7 +50,7 @@ enum {
 /* Return true if ATTR is in the set represented by the NUL-terminated
    strings in LISTBUF, which is of size LISTSIZE.  */
 
-static bool
+ATTRIBUTE_PURE static bool
 have_xattr (char const *attr, char const *listbuf, ssize_t listsize)
 {
   char const *blim = listbuf + listsize;

@@ -8,6 +8,7 @@ m4/acl.m4
 
 Depends-on:
 acl-permissions
+attribute
 extern-inline
 minmax
 free-posix
