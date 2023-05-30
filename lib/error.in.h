@@ -81,7 +81,7 @@ _GL_CXXALIAS_RPL (error, void,
 # ifndef _GL_NO_INLINE_ERROR
 #  undef error
 #  define error(status, ...) \
-     __gl_error_call (rpl_error, status, __VA_ARGS)
+     __gl_error_call (rpl_error, status, __VA_ARGS__)
 # endif
 #else
 # if ! @HAVE_ERROR@
