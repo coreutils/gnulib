@@ -49,6 +49,18 @@
 # define _GL_ATTRIBUTE_SPEC_PRINTF_ERROR _GL_ATTRIBUTE_SPEC_PRINTF_SYSTEM
 #endif
 
+#ifdef __GNUC__
+# define __gl_error_call(function, status, ...) \
+    ({ \
+       int const __errstatus = status; \
+       (function) (0, __VA_ARGS__); \
+       __errstatus != 0 ? exit (__errstatus) : (void) 0; \
+    })
+#else
+# define __gl_error_call(function, status, ...) \
+    (function) (status, __VA_ARGS__)
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -69,7 +81,7 @@ _GL_CXXALIAS_RPL (error, void,
 # ifndef _GL_NO_INLINE_ERROR
 #  undef error
 #  define error(status, ...) \
-     ((rpl_error)(0, __VA_ARGS__), (status) != 0 ? exit (status) : (void)0)
+     __gl_error_call (rpl_error, status, __VA_ARGS)
 # endif
 #else
 # if ! @HAVE_ERROR@
@@ -81,7 +93,7 @@ _GL_CXXALIAS_SYS (error, void,
                   (int __status, int __errnum, const char *__format, ...));
 # ifndef _GL_NO_INLINE_ERROR
 #  define error(status, ...) \
-     ((error)(0, __VA_ARGS__), (status) != 0 ? exit (status) : (void)0)
+     __gl_error_call (error, status, __VA_ARGS__)
 # endif
 #endif
 #if __GLIBC__ >= 2
@@ -105,7 +117,7 @@ _GL_CXXALIAS_RPL (error_at_line, void,
 # ifndef _GL_NO_INLINE_ERROR
 #  undef error_at_line
 #  define error_at_line(status, ...) \
-     ((rpl_error_at_line)(0, __VA_ARGS__), (status) != 0 ? exit (status) : (void)0)
+     __gl_error_call (rpl_error_at_line, status, __VA_ARGS__)
 # endif
 #else
 # if ! @HAVE_ERROR_AT_LINE@
@@ -119,7 +131,7 @@ _GL_CXXALIAS_SYS (error_at_line, void,
                    unsigned int __lineno, const char *__format, ...));
 # ifndef _GL_NO_INLINE_ERROR
 #  define error_at_line(status, ...) \
-     ((error_at_line)(0, __VA_ARGS__), (status) != 0 ? exit (status) : (void)0)
+     __gl_error_call (error_at_line, status, __VA_ARGS__)
 # endif
 #endif
 _GL_CXXALIASWARN (error_at_line);
