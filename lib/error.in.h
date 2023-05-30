@@ -35,11 +35,11 @@
  #error "Please include config.h first."
 #endif
 
+/* Get 'unreachable'.  */
+#include <stddef.h>
+
 /* Get _GL_ATTRIBUTE_SPEC_PRINTF_STANDARD, _GL_ATTRIBUTE_SPEC_PRINTF_SYSTEM.  */
 #include <stdio.h>
-
-/* Get exit().  */
-#include <stdlib.h>
 
 /* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
 
@@ -53,8 +53,8 @@
 # define __gl_error_call(function, status, ...) \
     ({ \
        int const __errstatus = status; \
-       (function) (0, __VA_ARGS__); \
-       __errstatus != 0 ? exit (__errstatus) : (void) 0; \
+       (function) (__errstatus, __VA_ARGS__); \
+       __errstatus != 0 ? unreachable () : (void) 0; \
     })
 #else
 # define __gl_error_call(function, status, ...) \
