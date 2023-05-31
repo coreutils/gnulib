@@ -30,6 +30,7 @@
 #include "readline.h"
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 char *
@@ -45,7 +46,10 @@ readline (const char *prompt)
     }
 
   if (getline (&out, &size, stdin) < 0)
-    return NULL;
+    {
+      free (out);
+      return NULL;
+    }
 
   while (*out && (out[strlen (out) - 1] == '\r'
                   || out[strlen (out) - 1] == '\n'))
