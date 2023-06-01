@@ -1057,7 +1057,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
             if isfile(path) or os.path.islink(path):
                 if not self.config['dryrun']:
                     backup = '%s~' % path
-                    print('Removing file %s (backup in )' % (path, backup))
+                    print('Removing file %s (backup in %s)' % (path, backup))
                     try:  # Try to move file
                         if os.path.exists(backup):
                             os.remove(backup)
