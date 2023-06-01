@@ -212,7 +212,19 @@ getprogname (void)
                 {
                   char *s = strdup (last_component (buf.ps_pathptr));
                   if (s)
-                    p = s;
+                    {
+#  if defined __XPLINK__ && __CHARSET_LIB == 1
+                      /* The compiler option -qascii is in use.
+                         https://makingdeveloperslivesbetter.wordpress.com/2022/01/07/is-z-os-ascii-or-ebcdic-yes/
+                         https://www.ibm.com/docs/en/zos/2.5.0?topic=features-macros-related-compiler-option-settings
+                         So, convert the result from EBCDIC to ASCII.
+                         https://www.ibm.com/docs/en/zos/2.5.0?topic=functions-e2a-s-convert-string-from-ebcdic-ascii */
+                      if (__e2a_s (s) == (size_t)-1)
+                        free (s);
+                      else
+#  endif
+                        p = s;
+                    }
                   break;
                 }
             }
