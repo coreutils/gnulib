@@ -1,0 +1,50 @@
+Information for GNU Gnulib maintainers and contributors
+*******************************************************
+
+Using git
+=========
+
+* We don't use topic branches.  Changes are usually small enough that
+  they can be committed directly to the master branch, after appropriate
+  testing.
+
+* We maintain stable branches, though, as described in the documentation:
+  https://www.gnu.org/software/gnulib/manual/html_node/Stable-Branches.html
+  When backporting a commit to a stable branch of the last year, be sure
+  to update the copyright year of each modified file (since we don't run
+  "make update-copyright" on the stable branches).
+
+* We update the ChangeLog by hand.  The commit message is usually identical
+  to the ChangeLog entry, with the date and author line removed, with
+  the leading tabs removed, and with a blank line after the commit's
+  summary line.
+
+* When you commit a contributor's patch, please
+  - add a reasonable ChangeLog entry in the usual style (meaningful
+    summary line and detailed change list),
+  - if the contribution is so small that it does not require a
+    copyright assignment (cf.
+    https://www.gnu.org/prep/maintain/html_node/Legally-Significant.html )
+    add a line:
+    Copyright-paperwork-exempt: Yes
+  - use the 'git commit' option --author="Contributor Name <email@address>"
+
+License Notices
+===============
+
+In *.m4 files, use a notice like this:
+  dnl Copyright (C) YEARS Free Software Foundation, Inc.
+  dnl This file is free software; the Free Software Foundation
+  dnl gives unlimited permission to copy and/or distribute it,
+  dnl with or without modifications, as long as this notice is preserved.
+
+In lib/, tests/, build-aux/ files, except those that are shared with glibc,
+use the license notices from etc/license-notices/ . This avoids gratuitous
+differences in wording, as well misunderstandings when a license notice
+would say "This program ...".
+
+Test Suite
+==========
+
+When adding a module, add a unit test module as well.  This is our best
+chance to catch portability problems.
