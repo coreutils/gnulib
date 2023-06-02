@@ -1,4 +1,4 @@
-/* Copyright (C) 1992, 1995-2003, 2005-2022 Free Software Foundation, Inc.
+/* Copyright (C) 1992, 1995-2003, 2005-2023 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    This file is free software: you can redistribute it and/or modify
@@ -375,6 +375,11 @@ rpl_setenv (const char *name, const char *value, int replace)
           int saved_errno;
           size_t len = strlen (value);
           tmp = malloca (len + 2);
+          if (tmp == NULL)
+            {
+              errno = ENOMEM;
+              return -1;
+            }
           /* Since leading '=' is eaten, double it up.  */
           *tmp = '=';
           memcpy (tmp + 1, value, len + 1);
