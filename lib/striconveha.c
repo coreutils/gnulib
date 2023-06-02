@@ -1,5 +1,5 @@
 /* Character set conversion with error handling and autodetection.
-   Copyright (C) 2002, 2005, 2007, 2009-2022 Free Software Foundation, Inc.
+   Copyright (C) 2002, 2005, 2007, 2009-2023 Free Software Foundation, Inc.
    Written by Bruno Haible.
 
    This file is free software: you can redistribute it and/or modify
@@ -234,6 +234,11 @@ mem_iconveha (const char *src, size_t srclen,
       int retval;
       size_t len = strlen (to_codeset);
       char *to_codeset_suffixed = (char *) malloca (len + 10 + 1);
+      if (to_codeset_suffixed == NULL)
+        {
+          errno = ENOMEM;
+          return -1;
+        }
       memcpy (to_codeset_suffixed, to_codeset, len);
       memcpy (to_codeset_suffixed + len, "//TRANSLIT", 10 + 1);
 
@@ -336,6 +341,11 @@ str_iconveha (const char *src,
       char *result;
       size_t len = strlen (to_codeset);
       char *to_codeset_suffixed = (char *) malloca (len + 10 + 1);
+      if (to_codeset_suffixed == NULL)
+        {
+          errno = ENOMEM;
+          return NULL;
+        }
       memcpy (to_codeset_suffixed, to_codeset, len);
       memcpy (to_codeset_suffixed + len, "//TRANSLIT", 10 + 1);
 
