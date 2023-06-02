@@ -49,13 +49,24 @@
 # define _GL_ATTRIBUTE_SPEC_PRINTF_ERROR _GL_ATTRIBUTE_SPEC_PRINTF_SYSTEM
 #endif
 
+/* Helper macro for supporting the compiler's control flow analysis better.
+   Test case: Compile copy-file.c with "gcc -Wimplicit-fallthrough".  */
 #ifdef __GNUC__
-# define __gl_error_call(function, status, ...) \
-    ({ \
-       int const __errstatus = status; \
-       (function) (__errstatus, __VA_ARGS__); \
-       __errstatus != 0 ? unreachable () : (void) 0; \
-    })
+/* Avoid evaluating STATUS twice, if this is possible without making the
+   "warning: this statement may fall through" reappear.  */
+# if __OPTIMIZE__
+#  define __gl_error_call(function, status, ...) \
+     ({ \
+        int const __errstatus = (status); \
+        (function) (__errstatus, __VA_ARGS__); \
+        __errstatus != 0 ? unreachable () : (void) 0; \
+     })
+# else
+#  define __gl_error_call(function, status, ...) \
+     ((function) (status, __VA_ARGS__), \
+      (status) != 0 ? unreachable () : (void)0 \
+     )
+# endif
 #else
 # define __gl_error_call(function, status, ...) \
     (function) (status, __VA_ARGS__)
