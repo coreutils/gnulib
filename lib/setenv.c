@@ -375,6 +375,11 @@ rpl_setenv (const char *name, const char *value, int replace)
           int saved_errno;
           size_t len = strlen (value);
           tmp = malloca (len + 2);
+          if (tmp == NULL)
+            {
+              errno = ENOMEM;
+              return -1;
+            }
           /* Since leading '=' is eaten, double it up.  */
           *tmp = '=';
           memcpy (tmp + 1, value, len + 1);
