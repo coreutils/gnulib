@@ -17,12 +17,8 @@
 
 #include <config.h>
 
-#ifdef _OPENMP
-
 /* Specification.  */
-# include <omp.h>
-
-#endif
+#include <omp.h>
 
 #include <stdlib.h>
 

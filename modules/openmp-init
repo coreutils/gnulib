@@ -37,9 +37,7 @@ MOSTLYCLEANFILES += omp.h omp.h-t
 lib_SOURCES += omp-init.c
 
 Include:
-#ifdef _OPENMP
-# include <omp.h>
-#endif
+#include <omp.h>
 
 License:
 LGPL
