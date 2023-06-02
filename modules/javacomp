@@ -28,6 +28,7 @@ clean-temp
 stat
 error
 xvasprintf
+verify
 c-strstr
 gettext-h
 javacomp-script

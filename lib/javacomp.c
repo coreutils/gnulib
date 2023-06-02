@@ -46,6 +46,7 @@
 #include "clean-temp.h"
 #include "error.h"
 #include "xvasprintf.h"
+#include "verify.h"
 #include "c-strstr.h"
 #include "gettext.h"
 
@@ -849,6 +850,7 @@ is_envjavac_gcj43_usable (const char *javac,
           /* Try adding -fsource option if it is useful.  */
           char *javac_source =
             xasprintf ("%s -fsource=%s", javac, source_version);
+          assume (javac_source != NULL);
 
           unlink (compiled_file_name);
 
@@ -917,6 +919,7 @@ is_envjavac_gcj43_usable (const char *javac,
           char *javac_target =
             xasprintf ("%s -fsource=%s -ftarget=%s",
                        javac, source_version, target_version);
+          assume (javac_target != NULL);
 
           unlink (compiled_file_name);
 
@@ -1060,6 +1063,7 @@ is_envjavac_oldgcj_14_13_usable (const char *javac,
       unlink (compiled_file_name);
 
       javac_noassert = xasprintf ("%s -fno-assert", javac);
+      assume (javac_noassert != NULL);
 
       java_sources[0] = conftest_file_name;
       if (!compile_using_envjavac (javac_noassert,
@@ -1200,6 +1204,7 @@ is_envjavac_nongcj_usable (const char *javac,
           /* Try adding -source option if it is useful.  */
           char *javac_source =
             xasprintf ("%s -source %s", javac, source_version_for_javac);
+          assume (javac_source != NULL);
 
           unlink (compiled_file_name);
 
@@ -1268,6 +1273,7 @@ is_envjavac_nongcj_usable (const char *javac,
              option but no -source option.)  */
           char *javac_target =
             xasprintf ("%s -target %s", javac, target_version);
+          assume (javac_target != NULL);
 
           unlink (compiled_file_name);
 
@@ -1284,6 +1290,7 @@ is_envjavac_nongcj_usable (const char *javac,
               /* Try adding -source option if it is useful.  */
               char *javac_target_source =
                 xasprintf ("%s -source %s", javac_target, source_version_for_javac);
+              assume (javac_target_source != NULL);
 
               unlink (compiled_file_name);
 
@@ -1358,6 +1365,7 @@ is_envjavac_nongcj_usable (const char *javac,
                  higher.)  */
               char *javac_target_source =
                 xasprintf ("%s -source %s", javac_target, source_version_for_javac);
+              assume (javac_target_source != NULL);
 
               unlink (compiled_file_name);
 
@@ -2267,6 +2275,7 @@ compile_java_class (const char * const *java_sources,
                             fsource_option ? source_version : "",
                             ftarget_option ? " -ftarget=" : "",
                             ftarget_option ? target_version : ""));
+            assume (javac_with_options != NULL);
 
             err = compile_using_envjavac (javac_with_options,
                                           java_sources, java_sources_count,
