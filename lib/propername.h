@@ -45,11 +45,14 @@
      ...
      Written by Danilo Segan and Bruno Haible.
 
-   The 'propername' module does exactly this. Plus, for languages that use
-   a different writing system than the Latin alphabet, it allows a translator
+   The 'propername' and 'propername-lite’ modules do this. Plus, for
+   languages that do not use the Latin alphabet, they allow a translator
    to write the name using that different writing system. In that case the
-   output will look like this:
+   propername and propername_utf8 output will look like this:
       <translated name> (<original name in English>)
+   whereas the propername_lite output will just be the translated name
+   if available, otherwise the original name (in UTF-8 if possible and
+   in ASCII if not).
 
    To use the 'propername' module requires two simple steps:
 
@@ -62,12 +65,29 @@
 
           from "Torbjorn Granlund"
           to   proper_name_utf8 ("Torbjorn Granlund", "Torbj\303\266rn Granlund")
+          or   proper_name_lite ("Torbjorn Granlund", "Torbj\303\266rn Granlund")
 
           from "F. Pinard"
           to   proper_name_utf8 ("Franc,ois Pinard", "Fran\303\247ois Pinard")
+          or   proper_name_lite ("Franc,ois Pinard", "Fran\303\247ois Pinard")
+
+        In source code, the second argument of proper_name_lite and
+        proper_name_utf8 should use octal escapes, not UTF-8 - e.g.,
+        "Fran\303\247ois Pinard", not "François Pinard".  Doing it
+        this way can avoid mishandling non-ASCII characters if the
+        source is recoded to non-UTF8, or if the compiler does not
+        treat UTF-8 as-is in character string contents.
 
         (Optionally, here you can also add / * TRANSLATORS: ... * / comments
         explaining how the name is written or pronounced.)
+
+   Here is an example in context.
+
+        printf (_("Written by %s and %s.\n"),
+                / * TRANSLATORS: This is the proper name "Danilo Šegan".
+                    In the original Cyrillic it is "Данило Шеган".  * /
+                proper_name_utf8 ("Danilo Segan", "Danilo \305\240egan"),
+                proper_name ("Bruno Haible"));
  */
 
 #ifndef _PROPERNAME_H
@@ -87,6 +107,12 @@ extern const char * proper_name (const char *name) /* NOT attribute const */;
    characters.  */
 extern const char * proper_name_utf8 (const char *name_ascii,
                                       const char *name_utf8);
+
+/* Return the localization of the name spelled NAME_ASCII in ASCII,
+   and NAME_UTF8 in UTF-8.  This function needs less infrastructure
+   than proper_name and proper_name_utf8.  */
+extern const char *proper_name_lite (const char *name_ascii,
+                                     const char *name_utf8);
 
 #ifdef __cplusplus
 }

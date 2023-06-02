@@ -1,0 +1,27 @@
+Description:
+Lighter-weight localization of proper names.
+
+Files:
+lib/propername-lite.c
+lib/propername.h
+
+Depends-on:
+localcharset
+c-strcase
+gettext-h
+
+configure.ac:
+m4_ifdef([AM_XGETTEXT_OPTION],
+  [AM_][XGETTEXT_OPTION([--keyword='proper_name_lite:1,\"This is a proper name. See the gettext manual, section Names.\"'])])
+
+Makefile.am:
+lib_SOURCES += propername-lite.c propername.h
+
+Include:
+"propername.h"
+
+License:
+LGPL
+
+Maintainer:
+all

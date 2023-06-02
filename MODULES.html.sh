@@ -3041,6 +3041,7 @@ func_all_modules ()
   func_module gettext
   func_module gettext-h
   func_module propername
+  func_module propername-lite
   func_module iconv
   func_module striconv
   func_module xstriconv
