@@ -21,22 +21,6 @@
 #include "pipe-filter.h"
 
 #include <errno.h>
-#include <fcntl.h>
-#include <stdint.h>
-#include <stdlib.h>
 #include <unistd.h>
-#if defined _WIN32 && ! defined __CYGWIN__
-# include <windows.h>
-#else
-# include <signal.h>
-# include <sys/select.h>
-#endif
-
-#include "error.h"
-#include "spawn-pipe.h"
-#include "wait-process.h"
-#include "gettext.h"
-
-#define _(str) gettext (str)
 
 #include "pipe-filter-aux.h"
