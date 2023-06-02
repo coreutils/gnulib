@@ -721,11 +721,11 @@ stopping_signal_handler (int sig)
 /* The signal handler for SIGCONT.
    It is reentrant.  */
 static _GL_ASYNC_SAFE void
-continuing_signal_handler (int sig)
+continuing_signal_handler (int sigcont)
 {
   int saved_errno = errno;
 
-  log_signal_handler_called (sig);
+  log_signal_handler_called (sigcont);
   update_pgrp_status ();
   /* Only do something while some output was interrupted.  */
   if (active_controller != NULL
