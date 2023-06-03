@@ -45,7 +45,7 @@
      ...
      Written by Danilo Segan and Bruno Haible.
 
-   The 'propername' and 'propername-lite’ modules do this. Plus, for
+   The 'propername' and 'propername-lite' modules do this. Plus, for
    languages that do not use the Latin alphabet, they allow a translator
    to write the name using that different writing system. In that case the
    propername and propername_utf8 output will look like this:
@@ -75,7 +75,7 @@
         proper_name_utf8 should use octal escapes, not UTF-8 - e.g.,
         "Fran\303\247ois Pinard", not "François Pinard".  Doing it
         this way can avoid mishandling non-ASCII characters if the
-        source is recoded to non-UTF8, or if the compiler does not
+        source is recoded to non-UTF-8, or if the compiler does not
         treat UTF-8 as-is in character string contents.
 
         (Optionally, here you can also add / * TRANSLATORS: ... * / comments
@@ -88,6 +88,17 @@
                     In the original Cyrillic it is "Данило Шеган".  * /
                 proper_name_utf8 ("Danilo Segan", "Danilo \305\240egan"),
                 proper_name ("Bruno Haible"));
+
+   Differences between proper_name_utf8 and proper_name_lite:
+   * proper_name_lite uses the localization provided by the translator.
+     If there is no localization, it uses the name with Unicode characters
+     only in UTF-8 locales, otherwise it uses the original name in English.
+   * proper_name_utf8 is more elaborate:
+     - It uses the name with Unicode characters also when the locale encoding
+       is not UTF-8 but contains the necessary characters (e.g. ISO-8859-x or
+       GB18030).
+     - If there is a localization, it produces a better result when the
+       translator has given a poor localization.
  */
 
 #ifndef _PROPERNAME_H
