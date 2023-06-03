@@ -50,23 +50,20 @@
 #endif
 
 /* Helper macro for supporting the compiler's control flow analysis better.
+   It evaluates its arguments only once.  It uses __builtin_constant_p
+   and comma expressions to work around GCC false positives.
    Test case: Compile copy-file.c with "gcc -Wimplicit-fallthrough".  */
 #ifdef __GNUC__
-/* Avoid evaluating STATUS twice, if this is possible without making the
-   "warning: this statement may fall through" reappear.  */
-# if __OPTIMIZE__
-#  define __gl_error_call(function, status, ...) \
-     ({ \
-        int const __errstatus = (status); \
-        (function) (__errstatus, __VA_ARGS__); \
-        __errstatus != 0 ? unreachable () : (void) 0; \
-     })
-# else
-#  define __gl_error_call(function, status, ...) \
-     ((function) (status, __VA_ARGS__), \
-      (status) != 0 ? unreachable () : (void)0 \
-     )
-# endif
+# define __gl_error_call1(function, status, ...) \
+    ((function) (status, __VA_ARGS__), \
+     (status) != 0 ? unreachable () : (void) 0)
+# define __gl_error_call(function, status, ...) \
+    (__builtin_constant_p (status) \
+     ? __gl_error_call1 (function, status, __VA_ARGS__) \
+     : ({ \
+         int const __errstatus = status; \
+         __gl_error_call1 (function, __errstatus, __VA_ARGS__); \
+       }))
 #else
 # define __gl_error_call(function, status, ...) \
     (function) (status, __VA_ARGS__)
