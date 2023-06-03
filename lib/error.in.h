@@ -50,13 +50,21 @@
 #endif
 
 /* Helper macro for supporting the compiler's control flow analysis better.
-   It evaluates its arguments only once.  It uses __builtin_constant_p
-   and comma expressions to work around GCC false positives.
+   It evaluates its arguments only once.
    Test case: Compile copy-file.c with "gcc -Wimplicit-fallthrough".  */
 #ifdef __GNUC__
+/* Use 'unreachable' to tell the compiler when the function call does not
+   return.  */
 # define __gl_error_call1(function, status, ...) \
     ((function) (status, __VA_ARGS__), \
      (status) != 0 ? unreachable () : (void) 0)
+/* If STATUS is a not a constant, the function call may or may not return;
+   therefore -Wimplicit-fallthrough will produce a warning.  Use a compound
+   statement in order to evaluate STATUS only once.
+   If STATUS is a constant, we don't use a compound statement, because that
+   would trigger a -Wimplicit-fallthrough warning even when STATUS is != 0,
+   when not optimizing.  This causes STATUS to be evaluated twice, but
+   that's OK since it does not have side effects.  */
 # define __gl_error_call(function, status, ...) \
     (__builtin_constant_p (status) \
      ? __gl_error_call1 (function, status, __VA_ARGS__) \
