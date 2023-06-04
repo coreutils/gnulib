@@ -260,7 +260,7 @@ tparm (const char *str, ...)
   static char buf[MAX_LINE];
   const char *sp;
   char *dp;
-  char *fmt;
+  const char *fmt;
   char scan_for;
   int scan_depth;
   int if_depth;
@@ -473,21 +473,22 @@ tparm (const char *str, ...)
             case '6': case '7': case '8': case '9':
               if (fmt == NULL)
                 {
+                  char *fmtp;
                   if (termcap)
                     return OOPS;
                   if (*sp == ':')
                     sp++;
-                  fmt = fmt_buf;
-                  *fmt++ = '%';
+                  fmtp = fmt_buf;
+                  *fmtp++ = '%';
                   while (*sp != 's' && *sp != 'x' && *sp != 'X' && *sp != 'd'
                          && *sp != 'o' && *sp != 'c' && *sp != 'u')
                     {
                       if (*sp == '\0')
                         return OOPS;
-                      *fmt++ = *sp++;
+                      *fmtp++ = *sp++;
                     }
-                  *fmt++ = *sp;
-                  *fmt = '\0';
+                  *fmtp++ = *sp;
+                  *fmtp = '\0';
                   fmt = fmt_buf;
                 }
               {
