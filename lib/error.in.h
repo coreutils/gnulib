@@ -30,7 +30,8 @@
 #ifndef _@GUARD_PREFIX@_ERROR_H
 #define _@GUARD_PREFIX@_ERROR_H
 
-/* This file uses _GL_ATTRIBUTE_FORMAT.  */
+/* This file uses _GL_ATTRIBUTE_ALWAYS_INLINE, _GL_ATTRIBUTE_FORMAT,
+  _GL_ATTRIBUTE_MAYBE_UNUSED.  */
 #if !_GL_CONFIG_H_INCLUDED
  #error "Please include config.h first."
 #endif
@@ -108,8 +109,28 @@ _GL_FUNCDECL_SYS (error, void,
 _GL_CXXALIAS_SYS (error, void,
                   (int __status, int __errnum, const char *__format, ...));
 # ifndef _GL_NO_INLINE_ERROR
-#  define error(status, ...) \
-     __gl_error_call (error, status, __VA_ARGS__)
+#  ifdef error
+/* Only gcc ≥ 4.7 has __builtin_va_arg_pack.  */
+#   if _GL_GNUC_PREREQ (4, 7)
+#    pragma GCC diagnostic push
+#    pragma GCC diagnostic ignored "-Wattributes"
+_GL_ATTRIBUTE_MAYBE_UNUSED
+static void
+_GL_ATTRIBUTE_ALWAYS_INLINE
+_GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_ERROR, 3, 4))
+_gl_inline_error (int __status, int __errnum, const char *__format, ...)
+{
+  return error (__status, __errnum, __format, __builtin_va_arg_pack ());
+}
+#    pragma GCC diagnostic pop
+#    undef error
+#    define error(status, ...) \
+       __gl_error_call (_gl_inline_error, status, __VA_ARGS__)
+#   endif
+#  else
+#   define error(status, ...) \
+      __gl_error_call (error, status, __VA_ARGS__)
+#  endif
 # endif
 #endif
 #if __GLIBC__ >= 2
@@ -146,8 +167,30 @@ _GL_CXXALIAS_SYS (error_at_line, void,
                   (int __status, int __errnum, const char *__filename,
                    unsigned int __lineno, const char *__format, ...));
 # ifndef _GL_NO_INLINE_ERROR
-#  define error_at_line(status, ...) \
-     __gl_error_call (error_at_line, status, __VA_ARGS__)
+#  ifdef error_at_line
+/* Only gcc ≥ 4.7 has __builtin_va_arg_pack.  */
+#   if _GL_GNUC_PREREQ (4, 7)
+#    pragma GCC diagnostic push
+#    pragma GCC diagnostic ignored "-Wattributes"
+_GL_ATTRIBUTE_MAYBE_UNUSED
+static void
+_GL_ATTRIBUTE_ALWAYS_INLINE
+_GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_ERROR, 5, 6))
+_gl_inline_error_at_line (int __status, int __errnum, const char *__filename,
+                          unsigned int __lineno, const char *__format, ...)
+{
+  return error_at_line (__status, __errnum, __filename, __lineno, __format,
+                        __builtin_va_arg_pack ());
+}
+#    pragma GCC diagnostic pop
+#    undef error_at_line
+#    define error_at_line(status, ...) \
+       __gl_error_call (_gl_inline_error_at_line, status, __VA_ARGS__)
+#   endif
+#  else
+#   define error_at_line(status, ...) \
+      __gl_error_call (error_at_line, status, __VA_ARGS__)
+#  endif
 # endif
 #endif
 _GL_CXXALIASWARN (error_at_line);
