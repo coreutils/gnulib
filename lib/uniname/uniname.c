@@ -245,7 +245,7 @@ unicode_character_name (ucs4_t c, char *buf)
       unsigned int index3;
       const char *q;
 
-      /* buf needs to have at least 16 + 7 bytes here.  */
+      /* buf needs to have at least 16 + 7 + 1 bytes here.  */
       memcpy (buf, "HANGUL SYLLABLE ", 16);
       ptr = buf + 16;
 
@@ -274,7 +274,7 @@ unicode_character_name (ucs4_t c, char *buf)
       char *ptr;
       int i;
 
-      /* buf needs to have at least 28 + 5 bytes here.  */
+      /* buf needs to have at least 28 + 5 + 1 bytes here.  */
       memcpy (buf, "CJK COMPATIBILITY IDEOGRAPH-", 28);
       ptr = buf + 28;
 
@@ -291,7 +291,7 @@ unicode_character_name (ucs4_t c, char *buf)
       /* Special case for variation selectors. Keeps the tables
          small.  */
 
-      /* buf needs to have at least 19 + 3 bytes here.  */
+      /* buf needs to have at least 19 + 3 + 1 bytes here.  */
       sprintf (buf, "VARIATION SELECTOR-%d",
                c <= 0xFE0F ? c - 0xFE00 + 1 : c - 0xE0100 + 17);
       return buf;
@@ -339,7 +339,8 @@ unicode_character_name (ucs4_t c, char *buf)
       if (words != NULL)
         {
           /* Found it in unicode_index_to_name. Now concatenate the words.  */
-          /* buf needs to have at least UNICODE_CHARNAME_MAX_LENGTH bytes.  */
+          /* buf needs to have at least UNICODE_CHARNAME_MAX_LENGTH + 1
+             bytes.  */
           char *ptr = buf;
           for (;;)
             {
