@@ -292,7 +292,7 @@ unicode_character_name (ucs4_t c, char *buf)
          small.  */
 
       /* buf needs to have at least 19 + 3 + 1 bytes here.  */
-      sprintf (buf, "VARIATION SELECTOR-%d",
+      sprintf (buf, "VARIATION SELECTOR-%u",
                c <= 0xFE0F ? c - 0xFE00 + 1 : c - 0xE0100 + 17);
       return buf;
     }
