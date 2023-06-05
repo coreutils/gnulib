@@ -182,16 +182,17 @@ convert_dirent64 (const struct dirent64 *source)
 #endif
 
 #ifndef _LIBC
-/* The results of opendir() in this file are not used with dirfd and fchdir,
-   and we do not leak fds to any single-threaded code that could use stdio,
-   therefore save some unnecessary recursion in fchdir.c and opendir_safer.c.
-   FIXME - if the kernel ever adds support for multi-thread safety for
-   avoiding standard fds, then we should use opendir_safer.  */
-# ifdef GNULIB_defined_opendir
-#  undef opendir
-# endif
-# ifdef GNULIB_defined_closedir
-#  undef closedir
+/* The results of opendir() in this file are used with dirfd.  But they are
+   not used with fchdir, and we do not leak fds to any single-threaded code
+   that could use stdio, therefore save some unnecessary recursion in
+   fchdir.c and opendir_safer.c.  */
+# ifndef GNULIB_defined_DIR
+#  ifdef GNULIB_defined_opendir
+#   undef opendir
+#  endif
+#  ifdef GNULIB_defined_closedir
+#   undef closedir
+#  endif
 # endif
 
 /* Just use malloc.  */

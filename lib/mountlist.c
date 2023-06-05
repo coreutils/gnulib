@@ -154,11 +154,18 @@
 
 /* The results of opendir() in this file are not used with dirfd and fchdir,
    therefore save some unnecessary work in fchdir.c.  */
-#ifdef GNULIB_defined_opendir
+#ifdef GNULIB_defined_DIR
+# undef DIR
 # undef opendir
-#endif
-#ifdef GNULIB_defined_closedir
 # undef closedir
+# undef readdir
+#else
+# ifdef GNULIB_defined_opendir
+#  undef opendir
+# endif
+# ifdef GNULIB_defined_closedir
+#  undef closedir
+# endif
 #endif
 
 #define ME_DUMMY_0(Fs_name, Fs_type)            \
