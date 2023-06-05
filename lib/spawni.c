@@ -857,7 +857,7 @@ __spawni (pid_t *pid, const char *prog_filename,
 /* The warning "warning: 'vfork' is deprecated: Use posix_spawn or fork" seen
    on macOS 12 is pointless, as we use vfork only when it is safe or when the
    user has explicitly requested it.  Silence this warning.  */
-#if __GNUC__ >= 3
+#if _GL_GNUC_PREREQ (4, 2)
 # pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #endif
 
