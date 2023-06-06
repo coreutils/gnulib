@@ -1,6 +1,6 @@
 # A library of shell functions for autopull.sh, autogen.sh, and bootstrap.
 
-scriptlibversion=2022-12-27.16; # UTC
+scriptlibversion=2023-06-06.21; # UTC
 
 # Copyright (C) 2003-2023 Free Software Foundation, Inc.
 #
@@ -939,7 +939,7 @@ symlink_to_dir()
       for dot_ig in x $vc_ignore; do
         test $dot_ig = x && continue
         ig=$parent/$dot_ig
-        insert_vc_ignore $ig "${dst_dir##*/}"
+        insert_vc_ignore $ig "${dst_dir##*/}/"
       done
     fi
 
@@ -1065,7 +1065,7 @@ autogen()
     mkdir $build_aux
     for dot_ig in x $vc_ignore; do
       test $dot_ig = x && continue
-      insert_vc_ignore $dot_ig $build_aux
+      insert_vc_ignore $dot_ig $build_aux/
     done
   fi
 
