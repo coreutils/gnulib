@@ -1377,6 +1377,22 @@ sc_unportable_grep_q:
 	@prohibit='grep -q' halt="unportable 'grep -q', use >/dev/null instead" \
 	  $(_sc_search_regexp)
 
+# The GNU Codying standards says that README should refer to both
+# INSTALL and the file that contains the copying conditions.  This
+# shall be COPYING for GPL and COPYING.LESSER for LGPL.
+
+sc_readme_link_install:
+	@require='INSTALL' 					\
+	in_vc_files='$(top_srcdir)/README$$'                    \
+	halt='The README file should refer to INSTALL'          \
+	  $(_sc_search_regexp)
+
+sc_readme_link_copying:
+	@require='COPYING' 					\
+	in_vc_files='$(top_srcdir)/README$$'                    \
+	halt='The README file should refer to COPYING[.LESSER]' \
+	  $(_sc_search_regexp)
+
 vc-diff-check:
 	$(AM_V_GEN)(unset CDPATH; cd $(srcdir) && $(VC) diff) > vc-diffs || :
 	$(AM_V_at)if test -s vc-diffs; then			\
