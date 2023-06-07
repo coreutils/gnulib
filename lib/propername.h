@@ -83,11 +83,12 @@
 
    Here is an example in context.
 
-        printf (_("Written by %s and %s.\n"),
+              char const *author_names[2] = {
                 / * TRANSLATORS: This is the proper name "Danilo Šegan".
                     In the original Cyrillic it is "Данило Шеган".  * /
                 proper_name_utf8 ("Danilo Segan", "Danilo \305\240egan"),
-                proper_name ("Bruno Haible"));
+                proper_name ("Bruno Haible")
+              };
 
    Differences between proper_name_utf8 and proper_name_lite:
    * proper_name_lite uses the localization provided by the translator.
