@@ -614,7 +614,7 @@ sc_prohibit_error_without_use:
 # 2) notice that "c(har)?|[mz]" is equivalent to the shorter and more readable
 # "char|[cmz]"
 # x(((2n?)?re|char|n(re|m)|[cmz])alloc|alloc_(oversized|die)|(mem|str)dup)
-_xa1 = x(((2n?)?re|char|n(re|m)|[cmz])alloc|alloc_(oversized|die)|(mem|str)dup)
+_xa1 = x(i(m(emdup0?|alloc)|realloc(array)?|([cz]|nm)alloc)|([pz]|c(har)?|2n?re|nm)alloc|realloc(array)?|m(alloc|emdup)|strdup)
 _xa2 = X([CZ]|N?M)ALLOC
 sc_prohibit_xalloc_without_use:
 	@h='xalloc.h' \
