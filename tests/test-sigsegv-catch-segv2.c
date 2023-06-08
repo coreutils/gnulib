@@ -100,7 +100,7 @@ main ()
   prot_unwritable = PROT_READ;
 # endif
 
-  /* Setup some mmaped memory.  */
+  /* Setup some mmapped memory.  */
   p = mmap_zeromap ((void *) 0x12340000, 0x4000);
   if (p == (void *)(-1))
     {

@@ -179,7 +179,7 @@ extra effort to create self-contained tarballs, and it may disturb some
 mechanism the maintainer applies to the sources.  For these reasons,
 this option is generally discouraged.
 
-@code{gnulib-tool} will overwrite any pre-existing files, in
+@code{gnulib-tool} will overwrite any preexisting files, in
 particular @file{Makefile.am}.  It is also possible to separate the
 generated @file{Makefile.am} content (for building the gnulib library)
 into a separate file, say @file{gnulib.mk}, that can be included by your

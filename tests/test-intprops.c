@@ -173,7 +173,7 @@ main (void)
      INT_<op>_OVERFLOW tests, so define macros to do both.  OP is the
      operation, OPNAME its symbolic name, A and B its operands, T the
      result type, V the overflow flag, and VRES the result if V and if
-     two's complement.  CHECK_BINOP is for most binary operatinos,
+     two's complement.  CHECK_BINOP is for most binary operations,
      CHECK_SBINOP for binary +, -, * when the result type is signed,
      and CHECK_UNOP for unary operations.  */
   #define CHECK_BINOP(op, opname, a, b, t, v, vres)                       \

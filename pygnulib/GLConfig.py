@@ -577,7 +577,7 @@ class GLConfig(object):
                             % type(file).__name__)
 
     def getFiles(self):
-        '''Return the list of the fileed files.'''
+        '''Return the list of files.'''
         return list(self.table['files'])
 
     def setFiles(self, files):

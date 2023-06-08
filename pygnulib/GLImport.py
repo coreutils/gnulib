@@ -257,7 +257,7 @@ class GLImport(object):
             raise GLError(10, None)
 
         # Define GLImport attributes.
-        self.emiter = GLEmiter(self.config)
+        self.emitter = GLEmiter(self.config)
         self.filesystem = GLFileSystem(self.config)
         self.modulesystem = GLModuleSystem(self.config)
         self.moduletable = GLModuleTable(self.config,
@@ -490,7 +490,7 @@ class GLImport(object):
         modules = [ str(module)
                     for module in moduletable['base'] ]
         avoids = self.config['avoids']
-        emit += self.emiter.copyright_notice()
+        emit += self.emitter.copyright_notice()
         emit += '''#
 # This file represents the specification of how gnulib-tool is used.
 # It acts as a cache: It is written and read by gnulib-tool.
@@ -575,7 +575,7 @@ class GLImport(object):
         modules = [ str(module)
                     for module in moduletable['base'] ]
         emit += '# DO NOT EDIT! GENERATED AUTOMATICALLY!\n'
-        emit += self.emiter.copyright_notice()
+        emit += self.emitter.copyright_notice()
         emit += '''#
 # This file represents the compiled summary of the specification in
 # gnulib-cache.m4. It lists the computed macro invocations that need
@@ -593,7 +593,7 @@ AC_DEFUN([%s_EARLY],
   m4_pattern_allow([^gl_ES$])dnl a valid locale name
   m4_pattern_allow([^gl_LIBOBJS$])dnl a variable
   m4_pattern_allow([^gl_LTLIBOBJS$])dnl a variable\n''' % (configure_ac, macro_prefix)
-        emit += self.emiter.preEarlyMacros(True, '  ', moduletable['final'])
+        emit += self.emitter.preEarlyMacros(True, '  ', moduletable['final'])
         uses_subdirs = False
         for module in moduletable['main']:
             # Test whether there are some source files in subdirectories.
@@ -630,20 +630,20 @@ AC_DEFUN([%s_INIT],
         if auxdir != 'build-aux':
             replace_auxdir = True
         emit += '  gl_m4_base=\'%s\'\n' % m4base
-        emit += self.emiter.initmacro_start(macro_prefix)
+        emit += self.emitter.initmacro_start(macro_prefix)
         emit += '  gl_source_base=\'%s\'\n' % sourcebase
         if witness_c_macro:
             emit += '  m4_pushdef([gl_MODULE_INDICATOR_CONDITION], [%s])\n' % witness_c_macro
         # Emit main autoconf snippets.
-        emit += self.emiter.autoconfSnippets(moduletable['main'],
-                                             moduletable, 0, True, False, True, replace_auxdir)
+        emit += self.emitter.autoconfSnippets(moduletable['main'],
+                                              moduletable, 0, True, False, True, replace_auxdir)
         if witness_c_macro:
             emit += '  m4_popdef([gl_MODULE_INDICATOR_CONDITION])\n'
         emit += '  # End of code from modules\n'
-        emit += self.emiter.initmacro_end(macro_prefix)
+        emit += self.emitter.initmacro_end(macro_prefix)
         emit += '  gltests_libdeps=\n'
         emit += '  gltests_ltlibdeps=\n'
-        emit += self.emiter.initmacro_start('%stests' % macro_prefix)
+        emit += self.emitter.initmacro_start('%stests' % macro_prefix)
         emit += '  gl_source_base=\'%s\'\n' % testsbase
         # Define a tests witness macro that depends on the package.
         # PACKAGE is defined by AM_INIT_AUTOMAKE, PACKAGE_TARNAME is defined by
@@ -658,10 +658,10 @@ AC_DEFUN([%s_INIT],
         emit += '  m4_pushdef([gl_MODULE_INDICATOR_CONDITION], '
         emit += '[$gl_module_indicator_condition])\n'
         # Emit tests autoconf snippets.
-        emit += self.emiter.autoconfSnippets(moduletable['tests'],
-                                             moduletable, 0, True, True, True, replace_auxdir)
+        emit += self.emitter.autoconfSnippets(moduletable['tests'],
+                                              moduletable, 0, True, True, True, replace_auxdir)
         emit += '  m4_popdef([gl_MODULE_INDICATOR_CONDITION])\n'
-        emit += self.emiter.initmacro_end('%stests' % macro_prefix)
+        emit += self.emitter.initmacro_end('%stests' % macro_prefix)
         # _LIBDEPS and _LTLIBDEPS variables are not needed if this library is
         # created using libtool, because libtool already handles the dependencies.
         if not libtool:
@@ -674,8 +674,8 @@ AC_DEFUN([%s_INIT],
             emit += '  LIBTESTS_LIBDEPS="$gltests_libdeps"\n'
             emit += '  AC_SUBST([LIBTESTS_LIBDEPS])\n'
         emit += '])\n'
-        emit += self.emiter.initmacro_done(macro_prefix, sourcebase)
-        emit += self.emiter.initmacro_done('%stests' % macro_prefix, testsbase)
+        emit += self.emitter.initmacro_done(macro_prefix, sourcebase)
+        emit += self.emitter.initmacro_done('%stests' % macro_prefix, testsbase)
         emit += '''
 # This macro records the list of files which have been installed by
 # gnulib-tool and may be removed by future gnulib-tool invocations.
@@ -1135,9 +1135,9 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         # Create library makefile.
         basename = joinpath(sourcebase, makefile_am)
         tmpfile = self.assistant.tmpfilename(basename)
-        emit, uses_subdirs = self.emiter.lib_Makefile_am(basename,
-                                                         self.moduletable['main'], self.moduletable, self.makefiletable,
-                                                         actioncmd, for_test)
+        emit, uses_subdirs = self.emitter.lib_Makefile_am(basename,
+                                                          self.moduletable['main'], self.moduletable, self.makefiletable,
+                                                          actioncmd, for_test)
         with codecs.open(tmpfile, 'wb', 'UTF-8') as file:
             file.write(emit)
         filename, backup, flag = self.assistant.super_update(basename, tmpfile)
@@ -1183,7 +1183,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
             # Create po makefile parameterization, part 1.
             basename = joinpath(pobase, 'Makevars')
             tmpfile = self.assistant.tmpfilename(basename)
-            emit = self.emiter.po_Makevars()
+            emit = self.emitter.po_Makevars()
             with codecs.open(tmpfile, 'wb', 'UTF-8') as file:
                 file.write(emit)
             filename, backup, flag = self.assistant.super_update(basename, tmpfile)
@@ -1205,7 +1205,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
             basename = joinpath(pobase, 'POTFILES.in')
             tmpfile = self.assistant.tmpfilename(basename)
             with codecs.open(tmpfile, 'wb', 'UTF-8') as file:
-                file.write(self.emiter.po_POTFILES_in(filetable['all']))
+                file.write(self.emitter.po_POTFILES_in(filetable['all']))
             basename = joinpath(pobase, 'POTFILES.in')
             filename, backup, flag = self.assistant.super_update(basename, tmpfile)
             if flag == 1:
@@ -1314,9 +1314,9 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         if inctests:
             basename = joinpath(testsbase, makefile_am)
             tmpfile = self.assistant.tmpfilename(basename)
-            emit, uses_subdirs = self.emiter.lib_Makefile_am(basename,
-                                                             self.moduletable['tests'], self.moduletable, self.makefiletable,
-                                                             actioncmd, for_test)
+            emit, uses_subdirs = self.emitter.lib_Makefile_am(basename,
+                                                              self.moduletable['tests'], self.moduletable, self.makefiletable,
+                                                              actioncmd, for_test)
             with codecs.open(tmpfile, 'wb', 'UTF-8') as file:
                 file.write(emit)
             filename, backup, flag = self.assistant.super_update(basename, tmpfile)

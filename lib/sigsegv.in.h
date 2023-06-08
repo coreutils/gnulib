@@ -214,7 +214,7 @@ typedef void (*stackoverflow_handler_t) (int emergency, stackoverflow_context_t 
  * Installs a stack overflow handler.
  * The extra_stack argument is a pointer to a pre-allocated area used as a
  * stack for executing the handler. It typically comes from a static variable
- * or from heap-allocated memoty; placing it on the main stack may fail on
+ * or from heap-allocated memory; placing it on the main stack may fail on
  * some operating systems.
  * Its size, passed in extra_stack_size, should be sufficiently large.  The
  * following code determines an appropriate size:

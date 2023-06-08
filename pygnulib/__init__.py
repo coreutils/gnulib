@@ -31,5 +31,5 @@ Texinfo), assorted configuration scripts, and more. The goal is to provide all
 the common infrastructure needed by GNU packages.'''
 
 __copyright__ = '2012-2022 Free Software Foundation, Inc.'
-__author__ = 'Dmitriy Selyutin'
+__author__ = 'Dmitry Selyutin'
 __license__ = 'GNU GPLv3+'

@@ -423,7 +423,7 @@ test_tss_dtorcheck2 (void)
 #undef THREAD_COUNT
 
 
-/* --- Test thread-local storage with with races between init and destroy --- */
+/* --- Test thread-local storage with races between init and destroy --- */
 
 /* Number of simultaneous threads.  */
 #if defined __ANDROID__

@@ -116,7 +116,7 @@ macOS,
 AIX with gcc or xlclang.
 @end itemize
 @noindent
-It is not supprted on
+It is not supported on
 @itemize @bullet
 @item
 Other compilers on ELF platforms or AIX,

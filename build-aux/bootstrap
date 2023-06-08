@@ -340,7 +340,7 @@ check_versions() {
     # Handle the still-experimental Automake-NG programs specially.
     # They remain named as the mainstream Automake programs ("automake",
     # and "aclocal") to avoid gratuitous incompatibilities with
-    # pre-existing usages (by, say, autoreconf, or custom autogen.sh
+    # preexisting usages (by, say, autoreconf, or custom autogen.sh
     # scripts), but correctly identify themselves (as being part of
     # "GNU automake-ng") when asked their version.
     case $app in

@@ -248,7 +248,7 @@ struct parser
   /* LONG_OPTS is the array of getop long option structures for the union of
      all the groups of options.  */
   struct option *long_opts;
-  /* OPT_DATA is the getopt data used for the re-entrant getopt.  */
+  /* OPT_DATA is the getopt data used for the reentrant getopt.  */
   struct _getopt_data opt_data;
 
   /* States of the various parsing groups.  */

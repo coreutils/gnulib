@@ -28,12 +28,12 @@ ProjectQuirks or a subclass of the same.  The definition of the ProjectQuirks
 class is below and it specifies the properties that the project must set to
 ensure correct parsing of its contents.
 
-Among other things, ProjectQurks specifies the VCS to read from; the default is
+Among other things, ProjectQuirks specifies the VCS to read from; the default is
 assumed to be git.  The script then studies the VCS log and for each change,
 list out the nature of changes in the constituent files.
 
 Each file type may have parser frontends that can read files and construct
-objects that may be compared to determine the minimal changes that occured in
+objects that may be compared to determine the minimal changes that occurred in
 each revision.  For files that do not have parsers, we may only know the nature
 of changes at the top level depending on the information that the VCS stores.
 

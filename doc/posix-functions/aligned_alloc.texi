@@ -32,7 +32,7 @@ that do not crash even if the AddressSanitizer bug is present:
 @itemize
 @item
 The Gnulib module @code{alignalloc} provides a portable function
-@code{alignalloc} that is a near-substitute for for glibc
+@code{alignalloc} that is a near-substitute for glibc
 @code{aligned_alloc}, except that the result must be freed
 with @code{alignfree} rather than plain @code{free}.
 

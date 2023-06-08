@@ -1574,7 +1574,7 @@ setlocale_improved (int category, const char *locale)
                            For LC_COLLATE, the application should use the locale
                            properties kCFLocaleCollationIdentifier,
                            kCFLocaleCollatorIdentifier.
-                           For LC_MONETARY, the applicationshould use the locale
+                           For LC_MONETARY, the application should use the locale
                            properties kCFLocaleCurrencySymbol,
                            kCFLocaleCurrencyCode.
                            But since most applications don't have macOS specific

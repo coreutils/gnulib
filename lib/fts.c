@@ -1804,7 +1804,7 @@ fts_stat(FTS *sp, register FTSENT *p, bool follow)
 
         /*
          * If doing a logical walk, or application requested FTS_FOLLOW, do
-         * a stat(2).  If that fails, check for a non-existent symlink.  If
+         * a stat(2).  If that fails, check for a nonexistent symlink.  If
          * fail, set the errno from the stat call.
          */
         int flags = follow ? 0 : AT_SYMLINK_NOFOLLOW;

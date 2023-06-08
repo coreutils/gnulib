@@ -276,7 +276,7 @@ COPYRIGHT_TZ = UTC0
 # Also exclude doc/INSTALL*, since they too are generated.
 # Also adjust template-style files that must start with a single
 # (the current) year number in some places.
-# Also adjust version-etc.c and and gendocs.sh.
+# Also adjust version-etc.c and gendocs.sh.
 update-copyright:
 	export TZ='$(COPYRIGHT_TZ)';					\
 	exempt=$$(mktemp);						\

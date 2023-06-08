@@ -206,7 +206,7 @@ class CompositeParser(ExprParser):
             if 'typedef' in cur:
                 name = re.sub(r'.*}\s*(\w+);$', r'\1', cur)
             else:
-                name= '<anoymous>'
+                name= '<anonymous>'
 
         ctype = found.group(1)
 
@@ -457,7 +457,7 @@ class Frontend:
         ''' Parse a preprocessor directive.
 
         In case a preprocessor condition (i.e. if/elif/else), create a new code
-        block to nest code into and in other cases, identify and add entities suchas
+        block to nest code into and in other cases, identify and add entities such as
         include files, defines, etc.
 
         - OP is the string array for the file
@@ -649,7 +649,7 @@ class Frontend:
     def consolidate_tree_blocks(self, tree):
         ''' Consolidate common macro conditional blocks.
 
-        Get macro conditional blocks at the same level but scatterred across the
+        Get macro conditional blocks at the same level but scattered across the
         file together into a single common block to allow for better comparison.
         '''
         # Nothing to do for non-nesting blocks.

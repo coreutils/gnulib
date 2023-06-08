@@ -407,7 +407,7 @@ struct argp_state
    unknown option is present, ARGP_ERR_UNKNOWN is returned; if some parser
    routine returned a non-zero value, it is returned; otherwise 0 is
    returned.  This function may also call exit unless the ARGP_NO_HELP flag
-   is set.  INPUT is a pointer to a value to be passed in to the parser.  */
+   is set.  INPUT is a pointer to a value to be passed into the parser.  */
 extern error_t argp_parse (const struct argp *__restrict __argp,
                            int /*argc*/, char **__restrict /*argv*/,
                            unsigned __flags, int *__restrict __arg_index,

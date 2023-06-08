@@ -43,7 +43,7 @@ isdir = os.path.isdir
 # Define GLInfo class
 #===============================================================================
 class GLInfo(object):
-    '''This class is used to get fromatted information about gnulib-tool.
+    '''This class is used to get formatted information about gnulib-tool.
     This information is mainly used in stdout messages, but can be used
     anywhere else. The return values are not the same as for the module,
     but still depends on them.'''

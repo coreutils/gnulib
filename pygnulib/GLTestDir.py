@@ -80,7 +80,7 @@ class GLTestDir(object):
                 os.mkdir(self.testdir)
             except Exception as error:
                 raise GLError(19, self.testdir)
-        self.emiter = GLEmiter(self.config)
+        self.emitter = GLEmiter(self.config)
         self.filesystem = GLFileSystem(self.config)
         self.modulesystem = GLModuleSystem(self.config)
         self.assistant = GLFileAssistant(self.config)
@@ -354,11 +354,11 @@ class GLTestDir(object):
             os.mkdir(directory)
         destfile = joinpath(directory, 'Makefile.am')
         if single_configure:
-            emit, uses_subdirs = self.emiter.lib_Makefile_am(destfile, main_modules,
-                                                             moduletable, self.makefiletable, '', for_test)
+            emit, uses_subdirs = self.emitter.lib_Makefile_am(destfile, main_modules,
+                                                              moduletable, self.makefiletable, '', for_test)
         else:  # if not single_configure
-            emit, uses_subdirs = self.emiter.lib_Makefile_am(destfile, modules,
-                                                             moduletable, self.makefiletable, '', for_test)
+            emit, uses_subdirs = self.emitter.lib_Makefile_am(destfile, modules,
+                                                              moduletable, self.makefiletable, '', for_test)
         with codecs.open(destfile, 'wb', 'UTF-8') as file:
             file.write(emit)
         any_uses_subdirs = uses_subdirs
@@ -381,7 +381,7 @@ class GLTestDir(object):
         subdirs = [sourcebase, m4base]
         subdirs_with_configure_ac = list()
 
-        testsbase_appened = False
+        testsbase_append = False
         inctests = self.config.checkInclTestCategory(TESTS['tests'])
         if inctests:
             directory = joinpath(self.testdir, testsbase)
@@ -391,8 +391,8 @@ class GLTestDir(object):
                 # Create $testsbase/Makefile.am.
                 destfile = joinpath(directory, 'Makefile.am')
                 witness_macro = '%stests_WITNESS' % macro_prefix
-                emit, uses_subdirs = self.emiter.tests_Makefile_am(destfile,
-                                                                   tests_modules, self.makefiletable, witness_macro, for_test)
+                emit, uses_subdirs = self.emitter.tests_Makefile_am(destfile,
+                                                                    tests_modules, self.makefiletable, witness_macro, for_test)
                 with codecs.open(destfile, 'wb', 'UTF-8') as file:
                     file.write(emit)
             else:  # if not single_configure
@@ -400,8 +400,8 @@ class GLTestDir(object):
                 destfile = joinpath(directory, 'Makefile.am')
                 libtests = False
                 self.config.setLibtests(False)
-                emit, uses_subdirs = self.emiter.tests_Makefile_am(destfile,
-                                                                   modules, self.makefiletable, '', for_test)
+                emit, uses_subdirs = self.emitter.tests_Makefile_am(destfile,
+                                                                    modules, self.makefiletable, '', for_test)
                 with codecs.open(destfile, 'wb', 'UTF-8') as file:
                     file.write(emit)
                 # Viewed from the $testsbase subdirectory, $auxdir is different.
@@ -418,7 +418,7 @@ class GLTestDir(object):
                 emit += 'AC_PROG_CC\n'
                 emit += 'AC_PROG_INSTALL\n'
                 emit += 'AC_PROG_MAKE_SET\n'
-                emit += self.emiter.preEarlyMacros(False, '', modules)
+                emit += self.emitter.preEarlyMacros(False, '', modules)
                 if uses_subdirs:
                     emit += 'AM_PROG_CC_C_O\n\n'
                 snippets = list()
@@ -462,19 +462,19 @@ class GLTestDir(object):
                 emit += 'AC_DEFUN([gl_INIT], [\n'
                 replace_auxdir = True
                 emit += "gl_m4_base='../%s'\n" % m4base
-                emit += self.emiter.initmacro_start(macro_prefix)
+                emit += self.emitter.initmacro_start(macro_prefix)
                 # We don't have explicit ordering constraints between the various
                 # autoconf snippets. It's cleanest to put those of the library before
                 # those of the tests.
                 emit += "gl_source_base='../%s'\n" % sourcebase
-                emit += self.emiter.autoconfSnippets(modules,
-                                                     moduletable, 1, False, False, False,
-                                                     replace_auxdir)
+                emit += self.emitter.autoconfSnippets(modules,
+                                                      moduletable, 1, False, False, False,
+                                                      replace_auxdir)
                 emit += "gl_source_base='.'"
-                emit += self.emiter.autoconfSnippets(modules,
-                                                     moduletable, 2, False, False, False,
-                                                     replace_auxdir)
-                emit += self.emiter.initmacro_end(macro_prefix)
+                emit += self.emitter.autoconfSnippets(modules,
+                                                      moduletable, 2, False, False, False,
+                                                      replace_auxdir)
+                emit += self.emitter.initmacro_end(macro_prefix)
                 # _LIBDEPS and _LTLIBDEPS variables are not needed if this library is
                 # created using libtool, because libtool already handles the
                 # dependencies.
@@ -486,7 +486,7 @@ class GLTestDir(object):
                     emit += '  AC_SUBST([%s_LTLIBDEPS])\n' % libname_upper
                 emit += '])\n'
                 # FIXME use $sourcebase or $testsbase?
-                emit += self.emiter.initmacro_done(macro_prefix, sourcebase)
+                emit += self.emitter.initmacro_done(macro_prefix, sourcebase)
                 emit += '\ngl_INIT\n\n'
                 # Usually $testsbase/config.h will be a superset of config.h. Verify
                 # this by "merging" config.h into $testsbase/config.h; look out for gcc
@@ -505,7 +505,7 @@ class GLTestDir(object):
                 subdirs_with_configure_ac += [testsbase]
 
             subdirs += [testsbase]
-            testsbase_appened = True
+            testsbase_append = True
 
         # Create Makefile.am.
         emit = '## Process this file with automake to produce Makefile.in.\n\n'
@@ -535,7 +535,7 @@ class GLTestDir(object):
         emit += 'm4_pattern_allow([^gl_ES$])dnl a valid locale name\n'
         emit += 'm4_pattern_allow([^gl_LIBOBJS$])dnl a variable\n'
         emit += 'm4_pattern_allow([^gl_LTLIBOBJS$])dnl a variable\n'
-        emit += self.emiter.preEarlyMacros(False, '', modules)
+        emit += self.emitter.preEarlyMacros(False, '', modules)
         if any_uses_subdirs:
             emit += 'AM_PROG_CC_C_O\n'
         snippets = list()
@@ -582,19 +582,19 @@ class GLTestDir(object):
         else:  # auxdir == 'build-aux'
             replace_auxdir = False
         emit += 'gl_m4_base=\'%s\'\n' % m4base
-        emit += self.emiter.initmacro_start(macro_prefix)
+        emit += self.emitter.initmacro_start(macro_prefix)
         emit += 'gl_source_base=\'%s\'\n' % sourcebase
         if single_configure:
-            emit += self.emiter.autoconfSnippets(main_modules, moduletable,
-                                                 0, False, False, False, replace_auxdir)
+            emit += self.emitter.autoconfSnippets(main_modules, moduletable,
+                                                  0, False, False, False, replace_auxdir)
         else:  # if not single_configure
-            emit += self.emiter.autoconfSnippets(modules, moduletable,
-                                                 1, False, False, False, replace_auxdir)
-        emit += self.emiter.initmacro_end(macro_prefix)
+            emit += self.emitter.autoconfSnippets(modules, moduletable,
+                                                  1, False, False, False, replace_auxdir)
+        emit += self.emitter.initmacro_end(macro_prefix)
         if single_configure:
             emit += '  gltests_libdeps=\n'
             emit += '  gltests_ltlibdeps=\n'
-            emit += self.emiter.initmacro_start('%stests' % macro_prefix)
+            emit += self.emitter.initmacro_start('%stests' % macro_prefix)
             emit += '  gl_source_base=\'%s\'\n' % testsbase
             # Define a tests witness macro.
             emit += '  %stests_WITNESS=IN_GNULIB_TESTS\n' % macro_prefix
@@ -602,11 +602,11 @@ class GLTestDir(object):
             emit += '  gl_module_indicator_condition=$%stests_WITNESS\n' % macro_prefix
             emit += '  m4_pushdef([gl_MODULE_INDICATOR_CONDITION], '
             emit += '[$gl_module_indicator_condition])\n'
-            snippets = self.emiter.autoconfSnippets(tests_modules, moduletable,
-                                                    1, True, False, False, replace_auxdir)
+            snippets = self.emitter.autoconfSnippets(tests_modules, moduletable,
+                                                     1, True, False, False, replace_auxdir)
             emit += snippets.strip()
             emit += '  m4_popdef([gl_MODULE_INDICATOR_CONDITION])\n'
-            emit += self.emiter.initmacro_end('%stests' % macro_prefix)
+            emit += self.emitter.initmacro_end('%stests' % macro_prefix)
         # _LIBDEPS and _LTLIBDEPS variables are not needed if this library is
         # created using libtool, because libtool already handles the dependencies.
         if not libtool:
@@ -619,9 +619,9 @@ class GLTestDir(object):
             emit += '  LIBTESTS_LIBDEPS="$gltests_libdeps"\n'
             emit += '  AC_SUBST([LIBTESTS_LIBDEPS])\n'
         emit += '])\n'
-        emit += self.emiter.initmacro_done(macro_prefix, sourcebase)
+        emit += self.emitter.initmacro_done(macro_prefix, sourcebase)
         if single_configure:
-            emit += self.emiter.initmacro_done('%stests' % macro_prefix, testsbase)
+            emit += self.emitter.initmacro_done('%stests' % macro_prefix, testsbase)
         emit += '\ngl_INIT\n\n'
         if subdirs_with_configure_ac:
             if single_configure:
@@ -863,7 +863,7 @@ class GLMegaTestDir(object):
                 os.mkdir(self.megatestdir)
             except Exception as error:
                 raise GLError(19, self.megatestdir)
-        self.emiter = GLEmiter(self.config)
+        self.emitter = GLEmiter(self.config)
         self.filesystem = GLFileSystem(self.config)
         self.modulesystem = GLModuleSystem(self.config)
         self.assistant = GLFileAssistant(self.config)

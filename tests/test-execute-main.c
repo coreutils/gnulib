@@ -109,8 +109,8 @@ main (int argc, char *argv[])
       break;
     case 1:
       {
-        /* Check an invocation of a non-existent program.  */
-        const char *prog_argv[3] = { "./non-existent", NULL };
+        /* Check an invocation of a nonexistent program.  */
+        const char *prog_argv[3] = { "./nonexistent", NULL };
         int ret = execute (progname, prog_argv[0], prog_argv, NULL,
                            false, false, false, false, true, false, NULL);
         ASSERT (ret == 127);

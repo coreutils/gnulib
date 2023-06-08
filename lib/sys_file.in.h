@@ -43,7 +43,7 @@
 # define LOCK_EX 2       /* Exclusive lock.  */
 # define LOCK_UN 8       /* Unlock.  */
 
-/* Can be OR'd in to one of the above.  */
+/* Can be OR'd into one of the above.  */
 # define LOCK_NB 4       /* Don't block when locking.  */
 #endif
 

@@ -159,7 +159,7 @@ mbmemcasecoll (const char *s1, size_t s1len, const char *s2, size_t s2len,
   t1 = memory;
   t2 = memory + t1len + 1;
 
-  /* Csae-fold the two argument strings.  */
+  /* Case-fold the two argument strings.  */
   if (MB_CUR_MAX > 1)
     {
       t1len = apply_towlower (s1, s1len, t1, t1len);

@@ -1377,7 +1377,7 @@ sc_unportable_grep_q:
 	@prohibit='grep -q' halt="unportable 'grep -q', use >/dev/null instead" \
 	  $(_sc_search_regexp)
 
-# The GNU Codying standards says that README should refer to both
+# The GNU Coding standards say that README should refer to both
 # INSTALL and the file that contains the copying conditions.  This
 # shall be COPYING for GPL and COPYING.LESSER for LGPL.
 

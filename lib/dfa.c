@@ -3263,9 +3263,9 @@ build_state (state_num s, struct dfa *d, unsigned char uc)
 /* Multibyte character handling sub-routines for dfaexec.  */
 
 /* Consume a single byte and transit state from 's' to '*next_state'.
-   This function is almost same as the state transition routin in dfaexec.
-   But state transition is done just once, otherwise matching succeed or
-   reach the end of the buffer.  */
+   This is almost the same as the state transition routine in dfaexec.
+   But the state transition is done just once; otherwise, matching succeeds or
+   we reach the end of the buffer.  */
 static state_num
 transit_state_singlebyte (struct dfa *d, state_num s, unsigned char const **pp)
 {

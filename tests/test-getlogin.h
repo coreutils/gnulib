@@ -49,7 +49,7 @@ test_getlogin_result (const char *buf, int err)
 
 #if defined __linux__
       /* On Linux, it is possible to set up a chroot environment in such a way
-         that stdin is connected to a tty and nervertheless /proc/self/loginuid
+         that stdin is connected to a tty and nevertheless /proc/self/loginuid
          contains the value (uid_t)(-1).  In this situation, getlogin() and
          getlogin_r() fail; this is expected.  */
       bool loginuid_undefined = false;

@@ -49,7 +49,7 @@
 #      subdirectory, let's call it a "subcheckout") are:
 #        - The simplicity: you are conceptually always using the newest revision
 #          of the dependency package.
-#        - You don't have to remember to periodially upgrade the dependency.
+#        - You don't have to remember to periodically upgrade the dependency.
 #          Upgrading the dependency is an implicit operation.
 
 # This program is meant to be copied to the top-level directory of the package,

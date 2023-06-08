@@ -28,7 +28,7 @@ This function does not put the state into non-initial state when parsing an
 incomplete multibyte character on some platforms:
 AIX 7.2.
 @item
-This function stores a wide character when when parsing an incomplete multibyte
+This function stores a wide character when parsing an incomplete multibyte
 character on some platforms:
 MSVC 14.
 @item

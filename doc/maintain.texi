@@ -2267,7 +2267,7 @@ positively authenticate the signatures, then the files
 @file{foo-1.0.tar.gz} and @file{foo-1.0.tar.gz.sig} will be placed in the
 directory @file{gnu/bar/v1} of the @code{ftp.gnu.org} site.
 
-The directive file can be used to create currently non-existent
+The directive file can be used to create currently nonexistent
 directory trees, as long as they are under the package directory for
 your package (in the example above, that is @code{bar}).
 
@@ -2446,10 +2446,10 @@ Consideration}).  Although the GIF patents expired in 2006, using GIF
 images is still not recommended, as the PNG and JPEG formats are
 generally superior.  See @url{https://www.gnu.org/philosophy/gif.html}.
 
-Please make sure that any Javascript code in your web pages is covered
+Please make sure that any JavaScript code in your web pages is covered
 by a free license, and has its license indicated in a way LibreJS can
 recognize.  See @url{https://gnu.org/philosophy/javascript-trap.html}.
-If the Javascript in the page is minified, or for any other reason is
+If the JavaScript in the page is minified, or for any other reason is
 not the source code, it must point to its source code as described
 there.
 

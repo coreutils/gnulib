@@ -360,7 +360,7 @@ rpl_rename (char const *src, char const *dst)
 # if (RENAME_TRAILING_SLASH_SOURCE_BUG || RENAME_DEST_EXISTS_BUG        \
       || RENAME_HARD_LINK_BUG)
   /* If the only bug was that a trailing slash was allowed on a
-     non-existing file destination, as in Solaris 10, then we've
+     nonexistent file destination, as in Solaris 10, then we've
      already covered that situation.  But if there is any problem with
      a trailing slash on an existing source or destination, as in
      Solaris 9, or if a directory can overwrite a symlink, as on

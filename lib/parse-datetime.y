@@ -1638,7 +1638,7 @@ debug_strftime (struct tm const *tm, char *buf, int n)
     date:        normalized time: '(Y-M-D) 2006-04-02 03:45:00'
     date:                                             __
     date:      possible reasons:
-    date:        non-existing due to daylight-saving time;
+    date:        nonexistent due to daylight-saving time;
     date:        numeric values overflow;
     date:        missing timezone;
  */
@@ -1690,7 +1690,7 @@ debug_mktime_not_ok (struct tm const *tm0, struct tm const *tm1,
 
   dbg_printf (_("     possible reasons:\n"));
   if (dst_shift)
-    dbg_printf (_("       non-existing due to daylight-saving time;\n"));
+    dbg_printf (_("       nonexistent due to daylight-saving time;\n"));
   if (!eq_mday && !eq_month)
     dbg_printf (_("       invalid day/month combination;\n"));
   dbg_printf (_("       numeric values overflow;\n"));

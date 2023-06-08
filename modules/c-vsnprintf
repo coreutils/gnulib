@@ -1,5 +1,5 @@
 Description:
-c_vsnprintf(): print formatted output from an stdarg argument listto a
+c_vsnprintf(): print formatted output from an stdarg argument list to a
 fixed length string in C locale
 
 Files:
