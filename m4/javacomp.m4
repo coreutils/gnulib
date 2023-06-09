@@ -1,4 +1,4 @@
-# javacomp.m4 serial 20
+# javacomp.m4 serial 21
 dnl Copyright (C) 2001-2003, 2006-2007, 2009-2023 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -45,20 +45,16 @@ dnl with or without modifications, as long as this notice is preserved.
 #      target-version   for JVM
 #           1.1         JDK 1.1
 #           1.2         JDK/JRE 1.2
-#           1.3         JDK/JRE 1.3, gij 3.3, 3.4
-#           1.4         JDK/JRE 1.4, gij 4.0 ... 4.2
-#           1.5         JDK/JRE 5, gij 4.3 ... 6
+#           1.3         JDK/JRE 1.3
+#           1.4         JDK/JRE 1.4
+#           1.5         JDK/JRE 5
 #           1.6         JDK/JRE 6
 #           1.7         JDK/JRE 7
 #           1.8         JDK/JRE 8
 #           9           JDK/JRE 9
 #          10           JDK/JRE 10
 #          11           JDK/JRE 11
-# Note: gij >= 3.3 can in some cases handle classes compiled with -target 1.4,
-# and gij >= 4.1 can in some cases partially handle classes compiled with
-# -target 1.5, but I have no idea how complete this support is. Similarly,
-# gcj >= 4.3 supports -ftarget=1.6, and gij >= 4.3 can in some cases handle
-# classes compiled with -target 1.6.
+# Note: gcj >= 4.3 supports -ftarget=1.6.
 #
 # Specifying target-version is useful when building a library (.jar) that is
 # useful outside the given package. Omitting target-version is useful when
