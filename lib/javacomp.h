@@ -61,11 +61,7 @@
    because even Sun's/Oracle's javac doesn't support these combinations.
    It is redundant to ask for a target_version > source_version, since the
    smaller target_version = source_version will also always work and newer JVMs
-   support the older target_versions too. Except for the cases
-     - target_version = 1.4, source_version = 1.3, which allows gcj versions 3.0
-       to 3.2 to be used,
-     - target-version = 1.6, source-version = 1.5, which allows gcj versions
-       >= 4.3 to be used.
+   support the older target_versions too.
 
    directory is the target directory. The .class file for class X.Y.Z is
    written at directory/X/Y/Z.class. If directory is NULL, the .class
