@@ -48,20 +48,7 @@ else
     test -z "$JAVA_VERBOSE" || echo "$CONF_JAVAC $@"
     exec $CONF_JAVAC "$@"
   else
-    if test -n "@HAVE_JIKES@"; then
-      # In this case, $CONF_JAVAC starts with "jikes".
-      # Combine given CLASSPATH and configured CLASSPATH.
-      if test -n "$CLASSPATH"; then
-        CLASSPATH="$CLASSPATH${CONF_CLASSPATH:+@CLASSPATH_SEPARATOR@$CONF_CLASSPATH}"
-      else
-        CLASSPATH="$CONF_CLASSPATH"
-      fi
-      export CLASSPATH
-      test -z "$JAVA_VERBOSE" || echo "$CONF_JAVAC $@"
-      exec $CONF_JAVAC "$@"
-    else
-      echo 'Java compiler not found, try setting $JAVAC, then reconfigure' 1>&2
-      exit 1
-    fi
+    echo 'Java compiler not found, try setting $JAVAC, then reconfigure' 1>&2
+    exit 1
   fi
 fi

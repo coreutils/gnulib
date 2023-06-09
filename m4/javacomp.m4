@@ -1,4 +1,4 @@
-# javacomp.m4 serial 22
+# javacomp.m4 serial 23
 dnl Copyright (C) 2001-2003, 2006-2007, 2009-2023 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -239,17 +239,9 @@ changequote([,])dnl
   dnl                -target 9 only possible with -source 1.6/1.7/1.8/9
   dnl                -target 10 only possible with -source 1.6/1.7/1.8/9/10
   dnl
-  dnl The support of jikes for target-version and source-version:
-  dnl
-  dnl   jikes 1.14 does not have a way to specify the target-version. It
-  dnl   always assumes target-version=1.1.
-  dnl
-  dnl   For jikes 1.14, the source-version always is 1.3.
-  dnl
   CONF_JAVAC=
   HAVE_JAVAC_ENVVAR=
   HAVE_JAVAC=
-  HAVE_JIKES=
   HAVE_JAVACOMP=
 changequote(,)dnl
   cat > conftestlib.java <<EOF
@@ -358,7 +350,6 @@ changequote([,])dnl
     pushdef([AC_CHECKING],[:])dnl
     pushdef([AC_MSG_RESULT],[:])dnl
     AC_CHECK_PROG([HAVE_JAVAC_IN_PATH], [javac], [yes])
-    AC_CHECK_PROG([HAVE_JIKES_IN_PATH], [jikes], [yes])
     popdef([AC_MSG_RESULT])dnl
     popdef([AC_CHECKING])dnl
     popdef([AC_MSG_CHECKING])dnl
@@ -457,27 +448,6 @@ changequote([,])dnl
         fi
       fi
     fi
-    if test -z "$HAVE_JAVACOMP" && test -n "$HAVE_JIKES_IN_PATH"; then
-      dnl Test whether jikes is usable.
-      if { jikes >/dev/null 2>/dev/null || test $? = 1; } \
-         && (
-              # See if the existing CLASSPATH is sufficient to make jikes work.
-              unset JAVA_HOME
-              jikes conftestlib.java >&AS_MESSAGE_LOG_FD 2>&1
-              error=$?
-              rm -f conftestlib.class
-              exit $error
-            ); then
-        dnl OK, jikes works.
-        dnl Now test whether it supports the desired target-version and
-        dnl source-version.
-        if test "$source_version" = 1.3; then
-          CONF_JAVAC="jikes"
-          HAVE_JIKES=1
-          HAVE_JAVACOMP=1
-        fi
-      fi
-    fi
   fi
   rm -f conftest*.java conftest*.class
   if test -n "$HAVE_JAVACOMP"; then
@@ -491,7 +461,6 @@ changequote([,])dnl
   AC_SUBST([CLASSPATH_SEPARATOR])
   AC_SUBST([HAVE_JAVAC_ENVVAR])
   AC_SUBST([HAVE_JAVAC])
-  AC_SUBST([HAVE_JIKES])
 ])
 
 # Simulates gt_JAVACOMP when no Java support is desired.
@@ -500,9 +469,7 @@ AC_DEFUN([gt_JAVACOMP_DISABLED],
   CONF_JAVAC=
   HAVE_JAVAC_ENVVAR=
   HAVE_JAVAC=
-  HAVE_JIKES=
   AC_SUBST([CONF_JAVAC])
   AC_SUBST([HAVE_JAVAC_ENVVAR])
   AC_SUBST([HAVE_JAVAC])
-  AC_SUBST([HAVE_JIKES])
 ])
