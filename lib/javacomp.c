@@ -66,7 +66,6 @@
    $JAVAC   unknown     N  n/a            -O -g  true
    javac    JDK 1.1.8   Y  -classpath P   -O -g  javac 2>/dev/null; test $? = 1
    javac    JDK 1.3.0   Y  -classpath P   -O -g  javac 2>/dev/null; test $? -le 2
-   jikes    Jikes 1.14  N  -classpath P   -O -g  jikes 2>/dev/null; test $? = 1
 
    All compilers support the option "-d DIRECTORY" for the base directory
    of the classes to be written.
@@ -77,10 +76,7 @@
    We try the Java compilers in the following order:
      1. getenv ("JAVAC"), because the user must be able to override our
         preferences,
-     2. "javac", because it is a standard compiler,
-     3. "jikes", comes last because it has some deviating interpretation
-        of the Java Language Specification and because it requires a
-        CLASSPATH environment variable.
+     2. "javac", because it is a standard compiler.
 
    We unset the JAVA_HOME environment variable, because a wrong setting of
    this variable can confuse the JDK's javac.
@@ -413,62 +409,6 @@ compile_using_javac (const char * const *java_sources,
   exitstatus = execute ("javac", "javac", argv, NULL,
                         false, false, false,
                         null_stderr, true, true, NULL);
-  err = (exitstatus != 0);
-
-  freea (argv);
-
-  return err;
-}
-
-/* Try to compile a set of Java sources with jikes.
-   Return a failure indicator (true upon error).  */
-static bool
-compile_using_jikes (const char * const *java_sources,
-                     unsigned int java_sources_count,
-                     const char *directory,
-                     bool optimize, bool debug,
-                     bool verbose, bool null_stderr)
-{
-  bool err;
-  unsigned int argc;
-  const char **argv;
-  const char **argp;
-  int exitstatus;
-  unsigned int i;
-
-  argc =
-    1 + (optimize ? 1 : 0) + (debug ? 1 : 0) + (directory != NULL ? 2 : 0)
-    + java_sources_count;
-  argv = (const char **) xmalloca ((argc + 1) * sizeof (const char *));
-
-  argp = argv;
-  *argp++ = "jikes";
-  if (optimize)
-    *argp++ = "-O";
-  if (debug)
-    *argp++ = "-g";
-  if (directory != NULL)
-    {
-      *argp++ = "-d";
-      *argp++ = directory;
-    }
-  for (i = 0; i < java_sources_count; i++)
-    *argp++ = java_sources[i];
-  *argp = NULL;
-  /* Ensure argv length was correctly calculated.  */
-  if (argp - argv != argc)
-    abort ();
-
-  if (verbose)
-    {
-      char *command = shell_quote_argv (argv);
-      printf ("%s\n", command);
-      free (command);
-    }
-
-  exitstatus = execute ("jikes", "jikes", argv, NULL,
-                        false, false, false, null_stderr,
-                        true, true, NULL);
   err = (exitstatus != 0);
 
   freea (argv);
@@ -1062,30 +1002,6 @@ is_javac_usable (const char *source_version,
   return false;
 }
 
-static bool
-is_jikes_present (void)
-{
-  static bool jikes_tested;
-  static bool jikes_present;
-
-  if (!jikes_tested)
-    {
-      /* Test for presence of jikes: "jikes 2> /dev/null ; test $? = 1"  */
-      const char *argv[2];
-      int exitstatus;
-
-      argv[0] = "jikes";
-      argv[1] = NULL;
-      exitstatus = execute ("jikes", "jikes", argv, NULL,
-                            false, false, true, true,
-                            true, false, NULL);
-      jikes_present = (exitstatus == 0 || exitstatus == 1);
-      jikes_tested = true;
-    }
-
-  return jikes_present;
-}
-
 /* ============================= Main function ============================= */
 
 bool
@@ -1215,35 +1131,6 @@ compile_java_class (const char * const *java_sources,
           err = compile_using_javac (java_sources, java_sources_count,
                                      source_option, source_version_for_javac,
                                      target_option, target_version,
-                                     directory, optimize, debug, verbose,
-                                     false);
-
-          /* Reset CLASSPATH.  */
-          reset_classpath (old_classpath);
-
-          goto done2;
-        }
-    }
-
-  if (is_jikes_present ())
-    {
-      /* Test whether it supports the desired target-version and
-         source-version.  */
-      bool usable = (strcmp (source_version, "1.3") == 0);
-
-      if (usable)
-        {
-          char *old_classpath;
-
-          /* Set CLASSPATH.  We could also use the "-classpath ..." option.
-             Since jikes doesn't come with its own standard library, it
-             needs a classes.zip or rt.jar or libgcj.jar in the CLASSPATH.
-             To increase the chance of success, we reuse the current CLASSPATH
-             if the user has set it.  */
-          old_classpath =
-            set_classpath (classpaths, classpaths_count, false, verbose);
-
-          err = compile_using_jikes (java_sources, java_sources_count,
                                      directory, optimize, debug, verbose,
                                      false);
 
