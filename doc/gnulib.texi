@@ -1076,6 +1076,7 @@ which (known) portability problems are not worked around by Gnulib.
 * spawn.h::
 * stdalign.h::
 * stdarg.h::
+* stdatomic.h::
 * stdbool.h::
 * stdckdint.h::
 * stddef.h::
@@ -1167,6 +1168,7 @@ which (known) portability problems are not worked around by Gnulib.
 @include posix-headers/spawn.texi
 @include posix-headers/stdalign.texi
 @include posix-headers/stdarg.texi
+@include posix-headers/stdatomic.texi
 @include posix-headers/stdbool.texi
 @include posix-headers/stdckdint.texi
 @include posix-headers/stddef.texi
