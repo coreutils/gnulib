@@ -180,7 +180,7 @@ no-vc-detected:
 endif
 .PHONY: $(local-checks-available)
 
-# Arrange to print the name of each syntax-checking rule just before running it.
+# Arrange to prine the name of each syntax-checking rule just before running it.
 $(syntax-check-rules): %: %.m
 sc_m_rules_ = $(patsubst %, %.m, $(syntax-check-rules))
 .PHONY: $(sc_m_rules_)
@@ -598,23 +598,14 @@ sc_prohibit_error_without_use:
 	re='\<error(_at_line|_print_progname|_one_per_line|_message_count)? *\('\
 	  $(_sc_header_without_use)
 
-# Don't include xalloc.h unless you use one of its functions.
+# Don't include xalloc.h unless you use one of its symbols.
 # Consider these symbols:
 # perl -lne '/^# *define (\w+)\(/ and print $1' lib/xalloc.h|grep -v '^__';
-# perl -lne '/^(?:extern )?(?:void|char) \*?(\w+) *\(/ and print $1' lib/xalloc.h
+# perl -lne 'm{^(?:_Noreturn )?(?:void|char) \*?(\w+) *\(} and print $1' lib/xalloc.h
 # Divide into two sets on case, and filter each through this:
 # | sort | perl -MRegexp::Assemble -le \
 #  'print Regexp::Assemble->new(file => "/dev/stdin")->as_string'|sed 's/\?://g'
-# Note this was produced by the above:
-# _xa1 = \
-#x(((2n?)?re|c(har)?|n(re|m)|z)alloc|alloc_(oversized|die)|m(alloc|emdup)|strdup)
-# But we can do better, in at least two ways:
-# 1) take advantage of two "dup"-suffixed strings:
-# x(((2n?)?re|c(har)?|n(re|m)|[mz])alloc|alloc_(oversized|die)|(mem|str)dup)
-# 2) notice that "c(har)?|[mz]" is equivalent to the shorter and more readable
-# "char|[cmz]"
-# x(((2n?)?re|char|n(re|m)|[cmz])alloc|alloc_(oversized|die)|(mem|str)dup)
-_xa1 = x(i(m(emdup0?|alloc)|realloc(array)?|([cz]|nm)alloc)|([pz]|c(har)?|2n?re|nm)alloc|realloc(array)?|m(alloc|emdup)|strdup)
+_xa1 = x(i(m(emdup0?|alloc)|realloc(array)?|([cz]|nm)alloc)|([pz]|c(har)?|2n?re|nm)alloc|realloc(array)?|m(alloc|emdup)|alloc_die|strdup)
 _xa2 = X([CZ]|N?M)ALLOC
 sc_prohibit_xalloc_without_use:
 	@h='xalloc.h' \
