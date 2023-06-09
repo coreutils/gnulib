@@ -1,4 +1,4 @@
-# javacomp.m4 serial 19
+# javacomp.m4 serial 20
 dnl Copyright (C) 2001-2003, 2006-2007, 2009-2023 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -43,7 +43,7 @@ dnl with or without modifications, as long as this notice is preserved.
 # target-version can also be omitted. In this case, the required target-version
 # is determined from the found JVM (see macro gt_JAVAEXEC):
 #      target-version   for JVM
-#           1.1         JDK 1.1, jview
+#           1.1         JDK 1.1
 #           1.2         JDK/JRE 1.2
 #           1.3         JDK/JRE 1.3, gij 3.3, 3.4
 #           1.4         JDK/JRE 1.4, gij 4.0 ... 4.2

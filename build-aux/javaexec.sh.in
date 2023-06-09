@@ -56,14 +56,8 @@ else
         test -z "$JAVA_VERBOSE" || echo "$CONF_JAVA $@"
         exec $CONF_JAVA "$@"
       else
-        if test -n "@HAVE_JVIEW@"; then
-          # In this case, $CONF_JAVA is "jview".
-          test -z "$JAVA_VERBOSE" || echo "$CONF_JAVA $@"
-          exec $CONF_JAVA "$@"
-        else
-          echo 'Java virtual machine not found, try installing gij or set $JAVA, then reconfigure' 1>&2
-          exit 1
-        fi
+        echo 'Java virtual machine not found, try installing gij or set $JAVA, then reconfigure' 1>&2
+        exit 1
       fi
     fi
   fi
