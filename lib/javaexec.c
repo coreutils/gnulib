@@ -48,7 +48,6 @@
    Program    from         A B  C              T
 
    $JAVA      unknown      N Y  n/a            true
-   gij        GCC 3.0      Y Y  n/a            gij --version >/dev/null
    java       JDK 1.1.8    Y Y  -classpath P   java -version 2>/dev/null
    jre        JDK 1.1.8    N Y  -classpath P   jre 2>/dev/null; test $? = 1
    java       JDK 1.3.0    Y Y  -classpath P   java -version 2>/dev/null
@@ -59,9 +58,8 @@
    We try the Java virtual machines in the following order:
      1. getenv ("JAVA"), because the user must be able to override our
         preferences,
-     2. "gij", because it is a completely free JVM,
-     3. "java", because it is a standard JVM,
-     4. "jre", comes last because it requires a CLASSPATH environment variable.
+     2. "java", because it is a standard JVM,
+     3. "jre", comes last because it requires a CLASSPATH environment variable.
 
    We unset the JAVA_HOME environment variable, because a wrong setting of
    this variable can confuse the JDK's javac.
@@ -195,61 +193,6 @@ execute_java_class (const char *class_name,
     }
 
   {
-    static bool gij_tested;
-    static bool gij_present;
-
-    if (!gij_tested)
-      {
-        /* Test for presence of gij: "gij --version > /dev/null"  */
-        const char *argv[3];
-        int exitstatus;
-
-        argv[0] = "gij";
-        argv[1] = "--version";
-        argv[2] = NULL;
-        exitstatus = execute ("gij", "gij", argv, NULL,
-                              false, false, true, true,
-                              true, false, NULL);
-        gij_present = (exitstatus == 0);
-        gij_tested = true;
-      }
-
-    if (gij_present)
-      {
-        char *old_classpath;
-        const char **argv =
-          (const char **) xmalloca ((2 + nargs + 1) * sizeof (const char *));
-        unsigned int i;
-
-        /* Set CLASSPATH.  */
-        old_classpath =
-          set_classpath (classpaths, classpaths_count, use_minimal_classpath,
-                         verbose);
-
-        argv[0] = "gij";
-        argv[1] = class_name;
-        for (i = 0; i <= nargs; i++)
-          argv[2 + i] = args[i];
-
-        if (verbose)
-          {
-            char *command = shell_quote_argv (argv);
-            printf ("%s\n", command);
-            free (command);
-          }
-
-        err = executer ("gij", "gij", argv, private_data);
-
-        /* Reset CLASSPATH.  */
-        reset_classpath (old_classpath);
-
-        freea (argv);
-
-        goto done2;
-      }
-  }
-
-  {
     static bool java_tested;
     static bool java_present;
 
@@ -363,7 +306,7 @@ execute_java_class (const char *class_name,
   }
 
   if (!quiet)
-    error (0, 0, _("Java virtual machine not found, try installing gij or set $JAVA"));
+    error (0, 0, _("Java virtual machine not found, try setting $JAVA"));
   err = true;
 
  done2:
