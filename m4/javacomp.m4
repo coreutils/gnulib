@@ -243,14 +243,6 @@ changequote([,])dnl
   HAVE_JAVAC_ENVVAR=
   HAVE_JAVAC=
   HAVE_JAVACOMP=
-changequote(,)dnl
-  cat > conftestlib.java <<EOF
-public class conftestlib {
-  public static void main (String[] args) {
-  }
-}
-EOF
-changequote([,])dnl
   echo "$goodcode" > conftest.java
   echo "$failcode" > conftestfail.java
   dnl If the user has set the JAVAC environment variable, use that, if it

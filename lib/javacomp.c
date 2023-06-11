@@ -1024,11 +1024,8 @@ compile_java_class (const char * const *java_sources,
     if (javac != NULL && javac[0] != '\0')
       {
         bool usable = false;
-        bool no_assert_option = false;
         bool source_option = false;
         bool target_option = false;
-        bool fsource_option = false;
-        bool ftarget_option = false;
         const char *source_version_for_javac;
 
         if (target_version == NULL)
@@ -1058,18 +1055,12 @@ compile_java_class (const char * const *java_sources,
               set_classpath (classpaths, classpaths_count, false, verbose);
 
             javac_with_options =
-              (no_assert_option
-               ? xasprintf ("%s -fno-assert", javac)
-               : xasprintf ("%s%s%s%s%s%s%s%s%s",
-                            javac,
-                            source_option ? " -source " : "",
-                            source_option ? source_version_for_javac : "",
-                            target_option ? " -target " : "",
-                            target_option ? target_version : "",
-                            fsource_option ? " -fsource=" : "",
-                            fsource_option ? source_version : "",
-                            ftarget_option ? " -ftarget=" : "",
-                            ftarget_option ? target_version : ""));
+              xasprintf ("%s%s%s%s%s",
+                         javac,
+                         source_option ? " -source " : "",
+                         source_option ? source_version_for_javac : "",
+                         target_option ? " -target " : "",
+                         target_option ? target_version : "");
             assume (javac_with_options != NULL);
 
             err = compile_using_envjavac (javac_with_options,
