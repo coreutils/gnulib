@@ -258,6 +258,7 @@ compile_using_envjavac (const char *javac,
 static bool
 compile_using_javac (const char * const *java_sources,
                      unsigned int java_sources_count,
+                     const char *nowarn_option,
                      bool source_option, const char *source_version,
                      bool target_option, const char *target_version,
                      const char *directory,
@@ -272,12 +273,15 @@ compile_using_javac (const char * const *java_sources,
   unsigned int i;
 
   argc =
-    1 + (source_option ? 2 : 0) + (target_option ? 2 : 0) + (optimize ? 1 : 0)
-    + (debug ? 1 : 0) + (directory != NULL ? 2 : 0) + java_sources_count;
+    1 + (nowarn_option != NULL ? 1 : 0) + (source_option ? 2 : 0)
+    + (target_option ? 2 : 0) + (optimize ? 1 : 0) + (debug ? 1 : 0)
+    + (directory != NULL ? 2 : 0) + java_sources_count;
   argv = (const char **) xmalloca ((argc + 1) * sizeof (const char *));
 
   argp = argv;
   *argp++ = "javac";
+  if (nowarn_option != NULL)
+    *argp++ = nowarn_option;
   if (source_option)
     {
       *argp++ = "-source";
@@ -495,12 +499,13 @@ get_classfile_version (const char *compiled_file_name)
 }
 
 /* Test whether $JAVAC can be used, and whether it needs a -source and/or
-   -target option.
+   -target option, as well as an option to inhibit warnings.
    Return a failure indicator (true upon error).  */
 static bool
 is_envjavac_usable (const char *javac,
                     const char *source_version, const char *target_version,
                     bool *usablep,
+                    char nowarn_option_out[17],
                     char source_option_out[30], char target_option_out[30])
 {
   /* The cache depends on the source_version and target_version.  */
@@ -508,6 +513,7 @@ is_envjavac_usable (const char *javac,
   {
     /*bool*/ unsigned int tested : 1;
     /*bool*/ unsigned int usable : 1;
+    /*bool*/ unsigned int nowarn_option : 1;
     unsigned int source_option : 7;
     unsigned int target_option : 7;
   };
@@ -530,6 +536,7 @@ is_envjavac_usable (const char *javac,
           char *conftest_file_name;
           char *compiled_file_name;
           const char *java_sources[1];
+          const char *nowarn_option;
           struct stat statbuf;
 
           tmpdir = create_temp_dir ("java", NULL, false);
@@ -549,11 +556,22 @@ is_envjavac_usable (const char *javac,
             xconcatenated_filename (tmpdir->dir_name, "conftest.class", NULL);
           register_temp_file (tmpdir, compiled_file_name);
 
+          /* See the discussion in javacomp.m4.  */
+          nowarn_option = " -Xlint:-options";
+          char *javac_nowarn = xasprintf ("%s%s", javac, nowarn_option);
+          assume (javac_nowarn != NULL);
+
           java_sources[0] = conftest_file_name;
-          if (!compile_using_envjavac (javac,
-                                       java_sources, 1, tmpdir->dir_name,
-                                       false, false, false, true)
-              && stat (compiled_file_name, &statbuf) >= 0)
+          if ((!compile_using_envjavac (javac_nowarn,
+                                        java_sources, 1, tmpdir->dir_name,
+                                        false, false, false, true)
+               && stat (compiled_file_name, &statbuf) >= 0)
+              || (nowarn_option = "",
+                  unlink (compiled_file_name),
+                  (!compile_using_envjavac (javac,
+                                            java_sources, 1, tmpdir->dir_name,
+                                            false, false, false, true)
+                   && stat (compiled_file_name, &statbuf) >= 0)))
             {
               /* $JAVAC compiled conftest.java successfully.  */
               int compiler_cfversion =
@@ -583,7 +601,8 @@ is_envjavac_usable (const char *javac,
                          try_target_version);
 
               char *javac_source_target =
-                xasprintf ("%s%s%s", javac, source_option, target_option);
+                xasprintf ("%s%s%s%s", javac, nowarn_option,
+                           source_option, target_option);
               assume (javac_source_target != NULL);
 
               unlink (compiled_file_name);
@@ -598,6 +617,7 @@ is_envjavac_usable (const char *javac,
                      and target_version.  Perfect.  */
                   free (javac_source_target);
 
+                  resultp->nowarn_option = (nowarn_option[0] != '\0');
                   resultp->source_option = try_source_version;
                   resultp->target_option =
                     (try_target_version == compiler_target_version ? 0 :
@@ -670,7 +690,7 @@ is_envjavac_usable (const char *javac,
                                      try_target_version);
 
                           javac_source_target =
-                            xasprintf ("%s%s%s", javac,
+                            xasprintf ("%s%s%s%s", javac, nowarn_option,
                                        source_option, target_option);
                           assume (javac_source_target != NULL);
 
@@ -689,6 +709,7 @@ is_envjavac_usable (const char *javac,
                                  nothing.  */
                               free (javac_source_target);
 
+                              resultp->nowarn_option = (nowarn_option[0] != '\0');
                               resultp->source_option = try_source_version;
                               resultp->target_option =
                                 (try_target_version == compiler_target_version ? 0 :
@@ -705,6 +726,7 @@ is_envjavac_usable (const char *javac,
 
           cleanup_temp_dir (tmpdir);
 
+          free (javac_nowarn);
           free (compiled_file_name);
           free (conftest_file_name);
         }
@@ -713,6 +735,10 @@ is_envjavac_usable (const char *javac,
     }
 
   *usablep = resultp->usable;
+  if (resultp->nowarn_option)
+    strcpy (nowarn_option_out, " -Xlint:-options");
+  else
+    nowarn_option_out[0] = '\0';
   sprintf (source_option_out, " -source %s%d",
            resultp->source_option <= 8 ? "1." : "",
            resultp->source_option);
@@ -750,11 +776,12 @@ is_javac_present (void)
 }
 
 /* Test whether javac can be used and whether it needs a -source and/or
-   -target option.
+   -target option, as well as an option to inhibit warnings.
    Return a failure indicator (true upon error).  */
 static bool
 is_javac_usable (const char *source_version, const char *target_version,
                  bool *usablep,
+                 char nowarn_option_out[17],
                  char source_option_out[20], char target_option_out[20])
 {
   /* The cache depends on the source_version and target_version.  */
@@ -762,6 +789,7 @@ is_javac_usable (const char *source_version, const char *target_version,
   {
     /*bool*/ unsigned int tested : 1;
     /*bool*/ unsigned int usable : 1;
+    /*bool*/ unsigned int nowarn_option : 1;
     unsigned int source_option : 7;
     unsigned int target_option : 7;
   };
@@ -784,6 +812,7 @@ is_javac_usable (const char *source_version, const char *target_version,
           char *conftest_file_name;
           char *compiled_file_name;
           const char *java_sources[1];
+          const char *nowarn_option;
           struct stat statbuf;
 
           tmpdir = create_temp_dir ("java", NULL, false);
@@ -803,13 +832,26 @@ is_javac_usable (const char *source_version, const char *target_version,
             xconcatenated_filename (tmpdir->dir_name, "conftest.class", NULL);
           register_temp_file (tmpdir, compiled_file_name);
 
+          /* See the discussion in javacomp.m4.  */
+          nowarn_option = "-Xlint:-options";
+
           java_sources[0] = conftest_file_name;
-          if (!compile_using_javac (java_sources, 1,
-                                    false, source_version,
-                                    false, target_version,
-                                    tmpdir->dir_name,
-                                    false, false, false, true)
-              && stat (compiled_file_name, &statbuf) >= 0)
+          if ((!compile_using_javac (java_sources, 1,
+                                     nowarn_option,
+                                     false, source_version,
+                                     false, target_version,
+                                     tmpdir->dir_name,
+                                     false, false, false, true)
+               && stat (compiled_file_name, &statbuf) >= 0)
+              || (nowarn_option = NULL,
+                  unlink (compiled_file_name),
+                  (!compile_using_javac (java_sources, 1,
+                                         nowarn_option,
+                                         false, source_version,
+                                         false, target_version,
+                                         tmpdir->dir_name,
+                                         false, false, false, true)
+                   && stat (compiled_file_name, &statbuf) >= 0)))
             {
               /* javac compiled conftest.java successfully.  */
               int compiler_cfversion =
@@ -840,6 +882,7 @@ is_javac_usable (const char *source_version, const char *target_version,
 
               java_sources[0] = conftest_file_name;
               if (!compile_using_javac (java_sources, 1,
+                                        nowarn_option,
                                         true,
                                         source_option,
                                         try_target_version != compiler_target_version,
@@ -850,6 +893,7 @@ is_javac_usable (const char *source_version, const char *target_version,
                 {
                   /* The compiler directly supports the desired source_version
                      and target_version.  Perfect.  */
+                  resultp->nowarn_option = (nowarn_option != NULL);
                   resultp->source_option = try_source_version;
                   resultp->target_option =
                     (try_target_version == compiler_target_version ? 0 :
@@ -902,6 +946,7 @@ is_javac_usable (const char *source_version, const char *target_version,
 
                           java_sources[0] = conftest_file_name;
                           if (!compile_using_javac (java_sources, 1,
+                                                    nowarn_option,
                                                     true,
                                                     source_option,
                                                     try_target_version != compiler_target_version,
@@ -913,6 +958,7 @@ is_javac_usable (const char *source_version, const char *target_version,
                               /* The compiler supports the try_source_version
                                  and try_target_version.  It's better than
                                  nothing.  */
+                              resultp->nowarn_option = (nowarn_option != NULL);
                               resultp->source_option = try_source_version;
                               resultp->target_option =
                                 (try_target_version == compiler_target_version ? 0 :
@@ -935,6 +981,10 @@ is_javac_usable (const char *source_version, const char *target_version,
     }
 
   *usablep = resultp->usable;
+  if (resultp->nowarn_option)
+    strcpy (nowarn_option_out, "-Xlint:-options");
+  else
+    nowarn_option_out[0] = '\0';
   sprintf (source_option_out, "%s%d",
            resultp->source_option <= 8 ? "1." : "",
            resultp->source_option);
@@ -982,6 +1032,7 @@ compile_java_class (const char * const *java_sources,
     if (javac != NULL && javac[0] != '\0')
       {
         bool usable = false;
+        char nowarn_option[17];
         char source_option[30];
         char target_option[30];
 
@@ -991,6 +1042,7 @@ compile_java_class (const char * const *java_sources,
         if (is_envjavac_usable (javac,
                                 source_version, target_version,
                                 &usable,
+                                nowarn_option,
                                 source_option, target_option))
           {
             err = true;
@@ -1007,7 +1059,8 @@ compile_java_class (const char * const *java_sources,
               set_classpath (classpaths, classpaths_count, false, verbose);
 
             javac_with_options =
-              xasprintf ("%s%s%s", javac, source_option, target_option);
+              xasprintf ("%s%s%s%s", javac,
+                         nowarn_option, source_option, target_option);
             assume (javac_with_options != NULL);
 
             err = compile_using_envjavac (javac_with_options,
@@ -1036,6 +1089,7 @@ compile_java_class (const char * const *java_sources,
   if (is_javac_present ())
     {
       bool usable = false;
+      char nowarn_option[17];
       char source_option[20];
       char target_option[20];
 
@@ -1044,6 +1098,7 @@ compile_java_class (const char * const *java_sources,
 
       if (is_javac_usable (source_version, target_version,
                            &usable,
+                           nowarn_option,
                            source_option, target_option))
         {
           err = true;
@@ -1063,6 +1118,7 @@ compile_java_class (const char * const *java_sources,
                            verbose);
 
           err = compile_using_javac (java_sources, java_sources_count,
+                                     nowarn_option[0] != '\0' ? nowarn_option : NULL,
                                      true, source_option,
                                      target_option[0] != '\0', target_option,
                                      directory, optimize, debug, verbose,

@@ -1,4 +1,4 @@
-# javacomp.m4 serial 25
+# javacomp.m4 serial 26
 dnl Copyright (C) 2001-2003, 2006-2007, 2009-2023 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -215,8 +215,8 @@ changequote([,])dnl
   dnl     javac     classfile         valid -source and   obsolete -source
   dnl     version   default version   -target values      and -target values
   dnl     -------   ---------------   -----------------   ------------------
-  dnl     1.6       50.0              1.3 .. 1.6
-  dnl     1.7       51.0              1.3 .. 1.7
+  dnl     1.6       50.0              1.2 .. 1.6
+  dnl     1.7       51.0              1.2 .. 1.7
   dnl     1.8       52.0              1.3 .. 1.8          1.3 .. 1.5
   dnl     9         53.0              1.6 .. 9            1.6
   dnl     10        54.0              1.6 .. 10           1.6
@@ -233,7 +233,19 @@ changequote([,])dnl
   dnl
   dnl   The -source option value must be <= the -target option value.
   dnl   The minimal -source and -target option value produces an "is obsolete"
-  dnl   warning.
+  dnl   warning (in javac 1.8 or newer). Additionally, if the -source option
+  dnl   value is not the maximal possible one, i.e. not redundant, it produces a
+  dnl   "bootstrap class path not set in conjunction with -source ..." warning
+  dnl   (in javac 1.7 or newer).
+  dnl
+  dnl   To get rid of these warnings, two options are available:
+  dnl     * -nowarn. This option is supported since javac 1.6 at least. But
+  dnl       it is overkill, because it would also silence warnings about the
+  dnl       code being compiled.
+  dnl     * -Xlint:-options. This option is supported since javac 1.6 at least.
+  dnl       In javac 1.6 it is an undocumented no-op.
+  dnl   We use -Xlint:-options and omit it only if we find that the compiler
+  dnl   does not support it (which is unlikely).
   dnl
   dnl Canonicalize source_version and target_version, for easier arithmetic.
   case "$source_version" in
@@ -254,11 +266,22 @@ changequote([,])dnl
     dnl options).
     if test -n "$JAVAC"; then
       dnl Test whether $JAVAC is usable.
-      rm -f conftest.class
-      if { echo "$as_me:__oline__: $JAVAC -d . conftest.java" >&AS_MESSAGE_LOG_FD
-           $JAVAC -d . conftest.java >&AS_MESSAGE_LOG_FD 2>&1
-         } \
-         && test -f conftest.class; then
+      dnl At the same time, determine which option to use to inhibit warnings;
+      dnl see the discussion above.
+      nowarn_option=' -Xlint:-options'
+      if { rm -f conftest.class \
+           && { echo "$as_me:__oline__: $JAVAC$nowarn_option -d . conftest.java" >&AS_MESSAGE_LOG_FD
+                $JAVAC$nowarn_option -d . conftest.java >&AS_MESSAGE_LOG_FD 2>&1
+              } \
+           && test -f conftest.class
+         } || { \
+           nowarn_option=
+           rm -f conftest.class \
+           && { echo "$as_me:__oline__: $JAVAC$nowarn_option -d . conftest.java" >&AS_MESSAGE_LOG_FD
+                $JAVAC$nowarn_option -d . conftest.java >&AS_MESSAGE_LOG_FD 2>&1
+              } \
+           && test -f conftest.class
+         }; then
         compiler_cfversion=`func_classfile_version conftest.class`
         compiler_target_version=`expr $compiler_cfversion - 44`
         dnl It is hard to determine the compiler_source_version. This would
@@ -275,13 +298,13 @@ changequote([,])dnl
         else
           target_option=' -target '`case "$target_version" in 6|7|8) echo 1. ;; esac`"$target_version"
         fi
-        if { echo "$as_me:__oline__: $JAVAC$source_option$target_option -d . conftest.java" >&AS_MESSAGE_LOG_FD
-             $JAVAC$source_option$target_option -d . conftest.java >&AS_MESSAGE_LOG_FD 2>&1
+        if { echo "$as_me:__oline__: $JAVAC$nowarn_option$source_option$target_option -d . conftest.java" >&AS_MESSAGE_LOG_FD
+             $JAVAC$nowarn_option$source_option$target_option -d . conftest.java >&AS_MESSAGE_LOG_FD 2>&1
            } \
            && test -f conftest.class; then
           dnl The compiler directly supports the desired source_version and
           dnl target_version. Perfect.
-          CONF_JAVAC="$JAVAC$source_option$target_option"
+          CONF_JAVAC="$JAVAC$nowarn_option$source_option$target_option"
           HAVE_JAVAC_ENVVAR=1
           HAVE_JAVACOMP=1
         else
@@ -321,13 +344,13 @@ changequote([,])dnl
               else
                 target_option=' -target '`case "$try_target_version" in 6|7|8) echo 1. ;; esac`"$try_target_version"
               fi
-              if { echo "$as_me:__oline__: $JAVAC$source_option$target_option -d . conftest.java" >&AS_MESSAGE_LOG_FD
-                   $JAVAC$source_option$target_option -d . conftest.java >&AS_MESSAGE_LOG_FD 2>&1
+              if { echo "$as_me:__oline__: $JAVAC$nowarn_option$source_option$target_option -d . conftest.java" >&AS_MESSAGE_LOG_FD
+                   $JAVAC$nowarn_option$source_option$target_option -d . conftest.java >&AS_MESSAGE_LOG_FD 2>&1
                  } \
                  && test -f conftest.class; then
                 dnl The compiler supports the try_source_version and
                 dnl try_target_version. It's better than nothing.
-                CONF_JAVAC="$JAVAC$source_option$target_option"
+                CONF_JAVAC="$JAVAC$nowarn_option$source_option$target_option"
                 HAVE_JAVAC_ENVVAR=1
                 HAVE_JAVACOMP=1
                 break
@@ -347,11 +370,22 @@ changequote([,])dnl
       popdef([AC_MSG_CHECKING])dnl
       if test -z "$HAVE_JAVACOMP" && test -n "$HAVE_JAVAC_IN_PATH"; then
         dnl Test whether javac is usable.
-        rm -f conftest.class
-        if { echo "$as_me:__oline__: javac -d . conftest.java" >&AS_MESSAGE_LOG_FD
-             javac -d . conftest.java >&AS_MESSAGE_LOG_FD 2>&1
-           } \
-           && test -f conftest.class; then
+        dnl At the same time, determine which option to use to inhibit warnings;
+        dnl see the discussion above.
+        nowarn_option=' -Xlint:-options'
+        if { rm -f conftest.class \
+             && { echo "$as_me:__oline__: javac$nowarn_option -d . conftest.java" >&AS_MESSAGE_LOG_FD
+                  javac$nowarn_option -d . conftest.java >&AS_MESSAGE_LOG_FD 2>&1
+                } \
+             && test -f conftest.class
+           } || { \
+             nowarn_option=
+             rm -f conftest.class \
+             && { echo "$as_me:__oline__: javac$nowarn_option -d . conftest.java" >&AS_MESSAGE_LOG_FD
+                  javac$nowarn_option -d . conftest.java >&AS_MESSAGE_LOG_FD 2>&1
+                } \
+             && test -f conftest.class
+           }; then
           compiler_cfversion=`func_classfile_version conftest.class`
           compiler_target_version=`expr $compiler_cfversion - 44`
           dnl It is hard to determine the compiler_source_version. This would
@@ -369,13 +403,13 @@ changequote([,])dnl
           else
             target_option=' -target '`case "$target_version" in 6|7|8) echo 1. ;; esac`"$target_version"
           fi
-          if { echo "$as_me:__oline__: javac$source_option$target_option -d . conftest.java" >&AS_MESSAGE_LOG_FD
-               javac$source_option$target_option -d . conftest.java >&AS_MESSAGE_LOG_FD 2>&1
+          if { echo "$as_me:__oline__: javac$nowarn_option$source_option$target_option -d . conftest.java" >&AS_MESSAGE_LOG_FD
+               javac$nowarn_option$source_option$target_option -d . conftest.java >&AS_MESSAGE_LOG_FD 2>&1
              } \
              && test -f conftest.class; then
             dnl The compiler directly supports the desired source_version and
             dnl target_version. Perfect.
-            CONF_JAVAC="javac$source_option$target_option"
+            CONF_JAVAC="javac$nowarn_option$source_option$target_option"
             HAVE_JAVAC=1
             HAVE_JAVACOMP=1
           else
@@ -415,13 +449,13 @@ changequote([,])dnl
                 else
                   target_option=' -target '`case "$try_target_version" in 6|7|8) echo 1. ;; esac`"$try_target_version"
                 fi
-                if { echo "$as_me:__oline__: javac$source_option$target_option -d . conftest.java" >&AS_MESSAGE_LOG_FD
-                     javac$source_option$target_option -d . conftest.java >&AS_MESSAGE_LOG_FD 2>&1
+                if { echo "$as_me:__oline__: javac$nowarn_option$source_option$target_option -d . conftest.java" >&AS_MESSAGE_LOG_FD
+                     javac$nowarn_option$source_option$target_option -d . conftest.java >&AS_MESSAGE_LOG_FD 2>&1
                    } \
                    && test -f conftest.class; then
                   dnl The compiler supports the try_source_version and
                   dnl try_target_version. It's better than nothing.
-                  CONF_JAVAC="javac$source_option$target_option"
+                  CONF_JAVAC="javac$nowarn_option$source_option$target_option"
                   HAVE_JAVAC=1
                   HAVE_JAVACOMP=1
                   break
