@@ -29,6 +29,7 @@
              9               private interface methods
             10               type inference for local variables
             11               'var' in parameters of lambda expressions
+            ...
    If source-version 1.3 or 1.4 or 1.5 is requested, it gets mapped to 1.6, for
    backward compatibility. (Currently the minimum Java and javac version we need
    to support is Java 1.6, since that's the default Java version on Solaris 10.)
@@ -40,6 +41,7 @@
              9                   53.0
             10                   54.0
             11                   55.0
+            ...                  ...
    If a target-version below 1.6 is requested, it gets mapped to 1.6, for
    backward compatibility. (Currently the minimum Java and javac version we need
    to support is Java 1.6, since that's the default Java version on Solaris 10.)
