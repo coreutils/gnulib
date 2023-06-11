@@ -23,33 +23,32 @@
    classpaths is a list of pathnames to be prepended to the CLASSPATH.
 
    source_version can be:    support for
-             1.3             inner classes
-             1.4             assert keyword
-             1.5             generic classes and methods
-             1.6             (not supported)
+             1.6             assert keyword (1.4), generic classes and methods (1.5)
              1.7             switch(string)
              1.8             lambdas
              9               private interface methods
             10               type inference for local variables
             11               'var' in parameters of lambda expressions
+   If source-version 1.3 or 1.4 or 1.5 is requested, it gets mapped to 1.6, for
+   backward compatibility. (Currently the minimum Java and javac version we need
+   to support is Java 1.6, since that's the default Java version on Solaris 10.)
+
    target_version can be:  classfile version:
-             1.1                 45.3
-             1.2                 46.0
-             1.3                 47.0
-             1.4                 48.0
-             1.5                 49.0
              1.6                 50.0
              1.7                 51.0
              1.8                 52.0
              9                   53.0
             10                   54.0
             11                   55.0
+   If a target-version below 1.6 is requested, it gets mapped to 1.6, for
+   backward compatibility. (Currently the minimum Java and javac version we need
+   to support is Java 1.6, since that's the default Java version on Solaris 10.)
    target_version can also be given as NULL. In this case, the required
    target_version is determined from the found JVM (see javaversion.h).
    Specifying target_version is useful when building a library (.jar) that is
    useful outside the given package. Passing target_version = NULL is useful
    when building an application.
-   It is unreasonable to ask for:
+   It is unreasonable to ask for a target-version < source-version, such as
      - target_version < 1.4 with source_version >= 1.4, or
      - target_version < 1.5 with source_version >= 1.5, or
      - target_version < 1.6 with source_version >= 1.6, or
@@ -57,7 +56,8 @@
      - target_version < 1.8 with source_version >= 1.8, or
      - target_version < 9 with source_version >= 9, or
      - target_version < 10 with source_version >= 10, or
-     - target_version < 11 with source_version >= 11,
+     - target_version < 11 with source_version >= 11, or
+     - ...
    because even Sun's/Oracle's javac doesn't support these combinations.
    It is redundant to ask for a target_version > source_version, since the
    smaller target_version = source_version will also always work and newer JVMs

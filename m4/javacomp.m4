@@ -1,4 +1,4 @@
-# javacomp.m4 serial 23
+# javacomp.m4 serial 24
 dnl Copyright (C) 2001-2003, 2006-2007, 2009-2023 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -12,25 +12,17 @@ dnl with or without modifications, as long as this notice is preserved.
 # target-version format.
 #
 # source-version can be:    support for
-#           1.3             inner classes
-#           1.4             assert keyword
-#           1.5             generic classes and methods
-#           1.6             (not supported)
+#           1.6             assert keyword (1.4), generic classes and methods (1.5)
 #           1.7             switch(string)
 #           1.8             lambdas
 #           9               private interface methods
 #          10               type inference for local variables
 #          11               'var' in parameters of lambda expressions
-# Instead of source-version 1.6, use 1.5, since Java 6 did not introduce any
-# language changes. See
-# https://docs.oracle.com/javase/8/docs/technotes/guides/language/enhancements.html
+# If source-version 1.3 or 1.4 or 1.5 is requested, it gets mapped to 1.6, for
+# backward compatibility. (Currently the minimum Java and javac version we need
+# to support is Java 1.6, since that's the default Java version on Solaris 10.)
 #
 # target-version can be:  classfile version:
-#           1.1                 45.3
-#           1.2                 46.0
-#           1.3                 47.0
-#           1.4                 48.0
-#           1.5                 49.0
 #           1.6                 50.0
 #           1.7                 51.0
 #           1.8                 52.0
@@ -40,14 +32,13 @@ dnl with or without modifications, as long as this notice is preserved.
 # The classfile version of a .class file can be determined through the "file"
 # command. More portably, the classfile major version can be determined through
 # "od -A n -t d1 -j 7 -N 1 classfile".
+# If a target-version below 1.6 is requested, it gets mapped to 1.6, for
+# backward compatibility. (Currently the minimum Java and javac version we need
+# to support is Java 1.6, since that's the default Java version on Solaris 10.)
+#
 # target-version can also be omitted. In this case, the required target-version
 # is determined from the found JVM (see macro gt_JAVAEXEC):
 #      target-version   for JVM
-#           1.1         JDK 1.1
-#           1.2         JDK/JRE 1.2
-#           1.3         JDK/JRE 1.3
-#           1.4         JDK/JRE 1.4
-#           1.5         JDK/JRE 5
 #           1.6         JDK/JRE 6
 #           1.7         JDK/JRE 7
 #           1.8         JDK/JRE 8
@@ -59,7 +50,7 @@ dnl with or without modifications, as long as this notice is preserved.
 # useful outside the given package. Omitting target-version is useful when
 # building an application.
 #
-# It is unreasonable to ask for:
+# It is unreasonable to ask for a target-version < source-version, such as
 #   - target-version < 1.4 with source-version >= 1.4, or
 #   - target-version < 1.5 with source-version >= 1.5, or
 #   - target_version < 1.6 with source_version >= 1.6, or
@@ -67,7 +58,8 @@ dnl with or without modifications, as long as this notice is preserved.
 #   - target_version < 1.8 with source_version >= 1.8, or
 #   - target_version < 9 with source_version >= 9, or
 #   - target_version < 10 with source_version >= 10, or
-#   - target_version < 11 with source_version >= 11,
+#   - target_version < 11 with source_version >= 11, or
+#   - ...
 # because even Sun's/Oracle's javac doesn't support these combinations.
 #
 # It is redundant to ask for a target-version > source-version, since the
@@ -86,6 +78,9 @@ AC_DEFUN([gt_JAVACOMP],
   test -n "$source_version" || {
     AC_MSG_ERROR([missing source-version argument to gt_@&t@JAVACOMP])
   }
+  case "$source_version" in
+    1.1 | 1.2 | 1.3 | 1.4 | 1.5) source_version='1.6' ;;
+  esac
   m4_if([$2], [],
     [if test -n "$HAVE_JAVAEXEC"; then
        dnl Use $CONF_JAVA to determine the JVM's version.
@@ -117,28 +112,33 @@ changequote([,])dnl
          CLASSPATH=.${CLASSPATH:+$CLASSPATH_SEPARATOR$CLASSPATH} $CONF_JAVA conftestver 2>&AS_MESSAGE_LOG_FD
        }`
        case "$target_version" in
-         1.1 | 1.2 | 1.3 | 1.4 | 1.5 | 1.6 | 1.7 | 1.8 | 9 | 10 | 11) ;;
+         null)
+           dnl JDK 1.1.X returns null.
+           target_version=1.1 ;;
+       esac
+       case "$target_version" in
+         1.1 | 1.2 | 1.3 | 1.4 | 1.5)
+           AC_MSG_WARN([$CONF_JAVA is too old, cannot compile Java code for this old version any more])
+           target_version=1.6 ;;
+         1.6 | 1.7 | 1.8 | 9 | 10 | 11) ;;
          12 | 13 | 14 | 15 | 16 | 17)
            dnl Assume that these (not yet released) Java versions will behave
            dnl like the preceding ones.
            target_version=11 ;;
-         null)
-           dnl JDK 1.1.X returns null.
-           target_version=1.1 ;;
          *) AC_MSG_WARN([unknown target-version $target_version, please update gt_@&t@JAVACOMP macro])
-            target_version=1.1 ;;
+            target_version=1.6 ;;
        esac
      else
-       target_version="1.1"
+       target_version="1.6"
      fi
     ],
-    [target_version=$2])
+    [target_version=$2
+     case "$target_version" in
+       1.1 | 1.2 | 1.3 | 1.4 | 1.5) target_version='1.6' ;;
+     esac
+    ])
   case "$source_version" in
-    1.3) goodcode='class conftest {}'
-         failcode='class conftestfail { static { assert(true); } }' ;;
-    1.4) goodcode='class conftest     { static { assert(true); } }'
-         failcode='class conftestfail<T> { T foo() { return null; } }' ;;
-    1.5) goodcode='class conftest<T>     { T foo() { return null; } }'
+    1.6) goodcode='class conftest<T>     { T foo() { return null; } }'
          failcode='class conftestfail { void foo () { switch ("A") {} } }' ;;
     1.7) goodcode='class conftest     { void foo () { switch ("A") {} } }'
          failcode='class conftestfail { void foo () { Runnable r = () -> {}; } }' ;;
@@ -153,11 +153,6 @@ changequote([,])dnl
     *) AC_MSG_ERROR([invalid source-version argument to gt_@&t@JAVACOMP: $source_version]) ;;
   esac
   case "$target_version" in
-    1.1) cfversion=45 ;;
-    1.2) cfversion=46 ;;
-    1.3) cfversion=47 ;;
-    1.4) cfversion=48 ;;
-    1.5) cfversion=49 ;;
     1.6) cfversion=50 ;;
     1.7) cfversion=51 ;;
     1.8) cfversion=52 ;;
@@ -184,18 +179,6 @@ changequote([,])dnl
   AC_MSG_CHECKING([for Java compiler])
   dnl
   dnl The support of Sun/Oracle javac for target-version and source-version:
-  dnl
-  dnl   javac 1.3:   -target 1.1 1.2 1.3               default: 1.1
-  dnl                                                  source always: 1.3
-  dnl
-  dnl   javac 1.4:   -target 1.1 1.2 1.3 1.4           default: 1.2
-  dnl                -source 1.3 1.4                   default: 1.3
-  dnl                -target 1.1/1.2/1.3 only possible with -source 1.3 or no -source
-  dnl
-  dnl   javac 1.5:   -target 1.1 1.2 1.3 1.4 1.5       default: 1.5
-  dnl                -source 1.3 1.4 1.5               default: 1.5
-  dnl                -target 1.1/1.2/1.3 only possible with -source 1.3
-  dnl                -target 1.4 only possible with -source 1.3/1.4
   dnl
   dnl   javac 1.6:   -target 1.1 1.2 1.3 1.4 1.5 1.6   default: 1.6
   dnl                -source 1.3 1.4 1.5 1.6           default: 1.5
@@ -250,15 +233,6 @@ changequote([,])dnl
   dnl options).
   if test -n "$JAVAC"; then
     dnl Try $JAVAC.
-    dnl The javac option '-source 1.5' has the same meaning as '-source 1.6',
-    dnl but since Java 9 supports only the latter, prefer the latter if a
-    dnl target_version >= 1.6 is requested.
-    if test "$source_version" = 1.5; then
-      case "$target_version" in
-        1.1 | 1.2 | 1.3 | 1.4 | 1.5) ;;
-        *) source_version='1.6' ;;
-      esac
-    fi
     rm -f conftest.class
     if { echo "$as_me:__oline__: $JAVAC -d . conftest.java" >&AS_MESSAGE_LOG_FD
          $JAVAC -d . conftest.java >&AS_MESSAGE_LOG_FD 2>&1
@@ -289,51 +263,17 @@ changequote([,])dnl
         HAVE_JAVACOMP=1
       fi
     else
-      dnl Try with -target option alone. (Sun javac 1.3.1 has the -target
-      dnl option but no -source option.)
+      dnl Try with -target and -source options. (All supported javac
+      dnl versions support both, see the table above.)
       rm -f conftest.class
-      if { echo "$as_me:__oline__: $JAVAC -target $target_version -d . conftest.java" >&AS_MESSAGE_LOG_FD
-           $JAVAC -target "$target_version" -d . conftest.java >&AS_MESSAGE_LOG_FD 2>&1
+      if { echo "$as_me:__oline__: $JAVAC -target $target_version -source $source_version -d . conftest.java" >&AS_MESSAGE_LOG_FD
+           $JAVAC -target "$target_version" -source "$source_version" -d . conftest.java >&AS_MESSAGE_LOG_FD 2>&1
          } \
          && test -f conftest.class \
          && expr `func_classfile_version conftest.class` '<=' $cfversion >/dev/null 2>&AS_MESSAGE_LOG_FD; then
-        dnl Try adding -source option if it is useful.
-        rm -f conftest.class
-        rm -f conftestfail.class
-        if { echo "$as_me:__oline__: $JAVAC -target $target_version -source $source_version -d . conftest.java" >&AS_MESSAGE_LOG_FD
-             $JAVAC -target "$target_version" -source "$source_version" -d . conftest.java >&AS_MESSAGE_LOG_FD 2>&1
-           } \
-           && test -f conftest.class \
-           && expr `func_classfile_version conftest.class` '<=' $cfversion >/dev/null 2>&AS_MESSAGE_LOG_FD \
-           && { echo "$as_me:__oline__: $JAVAC -target $target_version -d . conftestfail.java" >&AS_MESSAGE_LOG_FD
-                $JAVAC -target "$target_version" -d . conftestfail.java >&AS_MESSAGE_LOG_FD 2>&1
-              } \
-           && test -f conftestfail.class \
-           && ! { echo "$as_me:__oline__: $JAVAC -target $target_version -source $source_version -d . conftestfail.java" >&AS_MESSAGE_LOG_FD
-                  $JAVAC -target "$target_version" -source "$source_version" -d . conftestfail.java >&AS_MESSAGE_LOG_FD 2>&1
-                }; then
-          CONF_JAVAC="$JAVAC -target $target_version -source $source_version"
-          HAVE_JAVAC_ENVVAR=1
-          HAVE_JAVACOMP=1
-        else
-          CONF_JAVAC="$JAVAC -target $target_version"
-          HAVE_JAVAC_ENVVAR=1
-          HAVE_JAVACOMP=1
-        fi
-      else
-        dnl Maybe this -target option requires a -source option? Try with
-        dnl -target and -source options. (Supported by Sun javac 1.4 and
-        dnl higher.)
-        rm -f conftest.class
-        if { echo "$as_me:__oline__: $JAVAC -target $target_version -source $source_version -d . conftest.java" >&AS_MESSAGE_LOG_FD
-             $JAVAC -target "$target_version" -source "$source_version" -d . conftest.java >&AS_MESSAGE_LOG_FD 2>&1
-           } \
-           && test -f conftest.class \
-           && expr `func_classfile_version conftest.class` '<=' $cfversion >/dev/null 2>&AS_MESSAGE_LOG_FD; then
-          CONF_JAVAC="$JAVAC -target $target_version -source $source_version"
-          HAVE_JAVAC_ENVVAR=1
-          HAVE_JAVACOMP=1
-        fi
+        CONF_JAVAC="$JAVAC -target $target_version -source $source_version"
+        HAVE_JAVAC_ENVVAR=1
+        HAVE_JAVACOMP=1
       fi
     fi
   fi
@@ -350,15 +290,6 @@ changequote([,])dnl
       if { javac -version >/dev/null 2>/dev/null || test $? -le 2; } \
          && ( if javac -help 2>&1 >/dev/null | grep at.dms.kjc.Main >/dev/null && javac -help 2>/dev/null | grep 'released.*2000' >/dev/null ; then exit 1; else exit 0; fi ); then
         dnl OK, javac works.
-        dnl The javac option '-source 1.5' has the same meaning as '-source 1.6',
-        dnl but since Java 9 supports only the latter, prefer the latter if a
-        dnl target_version >= 1.6 is requested.
-        if test "$source_version" = 1.5; then
-          case "$target_version" in
-            1.1 | 1.2 | 1.3 | 1.4 | 1.5) ;;
-            *) source_version='1.6' ;;
-          esac
-        fi
         dnl Now test whether it supports the desired target-version and
         dnl source-version.
         rm -f conftest.class
@@ -391,51 +322,17 @@ changequote([,])dnl
             HAVE_JAVACOMP=1
           fi
         else
-          dnl Try with -target option alone. (Sun javac 1.3.1 has the -target
-          dnl option but no -source option.)
+          dnl Try with -target and -source options. (All supported javac
+          dnl versions support both, see the table above.)
           rm -f conftest.class
-          if { echo "$as_me:__oline__: javac -target $target_version -d . conftest.java" >&AS_MESSAGE_LOG_FD
-               javac -target "$target_version" -d . conftest.java >&AS_MESSAGE_LOG_FD 2>&1
+          if { echo "$as_me:__oline__: javac -target $target_version -source $source_version -d . conftest.java" >&AS_MESSAGE_LOG_FD
+               javac -target "$target_version" -source "$source_version" -d . conftest.java >&AS_MESSAGE_LOG_FD 2>&1
              } \
              && test -f conftest.class \
              && expr `func_classfile_version conftest.class` '<=' $cfversion >/dev/null 2>&AS_MESSAGE_LOG_FD; then
-            dnl Try adding -source option if it is useful.
-            rm -f conftest.class
-            rm -f conftestfail.class
-            if { echo "$as_me:__oline__: javac -target $target_version -source $source_version -d . conftest.java" >&AS_MESSAGE_LOG_FD
-                 javac -target "$target_version" -source "$source_version" -d . conftest.java >&AS_MESSAGE_LOG_FD 2>&1
-               } \
-               && test -f conftest.class \
-               && expr `func_classfile_version conftest.class` '<=' $cfversion >/dev/null 2>&AS_MESSAGE_LOG_FD \
-               && { echo "$as_me:__oline__: javac -target $target_version -d . conftestfail.java" >&AS_MESSAGE_LOG_FD
-                    javac -target "$target_version" -d . conftestfail.java >&AS_MESSAGE_LOG_FD 2>&1
-                  } \
-               && test -f conftestfail.class \
-               && ! { echo "$as_me:__oline__: javac -target $target_version -source $source_version -d . conftestfail.java" >&AS_MESSAGE_LOG_FD
-                      javac -target "$target_version" -source "$source_version" -d . conftestfail.java >&AS_MESSAGE_LOG_FD 2>&1
-                    }; then
-              CONF_JAVAC="javac -target $target_version -source $source_version"
-              HAVE_JAVAC=1
-              HAVE_JAVACOMP=1
-            else
-              CONF_JAVAC="javac -target $target_version"
-              HAVE_JAVAC=1
-              HAVE_JAVACOMP=1
-            fi
-          else
-            dnl Maybe this -target option requires a -source option? Try with
-            dnl -target and -source options. (Supported by Sun javac 1.4 and
-            dnl higher.)
-            rm -f conftest.class
-            if { echo "$as_me:__oline__: javac -target $target_version -source $source_version -d . conftest.java" >&AS_MESSAGE_LOG_FD
-                 javac -target "$target_version" -source "$source_version" -d . conftest.java >&AS_MESSAGE_LOG_FD 2>&1
-               } \
-               && test -f conftest.class \
-               && expr `func_classfile_version conftest.class` '<=' $cfversion >/dev/null 2>&AS_MESSAGE_LOG_FD; then
-              CONF_JAVAC="javac -target $target_version -source $source_version"
-              HAVE_JAVAC=1
-              HAVE_JAVACOMP=1
-            fi
+            CONF_JAVAC="javac -target $target_version -source $source_version"
+            HAVE_JAVAC=1
+            HAVE_JAVACOMP=1
           fi
         fi
       fi
