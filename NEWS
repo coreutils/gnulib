@@ -74,6 +74,12 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2023-06-10  javacomp-script  These modules now compile the Java code with option
+            javacomp          '-source 1.6' or higher. As a consequence, the
+                             compiler may emit notes "... uses unchecked or
+                             unsafe operations". To avoid these notes, add
+                             template arguments to the types or functions.
+
 2023-04-28  largefile-required
             year2038-required
                             Modules removed, for consistency with Autoconf
