@@ -1,4 +1,4 @@
-# printf.m4 serial 82
+# printf.m4 serial 83
 dnl Copyright (C) 2003, 2007-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -1906,7 +1906,7 @@ AC_DEFUN([gl_SWPRINTF_WORKS],
 int main()
 {
   int result = 0;
-  { /* This test fails on musl, FreeBSD, NetBSD, OpenBSD, macOS, AIX.  */
+  { /* This test fails on musl libc 1.2.3, FreeBSD, NetBSD, OpenBSD, macOS, AIX.  */
     wchar_t buf[5] = { 0xBEEF, 0xBEEF, 0xBEEF, 0xBEEF, 0xBEEF };
     int ret = swprintf (buf, 4, L"%cz", '\0');
     /* Expected result:
@@ -1937,7 +1937,7 @@ int main()
                                # Guess yes on glibc systems.
            *-gnu* | gnu*)      gl_cv_func_swprintf_works="guessing yes";;
                                # Guess no on musl systems.
-           *-musl* | midipix*) gl_cv_func_swprintf_works="guessing yes";;
+           *-musl* | midipix*) gl_cv_func_swprintf_works="guessing no";;
                                # Guess no on FreeBSD, NetBSD, OpenBSD, macOS, AIX.
            freebsd* | midnightbsd* | netbsd* | openbsd* | darwin* | aix*)
                                gl_cv_func_swprintf_works="guessing no";;
@@ -1999,8 +1999,8 @@ int main ()
                                  # Guess yes on musl systems.
            *-musl* | midipix*)   gl_cv_func_swprintf_directive_la="guessing yes";;
                                  # Guess yes on Android.
-           linux*-android*)      gl_cv_func_swprintf_directive_la="guessing no";;
-                                 # Guess yes on native Windows.
+           linux*-android*)      gl_cv_func_swprintf_directive_la="guessing yes";;
+                                 # Guess no on native Windows.
            mingw*)               gl_cv_func_swprintf_directive_la="guessing no";;
                                  # If we don't know, obey --enable-cross-guesses.
            *)                    gl_cv_func_swprintf_directive_la="$gl_cross_guess_normal";;
