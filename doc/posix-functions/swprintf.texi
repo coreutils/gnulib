@@ -74,6 +74,9 @@ In the C or POSIX locales, the @code{%c} and @code{%s} conversions may fail
 on some platforms:
 glibc 2.35, musl libc 1.2.4, FreeBSD 13.2, NetBSD 9.3, OpenBSD 7.2, Cygwin 2.9.0.
 @item
+The @code{%lc} directive may fail on some platforms:
+musl libc 1.2.4, FreeBSD 13.2, NetBSD 9.3, OpenBSD 7.2.
+@item
 When formatting an integer with grouping flag, this function inserts thousands
 separators even in the "C" locale on some platforms:
 NetBSD 5.1.

@@ -166,6 +166,15 @@ int main()
          the 'a' directive with 'long double' arguments.])
       ;;
   esac
+  gl_SWPRINTF_DIRECTIVE_LC
+  case "$gl_cv_func_swprintf_directive_lc" in
+    *yes) ;;
+    *)
+      AC_DEFINE([NEED_WPRINTF_DIRECTIVE_LC], [1],
+        [Define if the vasnwprintf implementation needs special code for
+         the 'lc' directive.])
+      ;;
+  esac
   gl_MUSL_LIBC
   gl_PREREQ_VASNXPRINTF
 ])
