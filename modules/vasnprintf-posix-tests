@@ -22,7 +22,10 @@ gt_LOCALE_FR_UTF8
 
 Makefile.am:
 TESTS += test-vasnprintf-posix test-vasnprintf-posix2.sh test-vasnprintf-posix3
-TESTS_ENVIRONMENT += LOCALE_FR='@LOCALE_FR@' LOCALE_FR_UTF8='@LOCALE_FR_UTF8@'
+TESTS_ENVIRONMENT += \
+  LOCALE_FR='@LOCALE_FR@' \
+  LOCALE_FR_UTF8='@LOCALE_FR_UTF8@' \
+  LC_NUMERIC_IMPLEMENTED='@LC_NUMERIC_IMPLEMENTED@'
 check_PROGRAMS += test-vasnprintf-posix test-vasnprintf-posix2 test-vasnprintf-posix3
 test_vasnprintf_posix2_LDADD = $(LDADD) $(SETLOCALE_LIB)
 test_vasnprintf_posix3_LDADD = $(LDADD) $(SETLOCALE_LIB)

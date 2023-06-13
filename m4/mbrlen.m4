@@ -1,4 +1,4 @@
-# mbrlen.m4 serial 11  -*- coding: utf-8 -*-
+# mbrlen.m4 serial 12  -*- coding: utf-8 -*-
 dnl Copyright (C) 2008, 2010-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -116,7 +116,8 @@ int main ()
 {
   int result = 0;
   /* This fails on Solaris.  */
-  if (setlocale (LC_ALL, "$LOCALE_FR_UTF8") != NULL)
+  if (strcmp ("$LOCALE_FR_UTF8", "none") != 0
+      && setlocale (LC_ALL, "$LOCALE_FR_UTF8") != NULL)
     {
       char input[] = "B\303\274\303\237er"; /* "Büßer" */
       mbstate_t state;
@@ -130,7 +131,8 @@ int main ()
         }
     }
   /* This fails on HP-UX 11.11.  */
-  if (setlocale (LC_ALL, "$LOCALE_JA") != NULL)
+  if (strcmp ("$LOCALE_JA", "none") != 0
+      && setlocale (LC_ALL, "$LOCALE_JA") != NULL)
     {
       char input[] = "B\217\253\344\217\251\316er"; /* "Büßer" */
       mbstate_t state;

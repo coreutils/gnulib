@@ -1,4 +1,4 @@
-# iswdigit.m4 serial 3
+# iswdigit.m4 serial 4
 dnl Copyright (C) 2020-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -63,7 +63,8 @@ main (int argc, char *argv[])
   int is;
   int result = 0;
 
-  if (setlocale (LC_ALL, "$LOCALE_FR") != NULL)
+  if (strcmp ("$LOCALE_FR", "none") != 0
+      && setlocale (LC_ALL, "$LOCALE_FR") != NULL)
     {
       /* This fails on mingw, MSVC 14.  */
       /* U+00B2 SUPERSCRIPT TWO */
@@ -71,7 +72,8 @@ main (int argc, char *argv[])
       if (!(is == 0))
         result |= 1;
     }
-  if (setlocale (LC_ALL, "$LOCALE_JA") != NULL)
+  if (strcmp ("$LOCALE_JA", "none") != 0
+      && setlocale (LC_ALL, "$LOCALE_JA") != NULL)
     {
       /* This fails on NetBSD 8.0.  */
       /* U+FF11 FULLWIDTH DIGIT ONE */
@@ -79,7 +81,8 @@ main (int argc, char *argv[])
       if (!(is == 0))
         result |= 2;
     }
-  if (setlocale (LC_ALL, "$LOCALE_FR_UTF8") != NULL)
+  if (strcmp ("$LOCALE_FR_UTF8", "none") != 0
+      && setlocale (LC_ALL, "$LOCALE_FR_UTF8") != NULL)
     {
       /* This fails on FreeBSD 13.0, NetBSD 8.0, MSVC 14.  */
       /* U+0663 ARABIC-INDIC DIGIT THREE */
@@ -92,7 +95,8 @@ main (int argc, char *argv[])
       if (!(is == 0))
         result |= 8;
     }
-  if (setlocale (LC_ALL, "$LOCALE_ZH_CN") != NULL)
+  if (strcmp ("$LOCALE_ZH_CN", "none") != 0
+      && setlocale (LC_ALL, "$LOCALE_ZH_CN") != NULL)
     {
       /* This fails on NetBSD 8.0, Solaris 10, Solaris 11.4.  */
       /* U+FF11 FULLWIDTH DIGIT ONE */

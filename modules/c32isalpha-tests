@@ -7,6 +7,7 @@ m4/locale-fr.m4
 m4/locale-ja.m4
 m4/locale-zh.m4
 m4/codeset.m4
+m4/musl.m4
 
 Depends-on:
 mbrtoc32
@@ -17,6 +18,7 @@ gt_LOCALE_FR
 gt_LOCALE_FR_UTF8
 gt_LOCALE_JA
 gt_LOCALE_ZH_CN
+gl_MUSL_LIBC
 
 Makefile.am:
 TESTS += test-c32isalpha.sh

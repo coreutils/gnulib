@@ -12,6 +12,13 @@ if test $LOCALE_FR = none && test $LOCALE_FR_UTF8 = none; then
   exit 77
 fi
 
+if $LC_NUMERIC_IMPLEMENTED; then
+  :
+else
+  echo "Skipping test: LC_NUMERIC category of locales is not implemented"
+  exit 77
+fi
+
 if test $LOCALE_FR != none; then
   LC_ALL=$LOCALE_FR      ${CHECKER} ./test-strtold1${EXEEXT} || exit 1
 fi

@@ -18,5 +18,12 @@ else
   fi
 fi
 
+if $LC_NUMERIC_IMPLEMENTED; then
+  :
+else
+  echo "Skipping test: LC_NUMERIC category of locales is not implemented"
+  exit 77
+fi
+
 LC_ALL=$testlocale \
 ${CHECKER} ./test-vasnprintf-posix2${EXEEXT}

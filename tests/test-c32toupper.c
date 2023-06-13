@@ -259,7 +259,7 @@ main (int argc, char *argv[])
           mb = for_character ("\302\262", 2);
           ASSERT (mb.nbytes == 2);
           ASSERT (memcmp (mb.buf, "\302\262", 2) == 0);
-        #if !(defined __GLIBC__ || (defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__ || defined _AIX || defined __sun || defined __CYGWIN__)
+        #if !(defined __GLIBC__ || defined MUSL_LIBC || (defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__ || defined _AIX || defined __sun || defined __CYGWIN__)
           /* U+00B5 MICRO SIGN */
           mb = for_character ("\302\265", 2);
           ASSERT (mb.nbytes == 2);
@@ -269,10 +269,12 @@ main (int argc, char *argv[])
           mb = for_character ("\303\211", 2);
           ASSERT (mb.nbytes == 2);
           ASSERT (memcmp (mb.buf, "\303\211", 2) == 0);
+        #if !defined MUSL_LIBC
           /* U+00DF LATIN SMALL LETTER SHARP S */
           mb = for_character ("\303\237", 2);
           ASSERT (mb.nbytes == 2);
           ASSERT (memcmp (mb.buf, "\303\237", 2) == 0);
+        #endif
         #if !(defined _WIN32 && !defined __CYGWIN__)
           /* U+00E9 LATIN SMALL LETTER E WITH ACUTE */
           mb = for_character ("\303\251", 2);

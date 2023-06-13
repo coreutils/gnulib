@@ -1,4 +1,4 @@
-# wcrtomb.m4 serial 17
+# wcrtomb.m4 serial 18
 dnl Copyright (C) 2008-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -97,12 +97,14 @@ changequote([,])dnl
 int main ()
 {
   int result = 0;
-  if (setlocale (LC_ALL, "$LOCALE_FR") != NULL)
+  if (strcmp ("$LOCALE_FR", "none") != 0
+      && setlocale (LC_ALL, "$LOCALE_FR") != NULL)
     {
       if (wcrtomb (NULL, 0, NULL) != 1)
         result |= 1;
     }
-  if (setlocale (LC_ALL, "$LOCALE_FR_UTF8") != NULL)
+  if (strcmp ("$LOCALE_FR_UTF8", "none") != 0
+      && setlocale (LC_ALL, "$LOCALE_FR_UTF8") != NULL)
     {
       if (wcrtomb (NULL, 0, NULL) != 1)
         result |= 2;
@@ -113,12 +115,14 @@ int main ()
             result |= 2;
       }
     }
-  if (setlocale (LC_ALL, "$LOCALE_JA") != NULL)
+  if (strcmp ("$LOCALE_JA", "none") != 0
+      && setlocale (LC_ALL, "$LOCALE_JA") != NULL)
     {
       if (wcrtomb (NULL, 0, NULL) != 1)
         result |= 4;
     }
-  if (setlocale (LC_ALL, "$LOCALE_ZH_CN") != NULL)
+  if (strcmp ("$LOCALE_ZH_CN", "none") != 0
+      && setlocale (LC_ALL, "$LOCALE_ZH_CN") != NULL)
     {
       if (wcrtomb (NULL, 0, NULL) != 1)
         result |= 8;

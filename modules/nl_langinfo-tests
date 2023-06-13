@@ -9,6 +9,7 @@ tests/macros.h
 m4/locale-fr.m4
 m4/codeset.m4
 m4/intl-thread-locale.m4
+m4/musl.m4
 
 Depends-on:
 c-strcase
@@ -22,6 +23,7 @@ configure.ac:
 gt_LOCALE_FR
 gt_LOCALE_FR_UTF8
 gt_FUNC_USELOCALE
+gl_MUSL_LIBC
 
 Makefile.am:
 TESTS += test-nl_langinfo1.sh test-nl_langinfo2.sh test-nl_langinfo-mt

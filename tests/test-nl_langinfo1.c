@@ -139,7 +139,7 @@ main (int argc, char *argv[])
   {
     const char *currency = nl_langinfo (CRNCYSTR);
     ASSERT (strlen (currency) >= 0);
-#if !defined __NetBSD__
+#if !(defined MUSL_LIBC || defined __NetBSD__)
     if (pass > 0)
       ASSERT (strlen (currency) >= 1);
 #endif

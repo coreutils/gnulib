@@ -1,4 +1,4 @@
-# mbrtoc32.m4 serial 14
+# mbrtoc32.m4 serial 15
 dnl Copyright (C) 2014-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -212,7 +212,8 @@ int main ()
   /* This fails on native Windows:
      mbrtoc32 returns (size_t)-1.
      mbrtowc returns 1 (correct).  */
-  if (setlocale (LC_ALL, "$LOCALE_FR") != NULL)
+  if (strcmp ("$LOCALE_FR", "none") != 0
+      && setlocale (LC_ALL, "$LOCALE_FR") != NULL)
     {
       mbstate_t state;
       wchar_t wc = (wchar_t) 0xBADFACE;
@@ -228,7 +229,8 @@ int main ()
   /* This fails on FreeBSD 13.0 and Solaris 11.4:
      mbrtoc32 returns (size_t)-2 or (size_t)-1.
      mbrtowc returns 4 (correct).  */
-  if (setlocale (LC_ALL, "$LOCALE_ZH_CN") != NULL)
+  if (strcmp ("$LOCALE_ZH_CN", "none") != 0
+      && setlocale (LC_ALL, "$LOCALE_ZH_CN") != NULL)
     {
       mbstate_t state;
       wchar_t wc = (wchar_t) 0xBADFACE;

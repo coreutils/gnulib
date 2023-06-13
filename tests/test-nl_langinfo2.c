@@ -86,6 +86,10 @@ main (int argc, char *argv[])
                 ASSERT (c_strcasecmp (fr_CODESET, "UTF-8") == 0
                         || c_strcasecmp (fr_CODESET, "UTF8") == 0);
 
+              /* In musl libc, locales differ at most in the LC_MESSAGES
+                 category.  */
+              #if !defined MUSL_LIBC
+
               /* nl_langinfo items of the LC_NUMERIC category */
               const char *fr_RADIXCHAR = nl_langinfo (RADIXCHAR);
               ASSERT (strcmp (fr_RADIXCHAR, ",") == 0);
@@ -113,9 +117,15 @@ main (int argc, char *argv[])
                         && strcmp (fr_CRNCYSTR + 1, "€") == 0);
               #endif
 
+              #endif
+
               /* nl_langinfo items of the LC_MESSAGES category */
+              /* In musl libc, this works only if the package 'musl-locales' is
+                 installed.  */
+              #if !defined MUSL_LIBC
               const char *fr_YESEXPR = nl_langinfo (YESEXPR);
               ASSERT (c_strcasestr (fr_YESEXPR, "o" /* from "oui" */) != NULL);
+              #endif
 
               skipped_all = false;
             }

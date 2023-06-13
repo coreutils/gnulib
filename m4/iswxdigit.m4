@@ -1,4 +1,4 @@
-# iswxdigit.m4 serial 3
+# iswxdigit.m4 serial 4
 dnl Copyright (C) 2020-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -62,7 +62,8 @@ main (int argc, char *argv[])
   int is;
   int result = 0;
 
-  if (setlocale (LC_ALL, "$LOCALE_JA") != NULL)
+  if (strcmp ("$LOCALE_JA", "none") != 0
+      && setlocale (LC_ALL, "$LOCALE_JA") != NULL)
     {
       /* This fails on NetBSD 8.0.  */
       /* U+FF21 FULLWIDTH LATIN CAPITAL LETTER A */
@@ -70,7 +71,8 @@ main (int argc, char *argv[])
       if (!(is == 0))
         result |= 1;
     }
-  if (setlocale (LC_ALL, "$LOCALE_FR_UTF8") != NULL)
+  if (strcmp ("$LOCALE_FR_UTF8", "none") != 0
+      && setlocale (LC_ALL, "$LOCALE_FR_UTF8") != NULL)
     {
       /* This fails on FreeBSD 13.0.  */
       /* U+0663 ARABIC-INDIC DIGIT THREE */
@@ -83,7 +85,8 @@ main (int argc, char *argv[])
       if (!(is == 0))
         result |= 4;
     }
-  if (setlocale (LC_ALL, "$LOCALE_ZH_CN") != NULL)
+  if (strcmp ("$LOCALE_ZH_CN", "none") != 0
+      && setlocale (LC_ALL, "$LOCALE_ZH_CN") != NULL)
     {
       /* This fails on Solaris 10, Solaris 11.4.  */
       /* U+FF11 FULLWIDTH DIGIT ONE */
