@@ -1,5 +1,5 @@
-# malloc-align.m4 serial 1
-dnl Copyright (C) 2020-2022 Free Software Foundation, Inc.
+# malloc-align.m4 serial 2
+dnl Copyright (C) 2020-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -71,7 +71,7 @@ AC_DEFUN([gl_MALLOC_ALIGNMENT],
               bits |= (uintptr_t) malloc (17027);
               bits |= (uintptr_t) malloc (81231);
               bits |= (uintptr_t) malloc (81231);
-              fprintf (fp, "%u\n", (unsigned int) (((bits ^ (bits - 1)) + 1) >> 1));
+              fprintf (fp, "%u", (unsigned int) (((bits ^ (bits - 1)) + 1) >> 1));
             }
             if (fclose (fp) != 0)
               return 2;
