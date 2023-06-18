@@ -4,7 +4,7 @@ scriptversion=2022-06-04.00; # UTC
 
 # Bootstrap this package from checked-out sources.
 
-# Copyright (C) 2003-2022 Free Software Foundation, Inc.
+# Copyright (C) 2003-2023 Free Software Foundation, Inc.
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -374,7 +374,7 @@ symlink_to_dir()
       for dot_ig in x $vc_ignore; do
         test $dot_ig = x && continue
         ig=$parent/$dot_ig
-        insert_vc_ignore $ig "${dst_dir##*/}"
+        insert_vc_ignore $ig "${dst_dir##*/}/"
       done
     fi
 
@@ -500,7 +500,7 @@ if test ! -d $build_aux; then
   mkdir $build_aux
   for dot_ig in x $vc_ignore; do
     test $dot_ig = x && continue
-    insert_vc_ignore $dot_ig $build_aux
+    insert_vc_ignore $dot_ig $build_aux/
   done
 fi
 
