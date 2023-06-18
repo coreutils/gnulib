@@ -1,6 +1,14 @@
 Description:
 Translate messages to user's native language.
 
+The purpose of this module is:
+  - So that gnulib testdirs include i18n support and thus expose possible
+    link errors on non-glibc platforms. We want to detect such link
+    errors from within gnulib and fix them by adding $(LIBINTL) to
+    various <program>_LDADD variables.
+  - As a prototype if/when we someday unify gnulib-tool, libtoolize, and
+    gettextize in a single tool.
+
 Status:
 obsolete
 
@@ -31,16 +39,6 @@ AM_GNU_GETTEXT([external])
 AM_GNU_GETTEXT_VERSION([0.22])
 
 Makefile.am:
-# If your project uses "gettextize --intl" to put a source-code
-# copy of libintl into the package, every Makefile.am needs
-# -I$(top_builddir)/intl, so that <libintl.h> can be found in this directory.
-# Here's one way to do this:
-#AM_CPPFLAGS += -I$(top_builddir)/intl
-# This option has no effect when the user disables NLS (because then
-# the intl directory contains no libintl.h file).  This option is not
-# enabled by default because the intl directory might not exist if
-# your project does not use "gettext --intl", and some compilers
-# complain about -I options applied to nonexistent directories.
 
 Include:
 "gettext.h"
