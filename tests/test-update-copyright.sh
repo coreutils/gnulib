@@ -252,6 +252,43 @@ EOF
 
 rm $TMP*
 
+## ------------------------ ##
+## Examples from man pages  ##
+## ------------------------ ##
+
+TMP=$TMP_BASE-man
+cat > $TMP.1 <<EOF
+'\" Copyright (C) 1998-2009 Free Software Foundation, Inc.
+EOF
+cat > $TMP.2 <<EOF
+Copyright \(co 1998-2009 Free Software Foundation, Inc.
+EOF
+cat > $TMP.3 <<EOF
+Copyright \(co 1998\(en2009 Free Software Foundation, Inc.
+EOF
+cat > $TMP.4 <<EOF
+Copyright \(co 2009 Free Software Foundation, Inc.
+EOF
+
+UPDATE_COPYRIGHT_YEAR=2010 UPDATE_COPYRIGHT_USE_INTERVALS=1 \
+  update-copyright $TMP.? 1> $TMP-stdout 2> $TMP-stderr
+compare /dev/null $TMP-stdout || exit 1
+compare /dev/null $TMP-stderr || exit 1
+compare - $TMP.1 <<EOF || exit 1
+'\" Copyright (C) 1998-2010 Free Software Foundation, Inc.
+EOF
+compare - $TMP.2 <<EOF || exit 1
+Copyright \(co 1998-2010 Free Software Foundation, Inc.
+EOF
+compare - $TMP.3 <<EOF || exit 1
+Copyright \(co 1998\(en2010 Free Software Foundation, Inc.
+EOF
+compare - $TMP.4 <<EOF || exit 1
+Copyright \(co 2009\(en2010 Free Software Foundation, Inc.
+EOF
+
+rm $TMP*
+
 ## -------------- ##
 ## Current year.  ##
 ## -------------- ##
