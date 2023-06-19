@@ -486,7 +486,7 @@ The source files, more precisely the files in @file{lib/} and
 license.  Most often, they are under the same license.  But files can be
 shared among several modules, and in these cases it can happen that a
 source file is under a weaker license than noted in the module
-description --- namely under the weakest license among the licenses of
+description -- namely under the weakest license among the licenses of
 the modules that contain the file.
 
 Different licenses apply to files in special directories:

@@ -222,7 +222,7 @@ a better choice.
 @section Optimizations of multithreaded code
 
 Despite all the optimizations of multithreading primitives that have been
-implemented over the years --- from
+implemented over the years -- from
 @url{https://en.wikipedia.org/wiki/Compare-and-swap,
 atomic operations in hardware},
 over @url{https://en.wikipedia.org/wiki/Futex, futexes} and
@@ -232,7 +232,7 @@ in the Linux kernel, to lock elision
 @url{https://lwn.net/Articles/534758/, [1]}
 @url{https://www.gnu.org/software/libc/manual/html_node/Elision-Tunables.html,
 [2]})
---- single-threaded programs can still profit performance-wise from the
+-- single-threaded programs can still profit performance-wise from the
 assertion that they are single-threaded.
 
 Gnulib defines four facilities that help optimizing for the single-threaded

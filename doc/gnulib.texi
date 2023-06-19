@@ -632,7 +632,7 @@ When a module description contains an @code{AC_LIBOBJ([foo])}
 invocation, you @strong{must} list the source file @code{lib/foo.c}
 in the @code{Files} section.  This is needed even if the module
 depends on another module that already lists @code{lib/foo.c} in its
-@code{Files} section --- because your module might be used among
+@code{Files} section -- because your module might be used among
 the test modules (in the directory specified through @samp{--tests-base})
 and the other module among the main modules (in the directory specified
 through @samp{--source-base}), and in this situation, the
@@ -7214,7 +7214,7 @@ the source directory of a package, preparing for the state where
 
 @code{autopull.sh} is a program for fetching dependencies that may
 require network accesses.  It manages the Git submodules, including
-Gnulib --- assuming that Gnulib is a Git submodule. It also can fetch
+Gnulib -- assuming that Gnulib is a Git submodule. It also can fetch
 the PO files for internationalized packages.
 
 @code{autogen.sh} is a program that is meant to be run after

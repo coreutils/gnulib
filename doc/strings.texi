@@ -68,7 +68,7 @@ In POSIX, the character encoding is determined by the locale.  The
 locale is some environmental attribute that the user can choose.
 
 Depending on the encoding, in general, every character is represented by
-one or more bytes (up to 4 bytes in practice --- but
+one or more bytes (up to 4 bytes in practice -- but
 use @code{MB_LEN_MAX} instead of the number 4 in the code).
 @cindex unibyte locale
 @cindex multibyte locale
@@ -596,7 +596,7 @@ of processing.
 @subsection The @code{char} type
 
 The @code{char} type is in the C language since the beginning in the
-1970ies, but --- due to its limitation of 256 possible values --- is no
+1970ies, but -- due to its limitation of 256 possible values -- is no
 longer the adequate type for storing a character.
 
 Technically, it is still adequate in unibyte locales.  But since most
@@ -641,7 +641,7 @@ On Windows platforms and on AIX in 32-bit mode, @code{wchar_t} is a
 16-bit type.  This means that it can never accommodate an entire Unicode
 character.  Either the @code{wchar_t *} strings are limited to
 characters in UCS-2 (the ``Basic Multilingual Plane'' of Unicode), or
---- if @code{wchar_t *} strings are encoded in UTF-16 --- a
+-- if @code{wchar_t *} strings are encoded in UTF-16 -- a
 @code{wchar_t} represents only half of a character in the worst case,
 making the @posixheader{wctype.h} functions pointless.
 
@@ -649,8 +649,8 @@ making the @posixheader{wctype.h} functions pointless.
 On Solaris and FreeBSD, the @code{wchar_t} encoding is locale dependent
 and undocumented.  This means, if you want to know any property of a
 @code{wchar_t} character, other than the properties defined by
-@posixheader{wctype.h} --- such as whether it's a dash, currency symbol,
-paragraph separator, or similar ---, you have to convert it to
+@posixheader{wctype.h} -- such as whether it's a dash, currency symbol,
+paragraph separator, or similar --, you have to convert it to
 @code{char *} encoding first, by use of the function @posixfunc{wctomb}.
 
 @item
