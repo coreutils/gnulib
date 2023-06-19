@@ -76,7 +76,7 @@ When every character is represented by only 1 byte, we speak of an
 ``unibyte locale'', otherwise of a ``multibyte locale''.
 
 It is important to realize that the majority of Unix installations
-nowadays use UTF-8 or GB18030 as locale encoding; therefore, the
+nowadays use UTF-8 as locale encoding; therefore, the
 majority of users are using multibyte locales.
 
 Three important facts to remember are:
@@ -89,8 +89,8 @@ As a consequence:
 @itemize @bullet
 @item
 The @posixheader{ctype.h} API, that was designed only with unibyte
-encodings in mind, is useless nowadays; it does not work in
-multibyte locales.
+encodings in mind, is useless nowadays for general text processing; it
+does not work in multibyte locales.
 @item
 The @posixfunc{strlen} function does not return the number of characters
 in a string.  Nor does it return the number of screen columns occupied
@@ -107,9 +107,9 @@ represented by a hollow box.
 @emph{Multibyte does not imply UTF-8 encoding.}
 @end cartouche
 
-While UTF-8 is the most common multibyte encoding, GB18030 is there as
-well and will not go away within decades, because it is a Chinese
-government standard, last revised in 2022.
+While UTF-8 is the most common multibyte encoding, GB18030 is also a
+supported locale encoding on GNU systems (mostly because it is a Chinese
+government standard, last revised in 2022).
 
 @cartouche
 @emph{Searching for a character in a string is not the same as searching
@@ -184,7 +184,7 @@ Gnulib also has additional API.
 @node Iterating through strings
 @subsubsection Iterating through strings
 
-For complex string processing, the provided strings functions may not be
+For complex string processing, the provided string functions may not be
 enough, and what you need is a way to iterate through a string while
 processing each (possibly multibyte) character in turn.  Gnulib provides
 two modules for this purpose.  Both iterate through the string in
@@ -604,7 +604,8 @@ locales nowadays are multibyte locales, it makes no sense to write a
 program that runs only in unibyte locales.
 
 ISO C and POSIX standardized an API for characters of type @code{char},
-in @code{<ctype.h>}.  This API is nowadays useless and obsolete.
+in @code{<ctype.h>}.  This API is nowadays useless and obsolete, when it
+comes to general text processing.
 
 The important lessons to remember are:
 
