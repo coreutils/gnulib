@@ -39,20 +39,28 @@ INSTALL_PRELUDE = echo '@firstparagraphindent insert'
 
 OMIT_TRAILING_EMPTY_LINES = /^$$/H; /^$$/d; x; s/\n//p; s/\n*//; x
 
-# INSTALL file with directed ASCII quotation marks.
+# INSTALL file with UTF-8 encoding.
 INSTALL: install.texi
 	$(INSTALL_PRELUDE) | cat - $< > tmp.texi
 	$(MAKEINFO) --plaintext --no-validate tmp.texi \
 	  | sed -e '$(OMIT_TRAILING_EMPTY_LINES)' > $@
 	rm -f tmp.texi
 
-# INSTALL file with ISO 646 or ISO 8859 quotation marks.
+# INSTALL file with ASCII encoding.
 INSTALL.ISO: INSTALL
-	sed -e "s/\`\([^']*\)'/'\1'/g" $< > $@
+	sed \
+          -e 's/©/(C)/g' \
+          -e 's/–/-/g' \
+          -e 's/‘/'\''/g' \
+          -e 's/’/'\''/g' \
+          -e 's/“/"/g' \
+          -e 's/”/"/g' \
+          $< > $@
 
-# INSTALL file with ISO 10646 (Unicode) quotation marks.
+# INSTALL file with UTF-8 encoding.
+# This file is obsolescent, as INSTALL now uses UTF-8.
 INSTALL.UTF-8: INSTALL
-	sed -e "s/\`\([^']*\)'/‘\1’/g" $< > $@
+	cp $< $@
 
 GNULIB_TEXI_FILES = $(filter-out maintain.texi make-stds.texi standards.texi,$(wildcard *.texi)) $(wildcard posix-headers/*.texi) $(wildcard posix-functions/*.texi) $(wildcard glibc-headers/*.texi) $(wildcard glibc-functions/*.texi)
 NEWEST_GNULIB_TEXI_FILE = $(shell ls -t $(GNULIB_TEXI_FILES) | sed 1q)
