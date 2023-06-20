@@ -4607,19 +4607,19 @@ you should not link to @var{p}.
 
 A web page recommends a program in an implicit but particularly strong
 way if it requires users to run that program in order to use the page.
-Many pages contain Javascript code which they recommend in this way.
-This Javascript code may be free or non-free, but non-free is the usual
+Many pages contain JavaScript code which they recommend in this way.
+This JavaScript code may be free or non-free, but non-free is the usual
 case.
 
 If the purpose for which you would refer to the page cannot be carried
-out without running non-free Javascript code, then you should not refer
+out without running non-free JavaScript code, then you should not refer
 to it.  Thus, if the purpose of referring to the page is for people to
 view a video, or subscribing to a mailing list, and the viewing or
 subscribing fail to work if the user's browser blocks the non-free
-Javascript code, then don't refer to that page.
+JavaScript code, then don't refer to that page.
 
 The extreme case is that of web sites which depend on non-free
-Javascript code even to @emph{see} the contents of the pages.  Any
+JavaScript code even to @emph{see} the contents of the pages.  Any
 site hosted on @indicateurl{wix.com} has this problem, and so do some
 other sites.  Referring people to such pages to read their contents
 is, in effect, urging them to run those non-free programs---so please
