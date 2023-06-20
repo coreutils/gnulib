@@ -12,14 +12,34 @@ without warranty of any kind.
 Basic Installation
 ==================
 
-   Briefly, the shell command ‘./configure && make && make install’
-should configure, build, and install this package.  The following
-more-detailed instructions are generic; see the ‘README’ file for
-instructions specific to this package.  Some packages provide this
-‘INSTALL’ file but do not implement all of the features documented
-below.  The lack of an optional feature in a given package is not
-necessarily a bug.  More recommendations for GNU packages can be found
-in *note Makefile Conventions: (standards)Makefile Conventions.
+   Briefly, the following shell commands:
+
+     test -f configure || ./bootstrap
+     ./configure
+     make
+     make install
+
+should configure, build, and install this package.  The ‘./bootstrap’
+line is intended for developers; you can omit it when building from a
+distribution tarball.
+
+   The following more-detailed instructions are generic; see the
+‘README’ file for instructions specific to this package.  Some packages
+provide this ‘INSTALL’ file but do not implement all of the features
+documented below.  The lack of an optional feature in a given package is
+not necessarily a bug.  More recommendations for GNU packages can be
+found in *note Makefile Conventions: (standards)Makefile Conventions.
+
+   If the ‘bootstrap’ shell script exists, it attempts to build the
+‘configure’ shell script and related files, perhaps by downloading other
+software components from the network, and by using developer tools that
+are less commonly installed.  Because the output of ‘bootstrap’ is
+system-independent, it is normally run by a package developer so that
+its output can be put into the distribution tarball and ordinary
+builders and users need not run ‘bootstrap’.  Some packages have
+commands like ‘./autopull.sh’ and ‘./autogen.sh’ that you can run
+instead of ‘./bootstrap’, for more fine-grained control over
+bootstrapping.
 
    The ‘configure’ shell script attempts to guess correct values for
 various system-dependent variables used during compilation.  It uses
@@ -49,31 +69,36 @@ you want to change it or regenerate ‘configure’ using a newer version of
 
    The simplest way to compile this package is:
 
-  1. ‘cd’ to the directory containing the package’s source code and type
-     ‘./configure’ to configure the package for your system.
+  1. ‘cd’ to the directory containing the package’s source code.
+
+  2. If this is a developer checkout and file ‘configure’ does not yet
+     exist, type ‘./bootstrap’ to create it.  You may need special
+     developer tools and network access to bootstrap.
+
+  3. Type ‘./configure’ to configure the package for your system.
 
      Running ‘configure’ might take a while.  While running, it prints
      some messages telling which features it is checking for.
 
-  2. Type ‘make’ to compile the package.
+  4. Type ‘make’ to compile the package.
 
-  3. Optionally, type ‘make check’ to run any self-tests that come with
+  5. Optionally, type ‘make check’ to run any self-tests that come with
      the package, generally using the just-built uninstalled binaries.
 
-  4. Type ‘make install’ to install the programs and any data files and
+  6. Type ‘make install’ to install the programs and any data files and
      documentation.  When installing into a prefix owned by root, it is
      recommended that the package be configured and built as a regular
      user, and only the ‘make install’ phase executed with root
      privileges.
 
-  5. Optionally, type ‘make installcheck’ to repeat any self-tests, but
+  7. Optionally, type ‘make installcheck’ to repeat any self-tests, but
      this time using the binaries in their final installed location.
      This target does not install anything.  Running this target as a
      regular user, particularly if the prior ‘make install’ required
      root privileges, verifies that the installation completed
      correctly.
 
-  6. You can remove the program binaries and object files from the
+  8. You can remove the program binaries and object files from the
      source code directory by typing ‘make clean’.  To also remove the
      files that ‘configure’ created (so you can compile the package for
      a different kind of computer), type ‘make distclean’.  There is
@@ -82,12 +107,12 @@ you want to change it or regenerate ‘configure’ using a newer version of
      all sorts of other programs in order to regenerate files that came
      with the distribution.
 
-  7. Often, you can also type ‘make uninstall’ to remove the installed
+  9. Often, you can also type ‘make uninstall’ to remove the installed
      files again.  In practice, not all packages have tested that
      uninstallation works correctly, even though it is required by the
      GNU Coding Standards.
 
-  8. Some packages, particularly those that use Automake, provide ‘make
+  10. Some packages, particularly those that use Automake, provide ‘make
      distcheck’, which can by used by developers to test that all other
      targets like ‘make install’ and ‘make uninstall’ work correctly.
      This target is generally not run by end users.
@@ -103,7 +128,7 @@ for details on some of the pertinent environment variables.
 by setting variables in the command line or in the environment.  Here is
 an example:
 
-     ./configure CC=c99 CFLAGS=-g LIBS=-lposix
+     ./configure CC=gcc CFLAGS=-g LIBS=-lposix
 
    *Note Defining Variables::, for more details.
 
@@ -123,19 +148,10 @@ architecture at a time in the source code directory.  After you have
 installed the package for one architecture, use ‘make distclean’ before
 reconfiguring for another architecture.
 
-   On MacOS X 10.5 and later systems, you can create libraries and
-executables that work on multiple system types—known as “fat” or
-“universal” binaries—by specifying multiple ‘-arch’ options to the
-compiler but only a single ‘-arch’ option to the preprocessor.  Like
-this:
-
-     ./configure CC="gcc -arch i386 -arch x86_64 -arch ppc -arch ppc64" \
-                 CXX="g++ -arch i386 -arch x86_64 -arch ppc -arch ppc64" \
-                 CPP="gcc -E" CXXCPP="g++ -E"
-
-   This is not guaranteed to produce working output in all cases, you
-may have to build one architecture at a time and combine the results
-using the ‘lipo’ tool if you have problems.
+   Some platforms, notably macOS, support “fat” or “universal” binaries,
+where a single binary can execute on different architectures.  On these
+platforms you can configure and compile just once, with options specific
+to that platform.
 
 Installation Names
 ==================
@@ -195,17 +211,12 @@ Optional Features
 with an extra prefix or suffix on their names by giving ‘configure’ the
 option ‘--program-prefix=PREFIX’ or ‘--program-suffix=SUFFIX’.
 
-   Some packages pay attention to ‘--enable-FEATURE’ options to
-‘configure’, where FEATURE indicates an optional part of the package.
-They may also pay attention to ‘--with-PACKAGE’ options, where PACKAGE
-is something like ‘gnu-as’ or ‘x’ (for the X Window System).  The
-‘README’ should mention any ‘--enable-’ and ‘--with-’ options that the
-package recognizes.
-
-   For packages that use the X Window System, ‘configure’ can usually
-find the X include and library files automatically, but if it doesn’t,
-you can use the ‘configure’ options ‘--x-includes=DIR’ and
-‘--x-libraries=DIR’ to specify their locations.
+   Some packages pay attention to ‘--enable-FEATURE’ and
+‘--disable-FEATURE’ options to ‘configure’, where FEATURE indicates an
+optional part of the package.  They may also pay attention to
+‘--with-PACKAGE’ and ‘--without-PACKAGE’ options, where PACKAGE is
+something like ‘gnu-ld’.  ‘./configure --help’ should mention the
+‘--enable-...’ and ‘--with-...’ options that the package recognizes.
 
    Some packages offer the ability to configure how verbose the
 execution of ‘make’ will be.  For these packages, running ‘./configure
@@ -213,42 +224,6 @@ execution of ‘make’ will be.  For these packages, running ‘./configure
 overridden with ‘make V=1’; while running ‘./configure
 --disable-silent-rules’ sets the default to verbose, which can be
 overridden with ‘make V=0’.
-
-Particular systems
-==================
-
-   On HP-UX, the default C compiler is not ANSI C compatible.  If GNU CC
-is not installed, it is recommended to use the following options in
-order to use an ANSI C compiler:
-
-     ./configure CC="cc -Ae -D_XOPEN_SOURCE=500"
-
-and if that doesn’t work, install pre-built binaries of GCC for HP-UX.
-
-   HP-UX ‘make’ updates targets which have the same timestamps as their
-prerequisites, which makes it generally unusable when shipped generated
-files such as ‘configure’ are involved.  Use GNU ‘make’ instead.
-
-   On OSF/1 a.k.a. Tru64, some versions of the default C compiler cannot
-parse its ‘<wchar.h>’ header file.  The option ‘-nodtk’ can be used as a
-workaround.  If GNU CC is not installed, it is therefore recommended to
-try
-
-     ./configure CC="cc"
-
-and if that doesn’t work, try
-
-     ./configure CC="cc -nodtk"
-
-   On Solaris, don’t put ‘/usr/ucb’ early in your ‘PATH’.  This
-directory contains several dysfunctional programs; working variants of
-these programs are available in ‘/usr/bin’.  So, if you need ‘/usr/ucb’
-in your ‘PATH’, put it _after_ ‘/usr/bin’.
-
-   On Haiku, software installed for all users goes in ‘/boot/common’,
-not ‘/usr/local’.  It is recommended to use the following options:
-
-     ./configure --prefix=/boot/common
 
 Specifying the System Type
 ==========================
@@ -258,8 +233,9 @@ automatically, but needs to determine by the type of machine the package
 will run on.  Usually, assuming the package is built to be run on the
 _same_ architectures, ‘configure’ can figure that out, but if it prints
 a message saying it cannot guess the machine type, give it the
-‘--build=TYPE’ option.  TYPE can either be a short name for the system
-type, such as ‘sun4’, or a canonical name which has the form:
+‘--build=TYPE’ option.  TYPE can either be a short name like ‘mingw64’
+for the system type, or a canonical name like ‘x86_64-pc-linux-gnu’
+which has the form:
 
      CPU-COMPANY-SYSTEM
 
@@ -268,7 +244,7 @@ where SYSTEM can have one of these forms:
      OS
      KERNEL-OS
 
-   See the file ‘config.sub’ for the possible values of each field.  If
+See the file ‘config.sub’ for the possible values of each field.  If
 ‘config.sub’ isn’t included in this package, then this package doesn’t
 need to know the machine type.
 
@@ -343,13 +319,6 @@ operates.
 ‘-C’
      Alias for ‘--cache-file=config.cache’.
 
-‘--quiet’
-‘--silent’
-‘-q’
-     Do not print messages saying which checks are being made.  To
-     suppress all normal output, redirect it to ‘/dev/null’ (any error
-     messages will still be shown).
-
 ‘--srcdir=DIR’
      Look for the package’s source code in directory DIR.  Usually
      ‘configure’ can determine that directory automatically.
@@ -359,10 +328,30 @@ operates.
      more details, including other options available for fine-tuning the
      installation locations.
 
+‘--build=TYPE’
+     Build for architecture TYPE.  *note System Type::.  for more
+     details, including other system type options.
+
+‘--enable-FEATURE’
+‘--disable-FEATURE’
+     Enable or disable the optional FEATURE.  *Note Optional Features::.
+
+‘--with-PACKAGE’
+‘--without-PACKAGE’
+     Use or omit PACKAGE when building.  *Note Optional Features::.
+
+‘--quiet’
+‘--silent’
+‘-q’
+     Do not print messages saying which checks are being made.  To
+     suppress all normal output, redirect it to ‘/dev/null’ (any error
+     messages will still be shown).
+
 ‘--no-create’
 ‘-n’
      Run the configure checks, but stop before creating any output
      files.
 
-‘configure’ also accepts some other, not widely useful, options.  Run
-‘configure --help’ for more details.
+‘configure’ also recognizes several environment variables, and accepts
+some other, less widely useful, options.  Run ‘configure --help’ for
+more details.
