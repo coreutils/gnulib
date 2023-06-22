@@ -27,6 +27,7 @@ in memory of a running C program.
 @menu
 * C strings::
 * Strings with NUL characters::
+* String Functions in C Locale::
 * Comparison of string APIs::
 @end menu
 
