@@ -9,7 +9,9 @@ doc = gnulib
 
 lang_env = env LANG= LC_MESSAGES= LC_ALL= LANGUAGE=
 makeinfo_prog = makeinfo
-MAKEINFO = $(lang_env) $(makeinfo_prog)
+# The customization variable CHECK_NORMAL_MENU_STRUCTURE is necessary with
+# makeinfo versions ≥ 6.8.
+MAKEINFO = $(lang_env) $(makeinfo_prog) -c CHECK_NORMAL_MENU_STRUCTURE=1
 
 manual_opts = --no-split --reference-limit=2000
 TEXI2HTML = $(MAKEINFO) $(manual_opts) --html
