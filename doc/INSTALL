@@ -1,18 +1,10 @@
 Installation Instructions
 *************************
 
-   Copyright © 1994–1996, 1999–2002, 2004–2017, 2020–2023 Free Software
-Foundation, Inc.
-
-   Copying and distribution of this file, with or without modification,
-are permitted in any medium without royalty provided the copyright
-notice and this notice are preserved.  This file is offered as-is,
-without warranty of any kind.
-
 Basic Installation
 ==================
 
-   Briefly, the following shell commands:
+   The following shell commands:
 
      test -f configure || ./bootstrap
      ./configure
@@ -28,7 +20,7 @@ distribution tarball.
 provide this ‘INSTALL’ file but do not implement all of the features
 documented below.  The lack of an optional feature in a given package is
 not necessarily a bug.  More recommendations for GNU packages can be
-found in *note Makefile Conventions: (standards)Makefile Conventions.
+found in the GNU Coding Standards.
 
    If the ‘bootstrap’ shell script exists, it attempts to build the
 ‘configure’ shell script and related files, perhaps by downloading other
@@ -47,8 +39,7 @@ those values to create a ‘Makefile’ in each directory of the package.
 It may also create one or more ‘.h’ files containing system-dependent
 definitions.  Finally, it creates a shell script ‘config.status’ that
 you can run in the future to recreate the current configuration, and a
-file ‘config.log’ containing compiler output (useful mainly for
-debugging ‘configure’).
+file ‘config.log’ containing output useful for debugging ‘configure’.
 
    It can also use an optional file (typically called ‘config.cache’ and
 enabled with ‘--cache-file=config.cache’ or simply ‘-C’) that saves the
@@ -62,10 +53,9 @@ be considered for the next release.  If you are using the cache, and at
 some point ‘config.cache’ contains results you don’t want to keep, you
 may remove or edit it.
 
-   The file ‘configure.ac’ (or ‘configure.in’) is used to create
-‘configure’ by a program called ‘autoconf’.  You need ‘configure.ac’ if
-you want to change it or regenerate ‘configure’ using a newer version of
-‘autoconf’.
+   The ‘autoconf’ program generates ‘configure’ from the file
+‘configure.ac’.  Normally you should edit ‘configure.ac’ instead of
+editing ‘configure’ directly.
 
    The simplest way to compile this package is:
 
@@ -75,10 +65,9 @@ you want to change it or regenerate ‘configure’ using a newer version of
      exist, type ‘./bootstrap’ to create it.  You may need special
      developer tools and network access to bootstrap.
 
-  3. Type ‘./configure’ to configure the package for your system.
-
-     Running ‘configure’ might take a while.  While running, it prints
-     some messages telling which features it is checking for.
+  3. Type ‘./configure’ to configure the package for your system.  This
+     might take a while.  While running, ‘configure’ prints messages
+     telling which features it is checking for.
 
   4. Type ‘make’ to compile the package.
 
@@ -103,19 +92,11 @@ you want to change it or regenerate ‘configure’ using a newer version of
      files that ‘configure’ created (so you can compile the package for
      a different kind of computer), type ‘make distclean’.  There is
      also a ‘make maintainer-clean’ target, but that is intended mainly
-     for the package’s developers.  If you use it, you may have to get
-     all sorts of other programs in order to regenerate files that came
-     with the distribution.
+     for the package’s developers.  If you use it, you may have to
+     bootstrap again.
 
-  9. Often, you can also type ‘make uninstall’ to remove the installed
-     files again.  In practice, not all packages have tested that
-     uninstallation works correctly, even though it is required by the
-     GNU Coding Standards.
-
-  10. Some packages, particularly those that use Automake, provide ‘make
-     distcheck’, which can by used by developers to test that all other
-     targets like ‘make install’ and ‘make uninstall’ work correctly.
-     This target is generally not run by end users.
+  9. If the package follows the GNU Coding Standards, you can type ‘make
+     uninstall’ to remove the installed files.
 
 Compilers and Options
 =====================
@@ -130,23 +111,23 @@ an example:
 
      ./configure CC=gcc CFLAGS=-g LIBS=-lposix
 
-   *Note Defining Variables::, for more details.
+   See *note Defining Variables:: for more details.
 
 Compiling For Multiple Architectures
 ====================================
 
    You can compile the package for more than one kind of computer at the
-same time, by placing the object files for each architecture in their
-own directory.  To do this, you can use GNU ‘make’.  ‘cd’ to the
-directory where you want the object files and executables to go and run
-the ‘configure’ script.  ‘configure’ automatically checks for the source
+same time, by placing the object files for each system in their own
+directory.  To do this, you can use GNU ‘make’.  ‘cd’ to the directory
+where you want the object files and executables to go and run the
+‘configure’ script.  ‘configure’ automatically checks for the source
 code in the directory that ‘configure’ is in and in ‘..’.  This is known
 as a “VPATH” build.
 
    With a non-GNU ‘make’, it is safer to compile the package for one
-architecture at a time in the source code directory.  After you have
-installed the package for one architecture, use ‘make distclean’ before
-reconfiguring for another architecture.
+system at a time in the source code directory.  After you have installed
+the package for one system, use ‘make distclean’ before reconfiguring
+for another system.
 
    Some platforms, notably macOS, support “fat” or “universal” binaries,
 where a single binary can execute on different architectures.  On these
@@ -225,37 +206,51 @@ overridden with ‘make V=1’; while running ‘./configure
 --disable-silent-rules’ sets the default to verbose, which can be
 overridden with ‘make V=0’.
 
-Specifying the System Type
-==========================
+Specifying a System Type
+========================
 
-   There may be some features ‘configure’ cannot figure out
-automatically, but needs to determine by the type of machine the package
-will run on.  Usually, assuming the package is built to be run on the
-_same_ architectures, ‘configure’ can figure that out, but if it prints
-a message saying it cannot guess the machine type, give it the
-‘--build=TYPE’ option.  TYPE can either be a short name like ‘mingw64’
-for the system type, or a canonical name like ‘x86_64-pc-linux-gnu’
-which has the form:
+   By default ‘configure’ builds for the current system.  To create
+binaries that can run on a different system type, specify a
+‘--host=TYPE’ option along with compiler variables that specify how to
+generate object code for TYPE.  For example, to create binaries intended
+to run on a 64-bit ARM processor:
 
-     CPU-COMPANY-SYSTEM
+     ./configure --host=aarch64-linux-gnu \
+        CC=aarch64-linux-gnu-gcc \
+        CXX=aarch64-linux-gnu-g++
 
-where SYSTEM can have one of these forms:
+If done on a machine that can execute these binaries (e.g., via
+‘qemu-aarch64’, ‘$QEMU_LD_PREFIX’, and Linux’s ‘binfmt_misc’
+capability), the build behaves like a native build.  Otherwise it is a
+cross-build: ‘configure’ will make cross-compilation guesses instead of
+running test programs, and ‘make check’ will not work.
 
-     OS
-     KERNEL-OS
+   A system type can either be a short name like ‘mingw64’, or a
+canonical name like ‘x86_64-pc-linux-gnu’.  Canonical names have the
+form CPU-COMPANY-SYSTEM where SYSTEM is either OS or KERNEL-OS.  To
+canonicalize and validate a system type, you can run the command
+‘config.sub’, which is often squirreled away in a subdirectory like
+‘build-aux’.  For example:
 
-See the file ‘config.sub’ for the possible values of each field.  If
-‘config.sub’ isn’t included in this package, then this package doesn’t
-need to know the machine type.
+     $ build-aux/config.sub arm64-linux
+     aarch64-unknown-linux-gnu
+     $ build-aux/config.sub riscv-lnx
+     Invalid configuration 'riscv-lnx': OS 'lnx' not recognized
 
-   If you are _building_ compiler tools for cross-compiling, you should
-use the option ‘--target=TYPE’ to select the type of system they will
-produce code for.
+You can look at the ‘config.sub’ file to see which types are recognized.
+If the file is absent, this package does not need the system type.
 
-   If you want to _use_ a cross compiler, that generates code for a
-platform different from the build platform, you should specify the
-“host” platform (i.e., that on which the generated programs will
-eventually be run) with ‘--host=TYPE’.
+   If ‘configure’ fails with the diagnostic “cannot guess build type”.
+‘config.sub’ did not recognize your system’s type.  In this case, first
+fetch the newest versions of these files from the GNU config package
+(https://savannah.gnu.org/projects/config).  If that fixes things,
+please report it to the maintainers of the package containing
+‘configure’.  Otherwise, you can try the configure option ‘--build=TYPE’
+where TYPE comes close to your system type; also, please report the
+problem to <config-patches@gnu.org>.
+
+   For more details about configuring system types, see the Autoconf
+documentation.
 
 Sharing Defaults
 ================
@@ -328,9 +323,8 @@ operates.
      more details, including other options available for fine-tuning the
      installation locations.
 
-‘--build=TYPE’
-     Build for architecture TYPE.  *note System Type::.  for more
-     details, including other system type options.
+‘--host=TYPE’
+     Build binaries for system TYPE.  *Note System Types::.
 
 ‘--enable-FEATURE’
 ‘--disable-FEATURE’
@@ -355,3 +349,14 @@ operates.
 ‘configure’ also recognizes several environment variables, and accepts
 some other, less widely useful, options.  Run ‘configure --help’ for
 more details.
+
+Copyright notice
+================
+
+   Copyright © 1994–1996, 1999–2002, 2004–2017, 2020–2023 Free Software
+Foundation, Inc.
+
+   Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.  This file is offered as-is,
+without warranty of any kind.

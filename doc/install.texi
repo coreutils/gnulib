@@ -2,23 +2,13 @@
 @c the INSTALL file.
 
 @ifclear autoconf
-
 @unnumbered Installation Instructions
-
-Copyright @copyright{} 1994--1996, 1999--2002, 2004--2017, 2020--2023
-Free Software Foundation, Inc.
-
-Copying and distribution of this file, with or without modification, are
-permitted in any medium without royalty provided the copyright notice
-and this notice are preserved.  This file is offered as-is, without
-warranty of any kind.
-
 @end ifclear
 
 @node Basic Installation
 @section Basic Installation
 
-Briefly, the following shell commands:
+The following shell commands:
 
 @example
 test -f configure || ./bootstrap
@@ -41,8 +31,13 @@ of the features documented below.  The lack of an optional feature in a
 given package is not necessarily a bug.
 @end ifclear
 More recommendations for GNU packages can be found in
+@ifset autoconf
 @ref{Makefile Conventions, , Makefile Conventions, standards,
 GNU Coding Standards}.
+@end ifset
+@ifclear autoconf
+the GNU Coding Standards.
+@end ifclear
 
 If the @command{bootstrap} shell script exists, it attempts to build the
 @command{configure} shell script and related files, perhaps by
@@ -61,8 +56,8 @@ those values to create a @file{Makefile} in each directory of the
 package.  It may also create one or more @file{.h} files containing
 system-dependent definitions.  Finally, it creates a shell script
 @file{config.status} that you can run in the future to recreate the
-current configuration, and a file @file{config.log} containing compiler
-output (useful mainly for debugging @command{configure}).
+current configuration, and a file @file{config.log} containing
+output useful for debugging @command{configure}.
 
 It can also use an optional file (typically called @file{config.cache}
 and enabled with @option{--cache-file=config.cache} or simply
@@ -77,10 +72,9 @@ they can be considered for the next release.  If you are using the
 cache, and at some point @file{config.cache} contains results you don't
 want to keep, you may remove or edit it.
 
-The file @file{configure.ac} (or @file{configure.in}) is used to create
-@file{configure} by a program called @command{autoconf}.  You need
-@file{configure.ac} if you want to change it or regenerate
-@file{configure} using a newer version of @command{autoconf}.
+The @command{autoconf} program generates @file{configure} from the file
+@file{configure.ac}.  Normally you should edit @file{configure.ac}
+instead of editing @file{configure} directly.
 
 The simplest way to compile this package is:
 
@@ -95,8 +89,7 @@ You may need special developer tools and network access to bootstrap.
 
 @item
 Type @samp{./configure} to configure the package for your system.
-
-Running @command{configure} might take a while.  While running, it prints some
+This might take a while.  While running, @command{configure} prints
 messages telling which features it is checking for.
 
 @item
@@ -125,21 +118,11 @@ code directory by typing @samp{make clean}.  To also remove the files
 that @command{configure} created (so you can compile the package for a
 different kind of computer), type @samp{make distclean}.  There is also
 a @samp{make maintainer-clean} target, but that is intended mainly for
-the package's developers.  If you use it, you may have to get all sorts
-of other programs in order to regenerate files that came with the
-distribution.
+the package's developers.  If you use it, you may have to bootstrap again.
 
 @item
-Often, you can also type @samp{make uninstall} to remove the installed
-files again.  In practice, not all packages have tested that
-uninstallation works correctly, even though it is required by the
-GNU Coding Standards.
-
-@item
-Some packages, particularly those that use Automake, provide @samp{make
-distcheck}, which can by used by developers to test that all other
-targets like @samp{make install} and @samp{make uninstall} work
-correctly.  This target is generally not run by end users.
+If the package follows the GNU Coding Standards,
+you can type @samp{make uninstall} to remove the installed files.
 @end enumerate
 
 @node Compilers and Options
@@ -157,14 +140,18 @@ Here is an example:
 ./configure CC=gcc CFLAGS=-g LIBS=-lposix
 @end example
 
-@xref{Defining Variables}, for more details.
-
+See
+@ref{Defining Variables}
+@ifset autoconf
+and @ref{Preset Output Variables}
+@end ifset
+for more details.
 
 @node Multiple Architectures
 @section Compiling For Multiple Architectures
 
 You can compile the package for more than one kind of computer at the
-same time, by placing the object files for each architecture in their
+same time, by placing the object files for each system in their
 own directory.  To do this, you can use GNU @command{make}.
 @command{cd} to the directory where you want the object files and
 executables to go and run the @command{configure} script.
@@ -174,9 +161,9 @@ known as a @dfn{VPATH} build.
 
 With a non-GNU @command{make},
 it is safer to compile the package for one
-architecture at a time in the source code directory.  After you have
-installed the package for one architecture, use @samp{make distclean}
-before reconfiguring for another architecture.
+system at a time in the source code directory.  After you have
+installed the package for one system, use @samp{make distclean}
+before reconfiguring for another system.
 
 Some platforms, notably macOS, support ``fat'' or ``universal'' binaries,
 where a single binary can execute on different architectures.
@@ -263,44 +250,68 @@ output, which can be overridden with @code{make V=1}; while running
 @samp{./configure --disable-silent-rules} sets the default to verbose,
 which can be overridden with @code{make V=0}.
 
-@node System Type
-@section Specifying the System Type
+@node System Types
+@section Specifying a System Type
 
-There may be some features @command{configure} cannot figure out
-automatically, but needs to determine by the type of machine the package
-will run on.  Usually, assuming the package is built to be run on the
-@emph{same} architectures, @command{configure} can figure that out, but
-if it prints a message saying it cannot guess the machine type, give it
-the @option{--build=@var{type}} option.  @var{type} can either be a
-short name like @samp{mingw64} for the system type, or a canonical name
-like @samp{x86_64-pc-linux-gnu}
-which has the form:
+By default @command{configure} builds for the current system.
+To create binaries that can run on a different system type,
+specify a @option{--host=@var{type}} option along with compiler
+variables that specify how to generate object code for @var{type}.
+For example, to create binaries intended to run on a 64-bit ARM
+processor:
 
 @example
-@var{cpu}-@var{company}-@var{system}
+./configure --host=aarch64-linux-gnu \
+   CC=aarch64-linux-gnu-gcc \
+   CXX=aarch64-linux-gnu-g++
 @end example
 
 @noindent
-where @var{system} can have one of these forms:
+If done on a machine that can execute these binaries
+(e.g., via @command{qemu-aarch64}, @env{$QEMU_LD_PREFIX}, and Linux's
+@code{binfmt_misc} capability), the build behaves like a native build.
+Otherwise it is a cross-build: @code{configure}
+will make cross-compilation guesses instead of running test programs,
+and @code{make check} will not work.
+
+A system type can either be a short name like @samp{mingw64},
+or a canonical name like @samp{x86_64-pc-linux-gnu}.
+Canonical names have the form @var{cpu}-@var{company}-@var{system}
+where @var{system} is either @var{os} or @var{kernel}-@var{os}.
+To canonicalize and validate a system type,
+you can run the command @file{config.sub},
+which is often squirreled away in a subdirectory like @file{build-aux}.
+For example:
 
 @example
-@var{os}
-@var{kernel}-@var{os}
+$ build-aux/config.sub arm64-linux
+aarch64-unknown-linux-gnu
+$ build-aux/config.sub riscv-lnx
+Invalid configuration 'riscv-lnx': OS 'lnx' not recognized
 @end example
 
 @noindent
-See the file @file{config.sub} for the possible values of each field.
-If @file{config.sub} isn't included in this package, then this package
-doesn't need to know the machine type.
+You can look at the @file{config.sub} file to see which types are recognized.
+If the file is absent, this package does not need the system type.
 
-If you are @emph{building} compiler tools for cross-compiling, you
-should use the option @option{--target=@var{type}} to select the type of
-system they will produce code for.
+If @command{configure} fails with the diagnostic ``cannot guess build type''.
+@file{config.sub} did not recognize your system's type.
+In this case, first fetch the newest versions of these files
+from the @url{https://savannah.gnu.org/projects/config, GNU config package}.
+If that fixes things, please report it to the
+maintainers of the package containing @command{configure}.
+Otherwise, you can try the configure option
+@option{--build=@var{type}} where @var{type} comes close to your
+system type; also, please report the problem to
+@email{config-patches@@gnu.org}.
 
-If you want to @emph{use} a cross compiler, that generates code for a
-platform different from the build platform, you should specify the
-@dfn{host} platform (i.e., that on which the generated programs will
-eventually be run) with @option{--host=@var{type}}.
+For more details about configuring system types, see
+@ifset autoconf
+@ref{Manual Configuration}.
+@end ifset
+@ifclear autoconf
+the Autoconf documentation.
+@end ifclear
 
 @node Sharing Defaults
 @section Sharing Defaults
@@ -384,9 +395,9 @@ Use @var{dir} as the installation prefix.  @ref{Installation Names}
 for more details, including other options available for fine-tuning
 the installation locations.
 
-@item --build=@var{type}
-Build for architecture @var{type}.  @ref{System Type}.
-for more details, including other system type options.
+@item --host=@var{type}
+Build binaries for system @var{type}.
+@xref{System Types}.
 
 @item --enable-@var{feature}
 @itemx --disable-@var{feature}
@@ -412,6 +423,19 @@ Run the configure checks, but stop before creating any output files.
 @command{configure} also recognizes several environment variables,
 and accepts some other, less widely useful, options.
 Run @samp{configure --help} for more details.
+
+@ifclear autoconf
+@node Copyright notice
+@section Copyright notice
+
+Copyright @copyright{} 1994--1996, 1999--2002, 2004--2017, 2020--2023
+Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification, are
+permitted in any medium without royalty provided the copyright notice
+and this notice are preserved.  This file is offered as-is, without
+warranty of any kind.
+@end ifclear
 
 @c Local Variables:
 @c fill-column: 72
