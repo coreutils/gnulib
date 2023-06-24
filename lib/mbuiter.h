@@ -98,7 +98,7 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
-#include <wchar.h>
+#include <uchar.h>
 
 #include "mbchar.h"
 #include "strnlen1.h"
@@ -114,11 +114,11 @@ struct mbuiter_multi
   mbstate_t state;      /* if in_shift: current shift state */
   bool next_done;       /* true if mbui_avail has already filled the following */
   struct mbchar cur;    /* the current character:
-        const char *cur.ptr             pointer to current character
+        const char *cur.ptr          pointer to current character
         The following are only valid after mbui_avail.
-        size_t cur.bytes                number of bytes of current character
-        bool cur.wc_valid               true if wc is a valid wide character
-        wchar_t cur.wc                  if wc_valid: the current character
+        size_t cur.bytes             number of bytes of current character
+        bool cur.wc_valid            true if wc is a valid 32-bit wide character
+        char32_t cur.wc              if wc_valid: the current character
         */
 };
 
@@ -144,9 +144,9 @@ mbuiter_multi_next (struct mbuiter_multi *iter)
       assert (mbsinit (&iter->state));
       iter->in_shift = true;
     with_shift:
-      iter->cur.bytes = mbrtowc (&iter->cur.wc, iter->cur.ptr,
-                                 strnlen1 (iter->cur.ptr, MB_CUR_MAX),
-                                 &iter->state);
+      iter->cur.bytes = mbrtoc32 (&iter->cur.wc, iter->cur.ptr,
+                                  strnlen1 (iter->cur.ptr, MB_CUR_MAX),
+                                  &iter->state);
       if (iter->cur.bytes == (size_t) -1)
         {
           /* An invalid multibyte sequence was encountered.  */

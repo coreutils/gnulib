@@ -64,7 +64,7 @@ knuth_morris_pratt_multibyte (const char *haystack, const char *needle,
       {
         mb_copy (&needle_mbchars[j], &mbui_cur (iter));
         if (needle_mbchars[j].wc_valid)
-          needle_mbchars[j].wc = towlower (needle_mbchars[j].wc);
+          needle_mbchars[j].wc = c32tolower (needle_mbchars[j].wc);
       }
   }
 
@@ -152,7 +152,7 @@ knuth_morris_pratt_multibyte (const char *haystack, const char *needle,
 
         mb_copy (&c, &mbui_cur (phaystack));
         if (c.wc_valid)
-          c.wc = towlower (c.wc);
+          c.wc = c32tolower (c.wc);
         if (mb_equal (needle_mbchars[j], c))
           {
             j++;
@@ -237,7 +237,7 @@ mbscasestr (const char *haystack, const char *needle)
 
           mb_copy (&b, &mbui_cur (iter_needle));
           if (b.wc_valid)
-            b.wc = towlower (b.wc);
+            b.wc = c32tolower (b.wc);
 
           mbui_init (iter_haystack, haystack);
           for (;; mbui_advance (iter_haystack))
@@ -279,7 +279,7 @@ mbscasestr (const char *haystack, const char *needle)
               comparison_count++;
               mb_copy (&c, &mbui_cur (iter_haystack));
               if (c.wc_valid)
-                c.wc = towlower (c.wc);
+                c.wc = c32tolower (c.wc);
               if (mb_equal (c, b))
                 /* The first character matches.  */
                 {

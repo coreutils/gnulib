@@ -10,9 +10,9 @@ m4/mbrtowc.m4
 Depends-on:
 extern-inline
 mbchar
-mbrtowc
+mbrtoc32
 mbsinit
-wchar
+uchar
 stdbool
 
 configure.ac:

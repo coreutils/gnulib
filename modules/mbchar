@@ -10,12 +10,21 @@ Depends-on:
 extensions
 extern-inline
 stdbool
-wchar
-wctype-h
-iswblank
-iswdigit
-iswxdigit
-wcwidth
+uchar
+c32isalnum
+c32isalpha
+c32isblank
+c32iscntrl
+c32isdigit
+c32isgraph
+c32islower
+c32isprint
+c32ispunct
+c32isspace
+c32isupper
+c32isxdigit
+c32tolower
+c32width
 memcmp
 
 configure.ac:

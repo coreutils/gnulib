@@ -110,7 +110,7 @@ mbfile_multi_getc (struct mbchar *mbc, struct mbfile_multi *mbf)
     {
       /* These characters are part of the basic character set.  ISO C 99
          guarantees that their wide character code is identical to their
-         char code.  */
+         char code.  The 32-bit wide character code is the same as well.  */
       mbc->wc = mbc->buf[0] = mbf->buf[0];
       mbc->wc_valid = true;
       mbc->ptr = &mbc->buf[0];
@@ -136,7 +136,7 @@ mbfile_multi_getc (struct mbchar *mbc, struct mbfile_multi *mbf)
          behaviour will clobber it.  */
       mbstate_t backup_state = mbf->state;
 
-      bytes = mbrtowc (&mbc->wc, &mbf->buf[0], mbf->bufcount, &mbf->state);
+      bytes = mbrtoc32 (&mbc->wc, &mbf->buf[0], mbf->bufcount, &mbf->state);
 
       if (bytes == (size_t) -1)
         {
@@ -178,7 +178,7 @@ mbfile_multi_getc (struct mbchar *mbc, struct mbfile_multi *mbf)
         {
           if (bytes == 0)
             {
-              /* A null wide character was encountered.  */
+              /* A null 32-bit wide character was encountered.  */
               bytes = 1;
               assert (mbf->buf[0] == '\0');
               assert (mbc->wc == 0);

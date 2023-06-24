@@ -11,6 +11,7 @@ stdbool
 string
 mbslen
 malloca
+c32tolower
 strnlen
 
 configure.ac:

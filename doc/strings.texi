@@ -45,7 +45,7 @@ not be modified, @samp{const char *}.  There are many C library
 functions, standardized by ISO C and POSIX, that assume this
 representation of strings.
 
-An @emph{character encoding}, or @emph{encoding} for short, describes
+A @emph{character encoding}, or @emph{encoding} for short, describes
 how the elements of a character set are represented as a sequence of
 bytes.  For example, in the @code{ASCII} encoding, the UNDERSCORE
 character is represented by a single byte, with value 0x5F.  As another

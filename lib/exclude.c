@@ -209,10 +209,10 @@ string_hasher_ci (void const *data, size_t n_buckets)
   for (mbui_init (iter, p); mbui_avail (iter); mbui_advance (iter))
     {
       mbchar_t m = mbui_cur (iter);
-      wchar_t wc;
+      char32_t wc;
 
       if (m.wc_valid)
-        wc = towlower (m.wc);
+        wc = c32tolower (m.wc);
       else
         wc = *m.ptr;
 
