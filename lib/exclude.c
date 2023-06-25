@@ -29,7 +29,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <wctype.h>
+#include <uchar.h>
 #include <regex.h>
 
 #include "exclude.h"
