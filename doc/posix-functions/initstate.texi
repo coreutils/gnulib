@@ -19,7 +19,7 @@ Cygwin 1.5.25.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
-This function crashes if the state buffer is unaligned on on some platforms:
+This function crashes if the state buffer is unaligned on some platforms:
 @c https://sourceware.org/bugzilla/show_bug.cgi?id=30584
 glibc 2.36/sparc.
 @item
