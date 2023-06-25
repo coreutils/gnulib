@@ -21,6 +21,12 @@ glibc 2.31, macOS 11.1, FreeBSD 13.0, NetBSD 9.0, OpenBSD 6.7, Minix 3.1.8, AIX 
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+The description of SIGCHLD is wrong on some platforms:
+glibc.
+@item
+The description of SIGEMT is completely unintelligible on some platforms:
+glibc.
 @end itemize
 
 Note: This function is hardly useful, because it returns English strings, not
