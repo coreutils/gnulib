@@ -32,6 +32,10 @@ AIX 7.1.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
+This function crashes if the state buffer is unaligned on on some platforms:
+@c https://sourceware.org/bugzilla/show_bug.cgi?id=30584
+glibc 2.36/sparc.
+@item
 This function has a slightly different (but compatible) declaration on some
 platforms:
 Haiku 2017.

@@ -19,6 +19,10 @@ Cygwin 1.5.25.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
+This function crashes if the state buffer is unaligned on on some platforms:
+@c https://sourceware.org/bugzilla/show_bug.cgi?id=30584
+glibc 2.36/sparc.
+@item
 The first parameter is @code{unsigned long} instead of @code{unsigned int} on
 some platforms:
 MidnightBSD 2.0.
