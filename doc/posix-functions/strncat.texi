@@ -10,7 +10,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function dereferences too much memory on some platforms:
-Solaris 10 on SPARC, Solaris 11.0 on x86.
+Solaris 11.4 on SPARC, Solaris 11.0 on x86.
 @item
 This function cannot be called from plain inline or extern inline functions
 on some platforms:
