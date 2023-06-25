@@ -126,9 +126,11 @@ main (void)
   #ifdef SIGDANGER
   ASSERT (strcmp (sigdescr_np (SIGDANGER), "Swap space nearly exhausted") == 0);
   #endif
-  /* Mac OS X, FreeBSD, NetBSD, OpenBSD, Minix, AIX, IRIX, Cygwin, mingw */
+  /* glibc, Mac OS X, FreeBSD, NetBSD, OpenBSD, Minix, AIX, IRIX, Cygwin, mingw */
   #ifdef SIGEMT
-  ASSERT (strcmp (sigdescr_np (SIGEMT), "Instruction emulation needed") == 0);
+  ASSERT (strcmp (sigdescr_np (SIGEMT), "Instruction emulation needed") == 0
+          /* This completely unintelligible message is seen in glibc.  */
+          || strcmp (sigdescr_np (SIGEMT), "EMT trap") == 0);
   #endif
   /* Mac OS X, FreeBSD, NetBSD, OpenBSD, Minix */
   #if defined SIGINFO && SIGINFO != SIGPWR
