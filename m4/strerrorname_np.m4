@@ -1,5 +1,5 @@
-# strerrorname_np.m4 serial 2
-dnl Copyright (C) 2020-2022 Free Software Foundation, Inc.
+# strerrorname_np.m4 serial 3
+dnl Copyright (C) 2020-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -15,6 +15,9 @@ AC_DEFUN([gl_FUNC_STRERRORNAME_NP],
     dnl In glibc 2.32, strerrorname_np returns English error descriptions, not
     dnl error names.
     dnl See <https://sourceware.org/bugzilla/show_bug.cgi?id=26555>.
+    dnl In glibc 2.36, strerrorname_np returns NULL for EDEADLOCK on powerpc and
+    dnl sparc platforms.
+    dnl See <https://sourceware.org/bugzilla/show_bug.cgi?id=29545>.
     AC_CACHE_CHECK([whether strerrorname_np works],
       [gl_cv_func_strerrorname_np_works],
       [AC_RUN_IFELSE(
@@ -22,7 +25,12 @@ AC_DEFUN([gl_FUNC_STRERRORNAME_NP],
             [[#include <errno.h>
               #include <string.h>
             ]],
-            [[return strcmp (strerrorname_np (EINVAL), "EINVAL") != 0;
+            [[return
+                strcmp (strerrorname_np (EINVAL), "EINVAL") != 0
+                #ifdef EDEADLOCK
+                || strerrorname_np (EDEADLOCK) == NULL
+                #endif
+                ;
             ]])],
          [gl_cv_func_strerrorname_np_works=yes],
          [gl_cv_func_strerrorname_np_works=no],
