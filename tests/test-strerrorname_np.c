@@ -306,7 +306,7 @@ main (void)
   ASSERT (strcmp (strerrorname_np (EBADCPU), "EBADCPU") == 0);
   #endif
   /* Linux, IRIX, Solaris, Cygwin */
-  #if defined EBADE
+  #if defined EBADE && EBADE != ECKSUM
   ASSERT (strcmp (strerrorname_np (EBADE), "EBADE") == 0);
   #endif
   /* Minix */
@@ -338,7 +338,7 @@ main (void)
   ASSERT (strcmp (strerrorname_np (EBADMODE), "EBADMODE") == 0);
   #endif
   /* Linux, IRIX, Solaris, Cygwin */
-  #if defined EBADR
+  #if defined EBADR && EBADR != EFRAGS
   ASSERT (strcmp (strerrorname_np (EBADR), "EBADR") == 0);
   #endif
   /* Minix */
@@ -408,6 +408,10 @@ main (void)
   /* IRIX */
   #if defined ECKPT
   ASSERT (strcmp (strerrorname_np (ECKPT), "ECKPT") == 0);
+  #endif
+  /* Solaris */
+  #if defined ECKSUM
+  ASSERT (strcmp (strerrorname_np (ECKSUM), "ECKSUM") == 0);
   #endif
   /* IRIX */
   #if defined ECLOCKCPU
@@ -568,6 +572,10 @@ main (void)
   /* Haiku */
   #if defined EFPOS
   ASSERT (strcmp (strerrorname_np (EFPOS), "EFPOS") == 0);
+  #endif
+  /* Solaris */
+  #if defined EFRAGS
+  ASSERT (strcmp (strerrorname_np (EFRAGS), "EFRAGS") == 0);
   #endif
   /* IRIX */
   #if defined EFSCORRUPTED
@@ -1018,7 +1026,7 @@ main (void)
   ASSERT (strcmp (strerrorname_np (ENMFILE), "ENMFILE") == 0);
   #endif
   /* Linux, IRIX, Solaris, Cygwin */
-  #if defined ENOANO
+  #if defined ENOANO && ENOANO != ENOKEY
   ASSERT (strcmp (strerrorname_np (ENOANO), "ENOANO") == 0);
   #endif
   /* IRIX */

@@ -304,7 +304,7 @@ strerrorname_np (int errnum)
     case EBADCPU:         return "EBADCPU";
     #endif
     /* Linux, IRIX, Solaris, Cygwin */
-    #if defined EBADE
+    #if defined EBADE && EBADE != ECKSUM
     case EBADE:           return "EBADE";
     #endif
     /* Minix */
@@ -336,7 +336,7 @@ strerrorname_np (int errnum)
     case EBADMODE:        return "EBADMODE";
     #endif
     /* Linux, IRIX, Solaris, Cygwin */
-    #if defined EBADR
+    #if defined EBADR && EBADR != EFRAGS
     case EBADR:           return "EBADR";
     #endif
     /* Minix */
@@ -406,6 +406,10 @@ strerrorname_np (int errnum)
     /* IRIX */
     #if defined ECKPT
     case ECKPT:           return "ECKPT";
+    #endif
+    /* Solaris */
+    #if defined ECKSUM
+    case ECKSUM:          return "ECKSUM";
     #endif
     /* IRIX */
     #if defined ECLOCKCPU
@@ -566,6 +570,10 @@ strerrorname_np (int errnum)
     /* Haiku */
     #if defined EFPOS
     case EFPOS:           return "EFPOS";
+    #endif
+    /* Solaris */
+    #if defined EFRAGS
+    case EFRAGS:          return "EFRAGS";
     #endif
     /* IRIX */
     #if defined EFSCORRUPTED
@@ -1016,7 +1024,7 @@ strerrorname_np (int errnum)
     case ENMFILE:         return "ENMFILE";
     #endif
     /* Linux, IRIX, Solaris, Cygwin */
-    #if defined ENOANO
+    #if defined ENOANO && ENOANO != ENOKEY
     case ENOANO:          return "ENOANO";
     #endif
     /* IRIX */
