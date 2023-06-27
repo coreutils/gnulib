@@ -12,4 +12,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-c32swidth
 check_PROGRAMS += test-c32swidth
-test_c32swidth_LDADD = $(LDADD) $(SETLOCALE_LIB) $(LIBUNISTRING)
+test_c32swidth_LDADD = $(LDADD) $(SETLOCALE_LIB) $(LIBUNISTRING) $(LIBC32CONV)

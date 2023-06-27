@@ -27,6 +27,7 @@ SIGNATURE_CHECK (mbsnrtoc32s, size_t,
 #include <locale.h>
 #include <stdio.h>
 #include <string.h>
+#include <wchar.h>
 
 #include "macros.h"
 
@@ -246,6 +247,10 @@ main (int argc, char *argv[])
 
             case '4':
               /* Locale encoding is GB18030.  */
+              #if GL_CHAR32_T_IS_UNICODE && (defined __NetBSD__ || defined __sun)
+              fputs ("Skipping test: The GB18030 converter in this system's iconv is broken.\n", stderr);
+              return 77;
+              #endif
               {
                 char input[] = "s\250\271\201\060\211\070\224\071\375\067!"; /* "süß😋!" */
                 memset (&state, '\0', sizeof (mbstate_t));

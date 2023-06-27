@@ -26,6 +26,10 @@
 #include <string.h>
 #include <wchar.h>
 
+#if GL_CHAR32_T_IS_UNICODE
+# include "lc-charset-unicode.h"
+#endif
+
 #if _GL_WCHAR_T_IS_UCS4
 _GL_EXTERN_INLINE
 #endif
@@ -53,6 +57,14 @@ c32tob (wint_t wc)
   else
     return EOF;
 #else
+# if GL_CHAR32_T_IS_UNICODE && GL_CHAR32_T_VS_WCHAR_T_NEEDS_CONVERSION
+  if (wc != 0)
+    {
+      wc = unicode_to_locale_encoding (wc);
+      if (wc == 0)
+        return EOF;
+    }
+# endif
   return wctob (wc);
 #endif
 }

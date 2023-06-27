@@ -28,6 +28,10 @@
 #include "localcharset.h"
 #include "streq.h"
 
+#if GL_CHAR32_T_IS_UNICODE
+# include "lc-charset-unicode.h"
+#endif
+
 size_t
 c32rtomb (char *s, char32_t wc, mbstate_t *ps)
 #undef c32rtomb
@@ -111,6 +115,17 @@ c32rtomb (char *s, char32_t wc, mbstate_t *ps)
 #else
 
   /* char32_t and wchar_t are equivalent.  */
+# if GL_CHAR32_T_IS_UNICODE && GL_CHAR32_T_VS_WCHAR_T_NEEDS_CONVERSION
+  if (wc != 0)
+    {
+      wc = unicode_to_locale_encoding (wc);
+      if (wc == 0)
+        {
+          errno = EILSEQ;
+          return (size_t)(-1);
+        }
+    }
+# endif
   return wcrtomb (s, (wchar_t) wc, ps);
 
 #endif

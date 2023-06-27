@@ -26,4 +26,4 @@ TESTS += \
  test-exclude8.sh
 
 check_PROGRAMS += test-exclude
-test_exclude_LDADD = $(LDADD) $(LIBUNISTRING) @LIBINTL@ $(MBRTOWC_LIB) $(LIBTHREAD)
+test_exclude_LDADD = $(LDADD) $(LIBUNISTRING) @LIBINTL@ $(MBRTOWC_LIB) $(LIBTHREAD) $(LIBC32CONV)

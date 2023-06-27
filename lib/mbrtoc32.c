@@ -26,6 +26,10 @@
 #include <errno.h>
 #include <stdlib.h>
 
+#if GL_CHAR32_T_IS_UNICODE
+# include "lc-charset-unicode.h"
+#endif
+
 #if GNULIB_defined_mbstate_t /* AIX, IRIX */
 /* Implement mbrtoc32() on top of mbtowc() for the non-UTF-8 locales
    and directly for the UTF-8 locales.  */
@@ -242,6 +246,17 @@ mbrtoc32 (char32_t *pwc, const char *s, size_t n, mbstate_t *ps)
   /* char32_t and wchar_t are equivalent.  Use mbrtowc().  */
   wchar_t wc;
   size_t ret = mbrtowc (&wc, s, n, ps);
+#  if GL_CHAR32_T_IS_UNICODE && GL_CHAR32_T_VS_WCHAR_T_NEEDS_CONVERSION
+  if (ret < (size_t) -2 && wc != 0)
+    {
+      wc = locale_encoding_to_unicode (wc);
+      if (wc == 0)
+        {
+          ret = (size_t) -1;
+          errno = EILSEQ;
+        }
+    }
+#  endif
   if (ret < (size_t) -2 && pwc != NULL)
     *pwc = wc;
   return ret;

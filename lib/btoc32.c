@@ -25,6 +25,10 @@
 #include <stdio.h>
 #include <string.h>
 
+#if GL_CHAR32_T_IS_UNICODE
+# include "lc-charset-unicode.h"
+#endif
+
 #if _GL_WCHAR_T_IS_UCS4
 _GL_EXTERN_INLINE
 #endif
@@ -49,6 +53,15 @@ btoc32 (int c)
 #else
   /* In all known locale encodings, unibyte characters correspond only to
      characters in the BMP.  */
-  return btowc (c);
+  wint_t wc = btowc (c);
+# if GL_CHAR32_T_IS_UNICODE && GL_CHAR32_T_VS_WCHAR_T_NEEDS_CONVERSION
+  if (wc != WEOF && wc != 0)
+    {
+      wc = locale_encoding_to_unicode (wc);
+      if (wc == 0)
+        return WEOF;
+    }
+# endif
+  return wc;
 #endif
 }

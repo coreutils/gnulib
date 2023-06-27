@@ -24,6 +24,10 @@
 # include "streq.h"
 #endif
 
+#if GL_CHAR32_T_IS_UNICODE
+# include "lc-charset-unicode.h"
+#endif
+
 #include "unicase.h"
 
 #if _GL_WCHAR_T_IS_UCS4 && !GNULIB_defined_mbstate_t
@@ -79,6 +83,10 @@ FUNC (wint_t wc)
   /* char32_t and wchar_t are equivalent.  */
   static_assert (sizeof (char32_t) == sizeof (wchar_t));
 
+# if GL_CHAR32_T_IS_UNICODE && GL_CHAR32_T_VS_WCHAR_T_NEEDS_CONVERSION
+  return UCS_FUNC (wc);
+# else
   return WCHAR_FUNC (wc);
+# endif
 #endif
 }

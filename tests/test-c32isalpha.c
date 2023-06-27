@@ -158,7 +158,7 @@ main (int argc, char *argv[])
           /* U+3001 IDEOGRAPHIC COMMA */
           is = for_character ("\241\242", 2);
           ASSERT (is == 0);
-        #if !(defined __GLIBC__ || defined __CYGWIN__)
+        #if !(defined __GLIBC__ || (defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __NetBSD__ || defined __sun || defined __CYGWIN__)
           /* U+FF11 FULLWIDTH DIGIT ONE */
           is = for_character ("\243\261", 2);
           ASSERT (is == 0);
@@ -186,7 +186,7 @@ main (int argc, char *argv[])
           /* U+3001 IDEOGRAPHIC COMMA */
           is = for_character ("\343\200\201", 3);
           ASSERT (is == 0);
-        #if !(defined __GLIBC__ || defined MUSL_LIBC || defined _AIX || defined __sun || defined __CYGWIN__)
+        #if !(defined __GLIBC__ || defined MUSL_LIBC || (defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __NetBSD__ || defined _AIX || defined __sun || defined __CYGWIN__)
           /* U+FF11 FULLWIDTH DIGIT ONE */
           is = for_character ("\357\274\221", 3);
           ASSERT (is == 0);
@@ -210,6 +210,10 @@ main (int argc, char *argv[])
 
       case '4':
         /* Locale encoding is GB18030.  */
+        #if GL_CHAR32_T_IS_UNICODE && (defined __NetBSD__ || defined __sun)
+        fputs ("Skipping test: The GB18030 converter in this system's iconv is broken.\n", stderr);
+        return 77;
+        #endif
         {
           /* U+00D7 MULTIPLICATION SIGN */
           is = for_character ("\241\301", 2);
@@ -225,7 +229,7 @@ main (int argc, char *argv[])
           /* U+3001 IDEOGRAPHIC COMMA */
           is = for_character ("\241\242", 2);
           ASSERT (is == 0);
-        #if !defined __GLIBC__
+        #if !(defined __GLIBC__ || (defined __APPLE__ && defined __MACH__) || defined __FreeBSD__)
           /* U+FF11 FULLWIDTH DIGIT ONE */
           is = for_character ("\243\261", 2);
           ASSERT (is == 0);

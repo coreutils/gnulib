@@ -28,8 +28,11 @@ fi
 : "${LOCALE_ZH_CN=zh_CN.GB18030}"
 if test $LOCALE_ZH_CN != none; then
   LC_ALL=$LOCALE_ZH_CN \
-  ${CHECKER} ./test-c32rtomb${EXEEXT} 4 \
-  || exit 1
+  ${CHECKER} ./test-c32rtomb${EXEEXT} 4
+  case $? in
+    0 | 77) ;;
+    *) exit 1 ;;
+  esac
 fi
 
 # Test in the POSIX locale.

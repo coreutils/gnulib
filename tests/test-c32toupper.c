@@ -163,7 +163,7 @@ main (int argc, char *argv[])
           mb = for_character ("\262", 1);
           ASSERT (mb.nbytes == 1);
           ASSERT (memcmp (mb.buf, "\262", 1) == 0);
-        #if !(defined __GLIBC__ || defined __sun || defined __CYGWIN__)
+        #if !(defined __GLIBC__ || (defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __NetBSD__ || defined __sun || defined __CYGWIN__)
           /* U+00B5 MICRO SIGN */
           mb = for_character ("\265", 1);
           ASSERT (mb.nbytes == 1);
@@ -181,7 +181,7 @@ main (int argc, char *argv[])
           mb = for_character ("\351", 1);
           ASSERT (mb.nbytes == 1);
           ASSERT (memcmp (mb.buf, "\311", 1) == 0);
-        #if !(defined __GLIBC__ || defined __DragonFly__ || defined __sun || defined __CYGWIN__ || (defined _WIN32 && !defined __CYGWIN__))
+        #if !(defined __GLIBC__ || (defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__ || defined __sun || defined __CYGWIN__ || (defined _WIN32 && !defined __CYGWIN__))
           /* U+00FF LATIN SMALL LETTER Y WITH DIAERESIS */
           mb = for_character ("\377", 1);
           ASSERT (mb.nbytes == 1);
@@ -348,12 +348,16 @@ main (int argc, char *argv[])
 
       case '4':
         /* Locale encoding is GB18030.  */
+        #if GL_CHAR32_T_IS_UNICODE && (defined __NetBSD__ || defined __sun)
+        fputs ("Skipping test: The GB18030 converter in this system's iconv is broken.\n", stderr);
+        return 77;
+        #endif
         {
           /* U+00B2 SUPERSCRIPT TWO */
           mb = for_character ("\201\060\205\065", 4);
           ASSERT (mb.nbytes == 4);
           ASSERT (memcmp (mb.buf, "\201\060\205\065", 4) == 0);
-        #if !(defined __GLIBC__ || (defined __APPLE__ && defined __MACH__) || defined __NetBSD__)
+        #if !(defined __GLIBC__ || defined __FreeBSD__ || (defined __APPLE__ && defined __MACH__) || defined __NetBSD__)
           /* U+00B5 MICRO SIGN */
           mb = for_character ("\201\060\205\070", 4);
           ASSERT (mb.nbytes == 4);

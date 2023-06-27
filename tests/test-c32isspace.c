@@ -165,6 +165,10 @@ main (int argc, char *argv[])
 
       case '4':
         /* Locale encoding is GB18030.  */
+        #if GL_CHAR32_T_IS_UNICODE && (defined __NetBSD__ || defined __sun)
+        fputs ("Skipping test: The GB18030 converter in this system's iconv is broken.\n", stderr);
+        return 77;
+        #endif
         {
           /* U+00B7 MIDDLE DOT */
           is = for_character ("\241\244", 2);

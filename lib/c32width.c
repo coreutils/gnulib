@@ -33,6 +33,11 @@
 #endif
 
 #include "localcharset.h"
+
+#if GL_CHAR32_T_IS_UNICODE
+# include "lc-charset-unicode.h"
+#endif
+
 #include "uniwidth.h"
 
 #if _GL_WCHAR_T_IS_UCS4 && !GNULIB_defined_mbstate_t
@@ -89,6 +94,9 @@ c32width (char32_t wc)
   /* char32_t and wchar_t are equivalent.  */
   static_assert (sizeof (char32_t) == sizeof (wchar_t));
 
+# if GL_CHAR32_T_IS_UNICODE && GL_CHAR32_T_VS_WCHAR_T_NEEDS_CONVERSION
+  return uc_width (wc, locale_charset ());
+# endif
   return wcwidth (wc);
 #endif
 }

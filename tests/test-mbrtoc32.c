@@ -28,6 +28,7 @@ SIGNATURE_CHECK (mbrtoc32, size_t,
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <wchar.h>
 
 #include "macros.h"
 
@@ -154,6 +155,9 @@ main (int argc, char *argv[])
           ret = mbrtoc32 (&wc, input + 1, 1, &state);
           ASSERT (ret == 1);
           ASSERT (c32tob (wc) == (unsigned char) '\374');
+          #if GL_CHAR32_T_IS_UNICODE
+          ASSERT (wc == 0x00FC); /* expect Unicode encoding */
+          #endif
           ASSERT (mbsinit (&state));
           input[1] = '\0';
 
@@ -166,6 +170,9 @@ main (int argc, char *argv[])
           ret = mbrtoc32 (&wc, input + 2, 3, &state);
           ASSERT (ret == 1);
           ASSERT (c32tob (wc) == (unsigned char) '\337');
+          #if GL_CHAR32_T_IS_UNICODE
+          ASSERT (wc == 0x00DF); /* expect Unicode encoding */
+          #endif
           ASSERT (mbsinit (&state));
           input[2] = '\0';
 
@@ -267,6 +274,9 @@ main (int argc, char *argv[])
           ret = mbrtoc32 (&wc, input + 1, 2, &state);
           ASSERT (ret == 2);
           ASSERT (c32tob (wc) == EOF);
+          #if GL_CHAR32_T_IS_UNICODE
+          ASSERT (wc == 0x65E5); /* expect Unicode encoding */
+          #endif
           ASSERT (mbsinit (&state));
           input[1] = '\0';
           input[2] = '\0';
@@ -282,6 +292,9 @@ main (int argc, char *argv[])
           ret = mbrtoc32 (&wc, input + 4, 4, &state);
           ASSERT (ret == 1);
           ASSERT (c32tob (wc) == EOF);
+          #if GL_CHAR32_T_IS_UNICODE
+          ASSERT (wc == 0x672C); /* expect Unicode encoding */
+          #endif
           ASSERT (mbsinit (&state));
           input[4] = '\0';
 
@@ -294,6 +307,9 @@ main (int argc, char *argv[])
           ret = mbrtoc32 (&wc, input + 5, 3, &state);
           ASSERT (ret == 2);
           ASSERT (c32tob (wc) == EOF);
+          #if GL_CHAR32_T_IS_UNICODE
+          ASSERT (wc == 0x8A9E); /* expect Unicode encoding */
+          #endif
           ASSERT (mbsinit (&state));
           input[5] = '\0';
           input[6] = '\0';
@@ -308,6 +324,10 @@ main (int argc, char *argv[])
 
       case '4':
         /* Locale encoding is GB18030.  */
+        #if GL_CHAR32_T_IS_UNICODE && (defined __NetBSD__ || defined __sun)
+        fputs ("Skipping test: The GB18030 converter in this system's iconv is broken.\n", stderr);
+        return 77;
+        #endif
         {
           char input[] = "s\250\271\201\060\211\070\224\071\375\067!"; /* "süß😋!" */
           memset (&state, '\0', sizeof (mbstate_t));
@@ -330,6 +350,9 @@ main (int argc, char *argv[])
           ret = mbrtoc32 (&wc, input + 2, 9, &state);
           ASSERT (ret == 1);
           ASSERT (c32tob (wc) == EOF);
+          #if GL_CHAR32_T_IS_UNICODE
+          ASSERT (wc == 0x00FC); /* expect Unicode encoding */
+          #endif
           ASSERT (mbsinit (&state));
           input[2] = '\0';
 
@@ -342,6 +365,9 @@ main (int argc, char *argv[])
           ret = mbrtoc32 (&wc, input + 3, 8, &state);
           ASSERT (ret == 4);
           ASSERT (c32tob (wc) == EOF);
+          #if GL_CHAR32_T_IS_UNICODE
+          ASSERT (wc == 0x00DF); /* expect Unicode encoding */
+          #endif
           ASSERT (mbsinit (&state));
           input[3] = '\0';
           input[4] = '\0';
@@ -357,6 +383,9 @@ main (int argc, char *argv[])
           ret = mbrtoc32 (&wc, input + 7, 4, &state);
           ASSERT (ret == 4);
           ASSERT (c32tob (wc) == EOF);
+          #if GL_CHAR32_T_IS_UNICODE
+          ASSERT (wc == 0x1F60B); /* expect Unicode encoding */
+          #endif
           ASSERT (mbsinit (&state));
           input[7] = '\0';
           input[8] = '\0';

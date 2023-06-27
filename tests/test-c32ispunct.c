@@ -246,7 +246,7 @@ main (int argc, char *argv[])
           is = for_character ("\360\235\204\200", 4);
           ASSERT (is != 0);
         #endif
-        #if !(defined __GLIBC__ || defined _AIX || defined __sun || defined __CYGWIN__ || (defined _WIN32 && !defined __CYGWIN__))
+        #if !(defined __GLIBC__ || (defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __NetBSD__ || defined _AIX || defined __sun || defined __CYGWIN__ || (defined _WIN32 && !defined __CYGWIN__))
           /* U+E003A TAG COLON */
           is = for_character ("\363\240\200\272", 4);
           ASSERT (is == 0);
@@ -256,6 +256,10 @@ main (int argc, char *argv[])
 
       case '4':
         /* Locale encoding is GB18030.  */
+        #if GL_CHAR32_T_IS_UNICODE && (defined __NetBSD__ || defined __sun)
+        fputs ("Skipping test: The GB18030 converter in this system's iconv is broken.\n", stderr);
+        return 77;
+        #endif
         {
         #if !(defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
           /* U+00BF INVERTED QUESTION MARK */
@@ -303,7 +307,7 @@ main (int argc, char *argv[])
           is = for_character ("\224\062\273\064", 4);
           ASSERT (is != 0);
         #endif
-        #if !defined __GLIBC__
+        #if !(defined __GLIBC__ || (defined __APPLE__ && defined __MACH__) || defined __FreeBSD__)
           /* U+E003A TAG COLON */
           is = for_character ("\323\066\233\066", 4);
           ASSERT (is == 0);

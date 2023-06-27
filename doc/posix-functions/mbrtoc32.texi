@@ -31,3 +31,7 @@ Portability problems not fixed by Gnulib:
 This function is only defined as an inline function on some platforms:
 Haiku 2020.
 @end itemize
+
+Note: If you want the guarantee that the @code{char32_t} values returned
+by this function are Unicode code points, you also need to request the
+@code{uchar-c23} module.

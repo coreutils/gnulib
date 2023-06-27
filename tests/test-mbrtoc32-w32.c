@@ -23,6 +23,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <wchar.h>
 
 #include "localcharset.h"
 #include "macros.h"
@@ -90,10 +91,7 @@ test_one_locale (const char *name, int codepage)
     memset (&state, '\0', sizeof (mbstate_t));
     wc = (char32_t) 0xBADFACE;
     ret = mbrtoc32 (&wc, "x", 0, &state);
-    /* gnulib's implementation returns (size_t)(-2).
-       The AIX 5.1 implementation returns (size_t)(-1).
-       glibc's implementation returns 0.  */
-    ASSERT (ret == (size_t)(-2) || ret == (size_t)(-1) || ret == 0);
+    ASSERT (ret == (size_t)(-2));
     ASSERT (mbsinit (&state));
   }
 
@@ -183,7 +181,7 @@ test_one_locale (const char *name, int codepage)
         ret = mbrtoc32 (&wc, input + 1, 1, &state);
         ASSERT (ret == 1);
         ASSERT (c32tob (wc) == (unsigned char) '\374');
-        ASSERT (wc == 0x00FC);
+        ASSERT (wc == 0x00FC); /* expect Unicode encoding */
         ASSERT (mbsinit (&state));
         input[1] = '\0';
 
@@ -196,7 +194,7 @@ test_one_locale (const char *name, int codepage)
         ret = mbrtoc32 (&wc, input + 2, 3, &state);
         ASSERT (ret == 1);
         ASSERT (c32tob (wc) == (unsigned char) '\337');
-        ASSERT (wc == 0x00DF);
+        ASSERT (wc == 0x00DF); /* expect Unicode encoding */
         ASSERT (mbsinit (&state));
         input[2] = '\0';
 
@@ -232,7 +230,7 @@ test_one_locale (const char *name, int codepage)
         ret = mbrtoc32 (&wc, input + 1, 1, &state);
         ASSERT (ret == 1);
         ASSERT (c32tob (wc) == (unsigned char) '\302');
-        ASSERT (wc == 0x0622);
+        ASSERT (wc == 0x0622); /* expect Unicode encoding */
         ASSERT (mbsinit (&state));
         input[1] = '\0';
 
@@ -245,7 +243,7 @@ test_one_locale (const char *name, int codepage)
         ret = mbrtoc32 (&wc, input + 2, 3, &state);
         ASSERT (ret == 1);
         ASSERT (c32tob (wc) == (unsigned char) '\341');
-        ASSERT (wc == 0x0644);
+        ASSERT (wc == 0x0644); /* expect Unicode encoding */
         ASSERT (mbsinit (&state));
         input[2] = '\0';
 
@@ -253,7 +251,7 @@ test_one_locale (const char *name, int codepage)
         ret = mbrtoc32 (&wc, input + 3, 2, &state);
         ASSERT (ret == 1);
         ASSERT (c32tob (wc) == (unsigned char) '\346');
-        ASSERT (wc == 0x0648);
+        ASSERT (wc == 0x0648); /* expect Unicode encoding */
         ASSERT (mbsinit (&state));
         input[3] = '\0';
 
@@ -282,7 +280,7 @@ test_one_locale (const char *name, int codepage)
         ret = mbrtoc32 (&wc, input + 1, 2, &state);
         ASSERT (ret == 2);
         ASSERT (c32tob (wc) == EOF);
-        ASSERT (wc == 0x65E5);
+        ASSERT (wc == 0x65E5); /* expect Unicode encoding */
         ASSERT (mbsinit (&state));
         input[1] = '\0';
         input[2] = '\0';
@@ -298,7 +296,7 @@ test_one_locale (const char *name, int codepage)
         ret = mbrtoc32 (&wc, input + 4, 4, &state);
         ASSERT (ret == 1);
         ASSERT (c32tob (wc) == EOF);
-        ASSERT (wc == 0x672C);
+        ASSERT (wc == 0x672C); /* expect Unicode encoding */
         ASSERT (mbsinit (&state));
         input[4] = '\0';
 
@@ -311,7 +309,7 @@ test_one_locale (const char *name, int codepage)
         ret = mbrtoc32 (&wc, input + 5, 3, &state);
         ASSERT (ret == 2);
         ASSERT (c32tob (wc) == EOF);
-        ASSERT (wc == 0x8A9E);
+        ASSERT (wc == 0x8A9E); /* expect Unicode encoding */
         ASSERT (mbsinit (&state));
         input[5] = '\0';
         input[6] = '\0';
@@ -352,7 +350,7 @@ test_one_locale (const char *name, int codepage)
         ret = mbrtoc32 (&wc, input + 1, 2, &state);
         ASSERT (ret == 2);
         ASSERT (c32tob (wc) == EOF);
-        ASSERT (wc == 0x65E5);
+        ASSERT (wc == 0x65E5); /* expect Unicode encoding */
         ASSERT (mbsinit (&state));
         input[1] = '\0';
         input[2] = '\0';
@@ -368,7 +366,7 @@ test_one_locale (const char *name, int codepage)
         ret = mbrtoc32 (&wc, input + 4, 4, &state);
         ASSERT (ret == 1);
         ASSERT (c32tob (wc) == EOF);
-        ASSERT (wc == 0x672C);
+        ASSERT (wc == 0x672C); /* expect Unicode encoding */
         ASSERT (mbsinit (&state));
         input[4] = '\0';
 
@@ -381,7 +379,7 @@ test_one_locale (const char *name, int codepage)
         ret = mbrtoc32 (&wc, input + 5, 3, &state);
         ASSERT (ret == 2);
         ASSERT (c32tob (wc) == EOF);
-        ASSERT (wc == 0x8A9E);
+        ASSERT (wc == 0x8A9E); /* expect Unicode encoding */
         ASSERT (mbsinit (&state));
         input[5] = '\0';
         input[6] = '\0';
@@ -422,7 +420,7 @@ test_one_locale (const char *name, int codepage)
         ret = mbrtoc32 (&wc, input + 1, 2, &state);
         ASSERT (ret == 2);
         ASSERT (c32tob (wc) == EOF);
-        ASSERT (wc == 0x65E5);
+        ASSERT (wc == 0x65E5); /* expect Unicode encoding */
         ASSERT (mbsinit (&state));
         input[1] = '\0';
         input[2] = '\0';
@@ -438,7 +436,7 @@ test_one_locale (const char *name, int codepage)
         ret = mbrtoc32 (&wc, input + 4, 4, &state);
         ASSERT (ret == 1);
         ASSERT (c32tob (wc) == EOF);
-        ASSERT (wc == 0x672C);
+        ASSERT (wc == 0x672C); /* expect Unicode encoding */
         ASSERT (mbsinit (&state));
         input[4] = '\0';
 
@@ -451,7 +449,7 @@ test_one_locale (const char *name, int codepage)
         ret = mbrtoc32 (&wc, input + 5, 3, &state);
         ASSERT (ret == 2);
         ASSERT (c32tob (wc) == EOF);
-        ASSERT (wc == 0x8A9E);
+        ASSERT (wc == 0x8A9E); /* expect Unicode encoding */
         ASSERT (mbsinit (&state));
         input[5] = '\0';
         input[6] = '\0';
@@ -501,7 +499,7 @@ test_one_locale (const char *name, int codepage)
         ret = mbrtoc32 (&wc, input + 2, 9, &state);
         ASSERT (ret == 1);
         ASSERT (c32tob (wc) == EOF);
-        ASSERT (wc == 0x00FC);
+        ASSERT (wc == 0x00FC); /* expect Unicode encoding */
         ASSERT (mbsinit (&state));
         input[2] = '\0';
 
@@ -514,7 +512,7 @@ test_one_locale (const char *name, int codepage)
         ret = mbrtoc32 (&wc, input + 3, 8, &state);
         ASSERT (ret == 4);
         ASSERT (c32tob (wc) == EOF);
-        ASSERT (wc == 0x00DF);
+        ASSERT (wc == 0x00DF); /* expect Unicode encoding */
         ASSERT (mbsinit (&state));
         input[3] = '\0';
         input[4] = '\0';
@@ -530,7 +528,7 @@ test_one_locale (const char *name, int codepage)
         ret = mbrtoc32 (&wc, input + 7, 4, &state);
         ASSERT (ret == 4);
         ASSERT (c32tob (wc) == EOF);
-        ASSERT (wc == 0x1F60B);
+        ASSERT (wc == 0x1F60B); /* expect Unicode encoding */
         ASSERT (mbsinit (&state));
         input[7] = '\0';
         input[8] = '\0';
@@ -608,7 +606,7 @@ test_one_locale (const char *name, int codepage)
         ret = mbrtoc32 (&wc, input + 2, 7, &state);
         ASSERT (ret == 1);
         ASSERT (c32tob (wc) == EOF);
-        ASSERT (wc == 0x00FC);
+        ASSERT (wc == 0x00FC); /* expect Unicode encoding */
         ASSERT (mbsinit (&state));
         input[2] = '\0';
 
@@ -621,7 +619,7 @@ test_one_locale (const char *name, int codepage)
         ret = mbrtoc32 (&wc, input + 3, 6, &state);
         ASSERT (ret == 2);
         ASSERT (c32tob (wc) == EOF);
-        ASSERT (wc == 0x00DF);
+        ASSERT (wc == 0x00DF); /* expect Unicode encoding */
         ASSERT (mbsinit (&state));
         input[3] = '\0';
         input[4] = '\0';
@@ -635,7 +633,7 @@ test_one_locale (const char *name, int codepage)
         ret = mbrtoc32 (&wc, input + 5, 4, &state);
         ASSERT (ret == 4);
         ASSERT (c32tob (wc) == EOF);
-        ASSERT (wc == 0x1F60B);
+        ASSERT (wc == 0x1F60B); /* expect Unicode encoding */
         ASSERT (mbsinit (&state));
         input[5] = '\0';
         input[6] = '\0';

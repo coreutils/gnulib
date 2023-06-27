@@ -110,7 +110,9 @@ typedef uint_least16_t gl_char16_t;
 /* A 32-bit variant of wchar_t.
    Note: This type is only mandated by ISO C 11 or newer.  In ISO C 23
    and newer, it denotes UTF-32 code points; in older versions of ISO C
-   it did so only on platforms on which __STDC_UTF_32__ was defined.  */
+   it did so only on platforms on which __STDC_UTF_32__ was defined.
+   In gnulib, we guarantee that it denotes UTF-32 code points if and
+   only if the module 'uchar-c23' is in use.  */
 typedef uint_least32_t char32_t;
 
 #elif @GNULIBHEADERS_OVERRIDE_CHAR32_T@
