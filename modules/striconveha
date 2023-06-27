@@ -21,6 +21,10 @@ lib_SOURCES += striconveha.h striconveha.c
 Include:
 "striconveha.h"
 
+Link:
+$(LTLIBUNISTRING) when linking with libtool, $(LIBUNISTRING) otherwise
+$(LTLIBICONV) when linking with libtool, $(LIBICONV) otherwise
+
 License:
 LGPLv2+
 

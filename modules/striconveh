@@ -37,6 +37,7 @@ Include:
 "striconveh.h"
 
 Link:
+$(LTLIBUNISTRING) when linking with libtool, $(LIBUNISTRING) otherwise
 $(LTLIBICONV) when linking with libtool, $(LIBICONV) otherwise
 
 License:
