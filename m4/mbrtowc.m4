@@ -1,4 +1,4 @@
-# mbrtowc.m4 serial 42  -*- coding: utf-8 -*-
+# mbrtowc.m4 serial 43  -*- coding: utf-8 -*-
 dnl Copyright (C) 2001-2002, 2004-2005, 2008-2023 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -697,8 +697,10 @@ AC_DEFUN([gl_MBRTOWC_EMPTY_INPUT],
        [case "$host_os" in
                                 # Guess no on AIX and glibc systems.
           aix* | *-gnu* | gnu*) gl_cv_func_mbrtowc_empty_input="guessing no" ;;
-                                # Guess yes on native Windows.
-          mingw*)               gl_cv_func_mbrtowc_empty_input="guessing yes" ;;
+                                # Guess no on Android.
+          linux*-android*)      gl_cv_func_mbrtowc_empty_input="guessing no" ;;
+                                # Guess no on native Windows.
+          mingw*)               gl_cv_func_mbrtowc_empty_input="guessing no" ;;
           *)                    gl_cv_func_mbrtowc_empty_input="guessing yes" ;;
         esac
        ])

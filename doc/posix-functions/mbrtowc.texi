@@ -18,7 +18,7 @@ glibc 2.35.
 @item
 This function returns 0 instead of @code{(size_t) -2} when the input
 is empty:
-glibc 2.19.
+glibc 2.19, MSVC 14, Android 11.
 @item
 This function returns @code{(size_t) -1} instead of @code{(size_t) -2}
 when the input is empty:
@@ -35,7 +35,7 @@ MSVC 14.
 This function returns the total number of bytes that make up the multibyte
 character, not the number of bytes that were needed to complete the multibyte
 character, on some platforms:
-HP-UX 11.11, Solaris 11 2010-11, mingw, possibly MSVC 14.
+HP-UX 11.11, Solaris 11 2010-11, mingw, MSVC 14.
 @item
 This function may not return 0 when parsing the NUL character on some platforms:
 Solaris 9.
