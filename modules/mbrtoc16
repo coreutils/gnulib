@@ -1,0 +1,46 @@
+Description:
+mbrtoc16() function: convert multibyte character and return next 16-bit wide character.
+
+Files:
+lib/mbrtoc16.c
+m4/mbrtoc16.m4
+m4/locale-fr.m4
+m4/codeset.m4
+m4/mbrtowc.m4
+m4/mbstate_t.m4
+
+Depends-on:
+uchar
+uchar-c23       [test $HAVE_MBRTOC16 = 0 || test $REPLACE_MBRTOC16 = 1]
+mbrtoc32        [test $HAVE_MBRTOC16 = 0 || test $REPLACE_MBRTOC16 = 1]
+mbsinit         [test $HAVE_MBRTOC16 = 0 || test $REPLACE_MBRTOC16 = 1]
+c99             [test $HAVE_MBRTOC16 = 0 || test $REPLACE_MBRTOC16 = 1]
+assert-h        [test $HAVE_MBRTOC16 = 0 || test $REPLACE_MBRTOC16 = 1]
+
+configure.ac:
+gl_FUNC_MBRTOC16
+gl_CONDITIONAL([GL_COND_OBJ_MBRTOC16],
+               [test $HAVE_MBRTOC16 = 0 || test $REPLACE_MBRTOC16 = 1])
+AM_COND_IF([GL_COND_OBJ_MBRTOC16], [
+  gl_PREREQ_MBRTOC16
+])
+gl_UCHAR_MODULE_INDICATOR([mbrtoc16])
+
+Makefile.am:
+if GL_COND_OBJ_MBRTOC16
+lib_SOURCES += mbrtoc16.c
+endif
+
+Include:
+<uchar.h>
+
+Link:
+$(LTLIBUNISTRING) when linking with libtool, $(LIBUNISTRING) otherwise
+$(MBRTOWC_LIB)
+$(LTLIBC32CONV) when linking with libtool, $(LIBC32CONV) otherwise
+
+License:
+LGPLv2+
+
+Maintainer:
+Bruno Haible

@@ -567,6 +567,38 @@ _GL_WARN_ON_USE (mbrtoc32, "mbrtoc32 is not portable - "
 #endif
 
 
+/* Converts a multibyte character and returns the next 16-bit wide
+   character.  */
+#if @GNULIB_MBRTOC16@
+# if @REPLACE_MBRTOC16@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef mbrtoc16
+#   define mbrtoc16 rpl_mbrtoc16
+#  endif
+_GL_FUNCDECL_RPL (mbrtoc16, size_t,
+                  (char16_t *pc, const char *s, size_t n, mbstate_t *ps));
+_GL_CXXALIAS_RPL (mbrtoc16, size_t,
+                  (char16_t *pc, const char *s, size_t n, mbstate_t *ps));
+# else
+#  if !@HAVE_MBRTOC32@
+_GL_FUNCDECL_SYS (mbrtoc16, size_t,
+                  (char16_t *pc, const char *s, size_t n, mbstate_t *ps));
+#  endif
+_GL_CXXALIAS_SYS (mbrtoc16, size_t,
+                  (char16_t *pc, const char *s, size_t n, mbstate_t *ps));
+# endif
+# if __GLIBC__ + (__GLIBC_MINOR__ >= 16) > 2
+_GL_CXXALIASWARN (mbrtoc16);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef mbrtoc16
+# if HAVE_RAW_DECL_MBRTOC16
+_GL_WARN_ON_USE (mbrtoc16, "mbrtoc16 is not portable - "
+                 "use gnulib module mbrtoc16 for portability");
+# endif
+#endif
+
+
 /* Convert a string to a 32-bit wide string.  */
 #if @GNULIB_MBSNRTOC32S@
 # if _GL_WCHAR_T_IS_UCS4 && !defined IN_MBSNRTOC32S

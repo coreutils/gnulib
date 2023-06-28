@@ -18,4 +18,7 @@ mingw.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+@c https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=272218
+This function is not useful after calls to @code{mbrtoc16} or @code{mbrtoc8}.
 @end itemize
