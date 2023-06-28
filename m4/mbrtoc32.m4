@@ -1,4 +1,4 @@
-# mbrtoc32.m4 serial 16
+# mbrtoc32.m4 serial 17
 dnl Copyright (C) 2014-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -80,6 +80,8 @@ AC_DEFUN([gl_CHECK_FUNC_MBRTOC32],
   fi
 ])
 
+dnl Test whether mbrtoc32 returns the correct value on empty input.
+
 AC_DEFUN([gl_MBRTOC32_EMPTY_INPUT],
 [
   AC_REQUIRE([AC_PROG_CC])
@@ -103,9 +105,13 @@ AC_DEFUN([gl_MBRTOC32_EMPTY_INPUT],
         [gl_cv_func_mbrtoc32_empty_input=yes],
         [gl_cv_func_mbrtoc32_empty_input=no],
         [case "$host_os" in
-                          # Guess no on glibc systems.
-           *-gnu* | gnu*) gl_cv_func_mbrtoc32_empty_input="guessing no" ;;
-           *)             gl_cv_func_mbrtoc32_empty_input="guessing yes" ;;
+                            # Guess no on glibc systems.
+           *-gnu* | gnu*)   gl_cv_func_mbrtoc32_empty_input="guessing no" ;;
+                            # Guess no on Android.
+           linux*-android*) gl_cv_func_mbrtoc32_empty_input="guessing no" ;;
+                            # Guess no on native Windows.
+           mingw*)          gl_cv_func_mbrtoc32_empty_input="guessing no" ;;
+           *)               gl_cv_func_mbrtoc32_empty_input="guessing yes" ;;
          esac
         ])
     ])
