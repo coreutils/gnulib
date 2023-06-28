@@ -1283,6 +1283,7 @@ problems are not worked around by Gnulib.
 * bind::
 * bsearch::
 * btowc::
+* c8rtomb::
 * c16rtomb::
 * c32rtomb::
 * cabs::
@@ -1814,6 +1815,7 @@ problems are not worked around by Gnulib.
 * malloc::
 * mblen::
 * mbrlen::
+* mbrtoc8::
 * mbrtoc16::
 * mbrtoc32::
 * mbrtowc::
@@ -2577,6 +2579,7 @@ problems are not worked around by Gnulib.
 @include posix-functions/bind.texi
 @include posix-functions/bsearch.texi
 @include posix-functions/btowc.texi
+@include posix-functions/c8rtomb.texi
 @include posix-functions/c16rtomb.texi
 @include posix-functions/c32rtomb.texi
 @include posix-functions/cabs.texi
@@ -3108,6 +3111,7 @@ problems are not worked around by Gnulib.
 @include posix-functions/malloc.texi
 @include posix-functions/mblen.texi
 @include posix-functions/mbrlen.texi
+@include posix-functions/mbrtoc8.texi
 @include posix-functions/mbrtoc16.texi
 @include posix-functions/mbrtoc32.texi
 @include posix-functions/mbrtowc.texi
