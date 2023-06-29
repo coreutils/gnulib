@@ -1373,13 +1373,13 @@ sc_unportable_grep_q:
 # shall be COPYING for GPL and COPYING.LESSER for LGPL.
 
 sc_readme_link_install:
-	@require='INSTALL' 					\
+	@require='INSTALL'					\
 	in_vc_files='$(top_srcdir)/README$$'                    \
 	halt='The README file should refer to INSTALL'          \
 	  $(_sc_search_regexp)
 
 sc_readme_link_copying:
-	@require='COPYING' 					\
+	@require='COPYING'					\
 	in_vc_files='$(top_srcdir)/README$$'                    \
 	halt='The README file should refer to COPYING[.LESSER]' \
 	  $(_sc_search_regexp)
