@@ -39,7 +39,7 @@ simple_callee (nullptr_t x)
 
 #endif
 
-void
+static void
 varargs_callee (const char *first, ...)
 {
   va_list args;
