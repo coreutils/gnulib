@@ -232,6 +232,12 @@ styled_ostream_flush_to_current_style (_GL_ATTRIBUTE_MAYBE_UNUSED styled_ostream
 {
 }
 
+static inline bool
+is_instance_of_styled_ostream (_GL_ATTRIBUTE_MAYBE_UNUSED ostream_t stream)
+{
+  return false;
+}
+
 /* -------------------------- From file-ostream.h -------------------------- */
 
 typedef ostream_t file_ostream_t;
@@ -240,10 +246,22 @@ typedef ostream_t file_ostream_t;
 #define file_ostream_flush ostream_flush
 #define file_ostream_free ostream_free
 
+static inline FILE *
+file_ostream_get_stdio_stream (file_ostream_t stream)
+{
+  return stream;
+}
+
 static inline file_ostream_t
 file_ostream_create (FILE *fp)
 {
   return fp;
+}
+
+static inline bool
+is_instance_of_file_ostream (_GL_ATTRIBUTE_MAYBE_UNUSED ostream_t stream)
+{
+  return true;
 }
 
 /* --------------------------- From fd-ostream.h --------------------------- */
@@ -253,6 +271,24 @@ typedef ostream_t fd_ostream_t;
 #define fd_ostream_write_mem ostream_write_mem
 #define fd_ostream_flush ostream_flush
 #define fd_ostream_free ostream_free
+
+static inline int
+fd_ostream_get_descriptor (fd_ostream_t stream)
+{
+  return fileno (stream);
+}
+
+static inline const char *
+fd_ostream_get_filename (_GL_ATTRIBUTE_MAYBE_UNUSED fd_ostream_t stream)
+{
+  return NULL;
+}
+
+static inline bool
+fd_ostream_is_buffered (_GL_ATTRIBUTE_MAYBE_UNUSED fd_ostream_t stream)
+{
+  return false;
+}
 
 static inline fd_ostream_t
 fd_ostream_create (int fd, _GL_ATTRIBUTE_MAYBE_UNUSED const char *filename,
@@ -264,6 +300,12 @@ fd_ostream_create (int fd, _GL_ATTRIBUTE_MAYBE_UNUSED const char *filename,
     return stderr;
   else
     return fdopen (fd, "w");
+}
+
+static inline bool
+is_instance_of_fd_ostream (ostream_t stream)
+{
+  return fileno (stream) >= 0;
 }
 
 /* -------------------------- From term-ostream.h -------------------------- */
@@ -294,6 +336,22 @@ typedef enum
   UNDERLINE_ON,
   UNDERLINE_DEFAULT = UNDERLINE_OFF
 } term_underline_t;
+
+typedef enum
+{
+  TTYCTL_AUTO = 0,  /* Automatic best-possible choice.  */
+  TTYCTL_NONE,      /* No control.
+                       Result: Garbled output can occur, and the terminal can
+                       be left in any state when the program is interrupted.  */
+  TTYCTL_PARTIAL,   /* Signal handling.
+                       Result: Garbled output can occur, but the terminal will
+                       be left in the default state when the program is
+                       interrupted.  */
+  TTYCTL_FULL       /* Signal handling and disabling echo and flush-upon-signal.
+                       Result: No garbled output, and the terminal will
+                       be left in the default state when the program is
+                       interrupted.  */
+} ttyctl_t;
 
 typedef ostream_t term_ostream_t;
 
@@ -395,21 +453,20 @@ term_ostream_flush_to_current_style (term_ostream_t stream)
   fflush (stream);
 }
 
-typedef enum
+#define term_ostream_get_descriptor fd_ostream_get_descriptor
+#define term_ostream_get_filename fd_ostream_get_filename
+
+static inline ttyctl_t
+term_ostream_get_tty_control (_GL_ATTRIBUTE_MAYBE_UNUSED term_ostream_t stream)
 {
-  TTYCTL_AUTO = 0,  /* Automatic best-possible choice.  */
-  TTYCTL_NONE,      /* No control.
-                       Result: Garbled output can occur, and the terminal can
-                       be left in any state when the program is interrupted.  */
-  TTYCTL_PARTIAL,   /* Signal handling.
-                       Result: Garbled output can occur, but the terminal will
-                       be left in the default state when the program is
-                       interrupted.  */
-  TTYCTL_FULL       /* Signal handling and disabling echo and flush-upon-signal.
-                       Result: No garbled output, and the terminal will
-                       be left in the default state when the program is
-                       interrupted.  */
-} ttyctl_t;
+  return TTYCTL_NONE;
+}
+
+static inline ttyctl_t
+term_ostream_get_effective_tty_control (_GL_ATTRIBUTE_MAYBE_UNUSED term_ostream_t stream)
+{
+  return TTYCTL_NONE;
+}
 
 static inline term_ostream_t
 term_ostream_create (int fd, const char *filename,
@@ -417,6 +474,8 @@ term_ostream_create (int fd, const char *filename,
 {
   return fd_ostream_create (fd, filename, true);
 }
+
+#define is_instance_of_term_ostream is_instance_of_fd_ostream
 
 /* ------------------------- From memory-ostream.h ------------------------- */
 
@@ -440,6 +499,12 @@ memory_ostream_create (void)
   /* Not supported without the real libtextstyle.  */
   abort ();
   return NULL;
+}
+
+static inline bool
+is_instance_of_memory_ostream (_GL_ATTRIBUTE_MAYBE_UNUSED ostream_t stream)
+{
+  return false;
 }
 
 /* -------------------------- From html-ostream.h -------------------------- */
@@ -479,12 +544,24 @@ html_ostream_flush_to_current_style (_GL_ATTRIBUTE_MAYBE_UNUSED html_ostream_t s
 {
 }
 
+static inline ostream_t
+html_ostream_get_destination (_GL_ATTRIBUTE_MAYBE_UNUSED html_ostream_t stream)
+{
+  return NULL;
+}
+
 static inline html_ostream_t
 html_ostream_create (ostream_t destination)
 {
   /* Not supported without the real libtextstyle.  */
   abort ();
   return NULL;
+}
+
+static inline bool
+is_instance_of_html_ostream (_GL_ATTRIBUTE_MAYBE_UNUSED ostream_t stream)
+{
+  return false;
 }
 
 /* ----------------------- From term-styled-ostream.h ----------------------- */
@@ -501,6 +578,18 @@ typedef styled_ostream_t term_styled_ostream_t;
 #define term_styled_ostream_set_hyperlink styled_ostream_set_hyperlink
 #define term_styled_ostream_flush_to_current_style styled_ostream_flush_to_current_style
 
+static inline term_ostream_t
+term_styled_ostream_get_destination (term_styled_ostream_t stream)
+{
+  return stream;
+}
+
+static inline const char *
+term_styled_ostream_get_css_filename (_GL_ATTRIBUTE_MAYBE_UNUSED term_styled_ostream_t stream)
+{
+  return NULL;
+}
+
 static inline term_styled_ostream_t
 term_styled_ostream_create (int fd, const char *filename,
                             _GL_ATTRIBUTE_MAYBE_UNUSED ttyctl_t tty_control,
@@ -508,6 +597,8 @@ term_styled_ostream_create (int fd, const char *filename,
 {
   return fd_ostream_create (fd, filename, true);
 }
+
+#define is_instance_of_term_styled_ostream is_instance_of_term_ostream
 
 /* ----------------------- From html-styled-ostream.h ----------------------- */
 
@@ -523,6 +614,24 @@ typedef styled_ostream_t html_styled_ostream_t;
 #define html_styled_ostream_set_hyperlink styled_ostream_set_hyperlink
 #define html_styled_ostream_flush_to_current_style styled_ostream_flush_to_current_style
 
+static inline ostream_t
+html_styled_ostream_get_destination (_GL_ATTRIBUTE_MAYBE_UNUSED html_styled_ostream_t stream)
+{
+  return NULL;
+}
+
+static inline html_ostream_t
+html_styled_ostream_get_html_destination (_GL_ATTRIBUTE_MAYBE_UNUSED html_styled_ostream_t stream)
+{
+  return NULL;
+}
+
+static inline const char *
+html_styled_ostream_get_css_filename (_GL_ATTRIBUTE_MAYBE_UNUSED html_styled_ostream_t stream)
+{
+  return NULL;
+}
+
 static inline html_styled_ostream_t
 html_styled_ostream_create (_GL_ATTRIBUTE_MAYBE_UNUSED ostream_t destination,
                             _GL_ATTRIBUTE_MAYBE_UNUSED const char *css_filename)
@@ -530,6 +639,12 @@ html_styled_ostream_create (_GL_ATTRIBUTE_MAYBE_UNUSED ostream_t destination,
   /* Not supported without the real libtextstyle.  */
   abort ();
   return NULL;
+}
+
+static inline bool
+is_instance_of_html_styled_ostream (_GL_ATTRIBUTE_MAYBE_UNUSED ostream_t stream)
+{
+  return false;
 }
 
 /* ----------------------- From noop-styled-ostream.h ----------------------- */
@@ -546,6 +661,18 @@ typedef styled_ostream_t noop_styled_ostream_t;
 #define noop_styled_ostream_set_hyperlink styled_ostream_set_hyperlink
 #define noop_styled_ostream_flush_to_current_style styled_ostream_flush_to_current_style
 
+static inline ostream_t
+noop_styled_ostream_get_destination (noop_styled_ostream_t stream)
+{
+  return stream;
+}
+
+static inline bool
+noop_styled_ostream_is_owning_destination (_GL_ATTRIBUTE_MAYBE_UNUSED noop_styled_ostream_t stream)
+{
+  return true;
+}
+
 static inline noop_styled_ostream_t
 noop_styled_ostream_create (ostream_t destination, bool pass_ownership)
 {
@@ -553,6 +680,12 @@ noop_styled_ostream_create (ostream_t destination, bool pass_ownership)
     /* Not supported without the real libtextstyle.  */
     abort ();
   return destination;
+}
+
+static inline bool
+is_instance_of_noop_styled_ostream (_GL_ATTRIBUTE_MAYBE_UNUSED ostream_t stream)
+{
+  return false;
 }
 
 /* ------------------------------ From color.h ------------------------------ */
