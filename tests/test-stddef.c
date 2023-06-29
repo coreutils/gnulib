@@ -24,7 +24,7 @@
 wchar_t a = 'c';
 ptrdiff_t b = 1;
 size_t c = 2;
-max_align_t x;
+max_align_t mat;
 
 /* Check that NULL can be passed through varargs as a pointer type,
    per POSIX 2008.  */
