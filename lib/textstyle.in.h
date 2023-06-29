@@ -302,6 +302,15 @@ typedef ostream_t term_ostream_t;
 #define term_ostream_free ostream_free
 
 static inline term_color_t
+term_ostream_rgb_to_color (_GL_ATTRIBUTE_MAYBE_UNUSED term_ostream_t stream,
+                           _GL_ATTRIBUTE_MAYBE_UNUSED int red,
+                           _GL_ATTRIBUTE_MAYBE_UNUSED int green,
+                           _GL_ATTRIBUTE_MAYBE_UNUSED int blue)
+{
+  return COLOR_DEFAULT;
+}
+
+static inline term_color_t
 term_ostream_get_color (_GL_ATTRIBUTE_MAYBE_UNUSED term_ostream_t stream)
 {
   return COLOR_DEFAULT;
@@ -409,6 +418,75 @@ term_ostream_create (int fd, const char *filename,
   return fd_ostream_create (fd, filename, true);
 }
 
+/* ------------------------- From memory-ostream.h ------------------------- */
+
+typedef ostream_t memory_ostream_t;
+
+#define memory_ostream_write_mem ostream_write_mem
+#define memory_ostream_flush ostream_flush
+#define memory_ostream_free ostream_free
+
+static inline void
+memory_ostream_contents (_GL_ATTRIBUTE_MAYBE_UNUSED memory_ostream_t stream,
+                         const void **bufp, size_t *buflenp)
+{
+  *bufp = NULL;
+  *buflenp = 0;
+}
+
+static inline memory_ostream_t
+memory_ostream_create (void)
+{
+  /* Not supported without the real libtextstyle.  */
+  abort ();
+  return NULL;
+}
+
+/* -------------------------- From html-ostream.h -------------------------- */
+
+typedef ostream_t html_ostream_t;
+
+#define html_ostream_write_mem ostream_write_mem
+#define html_ostream_flush ostream_flush
+#define html_ostream_free ostream_free
+
+static inline void
+html_ostream_begin_span (_GL_ATTRIBUTE_MAYBE_UNUSED html_ostream_t stream,
+                         _GL_ATTRIBUTE_MAYBE_UNUSED const char *classname)
+{
+}
+
+static inline void
+html_ostream_end_span (_GL_ATTRIBUTE_MAYBE_UNUSED html_ostream_t stream,
+                       _GL_ATTRIBUTE_MAYBE_UNUSED const char *classname)
+{
+}
+
+static inline const char *
+html_ostream_get_hyperlink_ref (_GL_ATTRIBUTE_MAYBE_UNUSED html_ostream_t stream)
+{
+  return NULL;
+}
+
+static inline void
+html_ostream_set_hyperlink_ref (_GL_ATTRIBUTE_MAYBE_UNUSED html_ostream_t stream,
+                                _GL_ATTRIBUTE_MAYBE_UNUSED const char *ref)
+{
+}
+
+static inline void
+html_ostream_flush_to_current_style (_GL_ATTRIBUTE_MAYBE_UNUSED html_ostream_t stream)
+{
+}
+
+static inline html_ostream_t
+html_ostream_create (ostream_t destination)
+{
+  /* Not supported without the real libtextstyle.  */
+  abort ();
+  return NULL;
+}
+
 /* ----------------------- From term-styled-ostream.h ----------------------- */
 
 typedef styled_ostream_t term_styled_ostream_t;
@@ -435,12 +513,46 @@ term_styled_ostream_create (int fd, const char *filename,
 
 typedef styled_ostream_t html_styled_ostream_t;
 
+#define html_styled_ostream_write_mem ostream_write_mem
+#define html_styled_ostream_flush ostream_flush
+#define html_styled_ostream_free ostream_free
+#define html_styled_ostream_begin_use_class styled_ostream_begin_use_class
+#define html_styled_ostream_end_use_class styled_ostream_end_use_class
+#define html_styled_ostream_get_hyperlink_ref styled_ostream_get_hyperlink_ref
+#define html_styled_ostream_get_hyperlink_id styled_ostream_get_hyperlink_id
+#define html_styled_ostream_set_hyperlink styled_ostream_set_hyperlink
+#define html_styled_ostream_flush_to_current_style styled_ostream_flush_to_current_style
+
 static inline html_styled_ostream_t
 html_styled_ostream_create (_GL_ATTRIBUTE_MAYBE_UNUSED ostream_t destination,
                             _GL_ATTRIBUTE_MAYBE_UNUSED const char *css_filename)
 {
+  /* Not supported without the real libtextstyle.  */
   abort ();
   return NULL;
+}
+
+/* ----------------------- From noop-styled-ostream.h ----------------------- */
+
+typedef styled_ostream_t noop_styled_ostream_t;
+
+#define noop_styled_ostream_write_mem ostream_write_mem
+#define noop_styled_ostream_flush ostream_flush
+#define noop_styled_ostream_free ostream_free
+#define noop_styled_ostream_begin_use_class styled_ostream_begin_use_class
+#define noop_styled_ostream_end_use_class styled_ostream_end_use_class
+#define noop_styled_ostream_get_hyperlink_ref styled_ostream_get_hyperlink_ref
+#define noop_styled_ostream_get_hyperlink_id styled_ostream_get_hyperlink_id
+#define noop_styled_ostream_set_hyperlink styled_ostream_set_hyperlink
+#define noop_styled_ostream_flush_to_current_style styled_ostream_flush_to_current_style
+
+static inline noop_styled_ostream_t
+noop_styled_ostream_create (ostream_t destination, bool pass_ownership)
+{
+  if (!pass_ownership)
+    /* Not supported without the real libtextstyle.  */
+    abort ();
+  return destination;
 }
 
 /* ------------------------------ From color.h ------------------------------ */
@@ -466,6 +578,7 @@ handle_style_option (_GL_ATTRIBUTE_MAYBE_UNUSED const char *option)
 static inline void
 print_color_test (void)
 {
+  /* Not supported without the real libtextstyle.  */
   abort ();
 }
 
