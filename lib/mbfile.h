@@ -183,6 +183,10 @@ mbfile_multi_getc (struct mbchar *mbc, struct mbfile_multi *mbf)
               assert (mbf->buf[0] == '\0');
               assert (mbc->wc == 0);
             }
+          else if (bytes == (size_t) -3)
+            /* The previous multibyte sequence produced an additional 32-bit
+               wide character.  */
+            bytes = 0;
           mbc->wc_valid = true;
           break;
         }

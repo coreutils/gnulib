@@ -163,6 +163,10 @@ mbiter_multi_next (struct mbiter_multi *iter)
               assert (*iter->cur.ptr == '\0');
               assert (iter->cur.wc == 0);
             }
+          else if (iter->cur.bytes == (size_t) -3)
+            /* The previous multibyte sequence produced an additional 32-bit
+               wide character.  */
+            iter->cur.bytes = 0;
           iter->cur.wc_valid = true;
 
           /* When in the initial state, we can go back treating ASCII
