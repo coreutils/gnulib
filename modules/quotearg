@@ -5,16 +5,15 @@ Files:
 lib/quotearg.h
 lib/quotearg.c
 lib/quote.h
-m4/mbstate_t.m4
-m4/mbrtowc.m4
 m4/quotearg.m4
 
 Depends-on:
 attribute
 c-strcaseeq
+c32isprint
 extensions
 gettext-h
-mbrtowc
+mbrtoc32
 mbsinit
 memcmp
 minmax
@@ -22,8 +21,7 @@ quotearg-simple
 localcharset
 stdbool
 stdint
-wchar
-wctype-h
+uchar
 xalloc
 
 configure.ac:
@@ -36,7 +34,9 @@ Include:
 "quotearg.h"
 
 Link:
+$(LTLIBUNISTRING) when linking with libtool, $(LIBUNISTRING) otherwise
 $(MBRTOWC_LIB)
+$(LTLIBC32CONV) when linking with libtool, $(LIBC32CONV) otherwise
 
 License:
 GPL

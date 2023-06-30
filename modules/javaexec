@@ -29,7 +29,9 @@ Include:
 "javaexec.h"
 
 Link:
+$(LTLIBUNISTRING) when linking with libtool, $(LIBUNISTRING) otherwise
 $(MBRTOWC_LIB)
+$(LTLIBC32CONV) when linking with libtool, $(LIBC32CONV) otherwise
 $(LIBTHREAD)
 
 License:

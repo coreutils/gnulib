@@ -41,8 +41,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
-#include <wchar.h>
-#include <wctype.h>
+#include <uchar.h>
 
 #include "gettext.h"
 #define _(msgid) gettext (msgid)
@@ -535,7 +534,7 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
         case '`': case '|':
           /* A shell special character.  In theory, '$' and '`' could
              be the first bytes of multibyte characters, which means
-             we should check them with mbrtowc, but in practice this
+             we should check them with mbrtoc32, but in practice this
              doesn't happen so it's not worth worrying about.  */
           if (quoting_style == shell_always_quoting_style
               && elide_outer_quotes)
@@ -620,9 +619,9 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
 
                 do
                   {
-                    wchar_t w;
-                    size_t bytes = mbrtowc (&w, &arg[i + m],
-                                            argsize - (i + m), &mbstate);
+                    char32_t w;
+                    size_t bytes = mbrtoc32 (&w, &arg[i + m],
+                                             argsize - (i + m), &mbstate);
                     if (bytes == 0)
                       break;
                     else if (bytes == (size_t) -1)
@@ -639,6 +638,8 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
                       }
                     else
                       {
+                        if (bytes == (size_t) -3)
+                          bytes = 0;
                         /* Work around a bug with older shells that "see" a '\'
                            that is really the 2nd byte of a multibyte character.
                            In practice the problem is limited to ASCII
@@ -659,7 +660,7 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
                                 }
                           }
 
-                        if (! iswprint (w))
+                        if (! c32isprint (w))
                           printable = false;
                         m += bytes;
                       }

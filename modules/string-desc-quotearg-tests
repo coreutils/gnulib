@@ -9,4 +9,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-string-desc-quotearg
 check_PROGRAMS += test-string-desc-quotearg
-test_string_desc_quotearg_LDADD = $(LDADD) @LIBINTL@ $(MBRTOWC_LIB)
+test_string_desc_quotearg_LDADD = $(LDADD) $(LIBUNISTRING) @LIBINTL@ $(MBRTOWC_LIB) $(LIBC32CONV)
