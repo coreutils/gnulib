@@ -12,17 +12,25 @@ glibc 2.15, macOS 11.1, FreeBSD 6.4, NetBSD 9.0, OpenBSD 6.7, Minix 3.1.8, AIX 7
 @item
 In the C or POSIX locales, this function can return @code{(size_t) -1}
 and set @code{errno} to @code{EILSEQ}:
+@c https://sourceware.org/bugzilla/show_bug.cgi?id=19932
+@c https://sourceware.org/bugzilla/show_bug.cgi?id=29511
 glibc 2.35.
 @item
 This function returns 0 instead of @code{(size_t) -2} when the input
 is empty:
-glibc 2.19, mingw, Android 11,
+@c https://sourceware.org/bugzilla/show_bug.cgi?id=16950
+glibc 2.19,
+mingw,
+@c https://issuetracker.google.com/issues/289419880
+Android 11,
 @c https://dev.haiku-os.org/ticket/18350
 Haiku.
 @item
 This function does not recognize multibyte sequences that @code{mbrtowc}
 recognizes on some platforms:
-FreeBSD 13.0, Solaris 11.4, mingw, MSVC 14.
+@c https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=272293
+FreeBSD 13.2,
+Solaris 11.4, mingw, MSVC 14.
 @c For MSVC this is because it assumes that the input is always UTF-8 encoded.
 @c See https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/mbrtoc16-mbrtoc323
 @end itemize
