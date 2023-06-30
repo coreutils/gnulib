@@ -65,6 +65,7 @@ int
 main (void)
 {
   STATIC_ASSERT_TESTS;
+  f ("");
   g ();
   h ();
   return 0;
