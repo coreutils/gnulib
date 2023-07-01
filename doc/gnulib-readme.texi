@@ -580,12 +580,15 @@ updates to @code{texinfo.tex},
 documentation updates.
 @end itemize
 
-So far, we have three stable branches:
+So far, we have four stable branches:
 @table @code
+@item stable-202307
+A stable branch that starts at the beginning of July 2023.
 @item stable-202301
 A stable branch that starts at the beginning of January 2023.
 @item stable-202207
 A stable branch that starts at the beginning of July 2022.
+It is no longer updated.
 @item stable-202201
 A stable branch that starts at the beginning of January 2022.
 It is no longer updated.
