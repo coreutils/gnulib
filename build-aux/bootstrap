@@ -3,7 +3,7 @@
 
 # Bootstrap this package from checked-out sources.
 
-scriptversion=2022-12-27.07; # UTC
+scriptversion=2023-07-01.18; # UTC
 
 # Copyright (C) 2003-2023 Free Software Foundation, Inc.
 #
@@ -1478,9 +1478,11 @@ done
 $pull || $gen || pull=true gen=true
 
 $use_git || test -n "$GNULIB_SRCDIR" \
-  || die "Error: --no-git requires \$GNULIB_SRCDIR environment variable or --gnulib-srcdir option"
+  || die "Error: --no-git requires \$GNULIB_SRCDIR environment variable" \
+         "or --gnulib-srcdir option"
 test -z "$GNULIB_SRCDIR" || test -d "$GNULIB_SRCDIR" \
-  || die "Error: \$GNULIB_SRCDIR environment variable or --gnulib-srcdir option is specified, but does not denote a directory"
+  || die "Error: \$GNULIB_SRCDIR environment variable or --gnulib-srcdir" \
+         "option is specified, but does not denote a directory"
 
 if test -n "$checkout_only_file" && test ! -r "$checkout_only_file"; then
   die "Bootstrapping from a non-checked-out distribution is risky."
@@ -1503,7 +1505,11 @@ export GNULIB_REFDIR
 
 if $pull && { $use_git || test -z "$SKIP_PO"; }; then
   autopull \
-      `if $bootstrap_sync; then echo ' --bootstrap-sync'; else echo ' --no-bootstrap-sync'; fi` \
+      `if $bootstrap_sync; then
+         echo ' --bootstrap-sync'
+       else
+         echo ' --no-bootstrap-sync'
+       fi` \
       `if test -z "$checkout_only_file"; then echo ' --force'; fi` \
       `if ! $use_git; then echo ' --no-git'; fi` \
       `if test -n "$SKIP_PO"; then echo ' --skip-po'; fi` \
