@@ -29,11 +29,11 @@
 /* Get isprint().  */
 #include <ctype.h>
 
-/* Get mbstate_t, mbrtowc(), mbsinit(), wcwidth().  */
+/* Get mbstate_t, mbsinit().  */
 #include <wchar.h>
 
-/* Get iswcntrl().  */
-#include <wctype.h>
+/* Get char32_t, mbrtoc32(), c32iscntrl(), c32width().  */
+#include <uchar.h>
 
 /* Get INT_MAX.  */
 #include <limits.h>
@@ -97,11 +97,11 @@ mbsnwidth (const char *string, size_t nbytes, int flags)
                 memset (&mbstate, 0, sizeof mbstate);
                 do
                   {
-                    wchar_t wc;
+                    char32_t wc;
                     size_t bytes;
                     int w;
 
-                    bytes = mbrtowc (&wc, p, plimit - p, &mbstate);
+                    bytes = mbrtoc32 (&wc, p, plimit - p, &mbstate);
 
                     if (bytes == (size_t) -1)
                       /* An invalid multibyte sequence was encountered.  */
@@ -132,8 +132,10 @@ mbsnwidth (const char *string, size_t nbytes, int flags)
                     if (bytes == 0)
                       /* A null wide character was encountered.  */
                       bytes = 1;
+                    else if (bytes == (size_t) -3)
+                      bytes = 0;
 
-                    w = wcwidth (wc);
+                    w = c32width (wc);
                     if (w >= 0)
                       /* A printable multibyte character.  */
                       {
@@ -145,7 +147,7 @@ mbsnwidth (const char *string, size_t nbytes, int flags)
                       /* An unprintable multibyte character.  */
                       if (!(flags & MBSW_REJECT_UNPRINTABLE))
                         {
-                          if (!iswcntrl (wc))
+                          if (!c32iscntrl (wc))
                             {
                               if (width == INT_MAX)
                                 goto overflow;
