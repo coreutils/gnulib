@@ -39,6 +39,7 @@ extern mbstate_t _gl_mbsrtoc32s_state;
 # define DCHAR_T char32_t
 # define INTERNAL_STATE _gl_mbsrtoc32s_state
 # define MBRTOWC mbrtoc32
+# define USES_C32 1
 # include "mbsrtowcs-impl.h"
 
 #else
