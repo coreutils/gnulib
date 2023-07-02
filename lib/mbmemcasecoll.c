@@ -27,11 +27,11 @@
 /* Get tolower().  */
 #include <ctype.h>
 
-/* Get mbstate_t, mbrtowc(), wcrtomb().  */
+/* Get mbstate_t.  */
 #include <wchar.h>
 
-/* Get towlower().  */
-#include <wctype.h>
+/* Get char32_t, mbrtoc32(), c32rtomb(), c32tolower().  */
+#include <uchar.h>
 
 #include "malloca.h"
 #include "memcmp2.h"
@@ -39,11 +39,11 @@
 
 #define TOLOWER(Ch) (isupper (Ch) ? tolower (Ch) : (Ch))
 
-/* Apply towlower() to the multibyte character sequence in INBUF, storing the
+/* Apply c32tolower() to the multibyte character sequence in INBUF, storing the
    result as a multibyte character sequence in OUTBUF.  */
 static size_t
-apply_towlower (const char *inbuf, size_t inbufsize,
-                char *outbuf, size_t outbufsize)
+apply_c32tolower (const char *inbuf, size_t inbufsize,
+                  char *outbuf, size_t outbufsize)
 {
   char *outbuf_orig = outbuf;
   size_t remaining;
@@ -51,12 +51,12 @@ apply_towlower (const char *inbuf, size_t inbufsize,
   remaining = inbufsize;
   while (remaining > 0)
     {
-      wchar_t wc1;
+      char32_t wc1;
       size_t n1;
       mbstate_t state;
 
       memset (&state, '\0', sizeof (mbstate_t));
-      n1 = mbrtowc (&wc1, inbuf, remaining, &state);
+      n1 = mbrtoc32 (&wc1, inbuf, remaining, &state);
       if (n1 == (size_t)(-2))
         break;
       if (n1 != (size_t)(-1))
@@ -65,14 +65,16 @@ apply_towlower (const char *inbuf, size_t inbufsize,
 
           if (n1 == 0) /* NUL character? */
             n1 = 1;
+          else if (n1 == (size_t)(-3))
+            n1 = 0;
 
-          wc2 = towlower (wc1);
+          wc2 = c32tolower (wc1);
           if (wc2 != wc1)
             {
               size_t n2;
 
               memset (&state, '\0', sizeof (mbstate_t));
-              n2 = wcrtomb (outbuf, wc2, &state);
+              n2 = c32rtomb (outbuf, wc2, &state);
               if (n2 != (size_t)(-1))
                 {
                   /* Store the translated multibyte character.  */
@@ -162,8 +164,8 @@ mbmemcasecoll (const char *s1, size_t s1len, const char *s2, size_t s2len,
   /* Case-fold the two argument strings.  */
   if (MB_CUR_MAX > 1)
     {
-      t1len = apply_towlower (s1, s1len, t1, t1len);
-      t2len = apply_towlower (s2, s2len, t2, t2len);
+      t1len = apply_c32tolower (s1, s1len, t1, t1len);
+      t2len = apply_c32tolower (s2, s2len, t2, t2len);
     }
   else
     {
