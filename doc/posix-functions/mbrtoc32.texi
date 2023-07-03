@@ -38,6 +38,11 @@ Solaris 11.4, mingw, MSVC 14.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
+This function behaves incorrectly when converting precomposed characters
+from the BIG5-HKSCS encoding:
+@c https://sourceware.org/bugzilla/show_bug.cgi?id=30611
+glibc 2.36.
+@item
 Although ISO C says this function can return @code{(size_t) -3},
 no known implementation behaves that way,
 and if it were to happen it would break common uses.
