@@ -273,17 +273,19 @@ mb_copy (mbchar_t *new_mbc, const mbchar_t *old_mbc)
 
 
 /* is_basic(c) tests whether the single-byte character c is in the
-   ISO C "basic character set".
+   ISO C "basic character set" or is one of '@', '$', and '`' which
+   ISO C 23 § 5.2.1.1.(1) guarantees to be single-byte and in practice
+   are safe to treat as basic in the execution character set.
    This is a convenience function, and is in this file only to share code
    between mbiter_multi.h and mbfile_multi.h.  */
-#if (' ' == 32) && ('!' == 33) && ('"' == 34) && ('#' == 35) \
+#if (' ' == 32) && ('!' == 33) && ('"' == 34) && ('#' == 35) && ('$' == 36) \
     && ('%' == 37) && ('&' == 38) && ('\'' == 39) && ('(' == 40) \
     && (')' == 41) && ('*' == 42) && ('+' == 43) && (',' == 44) \
     && ('-' == 45) && ('.' == 46) && ('/' == 47) && ('0' == 48) \
     && ('1' == 49) && ('2' == 50) && ('3' == 51) && ('4' == 52) \
     && ('5' == 53) && ('6' == 54) && ('7' == 55) && ('8' == 56) \
     && ('9' == 57) && (':' == 58) && (';' == 59) && ('<' == 60) \
-    && ('=' == 61) && ('>' == 62) && ('?' == 63) && ('A' == 65) \
+    && ('=' == 61) && ('>' == 62) && ('?' == 63) && ('@' == 64) && ('A' == 65) \
     && ('B' == 66) && ('C' == 67) && ('D' == 68) && ('E' == 69) \
     && ('F' == 70) && ('G' == 71) && ('H' == 72) && ('I' == 73) \
     && ('J' == 74) && ('K' == 75) && ('L' == 76) && ('M' == 77) \
@@ -291,7 +293,7 @@ mb_copy (mbchar_t *new_mbc, const mbchar_t *old_mbc)
     && ('R' == 82) && ('S' == 83) && ('T' == 84) && ('U' == 85) \
     && ('V' == 86) && ('W' == 87) && ('X' == 88) && ('Y' == 89) \
     && ('Z' == 90) && ('[' == 91) && ('\\' == 92) && (']' == 93) \
-    && ('^' == 94) && ('_' == 95) && ('a' == 97) && ('b' == 98) \
+    && ('^' == 94) && ('_' == 95) && ('`' == 96) && ('a' == 97) && ('b' == 98) \
     && ('c' == 99) && ('d' == 100) && ('e' == 101) && ('f' == 102) \
     && ('g' == 103) && ('h' == 104) && ('i' == 105) && ('j' == 106) \
     && ('k' == 107) && ('l' == 108) && ('m' == 109) && ('n' == 110) \
@@ -319,20 +321,20 @@ is_basic (char c)
   switch (c)
     {
     case '\t': case '\v': case '\f':
-    case ' ': case '!': case '"': case '#': case '%':
+    case ' ': case '!': case '"': case '#': case '$': case '%':
     case '&': case '\'': case '(': case ')': case '*':
     case '+': case ',': case '-': case '.': case '/':
     case '0': case '1': case '2': case '3': case '4':
     case '5': case '6': case '7': case '8': case '9':
     case ':': case ';': case '<': case '=': case '>':
-    case '?':
+    case '?': case '@':
     case 'A': case 'B': case 'C': case 'D': case 'E':
     case 'F': case 'G': case 'H': case 'I': case 'J':
     case 'K': case 'L': case 'M': case 'N': case 'O':
     case 'P': case 'Q': case 'R': case 'S': case 'T':
     case 'U': case 'V': case 'W': case 'X': case 'Y':
     case 'Z':
-    case '[': case '\\': case ']': case '^': case '_':
+    case '[': case '\\': case ']': case '^': case '_': case '`':
     case 'a': case 'b': case 'c': case 'd': case 'e':
     case 'f': case 'g': case 'h': case 'i': case 'j':
     case 'k': case 'l': case 'm': case 'n': case 'o':
