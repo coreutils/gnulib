@@ -38,6 +38,12 @@ Solaris 11.4, mingw, MSVC 14.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
+Although ISO C says this function can return @code{(size_t) -3},
+no known implementation behaves that way,
+and if it were to happen it would break common uses.
+If dealing with @code{(size_t) -3} would complicate your code significantly,
+it is probably better not to bother.
+@item
 This function is only defined as an inline function on some platforms:
 Haiku 2020.
 @end itemize
