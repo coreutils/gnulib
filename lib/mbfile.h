@@ -147,6 +147,8 @@ mbfile_multi_getc (struct mbchar *mbc, struct mbfile_multi *mbf)
           /* Return a single byte.  */
           bytes = 1;
           mbc->wc_valid = false;
+          /* Allow the next invocation to continue from a sane state.  */
+          memset (&mbf->state, '\0', sizeof (mbstate_t));
           break;
         }
       else if (bytes == (size_t) -2)

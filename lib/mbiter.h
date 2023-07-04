@@ -146,8 +146,9 @@ mbiter_multi_next (struct mbiter_multi *iter)
           /* An invalid multibyte sequence was encountered.  */
           iter->cur.bytes = 1;
           iter->cur.wc_valid = false;
-          /* Whether to set iter->in_shift = false and reset iter->state
-             or not is not very important; the string is bogus anyway.  */
+          /* Allow the next invocation to continue from a sane state.  */
+          iter->in_shift = false;
+          memset (&iter->state, '\0', sizeof (mbstate_t));
         }
       else if (iter->cur.bytes == (size_t) -2)
         {
