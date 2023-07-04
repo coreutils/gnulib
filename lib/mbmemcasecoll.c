@@ -51,59 +51,69 @@ apply_c32tolower (const char *inbuf, size_t inbufsize,
   remaining = inbufsize;
   while (remaining > 0)
     {
-      char32_t wc1;
-      size_t n1;
       mbstate_t state;
 
       memset (&state, '\0', sizeof (mbstate_t));
-      n1 = mbrtoc32 (&wc1, inbuf, remaining, &state);
-      if (n1 == (size_t)(-2))
-        break;
-      if (n1 != (size_t)(-1))
+      do
         {
-          wint_t wc2;
+          char32_t wc1;
+          size_t n1;
 
-          if (n1 == 0) /* NUL character? */
-            n1 = 1;
-          else if (n1 == (size_t)(-3))
-            n1 = 0;
+          n1 = mbrtoc32 (&wc1, inbuf, remaining, &state);
 
-          wc2 = c32tolower (wc1);
-          if (wc2 != wc1)
+          if (n1 == (size_t)(-1))
             {
-              size_t n2;
-
-              memset (&state, '\0', sizeof (mbstate_t));
-              n2 = c32rtomb (outbuf, wc2, &state);
-              if (n2 != (size_t)(-1))
-                {
-                  /* Store the translated multibyte character.  */
-                  inbuf += n1;
-                  remaining -= n1;
-                  outbuf += n2;
-                  continue;
-                }
+              /* Invalid multibyte character on input.
+                 Copy one byte without modification.  */
+              *outbuf++ = *inbuf++;
+              remaining -= 1;
+              break;
             }
+          else if (n1 == (size_t)(-2))
+            {
+              /* Incomplete multibyte sequence on input.
+                 Pass it through unmodified.  */
+              while (remaining > 0)
+                {
+                  *outbuf++ = *inbuf++;
+                  remaining -= 1;
+                }
+              break;
+            }
+          else
+            {
+              wint_t wc2;
 
-          /* Nothing to translate. */
-          memcpy (outbuf, inbuf, n1);
-          inbuf += n1;
-          remaining -= n1;
-          outbuf += n1;
-          continue;
+              if (n1 == 0) /* NUL character? */
+                n1 = 1;
+              else if (n1 == (size_t)(-3))
+                n1 = 0;
+
+              wc2 = c32tolower (wc1);
+              if (wc2 != wc1)
+                {
+                  mbstate_t state2;
+                  size_t n2;
+
+                  memset (&state2, '\0', sizeof (mbstate_t));
+                  n2 = c32rtomb (outbuf, wc2, &state2);
+                  if (n2 != (size_t)(-1))
+                    {
+                      /* Store the translated multibyte character.  */
+                      outbuf += n2;
+                      goto done_storing;
+                    }
+                }
+
+              /* Nothing to translate. */
+              memcpy (outbuf, inbuf, n1);
+              outbuf += n1;
+             done_storing:
+              inbuf += n1;
+              remaining -= n1;
+            }
         }
-
-      /* Invalid multibyte character on input.
-         Copy one byte without modification.  */
-      *outbuf++ = *inbuf++;
-      remaining -= 1;
-    }
-  /* Incomplete multibyte sequence on input.
-     Pass it through unmodified.  */
-  while (remaining > 0)
-    {
-      *outbuf++ = *inbuf++;
-      remaining -= 1;
+      while (! mbsinit (&state));
     }
 
   /* Verify the output buffer was large enough.  */

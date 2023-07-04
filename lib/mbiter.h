@@ -155,8 +155,10 @@ mbiter_multi_next (struct mbiter_multi *iter)
           /* An incomplete multibyte character at the end.  */
           iter->cur.bytes = iter->limit - iter->cur.ptr;
           iter->cur.wc_valid = false;
-          /* Whether to set iter->in_shift = false and reset iter->state
-             or not is not important; the string end is reached anyway.  */
+          /* Cause the next mbi_avail invocation to return false.  */
+          iter->in_shift = false;
+          /* Whether to reset iter->state or not is not important; the
+             string end is reached anyway.  */
         }
       else
         {
@@ -208,7 +210,8 @@ typedef struct mbiter_multi mbi_iterator_t;
    (iter).in_shift = false, memset (&(iter).state, '\0', sizeof (mbstate_t)), \
    (iter).next_done = false)
 #define mbi_avail(iter) \
-  ((iter).cur.ptr < (iter).limit && (mbiter_multi_next (&(iter)), true))
+  (((iter).cur.ptr < (iter).limit || (iter).in_shift) \
+   && (mbiter_multi_next (&(iter)), true))
 #define mbi_advance(iter) \
   ((iter).cur.ptr += (iter).cur.bytes, (iter).next_done = false)
 
