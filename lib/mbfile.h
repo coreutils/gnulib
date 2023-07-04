@@ -108,9 +108,12 @@ mbfile_multi_getc (struct mbchar *mbc, struct mbfile_multi *mbf)
   /* Handle most ASCII characters quickly, without calling mbrtowc().  */
   if (mbf->bufcount == 1 && mbsinit (&mbf->state) && is_basic (mbf->buf[0]))
     {
-      /* These characters are part of the basic character set.  ISO C 99
-         guarantees that their wide character code is identical to their
-         char code.  The 32-bit wide character code is the same as well.  */
+      /* These characters are part of the POSIX portable character set.
+         For most of them, namely those in the ISO C basic character set,
+         ISO C 99 guarantees that their wide character code is identical to
+         their char code.  For the few other ones, this is the case as well,
+         in all locale encodings that are in use.  The 32-bit wide character
+         code is the same as well.  */
       mbc->wc = mbc->buf[0] = mbf->buf[0];
       mbc->wc_valid = true;
       mbc->ptr = &mbc->buf[0];

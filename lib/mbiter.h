@@ -124,9 +124,12 @@ mbiter_multi_next (struct mbiter_multi *iter)
   /* Handle most ASCII characters quickly, without calling mbrtowc().  */
   if (is_basic (*iter->cur.ptr))
     {
-      /* These characters are part of the basic character set.  ISO C 99
-         guarantees that their wide character code is identical to their
-         char code.  */
+      /* These characters are part of the POSIX portable character set.
+         For most of them, namely those in the ISO C basic character set,
+         ISO C 99 guarantees that their wide character code is identical to
+         their char code.  For the few other ones, this is the case as well,
+         in all locale encodings that are in use.  The 32-bit wide character
+         code is the same as well.  */
       iter->cur.bytes = 1;
       iter->cur.wc = *iter->cur.ptr;
       iter->cur.wc_valid = true;
