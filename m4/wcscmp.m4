@@ -1,4 +1,4 @@
-# wcscmp.m4 serial 3
+# wcscmp.m4 serial 4
 dnl Copyright (C) 2011-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -33,6 +33,10 @@ AC_DEFUN([gl_FUNC_WCSCMP],
                 int cmp = wcscmp (c, d);
                 if (!((wchar_t)-1 < 0 ? cmp > 0 : cmp < 0))
                   result |= 2;
+                /* This test fails on glibc 2.37 on arm and arm64 CPUs.  */
+                cmp = wcscmp (d, c);
+                if (!((wchar_t)-1 < 0 ? cmp < 0 : cmp > 0))
+                  result |= 4;
               }
               return result;
             }
