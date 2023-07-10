@@ -1,0 +1,14 @@
+Files:
+tests/test-mbrtoc32-regular.c
+tests/macros.h
+
+Depends-on:
+mbsinit
+setlocale
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-mbrtoc32-regular
+check_PROGRAMS += test-mbrtoc32-regular
+test_mbrtoc32_regular_LDADD = $(LDADD) $(LIBUNISTRING) $(SETLOCALE_LIB) $(MBRTOWC_LIB) $(LIBC32CONV)
