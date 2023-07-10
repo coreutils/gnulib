@@ -100,5 +100,11 @@ int main () {
     rm -fr conftest*
   ])
   LOCALE_AR=$gt_cv_locale_ar
+  case $LOCALE_AR in #(
+    '' | *[[[:space:]\"\$\'*@<:@]]*)
+      dnl This locale name might cause trouble with sh or make.
+      AC_MSG_WARN([invalid locale "$LOCALE_AR"; assuming "none"])
+      LOCALE_AR=none;;
+  esac
   AC_SUBST([LOCALE_AR])
 ])

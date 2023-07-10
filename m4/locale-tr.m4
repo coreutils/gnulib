@@ -122,5 +122,11 @@ int main () {
     rm -fr conftest*
   ])
   LOCALE_TR_UTF8=$gt_cv_locale_tr_utf8
+  case $LOCALE_TR_UTF8 in #(
+    '' | *[[[:space:]\"\$\'*@<:@]]*)
+      dnl This locale name might cause trouble with sh or make.
+      AC_MSG_WARN([invalid locale "$LOCALE_TR_UTF8"; assuming "none"])
+      LOCALE_TR_UTF8=none;;
+  esac
   AC_SUBST([LOCALE_TR_UTF8])
 ])
