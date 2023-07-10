@@ -126,6 +126,15 @@ mbrtoc32 (char32_t *pwc, const char *s, size_t n, mbstate_t *ps)
   size_t ret = mbrtoc32 (pwc, s, n, ps);
 #  endif
 
+#  if GNULIB_MBRTOC32_REGULAR
+  /* Verify that mbrtoc32 is regular.  */
+  if (ret < (size_t) -3 && ! mbsinit (ps))
+    /* This occurs on glibc 2.36.  */
+    memset (ps, '\0', sizeof (mbstate_t));
+  if (ret == (size_t) -3)
+    abort ();
+#  endif
+
 #  if MBRTOC32_IN_C_LOCALE_MAYBE_EILSEQ
   if ((size_t) -2 <= ret && n != 0 && ! hard_locale (LC_CTYPE))
     {

@@ -2,9 +2,9 @@
 @section @code{mbrtoc32}
 @findex mbrtoc32
 
-Gnulib module: mbrtoc32
+Gnulib module: mbrtoc32 or mbrtoc32-regular
 
-Portability problems fixed by Gnulib:
+Portability problems fixed by either Gnulib module @code{mbrtoc32} or @code{mbrtoc32-regular}:
 @itemize
 @item
 This function is missing on most non-glibc platforms:
@@ -35,19 +35,25 @@ Solaris 11.4, mingw, MSVC 14.
 @c See https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/mbrtoc16-mbrtoc323
 @end itemize
 
-Portability problems not fixed by Gnulib:
+Portability problems fixed by Gnulib module @code{mbrtoc32-regular}:
 @itemize
+@item
+This function can map some multibyte characters to a sequence of two or more
+Unicode characters, and may thus return @code{(size_t) -3}.
+No known implementation currently (2023) behaves that way, but it may
+theoretically happen.
+With the @code{mbrtoc32-regular} module, you have the guarantee that the
+Gnulib-provided @code{mbrtoc32} function maps each multibyte character to
+exactly one Unicode character and thus never returns @code{(size_t) -3}.
 @item
 This function behaves incorrectly when converting precomposed characters
 from the BIG5-HKSCS encoding:
 @c https://sourceware.org/bugzilla/show_bug.cgi?id=30611
 glibc 2.36.
-@item
-Although ISO C says this function can return @code{(size_t) -3},
-no known implementation behaves that way,
-and if it were to happen it would break common uses.
-If dealing with @code{(size_t) -3} would complicate your code significantly,
-it is probably better not to bother.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
 @item
 This function is only defined as an inline function on some platforms:
 Haiku 2020.

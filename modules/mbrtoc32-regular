@@ -1,0 +1,27 @@
+Description:
+mbrtoc32() function that maps each multibyte character to exactly one Unicode
+character and thus never returns (size_t)(-3).
+
+Files:
+
+Depends-on:
+mbrtoc32
+
+configure.ac:
+gl_MODULE_INDICATOR([mbrtoc32-regular])
+
+Makefile.am:
+
+Include:
+<uchar.h>
+
+Link:
+$(LTLIBUNISTRING) when linking with libtool, $(LIBUNISTRING) otherwise
+$(MBRTOWC_LIB)
+$(LTLIBC32CONV) when linking with libtool, $(LIBC32CONV) otherwise
+
+License:
+LGPLv2+
+
+Maintainer:
+Bruno Haible
