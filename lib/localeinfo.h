@@ -21,13 +21,6 @@
 
 #include <limits.h>
 #include <wchar.h>
-#if GAWK
-/* Use ISO C 99 API.  */
-# define char32_t wchar_t
-#else
-/* Use ISO C 11 + gnulib API.  */
-# include <uchar.h>
-#endif
 
 struct localeinfo
 {
@@ -50,8 +43,8 @@ struct localeinfo
   signed char sbclen[UCHAR_MAX + 1];
 
   /* An array indexed by byte values B that contains the corresponding
-     32-bit wide character (if any) for B if sbclen[B] == 1.  WEOF means
-     the byte is not a valid single-byte character, i.e., sbclen[B] == -1
+     wide character (if any) for B if sbclen[B] == 1.  WEOF means the
+     byte is not a valid single-byte character, i.e., sbclen[B] == -1
      or -2.  */
   wint_t sbctowc[UCHAR_MAX + 1];
 };
@@ -63,4 +56,4 @@ extern void init_localeinfo (struct localeinfo *);
    itself.  This is a generous upper bound.  */
 enum { CASE_FOLDED_BUFSIZE = 32 };
 
-extern int case_folded_counterparts (wint_t, char32_t[CASE_FOLDED_BUFSIZE]);
+extern int case_folded_counterparts (wint_t, wchar_t[CASE_FOLDED_BUFSIZE]);
