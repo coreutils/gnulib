@@ -78,8 +78,9 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's/@''GNULIB_HYPOT''@/$(GNULIB_HYPOT)/g' \
 	      -e 's/@''GNULIB_HYPOTF''@/$(GNULIB_HYPOTF)/g' \
 	      -e 's/@''GNULIB_HYPOTL''@/$(GNULIB_HYPOTL)/g' \
-	      < $(srcdir)/math.in.h | \
-	  sed -e 's/@''GNULIB_ILOGB''@/$(GNULIB_ILOGB)/g' \
+	      < $(srcdir)/math.in.h > $@-t1
+	$(AM_V_at)sed \
+	      -e 's/@''GNULIB_ILOGB''@/$(GNULIB_ILOGB)/g' \
 	      -e 's/@''GNULIB_ILOGBF''@/$(GNULIB_ILOGBF)/g' \
 	      -e 's/@''GNULIB_ILOGBL''@/$(GNULIB_ILOGBL)/g' \
 	      -e 's/@''GNULIB_ISFINITE''@/$(GNULIB_ISFINITE)/g' \
@@ -136,8 +137,9 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's/@''GNULIB_MDA_Y0''@/$(GNULIB_MDA_Y0)/g' \
 	      -e 's/@''GNULIB_MDA_Y1''@/$(GNULIB_MDA_Y1)/g' \
 	      -e 's/@''GNULIB_MDA_YN''@/$(GNULIB_MDA_YN)/g' \
-	  | \
-	  sed -e 's|@''HAVE_ACOSF''@|$(HAVE_ACOSF)|g' \
+	      < $@-t1 > $@-t2
+	$(AM_V_at)sed \
+	      -e 's|@''HAVE_ACOSF''@|$(HAVE_ACOSF)|g' \
 	      -e 's|@''HAVE_ACOSL''@|$(HAVE_ACOSL)|g' \
 	      -e 's|@''HAVE_ASINF''@|$(HAVE_ASINF)|g' \
 	      -e 's|@''HAVE_ASINL''@|$(HAVE_ASINL)|g' \
@@ -197,6 +199,8 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's|@''HAVE_TANF''@|$(HAVE_TANF)|g' \
 	      -e 's|@''HAVE_TANL''@|$(HAVE_TANL)|g' \
 	      -e 's|@''HAVE_TANHF''@|$(HAVE_TANHF)|g' \
+	      < $@-t2 > $@-t3
+	$(AM_V_at)sed \
 	      -e 's|@''HAVE_DECL_ACOSL''@|$(HAVE_DECL_ACOSL)|g' \
 	      -e 's|@''HAVE_DECL_ASINL''@|$(HAVE_DECL_ASINL)|g' \
 	      -e 's|@''HAVE_DECL_ATANL''@|$(HAVE_DECL_ATANL)|g' \
@@ -233,8 +237,9 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's|@''HAVE_DECL_TRUNC''@|$(HAVE_DECL_TRUNC)|g' \
 	      -e 's|@''HAVE_DECL_TRUNCF''@|$(HAVE_DECL_TRUNCF)|g' \
 	      -e 's|@''HAVE_DECL_TRUNCL''@|$(HAVE_DECL_TRUNCL)|g' \
-	  | \
-	  sed -e 's|@''REPLACE_ACOSF''@|$(REPLACE_ACOSF)|g' \
+	      < $@-t3 > $@-t4
+	$(AM_V_at)sed \
+	      -e 's|@''REPLACE_ACOSF''@|$(REPLACE_ACOSF)|g' \
 	      -e 's|@''REPLACE_ASINF''@|$(REPLACE_ASINF)|g' \
 	      -e 's|@''REPLACE_ATANF''@|$(REPLACE_ATANF)|g' \
 	      -e 's|@''REPLACE_ATAN2F''@|$(REPLACE_ATAN2F)|g' \
@@ -276,6 +281,8 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's|@''REPLACE_ISINF''@|$(REPLACE_ISINF)|g' \
 	      -e 's|@''REPLACE_ISNAN''@|$(REPLACE_ISNAN)|g' \
 	      -e 's|@''REPLACE_ITOLD''@|$(REPLACE_ITOLD)|g' \
+	      < $@-t4 > $@-t5
+	$(AM_V_at)sed \
 	      -e 's|@''REPLACE_LDEXPL''@|$(REPLACE_LDEXPL)|g' \
 	      -e 's|@''REPLACE_LOG''@|$(REPLACE_LOG)|g' \
 	      -e 's|@''REPLACE_LOGF''@|$(REPLACE_LOGF)|g' \
@@ -317,9 +324,10 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
 	      -e '/definition of _GL_ARG_NONNULL/r $(ARG_NONNULL_H)' \
 	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
-	      > $@-t
-	$(AM_V_at)mv $@-t $@
-MOSTLYCLEANFILES += math.h math.h-t
+	      < $@-t5 > $@-t6
+	$(AM_V_at)rm -f $@-t1 $@-t2 $@-t3 $@-t4 $@-t5
+	$(AM_V_at)mv $@-t6 $@
+MOSTLYCLEANFILES += math.h math.h-t1 math.h-t2 math.h-t3 math.h-t4 math.h-t5 math.h-t6
 
 Include:
 <math.h>
