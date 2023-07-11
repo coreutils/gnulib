@@ -1,7 +1,10 @@
-Sun seems to care about Solaris versus SunOS branding...
+Sun Microsystems seemed to care about Solaris versus SunOS branding...
 
-Here is a mapping table that maps the `uname -sr` values to Sun's marketing
-names.
+Solaris also has a fork named Illumos, which is free (but not GPL-compatible)
+software and which has behavior close to that of Solaris 11.
+See <https://illumos.org>.
+
+Here is a mapping table that maps the `uname -sr` values to the marketing names.
 
        SunOS 1.x       == SunOS 1.x
        SunOS 2.x       == SunOS 2.x
@@ -22,7 +25,7 @@ Starting with 4.1.1B of SunOS we have the 'Solaris 1.0' release.
        SunOS 4.1.3_U1B == Solaris 1.1.1B
        SunOS 4.1.4     == Solaris 1.1.2
 
-The SunOS 5.x uname output maps to the Solaris 2.x numbers through 2.6
+The SunOS 5.x uname output maps to the Solaris 2.x numbers through 2.6.
 
        SunOS 5.0       == Solaris 2.0
        SunOS 5.1       == Solaris 2.1
@@ -33,21 +36,20 @@ The SunOS 5.x uname output maps to the Solaris 2.x numbers through 2.6
        SunOS 5.5.1     == Solaris 2.5.1
        SunOS 5.6       == Solaris 2.6
 
-After SunOS 5.6, they started numbering based on the second digit
+After SunOS 5.6, they started numbering based on the second digit.
 
        SunOS 5.7       == Solaris 7
        SunOS 5.8       == Solaris 8
        SunOS 5.9       == Solaris 9
        SunOS 5.10      == Solaris 10
-
-The next version will be SunOS 5.11, but as of 2006-08-14 it is not
-known whether it will also be called "Solaris 11".
+       SunOS 5.11      == Solaris 11 or Illumos
 
 The common terminology is to use the name "SunOS ..." to designate SunOS 2.x,
-3.x, 4.x, and "Solaris ..." to designate SunOS 5.x.
+3.x, 4.x, and "Solaris ..." or "Illumos" to designate SunOS 5.x.
 
-Most of these operating systems are obsolete.  As of 2006-07-24 only
-SunOS 5.7 and later are supported by Sun and are therefore of
+Most of these operating systems are obsolete.  As of 2023-07-11 only
+Solaris 10 (end-of-life January 2025) and Solaris 11 (end-of-life
+November 2034) are supported by Oracle and are therefore of
 practical porting concern for GNU applications.  For the current list, see
 <https://en.wikipedia.org/wiki/Solaris_(operating_system)#Version_history>.
 

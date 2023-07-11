@@ -530,12 +530,9 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
         case '<':
         case '=': /* sometimes special in 0th or (with "set -k") later args */
         case '>': case '[':
-        case '^': /* special in old /bin/sh, e.g. SunOS 4.1.4 */
+        case '^': /* special in old /bin/sh, e.g., Solaris 10 */
         case '`': case '|':
-          /* A shell special character.  In theory, '$' and '`' could
-             be the first bytes of multibyte characters, which means
-             we should check them with mbrtoc32, but in practice this
-             doesn't happen so it's not worth worrying about.  */
+          /* A shell special character.  */
           if (quoting_style == shell_always_quoting_style
               && elide_outer_quotes)
             goto force_outer_quoting_style;
