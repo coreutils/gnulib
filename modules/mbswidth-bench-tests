@@ -1,0 +1,18 @@
+Files:
+tests/bench-mbswidth.c
+tests/bench-multibyte.h
+tests/bench.h
+
+Depends-on:
+mbrtoc32-regular
+mbswidth
+setlocale
+striconv
+getrusage
+gettimeofday
+
+configure.ac:
+
+Makefile.am:
+noinst_PROGRAMS += bench-mbswidth
+bench_mbswidth_LDADD = $(LDADD) $(LIBUNISTRING) $(SETLOCALE_LIB) $(MBRTOWC_LIB) $(LIBC32CONV)
