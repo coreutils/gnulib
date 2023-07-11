@@ -95,7 +95,7 @@ mbfile_multi_getc (struct mbchar *mbc, struct mbfile_multi *mbf)
 
   new_bufcount = mbf->bufcount;
 
-  /* If mbf->state is not in the initial state, some more 32-bit wide character
+  /* If mbf->state is not in an initial state, some more 32-bit wide character
      may be hiding in the state.  We need to call mbrtoc32 again.  */
   if (mbsinit (&mbf->state))
     {

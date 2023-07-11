@@ -21,7 +21,7 @@
 
 /* Internal state used by the functions mbsrtoc32s() and mbsnrtoc32s().  */
 mbstate_t _gl_mbsrtoc32s_state
-/* The state must initially be in the "initial state"; so, zero-initialize it.
+/* The state must initially be in an "initial state"; so, zero-initialize it.
    On most systems, putting it into BSS is sufficient.  Not so on Mac OS X 10.3,
    see <https://lists.gnu.org/r/bug-gnulib/2009-01/msg00329.html>.
    When it needs an initializer, use 0 or {0} as initializer? 0 only works

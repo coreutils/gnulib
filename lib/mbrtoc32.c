@@ -203,7 +203,7 @@ mbrtoc32 (char32_t *pwc, const char *s, size_t n, mbstate_t *ps)
       if (nstate >= (res > 0 ? res : 1))
         abort ();
       res -= nstate;
-      /* Set *ps to the initial state.  */
+      /* Set *ps to an initial state.  */
 #  if defined _WIN32 && !defined __CYGWIN__
       /* Native Windows.  */
       /* MSVC defines 'mbstate_t' as an 8-byte struct; the first 4 bytes matter.

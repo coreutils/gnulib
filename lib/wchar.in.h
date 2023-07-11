@@ -288,7 +288,7 @@ _GL_WARN_ON_USE (wctob, "wctob is unportable - "
 #endif
 
 
-/* Test whether *PS is in the initial state.  */
+/* Test whether *PS is in an initial state.  */
 #if @GNULIB_MBSINIT@
 # if @REPLACE_MBSINIT@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)

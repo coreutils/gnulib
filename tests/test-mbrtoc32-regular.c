@@ -61,7 +61,7 @@ main (int argc, char *argv[])
   /* It is OK if this conversion fails.  */
   if (ret != (size_t)(-1))
     {
-      /* mbrtoc32 being regular, means that STATE is in the initial state.  */
+      /* mbrtoc32 being regular, means that STATE is in an initial state.  */
       ASSERT (mbsinit (&state));
       ret = mbrtoc32 (&c32, "", 0, &state);
       /* mbrtoc32 being regular, means that it returns (size_t)(-2), not

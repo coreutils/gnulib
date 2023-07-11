@@ -175,7 +175,7 @@ mbiter_multi_next (struct mbiter_multi *iter)
             iter->cur.bytes = 0;
           iter->cur.wc_valid = true;
 
-          /* When in the initial state, we can go back treating ASCII
+          /* When in an initial state, we can go back treating ASCII
              characters more quickly.  */
           if (mbsinit (&iter->state))
             iter->in_shift = false;

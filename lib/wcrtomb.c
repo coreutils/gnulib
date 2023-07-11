@@ -29,7 +29,7 @@ wcrtomb (char *s, wchar_t wc, mbstate_t *ps)
 #undef wcrtomb
 {
   /* This implementation of wcrtomb supports only stateless encodings.
-     ps must be in the initial state.  */
+     ps must be in an initial state.  */
   if (ps != NULL && !mbsinit (ps))
     {
       errno = EINVAL;
