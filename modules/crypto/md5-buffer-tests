@@ -2,6 +2,7 @@ Files:
 tests/test-md5-buffer.c
 tests/bench-md5.c
 tests/bench-digest.h
+tests/bench.h
 
 Depends-on:
 c99

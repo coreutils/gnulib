@@ -2,6 +2,7 @@ Files:
 tests/bench-sha224.c
 tests/bench-sha256.c
 tests/bench-digest.h
+tests/bench.h
 
 Depends-on:
 c99

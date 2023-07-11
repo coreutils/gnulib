@@ -2,6 +2,7 @@ Files:
 tests/test-sha1-buffer.c
 tests/bench-sha1.c
 tests/bench-digest.h
+tests/bench.h
 
 Depends-on:
 c99
