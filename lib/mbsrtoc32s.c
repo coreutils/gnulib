@@ -39,7 +39,13 @@ extern mbstate_t _gl_mbsrtoc32s_state;
 # define DCHAR_T char32_t
 # define INTERNAL_STATE _gl_mbsrtoc32s_state
 # define MBRTOWC mbrtoc32
-# define USES_C32 1
+# if GNULIB_MBRTOC32_REGULAR
+   /* If the 'mbrtoc32-regular' module is in use, we don't need to handle
+      a (size_t)(-3) return value from mbrtoc32.  */
+#  define USES_C32 0
+# else
+#  define USES_C32 1
+# endif
 # include "mbsrtowcs-impl.h"
 
 #else
