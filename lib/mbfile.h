@@ -97,7 +97,11 @@ mbfile_multi_getc (struct mbchar *mbc, struct mbfile_multi *mbf)
 
   /* If mbf->state is not in an initial state, some more 32-bit wide character
      may be hiding in the state.  We need to call mbrtoc32 again.  */
+  #if GNULIB_MBRTOC32_REGULAR
+  assert (mbsinit (&mbf->state));
+  #else
   if (mbsinit (&mbf->state))
+  #endif
     {
       /* Before using mbrtoc32, we need at least one byte.  */
       if (new_bufcount == 0)
@@ -185,10 +189,12 @@ mbfile_multi_getc (struct mbchar *mbc, struct mbfile_multi *mbf)
               assert (mbf->buf[0] == '\0');
               assert (mbc->wc == 0);
             }
+          #if !GNULIB_MBRTOC32_REGULAR
           else if (bytes == (size_t) -3)
             /* The previous multibyte sequence produced an additional 32-bit
                wide character.  */
             bytes = 0;
+          #endif
           mbc->wc_valid = true;
           break;
         }

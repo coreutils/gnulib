@@ -95,7 +95,7 @@ mbsnwidth (const char *string, size_t nbytes, int flags)
               {
                 mbstate_t mbstate;
                 memset (&mbstate, 0, sizeof mbstate);
-                do
+                for (;;)
                   {
                     char32_t wc;
                     size_t bytes;
@@ -132,8 +132,10 @@ mbsnwidth (const char *string, size_t nbytes, int flags)
                     if (bytes == 0)
                       /* A null wide character was encountered.  */
                       bytes = 1;
+                    #if !GNULIB_MBRTOC32_REGULAR
                     else if (bytes == (size_t) -3)
                       bytes = 0;
+                    #endif
 
                     w = c32width (wc);
                     if (w >= 0)
@@ -158,8 +160,11 @@ mbsnwidth (const char *string, size_t nbytes, int flags)
                         return -1;
 
                     p += bytes;
+                    #if !GNULIB_MBRTOC32_REGULAR
+                    if (mbsinit (&mbstate))
+                    #endif
+                      break;
                   }
-                while (! mbsinit (&mbstate));
               }
               break;
           }

@@ -54,7 +54,7 @@ apply_c32tolower (const char *inbuf, size_t inbufsize,
       mbstate_t state;
 
       memset (&state, '\0', sizeof (mbstate_t));
-      do
+      for (;;)
         {
           char32_t wc1;
           size_t n1;
@@ -86,8 +86,10 @@ apply_c32tolower (const char *inbuf, size_t inbufsize,
 
               if (n1 == 0) /* NUL character? */
                 n1 = 1;
+              #if !GNULIB_MBRTOC32_REGULAR
               else if (n1 == (size_t)(-3))
                 n1 = 0;
+              #endif
 
               wc2 = c32tolower (wc1);
               if (wc2 != wc1)
@@ -112,8 +114,11 @@ apply_c32tolower (const char *inbuf, size_t inbufsize,
               inbuf += n1;
               remaining -= n1;
             }
+          #if !GNULIB_MBRTOC32_REGULAR
+          if (mbsinit (&state))
+          #endif
+            break;
         }
-      while (! mbsinit (&state));
     }
 
   /* Verify the output buffer was large enough.  */

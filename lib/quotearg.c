@@ -614,7 +614,7 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
                 if (argsize == SIZE_MAX)
                   argsize = strlen (arg);
 
-                do
+                for (;;)
                   {
                     char32_t w;
                     size_t bytes = mbrtoc32 (&w, &arg[i + m],
@@ -635,8 +635,10 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
                       }
                     else
                       {
+                        #if !GNULIB_MBRTOC32_REGULAR
                         if (bytes == (size_t) -3)
                           bytes = 0;
+                        #endif
                         /* Work around a bug with older shells that "see" a '\'
                            that is really the 2nd byte of a multibyte character.
                            In practice the problem is limited to ASCII
@@ -661,8 +663,11 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
                           printable = false;
                         m += bytes;
                       }
+                    #if !GNULIB_MBRTOC32_REGULAR
+                    if (mbsinit (&mbstate))
+                    #endif
+                      break;
                   }
-                while (! mbsinit (&mbstate));
               }
 
             c_and_shell_quote_compat = printable;

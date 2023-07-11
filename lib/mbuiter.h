@@ -176,15 +176,19 @@ mbuiter_multi_next (struct mbuiter_multi *iter)
               assert (*iter->cur.ptr == '\0');
               assert (iter->cur.wc == 0);
             }
+          #if !GNULIB_MBRTOC32_REGULAR
           else if (iter->cur.bytes == (size_t) -3)
             /* The previous multibyte sequence produced an additional 32-bit
                wide character.  */
             iter->cur.bytes = 0;
+          #endif
           iter->cur.wc_valid = true;
 
           /* When in an initial state, we can go back treating ASCII
              characters more quickly.  */
+          #if !GNULIB_MBRTOC32_REGULAR
           if (mbsinit (&iter->state))
+          #endif
             iter->in_shift = false;
         }
     }
