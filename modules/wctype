@@ -32,7 +32,7 @@ Include:
 <wctype.h>
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 all
