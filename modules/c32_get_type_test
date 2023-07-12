@@ -1,0 +1,41 @@
+Description:
+c32_get_type_test() function: get descriptor for a 32-bit wide character
+property.
+
+Files:
+lib/c32_get_type_test.c
+
+Depends-on:
+uchar
+wctype
+c32isalnum
+c32isalpha
+c32isblank
+c32iscntrl
+c32isdigit
+c32isgraph
+c32islower
+c32isprint
+c32ispunct
+c32isspace
+c32isupper
+c32isxdigit
+
+configure.ac:
+gl_UCHAR_MODULE_INDICATOR([c32_get_type_test])
+
+Makefile.am:
+lib_SOURCES += c32_get_type_test.c
+
+Include:
+<uchar.h>
+
+Link:
+$(LTLIBUNISTRING) when linking with libtool, $(LIBUNISTRING) otherwise
+$(LTLIBC32CONV) when linking with libtool, $(LIBC32CONV) otherwise
+
+License:
+LGPLv2+
+
+Maintainer:
+Bruno Haible
