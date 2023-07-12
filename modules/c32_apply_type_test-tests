@@ -1,0 +1,14 @@
+Files:
+tests/test-c32_apply_type_test.c
+tests/signature.h
+tests/macros.h
+
+Depends-on:
+c32_get_type_test
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-c32_apply_type_test
+check_PROGRAMS += test-c32_apply_type_test
+test_c32_apply_type_test_LDADD = $(LDADD) $(LIBUNISTRING) $(LIBC32CONV)
