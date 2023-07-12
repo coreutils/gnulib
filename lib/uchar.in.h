@@ -669,7 +669,7 @@ _GL_CXXALIASWARN (mbstoc32s);
 #endif
 
 
-#if @GNULIB_C32_GET_TYPE_TEST@
+#if @GNULIB_C32_GET_TYPE_TEST@ || @GNULIB_C32_APPLY_TYPE_TEST@
 /* A scalar type.  Instances of this type, other than (c32_type_test_t) 0,
    represent a character property, sometimes also viewed as a "character class".
    It can be applied to 32-bit wide characters.  It is the counterpart of
@@ -702,6 +702,30 @@ _GL_FUNCDECL_SYS (c32_get_type_test, c32_type_test_t, (const char *name)
 # endif
 _GL_CXXALIAS_SYS (c32_get_type_test, c32_type_test_t, (const char *name));
 _GL_CXXALIASWARN (c32_get_type_test);
+#endif
+
+/* Test whether a given 32-bit wide character has the specified character
+   property.
+   Return non-zero if true, zero if false or if the argument is WEOF.
+   This function is the counterpart of function 'iswctype' for wide characters.
+ */
+#if @GNULIB_C32_APPLY_TYPE_TEST@
+# if _GL_WCHAR_T_IS_UCS4 && !defined IN_C32_APPLY_TYPE_TEST
+_GL_BEGIN_C_LINKAGE
+_GL_INLINE _GL_ARG_NONNULL ((2)) int
+c32_apply_type_test (wint_t wc, c32_type_test_t property)
+{
+  return iswctype (wc, property);
+}
+_GL_END_C_LINKAGE
+# else
+_GL_FUNCDECL_SYS (c32_apply_type_test, int,
+                  (wint_t wc, c32_type_test_t property)
+                  _GL_ARG_NONNULL ((2)));
+# endif
+_GL_CXXALIAS_SYS (c32_apply_type_test, int,
+                  (wint_t wc, c32_type_test_t property));
+_GL_CXXALIASWARN (c32_apply_type_test);
 #endif
 
 

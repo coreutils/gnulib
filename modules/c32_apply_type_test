@@ -1,0 +1,25 @@
+Description:
+c32_apply_type_test() function: test whether a 32-bit wide character has
+a given property.
+
+Files:
+lib/c32_apply_type_test.c
+
+Depends-on:
+uchar
+iswctype
+
+configure.ac:
+gl_UCHAR_MODULE_INDICATOR([c32_apply_type_test])
+
+Makefile.am:
+lib_SOURCES += c32_apply_type_test.c
+
+Include:
+<uchar.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+all
