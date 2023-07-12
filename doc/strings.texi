@@ -834,8 +834,14 @@ POSIX and in Gnulib.
 
 @item --
 @tab --
-@tab @code{iswctype}
+@tab @code{wctype}
+@tab @code{c32_get_type_test}
 @tab --
+
+@item --
+@tab --
+@tab @code{iswctype}
+@tab @code{c32_apply_type_test}
 @tab --
 
 @item @code{tolower}
