@@ -102,8 +102,15 @@ _GL_INLINE_HEADER_BEGIN
 struct mbiter_multi
 {
   const char *limit;    /* pointer to end of string */
+  #if !GNULIB_MBRTOC32_REGULAR
   bool in_shift;        /* true if next byte may not be interpreted as ASCII */
+                        /* If GNULIB_MBRTOC32_REGULAR, it is always false,
+                           so optimize it away.  */
+  #endif
   mbstate_t state;      /* if in_shift: current shift state */
+                        /* If GNULIB_MBRTOC32_REGULAR, it is in an initial state
+                           before and after every mbiter_multi_next invocation.
+                         */
   bool next_done;       /* true if mbi_avail has already filled the following */
   struct mbchar cur;    /* the current character:
         const char *cur.ptr          pointer to current character
@@ -119,8 +126,10 @@ mbiter_multi_next (struct mbiter_multi *iter)
 {
   if (iter->next_done)
     return;
+  #if !GNULIB_MBRTOC32_REGULAR
   if (iter->in_shift)
     goto with_shift;
+  #endif
   /* Handle most ASCII characters quickly, without calling mbrtowc().  */
   if (is_basic (*iter->cur.ptr))
     {
@@ -137,8 +146,10 @@ mbiter_multi_next (struct mbiter_multi *iter)
   else
     {
       assert (mbsinit (&iter->state));
+      #if !GNULIB_MBRTOC32_REGULAR
       iter->in_shift = true;
     with_shift:
+      #endif
       iter->cur.bytes = mbrtoc32 (&iter->cur.wc, iter->cur.ptr,
                                   iter->limit - iter->cur.ptr, &iter->state);
       if (iter->cur.bytes == (size_t) -1)
@@ -147,7 +158,9 @@ mbiter_multi_next (struct mbiter_multi *iter)
           iter->cur.bytes = 1;
           iter->cur.wc_valid = false;
           /* Allow the next invocation to continue from a sane state.  */
+          #if !GNULIB_MBRTOC32_REGULAR
           iter->in_shift = false;
+          #endif
           memset (&iter->state, '\0', sizeof (mbstate_t));
         }
       else if (iter->cur.bytes == (size_t) -2)
@@ -155,8 +168,10 @@ mbiter_multi_next (struct mbiter_multi *iter)
           /* An incomplete multibyte character at the end.  */
           iter->cur.bytes = iter->limit - iter->cur.ptr;
           iter->cur.wc_valid = false;
+          #if !GNULIB_MBRTOC32_REGULAR
           /* Cause the next mbi_avail invocation to return false.  */
           iter->in_shift = false;
+          #endif
           /* Whether to reset iter->state or not is not important; the
              string end is reached anyway.  */
         }
@@ -181,8 +196,8 @@ mbiter_multi_next (struct mbiter_multi *iter)
              characters more quickly.  */
           #if !GNULIB_MBRTOC32_REGULAR
           if (mbsinit (&iter->state))
-          #endif
             iter->in_shift = false;
+          #endif
         }
     }
   iter->next_done = true;
@@ -199,9 +214,11 @@ MBITER_INLINE void
 mbiter_multi_copy (struct mbiter_multi *new_iter, const struct mbiter_multi *old_iter)
 {
   new_iter->limit = old_iter->limit;
+  #if !GNULIB_MBRTOC32_REGULAR
   if ((new_iter->in_shift = old_iter->in_shift))
     memcpy (&new_iter->state, &old_iter->state, sizeof (mbstate_t));
   else
+  #endif
     memset (&new_iter->state, 0, sizeof (mbstate_t));
   new_iter->next_done = old_iter->next_done;
   mb_copy (&new_iter->cur, &old_iter->cur);
@@ -209,13 +226,28 @@ mbiter_multi_copy (struct mbiter_multi *new_iter, const struct mbiter_multi *old
 
 /* Iteration macros.  */
 typedef struct mbiter_multi mbi_iterator_t;
+#if !GNULIB_MBRTOC32_REGULAR
 #define mbi_init(iter, startptr, length) \
   ((iter).cur.ptr = (startptr), (iter).limit = (iter).cur.ptr + (length), \
    (iter).in_shift = false, memset (&(iter).state, '\0', sizeof (mbstate_t)), \
    (iter).next_done = false)
+#else
+/* Optimized: no in_shift.  */
+#define mbi_init(iter, startptr, length) \
+  ((iter).cur.ptr = (startptr), (iter).limit = (iter).cur.ptr + (length), \
+   memset (&(iter).state, '\0', sizeof (mbstate_t)), \
+   (iter).next_done = false)
+#endif
+#if !GNULIB_MBRTOC32_REGULAR
 #define mbi_avail(iter) \
   (((iter).cur.ptr < (iter).limit || (iter).in_shift) \
    && (mbiter_multi_next (&(iter)), true))
+#else
+/* Optimized: no in_shift.  */
+#define mbi_avail(iter) \
+  ((iter).cur.ptr < (iter).limit \
+   && (mbiter_multi_next (&(iter)), true))
+#endif
 #define mbi_advance(iter) \
   ((iter).cur.ptr += (iter).cur.bytes, (iter).next_done = false)
 

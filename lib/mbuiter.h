@@ -110,8 +110,15 @@ _GL_INLINE_HEADER_BEGIN
 
 struct mbuiter_multi
 {
+  #if !GNULIB_MBRTOC32_REGULAR
   bool in_shift;        /* true if next byte may not be interpreted as ASCII */
+                        /* If GNULIB_MBRTOC32_REGULAR, it is always false,
+                           so optimize it away.  */
+  #endif
   mbstate_t state;      /* if in_shift: current shift state */
+                        /* If GNULIB_MBRTOC32_REGULAR, it is in an initial state
+                           before and after every mbuiter_multi_next invocation.
+                         */
   bool next_done;       /* true if mbui_avail has already filled the following */
   struct mbchar cur;    /* the current character:
         const char *cur.ptr          pointer to current character
@@ -127,8 +134,10 @@ mbuiter_multi_next (struct mbuiter_multi *iter)
 {
   if (iter->next_done)
     return;
+  #if !GNULIB_MBRTOC32_REGULAR
   if (iter->in_shift)
     goto with_shift;
+  #endif
   /* Handle most ASCII characters quickly, without calling mbrtowc().  */
   if (is_basic (*iter->cur.ptr))
     {
@@ -145,8 +154,10 @@ mbuiter_multi_next (struct mbuiter_multi *iter)
   else
     {
       assert (mbsinit (&iter->state));
+      #if !GNULIB_MBRTOC32_REGULAR
       iter->in_shift = true;
     with_shift:
+      #endif
       iter->cur.bytes = mbrtoc32 (&iter->cur.wc, iter->cur.ptr,
                                   strnlen1 (iter->cur.ptr, MB_CUR_MAX),
                                   &iter->state);
@@ -156,7 +167,9 @@ mbuiter_multi_next (struct mbuiter_multi *iter)
           iter->cur.bytes = 1;
           iter->cur.wc_valid = false;
           /* Allow the next invocation to continue from a sane state.  */
+          #if !GNULIB_MBRTOC32_REGULAR
           iter->in_shift = false;
+          #endif
           memset (&iter->state, '\0', sizeof (mbstate_t));
         }
       else if (iter->cur.bytes == (size_t) -2)
@@ -188,8 +201,8 @@ mbuiter_multi_next (struct mbuiter_multi *iter)
              characters more quickly.  */
           #if !GNULIB_MBRTOC32_REGULAR
           if (mbsinit (&iter->state))
-          #endif
             iter->in_shift = false;
+          #endif
         }
     }
   iter->next_done = true;
@@ -204,9 +217,11 @@ mbuiter_multi_reloc (struct mbuiter_multi *iter, ptrdiff_t ptrdiff)
 MBUITER_INLINE void
 mbuiter_multi_copy (struct mbuiter_multi *new_iter, const struct mbuiter_multi *old_iter)
 {
+  #if !GNULIB_MBRTOC32_REGULAR
   if ((new_iter->in_shift = old_iter->in_shift))
     memcpy (&new_iter->state, &old_iter->state, sizeof (mbstate_t));
   else
+  #endif
     memset (&new_iter->state, 0, sizeof (mbstate_t));
   new_iter->next_done = old_iter->next_done;
   mb_copy (&new_iter->cur, &old_iter->cur);
@@ -214,10 +229,18 @@ mbuiter_multi_copy (struct mbuiter_multi *new_iter, const struct mbuiter_multi *
 
 /* Iteration macros.  */
 typedef struct mbuiter_multi mbui_iterator_t;
+#if !GNULIB_MBRTOC32_REGULAR
 #define mbui_init(iter, startptr) \
   ((iter).cur.ptr = (startptr), \
    (iter).in_shift = false, memset (&(iter).state, '\0', sizeof (mbstate_t)), \
    (iter).next_done = false)
+#else
+/* Optimized: no in_shift.  */
+#define mbui_init(iter, startptr) \
+  ((iter).cur.ptr = (startptr), \
+   memset (&(iter).state, '\0', sizeof (mbstate_t)), \
+   (iter).next_done = false)
+#endif
 #define mbui_avail(iter) \
   (mbuiter_multi_next (&(iter)), !mb_isnul ((iter).cur))
 #define mbui_advance(iter) \
