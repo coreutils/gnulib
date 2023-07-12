@@ -22,8 +22,10 @@ without any warranty.
 <ul>
 <li><a href="%%PACKAGE%%.html">HTML
     (%%HTML_MONO_SIZE%%K bytes)</a> - entirely on one web page.</li>
+%%IF HTML_NODE%%
 <li><a href="html_node/index.html">HTML</a> - with one web page per
     node.</li>
+%%ENDIF HTML_NODE%%
 %%IF HTML_SECTION%%
 <li><a href="html_section/index.html">HTML</a> - with one web page per
     section.</li>
@@ -35,9 +37,11 @@ without any warranty.
 <li><a href="%%PACKAGE%%.html.gz">HTML compressed
     (%%HTML_MONO_GZ_SIZE%%K gzipped characters)</a> - entirely on
     one web page.</li>
+%%IF HTML_NODE%%
 <li><a href="%%PACKAGE%%.html_node.tar.gz">HTML compressed
     (%%HTML_NODE_TGZ_SIZE%%K gzipped tar file)</a> -
     with one web page per node.</li>
+%%ENDIF HTML_NODE%%
 %%IF HTML_SECTION%%
 <li><a href="%%PACKAGE%%.html_section.tar.gz">HTML compressed
     (%%HTML_SECTION_TGZ_SIZE%%K gzipped tar file)</a> -
@@ -72,9 +76,7 @@ script</a>.)</p>
 <!-- If needed, change the copyright block at the bottom. In general,
      all pages on the GNU web server should have the section about
      verbatim copying.  Please do NOT remove this without talking
-     with the webmasters first.
-     Please make sure the copyright date is consistent with the document
-     and that it is like this: "2001, 2002", not this: "2001-2002". -->
+     with the webmasters first.  -->
 </div><!-- for id="content", starts in the include above -->
 <!--#include virtual="/server/footer.html" -->
 <div id="footer">
@@ -87,7 +89,7 @@ the FSF.  Broken links and other corrections or suggestions can be sent
 to <a href="mailto:%%EMAIL%%">&lt;%%EMAIL%%&gt;</a>.</p>
 </div>
 
-<p>Copyright &copy; 2022 Free Software Foundation, Inc.</p>
+<p>Copyright &copy; 2023 Free Software Foundation, Inc.</p>
 
 <p>This page is licensed under a <a rel="license"
 href="https://creativecommons.org/licenses/by-nd/3.0/us/">Creative

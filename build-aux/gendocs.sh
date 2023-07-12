@@ -2,7 +2,7 @@
 # gendocs.sh -- generate a GNU manual in many formats.  This script is
 #   mentioned in maintain.texi.  See the help message below for usage details.
 
-scriptversion=2023-01-21.00
+scriptversion=2023-07-12.10
 
 # Copyright 2003-2023 Free Software Foundation, Inc.
 #
@@ -466,11 +466,25 @@ fi
 # 
 printf "\nMaking index.html for %s...\n" "$PACKAGE"
 if test -z "$use_texi2html"; then
-  CONDS="/%%IF  *HTML_SECTION%%/,/%%ENDIF  *HTML_SECTION%%/d;\
-         /%%IF  *HTML_CHAPTER%%/,/%%ENDIF  *HTML_CHAPTER%%/d"
+  if test x$split = xnode; then
+    CONDS="/%%IF  *HTML_NODE%%/d;/%%ENDIF  *HTML_NODE%%/d;\
+           /%%IF  *HTML_CHAPTER%%/,/%%ENDIF  *HTML_CHAPTER%%/d;\
+           /%%IF  *HTML_SECTION%%/,/%%ENDIF  *HTML_SECTION%%/d;"
+  elif test x$split = xchapter; then
+    CONDS="/%%IF  *HTML_CHAPTER%%/d;/%%ENDIF  *HTML_CHAPTER%%/d;\
+           /%%IF  *HTML_SECTION%%/,/%%ENDIF  *HTML_SECTION%%/d;\
+           /%%IF  *HTML_NODE%%/,/%%ENDIF  *HTML_NODE%%/d;"
+  elif test x$split = xsection; then
+    CONDS="/%%IF  *HTML_SECTION%%/d;/%%ENDIF  *HTML_SECTION%%/d;\
+           /%%IF  *HTML_CHAPTER%%/,/%%ENDIF  *HTML_CHAPTER%%/d;\
+           /%%IF  *HTML_NODE%%/,/%%ENDIF  *HTML_NODE%%/d;"
+  else
+    CONDS="/%%IF.*%%/d;/%%ENDIF.*%%/d;" # invalid split argument
+  fi
 else
-  # should take account of --split here.
-  CONDS="/%%ENDIF.*%%/d;/%%IF  *HTML_SECTION%%/d;/%%IF  *HTML_CHAPTER%%/d"
+  # for texi2html, we do not take account of --split and simply output
+  # all variants
+  CONDS="/%%IF.*%%/d;/%%ENDIF.*%%/d;"
 fi
 
 curdate=`$SETLANG date '+%B %d, %Y'`
