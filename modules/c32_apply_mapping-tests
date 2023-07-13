@@ -1,0 +1,14 @@
+Files:
+tests/test-c32_apply_mapping.c
+tests/signature.h
+tests/macros.h
+
+Depends-on:
+c32_get_mapping
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-c32_apply_mapping
+check_PROGRAMS += test-c32_apply_mapping
+test_c32_apply_mapping_LDADD = $(LDADD) $(LIBUNISTRING) $(LIBC32CONV)
