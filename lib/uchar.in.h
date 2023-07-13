@@ -729,6 +729,41 @@ _GL_CXXALIASWARN (c32_apply_type_test);
 #endif
 
 
+#if @GNULIB_C32_GET_MAPPING@
+/* A scalar type.  Instances of this type, other than (c32_mapping_t) 0,
+   represent a character mapping.  It can be applied to 32-bit wide characters.
+   It is the counterpart of type 'wctrans_t' for wide characters.
+   To apply a certain mapping to a given character, use the function
+   'c32_apply_mapping'.  */
+# if _GL_WCHAR_T_IS_UCS4
+typedef wctrans_t c32_mapping_t;
+# else
+typedef wint_t (*c32_mapping_t) (wint_t wc);
+# endif
+#endif
+
+/* Return a character mapping with the given name, or (c32_mapping_t) 0
+   if the designated mapping does not exist.
+   This function is the counterpart of function 'wctrans' for wide characters.
+ */
+#if @GNULIB_C32_GET_MAPPING@
+# if _GL_WCHAR_T_IS_UCS4 && !defined IN_C32_GET_MAPPING
+_GL_BEGIN_C_LINKAGE
+_GL_INLINE _GL_ARG_NONNULL ((1)) c32_mapping_t
+c32_get_mapping (const char *name)
+{
+  return wctrans (name);
+}
+_GL_END_C_LINKAGE
+# else
+_GL_FUNCDECL_SYS (c32_get_mapping, c32_mapping_t, (const char *name)
+                                                  _GL_ARG_NONNULL ((1)));
+# endif
+_GL_CXXALIAS_SYS (c32_get_mapping, c32_mapping_t, (const char *name));
+_GL_CXXALIASWARN (c32_get_mapping);
+#endif
+
+
 _GL_INLINE_HEADER_END
 
 #endif /* _@GUARD_PREFIX@_UCHAR_H */

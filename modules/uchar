@@ -61,6 +61,7 @@ uchar.h: uchar.in.h $(top_builddir)/config.status $(CXXDEFS_H)
 	      -e 's/@''GNULIB_C32SWIDTH''@/$(GNULIB_C32SWIDTH)/g' \
 	      -e 's/@''GNULIB_C32TOB''@/$(GNULIB_C32TOB)/g' \
 	      -e 's/@''GNULIB_C32_APPLY_TYPE_TEST''@/$(GNULIB_C32_APPLY_TYPE_TEST)/g' \
+	      -e 's/@''GNULIB_C32_GET_MAPPING''@/$(GNULIB_C32_GET_MAPPING)/g' \
 	      -e 's/@''GNULIB_C32_GET_TYPE_TEST''@/$(GNULIB_C32_GET_TYPE_TEST)/g' \
 	      -e 's/@''GNULIB_MBRTOC16''@/$(GNULIB_MBRTOC16)/g' \
 	      -e 's/@''GNULIB_MBRTOC32''@/$(GNULIB_MBRTOC32)/g' \
