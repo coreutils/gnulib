@@ -1,0 +1,25 @@
+Description:
+c32_apply_mapping() function: convert a 32-bit wide character using a
+case mapping.
+
+Files:
+lib/c32_apply_mapping.c
+
+Depends-on:
+uchar
+towctrans
+
+configure.ac:
+gl_UCHAR_MODULE_INDICATOR([c32_apply_mapping])
+
+Makefile.am:
+lib_SOURCES += c32_apply_mapping.c
+
+Include:
+<uchar.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+all

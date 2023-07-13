@@ -729,7 +729,7 @@ _GL_CXXALIASWARN (c32_apply_type_test);
 #endif
 
 
-#if @GNULIB_C32_GET_MAPPING@
+#if @GNULIB_C32_GET_MAPPING@ || @GNULIB_C32_APPLY_MAPPING@
 /* A scalar type.  Instances of this type, other than (c32_mapping_t) 0,
    represent a character mapping.  It can be applied to 32-bit wide characters.
    It is the counterpart of type 'wctrans_t' for wide characters.
@@ -761,6 +761,30 @@ _GL_FUNCDECL_SYS (c32_get_mapping, c32_mapping_t, (const char *name)
 # endif
 _GL_CXXALIAS_SYS (c32_get_mapping, c32_mapping_t, (const char *name));
 _GL_CXXALIASWARN (c32_get_mapping);
+#endif
+
+/* Apply the specified character mapping to a given 32-bit wide character.
+   Return the result of this mapping.  Return the WC argument unchanged if it is
+   WEOF.
+   This function is the counterpart of function 'towctrans' for wide characters.
+ */
+#if @GNULIB_C32_APPLY_MAPPING@
+# if _GL_WCHAR_T_IS_UCS4 && !defined IN_C32_APPLY_MAPPING
+_GL_BEGIN_C_LINKAGE
+_GL_INLINE _GL_ARG_NONNULL ((2)) wint_t
+c32_apply_mapping (wint_t wc, c32_mapping_t mapping)
+{
+  return towctrans (wc, mapping);
+}
+_GL_END_C_LINKAGE
+# else
+_GL_FUNCDECL_SYS (c32_apply_mapping, wint_t,
+                  (wint_t wc, c32_mapping_t mapping)
+                  _GL_ARG_NONNULL ((2)));
+# endif
+_GL_CXXALIAS_SYS (c32_apply_mapping, wint_t,
+                  (wint_t wc, c32_mapping_t mapping));
+_GL_CXXALIASWARN (c32_apply_mapping);
 #endif
 
 
