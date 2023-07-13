@@ -309,14 +309,17 @@ mb_copy (mbchar_t *new_mbc, const mbchar_t *old_mbc)
 /* The character set is ISO-646, not EBCDIC. */
 # define IS_BASIC_ASCII 1
 
-extern const unsigned int is_basic_table[];
-
-MBCHAR_INLINE bool
-is_basic (char c)
-{
-  return (is_basic_table [(unsigned char) c >> 5] >> ((unsigned char) c & 31))
-         & 1;
-}
+/* All locale encodings (see localcharset.h) map the characters 0x00..0x7F
+   to U+0000..U+007F, like ASCII, except for
+     CP864      different mapping of '%'
+     SHIFT_JIS  different mappings of 0x5C, 0x7E
+     JOHAB      different mapping of 0x5C
+   However, these characters in the range 0x20..0x7E are in the ISO C
+   "basic character set" and in the POSIX "portable character set", which
+   ISO C and POSIX guarantee to be single-byte.  Thus, locales with these
+   encodings are not POSIX compliant.  And they are most likely not in use
+   any more (as of 2023).  */
+# define is_basic(c) ((unsigned char) (c) < 0x80)
 
 #else
 
