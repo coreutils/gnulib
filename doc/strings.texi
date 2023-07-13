@@ -858,8 +858,14 @@ POSIX and in Gnulib.
 
 @item --
 @tab --
-@tab @code{towctrans}
+@tab @code{wctrans}
+@tab @code{c32_get_mapping}
 @tab --
+
+@item --
+@tab --
+@tab @code{towctrans}
+@tab @code{c32_apply_mapping}
 @tab --
 
 @item --
