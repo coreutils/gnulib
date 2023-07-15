@@ -710,14 +710,19 @@ _GL_CXXALIASWARN (c32_get_type_test);
    This function is the counterpart of function 'iswctype' for wide characters.
  */
 #if @GNULIB_C32_APPLY_TYPE_TEST@
-# if _GL_WCHAR_T_IS_UCS4 && !defined IN_C32_APPLY_TYPE_TEST
+# if _GL_WCHAR_T_IS_UCS4
+#  if !defined IN_C32_APPLY_TYPE_TEST
 _GL_BEGIN_C_LINKAGE
-_GL_INLINE _GL_ARG_NONNULL ((2)) int
+_GL_INLINE int
 c32_apply_type_test (wint_t wc, c32_type_test_t property)
 {
   return iswctype (wc, property);
 }
 _GL_END_C_LINKAGE
+#  else
+_GL_FUNCDECL_SYS (c32_apply_type_test, int,
+                  (wint_t wc, c32_type_test_t property));
+#  endif
 # else
 _GL_FUNCDECL_SYS (c32_apply_type_test, int,
                   (wint_t wc, c32_type_test_t property)
