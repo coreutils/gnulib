@@ -5,6 +5,7 @@ Files:
 lib/mbsinit.c
 m4/mbsinit.m4
 m4/mbstate_t.m4
+m4/mbrtowc.m4
 
 Depends-on:
 wchar
