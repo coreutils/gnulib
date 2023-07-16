@@ -7,6 +7,7 @@ lib/c32stombs.c
 Depends-on:
 uchar
 wchar
+mbszero
 c32srtombs
 
 configure.ac:

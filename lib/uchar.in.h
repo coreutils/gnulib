@@ -482,7 +482,7 @@ c32stombs (char *dest, const char32_t *src, size_t len)
 {
   mbstate_t state;
 
-  memset (&state, '\0', sizeof (mbstate_t));
+  mbszero (&state);
   return c32srtombs (dest, &src, len, &state);
 }
 _GL_END_C_LINKAGE
