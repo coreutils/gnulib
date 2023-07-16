@@ -158,7 +158,8 @@ locale_encoding_to_unicode (wchar_t wc)
   char mbbuf[64];
   size_t mbcnt;
   {
-    mbstate_t state = { 0 };
+    mbstate_t state;
+    mbszero (&state);
     mbcnt = wcrtomb (mbbuf, wc, &state);
     if (mbcnt > sizeof (mbbuf))
       /* wcrtomb did not recognize the wide character wc.  */
@@ -248,7 +249,8 @@ unicode_to_locale_encoding (char32_t uc)
 
   wchar_t wc;
   {
-    mbstate_t state = { 0 };
+    mbstate_t state;
+    mbszero (&state);
     if (mbrtowc (&wc, mbbuf, mbcnt, &state) != mbcnt)
       /* iconv produced an invalid multibyte sequence.  */
       return 0;

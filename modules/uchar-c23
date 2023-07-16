@@ -13,6 +13,7 @@ localcharset
 streq
 lock
 tls
+mbszero
 wcrtomb
 unistr/u8-mbtouc
 unistr/u8-uctomb
