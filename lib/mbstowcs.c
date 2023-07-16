@@ -28,6 +28,6 @@ mbstowcs (wchar_t *dest, const char *src, size_t len)
 {
   mbstate_t state;
 
-  memset (&state, '\0', sizeof (mbstate_t));
+  mbszero (&state);
   return mbsrtowcs (dest, &src, len, &state);
 }

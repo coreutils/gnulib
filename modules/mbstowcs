@@ -8,6 +8,7 @@ m4/mbrtowc.m4
 
 Depends-on:
 stdlib
+mbszero         [test $REPLACE_MBSTOWCS = 1]
 mbsrtowcs       [test $REPLACE_MBSTOWCS = 1]
 
 configure.ac:
