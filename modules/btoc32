@@ -6,6 +6,7 @@ lib/btoc32.c
 
 Depends-on:
 uchar
+mbszero
 mbrtoc32
 btowc
 

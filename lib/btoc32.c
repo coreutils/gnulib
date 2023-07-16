@@ -24,6 +24,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <wchar.h>
 
 #if GL_CHAR32_T_IS_UNICODE
 # include "lc-charset-unicode.h"
@@ -44,7 +45,7 @@ btoc32 (int c)
       char s[1];
       char32_t wc;
 
-      memset (&state, '\0', sizeof (mbstate_t));
+      mbszero (&state);
       s[0] = (unsigned char) c;
       if (mbrtoc32 (&wc, s, 1, &state) <= 1)
         return wc;
