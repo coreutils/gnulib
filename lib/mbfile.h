@@ -150,7 +150,7 @@ mbfile_multi_getc (struct mbchar *mbc, struct mbfile_multi *mbf)
           bytes = 1;
           mbc->wc_valid = false;
           /* Allow the next invocation to continue from a sane state.  */
-          memset (&mbf->state, '\0', sizeof (mbstate_t));
+          mbszero (&mbf->state);
           break;
         }
       else if (bytes == (size_t) -2)
@@ -244,7 +244,7 @@ typedef mbchar_t mbf_char_t;
   ((mbf).fp = (stream),                                                 \
    (mbf).eof_seen = false,                                              \
    (mbf).have_pushback = false,                                         \
-   memset (&(mbf).state, '\0', sizeof (mbstate_t)),                     \
+   mbszero (&(mbf).state),                                              \
    (mbf).bufcount = 0)
 
 #define mbf_getc(mbc, mbf) mbfile_multi_getc (&(mbc), &(mbf))
