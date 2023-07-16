@@ -44,7 +44,7 @@ c32tob (wint_t wc)
       mbstate_t state;
       char buf[8];
 
-      memset (&state, '\0', sizeof (mbstate_t));
+      mbszero (&state);
       if (c32rtomb (buf, wc, &state) == 1)
         return (unsigned char) buf[0];
     }
