@@ -99,6 +99,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <uchar.h>
+#include <wchar.h>
 
 #include "mbchar.h"
 #include "strnlen1.h"
@@ -170,7 +171,7 @@ mbuiter_multi_next (struct mbuiter_multi *iter)
           #if !GNULIB_MBRTOC32_REGULAR
           iter->in_shift = false;
           #endif
-          memset (&iter->state, '\0', sizeof (mbstate_t));
+          mbszero (&iter->state);
         }
       else if (iter->cur.bytes == (size_t) -2)
         {
@@ -222,7 +223,7 @@ mbuiter_multi_copy (struct mbuiter_multi *new_iter, const struct mbuiter_multi *
     memcpy (&new_iter->state, &old_iter->state, sizeof (mbstate_t));
   else
   #endif
-    memset (&new_iter->state, 0, sizeof (mbstate_t));
+    mbszero (&new_iter->state);
   new_iter->next_done = old_iter->next_done;
   mb_copy (&new_iter->cur, &old_iter->cur);
 }
@@ -232,13 +233,13 @@ typedef struct mbuiter_multi mbui_iterator_t;
 #if !GNULIB_MBRTOC32_REGULAR
 #define mbui_init(iter, startptr) \
   ((iter).cur.ptr = (startptr), \
-   (iter).in_shift = false, memset (&(iter).state, '\0', sizeof (mbstate_t)), \
+   (iter).in_shift = false, mbszero (&(iter).state), \
    (iter).next_done = false)
 #else
 /* Optimized: no in_shift.  */
 #define mbui_init(iter, startptr) \
   ((iter).cur.ptr = (startptr), \
-   memset (&(iter).state, '\0', sizeof (mbstate_t)), \
+   mbszero (&(iter).state), \
    (iter).next_done = false)
 #endif
 #define mbui_avail(iter) \
