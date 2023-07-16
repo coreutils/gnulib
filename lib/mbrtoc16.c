@@ -54,24 +54,26 @@ static_assert (sizeof (mbstate_t) >= 4);
 /* macOS, FreeBSD, NetBSD, OpenBSD, Minix */
 /* On macOS, mbstate_t is defined in <machine/_types.h>.
    It is an opaque aligned 128-byte struct, of which at most the first
-   20 bytes are used (the members are at most: 2x wchar_t, 2x int, 4x char).
+   12 bytes are used.
    For more details, see the __mbsinit implementations in
    Libc-<version>/locale/FreeBSD/
    {ascii,none,euc,mskanji,big5,gb2312,gbk,gb18030,utf8,utf2}.c.  */
 /* On FreeBSD, mbstate_t is defined in src/sys/sys/_types.h.
    It is an opaque aligned 128-byte struct, of which at most the first
-   20 bytes are used (the members are at most: 2x wchar_t, 2x int, 4x char).
+   12 bytes are used.
    For more details, see the __mbsinit implementations in
    src/lib/libc/locale/
    {ascii,none,euc,mskanji,big5,gb2312,gbk,gb18030,utf8}.c.  */
 /* On NetBSD, mbstate_t is defined in src/sys/sys/ansi.h.
    It is an opaque aligned 128-byte struct, of which at most the first
-   24 bytes are used (the members are at most: 3x int, 12x char).
+   28 bytes are used.
    For more details, see the *State types in
-   src/lib/libc/citrus/modules/citrus_*.c.  */
+   src/lib/libc/citrus/modules/citrus_*.c
+   (ignoring citrus_{hz,iso2022,utf7,viqr,zw}.c, since these implement
+   stateful encodings, not usable as locale encodings).  */
 /* On OpenBSD, mbstate_t is defined in src/sys/sys/_types.h.
    It is an opaque aligned 128-byte struct, of which at most the first
-   12 bytes are used (the members are at most: 2x wchar_t, 1x int).
+   12 bytes are used.
    For more details, see src/lib/libc/citrus/citrus_*.c.  */
 /* Minix has borrowed its mbstate_t type and mbrtowc implementation from the
    BSDs.  */
@@ -84,7 +86,7 @@ static_assert (sizeof (mbstate_t) >= 4);
 #elif defined __sun                                       /* Solaris */
 /* On Solaris, mbstate_t is defined in <wchar_impl.h>.
    It is an opaque aligned 24-byte or 32-byte struct, of which at most the first
-   20 bytes are used (the members are at most: 2x wchar_t, 2x int, 4x char).
+   20 or 28 bytes are used.
    For more details, see the *State types in
    illumos-gate/usr/src/lib/libc/port/locale/
    {none,euc,mskanji,big5,gb2312,gbk,gb18030,utf8}.c.  */

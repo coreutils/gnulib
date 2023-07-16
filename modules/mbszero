@@ -1,0 +1,29 @@
+Description:
+mbszero() function: put an mbstate_t into an initial conversion state.
+
+Files:
+lib/mbszero.c
+m4/mbstate_t.m4
+m4/mbrtowc.m4
+m4/musl.m4
+
+Depends-on:
+wchar
+
+configure.ac:
+AC_REQUIRE([AC_TYPE_MBSTATE_T])
+gl_MBSTATE_T_BROKEN
+gl_MUSL_LIBC
+gl_WCHAR_MODULE_INDICATOR([mbszero])
+
+Makefile.am:
+lib_SOURCES += mbszero.c
+
+Include:
+<wchar.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+all
