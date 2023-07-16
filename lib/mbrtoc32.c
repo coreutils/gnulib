@@ -130,7 +130,7 @@ mbrtoc32 (char32_t *pwc, const char *s, size_t n, mbstate_t *ps)
   /* Verify that mbrtoc32 is regular.  */
   if (ret < (size_t) -3 && ! mbsinit (ps))
     /* This occurs on glibc 2.36.  */
-    memset (ps, '\0', sizeof (mbstate_t));
+    mbszero (ps);
   if (ret == (size_t) -3)
     abort ();
 #  endif
