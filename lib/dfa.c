@@ -52,6 +52,7 @@
 # define c32tob wctob
 # define c32isprint iswprint
 # define c32isspace iswspace
+# define mbszero(p) memset ((p), 0, sizeof (mbstate_t))
 #else
 /* Use ISO C 11 + gnulib API.  */
 # include <uchar.h>
@@ -661,7 +662,7 @@ mbs_to_wchar (wint_t *pwc, char const *s, idx_t n, struct dfa *d)
              'mbrtoc32-regular' module.  */
           return nbytes;
         }
-      memset (&d->mbs, 0, sizeof d->mbs);
+      mbszero (&d->mbs);
     }
 
   *pwc = wc;
@@ -1585,7 +1586,8 @@ lex (struct dfa *dfa)
               else
                 {
                   char buf[MB_LEN_MAX + 1];
-                  mbstate_t s = { 0 };
+                  mbstate_t s;
+                  mbszero (&s);
                   size_t stored_bytes = c32rtomb (buf, dfa->lex.wctok, &s);
                   if (stored_bytes < (size_t) -1)
                     {
@@ -1722,7 +1724,8 @@ static void
 addtok_wc (struct dfa *dfa, wint_t wc)
 {
   unsigned char buf[MB_LEN_MAX];
-  mbstate_t s = { 0 };
+  mbstate_t s;
+  mbszero (&s);
   size_t stored_bytes = c32rtomb ((char *) buf, wc, &s);
   int buflen;
 
@@ -3495,7 +3498,7 @@ dfaexec_main (struct dfa *d, char const *begin, char *end, bool allow_nl,
 
   if (multibyte)
     {
-      memset (&d->mbs, 0, sizeof d->mbs);
+      mbszero (&d->mbs);
       if (d->mb_follows.alloc == 0)
         alloc_position_set (&d->mb_follows, d->nleaves);
     }

@@ -21,6 +21,7 @@ flexmember
 idx
 locale
 mbrtoc32-regular
+mbszero
 regex
 stdbool
 stddef
