@@ -94,7 +94,7 @@ mbsnwidth (const char *string, size_t nbytes, int flags)
               /* If we have a multibyte sequence, scan it up to its end.  */
               {
                 mbstate_t mbstate;
-                memset (&mbstate, 0, sizeof mbstate);
+                mbszero (&mbstate);
                 for (;;)
                   {
                     char32_t wc;

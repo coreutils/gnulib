@@ -13,6 +13,7 @@ wchar
 uchar
 mbrtoc32
 mbsinit
+mbszero
 c32width
 c32iscntrl
 extensions
