@@ -8,8 +8,9 @@ m4/wctomb.m4
 
 Depends-on:
 stdlib
-wcrtomb         [test $REPLACE_WCTOMB = 1]
 wchar           [test $REPLACE_WCTOMB = 1]
+mbszero         [test $REPLACE_WCTOMB = 1]
+wcrtomb         [test $REPLACE_WCTOMB = 1]
 
 configure.ac:
 gl_FUNC_WCTOMB

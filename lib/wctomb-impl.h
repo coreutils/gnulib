@@ -25,7 +25,7 @@ wctomb (char *s, wchar_t wc)
       mbstate_t state;
       size_t result;
 
-      memset (&state, 0, sizeof (mbstate_t));
+      mbszero (&state);
       result = wcrtomb (s, wc, &state);
       if (result == (size_t)-1)
         return -1;
