@@ -35,7 +35,7 @@ btowc (int c)
       buf[0] = c;
 #if HAVE_MBRTOWC
       mbstate_t state;
-      memset (&state, 0, sizeof (mbstate_t));
+      mbszero (&state);
       size_t ret = mbrtowc (&wc, buf, 1, &state);
       if (!(ret == (size_t)(-1) || ret == (size_t)(-2)))
 #else
