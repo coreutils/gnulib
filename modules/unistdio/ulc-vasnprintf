@@ -46,6 +46,7 @@ free-posix
 memchr
 multiarch
 assert-h
+mbszero
 
 configure.ac:
 gl_PREREQ_VASNPRINTF_WITH_POSIX_EXTRAS

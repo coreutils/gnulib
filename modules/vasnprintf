@@ -33,6 +33,7 @@ errno
 memchr
 assert-h
 wchar
+mbszero
 
 configure.ac:
 AC_REQUIRE([AC_C_RESTRICT])

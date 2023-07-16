@@ -83,7 +83,7 @@
 #include <stdio.h>      /* snprintf(), sprintf() */
 #include <stdlib.h>     /* abort(), malloc(), realloc(), free() */
 #include <string.h>     /* memcpy(), strlen() */
-#include <wchar.h>      /* mbstate_t, mbrtowc(), mbrlen(), wcrtomb() */
+#include <wchar.h>      /* mbstate_t, mbrtowc(), mbrlen(), wcrtomb(), mbszero() */
 #include <errno.h>      /* errno */
 #include <limits.h>     /* CHAR_BIT, INT_WIDTH, LONG_WIDTH */
 #include <float.h>      /* DBL_MAX_EXP, LDBL_MAX_EXP */
@@ -3007,7 +3007,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                          wide characters, from the left.  */
 #  if HAVE_MBRTOWC
                       mbstate_t state;
-                      memset (&state, '\0', sizeof (mbstate_t));
+                      mbszero (&state);
 #  endif
                       arg_end = arg;
                       characters = 0;
@@ -3035,7 +3035,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                          characters.  */
 #  if HAVE_MBRTOWC
                       mbstate_t state;
-                      memset (&state, '\0', sizeof (mbstate_t));
+                      mbszero (&state);
 #  endif
                       arg_end = arg;
                       characters = 0;
@@ -3079,7 +3079,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                       size_t remaining;
 #  if HAVE_MBRTOWC
                       mbstate_t state;
-                      memset (&state, '\0', sizeof (mbstate_t));
+                      mbszero (&state);
 #  endif
                       ENSURE_ALLOCATION (xsum (length, characters));
                       for (remaining = characters; remaining > 0; remaining--)
@@ -3105,7 +3105,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                     {
 #  if HAVE_MBRTOWC
                       mbstate_t state;
-                      memset (&state, '\0', sizeof (mbstate_t));
+                      mbszero (&state);
 #  endif
                       while (arg < arg_end)
                         {
@@ -3157,7 +3157,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                          at most PRECISION bytes, from the left.  */
 #  if HAVE_WCRTOMB && !defined GNULIB_defined_mbstate_t
                       mbstate_t state;
-                      memset (&state, '\0', sizeof (mbstate_t));
+                      mbszero (&state);
 #  endif
                       arg_end = arg;
                       characters = 0;
@@ -3190,7 +3190,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                          bytes.  */
 #  if HAVE_WCRTOMB && !defined GNULIB_defined_mbstate_t
                       mbstate_t state;
-                      memset (&state, '\0', sizeof (mbstate_t));
+                      mbszero (&state);
 #  endif
                       arg_end = arg;
                       characters = 0;
@@ -3230,7 +3230,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                     size_t remaining;
 #   if HAVE_WCRTOMB && !defined GNULIB_defined_mbstate_t
                     mbstate_t state;
-                    memset (&state, '\0', sizeof (mbstate_t));
+                    mbszero (&state);
 #   endif
                     for (remaining = characters; remaining > 0; )
                       {
@@ -3299,7 +3299,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                       size_t remaining;
 #   if HAVE_WCRTOMB && !defined GNULIB_defined_mbstate_t
                       mbstate_t state;
-                      memset (&state, '\0', sizeof (mbstate_t));
+                      mbszero (&state);
 #   endif
                       ENSURE_ALLOCATION (xsum (length, characters));
                       for (remaining = characters; remaining > 0; )
@@ -3325,7 +3325,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                     {
 #   if HAVE_WCRTOMB && !defined GNULIB_defined_mbstate_t
                       mbstate_t state;
-                      memset (&state, '\0', sizeof (mbstate_t));
+                      mbszero (&state);
 #   endif
                       while (arg < arg_end)
                         {
@@ -3430,7 +3430,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                           int count;
 # if HAVE_WCRTOMB && !defined GNULIB_defined_mbstate_t
                           mbstate_t state;
-                          memset (&state, '\0', sizeof (mbstate_t));
+                          mbszero (&state);
 # endif
 
                           count = local_wcrtomb (cbuf, arg, &state);
@@ -3456,7 +3456,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                       int count;
 #  if HAVE_WCRTOMB && !defined GNULIB_defined_mbstate_t
                       mbstate_t state;
-                      memset (&state, '\0', sizeof (mbstate_t));
+                      mbszero (&state);
 #  endif
 
                       count = local_wcrtomb (cbuf, arg, &state);
@@ -3512,7 +3512,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                           int count;
 #  if HAVE_WCRTOMB && !defined GNULIB_defined_mbstate_t
                           mbstate_t state;
-                          memset (&state, '\0', sizeof (mbstate_t));
+                          mbszero (&state);
 #  endif
 
                           count = local_wcrtomb (result + length, arg, &state);
@@ -3530,7 +3530,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                           int count;
 #  if HAVE_WCRTOMB && !defined GNULIB_defined_mbstate_t
                           mbstate_t state;
-                          memset (&state, '\0', sizeof (mbstate_t));
+                          mbszero (&state);
 #  endif
 
                           count = local_wcrtomb (cbuf, arg, &state);
@@ -3604,7 +3604,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                   mbstate_t state;
                   wchar_t wc;
 
-                  memset (&state, '\0', sizeof (mbstate_t));
+                  mbszero (&state);
                   int count = mbrtowc (&wc, &arg, 1, &state);
                   if (count < 0)
                     /* Invalid or incomplete multibyte character.  */
@@ -6602,7 +6602,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                            wide character array.  */
                         mbstate_t state;
 
-                        memset (&state, '\0', sizeof (mbstate_t));
+                        mbszero (&state);
                         tmpdst_len = 0;
                         {
                           const TCHAR_T *src = tmpsrc;
@@ -6626,7 +6626,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                         if (tmpdst == NULL)
                           goto out_of_memory;
 
-                        memset (&state, '\0', sizeof (mbstate_t));
+                        mbszero (&state);
                         {
                           DCHAR_T *destptr = tmpdst;
                           const TCHAR_T *src = tmpsrc;

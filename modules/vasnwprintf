@@ -37,6 +37,7 @@ errno
 memchr
 assert-h
 wchar
+mbszero
 mbrtowc
 wmemcpy
 wmemset

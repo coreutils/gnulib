@@ -42,6 +42,7 @@ xsize
 errno
 memchr
 multiarch
+mbszero
 
 configure.ac:
 AC_REQUIRE([AC_C_RESTRICT])
