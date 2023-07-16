@@ -42,6 +42,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <uchar.h>
+#include <wchar.h>
 
 #include "gettext.h"
 #define _(msgid) gettext (msgid)
@@ -607,7 +608,7 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
             else
               {
                 mbstate_t mbstate;
-                memset (&mbstate, 0, sizeof mbstate);
+                mbszero (&mbstate);
 
                 m = 0;
                 printable = true;
