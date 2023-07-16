@@ -11,6 +11,7 @@ stdbool
 wchar
 uchar
 malloca
+mbszero
 mbrtoc32
 c32rtomb
 c32tolower

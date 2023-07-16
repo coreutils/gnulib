@@ -53,7 +53,7 @@ apply_c32tolower (const char *inbuf, size_t inbufsize,
     {
       mbstate_t state;
 
-      memset (&state, '\0', sizeof (mbstate_t));
+      mbszero (&state);
       for (;;)
         {
           char32_t wc1;
@@ -97,7 +97,7 @@ apply_c32tolower (const char *inbuf, size_t inbufsize,
                   mbstate_t state2;
                   size_t n2;
 
-                  memset (&state2, '\0', sizeof (mbstate_t));
+                  mbszero (&state2);
                   n2 = c32rtomb (outbuf, wc2, &state2);
                   if (n2 != (size_t)(-1))
                     {
