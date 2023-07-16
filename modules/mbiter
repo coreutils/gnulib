@@ -12,6 +12,7 @@ extern-inline
 mbchar
 mbrtoc32
 mbsinit
+mbszero
 uchar
 stdbool
 
