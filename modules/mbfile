@@ -18,6 +18,10 @@ stdbool
 
 configure.ac:
 gl_MBFILE
+dnl Do not use gl_MODULE_INDICATOR([mbfile]) here: we don't want 'struct mbchar'
+dnl to have a different size in lib/ than in tests/.
+AC_DEFINE([GNULIB_MBFILE], [1],
+  [Define to 1 if the gnulib module 'mbfile' is in use.])
 
 Makefile.am:
 lib_SOURCES += mbfile.h mbfile.c

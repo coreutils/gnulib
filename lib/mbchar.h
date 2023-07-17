@@ -156,7 +156,9 @@ _GL_INLINE_HEADER_BEGIN
 # define MBCHAR_INLINE _GL_INLINE
 #endif
 
-#define MBCHAR_BUF_SIZE 24
+/* The longest multibyte characters, nowadays, are 4 bytes long.
+   Regardless of the values of MB_CUR_MAX and MB_LEN_MAX.  */
+#define MBCHAR_BUF_SIZE 4
 
 struct mbchar
 {
@@ -164,7 +166,9 @@ struct mbchar
   size_t bytes;         /* number of bytes of current character, > 0 */
   bool wc_valid;        /* true if wc is a valid 32-bit wide character */
   char32_t wc;          /* if wc_valid: the current character */
+#if defined GNULIB_MBFILE
   char buf[MBCHAR_BUF_SIZE]; /* room for the bytes, used for file input only */
+#endif
 };
 
 /* EOF (not a real character) is represented with bytes = 0 and
