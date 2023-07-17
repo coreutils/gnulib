@@ -121,6 +121,7 @@ struct mbuiter_multi
                            before and after every mbuiter_multi_next invocation.
                          */
   bool next_done;       /* true if mbui_avail has already filled the following */
+  unsigned int cur_max; /* A cache of MB_CUR_MAX.  */
   struct mbchar cur;    /* the current character:
         const char *cur.ptr          pointer to current character
         The following are only valid after mbui_avail.
@@ -160,7 +161,7 @@ mbuiter_multi_next (struct mbuiter_multi *iter)
     with_shift:
       #endif
       iter->cur.bytes = mbrtoc32 (&iter->cur.wc, iter->cur.ptr,
-                                  strnlen1 (iter->cur.ptr, MB_CUR_MAX),
+                                  strnlen1 (iter->cur.ptr, iter->cur_max),
                                   &iter->state);
       if (iter->cur.bytes == (size_t) -1)
         {
@@ -225,6 +226,7 @@ mbuiter_multi_copy (struct mbuiter_multi *new_iter, const struct mbuiter_multi *
   #endif
     mbszero (&new_iter->state);
   new_iter->next_done = old_iter->next_done;
+  new_iter->cur_max = old_iter->cur_max;
   mb_copy (&new_iter->cur, &old_iter->cur);
 }
 
@@ -234,13 +236,15 @@ typedef struct mbuiter_multi mbui_iterator_t;
 #define mbui_init(iter, startptr) \
   ((iter).cur.ptr = (startptr), \
    (iter).in_shift = false, mbszero (&(iter).state), \
-   (iter).next_done = false)
+   (iter).next_done = false, \
+   (iter).cur_max = MB_CUR_MAX)
 #else
 /* Optimized: no in_shift.  */
 #define mbui_init(iter, startptr) \
   ((iter).cur.ptr = (startptr), \
    mbszero (&(iter).state), \
-   (iter).next_done = false)
+   (iter).next_done = false, \
+   (iter).cur_max = MB_CUR_MAX)
 #endif
 #define mbui_avail(iter) \
   (mbuiter_multi_next (&(iter)), !mb_isnul ((iter).cur))
