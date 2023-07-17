@@ -107,6 +107,7 @@
 
    mb_setascii (&mbc, sc)
      assigns the standard ASCII character sc to mbc.
+     (Only available if the 'mbfile' module is in use.)
 
    mb_copy (&destmbc, &srcmbc)
      copies srcmbc to destmbc.
@@ -254,21 +255,25 @@ mb_width_aux (char32_t wc)
 /* Output.  */
 #define mb_putc(mbc, stream)  fwrite ((mbc).ptr, 1, (mbc).bytes, (stream))
 
+#if defined GNULIB_MBFILE
 /* Assignment.  */
-#define mb_setascii(mbc, sc) \
-  ((mbc)->ptr = (mbc)->buf, (mbc)->bytes = 1, (mbc)->wc_valid = 1, \
-   (mbc)->wc = (mbc)->buf[0] = (sc))
+# define mb_setascii(mbc, sc) \
+   ((mbc)->ptr = (mbc)->buf, (mbc)->bytes = 1, (mbc)->wc_valid = 1, \
+    (mbc)->wc = (mbc)->buf[0] = (sc))
+#endif
 
 /* Copying a character.  */
 MBCHAR_INLINE void
 mb_copy (mbchar_t *new_mbc, const mbchar_t *old_mbc)
 {
+#if defined GNULIB_MBFILE
   if (old_mbc->ptr == &old_mbc->buf[0])
     {
       memcpy (&new_mbc->buf[0], &old_mbc->buf[0], old_mbc->bytes);
       new_mbc->ptr = &new_mbc->buf[0];
     }
   else
+#endif
     new_mbc->ptr = old_mbc->ptr;
   new_mbc->bytes = old_mbc->bytes;
   if ((new_mbc->wc_valid = old_mbc->wc_valid))
