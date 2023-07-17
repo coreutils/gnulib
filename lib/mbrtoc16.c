@@ -87,7 +87,7 @@ static_assert (sizeof (mbstate_t) >= 4);
 /* On Solaris, mbstate_t is defined in <wchar_impl.h>.
    It is an opaque aligned 24-byte or 32-byte struct, of which at most the first
    20 or 28 bytes are used.
-   For more details, see the *State types in
+   For more details on OpenSolaris derivatives, see the *State types in
    illumos-gate/usr/src/lib/libc/port/locale/
    {none,euc,mskanji,big5,gb2312,gbk,gb18030,utf8}.c.  */
 # define SET_EXTRA_STATE(ps, c16) \
