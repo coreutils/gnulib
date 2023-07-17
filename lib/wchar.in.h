@@ -451,8 +451,9 @@ _GL_WARN_ON_USE (mbsinit, "mbsinit is unportable - "
    lib/libc/citrus/citrus_*.c.  */
 /* File           INIT_SIZE  ZERO_SIZE
    citrus_none.c      0          0 */
-#  define _GL_MBSTATE_INIT_SIZE 1
-#  define _GL_MBSTATE_ZERO_SIZE 1
+/* But 1 is not the correct value for _GL_MBSTATE_ZERO_SIZE: we get test
+   failures for values < 4.  */
+#  define _GL_MBSTATE_ZERO_SIZE 4
 # elif defined __sun                                      /* Solaris */
 /* On Solaris, mbstate_t is defined in <wchar_impl.h>.
    It is an opaque aligned 24-byte or 32-byte struct, of which at most the first
