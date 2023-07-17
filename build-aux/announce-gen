@@ -35,7 +35,7 @@
 eval 'exec perl -wSx "$0" "$@"'
      if 0;
 
-my $VERSION = '2023-02-26 17:15'; # UTC
+my $VERSION = '2023-07-17 20:05'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -545,7 +545,7 @@ EOF
   my $v0 = $prev_version;
   my $v1 = $curr_version;
 
-  (my $first_name = `git config --global user.name|cut -d' ' -f1`)
+  (my $first_name = `git config user.name|cut -d' ' -f1`)
     =~ m{\S} or die "no name? set user.name in ~/.gitconfig\n";
 
   chomp (my $n_ci = `git rev-list "v$v0..v$v1" | wc -l`);
