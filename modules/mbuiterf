@@ -1,0 +1,38 @@
+Description:
+Iterating through multibyte strings, faster.
+
+Files:
+lib/mbuiterf.h
+lib/mbuiterf.c
+m4/mbiter.m4
+m4/mbrtowc.m4
+
+Depends-on:
+extern-inline
+mbchar
+mbrtoc32
+mbsinit
+mbszero
+uchar
+stdbool
+strnlen1
+
+configure.ac:
+gl_MBITER
+
+Makefile.am:
+lib_SOURCES += mbuiterf.h mbuiterf.c
+
+Include:
+"mbuiterf.h"
+
+Link:
+$(LTLIBUNISTRING) when linking with libtool, $(LIBUNISTRING) otherwise
+$(MBRTOWC_LIB)
+$(LTLIBC32CONV) when linking with libtool, $(LIBC32CONV) otherwise
+
+License:
+LGPL
+
+Maintainer:
+all
