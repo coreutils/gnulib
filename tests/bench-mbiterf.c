@@ -43,7 +43,7 @@ do_test (char test, int repeat, const char *locale_name, const char *text)
           unsigned long long sum = 0;
           const char *text_end = text + text_len;
           mbif_state_t state;
-          char *iter;
+          const char *iter;
           for (mbif_init (state), iter = text; mbif_avail (state, iter, text_end); )
             {
               mbchar_t cur = mbif_next (state, iter, text_end);

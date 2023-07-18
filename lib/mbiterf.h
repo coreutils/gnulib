@@ -120,7 +120,7 @@ mbiterf_next (struct mbif_state *ps, const char *iter, const char *endptr)
          their char code.  For the few other ones, this is the case as well,
          in all locale encodings that are in use.  The 32-bit wide character
          code is the same as well.  */
-      return (mbchar_t) { ptr: iter, bytes: 1, wc_valid: true, wc: *iter };
+      return (mbchar_t) { .ptr = iter, .bytes = 1, .wc_valid = true, .wc = *iter };
     }
   else
     {
@@ -140,7 +140,7 @@ mbiterf_next (struct mbif_state *ps, const char *iter, const char *endptr)
           ps->in_shift = false;
           #endif
           mbszero (&ps->state);
-          return (mbchar_t) { ptr: iter, bytes: 1, wc_valid: false };
+          return (mbchar_t) { .ptr = iter, .bytes = 1, .wc_valid = false };
         }
       else if (bytes == (size_t) -2)
         {
@@ -150,7 +150,7 @@ mbiterf_next (struct mbif_state *ps, const char *iter, const char *endptr)
           #endif
           /* Whether to reset ps->state or not is not important; the string end
              is reached anyway.  */
-          return (mbchar_t) { ptr: iter, bytes: endptr - iter, wc_valid: false };
+          return (mbchar_t) { .ptr = iter, .bytes = endptr - iter, .wc_valid = false };
         }
       else
         {
@@ -174,7 +174,7 @@ mbiterf_next (struct mbif_state *ps, const char *iter, const char *endptr)
           if (mbsinit (&ps->state))
             ps->in_shift = false;
           #endif
-          return (mbchar_t) { ptr: iter, bytes: bytes, wc_valid: true, wc: wc };
+          return (mbchar_t) { .ptr = iter, .bytes = bytes, .wc_valid = true, .wc = wc };
         }
     }
 }
