@@ -5,7 +5,7 @@ Files:
 lib/mbscspn.c
 
 Depends-on:
-mbuiter
+mbuiterf
 string
 mbschr
 strcspn

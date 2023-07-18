@@ -20,7 +20,7 @@
 /* Specification.  */
 #include <string.h>
 
-#include "mbuiter.h"
+#include "mbuiterf.h"
 
 /* Find the first occurrence in the character string STRING of any character
    in the character string ACCEPT.  Return the number of bytes from the
@@ -40,28 +40,33 @@ mbscspn (const char *string, const char *accept)
   /* General case.  */
   if (MB_CUR_MAX > 1)
     {
-      mbui_iterator_t iter;
-
-      for (mbui_init (iter, string); mbui_avail (iter); mbui_advance (iter))
+      mbuif_state_t state;
+      const char *iter;
+      for (mbuif_init (state), iter = string; mbuif_avail (state, iter); )
         {
-          if (mb_len (mbui_cur (iter)) == 1)
+          mbchar_t cur = mbuif_next (state, iter);
+          if (mb_len (cur) == 1)
             {
-              if (mbschr (accept, * mbui_cur_ptr (iter)))
+              if (mbschr (accept, *iter))
                 goto found;
             }
           else
             {
-              mbui_iterator_t aiter;
-
-              for (mbui_init (aiter, accept);
-                   mbui_avail (aiter);
-                   mbui_advance (aiter))
-                if (mb_equal (mbui_cur (aiter), mbui_cur (iter)))
-                  goto found;
+              mbuif_state_t astate;
+              const char *aiter;
+              for (mbuif_init (astate), aiter = accept;
+                   mbuif_avail (astate, aiter); )
+                {
+                  mbchar_t acur = mbuif_next (astate, aiter);
+                  if (mb_equal (acur, cur))
+                    goto found;
+                  aiter += mb_len (acur);
+                }
             }
+          iter += mb_len (cur);
         }
      found:
-      return mbui_cur_ptr (iter) - string;
+      return iter - string;
     }
   else
     return strcspn (string, accept);
