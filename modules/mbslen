@@ -6,7 +6,7 @@ lib/mbslen.c
 m4/mbslen.m4
 
 Depends-on:
-mbuiter
+mbuiterf
 string
 
 configure.ac:

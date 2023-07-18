@@ -22,7 +22,7 @@
 
 #include <stdlib.h>
 
-#include "mbuiter.h"
+#include "mbuiterf.h"
 
 /* Return the number of multibyte characters in the character string STRING.  */
 size_t
@@ -30,12 +30,16 @@ mbslen (const char *string)
 {
   if (MB_CUR_MAX > 1)
     {
-      size_t count;
-      mbui_iterator_t iter;
+      size_t count = 0;
 
-      count = 0;
-      for (mbui_init (iter, string); mbui_avail (iter); mbui_advance (iter))
-        count++;
+      mbuif_state_t state;
+      const char *iter;
+      for (mbuif_init (state), iter = string; mbuif_avail (state, iter); )
+        {
+          mbchar_t cur = mbuif_next (state, iter);
+          count++;
+          iter += mb_len (cur);
+        }
 
       return count;
     }
