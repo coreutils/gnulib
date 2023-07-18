@@ -20,7 +20,7 @@
 /* Specification.  */
 #include <string.h>
 
-#include "mbuiter.h"
+#include "mbuiterf.h"
 
 /* Locate the first single-byte character C in the character string STRING,
    and return a pointer to it.  Return NULL if C is not found in STRING.  */
@@ -33,17 +33,18 @@ mbschr (const char *string, int c)
          the faster unibyte loop can be used.  */
       && (unsigned char) c >= 0x30)
     {
-      mbui_iterator_t iter;
-
-      for (mbui_init (iter, string);; mbui_advance (iter))
+      mbuif_state_t state;
+      const char *iter;
+      for (mbuif_init (state), iter = string;; )
         {
-          if (!mbui_avail (iter))
+          if (!mbuif_avail (state, iter))
             goto notfound;
-          if (mb_len (mbui_cur (iter)) == 1
-              && (unsigned char) * mbui_cur_ptr (iter) == (unsigned char) c)
+          mbchar_t cur = mbuif_next (state, iter);
+          if (mb_len (cur) == 1 && (unsigned char) *iter == (unsigned char) c)
             break;
+          iter += mb_len (cur);
         }
-      return (char *) mbui_cur_ptr (iter);
+      return (char *) iter;
      notfound:
       return NULL;
     }

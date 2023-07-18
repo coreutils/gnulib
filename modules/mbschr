@@ -5,7 +5,7 @@ Files:
 lib/mbschr.c
 
 Depends-on:
-mbuiter
+mbuiterf
 string
 
 configure.ac:
