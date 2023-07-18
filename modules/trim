@@ -8,7 +8,7 @@ lib/trim.c
 Depends-on:
 xalloc
 mbchar
-mbiter
+mbiterf
 memmove
 strdup
 

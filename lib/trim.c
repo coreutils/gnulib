@@ -27,7 +27,7 @@
 #include <stdlib.h>
 
 #include "mbchar.h"
-#include "mbiter.h"
+#include "mbiterf.h"
 #include "xalloc.h"
 
 char *
@@ -42,17 +42,23 @@ trim2 (const char *s, int how)
 
   if (MB_CUR_MAX > 1)
     {
-      mbi_iterator_t i;
-
       /* Trim leading whitespaces. */
       if (how != TRIM_TRAILING)
         {
-          mbi_init (i, d, strlen (d));
+          const char *d_end = d + strlen (d);
+          mbif_state_t state;
+          char *iter;
+          for (mbif_init (state), iter = d; mbif_avail (state, iter, d_end); )
+            {
+              mbchar_t cur = mbif_next (state, iter, d_end);
 
-          for (; mbi_avail (i) && mb_isspace (mbi_cur (i)); mbi_advance (i))
-            ;
+              if (!mb_isspace (cur))
+                break;
 
-          memmove (d, mbi_cur_ptr (i), strlen (mbi_cur_ptr (i)) + 1);
+              iter += mb_len (cur);
+            }
+
+          memmove (d, iter, strlen (iter) + 1);
         }
 
       /* Trim trailing whitespaces. */
@@ -60,16 +66,23 @@ trim2 (const char *s, int how)
         {
           char *start_of_spaces = NULL;
 
-          mbi_init (i, d, strlen (d));
+          const char *d_end = d + strlen (d);
+          mbif_state_t state;
+          char *iter;
+          for (mbif_init (state), iter = d; mbif_avail (state, iter, d_end); )
+            {
+              mbchar_t cur = mbif_next (state, iter, d_end);
 
-          for (; mbi_avail (i); mbi_advance (i))
-            if (mb_isspace (mbi_cur (i)))
-              {
-                if (start_of_spaces == NULL)
-                  start_of_spaces = (char *) mbi_cur_ptr (i);
-              }
-            else
-              start_of_spaces = NULL;
+              if (mb_isspace (cur))
+                {
+                  if (start_of_spaces == NULL)
+                    start_of_spaces = iter;
+                }
+              else
+                start_of_spaces = NULL;
+
+              iter += mb_len (cur);
+            }
 
           if (start_of_spaces != NULL)
             *start_of_spaces = '\0';
