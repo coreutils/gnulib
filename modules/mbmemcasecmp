@@ -6,7 +6,7 @@ lib/mbmemcasecmp.h
 lib/mbmemcasecmp.c
 
 Depends-on:
-mbiter
+mbiterf
 
 configure.ac:
 
