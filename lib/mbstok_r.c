@@ -20,7 +20,7 @@
 /* Specification.  */
 #include <string.h>
 
-#include "mbuiter.h"
+#include <stdlib.h>
 
 char *
 mbstok_r (char *string, const char *delim, char **save_ptr)
