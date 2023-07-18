@@ -73,7 +73,8 @@
 #ifndef _MBITERF_H
 #define _MBITERF_H 1
 
-/* This file uses _GL_INLINE_HEADER_BEGIN, _GL_INLINE.  */
+/* This file uses _GL_INLINE_HEADER_BEGIN, _GL_INLINE,
+   _GL_ATTRIBUTE_ALWAYS_INLINE.  */
 #if !_GL_CONFIG_H_INCLUDED
  #error "Please include config.h first."
 #endif
@@ -88,7 +89,7 @@
 
 _GL_INLINE_HEADER_BEGIN
 #ifndef MBITERF_INLINE
-# define MBITERF_INLINE _GL_INLINE
+# define MBITERF_INLINE _GL_INLINE _GL_ATTRIBUTE_ALWAYS_INLINE
 #endif
 
 struct mbif_state

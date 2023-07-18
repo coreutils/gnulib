@@ -89,7 +89,8 @@
 #ifndef _MBUITER_H
 #define _MBUITER_H 1
 
-/* This file uses _GL_INLINE_HEADER_BEGIN, _GL_INLINE.  */
+/* This file uses _GL_INLINE_HEADER_BEGIN, _GL_INLINE,
+   _GL_ATTRIBUTE_ALWAYS_INLINE.  */
 #if !_GL_CONFIG_H_INCLUDED
  #error "Please include config.h first."
 #endif
@@ -106,7 +107,7 @@
 
 _GL_INLINE_HEADER_BEGIN
 #ifndef MBUITER_INLINE
-# define MBUITER_INLINE _GL_INLINE
+# define MBUITER_INLINE _GL_INLINE _GL_ATTRIBUTE_ALWAYS_INLINE
 #endif
 
 struct mbuiter_multi
