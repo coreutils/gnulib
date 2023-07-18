@@ -22,7 +22,7 @@
 
 #include <stdlib.h>
 
-#include "mbuiter.h"
+#include "mbuiterf.h"
 
 char *
 mbssep (char **stringp, const char *delim)
@@ -47,14 +47,13 @@ mbssep (char **stringp, const char *delim)
         }
       else
         {
-          mbui_iterator_t iter;
-
-          mbui_init (iter, ptr);
-          if (!mbui_avail (iter))
+          mbuif_state_t state;
+          mbuif_init (state);
+          if (!mbuif_avail (state, ptr))
             abort ();
-          mbui_advance (iter);
+          mbchar_t cur = mbuif_next (state, ptr);
           *ptr = '\0';
-          *stringp = (char *) mbui_cur_ptr (iter);
+          *stringp = ptr + mb_len (cur);
           return start;
         }
     }
