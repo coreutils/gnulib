@@ -20,7 +20,7 @@
 /* Specification.  */
 #include <string.h>
 
-#include "mbuiter.h"
+#include "mbuiterf.h"
 
 /* Find the first occurrence in the character string STRING of any character
    not in the character string REJECT.  Return the number of bytes from the
@@ -38,13 +38,16 @@ mbsspn (const char *string, const char *reject)
 
       if (MB_CUR_MAX > 1)
         {
-          mbui_iterator_t iter;
-
-          for (mbui_init (iter, string); mbui_avail (iter); mbui_advance (iter))
-            if (!(mb_len (mbui_cur (iter)) == 1
-                  && (unsigned char) * mbui_cur_ptr (iter) == uc))
-              break;
-          return mbui_cur_ptr (iter) - string;
+          mbuif_state_t state;
+          const char *iter;
+          for (mbuif_init (state), iter = string; mbuif_avail (state, iter); )
+            {
+              mbchar_t cur = mbuif_next (state, iter);
+              if (!(mb_len (cur) == 1 && (unsigned char) *iter == uc))
+                break;
+              iter += mb_len (cur);
+            }
+          return iter - string;
         }
       else
         {
@@ -59,30 +62,34 @@ mbsspn (const char *string, const char *reject)
   /* General case.  */
   if (MB_CUR_MAX > 1)
     {
-      mbui_iterator_t iter;
-
-      for (mbui_init (iter, string); mbui_avail (iter); mbui_advance (iter))
+      mbuif_state_t state;
+      const char *iter;
+      for (mbuif_init (state), iter = string; mbuif_avail (state, iter); )
         {
-          if (mb_len (mbui_cur (iter)) == 1)
+          mbchar_t cur = mbuif_next (state, iter);
+          if (mb_len (cur) == 1)
             {
-              if (mbschr (reject, * mbui_cur_ptr (iter)) == NULL)
+              if (mbschr (reject, *iter) == NULL)
                 goto found;
             }
           else
             {
-              mbui_iterator_t aiter;
-
-              for (mbui_init (aiter, reject);; mbui_advance (aiter))
+              mbuif_state_t astate;
+              const char *aiter;
+              for (mbuif_init (astate), aiter = reject; ; )
                 {
-                  if (!mbui_avail (aiter))
+                  if (!mbuif_avail (astate, aiter))
                     goto found;
-                  if (mb_equal (mbui_cur (aiter), mbui_cur (iter)))
+                  mbchar_t acur = mbuif_next (astate, aiter);
+                  if (mb_equal (acur, cur))
                     break;
+                  aiter += mb_len (acur);
                 }
             }
+          iter += mb_len (cur);
         }
      found:
-      return mbui_cur_ptr (iter) - string;
+      return iter - string;
     }
   else
     return strspn (string, reject);
