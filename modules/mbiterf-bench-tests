@@ -1,0 +1,18 @@
+Files:
+tests/bench-mbiterf.c
+tests/bench-multibyte.h
+tests/bench.h
+
+Depends-on:
+mbrtoc32-regular
+mbiterf
+setlocale
+striconv
+getrusage
+gettimeofday
+
+configure.ac:
+
+Makefile.am:
+noinst_PROGRAMS += bench-mbiterf
+bench_mbiterf_LDADD = $(LDADD) $(LIBUNISTRING) $(SETLOCALE_LIB) $(MBRTOWC_LIB) $(LIBC32CONV)
