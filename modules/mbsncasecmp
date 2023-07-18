@@ -5,7 +5,7 @@ Files:
 lib/mbsncasecmp.c
 
 Depends-on:
-mbuiter
+mbuiterf
 string
 
 configure.ac:
