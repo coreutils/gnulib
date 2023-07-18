@@ -5,7 +5,7 @@ Files:
 lib/mbsnlen.c
 
 Depends-on:
-mbiter
+mbiterf
 string
 
 configure.ac:
