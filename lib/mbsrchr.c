@@ -20,7 +20,7 @@
 /* Specification.  */
 #include <string.h>
 
-#include "mbuiter.h"
+#include "mbuiterf.h"
 
 /* Locate the last single-byte character C in the character string STRING,
    and return a pointer to it.  Return NULL if C is not found in STRING.  */
@@ -34,14 +34,17 @@ mbsrchr (const char *string, int c)
       && (unsigned char) c >= 0x30)
     {
       const char *result = NULL;
-      mbui_iterator_t iter;
 
-      for (mbui_init (iter, string); mbui_avail (iter); mbui_advance (iter))
+      mbuif_state_t state;
+      const char *iter;
+      for (mbuif_init (state), iter = string; mbuif_avail (state, iter); )
         {
-          if (mb_len (mbui_cur (iter)) == 1
-              && (unsigned char) * mbui_cur_ptr (iter) == (unsigned char) c)
-            result = mbui_cur_ptr (iter);
+          mbchar_t cur = mbuif_next (state, iter);
+          if (mb_len (cur) == 1 && (unsigned char) *iter == (unsigned char) c)
+            result = iter;
+          iter += mb_len (cur);
         }
+
       return (char *) result;
     }
   else
