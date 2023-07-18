@@ -5,7 +5,7 @@ Files:
 lib/mbspbrk.c
 
 Depends-on:
-mbuiter
+mbuiterf
 string
 mbschr
 strpbrk
