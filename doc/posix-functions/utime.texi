@@ -34,4 +34,5 @@ instead.
 @item
 POSIX says this function is obsolescent and it is planned to be
 removed in POSIX 202x.
+You can use Gnulib module @code{utimens} instead.
 @end itemize

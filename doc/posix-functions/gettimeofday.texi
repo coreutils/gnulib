@@ -36,4 +36,7 @@ is not @code{NULL}.
 @item
 POSIX says this function is obsolescent and it is planned to be
 removed in POSIX 202x.
+Use the Gnulib module @code{gettime} or @code{timespec_get} instead.
+(POSIX recommends to use the function @code{clock_gettime}, but there is
+no corresponding Gnulib module for it yet.)
 @end itemize

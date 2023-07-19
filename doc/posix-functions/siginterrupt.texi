@@ -18,6 +18,7 @@ Minix 3.1.8, mingw, MSVC 14.
 @item
 POSIX says this function is obsolescent and it is planned to be
 removed in POSIX 202x.
+Use the function @code{sigaction} instead.
 @end itemize
 
 Note: POSIX recommends using @code{sigaction} with SA_RESTART instead of

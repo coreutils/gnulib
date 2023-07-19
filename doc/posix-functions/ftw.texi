@@ -21,4 +21,5 @@ FreeBSD 5.2.1, NetBSD 3.0, Minix 3.1.8, mingw, MSVC 14, Android 4.1.
 @item
 POSIX says this function is obsolescent and it is planned to be
 removed in POSIX 202x.
+Use the Gnulib module @code{fts} instead.
 @end itemize
