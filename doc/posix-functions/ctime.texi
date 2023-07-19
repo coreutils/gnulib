@@ -20,6 +20,9 @@ This function is deprecated in C23.
 Portable applications can use @code{localtime_r} and @code{strftime}
 (or even @code{sprintf}) instead.
 @item
+POSIX says this function is obsolescent and it is planned to be
+removed in a future version.
+@item
 This function may overflow its internal buffer if an invalid year is passed.
 @item
 The @code{ctime} function need not be reentrant, and consequently is

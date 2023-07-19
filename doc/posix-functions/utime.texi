@@ -31,4 +31,7 @@ Solaris 9.
 This function cannot set full timestamp resolution.  Use
 @code{utimensat(AT_FDCWD,file,times,0)}, or the gnulib module @code{utimens},
 instead.
+@item
+POSIX says this function is obsolescent and it is planned to be
+removed in POSIX 202x.
 @end itemize

@@ -16,6 +16,9 @@ Portability problems not fixed by Gnulib:
 This function is missing on some platforms:
 mingw, MSVC 14.
 @item
+POSIX 202x says this function is obsolescent and it is planned to be
+removed in a future version.
+@item
 The @code{inet_ntoa} function need not be reentrant, and consequently
 is not required to be thread safe.  Implementations of
 @code{inet_ntoa} typically write the timestamp into static buffer.

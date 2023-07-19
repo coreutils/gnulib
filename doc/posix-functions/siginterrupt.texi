@@ -15,6 +15,9 @@ Portability problems not fixed by Gnulib:
 @item
 This function is missing on some platforms:
 Minix 3.1.8, mingw, MSVC 14.
+@item
+POSIX says this function is obsolescent and it is planned to be
+removed in POSIX 202x.
 @end itemize
 
 Note: POSIX recommends using @code{sigaction} with SA_RESTART instead of

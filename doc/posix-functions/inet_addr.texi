@@ -16,6 +16,9 @@ Portability problems not fixed by Gnulib:
 This function is missing on some platforms:
 mingw, MSVC 14.
 @item
+POSIX 202x says this function is obsolescent and it is planned to be
+removed in a future version.
+@item
 On some old platforms, this function returns a @samp{struct in_addr} rather
 than a scalar type such as @samp{unsigned int} or @samp{unsigned long}.
 @end itemize

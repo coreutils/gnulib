@@ -18,6 +18,9 @@ This function should never be used, because it can overflow any given buffer.
 This function is missing on some platforms:
 OpenBSD 6.7, Solaris 11.4.
 @item
+POSIX says this function is obsolescent and it is planned to be
+removed in POSIX 202x.
+@item
 When reading from a non-blocking pipe whose buffer is empty, this function
 fails with @code{errno} being set to @code{EINVAL} instead of @code{EAGAIN} on
 some platforms:
