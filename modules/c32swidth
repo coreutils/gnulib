@@ -5,6 +5,9 @@ a size-bounded 32-bit wide string.
 Files:
 lib/c32swidth.c
 lib/wcswidth-impl.h
+m4/locale-ja.m4
+m4/locale-zh.m4
+m4/codeset.m4
 
 Depends-on:
 uchar
