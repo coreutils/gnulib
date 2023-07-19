@@ -128,7 +128,7 @@ mbiterf_next (struct mbif_state *ps, const char *iter, const char *endptr)
       assert (mbsinit (&ps->state));
       #if !GNULIB_MBRTOC32_REGULAR
       ps->in_shift = true;
-    with_shift:
+    with_shift:;
       #endif
       size_t bytes;
       char32_t wc;
