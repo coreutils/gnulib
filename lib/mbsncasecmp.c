@@ -26,8 +26,6 @@
 
 #include "mbuiterf.h"
 
-#define TOLOWER(Ch) (isupper (Ch) ? tolower (Ch) : (Ch))
-
 /* Compare the initial segment of the character string S1 consisting of at most
    N characters with the initial segment of the character string S2 consisting
    of at most N characters, ignoring case, returning less than, equal to or
@@ -87,8 +85,8 @@ mbsncasecmp (const char *s1, const char *s2, size_t n)
 
       for (; ; p1++, p2++)
         {
-          c1 = TOLOWER (*p1);
-          c2 = TOLOWER (*p2);
+          c1 = tolower (*p1);
+          c2 = tolower (*p2);
 
           if (--n == 0 || c1 == '\0' || c1 != c2)
             break;

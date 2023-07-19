@@ -23,14 +23,12 @@
 #include <ctype.h>
 #include <strings.h>
 
-#define TOLOWER(Ch) (isupper (Ch) ? tolower (Ch) : (Ch))
-
 /* Two-Way algorithm.  */
 #define RETURN_TYPE char *
 #define AVAILABLE(h, h_l, j, n_l)                       \
   (!memchr ((h) + (h_l), '\0', (j) + (n_l) - (h_l))     \
    && ((h_l) = (j) + (n_l)))
-#define CANON_ELEMENT(c) TOLOWER (c)
+#define CANON_ELEMENT(c) tolower (c)
 #define CMP_FUNC(p1, p2, l)                             \
   strncasecmp ((const char *) (p1), (const char *) (p2), l)
 #include "str-two-way.h"
@@ -52,8 +50,8 @@ strcasestr (const char *haystack_start, const char *needle_start)
      NEEDLE if HAYSTACK is too short).  */
   while (*haystack && *needle)
     {
-      ok &= (TOLOWER ((unsigned char) *haystack)
-             == TOLOWER ((unsigned char) *needle));
+      ok &= (tolower ((unsigned char) *haystack)
+             == tolower ((unsigned char) *needle));
       haystack++;
       needle++;
     }

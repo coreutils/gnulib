@@ -26,8 +26,6 @@
 
 #include "mbuiterf.h"
 
-#define TOLOWER(Ch) (isupper (Ch) ? tolower (Ch) : (Ch))
-
 /* Compare the character strings S1 and S2, ignoring case, returning less than,
    equal to or greater than zero if S1 is lexicographically less than, equal to
    or greater than S2.
@@ -82,8 +80,8 @@ mbscasecmp (const char *s1, const char *s2)
 
       do
         {
-          c1 = TOLOWER (*p1);
-          c2 = TOLOWER (*p2);
+          c1 = tolower (*p1);
+          c2 = tolower (*p2);
 
           if (c1 == '\0')
             break;

@@ -27,8 +27,6 @@
 
 #include "mbiterf.h"
 
-#define TOLOWER(Ch) (isupper (Ch) ? tolower (Ch) : (Ch))
-
 int
 mbmemcasecmp (const char *s1, size_t n1, const char *s2, size_t n2)
 {
@@ -79,8 +77,8 @@ mbmemcasecmp (const char *s1, size_t n1, const char *s2, size_t n2)
 
       while (p1 < s1_end && p2 < s2_end)
         {
-          unsigned char c1 = TOLOWER (*p1);
-          unsigned char c2 = TOLOWER (*p2);
+          unsigned char c1 = tolower (*p1);
+          unsigned char c2 = tolower (*p2);
           if (c1 != c2)
             {
               if (UCHAR_MAX <= INT_MAX)

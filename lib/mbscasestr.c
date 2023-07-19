@@ -27,11 +27,9 @@
 #include "malloca.h"
 #include "mbuiter.h"
 
-#define TOLOWER(Ch) (isupper (Ch) ? tolower (Ch) : (Ch))
-
 /* Knuth-Morris-Pratt algorithm.  */
 #define UNIT unsigned char
-#define CANON_ELEMENT(c) TOLOWER (c)
+#define CANON_ELEMENT(c) tolower (c)
 #include "str-kmp.h"
 
 /* Knuth-Morris-Pratt algorithm.
@@ -340,7 +338,7 @@ mbscasestr (const char *haystack, const char *needle)
 
           /* Speed up the following searches of needle by caching its first
              character.  */
-          unsigned char b = TOLOWER ((unsigned char) *needle);
+          unsigned char b = tolower ((unsigned char) *needle);
 
           needle++;
           for (;; haystack++)
@@ -383,7 +381,7 @@ mbscasestr (const char *haystack, const char *needle)
 
               outer_loop_count++;
               comparison_count++;
-              if (TOLOWER ((unsigned char) *haystack) == b)
+              if (tolower ((unsigned char) *haystack) == b)
                 /* The first character matches.  */
                 {
                   const char *rhaystack = haystack + 1;
@@ -398,8 +396,8 @@ mbscasestr (const char *haystack, const char *needle)
                         /* No match.  */
                         return NULL;
                       comparison_count++;
-                      if (TOLOWER ((unsigned char) *rhaystack)
-                          != TOLOWER ((unsigned char) *rneedle))
+                      if (tolower ((unsigned char) *rhaystack)
+                          != tolower ((unsigned char) *rneedle))
                         /* Nothing in this round.  */
                         break;
                     }

@@ -37,8 +37,6 @@
 #include "memcmp2.h"
 #include "memcoll.h"
 
-#define TOLOWER(Ch) (isupper (Ch) ? tolower (Ch) : (Ch))
-
 /* Apply c32tolower() to the multibyte character sequence in INBUF, storing the
    result as a multibyte character sequence in OUTBUF.  */
 static size_t
@@ -136,7 +134,7 @@ apply_tolower (const char *inbuf, char *outbuf, size_t bufsize)
 {
   for (; bufsize > 0; bufsize--)
     {
-      *outbuf = TOLOWER ((unsigned char) *inbuf);
+      *outbuf = tolower ((unsigned char) *inbuf);
       inbuf++;
       outbuf++;
     }

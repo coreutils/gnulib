@@ -24,8 +24,6 @@
 
 #include "mbuiterf.h"
 
-#define TOLOWER(Ch) (isupper (Ch) ? tolower (Ch) : (Ch))
-
 /* Compare the initial segment of the character string STRING consisting of
    at most mbslen (PREFIX) characters with the character string PREFIX,
    ignoring case.  If the two match, return a pointer to the first byte
@@ -83,8 +81,8 @@ mbspcasecmp (const char *string, const char *prefix)
 
       for (; ; p1++, p2++)
         {
-          c1 = TOLOWER (*p1);
-          c2 = TOLOWER (*p2);
+          c1 = tolower (*p1);
+          c2 = tolower (*p2);
 
           if (c2 == '\0' || c1 != c2)
             break;
