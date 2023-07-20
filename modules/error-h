@@ -4,6 +4,8 @@ Functions for error reporting.
 Files:
 lib/error.in.h
 m4/error_h.m4
+m4/include_next.m4
+m4/absolute-header.m4
 
 Depends-on:
 gen-header
