@@ -1736,11 +1736,11 @@ fd_ring_print (FTS const *sp, FILE *stream, char const *msg)
     {
       int fd = fd_ring->ir_data[i];
       if (fd < 0)
-        fprintf (stream, "%d: %d:\n", i, fd);
+        fprintf (stream, "%u: %d:\n", i, fd);
       else
         {
           struct devino wd = getdevino (fd);
-          fprintf (stream, "%d: %d: "PRINT_DEVINO"\n", i, fd, wd.dev, wd.ino);
+          fprintf (stream, "%u: %d: "PRINT_DEVINO"\n", i, fd, wd.dev, wd.ino);
         }
       if (i == fd_ring->ir_back)
         break;
