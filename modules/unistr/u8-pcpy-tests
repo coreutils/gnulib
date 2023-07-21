@@ -1,0 +1,14 @@
+Files:
+tests/unistr/test-u8-pcpy.c
+tests/unistr/test-pcpy.h
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-u8-pcpy
+check_PROGRAMS += test-u8-pcpy
+test_u8_pcpy_SOURCES = unistr/test-u8-pcpy.c
+test_u8_pcpy_LDADD = $(LDADD) $(LIBUNISTRING)
