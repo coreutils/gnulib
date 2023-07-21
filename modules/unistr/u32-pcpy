@@ -1,0 +1,27 @@
+Description:
+Copy piece of UTF-32 string, return pointer after last written unit.
+
+Files:
+lib/unistr/u32-pcpy.c
+lib/unistr/u-pcpy.h
+
+Depends-on:
+unistr/base
+unistr/u32-cpy
+
+configure.ac:
+gl_LIBUNISTRING_MODULE([1.2], [unistr/u32-pcpy])
+
+Makefile.am:
+if LIBUNISTRING_COMPILE_UNISTR_U32_PCPY
+lib_SOURCES += unistr/u32-pcpy.c
+endif
+
+Include:
+"unistr.h"
+
+License:
+LGPLv2+
+
+Maintainer:
+all

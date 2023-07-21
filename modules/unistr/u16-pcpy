@@ -1,0 +1,27 @@
+Description:
+Copy piece of UTF-16 string, return pointer after last written unit.
+
+Files:
+lib/unistr/u16-pcpy.c
+lib/unistr/u-pcpy.h
+
+Depends-on:
+unistr/base
+unistr/u16-cpy
+
+configure.ac:
+gl_LIBUNISTRING_MODULE([1.2], [unistr/u16-pcpy])
+
+Makefile.am:
+if LIBUNISTRING_COMPILE_UNISTR_U16_PCPY
+lib_SOURCES += unistr/u16-pcpy.c
+endif
+
+Include:
+"unistr.h"
+
+License:
+LGPLv3+ or GPLv2+
+
+Maintainer:
+all
