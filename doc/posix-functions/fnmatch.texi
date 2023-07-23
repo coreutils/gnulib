@@ -27,6 +27,64 @@ Portability problems fixed by either Gnulib module @code{fnmatch} or @code{fnmat
 This function is missing on some platforms:
 mingw, MSVC 14.
 @item
+The @code{"?"} pattern character fails to match characters outside the
+single-byte range on some platforms:
+@c Failing test cases:
+@c fnmatch ("x?y", "x\303\274y", 0) == 0
+@c fnmatch ("x?y", "x\303\237y", 0) == 0
+@c fnmatch ("x?y", "x\360\237\230\213y", 0) == 0
+@c fnmatch ("x?y", "x\306\374y", 0) == 0
+@c fnmatch ("x?y", "x\313\334y", 0) == 0
+@c fnmatch ("x?y", "x\270\354y", 0) == 0
+@c fnmatch ("x?y", "x\250\271y", 0) == 0
+@c fnmatch ("x?y", "x\201\060\211\070y", 0) == 0
+@c fnmatch ("x?y", "x\224\071\375\067y", 0) == 0
+NetBSD 9.3,
+@c Failing test cases:
+@c fnmatch ("x?y", "x\303\274y", 0) == 0
+@c fnmatch ("x?y", "x\303\237y", 0) == 0
+@c fnmatch ("x?y", "x\360\237\230\213y", 0) == 0
+Android 13.
+@item
+In the pattern, negated character ranges (such as @code{[!a-z]}) are not
+supported on some platforms:
+@c Failing test cases:
+@c fnmatch ("[!a-z]", "", 0) == FNM_NOMATCH
+Solaris 11.4.
+@item
+In the pattern, character classes (such as @code{[:alnum:]}) inside
+bracket expressions are not supported on some platforms:
+@c Failing test cases:
+@c fnmatch ("[[:alnum:]]", "a", 0) == 0
+@c etc.
+FreeBSD 13.2, NetBSD 9.3, Cygwin 3.4.6.
+@item
+In the pattern, character classes (such as @code{[:alnum:]}) inside
+bracket expressions fail to match characters outside the single-byte
+range on some platforms:
+@c Failing test cases:
+@c fnmatch ("x[[:alnum:]]y", "x\305\201y", 0) == 0
+@c fnmatch ("x[[:alnum:]]y", "x\360\220\214\260y", 0) == 0
+@c fnmatch ("x[[:alpha:]]y", "x\305\201y", 0) == 0
+@c fnmatch ("x[[:alpha:]]y", "x\360\220\214\260y", 0) == 0
+@c fnmatch ("x[[:graph:]]y", "x\302\270y", 0) == 0
+@c fnmatch ("x[[:graph:]]y", "x\360\240\200\200y", 0) == 0
+@c fnmatch ("x[[:lower:]]y", "x\303\277y", 0) == 0
+@c fnmatch ("x[[:lower:]]y", "x\360\220\221\201y", 0) == 0
+@c fnmatch ("x[[:print:]]y", "x\302\270y", 0) == 0
+@c fnmatch ("x[[:print:]]y", "x\360\240\200\200y", 0) == 0
+@c fnmatch ("x[[:punct:]]y", "x\302\277y", 0) == 0
+@c fnmatch ("x[[:space:]]y", "x\343\200\200y", 0) == 0
+@c fnmatch ("x[[:upper:]]y", "x\320\251y", 0) == 0
+@c fnmatch ("x[[:upper:]]y", "x\360\220\220\231y", 0) == 0
+Android 13.
+@item
+The character class @code{[:cntrl:]} matches the empty string
+on some platforms:
+@c Failing test cases:
+@c fnmatch ("[[:cntrl:]]", "", 0) == FNM_NOMATCH
+Solaris 11.4.
+@item
 Ranges that start or end with a backslash don't work right on some platforms:
 @c https://sourceware.org/bugzilla/show_bug.cgi?id=361
 glibc 2.3.3.
@@ -46,7 +104,11 @@ glibc 2.12,
 @c fnmatch ("[", "[", 0) == 0
 @c fnmatch ("[", "]", 0) == FNM_NOMATCH
 @c fnmatch ("[/b", "[/b", 0) == 0
-macOS 12.5.
+macOS 12.5,
+@c Failing test cases:
+@c fnmatch ("[", "[", 0) == 0
+@c fnmatch ("[/-/]", "/", 0) == 0
+NetBSD 9.3.
 @end itemize
 
 Portability problems fixed by Gnulib module @code{fnmatch-gnu}:
@@ -88,25 +150,6 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 The @code{"?"} pattern character fails to match characters outside the
-single-byte range on some platforms:
-@c Failing test cases:
-@c fnmatch ("x?y", "x\303\274y", 0) == 0
-@c fnmatch ("x?y", "x\303\237y", 0) == 0
-@c fnmatch ("x?y", "x\360\237\230\213y", 0) == 0
-@c fnmatch ("x?y", "x\306\374y", 0) == 0
-@c fnmatch ("x?y", "x\313\334y", 0) == 0
-@c fnmatch ("x?y", "x\270\354y", 0) == 0
-@c fnmatch ("x?y", "x\250\271y", 0) == 0
-@c fnmatch ("x?y", "x\201\060\211\070y", 0) == 0
-@c fnmatch ("x?y", "x\224\071\375\067y", 0) == 0
-NetBSD 9.3,
-@c Failing test cases:
-@c fnmatch ("x?y", "x\303\274y", 0) == 0
-@c fnmatch ("x?y", "x\303\237y", 0) == 0
-@c fnmatch ("x?y", "x\360\237\230\213y", 0) == 0
-Android 13.
-@item
-The @code{"?"} pattern character fails to match characters outside the
 Unicode BMP on some platforms:
 @c Failing test cases:
 @c fnmatch ("x?y", "x\360\237\230\213y", 0) == 0
@@ -130,52 +173,6 @@ MSVC,
 @c fnmatch ("x[[:print:]]y", "x\360\240\200\200y", 0) == 0
 @c fnmatch ("x[[:upper:]]y", "x\360\220\220\231y", 0) == 0
 32-bit AIX.
-@item
-In the pattern, negated character ranges (such as @code{[!a-z]}) are not
-supported on some platforms:
-@c Failing test cases:
-@c fnmatch ("[!a-z]", "", 0) == FNM_NOMATCH
-Solaris 11.4.
-@item
-In the pattern, character classes (such as @code{[:alnum:]}) inside
-bracket expressions are not supported on some platforms:
-@c Failing test cases:
-@c fnmatch ("[[:alnum:]]", "a", 0) == 0
-@c etc.
-FreeBSD 13.2, NetBSD 9.3, Cygwin 2.9.0.
-@item
-In the pattern, character classes (such as @code{[:alnum:]}) inside
-bracket expressions fail to match characters outside the single-byte
-range on some platforms:
-@c Failing test cases:
-@c fnmatch ("x[[:alnum:]]y", "x\305\201y", 0) == 0
-@c fnmatch ("x[[:alnum:]]y", "x\360\220\214\260y", 0) == 0
-@c fnmatch ("x[[:alpha:]]y", "x\305\201y", 0) == 0
-@c fnmatch ("x[[:alpha:]]y", "x\360\220\214\260y", 0) == 0
-@c fnmatch ("x[[:graph:]]y", "x\302\270y", 0) == 0
-@c fnmatch ("x[[:graph:]]y", "x\360\240\200\200y", 0) == 0
-@c fnmatch ("x[[:lower:]]y", "x\303\277y", 0) == 0
-@c fnmatch ("x[[:lower:]]y", "x\360\220\221\201y", 0) == 0
-@c fnmatch ("x[[:print:]]y", "x\302\270y", 0) == 0
-@c fnmatch ("x[[:print:]]y", "x\360\240\200\200y", 0) == 0
-@c fnmatch ("x[[:punct:]]y", "x\302\277y", 0) == 0
-@c fnmatch ("x[[:space:]]y", "x\343\200\200y", 0) == 0
-@c fnmatch ("x[[:upper:]]y", "x\320\251y", 0) == 0
-@c fnmatch ("x[[:upper:]]y", "x\360\220\220\231y", 0) == 0
-Android 13.
-@item
-The character class @code{[:cntrl:]} matches the empty string
-on some platforms:
-@c Failing test cases:
-@c fnmatch ("[[:cntrl:]]", "", 0) == FNM_NOMATCH
-Solaris 11.4.
-@item
-In the pattern, an opening bracket without closing bracket does not match
-a literal @code{'['} on some platforms:
-@c Failing test cases:
-@c fnmatch ("[", "[", 0) == 0
-@c fnmatch ("[/-/]", "/", 0) == 0
-NetBSD 9.3.
 @end itemize
 
 Note: Gnulib's replacement function has some limitations:

@@ -1,4 +1,4 @@
-# Check for fnmatch - serial 16.  -*- coding: utf-8 -*-
+# Check for fnmatch - serial 17  -*- coding: utf-8 -*-
 
 # Copyright (C) 2000-2007, 2009-2023 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -40,6 +40,8 @@ AC_DEFUN([gl_FUNC_FNMATCH_POSIX],
        AC_RUN_IFELSE(
          [AC_LANG_PROGRAM(
             [[#include <fnmatch.h>
+              #include <locale.h>
+              #include <stddef.h>
               static int
               y (char const *pattern, char const *string, int flags)
               {
@@ -60,60 +62,85 @@ AC_DEFUN([gl_FUNC_FNMATCH_POSIX],
               static char const bs_1[] = { '\\\\' - 1, 0 };
               static char const bs01[] = { '\\\\' + 1, 0 };
               int result = 0;
+              /* ==== Start of tests in the "C" locale ==== */
+              /* These are sanity checks. They all succeed on current platforms.  */
               if (!n ("a*", "", 0))
                 return 1;
               if (!y ("a*", "abc", 0))
                 return 1;
-              if (!y ("[/b", "[/b", 0)) /*"]]"*/ /* glibc Bugzilla bug 12378 */
-                return 1;
               if (!n ("d*/*1", "d/s/1", FNM_PATHNAME))
-                return 2;
+                return 1;
               if (!y ("a\\\\bc", "abc", 0))
-                return 3;
+                return 1;
               if (!n ("a\\\\bc", "abc", FNM_NOESCAPE))
-                return 3;
+                return 1;
               if (!y ("*x", ".x", 0))
-                return 4;
+                return 1;
               if (!n ("*x", ".x", FNM_PERIOD))
-                return 4;
+                return 1;
+              /* glibc bug <https://sourceware.org/bugzilla/show_bug.cgi?id=361>
+                 exists in glibc 2.3.3, fixed in glibc 2.5.  */
               if (!y (Apat, "\\\\", 0))
-                return 5;
+                result |= 2;
               if (!y (Apat, "A", 0))
-                return 5;
+                result |= 2;
               if (!y (apat, "\\\\", 0))
-                return 5;
+                result |= 2;
               if (!y (apat, "a", 0))
-                return 5;
+                result |= 2;
               if (!(n (Apat, A_1, 0) == ('A' < '\\\\')))
-                return 5;
+                result |= 2;
               if (!(n (apat, a_1, 0) == ('a' < '\\\\')))
-                return 5;
+                result |= 2;
               if (!(y (Apat, A01, 0) == ('A' < '\\\\')))
-                return 5;
+                result |= 2;
               if (!(y (apat, a01, 0) == ('a' < '\\\\')))
-                return 5;
+                result |= 2;
               if (!(y (Apat, bs_1, 0) == ('A' < '\\\\')))
-                return 5;
+                result |= 2;
               if (!(y (apat, bs_1, 0) == ('a' < '\\\\')))
-                return 5;
+                result |= 2;
               if (!(n (Apat, bs01, 0) == ('A' < '\\\\')))
-                return 5;
+                result |= 2;
               if (!(n (apat, bs01, 0) == ('a' < '\\\\')))
-                return 5;
-              $gl_fnmatch_gnu_start
-              if (!y ("xxXX", "xXxX", FNM_CASEFOLD))
+                result |= 2;
+              /* glibc bug <https://sourceware.org/bugzilla/show_bug.cgi?id=12378>
+                 exists in glibc 2.12, fixed in glibc 2.13.  */
+              if (!y ("[/b", "[/b", 0)) /*"]]"*/
+                result |= 4;
+              /* This test fails on FreeBSD 13.2, NetBSD 9.3, Cygwin 3.4.6.  */
+              if (!y ("[[:alnum:]]", "a", 0))
                 result |= 8;
+              $gl_fnmatch_gnu_start /* ==== Start of GNU extensions tests ==== */
+              /* Sanity checks, mainly to check the presence of the FNM_* macros.  */
+              if (!y ("xxXX", "xXxX", FNM_CASEFOLD))
+                result |= 64;
               if (!y ("a++(x|yy)b", "a+xyyyyxb", FNM_EXTMATCH))
-                result |= 16;
+                result |= 64;
               if (!n ("d*/*1", "d/s/1", FNM_FILE_NAME))
-                result |= 32;
+                result |= 64;
               if (!y ("*", "x", FNM_FILE_NAME | FNM_LEADING_DIR))
                 result |= 64;
               if (!y ("x*", "x/y/z", FNM_FILE_NAME | FNM_LEADING_DIR))
                 result |= 64;
               if (!y ("*c*", "c/x", FNM_FILE_NAME | FNM_LEADING_DIR))
                 result |= 64;
-              $gl_fnmatch_gnu_end
+              $gl_fnmatch_gnu_end /* ==== End of GNU extensions tests ==== */
+              /* ==== End of tests in the "C" locale ==== */
+              /* ==== Start of tests that require a specific locale ==== */
+              /* This test fails on Solaris 11.4.  */
+              if (setlocale (LC_ALL, "en_US.UTF-8") != NULL)
+                {
+                  if (!n ("[!a-z]", "", 0))
+                    result |= 16;
+                }
+              /* This test fails on NetBSD 9.3, Android 13.  */
+              if (setlocale (LC_ALL, "C.UTF-8") != NULL)
+                {
+                  if (!y ("x?y", "x\\303\\274y", 0))
+                    result |= 32;
+                }
+              /* ==== End of tests that require a specific locale ==== */
               return result;
             ]])],
          [eval "$gl_fnmatch_cache_var=yes"],
