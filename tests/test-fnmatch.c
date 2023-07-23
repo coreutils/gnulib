@@ -941,7 +941,7 @@ main (int argc, char *argv[])
           mbstate_t state;
           wchar_t wc;
           memset (&state, 0, sizeof (mbstate_t));
-          if (mbrtowc (&wc, "\250\271", 2, &state) == 2
+          if (mbrtowc (&wc, "\201\060\213\062", 4, &state) == 4
               && towupper (wc) != wc)
             {
               ASSERT (fnmatch ("\201\060\213\062zg\250\271r", "\201\060\211\060ZG\201\060\211\065R", FNM_CASEFOLD) == 0);
