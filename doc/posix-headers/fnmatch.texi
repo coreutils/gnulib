@@ -3,13 +3,27 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/fnmatch.h.html}
 
-Gnulib module: fnmatch-h
+Gnulib module: fnmatch-h, fnmatch-gnu
 
-Portability problems fixed by Gnulib:
+Portability problems fixed by Gnulib module @code{fnmatch-h}:
 @itemize
 @item
 This header file is missing on some platforms:
 mingw, MSVC 14.
+@end itemize
+
+Portability problems fixed by Gnulib module @code{fnmatch-gnu}, together with module @code{fnmatch-h}:
+@itemize
+@item
+The macros @code{FNM_LEADING_DIR} and @code{FNM_CASEFOLD} are not defined
+on some platforms:
+AIX 7.2, HP-UX 11.31, IRIX 6.5, Solaris 10.
+@item
+The macro @code{FNM_EXTMATCH} is not defined on all non-glibc platforms:
+musl libc, macOS 12.5, FreeBSD 13.2, NetBSD 9.3, OpenBSD 7.2, Minix 3.3, AIX 7.2, HP-UX 11.31, IRIX 6.5, Solaris 11.4, Cygwin 3.4.6, Android 13.
+@item
+The macro @code{FNM_FILE_NAME} is not defined on some platforms:
+NetBSD 9.3, AIX 7.2, HP-UX 11.31, IRIX 6.5, Solaris 10.
 @end itemize
 
 Portability problems not fixed by Gnulib:
