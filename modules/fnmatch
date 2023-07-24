@@ -9,27 +9,37 @@ m4/fnmatch.m4
 
 Depends-on:
 fnmatch-h
-alloca-opt      [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
-attribute       [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
-btowc           [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
-builtin-expect  [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
-flexmember      [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
-idx             [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
-isblank         [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
-iswctype        [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
-libc-config     [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
-stdbool         [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
-stdckdint       [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
-strnlen         [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
-wchar           [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
-wctype-h        [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
-wmemchr         [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
-wmempcpy        [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
-memchr          [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
-memcmp          [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
-mempcpy         [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
-mbsrtowcs       [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
-mbsinit         [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
+alloca-opt          [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
+attribute           [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
+builtin-expect      [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
+flexmember          [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
+idx                 [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
+isblank             [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
+libc-config         [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
+stdbool             [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
+stdckdint           [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
+strnlen             [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
+uchar               [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
+memchr              [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
+memcmp              [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
+mempcpy             [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
+mbsinit             [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
+btowc               [{ test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1; } && test $SMALL_WCHAR_T = 0]
+iswctype            [{ test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1; } && test $SMALL_WCHAR_T = 0]
+mbsrtowcs           [{ test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1; } && test $SMALL_WCHAR_T = 0]
+wchar               [{ test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1; } && test $SMALL_WCHAR_T = 0]
+wctype-h            [{ test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1; } && test $SMALL_WCHAR_T = 0]
+wmemchr             [{ test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1; } && test $SMALL_WCHAR_T = 0]
+wmempcpy            [{ test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1; } && test $SMALL_WCHAR_T = 0]
+btoc32              [{ test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1; } && test $SMALL_WCHAR_T = 1]
+c32tolower          [{ test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1; } && test $SMALL_WCHAR_T = 1]
+c32_get_type_test   [{ test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1; } && test $SMALL_WCHAR_T = 1]
+c32_apply_type_test [{ test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1; } && test $SMALL_WCHAR_T = 1]
+mbsrtoc32s          [{ test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1; } && test $SMALL_WCHAR_T = 1]
+unistr/u32-chr      [{ test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1; } && test $SMALL_WCHAR_T = 1]
+unistr/u32-pcpy     [{ test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1; } && test $SMALL_WCHAR_T = 1]
+unistr/u32-strcat   [{ test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1; } && test $SMALL_WCHAR_T = 1]
+unistr/u32-strlen   [{ test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1; } && test $SMALL_WCHAR_T = 1]
 
 configure.ac:
 gl_FUNC_FNMATCH_POSIX
@@ -47,6 +57,7 @@ Include:
 <fnmatch.h>
 
 Link:
+$(LTLIBUNISTRING) when linking with libtool, $(LIBUNISTRING) otherwise
 $(MBRTOWC_LIB)
 
 License:

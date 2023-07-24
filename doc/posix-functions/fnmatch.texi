@@ -50,7 +50,26 @@ The @code{"?"} pattern character fails to match characters outside the
 Unicode BMP on some platforms:
 @c Failing test cases:
 @c fnmatch ("x?y", "x\360\237\230\213y", 0) == 0
-Solaris 10.
+Solaris 10, Cygwin 3.4.6,
+@c Failing test cases:
+@c fnmatch ("x?y", "x\360\237\230\213y", 0) == 0
+@c fnmatch ("x[[:alnum:]]y", "x\360\220\214\260y", 0) == 0
+@c fnmatch ("x[[:alpha:]]y", "x\360\220\214\260y", 0) == 0
+@c fnmatch ("x[[:graph:]]y", "x\360\240\200\200y", 0) == 0
+@c fnmatch ("x[[:lower:]]y", "x\360\220\221\201y", 0) == 0
+@c fnmatch ("x[[:print:]]y", "x\360\240\200\200y", 0) == 0
+@c fnmatch ("x[[:punct:]]y", "x\360\235\204\200y", 0) == 0
+@c fnmatch ("x[[:upper:]]y", "x\360\220\220\231y", 0) == 0
+MSVC,
+@c Failing test cases:
+@c fnmatch ("x?y", "x\360\237\230\213y", 0) == 0
+@c fnmatch ("x[[:alnum:]]y", "x\360\220\214\260y", 0) == 0
+@c fnmatch ("x[[:alpha:]]y", "x\360\220\214\260y", 0) == 0
+@c fnmatch ("x[[:graph:]]y", "x\360\240\200\200y", 0) == 0
+@c fnmatch ("x[[:lower:]]y", "x\360\220\221\201y", 0) == 0
+@c fnmatch ("x[[:print:]]y", "x\360\240\200\200y", 0) == 0
+@c fnmatch ("x[[:upper:]]y", "x\360\220\220\231y", 0) == 0
+32-bit AIX.
 @item
 In the pattern, negated character ranges (such as @code{[!a-z]}) are not
 supported on some platforms:
@@ -154,31 +173,6 @@ NetBSD 9.3, AIX 7.2, HP-UX 11.31, IRIX 6.5, Solaris 10.
 
 Portability problems not fixed by Gnulib:
 @itemize
-@item
-The @code{"?"} pattern character fails to match characters outside the
-Unicode BMP on some platforms:
-@c Failing test cases:
-@c fnmatch ("x?y", "x\360\237\230\213y", 0) == 0
-Cygwin 3.4.6,
-@c Failing test cases:
-@c fnmatch ("x?y", "x\360\237\230\213y", 0) == 0
-@c fnmatch ("x[[:alnum:]]y", "x\360\220\214\260y", 0) == 0
-@c fnmatch ("x[[:alpha:]]y", "x\360\220\214\260y", 0) == 0
-@c fnmatch ("x[[:graph:]]y", "x\360\240\200\200y", 0) == 0
-@c fnmatch ("x[[:lower:]]y", "x\360\220\221\201y", 0) == 0
-@c fnmatch ("x[[:print:]]y", "x\360\240\200\200y", 0) == 0
-@c fnmatch ("x[[:punct:]]y", "x\360\235\204\200y", 0) == 0
-@c fnmatch ("x[[:upper:]]y", "x\360\220\220\231y", 0) == 0
-MSVC,
-@c Failing test cases:
-@c fnmatch ("x?y", "x\360\237\230\213y", 0) == 0
-@c fnmatch ("x[[:alnum:]]y", "x\360\220\214\260y", 0) == 0
-@c fnmatch ("x[[:alpha:]]y", "x\360\220\214\260y", 0) == 0
-@c fnmatch ("x[[:graph:]]y", "x\360\240\200\200y", 0) == 0
-@c fnmatch ("x[[:lower:]]y", "x\360\220\221\201y", 0) == 0
-@c fnmatch ("x[[:print:]]y", "x\360\240\200\200y", 0) == 0
-@c fnmatch ("x[[:upper:]]y", "x\360\220\220\231y", 0) == 0
-32-bit AIX.
 @end itemize
 
 Note: Gnulib's replacement function has some limitations:
@@ -187,14 +181,4 @@ Note: Gnulib's replacement function has some limitations:
 It does not implement patterns with
 collating elements (such as @code{"[[.ch.]]"}) or
 equivalence classes (such as @code{"[[=a=]]"}).
-@item
-In the pattern, the character class @code{[:blank:]} inside bracket
-expressions is not supported on some platforms:
-@c Failing test cases:
-@c fnmatch ("[[:blank:]]", " ", 0) == 0
-mingw.
-@c Additionally, on mingw 10, there are test failures:
-@c fnmatch ("x?y", "x\223\372y", 0) == 0
-@c fnmatch ("x?y", "x\244\351y", 0) == 0
-@c fnmatch ("x?y", "x\310\325y", 0) == 0
 @end itemize

@@ -1,4 +1,4 @@
-# Check for fnmatch - serial 17  -*- coding: utf-8 -*-
+# Check for fnmatch - serial 18  -*- coding: utf-8 -*-
 
 # Copyright (C) 2000-2007, 2009-2023 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -158,6 +158,14 @@ AC_DEFUN([gl_FUNC_FNMATCH_POSIX],
       *yes) ;;
       *) REPLACE_FNMATCH=1 ;;
     esac
+    dnl On AIX 7.2 in 32-bit mode, fnmatch()'s only POSIX compliance problem is
+    dnl that is does not support characters outside the Unicode BMP correctly.
+    dnl Test case: fnmatch ("x?y", "x\360\237\230\213y", 0) == 0
+    dnl This is due to wchar_t being only 16 bits wide.
+    AC_REQUIRE([gl_UCHAR_H])
+    if test $SMALL_WCHAR_T = 1; then
+      REPLACE_FNMATCH=1
+    fi
   fi
   if test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1; then
     gl_REPLACE_FNMATCH_H
