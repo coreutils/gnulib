@@ -46,6 +46,12 @@ NetBSD 9.3,
 @c fnmatch ("x?y", "x\360\237\230\213y", 0) == 0
 Android 13.
 @item
+The @code{"?"} pattern character fails to match characters outside the
+Unicode BMP on some platforms:
+@c Failing test cases:
+@c fnmatch ("x?y", "x\360\237\230\213y", 0) == 0
+Solaris 10.
+@item
 In the pattern, negated character ranges (such as @code{[!a-z]}) are not
 supported on some platforms:
 @c Failing test cases:
@@ -153,7 +159,7 @@ The @code{"?"} pattern character fails to match characters outside the
 Unicode BMP on some platforms:
 @c Failing test cases:
 @c fnmatch ("x?y", "x\360\237\230\213y", 0) == 0
-Solaris 10, Cygwin 3.4.6,
+Cygwin 3.4.6,
 @c Failing test cases:
 @c fnmatch ("x?y", "x\360\237\230\213y", 0) == 0
 @c fnmatch ("x[[:alnum:]]y", "x\360\220\214\260y", 0) == 0
