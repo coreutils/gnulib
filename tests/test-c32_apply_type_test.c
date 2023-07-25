@@ -146,8 +146,9 @@ main (int argc, char *argv[])
   ASSERT (c32_apply_type_test ((char32_t) '9', desc));
   ASSERT (c32_apply_type_test ((char32_t) '$', desc));
   ASSERT (! c32_apply_type_test ((char32_t) ' ', desc));
-  ASSERT (! c32_apply_type_test ((char32_t) '\0', desc));
   ASSERT (! c32_apply_type_test ((char32_t) '\t', desc));
+  ASSERT (! c32_apply_type_test ((char32_t) '\n', desc));
+  ASSERT (! c32_apply_type_test ((char32_t) '\0', desc));
   ASSERT (! c32_apply_type_test (WEOF, desc));
 
   desc = c32_get_type_test ("print");
@@ -160,8 +161,9 @@ main (int argc, char *argv[])
   ASSERT (c32_apply_type_test ((char32_t) '9', desc));
   ASSERT (c32_apply_type_test ((char32_t) '$', desc));
   ASSERT (c32_apply_type_test ((char32_t) ' ', desc));
-  ASSERT (! c32_apply_type_test ((char32_t) '\0', desc));
   ASSERT (! c32_apply_type_test ((char32_t) '\t', desc));
+  ASSERT (! c32_apply_type_test ((char32_t) '\n', desc));
+  ASSERT (! c32_apply_type_test ((char32_t) '\0', desc));
   ASSERT (! c32_apply_type_test (WEOF, desc));
 
   return 0;

@@ -1,0 +1,13 @@
+Files:
+tests/test-iswctype.c
+tests/signature.h
+tests/macros.h
+
+Depends-on:
+wctype
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-iswctype
+check_PROGRAMS += test-iswctype
