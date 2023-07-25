@@ -63,9 +63,9 @@ u8_prev (ucs4_t *puc, const uint8_t *s, const uint8_t *start)
                       {
                         uint8_t c_4 = s[-4];
 
-                        if (c_4 >= 0xf0 && c_4 < 0xf8
+                        if (c_4 >= 0xf0 && c_4 <= 0xf4
                             && (c_4 >= 0xf1 || c_3 >= 0x90)
-                            && (c_4 < 0xf4 || (c_4 == 0xf4 && c_3 < 0x90)))
+                            && (c_4 < 0xf4 || (/* c_4 == 0xf4 && */ c_3 < 0x90)))
                           {
                             *puc = ((unsigned int) (c_4 & 0x07) << 18)
                                    | ((unsigned int) (c_3 ^ 0x80) << 12)

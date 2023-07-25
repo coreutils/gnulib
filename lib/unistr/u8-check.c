@@ -57,13 +57,13 @@ u8_check (const uint8_t *s, size_t n)
                   continue;
                 }
             }
-          else if (c < 0xf8)
+          else if (c <= 0xf4)
             {
               if (s + 4 <= s_end
                   && (s[1] ^ 0x80) < 0x40 && (s[2] ^ 0x80) < 0x40
                   && (s[3] ^ 0x80) < 0x40
                   && (c >= 0xf1 || s[1] >= 0x90)
-                  && (c < 0xf4 || (c == 0xf4 && s[1] < 0x90)))
+                  && (c < 0xf4 || (/* c == 0xf4 && */ s[1] < 0x90)))
                 {
                   s += 4;
                   continue;

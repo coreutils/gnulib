@@ -86,13 +86,13 @@ u8_mbtoucr (ucs4_t *puc, const uint8_t *s, size_t n)
               return -2;
             }
         }
-      else if (c < 0xf8)
+      else if (c <= 0xf4)
         {
           if (n >= 2)
             {
               if ((s[1] ^ 0x80) < 0x40
                   && (c >= 0xf1 || s[1] >= 0x90)
-                  && (c < 0xf4 || (c == 0xf4 && s[1] < 0x90)))
+                  && (c < 0xf4 || (/* c == 0xf4 && */ s[1] < 0x90)))
                 {
                   if (n >= 3)
                     {

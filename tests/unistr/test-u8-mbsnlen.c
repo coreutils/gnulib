@@ -61,9 +61,18 @@ main ()
      that a "malformed sequence" is interpreted in the same way as
      "a character that is outside the adopted subset".
      Reference:
+       ISO 10646-1 amendment 2
+       <https://www.cl.cam.ac.uk/~mgk25/ucs/ISO-10646-UTF-8.html>
        Markus Kuhn: UTF-8 decoder capability and stress test
        <https://www.cl.cam.ac.uk/~mgk25/ucs/examples/UTF-8-test.txt>
        <https://www.w3.org/2001/06/utf-8-wrong/UTF-8-test.html>
+     These old specifications (from ca. 2000) were a bit ambiguous, and the
+     definition of UTF-8 has changed a bit as well.  The newer specification
+     we obey is the Unicode Standard, version 15.
+     Reference:
+       Unicode Standard 15.0.0, section 3.9
+       <https://www.unicode.org/versions/Unicode15.0.0/ch03.pdf>
+       pages 124..129, especially table 3-7.
    */
   /* 3.1. Test that each unexpected continuation byte is signalled as a
      malformed sequence of its own.  */
@@ -97,8 +106,13 @@ main ()
   }
   /* 3.3.2. 3-byte sequence with last byte missing.  */
   {
-    static const uint8_t input[] = { '"', 0xE0, 0x80, '"' };
+    static const uint8_t input[] = { '"', 0xE0, 0xA0, '"' };
     ASSERT (u8_mbsnlen (input, 4) == 3);
+  }
+  {
+    /* Outdated example: 0xE0 0x80 is an ill-formed sequence.  */
+    static const uint8_t input[] = { '"', 0xE0, 0x80, '"' };
+    ASSERT (u8_mbsnlen (input, 4) == 4);
   }
   /* 3.3.7. 3-byte sequence with last byte missing.  */
   {
@@ -107,13 +121,23 @@ main ()
   }
   /* 3.3.3. 4-byte sequence with last byte missing.  */
   {
-    static const uint8_t input[] = { '"', 0xF0, 0x80, 0x80, '"' };
+    static const uint8_t input[] = { '"', 0xF0, 0x90, 0x80, '"' };
     ASSERT (u8_mbsnlen (input, 5) == 3);
+  }
+  {
+    /* Outdated example: 0xF0 0x80 is an ill-formed sequence.  */
+    static const uint8_t input[] = { '"', 0xF0, 0x80, 0x80, '"' };
+    ASSERT (u8_mbsnlen (input, 5) == 5);
   }
   /* 3.3.8. 4-byte sequence with last byte missing.  */
   {
-    static const uint8_t input[] = { '"', 0xF7, 0xBF, 0xBF, '"' };
+    static const uint8_t input[] = { '"', 0xF3, 0xBF, 0xBF, '"' };
     ASSERT (u8_mbsnlen (input, 5) == 3);
+  }
+  {
+    /* Outdated example: 0xF7 is an invalid first byte.  */
+    static const uint8_t input[] = { '"', 0xF7, 0xBF, 0xBF, '"' };
+    ASSERT (u8_mbsnlen (input, 5) == 5);
   }
 
   return 0;

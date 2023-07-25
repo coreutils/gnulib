@@ -63,12 +63,12 @@ u8_strmbtouc (ucs4_t *puc, const uint8_t *s)
               return 3;
             }
         }
-      else if (c < 0xf8)
+      else if (c <= 0xf4)
         {
           if ((s[1] ^ 0x80) < 0x40 && (s[2] ^ 0x80) < 0x40
               && (s[3] ^ 0x80) < 0x40
               && (c >= 0xf1 || s[1] >= 0x90)
-              && (c < 0xf4 || (c == 0xf4 && s[1] < 0x90)))
+              && (c < 0xf4 || (/* c == 0xf4 && */ s[1] < 0x90)))
             {
               *puc = ((unsigned int) (c & 0x07) << 18)
                      | ((unsigned int) (s[1] ^ 0x80) << 12)

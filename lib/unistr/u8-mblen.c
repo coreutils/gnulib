@@ -47,13 +47,13 @@ u8_mblen (const uint8_t *s, size_t n)
                   && (c != 0xed || s[1] < 0xa0))
                 return 3;
             }
-          else if (c < 0xf8)
+          else if (c <= 0xf4)
             {
               if (n >= 4
                   && (s[1] ^ 0x80) < 0x40 && (s[2] ^ 0x80) < 0x40
                   && (s[3] ^ 0x80) < 0x40
                   && (c >= 0xf1 || s[1] >= 0x90)
-                  && (c < 0xf4 || (c == 0xf4 && s[1] < 0x90)))
+                  && (c < 0xf4 || (/* c == 0xf4 && */ s[1] < 0x90)))
                 return 4;
             }
         }
