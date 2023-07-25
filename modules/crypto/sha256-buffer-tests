@@ -13,5 +13,7 @@ configure.ac:
 
 Makefile.am:
 noinst_PROGRAMS += bench-sha224 bench-sha256
+bench_sha224_CPPFLAGS = $(AM_CPPFLAGS) -DNDEBUG
 bench_sha224_LDADD = $(LDADD) @LIB_CRYPTO@
+bench_sha256_CPPFLAGS = $(AM_CPPFLAGS) -DNDEBUG
 bench_sha256_LDADD = $(LDADD) @LIB_CRYPTO@
