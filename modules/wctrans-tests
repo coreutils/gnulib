@@ -1,0 +1,12 @@
+Files:
+tests/test-wctrans.c
+tests/signature.h
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-wctrans
+check_PROGRAMS += test-wctrans
