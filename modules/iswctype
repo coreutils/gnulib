@@ -1,16 +1,11 @@
 Description:
 iswctype() function: test whether a wide character has a given property.
 
-Status:
-obsolete
-
-Notice:
-This module is obsolete.
-
 Files:
 lib/iswctype.c
 lib/iswctype-impl.h
 m4/iswctype.m4
+m4/wctype.m4
 
 Depends-on:
 wctype-h
@@ -18,7 +13,7 @@ wctype-h
 configure.ac:
 gl_FUNC_ISWCTYPE
 gl_CONDITIONAL([GL_COND_OBJ_ISWCTYPE],
-               [test $HAVE_WCTYPE_T = 0 || test $GNULIBHEADERS_OVERRIDE_WINT_T = 1])
+               [test $HAVE_WCTYPE_T = 0 || test $GNULIBHEADERS_OVERRIDE_WINT_T = 1 || test $REPLACE_WCTYPE = 1])
 gl_WCTYPE_MODULE_INDICATOR([iswctype])
 
 Makefile.am:

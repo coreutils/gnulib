@@ -15,6 +15,10 @@ Minix 3.1.8, MSVC 9.
 This function is declared in @code{<wchar.h>}, not in @code{<wctype.h>}, on
 some platforms:
 HP-UX 11.00.
+@item
+This function does not support the @code{"blank"} character class
+on some platforms:
+mingw.
 @end itemize
 
 Portability problems not fixed by Gnulib:

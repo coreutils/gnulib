@@ -633,15 +633,32 @@ _GL_CXXALIASWARN (iswblank);
 typedef void * wctype_t;
 #  define GNULIB_defined_wctype_t 1
 # endif
+#elif @REPLACE_WCTYPE@
+# if !GNULIB_defined_wctype_t
+typedef void *rpl_wctype_t;
+#  undef wctype_t
+#  define wctype_t rpl_wctype_t
+#  define GNULIB_defined_wctype_t 1
+# endif
 #endif
 
 /* Get a descriptor for a wide character property.  */
 #if @GNULIB_WCTYPE@
-# if !@HAVE_WCTYPE_T@
+# if @REPLACE_WCTYPE@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef wctype
+#   define wctype rpl_wctype
+#  endif
+_GL_FUNCDECL_RPL (wctype, wctype_t, (const char *name)
+                                    _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_RPL (wctype, wctype_t, (const char *name));
+# else
+#  if !@HAVE_WCTYPE_T@
 _GL_FUNCDECL_SYS (wctype, wctype_t, (const char *name)
                                     _GL_ARG_NONNULL ((1)));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (wctype, wctype_t, (const char *name));
+# endif
 # if __GLIBC__ >= 2
 _GL_CXXALIASWARN (wctype);
 # endif
@@ -657,7 +674,7 @@ _GL_WARN_ON_USE (wctype, "wctype is unportable - "
    The argument WC must be either a wchar_t value or WEOF.
    The argument DESC must have been returned by the wctype() function.  */
 #if @GNULIB_ISWCTYPE@
-# if @GNULIBHEADERS_OVERRIDE_WINT_T@
+# if @GNULIBHEADERS_OVERRIDE_WINT_T@ || @REPLACE_WCTYPE@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   undef iswctype
 #   define iswctype rpl_iswctype
