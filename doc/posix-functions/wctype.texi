@@ -19,6 +19,11 @@ HP-UX 11.00.
 This function does not support the @code{"blank"} character class
 on some platforms:
 mingw.
+@item
+The object returned by this function for the @code{"blank"} character class
+is inconsistent with the @code{iswblank} and @code{isblank} functions
+on some platforms:
+MSVC 14.
 @end itemize
 
 Portability problems not fixed by Gnulib:
