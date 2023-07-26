@@ -31,5 +31,10 @@ main (void)
   /* Check that the isw* functions map WEOF to 0.  */
   ASSERT (!iswblank (e));
 
+  /* Sanity check for the iswblank function.  */
+  ASSERT (iswblank (L' '));
+  ASSERT (iswblank (L'\t'));
+  ASSERT (!iswblank (L'\n'));
+
   return 0;
 }
