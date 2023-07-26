@@ -68,9 +68,7 @@ main (int argc, char *argv[])
     for (c = 0; c < 0x100; c++)
       switch (c)
         {
-        #if !(defined _WIN32 && !defined __CYGWIN__)
         case '\t': case '\v': case '\f':
-        #endif
         case ' ': case '!': case '"': case '#': case '%':
         case '&': case '\'': case '(': case ')': case '*':
         case '+': case ',': case '-': case '.': case '/':

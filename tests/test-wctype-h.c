@@ -62,6 +62,11 @@ main (void)
   ASSERT (!iswupper (e));
   ASSERT (!iswxdigit (e));
 
+  /* Sanity check for the iswprint function.  */
+  ASSERT (iswprint (L' '));
+  ASSERT (!iswprint (L'\t'));
+  ASSERT (!iswprint (L'\n'));
+
   /* Check that the tow* functions exist as functions or as macros.  */
   (void) towlower (0);
   (void) towupper (0);

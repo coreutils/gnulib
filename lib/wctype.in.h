@@ -132,7 +132,8 @@ typedef unsigned int rpl_wint_t;
 /* FreeBSD 4.4 to 4.11 has <wctype.h> but lacks the functions.
    Linux libc5 has <wctype.h> and the functions but they are broken.
    mingw and MSVC have <wctype.h> and the functions but they take a wchar_t
-   as argument, not an rpl_wint_t.
+   as argument, not an rpl_wint_t.  Additionally, the mingw iswprint function
+   is broken.
    Assume all 11 functions (all isw* except iswblank) are implemented the
    same way, or not at all.  */
 # if ! @HAVE_ISWCNTRL@ || @REPLACE_ISWCNTRL@
@@ -184,7 +185,11 @@ rpl_iswlower (wint_t wc)
 _GL_WCTYPE_INLINE int
 rpl_iswprint (wint_t wc)
 {
+#   ifdef __MINGW32__
+  return ((wchar_t) wc == wc ? wc == ' ' || iswgraph ((wchar_t) wc) : 0);
+#   else
   return ((wchar_t) wc == wc ? iswprint ((wchar_t) wc) : 0);
+#   endif
 }
 
 _GL_WCTYPE_INLINE int

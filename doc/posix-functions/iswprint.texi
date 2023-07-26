@@ -15,6 +15,10 @@ Minix 3.1.8.
 This function cannot be called from plain inline or extern inline functions
 on some platforms:
 OS X 10.8.
+@item
+This function returns true for the tab (@code{'\t'}) character
+on some platforms:
+mingw.
 @end itemize
 
 Portability problems not fixed by Gnulib:
