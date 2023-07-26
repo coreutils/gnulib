@@ -1,0 +1,14 @@
+Files:
+tests/test-towctrans.c
+tests/signature.h
+tests/macros.h
+
+Depends-on:
+wctrans
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-towctrans
+check_PROGRAMS += test-towctrans
+test_towctrans_LDADD = $(LDADD) $(LIBUNISTRING) $(LIBC32CONV)
