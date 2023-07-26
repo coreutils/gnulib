@@ -81,6 +81,8 @@ _GL_INLINE_HEADER_BEGIN
 
 /* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
 
+/* The definition of _GL_ARG_NONNULL is copied here.  */
+
 /* The definition of _GL_WARN_ON_USE is copied here.  */
 
 /* Solaris 2.6 <wctype.h> includes <widec.h> which includes <euc.h> which
@@ -631,7 +633,8 @@ typedef void * wctype_t;
 /* Get a descriptor for a wide character property.  */
 #if @GNULIB_WCTYPE@
 # if !@HAVE_WCTYPE_T@
-_GL_FUNCDECL_SYS (wctype, wctype_t, (const char *name));
+_GL_FUNCDECL_SYS (wctype, wctype_t, (const char *name)
+                                    _GL_ARG_NONNULL ((1)));
 # endif
 _GL_CXXALIAS_SYS (wctype, wctype_t, (const char *name));
 # if __GLIBC__ >= 2
@@ -695,7 +698,8 @@ typedef void * wctrans_t;
 /* Get a descriptor for a wide character case conversion.  */
 #if @GNULIB_WCTRANS@
 # if !@HAVE_WCTRANS_T@
-_GL_FUNCDECL_SYS (wctrans, wctrans_t, (const char *name));
+_GL_FUNCDECL_SYS (wctrans, wctrans_t, (const char *name)
+                                      _GL_ARG_NONNULL ((1)));
 # endif
 _GL_CXXALIAS_SYS (wctrans, wctrans_t, (const char *name));
 # if __GLIBC__ >= 2

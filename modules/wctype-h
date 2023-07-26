@@ -11,6 +11,7 @@ Depends-on:
 extern-inline
 gen-header
 include_next
+snippet/arg-nonnull
 snippet/c++defs
 snippet/warn-on-use
 
@@ -25,7 +26,7 @@ lib_SOURCES += wctype-h.c
 
 # We need the following in order to create <wctype.h> when the system
 # doesn't have one that works with the given compiler.
-wctype.h: wctype.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(WARN_ON_USE_H)
+wctype.h: wctype.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
 @NMD@	$(AM_V_GEN)$(MKDIR_P) '%reldir%'
 	$(gl_V_at)$(SED_HEADER_STDOUT) \
 	      -e 's|@''GUARD_PREFIX''@|${gl_include_guard_prefix}|g' \
@@ -54,6 +55,7 @@ wctype.h: wctype.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(WARN_ON_USE_H
 	      -e 's/@''REPLACE_ISWCNTRL''@/$(REPLACE_ISWCNTRL)/g' \
 	      -e 's/@''REPLACE_TOWLOWER''@/$(REPLACE_TOWLOWER)/g' \
 	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
+	      -e '/definition of _GL_ARG_NONNULL/r $(ARG_NONNULL_H)' \
 	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
 	      $(srcdir)/wctype.in.h > $@-t
 	$(AM_V_at)mv $@-t $@
