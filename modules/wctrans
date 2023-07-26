@@ -8,10 +8,12 @@ m4/wctrans.m4
 
 Depends-on:
 wctype-h
+# When we override wctrans_t, we also need to override towctrans().
+towctrans       [test $REPLACE_WCTRANS = 1]
 
 configure.ac:
 gl_FUNC_WCTRANS
-gl_CONDITIONAL([GL_COND_OBJ_WCTRANS], [test $HAVE_WCTRANS = 0])
+gl_CONDITIONAL([GL_COND_OBJ_WCTRANS], [test $HAVE_WCTRANS = 0 || test $REPLACE_WCTRANS = 1])
 gl_WCTYPE_MODULE_INDICATOR([wctrans])
 
 Makefile.am:

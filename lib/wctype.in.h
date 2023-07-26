@@ -715,15 +715,32 @@ _GL_CXXALIASWARN (towupper);
 typedef void * wctrans_t;
 #  define GNULIB_defined_wctrans_t 1
 # endif
+#elif @REPLACE_WCTRANS@
+# if !GNULIB_defined_wctrans_t
+typedef void *rpl_wctrans_t;
+#  undef wctrans_t
+#  define wctrans_t rpl_wctrans_t
+#  define GNULIB_defined_wctrans_t 1
+# endif
 #endif
 
 /* Get a descriptor for a wide character case conversion.  */
 #if @GNULIB_WCTRANS@
-# if !@HAVE_WCTRANS_T@
+# if @REPLACE_WCTRANS@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef wctrans
+#   define wctrans rpl_wctrans
+#  endif
+_GL_FUNCDECL_RPL (wctrans, wctrans_t, (const char *name)
+                                      _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_RPL (wctrans, wctrans_t, (const char *name));
+# else
+#  if !@HAVE_WCTRANS_T@
 _GL_FUNCDECL_SYS (wctrans, wctrans_t, (const char *name)
                                       _GL_ARG_NONNULL ((1)));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (wctrans, wctrans_t, (const char *name));
+# endif
 # if __GLIBC__ >= 2
 _GL_CXXALIASWARN (wctrans);
 # endif
@@ -739,10 +756,19 @@ _GL_WARN_ON_USE (wctrans, "wctrans is unportable - "
    The argument WC must be either a wchar_t value or WEOF.
    The argument DESC must have been returned by the wctrans() function.  */
 #if @GNULIB_TOWCTRANS@
-# if !@HAVE_WCTRANS_T@
+# if @REPLACE_WCTRANS@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef towctrans
+#   define towctrans rpl_towctrans
+#  endif
+_GL_FUNCDECL_RPL (towctrans, wint_t, (wint_t wc, wctrans_t desc));
+_GL_CXXALIAS_RPL (towctrans, wint_t, (wint_t wc, wctrans_t desc));
+# else
+#  if !@HAVE_WCTRANS_T@
 _GL_FUNCDECL_SYS (towctrans, wint_t, (wint_t wc, wctrans_t desc));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (towctrans, wint_t, (wint_t wc, wctrans_t desc));
+# endif
 # if __GLIBC__ >= 2
 _GL_CXXALIASWARN (towctrans);
 # endif

@@ -11,6 +11,13 @@ Portability problems fixed by Gnulib:
 @item
 This function is missing on some platforms:
 Minix 3.1.8, HP-UX 11.00, IRIX 6.5, mingw, MSVC 9, Android 7.1.
+@item
+This function does not support the @code{"tolower"} and @code{"toupper"}
+mappings on some platforms:
+NetBSD 9.3.
+(It returns non-null values for the arguments @code{"towlower"} and
+@code{"towupper"}, but with these values, the function @code{towctrans}
+always crashes.)
 @end itemize
 
 Portability problems not fixed by Gnulib:
