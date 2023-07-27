@@ -46,3 +46,4 @@ TESTS_ENVIRONMENT += \
   LOCALE_ZH_CN='@LOCALE_ZH_CN@'
 check_PROGRAMS += test-fnmatch test-fnmatch-w32
 test_fnmatch_LDADD = $(LDADD) $(SETLOCALE_LIB) $(LIBUNISTRING) $(MBRTOWC_LIB)
+test_fnmatch_w32_LDADD = $(LDADD) $(SETLOCALE_LIB) $(LIBUNISTRING) $(MBRTOWC_LIB)

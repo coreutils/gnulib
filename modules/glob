@@ -59,6 +59,7 @@ Include:
 <glob.h>
 
 Link:
+$(LTLIBUNISTRING) when linking with libtool, $(LIBUNISTRING) otherwise
 $(MBRTOWC_LIB)
 
 License:
