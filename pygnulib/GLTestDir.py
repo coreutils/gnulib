@@ -160,13 +160,13 @@ class GLTestDir(object):
             # Except config-h, which breaks all modules which use HAVE_CONFIG_H.
             # Except non-recursive-gnulib-prefix-hack, which represents a
             # nonstandard way of using Automake.
-            # Except ftruncate, mountlist, which abort the configuration on mingw.
+            # Except mountlist, which aborts the configuration on mingw.
             # Except lib-ignore, which leads to link errors when Sun C++ is used.
             specified_modules = self.modulesystem.list()
             specified_modules = [module
                                  for module in specified_modules
                                  if module not in ['config-h', 'non-recursive-gnulib-prefix-hack',
-                                                   'ftruncate', 'mountlist', 'lib-ignore']]
+                                                   'mountlist', 'lib-ignore']]
 
         # Canonicalize the list of specified modules.
         specified_modules = sorted(set(specified_modules))
