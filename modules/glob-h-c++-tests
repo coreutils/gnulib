@@ -15,5 +15,5 @@ if ANSICXX
 TESTS += test-glob-h-c++
 check_PROGRAMS += test-glob-h-c++
 test_glob_h_c___SOURCES = test-glob-h-c++.cc
-test_glob_h_c___LDADD = $(LDADD) $(LIBINTL) $(CLOCK_TIME_LIB) $(MBRTOWC_LIB)
+test_glob_h_c___LDADD = $(LDADD) $(LIBUNISTRING) $(LIBINTL) $(CLOCK_TIME_LIB) $(MBRTOWC_LIB)
 endif
