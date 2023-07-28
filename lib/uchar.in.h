@@ -58,6 +58,10 @@
 
 /* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
 
+/* The definition of _GL_ARG_NONNULL is copied here.  */
+
+/* The definition of _GL_WARN_ON_USE is copied here.  */
+
 
 #if !(@HAVE_UCHAR_H@ || (defined __cplusplus && @CXX_HAS_UCHAR_TYPES@))
 
