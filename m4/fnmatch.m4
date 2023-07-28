@@ -1,4 +1,4 @@
-# Check for fnmatch - serial 18  -*- coding: utf-8 -*-
+# Check for fnmatch - serial 19  -*- coding: utf-8 -*-
 
 # Copyright (C) 2000-2007, 2009-2023 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -14,7 +14,7 @@ AC_DEFUN([gl_FUNC_FNMATCH_POSIX],
   m4_divert_text([DEFAULTS], [gl_fnmatch_required=POSIX])
 
   AC_REQUIRE([gl_FNMATCH_H])
-  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+  AC_REQUIRE([AC_CANONICAL_HOST])
   gl_fnmatch_required_lowercase=`
     echo $gl_fnmatch_required | LC_ALL=C tr '[[A-Z]]' '[[a-z]]'
   `
@@ -164,7 +164,17 @@ AC_DEFUN([gl_FUNC_FNMATCH_POSIX],
     dnl This is due to wchar_t being only 16 bits wide.
     AC_REQUIRE([gl_UCHAR_H])
     if test $SMALL_WCHAR_T = 1; then
-      REPLACE_FNMATCH=1
+      case "$host_os" in
+        cygwin*)
+          dnl On Cygwin < 3.5.0, the above $gl_fnmatch_result came out as 'no',
+          dnl On Cygwin >= 3.5.0, fnmatch supports all Unicode characters,
+          dnl despite wchar_t being only 16 bits wide (because internally it
+          dnl works on wint_t values).
+          ;;
+        *)
+          REPLACE_FNMATCH=1
+          ;;
+      esac
     fi
   fi
   if test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1; then
