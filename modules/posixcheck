@@ -17,11 +17,14 @@ iconv-h
 inttypes-incomplete
 langinfo
 locale
+malloc-h
 math
 monetary
 netdb
 poll-h
+pthread-h
 pty
+sched
 search
 signal-h
 spawn
@@ -31,6 +34,7 @@ string
 strings
 sys_file
 sys_ioctl
+sys_random
 sys_resource
 sys_select
 sys_socket
@@ -40,7 +44,9 @@ sys_times
 sys_utsname
 sys_wait
 termios
+threads-h
 time
+uchar
 unistd
 utime-h
 wchar
