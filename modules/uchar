@@ -9,7 +9,9 @@ m4/stdint.m4
 Depends-on:
 gen-header
 include_next
+snippet/arg-nonnull
 snippet/c++defs
+snippet/warn-on-use
 extern-inline
 assert-h
 stdint
@@ -23,7 +25,7 @@ AC_PROG_MKDIR_P
 Makefile.am:
 BUILT_SOURCES += uchar.h
 
-uchar.h: uchar.in.h $(top_builddir)/config.status $(CXXDEFS_H)
+uchar.h: uchar.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
 @NMD@	$(AM_V_GEN)$(MKDIR_P) '%reldir%'
 	$(gl_V_at)$(SED_HEADER_STDOUT) \
 	      -e 's|@''GUARD_PREFIX''@|${gl_include_guard_prefix}|g' \
@@ -76,6 +78,8 @@ uchar.h: uchar.in.h $(top_builddir)/config.status $(CXXDEFS_H)
 	      -e 's|@''REPLACE_MBRTOC16''@|$(REPLACE_MBRTOC16)|g' \
 	      -e 's|@''REPLACE_MBRTOC32''@|$(REPLACE_MBRTOC32)|g' \
 	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
+	      -e '/definition of _GL_ARG_NONNULL/r $(ARG_NONNULL_H)' \
+	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
 	      $(srcdir)/uchar.in.h > $@-t
 	$(AM_V_at)mv $@-t $@
 MOSTLYCLEANFILES += uchar.h uchar.h-t
