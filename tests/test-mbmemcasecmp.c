@@ -22,6 +22,8 @@
 
 #include <locale.h>
 #include <string.h>
+#include <wchar.h>
+#include <wctype.h>
 
 #include "macros.h"
 

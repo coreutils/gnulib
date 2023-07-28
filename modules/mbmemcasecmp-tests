@@ -12,6 +12,8 @@ m4/codeset.m4
 Depends-on:
 stdbool
 setlocale
+mbrtowc
+wctype-h
 
 configure.ac:
 gt_LOCALE_FR

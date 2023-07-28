@@ -123,8 +123,19 @@ test_utf_8 (int (*my_casecmp) (const char *, size_t, const char *, size_t), bool
   /* The following tests shows how my_casecmp() is different from
      strcasecmp().  */
 
-  ASSERT (my_casecmp ("\303\266zg\303\274r", 7, "\303\226ZG\303\234R", 7) == 0); /* özgür */
-  ASSERT (my_casecmp ("\303\226ZG\303\234R", 7, "\303\266zg\303\274r", 7) == 0); /* özgür */
+  {
+    /* Some platforms, e.g. MSVC 14, lack the upper/lower mappings for these
+       wide characters in the *.65001 locales.  */
+    mbstate_t state;
+    wchar_t wc;
+    memset (&state, 0, sizeof (mbstate_t));
+    if (mbrtowc (&wc, "\303\274", 2, &state) == 2
+        && towupper (wc) != wc)
+      {
+        ASSERT (my_casecmp ("\303\266zg\303\274r", 7, "\303\226ZG\303\234R", 7) == 0); /* özgür */
+        ASSERT (my_casecmp ("\303\226ZG\303\234R", 7, "\303\266zg\303\274r", 7) == 0); /* özgür */
+      }
+  }
 
   /* This test shows how strings of different size can compare equal.  */
   if (turkish)
@@ -234,7 +245,18 @@ test_utf_8 (int (*my_casecmp) (const char *, size_t, const char *, size_t), bool
     ASSERT (my_casecmp (input1, SIZEOF (input1), input3, SIZEOF (input3)) == 0);
     #endif
 
-    ASSERT (my_casecmp (input2, SIZEOF (input2), input3, SIZEOF (input3)) == 0);
+    {
+      /* Some platforms, e.g. MSVC 14, lack the upper/lower mappings for the
+         'ü'/'Ü' wide characters in the *.65001 locales.  */
+      mbstate_t state;
+      wchar_t wc;
+      memset (&state, 0, sizeof (mbstate_t));
+      if (mbrtowc (&wc, "\303\234", 2, &state) == 2
+          && towlower (wc) != wc)
+        {
+          ASSERT (my_casecmp (input2, SIZEOF (input2), input3, SIZEOF (input3)) == 0);
+        }
+    }
   }
 
   #if 0 /* This functionality requires ulc_casecmp.  */
