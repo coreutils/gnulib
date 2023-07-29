@@ -1,9 +1,9 @@
 Files:
-tests/test-mbstowcs1.sh
-tests/test-mbstowcs2.sh
-tests/test-mbstowcs3.sh
-tests/test-mbstowcs4.sh
-tests/test-mbstowcs5.sh
+tests/test-mbstowcs-1.sh
+tests/test-mbstowcs-2.sh
+tests/test-mbstowcs-3.sh
+tests/test-mbstowcs-4.sh
+tests/test-mbstowcs-5.sh
 tests/test-mbstowcs.c
 tests/signature.h
 tests/macros.h
@@ -26,8 +26,8 @@ gt_LOCALE_ZH_CN
 
 Makefile.am:
 TESTS += \
-  test-mbstowcs1.sh test-mbstowcs2.sh test-mbstowcs3.sh test-mbstowcs4.sh \
-  test-mbstowcs5.sh
+  test-mbstowcs-1.sh test-mbstowcs-2.sh test-mbstowcs-3.sh test-mbstowcs-4.sh \
+  test-mbstowcs-5.sh
 TESTS_ENVIRONMENT += \
   LOCALE_FR='@LOCALE_FR@' \
   LOCALE_FR_UTF8='@LOCALE_FR_UTF8@' \

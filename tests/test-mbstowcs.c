@@ -70,8 +70,8 @@ main (int argc, char *argv[])
      "C" locale.  Furthermore, when you attempt to set the "C" or "POSIX"
      locale via setlocale(), what you get is a "C" locale with UTF-8 encoding,
      that is, effectively the "C.UTF-8" locale.  */
-  if (argc > 1 && strcmp (argv[1], "5") == 0 && MB_CUR_MAX > 1)
-    argv[1] = "2";
+  if (argc > 1 && strcmp (argv[1], "1") == 0 && MB_CUR_MAX > 1)
+    argv[1] = "3";
 #endif
 
   if (argc > 1)
@@ -93,110 +93,6 @@ main (int argc, char *argv[])
           switch (argv[1][0])
             {
             case '1':
-              /* Locale encoding is ISO-8859-1 or ISO-8859-15.  */
-              {
-                char input[] = "B\374\337er"; /* "Büßer" */
-
-                src = input + 1;
-                ret = mbstowcs (NULL, src, unlimited ? BUFSIZE : 1);
-                ASSERT (ret == 4);
-
-                src = input + 1;
-                ret = mbstowcs (buf, src, unlimited ? BUFSIZE : 1);
-                ASSERT (ret == (unlimited ? 4 : 1));
-                ASSERT (wctob (buf[0]) == (unsigned char) '\374');
-                if (unlimited)
-                  {
-                    ASSERT (wctob (buf[1]) == (unsigned char) '\337');
-                    ASSERT (buf[2] == 'e');
-                    ASSERT (buf[3] == 'r');
-                    ASSERT (buf[4] == 0);
-                    ASSERT (buf[5] == (wchar_t) 0xBADFACE);
-                  }
-                else
-                  ASSERT (buf[1] == (wchar_t) 0xBADFACE);
-              }
-              break;
-
-            case '2':
-              /* Locale encoding is UTF-8.  */
-              {
-                char input[] = "B\303\274\303\237er"; /* "Büßer" */
-
-                src = input + 1;
-                ret = mbstowcs (NULL, src, unlimited ? BUFSIZE : 1);
-                ASSERT (ret == 4);
-
-                src = input + 1;
-                ret = mbstowcs (buf, src, unlimited ? BUFSIZE : 1);
-                ASSERT (ret == (unlimited ? 4 : 1));
-                ASSERT (wctob (buf[0]) == EOF);
-                ASSERT (wctob (buf[1]) == EOF);
-                if (unlimited)
-                  {
-                    ASSERT (buf[2] == 'e');
-                    ASSERT (buf[3] == 'r');
-                    ASSERT (buf[4] == 0);
-                    ASSERT (buf[5] == (wchar_t) 0xBADFACE);
-                  }
-                else
-                  ASSERT (buf[2] == (wchar_t) 0xBADFACE);
-              }
-              break;
-
-            case '3':
-              /* Locale encoding is EUC-JP.  */
-              {
-                char input[] = "<\306\374\313\334\270\354>"; /* "<日本語>" */
-
-                src = input + 1;
-                ret = mbstowcs (NULL, src, unlimited ? BUFSIZE : 1);
-                ASSERT (ret == 4);
-
-                src = input + 1;
-                ret = mbstowcs (buf, src, unlimited ? BUFSIZE : 1);
-                ASSERT (ret == (unlimited ? 4 : 1));
-                ASSERT (wctob (buf[0]) == EOF);
-                ASSERT (wctob (buf[1]) == EOF);
-                ASSERT (wctob (buf[2]) == EOF);
-                if (unlimited)
-                  {
-                    ASSERT (buf[3] == '>');
-                    ASSERT (buf[4] == 0);
-                    ASSERT (buf[5] == (wchar_t) 0xBADFACE);
-                  }
-                else
-                  ASSERT (buf[3] == (wchar_t) 0xBADFACE);
-              }
-              break;
-
-            case '4':
-              /* Locale encoding is GB18030.  */
-              {
-                char input[] = "B\250\271\201\060\211\070er"; /* "Büßer" */
-
-                src = input + 1;
-                ret = mbstowcs (NULL, src, unlimited ? BUFSIZE : 1);
-                ASSERT (ret == 4);
-
-                src = input + 1;
-                ret = mbstowcs (buf, src, unlimited ? BUFSIZE : 1);
-                ASSERT (ret == (unlimited ? 4 : 1));
-                ASSERT (wctob (buf[0]) == EOF);
-                if (unlimited)
-                  {
-                    ASSERT (wctob (buf[1]) == EOF);
-                    ASSERT (buf[2] == 'e');
-                    ASSERT (buf[3] == 'r');
-                    ASSERT (buf[4] == 0);
-                    ASSERT (buf[5] == (wchar_t) 0xBADFACE);
-                  }
-                else
-                  ASSERT (buf[1] == (wchar_t) 0xBADFACE);
-              }
-              break;
-
-            case '5':
               /* C or POSIX locale.  */
               {
                 char input[] = "n/a";
@@ -248,6 +144,110 @@ main (int argc, char *argv[])
                            But on musl libc, the bytes 0x80..0xFF map to U+DF80..U+DFFF.  */
                         ASSERT (buf[0] == (btowc (c) == 0xDF00 + c ? btowc (c) : c));
                     }
+              }
+              break;
+
+            case '2':
+              /* Locale encoding is ISO-8859-1 or ISO-8859-15.  */
+              {
+                char input[] = "B\374\337er"; /* "Büßer" */
+
+                src = input + 1;
+                ret = mbstowcs (NULL, src, unlimited ? BUFSIZE : 1);
+                ASSERT (ret == 4);
+
+                src = input + 1;
+                ret = mbstowcs (buf, src, unlimited ? BUFSIZE : 1);
+                ASSERT (ret == (unlimited ? 4 : 1));
+                ASSERT (wctob (buf[0]) == (unsigned char) '\374');
+                if (unlimited)
+                  {
+                    ASSERT (wctob (buf[1]) == (unsigned char) '\337');
+                    ASSERT (buf[2] == 'e');
+                    ASSERT (buf[3] == 'r');
+                    ASSERT (buf[4] == 0);
+                    ASSERT (buf[5] == (wchar_t) 0xBADFACE);
+                  }
+                else
+                  ASSERT (buf[1] == (wchar_t) 0xBADFACE);
+              }
+              break;
+
+            case '3':
+              /* Locale encoding is UTF-8.  */
+              {
+                char input[] = "B\303\274\303\237er"; /* "Büßer" */
+
+                src = input + 1;
+                ret = mbstowcs (NULL, src, unlimited ? BUFSIZE : 1);
+                ASSERT (ret == 4);
+
+                src = input + 1;
+                ret = mbstowcs (buf, src, unlimited ? BUFSIZE : 1);
+                ASSERT (ret == (unlimited ? 4 : 1));
+                ASSERT (wctob (buf[0]) == EOF);
+                ASSERT (wctob (buf[1]) == EOF);
+                if (unlimited)
+                  {
+                    ASSERT (buf[2] == 'e');
+                    ASSERT (buf[3] == 'r');
+                    ASSERT (buf[4] == 0);
+                    ASSERT (buf[5] == (wchar_t) 0xBADFACE);
+                  }
+                else
+                  ASSERT (buf[2] == (wchar_t) 0xBADFACE);
+              }
+              break;
+
+            case '4':
+              /* Locale encoding is EUC-JP.  */
+              {
+                char input[] = "<\306\374\313\334\270\354>"; /* "<日本語>" */
+
+                src = input + 1;
+                ret = mbstowcs (NULL, src, unlimited ? BUFSIZE : 1);
+                ASSERT (ret == 4);
+
+                src = input + 1;
+                ret = mbstowcs (buf, src, unlimited ? BUFSIZE : 1);
+                ASSERT (ret == (unlimited ? 4 : 1));
+                ASSERT (wctob (buf[0]) == EOF);
+                ASSERT (wctob (buf[1]) == EOF);
+                ASSERT (wctob (buf[2]) == EOF);
+                if (unlimited)
+                  {
+                    ASSERT (buf[3] == '>');
+                    ASSERT (buf[4] == 0);
+                    ASSERT (buf[5] == (wchar_t) 0xBADFACE);
+                  }
+                else
+                  ASSERT (buf[3] == (wchar_t) 0xBADFACE);
+              }
+              break;
+
+            case '5':
+              /* Locale encoding is GB18030.  */
+              {
+                char input[] = "B\250\271\201\060\211\070er"; /* "Büßer" */
+
+                src = input + 1;
+                ret = mbstowcs (NULL, src, unlimited ? BUFSIZE : 1);
+                ASSERT (ret == 4);
+
+                src = input + 1;
+                ret = mbstowcs (buf, src, unlimited ? BUFSIZE : 1);
+                ASSERT (ret == (unlimited ? 4 : 1));
+                ASSERT (wctob (buf[0]) == EOF);
+                if (unlimited)
+                  {
+                    ASSERT (wctob (buf[1]) == EOF);
+                    ASSERT (buf[2] == 'e');
+                    ASSERT (buf[3] == 'r');
+                    ASSERT (buf[4] == 0);
+                    ASSERT (buf[5] == (wchar_t) 0xBADFACE);
+                  }
+                else
+                  ASSERT (buf[1] == (wchar_t) 0xBADFACE);
               }
               break;
 

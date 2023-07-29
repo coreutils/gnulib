@@ -12,4 +12,4 @@ if test $LOCALE_FR_UTF8 = none; then
 fi
 
 LC_ALL=$LOCALE_FR_UTF8 \
-${CHECKER} ./test-mbstowcs${EXEEXT} 2
+${CHECKER} ./test-mbstowcs${EXEEXT} 3
