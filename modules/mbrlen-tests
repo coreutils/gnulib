@@ -1,17 +1,17 @@
 Files:
-tests/test-mbrlen1.sh
-tests/test-mbrlen2.sh
-tests/test-mbrlen3.sh
-tests/test-mbrlen4.sh
-tests/test-mbrlen5.sh
+tests/test-mbrlen-1.sh
+tests/test-mbrlen-2.sh
+tests/test-mbrlen-3.sh
+tests/test-mbrlen-4.sh
+tests/test-mbrlen-5.sh
 tests/test-mbrlen.c
-tests/test-mbrlen-w32-1.sh
 tests/test-mbrlen-w32-2.sh
 tests/test-mbrlen-w32-3.sh
 tests/test-mbrlen-w32-4.sh
 tests/test-mbrlen-w32-5.sh
 tests/test-mbrlen-w32-6.sh
 tests/test-mbrlen-w32-7.sh
+tests/test-mbrlen-w32-8.sh
 tests/test-mbrlen-w32.c
 tests/signature.h
 tests/macros.h
@@ -34,11 +34,11 @@ gt_LOCALE_ZH_CN
 
 Makefile.am:
 TESTS += \
-  test-mbrlen1.sh test-mbrlen2.sh test-mbrlen3.sh test-mbrlen4.sh \
-  test-mbrlen5.sh \
-  test-mbrlen-w32-1.sh test-mbrlen-w32-2.sh test-mbrlen-w32-3.sh \
-  test-mbrlen-w32-4.sh test-mbrlen-w32-5.sh test-mbrlen-w32-6.sh \
-  test-mbrlen-w32-7.sh
+  test-mbrlen-1.sh test-mbrlen-2.sh test-mbrlen-3.sh test-mbrlen-4.sh \
+  test-mbrlen-5.sh \
+  test-mbrlen-w32-2.sh test-mbrlen-w32-3.sh test-mbrlen-w32-4.sh \
+  test-mbrlen-w32-5.sh test-mbrlen-w32-6.sh test-mbrlen-w32-7.sh \
+  test-mbrlen-w32-8.sh
 TESTS_ENVIRONMENT += \
   LOCALE_FR='@LOCALE_FR@' \
   LOCALE_FR_UTF8='@LOCALE_FR_UTF8@' \

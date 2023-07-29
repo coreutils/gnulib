@@ -216,6 +216,97 @@ test_one_locale (const char *name, int codepage)
       }
       return 0;
 
+    case 65001:
+      /* Locale encoding is CP65001 = UTF-8.  */
+      if (strcmp (locale_charset (), "UTF-8") != 0)
+        return 77;
+      {
+        char input[] = "B\303\274\303\237er"; /* "Büßer" */
+        memset (&state, '\0', sizeof (mbstate_t));
+
+        ret = mbrlen (input, 1, &state);
+        ASSERT (ret == 1);
+        ASSERT (mbsinit (&state));
+        input[0] = '\0';
+
+        ret = mbrlen (input + 1, 1, &state);
+        ASSERT (ret == (size_t)(-2));
+        ASSERT (!mbsinit (&state));
+        input[1] = '\0';
+
+        ret = mbrlen (input + 2, 5, &state);
+        ASSERT (ret == 1);
+        ASSERT (mbsinit (&state));
+        input[2] = '\0';
+
+        ret = mbrlen (input + 3, 4, &state);
+        ASSERT (ret == 2);
+        ASSERT (mbsinit (&state));
+        input[3] = '\0';
+        input[4] = '\0';
+
+        ret = mbrlen (input + 5, 2, &state);
+        ASSERT (ret == 1);
+        ASSERT (mbsinit (&state));
+        input[5] = '\0';
+
+        ret = mbrlen (input + 6, 1, &state);
+        ASSERT (ret == 1);
+        ASSERT (mbsinit (&state));
+
+        /* Test some invalid input.  */
+        memset (&state, '\0', sizeof (mbstate_t));
+        ret = mbrlen ("\377", 1, &state); /* 0xFF */
+        ASSERT (ret == (size_t)-1);
+        ASSERT (errno == EILSEQ);
+
+        memset (&state, '\0', sizeof (mbstate_t));
+        ret = mbrlen ("\303\300", 2, &state); /* 0xC3 0xC0 */
+        ASSERT (ret == (size_t)-1);
+        ASSERT (errno == EILSEQ);
+
+        memset (&state, '\0', sizeof (mbstate_t));
+        ret = mbrlen ("\343\300", 2, &state); /* 0xE3 0xC0 */
+        ASSERT (ret == (size_t)-1);
+        ASSERT (errno == EILSEQ);
+
+        memset (&state, '\0', sizeof (mbstate_t));
+        ret = mbrlen ("\343\300\200", 3, &state); /* 0xE3 0xC0 0x80 */
+        ASSERT (ret == (size_t)-1);
+        ASSERT (errno == EILSEQ);
+
+        memset (&state, '\0', sizeof (mbstate_t));
+        ret = mbrlen ("\343\200\300", 3, &state); /* 0xE3 0x80 0xC0 */
+        ASSERT (ret == (size_t)-1);
+        ASSERT (errno == EILSEQ);
+
+        memset (&state, '\0', sizeof (mbstate_t));
+        ret = mbrlen ("\363\300", 2, &state); /* 0xF3 0xC0 */
+        ASSERT (ret == (size_t)-1);
+        ASSERT (errno == EILSEQ);
+
+        memset (&state, '\0', sizeof (mbstate_t));
+        ret = mbrlen ("\363\300\200\200", 4, &state); /* 0xF3 0xC0 0x80 0x80 */
+        ASSERT (ret == (size_t)-1);
+        ASSERT (errno == EILSEQ);
+
+        memset (&state, '\0', sizeof (mbstate_t));
+        ret = mbrlen ("\363\200\300", 3, &state); /* 0xF3 0x80 0xC0 */
+        ASSERT (ret == (size_t)-1);
+        ASSERT (errno == EILSEQ);
+
+        memset (&state, '\0', sizeof (mbstate_t));
+        ret = mbrlen ("\363\200\300\200", 4, &state); /* 0xF3 0x80 0xC0 0x80 */
+        ASSERT (ret == (size_t)-1);
+        ASSERT (errno == EILSEQ);
+
+        memset (&state, '\0', sizeof (mbstate_t));
+        ret = mbrlen ("\363\200\200\300", 4, &state); /* 0xF3 0x80 0x80 0xC0 */
+        ASSERT (ret == (size_t)-1);
+        ASSERT (errno == EILSEQ);
+      }
+      return 0;
+
     case 932:
       /* Locale encoding is CP932, similar to Shift_JIS.  */
       {
@@ -428,97 +519,6 @@ test_one_locale (const char *name, int codepage)
 
         memset (&state, '\0', sizeof (mbstate_t));
         ret = mbrlen ("\201\060\211\072", 4, &state); /* 0x81 0x30 0x89 0x3A */
-        ASSERT (ret == (size_t)-1);
-        ASSERT (errno == EILSEQ);
-      }
-      return 0;
-
-    case 65001:
-      /* Locale encoding is CP65001 = UTF-8.  */
-      if (strcmp (locale_charset (), "UTF-8") != 0)
-        return 77;
-      {
-        char input[] = "B\303\274\303\237er"; /* "Büßer" */
-        memset (&state, '\0', sizeof (mbstate_t));
-
-        ret = mbrlen (input, 1, &state);
-        ASSERT (ret == 1);
-        ASSERT (mbsinit (&state));
-        input[0] = '\0';
-
-        ret = mbrlen (input + 1, 1, &state);
-        ASSERT (ret == (size_t)(-2));
-        ASSERT (!mbsinit (&state));
-        input[1] = '\0';
-
-        ret = mbrlen (input + 2, 5, &state);
-        ASSERT (ret == 1);
-        ASSERT (mbsinit (&state));
-        input[2] = '\0';
-
-        ret = mbrlen (input + 3, 4, &state);
-        ASSERT (ret == 2);
-        ASSERT (mbsinit (&state));
-        input[3] = '\0';
-        input[4] = '\0';
-
-        ret = mbrlen (input + 5, 2, &state);
-        ASSERT (ret == 1);
-        ASSERT (mbsinit (&state));
-        input[5] = '\0';
-
-        ret = mbrlen (input + 6, 1, &state);
-        ASSERT (ret == 1);
-        ASSERT (mbsinit (&state));
-
-        /* Test some invalid input.  */
-        memset (&state, '\0', sizeof (mbstate_t));
-        ret = mbrlen ("\377", 1, &state); /* 0xFF */
-        ASSERT (ret == (size_t)-1);
-        ASSERT (errno == EILSEQ);
-
-        memset (&state, '\0', sizeof (mbstate_t));
-        ret = mbrlen ("\303\300", 2, &state); /* 0xC3 0xC0 */
-        ASSERT (ret == (size_t)-1);
-        ASSERT (errno == EILSEQ);
-
-        memset (&state, '\0', sizeof (mbstate_t));
-        ret = mbrlen ("\343\300", 2, &state); /* 0xE3 0xC0 */
-        ASSERT (ret == (size_t)-1);
-        ASSERT (errno == EILSEQ);
-
-        memset (&state, '\0', sizeof (mbstate_t));
-        ret = mbrlen ("\343\300\200", 3, &state); /* 0xE3 0xC0 0x80 */
-        ASSERT (ret == (size_t)-1);
-        ASSERT (errno == EILSEQ);
-
-        memset (&state, '\0', sizeof (mbstate_t));
-        ret = mbrlen ("\343\200\300", 3, &state); /* 0xE3 0x80 0xC0 */
-        ASSERT (ret == (size_t)-1);
-        ASSERT (errno == EILSEQ);
-
-        memset (&state, '\0', sizeof (mbstate_t));
-        ret = mbrlen ("\363\300", 2, &state); /* 0xF3 0xC0 */
-        ASSERT (ret == (size_t)-1);
-        ASSERT (errno == EILSEQ);
-
-        memset (&state, '\0', sizeof (mbstate_t));
-        ret = mbrlen ("\363\300\200\200", 4, &state); /* 0xF3 0xC0 0x80 0x80 */
-        ASSERT (ret == (size_t)-1);
-        ASSERT (errno == EILSEQ);
-
-        memset (&state, '\0', sizeof (mbstate_t));
-        ret = mbrlen ("\363\200\300", 3, &state); /* 0xF3 0x80 0xC0 */
-        ASSERT (ret == (size_t)-1);
-        ASSERT (errno == EILSEQ);
-
-        memset (&state, '\0', sizeof (mbstate_t));
-        ret = mbrlen ("\363\200\300\200", 4, &state); /* 0xF3 0x80 0xC0 0x80 */
-        ASSERT (ret == (size_t)-1);
-        ASSERT (errno == EILSEQ);
-
-        memset (&state, '\0', sizeof (mbstate_t));
-        ret = mbrlen ("\363\200\200\300", 4, &state); /* 0xF3 0x80 0x80 0xC0 */
         ASSERT (ret == (size_t)-1);
         ASSERT (errno == EILSEQ);
       }

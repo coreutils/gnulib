@@ -114,14 +114,36 @@ main (int argc, char *argv[])
      "C" locale.  Furthermore, when you attempt to set the "C" or "POSIX"
      locale via setlocale(), what you get is a "C" locale with UTF-8 encoding,
      that is, effectively the "C.UTF-8" locale.  */
-  if (argc > 1 && strcmp (argv[1], "5") == 0 && MB_CUR_MAX > 1)
-    argv[1] = "2";
+  if (argc > 1 && strcmp (argv[1], "1") == 0 && MB_CUR_MAX > 1)
+    argv[1] = "3";
 #endif
 
   if (argc > 1)
     switch (argv[1][0])
       {
       case '1':
+        /* C or POSIX locale.  */
+        {
+          int c;
+          char buf[1];
+
+          memset (&state, '\0', sizeof (mbstate_t));
+          for (c = 0; c < 0x100; c++)
+            if (c != 0)
+              {
+                /* We are testing all nonnull bytes.  */
+                buf[0] = c;
+
+                ret = mbrlen (buf, 1, &state);
+                /* POSIX:2018 says: "In the POSIX locale an [EILSEQ] error
+                   cannot occur since all byte values are valid characters."  */
+                ASSERT (ret == 1);
+                ASSERT (mbsinit (&state));
+              }
+        }
+        return 0;
+
+      case '2':
         /* Locale encoding is ISO-8859-1 or ISO-8859-15.  */
         {
           char input[] = "B\374\337er"; /* "Büßer" */
@@ -153,7 +175,7 @@ main (int argc, char *argv[])
         }
         return 0;
 
-      case '2':
+      case '3':
         /* Locale encoding is UTF-8.  */
         {
           char input[] = "B\303\274\303\237er"; /* "Büßer" */
@@ -191,7 +213,7 @@ main (int argc, char *argv[])
         }
         return 0;
 
-      case '3':
+      case '4':
         /* Locale encoding is EUC-JP.  */
         {
           char input[] = "<\306\374\313\334\270\354>"; /* "<日本語>" */
@@ -230,7 +252,7 @@ main (int argc, char *argv[])
         }
         return 0;
 
-      case '4':
+      case '5':
         /* Locale encoding is GB18030.  */
         {
           char input[] = "B\250\271\201\060\211\070er"; /* "Büßer" */
@@ -267,28 +289,6 @@ main (int argc, char *argv[])
           ret = mbrlen (input + 8, 1, &state);
           ASSERT (ret == 1);
           ASSERT (mbsinit (&state));
-        }
-        return 0;
-
-      case '5':
-        /* C or POSIX locale.  */
-        {
-          int c;
-          char buf[1];
-
-          memset (&state, '\0', sizeof (mbstate_t));
-          for (c = 0; c < 0x100; c++)
-            if (c != 0)
-              {
-                /* We are testing all nonnull bytes.  */
-                buf[0] = c;
-
-                ret = mbrlen (buf, 1, &state);
-                /* POSIX:2018 says: "In the POSIX locale an [EILSEQ] error
-                   cannot occur since all byte values are valid characters."  */
-                ASSERT (ret == 1);
-                ASSERT (mbsinit (&state));
-              }
         }
         return 0;
       }
