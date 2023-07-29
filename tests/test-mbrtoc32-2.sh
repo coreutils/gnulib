@@ -1,15 +1,15 @@
 #!/bin/sh
 
-# Test whether a specific UTF-8 locale is installed.
-: "${LOCALE_FR_UTF8=fr_FR.UTF-8}"
-if test $LOCALE_FR_UTF8 = none; then
+# Test in an ISO-8859-1 or ISO-8859-15 locale.
+: "${LOCALE_FR=fr_FR}"
+if test $LOCALE_FR = none; then
   if test -f /usr/bin/localedef; then
-    echo "Skipping test: no french Unicode locale is installed"
+    echo "Skipping test: no traditional french locale is installed"
   else
-    echo "Skipping test: no french Unicode locale is supported"
+    echo "Skipping test: no traditional french locale is supported"
   fi
   exit 77
 fi
 
-LC_ALL=$LOCALE_FR_UTF8 \
+LC_ALL=$LOCALE_FR \
 ${CHECKER} ./test-mbrtoc32${EXEEXT} 2
