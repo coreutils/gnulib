@@ -1,15 +1,15 @@
 #!/bin/sh
 
-# Test whether a specific GB18030 locale is installed.
-: "${LOCALE_ZH_CN=zh_CN.GB18030}"
-if test $LOCALE_ZH_CN = none; then
+# Test whether a specific EUC-JP locale is installed.
+: "${LOCALE_JA=ja_JP}"
+if test $LOCALE_JA = none; then
   if test -f /usr/bin/localedef; then
-    echo "Skipping test: no transitional chinese locale is installed"
+    echo "Skipping test: no traditional japanese locale is installed"
   else
-    echo "Skipping test: no transitional chinese locale is supported"
+    echo "Skipping test: no traditional japanese locale is supported"
   fi
   exit 77
 fi
 
-LC_ALL=$LOCALE_ZH_CN \
+LC_ALL=$LOCALE_JA \
 ${CHECKER} ./test-mbrtoc16${EXEEXT} 4

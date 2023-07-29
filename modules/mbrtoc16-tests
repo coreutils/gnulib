@@ -5,13 +5,13 @@ tests/test-mbrtoc16-3.sh
 tests/test-mbrtoc16-4.sh
 tests/test-mbrtoc16-5.sh
 tests/test-mbrtoc16.c
-tests/test-mbrtoc16-w32-1.sh
 tests/test-mbrtoc16-w32-2.sh
 tests/test-mbrtoc16-w32-3.sh
 tests/test-mbrtoc16-w32-4.sh
 tests/test-mbrtoc16-w32-5.sh
 tests/test-mbrtoc16-w32-6.sh
 tests/test-mbrtoc16-w32-7.sh
+tests/test-mbrtoc16-w32-8.sh
 tests/test-mbrtoc16-w32.c
 tests/signature.h
 tests/macros.h
@@ -37,9 +37,9 @@ Makefile.am:
 TESTS += \
   test-mbrtoc16-1.sh test-mbrtoc16-2.sh test-mbrtoc16-3.sh test-mbrtoc16-4.sh \
   test-mbrtoc16-5.sh \
-  test-mbrtoc16-w32-1.sh test-mbrtoc16-w32-2.sh test-mbrtoc16-w32-3.sh \
-  test-mbrtoc16-w32-4.sh test-mbrtoc16-w32-5.sh test-mbrtoc16-w32-6.sh \
-  test-mbrtoc16-w32-7.sh
+  test-mbrtoc16-w32-2.sh test-mbrtoc16-w32-3.sh test-mbrtoc16-w32-4.sh \
+  test-mbrtoc16-w32-5.sh test-mbrtoc16-w32-6.sh test-mbrtoc16-w32-7.sh \
+  test-mbrtoc16-w32-8.sh
 TESTS_ENVIRONMENT += \
   LOCALE_FR='@LOCALE_FR@' \
   LOCALE_FR_UTF8='@LOCALE_FR_UTF8@' \
