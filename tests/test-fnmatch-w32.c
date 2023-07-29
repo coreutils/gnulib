@@ -144,6 +144,88 @@ test_one_locale (const char *name, int codepage)
 
       return 0;
 
+    case 65001:
+      /* Locale encoding is CP65001 = UTF-8.  */
+      if (strcmp (locale_charset (), "UTF-8") != 0)
+        return 77;
+
+      ASSERT (fnmatch ("x?y", "x\303\274y", 0) == 0); /* "xüy" */
+      ASSERT (fnmatch ("x?y", "x\303\237y", 0) == 0); /* "xßy" */
+      ASSERT (fnmatch ("x?y", "x\360\237\230\213y", 0) == 0); /* "x😋y" */
+      /* U+0141 LATIN CAPITAL LETTER L WITH STROKE */
+      ASSERT (fnmatch ("x[[:alnum:]]y", "x\305\201y", 0) == 0);
+      /* U+10330 GOTHIC LETTER AHSA */
+      ASSERT (fnmatch ("x[[:alnum:]]y", "x\360\220\214\260y", 0) == 0);
+      /* U+0141 LATIN CAPITAL LETTER L WITH STROKE */
+      ASSERT (fnmatch ("x[[:alpha:]]y", "x\305\201y", 0) == 0);
+      /* U+10330 GOTHIC LETTER AHSA */
+      ASSERT (fnmatch ("x[[:alpha:]]y", "x\360\220\214\260y", 0) == 0);
+      /* U+00B8 CEDILLA */
+      ASSERT (fnmatch ("x[[:graph:]]y", "x\302\270y", 0) == 0);
+      /* U+20000 <CJK Ideograph> */
+      ASSERT (fnmatch ("x[[:graph:]]y", "x\360\240\200\200y", 0) == 0);
+      /* U+00FF LATIN SMALL LETTER Y WITH DIAERESIS */
+      ASSERT (fnmatch ("x[[:lower:]]y", "x\303\277y", 0) == 0);
+      /* U+10441 DESERET SMALL LETTER EF */
+      ASSERT (fnmatch ("x[[:lower:]]y", "x\360\220\221\201y", 0) == 0);
+      /* U+00B8 CEDILLA */
+      ASSERT (fnmatch ("x[[:print:]]y", "x\302\270y", 0) == 0);
+      /* U+20000 <CJK Ideograph> */
+      ASSERT (fnmatch ("x[[:print:]]y", "x\360\240\200\200y", 0) == 0);
+      /* U+00BF INVERTED QUESTION MARK */
+      ASSERT (fnmatch ("x[[:punct:]]y", "x\302\277y", 0) == 0);
+      /* U+1D100 MUSICAL SYMBOL SINGLE BARLINE */
+      ASSERT (fnmatch ("x[[:punct:]]y", "x\360\235\204\200y", 0) == 0);
+      /* U+3000 IDEOGRAPHIC SPACE */
+      ASSERT (fnmatch ("x[[:space:]]y", "x\343\200\200y", 0) == 0);
+      /* U+0429 CYRILLIC CAPITAL LETTER SHCHA */
+      ASSERT (fnmatch ("x[[:upper:]]y", "x\320\251y", 0) == 0);
+      /* U+10419 DESERET CAPITAL LETTER EF */
+      ASSERT (fnmatch ("x[[:upper:]]y", "x\360\220\220\231y", 0) == 0);
+      /* U+00D7 MULTIPLICATION SIGN */
+      ASSERT (fnmatch ("x[[:alnum:]]y", "x\303\227y", 0) == FNM_NOMATCH);
+      /* U+00D7 MULTIPLICATION SIGN */
+      ASSERT (fnmatch ("x[[:alpha:]]y", "x\303\227y", 0) == FNM_NOMATCH);
+      /* U+0141 LATIN CAPITAL LETTER L WITH STROKE */
+      ASSERT (fnmatch ("x[[:blank:]]y", "x\305\201y", 0) == FNM_NOMATCH);
+      /* U+0141 LATIN CAPITAL LETTER L WITH STROKE */
+      ASSERT (fnmatch ("x[[:cntrl:]]y", "x\305\201y", 0) == FNM_NOMATCH);
+      /* U+0141 LATIN CAPITAL LETTER L WITH STROKE */
+      ASSERT (fnmatch ("x[[:digit:]]y", "x\305\201y", 0) == FNM_NOMATCH);
+      /* U+2002 EN SPACE */
+      ASSERT (fnmatch ("x[[:graph:]]y", "x\342\200\202y", 0) == FNM_NOMATCH);
+      /* U+00B2 SUPERSCRIPT TWO */
+      ASSERT (fnmatch ("x[[:lower:]]y", "x\302\262y", 0) == FNM_NOMATCH);
+      /* U+0141 LATIN CAPITAL LETTER L WITH STROKE */
+      ASSERT (fnmatch ("x[[:punct:]]y", "x\305\201y", 0) == FNM_NOMATCH);
+      /* U+0141 LATIN CAPITAL LETTER L WITH STROKE */
+      ASSERT (fnmatch ("x[[:space:]]y", "x\305\201y", 0) == FNM_NOMATCH);
+      /* U+00B2 SUPERSCRIPT TWO */
+      ASSERT (fnmatch ("x[[:upper:]]y", "x\302\262y", 0) == FNM_NOMATCH);
+      /* U+0141 LATIN CAPITAL LETTER L WITH STROKE */
+      ASSERT (fnmatch ("x[[:xdigit:]]y", "x\305\201y", 0) == FNM_NOMATCH);
+
+      #if GNULIB_FNMATCH_GNU && defined FNM_CASEFOLD
+      /* "özgür" */
+      {
+        /* Some platforms, e.g. MSVC 14, lack the upper/lower mappings for
+           these wide characters in the *.65001 locales.  */
+        mbstate_t state;
+        wchar_t wc;
+        memset (&state, 0, sizeof (mbstate_t));
+        if (mbrtowc (&wc, "\303\274", 2, &state) == 2
+            && towupper (wc) != wc)
+          {
+            ASSERT (fnmatch ("\303\266zg\303\274r", "\303\226ZG\303\234R", FNM_CASEFOLD) == 0);
+            ASSERT (fnmatch ("\303\226ZG\303\234R", "\303\266zg\303\274r", FNM_CASEFOLD) == 0);
+            ASSERT (fnmatch ("\303\266Zg\303\234r", "\303\226zG\303\274R", FNM_CASEFOLD) == 0);
+            ASSERT (fnmatch ("\303\226zG\303\274R", "\303\266Zg\303\234r", FNM_CASEFOLD) == 0);
+          }
+      }
+      #endif
+
+      return 0;
+
     case 932:
       /* Locale encoding is CP932, similar to Shift_JIS.  */
 
@@ -284,88 +366,6 @@ test_one_locale (const char *name, int codepage)
       ASSERT (fnmatch ("\201\060\211\060ZG\201\060\211\065R", "\201\060\213\062zg\250\271r", FNM_CASEFOLD) == 0);
       ASSERT (fnmatch ("\201\060\213\062Zg\201\060\211\065r", "\201\060\211\060zG\250\271R", FNM_CASEFOLD) == 0);
       ASSERT (fnmatch ("\201\060\211\060zG\250\271R", "\201\060\213\062Zg\201\060\211\065r", FNM_CASEFOLD) == 0);
-      #endif
-
-      return 0;
-
-    case 65001:
-      /* Locale encoding is CP65001 = UTF-8.  */
-      if (strcmp (locale_charset (), "UTF-8") != 0)
-        return 77;
-
-      ASSERT (fnmatch ("x?y", "x\303\274y", 0) == 0); /* "xüy" */
-      ASSERT (fnmatch ("x?y", "x\303\237y", 0) == 0); /* "xßy" */
-      ASSERT (fnmatch ("x?y", "x\360\237\230\213y", 0) == 0); /* "x😋y" */
-      /* U+0141 LATIN CAPITAL LETTER L WITH STROKE */
-      ASSERT (fnmatch ("x[[:alnum:]]y", "x\305\201y", 0) == 0);
-      /* U+10330 GOTHIC LETTER AHSA */
-      ASSERT (fnmatch ("x[[:alnum:]]y", "x\360\220\214\260y", 0) == 0);
-      /* U+0141 LATIN CAPITAL LETTER L WITH STROKE */
-      ASSERT (fnmatch ("x[[:alpha:]]y", "x\305\201y", 0) == 0);
-      /* U+10330 GOTHIC LETTER AHSA */
-      ASSERT (fnmatch ("x[[:alpha:]]y", "x\360\220\214\260y", 0) == 0);
-      /* U+00B8 CEDILLA */
-      ASSERT (fnmatch ("x[[:graph:]]y", "x\302\270y", 0) == 0);
-      /* U+20000 <CJK Ideograph> */
-      ASSERT (fnmatch ("x[[:graph:]]y", "x\360\240\200\200y", 0) == 0);
-      /* U+00FF LATIN SMALL LETTER Y WITH DIAERESIS */
-      ASSERT (fnmatch ("x[[:lower:]]y", "x\303\277y", 0) == 0);
-      /* U+10441 DESERET SMALL LETTER EF */
-      ASSERT (fnmatch ("x[[:lower:]]y", "x\360\220\221\201y", 0) == 0);
-      /* U+00B8 CEDILLA */
-      ASSERT (fnmatch ("x[[:print:]]y", "x\302\270y", 0) == 0);
-      /* U+20000 <CJK Ideograph> */
-      ASSERT (fnmatch ("x[[:print:]]y", "x\360\240\200\200y", 0) == 0);
-      /* U+00BF INVERTED QUESTION MARK */
-      ASSERT (fnmatch ("x[[:punct:]]y", "x\302\277y", 0) == 0);
-      /* U+1D100 MUSICAL SYMBOL SINGLE BARLINE */
-      ASSERT (fnmatch ("x[[:punct:]]y", "x\360\235\204\200y", 0) == 0);
-      /* U+3000 IDEOGRAPHIC SPACE */
-      ASSERT (fnmatch ("x[[:space:]]y", "x\343\200\200y", 0) == 0);
-      /* U+0429 CYRILLIC CAPITAL LETTER SHCHA */
-      ASSERT (fnmatch ("x[[:upper:]]y", "x\320\251y", 0) == 0);
-      /* U+10419 DESERET CAPITAL LETTER EF */
-      ASSERT (fnmatch ("x[[:upper:]]y", "x\360\220\220\231y", 0) == 0);
-      /* U+00D7 MULTIPLICATION SIGN */
-      ASSERT (fnmatch ("x[[:alnum:]]y", "x\303\227y", 0) == FNM_NOMATCH);
-      /* U+00D7 MULTIPLICATION SIGN */
-      ASSERT (fnmatch ("x[[:alpha:]]y", "x\303\227y", 0) == FNM_NOMATCH);
-      /* U+0141 LATIN CAPITAL LETTER L WITH STROKE */
-      ASSERT (fnmatch ("x[[:blank:]]y", "x\305\201y", 0) == FNM_NOMATCH);
-      /* U+0141 LATIN CAPITAL LETTER L WITH STROKE */
-      ASSERT (fnmatch ("x[[:cntrl:]]y", "x\305\201y", 0) == FNM_NOMATCH);
-      /* U+0141 LATIN CAPITAL LETTER L WITH STROKE */
-      ASSERT (fnmatch ("x[[:digit:]]y", "x\305\201y", 0) == FNM_NOMATCH);
-      /* U+2002 EN SPACE */
-      ASSERT (fnmatch ("x[[:graph:]]y", "x\342\200\202y", 0) == FNM_NOMATCH);
-      /* U+00B2 SUPERSCRIPT TWO */
-      ASSERT (fnmatch ("x[[:lower:]]y", "x\302\262y", 0) == FNM_NOMATCH);
-      /* U+0141 LATIN CAPITAL LETTER L WITH STROKE */
-      ASSERT (fnmatch ("x[[:punct:]]y", "x\305\201y", 0) == FNM_NOMATCH);
-      /* U+0141 LATIN CAPITAL LETTER L WITH STROKE */
-      ASSERT (fnmatch ("x[[:space:]]y", "x\305\201y", 0) == FNM_NOMATCH);
-      /* U+00B2 SUPERSCRIPT TWO */
-      ASSERT (fnmatch ("x[[:upper:]]y", "x\302\262y", 0) == FNM_NOMATCH);
-      /* U+0141 LATIN CAPITAL LETTER L WITH STROKE */
-      ASSERT (fnmatch ("x[[:xdigit:]]y", "x\305\201y", 0) == FNM_NOMATCH);
-
-      #if GNULIB_FNMATCH_GNU && defined FNM_CASEFOLD
-      /* "özgür" */
-      {
-        /* Some platforms, e.g. MSVC 14, lack the upper/lower mappings for
-           these wide characters in the *.65001 locales.  */
-        mbstate_t state;
-        wchar_t wc;
-        memset (&state, 0, sizeof (mbstate_t));
-        if (mbrtowc (&wc, "\303\274", 2, &state) == 2
-            && towupper (wc) != wc)
-          {
-            ASSERT (fnmatch ("\303\266zg\303\274r", "\303\226ZG\303\234R", FNM_CASEFOLD) == 0);
-            ASSERT (fnmatch ("\303\226ZG\303\234R", "\303\266zg\303\274r", FNM_CASEFOLD) == 0);
-            ASSERT (fnmatch ("\303\266Zg\303\234r", "\303\226zG\303\274R", FNM_CASEFOLD) == 0);
-            ASSERT (fnmatch ("\303\226zG\303\274R", "\303\266Zg\303\234r", FNM_CASEFOLD) == 0);
-          }
-      }
       #endif
 
       return 0;

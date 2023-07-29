@@ -5,13 +5,13 @@ tests/test-fnmatch-3.sh
 tests/test-fnmatch-4.sh
 tests/test-fnmatch-5.sh
 tests/test-fnmatch.c
-tests/test-fnmatch-w32-1.sh
 tests/test-fnmatch-w32-2.sh
 tests/test-fnmatch-w32-3.sh
 tests/test-fnmatch-w32-4.sh
 tests/test-fnmatch-w32-5.sh
 tests/test-fnmatch-w32-6.sh
 tests/test-fnmatch-w32-7.sh
+tests/test-fnmatch-w32-8.sh
 tests/test-fnmatch-w32.c
 tests/signature.h
 tests/macros.h
@@ -36,9 +36,9 @@ Makefile.am:
 TESTS += \
   test-fnmatch-1.sh test-fnmatch-2.sh test-fnmatch-3.sh test-fnmatch-4.sh \
   test-fnmatch-5.sh \
-  test-fnmatch-w32-1.sh test-fnmatch-w32-2.sh test-fnmatch-w32-3.sh \
-  test-fnmatch-w32-4.sh test-fnmatch-w32-5.sh test-fnmatch-w32-6.sh \
-  test-fnmatch-w32-7.sh
+  test-fnmatch-w32-2.sh test-fnmatch-w32-3.sh test-fnmatch-w32-4.sh \
+  test-fnmatch-w32-5.sh test-fnmatch-w32-6.sh test-fnmatch-w32-7.sh \
+  test-fnmatch-w32-8.sh
 TESTS_ENVIRONMENT += \
   LOCALE_FR='@LOCALE_FR@' \
   LOCALE_FR_UTF8='@LOCALE_FR_UTF8@' \
