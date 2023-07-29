@@ -184,6 +184,32 @@ test_one_locale (const char *name, int codepage)
       }
       return 0;
 
+    case 65001:
+      /* Locale encoding is CP65001 = UTF-8.  */
+      if (strcmp (locale_charset (), "UTF-8") != 0)
+        return 77;
+      {
+        /* Convert "s\303\274\303\237\360\237\230\213!"; "süß😋!" */
+        memset (buf, 'x', 8);
+        ret = c32rtomb (buf, 0x00FC, NULL);
+        ASSERT (ret == 2);
+        ASSERT (memcmp (buf, "\303\274", 2) == 0);
+        ASSERT (buf[2] == 'x');
+
+        memset (buf, 'x', 8);
+        ret = c32rtomb (buf, 0x00DF, NULL);
+        ASSERT (ret == 2);
+        ASSERT (memcmp (buf, "\303\237", 2) == 0);
+        ASSERT (buf[2] == 'x');
+
+        memset (buf, 'x', 8);
+        ret = c32rtomb (buf, 0x1F60B, NULL);
+        ASSERT (ret == 4);
+        ASSERT (memcmp (buf, "\360\237\230\213", 4) == 0);
+        ASSERT (buf[4] == 'x');
+      }
+      return 0;
+
     case 932:
       /* Locale encoding is CP932, similar to Shift_JIS.  */
       {
@@ -278,32 +304,6 @@ test_one_locale (const char *name, int codepage)
         ret = c32rtomb (buf, 0x1F60B, NULL);
         ASSERT (ret == 4);
         ASSERT (memcmp (buf, "\224\071\375\067", 4) == 0);
-        ASSERT (buf[4] == 'x');
-      }
-      return 0;
-
-    case 65001:
-      /* Locale encoding is CP65001 = UTF-8.  */
-      if (strcmp (locale_charset (), "UTF-8") != 0)
-        return 77;
-      {
-        /* Convert "s\303\274\303\237\360\237\230\213!"; "süß😋!" */
-        memset (buf, 'x', 8);
-        ret = c32rtomb (buf, 0x00FC, NULL);
-        ASSERT (ret == 2);
-        ASSERT (memcmp (buf, "\303\274", 2) == 0);
-        ASSERT (buf[2] == 'x');
-
-        memset (buf, 'x', 8);
-        ret = c32rtomb (buf, 0x00DF, NULL);
-        ASSERT (ret == 2);
-        ASSERT (memcmp (buf, "\303\237", 2) == 0);
-        ASSERT (buf[2] == 'x');
-
-        memset (buf, 'x', 8);
-        ret = c32rtomb (buf, 0x1F60B, NULL);
-        ASSERT (ret == 4);
-        ASSERT (memcmp (buf, "\360\237\230\213", 4) == 0);
         ASSERT (buf[4] == 'x');
       }
       return 0;
