@@ -12,4 +12,4 @@ if test $LOCALE_ZH_CN = none; then
 fi
 
 LC_ALL=$LOCALE_ZH_CN \
-${CHECKER} ./test-wcsrtombs${EXEEXT} 4
+${CHECKER} ./test-wcsrtombs${EXEEXT} 5
