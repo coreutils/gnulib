@@ -1,8 +1,8 @@
 Files:
-tests/test-wcsnrtombs1.sh
-tests/test-wcsnrtombs2.sh
-tests/test-wcsnrtombs3.sh
-tests/test-wcsnrtombs4.sh
+tests/test-wcsnrtombs-2.sh
+tests/test-wcsnrtombs-3.sh
+tests/test-wcsnrtombs-4.sh
+tests/test-wcsnrtombs-5.sh
 tests/test-wcsnrtombs.c
 tests/signature.h
 tests/macros.h
@@ -21,7 +21,9 @@ gt_LOCALE_JA
 gt_LOCALE_ZH_CN
 
 Makefile.am:
-TESTS += test-wcsnrtombs1.sh test-wcsnrtombs2.sh test-wcsnrtombs3.sh test-wcsnrtombs4.sh
+TESTS += \
+  test-wcsnrtombs-2.sh test-wcsnrtombs-3.sh test-wcsnrtombs-4.sh \
+  test-wcsnrtombs-5.sh
 TESTS_ENVIRONMENT += \
   LOCALE_FR='@LOCALE_FR@' \
   LOCALE_FR_UTF8='@LOCALE_FR_UTF8@' \
