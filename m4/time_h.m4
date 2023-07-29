@@ -2,7 +2,7 @@
 
 # Copyright (C) 2000-2001, 2003-2007, 2009-2023 Free Software Foundation, Inc.
 
-# serial 23
+# serial 24
 
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -176,8 +176,4 @@ AC_DEFUN([gl_TIME_H_DEFAULTS],
   REPLACE_TIMEGM=0;                      AC_SUBST([REPLACE_TIMEGM])
   REPLACE_TIMESPEC_GET=0;                AC_SUBST([REPLACE_TIMESPEC_GET])
   REPLACE_TZSET=0;                       AC_SUBST([REPLACE_TZSET])
-
-  dnl Hack so that the time module doesn't depend on the sys_time module.
-  dnl Default GNULIB_GETTIMEOFDAY to 0 if sys_time is absent.
-  : ${GNULIB_GETTIMEOFDAY=0};            AC_SUBST([GNULIB_GETTIMEOFDAY])
 ])
