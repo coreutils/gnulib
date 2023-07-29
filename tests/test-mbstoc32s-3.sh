@@ -1,15 +1,15 @@
 #!/bin/sh
 
-# Test whether a specific EUC-JP locale is installed.
-: "${LOCALE_JA=ja_JP}"
-if test $LOCALE_JA = none; then
+# Test whether a specific UTF-8 locale is installed.
+: "${LOCALE_FR_UTF8=fr_FR.UTF-8}"
+if test $LOCALE_FR_UTF8 = none; then
   if test -f /usr/bin/localedef; then
-    echo "Skipping test: no traditional japanese locale is installed"
+    echo "Skipping test: no french Unicode locale is installed"
   else
-    echo "Skipping test: no traditional japanese locale is supported"
+    echo "Skipping test: no french Unicode locale is supported"
   fi
   exit 77
 fi
 
-LC_ALL=$LOCALE_JA \
+LC_ALL=$LOCALE_FR_UTF8 \
 ${CHECKER} ./test-mbstoc32s${EXEEXT} 3

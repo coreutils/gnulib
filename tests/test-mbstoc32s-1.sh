@@ -1,15 +1,9 @@
 #!/bin/sh
 
-# Test in an ISO-8859-1 or ISO-8859-15 locale.
-: "${LOCALE_FR=fr_FR}"
-if test $LOCALE_FR = none; then
-  if test -f /usr/bin/localedef; then
-    echo "Skipping test: no traditional french locale is installed"
-  else
-    echo "Skipping test: no traditional french locale is supported"
-  fi
-  exit 77
-fi
+# Test whether the POSIX locale has encoding errors.
+LC_ALL=C \
+${CHECKER} ./test-mbstoc32s${EXEEXT} 1 || exit 1
+LC_ALL=POSIX \
+${CHECKER} ./test-mbstoc32s${EXEEXT} 1 || exit 1
 
-LC_ALL=$LOCALE_FR \
-${CHECKER} ./test-mbstoc32s${EXEEXT} 1
+exit 0
