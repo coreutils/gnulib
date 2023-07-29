@@ -41,17 +41,17 @@ main (int argc, char *argv[])
   if (argc > 1)
     switch (argv[1][0])
       {
-      case '1':
+      case '2':
         /* Locale encoding is ISO-8859-1 or ISO-8859-15.  */
         test_iso_8859_1 (mbmemcasecmp, true);
         return 0;
 
-      case '2':
+      case '3':
         /* Locale encoding is UTF-8, locale is not Turkish.  */
         test_utf_8 (mbmemcasecmp, false);
         return 0;
 
-      case '3':
+      case '4':
         /* Locale encoding is UTF-8, locale is Turkish.  */
         test_utf_8 (mbmemcasecmp, true);
         return 0;
