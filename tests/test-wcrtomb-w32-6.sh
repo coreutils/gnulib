@@ -1,4 +1,4 @@
 #!/bin/sh
 
-# Test a GB18030 locale.
-${CHECKER} ./test-wcrtomb-w32${EXEEXT} Chinese_China 54936
+# Test a CP950 locale.
+${CHECKER} ./test-wcrtomb-w32${EXEEXT} Chinese_Taiwan 950

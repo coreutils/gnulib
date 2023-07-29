@@ -1,4 +1,4 @@
 #!/bin/sh
 
-# Test some UTF-8 locales.
-${CHECKER} ./test-wcrtomb-w32${EXEEXT} French_France Japanese_Japan Chinese_Taiwan Chinese_China 65001
+# Test a CP936 locale.
+${CHECKER} ./test-wcrtomb-w32${EXEEXT} Chinese_China 936
