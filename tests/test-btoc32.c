@@ -45,30 +45,14 @@ main (int argc, char *argv[])
      "C" locale.  Furthermore, when you attempt to set the "C" or "POSIX"
      locale via setlocale(), what you get is a "C" locale with UTF-8 encoding,
      that is, effectively the "C.UTF-8" locale.  */
-  if (argc > 1 && strcmp (argv[1], "3") == 0 && MB_CUR_MAX > 1)
-    argv[1] = "2";
+  if (argc > 1 && strcmp (argv[1], "1") == 0 && MB_CUR_MAX > 1)
+    argv[1] = "3";
 #endif
 
   if (argc > 1)
     switch (argv[1][0])
       {
       case '1':
-        /* Locale encoding is ISO-8859-1 or ISO-8859-15.  */
-        for (c = 0; c < 0x80; c++)
-          ASSERT (btoc32 (c) == c);
-        for (c = 0xA0; c < 0x100; c++)
-          ASSERT (btoc32 (c) != WEOF);
-        return 0;
-
-      case '2':
-        /* Locale encoding is UTF-8.  */
-        for (c = 0; c < 0x80; c++)
-          ASSERT (btoc32 (c) == c);
-        for (c = 0x80; c < 0x100; c++)
-          ASSERT (btoc32 (c) == WEOF);
-        return 0;
-
-      case '3':
         /* C or POSIX locale.  */
         for (c = 0; c < 0x100; c++)
           if (c != 0)
@@ -87,6 +71,22 @@ main (int argc, char *argv[])
                    But on musl libc, the bytes 0x80..0xFF map to U+DF80..U+DFFF.  */
                 ASSERT (wc == c || wc == 0xDF00 + c);
             }
+        return 0;
+
+      case '2':
+        /* Locale encoding is ISO-8859-1 or ISO-8859-15.  */
+        for (c = 0; c < 0x80; c++)
+          ASSERT (btoc32 (c) == c);
+        for (c = 0xA0; c < 0x100; c++)
+          ASSERT (btoc32 (c) != WEOF);
+        return 0;
+
+      case '3':
+        /* Locale encoding is UTF-8.  */
+        for (c = 0; c < 0x80; c++)
+          ASSERT (btoc32 (c) == c);
+        for (c = 0x80; c < 0x100; c++)
+          ASSERT (btoc32 (c) == WEOF);
         return 0;
       }
 

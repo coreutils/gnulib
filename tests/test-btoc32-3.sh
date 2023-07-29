@@ -1,9 +1,15 @@
 #!/bin/sh
 
-# Test whether the POSIX locale has encoding errors.
-LC_ALL=C \
-${CHECKER} ./test-btoc32${EXEEXT} 3 || exit 1
-LC_ALL=POSIX \
-${CHECKER} ./test-btoc32${EXEEXT} 3 || exit 1
+# Test whether a specific UTF-8 locale is installed.
+: "${LOCALE_FR_UTF8=fr_FR.UTF-8}"
+if test $LOCALE_FR_UTF8 = none; then
+  if test -f /usr/bin/localedef; then
+    echo "Skipping test: no french Unicode locale is installed"
+  else
+    echo "Skipping test: no french Unicode locale is supported"
+  fi
+  exit 77
+fi
 
-exit 0
+LC_ALL=$LOCALE_FR_UTF8 \
+${CHECKER} ./test-btoc32${EXEEXT} 3
