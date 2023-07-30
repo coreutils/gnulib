@@ -86,6 +86,51 @@ desirable_utmp_entry (STRUCT_UTMP const *u, int options)
 
 #ifdef UTMP_NAME_FUNCTION
 
+static void
+copy_utmp_entry (STRUCT_UTMP *dst, STRUCT_UTMP *src)
+{
+#if __GLIBC__ && _TIME_BITS == 64
+  /* Convert from external form in SRC to internal form in DST.
+     It is OK to convert now, rather than earlier, before
+     desirable_utmp_entry was invoked, because desirable_utmp_entry
+     inspects only the leading prefix of the entry, which is the
+     same in both external and internal forms.  */
+
+  /* This is a near-copy of glibc's struct utmpx, which stops working
+     after the year 2038.  Unlike the glibc version, struct utmpx32
+     describes the file format even if time_t is 64 bits.  */
+  struct utmpx32
+  {
+    short int ut_type;			/* Type of login.  */
+    pid_t ut_pid;			/* Process ID of login process.  */
+    char ut_line[sizeof src->ut_line];	/* Devicename.  */
+    char ut_id[sizeof src->ut_id];	/* Inittab ID.  */
+    char ut_user[sizeof src->ut_user];  /* Username.  */
+    char ut_host[sizeof src->ut_host];	/* Hostname for remote login.  */
+    struct __exit_status ut_exit;	/* Exit status of a process marked
+                                           as DEAD_PROCESS.  */
+    /* The fields ut_session and ut_tv must be the same size when compiled
+       32- and 64-bit.  This allows files and shared memory to be shared
+       between 32- and 64-bit applications.  */
+    int ut_session;			/* Session ID, used for windowing.  */
+    struct
+    {
+      int tv_sec;			/* Seconds.  */
+      int tv_usec;			/* Microseconds.  */
+    } ut_tv;				/* Time entry was made.  */
+    int ut_addr_v6[4];			/* Internet address of remote host.  */
+    char ut_reserved[20];		/* Reserved for future use.  */
+  } *s = (struct utmpx32 *) src;
+  memcpy (dst, s, offsetof (struct utmpx32, ut_session));
+  dst->ut_session = s->ut_session;
+  dst->ut_tv.tv_sec = s->ut_tv.tv_sec;
+  dst->ut_tv.tv_usec = s->ut_tv.tv_usec;
+  memcpy (&dst->ut_addr_v6, s->ut_addr_v6, sizeof dst->ut_addr_v6);
+#else
+  *dst = *src;
+#endif
+}
+
 int
 read_utmp (char const *file, size_t *n_entries, STRUCT_UTMP **utmp_buf,
            int options)
@@ -109,7 +154,7 @@ read_utmp (char const *file, size_t *n_entries, STRUCT_UTMP **utmp_buf,
         if (n_read == n_alloc)
           utmp = xpalloc (utmp, &n_alloc, 1, -1, sizeof *utmp);
 
-        utmp[n_read++] = *u;
+        copy_utmp_entry (&utmp[n_read++], u);
       }
 
   END_UTMP_ENT ();
