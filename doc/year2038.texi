@@ -103,3 +103,11 @@ Cygwin 3.3.6 (2022) and earlier on x86,
 @item
 Haiku/x86.
 @end itemize
+
+If you use the @samp{year2038} or @samp{year2038-recommended} modules,
+and configure to support timestamps after the year 2038,
+your code should not include @samp{<utmp.h>} or @samp{<utmpx.h>}
+directly, because these include files do not work with 64-bit timestamps
+if the platform's @code{time_t} was traditionally 32 bits.
+Your code can instead use the @samp{readutmp} module,
+which works around this problem.

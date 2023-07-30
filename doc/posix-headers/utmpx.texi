@@ -14,4 +14,17 @@ Portability problems not fixed by Gnulib:
 @item
 This header file is missing on some platforms:
 FreeBSD 6.0, OpenBSD 6.7, Minix 3.1.8, mingw, MSVC 14, Android 9.0.
+@item
+On some platforms, this API does not support timestamps past the
+year 2038:
+glibc 2.38 on 32-bit platforms like x86 and ARM where @code{time_t}
+was historically 32 bits.
+@item
+On some platforms, this header misbehaves if the @code{year2038} or
+@code{year2038-recommended} modules are used and the program is
+configured without the @option{--disable-year2038} option.
+The @code{readutmp} module works around this problem:
+glibc 2.38 on 32-bit platforms like x86 and ARM where @code{time_t}
+was historically 32 bits.
+@xref{Avoiding the year 2038 problem}.
 @end itemize
