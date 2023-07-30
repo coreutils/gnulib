@@ -1,0 +1,13 @@
+Files:
+tests/test-readutmp.c
+
+Depends-on:
+array-mergesort
+xalloc
+year2038
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-readutmp
+check_PROGRAMS += test-readutmp
