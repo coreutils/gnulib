@@ -40,7 +40,7 @@
 # pragma GCC diagnostic ignored "-Wsizeof-pointer-memaccess"
 #endif
 
-/* Copy UT->ut_name into storage obtained from malloc.  Then remove any
+/* Copy UT_USER (UT) into storage obtained from malloc.  Then remove any
    trailing spaces from the copy, NUL terminate it, and return the copy.  */
 
 char *
@@ -76,13 +76,6 @@ desirable_utmp_entry (STRUCT_UTMP const *u, int options)
     return false;
   return true;
 }
-
-/* Read the utmp entries corresponding to file FILE into freshly-
-   malloc'd storage, set *UTMP_BUF to that pointer, set *N_ENTRIES to
-   the number of entries, and return zero.  If there is any error,
-   return -1, setting errno, and don't modify the parameters.
-   If OPTIONS & READ_UTMP_CHECK_PIDS is nonzero, omit entries whose
-   process-IDs do not currently exist.  */
 
 #ifdef UTMP_NAME_FUNCTION
 
