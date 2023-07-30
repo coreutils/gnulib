@@ -25,7 +25,9 @@ lib_SOURCES += readutmp.c
 endif
 
 Include:
-"readutmp.h"
+#if HAVE_UTMPX_H || HAVE_UTMP_H
+#include "readutmp.h"
+#endif
 
 License:
 GPL

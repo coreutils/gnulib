@@ -219,10 +219,21 @@ enum
     READ_UTMP_USER_PROCESS = 2
   };
 
+/* Return a copy of UT_USER (UT), without trailing spaces,
+   as a freshly allocated string.  */
 char *extract_trimmed_name (const STRUCT_UTMP *ut)
   _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE
   _GL_ATTRIBUTE_RETURNS_NONNULL;
 
+/* Read the utmp entries corresponding to file FILE into freshly-
+   malloc'd storage, set *UTMP_BUF to that pointer, set *N_ENTRIES to
+   the number of entries, and return zero.  If there is any error,
+   return -1, setting errno, and don't modify the parameters.
+   A good candidate for FILE is UTMP_FILE.
+   If OPTIONS & READ_UTMP_CHECK_PIDS is nonzero, omit entries whose
+   process-IDs do not currently exist.
+   If OPTIONS & READ_UTMP_USER_PROCESS is nonzero, omit entries which
+   do not correspond to a user process.  */
 /* FIXME: This header should use idx_t, not size_t.  */
 int read_utmp (char const *file, size_t *n_entries, STRUCT_UTMP **utmp_buf,
                int options);
