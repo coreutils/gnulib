@@ -52,9 +52,47 @@ main (int argc, char *argv[])
       return 77;
     }
 
-  printf ("    Time (GMT)           User          PID     Term Exit Boot User Process\n");
-  printf ("------------------- --------------- ---------- ---- ---- ---- ------------\n");
+  printf ("Here are the read_utmp results.\n");
+  printf ("Flags: B = Boot, U = User Process\n");
+  printf ("\n");
+  printf ("                                                              Termi‐      Flags\n");
+  printf ("    Time (GMT)             User          Device        PID    nation Exit  B U\n");
+  printf ("------------------- ------------------ ----------- ---------- ------ ----  - -\n");
 
+  /* What do the results look like?
+     * On Alpine Linux, Cygwin, Android, the output is empty.
+     * The entries are usually not sorted according to the Time column, so
+       we do it here.
+     * In the User column, special values exist:
+       - The empty string denotes a system event.
+         Seen on glibc, macOS, FreeBSD, NetBSD, OpenBSD, AIX
+       - The value "reboot" denotes a reboot.
+         Seen on glibc
+       - The value "runlevel" denotes a runlevel change.
+         Seen on glibc
+       - The value "LOGIN" denotes the start of a virtual console.
+         Seen on glibc, Solaris
+       - The value "/usr/libexec/getty" denotes the start of a virtual console.
+         Seen on NetBSD
+     * In the Device column:
+       - The empty string denotes a system event.
+         Seen on macOS, FreeBSD, AIX
+       - The value "~" denotes an event with no associated device.
+         Seen on glibc
+       - The values "system boot", "system down", "run-level N" are
+         seen on NetBSD, AIX, Solaris.
+       - The values "old time", "new time" are
+         seen on Solaris.
+       - Common devices are:
+         - On glibc: "ttyN" (console) and "pts/N" (pseudo-terminals).
+         - On macOS: "ttysNNN" (pseudo-terminals).
+         - On FreeBSD: "ttyvN" (console).
+         - On NetBSD: "ttyEN", "constty" (console).
+         - On OpenBSD: "ttyCN", "console" (console) and "ttypN" (pseudo-terminals).
+         - on AIX: "vtyN" (console) and "pts/N" (pseudo-terminals).
+         - On Solaris: "vt/N", "console" (console) and "pts/N" (pseudo-terminals).
+     * The PID column is zero on platforms without a 'ut_pid' field: OpenBSD.
+   */
   if (num_entries > 0)
     {
       /* Sort the entries according to increasing UT_TIME_MEMBER (entry).
@@ -68,6 +106,7 @@ main (int argc, char *argv[])
           const STRUCT_UTMP *entry = &entries[i];
 
           char *user = extract_trimmed_name (entry);
+          const char *device = entry->ut_line;
           long pid = UT_PID (entry);
           int termination = UT_EXIT_E_TERMINATION (entry);
           int exit = UT_EXIT_E_EXIT (entry);
@@ -80,15 +119,17 @@ main (int argc, char *argv[])
                  == 0)
             strcpy (timbuf, "---");
 
-          printf ("%s %-15s %10ld %3d  %3d   %c       %c\n",
+          printf ("%-19s %-18s %-11s %10ld %4d   %3d   %c %c\n",
                   timbuf,
                   user,
+                  device,
                   pid,
                   termination,
                   exit,
                   UT_TYPE_BOOT_TIME (entry) ? 'X' : ' ',
                   UT_TYPE_USER_PROCESS (entry) ? 'X' : ' ');
         }
+      fflush (stdout);
 
       /* If the first time is more than 5 years in the past or the last time
          is more than a week in the future, the time_t members are wrong.  */
