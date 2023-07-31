@@ -50,7 +50,7 @@
 #  endif
 #  include <utmpx.h>
 #  define UTMP_STRUCT_NAME utmpx
-#  define UT_TIME_MEMBER(UT_PTR) ((UT_PTR)->ut_tv.tv_sec)
+#  define UT_TIME_MEMBER(UT) ((UT)->ut_tv.tv_sec)
 #  define SET_UTMP_ENT setutxent
 #  define GET_UTMP_ENT getutxent
 #  define END_UTMP_ENT endutxent
@@ -61,22 +61,22 @@
 #  endif
 
 #  if HAVE_STRUCT_UTMPX_UT_EXIT_E_TERMINATION
-#   define UT_EXIT_E_TERMINATION(U) ((U)->ut_exit.e_termination)
+#   define UT_EXIT_E_TERMINATION(UT) ((UT)->ut_exit.e_termination)
 #  else
 #   if HAVE_STRUCT_UTMPX_UT_EXIT_UT_TERMINATION
-#    define UT_EXIT_E_TERMINATION(U) ((U)->ut_exit.ut_termination)
+#    define UT_EXIT_E_TERMINATION(UT) ((UT)->ut_exit.ut_termination)
 #   else
-#    define UT_EXIT_E_TERMINATION(U) 0
+#    define UT_EXIT_E_TERMINATION(UT) 0
 #   endif
 #  endif
 
 #  if HAVE_STRUCT_UTMPX_UT_EXIT_E_EXIT
-#   define UT_EXIT_E_EXIT(U) ((U)->ut_exit.e_exit)
+#   define UT_EXIT_E_EXIT(UT) ((UT)->ut_exit.e_exit)
 #  else
 #   if HAVE_STRUCT_UTMPX_UT_EXIT_UT_EXIT
-#    define UT_EXIT_E_EXIT(U) ((U)->ut_exit.ut_exit)
+#    define UT_EXIT_E_EXIT(UT) ((UT)->ut_exit.ut_exit)
 #   else
-#    define UT_EXIT_E_EXIT(U) 0
+#    define UT_EXIT_E_EXIT(UT) 0
 #   endif
 #  endif
 
@@ -87,7 +87,7 @@
     struct utmp *getutent (void);
 #  endif
 #  define UTMP_STRUCT_NAME utmp
-#  define UT_TIME_MEMBER(UT_PTR) ((UT_PTR)->ut_time)
+#  define UT_TIME_MEMBER(UT) ((UT)->ut_time)
 #  define SET_UTMP_ENT setutent
 #  define GET_UTMP_ENT getutent
 #  define END_UTMP_ENT endutent
@@ -96,22 +96,22 @@
 #  endif
 
 #  if HAVE_STRUCT_UTMP_UT_EXIT_E_TERMINATION
-#   define UT_EXIT_E_TERMINATION(U) ((U)->ut_exit.e_termination)
+#   define UT_EXIT_E_TERMINATION(UT) ((UT)->ut_exit.e_termination)
 #  else
 #   if HAVE_STRUCT_UTMP_UT_EXIT_UT_TERMINATION
-#    define UT_EXIT_E_TERMINATION(U) ((U)->ut_exit.ut_termination)
+#    define UT_EXIT_E_TERMINATION(UT) ((UT)->ut_exit.ut_termination)
 #   else
-#    define UT_EXIT_E_TERMINATION(U) 0
+#    define UT_EXIT_E_TERMINATION(UT) 0
 #   endif
 #  endif
 
 #  if HAVE_STRUCT_UTMP_UT_EXIT_E_EXIT
-#   define UT_EXIT_E_EXIT(U) ((U)->ut_exit.e_exit)
+#   define UT_EXIT_E_EXIT(UT) ((UT)->ut_exit.e_exit)
 #  else
 #   if HAVE_STRUCT_UTMP_UT_EXIT_UT_EXIT
-#    define UT_EXIT_E_EXIT(U) ((U)->ut_exit.ut_exit)
+#    define UT_EXIT_E_EXIT(UT) ((UT)->ut_exit.ut_exit)
 #   else
-#    define UT_EXIT_E_EXIT(U) 0
+#    define UT_EXIT_E_EXIT(UT) 0
 #   endif
 #  endif
 
@@ -129,9 +129,9 @@ struct gl_utmp
   struct timeval ut_tv;
 };
 #  define UTMP_STRUCT_NAME gl_utmp
-#  define UT_TIME_MEMBER(UT_PTR) ((UT_PTR)->ut_tv.tv_sec)
-#  define UT_EXIT_E_TERMINATION(U) 0
-#  define UT_EXIT_E_EXIT(U) 0
+#  define UT_TIME_MEMBER(UT) ((UT)->ut_tv.tv_sec)
+#  define UT_EXIT_E_TERMINATION(UT) 0
+#  define UT_EXIT_E_EXIT(UT) 0
 
 # endif
 
@@ -139,26 +139,26 @@ struct gl_utmp
 # if HAVE_UTMPX_H
 
 #  if HAVE_STRUCT_UTMPX_UT_USER
-#   define UT_USER(Utmp) ((Utmp)->ut_user)
+#   define UT_USER(UT) ((UT)->ut_user)
 #  endif
 #  if HAVE_STRUCT_UTMPX_UT_NAME
 #   undef UT_USER
-#   define UT_USER(Utmp) ((Utmp)->ut_name)
+#   define UT_USER(UT) ((UT)->ut_name)
 #  endif
 
 # elif HAVE_UTMP_H
 
 #  if HAVE_STRUCT_UTMP_UT_USER
-#   define UT_USER(Utmp) ((Utmp)->ut_user)
+#   define UT_USER(UT) ((UT)->ut_user)
 #  endif
 #  if HAVE_STRUCT_UTMP_UT_NAME
 #   undef UT_USER
-#   define UT_USER(Utmp) ((Utmp)->ut_name)
+#   define UT_USER(UT) ((UT)->ut_name)
 #  endif
 
 # else /* dummy fallback */
 
-#  define UT_USER(Utmp) ((Utmp)->ut_user)
+#  define UT_USER(UT) ((UT)->ut_user)
 
 # endif
 
@@ -210,38 +210,38 @@ enum { UT_USER_SIZE = sizeof UT_USER ((STRUCT_UTMP *) 0) };
 
 /* Accessor macro for the member named ut_pid.  */
 # if HAVE_STRUCT_XTMP_UT_PID
-#  define UT_PID(U) ((U)->ut_pid)
+#  define UT_PID(UT) ((UT)->ut_pid)
 # else
-#  define UT_PID(U) 0
+#  define UT_PID(UT) 0
 # endif
 
 /* Accessor macros for the member named ut_type.  */
 
 # if HAVE_STRUCT_UTMP_UT_TYPE || HAVE_STRUCT_UTMPX_UT_TYPE
-#  define UT_TYPE_EQ(U, V) ((U)->ut_type == (V))
+#  define UT_TYPE_EQ(UT, V) ((UT)->ut_type == (V))
 #  define UT_TYPE_NOT_DEFINED 0
 # else
-#  define UT_TYPE_EQ(U, V) 0
+#  define UT_TYPE_EQ(UT, V) 0
 #  define UT_TYPE_NOT_DEFINED 1
 # endif
 
 # ifdef BOOT_TIME
-#  define UT_TYPE_BOOT_TIME(U) UT_TYPE_EQ (U, BOOT_TIME)
+#  define UT_TYPE_BOOT_TIME(UT) UT_TYPE_EQ (UT, BOOT_TIME)
 # else
-#  define UT_TYPE_BOOT_TIME(U) 0
+#  define UT_TYPE_BOOT_TIME(UT) 0
 # endif
 
 # ifdef USER_PROCESS
-#  define UT_TYPE_USER_PROCESS(U) UT_TYPE_EQ (U, USER_PROCESS)
+#  define UT_TYPE_USER_PROCESS(UT) UT_TYPE_EQ (UT, USER_PROCESS)
 # else
-#  define UT_TYPE_USER_PROCESS(U) 0
+#  define UT_TYPE_USER_PROCESS(UT) 0
 # endif
 
-/* Determines whether an entry *U corresponds to a user process.  */
-# define IS_USER_PROCESS(U)                                     \
-   (UT_USER (U)[0]                                              \
-    && (UT_TYPE_USER_PROCESS (U)                                \
-        || (UT_TYPE_NOT_DEFINED && UT_TIME_MEMBER (U) != 0)))
+/* Determines whether an entry *UT corresponds to a user process.  */
+# define IS_USER_PROCESS(UT)                                    \
+   (UT_USER (UT)[0]                                             \
+    && (UT_TYPE_USER_PROCESS (UT)                               \
+        || (UT_TYPE_NOT_DEFINED && UT_TIME_MEMBER (UT) != 0)))
 
 /* Define if read_utmp is not just a dummy.  */
 # if HAVE_UTMPX_H || HAVE_UTMP_H

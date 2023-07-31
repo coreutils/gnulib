@@ -63,18 +63,18 @@ extract_trimmed_name (const STRUCT_UTMP *ut)
 
 #if READ_UTMP_SUPPORTED
 
-/* Is the utmp entry U desired by the user who asked for OPTIONS?  */
+/* Is the utmp entry UT desired by the user who asked for OPTIONS?  */
 
 static bool
-desirable_utmp_entry (STRUCT_UTMP const *u, int options)
+desirable_utmp_entry (STRUCT_UTMP const *ut, int options)
 {
-  bool user_proc = IS_USER_PROCESS (u);
+  bool user_proc = IS_USER_PROCESS (ut);
   if ((options & READ_UTMP_USER_PROCESS) && !user_proc)
     return false;
   if ((options & READ_UTMP_CHECK_PIDS)
       && user_proc
-      && 0 < UT_PID (u)
-      && (kill (UT_PID (u), 0) < 0 && errno == ESRCH))
+      && 0 < UT_PID (ut)
+      && (kill (UT_PID (ut), 0) < 0 && errno == ESRCH))
     return false;
   return true;
 }
@@ -133,7 +133,7 @@ read_utmp (char const *file, size_t *n_entries, STRUCT_UTMP **utmp_buf,
   idx_t n_read = 0;
   idx_t n_alloc = 0;
   STRUCT_UTMP *utmp = NULL;
-  STRUCT_UTMP *u;
+  STRUCT_UTMP *ut;
 
   /* Ignore the return value for now.
      Solaris' utmpname returns 1 upon success -- which is contrary
@@ -143,13 +143,13 @@ read_utmp (char const *file, size_t *n_entries, STRUCT_UTMP **utmp_buf,
 
   SET_UTMP_ENT ();
 
-  while ((u = GET_UTMP_ENT ()) != NULL)
-    if (desirable_utmp_entry (u, options))
+  while ((ut = GET_UTMP_ENT ()) != NULL)
+    if (desirable_utmp_entry (ut, options))
       {
         if (n_read == n_alloc)
           utmp = xpalloc (utmp, &n_alloc, 1, -1, sizeof *utmp);
 
-        copy_utmp_entry (&utmp[n_read++], u);
+        copy_utmp_entry (&utmp[n_read++], ut);
       }
 
   END_UTMP_ENT ();
