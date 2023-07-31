@@ -74,6 +74,12 @@ desirable_utmp_entry (STRUCT_UTMP const *u, int options)
       && 0 < UT_PID (u)
       && (kill (UT_PID (u), 0) < 0 && errno == ESRCH))
     return false;
+# if defined __OpenBSD__ && !HAVE_UTMPX_H
+  /* Eliminate entirely empty entries.  */
+  if (UT_TIME_MEMBER (ut) == 0 && UT_USER (ut)[0] == '\0'
+      && ut->ut_line[0] == '\0' && ut->ut_host[0] == '\0')
+    return false;
+# endif
   return true;
 }
 
