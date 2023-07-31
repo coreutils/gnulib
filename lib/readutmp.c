@@ -61,6 +61,8 @@ extract_trimmed_name (const STRUCT_UTMP *ut)
   return trimmed_name;
 }
 
+#if READ_UTMP_SUPPORTED
+
 /* Is the utmp entry U desired by the user who asked for OPTIONS?  */
 
 static bool
@@ -77,12 +79,12 @@ desirable_utmp_entry (STRUCT_UTMP const *u, int options)
   return true;
 }
 
-#ifdef UTMP_NAME_FUNCTION
+# if defined UTMP_NAME_FUNCTION
 
 static void
 copy_utmp_entry (STRUCT_UTMP *dst, STRUCT_UTMP *src)
 {
-#if __GLIBC__ && _TIME_BITS == 64
+#  if __GLIBC__ && _TIME_BITS == 64
   /* Convert from external form in SRC to internal form in DST.
      It is OK to convert now, rather than earlier, before
      desirable_utmp_entry was invoked, because desirable_utmp_entry
@@ -119,9 +121,9 @@ copy_utmp_entry (STRUCT_UTMP *dst, STRUCT_UTMP *src)
   dst->ut_tv.tv_sec = s->ut_tv.tv_sec;
   dst->ut_tv.tv_usec = s->ut_tv.tv_usec;
   memcpy (&dst->ut_addr_v6, s->ut_addr_v6, sizeof dst->ut_addr_v6);
-#else
+#  else
   *dst = *src;
-#endif
+#  endif
 }
 
 int
@@ -158,7 +160,7 @@ read_utmp (char const *file, size_t *n_entries, STRUCT_UTMP **utmp_buf,
   return 0;
 }
 
-#else
+# else
 
 int
 read_utmp (char const *file, size_t *n_entries, STRUCT_UTMP **utmp_buf,
@@ -196,6 +198,18 @@ read_utmp (char const *file, size_t *n_entries, STRUCT_UTMP **utmp_buf,
   *utmp_buf = utmp;
 
   return 0;
+}
+
+# endif
+
+#else /* dummy fallback */
+
+int
+read_utmp (char const *file, size_t *n_entries, STRUCT_UTMP **utmp_buf,
+           int options)
+{
+  errno = ENOSYS;
+  return -1;
 }
 
 #endif

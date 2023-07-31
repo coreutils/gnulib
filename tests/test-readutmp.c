@@ -18,25 +18,23 @@
 
 #include <config.h>
 
-#if HAVE_UTMPX_H || HAVE_UTMP_H
+#include "readutmp.h"
 
-# include "readutmp.h"
+#include <stddef.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
 
-# include <stddef.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <time.h>
+#include "xalloc.h"
 
-# include "xalloc.h"
+#define ELEMENT STRUCT_UTMP
+#define COMPARE(entry1, entry2) \
+  _GL_CMP (UT_TIME_MEMBER (entry1), UT_TIME_MEMBER (entry2))
+#define STATIC static
+#include "array-mergesort.h"
 
-# define ELEMENT STRUCT_UTMP
-# define COMPARE(entry1, entry2) \
-   _GL_CMP (UT_TIME_MEMBER (entry1), UT_TIME_MEMBER (entry2))
-# define STATIC static
-# include "array-mergesort.h"
-
-# include "macros.h"
+#include "macros.h"
 
 int
 main (int argc, char *argv[])
@@ -46,7 +44,11 @@ main (int argc, char *argv[])
 
   if (read_utmp (UTMP_FILE, &num_entries, &entries, 0) < 0)
     {
+      #if READ_UTMP_SUPPORTED
       fprintf (stderr, "Skipping test: cannot open %s\n", UTMP_FILE);
+      #else
+      fprintf (stderr, "Skipping test: neither <utmpx.h> nor <utmp.h> is available\n");
+      #endif
       return 77;
     }
 
@@ -99,16 +101,3 @@ main (int argc, char *argv[])
 
   return 0;
 }
-
-#else
-
-# include <stdio.h>
-
-int
-main ()
-{
-  fprintf (stderr, "Skipping test: neither <utmpx.h> nor <utmp.h> is available\n");
-  return 77;
-}
-
-#endif

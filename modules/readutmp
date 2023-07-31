@@ -11,23 +11,18 @@ extensions
 xalloc
 stdbool
 stdint
+sys_time
 fopen-gnu
 unlocked-io-internal
 
 configure.ac:
 gl_READUTMP
-gl_CONDITIONAL([GL_COND_OBJ_READUTMP],
-               [test $ac_cv_header_utmp_h = yes || test $ac_cv_header_utmpx_h = yes])
 
 Makefile.am:
-if GL_COND_OBJ_READUTMP
 lib_SOURCES += readutmp.c
-endif
 
 Include:
-#if HAVE_UTMPX_H || HAVE_UTMP_H
-#include "readutmp.h"
-#endif
+"readutmp.h"
 
 License:
 GPL

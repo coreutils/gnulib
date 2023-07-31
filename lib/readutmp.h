@@ -38,6 +38,7 @@
 # endif
 
 # if HAVE_UTMPX_H
+
 #  if HAVE_UTMP_H
     /* HPUX 10.20 needs utmp.h, for the definition of e.g., UTMP_FILE.  */
 #   include <utmp.h>
@@ -114,6 +115,24 @@
 #   endif
 #  endif
 
+# else
+
+/* Provide a dummy fallback.  */
+
+/* Get 'struct timeval'.  */
+#  include <sys/time.h>
+
+struct gl_utmp
+{
+  char ut_user[1];
+  char ut_line[1];
+  struct timeval ut_tv;
+};
+#  define UTMP_STRUCT_NAME gl_utmp
+#  define UT_TIME_MEMBER(UT_PTR) ((UT_PTR)->ut_tv.tv_sec)
+#  define UT_EXIT_E_TERMINATION(U) 0
+#  define UT_EXIT_E_EXIT(U) 0
+
 # endif
 
 /* Accessor macro for the member named ut_user or ut_name.  */
@@ -137,6 +156,10 @@
 #   define UT_USER(Utmp) ((Utmp)->ut_name)
 #  endif
 
+# else /* dummy fallback */
+
+#  define UT_USER(Utmp) ((Utmp)->ut_user)
+
 # endif
 
 # define HAVE_STRUCT_XTMP_UT_EXIT \
@@ -151,9 +174,13 @@
     (HAVE_STRUCT_UTMP_UT_PID \
      || HAVE_STRUCT_UTMPX_UT_PID)
 
+/* Type of entry returned by read_utmp().  */
 typedef struct UTMP_STRUCT_NAME STRUCT_UTMP;
 
+/* Size of the UT_USER (ut) member.  */
 enum { UT_USER_SIZE = sizeof UT_USER ((STRUCT_UTMP *) 0) };
+
+/* Definition of UTMP_FILE and WTMP_FILE.  */
 
 # if !defined UTMP_FILE && defined _PATH_UTMP
 #  define UTMP_FILE _PATH_UTMP
@@ -181,11 +208,14 @@ enum { UT_USER_SIZE = sizeof UT_USER ((STRUCT_UTMP *) 0) };
 #  define WTMP_FILE "/etc/wtmp"
 # endif
 
+/* Accessor macro for the member named ut_pid.  */
 # if HAVE_STRUCT_XTMP_UT_PID
 #  define UT_PID(U) ((U)->ut_pid)
 # else
 #  define UT_PID(U) 0
 # endif
+
+/* Accessor macros for the member named ut_type.  */
 
 # if HAVE_STRUCT_UTMP_UT_TYPE || HAVE_STRUCT_UTMPX_UT_TYPE
 #  define UT_TYPE_EQ(U, V) ((U)->ut_type == (V))
@@ -207,10 +237,16 @@ enum { UT_USER_SIZE = sizeof UT_USER ((STRUCT_UTMP *) 0) };
 #  define UT_TYPE_USER_PROCESS(U) 0
 # endif
 
+/* Determines whether an entry *U corresponds to a user process.  */
 # define IS_USER_PROCESS(U)                                     \
    (UT_USER (U)[0]                                              \
     && (UT_TYPE_USER_PROCESS (U)                                \
         || (UT_TYPE_NOT_DEFINED && UT_TIME_MEMBER (U) != 0)))
+
+/* Define if read_utmp is not just a dummy.  */
+# if HAVE_UTMPX_H || HAVE_UTMP_H
+#  define READ_UTMP_SUPPORTED 1
+# endif
 
 /* Options for read_utmp.  */
 enum
