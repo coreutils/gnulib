@@ -13,7 +13,21 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This header file is missing on some platforms:
-FreeBSD 6.0, OpenBSD 6.7, Minix 3.1.8, mingw, MSVC 14, Android 9.0.
+FreeBSD 8.4, OpenBSD 7.2, Minix 3.1.8, mingw, MSVC 14, Android 13.0.
+@item
+While some platforms have the @code{struct utmpx} field @code{ut_user},
+older platforms have the field @code{ut_name}.
+@item
+The @code{struct utmpx} field @code{ut_exit} does not exist on some platforms:
+macOS, FreeBSD, AIX, Cygwin.
+@item
+The @code{struct utmpx} field @code{ut_session} does not exist
+on some platforms:
+macOS, FreeBSD, AIX, HP-UX, Cygwin.
+@item
+The @code{struct utmpx} field @code{ut_addr} or @code{ut_addr_v6} or
+@code{ut_ss} does not exist on some platforms:
+macOS, FreeBSD, AIX, IRIX, Solaris.
 @item
 On some platforms, this API does not support timestamps past the
 year 2038:
