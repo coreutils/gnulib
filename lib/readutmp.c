@@ -48,12 +48,12 @@ extract_trimmed_name (const STRUCT_UTMP *ut)
 {
   char *p, *trimmed_name;
 
-  trimmed_name = xmalloc (sizeof (UT_USER (ut)) + 1);
-  strncpy (trimmed_name, UT_USER (ut), sizeof (UT_USER (ut)));
+  trimmed_name = xmalloc (UT_USER_SIZE + 1);
+  strncpy (trimmed_name, UT_USER (ut), UT_USER_SIZE);
   /* Append a trailing NUL.  Some systems pad names shorter than the
      maximum with spaces, others pad with NULs.  Remove any trailing
      spaces.  */
-  trimmed_name[sizeof (UT_USER (ut))] = '\0';
+  trimmed_name[UT_USER_SIZE] = '\0';
   for (p = trimmed_name + strlen (trimmed_name);
        trimmed_name < p && p[-1] == ' ';
        *--p = '\0')
