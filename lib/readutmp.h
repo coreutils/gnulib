@@ -252,12 +252,39 @@ struct gl_utmp
       || HAVE_STRUCT_UTMPX_UT_PID)
 # endif
 
+# if READUTMP_USE_SYSTEMD
+#  define HAVE_STRUCT_XTMP_UT_HOST 1
+# else
+#  define HAVE_STRUCT_XTMP_UT_HOST \
+     (HAVE_STRUCT_UTMP_UT_HOST \
+      || HAVE_STRUCT_UTMPX_UT_HOST)
+# endif
+
 /* Type of entry returned by read_utmp().  */
 typedef struct UTMP_STRUCT_NAME STRUCT_UTMP;
 
-/* Size of the UT_USER (ut) member.  */
-# if !READUTMP_USE_SYSTEMD
+/* Size of the UT_USER (ut) member, or -1 if unbounded.  */
+# if READUTMP_USE_SYSTEMD
+enum { UT_USER_SIZE = -1 };
+# else
 enum { UT_USER_SIZE = sizeof UT_USER ((STRUCT_UTMP *) 0) };
+#  define UT_USER_SIZE UT_USER_SIZE
+# endif
+
+/* Size of the ut->ut_line member, or -1 if unbounded.  */
+# if READUTMP_USE_SYSTEMD
+enum { UT_LINE_SIZE = -1 };
+# else
+enum { UT_LINE_SIZE = sizeof (((STRUCT_UTMP *) 0)->ut_line) };
+#  define UT_LINE_SIZE UT_LINE_SIZE
+# endif
+
+/* Size of the ut->ut_host member, or -1 if unbounded.  */
+# if READUTMP_USE_SYSTEMD
+enum { UT_HOST_SIZE = -1 };
+# else
+enum { UT_HOST_SIZE = sizeof (((STRUCT_UTMP *) 0)->ut_host) };
+#  define UT_HOST_SIZE UT_HOST_SIZE
 # endif
 
 /* Definition of UTMP_FILE and WTMP_FILE.  */
