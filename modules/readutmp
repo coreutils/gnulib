@@ -5,6 +5,7 @@ Files:
 lib/readutmp.h
 lib/readutmp.c
 m4/readutmp.m4
+m4/systemd.m4
 
 Depends-on:
 extensions
@@ -23,6 +24,9 @@ lib_SOURCES += readutmp.c
 
 Include:
 "readutmp.h"
+
+Link:
+$(READUTMP_LIB)
 
 License:
 GPL

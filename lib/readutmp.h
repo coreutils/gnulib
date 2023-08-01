@@ -37,7 +37,34 @@
 #  undef HAVE_UTMPX_H
 # endif
 
-# if HAVE_UTMPX_H
+# if READUTMP_USE_SYSTEMD
+
+/* Get 'struct timeval'.  */
+#  include <sys/time.h>
+
+/* Type for the entries returned by read_utmp.  */
+struct gl_utmp
+{
+  /* All 'char *' here are of arbitrary length and malloc-allocated.  */
+  char *ut_user;                /* User name */
+  char *ut_id;                  /* Session ID */
+  char *ut_line;                /* seat / device */
+  pid_t ut_pid;                 /* process ID of ? */
+  short ut_type;                /* BOOT_TIME or USER_PROCESS */
+  struct timeval ut_tv;         /* time */
+  char *ut_host;                /* for remote sessions: user@host or host */
+  long ut_session;              /* process ID of session leader */
+};
+
+/* Get values for ut_type: BOOT_TIME, USER_PROCESS.  */
+#  include <utmpx.h>
+
+#  define UTMP_STRUCT_NAME gl_utmp
+#  define UT_TIME_MEMBER(UT) ((UT)->ut_tv.tv_sec)
+#  define UT_EXIT_E_TERMINATION(UT) 0
+#  define UT_EXIT_E_EXIT(UT) 0
+
+# elif HAVE_UTMPX_H
 
 /* <utmpx.h> defines 'struct utmpx' with the following fields:
 
@@ -171,7 +198,11 @@ struct gl_utmp
 # endif
 
 /* Accessor macro for the member named ut_user or ut_name.  */
-# if HAVE_UTMPX_H
+# if READUTMP_USE_SYSTEMD
+
+#  define UT_USER(UT) ((UT)->ut_user)
+
+# elif HAVE_UTMPX_H
 
 #  if HAVE_STRUCT_UTMPX_UT_USER
 #   define UT_USER(UT) ((UT)->ut_user)
@@ -197,23 +228,37 @@ struct gl_utmp
 
 # endif
 
-# define HAVE_STRUCT_XTMP_UT_EXIT \
-    (HAVE_STRUCT_UTMP_UT_EXIT \
-     || HAVE_STRUCT_UTMPX_UT_EXIT)
+# if READUTMP_USE_SYSTEMD
+#  define HAVE_STRUCT_XTMP_UT_EXIT 0
+# else
+#  define HAVE_STRUCT_XTMP_UT_EXIT \
+     (HAVE_STRUCT_UTMP_UT_EXIT \
+      || HAVE_STRUCT_UTMPX_UT_EXIT)
+# endif
 
-# define HAVE_STRUCT_XTMP_UT_ID \
-    (HAVE_STRUCT_UTMP_UT_ID \
-     || HAVE_STRUCT_UTMPX_UT_ID)
+# if READUTMP_USE_SYSTEMD
+#  define HAVE_STRUCT_XTMP_UT_ID 1
+# else
+#  define HAVE_STRUCT_XTMP_UT_ID \
+     (HAVE_STRUCT_UTMP_UT_ID \
+      || HAVE_STRUCT_UTMPX_UT_ID)
+# endif
 
-# define HAVE_STRUCT_XTMP_UT_PID \
-    (HAVE_STRUCT_UTMP_UT_PID \
-     || HAVE_STRUCT_UTMPX_UT_PID)
+# if READUTMP_USE_SYSTEMD
+#  define HAVE_STRUCT_XTMP_UT_PID 1
+# else
+#  define HAVE_STRUCT_XTMP_UT_PID \
+     (HAVE_STRUCT_UTMP_UT_PID \
+      || HAVE_STRUCT_UTMPX_UT_PID)
+# endif
 
 /* Type of entry returned by read_utmp().  */
 typedef struct UTMP_STRUCT_NAME STRUCT_UTMP;
 
 /* Size of the UT_USER (ut) member.  */
+# if !READUTMP_USE_SYSTEMD
 enum { UT_USER_SIZE = sizeof UT_USER ((STRUCT_UTMP *) 0) };
+# endif
 
 /* Definition of UTMP_FILE and WTMP_FILE.  */
 
@@ -252,7 +297,7 @@ enum { UT_USER_SIZE = sizeof UT_USER ((STRUCT_UTMP *) 0) };
 
 /* Accessor macros for the member named ut_type.  */
 
-# if HAVE_STRUCT_UTMP_UT_TYPE || HAVE_STRUCT_UTMPX_UT_TYPE
+# if READUTMP_USE_SYSTEMD || HAVE_STRUCT_UTMP_UT_TYPE || HAVE_STRUCT_UTMPX_UT_TYPE
 #  define UT_TYPE_EQ(UT, V) ((UT)->ut_type == (V))
 #  define UT_TYPE_NOT_DEFINED 0
 # else
@@ -279,7 +324,7 @@ enum { UT_USER_SIZE = sizeof UT_USER ((STRUCT_UTMP *) 0) };
         || (UT_TYPE_NOT_DEFINED && UT_TIME_MEMBER (UT) != 0)))
 
 /* Define if read_utmp is not just a dummy.  */
-# if HAVE_UTMPX_H || HAVE_UTMP_H
+# if READUTMP_USE_SYSTEMD || HAVE_UTMPX_H || HAVE_UTMP_H
 #  define READ_UTMP_SUPPORTED 1
 # endif
 
@@ -308,5 +353,9 @@ char *extract_trimmed_name (const STRUCT_UTMP *ut)
 /* FIXME: This header should use idx_t, not size_t.  */
 int read_utmp (char const *file, size_t *n_entries, STRUCT_UTMP **utmp_buf,
                int options);
+
+/* Free the memory allocated by the N_ENTRIES utmp entries, starting
+   at ENTRIES.  */
+void free_utmp (size_t n_entries, STRUCT_UTMP *entries);
 
 #endif /* __READUTMP_H__ */

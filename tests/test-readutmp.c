@@ -138,6 +138,8 @@ main (int argc, char *argv[])
       time_t now = time (NULL);
       ASSERT (first >= now - 157680000);
       ASSERT (last <= now + 604800);
+
+      free_utmp (num_entries, entries);
     }
 
   return 0;

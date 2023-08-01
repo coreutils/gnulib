@@ -9,6 +9,42 @@ AC_DEFUN([gl_READUTMP],
   dnl Persuade utmpx.h to declare utmpxname
   AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
 
+  AC_REQUIRE([gl_SYSTEMD_CHOICE])
+
+  dnl Set READUTMP_LIB to '-lsystemd' or '', depending on whether use of
+  dnl systemd APIs is possible and desired (only the systemd login API, here).
+  dnl AC_LIB_LINKFLAGS_BODY would be overkill here, since few people install
+  dnl libsystemd in non-system directories.
+  READUTMP_LIB=
+  if test "$SYSTEMD_CHOICE" = yes; then
+    AC_CHECK_HEADER([systemd/sd-login.h])
+    if test $ac_cv_header_systemd_sd_login_h = yes; then
+      AC_CACHE_CHECK([for libsystemd version >= 254],
+        [gl_cv_lib_readutmp_systemd],
+        [gl_save_LIBS="$LIBS"
+         LIBS="$LIBS -lsystemd"
+         AC_LINK_IFELSE(
+           [AC_LANG_PROGRAM([[
+              #include <stdint.h>
+              #include <systemd/sd-login.h>
+              ]], [[
+              uint64_t st;
+              sd_session_get_start_time ("1", &st);
+              ]])
+           ],
+           [gl_cv_lib_readutmp_systemd=yes],
+           [gl_cv_lib_readutmp_systemd=no])
+         LIBS="$gl_save_LIBS"
+        ])
+      if test $gl_cv_lib_readutmp_systemd = yes; then
+        AC_DEFINE([READUTMP_USE_SYSTEMD], [1],
+          [Define if the readutmp module should use the systemd login API.])
+        READUTMP_LIB='-lsystemd'
+      fi
+    fi
+  fi
+  AC_SUBST([READUTMP_LIB])
+
   AC_CHECK_HEADERS_ONCE([utmp.h utmpx.h])
   if test $ac_cv_header_utmp_h = yes || test $ac_cv_header_utmpx_h = yes; then
     dnl Prerequisites of lib/readutmp.h and lib/readutmp.c.

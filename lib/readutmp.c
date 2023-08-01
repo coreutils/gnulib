@@ -31,6 +31,13 @@
 #include <stdlib.h>
 #include <stdint.h>
 
+#if READUTMP_USE_SYSTEMD
+# include <dirent.h>
+# include <sys/sysinfo.h>
+# include <systemd/sd-login.h>
+# include <time.h>
+#endif
+
 #include "xalloc.h"
 
 /* Each of the FILE streams in this file is only used in a single thread.  */
@@ -48,16 +55,20 @@ extract_trimmed_name (const STRUCT_UTMP *ut)
 {
   char *p, *trimmed_name;
 
+#if READUTMP_USE_SYSTEMD
+  trimmed_name = xstrdup (UT_USER (ut));
+#else
   trimmed_name = xmalloc (UT_USER_SIZE + 1);
   strncpy (trimmed_name, UT_USER (ut), UT_USER_SIZE);
   /* Append a trailing NUL.  Some systems pad names shorter than the
-     maximum with spaces, others pad with NULs.  Remove any trailing
-     spaces.  */
+     maximum with spaces, others pad with NULs.  */
   trimmed_name[UT_USER_SIZE] = '\0';
+#endif
+  /* Remove any trailing spaces.  */
   for (p = trimmed_name + strlen (trimmed_name);
        trimmed_name < p && p[-1] == ' ';
        *--p = '\0')
-    continue;
+    ;
   return trimmed_name;
 }
 
@@ -85,7 +96,322 @@ desirable_utmp_entry (STRUCT_UTMP const *ut, int options)
   return true;
 }
 
-# if defined UTMP_NAME_FUNCTION
+# if READUTMP_USE_SYSTEMD
+/* Use systemd and Linux /proc and kernel APIs.  */
+
+static struct timeval
+get_boot_time_uncached ()
+{
+  /* /proc/uptime contains the uptime with a resolution of 0.01 sec.  */
+  FILE *fp = fopen ("/proc/uptime", "re");
+  if (fp != NULL)
+    {
+      char buf[32 + 1];
+      size_t n = fread (buf, 1, sizeof (buf) - 1, fp);
+      fclose (fp);
+      if (n > 0)
+        {
+          buf[n] = '\0';
+          /* buf now contains two values: the uptime and the idle time.  */
+          char *endptr;
+          double uptime = strtod (buf, &endptr);
+          if (endptr > buf)
+            {
+              struct timeval result;
+              if (gettimeofday (&result, NULL) >= 0)
+                {
+                  long uptime_sec = (long) uptime;
+                  int uptime_usec =
+                    (int) ((uptime - (double) uptime_sec) * 1000000.0 + 0.5);
+                  if (result.tv_usec < uptime_usec)
+                    {
+                      result.tv_usec += 1000000;
+                      result.tv_sec -= 1;
+                    }
+                  result.tv_sec -= uptime_sec;
+                  result.tv_usec -= uptime_usec;
+                  return result;
+                }
+            }
+        }
+    }
+
+  /* The sysinfo call returns the uptime with a resolution of 1 sec only.  */
+  struct sysinfo info;
+  if (sysinfo (&info) >= 0)
+    {
+      struct timeval result;
+      if (gettimeofday (&result, NULL) >= 0)
+        {
+          result.tv_sec -= info.uptime;
+          return result;
+        }
+    }
+
+  /* We shouldn't get here.  */
+  return (struct timeval) { .tv_sec = 0, .tv_usec = 0 };
+}
+
+static struct timeval
+get_boot_time ()
+{
+  static int cached;
+  static struct timeval boot_time;
+
+  if (!cached)
+    {
+      boot_time = get_boot_time_uncached ();
+      cached = 1;
+    }
+  return boot_time;
+}
+
+/* Guess the pty name that was opened for the given user right after
+   the given time AT.  */
+static char *
+guess_pty_name (uid_t uid, const struct timespec at)
+{
+  /* Traverse the entries of the /dev/pts/ directory, looking for devices
+     which are owned by UID and whose ctime is shortly after AT.  */
+  DIR *dirp = opendir ("/dev/pts");
+  if (dirp != NULL)
+    {
+      /* Buffer containing /dev/pts/N.  */
+      char name_buf[9 + 10 + 1];
+      memcpy (name_buf, "/dev/pts/", 9);
+
+      char best_name[9 + 10 + 1];
+      struct timespec best_time = { .tv_sec = 0, .tv_nsec = 0 };
+
+      for (;;)
+        {
+          struct dirent *dp = readdir (dirp);
+          if (dp == NULL)
+            break;
+          if (dp->d_name[0] != '.' && strlen (dp->d_name) <= 10)
+            {
+              /* Compose the absolute file name /dev/pts/N.  */
+              strcpy (name_buf + 9, dp->d_name);
+
+              /* Find its owner and ctime.  */
+              struct stat st;
+              if (stat (name_buf, &st) >= 0
+                  && st.st_uid == uid
+                  && (st.st_ctim.tv_sec > at.tv_sec
+                      || (st.st_ctim.tv_sec == at.tv_sec
+                          && st.st_ctim.tv_nsec >= at.tv_nsec)))
+                {
+                  /* This entry has the owner UID and a ctime >= AT.  */
+                  /* Is this entry the best one so far?  */
+                  if ((best_time.tv_sec == 0 && best_time.tv_nsec == 0)
+                      || (st.st_ctim.tv_sec < best_time.tv_sec
+                          || (st.st_ctim.tv_sec == best_time.tv_sec
+                              && st.st_ctim.tv_nsec < best_time.tv_nsec)))
+                    {
+                      strcpy (best_name, name_buf);
+                      best_time = st.st_ctim;
+                    }
+                }
+            }
+        }
+
+      closedir (dirp);
+
+      /* Did we find an entry owned by ID, and is it at most 5 seconds
+         after AT?  */
+      if (!(best_time.tv_sec == 0 && best_time.tv_nsec == 0)
+          && (best_time.tv_sec < at.tv_sec + 5
+              || (best_time.tv_sec == at.tv_sec + 5
+                  && best_time.tv_nsec <= at.tv_nsec)))
+        return xstrdup (best_name + 5);
+    }
+
+  return NULL;
+}
+
+int
+read_utmp (char const *file, size_t *n_entries, STRUCT_UTMP **utmp_buf,
+           int options)
+{
+  /* Fill entries, simulating what an utmp file would contain.  */
+  idx_t n_filled = 0;
+  idx_t n_alloc = 0;
+  STRUCT_UTMP *utmp = NULL;
+
+  /* Synthesize a BOOT_TIME entry.  */
+  if (!(options & READ_UTMP_USER_PROCESS))
+    {
+      if (n_filled == n_alloc)
+        utmp = xpalloc (utmp, &n_alloc, 1, -1, sizeof (STRUCT_UTMP));
+      STRUCT_UTMP *ut = &utmp[n_filled];
+      ut->ut_user = xstrdup ("reboot");
+      ut->ut_id = xstrdup ("");
+      ut->ut_line = xstrdup ("~");
+      ut->ut_pid = 0;
+      ut->ut_type = BOOT_TIME;
+      ut->ut_tv = get_boot_time ();
+      ut->ut_host = xstrdup ("");
+      ut->ut_session = 0;
+      if (desirable_utmp_entry (ut, options))
+        n_filled++;
+      else
+        free_utmp (1, ut);
+    }
+
+  /* Synthesize USER_PROCESS entries.  */
+  char **sessions;
+  int num_sessions = sd_get_sessions (&sessions);
+  if (num_sessions >= 0)
+    {
+      char **session_ptr;
+      for (session_ptr = sessions; *session_ptr != NULL; session_ptr++)
+        {
+          char *session = *session_ptr;
+
+          uint64_t start_usec;
+          if (sd_session_get_start_time (session, &start_usec) < 0)
+            start_usec = 0;
+          struct timeval start_tv;
+          start_tv.tv_sec = start_usec / 1000000;
+          start_tv.tv_usec = start_usec % 1000000;
+
+          char *seat;
+          if (sd_session_get_seat (session, &seat) < 0)
+            seat = NULL;
+
+          char *tty;
+          if (sd_session_get_tty (session, &tty) < 0)
+            {
+              tty = NULL;
+              /* Try harder to get a sensible value for the tty.  */
+              char *type;
+              if (sd_session_get_type (session, &type) >= 0)
+                {
+                  if (strcmp (type, "tty") == 0)
+                    {
+                      char *service;
+                      if (sd_session_get_service (session, &service) < 0)
+                        service = NULL;
+
+                      char *pty;
+                      uid_t uid;
+                      if (sd_session_get_uid (session, &uid) >= 0)
+                        {
+                          struct timespec start_ts =
+                            {
+                              .tv_sec = start_tv.tv_sec,
+                              .tv_nsec = start_tv.tv_usec * 1000
+                            };
+                          pty = guess_pty_name (uid, start_ts);
+                        }
+                      else
+                        pty = NULL;
+
+                      if (service != NULL && pty != NULL)
+                        {
+                          tty = xmalloc (strlen (service) + 1 + strlen (pty) + 1);
+                          stpcpy (stpcpy (stpcpy (tty, service), " "), pty);
+                        }
+                      else if (service != NULL)
+                        tty = xstrdup (service);
+                      else if (pty != NULL)
+                        tty = xstrdup (pty);
+
+                      free (pty);
+                      free (service);
+                    }
+                  free (type);
+                }
+            }
+
+          /* Create up to two USER_PROCESS entries: one for the seat,
+             one for the tty.  */
+          if (seat != NULL || tty != NULL)
+            {
+              char *user;
+              if (sd_session_get_username (session, &user) < 0)
+                user = xstrdup ("");
+
+              pid_t leader_pid;
+              if (sd_session_get_leader (session, &leader_pid) < 0)
+                leader_pid = 0;
+
+              char *remote_host;
+              if (sd_session_get_remote_host (session, &remote_host) < 0)
+                remote_host = NULL;
+              char *remote_user;
+              if (sd_session_get_remote_user (session, &remote_user) < 0)
+                remote_user = NULL;
+              char *host;
+              if (remote_host != NULL)
+                {
+                  if (remote_user != NULL)
+                    {
+                      host = xmalloc (strlen (remote_user) + 1 + strlen (remote_host) + 1);
+                      stpcpy (stpcpy (stpcpy (host, remote_user), "@"), remote_host);
+                    }
+                  else
+                    host = xstrdup (remote_host);
+                }
+              else
+                host = xstrdup ("");
+
+              size_t n_filled_after = n_filled + (seat != NULL) + (tty != NULL);
+              if (n_filled_after > n_alloc)
+                utmp = xpalloc (utmp, &n_alloc, n_filled_after - n_alloc, -1,
+                                sizeof (STRUCT_UTMP));
+              if (seat != NULL)
+                {
+                  STRUCT_UTMP *ut = &utmp[n_filled];
+                  ut->ut_user = xstrdup (user);
+                  ut->ut_id = xstrdup (session);
+                  ut->ut_line = xstrdup (seat);
+                  ut->ut_pid = leader_pid; /* this is the best we have */
+                  ut->ut_type = USER_PROCESS;
+                  ut->ut_tv = start_tv;
+                  ut->ut_host = xstrdup (host);
+                  ut->ut_session = leader_pid;
+                  if (desirable_utmp_entry (ut, options))
+                    n_filled++;
+                  else
+                    free_utmp (1, ut);
+                }
+              if (tty != NULL)
+                {
+                  STRUCT_UTMP *ut = &utmp[n_filled];
+                  ut->ut_user = xstrdup (user);
+                  ut->ut_id = xstrdup (session);
+                  ut->ut_line = xstrdup (tty);
+                  ut->ut_pid = leader_pid; /* this is the best we have */
+                  ut->ut_type = USER_PROCESS;
+                  ut->ut_tv = start_tv;
+                  ut->ut_host = xstrdup (host);
+                  ut->ut_session = leader_pid;
+                  if (desirable_utmp_entry (ut, options))
+                    n_filled++;
+                  else
+                    free_utmp (1, ut);
+                }
+
+              free (host);
+              free (remote_user);
+              free (remote_host);
+              free (user);
+            }
+          free (tty);
+          free (seat);
+          free (session);
+        }
+      free (sessions);
+    }
+
+  *n_entries = n_filled;
+  *utmp_buf = utmp;
+
+  return 0;
+}
+
+# elif defined UTMP_NAME_FUNCTION
 
 static void
 copy_utmp_entry (STRUCT_UTMP *dst, STRUCT_UTMP *src)
@@ -219,3 +545,19 @@ read_utmp (char const *file, size_t *n_entries, STRUCT_UTMP **utmp_buf,
 }
 
 #endif
+
+void
+free_utmp (size_t n_entries, STRUCT_UTMP *entries)
+{
+#if READUTMP_USE_SYSTEMD
+  size_t i;
+  for (i = 0; i < n_entries; i++)
+    {
+      STRUCT_UTMP *ut = &entries[i];
+      free (ut->ut_user);
+      free (ut->ut_id);
+      free (ut->ut_line);
+      free (ut->ut_host);
+    }
+#endif
+}

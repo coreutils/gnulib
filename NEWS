@@ -74,6 +74,10 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2023-08-01  readutmp        After processing the read_utmp() results, call
+                            free_utmp() in order to avoid a memory leak.
+                            Link additionally with $(READUTMP_LIB).
+
 2023-07-10  dfa             The signature of the function
                             case_folded_counterparts, declared in localeinfo.h,
                             has changed.

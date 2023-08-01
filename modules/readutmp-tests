@@ -11,3 +11,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-readutmp
 check_PROGRAMS += test-readutmp
+test_readutmp_LDADD = $(LDADD) @READUTMP_LIB@
