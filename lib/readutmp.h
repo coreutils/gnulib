@@ -271,6 +271,14 @@ enum { UT_USER_SIZE = sizeof UT_USER ((STRUCT_UTMP *) 0) };
 #  define UT_USER_SIZE UT_USER_SIZE
 # endif
 
+/* Size of the ut->ut_id member, or -1 if unbounded.  */
+# if READUTMP_USE_SYSTEMD
+enum { UT_ID_SIZE = -1 };
+# else
+enum { UT_ID_SIZE = sizeof (((STRUCT_UTMP *) 0)->ut_id) };
+#  define UT_ID_SIZE UT_ID_SIZE
+# endif
+
 /* Size of the ut->ut_line member, or -1 if unbounded.  */
 # if READUTMP_USE_SYSTEMD
 enum { UT_LINE_SIZE = -1 };
