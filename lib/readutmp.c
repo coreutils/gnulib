@@ -354,7 +354,25 @@ read_utmp (char const *file, size_t *n_entries, STRUCT_UTMP **utmp_buf,
                     host = xstrdup (remote_host);
                 }
               else
-                host = xstrdup ("");
+                {
+                  host = NULL;
+                  /* For backward compatibility, put the X11 display into the
+                     host field.  */
+                  char *type;
+                  if (sd_session_get_type (session, &type) >= 0)
+                    {
+                      if (strcmp (type, "x11") == 0)
+                        {
+                          char *display;
+                          if (sd_session_get_display (session, &display) < 0)
+                            display = NULL;
+                          host = display;
+                        }
+                      free (type);
+                    }
+                  if (host == NULL)
+                    host = xstrdup ("");
+                }
 
               size_t n_filled_after = n_filled + (seat != NULL) + (tty != NULL);
               if (n_filled_after > n_alloc)
