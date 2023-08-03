@@ -31,6 +31,7 @@
 
 #include <stdlib.h>
 #include <sys/types.h>
+#include <time.h>
 
 /* AIX 4.3.3 has both utmp.h and utmpx.h, but only struct utmp
    has the ut_exit member.  */
@@ -39,30 +40,39 @@
 # undef HAVE_UTMPX_H
 #endif
 
-#if READUTMP_USE_SYSTEMD
+/* HPUX 10.20 needs utmp.h, for the definition of e.g., UTMP_FILE.  */
+#if HAVE_UTMP_H
+# include <utmp.h>
+#endif
 
-/* Get 'struct timeval'.  */
-# include <sys/time.h>
+/* Needed for BOOT_TIME and USER_PROCESS.  */
+#if HAVE_UTMPX_H
+# if defined _THREAD_SAFE && defined UTMP_DATA_INIT
+    /* When including both utmp.h and utmpx.h on AIX 4.3, with _THREAD_SAFE
+       defined, work around the duplicate struct utmp_data declaration.  */
+#  define utmp_data gl_aix_4_3_workaround_utmp_data
+# endif
+# include <utmpx.h>
+#endif
 
-/* Type for the entries returned by read_utmp.  */
+#if READUTMP_USE_SYSTEMD || ! (HAVE_UTMPX_H || HAVE_UTMP_H)
+
 struct gl_utmp
 {
   /* All 'char *' here are of arbitrary length and malloc-allocated.  */
   char *ut_user;                /* User name */
   char *ut_id;                  /* Session ID */
   char *ut_line;                /* seat / device */
-  pid_t ut_pid;                 /* process ID of ? */
-  short ut_type;                /* BOOT_TIME or USER_PROCESS */
-  struct timeval ut_tv;         /* time */
   char *ut_host;                /* for remote sessions: user@host or host */
-  long ut_session;              /* process ID of session leader */
+  struct timespec ut_ts;        /* time */
+  pid_t ut_pid;                 /* process ID of ? */
+  pid_t ut_session;             /* process ID of session leader */
+  short ut_type;                /* BOOT_TIME or USER_PROCESS */
 };
 
-/* Get values for ut_type: BOOT_TIME, USER_PROCESS.  */
-# include <utmpx.h>
-
+# define HAVE_GL_UTMP 1
 # define UTMP_STRUCT_NAME gl_utmp
-# define UT_TIME_MEMBER(UT) ((UT)->ut_tv.tv_sec)
+# define UT_TIME_MEMBER(UT) ((UT)->ut_ts.tv_sec)
 # define UT_EXIT_E_TERMINATION(UT) 0
 # define UT_EXIT_E_EXIT(UT) 0
 
@@ -90,16 +100,6 @@ struct gl_utmp
    ⎣ ut_ss        struct sockaddr_storage    NetBSD, Minix
  */
 
-# if HAVE_UTMP_H
-    /* HPUX 10.20 needs utmp.h, for the definition of e.g., UTMP_FILE.  */
-#  include <utmp.h>
-# endif
-# if defined _THREAD_SAFE && defined UTMP_DATA_INIT
-    /* When including both utmp.h and utmpx.h on AIX 4.3, with _THREAD_SAFE
-       defined, work around the duplicate struct utmp_data declaration.  */
-#  define utmp_data gl_aix_4_3_workaround_utmp_data
-# endif
-# include <utmpx.h>
 # define UTMP_STRUCT_NAME utmpx
 # define UT_TIME_MEMBER(UT) ((UT)->ut_tv.tv_sec)
 # define SET_UTMP_ENT setutxent
@@ -150,12 +150,11 @@ struct gl_utmp
    ⎣ ut_addr_v6   [u]int[4]                  glibc, musl, Android
  */
 
-# include <utmp.h>
 # if !HAVE_DECL_GETUTENT
     struct utmp *getutent (void);
 # endif
 # define UTMP_STRUCT_NAME utmp
-# define UT_TIME_MEMBER(UT) ((UT)->ut_time)
+# define UT_TIME_MEMBER(UT) ((UT)->ut_ts.tv_sec)
 # define SET_UTMP_ENT setutent
 # define GET_UTMP_ENT getutent
 # define END_UTMP_ENT endutent
@@ -175,94 +174,34 @@ struct gl_utmp
 #  define UT_EXIT_E_EXIT(UT) 0
 # endif
 
-#else
-
-/* Provide a dummy fallback.  */
-
-/* Get 'struct timeval'.  */
-# include <sys/time.h>
-
-struct gl_utmp
-{
-  char ut_user[1];
-  char ut_line[1];
-  struct timeval ut_tv;
-};
-# define UTMP_STRUCT_NAME gl_utmp
-# define UT_TIME_MEMBER(UT) ((UT)->ut_tv.tv_sec)
-# define UT_EXIT_E_TERMINATION(UT) 0
-# define UT_EXIT_E_EXIT(UT) 0
-
 #endif
 
 /* Accessor macro for the member named ut_user or ut_name.  */
-#if READUTMP_USE_SYSTEMD
-
+#if (!HAVE_GL_UTMP \
+     && (HAVE_UTMPX_H ? HAVE_STRUCT_UTMPX_UT_NAME \
+         : HAVE_UTMP_H && HAVE_STRUCT_UTMP_UT_NAME))
+# define UT_USER(UT) ((UT)->ut_name)
+#else
 # define UT_USER(UT) ((UT)->ut_user)
-
-#elif HAVE_UTMPX_H
-
-# if HAVE_STRUCT_UTMPX_UT_USER
-#  define UT_USER(UT) ((UT)->ut_user)
-# endif
-# if HAVE_STRUCT_UTMPX_UT_NAME
-#  undef UT_USER
-#  define UT_USER(UT) ((UT)->ut_name)
-# endif
-
-#elif HAVE_UTMP_H
-
-# if HAVE_STRUCT_UTMP_UT_USER
-#  define UT_USER(UT) ((UT)->ut_user)
-# endif
-# if HAVE_STRUCT_UTMP_UT_NAME
-#  undef UT_USER
-#  define UT_USER(UT) ((UT)->ut_name)
-# endif
-
-#else /* dummy fallback */
-
-# define UT_USER(UT) ((UT)->ut_user)
-
 #endif
 
-#if READUTMP_USE_SYSTEMD
-# define HAVE_STRUCT_XTMP_UT_EXIT 0
-#else
-# define HAVE_STRUCT_XTMP_UT_EXIT \
-     (HAVE_STRUCT_UTMP_UT_EXIT \
-      || HAVE_STRUCT_UTMPX_UT_EXIT)
-#endif
+#define HAVE_STRUCT_XTMP_UT_EXIT \
+  (!HAVE_GL_UTMP && (HAVE_STRUCT_UTMP_UT_EXIT || HAVE_STRUCT_UTMPX_UT_EXIT)
 
-#if READUTMP_USE_SYSTEMD
-# define HAVE_STRUCT_XTMP_UT_ID 1
-#else
-# define HAVE_STRUCT_XTMP_UT_ID \
-     (HAVE_STRUCT_UTMP_UT_ID \
-      || HAVE_STRUCT_UTMPX_UT_ID)
-#endif
+#define HAVE_STRUCT_XTMP_UT_ID \
+  (HAVE_GL_UTMP || HAVE_STRUCT_UTMP_UT_ID || HAVE_STRUCT_UTMPX_UT_ID)
 
-#if READUTMP_USE_SYSTEMD
-# define HAVE_STRUCT_XTMP_UT_PID 1
-#else
-# define HAVE_STRUCT_XTMP_UT_PID \
-     (HAVE_STRUCT_UTMP_UT_PID \
-      || HAVE_STRUCT_UTMPX_UT_PID)
-#endif
+#define HAVE_STRUCT_XTMP_UT_PID \
+  (HAVE_GL_UTMP || HAVE_STRUCT_UTMP_UT_PID || HAVE_STRUCT_UTMPX_UT_PID)
 
-#if READUTMP_USE_SYSTEMD
-# define HAVE_STRUCT_XTMP_UT_HOST 1
-#else
-# define HAVE_STRUCT_XTMP_UT_HOST \
-     (HAVE_STRUCT_UTMP_UT_HOST \
-      || HAVE_STRUCT_UTMPX_UT_HOST)
-#endif
+#define HAVE_STRUCT_XTMP_UT_HOST \
+  (HAVE_GL_UTMP || HAVE_STRUCT_UTMP_UT_HOST || HAVE_STRUCT_UTMPX_UT_HOST)
 
 /* Type of entry returned by read_utmp().  */
 typedef struct UTMP_STRUCT_NAME STRUCT_UTMP;
 
 /* Size of the UT_USER (ut) member, or -1 if unbounded.  */
-#if READUTMP_USE_SYSTEMD
+#if HAVE_GL_UTMP
 enum { UT_USER_SIZE = -1 };
 #else
 enum { UT_USER_SIZE = sizeof UT_USER ((STRUCT_UTMP *) 0) };
@@ -270,7 +209,7 @@ enum { UT_USER_SIZE = sizeof UT_USER ((STRUCT_UTMP *) 0) };
 #endif
 
 /* Size of the ut->ut_id member, or -1 if unbounded.  */
-#if READUTMP_USE_SYSTEMD
+#if HAVE_GL_UTMP
 enum { UT_ID_SIZE = -1 };
 #else
 enum { UT_ID_SIZE = sizeof (((STRUCT_UTMP *) 0)->ut_id) };
@@ -278,7 +217,7 @@ enum { UT_ID_SIZE = sizeof (((STRUCT_UTMP *) 0)->ut_id) };
 #endif
 
 /* Size of the ut->ut_line member, or -1 if unbounded.  */
-#if READUTMP_USE_SYSTEMD
+#if HAVE_GL_UTMP
 enum { UT_LINE_SIZE = -1 };
 #else
 enum { UT_LINE_SIZE = sizeof (((STRUCT_UTMP *) 0)->ut_line) };
@@ -286,7 +225,7 @@ enum { UT_LINE_SIZE = sizeof (((STRUCT_UTMP *) 0)->ut_line) };
 #endif
 
 /* Size of the ut->ut_host member, or -1 if unbounded.  */
-#if READUTMP_USE_SYSTEMD
+#if HAVE_GL_UTMP
 enum { UT_HOST_SIZE = -1 };
 #else
 enum { UT_HOST_SIZE = sizeof (((STRUCT_UTMP *) 0)->ut_host) };
@@ -330,7 +269,7 @@ enum { UT_HOST_SIZE = sizeof (((STRUCT_UTMP *) 0)->ut_host) };
 
 /* Accessor macros for the member named ut_type.  */
 
-#if READUTMP_USE_SYSTEMD || HAVE_STRUCT_UTMP_UT_TYPE || HAVE_STRUCT_UTMPX_UT_TYPE
+#if HAVE_GL_UTMP || HAVE_STRUCT_UTMP_UT_TYPE || HAVE_STRUCT_UTMPX_UT_TYPE
 # define UT_TYPE_EQ(UT, V) ((UT)->ut_type == (V))
 # define UT_TYPE_NOT_DEFINED 0
 #else

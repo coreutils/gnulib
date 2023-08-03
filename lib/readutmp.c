@@ -93,7 +93,7 @@ desirable_utmp_entry (STRUCT_UTMP const *ut, int options)
 # if READUTMP_USE_SYSTEMD
 /* Use systemd and Linux /proc and kernel APIs.  */
 
-static struct timeval
+static struct timespec
 get_boot_time_uncached (void)
 {
   /* /proc/uptime contains the uptime with a resolution of 0.01 sec.  */
@@ -111,19 +111,22 @@ get_boot_time_uncached (void)
           double uptime = strtod (buf, &endptr);
           if (endptr > buf)
             {
-              struct timeval result;
-              if (gettimeofday (&result, NULL) >= 0)
+              struct timespec result;
+              if (0 <= timespec_get (&result, TIME_UTC))
                 {
-                  long uptime_sec = (long) uptime;
-                  int uptime_usec =
-                    (int) ((uptime - (double) uptime_sec) * 1000000.0 + 0.5);
-                  if (result.tv_usec < uptime_usec)
+                  time_t uptime_sec = uptime;
+                  struct timespec up =
                     {
-                      result.tv_usec += 1000000;
+                      .tv_sec = uptime_sec,
+                      .tv_nsec = (uptime - uptime_sec) * 1e9 + 0.5
+                    };
+                  if (result.tv_nsec < up.tv_nsec)
+                    {
+                      result.tv_nsec += 1000000000;
                       result.tv_sec -= 1;
                     }
-                  result.tv_sec -= uptime_sec;
-                  result.tv_usec -= uptime_usec;
+                  result.tv_sec -= up.tv_sec;
+                  result.tv_nsec -= up.tv_nsec;
                   return result;
                 }
             }
@@ -134,8 +137,8 @@ get_boot_time_uncached (void)
   struct sysinfo info;
   if (sysinfo (&info) >= 0)
     {
-      struct timeval result;
-      if (gettimeofday (&result, NULL) >= 0)
+      struct timespec result;
+      if (0 <= timespec_get (&result, TIME_UTC))
         {
           result.tv_sec -= info.uptime;
           return result;
@@ -143,19 +146,19 @@ get_boot_time_uncached (void)
     }
 
   /* We shouldn't get here.  */
-  return (struct timeval) { .tv_sec = 0, .tv_usec = 0 };
+  return (struct timespec) {0};
 }
 
-static struct timeval
+static struct timespec
 get_boot_time (void)
 {
-  static int cached;
-  static struct timeval boot_time;
+  static bool cached;
+  static struct timespec boot_time;
 
   if (!cached)
     {
+      cached = true;
       boot_time = get_boot_time_uncached ();
-      cached = 1;
     }
   return boot_time;
 }
@@ -252,7 +255,7 @@ struct utmp_alloc
 static struct utmp_alloc
 add_utmp (struct utmp_alloc a, int options,
           char const *user, char const *id, char const *line, pid_t pid,
-          short type, struct timeval t, char const *host, long session)
+          short type, struct timespec ts, char const *host, long session)
 {
   if (!user) user = "";
   if (!host) host = "";
@@ -277,11 +280,11 @@ add_utmp (struct utmp_alloc a, int options,
   ut->ut_user = p = memcpy (p - usersize, user, usersize);
   ut->ut_id   = p = memcpy (p -   idsize,   id,   idsize);
   ut->ut_line = p = memcpy (p - linesize, line, linesize);
-  ut->ut_pid = pid;
-  ut->ut_type = type;
-  ut->ut_tv = t;
   ut->ut_host = memcpy (p - hostsize, line, hostsize);
+  ut->ut_ts = ts;
+  ut->ut_pid = pid;
   ut->ut_session = session;
+  ut->ut_type = type;
   if (desirable_utmp_entry (ut, options))
     {
       /* Now that UT has been checked, relocate its string slots to be
@@ -323,9 +326,9 @@ read_utmp (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
           uint64_t start_usec;
           if (sd_session_get_start_time (session, &start_usec) < 0)
             start_usec = 0;
-          struct timeval start_tv;
-          start_tv.tv_sec = start_usec / 1000000;
-          start_tv.tv_usec = start_usec % 1000000;
+          struct timespec start_ts;
+          start_ts.tv_sec = start_usec / 1000000;
+          start_ts.tv_nsec = start_usec % 1000000 * 1000;
 
           char *seat;
           if (sd_session_get_seat (session, &seat) < 0)
@@ -346,19 +349,9 @@ read_utmp (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
                   if (sd_session_get_service (session, &service) < 0)
                     service = NULL;
 
-                  char *pty;
                   uid_t uid;
-                  if (sd_session_get_uid (session, &uid) >= 0)
-                    {
-                      struct timespec start_ts =
-                        {
-                          .tv_sec = start_tv.tv_sec,
-                          .tv_nsec = start_tv.tv_usec * 1000
-                        };
-                      pty = guess_pty_name (uid, start_ts);
-                    }
-                  else
-                    pty = NULL;
+                  char *pty = (sd_session_get_uid (session, &uid) < 0 ? NULL
+                               : guess_pty_name (uid, start_ts));
 
                   if (service != NULL && pty != NULL)
                     {
@@ -422,11 +415,11 @@ read_utmp (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
               if (seat != NULL)
                 a = add_utmp (a, options, user, session, seat,
                               leader_pid /* the best we have */,
-                              USER_PROCESS, start_tv, host, leader_pid);
+                              USER_PROCESS, start_ts, host, leader_pid);
               if (tty != NULL)
                 a = add_utmp (a, options, user, session, tty,
                               leader_pid /* the best we have */,
-                              USER_PROCESS, start_tv, host, leader_pid);
+                              USER_PROCESS, start_ts, host, leader_pid);
 
               free (host);
               free (user);
