@@ -84,7 +84,7 @@ bracket expressions are not supported on some platforms:
 @c etc.
 @c https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=57911
 FreeBSD 13.2,
-NetBSD 9.3, Cygwin 3.4.6.
+NetBSD 9.3, Solaris 11 OpenIndiana, Cygwin 3.4.6.
 @item
 In the pattern, character classes (such as @code{[:alnum:]}) inside
 bracket expressions fail to match characters outside the single-byte
