@@ -305,6 +305,13 @@ int
 read_utmp (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
            int options)
 {
+  /* The current implementation can imitate only UTMP_FILE.  */
+  if (strcmp (file, UTMP_FILE) != 0)
+    {
+      errno = ENOTSUP;
+      return -1;
+    }
+
   /* Fill entries, simulating what a utmp file would contain.  */
   struct utmp_alloc a = {0};
 
