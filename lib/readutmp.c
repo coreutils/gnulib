@@ -94,7 +94,7 @@ desirable_utmp_entry (STRUCT_UTMP const *ut, int options)
 /* Use systemd and Linux /proc and kernel APIs.  */
 
 static struct timeval
-get_boot_time_uncached ()
+get_boot_time_uncached (void)
 {
   /* /proc/uptime contains the uptime with a resolution of 0.01 sec.  */
   FILE *fp = fopen ("/proc/uptime", "re");
@@ -147,7 +147,7 @@ get_boot_time_uncached ()
 }
 
 static struct timeval
-get_boot_time ()
+get_boot_time (void)
 {
   static int cached;
   static struct timeval boot_time;
