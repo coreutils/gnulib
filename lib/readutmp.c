@@ -299,7 +299,7 @@ add_utmp (struct utmp_alloc a, int options,
 }
 
 int
-read_utmp (char const *file, size_t *n_entries, STRUCT_UTMP **utmp_buf,
+read_utmp (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
            int options)
 {
   /* Fill entries, simulating what a utmp file would contain.  */
@@ -508,7 +508,7 @@ copy_utmp_entry (STRUCT_UTMP *dst, STRUCT_UTMP *src)
 }
 
 int
-read_utmp (char const *file, size_t *n_entries, STRUCT_UTMP **utmp_buf,
+read_utmp (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
            int options)
 {
   idx_t n_read = 0;
@@ -544,7 +544,7 @@ read_utmp (char const *file, size_t *n_entries, STRUCT_UTMP **utmp_buf,
 # else
 
 int
-read_utmp (char const *file, size_t *n_entries, STRUCT_UTMP **utmp_buf,
+read_utmp (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
            int options)
 {
   idx_t n_read = 0;
@@ -586,7 +586,7 @@ read_utmp (char const *file, size_t *n_entries, STRUCT_UTMP **utmp_buf,
 #else /* dummy fallback */
 
 int
-read_utmp (char const *file, size_t *n_entries, STRUCT_UTMP **utmp_buf,
+read_utmp (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
            int options)
 {
   errno = ENOSYS;

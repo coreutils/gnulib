@@ -9,6 +9,7 @@ m4/systemd.m4
 
 Depends-on:
 extensions
+idx
 xalloc
 stdbool
 stdint

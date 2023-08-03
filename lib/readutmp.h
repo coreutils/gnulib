@@ -27,6 +27,8 @@
 #  error "Please include config.h first."
 # endif
 
+# include "idx.h"
+
 # include <stdlib.h>
 # include <sys/types.h>
 
@@ -385,8 +387,7 @@ char *extract_trimmed_name (const STRUCT_UTMP *ut)
    process-IDs do not currently exist.
    If OPTIONS & READ_UTMP_USER_PROCESS is nonzero, omit entries which
    do not correspond to a user process.  */
-/* FIXME: This header should use idx_t, not size_t.  */
-int read_utmp (char const *file, size_t *n_entries, STRUCT_UTMP **utmp_buf,
+int read_utmp (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
                int options);
 
 #endif /* __READUTMP_H__ */
