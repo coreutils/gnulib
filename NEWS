@@ -74,8 +74,8 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
-2023-08-01  readutmp        After processing the read_utmp() results, call
-                            free_utmp() in order to avoid a memory leak.
+2023-08-01  readutmp        Some STRUCT_UTMP members can be char *,
+                            rather than fixed-length char arrays.
                             Link additionally with $(READUTMP_LIB).
 
 2023-07-10  dfa             The signature of the function

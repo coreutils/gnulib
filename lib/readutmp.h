@@ -389,8 +389,4 @@ char *extract_trimmed_name (const STRUCT_UTMP *ut)
 int read_utmp (char const *file, size_t *n_entries, STRUCT_UTMP **utmp_buf,
                int options);
 
-/* Free the memory allocated by the N_ENTRIES utmp entries, starting
-   at ENTRIES.  */
-void free_utmp (size_t n_entries, STRUCT_UTMP *entries);
-
 #endif /* __READUTMP_H__ */

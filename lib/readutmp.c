@@ -223,34 +223,92 @@ guess_pty_name (uid_t uid, const struct timespec at)
   return NULL;
 }
 
+/* A memory allocation for an in-progress read_utmp.  */
+
+struct utmp_alloc
+{
+  /* A pointer to a possibly-empty array of utmp entries,
+     followed by a possibly-empty sequence of unused bytes,
+     followed by a possibly-empty sequence of string bytes.
+     UTMP is either null or allocated by malloc.  */
+  STRUCT_UTMP *utmp;
+
+  /* The number of utmp entries.  */
+  idx_t filled;
+
+  /* The string byte sequence length.  Strings are null-terminated.  */
+  idx_t string_bytes;
+
+  /* The total number of bytes allocated.  This equals
+     FILLED * sizeof *UTMP + [size of free area] + STRING_BYTES.  */
+  idx_t alloc_bytes;
+};
+
+/* Use the memory allocation A, and if the read_utmp options OPTIONS
+   permit it, add a new entry with the given USER, etc.  Grow A as
+   needed, reporting an error and exit on memory allocation failure.
+   Return the resulting memory allocation.  */
+
+static struct utmp_alloc
+add_utmp (struct utmp_alloc a, int options,
+          char const *user, char const *id, char const *line, pid_t pid,
+          short type, struct timeval t, char const *host, long session)
+{
+  if (!user) user = "";
+  if (!host) host = "";
+  int entry_bytes = sizeof (STRUCT_UTMP);
+  idx_t usersize = strlen (user) + 1, idsize = strlen (id) + 1,
+    linesize = strlen (line) + 1, hostsize = strlen (host) + 1;
+  idx_t avail = a.alloc_bytes - (entry_bytes * a.filled + a.string_bytes);
+  idx_t needed_string_bytes = usersize + idsize + linesize + hostsize;
+  idx_t needed = entry_bytes + needed_string_bytes;
+  if (avail < needed)
+    {
+      idx_t old_string_offset = a.alloc_bytes - a.string_bytes;
+      void *new = xpalloc (a.utmp, &a.alloc_bytes, needed - avail, -1, 1);
+      idx_t new_string_offset = a.alloc_bytes - a.string_bytes;
+      a.utmp = new;
+      char *q = new;
+      memmove (q + new_string_offset, q + old_string_offset, a.string_bytes);
+    }
+  STRUCT_UTMP *ut = &a.utmp[a.filled];
+  char *stringlim = (char *) a.utmp + a.alloc_bytes;
+  char *p = stringlim - a.string_bytes;
+  ut->ut_user = p = memcpy (p - usersize, user, usersize);
+  ut->ut_id   = p = memcpy (p -   idsize,   id,   idsize);
+  ut->ut_line = p = memcpy (p - linesize, line, linesize);
+  ut->ut_pid = pid;
+  ut->ut_type = type;
+  ut->ut_tv = t;
+  ut->ut_host = memcpy (p - hostsize, line, hostsize);
+  ut->ut_session = session;
+  if (desirable_utmp_entry (ut, options))
+    {
+      /* Now that UT has been checked, relocate its string slots to be
+         relative to the end of the allocated storage, so that these
+         slots survive realloc.  The slots will be relocated back just
+         before read_utmp returns.  */
+      ut->ut_user = (char *) (intptr_t) (ut->ut_user - stringlim);
+      ut->ut_id   = (char *) (intptr_t) (ut->ut_id   - stringlim);
+      ut->ut_line = (char *) (intptr_t) (ut->ut_line - stringlim);
+      ut->ut_host = (char *) (intptr_t) (ut->ut_host - stringlim);
+      a.filled++;
+      a.string_bytes += needed_string_bytes;
+    }
+  return a;
+}
+
 int
 read_utmp (char const *file, size_t *n_entries, STRUCT_UTMP **utmp_buf,
            int options)
 {
-  /* Fill entries, simulating what an utmp file would contain.  */
-  idx_t n_filled = 0;
-  idx_t n_alloc = 0;
-  STRUCT_UTMP *utmp = NULL;
+  /* Fill entries, simulating what a utmp file would contain.  */
+  struct utmp_alloc a = {0};
 
   /* Synthesize a BOOT_TIME entry.  */
   if (!(options & READ_UTMP_USER_PROCESS))
-    {
-      if (n_filled == n_alloc)
-        utmp = xpalloc (utmp, &n_alloc, 1, -1, sizeof (STRUCT_UTMP));
-      STRUCT_UTMP *ut = &utmp[n_filled];
-      ut->ut_user = xstrdup ("reboot");
-      ut->ut_id = xstrdup ("");
-      ut->ut_line = xstrdup ("~");
-      ut->ut_pid = 0;
-      ut->ut_type = BOOT_TIME;
-      ut->ut_tv = get_boot_time ();
-      ut->ut_host = xstrdup ("");
-      ut->ut_session = 0;
-      if (desirable_utmp_entry (ut, options))
-        n_filled++;
-      else
-        free_utmp (1, ut);
-    }
+    a = add_utmp (a, options, "reboot", "", "~", 0,
+                  BOOT_TIME, get_boot_time (), "", 0);
 
   /* Synthesize USER_PROCESS entries.  */
   char **sessions;
@@ -273,48 +331,46 @@ read_utmp (char const *file, size_t *n_entries, STRUCT_UTMP **utmp_buf,
           if (sd_session_get_seat (session, &seat) < 0)
             seat = NULL;
 
+          char missing_type[] = "";
+          char *type = NULL;
           char *tty;
           if (sd_session_get_tty (session, &tty) < 0)
             {
               tty = NULL;
               /* Try harder to get a sensible value for the tty.  */
-              char *type;
-              if (sd_session_get_type (session, &type) >= 0)
+              if (sd_session_get_type (session, &type) < 0)
+                type = missing_type;
+              if (strcmp (type, "tty") == 0)
                 {
-                  if (strcmp (type, "tty") == 0)
+                  char *service;
+                  if (sd_session_get_service (session, &service) < 0)
+                    service = NULL;
+
+                  char *pty;
+                  uid_t uid;
+                  if (sd_session_get_uid (session, &uid) >= 0)
                     {
-                      char *service;
-                      if (sd_session_get_service (session, &service) < 0)
-                        service = NULL;
-
-                      char *pty;
-                      uid_t uid;
-                      if (sd_session_get_uid (session, &uid) >= 0)
+                      struct timespec start_ts =
                         {
-                          struct timespec start_ts =
-                            {
-                              .tv_sec = start_tv.tv_sec,
-                              .tv_nsec = start_tv.tv_usec * 1000
-                            };
-                          pty = guess_pty_name (uid, start_ts);
-                        }
-                      else
-                        pty = NULL;
+                          .tv_sec = start_tv.tv_sec,
+                          .tv_nsec = start_tv.tv_usec * 1000
+                        };
+                      pty = guess_pty_name (uid, start_ts);
+                    }
+                  else
+                    pty = NULL;
 
-                      if (service != NULL && pty != NULL)
-                        {
-                          tty = xmalloc (strlen (service) + 1 + strlen (pty) + 1);
-                          stpcpy (stpcpy (stpcpy (tty, service), " "), pty);
-                        }
-                      else if (service != NULL)
-                        tty = xstrdup (service);
-                      else if (pty != NULL)
-                        tty = xstrdup (pty);
-
+                  if (service != NULL && pty != NULL)
+                    {
+                      tty = xmalloc (strlen (service) + 1 + strlen (pty) + 1);
+                      stpcpy (stpcpy (stpcpy (tty, service), " "), pty);
                       free (pty);
                       free (service);
                     }
-                  free (type);
+                  else if (service != NULL)
+                    tty = service;
+                  else if (pty != NULL)
+                    tty = pty;
                 }
             }
 
@@ -324,92 +380,60 @@ read_utmp (char const *file, size_t *n_entries, STRUCT_UTMP **utmp_buf,
             {
               char *user;
               if (sd_session_get_username (session, &user) < 0)
-                user = xstrdup ("");
+                user = NULL;
 
               pid_t leader_pid;
               if (sd_session_get_leader (session, &leader_pid) < 0)
                 leader_pid = 0;
 
+              char *host;
               char *remote_host;
               if (sd_session_get_remote_host (session, &remote_host) < 0)
-                remote_host = NULL;
-              char *remote_user;
-              if (sd_session_get_remote_user (session, &remote_user) < 0)
-                remote_user = NULL;
-              char *host;
-              if (remote_host != NULL)
-                {
-                  if (remote_user != NULL)
-                    {
-                      host = xmalloc (strlen (remote_user) + 1 + strlen (remote_host) + 1);
-                      stpcpy (stpcpy (stpcpy (host, remote_user), "@"), remote_host);
-                    }
-                  else
-                    host = xstrdup (remote_host);
-                }
-              else
                 {
                   host = NULL;
                   /* For backward compatibility, put the X11 display into the
                      host field.  */
-                  char *type;
-                  if (sd_session_get_type (session, &type) >= 0)
+                  if (!type && sd_session_get_type (session, &type) < 0)
+                    type = missing_type;
+                  if (strcmp (type, "x11") == 0)
                     {
-                      if (strcmp (type, "x11") == 0)
-                        {
-                          char *display;
-                          if (sd_session_get_display (session, &display) < 0)
-                            display = NULL;
-                          host = display;
-                        }
-                      free (type);
+                      char *display;
+                      if (sd_session_get_display (session, &display) < 0)
+                        display = NULL;
+                      host = display;
                     }
-                  if (host == NULL)
-                    host = xstrdup ("");
+                }
+              else
+                {
+                  char *remote_user;
+                  if (sd_session_get_remote_user (session, &remote_user) < 0)
+                    host = remote_host;
+                  else
+                    {
+                      host = xmalloc (strlen (remote_user) + 1
+                                      + strlen (remote_host) + 1);
+                      stpcpy (stpcpy (stpcpy (host, remote_user), "@"),
+                              remote_host);
+                      free (remote_user);
+                      free (remote_host);
+                    }
                 }
 
-              size_t n_filled_after = n_filled + (seat != NULL) + (tty != NULL);
-              if (n_filled_after > n_alloc)
-                utmp = xpalloc (utmp, &n_alloc, n_filled_after - n_alloc, -1,
-                                sizeof (STRUCT_UTMP));
               if (seat != NULL)
-                {
-                  STRUCT_UTMP *ut = &utmp[n_filled];
-                  ut->ut_user = xstrdup (user);
-                  ut->ut_id = xstrdup (session);
-                  ut->ut_line = xstrdup (seat);
-                  ut->ut_pid = leader_pid; /* this is the best we have */
-                  ut->ut_type = USER_PROCESS;
-                  ut->ut_tv = start_tv;
-                  ut->ut_host = xstrdup (host);
-                  ut->ut_session = leader_pid;
-                  if (desirable_utmp_entry (ut, options))
-                    n_filled++;
-                  else
-                    free_utmp (1, ut);
-                }
+                a = add_utmp (a, options, user, session, seat,
+                              leader_pid /* the best we have */,
+                              USER_PROCESS, start_tv, host, leader_pid);
               if (tty != NULL)
-                {
-                  STRUCT_UTMP *ut = &utmp[n_filled];
-                  ut->ut_user = xstrdup (user);
-                  ut->ut_id = xstrdup (session);
-                  ut->ut_line = xstrdup (tty);
-                  ut->ut_pid = leader_pid; /* this is the best we have */
-                  ut->ut_type = USER_PROCESS;
-                  ut->ut_tv = start_tv;
-                  ut->ut_host = xstrdup (host);
-                  ut->ut_session = leader_pid;
-                  if (desirable_utmp_entry (ut, options))
-                    n_filled++;
-                  else
-                    free_utmp (1, ut);
-                }
+                a = add_utmp (a, options, user, session, tty,
+                              leader_pid /* the best we have */,
+                              USER_PROCESS, start_tv, host, leader_pid);
 
               free (host);
-              free (remote_user);
-              free (remote_host);
               free (user);
             }
+
+          if (type != missing_type)
+            free (type);
           free (tty);
           free (seat);
           free (session);
@@ -417,8 +441,21 @@ read_utmp (char const *file, size_t *n_entries, STRUCT_UTMP **utmp_buf,
       free (sessions);
     }
 
-  *n_entries = n_filled;
-  *utmp_buf = utmp;
+  /* Relocate the string pointers back to their natural position.  */
+  {
+    char *stringlim = (char *) a.utmp + a.alloc_bytes;
+
+    for (idx_t i = 0; i < a.filled; i++)
+      {
+        a.utmp[i].ut_user = (intptr_t) a.utmp[i].ut_user + stringlim;
+        a.utmp[i].ut_id   = (intptr_t) a.utmp[i].ut_id   + stringlim;
+        a.utmp[i].ut_line = (intptr_t) a.utmp[i].ut_line + stringlim;
+        a.utmp[i].ut_host = (intptr_t) a.utmp[i].ut_host + stringlim;
+      }
+  }
+
+  *n_entries = a.filled;
+  *utmp_buf = a.utmp;
 
   return 0;
 }
@@ -557,19 +594,3 @@ read_utmp (char const *file, size_t *n_entries, STRUCT_UTMP **utmp_buf,
 }
 
 #endif
-
-void
-free_utmp (size_t n_entries, STRUCT_UTMP *entries)
-{
-#if READUTMP_USE_SYSTEMD
-  size_t i;
-  for (i = 0; i < n_entries; i++)
-    {
-      STRUCT_UTMP *ut = &entries[i];
-      free (ut->ut_user);
-      free (ut->ut_id);
-      free (ut->ut_line);
-      free (ut->ut_host);
-    }
-#endif
-}
