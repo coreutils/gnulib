@@ -47,29 +47,23 @@
 # pragma GCC diagnostic ignored "-Wsizeof-pointer-memaccess"
 #endif
 
+/* Work around <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=109614>.  */
+#if 11 <= __GNUC__
+# pragma GCC diagnostic ignored "-Wstringop-overread"
+#endif
+
 /* Copy UT_USER (UT) into storage obtained from malloc.  Then remove any
    trailing spaces from the copy, NUL terminate it, and return the copy.  */
 
 char *
 extract_trimmed_name (const STRUCT_UTMP *ut)
 {
-  char *p, *trimmed_name;
-
-#if READUTMP_USE_SYSTEMD
-  trimmed_name = xstrdup (UT_USER (ut));
-#else
-  trimmed_name = xmalloc (UT_USER_SIZE + 1);
-  strncpy (trimmed_name, UT_USER (ut), UT_USER_SIZE);
-  /* Append a trailing NUL.  Some systems pad names shorter than the
-     maximum with spaces, others pad with NULs.  */
-  trimmed_name[UT_USER_SIZE] = '\0';
-#endif
-  /* Remove any trailing spaces.  */
-  for (p = trimmed_name + strlen (trimmed_name);
-       trimmed_name < p && p[-1] == ' ';
-       *--p = '\0')
-    ;
-  return trimmed_name;
+  char const *name = UT_USER (ut);
+  idx_t len = strnlen (name, UT_USER_SIZE);
+  char const *p;
+  for (p = name + len; name < p && p[-1] == ' '; p--)
+    continue;
+  return ximemdup0 (name, p - name);
 }
 
 #if READ_UTMP_SUPPORTED

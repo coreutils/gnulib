@@ -12,6 +12,7 @@ extensions
 xalloc
 stdbool
 stdint
+strnlen
 sys_time
 fopen-gnu
 unlocked-io-internal
