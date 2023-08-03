@@ -82,7 +82,9 @@ bracket expressions are not supported on some platforms:
 @c Failing test cases:
 @c fnmatch ("[[:alnum:]]", "a", 0) == 0
 @c etc.
-FreeBSD 13.2, NetBSD 9.3, Cygwin 3.4.6.
+@c https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=57911
+FreeBSD 13.2,
+NetBSD 9.3, Cygwin 3.4.6.
 @item
 In the pattern, character classes (such as @code{[:alnum:]}) inside
 bracket expressions fail to match characters outside the single-byte
