@@ -1,4 +1,4 @@
-# systemd.m4 serial 2
+# systemd.m4 serial 3
 dnl Copyright (C) 2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -10,7 +10,7 @@ AC_DEFUN([gl_SYSTEMD_CHOICE],
 [
   AC_MSG_CHECKING([whether to use systemd APIs])
   AC_ARG_ENABLE([systemd],
-    [  --enable-systemd       use systemd APIs],
+    [  --enable-systemd        use systemd APIs],
     [SYSTEMD_CHOICE="$enableval"],
     [SYSTEMD_CHOICE=no])
   AC_MSG_RESULT([$SYSTEMD_CHOICE])
