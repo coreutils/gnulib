@@ -59,7 +59,8 @@
 
 struct gl_utmp
 {
-  /* All 'char *' here are of arbitrary length and malloc-allocated.  */
+  /* All 'char *' here are of arbitrary length and point to storage
+     with lifetime equal to that of this struct.  */
   char *ut_user;                /* User name */
   char *ut_id;                  /* Session ID */
   char *ut_line;                /* seat / device */

@@ -74,8 +74,11 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
-2023-08-02  readutmp        Some STRUCT_UTMP members can be char *,
+2023-08-03  readutmp        Some STRUCT_UTMP members can be char *,
 2023-08-01                  rather than fixed-length char arrays.
+                            On some platforms, the timestamp is ut_ts of type
+                            struct timespec, not ut_tv of type struct timeval,
+                            and ut_session is pid_t not long.
                             read_utmp's 2nd arg is now idx_t * not size_t *.
                             Link additionally with $(READUTMP_LIB).
 
