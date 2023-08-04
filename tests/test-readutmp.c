@@ -57,8 +57,8 @@ main (int argc, char *argv[])
   printf ("Flags: B = Boot, U = User Process\n");
   printf ("\n");
   printf ("                                                              Termi‐      Flags\n");
-  printf ("    Time (GMT)             User          Device        PID    nation Exit  B U\n");
-  printf ("------------------- ------------------ ----------- ---------- ------ ----  - -\n");
+  printf ("    Time (GMT)             User          Device        PID    nation Exit  B U  Host\n");
+  printf ("------------------- ------------------ ----------- ---------- ------ ----  - -  ----\n");
 
   /* What do the results look like?
      * On Alpine Linux, Cygwin, Android, the output is empty.
@@ -111,6 +111,7 @@ main (int argc, char *argv[])
           long pid = UT_PID (entry);
           int termination = UT_EXIT_E_TERMINATION (entry);
           int exit = UT_EXIT_E_EXIT (entry);
+          const char *host = entry->ut_host;
 
           time_t tim = UT_TIME_MEMBER (entry);
           struct tm *gmt = gmtime (&tim);
@@ -120,7 +121,7 @@ main (int argc, char *argv[])
                  == 0)
             strcpy (timbuf, "---");
 
-          printf ("%-19s %-18s %-11s %10ld %4d   %3d   %c %c\n",
+          printf ("%-19s %-18s %-11s %10ld %4d   %3d   %c %c  %s\n",
                   timbuf,
                   user,
                   device,
@@ -128,7 +129,8 @@ main (int argc, char *argv[])
                   termination,
                   exit,
                   UT_TYPE_BOOT_TIME (entry) ? 'X' : ' ',
-                  UT_TYPE_USER_PROCESS (entry) ? 'X' : ' ');
+                  UT_TYPE_USER_PROCESS (entry) ? 'X' : ' ',
+                  host);
         }
       fflush (stdout);
 

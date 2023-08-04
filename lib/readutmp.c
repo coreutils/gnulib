@@ -280,7 +280,7 @@ add_utmp (struct utmp_alloc a, int options,
   ut->ut_user = p = memcpy (p - usersize, user, usersize);
   ut->ut_id   = p = memcpy (p -   idsize,   id,   idsize);
   ut->ut_line = p = memcpy (p - linesize, line, linesize);
-  ut->ut_host = memcpy (p - hostsize, line, hostsize);
+  ut->ut_host =     memcpy (p - hostsize, host, hostsize);
   ut->ut_ts = ts;
   ut->ut_pid = pid;
   ut->ut_session = session;
