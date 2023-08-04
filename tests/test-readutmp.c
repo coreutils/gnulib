@@ -26,6 +26,7 @@
 #include <string.h>
 #include <time.h>
 
+#include "idx.h"
 #include "xalloc.h"
 
 #define ELEMENT STRUCT_UTMP
@@ -40,7 +41,7 @@ int
 main (int argc, char *argv[])
 {
   STRUCT_UTMP *entries;
-  size_t num_entries;
+  idx_t num_entries;
 
   if (read_utmp (UTMP_FILE, &num_entries, &entries, 0) < 0)
     {
@@ -100,7 +101,7 @@ main (int argc, char *argv[])
       merge_sort_inplace (entries, num_entries,
                           XNMALLOC (num_entries, STRUCT_UTMP));
 
-      size_t i;
+      idx_t i;
       for (i = 0; i < num_entries; i++)
         {
           const STRUCT_UTMP *entry = &entries[i];
