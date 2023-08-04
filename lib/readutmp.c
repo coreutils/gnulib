@@ -152,13 +152,13 @@ get_boot_time_uncached (void)
 static struct timespec
 get_boot_time (void)
 {
-  static bool cached;
-  static struct timespec boot_time;
+  static bool volatile cached;
+  static struct timespec volatile boot_time;
 
   if (!cached)
     {
-      cached = true;
       boot_time = get_boot_time_uncached ();
+      cached = true;
     }
   return boot_time;
 }
