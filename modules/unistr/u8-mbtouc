@@ -10,7 +10,7 @@ unistr/base
 
 configure.ac:
 gl_MODULE_INDICATOR([unistr/u8-mbtouc])
-gl_LIBUNISTRING_MODULE([0.9.4], [unistr/u8-mbtouc])
+gl_LIBUNISTRING_MODULE([1.2], [unistr/u8-mbtouc])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNISTR_U8_MBTOUC
