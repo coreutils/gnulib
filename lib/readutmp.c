@@ -491,7 +491,12 @@ copy_utmp_entry (STRUCT_UTMP *dst, STRUCT_UTMP *src)
     int ut_session;			/* Session ID, used for windowing.  */
     struct
     {
-      int tv_sec;			/* Seconds.  */
+      /* Seconds.  Unsigned not signed, as glibc did not exist before 1970,
+         and if the format is still in use after 2038 its timestamps
+         will surely have the sign bit on.  This hack stops working
+         at 2106-02-07 06:28:16 UTC.  */
+      unsigned int tv_sec;
+
       int tv_usec;			/* Microseconds.  */
     } ut_tv;				/* Time entry was made.  */
     int ut_addr_v6[4];			/* Internet address of remote host.  */
