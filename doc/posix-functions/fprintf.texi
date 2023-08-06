@@ -42,7 +42,7 @@ Cygwin 1.5.x, mingw, MSVC 14.
 @item
 This function does not support the @samp{n} directive on some platforms:
 glibc when used with @code{_FORTIFY_SOURCE >= 2} (set by default on Ubuntu),
-macOS 11.1, MSVC 14.
+Android, OpenBSD, macOS 11.1, MSVC 14.
 @item
 This function does not support the @samp{ls} directive on some platforms:
 OpenBSD 4.0, IRIX 6.5, Cygwin 1.5.x, Haiku.

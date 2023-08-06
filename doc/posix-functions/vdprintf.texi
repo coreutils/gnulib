@@ -37,7 +37,7 @@ AIX 7.2, Solaris 11.4, Cygwin 2.9.0.
 @item
 This function does not support the @samp{n} directive on some platforms:
 glibc when used with @code{_FORTIFY_SOURCE >= 2} (set by default on Ubuntu),
-macOS 11.1.
+Android, OpenBSD, macOS 11.1.
 @item
 This function does not support precisions in the @samp{ls} directive correctly
 on some platforms:
