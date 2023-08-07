@@ -155,11 +155,11 @@ enum quoting_style
 
        LC_MESSAGES=C
        quotearg_buffer:
-       "`simple'", "`\\0 \\t\\n\\'\"\\033??/\\\\'", "`a:b'"
+       "'simple'", "'\\0 \\t\\n\\'\"\\033??/\\\\'", "'a:b'"
        quotearg:
-       "`simple'", "`\\0 \\t\\n\\'\"\\033??/\\\\'", "`a:b'"
+       "'simple'", "'\\0 \\t\\n\\'\"\\033??/\\\\'", "'a:b'"
        quotearg_colon:
-       "`simple'", "`\\0 \\t\\n\\'\"\\033??/\\\\'", "`a\\:b'"
+       "'simple'", "'\\0 \\t\\n\\'\"\\033??/\\\\'", "'a\\:b'"
 
        LC_MESSAGES=pt_PT.utf8
        quotearg_buffer:
