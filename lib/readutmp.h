@@ -213,7 +213,11 @@ enum { UT_USER_SIZE = sizeof UT_USER ((STRUCT_UTMP *) 0) };
 #if HAVE_GL_UTMP
 enum { UT_ID_SIZE = -1 };
 #else
+# if (HAVE_UTMPX_H ? HAVE_STRUCT_UTMPX_UT_ID : HAVE_STRUCT_UTMP_UT_ID)
 enum { UT_ID_SIZE = sizeof (((STRUCT_UTMP *) 0)->ut_id) };
+# else
+enum { UT_ID_SIZE = 1 };
+# endif
 # define UT_ID_SIZE UT_ID_SIZE
 #endif
 
