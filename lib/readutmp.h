@@ -155,7 +155,7 @@ struct gl_utmp
     struct utmp *getutent (void);
 # endif
 # define UTMP_STRUCT_NAME utmp
-# define UT_TIME_MEMBER(UT) ((UT)->ut_ts.tv_sec)
+# define UT_TIME_MEMBER(UT) ((UT)->ut_time)
 # define SET_UTMP_ENT setutent
 # define GET_UTMP_ENT getutent
 # define END_UTMP_ENT endutent
