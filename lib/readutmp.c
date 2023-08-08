@@ -284,6 +284,31 @@ finish_utmp (struct utmp_alloc a)
 static struct timespec
 get_boot_time_uncached (void)
 {
+  /* The clock_gettime facility returns the uptime with a resolution of 1 µsec.
+     It is available with glibc >= 2.14.  In glibc < 2.17 it required linking
+     with librt.  */
+#  if __GLIBC__ + (__GLIBC_MINOR__ >= 17) > 2
+  struct timespec up;
+  if (clock_gettime (CLOCK_BOOTTIME, &up) >= 0)
+    {
+      struct timespec result;
+      /* equivalent to:
+      if (clock_gettime (CLOCK_REALTIME, &result) >= 0)
+      */
+      if (timespec_get (&result, TIME_UTC) >= 0)
+        {
+          if (result.tv_nsec < up.tv_nsec)
+            {
+              result.tv_nsec += 1000000000;
+              result.tv_sec -= 1;
+            }
+          result.tv_sec -= up.tv_sec;
+          result.tv_nsec -= up.tv_nsec;
+          return result;
+        }
+    }
+#  endif
+
   /* /proc/uptime contains the uptime with a resolution of 0.01 sec.  */
   FILE *fp = fopen ("/proc/uptime", "re");
   if (fp != NULL)
