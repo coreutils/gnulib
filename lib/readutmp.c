@@ -439,17 +439,9 @@ guess_pty_name (uid_t uid, const struct timespec at)
   return NULL;
 }
 
-int
-read_utmp (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
-           int options)
+static int
+read_utmp_from_systemd (idx_t *n_entries, STRUCT_UTMP **utmp_buf, int options)
 {
-  /* The current implementation can imitate only UTMP_FILE.  */
-  if (strcmp (file, UTMP_FILE) != 0)
-    {
-      errno = ENOTSUP;
-      return -1;
-    }
-
   /* Fill entries, simulating what a utmp file would contain.  */
   struct utmp_alloc a = {0};
 
@@ -602,7 +594,9 @@ read_utmp (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
   return 0;
 }
 
-# elif defined UTMP_NAME_FUNCTION /* glibc, musl, macOS, FreeBSD, NetBSD, Minix, AIX, IRIX, Solaris, Cygwin, Android */
+# endif
+
+# if defined UTMP_NAME_FUNCTION /* glibc, musl, macOS, FreeBSD, NetBSD, Minix, AIX, IRIX, Solaris, Cygwin, Android */
 
 #  if !HAVE_UTMPX_H && HAVE_UTMP_H && !HAVE_DECL_GETUTENT
 struct utmp *getutent (void);
@@ -612,6 +606,12 @@ int
 read_utmp (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
            int options)
 {
+#  if READUTMP_USE_SYSTEMD
+  if (strcmp (file, UTMP_FILE) == 0)
+    /* Imitate reading UTMP_FILE, using systemd and Linux APIs.  */
+    return read_utmp_from_systemd (n_entries, utmp_buf, options);
+#  endif
+
   /* Ignore the return value for now.
      Solaris' utmpname returns 1 upon success -- which is contrary
      to what the GNU libc version does.  In addition, older GNU libc
