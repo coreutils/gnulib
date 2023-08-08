@@ -74,6 +74,10 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2023-08-08  readutmp        The result element type of the function read_utmp,
+                            STRUCT_UTMP, is no longer the same as the result
+                            value type of the function getutxent, struct utmpx.
+
 2023-08-03  readutmp        Some STRUCT_UTMP members can be char *,
 2023-08-01                  rather than fixed-length char arrays.
                             On some platforms, the timestamp is ut_ts of type

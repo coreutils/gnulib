@@ -43,6 +43,95 @@
 /* Each of the FILE streams in this file is only used in a single thread.  */
 #include "unlocked-io.h"
 
+/* The following macros describe the 'struct UTMP_STRUCT_NAME',
+   *not* 'struct gl_utmp'.  */
+#undef UT_USER
+#undef UT_TIME_MEMBER
+#undef UT_PID
+#undef UT_TYPE_EQ
+#undef UT_TYPE_NOT_DEFINED
+#undef IS_USER_PROCESS
+#undef UT_EXIT_E_TERMINATION
+#undef UT_EXIT_E_EXIT
+
+/* Accessor macro for the member named ut_user or ut_name.  */
+#if (HAVE_UTMPX_H ? HAVE_STRUCT_UTMPX_UT_NAME \
+     : HAVE_UTMP_H && HAVE_STRUCT_UTMP_UT_NAME)
+# define UT_USER(UT) ((UT)->ut_name)
+#else
+# define UT_USER(UT) ((UT)->ut_user)
+#endif
+
+/* Accessor macro for the member of type time_t (or 'unsigned int').  */
+#if HAVE_UTMPX_H || (HAVE_UTMP_H && HAVE_STRUCT_UTMP_UT_TV)
+# define UT_TIME_MEMBER(UT) ((UT)->ut_tv.tv_sec)
+#else
+# define UT_TIME_MEMBER(UT) ((UT)->ut_time)
+#endif
+
+/* Accessor macro for the member named ut_pid.  */
+#if (HAVE_UTMPX_H ? HAVE_STRUCT_UTMPX_UT_PID : HAVE_STRUCT_UTMP_UT_PID)
+# define UT_PID(UT) ((UT)->ut_pid)
+#else
+# define UT_PID(UT) 0
+#endif
+
+/* Accessor macros for the member named ut_type.  */
+#if (HAVE_UTMPX_H ? HAVE_STRUCT_UTMP_UT_TYPE : HAVE_STRUCT_UTMPX_UT_TYPE)
+# define UT_TYPE_EQ(UT, V) ((UT)->ut_type == (V))
+# define UT_TYPE_NOT_DEFINED 0
+#else
+# define UT_TYPE_EQ(UT, V) 0
+# define UT_TYPE_NOT_DEFINED 1
+#endif
+
+/* Determines whether an entry *UT corresponds to a user process.  */
+#define IS_USER_PROCESS(UT)                                    \
+  ((UT)->ut_user[0]                                            \
+   && (UT_TYPE_USER_PROCESS (UT)                               \
+       || (UT_TYPE_NOT_DEFINED && (UT)->ut_ts.tv_sec != 0)))
+
+#if HAVE_UTMPX_H
+# if HAVE_STRUCT_UTMPX_UT_EXIT_E_TERMINATION
+#  define UT_EXIT_E_TERMINATION(UT) ((UT)->ut_exit.e_termination)
+# elif HAVE_STRUCT_UTMPX_UT_EXIT_UT_TERMINATION /* OSF/1 */
+#  define UT_EXIT_E_TERMINATION(UT) ((UT)->ut_exit.ut_termination)
+# else
+#  define UT_EXIT_E_TERMINATION(UT) 0
+# endif
+#elif HAVE_UTMP_H
+# if HAVE_STRUCT_UTMP_UT_EXIT_E_TERMINATION
+#  define UT_EXIT_E_TERMINATION(UT) ((UT)->ut_exit.e_termination)
+# else
+#  define UT_EXIT_E_TERMINATION(UT) 0
+# endif
+#endif
+
+#if HAVE_UTMPX_H
+# if HAVE_STRUCT_UTMPX_UT_EXIT_E_EXIT
+#  define UT_EXIT_E_EXIT(UT) ((UT)->ut_exit.e_exit)
+# elif HAVE_STRUCT_UTMPX_UT_EXIT_UT_EXIT /* OSF/1 */
+#  define UT_EXIT_E_EXIT(UT) ((UT)->ut_exit.ut_exit)
+# else
+#  define UT_EXIT_E_EXIT(UT) 0
+# endif
+#elif HAVE_UTMP_H
+# if HAVE_STRUCT_UTMP_UT_EXIT_E_EXIT
+#  define UT_EXIT_E_EXIT(UT) ((UT)->ut_exit.e_exit)
+# else
+#  define UT_EXIT_E_EXIT(UT) 0
+# endif
+#endif
+
+/* Size of the UT_USER (ut) member.  */
+#define UT_USER_SIZE  sizeof UT_USER ((struct UTMP_STRUCT_NAME *) 0)
+/* Size of the ut->ut_id member.  */
+#define UT_ID_SIZE    sizeof (((struct UTMP_STRUCT_NAME *) 0)->ut_id)
+/* Size of the ut->ut_line member.  */
+#define UT_LINE_SIZE  sizeof (((struct UTMP_STRUCT_NAME *) 0)->ut_line)
+/* Size of the ut->ut_host member.  */
+#define UT_HOST_SIZE  sizeof (((struct UTMP_STRUCT_NAME *) 0)->ut_host)
+
 #if 8 <= __GNUC__
 # pragma GCC diagnostic ignored "-Wsizeof-pointer-memaccess"
 #endif
@@ -52,14 +141,14 @@
 # pragma GCC diagnostic ignored "-Wstringop-overread"
 #endif
 
-/* Copy UT_USER (UT) into storage obtained from malloc.  Then remove any
+/* Copy UT->ut_user into storage obtained from malloc.  Then remove any
    trailing spaces from the copy, NUL terminate it, and return the copy.  */
 
 char *
 extract_trimmed_name (const STRUCT_UTMP *ut)
 {
-  char const *name = UT_USER (ut);
-  idx_t len = strnlen (name, UT_USER_SIZE);
+  char const *name = ut->ut_user;
+  idx_t len = strlen (name);
   char const *p;
   for (p = name + len; name < p && p[-1] == ' '; p--)
     continue;
@@ -73,6 +162,12 @@ extract_trimmed_name (const STRUCT_UTMP *ut)
 static bool
 desirable_utmp_entry (STRUCT_UTMP const *ut, int options)
 {
+# if defined __OpenBSD__ && !HAVE_UTMPX_H
+  /* Eliminate entirely empty entries.  */
+  if (ut->ut_ts.tv_sec == 0 && ut->ut_user[0] == '\0'
+      && ut->ut_line[0] == '\0' && ut->ut_host[0] == '\0')
+    return false;
+# endif
   bool user_proc = IS_USER_PROCESS (ut);
   if ((options & READ_UTMP_USER_PROCESS) && !user_proc)
     return false;
@@ -81,13 +176,106 @@ desirable_utmp_entry (STRUCT_UTMP const *ut, int options)
       && 0 < UT_PID (ut)
       && (kill (UT_PID (ut), 0) < 0 && errno == ESRCH))
     return false;
-# if defined __OpenBSD__ && !HAVE_UTMPX_H
-  /* Eliminate entirely empty entries.  */
-  if (UT_TIME_MEMBER (ut) == 0 && UT_USER (ut)[0] == '\0'
-      && ut->ut_line[0] == '\0' && ut->ut_host[0] == '\0')
-    return false;
-# endif
   return true;
+}
+
+/* A memory allocation for an in-progress read_utmp.  */
+
+struct utmp_alloc
+{
+  /* A pointer to a possibly-empty array of utmp entries,
+     followed by a possibly-empty sequence of unused bytes,
+     followed by a possibly-empty sequence of string bytes.
+     UTMP is either null or allocated by malloc.  */
+  struct gl_utmp *utmp;
+
+  /* The number of utmp entries.  */
+  idx_t filled;
+
+  /* The string byte sequence length.  Strings are null-terminated.  */
+  idx_t string_bytes;
+
+  /* The total number of bytes allocated.  This equals
+     FILLED * sizeof *UTMP + [size of free area] + STRING_BYTES.  */
+  idx_t alloc_bytes;
+};
+
+/* Use the memory allocation A, and if the read_utmp options OPTIONS
+   permit it, add a new entry with the given USER, etc.  Grow A as
+   needed, reporting an error and exit on memory allocation failure.
+   Return the resulting memory allocation.  */
+
+static struct utmp_alloc
+add_utmp (struct utmp_alloc a, int options,
+          char const *user, idx_t user_len,
+          char const *id, idx_t id_len,
+          char const *line, idx_t line_len,
+          char const *host, idx_t host_len,
+          pid_t pid, short type, struct timespec ts, long session,
+          int termination, int exit)
+{
+  int entry_bytes = sizeof (struct gl_utmp);
+  idx_t avail = a.alloc_bytes - (entry_bytes * a.filled + a.string_bytes);
+  idx_t needed_string_bytes =
+    (user_len + 1) + (id_len + 1) + (line_len + 1) + (host_len + 1);
+  idx_t needed = entry_bytes + needed_string_bytes;
+  if (avail < needed)
+    {
+      idx_t old_string_offset = a.alloc_bytes - a.string_bytes;
+      void *new = xpalloc (a.utmp, &a.alloc_bytes, needed - avail, -1, 1);
+      idx_t new_string_offset = a.alloc_bytes - a.string_bytes;
+      a.utmp = new;
+      char *q = new;
+      memmove (q + new_string_offset, q + old_string_offset, a.string_bytes);
+    }
+  struct gl_utmp *ut = &a.utmp[a.filled];
+  char *stringlim = (char *) a.utmp + a.alloc_bytes;
+  char *p = stringlim - a.string_bytes;
+  *--p = '\0'; /* NUL-terminate ut->ut_user */
+  ut->ut_user = p = memcpy (p - user_len, user, user_len);
+  *--p = '\0'; /* NUL-terminate ut->ut_id */
+  ut->ut_id   = p = memcpy (p -   id_len,   id,   id_len);
+  *--p = '\0'; /* NUL-terminate ut->ut_line */
+  ut->ut_line = p = memcpy (p - line_len, line, line_len);
+  *--p = '\0'; /* NUL-terminate ut->ut_host */
+  ut->ut_host =     memcpy (p - host_len, host, host_len);
+  ut->ut_ts = ts;
+  ut->ut_pid = pid;
+  ut->ut_session = session;
+  ut->ut_type = type;
+  ut->ut_exit.e_termination = termination;
+  ut->ut_exit.e_exit = exit;
+  if (desirable_utmp_entry (ut, options))
+    {
+      /* Now that UT has been checked, relocate its string slots to be
+         relative to the end of the allocated storage, so that these
+         slots survive realloc.  The slots will be relocated back just
+         before read_utmp returns.  */
+      ut->ut_user = (char *) (intptr_t) (ut->ut_user - stringlim);
+      ut->ut_id   = (char *) (intptr_t) (ut->ut_id   - stringlim);
+      ut->ut_line = (char *) (intptr_t) (ut->ut_line - stringlim);
+      ut->ut_host = (char *) (intptr_t) (ut->ut_host - stringlim);
+      a.filled++;
+      a.string_bytes += needed_string_bytes;
+    }
+  return a;
+}
+
+/* Relocate the string pointers in A back to their natural position.  */
+static struct utmp_alloc
+finish_utmp (struct utmp_alloc a)
+{
+  char *stringlim = (char *) a.utmp + a.alloc_bytes;
+
+  for (idx_t i = 0; i < a.filled; i++)
+    {
+      a.utmp[i].ut_user = (intptr_t) a.utmp[i].ut_user + stringlim;
+      a.utmp[i].ut_id   = (intptr_t) a.utmp[i].ut_id   + stringlim;
+      a.utmp[i].ut_line = (intptr_t) a.utmp[i].ut_line + stringlim;
+      a.utmp[i].ut_host = (intptr_t) a.utmp[i].ut_host + stringlim;
+    }
+
+  return a;
 }
 
 # if READUTMP_USE_SYSTEMD
@@ -226,81 +414,6 @@ guess_pty_name (uid_t uid, const struct timespec at)
   return NULL;
 }
 
-/* A memory allocation for an in-progress read_utmp.  */
-
-struct utmp_alloc
-{
-  /* A pointer to a possibly-empty array of utmp entries,
-     followed by a possibly-empty sequence of unused bytes,
-     followed by a possibly-empty sequence of string bytes.
-     UTMP is either null or allocated by malloc.  */
-  STRUCT_UTMP *utmp;
-
-  /* The number of utmp entries.  */
-  idx_t filled;
-
-  /* The string byte sequence length.  Strings are null-terminated.  */
-  idx_t string_bytes;
-
-  /* The total number of bytes allocated.  This equals
-     FILLED * sizeof *UTMP + [size of free area] + STRING_BYTES.  */
-  idx_t alloc_bytes;
-};
-
-/* Use the memory allocation A, and if the read_utmp options OPTIONS
-   permit it, add a new entry with the given USER, etc.  Grow A as
-   needed, reporting an error and exit on memory allocation failure.
-   Return the resulting memory allocation.  */
-
-static struct utmp_alloc
-add_utmp (struct utmp_alloc a, int options,
-          char const *user, char const *id, char const *line, pid_t pid,
-          short type, struct timespec ts, char const *host, long session)
-{
-  if (!user) user = "";
-  if (!host) host = "";
-  int entry_bytes = sizeof (STRUCT_UTMP);
-  idx_t usersize = strlen (user) + 1, idsize = strlen (id) + 1,
-    linesize = strlen (line) + 1, hostsize = strlen (host) + 1;
-  idx_t avail = a.alloc_bytes - (entry_bytes * a.filled + a.string_bytes);
-  idx_t needed_string_bytes = usersize + idsize + linesize + hostsize;
-  idx_t needed = entry_bytes + needed_string_bytes;
-  if (avail < needed)
-    {
-      idx_t old_string_offset = a.alloc_bytes - a.string_bytes;
-      void *new = xpalloc (a.utmp, &a.alloc_bytes, needed - avail, -1, 1);
-      idx_t new_string_offset = a.alloc_bytes - a.string_bytes;
-      a.utmp = new;
-      char *q = new;
-      memmove (q + new_string_offset, q + old_string_offset, a.string_bytes);
-    }
-  STRUCT_UTMP *ut = &a.utmp[a.filled];
-  char *stringlim = (char *) a.utmp + a.alloc_bytes;
-  char *p = stringlim - a.string_bytes;
-  ut->ut_user = p = memcpy (p - usersize, user, usersize);
-  ut->ut_id   = p = memcpy (p -   idsize,   id,   idsize);
-  ut->ut_line = p = memcpy (p - linesize, line, linesize);
-  ut->ut_host =     memcpy (p - hostsize, host, hostsize);
-  ut->ut_ts = ts;
-  ut->ut_pid = pid;
-  ut->ut_session = session;
-  ut->ut_type = type;
-  if (desirable_utmp_entry (ut, options))
-    {
-      /* Now that UT has been checked, relocate its string slots to be
-         relative to the end of the allocated storage, so that these
-         slots survive realloc.  The slots will be relocated back just
-         before read_utmp returns.  */
-      ut->ut_user = (char *) (intptr_t) (ut->ut_user - stringlim);
-      ut->ut_id   = (char *) (intptr_t) (ut->ut_id   - stringlim);
-      ut->ut_line = (char *) (intptr_t) (ut->ut_line - stringlim);
-      ut->ut_host = (char *) (intptr_t) (ut->ut_host - stringlim);
-      a.filled++;
-      a.string_bytes += needed_string_bytes;
-    }
-  return a;
-}
-
 int
 read_utmp (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
            int options)
@@ -317,8 +430,12 @@ read_utmp (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
 
   /* Synthesize a BOOT_TIME entry.  */
   if (!(options & READ_UTMP_USER_PROCESS))
-    a = add_utmp (a, options, "reboot", "", "~", 0,
-                  BOOT_TIME, get_boot_time (), "", 0);
+    a = add_utmp (a, options,
+                  "reboot", strlen ("reboot"),
+                  "", 0,
+                  "~", strlen ("~"),
+                  "", 0,
+                  0, BOOT_TIME, get_boot_time (), 0, 0, 0);
 
   /* Synthesize USER_PROCESS entries.  */
   char **sessions;
@@ -341,7 +458,8 @@ read_utmp (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
           if (sd_session_get_seat (session, &seat) < 0)
             seat = NULL;
 
-          char missing_type[] = "";
+          char missing[] = "";
+
           char *type = NULL;
           char *tty;
           if (sd_session_get_tty (session, &tty) < 0)
@@ -349,7 +467,7 @@ read_utmp (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
               tty = NULL;
               /* Try harder to get a sensible value for the tty.  */
               if (sd_session_get_type (session, &type) < 0)
-                type = missing_type;
+                type = missing;
               if (strcmp (type, "tty") == 0)
                 {
                   char *service;
@@ -380,7 +498,7 @@ read_utmp (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
             {
               char *user;
               if (sd_session_get_username (session, &user) < 0)
-                user = NULL;
+                user = missing;
 
               pid_t leader_pid;
               if (sd_session_get_leader (session, &leader_pid) < 0)
@@ -390,11 +508,11 @@ read_utmp (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
               char *remote_host;
               if (sd_session_get_remote_host (session, &remote_host) < 0)
                 {
-                  host = NULL;
+                  host = missing;
                   /* For backward compatibility, put the X11 display into the
                      host field.  */
                   if (!type && sd_session_get_type (session, &type) < 0)
-                    type = missing_type;
+                    type = missing;
                   if (strcmp (type, "x11") == 0)
                     {
                       char *display;
@@ -420,19 +538,29 @@ read_utmp (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
                 }
 
               if (seat != NULL)
-                a = add_utmp (a, options, user, session, seat,
+                a = add_utmp (a, options,
+                              user, strlen (user),
+                              session, strlen (session),
+                              seat, strlen (seat),
+                              host, strlen (host),
                               leader_pid /* the best we have */,
-                              USER_PROCESS, start_ts, host, leader_pid);
+                              USER_PROCESS, start_ts, leader_pid, 0, 0);
               if (tty != NULL)
-                a = add_utmp (a, options, user, session, tty,
+                a = add_utmp (a, options,
+                              user, strlen (user),
+                              session, strlen (session),
+                              tty, strlen (tty),
+                              host, strlen (host),
                               leader_pid /* the best we have */,
-                              USER_PROCESS, start_ts, host, leader_pid);
+                              USER_PROCESS, start_ts, leader_pid, 0, 0);
 
-              free (host);
-              free (user);
+              if (host != missing)
+                free (host);
+              if (user != missing)
+                free (user);
             }
 
-          if (type != missing_type)
+          if (type != missing)
             free (type);
           free (tty);
           free (seat);
@@ -441,18 +569,7 @@ read_utmp (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
       free (sessions);
     }
 
-  /* Relocate the string pointers back to their natural position.  */
-  {
-    char *stringlim = (char *) a.utmp + a.alloc_bytes;
-
-    for (idx_t i = 0; i < a.filled; i++)
-      {
-        a.utmp[i].ut_user = (intptr_t) a.utmp[i].ut_user + stringlim;
-        a.utmp[i].ut_id   = (intptr_t) a.utmp[i].ut_id   + stringlim;
-        a.utmp[i].ut_line = (intptr_t) a.utmp[i].ut_line + stringlim;
-        a.utmp[i].ut_host = (intptr_t) a.utmp[i].ut_host + stringlim;
-      }
-  }
+  a = finish_utmp (a);
 
   *n_entries = a.filled;
   *utmp_buf = a.utmp;
@@ -460,67 +577,16 @@ read_utmp (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
   return 0;
 }
 
-# elif defined UTMP_NAME_FUNCTION
+# elif defined UTMP_NAME_FUNCTION /* glibc, musl, macOS, FreeBSD, NetBSD, Minix, AIX, IRIX, Solaris, Cygwin, Android */
 
-static void
-copy_utmp_entry (STRUCT_UTMP *dst, STRUCT_UTMP *src)
-{
-#  if __GLIBC__ && _TIME_BITS == 64
-  /* Convert from external form in SRC to internal form in DST.
-     It is OK to convert now, rather than earlier, before
-     desirable_utmp_entry was invoked, because desirable_utmp_entry
-     inspects only the leading prefix of the entry, which is the
-     same in both external and internal forms.  */
-
-  /* This is a near-copy of glibc's struct utmpx, which stops working
-     after the year 2038.  Unlike the glibc version, struct utmpx32
-     describes the file format even if time_t is 64 bits.  */
-  struct utmpx32
-  {
-    short int ut_type;			/* Type of login.  */
-    pid_t ut_pid;			/* Process ID of login process.  */
-    char ut_line[sizeof src->ut_line];	/* Devicename.  */
-    char ut_id[sizeof src->ut_id];	/* Inittab ID.  */
-    char ut_user[sizeof src->ut_user];  /* Username.  */
-    char ut_host[sizeof src->ut_host];	/* Hostname for remote login.  */
-    struct __exit_status ut_exit;	/* Exit status of a process marked
-                                           as DEAD_PROCESS.  */
-    /* The fields ut_session and ut_tv must be the same size when compiled
-       32- and 64-bit.  This allows files and shared memory to be shared
-       between 32- and 64-bit applications.  */
-    int ut_session;			/* Session ID, used for windowing.  */
-    struct
-    {
-      /* Seconds.  Unsigned not signed, as glibc did not exist before 1970,
-         and if the format is still in use after 2038 its timestamps
-         will surely have the sign bit on.  This hack stops working
-         at 2106-02-07 06:28:16 UTC.  */
-      unsigned int tv_sec;
-
-      int tv_usec;			/* Microseconds.  */
-    } ut_tv;				/* Time entry was made.  */
-    int ut_addr_v6[4];			/* Internet address of remote host.  */
-    char ut_reserved[20];		/* Reserved for future use.  */
-  } *s = (struct utmpx32 *) src;
-  memcpy (dst, s, offsetof (struct utmpx32, ut_session));
-  dst->ut_session = s->ut_session;
-  dst->ut_tv.tv_sec = s->ut_tv.tv_sec;
-  dst->ut_tv.tv_usec = s->ut_tv.tv_usec;
-  memcpy (&dst->ut_addr_v6, s->ut_addr_v6, sizeof dst->ut_addr_v6);
-#  else
-  *dst = *src;
+#  if !HAVE_UTMPX_H && HAVE_UTMP_H && !HAVE_DECL_GETUTENT
+struct utmp *getutent (void);
 #  endif
-}
 
 int
 read_utmp (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
            int options)
 {
-  idx_t n_read = 0;
-  idx_t n_alloc = 0;
-  STRUCT_UTMP *utmp = NULL;
-  STRUCT_UTMP *ut;
-
   /* Ignore the return value for now.
      Solaris' utmpname returns 1 upon success -- which is contrary
      to what the GNU libc version does.  In addition, older GNU libc
@@ -529,59 +595,163 @@ read_utmp (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
 
   SET_UTMP_ENT ();
 
-  while ((ut = GET_UTMP_ENT ()) != NULL)
-    if (desirable_utmp_entry (ut, options))
-      {
-        if (n_read == n_alloc)
-          utmp = xpalloc (utmp, &n_alloc, 1, -1, sizeof *utmp);
+  struct utmp_alloc a = {0};
+  void const *entry;
 
-        copy_utmp_entry (&utmp[n_read++], ut);
-      }
+  while ((entry = GET_UTMP_ENT ()) != NULL)
+    {
+#  if __GLIBC__ && _TIME_BITS == 64
+      /* This is a near-copy of glibc's struct utmpx, which stops working
+         after the year 2038.  Unlike the glibc version, struct utmpx32
+         describes the file format even if time_t is 64 bits.  */
+      struct utmpx32
+      {
+        short int ut_type;               /* Type of login.  */
+        pid_t ut_pid;                    /* Process ID of login process.  */
+        char ut_line[UT_LINE_SIZE];      /* Devicename.  */
+        char ut_id[UT_ID_SIZE];          /* Inittab ID.  */
+        char ut_user[UT_USER_SIZE];      /* Username.  */
+        char ut_host[UT_HOST_SIZE];      /* Hostname for remote login. */
+        struct __exit_status ut_exit;    /* Exit status of a process marked
+                                            as DEAD_PROCESS.  */
+        /* The fields ut_session and ut_tv must be the same size when compiled
+           32- and 64-bit.  This allows files and shared memory to be shared
+           between 32- and 64-bit applications.  */
+        int ut_session;                  /* Session ID, used for windowing.  */
+        struct
+        {
+          /* Seconds.  Unsigned not signed, as glibc did not exist before 1970,
+             and if the format is still in use after 2038 its timestamps
+             will surely have the sign bit on.  This hack stops working
+             at 2106-02-07 06:28:16 UTC.  */
+          unsigned int tv_sec;
+          int tv_usec;                   /* Microseconds.  */
+        } ut_tv;                         /* Time entry was made.  */
+        int ut_addr_v6[4];               /* Internet address of remote host.  */
+        char ut_reserved[20];            /* Reserved for future use.  */
+      };
+      struct utmpx32 const *ut = (struct utmpx32 const *) entry;
+#  else
+      struct UTMP_STRUCT_NAME const *ut = (struct UTMP_STRUCT_NAME const *) entry;
+#  endif
+
+      a = add_utmp (a, options,
+                    UT_USER (ut), strnlen (UT_USER (ut), UT_USER_SIZE),
+                    #if (HAVE_UTMPX_H ? HAVE_STRUCT_UTMPX_UT_ID : HAVE_STRUCT_UTMP_UT_ID)
+                    ut->ut_id, strnlen (ut->ut_id, UT_ID_SIZE),
+                    #else
+                    "", 0,
+                    #endif
+                    ut->ut_line, strnlen (ut->ut_line, UT_LINE_SIZE),
+                    #if (HAVE_UTMPX_H ? HAVE_STRUCT_UTMPX_UT_HOST : HAVE_STRUCT_UTMP_UT_HOST)
+                    ut->ut_host, strnlen (ut->ut_host, UT_HOST_SIZE),
+                    #else
+                    "", 0,
+                    #endif
+                    #if (HAVE_UTMPX_H ? HAVE_STRUCT_UTMPX_UT_PID : HAVE_STRUCT_UTMP_UT_PID)
+                    ut->ut_pid,
+                    #else
+                    0,
+                    #endif
+                    #if (HAVE_UTMPX_H ? HAVE_STRUCT_UTMPX_UT_TYPE : HAVE_STRUCT_UTMP_UT_TYPE)
+                    ut->ut_type,
+                    #else
+                    0,
+                    #endif
+                    #if (HAVE_UTMPX_H ? 1 : HAVE_STRUCT_UTMP_UT_TV)
+                    (struct timespec) { .tv_sec = ut->ut_tv.tv_sec, .tv_nsec = ut->ut_tv.tv_usec * 1000 },
+                    #else
+                    (struct timespec) { .tv_sec = ut->ut_time, .tv_nsec = 0 },
+                    #endif
+                    #if (HAVE_UTMPX_H ? HAVE_STRUCT_UTMPX_UT_SESSION : HAVE_STRUCT_UTMP_UT_SESSION)
+                    ut->ut_session,
+                    #else
+                    0,
+                    #endif
+                    UT_EXIT_E_TERMINATION (ut), UT_EXIT_E_EXIT (ut)
+                   );
+    }
 
   END_UTMP_ENT ();
 
-  *n_entries = n_read;
-  *utmp_buf = utmp;
+  a = finish_utmp (a);
+
+  *n_entries = a.filled;
+  *utmp_buf = a.utmp;
 
   return 0;
 }
 
-# else
+# else /* old FreeBSD, OpenBSD, HP-UX */
 
 int
 read_utmp (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
            int options)
 {
-  idx_t n_read = 0;
-  idx_t n_alloc = 0;
-  STRUCT_UTMP *utmp = NULL;
-  int saved_errno;
   FILE *f = fopen (file, "re");
 
   if (! f)
     return -1;
 
+  struct utmp_alloc a = {0};
+
   for (;;)
     {
-      if (n_read == n_alloc)
-        utmp = xpalloc (utmp, &n_alloc, 1, -1, sizeof *utmp);
-      if (fread (&utmp[n_read], sizeof utmp[n_read], 1, f) == 0)
+      struct UTMP_STRUCT_NAME ut;
+
+      if (fread (&ut, sizeof ut, 1, f) == 0)
         break;
-      n_read += desirable_utmp_entry (&utmp[n_read], options);
+      a = add_utmp (a, options,
+                    UT_USER (&ut), strnlen (UT_USER (&ut), UT_USER_SIZE),
+                    #if (HAVE_UTMPX_H ? HAVE_STRUCT_UTMPX_UT_ID : HAVE_STRUCT_UTMP_UT_ID)
+                    ut.ut_id, strnlen (ut.ut_id, UT_ID_SIZE),
+                    #else
+                    "", 0,
+                    #endif
+                    ut.ut_line, strnlen (ut.ut_line, UT_LINE_SIZE),
+                    #if (HAVE_UTMPX_H ? HAVE_STRUCT_UTMPX_UT_HOST : HAVE_STRUCT_UTMP_UT_HOST)
+                    ut.ut_host, strnlen (ut.ut_host, UT_HOST_SIZE),
+                    #else
+                    "", 0,
+                    #endif
+                    #if (HAVE_UTMPX_H ? HAVE_STRUCT_UTMPX_UT_PID : HAVE_STRUCT_UTMP_UT_PID)
+                    ut.ut_pid,
+                    #else
+                    0,
+                    #endif
+                    #if (HAVE_UTMPX_H ? HAVE_STRUCT_UTMPX_UT_TYPE : HAVE_STRUCT_UTMP_UT_TYPE)
+                    ut.ut_type,
+                    #else
+                    0,
+                    #endif
+                    #if (HAVE_UTMPX_H ? 1 : HAVE_STRUCT_UTMP_UT_TV)
+                    (struct timespec) { .tv_sec = ut.ut_tv.tv_sec, .tv_nsec = ut.ut_tv.tv_usec * 1000 },
+                    #else
+                    (struct timespec) { .tv_sec = ut.ut_time, .tv_nsec = 0 },
+                    #endif
+                    #if (HAVE_UTMPX_H ? HAVE_STRUCT_UTMPX_UT_SESSION : HAVE_STRUCT_UTMP_UT_SESSION)
+                    ut.ut_session,
+                    #else
+                    0,
+                    #endif
+                    UT_EXIT_E_TERMINATION (&ut), UT_EXIT_E_EXIT (&ut)
+                   );
     }
 
-  saved_errno = ferror (f) ? errno : 0;
+  int saved_errno = ferror (f) ? errno : 0;
   if (fclose (f) != 0)
     saved_errno = errno;
   if (saved_errno != 0)
     {
-      free (utmp);
+      free (a.utmp);
       errno = saved_errno;
       return -1;
     }
 
-  *n_entries = n_read;
-  *utmp_buf = utmp;
+  a = finish_utmp (a);
+
+  *n_entries = a.filled;
+  *utmp_buf = a.utmp;
 
   return 0;
 }
