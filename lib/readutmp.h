@@ -69,7 +69,7 @@ struct gl_utmp
   struct timespec ut_ts;        /* time */
   pid_t ut_pid;                 /* process ID of ? */
   pid_t ut_session;             /* process ID of session leader */
-  short ut_type;                /* BOOT_TIME or USER_PROCESS */
+  short ut_type;                /* BOOT_TIME, USER_PROCESS, or other */
   struct { int e_termination; int e_exit; } ut_exit;
 };
 
@@ -237,8 +237,10 @@ enum { UT_HOST_SIZE = -1 };
 /* Options for read_utmp.  */
 enum
   {
-    READ_UTMP_CHECK_PIDS = 1,
-    READ_UTMP_USER_PROCESS = 2
+    READ_UTMP_CHECK_PIDS   = 1,
+    READ_UTMP_USER_PROCESS = 2,
+    READ_UTMP_BOOT_TIME    = 4,
+    READ_UTMP_NO_BOOT_TIME = 8
   };
 
 /* Return a copy of (UT)->ut_user, without trailing spaces,
@@ -256,6 +258,10 @@ char *extract_trimmed_name (const STRUCT_UTMP *ut)
    process-IDs do not currently exist.
    If OPTIONS & READ_UTMP_USER_PROCESS is nonzero, omit entries which
    do not correspond to a user process.
+   If OPTIONS & READ_UTMP_BOOT_TIME is nonzero, omit all entries except
+   the one that contains the boot time.
+   If OPTIONS & READ_UTMP_NO_BOOT_TIME is nonzero, omit the boot time
+   entries.
 
    This function is not multithread-safe, since on many platforms it
    invokes the functions setutxent, getutxent, endutxent.  These

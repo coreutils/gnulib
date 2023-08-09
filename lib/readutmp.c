@@ -163,6 +163,13 @@ desirable_utmp_entry (STRUCT_UTMP const *ut, int options)
       && ut->ut_line[0] == '\0' && ut->ut_host[0] == '\0')
     return false;
 # endif
+
+  bool boot_time = UT_TYPE_BOOT_TIME (ut);
+  if ((options & READ_UTMP_BOOT_TIME) && !boot_time)
+    return false;
+  if ((options & READ_UTMP_NO_BOOT_TIME) && boot_time)
+    return false;
+
   bool user_proc = IS_USER_PROCESS (ut);
   if ((options & READ_UTMP_USER_PROCESS) && !user_proc)
     return false;
@@ -171,6 +178,7 @@ desirable_utmp_entry (STRUCT_UTMP const *ut, int options)
       && 0 < UT_PID (ut)
       && (kill (UT_PID (ut), 0) < 0 && errno == ESRCH))
     return false;
+
   return true;
 }
 
@@ -441,7 +449,7 @@ read_utmp_from_systemd (idx_t *n_entries, STRUCT_UTMP **utmp_buf, int options)
   struct utmp_alloc a = {0};
 
   /* Synthesize a BOOT_TIME entry.  */
-  if (!(options & READ_UTMP_USER_PROCESS))
+  if (!(options & (READ_UTMP_USER_PROCESS | READ_UTMP_NO_BOOT_TIME)))
     a = add_utmp (a, options,
                   "reboot", strlen ("reboot"),
                   "", 0,
@@ -450,135 +458,138 @@ read_utmp_from_systemd (idx_t *n_entries, STRUCT_UTMP **utmp_buf, int options)
                   0, BOOT_TIME, get_boot_time (), 0, 0, 0);
 
   /* Synthesize USER_PROCESS entries.  */
-  char **sessions;
-  int num_sessions = sd_get_sessions (&sessions);
-  if (num_sessions >= 0)
+  if (!(options & READ_UTMP_BOOT_TIME))
     {
-      char **session_ptr;
-      for (session_ptr = sessions; *session_ptr != NULL; session_ptr++)
+      char **sessions;
+      int num_sessions = sd_get_sessions (&sessions);
+      if (num_sessions >= 0)
         {
-          char *session = *session_ptr;
-
-          uint64_t start_usec;
-          if (sd_session_get_start_time (session, &start_usec) < 0)
-            start_usec = 0;
-          struct timespec start_ts;
-          start_ts.tv_sec = start_usec / 1000000;
-          start_ts.tv_nsec = start_usec % 1000000 * 1000;
-
-          char *seat;
-          if (sd_session_get_seat (session, &seat) < 0)
-            seat = NULL;
-
-          char missing[] = "";
-
-          char *type = NULL;
-          char *tty;
-          if (sd_session_get_tty (session, &tty) < 0)
+          char **session_ptr;
+          for (session_ptr = sessions; *session_ptr != NULL; session_ptr++)
             {
-              tty = NULL;
-              /* Try harder to get a sensible value for the tty.  */
-              if (sd_session_get_type (session, &type) < 0)
-                type = missing;
-              if (strcmp (type, "tty") == 0)
+              char *session = *session_ptr;
+
+              uint64_t start_usec;
+              if (sd_session_get_start_time (session, &start_usec) < 0)
+                start_usec = 0;
+              struct timespec start_ts;
+              start_ts.tv_sec = start_usec / 1000000;
+              start_ts.tv_nsec = start_usec % 1000000 * 1000;
+
+              char *seat;
+              if (sd_session_get_seat (session, &seat) < 0)
+                seat = NULL;
+
+              char missing[] = "";
+
+              char *type = NULL;
+              char *tty;
+              if (sd_session_get_tty (session, &tty) < 0)
                 {
-                  char *service;
-                  if (sd_session_get_service (session, &service) < 0)
-                    service = NULL;
-
-                  uid_t uid;
-                  char *pty = (sd_session_get_uid (session, &uid) < 0 ? NULL
-                               : guess_pty_name (uid, start_ts));
-
-                  if (service != NULL && pty != NULL)
-                    {
-                      tty = xmalloc (strlen (service) + 1 + strlen (pty) + 1);
-                      stpcpy (stpcpy (stpcpy (tty, service), " "), pty);
-                      free (pty);
-                      free (service);
-                    }
-                  else if (service != NULL)
-                    tty = service;
-                  else if (pty != NULL)
-                    tty = pty;
-                }
-            }
-
-          /* Create up to two USER_PROCESS entries: one for the seat,
-             one for the tty.  */
-          if (seat != NULL || tty != NULL)
-            {
-              char *user;
-              if (sd_session_get_username (session, &user) < 0)
-                user = missing;
-
-              pid_t leader_pid;
-              if (sd_session_get_leader (session, &leader_pid) < 0)
-                leader_pid = 0;
-
-              char *host;
-              char *remote_host;
-              if (sd_session_get_remote_host (session, &remote_host) < 0)
-                {
-                  host = missing;
-                  /* For backward compatibility, put the X11 display into the
-                     host field.  */
-                  if (!type && sd_session_get_type (session, &type) < 0)
+                  tty = NULL;
+                  /* Try harder to get a sensible value for the tty.  */
+                  if (sd_session_get_type (session, &type) < 0)
                     type = missing;
-                  if (strcmp (type, "x11") == 0)
+                  if (strcmp (type, "tty") == 0)
                     {
-                      char *display;
-                      if (sd_session_get_display (session, &display) < 0)
-                        display = NULL;
-                      host = display;
+                      char *service;
+                      if (sd_session_get_service (session, &service) < 0)
+                        service = NULL;
+
+                      uid_t uid;
+                      char *pty = (sd_session_get_uid (session, &uid) < 0 ? NULL
+                                   : guess_pty_name (uid, start_ts));
+
+                      if (service != NULL && pty != NULL)
+                        {
+                          tty = xmalloc (strlen (service) + 1 + strlen (pty) + 1);
+                          stpcpy (stpcpy (stpcpy (tty, service), " "), pty);
+                          free (pty);
+                          free (service);
+                        }
+                      else if (service != NULL)
+                        tty = service;
+                      else if (pty != NULL)
+                        tty = pty;
                     }
                 }
-              else
+
+              /* Create up to two USER_PROCESS entries: one for the seat,
+                 one for the tty.  */
+              if (seat != NULL || tty != NULL)
                 {
-                  char *remote_user;
-                  if (sd_session_get_remote_user (session, &remote_user) < 0)
-                    host = remote_host;
+                  char *user;
+                  if (sd_session_get_username (session, &user) < 0)
+                    user = missing;
+
+                  pid_t leader_pid;
+                  if (sd_session_get_leader (session, &leader_pid) < 0)
+                    leader_pid = 0;
+
+                  char *host;
+                  char *remote_host;
+                  if (sd_session_get_remote_host (session, &remote_host) < 0)
+                    {
+                      host = missing;
+                      /* For backward compatibility, put the X11 display into the
+                         host field.  */
+                      if (!type && sd_session_get_type (session, &type) < 0)
+                        type = missing;
+                      if (strcmp (type, "x11") == 0)
+                        {
+                          char *display;
+                          if (sd_session_get_display (session, &display) < 0)
+                            display = NULL;
+                          host = display;
+                        }
+                    }
                   else
                     {
-                      host = xmalloc (strlen (remote_user) + 1
-                                      + strlen (remote_host) + 1);
-                      stpcpy (stpcpy (stpcpy (host, remote_user), "@"),
-                              remote_host);
-                      free (remote_user);
-                      free (remote_host);
+                      char *remote_user;
+                      if (sd_session_get_remote_user (session, &remote_user) < 0)
+                        host = remote_host;
+                      else
+                        {
+                          host = xmalloc (strlen (remote_user) + 1
+                                          + strlen (remote_host) + 1);
+                          stpcpy (stpcpy (stpcpy (host, remote_user), "@"),
+                                  remote_host);
+                          free (remote_user);
+                          free (remote_host);
+                        }
                     }
+
+                  if (seat != NULL)
+                    a = add_utmp (a, options,
+                                  user, strlen (user),
+                                  session, strlen (session),
+                                  seat, strlen (seat),
+                                  host, strlen (host),
+                                  leader_pid /* the best we have */,
+                                  USER_PROCESS, start_ts, leader_pid, 0, 0);
+                  if (tty != NULL)
+                    a = add_utmp (a, options,
+                                  user, strlen (user),
+                                  session, strlen (session),
+                                  tty, strlen (tty),
+                                  host, strlen (host),
+                                  leader_pid /* the best we have */,
+                                  USER_PROCESS, start_ts, leader_pid, 0, 0);
+
+                  if (host != missing)
+                    free (host);
+                  if (user != missing)
+                    free (user);
                 }
 
-              if (seat != NULL)
-                a = add_utmp (a, options,
-                              user, strlen (user),
-                              session, strlen (session),
-                              seat, strlen (seat),
-                              host, strlen (host),
-                              leader_pid /* the best we have */,
-                              USER_PROCESS, start_ts, leader_pid, 0, 0);
-              if (tty != NULL)
-                a = add_utmp (a, options,
-                              user, strlen (user),
-                              session, strlen (session),
-                              tty, strlen (tty),
-                              host, strlen (host),
-                              leader_pid /* the best we have */,
-                              USER_PROCESS, start_ts, leader_pid, 0, 0);
-
-              if (host != missing)
-                free (host);
-              if (user != missing)
-                free (user);
+              if (type != missing)
+                free (type);
+              free (tty);
+              free (seat);
+              free (session);
             }
-
-          if (type != missing)
-            free (type);
-          free (tty);
-          free (seat);
-          free (session);
+          free (sessions);
         }
-      free (sessions);
     }
 
   a = finish_utmp (a);
@@ -606,6 +617,15 @@ read_utmp (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
     /* Imitate reading UTMP_FILE, using systemd and Linux APIs.  */
     return read_utmp_from_systemd (n_entries, utmp_buf, options);
 #  endif
+
+  if ((options & READ_UTMP_BOOT_TIME) != 0
+      && (options & (READ_UTMP_USER_PROCESS | READ_UTMP_NO_BOOT_TIME)) != 0)
+    {
+      /* No entries can match the given options.  */
+      *n_entries = 0;
+      *utmp_buf = NULL;
+      return 0;
+    }
 
   /* Ignore the return value for now.
      Solaris' utmpname returns 1 upon success -- which is contrary
@@ -708,6 +728,15 @@ int
 read_utmp (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
            int options)
 {
+  if ((options & READ_UTMP_BOOT_TIME) != 0
+      && (options & (READ_UTMP_USER_PROCESS | READ_UTMP_NO_BOOT_TIME)) != 0)
+    {
+      /* No entries can match the given options.  */
+      *n_entries = 0;
+      *utmp_buf = NULL;
+      return 0;
+    }
+
   FILE *f = fopen (file, "re");
 
   if (! f)
