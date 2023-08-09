@@ -78,7 +78,7 @@
 #endif
 
 /* Accessor macros for the member named ut_type.  */
-#if (HAVE_UTMPX_H ? HAVE_STRUCT_UTMP_UT_TYPE : HAVE_STRUCT_UTMPX_UT_TYPE)
+#if (HAVE_UTMPX_H ? HAVE_STRUCT_UTMPX_UT_TYPE : HAVE_STRUCT_UTMP_UT_TYPE)
 # define UT_TYPE_EQ(UT, V) ((UT)->ut_type == (V))
 # define UT_TYPE_NOT_DEFINED 0
 #else
