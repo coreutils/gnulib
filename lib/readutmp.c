@@ -38,6 +38,7 @@
 # include <time.h>
 #endif
 
+#include "stat-time.h"
 #include "xalloc.h"
 
 /* Each of the FILE streams in this file is only used in a single thread.  */
@@ -131,6 +132,8 @@
 #define UT_LINE_SIZE  sizeof (((struct UTMP_STRUCT_NAME *) 0)->ut_line)
 /* Size of the ut->ut_host member.  */
 #define UT_HOST_SIZE  sizeof (((struct UTMP_STRUCT_NAME *) 0)->ut_host)
+
+#define SIZEOF(a) (sizeof(a)/sizeof(a[0]))
 
 #if 8 <= __GNUC__
 # pragma GCC diagnostic ignored "-Wsizeof-pointer-memaccess"
@@ -387,6 +390,51 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
     }
 
   END_UTMP_ENT ();
+
+#  if defined __linux__
+  /* On Alpine Linux, UTMP_FILE is not filled.  It is always empty.
+     So, fake a BOOT_TIME entry, by getting the time stamp of a file that
+     gets touched only during the boot process.  */
+  if ((options & (READ_UTMP_USER_PROCESS | READ_UTMP_NO_BOOT_TIME)) == 0
+      && strcmp (file, UTMP_FILE) == 0)
+    {
+      bool have_boot_time = false;
+      for (idx_t i = 0; i < a.filled; i++)
+        {
+          struct gl_utmp *ut = &a.utmp[i];
+          if (UT_TYPE_BOOT_TIME (ut))
+            {
+              have_boot_time = true;
+              break;
+            }
+        }
+      if (!have_boot_time)
+        {
+          const char * const boot_touched_files[] =
+            {
+              "/var/lib/systemd/random-seed", /* seen on distros with systemd */
+              "/var/run/utmp",                /* seen on distros with OpenRC */
+              "/var/lib/random-seed"          /* seen on older distros */
+            };
+          for (idx_t i = 0; i < SIZEOF (boot_touched_files); i++)
+            {
+              const char *filename = boot_touched_files[i];
+              struct stat statbuf;
+              if (stat (filename, &statbuf) >= 0)
+                {
+                  struct timespec boot_time = get_stat_mtime (&statbuf);
+                  a = add_utmp (a, options,
+                                "reboot", strlen ("reboot"),
+                                "", 0,
+                                "~", strlen ("~"),
+                                "", 0,
+                                0, BOOT_TIME, boot_time, 0, 0, 0);
+                  break;
+                }
+            }
+        }
+    }
+#  endif
 
 # else /* old FreeBSD, OpenBSD, HP-UX */
 

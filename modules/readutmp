@@ -11,6 +11,7 @@ Depends-on:
 extensions
 fopen-gnu
 idx
+stat-time
 stdbool
 stdint
 strnlen
