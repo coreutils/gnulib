@@ -136,11 +136,6 @@
 # pragma GCC diagnostic ignored "-Wsizeof-pointer-memaccess"
 #endif
 
-/* Work around <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=110884>.  */
-#if 11 <= __GNUC__
-# pragma GCC diagnostic ignored "-Wstringop-overread"
-#endif
-
 /* Copy UT->ut_user into storage obtained from malloc.  Then remove any
    trailing spaces from the copy, NUL terminate it, and return the copy.  */
 
