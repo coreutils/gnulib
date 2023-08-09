@@ -281,12 +281,211 @@ finish_utmp (struct utmp_alloc a)
   return a;
 }
 
+# if !HAVE_UTMPX_H && HAVE_UTMP_H && defined UTMP_NAME_FUNCTION && !HAVE_DECL_GETUTENT
+struct utmp *getutent (void);
+# endif
+
+static int
+read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
+                     int options)
+{
+  if ((options & READ_UTMP_BOOT_TIME) != 0
+      && (options & (READ_UTMP_USER_PROCESS | READ_UTMP_NO_BOOT_TIME)) != 0)
+    {
+      /* No entries can match the given options.  */
+      *n_entries = 0;
+      *utmp_buf = NULL;
+      return 0;
+    }
+
+  struct utmp_alloc a = {0};
+
+# if defined UTMP_NAME_FUNCTION /* glibc, musl, macOS, FreeBSD, NetBSD, Minix, AIX, IRIX, Solaris, Cygwin, Android */
+
+  /* Ignore the return value for now.
+     Solaris' utmpname returns 1 upon success -- which is contrary
+     to what the GNU libc version does.  In addition, older GNU libc
+     versions are actually void.   */
+  UTMP_NAME_FUNCTION ((char *) file);
+
+  SET_UTMP_ENT ();
+
+  void const *entry;
+
+  while ((entry = GET_UTMP_ENT ()) != NULL)
+    {
+#  if __GLIBC__ && _TIME_BITS == 64
+      /* This is a near-copy of glibc's struct utmpx, which stops working
+         after the year 2038.  Unlike the glibc version, struct utmpx32
+         describes the file format even if time_t is 64 bits.  */
+      struct utmpx32
+      {
+        short int ut_type;               /* Type of login.  */
+        pid_t ut_pid;                    /* Process ID of login process.  */
+        char ut_line[UT_LINE_SIZE];      /* Devicename.  */
+        char ut_id[UT_ID_SIZE];          /* Inittab ID.  */
+        char ut_user[UT_USER_SIZE];      /* Username.  */
+        char ut_host[UT_HOST_SIZE];      /* Hostname for remote login. */
+        struct __exit_status ut_exit;    /* Exit status of a process marked
+                                            as DEAD_PROCESS.  */
+        /* The fields ut_session and ut_tv must be the same size when compiled
+           32- and 64-bit.  This allows files and shared memory to be shared
+           between 32- and 64-bit applications.  */
+        int ut_session;                  /* Session ID, used for windowing.  */
+        struct
+        {
+          /* Seconds.  Unsigned not signed, as glibc did not exist before 1970,
+             and if the format is still in use after 2038 its timestamps
+             will surely have the sign bit on.  This hack stops working
+             at 2106-02-07 06:28:16 UTC.  */
+          unsigned int tv_sec;
+          int tv_usec;                   /* Microseconds.  */
+        } ut_tv;                         /* Time entry was made.  */
+        int ut_addr_v6[4];               /* Internet address of remote host.  */
+        char ut_reserved[20];            /* Reserved for future use.  */
+      };
+      struct utmpx32 const *ut = (struct utmpx32 const *) entry;
+#  else
+      struct UTMP_STRUCT_NAME const *ut = (struct UTMP_STRUCT_NAME const *) entry;
+#  endif
+
+      a = add_utmp (a, options,
+                    UT_USER (ut), strnlen (UT_USER (ut), UT_USER_SIZE),
+                    #if (HAVE_UTMPX_H ? HAVE_STRUCT_UTMPX_UT_ID : HAVE_STRUCT_UTMP_UT_ID)
+                    ut->ut_id, strnlen (ut->ut_id, UT_ID_SIZE),
+                    #else
+                    "", 0,
+                    #endif
+                    ut->ut_line, strnlen (ut->ut_line, UT_LINE_SIZE),
+                    #if (HAVE_UTMPX_H ? HAVE_STRUCT_UTMPX_UT_HOST : HAVE_STRUCT_UTMP_UT_HOST)
+                    ut->ut_host, strnlen (ut->ut_host, UT_HOST_SIZE),
+                    #else
+                    "", 0,
+                    #endif
+                    #if (HAVE_UTMPX_H ? HAVE_STRUCT_UTMPX_UT_PID : HAVE_STRUCT_UTMP_UT_PID)
+                    ut->ut_pid,
+                    #else
+                    0,
+                    #endif
+                    #if (HAVE_UTMPX_H ? HAVE_STRUCT_UTMPX_UT_TYPE : HAVE_STRUCT_UTMP_UT_TYPE)
+                    ut->ut_type,
+                    #else
+                    0,
+                    #endif
+                    #if (HAVE_UTMPX_H ? 1 : HAVE_STRUCT_UTMP_UT_TV)
+                    (struct timespec) { .tv_sec = ut->ut_tv.tv_sec, .tv_nsec = ut->ut_tv.tv_usec * 1000 },
+                    #else
+                    (struct timespec) { .tv_sec = ut->ut_time, .tv_nsec = 0 },
+                    #endif
+                    #if (HAVE_UTMPX_H ? HAVE_STRUCT_UTMPX_UT_SESSION : HAVE_STRUCT_UTMP_UT_SESSION)
+                    ut->ut_session,
+                    #else
+                    0,
+                    #endif
+                    UT_EXIT_E_TERMINATION (ut), UT_EXIT_E_EXIT (ut)
+                   );
+    }
+
+  END_UTMP_ENT ();
+
+# else /* old FreeBSD, OpenBSD, HP-UX */
+
+  FILE *f = fopen (file, "re");
+
+  if (! f)
+    return -1;
+
+  for (;;)
+    {
+      struct UTMP_STRUCT_NAME ut;
+
+      if (fread (&ut, sizeof ut, 1, f) == 0)
+        break;
+      a = add_utmp (a, options,
+                    UT_USER (&ut), strnlen (UT_USER (&ut), UT_USER_SIZE),
+                    #if (HAVE_UTMPX_H ? HAVE_STRUCT_UTMPX_UT_ID : HAVE_STRUCT_UTMP_UT_ID)
+                    ut.ut_id, strnlen (ut.ut_id, UT_ID_SIZE),
+                    #else
+                    "", 0,
+                    #endif
+                    ut.ut_line, strnlen (ut.ut_line, UT_LINE_SIZE),
+                    #if (HAVE_UTMPX_H ? HAVE_STRUCT_UTMPX_UT_HOST : HAVE_STRUCT_UTMP_UT_HOST)
+                    ut.ut_host, strnlen (ut.ut_host, UT_HOST_SIZE),
+                    #else
+                    "", 0,
+                    #endif
+                    #if (HAVE_UTMPX_H ? HAVE_STRUCT_UTMPX_UT_PID : HAVE_STRUCT_UTMP_UT_PID)
+                    ut.ut_pid,
+                    #else
+                    0,
+                    #endif
+                    #if (HAVE_UTMPX_H ? HAVE_STRUCT_UTMPX_UT_TYPE : HAVE_STRUCT_UTMP_UT_TYPE)
+                    ut.ut_type,
+                    #else
+                    0,
+                    #endif
+                    #if (HAVE_UTMPX_H ? 1 : HAVE_STRUCT_UTMP_UT_TV)
+                    (struct timespec) { .tv_sec = ut.ut_tv.tv_sec, .tv_nsec = ut.ut_tv.tv_usec * 1000 },
+                    #else
+                    (struct timespec) { .tv_sec = ut.ut_time, .tv_nsec = 0 },
+                    #endif
+                    #if (HAVE_UTMPX_H ? HAVE_STRUCT_UTMPX_UT_SESSION : HAVE_STRUCT_UTMP_UT_SESSION)
+                    ut.ut_session,
+                    #else
+                    0,
+                    #endif
+                    UT_EXIT_E_TERMINATION (&ut), UT_EXIT_E_EXIT (&ut)
+                   );
+    }
+
+  int saved_errno = ferror (f) ? errno : 0;
+  if (fclose (f) != 0)
+    saved_errno = errno;
+  if (saved_errno != 0)
+    {
+      free (a.utmp);
+      errno = saved_errno;
+      return -1;
+    }
+
+# endif
+
+  a = finish_utmp (a);
+
+  *n_entries = a.filled;
+  *utmp_buf = a.utmp;
+
+  return 0;
+}
+
 # if READUTMP_USE_SYSTEMD
 /* Use systemd and Linux /proc and kernel APIs.  */
 
 static struct timespec
 get_boot_time_uncached (void)
 {
+  /* Try to find the boot time in the /var/run/utmp file.  */
+  {
+    idx_t n_entries = 0;
+    STRUCT_UTMP *utmp = NULL;
+    read_utmp_from_file (UTMP_FILE, &n_entries, &utmp, READ_UTMP_BOOT_TIME);
+    if (n_entries > 0)
+      {
+        struct timespec result = utmp[0].ut_ts;
+        free (utmp);
+        return result;
+      }
+    free (utmp);
+  }
+
+  /* The following approaches are only usable as fallbacks, because they are
+     all of the form
+       boot_time = (time now) - (kernel's ktime_get_boottime[_ts64] ())
+     and therefore produce wrong values after the date has been bumped in the
+     running system, which happens frequently if the system is running in a
+     virtual machine and this VM has been put into "saved" or "sleep" state
+     and then resumed.  */
+
   /* The clock_gettime facility returns the uptime with a resolution of 1 µsec.
      It is available with glibc >= 2.14.  In glibc < 2.17 it required linking
      with librt.  */
@@ -602,210 +801,18 @@ read_utmp_from_systemd (idx_t *n_entries, STRUCT_UTMP **utmp_buf, int options)
 
 # endif
 
-# if defined UTMP_NAME_FUNCTION /* glibc, musl, macOS, FreeBSD, NetBSD, Minix, AIX, IRIX, Solaris, Cygwin, Android */
-
-#  if !HAVE_UTMPX_H && HAVE_UTMP_H && !HAVE_DECL_GETUTENT
-struct utmp *getutent (void);
-#  endif
-
 int
 read_utmp (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
            int options)
 {
-#  if READUTMP_USE_SYSTEMD
+# if READUTMP_USE_SYSTEMD
   if (strcmp (file, UTMP_FILE) == 0)
     /* Imitate reading UTMP_FILE, using systemd and Linux APIs.  */
     return read_utmp_from_systemd (n_entries, utmp_buf, options);
-#  endif
-
-  if ((options & READ_UTMP_BOOT_TIME) != 0
-      && (options & (READ_UTMP_USER_PROCESS | READ_UTMP_NO_BOOT_TIME)) != 0)
-    {
-      /* No entries can match the given options.  */
-      *n_entries = 0;
-      *utmp_buf = NULL;
-      return 0;
-    }
-
-  /* Ignore the return value for now.
-     Solaris' utmpname returns 1 upon success -- which is contrary
-     to what the GNU libc version does.  In addition, older GNU libc
-     versions are actually void.   */
-  UTMP_NAME_FUNCTION ((char *) file);
-
-  SET_UTMP_ENT ();
-
-  struct utmp_alloc a = {0};
-  void const *entry;
-
-  while ((entry = GET_UTMP_ENT ()) != NULL)
-    {
-#  if __GLIBC__ && _TIME_BITS == 64
-      /* This is a near-copy of glibc's struct utmpx, which stops working
-         after the year 2038.  Unlike the glibc version, struct utmpx32
-         describes the file format even if time_t is 64 bits.  */
-      struct utmpx32
-      {
-        short int ut_type;               /* Type of login.  */
-        pid_t ut_pid;                    /* Process ID of login process.  */
-        char ut_line[UT_LINE_SIZE];      /* Devicename.  */
-        char ut_id[UT_ID_SIZE];          /* Inittab ID.  */
-        char ut_user[UT_USER_SIZE];      /* Username.  */
-        char ut_host[UT_HOST_SIZE];      /* Hostname for remote login. */
-        struct __exit_status ut_exit;    /* Exit status of a process marked
-                                            as DEAD_PROCESS.  */
-        /* The fields ut_session and ut_tv must be the same size when compiled
-           32- and 64-bit.  This allows files and shared memory to be shared
-           between 32- and 64-bit applications.  */
-        int ut_session;                  /* Session ID, used for windowing.  */
-        struct
-        {
-          /* Seconds.  Unsigned not signed, as glibc did not exist before 1970,
-             and if the format is still in use after 2038 its timestamps
-             will surely have the sign bit on.  This hack stops working
-             at 2106-02-07 06:28:16 UTC.  */
-          unsigned int tv_sec;
-          int tv_usec;                   /* Microseconds.  */
-        } ut_tv;                         /* Time entry was made.  */
-        int ut_addr_v6[4];               /* Internet address of remote host.  */
-        char ut_reserved[20];            /* Reserved for future use.  */
-      };
-      struct utmpx32 const *ut = (struct utmpx32 const *) entry;
-#  else
-      struct UTMP_STRUCT_NAME const *ut = (struct UTMP_STRUCT_NAME const *) entry;
-#  endif
-
-      a = add_utmp (a, options,
-                    UT_USER (ut), strnlen (UT_USER (ut), UT_USER_SIZE),
-                    #if (HAVE_UTMPX_H ? HAVE_STRUCT_UTMPX_UT_ID : HAVE_STRUCT_UTMP_UT_ID)
-                    ut->ut_id, strnlen (ut->ut_id, UT_ID_SIZE),
-                    #else
-                    "", 0,
-                    #endif
-                    ut->ut_line, strnlen (ut->ut_line, UT_LINE_SIZE),
-                    #if (HAVE_UTMPX_H ? HAVE_STRUCT_UTMPX_UT_HOST : HAVE_STRUCT_UTMP_UT_HOST)
-                    ut->ut_host, strnlen (ut->ut_host, UT_HOST_SIZE),
-                    #else
-                    "", 0,
-                    #endif
-                    #if (HAVE_UTMPX_H ? HAVE_STRUCT_UTMPX_UT_PID : HAVE_STRUCT_UTMP_UT_PID)
-                    ut->ut_pid,
-                    #else
-                    0,
-                    #endif
-                    #if (HAVE_UTMPX_H ? HAVE_STRUCT_UTMPX_UT_TYPE : HAVE_STRUCT_UTMP_UT_TYPE)
-                    ut->ut_type,
-                    #else
-                    0,
-                    #endif
-                    #if (HAVE_UTMPX_H ? 1 : HAVE_STRUCT_UTMP_UT_TV)
-                    (struct timespec) { .tv_sec = ut->ut_tv.tv_sec, .tv_nsec = ut->ut_tv.tv_usec * 1000 },
-                    #else
-                    (struct timespec) { .tv_sec = ut->ut_time, .tv_nsec = 0 },
-                    #endif
-                    #if (HAVE_UTMPX_H ? HAVE_STRUCT_UTMPX_UT_SESSION : HAVE_STRUCT_UTMP_UT_SESSION)
-                    ut->ut_session,
-                    #else
-                    0,
-                    #endif
-                    UT_EXIT_E_TERMINATION (ut), UT_EXIT_E_EXIT (ut)
-                   );
-    }
-
-  END_UTMP_ENT ();
-
-  a = finish_utmp (a);
-
-  *n_entries = a.filled;
-  *utmp_buf = a.utmp;
-
-  return 0;
-}
-
-# else /* old FreeBSD, OpenBSD, HP-UX */
-
-int
-read_utmp (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
-           int options)
-{
-  if ((options & READ_UTMP_BOOT_TIME) != 0
-      && (options & (READ_UTMP_USER_PROCESS | READ_UTMP_NO_BOOT_TIME)) != 0)
-    {
-      /* No entries can match the given options.  */
-      *n_entries = 0;
-      *utmp_buf = NULL;
-      return 0;
-    }
-
-  FILE *f = fopen (file, "re");
-
-  if (! f)
-    return -1;
-
-  struct utmp_alloc a = {0};
-
-  for (;;)
-    {
-      struct UTMP_STRUCT_NAME ut;
-
-      if (fread (&ut, sizeof ut, 1, f) == 0)
-        break;
-      a = add_utmp (a, options,
-                    UT_USER (&ut), strnlen (UT_USER (&ut), UT_USER_SIZE),
-                    #if (HAVE_UTMPX_H ? HAVE_STRUCT_UTMPX_UT_ID : HAVE_STRUCT_UTMP_UT_ID)
-                    ut.ut_id, strnlen (ut.ut_id, UT_ID_SIZE),
-                    #else
-                    "", 0,
-                    #endif
-                    ut.ut_line, strnlen (ut.ut_line, UT_LINE_SIZE),
-                    #if (HAVE_UTMPX_H ? HAVE_STRUCT_UTMPX_UT_HOST : HAVE_STRUCT_UTMP_UT_HOST)
-                    ut.ut_host, strnlen (ut.ut_host, UT_HOST_SIZE),
-                    #else
-                    "", 0,
-                    #endif
-                    #if (HAVE_UTMPX_H ? HAVE_STRUCT_UTMPX_UT_PID : HAVE_STRUCT_UTMP_UT_PID)
-                    ut.ut_pid,
-                    #else
-                    0,
-                    #endif
-                    #if (HAVE_UTMPX_H ? HAVE_STRUCT_UTMPX_UT_TYPE : HAVE_STRUCT_UTMP_UT_TYPE)
-                    ut.ut_type,
-                    #else
-                    0,
-                    #endif
-                    #if (HAVE_UTMPX_H ? 1 : HAVE_STRUCT_UTMP_UT_TV)
-                    (struct timespec) { .tv_sec = ut.ut_tv.tv_sec, .tv_nsec = ut.ut_tv.tv_usec * 1000 },
-                    #else
-                    (struct timespec) { .tv_sec = ut.ut_time, .tv_nsec = 0 },
-                    #endif
-                    #if (HAVE_UTMPX_H ? HAVE_STRUCT_UTMPX_UT_SESSION : HAVE_STRUCT_UTMP_UT_SESSION)
-                    ut.ut_session,
-                    #else
-                    0,
-                    #endif
-                    UT_EXIT_E_TERMINATION (&ut), UT_EXIT_E_EXIT (&ut)
-                   );
-    }
-
-  int saved_errno = ferror (f) ? errno : 0;
-  if (fclose (f) != 0)
-    saved_errno = errno;
-  if (saved_errno != 0)
-    {
-      free (a.utmp);
-      errno = saved_errno;
-      return -1;
-    }
-
-  a = finish_utmp (a);
-
-  *n_entries = a.filled;
-  *utmp_buf = a.utmp;
-
-  return 0;
-}
-
 # endif
+
+  return read_utmp_from_file (file, n_entries, utmp_buf, options);
+}
 
 #else /* dummy fallback */
 
