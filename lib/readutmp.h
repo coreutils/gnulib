@@ -211,6 +211,14 @@ enum { UT_HOST_SIZE = -1 };
 # define WTMP_FILE "/etc/wtmp"
 #endif
 
+/* Some platforms, such as OpenBSD, don't have an ut_type field and don't have
+   the BOOT_TIME and USER_PROCESS macros.  But we want to support them in
+   'struct gl_utmp'.  */
+#if !(HAVE_UTMPX_H ? HAVE_STRUCT_UTMPX_UT_TYPE : HAVE_STRUCT_UTMP_UT_TYPE)
+# define BOOT_TIME 2
+# define USER_PROCESS 0
+#endif
+
 /* Macros that test (UT)->ut_type.  */
 #ifdef BOOT_TIME
 # define UT_TYPE_BOOT_TIME(UT) UT_TYPE_EQ (UT, BOOT_TIME)

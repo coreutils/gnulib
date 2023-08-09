@@ -496,6 +496,42 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
       return -1;
     }
 
+#  if defined __OpenBSD__
+  /* On OpenBSD, UTMP_FILE is not filled.  It contains only dummy entries.
+     So, fake a BOOT_TIME entry, by getting the time stamp of a file that
+     gets touched only during the boot process.  */
+  if ((options & (READ_UTMP_USER_PROCESS | READ_UTMP_NO_BOOT_TIME)) == 0
+      && strcmp (file, UTMP_FILE) == 0)
+    {
+      /* OpenBSD's 'struct utmp' does not have an ut_type field.  */
+      bool have_boot_time = false;
+      if (!have_boot_time)
+        {
+          const char * const boot_touched_files[] =
+            {
+              "/var/db/host.random",
+              "/var/run/utmp"
+            };
+          for (idx_t i = 0; i < SIZEOF (boot_touched_files); i++)
+            {
+              const char *filename = boot_touched_files[i];
+              struct stat statbuf;
+              if (stat (filename, &statbuf) >= 0)
+                {
+                  struct timespec boot_time = get_stat_mtime (&statbuf);
+                  a = add_utmp (a, options,
+                                "reboot", strlen ("reboot"),
+                                "", 0,
+                                "", strlen (""),
+                                "", 0,
+                                0, BOOT_TIME, boot_time, 0, 0, 0);
+                  break;
+                }
+            }
+        }
+    }
+#  endif
+
 # endif
 
   a = finish_utmp (a);
