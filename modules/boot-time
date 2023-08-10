@@ -1,0 +1,27 @@
+Description:
+Determine the time when the machine last booted.
+
+Files:
+lib/boot-time.h
+lib/boot-time.c
+
+Depends-on:
+idx
+readutmp
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += boot-time.c
+
+Include:
+"boot-time.h"
+
+Link:
+$(READUTMP_LIB)
+
+License:
+GPL
+
+Maintainer:
+all
