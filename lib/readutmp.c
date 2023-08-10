@@ -369,6 +369,12 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
 
   SET_UTMP_ENT ();
 
+#  if defined __linux__ && !defined __ANDROID__
+  bool file_is_utmp = (strcmp (file, UTMP_FILE) == 0);
+  /* Timestamp of the "runlevel" entry, if any.  */
+  struct timespec runlevel_ts = {0};
+#  endif
+
   void const *entry;
 
   while ((entry = GET_UTMP_ENT ()) != NULL)
@@ -408,6 +414,13 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
       struct UTMP_STRUCT_NAME const *ut = (struct UTMP_STRUCT_NAME const *) entry;
 #  endif
 
+      struct timespec ts =
+        #if (HAVE_UTMPX_H ? 1 : HAVE_STRUCT_UTMP_UT_TV)
+        { .tv_sec = ut->ut_tv.tv_sec, .tv_nsec = ut->ut_tv.tv_usec * 1000 };
+        #else
+        { .tv_sec = ut->ut_time, .tv_nsec = 0 };
+        #endif
+
       a = add_utmp (a, options,
                     UT_USER (ut), strnlen (UT_USER (ut), UT_USER_SIZE),
                     #if (HAVE_UTMPX_H ? HAVE_STRUCT_UTMPX_UT_ID : HAVE_STRUCT_UTMP_UT_ID)
@@ -431,11 +444,7 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
                     #else
                     0,
                     #endif
-                    #if (HAVE_UTMPX_H ? 1 : HAVE_STRUCT_UTMP_UT_TV)
-                    (struct timespec) { .tv_sec = ut->ut_tv.tv_sec, .tv_nsec = ut->ut_tv.tv_usec * 1000 },
-                    #else
-                    (struct timespec) { .tv_sec = ut->ut_time, .tv_nsec = 0 },
-                    #endif
+                    ts,
                     #if (HAVE_UTMPX_H ? HAVE_STRUCT_UTMPX_UT_SESSION : HAVE_STRUCT_UTMP_UT_SESSION)
                     ut->ut_session,
                     #else
@@ -443,6 +452,12 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
                     #endif
                     UT_EXIT_E_TERMINATION (ut), UT_EXIT_E_EXIT (ut)
                    );
+#  if defined __linux__ && !defined __ANDROID__
+      if (file_is_utmp
+          && memcmp (UT_USER (ut), "runlevel", strlen ("runlevel") + 1) == 0
+          && memcmp (ut->ut_line, "~", strlen ("~") + 1) == 0)
+        runlevel_ts = ts;
+#  endif
     }
 
   END_UTMP_ENT ();
@@ -450,9 +465,19 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
 #  if defined __linux__ && !defined __ANDROID__
   /* On Alpine Linux, UTMP_FILE is not filled.  It is always empty.
      So, fake a BOOT_TIME entry, by getting the time stamp of a file that
-     gets touched only during the boot process.  */
+     gets touched only during the boot process.
+
+     On Raspbian, which runs on hardware without a real-time clock, during boot,
+       1. the clock gets set to 1970-01-01 00:00:00,
+       2. an entry gets written into /var/run/utmp, with ut_type = BOOT_TIME,
+          ut_user = "reboot", ut_line = "~", time = 1970-01-01 00:00:05 or so,
+       3. the clock gets set to a correct value through NTP,
+       4. an entry gets written into /var/run/utmp, with
+          ut_user = "runlevel", ut_line = "~", time = correct value.
+     In this case, copy the time from the "runlevel" entry to the "reboot"
+     entry.  */
   if ((options & (READ_UTMP_USER_PROCESS | READ_UTMP_NO_BOOT_TIME)) == 0
-      && strcmp (file, UTMP_FILE) == 0)
+      && file_is_utmp)
     {
       bool have_boot_time = false;
       for (idx_t i = 0; i < a.filled; i++)
@@ -460,12 +485,16 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
           struct gl_utmp *ut = &a.utmp[i];
           if (UT_TYPE_BOOT_TIME (ut))
             {
+              /* Workaround for Raspbian:  */
+              if (ut->ut_ts.tv_sec <= 60 && runlevel_ts.tv_sec != 0)
+                ut->ut_ts = runlevel_ts;
               have_boot_time = true;
               break;
             }
         }
       if (!have_boot_time)
         {
+          /* Workaround for Alpine Linux:  */
           const char * const boot_touched_files[] =
             {
               "/var/lib/systemd/random-seed", /* seen on distros with systemd */
