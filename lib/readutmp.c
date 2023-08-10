@@ -31,11 +31,13 @@
 #include <stdlib.h>
 #include <stdint.h>
 
+#if READUTMP_USE_SYSTEMD || defined __ANDROID__
+# include <sys/sysinfo.h>
+# include <time.h>
+#endif
 #if READUTMP_USE_SYSTEMD
 # include <dirent.h>
-# include <sys/sysinfo.h>
 # include <systemd/sd-login.h>
-# include <time.h>
 #endif
 
 #include "stat-time.h"
@@ -284,6 +286,60 @@ finish_utmp (struct utmp_alloc a)
   return a;
 }
 
+# if READUTMP_USE_SYSTEMD || defined __ANDROID__
+
+/* Store the uptime counter, as managed by the Linux kernel, in *P_UPTIME.
+   Return 0 upon success, -1 upon failure.  */
+static int
+get_linux_uptime (struct timespec *p_uptime)
+{
+  /* The clock_gettime facility returns the uptime with a resolution of 1 µsec.
+     It is available with glibc >= 2.14.  In glibc < 2.17 it required linking
+     with librt.  */
+#  if (__GLIBC__ + (__GLIBC_MINOR__ >= 17) > 2) || defined __ANDROID__
+  if (clock_gettime (CLOCK_BOOTTIME, p_uptime) >= 0)
+    return 0;
+#  endif
+
+  /* /proc/uptime contains the uptime with a resolution of 0.01 sec.
+     But it does not have read permissions on Android.  */
+#  if !defined __ANDROID__
+  FILE *fp = fopen ("/proc/uptime", "re");
+  if (fp != NULL)
+    {
+      char buf[32 + 1];
+      size_t n = fread (buf, 1, sizeof (buf) - 1, fp);
+      fclose (fp);
+      if (n > 0)
+        {
+          buf[n] = '\0';
+          /* buf now contains two values: the uptime and the idle time.  */
+          char *endptr;
+          double uptime = strtod (buf, &endptr);
+          if (endptr > buf)
+            {
+              p_uptime->tv_sec = (time_t) uptime;
+              p_uptime->tv_nsec = (uptime - p_uptime->tv_sec) * 1e9 + 0.5;
+              return 0;
+            }
+        }
+    }
+#  endif
+
+  /* The sysinfo call returns the uptime with a resolution of 1 sec only.  */
+  struct sysinfo info;
+  if (sysinfo (&info) >= 0)
+    {
+      p_uptime->tv_sec = info.uptime;
+      p_uptime->tv_nsec = 0;
+      return 0;
+    }
+
+  return -1;
+}
+
+# endif
+
 # if !HAVE_UTMPX_H && HAVE_UTMP_H && defined UTMP_NAME_FUNCTION && !HAVE_DECL_GETUTENT
 struct utmp *getutent (void);
 # endif
@@ -391,7 +447,7 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
 
   END_UTMP_ENT ();
 
-#  if defined __linux__
+#  if defined __linux__ && !defined __ANDROID__
   /* On Alpine Linux, UTMP_FILE is not filled.  It is always empty.
      So, fake a BOOT_TIME entry, by getting the time stamp of a file that
      gets touched only during the boot process.  */
@@ -434,6 +490,37 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
             }
         }
     }
+#  endif
+
+#  if defined __ANDROID__
+  /* On Android, there is no /var, and normal processes don't have access
+     to system files.  Therefore use the kernel's uptime counter, although
+     it produces wrong values after the date has been bumped in the running
+     system.  */
+  {
+    struct timespec uptime;
+    if (get_linux_uptime (&uptime) >= 0)
+      {
+        struct timespec result;
+        if (clock_gettime (CLOCK_REALTIME, &result) >= 0)
+          {
+            if (result.tv_nsec < uptime.tv_nsec)
+              {
+                result.tv_nsec += 1000000000;
+                result.tv_sec -= 1;
+              }
+            result.tv_sec -= uptime.tv_sec;
+            result.tv_nsec -= uptime.tv_nsec;
+            struct timespec boot_time = result;
+            a = add_utmp (a, options,
+                          "reboot", strlen ("reboot"),
+                          "", 0,
+                          "", 0,
+                          "", 0,
+                          0, BOOT_TIME, boot_time, 0, 0, 0);
+          }
+      }
+  }
 #  endif
 
 # else /* old FreeBSD, OpenBSD, HP-UX */
@@ -522,7 +609,7 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
                   a = add_utmp (a, options,
                                 "reboot", strlen ("reboot"),
                                 "", 0,
-                                "", strlen (""),
+                                "", 0,
                                 "", 0,
                                 0, BOOT_TIME, boot_time, 0, 0, 0);
                   break;
@@ -562,87 +649,34 @@ get_boot_time_uncached (void)
     free (utmp);
   }
 
-  /* The following approaches are only usable as fallbacks, because they are
-     all of the form
+  /* The following approach is only usable as a fallback, because it is of
+     the form
        boot_time = (time now) - (kernel's ktime_get_boottime[_ts64] ())
-     and therefore produce wrong values after the date has been bumped in the
+     and therefore produces wrong values after the date has been bumped in the
      running system, which happens frequently if the system is running in a
      virtual machine and this VM has been put into "saved" or "sleep" state
      and then resumed.  */
-
-  /* The clock_gettime facility returns the uptime with a resolution of 1 µsec.
-     It is available with glibc >= 2.14.  In glibc < 2.17 it required linking
-     with librt.  */
-#  if __GLIBC__ + (__GLIBC_MINOR__ >= 17) > 2
-  struct timespec up;
-  if (clock_gettime (CLOCK_BOOTTIME, &up) >= 0)
-    {
-      struct timespec result;
-      /* equivalent to:
-      if (clock_gettime (CLOCK_REALTIME, &result) >= 0)
-      */
-      if (timespec_get (&result, TIME_UTC) >= 0)
-        {
-          if (result.tv_nsec < up.tv_nsec)
-            {
-              result.tv_nsec += 1000000000;
-              result.tv_sec -= 1;
-            }
-          result.tv_sec -= up.tv_sec;
-          result.tv_nsec -= up.tv_nsec;
-          return result;
-        }
-    }
-#  endif
-
-  /* /proc/uptime contains the uptime with a resolution of 0.01 sec.  */
-  FILE *fp = fopen ("/proc/uptime", "re");
-  if (fp != NULL)
-    {
-      char buf[32 + 1];
-      size_t n = fread (buf, 1, sizeof (buf) - 1, fp);
-      fclose (fp);
-      if (n > 0)
-        {
-          buf[n] = '\0';
-          /* buf now contains two values: the uptime and the idle time.  */
-          char *endptr;
-          double uptime = strtod (buf, &endptr);
-          if (endptr > buf)
-            {
-              struct timespec result;
-              if (0 <= timespec_get (&result, TIME_UTC))
-                {
-                  time_t uptime_sec = uptime;
-                  struct timespec up =
-                    {
-                      .tv_sec = uptime_sec,
-                      .tv_nsec = (uptime - uptime_sec) * 1e9 + 0.5
-                    };
-                  if (result.tv_nsec < up.tv_nsec)
-                    {
-                      result.tv_nsec += 1000000000;
-                      result.tv_sec -= 1;
-                    }
-                  result.tv_sec -= up.tv_sec;
-                  result.tv_nsec -= up.tv_nsec;
-                  return result;
-                }
-            }
-        }
-    }
-
-  /* The sysinfo call returns the uptime with a resolution of 1 sec only.  */
-  struct sysinfo info;
-  if (sysinfo (&info) >= 0)
-    {
-      struct timespec result;
-      if (0 <= timespec_get (&result, TIME_UTC))
-        {
-          result.tv_sec -= info.uptime;
-          return result;
-        }
-    }
+  {
+    struct timespec uptime;
+    if (get_linux_uptime (&uptime) >= 0)
+      {
+        struct timespec result;
+        /* equivalent to:
+        if (clock_gettime (CLOCK_REALTIME, &result) >= 0)
+        */
+        if (timespec_get (&result, TIME_UTC) >= 0)
+          {
+            if (result.tv_nsec < uptime.tv_nsec)
+              {
+                result.tv_nsec += 1000000000;
+                result.tv_sec -= 1;
+              }
+            result.tv_sec -= uptime.tv_sec;
+            result.tv_nsec -= uptime.tv_nsec;
+            return result;
+          }
+      }
+  }
 
   /* We shouldn't get here.  */
   return (struct timespec) {0};
