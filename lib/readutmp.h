@@ -56,6 +56,11 @@
 #endif
 
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /* Type of entries returned by read_utmp on all platforms.  */
 struct gl_utmp
 {
@@ -278,5 +283,10 @@ char *extract_trimmed_name (const STRUCT_UTMP *ut)
    drawback is that they have a common global state.  */
 int read_utmp (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
                int options);
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* __READUTMP_H__ */
