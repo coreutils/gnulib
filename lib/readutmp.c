@@ -526,30 +526,45 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
      to system files.  Therefore use the kernel's uptime counter, although
      it produces wrong values after the date has been bumped in the running
      system.  */
-  {
-    struct timespec uptime;
-    if (get_linux_uptime (&uptime) >= 0)
-      {
-        struct timespec result;
-        if (clock_gettime (CLOCK_REALTIME, &result) >= 0)
-          {
-            if (result.tv_nsec < uptime.tv_nsec)
-              {
-                result.tv_nsec += 1000000000;
-                result.tv_sec -= 1;
-              }
-            result.tv_sec -= uptime.tv_sec;
-            result.tv_nsec -= uptime.tv_nsec;
-            struct timespec boot_time = result;
-            a = add_utmp (a, options,
-                          "reboot", strlen ("reboot"),
-                          "", 0,
-                          "", 0,
-                          "", 0,
-                          0, BOOT_TIME, boot_time, 0, 0, 0);
-          }
-      }
-  }
+  if ((options & (READ_UTMP_USER_PROCESS | READ_UTMP_NO_BOOT_TIME)) == 0
+      && strcmp (file, UTMP_FILE) == 0)
+    {
+      bool have_boot_time = false;
+      for (idx_t i = 0; i < a.filled; i++)
+        {
+          struct gl_utmp *ut = &a.utmp[i];
+          if (UT_TYPE_BOOT_TIME (ut))
+            {
+              have_boot_time = true;
+              break;
+            }
+        }
+      if (!have_boot_time)
+        {
+          struct timespec uptime;
+          if (get_linux_uptime (&uptime) >= 0)
+            {
+              struct timespec result;
+              if (clock_gettime (CLOCK_REALTIME, &result) >= 0)
+                {
+                  if (result.tv_nsec < uptime.tv_nsec)
+                    {
+                      result.tv_nsec += 1000000000;
+                      result.tv_sec -= 1;
+                    }
+                  result.tv_sec -= uptime.tv_sec;
+                  result.tv_nsec -= uptime.tv_nsec;
+                  struct timespec boot_time = result;
+                  a = add_utmp (a, options,
+                                "reboot", strlen ("reboot"),
+                                "", 0,
+                                "", 0,
+                                "", 0,
+                                0, BOOT_TIME, boot_time, 0, 0, 0);
+                }
+            }
+        }
+    }
 #  endif
 
 # else /* old FreeBSD, OpenBSD, HP-UX */
