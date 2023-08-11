@@ -1,4 +1,4 @@
-# readutmp.m4 serial 23
+# readutmp.m4 serial 24
 dnl Copyright (C) 2002-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -6,9 +6,6 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_READUTMP],
 [
-  dnl Persuade utmpx.h to declare utmpxname
-  AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
-
   AC_REQUIRE([gl_SYSTEMD_CHOICE])
 
   dnl Set READUTMP_LIB to '-lsystemd' or '', depending on whether use of
@@ -44,6 +41,15 @@ AC_DEFUN([gl_READUTMP],
     fi
   fi
   AC_SUBST([READUTMP_LIB])
+
+  gl_PREREQ_READUTMP_H
+])
+
+# Prerequisites of readutmp.h.
+AC_DEFUN_ONCE([gl_PREREQ_READUTMP_H],
+[
+  dnl Persuade utmpx.h to declare utmpxname
+  AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
 
   AC_CHECK_HEADERS_ONCE([utmp.h utmpx.h])
   if test $ac_cv_header_utmp_h = yes || test $ac_cv_header_utmpx_h = yes; then

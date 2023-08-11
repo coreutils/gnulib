@@ -31,7 +31,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 
-#if READUTMP_USE_SYSTEMD || defined __ANDROID__
+#if defined __linux__ || defined __ANDROID__
 # include <sys/sysinfo.h>
 # include <time.h>
 #endif
@@ -45,6 +45,10 @@
 
 /* Each of the FILE streams in this file is only used in a single thread.  */
 #include "unlocked-io.h"
+
+/* Some helper functions.  */
+#define NEED_BOOT_TIME_FINAL_FALLBACK READUTMP_USE_SYSTEMD
+#include "boot-time-aux.h"
 
 /* The following macros describe the 'struct UTMP_STRUCT_NAME',
    *not* 'struct gl_utmp'.  */
@@ -134,8 +138,6 @@
 #define UT_LINE_SIZE  sizeof (((struct UTMP_STRUCT_NAME *) 0)->ut_line)
 /* Size of the ut->ut_host member.  */
 #define UT_HOST_SIZE  sizeof (((struct UTMP_STRUCT_NAME *) 0)->ut_host)
-
-#define SIZEOF(a) (sizeof(a)/sizeof(a[0]))
 
 #if 8 <= __GNUC__
 # pragma GCC diagnostic ignored "-Wsizeof-pointer-memaccess"
@@ -288,60 +290,6 @@ finish_utmp (struct utmp_alloc a)
   return a;
 }
 
-# if READUTMP_USE_SYSTEMD || defined __ANDROID__
-
-/* Store the uptime counter, as managed by the Linux kernel, in *P_UPTIME.
-   Return 0 upon success, -1 upon failure.  */
-static int
-get_linux_uptime (struct timespec *p_uptime)
-{
-  /* The clock_gettime facility returns the uptime with a resolution of 1 µsec.
-     It is available with glibc >= 2.14.  In glibc < 2.17 it required linking
-     with librt.  */
-#  if (__GLIBC__ + (__GLIBC_MINOR__ >= 17) > 2) || defined __ANDROID__
-  if (clock_gettime (CLOCK_BOOTTIME, p_uptime) >= 0)
-    return 0;
-#  endif
-
-  /* /proc/uptime contains the uptime with a resolution of 0.01 sec.
-     But it does not have read permissions on Android.  */
-#  if !defined __ANDROID__
-  FILE *fp = fopen ("/proc/uptime", "re");
-  if (fp != NULL)
-    {
-      char buf[32 + 1];
-      size_t n = fread (buf, 1, sizeof (buf) - 1, fp);
-      fclose (fp);
-      if (n > 0)
-        {
-          buf[n] = '\0';
-          /* buf now contains two values: the uptime and the idle time.  */
-          char *endptr;
-          double uptime = strtod (buf, &endptr);
-          if (endptr > buf)
-            {
-              p_uptime->tv_sec = (time_t) uptime;
-              p_uptime->tv_nsec = (uptime - p_uptime->tv_sec) * 1e9 + 0.5;
-              return 0;
-            }
-        }
-    }
-#  endif
-
-  /* The sysinfo call returns the uptime with a resolution of 1 sec only.  */
-  struct sysinfo info;
-  if (sysinfo (&info) >= 0)
-    {
-      p_uptime->tv_sec = info.uptime;
-      p_uptime->tv_nsec = 0;
-      return 0;
-    }
-
-  return -1;
-}
-
-# endif
-
 # if !HAVE_UTMPX_H && HAVE_UTMP_H && defined UTMP_NAME_FUNCTION && !HAVE_DECL_GETUTENT
 struct utmp *getutent (void);
 # endif
@@ -472,28 +420,14 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
       if (!have_boot_time)
         {
           /* Workaround for Alpine Linux:  */
-          const char * const boot_touched_files[] =
-            {
-              "/var/lib/systemd/random-seed", /* seen on distros with systemd */
-              "/var/run/utmp",                /* seen on distros with OpenRC */
-              "/var/lib/random-seed"          /* seen on older distros */
-            };
-          for (idx_t i = 0; i < SIZEOF (boot_touched_files); i++)
-            {
-              const char *filename = boot_touched_files[i];
-              struct stat statbuf;
-              if (stat (filename, &statbuf) >= 0)
-                {
-                  struct timespec boot_time = get_stat_mtime (&statbuf);
-                  a = add_utmp (a, options,
-                                "reboot", strlen ("reboot"),
-                                "", 0,
-                                "~", strlen ("~"),
-                                "", 0,
-                                0, BOOT_TIME, boot_time, 0, 0, 0);
-                  break;
-                }
-            }
+          struct timespec boot_time;
+          if (get_linux_boot_time_fallback (&boot_time) >= 0)
+            a = add_utmp (a, options,
+                          "reboot", strlen ("reboot"),
+                          "", 0,
+                          "~", strlen ("~"),
+                          "", 0,
+                          0, BOOT_TIME, boot_time, 0, 0, 0);
         }
     }
 #   endif
@@ -518,28 +452,14 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
         }
       if (!have_boot_time)
         {
-          struct timespec uptime;
-          if (get_linux_uptime (&uptime) >= 0)
-            {
-              struct timespec result;
-              if (clock_gettime (CLOCK_REALTIME, &result) >= 0)
-                {
-                  if (result.tv_nsec < uptime.tv_nsec)
-                    {
-                      result.tv_nsec += 1000000000;
-                      result.tv_sec -= 1;
-                    }
-                  result.tv_sec -= uptime.tv_sec;
-                  result.tv_nsec -= uptime.tv_nsec;
-                  struct timespec boot_time = result;
-                  a = add_utmp (a, options,
-                                "reboot", strlen ("reboot"),
-                                "", 0,
-                                "", 0,
-                                "", 0,
-                                0, BOOT_TIME, boot_time, 0, 0, 0);
-                }
-            }
+          struct timespec boot_time;
+          if (get_android_boot_time (&boot_time) >= 0)
+            a = add_utmp (a, options,
+                          "reboot", strlen ("reboot"),
+                          "", 0,
+                          "", 0,
+                          "", 0,
+                          0, BOOT_TIME, boot_time, 0, 0, 0);
         }
     }
 #   endif
@@ -629,9 +549,6 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
     }
 
 #   if defined __OpenBSD__
-  /* On OpenBSD, UTMP_FILE is not filled.  It contains only dummy entries.
-     So, fake a BOOT_TIME entry, by getting the time stamp of a file that
-     gets touched only during the boot process.  */
   if ((options & (READ_UTMP_USER_PROCESS | READ_UTMP_NO_BOOT_TIME)) == 0
       && strcmp (file, UTMP_FILE) == 0)
     {
@@ -639,26 +556,16 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
       bool have_boot_time = false;
       if (!have_boot_time)
         {
-          const char * const boot_touched_files[] =
+          struct timespec boot_time;
+          if (get_openbsd_boot_time (&boot_time) >= 0)
             {
-              "/var/db/host.random",
-              "/var/run/utmp"
-            };
-          for (idx_t i = 0; i < SIZEOF (boot_touched_files); i++)
-            {
-              const char *filename = boot_touched_files[i];
-              struct stat statbuf;
-              if (stat (filename, &statbuf) >= 0)
-                {
-                  struct timespec boot_time = get_stat_mtime (&statbuf);
-                  a = add_utmp (a, options,
-                                "reboot", strlen ("reboot"),
-                                "", 0,
-                                "", 0,
-                                "", 0,
-                                0, BOOT_TIME, boot_time, 0, 0, 0);
-                  break;
-                }
+              a = add_utmp (a, options,
+                            "reboot", strlen ("reboot"),
+                            "", 0,
+                            "", 0,
+                            "", 0,
+                            0, BOOT_TIME, boot_time, 0, 0, 0);
+              break;
             }
         }
     }
@@ -678,24 +585,14 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
       && strcmp (file, UTMP_FILE) == 0
       && a.filled == 0)
     {
-      const char * const boot_touched_file =
-        #if defined __CYGWIN__ && !defined _WIN32
-        "/cygdrive/c/pagefile.sys"
-        #else
-        "C:\\pagefile.sys"
-        #endif
-        ;
-      struct stat statbuf;
-      if (stat (boot_touched_file, &statbuf) >= 0)
-        {
-          struct timespec boot_time = get_stat_mtime (&statbuf);
-          a = add_utmp (a, options,
-                        "reboot", strlen ("reboot"),
-                        "", 0,
-                        "", 0,
-                        "", 0,
-                        0, BOOT_TIME, boot_time, 0, 0, 0);
-        }
+      struct timespec boot_time;
+      if (get_windows_boot_time (&boot_time) >= 0)
+        a = add_utmp (a, options,
+                      "reboot", strlen ("reboot"),
+                      "", 0,
+                      "", 0,
+                      "", 0,
+                      0, BOOT_TIME, boot_time, 0, 0, 0);
     }
 # endif
 
@@ -727,33 +624,10 @@ get_boot_time_uncached (void)
     free (utmp);
   }
 
-  /* The following approach is only usable as a fallback, because it is of
-     the form
-       boot_time = (time now) - (kernel's ktime_get_boottime[_ts64] ())
-     and therefore produces wrong values after the date has been bumped in the
-     running system, which happens frequently if the system is running in a
-     virtual machine and this VM has been put into "saved" or "sleep" state
-     and then resumed.  */
   {
-    struct timespec uptime;
-    if (get_linux_uptime (&uptime) >= 0)
-      {
-        struct timespec result;
-        /* equivalent to:
-        if (clock_gettime (CLOCK_REALTIME, &result) >= 0)
-        */
-        if (timespec_get (&result, TIME_UTC) >= 0)
-          {
-            if (result.tv_nsec < uptime.tv_nsec)
-              {
-                result.tv_nsec += 1000000000;
-                result.tv_sec -= 1;
-              }
-            result.tv_sec -= uptime.tv_sec;
-            result.tv_nsec -= uptime.tv_nsec;
-            return result;
-          }
-      }
+    struct timespec boot_time;
+    if (get_linux_boot_time_final_fallback (&boot_time) >= 0)
+      return boot_time;
   }
 
   /* We shouldn't get here.  */
