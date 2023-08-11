@@ -15,6 +15,10 @@ Portability problems not fixed by Gnulib:
 @item
 This function is missing on some platforms:
 Mac OS X 10.11, Minix 3.1.8, mingw, MSVC 14.
+@item
+This function leaves the upper 32 bits of the @code{tv_sec} field of the result
+uninitialized on some platforms:
+mingw in 32-bit mode.
 @end itemize
 
 The Gnulib modules @code{gettime} and @code{timespec_get} are partial
