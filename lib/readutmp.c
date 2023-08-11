@@ -373,7 +373,7 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
 
   SET_UTMP_ENT ();
 
-#   if defined __linux__ && !defined __ANDROID__
+#   if (defined __linux__ && !defined __ANDROID__) || defined __minix
   bool file_is_utmp = (strcmp (file, UTMP_FILE) == 0);
   /* Timestamp of the "runlevel" entry, if any.  */
   struct timespec runlevel_ts = {0};
@@ -460,6 +460,12 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
       if (file_is_utmp
           && memcmp (UT_USER (ut), "runlevel", strlen ("runlevel") + 1) == 0
           && memcmp (ut->ut_line, "~", strlen ("~") + 1) == 0)
+        runlevel_ts = ts;
+#   endif
+#   if defined __minix
+      if (file_is_utmp
+          && UT_USER (ut)[0] == '\0'
+          && memcmp (ut->ut_line, "run-level ", strlen ("run-level ")) == 0)
         runlevel_ts = ts;
 #   endif
     }
@@ -566,6 +572,30 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
                                 "", 0,
                                 0, BOOT_TIME, boot_time, 0, 0, 0);
                 }
+            }
+        }
+    }
+#   endif
+
+#   if defined __minix
+  /* On Minix, during boot,
+       1. an entry gets written into /var/run/utmp, with ut_type = BOOT_TIME,
+          ut_user = "", ut_line = "system boot", time = 1970-01-01 00:00:00,
+       2. an entry gets written into /var/run/utmp, with
+          ut_user = "", ut_line = "run-level m", time = correct value.
+     In this case, copy the time from the "run-level m" entry to the
+     "system boot" entry.  */
+  if ((options & (READ_UTMP_USER_PROCESS | READ_UTMP_NO_BOOT_TIME)) == 0
+      && file_is_utmp)
+    {
+      for (idx_t i = 0; i < a.filled; i++)
+        {
+          struct gl_utmp *ut = &a.utmp[i];
+          if (UT_TYPE_BOOT_TIME (ut))
+            {
+              if (ut->ut_ts.tv_sec <= 60 && runlevel_ts.tv_sec != 0)
+                ut->ut_ts = runlevel_ts;
+              break;
             }
         }
     }
