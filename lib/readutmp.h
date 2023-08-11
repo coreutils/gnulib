@@ -243,7 +243,7 @@ enum { UT_HOST_SIZE = -1 };
        || (UT_TYPE_NOT_DEFINED && UT_TIME_MEMBER (UT) != 0)))
 
 /* Define if read_utmp is not just a dummy.  */
-#if READUTMP_USE_SYSTEMD || HAVE_UTMPX_H || HAVE_UTMP_H
+#if READUTMP_USE_SYSTEMD || HAVE_UTMPX_H || HAVE_UTMP_H || defined __CYGWIN__ || defined _WIN32
 # define READ_UTMP_SUPPORTED 1
 #endif
 

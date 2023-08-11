@@ -178,11 +178,13 @@ desirable_utmp_entry (STRUCT_UTMP const *ut, int options)
   bool user_proc = IS_USER_PROCESS (ut);
   if ((options & READ_UTMP_USER_PROCESS) && !user_proc)
     return false;
+# if !(defined __CYGWIN__ || defined _WIN32)
   if ((options & READ_UTMP_CHECK_PIDS)
       && user_proc
       && 0 < UT_PID (ut)
       && (kill (UT_PID (ut), 0) < 0 && errno == ESRCH))
     return false;
+# endif
 
   return true;
 }
@@ -359,7 +361,9 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
 
   struct utmp_alloc a = {0};
 
-# if defined UTMP_NAME_FUNCTION /* glibc, musl, macOS, FreeBSD, NetBSD, Minix, AIX, IRIX, Solaris, Cygwin, Android */
+# if READUTMP_USE_SYSTEMD || HAVE_UTMPX_H || HAVE_UTMP_H
+
+#  if defined UTMP_NAME_FUNCTION /* glibc, musl, macOS, FreeBSD, NetBSD, Minix, AIX, IRIX, Solaris, Cygwin, Android */
 
   /* Ignore the return value for now.
      Solaris' utmpname returns 1 upon success -- which is contrary
@@ -369,17 +373,17 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
 
   SET_UTMP_ENT ();
 
-#  if defined __linux__ && !defined __ANDROID__
+#   if defined __linux__ && !defined __ANDROID__
   bool file_is_utmp = (strcmp (file, UTMP_FILE) == 0);
   /* Timestamp of the "runlevel" entry, if any.  */
   struct timespec runlevel_ts = {0};
-#  endif
+#   endif
 
   void const *entry;
 
   while ((entry = GET_UTMP_ENT ()) != NULL)
     {
-#  if __GLIBC__ && _TIME_BITS == 64
+#   if __GLIBC__ && _TIME_BITS == 64
       /* This is a near-copy of glibc's struct utmpx, which stops working
          after the year 2038.  Unlike the glibc version, struct utmpx32
          describes the file format even if time_t is 64 bits.  */
@@ -410,9 +414,9 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
         char ut_reserved[20];            /* Reserved for future use.  */
       };
       struct utmpx32 const *ut = (struct utmpx32 const *) entry;
-#  else
+#   else
       struct UTMP_STRUCT_NAME const *ut = (struct UTMP_STRUCT_NAME const *) entry;
-#  endif
+#   endif
 
       struct timespec ts =
         #if (HAVE_UTMPX_H ? 1 : HAVE_STRUCT_UTMP_UT_TV)
@@ -452,17 +456,17 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
                     #endif
                     UT_EXIT_E_TERMINATION (ut), UT_EXIT_E_EXIT (ut)
                    );
-#  if defined __linux__ && !defined __ANDROID__
+#   if defined __linux__ && !defined __ANDROID__
       if (file_is_utmp
           && memcmp (UT_USER (ut), "runlevel", strlen ("runlevel") + 1) == 0
           && memcmp (ut->ut_line, "~", strlen ("~") + 1) == 0)
         runlevel_ts = ts;
-#  endif
+#   endif
     }
 
   END_UTMP_ENT ();
 
-#  if defined __linux__ && !defined __ANDROID__
+#   if defined __linux__ && !defined __ANDROID__
   /* On Alpine Linux, UTMP_FILE is not filled.  It is always empty.
      So, fake a BOOT_TIME entry, by getting the time stamp of a file that
      gets touched only during the boot process.
@@ -519,9 +523,9 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
             }
         }
     }
-#  endif
+#   endif
 
-#  if defined __ANDROID__
+#   if defined __ANDROID__
   /* On Android, there is no /var, and normal processes don't have access
      to system files.  Therefore use the kernel's uptime counter, although
      it produces wrong values after the date has been bumped in the running
@@ -565,9 +569,9 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
             }
         }
     }
-#  endif
+#   endif
 
-# else /* old FreeBSD, OpenBSD, HP-UX */
+#  else /* old FreeBSD, OpenBSD, HP-UX */
 
   FILE *f = fopen (file, "re");
 
@@ -627,7 +631,7 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
       return -1;
     }
 
-#  if defined __OpenBSD__
+#   if defined __OpenBSD__
   /* On OpenBSD, UTMP_FILE is not filled.  It contains only dummy entries.
      So, fake a BOOT_TIME entry, by getting the time stamp of a file that
      gets touched only during the boot process.  */
@@ -661,8 +665,41 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
             }
         }
     }
+#   endif
+
 #  endif
 
+# endif
+
+# if defined __CYGWIN__ || defined _WIN32
+  /* On Cygwin, /var/run/utmp is empty.
+     On native Windows, <utmpx.h> and <utmp.h> don't exist.
+     Instead, on Windows, the boot time can be retrieved by looking at the
+     time stamp of a file that (normally) gets touched only during the boot
+     process, namely C:\pagefile.sys.  */
+  if ((options & (READ_UTMP_USER_PROCESS | READ_UTMP_NO_BOOT_TIME)) == 0
+      && strcmp (file, UTMP_FILE) == 0
+      && a.filled == 0)
+    {
+      const char * const boot_touched_file =
+        #if defined __CYGWIN__ && !defined _WIN32
+        "/cygdrive/c/pagefile.sys"
+        #else
+        "C:\\pagefile.sys"
+        #endif
+        ;
+      struct stat statbuf;
+      if (stat (boot_touched_file, &statbuf) >= 0)
+        {
+          struct timespec boot_time = get_stat_mtime (&statbuf);
+          a = add_utmp (a, options,
+                        "reboot", strlen ("reboot"),
+                        "", 0,
+                        "", 0,
+                        "", 0,
+                        0, BOOT_TIME, boot_time, 0, 0, 0);
+        }
+    }
 # endif
 
   a = finish_utmp (a);
