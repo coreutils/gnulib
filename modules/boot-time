@@ -4,12 +4,22 @@ Determine the time when the machine last booted.
 Files:
 lib/boot-time.h
 lib/boot-time.c
+lib/boot-time-aux.h
+lib/readutmp.h
+m4/readutmp.m4
 
 Depends-on:
+extensions
+fopen-gnu
 idx
-readutmp
+stat-time
+stdbool
+time-h
+timespec_get
+unlocked-io-internal
 
 configure.ac:
+gl_PREREQ_READUTMP_H
 
 Makefile.am:
 lib_SOURCES += boot-time.c
@@ -18,7 +28,7 @@ Include:
 "boot-time.h"
 
 Link:
-$(READUTMP_LIB)
+$(CLOCK_TIME_LIB)
 
 License:
 GPL

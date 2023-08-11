@@ -8,4 +8,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-boot-time
 check_PROGRAMS += test-boot-time
-test_boot_time_LDADD = $(LDADD) $(READUTMP_LIB)
+test_boot_time_LDADD = $(LDADD) $(CLOCK_TIME_LIB)
