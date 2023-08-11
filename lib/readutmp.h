@@ -132,7 +132,40 @@ enum { UT_HOST_SIZE = -1 };
    ⎣ ut_ss        struct sockaddr_storage    NetBSD, Minix
  */
 
-# define UTMP_STRUCT_NAME utmpx
+# if __GLIBC__ && _TIME_BITS == 64
+/* This is a near-copy of glibc's struct utmpx, which stops working
+   after the year 2038.  Unlike the glibc version, struct utmpx32
+   describes the file format even if time_t is 64 bits.  */
+struct utmpx32
+{
+  short int ut_type;               /* Type of login.  */
+  pid_t ut_pid;                    /* Process ID of login process.  */
+  char ut_line[__UT_LINESIZE];     /* Devicename.  */
+  char ut_id[4];                   /* Inittab ID.  */
+  char ut_user[__UT_USERSIZE];     /* Username.  */
+  char ut_host[__UT_HOSTSIZE];     /* Hostname for remote login. */
+  struct __exit_status ut_exit;    /* Exit status of a process marked
+                                      as DEAD_PROCESS.  */
+  /* The fields ut_session and ut_tv must be the same size when compiled
+     32- and 64-bit.  This allows files and shared memory to be shared
+     between 32- and 64-bit applications.  */
+  int ut_session;                  /* Session ID, used for windowing.  */
+  struct
+  {
+    /* Seconds.  Unsigned not signed, as glibc did not exist before 1970,
+       and if the format is still in use after 2038 its timestamps
+       will surely have the sign bit on.  This hack stops working
+       at 2106-02-07 06:28:16 UTC.  */
+    unsigned int tv_sec;
+    int tv_usec;                   /* Microseconds.  */
+  } ut_tv;                         /* Time entry was made.  */
+  int ut_addr_v6[4];               /* Internet address of remote host.  */
+  char ut_reserved[20];            /* Reserved for future use.  */
+};
+#  define UTMP_STRUCT_NAME utmpx32
+# else
+#  define UTMP_STRUCT_NAME utmpx
+# endif
 # define SET_UTMP_ENT setutxent
 # define GET_UTMP_ENT getutxent
 # define END_UTMP_ENT endutxent

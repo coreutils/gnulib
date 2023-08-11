@@ -383,40 +383,7 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
 
   while ((entry = GET_UTMP_ENT ()) != NULL)
     {
-#   if __GLIBC__ && _TIME_BITS == 64
-      /* This is a near-copy of glibc's struct utmpx, which stops working
-         after the year 2038.  Unlike the glibc version, struct utmpx32
-         describes the file format even if time_t is 64 bits.  */
-      struct utmpx32
-      {
-        short int ut_type;               /* Type of login.  */
-        pid_t ut_pid;                    /* Process ID of login process.  */
-        char ut_line[UT_LINE_SIZE];      /* Devicename.  */
-        char ut_id[UT_ID_SIZE];          /* Inittab ID.  */
-        char ut_user[UT_USER_SIZE];      /* Username.  */
-        char ut_host[UT_HOST_SIZE];      /* Hostname for remote login. */
-        struct __exit_status ut_exit;    /* Exit status of a process marked
-                                            as DEAD_PROCESS.  */
-        /* The fields ut_session and ut_tv must be the same size when compiled
-           32- and 64-bit.  This allows files and shared memory to be shared
-           between 32- and 64-bit applications.  */
-        int ut_session;                  /* Session ID, used for windowing.  */
-        struct
-        {
-          /* Seconds.  Unsigned not signed, as glibc did not exist before 1970,
-             and if the format is still in use after 2038 its timestamps
-             will surely have the sign bit on.  This hack stops working
-             at 2106-02-07 06:28:16 UTC.  */
-          unsigned int tv_sec;
-          int tv_usec;                   /* Microseconds.  */
-        } ut_tv;                         /* Time entry was made.  */
-        int ut_addr_v6[4];               /* Internet address of remote host.  */
-        char ut_reserved[20];            /* Reserved for future use.  */
-      };
-      struct utmpx32 const *ut = (struct utmpx32 const *) entry;
-#   else
       struct UTMP_STRUCT_NAME const *ut = (struct UTMP_STRUCT_NAME const *) entry;
-#   endif
 
       struct timespec ts =
         #if (HAVE_UTMPX_H ? 1 : HAVE_STRUCT_UTMP_UT_TV)
