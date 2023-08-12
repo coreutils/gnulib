@@ -58,7 +58,6 @@
 #include "unlocked-io.h"
 
 /* Some helper functions.  */
-#define NEED_BOOT_TIME_FINAL_FALLBACK READUTMP_USE_SYSTEMD
 #include "boot-time-aux.h"
 
 /* The following macros describe the 'struct UTMP_STRUCT_NAME',
@@ -587,6 +586,23 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
 
 #  endif
 
+#  if defined __linux__ && !defined __ANDROID__
+  if ((options & (READ_UTMP_USER_PROCESS | READ_UTMP_NO_BOOT_TIME)) == 0
+      && strcmp (file, UTMP_FILE) == 0
+      && !have_boot_time (a))
+    {
+      struct timespec boot_time;
+      if (get_linux_boot_time_final_fallback (&boot_time) >= 0)
+        a = add_utmp (a, options,
+                      "reboot", strlen ("reboot"),
+                      "", 0,
+                      "~", strlen ("~"),
+                      "", 0,
+                      0, BOOT_TIME, boot_time, 0, 0, 0);
+    }
+
+#  endif
+
 #  if HAVE_SYS_SYSCTL_H && HAVE_SYSCTL \
       && defined CTL_KERN && defined KERN_BOOTTIME \
       && !defined __minix
@@ -681,12 +697,6 @@ get_boot_time_uncached (void)
         return result;
       }
     free (utmp);
-  }
-
-  {
-    struct timespec boot_time;
-    if (get_linux_boot_time_final_fallback (&boot_time) >= 0)
-      return boot_time;
   }
 
   /* We shouldn't get here.  */

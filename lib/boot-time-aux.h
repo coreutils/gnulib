@@ -101,8 +101,6 @@ get_linux_boot_time_fallback (struct timespec *p_boot_time)
   return -1;
 }
 
-# if NEED_BOOT_TIME_FINAL_FALLBACK
-
 /* The following approach is only usable as a fallback, because it is of
    the form
      boot_time = (time now) - (kernel's ktime_get_boottime[_ts64] ())
@@ -135,8 +133,6 @@ get_linux_boot_time_final_fallback (struct timespec *p_boot_time)
     }
   return -1;
 }
-
-# endif
 
 #endif
 

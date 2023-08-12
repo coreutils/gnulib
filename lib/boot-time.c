@@ -51,7 +51,6 @@
 #include "unlocked-io.h"
 
 /* Some helper functions.  */
-#define NEED_BOOT_TIME_FINAL_FALLBACK 1
 #include "boot-time-aux.h"
 
 /* The following macros describe the 'struct UTMP_STRUCT_NAME',
