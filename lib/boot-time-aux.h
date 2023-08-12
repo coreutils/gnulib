@@ -47,12 +47,18 @@ get_linux_uptime (struct timespec *p_uptime)
         {
           buf[n] = '\0';
           /* buf now contains two values: the uptime and the idle time.  */
-          char *endptr;
-          double uptime = c_strtod (buf, &endptr);
-          if (endptr > buf)
+          time_t s = 0;
+          char *p;
+          for (p = buf; '0' <= *p && *p <= '9'; p++)
+            s = 10 * s + (*p - '0');
+          if (buf < p)
             {
-              p_uptime->tv_sec = (time_t) uptime;
-              p_uptime->tv_nsec = (uptime - p_uptime->tv_sec) * 1e9 + 0.5;
+              long ns = 0;
+              if (*p++ == '.')
+                for (int i = 0; i < 9; i++)
+                  ns = 10 * ns + ('0' <= *p && *p <= '9' ? *p++ - '0' : 0);
+              p_uptime->tv_sec = s;
+              p_uptime->tv_nsec = ns;
               return 0;
             }
         }

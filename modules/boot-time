@@ -9,7 +9,6 @@ lib/readutmp.h
 m4/readutmp.m4
 
 Depends-on:
-c-strtod
 extensions
 idx
 stat-time
