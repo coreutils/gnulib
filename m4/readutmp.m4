@@ -1,4 +1,4 @@
-# readutmp.m4 serial 25
+# readutmp.m4 serial 26
 dnl Copyright (C) 2002-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -112,4 +112,6 @@ AC_INCLUDES_DEFAULT
      #endif
     ])
   AC_CHECK_FUNCS([sysctl])
+
+  AC_CHECK_HEADERS_ONCE([OS.h])
 ])

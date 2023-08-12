@@ -39,6 +39,10 @@
 # include <sys/sysctl.h>
 #endif
 
+#if HAVE_OS_H
+# include <OS.h>
+#endif
+
 #include "idx.h"
 #include "readutmp.h"
 #include "stat-time.h"
@@ -162,7 +166,7 @@ get_boot_time_uncached (struct timespec *p_boot_time)
     found_boot_time = runlevel_ts;
 #   endif
 
-#  else /* HP-UX */
+#  else /* HP-UX, Haiku */
 
   FILE *f = fopen (UTMP_FILE, "re");
 
@@ -213,6 +217,20 @@ get_boot_time_uncached (struct timespec *p_boot_time)
   if (found_boot_time.tv_sec == 0)
     {
       get_bsd_boot_time_final_fallback (&found_boot_time);
+    }
+# endif
+
+# if defined __HAIKU__
+  if (found_boot_time.tv_sec == 0)
+    {
+      get_haiku_boot_time (&found_boot_time);
+    }
+# endif
+
+# if HAVE_OS_H
+  if (found_boot_time.tv_sec == 0)
+    {
+      get_haiku_boot_time_final_fallback (&found_boot_time);
     }
 # endif
 

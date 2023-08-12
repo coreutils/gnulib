@@ -227,6 +227,51 @@ get_bsd_boot_time_final_fallback (struct timespec *p_boot_time)
 
 #endif
 
+#if defined __HAIKU__
+
+static int
+get_haiku_boot_time (struct timespec *p_boot_time)
+{
+  /* On Haiku, /etc/utmp does not exist.  During boot,
+       1. the current time is restored, but possibly with a wrong time zone,
+          that is, with an offset of a few hours,
+       2. some symlinks and files get created,
+       3. the various devices are brought up, in particular the network device,
+       4. the correct date and time is set,
+       5. some more device nodes get created.
+     The boot time can be retrieved by looking at a directory created during
+     phase 5, such as /dev/input.  */
+  const char * const boot_touched_file = "/dev/input";
+  struct stat statbuf;
+  if (stat (boot_touched_file, &statbuf) >= 0)
+    {
+      *p_boot_time = get_stat_mtime (&statbuf);
+      return 0;
+    }
+  return -1;
+}
+
+#endif
+
+#if HAVE_OS_H /* BeOS, Haiku */
+
+/* The following approach is only usable as a fallback, because it produces
+   wrong values after the date has been bumped in the running system, which
+   happens frequently if the system is running in a virtual machine and this
+   VM has been put into "saved" or "sleep" state and then resumed.  */
+static int
+get_haiku_boot_time_final_fallback (struct timespec *p_boot_time)
+{
+  system_info si;
+
+  get_system_info (&si);
+  p_boot_time->tv_sec = si.boot_time / 1000000;
+  p_boot_time->tv_nsec = (si.boot_time % 1000000) * 1000;
+  return 0;
+}
+
+#endif
+
 #if defined __CYGWIN__ || defined _WIN32
 
 static int

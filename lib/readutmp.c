@@ -47,6 +47,10 @@
 # include <sys/sysctl.h>
 #endif
 
+#if HAVE_OS_H
+# include <OS.h>
+#endif
+
 #include "stat-time.h"
 #include "xalloc.h"
 
@@ -495,64 +499,74 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
     }
 #   endif
 
-#  else /* old FreeBSD, OpenBSD, HP-UX */
+#  else /* old FreeBSD, OpenBSD, HP-UX, Haiku */
 
   FILE *f = fopen (file, "re");
 
-  if (! f)
-    return -1;
-
-  for (;;)
+  if (f != NULL)
     {
-      struct UTMP_STRUCT_NAME ut;
+      for (;;)
+        {
+          struct UTMP_STRUCT_NAME ut;
 
-      if (fread (&ut, sizeof ut, 1, f) == 0)
-        break;
-      a = add_utmp (a, options,
-                    UT_USER (&ut), strnlen (UT_USER (&ut), UT_USER_SIZE),
-                    #if (HAVE_UTMPX_H ? HAVE_STRUCT_UTMPX_UT_ID : HAVE_STRUCT_UTMP_UT_ID)
-                    ut.ut_id, strnlen (ut.ut_id, UT_ID_SIZE),
-                    #else
-                    "", 0,
-                    #endif
-                    ut.ut_line, strnlen (ut.ut_line, UT_LINE_SIZE),
-                    #if (HAVE_UTMPX_H ? HAVE_STRUCT_UTMPX_UT_HOST : HAVE_STRUCT_UTMP_UT_HOST)
-                    ut.ut_host, strnlen (ut.ut_host, UT_HOST_SIZE),
-                    #else
-                    "", 0,
-                    #endif
-                    #if (HAVE_UTMPX_H ? HAVE_STRUCT_UTMPX_UT_PID : HAVE_STRUCT_UTMP_UT_PID)
-                    ut.ut_pid,
-                    #else
-                    0,
-                    #endif
-                    #if (HAVE_UTMPX_H ? HAVE_STRUCT_UTMPX_UT_TYPE : HAVE_STRUCT_UTMP_UT_TYPE)
-                    ut.ut_type,
-                    #else
-                    0,
-                    #endif
-                    #if (HAVE_UTMPX_H ? 1 : HAVE_STRUCT_UTMP_UT_TV)
-                    (struct timespec) { .tv_sec = ut.ut_tv.tv_sec, .tv_nsec = ut.ut_tv.tv_usec * 1000 },
-                    #else
-                    (struct timespec) { .tv_sec = ut.ut_time, .tv_nsec = 0 },
-                    #endif
-                    #if (HAVE_UTMPX_H ? HAVE_STRUCT_UTMPX_UT_SESSION : HAVE_STRUCT_UTMP_UT_SESSION)
-                    ut.ut_session,
-                    #else
-                    0,
-                    #endif
-                    UT_EXIT_E_TERMINATION (&ut), UT_EXIT_E_EXIT (&ut)
-                   );
+          if (fread (&ut, sizeof ut, 1, f) == 0)
+            break;
+          a = add_utmp (a, options,
+                        UT_USER (&ut), strnlen (UT_USER (&ut), UT_USER_SIZE),
+                        #if (HAVE_UTMPX_H ? HAVE_STRUCT_UTMPX_UT_ID : HAVE_STRUCT_UTMP_UT_ID)
+                        ut.ut_id, strnlen (ut.ut_id, UT_ID_SIZE),
+                        #else
+                        "", 0,
+                        #endif
+                        ut.ut_line, strnlen (ut.ut_line, UT_LINE_SIZE),
+                        #if (HAVE_UTMPX_H ? HAVE_STRUCT_UTMPX_UT_HOST : HAVE_STRUCT_UTMP_UT_HOST)
+                        ut.ut_host, strnlen (ut.ut_host, UT_HOST_SIZE),
+                        #else
+                        "", 0,
+                        #endif
+                        #if (HAVE_UTMPX_H ? HAVE_STRUCT_UTMPX_UT_PID : HAVE_STRUCT_UTMP_UT_PID)
+                        ut.ut_pid,
+                        #else
+                        0,
+                        #endif
+                        #if (HAVE_UTMPX_H ? HAVE_STRUCT_UTMPX_UT_TYPE : HAVE_STRUCT_UTMP_UT_TYPE)
+                        ut.ut_type,
+                        #else
+                        0,
+                        #endif
+                        #if (HAVE_UTMPX_H ? 1 : HAVE_STRUCT_UTMP_UT_TV)
+                        (struct timespec) { .tv_sec = ut.ut_tv.tv_sec, .tv_nsec = ut.ut_tv.tv_usec * 1000 },
+                        #else
+                        (struct timespec) { .tv_sec = ut.ut_time, .tv_nsec = 0 },
+                        #endif
+                        #if (HAVE_UTMPX_H ? HAVE_STRUCT_UTMPX_UT_SESSION : HAVE_STRUCT_UTMP_UT_SESSION)
+                        ut.ut_session,
+                        #else
+                        0,
+                        #endif
+                        UT_EXIT_E_TERMINATION (&ut), UT_EXIT_E_EXIT (&ut)
+                       );
+        }
+
+      int saved_errno = ferror (f) ? errno : 0;
+      if (fclose (f) != 0)
+        saved_errno = errno;
+      if (saved_errno != 0)
+        {
+          free (a.utmp);
+          errno = saved_errno;
+          return -1;
+        }
     }
-
-  int saved_errno = ferror (f) ? errno : 0;
-  if (fclose (f) != 0)
-    saved_errno = errno;
-  if (saved_errno != 0)
+  else
     {
-      free (a.utmp);
-      errno = saved_errno;
-      return -1;
+      if (strcmp (file, UTMP_FILE) != 0)
+        {
+          int saved_errno = errno;
+          free (a.utmp);
+          errno = saved_errno;
+          return -1;
+        }
     }
 
 #   if defined __OpenBSD__
@@ -582,6 +596,38 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
     {
       struct timespec boot_time;
       if (get_bsd_boot_time_final_fallback (&boot_time) >= 0)
+        a = add_utmp (a, options,
+                      "reboot", strlen ("reboot"),
+                      "", 0,
+                      "", 0,
+                      "", 0,
+                      0, BOOT_TIME, boot_time, 0, 0, 0);
+    }
+#  endif
+
+#  if defined __HAIKU__
+  if ((options & (READ_UTMP_USER_PROCESS | READ_UTMP_NO_BOOT_TIME)) == 0
+      && strcmp (file, UTMP_FILE) == 0
+      && !have_boot_time (a))
+    {
+      struct timespec boot_time;
+      if (get_haiku_boot_time (&boot_time) >= 0)
+        a = add_utmp (a, options,
+                      "reboot", strlen ("reboot"),
+                      "", 0,
+                      "", 0,
+                      "", 0,
+                      0, BOOT_TIME, boot_time, 0, 0, 0);
+    }
+#  endif
+
+#  if HAVE_OS_H /* BeOS, Haiku */
+  if ((options & (READ_UTMP_USER_PROCESS | READ_UTMP_NO_BOOT_TIME)) == 0
+      && strcmp (file, UTMP_FILE) == 0
+      && !have_boot_time (a))
+    {
+      struct timespec boot_time;
+      if (get_haiku_boot_time_final_fallback (&boot_time) >= 0)
         a = add_utmp (a, options,
                       "reboot", strlen ("reboot"),
                       "", 0,
