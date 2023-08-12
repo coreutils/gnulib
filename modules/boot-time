@@ -16,7 +16,6 @@ idx
 stat-time
 stdbool
 time-h
-timespec_get
 unlocked-io-internal
 
 configure.ac:

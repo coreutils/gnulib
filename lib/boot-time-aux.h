@@ -27,9 +27,9 @@ static int
 get_linux_uptime (struct timespec *p_uptime)
 {
   /* The clock_gettime facility returns the uptime with a resolution of 1 µsec.
-     It is available with glibc >= 2.14.  In glibc < 2.17 it required linking
-     with librt.  */
-# if (__GLIBC__ + (__GLIBC_MINOR__ >= 17) > 2) || defined __ANDROID__
+     It is available with glibc >= 2.14, Android, or musl libc.
+     In glibc < 2.17 it required linking with librt.  */
+# if !defined __GLIBC__ || 2 < __GLIBC__ + (17 <= __GLIBC_MINOR__)
   if (clock_gettime (CLOCK_BOOTTIME, p_uptime) >= 0)
     return 0;
 # endif
@@ -115,21 +115,33 @@ get_linux_boot_time_final_fallback (struct timespec *p_boot_time)
   if (get_linux_uptime (&uptime) >= 0)
     {
       struct timespec result;
-      /* equivalent to:
-      if (clock_gettime (CLOCK_REALTIME, &result) >= 0)
+# if !defined __GLIBC__ || 2 < __GLIBC__ + (16 <= __GLIBC_MINOR__)
+      /* Better than:
+      if (0 <= clock_gettime (CLOCK_REALTIME, &result))
+         because timespec_get does not need -lrt in glibc 2.16.
       */
-      if (timespec_get (&result, TIME_UTC) >= 0)
+      if (! timespec_get (&result, TIME_UTC))
+        return -1;
+#  else
+      /* Fall back on lower-res approach that does not need -lrt.
+         This is good enough; on these hosts UPTIME is even lower-res.  */
+      struct timeval tv;
+      int r = gettimeofday (&tv, NULL);
+      if (r < 0)
+        return r;
+      result.tv_sec = tv.tv_sec;
+      result.tv_nsec = tv.tv_usec * 1000;
+#  endif
+
+      if (result.tv_nsec < uptime.tv_nsec)
         {
-          if (result.tv_nsec < uptime.tv_nsec)
-            {
-              result.tv_nsec += 1000000000;
-              result.tv_sec -= 1;
-            }
-          result.tv_sec -= uptime.tv_sec;
-          result.tv_nsec -= uptime.tv_nsec;
-          *p_boot_time = result;
-          return 0;
+          result.tv_nsec += 1000000000;
+          result.tv_sec -= 1;
         }
+      result.tv_sec -= uptime.tv_sec;
+      result.tv_nsec -= uptime.tv_nsec;
+      *p_boot_time = result;
+      return 0;
     }
   return -1;
 }
