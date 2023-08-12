@@ -1,4 +1,4 @@
-# readutmp.m4 serial 27
+# readutmp.m4 serial 28
 dnl Copyright (C) 2002-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -40,8 +40,6 @@ AC_DEFUN([gl_READUTMP],
       fi
     fi
   fi
-  AC_REQUIRE([gl_CLOCK_TIME])
-  READUTMP_LIB="$READUTMP_LIB $CLOCK_TIME_LIB"
   AC_SUBST([READUTMP_LIB])
 
   gl_PREREQ_READUTMP_H

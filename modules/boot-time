@@ -27,7 +27,6 @@ Include:
 "boot-time.h"
 
 Link:
-$(CLOCK_TIME_LIB)
 
 License:
 GPL
