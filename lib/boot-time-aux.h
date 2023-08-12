@@ -48,7 +48,7 @@ get_linux_uptime (struct timespec *p_uptime)
           buf[n] = '\0';
           /* buf now contains two values: the uptime and the idle time.  */
           char *endptr;
-          double uptime = strtod (buf, &endptr);
+          double uptime = c_strtod (buf, &endptr);
           if (endptr > buf)
             {
               p_uptime->tv_sec = (time_t) uptime;

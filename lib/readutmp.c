@@ -51,6 +51,7 @@
 # include <OS.h>
 #endif
 
+#include "c-strtod.h"
 #include "stat-time.h"
 #include "xalloc.h"
 

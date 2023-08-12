@@ -43,6 +43,7 @@
 # include <OS.h>
 #endif
 
+#include "c-strtod.h"
 #include "idx.h"
 #include "readutmp.h"
 #include "stat-time.h"

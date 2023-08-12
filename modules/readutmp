@@ -9,6 +9,7 @@ m4/readutmp.m4
 m4/systemd.m4
 
 Depends-on:
+c-strtod
 extensions
 fopen-gnu
 idx
