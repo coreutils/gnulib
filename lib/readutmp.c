@@ -297,6 +297,20 @@ finish_utmp (struct utmp_alloc a)
   return a;
 }
 
+/* Determine whether A already contains an entry of type BOOT_TIME.  */
+_GL_ATTRIBUTE_MAYBE_UNUSED
+static bool
+have_boot_time (struct utmp_alloc a)
+{
+  for (idx_t i = 0; i < a.filled; i++)
+    {
+      struct gl_utmp *ut = &a.utmp[i];
+      if (UT_TYPE_BOOT_TIME (ut))
+        return true;
+    }
+  return false;
+}
+
 # if !HAVE_UTMPX_H && HAVE_UTMP_H && defined UTMP_NAME_FUNCTION && !HAVE_DECL_GETUTENT
 struct utmp *getutent (void);
 # endif
@@ -411,7 +425,6 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
   if ((options & (READ_UTMP_USER_PROCESS | READ_UTMP_NO_BOOT_TIME)) == 0
       && file_is_utmp)
     {
-      bool have_boot_time = false;
       for (idx_t i = 0; i < a.filled; i++)
         {
           struct gl_utmp *ut = &a.utmp[i];
@@ -420,11 +433,10 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
               /* Workaround for Raspbian:  */
               if (ut->ut_ts.tv_sec <= 60 && runlevel_ts.tv_sec != 0)
                 ut->ut_ts = runlevel_ts;
-              have_boot_time = true;
               break;
             }
         }
-      if (!have_boot_time)
+      if (!have_boot_time (a))
         {
           /* Workaround for Alpine Linux:  */
           struct timespec boot_time;
@@ -445,29 +457,17 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
      it produces wrong values after the date has been bumped in the running
      system.  */
   if ((options & (READ_UTMP_USER_PROCESS | READ_UTMP_NO_BOOT_TIME)) == 0
-      && strcmp (file, UTMP_FILE) == 0)
+      && strcmp (file, UTMP_FILE) == 0
+      && !have_boot_time (a))
     {
-      bool have_boot_time = false;
-      for (idx_t i = 0; i < a.filled; i++)
-        {
-          struct gl_utmp *ut = &a.utmp[i];
-          if (UT_TYPE_BOOT_TIME (ut))
-            {
-              have_boot_time = true;
-              break;
-            }
-        }
-      if (!have_boot_time)
-        {
-          struct timespec boot_time;
-          if (get_android_boot_time (&boot_time) >= 0)
-            a = add_utmp (a, options,
-                          "reboot", strlen ("reboot"),
-                          "", 0,
-                          "", 0,
-                          "", 0,
-                          0, BOOT_TIME, boot_time, 0, 0, 0);
-        }
+      struct timespec boot_time;
+      if (get_android_boot_time (&boot_time) >= 0)
+        a = add_utmp (a, options,
+                      "reboot", strlen ("reboot"),
+                      "", 0,
+                      "", 0,
+                      "", 0,
+                      0, BOOT_TIME, boot_time, 0, 0, 0);
     }
 #   endif
 
@@ -557,21 +557,17 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
 
 #   if defined __OpenBSD__
   if ((options & (READ_UTMP_USER_PROCESS | READ_UTMP_NO_BOOT_TIME)) == 0
-      && strcmp (file, UTMP_FILE) == 0)
+      && strcmp (file, UTMP_FILE) == 0
+      && !have_boot_time (a))
     {
-      /* OpenBSD's 'struct utmp' does not have an ut_type field.  */
-      bool have_boot_time = false;
-      if (!have_boot_time)
-        {
-          struct timespec boot_time;
-          if (get_openbsd_boot_time (&boot_time) >= 0)
-            a = add_utmp (a, options,
-                          "reboot", strlen ("reboot"),
-                          "", 0,
-                          "", 0,
-                          "", 0,
-                          0, BOOT_TIME, boot_time, 0, 0, 0);
-        }
+      struct timespec boot_time;
+      if (get_openbsd_boot_time (&boot_time) >= 0)
+        a = add_utmp (a, options,
+                      "reboot", strlen ("reboot"),
+                      "", 0,
+                      "", 0,
+                      "", 0,
+                      0, BOOT_TIME, boot_time, 0, 0, 0);
     }
 #   endif
 
@@ -581,29 +577,17 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
       && defined CTL_KERN && defined KERN_BOOTTIME \
       && !defined __minix
   if ((options & (READ_UTMP_USER_PROCESS | READ_UTMP_NO_BOOT_TIME)) == 0
-      && strcmp (file, UTMP_FILE) == 0)
+      && strcmp (file, UTMP_FILE) == 0
+      && !have_boot_time (a))
     {
-      bool have_boot_time = false;
-      for (idx_t i = 0; i < a.filled; i++)
-        {
-          struct gl_utmp *ut = &a.utmp[i];
-          if (UT_TYPE_BOOT_TIME (ut))
-            {
-              have_boot_time = true;
-              break;
-            }
-        }
-      if (!have_boot_time)
-        {
-          struct timespec boot_time;
-          if (get_bsd_boot_time_final_fallback (&boot_time) >= 0)
-            a = add_utmp (a, options,
-                          "reboot", strlen ("reboot"),
-                          "", 0,
-                          "", 0,
-                          "", 0,
-                          0, BOOT_TIME, boot_time, 0, 0, 0);
-        }
+      struct timespec boot_time;
+      if (get_bsd_boot_time_final_fallback (&boot_time) >= 0)
+        a = add_utmp (a, options,
+                      "reboot", strlen ("reboot"),
+                      "", 0,
+                      "", 0,
+                      "", 0,
+                      0, BOOT_TIME, boot_time, 0, 0, 0);
     }
 #  endif
 
@@ -612,7 +596,7 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
 # if defined __CYGWIN__ || defined _WIN32
   if ((options & (READ_UTMP_USER_PROCESS | READ_UTMP_NO_BOOT_TIME)) == 0
       && strcmp (file, UTMP_FILE) == 0
-      && a.filled == 0)
+      && !have_boot_time (a))
     {
       struct timespec boot_time;
       if (get_windows_boot_time (&boot_time) >= 0)
