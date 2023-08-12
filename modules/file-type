@@ -6,6 +6,7 @@ lib/file-type.h
 lib/file-type.c
 
 Depends-on:
+c-file-type
 gettext-h
 sys_stat
 
