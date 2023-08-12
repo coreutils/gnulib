@@ -18,7 +18,6 @@ stdbool
 stdint
 strnlen
 time-h
-timespec_get
 unlocked-io-internal
 xalloc
 
