@@ -32,6 +32,13 @@
 # include <time.h>
 #endif
 
+#if HAVE_SYS_SYSCTL_H && !defined __minix
+# if HAVE_SYS_PARAM_H
+#  include <sys/param.h>
+# endif
+# include <sys/sysctl.h>
+#endif
+
 #include "idx.h"
 #include "readutmp.h"
 #include "stat-time.h"
@@ -66,14 +73,7 @@ get_boot_time_uncached (struct timespec *p_boot_time)
 {
   struct timespec found_boot_time = {0};
 
-# if !(HAVE_UTMPX_H ? HAVE_STRUCT_UTMPX_UT_TYPE : HAVE_STRUCT_UTMP_UT_TYPE) /* old FreeBSD, OpenBSD, native Windows */
-
-#  if defined __OpenBSD__
-  /* Workaround for OpenBSD:  */
-  get_openbsd_boot_time (&found_boot_time);
-#  endif
-
-# else
+# if (HAVE_UTMPX_H ? HAVE_STRUCT_UTMPX_UT_TYPE : HAVE_STRUCT_UTMP_UT_TYPE)
 
   /* Try to find the boot time in the /var/run/utmp file.  */
 
@@ -198,6 +198,22 @@ get_boot_time_uncached (struct timespec *p_boot_time)
     }
 #  endif
 
+# else /* old FreeBSD, OpenBSD, native Windows */
+
+#  if defined __OpenBSD__
+  /* Workaround for OpenBSD:  */
+  get_openbsd_boot_time (&found_boot_time);
+#  endif
+
+# endif
+
+# if HAVE_SYS_SYSCTL_H && HAVE_SYSCTL \
+     && defined CTL_KERN && defined KERN_BOOTTIME \
+     && !defined __minix
+  if (found_boot_time.tv_sec == 0)
+    {
+      get_bsd_boot_time_final_fallback (&found_boot_time);
+    }
 # endif
 
 # if defined __CYGWIN__ || defined _WIN32

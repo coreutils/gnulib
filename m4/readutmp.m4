@@ -1,4 +1,4 @@
-# readutmp.m4 serial 24
+# readutmp.m4 serial 25
 dnl Copyright (C) 2002-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -45,7 +45,7 @@ AC_DEFUN([gl_READUTMP],
   gl_PREREQ_READUTMP_H
 ])
 
-# Prerequisites of readutmp.h.
+# Prerequisites of readutmp.h and boot-time-aux.h.
 AC_DEFUN_ONCE([gl_PREREQ_READUTMP_H],
 [
   dnl Persuade utmpx.h to declare utmpxname
@@ -102,4 +102,14 @@ AC_INCLUDES_DEFAULT
     AC_CHECK_MEMBERS([struct utmpx.ut_exit.e_termination],,,[$utmp_includes])
     AC_CHECK_MEMBERS([struct utmp.ut_exit.e_termination],,,[$utmp_includes])
   fi
+
+  AC_CHECK_HEADERS_ONCE([sys/param.h])
+  dnl <sys/sysctl.h> requires <sys/param.h> on OpenBSD 4.0.
+  AC_CHECK_HEADERS([sys/sysctl.h],,,
+    [AC_INCLUDES_DEFAULT
+     #if HAVE_SYS_PARAM_H
+     # include <sys/param.h>
+     #endif
+    ])
+  AC_CHECK_FUNCS([sysctl])
 ])

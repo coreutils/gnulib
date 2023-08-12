@@ -199,7 +199,35 @@ get_openbsd_boot_time (struct timespec *p_boot_time)
 
 #endif
 
-# if defined __CYGWIN__ || defined _WIN32
+#if HAVE_SYS_SYSCTL_H && HAVE_SYSCTL \
+    && defined CTL_KERN && defined KERN_BOOTTIME \
+    && !defined __minix
+/* macOS, FreeBSD, GNU/kFreeBSD, NetBSD, OpenBSD */
+/* On Minix 3.3 this sysctl produces garbage results.  Therefore avoid it.  */
+
+/* The following approach is only usable as a fallback, because it produces
+   wrong values after the date has been bumped in the running system, which
+   happens frequently if the system is running in a virtual machine and this
+   VM has been put into "saved" or "sleep" state and then resumed.  */
+static int
+get_bsd_boot_time_final_fallback (struct timespec *p_boot_time)
+{
+  static int request[2] = { CTL_KERN, KERN_BOOTTIME };
+  struct timeval result;
+  size_t result_len = sizeof result;
+
+  if (sysctl (request, 2, &result, &result_len, NULL, 0) >= 0)
+    {
+      p_boot_time->tv_sec = result.tv_sec;
+      p_boot_time->tv_nsec = result.tv_usec * 1000;
+      return 0;
+    }
+  return -1;
+}
+
+#endif
+
+#if defined __CYGWIN__ || defined _WIN32
 
 static int
 get_windows_boot_time (struct timespec *p_boot_time)
@@ -225,4 +253,4 @@ get_windows_boot_time (struct timespec *p_boot_time)
   return -1;
 }
 
-# endif
+#endif

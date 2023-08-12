@@ -40,6 +40,13 @@
 # include <systemd/sd-login.h>
 #endif
 
+#if HAVE_SYS_SYSCTL_H && !defined __minix
+# if HAVE_SYS_PARAM_H
+#  include <sys/param.h>
+# endif
+# include <sys/sysctl.h>
+#endif
+
 #include "stat-time.h"
 #include "xalloc.h"
 
@@ -570,14 +577,39 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
 
 #  endif
 
+#  if HAVE_SYS_SYSCTL_H && HAVE_SYSCTL \
+      && defined CTL_KERN && defined KERN_BOOTTIME \
+      && !defined __minix
+  if ((options & (READ_UTMP_USER_PROCESS | READ_UTMP_NO_BOOT_TIME)) == 0
+      && strcmp (file, UTMP_FILE) == 0)
+    {
+      bool have_boot_time = false;
+      for (idx_t i = 0; i < a.filled; i++)
+        {
+          struct gl_utmp *ut = &a.utmp[i];
+          if (UT_TYPE_BOOT_TIME (ut))
+            {
+              have_boot_time = true;
+              break;
+            }
+        }
+      if (!have_boot_time)
+        {
+          struct timespec boot_time;
+          if (get_bsd_boot_time_final_fallback (&boot_time) >= 0)
+            a = add_utmp (a, options,
+                          "reboot", strlen ("reboot"),
+                          "", 0,
+                          "", 0,
+                          "", 0,
+                          0, BOOT_TIME, boot_time, 0, 0, 0);
+        }
+    }
+#  endif
+
 # endif
 
 # if defined __CYGWIN__ || defined _WIN32
-  /* On Cygwin, /var/run/utmp is empty.
-     On native Windows, <utmpx.h> and <utmp.h> don't exist.
-     Instead, on Windows, the boot time can be retrieved by looking at the
-     time stamp of a file that (normally) gets touched only during the boot
-     process, namely C:\pagefile.sys.  */
   if ((options & (READ_UTMP_USER_PROCESS | READ_UTMP_NO_BOOT_TIME)) == 0
       && strcmp (file, UTMP_FILE) == 0
       && a.filled == 0)
