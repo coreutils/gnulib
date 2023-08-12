@@ -558,15 +558,12 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
         {
           struct timespec boot_time;
           if (get_openbsd_boot_time (&boot_time) >= 0)
-            {
-              a = add_utmp (a, options,
-                            "reboot", strlen ("reboot"),
-                            "", 0,
-                            "", 0,
-                            "", 0,
-                            0, BOOT_TIME, boot_time, 0, 0, 0);
-              break;
-            }
+            a = add_utmp (a, options,
+                          "reboot", strlen ("reboot"),
+                          "", 0,
+                          "", 0,
+                          "", 0,
+                          0, BOOT_TIME, boot_time, 0, 0, 0);
         }
     }
 #   endif
