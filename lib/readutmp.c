@@ -40,7 +40,7 @@
 # include <systemd/sd-login.h>
 #endif
 
-#if HAVE_SYS_SYSCTL_H && !defined __minix
+#if HAVE_SYS_SYSCTL_H && !(defined __GLIBC__ && defined __linux__) && !defined __minix
 # if HAVE_SYS_PARAM_H
 #  include <sys/param.h>
 # endif
