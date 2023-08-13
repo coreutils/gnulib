@@ -314,9 +314,11 @@ have_boot_time (struct utmp_alloc a)
   return false;
 }
 
-# if !HAVE_UTMPX_H && HAVE_UTMP_H && defined UTMP_NAME_FUNCTION && !HAVE_DECL_GETUTENT
-struct utmp *getutent (void);
+#if !HAVE_UTMPX_H && HAVE_UTMP_H && defined UTMP_NAME_FUNCTION
+# if !HAVE_DECL_ENDUTENT /* Android */
+void endutent (void);
 # endif
+#endif
 
 static int
 read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
