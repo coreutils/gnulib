@@ -11,6 +11,7 @@ Depends-on:
 alignasof
 attribute
 c99
+calloc-posix
 closedir
 cycle-check
 d-ino
@@ -19,16 +20,19 @@ fchdir
 fcntl
 fcntl-h
 flexmember
+free-posix
 fstat
 hash
 i-ring
 lstat
+malloc-posix
 memmove
 open
 openat-h
 opendir
 opendirat
 readdir
+realloc-posix
 stdbool
 stddef
 stdint
