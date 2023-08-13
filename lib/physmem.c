@@ -50,7 +50,7 @@
 # include <sys/param.h>
 #endif
 
-#if HAVE_SYS_SYSCTL_H && ! defined __GLIBC__
+#if HAVE_SYS_SYSCTL_H && !(defined __GLIBC__ && defined __linux__)
 # include <sys/sysctl.h>
 #endif
 
@@ -96,7 +96,7 @@ double
 physmem_total (void)
 {
 #if defined _SC_PHYS_PAGES && defined _SC_PAGESIZE
-  { /* This works on linux-gnu, solaris2 and cygwin.  */
+  { /* This works on linux-gnu, kfreebsd-gnu, solaris2, and cygwin.  */
     double pages = sysconf (_SC_PHYS_PAGES);
     double pagesize = sysconf (_SC_PAGESIZE);
     if (0 <= pages && 0 <= pagesize)
@@ -153,8 +153,8 @@ physmem_total (void)
   }
 #endif
 
-#if HAVE_SYSCTL && ! defined __GLIBC__ && defined HW_PHYSMEM
-  { /* This works on *bsd and darwin.  */
+#if HAVE_SYSCTL && !(defined __GLIBC__ && defined __linux__) && defined HW_PHYSMEM
+  { /* This works on *bsd, kfreebsd-gnu, and darwin.  */
     unsigned int physmem;
     size_t len = sizeof physmem;
     static int mib[2] = { CTL_HW, HW_PHYSMEM };
@@ -208,7 +208,7 @@ double
 physmem_available (void)
 {
 #if defined _SC_AVPHYS_PAGES && defined _SC_PAGESIZE
-  { /* This works on linux-gnu, solaris2 and cygwin.  */
+  { /* This works on linux-gnu, kfreebsd-gnu, solaris2, and cygwin.  */
     double pages = sysconf (_SC_AVPHYS_PAGES);
     double pagesize = sysconf (_SC_PAGESIZE);
     if (0 <= pages && 0 <= pagesize)
@@ -267,8 +267,8 @@ physmem_available (void)
   }
 #endif
 
-#if HAVE_SYSCTL && ! defined __GLIBC__ && defined HW_USERMEM
-  { /* This works on *bsd and darwin.  */
+#if HAVE_SYSCTL && !(defined __GLIBC__ && defined __linux__) && defined HW_USERMEM
+  { /* This works on *bsd, kfreebsd-gnu, and darwin.  */
     unsigned int usermem;
     size_t len = sizeof usermem;
     static int mib[2] = { CTL_HW, HW_USERMEM };
