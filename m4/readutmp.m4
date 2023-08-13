@@ -1,4 +1,4 @@
-# readutmp.m4 serial 29
+# readutmp.m4 serial 30
 dnl Copyright (C) 2002-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -102,6 +102,10 @@ AC_INCLUDES_DEFAULT
     AC_CHECK_MEMBERS([struct utmpx.ut_exit.e_termination],,,[$utmp_includes])
     AC_CHECK_MEMBERS([struct utmp.ut_exit.e_termination],,,[$utmp_includes])
   fi
+
+  AC_CHECK_DECLS([sysinfo],,,[[
+    #include <sys/sysinfo.h>
+    ]])
 
   AC_CHECK_HEADERS_ONCE([sys/param.h])
   dnl <sys/sysctl.h> requires <sys/param.h> on OpenBSD 4.0.
