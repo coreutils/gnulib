@@ -142,7 +142,7 @@ struct utmpx32
   pid_t ut_pid;                    /* Process ID of login process.  */
   char ut_line[__UT_LINESIZE];     /* Devicename.  */
   char ut_id[4];                   /* Inittab ID.  */
-  char ut_user[__UT_USERSIZE];     /* Username.  */
+  char ut_user[__UT_NAMESIZE];     /* Username.  */
   char ut_host[__UT_HOSTSIZE];     /* Hostname for remote login. */
   struct __exit_status ut_exit;    /* Exit status of a process marked
                                       as DEAD_PROCESS.  */
