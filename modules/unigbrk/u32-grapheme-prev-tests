@@ -1,5 +1,6 @@
 Files:
 tests/unigbrk/test-u32-grapheme-prev.c
+tests/macros.h
 
 Depends-on:
 

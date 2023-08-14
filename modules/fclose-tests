@@ -1,5 +1,6 @@
 Files:
 tests/test-fclose.c
+tests/macros.h
 
 Depends-on:
 fdopen

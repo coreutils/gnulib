@@ -2,6 +2,7 @@ Files:
 tests/unigbrk/test-uc-grapheme-breaks.c
 tests/unigbrk/test-uc-grapheme-breaks.sh
 tests/unigbrk/GraphemeBreakTest.txt
+tests/macros.h
 
 Depends-on:
 
