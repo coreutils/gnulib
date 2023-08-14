@@ -8,6 +8,7 @@ tests/executable-script
 tests/executable-script.sh
 tests/executable-shell-script
 tests/signature.h
+tests/macros.h
 
 Depends-on:
 posix_spawn_file_actions_init

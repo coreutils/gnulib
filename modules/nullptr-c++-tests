@@ -1,5 +1,6 @@
 Files:
 tests/test-nullptr-c++.cc
+tests/macros.h
 
 Status:
 c++-test

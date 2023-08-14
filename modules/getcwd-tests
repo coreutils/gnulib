@@ -2,6 +2,7 @@ Files:
 tests/test-getcwd.sh
 tests/test-getcwd.c
 tests/qemu.h
+tests/macros.h
 
 Depends-on:
 errno
