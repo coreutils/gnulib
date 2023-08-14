@@ -1,5 +1,6 @@
 Files:
 tests/unigbrk/test-u8-grapheme-next.c
+tests/macros.h
 
 Depends-on:
 
