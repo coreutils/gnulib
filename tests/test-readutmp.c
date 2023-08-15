@@ -101,6 +101,7 @@ main (int argc, char *argv[])
       merge_sort_inplace (entries, num_entries,
                           XNMALLOC (num_entries, STRUCT_UTMP));
 
+      idx_t boot_time_count = 0;
       idx_t i;
       for (i = 0; i < num_entries; i++)
         {
@@ -131,6 +132,9 @@ main (int argc, char *argv[])
                   UT_TYPE_BOOT_TIME (entry) ? 'X' : ' ',
                   UT_TYPE_USER_PROCESS (entry) ? 'X' : ' ',
                   host);
+
+          if (UT_TYPE_BOOT_TIME (entry))
+            boot_time_count++;
         }
       fflush (stdout);
 
@@ -141,6 +145,13 @@ main (int argc, char *argv[])
       time_t now = time (NULL);
       ASSERT (first >= now - 157680000);
       ASSERT (last <= now + 604800);
+
+      /* read_utmp should not produce multiple BOOT_TIME entries.  */
+      ASSERT (boot_time_count <= 1);
+
+      /* read_utmp should fake a BOOT_TIME entry if needed.
+         Platform specific hacks go into lib/boot-time-aux.h.  */
+      ASSERT (boot_time_count >= 1);
     }
 
   free (entries);
