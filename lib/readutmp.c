@@ -67,7 +67,6 @@
 #undef UT_PID
 #undef UT_TYPE_EQ
 #undef UT_TYPE_NOT_DEFINED
-#undef IS_USER_PROCESS
 #undef UT_EXIT_E_TERMINATION
 #undef UT_EXIT_E_EXIT
 
@@ -101,12 +100,6 @@
 # define UT_TYPE_EQ(UT, V) 0
 # define UT_TYPE_NOT_DEFINED 1
 #endif
-
-/* Determines whether an entry *UT corresponds to a user process.  */
-#define IS_USER_PROCESS(UT)                                    \
-  ((UT)->ut_user[0]                                            \
-   && (UT_TYPE_USER_PROCESS (UT)                               \
-       || (UT_TYPE_NOT_DEFINED && (UT)->ut_ts.tv_sec != 0)))
 
 #if HAVE_UTMPX_H
 # if HAVE_STRUCT_UTMPX_UT_EXIT_E_TERMINATION
