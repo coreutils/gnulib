@@ -19,8 +19,8 @@ make install
 
 @noindent
 should configure, build, and install this package.
-The @command{./bootstrap} line is intended for developers;
-you can omit it when building from a distribution tarball.
+The first line, which bootstraps, is intended for developers;
+when building from distribution tarballs it does nothing and can be skipped.
 
 The following
 more-detailed instructions are generic; see the @file{README} file for
@@ -39,10 +39,12 @@ GNU Coding Standards}.
 the GNU Coding Standards.
 @end ifclear
 
+Many packages have scripts meant for developers instead of ordinary
+builders, as they may use developer tools that are less commonly installed,
+or they may access the network, which has privacy implications.
 If the @command{bootstrap} shell script exists, it attempts to build the
-@command{configure} shell script and related files, perhaps by
-downloading other software components from the network, and by using
-developer tools that are less commonly installed.  Because the output of
+@command{configure} shell script and related files, possibly
+using developer tools or the network.  Because the output of
 @command{bootstrap} is system-independent, it is normally run by a
 package developer so that its output can be put into the distribution
 tarball and ordinary builders and users need not run @command{bootstrap}.
@@ -85,7 +87,8 @@ The simplest way to compile this package is:
 @item
 If this is a developer checkout and file @samp{configure} does not yet exist,
 type @samp{./bootstrap} to create it.
-You may need special developer tools and network access to bootstrap.
+You may need special developer tools and network access to bootstrap,
+and the network access may have privacy implications.
 
 @item
 Type @samp{./configure} to configure the package for your system.
@@ -397,15 +400,32 @@ the installation locations.
 
 @item --host=@var{type}
 Build binaries for system @var{type}.
+@ifplaintext
+See ``Specifying a System Type''.
+@end ifplaintext
+@ifnotplaintext
 @xref{System Types}.
+@end ifnotplaintext
 
 @item --enable-@var{feature}
 @itemx --disable-@var{feature}
-Enable or disable the optional @var{feature}.  @xref{Optional Features}.
+Enable or disable the optional @var{feature}.
+@ifplaintext
+See ``Optional Features''.
+@end ifplaintext
+@ifnotplaintext
+@xref{Optional Features}.
+@end ifnotplaintext
 
 @item --with-@var{package}
 @itemx --without-@var{package}
-Use or omit @var{package} when building.  @xref{Optional Features}.
+Use or omit @var{package} when building.
+@ifplaintext
+See ``Optional Features''.
+@end ifplaintext
+@ifnotplaintext
+@xref{Optional Features}.
+@end ifnotplaintext
 
 @item --quiet
 @itemx --silent
