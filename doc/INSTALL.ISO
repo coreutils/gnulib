@@ -11,9 +11,9 @@ Basic Installation
      make
      make install
 
-should configure, build, and install this package.  The './bootstrap'
-line is intended for developers; you can omit it when building from a
-distribution tarball.
+should configure, build, and install this package.  The first line,
+which bootstraps, is intended for developers; when building from
+distribution tarballs it does nothing and can be skipped.
 
    The following more-detailed instructions are generic; see the
 'README' file for instructions specific to this package.  Some packages
@@ -22,10 +22,12 @@ documented below.  The lack of an optional feature in a given package is
 not necessarily a bug.  More recommendations for GNU packages can be
 found in the GNU Coding Standards.
 
-   If the 'bootstrap' shell script exists, it attempts to build the
-'configure' shell script and related files, perhaps by downloading other
-software components from the network, and by using developer tools that
-are less commonly installed.  Because the output of 'bootstrap' is
+   Many packages have scripts meant for developers instead of ordinary
+builders, as they may use developer tools that are less commonly
+installed, or they may access the network, which has privacy
+implications.  If the 'bootstrap' shell script exists, it attempts to
+build the 'configure' shell script and related files, possibly using
+developer tools or the network.  Because the output of 'bootstrap' is
 system-independent, it is normally run by a package developer so that
 its output can be put into the distribution tarball and ordinary
 builders and users need not run 'bootstrap'.  Some packages have
@@ -63,7 +65,8 @@ editing 'configure' directly.
 
   2. If this is a developer checkout and file 'configure' does not yet
      exist, type './bootstrap' to create it.  You may need special
-     developer tools and network access to bootstrap.
+     developer tools and network access to bootstrap, and the network
+     access may have privacy implications.
 
   3. Type './configure' to configure the package for your system.  This
      might take a while.  While running, 'configure' prints messages
@@ -324,15 +327,15 @@ operates.
      installation locations.
 
 '--host=TYPE'
-     Build binaries for system TYPE.  *Note System Types::.
+     Build binaries for system TYPE.  See "Specifying a System Type".
 
 '--enable-FEATURE'
 '--disable-FEATURE'
-     Enable or disable the optional FEATURE.  *Note Optional Features::.
+     Enable or disable the optional FEATURE.  See "Optional Features".
 
 '--with-PACKAGE'
 '--without-PACKAGE'
-     Use or omit PACKAGE when building.  *Note Optional Features::.
+     Use or omit PACKAGE when building.  See "Optional Features".
 
 '--quiet'
 '--silent'
