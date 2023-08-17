@@ -1,4 +1,4 @@
-# fchdir.m4 serial 28
+# fchdir.m4 serial 29
 dnl Copyright (C) 2006-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -32,16 +32,16 @@ AC_DEFUN([gl_FUNC_FCHDIR],
          [gl_cv_func_open_directory_works=yes],
          [gl_cv_func_open_directory_works=no],
          [case "$host_os" in
-                             # Guess yes on Linux systems.
-            linux-* | linux) gl_cv_func_open_directory_works="guessing yes" ;;
-                             # Guess yes on systems that emulate the Linux system calls.
-            midipix*)        gl_cv_func_open_directory_works="guessing yes" ;;
-                             # Guess yes on glibc systems.
-            *-gnu* | gnu*)   gl_cv_func_open_directory_works="guessing yes" ;;
-                             # Guess no on native Windows.
-            mingw*)          gl_cv_func_open_directory_works="guessing no" ;;
-                             # If we don't know, obey --enable-cross-guesses.
-            *)               gl_cv_func_open_directory_works="$gl_cross_guess_normal" ;;
+                               # Guess yes on Linux systems.
+            linux-* | linux)   gl_cv_func_open_directory_works="guessing yes" ;;
+                               # Guess yes on systems that emulate the Linux system calls.
+            midipix*)          gl_cv_func_open_directory_works="guessing yes" ;;
+                               # Guess yes on glibc systems.
+            *-gnu* | gnu*)     gl_cv_func_open_directory_works="guessing yes" ;;
+                               # Guess no on native Windows.
+            mingw* | windows*) gl_cv_func_open_directory_works="guessing no" ;;
+                               # If we don't know, obey --enable-cross-guesses.
+            *)                 gl_cv_func_open_directory_works="$gl_cross_guess_normal" ;;
           esac
          ])])
     case "$gl_cv_func_open_directory_works" in

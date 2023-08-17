@@ -1,4 +1,4 @@
-# csharpexec.m4 serial 8
+# csharpexec.m4 serial 9
 dnl Copyright (C) 2003-2005, 2009-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -44,7 +44,7 @@ AC_DEFUN([gt_CSHARPEXEC],
            m4_if([$1], , , [&& clix $2/$1 >/dev/null 2>/dev/null]); then
           HAVE_CLIX=1
           case $host_os in
-            cygwin* | mingw* | pw32*)
+            cygwin* | mingw* | windows* | pw32*)
               CLIX_PATH_VAR=PATH
               ;;
             darwin* | rhapsody*)

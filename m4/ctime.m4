@@ -1,4 +1,4 @@
-# ctime.m4 serial 3
+# ctime.m4 serial 4
 dnl Copyright (C) 2017-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,6 +9,6 @@ AC_DEFUN([gl_FUNC_CTIME],
   AC_REQUIRE([gl_TIME_H_DEFAULTS])
   AC_REQUIRE([AC_CANONICAL_HOST])
   case "$host_os" in
-    mingw*) REPLACE_CTIME=1 ;;
+    mingw* | windows*) REPLACE_CTIME=1 ;;
   esac
 ])

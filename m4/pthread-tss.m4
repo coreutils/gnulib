@@ -1,4 +1,4 @@
-# pthread-tss.m4 serial 1
+# pthread-tss.m4 serial 2
 dnl Copyright (C) 2019-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,7 +9,7 @@ AC_DEFUN([gl_PTHREAD_TSS],
   AC_REQUIRE([gl_PTHREAD_H])
   AC_REQUIRE([AC_CANONICAL_HOST])
 
-  if { case "$host_os" in mingw*) true;; *) false;; esac; } \
+  if { case "$host_os" in mingw* | windows*) true;; *) false;; esac; } \
      && test $gl_threads_api = windows; then
     dnl Choose function names that don't conflict with the mingw-w64 winpthreads
     dnl library.

@@ -1,4 +1,4 @@
-# strerror.m4 serial 24
+# strerror.m4 serial 25
 dnl Copyright (C) 2002, 2007-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -85,7 +85,7 @@ AC_DEFUN([gl_FUNC_STRERROR_0],
                              # Guess yes on musl systems.
          *-musl* | midipix*) gl_cv_func_strerror_0_works="guessing yes" ;;
                              # Guess yes on native Windows.
-         mingw*)             gl_cv_func_strerror_0_works="guessing yes" ;;
+         mingw* | windows*)  gl_cv_func_strerror_0_works="guessing yes" ;;
                              # If we don't know, obey --enable-cross-guesses.
          *)                  gl_cv_func_strerror_0_works="$gl_cross_guess_normal" ;;
        esac

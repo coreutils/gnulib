@@ -1,4 +1,4 @@
-# serial 17
+# serial 18
 
 # Copyright (C) 2003, 2007, 2009-2023 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -12,6 +12,6 @@ AC_DEFUN([gl_FUNC_TZSET],
   AC_REQUIRE([gl_TIME_H_DEFAULTS])
   AC_REQUIRE([AC_CANONICAL_HOST])
   case "$host_os" in
-    mingw*) REPLACE_TZSET=1 ;;
+    mingw* | windows*) REPLACE_TZSET=1 ;;
   esac
 ])

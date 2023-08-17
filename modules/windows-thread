@@ -12,7 +12,7 @@ windows-tls
 configure.ac:
 AC_REQUIRE([AC_CANONICAL_HOST])
 gl_CONDITIONAL([GL_COND_OBJ_WINDOWS_THREAD],
-               [case "$host_os" in mingw*) true;; *) false;; esac])
+               [case "$host_os" in mingw* | windows*) true;; *) false;; esac])
 
 Makefile.am:
 if GL_COND_OBJ_WINDOWS_THREAD

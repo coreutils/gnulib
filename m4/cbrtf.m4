@@ -1,4 +1,4 @@
-# cbrtf.m4 serial 4
+# cbrtf.m4 serial 5
 dnl Copyright (C) 2012-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -91,10 +91,10 @@ int main ()
         [gl_cv_func_cbrtf_works=yes],
         [gl_cv_func_cbrtf_works=no],
         [case "$host_os" in
-           irix*)  gl_cv_func_cbrtf_works="guessing no";;
-                   # Guess yes on native Windows.
-           mingw*) gl_cv_func_cbrtf_works="guessing yes";;
-           *)      gl_cv_func_cbrtf_works="guessing yes";;
+           irix*)             gl_cv_func_cbrtf_works="guessing no";;
+                              # Guess yes on native Windows.
+           mingw* | windows*) gl_cv_func_cbrtf_works="guessing yes";;
+           *)                 gl_cv_func_cbrtf_works="guessing yes";;
          esac
         ])
     ])

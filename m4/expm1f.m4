@@ -1,4 +1,4 @@
-# expm1f.m4 serial 5
+# expm1f.m4 serial 6
 dnl Copyright (C) 2011-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -82,7 +82,7 @@ int main (int argc, char *argv[])
                                      # Guess yes on musl systems.
                  *-musl* | midipix*) gl_cv_func_expm1f_ieee="guessing yes" ;;
                                      # Guess yes on native Windows.
-                 mingw*)             gl_cv_func_expm1f_ieee="guessing yes" ;;
+                 mingw* | windows*)  gl_cv_func_expm1f_ieee="guessing yes" ;;
                                      # Guess no on AIX.
                  aix*)               gl_cv_func_expm1f_ieee="guessing no" ;;
                                      # If we don't know, obey --enable-cross-guesses.
@@ -132,10 +132,10 @@ int main ()
         [gl_cv_func_expm1f_works=yes],
         [gl_cv_func_expm1f_works=no],
         [case "$host_os" in
-           irix*)  gl_cv_func_expm1f_works="guessing no" ;;
-                   # Guess yes on native Windows.
-           mingw*) gl_cv_func_expm1f_works="guessing yes" ;;
-           *)      gl_cv_func_expm1f_works="guessing yes" ;;
+           irix*)             gl_cv_func_expm1f_works="guessing no" ;;
+                              # Guess yes on native Windows.
+           mingw* | windows*) gl_cv_func_expm1f_works="guessing yes" ;;
+           *)                 gl_cv_func_expm1f_works="guessing yes" ;;
          esac
         ])
     ])

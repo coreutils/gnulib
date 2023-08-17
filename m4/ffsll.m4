@@ -1,4 +1,4 @@
-# ffsll.m4 serial 5
+# ffsll.m4 serial 6
 dnl Copyright (C) 2011-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -56,7 +56,7 @@ AC_DEFUN([gl_FUNC_FFSLL],
                                 # Guess yes on musl systems.
             *-musl* | midipix*) gl_cv_func_ffsll_works="guessing yes" ;;
                                 # Guess yes on native Windows.
-            mingw*)             gl_cv_func_ffsll_works="guessing yes" ;;
+            mingw* | windows*)  gl_cv_func_ffsll_works="guessing yes" ;;
                                 # Guess no on AIX.
             aix*)               gl_cv_func_ffsll_works="guessing no" ;;
                                 # If we don't know, obey --enable-cross-guesses.

@@ -1,4 +1,4 @@
-# windows-stat-inodes.m4 serial 1
+# windows-stat-inodes.m4 serial 2
 dnl Copyright (C) 2017-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -13,7 +13,7 @@ AC_DEFUN([gl_WINDOWS_STAT_INODES],
 [
   AC_REQUIRE([AC_CANONICAL_HOST])
   case "$host_os" in
-    mingw*) WINDOWS_STAT_INODES=1 ;;
-    *)      WINDOWS_STAT_INODES=0 ;;
+    mingw* | windows*) WINDOWS_STAT_INODES=1 ;;
+    *)                 WINDOWS_STAT_INODES=0 ;;
   esac
 ])

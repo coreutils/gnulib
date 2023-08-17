@@ -1,4 +1,4 @@
-# nonblocking.m4 serial 3
+# nonblocking.m4 serial 4
 dnl Copyright (C) 2011-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -19,11 +19,11 @@ AC_DEFUN([gl_NONBLOCKING_IO_BODY],
 [
   AC_REQUIRE([AC_CANONICAL_HOST])
   case "$host_os" in
-    mingw*) gl_cv_have_nonblocking=no ;;
-    *)      gl_cv_have_nonblocking=yes ;;
+    mingw* | windows*) gl_cv_have_nonblocking=no ;;
+    *)                 gl_cv_have_nonblocking=yes ;;
   esac
   case "$host_os" in
-    mingw*) gl_cv_have_open_O_NONBLOCK=no ;;
-    *)      gl_cv_have_open_O_NONBLOCK=yes ;;
+    mingw* | windows*) gl_cv_have_open_O_NONBLOCK=no ;;
+    *)                 gl_cv_have_open_O_NONBLOCK=yes ;;
   esac
 ])

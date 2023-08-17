@@ -1,4 +1,4 @@
-# wcrtomb.m4 serial 18
+# wcrtomb.m4 serial 19
 dnl Copyright (C) 2008-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -82,9 +82,11 @@ int main ()
 changequote(,)dnl
           case "$host_os" in
             # Guess no on AIX 4, OSF/1, Solaris, native Windows.
-            aix4* | osf* | solaris* | mingw*) gl_cv_func_wcrtomb_retval="guessing no" ;;
+            aix4* | osf* | solaris* | mingw* | windows*)
+              gl_cv_func_wcrtomb_retval="guessing no" ;;
             # Guess yes otherwise.
-            *)                                gl_cv_func_wcrtomb_retval="guessing yes" ;;
+            *)
+              gl_cv_func_wcrtomb_retval="guessing yes" ;;
           esac
 changequote([,])dnl
           if test $LOCALE_FR != none || test $LOCALE_FR_UTF8 != none || test $LOCALE_JA != none || test $LOCALE_ZH_CN != none; then

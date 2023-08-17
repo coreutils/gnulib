@@ -1,4 +1,4 @@
-# logbl.m4 serial 5
+# logbl.m4 serial 6
 dnl Copyright (C) 2012-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -108,10 +108,10 @@ int main ()
         [gl_cv_func_logbl_works=yes],
         [gl_cv_func_logbl_works=no],
         [case "$host_os" in
-           *gnu* | solaris*) gl_cv_func_logbl_works="guessing no" ;;
-                             # Guess yes on native Windows.
-           mingw*)           gl_cv_func_logbl_works="guessing yes" ;;
-           *)                gl_cv_func_logbl_works="guessing yes" ;;
+           *gnu* | solaris*)  gl_cv_func_logbl_works="guessing no" ;;
+                              # Guess yes on native Windows.
+           mingw* | windows*) gl_cv_func_logbl_works="guessing yes" ;;
+           *)                 gl_cv_func_logbl_works="guessing yes" ;;
          esac
         ])
     ])

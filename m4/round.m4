@@ -1,4 +1,4 @@
-# round.m4 serial 24
+# round.m4 serial 25
 dnl Copyright (C) 2007, 2009-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -60,17 +60,19 @@ int main()
   return (x < 0.5 && round (x) != 0.0);
 }]])], [gl_cv_func_round_works=yes], [gl_cv_func_round_works=no],
         [case "$host_os" in
-           netbsd* | aix*) gl_cv_func_round_works="guessing no" ;;
-                           # Guess yes on MSVC, no on mingw.
-           mingw*)         AC_EGREP_CPP([Known], [
+           netbsd* | aix*)    gl_cv_func_round_works="guessing no" ;;
+                              # Guess yes on MSVC, no on mingw.
+           windows*-gnu*)     gl_cv_func_round_works="guessing no" ;;
+           windows*-msvc*)    gl_cv_func_round_works="guessing yes" ;;
+           mingw* | windows*) AC_EGREP_CPP([Known], [
 #ifdef _MSC_VER
  Known
 #endif
-                             ],
-                             [gl_cv_func_round_works="guessing yes"],
-                             [gl_cv_func_round_works="guessing no"])
-                           ;;
-           *)              gl_cv_func_round_works="guessing yes" ;;
+                                ],
+                                [gl_cv_func_round_works="guessing yes"],
+                                [gl_cv_func_round_works="guessing no"])
+                              ;;
+           *)                 gl_cv_func_round_works="guessing yes" ;;
          esac
         ])
         LIBS="$save_LIBS"
@@ -118,7 +120,9 @@ int main (int argc, char *argv[])
                                      # Guess yes on musl systems.
                  *-musl* | midipix*) gl_cv_func_round_ieee="guessing yes" ;;
                                      # Guess yes on MSVC, no on mingw.
-                 mingw*)             AC_EGREP_CPP([Known], [
+                 windows*-gnu*)      gl_cv_func_round_ieee="guessing no" ;;
+                 windows*-msvc*)     gl_cv_func_round_ieee="guessing yes" ;;
+                 mingw* | windows*)  AC_EGREP_CPP([Known], [
 #ifdef _MSC_VER
  Known
 #endif

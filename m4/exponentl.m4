@@ -1,4 +1,4 @@
-# exponentl.m4 serial 6
+# exponentl.m4 serial 7
 dnl Copyright (C) 2007-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -82,8 +82,9 @@ int main ()
           dnl ABI and compiler version. There are too many cases.
           gl_cv_cc_long_double_expbit0="unknown"
           case "$host_os" in
-            mingw*) # On native Windows (little-endian), we know the result
-                    # in two cases: mingw, MSVC.
+            mingw* | windows*)
+              # On native Windows (little-endian), we know the result
+              # in two cases: mingw, MSVC.
               AC_EGREP_CPP([Known], [
 #ifdef __MINGW32__
  Known

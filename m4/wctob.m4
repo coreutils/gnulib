@@ -1,4 +1,4 @@
-# wctob.m4 serial 13
+# wctob.m4 serial 14
 dnl Copyright (C) 2008-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -32,7 +32,7 @@ changequote(,)dnl
           solaris2.[1-9] | solaris2.[1-9].* | cygwin*)
             gl_cv_func_wctob_works="guessing no" ;;
             # Guess no on native Windows.
-          mingw*)
+          mingw* | windows*)
             gl_cv_func_wctob_works="guessing no" ;;
             # Guess yes otherwise.
           *) gl_cv_func_wctob_works="guessing yes" ;;

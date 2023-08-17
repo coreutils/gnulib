@@ -1,4 +1,4 @@
-# access.m4 serial 1
+# access.m4 serial 2
 dnl Copyright (C) 2019-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -11,6 +11,6 @@ AC_DEFUN([gl_FUNC_ACCESS],
   dnl On native Windows, access (= _access) does not support the X_OK mode.
   dnl It works by chance on some versions of mingw.
   case "$host_os" in
-    mingw*) REPLACE_ACCESS=1 ;;
+    mingw* | windows*) REPLACE_ACCESS=1 ;;
   esac
 ])

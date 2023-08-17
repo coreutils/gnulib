@@ -1,4 +1,4 @@
-#serial 15
+#serial 16
 
 dnl From J. David Anglin.
 
@@ -31,9 +31,9 @@ AC_DEFUN([gl_FUNC_UNLINK_BUSY_TEXT],
         [gl_cv_func_unlink_busy_text=yes],
         [gl_cv_func_unlink_busy_text=no],
         [case "$host_os" in
-                   # Guess no on native Windows.
-           mingw*) gl_cv_func_unlink_busy_text="guessing no" ;;
-           *)      gl_cv_func_unlink_busy_text="guessing no" ;;
+                              # Guess no on native Windows.
+           mingw* | windows*) gl_cv_func_unlink_busy_text="guessing no" ;;
+           *)                 gl_cv_func_unlink_busy_text="guessing no" ;;
          esac
         ]
       )

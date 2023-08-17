@@ -1,4 +1,4 @@
-# modfl.m4 serial 9
+# modfl.m4 serial 10
 dnl Copyright (C) 2011-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -68,7 +68,9 @@ int main (int argc, char *argv[])
                                      # Guess yes on musl systems.
                  *-musl* | midipix*) gl_cv_func_modfl_ieee="guessing yes" ;;
                                      # Guess yes on MSVC, no on mingw.
-                 mingw*)             AC_EGREP_CPP([Known], [
+                 windows*-gnu*)      gl_cv_func_modfl_ieee="guessing no" ;;
+                 windows*-msvc*)     gl_cv_func_modfl_ieee="guessing yes" ;;
+                 mingw* | windows*)  AC_EGREP_CPP([Known], [
 #ifdef _MSC_VER
  Known
 #endif

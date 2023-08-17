@@ -1,4 +1,4 @@
-# serial 7
+# serial 8
 
 # Copyright (C) 2005-2007, 2009-2023 Free Software Foundation, Inc.
 #
@@ -25,7 +25,7 @@ AC_DEFUN([gl_UNLINKDIR],
   linux-* | linux | \
   freebsd2.2* | freebsd[[3-9]]* | freebsd[[1-9]][[0-9]]* | \
   cygwin | \
-  mingw*)
+  mingw* | windows*)
     AC_DEFINE([UNLINK_CANNOT_UNLINK_DIR], [1],
       [Define to 1 if unlink (dir) cannot possibly succeed.]);;
   esac

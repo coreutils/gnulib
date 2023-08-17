@@ -1,4 +1,4 @@
-# expl.m4 serial 19
+# expl.m4 serial 20
 dnl Copyright (C) 2010-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -153,7 +153,7 @@ int main (int argc, char *argv[])
                                    # Guess no on musl systems.
                *-musl* | midipix*) gl_cv_func_expl_works="guessing no" ;;
                                    # Guess yes on native Windows.
-               mingw*)             gl_cv_func_expl_works="guessing yes" ;;
+               mingw* | windows*)  gl_cv_func_expl_works="guessing yes" ;;
                                    # If we don't know, obey --enable-cross-guesses.
                *)                  gl_cv_func_expl_works="$gl_cross_guess_normal" ;;
              esac

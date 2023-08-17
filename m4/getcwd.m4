@@ -6,7 +6,7 @@
 # with or without modifications, as long as this notice is preserved.
 
 # Written by Paul Eggert.
-# serial 20
+# serial 21
 
 AC_DEFUN([gl_FUNC_GETCWD_NULL],
   [
@@ -116,7 +116,7 @@ AC_DEFUN([gl_FUNC_GETCWD],
 
   gl_abort_bug=no
   case "$host_os" in
-    mingw*)
+    mingw* | windows*)
       gl_cv_func_getcwd_path_max=yes
       ;;
     *)

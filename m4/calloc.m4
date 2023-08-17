@@ -1,4 +1,4 @@
-# calloc.m4 serial 30
+# calloc.m4 serial 31
 
 # Copyright (C) 2004-2023 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -41,7 +41,7 @@ AC_DEFUN([_AC_FUNC_CALLOC_IF],
                              # Guess yes on musl systems.
          *-musl* | midipix*) ac_cv_func_calloc_0_nonnull="guessing yes" ;;
                              # Guess yes on native Windows.
-         mingw*)             ac_cv_func_calloc_0_nonnull="guessing yes" ;;
+         mingw* | windows*)  ac_cv_func_calloc_0_nonnull="guessing yes" ;;
                              # If we don't know, obey --enable-cross-guesses.
          *)                  ac_cv_func_calloc_0_nonnull="$gl_cross_guess_normal" ;;
        esac

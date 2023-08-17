@@ -1,4 +1,4 @@
-# remove.m4 serial 5
+# remove.m4 serial 6
 dnl Copyright (C) 2009-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -30,8 +30,8 @@ AC_DEFUN([gl_FUNC_REMOVE],
 ]], [[return remove ("conftest.dir");]])],
          [gl_cv_func_remove_dir_works=yes], [gl_cv_func_remove_dir_works=no],
          [case $host_os in
-            mingw*) gl_cv_func_remove_dir_works="guessing no";;
-            *) gl_cv_func_remove_dir_works="guessing yes";;
+            mingw* | windows*) gl_cv_func_remove_dir_works="guessing no" ;;
+            *)                 gl_cv_func_remove_dir_works="guessing yes" ;;
           esac])
        rm -rf conftest.dir])
     case $gl_cv_func_remove_dir_works in

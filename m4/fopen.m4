@@ -1,4 +1,4 @@
-# fopen.m4 serial 15
+# fopen.m4 serial 16
 dnl Copyright (C) 2007-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,7 +9,7 @@ AC_DEFUN([gl_FUNC_FOPEN_ITSELF],
   AC_REQUIRE([gl_STDIO_H_DEFAULTS])
   AC_REQUIRE([AC_CANONICAL_HOST])
   case "$host_os" in
-    mingw* | pw*)
+    mingw* | windows* | pw*)
       dnl Replace fopen, for handling of "/dev/null".
       REPLACE_FOPEN=1
       dnl fopen on mingw also has the trailing slash bug.
@@ -136,7 +136,7 @@ int main ()
           linux*-gnu* | gnu* | kfreebsd*-gnu | *-musl* | midipix*)
             gl_cv_func_fopen_mode_e="guessing yes" ;;
           # Guess no on native Windows.
-          mingw*)
+          mingw* | windows*)
             gl_cv_func_fopen_mode_e="guessing no" ;;
           # If we don't know, obey --enable-cross-guesses.
           *)

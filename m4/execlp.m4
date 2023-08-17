@@ -1,4 +1,4 @@
-# execlp.m4 serial 1
+# execlp.m4 serial 2
 dnl Copyright (C) 2020-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -10,6 +10,6 @@ AC_DEFUN([gl_FUNC_EXECLP],
   AC_REQUIRE([AC_CANONICAL_HOST])
 
   case "$host_os" in
-    mingw*) REPLACE_EXECLP=1 ;;
+    mingw* | windows*) REPLACE_EXECLP=1 ;;
   esac
 ])

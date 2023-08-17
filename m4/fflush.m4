@@ -1,4 +1,4 @@
-# fflush.m4 serial 18
+# fflush.m4 serial 19
 
 # Copyright (C) 2007-2023 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -79,9 +79,9 @@ AC_DEFUN([gl_FUNC_FFLUSH_STDIN],
        [gl_cv_func_fflush_stdin=yes],
        [gl_cv_func_fflush_stdin=no],
        [case "$host_os" in
-                  # Guess no on native Windows.
-          mingw*) gl_cv_func_fflush_stdin="guessing no" ;;
-          *)      gl_cv_func_fflush_stdin=cross ;;
+                             # Guess no on native Windows.
+          mingw* | windows*) gl_cv_func_fflush_stdin="guessing no" ;;
+          *)                 gl_cv_func_fflush_stdin=cross ;;
         esac
        ])
      rm conftest.txt

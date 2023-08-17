@@ -1,4 +1,4 @@
-# lseek.m4 serial 14
+# lseek.m4 serial 15
 dnl Copyright (C) 2007, 2009-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -13,7 +13,7 @@ AC_DEFUN([gl_FUNC_LSEEK],
   AC_CHECK_HEADERS_ONCE([unistd.h])
   AC_CACHE_CHECK([whether lseek detects pipes], [gl_cv_func_lseek_pipe],
     [case "$host_os" in
-       mingw*)
+       mingw* | windows*)
          dnl Native Windows.
          dnl The result of lseek (fd, (off_t)0, SEEK_CUR) or
          dnl SetFilePointer(handle, 0, NULL, FILE_CURRENT)

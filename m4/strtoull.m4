@@ -1,4 +1,4 @@
-# strtoull.m4 serial 10
+# strtoull.m4 serial 11
 dnl Copyright (C) 2002, 2004, 2006, 2008-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -38,7 +38,7 @@ AC_DEFUN([gl_FUNC_STRTOULL],
          [gl_cv_func_strtoull_works=no],
          [case "$host_os" in
                                 # Guess no on native Windows.
-            mingw*)             gl_cv_func_strtoull_works="guessing no" ;;
+            mingw* | windows*)  gl_cv_func_strtoull_works="guessing no" ;;
                                 # Guess no on glibc systems.
             *-gnu* | gnu*)      gl_cv_func_strtoull_works="guessing no" ;;
                                 # Guess no on musl systems.

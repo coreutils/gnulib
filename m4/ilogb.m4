@@ -1,4 +1,4 @@
-# ilogb.m4 serial 7
+# ilogb.m4 serial 8
 dnl Copyright (C) 2010-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -123,10 +123,11 @@ int main (int argc, char *argv[])
         [gl_cv_func_ilogb_works=no],
         [case "$host_os" in
            aix* | openbsd* | netbsd* | solaris*)
-                   gl_cv_func_ilogb_works="guessing no" ;;
-                   # Guess yes on native Windows.
-           mingw*) gl_cv_func_ilogb_works="guessing yes" ;;
-           *)      gl_cv_func_ilogb_works="guessing yes" ;;
+              gl_cv_func_ilogb_works="guessing no" ;;
+              # Guess yes on native Windows.
+           mingw* | windows*)
+              gl_cv_func_ilogb_works="guessing yes" ;;
+           *) gl_cv_func_ilogb_works="guessing yes" ;;
          esac
         ])
     ])

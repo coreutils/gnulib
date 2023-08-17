@@ -1,4 +1,4 @@
-# utime.m4 serial 4
+# utime.m4 serial 5
 dnl Copyright (C) 2017-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -10,7 +10,7 @@ AC_DEFUN([gl_FUNC_UTIME],
   AC_REQUIRE([AC_CANONICAL_HOST])
   AC_CHECK_FUNCS_ONCE([lstat])
   case "$host_os" in
-    mingw*)
+    mingw* | windows*)
       dnl On this platform, the original utime() or _utime() produces
       dnl timestamps that are affected by the time zone.
       dnl Use the function name 'rpl_utime' always, in order to avoid a

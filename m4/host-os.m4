@@ -1,4 +1,4 @@
-# serial 12
+# serial 13
 
 # Copyright (C) 2001, 2003-2004, 2006, 2009-2023 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -47,7 +47,7 @@ AC_DEFUN([gl_HOST_OS],
        msdosdjgpp*)     os='DJGPP';;
        mpeix*)          os='MPE/iX';;
        mint*)           os='MiNT';;
-       mingw*)          os='MinGW';;
+       mingw* | windows*) os='MinGW';;
        lynxos*)         os='LynxOS';;
        linux*)          os='GNU/Linux';;
        hpux*)           os='HP-UX';;

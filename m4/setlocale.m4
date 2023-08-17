@@ -1,4 +1,4 @@
-# setlocale.m4 serial 9
+# setlocale.m4 serial 10
 dnl Copyright (C) 2011-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -15,7 +15,7 @@ AC_DEFUN([gl_FUNC_SETLOCALE],
   case "$host_os" in
     dnl On native Windows systems, setlocale(category,NULL) does not look at
     dnl the environment variables LC_ALL, category, and LANG.
-    mingw*) NEED_SETLOCALE_IMPROVED=1 ;;
+    mingw* | windows*) NEED_SETLOCALE_IMPROVED=1 ;;
     dnl On Cygwin 1.5.x, setlocale always succeeds but setlocale(LC_CTYPE,NULL)
     dnl is then still "C".
     cygwin*)

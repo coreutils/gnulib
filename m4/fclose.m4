@@ -1,4 +1,4 @@
-# fclose.m4 serial 11
+# fclose.m4 serial 12
 dnl Copyright (C) 2008-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -88,7 +88,7 @@ AC_DEFUN([gl_FUNC_FCLOSE_STDIN],
                               # Guess yes on musl systems.
           *-musl* | midipix*) gl_cv_func_fclose_stdin="guessing yes" ;;
                               # Guess no on native Windows.
-          mingw*)             gl_cv_func_fclose_stdin="guessing no" ;;
+          mingw* | windows*)  gl_cv_func_fclose_stdin="guessing no" ;;
                               # If we don't know, obey --enable-cross-guesses.
           *)                  gl_cv_func_fclose_stdin="$gl_cross_guess_normal" ;;
         esac

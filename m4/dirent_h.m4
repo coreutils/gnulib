@@ -1,4 +1,4 @@
-# dirent_h.m4 serial 20
+# dirent_h.m4 serial 21
 dnl Copyright (C) 2008-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -38,8 +38,8 @@ AC_DEFUN_ONCE([gl_DIRENT_DIR],
   dnl it's simpler since we know the affected platforms.
   AC_REQUIRE([AC_CANONICAL_HOST])
   case "$host_os" in
-    mingw*) DIR_HAS_FD_MEMBER=0 ;;
-    *)      DIR_HAS_FD_MEMBER=1 ;;
+    mingw* | windows*) DIR_HAS_FD_MEMBER=0 ;;
+    *)                 DIR_HAS_FD_MEMBER=1 ;;
   esac
   AC_SUBST([DIR_HAS_FD_MEMBER])
 ])

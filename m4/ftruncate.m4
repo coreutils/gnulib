@@ -1,4 +1,4 @@
-# serial 23
+# serial 24
 
 # See if we need to emulate a missing ftruncate function using _chsize.
 
@@ -15,7 +15,7 @@ AC_DEFUN([gl_FUNC_FTRUNCATE],
     m4_ifdef([gl_LARGEFILE], [
       AC_REQUIRE([AC_CANONICAL_HOST])
       case "$host_os" in
-        mingw*)
+        mingw* | windows*)
           dnl Native Windows, and Large File Support is requested.
           dnl The MSVCRT _chsize() function only accepts a 32-bit file size,
           dnl and the mingw64 ftruncate64() function is unreliable (it may

@@ -1,4 +1,4 @@
-# build-to-host.m4 serial 2
+# build-to-host.m4 serial 3
 dnl Copyright (C) 2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -41,7 +41,7 @@ AC_DEFUN([gl_BUILD_TO_HOST],
   case "$build_os" in
     cygwin*)
       case "$host_os" in
-        mingw*)
+        mingw* | windows*)
           gl_final_[$1]=`cygpath -w "$gl_final_[$1]"` ;;
       esac
       ;;

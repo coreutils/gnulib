@@ -1,4 +1,4 @@
-# serial 19
+# serial 20
 
 # Copyright (C) 2009-2023 Free Software Foundation, Inc.
 #
@@ -12,7 +12,7 @@ AC_DEFUN([gl_FUNC_STAT],
   AC_REQUIRE([gl_SYS_STAT_H_DEFAULTS])
   AC_CHECK_FUNCS_ONCE([lstat])
   case "$host_os" in
-    mingw*)
+    mingw* | windows*)
       dnl On this platform, the original stat() returns st_atime, st_mtime,
       dnl st_ctime values that are affected by the time zone.
       REPLACE_STAT=1
@@ -80,7 +80,7 @@ AC_DEFUN([gl_PREREQ_STAT], [
 AC_DEFUN([gl_PREREQ_STAT_W32], [
   AC_REQUIRE([AC_CANONICAL_HOST])
   case "$host_os" in
-    mingw*)
+    mingw* | windows*)
       AC_CHECK_HEADERS([sdkddkver.h])
       ;;
   esac

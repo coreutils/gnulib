@@ -1,4 +1,4 @@
-# wcsrtombs.m4 serial 13
+# wcsrtombs.m4 serial 14
 dnl Copyright (C) 2008-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -64,12 +64,12 @@ AC_DEFUN([gl_WCSRTOMBS_TERMINATION],
       dnl is present.
 changequote(,)dnl
       case "$host_os" in
-                # Guess no on OSF/1.
-        osf*)   gl_cv_func_wcsrtombs_termination="guessing no" ;;
-                # Guess yes on native Windows.
-        mingw*) gl_cv_func_wcsrtombs_termination="guessing yes" ;;
-                # Guess yes otherwise.
-        *)      gl_cv_func_wcsrtombs_termination="guessing yes" ;;
+                           # Guess no on OSF/1.
+        osf*)              gl_cv_func_wcsrtombs_termination="guessing no" ;;
+                           # Guess yes on native Windows.
+        mingw* | windows*) gl_cv_func_wcsrtombs_termination="guessing yes" ;;
+                           # Guess yes otherwise.
+        *)                 gl_cv_func_wcsrtombs_termination="guessing yes" ;;
       esac
 changequote([,])dnl
       if test $LOCALE_FR != none; then
@@ -121,12 +121,15 @@ AC_DEFUN([gl_WCSRTOMBS_NULL],
       dnl is present.
 changequote(,)dnl
       case "$host_os" in
-                               # Guess no on HP-UX, OSF/1, mingw.
-        hpux* | osf* | mingw*) gl_cv_func_wcsrtombs_null="guessing no" ;;
-                               # Guess yes on native Windows.
-        mingw*)                gl_cv_func_wcsrtombs_null="guessing yes" ;;
-                               # Guess yes otherwise.
-        *)                     gl_cv_func_wcsrtombs_null="guessing yes" ;;
+          # Guess no on HP-UX, OSF/1, mingw.
+        hpux* | osf* | mingw* | windows*)
+          gl_cv_func_wcsrtombs_null="guessing no" ;;
+          # Guess yes on native Windows.
+        mingw* | windows*)
+          gl_cv_func_wcsrtombs_null="guessing yes" ;;
+          # Guess yes otherwise.
+        *)
+          gl_cv_func_wcsrtombs_null="guessing yes" ;;
       esac
 changequote([,])dnl
       if test $LOCALE_FR != none; then

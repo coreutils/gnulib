@@ -1,4 +1,4 @@
-# logb.m4 serial 9
+# logb.m4 serial 10
 dnl Copyright (C) 2010-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -134,7 +134,14 @@ int main ()
         [gl_cv_func_logb_works=no],
         [case "$host_os" in
            *gnu* | solaris* | cygwin*) gl_cv_func_logb_works="guessing no" ;;
-           mingw*) # Guess yes on MSVC, no on mingw.
+           # Guess yes on MSVC, no on mingw.
+           windows*-gnu*)
+             gl_cv_func_logb_works="guessing no"
+             ;;
+           windows*-msvc*)
+             gl_cv_func_logb_works="guessing yes"
+             ;;
+           mingw* | windows*)
              AC_EGREP_CPP([Known], [
 #ifdef _MSC_VER
  Known

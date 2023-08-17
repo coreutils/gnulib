@@ -1,4 +1,4 @@
-# mprotect.m4 serial 2
+# mprotect.m4 serial 3
 dnl Copyright (C) 1993-2023 Free Software Foundation, Inc.
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License as published by the Free Software Foundation;
@@ -144,7 +144,7 @@ AC_DEFUN([gl_FUNC_MPROTECT_WORKS],
            darwin* | freebsd* | dragonfly* | midnightbsd* | netbsd* | openbsd* | \
            aix* | hpux* | irix* | solaris* | cygwin*)
              gl_cv_func_mprotect_works="guessing yes" ;;
-           mingw*)
+           mingw* | windows*)
              gl_cv_func_mprotect_works="guessing no" ;;
            *)
              dnl If we don't know, obey --enable-cross-guesses.

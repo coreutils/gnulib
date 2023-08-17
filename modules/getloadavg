@@ -8,7 +8,7 @@ m4/getloadavg.m4
 Depends-on:
 extensions
 intprops  [test $HAVE_GETLOADAVG = 0 || test $REPLACE_GETLOADAVG = 1]
-open      [case $host_os in mingw*) false;; *) test $HAVE_GETLOADAVG = 0 || test $REPLACE_GETLOADAVG = 1;; esac]
+open      [case $host_os in mingw* | windows*) false;; *) test $HAVE_GETLOADAVG = 0 || test $REPLACE_GETLOADAVG = 1;; esac]
 stdbool   [test $HAVE_GETLOADAVG = 0 || test $REPLACE_GETLOADAVG = 1]
 stdlib    [test $HAVE_GETLOADAVG = 0 || test $REPLACE_GETLOADAVG = 1]
 

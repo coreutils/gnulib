@@ -1,4 +1,4 @@
-# isnanl.m4 serial 22
+# isnanl.m4 serial 23
 dnl Copyright (C) 2007-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -232,7 +232,7 @@ int main ()
         [gl_cv_func_isnanl_works=yes],
         [gl_cv_func_isnanl_works=no],
         [case "$host_os" in
-           mingw*) # Guess yes on mingw, no on MSVC.
+           mingw* | windows*) # Guess yes on mingw, no on MSVC.
              AC_EGREP_CPP([Known], [
 #ifdef __MINGW32__
  Known

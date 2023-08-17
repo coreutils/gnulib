@@ -1,4 +1,4 @@
-# truncate.m4 serial 5   -*- Autoconf -*-
+# truncate.m4 serial 6   -*- Autoconf -*-
 dnl Copyright (C) 2017-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -18,7 +18,7 @@ AC_DEFUN([gl_FUNC_TRUNCATE],
   if test $ac_cv_have_decl_truncate = yes; then
     m4_ifdef([gl_LARGEFILE], [
       case "$host_os" in
-        mingw*)
+        mingw* | windows*)
           dnl Native Windows, and Large File Support is requested.
           dnl The mingw64 truncate64() function is based on ftruncate64(),
           dnl which is unreliable (it may delete the file, see

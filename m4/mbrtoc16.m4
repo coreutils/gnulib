@@ -1,4 +1,4 @@
-# mbrtoc16.m4 serial 1
+# mbrtoc16.m4 serial 2
 dnl Copyright (C) 2014-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -138,12 +138,12 @@ AC_DEFUN([gl_MBRTOC16_RETVAL],
       dnl is present.
 changequote(,)dnl
       case "$host_os" in
-                         # Guess no on Android.
-        linux*-android*) gl_cv_func_mbrtoc16_retval="guessing no" ;;
-                         # Guess no on native Windows.
-        mingw*)          gl_cv_func_mbrtoc16_retval="guessing no" ;;
-                         # Guess yes otherwise.
-        *)               gl_cv_func_mbrtoc16_retval="guessing yes" ;;
+                           # Guess no on Android.
+        linux*-android*)   gl_cv_func_mbrtoc16_retval="guessing no" ;;
+                           # Guess no on native Windows.
+        mingw* | windows*) gl_cv_func_mbrtoc16_retval="guessing no" ;;
+                           # Guess yes otherwise.
+        *)                 gl_cv_func_mbrtoc16_retval="guessing yes" ;;
       esac
 changequote([,])dnl
       AC_RUN_IFELSE(
@@ -301,9 +301,9 @@ AC_DEFUN([gl_MBRTOC16_C_LOCALE],
        [gl_cv_func_mbrtoc16_C_locale_sans_EILSEQ=yes],
        [gl_cv_func_mbrtoc16_C_locale_sans_EILSEQ=no],
        [case "$host_os" in
-                  # Guess yes on native Windows.
-          mingw*) gl_cv_func_mbrtoc16_C_locale_sans_EILSEQ="guessing yes" ;;
-          *)      gl_cv_func_mbrtoc16_C_locale_sans_EILSEQ="$gl_cross_guess_normal" ;;
+                             # Guess yes on native Windows.
+          mingw* | windows*) gl_cv_func_mbrtoc16_C_locale_sans_EILSEQ="guessing yes" ;;
+          *)                 gl_cv_func_mbrtoc16_C_locale_sans_EILSEQ="$gl_cross_guess_normal" ;;
         esac
        ])
     ])
@@ -331,7 +331,7 @@ AC_DEFUN([gl_MBRTOC16_SANITYCHECK],
 changequote(,)dnl
         case "$host_os" in
           # Guess no on FreeBSD, Solaris, native Windows.
-          freebsd* | midnightbsd* | solaris* | mingw*)
+          freebsd* | midnightbsd* | solaris* | mingw* | windows*)
             gl_cv_func_mbrtoc16_sanitycheck="guessing no"
             ;;
           # Guess yes otherwise.

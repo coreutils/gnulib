@@ -1,4 +1,4 @@
-# serial 21
+# serial 22
 
 dnl From Jim Meyering.
 dnl
@@ -40,16 +40,16 @@ AC_DEFUN([gl_CHECK_TYPE_STRUCT_DIRENT_D_INO],
            [gl_cv_struct_dirent_d_ino=yes],
            [gl_cv_struct_dirent_d_ino=no],
            [case "$host_os" in
-                            # Guess yes on glibc systems with Linux kernel.
-              linux*-gnu*)  gl_cv_struct_dirent_d_ino="guessing yes" ;;
-                            # Guess yes on musl systems with Linux kernel.
-              linux*-musl*) gl_cv_struct_dirent_d_ino="guessing yes" ;;
-                            # Guess yes on systems that emulate the Linux system calls.
-              midipix*)     gl_cv_struct_dirent_d_ino="guessing yes" ;;
-                            # Guess no on native Windows.
-              mingw*)       gl_cv_struct_dirent_d_ino="guessing no" ;;
-                            # If we don't know, obey --enable-cross-guesses.
-              *)            gl_cv_struct_dirent_d_ino="$gl_cross_guess_normal" ;;
+                                 # Guess yes on glibc systems with Linux kernel.
+              linux*-gnu*)       gl_cv_struct_dirent_d_ino="guessing yes" ;;
+                                 # Guess yes on musl systems with Linux kernel.
+              linux*-musl*)      gl_cv_struct_dirent_d_ino="guessing yes" ;;
+                                 # Guess yes on systems that emulate the Linux system calls.
+              midipix*)          gl_cv_struct_dirent_d_ino="guessing yes" ;;
+                                 # Guess no on native Windows.
+              mingw* | windows*) gl_cv_struct_dirent_d_ino="guessing no" ;;
+                                 # If we don't know, obey --enable-cross-guesses.
+              *)                 gl_cv_struct_dirent_d_ino="$gl_cross_guess_normal" ;;
             esac
            ])])
    case "$gl_cv_struct_dirent_d_ino" in

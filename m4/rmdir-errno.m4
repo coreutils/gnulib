@@ -1,4 +1,4 @@
-# serial 15
+# serial 16
 
 # Copyright (C) 2000-2001, 2005-2006, 2009-2023 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -42,9 +42,9 @@ AC_DEFUN([gl_FUNC_RMDIR_NOTEMPTY],
         [gl_cv_func_rmdir_errno_not_empty=`cat confdir2/errno`],
         [gl_cv_func_rmdir_errno_not_empty='configure error in rmdir-errno.m4'],
         [case "$host_os" in
-                   # Guess ENOTEMPTY = 41 on native Windows.
-           mingw*) gl_cv_func_rmdir_errno_not_empty=ENOTEMPTY ;;
-           *)      gl_cv_func_rmdir_errno_not_empty=ENOTEMPTY ;;
+                              # Guess ENOTEMPTY = 41 on native Windows.
+           mingw* | windows*) gl_cv_func_rmdir_errno_not_empty=ENOTEMPTY ;;
+           *)                 gl_cv_func_rmdir_errno_not_empty=ENOTEMPTY ;;
          esac
         ])
     ]

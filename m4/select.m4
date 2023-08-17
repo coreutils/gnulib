@@ -1,4 +1,4 @@
-# select.m4 serial 15
+# select.m4 serial 16
 dnl Copyright (C) 2009-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -96,7 +96,7 @@ changequote([,])dnl
   SELECT_LIB="$LIBSOCKET"
   if test $REPLACE_SELECT = 1; then
     case "$host_os" in
-      mingw*)
+      mingw* | windows*)
         dnl On the MSVC platform, the function MsgWaitForMultipleObjects
         dnl (used in lib/select.c) requires linking with -luser32. On mingw,
         dnl it is implicit.

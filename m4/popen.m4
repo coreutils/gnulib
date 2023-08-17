@@ -1,4 +1,4 @@
-# popen.m4 serial 6
+# popen.m4 serial 7
 dnl Copyright (C) 2009-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -32,11 +32,11 @@ AC_DEFUN([gl_FUNC_POPEN],
           [gl_cv_func_popen_works=yes],
           [gl_cv_func_popen_works=no],
           [case "$host_os" in
-                      # For now, only cygwin 1.5 or older is known to be broken.
-             cygwin*) gl_cv_func_popen_works="guessing no" ;;
-                      # Guess yes on native Windows.
-             mingw*)  gl_cv_func_popen_works="guessing yes" ;;
-             *)       gl_cv_func_popen_works="guessing yes" ;;
+                                # For now, only cygwin 1.5 or older is known to be broken.
+             cygwin*)           gl_cv_func_popen_works="guessing no" ;;
+                                # Guess yes on native Windows.
+             mingw* | windows*) gl_cv_func_popen_works="guessing yes" ;;
+             *)                 gl_cv_func_popen_works="guessing yes" ;;
            esac
           ])
       ])

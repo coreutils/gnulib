@@ -1,4 +1,4 @@
-# pthread_rwlock_rdlock.m4 serial 5
+# pthread_rwlock_rdlock.m4 serial 6
 dnl Copyright (C) 2017-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -164,7 +164,7 @@ main ()
           *-android*)         gl_cv_pthread_rwlock_rdlock_prefer_writer="guessing no" ;;
                               # Guess yes on native Windows with the mingw-w64 winpthreads library.
                               # Guess no on native Windows with the gnulib windows-rwlock module.
-          mingw*)             if test "$gl_use_threads" = yes || test "$gl_use_threads" = posix; then
+          mingw* | windows*)  if test "$gl_use_threads" = yes || test "$gl_use_threads" = posix; then
                                 gl_cv_pthread_rwlock_rdlock_prefer_writer="guessing yes"
                               else
                                 gl_cv_pthread_rwlock_rdlock_prefer_writer="guessing no"
