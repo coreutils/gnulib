@@ -355,7 +355,9 @@ _GL_CXXALIAS_SYS_CAST (accept, int,
                         struct sockaddr *restrict addr,
                         socklen_t *restrict addrlen));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (accept);
+# endif
 #elif @HAVE_WINSOCK2_H@
 # undef accept
 # define accept accept_used_without_requesting_gnulib_module_accept
@@ -417,7 +419,9 @@ _GL_CXXALIAS_SYS_CAST (getpeername, int,
                        (int fd, struct sockaddr *restrict addr,
                         socklen_t *restrict addrlen));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (getpeername);
+# endif
 #elif @HAVE_WINSOCK2_H@
 # undef getpeername
 # define getpeername getpeername_used_without_requesting_gnulib_module_getpeername
@@ -449,7 +453,9 @@ _GL_CXXALIAS_SYS_CAST (getsockname, int,
                        (int fd, struct sockaddr *restrict addr,
                         socklen_t *restrict addrlen));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (getsockname);
+# endif
 #elif @HAVE_WINSOCK2_H@
 # undef getsockname
 # define getsockname getsockname_used_without_requesting_gnulib_module_getsockname
@@ -596,7 +602,9 @@ _GL_CXXALIAS_SYS_CAST (recvfrom, ssize_t,
                         struct sockaddr *restrict from,
                         socklen_t *restrict fromlen));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (recvfrom);
+# endif
 #elif @HAVE_WINSOCK2_H@
 # undef recvfrom
 # define recvfrom recvfrom_used_without_requesting_gnulib_module_recvfrom
