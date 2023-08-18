@@ -139,6 +139,8 @@ typedef pthread_t thrd_t;
 #if @BROKEN_THRD_START_T@
 /* Need to override thrd_start_t, to make thrd_create work.  */
 # define thrd_start_t rpl_thrd_start_t
+#endif
+#if @BROKEN_THRD_START_T@ || @BROKEN_THRD_JOIN@
 /* Need to override thrd_t, to make thrd_join work.  */
 struct thrd_with_exitcode
 {

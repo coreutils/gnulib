@@ -1,4 +1,4 @@
-# thrd.m4 serial 3
+# thrd.m4 serial 4
 dnl Copyright (C) 2019-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -10,15 +10,15 @@ AC_DEFUN([gl_FUNC_THRD_JOIN],
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
 
   if test $ac_cv_header_threads_h = yes; then
-    if test $BROKEN_THRD_START_T = 1; then
+    if test $BROKEN_THRD_START_T = 1 || test $BROKEN_THRD_JOIN = 1; then
       REPLACE_THRD_CREATE=1
       REPLACE_THRD_CURRENT=1
       REPLACE_THRD_DETACH=1
       REPLACE_THRD_EQUAL=1
       REPLACE_THRD_EXIT=1
       REPLACE_THRD_JOIN=1
-      AC_DEFINE([BROKEN_THRD_START_T], [1],
-        [Define if the thrd_start_t type is not as described in ISO C 11.])
+      AC_DEFINE([BROKEN_THRD_START_T_OR_JOIN], [1],
+        [Define if the thrd_start_t type is not as described in ISO C 11 or if thrd_join discards the thread's exit code.])
       dnl The thrd_exit replacement relies on pthread_exit, which on AIX is in
       dnl libpthread.
       LIBSTDTHREAD="$LIBSTDTHREAD $LIBPTHREAD"

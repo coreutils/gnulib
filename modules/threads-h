@@ -56,6 +56,7 @@ threads.h: threads.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(_NORETURN_H
 	      -e 's/@''GNULIB_THRD''@/$(GNULIB_THRD)/g' \
 	      -e 's/@''GNULIB_TSS''@/$(GNULIB_TSS)/g' \
 	      -e 's|@''HAVE_THREAD_LOCAL''@|$(HAVE_THREAD_LOCAL)|g' \
+	      -e 's|@''BROKEN_THRD_JOIN''@|$(BROKEN_THRD_JOIN)|g' \
 	      -e 's|@''BROKEN_THRD_START_T''@|$(BROKEN_THRD_START_T)|g' \
 	      -e 's|@''REPLACE_THRD_CREATE''@|$(REPLACE_THRD_CREATE)|g' \
 	      -e 's|@''REPLACE_THRD_CURRENT''@|$(REPLACE_THRD_CURRENT)|g' \
