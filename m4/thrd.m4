@@ -1,4 +1,4 @@
-# thrd.m4 serial 2
+# thrd.m4 serial 3
 dnl Copyright (C) 2019-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -25,8 +25,8 @@ AC_DEFUN([gl_FUNC_THRD_JOIN],
     fi
 
     dnl On Solaris 11.4, thrd_join crashes when the second argument is NULL.
-    AC_CACHE_CHECK([whether thrd_join works],
-      [gl_cv_func_thrd_join_works],
+    AC_CACHE_CHECK([whether thrd_join with NULL argument works],
+      [gl_cv_func_thrd_join_null_works],
       [save_LIBS="$LIBS"
        LIBS="$LIBS $LIBSTDTHREAD"
        AC_RUN_IFELSE(
@@ -45,22 +45,22 @@ AC_DEFUN([gl_FUNC_THRD_JOIN],
                 return 2;
               return 0;
             ]])],
-         [gl_cv_func_thrd_join_works=yes],
-         [gl_cv_func_thrd_join_works=no],
+         [gl_cv_func_thrd_join_null_works=yes],
+         [gl_cv_func_thrd_join_null_works=no],
          [case "$host_os" in
                       # Only Solaris is known to be broken.
-            solaris*) gl_cv_func_thrd_join_works="guessing no" ;;
-            *)        gl_cv_func_thrd_join_works="guessing yes" ;;
+            solaris*) gl_cv_func_thrd_join_null_works="guessing no" ;;
+            *)        gl_cv_func_thrd_join_null_works="guessing yes" ;;
           esac
          ])
        LIBS="$save_LIBS"
       ])
-    case "$gl_cv_func_thrd_join_works" in
+    case "$gl_cv_func_thrd_join_null_works" in
       *yes) ;;
       *)
         REPLACE_THRD_JOIN=1
-        AC_DEFINE([BROKEN_THRD_JOIN], [1],
-          [Define if the thrd_join function does not behave as in ISO C 11.])
+        AC_DEFINE([BROKEN_THRD_JOIN_NULL], [1],
+          [Define if the thrd_join function, when given a NULL argument, does not behave as in ISO C 11.])
         ;;
     esac
   fi
