@@ -1,4 +1,4 @@
-# thrd.m4 serial 1
+# thrd.m4 serial 2
 dnl Copyright (C) 2019-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -15,9 +15,13 @@ AC_DEFUN([gl_FUNC_THRD_JOIN],
       REPLACE_THRD_CURRENT=1
       REPLACE_THRD_DETACH=1
       REPLACE_THRD_EQUAL=1
+      REPLACE_THRD_EXIT=1
       REPLACE_THRD_JOIN=1
       AC_DEFINE([BROKEN_THRD_START_T], [1],
         [Define if the thrd_start_t type is not as described in ISO C 11.])
+      dnl The thrd_exit replacement relies on pthread_exit, which on AIX is in
+      dnl libpthread.
+      LIBSTDTHREAD="$LIBSTDTHREAD $LIBPTHREAD"
     fi
 
     dnl On Solaris 11.4, thrd_join crashes when the second argument is NULL.

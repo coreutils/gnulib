@@ -203,6 +203,21 @@ rpl_thrd_join (rpl_thrd_t thread, int *exitcodep)
   }
 }
 
+_Noreturn void
+rpl_thrd_exit (int exitcode)
+{
+  rpl_thrd_t t = rpl_thrd_current ();
+
+  /* Store the exitcode, for use by thrd_join().  */
+  t->exitcode = exitcode;
+  if (t->detached)
+    {
+      /* Clean up the thread, like thrd_join would do.  */
+      free (t);
+    }
+  pthread_exit (NULL);
+}
+
 # endif
 
 # if BROKEN_THRD_JOIN
