@@ -11,7 +11,7 @@ Portability problems fixed by Gnulib:
 @item
 This function fails if the alignment argument is smaller than
 @code{sizeof (void *)} on some platforms:
-macOS 11.1, AIX 7.2.
+macOS 11.1, AIX 7.3.1.
 @end itemize
 
 Portability problems not fixed by Gnulib:

@@ -1,4 +1,4 @@
-# aligned_alloc.m4 serial 3
+# aligned_alloc.m4 serial 3.1
 dnl Copyright (C) 2020-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -14,15 +14,16 @@ AC_DEFUN([gl_FUNC_ALIGNED_ALLOC],
 
   AC_CHECK_FUNCS_ONCE([aligned_alloc])
   if test $ac_cv_func_aligned_alloc = yes; then
-    dnl On macOS 11.1 and AIX 7.2, aligned_alloc returns NULL when the alignment
-    dnl argument is smaller than sizeof (void *).
+    dnl On macOS 11.1 and AIX 7.3.1, aligned_alloc returns NULL when the
+    dnl alignment argument is smaller than sizeof (void *).
     AC_CACHE_CHECK([whether aligned_alloc works for small alignments],
       [gl_cv_func_aligned_alloc_works],
       [AC_RUN_IFELSE(
          [AC_LANG_PROGRAM(
             [[#include <stdlib.h>
             ]],
-            [[return aligned_alloc (2, 18) == NULL;
+            [[void *volatile p = aligned_alloc (2, 18);
+              return p == NULL;
             ]])
          ],
          [gl_cv_func_aligned_alloc_works=yes],
