@@ -275,11 +275,19 @@ _GL_WARN_ON_USE (thrd_join, "thrd_join is unportable - "
 #endif
 
 #if @GNULIB_THRD@
-# if !@HAVE_THREADS_H@
+# if @REPLACE_THRD_EXIT@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define thrd_exit rpl_thrd_exit
+#  endif
+_GL_FUNCDECL_RPL (thrd_exit, _Noreturn void, (int));
+_GL_CXXALIAS_RPL (thrd_exit, void, (int));
+# else
+#  if !@HAVE_THREADS_H@
 _GL_FUNCDECL_SYS (thrd_exit, _Noreturn void, (int));
-# endif
+#  endif
 /* Need to cast because of AIX with xlclang++.  */
 _GL_CXXALIAS_SYS_CAST (thrd_exit, void, (int));
+# endif
 _GL_CXXALIASWARN (thrd_exit);
 #elif defined GNULIB_POSIXCHECK
 # undef thrd_exit

@@ -60,6 +60,7 @@ threads.h: threads.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(_NORETURN_H
 	      -e 's|@''REPLACE_THRD_CURRENT''@|$(REPLACE_THRD_CURRENT)|g' \
 	      -e 's|@''REPLACE_THRD_DETACH''@|$(REPLACE_THRD_DETACH)|g' \
 	      -e 's|@''REPLACE_THRD_EQUAL''@|$(REPLACE_THRD_EQUAL)|g' \
+	      -e 's|@''REPLACE_THRD_EXIT''@|$(REPLACE_THRD_EXIT)|g' \
 	      -e 's|@''REPLACE_THRD_JOIN''@|$(REPLACE_THRD_JOIN)|g' \
 	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
 	      -e '/definition of _Noreturn/r $(_NORETURN_H)' \

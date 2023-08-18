@@ -1,4 +1,4 @@
-# threads_h.m4 serial 10
+# threads_h.m4 serial 10.1
 dnl Copyright (C) 2019-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -174,5 +174,6 @@ AC_DEFUN([gl_THREADS_H_DEFAULTS],
   REPLACE_THRD_CURRENT=0; AC_SUBST([REPLACE_THRD_CURRENT])
   REPLACE_THRD_DETACH=0;  AC_SUBST([REPLACE_THRD_DETACH])
   REPLACE_THRD_EQUAL=0;   AC_SUBST([REPLACE_THRD_EQUAL])
+  REPLACE_THRD_EXIT=0;    AC_SUBST([REPLACE_THRD_EXIT])
   REPLACE_THRD_JOIN=0;    AC_SUBST([REPLACE_THRD_JOIN])
 ])
