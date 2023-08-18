@@ -218,7 +218,7 @@ rpl_thrd_exit (int exitcode)
 
 # endif
 
-# if BROKEN_THRD_JOIN
+# if BROKEN_THRD_JOIN_NULL
 
 /* On Solaris 11.4, thrd_join crashes when the second argument is NULL.  */
 int
