@@ -26,13 +26,15 @@
 #if HAVE_THREADS_H
 /* Provide workarounds.  */
 
-# if BROKEN_THRD_START_T
+# if BROKEN_THRD_START_T_OR_JOIN
 
 #  undef thrd_t
 
 /* AIX 7.1..7.2 defines thrd_start_t incorrectly, namely as
    'void * (*) (void *)' instead of 'int (*) (void *)'.
-   As a consequence, its thrd_join function never stores an exit code.  */
+   As a consequence, its thrd_join function never stores an exit code.
+   AIX 7.3.1 has a corrected thrd_start_t.  But the thrd_join function still
+   never stores an exit code.  */
 
 /* The Thread-Specific Storage (TSS) key that allows to access each thread's
    'struct thrd_with_exitcode *' pointer.  */

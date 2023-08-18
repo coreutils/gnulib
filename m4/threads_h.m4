@@ -1,4 +1,4 @@
-# threads_h.m4 serial 10.1
+# threads_h.m4 serial 10.2
 dnl Copyright (C) 2019-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -45,6 +45,46 @@ AC_DEFUN_ONCE([gl_THREADS_H],
       ])
     if test $gl_cv_thrd_start_t_correct != yes; then
       BROKEN_THRD_START_T=1
+    else
+      dnl On AIX 7.3.1, thrd_join still never stores an exit code.
+      AC_CACHE_CHECK([whether thrd_join works],
+        [gl_cv_func_thrd_join_works],
+        [save_LIBS="$LIBS"
+         LIBS="$LIBS $LIBSTDTHREAD"
+         AC_RUN_IFELSE(
+           [AC_LANG_PROGRAM(
+              [[#include <stddef.h>
+                #include <threads.h>
+                #define MAGIC 1266074729
+                static int func (void *arg)
+                {
+                  return MAGIC;
+                }
+              ]],
+              [[thrd_t thread;
+                if (thrd_create (&thread, func, NULL) != thrd_success)
+                  return 1;
+                int ret = 0xDEADBEEF;
+                if (thrd_join (thread, &ret) != thrd_success)
+                  return 2;
+                if (ret != MAGIC)
+                  return (ret == 0xDEADBEEF ? 3 : 4);
+                return 0;
+              ]])],
+           [gl_cv_func_thrd_join_works=yes],
+           [gl_cv_func_thrd_join_works=no],
+           [case "$host_os" in
+                    # Only AIX is known to be broken.
+              aix*) gl_cv_func_thrd_join_works="guessing no" ;;
+              *)    gl_cv_func_thrd_join_works="guessing yes" ;;
+            esac
+           ])
+         LIBS="$save_LIBS"
+        ])
+      case "$gl_cv_func_thrd_join_works" in
+        *yes) ;;
+        *) BROKEN_THRD_JOIN=1 ;;
+      esac
     fi
   fi
 
@@ -169,6 +209,7 @@ AC_DEFUN([gl_THREADS_H_DEFAULTS],
 [
   dnl Assume proper GNU behavior unless another module says otherwise.
   HAVE_THREAD_LOCAL=1;    AC_SUBST([HAVE_THREAD_LOCAL])
+  BROKEN_THRD_JOIN=0;     AC_SUBST([BROKEN_THRD_JOIN])
   BROKEN_THRD_START_T=0;  AC_SUBST([BROKEN_THRD_START_T])
   REPLACE_THRD_CREATE=0;  AC_SUBST([REPLACE_THRD_CREATE])
   REPLACE_THRD_CURRENT=0; AC_SUBST([REPLACE_THRD_CURRENT])
