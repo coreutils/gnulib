@@ -23,6 +23,11 @@
 /* Specification.  */
 #include <math.h>
 
+/* Avoid some warnings from "gcc -Wshadow".
+   This file doesn't use the exp() function.  */
+#undef exp
+#define exp exponent
+
 #if HAVE_SAME_LONG_DOUBLE_AS_DOUBLE
 
 long double
