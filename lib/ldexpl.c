@@ -39,8 +39,9 @@ ldexpl (long double x, int exp)
 long double
 ldexpl (long double x, int exp)
 {
+  unsigned int uexp;
   long double factor;
-  int bit;
+  unsigned int bit;
   DECL_LONG_DOUBLE_ROUNDING
 
   BEGIN_LONG_DOUBLE_ROUNDING ();
@@ -50,21 +51,25 @@ ldexpl (long double x, int exp)
     {
       if (exp < 0)
         {
-          exp = -exp;
+          /* Avoid signed integer overflow when exp == INT_MIN.  */
+          uexp = (unsigned int) (-1 - exp) + 1;
           factor = 0.5L;
         }
       else
-        factor = 2.0L;
+        {
+          uexp = exp;
+          factor = 2.0L;
+        }
 
-      if (exp > 0)
+      if (uexp > 0)
         for (bit = 1;;)
           {
             /* Invariant: Here bit = 2^i, factor = 2^-2^i or = 2^2^i,
-               and bit <= exp.  */
-            if (exp & bit)
+               and bit <= uexp.  */
+            if (uexp & bit)
               x *= factor;
             bit <<= 1;
-            if (bit > exp)
+            if (bit == 0 || bit > uexp)
               break;
             factor = factor * factor;
           }
