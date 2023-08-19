@@ -1,4 +1,4 @@
-# logbl.m4 serial 6
+# logbl.m4 serial 7
 dnl Copyright (C) 2012-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -69,6 +69,11 @@ AC_DEFUN([gl_FUNC_LOGBL_WORKS],
         [AC_LANG_SOURCE([[
 #include <float.h>
 #include <math.h>
+#include <signal.h> /* for signal */
+#ifdef SIGALRM
+# include <unistd.h> /* for alarm, _exit */
+static void quit (int sig) { _exit (sig + 128); }
+#endif
 /* Override the values of <float.h>, like done in float.in.h.  */
 #if defined __i386__ && (defined __BEOS__ || defined __OpenBSD__)
 # undef LDBL_MIN_EXP
@@ -92,6 +97,10 @@ volatile long double x;
 int main ()
 {
   int i;
+#ifdef SIGALRM
+  signal (SIGALRM, quit);
+  alarm (5);
+#endif
   for (i = 1, x = 1.0L; i >= LDBL_MIN_EXP - 54; i--, x *= 0.5L)
     /* Either x = 2^(i-1) or x = 0.0.  */
     if ((i == LDBL_MIN_EXP - 1 || i == LDBL_MIN_EXP - 54)
