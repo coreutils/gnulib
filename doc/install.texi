@@ -143,8 +143,12 @@ Here is an example:
 ./configure CC=gcc CFLAGS=-g LIBS=-lposix
 @end example
 
-See
+@ifplaintext
+See ``Defining Variables''
+@end ifplaintext
+@ifnotplaintext
 @ref{Defining Variables}
+@end ifnotplaintext
 @ifset autoconf
 and @ref{Preset Output Variables}
 @end ifset
@@ -394,7 +398,13 @@ Look for the package's source code in directory @var{dir}.  Usually
 @command{configure} can determine that directory automatically.
 
 @item --prefix=@var{dir}
-Use @var{dir} as the installation prefix.  @ref{Installation Names}
+Use @var{dir} as the installation prefix.
+@ifplaintext
+See ``Installation Names''
+@end ifplaintext
+@ifnotplaintext
+@ref{Installation Names}
+@end ifnotplaintext
 for more details, including other options available for fine-tuning
 the installation locations.
 
