@@ -57,38 +57,19 @@ FUNC (DOUBLE x, int exp)
   BEGIN_ROUNDING ();
 
   /* Check for zero, nan and infinity. */
-  if (!(ISNAN (x) || x + x == x))
+  if (!(ISNAN (x) || x + x == x || exp == 0))
     {
-      unsigned int uexp;
-      DOUBLE factor;
+      bool negexp = exp < 0;
+      DOUBLE factor = negexp ? L_(0.5) : L_(2.0);
 
-      if (exp < 0)
+      while (true)
         {
-          /* Avoid signed integer overflow when exp == INT_MIN.  */
-          uexp = (unsigned int) (-1 - exp) + 1;
-          factor = L_(0.5);
-        }
-      else
-        {
-          uexp = exp;
-          factor = L_(2.0);
-        }
-
-      if (uexp > 0)
-        {
-          unsigned int bit;
-
-          for (bit = 1;;)
-            {
-              /* Invariant: Here bit = 2^i, factor = 2^-2^i or = 2^2^i,
-                 and bit <= uexp.  */
-              if (uexp & bit)
-                x *= factor;
-              bit <<= 1;
-              if (bit > uexp)
-                break;
-              factor = factor * factor;
-            }
+          if (exp & 1)
+            x *= factor;
+          exp = (exp + negexp) >> 1;
+          if (exp == 0)
+            break;
+          factor = factor * factor;
         }
     }
 

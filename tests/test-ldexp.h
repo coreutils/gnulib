@@ -16,6 +16,8 @@
 
 /* Written by Bruno Haible <bruno@clisp.org>, 2007, 2010.  */
 
+#include <limits.h>
+
 static void
 test_function (void)
 {
@@ -99,6 +101,7 @@ test_function (void)
         ASSERT (y == expected);
       }
       y = LDEXP (x, -5); ASSERT (y == x * 0.03125L);
+      y = LDEXP (x, INT_MIN); ASSERT (y == 0);
     }
   for (i = 1, x = L_(1.73205); i >= MIN_EXP; i--, x *= L_(0.5))
     {
