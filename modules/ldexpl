@@ -30,7 +30,7 @@ Link:
 $(LDEXPL_LIBM)
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 Paolo Bonzini
