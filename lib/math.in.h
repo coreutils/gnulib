@@ -1440,7 +1440,7 @@ _GL_CXXALIAS_RPL (ldexp, double, (double x, int exp));
 _GL_CXXALIAS_SYS (ldexp, double, (double x, int exp));
 # endif
 # if __GLIBC__ >= 2
-_GL_CXXALIASWARN (ldexp);
+_GL_CXXALIASWARN1 (ldexp, double, (double x, int exp));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef ldexp
