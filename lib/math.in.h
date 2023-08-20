@@ -1435,6 +1435,29 @@ _GL_WARN_ON_USE (ldexpf, "ldexpf is unportable - "
 #endif
 
 /* Return x * 2^exp.  */
+#if @GNULIB_LDEXP@
+# if @REPLACE_LDEXP@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef ldexp
+#   define ldexp rpl_ldexp
+#  endif
+_GL_FUNCDECL_RPL (ldexp, double, (double x, int exp));
+_GL_CXXALIAS_RPL (ldexp, double, (double x, int exp));
+# else
+/* Assume ldexp is always declared.  */
+_GL_CXXALIAS_SYS (ldexp, double, (double x, int exp));
+# endif
+# if __GLIBC__ >= 2
+_GL_CXXALIASWARN (ldexp);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef ldexp
+/* Assume ldexp is always declared.  */
+_GL_WARN_ON_USE (ldexp, "ldexp is unportable - "
+                 "use gnulib module ldexp for portability");
+#endif
+
+/* Return x * 2^exp.  */
 #if @GNULIB_LDEXPL@ && @REPLACE_LDEXPL@
 # if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #  undef ldexpl

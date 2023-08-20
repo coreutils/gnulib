@@ -1,9 +1,5 @@
-/* Emulation for ldexpl.
-   Contributed by Paolo Bonzini
-
+/* Multiply a 'float' by a power of 2.
    Copyright 2002-2003, 2007-2023 Free Software Foundation, Inc.
-
-   This file is part of gnulib.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as
@@ -17,6 +13,8 @@
 
    You should have received a copy of the GNU Lesser General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
+
+/* Written by Paolo Bonzini and Bruno Haible.  */
 
 #include <config.h>
 
@@ -38,52 +36,8 @@ ldexpl (long double x, int exp)
 
 #else
 
-# include <float.h>
-# include "fpucw.h"
-
-long double
-ldexpl (long double x, int exp)
-{
-  unsigned int uexp;
-  long double factor;
-  unsigned int bit;
-  DECL_LONG_DOUBLE_ROUNDING
-
-  BEGIN_LONG_DOUBLE_ROUNDING ();
-
-  /* Check for zero, nan and infinity. */
-  if (!(isnanl (x) || x + x == x))
-    {
-      if (exp < 0)
-        {
-          /* Avoid signed integer overflow when exp == INT_MIN.  */
-          uexp = (unsigned int) (-1 - exp) + 1;
-          factor = 0.5L;
-        }
-      else
-        {
-          uexp = exp;
-          factor = 2.0L;
-        }
-
-      if (uexp > 0)
-        for (bit = 1;;)
-          {
-            /* Invariant: Here bit = 2^i, factor = 2^-2^i or = 2^2^i,
-               and bit <= uexp.  */
-            if (uexp & bit)
-              x *= factor;
-            bit <<= 1;
-            if (bit > uexp)
-              break;
-            factor = factor * factor;
-          }
-    }
-
-  END_LONG_DOUBLE_ROUNDING ();
-
-  return x;
-}
+# define USE_LONG_DOUBLE
+# include "ldexp.c"
 
 #endif
 

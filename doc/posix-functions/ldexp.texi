@@ -8,6 +8,10 @@ Gnulib module: ldexp
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+This function produces wrong results on some platforms:
+@c ldexp(1.9269695883136991774e-308,0) returns 7.32274e-245.
+OpenBSD 7.3/mips64.
 @end itemize
 
 Portability problems not fixed by Gnulib:
