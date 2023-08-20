@@ -33,7 +33,7 @@ Link:
 $(ISNAND_LIBM)
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 all
