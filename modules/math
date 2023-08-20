@@ -89,6 +89,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's/@''GNULIB_ISNANF''@/$(GNULIB_ISNANF)/g' \
 	      -e 's/@''GNULIB_ISNAND''@/$(GNULIB_ISNAND)/g' \
 	      -e 's/@''GNULIB_ISNANL''@/$(GNULIB_ISNANL)/g' \
+	      -e 's/@''GNULIB_LDEXP''@/$(GNULIB_LDEXP)/g' \
 	      -e 's/@''GNULIB_LDEXPF''@/$(GNULIB_LDEXPF)/g' \
 	      -e 's/@''GNULIB_LDEXPL''@/$(GNULIB_LDEXPL)/g' \
 	      -e 's/@''GNULIB_LOG''@/$(GNULIB_LOG)/g' \
@@ -283,6 +284,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's|@''REPLACE_ITOLD''@|$(REPLACE_ITOLD)|g' \
 	      < $@-t4 > $@-t5
 	$(AM_V_at)sed \
+	      -e 's|@''REPLACE_LDEXP''@|$(REPLACE_LDEXP)|g' \
 	      -e 's|@''REPLACE_LDEXPL''@|$(REPLACE_LDEXPL)|g' \
 	      -e 's|@''REPLACE_LOG''@|$(REPLACE_LOG)|g' \
 	      -e 's|@''REPLACE_LOGF''@|$(REPLACE_LOGF)|g' \

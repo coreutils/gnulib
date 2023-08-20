@@ -3,6 +3,7 @@ ldexpl() function: multiply a 'long double' by a power of 2.
 
 Files:
 lib/ldexpl.c
+lib/ldexp.c
 m4/ldexpl.m4
 
 Depends-on:
