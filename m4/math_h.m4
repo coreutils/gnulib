@@ -1,4 +1,4 @@
-# math_h.m4 serial 125
+# math_h.m4 serial 126
 dnl Copyright (C) 2007-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -125,6 +125,7 @@ AC_DEFUN([gl_MATH_H_REQUIRE_DEFAULTS],
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_ISNANF])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_ISNAND])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_ISNANL])
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_LDEXP])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_LDEXPF])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_LDEXPL])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_LOG])
@@ -319,6 +320,7 @@ AC_DEFUN([gl_MATH_H_DEFAULTS],
   REPLACE_ISFINITE=0;               AC_SUBST([REPLACE_ISFINITE])
   REPLACE_ISINF=0;                  AC_SUBST([REPLACE_ISINF])
   REPLACE_ISNAN=0;                  AC_SUBST([REPLACE_ISNAN])
+  REPLACE_LDEXP=0;                  AC_SUBST([REPLACE_LDEXP])
   REPLACE_LDEXPL=0;                 AC_SUBST([REPLACE_LDEXPL])
   REPLACE_LOG=0;                    AC_SUBST([REPLACE_LOG])
   REPLACE_LOGF=0;                   AC_SUBST([REPLACE_LOGF])

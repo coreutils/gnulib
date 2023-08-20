@@ -2,14 +2,22 @@ Description:
 ldexp() function: multiply a 'double' by a power of 2.
 
 Files:
+lib/ldexp.c
 m4/ldexp.m4
 
 Depends-on:
+math
+isnand          [test $REPLACE_LDEXP = 1]
 
 configure.ac:
 gl_FUNC_LDEXP
+gl_CONDITIONAL([GL_COND_OBJ_LDEXP], [test $REPLACE_LDEXP = 1])
+gl_MATH_MODULE_INDICATOR([ldexp])
 
 Makefile.am:
+if GL_COND_OBJ_LDEXP
+lib_SOURCES += ldexp.c
+endif
 
 Include:
 <math.h>
