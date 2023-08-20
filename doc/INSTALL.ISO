@@ -114,7 +114,7 @@ an example:
 
      ./configure CC=gcc CFLAGS=-g LIBS=-lposix
 
-   See *note Defining Variables:: for more details.
+   See "Defining Variables" for more details.
 
 Compiling For Multiple Architectures
 ====================================
@@ -322,7 +322,7 @@ operates.
      'configure' can determine that directory automatically.
 
 '--prefix=DIR'
-     Use DIR as the installation prefix.  *note Installation Names:: for
+     Use DIR as the installation prefix.  See "Installation Names" for
      more details, including other options available for fine-tuning the
      installation locations.
 
