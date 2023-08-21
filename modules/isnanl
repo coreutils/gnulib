@@ -34,7 +34,7 @@ Link:
 $(ISNANL_LIBM)
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 all
