@@ -29,7 +29,7 @@ Include:
 <wchar.h>
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 all
