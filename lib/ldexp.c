@@ -57,16 +57,15 @@ FUNC (DOUBLE x, int exp)
   BEGIN_ROUNDING ();
 
   /* Check for zero, nan and infinity. */
-  if (!(ISNAN (x) || x + x == x || exp == 0))
+  if (!(ISNAN (x) || x + x == x))
     {
-      bool negexp = exp < 0;
-      DOUBLE factor = negexp ? L_(0.5) : L_(2.0);
+      DOUBLE factor = exp < 0 ? L_(0.5) : L_(2.0);
 
       while (true)
         {
-          if (exp & 1)
+          if (exp % 2 != 0)
             x *= factor;
-          exp = (exp + negexp) >> 1;
+          exp /= 2;
           if (exp == 0)
             break;
           factor = factor * factor;
