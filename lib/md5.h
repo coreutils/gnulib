@@ -27,7 +27,17 @@
 #  ifndef OPENSSL_API_COMPAT
 #   define OPENSSL_API_COMPAT 0x10101000L /* FIXME: Use OpenSSL 1.1+ API.  */
 #  endif
-#  include <openssl/md5.h>
+/* If <openssl/macros.h> would give a compile-time error, don't use OpenSSL.  */
+#  include <openssl/configuration.h>
+#  if (OPENSSL_CONFIGURED_API \
+       < (OPENSSL_API_COMPAT < 0x900000L ? OPENSSL_API_COMPAT : \
+          ((OPENSSL_API_COMPAT >> 28) & 0xF) * 10000 \
+          + ((OPENSSL_API_COMPAT >> 20) & 0xFF) * 100 \
+          + ((OPENSSL_API_COMPAT >> 12) & 0xFF)))
+#   undef HAVE_OPENSSL_MD5
+#  else
+#   include <openssl/md5.h>
+#  endif
 # endif
 
 #define MD5_DIGEST_SIZE 16
