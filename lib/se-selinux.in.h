@@ -129,5 +129,5 @@ matchpathcon_init_prefix (_GL_ATTRIBUTE_MAYBE_UNUSED char const *path,
 
 _GL_INLINE_HEADER_END
 
-# endif
+# endif /* _@GUARD_PREFIX@_SELINUX_SELINUX_H */
 #endif
