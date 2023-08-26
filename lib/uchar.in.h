@@ -21,13 +21,13 @@
  */
 
 #ifndef _@GUARD_PREFIX@_UCHAR_H
-#define _@GUARD_PREFIX@_UCHAR_H
 
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
 #endif
 @PRAGMA_COLUMNS@
 
+/* The include_next requires a split double-inclusion guard.  */
 #if @HAVE_UCHAR_H@
 /* On AIX 7.2 with xlclang++, /usr/include/uchar.h produces compilation errors
    because it contains typedef definitions of char16_t and char32_t, however
@@ -39,6 +39,9 @@
 # endif
 # @INCLUDE_NEXT@ @NEXT_UCHAR_H@
 #endif
+
+#ifndef _@GUARD_PREFIX@_UCHAR_H
+#define _@GUARD_PREFIX@_UCHAR_H
 
 /* Get uint_least16_t, uint_least32_t.  */
 #include <stdint.h>
@@ -308,4 +311,5 @@ _GL_CXXALIASWARN (mbstoc32s);
 #endif
 
 
+#endif /* _@GUARD_PREFIX@_UCHAR_H */
 #endif /* _@GUARD_PREFIX@_UCHAR_H */
