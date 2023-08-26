@@ -21,6 +21,7 @@
 #endif
 @PRAGMA_COLUMNS@
 
+/* The include_next requires a split double-inclusion guard.  */
 #if @HAVE_SYS_UTSNAME_H@
 
 /* Minix 3.1.8 has a bug: <stddef.h> must be included before <sys/utsname.h>.
@@ -33,6 +34,7 @@
 
 #endif
 
+#ifndef _@GUARD_PREFIX@_SYS_UTSNAME_H
 #define _@GUARD_PREFIX@_SYS_UTSNAME_H
 
 /* This file uses GNULIB_POSIXCHECK, HAVE_RAW_DECL_*.  */
@@ -110,4 +112,5 @@ _GL_WARN_ON_USE (uname, "uname is unportable - "
 #endif
 
 
+#endif /* _@GUARD_PREFIX@_SYS_UTSNAME_H */
 #endif /* _@GUARD_PREFIX@_SYS_UTSNAME_H */
