@@ -337,8 +337,9 @@ mbscasestr (const char *haystack, const char *needle)
           const char *needle_last_ccount = needle; /* = needle + last_ccount */
 
           /* Speed up the following searches of needle by caching its first
-             character.  */
-          unsigned char b = tolower ((unsigned char) *needle);
+             character and lowercase counterpart.  */
+          unsigned char B = *needle;
+          unsigned char b = tolower (B);
 
           needle++;
           for (;; haystack++)
@@ -381,7 +382,8 @@ mbscasestr (const char *haystack, const char *needle)
 
               outer_loop_count++;
               comparison_count++;
-              if (tolower ((unsigned char) *haystack) == b)
+              unsigned char H = *haystack;
+              if (H == B || H == b || tolower (H) == b)
                 /* The first character matches.  */
                 {
                   const char *rhaystack = haystack + 1;
@@ -396,8 +398,9 @@ mbscasestr (const char *haystack, const char *needle)
                         /* No match.  */
                         return NULL;
                       comparison_count++;
-                      if (tolower ((unsigned char) *rhaystack)
-                          != tolower ((unsigned char) *rneedle))
+                      if (! (*rhaystack == *rneedle
+                             || (tolower ((unsigned char) *rhaystack)
+                                 == tolower ((unsigned char) *rneedle))))
                         /* Nothing in this round.  */
                         break;
                     }

@@ -39,20 +39,19 @@ mbspcasecmp (const char *string, const char *prefix)
   if (string == prefix)
     return (char *) (string + strlen (string));
 
+  const char *iter1 = string;
+  const char *iter2 = prefix;
+
   /* Be careful not to look at the entire extent of STRING or PREFIX until
      needed.  This is useful because when two strings differ, the difference is
      most often already in the very few first characters.  */
   if (MB_CUR_MAX > 1)
     {
       mbuif_state_t state1;
-      const char *iter1;
       mbuif_init (state1);
-      iter1 = string;
 
       mbuif_state_t state2;
-      const char *iter2;
       mbuif_init (state2);
-      iter2 = prefix;
 
       while (mbuif_avail (state1, iter1) && mbuif_avail (state2, iter2))
         {
@@ -74,25 +73,23 @@ mbspcasecmp (const char *string, const char *prefix)
         return NULL;
     }
   else
-    {
-      const unsigned char *p1 = (const unsigned char *) string;
-      const unsigned char *p2 = (const unsigned char *) prefix;
-      unsigned char c1, c2;
+    for (;; iter1++, iter2++)
+      {
+        unsigned char c2 = *iter2;
 
-      for (; ; p1++, p2++)
-        {
-          c1 = tolower (*p1);
-          c2 = tolower (*p2);
+        if (c2 == '\0')
+          /* PREFIX equals STRING or is terminated before STRING.  */
+          return (char *) iter1;
 
-          if (c2 == '\0' || c1 != c2)
-            break;
-        }
+        unsigned char c1 = *iter1;
 
-      if (c2 == '\0')
-        /* PREFIX equals STRING or is terminated before STRING.  */
-        return (char *) p1;
-      else
-        /* STRING terminated before PREFIX.  */
-        return NULL;
-    }
+        if (c1 != c2)
+          {
+            c1 = tolower (c1);
+            if (c1 != c2 && c1 != tolower (c2))
+              /* STRING and PREFIX disagree,
+                 or STRING terminated before PREFIX.  */
+              return NULL;
+          }
+      }
 }
