@@ -55,15 +55,19 @@ mbsstr_trimmed_wordbounded (const char *string, const char *sub)
 {
   char *tsub = trim (sub);
   bool found = false;
+  bool multibyte_locale = MB_CUR_MAX > 1;
+  size_t tsublen;
+  if (! multibyte_locale)
+    tsublen = strlen (tsub);
 
-  for (; *string != '\0';)
+  while (*string != '\0')
     {
       const char *tsub_in_string = mbsstr (string, tsub);
       if (tsub_in_string == NULL)
         break;
       else
         {
-          if (MB_CUR_MAX > 1)
+          if (multibyte_locale)
             {
               mbui_iterator_t string_iter;
               bool word_boundary_before;
@@ -120,22 +124,9 @@ mbsstr_trimmed_wordbounded (const char *string, const char *sub)
             }
           else
             {
-              bool word_boundary_before;
-              const char *p;
-              bool word_boundary_after;
-
-              word_boundary_before = true;
-              if (string < tsub_in_string)
-                if (isalnum ((unsigned char) tsub_in_string[-1]))
-                  word_boundary_before = false;
-
-              p = tsub_in_string + strlen (tsub);
-              word_boundary_after = true;
-              if (*p != '\0')
-                if (isalnum ((unsigned char) *p))
-                  word_boundary_after = false;
-
-              if (word_boundary_before && word_boundary_after)
+              if ((string == tsub_in_string
+                   || !isalnum ((unsigned char) tsub_in_string[-1]))
+                  && !isalnum ((unsigned char) tsub_in_string[tsublen]))
                 {
                   found = true;
                   break;
