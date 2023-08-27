@@ -6,11 +6,10 @@ lib/trim.h
 lib/trim.c
 
 Depends-on:
-xalloc
 mbchar
-mbiterf
-memmove
-strdup
+mbuiterf
+mempcpy
+xalloc-die
 
 configure.ac:
 
