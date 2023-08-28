@@ -1,6 +1,6 @@
 # A library of shell functions for autopull.sh, autogen.sh, and bootstrap.
 
-scriptlibversion=2023-07-01.17; # UTC
+scriptlibversion=2023-08-28.18; # UTC
 
 # Copyright (C) 2003-2023 Free Software Foundation, Inc.
 #
@@ -622,7 +622,7 @@ Optional environment variables:
                            Use this if you already have gnulib sources
                            and history on your machine, and do not want
                            to waste your bandwidth downloading them again.
-  GNULIB_URL               Cloneable URL of the gnulib repository.
+  GNULIB_URL               Clonable URL of the gnulib repository.
 
 Options:
   --bootstrap-sync         if this bootstrap script is not identical to
