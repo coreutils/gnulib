@@ -4,7 +4,7 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/iswdigit.html}
 
-Gnulib module: wctype-h
+Gnulib module: iswdigit
 
 Portability problems fixed by Gnulib:
 @itemize
