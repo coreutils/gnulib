@@ -1,4 +1,4 @@
-# serial 35
+# serial 36
 
 # Copyright (C) 2001, 2003, 2005-2006, 2009-2023 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -9,8 +9,8 @@ dnl From Volker Borchert.
 dnl Determine whether rename works for source file names with a trailing slash.
 dnl The rename from SunOS 4.1.1_U1 doesn't.
 dnl
-dnl If it doesn't, then define RENAME_TRAILING_SLASH_BUG and arrange
-dnl to compile the wrapper function.
+dnl If it doesn't, arrange to compile the wrapper function and define
+dnl macros for use by that function.
 dnl
 
 AC_DEFUN([gl_FUNC_RENAME],
