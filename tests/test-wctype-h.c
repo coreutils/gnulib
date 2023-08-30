@@ -67,6 +67,38 @@ main (void)
   ASSERT (!iswprint (L'\t'));
   ASSERT (!iswprint (L'\n'));
 
+  /* Sanity check for the iswpunct function.
+     These characters are usually expected to be punctuation or symbol
+     characters.  */
+  ASSERT (iswpunct (L'!'));
+  ASSERT (iswpunct (L'"'));
+  ASSERT (iswpunct (L'#'));
+  ASSERT (iswpunct (L'%'));
+  ASSERT (iswpunct (L'&'));
+  ASSERT (iswpunct (L'\''));
+  ASSERT (iswpunct (L'('));
+  ASSERT (iswpunct (L')'));
+  ASSERT (iswpunct (L'*'));
+  ASSERT (iswpunct (L','));
+  ASSERT (iswpunct (L'-'));
+  ASSERT (iswpunct (L'.'));
+  ASSERT (iswpunct (L'/'));
+  ASSERT (iswpunct (L':'));
+  ASSERT (iswpunct (L';'));
+  ASSERT (iswpunct (L'?'));
+  ASSERT (iswpunct (L'@'));
+  ASSERT (iswpunct (L'['));
+  ASSERT (iswpunct (L'\\'));
+  ASSERT (iswpunct (L']'));
+  ASSERT (iswpunct (L'_'));
+  ASSERT (iswpunct (L'{'));
+  ASSERT (iswpunct (L'}'));
+  ASSERT (!iswpunct (L'5'));
+  ASSERT (!iswpunct (L'F'));
+  ASSERT (!iswpunct (L' '));
+  ASSERT (!iswpunct (L'\t'));
+  ASSERT (!iswpunct (L'\n'));
+
   /* Check that the tow* functions exist as functions or as macros.  */
   (void) towlower (0);
   (void) towupper (0);
