@@ -16,6 +16,7 @@ Depends-on:
 uchar
 wchar
 wctype-h
+iswpunct
 localcharset    [test $REPLACE_MBSTATE_T = 1]
 streq           [test $REPLACE_MBSTATE_T = 1]
 unictype/ctype-punct

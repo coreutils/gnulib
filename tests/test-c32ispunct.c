@@ -136,6 +136,15 @@ main (int argc, char *argv[])
       {
       case '0':
         /* C locale; tested above.  */
+        /* These characters are not in the ISO C "basic character set", but
+           are nevertheless usually expected to be punctuation or symbol
+           characters.  */
+        is = for_character ("$", 1);
+        ASSERT (is != 0);
+        is = for_character ("@", 1);
+        ASSERT (is != 0);
+        is = for_character ("`", 1);
+        ASSERT (is != 0);
         return 0;
 
       case '1':
