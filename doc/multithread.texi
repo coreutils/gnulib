@@ -290,6 +290,8 @@ before the locale has been initialized.
 @end itemize
 This macro optimizes the functions @code{mbrtowc}, @code{mbrtoc32}, and
 @code{wcwidth}.
+You can get this macro defined by including the Gnulib module
+@code{wchar-single}.
 @item
 You may define the C macro @code{GNULIB_GETUSERSHELL_SINGLE_THREAD}, if all the
 programs in your package invoke the functions @code{setusershell},
