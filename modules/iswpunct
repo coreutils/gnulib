@@ -1,0 +1,30 @@
+Description:
+iswpunct() function: test wide character for being a punctuation or symbol
+character.
+
+Files:
+lib/iswpunct.c
+m4/iswpunct.m4
+
+Depends-on:
+wctype-h
+
+configure.ac:
+gl_FUNC_ISWPUNCT
+gl_CONDITIONAL([GL_COND_OBJ_ISWPUNCT],
+               [! { test $HAVE_ISWCNTRL = 0 || test $REPLACE_ISWCNTRL = 1; } && test $REPLACE_ISWPUNCT = 1])
+gl_WCTYPE_MODULE_INDICATOR([iswpunct])
+
+Makefile.am:
+if GL_COND_OBJ_ISWPUNCT
+lib_SOURCES += iswpunct.c
+endif
+
+Include:
+<wctype.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+Bruno Haible
