@@ -1,0 +1,16 @@
+Files:
+tests/test-iswpunct.sh
+tests/test-iswpunct.c
+tests/signature.h
+tests/macros.h
+
+Depends-on:
+mbrtowc
+setlocale
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-iswpunct.sh
+check_PROGRAMS += test-iswpunct
+test_iswpunct_LDADD = $(LDADD) $(SETLOCALE_LIB) $(MBRTOWC_LIB)
