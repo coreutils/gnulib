@@ -24,6 +24,10 @@ The object returned by this function for the @code{"blank"} character class
 is inconsistent with the @code{iswblank} and @code{isblank} functions
 on some platforms:
 MSVC 14.
+@item
+The object returned by this function for the @code{"punct"} character class
+is inconsistent with the @code{ispunct} function on some platforms:
+Android 11.
 @end itemize
 
 Portability problems not fixed by Gnulib:
