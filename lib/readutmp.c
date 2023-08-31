@@ -795,7 +795,7 @@ read_utmp_from_systemd (idx_t *n_entries, STRUCT_UTMP **utmp_buf, int options)
     {
       char **sessions;
       int num_sessions = sd_get_sessions (&sessions);
-      if (num_sessions >= 0)
+      if (num_sessions > 0)
         {
           char **session_ptr;
           for (session_ptr = sessions; *session_ptr != NULL; session_ptr++)
