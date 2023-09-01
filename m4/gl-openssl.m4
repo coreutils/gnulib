@@ -1,4 +1,4 @@
-# gl-openssl.m4 serial 6
+# gl-openssl.m4 serial 7
 dnl Copyright (C) 2013-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -39,6 +39,9 @@ AC_DEFUN([gl_CRYPTO_CHECK],
   AC_SUBST([LIB_CRYPTO])
   if test "x$with_openssl" != xno; then
     if test "x$with_openssl" = xauto-gpl-compat; then
+      dnl OpenSSL versions < 3 are under the OpenSSL license, which is not
+      dnl GPL compatible.
+      dnl See <https://www.gnu.org/licenses/license-list.en.html#OpenSSL>.
       AC_CACHE_CHECK([whether openssl is GPL compatible],
                      [gl_cv_openssl_gpl_compat],
         [AC_COMPILE_IFELSE(
