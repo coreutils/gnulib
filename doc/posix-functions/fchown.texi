@@ -15,4 +15,10 @@ Portability problems not fixed by Gnulib:
 @item
 This function is missing on some platforms:
 mingw, MSVC 14.
+@item
+This function sometimes fails with @code{EACCES} when the failure is
+due to lack of appropriate privileges (@code{EPERM}), not to
+search permission denied on the file name prefix (@code{EACCES}):
+Linux kernel 5.15 with glibc 2.35 and a CIFS v1 file system
+(see @url{https://bugs.gnu.org/65599}).
 @end itemize

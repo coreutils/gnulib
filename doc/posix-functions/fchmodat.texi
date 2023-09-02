@@ -36,4 +36,11 @@ this function can fail with @code{errno} set to @code{EMFILE} or @code{ENFILE},
 and it fails with @code{errno} set to @code{EOPNOTSUPP} if the
 @file{/proc} file system is not mounted:
 GNU/Linux with glibc 2.34.
+
+@item
+This function sometimes fails with @code{EACCES} when the failure is
+due to lack of appropriate privileges (@code{EPERM}), not to
+search permission denied on the file name prefix (@code{EACCES}):
+Linux kernel 5.15 with glibc 2.35 and a CIFS v1 file system
+(see @url{https://bugs.gnu.org/65599}).
 @end itemize
