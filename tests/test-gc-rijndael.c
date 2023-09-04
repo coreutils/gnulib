@@ -43,7 +43,7 @@ main (int argc, char *argv[])
     char ct[] = "\xC3\x4C\x05\x2C\xC0\xDA\x8D\x73"
       "\x45\x1A\xFE\x5F\x03\xBE\x29\x7F";
     gc_cipher_handle ctx;
-    size_t i;
+    size_t round;
 
     rc = gc_cipher_open (GC_AES128, GC_ECB, &ctx);
     if (rc != GC_OK)
@@ -55,7 +55,7 @@ main (int argc, char *argv[])
 
     memcpy (buf, pt, 16);
 
-    for (i = 0; i < 10000; i++)
+    for (round = 0; round < 10000; round++)
       {
         rc = gc_cipher_encrypt_inline (ctx, 16, buf);
         if (rc != GC_OK)
@@ -78,7 +78,7 @@ main (int argc, char *argv[])
         return 1;
       }
 
-    for (i = 0; i < 10000; i++)
+    for (round = 0; round < 10000; round++)
       {
         rc = gc_cipher_decrypt_inline (ctx, 16, buf);
         if (rc != GC_OK)
@@ -116,7 +116,7 @@ main (int argc, char *argv[])
     char ct[] = "\x66\xe9\x4b\xd4\xef\x8a\x2c\x3b"
       "\x88\x4c\xfa\x59\xca\x34\x2b\x2e";
     gc_cipher_handle ctx;
-    size_t i;
+    size_t round;
 
     rc = gc_cipher_open (GC_AES128, GC_CBC, &ctx);
     if (rc != GC_OK)
@@ -132,7 +132,7 @@ main (int argc, char *argv[])
 
     memcpy (buf, pt, 16);
 
-    for (i = 0; i < 10000; i++)
+    for (round = 0; round < 10000; round++)
       {
         rc = gc_cipher_encrypt_inline (ctx, 16, buf);
         if (rc != GC_OK)
