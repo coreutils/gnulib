@@ -22,7 +22,6 @@ test_strchr (void)
 {
   size_t size = 0x100000;
   size_t length;
-  size_t i;
   UNIT *input;
   uint32_t *input32 = (uint32_t *) malloc ((size + 1) * sizeof (uint32_t));
   ASSERT (input32);
@@ -30,7 +29,7 @@ test_strchr (void)
   input32[0] = 'a';
   input32[1] = 'b';
   u32_set (input32 + 2, 'c', 1024);
-  for (i = 1026; i < size - 2; i += 63)
+  for (size_t i = 1026; i < size - 2; i += 63)
     {
       size_t last = i + 63 < size - 2 ? i + 63 : size - 2;
       ucs4_t uc = 'd' | (i - 1026);
@@ -54,7 +53,7 @@ test_strchr (void)
     UNIT *exp = input + 1026;
     UNIT *prev = input + 2;
 
-    for (i = 1026; i < size - 2; i += 63)
+    for (size_t i = 1026; i < size - 2; i += 63)
       {
         UNIT c[6];
         size_t n;
