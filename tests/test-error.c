@@ -31,7 +31,7 @@ print_no_progname (void)
 }
 
 int
-main (int argc, char *argv[])
+main ()
 {
   /* Test error() function with zero STATUS and zero ERRNUM.  */
   error (0, 0, "bummer");

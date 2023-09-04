@@ -1,4 +1,4 @@
-/* macros useful in interpreting size-related values in struct stat.
+/* Yield size-related values in struct stat.
    Copyright (C) 1989, 1991-2023 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -13,15 +13,7 @@
 
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
-/*
-   Macros defined by this file (s is an rvalue of type struct stat):
 
-   DEV_BSIZE:       The device blocksize.  But use ST_NBLOCKSIZE instead.
-   ST_BLKSIZE(s):   Preferred (in the sense of best performance) I/O blocksize
-                    for the file, in bytes.
-   ST_NBLOCKS(s):   Number of blocks in the file, including indirect blocks.
-   ST_NBLOCKSIZE:   Size of blocks used when calculating ST_NBLOCKS.
- */
 #ifndef STAT_SIZE_H
 #define STAT_SIZE_H
 
@@ -35,8 +27,8 @@
 # include <sys/param.h>
 #endif
 
-
-/* Get or fake the disk device blocksize.
+/* The device blocksize, or a faked version thereof.
+   But use ST_NBLOCKSIZE instead.
    Usually defined by sys/param.h (if at all).  */
 #if !defined DEV_BSIZE && defined BSIZE
 # define DEV_BSIZE BSIZE
@@ -48,23 +40,21 @@
 # define DEV_BSIZE 4096
 #endif
 
-
-
-/* Extract or fake data from a 'struct stat'.
-   ST_BLKSIZE: Preferred I/O blocksize for the file, in bytes.
-   ST_NBLOCKS: Number of blocks in the file, including indirect blocks.
+/* Extract or fake data from a struct stat *st.
+   STP_BLKSIZE(st): Preferred performance I/O blocksize, in bytes.
+   STP_NBLOCKS(st): Number of blocks, including indirect blocks.
    ST_NBLOCKSIZE: Size of blocks used when calculating ST_NBLOCKS.  */
 #ifndef HAVE_STRUCT_STAT_ST_BLOCKS
-# define ST_BLKSIZE(statbuf) DEV_BSIZE
+# define STP_BLKSIZE(st) DEV_BSIZE
   /* coreutils' fileblocks.c also uses BSIZE.  */
 # if defined _POSIX_SOURCE || !defined BSIZE
-#  define ST_NBLOCKS(statbuf) \
-  ((statbuf).st_size / ST_NBLOCKSIZE + ((statbuf).st_size % ST_NBLOCKSIZE != 0))
+#  define STP_NBLOCKS(st) \
+    ((st)->st_size / ST_NBLOCKSIZE + ((st)->st_size % ST_NBLOCKSIZE != 0))
 # else
    /* This definition calls st_blocks, which is in the fileblocks module. */
-#  define ST_NBLOCKS(statbuf) \
-  (S_ISREG ((statbuf).st_mode) || S_ISDIR ((statbuf).st_mode) ? \
-   st_blocks ((statbuf).st_size) : 0)
+#  define STP_NBLOCKS(st) \
+    (S_ISREG ((st)->st_mode) || S_ISDIR ((st)->st_mode) \
+     ? st_blocks ((st)->st_size) : 0)
 # endif
 #else
 /* When running 'rsh hpux11-system cat any-file', cat would
@@ -75,9 +65,9 @@
    suffice, since "cat" sometimes multiplies the result by 4.)  If
    anyone knows of a system for which this limit is too small, please
    report it as a bug in this code.  */
-# define ST_BLKSIZE(statbuf) ((0 < (statbuf).st_blksize \
-                               && (statbuf).st_blksize <= ((size_t)-1) / 8 + 1) \
-                              ? (statbuf).st_blksize : DEV_BSIZE)
+# define STP_BLKSIZE(st) ((0 < (st)->st_blksize \
+                           && (st)->st_blksize <= (size_t) -1 / 8 + 1)  \
+                          ? (st)->st_blksize : DEV_BSIZE)
 # if defined hpux || defined __hpux__ || defined __hpux
   /* HP-UX counts st_blocks in 1024-byte units.
      This loses when mixing HP-UX and BSD file systems with NFS.  */
@@ -85,8 +75,8 @@
 # endif
 #endif
 
-#ifndef ST_NBLOCKS
-# define ST_NBLOCKS(statbuf) ((statbuf).st_blocks)
+#ifndef STP_NBLOCKS
+# define STP_NBLOCKS(st) ((st)->st_blocks)
 #endif
 
 #ifndef ST_NBLOCKSIZE
@@ -96,5 +86,9 @@
 #  define ST_NBLOCKSIZE 512
 # endif
 #endif
+
+/* Preferred blocksize and number of blocks for a struct stat object.  */
+#define ST_BLKSIZE(statbuf) STP_BLKSIZE (&(statbuf))
+#define ST_NBLOCKS(statbuf) STP_NBLOCKS (&(statbuf))
 
 #endif /* STAT_SIZE_H */

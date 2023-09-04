@@ -32,7 +32,7 @@ SIGNATURE_CHECK (fwrite, size_t, (const void *, size_t, size_t, FILE *));
 #include "macros.h"
 
 int
-main (int argc, char **argv)
+main ()
 {
   const char *filename = "test-fwrite.txt";
 

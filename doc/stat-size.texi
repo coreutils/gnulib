@@ -9,17 +9,21 @@ intended for interpreting the file size information in an instance of
 @c Youngman as if the ST_NBLOCKSIZE macro should be used instead).
 
 @findex ST_NBLOCKS
+@findex STP_NBLOCKS
 @findex ST_NBLOCKSIZE
 @cindex block size
 On POSIX systems, the @code{st_blocks} member of @code{struct stat}
 contains the number of disk blocks occupied by a file.  The
-@code{ST_NBLOCKS} macro is used to estimate this quantity on systems
+@code{ST_NBLOCKS} and @code{STP_NBLOCKS} macros
+estimate this quantity on systems
 which don't actually have @code{st_blocks}.  Each of these blocks
 contains @code{ST_NBLOCKSIZE} bytes.
 
 @findex ST_BLKSIZE
+@findex STP_BLKSIZE
 The value of @code{ST_NBLOCKSIZE} is often quite small, small enough
 that performing I/O in chunks that size would be inefficient.
-@code{ST_BLKSIZE} is the I/O block size recommended for I/O to this
+The @code{ST_BLKSIZE} and @code{STP_BLKSIZE} macros
+give the I/O block size recommended for I/O to this
 file.  This is not guaranteed to give optimum performance, but it
 should be reasonably efficient.

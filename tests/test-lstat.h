@@ -32,14 +32,14 @@ test_lstat_func (int (*func) (char const *, struct stat *), bool print)
   ASSERT (func (".", &st1) == 0);
   ASSERT (func ("./", &st2) == 0);
 #if !(defined _WIN32 && !defined __CYGWIN__ && !_GL_WINDOWS_STAT_INODES)
-  ASSERT (SAME_INODE (st1, st2));
+  ASSERT (psame_inode (&st1, &st2));
 #endif
   ASSERT (S_ISDIR (st1.st_mode));
   ASSERT (S_ISDIR (st2.st_mode));
   ASSERT (func ("/", &st1) == 0);
   ASSERT (func ("///", &st2) == 0);
 #if !(defined _WIN32 && !defined __CYGWIN__ && !_GL_WINDOWS_STAT_INODES)
-  ASSERT (SAME_INODE (st1, st2));
+  ASSERT (psame_inode (&st1, &st2));
 #endif
   ASSERT (S_ISDIR (st1.st_mode));
   ASSERT (S_ISDIR (st2.st_mode));
@@ -90,7 +90,7 @@ test_lstat_func (int (*func) (char const *, struct stat *), bool print)
   ASSERT (S_ISDIR (st1.st_mode));
   ASSERT (S_ISDIR (st2.st_mode));
 #if !(defined _WIN32 && !defined __CYGWIN__ && !_GL_WINDOWS_STAT_INODES)
-  ASSERT (SAME_INODE (st1, st2));
+  ASSERT (psame_inode (&st1, &st2));
 #endif
 
   ASSERT (func (BASE "link2", &st1) == 0);

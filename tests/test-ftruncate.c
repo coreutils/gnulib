@@ -27,7 +27,7 @@ SIGNATURE_CHECK (ftruncate, int, (int, off_t));
 #include "macros.h"
 
 int
-main (int argc, char *argv[])
+main (_GL_UNUSED int argc, char *argv[])
 {
   const char *filename = argv[1];
 

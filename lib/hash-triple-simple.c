@@ -46,7 +46,7 @@ triple_compare_ino_str (void const *x, void const *y)
 {
   struct F_triple const *a = x;
   struct F_triple const *b = y;
-  return (SAME_INODE (*a, *b) && STREQ (a->name, b->name)) ? true : false;
+  return PSAME_INODE (a, b) && STREQ (a->name, b->name);
 }
 
 /* Free an F_triple.  */

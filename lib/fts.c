@@ -1714,7 +1714,7 @@ same_fd (int fd1, int fd2)
   struct stat sb1, sb2;
   return (fstat (fd1, &sb1) == 0
           && fstat (fd2, &sb2) == 0
-          && SAME_INODE (sb1, sb2));
+          && psame_inode (&sb1, &sb2));
 }
 
 static void

@@ -30,7 +30,7 @@ SIGNATURE_CHECK (raise, int, (int));
    exit() is a non-returning function, even on platforms where its declaration
    in <stdlib.h> does not have the 'noreturn' attribute.  */
 static _Noreturn void
-handler (int sig)
+handler (_GL_UNUSED int sig)
 {
   _exit (0);
 }

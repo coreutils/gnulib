@@ -30,7 +30,7 @@ SIGNATURE_CHECK (fdopendir, DIR *, (int));
 #include "macros.h"
 
 int
-main (_GL_UNUSED int argc, char *argv[])
+main ()
 {
   DIR *d;
   int fd;

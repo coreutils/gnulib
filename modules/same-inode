@@ -2,14 +2,18 @@ Description:
 compare inodes
 
 Files:
+lib/same-inode.c
 lib/same-inode.h
 
 Depends-on:
+extern-inline
+stdbool
 sys_types
 
 configure.ac:
 
 Makefile.am:
+lib_SOURCES += same-inode.h same-inode.c
 
 Include:
 "same-inode.h"

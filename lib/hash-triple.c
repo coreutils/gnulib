@@ -40,5 +40,5 @@ triple_compare (void const *x, void const *y)
 {
   struct F_triple const *a = x;
   struct F_triple const *b = y;
-  return (SAME_INODE (*a, *b) && same_name (a->name, b->name)) ? true : false;
+  return PSAME_INODE (a, b) && same_name (a->name, b->name);
 }

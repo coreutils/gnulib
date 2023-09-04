@@ -51,8 +51,12 @@ SIGNATURE_CHECK (fcntl, int, (int, int, ...));
 #endif
 
 #if !O_BINARY
-# define set_binary_mode(f,m) zero ()
-static int zero (void) { return 0; }
+# define set_binary_mode my_set_binary_mode
+static int
+set_binary_mode (_GL_UNUSED int fd, _GL_UNUSED int mode)
+{
+  return 0;
+}
 #endif
 
 /* Return true if FD is open.  */
@@ -217,7 +221,7 @@ check_flags (void)
 }
 
 int
-main (int argc, char *argv[])
+main (int argc, _GL_UNUSED char *argv[])
 {
   if (argc > 1)
     /* child process */

@@ -33,7 +33,7 @@ static pthread_t main_thread;
 static pthread_t killer_thread;
 
 static void *
-killer_thread_func (void *arg)
+killer_thread_func (_GL_UNUSED void *arg)
 {
   sleep (1);
   pthread_kill (main_thread, SIGINT);
@@ -43,13 +43,13 @@ killer_thread_func (void *arg)
 static volatile int sigint_occurred;
 
 static void
-sigint_handler (int sig)
+sigint_handler (_GL_UNUSED int sig)
 {
   sigint_occurred++;
 }
 
 int
-main (int argc, char *argv[])
+main ()
 {
   sigset_t set;
 

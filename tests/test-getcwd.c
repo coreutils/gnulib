@@ -262,7 +262,7 @@ test_long_name (void)
 }
 
 int
-main (int argc, char **argv)
+main ()
 {
   int err1 = test_abort_bug ();
   int err2 = test_long_name ();

@@ -36,13 +36,13 @@ SIGNATURE_CHECK (sigprocmask, int, (int, const sigset_t *, sigset_t *));
 static volatile int sigint_occurred;
 
 static void
-sigint_handler (int sig)
+sigint_handler (_GL_UNUSED int sig)
 {
   sigint_occurred++;
 }
 
 int
-main (int argc, char *argv[])
+main ()
 {
   sigset_t set;
   pid_t pid = getpid ();

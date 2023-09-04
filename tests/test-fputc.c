@@ -32,7 +32,7 @@ SIGNATURE_CHECK (fputc, int, (int, FILE *));
 #include "macros.h"
 
 int
-main (int argc, char **argv)
+main ()
 {
   const char *filename = "test-fputc.txt";
 

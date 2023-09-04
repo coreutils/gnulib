@@ -113,7 +113,7 @@ test_asnprintf ()
 }
 
 int
-main (int argc, char *argv[])
+main ()
 {
   test_vasnprintf ();
   test_asnprintf ();

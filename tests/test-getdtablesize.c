@@ -31,7 +31,7 @@ SIGNATURE_CHECK (getdtablesize, int, (void));
 #endif
 
 int
-main (int argc, char *argv[])
+main ()
 {
   ASSERT (getdtablesize () >= 3);
   ASSERT (dup2 (0, getdtablesize() - 1) == getdtablesize () - 1);

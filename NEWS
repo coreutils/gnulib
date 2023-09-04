@@ -74,6 +74,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2023-09-03  same-inode      SAME_INODE, ST_BLKSIZE and ST_NBLOCKS args
+            stat-size       must be addressable lvalues.
+
 2023-08-08  readutmp        The result element type of the function read_utmp,
                             STRUCT_UTMP, is no longer the same as the result
                             value type of the function getutxent, struct utmpx.

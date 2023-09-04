@@ -73,7 +73,7 @@ static gl_thread_t timer;
 static gl_lock_t baton;
 
 static void *
-timer_func (void *ignored)
+timer_func (_GL_UNUSED void *ignored)
 {
   /* Step 13 (can be before or after step 12):
      The timer thread takes the baton, then waits a moment to make sure
@@ -87,7 +87,7 @@ timer_func (void *ignored)
 }
 
 static void *
-reader2_func (void *ignored)
+reader2_func (_GL_UNUSED void *ignored)
 {
   int err;
 
@@ -113,7 +113,7 @@ reader2_func (void *ignored)
 }
 
 static void *
-writer_func (void *ignored)
+writer_func (_GL_UNUSED void *ignored)
 {
   /* Step 4: Take the baton, so that the second reader thread does not go ahead
      too early.  */

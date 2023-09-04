@@ -143,7 +143,7 @@ check_accounts (void)
 gl_lock_define_initialized(static, my_lock)
 
 static void *
-lock_mutator_thread (void *arg)
+lock_mutator_thread (_GL_UNUSED void *arg)
 {
   int repeat;
 
@@ -181,7 +181,7 @@ lock_mutator_thread (void *arg)
 static struct atomic_int lock_checker_done;
 
 static void *
-lock_checker_thread (void *arg)
+lock_checker_thread (_GL_UNUSED void *arg)
 {
   while (get_atomic_int_value (&lock_checker_done) == 0)
     {
@@ -234,7 +234,7 @@ test_lock (void)
 gl_rwlock_define_initialized(static, my_rwlock)
 
 static void *
-rwlock_mutator_thread (void *arg)
+rwlock_mutator_thread (_GL_UNUSED void *arg)
 {
   int repeat;
 
@@ -266,7 +266,7 @@ rwlock_mutator_thread (void *arg)
 static struct atomic_int rwlock_checker_done;
 
 static void *
-rwlock_checker_thread (void *arg)
+rwlock_checker_thread (_GL_UNUSED void *arg)
 {
   while (get_atomic_int_value (&rwlock_checker_done) == 0)
     {
@@ -345,7 +345,7 @@ recshuffle (void)
 }
 
 static void *
-reclock_mutator_thread (void *arg)
+reclock_mutator_thread (_GL_UNUSED void *arg)
 {
   int repeat;
 
@@ -369,7 +369,7 @@ reclock_mutator_thread (void *arg)
 static struct atomic_int reclock_checker_done;
 
 static void *
-reclock_checker_thread (void *arg)
+reclock_checker_thread (_GL_UNUSED void *arg)
 {
   while (get_atomic_int_value (&reclock_checker_done) == 0)
     {

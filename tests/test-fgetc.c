@@ -32,7 +32,7 @@ SIGNATURE_CHECK (fgetc, int, (FILE *));
 #include "macros.h"
 
 int
-main (int argc, char **argv)
+main ()
 {
   const char *filename = "test-fgetc.txt";
 

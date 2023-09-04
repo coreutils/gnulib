@@ -132,7 +132,7 @@ at_func2 (int fd1, char const *file1,
           errno = ENOTDIR;
           return -1;
         }
-      if (SAME_INODE (st1, st2)) /* Reduced to cases 1, 5.  */
+      if (psame_inode (&st1, &st2)) /* Reduced to cases 1, 5.  */
         return func (file1, file2);
     }
   else if (fd2 == AT_FDCWD) /* Cases 12, 13.  */
@@ -144,7 +144,7 @@ at_func2 (int fd1, char const *file1,
           errno = ENOTDIR;
           return -1;
         }
-      if (SAME_INODE (st1, st2)) /* Reduced to cases 4, 5.  */
+      if (psame_inode (&st1, &st2)) /* Reduced to cases 4, 5.  */
         return func (file1, file2);
     }
   else if (fd1 != fd2) /* Case 15b.  */
@@ -156,10 +156,10 @@ at_func2 (int fd1, char const *file1,
           errno = ENOTDIR;
           return -1;
         }
-      if (SAME_INODE (st1, st2)) /* Reduced to case 15a.  */
+      if (psame_inode (&st1, &st2)) /* Reduced to case 15a.  */
         {
           fd2 = fd1;
-          if (stat (".", &st1) == 0 && SAME_INODE (st1, st2))
+          if (stat (".", &st1) == 0 && psame_inode (&st1, &st2))
             return func (file1, file2); /* Further reduced to case 5.  */
         }
     }
@@ -172,7 +172,7 @@ at_func2 (int fd1, char const *file1,
           errno = ENOTDIR;
           return -1;
         }
-      if (stat (".", &st2) == 0 && SAME_INODE (st1, st2))
+      if (stat (".", &st2) == 0 && psame_inode (&st1, &st2))
         return func (file1, file2); /* Reduced to case 5.  */
     }
 

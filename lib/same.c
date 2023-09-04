@@ -111,7 +111,7 @@ same_nameat (int source_dfd, char const *source,
       int destdir_fd = openat (dest_dfd, dest_dirname, open_flags);
       if (destdir_fd < 0 || fstat (destdir_fd, &dest_dir_stats) != 0)
         destdir_errno = errno;
-      else if (SAME_INODE (source_dir_stats, dest_dir_stats))
+      else if (psame_inode (&source_dir_stats, &dest_dir_stats))
         {
           same = identical_basenames;
           if (! same)
@@ -138,7 +138,7 @@ same_nameat (int source_dfd, char const *source,
           /* Shouldn't happen.  */
           error (1, errno, "%s", dest_dirname);
         }
-      same = SAME_INODE (source_dir_stats, dest_dir_stats);
+      same = psame_inode (&source_dir_stats, &dest_dir_stats);
 #endif
 
       free (dest_dirname);

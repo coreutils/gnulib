@@ -62,8 +62,12 @@ is_inheritable (int fd)
 }
 
 #if !O_BINARY
-# define set_binary_mode(f,m) zero ()
-static int zero (void) { return 0; }
+# define set_binary_mode my_set_binary_mode
+static int
+set_binary_mode (_GL_UNUSED int fd, _GL_UNUSED int mode)
+{
+  return 0;
+}
 #endif
 
 /* Return non-zero if FD is open in the given MODE, which is either

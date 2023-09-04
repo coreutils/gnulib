@@ -351,7 +351,7 @@ rpl_rename (char const *src, char const *dst)
           return -1;
         }
 # if RENAME_HARD_LINK_BUG
-      if (SAME_INODE (src_st, dst_st))
+      if (psame_inode (&src_st, &dst_st))
         return 0;
 # endif /* RENAME_HARD_LINK_BUG */
       dst_exists = true;

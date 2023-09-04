@@ -27,7 +27,7 @@ SIGNATURE_CHECK (fstat, int, (int, struct stat *));
 #include "macros.h"
 
 int
-main (int argc, char *argv[])
+main ()
 {
   /* Test behaviour for invalid file descriptors.  */
   {

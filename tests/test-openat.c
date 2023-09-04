@@ -57,7 +57,7 @@ do_open (char const *name, int flags, ...)
 }
 
 int
-main (_GL_UNUSED int argc, char *argv[])
+main ()
 {
   int result;
 

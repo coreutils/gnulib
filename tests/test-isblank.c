@@ -29,7 +29,7 @@ SIGNATURE_CHECK (isblank, int, (int));
 #include "macros.h"
 
 int
-main (int argc, char *argv[])
+main ()
 {
   unsigned int c;
 

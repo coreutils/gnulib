@@ -32,7 +32,7 @@ SIGNATURE_CHECK (fread, size_t, (void *, size_t, size_t, FILE *));
 #include "macros.h"
 
 int
-main (int argc, char **argv)
+main ()
 {
   const char *filename = "test-fread.txt";
 

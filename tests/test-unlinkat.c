@@ -55,7 +55,7 @@ unlinker (char const *name)
 }
 
 int
-main (_GL_UNUSED int argc, char *argv[])
+main ()
 {
   /* FIXME: Add tests of fd other than ".".  */
   int result1;

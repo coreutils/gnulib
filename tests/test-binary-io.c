@@ -30,7 +30,7 @@
 #include "macros.h"
 
 int
-main (int argc, char *argv[])
+main (_GL_UNUSED int argc, char *argv[])
 {
   /* Test the O_BINARY macro.  */
   {

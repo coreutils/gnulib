@@ -33,7 +33,7 @@ static int dummy;
 static volatile int work_done;
 
 static void *
-worker_thread_func (void *arg)
+worker_thread_func (_GL_UNUSED void *arg)
 {
   work_done = 1;
   return &dummy;

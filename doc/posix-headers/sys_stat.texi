@@ -37,6 +37,13 @@ Portability problems fixed by Gnulib module @code{sys_stat}, together with modul
 On Windows platforms (excluding Cygwin), @code{st_ino} is always 0.
 @end itemize
 
+On platforms where @code{off_t} is a 32-bit type, @code{struct stat}
+cannot represent the size of files or block devices 2 GiB or lager
+and may not work correctly on directories 2 GiB or larger.
+Also, on platforms where @code{ino_t} is a 32-bit type,
+@code{struct stat} cannot represent larger inode numbers.
+@xref{Large File Support}, for how to address these problems.
+
 @xref{Avoiding the year 2038 problem}, for portability issues with the
 @code{time_t} components of @code{struct stat}.
 
@@ -48,15 +55,7 @@ MSVC 14.
 @item
 On OpenVMS, @code{st_ino} is an array of three @code{ino_t} values,
 not a single value.
-@item
-To partially work around the previous two problems, you can test for
-nonzero @code{st_ino} and use the Gnulib @code{same-inode} module to
-compare nonzero values.  For example, @code{SAME_INODE (a, b)}
-is true if the @code{struct stat} values @code{a} and
-@code{b} are known to represent the same file, @code{(a.st_ino &&
-!SAME_INODE (a, b))} is true if they are known to represent different
-files, and @code{!a.st_ino} is true if it is not known whether they
-represent different files.
+@code{b} are known to represent the same file.
 @item
 On some platforms, two different files may have the same @code{st_dev}
 and @code{st_ino} values, even when @code{st_ino} is nonzero:
@@ -70,13 +69,20 @@ Network Appliance NFS servers in snapshot directories; see Network
 Appliance bug #195.
 @item
 ClearCase MVFS; see bug id ATRia04618.
-@end itemize
-One partial workaround is to compare other file metadata such as
-@code{st_mode} and @code{st_mtime} to detect this bug, but this
-approach does not work on files whose metadata are being changed by
-other programs.
 @item
 On some file systems, @code{st_size} contains bogus information for
 symlinks; use the Gnulib module @code{areadlink-with-size} for a
 better way to get symlink contents.
 @end itemize
+
+To partially work around porting problems with Microsoft Windows and OpenVMS,
+you can use the Gnulib @code{same-inode} module to test whether two
+@code{struct stat} objects are known to represent the same file.
+For example, @code{psame_inode (&a, &b)} is true if the @code{struct stat}
+objects @code{a} and @code{b} are known to represent the same file.
+
+Another partial workaround is to compare other file metadata such as
+@code{st_mode} and @code{st_mtime} on platforms where @code{st_dev}
+and @code{st_ino} not uniquely identify a file.  However, this does
+not work reliably on files whose metadata are being changed by other
+programs, or where the metadata happen to be equal.

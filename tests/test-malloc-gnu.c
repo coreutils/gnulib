@@ -25,7 +25,7 @@
 #include "macros.h"
 
 int
-main (int argc, char **argv)
+main (int argc, _GL_UNUSED char **argv)
 {
   /* Check that malloc (0) is not a NULL pointer.  */
   void *volatile p = malloc (0);

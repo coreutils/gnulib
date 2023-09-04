@@ -28,7 +28,7 @@ SIGNATURE_CHECK (snprintf, int, (char *, size_t, char const *, ...));
 #include "macros.h"
 
 int
-main (int argc, char *argv[])
+main ()
 {
   char buf[8];
   int size;

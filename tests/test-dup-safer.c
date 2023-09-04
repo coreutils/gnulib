@@ -41,8 +41,12 @@
 #endif
 
 #if !O_BINARY
-# define set_binary_mode(f,m) zero ()
-static int zero (void) { return 0; }
+# define set_binary_mode my_set_binary_mode
+static int
+set_binary_mode (_GL_UNUSED int fd, _GL_UNUSED int mode)
+{
+  return 0;
+}
 #endif
 
 /* This test intentionally closes stderr.  So, we arrange to have fd 10
