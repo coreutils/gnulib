@@ -26,9 +26,9 @@ SIGNATURE_CHECK (raise, int, (int));
 
 #include "macros.h"
 
-/* It is safe to use _Noreturn here: exit() never returns, and GCC knows that
-   exit() is a non-returning function, even on platforms where its declaration
-   in <stdlib.h> does not have the 'noreturn' attribute.  */
+/* It is safe to use _Noreturn here: _exit() never returns, and GCC knows that
+   _exit() is a non-returning function, even on platforms where its declaration
+   in <unistd.h> does not have the 'noreturn' attribute.  */
 static _Noreturn void
 handler (_GL_UNUSED int sig)
 {
