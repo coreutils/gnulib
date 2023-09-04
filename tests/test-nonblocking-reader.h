@@ -74,6 +74,7 @@ full_read (size_t fd, void *buf, size_t count)
       END_TIMING
       dbgfprintf (stderr, "%s: << read -> %ld%s\n", PROG_ROLE,
                   (long) ret, dbgstrerror (ret < 0, saved_errno));
+      (void) spent_time;
       if (ret < 0)
         return -1;
       else
