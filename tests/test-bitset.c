@@ -274,7 +274,7 @@ check_zero (bitset bs)
   /* FOR_EACH.  */
   {
     bitset_iterator iter;
-    bitset_bindex i;
+    _GL_UNUSED bitset_bindex i;
     BITSET_FOR_EACH (iter, bs, i, 0)
       ASSERT (0);
     BITSET_FOR_EACH_REVERSE (iter, bs, i, 0)
