@@ -27,7 +27,7 @@
 
 #include "macros.h"
 
-static const char *
+_GL_UNUSED static const char *
 graphemebreakproperty_to_string (int gbp)
 {
   printf ("%d\n", gbp);
