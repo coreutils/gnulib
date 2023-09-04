@@ -206,8 +206,6 @@ main ()
   ASSERT (category_equals (uc_general_category_byname ("UNASSIGNED"), UC_CATEGORY_Cn));
   ASSERT (category_equals (uc_general_category_byname ("Unassigned"), UC_CATEGORY_Cn));
 
-  uc_general_category_byname ("Nl");
-
   {
     uc_general_category_t ct = uc_general_category_byname ("Nd");
     unsigned int c;
@@ -216,6 +214,16 @@ main ()
       ASSERT (uc_is_general_category (c, ct));
     for (c = 0x40; c < 0x80; c++)
       ASSERT (!uc_is_general_category (c, ct));
+  }
+
+  {
+    uc_general_category_t ct = uc_general_category_byname ("Nl");
+    unsigned int c;
+
+    for (c = 0x2160; c < 0x2180; c++)
+      ASSERT (uc_is_general_category (c, ct));
+    ASSERT (!uc_is_general_category (0x0BF1, ct));
+    ASSERT (!uc_is_general_category (0x0D71, ct));
   }
 
   {
