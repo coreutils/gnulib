@@ -107,7 +107,7 @@ main (int argc, char *argv[])
 
   /* Convert it to uppercase, line by line.  */
   {
-    const char *argv[4];
+    const char *tr_argv[4];
     struct locals l;
     int result;
 
@@ -116,12 +116,12 @@ main (int argc, char *argv[])
     l.nwritten = 0;
     l.nread = 0;
 
-    argv[0] = tr_program;
-    argv[1] = "abcdefghijklmnopqrstuvwxyz";
-    argv[2] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    argv[3] = NULL;
+    tr_argv[0] = tr_program;
+    tr_argv[1] = "abcdefghijklmnopqrstuvwxyz";
+    tr_argv[2] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    tr_argv[3] = NULL;
 
-    result = pipe_filter_ii_execute ("tr", tr_program, argv, false, true,
+    result = pipe_filter_ii_execute ("tr", tr_program, tr_argv, false, true,
                                      prepare_write, done_write,
                                      prepare_read, done_read,
                                      &l);
