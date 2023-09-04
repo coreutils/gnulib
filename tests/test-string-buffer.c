@@ -21,6 +21,7 @@
 #include "string-buffer.h"
 
 #include <string.h>
+#include <wchar.h>
 
 #include "macros.h"
 
@@ -101,7 +102,7 @@ main ()
 
     sb_init (&buffer);
     sb_append (&buffer, "<");
-    sb_appendf (&buffer, "%lc", 0x76543210);
+    sb_appendf (&buffer, "%lc", (wint_t) 0x76543210);
     sb_append (&buffer, "|");
     sb_appendf (&buffer, invalid_format_string_1, 1);
     sb_append (&buffer, "|");
