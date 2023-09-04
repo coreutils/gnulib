@@ -2695,12 +2695,13 @@ _GL_WARN_REAL_FLOATING_DECL (isnan);
 _GL_EXTERN_C int gl_signbitf (float arg);
 _GL_EXTERN_C int gl_signbitd (double arg);
 _GL_EXTERN_C int gl_signbitl (long double arg);
-#  if (__GNUC__ >= 2 || defined __clang__) && !defined __STRICT_ANSI__
+#  if __GNUC__ >= 2 || defined __clang__
 #   define _GL_NUM_UINT_WORDS(type) \
       ((sizeof (type) + sizeof (unsigned int) - 1) / sizeof (unsigned int))
 #   if defined FLT_SIGNBIT_WORD && defined FLT_SIGNBIT_BIT && !defined gl_signbitf
 #    define gl_signbitf_OPTIMIZED_MACRO
 #    define gl_signbitf(arg) \
+       __extension__                                                    \
        ({ union { float _value;                                         \
                   unsigned int _word[_GL_NUM_UINT_WORDS (float)];       \
                 } _m;                                                   \
@@ -2711,6 +2712,7 @@ _GL_EXTERN_C int gl_signbitl (long double arg);
 #   if defined DBL_SIGNBIT_WORD && defined DBL_SIGNBIT_BIT && !defined gl_signbitd
 #    define gl_signbitd_OPTIMIZED_MACRO
 #    define gl_signbitd(arg) \
+       __extension__                                                    \
        ({ union { double _value;                                        \
                   unsigned int _word[_GL_NUM_UINT_WORDS (double)];      \
                 } _m;                                                   \
@@ -2721,6 +2723,7 @@ _GL_EXTERN_C int gl_signbitl (long double arg);
 #   if defined LDBL_SIGNBIT_WORD && defined LDBL_SIGNBIT_BIT && !defined gl_signbitl
 #    define gl_signbitl_OPTIMIZED_MACRO
 #    define gl_signbitl(arg) \
+       __extension__                                                    \
        ({ union { long double _value;                                   \
                   unsigned int _word[_GL_NUM_UINT_WORDS (long double)]; \
                 } _m;                                                   \
