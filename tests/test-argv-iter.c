@@ -86,15 +86,14 @@ main (void)
               ASSERT ((i == n_found) == (ai_err == AI_ERR_EOF));
               ASSERT ((s == NULL) ^ (ai_err == AI_ERR_OK));
               ASSERT (ai_err == AI_ERR_OK || ai_err == AI_ERR_EOF);
-              if (ai_err == AI_ERR_OK)
-                ++n_found;
               if (ai_err == AI_ERR_EOF)
                 break;
               /* In stream mode, the strings are equal, but
                  in argv mode the actual pointers are equal.  */
               ASSERT (use_stream
-                      ? STREQ (s, av[i][n_found - 1])
-                      : s == av[i][n_found - 1]);
+                      ? STREQ (s, av[i][n_found])
+                      : s == av[i][n_found]);
+              ++n_found;
             }
           ASSERT (argv_iter_n_args (ai) == i);
           argv_iter_free (ai);
