@@ -46,7 +46,8 @@
 #ifndef _@GUARD_PREFIX@_MALLOC_H
 #define _@GUARD_PREFIX@_MALLOC_H
 
-/* This file uses _GL_ATTRIBUTE_DEALLOC, GNULIB_POSIXCHECK, HAVE_RAW_DECL_*.  */
+/* This file uses _GL_ATTRIBUTE_DEALLOC, _GL_ATTRIBUTE_NOTHROW,
+   GNULIB_POSIXCHECK, HAVE_RAW_DECL_*.  */
 #if !_GL_CONFIG_H_INCLUDED
  #error "Please include config.h first."
 #endif
@@ -58,6 +59,29 @@
 
 /* Get size_t.  */
 #include <stddef.h>
+
+
+/* _GL_ATTRIBUTE_NOTHROW declares that the function does not throw exceptions.
+ */
+#ifndef _GL_ATTRIBUTE_NOTHROW
+# if defined __cplusplus
+#  if (__GNUC__ + (__GNUC_MINOR__ >= 8) > 2) || __clang_major >= 4
+#   if __cplusplus >= 201103L
+#    define _GL_ATTRIBUTE_NOTHROW noexcept (true)
+#   else
+#    define _GL_ATTRIBUTE_NOTHROW throw ()
+#   endif
+#  else
+#   define _GL_ATTRIBUTE_NOTHROW
+#  endif
+# else
+#  if (__GNUC__ + (__GNUC_MINOR__ >= 3) > 3) || defined __clang__
+#   define _GL_ATTRIBUTE_NOTHROW __attribute__ ((__nothrow__))
+#  else
+#   define _GL_ATTRIBUTE_NOTHROW
+#  endif
+# endif
+#endif
 
 /* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
 
@@ -125,9 +149,16 @@ _GL_CXXALIAS_RPL (memalign, void *, (size_t alignment, size_t size));
 #  if @HAVE_MEMALIGN@
 #   if __GNUC__ >= 11
 /* For -Wmismatched-dealloc: Associate memalign with free or rpl_free.  */
+#    if __GLIBC__ + (__GLIBC_MINOR__ >= 14) > 2
+_GL_FUNCDECL_SYS (memalign, void *,
+                  (size_t alignment, size_t size)
+                  _GL_ATTRIBUTE_NOTHROW
+                  _GL_ATTRIBUTE_DEALLOC_FREE);
+#    else
 _GL_FUNCDECL_SYS (memalign, void *,
                   (size_t alignment, size_t size)
                   _GL_ATTRIBUTE_DEALLOC_FREE);
+#    endif
 #   endif
 _GL_CXXALIAS_SYS (memalign, void *, (size_t alignment, size_t size));
 #  endif
@@ -138,9 +169,16 @@ _GL_CXXALIASWARN (memalign);
 #else
 # if __GNUC__ >= 11 && !defined memalign
 /* For -Wmismatched-dealloc: Associate memalign with free or rpl_free.  */
+#  if __GLIBC__ + (__GLIBC_MINOR__ >= 14) > 2
+_GL_FUNCDECL_SYS (memalign, void *,
+                  (size_t alignment, size_t size)
+                  _GL_ATTRIBUTE_NOTHROW
+                  _GL_ATTRIBUTE_DEALLOC_FREE);
+#  else
 _GL_FUNCDECL_SYS (memalign, void *,
                   (size_t alignment, size_t size)
                   _GL_ATTRIBUTE_DEALLOC_FREE);
+#  endif
 # endif
 # if defined GNULIB_POSIXCHECK
 #  undef memalign

@@ -85,7 +85,8 @@
 #define _@GUARD_PREFIX@_WCHAR_H
 
 /* This file uses _GL_ATTRIBUTE_DEALLOC, _GL_ATTRIBUTE_MALLOC,
-   _GL_ATTRIBUTE_PURE, GNULIB_POSIXCHECK, HAVE_RAW_DECL_*.  */
+   _GL_ATTRIBUTE_NOTHROW, _GL_ATTRIBUTE_PURE, GNULIB_POSIXCHECK,
+   HAVE_RAW_DECL_*.  */
 #if !_GL_CONFIG_H_INCLUDED
  #error "Please include config.h first."
 #endif
@@ -133,6 +134,28 @@
 #  define _GL_ATTRIBUTE_PURE __attribute__ ((__pure__))
 # else
 #  define _GL_ATTRIBUTE_PURE /* empty */
+# endif
+#endif
+
+/* _GL_ATTRIBUTE_NOTHROW declares that the function does not throw exceptions.
+ */
+#ifndef _GL_ATTRIBUTE_NOTHROW
+# if defined __cplusplus
+#  if (__GNUC__ + (__GNUC_MINOR__ >= 8) > 2) || __clang_major >= 4
+#   if __cplusplus >= 201103L
+#    define _GL_ATTRIBUTE_NOTHROW noexcept (true)
+#   else
+#    define _GL_ATTRIBUTE_NOTHROW throw ()
+#   endif
+#  else
+#   define _GL_ATTRIBUTE_NOTHROW
+#  endif
+# else
+#  if (__GNUC__ + (__GNUC_MINOR__ >= 3) > 3) || defined __clang__
+#   define _GL_ATTRIBUTE_NOTHROW __attribute__ ((__nothrow__))
+#  else
+#   define _GL_ATTRIBUTE_NOTHROW
+#  endif
 # endif
 #endif
 
@@ -1094,9 +1117,16 @@ _GL_CXXALIAS_MDA (wcsdup, wchar_t *, (const wchar_t *s));
    namespace, not in the global namespace.  So, force a declaration in
    the global namespace.  */
 #  if !@HAVE_WCSDUP@ || (defined __sun && defined __cplusplus) || __GNUC__ >= 11
+#   if __GLIBC__ + (__GLIBC_MINOR__ >= 2) > 2
+_GL_FUNCDECL_SYS (wcsdup, wchar_t *,
+                  (const wchar_t *s)
+                  _GL_ATTRIBUTE_NOTHROW
+                  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE);
+#   else
 _GL_FUNCDECL_SYS (wcsdup, wchar_t *,
                   (const wchar_t *s)
                   _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE);
+#   endif
 #  endif
 _GL_CXXALIAS_SYS (wcsdup, wchar_t *, (const wchar_t *s));
 # endif
@@ -1104,9 +1134,16 @@ _GL_CXXALIASWARN (wcsdup);
 #else
 # if __GNUC__ >= 11 && !defined wcsdup
 /* For -Wmismatched-dealloc: Associate wcsdup with free or rpl_free.  */
+#  if __GLIBC__ + (__GLIBC_MINOR__ >= 2) > 2
+_GL_FUNCDECL_SYS (wcsdup, wchar_t *,
+                  (const wchar_t *s)
+                  _GL_ATTRIBUTE_NOTHROW
+                  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE);
+#  else
 _GL_FUNCDECL_SYS (wcsdup, wchar_t *,
                   (const wchar_t *s)
                   _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE);
+#  endif
 # endif
 # if defined GNULIB_POSIXCHECK
 #  undef wcsdup
@@ -1125,9 +1162,16 @@ _GL_WARN_ON_USE (wcsdup, "wcsdup is unportable - "
 #   endif
 _GL_CXXALIAS_MDA (wcsdup, wchar_t *, (const wchar_t *s));
 #  else
+#   if __GLIBC__ + (__GLIBC_MINOR__ >= 2) > 2
+_GL_FUNCDECL_SYS (wcsdup, wchar_t *,
+                  (const wchar_t *s)
+                  _GL_ATTRIBUTE_NOTHROW
+                  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE);
+#   else
 _GL_FUNCDECL_SYS (wcsdup, wchar_t *,
                   (const wchar_t *s)
                   _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE);
+#   endif
 #   if @HAVE_DECL_WCSDUP@
 _GL_CXXALIAS_SYS (wcsdup, wchar_t *, (const wchar_t *s));
 #   endif

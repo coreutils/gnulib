@@ -38,7 +38,8 @@
 #define _@GUARD_PREFIX@_STDLIB_H
 
 /* This file uses _Noreturn, _GL_ATTRIBUTE_DEALLOC, _GL_ATTRIBUTE_MALLOC,
-   _GL_ATTRIBUTE_PURE, GNULIB_POSIXCHECK, HAVE_RAW_DECL_*.  */
+   _GL_ATTRIBUTE_NOTHROW, _GL_ATTRIBUTE_PURE, GNULIB_POSIXCHECK,
+   HAVE_RAW_DECL_*.  */
 #if !_GL_CONFIG_H_INCLUDED
  #error "Please include config.h first."
 #endif
@@ -129,6 +130,28 @@ struct random_data
 #  define _GL_ATTRIBUTE_MALLOC __attribute__ ((__malloc__))
 # else
 #  define _GL_ATTRIBUTE_MALLOC
+# endif
+#endif
+
+/* _GL_ATTRIBUTE_NOTHROW declares that the function does not throw exceptions.
+ */
+#ifndef _GL_ATTRIBUTE_NOTHROW
+# if defined __cplusplus
+#  if (__GNUC__ + (__GNUC_MINOR__ >= 8) > 2) || __clang_major >= 4
+#   if __cplusplus >= 201103L
+#    define _GL_ATTRIBUTE_NOTHROW noexcept (true)
+#   else
+#    define _GL_ATTRIBUTE_NOTHROW throw ()
+#   endif
+#  else
+#   define _GL_ATTRIBUTE_NOTHROW
+#  endif
+# else
+#  if (__GNUC__ + (__GNUC_MINOR__ >= 3) > 3) || defined __clang__
+#   define _GL_ATTRIBUTE_NOTHROW __attribute__ ((__nothrow__))
+#  else
+#   define _GL_ATTRIBUTE_NOTHROW
+#  endif
 # endif
 #endif
 
@@ -234,9 +257,16 @@ _GL_CXXALIAS_RPL (aligned_alloc, void *, (size_t alignment, size_t size));
 #  if @HAVE_ALIGNED_ALLOC@
 #   if __GNUC__ >= 11
 /* For -Wmismatched-dealloc: Associate aligned_alloc with free or rpl_free.  */
+#    if __GLIBC__ + (__GLIBC_MINOR__ >= 16) > 2
+_GL_FUNCDECL_SYS (aligned_alloc, void *,
+                  (size_t alignment, size_t size)
+                  _GL_ATTRIBUTE_NOTHROW
+                  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE);
+#    else
 _GL_FUNCDECL_SYS (aligned_alloc, void *,
                   (size_t alignment, size_t size)
                   _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE);
+#    endif
 #   endif
 _GL_CXXALIAS_SYS (aligned_alloc, void *, (size_t alignment, size_t size));
 #  endif
@@ -247,9 +277,16 @@ _GL_CXXALIASWARN (aligned_alloc);
 #else
 # if @GNULIB_FREE_POSIX@ && __GNUC__ >= 11 && !defined aligned_alloc
 /* For -Wmismatched-dealloc: Associate aligned_alloc with free or rpl_free.  */
+#  if __GLIBC__ + (__GLIBC_MINOR__ >= 16) > 2
+_GL_FUNCDECL_SYS (aligned_alloc, void *,
+                  (size_t alignment, size_t size)
+                  _GL_ATTRIBUTE_NOTHROW
+                  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE);
+#  else
 _GL_FUNCDECL_SYS (aligned_alloc, void *,
                   (size_t alignment, size_t size)
                   _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE);
+#  endif
 # endif
 # if defined GNULIB_POSIXCHECK
 #  undef aligned_alloc
@@ -292,9 +329,16 @@ _GL_CXXALIAS_RPL (calloc, void *, (size_t nmemb, size_t size));
 # else
 #  if __GNUC__ >= 11
 /* For -Wmismatched-dealloc: Associate calloc with free or rpl_free.  */
+#   if __GLIBC__ + (__GLIBC_MINOR__ >= 14) > 2
+_GL_FUNCDECL_SYS (calloc, void *,
+                  (size_t nmemb, size_t size)
+                  _GL_ATTRIBUTE_NOTHROW
+                  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE);
+#   else
 _GL_FUNCDECL_SYS (calloc, void *,
                   (size_t nmemb, size_t size)
                   _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE);
+#   endif
 #  endif
 _GL_CXXALIAS_SYS (calloc, void *, (size_t nmemb, size_t size));
 # endif
@@ -304,9 +348,16 @@ _GL_CXXALIASWARN (calloc);
 #else
 # if @GNULIB_FREE_POSIX@ && __GNUC__ >= 11 && !defined calloc
 /* For -Wmismatched-dealloc: Associate calloc with free or rpl_free.  */
+#  if __GLIBC__ + (__GLIBC_MINOR__ >= 14) > 2
+_GL_FUNCDECL_SYS (calloc, void *,
+                  (size_t nmemb, size_t size)
+                  _GL_ATTRIBUTE_NOTHROW
+                  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE);
+#  else
 _GL_FUNCDECL_SYS (calloc, void *,
                   (size_t nmemb, size_t size)
                   _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE);
+#  endif
 # endif
 # if defined GNULIB_POSIXCHECK
 #  undef calloc
@@ -328,10 +379,18 @@ _GL_FUNCDECL_RPL (canonicalize_file_name, char *,
 _GL_CXXALIAS_RPL (canonicalize_file_name, char *, (const char *name));
 # else
 #  if !@HAVE_CANONICALIZE_FILE_NAME@ || __GNUC__ >= 11
+#   if __GLIBC__ + (__GLIBC_MINOR__ >= 2) > 2
+_GL_FUNCDECL_SYS (canonicalize_file_name, char *,
+                  (const char *name)
+                  _GL_ATTRIBUTE_NOTHROW
+                  _GL_ARG_NONNULL ((1))
+                  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE);
+#   else
 _GL_FUNCDECL_SYS (canonicalize_file_name, char *,
                   (const char *name)
                   _GL_ARG_NONNULL ((1))
                   _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE);
+#   endif
 #  endif
 _GL_CXXALIAS_SYS (canonicalize_file_name, char *, (const char *name));
 # endif
@@ -344,10 +403,18 @@ _GL_CXXALIASWARN (canonicalize_file_name);
 # if @GNULIB_FREE_POSIX@ && __GNUC__ >= 11 && !defined canonicalize_file_name
 /* For -Wmismatched-dealloc: Associate canonicalize_file_name with free or
    rpl_free.  */
+#  if __GLIBC__ + (__GLIBC_MINOR__ >= 2) > 2
+_GL_FUNCDECL_SYS (canonicalize_file_name, char *,
+                  (const char *name)
+                  _GL_ATTRIBUTE_NOTHROW
+                  _GL_ARG_NONNULL ((1))
+                  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE);
+#  else
 _GL_FUNCDECL_SYS (canonicalize_file_name, char *,
                   (const char *name)
                   _GL_ARG_NONNULL ((1))
                   _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE);
+#  endif
 # endif
 # if defined GNULIB_POSIXCHECK
 #  undef canonicalize_file_name
@@ -569,9 +636,16 @@ _GL_CXXALIAS_RPL (malloc, void *, (size_t size));
 # else
 #  if __GNUC__ >= 11
 /* For -Wmismatched-dealloc: Associate malloc with free or rpl_free.  */
+#   if __GLIBC__ + (__GLIBC_MINOR__ >= 14) > 2
+_GL_FUNCDECL_SYS (malloc, void *,
+                  (size_t size)
+                  _GL_ATTRIBUTE_NOTHROW
+                  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE);
+#   else
 _GL_FUNCDECL_SYS (malloc, void *,
                   (size_t size)
                   _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE);
+#   endif
 #  endif
 _GL_CXXALIAS_SYS (malloc, void *, (size_t size));
 # endif
@@ -581,9 +655,16 @@ _GL_CXXALIASWARN (malloc);
 #else
 # if @GNULIB_FREE_POSIX@ && __GNUC__ >= 11 && !defined malloc
 /* For -Wmismatched-dealloc: Associate malloc with free or rpl_free.  */
+#  if __GLIBC__ + (__GLIBC_MINOR__ >= 14) > 2
+_GL_FUNCDECL_SYS (malloc, void *,
+                  (size_t size)
+                  _GL_ATTRIBUTE_NOTHROW
+                  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE);
+#  else
 _GL_FUNCDECL_SYS (malloc, void *,
                   (size_t size)
                   _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE);
+#  endif
 # endif
 # if defined GNULIB_POSIXCHECK && !_GL_USE_STDLIB_ALLOC
 #  undef malloc
@@ -1292,8 +1373,16 @@ _GL_CXXALIAS_RPL (realloc, void *, (void *ptr, size_t size));
 # else
 #  if __GNUC__ >= 11
 /* For -Wmismatched-dealloc: Associate realloc with free or rpl_free.  */
-_GL_FUNCDECL_SYS (realloc, void *, (void *ptr, size_t size)
-                                   _GL_ATTRIBUTE_DEALLOC_FREE);
+#   if __GLIBC__ + (__GLIBC_MINOR__ >= 14) > 2
+_GL_FUNCDECL_SYS (realloc, void *,
+                  (void *ptr, size_t size)
+                  _GL_ATTRIBUTE_NOTHROW
+                  _GL_ATTRIBUTE_DEALLOC_FREE);
+#   else
+_GL_FUNCDECL_SYS (realloc, void *,
+                  (void *ptr, size_t size)
+                  _GL_ATTRIBUTE_DEALLOC_FREE);
+#   endif
 #  endif
 _GL_CXXALIAS_SYS (realloc, void *, (void *ptr, size_t size));
 # endif
@@ -1303,8 +1392,16 @@ _GL_CXXALIASWARN (realloc);
 #else
 # if @GNULIB_FREE_POSIX@ && __GNUC__ >= 11 && !defined realloc
 /* For -Wmismatched-dealloc: Associate realloc with free or rpl_free.  */
-_GL_FUNCDECL_SYS (realloc, void *, (void *ptr, size_t size)
-                                   _GL_ATTRIBUTE_DEALLOC_FREE);
+#  if __GLIBC__ + (__GLIBC_MINOR__ >= 14) > 2
+_GL_FUNCDECL_SYS (realloc, void *,
+                  (void *ptr, size_t size)
+                  _GL_ATTRIBUTE_NOTHROW
+                  _GL_ATTRIBUTE_DEALLOC_FREE);
+#  else
+_GL_FUNCDECL_SYS (realloc, void *,
+                  (void *ptr, size_t size)
+                  _GL_ATTRIBUTE_DEALLOC_FREE);
+#  endif
 # endif
 # if defined GNULIB_POSIXCHECK && !_GL_USE_STDLIB_ALLOC
 #  undef realloc
