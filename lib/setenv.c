@@ -82,6 +82,7 @@ typedef int (*compar_fn_t) (const void *, const void *);
 static void *known_values;
 
 # define KNOWN_VALUE(Str) \
+  __extension__                                                               \
   ({                                                                          \
     void *value = tfind (Str, &known_values, (compar_fn_t) strcmp);           \
     value != NULL ? *(char **) value : NULL;                                  \

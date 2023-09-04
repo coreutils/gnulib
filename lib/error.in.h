@@ -53,7 +53,7 @@
 /* Helper macro for supporting the compiler's control flow analysis better.
    It evaluates its arguments only once.
    Test case: Compile copy-file.c with "gcc -Wimplicit-fallthrough".  */
-#ifdef __GNUC__
+#if defined __GNUC__ || defined __clang__
 /* Use 'unreachable' to tell the compiler when the function call does not
    return.  */
 # define __gl_error_call1(function, status, ...) \
@@ -66,11 +66,12 @@
    would trigger a -Wimplicit-fallthrough warning even when STATUS is != 0,
    when not optimizing.  This causes STATUS to be evaluated twice, but
    that's OK since it does not have side effects.  */
-# define __gl_error_call(function, status, ...) \
-    (__builtin_constant_p (status) \
-     ? __gl_error_call1 (function, status, __VA_ARGS__) \
-     : ({ \
-         int const __errstatus = status; \
+# define __gl_error_call(function, status, ...)                 \
+    (__builtin_constant_p (status)                              \
+     ? __gl_error_call1 (function, status, __VA_ARGS__)         \
+     : __extension__                                            \
+       ({                                                       \
+         int const __errstatus = status;                        \
          __gl_error_call1 (function, __errstatus, __VA_ARGS__); \
        }))
 #else
