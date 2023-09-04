@@ -85,7 +85,7 @@ main (int argc, char *argv[])
 
   /* Convert it to uppercase, line by line.  */
   {
-    const char *argv[4];
+    const char *tr_argv[4];
     struct locals l;
     struct pipe_filter_gi *f;
     int result;
@@ -93,12 +93,12 @@ main (int argc, char *argv[])
     l.input = input;
     l.nread = 0;
 
-    argv[0] = tr_program;
-    argv[1] = "abcdefghijklmnopqrstuvwxyz";
-    argv[2] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    argv[3] = NULL;
+    tr_argv[0] = tr_program;
+    tr_argv[1] = "abcdefghijklmnopqrstuvwxyz";
+    tr_argv[2] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    tr_argv[3] = NULL;
 
-    f = pipe_filter_gi_create ("tr", tr_program, argv, false, true,
+    f = pipe_filter_gi_create ("tr", tr_program, tr_argv, false, true,
                                prepare_read, done_read, &l);
     ASSERT (f != NULL);
     result = pipe_filter_gi_write (f, input, input_size);
