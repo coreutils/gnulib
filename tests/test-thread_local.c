@@ -84,10 +84,10 @@ perhaps_yield (void)
 /* ----------------------- Test thread-local storage ----------------------- */
 
 #define KEYS_COUNT 4
-static unsigned int thread_local value0;
-static unsigned int thread_local value1;
-static unsigned int thread_local value2;
-static unsigned int thread_local value3;
+static thread_local unsigned int value0;
+static thread_local unsigned int value1;
+static thread_local unsigned int value2;
+static thread_local unsigned int value3;
 
 static int
 worker_thread (void *arg)
