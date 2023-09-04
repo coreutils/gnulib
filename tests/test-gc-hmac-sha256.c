@@ -35,12 +35,12 @@ main (int argc, char *argv[])
     }
 
   {
-    char *key =
+    const char *key =
       "\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b";
     size_t key_len = 20;
-    char *data = "Hi There";
+    const char *data = "Hi There";
     size_t data_len = 8;
-    char *digest =
+    const char *digest =
       "\xb0\x34\x4c\x61\xd8\xdb\x38\x53\x5c\xa8\xaf\xce\xaf\x0b\xf1\x2b\x88\x1d\xc2\x00\xc9\x83\x3d\xa7\x26\xe9\x37\x6c\x2e\x32\xcf\xf7";
     char out[GC_SHA256_DIGEST_SIZE];
 

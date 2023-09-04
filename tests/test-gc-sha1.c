@@ -36,9 +36,9 @@ main (int argc, char *argv[])
     }
 
   {
-    char *in = "abcdefgh";
+    const char *in = "abcdefgh";
     size_t inlen = strlen (in);
-    char *expect = "\x42\x5a\xf1\x2a\x07\x43\x50\x2b"
+    const char *expect = "\x42\x5a\xf1\x2a\x07\x43\x50\x2b"
       "\x32\x2e\x93\xa0\x15\xbc\xf8\x68\xe3\x24\xd5\x6a";
     char out[20];
     const char *p;

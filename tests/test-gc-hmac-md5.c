@@ -37,12 +37,12 @@ main (int argc, char *argv[])
     /* Test vectors from RFC 2104. */
 
   {
-    char *key =
+    const char *key =
       "\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b";
     size_t key_len = 16;
-    char *data = "Hi There";
+    const char *data = "Hi There";
     size_t data_len = 8;
-    char *digest =
+    const char *digest =
       "\x92\x94\x72\x7a\x36\x38\xbb\x1c\x13\xf4\x8e\xf8\x15\x8b\xfc\x9d";
     char out[16];
 
