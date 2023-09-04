@@ -31,7 +31,7 @@ int s = SIGPIPE;
 static void
 handler (int sig)
 {
-  exit (0);
+  _exit (0);
 }
 
 int
