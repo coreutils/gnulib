@@ -422,8 +422,8 @@ struct hol
 {
   /* An array of hol_entry's.  */
   struct hol_entry *entries;
-  /* The number of entries in this hol.  If this field is zero, the others
-     are undefined.  */
+  /* The number of entries in this hol.  If this field is zero, entries and
+     short_options are undefined.  */
   unsigned num_entries;
 
   /* A string containing all short options in this HOL.  Each entry contains
@@ -642,21 +642,26 @@ hol_entry_first_long (const struct hol_entry *entry)
 static struct hol_entry *
 hol_find_entry (struct hol *hol, const char *name)
 {
-  struct hol_entry *entry = hol->entries;
   unsigned num_entries = hol->num_entries;
 
-  while (num_entries-- > 0)
+  if (num_entries > 0)
     {
-      const struct argp_option *opt = entry->opt;
-      unsigned num_opts = entry->num;
+      struct hol_entry *entry = hol->entries;
 
-      while (num_opts-- > 0)
-        if (opt->name && ovisible (opt) && strcmp (opt->name, name) == 0)
-          return entry;
-        else
-          opt++;
+      do
+        {
+          const struct argp_option *opt = entry->opt;
+          unsigned num_opts = entry->num;
 
-      entry++;
+          while (num_opts-- > 0)
+            if (opt->name && ovisible (opt) && strcmp (opt->name, name) == 0)
+              return entry;
+            else
+              opt++;
+
+          entry++;
+        }
+      while (--num_entries > 0);
     }
 
   return 0;
