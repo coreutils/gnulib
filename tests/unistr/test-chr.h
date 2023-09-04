@@ -20,7 +20,6 @@ int
 main (void)
 {
   size_t size = 0x100000;
-  size_t i;
   size_t length;
   UNIT *input;
   uint32_t *input32 = (uint32_t *) malloc (size * sizeof (uint32_t));
@@ -29,7 +28,7 @@ main (void)
   input32[0] = 'a';
   input32[1] = 'b';
   u32_set (input32 + 2, 'c', 1024);
-  for (i = 1026; i < size - 2; i += 63)
+  for (size_t i = 1026; i < size - 2; i += 63)
     {
       size_t last = i + 63 < size - 2 ? i + 63 : size - 2;
       ucs4_t uc = 'd' | (i - 1026);
@@ -48,9 +47,11 @@ main (void)
   ASSERT (U_CHR (input, length, 'a') == input);
 
   ASSERT (U_CHR (input, 0, 'a') == NULL);
-  void *page_boundary = zerosize_ptr ();
-  if (page_boundary)
-    ASSERT (U_CHR (page_boundary, 0, 'a') == NULL);
+  {
+    void *page_boundary = zerosize_ptr ();
+    if (page_boundary != NULL)
+      ASSERT (U_CHR (page_boundary, 0, 'a') == NULL);
+  }
 
   ASSERT (U_CHR (input, length, 'b') == input + 1);
   ASSERT (U_CHR (input, length, 'c') == input + 2);
@@ -59,7 +60,7 @@ main (void)
   {
     UNIT *exp = input + 1026;
     UNIT *prev = input + 1;
-    for (i = 1026; i < size - 2; i += 63)
+    for (size_t i = 1026; i < size - 2; i += 63)
       {
         UNIT c[6];
         size_t n;
