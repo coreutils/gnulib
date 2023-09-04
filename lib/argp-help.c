@@ -449,7 +449,7 @@ make_hol (const struct argp *argp, struct hol_cluster *cluster)
   assert (hol);
 
   hol->num_entries = 0;
-  hol->clusters = 0;
+  hol->clusters = NULL;
 
   if (opts)
     {
@@ -634,7 +634,7 @@ hol_entry_first_long (const struct hol_entry *entry)
   for (opt = entry->opt, num = entry->num; num > 0; opt++, num--)
     if (opt->name && ovisible (opt))
       return opt->name;
-  return 0;
+  return NULL;
 }
 
 /* Returns the entry in HOL with the long option name NAME, or NULL if there is
@@ -664,7 +664,7 @@ hol_find_entry (struct hol *hol, const char *name)
       while (--num_entries > 0);
     }
 
-  return 0;
+  return NULL;
 }
 
 /* If an entry with the long option NAME occurs in HOL, set its special
@@ -945,7 +945,7 @@ hol_append (struct hol *hol, struct hol *more)
   while (*cl_end)
     cl_end = &(*cl_end)->next;
   *cl_end = more->clusters;
-  more->clusters = 0;
+  more->clusters = NULL;
 
   /* Merge entries.  */
   if (more->num_entries > 0)
@@ -1317,7 +1317,7 @@ hol_entry_help (struct hol_entry *entry, const struct argp_state *state,
     {
       const char *tstr = real->doc ? dgettext (state == NULL ? NULL
                                                : state->root_argp->argp_domain,
-                                               real->doc) : 0;
+                                               real->doc) : NULL;
       const char *fstr = filter_doc (tstr, real->key, entry->argp, state);
       if (fstr && *fstr)
         {
@@ -1479,7 +1479,7 @@ hol_usage (struct hol *hol, argp_fmtstream_t stream)
                                  entry->argp->argp_domain, &snao_end);
       if (snao_end > short_no_arg_opts)
         {
-          *snao_end++ = 0;
+          *snao_end++ = '\0';
           __argp_fmtstream_printf (stream, " [-%s]", short_no_arg_opts);
         }
 
@@ -1593,7 +1593,7 @@ argp_doc (const struct argp *argp, const struct argp_state *state,
 {
   const char *text;
   const char *inp_text;
-  void *input = 0;
+  void *input = NULL;
   int anything = 0;
   size_t inp_text_limit = 0;
   const char *doc = argp->doc ? dgettext (argp->argp_domain, argp->doc) : NULL;
@@ -1681,7 +1681,7 @@ _help (const struct argp *argp, const struct argp_state *state, FILE *stream,
        unsigned flags, char *name)
 {
   int anything = 0;             /* Whether we've output anything.  */
-  struct hol *hol = 0;
+  struct hol *hol = NULL;
   argp_fmtstream_t fs;
 
   if (! stream)

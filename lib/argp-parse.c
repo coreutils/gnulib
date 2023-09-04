@@ -355,9 +355,9 @@ convert_options (const struct argp *argp,
       group->args_processed = 0;
       group->parent = parent;
       group->parent_index = parent_index;
-      group->input = 0;
-      group->hook = 0;
-      group->child_inputs = 0;
+      group->input = NULL;
+      group->hook = NULL;
+      group->child_inputs = NULL;
 
       if (children)
         /* Assign GROUP's CHILD_INPUTS field some space from
@@ -373,7 +373,7 @@ convert_options (const struct argp *argp,
       parent = group++;
     }
   else
-    parent = 0;
+    parent = NULL;
 
   if (children)
     {
@@ -912,7 +912,7 @@ __argp_parse (const struct argp *argp, int argc, char **argv, unsigned flags,
       (child++)->argp = &argp_default_argp;
       if (argp_program_version || argp_program_version_hook)
         (child++)->argp = &argp_version_argp;
-      child->argp = 0;
+      child->argp = NULL;
 
       argp = top_argp;
     }
@@ -949,7 +949,7 @@ __argp_input (const struct argp *argp, const struct argp_state *state)
           return group->input;
     }
 
-  return 0;
+  return NULL;
 }
 #ifdef weak_alias
 weak_alias (__argp_input, _argp_input)
