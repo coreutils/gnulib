@@ -57,20 +57,20 @@ main (int argc, char *argv[])
     char key[16];
     size_t key_len = sizeof key;
     memset (key, '\x0b', sizeof key);
-    char *data = "Hi There";
+    const char *data = "Hi There";
     size_t data_len = 8;
-    char *digest =
+    const char *digest =
       "\x67\x5b\x0b\x3a\x1b\x4d\xdf\x4e\x12\x48\x72\xda\x6c\x2f\x63\x2b"
       "\xfe\xd9\x57\xe9";
     hmac_check (key, key_len, data, data_len, digest);
   }
 
   {
-    char *key = "Jefe";
+    const char *key = "Jefe";
     size_t key_len = 4;
-    char *data = "what do ya want for nothing?";
+    const char *data = "what do ya want for nothing?";
     size_t data_len = 28;
-    char *digest =
+    const char *digest =
       "\xef\xfc\xdf\x6a\xe5\xeb\x2f\xa2\xd2\x74\x16\xd5\xf1\x84\xdf\x9c"
       "\x25\x9a\x7c\x79";
     hmac_check (key, key_len, data, data_len, digest);
@@ -83,7 +83,7 @@ main (int argc, char *argv[])
     char data[50];
     size_t data_len = sizeof data;
     memset (data, '\xDD', sizeof data);
-    char *digest =
+    const char *digest =
       "\x12\x5d\x73\x42\xb9\xac\x11\xcd\x91\xa3\x9a\xf4\x8a\xa1\x7b\x4f"
       "\x63\xf1\x75\xd3";
     hmac_check (key, key_len, data, data_len, digest);
@@ -93,9 +93,9 @@ main (int argc, char *argv[])
     char key[65];
     size_t key_len = sizeof key;
     memset (key, '\x0b', sizeof key);
-    char *data = "Hi There";
+    const char *data = "Hi There";
     size_t data_len = 8;
-    char *digest =
+    const char *digest =
       "\x29\xda\xa9\xe9\xcc\x4b\x9f\x09\x48\x29\xdc\xd4\x03\xc0\x69\x27"
       "\xd8\xa9\x53\x93";
     hmac_check (key, key_len, data, data_len, digest);

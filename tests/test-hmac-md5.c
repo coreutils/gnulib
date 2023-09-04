@@ -59,19 +59,19 @@ main (int argc, char *argv[])
     char key[16];
     size_t key_len = sizeof key;
     memset (key, '\x0b', sizeof key);
-    char *data = "Hi There";
+    const char *data = "Hi There";
     size_t data_len = 8;
-    char *digest =
+    const char *digest =
       "\x92\x94\x72\x7a\x36\x38\xbb\x1c\x13\xf4\x8e\xf8\x15\x8b\xfc\x9d";
     hmac_check (key, key_len, data, data_len, digest);
   }
 
   {
-    char *key = "Jefe";
+    const char *key = "Jefe";
     size_t key_len = 4;
-    char *data = "what do ya want for nothing?";
+    const char *data = "what do ya want for nothing?";
     size_t data_len = 28;
-    char *digest =
+    const char *digest =
       "\x75\x0c\x78\x3e\x6a\xb0\xb5\x03\xea\xa8\x6e\x31\x0a\x5d\xb7\x38";
     hmac_check (key, key_len, data, data_len, digest);
   }
@@ -83,7 +83,7 @@ main (int argc, char *argv[])
     char data[50];
     size_t data_len = sizeof data;
     memset (data, '\xDD', sizeof data);
-    char *digest =
+    const char *digest =
       "\x56\xbe\x34\x52\x1d\x14\x4c\x88\xdb\xb8\xc7\x33\xf0\xe8\xb3\xf6";
     hmac_check (key, key_len, data, data_len, digest);
   }
@@ -92,9 +92,9 @@ main (int argc, char *argv[])
     char key[65];
     size_t key_len = sizeof key;
     memset (key, '\x0b', sizeof key);
-    char *data = "Hi There";
+    const char *data = "Hi There";
     size_t data_len = 8;
-    char *digest =
+    const char *digest =
       "\xd6\x07\x5b\xee\x4d\x91\x80\xd8\xd1\xa2\x99\x29\x5e\x7c\xc9\xcb";
     hmac_check (key, key_len, data, data_len, digest);
   }
