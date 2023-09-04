@@ -26,9 +26,9 @@ static struct {
   unsigned sign; unsigned exponent; unsigned frac;
 } const float_tests[] =
   {
-   {0, 0, 0, 0},
-   {-0.0, 1, 0, 0},
-   {0.1, 0, 0x7b, 0x4ccccd}
+   {0.0f, 0, 0, 0},
+   {-0.0f, 1, 0, 0},
+   {0.1f, 0, 0x7b, 0x4ccccd}
   };
 
 static struct {
@@ -36,8 +36,8 @@ static struct {
   unsigned sign; unsigned exponent; unsigned frac_hi; unsigned frac_lo;
 } const double_tests[] =
   {
-   {0, 0, 0, 0},
-   {-0.0, 1, 0, 0 },
+   {0.0, 0, 0, 0, 0},
+   {-0.0, 1, 0, 0, 0},
    {0.1, 0, 0x3fb, 0x99999, 0x9999999a}
   };
 
