@@ -1,4 +1,4 @@
-# threads_h.m4 serial 10.2
+# threads_h.m4 serial 10.3
 dnl Copyright (C) 2019-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -110,7 +110,7 @@ AC_DEFUN_ONCE([gl_THREADS_H],
      else
        AC_COMPILE_IFELSE(
          [AC_LANG_PROGRAM([gl_THREAD_LOCAL_DEFINITION[
-            int _Thread_local x;
+            _Thread_local int x;
           ]], [[
             x = 42;
           ]])],
