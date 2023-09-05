@@ -107,6 +107,7 @@ init_atomic_int (struct atomic_int *ai)
           else
             {
               perror ("sem_open failed");
+              fflush (stderr);
               abort ();
             }
         }
