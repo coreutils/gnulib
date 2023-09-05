@@ -38,7 +38,7 @@ test_u8_grapheme_next (const char *input, size_t n, size_t len)
       if (next == NULL)
         fputs ("u8_grapheme_next returned NULL", stderr);
       else
-        fprintf (stderr, "u8_grapheme_next skipped %zu bytes", next - s);
+        fprintf (stderr, "u8_grapheme_next skipped %tu bytes", next - s);
       fprintf (stderr, ", expected %zu:\n", len);
       for (i = 0; i < n; i++)
         fprintf (stderr, " %02x", s[i]);
