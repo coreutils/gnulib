@@ -11,7 +11,7 @@ Portability problems fixed by either Gnulib module @code{fprintf-posix} or @code
 @item
 This function does not support size specifiers as in C99 (@code{hh}, @code{ll},
 @code{j}, @code{t}, @code{z}) on some platforms:
-AIX 5.1, HP-UX 11.23, IRIX 6.5, Solaris 9, Cygwin 1.5.24, mingw, MSVC 14.
+AIX 5.1, HP-UX 11.23, IRIX 6.5, Solaris 9, Cygwin 1.5.24, old mingw, MSVC 9.
 @item
 This function does not support size specifiers as in C23 (@code{w8},
 @code{w16}, @code{w32}, @code{w64}, @code{wf8}, @code{wf16}, @code{wf32},
