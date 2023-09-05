@@ -50,10 +50,12 @@ test_u_strtok (void)
         'A', 'B', 'C', 'D', 'A', 'B', 'C', 'D', 'A', 'B', 'D', 'E', 0
       };
     ucs4_t u_delim[] = { 0x3000, 0x3001, 0 };
-    size_t input_len = 6 * SIZEOF (u_input);
-    UNIT *input = (UNIT *) malloc (input_len);
-    size_t delim_len = 6 * SIZEOF (u_delim);
-    UNIT *delim = (UNIT *) malloc (delim_len);
+    /* Convert ucs4_t[] to UNIT[].
+       Every ucs4_t yields at most 4 / sizeof (UNIT) units.  */
+    size_t input_len = SIZEOF (u_input) * (4 / sizeof (UNIT));
+    UNIT *input = (UNIT *) malloc (input_len * sizeof (UNIT));
+    size_t delim_len = SIZEOF (u_delim) * (4 / sizeof (UNIT));
+    UNIT *delim = (UNIT *) malloc (delim_len * sizeof (UNIT));
     UNIT *state;
     const UNIT *result;
     UNIT *ptr, *first_ptr, *second_ptr;
