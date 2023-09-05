@@ -57,7 +57,7 @@ test_u16_grapheme_next (size_t len, ...)
       if (next == NULL)
         fputs ("u16_grapheme_next returned NULL", stderr);
       else
-        fprintf (stderr, "u16_grapheme_next skipped %zu units", next - s);
+        fprintf (stderr, "u16_grapheme_next skipped %tu units", next - s);
       fprintf (stderr, ", expected %zu:\n", len);
       for (i = 0; i < n; i++)
         fprintf (stderr, " %04x", s[i]);
