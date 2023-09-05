@@ -48,3 +48,50 @@ Test Suite
 
 When adding a module, add a unit test module as well.  This is our best
 chance to catch portability problems.
+
+Warning Options
+===============
+
+For packages that use Gnulib, we recommend to use the 'warnings' or
+'manywarnings' module, as documented in
+https://www.gnu.org/software/gnulib/manual/html_node/warnings.html
+https://www.gnu.org/software/gnulib/manual/html_node/manywarnings.html
+
+When building Gnulib testdirs, e.g. when preparing a Gnulib patch,
+there are three possible approaches:
+
+* The simplest approach, which warns about the most common mistakes, is to
+  use GCC's -Wall option, both for C and C++ compilation units. Just set
+    $ ./configure CPPFLAGS="-Wall"
+    $ make
+  You should generally fix all compiler warnings that you see from this
+  approach.
+
+* If you are developing on a glibc system and have GCC version 13 binaries
+  available, here's a recipe that will find more mistakes, but is nearly
+  as easy to use. Here, different warning options are needed for C and
+  for C++:
+    $ WARN_GCC13="-fanalyzer -Wall -Warith-conversion -Wcast-align=strict -Wdate-time -Wdisabled-optimization -Wduplicated-cond -Wextra -Wformat-signedness -Winit-self -Winvalid-pch -Wlogical-op -Wmissing-include-dirs -Wopenmp-simd -Woverlength-strings -Wpacked -Wpointer-arith -Wstrict-overflow -Wsuggest-final-methods -Wsuggest-final-types -Wsync-nand -Wsystem-headers -Wtrampolines -Wuninitialized -Wunknown-pragmas -Wunsafe-loop-optimizations -Wvariadic-macros -Wvector-operation-performance -Wwrite-strings -Warray-bounds=2 -Wattribute-alias=2 -Wformat-overflow=2 -Wformat-truncation=2 -Wshift-overflow=2 -Wunused-const-variable=2 -Wvla-larger-than=4031 -Wno-empty-body -Wno-analyzer-allocation-size -Wno-analyzer-fd-double-close -Wno-analyzer-double-fclose -Wno-analyzer-double-free -Wno-analyzer-fd-leak -Wno-analyzer-fd-use-after-close -Wno-analyzer-fd-use-without-check -Wno-analyzer-free-of-non-heap -Wno-analyzer-malloc-leak -Wno-analyzer-mismatching-deallocation -Wno-analyzer-null-argument -Wno-analyzer-null-dereference -Wno-analyzer-out-of-bounds -Wno-analyzer-possible-null-argument -Wno-analyzer-possible-null-dereference -Wno-analyzer-use-after-free -Wno-analyzer-use-of-pointer-in-stale-stack-frame -Wno-analyzer-use-of-uninitialized-value -Wno-analyzer-va-arg-type-mismatch -Wno-attribute-warning -Wno-cast-align -Wno-clobbered -Wno-dangling-pointer -Wno-format -Wno-implicit-fallthrough -Wno-maybe-uninitialized -Wno-missing-field-initializers -Wno-restrict -Wno-sign-compare -Wno-switch -Wno-type-limits -Wno-unused-parameter"
+    $ WARN_CFLAGS_GCC13="$WARN_GCC13 -Wnested-externs -Wshadow=local -Wno-discarded-qualifiers"
+    $ WARN_CXXFLAGS_GCC13="$WARN_GCC13 -Wno-cpp"
+    $ ./configure CFLAGS="-O2 -g $WARN_CFLAGS_GCC13" CXXFLAGS="-O2 -g $WARN_CXXFLAGS_GCC13"
+    $ make
+  You should generally fix all compiler warnings that you see from this
+  approach, or report when this approach produced a pointless warning
+  (so that we can fix the value of WARN_GCC13 above).
+
+* If you are developing on a glibc system and have GCC version 13 binaries
+  available: Here's a recipe that will find even more mistakes, but it
+  requires that you are willing to filter out and ignore pointless warnings.
+    $ WARN_GCC13="-fanalyzer -Wall -Warith-conversion -Wcast-align=strict -Wdate-time -Wdisabled-optimization -Wduplicated-cond -Wextra -Wformat-signedness -Winit-self -Winvalid-pch -Wlogical-op -Wmissing-include-dirs -Wnull-dereference -Wopenmp-simd -Woverlength-strings -Wpacked -Wpointer-arith -Wstrict-overflow -Wsuggest-attribute=format -Wsuggest-final-methods -Wsuggest-final-types -Wsync-nand -Wsystem-headers -Wtrampolines -Wuninitialized -Wunknown-pragmas -Wunsafe-loop-optimizations -Wvariadic-macros -Wvector-operation-performance -Wwrite-strings -Warray-bounds=2 -Wattribute-alias=2 -Wformat-overflow=2 -Wformat=2 -Wformat-truncation=2 -Wimplicit-fallthrough=5 -Wshift-overflow=2 -Wunused-const-variable=2 -Wvla-larger-than=4031 -Wno-empty-body -Wno-analyzer-double-fclose -Wno-analyzer-double-free -Wno-analyzer-free-of-non-heap -Wno-analyzer-malloc-leak -Wno-analyzer-null-argument -Wno-analyzer-null-dereference -Wno-analyzer-use-after-free -Wno-attribute-warning -Wno-cast-align -Wno-clobbered -Wno-format-nonliteral -Wno-sign-compare -Wno-type-limits -Wno-unused-parameter"
+    $ WARN_CFLAGS_GCC13="$WARN_GCC13 -Wnested-externs -Wshadow=local"
+    $ WARN_CXXFLAGS_GCC13="$WARN_GCC13 -Wno-cpp"
+    $ ./configure CFLAGS="-O2 -g $WARN_CFLAGS_GCC13" CXXFLAGS="-O2 -g $WARN_CXXFLAGS_GCC13"
+    $ make
+  With this approach, use your own judgement whether to fix warnings
+  arising from your new code or not.
+  Do *not* submit patches to silence warnings from existing code:
+    - For these warnings, often the cure will be worse than the disease.
+    - Some of the warnings are false positives. Rather than silencing
+      these warnings, we prefer to report them in the GCC bug tracker
+      and wait until they are fixed in a future GCC release.
