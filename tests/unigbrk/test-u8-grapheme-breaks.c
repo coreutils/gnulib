@@ -63,6 +63,7 @@ test_u8_grapheme_breaks (const char *input, const char *expected)
           fprintf (stderr, "  %d", breaks[j]);
         putc ('\n', stderr);
 
+        fflush (stderr);
         abort ();
       }
 

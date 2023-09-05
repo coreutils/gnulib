@@ -62,6 +62,7 @@ test_u32_grapheme_next (size_t len, ...)
       for (i = 0; i < n; i++)
         fprintf (stderr, " %04x", s[i]);
       putc ('\n', stderr);
+      fflush (stderr);
       abort ();
     }
 }

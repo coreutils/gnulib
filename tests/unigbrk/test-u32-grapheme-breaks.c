@@ -74,6 +74,7 @@ test_u32_grapheme_breaks (const char *expected, ...)
           fprintf (stderr, "  %d", breaks[j]);
         putc ('\n', stderr);
 
+        fflush (stderr);
         abort ();
       }
 }

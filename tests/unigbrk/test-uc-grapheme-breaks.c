@@ -88,6 +88,7 @@ test_uc_grapheme_breaks (const char *expected, ucs4_t *s, size_t n,
           fprintf (stderr, "  %d", breaks[j]);
         putc ('\n', stderr);
 
+        fflush (stderr);
         abort ();
       }
 }

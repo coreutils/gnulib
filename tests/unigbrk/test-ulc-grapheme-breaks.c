@@ -77,6 +77,7 @@ main ()
             fprintf (stderr, "  %d", p[j]);
           putc ('\n', stderr);
 
+          fflush (stderr);
           abort ();
         }
   }
