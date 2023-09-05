@@ -21,6 +21,7 @@
 #include "string-buffer.h"
 
 #include <string.h>
+#include <wchar.h>
 
 #include "macros.h"
 
