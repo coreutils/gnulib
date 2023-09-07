@@ -41,6 +41,7 @@ uchar.h: uchar.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) 
 	      -e 's|@''GNULIBHEADERS_OVERRIDE_CHAR16_T''@|$(GNULIBHEADERS_OVERRIDE_CHAR16_T)|g' \
 	      -e 's|@''GNULIBHEADERS_OVERRIDE_CHAR32_T''@|$(GNULIBHEADERS_OVERRIDE_CHAR32_T)|g' \
 	      -e 's/@''GNULIB_BTOC32''@/$(GNULIB_BTOC32)/g' \
+	      -e 's/@''GNULIB_BTOWC''@/$(GNULIB_BTOWC)/g' \
 	      -e 's/@''GNULIB_C32ISALNUM''@/$(GNULIB_C32ISALNUM)/g' \
 	      -e 's/@''GNULIB_C32ISALPHA''@/$(GNULIB_C32ISALPHA)/g' \
 	      -e 's/@''GNULIB_C32ISBLANK''@/$(GNULIB_C32ISBLANK)/g' \
@@ -62,11 +63,20 @@ uchar.h: uchar.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) 
 	      -e 's/@''GNULIB_C32STOMBS''@/$(GNULIB_C32STOMBS)/g' \
 	      -e 's/@''GNULIB_C32SWIDTH''@/$(GNULIB_C32SWIDTH)/g' \
 	      -e 's/@''GNULIB_C32TOB''@/$(GNULIB_C32TOB)/g' \
+	      -e 's/@''GNULIB_ISWDIGIT''@/$(GNULIB_ISWDIGIT)/g' \
+	      -e 's/@''GNULIB_ISWXDIGIT''@/$(GNULIB_ISWXDIGIT)/g' \
 	      -e 's/@''GNULIB_MBRTOC16''@/$(GNULIB_MBRTOC16)/g' \
 	      -e 's/@''GNULIB_MBRTOC32''@/$(GNULIB_MBRTOC32)/g' \
 	      -e 's/@''GNULIB_MBSNRTOC32S''@/$(GNULIB_MBSNRTOC32S)/g' \
+	      -e 's/@''GNULIB_MBSNRTOWCS''@/$(GNULIB_MBSNRTOWCS)/g' \
 	      -e 's/@''GNULIB_MBSRTOC32S''@/$(GNULIB_MBSRTOC32S)/g' \
+	      -e 's/@''GNULIB_MBSRTOWCS''@/$(GNULIB_MBSRTOWCS)/g' \
 	      -e 's/@''GNULIB_MBSTOC32S''@/$(GNULIB_MBSTOC32S)/g' \
+	      -e 's/@''GNULIB_WCSNRTOMBS''@/$(GNULIB_WCSNRTOMBS)/g' \
+	      -e 's/@''GNULIB_WCSRTOMBS''@/$(GNULIB_WCSRTOMBS)/g' \
+	      -e 's/@''GNULIB_WCSWIDTH''@/$(GNULIB_WCSWIDTH)/g' \
+	      -e 's/@''GNULIB_WCTOB''@/$(GNULIB_WCTOB)/g' \
+	      -e 's/@''GNULIB_WCWIDTH''@/$(GNULIB_WCWIDTH)/g' \
 	      -e 's|@''HAVE_C32RTOMB''@|$(HAVE_C32RTOMB)|g' \
 	      -e 's|@''HAVE_MBRTOC16''@|$(HAVE_MBRTOC16)|g' \
 	      -e 's|@''HAVE_MBRTOC32''@|$(HAVE_MBRTOC32)|g' \
