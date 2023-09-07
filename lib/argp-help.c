@@ -165,7 +165,7 @@ fill_in_uparams (const struct argp_state *state)
   const char *var = getenv ("ARGP_HELP_FMT");
   struct uparams new_params = uparams;
 
-#define SKIPWS(p) do { while (isspace ((unsigned char) *p)) p++; } while (0);
+#define SKIPWS(p) do { while (isspace ((unsigned char) *p)) p++; } while (0)
 
   if (var)
     {
