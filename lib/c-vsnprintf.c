@@ -21,7 +21,7 @@
 #endif
 
 /* Specification.  */
-#include <stdio.h>
+#include "c-vsnprintf.h"
 
 #include <errno.h>
 #include <limits.h>

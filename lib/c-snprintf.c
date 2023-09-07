@@ -19,7 +19,7 @@
 #include <config.h>
 
 /* Specification.  */
-#include <stdio.h>
+#include "c-snprintf.h"
 
 #include <errno.h>
 #include <limits.h>

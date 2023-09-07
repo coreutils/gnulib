@@ -16,6 +16,9 @@
 
 #include <config.h>
 
+/* Specification.  */
+#include "c-vasnprintf.h"
+
 #include <string.h>
 
 #include "printf-parse.h"
