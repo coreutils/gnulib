@@ -29,9 +29,9 @@ main (void)
     case LOCK_EX:
     case LOCK_NB:
     case LOCK_UN:
-      ;
+      break;
     default:
-      ;
+      break;
     }
   return 0;
 }

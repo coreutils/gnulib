@@ -92,6 +92,7 @@ main (int argc, char *argv[])
           for (fd = 3; fd < 20; fd++)
             close (fd);
         }
+      break;
     default:
       break;
     }
