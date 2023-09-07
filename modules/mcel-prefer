@@ -1,0 +1,28 @@
+Description:
+Prefer mcel to the mbiter family.  mcel is simpler and can be faster.
+However, it does not support some obsolete encodings that are also not
+supported by glibc locales, and the caller is responsible for
+coalescing sequences of error-encoding bytes if that is desired.
+
+Files:
+
+Depends-on:
+mcel
+
+configure.ac-early:
+# Prefer mcel by default.  This can be overridden via
+# './configure GNULIB_MCEL_PREFER=no'.
+: ${GNULIB_MCEL_PREFER=yes}
+
+configure.ac:
+gl_MODULE_INDICATOR([mcel-prefer])
+
+Makefile.am:
+
+Include:
+
+License:
+LGPLv2+
+
+Maintainer:
+Paul Eggert
