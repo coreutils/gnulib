@@ -23,8 +23,14 @@
 
 #include <ctype.h>
 #include <limits.h>
+#include <stdlib.h>
+#include <uchar.h>
 
-#include "mbuiterf.h"
+#if GNULIB_MCEL_PREFER
+# include "mcel.h"
+#else
+# include "mbuiterf.h"
+#endif
 
 /* Compare the character strings S1 and S2, ignoring case, returning less than,
    equal to or greater than zero if S1 is lexicographically less than, equal to
@@ -45,6 +51,16 @@ mbscasecmp (const char *s1, const char *s2)
      most often already in the very few first characters.  */
   if (MB_CUR_MAX > 1)
     {
+#if GNULIB_MCEL_PREFER
+      while (true)
+        {
+          mcel_t g1 = mcel_scanz (iter1); iter1 += g1.len;
+          mcel_t g2 = mcel_scanz (iter2); iter2 += g2.len;
+          int cmp = mcel_tocmp (c32tolower, g1, g2);
+          if (cmp | !g1.ch)
+            return cmp;
+        }
+#else
       mbuif_state_t state1;
       mbuif_init (state1);
 
@@ -70,6 +86,7 @@ mbscasecmp (const char *s1, const char *s2)
         /* s1 terminated before s2.  */
         return -1;
       return 0;
+#endif
     }
   else
     for (;;)

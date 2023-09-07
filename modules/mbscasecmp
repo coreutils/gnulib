@@ -5,8 +5,11 @@ Files:
 lib/mbscasecmp.c
 
 Depends-on:
-mbuiterf
+c32tolower
+mbuiterf            [test "$GNULIB_MCEL_PREFER" != yes]
+stdlib
 string
+uchar
 
 configure.ac:
 gl_STRING_MODULE_INDICATOR([mbscasecmp])
