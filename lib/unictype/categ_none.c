@@ -27,4 +27,4 @@ always_false (ucs4_t uc, uint32_t bitmask)
 }
 
 const uc_general_category_t _UC_CATEGORY_NONE =
-  { 0, 1, { &always_false } };
+  { 0, 1, { .lookup_fn = &always_false } };
