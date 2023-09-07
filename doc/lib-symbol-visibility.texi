@@ -140,9 +140,9 @@ for the compilation of the sources that make up the library.
 Define a macro specific to your library like this.
 @smallexample
 #if HAVE_VISIBILITY && BUILDING_LIBFOO
-#define LIBFOO_DLL_EXPORTED __attribute__((__visibility__("default")))
+# define LIBFOO_DLL_EXPORTED __attribute__((__visibility__("default")))
 #else
-#define LIBFOO_DLL_EXPORTED
+# define LIBFOO_DLL_EXPORTED
 #endif
 @end smallexample
 This macro should be enabled in all public header files of your library.
@@ -168,27 +168,35 @@ Note about other compilers: MSVC support can be added easily, by extending
 the definition of the macro mentioned above, to something like this:
 @smallexample
 #if HAVE_VISIBILITY && BUILDING_LIBFOO
-#define LIBFOO_DLL_EXPORTED __attribute__((__visibility__("default")))
-#elif (defined _WIN32 && !defined __CYGWIN__) && BUILDING_SHARED && BUILDING_LIBFOO
-#define LIBFOO_DLL_EXPORTED __declspec(dllexport)
-#elif (defined _WIN32 && !defined __CYGWIN__) && BUILDING_SHARED
-#define LIBFOO_DLL_EXPORTED __declspec(dllimport)
+# define LIBFOO_DLL_EXPORTED __attribute__((__visibility__("default")))
+#elif (defined _WIN32 && !defined __CYGWIN__) && @@BUILDING_SHARED@@ && BUILDING_LIBFOO
+# if defined DLL_EXPORT
+#  define LIBFOO_DLL_EXPORTED __declspec(dllexport)
+# else
+#  define LIBFOO_DLL_EXPORTED
+# endif
+#elif (defined _WIN32 && !defined __CYGWIN__) && @@BUILDING_SHARED@@
+# define LIBFOO_DLL_EXPORTED __declspec(dllimport)
 #else
-#define LIBFOO_DLL_EXPORTED
+# define LIBFOO_DLL_EXPORTED
 #endif
 @end smallexample
 @noindent
-Here @code{BUILDING_SHARED} is a C macro that you have to define.  It
-ought to evaluate to 1 in a build configured with @samp{--enable-shared},
+Here @code{BUILDING_SHARED} is an Autoconf variable that you have to define.
+It ought to evaluate to 1 in a build configured with @samp{--enable-shared},
 or to 0 in a build configured with @samp{--disable-shared}.
 You may use the following @samp{configure.ac} snippet:
 
 @smallexample
   if test "$enable_shared" = yes; then
-    building_shared=1
+    BUILDING_SHARED=1
   else
-    building_shared=0
+    BUILDING_SHARED=0
   fi
-  AC_DEFINE_UNQUOTED([BUILDING_SHARED], [$building_shared],
-    [Define when --enable-shared is used.])
+  AC_SUBST([BUILDING_SHARED])
 @end smallexample
+
+@noindent
+And @code{DLL_EXPORT} is defined by Libtool, on Windows platforms, when
+compiling for a DLL.  It is not defined when Libtool compiles an object
+file meant to be linked statically into some executable.
