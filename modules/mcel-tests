@@ -1,0 +1,12 @@
+Files:
+tests/test-mcel.c
+
+Depends-on:
+assert-h
+setlocale
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-mcel
+check_PROGRAMS += test-mcel
