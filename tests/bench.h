@@ -60,7 +60,7 @@ timing_end (struct timings_state *ts)
                  + usage.ru_stime.tv_usec - ts->sys_start.tv_usec;
 }
 
-static void
+_GL_UNUSED static void
 timing_output (const struct timings_state *ts)
 {
   printf ("real %10.6f\n", (double)ts->real_usec / 1000000.0);

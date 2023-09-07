@@ -1,0 +1,23 @@
+Files:
+tests/bench-mcel.c
+tests/bench-multibyte.h
+tests/bench.h
+
+Depends-on:
+mbiter
+mbiterf
+mbrtoc32-regular
+mbuiter
+mbuiterf
+mcel
+setlocale
+striconv
+getrusage
+gettimeofday
+
+configure.ac:
+
+Makefile.am:
+noinst_PROGRAMS += bench-mcel
+bench_mcel_CPPFLAGS = $(AM_CPPFLAGS) -DNDEBUG
+bench_mcel_LDADD = $(LDADD) $(LIBUNISTRING) $(SETLOCALE_LIB) $(MBRTOWC_LIB) $(LIBC32CONV)
