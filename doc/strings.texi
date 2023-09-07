@@ -26,6 +26,7 @@ in memory of a running C program.
 
 @menu
 * C strings::
+* Iterating through strings::
 * Strings with NUL characters::
 * String Functions in C Locale::
 * Comparison of string APIs::
@@ -176,35 +177,84 @@ Gnulib has functions @func{mbscasecmp}, @func{mbsncasecmp},
 function @code{ulc_casecmp} is preferable to these functions.
 @end itemize
 
-Gnulib also has additional API.
+@cartouche
+@emph{A C string can contain encoding errors.}
+@end cartouche
 
-@menu
-* Iterating through strings::
-@end menu
+Not every NUL-terminated byte sequence represents a valid multibyte
+string.  Byte sequences can contain encoding errors, that is, bytes or
+byte sequences that are invalid and do not represent characters.
+
+String functions like @code{mbscasecmp} and @code{strcoll} whose
+behavior depends on encoding have unspecified behavior on strings
+containing encoding errors, unless the behavior is specifically
+documented.  If an application needs a particular behavior on these
+strings it can iterate through them itself, as described in the next
+subsection.
 
 @node Iterating through strings
-@subsubsection Iterating through strings
+@subsection Iterating through strings
 
-For complex string processing, the provided string functions may not be
-enough, and what you need is a way to iterate through a string while
-processing each (possibly multibyte) character in turn.  Gnulib provides
-two modules for this purpose.  Both iterate through the string in
-forward direction.  Iteration in backward direction, that is, from the
-string's end to start, is not provided, as it is too hairy in general.
+For complex string processing, string functions may not be enough, and
+you need to iterate through a string while processing each (possibly
+multibyte) character or encoding error in turn.  Gnulib has several
+modules for iterating forward through a string in this way.  Backward
+iteration, that is, from the string's end to start, is not provided,
+as it is too hairy in general.
 
 @itemize
 @item
-The @code{mbiter} module.  It iterates through a C string whose length
-is already known.
+The @code{mbiter} module iterates through a string whose length
+is already known.  The string can contain NULs and encoding errors.
 @item
-The @code{mbuiter} module.  It iterates through a C string whose length
-is not a-priori known.
+The @code{mbiterf} module is like @code{mbiter}
+except it is more complex and typically faster.
+@item
+The @code{mbuiter} module iterates through a C string whose length
+is not a-priori known.  The string can contain encoding errors and is
+terminated by the first NUL.
+@item
+The @code{mbuiterf} module is like @code{mbuiter}
+except it is more complex and typically faster.
+@item
+The @code{mcel} module is simpler than @code{mbiter} and @code{mbuiter}
+and can be faster than even @code{mbiterf} and @code{mbuiterf}.
+It can iterate through either strings whose length is known, or
+C strings, or strings terminated by other ASCII characters < 0x30.
+@item
+The @code{mcel-prefer} module is like @code{mcel} except that it
+causes some other modules to be based on @code{mcel} instead of
+on the @code{mbiter} family.
 @end itemize
 
-The @code{mbuiter} module is suitable when there is a high probability
-that only the first few multibyte characters need to be inspected.
-Whereas the @code{mbiter} module is better if usually the iteration runs
-through the entire string.
+The choice of modules depends on the application's needs.  The
+@code{mbiter} module family is more suitable for applications that
+treat some sequences of two or more bytes as a single encoding error,
+and for applications that need to support obsolescent encodings on
+non-GNU platforms, such as CP864, EBCDIC, Johab, and Shift JIS.
+In this module family, @code{mbuiter} and @code{mbuiterf} are more
+suitable than @code{mbiter} and @code{mbiterf} when arguments are C strings,
+lengths are not already known, and it is highly likely that only the
+first few multibyte characters need to be inspected.
+
+The @code{mcel} module is simpler and can be faster than the
+@code{mbiter} family, and is more suitable for applications that do
+not need the @code{mbiter} family's special features.
+
+The @code{mcel-prefer} module is like @code{mcel} except that it also
+causes some other modules, such as @code{mbscasecmp}, to use
+@code{mcel} rather than the @code{mbiter} family.  This can be simpler
+and faster.  However, it does not support the obsolescent encodings,
+and it may behave differently on data containing encoding errors where
+behavior is unspecified or undefined, because in @code{mcel} each
+encoding error is a single byte whereas in the @code{mbiter} family a
+single encoding error can contain two or more bytes.
+
+If a package uses @code{mcel-prefer}, it may also want to give
+@command{gnulib-tool} one or more of the options
+@option{--avoid=mbiter}, @option{--avoid=mbiterf},
+@option{--avoid=mbuiter} and @option{--avoid=mbuiterf},
+to avoid packaging modules that are not needed.
 
 @node Strings with NUL characters
 @subsection Strings with NUL characters
