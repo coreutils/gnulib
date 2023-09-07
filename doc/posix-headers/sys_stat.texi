@@ -69,6 +69,7 @@ Network Appliance NFS servers in snapshot directories; see Network
 Appliance bug #195.
 @item
 ClearCase MVFS; see bug id ATRia04618.
+@end itemize
 @item
 On some file systems, @code{st_size} contains bogus information for
 symlinks; use the Gnulib module @code{areadlink-with-size} for a
