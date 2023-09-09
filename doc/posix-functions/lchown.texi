@@ -9,6 +9,14 @@ Gnulib module: lchown
 Portability problems fixed by Gnulib:
 @itemize
 @item
+This function is missing on some platforms; however, the replacement
+fails with @code{ENOSYS}:
+mingw, MSVC 14.
+@item
+This function is missing on some platforms; however, the replacement
+fails on symlinks:
+Minix 3.2.1.
+@item
 Some platforms fail to detect trailing slash on non-directories, as in
 @code{lchown("link-to-file/",uid,gid)}:
 FreeBSD 7.2, Solaris 9.
@@ -17,11 +25,6 @@ Some platforms fail to update the change time when at least one
 argument was not -1, but no ownership changes resulted.  However,
 without @code{lchmod}, the replacement only fixes this for non-symlinks:
 OpenBSD 4.0.
-@item
-This function is missing on some platforms; however, the replacement
-fails on symlinks if @code{chown} is supported, and fails altogether
-with @code{ENOSYS} otherwise:
-Minix 3.1.8, mingw, MSVC 14.
 @end itemize
 
 Portability problems not fixed by Gnulib:

@@ -30,7 +30,7 @@
 
 /* If the system chown does not follow symlinks, we don't want it
    replaced by gnulib's chown, which does follow symlinks.  */
-# if CHOWN_MODIFIES_SYMLINK
+# if CHOWN_MODIFIES_SYMLINK /* native Windows and some very old platforms */
 #  undef chown
 # endif
 

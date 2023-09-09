@@ -57,7 +57,7 @@ rpl_chown (const char *file, uid_t uid, gid_t gid)
   bool stat_valid = false;
   int result;
 
-# if CHOWN_CHANGE_TIME_BUG
+# if CHOWN_CHANGE_TIME_BUG /* OpenBSD 7.2 */
   if (gid != (gid_t) -1 || uid != (uid_t) -1)
     {
       if (stat (file, &st))
@@ -66,7 +66,7 @@ rpl_chown (const char *file, uid_t uid, gid_t gid)
     }
 # endif
 
-# if CHOWN_FAILS_TO_HONOR_ID_OF_NEGATIVE_ONE
+# if CHOWN_FAILS_TO_HONOR_ID_OF_NEGATIVE_ONE /* some very old platforms */
   if (gid == (gid_t) -1 || uid == (uid_t) -1)
     {
       /* Stat file to get id(s) that should remain unchanged.  */
@@ -79,7 +79,7 @@ rpl_chown (const char *file, uid_t uid, gid_t gid)
     }
 # endif
 
-# if CHOWN_MODIFIES_SYMLINK
+# if CHOWN_MODIFIES_SYMLINK /* some very old platforms */
   {
     /* Handle the case in which the system-supplied chown function
        does *not* follow symlinks.  Instead, it changes permissions
@@ -118,7 +118,7 @@ rpl_chown (const char *file, uid_t uid, gid_t gid)
   }
 # endif
 
-# if CHOWN_TRAILING_SLASH_BUG
+# if CHOWN_TRAILING_SLASH_BUG /* macOS 12.5, FreeBSD 7.2, AIX 7.3.1, Solaris 9 */
   if (!stat_valid)
     {
       size_t len = strlen (file);
@@ -129,7 +129,7 @@ rpl_chown (const char *file, uid_t uid, gid_t gid)
 
   result = chown (file, uid, gid);
 
-# if CHOWN_CHANGE_TIME_BUG
+# if CHOWN_CHANGE_TIME_BUG /* OpenBSD 7.2 */
   if (result == 0 && stat_valid
       && (uid == st.st_uid || uid == (uid_t) -1)
       && (gid == st.st_gid || gid == (gid_t) -1))
