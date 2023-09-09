@@ -38,9 +38,9 @@
       char *p = ..., *lim = ...;
       for (mcel_t g; p < lim; p += g.len)
         {
-	  g = mcel_scan (p, lim);
-	  process (g);
-	}
+          g = mcel_scan (p, lim);
+          process (g);
+        }
 
    You can select from G using G.ch, G.err, and G.len.
    G is an encoding error if G.err is nonzero, a character otherwise.
@@ -51,16 +51,16 @@
 
       char *p = ...;
       for (; *p; p++)
-	process (*p);
+        process (*p);
 
    You can use this multi-byte code:
 
       char *p = ...;
       for (mcel_t g; *p; p += g.len)
-	{
-	  g = mcel_scanz (p);
-	  process (g);
-	}
+        {
+          g = mcel_scanz (p);
+          process (g);
+        }
 
    mcel_scant (P, TERMINATOR) is like mcel_scanz (P) except the
    string is terminated by TERMINATOR.  The C standard says that the

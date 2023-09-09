@@ -192,11 +192,11 @@
    we grant an exception to any with "bind" in its list of mount options.
    I.e., those are *not* dummy entries.  */
 #ifdef MOUNTED_GETMNTENT1
-# define ME_DUMMY(Fs_name, Fs_type, Bind)	\
-  (ME_DUMMY_0 (Fs_name, Fs_type)		\
+# define ME_DUMMY(Fs_name, Fs_type, Bind) \
+  (ME_DUMMY_0 (Fs_name, Fs_type) \
    || (strcmp (Fs_type, "none") == 0 && !Bind))
 #else
-# define ME_DUMMY(Fs_name, Fs_type)		\
+# define ME_DUMMY(Fs_name, Fs_type) \
   (ME_DUMMY_0 (Fs_name, Fs_type) || strcmp (Fs_type, "none") == 0)
 #endif
 
