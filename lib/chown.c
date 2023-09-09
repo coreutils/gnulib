@@ -53,8 +53,11 @@ chown (_GL_UNUSED const char *file, _GL_UNUSED uid_t uid,
 int
 rpl_chown (const char *file, uid_t uid, gid_t gid)
 {
+# if (CHOWN_CHANGE_TIME_BUG || CHOWN_FAILS_TO_HONOR_ID_OF_NEGATIVE_ONE \
+      || CHOWN_TRAILING_SLASH_BUG)
   struct stat st;
   bool stat_valid = false;
+# endif
   int result;
 
 # if CHOWN_CHANGE_TIME_BUG /* OpenBSD 7.2 */
@@ -80,42 +83,30 @@ rpl_chown (const char *file, uid_t uid, gid_t gid)
 # endif
 
 # if CHOWN_MODIFIES_SYMLINK /* some very old platforms */
-  {
-    /* Handle the case in which the system-supplied chown function
-       does *not* follow symlinks.  Instead, it changes permissions
-       on the symlink itself.  To work around that, we open the
-       file (but this can fail due to lack of read or write permission) and
-       use fchown on the resulting descriptor.  */
-    int open_flags = O_NONBLOCK | O_NOCTTY | O_CLOEXEC;
-    int fd = open (file, O_RDONLY | open_flags);
-    if (0 <= fd
-        || (errno == EACCES
-            && 0 <= (fd = open (file, O_WRONLY | open_flags))))
-      {
-        int saved_errno;
-        bool fchown_socket_failure;
+  /* The system-supplied chown function does not follow symlinks.
+     If the file is a symlink, open the file (following symlinks), and
+     fchown the resulting descriptor.  Although the open might fail
+     due to lack of permissions, it's the best we can easily do.  */
+  char linkbuf[1];
+  if (0 <= readlink (file, linkbuf, sizeof linkbuf))
+    {
+      int open_flags = O_NONBLOCK | O_NOCTTY | O_CLOEXEC;
+      int fd = open (file, O_RDONLY | open_flags);
+      if (fd < 0
+          && (errno != EACCES
+              || ((fd = open (file, O_WRONLY | open_flags)) < 0))
+          && (errno != EACCES || O_EXEC == O_RDONLY
+              || ((fd = open (file, O_EXEC | open_flags)) < 0))
+          && (errno != EACCES || O_SEARCH == O_RDONLY || O_SEARCH == O_EXEC
+              || ((fd = open (file, O_SEARCH | open_flags)) < 0)))
+        return fd;
 
-        result = fchown (fd, uid, gid);
-        saved_errno = errno;
-
-        /* POSIX says fchown can fail with errno == EINVAL on sockets
-           and pipes, so fall back on chown in that case.  */
-        fchown_socket_failure =
-          (result != 0 && saved_errno == EINVAL
-           && fstat (fd, &st) == 0
-           && (S_ISFIFO (st.st_mode) || S_ISSOCK (st.st_mode)));
-
-        close (fd);
-
-        if (! fchown_socket_failure)
-          {
-            errno = saved_errno;
-            return result;
-          }
-      }
-    else if (errno != EACCES)
-      return -1;
-  }
+      int r = fchown (fd, uid, gid);
+      int err = errno;
+      close (fd);
+      errno = err;
+      return r;
+    }
 # endif
 
 # if CHOWN_TRAILING_SLASH_BUG /* macOS 12.5, FreeBSD 7.2, AIX 7.3.1, Solaris 9 */
