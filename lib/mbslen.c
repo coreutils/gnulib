@@ -22,7 +22,11 @@
 
 #include <stdlib.h>
 
-#include "mbuiterf.h"
+#if GNULIB_MCEL_PREFER
+# include "mcel.h"
+#else
+# include "mbuiterf.h"
+#endif
 
 /* Return the number of multibyte characters in the character string STRING.  */
 size_t
@@ -32,6 +36,10 @@ mbslen (const char *string)
     {
       size_t count = 0;
 
+#if GNULIB_MCEL_PREFER
+      for (; *string; string += mcel_scanz (string).len)
+        count++;
+#else
       mbuif_state_t state;
       const char *iter;
       for (mbuif_init (state), iter = string; mbuif_avail (state, iter); )
@@ -40,6 +48,7 @@ mbslen (const char *string)
           count++;
           iter += mb_len (cur);
         }
+#endif
 
       return count;
     }
