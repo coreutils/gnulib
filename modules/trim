@@ -6,6 +6,7 @@ lib/trim.h
 lib/trim.c
 
 Depends-on:
+c32isspace
 mbchar
 mbuiterf
 mempcpy

@@ -26,8 +26,12 @@
 #include <stddef.h>
 #include <stdlib.h>
 
-#include "mbchar.h"
-#include "mbuiterf.h"
+#if GNULIB_MCEL_PREFER
+# include "mcel.h"
+#else
+# include "mbchar.h"
+# include "mbuiterf.h"
+#endif
 #include "xalloc.h"
 
 char *
@@ -38,6 +42,26 @@ trim2 (const char *s, int how)
 
   if (MB_CUR_MAX > 1)
     {
+#if GNULIB_MCEL_PREFER
+      /* Skip leading whitespace. */
+      if (how != TRIM_TRAILING)
+        for (mcel_t g; *start; start += g.len)
+          {
+            g = mcel_scanz (start);
+            if (!c32isspace (g.ch))
+              break;
+          }
+
+      /* Find start of any trailing whitespace.  */
+      if (how != TRIM_LEADING)
+        for (const char *p = end = start; *p; )
+          {
+            mcel_t g = mcel_scanz (p);
+            p += g.len;
+            if (!c32isspace (g.ch))
+              end = p;
+          }
+#else
       mbuif_state_t state;
       mbuif_init (state);
 
@@ -60,6 +84,7 @@ trim2 (const char *s, int how)
             if (!mb_isspace (cur))
               end = p;
           }
+#endif
     }
   else
     {
