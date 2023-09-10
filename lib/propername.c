@@ -35,8 +35,12 @@
 #endif
 
 #include "trim.h"
-#include "mbchar.h"
-#include "mbuiter.h"
+#if GNULIB_MCEL_PREFER
+# include "mcel.h"
+#else
+# include "mbchar.h"
+# include "mbuiter.h"
+#endif
 #include "localcharset.h"
 #include "c-strcase.h"
 #include "xstriconv.h"
@@ -69,6 +73,33 @@ mbsstr_trimmed_wordbounded (const char *string, const char *sub)
         {
           if (multibyte_locale)
             {
+#if GNULIB_MCEL_PREFER
+              char const *string_iter = string;
+
+              char32_t last_char_before_tsub = 0;
+              while (string_iter < tsub_in_string)
+                {
+                  mcel_t g = mcel_scanz (string_iter);
+                  last_char_before_tsub = g.ch;
+                  string_iter += g.len;
+                }
+
+              string_iter = tsub_in_string;
+              for (char const *tsub_iter = tsub; *tsub_iter;
+                   tsub_iter += mcel_scanz (tsub_iter).len)
+                string_iter += mcel_scanz (string_iter).len;
+
+              if (!c32isalnum (last_char_before_tsub)
+                  && !c32isalnum (mcel_scanz (string_iter).ch))
+                {
+                  found = true;
+                  break;
+                }
+
+              if (!*tsub_in_string)
+                break;
+              string = tsub_in_string + mcel_scanz (tsub_in_string).len;
+#else
               mbui_iterator_t string_iter;
               bool word_boundary_before;
               bool word_boundary_after;
@@ -121,6 +152,7 @@ mbsstr_trimmed_wordbounded (const char *string, const char *sub)
               if (!mbui_avail (string_iter))
                 break;
               string = tsub_in_string + mb_len (mbui_cur (string_iter));
+#endif
             }
           else
             {
