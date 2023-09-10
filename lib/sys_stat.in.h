@@ -599,7 +599,11 @@ _GL_WARN_ON_USE (futimens, "futimens is not portable - "
 
 #if @GNULIB_GETUMASK@
 # if !@HAVE_GETUMASK@
+#  if __GLIBC__ + (__GLIBC_MINOR__ >= 2) > 2
 _GL_FUNCDECL_SYS (getumask, mode_t, (void) _GL_ATTRIBUTE_NOTHROW);
+#  else
+_GL_FUNCDECL_SYS (getumask, mode_t, (void));
+#  endif
 # endif
 _GL_CXXALIAS_SYS (getumask, mode_t, (void));
 # if @HAVE_GETUMASK@
