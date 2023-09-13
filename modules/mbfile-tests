@@ -1,0 +1,14 @@
+Files:
+tests/test-mbfile.sh
+tests/test-mbfile.c
+tests/macros.h
+
+Depends-on:
+setlocale
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-mbfile.sh
+check_PROGRAMS += test-mbfile
+test_mbfile_LDADD = $(LDADD) $(LIBUNISTRING) $(SETLOCALE_LIB) $(MBRTOWC_LIB) $(LIBC32CONV)
