@@ -141,11 +141,11 @@ mbfile_multi_getc (struct mbchar *mbc, struct mbfile_multi *mbf)
     {
       /* Feed the bytes one by one into mbrtoc32.  */
       bytes = mbrtoc32 (&mbc->wc, &mbf->buf[mbf->bufcount], new_bufcount - mbf->bufcount, &mbf->state);
-      mbf->bufcount = new_bufcount;
 
       if (bytes == (size_t) -1)
         {
           /* An invalid multibyte sequence was encountered.  */
+          mbf->bufcount = new_bufcount;
           /* Return a single byte.  */
           bytes = 1;
           mbc->wc_valid = false;
@@ -156,6 +156,7 @@ mbfile_multi_getc (struct mbchar *mbc, struct mbfile_multi *mbf)
       else if (bytes == (size_t) -2)
         {
           /* An incomplete multibyte character.  */
+          mbf->bufcount = new_bufcount;
           if (mbf->bufcount == MBCHAR_BUF_SIZE)
             {
               /* An overlong incomplete multibyte sequence was encountered.  */
@@ -182,19 +183,27 @@ mbfile_multi_getc (struct mbchar *mbc, struct mbfile_multi *mbf)
         }
       else
         {
-          if (bytes == 0)
-            {
-              /* A null 32-bit wide character was encountered.  */
-              bytes = 1;
-              assert (mbf->buf[0] == '\0');
-              assert (mbc->wc == 0);
-            }
           #if !GNULIB_MBRTOC32_REGULAR
-          else if (bytes == (size_t) -3)
-            /* The previous multibyte sequence produced an additional 32-bit
-               wide character.  */
-            bytes = 0;
+          if (bytes == (size_t) -3)
+            {
+              /* The previous multibyte sequence produced an additional 32-bit
+                 wide character.  */
+              mbf->bufcount = new_bufcount;
+              bytes = 0;
+            }
+          else
           #endif
+            {
+              bytes = mbf->bufcount + bytes;
+              mbf->bufcount = new_bufcount;
+              if (bytes == 0)
+                {
+                  /* A null 32-bit wide character was encountered.  */
+                  bytes = 1;
+                  assert (mbf->buf[0] == '\0');
+                  assert (mbc->wc == 0);
+                }
+            }
           mbc->wc_valid = true;
           break;
         }
