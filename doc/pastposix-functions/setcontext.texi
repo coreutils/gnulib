@@ -20,3 +20,6 @@ The effects of this call are system and compiler optimization dependent,
 since it restores the contents of register-allocated variables but not
 the contents of stack-allocated variables.
 @end itemize
+
+Note: A third-party implementation is available at
+@url{https://github.com/kaniini/libucontext/}.
