@@ -873,7 +873,10 @@ read_utmp_from_systemd (idx_t *n_entries, STRUCT_UTMP **utmp_buf, int options)
                           char *display;
                           if (sd_session_get_display (session, &display) < 0)
                             display = NULL;
-                          host = display;
+                          /* Workaround: gdm "forgets" to pass the display to
+                             systemd, thus display may be NULL here.  */
+                          if (display != NULL)
+                            host = display;
                         }
                     }
                   else
