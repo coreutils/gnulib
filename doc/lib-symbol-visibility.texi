@@ -140,16 +140,16 @@ for the compilation of the sources that make up the library.
 Define a macro specific to your library like this.
 @smallexample
 #if HAVE_VISIBILITY && BUILDING_LIBFOO
-# define LIBFOO_DLL_EXPORTED __attribute__((__visibility__("default")))
+# define LIBFOO_SHLIB_EXPORTED __attribute__((__visibility__("default")))
 #else
-# define LIBFOO_DLL_EXPORTED
+# define LIBFOO_SHLIB_EXPORTED
 #endif
 @end smallexample
 This macro should be enabled in all public header files of your library.
 
 @item
 Annotate all variable, function and class declarations in all public header
-files of your library with @samp{LIBFOO_DLL_EXPORTED}.  This annotation
+files of your library with @samp{LIBFOO_SHLIB_EXPORTED}.  This annotation
 can occur at different locations: between the @samp{extern} and the
 type or return type, or just before the entity being declared, or after
 the entire declarator.  My preference is to put it right after @samp{extern},
@@ -168,17 +168,17 @@ Note about other compilers: MSVC support can be added easily, by extending
 the definition of the macro mentioned above, to something like this:
 @smallexample
 #if HAVE_VISIBILITY && BUILDING_LIBFOO
-# define LIBFOO_DLL_EXPORTED __attribute__((__visibility__("default")))
+# define LIBFOO_SHLIB_EXPORTED __attribute__((__visibility__("default")))
 #elif (defined _WIN32 && !defined __CYGWIN__) && @@BUILDING_SHARED@@ && BUILDING_LIBFOO
 # if defined DLL_EXPORT
-#  define LIBFOO_DLL_EXPORTED __declspec(dllexport)
+#  define LIBFOO_SHLIB_EXPORTED __declspec(dllexport)
 # else
-#  define LIBFOO_DLL_EXPORTED
+#  define LIBFOO_SHLIB_EXPORTED
 # endif
 #elif (defined _WIN32 && !defined __CYGWIN__) && @@BUILDING_SHARED@@
-# define LIBFOO_DLL_EXPORTED __declspec(dllimport)
+# define LIBFOO_SHLIB_EXPORTED __declspec(dllimport)
 #else
-# define LIBFOO_DLL_EXPORTED
+# define LIBFOO_SHLIB_EXPORTED
 #endif
 @end smallexample
 @noindent
@@ -198,5 +198,6 @@ You may use the following @samp{configure.ac} snippet:
 
 @noindent
 And @code{DLL_EXPORT} is defined by Libtool, on Windows platforms, when
-compiling for a DLL.  It is not defined when Libtool compiles an object
-file meant to be linked statically into some executable.
+compiling for a shared library (called DLL under Windows).
+It is not defined when Libtool compiles an object file meant to be linked
+statically into some executable.

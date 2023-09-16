@@ -33,11 +33,11 @@ extern "C" {
 /* This can be enabled through the configure --enable-relocatable option.  */
 #if ENABLE_RELOCATABLE
 
-/* When building a DLL, we must export some functions.  Note that because
-   this is a private .h file, we don't need to use __declspec(dllimport)
-   in any case.  */
+/* When building a shared library, we must export some functions.
+   Note that because this is a private .h file, we don't need to use
+   __declspec(dllimport) in any case.  */
 #if HAVE_VISIBILITY && BUILDING_DLL
-# define RELOCATABLE_DLL_EXPORTED __attribute__((__visibility__("default")))
+# define RELOCATABLE_SHLIB_EXPORTED __attribute__((__visibility__("default")))
 #elif defined _MSC_VER && BUILDING_DLL
 /* When building with MSVC, exporting a symbol means that the object file
    contains a "linker directive" of the form /EXPORT:symbol.  This can be
@@ -45,16 +45,16 @@ extern "C" {
    "dumpbin /directives FILE" commands.
    The symbols from this file should be exported if and only if the object
    file gets included in a DLL.  Libtool, on Windows platforms, defines
-   the C macro DLL_EXPORT (together with PIC) when compiling for a DLL
-   and does not define it when compiling an object file meant to be linked
-   statically into some executable.  */
+   the C macro DLL_EXPORT (together with PIC) when compiling for a shared
+   library (called DLL under Windows) and does not define it when compiling
+   an object file meant to be linked statically into some executable.  */
 # if defined DLL_EXPORT
-#  define RELOCATABLE_DLL_EXPORTED __declspec(dllexport)
+#  define RELOCATABLE_SHLIB_EXPORTED __declspec(dllexport)
 # else
-#  define RELOCATABLE_DLL_EXPORTED
+#  define RELOCATABLE_SHLIB_EXPORTED
 # endif
 #else
-# define RELOCATABLE_DLL_EXPORTED
+# define RELOCATABLE_SHLIB_EXPORTED
 #endif
 
 /* Sets the original and the current installation prefix of the package.
@@ -62,7 +62,7 @@ extern "C" {
    by the corresponding pathname with the current prefix instead.  Both
    prefixes should be directory names without trailing slash (i.e. use ""
    instead of "/").  */
-extern RELOCATABLE_DLL_EXPORTED void
+extern RELOCATABLE_SHLIB_EXPORTED void
        set_relocation_prefix (const char *orig_prefix,
                               const char *curr_prefix);
 
