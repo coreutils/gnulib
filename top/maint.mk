@@ -1375,13 +1375,13 @@ sc_unportable_grep_q:
 
 sc_readme_link_install:
 	@require='INSTALL'					\
-	in_vc_files='$(top_srcdir)/README$$'                    \
+	in_vc_files='^README$$'					\
 	halt='The README file should refer to INSTALL'          \
 	  $(_sc_search_regexp)
 
 sc_readme_link_copying:
 	@require='COPYING'					\
-	in_vc_files='$(top_srcdir)/README$$'                    \
+	in_vc_files='^README$$'					\
 	halt='The README file should refer to COPYING[.LESSER]' \
 	  $(_sc_search_regexp)
 
