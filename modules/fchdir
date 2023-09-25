@@ -6,11 +6,11 @@ lib/fchdir.c
 m4/fchdir.m4
 
 Depends-on:
+dirent
 unistd
 assure           [test $HAVE_FCHDIR = 0]
 chdir            [test $HAVE_FCHDIR = 0]
 close            [test $HAVE_FCHDIR = 0]
-dirent           [test $HAVE_FCHDIR = 0]
 dirfd            [test $HAVE_FCHDIR = 0]
 dup2             [test $HAVE_FCHDIR = 0]
 fcntl            [test $HAVE_FCHDIR = 0]

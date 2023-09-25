@@ -40,7 +40,7 @@ int
 closedir (DIR *dirp)
 #undef closedir
 {
-#if GNULIB_defined_DIR || REPLACE_FCHDIR || defined __KLIBC__
+#if GNULIB_defined_DIR || REPLACE_FCHDIR
   int fd = dirfd (dirp);
 #endif
   int retval;
@@ -55,10 +55,6 @@ closedir (DIR *dirp)
   retval = closedir (dirp);
 # endif
 
-# ifdef __KLIBC__
-  if (!retval)
-    _gl_unregister_dirp_fd (fd);
-# endif
 #else
 
   if (dirp->current != INVALID_HANDLE_VALUE)
