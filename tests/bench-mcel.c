@@ -274,7 +274,7 @@ main (int argc, char *argv[])
     {
       fprintf (stderr, "Usage: %s TESTS REPETITIONS\n", argv[0]);
 
-      fprintf (stderr, "Example: %s ABCDEFGHIJKabehi 100000\n", argv[0]);
+      fprintf (stderr, "Example: %s ABCDEFGHIJKLabehi 100000\n", argv[0]);
       exit (1);
     }
 
