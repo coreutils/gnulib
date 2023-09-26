@@ -6,6 +6,7 @@ lib/mbscasestr.c
 lib/str-kmp.h
 
 Depends-on:
+alignasof
 mbuiter
 stdbool
 string

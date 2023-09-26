@@ -67,19 +67,19 @@ knuth_morris_pratt_multibyte (const char *haystack, const char *needle,
   size_t *table = table_memory = aligned;
 
   /* Fill needle_mbchars.  */
-  {
 #if GNULIB_MCEL_PREFER
-    for (size_t j = 0; *needle; needle += needle_mbchars[j++].len)
-      needle_mbchars[j] = mcel_scanz (needle);
+  for (size_t j = 0; *needle; needle += needle_mbchars[j++].len)
+    needle_mbchars[j] = mcel_scanz (needle);
 #else
+  {
     mbui_iterator_t iter;
     size_t j;
 
     j = 0;
     for (mbui_init (iter, needle); mbui_avail (iter); mbui_advance (iter), j++)
       mb_copy (&needle_mbchars[j], &mbui_cur (iter));
-#endif
   }
+#endif
 
   /* Fill the table.
      For 0 < i < m:
