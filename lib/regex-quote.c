@@ -22,7 +22,12 @@
 
 #include <string.h>
 
-#include "mbuiter.h"
+#if GNULIB_MCEL_PREFER
+# include "mcel.h"
+#else
+# include "mbuiter.h"
+#endif
+
 #include "xalloc.h"
 
 /* Characters that are special in a BRE.  */
@@ -138,6 +143,16 @@ regex_quote_length (const char *string, const struct regex_quote_spec *spec)
     length += 2; /* for '^' at the beginning and '$' at the end */
   if (spec->multibyte)
     {
+#if GNULIB_MCEL_PREFER
+      char const *iter = string;
+      for (mcel_t g; *iter; iter += g.len)
+        {
+          g = mcel_scanz (iter);
+          /* We know that special contains only ASCII characters.  */
+          length += g.len == 1 && strchr (special, *iter);
+        }
+      length += iter - string;
+#else
       mbui_iterator_t iter;
 
       for (mbui_init (iter, string); mbui_avail (iter); mbui_advance (iter))
@@ -148,6 +163,7 @@ regex_quote_length (const char *string, const struct regex_quote_spec *spec)
             length += 1;
           length += mb_len (mbui_cur (iter));
         }
+#endif
     }
   else
     {
@@ -173,6 +189,17 @@ regex_quote_copy (char *p, const char *string, const struct regex_quote_spec *sp
     *p++ = '^';
   if (spec->multibyte)
     {
+#if GNULIB_MCEL_PREFER
+      for (char const *iter = string; *iter; )
+        {
+          mcel_t g = mcel_scanz (iter);
+          *p = '\\';
+          /* We know that special contains only ASCII characters.  */
+          p += g.len == 1 && strchr (special, *iter);
+          p = mempcpy (p, iter, g.len);
+          iter += g.len;
+        }
+#else
       mbui_iterator_t iter;
 
       for (mbui_init (iter, string); mbui_avail (iter); mbui_advance (iter))

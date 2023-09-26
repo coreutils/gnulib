@@ -6,6 +6,7 @@ lib/mbmemcasecmp.h
 lib/mbmemcasecmp.c
 
 Depends-on:
+c32tolower
 mbiterf
 
 configure.ac:

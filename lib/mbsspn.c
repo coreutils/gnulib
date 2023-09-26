@@ -20,7 +20,13 @@
 /* Specification.  */
 #include <string.h>
 
-#include "mbuiterf.h"
+#include <stdlib.h>
+
+#if GNULIB_MCEL_PREFER
+# include "mcel.h"
+#else
+# include "mbuiterf.h"
+#endif
 
 /* Find the first occurrence in the character string STRING of any character
    not in the character string REJECT.  Return the number of bytes from the
@@ -35,33 +41,66 @@ mbsspn (const char *string, const char *reject)
   if (reject[1] == '\0')
     {
       unsigned char uc = (unsigned char) reject[0];
+      const char *iter = string;
 
       if (MB_CUR_MAX > 1)
         {
+#if GNULIB_MCEL_PREFER
+          for (mcel_t g; *iter; iter += g.len)
+            {
+              g = mcel_scanz (iter);
+              if (! (g.len == 1 && (unsigned char) *iter == uc))
+                break;
+            }
+#else
           mbuif_state_t state;
-          const char *iter;
-          for (mbuif_init (state), iter = string; mbuif_avail (state, iter); )
+          for (mbuif_init (state); mbuif_avail (state, iter); )
             {
               mbchar_t cur = mbuif_next (state, iter);
               if (!(mb_len (cur) == 1 && (unsigned char) *iter == uc))
                 break;
               iter += mb_len (cur);
             }
-          return iter - string;
+#endif
         }
       else
         {
-          const char *ptr;
-
-          for (ptr = string; *ptr != '\0'; ptr++)
-            if ((unsigned char) *ptr != uc)
+          for (; *iter != '\0'; iter++)
+            if ((unsigned char) *iter != uc)
               break;
-          return ptr - string;
         }
+      return iter - string;
     }
   /* General case.  */
   if (MB_CUR_MAX > 1)
     {
+#if GNULIB_MCEL_PREFER
+      for (size_t i = 0; ; )
+        {
+          char c = string[i];
+          if (!c)
+            return i;
+          mcel_t g = mcel_scanz (string + i);
+          if (g.len == 1)
+            {
+              if (!mbschr (reject, c))
+                return i;
+            }
+          else
+            {
+              for (char const *aiter = reject; ; )
+                {
+                  if (!*aiter)
+                    return i;
+                  mcel_t a = mcel_scanz (aiter);
+                  if (mcel_cmp (a, g) == 0)
+                    break;
+                  aiter += a.len;
+                }
+            }
+          i += g.len;
+        }
+#else
       mbuif_state_t state;
       const char *iter;
       for (mbuif_init (state), iter = string; mbuif_avail (state, iter); )
@@ -90,6 +129,7 @@ mbsspn (const char *string, const char *reject)
         }
      found:
       return iter - string;
+#endif
     }
   else
     return strspn (string, reject);

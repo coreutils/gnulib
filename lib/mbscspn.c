@@ -20,7 +20,13 @@
 /* Specification.  */
 #include <string.h>
 
-#include "mbuiterf.h"
+#include <stdlib.h>
+
+#if GNULIB_MCEL_PREFER
+# include "mcel.h"
+#else
+# include "mbuiterf.h"
+#endif
 
 /* Find the first occurrence in the character string STRING of any character
    in the character string ACCEPT.  Return the number of bytes from the
@@ -40,6 +46,27 @@ mbscspn (const char *string, const char *accept)
   /* General case.  */
   if (MB_CUR_MAX > 1)
     {
+#if GNULIB_MCEL_PREFER
+      mcel_t a, g;
+      size_t i;
+      for (i = 0; string[i]; i += g.len)
+        {
+          g = mcel_scanz (string + i);
+          if (g.len == 1)
+            {
+              if (mbschr (accept, string[i]))
+                return i;
+            }
+          else
+            for (char const *aiter = accept; *aiter; aiter += a.len)
+              {
+                a = mcel_scanz (aiter);
+                if (mcel_cmp (g, a) == 0)
+                  return i;
+              }
+        }
+      return i;
+#else
       mbuif_state_t state;
       const char *iter;
       for (mbuif_init (state), iter = string; mbuif_avail (state, iter); )
@@ -67,6 +94,7 @@ mbscspn (const char *string, const char *accept)
         }
      found:
       return iter - string;
+#endif
     }
   else
     return strcspn (string, accept);

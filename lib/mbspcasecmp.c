@@ -21,8 +21,13 @@
 #include <string.h>
 
 #include <ctype.h>
+#include <stdlib.h>
 
-#include "mbuiterf.h"
+#if GNULIB_MCEL_PREFER
+# include "mcel.h"
+#else
+# include "mbuiterf.h"
+#endif
 
 /* Compare the initial segment of the character string STRING consisting of
    at most mbslen (PREFIX) characters with the character string PREFIX,
@@ -47,6 +52,18 @@ mbspcasecmp (const char *string, const char *prefix)
      most often already in the very few first characters.  */
   if (MB_CUR_MAX > 1)
     {
+#if GNULIB_MCEL_PREFER
+      while (*iter2)
+        {
+          if (!*iter1)
+            return NULL;
+          mcel_t g1 = mcel_scanz (iter1); iter1 += g1.len;
+          mcel_t g2 = mcel_scanz (iter2); iter2 += g2.len;
+          if (mcel_tocmp (c32tolower, g1, g2) != 0)
+            return NULL;
+        }
+      return (char *) iter1;
+#else
       mbuif_state_t state1;
       mbuif_init (state1);
 
@@ -71,6 +88,7 @@ mbspcasecmp (const char *string, const char *prefix)
       else
         /* STRING terminated before PREFIX.  */
         return NULL;
+#endif
     }
   else
     for (;; iter1++, iter2++)

@@ -20,7 +20,13 @@
 /* Specification.  */
 #include <string.h>
 
-#include "mbuiterf.h"
+#include <stdlib.h>
+
+#if GNULIB_MCEL_PREFER
+# include "mcel.h"
+#else
+# include "mbuiterf.h"
+#endif
 
 /* Find the first occurrence in the character string STRING of any character
    in the character string ACCEPT.  Return the pointer to it, or NULL if none
@@ -36,9 +42,28 @@ mbspbrk (const char *string, const char *accept)
   /* General case.  */
   if (MB_CUR_MAX > 1)
     {
+      char const *iter = string;
+#if GNULIB_MCEL_PREFER
+      mcel_t a, g;
+      for (char const *iter = string; *iter; iter += g.len)
+        {
+          g = mcel_scanz (iter);
+          if (g.len == 1)
+            {
+              if (mbschr (accept, *iter))
+                return (char *) iter;
+            }
+          else
+            for (char const *aiter = accept; *aiter; aiter += a.len)
+              {
+                a = mcel_scanz (aiter);
+                if (mcel_cmp (a, g) == 0)
+                  return (char *) iter;
+              }
+        }
+#else
       mbuif_state_t state;
-      const char *iter;
-      for (mbuif_init (state), iter = string; mbuif_avail (state, iter); )
+      for (mbuif_init (state); mbuif_avail (state, iter); )
         {
           mbchar_t cur = mbuif_next (state, iter);
           if (mb_len (cur) == 1)
@@ -61,6 +86,7 @@ mbspbrk (const char *string, const char *accept)
             }
           iter += mb_len (cur);
         }
+#endif
       return NULL;
     }
   else

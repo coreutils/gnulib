@@ -5,6 +5,7 @@ Files:
 lib/mbsncasecmp.c
 
 Depends-on:
+c32tolower
 mbuiterf
 string
 

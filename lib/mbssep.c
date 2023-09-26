@@ -22,7 +22,11 @@
 
 #include <stdlib.h>
 
-#include "mbuiterf.h"
+#if GNULIB_MCEL_PREFER
+# include "mcel.h"
+#else
+# include "mbuiterf.h"
+#endif
 
 char *
 mbssep (char **stringp, const char *delim)
@@ -30,7 +34,6 @@ mbssep (char **stringp, const char *delim)
   if (MB_CUR_MAX > 1)
     {
       char *start = *stringp;
-      char *ptr;
 
       if (start == NULL)
         return NULL;
@@ -38,24 +41,25 @@ mbssep (char **stringp, const char *delim)
       /* No need to optimize the cases of 0 or 1 delimiters specially,
          since mbspbrk already optimizes them.  */
 
-      ptr = mbspbrk (start, delim);
+      char *ptr = mbspbrk (start, delim);
 
       if (ptr == NULL)
-        {
-          *stringp = NULL;
-          return start;
-        }
+        *stringp = NULL;
       else
         {
+#if GNULIB_MCEL_PREFER
+          *stringp = ptr + mcel_scanz (ptr).len;
+#else
           mbuif_state_t state;
           mbuif_init (state);
           if (!mbuif_avail (state, ptr))
             abort ();
           mbchar_t cur = mbuif_next (state, ptr);
-          *ptr = '\0';
           *stringp = ptr + mb_len (cur);
-          return start;
+#endif
+          *ptr = '\0';
         }
+      return start;
     }
   else
     return strsep (stringp, delim);

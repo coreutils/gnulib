@@ -25,7 +25,11 @@
 #include <limits.h>
 #include <stdlib.h>
 
-#include "mbiterf.h"
+#if GNULIB_MCEL_PREFER
+# include "mcel.h"
+#else
+# include "mbiterf.h"
+#endif
 
 int
 mbmemcasecmp (const char *s1, size_t n1, const char *s2, size_t n2)
@@ -35,14 +39,25 @@ mbmemcasecmp (const char *s1, size_t n1, const char *s2, size_t n2)
 
   const char *iter1 = s1;
   const char *iter2 = s2;
+  const char *s1_end = s1 + n1;
+  const char *s2_end = s2 + n2;
 
   if (MB_CUR_MAX > 1)
     {
-      const char *s1_end = s1 + n1;
+#if GNULIB_MCEL_PREFER
+      while ((iter1 < s1_end) & (iter2 < s2_end))
+        {
+          mcel_t g1 = mcel_scan (iter1, s1_end); iter1 += g1.len;
+          mcel_t g2 = mcel_scan (iter2, s2_end); iter2 += g2.len;
+          int cmp = mcel_tocmp (c32tolower, g1, g2);
+          if (cmp)
+            return cmp;
+        }
+      return (iter1 < s1_end) - (iter2 < s2_end);
+#else
       mbif_state_t state1;
       mbif_init (state1);
 
-      const char *s2_end = s2 + n2;
       mbif_state_t state2;
       mbif_init (state2);
 
@@ -66,12 +81,10 @@ mbmemcasecmp (const char *s1, size_t n1, const char *s2, size_t n2)
         /* s1 terminated before s2.  */
         return -1;
       return 0;
+#endif
     }
   else
     {
-      const char *s1_end = s1 + n1;
-      const char *s2_end = s2 + n2;
-
       while (iter1 < s1_end && iter2 < s2_end)
         {
           unsigned char c1 = *iter1++;

@@ -5,6 +5,7 @@ Files:
 lib/mbspcasecmp.c
 
 Depends-on:
+c32tolower
 mbuiterf
 string
 

@@ -22,7 +22,11 @@
 
 #include <stdlib.h>
 
-#include "mbiterf.h"
+#if GNULIB_MCEL_PREFER
+# include "mcel.h"
+#else
+# include "mbiterf.h"
+#endif
 
 /* Return the number of multibyte characters in the character string starting
    at STRING and ending at STRING + LEN.  */
@@ -34,6 +38,11 @@ mbsnlen (const char *string, size_t len)
       size_t count = 0;
 
       const char *string_end = string + len;
+
+#if GNULIB_MCEL_PREFER
+      for (; *string; string += mcel_scan (string, string_end).len)
+        count++;
+#else
       mbif_state_t state;
       const char *iter;
       for (mbif_init (state), iter = string; mbif_avail (state, iter, string_end); )
@@ -42,6 +51,7 @@ mbsnlen (const char *string, size_t len)
           count++;
           iter += mb_len (cur);
         }
+#endif
 
       return count;
     }

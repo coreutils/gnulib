@@ -23,8 +23,13 @@
 
 #include <ctype.h>
 #include <limits.h>
+#include <stdlib.h>
 
-#include "mbuiterf.h"
+#if GNULIB_MCEL_PREFER
+# include "mcel.h"
+#else
+# include "mbuiterf.h"
+#endif
 
 /* Compare the initial segment of the character string S1 consisting of at most
    N characters with the initial segment of the character string S2 consisting
@@ -47,6 +52,17 @@ mbsncasecmp (const char *s1, const char *s2, size_t n)
      most often already in the very few first characters.  */
   if (MB_CUR_MAX > 1)
     {
+#if GNULIB_MCEL_PREFER
+      while (true)
+        {
+          mcel_t g1 = mcel_scanz (iter1); iter1 += g1.len;
+          mcel_t g2 = mcel_scanz (iter2); iter2 += g2.len;
+          int cmp = mcel_tocmp (c32tolower, g1, g2);
+          n--;
+          if (cmp | !n | !g1.ch)
+            return cmp;
+        }
+#else
       mbuif_state_t state1;
       mbuif_init (state1);
 
@@ -75,6 +91,7 @@ mbsncasecmp (const char *s1, const char *s2, size_t n)
         /* s1 terminated before s2 and n.  */
         return -1;
       return 0;
+#endif
     }
   else
     for (;;)

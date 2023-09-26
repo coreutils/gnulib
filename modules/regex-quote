@@ -9,6 +9,7 @@ Depends-on:
 stdbool
 xalloc
 mbuiter
+mempcpy
 
 configure.ac:
 AC_REQUIRE([AC_C_RESTRICT])
