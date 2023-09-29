@@ -1,4 +1,4 @@
-# fchdir.m4 serial 30
+# fchdir.m4 serial 31
 dnl Copyright (C) 2006-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -20,7 +20,7 @@ AC_DEFUN([gl_FUNC_FCHDIR],
     AC_REQUIRE([gl_DIRENT_DIR])
     if test $DIR_HAS_FD_MEMBER = 0; then
       dnl fchdir() should be replaced if dirfd() does not work.
-      HAVE_FCHDIR=0
+      REPLACE_FCHDIR=1
     fi
   fi
 
