@@ -26,9 +26,7 @@ lib_SOURCES += gc-libgcrypt.c
 else
 lib_SOURCES += gc-gnulib.c
 endif
-if GL_COND_LIBTOOL
 lib_LDFLAGS += $(LTLIBGCRYPT)
-endif
 
 Include:
 "gc.h"

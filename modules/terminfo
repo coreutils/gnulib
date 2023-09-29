@@ -16,9 +16,7 @@ configure.ac:
 gl_TERMINFO
 
 Makefile.am:
-if GL_COND_LIBTOOL
 lib_LDFLAGS += $(LTLIBTERMINFO)
-endif
 
 Include:
 

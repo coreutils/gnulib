@@ -23,9 +23,7 @@ configure.ac:
 gl_TERMCAP
 
 Makefile.am:
-if GL_COND_LIBTOOL
 lib_LDFLAGS += $(LTLIBTERMCAP)
-endif
 
 Include:
 

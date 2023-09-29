@@ -29,9 +29,7 @@ fi
 
 Makefile.am:
 lib_SOURCES += striconveh.h striconveh.c
-if GL_COND_LIBTOOL
 lib_LDFLAGS += $(LTLIBICONV)
-endif
 
 Include:
 "striconveh.h"
