@@ -1,0 +1,25 @@
+Description:
+Native Windows specific wgetcwd function. Like _wgetcwd, but also ensure
+that wgetcwd(NULL, 0) returns a buffer allocated by the malloc() function.
+
+Files:
+lib/wgetcwd-lgpl.c
+
+Depends-on:
+wchar
+free-posix
+
+configure.ac:
+gl_WCHAR_MODULE_INDICATOR([wgetcwd])
+
+Makefile.am:
+lib_SOURCES += wgetcwd-lgpl.c
+
+Include:
+<wchar.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+all
