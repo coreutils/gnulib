@@ -92,7 +92,7 @@ main (int argc, char **argv)
 
   /* Validate a POSIX requirement on size.  */
   errno = 0;
-  ASSERT (getcwd(pwd2, 0) == NULL);
+  ASSERT (getcwd (pwd2, 0) == NULL);
   ASSERT (errno == EINVAL);
 
   free (pwd1);
