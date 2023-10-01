@@ -211,6 +211,7 @@ regex_quote_copy (char *p, const char *string, const struct regex_quote_spec *sp
           memcpy (p, mbui_cur_ptr (iter), mb_len (mbui_cur (iter)));
           p += mb_len (mbui_cur (iter));
         }
+#endif
     }
   else
     {
