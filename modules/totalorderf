@@ -1,0 +1,36 @@
+Description:
+totalorderf function: total order on float
+
+Files:
+lib/totalorderf.c
+m4/mathfunc.m4
+m4/totalorder.m4
+
+Depends-on:
+math
+extensions
+isnanf          [test $HAVE_TOTALORDERF = 0 || test $REPLACE_TOTALORDERF = 0]
+signbit         [test $HAVE_TOTALORDERF = 0 || test $REPLACE_TOTALORDERF = 0]
+
+configure.ac:
+gl_FUNC_TOTALORDERF
+gl_CONDITIONAL([GL_COND_OBJ_TOTALORDERF],
+               [test $HAVE_TOTALORDERF = 0 || test $REPLACE_TOTALORDERF = 1])
+gl_MATH_MODULE_INDICATOR([totalorderf])
+
+Makefile.am:
+if GL_COND_OBJ_TOTALORDERF
+lib_SOURCES += totalorderf.c
+endif
+
+Include:
+<math.h>
+
+Link:
+$(TOTALORDERF_LIBM)
+
+License:
+LGPL
+
+Maintainer:
+all

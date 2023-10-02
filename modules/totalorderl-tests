@@ -1,0 +1,16 @@
+Files:
+tests/test-totalorderl.c
+tests/test-totalorder.c
+tests/minus-zero.h
+tests/infinity.h
+tests/nan.h
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-totalorderl
+check_PROGRAMS += test-totalorderl
+test_totalorderl_LDADD = $(LDADD) @TOTALORDERL_LIBM@

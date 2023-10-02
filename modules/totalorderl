@@ -1,0 +1,37 @@
+Description:
+totalorderl function: total order on long double
+
+Files:
+lib/totalorderl.c
+m4/mathfunc.m4
+m4/totalorder.m4
+
+Depends-on:
+math
+extensions
+stdbool         [test $HAVE_TOTALORDERL = 0 || test $REPLACE_TOTALORDERL = 0]
+isnanl          [test $HAVE_TOTALORDERL = 0 || test $REPLACE_TOTALORDERL = 0]
+signbit         [test $HAVE_TOTALORDERL = 0 || test $REPLACE_TOTALORDERL = 0]
+
+configure.ac:
+gl_FUNC_TOTALORDERL
+gl_CONDITIONAL([GL_COND_OBJ_TOTALORDERL],
+               [test $HAVE_TOTALORDERL = 0 || test $REPLACE_TOTALORDERL = 1])
+gl_MATH_MODULE_INDICATOR([totalorderl])
+
+Makefile.am:
+if GL_COND_OBJ_TOTALORDERL
+lib_SOURCES += totalorderl.c
+endif
+
+Include:
+<math.h>
+
+Link:
+$(TOTALORDERL_LIBM)
+
+License:
+LGPL
+
+Maintainer:
+all

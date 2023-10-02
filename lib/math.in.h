@@ -2761,6 +2761,82 @@ _GL_WARN_REAL_FLOATING_DECL (signbit);
 # endif
 #endif
 
+
+#if @GNULIB_TOTALORDERF@
+# if @REPLACE_TOTALORDERF@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef totalorderf
+#   define totalorderf rpl_totalorderf
+#  endif
+_GL_FUNCDECL_RPL (totalorderf, int, (float const *, float const *));
+_GL_CXXALIAS_RPL (totalorderf, int, (float const *, float const *));
+# else
+#  if !@HAVE_TOTALORDERF@
+_GL_FUNCDECL_SYS (totalorderf, int, (float const *, float const *));
+#  endif
+_GL_CXXALIAS_SYS (totalorderf, int, (float const *, float const *));
+# endif
+_GL_CXXALIASWARN (totalorderf);
+#elif defined GNULIB_POSIXCHECK
+# undef totalorderf
+# if HAVE_RAW_DECL_TOTALORDERF
+_GL_WARN_ON_USE (totalorderf, "totalorderf is unportable - "
+                 "use gnulib module totalorderf for portability");
+# endif
+#endif
+
+#if @GNULIB_TOTALORDER@
+# if @REPLACE_TOTALORDER@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef totalorder
+#   define totalorder rpl_totalorder
+#  endif
+_GL_FUNCDECL_RPL (totalorder, int, (double const *, double const *));
+_GL_CXXALIAS_RPL (totalorder, int, (double const *, double const *));
+# else
+#  if !@HAVE_TOTALORDER@
+_GL_FUNCDECL_SYS (totalorder, int, (double const *, double const *));
+#  endif
+_GL_CXXALIAS_SYS (totalorder, int, (double const *, double const *));
+# endif
+# if __GLIBC__ >= 2
+_GL_CXXALIASWARN1 (totalorder, int, (double const *, double const *));
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef totalorder
+# if HAVE_RAW_DECL_TOTALORDER
+_GL_WARN_ON_USE (totalorder, "totalorder is unportable - "
+                 "use gnulib module totalorder for portability");
+# endif
+#endif
+
+#if @GNULIB_TOTALORDERL@
+# if @REPLACE_TOTALORDERL@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef totalorderl
+#   define totalorderl rpl_totalorderl
+#  endif
+_GL_FUNCDECL_RPL (totalorderl, int,
+                  (long double const *, long double const *));
+_GL_CXXALIAS_RPL (totalorderl, int,
+                  (long double const *, long double const *));
+# else
+#  if !@HAVE_TOTALORDERL@
+_GL_FUNCDECL_SYS (totalorderl, int,
+                  (long double const *, long double const *));
+#  endif
+_GL_CXXALIAS_SYS (totalorderl, int,
+                  (long double const *, long double const *));
+# endif
+_GL_CXXALIASWARN (totalorderl);
+#elif defined GNULIB_POSIXCHECK
+# undef totalorderl
+# if HAVE_RAW_DECL_TOTALORDERL
+_GL_WARN_ON_USE (totalorderl, "totalorderl is unportable - "
+                 "use gnulib module totalorderl for portability");
+# endif
+#endif
+
 _GL_INLINE_HEADER_END
 
 #endif /* _@GUARD_PREFIX@_MATH_H */
