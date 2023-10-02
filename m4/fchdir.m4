@@ -1,4 +1,4 @@
-# fchdir.m4 serial 31
+# fchdir.m4 serial 32
 dnl Copyright (C) 2006-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -24,7 +24,7 @@ AC_DEFUN([gl_FUNC_FCHDIR],
     fi
   fi
 
-  if test $HAVE_FCHDIR = 0; then
+  if test $HAVE_FCHDIR = 0 || test $REPLACE_FCHDIR = 1; then
     AC_DEFINE([REPLACE_FCHDIR], [1],
       [Define to 1 if gnulib's fchdir() replacement is used.])
     dnl We must also replace anything that can manipulate a directory fd,
