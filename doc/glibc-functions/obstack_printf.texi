@@ -73,6 +73,10 @@ printf @code{"%010f"} of NaN and Infinity yields an incorrect result (padded
 with zeroes) on some platforms:
 Mac OS X 10.5, FreeBSD 13.0, NetBSD 5.0, AIX 5.2, IRIX 6.5, Solaris 11.0, Cygwin 1.5.x, mingw, MSVC/clang.
 @item
+printf @code{"%#.0x"} or @code{"%#.0X"} with a zero argument yields an
+incorrect result (non-empty) on some platforms:
+Mac OS X 10.6.
+@item
 This function does not support precisions larger than 512 or 1024 in integer,
 floating-point and pointer output on some platforms:
 Solaris 10/x86, mingw, MSVC/clang.

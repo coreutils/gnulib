@@ -1,4 +1,4 @@
-# fprintf-posix.m4 serial 18
+# fprintf-posix.m4 serial 19
 dnl Copyright (C) 2007-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -33,6 +33,7 @@ AC_DEFUN([gl_FUNC_FPRINTF_IS_POSIX],
   AC_REQUIRE([gl_PRINTF_FLAG_GROUPING])
   AC_REQUIRE([gl_PRINTF_FLAG_LEFTADJUST])
   AC_REQUIRE([gl_PRINTF_FLAG_ZERO])
+  AC_REQUIRE([gl_PRINTF_FLAG_ALT_PRECISION_ZERO])
   AC_REQUIRE([gl_PRINTF_PRECISION])
   AC_REQUIRE([gl_PRINTF_ENOMEM])
   gl_cv_func_fprintf_posix=no
@@ -66,13 +67,17 @@ AC_DEFUN([gl_FUNC_FPRINTF_IS_POSIX],
                                                         *yes)
                                                           case "$gl_cv_func_printf_flag_zero" in
                                                             *yes)
-                                                              case "$gl_cv_func_printf_precision" in
+                                                              case "$gl_cv_func_printf_flag_alt_precision_zero" in
                                                                 *yes)
-                                                                  case "$gl_cv_func_printf_enomem" in
+                                                                  case "$gl_cv_func_printf_precision" in
                                                                     *yes)
-                                                                      # fprintf exists and is
-                                                                      # already POSIX compliant.
-                                                                      gl_cv_func_fprintf_posix=yes
+                                                                      case "$gl_cv_func_printf_enomem" in
+                                                                        *yes)
+                                                                          # fprintf exists and is
+                                                                          # already POSIX compliant.
+                                                                          gl_cv_func_fprintf_posix=yes
+                                                                          ;;
+                                                                      esac
                                                                       ;;
                                                                   esac
                                                                   ;;

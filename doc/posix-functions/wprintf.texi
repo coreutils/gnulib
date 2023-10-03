@@ -33,6 +33,10 @@ on some platforms:
 glibc 2.34, musl libc, macOS 12.5, FreeBSD 13.1, NetBSD 9.0, OpenBSD 7.2,
 AIX 7.2, HP-UX 11, Solaris 11.4, Cygwin 2.9.0, mingw, MSVC 14.
 @item
+printf @code{"%#.0x"} or @code{"%#.0X"} with a zero argument yields an
+incorrect result (non-empty) on some platforms:
+Mac OS X 10.6.
+@item
 The @code{%m} directive is not portable, use @code{%s} mapped to an
 argument of @code{strerror(errno)} (or a version of @code{strerror_r})
 instead.

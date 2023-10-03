@@ -1,4 +1,4 @@
-# printf.m4 serial 84
+# printf.m4 serial 84.1
 dnl Copyright (C) 2003, 2007-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -1245,6 +1245,50 @@ changequote(,)dnl
            mingw*)             gl_cv_func_printf_flag_zero="guessing no";;
                                # If we don't know, obey --enable-cross-guesses.
            *)                  gl_cv_func_printf_flag_zero="$gl_cross_guess_normal";;
+         esac
+changequote([,])dnl
+        ])
+    ])
+])
+
+dnl Test whether the *printf family of functions supports the # flag with a
+dnl zero precision and a zero value in the 'x' and 'X' directives correctly.
+dnl ISO C and POSIX specify that for the 'd', 'i', 'b', 'o', 'u', 'x', 'X'
+dnl directives: "The result of converting a zero value with a precision of
+dnl zero is no characters."  But on Mac OS X 10.5, for the 'x', 'X' directives,
+dnl when a # flag is present, the output is "0" instead of "".
+dnl Result is gl_cv_func_printf_flag_alt_precision_zero.
+
+AC_DEFUN([gl_PRINTF_FLAG_ALT_PRECISION_ZERO],
+[
+  AC_REQUIRE([AC_PROG_CC])
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+  AC_CACHE_CHECK([whether printf supports the alternative flag with a zero precision],
+    [gl_cv_func_printf_flag_alt_precision_zero],
+    [
+      AC_RUN_IFELSE(
+        [AC_LANG_SOURCE([[
+#include <stdio.h>
+static char buf[10];
+int main ()
+{
+  int result = 0;
+  if (sprintf (buf, "%#.0x %d", 0, 33, 44) > 0 + 3)
+    result |= 1;
+  return result;
+}]])],
+        [gl_cv_func_printf_flag_alt_precision_zero=yes],
+        [gl_cv_func_printf_flag_alt_precision_zero=no],
+        [
+changequote(,)dnl
+         case "$host_os" in
+           # Guess no only on macOS 10..12 systems.
+           darwin[0-9] | darwin[0-9].* | \
+           darwin1[0-9] | darwin1[0-9].* | \
+           darwin2[0-1] | darwin2[0-1].*)
+                    gl_cv_func_printf_flag_alt_precision_zero="guessing no" ;;
+           darwin*) gl_cv_func_printf_flag_alt_precision_zero="guessing yes" ;;
+           *)       gl_cv_func_printf_flag_alt_precision_zero="guessing yes" ;;
          esac
 changequote([,])dnl
         ])
