@@ -45,12 +45,22 @@ main (void)
   }
 
   /* Test behavior with trailing slash.  */
+
   unlink (BASE "file");
   ASSERT (faccessat (AT_FDCWD, ".", X_OK, 0) == 0);
   ASSERT (faccessat (AT_FDCWD, "./", X_OK, 0) == 0);
   ASSERT (close (open (BASE "file", O_CREAT | O_WRONLY, 0)) == 0);
   ASSERT (faccessat (AT_FDCWD, BASE "file", F_OK, 0) == 0);
+
   ASSERT (faccessat (AT_FDCWD, BASE "file/", F_OK, 0) != 0);
+  ASSERT (errno == ENOTDIR);
+  ASSERT (faccessat (AT_FDCWD, BASE "file/", R_OK, 0) != 0);
+  ASSERT (errno == ENOTDIR);
+  ASSERT (faccessat (AT_FDCWD, BASE "file/", W_OK, 0) != 0);
+  ASSERT (errno == ENOTDIR);
+  ASSERT (faccessat (AT_FDCWD, BASE "file/", X_OK, 0) != 0);
+  ASSERT (errno == ENOTDIR);
+
   unlink (BASE "link1");
   if (symlink (".", BASE "link1") == 0)
     {
@@ -61,12 +71,27 @@ main (void)
       ASSERT (symlink (BASE "file", BASE "link2") == 0);
       ASSERT (faccessat (AT_FDCWD, BASE "link2", F_OK, 0) == 0);
       ASSERT (faccessat (AT_FDCWD, BASE "link2/", F_OK, 0) != 0);
+      ASSERT (errno == ENOTDIR);
+      ASSERT (faccessat (AT_FDCWD, BASE "link2/", R_OK, 0) != 0);
+      ASSERT (errno == ENOTDIR || errno == EACCES);
+      ASSERT (faccessat (AT_FDCWD, BASE "link2/", W_OK, 0) != 0);
+      ASSERT (errno == ENOTDIR || errno == EACCES);
+      ASSERT (faccessat (AT_FDCWD, BASE "link2/", X_OK, 0) != 0);
+      ASSERT (errno == ENOTDIR || errno == EACCES);
       unlink (BASE "link2");
 
       unlink (BASE "link3");
       ASSERT (symlink (BASE "no-such-file", BASE "link3") == 0);
       ASSERT (faccessat (AT_FDCWD, BASE "link3", F_OK, 0) != 0);
+      ASSERT (errno == ENOENT);
       ASSERT (faccessat (AT_FDCWD, BASE "link3/", F_OK, 0) != 0);
+      ASSERT (errno == ENOENT);
+      ASSERT (faccessat (AT_FDCWD, BASE "link3/", R_OK, 0) != 0);
+      ASSERT (errno == ENOENT);
+      ASSERT (faccessat (AT_FDCWD, BASE "link3/", W_OK, 0) != 0);
+      ASSERT (errno == ENOENT);
+      ASSERT (faccessat (AT_FDCWD, BASE "link3/", X_OK, 0) != 0);
+      ASSERT (errno == ENOENT);
       unlink (BASE "link3");
     }
   unlink (BASE "link1");
