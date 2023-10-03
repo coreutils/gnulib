@@ -138,7 +138,7 @@
 eval 'exec perl -wSx -0777 -pi "$0" "$@"'
      if 0;
 
-my $VERSION = '2023-06-18.01:14'; # UTC
+my $VERSION = '2023-10-03.12:14'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -146,6 +146,7 @@ my $VERSION = '2023-06-18.01:14'; # UTC
 
 use strict;
 use warnings;
+use re 'eval';
 
 my $copyright_re = 'Copyright';
 my $circle_c_re = '(?:\([cC]\)|@copyright\{}|\\\\\(co|&copy;|©)';
