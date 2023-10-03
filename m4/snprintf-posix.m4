@@ -1,4 +1,4 @@
-# snprintf-posix.m4 serial 18
+# snprintf-posix.m4 serial 19
 dnl Copyright (C) 2007-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -33,6 +33,7 @@ AC_DEFUN([gl_FUNC_SNPRINTF_IS_POSIX],
   AC_REQUIRE([gl_PRINTF_FLAG_GROUPING])
   AC_REQUIRE([gl_PRINTF_FLAG_LEFTADJUST])
   AC_REQUIRE([gl_PRINTF_FLAG_ZERO])
+  AC_REQUIRE([gl_PRINTF_FLAG_ALT_PRECISION_ZERO])
   AC_REQUIRE([gl_PRINTF_PRECISION])
   AC_REQUIRE([gl_PRINTF_ENOMEM])
   gl_cv_func_snprintf_posix=no
@@ -73,23 +74,27 @@ AC_DEFUN([gl_FUNC_SNPRINTF_IS_POSIX],
                                                           *yes)
                                                             case "$gl_cv_func_printf_flag_zero" in
                                                               *yes)
-                                                                case "$gl_cv_func_printf_precision" in
+                                                                case "$gl_cv_func_printf_flag_alt_precision_zero" in
                                                                   *yes)
-                                                                    case "$gl_cv_func_printf_enomem" in
+                                                                    case "$gl_cv_func_printf_precision" in
                                                                       *yes)
-                                                                        case "$gl_cv_func_snprintf_truncation_c99" in
+                                                                        case "$gl_cv_func_printf_enomem" in
                                                                           *yes)
-                                                                            case "$gl_cv_func_snprintf_retval_c99" in
+                                                                            case "$gl_cv_func_snprintf_truncation_c99" in
                                                                               *yes)
-                                                                                case "$gl_cv_func_snprintf_directive_n" in
+                                                                                case "$gl_cv_func_snprintf_retval_c99" in
                                                                                   *yes)
-                                                                                    case "$gl_cv_func_snprintf_size1" in
+                                                                                    case "$gl_cv_func_snprintf_directive_n" in
                                                                                       *yes)
-                                                                                        case "$gl_cv_func_vsnprintf_zerosize_c99" in
+                                                                                        case "$gl_cv_func_snprintf_size1" in
                                                                                           *yes)
-                                                                                            # snprintf exists and is
-                                                                                            # already POSIX compliant.
-                                                                                            gl_cv_func_snprintf_posix=yes
+                                                                                            case "$gl_cv_func_vsnprintf_zerosize_c99" in
+                                                                                              *yes)
+                                                                                                # snprintf exists and is
+                                                                                                # already POSIX compliant.
+                                                                                                gl_cv_func_snprintf_posix=yes
+                                                                                                ;;
+                                                                                            esac
                                                                                             ;;
                                                                                         esac
                                                                                         ;;

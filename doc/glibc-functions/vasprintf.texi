@@ -71,6 +71,10 @@ printf @code{"%010f"} of NaN and Infinity yields an incorrect result (padded
 with zeroes) on some platforms:
 Mac OS X 10.5, FreeBSD 6.0, NetBSD 5.0, Solaris 11.0, Cygwin 1.5.x.
 @item
+printf @code{"%#.0x"} or @code{"%#.0X"} with a zero argument yields an
+incorrect result (non-empty) on some platforms:
+Mac OS X 10.6.
+@item
 This function produces wrong output for the @samp{lc} directive with a NUL
 wide character argument on some platforms:
 glibc 2.35, FreeBSD 13.1, NetBSD 9.0, OpenBSD 7.2, macOS 12.5, AIX 7.2, Solaris 11.4, and others.
