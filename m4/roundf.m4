@@ -1,4 +1,4 @@
-# roundf.m4 serial 26
+# roundf.m4 serial 27
 dnl Copyright (C) 2007-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -57,10 +57,7 @@ int main()
   return (x < 0.5f && roundf (x) != 0.0f);
 }]])], [gl_cv_func_roundf_works=yes], [gl_cv_func_roundf_works=no],
         [case "$host_os" in
-             # Guess yes on MSVC, no on mingw.
-           windows*-gnu*)
-             gl_cv_func_roundf_works="guessing no"
-             ;;
+           # Guess yes on MSVC, no on mingw.
            windows*-msvc*)
              gl_cv_func_roundf_works="guessing yes"
              ;;
@@ -127,7 +124,6 @@ int main (int argc, char *argv[])
                                      # Guess yes on musl systems.
                  *-musl* | midipix*) gl_cv_func_roundf_ieee="guessing yes" ;;
                                      # Guess yes on MSVC, no on mingw.
-                 windows*-gnu*)      gl_cv_func_roundf_ieee="guessing no" ;;
                  windows*-msvc*)     gl_cv_func_roundf_ieee="guessing yes" ;;
                  mingw* | windows*)  AC_EGREP_CPP([Known], [
 #ifdef _MSC_VER

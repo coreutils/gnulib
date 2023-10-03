@@ -1,4 +1,4 @@
-# frexpf.m4 serial 7
+# frexpf.m4 serial 8
 dnl Copyright (C) 2011-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -89,10 +89,7 @@ int main()
         [gl_cv_func_frexpf_works=no],
         [case "$host_os" in
            irix*) gl_cv_func_frexpf_works="guessing no" ;;
-             # Guess yes with MSVC, no with mingw.
-           windows*-gnu*)
-             gl_cv_func_frexpf_works="guessing no"
-             ;;
+           # Guess yes with MSVC, no with mingw.
            windows*-msvc*)
              gl_cv_func_frexpf_works="guessing yes"
              ;;

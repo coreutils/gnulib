@@ -135,9 +135,6 @@ int main ()
         [case "$host_os" in
            *gnu* | solaris* | cygwin*) gl_cv_func_logb_works="guessing no" ;;
            # Guess yes on MSVC, no on mingw.
-           windows*-gnu*)
-             gl_cv_func_logb_works="guessing no"
-             ;;
            windows*-msvc*)
              gl_cv_func_logb_works="guessing yes"
              ;;

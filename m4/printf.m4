@@ -1,4 +1,4 @@
-# printf.m4 serial 85
+# printf.m4 serial 86
 dnl Copyright (C) 2003, 2007-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -86,7 +86,6 @@ changequote(,)dnl
            linux*-android*)      gl_cv_func_printf_sizes_c99="guessing yes";;
 changequote([,])dnl
                                  # Guess yes on MSVC, no on mingw.
-           windows*-gnu*)        gl_cv_func_printf_sizes_c99="guessing no" ;;
            windows*-msvc*)       gl_cv_func_printf_sizes_c99="guessing yes" ;;
            mingw* | windows*)    AC_EGREP_CPP([Known], [
 #ifdef _MSC_VER
@@ -230,7 +229,6 @@ int main ()
                               # Guess yes on Android.
            linux*-android*)   gl_cv_func_printf_long_double="guessing yes";;
                               # Guess yes on MSVC, no on mingw.
-           windows*-gnu*)     gl_cv_func_printf_long_double="guessing no" ;;
            windows*-msvc*)    gl_cv_func_printf_long_double="guessing yes" ;;
            mingw* | windows*) AC_EGREP_CPP([Known], [
 #ifdef _MSC_VER
@@ -358,7 +356,6 @@ changequote(,)dnl
            linux*-android*)      gl_cv_func_printf_infinite="guessing no";;
 changequote([,])dnl
                                  # Guess yes on MSVC, no on mingw.
-           windows*-gnu*)        gl_cv_func_printf_infinite="guessing no" ;;
            windows*-msvc*)       gl_cv_func_printf_infinite="guessing yes" ;;
            mingw* | windows*)    AC_EGREP_CPP([Known], [
 #ifdef _MSC_VER
@@ -574,7 +571,6 @@ changequote(,)dnl
                    linux*-android*)      gl_cv_func_printf_infinite_long_double="guessing no";;
 changequote([,])dnl
                                          # Guess yes on MSVC, no on mingw.
-                   windows*-gnu*)        gl_cv_func_printf_infinite_long_double="guessing no" ;;
                    windows*-msvc*)       gl_cv_func_printf_infinite_long_double="guessing yes" ;;
                    mingw* | windows*)    AC_EGREP_CPP([Known], [
 #ifdef _MSC_VER
@@ -865,7 +861,6 @@ changequote(,)dnl
            linux*-android*)      gl_cv_func_printf_directive_f="guessing no";;
 changequote([,])dnl
                                  # Guess yes on MSVC, no on mingw.
-           windows*-gnu*)        gl_cv_func_printf_directive_f="guessing no" ;;
            windows*-msvc*)       gl_cv_func_printf_directive_f="guessing yes" ;;
            mingw* | windows*)    AC_EGREP_CPP([Known], [
 #ifdef _MSC_VER
@@ -1629,7 +1624,6 @@ changequote(,)dnl
            linux*-android*)      gl_cv_func_snprintf_retval_c99="guessing yes";;
 changequote([,])dnl
                                  # Guess yes on MSVC, no on mingw.
-           windows*-gnu*)        gl_cv_func_snprintf_retval_c99="guessing no" ;;
            windows*-msvc*)       gl_cv_func_snprintf_retval_c99="guessing yes" ;;
            mingw* | windows*)    AC_EGREP_CPP([Known], [
 #ifdef _MSC_VER

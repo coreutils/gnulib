@@ -1,4 +1,4 @@
-# fmaf.m4 serial 7
+# fmaf.m4 serial 8
 dnl Copyright (C) 2011-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -190,8 +190,6 @@ int main()
          dnl Otherwise guess no, even on glibc systems.
          gl_cv_func_fmaf_works="$gl_cross_guess_normal"
          case "$host_os" in
-           windows*-gnu*)
-             ;;
            windows*-msvc*)
              gl_cv_func_fmaf_works="guessing yes"
              ;;
