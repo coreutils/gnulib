@@ -249,6 +249,8 @@ mcel_scan (char const *p, char const *lim)
   char32_t ch;
   size_t len = mbrtoc32 (&ch, p, lim - p, &mbs);
 
+#undef mbs
+
   /* Any LEN with top bit set is an encoding error, as LEN == (size_t) -3
      is not supported and MB_LEN_MAX is small.  */
   if (_GL_UNLIKELY ((size_t) -1 / 2 < len))
