@@ -39,5 +39,5 @@ test_uchar_c___SOURCES = test-uchar-c++.cc
 if CXX_HAVE_CUCHAR
 test_uchar_c___SOURCES += test-uchar-c++2.cc
 endif
-test_uchar_c___LDADD = $(LDADD) $(LIBUNISTRING) $(MBRTOWC_LIB)
+test_uchar_c___LDADD = $(LDADD) $(LIBUNISTRING) $(MBRTOWC_LIB) $(LIBC32CONV)
 endif
