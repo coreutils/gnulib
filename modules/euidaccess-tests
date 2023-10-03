@@ -1,0 +1,17 @@
+Files:
+tests/test-euidaccess.c
+tests/test-access.h
+tests/signature.h
+tests/macros.h
+
+Depends-on:
+creat
+root-uid
+symlink
+
+configure.ac:
+AC_CHECK_FUNCS_ONCE([geteuid])
+
+Makefile.am:
+TESTS += test-euidaccess
+check_PROGRAMS += test-euidaccess

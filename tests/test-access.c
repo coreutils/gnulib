@@ -27,93 +27,14 @@ SIGNATURE_CHECK (access, int, (const char *, int));
 #include "root-uid.h"
 #include "macros.h"
 
-/* mingw and MSVC 9 lack geteuid, so setup a dummy value.  */
-#if !HAVE_GETEUID
-# define geteuid() ROOT_UID
-#endif
-
 #define BASE "test-access.t"
+
+#include "test-access.h"
 
 int
 main ()
 {
-  /* Remove anything from prior partial run.  */
-  unlink (BASE "f");
-  unlink (BASE "f1");
-  chmod (BASE "f2", 0600);
-  unlink (BASE "f2");
-  unlink (BASE "sl");
-
-  {
-    errno = 0;
-    ASSERT (access (BASE "f", R_OK) == -1);
-    ASSERT (errno == ENOENT);
-
-    errno = 0;
-    ASSERT (access (BASE "f", W_OK) == -1);
-    ASSERT (errno == ENOENT);
-
-    errno = 0;
-    ASSERT (access (BASE "f", X_OK) == -1);
-    ASSERT (errno == ENOENT);
-  }
-  {
-    ASSERT (close (creat (BASE "f1", 0700)) == 0);
-
-    ASSERT (access (BASE "f1", F_OK) == 0);
-    ASSERT (access (BASE "f1", R_OK) == 0);
-    ASSERT (access (BASE "f1", W_OK) == 0);
-    ASSERT (access (BASE "f1", X_OK) == 0);
-
-    ASSERT (access (BASE "f1/", F_OK) == -1);
-    ASSERT (errno == ENOTDIR);
-    ASSERT (access (BASE "f1/", R_OK) == -1);
-    ASSERT (errno == ENOTDIR);
-    ASSERT (access (BASE "f1/", W_OK) == -1);
-    ASSERT (errno == ENOTDIR);
-    ASSERT (access (BASE "f1/", X_OK) == -1);
-    ASSERT (errno == ENOTDIR);
-
-    if (symlink (BASE "f1", BASE "sl") == 0)
-      {
-        ASSERT (access (BASE "sl/", F_OK) == -1);
-        ASSERT (errno == ENOTDIR);
-        ASSERT (access (BASE "sl/", R_OK) == -1);
-        ASSERT (errno == ENOTDIR);
-        ASSERT (access (BASE "sl/", W_OK) == -1);
-        ASSERT (errno == ENOTDIR);
-        ASSERT (access (BASE "sl/", X_OK) == -1);
-        ASSERT (errno == ENOTDIR);
-      }
-  }
-  {
-    ASSERT (close (creat (BASE "f2", 0600)) == 0);
-    ASSERT (chmod (BASE "f2", 0400) == 0);
-
-    ASSERT (access (BASE "f2", R_OK) == 0);
-
-    if (geteuid () != ROOT_UID)
-      {
-        errno = 0;
-        ASSERT (access (BASE "f2", W_OK) == -1);
-        ASSERT (errno == EACCES);
-      }
-
-#if defined _WIN32 && !defined __CYGWIN__
-    /* X_OK works like R_OK.  */
-    ASSERT (access (BASE "f2", X_OK) == 0);
-#else
-    errno = 0;
-    ASSERT (access (BASE "f2", X_OK) == -1);
-    ASSERT (errno == EACCES);
-#endif
-  }
-
-  /* Cleanup.  */
-  ASSERT (unlink (BASE "f1") == 0);
-  ASSERT (chmod (BASE "f2", 0600) == 0);
-  ASSERT (unlink (BASE "f2") == 0);
-  unlink (BASE "sl");
+  test_access (access);
 
   return 0;
 }

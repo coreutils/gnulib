@@ -1,5 +1,6 @@
 Files:
 tests/test-access.c
+tests/test-access.h
 tests/signature.h
 tests/macros.h
 
