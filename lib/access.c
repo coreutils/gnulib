@@ -52,11 +52,16 @@ access (const char *file, int mode)
       if (file_len > 0 && file[file_len - 1] == '/')
         {
           struct stat st;
-          if (stat (file, &st) == 0 && ! S_ISDIR (st.st_mode))
+          if (stat (file, &st) == 0)
             {
-              errno = ENOTDIR;
-              return -1;
+              if (! S_ISDIR (st.st_mode))
+                {
+                  errno = ENOTDIR;
+                  return -1;
+                }
             }
+          else
+            return (mode == F_OK && errno == EOVERFLOW ? 0 : -1);
         }
     }
 # endif
