@@ -377,7 +377,11 @@ it directly, preferring plain @code{bool} via the
 Compound literals and designated initializers.
 
 @item
-Variadic macros.
+Variadic macros.@*
+@findex __VA_ARGS__
+Note: The handling of @code{__VA_ARGS__} in MSVC differs from the one
+in ISO C 99, see @url{https://stackoverflow.com/questions/5134523/}.
+But usually this matters only for macros that decompose @code{__VA_ARGS__}.
 
 @item
 @code{static inline} functions.
