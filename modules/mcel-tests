@@ -10,3 +10,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-mcel
 check_PROGRAMS += test-mcel
+test_mcel_LDADD = $(LDADD) $(LIBUNISTRING) $(SETLOCALE_LIB) $(MBRTOWC_LIB) $(LIBC32CONV)
