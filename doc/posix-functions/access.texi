@@ -11,6 +11,10 @@ Portability problems fixed by Gnulib:
 @item
 This function does not support the @code{X_OK} mode on some platforms:
 MSVC 14.
+@item
+This function does not reject trailing slashes on symlinks to non-directories
+on some platforms:
+Mac OS X 10.5.
 @end itemize
 
 Portability problems not fixed by Gnulib:

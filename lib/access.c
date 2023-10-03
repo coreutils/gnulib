@@ -20,7 +20,10 @@
 #include <unistd.h>
 
 #include <fcntl.h>
-#include <io.h>
+
+#if defined _WIN32 && ! defined __CYGWIN__
+
+# include <io.h>
 
 int
 access (const char *file, int mode)
@@ -29,3 +32,35 @@ access (const char *file, int mode)
     mode = (mode & ~X_OK) | R_OK;
   return _access (file, mode);
 }
+
+#else
+
+# include <errno.h>
+# include <string.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+
+int
+access (const char *file, int mode)
+# undef access
+{
+  int ret = access (file, mode);
+# if ACCESS_TRAILING_SLASH_BUG
+  if (ret == 0)
+    {
+      size_t file_len = strlen (file);
+      if (file_len > 0 && file[file_len - 1] == '/')
+        {
+          struct stat st;
+          if (stat (file, &st) == 0 && ! S_ISDIR (st.st_mode))
+            {
+              errno = ENOTDIR;
+              return -1;
+            }
+        }
+    }
+# endif
+  return ret;
+}
+
+#endif

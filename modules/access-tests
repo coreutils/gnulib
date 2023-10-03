@@ -6,6 +6,7 @@ tests/macros.h
 Depends-on:
 creat
 root-uid
+symlink
 
 configure.ac:
 AC_CHECK_FUNCS_ONCE([geteuid])

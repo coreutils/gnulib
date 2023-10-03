@@ -42,6 +42,7 @@ main ()
   unlink (BASE "f1");
   chmod (BASE "f2", 0600);
   unlink (BASE "f2");
+  unlink (BASE "sl");
 
   {
     errno = 0;
@@ -59,9 +60,31 @@ main ()
   {
     ASSERT (close (creat (BASE "f1", 0700)) == 0);
 
+    ASSERT (access (BASE "f1", F_OK) == 0);
     ASSERT (access (BASE "f1", R_OK) == 0);
     ASSERT (access (BASE "f1", W_OK) == 0);
     ASSERT (access (BASE "f1", X_OK) == 0);
+
+    ASSERT (access (BASE "f1/", F_OK) == -1);
+    ASSERT (errno == ENOTDIR);
+    ASSERT (access (BASE "f1/", R_OK) == -1);
+    ASSERT (errno == ENOTDIR);
+    ASSERT (access (BASE "f1/", W_OK) == -1);
+    ASSERT (errno == ENOTDIR);
+    ASSERT (access (BASE "f1/", X_OK) == -1);
+    ASSERT (errno == ENOTDIR);
+
+    if (symlink (BASE "f1", BASE "sl") == 0)
+      {
+        ASSERT (access (BASE "sl/", F_OK) == -1);
+        ASSERT (errno == ENOTDIR);
+        ASSERT (access (BASE "sl/", R_OK) == -1);
+        ASSERT (errno == ENOTDIR);
+        ASSERT (access (BASE "sl/", W_OK) == -1);
+        ASSERT (errno == ENOTDIR);
+        ASSERT (access (BASE "sl/", X_OK) == -1);
+        ASSERT (errno == ENOTDIR);
+      }
   }
   {
     ASSERT (close (creat (BASE "f2", 0600)) == 0);
@@ -90,6 +113,7 @@ main ()
   ASSERT (unlink (BASE "f1") == 0);
   ASSERT (chmod (BASE "f2", 0600) == 0);
   ASSERT (unlink (BASE "f2") == 0);
+  unlink (BASE "sl");
 
   return 0;
 }
