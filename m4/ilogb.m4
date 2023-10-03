@@ -1,4 +1,4 @@
-# ilogb.m4 serial 8
+# ilogb.m4 serial 9
 dnl Copyright (C) 2010-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -44,7 +44,8 @@ AC_DEFUN([gl_FUNC_ILOGB],
 
 dnl Test whether ilogb() works.
 dnl On OpenBSD 6.7, AIX 5.1, ilogb(0.0) is wrong.
-dnl On AIX 7.1 in 64-bit mode, ilogb(2^(DBL_MIN_EXP-1)) is wrong.
+dnl On Mac OS X 10.5 in 64-bit mode and on AIX 7.1 in 64-bit mode,
+dnl ilogb(2^(DBL_MIN_EXP-1)) is wrong.
 dnl On NetBSD 7.1, OpenBSD 6.7, ilogb(Infinity) is wrong.
 dnl On NetBSD 7.1, OpenBSD 6.7, ilogb(NaN) is wrong.
 AC_DEFUN([gl_FUNC_ILOGB_WORKS],
@@ -95,7 +96,8 @@ int main (int argc, char *argv[])
     if (my_ilogb (x) != FP_ILOGB0)
       result |= 1;
   }
-  /* This test fails on AIX 7.1 in 64-bit mode.  */
+  /* This test fails on Mac OS X 10.5 in 64-bit mode and on
+     AIX 7.1 in 64-bit mode.  */
   {
     int i;
     x = 0.5;
