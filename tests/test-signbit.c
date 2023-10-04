@@ -56,7 +56,17 @@ test_signbitf ()
   ASSERT (!signbit (Infinityf ()));
   ASSERT (signbit (- Infinityf ()));
   /* Quiet NaN.  */
-  (void) signbit (zerof / zerof);
+  {
+    float nan = zerof / zerof;
+    float pos_nan;
+    float neg_nan;
+    if (signbit (nan))
+      pos_nan = - nan, neg_nan = nan;
+    else
+      pos_nan = nan, neg_nan = - nan;
+    ASSERT (!signbit (pos_nan));
+    ASSERT (signbit (neg_nan));
+  }
 #if defined FLT_EXPBIT0_WORD && defined FLT_EXPBIT0_BIT
   /* Signalling NaN.  */
   {
@@ -101,7 +111,17 @@ test_signbitd ()
   ASSERT (!signbit (Infinityd ()));
   ASSERT (signbit (- Infinityd ()));
   /* Quiet NaN.  */
-  (void) signbit (zerod / zerod);
+  {
+    double nan = zerod / zerod;
+    double pos_nan;
+    double neg_nan;
+    if (signbit (nan))
+      pos_nan = - nan, neg_nan = nan;
+    else
+      pos_nan = nan, neg_nan = - nan;
+    ASSERT (!signbit (pos_nan));
+    ASSERT (signbit (neg_nan));
+  }
 #if defined DBL_EXPBIT0_WORD && defined DBL_EXPBIT0_BIT
   /* Signalling NaN.  */
   {
@@ -144,7 +164,17 @@ test_signbitl ()
   ASSERT (!signbit (Infinityl ()));
   ASSERT (signbit (- Infinityl ()));
   /* Quiet NaN.  */
-  (void) signbit (zerol / zerol);
+  {
+    long double nan = zerol / zerol;
+    long double pos_nan;
+    long double neg_nan;
+    if (signbit (nan))
+      pos_nan = - nan, neg_nan = nan;
+    else
+      pos_nan = nan, neg_nan = - nan;
+    ASSERT (!signbit (pos_nan));
+    ASSERT (signbit (neg_nan));
+  }
 #if defined LDBL_EXPBIT0_WORD && defined LDBL_EXPBIT0_BIT
   /* Signalling NaN.  */
   {
