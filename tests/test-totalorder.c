@@ -31,24 +31,36 @@
 # define TOTALORDER_TYPE double
 #endif
 
+/* Return a quiet NaN with sign bit == 0.  */
+static TOTALORDER_TYPE
+positive_nan ()
+{
+  /* 'volatile' works around a GCC bug:
+     <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=111655>  */
+  TOTALORDER_TYPE volatile nan = TOTALORDER_NAN ();
+  return (signbit (nan) ? - nan : nan);
+}
+
+/* Return a quiet NaN with sign bit == 1.  */
+static TOTALORDER_TYPE
+negative_nan ()
+{
+  /* 'volatile' works around a GCC bug:
+     <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=111655>  */
+  TOTALORDER_TYPE volatile nan = TOTALORDER_NAN ();
+  return (signbit (nan) ? nan : - nan);
+}
+
 int
 main ()
 {
   TOTALORDER_TYPE x[] =
     {
-      -TOTALORDER_NAN (), -TOTALORDER_INF (), -1e37, -1, -1e-5,
+      negative_nan (), -TOTALORDER_INF (), -1e37, -1, -1e-5,
       TOTALORDER_MINUS_ZERO, 0,
-      1e-5, 1, 1e37, TOTALORDER_INF (), TOTALORDER_NAN ()
+      1e-5, 1, 1e37, TOTALORDER_INF (), positive_nan ()
     };
   int n = sizeof x / sizeof *x;
-
-  /* TOTALORDER_NAN () yields a NaN of unknown sign, so fix the
-     first NaN to be negative and the last NaN to be nonnegative.
-     Do this via volatile accesses, to work around GCC bug 111655.  */
-  TOTALORDER_TYPE volatile a = x[0], z = x[n - 1];
-  if (! signbit (a)) a = -a;
-  if (  signbit (z)) z = -z;
-  x[0] = a, x[n - 1] = z;
 
   for (int i = 0; i < n; i++)
     for (int j = 0; j < n; j++)
