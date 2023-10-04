@@ -26,16 +26,27 @@ totalorderl (long double const *x, long double const *y)
   /* Although the following is not strictly portable, and won't work
      on some obsolete platforms (e.g., PA-RISC, MIPS before alignment
      to IEEE 754-2008), it should be good enough nowadays.  */
+
+  /* If the sign bits of *X and *Y differ, the one with sign bit == 1
+     is "smaller" than the one with sign bit == 0.  */
   int xs = signbit (*x);
   int ys = signbit (*y);
   if (!xs != !ys)
     return xs;
+
+  /* If one of *X, *Y is a NaN and the other isn't, the answer is easy
+     as well: the negative NaN is "smaller", the positive NaN is "greater"
+     than the other argument.  */
   int xn = isnanl (*x);
   int yn = isnanl (*y);
   if (!xn != !yn)
     return !xn == !xs;
+  /* If none of *X, *Y is a NaN, the '<=' operator does the job, including
+     for -Infinity and +Infinity.  */
   if (!xn)
     return *x <= *y;
+
+  /* At this point, *X and *Y are NaNs with the same sign bit.  */
 
   unsigned long long extended_sign = -!!xs;
 
@@ -48,12 +59,23 @@ totalorderl (long double const *x, long double const *y)
       return (xu.i ^ extended_sign) <= (yu.i ^ extended_sign);
     }
 
-  union { unsigned long long i[2]; long double f; } volatile
-    xu = {0}, yu = {0}, zu = {0};
+  union { unsigned long long i[2]; long double f; } volatile xu, yu, zu;
+  /* It would be tempting to initialize xu, yu, zu with {0}.  But
+     Solaris cc (Sun C 5.8) on x86_64 miscompiles it: It initializes
+     only the lower 80 bits, not the entire 128 bits, of each of the
+     three variables.  */
+  xu.i[0] = 0; xu.i[1] = 0;
+  yu.i[0] = 0; yu.i[1] = 0;
+  zu.i[0] = 0; zu.i[1] = 0;
+
   xu.f = *x;
   yu.f = *y;
+
+  /* Determine in which of the two 'unsigned long long' words the sign bit
+     is located.  */
   zu.f = -zu.f;
   bool bigendian = !!zu.i[0];
+
   unsigned long long
     xhi = xu.i[!bigendian] ^ extended_sign,
     yhi = yu.i[!bigendian] ^ extended_sign,
