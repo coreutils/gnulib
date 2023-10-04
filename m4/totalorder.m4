@@ -81,6 +81,9 @@ AC_DEFUN([gl_FUNC_TOTALORDERL],
      else
        REPLACE_TOTALORDERL=1
      fi
-     TOTALORDERL_LIBM='$(ISNANL_LIBM)'])
+     TOTALORDERL_LIBM='$(ISNANL_LIBM)'
+     dnl Prerequisite of lib/totalorderl.c.
+     gl_LONG_DOUBLE_SIGN_LOCATION
+    ])
   AC_SUBST([TOTALORDERL_LIBM])
 ])

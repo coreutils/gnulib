@@ -73,8 +73,14 @@ totalorderl (long double const *x, long double const *y)
 
   /* Determine in which of the two 'unsigned long long' words the sign bit
      is located.  */
+  bool bigendian;
+#if defined LDBL_SIGNBIT_WORD
+  /* We have already determined the sign bit location at configure time.  */
+  bigendian = (LDBL_SIGNBIT_WORD < 2);
+#else
   zu.f = -zu.f;
-  bool bigendian = !!zu.i[0];
+  bigendian = !!zu.i[0];
+#endif
 
   unsigned long long
     xhi = xu.i[!bigendian] ^ extended_sign,

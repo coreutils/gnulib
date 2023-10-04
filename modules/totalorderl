@@ -5,6 +5,7 @@ Files:
 lib/totalorderl.c
 m4/mathfunc.m4
 m4/totalorder.m4
+m4/signbit.m4
 
 Depends-on:
 math
