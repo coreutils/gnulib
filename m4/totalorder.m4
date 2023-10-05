@@ -19,10 +19,7 @@ AC_DEFUN([gl_FUNC_TOTALORDERF],
     ])
   AS_IF([test $gl_cv_func_totalorderf_no_libm != yes &&
          test $gl_cv_func_totalorderf_in_libm != yes],
-    [gl_saved_LIBS=$LIBS
-     AC_SEARCH_LIBS([totalorderf], [m])
-     LIBS=$gl_saved_LIBS
-     if test "$ac_cv_search_totalorderf" = no; then
+    [if test $gl_cv_func_totalorderf_in_libm != yes; then
        HAVE_TOTALORDERF=0
      else
        REPLACE_TOTALORDERF=1
@@ -46,10 +43,7 @@ AC_DEFUN([gl_FUNC_TOTALORDER],
     ])
   AS_IF([test $gl_cv_func_totalorder_no_libm != yes &&
          test $gl_cv_func_totalorder_in_libm != yes],
-    [gl_saved_LIBS=$LIBS
-     AC_SEARCH_LIBS([totalorder], [m])
-     LIBS=$gl_saved_LIBS
-     if test "$ac_cv_search_totalorder" = no; then
+    [if test $gl_cv_func_totalorder_in_libm != yes; then
        HAVE_TOTALORDER=0
      else
        REPLACE_TOTALORDER=1
@@ -73,10 +67,7 @@ AC_DEFUN([gl_FUNC_TOTALORDERL],
     ])
   AS_IF([test $gl_cv_func_totalorderl_no_libm != yes &&
          test $gl_cv_func_totalorderl_in_libm != yes],
-    [gl_saved_LIBS=$LIBS
-     AC_SEARCH_LIBS([totalorderl], [m])
-     LIBS=$gl_saved_LIBS
-     if test "$ac_cv_search_totalorderl" = no; then
+    [if test $gl_cv_func_totalorderl_in_libm != yes; then
        HAVE_TOTALORDERL=0
      else
        REPLACE_TOTALORDERL=1
