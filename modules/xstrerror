@@ -1,0 +1,26 @@
+Description:
+xstrerror() function: return diagnostic string based on error code.
+Multithread-safe. With out-of-memory checking.
+
+Files:
+lib/xstrerror.h
+lib/xstrerror.c
+
+Depends-on:
+strerror_r-posix
+xalloc
+xvasprintf
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += xstrerror.c
+
+Include:
+"xstrerror.h"
+
+License:
+GPL
+
+Maintainer:
+all
