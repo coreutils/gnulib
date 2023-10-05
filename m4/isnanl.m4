@@ -1,4 +1,4 @@
-# isnanl.m4 serial 23
+# isnanl.m4 serial 24
 dnl Copyright (C) 2007-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -16,8 +16,7 @@ AC_DEFUN([gl_FUNC_ISNANL],
     fi
   fi
   dnl The variable gl_func_isnanl set here is used by isnan.m4.
-  if test $gl_cv_func_isnanl_no_libm = yes \
-     || test $gl_cv_func_isnanl_in_libm = yes; then
+  if test $gl_cv_func_isnanl_no_libm = yes || test "$ISNANL_LIBM"; then
     save_LIBS="$LIBS"
     LIBS="$LIBS $ISNANL_LIBM"
     gl_FUNC_ISNANL_WORKS
