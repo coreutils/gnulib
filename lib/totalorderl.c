@@ -20,6 +20,10 @@
 
 #include <math.h>
 
+#ifndef LDBL_SIGNBIT_WORD
+# define LDBL_SIGNBIT_WORD (-1)
+#endif
+
 int
 totalorderl (long double const *x, long double const *y)
 {
@@ -27,7 +31,7 @@ totalorderl (long double const *x, long double const *y)
      on some obsolete platforms (e.g., PA-RISC, MIPS before alignment
      to IEEE 754-2008), it should be good enough nowadays.  */
 
-  /* If the sign bits of *X and *Y differ, the one with sign bit == 1
+  /* If the sign bits of *X and *Y differ, the one with non-zero sign bit
      is "smaller" than the one with sign bit == 0.  */
   int xs = signbit (*x);
   int ys = signbit (*y);
@@ -59,28 +63,28 @@ totalorderl (long double const *x, long double const *y)
       return (xu.i ^ extended_sign) <= (yu.i ^ extended_sign);
     }
 
-  union { unsigned long long i[2]; long double f; } volatile xu, yu, zu;
-  /* It would be tempting to initialize xu, yu, zu with {0}.  But
-     Solaris cc (Sun C 5.8) on x86_64 miscompiles it: It initializes
-     only the lower 80 bits, not the entire 128 bits, of each of the
-     three variables.  */
+  union u { unsigned long long i[2]; long double f; } volatile xu, yu;
+  /* Although it is tempting to initialize with {0}, Solaris cc (Sun C 5.8)
+     on x86_64 miscompiles {0}: it initializes only the lower 80 bits,
+     not the entire 128 bits.  */
   xu.i[0] = 0; xu.i[1] = 0;
   yu.i[0] = 0; yu.i[1] = 0;
-  zu.i[0] = 0; zu.i[1] = 0;
-
   xu.f = *x;
   yu.f = *y;
 
-  /* Determine in which of the two 'unsigned long long' words the sign bit
-     is located.  */
+  /* Set BIGENDIAN to true if and only if the most significant bits of
+     xu.f's fraction are in xu.i[0].  Use the sign bit's location to
+     infer BIGENDIAN.  */
   bool bigendian;
-#if defined LDBL_SIGNBIT_WORD
-  /* We have already determined the sign bit location at configure time.  */
-  bigendian = (LDBL_SIGNBIT_WORD < 2);
-#else
-  zu.f = -zu.f;
-  bigendian = !!zu.i[0];
-#endif
+  if (LDBL_SIGNBIT_WORD < 0)
+    {
+      union u volatile zu;
+      zu.i[0] = 0; zu.i[1] = 0;
+      zu.f = -zu.f;
+      bigendian = !!zu.i[0];
+    }
+  else
+    bigendian = LDBL_SIGNBIT_WORD < sizeof xu.i[0] / sizeof (unsigned);
 
   unsigned long long
     xhi = xu.i[!bigendian] ^ extended_sign,
