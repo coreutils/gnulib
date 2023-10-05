@@ -1,0 +1,12 @@
+Files:
+tests/test-xstrerror.c
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-xstrerror
+check_PROGRAMS += test-xstrerror
+test_xstrerror_LDADD = $(LDADD) $(LIBINTL)
