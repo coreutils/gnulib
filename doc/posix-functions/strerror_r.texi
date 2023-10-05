@@ -86,3 +86,8 @@ OpenBSD 4.7.
 Portability problems not fixed by Gnulib:
 @itemize
 @end itemize
+
+Note: Gnulib has a module @code{xstrerror}, with the property that
+@code{xstrerror (NULL, errnum)} returns the value of @code{strerror_r}
+as a freshly allocated string.
+(Recall that the expression @code{strerror (errnum)} is not multithread-safe.)
