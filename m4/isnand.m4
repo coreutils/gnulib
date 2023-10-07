@@ -18,7 +18,7 @@ AC_DEFUN([gl_FUNC_ISNAND],
     fi
   fi
   dnl The variable gl_func_isnand set here is used by isnan.m4.
-  if test $gl_cv_func_isnand_no_libm = yes || test "$ISNAND_LIBM"; then
+  if test $gl_cv_func_isnand_no_libm = yes || test -n "$ISNAND_LIBM"; then
     gl_func_isnand=yes
   else
     gl_func_isnand=no
