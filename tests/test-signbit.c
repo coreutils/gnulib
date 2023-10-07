@@ -30,6 +30,7 @@
 
 #include "minus-zero.h"
 #include "infinity.h"
+#include "qnan.h"
 #include "macros.h"
 
 float zerof = 0.0f;
@@ -56,17 +57,8 @@ test_signbitf ()
   ASSERT (!signbit (Infinityf ()));
   ASSERT (signbit (- Infinityf ()));
   /* Quiet NaN.  */
-  {
-    float nan = zerof / zerof;
-    float pos_nan;
-    float neg_nan;
-    if (signbit (nan))
-      pos_nan = - nan, neg_nan = nan;
-    else
-      pos_nan = nan, neg_nan = - nan;
-    ASSERT (!signbit (pos_nan));
-    ASSERT (signbit (neg_nan));
-  }
+  ASSERT (!signbit (positive_NaNf ()));
+  ASSERT (signbit (negative_NaNf ()));
 #if defined FLT_EXPBIT0_WORD && defined FLT_EXPBIT0_BIT
   /* Signalling NaN.  */
   {
@@ -111,17 +103,8 @@ test_signbitd ()
   ASSERT (!signbit (Infinityd ()));
   ASSERT (signbit (- Infinityd ()));
   /* Quiet NaN.  */
-  {
-    double nan = zerod / zerod;
-    double pos_nan;
-    double neg_nan;
-    if (signbit (nan))
-      pos_nan = - nan, neg_nan = nan;
-    else
-      pos_nan = nan, neg_nan = - nan;
-    ASSERT (!signbit (pos_nan));
-    ASSERT (signbit (neg_nan));
-  }
+  ASSERT (!signbit (positive_NaNd ()));
+  ASSERT (signbit (negative_NaNd ()));
 #if defined DBL_EXPBIT0_WORD && defined DBL_EXPBIT0_BIT
   /* Signalling NaN.  */
   {
@@ -164,17 +147,8 @@ test_signbitl ()
   ASSERT (!signbit (Infinityl ()));
   ASSERT (signbit (- Infinityl ()));
   /* Quiet NaN.  */
-  {
-    long double nan = zerol / zerol;
-    long double pos_nan;
-    long double neg_nan;
-    if (signbit (nan))
-      pos_nan = - nan, neg_nan = nan;
-    else
-      pos_nan = nan, neg_nan = - nan;
-    ASSERT (!signbit (pos_nan));
-    ASSERT (signbit (neg_nan));
-  }
+  ASSERT (!signbit (positive_NaNl ()));
+  ASSERT (signbit (negative_NaNl ()));
 #if defined LDBL_EXPBIT0_WORD && defined LDBL_EXPBIT0_BIT
   /* Signalling NaN.  */
   {

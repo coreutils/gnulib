@@ -21,44 +21,25 @@
 #include "infinity.h"
 #include "macros.h"
 #include "minus-zero.h"
-#include "nan.h"
+#include "qnan.h"
 
 #ifndef TOTALORDER
 # define TOTALORDER totalorder
 # define TOTALORDER_INF Infinityd
 # define TOTALORDER_MINUS_ZERO minus_zerod
-# define TOTALORDER_NAN NaNd
+# define TOTALORDER_POSITIVE_NAN positive_NaNd
+# define TOTALORDER_NEGATIVE_NAN negative_NaNd
 # define TOTALORDER_TYPE double
 #endif
-
-/* Return a quiet NaN with sign bit == 0.  */
-static TOTALORDER_TYPE
-positive_nan ()
-{
-  /* 'volatile' works around a GCC bug:
-     <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=111655>  */
-  TOTALORDER_TYPE volatile nan = TOTALORDER_NAN ();
-  return (signbit (nan) ? - nan : nan);
-}
-
-/* Return a quiet NaN with sign bit == 1.  */
-static TOTALORDER_TYPE
-negative_nan ()
-{
-  /* 'volatile' works around a GCC bug:
-     <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=111655>  */
-  TOTALORDER_TYPE volatile nan = TOTALORDER_NAN ();
-  return (signbit (nan) ? nan : - nan);
-}
 
 int
 main ()
 {
   TOTALORDER_TYPE x[] =
     {
-      negative_nan (), -TOTALORDER_INF (), -1e37, -1, -1e-5,
+      TOTALORDER_NEGATIVE_NAN (), -TOTALORDER_INF (), -1e37, -1, -1e-5,
       TOTALORDER_MINUS_ZERO, 0,
-      1e-5, 1, 1e37, TOTALORDER_INF (), positive_nan ()
+      1e-5, 1, 1e37, TOTALORDER_INF (), TOTALORDER_POSITIVE_NAN ()
     };
   int n = sizeof x / sizeof *x;
 

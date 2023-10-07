@@ -1,4 +1,4 @@
-/* Macros for not-a-number.
+/* Macros for quiet not-a-number.
    Copyright (C) 2007-2023 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -13,6 +13,9 @@
 
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
+
+#ifndef _TESTS_NAN_H
+#define _TESTS_NAN_H
 
 
 /* IBM z/OS supports both hexadecimal and IEEE floating-point formats. The
@@ -83,3 +86,6 @@ NaNl ()
 #else
 # define NaNl() (0.0L / 0.0L)
 #endif
+
+
+#endif /* _TESTS_NAN_H */
