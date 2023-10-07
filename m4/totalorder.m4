@@ -9,22 +9,36 @@ AC_DEFUN([gl_FUNC_TOTALORDERF],
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
 
-  gl_MATHFUNC([totalorderf], [int],
-    [(float const *, float const *)],
-    [extern
-     #ifdef __cplusplus
-     "C"
-     #endif
-     int totalorderf (float const *, float const *);
+  dnl glibc versions < 2.31 had an incompatible declaration of this function,
+  dnl see <https://sourceware.org/git/?p=glibc.git;a=commitdiff;h=42760d764649ad82f5fe45a26cbdf2c2500409f7>
+  AC_CACHE_CHECK([whether totalorderf has a non-standard declaration],
+    [gl_cv_func_totalorderf_incompatible],
+    [AC_COMPILE_IFELSE(
+       [AC_LANG_PROGRAM(
+          [[#include <math.h>
+          ]],
+          [[extern
+            #ifdef __cplusplus
+            "C"
+            #endif
+            int totalorderf (float const *, float const *);
+          ]])
+       ],
+       [gl_cv_func_totalorderf_incompatible=no],
+       [gl_cv_func_totalorderf_incompatible=yes])
     ])
-  AS_IF([test $gl_cv_func_totalorderf_no_libm != yes &&
-         test $gl_cv_func_totalorderf_in_libm != yes],
-    [if test $gl_cv_func_totalorderf_in_libm != yes; then
-       HAVE_TOTALORDERF=0
-     else
-       REPLACE_TOTALORDERF=1
-     fi
-     TOTALORDERF_LIBM='$(ISNANF_LIBM)'])
+  if test $gl_cv_func_totalorderf_incompatible = yes; then
+    REPLACE_TOTALORDERF=1
+  else
+    gl_MATHFUNC([totalorderf], [int], [(float const *, float const *)])
+    if test $gl_cv_func_totalorderf_no_libm != yes \
+       && test $gl_cv_func_totalorderf_in_libm != yes; then
+      HAVE_TOTALORDERF=0
+    fi
+  fi
+  if test $HAVE_TOTALORDERF = 0 || test $REPLACE_TOTALORDERF = 1; then
+    TOTALORDERF_LIBM='$(ISNANF_LIBM)'
+  fi
   AC_SUBST([TOTALORDERF_LIBM])
 ])
 
@@ -33,22 +47,36 @@ AC_DEFUN([gl_FUNC_TOTALORDER],
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
 
-  gl_MATHFUNC([totalorder], [int],
-    [(double const *, double const *)],
-    [extern
-     #ifdef __cplusplus
-     "C"
-     #endif
-     int totalorder (double const *, double const *);
+  dnl glibc versions < 2.31 had an incompatible declaration of this function,
+  dnl see <https://sourceware.org/git/?p=glibc.git;a=commitdiff;h=42760d764649ad82f5fe45a26cbdf2c2500409f7>
+  AC_CACHE_CHECK([whether totalorder has a non-standard declaration],
+    [gl_cv_func_totalorder_incompatible],
+    [AC_COMPILE_IFELSE(
+       [AC_LANG_PROGRAM(
+          [[#include <math.h>
+          ]],
+          [[extern
+            #ifdef __cplusplus
+            "C"
+            #endif
+            int totalorder (double const *, double const *);
+          ]])
+       ],
+       [gl_cv_func_totalorder_incompatible=no],
+       [gl_cv_func_totalorder_incompatible=yes])
     ])
-  AS_IF([test $gl_cv_func_totalorder_no_libm != yes &&
-         test $gl_cv_func_totalorder_in_libm != yes],
-    [if test $gl_cv_func_totalorder_in_libm != yes; then
-       HAVE_TOTALORDER=0
-     else
-       REPLACE_TOTALORDER=1
-     fi
-     TOTALORDER_LIBM='$(ISNAND_LIBM)'])
+  if test $gl_cv_func_totalorder_incompatible = yes; then
+    REPLACE_TOTALORDER=1
+  else
+    gl_MATHFUNC([totalorder], [int], [(double const *, double const *)])
+    if test $gl_cv_func_totalorder_no_libm != yes \
+       && test $gl_cv_func_totalorder_in_libm != yes; then
+      HAVE_TOTALORDER=0
+    fi
+  fi
+  if test $HAVE_TOTALORDER = 0 || test $REPLACE_TOTALORDER = 1; then
+    TOTALORDER_LIBM='$(ISNAND_LIBM)'
+  fi
   AC_SUBST([TOTALORDER_LIBM])
 ])
 
@@ -57,24 +85,38 @@ AC_DEFUN([gl_FUNC_TOTALORDERL],
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
 
-  gl_MATHFUNC([totalorderl], [int],
-    [(long double const *, long double const *)],
-    [extern
-     #ifdef __cplusplus
-     "C"
-     #endif
-     int totalorderl (long double const *, long double const *);
+  dnl glibc versions < 2.31 had an incompatible declaration of this function,
+  dnl see <https://sourceware.org/git/?p=glibc.git;a=commitdiff;h=42760d764649ad82f5fe45a26cbdf2c2500409f7>
+  AC_CACHE_CHECK([whether totalorderl has a non-standard declaration],
+    [gl_cv_func_totalorderl_incompatible],
+    [AC_COMPILE_IFELSE(
+       [AC_LANG_PROGRAM(
+          [[#include <math.h>
+          ]],
+          [[extern
+            #ifdef __cplusplus
+            "C"
+            #endif
+            int totalorderl (long double const *, long double const *);
+          ]])
+       ],
+       [gl_cv_func_totalorderl_incompatible=no],
+       [gl_cv_func_totalorderl_incompatible=yes])
     ])
-  AS_IF([test $gl_cv_func_totalorderl_no_libm != yes &&
-         test $gl_cv_func_totalorderl_in_libm != yes],
-    [if test $gl_cv_func_totalorderl_in_libm != yes; then
-       HAVE_TOTALORDERL=0
-     else
-       REPLACE_TOTALORDERL=1
-     fi
-     TOTALORDERL_LIBM='$(ISNANL_LIBM)'
-     dnl Prerequisite of lib/totalorderl.c.
-     gl_LONG_DOUBLE_SIGN_LOCATION
-    ])
+  if test $gl_cv_func_totalorderl_incompatible = yes; then
+    REPLACE_TOTALORDERL=1
+  else
+    gl_MATHFUNC([totalorderl], [int],
+      [(long double const *, long double const *)])
+    if test $gl_cv_func_totalorderl_no_libm != yes \
+       && test $gl_cv_func_totalorderl_in_libm != yes; then
+      HAVE_TOTALORDERL=0
+    fi
+  fi
+  if test $HAVE_TOTALORDERL = 0 || test $REPLACE_TOTALORDERL = 1; then
+    TOTALORDERL_LIBM='$(ISNANL_LIBM)'
+    dnl Prerequisite of lib/totalorderl.c.
+    gl_LONG_DOUBLE_SIGN_LOCATION
+  fi
   AC_SUBST([TOTALORDERL_LIBM])
 ])
