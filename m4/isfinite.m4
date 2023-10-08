@@ -1,4 +1,4 @@
-# isfinite.m4 serial 17
+# isfinite.m4 serial 17.1
 dnl Copyright (C) 2007-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -46,6 +46,7 @@ AC_DEFUN([gl_ISFINITEL_WORKS],
 [
   AC_REQUIRE([AC_PROG_CC])
   AC_REQUIRE([gl_BIGENDIAN])
+  AC_REQUIRE([gl_LONG_DOUBLE_EXPONENT_LOCATION])
   AC_REQUIRE([gl_LONG_DOUBLE_VS_DOUBLE])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CACHE_CHECK([whether isfinite(long double) works], [gl_cv_func_isfinitel_works],
@@ -87,6 +88,31 @@ int main ()
       m.word[i] |= 1;
     if (isfinite (m.value))
       result |= 1;
+
+#if defined LDBL_EXPBIT0_WORD && defined LDBL_EXPBIT0_BIT
+    /* Another NaN, more precisely crafted.  */
+    m.value = NaNl ();
+    #if defined __powerpc__ && LDBL_MANT_DIG == 106
+      /* This is PowerPC "double double", a pair of two doubles.  Inf and NaN are
+         represented as the corresponding 64-bit IEEE values in the first double;
+         the second is ignored.  Manipulate only the first double.  */
+      #define HNWORDS \
+        ((sizeof (double) + sizeof (unsigned int) - 1) / sizeof (unsigned int))
+    #else
+      #define HNWORDS NWORDS
+    #endif
+    #if LDBL_EXPBIT0_BIT > 0
+      m.word[LDBL_EXPBIT0_WORD] ^= (unsigned int) 1 << (LDBL_EXPBIT0_BIT - 1);
+    #else
+      m.word[LDBL_EXPBIT0_WORD + (LDBL_EXPBIT0_WORD < HNWORDS / 2 ? 1 : - 1)]
+        ^= (unsigned int) 1 << (sizeof (unsigned int) * CHAR_BIT - 1);
+    #endif
+    m.word[LDBL_EXPBIT0_WORD + (LDBL_EXPBIT0_WORD < HNWORDS / 2 ? 1 : - 1)]
+      |= (unsigned int) 1 << LDBL_EXPBIT0_BIT;
+    #undef HNWORDS
+    if (isfinite (m.value))
+      result |= 1;
+#endif
   }
 
 #if ((defined __ia64 && LDBL_MANT_DIG == 64) || (defined __x86_64__ || defined __amd64__) || (defined __i386 || defined __i386__ || defined _I386 || defined _M_IX86 || defined _X86_)) && !HAVE_SAME_LONG_DOUBLE_AS_DOUBLE

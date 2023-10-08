@@ -5,6 +5,7 @@ Files:
 lib/isfinite.c
 m4/isfinite.m4
 m4/check-math-lib.m4
+m4/exponentl.m4
 
 Depends-on:
 math

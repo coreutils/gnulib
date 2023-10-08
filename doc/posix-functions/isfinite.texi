@@ -12,9 +12,9 @@ Portability problems fixed by Gnulib:
 This macro is missing on some platforms:
 macOS 11.1, OpenBSD 6.7, AIX 5.1, IRIX 6.5, Solaris 11.4.
 @item
-This macro incorrectly yields true for some @samp{double} arguments, on some
-platforms:
-Linux/ia64 (signalling NaNs).
+This macro incorrectly yields true for some @samp{double} and for some
+@samp{long double} arguments, on some platforms:
+Linux/ia64 (NaNs).
 @end itemize
 
 Portability problems not fixed by Gnulib:
