@@ -39,12 +39,25 @@ va_list t5;
 
 #include <string.h>
 
-#include "nan.h"
+#include "qnan.h"
+#include "snan.h"
 #include "macros.h"
 
 int
 main (void)
 {
+  {
+    double value1;
+    char buf[64];
+
+    value1 = positive_NaNd();
+    sprintf (buf, "%g", value1);
+    ASSERT (strlen (buf) <= _PRINTF_NAN_LEN_MAX);
+
+    value1 = negative_NaNd();
+    sprintf (buf, "%g", value1);
+    ASSERT (strlen (buf) <= _PRINTF_NAN_LEN_MAX);
+  }
 #if defined DBL_EXPBIT0_WORD && defined DBL_EXPBIT0_BIT
   /* Check the value of _PRINTF_NAN_LEN_MAX.  */
   {
@@ -56,7 +69,7 @@ main (void)
     memory_double value2;
     char buf[64];
 
-    value1 = NaNd();
+    value1 = SNaNd();
     sprintf (buf, "%g", value1);
     ASSERT (strlen (buf) <= _PRINTF_NAN_LEN_MAX);
 

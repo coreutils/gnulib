@@ -1,6 +1,8 @@
 Files:
 tests/test-stdio.c
 tests/nan.h
+tests/qnan.h
+tests/snan.h
 tests/macros.h
 m4/exponentd.m4
 

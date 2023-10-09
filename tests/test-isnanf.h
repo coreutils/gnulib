@@ -21,6 +21,7 @@
 #include "minus-zero.h"
 #include "infinity.h"
 #include "nan.h"
+#include "snan.h"
 #include "macros.h"
 
 int
@@ -40,26 +41,9 @@ main ()
   ASSERT (!isnanf (- Infinityf ()));
   /* Quiet NaN.  */
   ASSERT (isnanf (NaNf ()));
-#if defined FLT_EXPBIT0_WORD && defined FLT_EXPBIT0_BIT
+#if HAVE_SNANF
   /* Signalling NaN.  */
-  {
-    #define NWORDS \
-      ((sizeof (float) + sizeof (unsigned int) - 1) / sizeof (unsigned int))
-    typedef union { float value; unsigned int word[NWORDS]; } memory_float;
-    memory_float m;
-    m.value = NaNf ();
-# if FLT_EXPBIT0_BIT > 0
-    m.word[FLT_EXPBIT0_WORD] ^= (unsigned int) 1 << (FLT_EXPBIT0_BIT - 1);
-# else
-    m.word[FLT_EXPBIT0_WORD + (FLT_EXPBIT0_WORD < NWORDS / 2 ? 1 : - 1)]
-      ^= (unsigned int) 1 << (sizeof (unsigned int) * CHAR_BIT - 1);
-# endif
-    if (FLT_EXPBIT0_WORD < NWORDS / 2)
-      m.word[FLT_EXPBIT0_WORD + 1] |= (unsigned int) 1 << FLT_EXPBIT0_BIT;
-    else
-      m.word[0] |= (unsigned int) 1;
-    ASSERT (isnanf (m.value));
-  }
+  ASSERT (isnanf (SNaNf ()));
 #endif
   return 0;
 }

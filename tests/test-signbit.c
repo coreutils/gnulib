@@ -31,6 +31,7 @@
 #include "minus-zero.h"
 #include "infinity.h"
 #include "qnan.h"
+#include "snan.h"
 #include "macros.h"
 
 float zerof = 0.0f;
@@ -59,27 +60,9 @@ test_signbitf ()
   /* Quiet NaN.  */
   ASSERT (!signbit (positive_NaNf ()));
   ASSERT (signbit (negative_NaNf ()));
-#if defined FLT_EXPBIT0_WORD && defined FLT_EXPBIT0_BIT
+#if HAVE_SNANF
   /* Signalling NaN.  */
-  {
-    #define NWORDS \
-      ((sizeof (float) + sizeof (unsigned int) - 1) / sizeof (unsigned int))
-    typedef union { float value; unsigned int word[NWORDS]; } memory_float;
-    memory_float m;
-    m.value = zerof / zerof;
-# if FLT_EXPBIT0_BIT > 0
-    m.word[FLT_EXPBIT0_WORD] ^= (unsigned int) 1 << (FLT_EXPBIT0_BIT - 1);
-# else
-    m.word[FLT_EXPBIT0_WORD + (FLT_EXPBIT0_WORD < NWORDS / 2 ? 1 : - 1)]
-      ^= (unsigned int) 1 << (sizeof (unsigned int) * CHAR_BIT - 1);
-# endif
-    if (FLT_EXPBIT0_WORD < NWORDS / 2)
-      m.word[FLT_EXPBIT0_WORD + 1] |= (unsigned int) 1 << FLT_EXPBIT0_BIT;
-    else
-      m.word[0] |= (unsigned int) 1;
-    (void) signbit (m.value);
-    #undef NWORDS
-  }
+  (void) signbit (SNaNf ());
 #endif
 }
 
@@ -105,25 +88,9 @@ test_signbitd ()
   /* Quiet NaN.  */
   ASSERT (!signbit (positive_NaNd ()));
   ASSERT (signbit (negative_NaNd ()));
-#if defined DBL_EXPBIT0_WORD && defined DBL_EXPBIT0_BIT
+#if HAVE_SNAND
   /* Signalling NaN.  */
-  {
-    #define NWORDS \
-      ((sizeof (double) + sizeof (unsigned int) - 1) / sizeof (unsigned int))
-    typedef union { double value; unsigned int word[NWORDS]; } memory_double;
-    memory_double m;
-    m.value = zerod / zerod;
-# if DBL_EXPBIT0_BIT > 0
-    m.word[DBL_EXPBIT0_WORD] ^= (unsigned int) 1 << (DBL_EXPBIT0_BIT - 1);
-# else
-    m.word[DBL_EXPBIT0_WORD + (DBL_EXPBIT0_WORD < NWORDS / 2 ? 1 : - 1)]
-      ^= (unsigned int) 1 << (sizeof (unsigned int) * CHAR_BIT - 1);
-# endif
-    m.word[DBL_EXPBIT0_WORD + (DBL_EXPBIT0_WORD < NWORDS / 2 ? 1 : - 1)]
-      |= (unsigned int) 1 << DBL_EXPBIT0_BIT;
-    (void) signbit (m.value);
-    #undef NWORDS
-  }
+  (void) signbit (SNaNd ());
 #endif
 }
 
@@ -149,35 +116,9 @@ test_signbitl ()
   /* Quiet NaN.  */
   ASSERT (!signbit (positive_NaNl ()));
   ASSERT (signbit (negative_NaNl ()));
-#if defined LDBL_EXPBIT0_WORD && defined LDBL_EXPBIT0_BIT
+#if HAVE_SNANL
   /* Signalling NaN.  */
-  {
-    #define NWORDS \
-      ((sizeof (long double) + sizeof (unsigned int) - 1) / sizeof (unsigned int))
-    typedef union { long double value; unsigned int word[NWORDS]; } memory_long_double;
-
-#if defined __powerpc__ && LDBL_MANT_DIG == 106
-    /* This is PowerPC "double double", a pair of two doubles.  Inf and Nan are
-       represented as the corresponding 64-bit IEEE values in the first double;
-       the second is ignored.  Manipulate only the first double.  */
-    #undef NWORDS
-    #define NWORDS \
-      ((sizeof (double) + sizeof (unsigned int) - 1) / sizeof (unsigned int))
-#endif
-
-    memory_long_double m;
-    m.value = zerol / zerol;
-# if LDBL_EXPBIT0_BIT > 0
-    m.word[LDBL_EXPBIT0_WORD] ^= (unsigned int) 1 << (LDBL_EXPBIT0_BIT - 1);
-# else
-    m.word[LDBL_EXPBIT0_WORD + (LDBL_EXPBIT0_WORD < NWORDS / 2 ? 1 : - 1)]
-      ^= (unsigned int) 1 << (sizeof (unsigned int) * CHAR_BIT - 1);
-# endif
-    m.word[LDBL_EXPBIT0_WORD + (LDBL_EXPBIT0_WORD < NWORDS / 2 ? 1 : - 1)]
-      |= (unsigned int) 1 << LDBL_EXPBIT0_BIT;
-    (void) signbit (m.value);
-    #undef NWORDS
-  }
+  (void) signbit (SNaNl ());
 #endif
 }
 

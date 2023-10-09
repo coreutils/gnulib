@@ -4,6 +4,7 @@ tests/test-isnanf.h
 tests/minus-zero.h
 tests/infinity.h
 tests/nan.h
+tests/snan.h
 tests/macros.h
 m4/exponentf.m4
 
