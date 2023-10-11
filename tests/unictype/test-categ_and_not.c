@@ -25,15 +25,36 @@
 int
 main ()
 {
-  uc_general_category_t ct =
-    uc_general_category_and_not (
-      uc_general_category_or (UC_LETTER, UC_NUMBER),
-      uc_general_category_or (UC_UPPERCASE_LETTER, UC_DECIMAL_DIGIT_NUMBER));
+  { /* A case where the result's bit mask is 0.  */
+    uc_general_category_t ct =
+      uc_general_category_and_not (UC_UPPERCASE_LETTER, UC_LETTER);
 
-  ASSERT (!uc_is_general_category ('A', ct));
-  ASSERT (uc_is_general_category ('a', ct));
-  ASSERT (!uc_is_general_category ('7', ct));
-  ASSERT (uc_is_general_category (0x00B2, ct));
+    ASSERT (!uc_is_general_category ('A', ct));
+    ASSERT (!uc_is_general_category ('a', ct));
+  }
+  { /* A case where the result's bit mask is the same as the first argument.  */
+    uc_general_category_t ct =
+      uc_general_category_and_not (
+        uc_general_category_or (UC_LETTER, UC_NUMBER),
+        UC_CONTROL);
+
+    ASSERT (uc_is_general_category ('A', ct));
+    ASSERT (uc_is_general_category ('a', ct));
+    ASSERT (uc_is_general_category ('7', ct));
+    ASSERT (uc_is_general_category (0x00B2, ct));
+  }
+  { /* The general case, where the result's bit mask is neither 0 nor the first
+       argument.  */
+    uc_general_category_t ct =
+      uc_general_category_and_not (
+        uc_general_category_or (UC_LETTER, UC_NUMBER),
+        uc_general_category_or (UC_UPPERCASE_LETTER, UC_DECIMAL_DIGIT_NUMBER));
+
+    ASSERT (!uc_is_general_category ('A', ct));
+    ASSERT (uc_is_general_category ('a', ct));
+    ASSERT (!uc_is_general_category ('7', ct));
+    ASSERT (uc_is_general_category (0x00B2, ct));
+  }
 
   return 0;
 }

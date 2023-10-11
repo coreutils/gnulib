@@ -9,6 +9,7 @@ unictype/category-L
 unictype/category-N
 unictype/category-Lu
 unictype/category-Nd
+unictype/category-Cc
 
 configure.ac:
 
