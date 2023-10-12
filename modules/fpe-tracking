@@ -1,0 +1,27 @@
+Description:
+Tracking floating-point exceptions, i.e. determining whether
+a floating-point exception has occurred during a certain computation.
+
+Files:
+m4/fpe.m4
+
+Depends-on:
+
+configure.ac:
+gl_FPE_TRACKING
+
+Makefile.am:
+
+Include:
+#if HAVE_FE_INVALID
+# include <fenv.h>
+#endif
+
+Link:
+$(FPE_TRACKING_LIBM)
+
+License:
+GPL
+
+Maintainer:
+all

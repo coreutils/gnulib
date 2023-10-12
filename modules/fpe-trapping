@@ -1,0 +1,30 @@
+Description:
+Trapping floating-point exceptions, i.e. turning a floating-point exception
+into a signal.
+
+Files:
+lib/fpe-trapping.h
+m4/fpe.m4
+m4/mathfunc.m4
+m4/musl.m4
+
+Depends-on:
+extensions
+
+configure.ac:
+gl_FPE_TRAPPING
+
+Makefile.am:
+lib_SOURCES += fpe-trapping.h
+
+Include:
+"fpe-trapping.h"
+
+Link:
+$(FPE_TRAPPING_LIBM)
+
+License:
+GPL
+
+Maintainer:
+all
