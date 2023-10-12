@@ -1,12 +1,12 @@
 Files:
 tests/test-stdio.c
-tests/snan.h
 tests/macros.h
 m4/exponentd.m4
 
 Depends-on:
 assert-h
 qnan
+snan
 stdio-c++-tests
 fgetc-tests
 fputc-tests

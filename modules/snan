@@ -1,0 +1,29 @@
+Description:
+Macros for signalling not-a-number.
+
+Files:
+lib/snan.h
+m4/snan.m4
+m4/exponentf.m4
+m4/exponentd.m4
+m4/exponentl.m4
+
+Depends-on:
+nan
+
+configure.ac:
+gl_SNAN
+
+Makefile.am:
+lib_SOURCES += snan.h
+
+Include:
+"snan.h"
+
+Link:
+
+License:
+GPL
+
+Maintainer:
+all

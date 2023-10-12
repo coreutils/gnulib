@@ -3,16 +3,14 @@ tests/test-isnanl-nolibm.c
 tests/test-isnanl.h
 tests/minus-zero.h
 tests/infinity.h
-tests/snan.h
 tests/macros.h
-m4/exponentl.m4
 
 Depends-on:
 float
 nan
+snan
 
 configure.ac:
-gl_LONG_DOUBLE_EXPONENT_LOCATION
 AC_REQUIRE([gl_LONG_DOUBLE_VS_DOUBLE])
 
 Makefile.am:

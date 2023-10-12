@@ -3,15 +3,13 @@ tests/test-isnanf-nolibm.c
 tests/test-isnanf.h
 tests/minus-zero.h
 tests/infinity.h
-tests/snan.h
 tests/macros.h
-m4/exponentf.m4
 
 Depends-on:
 nan
+snan
 
 configure.ac:
-gl_FLOAT_EXPONENT_LOCATION
 
 Makefile.am:
 TESTS += test-isnanf-nolibm
