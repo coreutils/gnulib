@@ -1,0 +1,17 @@
+Files:
+tests/test-snan-1.c
+tests/test-snan-2.sh
+tests/test-snan-2.c
+tests/macros.h
+
+Depends-on:
+fpe-tracking
+fpe-trapping
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-snan-1 test-snan-2.sh
+check_PROGRAMS += test-snan-1 test-snan-2
+test_snan_1_LDADD = $(LDADD) @FPE_TRACKING_LIBM@
+test_snan_2_LDADD = $(LDADD) @FPE_TRAPPING_LIBM@
