@@ -24,6 +24,23 @@
 #include "nan.h"
 
 
+/* The bit that distinguishes a quiet NaN from a signalling NaN is, according to
+   <https://en.wikipedia.org/wiki/NaN#Encoding>, the most significant bit of the
+   mantissa field.
+   According to <https://en.wikipedia.org/wiki/IEEE_754#Formats>, this is the
+   next bit, right below the bit 0 of the exponent.
+   This bit is
+     *  == 0 to indicate a quiet NaN or Infinity,
+        == 1 to indicate a signalling NaN,
+        on these CPUs: hppa, mips.
+     *  == 1 to indicate a quiet NaN,
+        == 0 to indicate a signalling NaN or Infinity,
+        on all other CPUs.
+        On these platforms, additionally a signalling NaN must have some other
+        mantissa bit == 1, because when all exponent bits are == 1 and all
+        mantissa bits are == 0, the number denotes ±Infinity.  */
+
+
 #if defined FLT_EXPBIT0_WORD && defined FLT_EXPBIT0_BIT
 
 # define HAVE_SNANF 1
@@ -37,15 +54,17 @@ SNaNf ()
   typedef union { float value; unsigned int word[NWORDS]; } memory_float;
   memory_float m;
   m.value = NaNf ();
- #if FLT_EXPBIT0_BIT > 0
+  /* Turn the quiet NaN into a signalling NaN.  */
+  #if FLT_EXPBIT0_BIT > 0
     m.word[FLT_EXPBIT0_WORD] ^= (unsigned int) 1 << (FLT_EXPBIT0_BIT - 1);
- #else
+  #else
     m.word[FLT_EXPBIT0_WORD + (FLT_EXPBIT0_WORD < NWORDS / 2 ? 1 : - 1)]
       ^= (unsigned int) 1 << (sizeof (unsigned int) * CHAR_BIT - 1);
- #endif
-  if (FLT_EXPBIT0_WORD < NWORDS / 2)
+  #endif
+  /* Set some arbitrary mantissa bit.  */
+  if (FLT_EXPBIT0_WORD < NWORDS / 2) /* NWORDS > 1 and big endian */
     m.word[FLT_EXPBIT0_WORD + 1] |= (unsigned int) 1 << FLT_EXPBIT0_BIT;
-  else
+  else /* NWORDS == 1 or little endian */
     m.word[0] |= (unsigned int) 1;
   #undef NWORDS
   return m.value;
@@ -67,12 +86,14 @@ SNaNd ()
   typedef union { double value; unsigned int word[NWORDS]; } memory_double;
   memory_double m;
   m.value = NaNd ();
+  /* Turn the quiet NaN into a signalling NaN.  */
   #if DBL_EXPBIT0_BIT > 0
     m.word[DBL_EXPBIT0_WORD] ^= (unsigned int) 1 << (DBL_EXPBIT0_BIT - 1);
   #else
     m.word[DBL_EXPBIT0_WORD + (DBL_EXPBIT0_WORD < NWORDS / 2 ? 1 : - 1)]
       ^= (unsigned int) 1 << (sizeof (unsigned int) * CHAR_BIT - 1);
   #endif
+  /* Set some arbitrary mantissa bit.  */
   m.word[DBL_EXPBIT0_WORD + (DBL_EXPBIT0_WORD < NWORDS / 2 ? 1 : - 1)]
     |= (unsigned int) 1 << DBL_EXPBIT0_BIT;
   #undef NWORDS
@@ -107,12 +128,14 @@ SNaNl ()
   #else
     #define HNWORDS NWORDS
   #endif
+  /* Turn the quiet NaN into a signalling NaN.  */
   #if LDBL_EXPBIT0_BIT > 0
     m.word[LDBL_EXPBIT0_WORD] ^= (unsigned int) 1 << (LDBL_EXPBIT0_BIT - 1);
   #else
     m.word[LDBL_EXPBIT0_WORD + (LDBL_EXPBIT0_WORD < HNWORDS / 2 ? 1 : - 1)]
       ^= (unsigned int) 1 << (sizeof (unsigned int) * CHAR_BIT - 1);
   #endif
+  /* Set some arbitrary mantissa bit.  */
   m.word[LDBL_EXPBIT0_WORD + (LDBL_EXPBIT0_WORD < HNWORDS / 2 ? 1 : - 1)]
     |= (unsigned int) 1 << LDBL_EXPBIT0_BIT;
   #undef HNWORDS
