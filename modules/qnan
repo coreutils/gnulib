@@ -1,0 +1,25 @@
+Description:
+Macros for quiet not-a-number.
+
+Files:
+lib/qnan.h
+
+Depends-on:
+nan
+signbit
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += qnan.h
+
+Include:
+"qnan.h"
+
+Link:
+
+License:
+GPL
+
+Maintainer:
+all

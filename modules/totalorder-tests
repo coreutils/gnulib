@@ -2,12 +2,10 @@ Files:
 tests/test-totalorder.c
 tests/minus-zero.h
 tests/infinity.h
-tests/qnan.h
 tests/macros.h
 
 Depends-on:
-nan
-signbit
+qnan
 
 configure.ac:
 
