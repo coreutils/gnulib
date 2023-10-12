@@ -3,12 +3,12 @@ tests/test-isnand.c
 tests/test-isnand.h
 tests/minus-zero.h
 tests/infinity.h
-tests/nan.h
 tests/snan.h
 tests/macros.h
 m4/exponentd.m4
 
 Depends-on:
+nan
 
 configure.ac:
 gl_DOUBLE_EXPONENT_LOCATION

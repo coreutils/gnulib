@@ -3,12 +3,12 @@ tests/test-fabsf-ieee.c
 tests/test-fabs-ieee.h
 tests/minus-zero.h
 tests/infinity.h
-tests/nan.h
 tests/macros.h
 
 Depends-on:
 isnanf-nolibm
 float
+nan
 signbit
 
 configure.ac:

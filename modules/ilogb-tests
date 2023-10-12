@@ -3,12 +3,12 @@ tests/test-ilogb.c
 tests/test-ilogb.h
 tests/minus-zero.h
 tests/infinity.h
-tests/nan.h
 tests/signature.h
 tests/macros.h
 tests/randomd.c
 
 Depends-on:
+nan
 
 configure.ac:
 

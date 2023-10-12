@@ -2,13 +2,13 @@ Files:
 tests/test-floorl-ieee.c
 tests/minus-zero.h
 tests/infinity.h
-tests/nan.h
 tests/macros.h
 
 Depends-on:
 fpucw
 isnanl-nolibm
 float
+nan
 signbit
 
 configure.ac:

@@ -3,12 +3,12 @@ tests/test-log10-ieee.c
 tests/test-log10-ieee.h
 tests/minus-zero.h
 tests/infinity.h
-tests/nan.h
 tests/macros.h
 
 Depends-on:
 isnand-nolibm
 float
+nan
 signbit
 
 configure.ac:

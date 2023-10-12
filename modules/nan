@@ -1,0 +1,23 @@
+Description:
+Macros for quiet not-a-number.
+
+Files:
+lib/nan.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += nan.h
+
+Include:
+"nan.h"
+
+Link:
+
+License:
+GPL
+
+Maintainer:
+all

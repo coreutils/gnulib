@@ -4,7 +4,6 @@ tests/test-round2.c
 tests/test-roundf2.c
 tests/minus-zero.h
 tests/infinity.h
-tests/nan.h
 tests/signature.h
 tests/macros.h
 
@@ -13,6 +12,7 @@ assert-h
 ceilf
 floorf
 isnanf-nolibm
+nan
 stdbool
 stdint
 

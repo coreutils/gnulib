@@ -3,13 +3,13 @@ tests/test-rint.c
 tests/test-rint.h
 tests/minus-zero.h
 tests/infinity.h
-tests/nan.h
 tests/signature.h
 tests/macros.h
 tests/randomd.c
 
 Depends-on:
 isnand-nolibm
+nan
 
 configure.ac:
 

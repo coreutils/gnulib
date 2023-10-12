@@ -2,7 +2,6 @@ Files:
 tests/test-signbit.c
 tests/minus-zero.h
 tests/infinity.h
-tests/nan.h
 tests/qnan.h
 tests/snan.h
 tests/macros.h
@@ -12,6 +11,7 @@ m4/exponentl.m4
 
 Depends-on:
 float
+nan
 
 configure.ac:
 AC_REQUIRE([gl_FLOAT_EXPONENT_LOCATION])

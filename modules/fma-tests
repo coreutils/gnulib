@@ -4,7 +4,6 @@ tests/test-fma1.h
 tests/test-fma2.c
 tests/test-fma2.h
 tests/infinity.h
-tests/nan.h
 tests/signature.h
 tests/macros.h
 lib/float+.h
@@ -13,6 +12,7 @@ Depends-on:
 float
 isnand-nolibm
 ldexp
+nan
 
 configure.ac:
 

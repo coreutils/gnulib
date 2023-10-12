@@ -3,7 +3,6 @@ tests/test-frexpl.c
 tests/test-frexp.h
 tests/minus-zero.h
 tests/infinity.h
-tests/nan.h
 tests/signature.h
 tests/macros.h
 tests/randoml.c
@@ -13,6 +12,7 @@ fpucw
 isnanl-nolibm
 signbit
 float
+nan
 
 configure.ac:
 

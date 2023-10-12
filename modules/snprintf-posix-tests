@@ -4,13 +4,13 @@ tests/test-snprintf-posix.h
 tests/test-snprintf.c
 tests/minus-zero.h
 tests/infinity.h
-tests/nan.h
 tests/signature.h
 tests/macros.h
 
 Depends-on:
 stdint
 float
+nan
 
 configure.ac:
 AC_REQUIRE([gl_LONG_DOUBLE_VS_DOUBLE])

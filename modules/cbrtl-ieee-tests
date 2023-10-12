@@ -3,12 +3,12 @@ tests/test-cbrtl-ieee.c
 tests/test-cbrt-ieee.h
 tests/minus-zero.h
 tests/infinity.h
-tests/nan.h
 tests/macros.h
 
 Depends-on:
 isnanl-nolibm
 float
+nan
 signbit
 
 configure.ac:

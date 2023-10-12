@@ -1,7 +1,6 @@
 Files:
 tests/test-isfinite.c
 tests/infinity.h
-tests/nan.h
 tests/snan.h
 tests/macros.h
 m4/exponentf.m4
@@ -10,6 +9,7 @@ m4/exponentl.m4
 
 Depends-on:
 float
+nan
 
 configure.ac:
 gl_FLOAT_EXPONENT_LOCATION

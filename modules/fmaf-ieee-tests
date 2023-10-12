@@ -2,11 +2,11 @@ Files:
 tests/test-fmaf-ieee.c
 tests/test-fma-ieee.h
 tests/infinity.h
-tests/nan.h
 tests/macros.h
 
 Depends-on:
 isnanf-nolibm
+nan
 
 configure.ac:
 
