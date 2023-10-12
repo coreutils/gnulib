@@ -21,11 +21,27 @@
 /* Specification.  */
 #include "nan.h"
 
+#include <stdio.h>
+
 #if HAVE_FE_INVALID
 
-# include <fenv.h>
+# if defined __GLIBC__ && defined __arm__ && defined __SOFTFP__
 
-# include "macros.h"
+/* The arm software floating-point emulation (used e.g. on armv5) does not set
+   the floating-point exception bits.  */
+
+int
+main ()
+{
+  fputs ("Skipping test: software floating-point emulation\n", stderr);
+  return 77;
+}
+
+# else
+
+#  include <fenv.h>
+
+#  include "macros.h"
 
 float volatile resultf;
 double volatile resultd;
@@ -64,13 +80,13 @@ main ()
   return 0;
 }
 
+# endif
+
 #else
 
 /* No <fenv.h> available.
    We could use the various alternative approaches from
    libgfortran/config/fpu-*.h, but that's not worth it.  */
-
-#include <stdio.h>
 
 int
 main ()

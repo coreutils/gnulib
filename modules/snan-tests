@@ -3,12 +3,14 @@ tests/test-snan-1.c
 tests/test-snan-2.sh
 tests/test-snan-2.c
 tests/macros.h
+m4/math_h.m4
 
 Depends-on:
 fpe-tracking
 fpe-trapping
 
 configure.ac:
+AC_REQUIRE([gl_LONG_DOUBLE_VS_DOUBLE])
 
 Makefile.am:
 TESTS += test-snan-1 test-snan-2.sh

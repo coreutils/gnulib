@@ -375,7 +375,7 @@ AC_DEFUN([gl_MATH_H_DEFAULTS],
 # Sets variable HAVE_SAME_LONG_DOUBLE_AS_DOUBLE to 0 or 1, and defines
 # HAVE_SAME_LONG_DOUBLE_AS_DOUBLE accordingly.
 # The currently known platforms where this is the case are:
-# Linux/HPPA, Minix 3.1.8, AIX 5, AIX 6 and 7 with xlc, MSVC 9.
+# Linux/HPPA, NetBSD/sparc32, Minix 3.1.8, AIX 5, AIX 6 and 7 with xlc, MSVC 9.
 AC_DEFUN([gl_LONG_DOUBLE_VS_DOUBLE],
 [
   AC_CACHE_CHECK([whether long double and double are the same],
