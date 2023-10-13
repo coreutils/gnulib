@@ -31,7 +31,7 @@
 #include "minus-zero.h"
 #include "infinity.h"
 #include "signed-nan.h"
-#include "snan.h"
+#include "signed-snan.h"
 #include "macros.h"
 
 float zerof = 0.0f;
@@ -62,7 +62,8 @@ test_signbitf ()
   ASSERT (signbit (negative_NaNf ()));
 #if HAVE_SNANF
   /* Signalling NaN.  */
-  (void) signbit (SNaNf ());
+  ASSERT (!signbit (positive_SNaNf ()));
+  ASSERT (signbit (negative_SNaNf ()));
 #endif
 }
 
@@ -90,7 +91,8 @@ test_signbitd ()
   ASSERT (signbit (negative_NaNd ()));
 #if HAVE_SNAND
   /* Signalling NaN.  */
-  (void) signbit (SNaNd ());
+  ASSERT (!signbit (positive_SNaNd ()));
+  ASSERT (signbit (negative_SNaNd ()));
 #endif
 }
 
@@ -118,7 +120,8 @@ test_signbitl ()
   ASSERT (signbit (negative_NaNl ()));
 #if HAVE_SNANL
   /* Signalling NaN.  */
-  (void) signbit (SNaNl ());
+  ASSERT (!signbit (positive_SNaNl ()));
+  ASSERT (signbit (negative_SNaNl ()));
 #endif
 }
 

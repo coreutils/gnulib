@@ -40,7 +40,7 @@ va_list t5;
 #include <string.h>
 
 #include "signed-nan.h"
-#include "snan.h"
+#include "signed-snan.h"
 #include "macros.h"
 
 int
@@ -69,11 +69,22 @@ main (void)
     memory_double value2;
     char buf[64];
 
-    value1 = SNaNd();
+    value1 = positive_SNaNd();
     sprintf (buf, "%g", value1);
     ASSERT (strlen (buf) <= _PRINTF_NAN_LEN_MAX);
 
-    value2.value = NaNd ();
+    value1 = negative_SNaNd();
+    sprintf (buf, "%g", value1);
+    ASSERT (strlen (buf) <= _PRINTF_NAN_LEN_MAX);
+
+    value2.value = positive_NaNd ();
+    #if DBL_EXPBIT0_BIT == 20
+    value2.word[DBL_EXPBIT0_WORD] ^= 0x54321;
+    #endif
+    sprintf (buf, "%g", value2.value);
+    ASSERT (strlen (buf) <= _PRINTF_NAN_LEN_MAX);
+
+    value2.value = negative_NaNd ();
     #if DBL_EXPBIT0_BIT == 20
     value2.word[DBL_EXPBIT0_WORD] ^= 0x54321;
     #endif

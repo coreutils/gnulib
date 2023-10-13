@@ -7,7 +7,7 @@ tests/macros.h
 Depends-on:
 float
 signed-nan
-snan
+signed-snan
 
 configure.ac:
 
