@@ -2535,16 +2535,22 @@ _GL_WARN_REAL_FLOATING_DECL (isinf);
 #if @GNULIB_ISNANF@
 /* Test for NaN for 'float' numbers.  */
 # if @HAVE_ISNANF@
+#  if defined __sun || defined __sgi
+/* Solaris and IRIX have isnanf() and declare it in <ieeefp.h>.  We cannot
+   define isnanf as a macro, because that would conflict with <ieeefp.h>.  */
+_GL_EXTERN_C int isnanf (float x);
+#  else
 /* The original <math.h> included above provides a declaration of isnan macro
    or (older) isnanf function.  */
-#  if (__GNUC__ >= 4) || (__clang_major__ >= 4)
+#   if (__GNUC__ >= 4) || (__clang_major__ >= 4)
     /* GCC >= 4.0 and clang provide a type-generic built-in for isnan.
        GCC >= 4.0 also provides __builtin_isnanf, but clang doesn't.  */
-#   undef isnanf
-#   define isnanf(x) __builtin_isnan ((float)(x))
-#  elif defined isnan
-#   undef isnanf
-#   define isnanf(x) isnan ((float)(x))
+#    undef isnanf
+#    define isnanf(x) __builtin_isnan ((float)(x))
+#   elif defined isnan
+#    undef isnanf
+#    define isnanf(x) isnan ((float)(x))
+#   endif
 #  endif
 # else
 /* Test whether X is a NaN.  */
@@ -2559,15 +2565,21 @@ _GL_EXTERN_C int isnanf (float x);
    This function is a gnulib extension, unlike isnan() which applied only
    to 'double' numbers earlier but now is a type-generic macro.  */
 # if @HAVE_ISNAND@
+#  if defined __sun || defined __sgi
+/* Solaris and IRIX have isnand() and declare it in <ieeefp.h>.  We cannot
+   define isnand as a macro, because that would conflict with <ieeefp.h>.  */
+_GL_EXTERN_C int isnand (double x);
+#  else
 /* The original <math.h> included above provides a declaration of isnan
    macro.  */
-#  if (__GNUC__ >= 4) || (__clang_major__ >= 4)
+#   if (__GNUC__ >= 4) || (__clang_major__ >= 4)
     /* GCC >= 4.0 and clang provide a type-generic built-in for isnan.  */
-#   undef isnand
-#   define isnand(x) __builtin_isnan ((double)(x))
-#  else
-#   undef isnand
-#   define isnand(x) isnan ((double)(x))
+#    undef isnand
+#    define isnand(x) __builtin_isnan ((double)(x))
+#   else
+#    undef isnand
+#    define isnand(x) isnan ((double)(x))
+#   endif
 #  endif
 # else
 /* Test whether X is a NaN.  */
