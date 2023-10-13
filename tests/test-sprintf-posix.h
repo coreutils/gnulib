@@ -19,6 +19,7 @@
 #include "minus-zero.h"
 #include "infinity.h"
 #include "nan.h"
+#include "snan.h"
 
 /* The SGI MIPS floating-point format does not distinguish 0.0 and -0.0.  */
 static int
@@ -181,6 +182,16 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
             && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
   }
+#if HAVE_SNAND
+  { /* Signalling NaN.  */
+    int retval =
+      my_sprintf (result, "%a %d", SNaNd (), 33, 44, 55);
+    ASSERT (strlen (result) >= 3 + 3
+            && strisnan (result, 0, strlen (result) - 3, 0)
+            && strcmp (result + strlen (result) - 3, " 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+#endif
 
   { /* Rounding near the decimal point.  */
     int retval =
@@ -442,6 +453,16 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
             && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
   }
+#if HAVE_SNANL
+  { /* Signalling NaN.  */
+    int retval =
+      my_sprintf (result, "%La %d", SNaNl (), 33, 44, 55);
+    ASSERT (strlen (result) >= 3 + 3
+            && strisnan (result, 0, strlen (result) - 3, 0)
+            && strcmp (result + strlen (result) - 3, " 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+#endif
 #if CHECK_PRINTF_SAFE && ((defined __ia64 && LDBL_MANT_DIG == 64) || (defined __x86_64__ || defined __amd64__) || (defined __i386 || defined __i386__ || defined _I386 || defined _M_IX86 || defined _X86_)) && !HAVE_SAME_LONG_DOUBLE_AS_DOUBLE
   { /* Quiet NaN.  */
     static union { unsigned int word[4]; long double value; } x =
@@ -859,6 +880,16 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
             && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
   }
+#if HAVE_SNAND
+  { /* Signalling NaN.  */
+    int retval =
+      my_sprintf (result, "%f %d", SNaNd (), 33, 44, 55);
+    ASSERT (strlen (result) >= 3 + 3
+            && strisnan (result, 0, strlen (result) - 3, 0)
+            && strcmp (result + strlen (result) - 3, " 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+#endif
 
   { /* Width.  */
     int retval =
@@ -1109,6 +1140,16 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
             && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
   }
+#if HAVE_SNANL
+  { /* Signalling NaN.  */
+    int retval =
+      my_sprintf (result, "%Lf %d", SNaNl (), 33, 44, 55);
+    ASSERT (strlen (result) >= 3 + 3
+            && strisnan (result, 0, strlen (result) - 3, 0)
+            && strcmp (result + strlen (result) - 3, " 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+#endif
 #if CHECK_PRINTF_SAFE && ((defined __ia64 && LDBL_MANT_DIG == 64) || (defined __x86_64__ || defined __amd64__) || (defined __i386 || defined __i386__ || defined _I386 || defined _M_IX86 || defined _X86_)) && !HAVE_SAME_LONG_DOUBLE_AS_DOUBLE
   { /* Quiet NaN.  */
     static union { unsigned int word[4]; long double value; } x =
@@ -1337,6 +1378,16 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
             && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
   }
+#if HAVE_SNAND
+  { /* Signalling NaN.  */
+    int retval =
+      my_sprintf (result, "%F %d", SNaNd (), 33, 44, 55);
+    ASSERT (strlen (result) >= 3 + 3
+            && strisnan (result, 0, strlen (result) - 3, 1)
+            && strcmp (result + strlen (result) - 3, " 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+#endif
 
   { /* FLAG_ZERO.  */
     int retval =
@@ -1434,6 +1485,16 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
             && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
   }
+#if HAVE_SNANL
+  { /* Signalling NaN.  */
+    int retval =
+      my_sprintf (result, "%LF %d", SNaNl (), 33, 44, 55);
+    ASSERT (strlen (result) >= 3 + 3
+            && strisnan (result, 0, strlen (result) - 3, 1)
+            && strcmp (result + strlen (result) - 3, " 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+#endif
 
   { /* FLAG_ZERO.  */
     int retval =
@@ -1634,6 +1695,16 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
             && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
   }
+#if HAVE_SNAND
+  { /* Signalling NaN.  */
+    int retval =
+      my_sprintf (result, "%e %d", SNaNd (), 33, 44, 55);
+    ASSERT (strlen (result) >= 3 + 3
+            && strisnan (result, 0, strlen (result) - 3, 0)
+            && strcmp (result + strlen (result) - 3, " 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+#endif
 
   { /* Width.  */
     int retval =
@@ -1917,6 +1988,16 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
             && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
   }
+#if HAVE_SNANL
+  { /* Signalling NaN.  */
+    int retval =
+      my_sprintf (result, "%Le %d", SNaNl (), 33, 44, 55);
+    ASSERT (strlen (result) >= 3 + 3
+            && strisnan (result, 0, strlen (result) - 3, 0)
+            && strcmp (result + strlen (result) - 3, " 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+#endif
 #if CHECK_PRINTF_SAFE && ((defined __ia64 && LDBL_MANT_DIG == 64) || (defined __x86_64__ || defined __amd64__) || (defined __i386 || defined __i386__ || defined _I386 || defined _M_IX86 || defined _X86_)) && !HAVE_SAME_LONG_DOUBLE_AS_DOUBLE
   { /* Quiet NaN.  */
     static union { unsigned int word[4]; long double value; } x =
@@ -2263,6 +2344,16 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
             && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
   }
+#if HAVE_SNAND
+  { /* Signalling NaN.  */
+    int retval =
+      my_sprintf (result, "%g %d", SNaNd (), 33, 44, 55);
+    ASSERT (strlen (result) >= 3 + 3
+            && strisnan (result, 0, strlen (result) - 3, 0)
+            && strcmp (result + strlen (result) - 3, " 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+#endif
 
   { /* Width.  */
     int retval =
@@ -2532,6 +2623,16 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
             && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
   }
+#if HAVE_SNANL
+  { /* Signalling NaN.  */
+    int retval =
+      my_sprintf (result, "%Lg %d", SNaNl (), 33, 44, 55);
+    ASSERT (strlen (result) >= 3 + 3
+            && strisnan (result, 0, strlen (result) - 3, 0)
+            && strcmp (result + strlen (result) - 3, " 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+#endif
 #if CHECK_PRINTF_SAFE && ((defined __ia64 && LDBL_MANT_DIG == 64) || (defined __x86_64__ || defined __amd64__) || (defined __i386 || defined __i386__ || defined _I386 || defined _M_IX86 || defined _X86_)) && !HAVE_SAME_LONG_DOUBLE_AS_DOUBLE
   { /* Quiet NaN.  */
     static union { unsigned int word[4]; long double value; } x =

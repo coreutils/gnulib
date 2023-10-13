@@ -14,6 +14,7 @@ Depends-on:
 stdint
 float
 nan
+snan
 setlocale
 wcscmp
 wcsspn

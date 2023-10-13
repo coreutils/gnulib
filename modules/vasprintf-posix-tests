@@ -8,6 +8,7 @@ Depends-on:
 stdint
 float
 nan
+snan
 
 configure.ac:
 AC_REQUIRE([gl_LONG_DOUBLE_VS_DOUBLE])

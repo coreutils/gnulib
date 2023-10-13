@@ -10,6 +10,7 @@ tests/macros.h
 Depends-on:
 binary-io
 c-ctype
+snan
 read-file
 full-write
 
