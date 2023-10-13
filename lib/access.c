@@ -19,34 +19,36 @@
 /* Specification.  */
 #include <unistd.h>
 
+#include <errno.h>
 #include <fcntl.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
-#if defined _WIN32 && ! defined __CYGWIN__
-
+#if defined _WIN32 && !defined __CYGWIN__
 # include <io.h>
+#endif
 
 int
 access (const char *file, int mode)
+#undef access
 {
+  int ret;
+
+#if defined _WIN32 && !defined __CYGWIN__
   if ((mode & X_OK) != 0)
     mode = (mode & ~X_OK) | R_OK;
-  return _access (file, mode);
-}
-
+  ret = _access (file, mode);
 #else
+  ret = access (file, mode);
+#endif
 
-# include <errno.h>
-# include <string.h>
-# include <sys/types.h>
-# include <sys/stat.h>
-
-int
-access (const char *file, int mode)
-# undef access
-{
-  int ret = access (file, mode);
-# if ACCESS_TRAILING_SLASH_BUG
+#if (defined _WIN32 && !defined __CYGWIN__) || ACCESS_TRAILING_SLASH_BUG
+# if defined _WIN32 && !defined __CYGWIN__
+  if (ret == 0 || errno == EINVAL)
+# else
   if (ret == 0)
+# endif
     {
       size_t file_len = strlen (file);
       if (file_len > 0 && file[file_len - 1] == '/')
@@ -64,8 +66,6 @@ access (const char *file, int mode)
             return (mode == F_OK && errno == EOVERFLOW ? 0 : -1);
         }
     }
-# endif
+#endif
   return ret;
 }
-
-#endif
