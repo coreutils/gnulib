@@ -45,15 +45,14 @@
 
 # define HAVE_SNANF 1
 
-/* Returns a signalling 'float' NaN.  */
 _GL_UNUSED static float
-SNaNf ()
+construct_SNaNf (float quiet_value)
 {
   #define NWORDS \
     ((sizeof (float) + sizeof (unsigned int) - 1) / sizeof (unsigned int))
   typedef union { float value; unsigned int word[NWORDS]; } memory_float;
   memory_float m;
-  m.value = NaNf ();
+  m.value = quiet_value;
   /* Turn the quiet NaN into a signalling NaN.  */
   #if FLT_EXPBIT0_BIT > 0
     m.word[FLT_EXPBIT0_WORD] ^= (unsigned int) 1 << (FLT_EXPBIT0_BIT - 1);
@@ -70,6 +69,13 @@ SNaNf ()
   return m.value;
 }
 
+/* Returns a signalling 'float' NaN.  */
+_GL_UNUSED static float
+SNaNf ()
+{
+  return construct_SNaNf (NaNf ());
+}
+
 #endif
 
 
@@ -77,15 +83,14 @@ SNaNf ()
 
 # define HAVE_SNAND 1
 
-/* Returns a signalling 'double' NaN.  */
 _GL_UNUSED static double
-SNaNd ()
+construct_SNaNd (double quiet_value)
 {
   #define NWORDS \
     ((sizeof (double) + sizeof (unsigned int) - 1) / sizeof (unsigned int))
   typedef union { double value; unsigned int word[NWORDS]; } memory_double;
   memory_double m;
-  m.value = NaNd ();
+  m.value = quiet_value;
   /* Turn the quiet NaN into a signalling NaN.  */
   #if DBL_EXPBIT0_BIT > 0
     m.word[DBL_EXPBIT0_WORD] ^= (unsigned int) 1 << (DBL_EXPBIT0_BIT - 1);
@@ -100,6 +105,13 @@ SNaNd ()
   return m.value;
 }
 
+/* Returns a signalling 'double' NaN.  */
+_GL_UNUSED static double
+SNaNd ()
+{
+  return construct_SNaNd (NaNd ());
+}
+
 #endif
 
 
@@ -107,9 +119,8 @@ SNaNd ()
 
 # define HAVE_SNANL 1
 
-/* Returns a signalling 'long double' NaN.  */
 _GL_UNUSED static long double
-SNaNl ()
+construct_SNaNl (long double quiet_value)
 {
   /* A bit pattern that is different from a Quiet NaN.  With a bit of luck,
      it's a Signalling NaN.  */
@@ -118,7 +129,7 @@ SNaNl ()
   typedef union { unsigned int word[NWORDS]; long double value; }
           memory_long_double;
   memory_long_double m;
-  m.value = NaNl ();
+  m.value = quiet_value;
   #if defined __powerpc__ && LDBL_MANT_DIG == 106
     /* This is PowerPC "double double", a pair of two doubles.  Inf and NaN are
        represented as the corresponding 64-bit IEEE values in the first double;
@@ -141,6 +152,13 @@ SNaNl ()
   #undef HNWORDS
   #undef NWORDS
   return m.value;
+}
+
+/* Returns a signalling 'long double' NaN.  */
+_GL_UNUSED static long double
+SNaNl ()
+{
+  return construct_SNaNl (NaNl ());
 }
 
 #endif

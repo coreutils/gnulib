@@ -1,0 +1,25 @@
+Description:
+Macros for signalling not-a-number.
+
+Files:
+lib/signed-snan.h
+
+Depends-on:
+signed-nan
+snan
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += signed-snan.h
+
+Include:
+"signed-snan.h"
+
+Link:
+
+License:
+GPL
+
+Maintainer:
+all
