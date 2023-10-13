@@ -21,7 +21,7 @@
 #include "infinity.h"
 #include "macros.h"
 #include "minus-zero.h"
-#include "qnan.h"
+#include "signed-nan.h"
 
 #ifndef TOTALORDER
 # define TOTALORDER totalorder

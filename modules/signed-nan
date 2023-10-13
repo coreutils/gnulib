@@ -2,7 +2,7 @@ Description:
 Macros for quiet not-a-number.
 
 Files:
-lib/qnan.h
+lib/signed-nan.h
 
 Depends-on:
 nan
@@ -11,10 +11,10 @@ signbit
 configure.ac:
 
 Makefile.am:
-lib_SOURCES += qnan.h
+lib_SOURCES += signed-nan.h
 
 Include:
-"qnan.h"
+"signed-nan.h"
 
 Link:
 

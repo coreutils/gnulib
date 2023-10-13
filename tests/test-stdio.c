@@ -39,7 +39,7 @@ va_list t5;
 
 #include <string.h>
 
-#include "qnan.h"
+#include "signed-nan.h"
 #include "snan.h"
 #include "macros.h"
 

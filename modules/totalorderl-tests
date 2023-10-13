@@ -6,7 +6,7 @@ tests/infinity.h
 tests/macros.h
 
 Depends-on:
-qnan
+signed-nan
 
 configure.ac:
 

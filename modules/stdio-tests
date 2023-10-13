@@ -5,7 +5,7 @@ m4/exponentd.m4
 
 Depends-on:
 assert-h
-qnan
+signed-nan
 snan
 stdio-c++-tests
 fgetc-tests

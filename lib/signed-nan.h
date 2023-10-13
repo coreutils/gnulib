@@ -14,8 +14,8 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
-#ifndef _QNAN_H
-#define _QNAN_H
+#ifndef _SIGNED_NAN_H
+#define _SIGNED_NAN_H
 
 #include <math.h>
 
@@ -85,4 +85,4 @@ negative_NaNl ()
 }
 
 
-#endif /* _QNAN_H */
+#endif /* _SIGNED_NAN_H */

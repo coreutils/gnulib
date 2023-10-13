@@ -30,7 +30,7 @@
 
 #include "minus-zero.h"
 #include "infinity.h"
-#include "qnan.h"
+#include "signed-nan.h"
 #include "snan.h"
 #include "macros.h"
 
