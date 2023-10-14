@@ -18,27 +18,39 @@
 
 #include <config.h>
 
+/* Specification.  */
 #include <math.h>
 
 int
 totalorderf (float const *x, float const *y)
 {
-  /* Although the following is not strictly portable, and won't work
-     on some obsolete platforms (e.g., PA-RISC, MIPS before alignment
-     to IEEE 754-2008), it should be good enough nowadays.  */
+  /* If the sign bits of *X and *Y differ, the one with non-zero sign bit
+     is "smaller" than the one with sign bit == 0.  */
   int xs = signbit (*x);
   int ys = signbit (*y);
   if (!xs != !ys)
     return xs;
+
+  /* If one of *X, *Y is a NaN and the other isn't, the answer is easy
+     as well: the negative NaN is "smaller", the positive NaN is "greater"
+     than the other argument.  */
   int xn = isnanf (*x);
   int yn = isnanf (*y);
   if (!xn != !yn)
     return !xn == !xs;
+  /* If none of *X, *Y is a NaN, the '<=' operator does the job, including
+     for -Infinity and +Infinity.  */
   if (!xn)
     return *x <= *y;
 
-  unsigned long extended_sign = -!!xs;
-  union { unsigned long i; float f; } volatile xu = {0}, yu = {0};
+  /* At this point, *X and *Y are NaNs with the same sign bit.  */
+
+  unsigned int extended_sign = -!!xs;
+#if defined __hppa || defined __mips__
+  /* Invert the most significant bit of the mantissa field.  Cf. snan.h.  */
+  extended_sign ^= (1U << 22);
+#endif
+  union { unsigned int i; float f; } volatile xu = {0}, yu = {0};
   xu.f = *x;
   yu.f = *y;
   return (xu.i ^ extended_sign) <= (yu.i ^ extended_sign);

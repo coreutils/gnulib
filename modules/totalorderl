@@ -10,6 +10,7 @@ m4/signbit.m4
 Depends-on:
 math
 extensions
+float           [test $HAVE_TOTALORDERL = 0 || test $REPLACE_TOTALORDERL = 1]
 stdbool         [test $HAVE_TOTALORDERL = 0 || test $REPLACE_TOTALORDERL = 1]
 isnanl          [test $HAVE_TOTALORDERL = 0 || test $REPLACE_TOTALORDERL = 1]
 signbit         [test $HAVE_TOTALORDERL = 0 || test $REPLACE_TOTALORDERL = 1]

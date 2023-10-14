@@ -18,26 +18,38 @@
 
 #include <config.h>
 
+/* Specification.  */
 #include <math.h>
 
 int
 totalorder (double const *x, double const *y)
 {
-  /* Although the following is not strictly portable, and won't work
-     on some obsolete platforms (e.g., PA-RISC, MIPS before alignment
-     to IEEE 754-2008), it should be good enough nowadays.  */
+  /* If the sign bits of *X and *Y differ, the one with non-zero sign bit
+     is "smaller" than the one with sign bit == 0.  */
   int xs = signbit (*x);
   int ys = signbit (*y);
   if (!xs != !ys)
     return xs;
+
+  /* If one of *X, *Y is a NaN and the other isn't, the answer is easy
+     as well: the negative NaN is "smaller", the positive NaN is "greater"
+     than the other argument.  */
   int xn = isnand (*x);
   int yn = isnand (*y);
   if (!xn != !yn)
     return !xn == !xs;
+  /* If none of *X, *Y is a NaN, the '<=' operator does the job, including
+     for -Infinity and +Infinity.  */
   if (!xn)
     return *x <= *y;
 
+  /* At this point, *X and *Y are NaNs with the same sign bit.  */
+
   unsigned long long extended_sign = -!!xs;
+#if defined __hppa || defined __mips__
+  /* Invert the most significant bit of the mantissa field.  Cf. snan.h.  */
+  extended_sign ^= (1ULL << 51);
+#endif
   union { unsigned long long i; double f; } volatile xu = {0}, yu = {0};
   xu.f = *x;
   yu.f = *y;
