@@ -29,4 +29,8 @@ glibc 2.30.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+This function treats signalling NaNs incorrectly on some platforms:
+@c https://sourceware.org/bugzilla/show_bug.cgi?id=30973
+glibc 2.35/sh4.
 @end itemize
