@@ -56,9 +56,9 @@ main ()
      The use of 'volatile' prevents the compiler from doing constant-folding
      optimizations on these values.  An alternative, for GCC only, would be
      the command-line option '-fsignaling-nans'.  */
-  float volatile nanf = SNaNf ();
-  double volatile nand = SNaNd ();
-  long double volatile nanl = SNaNl ();
+  _GL_UNUSED float volatile nanf = SNaNf ();
+  _GL_UNUSED double volatile nand = SNaNd ();
+  _GL_UNUSED long double volatile nanl = SNaNl ();
 
   /* Check that the values are really signalling.  */
   /* These tests do not work on 32-bit x86 processors, as well as
