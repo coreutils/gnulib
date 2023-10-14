@@ -41,6 +41,9 @@
         mantissa bits are == 0, the number denotes ±Infinity.  */
 
 
+/* 'float' = IEEE 754 single-precision
+   <https://en.wikipedia.org/wiki/Single-precision_floating-point_format>  */
+
 #if defined FLT_EXPBIT0_WORD && defined FLT_EXPBIT0_BIT
 
 # define HAVE_SNANF 1
@@ -79,6 +82,9 @@ SNaNf ()
 #endif
 
 
+/* 'double' = IEEE 754 double-precision
+   <https://en.wikipedia.org/wiki/Double-precision_floating-point_format>  */
+
 #if defined DBL_EXPBIT0_WORD && defined DBL_EXPBIT0_BIT
 
 # define HAVE_SNAND 1
@@ -115,6 +121,24 @@ SNaNd ()
 #endif
 
 
+/* 'long double' =
+   * if HAVE_SAME_LONG_DOUBLE_AS_DOUBLE:
+     IEEE 754 double-precision
+     <https://en.wikipedia.org/wiki/Double-precision_floating-point_format>
+   * Otherwise:
+     - On i386, x86_64, ia64:
+       80-bits extended-precision
+       <https://en.wikipedia.org/wiki/Extended_precision#x86_extended_precision_format>
+     - On alpha, arm64, loongarch64, mips64, riscv64, s390x, sparc64:
+       IEEE 754 quadruple-precision
+       <https://en.wikipedia.org/wiki/Quadruple-precision_floating-point_format#IEEE_754_quadruple-precision_binary_floating-point_format:_binary128>
+     - On powerpc, powerpc64, powerpc64le:
+       2x64-bits double-double
+       <https://en.wikipedia.org/wiki/Quadruple-precision_floating-point_format#Double-double_arithmetic>
+     - On m68k:
+       80-bits extended-precision, padded to 96 bits, with non-IEEE exponent
+ */
+
 #if defined LDBL_EXPBIT0_WORD && defined LDBL_EXPBIT0_BIT
 
 # define HAVE_SNANL 1
@@ -140,11 +164,23 @@ construct_SNaNl (long double quiet_value)
     #define HNWORDS NWORDS
   #endif
   /* Turn the quiet NaN into a signalling NaN.  */
-  #if LDBL_EXPBIT0_BIT > 0
-    m.word[LDBL_EXPBIT0_WORD] ^= (unsigned int) 1 << (LDBL_EXPBIT0_BIT - 1);
+  #if ((defined __ia64 && LDBL_MANT_DIG == 64) || (defined __x86_64__ || defined __amd64__) || (defined __i386 || defined __i386__ || defined _I386 || defined _M_IX86 || defined _X86_)) && !HAVE_SAME_LONG_DOUBLE_AS_DOUBLE
+  /* In this representation, the leading 1 of the mantissa is explicitly
+     stored.  */
+   #if LDBL_EXPBIT0_BIT > 1
+    m.word[LDBL_EXPBIT0_WORD] ^= (unsigned int) 1 << (LDBL_EXPBIT0_BIT - 2);
+   #else
+    m.word[LDBL_EXPBIT0_WORD + (LDBL_EXPBIT0_WORD < HNWORDS / 2 ? 1 : - 1)]
+      ^= (unsigned int) 1 << (sizeof (unsigned int) * CHAR_BIT - 2);
+   #endif
   #else
+  /* In this representation, the leading 1 of the mantissa is implicit.  */
+   #if LDBL_EXPBIT0_BIT > 0
+    m.word[LDBL_EXPBIT0_WORD] ^= (unsigned int) 1 << (LDBL_EXPBIT0_BIT - 1);
+   #else
     m.word[LDBL_EXPBIT0_WORD + (LDBL_EXPBIT0_WORD < HNWORDS / 2 ? 1 : - 1)]
       ^= (unsigned int) 1 << (sizeof (unsigned int) * CHAR_BIT - 1);
+   #endif
   #endif
   /* Set some arbitrary mantissa bit.  */
   m.word[LDBL_EXPBIT0_WORD + (LDBL_EXPBIT0_WORD < HNWORDS / 2 ? 1 : - 1)]
