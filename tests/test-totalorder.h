@@ -1,4 +1,4 @@
-/* Test totalorder.
+/* Test a totalorder-like function.
    Copyright 2023 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -14,18 +14,24 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
-#include <config.h>
+#include "infinity.h"
+#include "macros.h"
+#include "minus-zero.h"
+#include "signed-nan.h"
 
-/* Specification.  */
-#include <math.h>
+int
+main ()
+{
+  TOTALORDER_TYPE x[] =
+    {
+      TOTALORDER_NEGATIVE_NAN (), -TOTALORDER_INF (), -1e37, -1, -1e-5,
+      TOTALORDER_MINUS_ZERO, 0,
+      1e-5, 1, 1e37, TOTALORDER_INF (), TOTALORDER_POSITIVE_NAN ()
+    };
+  int n = sizeof x / sizeof *x;
 
-#include "signature.h"
-SIGNATURE_CHECK (totalorderf, int, (const float *, const float *));
-
-#define TOTALORDER totalorder
-#define TOTALORDER_TYPE double
-#define TOTALORDER_INF Infinityd
-#define TOTALORDER_MINUS_ZERO minus_zerod
-#define TOTALORDER_POSITIVE_NAN positive_NaNd
-#define TOTALORDER_NEGATIVE_NAN negative_NaNd
-#include "test-totalorder.h"
+  for (int i = 0; i < n; i++)
+    for (int j = 0; j < n; j++)
+      ASSERT (!!TOTALORDER (&x[i], &x[j]) == (i <= j));
+  return 0;
+}

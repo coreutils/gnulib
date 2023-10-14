@@ -1,7 +1,9 @@
 Files:
 tests/test-totalorder.c
+tests/test-totalorder.h
 tests/minus-zero.h
 tests/infinity.h
+tests/signature.h
 tests/macros.h
 
 Depends-on:
