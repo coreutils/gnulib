@@ -8,6 +8,7 @@ tests/macros.h
 
 Depends-on:
 signed-nan
+signed-snan
 
 configure.ac:
 

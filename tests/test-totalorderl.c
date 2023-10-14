@@ -23,9 +23,12 @@
 SIGNATURE_CHECK (totalorderl, int, (const long double *, const long double *));
 
 #define TOTALORDER totalorderl
-#define TOTALORDER_TYPE long double
+#define TOTALORDER_TYPE memory_long_double
 #define TOTALORDER_INF Infinityl
 #define TOTALORDER_MINUS_ZERO minus_zerol
 #define TOTALORDER_POSITIVE_NAN positive_NaNl
 #define TOTALORDER_NEGATIVE_NAN negative_NaNl
+#define TOTALORDER_HAVE_SNAN HAVE_SNANL
+#define TOTALORDER_POSITIVE_SNAN memory_positive_SNaNl
+#define TOTALORDER_NEGATIVE_SNAN memory_negative_SNaNl
 #include "test-totalorder.h"
