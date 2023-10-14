@@ -44,16 +44,17 @@
 /* 'float' = IEEE 754 single-precision
    <https://en.wikipedia.org/wiki/Single-precision_floating-point_format>  */
 
+#define NWORDS \
+  ((sizeof (float) + sizeof (unsigned int) - 1) / sizeof (unsigned int))
+typedef union { float value; unsigned int word[NWORDS]; } memory_float;
+
 #if defined FLT_EXPBIT0_WORD && defined FLT_EXPBIT0_BIT
 
 # define HAVE_SNANF 1
 
-_GL_UNUSED static float
-construct_SNaNf (float quiet_value)
+_GL_UNUSED static memory_float
+construct_memory_SNaNf (float quiet_value)
 {
-  #define NWORDS \
-    ((sizeof (float) + sizeof (unsigned int) - 1) / sizeof (unsigned int))
-  typedef union { float value; unsigned int word[NWORDS]; } memory_float;
   memory_float m;
   m.value = quiet_value;
   /* Turn the quiet NaN into a signalling NaN.  */
@@ -68,33 +69,53 @@ construct_SNaNf (float quiet_value)
     m.word[FLT_EXPBIT0_WORD + 1] |= (unsigned int) 1 << FLT_EXPBIT0_BIT;
   else /* NWORDS == 1 or little endian */
     m.word[0] |= (unsigned int) 1;
-  #undef NWORDS
-  return m.value;
+  return m;
 }
 
-/* Returns a signalling 'float' NaN.  */
+/* Returns a signalling 'float' NaN in memory.  */
+_GL_UNUSED static memory_float
+memory_SNaNf ()
+{
+  return construct_memory_SNaNf (NaNf ());
+}
+
+_GL_UNUSED static float
+construct_SNaNf (float quiet_value)
+{
+  return construct_memory_SNaNf (quiet_value).value;
+}
+
+/* Returns a signalling 'float' NaN.
+   Note: On 32-bit x86 processors, as well as on x86_64 processors with
+   CC="gcc -mfpmath=387", this function may return a quiet NaN instead.
+   Use memory_SNaNf() if you need to avoid this.  See
+   <https://lists.gnu.org/archive/html/bug-gnulib/2023-10/msg00060.html>
+   for details.  */
 _GL_UNUSED static float
 SNaNf ()
 {
-  return construct_SNaNf (NaNf ());
+  return memory_SNaNf ().value;
 }
 
 #endif
+
+#undef NWORDS
 
 
 /* 'double' = IEEE 754 double-precision
    <https://en.wikipedia.org/wiki/Double-precision_floating-point_format>  */
 
+#define NWORDS \
+  ((sizeof (double) + sizeof (unsigned int) - 1) / sizeof (unsigned int))
+typedef union { double value; unsigned int word[NWORDS]; } memory_double;
+
 #if defined DBL_EXPBIT0_WORD && defined DBL_EXPBIT0_BIT
 
 # define HAVE_SNAND 1
 
-_GL_UNUSED static double
-construct_SNaNd (double quiet_value)
+_GL_UNUSED static memory_double
+construct_memory_SNaNd (double quiet_value)
 {
-  #define NWORDS \
-    ((sizeof (double) + sizeof (unsigned int) - 1) / sizeof (unsigned int))
-  typedef union { double value; unsigned int word[NWORDS]; } memory_double;
   memory_double m;
   m.value = quiet_value;
   /* Turn the quiet NaN into a signalling NaN.  */
@@ -107,18 +128,37 @@ construct_SNaNd (double quiet_value)
   /* Set some arbitrary mantissa bit.  */
   m.word[DBL_EXPBIT0_WORD + (DBL_EXPBIT0_WORD < NWORDS / 2 ? 1 : - 1)]
     |= (unsigned int) 1 << DBL_EXPBIT0_BIT;
-  #undef NWORDS
-  return m.value;
+  return m;
 }
 
-/* Returns a signalling 'double' NaN.  */
+/* Returns a signalling 'double' NaN in memory.  */
+_GL_UNUSED static memory_double
+memory_SNaNd ()
+{
+  return construct_memory_SNaNd (NaNd ());
+}
+
+_GL_UNUSED static double
+construct_SNaNd (double quiet_value)
+{
+  return construct_memory_SNaNd (quiet_value).value;
+}
+
+/* Returns a signalling 'double' NaN.
+   Note: On 32-bit x86 processors, as well as on x86_64 processors with
+   CC="gcc -mfpmath=387", this function may return a quiet NaN instead.
+   Use memory_SNaNf() if you need to avoid this.  See
+   <https://lists.gnu.org/archive/html/bug-gnulib/2023-10/msg00060.html>
+   for details.  */
 _GL_UNUSED static double
 SNaNd ()
 {
-  return construct_SNaNd (NaNd ());
+  return memory_SNaNd ().value;
 }
 
 #endif
+
+#undef NWORDS
 
 
 /* 'long double' =
@@ -139,19 +179,18 @@ SNaNd ()
        80-bits extended-precision, padded to 96 bits, with non-IEEE exponent
  */
 
+#define NWORDS \
+  ((sizeof (long double) + sizeof (unsigned int) - 1) / sizeof (unsigned int))
+typedef union { unsigned int word[NWORDS]; long double value; }
+        memory_long_double;
+
 #if defined LDBL_EXPBIT0_WORD && defined LDBL_EXPBIT0_BIT
 
 # define HAVE_SNANL 1
 
-_GL_UNUSED static long double
-construct_SNaNl (long double quiet_value)
+_GL_UNUSED static memory_long_double
+construct_memory_SNaNl (long double quiet_value)
 {
-  /* A bit pattern that is different from a Quiet NaN.  With a bit of luck,
-     it's a Signalling NaN.  */
-  #define NWORDS \
-    ((sizeof (long double) + sizeof (unsigned int) - 1) / sizeof (unsigned int))
-  typedef union { unsigned int word[NWORDS]; long double value; }
-          memory_long_double;
   memory_long_double m;
   m.value = quiet_value;
   #if defined __powerpc__ && LDBL_MANT_DIG == 106
@@ -186,18 +225,38 @@ construct_SNaNl (long double quiet_value)
   m.word[LDBL_EXPBIT0_WORD + (LDBL_EXPBIT0_WORD < HNWORDS / 2 ? 1 : - 1)]
     |= (unsigned int) 1 << LDBL_EXPBIT0_BIT;
   #undef HNWORDS
-  #undef NWORDS
-  return m.value;
+  return m;
 }
 
-/* Returns a signalling 'long double' NaN.  */
+/* Returns a signalling 'long double' NaN in memory.  */
+_GL_UNUSED static memory_long_double
+memory_SNaNl ()
+{
+  return construct_memory_SNaNl (NaNl ());
+}
+
+_GL_UNUSED static long double
+construct_SNaNl (long double quiet_value)
+{
+  return construct_memory_SNaNl (quiet_value).value;
+}
+
+/* Returns a signalling 'long double' NaN.
+   Note: On 32-bit x86 processors, as well as on x86_64 processors with
+   CC="gcc -mfpmath=387", if HAVE_SAME_LONG_DOUBLE_AS_DOUBLE is 1, this
+   function may return a quiet NaN instead.  Use memory_SNaNf() if you
+   need to avoid this.  See
+   <https://lists.gnu.org/archive/html/bug-gnulib/2023-10/msg00060.html>
+   for details.  */
 _GL_UNUSED static long double
 SNaNl ()
 {
-  return construct_SNaNl (NaNl ());
+  return memory_SNaNl ().value;
 }
 
 #endif
+
+#undef NWORDS
 
 
 #endif /* _SNAN_H */
