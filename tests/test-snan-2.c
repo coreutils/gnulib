@@ -65,15 +65,13 @@ main (int argc, char *argv[])
     switch (argv[1][0])
       {
       case 'f':
-        /* This test does not work on 32-bit x86 processors, although the
-           "Intel 64 and IA-32 Architectures Software Developer's Manual" and
-           "IA-32 Intel Architecture Software Developer's Manual", each in
-           sections
-             4.8.3.4 NaNs
-             4.8.3.5 Operating on SNaNs and QNaNs
-             4.8.3.6 Using SNaNs and QNaNs in Applications
-           claim that it should work.  */
-        #if !(defined __i386 || defined _M_IX86)
+        /* This test does not work on 32-bit x86 processors, as well as
+           on x86_64 processors with CC="gcc -mfpmath=387", because loading
+           SNaNf() into a 387 FPU register already converted it to a quiet NaN.
+           See <https://lists.gnu.org/archive/html/bug-gnulib/2023-10/msg00060.html>
+           for details.  */
+        #if !((defined __i386 || defined _M_IX86) \
+              || ((defined __x86_64__ || defined _M_X64) && __FLT_EVAL_METHOD__ == 2))
         /* This test does not work on AIX 7.1 with the xlc compiler, even with
            the compiler options -qfloat=fenv -qfloat=nans -qfloat=spnans.  */
         #if !(defined _AIX && defined __xlC__)
@@ -89,15 +87,13 @@ main (int argc, char *argv[])
         break;
 
       case 'd':
-        /* This test does not work on 32-bit x86 processors, although the
-           "Intel 64 and IA-32 Architectures Software Developer's Manual" and
-           "IA-32 Intel Architecture Software Developer's Manual", each in
-           sections
-             4.8.3.4 NaNs
-             4.8.3.5 Operating on SNaNs and QNaNs
-             4.8.3.6 Using SNaNs and QNaNs in Applications
-           claim that it should work.  */
-        #if !(defined __i386 || defined _M_IX86)
+        /* This test does not work on 32-bit x86 processors, as well as
+           on x86_64 processors with CC="gcc -mfpmath=387", because loading
+           SNaNd() into a 387 FPU register already converted it to a quiet NaN.
+           See <https://lists.gnu.org/archive/html/bug-gnulib/2023-10/msg00060.html>
+           for details.  */
+        #if !((defined __i386 || defined _M_IX86) \
+              || ((defined __x86_64__ || defined _M_X64) && __FLT_EVAL_METHOD__ == 2))
         resultd = nand + 42.0;
         #else
         fputs ("Skipping test: known failure on this platform\n", stderr);
@@ -125,7 +121,9 @@ main (int argc, char *argv[])
                    || ((defined __FreeBSD__ || defined __NetBSD__ || defined __OpenBSD__) && (defined __aarch64__ || defined __sparc__))) \
                   && !HAVE_SAME_LONG_DOUBLE_AS_DOUBLE) \
               || (defined __CYGWIN__ && defined __i386) \
-              || ((defined __i386 || defined _M_IX86) && HAVE_SAME_LONG_DOUBLE_AS_DOUBLE))
+              || (((defined __i386 || defined _M_IX86) \
+                   || ((defined __x86_64__ || defined _M_X64) && __FLT_EVAL_METHOD__ == 2)) \
+                  && HAVE_SAME_LONG_DOUBLE_AS_DOUBLE))
         resultl = nanl + 42.0L;
         #else
         fputs ("Skipping test: known failure on this platform\n", stderr);
