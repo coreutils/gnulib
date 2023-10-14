@@ -46,7 +46,7 @@ totalorder (double const *x, double const *y)
   /* At this point, *X and *Y are NaNs with the same sign bit.  */
 
   unsigned long long extended_sign = -!!xs;
-#if defined __hppa || defined __mips__
+#if defined __hppa || defined __mips__ || defined __sh__
   /* Invert the most significant bit of the mantissa field.  Cf. snan.h.  */
   extended_sign ^= (1ULL << 51);
 #endif

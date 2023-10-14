@@ -32,7 +32,7 @@
    This bit is
      *  == 0 to indicate a quiet NaN or Infinity,
         == 1 to indicate a signalling NaN,
-        on these CPUs: hppa, mips.
+        on these CPUs: hppa, mips, sh4.
      *  == 1 to indicate a quiet NaN,
         == 0 to indicate a signalling NaN or Infinity,
         on all other CPUs.
