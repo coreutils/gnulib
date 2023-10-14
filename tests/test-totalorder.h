@@ -14,6 +14,8 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
+#include <stdio.h>
+
 #include "infinity.h"
 #include "macros.h"
 #include "minus-zero.h"
@@ -28,10 +30,16 @@ main ()
       TOTALORDER_MINUS_ZERO, 0,
       1e-5, 1, 1e37, TOTALORDER_INF (), TOTALORDER_POSITIVE_NAN ()
     };
-  int n = sizeof x / sizeof *x;
+  int n = SIZEOF (x);
+  int result = 0;
 
   for (int i = 0; i < n; i++)
     for (int j = 0; j < n; j++)
-      ASSERT (!!TOTALORDER (&x[i], &x[j]) == (i <= j));
-  return 0;
+      if (!(!!TOTALORDER (&x[i], &x[j]) == (i <= j)))
+        {
+          fprintf (stderr, "Failed: i=%d j=%d\n", i, j);
+          result = 1;
+        }
+
+  return result;
 }
