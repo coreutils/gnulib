@@ -415,7 +415,21 @@ typedef pthread_mutex_t pthread_spinlock_t;
 # define PTHREAD_PROCESS_PRIVATE 0
 # define PTHREAD_PROCESS_SHARED 1
 #else
-# if !@HAVE_PTHREAD_SPINLOCK_T@
+# if @HAVE_PTHREAD_SPINLOCK_T@
+/* <pthread.h> exists and defines pthread_spinlock_t.  */
+#  if !(((__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 7) \
+          || __clang_major__ > 3 || (__clang_major__ == 3 && __clang_minor__ >= 1)) \
+         || (((__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 1)) \
+              && !defined __ANDROID__) \
+             || __clang_major__ >= 3)) \
+        && !defined __ibmxl__)
+/* We can't use GCC built-ins.  Approximate spinlocks with mutexes.  */
+#   if !GNULIB_defined_pthread_spin_types
+#    define pthread_spinlock_t pthread_mutex_t
+#    define GNULIB_defined_pthread_spin_types 1
+#   endif
+#  endif
+# else
 /* Approximate spinlocks with mutexes.  */
 #  if !GNULIB_defined_pthread_spin_types
 typedef pthread_mutex_t pthread_spinlock_t;
