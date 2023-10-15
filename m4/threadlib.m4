@@ -1,4 +1,4 @@
-# threadlib.m4 serial 38
+# threadlib.m4 serial 38.1
 dnl Copyright (C) 2005-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -269,6 +269,15 @@ changequote([,])dnl
                    [Define if the pthread_in_use() detection is hard.])
              esac
            fi
+          ],
+          [dnl This is needed on FreeBSD 5.2.1.
+           AC_CHECK_LIB([thr], [pthread_kill],
+             [if test $gl_pthread_in_glibc = yes; then
+                LIBPMULTITHREAD=
+              else
+                LIBPMULTITHREAD=-lthr
+              fi
+             ])
           ])
       elif test $gl_pthread_api != yes; then
         # Some library is needed. Try libpthread and libc_r.
