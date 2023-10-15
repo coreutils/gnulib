@@ -32,6 +32,7 @@ SIGNATURE_CHECK (if_nametoindex, unsigned int, (const char *));
 
 #include <stddef.h> /* NULL */
 #include <stdio.h> /* fprintf */
+#include <string.h> /* strcmp */
 
 int
 main (int argc, char *argv[])
