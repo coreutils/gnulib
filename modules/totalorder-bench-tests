@@ -1,0 +1,18 @@
+Files:
+tests/bench-totalorder.c
+tests/bench.h
+
+Depends-on:
+totalorderf
+totalorder
+totalorderl
+getrusage
+gettimeofday
+signed-nan
+signed-snan
+
+configure.ac:
+
+Makefile.am:
+noinst_PROGRAMS += bench-totalorder
+bench_totalorder_LDADD = $(LDADD) $(TOTALORDERF_LIBM) $(TOTALORDER_LIBM) $(TOTALORDERL_LIBM)
