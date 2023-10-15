@@ -52,10 +52,15 @@ AC_DEFUN([gl_PTHREAD_SPIN],
           ])
         if test $gl_cv_func_pthread_spin_init_in_LIBMULTITHREAD != yes; then
           HAVE_PTHREAD_SPIN_INIT=0
+          REPLACE_PTHREAD_SPIN_INIT=1
           HAVE_PTHREAD_SPIN_LOCK=0
+          REPLACE_PTHREAD_SPIN_LOCK=1
           HAVE_PTHREAD_SPIN_TRYLOCK=0
+          REPLACE_PTHREAD_SPIN_TRYLOCK=1
           HAVE_PTHREAD_SPIN_UNLOCK=0
+          REPLACE_PTHREAD_SPIN_UNLOCK=1
           HAVE_PTHREAD_SPIN_DESTROY=0
+          REPLACE_PTHREAD_SPIN_DESTROY=1
         fi
       ], [
         :
