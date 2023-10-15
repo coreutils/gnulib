@@ -1,4 +1,4 @@
-# pthread_rwlock_rdlock.m4 serial 4
+# pthread_rwlock_rdlock.m4 serial 4.1
 dnl Copyright (C) 2017-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -34,7 +34,7 @@ dnl https://sourceware.org/bugzilla/show_bug.cgi?id=13701
 dnl https://bugzilla.redhat.com/show_bug.cgi?id=1410052
 AC_DEFUN([gl_PTHREAD_RWLOCK_RDLOCK_PREFER_WRITER],
 [
-  AC_REQUIRE([gl_THREADLIB_EARLY])
+  AC_REQUIRE([gl_THREADLIB])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CACHE_CHECK([whether pthread_rwlock_rdlock prefers a writer to a reader],
     [gl_cv_pthread_rwlock_rdlock_prefer_writer],
