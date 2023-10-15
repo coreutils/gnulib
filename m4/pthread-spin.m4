@@ -1,4 +1,4 @@
-# pthread-spin.m4 serial 2
+# pthread-spin.m4 serial 2.1
 dnl Copyright (C) 2019-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -25,6 +25,41 @@ AC_DEFUN([gl_PTHREAD_SPIN],
       HAVE_PTHREAD_SPIN_TRYLOCK=0
       HAVE_PTHREAD_SPIN_UNLOCK=0
       HAVE_PTHREAD_SPIN_DESTROY=0
+    else
+      dnl Test whether the gnulib module 'threadlib' is in use.
+      dnl Some packages like Emacs use --avoid=threadlib.
+      dnl Write the symbol in such a way that it does not cause 'aclocal' to pick
+      dnl the threadlib.m4 file that is installed in $PREFIX/share/aclocal/.
+      m4_ifdef([gl_][THREADLIB], [
+        AC_REQUIRE([gl_][THREADLIB])
+        dnl Test whether the functions actually exist.
+        dnl FreeBSD 5.2.1 declares them but does not define them.
+        AC_CACHE_CHECK([for pthread_spin_init],
+          [gl_cv_func_pthread_spin_init_in_LIBMULTITHREAD],
+          [gl_save_LIBS="$LIBS"
+           LIBS="$LIBS $LIBMULTITHREAD"
+           AC_LINK_IFELSE(
+             [AC_LANG_PROGRAM(
+                [[#include <pthread.h>
+                ]],
+                [[pthread_spinlock_t *lock;
+                  return pthread_spin_init (&lock, 0);
+                ]])
+             ],
+             [gl_cv_func_pthread_spin_init_in_LIBMULTITHREAD=yes],
+             [gl_cv_func_pthread_spin_init_in_LIBMULTITHREAD=no])
+           LIBS="$gl_save_LIBS"
+          ])
+        if test $gl_cv_func_pthread_spin_init_in_LIBMULTITHREAD != yes; then
+          HAVE_PTHREAD_SPIN_INIT=0
+          HAVE_PTHREAD_SPIN_LOCK=0
+          HAVE_PTHREAD_SPIN_TRYLOCK=0
+          HAVE_PTHREAD_SPIN_UNLOCK=0
+          HAVE_PTHREAD_SPIN_DESTROY=0
+        fi
+      ], [
+        :
+      ])
     fi
   fi
 ])
