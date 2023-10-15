@@ -45,7 +45,7 @@ mbspbrk (const char *string, const char *accept)
       char const *iter = string;
 #if GNULIB_MCEL_PREFER
       mcel_t a, g;
-      for (char const *iter = string; *iter; iter += g.len)
+      for (; *iter; iter += g.len)
         {
           g = mcel_scanz (iter);
           if (g.len == 1)
