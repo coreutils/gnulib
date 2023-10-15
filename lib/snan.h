@@ -181,7 +181,7 @@ SNaNd ()
 
 #define NWORDS \
   ((sizeof (long double) + sizeof (unsigned int) - 1) / sizeof (unsigned int))
-typedef union { unsigned int word[NWORDS]; long double value; }
+typedef union { long double value; unsigned int word[NWORDS]; }
         memory_long_double;
 
 #if defined LDBL_EXPBIT0_WORD && defined LDBL_EXPBIT0_BIT

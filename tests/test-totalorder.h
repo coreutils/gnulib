@@ -27,24 +27,24 @@ main ()
 {
   TOTALORDER_TYPE x[] =
     {
-      { .value = TOTALORDER_NEGATIVE_NAN () },
+      { TOTALORDER_NEGATIVE_NAN () },
 #if TOTALORDER_HAVE_SNAN
       TOTALORDER_NEGATIVE_SNAN (),
 #endif
-      { .value = -TOTALORDER_INF () },
-      { .value = -1e37 },
-      { .value = -1 },
-      { .value = -1e-5 },
-      { .value = TOTALORDER_MINUS_ZERO },
-      { .value = 0 },
-      { .value = 1e-5 },
-      { .value = 1 },
-      { .value = 1e37 },
-      { .value = TOTALORDER_INF () },
+      { -TOTALORDER_INF () },
+      { -1e37 },
+      { -1 },
+      { -1e-5 },
+      { TOTALORDER_MINUS_ZERO },
+      { 0 },
+      { 1e-5 },
+      { 1 },
+      { 1e37 },
+      { TOTALORDER_INF () },
 #if TOTALORDER_HAVE_SNAN
       TOTALORDER_POSITIVE_SNAN (),
 #endif
-      { .value = TOTALORDER_POSITIVE_NAN () }
+      { TOTALORDER_POSITIVE_NAN () }
     };
   int n = SIZEOF (x);
   int result = 0;
