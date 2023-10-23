@@ -133,6 +133,12 @@ test_heap (void)
    does not eliminate a call to explicit_bzero, even if data flow analysis
    reveals that the stack area is dead at the end of the function.  */
 static bool _GL_ATTRIBUTE_NOINLINE
+#if __GNUC__ + (__GNUC_MINOR__ >= 5) > 4
+__attribute__ ((__noclone__))
+#endif
+#if __GNUC__ >= 8
+__attribute__ ((__noipa__))
+#endif
 do_secret_stuff (int volatile pass, char *volatile *volatile last_stackbuf)
 {
   char stackbuf[SECRET_SIZE];
