@@ -41,6 +41,11 @@ static char zero[SECRET_SIZE] = { 0 };
 # define explicit_bzero(a, n)  memset (a, '\0', n)
 #endif
 
+/* Suppress GCC 13.2.1 false alarm, as this test needs a dangling pointer.  */
+#if 12 <= __GNUC__
+# pragma GCC diagnostic ignored "-Wdangling-pointer"
+#endif
+
 /* =================== Verify operation on static memory =================== */
 
 static char stbuf[SECRET_SIZE];
