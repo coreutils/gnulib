@@ -48,10 +48,6 @@ main ()
 #endif
 
 #if ((defined __ia64 && LDBL_MANT_DIG == 64) || (defined __x86_64__ || defined __amd64__) || (defined __i386 || defined __i386__ || defined _I386 || defined _M_IX86 || defined _X86_)) && !HAVE_SAME_LONG_DOUBLE_AS_DOUBLE
-  #define NWORDS \
-    ((sizeof (long double) + sizeof (unsigned int) - 1) / sizeof (unsigned int))
-  typedef union { unsigned int word[NWORDS]; long double value; }
-          memory_long_double;
 /* Representation of an 80-bit 'long double' as an initializer for a sequence
    of 'unsigned int' words.  */
 # ifdef WORDS_BIGENDIAN
@@ -66,39 +62,39 @@ main ()
 # endif
   { /* Quiet NaN.  */
     static memory_long_double x =
-      { LDBL80_WORDS (0xFFFF, 0xC3333333, 0x00000000) };
+      { .word = LDBL80_WORDS (0xFFFF, 0xC3333333, 0x00000000) };
     ASSERT (isnanl (x.value));
   }
   {
     /* Signalling NaN.  */
     static memory_long_double x =
-      { LDBL80_WORDS (0xFFFF, 0x83333333, 0x00000000) };
+      { .word = LDBL80_WORDS (0xFFFF, 0x83333333, 0x00000000) };
     ASSERT (isnanl (x.value));
   }
   /* isnanl should return something for noncanonical values.  */
   { /* Pseudo-NaN.  */
     static memory_long_double x =
-      { LDBL80_WORDS (0xFFFF, 0x40000001, 0x00000000) };
+      { .word = LDBL80_WORDS (0xFFFF, 0x40000001, 0x00000000) };
     ASSERT (isnanl (x.value) || !isnanl (x.value));
   }
   { /* Pseudo-Infinity.  */
     static memory_long_double x =
-      { LDBL80_WORDS (0xFFFF, 0x00000000, 0x00000000) };
+      { .word = LDBL80_WORDS (0xFFFF, 0x00000000, 0x00000000) };
     ASSERT (isnanl (x.value) || !isnanl (x.value));
   }
   { /* Pseudo-Zero.  */
     static memory_long_double x =
-      { LDBL80_WORDS (0x4004, 0x00000000, 0x00000000) };
+      { .word = LDBL80_WORDS (0x4004, 0x00000000, 0x00000000) };
     ASSERT (isnanl (x.value) || !isnanl (x.value));
   }
   { /* Unnormalized number.  */
     static memory_long_double x =
-      { LDBL80_WORDS (0x4000, 0x63333333, 0x00000000) };
+      { .word = LDBL80_WORDS (0x4000, 0x63333333, 0x00000000) };
     ASSERT (isnanl (x.value) || !isnanl (x.value));
   }
   { /* Pseudo-Denormal.  */
     static memory_long_double x =
-      { LDBL80_WORDS (0x0000, 0x83333333, 0x00000000) };
+      { .word = LDBL80_WORDS (0x0000, 0x83333333, 0x00000000) };
     ASSERT (isnanl (x.value) || !isnanl (x.value));
   }
   #undef NWORDS

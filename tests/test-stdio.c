@@ -61,10 +61,6 @@ main (void)
 #if defined DBL_EXPBIT0_WORD && defined DBL_EXPBIT0_BIT
   /* Check the value of _PRINTF_NAN_LEN_MAX.  */
   {
-    #define NWORDS \
-      ((sizeof (double) + sizeof (unsigned int) - 1) / sizeof (unsigned int))
-    typedef union { double value; unsigned int word[NWORDS]; } memory_double;
-
     double value1;
     memory_double value2;
     char buf[64];
