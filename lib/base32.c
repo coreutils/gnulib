@@ -40,7 +40,7 @@
 #include <config.h>
 
 /* Get prototype. */
-#define BASE64_INLINE _GL_EXTERN_INLINE
+#define BASE32_INLINE _GL_EXTERN_INLINE
 #include "base32.h"
 
 /* Get imalloc. */
