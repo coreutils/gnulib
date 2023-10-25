@@ -109,14 +109,14 @@ main (void)
   /* Check that uN_chr() does not read past the first occurrence of the
      byte being searched.  */
   {
-    char *page_boundary = (char *) zerosize_ptr ();
+    UNIT *page_boundary = zerosize_ptr ();
     size_t n;
 
     if (page_boundary != NULL)
       {
         for (n = 1; n <= 500 / sizeof (UNIT); n++)
           {
-            UNIT *mem = (UNIT *) (page_boundary - n * sizeof (UNIT));
+            UNIT *mem = page_boundary - n;
             U_SET (mem, 'X', n);
             ASSERT (U_CHR (mem, n, 'U') == NULL);
 
