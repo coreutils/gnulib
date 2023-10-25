@@ -7,6 +7,7 @@ lib/base32.c
 m4/base32.m4
 
 Depends-on:
+extern-inline
 ialloc
 stdbool
 memchr

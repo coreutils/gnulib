@@ -40,15 +40,13 @@
 #include <config.h>
 
 /* Get prototype. */
+#define BASE64_INLINE _GL_EXTERN_INLINE
 #include "base32.h"
 
 /* Get imalloc. */
 #include <ialloc.h>
 
 #include <intprops.h>
-
-/* Get UCHAR_MAX. */
-#include <limits.h>
 
 #include <string.h>
 
@@ -205,7 +203,7 @@ base32_encode_alloc (const char *in, idx_t inlen, char **out)
    : (_) == '7' ? 31                            \
    : -1)
 
-static const signed char b32[0x100] = {
+signed char const base32_to_int[256] = {
   B32 (0), B32 (1), B32 (2), B32 (3),
   B32 (4), B32 (5), B32 (6), B32 (7),
   B32 (8), B32 (9), B32 (10), B32 (11),
@@ -271,28 +269,6 @@ static const signed char b32[0x100] = {
   B32 (248), B32 (249), B32 (250), B32 (251),
   B32 (252), B32 (253), B32 (254), B32 (255)
 };
-
-#if UCHAR_MAX == 255
-# define uchar_in_range(c) true
-#else
-# define uchar_in_range(c) ((c) <= 255)
-#endif
-
-/* Return true if CH is a character from the Base32 alphabet, and
-   false otherwise.  Note that '=' is padding and not considered to be
-   part of the alphabet.  */
-bool
-isbase32 (char ch)
-{
-  return uchar_in_range (to_uchar (ch)) && 0 <= b32[to_uchar (ch)];
-}
-
-/* Initialize decode-context buffer, CTX.  */
-void
-base32_decode_ctx_init (struct base32_decode_context *ctx)
-{
-  ctx->i = 0;
-}
 
 /* If CTX->i is 0 or 8, there are eight or more bytes in [*IN..IN_END), and
    none of those eight is a newline, then return *IN.  Otherwise, copy up to
@@ -368,8 +344,8 @@ decode_8 (char const *restrict in, idx_t inlen,
 
   if (*outleft)
     {
-      *out++ = ((b32[to_uchar (in[0])] << 3)
-                | (b32[to_uchar (in[1])] >> 2));
+      *out++ = ((base32_to_int[to_uchar (in[0])] << 3)
+                | (base32_to_int[to_uchar (in[1])] >> 2));
       --*outleft;
     }
 
@@ -386,9 +362,9 @@ decode_8 (char const *restrict in, idx_t inlen,
 
       if (*outleft)
         {
-          *out++ = ((b32[to_uchar (in[1])] << 6)
-                    | (b32[to_uchar (in[2])] << 1)
-                    | (b32[to_uchar (in[3])] >> 4));
+          *out++ = ((base32_to_int[to_uchar (in[1])] << 6)
+                    | (base32_to_int[to_uchar (in[2])] << 1)
+                    | (base32_to_int[to_uchar (in[3])] >> 4));
           --*outleft;
         }
 
@@ -404,8 +380,8 @@ decode_8 (char const *restrict in, idx_t inlen,
 
           if (*outleft)
             {
-              *out++ = ((b32[to_uchar (in[3])] << 4)
-                        | (b32[to_uchar (in[4])] >> 1));
+              *out++ = ((base32_to_int[to_uchar (in[3])] << 4)
+                        | (base32_to_int[to_uchar (in[4])] >> 1));
               --*outleft;
             }
 
@@ -421,9 +397,9 @@ decode_8 (char const *restrict in, idx_t inlen,
 
               if (*outleft)
                 {
-                  *out++ = ((b32[to_uchar (in[4])] << 7)
-                            | (b32[to_uchar (in[5])] << 2)
-                            | (b32[to_uchar (in[6])] >> 3));
+                  *out++ = ((base32_to_int[to_uchar (in[4])] << 7)
+                            | (base32_to_int[to_uchar (in[5])] << 2)
+                            | (base32_to_int[to_uchar (in[6])] >> 3));
                   --*outleft;
                 }
 
@@ -434,8 +410,8 @@ decode_8 (char const *restrict in, idx_t inlen,
 
                   if (*outleft)
                     {
-                      *out++ = ((b32[to_uchar (in[6])] << 5)
-                                | (b32[to_uchar (in[7])]));
+                      *out++ = ((base32_to_int[to_uchar (in[6])] << 5)
+                                | (base32_to_int[to_uchar (in[7])]));
                       --*outleft;
                     }
                 }
