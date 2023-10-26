@@ -256,5 +256,20 @@ main (void)
   ok = base32_decode_alloc_ctx (NULL, "AABBAA=A", 8, &p, &len);
   ASSERT (!ok);
 
+  ok = base32_decode_alloc_ctx (NULL, "FZ======", 8, &p, &len);
+  ASSERT (!ok);
+
+  ok = base32_decode_alloc_ctx (NULL, "FYXB====", 8, &p, &len);
+  ASSERT (!ok);
+
+  ok = base32_decode_alloc_ctx (NULL, "FYXC5===", 8, &p, &len);
+  ASSERT (!ok);
+
+  ok = base32_decode_alloc_ctx (NULL, "FYXC4LR=", 8, &p, &len);
+  ASSERT (!ok);
+
+  ok = base32_decode_alloc_ctx (NULL, "FZ======FY======", 16, &p, &len);
+  ASSERT (!ok);
+
   return 0;
 }

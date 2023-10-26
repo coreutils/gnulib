@@ -396,6 +396,10 @@ decode_4 (char const *restrict in, idx_t inlen,
 
       if (in[3] != '=')
         return_false;
+
+      /* Reject non-canonical encodings.  */
+      if (base64_to_int[to_uchar (in[1])] & 0x0f)
+        return_false;
     }
   else
     {
@@ -415,6 +419,10 @@ decode_4 (char const *restrict in, idx_t inlen,
       if (in[3] == '=')
         {
           if (inlen != 4)
+            return_false;
+
+          /* Reject non-canonical encodings.  */
+          if (base64_to_int[to_uchar (in[2])] & 0x03)
             return_false;
         }
       else

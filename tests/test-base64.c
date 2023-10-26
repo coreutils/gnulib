@@ -233,5 +233,14 @@ main (void)
   ok = base64_decode_alloc_ctx (NULL, "aax=X", 5, &p, &len);
   ASSERT (!ok);
 
+  ok = base64_decode_alloc_ctx (NULL, "SGVsbG9=", 8, &p, &len);
+  ASSERT (!ok);
+
+  ok = base64_decode_alloc_ctx (NULL, "TR==", 4, &p, &len);
+  ASSERT (!ok);
+
+  ok = base64_decode_alloc_ctx (NULL, "TWF=TWE=", 8, &p, &len);
+  ASSERT (!ok);
+
   return 0;
 }

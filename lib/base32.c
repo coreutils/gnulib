@@ -354,6 +354,10 @@ decode_8 (char const *restrict in, idx_t inlen,
       if (in[3] != '=' || in[4] != '=' || in[5] != '='
           || in[6] != '=' || in[7] != '=')
         return_false;
+
+      /* Reject non-canonical encodings.  */
+      if (base32_to_int[to_uchar (in[1])] & 0x03)
+        return_false;
     }
   else
     {
@@ -372,6 +376,10 @@ decode_8 (char const *restrict in, idx_t inlen,
         {
           if (in[5] != '=' || in[6] != '=' || in[7] != '=')
             return_false;
+
+          /* Reject non-canonical encodings.  */
+          if (base32_to_int[to_uchar (in[3])] & 0x0f)
+            return_false;
         }
       else
         {
@@ -388,6 +396,10 @@ decode_8 (char const *restrict in, idx_t inlen,
           if (in[5] == '=')
             {
               if (in[6] != '=' || in[7] != '=')
+                return_false;
+
+              /* Reject non-canonical encodings.  */
+              if (base32_to_int[to_uchar (in[4])] & 0x01)
                 return_false;
             }
           else
@@ -414,6 +426,12 @@ decode_8 (char const *restrict in, idx_t inlen,
                                 | (base32_to_int[to_uchar (in[7])]));
                       --*outleft;
                     }
+                }
+              else
+                {
+                  /* Reject non-canonical encodings.  */
+                  if (base32_to_int[to_uchar (in[6])] & 0x07)
+                    return_false;
                 }
             }
         }
