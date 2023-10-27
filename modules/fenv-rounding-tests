@@ -1,0 +1,12 @@
+Files:
+tests/test-fenv-round.c
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-fenv-round
+check_PROGRAMS += test-fenv-round
+test_fenv_round_LDADD = $(LDADD) @FENV_ROUNDING_LIBM@
