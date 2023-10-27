@@ -8,6 +8,7 @@ tests/test-pipe-filter-ii2-child.c
 tests/macros.h
 
 Depends-on:
+c99
 binary-io
 c-ctype
 snan

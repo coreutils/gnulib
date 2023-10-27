@@ -5,6 +5,7 @@ tests/infinity.h
 tests/macros.h
 
 Depends-on:
+c99
 float
 nan
 snan
