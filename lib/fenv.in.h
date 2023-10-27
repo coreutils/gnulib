@@ -37,6 +37,8 @@
  #error "Please include config.h first."
 #endif
 
+/* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
+
 /* The definition of _GL_WARN_ON_USE is copied here.  */
 
 
@@ -180,6 +182,7 @@ typedef unsigned long fenv_t;
 
 # elif defined __aarch64__ /* arm64 */
 
+/* Attention: FreeBSD libc has these values shifted right by 22 bits!  */
 #  define FE_TONEAREST   (0 << 22)
 #  define FE_UPWARD      (1 << 22)
 #  define FE_DOWNWARD    (2 << 22)
@@ -246,6 +249,7 @@ typedef unsigned long fenv_t;
 
 # elif defined __riscv
 
+/* Attention: FreeBSD libc has these values shifted left by 5 bits!  */
 #  define FE_TONEAREST   0
 #  define FE_TOWARDZERO  1
 #  define FE_DOWNWARD    2
@@ -282,6 +286,44 @@ typedef unsigned long fenv_t;
 
 # endif
 
+#endif
+
+#if @GNULIB_FEGETROUND@
+/* Returns the current rounding direction.  */
+# if @REPLACE_FEGETROUND@ || (!@HAVE_FEGETROUND@ && (defined __GLIBC__ || defined __FreeBSD__)) /* has an inline definition */
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef fegetround
+#   define fegetround rpl_fegetround
+#  endif
+_GL_FUNCDECL_RPL (fegetround, int, (void));
+_GL_CXXALIAS_RPL (fegetround, int, (void));
+# else
+#  if !@HAVE_FEGETROUND@
+_GL_FUNCDECL_SYS (fegetround, int, (void));
+#  endif
+_GL_CXXALIAS_SYS (fegetround, int, (void));
+# endif
+_GL_CXXALIASWARN (fegetround);
+#endif
+
+#if @GNULIB_FESETROUND@
+/* Sets the rounding direction of the current thread.
+   Returns zero if the argument is valid and the operation was thus successful.
+   Returns non-zero upon failure.  */
+# if @REPLACE_FESETROUND@ || (!@HAVE_FESETROUND@ && defined __FreeBSD__) /* has an inline definition */
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef fesetround
+#   define fesetround rpl_fesetround
+#  endif
+_GL_FUNCDECL_RPL (fesetround, int, (int rounding_direction));
+_GL_CXXALIAS_RPL (fesetround, int, (int rounding_direction));
+# else
+#  if !@HAVE_FESETROUND@
+_GL_FUNCDECL_SYS (fesetround, int, (int rounding_direction));
+#  endif
+_GL_CXXALIAS_SYS (fesetround, int, (int rounding_direction));
+# endif
+_GL_CXXALIASWARN (fesetround);
 #endif
 
 

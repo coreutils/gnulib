@@ -1,0 +1,36 @@
+Description:
+Functions for controlling the floating-point rounding direction:
+fegetround, fesetround.
+
+Files:
+lib/fenv-round.c
+lib/fenv-private.h
+m4/fenv-rounding.m4
+m4/mathfunc.m4
+
+Depends-on:
+fenv
+
+configure.ac:
+gl_FENV_ROUNDING
+gl_CONDITIONAL([GL_COND_OBJ_FENV_ROUNDING],
+               [test $HAVE_FESETROUND = 0 || test $REPLACE_FESETROUND = 1])
+gl_FENV_MODULE_INDICATOR([fegetround])
+gl_FENV_MODULE_INDICATOR([fesetround])
+
+Makefile.am:
+if GL_COND_OBJ_FENV_ROUNDING
+lib_SOURCES += fenv-round.c
+endif
+
+Include:
+#include <fenv.h>
+
+Link:
+$(FENV_ROUNDING_LIBM)
+
+License:
+LGPLv2+
+
+Maintainer:
+all

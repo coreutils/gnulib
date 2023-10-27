@@ -9,6 +9,7 @@ m4/fenv_h.m4
 Depends-on:
 gen-header
 include_next
+snippet/c++defs
 snippet/warn-on-use
 
 configure.ac:
@@ -20,7 +21,7 @@ Makefile.am:
 BUILT_SOURCES += fenv.h
 
 # We need the following in order to create an override of <fenv.h>.
-fenv.h: fenv.in.h $(top_builddir)/config.status $(WARN_ON_USE_H)
+fenv.h: fenv.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(WARN_ON_USE_H)
 @NMD@	$(AM_V_GEN)$(MKDIR_P) '%reldir%'
 	$(gl_V_at)$(SED_HEADER_STDOUT) \
 	      -e 's|@''GUARD_PREFIX''@|${gl_include_guard_prefix}|g' \
@@ -72,6 +73,7 @@ fenv.h: fenv.in.h $(top_builddir)/config.status $(WARN_ON_USE_H)
 	      -e 's|@''REPLACE_FESETEXCEPTFLAG''@|$(REPLACE_FESETEXCEPTFLAG)|g' \
 	      -e 's|@''REPLACE_FESETROUND''@|$(REPLACE_FESETROUND)|g' \
 	      -e 's|@''REPLACE_FETESTEXCEPT''@|$(REPLACE_FETESTEXCEPT)|g' \
+	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
 	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
 	      $(srcdir)/fenv.in.h > $@-t
 	$(AM_V_at)mv $@-t $@
