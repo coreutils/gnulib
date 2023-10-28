@@ -71,6 +71,14 @@ generic_feraiseexcept (int exceptions)
 int
 feraiseexcept (int exceptions)
 {
+#  if defined _MSC_VER
+
+  /* Setting the exception flags only in the SSE unit (i.e. in the mxcsr
+     register) would not cause the hardware to trap on the exception.  */
+  generic_feraiseexcept (exceptions);
+
+#  else
+
   exceptions &= FE_ALL_EXCEPT;
 
   if ((exceptions & ~(FE_INVALID | FE_DIVBYZERO)) == 0)
@@ -95,18 +103,6 @@ feraiseexcept (int exceptions)
   else
     {
       /* The general case.  */
-#  if defined _MSC_VER
-
-      exceptions = exceptions_to_x86hardware (exceptions);
-
-      /* Set the bits only in the SSE unit.  */
-      unsigned int mxcsr, orig_mxcsr;
-      _FPU_GETSSECW (orig_mxcsr);
-      mxcsr = orig_mxcsr | exceptions;
-      if (mxcsr != orig_mxcsr)
-        _FPU_SETSSECW (mxcsr);
-
-#  else
 
       /* Set the bits in the 387 unit.  */
       x86_387_fenv_t env;
@@ -122,8 +118,9 @@ feraiseexcept (int exceptions)
           __asm__ __volatile__ ("fwait");
         }
 
-#  endif
     }
+
+#  endif
   return 0;
 }
 
@@ -168,6 +165,8 @@ feraiseexcept (int exceptions)
      the overflow/underflow exception follows the inexact exception.  After
      each exception we read from the fpscr, to force the exception to be
      raised immediately.  */
+  /* XXX Probably this should do actual floating-point operations, like in
+     generic_feraiseexcept, not just setting flag bits in the fpscr.  */
   unsigned int fpscr, orig_fpscr;
   /* First: invalid exception.  */
   if (exceptions & FE_INVALID)
