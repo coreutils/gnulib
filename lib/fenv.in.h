@@ -457,6 +457,63 @@ _GL_CXXALIASWARN (fesetround);
 
 #endif
 
+#if @GNULIB_FECLEAREXCEPT@
+/* Clears the specified exception flags, and returns 0.
+   Upon failure, it returns non-zero.  */
+# if @REPLACE_FECLEAREXCEPT@ || (!@HAVE_FECLEAREXCEPT@ && (defined __GLIBC__ || defined __FreeBSD__)) /* has an inline definition */
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef feclearexcept
+#   define feclearexcept rpl_feclearexcept
+#  endif
+_GL_FUNCDECL_RPL (feclearexcept, int, (int exceptions));
+_GL_CXXALIAS_RPL (feclearexcept, int, (int exceptions));
+# else
+#  if !@HAVE_FECLEAREXCEPT@
+_GL_FUNCDECL_SYS (feclearexcept, int, (int exceptions));
+#  endif
+_GL_CXXALIAS_SYS (feclearexcept, int, (int exceptions));
+# endif
+_GL_CXXALIASWARN (feclearexcept);
+#endif
+
+#if @GNULIB_FERAISEEXCEPT@
+/* Sets the specified exception flags, triggering handlers or traps if enabled,
+   and returns 0.  Upon failure, it returns non-zero.  */
+# if @REPLACE_FERAISEEXCEPT@ || (!@HAVE_FERAISEEXCEPT@ && (defined __GLIBC__ || defined __FreeBSD__ || defined _MSC_VER)) /* has an inline definition */
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef feraiseexcept
+#   define feraiseexcept rpl_feraiseexcept
+#  endif
+_GL_FUNCDECL_RPL (feraiseexcept, int, (int exceptions));
+_GL_CXXALIAS_RPL (feraiseexcept, int, (int exceptions));
+# else
+#  if !@HAVE_FERAISEEXCEPT@
+_GL_FUNCDECL_SYS (feraiseexcept, int, (int exceptions));
+#  endif
+_GL_CXXALIAS_SYS (feraiseexcept, int, (int exceptions));
+# endif
+_GL_CXXALIASWARN (feraiseexcept);
+#endif
+
+#if @GNULIB_FETESTEXCEPT@
+/* Returns a bitmask of those exception flags among EXCEPTIONS that are
+   currently set.  */
+# if @REPLACE_FETESTEXCEPT@ || (!@HAVE_FETESTEXCEPT@ && defined __FreeBSD__) /* has an inline definition */
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef fetestexcept
+#   define fetestexcept rpl_fetestexcept
+#  endif
+_GL_FUNCDECL_RPL (fetestexcept, int, (int exceptions));
+_GL_CXXALIAS_RPL (fetestexcept, int, (int exceptions));
+# else
+#  if !@HAVE_FETESTEXCEPT@
+_GL_FUNCDECL_SYS (fetestexcept, int, (int exceptions));
+#  endif
+_GL_CXXALIAS_SYS (fetestexcept, int, (int exceptions));
+# endif
+_GL_CXXALIASWARN (fetestexcept);
+#endif
+
 
 /* ISO C 99 § 7.6.2 Floating-point exceptions
    ISO C 23 § 7.6.4 Floating-point exceptions

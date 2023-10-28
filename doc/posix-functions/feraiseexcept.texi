@@ -4,15 +4,22 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/feraiseexcept.html}
 
-Gnulib module: ---
+Gnulib module: fenv-exceptions-tracking-c99
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+This function is missing on some platforms:
+FreeBSD 5.2.1, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, IRIX 6.5, Solaris 9, Cygwin 1.7.7, MSVC 9, Android 4.4.
+@item
+This function does not detect failures on
+glibc 2.19/arm.
+@item
+This function does not trigger traps on
+@c https://sourceware.org/pipermail/cygwin/2023-October/254667.html
+Cygwin 3.4.6/x86_64.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
-@item
-This function is missing on some platforms:
-FreeBSD 5.2.1, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, IRIX 6.5, Solaris 9, Cygwin 1.7.7, MSVC 14, Android 4.4.
 @end itemize

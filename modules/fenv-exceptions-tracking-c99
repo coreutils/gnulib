@@ -1,0 +1,50 @@
+Description:
+Functions for tracking which floating-point exceptions have occurred:
+feclearexcept, feraiseexcept, fetestexcept.
+
+Files:
+lib/fenv-except-tracking-clear.c
+lib/fenv-except-tracking-test.c
+lib/fenv-except-tracking-raise.c
+lib/fenv-private.h
+m4/fenv-exceptions-tracking.m4
+m4/fenv-exceptions.m4
+m4/mathfunc.m4
+
+Depends-on:
+fenv
+
+configure.ac:
+gl_FENV_EXCEPTIONS_TRACKING
+gl_CONDITIONAL([GL_COND_OBJ_FENV_EXCEPTIONS_TRACKING_CLEAR],
+               [test $HAVE_FECLEAREXCEPT = 0 || test $REPLACE_FECLEAREXCEPT = 1])
+gl_CONDITIONAL([GL_COND_OBJ_FENV_EXCEPTIONS_TRACKING_TEST],
+               [test $HAVE_FETESTEXCEPT = 0 || test $REPLACE_FETESTEXCEPT = 1])
+gl_CONDITIONAL([GL_COND_OBJ_FENV_EXCEPTIONS_TRACKING_RAISE],
+               [test $HAVE_FERAISEEXCEPT = 0 || test $REPLACE_FERAISEEXCEPT = 1])
+gl_FENV_MODULE_INDICATOR([feclearexcept])
+gl_FENV_MODULE_INDICATOR([fetestexcept])
+gl_FENV_MODULE_INDICATOR([feraiseexcept])
+
+Makefile.am:
+if GL_COND_OBJ_FENV_EXCEPTIONS_TRACKING_CLEAR
+lib_SOURCES += fenv-except-tracking-clear.c
+endif
+if GL_COND_OBJ_FENV_EXCEPTIONS_TRACKING_TEST
+lib_SOURCES += fenv-except-tracking-test.c
+endif
+if GL_COND_OBJ_FENV_EXCEPTIONS_TRACKING_RAISE
+lib_SOURCES += fenv-except-tracking-raise.c
+endif
+
+Include:
+#include <fenv.h>
+
+Link:
+$(FENV_EXCEPTIONS_TRACKING_LIBM)
+
+License:
+LGPLv2+
+
+Maintainer:
+all
