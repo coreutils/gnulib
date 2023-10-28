@@ -25,10 +25,10 @@
 
 #define HAVE_FPE_TRAPPING 1
 
+#include <fenv.h>
+
 #if HAVE_FEENABLEEXCEPT
 /* glibc, FreeBSD ≥ 6.0, NetBSD ≥ 7.0, OpenBSD ≥ 5.0, Cygwin ≥ 1.7.8, Android, Haiku.  */
-
-# include <fenv.h>
 
 static int
 sigfpe_on_invalid ()
@@ -69,7 +69,7 @@ sigfpe_on_invalid ()
   #endif
 
   #if (defined __FreeBSD__ || defined __NetBSD__) && defined __arm__
-  /* Work around a bug with FreeBSD 12.2 on arm64 CPUs:
+  /* Work around a bug with FreeBSD 12.2 on arm CPUs:
      feenableexcept returns success even if the CPU does not support the
      request.  */
   /* Test whether fpscr was actually changed as desired.  */
@@ -102,7 +102,16 @@ sigfpe_on_invalid ()
 static int
 sigfpe_on_invalid ()
 {
+  /* Clear FE_INVALID exceptions from past operations.  */
+  feclearexcept (FE_INVALID);
+
   fpsetmask (fpgetmask () | FP_X_INV);
+
+  #if defined __arm__ || defined __aarch64__
+  /* Test whether the CPU supports the request.  */
+  if ((fpgetmask () & ~FP_X_INV) == 0)
+    return -1;
+  #endif
 
   return 0;
 }
@@ -115,6 +124,9 @@ sigfpe_on_invalid ()
 static int
 sigfpe_on_invalid ()
 {
+  /* Clear FE_INVALID exceptions from past operations.  */
+  feclearexcept (FE_INVALID);
+
   fesettrapenable (fegettrapenable () | FE_INVALID);
 
   return 0;
@@ -128,6 +140,9 @@ sigfpe_on_invalid ()
 static int
 sigfpe_on_invalid ()
 {
+  /* Clear FE_INVALID exceptions from past operations.  */
+  feclearexcept (FE_INVALID);
+
   /* Enable precise trapping mode.
      Documentation: <https://www.ibm.com/docs/en/aix/7.3?topic=f-fp-trap-subroutine>  */
   fp_trap (FP_TRAP_SYNC);

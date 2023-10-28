@@ -10,6 +10,7 @@ m4/musl.m4
 
 Depends-on:
 extensions
+fenv-exceptions-tracking-c99
 
 configure.ac:
 gl_FPE_TRAPPING
