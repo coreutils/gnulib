@@ -1,0 +1,36 @@
+Description:
+Functions for tracking which floating-point exceptions have occurred:
+feclearexcept, fesetexcept, feraiseexcept, fetestexcept.
+
+Files:
+lib/fenv-except-tracking-set.c
+lib/fenv-private.h
+m4/fenv-exceptions-tracking-c23.m4
+m4/mathfunc.m4
+
+Depends-on:
+fenv
+fenv-exceptions-tracking-c99
+
+configure.ac:
+gl_FENV_EXCEPTIONS_TRACKING_C23
+gl_CONDITIONAL([GL_COND_OBJ_FENV_EXCEPTIONS_TRACKING_C23],
+               [test $HAVE_FESETEXCEPT = 0 || test $REPLACE_FESETEXCEPT = 1])
+gl_FENV_MODULE_INDICATOR([fesetexcept])
+
+Makefile.am:
+if GL_COND_OBJ_FENV_EXCEPTIONS_TRACKING_C23
+lib_SOURCES += fenv-except-tracking-set.c
+endif
+
+Include:
+#include <fenv.h>
+
+Link:
+$(FENV_EXCEPTIONS_TRACKING_LIBM)
+
+License:
+LGPLv2+
+
+Maintainer:
+all

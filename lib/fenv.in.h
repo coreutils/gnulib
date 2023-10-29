@@ -514,6 +514,33 @@ _GL_CXXALIAS_SYS (fetestexcept, int, (int exceptions));
 _GL_CXXALIASWARN (fetestexcept);
 #endif
 
+/* Added in ISO C 23 § 7.6.4 Floating-point exceptions.  */
+
+#if @GNULIB_FESETEXCEPT@
+/* Sets the specified exception flags, without triggering handlers or traps,
+   and returns 0.  Upon failure, it returns non-zero.  */
+# if @REPLACE_FESETEXCEPT@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef fesetexcept
+#   define fesetexcept rpl_fesetexcept
+#  endif
+_GL_FUNCDECL_RPL (fesetexcept, int, (int exceptions));
+_GL_CXXALIAS_RPL (fesetexcept, int, (int exceptions));
+# else
+#  if !@HAVE_FESETEXCEPT@
+_GL_FUNCDECL_SYS (fesetexcept, int, (int exceptions));
+#  endif
+_GL_CXXALIAS_SYS (fesetexcept, int, (int exceptions));
+# endif
+_GL_CXXALIASWARN (fesetexcept);
+#elif defined GNULIB_POSIXCHECK
+# undef fesetexcept
+# if HAVE_RAW_DECL_FESETEXCEPT
+_GL_WARN_ON_USE (fesetexcept, "fesetexcept is unportable - "
+                 "use gnulib module fenv-exceptions-tracking-c23 for portability");
+# endif
+#endif
+
 
 /* ISO C 99 § 7.6.2 Floating-point exceptions
    ISO C 23 § 7.6.4 Floating-point exceptions

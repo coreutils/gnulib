@@ -287,6 +287,33 @@ extern void __ieee_set_fp_control (unsigned long);
 # define _FPU_SETCW_AS_DOUBLE(cw) \
   __asm__ __volatile__ ("mtfsf 0xff,%0" : : "f" (cw))
 
+# if defined __NetBSD__
+/* Modifying the FE0 and FE1 bits of the machine state register (MSR) is
+   only possible from the kernel.  NetBSD allows it to be done from user
+   space, by emulating the mfmsr and mtmsr instructions when they trap.
+   In other words, these instructions are actually system calls in NetBSD.  */
+#  define _GETMSR(msr) __asm__ __volatile__ ("mfmsr %0" : "=r" (msr))
+#  define _SETMSR(msr) __asm__ __volatile__ ("mtmsr %0" : : "r" (msr))
+#  define MSR_FP_EXC_MASK 0x00000900
+/* This allows us to simulate the Linux prctl() through a macro.  */
+#  define PR_SET_FPEXC 1
+#  define PR_FP_EXC_DISABLED  0x00000000  /* FP exceptions disabled */
+#  define PR_FP_EXC_NONRECOV  0x00000100  /* async non-recoverable exc. mode */
+#  define PR_FP_EXC_ASYNC     0x00000800  /* async recoverable exception mode */
+#  define PR_FP_EXC_PRECISE   0x00000900  /* precise exception mode */
+#  define prctl(operation,arg) \
+     do {                                         \
+       if ((operation) == PR_SET_FPEXC)           \
+         {                                        \
+           unsigned int local_msr;                \
+           _GETMSR (local_msr);                   \
+           local_msr &= ~MSR_FP_EXC_MASK;         \
+           local_msr |= (arg) & MSR_FP_EXC_MASK;  \
+           _SETMSR (local_msr);                   \
+         }                                        \
+     } while (0)
+# endif
+
 #elif defined __riscv
 
 /* fcsr bits 4..0 indicate which floating-point exceptions have occurred
