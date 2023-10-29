@@ -1,0 +1,21 @@
+Files:
+tests/test-fenv-except-tracking-4.c
+tests/test-fenv-except-tracking-5.c
+tests/macros.h
+m4/musl.m4
+
+Depends-on:
+fpe-trapping
+
+configure.ac:
+gl_MUSL_LIBC
+
+Makefile.am:
+TESTS += \
+  test-fenv-except-tracking-4 \
+  test-fenv-except-tracking-5
+check_PROGRAMS += \
+  test-fenv-except-tracking-4 \
+  test-fenv-except-tracking-5
+test_fenv_except_tracking_4_LDADD = $(LDADD) @FENV_EXCEPTIONS_TRACKING_LIBM@
+test_fenv_except_tracking_5_LDADD = $(LDADD) @FENV_EXCEPTIONS_TRACKING_LIBM@ @FPE_TRAPPING_LIBM@
