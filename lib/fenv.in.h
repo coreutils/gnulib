@@ -657,6 +657,37 @@ _GL_CXXALIAS_SYS (fesetexceptflag, int,
 _GL_CXXALIASWARN (fesetexceptflag);
 #endif
 
+/* Added in ISO C 23 § 7.6.4 Floating-point exceptions.  */
+
+#if @GNULIB_FETESTEXCEPTFLAG@
+/* Copies the flags denoted by EXCEPTIONS from *SAVED_FLAGS to the
+   floating-point exception status flags.  */
+# if 0
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef fetestexceptflag
+#   define fetestexceptflag rpl_fetestexceptflag
+#  endif
+_GL_FUNCDECL_RPL (fetestexceptflag, int,
+                  (fexcept_t const *saved_flags, int exceptions));
+_GL_CXXALIAS_RPL (fetestexceptflag, int,
+                  (fexcept_t const *saved_flags, int exceptions));
+# else
+#  if !@HAVE_FETESTEXCEPTFLAG@
+_GL_FUNCDECL_SYS (fetestexceptflag, int,
+                  (fexcept_t const *saved_flags, int exceptions));
+#  endif
+_GL_CXXALIAS_SYS (fetestexceptflag, int,
+                  (fexcept_t const *saved_flags, int exceptions));
+# endif
+_GL_CXXALIASWARN (fetestexceptflag);
+#elif defined GNULIB_POSIXCHECK
+# undef fetestexceptflag
+# if HAVE_RAW_DECL_FETESTEXCEPTFLAG
+_GL_WARN_ON_USE (fetestexceptflag, "fetestexceptflag is unportable - "
+                 "use gnulib module fenv-exceptions-state-c23 for portability");
+# endif
+#endif
+
 
 #endif /* _@GUARD_PREFIX@_FENV_H */
 #endif /* _@GUARD_PREFIX@_FENV_H */

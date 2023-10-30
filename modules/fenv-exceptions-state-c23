@@ -1,0 +1,35 @@
+Description:
+Functions for saving the floating-point exception status flags:
+fegetexceptflag, fesetexceptflag, fetestexceptflag.
+
+Files:
+lib/fenv-except-state-test.c
+m4/fenv-exceptions-state-c23.m4
+m4/mathfunc.m4
+
+Depends-on:
+fenv
+fenv-exceptions-state-c99
+
+configure.ac:
+gl_FENV_EXCEPTIONS_STATE_C23
+gl_CONDITIONAL([GL_COND_OBJ_FENV_EXCEPTIONS_STATE_C23],
+               [test $HAVE_FETESTEXCEPTFLAG = 0])
+gl_FENV_MODULE_INDICATOR([fetestexceptflag])
+
+Makefile.am:
+if GL_COND_OBJ_FENV_EXCEPTIONS_STATE_C23
+lib_SOURCES += fenv-except-state-test.c
+endif
+
+Include:
+#include <fenv.h>
+
+Link:
+$(FENV_EXCEPTIONS_STATE_LIBM)
+
+License:
+LGPLv2+
+
+Maintainer:
+all
