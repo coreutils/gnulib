@@ -4,15 +4,30 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/fesetexceptflag.html}
 
-Gnulib module: ---
+Gnulib module: fenv-exceptions-state-c99
 
 Portability problems fixed by Gnulib:
-@itemize
-@end itemize
-
-Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
 FreeBSD 5.2.1, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, IRIX 6.5, Solaris 9, Cygwin 1.7.7, MSVC 9, Android 4.4.
+@item
+This function triggers floating-point exception traps although it shouldn't, on
+@c https://sourceware.org/bugzilla/show_bug.cgi?id=30990
+glibc 2.37/i386, glibc 2.37/x86_64,
+@c https://sourceware.org/bugzilla/show_bug.cgi?id=30988
+glibc 2.37/powerpc,
+musl libc, Mac OS X 10.5, mingw.
+@item
+This function clears too many floating-point exception flags on
+@c https://sourceware.org/bugzilla/show_bug.cgi?id=30998
+glibc 2.37/alpha.
+@item
+This function is also buggy on
+@c Without the override, the unit test test-fenv-except-state-1 fails.
+AIX 7.3.1.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
 @end itemize

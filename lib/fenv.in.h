@@ -544,7 +544,8 @@ _GL_WARN_ON_USE (fesetexcept, "fesetexcept is unportable - "
 
 /* ISO C 99 § 7.6.2 Floating-point exceptions
    ISO C 23 § 7.6.4 Floating-point exceptions
-   API with fexcept_t  */
+   API with fexcept_t.
+   The return type changed from 'void' to 'int' in ISO C 11.  */
 
 #if !@HAVE_FENV_H@
 
@@ -608,6 +609,52 @@ typedef unsigned long fexcept_t;
 
 # endif
 
+#endif
+
+#if @GNULIB_FEGETEXCEPTFLAG@
+/* Stores the current floating-point exception status flags denoted
+   by EXCEPTIONS in *SAVED_FLAGS.  */
+# if @REPLACE_FEGETEXCEPTFLAG@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef fegetexceptflag
+#   define fegetexceptflag rpl_fegetexceptflag
+#  endif
+_GL_FUNCDECL_RPL (fegetexceptflag, int,
+                  (fexcept_t *saved_flags, int exceptions));
+_GL_CXXALIAS_RPL (fegetexceptflag, int,
+                  (fexcept_t *saved_flags, int exceptions));
+# else
+#  if !@HAVE_FEGETEXCEPTFLAG@
+_GL_FUNCDECL_SYS (fegetexceptflag, int,
+                  (fexcept_t *saved_flags, int exceptions));
+#  endif
+_GL_CXXALIAS_SYS (fegetexceptflag, int,
+                  (fexcept_t *saved_flags, int exceptions));
+# endif
+_GL_CXXALIASWARN (fegetexceptflag);
+#endif
+
+#if @GNULIB_FESETEXCEPTFLAG@
+/* Copies the flags denoted by EXCEPTIONS from *SAVED_FLAGS to the
+   floating-point exception status flags.  */
+# if @REPLACE_FESETEXCEPTFLAG@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef fesetexceptflag
+#   define fesetexceptflag rpl_fesetexceptflag
+#  endif
+_GL_FUNCDECL_RPL (fesetexceptflag, int,
+                  (fexcept_t const *saved_flags, int exceptions));
+_GL_CXXALIAS_RPL (fesetexceptflag, int,
+                  (fexcept_t const *saved_flags, int exceptions));
+# else
+#  if !@HAVE_FESETEXCEPTFLAG@
+_GL_FUNCDECL_SYS (fesetexceptflag, int,
+                  (fexcept_t const *saved_flags, int exceptions));
+#  endif
+_GL_CXXALIAS_SYS (fesetexceptflag, int,
+                  (fexcept_t const *saved_flags, int exceptions));
+# endif
+_GL_CXXALIASWARN (fesetexceptflag);
 #endif
 
 
