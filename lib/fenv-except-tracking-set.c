@@ -69,21 +69,19 @@ fesetexcept (int exceptions)
     {
       /* Set the flags in the 387 unit.  */
       x86_387_fenv_t env;
-      unsigned short orig_status_word;
       __asm__ __volatile__ ("fnstenv %0" : "=m" (*&env));
-      orig_status_word = env.__status_word;
+      /* Note: fnstenv masks all floating-point exceptions until the fldenv
+         or fldcw below.  */
       env.__status_word |= exceptions;
-      if (env.__status_word != orig_status_word)
+      if ((~env.__control_word) & exceptions)
         {
-          if ((~env.__control_word) & exceptions)
-            {
-              /* Setting the exception flags may trigger a trap (at the next
-                 floating-point instruction, but that does not matter).
-                 ISO C 23 § 7.6.4.4 does not allow it.  */
-              return -1;
-            }
-          __asm__ __volatile__ ("fldenv %0" : : "m" (*&env));
+          /* Setting the exception flags may trigger a trap (at the next
+             floating-point instruction, but that does not matter).
+             ISO C 23 § 7.6.4.4 does not allow it.  */
+          __asm__ __volatile__ ("fldcw %0" : : "m" (*&env.__control_word));
+          return -1;
         }
+      __asm__ __volatile__ ("fldenv %0" : : "m" (*&env));
     }
 #   endif
 #  endif

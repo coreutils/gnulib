@@ -48,12 +48,11 @@ feclearexcept (int exceptions)
 
   /* Clear the bits in the 387 unit.  */
   x86_387_fenv_t env;
-  unsigned short orig_status_word;
   __asm__ __volatile__ ("fnstenv %0" : "=m" (*&env));
-  orig_status_word = env.__status_word;
+  /* Note: fnstenv masks all floating-point exceptions until the fldenv
+     below.  */
   env.__status_word &= ~exceptions;
-  if (env.__status_word != orig_status_word)
-    __asm__ __volatile__ ("fldenv %0" : : "m" (*&env));
+  __asm__ __volatile__ ("fldenv %0" : : "m" (*&env));
 
   if (CPU_HAS_SSE ())
     {
