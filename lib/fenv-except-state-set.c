@@ -72,33 +72,30 @@ fesetexceptflag (fexcept_t const *saved_flags, int exceptions)
       /* Modify the flags in the 387 unit, but only by clearing bits, not by
          setting bits.  */
       x86_387_fenv_t env;
-      unsigned short orig_status_word;
       __asm__ __volatile__ ("fnstenv %0" : "=m" (*&env));
-      orig_status_word = env.__status_word;
+      /* Note: fnstenv masks all floating-point exceptions until the fldenv
+         below.  */
       env.__status_word &= ~ (exceptions & ~desired_flags);
-      if (env.__status_word != orig_status_word)
-        __asm__ __volatile__ ("fldenv %0" : : "m" (*&env));
+      __asm__ __volatile__ ("fldenv %0" : : "m" (*&env));
     }
 #   if !(defined __x86_64__ || defined _M_X64)
   else
     {
       /* Modify the flags in the 387 unit.  */
       x86_387_fenv_t env;
-      unsigned short orig_status_word;
       __asm__ __volatile__ ("fnstenv %0" : "=m" (*&env));
-      orig_status_word = env.__status_word;
+      /* Note: fnstenv masks all floating-point exceptions until the fldenv
+         or fldcw below.  */
       env.__status_word ^= ((env.__status_word ^ desired_flags) & exceptions);
-      if (env.__status_word != orig_status_word)
+      if ((~env.__control_word) & env.__status_word & exceptions)
         {
-          if ((~env.__control_word) & env.__status_word & exceptions)
-            {
-              /* Setting the exception flags may trigger a trap (at the next
-                 floating-point instruction, but that does not matter).
-                 ISO C 23 § 7.6.4.5 does not allow it.  */
-              return -1;
-            }
-          __asm__ __volatile__ ("fldenv %0" : : "m" (*&env));
+          /* Setting the exception flags may trigger a trap (at the next
+             floating-point instruction, but that does not matter).
+             ISO C 23 § 7.6.4.5 does not allow it.  */
+          __asm__ __volatile__ ("fldcw %0" : : "m" (*&env.__control_word));
+          return -1;
         }
+      __asm__ __volatile__ ("fldenv %0" : : "m" (*&env));
     }
 #   endif
 #  endif
