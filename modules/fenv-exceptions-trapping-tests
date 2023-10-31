@@ -1,0 +1,25 @@
+Files:
+tests/test-fenv-except-trapping-1.c
+tests/test-fenv-except-trapping-2.sh
+tests/test-fenv-except-trapping-2.c
+tests/infinity.h
+tests/macros.h
+m4/musl.m4
+
+Depends-on:
+fenv-exceptions-tracking-c99
+nan
+snan
+
+configure.ac:
+gl_MUSL_LIBC
+
+Makefile.am:
+TESTS += \
+  test-fenv-except-trapping-1 \
+  test-fenv-except-trapping-2.sh
+check_PROGRAMS += \
+  test-fenv-except-trapping-1 \
+  test-fenv-except-trapping-2
+test_fenv_except_trapping_1_LDADD = $(LDADD) @FENV_EXCEPTIONS_TRAPPING_LIBM@
+test_fenv_except_trapping_2_LDADD = $(LDADD) @FENV_EXCEPTIONS_TRAPPING_LIBM@ @FENV_EXCEPTIONS_TRACKING_LIBM@
