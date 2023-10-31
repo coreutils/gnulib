@@ -1,0 +1,40 @@
+Description:
+Functions for turning floating-point exceptions into traps (signals):
+feenableexcept, fedisableexcept, fegetexcept.
+
+Files:
+lib/fenv-except-trapping.c
+lib/fenv-private.h
+m4/fenv-exceptions-trapping.m4
+m4/mathfunc.m4
+m4/musl.m4
+
+Depends-on:
+fenv
+extensions
+
+configure.ac:
+gl_FENV_EXCEPTIONS_TRAPPING
+gl_CONDITIONAL([GL_COND_OBJ_FENV_EXCEPTIONS_TRAPPING],
+               [test $HAVE_FEENABLEEXCEPT = 0 || test $REPLACE_FEENABLEEXCEPT = 1])
+gl_FENV_MODULE_INDICATOR([feenableexcept])
+gl_FENV_MODULE_INDICATOR([fedisableexcept])
+gl_FENV_MODULE_INDICATOR([fegetexcept])
+gl_MODULE_INDICATOR([feenableexcept])
+
+Makefile.am:
+if GL_COND_OBJ_FENV_EXCEPTIONS_TRAPPING
+lib_SOURCES += fenv-except-trapping.c
+endif
+
+Include:
+#include <fenv.h>
+
+Link:
+$(FENV_EXCEPTIONS_TRAPPING_LIBM)
+
+License:
+LGPLv2+
+
+Maintainer:
+all

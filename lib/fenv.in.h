@@ -542,6 +542,100 @@ _GL_WARN_ON_USE (fesetexcept, "fesetexcept is unportable - "
 #endif
 
 
+/* GNU extensions.  */
+
+#if @GNULIB_FEENABLEEXCEPT@
+/* Enables trapping for the floating-point exceptions denoted by the bit mask
+   EXCEPTIONS.
+   Returns the bit mask of floating-point exceptions for which trapping was
+   enabled before the call, or -1 upon failure.
+   Note: This function is a misnomer.  It does not enable the specified
+   floating-point exceptions; it enables *trapping* on them.  It should better
+   be called 'feenabletraps'.  */
+# if @REPLACE_FEENABLEEXCEPT@ || (!@HAVE_FEENABLEEXCEPT@ && defined __FreeBSD__) /* has an inline definition */
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef feenableexcept
+#   define feenableexcept rpl_feenableexcept
+#  endif
+_GL_FUNCDECL_RPL (feenableexcept, int, (int exceptions));
+_GL_CXXALIAS_RPL (feenableexcept, int, (int exceptions));
+# else
+#  if !@HAVE_FEENABLEEXCEPT@
+_GL_FUNCDECL_SYS (feenableexcept, int, (int exceptions));
+#  endif
+_GL_CXXALIAS_SYS (feenableexcept, int, (int exceptions));
+# endif
+_GL_CXXALIASWARN (feenableexcept);
+#elif defined GNULIB_POSIXCHECK
+# undef feenableexcept
+# if HAVE_RAW_DECL_FEENABLEEXCEPT
+_GL_WARN_ON_USE (feenableexcept, "feenableexcept is unportable - "
+                 "use gnulib module fenv-exceptions-trapping for portability");
+# endif
+#endif
+
+#if @GNULIB_FEDISABLEEXCEPT@
+/* Disables trapping for the floating-point exceptions denoted by the bit mask
+   EXCEPTIONS.
+   Returns the bit mask of floating-point exceptions for which trapping was
+   enabled before the call, or -1 upon failure.
+   Note: This function is a misnomer.  It does not disable the specified
+   floating-point exceptions; it disables *trapping* on them.  It should better
+   be called 'fedisabletraps'.  */
+# if @REPLACE_FEDISABLEEXCEPT@ || (!@HAVE_FEDISABLEEXCEPT@ && defined __FreeBSD__) /* has an inline definition */
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef fedisableexcept
+#   define fedisableexcept rpl_fedisableexcept
+#  endif
+_GL_FUNCDECL_RPL (fedisableexcept, int, (int exceptions));
+_GL_CXXALIAS_RPL (fedisableexcept, int, (int exceptions));
+# else
+#  if !@HAVE_FEDISABLEEXCEPT@
+_GL_FUNCDECL_SYS (fedisableexcept, int, (int exceptions));
+#  endif
+_GL_CXXALIAS_SYS (fedisableexcept, int, (int exceptions));
+# endif
+_GL_CXXALIASWARN (fedisableexcept);
+#elif defined GNULIB_POSIXCHECK
+# undef fedisableexcept
+# if HAVE_RAW_DECL_FEDISABLEEXCEPT
+_GL_WARN_ON_USE (fedisableexcept, "fedisableexcept is unportable - "
+                 "use gnulib module fenv-exceptions-trapping for portability");
+# endif
+#endif
+
+#if @GNULIB_FEGETEXCEPT@
+/* Returns the bit mask of floating-point exceptions for which trapping is
+   enabled.
+   Note: This function is an even bigger misnomer:
+     - It does not test for the specified floating-point exceptions;
+       fetestexcept() does that.  It tests whether *trapping* on these
+       exceptions is enabled.
+     - It is in no way the opposite of fesetexcept().
+   It should better be called 'fegettraps'.  */
+# if @REPLACE_FEGETEXCEPT@ || (!@HAVE_FEGETEXCEPT@ && defined __FreeBSD__) /* has an inline definition */
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef fegetexcept
+#   define fegetexcept rpl_fegetexcept
+#  endif
+_GL_FUNCDECL_RPL (fegetexcept, int, (void));
+_GL_CXXALIAS_RPL (fegetexcept, int, (void));
+# else
+#  if !@HAVE_FEGETEXCEPT@
+_GL_FUNCDECL_SYS (fegetexcept, int, (void));
+#  endif
+_GL_CXXALIAS_SYS (fegetexcept, int, (void));
+# endif
+_GL_CXXALIASWARN (fegetexcept);
+#elif defined GNULIB_POSIXCHECK
+# undef fegetexcept
+# if HAVE_RAW_DECL_FEGETEXCEPT
+_GL_WARN_ON_USE (fegetexcept, "fegetexcept is unportable - "
+                 "use gnulib module fenv-exceptions-trapping for portability");
+# endif
+#endif
+
+
 /* ISO C 99 § 7.6.2 Floating-point exceptions
    ISO C 23 § 7.6.4 Floating-point exceptions
    API with fexcept_t.

@@ -22,7 +22,8 @@ AC_DEFUN_ONCE([gl_FENV_H],
   dnl corresponding gnulib module is not in use, and which is not
   dnl guaranteed by C99.
   gl_WARN_ON_USE_PREPARE([[#include <fenv.h>
-    ]], [fedisableexcept feenableexcept fesetexcept fetestexceptflag])
+    ]], [fedisableexcept feenableexcept fegetexcept fesetexcept
+    fetestexceptflag])
 ])
 
 # gl_FENV_MODULE_INDICATOR([modulename])
