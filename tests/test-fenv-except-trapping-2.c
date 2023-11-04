@@ -448,10 +448,8 @@ main (int argc, char *argv[])
       #if defined __i386 || defined _M_IX86
       known_failure |= (operation_arg[0] == '7' || operation_arg[0] == '8');
       #endif
-      /* The '9' tests do not work on Linux/alpha, musl libc/powerpc64le,
-         AIX/powerpc.  */
-      #if (__GLIBC__ >= 2 && defined __alpha) \
-          || ((defined MUSL_LIBC || defined _AIX) && defined __powerpc__)
+      /* The '9' tests do not work on Linux/alpha.  */
+      #if (__GLIBC__ >= 2 && defined __alpha)
       known_failure |= (operation_arg[0] == '9');
       #endif
       /* The 'l' tests do not work on Linux/loongarch64 with glibc 2.37.

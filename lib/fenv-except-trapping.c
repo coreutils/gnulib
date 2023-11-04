@@ -505,7 +505,7 @@ feenableexcept (int exceptions)
 
   if (!(memenv.u == orig_memenv.u))
     {
-      if ((orig_memenv.u & 0x000000f7) == 0 && (memenv.u & 0x000000f7) != 0)
+      if ((orig_memenv.u & 0x000000f8) == 0 && (memenv.u & 0x000000f8) != 0)
         {
           /* Put the thread into precise trapping mode.  */
 #  if defined __linux__ || defined __NetBSD__
@@ -537,7 +537,7 @@ fedisableexcept (int exceptions)
     {
       _FPU_SETCW_AS_DOUBLE (memenv.f);
 
-      if ((orig_memenv.u & 0x000000f7) != 0 && (memenv.u & 0x000000f7) == 0)
+      if ((orig_memenv.u & 0x000000f8) != 0 && (memenv.u & 0x000000f8) == 0)
         {
           /* Put the thread into no-trapping mode.  */
 #  if defined __linux__ || defined __NetBSD__
