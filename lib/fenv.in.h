@@ -708,7 +708,7 @@ typedef unsigned long fexcept_t;
 #if @GNULIB_FEGETEXCEPTFLAG@
 /* Stores the current floating-point exception status flags denoted
    by EXCEPTIONS in *SAVED_FLAGS.  */
-# if @REPLACE_FEGETEXCEPTFLAG@
+# if @REPLACE_FEGETEXCEPTFLAG@ || (!@HAVE_FEGETEXCEPTFLAG@ && defined __FreeBSD__) /* has an inline definition */
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   undef fegetexceptflag
 #   define fegetexceptflag rpl_fegetexceptflag
@@ -731,7 +731,7 @@ _GL_CXXALIASWARN (fegetexceptflag);
 #if @GNULIB_FESETEXCEPTFLAG@
 /* Copies the flags denoted by EXCEPTIONS from *SAVED_FLAGS to the
    floating-point exception status flags.  */
-# if @REPLACE_FESETEXCEPTFLAG@
+# if @REPLACE_FESETEXCEPTFLAG@ || (!@HAVE_FESETEXCEPTFLAG@ && defined __FreeBSD__) /* has an inline definition */
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   undef fesetexceptflag
 #   define fesetexceptflag rpl_fesetexceptflag
