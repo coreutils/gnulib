@@ -1,4 +1,4 @@
-# fenv-exceptions-tracking.m4 serial 1
+# fenv-exceptions-tracking.m4 serial 2
 dnl Copyright (C) 2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -20,6 +20,8 @@ AC_DEFUN_ONCE([gl_FENV_EXCEPTIONS_TRACKING],
     dnl On musl libc, on those CPUs where fenv-except-tracking-raise.c
     dnl uses the "generic" approach, feraiseexcept does not trigger traps
     dnl because it merely manipulates flags in the control register.
+    dnl On NetBSD 9.3/x86_64, fetestexcept clears the exception trap bits,
+    dnl causing the fenv-environment tests to fail.
     case "$host" in
       arm*-*-linux*)
         AC_CACHE_CHECK([whether feraiseexcept works],
@@ -109,6 +111,12 @@ AC_DEFUN_ONCE([gl_FENV_EXCEPTIONS_TRACKING],
           *yes) ;;
           *) REPLACE_FERAISEEXCEPT=1 ;;
         esac
+        ;;
+      x86_64-*-netbsd*)
+        dnl On NetBSD 9.3/x86_64, fetestexcept is broken: it clears the
+        dnl floating-point exception trap bits (because it uses an
+        dnl 'fnstenv' instruction without subsequent 'fldenv' or 'fldcw').
+        REPLACE_FETESTEXCEPT=1
         ;;
     esac
     if test $REPLACE_FECLEAREXCEPT = 1 \
