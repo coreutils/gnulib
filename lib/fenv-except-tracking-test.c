@@ -24,7 +24,26 @@
 
 #include "fenv-private.h"
 
-#if defined __GNUC__ || defined __clang__ || defined _MSC_VER
+#if defined _AIX && defined __powerpc__ /* AIX */
+
+/* On AIX, the register fpscr is augmented with a 32-bit word named fpscrx
+   in thread-local storage.  Instead of accessing fpscr, we must access the
+   combination.  The function fp_read_flag() does this.  */
+
+# include <float.h>
+# include <fpxcp.h>
+
+/* Documentation:
+   <https://www.ibm.com/docs/en/aix/7.3?topic=f-fp-clr-flag-fp-set-flag-fp-read-flag-fp-swap-flag-subroutine>  */
+
+int
+fetestexcept (int exceptions)
+{
+  fpflag_t flags = fp_read_flag ();
+  return fpflag_to_exceptions (flags) & FE_ALL_EXCEPT & exceptions;
+}
+
+#elif defined __GNUC__ || defined __clang__ || defined _MSC_VER
 
 # if (defined __x86_64__ || defined _M_X64) || (defined __i386 || defined _M_IX86)
 
@@ -228,21 +247,6 @@ fetestexcept (int exceptions)
 {
   fp_except_t flags = fpgetsticky ();
   return flags & FE_ALL_EXCEPT & exceptions;
-}
-
-# elif defined _AIX && defined __powerpc__ /* AIX */
-
-#  include <float.h>
-#  include <fpxcp.h>
-
-/* Documentation:
-   <https://www.ibm.com/docs/en/aix/7.3?topic=f-fp-clr-flag-fp-set-flag-fp-read-flag-fp-swap-flag-subroutine>  */
-
-int
-fetestexcept (int exceptions)
-{
-  fpflag_t flags = fp_read_flag ();
-  return fpflag_to_exceptions (flags) & FE_ALL_EXCEPT & exceptions;
 }
 
 # else
