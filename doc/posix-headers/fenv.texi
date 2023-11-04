@@ -14,4 +14,9 @@ FreeBSD 5.2.1, NetBSD 5.0, OpenBSD 3.8, AIX 5.1, IRIX 6.5, Cygwin 1.7.7, MSVC 9.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+On MSVC, the values of the rounding direction macros have changed:
+@c https://github.com/MicrosoftDocs/cpp-docs/issues/4796
+In MSVC 14, @code{FE_UPWARD} is 0x100 and @code{FE_DOWNWARD} is 0x200,
+whereas in MSVC 14.30, it's the opposite.
 @end itemize
