@@ -32,11 +32,10 @@ int
 fegetround (void)
 {
 #  ifdef _MSC_VER
-  /* XXX Simplify: access the SSE unit.  */
-  fenv_t env;
-  if (fegetenv (&env) != 0)
-    return FE_TONEAREST;
-  unsigned int fctrl = env._Fe_ctl;
+  /* Use the rounding direction from the SSE unit.  */
+  unsigned int mxcsr;
+  _FPU_GETSSECW (mxcsr);
+  unsigned int fctrl = (mxcsr >> 3) & 0x0C00;
 #  else
   /* Use the rounding direction from the control word of the 387 unit, the
      so-called fctrl register.
@@ -47,12 +46,13 @@ fegetround (void)
 #  endif
 #  ifdef _MSC_VER
   /* The MSVC header files have different values for the rounding directions
-     than all the other platforms.  Map
-       0x0000 -> 0x0000 = FE_TONEAREST
-       0x0400 -> 0x0200 = FE_DOWNWARD
-       0x0800 -> 0x0100 = FE_UPWARD
-       0x0C00 -> 0x0300 = FE_TOWARDZERO  */
-  return ((fctrl & 0x0400) >> 1) | ((fctrl & 0x0800) >> 3);
+     than all the other platforms, and the even changed between MSVC 14 and
+     MSVC 14.30 (!).  Map
+       0x0000 -> FE_TONEAREST = 0
+       0x0400 -> FE_DOWNWARD
+       0x0800 -> FE_UPWARD
+       0x0C00 -> FE_TOWARDZERO = FE_DOWNWARD | FE_UPWARD */
+  return (fctrl & 0x0800 ? FE_UPWARD : 0) | (fctrl & 0x0400 ? FE_DOWNWARD : 0);
 #  else
   return fctrl & 0x0C00;
 #  endif
@@ -66,39 +66,35 @@ fesetround (int rounding_direction)
      than all the other platforms.  */
   if ((rounding_direction & ~0x0300) != 0)
     return -1;
-  /* Map
-     FE_TONEAREST  = 0x0000 -> 0x0000
-     FE_DOWNWARD   = 0x0200 -> 0x0400
-     FE_UPWARD     = 0x0100 -> 0x0800
-     FE_TOWARDZERO = 0x0300 -> 0x0C00  */
+  /* The MSVC header files have different values for the rounding directions
+     than all the other platforms, and the even changed between MSVC 14 and
+     MSVC 14.30 (!).  Map
+     FE_TONEAREST = 0                        -> 0x0000
+     FE_DOWNWARD                             -> 0x0400
+     FE_UPWARD                               -> 0x0800
+     FE_TOWARDZERO = FE_DOWNWARD | FE_UPWARD -> 0x0C00  */
   rounding_direction =
-    ((rounding_direction & 0x0200) << 1) | ((rounding_direction & 0x0100) << 3);
+    (rounding_direction & FE_UPWARD ? 0x0800 : 0)
+    | (rounding_direction & FE_DOWNWARD ? 0x0400 : 0);
 #  else
   if ((rounding_direction & ~0x0C00) != 0)
     return -1;
 #  endif
 
-  /* Set it in the 387 unit.  */
 #  ifdef _MSC_VER
-  /* XXX Simplify: only access the SSE unit.  */
-  fenv_t env;
-  unsigned long orig_ctl;
-  if (fegetenv (&env) != 0)
-    return -1;
-  orig_ctl = env._Fe_ctl;
-  env._Fe_ctl = (env._Fe_ctl & ~0x0C00) | rounding_direction;
-  if (env._Fe_ctl != orig_ctl)
-    {
-      if (fesetenv (&env) != 0)
-        return -1;
-    }
+  /* Set it in the SSE unit.  */
+  unsigned int mxcsr, orig_mxcsr;
+  _FPU_GETSSECW (orig_mxcsr);
+  mxcsr = (orig_mxcsr & ~(0x0C00 << 3)) | (rounding_direction << 3);
+  if (mxcsr != orig_mxcsr)
+    _FPU_SETSSECW (mxcsr);
 #  else
+  /* Set it in the 387 unit.  */
   unsigned short fctrl, orig_fctrl;
   _FPU_GETCW (orig_fctrl);
   fctrl = (orig_fctrl & ~0x0C00) | rounding_direction;
   if (fctrl != orig_fctrl)
     _FPU_SETCW (fctrl);
-#  endif
 
   if (CPU_HAS_SSE ())
     {
@@ -109,6 +105,7 @@ fesetround (int rounding_direction)
       if (mxcsr != orig_mxcsr)
         _FPU_SETSSECW (mxcsr);
     }
+#  endif
 
   return 0;
 }
