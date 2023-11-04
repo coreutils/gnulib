@@ -1,4 +1,4 @@
-# iswpunct.m4 serial 1
+# iswpunct.m4 serial 2
 dnl Copyright (C) 2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,6 +8,7 @@ AC_DEFUN([gl_FUNC_ISWPUNCT],
 [
   AC_REQUIRE([gl_WCTYPE_H_DEFAULTS])
   AC_REQUIRE([gl_WCTYPE_H])
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
 
   if test $HAVE_ISWCNTRL = 0 || test $REPLACE_ISWCNTRL = 1; then
     dnl <wctype.h> redefines iswpunct already.

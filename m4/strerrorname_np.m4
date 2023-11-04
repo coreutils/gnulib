@@ -1,4 +1,4 @@
-# strerrorname_np.m4 serial 3
+# strerrorname_np.m4 serial 4
 dnl Copyright (C) 2020-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -6,10 +6,13 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_FUNC_STRERRORNAME_NP],
 [
+  AC_REQUIRE([gl_STRING_H_DEFAULTS])
+
   dnl Persuade glibc <string.h> to declare strerrorname_np().
   AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
 
-  AC_REQUIRE([gl_STRING_H_DEFAULTS])
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+
   AC_CHECK_FUNCS([strerrorname_np])
   if test $ac_cv_func_strerrorname_np = yes; then
     dnl In glibc 2.32, strerrorname_np returns English error descriptions, not

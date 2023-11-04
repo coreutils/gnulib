@@ -1,4 +1,4 @@
-# wcscmp.m4 serial 4
+# wcscmp.m4 serial 5
 dnl Copyright (C) 2011-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -7,6 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_FUNC_WCSCMP],
 [
   AC_REQUIRE([gl_WCHAR_H_DEFAULTS])
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CHECK_FUNCS_ONCE([wcscmp])
   if test $ac_cv_func_wcscmp = no; then
     HAVE_WCSCMP=0

@@ -1,4 +1,4 @@
-# fenv-rounding.m4 serial 1
+# fenv-rounding.m4 serial 2
 dnl Copyright (C) 2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -7,6 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_FENV_ROUNDING],
 [
   AC_REQUIRE([gl_FENV_H_DEFAULTS])
+  AC_REQUIRE([AC_CANONICAL_HOST])
 
   dnl On FreeBSD 11/i386, fesetround needs -lm while fegetround doesn't.
   gl_MATHFUNC([fesetround], [int], [(int)], [#include <fenv.h>])

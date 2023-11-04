@@ -1,4 +1,4 @@
-# iswxdigit.m4 serial 5
+# iswxdigit.m4 serial 6
 dnl Copyright (C) 2020-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -11,6 +11,7 @@ AC_DEFUN([gl_FUNC_ISWXDIGIT],
   AC_REQUIRE([gt_LOCALE_JA])
   AC_REQUIRE([gt_LOCALE_FR_UTF8])
   AC_REQUIRE([gt_LOCALE_ZH_CN])
+  AC_REQUIRE([AC_CANONICAL_HOST])
 
   if test $HAVE_ISWCNTRL = 0 || test $REPLACE_ISWCNTRL = 1; then
     dnl <wctype.h> redefines iswxdigit already.

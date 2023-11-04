@@ -1,4 +1,4 @@
-# getrandom.m4 serial 12
+# getrandom.m4 serial 13
 dnl Copyright 2020-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,6 +9,8 @@ dnl Written by Paul Eggert.
 AC_DEFUN([gl_FUNC_GETRANDOM],
 [
   AC_REQUIRE([gl_SYS_RANDOM_H_DEFAULTS])
+  AC_REQUIRE([AC_CANONICAL_HOST])
+
   gl_CHECK_FUNCS_ANDROID([getrandom],
     [[/* Additional includes are needed before <sys/random.h> on uClibc
          and Mac OS X.  */

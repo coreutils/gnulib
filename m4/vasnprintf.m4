@@ -1,4 +1,4 @@
-# vasnprintf.m4 serial 51
+# vasnprintf.m4 serial 52
 dnl Copyright (C) 2002-2004, 2006-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -94,6 +94,7 @@ AC_DEFUN_ONCE([gl_PREREQ_VASNPRINTF],
 # Prerequisites of lib/vasnwprintf.c.
 AC_DEFUN_ONCE([gl_PREREQ_VASNWPRINTF],
 [
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CHECK_FUNCS_ONCE([swprintf wcsnlen mbrtowc])
   AC_CHECK_DECLS([_snwprintf], , , [[#include <stdio.h>]])
   AC_CHECK_DECLS([wcsnlen], , , [[#include <wchar.h>]])
