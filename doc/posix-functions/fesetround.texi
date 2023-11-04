@@ -18,4 +18,7 @@ MSVC 14.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+The rounding mode has no effect on @code{long double} operations on some platforms:
+FreeBSD/arm64, NetBSD/sparc64.
 @end itemize
