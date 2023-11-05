@@ -439,7 +439,8 @@ main (int argc, char *argv[])
            AIX/powerpc,
            Solaris/i386, Solaris/x86_64,
            Cygwin/x86_64,
-           native Windows/i386, native Windows/x86_64.
+           native Windows/i386, native Windows/x86_64,
+           Haiku/i386.
          Explanation of some of the {i386,x86_64} cases:
          - Quoting the Intel 64 and IA-32 Architectures Software Developer's
            Manual:
@@ -461,7 +462,8 @@ main (int argc, char *argv[])
           || (defined _AIX && defined __powerpc__) \
           || (defined __sun && ((defined __x86_64__ || defined _M_X64) || (defined __i386 || defined _M_IX86))) \
           || (defined __CYGWIN__ && (defined __x86_64__ || defined _M_X64)) \
-          || (defined _WIN32 && ((defined __x86_64__ || defined _M_X64) || (defined __i386 || defined _M_IX86)))
+          || (defined _WIN32 && ((defined __x86_64__ || defined _M_X64) || (defined __i386 || defined _M_IX86))) \
+          || (defined __HAIKU__ && (defined __i386 || defined _M_IX86))
       known_failure |= (operation_arg[0] == '4');
       #endif
       /* The '7' and '8' tests, with types 'f' and 'd', do not work reliably
