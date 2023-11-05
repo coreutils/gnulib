@@ -425,14 +425,35 @@ main (int argc, char *argv[])
 
       /* Avoid known test failures.  */
       int known_failure = 0;
-      /* The '4' tests do not work on Linux/powerpc* and Linux/s390*, as well as
-         on GNU/kFreeBSD/i386, GNU/kFreeBSD/x86_64, musl libc/i386,
-         musl libc/powerpc64le, macOS/i386, macOS/x86_64, macOS/arm64,
-         FreeBSD/i386, FreeBSD/x86_64, NetBSD/i386, NetBSD/x86_64, OpenBSD/i386,
-         OpenBSD/x86_64, AIX/powerpc, Solaris/i386, Solaris/x86_64,
-         Cygwin/x86_64, native Windows/i386,
-         native Windows/x86_64.  */
-      #if (__GLIBC__ >= 2 && (defined __powerpc__ || (defined __s390__ || defined __s390x__))) \
+      /* The '4' tests do not work
+         - on glibc/{i386,x86_64}, with gcc < 8 (except when option -mno-ieee-fp
+           is used) or with clang,
+         - on glibc/powerpc* and glibc/s390*,
+         - as well as on
+           GNU/kFreeBSD/i386, GNU/kFreeBSD/x86_64,
+           musl libc/i386, musl libc/powerpc64le,
+           macOS/i386, macOS/x86_64, macOS/arm64,
+           FreeBSD/i386, FreeBSD/x86_64,
+           NetBSD/i386, NetBSD/x86_64,
+           OpenBSD/i386, OpenBSD/x86_64,
+           AIX/powerpc,
+           Solaris/i386, Solaris/x86_64,
+           Cygwin/x86_64,
+           native Windows/i386, native Windows/x86_64.
+         Explanation of some of the {i386,x86_64} cases:
+         - Quoting the Intel 64 and IA-32 Architectures Software Developer's
+           Manual:
+           "The UCOMISD instruction differs from the COMISD instruction in that
+            it signals a SIMD floating-point invalid operation exception (#I)
+            only when a source operand is an SNaN. The COMISD instruction
+            signals an invalid numeric exception only if a source operand is
+            either an SNaN or a QNaN."
+         - gcc < 8 (except when option -mno-ieee-fp is used) generates 'ucom*'
+           or 'fucom*' instructions and thus fails the test.
+         - gcc >= 8 generates 'com*' or 'fcom*' instructions and thus passes
+           the test.  */
+      #if (__GLIBC__ >= 2 && ((defined __x86_64__ || defined _M_X64) || (defined __i386 || defined _M_IX86)) && __GNUC__ < 8) \
+          || (__GLIBC__ >= 2 && (defined __powerpc__ || (defined __s390__ || defined __s390x__))) \
           || (__GLIBC__ >= 2 && __FreeBSD_kernel__ && ((defined __x86_64__ || defined _M_X64) || (defined __i386 || defined _M_IX86))) \
           || (defined MUSL_LIBC && ((defined __i386 || defined _M_IX86) || defined __powerpc__)) \
           || ((defined __APPLE__ && defined __MACH__) && ((defined __x86_64__ || defined _M_X64) || (defined __i386 || defined _M_IX86) || defined __aarch64__)) \
