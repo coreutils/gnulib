@@ -1,49 +1,8 @@
-# fpe.m4 serial 1
+# fpe.m4 serial 2
 dnl Copyright (C) 2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
-
-# Prerequisites for tracking FE_INVALID exceptions.
-AC_DEFUN_ONCE([gl_FPE_TRACKING],
-[
-  AC_CACHE_CHECK([whether FE_INVALID exceptions can be tracked],
-    [gl_cv_fenv_invalid_api],
-    [AC_COMPILE_IFELSE(
-       [AC_LANG_PROGRAM(
-          [[#include <fenv.h>
-          ]],
-          [[feclearexcept (FE_INVALID);
-          ]])
-       ],
-       [gl_cv_fenv_invalid_api=yes],
-       [gl_cv_fenv_invalid_api=no])
-    ])
-  if test $gl_cv_fenv_invalid_api = yes; then
-    AC_DEFINE([HAVE_FE_INVALID], [1],
-      [Define if FE_INVALID exceptions can be programmatically tracked.])
-    AC_CACHE_CHECK([whether feclearexcept can be used without linking with libm],
-      [gl_cv_func_feclearexcept_no_libm],
-      [AC_LINK_IFELSE(
-         [AC_LANG_PROGRAM(
-            [[#include <fenv.h>
-            ]],
-            [[feclearexcept (FE_INVALID);
-            ]])
-         ],
-         [gl_cv_func_feclearexcept_no_libm=yes],
-         [gl_cv_func_feclearexcept_no_libm=no])
-      ])
-    if test $gl_cv_func_feclearexcept_no_libm != yes; then
-      FPE_TRACKING_LIBM=-lm
-    else
-      FPE_TRACKING_LIBM=
-    fi
-  else
-    FPE_TRACKING_LIBM=
-  fi
-  AC_SUBST([FPE_TRACKING_LIBM])
-])
 
 # Prerequisites for turning FE_INVALID exceptions into a SIGFPE signal.
 AC_DEFUN_ONCE([gl_FPE_TRAPPING],
@@ -109,7 +68,7 @@ AC_DEFUN_ONCE([gl_FPE_TRAPPING],
       fi
     fi
   fi
-  AC_REQUIRE([gl_FPE_TRACKING])
-  FPE_TRAPPING_LIBM="$FPE_TRAPPING_LIBM $FPE_TRACKING_LIBM"
+  AC_REQUIRE([gl_FENV_EXCEPTIONS_TRACKING])
+  FPE_TRAPPING_LIBM="$FPE_TRAPPING_LIBM $FENV_EXCEPTIONS_TRACKING_LIBM"
   AC_SUBST([FPE_TRAPPING_LIBM])
 ])

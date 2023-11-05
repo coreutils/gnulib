@@ -4,7 +4,7 @@ tests/test-nan-2.c
 tests/macros.h
 
 Depends-on:
-fpe-tracking
+fenv-exceptions-tracking-c99
 fpe-trapping
 
 configure.ac:
@@ -12,5 +12,5 @@ configure.ac:
 Makefile.am:
 TESTS += test-nan-1 test-nan-2
 check_PROGRAMS += test-nan-1 test-nan-2
-test_nan_1_LDADD = $(LDADD) @FPE_TRACKING_LIBM@
+test_nan_1_LDADD = $(LDADD) $(FENV_EXCEPTIONS_TRACKING_LIBM)
 test_nan_2_LDADD = $(LDADD) @FPE_TRAPPING_LIBM@
