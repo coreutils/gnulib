@@ -17,7 +17,7 @@ This function triggers floating-point exception traps although it shouldn't, on
 glibc 2.37/i386, glibc 2.37/x86_64,
 @c https://sourceware.org/bugzilla/show_bug.cgi?id=30988
 glibc 2.37/powerpc,
-musl libc, Mac OS X 10.5, mingw.
+musl libc, Mac OS X 10.5, mingw, Haiku.
 @item
 This function clears too many floating-point exception flags on
 @c https://sourceware.org/bugzilla/show_bug.cgi?id=30998

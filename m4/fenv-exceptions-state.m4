@@ -58,7 +58,8 @@ AC_DEFUN([gl_FENV_EXCEPTIONS_STATE],
       AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
       gl_MATHFUNC([feenableexcept], [int], [(int)], [#include <fenv.h>])
       dnl On glibc 2.37 for PowerPC, i386, x86_64, fesetexceptflag may raise
-      dnl traps. Likewise on Mac OS X 10.5.8 on i386, x86_64 and on mingw.
+      dnl traps. Likewise on Mac OS X 10.5.8 on i386, x86_64, on mingw, and
+      dnl on Haiku on i386, x86_64.
       AC_CACHE_CHECK([whether fesetexceptflag is guaranteed non-trapping],
         [gl_cv_func_fesetexceptflag_works1],
         [if test $gl_cv_func_feenableexcept_no_libm = yes \
@@ -128,6 +129,10 @@ changequote([,])dnl
                  ],
                  [gl_cv_func_fesetexceptflag_works1="guessing no"],
                  [gl_cv_func_fesetexceptflag_works1="guessing yes"])
+               ;;
+             # Guess no on Haiku.
+             haiku*)
+               gl_cv_func_fesetexceptflag_works1="guessing no"
                ;;
              *) gl_cv_func_fesetexceptflag_works1="guessing yes" ;;
            esac
