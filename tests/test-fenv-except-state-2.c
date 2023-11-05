@@ -86,7 +86,7 @@ main ()
 int
 main ()
 {
-  fputs ("Skipping test: feenableexcept or fpsetmask or fp_enable not available\n", stderr);
+  fputs ("Skipping test: feenableexcept not available\n", stderr);
   return 77;
 }
 

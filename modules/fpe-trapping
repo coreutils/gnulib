@@ -4,13 +4,12 @@ into a signal.
 
 Files:
 lib/fpe-trapping.h
-m4/fpe.m4
-m4/mathfunc.m4
-m4/musl.m4
+m4/fpe-trapping.m4
 
 Depends-on:
 extensions
 fenv-exceptions-tracking-c99
+fenv-exceptions-trapping
 
 configure.ac:
 gl_FPE_TRAPPING
