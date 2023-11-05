@@ -22,32 +22,48 @@
 #include <fenv.h>
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-#include "fpe-trapping.h"
 #include "macros.h"
 
 /* musl libc does not support floating-point exception trapping, even where
    the hardware supports it.  See
    <https://wiki.musl-libc.org/functional-differences-from-glibc.html>  */
-#if HAVE_FPE_TRAPPING && (!MUSL_LIBC || GNULIB_FEENABLEEXCEPT)
+#if !MUSL_LIBC || GNULIB_FEENABLEEXCEPT
 
 /* Check that feraiseexcept() can trigger a trap.  */
 
 int
-main ()
+main (int argc, char *argv[])
 {
-  /* Clear FE_INVALID exceptions from past operations.  */
-  feclearexcept (FE_INVALID);
-
-  /* An FE_INVALID exception shall trigger a SIGFPE signal, which by default
-     terminates the program.  */
-  if (sigfpe_on_invalid () < 0)
+  if (argc > 1)
     {
-      fputs ("Skipping test: trapping floating-point exceptions are not supported on this machine.\n", stderr);
-      return 77;
-    }
+      int exception;
 
-  feraiseexcept (FE_INVALID);
+      if (STREQ (argv[1], "FE_INVALID"))   exception = FE_INVALID;   else
+      if (STREQ (argv[1], "FE_DIVBYZERO")) exception = FE_DIVBYZERO; else
+      if (STREQ (argv[1], "FE_OVERFLOW"))  exception = FE_OVERFLOW;  else
+      if (STREQ (argv[1], "FE_UNDERFLOW")) exception = FE_UNDERFLOW; else
+      if (STREQ (argv[1], "FE_INEXACT"))   exception = FE_INEXACT;   else
+        {
+          printf ("Invalid argument: %s\n", argv[1]);
+          exit (1);
+        }
+
+      /* Clear FE_XX exceptions from past operations.  */
+      feclearexcept (exception);
+
+      /* An FE_XX exception shall trigger a SIGFPE signal, which by default
+         terminates the program.  */
+      if (feenableexcept (exception) == -1)
+        {
+          fputs ("Skipping test: trapping floating-point exceptions are not supported on this machine.\n", stderr);
+          return 77;
+        }
+
+      feraiseexcept (exception);
+    }
 
   return 0;
 }
