@@ -4,15 +4,32 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/fesetenv.html}
 
-Gnulib module: ---
+Gnulib module: fenv-environment
 
 Portability problems fixed by Gnulib:
-@itemize
-@end itemize
-
-Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
 FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, IRIX 6.5, Solaris 9, Cygwin 1.7.7, MSVC 9, Android 4.4.
+@item
+This function does not work on some platforms:
+@c https://cgit.freebsd.org/src/commit/?id=34cc08e336987a8ebc316595e3f552a4c09f1fd4
+FreeBSD 12.2/arm64.
+@item
+This function does not restore the floating-point exception trap bits
+on some platforms:
+musl libc/i386, musl libc/x86_64, AIX 7.3, Solaris 10 and 11, MSVC 14.
+@item
+The macro @code{FE_DFL_ENV} cannot be used because it leads to a link error
+on some platforms:
+NetBSD 9.3/hppa, NetBSD 9.3/sparc, Cygwin 2.9.0.
+@item
+This function, when called with @code{FE_DFL_ENV} argument, has no effect
+on the x86 @code{mxcsr} register and thus on floating-point operations
+performed in the SSE unit on some platforms:
+mingw 10.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
 @end itemize

@@ -4,15 +4,42 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/feupdateenv.html}
 
-Gnulib module: ---
+Gnulib module: fenv-environment
 
 Portability problems fixed by Gnulib:
-@itemize
-@end itemize
-
-Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
 FreeBSD 5.2.1, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, IRIX 6.5, Solaris 9, Cygwin 1.7.7, MSVC 14, Android 4.4.
+@item
+This function crashes when given the argument @code{FE_DFL_ENV}
+on some platforms:
+@c https://sourceware.org/bugzilla/show_bug.cgi?id=31022
+glibc 2.37/riscv64.
+@item
+This function does not work on some platforms:
+@c https://sourceware.org/git/?p=glibc.git;a=commitdiff;h=a8c79c4088e8c04e4297936efa0dee6c8e6e974d
+glibc 2.5/ia64,
+@c https://cgit.freebsd.org/src/commit/?id=34cc08e336987a8ebc316595e3f552a4c09f1fd4
+FreeBSD 12.2/arm64.
+@item
+This function forgets about the currently set floating-point exception flags
+on some platforms:
+Mac OS X 10.5/i386, Mac OS X 10.5/x86_64.
+@item
+This function does not restore the floating-point exception trap bits
+on some platforms:
+musl libc/i386, musl libc/x86_64, AIX 7.3, Solaris 10 and 11, mingw 10.
+@item
+This function does not trigger traps on
+@c https://sourceware.org/bugzilla/show_bug.cgi?id=31023
+glibc 2.37/hppa,
+musl libc/s390x.
+@item
+This function may fail on some platforms:
+MSVC 14.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
 @end itemize

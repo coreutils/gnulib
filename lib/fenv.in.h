@@ -101,7 +101,6 @@ typedef unsigned long fenv_t;
 typedef struct
 {
   unsigned int __status_word;  /* floating point status register */
-  unsigned int __exception[7]; /* floating point exception registers */
 } fenv_t;
 
 # elif defined __ia64__
@@ -164,6 +163,96 @@ typedef unsigned long fenv_t;
 
 # define FE_DFL_ENV ((const fenv_t *) (-1))
 
+#else
+
+# if !HAVE_FE_DFL_ENV
+#  undef FE_DFL_ENV
+#  define FE_DFL_ENV ((const fenv_t *) (-1))
+# endif
+
+#endif
+
+#if @GNULIB_FEGETENV@
+/* Stores the thread's current floating-point environment in *ENVP and
+   returns zero.  Upon failure, it returns non-zero.  */
+# if @REPLACE_FEGETENV@ || (!@HAVE_FEGETENV@ && defined __FreeBSD__) /* has an inline definition */
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef fegetenv
+#   define fegetenv rpl_fegetenv
+#  endif
+_GL_FUNCDECL_RPL (fegetenv, int, (fenv_t *envp));
+_GL_CXXALIAS_RPL (fegetenv, int, (fenv_t *envp));
+# else
+#  if !@HAVE_FEGETENV@
+_GL_FUNCDECL_SYS (fegetenv, int, (fenv_t *envp));
+#  endif
+_GL_CXXALIAS_SYS (fegetenv, int, (fenv_t *envp));
+# endif
+_GL_CXXALIASWARN (fegetenv);
+#endif
+
+#if @GNULIB_FESETENV@
+/* Activates the given object *ENVP as the thread's current floating-point
+   environment, without raising floating-point exceptions, and returns zero.
+   ENVP may be FE_DFL_ENV.
+   Upon failure, it returns non-zero.  */
+# if @REPLACE_FESETENV@ || (!@HAVE_FESETENV@ && defined __FreeBSD__) /* has an inline definition */
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef fesetenv
+#   define fesetenv rpl_fesetenv
+#  endif
+_GL_FUNCDECL_RPL (fesetenv, int, (fenv_t const *envp));
+_GL_CXXALIAS_RPL (fesetenv, int, (fenv_t const *envp));
+# else
+#  if !@HAVE_FESETENV@
+_GL_FUNCDECL_SYS (fesetenv, int, (fenv_t const *envp));
+#  endif
+_GL_CXXALIAS_SYS (fesetenv, int, (fenv_t const *envp));
+# endif
+_GL_CXXALIASWARN (fesetenv);
+#endif
+
+#if @GNULIB_FEUPDATEENV@
+/* Activates the given object *ENVP as the thread's current floating-point
+   environment, raising exactly those floating-point exceptions that were
+   raised before, and returns zero.
+   ENVP may be FE_DFL_ENV.
+   Upon failure, it returns non-zero.  */
+# if @REPLACE_FEUPDATEENV@ || (!@HAVE_FEUPDATEENV@ && (defined __FreeBSD__ || defined _MSC_VER)) /* has an inline definition */
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef feupdateenv
+#   define feupdateenv rpl_feupdateenv
+#  endif
+_GL_FUNCDECL_RPL (feupdateenv, int, (fenv_t const *envp));
+_GL_CXXALIAS_RPL (feupdateenv, int, (fenv_t const *envp));
+# else
+#  if !@HAVE_FEUPDATEENV@
+_GL_FUNCDECL_SYS (feupdateenv, int, (fenv_t const *envp));
+#  endif
+_GL_CXXALIAS_SYS (feupdateenv, int, (fenv_t const *envp));
+# endif
+_GL_CXXALIASWARN (feupdateenv);
+#endif
+
+#if @GNULIB_FEHOLDEXCEPT@
+/* Stores the thread's current floating-point environment in *ENVP, clears
+   the floating-point exception status flags, disables trapping for all
+   floating-point exceptions, and returns zero.  Upon failure, it returns
+   non-zero.  */
+# if @REPLACE_FEHOLDEXCEPT@ || (!@HAVE_FEHOLDEXCEPT@ && defined __FreeBSD__) /* has an inline definition */
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef feholdexcept
+#   define feholdexcept rpl_feholdexcept
+#  endif
+_GL_FUNCDECL_RPL (feholdexcept, int, (fenv_t *envp));
+_GL_CXXALIAS_RPL (feholdexcept, int, (fenv_t *envp));
+# else
+#  if !@HAVE_FEHOLDEXCEPT@
+_GL_FUNCDECL_SYS (feholdexcept, int, (fenv_t *envp));
+#  endif
+_GL_CXXALIAS_SYS (feholdexcept, int, (fenv_t *envp));
+# endif
+_GL_CXXALIASWARN (feholdexcept);
 #endif
 
 

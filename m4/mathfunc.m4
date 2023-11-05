@@ -1,4 +1,4 @@
-# mathfunc.m4 serial 16
+# mathfunc.m4 serial 17
 dnl Copyright (C) 2010-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -42,7 +42,9 @@ AC_DEFUN([gl_MATHFUNC],
                                                 [m4_bpatsubst(
                                                    [m4_bpatsubst(
                                                       [m4_bpatsubst(
-                                                         [$3],
+                                                         [m4_bpatsubst(
+                                                            [$3],
+                                                            [fenv_t\( const\)? \*], [&fenv_ret])],
                                                          [fexcept_t\( const\)? \*], [&fx_ret])],
                                                       [int\( const\)? \*],
                                                       [&i_ret])],

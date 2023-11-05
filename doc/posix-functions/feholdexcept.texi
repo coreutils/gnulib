@@ -4,15 +4,32 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/feholdexcept.html}
 
-Gnulib module: ---
+Gnulib module: fenv-environment
 
 Portability problems fixed by Gnulib:
-@itemize
-@end itemize
-
-Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
 FreeBSD 5.2.1, NetBSD 5.0, OpenBSD 3.8, AIX 5.1, IRIX 6.5, Solaris 9, Cygwin 1.7.7, MSVC 9, Android 4.4.
+@item
+This function does not work on some platforms:
+@c https://sourceware.org/git/?p=glibc.git;a=commitdiff;h=a8c79c4088e8c04e4297936efa0dee6c8e6e974d
+glibc 2.5,
+@c https://cgit.freebsd.org/src/commit/?id=34cc08e336987a8ebc316595e3f552a4c09f1fd4
+FreeBSD 12.2/arm64.
+@item
+This function does not save the exception trap bits on some platforms:
+AIX 7.3.
+@item
+This function does not clear the exception trap bits on some platforms:
+musl libc, mingw.
+@item
+This function may fail on some platforms:
+MSVC 14.
+@item
+
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
 @end itemize

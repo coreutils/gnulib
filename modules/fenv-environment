@@ -1,0 +1,56 @@
+Description:
+Functions for controlling the floating-point environment as a whole:
+fegetenv, fesetenv, feupdateenv, feholdexcept.
+
+Files:
+lib/fenv-env.c
+lib/fenv-env-update.c
+lib/fenv-env-hold.c
+lib/fenv-private.h
+m4/fenv-environment.m4
+m4/mathfunc.m4
+m4/musl.m4
+
+Depends-on:
+fenv
+extensions
+verify
+fenv-exceptions-tracking-c99
+fenv-exceptions-trapping
+
+configure.ac:
+gl_FENV_ENVIRONMENT
+gl_CONDITIONAL([GL_COND_OBJ_FENV_ENVIRONMENT],
+               [test $HAVE_FESETENV = 0 || test $REPLACE_FESETENV = 1])
+gl_CONDITIONAL([GL_COND_OBJ_FENV_ENVIRONMENT_UPDATE],
+               [test $HAVE_FEUPDATEENV = 0 || test $REPLACE_FEUPDATEENV = 1])
+gl_CONDITIONAL([GL_COND_OBJ_FENV_ENVIRONMENT_HOLD],
+               [test $HAVE_FEHOLDEXCEPT = 0 || test $REPLACE_FEHOLDEXCEPT = 1])
+gl_FENV_MODULE_INDICATOR([fegetenv])
+gl_FENV_MODULE_INDICATOR([fesetenv])
+gl_FENV_MODULE_INDICATOR([feupdateenv])
+gl_FENV_MODULE_INDICATOR([feholdexcept])
+gl_MUSL_LIBC
+
+Makefile.am:
+if GL_COND_OBJ_FENV_ENVIRONMENT
+lib_SOURCES += fenv-env.c
+endif
+if GL_COND_OBJ_FENV_ENVIRONMENT_UPDATE
+lib_SOURCES += fenv-env-update.c
+endif
+if GL_COND_OBJ_FENV_ENVIRONMENT_HOLD
+lib_SOURCES += fenv-env-hold.c
+endif
+
+Include:
+#include <fenv.h>
+
+Link:
+$(FENV_ENVIRONMENT_LIBM)
+
+License:
+LGPLv2+
+
+Maintainer:
+all

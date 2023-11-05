@@ -65,14 +65,18 @@ fenv.h: fenv.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(WARN_ON_USE_H)
 	      -e 's|@''REPLACE_FECLEAREXCEPT''@|$(REPLACE_FECLEAREXCEPT)|g' \
 	      -e 's|@''REPLACE_FEDISABLEEXCEPT''@|$(REPLACE_FEDISABLEEXCEPT)|g' \
 	      -e 's|@''REPLACE_FEENABLEEXCEPT''@|$(REPLACE_FEENABLEEXCEPT)|g' \
+	      -e 's|@''REPLACE_FEGETENV''@|$(REPLACE_FEGETENV)|g' \
 	      -e 's|@''REPLACE_FEGETEXCEPT''@|$(REPLACE_FEGETEXCEPT)|g' \
 	      -e 's|@''REPLACE_FEGETEXCEPTFLAG''@|$(REPLACE_FEGETEXCEPTFLAG)|g' \
 	      -e 's|@''REPLACE_FEGETROUND''@|$(REPLACE_FEGETROUND)|g' \
+	      -e 's|@''REPLACE_FEHOLDEXCEPT''@|$(REPLACE_FEHOLDEXCEPT)|g' \
 	      -e 's|@''REPLACE_FERAISEEXCEPT''@|$(REPLACE_FERAISEEXCEPT)|g' \
+	      -e 's|@''REPLACE_FESETENV''@|$(REPLACE_FESETENV)|g' \
 	      -e 's|@''REPLACE_FESETEXCEPT''@|$(REPLACE_FESETEXCEPT)|g' \
 	      -e 's|@''REPLACE_FESETEXCEPTFLAG''@|$(REPLACE_FESETEXCEPTFLAG)|g' \
 	      -e 's|@''REPLACE_FESETROUND''@|$(REPLACE_FESETROUND)|g' \
 	      -e 's|@''REPLACE_FETESTEXCEPT''@|$(REPLACE_FETESTEXCEPT)|g' \
+	      -e 's|@''REPLACE_FEUPDATEENV''@|$(REPLACE_FEUPDATEENV)|g' \
 	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
 	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
 	      $(srcdir)/fenv.in.h > $@-t
