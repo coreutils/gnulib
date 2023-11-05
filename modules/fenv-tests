@@ -3,6 +3,7 @@ tests/test-fenv.c
 
 Depends-on:
 verify
+fenv-c++-tests
 
 configure.ac:
 
