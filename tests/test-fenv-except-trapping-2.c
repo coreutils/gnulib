@@ -436,6 +436,7 @@ main (int argc, char *argv[])
            FreeBSD/i386, FreeBSD/x86_64,
            NetBSD/i386, NetBSD/x86_64,
            OpenBSD/i386, OpenBSD/x86_64,
+           Minix/i386,
            AIX/powerpc,
            Solaris/i386, Solaris/x86_64,
            Cygwin/x86_64,
@@ -459,6 +460,7 @@ main (int argc, char *argv[])
           || (defined MUSL_LIBC && ((defined __i386 || defined _M_IX86) || defined __powerpc__)) \
           || ((defined __APPLE__ && defined __MACH__) && ((defined __x86_64__ || defined _M_X64) || (defined __i386 || defined _M_IX86) || defined __aarch64__)) \
           || ((defined __FreeBSD__ || defined __NetBSD__ || defined __OpenBSD__) && ((defined __x86_64__ || defined _M_X64) || (defined __i386 || defined _M_IX86))) \
+          || (defined __minix && (defined __i386 || defined _M_IX86)) \
           || (defined _AIX && defined __powerpc__) \
           || (defined __sun && ((defined __x86_64__ || defined _M_X64) || (defined __i386 || defined _M_IX86))) \
           || (defined __CYGWIN__ && (defined __x86_64__ || defined _M_X64)) \
