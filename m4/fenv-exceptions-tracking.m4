@@ -1,4 +1,4 @@
-# fenv-exceptions-tracking.m4 serial 2
+# fenv-exceptions-tracking.m4 serial 3
 dnl Copyright (C) 2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -116,6 +116,12 @@ AC_DEFUN_ONCE([gl_FENV_EXCEPTIONS_TRACKING],
         dnl On NetBSD 9.3/x86_64, fetestexcept is broken: it clears the
         dnl floating-point exception trap bits (because it uses an
         dnl 'fnstenv' instruction without subsequent 'fldenv' or 'fldcw').
+        REPLACE_FETESTEXCEPT=1
+        ;;
+      *86*-*-minix*)
+        dnl On Minix 3.3, both the feclearexcept and fetestexcept functions
+        dnl need to be overridden; otherwise we get unit test failures.
+        REPLACE_FECLEAREXCEPT=1
         REPLACE_FETESTEXCEPT=1
         ;;
     esac

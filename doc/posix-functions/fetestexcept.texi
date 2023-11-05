@@ -15,6 +15,9 @@ FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, IRIX 6.5, Solaris 9,
 This function clears the floating-point exception trap bits on some platforms:
 @c It uses an 'fnstenv' instruction without subsequent 'fldenv' or 'fldcw'.
 NetBSD 9.3/x86_64.
+@item
+This function is broken on some platforms:
+Minix 3.3/i386.
 @end itemize
 
 Portability problems not fixed by Gnulib:
