@@ -34,5 +34,5 @@ Portability problems not fixed by Gnulib:
 @item
 The resulting signal is @code{SIGILL} instead of @code{SIGFPE}
 on some platforms:
-macOS 12.5/arm64.
+Linux/hppa, macOS 12.5/arm64.
 @end itemize
