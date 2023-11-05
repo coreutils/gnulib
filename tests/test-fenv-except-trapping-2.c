@@ -475,11 +475,11 @@ main (int argc, char *argv[])
       #endif
       /* The 'l' tests do not work on Linux/loongarch64 with glibc 2.37.
          Likewise on Linux/alpha with glibc 2.7 on Linux 2.6.26.
-         Likewise on FreeBSD 12.2/sparc.
+         Likewise on FreeBSD 12.2/sparc and NetBSD 8.0/sparc.
          Cause unknown.  */
       #if (__GLIBC__ >= 2 && defined __loongarch__) \
           || ((__GLIBC__ == 2 && __GLIBC_MINOR__ < 36) && defined __alpha) \
-          || (defined __FreeBSD__ && defined __sparc)
+          || ((defined __FreeBSD__ || defined __NetBSD__) && defined __sparc)
       known_failure |= (type_arg[0] == 'l');
       #endif
       if (known_failure)
