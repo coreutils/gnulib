@@ -29,10 +29,11 @@
 
 /* The Compaq (ex-DEC) C 6.4 compiler and the Microsoft MSVC 9 compiler choke
    on the expression 0.0 / 0.0.  The IBM XL C compiler on z/OS complains.
-   PGI 16.10 complains.  */
+   PGI 16.10 complains.  clang 13 on mips64 does incorrect constant-folding.  */
 #if (defined __DECC || defined _MSC_VER \
-     || (defined __MVS__ && defined __IBMC__)   \
-     || defined __PGI)
+     || (defined __MVS__ && defined __IBMC__) \
+     || defined __PGI \
+     || defined __mips__)
 static float
 NaNf ()
 {
@@ -48,10 +49,11 @@ NaNf ()
 
 /* The Compaq (ex-DEC) C 6.4 compiler and the Microsoft MSVC 9 compiler choke
    on the expression 0.0 / 0.0.  The IBM XL C compiler on z/OS complains.
-   PGI 16.10 complains.  */
+   PGI 16.10 complains.  clang 13 on mips64 does incorrect constant-folding.  */
 #if (defined __DECC || defined _MSC_VER \
-     || (defined __MVS__ && defined __IBMC__)   \
-     || defined __PGI)
+     || (defined __MVS__ && defined __IBMC__) \
+     || defined __PGI \
+     || defined __mips__)
 static double
 NaNd ()
 {
@@ -69,14 +71,18 @@ NaNd ()
    runtime type conversion.
    The Microsoft MSVC 9 compiler chokes on the expression 0.0L / 0.0L.
    The IBM XL C compiler on z/OS complains.
-   PGI 16.10 complains.  */
+   PGI 16.10 complains.
+   Avoid possible incorrect constant-folding on mips.  */
 #ifdef __sgi
 static long double NaNl ()
 {
   double zero = 0.0;
   return zero / zero;
 }
-#elif defined _MSC_VER || (defined __MVS__ && defined __IBMC__) || defined __PGI
+#elif (defined _MSC_VER \
+       || (defined __MVS__ && defined __IBMC__) \
+       || defined __PGI \
+       || defined __mips__)
 static long double
 NaNl ()
 {
