@@ -8,12 +8,14 @@ m4/exponentf.m4
 m4/exponentd.m4
 m4/exponentl.m4
 m4/math_h.m4
+m4/nan-mips.m4
 
 Depends-on:
 nan
 
 configure.ac:
 gl_SNAN
+gl_NAN_MIPS
 
 Makefile.am:
 lib_SOURCES += snan.h

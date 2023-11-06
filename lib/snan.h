@@ -32,13 +32,27 @@
    This bit is
      *  == 0 to indicate a quiet NaN or Infinity,
         == 1 to indicate a signalling NaN,
-        on these CPUs: hppa, mips, sh4.
+        on these CPUs: hppa, mips (*), sh4.
      *  == 1 to indicate a quiet NaN,
         == 0 to indicate a signalling NaN or Infinity,
         on all other CPUs.
         On these platforms, additionally a signalling NaN must have some other
         mantissa bit == 1, because when all exponent bits are == 1 and all
-        mantissa bits are == 0, the number denotes ±Infinity.  */
+        mantissa bits are == 0, the number denotes ±Infinity.
+        This NaN encoding is specified by IEEE 754-2008 § 6.2.1.
+
+   (*) On mips CPUs, it depends on the CPU model.  The classical behaviour is
+   as indicated above.  On some newer models, it's like on the other CPUs.
+   On some (but not all!) models this meta-info can be determined from two
+   special CPU registers: If the "Floating Point Implementation Register" (fir)
+   bit 23, also known as Has2008 bit, is set, the "Floating Point Control and
+   Status Register" (fcsr) bit 18, also known as the NAN2008 bit, has the value
+     - 0 for the classical behaviour,
+     - 1 for like on the other CPUs.
+   Both of these bits are read-only.
+   This module has determined the behaviour at configure time and defines the
+   C macros MIPS_NAN2008_FLOAT, MIPS_NAN2008_DOUBLE, MIPS_NAN2008_LONG_DOUBLE
+   accordingly.  */
 
 
 /* 'float' = IEEE 754 single-precision
