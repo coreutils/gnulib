@@ -207,7 +207,7 @@ main ()
   c = a * b;
   {
     int exc = fetestexcept (FE_ALL_EXCEPT);
-    ASSERT ((FE_OVERFLOW & !exc) == 0);
+    ASSERT ((FE_OVERFLOW & ~exc) == 0);
     ASSERT ((exc & ~(FE_OVERFLOW | FE_INEXACT)) == 0);
   }
   ASSERT (fetestexcept (FE_INVALID) == 0);
@@ -222,7 +222,7 @@ main ()
   c = a * b;
   {
     int exc = fetestexcept (FE_ALL_EXCEPT);
-    ASSERT ((FE_UNDERFLOW & !exc) == 0);
+    ASSERT ((FE_UNDERFLOW & ~exc) == 0);
     ASSERT ((exc & ~(FE_UNDERFLOW | FE_INEXACT)) == 0);
   }
   ASSERT (fetestexcept (FE_INVALID) == 0);
