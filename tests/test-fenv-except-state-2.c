@@ -21,25 +21,13 @@
 /* Specification.  */
 #include <fenv.h>
 
-#include <stdio.h>
-
-#include "fpe-trapping.h"
 #include "macros.h"
-
-/* musl libc does not support floating-point exception trapping, even where
-   the hardware supports it.  See
-   <https://wiki.musl-libc.org/functional-differences-from-glibc.html>  */
-#if HAVE_FPE_TRAPPING && (!MUSL_LIBC || GNULIB_FEENABLEEXCEPT)
-
-/* Check that fesetexceptflag() does not trigger a trap.  */
-
-static volatile double a, b;
-static volatile long double al, bl;
 
 int
 main ()
 {
   fexcept_t saved_flags_1;
+  fexcept_t saved_flags_2;
 
   /* Test setting all exception flags.  */
   if (feraiseexcept (FE_INVALID | FE_DIVBYZERO | FE_OVERFLOW | FE_UNDERFLOW | FE_INEXACT) != 0)
@@ -53,41 +41,83 @@ main ()
                            FE_INVALID | FE_DIVBYZERO | FE_OVERFLOW | FE_UNDERFLOW | FE_INEXACT)
           == 0);
 
-  /* Clear exceptions from past operations.  */
-  feclearexcept (FE_ALL_EXCEPT);
+  /* Clear some of the exception flags.  */
+  ASSERT (feclearexcept (FE_OVERFLOW | FE_UNDERFLOW | FE_INEXACT) == 0);
+  /* Here, the set exception flags are FE_INVALID | FE_DIVBYZERO.  */
+  ASSERT (fetestexcept (FE_INVALID) == FE_INVALID);
+  ASSERT (fetestexcept (FE_DIVBYZERO) == FE_DIVBYZERO);
+  ASSERT (fetestexcept (FE_OVERFLOW) == 0);
+  ASSERT (fetestexcept (FE_UNDERFLOW) == 0);
+  ASSERT (fetestexcept (FE_INEXACT) == 0);
 
-  /* An FE_INVALID exception shall trigger a SIGFPE signal, which by default
-     terminates the program.  */
-  if (sigfpe_on_invalid () < 0)
-    {
-      fputs ("Skipping test: trapping floating-point exceptions are not supported on this machine.\n", stderr);
-      return 77;
-    }
+  /* Fill saved_flags_2.  */
+  ASSERT (fegetexceptflag (&saved_flags_2, FE_INVALID | FE_OVERFLOW) == 0);
 
-  /* Attempt to set the FE_INVALID exception flag.  */
-  _GL_UNUSED int rc = fesetexceptflag (&saved_flags_1, FE_INVALID);
-  /* On older i386 and on PowerPC, there is no way to implement
-     fesetexceptflag() such that it does not trigger a trap.  fesetexceptflag()
-     is expected to fail in this case.  */
-# if !((defined __i386 || defined _M_IX86) || defined __powerpc__)
-  ASSERT (rc == 0);
-# endif
+  /* Restore some of the exception flags.  */
+  ASSERT (fesetexceptflag (&saved_flags_1,
+                           FE_INVALID | FE_DIVBYZERO | FE_OVERFLOW | FE_UNDERFLOW) == 0);
+  /* Here, the set exception flags are FE_INVALID | FE_DIVBYZERO | FE_OVERFLOW | FE_UNDERFLOW.  */
+  ASSERT (fetestexcept (FE_INVALID) == FE_INVALID);
+  ASSERT (fetestexcept (FE_DIVBYZERO) == FE_DIVBYZERO);
+  ASSERT (fetestexcept (FE_OVERFLOW) == FE_OVERFLOW);
+  ASSERT (fetestexcept (FE_UNDERFLOW) == FE_UNDERFLOW);
+  ASSERT (fetestexcept (FE_INEXACT) == 0);
 
-  /* Do a harmless floating-point operation (since on some CPUs, floating-point
-     exceptions trigger a trap only at the next floating-point operation).  */
-  a = 1.0; b = a + a;
-  al = 1.0L; bl = al + al;
+  /* Clear some more exception flags.  */
+  ASSERT (feclearexcept (FE_INVALID) == 0);
+  /* Here, the set exception flags are FE_DIVBYZERO | FE_OVERFLOW | FE_UNDERFLOW.  */
+  ASSERT (fetestexcept (FE_INVALID) == 0);
+  ASSERT (fetestexcept (FE_DIVBYZERO) == FE_DIVBYZERO);
+  ASSERT (fetestexcept (FE_OVERFLOW) == FE_OVERFLOW);
+  ASSERT (fetestexcept (FE_UNDERFLOW) == FE_UNDERFLOW);
+  ASSERT (fetestexcept (FE_INEXACT) == 0);
+
+  /* Restore some more exception flags.  */
+  ASSERT (fesetexceptflag (&saved_flags_2, FE_OVERFLOW) == 0);
+  /* Here, the set exception flags are FE_DIVBYZERO | FE_UNDERFLOW.  */
+  ASSERT (fetestexcept (FE_INVALID) == 0);
+  ASSERT (fetestexcept (FE_DIVBYZERO) == FE_DIVBYZERO);
+  ASSERT (fetestexcept (FE_OVERFLOW) == 0);
+  ASSERT (fetestexcept (FE_UNDERFLOW) == FE_UNDERFLOW);
+  ASSERT (fetestexcept (FE_INEXACT) == 0);
+
+  /* Restore some more exception flags.  */
+  ASSERT (fesetexceptflag (&saved_flags_2, FE_INVALID) == 0);
+  /* Here, the set exception flags are FE_INVALID | FE_DIVBYZERO | FE_UNDERFLOW.  */
+  ASSERT (fetestexcept (FE_INVALID) == FE_INVALID);
+  ASSERT (fetestexcept (FE_DIVBYZERO) == FE_DIVBYZERO);
+  ASSERT (fetestexcept (FE_OVERFLOW) == 0);
+  ASSERT (fetestexcept (FE_UNDERFLOW) == FE_UNDERFLOW);
+  ASSERT (fetestexcept (FE_INEXACT) == 0);
+
+  /* ======================================================================== */
+  /* Check that fesetexceptflag clears exception flags in both the 387 unit
+     and the SSE unit, on i386 and x86_64 CPUs.  */
+
+  fexcept_t saved_flags_3;
+
+  ASSERT (feclearexcept (FE_INVALID) == 0);
+
+  ASSERT (fegetexceptflag (&saved_flags_3, FE_INVALID) == 0);
+
+  /* Set the FE_INVALID flag in the SSE unit.  */
+  {
+    static volatile double a, b;
+    _GL_UNUSED volatile double c;
+    a = 0.0; b = 0.0; c = a / b;
+  }
+  /* Set the FE_INVALID flag in the 387 unit.  */
+  {
+    static volatile long double al, bl;
+    _GL_UNUSED volatile long double cl;
+    al = 0.0L; bl = 0.0L; cl = al / bl;
+  }
+
+  /* Use fesetexceptflag to clear the FE_INVALID flag.  */
+  ASSERT (fesetexceptflag (&saved_flags_3, FE_INVALID) == 0);
+
+  /* Check that it's clear in both units.  */
+  ASSERT (fetestexcept (FE_INVALID) == 0);
 
   return 0;
 }
-
-#else
-
-int
-main ()
-{
-  fputs ("Skipping test: feenableexcept not available\n", stderr);
-  return 77;
-}
-
-#endif

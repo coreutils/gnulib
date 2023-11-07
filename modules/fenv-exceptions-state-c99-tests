@@ -1,6 +1,7 @@
 Files:
 tests/test-fenv-except-state-1.c
 tests/test-fenv-except-state-2.c
+tests/test-fenv-except-state-3.c
 tests/macros.h
 m4/musl.m4
 
@@ -14,9 +15,12 @@ gl_MUSL_LIBC
 Makefile.am:
 TESTS += \
   test-fenv-except-state-1 \
-  test-fenv-except-state-2
+  test-fenv-except-state-2 \
+  test-fenv-except-state-3
 check_PROGRAMS += \
   test-fenv-except-state-1 \
-  test-fenv-except-state-2
-test_fenv_except_state_1_LDADD = $(LDADD) @FENV_EXCEPTIONS_STATE_LIBM@ $(FENV_EXCEPTIONS_TRACKING_LIBM)
-test_fenv_except_state_2_LDADD = $(LDADD) @FENV_EXCEPTIONS_STATE_LIBM@ $(FENV_EXCEPTIONS_TRACKING_LIBM) @FPE_TRAPPING_LIBM@
+  test-fenv-except-state-2 \
+  test-fenv-except-state-3
+test_fenv_except_state_1_LDADD = $(LDADD) @FENV_EXCEPTIONS_STATE_LIBM@
+test_fenv_except_state_2_LDADD = $(LDADD) @FENV_EXCEPTIONS_STATE_LIBM@ $(FENV_EXCEPTIONS_TRACKING_LIBM)
+test_fenv_except_state_3_LDADD = $(LDADD) @FENV_EXCEPTIONS_STATE_LIBM@ $(FENV_EXCEPTIONS_TRACKING_LIBM) @FPE_TRAPPING_LIBM@
