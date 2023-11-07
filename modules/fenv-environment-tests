@@ -3,8 +3,9 @@ tests/test-fenv-env-1.c
 tests/test-fenv-env-2.c
 tests/test-fenv-env-3.c
 tests/test-fenv-env-4.c
-tests/test-fenv-env-5.sh
 tests/test-fenv-env-5.c
+tests/test-fenv-env-6.sh
+tests/test-fenv-env-6.c
 tests/macros.h
 m4/musl.m4
 
@@ -23,15 +24,18 @@ TESTS += \
   test-fenv-env-2 \
   test-fenv-env-3 \
   test-fenv-env-4 \
-  test-fenv-env-5.sh
+  test-fenv-env-5 \
+  test-fenv-env-6.sh
 check_PROGRAMS += \
   test-fenv-env-1 \
   test-fenv-env-2 \
   test-fenv-env-3 \
   test-fenv-env-4 \
-  test-fenv-env-5
-test_fenv_env_1_LDADD = $(LDADD) @FENV_ENVIRONMENT_LIBM@ $(FENV_EXCEPTIONS_TRACKING_LIBM) $(FENV_ROUNDING_LIBM) $(FPE_TRAPPING_LIBM)
+  test-fenv-env-5 \
+  test-fenv-env-6
+test_fenv_env_1_LDADD = $(LDADD) @FENV_ENVIRONMENT_LIBM@
 test_fenv_env_2_LDADD = $(LDADD) @FENV_ENVIRONMENT_LIBM@ $(FENV_EXCEPTIONS_TRACKING_LIBM) $(FENV_ROUNDING_LIBM) $(FPE_TRAPPING_LIBM)
 test_fenv_env_3_LDADD = $(LDADD) @FENV_ENVIRONMENT_LIBM@ $(FENV_EXCEPTIONS_TRACKING_LIBM) $(FENV_ROUNDING_LIBM) $(FPE_TRAPPING_LIBM)
 test_fenv_env_4_LDADD = $(LDADD) @FENV_ENVIRONMENT_LIBM@ $(FENV_EXCEPTIONS_TRACKING_LIBM) $(FENV_ROUNDING_LIBM) $(FPE_TRAPPING_LIBM)
-test_fenv_env_5_LDADD = $(LDADD) @FENV_ENVIRONMENT_LIBM@ $(FENV_EXCEPTIONS_TRACKING_LIBM) $(FPE_TRAPPING_LIBM)
+test_fenv_env_5_LDADD = $(LDADD) @FENV_ENVIRONMENT_LIBM@ $(FENV_EXCEPTIONS_TRACKING_LIBM) $(FENV_ROUNDING_LIBM) $(FPE_TRAPPING_LIBM)
+test_fenv_env_6_LDADD = $(LDADD) @FENV_ENVIRONMENT_LIBM@ $(FENV_EXCEPTIONS_TRACKING_LIBM) $(FPE_TRAPPING_LIBM)

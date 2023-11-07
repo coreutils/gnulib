@@ -21,109 +21,16 @@
 /* Specification.  */
 #include <fenv.h>
 
-#include "macros.h"
-
-/* Test the combination of fegetenv() with fesetenv().  */
+/* Test the link dependencies: that $(FENV_ENVIRONMENT_LIBM) is sufficient.  */
 
 int
 main ()
 {
-#if defined __GLIBC__ && defined __arm__ && defined __SOFTFP__
-  fputs ("Skipping test: no floating-point environment exists on this machine\n", stderr);
-  return 77;
-#else
-  fenv_t env1, env2;
+  fenv_t env;
 
-  /* Get to a known initial state.  */
-  ASSERT (feclearexcept (FE_ALL_EXCEPT) == 0);
-
-  /* Save the current environment in env1.  */
-  ASSERT (fegetenv (&env1) == 0);
-
-  /* Modify the current environment.  */
-  fesetround (FE_UPWARD);
-  int supports_tracking = (feraiseexcept (FE_INVALID | FE_OVERFLOW | FE_INEXACT) == 0);
-  int supports_trapping = (feenableexcept (FE_DIVBYZERO) != -1);
-
-  /* Save the current environment in env2.  */
-  ASSERT (fegetenv (&env2) == 0);
-
-  /* Check that the exception flags are unmodified.  */
-  ASSERT (fetestexcept (FE_ALL_EXCEPT) == (supports_tracking ? FE_INVALID | FE_OVERFLOW | FE_INEXACT : 0));
-  /* Check that the exception trap bits are unmodified.  */
-  ASSERT (fegetexcept () == (supports_trapping ? FE_DIVBYZERO : 0));
-
-  /* Go back to env1.  */
-  ASSERT (fesetenv (&env1) == 0);
-
-  /* Check that the rounding direction has been restored.  */
-  ASSERT (fegetround () == FE_TONEAREST);
-  /* Check that the exception flags have been restored.  */
-  ASSERT (fetestexcept (FE_ALL_EXCEPT) == 0);
-  /* Check that the exception trap bits have been restored.  */
-  ASSERT (fegetexcept () == 0);
-
-  /* Modify the rounding direction, the exception flags, and the exception
-     trap bits again.  */
-  fesetround (FE_DOWNWARD);
-  ASSERT (fegetround () == FE_DOWNWARD);
-  feclearexcept (FE_OVERFLOW);
-  feraiseexcept (FE_UNDERFLOW | FE_INEXACT);
-  ASSERT (fetestexcept (FE_ALL_EXCEPT) == (supports_tracking ? FE_UNDERFLOW | FE_INEXACT : 0));
-  feenableexcept (FE_INVALID);
-  ASSERT (fegetexcept () == (supports_trapping ? FE_INVALID : 0));
-
-  /* Go back to env2.  */
-  ASSERT (fesetenv (&env2) == 0);
-
-  /* Check that the rounding direction has been restored.  */
-  ASSERT (fegetround () == FE_UPWARD);
-  /* Check that the exception flags have been restored.  */
-  ASSERT (fetestexcept (FE_ALL_EXCEPT) == (supports_tracking ? FE_INVALID | FE_OVERFLOW | FE_INEXACT : 0));
-  /* Check that the exception trap bits have been restored.  */
-  ASSERT (fegetexcept () == (supports_trapping ? FE_DIVBYZERO : 0));
-
-  /* ======================================================================== */
-  /* FE_DFL_ENV */
-
-  /* Enable trapping on FE_INVALID.  */
-  feclearexcept (FE_INVALID);
-  feenableexcept (FE_INVALID);
-  ASSERT (fetestexcept (FE_ALL_EXCEPT) == (supports_tracking ? FE_OVERFLOW | FE_INEXACT : 0));
-
-  /* Go back to the default environment.  */
-  ASSERT (fesetenv (FE_DFL_ENV) == 0);
-
-  /* Check its contents.  */
-  ASSERT (fegetround () == FE_TONEAREST);
-  ASSERT (fetestexcept (FE_ALL_EXCEPT) == 0);
-
-  /* Check that it has trapping on FE_INVALID disabled.  */
-  ASSERT (fegetexcept () == 0);
-  {
-    double volatile a;
-    _GL_UNUSED double volatile b;
-    a = 0; b = a / a;
-  }
-
-  /* ======================================================================== */
-  /* Check that fesetenv restores the trapping behaviour.  */
-
-  /* Enable trapping on FE_INVALID.  */
-  feclearexcept (FE_INVALID);
-  feenableexcept (FE_INVALID);
-
-  /* Go back to env1.  */
-  ASSERT (fesetenv (&env1) == 0);
-
-  /* Check that it has disabled trapping on FE_INVALID.  */
-  ASSERT (fegetexcept () == 0);
-  {
-    double volatile a;
-    _GL_UNUSED double volatile b;
-    a = 0; b = a / a;
-  }
+  fegetenv (&env);
+  fesetenv (FE_DFL_ENV);
+  fesetenv (&env);
 
   return 0;
-#endif
 }

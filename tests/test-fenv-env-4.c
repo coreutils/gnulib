@@ -23,7 +23,7 @@
 
 #include "macros.h"
 
-/* Test the combination of feholdexcept() with feupdateenv().  */
+/* Test the combination of feholdexcept() with fesetenv().  */
 
 int
 main ()
@@ -54,13 +54,11 @@ main ()
   ASSERT (fegetexcept () == 0);
 
   /* Go back to env1.  */
-  ASSERT (feupdateenv (&env1) == 0);
+  ASSERT (fesetenv (&env1) == 0);
 
   /* Check that the rounding direction has been restored.  */
   ASSERT (fegetround () == FE_TONEAREST);
-  /* Check that the exception flags are the union of the saved and of the
-     current exception flags.  (The saved exception flags and the current
-     exception flags both happen to be none in this case.)  */
+  /* Check that the exception flags have been restored.  */
   ASSERT (fetestexcept (FE_ALL_EXCEPT) == 0);
   /* Check that the exception trap bits have been restored.  */
   ASSERT (fegetexcept () == 0);
@@ -76,39 +74,29 @@ main ()
   ASSERT (fegetexcept () == (supports_trapping ? FE_INVALID : 0));
 
   /* Go back to env2.  */
-  ASSERT (feupdateenv (&env2) == 0);
+  ASSERT (fesetenv (&env2) == 0);
 
   /* Check that the rounding direction has been restored.  */
   ASSERT (fegetround () == FE_UPWARD);
-  /* Check that the exception flags are the union of the saved and of the
-     current exception flags.  */
-  ASSERT (fetestexcept (FE_ALL_EXCEPT) == (supports_tracking ? FE_INVALID | FE_OVERFLOW | FE_UNDERFLOW | FE_INEXACT : 0));
+  /* Check that the exception flags have been restored.  */
+  ASSERT (fetestexcept (FE_ALL_EXCEPT) == (supports_tracking ? FE_INVALID | FE_OVERFLOW | FE_INEXACT : 0));
   /* Check that the exception trap bits have been restored.  */
   ASSERT (fegetexcept () == (supports_trapping ? FE_DIVBYZERO : 0));
 
   /* ======================================================================== */
   /* FE_DFL_ENV */
 
-  /* Go back to the default environment.  */
-  ASSERT (feupdateenv (FE_DFL_ENV) == 0);
-
-  /* Check that the rounding direction has been restored,
-     whereas the exception flags are unmodified.  */
-  ASSERT (fegetround () == FE_TONEAREST);
-  ASSERT (fetestexcept (FE_ALL_EXCEPT) == (supports_tracking ? FE_INVALID | FE_OVERFLOW | FE_UNDERFLOW | FE_INEXACT : 0));
-
   /* Enable trapping on FE_INVALID.  */
   feclearexcept (FE_INVALID);
   feenableexcept (FE_INVALID);
-  ASSERT (fetestexcept (FE_ALL_EXCEPT) == (supports_tracking ? FE_OVERFLOW | FE_UNDERFLOW | FE_INEXACT : 0));
+  ASSERT (fetestexcept (FE_ALL_EXCEPT) == (supports_tracking ? FE_OVERFLOW | FE_INEXACT : 0));
 
   /* Go back to the default environment.  */
-  ASSERT (feupdateenv (FE_DFL_ENV) == 0);
+  ASSERT (fesetenv (FE_DFL_ENV) == 0);
 
-  /* Check that the rounding direction has been restored,
-     whereas the exception flags are unmodified.  */
+  /* Check its contents.  */
   ASSERT (fegetround () == FE_TONEAREST);
-  ASSERT (fetestexcept (FE_ALL_EXCEPT) == (supports_tracking ? FE_OVERFLOW | FE_UNDERFLOW | FE_INEXACT : 0));
+  ASSERT (fetestexcept (FE_ALL_EXCEPT) == 0);
 
   /* Check that it has trapping on FE_INVALID disabled.  */
   ASSERT (fegetexcept () == 0);
