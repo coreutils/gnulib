@@ -60,7 +60,7 @@ mmalloca (size_t n)
           /* The ckd_add avoids signed integer overflow on
              theoretical platforms where UINTPTR_MAX <= INT_MAX.  */
           ckd_add (&umemplus, umem, sizeof (small_t) + sa_alignment_max - 1);
-          idx_t offset = ((umemplus & ~alignment2_mask)
+          idx_t offset = (umemplus - umemplus % (2 * sa_alignment_max)
                           + sa_alignment_max - umem);
           void *vp = mem + offset;
           small_t *p = vp;
@@ -90,15 +90,18 @@ void
 freea (void *p)
 {
   /* Check argument.  */
-  if ((uintptr_t) p & (sa_alignment_max - 1))
+  uintptr_t u = (uintptr_t) p;
+  if (u & (sa_alignment_max - 1))
     {
       /* p was not the result of a malloca() call.  Invalid argument.  */
       abort ();
     }
   /* Determine whether p was a non-NULL pointer returned by mmalloca().  */
-  if ((uintptr_t) p & sa_alignment_max)
+  if (u & sa_alignment_max)
     {
-      void *mem = (char *) p - ((small_t *) p)[-1];
+      char *cp = p;
+      small_t *sp = p;
+      void *mem = cp - sp[-1];
       free (mem);
     }
 }
