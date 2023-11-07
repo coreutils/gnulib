@@ -37,7 +37,7 @@
 static float
 NaNf ()
 {
-  static float zero = 0.0f;
+  static float volatile zero = 0.0f;
   return zero / zero;
 }
 #else
@@ -57,7 +57,7 @@ NaNf ()
 static double
 NaNd ()
 {
-  static double zero = 0.0;
+  static double volatile zero = 0.0;
   return zero / zero;
 }
 #else
@@ -86,7 +86,7 @@ static long double NaNl ()
 static long double
 NaNl ()
 {
-  static long double zero = 0.0L;
+  static long double volatile zero = 0.0L;
   return zero / zero;
 }
 #else
