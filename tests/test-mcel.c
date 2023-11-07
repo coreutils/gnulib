@@ -123,9 +123,10 @@ main (void)
           for (int ti = 0; ti < sizeof terminator; ti++)
             {
               char t = terminator[ti];
-              if (i == t)
+              if (i == t || j == t || k == t)
                 continue;
-              mcel_t d = mcel_scant (ijk, t);
+              char const ijkt[] = {i, j, k, t};
+              mcel_t d = mcel_scant (ijkt, t);
               ASSERT (c.ch == d.ch && c.err == d.err && c.len == d.len);
               if (!t)
                 {
