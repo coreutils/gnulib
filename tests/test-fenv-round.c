@@ -45,7 +45,7 @@ test_towardzero ()
     a = -1; b = 3; q = a / b; p = b * q;
     ASSERT (p > a);
   }
-#if !((defined __FreeBSD__ && defined __aarch64__) || (defined __NetBSD__ && defined __sparcv9 /* sparc64 */))
+#if !((defined __FreeBSD__ && defined __aarch64__) || (defined __NetBSD__ && defined __sparcv9 /* sparc64 */) || (defined __OpenBSD__ && defined __mips64))
   {
     long double volatile a, b, q, p;
 
@@ -80,7 +80,7 @@ test_upward ()
     a = -1; b = 3; q = a / b; p = b * q;
     ASSERT (p > a);
   }
-#if !((defined __FreeBSD__ && defined __aarch64__) || (defined __NetBSD__ && defined __sparcv9 /* sparc64 */))
+#if !((defined __FreeBSD__ && defined __aarch64__) || (defined __NetBSD__ && defined __sparcv9 /* sparc64 */) || (defined __OpenBSD__ && defined __mips64))
   {
     long double volatile a, b, q, p;
 
@@ -115,7 +115,7 @@ test_downward ()
     a = -1; b = 3; q = a / b; p = b * q;
     ASSERT (p < a);
   }
-#if !((defined __FreeBSD__ && defined __aarch64__) || (defined __NetBSD__ && defined __sparcv9 /* sparc64 */))
+#if !((defined __FreeBSD__ && defined __aarch64__) || (defined __NetBSD__ && defined __sparcv9 /* sparc64 */) || (defined __OpenBSD__ && defined __mips64))
   {
     long double volatile a, b, q, p;
 

@@ -435,7 +435,7 @@ main (int argc, char *argv[])
            macOS/i386, macOS/x86_64, macOS/arm64,
            FreeBSD/i386, FreeBSD/x86_64,
            NetBSD/i386, NetBSD/x86_64,
-           OpenBSD/i386, OpenBSD/x86_64,
+           OpenBSD/i386, OpenBSD/x86_64, OpenBSD/mips64,
            Minix/i386,
            AIX/powerpc,
            Solaris/i386, Solaris/x86_64,
@@ -460,6 +460,7 @@ main (int argc, char *argv[])
           || (defined MUSL_LIBC && ((defined __i386 || defined _M_IX86) || defined __powerpc__)) \
           || ((defined __APPLE__ && defined __MACH__) && ((defined __x86_64__ || defined _M_X64) || (defined __i386 || defined _M_IX86) || defined __aarch64__)) \
           || ((defined __FreeBSD__ || defined __NetBSD__ || defined __OpenBSD__) && ((defined __x86_64__ || defined _M_X64) || (defined __i386 || defined _M_IX86))) \
+          || (defined __OpenBSD__ && defined __mips64) \
           || (defined __minix && (defined __i386 || defined _M_IX86)) \
           || (defined _AIX && defined __powerpc__) \
           || (defined __sun && ((defined __x86_64__ || defined _M_X64) || (defined __i386 || defined _M_IX86))) \
@@ -480,10 +481,12 @@ main (int argc, char *argv[])
       /* The 'l' tests do not work on Linux/loongarch64 with glibc 2.37.
          Likewise on Linux/alpha with glibc 2.7 on Linux 2.6.26.
          Likewise on FreeBSD 12.2/sparc and NetBSD 8.0/sparc.
+         Likewise on OpenBSD 7.4/mips64.
          Cause unknown.  */
       #if (__GLIBC__ >= 2 && defined __loongarch__) \
           || ((__GLIBC__ == 2 && __GLIBC_MINOR__ < 36) && defined __alpha) \
-          || ((defined __FreeBSD__ || defined __NetBSD__) && defined __sparc)
+          || ((defined __FreeBSD__ || defined __NetBSD__) && defined __sparc) \
+          || (defined __OpenBSD__ && defined __mips64)
       known_failure |= (type_arg[0] == 'l');
       #endif
       if (known_failure)

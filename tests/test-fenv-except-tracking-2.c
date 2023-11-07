@@ -67,10 +67,12 @@ main (int argc, char *argv[])
         /* This test does not work on Linux/loongarch64 with glibc 2.37.
            Likewise on Linux/alpha with glibc 2.7 on Linux 2.6.26.
            Likewise on FreeBSD 12.2/sparc and NetBSD 8.0/sparc.
+           Likewise on OpenBSD 7.4/mips64.
            Cause unknown.  */
         #if !((__GLIBC__ >= 2 && defined __loongarch__) \
               || ((__GLIBC__ == 2 && __GLIBC_MINOR__ < 36) && defined __alpha) \
-              || ((defined __FreeBSD__ || defined __NetBSD__) && defined __sparc))
+              || ((defined __FreeBSD__ || defined __NetBSD__) && defined __sparc) \
+              || (defined __OpenBSD__ && defined __mips64))
         {
           volatile long double a, b;
           _GL_UNUSED volatile long double c;

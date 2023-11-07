@@ -20,5 +20,5 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 The rounding mode has no effect on @code{long double} operations on some platforms:
-FreeBSD/arm64, NetBSD/sparc64.
+FreeBSD/arm64, NetBSD/sparc64, OpenBSD/mips64.
 @end itemize
