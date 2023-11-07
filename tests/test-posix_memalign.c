@@ -62,10 +62,13 @@ main (int argc, char *argv[])
           memset (aligned4_blocks[i], 'v', size);
         }
 
-      ASSERT (posix_memalign (&aligned8_blocks[i], 8, size) == 0);
-      ASSERT (aligned8_blocks[i] != NULL);
-      ASSERT (((uintptr_t) aligned8_blocks[i] % 8) == 0);
-      memset (aligned8_blocks[i], 'w', size);
+      if (sizeof (void *) <= 8)
+	{
+	  ASSERT (posix_memalign (&aligned8_blocks[i], 8, size) == 0);
+	  ASSERT (aligned8_blocks[i] != NULL);
+	  ASSERT (((uintptr_t) aligned8_blocks[i] % 8) == 0);
+	  memset (aligned8_blocks[i], 'w', size);
+	}
 
       ASSERT (posix_memalign (&aligned16_blocks[i], 16, size) == 0);
       ASSERT (aligned16_blocks[i] != NULL);
@@ -89,7 +92,8 @@ main (int argc, char *argv[])
         free (aligned2_blocks[i]);
       if (sizeof (void *) <= 4)
         free (aligned4_blocks[i]);
-      free (aligned8_blocks[i]);
+      if (sizeof (void *) <= 8)
+	free (aligned8_blocks[i]);
       free (aligned16_blocks[i]);
       free (aligned32_blocks[i]);
       free (aligned64_blocks[i]);
