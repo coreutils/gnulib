@@ -216,22 +216,24 @@ err or;
 /* 7.18.1.4. Integer types capable of holding object pointers */
 /* 7.18.2.4. Limits of integer types capable of holding object pointers */
 
+#ifdef INTPTR_MAX
 intptr_t g[3] = { 17, INTPTR_MIN, INTPTR_MAX };
 verify (sizeof (void *) <= sizeof (intptr_t));
+# ifndef __CHERI__
 verify (TYPE_MINIMUM (intptr_t) == INTPTR_MIN);
 verify (TYPE_MAXIMUM (intptr_t) == INTPTR_MAX);
+# endif
 verify_same_types (INTPTR_MIN, (intptr_t) 0 + 0);
 verify_same_types (INTPTR_MAX, (intptr_t) 0 + 0);
+#endif
 
+#ifdef UINTPTR_MAX
 uintptr_t h[2] = { 17, UINTPTR_MAX };
 verify (sizeof (void *) <= sizeof (uintptr_t));
+# ifndef __CHERI__
 verify (TYPE_MAXIMUM (uintptr_t) == UINTPTR_MAX);
+# endif
 verify_same_types (UINTPTR_MAX, (uintptr_t) 0 + 0);
-
-#if INTPTR_MIN && INTPTR_MAX && UINTPTR_MAX
-/* ok */
-#else
-err or;
 #endif
 
 /* 7.18.1.5. Greatest-width integer types */
@@ -408,8 +410,14 @@ verify_width (INT_FAST32_WIDTH, INT_FAST32_MIN, INT_FAST32_MAX);
 verify_width (UINT_FAST32_WIDTH, 0, UINT_FAST32_MAX);
 verify_width (INT_FAST64_WIDTH, INT_FAST64_MIN, INT_FAST64_MAX);
 verify_width (UINT_FAST64_WIDTH, 0, UINT_FAST64_MAX);
+#ifndef __CHERI__
+# ifdef INTPTR_WIDTH
 verify_width (INTPTR_WIDTH, INTPTR_MIN, INTPTR_MAX);
+# endif
+# ifdef UINTPTR_WIDTH
 verify_width (UINTPTR_WIDTH, 0, UINTPTR_MAX);
+# endif
+#endif
 verify_width (INTMAX_WIDTH, INTMAX_MIN, INTMAX_MAX);
 verify_width (UINTMAX_WIDTH, 0, UINTMAX_MAX);
 verify_width (PTRDIFF_WIDTH, PTRDIFF_MIN, PTRDIFF_MAX);
