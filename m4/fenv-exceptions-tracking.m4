@@ -1,4 +1,4 @@
-# fenv-exceptions-tracking.m4 serial 3
+# fenv-exceptions-tracking.m4 serial 4
 dnl Copyright (C) 2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -117,6 +117,11 @@ AC_DEFUN_ONCE([gl_FENV_EXCEPTIONS_TRACKING],
         dnl floating-point exception trap bits (because it uses an
         dnl 'fnstenv' instruction without subsequent 'fldenv' or 'fldcw').
         REPLACE_FETESTEXCEPT=1
+        ;;
+      mips*-*-openbsd*)
+        dnl On OpenBSD 7.4/mips64, the feclearexcept function does not work:
+        dnl it misses to clear the "cause bits".
+        REPLACE_FECLEAREXCEPT=1
         ;;
       *86*-*-minix*)
         dnl On Minix 3.3, both the feclearexcept and fetestexcept functions

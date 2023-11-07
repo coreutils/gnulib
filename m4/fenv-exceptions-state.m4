@@ -1,4 +1,4 @@
-# fenv-exceptions-state.m4 serial 1
+# fenv-exceptions-state.m4 serial 2
 dnl Copyright (C) 2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -89,7 +89,17 @@ AC_DEFUN([gl_FENV_EXCEPTIONS_STATE],
                 ]])
              ],
              [gl_cv_func_fesetexceptflag_works1=yes],
-             [gl_cv_func_fesetexceptflag_works1=no],
+             [dnl On OpenBSD 7.4/mips64 this test fails because feclearexcept
+              dnl is buggy, not because of fesetexceptflag.
+              case "$host" in
+                mips*-*-openbsd*)
+                  gl_cv_func_fesetexceptflag_works1="guessing yes"
+                  ;;
+                *)
+                  gl_cv_func_fesetexceptflag_works1=no
+                  ;;
+              esac
+             ],
              [case "$host_os" in
                 # Guess yes or no on glibc systems, depending on CPU.
                 *-gnu*)
