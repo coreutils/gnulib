@@ -108,7 +108,7 @@ main (int argc, char *argv[])
            Cause unknown.
            This test does not work on eglibc 2.13/mips64
            (bug in libc function __addtf3).
-           This test does not work on FreeBSD/arm64
+           This test does not work on FreeBSD/arm64 and OpenBSD/mips64
            (bug in libc function __addtf3).
            This test does not work on FreeBSD/sparc64 and NetBSD/sparc64
            (bug in libc function _Qp_add).
@@ -118,7 +118,7 @@ main (int argc, char *argv[])
         #if !((__GLIBC__ == 2 && __GLIBC_MINOR__ < 36 && defined __alpha__) \
               || (__GLIBC__ >= 2 && defined __loongarch__) \
               || (((__GLIBC__ == 2 && __GLIBC_MINOR__ < 19 && defined __mips64) \
-                   || ((defined __FreeBSD__ || defined __NetBSD__ || defined __OpenBSD__) && (defined __aarch64__ || defined __sparc__))) \
+                   || ((defined __FreeBSD__ || defined __NetBSD__ || defined __OpenBSD__) && (defined __aarch64__ || defined __mips64__ || defined __sparc__))) \
                   && !HAVE_SAME_LONG_DOUBLE_AS_DOUBLE) \
               || (defined __CYGWIN__ && defined __i386) \
               || (((defined __i386 || defined _M_IX86) \
