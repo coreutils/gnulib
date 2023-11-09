@@ -1,0 +1,29 @@
+Description:
+global random number generator
+
+Files:
+lib/rand.c
+m4/rand.m4
+
+Depends-on:
+stdlib
+random          [test $REPLACE_RAND = 1]
+
+configure.ac:
+gl_FUNC_RAND
+gl_CONDITIONAL([GL_COND_OBJ_RAND], [test $REPLACE_RAND = 1])
+gl_STDLIB_MODULE_INDICATOR([rand])
+
+Makefile.am:
+if GL_COND_OBJ_RAND
+lib_SOURCES += rand.c
+endif
+
+Include:
+<stdlib.h>
+
+License:
+LGPL
+
+Maintainer:
+glibc
