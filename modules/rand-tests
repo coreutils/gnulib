@@ -1,0 +1,11 @@
+Files:
+tests/test-rand.c
+tests/signature.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-rand
+check_PROGRAMS += test-rand
