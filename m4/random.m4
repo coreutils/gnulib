@@ -1,4 +1,4 @@
-# random.m4 serial 4
+# random.m4 serial 4.1
 dnl Copyright (C) 2012-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -7,6 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_FUNC_RANDOM],
 [
   AC_REQUIRE([gl_STDLIB_H_DEFAULTS])
+  AC_REQUIRE([AC_CANONICAL_HOST])
 
   dnl We can't use AC_CHECK_FUNC here, because random() is defined as a
   dnl static inline function when compiling for Android 4.4 or older.
@@ -31,7 +32,13 @@ AC_DEFUN([gl_FUNC_RANDOM],
     if test $ac_cv_func_setstate = no; then
       HAVE_SETSTATE=0
     fi
-    if test $ac_cv_func_initstate = no || test $ac_cv_func_setstate = no; then
+    dnl On several platforms, random() is not multithread-safe.
+    if test $ac_cv_func_initstate = no || test $ac_cv_func_setstate = no \
+       || case "$host_os" in \
+            darwin* | freebsd* | solaris* | cygwin* | haiku*) true ;; \
+            *) false ;; \
+          esac
+    then
       dnl In order to define initstate or setstate, we need to define all the
       dnl functions at once.
       REPLACE_RANDOM=1
