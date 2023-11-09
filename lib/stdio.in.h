@@ -38,8 +38,14 @@
 
 /* Suppress macOS deprecation warnings for sprintf and vsprintf.  */
 #if (defined __APPLE__ && defined __MACH__) && !defined _POSIX_C_SOURCE
-# define _POSIX_C_SOURCE 200809L
-# define _GL_DEFINED__POSIX_C_SOURCE
+# ifdef __ENVIRONMENT_MAC_OS_X_VERSION_MIN_REQUIRED__
+#  include <AvailabilityMacros.h>
+# endif
+# if (defined MAC_OS_X_VERSION_MIN_REQUIRED \
+      && 130000 <= MAC_OS_X_VERSION_MIN_REQUIRED)
+#  define _POSIX_C_SOURCE 200809L
+#  define _GL_DEFINED__POSIX_C_SOURCE
+# endif
 #endif
 
 #define _GL_ALREADY_INCLUDING_STDIO_H
