@@ -1,4 +1,4 @@
-# pthread-rwlock.m4 serial 2
+# pthread-rwlock.m4 serial 2.1
 dnl Copyright (C) 2019-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -38,27 +38,42 @@ AC_DEFUN([gl_PTHREAD_RWLOCK],
       HAVE_PTHREAD_RWLOCK_UNLOCK=0
       HAVE_PTHREAD_RWLOCK_DESTROY=0
     else
+      dnl On Mac OS X 10.4, the pthread_rwlock_* functions exist but are not
+      dnl usable because PTHREAD_RWLOCK_INITIALIZER is not defined.
       dnl On Android 4.3, the pthread_rwlock_* functions are declared in
       dnl <pthread.h> but don't exist in libc.
       AC_CACHE_CHECK([for pthread_rwlock_init],
         [gl_cv_func_pthread_rwlock_init],
-        [saved_LIBS="$LIBS"
-         LIBS="$LIBS $LIBPMULTITHREAD"
-         AC_LINK_IFELSE(
-           [AC_LANG_SOURCE(
-              [[extern
-                #ifdef __cplusplus
-                "C"
-                #endif
-                int pthread_rwlock_init (void);
-                int main ()
-                {
-                  return pthread_rwlock_init ();
-                }
-              ]])],
-           [gl_cv_func_pthread_rwlock_init=yes],
-           [gl_cv_func_pthread_rwlock_init=no])
-         LIBS="$saved_LIBS"
+        [case "$host_os" in
+           darwin*)
+             AC_COMPILE_IFELSE(
+               [AC_LANG_SOURCE(
+                  [[#include <pthread.h>
+                    pthread_rwlock_t l = PTHREAD_RWLOCK_INITIALIZER;
+                  ]])],
+               [gl_cv_func_pthread_rwlock_init=yes],
+               [gl_cv_func_pthread_rwlock_init=no])
+             ;;
+           *)
+             saved_LIBS="$LIBS"
+             LIBS="$LIBS $LIBPMULTITHREAD"
+             AC_LINK_IFELSE(
+               [AC_LANG_SOURCE(
+                  [[extern
+                    #ifdef __cplusplus
+                    "C"
+                    #endif
+                    int pthread_rwlock_init (void);
+                    int main ()
+                    {
+                      return pthread_rwlock_init ();
+                    }
+                  ]])],
+               [gl_cv_func_pthread_rwlock_init=yes],
+               [gl_cv_func_pthread_rwlock_init=no])
+             LIBS="$saved_LIBS"
+             ;;
+         esac
         ])
       if test $gl_cv_func_pthread_rwlock_init = no; then
         REPLACE_PTHREAD_RWLOCK_INIT=1
