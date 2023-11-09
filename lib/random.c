@@ -67,10 +67,10 @@
 #ifdef _LIBC
 # include <libc-lock.h>
 #else
-/* Allow memory races; that's random enough.  */
-# define __libc_lock_define_initialized(class, name)
-# define __libc_lock_lock(name) ((void) 0)
-# define __libc_lock_unlock(name) ((void) 0)
+# include "glthread/lock.h"
+# define __libc_lock_define_initialized gl_lock_define_initialized
+# define __libc_lock_lock gl_lock_lock
+# define __libc_lock_unlock gl_lock_unlock
 #endif
 
 /* An improved random number generation package.  In addition to the standard

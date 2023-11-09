@@ -15,7 +15,8 @@ mingw, MSVC 14.
 This function is only defined as an inline function on some platforms:
 Android 4.4.
 @item
-
+This function crashes when used in multithreaded programs on some platforms:
+CheriBSD.
 @end itemize
 
 Portability problems not fixed by Gnulib:
