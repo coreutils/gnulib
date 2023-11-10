@@ -6,6 +6,7 @@ tests/macros.h
 Depends-on:
 pthread-thread
 sched_yield
+random
 
 configure.ac:
 

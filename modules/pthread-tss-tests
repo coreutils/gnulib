@@ -6,6 +6,7 @@ Depends-on:
 pthread-thread
 pthread-mutex
 sched_yield
+random
 
 configure.ac:
 

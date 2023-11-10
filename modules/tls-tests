@@ -6,6 +6,7 @@ thread
 lock
 stdint
 yield
+random
 
 configure.ac:
 AC_CHECK_DECLS_ONCE([alarm])

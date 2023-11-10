@@ -8,6 +8,7 @@ Depends-on:
 thread
 lock
 yield
+random
 
 configure.ac:
 AC_CHECK_HEADERS_ONCE([semaphore.h])
