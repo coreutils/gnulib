@@ -26,4 +26,8 @@ Cygwin 1.5.25.
 The parameter is @code{unsigned long} instead of @code{unsigned int} on some
 platforms:
 MidnightBSD 2.0.
+@item
+This function has no effect on some platforms:
+OpenBSD 7.4.
+This platform has, instead, a function @code{srandom_deterministic}.
 @end itemize
