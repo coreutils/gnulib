@@ -1,4 +1,4 @@
-# random.m4 serial 7
+# random.m4 serial 8
 dnl Copyright (C) 2012-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -44,10 +44,13 @@ AC_DEFUN([gl_FUNC_RANDOM],
       future*) REPLACE_SETSTATE=1 ;;
     esac
   fi
-  dnl On CheriBSD, random() lacks locking, leading to an out-of-bounds read
-  dnl inside random_r.
+  dnl On several platforms, random() is not multithread-safe.
   if test $ac_cv_func_initstate = no || test $ac_cv_func_setstate = no \
-     || case "$host" in aarch64c-*-freebsd*) true;; *) false;; esac; then
+     || case "$host_os" in \
+          darwin* | freebsd* | solaris* | cygwin* | haiku*) true ;; \
+          *) false ;; \
+        esac
+  then
     dnl In order to define initstate or setstate, we need to define all the
     dnl functions at once.
     REPLACE_RANDOM=1
