@@ -436,11 +436,15 @@ int libsigsegv_version = LIBSIGSEGV_VERSION;
 #  define SIGSEGV_FAULT_ADDRESS  sip->si_addr
 #  define SIGSEGV_FAULT_CONTEXT  ((ucontext_t *) ucp)
 
-#  if defined __arm64__ /* 64-bit */
+#  if defined __arm64__ || defined __aarch64__ /* 64-bit */
 
 /* See sys/arm64/include/ucontext.h.  */
 
-#   define SIGSEGV_FAULT_STACKPOINTER  ((ucontext_t *) ucp)->uc_mcontext.mc_gpregs.gp_sp
+#   if defined __CHERI__
+#    define SIGSEGV_FAULT_STACKPOINTER  ((ucontext_t *) ucp)->uc_mcontext.mc_capregs.cap_sp
+#   else
+#    define SIGSEGV_FAULT_STACKPOINTER  ((ucontext_t *) ucp)->uc_mcontext.mc_gpregs.gp_sp
+#   endif
 
 #  elif defined __arm__ || defined __armhf__ /* 32-bit */
 
