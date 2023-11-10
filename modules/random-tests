@@ -1,12 +1,17 @@
 Files:
 tests/test-random.c
+tests/test-random-mt.c
 tests/signature.h
 tests/macros.h
 
 Depends-on:
+xalloc
+thread
+yield
 
 configure.ac:
 
 Makefile.am:
-TESTS += test-random
-check_PROGRAMS += test-random
+TESTS += test-random test-random-mt
+check_PROGRAMS += test-random test-random-mt
+test_random_mt_LDADD = $(LDADD) $(LIBINTL) $(LIBMULTITHREAD) $(YIELD_LIB)
