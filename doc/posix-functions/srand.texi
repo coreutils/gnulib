@@ -15,4 +15,8 @@ Portability problems not fixed by Gnulib:
 @item
 This function is only defined as an inline function on some platforms:
 Android 4.4.
+@item
+This function has no effect on @code{rand} invocations in other threads
+on some platforms:
+Cygwin 3.4.6.
 @end itemize

@@ -18,4 +18,7 @@ Portability problems not fixed by Gnulib:
 @item
 This function is only defined as an inline function on some platforms:
 Android 4.4.
+@item
+This function is not multithread-safe on some platforms:
+macOS 12.5, FreeBSD 13.2, Solaris 11.4.
 @end itemize
