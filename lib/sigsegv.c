@@ -430,7 +430,7 @@ int libsigsegv_version = LIBSIGSEGV_VERSION;
 
 #if defined __FreeBSD_kernel__ || defined __FreeBSD__ || defined __DragonFly__ /* GNU/kFreeBSD, FreeBSD */
 
-# if defined __arm__ || defined __armhf__ || defined __arm64__
+# if defined __arm__ || defined __armhf__ || (defined __arm64__ || defined __aarch64__)
 
 #  define SIGSEGV_FAULT_HANDLER_ARGLIST  int sig, siginfo_t *sip, void *ucp
 #  define SIGSEGV_FAULT_ADDRESS  sip->si_addr
@@ -825,8 +825,20 @@ int libsigsegv_version = LIBSIGSEGV_VERSION;
     || defined __FreeBSD_kernel__ || defined __FreeBSD__ || defined __DragonFly__ \
     || defined __NetBSD__ || defined __OpenBSD__ \
     || (defined __APPLE__ && defined __MACH__)
-# define SIGSEGV_FOR_ALL_SIGNALS(var,body) \
-    { int var; var = SIGSEGV; { body } var = SIGBUS; { body } }
+# if defined __CHERI__
+#  define SIGSEGV_FOR_ALL_SIGNALS(var,body) \
+     { int var;                             \
+       var = SIGSEGV; { body }              \
+       var = SIGBUS; { body }               \
+       var = SIGPROT; { body }              \
+     }
+# else
+#  define SIGSEGV_FOR_ALL_SIGNALS(var,body) \
+     { int var;                             \
+       var = SIGSEGV; { body }              \
+       var = SIGBUS; { body }               \
+     }
+# endif
 #else
 # define SIGSEGV_FOR_ALL_SIGNALS(var,body) \
     { int var; var = SIGSEGV; { body } }
