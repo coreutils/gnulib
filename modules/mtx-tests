@@ -8,6 +8,7 @@ Depends-on:
 thrd
 lock
 stdint
+random
 
 configure.ac:
 AC_CHECK_HEADERS_ONCE([semaphore.h])
