@@ -6,6 +6,7 @@ Depends-on:
 thrd
 mtx
 stdint
+random
 
 configure.ac:
 AC_CHECK_DECLS_ONCE([alarm])

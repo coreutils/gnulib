@@ -11,6 +11,7 @@ thread
 stdint
 usleep
 yield
+random
 
 configure.ac:
 AC_CHECK_HEADERS_ONCE([semaphore.h])
