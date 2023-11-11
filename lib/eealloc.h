@@ -36,6 +36,9 @@
 #endif
 
 #include <stdlib.h>
+#if defined __CHERI__
+# include <cheri.h>
+#endif
 
 _GL_INLINE_HEADER_BEGIN
 #ifndef EEALLOC_INLINE
@@ -52,9 +55,15 @@ EEALLOC_INLINE void *
 eemalloc (size_t n)
 {
   /* If n is zero, allocate a 1-byte block.  */
+  size_t nx = n;
   if (n == 0)
-    n = 1;
-  return malloc (n);
+    nx = 1;
+  void *ptr = malloc (nx);
+# if defined __CHERI__
+  if (ptr != NULL)
+    ptr = cheri_bounds_set (ptr, n);
+# endif
+  return ptr;
 }
 #endif
 
@@ -67,9 +76,15 @@ EEALLOC_INLINE void *
 eerealloc (void *p, size_t n)
 {
   /* If n is zero, allocate or keep a 1-byte block.  */
+  size_t nx = n;
   if (n == 0)
-    n = 1;
-  return realloc (p, n);
+    nx = 1;
+  void *ptr = realloc (p, nx);
+# if defined __CHERI__
+  if (ptr != NULL)
+    ptr = cheri_bounds_set (ptr, n);
+# endif
+  return ptr;
 }
 #endif
 
