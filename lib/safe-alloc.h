@@ -27,6 +27,9 @@
 #endif
 
 #include <stdlib.h>
+#if defined __CHERI__
+# include <cheri.h>
+#endif
 
 _GL_INLINE_HEADER_BEGIN
 #ifndef SAFE_ALLOC_INLINE
@@ -37,9 +40,16 @@ _GL_INLINE_HEADER_BEGIN
 SAFE_ALLOC_INLINE void *
 safe_alloc_realloc_n (void *ptr, size_t count, size_t size)
 {
+  size_t countx = count;
+  size_t sizex = size;
   if (count == 0 || size == 0)
-    count = size = 1;
-  return reallocarray (ptr, count, size);
+    countx = sizex = 1;
+  ptr = reallocarray (ptr, countx, sizex);
+#if defined __CHERI__
+  if (ptr != NULL && (count == 0 || size == 0))
+    ptr = cheri_bounds_set (ptr, 0);
+#endif
+  return ptr;
 }
 _GL_ATTRIBUTE_NODISCARD SAFE_ALLOC_INLINE int
 safe_alloc_check (void *ptr)
