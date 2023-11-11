@@ -88,5 +88,18 @@ main (void)
 
   free (input);
 
+  /* Test aligned oversized reads, which are allowed on most architectures
+     but not on CHERI.  */
+  {
+    input = malloc (5);
+    memcpy (input, "abcde", 5);
+    ASSERT (RAWMEMCHR (input, 'e') == input + 4);
+    ASSERT (RAWMEMCHR (input + 1, 'e') == input + 4);
+    ASSERT (RAWMEMCHR (input + 2, 'e') == input + 4);
+    ASSERT (RAWMEMCHR (input + 3, 'e') == input + 4);
+    ASSERT (RAWMEMCHR (input + 4, 'e') == input + 4);
+    free (input);
+  }
+
   return 0;
 }
