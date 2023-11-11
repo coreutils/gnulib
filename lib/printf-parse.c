@@ -555,7 +555,7 @@ PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
                     unsigned_type = TYPE_ULONGINT;
                     pointer_type = TYPE_COUNT_LONGINT_POINTER;
                   }
-                cp++;
+                cp += 3;
               }
 #endif
 
