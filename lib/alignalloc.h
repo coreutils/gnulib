@@ -29,6 +29,9 @@
 #include <errno.h>
 #include <stdlib.h>
 #include "idx.h"
+#if defined __CHERI__
+# include <cheri.h>
+#endif
 
 _GL_INLINE_HEADER_BEGIN
 #ifndef ALIGNALLOC_INLINE
@@ -93,6 +96,10 @@ alignalloc (idx_t alignment, idx_t size)
   if (alignment < sizeof (void *))
     alignment = sizeof (void *);
   errno = posix_memalign (&ptr, alignment, size | !size);
+#  if defined __CHERI__
+  if (ptr != NULL)
+    ptr = cheri_bounds_set (ptr, size);
+#  endif
   return ptr;
 # endif
 }
