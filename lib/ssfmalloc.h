@@ -133,6 +133,9 @@ static void free_block (uintptr_t block);
 #include "thread-optim.h"
 #include "gl_oset.h"
 #include "gl_rbtree_oset.h"
+#ifdef __CHERI__
+# include <cheri.h>
+#endif
 
 /* Help the branch prediction.  */
 #if __GNUC__ >= 3
@@ -178,6 +181,10 @@ struct page_tree_element
 struct dissected_page_header
 {
   struct any_page_header common;
+  #ifdef __CHERI__
+  /* This page, with bounds [page, page + PAGESIZE).  */
+  uintptr_t whole_page;
+  #endif
   /* Amount of free space in this page.  Always a multiple of ALIGNMENT.  */
   pg_offset_t free_space;
   /* The tree element.  */
@@ -386,6 +393,9 @@ init_small_block_page (uintptr_t page)
 {
   struct small_page_header *pageptr = (struct small_page_header *) page;
   pageptr->common.common.page_type = small_page_type;
+  #ifdef __CHERI__
+  pageptr->common.whole_page = page;
+  #endif
 
   /* Initialize available_bitmap.  */
   uint32_t *available_bitmap = small_block_page_available_bitmap (pageptr);
@@ -545,6 +555,9 @@ init_medium_block_page (uintptr_t page)
 {
   struct medium_page_header *pageptr = (struct medium_page_header *) page;
   pageptr->common.common.page_type = medium_page_type;
+  #ifdef __CHERI__
+  pageptr->common.whole_page = page;
+  #endif
   pageptr->num_gaps = 1;
   pageptr->gaps[0].start = MEDIUM_BLOCKS_PAGE_FIRST_GAP_START;
   pageptr->gaps[0].end   = MEDIUM_BLOCKS_PAGE_LAST_GAP_END;
@@ -844,7 +857,11 @@ free_block_from_pool (uintptr_t block, uintptr_t page, struct page_pool *pool)
         FREE_PAGES (pool->freeable_page, PAGESIZE);
 
       /* Don't free the page now, but later.  */
+      #ifdef __CHERI__
+      pool->freeable_page = pageptr->whole_page;
+      #else
       pool->freeable_page = page;
+      #endif
     }
 }
 
@@ -908,6 +925,15 @@ allocate_block (size_t size)
         (size <= SMALL_BLOCK_MAX_SIZE ? &small_block_pages : &medium_block_pages);
       block = allocate_block_from_pool (size, pool);
       if (mt) gl_lock_unlock (ssfmalloc_lock);
+#if defined __CHERI__
+      if (block != 0)
+        {
+          size_t offset = block & (PAGESIZE - 1);
+          block = (uintptr_t) cheri_bounds_set ((void *) (block - offset),
+                                                offset + size)
+                  + offset;
+        }
+#endif
     }
   return block;
 }
