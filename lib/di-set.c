@@ -24,13 +24,14 @@
 #include "ino-map.h"
 
 #include <limits.h>
+#include <stdint.h>
 #include <stdlib.h>
 
 /* The hash package hashes "void *", but this package wants to hash
    integers.  Use integers that are as large as possible, but no
    larger than void *, so that they can be cast to void * and back
    without losing information.  */
-typedef size_t hashint;
+typedef uintptr_t hashint;
 #define HASHINT_MAX ((hashint) -1)
 
 /* Integers represent inode numbers.  Integers in the range

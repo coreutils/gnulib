@@ -8,6 +8,7 @@ lib/di-set.h
 Depends-on:
 ino-map
 hash
+stdint
 
 configure.ac:
 
