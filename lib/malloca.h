@@ -28,6 +28,9 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <stdint.h>
+#if defined __CHERI__
+# include <cheri.h>
+#endif
 
 #include "xalloc-oversized.h"
 
@@ -68,12 +71,24 @@ extern void freea (void *p);
    memory allocated on the stack, that must be freed using freea() before
    the function returns.  Upon failure, it returns NULL.  */
 #if HAVE_ALLOCA
-# define malloca(N) \
-  ((N) < 4032 - (2 * sa_alignment_max - 1)                                   \
-   ? (void *) (((uintptr_t) (char *) alloca ((N) + 2 * sa_alignment_max - 1) \
-                + (2 * sa_alignment_max - 1))                                \
-               & ~(uintptr_t)(2 * sa_alignment_max - 1))                     \
-   : mmalloca (N))
+# if defined __CHERI__
+#  define malloca(N) \
+    ((N) < 4032 - (2 * sa_alignment_max - 1)                                  \
+     ? cheri_bounds_set ((void *) (((uintptr_t)                               \
+                                     (char *)                                 \
+                                      alloca ((N) + 2 * sa_alignment_max - 1) \
+                                    + (2 * sa_alignment_max - 1))             \
+                                   & ~(uintptr_t)(2 * sa_alignment_max - 1)), \
+                         (N))                                                 \
+     : mmalloca (N))
+# else
+#  define malloca(N) \
+    ((N) < 4032 - (2 * sa_alignment_max - 1)                                   \
+     ? (void *) (((uintptr_t) (char *) alloca ((N) + 2 * sa_alignment_max - 1) \
+                  + (2 * sa_alignment_max - 1))                                \
+                 & ~(uintptr_t)(2 * sa_alignment_max - 1))                     \
+     : mmalloca (N))
+# endif
 #else
 # define malloca(N) \
   mmalloca (N)
