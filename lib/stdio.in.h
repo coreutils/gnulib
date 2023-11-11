@@ -42,7 +42,7 @@
 #  include <AvailabilityMacros.h>
 # endif
 # if (defined MAC_OS_X_VERSION_MIN_REQUIRED \
-      && 101300 <= MAC_OS_X_VERSION_MIN_REQUIRED)
+      && 130000 <= MAC_OS_X_VERSION_MIN_REQUIRED)
 #  define _POSIX_C_SOURCE 200809L
 #  define _GL_DEFINED__POSIX_C_SOURCE
 # endif
