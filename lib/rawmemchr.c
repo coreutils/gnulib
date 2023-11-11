@@ -30,11 +30,16 @@
 void *
 rawmemchr (const void *s, int c_in)
 {
+#ifdef __CHERI__
+  /* Most architectures let you read an aligned word, even if the unsigned char
+     array at S ends in the middle of the word.  However, CHERI does not.  */
+  typedef unsigned char longword;
+#else
   /* Change this typedef to experiment with performance.  */
-  typedef unsigned long longword;
-  /* If you change the "unsigned long", you should change ULONG_WIDTH to match.
-     This verifies that the type does not have padding bits.  */
-  static_assert (ULONG_WIDTH == UCHAR_WIDTH * sizeof (longword));
+  typedef uintptr_t longword;
+  /* Verify that the longword type lacks padding bits.  */
+  static_assert (UINTPTR_WIDTH == UCHAR_WIDTH * sizeof (uintptr_t));
+#endif
 
   const unsigned char *char_ptr;
   unsigned char c = c_in;
