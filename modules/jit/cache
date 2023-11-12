@@ -1,0 +1,24 @@
+Description:
+JIT compiler - Flushing the instruction cache.
+
+Files:
+lib/jit/cache.h
+m4/valgrind-helper.m4
+
+Depends-on:
+
+configure.ac:
+gl_VALGRIND_HELPER
+AC_REQUIRE([AC_C_INLINE])
+AC_CHECK_FUNCS([__clear_cache])
+
+Makefile.am:
+
+Include:
+"jit/cache.h"
+
+License:
+LGPLv2+
+
+Maintainer:
+Bruno Haible
