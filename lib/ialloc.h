@@ -29,7 +29,7 @@
 #include <errno.h>
 #include <stdint.h>
 #include <stdlib.h>
-#if defined __CHERI__
+#if defined __CHERI_PURE_CAPABILITY__
 # include <cheri.h>
 #endif
 
@@ -73,7 +73,7 @@ irealloc (void *p, idx_t s)
       /* Work around GNU realloc glitch by treating a zero size as if it
          were 1, so that returning NULL is equivalent to failing.  */
       p = realloc (p, s | !s);
-#if defined __CHERI__
+#if defined __CHERI_PURE_CAPABILITY__
       if (p != NULL)
         p = cheri_bounds_set (p, s);
 #endif
@@ -121,7 +121,7 @@ ireallocarray (void *p, idx_t n, idx_t s)
       if (n == 0 || s == 0)
         nx = sx = 1;
       p = reallocarray (p, nx, sx);
-#if defined __CHERI__
+#if defined __CHERI_PURE_CAPABILITY__
       if (p != NULL && (n == 0 || s == 0))
         p = cheri_bounds_set (p, 0);
 #endif

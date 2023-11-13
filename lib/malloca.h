@@ -28,7 +28,7 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <stdint.h>
-#if defined __CHERI__
+#if defined __CHERI_PURE_CAPABILITY__
 # include <cheri.h>
 #endif
 
@@ -71,7 +71,7 @@ extern void freea (void *p);
    memory allocated on the stack, that must be freed using freea() before
    the function returns.  Upon failure, it returns NULL.  */
 #if HAVE_ALLOCA
-# if defined __CHERI__
+# if defined __CHERI_PURE_CAPABILITY__
 #  define malloca(N) \
     ((N) < 4032 - (2 * sa_alignment_max - 1)                                  \
      ? cheri_bounds_set ((void *) (((uintptr_t)                               \

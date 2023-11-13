@@ -27,7 +27,7 @@
 #endif
 
 #include <stdlib.h>
-#if defined __CHERI__
+#if defined __CHERI_PURE_CAPABILITY__
 # include <cheri.h>
 #endif
 
@@ -45,7 +45,7 @@ safe_alloc_realloc_n (void *ptr, size_t count, size_t size)
   if (count == 0 || size == 0)
     countx = sizex = 1;
   ptr = reallocarray (ptr, countx, sizex);
-#if defined __CHERI__
+#if defined __CHERI_PURE_CAPABILITY__
   if (ptr != NULL && (count == 0 || size == 0))
     ptr = cheri_bounds_set (ptr, 0);
 #endif

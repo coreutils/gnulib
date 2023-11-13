@@ -440,7 +440,7 @@ int libsigsegv_version = LIBSIGSEGV_VERSION;
 
 /* See sys/arm64/include/ucontext.h.  */
 
-#   if defined __CHERI__
+#   if defined __CHERI_PURE_CAPABILITY__
 #    define SIGSEGV_FAULT_STACKPOINTER  ((ucontext_t *) ucp)->uc_mcontext.mc_capregs.cap_sp
 #   else
 #    define SIGSEGV_FAULT_STACKPOINTER  ((ucontext_t *) ucp)->uc_mcontext.mc_gpregs.gp_sp

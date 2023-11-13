@@ -30,7 +30,7 @@
 void *
 rawmemchr (const void *s, int c_in)
 {
-# ifdef __CHERI__
+# ifdef __CHERI_PURE_CAPABILITY__
   /* Most architectures let you read an aligned word,
      even if the unsigned char array at S ends in the middle of the word.
      However CHERI does not, so call memchr

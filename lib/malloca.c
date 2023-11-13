@@ -22,7 +22,7 @@
 #include "malloca.h"
 
 #include <stdckdint.h>
-#if defined __CHERI__
+#if defined __CHERI_PURE_CAPABILITY__
 # include <cheri.h>
 #endif
 
@@ -39,7 +39,7 @@
        allocation.
      - NULL comes from a failed heap allocation.  */
 
-#if defined __CHERI__
+#if defined __CHERI_PURE_CAPABILITY__
 /* Type for holding the original malloc() result.  */
 typedef uintptr_t small_t;
 #else
@@ -78,7 +78,7 @@ mmalloca (size_t n)
              So, the memory range [p, p+n) lies in the allocated memory range
              [mem, mem + nplus).  */
           small_t *sp = p;
-# if defined __CHERI__
+# if defined __CHERI_PURE_CAPABILITY__
           sp[-1] = umem;
           p = (char *) cheri_bounds_set ((char *) p - sizeof (small_t),
                                          sizeof (small_t) + n)
@@ -117,7 +117,7 @@ freea (void *p)
     {
       char *cp = p;
       small_t *sp = p;
-# if defined __CHERI__
+# if defined __CHERI_PURE_CAPABILITY__
       void *mem = sp[-1];
 # else
       void *mem = cp - sp[-1];

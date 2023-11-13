@@ -36,7 +36,7 @@
 #endif
 
 #include <stdlib.h>
-#if defined __CHERI__
+#if defined __CHERI_PURE_CAPABILITY__
 # include <cheri.h>
 #endif
 
@@ -59,7 +59,7 @@ eemalloc (size_t n)
   if (n == 0)
     nx = 1;
   void *ptr = malloc (nx);
-# if defined __CHERI__
+# if defined __CHERI_PURE_CAPABILITY__
   if (ptr != NULL)
     ptr = cheri_bounds_set (ptr, n);
 # endif
@@ -80,7 +80,7 @@ eerealloc (void *p, size_t n)
   if (n == 0)
     nx = 1;
   void *ptr = realloc (p, nx);
-# if defined __CHERI__
+# if defined __CHERI_PURE_CAPABILITY__
   if (ptr != NULL)
     ptr = cheri_bounds_set (ptr, n);
 # endif
