@@ -1,4 +1,4 @@
-# valgrind-helper.m4 serial 1
+# valgrind-helper.m4 serial 2
 dnl Copyright (C) 2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -18,5 +18,13 @@ AC_DEFUN_ONCE([gl_VALGRIND_HELPER],
        support_valgrind=0
      fi
     ])
-  AC_DEFINE_UNQUOTED([ENABLE_VALGRIND_SUPPORT], [$support_valgrind])
+  if test $support_valgrind = 1; then
+    AC_CHECK_HEADERS([valgrind/valgrind.h])
+    if test $ac_cv_header_valgrind_valgrind_h != yes; then
+      AC_MSG_ERROR([cannot enable valgrind support: <valgrind/valgrind.h> not found])
+    fi
+  fi
+  AC_DEFINE_UNQUOTED([ENABLE_VALGRIND_SUPPORT], [$support_valgrind],
+    [Define to 1 to include support for running the binaries under valgrind,
+     or to 0 otherwise.])
 ])
