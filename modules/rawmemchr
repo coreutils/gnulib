@@ -7,7 +7,6 @@ lib/rawmemchr.valgrind
 m4/rawmemchr.m4
 
 Depends-on:
-alignasof
 assert-h
 extensions
 stdint
