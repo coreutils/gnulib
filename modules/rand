@@ -1,6 +1,12 @@
 Description:
 global random number generator
 
+Status:
+obsolete
+
+Notice:
+This module is obsolete.
+
 Files:
 lib/rand.c
 m4/rand.m4
