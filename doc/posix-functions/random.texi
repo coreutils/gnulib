@@ -25,4 +25,8 @@ Portability problems not fixed by Gnulib:
 This function has a slightly incompatible declaration (the return type being
 @samp{int} instead of @samp{long}) on some platforms:
 Cygwin 1.5.25, Haiku.
+@item
+When @samp{srandom} was not called, this function returns a non-deterministic
+sequence rather than a deterministic sequence of numbers on some platforms:
+OpenBSD 7.4.
 @end itemize
