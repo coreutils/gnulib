@@ -77,7 +77,7 @@ Mac OS X 10.6.
 @item
 This function produces wrong output for the @samp{lc} directive with a NUL
 wide character argument on some platforms:
-glibc 2.35, FreeBSD 13.1, NetBSD 9.0, OpenBSD 7.2, macOS 12.5, AIX 7.2, Solaris 11.4, and others.
+musl libc 1.2.4.
 @item
 This function can crash in out-of-memory conditions on some platforms:
 FreeBSD 13.0, NetBSD 5.0.

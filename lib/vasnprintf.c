@@ -3424,21 +3424,18 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                     {
                       /* Count the number of bytes.  */
                       characters = 0;
-                      if (arg != 0)
-                        {
-                          char cbuf[64]; /* Assume MB_CUR_MAX <= 64.  */
-                          int count;
+                      char cbuf[64]; /* Assume MB_CUR_MAX <= 64.  */
+                      int count;
 # if HAVE_WCRTOMB && !defined GNULIB_defined_mbstate_t
-                          mbstate_t state;
-                          mbszero (&state);
+                      mbstate_t state;
+                      mbszero (&state);
 # endif
 
-                          count = local_wcrtomb (cbuf, arg, &state);
-                          if (count < 0)
-                            /* Cannot convert.  */
-                            goto fail_with_EILSEQ;
-                          characters = count;
-                        }
+                      count = local_wcrtomb (cbuf, arg, &state);
+                      if (count < 0)
+                        /* Cannot convert.  */
+                        goto fail_with_EILSEQ;
+                      characters = count;
                     }
 # if DCHAR_IS_TCHAR
                   else
@@ -3450,7 +3447,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 
 # if !DCHAR_IS_TCHAR
                   /* Convert the string into a piece of temporary memory.  */
-                  if (characters > 0) /* implies arg != 0 */
+                  if (characters > 0)
                     {
                       char cbuf[64]; /* Assume MB_CUR_MAX <= 64.  */
                       int count;
@@ -3507,7 +3504,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                     {
                       /* We know the number of bytes in advance.  */
                       ENSURE_ALLOCATION (xsum (length, characters));
-                      if (characters > 0) /* implies arg != 0 */
+                      if (characters > 0)
                         {
                           int count;
 #  if HAVE_WCRTOMB && !defined GNULIB_defined_mbstate_t
@@ -3524,23 +3521,20 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                     }
                   else
                     {
-                      if (arg != 0)
-                        {
-                          char cbuf[64]; /* Assume MB_CUR_MAX <= 64.  */
-                          int count;
+                      char cbuf[64]; /* Assume MB_CUR_MAX <= 64.  */
+                      int count;
 #  if HAVE_WCRTOMB && !defined GNULIB_defined_mbstate_t
-                          mbstate_t state;
-                          mbszero (&state);
+                      mbstate_t state;
+                      mbszero (&state);
 #  endif
 
-                          count = local_wcrtomb (cbuf, arg, &state);
-                          if (count < 0)
-                            /* Cannot convert.  */
-                            goto fail_with_EILSEQ;
-                          ENSURE_ALLOCATION (xsum (length, count));
-                          memcpy (result + length, cbuf, count);
-                          length += count;
-                        }
+                      count = local_wcrtomb (cbuf, arg, &state);
+                      if (count < 0)
+                        /* Cannot convert.  */
+                        goto fail_with_EILSEQ;
+                      ENSURE_ALLOCATION (xsum (length, count));
+                      memcpy (result + length, cbuf, count);
+                      length += count;
                     }
 # else
                   ENSURE_ALLOCATION_ELSE (xsum (length, tmpdst_len),

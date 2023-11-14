@@ -3184,11 +3184,14 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
     int retval =
       my_snprintf (result, sizeof (result),
                    "a%lcz %d", (wint_t) L'\0', 33, 44, 55);
-    /* No NUL byte between 'a' and 'z'.  This is surprising, but is a
-       consequence of how POSIX:2018 and ISO C 23 specify the handling
-       of %lc.  */
-    ASSERT (memcmp (result, "az 33\0", 5 + 1) == 0);
-    ASSERT (retval == 5);
+    /* ISO C had this wrong for decades.  ISO C 23 now corrects it, through
+       this wording:
+       "If an l length modifier is present, the wint_t argument is converted
+        as if by a call to the wcrtomb function with a pointer to storage of
+        at least MB_CUR_MAX bytes, the wint_t argument converted to wchar_t,
+        and an initial shift state."  */
+    ASSERT (memcmp (result, "a\0z 33\0", 6 + 1) == 0);
+    ASSERT (retval == 6);
   }
 
   static wint_t L_invalid = (wchar_t) 0x76543210;
