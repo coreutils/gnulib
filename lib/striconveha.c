@@ -88,10 +88,6 @@ uniconv_register_autodetect (const char *name,
   size_t listlen;
   size_t memneed;
   size_t i;
-  char *memory;
-  struct autodetect_alias *new_alias;
-  char *new_name;
-  const char **new_try_in_order;
 
   /* The TRY_IN_ORDER list must not be empty.  */
   if (try_in_order[0] == NULL)
@@ -108,25 +104,24 @@ uniconv_register_autodetect (const char *name,
     memneed += sizeof (char *) + strlen (try_in_order[i]) + 1;
   listlen = i;
 
-  memory = (char *) malloc (memneed);
+  void *memory = malloc (memneed);
   if (memory != NULL)
     {
-      new_alias = (struct autodetect_alias *) memory;
-      memory += sizeof (struct autodetect_alias);
+      struct autodetect_alias *new_alias = memory;
+      memory = new_alias + 1;
 
-      new_try_in_order = (const char **) memory;
-      memory += (listlen + 1) * sizeof (char *);
+      char const **new_try_in_order = memory;
+      memory = new_try_in_order + listlen + 1;
 
-      new_name = (char *) memory;
-      memcpy (new_name, name, namelen);
-      memory += namelen;
+      char *new_name = memcpy (memory, name, namelen);
+      memory = new_name + namelen;
 
       for (i = 0; i < listlen; i++)
         {
           size_t len = strlen (try_in_order[i]) + 1;
-          memcpy (memory, try_in_order[i], len);
-          new_try_in_order[i] = (const char *) memory;
-          memory += len;
+          char *copy = memcpy (memory, try_in_order[i], len);
+          new_try_in_order[i] = copy;
+          memory = copy + len;
         }
       new_try_in_order[i] = NULL;
 
