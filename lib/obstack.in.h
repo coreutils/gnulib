@@ -97,9 +97,11 @@
           as you would with a stack.)
  */
 
+/* Documentation (part of the GNU libc manual):
+   <https://www.gnu.org/software/libc/manual/html_node/Obstacks.html>  */
+
 
 /* Don't do the contents of this file more than once.  */
-
 #ifndef _OBSTACK_H
 #define _OBSTACK_H 1
 
@@ -108,12 +110,8 @@
  #error "Please include config.h first."
 #endif
 
-#ifndef _OBSTACK_INTERFACE_VERSION
-# define _OBSTACK_INTERFACE_VERSION 2
-#endif
-
 #include <stddef.h>             /* For size_t and ptrdiff_t.  */
-#include <string.h>             /* For __GNU_LIBRARY__, and memcpy.  */
+#include <string.h>             /* For memcpy.  */
 
 #if __STDC_VERSION__ < 199901L || defined __HP_cc
 # define __FLEXIBLE_ARRAY_MEMBER 1
@@ -121,14 +119,14 @@
 # define __FLEXIBLE_ARRAY_MEMBER
 #endif
 
-#if _OBSTACK_INTERFACE_VERSION == 1
-/* For binary compatibility with obstack version 1, which used "int"
-   and "long" for these two types.  */
+/* These macros highlight the places where this implementation
+   is different from the one in GNU libc.  */
+#ifdef _LIBC
 # define _OBSTACK_SIZE_T unsigned int
 # define _CHUNK_SIZE_T unsigned long
 # define _OBSTACK_CAST(type, expr) ((type) (expr))
 #else
-/* Version 2 with sane types, especially for 64-bit hosts.  */
+/* In Gnulib, we use sane types, especially for 64-bit hosts.  */
 # define _OBSTACK_SIZE_T size_t
 # define _CHUNK_SIZE_T size_t
 # define _OBSTACK_CAST(type, expr) (expr)
@@ -214,6 +212,14 @@ struct obstack          /* control current object in current chunk */
 
 /* Declare the external functions we use; they are in obstack.c.  */
 
+#if @REPLACE_OBSTACK@
+# define _obstack_newchunk rpl_obstack_newchunk
+# define _obstack_free rpl_obstack_free
+# define _obstack_begin rpl_obstack_begin
+# define _obstack_begin_1 rpl_obstack_begin_1
+# define _obstack_memory_used rpl_obstack_memory_used
+# define _obstack_allocated_p rpl_obstack_allocated_p
+#endif
 extern void _obstack_newchunk (struct obstack *, _OBSTACK_SIZE_T);
 extern void _obstack_free (struct obstack *, void *);
 extern int _obstack_begin (struct obstack *,

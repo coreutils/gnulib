@@ -2,22 +2,43 @@ Description:
 Memory allocation, optimized for stack-like allocation patterns.
 
 Files:
-lib/obstack.h
+lib/obstack.in.h
 lib/obstack.c
 m4/obstack.m4
 
 Depends-on:
-alignof
-gettext-h
-exitfail
-stdint
-stdlib
+gen-header
+alignof         [test $HAVE_OBSTACK = 0 || test $REPLACE_OBSTACK = 1]
+gettext-h       [test $HAVE_OBSTACK = 0 || test $REPLACE_OBSTACK = 1]
+exitfail        [test $HAVE_OBSTACK = 0 || test $REPLACE_OBSTACK = 1]
+stdint          [test $HAVE_OBSTACK = 0 || test $REPLACE_OBSTACK = 1]
+stdlib          [test $HAVE_OBSTACK = 0 || test $REPLACE_OBSTACK = 1]
 
 configure.ac:
 gl_FUNC_OBSTACK
-gl_CONDITIONAL([GL_COND_OBJ_OBSTACK], [test "$gl_cv_func_obstack" != yes])
+gl_CONDITIONAL_HEADER([obstack.h])
+gl_CONDITIONAL([GL_COND_OBJ_OBSTACK],
+               [test $HAVE_OBSTACK = 0 || test $REPLACE_OBSTACK = 1])
+AC_PROG_MKDIR_P
 
 Makefile.am:
+BUILT_SOURCES += $(OBSTACK_H)
+
+# We need the following in order to create <obstack.h> when the system
+# doesn't have one that works with any size object.
+if GL_GENERATE_OBSTACK_H
+obstack.h: obstack.in.h $(top_builddir)/config.status
+@NMD@	$(AM_V_GEN)$(MKDIR_P) '%reldir%'
+	$(gl_V_at)$(SED_HEADER_STDOUT) \
+	      -e 's|@''REPLACE_OBSTACK''@|$(REPLACE_OBSTACK)|g' \
+	      $(srcdir)/obstack.in.h > $@-t
+	$(AM_V_at)mv $@-t $@
+else
+obstack.h: $(top_builddir)/config.status
+	rm -f $@
+endif
+MOSTLYCLEANFILES += obstack.h obstack.h-t
+
 if GL_COND_OBJ_OBSTACK
 lib_SOURCES += obstack.c
 endif
