@@ -28,7 +28,11 @@
 # include <stdint.h>
 # include <stdlib.h>
 
-# if defined _WIN32 && !defined __CYGWIN__
+# if AVOID_ANY_THREADS
+
+/* The option '--disable-threads' explicitly requests no locking.  */
+
+# elif defined _WIN32 && !defined __CYGWIN__
 
 #  define WIN32_LEAN_AND_MEAN  /* avoid including junk */
 #  include <windows.h>

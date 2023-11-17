@@ -18,9 +18,10 @@
 
 #include <config.h>
 
+/* The option '--disable-threads' explicitly requests no locking.  */
 /* When it is known that the gl_get_setlocale_null_lock function is defined
    by a dependency library, it should not be defined here.  */
-#if OMIT_SETLOCALE_LOCK
+#if AVOID_ANY_THREADS || OMIT_SETLOCALE_LOCK
 
 /* This declaration is solely to ensure that after preprocessing
    this file is never empty.  */

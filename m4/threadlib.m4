@@ -1,4 +1,4 @@
-# threadlib.m4 serial 40
+# threadlib.m4 serial 41
 dnl Copyright (C) 2005-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -584,6 +584,10 @@ AC_DEFUN([gl_THREADLIB_BODY],
           ;;
       esac
     fi
+  else
+    dnl "$gl_use_threads" is "no".
+    AC_DEFINE([AVOID_ANY_THREADS], [1],
+      [Define if no multithread safety and no multithreading is desired.])
   fi
   AC_MSG_CHECKING([for multithread API to use])
   AC_MSG_RESULT([$gl_threads_api])

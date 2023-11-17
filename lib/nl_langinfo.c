@@ -30,7 +30,12 @@
 #endif
 
 #if REPLACE_NL_LANGINFO && !NL_LANGINFO_MTSAFE
-# if defined _WIN32 && !defined __CYGWIN__
+
+# if AVOID_ANY_THREADS
+
+/* The option '--disable-threads' explicitly requests no locking.  */
+
+# elif defined _WIN32 && !defined __CYGWIN__
 
 #  define WIN32_LEAN_AND_MEAN  /* avoid including junk */
 #  include <windows.h>
@@ -51,6 +56,7 @@
 #  include <threads.h>
 
 # endif
+
 #endif
 
 /* nl_langinfo() must be multithread-safe.  To achieve this without using
@@ -186,7 +192,12 @@ nl_langinfo_unlocked (nl_item item)
 /* Prohibit renaming this symbol.  */
 #  undef gl_get_nl_langinfo_lock
 
-#  if defined _WIN32 && !defined __CYGWIN__
+#  if AVOID_ANY_THREADS
+
+/* The option '--disable-threads' explicitly requests no locking.  */
+#   define nl_langinfo_with_lock nl_langinfo_unlocked
+
+#  elif defined _WIN32 && !defined __CYGWIN__
 
 extern __declspec(dllimport) CRITICAL_SECTION *gl_get_nl_langinfo_lock (void);
 
