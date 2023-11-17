@@ -1,4 +1,4 @@
-# malloc.m4 serial 30
+# malloc.m4 serial 31
 dnl Copyright (C) 2007, 2009-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -16,7 +16,8 @@ AC_DEFUN([_AC_FUNC_MALLOC_IF],
           [[#include <stdlib.h>
           ]],
           [[void *p = malloc (0);
-            int result = !p;
+            void * volatile vp = p;
+            int result = !vp;
             free (p);
             return result;]])
        ],
