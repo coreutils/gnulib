@@ -5,6 +5,9 @@ tests/test-snan-2.c
 tests/macros.h
 m4/math_h.m4
 
+Status:
+unportable-test
+
 Depends-on:
 fenv-exceptions-tracking-c99
 fpe-trapping

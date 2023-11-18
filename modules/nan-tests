@@ -3,6 +3,9 @@ tests/test-nan-1.c
 tests/test-nan-2.c
 tests/macros.h
 
+Status:
+unportable-test
+
 Depends-on:
 fenv-exceptions-tracking-c99
 fpe-trapping
