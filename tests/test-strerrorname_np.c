@@ -1125,7 +1125,7 @@ main (void)
   #if defined ENOSHARE
   ASSERT (strcmp (strerrorname_np (ENOSHARE), "ENOSHARE") == 0);
   #endif
-  /* HP-UX, OSF/1 */
+  /* Linux, HP-UX, OSF/1 */
   #if defined ENOSYM
   ASSERT (strcmp (strerrorname_np (ENOSYM), "ENOSYM") == 0);
   #endif
@@ -1249,7 +1249,7 @@ main (void)
   #if defined EREMOTEIO
   ASSERT (strcmp (strerrorname_np (EREMOTEIO), "EREMOTEIO") == 0);
   #endif
-  /* HP-UX */
+  /* Linux, HP-UX */
   #if defined EREMOTERELEASE
   ASSERT (strcmp (strerrorname_np (EREMOTERELEASE), "EREMOTERELEASE") == 0);
   #endif
