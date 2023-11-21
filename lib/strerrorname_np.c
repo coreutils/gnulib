@@ -1123,7 +1123,7 @@ strerrorname_np (int errnum)
     #if defined ENOSHARE
     case ENOSHARE:        return "ENOSHARE";
     #endif
-    /* HP-UX, OSF/1 */
+    /* Linux, HP-UX, OSF/1 */
     #if defined ENOSYM
     case ENOSYM:          return "ENOSYM";
     #endif
@@ -1247,7 +1247,7 @@ strerrorname_np (int errnum)
     #if defined EREMOTEIO
     case EREMOTEIO:       return "EREMOTEIO";
     #endif
-    /* HP-UX */
+    /* Linux, HP-UX */
     #if defined EREMOTERELEASE
     case EREMOTERELEASE:  return "EREMOTERELEASE";
     #endif
