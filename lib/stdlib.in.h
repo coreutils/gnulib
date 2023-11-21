@@ -1122,11 +1122,26 @@ _GL_WARN_ON_USE (qsort_r, "qsort_r is not portable - "
 #endif
 
 
-#if @GNULIB_RANDOM_R@
-# if !@HAVE_RANDOM_R@
-#  ifndef RAND_MAX
-#   define RAND_MAX 2147483647
+#if @GNULIB_RAND@ || (@GNULIB_RANDOM_R@ && !@HAVE_RANDOM_R@)
+# ifndef RAND_MAX
+#  define RAND_MAX 2147483647
+# endif
+#endif
+
+
+#if @GNULIB_RAND@
+# if @REPLACE_RAND@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef rand
+#   define rand rpl_rand
 #  endif
+_GL_FUNCDECL_RPL (rand, int, (void));
+_GL_CXXALIAS_RPL (rand, int, (void));
+# else
+_GL_CXXALIAS_SYS (rand, int, (void));
+# endif
+# if __GLIBC__ >= 2
+_GL_CXXALIASWARN (rand);
 # endif
 #endif
 

@@ -62,6 +62,7 @@ stdlib.h: stdlib.in.h $(top_builddir)/config.status $(CXXDEFS_H) \
 	      -e 's/@''GNULIB_PTSNAME_R''@/$(GNULIB_PTSNAME_R)/g' \
 	      -e 's/@''GNULIB_PUTENV''@/$(GNULIB_PUTENV)/g' \
 	      -e 's/@''GNULIB_QSORT_R''@/$(GNULIB_QSORT_R)/g' \
+	      -e 's/@''GNULIB_RAND''@/$(GNULIB_RAND)/g' \
 	      -e 's/@''GNULIB_RANDOM''@/$(GNULIB_RANDOM)/g' \
 	      -e 's/@''GNULIB_RANDOM_R''@/$(GNULIB_RANDOM_R)/g' \
 	      -e 's/@''GNULIB_REALLOC_GNU''@/$(GNULIB_REALLOC_GNU)/g' \
@@ -159,6 +160,7 @@ stdlib.h: stdlib.in.h $(top_builddir)/config.status $(CXXDEFS_H) \
 	      -e 's|@''REPLACE_PTSNAME_R''@|$(REPLACE_PTSNAME_R)|g' \
 	      -e 's|@''REPLACE_PUTENV''@|$(REPLACE_PUTENV)|g' \
 	      -e 's|@''REPLACE_QSORT_R''@|$(REPLACE_QSORT_R)|g' \
+	      -e 's|@''REPLACE_RAND''@|$(REPLACE_RAND)|g' \
 	      -e 's|@''REPLACE_RANDOM''@|$(REPLACE_RANDOM)|g' \
 	      -e 's|@''REPLACE_RANDOM_R''@|$(REPLACE_RANDOM_R)|g' \
 	      -e 's|@''REPLACE_REALLOC_FOR_REALLOC_GNU''@|$(REPLACE_REALLOC_FOR_REALLOC_GNU)|g' \
