@@ -43,7 +43,7 @@ dummy (float f)
 int
 main (int argc, _GL_UNUSED char **argv)
 {
-  float (*my_floorf) (float) = argc ? floorf : dummy;
+  float (* volatile my_floorf) (float) = argc ? floorf : dummy;
 
   /* Zero.  */
   ASSERT (my_floorf (0.0f) == 0.0f);

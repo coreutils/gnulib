@@ -38,7 +38,7 @@ dummy (float f)
 int
 main (int argc, _GL_UNUSED char **argv)
 {
-  float (*my_floorf) (float) = argc ? floorf : dummy;
+  float (* volatile my_floorf) (float) = argc ? floorf : dummy;
 
   /* See IEEE 754, section 6.3:
        "the sign of the result of the round floating-point number to
