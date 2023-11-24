@@ -43,7 +43,7 @@ dummy (float f)
 int
 main (int argc, _GL_UNUSED char **argv)
 {
-  float (*my_ceilf) (float) = argc ? ceilf : dummy;
+  float (* volatile my_ceilf) (float) = argc ? ceilf : dummy;
 
   /* Zero.  */
   ASSERT (my_ceilf (0.0f) == 0.0f);
