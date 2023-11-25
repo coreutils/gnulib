@@ -1,0 +1,20 @@
+Files:
+tests/jit/test-cache.c
+tests/macros.h
+
+Status:
+unportable-test
+
+Depends-on:
+getpagesize
+pagealign_alloc
+stdint
+
+configure.ac:
+AC_CHECK_HEADERS_ONCE([sys/mman.h])
+AC_CHECK_FUNCS_ONCE([mprotect])
+
+Makefile.am:
+TESTS += test-cache
+check_PROGRAMS += test-cache
+test_cache_SOURCES = jit/test-cache.c
