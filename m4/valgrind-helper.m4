@@ -1,4 +1,4 @@
-# valgrind-helper.m4 serial 2
+# valgrind-helper.m4 serial 3
 dnl Copyright (C) 2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -17,7 +17,8 @@ AC_DEFUN_ONCE([gl_VALGRIND_HELPER],
      else
        support_valgrind=0
      fi
-    ])
+    ],
+    [support_valgrind=0])
   if test $support_valgrind = 1; then
     AC_CHECK_HEADERS([valgrind/valgrind.h])
     if test $ac_cv_header_valgrind_valgrind_h != yes; then
