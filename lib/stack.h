@@ -31,7 +31,7 @@
      Initialization:     stack_init (&stack);
      De-initialization:  stack_destroy (&stack);
      Predicate:          bool res = stack_empty (&stack);
-     Introspection:      ELEMENT *base = stack_base (&stack);
+     Introspection:      ELEMENT *base = stack_current_base (&stack);
      Pushing:            stack_push (&stack, element);
      Popping:            ELEMENT element = stack_pop (&stack);
      Discarding:         stack_discard (&stack);
