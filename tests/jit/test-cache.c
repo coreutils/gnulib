@@ -49,10 +49,9 @@ return2 (void)
 int
 main ()
 {
-#if !(HAVE_SYS_MMAN_H && HAVE_SYS_MMAN_H)
+#if !(HAVE_SYS_MMAN_H && HAVE_MPROTECT)
   return 77;
-#endif
-
+#else
   int const pagesize = getpagesize ();
   unsigned char *start = pagealign_xalloc (pagesize);
   unsigned char *end = start + pagesize;
@@ -74,4 +73,5 @@ main ()
   ASSERT (f () == 2);
 
   return 0;
+#endif  /* !(HAVE_SYS_MMAN_H && HAVE_PROTECT) */
 }
