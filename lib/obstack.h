@@ -108,6 +108,7 @@
 #endif
 
 #include <stddef.h>             /* For size_t and ptrdiff_t.  */
+#include <stdint.h>             /* For uintptr_t.  */
 #include <string.h>             /* For __GNU_LIBRARY__, and memcpy.  */
 
 #if __STDC_VERSION__ < 199901L || defined __HP_cc
@@ -131,20 +132,15 @@
 
 /* If B is the base of an object addressed by P, return the result of
    aligning P to the next multiple of A + 1.  B and P must be of type
-   char *.  A + 1 must be a power of 2.  */
+   char *.  A + 1 must be a power of 2.
+   If ptrdiff_t is narrower than a pointer (e.g., the AS/400), play it
+   safe and compute the alignment relative to B.  Otherwise, use the
+   faster strategy of computing the alignment through uintptr_t.  */
 
-#define __BPTR_ALIGN(B, P, A) ((B) + (((P) - (B) + (A)) & ~(A)))
-
-/* Similar to __BPTR_ALIGN (B, P, A), except optimize the common case
-   where pointers can be converted to integers, aligned as integers,
-   and converted back again.  If ptrdiff_t is narrower than a
-   pointer (e.g., the AS/400), play it safe and compute the alignment
-   relative to B.  Otherwise, use the faster strategy of computing the
-   alignment relative to 0.  */
-
-#define __PTR_ALIGN(B, P, A)						      \
-  __BPTR_ALIGN (sizeof (ptrdiff_t) < sizeof (void *) ? (B) : (char *) 0,      \
-                P, A)
+#define __PTR_ALIGN(B, P, A) \
+  (sizeof (ptrdiff_t) < sizeof (void *) \
+   ? (B) + (((P) - (B) + (A)) & ~(A))   \
+   : (P) + ((- (uintptr_t) (P)) & (A)))
 
 #ifndef __attribute_pure__
 # define __attribute_pure__ _GL_ATTRIBUTE_PURE
