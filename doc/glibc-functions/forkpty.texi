@@ -36,7 +36,7 @@ It is declared in termios.h on Solaris.
 @item
 Some platforms declare the function without marking the last two
 parameters @code{const}.
-FreeBSD 13.0, Solaris 11.4, Cygwin 1.7.1.
+FreeBSD 14.0, Solaris 11.4, Cygwin 1.7.1.
 @end itemize
 
 Portability problems not fixed by Gnulib:

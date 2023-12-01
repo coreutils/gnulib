@@ -25,7 +25,7 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-macOS 11.1, FreeBSD 13.0, Minix 3.1.8, AIX 5.1, HP-UX 11, IRIX 6.5, Solaris 11.4, mingw, MSVC 14, Android 4.4.
+macOS 11.1, FreeBSD 14.0, Minix 3.1.8, AIX 5.1, HP-UX 11, IRIX 6.5, Solaris 11.4, mingw, MSVC 14, Android 4.4.
 @item
 This function is not declared on some platforms:
 Android 9.0.

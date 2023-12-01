@@ -27,7 +27,7 @@ MSVC 14.
 @item
 When this function fails, it returns -1 instead of the error code
 on some platforms:
-macOS 11.1, FreeBSD 13.0, Android 4.3.
+macOS 11.1, FreeBSD 14.0, Android 4.3.
 @end itemize
 
 Portability problems not fixed by Gnulib:

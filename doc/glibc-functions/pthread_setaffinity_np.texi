@@ -20,5 +20,5 @@ This function has a different signature on some platforms:
 glibc 2.3.3.
 @item
 The third parameter has a different type on some platforms:
-FreeBSD 13.0, NetBSD 9.0.
+FreeBSD 14.0, NetBSD 9.0.
 @end itemize

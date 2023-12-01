@@ -23,7 +23,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This header file is missing on some platforms:
-FreeBSD 13.2, mingw, MSVC 14.
+FreeBSD 14.0, mingw, MSVC 14.
 @item
 @code{<sys/types.h>} is a prerequisite of @code{<utmp.h>} on some platforms:
 FreeBSD 8.0, OpenBSD 7.2.

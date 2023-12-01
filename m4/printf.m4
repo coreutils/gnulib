@@ -1,4 +1,4 @@
-# printf.m4 serial 88
+# printf.m4 serial 89
 dnl Copyright (C) 2003, 2007-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -2175,6 +2175,7 @@ dnl   musl libc 1.2.3                .  #  .  .  .  .  #  #  .  .  .  #  .  .  .
 dnl   glibc 2.35                     .  #  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
 dnl   glibc 2.5                      .  #  .  .  .  .  #  #  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  #  .
 dnl   glibc 2.3.6                    .  #  .  .  .  #  #  #  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  #  .
+dnl   FreeBSD 14.0                   .  .  .  .  .  #  .  .  .  .  .  .  .  .  .  .  .  .  #  .  .  .  .  .  .  #  .  #
 dnl   FreeBSD 13.0                   .  #  .  .  .  #  #  #  .  .  .  .  .  .  .  .  .  .  #  .  .  .  .  .  .  #  .  #
 dnl   FreeBSD 5.4, 6.1               .  #  .  .  .  #  #  #  .  .  .  .  .  .  .  #  ?  .  #  .  .  .  .  .  .  #  ?  ?
 dnl   Mac OS X 10.13.5               .  #  .  .  #  #  #  #  .  #  .  .  .  .  .  .  .  .  .  .  .  .  #  .  .  #  ?  ?

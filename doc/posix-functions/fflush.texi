@@ -12,7 +12,7 @@ Portability problems fixed by Gnulib:
 @code{fflush} followed by @code{fseek} or @code{fseeko}, applied to an input
 stream, should have the effect of positioning the underlying file descriptor.
 It doesn't do this on some platforms:
-glibc 2.34, FreeBSD 13.0, and others.
+glibc 2.34, FreeBSD 14.0, and others.
 @item
 @code{fflush} on an input stream changes the position of the stream to the
 end of the previous buffer, on some platforms: mingw, MSVC 14.

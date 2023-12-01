@@ -18,7 +18,7 @@ FreeBSD 6.4, OpenBSD 3.8.
 @item
 This function does nothing and always returns 0 in programs that are not
 linked with @code{-lpthread} on some platforms:
-FreeBSD 13.0, MidnightBSD 1.1, HP-UX 11.31, Solaris 9.
+FreeBSD 14.0, MidnightBSD 1.1, HP-UX 11.31, Solaris 9.
 @item
 When it fails, this functions returns @minus{}1 instead of the error number on
 some platforms:
