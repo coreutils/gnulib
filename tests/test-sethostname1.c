@@ -20,7 +20,9 @@
 #include <unistd.h>
 
 #include "signature.h"
+#if !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __sgi || defined __sun)
 SIGNATURE_CHECK (sethostname, int, (const char *, size_t));
+#endif
 
 int do_dangerous_things;
 
