@@ -1,4 +1,4 @@
-# frexp.m4 serial 16
+# frexp.m4 serial 16.1
 dnl Copyright (C) 2007-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -156,7 +156,8 @@ int main()
   {
     int exp;
     double y = frexp (x, &exp);
-    if (memcmp (&y, &x, sizeof x))
+    double x1 = x;
+    if (memcmp (&y, &x1, sizeof x1))
       result |= 4;
   }
   return result;
