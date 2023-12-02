@@ -1,4 +1,4 @@
-# frexpf.m4 serial 8
+# frexpf.m4 serial 9
 dnl Copyright (C) 2011-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -80,7 +80,8 @@ int main()
   {
     int exp;
     float y = frexpf (x, &exp);
-    if (memcmp (&y, &x, sizeof x))
+    float x1 = x;
+    if (memcmp (&y, &x1, sizeof x1))
       result |= 2;
   }
   return result;
