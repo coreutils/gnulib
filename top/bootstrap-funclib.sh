@@ -723,7 +723,7 @@ autopull()
   if $use_gnulib || $bootstrap_sync; then
     prepare_GNULIB_SRCDIR
     if $bootstrap_sync; then
-      upgrade_bootstrap
+      upgrade_bootstrap "$@"
     fi
   fi
 

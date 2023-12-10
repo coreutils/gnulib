@@ -760,7 +760,7 @@ autopull()
   if $use_gnulib || $bootstrap_sync; then
     prepare_GNULIB_SRCDIR
     if $bootstrap_sync; then
-      upgrade_bootstrap
+      upgrade_bootstrap "$@"
     fi
   fi
 
@@ -1470,7 +1470,7 @@ check_build_prerequisites $use_git
 
 if $bootstrap_sync; then
   prepare_GNULIB_SRCDIR
-  upgrade_bootstrap
+  upgrade_bootstrap "$@"
   # Since we have now upgraded if needed, no need to try it a second time below.
   bootstrap_sync=false
 fi
