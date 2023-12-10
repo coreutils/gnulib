@@ -1,7 +1,7 @@
 #! /bin/sh
 # Bootstrap this package from checked-out sources.
 
-scriptversion=2023-08-29.21; # UTC
+scriptversion=2023-12-10.18; # UTC
 
 # Copyright (C) 2003-2023 Free Software Foundation, Inc.
 #
@@ -192,7 +192,7 @@ check_build_prerequisites $use_git
 
 if $bootstrap_sync; then
   prepare_GNULIB_SRCDIR
-  upgrade_bootstrap
+  upgrade_bootstrap "$@"
   # Since we have now upgraded if needed, no need to try it a second time below.
   bootstrap_sync=false
 fi

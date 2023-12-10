@@ -1,6 +1,6 @@
 # A library of shell functions for autopull.sh, autogen.sh, and bootstrap.
 
-scriptlibversion=2023-08-29.21; # UTC
+scriptlibversion=2023-12-10.18; # UTC
 
 # Copyright (C) 2003-2023 Free Software Foundation, Inc.
 #
@@ -740,7 +740,7 @@ autopull()
   if $use_gnulib || $bootstrap_sync; then
     prepare_GNULIB_SRCDIR
     if $bootstrap_sync; then
-      upgrade_bootstrap
+      upgrade_bootstrap "$@"
     fi
   fi
 
