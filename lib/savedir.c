@@ -35,12 +35,16 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "attribute.h"
 #include "xalloc.h"
 
 typedef struct
 {
-  char *name;
+  /* Offset of file name in name_space.  */
+  idx_t name;
+
 #if D_INO_IN_DIRENT
+  /* File inode number.  */
   ino_t ino;
 #endif
 } direntry_t;
@@ -48,19 +52,20 @@ typedef struct
 /* Compare the names of two directory entries */
 
 static int
-direntry_cmp_name (void const *a, void const *b)
+direntry_cmp_name (void const *a, void const *b, void *arg)
 {
   direntry_t const *dea = a;
   direntry_t const *deb = b;
+  char const *name_space = arg;
 
-  return strcmp (dea->name, deb->name);
+  return strcmp (name_space + dea->name, name_space + deb->name);
 }
 
 #if D_INO_IN_DIRENT
 /* Compare the inode numbers of two directory entries */
 
 static int
-direntry_cmp_inode (void const *a, void const *b)
+direntry_cmp_inode (void const *a, void const *b, MAYBE_UNUSED void *arg)
 {
   direntry_t const *dea = a;
   direntry_t const *deb = b;
@@ -69,7 +74,7 @@ direntry_cmp_inode (void const *a, void const *b)
 }
 #endif
 
-typedef int (*comparison_function) (void const *, void const *);
+typedef int (*comparison_function) (void const *, void const *, void *);
 
 static comparison_function const comparison_function_table[] =
   {
@@ -117,24 +122,21 @@ streamsavedir (DIR *dirp, enum savedir_option option)
       if (entry[entry[0] != '.' ? 0 : entry[1] != '.' ? 1 : 2] != '\0')
         {
           idx_t entry_size = _D_EXACT_NAMLEN (dp) + 1;
+          if (allocated - used <= entry_size)
+            name_space = xpalloc (name_space, &allocated,
+                                  entry_size - (allocated - used),
+                                  IDX_MAX - 1, sizeof *name_space);
+          memcpy (name_space + used, entry, entry_size);
           if (cmp)
             {
               if (entries_allocated == entries_used)
                 entries = xpalloc (entries, &entries_allocated, 1, -1,
                                    sizeof *entries);
-              entries[entries_used].name = xstrdup (entry);
+              entries[entries_used].name = used;
 #if D_INO_IN_DIRENT
               entries[entries_used].ino = dp->d_ino;
 #endif
               entries_used++;
-            }
-          else
-            {
-              if (allocated - used <= entry_size)
-                name_space = xpalloc (name_space, &allocated,
-                                      entry_size - (allocated - used),
-                                      IDX_MAX - 1, sizeof *name_space);
-              memcpy (name_space + used, entry, entry_size);
             }
           used += entry_size;
         }
@@ -142,29 +144,29 @@ streamsavedir (DIR *dirp, enum savedir_option option)
 
   if (errno != 0)
     {
-      free (entries);
       free (name_space);
-      return NULL;
+      name_space = NULL;
     }
-
-  if (cmp)
+  else if (cmp)
     {
       if (entries_used)
-        qsort (entries, entries_used, sizeof *entries, cmp);
-      name_space = ximalloc (used + 1);
-      used = 0;
+        qsort_r (entries, entries_used, sizeof *entries, cmp, name_space);
+      char *sorted_name_space = ximalloc (used + 1);
+      char *p = sorted_name_space;
       for (idx_t i = 0; i < entries_used; i++)
-        {
-          char *dest = name_space + used;
-          used += stpcpy (dest, entries[i].name) - dest + 1;
-          free (entries[i].name);
-        }
-      free (entries);
+        p = stpcpy (p, name_space + entries[i].name) + 1;
+      *p = '\0';
+      free (name_space);
+      name_space = sorted_name_space;
     }
-  else if (used == allocated)
-    name_space = xirealloc (name_space, used + 1);
+  else
+    {
+      if (used == allocated)
+        name_space = xirealloc (name_space, used + 1);
+      name_space[used] = '\0';
+    }
 
-  name_space[used] = '\0';
+  free (entries);
   return name_space;
 }
 

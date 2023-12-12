@@ -7,11 +7,13 @@ lib/savedir.c
 m4/savedir.m4
 
 Depends-on:
+attribute
 closedir
 dirent-safer
 fdopendir
 free-posix
 opendir
+qsort_r
 readdir
 stpcpy
 xalloc
