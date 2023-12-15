@@ -130,7 +130,7 @@ main (void)
               ASSERT (c.ch == d.ch && c.err == d.err && c.len == d.len);
               if (!t)
                 {
-                  mcel_t z = mcel_scanz (ijk);
+                  mcel_t z = mcel_scanz (ijkt);
                   ASSERT (d.ch == z.ch && d.err == z.err && d.len == z.len);
                 }
             }
