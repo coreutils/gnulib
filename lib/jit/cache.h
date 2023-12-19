@@ -17,6 +17,7 @@
 
 /* Written by Bruno Haible <bruno@clisp.org>, 2020.  */
 
+#include <stdint.h>
 #if ENABLE_VALGRIND_SUPPORT
 # include <valgrind/valgrind.h>
 #endif
