@@ -57,6 +57,13 @@ selabel_lookup (_GL_ATTRIBUTE_MAYBE_UNUSED struct selabel_handle *hnd,
                 _GL_ATTRIBUTE_MAYBE_UNUSED int type)
 { errno = ENOTSUP; return -1; }
 
+SE_LABEL_INLINE int
+selabel_lookup_raw (_GL_ATTRIBUTE_MAYBE_UNUSED struct selabel_handle *hnd,
+                    _GL_ATTRIBUTE_MAYBE_UNUSED char **context,
+                    _GL_ATTRIBUTE_MAYBE_UNUSED char const *key,
+                    _GL_ATTRIBUTE_MAYBE_UNUSED int type)
+{ errno = ENOTSUP; return -1; }
+
 SE_LABEL_INLINE struct selabel_handle *
 selabel_open (_GL_ATTRIBUTE_MAYBE_UNUSED int backend,
               _GL_ATTRIBUTE_MAYBE_UNUSED struct selinux_opt *options,

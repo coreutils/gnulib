@@ -27,10 +27,16 @@ AC_DEFUN([gl_HEADERS_SELINUX_SELINUX_H],
       gl_CHECK_NEXT_HEADERS([selinux/selinux.h])
       AC_DEFINE([getfilecon], [rpl_getfilecon],
                 [Always use our getfilecon wrapper.])
+      AC_DEFINE([getfilecon_raw], [rpl_getfilecon_raw],
+                [Always use our getfilecon_raw wrapper.])
       AC_DEFINE([lgetfilecon], [rpl_lgetfilecon],
                 [Always use our lgetfilecon wrapper.])
+      AC_DEFINE([lgetfilecon_raw], [rpl_lgetfilecon_raw],
+                [Always use our lgetfilecon_raw wrapper.])
       AC_DEFINE([fgetfilecon], [rpl_fgetfilecon],
                 [Always use our fgetfilecon wrapper.])
+      AC_DEFINE([fgetfilecon_raw], [rpl_fgetfilecon_raw],
+                [Always use our fgetfilecon_raw wrapper.])
     fi
 
     case "$ac_cv_search_setfilecon:$ac_cv_header_selinux_selinux_h" in

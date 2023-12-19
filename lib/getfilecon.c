@@ -31,11 +31,17 @@
 #endif
 
 #undef getfilecon
+#undef getfilecon_raw
 #undef lgetfilecon
+#undef lgetfilecon_raw
 #undef fgetfilecon
+#undef fgetfilecon_raw
 int getfilecon (char const *file, char **con);
+int getfilecon_raw (char const *file, char **con);
 int lgetfilecon (char const *file, char **con);
+int lgetfilecon_raw (char const *file, char **con);
 int fgetfilecon (int fd, char **con);
+int fgetfilecon_raw (int fd, char **con);
 
 /* getfilecon, lgetfilecon, and fgetfilecon can all misbehave, be it
    via an old version of libselinux where these would return 0 and set the
@@ -73,6 +79,13 @@ rpl_getfilecon (char const *file, char **con)
 }
 
 int
+rpl_getfilecon_raw (char const *file, char **con)
+{
+  int ret = getfilecon_raw (file, con);
+  return map_to_failure (ret, con);
+}
+
+int
 rpl_lgetfilecon (char const *file, char **con)
 {
   int ret = lgetfilecon (file, con);
@@ -80,8 +93,22 @@ rpl_lgetfilecon (char const *file, char **con)
 }
 
 int
+rpl_lgetfilecon_raw (char const *file, char **con)
+{
+  int ret = lgetfilecon_raw (file, con);
+  return map_to_failure (ret, con);
+}
+
+int
 rpl_fgetfilecon (int fd, char**con)
 {
   int ret = fgetfilecon (fd, con);
+  return map_to_failure (ret, con);
+}
+
+int
+rpl_fgetfilecon_raw (int fd, char**con)
+{
+  int ret = fgetfilecon_raw (fd, con);
   return map_to_failure (ret, con);
 }
