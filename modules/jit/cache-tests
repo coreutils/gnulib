@@ -7,6 +7,7 @@ unportable-test
 
 Depends-on:
 getpagesize
+host-cpu-c-abi
 pagealign_alloc
 stdint
 
