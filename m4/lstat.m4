@@ -1,4 +1,4 @@
-# serial 34
+# serial 34.1
 
 # Copyright (C) 1997-2001, 2003-2023 Free Software Foundation, Inc.
 #
@@ -18,7 +18,7 @@ AC_DEFUN([gl_FUNC_LSTAT],
   if test $ac_cv_func_lstat = yes; then
     AC_REQUIRE([gl_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK])
     case $host_os,$gl_cv_func_lstat_dereferences_slashed_symlink in
-      solaris* | *no)
+      darwin* | solaris* | *no)
         REPLACE_LSTAT=1
         ;;
     esac
