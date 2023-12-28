@@ -21,10 +21,11 @@ access files that happen to have a 64-bit inode number.  This can occur with
 file systems such as XFS (typically on large disks) and NFS.
 @xref{Large File Support}.
 @item
-On Solaris 11.4, when this function yields a timestamp with a
+On macOS 12.6, when this function yields a timestamp with a
 nonpositive @code{tv_sec} value, @code{tv_nsec} might be in the range
-@minus{}1000000000..@minus{}1, representing a negative nanoseconds
-offset from @code{tv_sec}.
+@minus{}999999999..@minus{}1, representing a negative nanoseconds
+offset from @code{tv_sec}.  Solaris 11.4 is similar, except that
+@code{tv_sec} might also be @minus{}1000000000.
 @item
 The @code{st_atime}, @code{st_ctime}, @code{st_mtime} fields are affected by
 the current time zone and by the DST flag of the current time zone on some

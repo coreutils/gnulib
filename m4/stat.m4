@@ -1,4 +1,4 @@
-# serial 20
+# serial 21
 
 # Copyright (C) 2009-2023 Free Software Foundation, Inc.
 #
@@ -61,8 +61,8 @@ AC_DEFUN([gl_FUNC_STAT],
             help when passed a file name with a trailing slash]);;
       esac
       case $host_os in
-        dnl Solaris stat can return a negative tv_nsec.
-        solaris*)
+        dnl macOS and Solaris stat can return a negative tv_nsec.
+        darwin* | solaris*)
           REPLACE_FSTAT=1 ;;
       esac
       ;;
