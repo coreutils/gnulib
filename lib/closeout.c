@@ -28,7 +28,7 @@
 #define _(msgid) gettext (msgid)
 
 #include "close-stream.h"
-#include "error.h"
+#include <error.h>
 #include "exitfail.h"
 #include "quotearg.h"
 

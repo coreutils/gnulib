@@ -27,7 +27,7 @@
 #include "execute.h"
 #include "sh-quote.h"
 #include "xmalloca.h"
-#include "error.h"
+#include <error.h>
 #include "gettext.h"
 
 /* Handling of MONO_PATH is just like Java CLASSPATH.  */

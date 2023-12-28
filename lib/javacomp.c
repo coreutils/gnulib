@@ -44,7 +44,7 @@
 #include "concat-filename.h"
 #include "fwriteerror.h"
 #include "clean-temp.h"
-#include "error.h"
+#include <error.h>
 #include "xvasprintf.h"
 #include "verify.h"
 #include "c-strstr.h"

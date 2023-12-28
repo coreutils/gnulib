@@ -25,7 +25,7 @@
 #include "gettext.h"
 #define _(msgid) gettext (msgid)
 
-#include "error.h"
+#include <error.h>
 #include "exitfail.h"
 #include "memcoll.h"
 #include "quotearg.h"

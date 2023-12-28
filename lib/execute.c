@@ -31,7 +31,7 @@
 #include <sys/wait.h>
 
 #include "canonicalize.h"
-#include "error.h"
+#include <error.h>
 #include "fatal-signal.h"
 #include "filename.h"
 #include "findprog.h"

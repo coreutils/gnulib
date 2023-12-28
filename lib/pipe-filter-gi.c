@@ -33,7 +33,7 @@
 # include <sys/select.h>
 #endif
 
-#include "error.h"
+#include <error.h>
 #include "spawn-pipe.h"
 #include "wait-process.h"
 #include "xalloc.h"

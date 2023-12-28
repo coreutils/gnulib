@@ -28,7 +28,7 @@
 
 #include "close-stream.h"
 #include "closeout.h"
-#include "error.h"
+#include <error.h>
 #include "exitfail.h"
 #include "freadahead.h"
 #include "quotearg.h"

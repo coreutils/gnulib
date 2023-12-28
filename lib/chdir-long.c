@@ -209,7 +209,7 @@ chdir_long (char *dir)
 #if TEST_CHDIR
 
 # include "closeout.h"
-# include "error.h"
+# include <error.h>
 
 int
 main (int argc, char *argv[])

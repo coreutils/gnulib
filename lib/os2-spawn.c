@@ -29,7 +29,7 @@
 #include <errno.h>
 
 #include "cloexec.h"
-#include "error.h"
+#include <error.h>
 #include "gettext.h"
 
 #define _(str) gettext (str)

@@ -37,10 +37,14 @@ orig_truncate (const char *filename, off_t length)
 }
 #endif
 
+#ifdef __osf__
 /* Write "unistd.h" here, not <unistd.h>, otherwise OSF/1 5.1 DTK cc
    eliminates this include because of the preliminary #include <unistd.h>
    above.  */
-#include "unistd.h"
+# include "unistd.h"
+#else
+# include <unistd.h>
+#endif
 
 int
 truncate (const char *filename, off_t length)

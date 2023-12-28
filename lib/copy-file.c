@@ -28,7 +28,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-#include "error.h"
+#include <error.h>
 #include "ignore-value.h"
 #include "safe-read.h"
 #include "full-write.h"

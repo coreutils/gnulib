@@ -30,7 +30,7 @@
 
 #define _(msgid) gettext (msgid)
 
-#include "error.h"
+#include <error.h>
 #include "quotearg.h"
 
 #if USE_UNLOCKED_IO

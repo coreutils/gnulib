@@ -31,7 +31,7 @@
 # include <sys/mman.h>
 #endif
 
-#include "error.h"
+#include <error.h>
 #include "xalloc.h"
 #include "gettext.h"
 

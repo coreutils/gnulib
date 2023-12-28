@@ -34,7 +34,7 @@
 #include "javaexec.h"
 #include "spawn-pipe.h"
 #include "wait-process.h"
-#include "error.h"
+#include <error.h>
 #include "gettext.h"
 
 #define _(str) gettext (str)

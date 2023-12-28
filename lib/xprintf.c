@@ -20,7 +20,7 @@
 
 #include <errno.h>
 
-#include "error.h"
+#include <error.h>
 #include "exitfail.h"
 #include "gettext.h"
 

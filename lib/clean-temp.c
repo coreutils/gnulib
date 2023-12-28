@@ -36,7 +36,7 @@
 
 #include "clean-temp-simple.h"
 #include "clean-temp-private.h"
-#include "error.h"
+#include <error.h>
 #include "fatal-signal.h"
 #include "asyncsafe-spin.h"
 #include "pathmax.h"

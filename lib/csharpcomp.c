@@ -32,7 +32,7 @@
 #include "sh-quote.h"
 #include "safe-read.h"
 #include "xmalloca.h"
-#include "error.h"
+#include <error.h>
 #include "gettext.h"
 
 #define _(str) gettext (str)

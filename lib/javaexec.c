@@ -32,7 +32,7 @@
 #include "concat-filename.h"
 #include "xalloc.h"
 #include "xmalloca.h"
-#include "error.h"
+#include <error.h>
 #include "gettext.h"
 
 #define _(str) gettext (str)

@@ -20,7 +20,7 @@
 #include "xstdopen.h"
 
 #include "stdopen.h"
-#include "error.h"
+#include <error.h>
 #include "exitfail.h"
 
 #include "gettext.h"

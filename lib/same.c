@@ -37,7 +37,7 @@
 
 #include "same.h"
 #include "dirname.h"
-#include "error.h"
+#include <error.h>
 #include "same-inode.h"
 
 #ifndef MIN

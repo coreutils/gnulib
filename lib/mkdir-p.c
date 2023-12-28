@@ -31,7 +31,7 @@
 
 #include "dirchownmod.h"
 #include "dirname.h"
-#include "error.h"
+#include <error.h>
 #include "quote.h"
 #include "mkancesdirs.h"
 #include "savewd.h"

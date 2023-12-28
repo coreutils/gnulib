@@ -25,7 +25,7 @@
 #include <stdarg.h>
 #include <stdlib.h>
 
-#include "error.h"
+#include <error.h>
 #include "xvasprintf.h"
 
 #if ENABLE_NLS

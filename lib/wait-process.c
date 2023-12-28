@@ -29,7 +29,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-#include "error.h"
+#include <error.h>
 #include "fatal-signal.h"
 #include "xalloc.h"
 #include "gettext.h"

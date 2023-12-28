@@ -34,7 +34,7 @@
 
 #include "exclude.h"
 #include "filename.h"
-#include "fnmatch.h"
+#include <fnmatch.h>
 #include "hash.h"
 #if GNULIB_MCEL_PREFER
 # include "mcel.h"

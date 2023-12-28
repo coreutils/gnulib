@@ -24,7 +24,7 @@
 #include <errno.h>
 
 #include "quote.h"
-#include "error.h"
+#include <error.h>
 #include "gettext.h"
 #define _(msgid) gettext (msgid)
 

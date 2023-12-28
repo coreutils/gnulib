@@ -22,7 +22,7 @@
 # define _GL_NO_INLINE_ERROR
 #endif
 
-#include "error.h"
+#include <error.h>
 
 #include <stdarg.h>
 #include <stdio.h>
