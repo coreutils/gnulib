@@ -35,7 +35,7 @@
 eval 'exec perl -wSx "$0" "$@"'
      if 0;
 
-my $VERSION = '2023-07-17 20:05'; # UTC
+my $VERSION = '2023-12-29 18:26'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -570,10 +570,10 @@ $first_name [on behalf of the $package_name maintainers]
 ==================================================================
 
 Here is the GNU $package_name home page:
-    http://gnu.org/s/$package_name/
+    https://gnu.org/s/$package_name/
 
 For a summary of changes and contributors, see:
-  http://git.sv.gnu.org/gitweb/?p=$package_name.git;a=shortlog;h=v$v1
+  https://git.sv.gnu.org/gitweb/?p=$package_name.git;a=shortlog;h=v$v1
 or run this command from a git-cloned $package_name directory:
   git shortlog v$v0..v$v1
 
