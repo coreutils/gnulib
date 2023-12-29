@@ -17,13 +17,6 @@
 
 /* Written by Paul Eggert */
 
-/* Tell gcc not to warn about the (i < 0) test, below.  */
-#if (__GNUC__ == 4 && 3 <= __GNUC_MINOR__) || 4 < __GNUC__
-# pragma GCC diagnostic ignored "-Wtype-limits"
-#elif defined __clang__
-# pragma clang diagnostic ignored "-Wtautological-compare"
-#endif
-
 #include <config.h>
 
 #include "inttostr.h"
