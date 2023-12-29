@@ -20,8 +20,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#include <error.h>
 #include "xstrtol-error.h"
-#include "error.h"
 
 #ifndef __xstrtol
 # define __xstrtol xstrtol

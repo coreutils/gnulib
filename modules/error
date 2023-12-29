@@ -31,7 +31,7 @@ lib_SOURCES += error.c
 endif
 
 Include:
-"error.h"
+<error.h>
 
 License:
 LGPLv2+

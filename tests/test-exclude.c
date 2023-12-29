@@ -22,8 +22,8 @@
 #include <string.h>
 #include <fnmatch.h>
 
+#include <error.h>
 #include "exclude.h"
-#include "error.h"
 #include "argmatch.h"
 
 #ifndef FNM_CASEFOLD

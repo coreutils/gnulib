@@ -23,7 +23,7 @@
 #include <errno.h>
 #include <stdarg.h>
 
-#include "error.h"
+#include <error.h>
 #include "macros.h"
 
 /* Custom function to not show the program name in error messages.  */

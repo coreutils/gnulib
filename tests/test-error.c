@@ -18,7 +18,8 @@
 
 #include <config.h>
 
-#include "error.h"
+/* Specification.  */
+#include <error.h>
 
 #include <errno.h>
 
