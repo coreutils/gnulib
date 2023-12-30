@@ -5,6 +5,7 @@ tests/signature.h
 tests/macros.h
 
 Depends-on:
+inttypes
 sleep
 pthread-thread
 
