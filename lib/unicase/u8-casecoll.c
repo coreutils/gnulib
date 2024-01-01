@@ -1,6 +1,6 @@
 /* Locale dependent, case and normalization insensitive comparison of UTF-8
    strings.
-   Copyright (C) 2009-2023 Free Software Foundation, Inc.
+   Copyright (C) 2009-2024 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2009.
 
    This file is free software.

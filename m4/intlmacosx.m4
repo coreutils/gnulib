@@ -1,5 +1,5 @@
 # intlmacosx.m4 serial 9 (gettext-0.22.3)
-dnl Copyright (C) 2004-2014, 2016, 2019-2023 Free Software Foundation, Inc.
+dnl Copyright (C) 2004-2014, 2016, 2019-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.

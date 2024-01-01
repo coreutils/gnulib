@@ -1,5 +1,5 @@
 /* Categories of Unicode characters.
-   Copyright (C) 2002, 2006-2007, 2011-2023 Free Software Foundation, Inc.
+   Copyright (C) 2002, 2006-2007, 2011-2024 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2011.
 
    This file is free software.

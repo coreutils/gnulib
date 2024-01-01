@@ -1,5 +1,5 @@
 /* vasprintf and asprintf with out-of-memory checking in C locale.
-   Copyright (C) 1999, 2002-2004, 2006, 2009-2023 Free Software Foundation,
+   Copyright (C) 1999, 2002-2004, 2006, 2009-2024 Free Software Foundation,
    Inc.
 
    This program is free software: you can redistribute it and/or modify

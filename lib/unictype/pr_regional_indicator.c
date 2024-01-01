@@ -1,5 +1,5 @@
 /* Properties of Unicode characters.
-   Copyright (C) 2021-2023 Free Software Foundation, Inc.
+   Copyright (C) 2021-2024 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2021.
 
    This file is free software.

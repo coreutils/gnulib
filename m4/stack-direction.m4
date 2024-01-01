@@ -1,5 +1,5 @@
 # stack-direction.m4 serial 11
-dnl Copyright (C) 2002-2023 Free Software Foundation, Inc.
+dnl Copyright (C) 2002-2024 Free Software Foundation, Inc.
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
 dnl Public License, this file may be distributed as part of a program

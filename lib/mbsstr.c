@@ -1,5 +1,5 @@
 /* Searching in a string.  -*- coding: utf-8 -*-
-   Copyright (C) 2005-2023 Free Software Foundation, Inc.
+   Copyright (C) 2005-2024 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2005.
 
    This file is free software: you can redistribute it and/or modify

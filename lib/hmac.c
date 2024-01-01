@@ -1,5 +1,5 @@
 /* hmac.c -- hashed message authentication codes
-   Copyright (C) 2005-2006, 2009-2023 Free Software Foundation, Inc.
+   Copyright (C) 2005-2006, 2009-2024 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as

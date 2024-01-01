@@ -1,5 +1,5 @@
 /* check-version.h --- Check version string compatibility.
-   Copyright (C) 1998-2006, 2008-2023 Free Software Foundation, Inc.
+   Copyright (C) 1998-2006, 2008-2024 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as

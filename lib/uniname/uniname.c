@@ -1,5 +1,5 @@
 /* Association between Unicode characters and their names.
-   Copyright (C) 2000-2002, 2005-2007, 2009-2023 Free Software Foundation, Inc.
+   Copyright (C) 2000-2002, 2005-2007, 2009-2024 Free Software Foundation, Inc.
 
    This file is free software.
    It is dual-licensed under "the GNU LGPLv3+ or the GNU GPLv2+".

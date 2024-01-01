@@ -1,5 +1,5 @@
 /* Print a message describing error code.
-   Copyright (C) 2008-2023 Free Software Foundation, Inc.
+   Copyright (C) 2008-2024 Free Software Foundation, Inc.
    Written by Bruno Haible and Simon Josefsson.
 
    This file is free software: you can redistribute it and/or modify

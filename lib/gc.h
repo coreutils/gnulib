@@ -1,5 +1,5 @@
 /* gc.h --- Header file for implementation agnostic crypto wrapper API.
- * Copyright (C) 2002-2005, 2007-2008, 2011-2023 Free Software Foundation, Inc.
+ * Copyright (C) 2002-2005, 2007-2008, 2011-2024 Free Software Foundation, Inc.
  *
  * This file is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as

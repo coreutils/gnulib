@@ -1,5 +1,5 @@
 /* Filtering of data through a subprocess.  -*- coding: utf-8 -*-
-   Copyright (C) 2009-2023 Free Software Foundation, Inc.
+   Copyright (C) 2009-2024 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2009,
    and Paolo Bonzini <bonzini@gnu.org>, 2009.
 

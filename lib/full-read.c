@@ -1,5 +1,5 @@
 /* An interface to read that retries after partial reads and interrupts.
-   Copyright (C) 2002-2003, 2009-2023 Free Software Foundation, Inc.
+   Copyright (C) 2002-2003, 2009-2024 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as

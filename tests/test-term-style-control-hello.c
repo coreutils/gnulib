@@ -1,5 +1,5 @@
 /* Simple test program for the term-style-control module.
-   Copyright (C) 2019-2023 Free Software Foundation, Inc.
+   Copyright (C) 2019-2024 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2019.
 
    This program is free software: you can redistribute it and/or modify

@@ -1,6 +1,6 @@
 /* Error reporting interface for xstrto* functions.
 
-   Copyright (C) 1995-1996, 1998-1999, 2001-2004, 2006-2023 Free Software
+   Copyright (C) 1995-1996, 1998-1999, 2001-2004, 2006-2024 Free Software
    Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify

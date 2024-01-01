@@ -1,6 +1,6 @@
 #!/bin/sh
 # Test suite for update-copyright.
-# Copyright (C) 2009-2023 Free Software Foundation, Inc.
+# Copyright (C) 2009-2024 Free Software Foundation, Inc.
 # This file is part of the GNUlib Library.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -86,8 +86,7 @@ Copyright @copyright{} 1990-2005, 2007-2009 Free Software
 Foundation, Inc.
 EOF
 cat > $TMP-2 <<EOF
-# Copyright (C) 1990-2005, 2007-2009 Free Software
-# Foundation, Inc.
+# Copyright (C) 2009-2024 Free Software Foundation, Inc.
 EOF
 cat > $TMP-3 <<EOF
 /*
@@ -112,8 +111,7 @@ EOF
 cat > $TMP-7 <<EOF
 Copyright (C) 1990-2005, 2007-2009 Acme, Inc.
 
-# Copyright (C) 1990-2005, 2007-2009 Free Software
-# Foundation, Inc.
+# Copyright (C) 2009-2024 Free Software Foundation, Inc.
 EOF
 cat > $TMP-8 <<EOF
 Copyright (C) 2008 Free Software Foundation, Inc.
@@ -132,8 +130,7 @@ Copyright @copyright{} 1990-2005, 2007-2009 Free Software
 Foundation, Inc.
 EOF
 compare - $TMP-2 <<EOF || exit 1
-# Copyright (C) 1990-2005, 2007-2009 Free Software
-# Foundation, Inc.
+# Copyright (C) 2009-2024 Free Software Foundation, Inc.
 EOF
 compare - $TMP-3 <<EOF || exit 1
 /*
@@ -158,8 +155,7 @@ EOF
 compare - $TMP-7 <<EOF || exit 1
 Copyright (C) 1990-2005, 2007-2009 Acme, Inc.
 
-# Copyright (C) 1990-2005, 2007-2009 Free Software
-# Foundation, Inc.
+# Copyright (C) 2009-2024 Free Software Foundation, Inc.
 EOF
 compare - $TMP-8 <<EOF || exit 1
 Copyright (C) 2008, 2009 Free Software Foundation, Inc.
@@ -178,7 +174,7 @@ Copyright @copyright{} 1990-2005, 2007-2010 Free Software Foundation,
 Inc.
 EOF
 compare - $TMP-2 <<EOF || exit 1
-# Copyright (C) 1990-2005, 2007-2010 Free Software Foundation, Inc.
+# Copyright (C) 2009-2024 Free Software Foundation, Inc.
 EOF
 compare - $TMP-3 <<EOF || exit 1
 /*
@@ -201,7 +197,7 @@ EOF
 compare - $TMP-7 <<EOF || exit 1
 Copyright (C) 1990-2005, 2007-2009 Acme, Inc.
 
-# Copyright (C) 1990-2005, 2007-2010 Free Software Foundation, Inc.
+# Copyright (C) 2009-2024 Free Software Foundation, Inc.
 EOF
 
 UPDATE_COPYRIGHT_YEAR=2010 UPDATE_COPYRIGHT_FORCE=1 \
@@ -217,9 +213,7 @@ Copyright @copyright{} 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997,
 Free Software Foundation, Inc.
 EOF
 compare - $TMP-2 <<EOF || exit 1
-# Copyright (C) 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998,
-# 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2007, 2008, 2009, 2010 Free
-# Software Foundation, Inc.
+# Copyright (C) 2009-2024 Free Software Foundation, Inc.
 EOF
 compare - $TMP-3 <<EOF || exit 1
 /*
@@ -245,9 +239,7 @@ EOF
 compare - $TMP-7 <<EOF || exit 1
 Copyright (C) 1990-2005, 2007-2009 Acme, Inc.
 
-# Copyright (C) 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998,
-# 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2007, 2008, 2009, 2010 Free
-# Software Foundation, Inc.
+# Copyright (C) 2009-2024 Free Software Foundation, Inc.
 EOF
 
 rm $TMP*

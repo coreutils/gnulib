@@ -1,7 +1,7 @@
 /* Emulation for sqrtl.
    Contributed by Paolo Bonzini
 
-   Copyright 2002-2003, 2007, 2009-2023 Free Software Foundation, Inc.
+   Copyright 2002-2003, 2007, 2009-2024 Free Software Foundation, Inc.
 
    This file is part of gnulib.
 
