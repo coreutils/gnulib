@@ -20,8 +20,13 @@ Gnulib module: strverscmp
 Portability problems fixed by Gnulib:
 @itemize
 @item
-This function is missing on all non-glibc platforms:
-macOS 11.1, FreeBSD 13.0, NetBSD 9.0, OpenBSD 6.7, Minix 3.1.8, AIX 5.1, HP-UX 11, IRIX 6.5, Solaris 11.4, Cygwin 1.7.x, mingw, MSVC 14, Android 9.0.
+This function is missing on many platforms:
+macOS 11.1, FreeBSD 13.1, NetBSD 9.0, OpenBSD 6.7, Minix 3.1.8, AIX 5.1, HP-UX 11, IRIX 6.5, Solaris 11.4, Cygwin 1.7.x, mingw, MSVC 14, Android 9.0.
+@item
+This function treats ASCII letters as smaller than a digit sequence
+on some platforms:
+@c https://git.musl-libc.org/cgit/musl/commit/src/string/strverscmp.c?id=b50eb8c36c20f967bd0ed70c0b0db38a450886ba
+musl libc 1.2.3, Cygwin 3.4.6.
 @end itemize
 
 Portability problems not fixed by Gnulib:

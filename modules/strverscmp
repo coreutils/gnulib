@@ -7,13 +7,14 @@ m4/strverscmp.m4
 
 Depends-on:
 extensions
-libc-config  [test $HAVE_STRVERSCMP = 0]
-stdint       [test $HAVE_STRVERSCMP = 0]
+libc-config  [test $HAVE_STRVERSCMP = 0 || test $REPLACE_STRVERSCMP = 1]
+stdint       [test $HAVE_STRVERSCMP = 0 || test $REPLACE_STRVERSCMP = 1]
 string
 
 configure.ac:
 gl_FUNC_STRVERSCMP
-gl_CONDITIONAL([GL_COND_OBJ_STRVERSCMP], [test $HAVE_STRVERSCMP = 0])
+gl_CONDITIONAL([GL_COND_OBJ_STRVERSCMP],
+               [test $HAVE_STRVERSCMP = 0 || test $REPLACE_STRVERSCMP = 1])
 AM_COND_IF([GL_COND_OBJ_STRVERSCMP], [
   gl_PREREQ_STRVERSCMP
 ])
