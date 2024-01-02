@@ -30,6 +30,7 @@ main (void)
 {
   ASSERT (strverscmp ("", "") == 0);
   ASSERT (strverscmp ("a", "a") == 0);
+  ASSERT (strverscmp ("1.7", "1.7") == 0);
   ASSERT (strverscmp ("a", "b") < 0);
   ASSERT (strverscmp ("b", "a") > 0);
   ASSERT (strverscmp ("000", "00") < 0);
@@ -53,6 +54,14 @@ main (void)
     ASSERT (strverscmp (b, a) > 0);
     ASSERT (strverscmp (c, b) > 0);
     ASSERT (strverscmp (c, a) > 0);
+  }
+
+  /* From Dmitry Bogatov.  */
+  {
+    static char const a[] = "UNKNOWN";
+    static char const b[] = "2.2.0";
+    ASSERT (strverscmp (a, b) > 0);
+    ASSERT (strverscmp (b, a) < 0);
   }
 
   return 0;
