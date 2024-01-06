@@ -458,7 +458,7 @@ Run @samp{configure --help} for more details.
 @node Copyright notice
 @section Copyright notice
 
-Copyright @copyright{} 1994--1996, 1999--2002, 2004--2017, 2020--2023
+Copyright @copyright{} 1994--1996, 1999--2002, 2004--2017, 2020--2024
 Free Software Foundation, Inc.
 
 Copying and distribution of this file, with or without modification, are
