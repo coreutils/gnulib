@@ -76,7 +76,7 @@ perl -e 'require 5.8.0' || {
 UPDATE_COPYRIGHT_MAX_LINE_LENGTH=72
 export UPDATE_COPYRIGHT_MAX_LINE_LENGTH
 
-# This assignment to 'ight' is is so that data can contain strings
+# This assignment to 'ight' is so that data can contain strings
 # like "Copy$ight 2024 Free Software Foundation, Inc." without being
 # mistakenly updated by "cd .. && make update-copyright".
 ight=right
