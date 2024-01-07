@@ -52,7 +52,7 @@ default to prevent problems with accidental use of stale cache files.
 to figure out how ‘configure’ could check whether to do them, and mail
 diffs or instructions to the address given in the ‘README’ so they can
 be considered for the next release.  If you are using the cache, and at
-some point ‘config.cache’ contains results you don't want to keep, you
+some point ‘config.cache’ contains results you don’t want to keep, you
 may remove or edit it.
 
    The ‘autoconf’ program generates ‘configure’ from the file
@@ -61,7 +61,7 @@ editing ‘configure’ directly.
 
    The simplest way to compile this package is:
 
-  1. ‘cd’ to the directory containing the package's source code.
+  1. ‘cd’ to the directory containing the package’s source code.
 
   2. If this is a developer checkout and file ‘configure’ does not yet
      exist, type ‘./bootstrap’ to create it.  You may need special
@@ -95,7 +95,7 @@ editing ‘configure’ directly.
      files that ‘configure’ created (so you can compile the package for
      a different kind of computer), type ‘make distclean’.  There is
      also a ‘make maintainer-clean’ target, but that is intended mainly
-     for the package's developers.  If you use it, you may have to
+     for the package’s developers.  If you use it, you may have to
      bootstrap again.
 
   9. If the package follows the GNU Coding Standards, you can type ‘make
@@ -114,7 +114,7 @@ an example:
 
      ./configure CC=gcc CFLAGS=-g LIBS=-lposix
 
-   See "Defining Variables" for more details.
+   See “Defining Variables” for more details.
 
 Compiling For Multiple Architectures
 ====================================
@@ -132,7 +132,7 @@ system at a time in the source code directory.  After you have installed
 the package for one system, use ‘make distclean’ before reconfiguring
 for another system.
 
-   Some platforms, notably macOS, support "fat" or "universal" binaries,
+   Some platforms, notably macOS, support “fat” or “universal” binaries,
 where a single binary can execute on different architectures.  On these
 platforms you can configure and compile just once, with options specific
 to that platform.
@@ -140,7 +140,7 @@ to that platform.
 Installation Names
 ==================
 
-   By default, ‘make install’ installs the package's commands under
+   By default, ‘make install’ installs the package’s commands under
 ‘/usr/local/bin’, include files under ‘/usr/local/include’, etc.  You
 can specify an installation prefix other than ‘/usr/local’ by giving
 ‘configure’ the option ‘--prefix=PREFIX’, where PREFIX must be an
@@ -223,7 +223,7 @@ to run on a 64-bit ARM processor:
         CXX=aarch64-linux-gnu-g++
 
 If done on a machine that can execute these binaries (e.g., via
-‘qemu-aarch64’, ‘$QEMU_LD_PREFIX’, and Linux's ‘binfmt_misc’
+‘qemu-aarch64’, ‘$QEMU_LD_PREFIX’, and Linux’s ‘binfmt_misc’
 capability), the build behaves like a native build.  Otherwise it is a
 cross-build: ‘configure’ will make cross-compilation guesses instead of
 running test programs, and ‘make check’ will not work.
@@ -243,8 +243,8 @@ canonicalize and validate a system type, you can run the command
 You can look at the ‘config.sub’ file to see which types are recognized.
 If the file is absent, this package does not need the system type.
 
-   If ‘configure’ fails with the diagnostic "cannot guess build type".
-‘config.sub’ did not recognize your system's type.  In this case, first
+   If ‘configure’ fails with the diagnostic “cannot guess build type”.
+‘config.sub’ did not recognize your system’s type.  In this case, first
 fetch the newest versions of these files from the GNU config package
 (https://savannah.gnu.org/projects/config).  If that fixes things,
 please report it to the maintainers of the package containing
@@ -298,7 +298,7 @@ operates.
 
 ‘--help=short’
 ‘--help=recursive’
-     Print a summary of the options unique to this package's
+     Print a summary of the options unique to this package’s
      ‘configure’, and exit.  The ‘short’ variant lists options used only
      in the top level, while the ‘recursive’ variant lists options also
      present in any nested packages.
@@ -318,24 +318,24 @@ operates.
      Alias for ‘--cache-file=config.cache’.
 
 ‘--srcdir=DIR’
-     Look for the package's source code in directory DIR.  Usually
+     Look for the package’s source code in directory DIR.  Usually
      ‘configure’ can determine that directory automatically.
 
 ‘--prefix=DIR’
-     Use DIR as the installation prefix.  See "Installation Names" for
+     Use DIR as the installation prefix.  See “Installation Names” for
      more details, including other options available for fine-tuning the
      installation locations.
 
 ‘--host=TYPE’
-     Build binaries for system TYPE.  See "Specifying a System Type".
+     Build binaries for system TYPE.  See “Specifying a System Type”.
 
 ‘--enable-FEATURE’
 ‘--disable-FEATURE’
-     Enable or disable the optional FEATURE.  See "Optional Features".
+     Enable or disable the optional FEATURE.  See “Optional Features”.
 
 ‘--with-PACKAGE’
 ‘--without-PACKAGE’
-     Use or omit PACKAGE when building.  See "Optional Features".
+     Use or omit PACKAGE when building.  See “Optional Features”.
 
 ‘--quiet’
 ‘--silent’
@@ -356,7 +356,7 @@ more details.
 Copyright notice
 ================
 
-   Copyright © 1994-1996, 1999-2002, 2004-2017, 2020-2024 Free Software
+   Copyright © 1994–1996, 1999–2002, 2004–2017, 2020–2024 Free Software
 Foundation, Inc.
 
    Copying and distribution of this file, with or without modification,
