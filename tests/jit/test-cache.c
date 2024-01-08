@@ -89,7 +89,7 @@ struct func
 #ifdef FUNCPTR_POINTS_TO_CODE
 /* A function pointer points directly to the code.  */
 # define COPY_FUNCPTR(funcptr) funcptr
-# define CODE(funcptr) ((void*)(funcptr))
+# define CODE(funcptr) (funcptr)
 #else
 /* A function pointer points to a 'struct func'.  */
 static struct func *xcopy_funcptr (struct func *orig_funcptr)
