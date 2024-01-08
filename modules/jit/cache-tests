@@ -12,6 +12,7 @@ clean-temp-simple
 getpagesize
 host-cpu-c-abi
 stdint
+xalloc
 
 configure.ac:
 AC_CHECK_HEADERS_ONCE([sys/mman.h])
