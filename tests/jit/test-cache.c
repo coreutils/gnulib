@@ -114,8 +114,6 @@ main ()
      If this stack protector has not been disabled through a configure test,
      we need to skip this unit test.  */
   return 77;
-#elif !HAVE_SYS_MMAN_H
-  return 77;
 #else
   int const pagesize = getpagesize ();
   int const mapping_size = 1 * pagesize;
@@ -127,15 +125,25 @@ main ()
 
   /* Initialization.  */
   {
-# ifdef HAVE_MAP_ANONYMOUS
+# if defined _WIN32 && !defined __CYGWIN__
+    /* VirtualAlloc
+       <https://learn.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-virtualalloc>
+       <https://learn.microsoft.com/en-us/windows/win32/memory/memory-protection-constants> */
+    start = VirtualAlloc (NULL, mapping_size, MEM_COMMIT,
+                          PAGE_EXECUTE_READWRITE);
+    if (start == NULL)
+      return 1;
+    start_rw = start;
+# else
+#  ifdef HAVE_MAP_ANONYMOUS
     int flags = MAP_ANONYMOUS | MAP_PRIVATE;
     int fd = -1;
-# else
+#  else
     int flags = MAP_FILE | MAP_PRIVATE;
     int fd = open ("/dev/zero", O_RDONLY | O_CLOEXEC, 0666);
     if (fd < 0)
       return 1;
-# endif
+#  endif
     start = mmap (NULL, mapping_size, PROT_READ | PROT_WRITE | PROT_EXEC,
                   flags, fd, 0);
     if (start != (char *) (-1))
@@ -153,20 +161,20 @@ main ()
         sprintf (filename,
                  "%s/gnulib-test-cache-%u-%d-%ld",
                  "/tmp", (unsigned int) getuid (), (int) getpid (), random ());
-# ifdef KEEP_TEMP_FILE_VISIBLE
+#  ifdef KEEP_TEMP_FILE_VISIBLE
         if (register_temporary_file (filename) < 0)
           return 2;
-# endif
+#  endif
         fd = open (filename, O_CREAT | O_RDWR | O_TRUNC, 0700);
         if (fd < 0)
           return 3;
-# ifndef KEEP_TEMP_FILE_VISIBLE
+#  ifndef KEEP_TEMP_FILE_VISIBLE
         /* Remove the file from the file system as soon as possible, to make
            sure there is no leftover after this process terminates or crashes.
            On macOS 11.2, this does not work: It would make the mmap call below,
            with arguments PROT_READ|PROT_EXEC and MAP_SHARED, fail. */
         unlink (filename);
-# endif
+#  endif
         if (ftruncate (fd, mapping_size) < 0)
           return 4;
         start = mmap (NULL, mapping_size, PROT_READ | PROT_EXEC, MAP_SHARED,
@@ -176,6 +184,7 @@ main ()
         if (start == (char *) (-1) || start_rw == (char *) (-1))
           return 5;
       }
+# endif
     end = start + mapping_size;
   }
 
