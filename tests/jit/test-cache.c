@@ -1,6 +1,6 @@
 /* Test clear_cache.
 
-   Copyright 2023-2024 Free Software Foundation, Inc.
+   Copyright 2020-2024 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -17,14 +17,23 @@
 
 #include <config.h>
 
+/* Specification.  */
 #include <jit/cache.h>
 
-#include <pagealign_alloc.h>
+#include <fcntl.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 
-#if HAVE_SYS_MMAN_H && HAVE_MPROTECT
+#if HAVE_SYS_MMAN_H
 # include <sys/mman.h>
+#endif
+
+#if defined __APPLE__ && defined __MACH__ /* only needed on macOS */
+# define KEEP_TEMP_FILE_VISIBLE
+/* Support for temporary files that are cleaned up automatically. */
+# include "clean-temp-simple.h"
 #endif
 
 #include "macros.h"
@@ -43,12 +52,7 @@ struct func
   void *static_chain;
 };
 #elif defined __ia64__
-struct func
-{
-  void *code_address;
-  void *global_pointer;
-};
-#elif defined __ia64_ilp32__
+# if defined __ia64_ilp32__
 struct func
 {
   void *code_address;
@@ -56,13 +60,15 @@ struct func
   void *global_pointer;
   void *unused2;
 };
-#elif __hppa__
+# else
 struct func
 {
   void *code_address;
-  void *pic_base;
+  void *global_pointer;
 };
-#elif __hppa64__
+# endif
+#elif defined __hppa__
+# if defined __hppa64__
 struct func
 {
   void *some_other_code_address;
@@ -70,6 +76,13 @@ struct func
   void *code_address;
   void *pic_base;
 };
+# else
+struct func
+{
+  void *code_address;
+  void *pic_base;
+};
+# endif
 #else
 # undef CODE
 # define CODE(fn) ((*(void **) (&fn)))
@@ -94,27 +107,81 @@ return2 (void)
 int
 main ()
 {
-#if !(HAVE_SYS_MMAN_H && HAVE_MPROTECT)
+#if !HAVE_SYS_MMAN_H
   return 77;
 #else
   int const pagesize = getpagesize ();
-  unsigned char *start = pagealign_xalloc (pagesize);
-  unsigned char *end = start + pagesize;
+  int const mapping_size = 1 * pagesize;
+  /* Bounds of an executable memory region.  */
+  char *start;
+  char *end;
+  /* Start of a writable memory region.  */
+  char *start_rw;
 
-  /* We have to call `mprotect' before the tests because on some
-     platforms `mprotect' invalidates the caches.  */
-  mprotect (start, end - start, PROT_READ | PROT_WRITE | PROT_EXEC);
+  /* Initialization.  */
+  {
+# ifdef HAVE_MAP_ANONYMOUS
+    int flags = MAP_ANONYMOUS | MAP_PRIVATE;
+    int fd = -1;
+# else
+    int flags = MAP_FILE | MAP_PRIVATE;
+    int fd = open ("/dev/zero", O_RDONLY | O_CLOEXEC, 0666);
+    if (fd < 0)
+      return 1;
+# endif
+    start = mmap (NULL, mapping_size, PROT_READ | PROT_WRITE | PROT_EXEC,
+                  flags, fd, 0);
+    if (start != (char *) (-1))
+      {
+        /* A platform that allows a mmap'ed memory region to be simultaneously
+           writable and executable.  */
+        start_rw = start;
+      }
+    else
+      {
+        /* A platform which requires the writable mapping and the executable
+           mapping to be separate: macOS, FreeBSD, NetBSD, OpenBSD.  */
+        fprintf (stderr, "simple mmap failed, using separate mappings\n");
+        char filename[100];
+        sprintf (filename,
+                 "%s/gnulib-test-cache-%u-%d-%ld",
+                 "/tmp", (unsigned int) getuid (), (int) getpid (), random ());
+# ifdef KEEP_TEMP_FILE_VISIBLE
+        if (register_temporary_file (filename) < 0)
+          return 2;
+# endif
+        fd = open (filename, O_CREAT | O_RDWR | O_TRUNC, 0700);
+        if (fd < 0)
+          return 3;
+# ifndef KEEP_TEMP_FILE_VISIBLE
+        /* Remove the file from the file system as soon as possible, to make
+           sure there is no leftover after this process terminates or crashes.
+           On macOS 11.2, this does not work: It would make the mmap call below,
+           with arguments PROT_READ|PROT_EXEC and MAP_SHARED, fail. */
+        unlink (filename);
+# endif
+        if (ftruncate (fd, mapping_size) < 0)
+          return 4;
+        start = mmap (NULL, mapping_size, PROT_READ | PROT_EXEC, MAP_SHARED,
+                      fd, 0);
+        start_rw = mmap (NULL, mapping_size, PROT_READ | PROT_WRITE, MAP_SHARED,
+                         fd, 0);
+        if (start == (char *) (-1) || start_rw == (char *) (-1))
+          return 5;
+      }
+    end = start + mapping_size;
+  }
 
   int (*f) (void) = return1;
   CODE (f) = start;
 
   /* We assume that the code is not longer than 64 bytes and that we
      can access the full 64 bytes for reading.  */
-  memcpy (start, return1, 64);
+  memcpy (start_rw, return1, 64);
   clear_cache (start, end);
   ASSERT (f () == 1);
 
-  memcpy (start, return2, 64);
+  memcpy (start_rw, return2, 64);
   clear_cache (start, end);
   ASSERT (f () == 2);
 
