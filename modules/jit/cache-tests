@@ -1,19 +1,20 @@
 Files:
 tests/jit/test-cache.c
 tests/macros.h
+m4/mmap-anon.m4
 
 Status:
 unportable-test
 
 Depends-on:
+clean-temp-simple
 getpagesize
 host-cpu-c-abi
-pagealign_alloc
 stdint
 
 configure.ac:
 AC_CHECK_HEADERS_ONCE([sys/mman.h])
-AC_CHECK_FUNCS_ONCE([mprotect])
+gl_FUNC_MMAP_ANON
 
 Makefile.am:
 TESTS += test-cache
