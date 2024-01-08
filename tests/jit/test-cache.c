@@ -107,7 +107,14 @@ return2 (void)
 int
 main ()
 {
-#if !HAVE_SYS_MMAN_H
+#if defined _RET_PROTECTOR
+  /* The OpenBSD "retguard" stack protector produces code for 'return1' and
+     'return2' that is not position independent, and there is no clang
+     attribute for turning this instrumentation off for specific functions.
+     If this stack protector has not been disabled through a configure test,
+     we need to skip this unit test.  */
+  return 77;
+#elif !HAVE_SYS_MMAN_H
   return 77;
 #else
   int const pagesize = getpagesize ();

@@ -2,6 +2,7 @@ Files:
 tests/jit/test-cache.c
 tests/macros.h
 m4/mmap-anon.m4
+m4/warnings.m4
 
 Status:
 unportable-test
@@ -15,8 +16,14 @@ stdint
 configure.ac:
 AC_CHECK_HEADERS_ONCE([sys/mman.h])
 gl_FUNC_MMAP_ANON
+dnl Disable the OpenBSD "retguard" stack protector for this test.
+gl_COMPILER_OPTION_IF([-fno-ret-protector],
+  [DISABLE_OPENBSD_RETGUARD='-fno-ret-protector'],
+  [DISABLE_OPENBSD_RETGUARD=])
+AC_SUBST([DISABLE_OPENBSD_RETGUARD])
 
 Makefile.am:
 TESTS += test-cache
 check_PROGRAMS += test-cache
 test_cache_SOURCES = jit/test-cache.c
+test_cache_CFLAGS = $(AM_CFLAGS) $(DISABLE_OPENBSD_RETGUARD)
