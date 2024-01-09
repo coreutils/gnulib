@@ -99,6 +99,30 @@ clear_cache (void *start, void *end)
       addr += 8;
     }
   while (addr < end_addr);
+#elif (defined __GNUC__ || defined __clang__) && defined __hppa
+  /* Use inline assembly.  */
+  /* The PA-RISC 1.1 Architecture and Instruction Set Reference Manual says:
+     "A cache line can be 16, 32, or 64 bytes in length."  */
+  /* XXX Is this good enough, or do we need the space register business
+     like in gcc/gcc/config/pa/pa.md and libffcall/trampoline/cache-hppa.c?  */
+  intptr_t cache_line_size = 16;
+  uintptr_t addr = (uintptr_t) start & ~cache_line_size;
+  uintptr_t end_addr = (uintptr_t) end;
+  do
+    {
+      asm volatile ("fdc 0(0,%0)"
+             "\n\t" "sync"
+             "\n\t" "fic 0(0,%0)"
+             "\n\t" "sync" : : "r" (addr));
+      addr += cache_line_size;
+    }
+  while (addr < end_addr);
+  asm volatile ("nop"
+         "\n\t" "nop"
+         "\n\t" "nop"
+         "\n\t" "nop"
+         "\n\t" "nop"
+         "\n\t" "nop");
 #elif (defined __GNUC__ || defined __clang__) && defined __m68k__ && defined __linux__
   /* Use inline assembly to call the 'cacheflush' system call.
      sys_cacheflush (addr, scope, cache, len)
