@@ -22,6 +22,7 @@ gl_COMPILER_OPTION_IF([-fno-ret-protector],
   [DISABLE_OPENBSD_RETGUARD='-fno-ret-protector'],
   [DISABLE_OPENBSD_RETGUARD=])
 AC_SUBST([DISABLE_OPENBSD_RETGUARD])
+AC_REQUIRE([AC_C_INLINE])
 
 Makefile.am:
 TESTS += test-cache
