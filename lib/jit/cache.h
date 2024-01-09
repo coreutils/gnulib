@@ -123,6 +123,26 @@ clear_cache (void *start, void *end)
          "\n\t" "nop"
          "\n\t" "nop"
          "\n\t" "nop");
+#elif (defined __GNUC__ || defined __clang__) && defined __ia64
+  /* Use inline assembly.  */
+  /* The Intel IA-64 Architecture Software Developer's Manual volume 3 says:
+     "The line size affected is at least 32 bytes."  */
+  intptr_t cache_line_size = 32;
+  uintptr_t addr = (uintptr_t) start & ~cache_line_size;
+  uintptr_t end_addr = (uintptr_t) end;
+  do
+    {
+      /* Flush a cache line.  */
+      asm volatile ("fc %0" : : "r" (addr));
+      addr += cache_line_size;
+    }
+  while (addr < end_addr);
+  /* Ensure the preceding 'fc' instructions become effective in the local
+     processor and all remote processors.  */
+  asm volatile ("sync.i");
+  /* Ensure the preceding 'sync.i' instruction becomes effective in the
+     local processor's instruction cache.  */
+  asm volatile ("srlz.i");
 #elif (defined __GNUC__ || defined __clang__) && defined __m68k__ && defined __linux__
   /* Use inline assembly to call the 'cacheflush' system call.
      sys_cacheflush (addr, scope, cache, len)
