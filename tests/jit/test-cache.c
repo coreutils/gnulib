@@ -137,17 +137,96 @@ return2 (void)
   return 2;
 }
 
+/* For those platforms which map code with PROT_EXEC (as opposed to
+   PROT_READ | PROT_EXEC), not allowing us to read from the code area at
+   run time, here is a copy of the code of the functions 'return1' and
+   'return2'.  Produced with a cross-compiler like this:
+     $ <cpu>-linux-gnu-gcc -O2 -fomit-frame-pointer -c foo.c
+     $ <cpu>-linux-gnu-objdump -d -r foo.o
+ */
+
+#if defined __x86_64__ || defined __x86_64_x32__ || defined __i386__
+unsigned char const return1_code[] = { 0xb8,0x01,0x00,0x00,0x00, 0xc3 };
+unsigned char const return2_code[] = { 0xb8,0x02,0x00,0x00,0x00, 0xc3 };
+#endif
+#if defined __alpha__
+unsigned int const return1_code[] = { 0x201f0001, 0x6bfa8001 };
+unsigned int const return2_code[] = { 0x201f0002, 0x6bfa8001 };
+#endif
+#if defined __arm64__ || defined __arm64_ilp32__
+unsigned int const return1_code[] = { 0x52800020, 0xd65f03c0 };
+unsigned int const return2_code[] = { 0x52800040, 0xd65f03c0 };
+#elif defined __arm__ || defined __armhf__
+unsigned int const return1_code[] = { 0xe3a00001, 0xe1a0f00e };
+unsigned int const return2_code[] = { 0xe3a00002, 0xe1a0f00e };
+#endif
+#if defined __hppa64__
+unsigned int const return1_code[] = { 0xe840d000, 0x341c0002 };
+unsigned int const return2_code[] = { 0xe840d000, 0x341c0004 };
+#elif defined __hppa__
+unsigned int const return1_code[] = { 0xe840c000, 0x341c0002 };
+unsigned int const return2_code[] = { 0xe840c000, 0x341c0004 };
+#endif
+#if defined __ia64__ || defined __ia64_ilp32__
+unsigned char const return1_code[] =
+  { 0x11,0x00,0x00,0x00,0x01,0x00,0x80,0x08,0x00,0x00,0x48,0x80,0x08,0x00,0x84,0x00 };
+unsigned char const return2_code[] =
+  { 0x11,0x00,0x00,0x00,0x01,0x00,0x80,0x10,0x00,0x00,0x48,0x80,0x08,0x00,0x84,0x00 };
+#endif
+#if defined __loongarch64__
+unsigned int const return1_code[] = { 0x02800404, 0x4c000020 };
+unsigned int const return2_code[] = { 0x02800804, 0x4c000020 };
+#endif
+#if defined __m68k__
+unsigned short const return1_code[] = { 0x7001, 0x4e75 };
+unsigned short const return2_code[] = { 0x7002, 0x4e75 };
+#endif
+#if defined __mips64__ || defined __mipsn32__ || defined __mips__
+unsigned int const return1_code[] = { 0x03e00008, 0x24020001 };
+unsigned int const return2_code[] = { 0x03e00008, 0x24020002};
+#endif
+#if defined __powerpc64__ || defined __powerpc64_elfv2__ || defined __powerpc__
+unsigned int const return1_code[] = { 0x38600001, 0x4e800020 };
+unsigned int const return2_code[] = { 0x38600002, 0x4e800020 };
+#endif
+#if defined __riscv64__ || defined __riscv32__
+unsigned short const return1_code[] = { 0x4505, 0x8082 };
+unsigned short const return2_code[] = { 0x4509, 0x8082 };
+#endif
+#if defined __s390x__
+unsigned short const return1_code[] = { 0xa729,0x0001, 0x07fe, 0x0707 };
+unsigned short const return2_code[] = { 0xa729,0x0002, 0x07fe, 0x0707 };
+#elif defined __s390__
+unsigned short const return1_code[] = { 0xa728,0x0001, 0x07fe, 0x0707 };
+unsigned short const return2_code[] = { 0xa728,0x0002, 0x07fe, 0x0707 };
+#endif
+#if defined __sparc64__ || defined __sparc__
+unsigned int const return1_code[] = { 0x81c3e008, 0x90102001 };
+unsigned int const return2_code[] = { 0x81c3e008, 0x90102002 };
+#endif
+
 int
 main ()
 {
-#if defined _RET_PROTECTOR
+  void const *code_of_return1;
+  void const *code_of_return2;
+#if defined __OpenBSD__ || defined _RET_PROTECTOR
+  /* OpenBSD maps code with PROT_EXEC (as opposed to PROT_READ | PROT_EXEC).
+     We need to use predetermined code for 'return1' and 'return2'.  */
   /* The OpenBSD "retguard" stack protector produces code for 'return1' and
      'return2' that is not position independent, and there is no clang
      attribute for turning this instrumentation off for specific functions.
      If this stack protector has not been disabled through a configure test,
-     we need to skip this unit test.  */
-  return 77;
+     we need to use predetermined code for 'return1' and 'return2'.  */
+  code_of_return1 = return1_code;
+  code_of_return2 = return2_code;
 #else
+  code_of_return1 = CODE (return1);
+  code_of_return2 = CODE (return2);
+#endif
+  /* We assume that the code is not longer than 64 bytes.  */
+  size_t code_size_bound = 64;
+
   int const pagesize = getpagesize ();
   int const mapping_size = 1 * pagesize;
   /* Bounds of an executable memory region.  */
@@ -158,7 +237,7 @@ main ()
 
   /* Initialization.  */
   {
-# if defined _WIN32 && !defined __CYGWIN__
+#if defined _WIN32 && !defined __CYGWIN__
     /* VirtualAlloc
        <https://learn.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-virtualalloc>
        <https://learn.microsoft.com/en-us/windows/win32/memory/memory-protection-constants> */
@@ -167,16 +246,16 @@ main ()
     if (start == NULL)
       return 1;
     start_rw = start;
-# else
-#  ifdef HAVE_MAP_ANONYMOUS
+#else
+# ifdef HAVE_MAP_ANONYMOUS
     int flags = MAP_ANONYMOUS | MAP_PRIVATE;
     int fd = -1;
-#  else
+# else
     int flags = MAP_FILE | MAP_PRIVATE;
     int fd = open ("/dev/zero", O_RDONLY | O_CLOEXEC, 0666);
     if (fd < 0)
       return 1;
-#  endif
+# endif
     start = mmap (NULL, mapping_size, PROT_READ | PROT_WRITE | PROT_EXEC,
                   flags, fd, 0);
     if (start != (char *) (-1))
@@ -194,20 +273,20 @@ main ()
         sprintf (filename,
                  "%s/gnulib-test-cache-%u-%d-%ld",
                  "/tmp", (unsigned int) getuid (), (int) getpid (), random ());
-#  ifdef KEEP_TEMP_FILE_VISIBLE
+# ifdef KEEP_TEMP_FILE_VISIBLE
         if (register_temporary_file (filename) < 0)
           return 2;
-#  endif
+# endif
         fd = open (filename, O_CREAT | O_RDWR | O_TRUNC, 0700);
         if (fd < 0)
           return 3;
-#  ifndef KEEP_TEMP_FILE_VISIBLE
+# ifndef KEEP_TEMP_FILE_VISIBLE
         /* Remove the file from the file system as soon as possible, to make
            sure there is no leftover after this process terminates or crashes.
            On macOS 11.2, this does not work: It would make the mmap call below,
            with arguments PROT_READ|PROT_EXEC and MAP_SHARED, fail. */
         unlink (filename);
-#  endif
+# endif
         if (ftruncate (fd, mapping_size) < 0)
           return 4;
         start = mmap (NULL, mapping_size, PROT_READ | PROT_EXEC, MAP_SHARED,
@@ -217,23 +296,20 @@ main ()
         if (start == (char *) (-1) || start_rw == (char *) (-1))
           return 5;
       }
-# endif
+#endif
     end = start + mapping_size;
   }
 
   int (*f) (void) = COPY_FUNCPTR (return1);
   CODE (f) = start;
 
-  /* We assume that the code is not longer than 64 bytes and that we
-     can access the full 64 bytes for reading.  */
-  memcpy (start_rw, CODE (return1), 64);
+  memcpy (start_rw, code_of_return1, code_size_bound);
   clear_cache (start, end);
   ASSERT (f () == 1);
 
-  memcpy (start_rw, CODE (return2), 64);
+  memcpy (start_rw, code_of_return2, code_size_bound);
   clear_cache (start, end);
   ASSERT (f () == 2);
 
   return 0;
-#endif  /* !(HAVE_SYS_MMAN_H && HAVE_PROTECT) */
 }
