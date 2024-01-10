@@ -44,7 +44,7 @@
     however, is not universally true, see:
     https://git.savannah.gnu.org/gitweb/?p=libffcall.git;a=blob;f=porting-tools/abis/function-pointer.txt.  */
 
-#if ((defined __powerpc__ || defined __powerpc64__) && defined _AIX) || (defined __powerpc64__ && defined __linux__)
+#if ((defined __powerpc__ || defined __powerpc64__) && defined _AIX) || (defined __powerpc64__ && !defined __powerpc64_elfv2__ && defined __linux__)
 struct func
 {
   void *code_address;
