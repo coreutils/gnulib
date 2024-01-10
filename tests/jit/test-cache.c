@@ -210,6 +210,8 @@ main ()
 {
   void const *code_of_return1;
   void const *code_of_return2;
+  size_t size_of_return1;
+  size_t size_of_return2;
 #if defined __OpenBSD__ || defined _RET_PROTECTOR
   /* OpenBSD maps code with PROT_EXEC (as opposed to PROT_READ | PROT_EXEC).
      We need to use predetermined code for 'return1' and 'return2'.  */
@@ -220,12 +222,15 @@ main ()
      we need to use predetermined code for 'return1' and 'return2'.  */
   code_of_return1 = return1_code;
   code_of_return2 = return2_code;
+  size_of_return1 = sizeof (return1_code);
+  size_of_return2 = sizeof (return2_code);
 #else
   code_of_return1 = CODE (return1);
   code_of_return2 = CODE (return2);
-#endif
   /* We assume that the code is not longer than 64 bytes.  */
-  size_t code_size_bound = 64;
+  size_of_return1 = 64;
+  size_of_return2 = 64;
+#endif
 
   int const pagesize = getpagesize ();
   int const mapping_size = 1 * pagesize;
@@ -303,11 +308,11 @@ main ()
   int (*f) (void) = COPY_FUNCPTR (return1);
   CODE (f) = start;
 
-  memcpy (start_rw, code_of_return1, code_size_bound);
+  memcpy (start_rw, code_of_return1, size_of_return1);
   clear_cache (start, end);
   ASSERT (f () == 1);
 
-  memcpy (start_rw, code_of_return2, code_size_bound);
+  memcpy (start_rw, code_of_return2, size_of_return2);
   clear_cache (start, end);
   ASSERT (f () == 2);
 
