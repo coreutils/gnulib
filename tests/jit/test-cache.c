@@ -124,7 +124,11 @@ funcptr_to_structptr (void * volatile funcptr)
 }
 # else
 #  define structptr_to_funcptr(p) ((void *) (p))
-#  define funcptr_to_structptr(funcptr) ((struct func *) (funcptr))
+static inline struct func *
+funcptr_to_structptr (void * volatile funcptr)
+{
+  return (struct func *) funcptr;
+}
 # endif
 static inline struct func *
 xcopy_structptr (struct func *structptr)
