@@ -894,15 +894,6 @@ func_hardlink ()
   }
 }
 
-# The 'join' program does not exist on all platforms.  Where it exists,
-# we can use it.  Where not, bail out.
-if (type join) >/dev/null 2>&1; then
-  :
-else
-  echo "$progname: 'join' program not found. Consider installing GNU coreutils." >&2
-  func_exit 1
-fi
-
 # Ensure an 'echo' command that
 #   1. does not interpret backslashes and
 #   2. does not print an error message "broken pipe" when writing into a pipe
@@ -1069,6 +1060,38 @@ else
 fi
 if test "X$1" = "X--no-reexec"; then
   shift
+fi
+
+func_gnulib_dir
+func_tmpdir
+trap 'exit_status=$?
+      if test "$signal" != EXIT; then
+        echo "caught signal SIG$signal" >&2
+      fi
+      rm -rf "$tmp"
+      exit $exit_status' EXIT
+for signal in HUP INT QUIT PIPE TERM; do
+  trap '{ signal='$signal'; func_exit 1; }' $signal
+done
+signal=EXIT
+
+# The 'join' program does not exist on all platforms, and
+# on macOS 12.6, FreeBSD 14.0, NetBSD 9.3 it is buggy, see
+# <https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=232405>.
+# In these cases, bail out. Otherwise, we can use it.
+if (type join) >/dev/null 2>&1; then
+  echo a > "$tmp"/join-input-1
+  { echo; echo a; } > "$tmp"/join-input-2
+  if LC_ALL=C join "$tmp"/join-input-1 "$tmp"/join-input-2 | grep a >/dev/null \
+     && LC_ALL=C join "$tmp"/join-input-2 "$tmp"/join-input-1 | grep a >/dev/null; then
+    :
+  else
+    echo "$progname: 'join' program is buggy. Consider installing GNU coreutils." >&2
+    func_exit 1
+  fi
+else
+  echo "$progname: 'join' program not found. Consider installing GNU coreutils." >&2
+  func_exit 1
 fi
 
 # Unset CDPATH.  Otherwise, output from 'cd dir' can surprise callers.
@@ -1689,19 +1712,6 @@ func_determine_path_separator
     */ ) auxdir=`echo "$auxdir" | sed -e "$sed_trimtrailingslashes"` ;;
   esac
 }
-
-func_gnulib_dir
-func_tmpdir
-trap 'exit_status=$?
-      if test "$signal" != EXIT; then
-        echo "caught signal SIG$signal" >&2
-      fi
-      rm -rf "$tmp"
-      exit $exit_status' EXIT
-for signal in HUP INT QUIT PIPE TERM; do
-  trap '{ signal='$signal'; func_exit 1; }' $signal
-done
-signal=EXIT
 
 # Note: The 'eval' silences stderr output in dash.
 if (declare -A x && { x[f/2]='foo'; x[f/3]='bar'; eval test '${x[f/2]}' = foo; }) 2>/dev/null; then
