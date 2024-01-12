@@ -29,3 +29,4 @@ TESTS += test-cache
 check_PROGRAMS += test-cache
 test_cache_SOURCES = jit/test-cache.c
 test_cache_CFLAGS = $(AM_CFLAGS) $(DISABLE_OPENBSD_RETGUARD)
+test_cache_LDADD = $(LDADD) $(LIBINTL)
