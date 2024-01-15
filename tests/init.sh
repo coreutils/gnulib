@@ -436,13 +436,13 @@ setup_ ()
   # and Zero-length entries.
   saved_IFS="$IFS"; IFS="$PATH_SEPARATOR"
   new_PATH=
-  sep_=
   for dir in $PATH; do
     IFS="$save_IFS"
     case "$dir" in
-      /*) test -d "$dir/." || continue
-          new_PATH="${new_PATH}${sep_}${dir}"
-          sep_=':';;
+      /*)
+        test -d "$dir/." || continue
+        new_PATH="${new_PATH}${new_PATH:+$PATH_SEPARATOR}${dir}"
+        ;;
     esac
   done
   IFS="$saved_IFS"
