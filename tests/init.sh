@@ -434,7 +434,7 @@ setup_ ()
 
   # Remove relative and non-accessible directories from PATH, including '.'
   # and Zero-length entries.
-  saved_IFS="$IFS"; IFS="$PATH_SEPARATOR"
+  save_IFS="$IFS"; IFS="$PATH_SEPARATOR"
   new_PATH=
   for dir in $PATH; do
     IFS="$save_IFS"
@@ -445,7 +445,7 @@ setup_ ()
         ;;
     esac
   done
-  IFS="$saved_IFS"
+  IFS="$save_IFS"
   PATH="$new_PATH"
   export PATH
 }
