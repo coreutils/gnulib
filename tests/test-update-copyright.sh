@@ -124,6 +124,13 @@ cat > $TMP-8 <<EOF
 Copy$ight (C) 2008 Free Software Foundation, Inc.
 Copy$ight (C) 2008 Free Software Foundation, Inc.
 EOF
+cat > $TMP-9 <<EOF
+# Copy$ight (C) 2008 Free Software Foundation, Inc.
+
+Copy$ight (C) 2007 Free Software Foundation, Inc.
+
+Copy$ight (C) 2008 Free Software Foundation, Inc.
+EOF
 
 UPDATE_COPYRIGHT_YEAR=2009 \
   update-copyright $TMP-? 1> $TMP-stdout 2> $TMP-stderr
@@ -169,6 +176,20 @@ EOF
 compare - $TMP-8 <<EOF || exit 1
 Copy$ight (C) 2008, 2009 Free Software Foundation, Inc.
 Copy$ight (C) 2008, 2009 Free Software Foundation, Inc.
+EOF
+
+# Note that expecting "2007, 2009" on the third copyright line below
+# looks wrong since the corresponding copyright year was "2008".
+# However, the premise of this test (having inconsistent copyright dates
+# with the same holder) is not worth handling. What happens is that the
+# xform for the preceding line matches any list of year numbers with the
+# same prefix and holder.
+compare - $TMP-9 <<EOF || exit 1
+# Copy$ight (C) 2008, 2009 Free Software Foundation, Inc.
+
+Copy$ight (C) 2007, 2009 Free Software Foundation, Inc.
+
+Copy$ight (C) 2007, 2009 Free Software Foundation, Inc.
 EOF
 
 UPDATE_COPYRIGHT_YEAR=2010 UPDATE_COPYRIGHT_USE_INTERVALS=1 \
