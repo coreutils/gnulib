@@ -439,7 +439,7 @@ setup_ ()
   for dir in $PATH; do
     IFS="$save_IFS"
     case "$dir" in
-      /*)
+      [\\/]* | ?:[\\/]*)
         test -d "$dir/." || continue
         new_PATH="${new_PATH}${new_PATH:+$PATH_SEPARATOR}${dir}"
         ;;
