@@ -191,7 +191,7 @@ posixtime (time_t *p, const char *s, unsigned int syntax_bits)
              | (tm0.tm_min ^ tm1.tm_min)
              | (tm0.tm_sec ^ tm1.tm_sec)))
         {
-          if (ckd_add (&t, t, leapsec))
+          if (ckd_add (&t, t, +leapsec))
             return false;
           *p = t;
           return true;
