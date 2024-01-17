@@ -1,4 +1,4 @@
-# javaexec.m4 serial 10
+# javaexec.m4 serial 11
 dnl Copyright (C) 2001-2003, 2006, 2009-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -34,7 +34,7 @@ AC_DEFUN([gt_JAVAEXEC],
     popdef([AC_CHECKING])dnl
     popdef([AC_MSG_CHECKING])dnl
     m4_if([$1], , , [
-      save_CLASSPATH="$CLASSPATH"
+      gt_saved_CLASSPATH="$CLASSPATH"
       CLASSPATH="$2"${CLASSPATH+"$CLASSPATH_SEPARATOR$CLASSPATH"}
       ])
     export CLASSPATH
@@ -60,7 +60,7 @@ AC_DEFUN([gt_JAVAEXEC],
       fi
     fi
     m4_if([$1], , , [
-      CLASSPATH="$save_CLASSPATH"
+      CLASSPATH="$gt_saved_CLASSPATH"
     ])
   fi
   if test -n "$HAVE_JAVAEXEC"; then

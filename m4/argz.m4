@@ -7,7 +7,7 @@
 # unlimited permission to copy and/or distribute it, with or without
 # modifications, as long as this notice is preserved.
 
-# serial 14 argz.m4
+# serial 15 argz.m4
 
 AC_DEFUN([gl_FUNC_ARGZ],
 [gl_PREREQ_ARGZ
@@ -50,10 +50,10 @@ AS_IF([! $GL_GENERATE_ARGZ_H],
              lt_cv_sys_argz_works="$gl_cross_guess_normal"
            else
              lt_sed_extract_leading_digits='s/^\([0-9\.]*\).*/\1/'
-             save_IFS=$IFS
+             saved_IFS=$IFS
              IFS=-.
              set x `uname -r | sed -e "$lt_sed_extract_leading_digits"`
-             IFS=$save_IFS
+             IFS=$saved_IFS
              lt_os_major=${2-0}
              lt_os_minor=${3-0}
              lt_os_micro=${4-0}

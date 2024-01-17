@@ -1,4 +1,4 @@
-# pthread_rwlock_rdlock.m4 serial 7
+# pthread_rwlock_rdlock.m4 serial 8
 dnl Copyright (C) 2017-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -38,7 +38,7 @@ AC_DEFUN([gl_PTHREAD_RWLOCK_RDLOCK_PREFER_WRITER],
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CACHE_CHECK([whether pthread_rwlock_rdlock prefers a writer to a reader],
     [gl_cv_pthread_rwlock_rdlock_prefer_writer],
-    [save_LIBS="$LIBS"
+    [saved_LIBS="$LIBS"
      LIBS="$LIBS $LIBMULTITHREAD"
      AC_RUN_IFELSE(
        [AC_LANG_SOURCE([[
@@ -174,7 +174,7 @@ main ()
           *)                  gl_cv_pthread_rwlock_rdlock_prefer_writer="$gl_cross_guess_normal" ;;
          esac
        ])
-     LIBS="$save_LIBS"
+     LIBS="$saved_LIBS"
     ])
   case "$gl_cv_pthread_rwlock_rdlock_prefer_writer" in
     *yes)

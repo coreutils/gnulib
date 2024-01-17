@@ -1,4 +1,4 @@
-# hypotl.m4 serial 13
+# hypotl.m4 serial 14
 dnl Copyright (C) 2012-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -15,17 +15,17 @@ AC_DEFUN([gl_FUNC_HYPOTL],
 
   dnl Test whether hypotl() exists. Assume that hypotl(), if it exists, is
   dnl defined in the same library as hypot().
-  save_LIBS="$LIBS"
+  saved_LIBS="$LIBS"
   LIBS="$LIBS $HYPOT_LIBM"
   AC_CHECK_FUNCS([hypotl])
-  LIBS="$save_LIBS"
+  LIBS="$saved_LIBS"
   if test $ac_cv_func_hypotl = yes; then
     HYPOTL_LIBM="$HYPOT_LIBM"
 
-    save_LIBS="$LIBS"
+    saved_LIBS="$LIBS"
     LIBS="$LIBS $HYPOTL_LIBM"
     gl_FUNC_HYPOTL_WORKS
-    LIBS="$save_LIBS"
+    LIBS="$saved_LIBS"
     case "$gl_cv_func_hypotl_works" in
       *yes) ;;
       *) REPLACE_HYPOTL=1 ;;
@@ -37,7 +37,7 @@ AC_DEFUN([gl_FUNC_HYPOTL],
         AC_CACHE_CHECK([whether hypotl works according to ISO C 99 with IEC 60559],
           [gl_cv_func_hypotl_ieee],
           [
-            save_LIBS="$LIBS"
+            saved_LIBS="$LIBS"
             LIBS="$LIBS $HYPOTL_LIBM"
             AC_RUN_IFELSE(
               [AC_LANG_SOURCE([[
@@ -81,7 +81,7 @@ int main (int argc, char *argv[])
                  *)                  gl_cv_func_hypotl_ieee="$gl_cross_guess_normal" ;;
                esac
               ])
-            LIBS="$save_LIBS"
+            LIBS="$saved_LIBS"
           ])
         case "$gl_cv_func_hypotl_ieee" in
           *yes) ;;

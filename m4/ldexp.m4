@@ -1,4 +1,4 @@
-# ldexp.m4 serial 2
+# ldexp.m4 serial 3
 dnl Copyright (C) 2010-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -15,7 +15,7 @@ AC_DEFUN([gl_FUNC_LDEXP],
     AC_CACHE_CHECK([whether ldexp() can be used with libm],
       [gl_cv_func_ldexp_in_libm],
       [
-        save_LIBS="$LIBS"
+        saved_LIBS="$LIBS"
         LIBS="$LIBS -lm"
         AC_LINK_IFELSE(
           [AC_LANG_PROGRAM([[#ifndef __NO_MATH_INLINES
@@ -27,17 +27,17 @@ AC_DEFUN([gl_FUNC_LDEXP],
                            [[return ldexp (x, -1) > 0;]])],
           [gl_cv_func_ldexp_in_libm=yes],
           [gl_cv_func_ldexp_in_libm=no])
-        LIBS="$save_LIBS"
+        LIBS="$saved_LIBS"
       ])
     if test $gl_cv_func_ldexp_in_libm = yes; then
       LDEXP_LIBM=-lm
     fi
   fi
 
-  save_LIBS="$LIBS"
+  saved_LIBS="$LIBS"
   LIBS="$LIBS $LDEXP_LIBM"
   gl_FUNC_LDEXP_WORKS
-  LIBS="$save_LIBS"
+  LIBS="$saved_LIBS"
   case "$gl_cv_func_ldexp_works" in
     *yes) ;;
     *) REPLACE_LDEXP=1 ;;

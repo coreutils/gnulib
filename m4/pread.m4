@@ -1,4 +1,4 @@
-# pread.m4 serial 8
+# pread.m4 serial 9
 dnl Copyright (C) 2009-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -29,7 +29,7 @@ changequote(,)dnl
           *)     gl_cv_func_pread_works="guessing yes" ;;
         esac
 changequote([,])dnl
-        gl_save_CPPFLAGS="$CPPFLAGS"
+        gl_saved_CPPFLAGS="$CPPFLAGS"
         CPPFLAGS="$CPPFLAGS -D_FILE_OFFSET_BITS=64"
         AC_RUN_IFELSE(
           [AC_LANG_PROGRAM([[
@@ -73,7 +73,7 @@ changequote([,])dnl
           [gl_cv_func_pread_works=yes],
           [gl_cv_func_pread_works=no],
           [:])
-        CPPFLAGS="$gl_save_CPPFLAGS"
+        CPPFLAGS="$gl_saved_CPPFLAGS"
       ])
     case "$gl_cv_func_pread_works" in
       *yes) ;;

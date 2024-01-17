@@ -1,4 +1,4 @@
-# asinf.m4 serial 3
+# asinf.m4 serial 4
 dnl Copyright (C) 2011-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -14,10 +14,10 @@ AC_DEFUN([gl_FUNC_ASINF],
 
   dnl Test whether asinf() exists. Assume that asinf(), if it exists, is
   dnl defined in the same library as asin().
-  save_LIBS="$LIBS"
+  saved_LIBS="$LIBS"
   LIBS="$LIBS $ASIN_LIBM"
   AC_CHECK_FUNCS([asinf])
-  LIBS="$save_LIBS"
+  LIBS="$saved_LIBS"
   if test $ac_cv_func_asinf = yes; then
     ASINF_LIBM="$ASIN_LIBM"
   else

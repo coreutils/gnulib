@@ -1,4 +1,4 @@
-# sinf.m4 serial 3
+# sinf.m4 serial 4
 dnl Copyright (C) 2011-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -14,10 +14,10 @@ AC_DEFUN([gl_FUNC_SINF],
 
   dnl Test whether sinf() exists. Assume that sinf(), if it exists, is
   dnl defined in the same library as sin().
-  save_LIBS="$LIBS"
+  saved_LIBS="$LIBS"
   LIBS="$LIBS $SIN_LIBM"
   AC_CHECK_FUNCS([sinf])
-  LIBS="$save_LIBS"
+  LIBS="$saved_LIBS"
   if test $ac_cv_func_sinf = yes; then
     SINF_LIBM="$SIN_LIBM"
   else

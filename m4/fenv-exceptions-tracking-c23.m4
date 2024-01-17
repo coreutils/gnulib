@@ -1,4 +1,4 @@
-# fenv-exceptions-tracking-c23.m4 serial 1
+# fenv-exceptions-tracking-c23.m4 serial 2
 dnl Copyright (C) 2023-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -23,7 +23,7 @@ AC_DEFUN([gl_FENV_EXCEPTIONS_TRACKING_C23],
       [if test $gl_cv_func_feenableexcept_no_libm = yes \
           || test $gl_cv_func_feenableexcept_in_libm = yes; then
          dnl A platform that has feenableexcept.
-         save_LIBS="$LIBS"
+         saved_LIBS="$LIBS"
          if test $gl_cv_func_feenableexcept_no_libm != yes; then
            LIBS="$LIBS -lm"
          fi
@@ -61,7 +61,7 @@ changequote([,])dnl
               *) gl_cv_func_fesetexcept_works="$gl_cross_guess_normal" ;;
             esac
            ])
-         LIBS="$save_LIBS"
+         LIBS="$saved_LIBS"
        else
          gl_cv_func_fesetexcept_works="guessing yes"
        fi

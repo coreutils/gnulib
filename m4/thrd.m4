@@ -1,4 +1,4 @@
-# thrd.m4 serial 4
+# thrd.m4 serial 5
 dnl Copyright (C) 2019-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -27,7 +27,7 @@ AC_DEFUN([gl_FUNC_THRD_JOIN],
     dnl On Solaris 11.4, thrd_join crashes when the second argument is NULL.
     AC_CACHE_CHECK([whether thrd_join with NULL argument works],
       [gl_cv_func_thrd_join_null_works],
-      [save_LIBS="$LIBS"
+      [saved_LIBS="$LIBS"
        LIBS="$LIBS $LIBSTDTHREAD"
        AC_RUN_IFELSE(
          [AC_LANG_PROGRAM(
@@ -53,7 +53,7 @@ AC_DEFUN([gl_FUNC_THRD_JOIN],
             *)        gl_cv_func_thrd_join_null_works="guessing yes" ;;
           esac
          ])
-       LIBS="$save_LIBS"
+       LIBS="$saved_LIBS"
       ])
     case "$gl_cv_func_thrd_join_null_works" in
       *yes) ;;

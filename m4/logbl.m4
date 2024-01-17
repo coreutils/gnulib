@@ -1,4 +1,4 @@
-# logbl.m4 serial 7
+# logbl.m4 serial 8
 dnl Copyright (C) 2012-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -19,10 +19,10 @@ AC_DEFUN([gl_FUNC_LOGBL],
   gl_MATHFUNC([logbl], [long double], [(long double)])
   if test $gl_cv_func_logbl_no_libm = yes \
      || test $gl_cv_func_logbl_in_libm = yes; then
-    save_LIBS="$LIBS"
+    saved_LIBS="$LIBS"
     LIBS="$LIBS $LOGBL_LIBM"
     gl_FUNC_LOGBL_WORKS
-    LIBS="$save_LIBS"
+    LIBS="$saved_LIBS"
     case "$gl_cv_func_logbl_works" in
       *yes) ;;
       *) REPLACE_LOGBL=1 ;;

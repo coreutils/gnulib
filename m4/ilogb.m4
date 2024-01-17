@@ -1,4 +1,4 @@
-# ilogb.m4 serial 9
+# ilogb.m4 serial 10
 dnl Copyright (C) 2010-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -12,10 +12,10 @@ AC_DEFUN([gl_FUNC_ILOGB],
   gl_MATHFUNC([ilogb], [int], [(double)])
   if test $gl_cv_func_ilogb_no_libm = yes \
      || test $gl_cv_func_ilogb_in_libm = yes; then
-    save_LIBS="$LIBS"
+    saved_LIBS="$LIBS"
     LIBS="$LIBS $ILOGB_LIBM"
     gl_FUNC_ILOGB_WORKS
-    LIBS="$save_LIBS"
+    LIBS="$saved_LIBS"
     case "$gl_cv_func_ilogb_works" in
       *yes) ;;
       *) REPLACE_ILOGB=1 ;;

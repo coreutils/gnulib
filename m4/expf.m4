@@ -1,4 +1,4 @@
-# expf.m4 serial 3
+# expf.m4 serial 4
 dnl Copyright (C) 2011-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -14,10 +14,10 @@ AC_DEFUN([gl_FUNC_EXPF],
 
   dnl Test whether expf() exists. Assume that expf(), if it exists, is
   dnl defined in the same library as exp().
-  save_LIBS="$LIBS"
+  saved_LIBS="$LIBS"
   LIBS="$LIBS $EXP_LIBM"
   AC_CHECK_FUNCS([expf])
-  LIBS="$save_LIBS"
+  LIBS="$saved_LIBS"
   if test $ac_cv_func_expf = yes; then
     EXPF_LIBM="$EXP_LIBM"
   else

@@ -1,4 +1,4 @@
-# fenv-environment.m4 serial 1
+# fenv-environment.m4 serial 2
 dnl Copyright (C) 2023-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -16,7 +16,7 @@ AC_DEFUN([gl_FENV_ENVIRONMENT],
     [gl_cv_var_FE_DFL_ENV_works],
     [case "$host_os" in
        netbsd* | cygwin*)
-         save_LIBS="$LIBS"
+         saved_LIBS="$LIBS"
          LIBS="$LIBS -lm"
          AC_LINK_IFELSE(
            [AC_LANG_PROGRAM([[
@@ -29,7 +29,7 @@ AC_DEFUN([gl_FENV_ENVIRONMENT],
            ],
            [gl_cv_var_FE_DFL_ENV_works=yes],
            [gl_cv_var_FE_DFL_ENV_works=no])
-         LIBS="$save_LIBS"
+         LIBS="$saved_LIBS"
          ;;
        *)
          gl_cv_var_FE_DFL_ENV_works="guessing yes"
@@ -118,7 +118,7 @@ AC_DEFUN([gl_FENV_ENVIRONMENT],
            ;;
          *)
            dnl This test fails on FreeBSD 12.2/arm64.
-           save_LIBS="$LIBS"
+           saved_LIBS="$LIBS"
            LIBS="$LIBS $FENV_ENVIRONMENT_LIBM"
            AC_RUN_IFELSE(
              [AC_LANG_PROGRAM([[
@@ -134,7 +134,7 @@ AC_DEFUN([gl_FENV_ENVIRONMENT],
              [gl_cv_func_feholdexcept_works="guessing yes"],
              [gl_cv_func_feholdexcept_works=no],
              [gl_cv_func_feholdexcept_works="guessing yes"])
-           LIBS="$save_LIBS"
+           LIBS="$saved_LIBS"
            ;;
        esac
       ])
@@ -193,7 +193,7 @@ AC_DEFUN([gl_FENV_ENVIRONMENT],
            ], [gl_cv_func_fesetenv_works="guessing yes"])
            ;;
          *-*-aix*)
-           save_LIBS="$LIBS"
+           saved_LIBS="$LIBS"
            LIBS="$LIBS $FENV_ENVIRONMENT_LIBM"
            AC_RUN_IFELSE(
              [AC_LANG_PROGRAM([[
@@ -217,10 +217,10 @@ AC_DEFUN([gl_FENV_ENVIRONMENT],
              [gl_cv_func_fesetenv_works="guessing yes"],
              [gl_cv_func_fesetenv_works=no],
              [gl_cv_func_fesetenv_works="guessing no"])
-           LIBS="$save_LIBS"
+           LIBS="$saved_LIBS"
            ;;
          *-*-solaris*)
-           save_LIBS="$LIBS"
+           saved_LIBS="$LIBS"
            LIBS="$LIBS $FENV_ENVIRONMENT_LIBM"
            AC_RUN_IFELSE(
              [AC_LANG_PROGRAM([[
@@ -257,7 +257,7 @@ AC_DEFUN([gl_FENV_ENVIRONMENT],
              [gl_cv_func_fesetenv_works="guessing yes"],
              [gl_cv_func_fesetenv_works=no],
              [gl_cv_func_fesetenv_works="guessing no"])
-           LIBS="$save_LIBS"
+           LIBS="$saved_LIBS"
            ;;
          # Guess no on NetBSD/m68k.
          m68*-*-netbsd*)
@@ -271,7 +271,7 @@ AC_DEFUN([gl_FENV_ENVIRONMENT],
            dnl This test fails on FreeBSD 12.2/arm64.
            dnl Here we test only the rounding mode restoration, but the function
            dnl is more broken than that.
-           save_LIBS="$LIBS"
+           saved_LIBS="$LIBS"
            LIBS="$LIBS $FENV_ENVIRONMENT_LIBM"
            AC_RUN_IFELSE(
              [AC_LANG_PROGRAM([[
@@ -288,7 +288,7 @@ AC_DEFUN([gl_FENV_ENVIRONMENT],
              [gl_cv_func_fesetenv_works="guessing yes"],
              [gl_cv_func_fesetenv_works=no],
              [gl_cv_func_fesetenv_works="guessing yes"])
-           LIBS="$save_LIBS"
+           LIBS="$saved_LIBS"
            ;;
        esac
       ])
@@ -315,7 +315,7 @@ AC_DEFUN([gl_FENV_ENVIRONMENT],
       [case "$host" in
          # Guess no on glibc/riscv.
          riscv*-*-*-gnu*)
-           save_LIBS="$LIBS"
+           saved_LIBS="$LIBS"
            LIBS="$LIBS $FENV_ENVIRONMENT_LIBM"
            AC_RUN_IFELSE(
              [AC_LANG_PROGRAM([[
@@ -327,11 +327,11 @@ AC_DEFUN([gl_FENV_ENVIRONMENT],
              [gl_cv_func_feupdateenv_works=yes],
              [gl_cv_func_feupdateenv_works=no],
              [gl_cv_func_feupdateenv_works="guessing no"])
-           LIBS="$save_LIBS"
+           LIBS="$saved_LIBS"
            ;;
          # Guess no on glibc/hppa.
          hppa*-*-*-gnu*)
-           save_LIBS="$LIBS"
+           saved_LIBS="$LIBS"
            LIBS="$LIBS $FENV_ENVIRONMENT_LIBM"
            AC_RUN_IFELSE(
              [AC_LANG_PROGRAM([[
@@ -350,7 +350,7 @@ AC_DEFUN([gl_FENV_ENVIRONMENT],
              [gl_cv_func_feupdateenv_works=no],
              [gl_cv_func_feupdateenv_works="guessing yes"],
              [gl_cv_func_feupdateenv_works="guessing no"])
-           LIBS="$save_LIBS"
+           LIBS="$saved_LIBS"
            ;;
          # Guess no on glibc ≤ 2.5/{i386,x86_64,ia64}.
          *86*-*-*-gnu* | *86*-*-gnu* | ia64*-*-*-gnu*)
@@ -377,7 +377,7 @@ AC_DEFUN([gl_FENV_ENVIRONMENT],
            ], [gl_cv_func_feupdateenv_works="guessing yes"])
            ;;
          *-*-aix*)
-           save_LIBS="$LIBS"
+           saved_LIBS="$LIBS"
            LIBS="$LIBS $FENV_ENVIRONMENT_LIBM"
            AC_RUN_IFELSE(
              [AC_LANG_PROGRAM([[
@@ -401,10 +401,10 @@ AC_DEFUN([gl_FENV_ENVIRONMENT],
              [gl_cv_func_feupdateenv_works="guessing yes"],
              [gl_cv_func_feupdateenv_works=no],
              [gl_cv_func_feupdateenv_works="guessing no"])
-           LIBS="$save_LIBS"
+           LIBS="$saved_LIBS"
            ;;
          *-*-solaris*)
-           save_LIBS="$LIBS"
+           saved_LIBS="$LIBS"
            LIBS="$LIBS $FENV_ENVIRONMENT_LIBM"
            AC_RUN_IFELSE(
              [AC_LANG_PROGRAM([[
@@ -441,7 +441,7 @@ AC_DEFUN([gl_FENV_ENVIRONMENT],
              [gl_cv_func_feupdateenv_works="guessing yes"],
              [gl_cv_func_feupdateenv_works=no],
              [gl_cv_func_feupdateenv_works="guessing no"])
-           LIBS="$save_LIBS"
+           LIBS="$saved_LIBS"
            ;;
          # Guess no on Mac OS X/{i386,x86_64}.
          *86*-*-darwin*)
@@ -455,7 +455,7 @@ AC_DEFUN([gl_FENV_ENVIRONMENT],
            dnl This test fails on FreeBSD 12.2/arm64.
            dnl Here we test only the rounding mode restoration, but the function
            dnl is more broken than that.
-           save_LIBS="$LIBS"
+           saved_LIBS="$LIBS"
            LIBS="$LIBS $FENV_ENVIRONMENT_LIBM"
            AC_RUN_IFELSE(
              [AC_LANG_PROGRAM([[
@@ -472,7 +472,7 @@ AC_DEFUN([gl_FENV_ENVIRONMENT],
              [gl_cv_func_feupdateenv_works="guessing yes"],
              [gl_cv_func_feupdateenv_works=no],
              [gl_cv_func_feupdateenv_works="guessing yes"])
-           LIBS="$save_LIBS"
+           LIBS="$saved_LIBS"
            ;;
        esac
       ])

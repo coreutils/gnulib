@@ -1,4 +1,4 @@
-# hypot.m4 serial 11
+# hypot.m4 serial 12
 dnl Copyright (C) 2012-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -21,7 +21,7 @@ AC_DEFUN([gl_FUNC_HYPOT],
       AC_CACHE_CHECK([whether hypot works according to ISO C 99 with IEC 60559],
         [gl_cv_func_hypot_ieee],
         [
-          save_LIBS="$LIBS"
+          saved_LIBS="$LIBS"
           LIBS="$LIBS $HYPOT_LIBM"
           AC_RUN_IFELSE(
             [AC_LANG_SOURCE([[
@@ -65,7 +65,7 @@ int main (int argc, char *argv[])
                *)                  gl_cv_func_hypot_ieee="$gl_cross_guess_normal" ;;
              esac
             ])
-          LIBS="$save_LIBS"
+          LIBS="$saved_LIBS"
         ])
       case "$gl_cv_func_hypot_ieee" in
         *yes) ;;

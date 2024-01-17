@@ -1,4 +1,4 @@
-# powf.m4 serial 2
+# powf.m4 serial 3
 dnl Copyright (C) 2011-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -14,10 +14,10 @@ AC_DEFUN([gl_FUNC_POWF],
 
   dnl Test whether powf() exists. Assume that powf(), if it exists, is
   dnl defined in the same library as pow().
-  save_LIBS="$LIBS"
+  saved_LIBS="$LIBS"
   LIBS="$LIBS $POW_LIBM"
   AC_CHECK_FUNCS([powf])
-  LIBS="$save_LIBS"
+  LIBS="$saved_LIBS"
   if test $ac_cv_func_powf = yes; then
     POWF_LIBM="$POW_LIBM"
   else

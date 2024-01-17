@@ -1,4 +1,4 @@
-# pthread_mutex_timedlock.m4 serial 3
+# pthread_mutex_timedlock.m4 serial 4
 dnl Copyright (C) 2019-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -19,7 +19,7 @@ AC_DEFUN([gl_FUNC_PTHREAD_MUTEX_TIMEDLOCK],
        dnl FreeBSD 5.2.1 declares it but does not define it.
        AC_CACHE_CHECK([for pthread_mutex_timedlock],
          [gl_cv_func_pthread_mutex_timedlock_in_LIBMULTITHREAD],
-         [gl_save_LIBS="$LIBS"
+         [gl_saved_LIBS="$LIBS"
           LIBS="$LIBS $LIBMULTITHREAD"
           AC_LINK_IFELSE(
             [AC_LANG_PROGRAM(
@@ -32,7 +32,7 @@ AC_DEFUN([gl_FUNC_PTHREAD_MUTEX_TIMEDLOCK],
             ],
             [gl_cv_func_pthread_mutex_timedlock_in_LIBMULTITHREAD=yes],
             [gl_cv_func_pthread_mutex_timedlock_in_LIBMULTITHREAD=no])
-          LIBS="$gl_save_LIBS"
+          LIBS="$gl_saved_LIBS"
          ])
        if test $gl_cv_func_pthread_mutex_timedlock_in_LIBMULTITHREAD != yes; then
          HAVE_PTHREAD_MUTEX_TIMEDLOCK=0

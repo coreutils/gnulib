@@ -1,4 +1,4 @@
-# exp2l.m4 serial 12
+# exp2l.m4 serial 13
 dnl Copyright (C) 2010-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -16,10 +16,10 @@ AC_DEFUN([gl_FUNC_EXP2L],
 
   dnl Test whether exp2l() exists. Assume that exp2l(), if it exists, is
   dnl defined in the same library as exp2().
-  save_LIBS="$LIBS"
+  saved_LIBS="$LIBS"
   LIBS="$LIBS $EXP2_LIBM"
   AC_CHECK_FUNCS([exp2l])
-  LIBS="$save_LIBS"
+  LIBS="$saved_LIBS"
   if test $ac_cv_func_exp2l = yes; then
     HAVE_EXP2L=1
     EXP2L_LIBM="$EXP2_LIBM"
@@ -31,7 +31,7 @@ AC_DEFUN([gl_FUNC_EXP2L],
       AC_CACHE_CHECK([whether exp2l works],
         [gl_cv_func_exp2l_works],
         [
-          save_LIBS="$LIBS"
+          saved_LIBS="$LIBS"
           LIBS="$LIBS $EXP2L_LIBM"
           AC_RUN_IFELSE(
             [AC_LANG_SOURCE([[
@@ -109,7 +109,7 @@ int main (int argc, char *argv[])
                *)                  gl_cv_func_exp2l_works="$gl_cross_guess_normal" ;;
              esac
             ])
-          LIBS="$save_LIBS"
+          LIBS="$saved_LIBS"
         ])
       case "$gl_cv_func_exp2l_works" in
         *yes) ;;
@@ -122,7 +122,7 @@ int main (int argc, char *argv[])
         AC_CACHE_CHECK([whether exp2l works according to ISO C 99 with IEC 60559],
           [gl_cv_func_exp2l_ieee],
           [
-            save_LIBS="$LIBS"
+            saved_LIBS="$LIBS"
             LIBS="$LIBS $EXP2L_LIBM"
             AC_RUN_IFELSE(
               [AC_LANG_SOURCE([[
@@ -164,7 +164,7 @@ int main (int argc, char *argv[])
                  *)                  gl_cv_func_exp2l_ieee="$gl_cross_guess_normal" ;;
                esac
               ])
-            LIBS="$save_LIBS"
+            LIBS="$saved_LIBS"
           ])
         case "$gl_cv_func_exp2l_ieee" in
           *yes) ;;

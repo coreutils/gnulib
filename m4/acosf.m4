@@ -1,4 +1,4 @@
-# acosf.m4 serial 3
+# acosf.m4 serial 4
 dnl Copyright (C) 2011-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -14,10 +14,10 @@ AC_DEFUN([gl_FUNC_ACOSF],
 
   dnl Test whether acosf() exists. Assume that acosf(), if it exists, is
   dnl defined in the same library as acos().
-  save_LIBS="$LIBS"
+  saved_LIBS="$LIBS"
   LIBS="$LIBS $ACOS_LIBM"
   AC_CHECK_FUNCS([acosf])
-  LIBS="$save_LIBS"
+  LIBS="$saved_LIBS"
   if test $ac_cv_func_acosf = yes; then
     ACOSF_LIBM="$ACOS_LIBM"
   else

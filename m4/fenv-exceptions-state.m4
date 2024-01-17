@@ -1,4 +1,4 @@
-# fenv-exceptions-state.m4 serial 2
+# fenv-exceptions-state.m4 serial 3
 dnl Copyright (C) 2023-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -65,7 +65,7 @@ AC_DEFUN([gl_FENV_EXCEPTIONS_STATE],
         [if test $gl_cv_func_feenableexcept_no_libm = yes \
             || test $gl_cv_func_feenableexcept_in_libm = yes; then
            dnl A platform that has feenableexcept.
-           save_LIBS="$LIBS"
+           saved_LIBS="$LIBS"
            if test $gl_cv_func_feenableexcept_no_libm != yes; then
              LIBS="$LIBS -lm"
            fi
@@ -116,7 +116,7 @@ changequote([,])dnl
                 *) gl_cv_func_fesetexceptflag_works1="$gl_cross_guess_normal" ;;
               esac
              ])
-           LIBS="$save_LIBS"
+           LIBS="$saved_LIBS"
          else
            case "$host_os" in
              # Guess no on musl libc.
@@ -151,7 +151,7 @@ changequote([,])dnl
       dnl On glibc 2.37 for alpha, fesetexceptflag clears too many flag bits.
       AC_CACHE_CHECK([whether fesetexceptflag obeys its arguments],
         [gl_cv_func_fesetexceptflag_works2],
-        [save_LIBS="$LIBS"
+        [saved_LIBS="$LIBS"
          LIBS="$LIBS $FENV_EXCEPTIONS_STATE_LIBM"
          AC_RUN_IFELSE(
            [AC_LANG_PROGRAM([[
@@ -185,7 +185,7 @@ changequote([,])dnl
               *) gl_cv_func_fesetexceptflag_works2="$gl_cross_guess_normal" ;;
             esac
            ])
-         LIBS="$save_LIBS"
+         LIBS="$saved_LIBS"
         ])
       case "$gl_cv_func_fesetexceptflag_works1" in
         *yes) ;;

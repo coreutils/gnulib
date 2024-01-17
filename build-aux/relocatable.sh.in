@@ -40,9 +40,9 @@ func_find_curr_installdir ()
                  || PATH_SEPARATOR=';'
              }
       fi
-      save_IFS="$IFS"; IFS="$PATH_SEPARATOR"
+      saved_IFS="$IFS"; IFS="$PATH_SEPARATOR"
       for dir in $PATH; do
-        IFS="$save_IFS"
+        IFS="$saved_IFS"
         test -z "$dir" && dir=.
         for exec_ext in ''; do
           if test -f "$dir/$curr_executable$exec_ext"; then
@@ -51,7 +51,7 @@ func_find_curr_installdir ()
           fi
         done
       done
-      IFS="$save_IFS"
+      IFS="$saved_IFS"
       ;;
   esac
   # Make absolute.

@@ -71,9 +71,9 @@ if test -n "$origin_token"; then
   # We are not on AIX, HP-UX, or IRIX. Therefore the -rpath options are
   # cumulative.
   rpath_options=
-  save_IFS="$IFS"; IFS=":"
+  saved_IFS="$IFS"; IFS=":"
   for dir in $library_path_value; do
-    IFS="$save_IFS"
+    IFS="$saved_IFS"
     case "$dir" in
       /*)
         # Make dir relative to installdir. (Works only if dir is absolute.)
@@ -101,7 +101,7 @@ if test -n "$origin_token"; then
         ;;
     esac
   done
-  IFS="$save_IFS"
+  IFS="$saved_IFS"
   # Output it.
   if test -n "$rpath_options"; then
     case "$host_os" in

@@ -1,4 +1,4 @@
-# log.m4 serial 13
+# log.m4 serial 14
 dnl Copyright (C) 2011-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -12,10 +12,10 @@ AC_DEFUN([gl_FUNC_LOG],
   dnl Determine LOG_LIBM.
   gl_COMMON_DOUBLE_MATHFUNC([log])
 
-  save_LIBS="$LIBS"
+  saved_LIBS="$LIBS"
   LIBS="$LIBS $LOG_LIBM"
   gl_FUNC_LOG_WORKS
-  LIBS="$save_LIBS"
+  LIBS="$saved_LIBS"
   case "$gl_cv_func_log_works" in
     *yes) ;;
     *) REPLACE_LOG=1 ;;
@@ -27,7 +27,7 @@ AC_DEFUN([gl_FUNC_LOG],
       AC_CACHE_CHECK([whether log works according to ISO C 99 with IEC 60559],
         [gl_cv_func_log_ieee],
         [
-          save_LIBS="$LIBS"
+          saved_LIBS="$LIBS"
           LIBS="$LIBS $LOG_LIBM"
           AC_RUN_IFELSE(
             [AC_LANG_SOURCE([[
@@ -68,7 +68,7 @@ int main (int argc, char *argv[])
                *)                  gl_cv_func_log_ieee="$gl_cross_guess_normal" ;;
              esac
             ])
-          LIBS="$save_LIBS"
+          LIBS="$saved_LIBS"
         ])
       case "$gl_cv_func_log_ieee" in
         *yes) ;;

@@ -1,4 +1,4 @@
-# floor.m4 serial 16
+# floor.m4 serial 17
 dnl Copyright (C) 2007, 2009-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -19,7 +19,7 @@ AC_DEFUN([gl_FUNC_FLOOR],
       AC_CACHE_CHECK([whether floor works according to ISO C 99 with IEC 60559],
         [gl_cv_func_floor_ieee],
         [
-          save_LIBS="$LIBS"
+          saved_LIBS="$LIBS"
           LIBS="$LIBS $FLOOR_LIBM"
           AC_RUN_IFELSE(
             [AC_LANG_SOURCE([[
@@ -52,7 +52,7 @@ int main (int argc, char *argv[])
                *)                  gl_cv_func_floor_ieee="$gl_cross_guess_normal" ;;
              esac
             ])
-          LIBS="$save_LIBS"
+          LIBS="$saved_LIBS"
         ])
       case "$gl_cv_func_floor_ieee" in
         *yes) ;;
@@ -84,7 +84,7 @@ AC_DEFUN([gl_FUNC_FLOOR_LIBS],
          [[x = funcptr(x) + floor(x);]])],
       [gl_cv_func_floor_libm=])
     if test "$gl_cv_func_floor_libm" = "?"; then
-      save_LIBS="$LIBS"
+      saved_LIBS="$LIBS"
       LIBS="$LIBS -lm"
       AC_LINK_IFELSE(
         [AC_LANG_PROGRAM(
@@ -96,7 +96,7 @@ AC_DEFUN([gl_FUNC_FLOOR_LIBS],
              double x;]],
            [[x = funcptr(x) + floor(x);]])],
         [gl_cv_func_floor_libm="-lm"])
-      LIBS="$save_LIBS"
+      LIBS="$saved_LIBS"
     fi
   ])
   FLOOR_LIBM="$gl_cv_func_floor_libm"

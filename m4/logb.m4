@@ -1,4 +1,4 @@
-# logb.m4 serial 10
+# logb.m4 serial 11
 dnl Copyright (C) 2010-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -33,7 +33,7 @@ AC_DEFUN([gl_FUNC_LOGB],
        [[x = logb(x);]])],
     [LOGB_LIBM=])
   if test "$LOGB_LIBM" = "?"; then
-    save_LIBS="$LIBS"
+    saved_LIBS="$LIBS"
     LIBS="$LIBS -lm"
     AC_LINK_IFELSE(
       [AC_LANG_PROGRAM(
@@ -49,14 +49,14 @@ AC_DEFUN([gl_FUNC_LOGB],
            double x;]],
          [[x = logb(x);]])],
       [LOGB_LIBM="-lm"])
-    LIBS="$save_LIBS"
+    LIBS="$saved_LIBS"
   fi
   if test "$LOGB_LIBM" != "?"; then
     HAVE_LOGB=1
-    save_LIBS="$LIBS"
+    saved_LIBS="$LIBS"
     LIBS="$LIBS $LOGB_LIBM"
     gl_FUNC_LOGB_WORKS
-    LIBS="$save_LIBS"
+    LIBS="$saved_LIBS"
     case "$gl_cv_func_logb_works" in
       *yes) ;;
       *) REPLACE_LOGB=1 ;;

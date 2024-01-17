@@ -1,4 +1,4 @@
-# ldexpl.m4 serial 18
+# ldexpl.m4 serial 19
 dnl Copyright (C) 2007-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -24,7 +24,7 @@ AC_DEFUN([gl_FUNC_LDEXPL],
       AC_CACHE_CHECK([whether ldexpl() can be used with libm],
         [gl_cv_func_ldexpl_in_libm],
         [
-          save_LIBS="$LIBS"
+          saved_LIBS="$LIBS"
           LIBS="$LIBS -lm"
           AC_LINK_IFELSE(
             [AC_LANG_PROGRAM(
@@ -33,7 +33,7 @@ AC_DEFUN([gl_FUNC_LDEXPL],
                [[return ldexpl (x, -1) > 0;]])],
             [gl_cv_func_ldexpl_in_libm=yes],
             [gl_cv_func_ldexpl_in_libm=no])
-          LIBS="$save_LIBS"
+          LIBS="$saved_LIBS"
         ])
       if test $gl_cv_func_ldexpl_in_libm = yes; then
         LDEXPL_LIBM=-lm
@@ -41,10 +41,10 @@ AC_DEFUN([gl_FUNC_LDEXPL],
     fi
     if test $gl_cv_func_ldexpl_no_libm = yes \
        || test $gl_cv_func_ldexpl_in_libm = yes; then
-      save_LIBS="$LIBS"
+      saved_LIBS="$LIBS"
       LIBS="$LIBS $LDEXPL_LIBM"
       gl_FUNC_LDEXPL_WORKS
-      LIBS="$save_LIBS"
+      LIBS="$saved_LIBS"
       case "$gl_cv_func_ldexpl_works" in
         *yes) gl_func_ldexpl=yes ;;
         *)    gl_func_ldexpl=no; REPLACE_LDEXPL=1 ;;

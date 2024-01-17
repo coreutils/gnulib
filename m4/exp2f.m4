@@ -1,4 +1,4 @@
-# exp2f.m4 serial 1
+# exp2f.m4 serial 2
 dnl Copyright (C) 2011-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -14,10 +14,10 @@ AC_DEFUN([gl_FUNC_EXP2F],
 
   dnl Test whether exp2f() exists. Assume that exp2f(), if it exists, is
   dnl defined in the same library as exp2().
-  save_LIBS="$LIBS"
+  saved_LIBS="$LIBS"
   LIBS="$LIBS $EXP2_LIBM"
   AC_CHECK_FUNCS([exp2f])
-  LIBS="$save_LIBS"
+  LIBS="$saved_LIBS"
   if test $ac_cv_func_exp2f = yes; then
     HAVE_EXP2F=1
     EXP2F_LIBM="$EXP2_LIBM"

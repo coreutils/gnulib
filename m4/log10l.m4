@@ -1,4 +1,4 @@
-# log10l.m4 serial 12
+# log10l.m4 serial 13
 dnl Copyright (C) 2011-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -18,17 +18,17 @@ AC_DEFUN([gl_FUNC_LOG10L],
 
   dnl Test whether log10l() exists. Assume that log10l(), if it exists, is
   dnl defined in the same library as log10().
-  save_LIBS="$LIBS"
+  saved_LIBS="$LIBS"
   LIBS="$LIBS $LOG10_LIBM"
   AC_CHECK_FUNCS([log10l])
-  LIBS="$save_LIBS"
+  LIBS="$saved_LIBS"
   if test $ac_cv_func_log10l = yes; then
     LOG10L_LIBM="$LOG10_LIBM"
 
-    save_LIBS="$LIBS"
+    saved_LIBS="$LIBS"
     LIBS="$LIBS $LOG10L_LIBM"
     gl_FUNC_LOG10L_WORKS
-    LIBS="$save_LIBS"
+    LIBS="$saved_LIBS"
     case "$gl_cv_func_log10l_works" in
       *yes) ;;
       *) REPLACE_LOG10L=1 ;;

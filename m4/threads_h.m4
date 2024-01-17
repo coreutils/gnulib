@@ -1,4 +1,4 @@
-# threads_h.m4 serial 14
+# threads_h.m4 serial 15
 dnl Copyright (C) 2019-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -49,7 +49,7 @@ AC_DEFUN_ONCE([gl_THREADS_H],
       dnl On AIX 7.3.1, thrd_join still never stores an exit code.
       AC_CACHE_CHECK([whether thrd_join works],
         [gl_cv_func_thrd_join_works],
-        [save_LIBS="$LIBS"
+        [saved_LIBS="$LIBS"
          LIBS="$LIBS $LIBSTDTHREAD"
          AC_RUN_IFELSE(
            [AC_LANG_PROGRAM(
@@ -79,7 +79,7 @@ AC_DEFUN_ONCE([gl_THREADS_H],
               *)    gl_cv_func_thrd_join_works="guessing yes" ;;
             esac
            ])
-         LIBS="$save_LIBS"
+         LIBS="$saved_LIBS"
         ])
       case "$gl_cv_func_thrd_join_works" in
         *yes) ;;

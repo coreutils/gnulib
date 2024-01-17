@@ -13,10 +13,10 @@ AC_DEFUN([gl_ALIGNASOF],
 [
   AC_CACHE_CHECK([for alignas and alignof],
     [gl_cv_header_working_stdalign_h],
-    [gl_save_CFLAGS=$CFLAGS
+    [gl_saved_CFLAGS=$CFLAGS
      for gl_working in "yes, keywords" "yes, <stdalign.h> macros"; do
       AS_CASE([$gl_working],
-        [*stdalign.h*], [CFLAGS="$gl_save_CFLAGS -DINCLUDE_STDALIGN_H"])
+        [*stdalign.h*], [CFLAGS="$gl_saved_CFLAGS -DINCLUDE_STDALIGN_H"])
       AC_COMPILE_IFELSE(
        [AC_LANG_PROGRAM(
           [[#include <stdint.h>
@@ -56,7 +56,7 @@ AC_DEFUN([gl_ALIGNASOF],
        [gl_cv_header_working_stdalign_h=$gl_working],
        [gl_cv_header_working_stdalign_h=no])
 
-      CFLAGS=$gl_save_CFLAGS
+      CFLAGS=$gl_saved_CFLAGS
       test "$gl_cv_header_working_stdalign_h" != no && break
      done])
 

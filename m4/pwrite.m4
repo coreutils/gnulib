@@ -1,4 +1,4 @@
-# pwrite.m4 serial 8
+# pwrite.m4 serial 9
 dnl Copyright (C) 2010-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -29,7 +29,7 @@ changequote(,)dnl
           *)     gl_cv_func_pwrite_works="guessing yes" ;;
         esac
 changequote([,])dnl
-        gl_save_CPPFLAGS="$CPPFLAGS"
+        gl_saved_CPPFLAGS="$CPPFLAGS"
         CPPFLAGS="$CPPFLAGS -D_FILE_OFFSET_BITS=64"
         rm -f conftest.out
         AC_RUN_IFELSE(
@@ -87,7 +87,7 @@ changequote([,])dnl
           [gl_cv_func_pwrite_works=no],
           [:])
         rm -f conftest.out
-        CPPFLAGS="$gl_save_CPPFLAGS"
+        CPPFLAGS="$gl_saved_CPPFLAGS"
       ])
     case "$gl_cv_func_pwrite_works" in
       *yes) ;;

@@ -1,4 +1,4 @@
-# pty.m4 serial 19
+# pty.m4 serial 20
 dnl Copyright (C) 2010-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -15,13 +15,13 @@ AC_DEFUN([gl_PTY_LIB],
   case "$host_os" in
     haiku*) PTY_LIB='-lbsd' ;;
     *)
-      save_LIBS="$LIBS"
+      saved_LIBS="$LIBS"
       AC_SEARCH_LIBS([forkpty], [util],
         [if test "$ac_cv_search_forkpty" != "none required"; then
            PTY_LIB="$ac_cv_search_forkpty"
          fi
         ])
-      LIBS="$save_LIBS"
+      LIBS="$saved_LIBS"
       ;;
   esac
   AC_SUBST([PTY_LIB])

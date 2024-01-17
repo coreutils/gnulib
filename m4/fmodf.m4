@@ -1,4 +1,4 @@
-# fmodf.m4 serial 13
+# fmodf.m4 serial 14
 dnl Copyright (C) 2011-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -15,10 +15,10 @@ AC_DEFUN([gl_FUNC_FMODF],
 
   dnl Test whether fmodf() exists. Assume that fmodf(), if it exists, is
   dnl defined in the same library as fmod().
-  save_LIBS="$LIBS"
+  saved_LIBS="$LIBS"
   LIBS="$LIBS $FMOD_LIBM"
   AC_CHECK_FUNCS([fmodf])
-  LIBS="$save_LIBS"
+  LIBS="$saved_LIBS"
   if test $ac_cv_func_fmodf = yes; then
     FMODF_LIBM="$FMOD_LIBM"
     m4_ifdef([gl_FUNC_FMODF_IEEE], [
@@ -27,7 +27,7 @@ AC_DEFUN([gl_FUNC_FMODF],
         AC_CACHE_CHECK([whether fmodf works according to ISO C 99 with IEC 60559],
           [gl_cv_func_fmodf_ieee],
           [
-            save_LIBS="$LIBS"
+            saved_LIBS="$LIBS"
             LIBS="$LIBS $FMODF_LIBM"
             AC_RUN_IFELSE(
               [AC_LANG_SOURCE([[
@@ -69,7 +69,7 @@ int main (int argc, char *argv[])
                  *)                  gl_cv_func_fmodf_ieee="$gl_cross_guess_normal" ;;
                esac
               ])
-            LIBS="$save_LIBS"
+            LIBS="$saved_LIBS"
           ])
         case "$gl_cv_func_fmodf_ieee" in
           *yes) ;;

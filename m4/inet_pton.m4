@@ -1,4 +1,4 @@
-# inet_pton.m4 serial 19
+# inet_pton.m4 serial 20
 dnl Copyright (C) 2006, 2008-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -36,14 +36,14 @@ AC_DEFUN([gl_FUNC_INET_PTON],
       HAVE_DECL_INET_PTON=0
     fi
   else
-    gl_save_LIBS=$LIBS
+    gl_saved_LIBS=$LIBS
     AC_SEARCH_LIBS([inet_pton], [nsl resolv network], [],
       [AC_CHECK_FUNCS([inet_pton])
        if test $ac_cv_func_inet_pton = no; then
          HAVE_INET_PTON=0
        fi
       ])
-    LIBS=$gl_save_LIBS
+    LIBS=$gl_saved_LIBS
 
     if test "$ac_cv_search_inet_pton" != "no" \
        && test "$ac_cv_search_inet_pton" != "none required"; then

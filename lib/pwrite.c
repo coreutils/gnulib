@@ -35,7 +35,7 @@ pwrite (int fd, const void *buf, size_t nbyte, off_t offset)
 {
   /* Since we must not change the file pointer preserve the value so that
      we can restore it later.  */
-  int save_errno;
+  int saved_errno;
   ssize_t result;
   off_t old_offset = __libc_lseek (fd, 0, SEEK_CUR);
   if (old_offset == (off_t) -1)
@@ -51,14 +51,14 @@ pwrite (int fd, const void *buf, size_t nbyte, off_t offset)
   /* Now we have to restore the position.  If this fails we have to
      return this as an error.  But if the writing also failed we
      return this error.  */
-  save_errno = errno;
+  saved_errno = errno;
   if (__libc_lseek (fd, old_offset, SEEK_SET) == (off_t) -1)
     {
       if (result == -1)
-        __set_errno (save_errno);
+        __set_errno (saved_errno);
       return -1;
     }
-  __set_errno (save_errno);
+  __set_errno (saved_errno);
 
   return result;
 }

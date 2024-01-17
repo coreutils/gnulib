@@ -186,9 +186,9 @@ fi
 test -n "$library_path_var" || exit 0
 
 libdirs=
-save_IFS="$IFS"; IFS=":"
+saved_IFS="$IFS"; IFS=":"
 for dir in $library_path_value; do
-  IFS="$save_IFS"
+  IFS="$saved_IFS"
   if test -n "$dir"; then
     case "$libdirs" in
       *"\"$dir\""*) ;; # remove duplicate
@@ -196,7 +196,7 @@ for dir in $library_path_value; do
     esac
   fi
 done
-IFS="$save_IFS"
+IFS="$saved_IFS"
 # If there are no library directories to add at runtime, we don't need a
 # wrapper.
 test -n "$libdirs" || exit 0

@@ -1,4 +1,4 @@
-# serial 7   -*- Autoconf -*-
+# serial 8   -*- Autoconf -*-
 # Copyright (C) 2006-2007, 2009-2024 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -65,11 +65,11 @@ AC_DEFUN([gl_LIBSELINUX],
 
   LIB_SELINUX=
   if test "$with_selinux" != no; then
-    gl_save_LIBS=$LIBS
+    gl_saved_LIBS=$LIBS
     AC_SEARCH_LIBS([setfilecon], [selinux],
                    [test "$ac_cv_search_setfilecon" = "none required" ||
                     LIB_SELINUX=$ac_cv_search_setfilecon])
-    LIBS=$gl_save_LIBS
+    LIBS=$gl_saved_LIBS
   fi
   AC_SUBST([LIB_SELINUX])
 

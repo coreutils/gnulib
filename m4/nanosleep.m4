@@ -1,4 +1,4 @@
-# serial 45
+# serial 46
 
 dnl From Jim Meyering.
 dnl Check for the nanosleep function.
@@ -21,7 +21,7 @@ AC_DEFUN([gl_FUNC_NANOSLEEP],
 
  AC_CHECK_DECLS_ONCE([alarm])
 
- nanosleep_save_libs=$LIBS
+ gl_saved_LIBS=$LIBS
 
  # Solaris 2.5.1 needs -lposix4 to get the nanosleep function.
  # Solaris 7 prefers the library name -lrt to the obsolescent name -lposix4.
@@ -143,7 +143,7 @@ AC_DEFUN([gl_FUNC_NANOSLEEP],
  else
    HAVE_NANOSLEEP=0
  fi
- LIBS=$nanosleep_save_libs
+ LIBS=$gl_saved_LIBS
 
  # For backward compatibility.
  LIB_NANOSLEEP="$NANOSLEEP_LIB"

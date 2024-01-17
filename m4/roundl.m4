@@ -1,4 +1,4 @@
-# roundl.m4 serial 22
+# roundl.m4 serial 23
 dnl Copyright (C) 2007, 2009-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -32,7 +32,7 @@ AC_DEFUN([gl_FUNC_ROUNDL],
         AC_CACHE_CHECK([whether roundl works according to ISO C 99 with IEC 60559],
           [gl_cv_func_roundl_ieee],
           [
-            save_LIBS="$LIBS"
+            saved_LIBS="$LIBS"
             LIBS="$LIBS $ROUNDL_LIBM"
             AC_RUN_IFELSE(
               [AC_LANG_SOURCE([[
@@ -74,7 +74,7 @@ int main (int argc, char *argv[])
                  *)                  gl_cv_func_roundl_ieee="$gl_cross_guess_normal" ;;
                esac
               ])
-            LIBS="$save_LIBS"
+            LIBS="$saved_LIBS"
           ])
         case "$gl_cv_func_roundl_ieee" in
           *yes) ;;

@@ -1,4 +1,4 @@
-# remainder.m4 serial 11
+# remainder.m4 serial 12
 dnl Copyright (C) 2012-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -32,7 +32,7 @@ AC_DEFUN([gl_FUNC_REMAINDER],
     AC_CACHE_CHECK([whether remainder() can be used with libm],
       [gl_cv_func_remainder_in_libm],
       [
-        save_LIBS="$LIBS"
+        saved_LIBS="$LIBS"
         LIBS="$LIBS -lm"
         AC_LINK_IFELSE(
           [AC_LANG_PROGRAM(
@@ -45,7 +45,7 @@ AC_DEFUN([gl_FUNC_REMAINDER],
              [[return remainder (x, y) > 1;]])],
           [gl_cv_func_remainder_in_libm=yes],
           [gl_cv_func_remainder_in_libm=no])
-        LIBS="$save_LIBS"
+        LIBS="$saved_LIBS"
       ])
     if test $gl_cv_func_remainder_in_libm = yes; then
       REMAINDER_LIBM=-lm
@@ -60,7 +60,7 @@ AC_DEFUN([gl_FUNC_REMAINDER],
         AC_CACHE_CHECK([whether remainder works according to ISO C 99 with IEC 60559],
           [gl_cv_func_remainder_ieee],
           [
-            save_LIBS="$LIBS"
+            saved_LIBS="$LIBS"
             LIBS="$LIBS $REMAINDER_LIBM"
             AC_RUN_IFELSE(
               [AC_LANG_SOURCE([[
@@ -102,7 +102,7 @@ int main (int argc, char *argv[])
                  *)                  gl_cv_func_remainder_ieee="$gl_cross_guess_normal" ;;
                esac
               ])
-            LIBS="$save_LIBS"
+            LIBS="$saved_LIBS"
           ])
         case "$gl_cv_func_remainder_ieee" in
           *yes) ;;

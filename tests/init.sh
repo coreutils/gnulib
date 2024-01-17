@@ -434,10 +434,10 @@ setup_ ()
 
   # Remove relative and non-accessible directories from PATH, including '.'
   # and Zero-length entries.
-  save_IFS="$IFS"; IFS="$PATH_SEPARATOR"
+  saved_IFS="$IFS"; IFS="$PATH_SEPARATOR"
   new_PATH=
   for dir in $PATH; do
-    IFS="$save_IFS"
+    IFS="$saved_IFS"
     case "$dir" in
       [\\/]* | ?:[\\/]*)
         test -d "$dir/." || continue
@@ -445,7 +445,7 @@ setup_ ()
         ;;
     esac
   done
-  IFS="$save_IFS"
+  IFS="$saved_IFS"
   PATH="$new_PATH"
   export PATH
 }

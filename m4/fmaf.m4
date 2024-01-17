@@ -1,4 +1,4 @@
-# fmaf.m4 serial 8
+# fmaf.m4 serial 9
 dnl Copyright (C) 2011-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -65,7 +65,7 @@ AC_DEFUN([gl_FUNC_FMAF_WORKS],
   AC_REQUIRE([AC_PROG_CC])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_REQUIRE([gl_FUNC_LDEXPF])
-  save_LIBS="$LIBS"
+  saved_LIBS="$LIBS"
   LIBS="$LIBS $FMAF_LIBM $LDEXPF_LIBM"
   AC_CACHE_CHECK([whether fmaf works], [gl_cv_func_fmaf_works],
     [
@@ -203,7 +203,7 @@ int main()
          esac
         ])
     ])
-  LIBS="$save_LIBS"
+  LIBS="$saved_LIBS"
 ])
 
 # Prerequisites of lib/fmaf.c.

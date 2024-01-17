@@ -1,4 +1,4 @@
-# fmal.m4 serial 10
+# fmal.m4 serial 11
 dnl Copyright (C) 2011-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -72,7 +72,7 @@ AC_DEFUN([gl_FUNC_FMAL_WORKS],
   AC_REQUIRE([AC_PROG_CC])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_REQUIRE([gl_FUNC_LDEXPL])
-  save_LIBS="$LIBS"
+  saved_LIBS="$LIBS"
   LIBS="$LIBS $FMAL_LIBM $LDEXPL_LIBM"
   AC_CACHE_CHECK([whether fmal works], [gl_cv_func_fmal_works],
     [
@@ -401,7 +401,7 @@ int main()
          esac
         ])
     ])
-  LIBS="$save_LIBS"
+  LIBS="$saved_LIBS"
 ])
 
 # Prerequisites of lib/fmal.c.

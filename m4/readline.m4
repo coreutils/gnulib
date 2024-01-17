@@ -1,4 +1,4 @@
-# readline.m4 serial 10
+# readline.m4 serial 11
 dnl Copyright (C) 2005-2006, 2009-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -21,19 +21,19 @@ AC_DEFUN([gl_FUNC_READLINE],
   dnl because if the user has installed libreadline and not disabled its use
   dnl via --without-libreadline-prefix, he wants to use it. The AC_LINK_IFELSE
   dnl will then succeed.
-  am_save_CPPFLAGS="$CPPFLAGS"
+  gl_saved_CPPFLAGS="$CPPFLAGS"
   AC_LIB_APPENDTOVAR([CPPFLAGS], [$INCREADLINE])
 
   AC_CACHE_CHECK([for readline], [gl_cv_lib_readline], [
     gl_cv_lib_readline=no
-    am_save_LIBS="$LIBS"
+    gl_saved_LIBS="$LIBS"
     dnl On some systems, -lreadline doesn't link without an additional
     dnl -lncurses or -ltermcap.
     dnl Try -lncurses before -ltermcap, because libtermcap is insecure
     dnl by design and obsolete since 1994. Try -lcurses last, because
     dnl libcurses is unusable on some old Unices.
     for extra_lib in "" ncurses termcap curses; do
-      LIBS="$am_save_LIBS $LIBREADLINE"
+      LIBS="$gl_saved_LIBS $LIBREADLINE"
       if test -n "$extra_lib"; then
         LIBS="$LIBS -l$extra_lib"
       fi
@@ -50,7 +50,7 @@ AC_DEFUN([gl_FUNC_READLINE],
         break
       fi
     done
-    LIBS="$am_save_LIBS"
+    LIBS="$gl_saved_LIBS"
   ])
 
   if test "$gl_cv_lib_readline" != no; then
@@ -65,7 +65,7 @@ AC_DEFUN([gl_FUNC_READLINE],
   else
     dnl If $LIBREADLINE didn't lead to a usable library, we don't
     dnl need $INCREADLINE either.
-    CPPFLAGS="$am_save_CPPFLAGS"
+    CPPFLAGS="$gl_saved_CPPFLAGS"
     LIBREADLINE=
     LTLIBREADLINE=
   fi

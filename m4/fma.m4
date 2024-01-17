@@ -1,4 +1,4 @@
-# fma.m4 serial 6
+# fma.m4 serial 7
 dnl Copyright (C) 2011-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -62,7 +62,7 @@ AC_DEFUN([gl_FUNC_FMA_WORKS],
   AC_REQUIRE([AC_PROG_CC])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_REQUIRE([gl_FUNC_LDEXP])
-  save_LIBS="$LIBS"
+  saved_LIBS="$LIBS"
   LIBS="$LIBS $FMA_LIBM $LDEXP_LIBM"
   AC_CACHE_CHECK([whether fma works], [gl_cv_func_fma_works],
     [
@@ -184,7 +184,7 @@ int main()
          esac
         ])
     ])
-  LIBS="$save_LIBS"
+  LIBS="$saved_LIBS"
 ])
 
 # Prerequisites of lib/fma.c.

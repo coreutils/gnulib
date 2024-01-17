@@ -133,17 +133,17 @@ func_gnulib_dir ()
             ;;
         esac
       fi
-      save_IFS="$IFS"
+      saved_IFS="$IFS"
       IFS="$PATH_SEPARATOR"
       for d in $pathx; do
-        IFS="$save_IFS"
+        IFS="$saved_IFS"
         test -z "$d" && d=.
         if test -x "$d/$progname" && test ! -d "$d/$progname"; then
           self_abspathname="$d/$progname"
           break
         fi
       done
-      IFS="$save_IFS"
+      IFS="$saved_IFS"
       if test -z "$self_abspathname"; then
         func_fatal_error "could not locate the posix-modules program - how did you invoke it?"
       fi

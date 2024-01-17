@@ -1,4 +1,4 @@
-# atan2f.m4 serial 3
+# atan2f.m4 serial 4
 dnl Copyright (C) 2011-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -14,10 +14,10 @@ AC_DEFUN([gl_FUNC_ATAN2F],
 
   dnl Test whether atan2f() exists. Assume that atan2f(), if it exists, is
   dnl defined in the same library as atan2().
-  save_LIBS="$LIBS"
+  saved_LIBS="$LIBS"
   LIBS="$LIBS $ATAN2_LIBM"
   AC_CHECK_FUNCS([atan2f])
-  LIBS="$save_LIBS"
+  LIBS="$saved_LIBS"
   if test $ac_cv_func_atan2f = yes; then
     ATAN2F_LIBM="$ATAN2_LIBM"
   else

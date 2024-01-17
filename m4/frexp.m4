@@ -1,4 +1,4 @@
-# frexp.m4 serial 19
+# frexp.m4 serial 20
 dnl Copyright (C) 2007-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -13,7 +13,7 @@ AC_DEFUN([gl_FUNC_FREXP],
     AC_CACHE_CHECK([whether frexp() can be used with libm],
       [gl_cv_func_frexp_in_libm],
       [
-        save_LIBS="$LIBS"
+        saved_LIBS="$LIBS"
         LIBS="$LIBS -lm"
         AC_LINK_IFELSE(
           [AC_LANG_PROGRAM(
@@ -22,7 +22,7 @@ AC_DEFUN([gl_FUNC_FREXP],
              [[int e; return frexp (x, &e) > 0;]])],
           [gl_cv_func_frexp_in_libm=yes],
           [gl_cv_func_frexp_in_libm=no])
-        LIBS="$save_LIBS"
+        LIBS="$saved_LIBS"
       ])
     if test $gl_cv_func_frexp_in_libm = yes; then
       FREXP_LIBM=-lm
@@ -30,10 +30,10 @@ AC_DEFUN([gl_FUNC_FREXP],
   fi
   if test $gl_cv_func_frexp_no_libm = yes \
      || test $gl_cv_func_frexp_in_libm = yes; then
-    save_LIBS="$LIBS"
+    saved_LIBS="$LIBS"
     LIBS="$LIBS $FREXP_LIBM"
     gl_FUNC_FREXP_WORKS
-    LIBS="$save_LIBS"
+    LIBS="$saved_LIBS"
     case "$gl_cv_func_frexp_works" in
       *yes) gl_func_frexp=yes ;;
       *)    gl_func_frexp=no; REPLACE_FREXP=1; FREXP_LIBM= ;;

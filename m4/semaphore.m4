@@ -1,4 +1,4 @@
-# semaphore.m4 serial 1
+# semaphore.m4 serial 2
 dnl Copyright (C) 2019-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -19,7 +19,7 @@ AC_DEFUN([gl_SEMAPHORE],
   dnl $LIBMULTITHREAD. Therefore, the only library we need to test for is -lrt.
   AC_CACHE_CHECK([for library needed for semaphore functions],
     [gl_cv_semaphore_lib],
-    [save_LIBS="$LIBS"
+    [saved_LIBS="$LIBS"
      LIBS="$LIBS $LIBMULTITHREAD"
      AC_LINK_IFELSE(
        [AC_LANG_PROGRAM(
@@ -34,7 +34,7 @@ AC_DEFUN([gl_SEMAPHORE],
           [gl_cv_semaphore_lib='-lrt'],
           [gl_cv_semaphore_lib=none])
        ])
-     LIBS="$save_LIBS"
+     LIBS="$saved_LIBS"
     ])
   if test "x$gl_cv_semaphore_lib" = xnone; then
     LIB_SEMAPHORE=

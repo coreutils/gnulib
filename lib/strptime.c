@@ -1102,23 +1102,23 @@ __strptime_internal (rp, fmt, tm, decided, era_cnt LOCALE_PARAM)
 
   if ((have_uweek || have_wweek) && have_wday)
     {
-      int save_wday = tm->tm_wday;
-      int save_mday = tm->tm_mday;
-      int save_mon = tm->tm_mon;
+      int saved_wday = tm->tm_wday;
+      int saved_mday = tm->tm_mday;
+      int saved_mon = tm->tm_mon;
       int w_offset = have_uweek ? 0 : 1;
 
       tm->tm_mday = 1;
       tm->tm_mon = 0;
       day_of_the_week (tm);
       if (have_mday)
-        tm->tm_mday = save_mday;
+        tm->tm_mday = saved_mday;
       if (have_mon)
-        tm->tm_mon = save_mon;
+        tm->tm_mon = saved_mon;
 
       if (!have_yday)
         tm->tm_yday = ((7 - (tm->tm_wday - w_offset)) % 7
                        + (week_no - 1) *7
-                       + save_wday - w_offset);
+                       + saved_wday - w_offset);
 
       if (!have_mday || !have_mon)
         {
@@ -1134,7 +1134,7 @@ __strptime_internal (rp, fmt, tm, decided, era_cnt LOCALE_PARAM)
                  - __mon_yday[__isleap(1900 + tm->tm_year)][t_mon - 1] + 1);
         }
 
-      tm->tm_wday = save_wday;
+      tm->tm_wday = saved_wday;
     }
 
   return (char *) rp;

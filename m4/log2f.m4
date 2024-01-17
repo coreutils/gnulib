@@ -1,4 +1,4 @@
-# log2f.m4 serial 14
+# log2f.m4 serial 15
 dnl Copyright (C) 2010-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -17,20 +17,20 @@ AC_DEFUN([gl_FUNC_LOG2F],
   gl_COMMON_DOUBLE_MATHFUNC([log2f])
 
   dnl Test whether log2f() exists.
-  save_LIBS="$LIBS"
+  saved_LIBS="$LIBS"
   LIBS="$LIBS $LOG2F_LIBM"
   gl_CHECK_FUNCS_ANDROID([log2f], [[#include <math.h>]])
-  LIBS="$save_LIBS"
+  LIBS="$saved_LIBS"
   if test $ac_cv_func_log2f = yes; then
     HAVE_LOG2F=1
     dnl Also check whether it's declared.
     dnl IRIX 6.5 has log2f() in libm but doesn't declare it in <math.h>.
     AC_CHECK_DECL([log2f], , [HAVE_DECL_LOG2F=0], [[#include <math.h>]])
 
-    save_LIBS="$LIBS"
+    saved_LIBS="$LIBS"
     LIBS="$LIBS $LOG2F_LIBM"
     gl_FUNC_LOG2F_WORKS
-    LIBS="$save_LIBS"
+    LIBS="$saved_LIBS"
     case "$gl_cv_func_log2f_works" in
       *yes) ;;
       *) REPLACE_LOG2F=1 ;;
@@ -42,7 +42,7 @@ AC_DEFUN([gl_FUNC_LOG2F],
         AC_CACHE_CHECK([whether log2f works according to ISO C 99 with IEC 60559],
           [gl_cv_func_log2f_ieee],
           [
-            save_LIBS="$LIBS"
+            saved_LIBS="$LIBS"
             LIBS="$LIBS $LOG2F_LIBM"
             AC_RUN_IFELSE(
               [AC_LANG_SOURCE([[
@@ -90,7 +90,7 @@ int main (int argc, char *argv[])
                  *)                  gl_cv_func_log2f_ieee="$gl_cross_guess_normal" ;;
                esac
               ])
-            LIBS="$save_LIBS"
+            LIBS="$saved_LIBS"
           ])
         case "$gl_cv_func_log2f_ieee" in
           *yes) ;;

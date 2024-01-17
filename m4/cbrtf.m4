@@ -1,4 +1,4 @@
-# cbrtf.m4 serial 5
+# cbrtf.m4 serial 6
 dnl Copyright (C) 2012-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -14,19 +14,19 @@ AC_DEFUN([gl_FUNC_CBRTF],
 
   dnl Test whether cbrtf() exists. Assume that cbrtf(), if it exists, is
   dnl defined in the same library as cbrt().
-  save_LIBS="$LIBS"
+  saved_LIBS="$LIBS"
   LIBS="$LIBS $CBRT_LIBM"
   AC_CHECK_FUNCS([cbrtf])
-  LIBS="$save_LIBS"
+  LIBS="$saved_LIBS"
   if test $ac_cv_func_cbrtf = yes; then
     CBRTF_LIBM="$CBRT_LIBM"
     dnl Also check whether it's declared.
     dnl IRIX 6.5 has cbrtf() in libm but doesn't declare it in <math.h>.
     AC_CHECK_DECL([cbrtf], , [HAVE_DECL_CBRTF=0], [[#include <math.h>]])
-    save_LIBS="$LIBS"
+    saved_LIBS="$LIBS"
     LIBS="$LIBS $CBRTF_LIBM"
     gl_FUNC_CBRTF_WORKS
-    LIBS="$save_LIBS"
+    LIBS="$saved_LIBS"
     case "$gl_cv_func_cbrtf_works" in
       *yes) ;;
       *) REPLACE_CBRTF=1 ;;

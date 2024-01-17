@@ -1,4 +1,4 @@
-# log1p.m4 serial 10
+# log1p.m4 serial 11
 dnl Copyright (C) 2012-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -16,10 +16,10 @@ AC_DEFUN([gl_FUNC_LOG1P],
   gl_COMMON_DOUBLE_MATHFUNC([log1p])
 
   dnl Test whether log1p() exists.
-  save_LIBS="$LIBS"
+  saved_LIBS="$LIBS"
   LIBS="$LIBS $LOG1P_LIBM"
   AC_CHECK_FUNCS([log1p])
-  LIBS="$save_LIBS"
+  LIBS="$saved_LIBS"
   if test $ac_cv_func_log1p = yes; then
     :
     m4_ifdef([gl_FUNC_LOG1P_IEEE], [
@@ -28,7 +28,7 @@ AC_DEFUN([gl_FUNC_LOG1P],
         AC_CACHE_CHECK([whether log1p works according to ISO C 99 with IEC 60559],
           [gl_cv_func_log1p_ieee],
           [
-            save_LIBS="$LIBS"
+            saved_LIBS="$LIBS"
             LIBS="$LIBS $LOG1P_LIBM"
             AC_RUN_IFELSE(
               [AC_LANG_SOURCE([[
@@ -62,7 +62,7 @@ int main (int argc, char *argv[])
                  *)                  gl_cv_func_log1p_ieee="$gl_cross_guess_normal" ;;
                esac
               ])
-            LIBS="$save_LIBS"
+            LIBS="$saved_LIBS"
           ])
         case "$gl_cv_func_log1p_ieee" in
           *yes) ;;

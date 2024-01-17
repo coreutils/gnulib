@@ -1,4 +1,4 @@
-# isnanl.m4 serial 24
+# isnanl.m4 serial 25
 dnl Copyright (C) 2007-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -17,10 +17,10 @@ AC_DEFUN([gl_FUNC_ISNANL],
   fi
   dnl The variable gl_func_isnanl set here is used by isnan.m4.
   if test $gl_cv_func_isnanl_no_libm = yes || test -n "$ISNANL_LIBM"; then
-    save_LIBS="$LIBS"
+    saved_LIBS="$LIBS"
     LIBS="$LIBS $ISNANL_LIBM"
     gl_FUNC_ISNANL_WORKS
-    LIBS="$save_LIBS"
+    LIBS="$saved_LIBS"
     case "$gl_cv_func_isnanl_works" in
       *yes) gl_func_isnanl=yes ;;
       *)    gl_func_isnanl=no; ISNANL_LIBM= ;;
@@ -87,7 +87,7 @@ AC_DEFUN([gl_HAVE_ISNANL_IN_LIBM],
   AC_CACHE_CHECK([whether isnan(long double) can be used with libm],
     [gl_cv_func_isnanl_in_libm],
     [
-      save_LIBS="$LIBS"
+      saved_LIBS="$LIBS"
       LIBS="$LIBS -lm"
       AC_LINK_IFELSE(
         [AC_LANG_PROGRAM(
@@ -103,7 +103,7 @@ AC_DEFUN([gl_HAVE_ISNANL_IN_LIBM],
            [[return isnanl (x);]])],
         [gl_cv_func_isnanl_in_libm=yes],
         [gl_cv_func_isnanl_in_libm=no])
-      LIBS="$save_LIBS"
+      LIBS="$saved_LIBS"
     ])
 ])
 

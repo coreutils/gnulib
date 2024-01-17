@@ -1,4 +1,4 @@
-# rintl.m4 serial 10
+# rintl.m4 serial 11
 dnl Copyright (C) 2011-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -21,7 +21,7 @@ AC_DEFUN([gl_FUNC_RINTL],
       AC_CACHE_CHECK([whether rintl works],
         [gl_cv_func_rintl_works],
         [
-          save_LIBS="$LIBS"
+          saved_LIBS="$LIBS"
           LIBS="$LIBS $RINTL_LIBM"
           AC_RUN_IFELSE(
             [AC_LANG_SOURCE([[
@@ -60,7 +60,7 @@ int main (int argc, char *argv[])
                *)                  gl_cv_func_rintl_works="$gl_cross_guess_normal" ;;
              esac
             ])
-          LIBS="$save_LIBS"
+          LIBS="$saved_LIBS"
         ])
       case "$gl_cv_func_rintl_works" in
         *yes) ;;

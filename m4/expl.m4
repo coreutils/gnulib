@@ -1,4 +1,4 @@
-# expl.m4 serial 20
+# expl.m4 serial 21
 dnl Copyright (C) 2010-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -34,7 +34,7 @@ AC_DEFUN([gl_FUNC_EXPL],
     AC_CACHE_CHECK([whether expl() can be used with libm],
       [gl_cv_func_expl_in_libm],
       [
-        save_LIBS="$LIBS"
+        saved_LIBS="$LIBS"
         LIBS="$LIBS -lm"
         AC_LINK_IFELSE(
           [AC_LANG_PROGRAM(
@@ -48,7 +48,7 @@ AC_DEFUN([gl_FUNC_EXPL],
                       || expl (x) > 1.5;]])],
           [gl_cv_func_expl_in_libm=yes],
           [gl_cv_func_expl_in_libm=no])
-        LIBS="$save_LIBS"
+        LIBS="$saved_LIBS"
       ])
     if test $gl_cv_func_expl_in_libm = yes; then
       EXPL_LIBM=-lm
@@ -64,7 +64,7 @@ AC_DEFUN([gl_FUNC_EXPL],
       AC_CACHE_CHECK([whether expl works],
         [gl_cv_func_expl_works],
         [
-          save_LIBS="$LIBS"
+          saved_LIBS="$LIBS"
           LIBS="$LIBS $EXPL_LIBM"
           AC_RUN_IFELSE(
             [AC_LANG_SOURCE([[
@@ -158,7 +158,7 @@ int main (int argc, char *argv[])
                *)                  gl_cv_func_expl_works="$gl_cross_guess_normal" ;;
              esac
             ])
-          LIBS="$save_LIBS"
+          LIBS="$saved_LIBS"
         ])
       case "$gl_cv_func_expl_works" in
         *yes) ;;

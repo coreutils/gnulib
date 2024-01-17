@@ -1,4 +1,4 @@
-# log1pl.m4 serial 11
+# log1pl.m4 serial 12
 dnl Copyright (C) 2012-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -16,17 +16,17 @@ AC_DEFUN([gl_FUNC_LOG1PL],
 
   dnl Test whether log1pl() exists. Assume that log1pl(), if it exists, is
   dnl defined in the same library as log1p().
-  save_LIBS="$LIBS"
+  saved_LIBS="$LIBS"
   LIBS="$LIBS $LOG1P_LIBM"
   AC_CHECK_FUNCS([log1pl])
-  LIBS="$save_LIBS"
+  LIBS="$saved_LIBS"
   if test $ac_cv_func_log1pl = yes; then
     LOG1PL_LIBM="$LOG1P_LIBM"
 
-    save_LIBS="$LIBS"
+    saved_LIBS="$LIBS"
     LIBS="$LIBS $LOG1PL_LIBM"
     gl_FUNC_LOG1PL_WORKS
-    LIBS="$save_LIBS"
+    LIBS="$saved_LIBS"
     case "$gl_cv_func_log1pl_works" in
       *yes) ;;
       *) REPLACE_LOG1PL=1 ;;
@@ -38,7 +38,7 @@ AC_DEFUN([gl_FUNC_LOG1PL],
         AC_CACHE_CHECK([whether log1pl works according to ISO C 99 with IEC 60559],
           [gl_cv_func_log1pl_ieee],
           [
-            save_LIBS="$LIBS"
+            saved_LIBS="$LIBS"
             LIBS="$LIBS $LOG1PL_LIBM"
             AC_RUN_IFELSE(
               [AC_LANG_SOURCE([[
@@ -72,7 +72,7 @@ int main (int argc, char *argv[])
                  *)                  gl_cv_func_log1pl_ieee="$gl_cross_guess_normal" ;;
                esac
               ])
-            LIBS="$save_LIBS"
+            LIBS="$saved_LIBS"
           ])
         case "$gl_cv_func_log1pl_ieee" in
           *yes) ;;

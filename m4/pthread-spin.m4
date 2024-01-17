@@ -1,4 +1,4 @@
-# pthread-spin.m4 serial 4
+# pthread-spin.m4 serial 5
 dnl Copyright (C) 2019-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -36,7 +36,7 @@ AC_DEFUN([gl_PTHREAD_SPIN],
         dnl FreeBSD 5.2.1 declares them but does not define them.
         AC_CACHE_CHECK([for pthread_spin_init],
           [gl_cv_func_pthread_spin_init_in_LIBMULTITHREAD],
-          [gl_save_LIBS="$LIBS"
+          [gl_saved_LIBS="$LIBS"
            LIBS="$LIBS $LIBMULTITHREAD"
            AC_LINK_IFELSE(
              [AC_LANG_PROGRAM(
@@ -48,7 +48,7 @@ AC_DEFUN([gl_PTHREAD_SPIN],
              ],
              [gl_cv_func_pthread_spin_init_in_LIBMULTITHREAD=yes],
              [gl_cv_func_pthread_spin_init_in_LIBMULTITHREAD=no])
-           LIBS="$gl_save_LIBS"
+           LIBS="$gl_saved_LIBS"
           ])
         if test $gl_cv_func_pthread_spin_init_in_LIBMULTITHREAD != yes; then
           HAVE_PTHREAD_SPIN_INIT=0

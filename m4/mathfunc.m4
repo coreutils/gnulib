@@ -1,4 +1,4 @@
-# mathfunc.m4 serial 17
+# mathfunc.m4 serial 18
 dnl Copyright (C) 2010-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -85,7 +85,7 @@ AC_DEFUN([gl_MATHFUNC],
     AC_CACHE_CHECK([whether func() can be used with libm],
       [gl_cv_func_]func[_in_libm],
       [
-        save_LIBS="$LIBS"
+        saved_LIBS="$LIBS"
         LIBS="$LIBS -lm"
         AC_LINK_IFELSE(
           [AC_LANG_PROGRAM(
@@ -105,7 +105,7 @@ AC_DEFUN([gl_MATHFUNC],
              ]])],
           [gl_cv_func_]func[_in_libm=yes],
           [gl_cv_func_]func[_in_libm=no])
-        LIBS="$save_LIBS"
+        LIBS="$saved_LIBS"
       ])
     if test $gl_cv_func_[]func[]_in_libm = yes; then
       FUNC[]_LIBM=-lm

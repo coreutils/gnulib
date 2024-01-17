@@ -1,4 +1,4 @@
-# frexpf.m4 serial 9
+# frexpf.m4 serial 10
 dnl Copyright (C) 2011-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -18,10 +18,10 @@ AC_DEFUN([gl_FUNC_FREXPF],
   gl_MATHFUNC([frexpf], [float], [(float, int *)])
   if test $gl_cv_func_frexpf_no_libm = yes \
      || test $gl_cv_func_frexpf_in_libm = yes; then
-    save_LIBS="$LIBS"
+    saved_LIBS="$LIBS"
     LIBS="$LIBS $FREXPF_LIBM"
     gl_FUNC_FREXPF_WORKS
-    LIBS="$save_LIBS"
+    LIBS="$saved_LIBS"
     case "$gl_cv_func_frexpf_works" in
       *yes) ;;
       *)    REPLACE_FREXPF=1 ;;

@@ -1,4 +1,4 @@
-# manywarnings-c++.m4 serial 3
+# manywarnings-c++.m4 serial 4
 dnl Copyright (C) 2008-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -19,13 +19,13 @@ AC_DEFUN([gl_MANYWARN_ALL_GCC_CXX_IMPL],
     dnl with the current $CXX $CXXFLAGS $CPPFLAGS.
     AC_CACHE_CHECK([whether -Wno-missing-field-initializers is supported],
       [gl_cv_cxx_nomfi_supported],
-      [gl_save_CXXFLAGS="$CXXFLAGS"
+      [gl_saved_CXXFLAGS="$CXXFLAGS"
        CXXFLAGS="$CXXFLAGS -W -Werror -Wno-missing-field-initializers"
        AC_COMPILE_IFELSE(
          [AC_LANG_PROGRAM([[]], [[]])],
          [gl_cv_cxx_nomfi_supported=yes],
          [gl_cv_cxx_nomfi_supported=no])
-       CXXFLAGS="$gl_save_CXXFLAGS"
+       CXXFLAGS="$gl_saved_CXXFLAGS"
       ])
 
     if test "$gl_cv_cxx_nomfi_supported" = yes; then
@@ -33,7 +33,7 @@ AC_DEFUN([gl_MANYWARN_ALL_GCC_CXX_IMPL],
       dnl for the { 0, } construct.
       AC_CACHE_CHECK([whether -Wno-missing-field-initializers is needed],
         [gl_cv_cxx_nomfi_needed],
-        [gl_save_CXXFLAGS="$CXXFLAGS"
+        [gl_saved_CXXFLAGS="$CXXFLAGS"
          CXXFLAGS="$CXXFLAGS -W -Werror"
          AC_COMPILE_IFELSE(
            [AC_LANG_PROGRAM(
@@ -47,7 +47,7 @@ AC_DEFUN([gl_MANYWARN_ALL_GCC_CXX_IMPL],
               [[]])],
            [gl_cv_cxx_nomfi_needed=no],
            [gl_cv_cxx_nomfi_needed=yes])
-         CXXFLAGS="$gl_save_CXXFLAGS"
+         CXXFLAGS="$gl_saved_CXXFLAGS"
         ])
     fi
 
@@ -56,13 +56,13 @@ AC_DEFUN([gl_MANYWARN_ALL_GCC_CXX_IMPL],
     dnl has no effect if -O is not also used
     AC_CACHE_CHECK([whether -Wuninitialized is supported],
       [gl_cv_cxx_uninitialized_supported],
-      [gl_save_CXXFLAGS="$CXXFLAGS"
+      [gl_saved_CXXFLAGS="$CXXFLAGS"
        CXXFLAGS="$CXXFLAGS -Werror -Wuninitialized"
        AC_COMPILE_IFELSE(
          [AC_LANG_PROGRAM([[]], [[]])],
          [gl_cv_cxx_uninitialized_supported=yes],
          [gl_cv_cxx_uninitialized_supported=no])
-       CXXFLAGS="$gl_save_CXXFLAGS"
+       CXXFLAGS="$gl_saved_CXXFLAGS"
       ])
 
   fi

@@ -1,4 +1,4 @@
-# logbf.m4 serial 5
+# logbf.m4 serial 6
 dnl Copyright (C) 2012-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -15,10 +15,10 @@ AC_DEFUN([gl_FUNC_LOGBF],
   gl_MATHFUNC([logbf], [float], [(float)])
   if test $gl_cv_func_logbf_no_libm = yes \
      || test $gl_cv_func_logbf_in_libm = yes; then
-    save_LIBS="$LIBS"
+    saved_LIBS="$LIBS"
     LIBS="$LIBS $LOGBF_LIBM"
     gl_FUNC_LOGBF_WORKS
-    LIBS="$save_LIBS"
+    LIBS="$saved_LIBS"
     case "$gl_cv_func_logbf_works" in
       *yes) ;;
       *) REPLACE_LOGBF=1 ;;

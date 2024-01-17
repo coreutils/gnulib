@@ -1,4 +1,4 @@
-# atanl.m4 serial 9
+# atanl.m4 serial 10
 dnl Copyright (C) 2010-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -33,7 +33,7 @@ AC_DEFUN([gl_FUNC_ATANL],
     AC_CACHE_CHECK([whether atanl() can be used with libm],
       [gl_cv_func_atanl_in_libm],
       [
-        save_LIBS="$LIBS"
+        saved_LIBS="$LIBS"
         LIBS="$LIBS -lm"
         AC_LINK_IFELSE(
           [AC_LANG_PROGRAM(
@@ -47,7 +47,7 @@ AC_DEFUN([gl_FUNC_ATANL],
                       || atanl (x) > 1;]])],
           [gl_cv_func_atanl_in_libm=yes],
           [gl_cv_func_atanl_in_libm=no])
-        LIBS="$save_LIBS"
+        LIBS="$saved_LIBS"
       ])
     if test $gl_cv_func_atanl_in_libm = yes; then
       ATANL_LIBM=-lm

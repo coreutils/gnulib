@@ -463,17 +463,17 @@ func_gnulib_dir ()
             ;;
         esac
       fi
-      save_IFS="$IFS"
+      saved_IFS="$IFS"
       IFS="$PATH_SEPARATOR"
       for d in $pathx; do
-        IFS="$save_IFS"
+        IFS="$saved_IFS"
         test -z "$d" && d=.
         if test -x "$d/$progname" && test ! -d "$d/$progname"; then
           self_abspathname="$d/$progname"
           break
         fi
       done
-      IFS="$save_IFS"
+      IFS="$saved_IFS"
       if test -z "$self_abspathname"; then
         func_fatal_error "could not locate the gnulib-tool program - how did you invoke it?"
       fi
@@ -633,14 +633,14 @@ func_path_foreach ()
   fpf_cb="$1"; shift
   fpf_rc=false
 
-  fpf_save_IFS="$IFS"
+  fpf_saved_IFS="$IFS"
   IFS="$PATH_SEPARATOR"
   for fpf_dir in $fpf_dirs
   do
-    IFS="$fpf_save_IFS"
+    IFS="$fpf_saved_IFS"
     func_path_foreach_inner "$@" && fpf_rc=:
   done
-  IFS="$fpf_save_IFS"
+  IFS="$fpf_saved_IFS"
   $fpf_rc
 }
 
@@ -1682,17 +1682,17 @@ func_determine_path_separator
   sed_trimtrailingslashes='s,\([^/]\)//*$,\1,'
   old_local_gnulib_path="$local_gnulib_path"
   local_gnulib_path=
-  save_IFS="$IFS"
+  saved_IFS="$IFS"
   IFS=:
   for dir in $old_local_gnulib_path
   do
-    IFS="$save_IFS"
+    IFS="$saved_IFS"
     case "$dir" in
       */ ) dir=`echo "$dir" | sed -e "$sed_trimtrailingslashes"` ;;
     esac
     func_path_append local_gnulib_path "$dir"
   done
-  IFS="$save_IFS"
+  IFS="$saved_IFS"
   case "$sourcebase" in
     */ ) sourcebase=`echo "$sourcebase" | sed -e "$sed_trimtrailingslashes"` ;;
   esac
@@ -1799,14 +1799,14 @@ func_lookup_file ()
     rm -f "$tmp/$lkbase"
     cp "$lookedup_file" "$tmp/$lkbase"
     func_ensure_writable "$tmp/$lkbase"
-    save_IFS="$IFS"
+    saved_IFS="$IFS"
     IFS="$PATH_SEPARATOR"
     for patchfile in $lkpatches; do
-      IFS="$save_IFS"
+      IFS="$saved_IFS"
       patch -s "$tmp/$lkbase" < "$patchfile" >&2 \
         || func_fatal_error "patch file $patchfile didn't apply cleanly"
     done
-    IFS="$save_IFS"
+    IFS="$saved_IFS"
     lookedup_file="$tmp/$lkbase"
     lookedup_tmp=true
   fi
@@ -5859,11 +5859,11 @@ s,//*$,/,'
   func_compute_relative_local_gnulib_path ()
   {
     relative_local_gnulib_path=
-    save_IFS="$IFS"
+    saved_IFS="$IFS"
     IFS="$PATH_SEPARATOR"
     for local_dir in $local_gnulib_path
     do
-      IFS="$save_IFS"
+      IFS="$saved_IFS"
       # Store the local_dir relative to destdir.
       case "$local_dir" in
         "" | /*)
@@ -5881,7 +5881,7 @@ s,//*$,/,'
       esac
       func_path_append relative_local_gnulib_path "$relative_local_dir"
     done
-    IFS="$save_IFS"
+    IFS="$saved_IFS"
   }
 
   # Create m4/gnulib-cache.m4.

@@ -1,4 +1,4 @@
-# cosf.m4 serial 3
+# cosf.m4 serial 4
 dnl Copyright (C) 2011-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -14,10 +14,10 @@ AC_DEFUN([gl_FUNC_COSF],
 
   dnl Test whether cosf() exists. Assume that cosf(), if it exists, is
   dnl defined in the same library as cos().
-  save_LIBS="$LIBS"
+  saved_LIBS="$LIBS"
   LIBS="$LIBS $COS_LIBM"
   AC_CHECK_FUNCS([cosf])
-  LIBS="$save_LIBS"
+  LIBS="$saved_LIBS"
   if test $ac_cv_func_cosf = yes; then
     COSF_LIBM="$COS_LIBM"
   else
