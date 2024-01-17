@@ -94,9 +94,9 @@
 /* Verify that time_t is an integer as POSIX requires, and that every
    time_t value fits in intmax_t.  Please file a bug report if these
    assumptions are false on your platform.  */
-static_assert (TYPE_IS_INTEGER (time_t));
-static_assert (!TYPE_SIGNED (time_t) || INTMAX_MIN <= TYPE_MINIMUM (time_t));
-static_assert (TYPE_MAXIMUM (time_t) <= INTMAX_MAX);
+static_assert (TYPE_IS_INTEGER (time_t), "TYPE_IS_INTEGER (time_t)");
+static_assert (!TYPE_SIGNED (time_t) || INTMAX_MIN <= TYPE_MINIMUM (time_t), "!TYPE_SIGNED (time_t) || INTMAX_MIN <= TYPE_MINIMUM (time_t)");
+static_assert (TYPE_MAXIMUM (time_t) <= INTMAX_MAX, "TYPE_MAXIMUM (time_t) <= INTMAX_MAX");
 
 /* True if N is out of range for time_t.  */
 static bool
