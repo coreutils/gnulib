@@ -1,6 +1,6 @@
 /* Parse dates for touch and date.
 
-   Copyright (C) 1989-1991, 1998, 2000-2023 Free Software Foundation, Inc.
+   Copyright (C) 1989-1991, 1998, 2000-2024 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -191,7 +191,7 @@ posixtime (time_t *p, const char *s, unsigned int syntax_bits)
              | (tm0.tm_min ^ tm1.tm_min)
              | (tm0.tm_sec ^ tm1.tm_sec)))
         {
-          if (ckd_add (&t, t, leapsec))
+          if (ckd_add (&t, t, +leapsec))
             return false;
           *p = t;
           return true;
