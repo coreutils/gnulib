@@ -1,4 +1,4 @@
-# hypotl.m4 serial 14
+# hypotl.m4 serial 15
 dnl Copyright (C) 2012-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -135,6 +135,7 @@ dnl Test whether hypotl() works.
 dnl On OpenBSD 5.1/SPARC,
 dnl hypotl (2.5541394760659556563446062497337725156L, 7.7893454113437840832487794525518765265L)
 dnl has rounding errors that eat up the last 8 to 9 decimal digits.
+dnl On NetBSD 9.3, the result is accurate to only 16 digits.
 AC_DEFUN([gl_FUNC_HYPOTL_WORKS],
 [
   AC_REQUIRE([AC_PROG_CC])

@@ -1,4 +1,4 @@
-# log10l.m4 serial 13
+# log10l.m4 serial 14
 dnl Copyright (C) 2011-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -60,7 +60,7 @@ dnl 0xFFF00000000000007FF0000000000000, should be
 dnl 0xFFF00000000000000000000000000000.
 dnl On AIX 5.1, log10l(-0.0L) is finite if it's not the first log10l call
 dnl in the program.
-dnl On NetBSD 9.0, the result is accurate to only 16 digits.
+dnl On NetBSD 9.3, the result is accurate to only 16 digits.
 AC_DEFUN([gl_FUNC_LOG10L_WORKS],
 [
   AC_REQUIRE([AC_PROG_CC])
@@ -126,7 +126,7 @@ int main (int argc, char *argv[])
     if (!(gy + gy == gy))
       result |= 1;
   }
-  /* This test fails on musl 1.2.2/arm64, musl 1.2.2/s390x, NetBSD 9.0.  */
+  /* This test fails on musl 1.2.2/arm64, musl 1.2.2/s390x, NetBSD 9.3.  */
   {
     const long double TWO_LDBL_MANT_DIG = /* 2^LDBL_MANT_DIG */
       (long double) (1U << ((LDBL_MANT_DIG - 1) / 5))

@@ -103,7 +103,7 @@ AC_DEFUN([gl_FUNC_LOGL],
 
 dnl Test whether logl() works.
 dnl On OSF/1 5.1, logl(-0.0L) is NaN.
-dnl On NetBSD 9.0, the result is accurate to only 16 digits.
+dnl On NetBSD 9.3, the result is accurate to only 16 digits.
 AC_DEFUN([gl_FUNC_LOGL_WORKS],
 [
   AC_REQUIRE([AC_PROG_CC])
@@ -166,7 +166,7 @@ int main (int argc, char *argv[])
     if (!(gy + gy == gy))
       result |= 1;
   }
-  /* This test fails on musl 1.2.2/arm64, musl 1.2.2/s390x, NetBSD 9.0.  */
+  /* This test fails on musl 1.2.2/arm64, musl 1.2.2/s390x, NetBSD 9.3.  */
   {
     const long double TWO_LDBL_MANT_DIG = /* 2^LDBL_MANT_DIG */
       (long double) (1U << ((LDBL_MANT_DIG - 1) / 5))

@@ -1,4 +1,4 @@
-# expl.m4 serial 21
+# expl.m4 serial 22
 dnl Copyright (C) 2010-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -129,7 +129,7 @@ int main (int argc, char *argv[])
     if (isnan (expl (x1)) || isnan (expl (x2)) || isnan (expl (x3)))
       result |= 2;
   }
-  /* This test fails on musl 1.2.2/arm64, musl 1.2.2/s390x, NetBSD 9.0.  */
+  /* This test fails on musl 1.2.2/arm64, musl 1.2.2/s390x, NetBSD 9.3.  */
   {
     const long double TWO_LDBL_MANT_DIG = /* 2^LDBL_MANT_DIG */
       (long double) (1U << ((LDBL_MANT_DIG - 1) / 5))
