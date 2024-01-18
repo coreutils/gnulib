@@ -1,4 +1,4 @@
-# fma.m4 serial 7
+# fma.m4 serial 8
 dnl Copyright (C) 2011-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -70,6 +70,7 @@ AC_DEFUN([gl_FUNC_FMA_WORKS],
         [AC_LANG_SOURCE([[
 #include <float.h>
 #include <math.h>
+double (* volatile my_fma) (double, double, double) = fma;
 double p0 = 0.0;
 int main()
 {
@@ -84,7 +85,7 @@ int main()
        and is closer to (2^52 + 1) * 2^2, therefore the rounding
        must round up and produce (2^52 + 1) * 2^2.  */
     volatile double expected = z + 4.0;
-    volatile double result = fma (x, y, z);
+    volatile double result = my_fma (x, y, z);
     if (result != expected)
       failed_tests |= 1;
   }
@@ -97,7 +98,7 @@ int main()
        and is closer to (2^53 - 1) * 2^1, therefore the rounding
        must round down and produce (2^53 - 1) * 2^1.  */
     volatile double expected = (ldexp (1.0, DBL_MANT_DIG) - 1.0) * 2.0;
-    volatile double result = fma (x, y, z);
+    volatile double result = my_fma (x, y, z);
     if (result != expected)
       failed_tests |= 2;
   }
@@ -110,7 +111,7 @@ int main()
        and is closer to (2^52 + 2^50 + 1) * 2^-50, therefore the rounding
        must round up and produce (2^52 + 2^50 + 1) * 2^-50.  */
     volatile double expected = 4.0 + 1.0 + ldexp (1.0, 3 - DBL_MANT_DIG);
-    volatile double result = fma (x, y, z);
+    volatile double result = my_fma (x, y, z);
     if (result != expected)
       failed_tests |= 4;
   }
@@ -124,7 +125,7 @@ int main()
        (2^52 + 2^51 + 2^50 - 1) * 2^-50, therefore the rounding
        must round down and produce (2^52 + 2^51 + 2^50 - 1) * 2^-50.  */
     volatile double expected = 7.0 - ldexp (1.0, 3 - DBL_MANT_DIG);
-    volatile double result = fma (x, y, z);
+    volatile double result = my_fma (x, y, z);
     if (result != expected)
       failed_tests |= 8;
   }
@@ -136,10 +137,11 @@ int main()
        Lies between (2^53 - 2^0) and 2^53 and is closer to (2^53 - 2^0),
        therefore the rounding must round down and produce (2^53 - 2^0).  */
     volatile double expected = ldexp (1.0, DBL_MANT_DIG) - 1.0;
-    volatile double result = fma (x, y, z);
+    volatile double result = my_fma (x, y, z);
     if (result != expected)
       failed_tests |= 16;
   }
+  /* This test fails on OpenBSD 7.4/arm64.  */
   if ((DBL_MANT_DIG % 2) == 1)
     {
       volatile double x = 1.0 + ldexp (1.0, - (DBL_MANT_DIG + 1) / 2); /* 2^0 + 2^-27 */
@@ -150,7 +152,7 @@ int main()
          (2^53 - 1) * 2^-53, therefore the rounding must round down and
          produce (2^53 - 1) * 2^-53.  */
       volatile double expected = 1.0 - ldexp (1.0, - DBL_MANT_DIG);
-      volatile double result = fma (x, y, z);
+      volatile double result = my_fma (x, y, z);
       if (result != expected)
         failed_tests |= 32;
     }
@@ -159,7 +161,7 @@ int main()
     volatile double x = ldexp (1.0, DBL_MAX_EXP - 1);
     volatile double y = ldexp (1.0, DBL_MAX_EXP - 1);
     volatile double z = minus_inf;
-    volatile double result = fma (x, y, z);
+    volatile double result = my_fma (x, y, z);
     if (!(result == minus_inf))
       failed_tests |= 64;
   }

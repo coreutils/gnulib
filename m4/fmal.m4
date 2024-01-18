@@ -1,4 +1,4 @@
-# fmal.m4 serial 11
+# fmal.m4 serial 12
 dnl Copyright (C) 2011-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -109,6 +109,7 @@ AC_DEFUN([gl_FUNC_FMAL_WORKS],
 #  define LDBL_MIN_EXP DBL_MIN_EXP
 # endif
 #endif
+long double (* volatile my_fmal) (long double, long double, long double) = fmal;
 long double p0 = 0.0L;
 int main()
 {
@@ -123,7 +124,7 @@ int main()
        and is closer to (2^63 + 1) * 2^2, therefore the rounding
        must round up and produce (2^63 + 1) * 2^2.  */
     volatile long double expected = z + 4.0L;
-    volatile long double result = fmal (x, y, z);
+    volatile long double result = my_fmal (x, y, z);
     if (result != expected)
       failed_tests |= 1;
   }
@@ -137,7 +138,7 @@ int main()
        and is closer to (2^64 - 1) * 2^1, therefore the rounding
        must round down and produce (2^64 - 1) * 2^1.  */
     volatile long double expected = (ldexpl (1.0L, LDBL_MANT_DIG) - 1.0L) * 2.0L;
-    volatile long double result = fmal (x, y, z);
+    volatile long double result = my_fmal (x, y, z);
     if (result != expected)
       failed_tests |= 1;
   }
@@ -152,12 +153,12 @@ int main()
        and is closer to (2^63 + 2^61 + 1) * 2^-61, therefore the rounding
        must round up and produce (2^63 + 2^61 + 1) * 2^-61.  */
     volatile long double expected = 4.0L + 1.0L + ldexpl (1.0L, 3 - LDBL_MANT_DIG);
-    volatile long double result = fmal (x, y, z);
+    volatile long double result = my_fmal (x, y, z);
     if (result != expected)
       failed_tests |= 2;
   }
   /* This test fails on glibc 2.11 x86,x86_64,powerpc glibc 2.7 hppa,sparc,
-     OSF/1 5.1, mingw.  */
+     OpenBSD 7.4/arm64, OSF/1 5.1, mingw.  */
   {
     volatile long double x = 1.0L + ldexpl (1.0L, 1 - LDBL_MANT_DIG); /* 2^0 + 2^-63 */
     volatile long double y = - x;
@@ -168,7 +169,7 @@ int main()
        (2^63 + 2^62 + 2^61 - 1) * 2^-61, therefore the rounding
        must round down and produce (2^63 + 2^62 + 2^61 - 1) * 2^-61.  */
     volatile long double expected = 7.0L - ldexpl (1.0L, 3 - LDBL_MANT_DIG);
-    volatile long double result = fmal (x, y, z);
+    volatile long double result = my_fmal (x, y, z);
     if (result != expected)
       failed_tests |= 2;
   }
@@ -181,13 +182,13 @@ int main()
        Lies between (2^64 - 2^0) and 2^64 and is closer to (2^64 - 2^0),
        therefore the rounding must round down and produce (2^64 - 2^0).  */
     volatile long double expected = ldexpl (1.0L, LDBL_MANT_DIG) - 1.0L;
-    volatile long double result = fmal (x, y, z);
+    volatile long double result = my_fmal (x, y, z);
     if (result != expected)
       failed_tests |= 1;
   }
   if ((LDBL_MANT_DIG % 2) == 1)
     {
-      /* These tests fail on glibc 2.7 hppa,sparc, OSF/1 5.1.  */
+      /* These tests fail on glibc 2.7 hppa,sparc, OpenBSD 7.4/arm64, OSF/1 5.1.  */
       {
         volatile long double x = 1.0L + ldexpl (1.0L, - (LDBL_MANT_DIG + 1) / 2); /* 2^0 + 2^-27 */
         volatile long double y = 1.0L - ldexpl (1.0L, - (LDBL_MANT_DIG + 1) / 2); /* 2^0 - 2^-27 */
@@ -197,7 +198,7 @@ int main()
            (2^53 - 1) * 2^-53, therefore the rounding must round down and
            produce (2^53 - 1) * 2^-53.  */
         volatile long double expected = 1.0L - ldexpl (1.0L, - LDBL_MANT_DIG);
-        volatile long double result = fmal (x, y, z);
+        volatile long double result = my_fmal (x, y, z);
         if (result != expected)
           failed_tests |= 4;
       }
@@ -211,7 +212,7 @@ int main()
            must round up and produce (2^112 + 2^56 + 1) * 2^-112.  */
         volatile long double expected =
           1.0L + ldexpl (1.0L, - (LDBL_MANT_DIG - 1) / 2) + ldexpl (1.0L, 1 - LDBL_MANT_DIG);
-        volatile long double result = fmal (x, y, z);
+        volatile long double result = my_fmal (x, y, z);
         if (result != expected)
           failed_tests |= 4;
       }
@@ -229,7 +230,7 @@ int main()
            must round up and produce (2^63 + 2^32 + 1) * 2^-63.  */
         volatile long double expected =
           1.0L + ldexpl (1.0L, 1 - LDBL_MANT_DIG / 2) + ldexpl (1.0L, 1 - LDBL_MANT_DIG);
-        volatile long double result = fmal (x, y, z);
+        volatile long double result = my_fmal (x, y, z);
         if (result != expected)
           failed_tests |= 8;
       }
@@ -240,7 +241,7 @@ int main()
         /* x * y + z with infinite precision: 2^0 + 2^-31 + 2^-63.
            Rounding must return this value unchanged.  */
         volatile long double expected = 1.0L + ldexpl (1.0L, 1 - LDBL_MANT_DIG / 2) + ldexpl (1.0L, 1 - LDBL_MANT_DIG);
-        volatile long double result = fmal (x, y, z);
+        volatile long double result = my_fmal (x, y, z);
         if (result != expected)
           failed_tests |= 8;
       }
@@ -253,7 +254,7 @@ int main()
            and is at the same distance from each.  According to the round-to-even
            rule, the rounding must round up and produce (2^63 + 2^32 + 2) * 2^-63.  */
         volatile long double expected = 1.0L + ldexpl (1.0L, -31) + ldexpl (1.0L, -62);
-        volatile long double result = fmal (x, y, z);
+        volatile long double result = my_fmal (x, y, z);
         if (result != expected)
           failed_tests |= 8;
       }
@@ -266,7 +267,7 @@ int main()
            and is closer to (2^63 + 2^30 + 1) * 2^-30, therefore the rounding
            must round up and produce (2^63 + 2^30 + 1) * 2^-30.  */
         volatile long double expected = z + 1.0L + ldexp (1.0L, 2 - LDBL_MANT_DIG / 2);
-        volatile long double result = fmal (x, y, z);
+        volatile long double result = my_fmal (x, y, z);
         if (result != expected)
           failed_tests |= 8;
       }
@@ -279,7 +280,7 @@ int main()
            and is at the same distance from each.  According to the round-to-even
            rule, the rounding must round up and produce (2^63 + 2^32) * 2^-63.  */
         volatile long double expected = 1.0L + ldexpl (1.0L, 1 - LDBL_MANT_DIG / 2);
-        volatile long double result = fmal (x, y, z);
+        volatile long double result = my_fmal (x, y, z);
         if (result != expected)
           failed_tests |= 8;
       }
@@ -290,7 +291,7 @@ int main()
         /* x * y + z with infinite precision: 2^-31 + 2^-64.
            Rounding must return this value unchanged.  */
         volatile long double expected = ldexpl (1.0L, 1 - LDBL_MANT_DIG / 2) + ldexpl (1.0L, - LDBL_MANT_DIG);
-        volatile long double result = fmal (x, y, z);
+        volatile long double result = my_fmal (x, y, z);
         if (result != expected)
           failed_tests |= 8;
       }
@@ -301,7 +302,7 @@ int main()
         /* x * y + z with infinite precision: 2^0 - 2^31 - 2^-64.
            Rounding must return this value unchanged.  */
         volatile long double expected = 1.0L - ldexpl (1.0L, 1 - LDBL_MANT_DIG / 2) - ldexpl (1.0L, - LDBL_MANT_DIG);
-        volatile long double result = fmal (x, y, z);
+        volatile long double result = my_fmal (x, y, z);
         if (result != expected)
           failed_tests |= 8;
       }
@@ -314,7 +315,7 @@ int main()
            and is closer to (2^64 - 2^30 - 1) * 2^-30, therefore the rounding
            must round down and produce (2^64 - 2^30 - 1) * 2^-30.  */
         volatile long double expected = z - 1.0L - ldexpl (1.0L, 2 - LDBL_MANT_DIG / 2);
-        volatile long double result = fmal (x, y, z);
+        volatile long double result = my_fmal (x, y, z);
         if (result != expected)
           failed_tests |= 8;
       }
@@ -327,7 +328,7 @@ int main()
            (2^64 - 1) * 2^-64, therefore the rounding must round down and
            produce (2^64 - 1) * 2^-64.  */
         volatile long double expected = 1.0L - ldexpl (1.0L, - LDBL_MANT_DIG);
-        volatile long double result = fmal (x, y, z);
+        volatile long double result = my_fmal (x, y, z);
         if (result != expected)
           failed_tests |= 8;
       }
@@ -338,7 +339,7 @@ int main()
         /* x * y + z with infinite precision: - 2^-66.
            Rounding must return this value unchanged.  */
         volatile long double expected = - ldexpl (1.0L, - LDBL_MANT_DIG - 2);
-        volatile long double result = fmal (x, y, z);
+        volatile long double result = my_fmal (x, y, z);
         if (result != expected)
           failed_tests |= 8;
       }
@@ -350,7 +351,7 @@ int main()
     volatile long double x = ldexpl (1.0L, LDBL_MAX_EXP - 1);
     volatile long double y = ldexpl (1.0L, LDBL_MAX_EXP - 1);
     volatile long double z = minus_inf;
-    volatile long double result = fmal (x, y, z);
+    volatile long double result = my_fmal (x, y, z);
     if (!(result == minus_inf))
       failed_tests |= 16;
   }
@@ -362,7 +363,7 @@ int main()
     volatile long double z =
       - ldexpl (ldexpl (1.0L, LDBL_MAX_EXP - 1) - ldexpl (1.0L, LDBL_MAX_EXP - LDBL_MANT_DIG - 1), 1);
     volatile long double expected = ldexpl (1.0L, LDBL_MAX_EXP - LDBL_MANT_DIG);
-    volatile long double result = fmal (x, y, z);
+    volatile long double result = my_fmal (x, y, z);
     if (result != expected)
       failed_tests |= 32;
   }
@@ -376,7 +377,7 @@ int main()
        According to the round-to-even rule, the rounding must round up and
        produce 2^0.  */
     volatile long double expected = 1.0L;
-    volatile long double result = fmal (x, y, z);
+    volatile long double result = my_fmal (x, y, z);
     if (result != expected)
       failed_tests |= 64;
   }

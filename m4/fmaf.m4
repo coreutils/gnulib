@@ -1,4 +1,4 @@
-# fmaf.m4 serial 9
+# fmaf.m4 serial 10
 dnl Copyright (C) 2011-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -73,6 +73,7 @@ AC_DEFUN([gl_FUNC_FMAF_WORKS],
         [AC_LANG_SOURCE([[
 #include <float.h>
 #include <math.h>
+float (* volatile my_fmaf) (float, float, float) = fmaf;
 float p0 = 0.0f;
 int main()
 {
@@ -87,7 +88,7 @@ int main()
        and is closer to (2^23 + 1) * 2^2, therefore the rounding
        must round up and produce (2^23 + 1) * 2^2.  */
     volatile float expected = z + 4.0f;
-    volatile float result = fmaf (x, y, z);
+    volatile float result = my_fmaf (x, y, z);
     if (result != expected)
       failed_tests |= 1;
   }
@@ -100,7 +101,7 @@ int main()
        and is closer to (2^24 - 1) * 2^1, therefore the rounding
        must round down and produce (2^24 - 1) * 2^1.  */
     volatile float expected = (ldexpf (1.0f, FLT_MANT_DIG) - 1.0f) * 2.0f;
-    volatile float result = fmaf (x, y, z);
+    volatile float result = my_fmaf (x, y, z);
     if (result != expected)
       failed_tests |= 2;
   }
@@ -113,7 +114,7 @@ int main()
        and is closer to (2^23 + 2^21 + 1) * 2^-21, therefore the rounding
        must round up and produce (2^23 + 2^21 + 1) * 2^-21.  */
     volatile float expected = 4.0f + 1.0f + ldexpf (1.0f, 3 - FLT_MANT_DIG);
-    volatile float result = fmaf (x, y, z);
+    volatile float result = my_fmaf (x, y, z);
     if (result != expected)
       failed_tests |= 4;
   }
@@ -127,7 +128,7 @@ int main()
        (2^23 + 2^22 + 2^21 - 1) * 2^-21, therefore the rounding
        must round down and produce (2^23 + 2^22 + 2^21 - 1) * 2^-21.  */
     volatile float expected = 7.0f - ldexpf (1.0f, 3 - FLT_MANT_DIG);
-    volatile float result = fmaf (x, y, z);
+    volatile float result = my_fmaf (x, y, z);
     if (result != expected)
       failed_tests |= 8;
   }
@@ -139,10 +140,11 @@ int main()
        Lies between (2^24 - 2^0) and 2^24 and is closer to (2^24 - 2^0),
        therefore the rounding must round down and produce (2^24 - 2^0).  */
     volatile float expected = ldexpf (1.0f, FLT_MANT_DIG) - 1.0f;
-    volatile float result = fmaf (x, y, z);
+    volatile float result = my_fmaf (x, y, z);
     if (result != expected)
       failed_tests |= 16;
   }
+  /* This test fails on OpenBSD 7.4/arm64.  */
   if ((FLT_MANT_DIG % 2) == 0)
     {
       volatile float x = 1.0f + ldexpf (1.0f, - FLT_MANT_DIG / 2); /* 2^0 + 2^-12 */
@@ -154,7 +156,22 @@ int main()
          must round up and produce (2^23 + 2^12 + 1) * 2^-23.  */
       volatile float expected =
         1.0f + ldexpf (1.0f, 1 - FLT_MANT_DIG / 2) + ldexpf (1.0f, 1 - FLT_MANT_DIG);
-      volatile float result = fmaf (x, y, z);
+      volatile float result = my_fmaf (x, y, z);
+      if (result != expected)
+        failed_tests |= 32;
+    }
+  /* This test fails on FreeBSD 12.2/arm.  */
+  if ((FLT_MANT_DIG % 2) == 0)
+    {
+      volatile float x = 1.0f + ldexpf (1.0f, - FLT_MANT_DIG / 2); /* 2^0 + 2^-12 */
+      volatile float y = x;
+      volatile float z = - ldexpf (1.0f, FLT_MIN_EXP - FLT_MANT_DIG); /* - 2^-149 */
+      /* x * y + z with infinite precision: 2^0 + 2^-11 + 2^-24 - 2^-149.
+         Lies between (2^23 + 2^12 + 0) * 2^-23 and (2^23 + 2^12 + 1) * 2^-23
+         and is closer to (2^23 + 2^12 + 0) * 2^-23, therefore the rounding
+         must round down and produce (2^23 + 2^12 + 0) * 2^-23.  */
+      volatile float expected = 1.0f + ldexpf (1.0f, 1 - FLT_MANT_DIG / 2);
+      volatile float result = my_fmaf (x, y, z);
       if (result != expected)
         failed_tests |= 32;
     }
@@ -163,25 +180,10 @@ int main()
     volatile float x = ldexpf (1.0f, FLT_MAX_EXP - 1);
     volatile float y = ldexpf (1.0f, FLT_MAX_EXP - 1);
     volatile float z = minus_inf;
-    volatile float result = fmaf (x, y, z);
+    volatile float result = my_fmaf (x, y, z);
     if (!(result == minus_inf))
       failed_tests |= 64;
   }
-  /* This test fails on FreeBSD 12.2/arm.  */
-  if ((FLT_MANT_DIG % 2) == 0)
-    {
-      volatile float x = 1.0f + ldexpf (1.0f, - FLT_MANT_DIG / 2); /* 2^0 + 2^-12 */
-      volatile float y = x;
-      volatile float z = - ldexpf (1.0f, FLT_MIN_EXP - FLT_MANT_DIG); /* 2^-149 */
-      /* x * y + z with infinite precision: 2^0 + 2^-11 + 2^-24 - 2^-149.
-         Lies between (2^23 + 2^12 + 0) * 2^-23 and (2^23 + 2^12 + 1) * 2^-23
-         and is closer to (2^23 + 2^12 + 0) * 2^-23, therefore the rounding
-         must round down and produce (2^23 + 2^12 + 0) * 2^-23.  */
-      volatile float expected = 1.0f + ldexpf (1.0f, 1 - FLT_MANT_DIG / 2);
-      volatile float result = fmaf (x, y, z);
-      if (result != expected)
-        failed_tests |= 32;
-    }
   return failed_tests;
 }]])],
         [gl_cv_func_fmaf_works=yes],
