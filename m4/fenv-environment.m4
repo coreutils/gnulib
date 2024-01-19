@@ -1,4 +1,4 @@
-# fenv-environment.m4 serial 1
+# fenv-environment.m4 serial 1.1
 dnl Copyright (C) 2023-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -304,9 +304,10 @@ AC_DEFUN([gl_FENV_ENVIRONMENT],
     dnl <https://sourceware.org/git/?p=glibc.git;a=commitdiff;h=a8c79c4088e8c04e4297936efa0dee6c8e6e974d>)
     dnl and on Mac OS X 10.5/{i386,x86_64} (where it forgets about the currently
     dnl set floating-point exception flags)
-    dnl and on musl libc/s390x (where it does not trigger traps)
-    dnl on musl libc/{i386,x86_64} and AIX and Solaris and mingw 10 (where it
-    dnl fails to restore the exception trap bits),
+    dnl and on musl libc/s390x and NetBSD 9.3/powerpc (where it does not trigger
+    dnl traps)
+    dnl and on musl libc/{i386,x86_64} and AIX and Solaris and mingw 10 (where
+    dnl it fails to restore the exception trap bits),
     dnl and on FreeBSD 12.2/arm64 (see
     dnl <https://cgit.freebsd.org/src/commit/?id=34cc08e336987a8ebc316595e3f552a4c09f1fd4>).
     dnl On MSVC 14 it may even fail.
@@ -329,8 +330,8 @@ AC_DEFUN([gl_FENV_ENVIRONMENT],
              [gl_cv_func_feupdateenv_works="guessing no"])
            LIBS="$save_LIBS"
            ;;
-         # Guess no on glibc/hppa.
-         hppa*-*-*-gnu*)
+         # Guess no on glibc/hppa and NetBSD/powerpc64.
+         hppa*-*-*-gnu* | powerpc*-*-netbsd*)
            save_LIBS="$LIBS"
            LIBS="$LIBS $FENV_ENVIRONMENT_LIBM"
            AC_RUN_IFELSE(

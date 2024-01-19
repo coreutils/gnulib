@@ -34,7 +34,8 @@ musl libc/i386, musl libc/x86_64, AIX 7.3, Solaris 10 and 11, mingw 10.
 This function does not trigger traps on
 @c https://sourceware.org/bugzilla/show_bug.cgi?id=31023
 glibc 2.37/hppa,
-musl libc/s390x.
+musl libc/s390x,
+NetBSD 9.3/powerpc.
 @item
 This function may fail on some platforms:
 MSVC 14.
