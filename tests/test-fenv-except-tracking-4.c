@@ -25,6 +25,11 @@
 
 /* Check that fesetexcept() works.  */
 
+/* On *BSD/powerpc systems, raising FE_INVALID also sets FE_VXSOFT.  */
+#ifndef FE_VXSOFT
+# define FE_VXSOFT 0
+#endif
+
 int
 main ()
 {
@@ -42,7 +47,7 @@ main ()
   /* Test setting just one exception flag: FE_INVALID.  */
   ASSERT (feclearexcept (FE_ALL_EXCEPT) == 0);
   ASSERT (fesetexcept (FE_INVALID) == 0);
-  ASSERT (fetestexcept (FE_ALL_EXCEPT) == FE_INVALID);
+  ASSERT ((fetestexcept (FE_ALL_EXCEPT) & ~FE_VXSOFT) == FE_INVALID);
   ASSERT (fetestexcept (FE_INVALID) == FE_INVALID);
   ASSERT (fetestexcept (FE_DIVBYZERO) == 0);
   ASSERT (fetestexcept (FE_OVERFLOW) == 0);

@@ -25,6 +25,11 @@
 
 /* Test the combination of fegetenv() with feupdateenv().  */
 
+/* On *BSD/powerpc systems, raising FE_INVALID also sets FE_VXSOFT.  */
+#ifndef FE_VXSOFT
+# define FE_VXSOFT 0
+#endif
+
 int
 main ()
 {
@@ -49,7 +54,10 @@ main ()
   ASSERT (fegetenv (&env2) == 0);
 
   /* Check that the exception flags are unmodified.  */
-  ASSERT (fetestexcept (FE_ALL_EXCEPT) == (supports_tracking ? FE_INVALID | FE_OVERFLOW | FE_INEXACT : 0));
+  if (supports_tracking)
+    ASSERT ((fetestexcept (FE_ALL_EXCEPT) & ~FE_VXSOFT) == (FE_INVALID | FE_OVERFLOW | FE_INEXACT));
+  else
+    ASSERT (fetestexcept (FE_ALL_EXCEPT) == 0);
   /* Check that the exception trap bits are unmodified.  */
   ASSERT (fegetexcept () == (supports_trapping ? FE_DIVBYZERO : 0));
 
@@ -61,7 +69,10 @@ main ()
   /* Check that the exception flags are the union of the saved and of the
      current exception flags.  (The saved exception flags happen to be none
      in this case.)  */
-  ASSERT (fetestexcept (FE_ALL_EXCEPT) == (supports_tracking ? FE_INVALID | FE_OVERFLOW | FE_INEXACT : 0));
+  if (supports_tracking)
+    ASSERT ((fetestexcept (FE_ALL_EXCEPT) & ~FE_VXSOFT) == (FE_INVALID | FE_OVERFLOW | FE_INEXACT));
+  else
+    ASSERT (fetestexcept (FE_ALL_EXCEPT) == 0);
   /* Check that the exception trap bits have been restored.  */
   ASSERT (fegetexcept () == 0);
 
@@ -82,7 +93,10 @@ main ()
   ASSERT (fegetround () == FE_UPWARD);
   /* Check that the exception flags are the union of the saved and of the
      current exception flags.  */
-  ASSERT (fetestexcept (FE_ALL_EXCEPT) == (supports_tracking ? FE_INVALID | FE_OVERFLOW | FE_UNDERFLOW | FE_INEXACT : 0));
+  if (supports_tracking)
+    ASSERT ((fetestexcept (FE_ALL_EXCEPT) & ~FE_VXSOFT) == (FE_INVALID | FE_OVERFLOW | FE_UNDERFLOW | FE_INEXACT));
+  else
+    ASSERT (fetestexcept (FE_ALL_EXCEPT) == 0);
   /* Check that the exception trap bits have been restored.  */
   ASSERT (fegetexcept () == (supports_trapping ? FE_DIVBYZERO : 0));
 
@@ -95,7 +109,10 @@ main ()
   /* Check that the rounding direction has been restored,
      whereas the exception flags are unmodified.  */
   ASSERT (fegetround () == FE_TONEAREST);
-  ASSERT (fetestexcept (FE_ALL_EXCEPT) == (supports_tracking ? FE_INVALID | FE_OVERFLOW | FE_UNDERFLOW | FE_INEXACT : 0));
+  if (supports_tracking)
+    ASSERT ((fetestexcept (FE_ALL_EXCEPT) & ~FE_VXSOFT) == (FE_INVALID | FE_OVERFLOW | FE_UNDERFLOW | FE_INEXACT));
+  else
+    ASSERT (fetestexcept (FE_ALL_EXCEPT) == 0);
 
   /* Enable trapping on FE_INVALID.  */
   feclearexcept (FE_INVALID);

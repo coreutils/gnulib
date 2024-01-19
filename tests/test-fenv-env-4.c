@@ -25,6 +25,11 @@
 
 /* Test the combination of feholdexcept() with fesetenv().  */
 
+/* On *BSD/powerpc systems, raising FE_INVALID also sets FE_VXSOFT.  */
+#ifndef FE_VXSOFT
+# define FE_VXSOFT 0
+#endif
+
 int
 main ()
 {
@@ -79,7 +84,10 @@ main ()
   /* Check that the rounding direction has been restored.  */
   ASSERT (fegetround () == FE_UPWARD);
   /* Check that the exception flags have been restored.  */
-  ASSERT (fetestexcept (FE_ALL_EXCEPT) == (supports_tracking ? FE_INVALID | FE_OVERFLOW | FE_INEXACT : 0));
+  if (supports_tracking)
+    ASSERT ((fetestexcept (FE_ALL_EXCEPT) & ~FE_VXSOFT) == (FE_INVALID | FE_OVERFLOW | FE_INEXACT));
+  else
+    ASSERT (fetestexcept (FE_ALL_EXCEPT) == 0);
   /* Check that the exception trap bits have been restored.  */
   ASSERT (fegetexcept () == (supports_trapping ? FE_DIVBYZERO : 0));
 
