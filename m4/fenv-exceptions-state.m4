@@ -1,4 +1,4 @@
-# fenv-exceptions-state.m4 serial 2
+# fenv-exceptions-state.m4 serial 2.1
 dnl Copyright (C) 2023-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -195,10 +195,21 @@ changequote([,])dnl
         *yes) ;;
         *) REPLACE_FESETEXCEPTFLAG=1 ;;
       esac
+      dnl Additionally, on FreeBSD/powerpc64 and NetBSD/powerpc, the unit test
+      dnl test-fenv-except-state-2 fails if we don't override fesetexceptflag.
+      dnl The function fesetexceptflag apparently fails to restore the
+      dnl FE_INVALID flag.
+      case "$host" in
+        powerpc*-*-freebsd* | powerpc*-*-netbsd*)
+          REPLACE_FESETEXCEPTFLAG=1
+          ;;
+      esac
       dnl Additionally, on AIX, the unit test test-fenv-except-state-1 fails
       dnl if we don't override fesetexceptflag.
       case "$host" in
-        powerpc*-*-aix*) REPLACE_FESETEXCEPTFLAG=1 ;;
+        powerpc*-*-aix*)
+          REPLACE_FESETEXCEPTFLAG=1
+          ;;
       esac
       dnl Additionally, on MSVC, we want the bits in the saved state to be
       dnl identified by the FE_* macros, so that the fetestexceptflag function
