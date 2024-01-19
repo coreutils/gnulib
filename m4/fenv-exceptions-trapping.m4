@@ -1,4 +1,4 @@
-# fenv-exceptions-trapping.m4 serial 1
+# fenv-exceptions-trapping.m4 serial 2
 dnl Copyright (C) 2023-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -17,7 +17,7 @@ AC_DEFUN_ONCE([gl_FENV_EXCEPTIONS_TRAPPING],
     dnl On glibc 2.19/aarch64, feenableexcept does not detect failures.
     dnl Fixed through
     dnl <https://sourceware.org/git/?p=glibc.git;a=commitdiff;h=302949e2940a9da3f6364a1574619e621b7e1e71>.
-    dnl Similarly on FreeBSD 12.2/arm and FreeBSD 12.2/arm64.
+    dnl Similarly on FreeBSD 12.2/arm, FreeBSD 12.2/arm64, NetBSD 9.3/arm64.
     case "$host" in
       aarch64*-*-linux*)
         AC_CACHE_CHECK([whether feenableexcept works],
@@ -41,7 +41,7 @@ AC_DEFUN_ONCE([gl_FENV_EXCEPTIONS_TRAPPING],
           *) REPLACE_FEENABLEEXCEPT=1 ;;
         esac
         ;;
-      arm*-*-freebsd* | aarch64*-*-freebsd*)
+      arm*-*-freebsd* | aarch64*-*-freebsd* | aarch64*-*-netbsd*)
         REPLACE_FEENABLEEXCEPT=1
         ;;
     esac
