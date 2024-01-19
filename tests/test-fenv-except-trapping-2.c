@@ -433,8 +433,8 @@ main (int argc, char *argv[])
            GNU/kFreeBSD/i386, GNU/kFreeBSD/x86_64,
            musl libc/i386, musl libc/powerpc64le,
            macOS/i386, macOS/x86_64, macOS/arm64,
-           FreeBSD/i386, FreeBSD/x86_64,
-           NetBSD/i386, NetBSD/x86_64,
+           FreeBSD/i386, FreeBSD/x86_64, FreeBSD/powerpc64,
+           NetBSD/i386, NetBSD/x86_64, NetBSD/powerpc,
            OpenBSD/i386, OpenBSD/x86_64, OpenBSD/mips64,
            Minix/i386,
            AIX/powerpc,
@@ -460,6 +460,7 @@ main (int argc, char *argv[])
           || (defined MUSL_LIBC && ((defined __i386 || defined _M_IX86) || defined __powerpc__)) \
           || ((defined __APPLE__ && defined __MACH__) && ((defined __x86_64__ || defined _M_X64) || (defined __i386 || defined _M_IX86) || defined __aarch64__)) \
           || ((defined __FreeBSD__ || defined __NetBSD__ || defined __OpenBSD__) && ((defined __x86_64__ || defined _M_X64) || (defined __i386 || defined _M_IX86))) \
+          || ((defined __FreeBSD__ || defined __NetBSD__) && defined __powerpc__) \
           || (defined __OpenBSD__ && defined __mips64) \
           || (defined __minix && (defined __i386 || defined _M_IX86)) \
           || (defined _AIX && defined __powerpc__) \
