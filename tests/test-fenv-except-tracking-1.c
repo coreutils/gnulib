@@ -23,6 +23,14 @@
 
 #include "macros.h"
 
+/* On *BSD/powerpc systems, raising FE_INVALID also sets FE_VXSOFT.  */
+#ifndef FE_VXSOFT
+# define FE_VXSOFT 0
+#endif
+#ifndef FE_VXZDZ
+# define FE_VXZDZ 0
+#endif
+
 static volatile double a, b, c;
 
 int
@@ -37,7 +45,7 @@ main ()
   ASSERT (/* with the libc's feraiseexcept(): */
           fetestexcept (FE_ALL_EXCEPT) == FE_ALL_EXCEPT
           || /* with gnulib's feraiseexcept(): */
-             fetestexcept (FE_ALL_EXCEPT)
+             (fetestexcept (FE_ALL_EXCEPT) & ~FE_VXSOFT)
              == (FE_DIVBYZERO | FE_INEXACT | FE_INVALID | FE_OVERFLOW | FE_UNDERFLOW));
   ASSERT (fetestexcept (FE_INVALID) == FE_INVALID);
   ASSERT (fetestexcept (FE_DIVBYZERO) == FE_DIVBYZERO);
@@ -58,7 +66,7 @@ main ()
   /* Test setting just one exception flag: FE_INVALID.  */
   ASSERT (feclearexcept (FE_ALL_EXCEPT) == 0);
   ASSERT (feraiseexcept (FE_INVALID) == 0);
-  ASSERT (fetestexcept (FE_ALL_EXCEPT) == FE_INVALID);
+  ASSERT ((fetestexcept (FE_ALL_EXCEPT) & ~FE_VXSOFT) == FE_INVALID);
   ASSERT (fetestexcept (FE_INVALID) == FE_INVALID);
   ASSERT (fetestexcept (FE_DIVBYZERO) == 0);
   ASSERT (fetestexcept (FE_OVERFLOW) == 0);
@@ -128,7 +136,7 @@ main ()
   ASSERT (/* with the libc's feraiseexcept(): */
           fetestexcept (FE_ALL_EXCEPT) == (FE_ALL_EXCEPT & ~FE_DIVBYZERO)
           || /* with gnulib's feraiseexcept(): */
-             fetestexcept (FE_ALL_EXCEPT)
+             (fetestexcept (FE_ALL_EXCEPT) & ~FE_VXSOFT)
              == (FE_INEXACT | FE_INVALID | FE_OVERFLOW | FE_UNDERFLOW));
   ASSERT (fetestexcept (FE_INVALID) == FE_INVALID);
   ASSERT (fetestexcept (FE_DIVBYZERO) == 0);
@@ -142,7 +150,7 @@ main ()
   ASSERT (/* with the libc's feraiseexcept(): */
           fetestexcept (FE_ALL_EXCEPT) == (FE_ALL_EXCEPT & ~FE_OVERFLOW)
           || /* with gnulib's feraiseexcept(): */
-             fetestexcept (FE_ALL_EXCEPT)
+             (fetestexcept (FE_ALL_EXCEPT) & ~FE_VXSOFT)
              == (FE_DIVBYZERO | FE_INEXACT | FE_INVALID | FE_UNDERFLOW));
   ASSERT (fetestexcept (FE_INVALID) == FE_INVALID);
   ASSERT (fetestexcept (FE_DIVBYZERO) == FE_DIVBYZERO);
@@ -156,7 +164,7 @@ main ()
   ASSERT (/* with the libc's feraiseexcept(): */
           fetestexcept (FE_ALL_EXCEPT) == (FE_ALL_EXCEPT & ~FE_UNDERFLOW)
           || /* with gnulib's feraiseexcept(): */
-             fetestexcept (FE_ALL_EXCEPT)
+             (fetestexcept (FE_ALL_EXCEPT) & ~FE_VXSOFT)
              == (FE_DIVBYZERO | FE_INEXACT | FE_INVALID | FE_OVERFLOW));
   ASSERT (fetestexcept (FE_INVALID) == FE_INVALID);
   ASSERT (fetestexcept (FE_DIVBYZERO) == FE_DIVBYZERO);
@@ -170,7 +178,7 @@ main ()
   ASSERT (/* with the libc's feraiseexcept(): */
           fetestexcept (FE_ALL_EXCEPT) == (FE_ALL_EXCEPT & ~FE_INEXACT)
           || /* with gnulib's feraiseexcept(): */
-             fetestexcept (FE_ALL_EXCEPT)
+             (fetestexcept (FE_ALL_EXCEPT) & ~FE_VXSOFT)
              == (FE_DIVBYZERO | FE_INVALID | FE_OVERFLOW | FE_UNDERFLOW));
   ASSERT (fetestexcept (FE_INVALID) == FE_INVALID);
   ASSERT (fetestexcept (FE_DIVBYZERO) == FE_DIVBYZERO);
@@ -183,7 +191,7 @@ main ()
   /* Test the effects of an operation that produces FE_INVALID.  */
   ASSERT (feclearexcept (FE_ALL_EXCEPT) == 0);
   a = 0; b = 0; c = a / b;
-  ASSERT (fetestexcept (FE_ALL_EXCEPT) == FE_INVALID);
+  ASSERT ((fetestexcept (FE_ALL_EXCEPT) & ~FE_VXZDZ) == FE_INVALID);
   ASSERT (fetestexcept (FE_INVALID) == FE_INVALID);
   ASSERT (fetestexcept (FE_DIVBYZERO) == 0);
   ASSERT (fetestexcept (FE_OVERFLOW) == 0);
