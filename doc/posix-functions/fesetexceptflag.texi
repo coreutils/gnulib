@@ -23,6 +23,9 @@ This function clears too many floating-point exception flags on
 @c https://sourceware.org/bugzilla/show_bug.cgi?id=30998
 glibc 2.37/alpha.
 @item
+This function loses the @code{FE_INVALID} flag on
+FreeBSD 14.0/powerpc64, NetBSD 9.3/powerpc.
+@item
 This function is also buggy on
 @c Without the override, the unit test test-fenv-except-state-1 fails.
 AIX 7.3.1.
