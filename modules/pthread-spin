@@ -4,6 +4,7 @@ POSIX spin locks.
 Files:
 lib/pthread-spin.c
 m4/pthread-spin.m4
+m4/atomic-cas.m4
 
 Depends-on:
 pthread-h
@@ -15,6 +16,7 @@ gl_PTHREAD_SPIN
 gl_CONDITIONAL([GL_COND_OBJ_PTHREAD_SPIN],
                [test $HAVE_PTHREAD_SPIN_INIT = 0 || test $REPLACE_PTHREAD_SPIN_INIT = 1])
 gl_PTHREAD_MODULE_INDICATOR([pthread-spin])
+AC_REQUIRE([gl_ATOMIC_COMPARE_AND_SWAP])
 
 Makefile.am:
 if GL_COND_OBJ_PTHREAD_SPIN
