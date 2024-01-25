@@ -1,4 +1,4 @@
-# Test whether timespec_getres works.
+# timespec_getres serial 2
 dnl Copyright 2021-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -11,8 +11,11 @@ AC_DEFUN([gl_FUNC_TIMESPEC_GETRES],
   dnl Might be needed for the same reason timespec_get needs it.
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
 
-  AC_CHECK_FUNCS_ONCE([timespec_getres])
+  gl_CHECK_FUNCS_ANDROID([timespec_getres], [[#include <time.h>]])
   if test $ac_cv_func_timespec_getres != yes; then
     HAVE_TIMESPEC_GETRES=0
+    case "$gl_cv_onwards_func_timespec_getres" in
+      future*) REPLACE_TIMESPEC_GETRES=1 ;;
+    esac
   fi
 ])
