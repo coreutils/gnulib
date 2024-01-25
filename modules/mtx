@@ -3,6 +3,7 @@ ISO C 11 mutex functions.
 
 Files:
 lib/mtx.c
+m4/mtx.m4
 
 Depends-on:
 threads-h
@@ -14,7 +15,9 @@ windows-timedrecmutex
 
 configure.ac:
 AC_REQUIRE([gl_THREADS_H])
-gl_CONDITIONAL([GL_COND_OBJ_MTX], [test $HAVE_THREADS_H = 0])
+gl_FUNC_MTX_INIT
+gl_CONDITIONAL([GL_COND_OBJ_MTX],
+               [test $HAVE_THREADS_H = 0 || test $REPLACE_MTX_INIT = 1])
 gl_THREADS_MODULE_INDICATOR([mtx])
 
 Makefile.am:

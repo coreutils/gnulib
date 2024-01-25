@@ -3,6 +3,7 @@ call_once() function: ISO C 11 once-only initialization.
 
 Files:
 lib/call_once.c
+m4/call_once.m4
 
 Depends-on:
 threads-h
@@ -10,7 +11,9 @@ windows-once
 
 configure.ac:
 AC_REQUIRE([gl_THREADS_H])
-gl_CONDITIONAL([GL_COND_OBJ_CALL_ONCE], [test $HAVE_THREADS_H = 0])
+gl_FUNC_CALL_ONCE
+gl_CONDITIONAL([GL_COND_OBJ_CALL_ONCE],
+               [test $HAVE_THREADS_H = 0 || test $REPLACE_CALL_ONCE = 1])
 gl_THREADS_MODULE_INDICATOR([call_once])
 
 Makefile.am:

@@ -1,8 +1,28 @@
-# thrd.m4 serial 5
+# thrd.m4 serial 6
 dnl Copyright (C) 2019-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
+
+AC_DEFUN([gl_FUNC_THRD_CREATE],
+[
+  AC_REQUIRE([gl_THREADS_H])
+  gl_CHECK_FUNCS_ANDROID([thrd_create], [[#include <threads.h>]])
+  case "$gl_cv_onwards_func_thrd_create" in
+    future*)
+      REPLACE_THRD_CREATE=1
+      dnl Assume that the other thrd_* functions are introduced at the same time
+      dnl as thrd_create.
+      REPLACE_THRD_CURRENT=1
+      REPLACE_THRD_DETACH=1
+      REPLACE_THRD_EQUAL=1
+      REPLACE_THRD_EXIT=1
+      REPLACE_THRD_JOIN=1
+      REPLACE_THRD_SLEEP=1
+      REPLACE_THRD_YIELD=1
+      ;;
+  esac
+])
 
 AC_DEFUN([gl_FUNC_THRD_JOIN],
 [
