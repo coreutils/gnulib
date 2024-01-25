@@ -32,7 +32,7 @@
 
    STREAM must not be wide-character oriented.  */
 
-#if HAVE___FREADAHEAD /* musl libc */
+#if HAVE___FREADAHEAD /* musl libc, Android API level ≥ 33 */
 
 # include <stdio_ext.h>
 # define freadahead(stream) __freadahead (stream)
