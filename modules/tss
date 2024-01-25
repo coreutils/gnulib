@@ -3,6 +3,7 @@ ISO C 11 thread-specific storage functions.
 
 Files:
 lib/tss.c
+m4/tss.m4
 
 Depends-on:
 threads-h
@@ -10,7 +11,9 @@ windows-tls
 
 configure.ac:
 AC_REQUIRE([gl_THREADS_H])
-gl_CONDITIONAL([GL_COND_OBJ_TSS], [test $HAVE_THREADS_H = 0])
+gl_FUNC_TSS_CREATE
+gl_CONDITIONAL([GL_COND_OBJ_TSS],
+               [test $HAVE_THREADS_H = 0 || test $REPLACE_TSS_CREATE = 1])
 gl_THREADS_MODULE_INDICATOR([tss])
 
 Makefile.am:
