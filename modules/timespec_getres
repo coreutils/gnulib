@@ -8,11 +8,12 @@ m4/timespec_getres.m4
 Depends-on:
 extensions
 time-h
-gettime-res     [test $HAVE_TIMESPEC_GETRES = 0]
+gettime-res     [test $HAVE_TIMESPEC_GETRES = 0 || test $REPLACE_TIMESPEC_GETRES = 1]
 
 configure.ac:
 AC_REQUIRE([gl_FUNC_TIMESPEC_GETRES])
-gl_CONDITIONAL([GL_COND_OBJ_TIMESPEC_GETRES], [test $HAVE_TIMESPEC_GETRES = 0])
+gl_CONDITIONAL([GL_COND_OBJ_TIMESPEC_GETRES],
+               [test $HAVE_TIMESPEC_GETRES = 0 || test $REPLACE_TIMESPEC_GETRES = 1])
 gl_TIME_MODULE_INDICATOR([timespec_getres])
 
 Makefile.am:
