@@ -1,4 +1,4 @@
-# posix_spawn.m4 serial 24
+# posix_spawn.m4 serial 25
 dnl Copyright (C) 2008-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -36,7 +36,8 @@ AC_DEFUN([gl_POSIX_SPAWN_BODY],
   if test $ac_cv_func_posix_spawn = yes; then
     m4_ifdef([gl_FUNC_POSIX_SPAWN_FILE_ACTIONS_ADDCHDIR],
       [dnl Module 'posix_spawn_file_actions_addchdir' is present.
-       AC_CHECK_FUNCS_ONCE([posix_spawn_file_actions_addchdir_np])
+       gl_CHECK_FUNCS_ANDROID([posix_spawn_file_actions_addchdir_np],
+         [[#include <spawn.h>]])
        if test $ac_cv_func_posix_spawn_file_actions_addchdir_np = no; then
          dnl In order to implement the posix_spawn_file_actions_addchdir
          dnl function, we need to replace the entire posix_spawn facility.
@@ -45,7 +46,8 @@ AC_DEFUN([gl_POSIX_SPAWN_BODY],
       ])
     m4_ifdef([gl_FUNC_POSIX_SPAWN_FILE_ACTIONS_ADDFCHDIR],
       [dnl Module 'posix_spawn_file_actions_addfchdir' is present.
-       AC_CHECK_FUNCS_ONCE([posix_spawn_file_actions_addfchdir_np])
+       gl_CHECK_FUNCS_ANDROID([posix_spawn_file_actions_addfchdir_np],
+         [[#include <spawn.h>]])
        if test $ac_cv_func_posix_spawn_file_actions_addfchdir_np = no; then
          dnl In order to implement the posix_spawn_file_actions_addfchdir
          dnl function, we need to replace the entire posix_spawn facility.
