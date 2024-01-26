@@ -82,7 +82,8 @@ main (int argc, char *argv[])
            - with GNU make, when invoked as 'make -j N' with j > 1,
            - in some versions of the KDE desktop environment,
            - on NetBSD,
-           - in MacPorts with the "trace mode" enabled.
+           - in MacPorts with the "trace mode" enabled,
+           - on macOS 14.
        */
       #if HAVE_CLOSE_RANGE
       if (close_range (3, 20 - 1, 0) < 0)
@@ -363,11 +364,11 @@ main (int argc, char *argv[])
         ASSERT (fclose (fp) == 0);
 
         int fd = open (BASE ".tmp", O_RDONLY);
-        ASSERT (fd >= 0 && fd < 10);
+        ASSERT (fd >= 0 && fd < 15);
 
-        ASSERT (dup2 (fd, 10) >= 0);
+        ASSERT (dup2 (fd, 15) >= 0);
         close (fd);
-        fd = 10;
+        fd = 15;
 
         char buf[2];
         ASSERT (read (fd, buf, sizeof (buf)) == sizeof (buf));
@@ -388,11 +389,11 @@ main (int argc, char *argv[])
            including the file position.  */
         remove (BASE ".tmp");
         int fd = open (BASE ".tmp", O_RDWR | O_CREAT | O_TRUNC, 0600);
-        ASSERT (fd >= 0 && fd < 10);
+        ASSERT (fd >= 0 && fd < 15);
 
-        ASSERT (dup2 (fd, 10) >= 0);
+        ASSERT (dup2 (fd, 15) >= 0);
         close (fd);
-        fd = 10;
+        fd = 15;
 
         ASSERT (write (fd, "Foo", 3) == 3);
         /* The file position is now 3.  */
@@ -420,26 +421,26 @@ main (int argc, char *argv[])
         ASSERT (fclose (fp) == 0);
 
         int fd_in = open (BASE ".tmp", O_RDONLY);
-        ASSERT (fd_in >= 0 && fd_in < 10);
+        ASSERT (fd_in >= 0 && fd_in < 15);
 
         int fd_out = open (BASE ".tmp", O_WRONLY | O_APPEND);
-        ASSERT (fd_out >= 0 && fd_out < 10);
+        ASSERT (fd_out >= 0 && fd_out < 15);
 
-        ASSERT (dup2 (fd_in, 10) >= 0);
+        ASSERT (dup2 (fd_in, 15) >= 0);
         close (fd_in);
-        fd_in = 10;
+        fd_in = 15;
 
-        ASSERT (dup2 (fd_out, 11) >= 0);
+        ASSERT (dup2 (fd_out, 16) >= 0);
         close (fd_out);
-        fd_out = 11;
+        fd_out = 16;
 
         const char *prog_argv[3] = { prog_path, "19", NULL };
         int ret = execute (progname, prog_argv[0], prog_argv, NULL,
                            false, false, false, false, true, false, NULL);
         #if defined _WIN32 && ! defined __CYGWIN__
-        ASSERT (ret == 4 + 2 * (_isatty (10) != 0) + (_isatty (11) != 0));
+        ASSERT (ret == 4 + 2 * (_isatty (15) != 0) + (_isatty (16) != 0));
         #else
-        ASSERT (ret == 4 + 2 * (isatty (10) != 0) + (isatty (11) != 0));
+        ASSERT (ret == 4 + 2 * (isatty (15) != 0) + (isatty (16) != 0));
         #endif
 
         close (fd_in);
@@ -451,19 +452,19 @@ main (int argc, char *argv[])
       {
         /* Check that file descriptors >= 3, when inherited, preserve their
            isatty() property, part 2 (character devices).  */
-        ASSERT (dup2 (STDIN_FILENO, 10) >= 0);
-        int fd_in = 10;
+        ASSERT (dup2 (STDIN_FILENO, 15) >= 0);
+        int fd_in = 15;
 
-        ASSERT (dup2 (STDOUT_FILENO, 11) >= 0);
-        int fd_out = 11;
+        ASSERT (dup2 (STDOUT_FILENO, 16) >= 0);
+        int fd_out = 16;
 
         const char *prog_argv[3] = { prog_path, "20", NULL };
         int ret = execute (progname, prog_argv[0], prog_argv, NULL,
                            false, false, false, false, true, false, NULL);
         #if defined _WIN32 && ! defined __CYGWIN__
-        ASSERT (ret == 4 + 2 * (_isatty (10) != 0) + (_isatty (11) != 0));
+        ASSERT (ret == 4 + 2 * (_isatty (15) != 0) + (_isatty (16) != 0));
         #else
-        ASSERT (ret == 4 + 2 * (isatty (10) != 0) + (isatty (11) != 0));
+        ASSERT (ret == 4 + 2 * (isatty (15) != 0) + (isatty (16) != 0));
         #endif
 
         close (fd_in);
