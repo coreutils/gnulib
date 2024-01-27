@@ -2,7 +2,7 @@
 # gendocs.sh -- generate a GNU manual in many formats.  This script is
 #   mentioned in maintain.texi.  See the help message below for usage details.
 
-scriptversion=2024-01-01.00
+scriptversion=2024-01-27.12
 
 # Copyright 2003-2024 Free Software Foundation, Inc.
 #
@@ -66,7 +66,7 @@ generate_html=true
 generate_info=true
 generate_tex=true
 outdir=manual
-source_extra=
+unset source_extra
 split=node
 srcfile=
 texarg="-t @finalout"
@@ -416,11 +416,23 @@ fi # end html
 printf "\nMaking .tar.gz for sources...\n"
 d=`dirname $srcfile`
 (
-  cd "$d"
-  ls -d *.texinfo *.texi *.txi *.eps "$source_extra" 2>/dev/null \
-     | tar -czhf "$abs_outdir/$PACKAGE.texi.tar.gz" -T-
+  cd "$d" || exit
+
+  # Set PATS to a list of globbing patterns that expand to
+  # file names to be put into the .tar.gz for sources.
+  # Omit patterns that do not expand to file names.
+  pats=
+  for pat in '*.texinfo' '*.texi' '*.txi' '*.eps'; do
+    for file in $pat; do
+      test "$file" = "$pat" && test ! -e "$file" || pats="$pats $pat"
+      break
+    done
+  done
+
+  tar -czhf "$abs_outdir/$PACKAGE.texi.tar.gz" \
+    -- $pats ${source_extra-"$source_extra"} &&
   ls -l "$abs_outdir/$PACKAGE.texi.tar.gz"
-)
+) || exit
 texi_tgz_size=`calcsize "$outdir/$PACKAGE.texi.tar.gz"`
 
 # 
