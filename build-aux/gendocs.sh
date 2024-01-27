@@ -417,8 +417,8 @@ printf "\nMaking .tar.gz for sources...\n"
 d=`dirname $srcfile`
 (
   cd "$d"
-  srcfiles=`ls -d *.texinfo *.texi *.txi *.eps $source_extra 2>/dev/null` || true
-  tar czfh "$abs_outdir/$PACKAGE.texi.tar.gz" $srcfiles
+  ls -d *.texinfo *.texi *.txi *.eps "$source_extra" 2>/dev/null \
+     | tar -czhf "$abs_outdir/$PACKAGE.texi.tar.gz" -T-
   ls -l "$abs_outdir/$PACKAGE.texi.tar.gz"
 )
 texi_tgz_size=`calcsize "$outdir/$PACKAGE.texi.tar.gz"`
