@@ -167,7 +167,7 @@ while test $# -gt 0; do
     --html)      shift; default_htmlarg=false; htmlarg=$1;;
     --info)      shift; infoarg=$1;;
     --no-ascii)  generate_ascii=false;;
-    --no-html)   generate_ascii=false;;
+    --no-html)   generate_html=false;;
     --no-info)   generate_info=false;;
     --no-tex)    generate_tex=false;;
     --source)    shift; source_extra=$1;;
