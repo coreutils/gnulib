@@ -2,7 +2,7 @@
 # gendocs.sh -- generate a GNU manual in many formats.  This script is
 #   mentioned in maintain.texi.  See the help message below for usage details.
 
-scriptversion=2024-01-27.12
+scriptversion=2024-01-27.16
 
 # Copyright 2003-2024 Free Software Foundation, Inc.
 #
@@ -430,7 +430,7 @@ d=`dirname $srcfile`
   done
 
   tar -czhf "$abs_outdir/$PACKAGE.texi.tar.gz" \
-    -- $pats ${source_extra-"$source_extra"} &&
+    -- $pats ${source_extra+"$source_extra"} &&
   ls -l "$abs_outdir/$PACKAGE.texi.tar.gz"
 ) || exit
 texi_tgz_size=`calcsize "$outdir/$PACKAGE.texi.tar.gz"`
