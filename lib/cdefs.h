@@ -43,7 +43,7 @@
      && (!defined __clang_minor__ \
          || (defined __apple_build_version__ \
              ? 6000000 <= __apple_build_version__ \
-             : 3 < __clang_major__ + (5 <= __clang_minor__))))
+             : 5 <= __clang_major__)))
 # define __glibc_has_attribute(attr) __has_attribute (attr)
 #else
 # define __glibc_has_attribute(attr) 0
