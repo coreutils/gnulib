@@ -422,16 +422,42 @@ d=`dirname $srcfile`
   # file names to be put into the .tar.gz for sources.
   # Omit patterns that do not expand to file names.
   pats=
-  for pat in '*.texinfo' '*.texi' '*.txi' '*.eps'; do
-    for file in $pat; do
-      test "$file" = "$pat" && test ! -e "$file" || pats="$pats $pat"
-      break
-    done
-  done
 
-  tar -czhf "$abs_outdir/$PACKAGE.texi.tar.gz" \
-    -- $pats ${source_extra+"$source_extra"} &&
-  ls -l "$abs_outdir/$PACKAGE.texi.tar.gz"
+  if case `$MAKEINFO --version | sed -e 's/^[^0-9]*//' -e 1q` in \
+       [1-6]* | 7.[01]*) false;; \
+       *) true;; \
+     esac \
+  ; then
+
+    for pat in '*.eps'; do
+      for file in $pat; do
+        test "$file" = "$pat" && test ! -e "$file" || pats="$pats $pat"
+        break
+      done
+    done
+
+    # if $MAKEINFO is recent enough, use --trace-includes on the
+    # $srcfile to get the included files of the targetted manual only
+    base=`basename "$srcfile"`
+
+    cmd="$SETLANG $MAKEINFO $commonarg --trace-includes \"$base\""
+    eval "$cmd" \
+    | tar -czhf "$abs_outdir/$PACKAGE.texi.tar.gz" \
+        --verbatim-files-from -T- -- "$base" $pats \
+        ${source_extra+"$source_extra"} \
+    && ls -l "$abs_outdir/$PACKAGE.texi.tar.gz"
+  else
+    for pat in '*.texinfo' '*.texi' '*.txi' '*.eps'; do
+     for file in $pat; do
+       test "$file" = "$pat" && test ! -e "$file" || pats="$pats $pat"
+       break
+      done
+    done
+
+    tar -czhf "$abs_outdir/$PACKAGE.texi.tar.gz" \
+       -- $pats ${source_extra+"$source_extra"} \
+    && ls -l "$abs_outdir/$PACKAGE.texi.tar.gz"
+  fi
 ) || exit
 texi_tgz_size=`calcsize "$outdir/$PACKAGE.texi.tar.gz"`
 
