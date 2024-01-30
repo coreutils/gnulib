@@ -64,7 +64,7 @@ main ()
 
           fprintf (stderr, "   input:");
           for (j = 0; j < LENGTH; j++)
-            fprintf (stderr, " %02x", (unsigned char) s[j]);
+            fprintf (stderr, " %02X", (unsigned char) s[j]);
           putc ('\n', stderr);
 
           fprintf (stderr, "expected:");

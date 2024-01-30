@@ -61,17 +61,17 @@ test_u16_grapheme_breaks (const char *expected, ...)
 
         fprintf (stderr, "   input:");
         for (j = 0; j < n; j++)
-          fprintf (stderr, " %02x", s[j]);
+          fprintf (stderr, " %04X", s[j]);
         putc ('\n', stderr);
 
         fprintf (stderr, "expected:");
         for (j = 0; j < n; j++)
-          fprintf (stderr, "  %d", expected[j] == '#');
+          fprintf (stderr, "    %d", expected[j] == '#');
         putc ('\n', stderr);
 
         fprintf (stderr, "  actual:");
         for (j = 0; j < n; j++)
-          fprintf (stderr, "  %d", breaks[j]);
+          fprintf (stderr, "    %d", breaks[j]);
         putc ('\n', stderr);
 
         fflush (stderr);
