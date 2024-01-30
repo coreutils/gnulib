@@ -176,7 +176,7 @@
         (format ostream " * Unicode character name table.~%")
         (format ostream " * Generated automatically by the gen-uninames utility.~%")
         (format ostream " */~%")
-        (format ostream "/* Copyright (C) 2000-2022 Free Software Foundation, Inc.~%")
+        (format ostream "/* Copyright (C) 2000-2024 Free Software Foundation, Inc.~%")
         (format ostream "~%")
         (format ostream "   This file is free software.~%")
         (format ostream "   It is dual-licensed under \"the GNU LGPLv3+ or the GNU GPLv2+\".~%")
