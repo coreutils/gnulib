@@ -30,7 +30,6 @@
 const char *
 graphemebreakproperty_to_string (int gbp)
 {
-  printf ("%d\n", gbp);
   switch (gbp)
     {
 #define CASE(VALUE) case GBP_##VALUE: return #VALUE;
