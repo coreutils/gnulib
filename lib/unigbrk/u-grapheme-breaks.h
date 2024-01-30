@@ -37,6 +37,16 @@ FUNC (const UNIT *s, size_t n, char *p)
          -1 at the very beginning of the string.  */
       int last_char_prop = -1;
 
+      /* True if the last character ends a sequence of Indic_Conjunct_Break
+         values:  consonant {extend|linker}*  */
+      bool incb_consonant_extended = false;
+      /* True if the last character ends a sequence of Indic_Conjunct_Break
+         values:  consonant {extend|linker}* linker  */
+      bool incb_consonant_extended_linker = false;
+      /* True if the last character ends a sequence of Indic_Conjunct_Break
+         values:  consonant {extend|linker}* linker {extend|linker}*  */
+      bool incb_consonant_extended_linker_extended = false;
+
       /* True if the last character ends an emoji modifier sequence
          \p{Extended_Pictographic} Extend*.  */
       bool emoji_modifier_sequence = false;
@@ -56,6 +66,7 @@ FUNC (const UNIT *s, size_t n, char *p)
           ucs4_t uc;
           int count = U_MBTOUC (&uc, s, s_end - s);
           int prop = uc_graphemeclusterbreak_property (uc);
+          int incb = uc_indic_conjunct_break (uc);
 
           /* Break at the start of the string (GB1).  */
           if (last_char_prop < 0)
@@ -96,6 +107,15 @@ FUNC (const UNIT *s, size_t n, char *p)
               /* No break after Prepend characters (GB9b).  */
               else if (last_char_prop == GBP_PREPEND)
                 /* *p = 0 */;
+              /* No break within certain combinations of Indic_Conjunct_Break
+                 values: Between
+                   consonant {extend|linker}* linker {extend|linker}*
+                 and
+                   consonant
+                 (GB9c).  */
+              else if (incb_consonant_extended_linker_extended
+                       && incb == UC_INDIC_CONJUNCT_BREAK_CONSONANT)
+                /* *p = 0 */;
               /* No break within emoji modifier sequences or emoji zwj sequences
                  (GB11).  */
               else if (last_char_prop == GBP_ZWJ
@@ -110,6 +130,17 @@ FUNC (const UNIT *s, size_t n, char *p)
               else
                 *p = 1;
             }
+
+          incb_consonant_extended_linker =
+            incb_consonant_extended && incb == UC_INDIC_CONJUNCT_BREAK_LINKER;
+          incb_consonant_extended_linker_extended =
+            (incb_consonant_extended_linker
+             || (incb_consonant_extended_linker_extended
+                 && incb >= UC_INDIC_CONJUNCT_BREAK_LINKER));
+          incb_consonant_extended =
+            (incb == UC_INDIC_CONJUNCT_BREAK_CONSONANT
+             || (incb_consonant_extended
+                 && incb >= UC_INDIC_CONJUNCT_BREAK_LINKER));
 
           emoji_modifier_sequence_before_last_char = emoji_modifier_sequence;
           emoji_modifier_sequence =

@@ -10,7 +10,7 @@ unictype/base
 unictype/category-test-withtable
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([1.1], [unictype/joiningtype-of])
+gl_LIBUNISTRING_MODULE([1.2], [unictype/joiningtype-of])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNICTYPE_JOININGTYPE_OF

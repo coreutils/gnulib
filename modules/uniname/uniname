@@ -14,7 +14,7 @@ stdbool
 c99
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([1.1], [uniname/uniname])
+gl_LIBUNISTRING_MODULE([1.2], [uniname/uniname])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNINAME_UNINAME

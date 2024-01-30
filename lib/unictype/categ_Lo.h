@@ -1,8 +1,8 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Categories of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 15.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 15.1.0.  */
 
-/* Copyright (C) 2000-2022 Free Software Foundation, Inc.
+/* Copyright (C) 2000-2024 Free Software Foundation, Inc.
 
    This file is free software.
    It is dual-licensed under "the GNU LGPLv3+ or the GNU GPLv2+".
@@ -35,7 +35,7 @@ struct
     int header[1];
     int level1[4];
     short level2[4 << 7];
-    unsigned int level3[73 << 4];
+    unsigned int level3[74 << 4];
   }
 u_categ_Lo =
 {
@@ -421,26 +421,18 @@ u_categ_Lo =
         5 +   512 * sizeof (short) / sizeof (int) +   288,
         5 +   512 * sizeof (short) / sizeof (int) +   288,
         5 +   512 * sizeof (short) / sizeof (int) +  1104,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
         5 +   512 * sizeof (short) / sizeof (int) +   288,
         5 +   512 * sizeof (short) / sizeof (int) +  1120,
        -1,
        -1,
-        5 +   512 * sizeof (short) / sizeof (int) +   288,
-        5 +   512 * sizeof (short) / sizeof (int) +   288,
-        5 +   512 * sizeof (short) / sizeof (int) +   288,
-        5 +   512 * sizeof (short) / sizeof (int) +   288,
-        5 +   512 * sizeof (short) / sizeof (int) +   288,
-        5 +   512 * sizeof (short) / sizeof (int) +   288,
-        5 +   512 * sizeof (short) / sizeof (int) +   288,
-        5 +   512 * sizeof (short) / sizeof (int) +   288,
+       -1,
+       -1,
         5 +   512 * sizeof (short) / sizeof (int) +   288,
         5 +   512 * sizeof (short) / sizeof (int) +  1136,
+       -1,
+       -1,
+        5 +   512 * sizeof (short) / sizeof (int) +   288,
+        5 +   512 * sizeof (short) / sizeof (int) +   288,
         5 +   512 * sizeof (short) / sizeof (int) +   288,
         5 +   512 * sizeof (short) / sizeof (int) +   288,
         5 +   512 * sizeof (short) / sizeof (int) +   288,
@@ -449,6 +441,14 @@ u_categ_Lo =
         5 +   512 * sizeof (short) / sizeof (int) +   288,
         5 +   512 * sizeof (short) / sizeof (int) +   288,
         5 +   512 * sizeof (short) / sizeof (int) +  1152,
+        5 +   512 * sizeof (short) / sizeof (int) +   288,
+        5 +   512 * sizeof (short) / sizeof (int) +   288,
+        5 +   512 * sizeof (short) / sizeof (int) +   288,
+        5 +   512 * sizeof (short) / sizeof (int) +   288,
+        5 +   512 * sizeof (short) / sizeof (int) +   288,
+        5 +   512 * sizeof (short) / sizeof (int) +   288,
+        5 +   512 * sizeof (short) / sizeof (int) +   288,
+        5 +   512 * sizeof (short) / sizeof (int) +  1168,
        -1,
        -1,
        -1,
@@ -840,7 +840,11 @@ u_categ_Lo =
     0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU,
     0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU,
     0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU,
-    0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU, 0x00000001U,
+    0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFF0001U,
+    0xFFFFFFFFU, 0xFFFFFFFFU, 0x3FFFFFFFU, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x3FFFFFFFU, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,

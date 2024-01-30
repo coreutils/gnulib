@@ -49,7 +49,7 @@ unictype/category-none
 gperf
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([1.1], [unictype/category-byname])
+gl_LIBUNISTRING_MODULE([1.2], [unictype/category-byname])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNICTYPE_CATEGORY_BYNAME

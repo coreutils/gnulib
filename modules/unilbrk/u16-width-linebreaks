@@ -11,7 +11,7 @@ uniwidth/width
 unistr/u16-mbtouc-unsafe
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([1.1], [unilbrk/u16-width-linebreaks])
+gl_LIBUNISTRING_MODULE([1.2], [unilbrk/u16-width-linebreaks])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNILBRK_U16_WIDTH_LINEBREAKS

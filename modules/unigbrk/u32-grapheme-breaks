@@ -8,13 +8,14 @@ lib/unigbrk/u-grapheme-breaks.h
 Depends-on:
 unigbrk/base
 unigbrk/uc-gbrk-prop
+unictype/incb-of
 unictype/property-extended-pictographic
 unistr/u32-mbtouc
 stdbool
 
 configure.ac:
 gl_MODULE_INDICATOR([unigbrk/u32-grapheme-breaks])
-gl_LIBUNISTRING_MODULE([1.1], [unigbrk/u32-grapheme-breaks])
+gl_LIBUNISTRING_MODULE([1.2], [unigbrk/u32-grapheme-breaks])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNIGBRK_U32_GRAPHEME_BREAKS

@@ -1,0 +1,26 @@
+Description:
+Name of Indic_Conjunct_Break value.
+
+Files:
+lib/unictype/incb_name.c
+lib/unictype/incb_name.h
+
+Depends-on:
+unictype/base
+
+configure.ac:
+gl_LIBUNISTRING_MODULE([1.2], [unictype/incb-name])
+
+Makefile.am:
+if LIBUNISTRING_COMPILE_UNICTYPE_INCB_NAME
+lib_SOURCES += unictype/incb_name.c
+endif
+
+Include:
+"unictype.h"
+
+License:
+LGPLv3+ or GPLv2+
+
+Maintainer:
+all

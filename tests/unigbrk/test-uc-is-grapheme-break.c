@@ -88,6 +88,9 @@ main (int argc, char *argv[])
       const char *p;
       ucs4_t prev;
       int last_char_prop;
+      bool incb_consonant_extended;
+      bool incb_consonant_extended_linker;
+      bool incb_consonant_extended_linker_extended;
       bool emoji_modifier_sequence;
       bool emoji_modifier_sequence_before_last_char;
       size_t ri_count;
@@ -101,6 +104,9 @@ main (int argc, char *argv[])
         continue;
 
       last_char_prop = -1;
+      incb_consonant_extended = false;
+      incb_consonant_extended_linker = false;
+      incb_consonant_extended_linker_extended = false;
       emoji_modifier_sequence = false;
       emoji_modifier_sequence_before_last_char = false;
       ri_count = 0;
@@ -149,10 +155,17 @@ main (int argc, char *argv[])
               next = next_int;
             }
 
+          int incb = uc_indic_conjunct_break (next);
+
           /* Skip unsupported rules involving 3 or more characters.  */
-          if (last_char_prop == GBP_ZWJ
-              && emoji_modifier_sequence_before_last_char
-              && uc_is_property_extended_pictographic (next))
+          if (incb_consonant_extended_linker_extended
+              && incb == UC_INDIC_CONJUNCT_BREAK_CONSONANT)
+            fprintf (stderr, "%s:%d: skipping GB9c: should join U+%04X "
+                     "and U+%04X\n",
+                     filename, lineno, prev, next);
+          else if (last_char_prop == GBP_ZWJ
+                   && emoji_modifier_sequence_before_last_char
+                   && uc_is_property_extended_pictographic (next))
             {
               int prev_gbp = uc_graphemeclusterbreak_property (prev);
               int next_gbp = uc_graphemeclusterbreak_property (next);
@@ -188,6 +201,17 @@ main (int argc, char *argv[])
 
           p += strspn (p, " \t\r\n");
           prev = next;
+
+          incb_consonant_extended_linker =
+            incb_consonant_extended && incb == UC_INDIC_CONJUNCT_BREAK_LINKER;
+          incb_consonant_extended_linker_extended =
+            (incb_consonant_extended_linker
+             || (incb_consonant_extended_linker_extended
+                 && incb >= UC_INDIC_CONJUNCT_BREAK_LINKER));
+          incb_consonant_extended =
+            (incb == UC_INDIC_CONJUNCT_BREAK_CONSONANT
+             || (incb_consonant_extended
+                 && incb >= UC_INDIC_CONJUNCT_BREAK_LINKER));
 
           emoji_modifier_sequence_before_last_char = emoji_modifier_sequence;
           emoji_modifier_sequence =

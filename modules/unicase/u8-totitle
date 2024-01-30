@@ -12,7 +12,7 @@ unicase/empty-prefix-context
 unicase/empty-suffix-context
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([1.1], [unicase/u8-totitle])
+gl_LIBUNISTRING_MODULE([1.2], [unicase/u8-totitle])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNICASE_U8_TOTITLE

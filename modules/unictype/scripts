@@ -11,7 +11,7 @@ unictype/base
 gperf
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([1.1], [unictype/scripts])
+gl_LIBUNISTRING_MODULE([1.2], [unictype/scripts])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNICTYPE_SCRIPTS

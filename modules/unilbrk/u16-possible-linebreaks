@@ -13,7 +13,7 @@ unistr/u16-mbtouc-unsafe
 streq
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([1.1], [unilbrk/u16-possible-linebreaks])
+gl_LIBUNISTRING_MODULE([1.2], [unilbrk/u16-possible-linebreaks])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNILBRK_U16_POSSIBLE_LINEBREAKS

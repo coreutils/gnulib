@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Test the Unicode character type functions.
-   Copyright (C) 2007-2022 Free Software Foundation, Inc.
+   Copyright (C) 2007-2024 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published
@@ -20,7 +20,10 @@
     { 0x00B7, 0x00B7 },
     { 0x0387, 0x0387 },
     { 0x1369, 0x1371 },
-    { 0x19DA, 0x19DA }
+    { 0x19DA, 0x19DA },
+    { 0x200C, 0x200D },
+    { 0x30FB, 0x30FB },
+    { 0xFF65, 0xFF65 }
 
 #define PREDICATE(c) uc_is_property_other_id_continue (c)
 #include "test-predicate-part2.h"

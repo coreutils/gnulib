@@ -1,0 +1,23 @@
+Description:
+Complete API for Indic_Conjunct_Break attribute.
+
+Files:
+
+Depends-on:
+unictype/base
+unictype/incb-byname
+unictype/incb-name
+unictype/incb-of
+
+configure.ac:
+
+Makefile.am:
+
+Include:
+"unictype.h"
+
+License:
+LGPLv3+ or GPLv2+
+
+Maintainer:
+all

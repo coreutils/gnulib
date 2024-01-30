@@ -9,7 +9,7 @@ unictype/base
 unictype/bidiclass-of
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([1.1], [unictype/bidiclass-test])
+gl_LIBUNISTRING_MODULE([1.2], [unictype/bidiclass-test])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNICTYPE_BIDICLASS_TEST

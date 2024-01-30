@@ -909,6 +909,40 @@ extern bool uc_is_property_regional_indicator (ucs4_t uc)
 
 /* ========================================================================= */
 
+/* Other attributes.  */
+
+/* ------------------------------------------------------------------------- */
+
+/* Indic_Conjunct_Break (InCB): from the file DerivedCoreProperties.txt
+   in the Unicode Character Database.  */
+
+/* Possible values of the Indic_Conjunct_Break attribute.
+   This enumeration may be extended in the future.  */
+enum
+{
+  UC_INDIC_CONJUNCT_BREAK_NONE,              /* None */
+  UC_INDIC_CONJUNCT_BREAK_CONSONANT,         /* Consonant */
+  UC_INDIC_CONJUNCT_BREAK_LINKER,            /* Linker */
+  UC_INDIC_CONJUNCT_BREAK_EXTEND             /* Extend */
+};
+
+/* Return the name of an Indic_Conjunct_Break value.  */
+extern const char *
+       uc_indic_conjunct_break_name (int indic_conjunct_break)
+       _UC_ATTRIBUTE_CONST;
+
+/* Return the Indic_Conjunct_Break value given by name, e.g. "Consonant".  */
+extern int
+       uc_indic_conjunct_break_byname (const char *indic_conjunct_break_name)
+       _UC_ATTRIBUTE_PURE;
+
+/* Return the Indic_Conjunct_Break attribute of a Unicode character.  */
+extern int
+       uc_indic_conjunct_break (ucs4_t uc)
+       _UC_ATTRIBUTE_CONST;
+
+/* ========================================================================= */
+
 /* Subdivision of the Unicode characters into scripts.  */
 
 typedef struct

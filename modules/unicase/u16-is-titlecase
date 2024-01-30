@@ -10,7 +10,7 @@ unicase/u16-is-invariant
 unicase/u16-totitle
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([1.1], [unicase/u16-is-titlecase])
+gl_LIBUNISTRING_MODULE([1.2], [unicase/u16-is-titlecase])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNICASE_U16_IS_TITLECASE

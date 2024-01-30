@@ -1,8 +1,8 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Unicode blocks.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 15.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 15.1.0.  */
 
-/* Copyright (C) 2000-2022 Free Software Foundation, Inc.
+/* Copyright (C) 2000-2024 Free Software Foundation, Inc.
 
    This file is free software.
    It is dual-licensed under "the GNU LGPLv3+ or the GNU GPLv2+".
@@ -347,6 +347,7 @@ static const uc_block_t blocks[] =
   { 0x2B740, 0x2B81F, "CJK Unified Ideographs Extension D" },
   { 0x2B820, 0x2CEAF, "CJK Unified Ideographs Extension E" },
   { 0x2CEB0, 0x2EBEF, "CJK Unified Ideographs Extension F" },
+  { 0x2EBF0, 0x2EE5F, "CJK Unified Ideographs Extension I" },
   { 0x2F800, 0x2FA1F, "CJK Compatibility Ideographs Supplement" },
   { 0x30000, 0x3134F, "CJK Unified Ideographs Extension G" },
   { 0x31350, 0x323AF, "CJK Unified Ideographs Extension H" },
@@ -1001,4 +1002,4 @@ static const uint16_t blocks_level1[640 * 2] =
   315, 316
 };
 #define blocks_upper_first_index 315
-#define blocks_upper_last_index 327
+#define blocks_upper_last_index 328

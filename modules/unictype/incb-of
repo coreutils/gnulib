@@ -1,0 +1,26 @@
+Description:
+Determine Indic_Conjunct_Break attribute of a Unicode character.
+
+Files:
+lib/unictype/incb_of.c
+lib/unictype/incb_of.h
+
+Depends-on:
+unictype/base
+
+configure.ac:
+gl_LIBUNISTRING_MODULE([1.2], [unictype/incb-of])
+
+Makefile.am:
+if LIBUNISTRING_COMPILE_UNICTYPE_INCB_OF
+lib_SOURCES += unictype/incb_of.c
+endif
+
+Include:
+"unictype.h"
+
+License:
+LGPLv3+ or GPLv2+
+
+Maintainer:
+all

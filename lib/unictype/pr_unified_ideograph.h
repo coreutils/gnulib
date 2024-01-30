@@ -1,8 +1,8 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Properties of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 15.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 15.1.0.  */
 
-/* Copyright (C) 2000-2022 Free Software Foundation, Inc.
+/* Copyright (C) 2000-2024 Free Software Foundation, Inc.
 
    This file is free software.
    It is dual-licensed under "the GNU LGPLv3+ or the GNU GPLv2+".
@@ -35,7 +35,7 @@ struct
     int header[1];
     int level1[4];
     short level2[3 << 7];
-    unsigned int level3[10 << 4];
+    unsigned int level3[11 << 4];
   }
 u_property_unified_ideograph =
 {
@@ -293,26 +293,18 @@ u_property_unified_ideograph =
         5 +   384 * sizeof (short) / sizeof (int) +     0,
         5 +   384 * sizeof (short) / sizeof (int) +     0,
         5 +   384 * sizeof (short) / sizeof (int) +   112,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
-        5 +   384 * sizeof (short) / sizeof (int) +     0,
-        5 +   384 * sizeof (short) / sizeof (int) +     0,
-        5 +   384 * sizeof (short) / sizeof (int) +     0,
-        5 +   384 * sizeof (short) / sizeof (int) +     0,
-        5 +   384 * sizeof (short) / sizeof (int) +     0,
-        5 +   384 * sizeof (short) / sizeof (int) +     0,
-        5 +   384 * sizeof (short) / sizeof (int) +     0,
-        5 +   384 * sizeof (short) / sizeof (int) +     0,
         5 +   384 * sizeof (short) / sizeof (int) +     0,
         5 +   384 * sizeof (short) / sizeof (int) +   128,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+        5 +   384 * sizeof (short) / sizeof (int) +     0,
+        5 +   384 * sizeof (short) / sizeof (int) +     0,
         5 +   384 * sizeof (short) / sizeof (int) +     0,
         5 +   384 * sizeof (short) / sizeof (int) +     0,
         5 +   384 * sizeof (short) / sizeof (int) +     0,
@@ -321,6 +313,14 @@ u_property_unified_ideograph =
         5 +   384 * sizeof (short) / sizeof (int) +     0,
         5 +   384 * sizeof (short) / sizeof (int) +     0,
         5 +   384 * sizeof (short) / sizeof (int) +   144,
+        5 +   384 * sizeof (short) / sizeof (int) +     0,
+        5 +   384 * sizeof (short) / sizeof (int) +     0,
+        5 +   384 * sizeof (short) / sizeof (int) +     0,
+        5 +   384 * sizeof (short) / sizeof (int) +     0,
+        5 +   384 * sizeof (short) / sizeof (int) +     0,
+        5 +   384 * sizeof (short) / sizeof (int) +     0,
+        5 +   384 * sizeof (short) / sizeof (int) +     0,
+        5 +   384 * sizeof (short) / sizeof (int) +   160,
        -1,
        -1,
        -1,
@@ -464,7 +464,11 @@ u_property_unified_ideograph =
     0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU,
     0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU,
     0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU,
-    0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU, 0x00000001U,
+    0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFF0001U,
+    0xFFFFFFFFU, 0xFFFFFFFFU, 0x3FFFFFFFU, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU,
     0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU,
     0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFF07FFU, 0xFFFFFFFFU,

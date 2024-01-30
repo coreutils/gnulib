@@ -29,22 +29,22 @@
 
 enum
 {
-  /* Values >= 33 are resolved at run time. */
-  LBP_BK  = 33, /* mandatory break */
-  LBP_CR  = 34, /* carriage return */
-  LBP_LF  = 35, /* line feed */
-  LBP_CM  = 36, /* attached characters and combining marks */
+  /* Values >= 40 are resolved at run time. */
+  LBP_BK  = 40, /* mandatory break */
+  LBP_CR  = 41, /* carriage return */
+  LBP_LF  = 42, /* line feed */
+  LBP_CM  = 43, /* attached characters and combining marks */
 /*LBP_NL,          next line - not used here because it's equivalent to LBP_BK */
 /*LBP_SG,          surrogates - not used here because they are not characters */
   LBP_WJ  =  0, /* word joiner */
-  LBP_ZW  = 37, /* zero width space */
+  LBP_ZW  = 44, /* zero width space */
   LBP_GL  =  1, /* non-breaking (glue) */
-  LBP_SP  = 38, /* space */
+  LBP_SP  = 45, /* space */
   LBP_B2  =  2, /* break opportunity before and after */
   LBP_BA  =  3, /* break opportunity after */
   LBP_BB  =  4, /* break opportunity before */
   LBP_HY  =  5, /* hyphen */
-  LBP_CB  = 39, /* contingent break opportunity */
+  LBP_CB  = 46, /* contingent break opportunity */
   LBP_CL  =  6, /* closing punctuation */
   LBP_CP1 =  7, /* closing parenthesis, non-EastAsian character */
   LBP_CP2 =  8, /* closing parenthesis, EastAsian character */
@@ -53,29 +53,36 @@ enum
   LBP_NS  = 11, /* non starter */
   LBP_OP1 = 12, /* opening punctuation, non-EastAsian character */
   LBP_OP2 = 13, /* opening punctuation, EastAsian character */
-  LBP_QU  = 14, /* ambiguous quotation */
-  LBP_IS  = 15, /* infix separator (numeric) */
-  LBP_NU  = 16, /* numeric */
-  LBP_PO  = 17, /* postfix (numeric) */
-  LBP_PR  = 18, /* prefix (numeric) */
-  LBP_SY  = 19, /* symbols allowing breaks */
-  LBP_AI  = 40, /* ambiguous (alphabetic or ideograph) */
-  LBP_AL  = 20, /* ordinary alphabetic and symbol characters */
+  LBP_QU1 = 14, /* ambiguous quotation, neither initial nor final punctuation */
+  LBP_QU2 = 15, /* ambiguous quotation, initial punctuation */
+  LBP_QU3 = 16, /* ambiguous quotation, final punctuation */
+  LBP_IS  = 17, /* infix separator (numeric) */
+  LBP_NU  = 18, /* numeric */
+  LBP_PO  = 19, /* postfix (numeric) */
+  LBP_PR  = 20, /* prefix (numeric) */
+  LBP_SY  = 21, /* symbols allowing breaks */
+  LBP_AI  = 47, /* ambiguous (alphabetic or ideograph) */
+  LBP_AL  = 22, /* ordinary alphabetic and symbol characters */
 /*LBP_CJ,          conditional Japanese starter, resolved to NS */
-  LBP_H2  = 21, /* Hangul LV syllable */
-  LBP_H3  = 22, /* Hangul LVT syllable */
-  LBP_HL  = 28, /* Hebrew letter */
-  LBP_ID1 = 23, /* ideographic */
-  LBP_ID2 = 24, /* ideographic and potential future emoji */
-  LBP_JL  = 25, /* Hangul L Jamo */
-  LBP_JV  = 26, /* Hangul V Jamo */
-  LBP_JT  = 27, /* Hangul T Jamo */
-  LBP_RI  = 29, /* regional indicator */
-  LBP_SA  = 41, /* complex context (South East Asian) */
-  LBP_ZWJ = 30, /* zero width joiner */
-  LBP_EB  = 31, /* emoji base */
-  LBP_EM  = 32, /* emoji modifier */
-  LBP_XX  = 42, /* unknown */
+  LBP_H2  = 23, /* Hangul LV syllable */
+  LBP_H3  = 24, /* Hangul LVT syllable */
+  LBP_HL  = 30, /* Hebrew letter */
+  LBP_ID1 = 25, /* ideographic */
+  LBP_ID2 = 26, /* ideographic and potential future emoji */
+  LBP_JL  = 27, /* Hangul L Jamo */
+  LBP_JV  = 28, /* Hangul V Jamo */
+  LBP_JT  = 29, /* Hangul T Jamo */
+  LBP_AP  = 31, /* Brahmic scripts: pre-base repha */
+  LBP_AK  = 32, /* Brahmic scripts: consonants */
+  LBP_AS  = 33, /* Brahmic scripts: independent vowels */
+  LBP_VI  = 34, /* Brahmic scripts: conjoining viramas */
+  LBP_VF  = 35, /* Brahmic scripts: viramas for final consonants */
+  LBP_RI  = 36, /* regional indicator */
+  LBP_SA  = 48, /* complex context (South East Asian) */
+  LBP_ZWJ = 37, /* zero width joiner */
+  LBP_EB  = 38, /* emoji base */
+  LBP_EM  = 39, /* emoji modifier */
+  LBP_XX  = 49, /* unknown */
   /* Artificial values that exist only at runtime, not in the tables. */
   LBP_HL_BA = 100
 };
@@ -108,7 +115,7 @@ unilbrkprop_lookup (ucs4_t uc)
 #define I 2  /* indirect break opportunity, '%' in table 7.3 of UTR #14 */
 #define P 3  /* prohibited break,           '^' in table 7.3 of UTR #14 */
 
-extern const unsigned char unilbrk_table[33][33];
+extern const unsigned char unilbrk_table[40][40];
 
 /* We don't support line breaking of complex-context dependent characters
    (Thai, Lao, Myanmar, Khmer) yet, because it requires dictionary lookup. */

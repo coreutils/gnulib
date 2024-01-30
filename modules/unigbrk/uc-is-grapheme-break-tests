@@ -4,6 +4,7 @@ tests/unigbrk/test-uc-is-grapheme-break.sh
 tests/unigbrk/GraphemeBreakTest.txt
 
 Depends-on:
+unictype/incb-of
 unictype/property-extended-pictographic
 stdbool
 

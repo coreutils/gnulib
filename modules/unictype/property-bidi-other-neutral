@@ -13,7 +13,7 @@ unictype/bidiclass-of
 configure.ac:
 AC_REQUIRE([AC_C_INLINE])
 gl_UNICTYPE_H_REQUIRE_DEFAULTS
-gl_LIBUNISTRING_MODULE_WITH_VARIABLE([1.1], [unictype/property-bidi-other-neutral])
+gl_LIBUNISTRING_MODULE_WITH_VARIABLE([1.2], [unictype/property-bidi-other-neutral])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNICTYPE_PROPERTY_BIDI_OTHER_NEUTRAL

@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Test the Unicode character type functions.
-   Copyright (C) 2007-2022 Free Software Foundation, Inc.
+   Copyright (C) 2007-2024 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published
@@ -34,6 +34,7 @@
     { 0x1367, 0x1368 },
     { 0x166E, 0x166E },
     { 0x1735, 0x1736 },
+    { 0x17D4, 0x17D5 },
     { 0x1803, 0x1803 },
     { 0x1809, 0x1809 },
     { 0x1944, 0x1945 },

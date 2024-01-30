@@ -12,7 +12,7 @@ unictype/base
 
 configure.ac:
 AC_REQUIRE([AC_C_INLINE])
-gl_LIBUNISTRING_MODULE([1.1], [unictype/ctype-alnum])
+gl_LIBUNISTRING_MODULE([1.2], [unictype/ctype-alnum])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNICTYPE_CTYPE_ALNUM

@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Test the Unicode character type functions.
-   Copyright (C) 2007-2022 Free Software Foundation, Inc.
+   Copyright (C) 2007-2024 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published
@@ -233,7 +233,6 @@
     { 0x2E9A, 0x2E9A },
     { 0x2EF4, 0x2EFF },
     { 0x2FD6, 0x2FEF },
-    { 0x2FFC, 0x2FFF },
     { 0x3005, 0x3007 },
     { 0x3021, 0x3029 },
     { 0x302E, 0x302F },
@@ -243,7 +242,8 @@
     { 0x309D, 0x309F },
     { 0x30A1, 0x30FA },
     { 0x30FC, 0x31BF },
-    { 0x31E4, 0x321C },
+    { 0x31E4, 0x31EE },
+    { 0x31F0, 0x321C },
     { 0x321F, 0x324F },
     { 0x3260, 0x327B },
     { 0x327F, 0x32B0 },

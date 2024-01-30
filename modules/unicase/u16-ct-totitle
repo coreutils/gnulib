@@ -23,7 +23,7 @@ uninorm/u16-normalize
 stdbool
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([1.1], [unicase/u16-ct-totitle])
+gl_LIBUNISTRING_MODULE([1.2], [unicase/u16-ct-totitle])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNICASE_U16_CT_TOTITLE

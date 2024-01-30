@@ -1,8 +1,8 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Properties of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 15.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 15.1.0.  */
 
-/* Copyright (C) 2000-2022 Free Software Foundation, Inc.
+/* Copyright (C) 2000-2024 Free Software Foundation, Inc.
 
    This file is free software.
    It is dual-licensed under "the GNU LGPLv3+ or the GNU GPLv2+".
@@ -330,7 +330,7 @@ u_property_sentence_terminal =
     0x00000000U, 0x00000000U, 0x00000000U, 0x00004000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00600000U, 0x00000000U, 0x00000000U,
-    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00300000U, 0x00000000U,
     0x00000208U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000030U, 0x00000000U,

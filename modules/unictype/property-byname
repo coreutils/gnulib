@@ -97,7 +97,7 @@ unictype/property-zero-width
 gperf
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([1.1], [unictype/property-byname])
+gl_LIBUNISTRING_MODULE([1.2], [unictype/property-byname])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNICTYPE_PROPERTY_BYNAME

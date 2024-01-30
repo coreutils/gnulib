@@ -1,8 +1,8 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Properties of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 15.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 15.1.0.  */
 
-/* Copyright (C) 2000-2022 Free Software Foundation, Inc.
+/* Copyright (C) 2000-2024 Free Software Foundation, Inc.
 
    This file is free software.
    It is dual-licensed under "the GNU LGPLv3+ or the GNU GPLv2+".
@@ -35,7 +35,7 @@ struct
     int header[1];
     int level1[1];
     short level2[1 << 7];
-    unsigned int level3[4 << 4];
+    unsigned int level3[7 << 4];
   }
 u_property_other_id_continue =
 {
@@ -58,6 +58,7 @@ u_property_other_id_continue =
        -1,
        -1,
        -1,
+        2 +   128 * sizeof (short) / sizeof (int) +    64,
        -1,
        -1,
        -1,
@@ -65,6 +66,7 @@ u_property_other_id_continue =
        -1,
        -1,
        -1,
+        2 +   128 * sizeof (short) / sizeof (int) +    80,
        -1,
        -1,
        -1,
@@ -167,9 +169,7 @@ u_property_other_id_continue =
        -1,
        -1,
        -1,
-       -1,
-       -1,
-       -1
+        2 +   128 * sizeof (short) / sizeof (int) +    96
   },
   {
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
@@ -187,6 +187,18 @@ u_property_other_id_continue =
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
-    0x00000000U, 0x00000000U, 0x04000000U, 0x00000000U
+    0x00000000U, 0x00000000U, 0x04000000U, 0x00000000U,
+    0x00003000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x08000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000020U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U
   }
 };

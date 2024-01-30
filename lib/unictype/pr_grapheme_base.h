@@ -1,8 +1,8 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Properties of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 15.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 15.1.0.  */
 
-/* Copyright (C) 2000-2022 Free Software Foundation, Inc.
+/* Copyright (C) 2000-2024 Free Software Foundation, Inc.
 
    This file is free software.
    It is dual-licensed under "the GNU LGPLv3+ or the GNU GPLv2+".
@@ -35,7 +35,7 @@ struct
     int header[1];
     int level1[4];
     short level2[4 << 7];
-    unsigned int level3[88 << 4];
+    unsigned int level3[89 << 4];
   }
 u_property_grapheme_base =
 {
@@ -421,26 +421,18 @@ u_property_grapheme_base =
         5 +   512 * sizeof (short) / sizeof (int) +   160,
         5 +   512 * sizeof (short) / sizeof (int) +   160,
         5 +   512 * sizeof (short) / sizeof (int) +  1344,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
         5 +   512 * sizeof (short) / sizeof (int) +   160,
         5 +   512 * sizeof (short) / sizeof (int) +  1360,
        -1,
        -1,
-        5 +   512 * sizeof (short) / sizeof (int) +   160,
-        5 +   512 * sizeof (short) / sizeof (int) +   160,
-        5 +   512 * sizeof (short) / sizeof (int) +   160,
-        5 +   512 * sizeof (short) / sizeof (int) +   160,
-        5 +   512 * sizeof (short) / sizeof (int) +   160,
-        5 +   512 * sizeof (short) / sizeof (int) +   160,
-        5 +   512 * sizeof (short) / sizeof (int) +   160,
-        5 +   512 * sizeof (short) / sizeof (int) +   160,
+       -1,
+       -1,
         5 +   512 * sizeof (short) / sizeof (int) +   160,
         5 +   512 * sizeof (short) / sizeof (int) +  1376,
+       -1,
+       -1,
+        5 +   512 * sizeof (short) / sizeof (int) +   160,
+        5 +   512 * sizeof (short) / sizeof (int) +   160,
         5 +   512 * sizeof (short) / sizeof (int) +   160,
         5 +   512 * sizeof (short) / sizeof (int) +   160,
         5 +   512 * sizeof (short) / sizeof (int) +   160,
@@ -449,6 +441,14 @@ u_property_grapheme_base =
         5 +   512 * sizeof (short) / sizeof (int) +   160,
         5 +   512 * sizeof (short) / sizeof (int) +   160,
         5 +   512 * sizeof (short) / sizeof (int) +  1392,
+        5 +   512 * sizeof (short) / sizeof (int) +   160,
+        5 +   512 * sizeof (short) / sizeof (int) +   160,
+        5 +   512 * sizeof (short) / sizeof (int) +   160,
+        5 +   512 * sizeof (short) / sizeof (int) +   160,
+        5 +   512 * sizeof (short) / sizeof (int) +   160,
+        5 +   512 * sizeof (short) / sizeof (int) +   160,
+        5 +   512 * sizeof (short) / sizeof (int) +   160,
+        5 +   512 * sizeof (short) / sizeof (int) +  1408,
        -1,
        -1,
        -1,
@@ -644,11 +644,11 @@ u_property_grapheme_base =
     0xFFFFFFFFU, 0xFFFFFFFFU, 0x3FFFFFFFU, 0x00000000U,
     0xFBFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU, 0x000FFFFFU,
     0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU,
-    0xFFFFFFFFU, 0xFFFFFFFFU, 0x003FFFFFU, 0x0FFF0000U,
+    0xFFFFFFFFU, 0xFFFFFFFFU, 0x003FFFFFU, 0xFFFF0000U,
     0xFFFFFFFFU, 0xFFFF03FFU, 0xFFFFFFFEU, 0xFFFFFFFFU,
     0xF87FFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU,
     0xFFFFFFE0U, 0xFFFEFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU,
-    0xFFFF7FFFU, 0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFF000FU,
+    0xFFFF7FFFU, 0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFF800FU,
     0x7FFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU,
     0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU,
     0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU,
@@ -900,7 +900,11 @@ u_property_grapheme_base =
     0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU,
     0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU,
     0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU,
-    0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU, 0x00000001U,
+    0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFF0001U,
+    0xFFFFFFFFU, 0xFFFFFFFFU, 0x3FFFFFFFU, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x3FFFFFFFU, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,

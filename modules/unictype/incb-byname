@@ -1,0 +1,36 @@
+Description:
+Find a Indic_Conjunct_Break value, given its name.
+
+Files:
+lib/unictype/incb_byname.c
+lib/unictype/incb_byname.gperf
+
+Depends-on:
+unictype/base
+gperf
+
+configure.ac:
+gl_LIBUNISTRING_MODULE([1.2], [unictype/incb-byname])
+
+Makefile.am:
+if LIBUNISTRING_COMPILE_UNICTYPE_INCB_BYNAME
+lib_SOURCES += unictype/incb_byname.c
+endif
+
+$(srcdir)/unictype/incb_byname.h: $(srcdir)/unictype/incb_byname.gperf
+	$(V_GPERF)$(GPERF) -m 10 $(srcdir)/unictype/incb_byname.gperf > $(srcdir)/unictype/incb_byname.h-t1 \
+	&& sed -e 's/^const/static const/' < $(srcdir)/unictype/incb_byname.h-t1 > $(srcdir)/unictype/incb_byname.h-t2 \
+	&& mv $(srcdir)/unictype/incb_byname.h-t2 $(srcdir)/unictype/incb_byname.h
+BUILT_SOURCES        += unictype/incb_byname.h
+MOSTLYCLEANFILES     += unictype/incb_byname.h-t1 unictype/incb_byname.h-t2
+MAINTAINERCLEANFILES += unictype/incb_byname.h
+EXTRA_DIST           += unictype/incb_byname.h
+
+Include:
+"unictype.h"
+
+License:
+LGPLv3+ or GPLv2+
+
+Maintainer:
+all

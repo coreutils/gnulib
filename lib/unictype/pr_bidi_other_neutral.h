@@ -1,8 +1,8 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Properties of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 15.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 15.1.0.  */
 
-/* Copyright (C) 2000-2022 Free Software Foundation, Inc.
+/* Copyright (C) 2000-2024 Free Software Foundation, Inc.
 
    This file is free software.
    It is dual-licensed under "the GNU LGPLv3+ or the GNU GPLv2+".
@@ -382,11 +382,11 @@ u_property_bidi_other_neutral =
     0xFFFFFFFFU, 0xFFFFFFFFU, 0x3FFFFFFFU, 0x00000000U,
     0xFBFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU, 0x000FFFFFU,
     0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU,
-    0xFFFFFFFFU, 0xFFFFFFFFU, 0x003FFFFFU, 0x0FFF0000U,
+    0xFFFFFFFFU, 0xFFFFFFFFU, 0x003FFFFFU, 0xFFFF0000U,
     0xFFFFFF1EU, 0xE0C10001U, 0x00000000U, 0x00000000U,
     0x18000000U, 0x00000001U, 0x00000000U, 0x08000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
-    0x00000000U, 0x00000000U, 0xFFFFFFFFU, 0x0000000FU,
+    0x00000000U, 0x00000000U, 0xFFFFFFFFU, 0x0000800FU,
     0x60000000U, 0x00000000U, 0xFFFF0000U, 0x70000000U,
     0x00000000U, 0xFFFE0000U, 0x0000F000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x07800000U,

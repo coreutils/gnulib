@@ -10,7 +10,7 @@ unilbrk/u32-possible-linebreaks
 uniwidth/width
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([1.1], [unilbrk/u32-width-linebreaks])
+gl_LIBUNISTRING_MODULE([1.2], [unilbrk/u32-width-linebreaks])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNILBRK_U32_WIDTH_LINEBREAKS

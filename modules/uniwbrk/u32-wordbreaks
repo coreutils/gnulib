@@ -13,7 +13,7 @@ unictype/property-extended-pictographic
 unistr/u32-mbtouc-unsafe
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([1.1], [uniwbrk/u32-wordbreaks])
+gl_LIBUNISTRING_MODULE([1.2], [uniwbrk/u32-wordbreaks])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNIWBRK_U32_WORDBREAKS

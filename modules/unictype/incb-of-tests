@@ -1,0 +1,14 @@
+Files:
+tests/unictype/test-incb_of.c
+tests/unictype/test-incb_of.h
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-incb_of
+check_PROGRAMS += test-incb_of
+test_incb_of_SOURCES = unictype/test-incb_of.c
+test_incb_of_LDADD = $(LDADD) $(LIBUNISTRING)

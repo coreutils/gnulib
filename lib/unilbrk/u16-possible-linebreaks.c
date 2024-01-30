@@ -62,6 +62,7 @@ u16_possible_linebreaks_loop (const uint16_t *s, size_t n, const char *encoding,
         {
           ucs4_t uc;
           int count = u16_mbtouc_unsafe (&uc, s, s_end - s);
+          s += count;
           int prop = unilbrkprop_lookup (uc);
 
           if (prop == LBP_BK || prop == LBP_LF || prop == LBP_CR)
@@ -95,6 +96,62 @@ u16_possible_linebreaks_loop (const uint16_t *s, size_t n, const char *encoding,
                 case LBP_XX:
                   /* This is arbitrary.  */
                   prop = LBP_AL;
+                  break;
+                case LBP_QU2:
+                  /* For (LB15a): Replace LBP_QU2 with LBP_QU1 if the previous
+                     character's line break property was not one of
+                     BK, CR, LF, OP, QU, GL, SP, ZW.  */
+                  switch (prev_prop)
+                    {
+                    case LBP_BK:
+                    case LBP_CR:
+                    case LBP_LF:
+                    case LBP_OP1: case LBP_OP2:
+                    case LBP_QU1: case LBP_QU2: case LBP_QU3:
+                    case LBP_GL:
+                    case LBP_SP:
+                    case LBP_ZW:
+                      break;
+                    default:
+                      prop = LBP_QU1;
+                      break;
+                    }
+                  break;
+                case LBP_QU3:
+                  /* For (LB15b): Replace LBP_QU3 with LBP_QU1 if the next
+                     character's line break property is not one of
+                     BK, CR, LF, SP, GL, WJ, CL, QU, CP, EX, IS, SY, ZW.  */
+                  {
+                    int next_prop;
+                    if (s < s_end)
+                      {
+                        ucs4_t next_uc;
+                        (void) u16_mbtouc_unsafe (&next_uc, s, s_end - s);
+                        next_prop = unilbrkprop_lookup (next_uc);
+                      }
+                    else
+                      next_prop = LBP_BK;
+                    switch (next_prop)
+                      {
+                      case LBP_BK:
+                      case LBP_CR:
+                      case LBP_LF:
+                      case LBP_SP:
+                      case LBP_GL:
+                      case LBP_WJ:
+                      case LBP_CL:
+                      case LBP_QU1: case LBP_QU2: case LBP_QU3:
+                      case LBP_CP1: case LBP_CP2:
+                      case LBP_EX:
+                      case LBP_IS:
+                      case LBP_SY:
+                      case LBP_ZW:
+                        break;
+                      default:
+                        prop = LBP_QU1;
+                        break;
+                      }
+                  }
                   break;
                 }
 
@@ -209,7 +266,6 @@ u16_possible_linebreaks_loop (const uint16_t *s, size_t n, const char *encoding,
           else
             ri_count = 0;
 
-          s += count;
           p += count;
         }
       while (s < s_end);

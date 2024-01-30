@@ -1,0 +1,40 @@
+/* Indic_Conjunct_Break values.
+   Copyright (C) 2011-2024 Free Software Foundation, Inc.
+
+   This file is free software.
+   It is dual-licensed under "the GNU LGPLv3+ or the GNU GPLv2+".
+   You can redistribute it and/or modify it under either
+     - the terms of the GNU Lesser General Public License as published
+       by the Free Software Foundation, either version 3, or (at your
+       option) any later version, or
+     - the terms of the GNU General Public License as published by the
+       Free Software Foundation; either version 2, or (at your option)
+       any later version, or
+     - the same dual license "the GNU LGPLv3+ or the GNU GPLv2+".
+
+   This file is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   Lesser General Public License and the GNU General Public License
+   for more details.
+
+   You should have received a copy of the GNU Lesser General Public
+   License and of the GNU General Public License along with this
+   program.  If not, see <https://www.gnu.org/licenses/>.  */
+
+struct named_indic_conjunct_break { int name; int indic_conjunct_break; };
+%struct-type
+%ignore-case
+%language=ANSI-C
+%define hash-function-name indic_conjunct_break_hash
+%define lookup-function-name uc_indic_conjunct_break_lookup
+%readonly-tables
+%global-table
+%define word-array-name indic_conjunct_break_names
+%pic
+%define string-pool-name indic_conjunct_break_stringpool
+%%
+None, UC_INDIC_CONJUNCT_BREAK_NONE
+Consonant, UC_INDIC_CONJUNCT_BREAK_CONSONANT
+Linker, UC_INDIC_CONJUNCT_BREAK_LINKER
+Extend, UC_INDIC_CONJUNCT_BREAK_EXTEND

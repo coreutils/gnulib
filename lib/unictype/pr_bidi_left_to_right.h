@@ -1,8 +1,8 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Properties of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 15.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 15.1.0.  */
 
-/* Copyright (C) 2000-2022 Free Software Foundation, Inc.
+/* Copyright (C) 2000-2024 Free Software Foundation, Inc.
 
    This file is free software.
    It is dual-licensed under "the GNU LGPLv3+ or the GNU GPLv2+".
@@ -665,11 +665,11 @@ u_property_bidi_left_to_right =
     0x00000000U, 0x00000000U, 0xC0000000U, 0xFFFFFFFFU,
     0x04000000U, 0x00000000U, 0x00000000U, 0xFFF00000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
-    0x00000000U, 0x00000000U, 0xFFC00000U, 0xF000FFFFU,
+    0x00000000U, 0x00000000U, 0xFFC00000U, 0x0000FFFFU,
     0x000000E0U, 0x1F3EC3FEU, 0xFFFFFFFFU, 0xFFFFFFFFU,
     0xE1FFFFFFU, 0xFFFFFFFEU, 0xFFFFFFFFU, 0xF7FFFFFFU,
     0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU,
-    0xFFFFFFFFU, 0xFFFFFFFFU, 0x00000000U, 0xFFFFFFF0U,
+    0xFFFFFFFFU, 0xFFFFFFFFU, 0x00000000U, 0xFFFF7FF0U,
     0x9FFFFFFFU, 0xFFFFFFFFU, 0x0000FFFFU, 0x8FFFFFFFU,
     0xFFFFFFFFU, 0x0001FFFFU, 0xFFFF0FFFU, 0xFFFFFFFFU,
     0xFFFFFFFFU, 0xFFFFFFFFU, 0xFFFFFFFFU, 0xF87FFFFFU,
