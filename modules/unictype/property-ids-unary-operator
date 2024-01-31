@@ -1,0 +1,27 @@
+Description:
+Test whether a Unicode character is "ids unary operator".
+
+Files:
+lib/unictype/pr_ids_unary_operator.c
+
+Depends-on:
+unictype/base
+
+configure.ac:
+AC_REQUIRE([AC_C_INLINE])
+gl_UNICTYPE_H_REQUIRE_DEFAULTS
+gl_LIBUNISTRING_MODULE_WITH_VARIABLE([1.2], [unictype/property-ids-unary-operator])
+
+Makefile.am:
+if LIBUNISTRING_COMPILE_UNICTYPE_PROPERTY_IDS_UNARY_OPERATOR
+lib_SOURCES += unictype/pr_ids_unary_operator.c
+endif
+
+Include:
+"unictype.h"
+
+License:
+LGPLv3+ or GPLv2+
+
+Maintainer:
+all

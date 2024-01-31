@@ -48,11 +48,14 @@ unictype/property-grapheme-extend
 unictype/property-grapheme-link
 unictype/property-hex-digit
 unictype/property-hyphen
+unictype/property-id-compat-math-continue
+unictype/property-id-compat-math-start
 unictype/property-id-continue
 unictype/property-id-start
 unictype/property-ideographic
 unictype/property-ids-binary-operator
 unictype/property-ids-trinary-operator
+unictype/property-ids-unary-operator
 unictype/property-ignorable-control
 unictype/property-iso-control
 unictype/property-join-control

@@ -3316,6 +3316,20 @@ is_property_xid_continue (unsigned int ch)
 
 /* See PropList.txt, UCD.html.  */
 static bool
+is_property_id_compat_math_start (unsigned int ch)
+{
+  return ((unicode_properties[ch] & (1ULL << PROP_ID_COMPAT_MATH_START)) != 0);
+}
+
+/* See PropList.txt, UCD.html.  */
+static bool
+is_property_id_compat_math_continue (unsigned int ch)
+{
+  return ((unicode_properties[ch] & (1ULL << PROP_ID_COMPAT_MATH_CONTINUE)) != 0);
+}
+
+/* See PropList.txt, UCD.html.  */
+static bool
 is_property_pattern_white_space (unsigned int ch)
 {
   return ((unicode_properties[ch] & (1ULL << PROP_PATTERN_WHITE_SPACE)) != 0);
@@ -3518,6 +3532,13 @@ static bool
 is_property_radical (unsigned int ch)
 {
   return ((unicode_properties[ch] & (1ULL << PROP_RADICAL)) != 0);
+}
+
+/* See PropList.txt, UCD.html.  */
+static bool
+is_property_ids_unary_operator (unsigned int ch)
+{
+  return ((unicode_properties[ch] & (1ULL << PROP_IDS_UNARY_OPERATOR)) != 0);
 }
 
 /* See PropList.txt, UCD.html.  */
@@ -3872,6 +3893,8 @@ output_properties (const char *version)
   PROPERTY(other_id_continue)
   PROPERTY(xid_start)
   PROPERTY(xid_continue)
+  PROPERTY(id_compat_math_start)
+  PROPERTY(id_compat_math_continue)
   PROPERTY(pattern_white_space)
   PROPERTY(pattern_syntax)
   PROPERTY(join_control)
@@ -3901,6 +3924,7 @@ output_properties (const char *version)
   PROPERTY(ideographic)
   PROPERTY(unified_ideograph)
   PROPERTY(radical)
+  PROPERTY(ids_unary_operator)
   PROPERTY(ids_binary_operator)
   PROPERTY(ids_trinary_operator)
   PROPERTY(zero_width)

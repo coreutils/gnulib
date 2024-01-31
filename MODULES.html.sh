@@ -3419,11 +3419,14 @@ func_all_modules ()
   func_module unictype/property-grapheme-link
   func_module unictype/property-hex-digit
   func_module unictype/property-hyphen
+  func_module unictype/property-id-compat-math-continue
+  func_module unictype/property-id-compat-math-start
   func_module unictype/property-id-continue
   func_module unictype/property-id-start
   func_module unictype/property-ideographic
   func_module unictype/property-ids-binary-operator
   func_module unictype/property-ids-trinary-operator
+  func_module unictype/property-ids-unary-operator
   func_module unictype/property-ignorable-control
   func_module unictype/property-iso-control
   func_module unictype/property-join-control
