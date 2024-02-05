@@ -1,4 +1,4 @@
-# utime.m4 serial 5
+# utime.m4 serial 6
 dnl Copyright (C) 2017-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -48,14 +48,15 @@ AC_DEFUN([gl_FUNC_UTIME],
              [gl_cv_func_utime_file_slash=yes],
              [gl_cv_func_utime_file_slash=no],
              [case "$host_os" in
-                                 # Guess yes on Linux systems.
-                linux-* | linux) gl_cv_func_utime_file_slash="guessing yes" ;;
-                                 # Guess yes on glibc systems.
-                *-gnu* | gnu*)   gl_cv_func_utime_file_slash="guessing yes" ;;
-                                 # Guess no on macOS.
-                darwin*)         gl_cv_func_utime_file_slash="guessing no" ;;
-                                 # If we don't know, obey --enable-cross-guesses.
-                *)               gl_cv_func_utime_file_slash="$gl_cross_guess_normal" ;;
+                                   # Guess yes on Linux systems
+                                   # and on systems that emulate the Linux system calls.
+                linux* | midipix*) gl_cv_func_utime_file_slash="guessing yes" ;;
+                                   # Guess yes on glibc systems.
+                *-gnu* | gnu*)     gl_cv_func_utime_file_slash="guessing yes" ;;
+                                   # Guess no on macOS.
+                darwin*)           gl_cv_func_utime_file_slash="guessing no" ;;
+                                   # If we don't know, obey --enable-cross-guesses.
+                  *)               gl_cv_func_utime_file_slash="$gl_cross_guess_normal" ;;
               esac
              ])
            rm -f conftest.tmp conftest.lnk

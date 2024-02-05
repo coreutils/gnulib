@@ -1,4 +1,4 @@
-# truncate.m4 serial 6   -*- Autoconf -*-
+# truncate.m4 serial 7   -*- Autoconf -*-
 dnl Copyright (C) 2017-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -48,14 +48,15 @@ AC_DEFUN([gl_FUNC_TRUNCATE],
            [gl_cv_func_truncate_works=yes],
            [gl_cv_func_truncate_works=no],
            [case "$host_os" in
-                               # Guess yes on Linux systems.
-              linux-* | linux) gl_cv_func_truncate_works="guessing yes" ;;
-                               # Guess yes on glibc systems.
-              *-gnu* | gnu*)   gl_cv_func_truncate_works="guessing yes" ;;
-                               # Guess no on AIX systems.
-              aix*)            gl_cv_func_truncate_works="guessing no" ;;
-                               # If we don't know, obey --enable-cross-guesses.
-              *)               gl_cv_func_truncate_works="$gl_cross_guess_normal" ;;
+                                 # Guess yes on Linux systems
+                                 # and on systems that emulate the Linux system calls.
+              linux* | midipix*) gl_cv_func_truncate_works="guessing yes" ;;
+                                 # Guess yes on glibc systems.
+              *-gnu* | gnu*)     gl_cv_func_truncate_works="guessing yes" ;;
+                                 # Guess no on AIX systems.
+              aix*)              gl_cv_func_truncate_works="guessing no" ;;
+                                 # If we don't know, obey --enable-cross-guesses.
+              *)                 gl_cv_func_truncate_works="$gl_cross_guess_normal" ;;
             esac
            ])
          rm -f conftest.tmp
