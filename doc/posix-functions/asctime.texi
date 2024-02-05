@@ -18,5 +18,7 @@ Likewise, POSIX says this function is obsolescent and it is planned to be
 removed in a future version.
 Portable applications can use @code{strftime} (or even @code{sprintf}) instead.
 @item
-This function may overflow its internal buffer if an invalid year is passed.
+This function may overflow its internal buffer if its argument
+specifies a time before the year 1000 or after the year 9999.
+@xref{ctime}.
 @end itemize

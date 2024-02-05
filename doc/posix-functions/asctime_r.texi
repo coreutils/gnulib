@@ -25,6 +25,7 @@ POSIX says this function is obsolescent and it is planned to be
 removed in a future version.
 Use the function @code{strftime} (or even @code{sprintf}) instead.
 @item
-This function may put more than 26 bytes into the argument buffer if an
-invalid year is passed.
+This function may overflow its output buffer if its argument
+specifies a time before the year 1000 or after the year 9999.
+@xref{ctime}.
 @end itemize

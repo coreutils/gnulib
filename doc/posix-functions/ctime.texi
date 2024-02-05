@@ -22,7 +22,27 @@ removed in a future version.
 Portable applications can use @code{localtime_r} and @code{strftime}
 (or even @code{sprintf}) instead.
 @item
-This function may overflow its internal buffer if an invalid year is passed.
+This function may overflow its internal buffer if its argument
+specifies a time before the year 1000 or after the year 9999.
+
+Here is some history about this.
+This function was safe to use decades ago when @code{time_t} was narrow
+and there was no @code{strftime} or internationalization.
+Code could call @code{ctime} and then select the parts needed.
+For example, in Unix 7th Edition @file{/usr/src/cmd/ls.c} (1979):
+
+@example
+cp = ctime(&p->lmtime);
+if(p->lmtime < year)
+        printf(" %-7.7s %-4.4s ", cp+4, cp+20); else
+        printf(" %-12.12s ", cp+4);
+@end example
+
+This has well-defined behavior if @code{time_t} is only 32 bits
+and so was OK for circa 1979 platforms.
+However, today's platforms have a @code{time_t} so wide
+that the year might not be in the range [1000, 9999],
+and ISO C says that in this case the behavior of @code{ctime} is undefined.
 @item
 The @code{ctime} function need not be reentrant, and consequently is
 not required to be thread safe.  Implementations of @code{ctime}
