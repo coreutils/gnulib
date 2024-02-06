@@ -4,6 +4,7 @@ like nstrftime, but output the formatted date to a FILE* stream
 Files:
 lib/fprintftime.h
 lib/fprintftime.c
+lib/strftime.c
 
 Depends-on:
 stdio

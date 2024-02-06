@@ -15,5 +15,6 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
+#define my_strftime fprintftime
 #define FPRINTFTIME 1
-#include "nstrftime.c"
+#include "strftime.c"

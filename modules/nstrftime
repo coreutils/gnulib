@@ -4,6 +4,7 @@ nstrftime() function: convert date and time to string, with GNU extensions.
 Files:
 lib/strftime.h
 lib/nstrftime.c
+lib/strftime.c
 m4/tm_gmtoff.m4
 m4/nstrftime.m4
 
