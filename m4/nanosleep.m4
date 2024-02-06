@@ -116,10 +116,13 @@ AC_DEFUN([gl_FUNC_NANOSLEEP],
         *)     gl_cv_func_nanosleep=no ;;
         esac],
        [case "$host_os" in
-            # Guess it halfway works when the kernel is Linux
-            # and on systems that emulate the Linux system calls.
-          linux* | midipix*)
+            # Guess it halfway works when the kernel is Linux.
+          linux*)
             gl_cv_func_nanosleep='guessing no (mishandles large arguments)' ;;
+            # Midipix generally emulates the Linux system calls,
+            # but here it handles large arguments correctly.
+          midipix*)
+            gl_cv_func_nanosleep='guessing yes' ;;
             # Guess no on native Windows.
           mingw* | windows*)
             gl_cv_func_nanosleep='guessing no' ;;
