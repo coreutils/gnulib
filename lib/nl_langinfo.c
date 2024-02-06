@@ -1,6 +1,6 @@
 /* nl_langinfo() replacement: query locale dependent information.
 
-   Copyright (C) 2007-2023 Free Software Foundation, Inc.
+   Copyright (C) 2007-2024 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as
@@ -451,7 +451,7 @@ nl_langinfo (nl_item item)
     {
       static char const months[][sizeof "September"] = {
         "January", "February", "March", "April", "May", "June", "July",
-        "September", "October", "November", "December"
+        "August", "September", "October", "November", "December"
       };
       case MON_1:
       case MON_2:
@@ -515,7 +515,7 @@ nl_langinfo (nl_item item)
         static char result[12][30];
         static char const abmonths[][sizeof "Jan"] = {
           "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul",
-          "Sep", "Oct", "Nov", "Dec"
+          "Aug", "Sep", "Oct", "Nov", "Dec"
         };
         tmm.tm_mon = item - ABMON_1;
         if (!strftime (buf, sizeof result[0], "%b", &tmm))
