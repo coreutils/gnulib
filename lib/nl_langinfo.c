@@ -462,7 +462,7 @@ nl_langinfo (nl_item item)
     {
       static char const months[][sizeof "September"] = {
         "January", "February", "March", "April", "May", "June", "July",
-        "September", "October", "November", "December"
+        "August", "September", "October", "November", "December"
       };
       case MON_1:
       case MON_2:
@@ -526,7 +526,7 @@ nl_langinfo (nl_item item)
         static char result[12][30];
         static char const abmonths[][sizeof "Jan"] = {
           "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul",
-          "Sep", "Oct", "Nov", "Dec"
+          "Aug", "Sep", "Oct", "Nov", "Dec"
         };
         tmm.tm_mon = item - ABMON_1;
         if (!strftime (buf, sizeof result[0], "%b", &tmm))
