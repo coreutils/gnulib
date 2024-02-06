@@ -121,6 +121,10 @@ extern char *tzname[];
 # define mktime_z(tz, tm) mktime (tm)
 # define tzname __tzname
 # define tzset __tzset
+
+# define time_t __time64_t
+# define __gmtime_r(t, tp) __gmtime64_r (t, tp)
+# define mktime(tp) __mktime64 (tp)
 #endif
 
 #ifndef FPRINTFTIME

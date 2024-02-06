@@ -164,7 +164,7 @@ $LIBCSRC time/mktime-internal.h		lib
 #$LIBCSRC sysdeps/unix/dirfd.c		lib gpl
 #$LIBCSRC sysdeps/unix/grantpt.c	lib gpl
 #$LIBCSRC sysdeps/unix/rmdir.c		lib gpl
-#$LIBCSRC time/strftime.c		lib gpl
+#$LIBCSRC time/strftime_l.c		lib gpl (strftime.c)
 # These are close, but we are using the gettext versions.
 #$LIBCSRC misc/mkdtemp.c		lib gpl
 #$LIBCSRC stdlib/setenv.c		lib gpl (setenv.c, unsetenv.c)
