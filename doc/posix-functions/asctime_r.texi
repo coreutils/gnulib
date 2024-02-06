@@ -24,8 +24,9 @@ mingw, MSVC 14.
 POSIX says this function is obsolescent and it is planned to be
 removed in a future version.
 Use the function @code{strftime} (or even @code{sprintf}) instead.
+However, @code{strftime} is locale dependent.
 @item
 This function may overflow its output buffer if its argument
-specifies a time before the year 1000 or after the year 9999.
+specifies a year before 1000 or after 9999.
 @xref{ctime}.
 @end itemize

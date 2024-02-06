@@ -25,21 +25,9 @@ POSIX says this function is obsolescent and it is planned to be
 removed in a future version.
 Use the functions @code{localtime_r} and @code{strftime}
 (or even @code{sprintf}) instead.
+However, @code{localtime_r} can fail and @code{strftime} is locale dependent.
 @item
 This function may overflow its output buffer if its argument
 specifies a time before the year 1000 or after the year 9999.
 @xref{ctime}.
 @end itemize
-
-@code{ctime_r} takes a pre-allocated buffer and length of the buffer,
-and returns @code{NULL} on errors.
-The input buffer should be at least 26 bytes in size.  The output
-string is locale-independent.  However, years can have more than 4
-digits if @code{time_t} is sufficiently wide, so the length of the
-required output buffer is not easy to determine.  Increasing the
-buffer size when @code{ctime_r} returns @code{NULL} is not necessarily
-sufficient.  The @code{NULL} return value could mean some other error
-condition, which will not go away by increasing the buffer size.
-
-A more flexible function is @code{strftime}.  However, note that it is
-locale dependent.

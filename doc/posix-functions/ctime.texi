@@ -21,28 +21,10 @@ Likewise, POSIX says this function is obsolescent and it is planned to be
 removed in a future version.
 Portable applications can use @code{localtime_r} and @code{strftime}
 (or even @code{sprintf}) instead.
+However, @code{localtime_r} can fail and @code{strftime} is locale dependent.
 @item
 This function may overflow its internal buffer if its argument
 specifies a time before the year 1000 or after the year 9999.
-
-Here is some history about this.
-This function was safe to use decades ago when @code{time_t} was narrow
-and there was no @code{strftime} or internationalization.
-Code could call @code{ctime} and then select the parts needed.
-For example, in Unix 7th Edition @file{/usr/src/cmd/ls.c} (1979):
-
-@example
-cp = ctime(&p->lmtime);
-if(p->lmtime < year)
-        printf(" %-7.7s %-4.4s ", cp+4, cp+20); else
-        printf(" %-12.12s ", cp+4);
-@end example
-
-This has well-defined behavior if @code{time_t} is only 32 bits
-and so was OK for circa 1979 platforms.
-However, today's platforms have a @code{time_t} so wide
-that the year might not be in the range [1000, 9999],
-and ISO C says that in this case the behavior of @code{ctime} is undefined.
 @item
 The @code{ctime} function need not be reentrant, and consequently is
 not required to be thread safe.  Implementations of @code{ctime}
@@ -55,5 +37,31 @@ Native Windows platforms (mingw, MSVC) support only a subset of time
 zones supported by GNU or specified by POSIX@.  @xref{tzset}.
 @end itemize
 
-A more flexible function is @code{strftime}.  However, note that it is
-locale dependent.
+Although @code{ctime} and related functions @code{asctime}, @code{asctime_r}
+and @code{ctime_r} formerly were plausible to use,
+they are now unsafe in general, and should be avoided.
+
+Decades ago when @code{time_t} was narrow
+and there was no @code{strftime} or internationalization,
+code could call these functions and then select the parts needed.
+For example, in Unix 7th Edition @file{/usr/src/cmd/ls.c} (1979):
+
+@example
+cp = ctime(&p->lmtime);
+if(p->lmtime < year)
+        printf(" %-7.7s %-4.4s ", cp+4, cp+20); else
+        printf(" %-12.12s ", cp+4);
+@end example
+
+@noindent
+This had well-defined behavior when @code{time_t} was only 32 bits
+and so was OK for circa 1979 platforms.
+
+However, today's platforms have a @code{time_t} so wide
+that the year might not be in the range [1000, 9999].
+In this case the behavior of @code{ctime} is undefined
+and some platforms behave badly, overrunning a buffer;
+and even on platforms where no buffer overrun occurs,
+the 7th Edition code can generate wrong output for out-of-range years,
+because it incorrectly assumes that every year is represented by
+exactly four digits.
