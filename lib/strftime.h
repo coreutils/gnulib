@@ -26,7 +26,7 @@ extern "C" {
    LC_TIME category of the current locale.
 
    Uses the time zone __TZ.
-   If *__TP represents local time, _TZ should be set to
+   If *__TP represents local time, __TZ should be set to
      tzalloc (getenv ("TZ")).
    If *__TP represents universal time (a.k.a. GMT), __TZ should be set to
      (timezone_t) 0.
