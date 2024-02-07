@@ -868,7 +868,7 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
                "#define strftime rpl_strftime".  */
 # ifdef strftime
 #  undef strftime
-            size_t strftime ();
+            size_t strftime (char *, size_t, const char *, struct tm const *);
 # endif
 
             /* The space helps distinguish strftime failure from empty
