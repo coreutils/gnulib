@@ -1,4 +1,4 @@
-/* Copyright (C) 1991-2023 Free Software Foundation, Inc.
+/* Copyright (C) 1991-2024 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    This file is free software: you can redistribute it and/or modify
@@ -869,7 +869,7 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
                "#define strftime rpl_strftime".  */
 # ifdef strftime
 #  undef strftime
-            size_t strftime ();
+            size_t strftime (char *, size_t, const char *, struct tm const *);
 # endif
 
             /* The space helps distinguish strftime failure from empty
