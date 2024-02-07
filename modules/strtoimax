@@ -9,7 +9,7 @@ Depends-on:
 inttypes-incomplete
 assert-h        [test $HAVE_DECL_STRTOIMAX = 0 || test $REPLACE_STRTOIMAX = 1]
 stdint          [test $HAVE_DECL_STRTOIMAX = 0 || test $REPLACE_STRTOIMAX = 1]
-strtoll         [{ test $HAVE_DECL_STRTOIMAX = 0 || test $REPLACE_STRTOIMAX = 1; } && test $ac_cv_type_long_long_int = yes]
+strtoll         [test $HAVE_DECL_STRTOIMAX = 0 || test $REPLACE_STRTOIMAX = 1]
 
 configure.ac:
 gl_FUNC_STRTOIMAX

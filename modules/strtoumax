@@ -10,7 +10,7 @@ Depends-on:
 inttypes-incomplete
 assert-h        [test $HAVE_DECL_STRTOUMAX = 0 || test $REPLACE_STRTOUMAX = 1]
 stdint          [test $HAVE_DECL_STRTOUMAX = 0 || test $REPLACE_STRTOUMAX = 1]
-strtoull        [{ test $HAVE_DECL_STRTOUMAX = 0 || test $REPLACE_STRTOUMAX = 1; } && test $ac_cv_type_unsigned_long_long_int = yes]
+strtoull        [test $HAVE_DECL_STRTOUMAX = 0 || test $REPLACE_STRTOUMAX = 1]
 
 configure.ac:
 gl_FUNC_STRTOUMAX
