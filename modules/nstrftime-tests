@@ -1,5 +1,6 @@
 Files:
 tests/test-nstrftime.c
+tests/test-nstrftime.h
 tests/macros.h
 
 Depends-on:
