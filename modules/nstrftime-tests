@@ -1,7 +1,12 @@
 Files:
+tests/test-nstrftime-1.sh
+tests/test-nstrftime-2.sh
 tests/test-nstrftime.c
 tests/test-nstrftime.h
 tests/macros.h
+m4/locale-fr.m4
+m4/codeset.m4
+m4/musl.m4
 
 Depends-on:
 atoll
@@ -10,7 +15,14 @@ intprops
 strerror
 
 configure.ac:
+gt_LOCALE_FR
+gt_LOCALE_FR_UTF8
+gl_MUSL_LIBC
 
 Makefile.am:
-TESTS += test-nstrftime
+TESTS += test-nstrftime-1.sh test-nstrftime-2.sh
+TESTS_ENVIRONMENT += \
+  LOCALE_FR='@LOCALE_FR@' \
+  LOCALE_FR_UTF8='@LOCALE_FR_UTF8@'
 check_PROGRAMS += test-nstrftime
+test_nstrftime_LDADD = $(LDADD) $(SETLOCALE_LIB)

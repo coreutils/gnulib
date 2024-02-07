@@ -1,4 +1,4 @@
-/* Test of nstrftime-like functions in the "C" locale.
+/* Test of nstrftime-like functions.
    Copyright (C) 2011-2024 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -321,6 +321,341 @@ errno_test (void)
             }
         }
     }
+
+  return fail;
+}
+
+/* -------------------------------------------------------------------------- */
+
+/* Test various format directives.  */
+
+typedef enum { english, french } language_t;
+
+static int
+locales_test (language_t language)
+{
+  int fail = 0;
+
+  time_t t = 1509000003;
+  struct tm *tm = gmtime (&t);
+  int ns = 123456789;
+  char buf[100];
+  size_t n;
+
+  n = FUNC (buf, sizeof buf, "%+4Y-%m-%d %H:%M:%S.%N", tm, 0, ns);
+  ASSERT (n > 0);
+  printf ("Format as ISO 8601: %s\n", buf);
+  ASSERT (STREQ (buf, "2017-10-26 06:40:03.123456789"));
+
+  /* Exercise various POSIX format directives.  */
+
+  n = FUNC (buf, sizeof buf, "%a", tm, 0, ns);
+  ASSERT (n > 0);
+  printf ("%%a directive: %s\n", buf);
+  switch (language)
+    {
+    case english:
+      ASSERT (STREQ (buf, "Thu"));
+      break;
+    case french:
+      ASSERT (STREQ (buf, "jeu.") /* glibc, FreeBSD, NetBSD, Solaris, Cygwin */
+              || STREQ (buf, "Jeu") /* macOS, older FreeBSD */);
+      break;
+    }
+
+  n = FUNC (buf, sizeof buf, "%A", tm, 0, ns);
+  ASSERT (n > 0);
+  printf ("%%A directive: %s\n", buf);
+  switch (language)
+    {
+    case english:
+      ASSERT (STREQ (buf, "Thursday"));
+      break;
+    case french:
+      ASSERT (STREQ (buf, "jeudi") /* glibc, FreeBSD, NetBSD, Solaris, Cygwin */
+              || STREQ (buf, "Jeudi") /* macOS, older FreeBSD */);
+      break;
+    }
+
+  n = FUNC (buf, sizeof buf, "%b", tm, 0, ns);
+  ASSERT (n > 0);
+  printf ("%%b directive: %s\n", buf);
+  switch (language)
+    {
+    case english:
+      ASSERT (STREQ (buf, "Oct"));
+      break;
+    case french:
+      ASSERT (STREQ (buf, "oct.") /* glibc, FreeBSD, NetBSD, Solaris, Cygwin */
+              || STREQ (buf, "oct") /* macOS, older FreeBSD */);
+      break;
+    }
+
+  n = FUNC (buf, sizeof buf, "%B", tm, 0, ns);
+  ASSERT (n > 0);
+  printf ("%%B directive: %s\n", buf);
+  switch (language)
+    {
+    case english:
+      ASSERT (STREQ (buf, "October"));
+      break;
+    case french:
+      ASSERT (STREQ (buf, "octobre"));
+      break;
+    }
+
+  n = FUNC (buf, sizeof buf, "%c", tm, 0, ns);
+  ASSERT (n > 0);
+  printf ("%%c directive: %s\n", buf);
+  switch (language)
+    {
+    case english:
+      ASSERT (STREQ (buf, "Thu Oct 26 06:40:03 2017"));
+      break;
+    case french:
+      ASSERT (STREQ (buf, "jeu. 26 oct. 2017 06:40:03") /* glibc, Cygwin */
+              || STREQ (buf, "jeu. 26 oct. 06:40:03 2017") /* FreeBSD */
+              || STREQ (buf, "Jeu 26 oct 06:40:03 2017") /* macOS, older FreeBSD */
+              || STREQ (buf, "26 octobre 2017 06:40:03") /* NetBSD */
+              || STREQ (buf, "26 octobre 2017 à 06:40:03") /* Solaris (UTF-8) */
+              || STREQ (buf, "26 octobre 2017 \340 06:40:03") /* Solaris (ISO-8859-1) */);
+      break;
+    }
+
+  n = FUNC (buf, sizeof buf, "%C", tm, 0, ns);
+  ASSERT (n > 0);
+  printf ("%%C directive: %s\n", buf);
+  ASSERT (STREQ (buf, "20"));
+
+  n = FUNC (buf, sizeof buf, "%d", tm, 0, ns);
+  ASSERT (n > 0);
+  printf ("%%d directive: %s\n", buf);
+  ASSERT (STREQ (buf, "26"));
+
+  n = FUNC (buf, sizeof buf, "%D", tm, 0, ns);
+  ASSERT (n > 0);
+  printf ("%%D directive: %s\n", buf);
+  ASSERT (STREQ (buf, "10/26/17"));
+
+  n = FUNC (buf, sizeof buf, "%e", tm, 0, ns);
+  ASSERT (n > 0);
+  printf ("%%e directive: %s\n", buf);
+  ASSERT (STREQ (buf, "26"));
+
+  n = FUNC (buf, sizeof buf, "%F", tm, 0, ns);
+  ASSERT (n > 0);
+  printf ("%%F directive: %s\n", buf);
+  ASSERT (STREQ (buf, "2017-10-26"));
+
+  n = FUNC (buf, sizeof buf, "%g", tm, 0, ns);
+  ASSERT (n > 0);
+  printf ("%%g directive: %s\n", buf);
+  ASSERT (STREQ (buf, "17"));
+
+  n = FUNC (buf, sizeof buf, "%G", tm, 0, ns);
+  ASSERT (n > 0);
+  printf ("%%G directive: %s\n", buf);
+  ASSERT (STREQ (buf, "2017"));
+
+  n = FUNC (buf, sizeof buf, "%h", tm, 0, ns);
+  ASSERT (n > 0);
+  printf ("%%h directive: %s\n", buf);
+  switch (language)
+    {
+    case english:
+      ASSERT (STREQ (buf, "Oct"));
+      break;
+    case french:
+      ASSERT (STREQ (buf, "oct.") /* glibc, FreeBSD, NetBSD, Solaris, Cygwin */
+              || STREQ (buf, "oct") /* macOS, older FreeBSD */);
+      break;
+    }
+
+  n = FUNC (buf, sizeof buf, "%H", tm, 0, ns);
+  ASSERT (n > 0);
+  printf ("%%H directive: %s\n", buf);
+  ASSERT (STREQ (buf, "06"));
+
+  n = FUNC (buf, sizeof buf, "%I", tm, 0, ns);
+  ASSERT (n > 0);
+  printf ("%%I directive: %s\n", buf);
+  ASSERT (STREQ (buf, "06"));
+
+  n = FUNC (buf, sizeof buf, "%j", tm, 0, ns);
+  ASSERT (n > 0);
+  printf ("%%j directive: %s\n", buf);
+  ASSERT (STREQ (buf, "299"));
+
+  n = FUNC (buf, sizeof buf, "%m", tm, 0, ns);
+  ASSERT (n > 0);
+  printf ("%%m directive: %s\n", buf);
+  ASSERT (STREQ (buf, "10"));
+
+  n = FUNC (buf, sizeof buf, "%M", tm, 0, ns);
+  ASSERT (n > 0);
+  printf ("%%M directive: %s\n", buf);
+  ASSERT (STREQ (buf, "40"));
+
+  n = FUNC (buf, sizeof buf, "%n", tm, 0, ns);
+  ASSERT (n > 0);
+  printf ("%%n directive: %s\n", buf);
+  ASSERT (STREQ (buf, "\n"));
+
+  n = FUNC (buf, sizeof buf, "%p", tm, 0, ns);
+  switch (language)
+    {
+    case english:
+      ASSERT (n > 0);
+      printf ("%%p directive: %s\n", buf);
+      ASSERT (STREQ (buf, "AM"));
+      break;
+    case french:
+      ASSERT (n == 0);
+      break;
+    }
+
+  n = FUNC (buf, sizeof buf, "%r", tm, 0, ns);
+  ASSERT (n > 0);
+  printf ("%%r directive: %s\n", buf);
+  switch (language)
+    {
+    case english:
+      ASSERT (STREQ (buf, "06:40:03 AM"));
+      break;
+    case french:
+      ASSERT (STREQ (buf, "06:40:03 ") /* glibc */
+              || STREQ (buf, "06:40:03") /* Cygwin */
+              || STREQ (buf, "06:40:03 AM") /* NetBSD */
+              || STREQ (buf, " 6:40:03 AM") /* Solaris */);
+      break;
+    }
+
+  n = FUNC (buf, sizeof buf, "%R", tm, 0, ns);
+  ASSERT (n > 0);
+  printf ("%%R directive: %s\n", buf);
+  ASSERT (STREQ (buf, "06:40"));
+
+  n = FUNC (buf, sizeof buf, "%S", tm, 0, ns);
+  ASSERT (n > 0);
+  printf ("%%S directive: %s\n", buf);
+  ASSERT (STREQ (buf, "03"));
+
+  n = FUNC (buf, sizeof buf, "%t", tm, 0, ns);
+  ASSERT (n > 0);
+  printf ("%%t directive: %s\n", buf);
+  ASSERT (STREQ (buf, "\t"));
+
+  n = FUNC (buf, sizeof buf, "%T", tm, 0, ns);
+  ASSERT (n > 0);
+  printf ("%%T directive: %s\n", buf);
+  ASSERT (STREQ (buf, "06:40:03"));
+
+  n = FUNC (buf, sizeof buf, "%u", tm, 0, ns);
+  ASSERT (n > 0);
+  printf ("%%u directive: %s\n", buf);
+  ASSERT (STREQ (buf, "4"));
+
+  n = FUNC (buf, sizeof buf, "%U", tm, 0, ns);
+  ASSERT (n > 0);
+  printf ("%%U directive: %s\n", buf);
+  ASSERT (STREQ (buf, "43"));
+
+  n = FUNC (buf, sizeof buf, "%V", tm, 0, ns);
+  ASSERT (n > 0);
+  printf ("%%V directive: %s\n", buf);
+  ASSERT (STREQ (buf, "43"));
+
+  n = FUNC (buf, sizeof buf, "%w", tm, 0, ns);
+  ASSERT (n > 0);
+  printf ("%%w directive: %s\n", buf);
+  ASSERT (STREQ (buf, "4"));
+
+  n = FUNC (buf, sizeof buf, "%W", tm, 0, ns);
+  ASSERT (n > 0);
+  printf ("%%W directive: %s\n", buf);
+  ASSERT (STREQ (buf, "43"));
+
+  n = FUNC (buf, sizeof buf, "%x", tm, 0, ns);
+  ASSERT (n > 0);
+  printf ("%%x directive: %s\n", buf);
+  switch (language)
+    {
+    case english:
+      ASSERT (STREQ (buf, "10/26/17"));
+      break;
+    case french:
+      ASSERT (STREQ (buf, "26/10/2017") /* glibc, NetBSD, Solaris, Cygwin */
+              || STREQ (buf, "26.10.2017") /* FreeBSD, macOS */);
+      break;
+    }
+
+  n = FUNC (buf, sizeof buf, "%X", tm, 0, ns);
+  ASSERT (n > 0);
+  printf ("%%X directive: %s\n", buf);
+  ASSERT (STREQ (buf, "06:40:03"));
+
+  n = FUNC (buf, sizeof buf, "%y", tm, 0, ns);
+  ASSERT (n > 0);
+  printf ("%%y directive: %s\n", buf);
+  ASSERT (STREQ (buf, "17"));
+
+  n = FUNC (buf, sizeof buf, "%Y", tm, 0, ns);
+  ASSERT (n > 0);
+  printf ("%%Y directive: %s\n", buf);
+  ASSERT (STREQ (buf, "2017"));
+
+  n = FUNC (buf, sizeof buf, "%z", tm, 0, ns);
+  ASSERT (n > 0);
+  printf ("%%z directive: %s\n", buf);
+  ASSERT (STREQ (buf, "+0000"));
+
+  n = FUNC (buf, sizeof buf, "%Z", tm, 0, ns);
+  ASSERT (n > 0);
+  printf ("%%Z directive: %s\n", buf);
+  ASSERT (STREQ (buf, "GMT") /* glibc, NetBSD, OpenBSD, AIX, Solaris, Cygwin, Android */
+          || STREQ (buf, "UTC") /* musl, macOS, FreeBSD */);
+
+  n = FUNC (buf, sizeof buf, "%%", tm, 0, ns);
+  ASSERT (n > 0);
+  printf ("%%%% directive: %s\n", buf);
+  ASSERT (STREQ (buf, "%"));
+
+  /* Exercise various GNU extensions from glibc.  */
+
+  n = FUNC (buf, sizeof buf, "%k", tm, 0, ns);
+  ASSERT (n > 0);
+  printf ("%%k directive: %s\n", buf);
+  ASSERT (STREQ (buf, " 6"));
+
+  n = FUNC (buf, sizeof buf, "%l", tm, 0, ns);
+  ASSERT (n > 0);
+  printf ("%%l directive: %s\n", buf);
+  ASSERT (STREQ (buf, " 6"));
+
+  n = FUNC (buf, sizeof buf, "%P", tm, 0, ns);
+  switch (language)
+    {
+    case english:
+      ASSERT (n > 0);
+      printf ("%%P directive: %s\n", buf);
+      ASSERT (STREQ (buf, "am"));
+      break;
+    case french:
+      ASSERT (n == 0);
+      break;
+    }
+
+  n = FUNC (buf, sizeof buf, "%s", tm, 0, ns);
+  ASSERT (n > 0);
+  printf ("%%s directive: %s\n", buf);
+  ASSERT (STREQ (buf, "1509000003"));
+
+  /* Exercise various GNU extensions from gnulib.  */
+
+  n = FUNC (buf, sizeof buf, "%N", tm, 0, ns);
+  ASSERT (n > 0);
+  printf ("%%N directive: %s\n", buf);
+  ASSERT (STREQ (buf, "123456789"));
 
   return fail;
 }

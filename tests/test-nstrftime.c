@@ -18,7 +18,11 @@
 
 #include <config.h>
 
+/* Specification.  */
 #include "strftime.h"
+
+#include <locale.h>
+#include <stdlib.h>
 
 #include "intprops.h"
 
@@ -37,10 +41,33 @@
 int
 main (void)
 {
+  /* Try to set the locale by implicitly looking at the LC_ALL environment
+     variable.
+     configure should already have checked that the locale is supported.  */
+  if (setlocale (LC_ALL, "") == NULL)
+    return 1;
+
+  bool is_C_locale = STREQ (getenv ("LC_ALL"), "C");
+
   int fail = 0;
   fail |= posixtm_test ();
   fail |= tzalloc_test ();
   fail |= quarter_test ();
   fail |= errno_test ();
+  if (is_C_locale)
+    fail |= locales_test (english);
+  else
+    {
+#if MUSL_LIBC
+      if (fail == 0)
+        {
+          fputs ("Skipping test: musl libc does not come with localizations\n",
+                 stderr);
+          return 77;
+        }
+#else
+      fail |= locales_test (french);
+#endif
+    }
   return fail;
 }
