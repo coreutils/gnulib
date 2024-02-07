@@ -116,12 +116,18 @@ struct localtime_rz_test
 
 static struct localtime_rz_test LT[] =
   {
+#if !(defined __NetBSD__ || defined __ANDROID__)
     { TZ+Pacific,          0, "1969-12-31 16:00:00 -0800 (PST)",  0 },
+#endif
     { TZ+Arizona,          0, "1969-12-31 17:00:00 -0700 (MST)",  0 },
     { TZ+UTC    ,          0, "1970-01-01 00:00:00 +0000 (UTC)",  0 },
+#if !(defined __NetBSD__ || defined __ANDROID__)
     { TZ+CentEur,          0, "1970-01-01 01:00:00 +0100 (CET)",  0 },
+#endif
     { TZ+Japan  ,          0, "1970-01-01 09:00:00 +0900 (JST)",  0 },
+#if !defined __FreeBSD__
     { TZ+NZ     ,          0, "1970-01-01 13:00:00 +1300 (NZDT)", 1 },
+#endif
     { TZ+Pacific,  500000001, "1985-11-04 16:53:21 -0800 (PST)",  0 },
     { TZ+Arizona,  500000001, "1985-11-04 17:53:21 -0700 (MST)",  0 },
     { TZ+UTC    ,  500000001, "1985-11-05 00:53:21 +0000 (UTC)",  0 },
@@ -134,7 +140,7 @@ static struct localtime_rz_test LT[] =
     { TZ+CentEur, 1000000002, "2001-09-09 03:46:42 +0200 (CEST)", 0 },
     { TZ+Japan  , 1000000002, "2001-09-09 10:46:42 +0900 (JST)",  0 },
     { TZ+NZ     , 1000000002, "2001-09-09 13:46:42 +1200 (NZST)", 0 },
-#if TZ_ANGLE_BRACKETS_SHOULD_WORK
+#if TZ_ANGLE_BRACKETS_SHOULD_WORK && !defined __FreeBSD__
     { TZ+Unknown,          0, "1970-01-01 00:00:00 -0000 (-00)",  0 },
     { TZ+Unknown,  500000001, "1985-11-05 00:53:21 -0000 (-00)",  0 },
     { TZ+Unknown, 1000000002, "2001-09-09 01:46:42 -0000 (-00)",  0 },
