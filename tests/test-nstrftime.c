@@ -125,12 +125,12 @@ struct localtime_rz_test
 
 static struct localtime_rz_test LT[] =
   {
-#if !(defined __NetBSD__ || defined __ANDROID__)
+#if !(defined __DragonFly__ || defined __NetBSD__ || defined __ANDROID__)
     { TZ+Pacific,          0, "1969-12-31 16:00:00 -0800 (PST)",  0 },
 #endif
     { TZ+Arizona,          0, "1969-12-31 17:00:00 -0700 (MST)",  0 },
     { TZ+UTC    ,          0, "1970-01-01 00:00:00 +0000 (UTC)",  0 },
-#if !(defined __NetBSD__ || defined __ANDROID__)
+#if !(defined __DragonFly__ || defined __NetBSD__ || defined __ANDROID__)
     { TZ+CentEur,          0, "1970-01-01 01:00:00 +0100 (CET)",  0 },
 #endif
     { TZ+Japan  ,          0, "1970-01-01 09:00:00 +0900 (JST)",  0 },
