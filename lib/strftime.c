@@ -1168,6 +1168,10 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
               == L_('\0'))
             subfmt = L_("%I:%M:%S %p");
           goto subformat;
+#elif (defined __APPLE__ && defined __MACH__) || defined __FreeBSD__
+          /* macOS, FreeBSD strftime() may produce empty output for "%r".  */
+          subfmt = L_("%I:%M:%S %p");
+          goto subformat;
 #else
           goto underlying_strftime;
 #endif

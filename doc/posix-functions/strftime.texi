@@ -16,6 +16,10 @@ when the environment variable @code{TZ} has been set by Cygwin.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
+The %r specifier produces empty output, at least in a French locale,
+on some platforms:
+macOS 12.5, FreeBSD 14.0.
+@item
 The Windows C runtime library (which is used by MinGW) does not
 support the %e specifier (and possibly the other more recent SUS
 specifiers too, i.e., %C, %D, %h, %n, %r, %R, %t, and %T).
