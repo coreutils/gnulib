@@ -14,13 +14,28 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
-/* Written by Jim Meyering.  */
+/* Written by Jim Meyering and Bruno Haible.  */
 
 #define FUNC_NAME STRINGIFY(FUNC)
 #define STRINGIFY(x) #x
 
 /* Support for settings like TZ='<+00>0' was added in IEEE Std 1003.1-2001.  */
 #define TZ_ANGLE_BRACKETS_SHOULD_WORK (200112 <= _POSIX_VERSION)
+
+/* A wrapper around FUNC that checks the return value.  */
+static size_t
+FUNC_CHECKED (char *restrict s, size_t maxsize,
+              char const *format,
+              struct tm const *tp, timezone_t tz, int ns)
+{
+  size_t ret = FUNC (s, maxsize, format, tp, tz, ns);
+  if (ret > 0)
+    {
+      ASSERT (ret < maxsize);
+      ASSERT (strlen (s) == ret);
+    }
+  return ret;
+}
 
 /* -------------------------------------------------------------------------- */
 
@@ -55,7 +70,7 @@ posixtm_test (void)
 
       ASSERT (tm);
 
-      n = FUNC (buf, sizeof buf, T[i].fmt, tm, 0, T[i].in_ns);
+      n = FUNC_CHECKED (buf, sizeof buf, T[i].fmt, tm, 0, T[i].in_ns);
       if (n == 0)
         {
           fail = 1;
@@ -187,7 +202,7 @@ tzalloc_test (void)
           continue;
         }
 
-      n = FUNC (buf, sizeof buf, format, &tm, tz, 0);
+      n = FUNC_CHECKED (buf, sizeof buf, format, &tm, tz, 0);
       if (n == 0)
         {
           fail = 1;
@@ -228,7 +243,7 @@ quarter_test (void)
       struct tm qtm = { .tm_mon = mon - 1 };
       char fmt[3] = {'%','q','\0'};
 
-      size_t r = FUNC (out, sizeof (out), fmt, &qtm, 0, 0);
+      size_t r = FUNC_CHECKED (out, sizeof (out), fmt, &qtm, 0, 0);
       if (r == 0)
         {
           printf ("%s(\"%%q\") failed\n", FUNC_NAME);
@@ -260,7 +275,7 @@ errno_test (void)
   int bigyear = LLONG_MAX - 1900 < INT_MAX ? LLONG_MAX - 1900 : INT_MAX;
 
   errno = 0;
-  n = FUNC (buf, 0, "%m", &tm, 0, 0);
+  n = FUNC_CHECKED (buf, 0, "%m", &tm, 0, 0);
   if (! (n == 0 && errno == ERANGE))
     {
       fail = 1;
@@ -268,7 +283,7 @@ errno_test (void)
     }
 
   errno = 0;
-  n = FUNC (buf, sizeof buf, "", &tm, 0, 0);
+  n = FUNC_CHECKED (buf, sizeof buf, "", &tm, 0, 0);
   if (! (n == 0 && errno == 0))
     {
       fail = 1;
@@ -278,7 +293,7 @@ errno_test (void)
 
   tm.tm_year = bigyear;
   errno = 0;
-  n = FUNC (buf, sizeof buf, "%s", &tm, 0, 0);
+  n = FUNC_CHECKED (buf, sizeof buf, "%s", &tm, 0, 0);
   if (n == 0)
     {
       if (errno != EOVERFLOW)
@@ -310,7 +325,7 @@ errno_test (void)
           else
             {
               char buf1[sizeof buf];
-              size_t n1 = FUNC (buf1, sizeof buf1, "%s", tmp, 0, 0);
+              size_t n1 = FUNC_CHECKED (buf1, sizeof buf1, "%s", tmp, 0, 0);
               buf1[n1] = '\0';
               if (! STREQ (buf, buf1))
                 {
@@ -342,14 +357,14 @@ locales_test (language_t language)
   char buf[100];
   size_t n;
 
-  n = FUNC (buf, sizeof buf, "%+4Y-%m-%d %H:%M:%S.%N", tm, 0, ns);
+  n = FUNC_CHECKED (buf, sizeof buf, "%+4Y-%m-%d %H:%M:%S.%N", tm, 0, ns);
   ASSERT (n > 0);
   printf ("Format as ISO 8601: %s\n", buf);
   ASSERT (STREQ (buf, "2017-10-26 06:40:03.123456789"));
 
   /* Exercise various POSIX format directives.  */
 
-  n = FUNC (buf, sizeof buf, "%a", tm, 0, ns);
+  n = FUNC_CHECKED (buf, sizeof buf, "%a", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%a directive: %s\n", buf);
   switch (language)
@@ -363,7 +378,7 @@ locales_test (language_t language)
       break;
     }
 
-  n = FUNC (buf, sizeof buf, "%A", tm, 0, ns);
+  n = FUNC_CHECKED (buf, sizeof buf, "%A", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%A directive: %s\n", buf);
   switch (language)
@@ -377,7 +392,7 @@ locales_test (language_t language)
       break;
     }
 
-  n = FUNC (buf, sizeof buf, "%b", tm, 0, ns);
+  n = FUNC_CHECKED (buf, sizeof buf, "%b", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%b directive: %s\n", buf);
   switch (language)
@@ -391,7 +406,7 @@ locales_test (language_t language)
       break;
     }
 
-  n = FUNC (buf, sizeof buf, "%B", tm, 0, ns);
+  n = FUNC_CHECKED (buf, sizeof buf, "%B", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%B directive: %s\n", buf);
   switch (language)
@@ -404,7 +419,7 @@ locales_test (language_t language)
       break;
     }
 
-  n = FUNC (buf, sizeof buf, "%c", tm, 0, ns);
+  n = FUNC_CHECKED (buf, sizeof buf, "%c", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%c directive: %s\n", buf);
   switch (language)
@@ -422,42 +437,42 @@ locales_test (language_t language)
       break;
     }
 
-  n = FUNC (buf, sizeof buf, "%C", tm, 0, ns);
+  n = FUNC_CHECKED (buf, sizeof buf, "%C", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%C directive: %s\n", buf);
   ASSERT (STREQ (buf, "20"));
 
-  n = FUNC (buf, sizeof buf, "%d", tm, 0, ns);
+  n = FUNC_CHECKED (buf, sizeof buf, "%d", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%d directive: %s\n", buf);
   ASSERT (STREQ (buf, "26"));
 
-  n = FUNC (buf, sizeof buf, "%D", tm, 0, ns);
+  n = FUNC_CHECKED (buf, sizeof buf, "%D", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%D directive: %s\n", buf);
   ASSERT (STREQ (buf, "10/26/17"));
 
-  n = FUNC (buf, sizeof buf, "%e", tm, 0, ns);
+  n = FUNC_CHECKED (buf, sizeof buf, "%e", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%e directive: %s\n", buf);
   ASSERT (STREQ (buf, "26"));
 
-  n = FUNC (buf, sizeof buf, "%F", tm, 0, ns);
+  n = FUNC_CHECKED (buf, sizeof buf, "%F", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%F directive: %s\n", buf);
   ASSERT (STREQ (buf, "2017-10-26"));
 
-  n = FUNC (buf, sizeof buf, "%g", tm, 0, ns);
+  n = FUNC_CHECKED (buf, sizeof buf, "%g", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%g directive: %s\n", buf);
   ASSERT (STREQ (buf, "17"));
 
-  n = FUNC (buf, sizeof buf, "%G", tm, 0, ns);
+  n = FUNC_CHECKED (buf, sizeof buf, "%G", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%G directive: %s\n", buf);
   ASSERT (STREQ (buf, "2017"));
 
-  n = FUNC (buf, sizeof buf, "%h", tm, 0, ns);
+  n = FUNC_CHECKED (buf, sizeof buf, "%h", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%h directive: %s\n", buf);
   switch (language)
@@ -471,37 +486,37 @@ locales_test (language_t language)
       break;
     }
 
-  n = FUNC (buf, sizeof buf, "%H", tm, 0, ns);
+  n = FUNC_CHECKED (buf, sizeof buf, "%H", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%H directive: %s\n", buf);
   ASSERT (STREQ (buf, "06"));
 
-  n = FUNC (buf, sizeof buf, "%I", tm, 0, ns);
+  n = FUNC_CHECKED (buf, sizeof buf, "%I", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%I directive: %s\n", buf);
   ASSERT (STREQ (buf, "06"));
 
-  n = FUNC (buf, sizeof buf, "%j", tm, 0, ns);
+  n = FUNC_CHECKED (buf, sizeof buf, "%j", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%j directive: %s\n", buf);
   ASSERT (STREQ (buf, "299"));
 
-  n = FUNC (buf, sizeof buf, "%m", tm, 0, ns);
+  n = FUNC_CHECKED (buf, sizeof buf, "%m", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%m directive: %s\n", buf);
   ASSERT (STREQ (buf, "10"));
 
-  n = FUNC (buf, sizeof buf, "%M", tm, 0, ns);
+  n = FUNC_CHECKED (buf, sizeof buf, "%M", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%M directive: %s\n", buf);
   ASSERT (STREQ (buf, "40"));
 
-  n = FUNC (buf, sizeof buf, "%n", tm, 0, ns);
+  n = FUNC_CHECKED (buf, sizeof buf, "%n", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%n directive: %s\n", buf);
   ASSERT (STREQ (buf, "\n"));
 
-  n = FUNC (buf, sizeof buf, "%p", tm, 0, ns);
+  n = FUNC_CHECKED (buf, sizeof buf, "%p", tm, 0, ns);
   switch (language)
     {
     case english:
@@ -514,7 +529,7 @@ locales_test (language_t language)
       break;
     }
 
-  n = FUNC (buf, sizeof buf, "%r", tm, 0, ns);
+  n = FUNC_CHECKED (buf, sizeof buf, "%r", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%r directive: %s\n", buf);
   switch (language)
@@ -529,52 +544,52 @@ locales_test (language_t language)
       break;
     }
 
-  n = FUNC (buf, sizeof buf, "%R", tm, 0, ns);
+  n = FUNC_CHECKED (buf, sizeof buf, "%R", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%R directive: %s\n", buf);
   ASSERT (STREQ (buf, "06:40"));
 
-  n = FUNC (buf, sizeof buf, "%S", tm, 0, ns);
+  n = FUNC_CHECKED (buf, sizeof buf, "%S", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%S directive: %s\n", buf);
   ASSERT (STREQ (buf, "03"));
 
-  n = FUNC (buf, sizeof buf, "%t", tm, 0, ns);
+  n = FUNC_CHECKED (buf, sizeof buf, "%t", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%t directive: %s\n", buf);
   ASSERT (STREQ (buf, "\t"));
 
-  n = FUNC (buf, sizeof buf, "%T", tm, 0, ns);
+  n = FUNC_CHECKED (buf, sizeof buf, "%T", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%T directive: %s\n", buf);
   ASSERT (STREQ (buf, "06:40:03"));
 
-  n = FUNC (buf, sizeof buf, "%u", tm, 0, ns);
+  n = FUNC_CHECKED (buf, sizeof buf, "%u", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%u directive: %s\n", buf);
   ASSERT (STREQ (buf, "4"));
 
-  n = FUNC (buf, sizeof buf, "%U", tm, 0, ns);
+  n = FUNC_CHECKED (buf, sizeof buf, "%U", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%U directive: %s\n", buf);
   ASSERT (STREQ (buf, "43"));
 
-  n = FUNC (buf, sizeof buf, "%V", tm, 0, ns);
+  n = FUNC_CHECKED (buf, sizeof buf, "%V", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%V directive: %s\n", buf);
   ASSERT (STREQ (buf, "43"));
 
-  n = FUNC (buf, sizeof buf, "%w", tm, 0, ns);
+  n = FUNC_CHECKED (buf, sizeof buf, "%w", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%w directive: %s\n", buf);
   ASSERT (STREQ (buf, "4"));
 
-  n = FUNC (buf, sizeof buf, "%W", tm, 0, ns);
+  n = FUNC_CHECKED (buf, sizeof buf, "%W", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%W directive: %s\n", buf);
   ASSERT (STREQ (buf, "43"));
 
-  n = FUNC (buf, sizeof buf, "%x", tm, 0, ns);
+  n = FUNC_CHECKED (buf, sizeof buf, "%x", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%x directive: %s\n", buf);
   switch (language)
@@ -588,50 +603,50 @@ locales_test (language_t language)
       break;
     }
 
-  n = FUNC (buf, sizeof buf, "%X", tm, 0, ns);
+  n = FUNC_CHECKED (buf, sizeof buf, "%X", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%X directive: %s\n", buf);
   ASSERT (STREQ (buf, "06:40:03"));
 
-  n = FUNC (buf, sizeof buf, "%y", tm, 0, ns);
+  n = FUNC_CHECKED (buf, sizeof buf, "%y", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%y directive: %s\n", buf);
   ASSERT (STREQ (buf, "17"));
 
-  n = FUNC (buf, sizeof buf, "%Y", tm, 0, ns);
+  n = FUNC_CHECKED (buf, sizeof buf, "%Y", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%Y directive: %s\n", buf);
   ASSERT (STREQ (buf, "2017"));
 
-  n = FUNC (buf, sizeof buf, "%z", tm, 0, ns);
+  n = FUNC_CHECKED (buf, sizeof buf, "%z", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%z directive: %s\n", buf);
   ASSERT (STREQ (buf, "+0000"));
 
-  n = FUNC (buf, sizeof buf, "%Z", tm, 0, ns);
+  n = FUNC_CHECKED (buf, sizeof buf, "%Z", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%Z directive: %s\n", buf);
   ASSERT (STREQ (buf, "GMT") /* glibc, NetBSD, OpenBSD, AIX, Solaris, Cygwin, Android */
           || STREQ (buf, "UTC") /* musl, macOS, FreeBSD */);
 
-  n = FUNC (buf, sizeof buf, "%%", tm, 0, ns);
+  n = FUNC_CHECKED (buf, sizeof buf, "%%", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%%% directive: %s\n", buf);
   ASSERT (STREQ (buf, "%"));
 
   /* Exercise various GNU extensions from glibc.  */
 
-  n = FUNC (buf, sizeof buf, "%k", tm, 0, ns);
+  n = FUNC_CHECKED (buf, sizeof buf, "%k", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%k directive: %s\n", buf);
   ASSERT (STREQ (buf, " 6"));
 
-  n = FUNC (buf, sizeof buf, "%l", tm, 0, ns);
+  n = FUNC_CHECKED (buf, sizeof buf, "%l", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%l directive: %s\n", buf);
   ASSERT (STREQ (buf, " 6"));
 
-  n = FUNC (buf, sizeof buf, "%P", tm, 0, ns);
+  n = FUNC_CHECKED (buf, sizeof buf, "%P", tm, 0, ns);
   switch (language)
     {
     case english:
@@ -644,14 +659,14 @@ locales_test (language_t language)
       break;
     }
 
-  n = FUNC (buf, sizeof buf, "%s", tm, 0, ns);
+  n = FUNC_CHECKED (buf, sizeof buf, "%s", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%s directive: %s\n", buf);
   ASSERT (STREQ (buf, "1509000003"));
 
   /* Exercise various GNU extensions from gnulib.  */
 
-  n = FUNC (buf, sizeof buf, "%N", tm, 0, ns);
+  n = FUNC_CHECKED (buf, sizeof buf, "%N", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%N directive: %s\n", buf);
   ASSERT (STREQ (buf, "123456789"));
