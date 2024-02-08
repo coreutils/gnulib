@@ -14,6 +14,14 @@
    You should have received a copy of the GNU Lesser General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
+#ifndef FPRINTFTIME
+# define FPRINTFTIME 0
+#endif
+
+#ifndef USE_C_LOCALE
+# define USE_C_LOCALE 0
+#endif
+
 #ifdef _LIBC
 # define USE_IN_EXTENDED_LOCALE_MODEL 1
 # define HAVE_STRUCT_ERA_ENTRY 1
@@ -31,7 +39,11 @@
 # include "time-internal.h"
 #endif
 
-#include <ctype.h>
+#if USE_C_LOCALE
+# include "c-ctype.h"
+#else
+# include <ctype.h>
+#endif
 #include <errno.h>
 #include <time.h>
 
@@ -66,6 +78,10 @@ extern char *tzname[];
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
+
+#if USE_C_LOCALE && HAVE_STRFTIME_L
+# include <locale.h>
+#endif
 
 #include "attribute.h"
 #include <intprops.h>
@@ -125,10 +141,6 @@ extern char *tzname[];
 # define time_t __time64_t
 # define __gmtime_r(t, tp) __gmtime64_r (t, tp)
 # define mktime(tp) __mktime64 (tp)
-#endif
-
-#ifndef FPRINTFTIME
-# define FPRINTFTIME 0
 #endif
 
 #if FPRINTFTIME
@@ -270,8 +282,13 @@ extern char *tzname[];
 #  define TOUPPER(Ch, L) __toupper_l (Ch, L)
 #  define TOLOWER(Ch, L) __tolower_l (Ch, L)
 # else
-#  define TOUPPER(Ch, L) toupper (Ch)
-#  define TOLOWER(Ch, L) tolower (Ch)
+#  if USE_C_LOCALE
+#   define TOUPPER(Ch, L) c_toupper (Ch)
+#   define TOLOWER(Ch, L) c_tolower (Ch)
+#  else
+#   define TOUPPER(Ch, L) toupper (Ch)
+#   define TOLOWER(Ch, L) tolower (Ch)
+#  endif
 # endif
 #endif
 /* We don't use 'isdigit' here since the locale dependent
@@ -333,6 +350,26 @@ memcpy_uppcase (CHAR_T *dest, const CHAR_T *src, size_t len LOCALE_PARAM)
 #endif
 
 
+#if USE_C_LOCALE && HAVE_STRFTIME_L
+
+/* Cache for the C locale object.
+   Marked volatile so that different threads see the same value
+   (avoids locking).  */
+static volatile locale_t c_locale_cache;
+
+/* Return the C locale object, or (locale_t) 0 with errno set
+   if it cannot be created.  */
+static locale_t
+c_locale (void)
+{
+  if (!c_locale_cache)
+    c_locale_cache = newlocale (LC_ALL_MASK, "C", (locale_t) 0);
+  return c_locale_cache;
+}
+
+#endif
+
+
 #if ! HAVE_TM_GMTOFF
 /* Yield the difference between *A and *B,
    measured in seconds, ignoring leap seconds.  */
@@ -379,6 +416,21 @@ iso_week_days (int yday, int wday)
           - (yday - wday + ISO_WEEK1_WDAY + big_enough_multiple_of_7) % 7
           + ISO_WEEK1_WDAY - ISO_WEEK_START_WDAY);
 }
+
+
+#if !defined _NL_CURRENT && (USE_C_LOCALE && !HAVE_STRFTIME_L)
+static CHAR_T const c_weekday_names[][sizeof "Wednesday"] =
+  {
+    L_("Sunday"), L_("Monday"), L_("Tuesday"), L_("Wednesday"),
+    L_("Thursday"), L_("Friday"), L_("Saturday")
+  };
+static CHAR_T const c_month_names[][sizeof "September"] =
+  {
+    L_("January"), L_("February"), L_("March"), L_("April"), L_("May"),
+    L_("June"), L_("July"), L_("August"), L_("September"), L_("October"),
+    L_("November"), L_("December")
+  };
+#endif
 
 
 /* When compiling this file, GNU applications can #define my_strftime
@@ -478,6 +530,24 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
 # define am_len STRLEN (a_month)
 # define aam_len STRLEN (a_altmonth)
 # define ap_len STRLEN (ampm)
+#elif USE_C_LOCALE && !HAVE_STRFTIME_L
+/* The English abbreviated weekday names are just the first 3 characters of the
+   English full weekday names.  */
+# define a_wkday \
+  (tp->tm_wday < 0 || tp->tm_wday > 6 ? L_("?") : c_weekday_names[tp->tm_wday])
+# define aw_len 3
+# define f_wkday \
+  (tp->tm_wday < 0 || tp->tm_wday > 6 ? L_("?") : c_weekday_names[tp->tm_wday])
+/* The English abbreviated month names are just the first 3 characters of the
+   English full month names.  */
+# define a_month \
+  (tp->tm_mon < 0 || tp->tm_mon > 11 ? L_("?") : c_month_names[tp->tm_mon])
+# define am_len 3
+# define f_month \
+  (tp->tm_mon < 0 || tp->tm_mon > 11 ? L_("?") : c_month_names[tp->tm_mon])
+/* The English AM/PM strings happen to have the same length, namely 2.  */
+# define ampm (L_("AMPM") + 2 * (tp->tm_hour > 11))
+# define ap_len 2
 #endif
 #if HAVE_TZNAME
   char **tzname_vec = tzname;
@@ -765,7 +835,7 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
               to_uppcase = true;
               to_lowcase = false;
             }
-#ifdef _NL_CURRENT
+#if defined _NL_CURRENT || (USE_C_LOCALE && !HAVE_STRFTIME_L)
           cpy (aw_len, a_wkday);
           break;
 #else
@@ -780,7 +850,7 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
               to_uppcase = true;
               to_lowcase = false;
             }
-#ifdef _NL_CURRENT
+#if defined _NL_CURRENT || (USE_C_LOCALE && !HAVE_STRFTIME_L)
           cpy (STRLEN (f_wkday), f_wkday);
           break;
 #else
@@ -802,6 +872,9 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
           else
             cpy (am_len, a_month);
           break;
+#elif USE_C_LOCALE && !HAVE_STRFTIME_L
+          cpy (am_len, a_month);
+          break;
 #else
           goto underlying_strftime;
 #endif
@@ -820,6 +893,9 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
           else
             cpy (STRLEN (f_month), f_month);
           break;
+#elif USE_C_LOCALE && !HAVE_STRFTIME_L
+          cpy (STRLEN (f_month), f_month);
+          break;
 #else
           goto underlying_strftime;
 #endif
@@ -834,6 +910,8 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
                                                      NLW(ERA_D_T_FMT)))
                      != '\0')))
             subfmt = (const CHAR_T *) _NL_CURRENT (LC_TIME, NLW(D_T_FMT));
+#elif USE_C_LOCALE && !HAVE_STRFTIME_L
+          subfmt = L_("%a %b %e %H:%M:%S %Y");
 #else
           goto underlying_strftime;
 #endif
@@ -854,7 +932,7 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
           }
           break;
 
-#if !(defined _NL_CURRENT && HAVE_STRUCT_ERA_ENTRY)
+#if !((defined _NL_CURRENT && HAVE_STRUCT_ERA_ENTRY) || (USE_C_LOCALE && !HAVE_STRFTIME_L))
         underlying_strftime:
           {
             /* The relevant information is available only via the
@@ -879,7 +957,15 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
               *u++ = modifier;
             *u++ = format_char;
             *u = '\0';
+
+# if USE_C_LOCALE /* implies HAVE_STRFTIME_L */
+            locale_t locale = c_locale ();
+            if (!locale)
+              return 0; /* errno is set here */
+            len = strftime_l (ubuf, sizeof ubuf, ufmt, tp, locale);
+# else
             len = strftime (ubuf, sizeof ubuf, ufmt, tp);
+# endif
             if (len != 0)
               cpy (len - 1, ubuf + 1);
           }
@@ -902,6 +988,7 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
 # endif
                   break;
                 }
+#elif USE_C_LOCALE && !HAVE_STRFTIME_L
 #else
               goto underlying_strftime;
 #endif
@@ -924,6 +1011,9 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
                        (const CHAR_T *) _NL_CURRENT (LC_TIME, NLW(ERA_D_FMT)))
                      != L_('\0'))))
             subfmt = (const CHAR_T *) _NL_CURRENT (LC_TIME, NLW(D_FMT));
+          goto subformat;
+#elif USE_C_LOCALE && !HAVE_STRFTIME_L
+          subfmt = L_("%m/%d/%y");
           goto subformat;
 #else
           goto underlying_strftime;
@@ -1000,6 +1090,7 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
                       break;
                     }
                 }
+#elif USE_C_LOCALE && !HAVE_STRFTIME_L
 #else
               goto underlying_strftime;
 #endif
@@ -1147,7 +1238,7 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
               to_uppcase = false;
               to_lowcase = true;
             }
-#ifdef _NL_CURRENT
+#if defined _NL_CURRENT || (USE_C_LOCALE && !HAVE_STRFTIME_L)
           cpy (ap_len, ampm);
           break;
 #else
@@ -1167,6 +1258,9 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
                                                        NLW(T_FMT_AMPM)))
               == L_('\0'))
             subfmt = L_("%I:%M:%S %p");
+          goto subformat;
+#elif USE_C_LOCALE && !HAVE_STRFTIME_L
+          subfmt = L_("%I:%M:%S %p");
           goto subformat;
 #elif (defined __APPLE__ && defined __MACH__) || defined __FreeBSD__
           /* macOS, FreeBSD strftime() may produce empty output for "%r".  */
@@ -1224,6 +1318,9 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
                        (const CHAR_T *) _NL_CURRENT (LC_TIME, NLW(ERA_T_FMT)))
                      != L_('\0'))))
             subfmt = (const CHAR_T *) _NL_CURRENT (LC_TIME, NLW(T_FMT));
+          goto subformat;
+#elif USE_C_LOCALE && !HAVE_STRFTIME_L
+          subfmt = L_("%H:%M:%S");
           goto subformat;
 #else
           goto underlying_strftime;
@@ -1332,6 +1429,7 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
                     pad = yr_spec;
                   goto subformat;
                 }
+#elif USE_C_LOCALE && !HAVE_STRFTIME_L
 #else
               goto underlying_strftime;
 #endif
@@ -1355,6 +1453,7 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
                   DO_NUMBER (2, (era->offset
                                  + delta * era->absolute_direction));
                 }
+#elif USE_C_LOCALE && !HAVE_STRFTIME_L
 #else
               goto underlying_strftime;
 #endif

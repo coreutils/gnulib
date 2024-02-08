@@ -78,6 +78,12 @@ size_t nstrftime (char *restrict __s, size_t __maxsize,
                   char const *__format,
                   struct tm const *__tp, timezone_t __tz, int __ns);
 
+/* Like nstrftime, except that it uses the "C" locale instead of the
+   current locale.  */
+size_t c_nstrftime (char *restrict __s, size_t __maxsize,
+                    char const *__format,
+                    struct tm const *__tp, timezone_t __tz, int __ns);
+
 #ifdef __cplusplus
 }
 #endif

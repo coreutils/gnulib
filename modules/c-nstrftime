@@ -1,0 +1,37 @@
+Description:
+c_nstrftime() function: convert date and time to string, with GNU extensions, in "C" locale.
+
+Files:
+lib/strftime.h
+lib/c-nstrftime.c
+lib/strftime.c
+m4/tm_gmtoff.m4
+m4/c-nstrftime.m4
+
+Depends-on:
+attribute
+c-ctype
+c99
+errno
+extensions
+intprops
+libc-config
+locale
+stdbool
+stdckdint
+time_rz
+
+configure.ac:
+gl_C_GNU_STRFTIME
+
+Makefile.am:
+lib_SOURCES += c-nstrftime.c
+
+Include:
+"strftime.h"
+
+License:
+LGPL
+
+Maintainer:
+Jim Meyering, glibc
