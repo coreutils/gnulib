@@ -967,7 +967,48 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
             len = strftime (ubuf, sizeof ubuf, ufmt, tp);
 # endif
             if (len != 0)
-              cpy (len - 1, ubuf + 1);
+              {
+# if defined __NetBSD__ || defined __sun /* NetBSD, Solaris */
+                if (format_char == L_('c'))
+                  {
+                    /* The output of the strftime %c directive consists of the
+                       date, the time, and the time zone.  But the time zone is
+                       wrong, since neither TZ nor ZONE was passed as argument.
+                       Therefore, remove the the last space-delimited word.
+                       In order not to accidentally remove a date or a year
+                       (that contains no letter) or an AM/PM indicator (that has
+                       length 2), remove that last word only if it contains a
+                       letter and has length >= 3.  */
+                    char *space;
+                    for (space = ubuf + len - 1; *space != ' '; space--)
+                      ;
+                    if (space > ubuf)
+                      {
+                        /* Found a space.  */
+                        if (strlen (space + 1) >= 3)
+                          {
+                            /* The last word has length >= 3.  */
+                            bool found_letter = false;
+                            const char *p;
+                            for (p = space + 1; *p != '\0'; p++)
+                              if ((*p >= 'A' && *p <= 'Z')
+                                  || (*p >= 'a' && *p <= 'z'))
+                                {
+                                  found_letter = true;
+                                  break;
+                                }
+                            if (found_letter)
+                              {
+                                /* The last word contains a letter.  */
+                                *space = '\0';
+                                len = space - ubuf;
+                              }
+                          }
+                      }
+                  }
+# endif
+                cpy (len - 1, ubuf + 1);
+              }
           }
           break;
 #endif
