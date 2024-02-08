@@ -16,6 +16,11 @@ when the environment variable @code{TZ} has been set by Cygwin.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
+The %c specifier does not work with a time retrieved through @code{gmtime}
+or @code{gmtime_r}, since it outputs also the current time zone,
+on some platforms:
+NetBSD 9.3, Solaris 11.4.
+@item
 The %r specifier produces empty output, at least in a French locale,
 on some platforms:
 macOS 12.5, FreeBSD 14.0.
