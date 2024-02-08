@@ -1,0 +1,26 @@
+Files:
+tests/test-c-nstrftime-1.sh
+tests/test-c-nstrftime-2.sh
+tests/test-c-nstrftime.c
+tests/test-nstrftime.h
+tests/macros.h
+m4/locale-fr.m4
+m4/codeset.m4
+
+Depends-on:
+atoll
+c99
+intprops
+strerror
+
+configure.ac:
+gt_LOCALE_FR
+gt_LOCALE_FR_UTF8
+
+Makefile.am:
+TESTS += test-c-nstrftime-1.sh test-c-nstrftime-2.sh
+TESTS_ENVIRONMENT += \
+  LOCALE_FR='@LOCALE_FR@' \
+  LOCALE_FR_UTF8='@LOCALE_FR_UTF8@'
+check_PROGRAMS += test-c-nstrftime
+test_c_nstrftime_LDADD = $(LDADD) $(SETLOCALE_LIB)
