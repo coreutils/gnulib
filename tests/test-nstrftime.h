@@ -524,9 +524,8 @@ locales_test (language_t language)
       break;
     case french:
       ASSERT (STREQ (buf, "06:40:03 ") /* glibc */
-              || STREQ (buf, "06:40:03") /* Cygwin */
-              || STREQ (buf, "06:40:03 AM") /* NetBSD */
-              || STREQ (buf, " 6:40:03 AM") /* Solaris */);
+              || STREQ (buf, "06:40:03") /* NetBSD, Cygwin */
+              || STREQ (buf, " 6:40:03") /* Solaris */);
       break;
     }
 

@@ -83,6 +83,11 @@ extern char *tzname[];
 # include <locale.h>
 #endif
 
+#if (defined __NetBSD__ || defined __sun) && !USE_C_LOCALE
+# include <locale.h>
+# include "localename.h"
+#endif
+
 #include "attribute.h"
 #include <intprops.h>
 
@@ -365,6 +370,356 @@ c_locale (void)
   if (!c_locale_cache)
     c_locale_cache = newlocale (LC_ALL_MASK, "C", (locale_t) 0);
   return c_locale_cache;
+}
+
+#endif
+
+
+#if (defined __NetBSD__ || defined __sun) && !USE_C_LOCALE
+
+/* Return true if an AM/PM indicator should be removed.  */
+static bool
+should_remove_ampm (void)
+{
+  /* According to glibc's 'am_pm' attribute in the locale database, an AM/PM
+     indicator should be absent in the locales for the following languages:
+     ab an ast az be ber bg br bs ce cs csb cv da de dsb eo et eu fa fi fo fr
+     fur fy ga gl gv hr hsb ht hu hy it ka kk kl ku kv kw ky lb lg li lij ln
+     lt lv mg mhr mi mk mn ms mt nb nds nhn nl nn nr nso oc os pap pl pt ro
+     ru rw sah sc se sgs sk sl sm sr ss st su sv szl tg tk tn ts tt ug uk unm
+     uz ve wae wo xh zu  */
+  const char *loc = gl_locale_name (LC_TIME, "LC_TIME");
+  bool remove_ampm = false;
+  switch (loc[0])
+    {
+    case 'a':
+      switch (loc[1])
+        {
+        case 'b': case 'n': case 'z':
+          if (loc[2] == '\0' || loc[2] == '_')
+            remove_ampm = true;
+          break;
+        case 's':
+          if (loc[2] == 't' && (loc[3] == '\0' || loc[3] == '_'))
+            remove_ampm = true;
+          break;
+        default:
+          break;
+        }
+      break;
+    case 'b':
+      switch (loc[1])
+        {
+        case 'e':
+          if (loc[2] == '\0' || loc[2] == '_'
+              || (loc[2] == 'r' && (loc[3] == '\0' || loc[3] == '_')))
+            remove_ampm = true;
+          break;
+        case 'g': case 'r': case 's':
+          if (loc[2] == '\0' || loc[2] == '_')
+            remove_ampm = true;
+          break;
+        default:
+          break;
+        }
+      break;
+    case 'c':
+      switch (loc[1])
+        {
+        case 'e': case 'v':
+          if (loc[2] == '\0' || loc[2] == '_')
+            remove_ampm = true;
+          break;
+        case 's':
+          if (loc[2] == '\0' || loc[2] == '_'
+              || (loc[2] == 'b' && (loc[3] == '\0' || loc[3] == '_')))
+            remove_ampm = true;
+          break;
+        default:
+          break;
+        }
+      break;
+    case 'd':
+      switch (loc[1])
+        {
+        case 'a': case 'e':
+          if (loc[2] == '\0' || loc[2] == '_')
+            remove_ampm = true;
+          break;
+        case 's':
+          if (loc[2] == 'b' && (loc[3] == '\0' || loc[3] == '_'))
+            remove_ampm = true;
+          break;
+        default:
+          break;
+        }
+      break;
+    case 'e':
+      switch (loc[1])
+        {
+        case 'o': case 't': case 'u':
+          if (loc[2] == '\0' || loc[2] == '_')
+            remove_ampm = true;
+          break;
+        default:
+          break;
+        }
+      break;
+    case 'f':
+      switch (loc[1])
+        {
+        case 'a': case 'i': case 'o': case 'r': case 'y':
+          if (loc[2] == '\0' || loc[2] == '_')
+            remove_ampm = true;
+          break;
+        case 'u':
+          if (loc[2] == 'r' && (loc[3] == '\0' || loc[3] == '_'))
+            remove_ampm = true;
+          break;
+        default:
+          break;
+        }
+      break;
+    case 'g':
+      switch (loc[1])
+        {
+        case 'a': case 'l': case 'v':
+          if (loc[2] == '\0' || loc[2] == '_')
+            remove_ampm = true;
+          break;
+        default:
+          break;
+        }
+      break;
+    case 'h':
+      switch (loc[1])
+        {
+        case 'r': case 't': case 'u': case 'y':
+          if (loc[2] == '\0' || loc[2] == '_')
+            remove_ampm = true;
+          break;
+        case 's':
+          if (loc[2] == 'b' && (loc[3] == '\0' || loc[3] == '_'))
+            remove_ampm = true;
+          break;
+        default:
+          break;
+        }
+      break;
+    case 'i':
+      switch (loc[1])
+        {
+        case 't':
+          if (loc[2] == '\0' || loc[2] == '_')
+            remove_ampm = true;
+          break;
+        default:
+          break;
+        }
+      break;
+    case 'k':
+      switch (loc[1])
+        {
+        case 'a': case 'k': case 'l': case 'u': case 'v': case 'w': case 'y':
+          if (loc[2] == '\0' || loc[2] == '_')
+            remove_ampm = true;
+          break;
+        default:
+          break;
+        }
+      break;
+    case 'l':
+      switch (loc[1])
+        {
+        case 'b': case 'g': case 'n': case 't': case 'v':
+          if (loc[2] == '\0' || loc[2] == '_')
+            remove_ampm = true;
+          break;
+        case 'i':
+          if (loc[2] == 'j' && (loc[3] == '\0' || loc[3] == '_'))
+            remove_ampm = true;
+          break;
+        default:
+          break;
+        }
+      break;
+    case 'm':
+      switch (loc[1])
+        {
+        case 'g': case 'i': case 'k': case 'n': case 's': case 't':
+          if (loc[2] == '\0' || loc[2] == '_')
+            remove_ampm = true;
+          break;
+        case 'h':
+          if (loc[2] == 'r' && (loc[3] == '\0' || loc[3] == '_'))
+            remove_ampm = true;
+          break;
+        default:
+          break;
+        }
+      break;
+    case 'n':
+      switch (loc[1])
+        {
+        case 'b': case 'l': case 'n': case 'r':
+          if (loc[2] == '\0' || loc[2] == '_')
+            remove_ampm = true;
+          break;
+        case 'd':
+          if (loc[2] == 's' && (loc[3] == '\0' || loc[3] == '_'))
+            remove_ampm = true;
+          break;
+        case 'h':
+          if (loc[2] == 'n' && (loc[3] == '\0' || loc[3] == '_'))
+            remove_ampm = true;
+          break;
+        case 's':
+          if (loc[2] == 'o' && (loc[3] == '\0' || loc[3] == '_'))
+            remove_ampm = true;
+          break;
+        default:
+          break;
+        }
+      break;
+    case 'o':
+      switch (loc[1])
+        {
+        case 'c': case 's':
+          if (loc[2] == '\0' || loc[2] == '_')
+            remove_ampm = true;
+          break;
+        default:
+          break;
+        }
+      break;
+    case 'p':
+      switch (loc[1])
+        {
+        case 'l': case 't':
+          if (loc[2] == '\0' || loc[2] == '_')
+            remove_ampm = true;
+          break;
+        case 'a':
+          if (loc[2] == 'p' && (loc[3] == '\0' || loc[3] == '_'))
+            remove_ampm = true;
+          break;
+        default:
+          break;
+        }
+      break;
+    case 'r':
+      switch (loc[1])
+        {
+        case 'o': case 'u': case 'w':
+          if (loc[2] == '\0' || loc[2] == '_')
+            remove_ampm = true;
+          break;
+        default:
+          break;
+        }
+      break;
+    case 's':
+      switch (loc[1])
+        {
+        case 'c': case 'e': case 'k': case 'l': case 'm': case 'r': case 's':
+        case 't': case 'u': case 'v':
+          if (loc[2] == '\0' || loc[2] == '_')
+            remove_ampm = true;
+          break;
+        case 'a':
+          if (loc[2] == 'h' && (loc[3] == '\0' || loc[3] == '_'))
+            remove_ampm = true;
+          break;
+        case 'g':
+          if (loc[2] == 's' && (loc[3] == '\0' || loc[3] == '_'))
+            remove_ampm = true;
+          break;
+        case 'z':
+          if (loc[2] == 'l' && (loc[3] == '\0' || loc[3] == '_'))
+            remove_ampm = true;
+          break;
+        default:
+          break;
+        }
+      break;
+    case 't':
+      switch (loc[1])
+        {
+        case 'g': case 'k': case 'n': case 's': case 't':
+          if (loc[2] == '\0' || loc[2] == '_')
+            remove_ampm = true;
+          break;
+        default:
+          break;
+        }
+      break;
+    case 'u':
+      switch (loc[1])
+        {
+        case 'g': case 'k': case 'z':
+          if (loc[2] == '\0' || loc[2] == '_')
+            remove_ampm = true;
+          break;
+        case 'n':
+          if (loc[2] == 'm'&& (loc[3] == '\0' || loc[3] == '_'))
+            remove_ampm = true;
+          break;
+        default:
+          break;
+        }
+      break;
+    case 'v':
+      switch (loc[1])
+        {
+        case 'e':
+          if (loc[2] == '\0' || loc[2] == '_')
+            remove_ampm = true;
+          break;
+        default:
+          break;
+        }
+      break;
+    case 'w':
+      switch (loc[1])
+        {
+        case 'a':
+          if (loc[2] == 'e' && (loc[3] == '\0' || loc[3] == '_'))
+            remove_ampm = true;
+          break;
+        case 'o':
+          if (loc[2] == '\0' || loc[2] == '_')
+            remove_ampm = true;
+          break;
+        default:
+          break;
+        }
+      break;
+    case 'x':
+      switch (loc[1])
+        {
+        case 'h':
+          if (loc[2] == '\0' || loc[2] == '_')
+            remove_ampm = true;
+          break;
+        default:
+          break;
+        }
+      break;
+    case 'z':
+      switch (loc[1])
+        {
+        case 'u':
+          if (loc[2] == '\0' || loc[2] == '_')
+            remove_ampm = true;
+          break;
+        default:
+          break;
+        }
+      break;
+    default:
+      break;
+    }
+  return remove_ampm;
 }
 
 #endif
@@ -1006,6 +1361,36 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
                           }
                       }
                   }
+#  if !USE_C_LOCALE
+                /* The output of the strftime %p and %r directives contains
+                   an AM/PM indicator even for locales where it is not
+                   suitable, such as French.  Remove this indicator.  */
+                else if (format_char == L_('p'))
+                  {
+                    bool found_ampm = (len > 1);
+                    if (found_ampm && should_remove_ampm ())
+                      {
+                        ubuf[1] = '\0';
+                        len = 1;
+                      }
+                  }
+                else if (format_char == L_('r'))
+                  {
+                    char last_char = ubuf[len - 1];
+                    bool found_ampm = !(last_char >= '0' && last_char <= '9');
+                    if (found_ampm && should_remove_ampm ())
+                      {
+                        char *space;
+                        for (space = ubuf + len - 1; *space != ' '; space--)
+                          ;
+                        if (space > ubuf)
+                          {
+                            *space = '\0';
+                            len = space - ubuf;
+                          }
+                      }
+                  }
+#  endif
 # endif
                 cpy (len - 1, ubuf + 1);
               }

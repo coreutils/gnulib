@@ -25,6 +25,14 @@ The %r specifier produces empty output, at least in a French locale,
 on some platforms:
 macOS 12.5, FreeBSD 14.0.
 @item
+The %r specifier includes an AM/PM indicator, at least in a French locale,
+on some platforms:
+NetBSD 9.3, Solaris 11.4.
+@item
+The %p specifier produces non-empty output, at least in a French locale,
+on some platforms:
+NetBSD 9.3, Solaris 11.4.
+@item
 The Windows C runtime library (which is used by MinGW) does not
 support the %e specifier (and possibly the other more recent SUS
 specifiers too, i.e., %C, %D, %h, %n, %r, %R, %t, and %T).
