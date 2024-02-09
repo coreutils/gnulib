@@ -74,6 +74,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2024-02-09  strftime        This module, deprecated on 2017-07-23, is removed.
+                            Use module 'nstrftime' instead.
+
 2023-09-03  same-inode      SAME_INODE, ST_BLKSIZE and ST_NBLOCKS args
             stat-size       must be addressable lvalues.
 
