@@ -53,7 +53,22 @@ rpl_wcsftime (wchar_t *buf, size_t bufsize, const wchar_t *format, const struct 
      responsibility.  */
   const char *tz = getenv ("TZ");
   if (tz != NULL && strchr (tz, '/') != NULL)
-    _putenv ("TZ=");
+    {
+      /* Neutralize it, in a way that is multithread-safe.
+         (If we were to use _putenv ("TZ="), it would free the memory allocated
+         for the environment variable "TZ", and thus other threads that are
+         using the previously fetched value of getenv ("TZ") could crash.)  */
+      char **env = _environ;
+      wchar_t **wenv = _wenviron;
+      if (env != NULL)
+        for (char *s = env; *s != NULL; s++)
+          if (s[0] == 'T' && s[1] == 'Z' && s[2] == '=')
+            s[0] = '$';
+      if (wenv != NULL)
+        for (wchar_t *ws = wenv; *ws != NULL; ws++)
+          if (ws[0] == L'T' && ws[1] == L'Z' && ws[2] == L'=')
+            ws[0] = L'$';
+    }
 #endif
 
   return wcsftime (buf, bufsize, format, tp);
