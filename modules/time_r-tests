@@ -1,0 +1,27 @@
+Files:
+tests/test-gmtime_r.c
+tests/test-gmtime_r-mt.c
+tests/test-localtime_r.c
+tests/test-localtime_r-mt.c
+tests/macros.h
+
+Depends-on:
+setenv
+thread
+nanosleep
+
+configure.ac:
+dnl Possibly define HAVE_STRUCT_TM_TM_ZONE.
+AC_REQUIRE([AC_STRUCT_TIMEZONE])
+dnl Possibly define HAVE_STRUCT_TM_TM_GMTOFF.
+AC_CHECK_MEMBERS([struct tm.tm_gmtoff],,,[[#include <time.h>]])
+
+Makefile.am:
+TESTS += \
+  test-gmtime_r test-gmtime_r-mt \
+  test-localtime_r test-localtime_r-mt
+check_PROGRAMS += \
+  test-gmtime_r test-gmtime_r-mt \
+  test-localtime_r test-localtime_r-mt
+test_gmtime_r_mt_LDADD = $(LDADD) $(LIBMULTITHREAD) $(NANOSLEEP_LIB)
+test_localtime_r_mt_LDADD = $(LDADD) $(LIBMULTITHREAD) $(NANOSLEEP_LIB)
