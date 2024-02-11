@@ -22,4 +22,10 @@ However, @code{strftime} is locale dependent.
 This function may overflow its internal buffer if its argument
 specifies a year before 1000 or after 9999.
 @xref{ctime}.
+@item
+Although it is tempting to call this function on the value that
+functions like @code{localtime} return, this is typically a mistake.
+On most current platforms, these functions return a null pointer for
+timestamps out of range, and this function has undefined behavior in
+that case.
 @end itemize

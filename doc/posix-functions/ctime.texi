@@ -26,12 +26,15 @@ However, @code{localtime_r} can fail and @code{strftime} is locale dependent.
 This function may overflow its internal buffer if its argument
 specifies a time before the year 1000 or after the year 9999.
 @item
+This function may dereference an internal null pointer if its argument
+specifies a time before the year @code{INT_MIN}+1900 or after the
+year @code{INT_MAX}+1900.
+@item
 The @code{ctime} function need not be reentrant, and consequently is
 not required to be thread safe.  Implementations of @code{ctime}
 typically write the timestamp into static buffer.  If two threads
 call @code{ctime} at roughly the same time, you might end up with the
-wrong date in one of the threads, or some undefined string.  There is
-a reentrant interface @code{ctime_r}.
+wrong date in one of the threads, or some undefined string.
 @item
 Native Windows platforms (mingw, MSVC) support only a subset of time
 zones supported by GNU or specified by POSIX@.  @xref{tzset}.
@@ -60,8 +63,9 @@ and so was OK for circa 1979 platforms.
 However, today's platforms have a @code{time_t} so wide
 that the year might not be in the range [1000, 9999].
 In this case the behavior of @code{ctime} is undefined
-and some platforms behave badly, overrunning a buffer;
-and even on platforms where no buffer overrun occurs,
-the 7th Edition code can generate wrong output for out-of-range years,
+and some platforms behave badly, overrunning a buffer
+or dereferencing an internal null pointer;
+and even on platforms where no undefined behavior occurs,
+the 7th Edition code generates wrong output for out-of-range years,
 because it incorrectly assumes that every year is represented by
 exactly four digits.

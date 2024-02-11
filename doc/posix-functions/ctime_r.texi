@@ -30,4 +30,8 @@ However, @code{localtime_r} can fail and @code{strftime} is locale dependent.
 This function may overflow its output buffer if its argument
 specifies a time before the year 1000 or after the year 9999.
 @xref{ctime}.
+@item
+This function may dereference an internal null pointer if its argument
+specifies a time before the year @code{INT_MIN}+1900 or after the
+year @code{INT_MAX}+1900.
 @end itemize
