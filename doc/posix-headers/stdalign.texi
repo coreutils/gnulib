@@ -45,6 +45,10 @@ This portability problem should not matter with code using Gnulib's
 @code{alignasof} module, as such code should use @code{alignas} and
 @code{alignof} without checking these two macros.  (Gnulib's
 now-deprecated @code{stdalign} module defines these two macros.)
+@item
+@c https://github.com/llvm/llvm-project/issues/81472
+Clang 17 does not support an @code{alignas} attribute in the
+specifier-qualifier position of a member declaration.
 @end itemize
 
 Portability problems not fixed by Gnulib:
