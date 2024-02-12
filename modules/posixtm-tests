@@ -7,7 +7,7 @@ intprops
 setenv
 stdint
 stpcpy
-strftime
+strftime-fixes
 
 configure.ac:
 
