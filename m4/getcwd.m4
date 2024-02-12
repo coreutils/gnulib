@@ -6,7 +6,7 @@
 # with or without modifications, as long as this notice is preserved.
 
 # Written by Paul Eggert.
-# serial 21
+# serial 22
 
 AC_DEFUN([gl_FUNC_GETCWD_NULL],
   [
@@ -21,11 +21,8 @@ AC_DEFUN([gl_FUNC_GETCWD_NULL],
 #        else /* on Windows with MSVC */
 #         include <direct.h>
 #        endif
-         ]GL_MDA_DEFINES[
-#        ifndef getcwd
-         char *getcwd ();
-#        endif
-]], [[
+         ]GL_MDA_DEFINES],
+         [[
 #if defined _WIN32 && ! defined __CYGWIN__
 /* mingw cwd does not start with '/', but _getcwd does allocate.
    However, mingw fails to honor non-zero size.  */
