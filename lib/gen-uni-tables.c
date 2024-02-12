@@ -6669,8 +6669,13 @@ fill_width (const char *width_filename)
 /* The non-spacing attribute table consists of:
    * Non-spacing characters; generated from PropList.txt or
      "grep '^[^;]*;[^;]*;[^;]*;[^;]*;NSM;' UnicodeData.txt"
-   * Format control characters; generated from
-     "grep '^[^;]*;[^;]*;Cf;' UnicodeData.txt"
+   * Format control characters, except for characters with property
+     Prepended_Concatenation_Mark; generated from
+     "grep '^[^;]*;[^;]*;Cf;' UnicodeData.txt" and from
+     "grep Prepended_Concatenation_Mark PropList.txt".
+     Rationale for the Prepended_Concatenation_Mark exception:
+     The Unicode standard says "Unlike most other format characters,
+     however, they should be rendered with a visible glyph".
    * Zero width characters; generated from
      "grep '^[^;]*;ZERO WIDTH ' UnicodeData.txt"
    * Hangul Jamo characters that have conjoining behaviour:
@@ -6695,7 +6700,9 @@ is_nonspacing (unsigned int ch)
 {
   return (unicode_attributes[ch].name != NULL
           && (get_bidi_category (ch) == UC_BIDI_NSM
-              || is_category_Cc (ch) || is_category_Cf (ch)
+              || is_category_Cc (ch)
+              || (is_category_Cf (ch)
+                  && !is_property_prepended_concatenation_mark (ch))
               || strncmp (unicode_attributes[ch].name, "ZERO WIDTH ", 11) == 0
               || (ch >= 0x1160 && ch <= 0x11A7) || (ch >= 0xD7B0 && ch <= 0xD7C6) /* jungseong */
               || (ch >= 0x11A8 && ch <= 0x11FF) || (ch >= 0xD7CB && ch <= 0xD7FB) /* jongseong */
