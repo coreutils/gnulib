@@ -1,5 +1,5 @@
-# pthread-spin.m4 serial 2.1
-dnl Copyright (C) 2019-2023 Free Software Foundation, Inc.
+# pthread-spin.m4 serial 2.2
+dnl Copyright (C) 2019-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -42,7 +42,7 @@ AC_DEFUN([gl_PTHREAD_SPIN],
              [AC_LANG_PROGRAM(
                 [[#include <pthread.h>
                 ]],
-                [[pthread_spinlock_t *lock;
+                [[pthread_spinlock_t lock;
                   return pthread_spin_init (&lock, 0);
                 ]])
              ],
