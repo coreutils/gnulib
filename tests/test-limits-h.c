@@ -1,5 +1,5 @@
 /* Test of <limits.h> substitute.
-   Copyright 2016-2023 Free Software Foundation, Inc.
+   Copyright 2016-2024 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -115,7 +115,7 @@ verify_width (ULLONG_WIDTH, 0, ULLONG_MAX);
 /* Macros specified by C23.  */
 
 int bool_attrs[] = { BOOL_MAX, BOOL_WIDTH };
-static_assert (BOOL_MAX == (((1U << (BOOL_WIDTH - 1)) - 1) * 2) + 1);
+static_assert (BOOL_MAX == 1);
 
 static_assert (0 < MB_LEN_MAX);
 
