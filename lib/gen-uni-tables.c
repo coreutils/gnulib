@@ -2692,6 +2692,7 @@ enum
   PROP_WHITE_SPACE,
   PROP_BIDI_CONTROL,
   PROP_JOIN_CONTROL,
+  PROP_PREPENDED_CONCATENATION_MARK,
   PROP_DASH,
   PROP_HYPHEN,
   PROP_QUOTATION_MARK,
@@ -2724,7 +2725,6 @@ enum
   PROP_VARIATION_SELECTOR,
   PROP_PATTERN_WHITE_SPACE,
   PROP_PATTERN_SYNTAX,
-  PROP_PREPENDED_CONCATENATION_MARK,
   PROP_REGIONAL_INDICATOR,
   /* DerivedCoreProperties.txt */
   PROP_MATH,
@@ -2819,6 +2819,7 @@ fill_properties (const char *proplist_filename)
       PROP ("White_Space", PROP_WHITE_SPACE)
       PROP ("Bidi_Control", PROP_BIDI_CONTROL)
       PROP ("Join_Control", PROP_JOIN_CONTROL)
+      PROP ("Prepended_Concatenation_Mark", PROP_PREPENDED_CONCATENATION_MARK)
       PROP ("Dash", PROP_DASH)
       PROP ("Hyphen", PROP_HYPHEN)
       PROP ("Quotation_Mark", PROP_QUOTATION_MARK)
@@ -2851,7 +2852,6 @@ fill_properties (const char *proplist_filename)
       PROP ("Variation_Selector", PROP_VARIATION_SELECTOR)
       PROP ("Pattern_White_Space", PROP_PATTERN_WHITE_SPACE)
       PROP ("Pattern_Syntax", PROP_PATTERN_SYNTAX)
-      PROP ("Prepended_Concatenation_Mark", PROP_PREPENDED_CONCATENATION_MARK)
       PROP ("Regional_Indicator", PROP_REGIONAL_INDICATOR)
       /* DerivedCoreProperties.txt */
       PROP ("Math", PROP_MATH)
@@ -3621,6 +3621,13 @@ is_property_format_control (unsigned int ch)
 
 /* See PropList.txt, UCD.html.  */
 static bool
+is_property_prepended_concatenation_mark (unsigned int ch)
+{
+  return ((unicode_properties[ch] & (1ULL << PROP_PREPENDED_CONCATENATION_MARK)) != 0);
+}
+
+/* See PropList.txt, UCD.html.  */
+static bool
 is_property_dash (unsigned int ch)
 {
   return ((unicode_properties[ch] & (1ULL << PROP_DASH)) != 0);
@@ -3932,6 +3939,7 @@ output_properties (const char *version)
   PROPERTY(non_break)
   PROPERTY(iso_control)
   PROPERTY(format_control)
+  PROPERTY(prepended_concatenation_mark)
   PROPERTY(dash)
   PROPERTY(hyphen)
   PROPERTY(punctuation)

@@ -3450,6 +3450,7 @@ func_all_modules ()
   func_module unictype/property-paragraph-separator
   func_module unictype/property-pattern-syntax
   func_module unictype/property-pattern-white-space
+  func_module unictype/property-prepended-concatenation-mark
   func_module unictype/property-private-use
   func_module unictype/property-punctuation
   func_module unictype/property-quotation-mark

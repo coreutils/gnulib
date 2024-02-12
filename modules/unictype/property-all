@@ -83,6 +83,7 @@ unictype/property-paired-punctuation
 unictype/property-paragraph-separator
 unictype/property-pattern-syntax
 unictype/property-pattern-white-space
+unictype/property-prepended-concatenation-mark
 unictype/property-private-use
 unictype/property-punctuation
 unictype/property-quotation-mark
