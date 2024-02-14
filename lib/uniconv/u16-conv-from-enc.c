@@ -1,5 +1,5 @@
 /* Conversion to UTF-16 from legacy encodings.
-   Copyright (C) 2002, 2006-2007, 2009-2023 Free Software Foundation, Inc.
+   Copyright (C) 2002, 2006-2007, 2009-2024 Free Software Foundation, Inc.
 
    This file is free software.
    It is dual-licensed under "the GNU LGPLv3+ or the GNU GPLv2+".
@@ -36,7 +36,8 @@
 #include "unistr.h"
 
 /* Name of UTF-16 encoding with machine dependent endianness and alignment.  */
-#if defined _LIBICONV_VERSION || (((__GLIBC__ > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2)) && !defined __UCLIBC__)
+#if (defined _LIBICONV_VERSION && !(_LIBICONV_VERSION == 0x10b && defined __APPLE__)) \
+    || (((__GLIBC__ > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2)) && !defined __UCLIBC__)
 # ifdef WORDS_BIGENDIAN
 #  define UTF16_NAME "UTF-16BE"
 # else

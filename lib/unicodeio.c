@@ -1,6 +1,6 @@
 /* Unicode character output to streams with locale dependent encoding.
 
-   Copyright (C) 2000-2003, 2006, 2008-2023 Free Software Foundation, Inc.
+   Copyright (C) 2000-2003, 2006, 2008-2024 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -144,7 +144,7 @@ unicode_to_mb (unsigned int code,
 # endif
           /* FreeBSD iconv(), NetBSD iconv(), and Solaris 11 iconv() insert
              a '?' if they cannot convert.  */
-# if !defined _LIBICONV_VERSION
+# if !defined _LIBICONV_VERSION || (_LIBICONV_VERSION == 0x10b && defined __APPLE__)
           || (res > 0 && outptr - outbuf == 1 && *outbuf == '?')
 # endif
           /* musl libc iconv() inserts a '*' if it cannot convert.  */

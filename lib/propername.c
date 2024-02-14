@@ -222,7 +222,7 @@ proper_name_utf8 (const char *name_ascii, const char *name_utf8)
 
         if (converted_translit != NULL)
           {
-#  if !_LIBICONV_VERSION
+#  if !_LIBICONV_VERSION || (_LIBICONV_VERSION == 0x10b && defined __APPLE__)
             /* Don't use the transliteration if it added question marks.
                glibc's transliteration falls back to question marks; libiconv's
                transliteration does not.

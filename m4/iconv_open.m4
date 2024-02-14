@@ -1,5 +1,5 @@
-# iconv_open.m4 serial 16
-dnl Copyright (C) 2007-2023 Free Software Foundation, Inc.
+# iconv_open.m4 serial 17
+dnl Copyright (C) 2007-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -16,7 +16,8 @@ AC_DEFUN([gl_FUNC_ICONV_OPEN],
     dnl We know that GNU libiconv and GNU libc do.
     AC_EGREP_CPP([gnu_iconv], [
       #include <iconv.h>
-      #if defined _LIBICONV_VERSION || (defined __GLIBC__ && !defined __UCLIBC__)
+      #if (defined _LIBICONV_VERSION && !(_LIBICONV_VERSION == 0x10b && defined __APPLE__)) \
+          || (defined __GLIBC__ && !defined __UCLIBC__)
        gnu_iconv
       #endif
       ], [gl_func_iconv_gnu=yes], [gl_func_iconv_gnu=no])
