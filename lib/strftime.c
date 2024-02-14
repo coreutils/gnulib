@@ -39,6 +39,19 @@
 # include "time-internal.h"
 #endif
 
+/* Whether to require GNU behavior for AM and PM indicators, even on
+   other platforms.  This matters only in non-C locales.
+   The default is to require it; you can override this via
+   AC_DEFINE([REQUIRE_GNUISH_STRFTIME_AM_PM], 1) and if you do that
+   you may be able to omit Gnulib's localename module and its dependencies.  */
+#ifndef REQUIRE_GNUISH_STRFTIME_AM_PM
+# define REQUIRE_GNUISH_STRFTIME_AM_PM true
+#endif
+#if USE_C_LOCALE
+# undef REQUIRE_GNUISH_STRFTIME_AM_PM
+# define REQUIRE_GNUISH_STRFTIME_AM_PM false
+#endif
+
 #if USE_C_LOCALE
 # include "c-ctype.h"
 #else
@@ -83,7 +96,7 @@ extern char *tzname[];
 # include <locale.h>
 #endif
 
-#if (defined __NetBSD__ || defined __sun) && !USE_C_LOCALE
+#if (defined __NetBSD__ || defined __sun) && REQUIRE_GNUISH_STRFTIME_AM_PM
 # include <locale.h>
 # include "localename.h"
 #endif
@@ -375,7 +388,7 @@ c_locale (void)
 #endif
 
 
-#if (defined __NetBSD__ || defined __sun) && !USE_C_LOCALE
+#if (defined __NetBSD__ || defined __sun) && REQUIRE_GNUISH_STRFTIME_AM_PM
 
 /* Return true if an AM/PM indicator should be removed.  */
 static bool
@@ -1361,7 +1374,7 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
                           }
                       }
                   }
-#  if !USE_C_LOCALE
+#  if REQUIRE_GNUISH_STRFTIME_AM_PM
                 /* The output of the strftime %p and %r directives contains
                    an AM/PM indicator even for locales where it is not
                    suitable, such as French.  Remove this indicator.  */
