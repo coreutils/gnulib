@@ -139,11 +139,12 @@ iconveh_close (const iconveh_t *cd)
 /* iconv_carefully is like iconv, except that it stops as soon as it encounters
    a conversion error, and it returns in *INCREMENTED a boolean telling whether
    it has incremented the input pointers past the error location.  */
-# if !defined _LIBICONV_VERSION && !(defined __GLIBC__ && !defined __UCLIBC__)
+# if !(defined _LIBICONV_VERSION && !(_LIBICONV_VERSION == 0x10b && defined __APPLE__)) \
+     && !(defined __GLIBC__ && !defined __UCLIBC__)
 /* Irix iconv() inserts a NUL byte if it cannot convert.
    NetBSD iconv() inserts a question mark if it cannot convert.
-   Only GNU libiconv and GNU libc are known to prefer to fail rather
-   than doing a lossy conversion.  */
+   Only GNU libiconv (excluding the bastard Apple iconv) and GNU libc are
+   known to prefer to fail rather than doing a lossy conversion.  */
 static size_t
 iconv_carefully (iconv_t cd,
                  const char **inbuf, size_t *inbytesleft,
@@ -247,11 +248,12 @@ iconv_carefully_1 (iconv_t cd,
 
   *inbuf = inptr;
   *inbytesleft = inptr_end - inptr;
-# if !defined _LIBICONV_VERSION && !(defined __GLIBC__ && !defined __UCLIBC__)
+# if !(defined _LIBICONV_VERSION && !(_LIBICONV_VERSION == 0x10b && defined __APPLE__)) \
+     && !(defined __GLIBC__ && !defined __UCLIBC__)
   /* Irix iconv() inserts a NUL byte if it cannot convert.
      NetBSD iconv() inserts a question mark if it cannot convert.
-     Only GNU libiconv and GNU libc are known to prefer to fail rather
-     than doing a lossy conversion.  */
+     Only GNU libiconv (excluding the bastard Apple iconv) and GNU libc are
+     known to prefer to fail rather than doing a lossy conversion.  */
   if (res != (size_t)(-1) && res > 0)
     {
       /* iconv() has already incremented INPTR.  We cannot go back to a
@@ -948,13 +950,15 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
                               }
                             length = out2ptr - result;
                           }
-# if !defined _LIBICONV_VERSION && !(defined __GLIBC__ && !defined __UCLIBC__)
+# if !(defined _LIBICONV_VERSION && !(_LIBICONV_VERSION == 0x10b && defined __APPLE__)) \
+     && !(defined __GLIBC__ && !defined __UCLIBC__)
                         /* IRIX iconv() inserts a NUL byte if it cannot convert.
                            FreeBSD iconv(), NetBSD iconv(), and Solaris 11
                            iconv() insert a '?' if they cannot convert.
                            musl libc iconv() inserts a '*' if it cannot convert.
-                           Only GNU libiconv and GNU libc are known to prefer
-                           to fail rather than doing a lossy conversion.  */
+                           Only GNU libiconv (excluding the bastard Apple iconv)
+                           and GNU libc are known to prefer to fail rather than
+                           doing a lossy conversion.  */
                         if (res != (size_t)(-1) && res > 0)
                           {
                             errno = EILSEQ;

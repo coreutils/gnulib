@@ -36,7 +36,8 @@
 #include "unistr.h"
 
 /* Name of UTF-16 encoding with machine dependent endianness and alignment.  */
-#if defined _LIBICONV_VERSION || (((__GLIBC__ > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2)) && !defined __UCLIBC__)
+#if (defined _LIBICONV_VERSION && !(_LIBICONV_VERSION == 0x10b && defined __APPLE__)) \
+    || (((__GLIBC__ > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2)) && !defined __UCLIBC__)
 # ifdef WORDS_BIGENDIAN
 #  define UTF16_NAME "UTF-16BE"
 # else

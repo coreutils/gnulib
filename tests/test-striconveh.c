@@ -68,7 +68,7 @@ main ()
   iconv_t cd_88592_to_utf8 = iconv_open ("UTF-8", "ISO-8859-2");
   iconv_t cd_utf8_to_88592 = iconv_open ("ISO-8859-2", "UTF-8");
   iconv_t cd_utf7_to_utf8 = iconv_open ("UTF-8", "UTF-7");
-# if defined _LIBICONV_VERSION || (defined __GLIBC__ && !defined __UCLIBC__)
+# if (defined _LIBICONV_VERSION && !(_LIBICONV_VERSION == 0x10b && defined __APPLE__)) || (defined __GLIBC__ && !defined __UCLIBC__)
   iconv_t cd_ascii_to_gb18030 = iconv_open ("GB18030", "ASCII");
   iconv_t cd_utf8_to_gb18030 = iconv_open ("GB18030", "UTF-8");
   iconv_t cd_88591_to_gb18030 = iconv_open ("GB18030", "ISO-8859-1");
@@ -82,7 +82,7 @@ main ()
   iconveh_t cdeh_88591_to_utf8;
   iconveh_t cdeh_utf8_to_88591;
   iconveh_t cdeh_utf7_to_utf8;
-# if defined _LIBICONV_VERSION || (defined __GLIBC__ && !defined __UCLIBC__)
+# if (defined _LIBICONV_VERSION && !(_LIBICONV_VERSION == 0x10b && defined __APPLE__)) || (defined __GLIBC__ && !defined __UCLIBC__)
   iconveh_t cdeh_ascii_to_gb18030;
   iconveh_t cdeh_88591_to_gb18030;
   iconveh_t cdeh_utf7_to_gb18030;
@@ -93,7 +93,7 @@ main ()
   ASSERT (cd_utf8_to_88591 != (iconv_t)(-1));
   ASSERT (cd_88592_to_utf8 != (iconv_t)(-1));
   ASSERT (cd_utf8_to_88592 != (iconv_t)(-1));
-# if defined _LIBICONV_VERSION || (defined __GLIBC__ && !defined __UCLIBC__)
+# if (defined _LIBICONV_VERSION && !(_LIBICONV_VERSION == 0x10b && defined __APPLE__)) || (defined __GLIBC__ && !defined __UCLIBC__)
   ASSERT (cd_ascii_to_gb18030 != (iconv_t)(-1));
   ASSERT (cd_utf8_to_gb18030 != (iconv_t)(-1));
 # endif
@@ -130,7 +130,7 @@ main ()
   cdeh_utf7_to_utf8.cd1 = cd_utf7_to_utf8;
   cdeh_utf7_to_utf8.cd2 = (iconv_t)(-1);
 
-# if defined _LIBICONV_VERSION || (defined __GLIBC__ && !defined __UCLIBC__)
+# if (defined _LIBICONV_VERSION && !(_LIBICONV_VERSION == 0x10b && defined __APPLE__)) || (defined __GLIBC__ && !defined __UCLIBC__)
   cdeh_ascii_to_gb18030.cd = cd_ascii_to_gb18030;
   cdeh_ascii_to_gb18030.cd1 = cd_ascii_to_utf8;
   cdeh_ascii_to_gb18030.cd2 = cd_utf8_to_gb18030;
@@ -330,7 +330,7 @@ main ()
         }
     }
 
-# if defined _LIBICONV_VERSION || (defined __GLIBC__ && !defined __UCLIBC__)
+# if (defined _LIBICONV_VERSION && !(_LIBICONV_VERSION == 0x10b && defined __APPLE__)) || (defined __GLIBC__ && !defined __UCLIBC__)
   /* Test conversion from ISO-8859-1 to GB18030 with no errors.  */
   for (h = 0; h < SIZEOF (handlers); h++)
     {
@@ -462,7 +462,7 @@ main ()
         }
     }
 
-# if defined _LIBICONV_VERSION || ((__GLIBC__ + (__GLIBC_MINOR__ >= 16) > 2) && !defined __UCLIBC__)
+# if (defined _LIBICONV_VERSION && !(_LIBICONV_VERSION == 0x10b && defined __APPLE__)) || ((__GLIBC__ + (__GLIBC_MINOR__ >= 16) > 2) && !defined __UCLIBC__)
   /* Test conversion from ASCII to GB18030 with invalid input (EILSEQ).
      Note: glibc's GB18030 converter was buggy in glibc-2.15; fixed by
      Andreas Schwab on 2012-02-06.  */
@@ -648,7 +648,7 @@ main ()
           free (result);
         }
 
-#  if defined _LIBICONV_VERSION || (defined __GLIBC__ && !defined __UCLIBC__)
+#  if (defined _LIBICONV_VERSION && !(_LIBICONV_VERSION == 0x10b && defined __APPLE__)) || (defined __GLIBC__ && !defined __UCLIBC__)
       /* Test conversion from UTF-7 to GB18030 with EINVAL.  */
       for (h = 0; h < SIZEOF (handlers); h++)
         {
@@ -748,7 +748,7 @@ main ()
             }
         }
 
-#   if defined _LIBICONV_VERSION || ((__GLIBC__ + (__GLIBC_MINOR__ >= 16) > 2) && !defined __UCLIBC__)
+#   if (defined _LIBICONV_VERSION && !(_LIBICONV_VERSION == 0x10b && defined __APPLE__)) || ((__GLIBC__ + (__GLIBC_MINOR__ >= 16) > 2) && !defined __UCLIBC__)
       /* Test conversion from UTF-7 to GB18030 with EILSEQ.
          Note: glibc's GB18030 converter was buggy in glibc-2.15; fixed by
          Andreas Schwab on 2012-02-06.  */
@@ -926,7 +926,7 @@ main ()
       free (result);
     }
 
-# if defined _LIBICONV_VERSION || (defined __GLIBC__ && !defined __UCLIBC__)
+# if (defined _LIBICONV_VERSION && !(_LIBICONV_VERSION == 0x10b && defined __APPLE__)) || (defined __GLIBC__ && !defined __UCLIBC__)
   /* Test conversion from ISO-8859-1 to GB18030 with no errors.  */
   for (h = 0; h < SIZEOF (handlers); h++)
     {
@@ -989,7 +989,7 @@ main ()
         }
     }
 
-# if defined _LIBICONV_VERSION || ((__GLIBC__ + (__GLIBC_MINOR__ >= 16) > 2) && !defined __UCLIBC__)
+# if (defined _LIBICONV_VERSION && !(_LIBICONV_VERSION == 0x10b && defined __APPLE__)) || ((__GLIBC__ + (__GLIBC_MINOR__ >= 16) > 2) && !defined __UCLIBC__)
   /* Test conversion from ASCII to GB18030 with invalid input (EILSEQ).
      Note: glibc's GB18030 converter was buggy in glibc-2.15; fixed by
      Andreas Schwab on 2012-02-06.  */
@@ -1207,7 +1207,7 @@ main ()
         }
     }
 
-# if defined _LIBICONV_VERSION || (defined __GLIBC__ && !defined __UCLIBC__)
+# if (defined _LIBICONV_VERSION && !(_LIBICONV_VERSION == 0x10b && defined __APPLE__)) || (defined __GLIBC__ && !defined __UCLIBC__)
   /* Test conversion from ISO-8859-1 to GB18030 with no errors.  */
   for (h = 0; h < SIZEOF (handlers); h++)
     {
@@ -1427,7 +1427,7 @@ main ()
       free (result);
     }
 
-# if defined _LIBICONV_VERSION || (defined __GLIBC__ && !defined __UCLIBC__)
+# if (defined _LIBICONV_VERSION && !(_LIBICONV_VERSION == 0x10b && defined __APPLE__)) || (defined __GLIBC__ && !defined __UCLIBC__)
   /* Test conversion from ISO-8859-1 to GB18030 with no errors.  */
   for (h = 0; h < SIZEOF (handlers); h++)
     {
