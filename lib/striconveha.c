@@ -1,5 +1,5 @@
 /* Character set conversion with error handling and autodetection.
-   Copyright (C) 2002, 2005, 2007, 2009-2023 Free Software Foundation, Inc.
+   Copyright (C) 2002, 2005, 2007, 2009-2024 Free Software Foundation, Inc.
    Written by Bruno Haible.
 
    This file is free software: you can redistribute it and/or modify
@@ -219,11 +219,12 @@ mem_iconveha (const char *src, size_t srclen,
       return 0;
     }
 
-  /* When using GNU libc >= 2.2 or GNU libiconv >= 1.5,
-     we want to use transliteration.  */
+  /* When using GNU libc >= 2.2 or GNU libiconv >= 1.5 or Citrus/FreeBSD/macOS
+     iconv, we want to use transliteration.  */
 #if (((__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2) || __GLIBC__ > 2) \
      && !defined __UCLIBC__) \
-    || _LIBICONV_VERSION >= 0x0105
+    || _LIBICONV_VERSION >= 0x0105 \
+    || defined ICONV_SET_TRANSLITERATE
   if (transliterate)
     {
       int retval;
@@ -326,11 +327,12 @@ str_iconveha (const char *src,
       return result;
     }
 
-  /* When using GNU libc >= 2.2 or GNU libiconv >= 1.5,
-     we want to use transliteration.  */
+  /* When using GNU libc >= 2.2 or GNU libiconv >= 1.5 or Citrus/FreeBSD/macOS
+     iconv, we want to use transliteration.  */
 #if (((__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2) || __GLIBC__ > 2) \
      && !defined __UCLIBC__) \
-    || _LIBICONV_VERSION >= 0x0105
+    || _LIBICONV_VERSION >= 0x0105 \
+    || defined ICONV_SET_TRANSLITERATE
   if (transliterate)
     {
       char *result;

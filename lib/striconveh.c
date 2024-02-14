@@ -1,5 +1,5 @@
 /* Character set conversion with error handling.
-   Copyright (C) 2001-2023 Free Software Foundation, Inc.
+   Copyright (C) 2001-2024 Free Software Foundation, Inc.
    Written by Bruno Haible and Simon Josefsson.
 
    This file is free software: you can redistribute it and/or modify
@@ -81,7 +81,8 @@ iconveh_open (const char *to_codeset, const char *from_codeset, iconveh_t *cdp)
   if (STRCASEEQ (to_codeset, "UTF-8", 'U','T','F','-','8',0,0,0,0)
 # if (((__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2) || __GLIBC__ > 2) \
       && !defined __UCLIBC__) \
-     || _LIBICONV_VERSION >= 0x0105
+     || _LIBICONV_VERSION >= 0x0105 \
+     || defined ICONV_SET_TRANSLITERATE
       || c_strcasecmp (to_codeset, "UTF-8//TRANSLIT") == 0
 # endif
      )
