@@ -40,7 +40,7 @@
 
 /* Name of UTF-32 or UCS-4 encoding with machine dependent endianness and
    alignment.  */
-#if defined _LIBICONV_VERSION
+#if defined _LIBICONV_VERSION && !(_LIBICONV_VERSION == 0x10b && defined __APPLE__)
 # define UTF32_NAME "UCS-4-INTERNAL"
 #elif ((__GLIBC__ > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2)) && !defined __UCLIBC__
 # define UTF32_NAME "WCHAR_T"
