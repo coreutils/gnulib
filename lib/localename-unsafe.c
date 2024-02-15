@@ -3265,7 +3265,10 @@ gl_locale_name_posix_unsafe (int category, _GL_UNUSED const char *categoryname)
     /* Use the POSIX methods of looking to 'LC_ALL', 'LC_xxx', and 'LANG'.
        On some systems this can be done by the 'setlocale' function itself.  */
 #if defined HAVE_LC_MESSAGES && defined HAVE_LOCALE_NULL
-    locname = setlocale_null (category);
+    /* All platforms for which HAVE_LOCALE_NULL is defined happen to have
+       SETLOCALE_NULL_ONE_MTSAFE defined to 1.  Therefore it is OK, here,
+       to call setlocale_null_unlocked instead of setlocale_null.  */
+    locname = setlocale_null_unlocked (category);
 #else
     /* On other systems we ignore what setlocale reports and instead look at the
        environment variables directly.  This is necessary
