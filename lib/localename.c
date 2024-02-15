@@ -2730,6 +2730,9 @@ struniq (const char *string)
 static const char *
 get_locale_t_name (int category, locale_t locale)
 {
+  if (category == LC_ALL)
+    /* Invalid argument.  */
+    abort ();
   if (locale == LC_GLOBAL_LOCALE)
     {
       /* Query the global locale.  */
@@ -3105,6 +3108,9 @@ static
 const char *
 gl_locale_name_thread_unsafe (int category, _GL_UNUSED const char *categoryname)
 {
+  if (category == LC_ALL)
+    /* Invalid argument.  */
+    abort ();
 # if HAVE_GOOD_USELOCALE
   {
     locale_t thread_locale = uselocale (NULL);
@@ -3282,6 +3288,9 @@ gl_locale_name_thread_unsafe (int category, _GL_UNUSED const char *categoryname)
 const char *
 gl_locale_name_thread (int category, _GL_UNUSED const char *categoryname)
 {
+  if (category == LC_ALL)
+    /* Invalid argument.  */
+    abort ();
 #if HAVE_GOOD_USELOCALE
   const char *name = gl_locale_name_thread_unsafe (category, categoryname);
   if (name != NULL)
@@ -3328,6 +3337,9 @@ gl_locale_name_thread (int category, _GL_UNUSED const char *categoryname)
 const char *
 gl_locale_name_posix (int category, _GL_UNUSED const char *categoryname)
 {
+  if (category == LC_ALL)
+    /* Invalid argument.  */
+    abort ();
 #if defined WINDOWS_NATIVE
   if (LC_MIN <= category && category <= LC_MAX)
     {
@@ -3530,6 +3542,10 @@ const char *
 gl_locale_name (int category, const char *categoryname)
 {
   const char *retval;
+
+  if (category == LC_ALL)
+    /* Invalid argument.  */
+    abort ();
 
   retval = gl_locale_name_thread (category, categoryname);
   if (retval != NULL)
