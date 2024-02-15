@@ -4,34 +4,20 @@ Return current locale's name, according to glibc naming conventions.
 Files:
 lib/localename.h
 lib/localename.c
-lib/localename-table.h
-lib/localename-table.c
 lib/struniq.h
-m4/localename.m4
-m4/intl-thread-locale.m4
-m4/intlmacosx.m4
-m4/lcmessage.m4
-m4/musl.m4
 
 Depends-on:
-extensions
-stdbool
 locale
+localename-unsafe
 flexmember
-free-posix
-strdup
 lock
-langinfo
-setlocale-null
+stdbool
 thread-optim
 
 configure.ac:
-gl_LOCALENAME
-gl_LOCALE_MODULE_INDICATOR([localename])
-gl_MUSL_LIBC
 
 Makefile.am:
-lib_SOURCES += localename.c localename-table.c
+lib_SOURCES += localename.c
 
 Include:
 "localename.h"

@@ -96,6 +96,19 @@ extern const char * gl_locale_name_default (void)
 #endif
   ;
 
+
+/* These functions with the '_unsafe' suffix are like the functions without
+   this suffix, above, except that the result is not statically allocated, but
+   instead only valid in the current thread, until the next uselocale(),
+   setlocale(), newlocale(), or freelocale() call.  */
+extern const char * gl_locale_name_unsafe (int category,
+                                           const char *categoryname);
+extern const char * gl_locale_name_thread_unsafe (int category,
+                                                  const char *categoryname);
+extern const char * gl_locale_name_posix_unsafe (int category,
+                                                 const char *categoryname);
+
+
 #ifdef __cplusplus
 }
 #endif
