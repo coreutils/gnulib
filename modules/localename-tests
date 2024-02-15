@@ -1,6 +1,7 @@
 Files:
 tests/test-localename.c
 tests/macros.h
+m4/musl.m4
 
 Depends-on:
 locale
@@ -11,6 +12,7 @@ strdup
 
 configure.ac:
 gl_CHECK_FUNCS_ANDROID([newlocale], [[#include <locale.h>]])
+gl_MUSL_LIBC
 
 Makefile.am:
 TESTS += test-localename

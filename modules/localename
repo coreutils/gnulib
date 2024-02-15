@@ -10,6 +10,7 @@ m4/localename.m4
 m4/intl-thread-locale.m4
 m4/intlmacosx.m4
 m4/lcmessage.m4
+m4/musl.m4
 
 Depends-on:
 extensions
@@ -26,6 +27,7 @@ thread-optim
 configure.ac:
 gl_LOCALENAME
 gl_LOCALE_MODULE_INDICATOR([localename])
+gl_MUSL_LIBC
 
 Makefile.am:
 lib_SOURCES += localename.c localename-table.c

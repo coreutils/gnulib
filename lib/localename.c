@@ -3297,9 +3297,31 @@ gl_locale_name_thread (int category, _GL_UNUSED const char *categoryname)
    "Directs 'setlocale()' to query 'category' and return the current
     setting of 'local'."
    However it does not specify the exact format.  Neither do SUSV2 and
-   ISO C 99.  So we can use this feature only on selected systems (e.g.
-   those using GNU C Library).  */
-#if defined _LIBC || ((defined __GLIBC__ && __GLIBC__ >= 2) && !defined __UCLIBC__)
+   ISO C 99.  So we can use this feature only on selected systems, where
+   the return value has the XPG syntax
+     language[_territory][.codeset][@modifier]
+   or
+     C[.codeset]
+   namely
+     - glibc systems (except for aliases from /usr/share/locale/locale.alias,
+       that no one uses any more),
+     - musl libc,
+     - FreeBSD, NetBSD,
+     - Solaris,
+     - Haiku.
+   We cannot use it on
+     - macOS, Cygwin (because these systems have a facility for customizing the
+       default locale, and setlocale (category, NULL) ignores it and merely
+       returns "C" or "C.UTF-8"),
+     - OpenBSD (because on OpenBSD ≤ 6.1, LC_ALL does not set the LC_NUMERIC,
+       LC_TIME, LC_COLLATE, LC_MONETARY categories).
+     - AIX (because here the return value has the syntax
+         language[_script]_territory[.codeset]
+       e.g. zh_Hans_CN.UTF-8),
+     - native Windows (because it has locale names such as French_France.1252),
+     - Android (because it only supports the C and C.UTF-8 locales).
+ */
+#if defined _LIBC || ((defined __GLIBC__ && __GLIBC__ >= 2) && !defined __UCLIBC__) || MUSL_LIBC || defined __FreeBSD__ || defined __NetBSD__ || defined __sun || defined __HAIKU__
 # define HAVE_LOCALE_NULL
 #endif
 
@@ -3334,8 +3356,8 @@ gl_locale_name_posix (int category, _GL_UNUSED const char *categoryname)
     /* On other systems we ignore what setlocale reports and instead look at the
        environment variables directly.  This is necessary
          1. on systems which have a facility for customizing the default locale
-            (Mac OS X, native Windows, Cygwin) and where the system's setlocale()
-            function ignores this default locale (Mac OS X, Cygwin), in two cases:
+            (macOS, native Windows, Cygwin) and where the system's setlocale()
+            function ignores this default locale (macOS, Cygwin), in two cases:
             a. when the user missed to use the setlocale() override from libintl
                (for example by not including <libintl.h>),
             b. when setlocale supports only the "C" locale, such as on Cygwin
