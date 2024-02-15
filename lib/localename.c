@@ -2630,8 +2630,10 @@ get_lcid (const char *locale_name)
 #endif
 
 
-#if HAVE_GOOD_USELOCALE /* glibc, Mac OS X, FreeBSD >= 9.1, Cygwin >= 2.6,
-                           Solaris 11 OpenIndiana, or Solaris >= 11.4  */
+#if HAVE_GOOD_USELOCALE /* glibc, musl libc, macOS, FreeBSD >= 9.1, AIX 7.1,
+                           AIX >= 7.3, Solaris >= 11.4, Solaris 11 OpenIndiana,
+                           Solaris 11 OmniOS, Cygwin >= 2.6,
+                           Android API level >= 21 */
 
 /* Simple hash set of strings.  We don't want to drag in lots of hash table
    code here.  */
