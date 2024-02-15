@@ -1,0 +1,10 @@
+Files:
+tests/test-setlocale_null-unlocked.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-setlocale_null-unlocked
+check_PROGRAMS += test-setlocale_null-unlocked
