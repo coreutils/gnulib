@@ -1,12 +1,12 @@
 /* Determine name of the currently selected locale.
    Copyright (C) 1995-2024 Free Software Foundation, Inc.
 
-   This program is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Lesser General Public License as published by
-   the Free Software Foundation; either version 2.1 of the License, or
-   (at your option) any later version.
+   This file is free software: you can redistribute it and/or modify
+   it under the terms of the GNU Lesser General Public License as
+   published by the Free Software Foundation; either version 2.1 of the
+   License, or (at your option) any later version.
 
-   This program is distributed in the hope that it will be useful,
+   This file is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
    GNU Lesser General Public License for more details.
@@ -2747,6 +2747,14 @@ get_locale_t_name (int category, locale_t locale)
     }
   else
     {
+# if HAVE_AIX72_LOCALES
+      if (category == LC_MESSAGES)
+        {
+          const char *name = ((__locale_t) locale)->locale_name;
+          if (name != NULL)
+            return struniq (name);
+        }
+# endif
       /* Look up the names in the hash table.  */
       size_t hashcode = locale_hash_function (locale);
       size_t slot = hashcode % LOCALE_HASH_TABLE_SIZE;

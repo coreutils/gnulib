@@ -1,4 +1,4 @@
-# intl-thread-locale.m4 serial 11
+# intl-thread-locale.m4 serial 12
 dnl Copyright (C) 2015-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -130,7 +130,8 @@ int main ()
   dnl requires the gnulib overrides of 'newlocale', 'duplocale', 'freelocale',
   dnl which is a problem for GNU libunistring.  Therefore try hard to avoid
   dnl enabling this code!
-  dnl Expected result: HAVE_NAMELESS_LOCALES is defined on AIX.
+  dnl Expected result: HAVE_NAMELESS_LOCALES is defined on AIX,
+  dnl and              HAVE_AIX72_LOCALES is defined on AIX ≥ 7.2.
   gt_nameless_locales=no
   case "$host_os" in
     dnl It's needed on AIX 7.2.
@@ -138,6 +139,25 @@ int main ()
       gt_nameless_locales=yes
       AC_DEFINE([HAVE_NAMELESS_LOCALES], [1],
         [Define if the locale_t type does not contain the name of each locale category.])
+      dnl In AIX ≥ 7.2, a locale contains at least the name of the LC_MESSSAGES
+      dnl category (fix of defect 823926).
+      AC_CACHE_CHECK([for AIX locales with LC_MESSAGES name],
+        [gt_cv_locale_aix72],
+        [AC_COMPILE_IFELSE(
+           [AC_LANG_PROGRAM([[
+              #include <locale.h>
+              /* Include <sys/localedef.h>, which defines __locale_t.  */
+              #include <stdlib.h>
+              locale_t x;
+            ]],
+            [[return ((__locale_t) x)->locale_name[0];]])],
+           [gt_cv_locale_aix72=yes],
+           [gt_cv_locale_aix72=no])
+        ])
+      if test $gt_cv_locale_aix72 = yes; then
+        AC_DEFINE([HAVE_AIX72_LOCALES], [1],
+          [Define if the __locale_t type contains the name of the LC_MESSAGES category.])
+      fi
       ;;
   esac
 
@@ -150,7 +170,7 @@ int main ()
   if test $gt_working_uselocale = yes && test $gt_fake_locales = no; then
     gt_good_uselocale=yes
     AC_DEFINE([HAVE_GOOD_USELOCALE], [1],
-      [Define if the uselocale exists, may be safely called, and returns sufficient information.])
+      [Define if the uselocale function exists, may be safely called, and returns sufficient information.])
   else
     gt_good_uselocale=no
   fi
