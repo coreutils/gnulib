@@ -15,7 +15,7 @@ errno
 extensions
 intprops
 libc-config
-localename-unsafe
+localename-unsafe-limited
 stdbool
 stdckdint
 time_rz
