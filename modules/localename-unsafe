@@ -15,6 +15,7 @@ m4/lcmessage.m4
 m4/musl.m4
 
 Depends-on:
+localename-unsafe-limited
 extensions
 stdbool
 locale
@@ -33,7 +34,10 @@ gl_LOCALE_MODULE_INDICATOR([localename-unsafe])
 gl_MUSL_LIBC
 
 Makefile.am:
-lib_SOURCES += localename-unsafe.c localename-table.c
+if !GL_COND_OBJ_LOCALENAME_UNSAFE_LIMITED
+lib_SOURCES += localename-unsafe.c
+endif
+lib_SOURCES += localename-table.c
 
 Include:
 "localename.h"
