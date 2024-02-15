@@ -1,0 +1,27 @@
+Description:
+setlocale_null_unlocked() function: query the name of the current global locale,
+without locking.
+
+Files:
+lib/setlocale_null.h
+lib/setlocale_null-unlocked.c
+
+Depends-on:
+locale
+snippet/arg-nonnull
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += setlocale_null-unlocked.c
+
+Include:
+#include "setlocale_null.h"
+
+Link:
+
+License:
+LGPLv2+
+
+Maintainer:
+Bruno Haible
