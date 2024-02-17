@@ -5,7 +5,7 @@ dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 
 dnl From Bruno Haible.
-dnl Provide a working "error.h".
+dnl Provide a working <error.h>.
 
 AC_DEFUN_ONCE([gl_ERROR_H],
 [
