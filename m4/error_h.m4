@@ -1,11 +1,11 @@
 # error_h.m4 serial 4
-dnl Copyright (C) 1996-2023 Free Software Foundation, Inc.
+dnl Copyright (C) 1996-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 
 dnl From Bruno Haible.
-dnl Provide a working "error.h".
+dnl Provide a working <error.h>.
 
 AC_DEFUN_ONCE([gl_ERROR_H],
 [

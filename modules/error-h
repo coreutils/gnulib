@@ -35,7 +35,7 @@ error.h: error.in.h $(top_builddir)/config.status $(CXXDEFS_H)
 MOSTLYCLEANFILES += error.h error.h-t
 
 Include:
-"error.h"
+<error.h>
 
 License:
 LGPLv2+
