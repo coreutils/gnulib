@@ -535,6 +535,97 @@ sc_require_config_h_first:
 	else :;								\
 	fi
 
+# Generated headers that override system headers.
+# Keep sorted.
+gl_absolute_include_headers_ ?= \
+  alloca.h		\
+  arpa_inet.h		\
+  assert.h		\
+  ctype.h		\
+  dirent.h		\
+  errno.h		\
+  error.h		\
+  fcntl.h		\
+  fenv.h		\
+  float.h		\
+  fnmatch.h		\
+  getopt.h		\
+  glob.h		\
+  iconv.h		\
+  inttypes.h		\
+  langinfo.h		\
+  limits.h		\
+  locale.h		\
+  malloc.h		\
+  math.h		\
+  monetary.h		\
+  netdb.h		\
+  net/if.h		\
+  netinet/in.h		\
+  omp.h			\
+  poll.h		\
+  pthread.h		\
+  pty.h			\
+  sched.h		\
+  search.h		\
+  selinux/selinux.h	\
+  signal.h		\
+  spawn.h		\
+  stdalign.h		\
+  stdarg.h		\
+  stddef.h		\
+  stdint.h		\
+  stdio.h		\
+  stdlib.h		\
+  string.h		\
+  strings.h		\
+  sysexits.h		\
+  sys/file.h		\
+  sys/ioctl.h		\
+  sys/msg.h		\
+  sys/random.h		\
+  sys/resource.h	\
+  sys/select.h		\
+  sys/sem.h		\
+  sys/shm.h		\
+  sys/socket.h		\
+  sys/stat.h		\
+  sys/time.h		\
+  sys/times.h		\
+  sys/types.h		\
+  sys/uio.h		\
+  sys/utsname.h		\
+  sys/wait.h		\
+  termios.h		\
+  threads.h		\
+  time.h		\
+  uchar.h		\
+  unistd.h		\
+  utime.h		\
+  utmp.h		\
+  wchar.h		\
+  wctype.h
+
+# Suggest using '#include <header.h>' instead of '#include "header.h"' for
+# headers that substitute system headers.
+sc_verify_absolute_include_headers:
+	@if $(VC_LIST_EXCEPT) | $(GREP) '\.c$$' > /dev/null; then	\
+	  source_files=$$($(VC_LIST_EXCEPT) | $(GREP) '\.\(c\|h\)$$');	\
+	  for source_file in $$source_files; do				\
+	    local_includes=$$($(GREP) -h '^ *# *include "[^"]\+"' 	\
+                              $$source_file | $(SED) 			\
+                              -e 's/^[^"]\+"//g' -e 's/"$///g');	\
+	    for local_include in $$local_includes; do			\
+	      for header in $(gl_absolute_include_headers_); do         \
+	        if test "$$header" = "$$local_include";	then		\
+	          echo "$(ME): Use #include <$$header> instead of "     \
+	               "#include \"$$header\" in $$source_file" 2>&1;	\
+	        fi;							\
+	      done;							\
+	    done;							\
+          done;								\
+	fi;
+
 sc_prohibit_HAVE_MBRTOWC:
 	@prohibit='\bHAVE_MBRTOWC\b'					\
 	halt="do not use $$prohibit; it is always defined"		\
@@ -914,6 +1005,7 @@ sc_prohibit_always-defined_macros:
 		 exit 1; }						\
 	    || :;							\
 	fi
+
 # ==================================================================
 
 # Prohibit checked in backup files.
