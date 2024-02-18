@@ -47,9 +47,9 @@ After SunOS 5.6, they started numbering based on the second digit.
 The common terminology is to use the name "SunOS ..." to designate SunOS 2.x,
 3.x, 4.x, and "Solaris ..." or "Illumos" to designate SunOS 5.x.
 
-Most of these operating systems are obsolete.  As of 2023-07-11 only
-Solaris 10 (end-of-life January 2025) and Solaris 11 (end-of-life
-November 2034) are supported by Oracle and are therefore of
+Most of these operating systems are obsolete.  As of 2024-02-17 only
+Solaris 10 and 11.3 (both end-of-life January 2027) and Solaris 11.4
+(end-of-life November 2037) are supported by Oracle and are therefore of
 practical porting concern for GNU applications.  For the current list, see
 <https://en.wikipedia.org/wiki/Solaris_(operating_system)#Version_history>.
 
