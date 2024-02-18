@@ -434,6 +434,12 @@ your project.
 @node Source changes
 @section Changing your sources for use with Gnulib
 
+When you use Gnulib, you need to make some small changes to your source code
+base.
+
+@node -I options
+@subsection -I options
+
 Gnulib contains some header file overrides.  This means that when building
 on systems with deficient header files in @file{/usr/include/}, it may create
 files named @file{string.h}, @file{stdlib.h}, @file{stdint.h} or similar in
@@ -441,6 +447,9 @@ the build directory.  In the other source directories of your package you
 will usually pass @samp{-I} options to the compiler, so that these Gnulib
 substitutes are visible and take precedence over the files in
 @file{/usr/include/}.
+
+@node Include <config.h>
+@subsection Include <config.h>
 
 These Gnulib substitute header files rely on @file{<config.h>} being
 already included.  Furthermore @file{<config.h>} must be the first include
@@ -454,6 +463,91 @@ This is annoying, but inevitable: On many systems, @file{<config.h>} is
 used to set system dependent flags (such as @code{_GNU_SOURCE} on GNU systems),
 and these flags have no effect after any system header file has been included.
 
+@node Style of #include statements
+@subsection Style of #include statements
+
+When including including specific header files, you need to use the
+@samp{#include <...>} syntax, not the @samp{#include "..."} syntax.
+This is true for the following POSIX or ISO C standardized header files:
+@itemize @asis
+@item @code{arpa/inet.h}
+@item @code{assert.h}
+@item @code{ctype.h}
+@item @code{dirent.h}
+@item @code{errno.h}
+@item @code{fcntl.h}
+@item @code{fenv.h}
+@item @code{float.h}
+@item @code{fnmatch.h}
+@item @code{glob.h}
+@item @code{iconv.h}
+@item @code{inttypes.h}
+@item @code{langinfo.h}
+@item @code{limits.h}
+@item @code{locale.h}
+@item @code{math.h}
+@item @code{monetary.h}
+@item @code{netdb.h}
+@item @code{net/if.h}
+@item @code{netinet/in.h}
+@item @code{poll.h}
+@item @code{pthread.h}
+@item @code{sched.h}
+@item @code{search.h}
+@item @code{signal.h}
+@item @code{spawn.h}
+@item @code{stdalign.h}
+@item @code{stdarg.h}
+@item @code{stddef.h}
+@item @code{stdint.h}
+@item @code{stdio.h}
+@item @code{stdlib.h}
+@item @code{string.h}
+@item @code{strings.h}
+@item @code{sys/msg.h}
+@item @code{sys/resource.h}
+@item @code{sys/select.h}
+@item @code{sys/sem.h}
+@item @code{sys/shm.h}
+@item @code{sys/socket.h}
+@item @code{sys/stat.h}
+@item @code{sys/time.h}
+@item @code{sys/times.h}
+@item @code{sys/types.h}
+@item @code{sys/uio.h}
+@item @code{sys/utsname.h}
+@item @code{sys/wait.h}
+@item @code{termios.h}
+@item @code{threads.h}
+@item @code{time.h}
+@item @code{uchar.h}
+@item @code{unistd.h}
+@item @code{utime.h}
+@item @code{wchar.h}
+@item @code{wctype.h}
+@end itemize
+@noindent
+as well as for the following header files that exist in the GNU C library
+but are not standardized:
+@itemize @asis
+@item @code{alloca.h}
+@item @code{error.h}
+@item @code{getopt.h}
+@item @code{malloc.h}
+@item @code{omp.h}
+@item @code{pty.h}
+@item @code{selinux/selinux.h}
+@item @code{sys/file.h}
+@item @code{sys/ioctl.h}
+@item @code{sys/random.h}
+@item @code{sysexits.h}
+@item @code{utmp.h}
+@end itemize
+@noindent
+The reason for this requirement is that for these header files, the Gnulib
+override uses @code{#include_next} to include the system-provided header
+of the same name, and @code{#include_next} may not work right with the
+@samp{#include "..."} syntax.
 
 @node Link-time requirements
 @section Changing your link commands for use with Gnulib
