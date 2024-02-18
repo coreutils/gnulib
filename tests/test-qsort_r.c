@@ -22,7 +22,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-int
+static int
 cmp (void const *va, void const *vb, void *varg)
 {
   char const *a = va;
