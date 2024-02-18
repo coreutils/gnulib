@@ -38,6 +38,12 @@
 #include "attribute.h"
 #include "xalloc.h"
 
+/* Pacify GCC bug <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=113963>.  */
+#if 13 <= __GNUC__
+# pragma GCC diagnostic ignored "-Wanalyzer-malloc-leak"
+# pragma GCC diagnostic ignored "-Wanalyzer-null-dereference"
+#endif
+
 typedef struct
 {
   /* Offset of file name in name_space.  */
