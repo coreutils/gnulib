@@ -503,6 +503,7 @@ sc_prohibit_have_config_h:
 # Nearly all .c files must include <config.h>.  However, we also permit this
 # via inclusion of a package-specific header, if cfg.mk specified one.
 # config_h_header must be suitable for grep -E.
+# Rationale: The Gnulib documentation, node 'Include <config.h>'.
 config_h_header ?= <config\.h>
 sc_require_config_h:
 	@require='^# *include $(config_h_header)'			\
@@ -526,6 +527,7 @@ perl_config_h_first_ =							\
 
 # You must include <config.h> before including any other header file.
 # This can possibly be via a package-specific header, if given by cfg.mk.
+# Rationale: The Gnulib documentation, node 'Include <config.h>'.
 sc_require_config_h_first:
 	@if $(VC_LIST_EXCEPT) | $(GREP) '\.c$$' > /dev/null; then	\
 	  files=$$($(VC_LIST_EXCEPT) | $(GREP) '\.c$$') &&		\
@@ -607,7 +609,8 @@ gl_absolute_include_headers_ ?= \
   wctype.h
 
 # Suggest using '#include <header.h>' instead of '#include "header.h"' for
-# headers that substitute system headers.
+# headers that override system headers.
+# Rationale: The Gnulib documentation, node 'Style of #include statements'.
 sc_verify_absolute_include_headers:
 	@if $(VC_LIST_EXCEPT) | $(GREP) '\.c$$' > /dev/null; then	\
 	  source_files=$$($(VC_LIST_EXCEPT) | $(GREP) '\.\(c\|h\)$$');	\
