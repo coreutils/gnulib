@@ -42,7 +42,7 @@ __author__ = \
         'Dmitry Selyutin',
     ]
 __license__ = 'GNU GPLv3+'
-__copyright__ = '2002-2022 Free Software Foundation, Inc.'
+__copyright__ = '2002-2024 Free Software Foundation, Inc.'
 
 
 #===============================================================================

@@ -240,7 +240,7 @@ class GLImport(object):
                 modules = self.cache.getModules()
 
             # If user tries to apply conddeps and TESTS['tests'] together.
-            if self.checkInclTestCategory(TESTS['tests']) and self.config['conddeps']:
+            if self.config.checkInclTestCategory(TESTS['tests']) and self.config['conddeps']:
                 raise GLError(10, None)
 
             # Update configuration dictionary.
