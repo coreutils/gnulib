@@ -539,7 +539,7 @@ sc_require_config_h_first:
 
 # Generated headers that override system headers.
 # Keep sorted.
-gl_absolute_include_headers_ ?= \
+gl_prefer_angle_bracket_headers_ ?= \
   alloca.h		\
   arpa_inet.h		\
   assert.h		\
@@ -608,26 +608,17 @@ gl_absolute_include_headers_ ?= \
   wchar.h		\
   wctype.h
 
+# Remove each .h suffix and change each space to "|".
+angle_bracket_header_re = \
+  $(subst $(_sp),|,$(patsubst %.h,%,$(gl_prefer_angle_bracket_headers_)))
+
 # Suggest using '#include <header.h>' instead of '#include "header.h"' for
 # headers that override system headers.
 # Rationale: The Gnulib documentation, node 'Style of #include statements'.
-sc_verify_absolute_include_headers:
-	@if $(VC_LIST_EXCEPT) | $(GREP) '\.c$$' > /dev/null; then	\
-	  source_files=$$($(VC_LIST_EXCEPT) | $(GREP) '\.\(c\|h\)$$');	\
-	  for source_file in $$source_files; do				\
-	    local_includes=$$($(GREP) -h '^ *# *include "[^"]\+"' 	\
-                              $$source_file | $(SED) 			\
-                              -e 's/^[^"]\+"//g' -e 's/"$///g');	\
-	    for local_include in $$local_includes; do			\
-	      for header in $(gl_absolute_include_headers_); do         \
-	        if test "$$header" = "$$local_include";	then		\
-	          echo "$(ME): Use #include <$$header> instead of "     \
-	               "#include \"$$header\" in $$source_file" 2>&1;	\
-	        fi;							\
-	      done;							\
-	    done;							\
-          done;								\
-	fi;
+sc_prefer_angle_bracket_headers:
+	@prohibit='^ *# *include "($(angle_bracket_header_re))\.h"'	\
+	halt='Use #include <hdr.h>, not #include "hdr.h" for the above'	\
+	  $(_sc_search_regexp)
 
 sc_prohibit_HAVE_MBRTOWC:
 	@prohibit='\bHAVE_MBRTOWC\b'					\
