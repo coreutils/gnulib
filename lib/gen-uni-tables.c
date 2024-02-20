@@ -11768,6 +11768,52 @@ output_casing_properties (const char *version)
 
 /* ========================================================================= */
 
+/* Output the Unicode version.  */
+static void
+output_version (const char *filename, const char *version)
+{
+  FILE *stream;
+  int major;
+  int minor;
+
+  stream = fopen (filename, "w");
+  if (stream == NULL)
+    {
+      fprintf (stderr, "cannot open '%s' for writing\n", filename);
+      exit (1);
+    }
+
+  fprintf (stream, "/* DO NOT EDIT! GENERATED AUTOMATICALLY! */\n");
+  fprintf (stream, "/* Supported Unicode version.  */\n");
+  fprintf (stream, "/* Generated automatically by gen-uni-tables.c for Unicode %s.  */\n",
+           version);
+  fprintf (stream, "\n");
+
+  fprintf (stream, "/* Copyright (C) 2024 Free Software Foundation, Inc.\n");
+  fprintf (stream, "\n");
+  output_library_license (stream, false);
+  fprintf (stream, "\n");
+
+  fprintf (stream, "#include <config.h>\n");
+  fprintf (stream, "\n");
+
+  fprintf (stream, "/* Specification.  */\n");
+  fprintf (stream, "#include \"unimetadata.h\"\n");
+  fprintf (stream, "\n");
+
+  sscanf (version, "%d.%d", &major, &minor);
+  fprintf (stream, "const int _libunistring_unicode_version = (%d << 8) | %d;\n",
+           major, minor);
+
+  if (ferror (stream) || fclose (stream))
+    {
+      fprintf (stderr, "error writing to '%s'\n", filename);
+      exit (1);
+    }
+}
+
+/* ========================================================================= */
+
 int
 main (int argc, char * argv[])
 {
@@ -11884,6 +11930,8 @@ main (int argc, char * argv[])
   output_simple_mapping ("unicase/tocasefold.h", to_casefold, version);
   output_casing_rules ("unicase/special-casing-table.gperf", version);
   output_casing_properties (version);
+
+  output_version ("unimetadata/u-version.c", version);
 
   return 0;
 }

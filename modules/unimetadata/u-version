@@ -1,0 +1,26 @@
+Description:
+Supported Unicode version.
+
+Files:
+lib/unimetadata/u-version.c
+
+Depends-on:
+unimetadata/base
+
+configure.ac:
+gl_UNIMETADATA_H_REQUIRE_DEFAULTS
+gl_LIBUNISTRING_MODULE_WITH_VARIABLE([1.2], [unimetadata/u-version])
+
+Makefile.am:
+if LIBUNISTRING_COMPILE_UNIMETADATA_U_VERSION
+lib_SOURCES += unimetadata/u-version.c
+endif
+
+Include:
+"unimetadata.h"
+
+License:
+LGPLv3+ or GPLv2+
+
+Maintainer:
+all
