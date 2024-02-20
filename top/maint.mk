@@ -541,7 +541,7 @@ sc_require_config_h_first:
 # Keep sorted.
 gl_prefer_angle_bracket_headers_ ?= \
   alloca.h		\
-  arpa_inet.h		\
+  arpa/inet.h		\
   assert.h		\
   ctype.h		\
   dirent.h		\
