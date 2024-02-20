@@ -1,0 +1,37 @@
+Description:
+Base layer for libunistring meta information.
+
+Files:
+lib/unimetadata.in.h
+m4/libunistring-base.m4
+m4/unimetadata_h.m4
+
+Depends-on:
+gen-header
+
+configure.ac:
+gl_LIBUNISTRING_LIBHEADER([1.2], [unimetadata.h])
+gl_UNIMETADATA_H
+gl_UNIMETADATA_H_REQUIRE_DEFAULTS
+AC_PROG_MKDIR_P
+
+Makefile.am:
+BUILT_SOURCES += $(LIBUNISTRING_UNIMETADATA_H)
+
+unimetadata.h: unimetadata.in.h
+@NMD@	$(AM_V_GEN)$(MKDIR_P) '%reldir%'
+	$(gl_V_at)$(SED_HEADER_STDOUT) \
+	      -e 's|@''HAVE_UNISTRING_WOE32DLL_H''@|$(HAVE_UNISTRING_WOE32DLL_H)|g' \
+	      -e 's/@''GNULIB_UNIMETADATA_UNICODE_VERSION_DLL_VARIABLE''@/$(GNULIB_UNIMETADATA_UNICODE_VERSION_DLL_VARIABLE)/g' \
+	      $(srcdir)/unimetadata.in.h > $@-t
+	$(AM_V_at)mv $@-t $@
+MOSTLYCLEANFILES += unimetadata.h unimetadata.h-t
+
+Include:
+"unimetadata.h"
+
+License:
+LGPLv2+
+
+Maintainer:
+all
