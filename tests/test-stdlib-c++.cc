@@ -187,6 +187,10 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::setenv, int,
 SIGNATURE_CHECK (GNULIB_NAMESPACE::strtod, double, (const char *, char **));
 #endif
 
+#if GNULIB_TEST_STRTOF
+SIGNATURE_CHECK (GNULIB_NAMESPACE::strtof, float, (const char *, char **));
+#endif
+
 #if GNULIB_TEST_STRTOLL
 SIGNATURE_CHECK (GNULIB_NAMESPACE::strtoll, long long,
                  (const char *, char **, int));

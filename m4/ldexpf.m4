@@ -1,4 +1,4 @@
-# ldexpf.m4 serial 2
+# ldexpf.m4 serial 3
 dnl Copyright (C) 2011-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -22,4 +22,24 @@ AC_DEFUN([gl_FUNC_LDEXPF],
     LDEXPF_LIBM="$LDEXP_LIBM"
   fi
   AC_SUBST([LDEXPF_LIBM])
+])
+
+dnl Test whether ldexpf() can be used without linking with libm.
+dnl Set gl_cv_func_ldexpf_no_libm to 'yes' or 'no' accordingly.
+AC_DEFUN([gl_CHECK_LDEXPF_NO_LIBM],
+[
+  AC_CACHE_CHECK([whether ldexpf() can be used without linking with libm],
+    [gl_cv_func_ldexpf_no_libm],
+    [
+      AC_LINK_IFELSE(
+        [AC_LANG_PROGRAM([[#ifndef __NO_MATH_INLINES
+                           # define __NO_MATH_INLINES 1 /* for glibc */
+                           #endif
+                           #include <math.h>
+                           float (*funcptr) (float, int) = ldexpf;
+                           float x;]],
+                         [[return ldexpf (x, -1) > 0;]])],
+        [gl_cv_func_ldexpf_no_libm=yes],
+        [gl_cv_func_ldexpf_no_libm=no])
+    ])
 ])

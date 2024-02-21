@@ -1,0 +1,37 @@
+Description:
+strtof() function: convert string to 'float'.
+
+Files:
+lib/strtof.c
+lib/strtod.c
+m4/strtof.m4
+m4/ldexpf.m4
+
+Depends-on:
+stdlib
+c-ctype         [test $HAVE_STRTOF = 0 || test $REPLACE_STRTOF = 1]
+math            [test $HAVE_STRTOF = 0 || test $REPLACE_STRTOF = 1]
+stdbool         [test $HAVE_STRTOF = 0 || test $REPLACE_STRTOF = 1]
+
+configure.ac:
+gl_FUNC_STRTOF
+gl_CONDITIONAL([GL_COND_OBJ_STRTOF],
+               [test $HAVE_STRTOF = 0 || test $REPLACE_STRTOF = 1])
+AM_COND_IF([GL_COND_OBJ_STRTOF], [
+  gl_PREREQ_STRTOF
+])
+gl_STDLIB_MODULE_INDICATOR([strtof])
+
+Makefile.am:
+if GL_COND_OBJ_STRTOF
+lib_SOURCES += strtof.c
+endif
+
+Include:
+<stdlib.h>
+
+License:
+LGPL
+
+Maintainer:
+all

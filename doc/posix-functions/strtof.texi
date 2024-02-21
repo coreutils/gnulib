@@ -4,15 +4,41 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/strtof.html}
 
-Gnulib module: ---
+Gnulib module: strtof
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+This function is missing on some platforms:
+NetBSD 3.0, OpenBSD 3.8, Minix 3.1.8, HP-UX 11, IRIX 6.5, Solaris 9, MSVC 9, Android 4.4.
+
+@item
+This function returns the wrong end pointer for @samp{-0x} on some
+platforms:
+glibc 2.4, Mac OS X 10.5, FreeBSD 6.2.
+
+@item
+This function fails to parse @samp{NaN()} on some platforms:
+glibc-2.5, FreeBSD 6.2.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
 @item
-This function is missing on some platforms:
-NetBSD 3.0, OpenBSD 3.8, Minix 3.1.8, HP-UX 11, IRIX 6.5, Solaris 9, MSVC 9, Android 4.4.
+This function returns +0.0 (not @minus{}0.0) for negative underflow on some
+platforms:
+glibc 2.7, mingw, MSVC 14.
+
+@item
+This function cannot distinguish between ``nan'' and ``-nan'' on some
+platforms:
+glibc 2.7, mingw, MSVC 14.
+
+@item
+This function fails to correctly parse very long strings on some
+platforms:
+Mac OS X 10.5, FreeBSD 6.2, NetBSD 5.0, Cygwin, mingw, MSVC 14.
+
+@item
+The replacement function does not always return correctly rounded results.
 @end itemize
