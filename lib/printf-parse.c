@@ -558,6 +558,7 @@ PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
                 cp += 3;
               }
 #endif
+            (void) pointer_type;
 
             /* Read the conversion character.  */
             c = *cp++;
@@ -616,9 +617,11 @@ PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
               case 'p':
                 type = TYPE_POINTER;
                 break;
+#if NEED_PRINTF_WITH_N_DIRECTIVE
               case 'n':
                 type = pointer_type;
                 break;
+#endif
 #if ENABLE_UNISTDIO
               /* The unistdio extensions.  */
               case 'U':

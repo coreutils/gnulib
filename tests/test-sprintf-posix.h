@@ -2808,6 +2808,7 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     ASSERT (retval == strlen (result));
   }
 
+#if NEED_PRINTF_WITH_N_DIRECTIVE
   /* Test the support of the %n format directive.  */
 
   {
@@ -2818,6 +2819,7 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     ASSERT (retval == strlen (result));
     ASSERT (count == 4);
   }
+#endif
 
   /* Test the support of the POSIX/XSI format strings with positions.  */
 

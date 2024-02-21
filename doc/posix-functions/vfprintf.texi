@@ -40,10 +40,6 @@ This function does not support the @samp{F} directive on some platforms:
 NetBSD 3.0, AIX 5.1, HP-UX 11.23, IRIX 6.5, Solaris 9,
 Cygwin 1.5.x, mingw, MSVC 14.
 @item
-This function does not support the @samp{n} directive on some platforms:
-glibc when used with @code{_FORTIFY_SOURCE >= 2} (set by default on Ubuntu),
-Android, OpenBSD, macOS 11.1, MSVC 14.
-@item
 This function does not support the @samp{ls} directive on some platforms:
 OpenBSD 4.0, IRIX 6.5, Cygwin 1.5.x, Haiku.
 @item
@@ -92,6 +88,15 @@ Portability problems fixed by Gnulib module @code{vfprintf-gnu}:
 @item
 This function does not support the @samp{B} directive on some platforms:
 glibc 2.34, FreeBSD 13.2, NetBSD 9.0, OpenBSD 7.2, macOS 12.5, AIX 7.2, Solaris 11.4, and others.
+@end itemize
+
+Portability problems fixed by either Gnulib module @code{vfprintf-posix} or @code{vfprintf-gnu}
+and additionally the Gnulib module @code{printf-with-n-directive}:
+@itemize
+@item
+This function does not support the @samp{n} directive on some platforms:
+glibc when used with @code{_FORTIFY_SOURCE >= 2} (set by default on Ubuntu),
+Android, OpenBSD, macOS 11.1, MSVC 14.
 @end itemize
 
 Portability problems fixed by Gnulib module @code{stdio} or @code{vfprintf-posix} or @code{vfprintf-gnu}, together with module @code{nonblocking}:

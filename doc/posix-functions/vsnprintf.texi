@@ -93,10 +93,6 @@ FreeBSD 14.0, NetBSD 5.0.
 This function does not truncate the result as specified in C99 on some platforms:
 mingw, MSVC 14.
 @item
-This function does not fully support the @samp{n} directive on some platforms:
-glibc when used with @code{_FORTIFY_SOURCE >= 2} (set by default on Ubuntu),
-Android, OpenBSD, macOS 11.1, HP-UX 11, mingw, MSVC 14.
-@item
 This function overwrites memory even when a zero size argument is passed on some
 platforms:
 HP-UX 11.
@@ -107,6 +103,15 @@ Portability problems fixed by Gnulib module @code{vsnprintf-gnu}:
 @item
 This function does not support the @samp{B} directive on some platforms:
 glibc 2.34, FreeBSD 13.2, NetBSD 9.0, OpenBSD 7.2, macOS 12.5, AIX 7.2, Solaris 11.4, and others.
+@end itemize
+
+Portability problems fixed by either Gnulib module @code{vsnprintf-posix} or @code{vsnprintf-gnu}
+and additionally the Gnulib module @code{printf-with-n-directive}:
+@itemize
+@item
+This function does not fully support the @samp{n} directive on some platforms:
+glibc when used with @code{_FORTIFY_SOURCE >= 2} (set by default on Ubuntu),
+Android, OpenBSD, macOS 11.1, HP-UX 11, mingw, MSVC 14.
 @end itemize
 
 Portability problems not fixed by Gnulib:

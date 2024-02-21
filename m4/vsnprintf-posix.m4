@@ -1,4 +1,4 @@
-# vsnprintf-posix.m4 serial 20
+# vsnprintf-posix.m4 serial 22
 dnl Copyright (C) 2007-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -61,7 +61,7 @@ AC_DEFUN([gl_FUNC_VSNPRINTF_IS_POSIX],
                               *yes)
                                 case "$gl_cv_func_printf_directive_f" in
                                   *yes)
-                                    case "$gl_cv_func_printf_directive_n" in
+                                    case m4_ifdef([gl_PRINTF_SUPPORT_N_DIRECTIVE],["$gl_cv_func_printf_directive_n"],["yes"]) in
                                       *yes)
                                         case "$gl_cv_func_printf_directive_ls" in
                                           *yes)
@@ -85,7 +85,7 @@ AC_DEFUN([gl_FUNC_VSNPRINTF_IS_POSIX],
                                                                               *yes)
                                                                                 case "$gl_cv_func_snprintf_retval_c99" in
                                                                                   *yes)
-                                                                                    case "$gl_cv_func_snprintf_directive_n" in
+                                                                                    case m4_ifdef([gl_PRINTF_SUPPORT_N_DIRECTIVE],["$gl_cv_func_snprintf_directive_n"],["yes"]) in
                                                                                       *yes)
                                                                                         case "$gl_cv_func_snprintf_size1" in
                                                                                           *yes)

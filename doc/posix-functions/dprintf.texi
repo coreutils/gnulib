@@ -35,10 +35,6 @@ on some platforms:
 glibc 2.34, musl libc, macOS 12.5, FreeBSD 13.2, NetBSD 9.0, OpenBSD 7.2,
 AIX 7.2, Solaris 11.4, Cygwin 2.9.0.
 @item
-This function does not support the @samp{n} directive on some platforms:
-glibc when used with @code{_FORTIFY_SOURCE >= 2} (set by default on Ubuntu),
-Android, OpenBSD, macOS 11.1.
-@item
 This function does not support precisions in the @samp{ls} directive correctly
 on some platforms:
 Solaris 11.4.
@@ -65,6 +61,15 @@ Portability problems fixed by Gnulib module @code{dprintf-gnu}:
 @item
 This function does not support the @samp{B} directive on some platforms:
 glibc 2.34, FreeBSD 13.2, NetBSD 9.0, OpenBSD 7.2, macOS 12.5, AIX 7.2, Solaris 11.4, and others.
+@end itemize
+
+Portability problems fixed by either Gnulib module @code{dprintf-posix} or @code{dprintf-gnu}
+and additionally the Gnulib module @code{printf-with-n-directive}:
+@itemize
+@item
+This function does not support the @samp{n} directive on some platforms:
+glibc when used with @code{_FORTIFY_SOURCE >= 2} (set by default on Ubuntu),
+Android, OpenBSD, macOS 11.1.
 @end itemize
 
 Portability problems not fixed by Gnulib:

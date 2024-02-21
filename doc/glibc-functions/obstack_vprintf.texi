@@ -48,9 +48,6 @@ This function does not support the @samp{F} directive on some platforms:
 NetBSD 3.0, AIX 5.1, HP-UX 11.23, IRIX 6.5, Solaris 9,
 Cygwin 1.5.x, mingw, MSVC 14.
 @item
-This function does not support the @samp{n} directive on some platforms:
-MSVC 14.
-@item
 This function does not support the @samp{ls} directive on some platforms:
 OpenBSD 4.0, IRIX 6.5, Cygwin 1.5.x, Haiku.
 @item
@@ -87,9 +84,6 @@ musl libc 1.2.4.
 @item
 This function can crash in out-of-memory conditions on some platforms:
 FreeBSD 14.0, NetBSD 5.0.
-@item
-This function does not fully support the @samp{n} directive on some platforms:
-HP-UX 11, mingw, MSVC 14.
 @end itemize
 
 Portability problems fixed by Gnulib module @code{obstack-printf-gnu}:
@@ -97,6 +91,17 @@ Portability problems fixed by Gnulib module @code{obstack-printf-gnu}:
 @item
 This function does not support the @samp{B} directive on some platforms:
 glibc 2.34, FreeBSD 13.2, NetBSD 9.0, OpenBSD 7.2, macOS 12.5, AIX 7.2, Solaris 11.4, and others.
+@end itemize
+
+Portability problems fixed by either Gnulib module @code{obstack-printf-posix} or @code{obstack-printf-gnu}
+and additionally the Gnulib module @code{printf-with-n-directive}:
+@itemize
+@item
+This function does not support the @samp{n} directive on some platforms:
+MSVC 14.
+@item
+This function does not fully support the @samp{n} directive on some platforms:
+HP-UX 11, mingw, MSVC 14.
 @end itemize
 
 Portability problems not fixed by Gnulib:

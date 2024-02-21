@@ -1,0 +1,26 @@
+Description:
+Enable processing of the %n directive in *printf functions.
+
+Comment:
+This module should not be used as a dependency from a test module,
+otherwise when this module occurs as a tests-related module, it will
+have side effects on the compilation of the 'vasnprintf' module, if
+that module occurs among the main modules in lib/.
+
+Files:
+m4/printf-with-n-directive.m4
+
+Depends-on:
+
+configure.ac:
+gl_PRINTF_SUPPORT_N_DIRECTIVE
+
+Makefile.am:
+
+Include:
+
+License:
+LGPLv2+
+
+Maintainer:
+all

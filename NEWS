@@ -74,6 +74,11 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2024-02-21  *printf-posix   These modules no longer support the 'n' directive
+                            by default.  In order to keep the 'n' directive
+                            enabled, you need to additionally request the
+                            module 'printf-with-n-directive'.
+
 2024-02-09  strftime        This module, deprecated on 2017-07-23, is removed.
                             Use module 'nstrftime' instead.
 
@@ -812,15 +817,15 @@ Date        Modules         Changes
 2009-06-25  fpurge          The include file is changed from "fpurge.h" to
                             <stdio.h>.
 
-2009-04-26  modules/uniconv/u8-conv-from-enc
-            modules/uniconv/u16-conv-from-enc
-            modules/uniconv/u32-conv-from-enc
+2009-04-26  uniconv/u8-conv-from-enc
+            uniconv/u16-conv-from-enc
+            uniconv/u32-conv-from-enc
                             The calling convention of the functions
                             u*_conv_from_encoding is changed.
 
-2009-04-26  modules/uniconv/u8-conv-to-enc
-            modules/uniconv/u16-conv-to-enc
-            modules/uniconv/u32-conv-to-enc
+2009-04-26  uniconv/u8-conv-to-enc
+            uniconv/u16-conv-to-enc
+            uniconv/u32-conv-to-enc
                             The calling convention of the functions
                             u*_conv_to_encoding is changed.
 
