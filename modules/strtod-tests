@@ -12,6 +12,7 @@ Depends-on:
 float
 isnand-nolibm
 signbit
+setlocale
 
 configure.ac:
 gt_LOCALE_FR
