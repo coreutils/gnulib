@@ -1705,6 +1705,7 @@ AC_DEFUN([gl_SNPRINTF_DIRECTIVE_N],
     [
       AC_RUN_IFELSE(
         [AC_LANG_SOURCE([[
+#include <signal.h>
 #include <stdio.h>
 #include <string.h>
 #if HAVE_SNPRINTF
@@ -1721,11 +1722,18 @@ static int my_snprintf (char *buf, int size, const char *format, ...)
   return ret;
 }
 #endif
+static void
+abort_handler (int sig)
+{
+  (void) sig;
+  _exit (1);
+}
 static char fmtstring[10];
 static char buf[100];
 int main ()
 {
   int count = -1;
+  signal (SIGABRT, abort_handler);
   /* Copy the format string.  Some systems (glibc with _FORTIFY_SOURCE=2)
      support %n in format strings in read-only memory but not in writable
      memory.  */
