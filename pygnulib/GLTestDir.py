@@ -406,6 +406,7 @@ class GLTestDir(object):
                     file.write(emit)
                 # Viewed from the $testsbase subdirectory, $auxdir is different.
                 emit = ''
+                saved_auxdir = auxdir
                 auxdir = os.path.normpath(joinpath(relinverse(testsbase), auxdir))
                 self.config.setAuxDir(auxdir)
                 # Create $testsbase/configure.ac.
