@@ -1,0 +1,13 @@
+Files:
+tests/unimetadata/test-u-version.c
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-u-version
+check_PROGRAMS += test-u-version
+test_u_version_SOURCES = unimetadata/test-u-version.c
+test_u_version_LDADD = $(LDADD) $(LIBUNISTRING)
