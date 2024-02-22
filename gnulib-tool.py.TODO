@@ -877,23 +877,6 @@ Date:   Mon May 15 23:13:57 2017 +0200
 
 --------------------------------------------------------------------------------
 
-commit a7bd2403d2d3e49a8698495e74cdbe6a5261128a
-Author: Bruno Haible <bruno@clisp.org>
-Date:   Thu Apr 20 21:27:40 2017 +0200
-
-    verify tests: Fix spurious failure with parallel make.
-
-    * gnulib-tool (func_emit_tests_Makefile_am): Emit initialization of
-    EXTRA_PROGRAMS.
-    * tests/test-verify.sh: Build test-verify-try.o, not test-verify.o.
-    * tests/test-verify-try.c: New file.
-    * modules/verify-tests (Files): Add it.
-    (EXTRA_PROGRAMS): Add test-verify-try.
-    (MOSTLYCLEANFILES): Update accordingly.
-    Reported by Adam James Stewart <ajstewart@anl.gov>.
-
---------------------------------------------------------------------------------
-
 commit 363135016c25696d7a173094715e7f3f2dda3596
 Author: Bruno Haible <bruno@clisp.org>
 Date:   Wed Mar 15 23:24:03 2017 +0100

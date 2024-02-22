@@ -1001,6 +1001,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         emit += 'noinst_PROGRAMS =\n'
         if not for_test:
             emit += 'check_PROGRAMS =\n'
+        emit += 'EXTRA_PROGRAMS =\n'
         emit += 'noinst_HEADERS =\n'
         emit += 'noinst_LIBRARIES =\n'
         if libtests:
