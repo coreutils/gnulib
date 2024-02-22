@@ -818,17 +818,6 @@ Date:   Sun Oct 29 16:57:32 2017 +0100
 
 --------------------------------------------------------------------------------
 
-commit 87d14d357f694338acdb8745cea7304ff623ce47
-Author: Bruno Haible <bruno@clisp.org>
-Date:   Mon Jun 12 01:38:57 2017 +0200
-
-    gnulib-tool: Clean up after autotools.
-
-    * gnulib-tool (func_create_testdir, func_create_megatestdir): Remove
-    useless directory left over by the Autotools.
-
---------------------------------------------------------------------------------
-
 commit 30459fe101541698ec704acb224946d73676750e
 Author: Bruno Haible <bruno@clisp.org>
 Date:   Thu Jun 8 15:09:31 2017 +0200
