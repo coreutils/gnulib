@@ -1,4 +1,4 @@
-/* Convert string to double, using the C locale.
+/* Convert string to floating-point number, using the C locale.
 
    Copyright (C) 2003-2004, 2006, 2009-2024 Free Software Foundation, Inc.
 
@@ -26,7 +26,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-#if LONG
+#if FLOAT
+# define C_STRTOD c_strtof
+# define DOUBLE float
+# define STRTOD_L strtof_l
+# define HAVE_GOOD_STRTOD_L (HAVE_STRTOF_L && !GNULIB_defined_strtof_function)
+# define STRTOD strtof
+#elif LONG
 # define C_STRTOD c_strtold
 # define DOUBLE long double
 # define STRTOD_L strtold_l

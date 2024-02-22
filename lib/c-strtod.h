@@ -1,4 +1,4 @@
-/* Convert string to double, using the C locale.  -*- coding: utf-8 -*-
+/* Convert string to floating-point number, using the C locale.
 
    Copyright (C) 2003-2004, 2009-2024 Free Software Foundation, Inc.
 
@@ -27,7 +27,7 @@ extern "C" {
    parsed number or to NPTR if the string does not start with a parsable
    number.
    Return value:
-   - If successful, return the value as a double or 'long double',
+   - If successful, return the value as a float, double, or 'long double',
      respectively, and don't modify errno.
    - In case of overflow, return ±HUGE_VAL or ±HUGE_VALL, respectively, and
      set errno to ERANGE.
@@ -37,9 +37,17 @@ extern "C" {
      that if ENDPTR != NULL, *ENDPTR is set to NPTR), and maybe set errno to
      EINVAL.
    - In case of other error, return 0 and set errno, for example to ENOMEM.  */
+extern float       c_strtof  (char const *nptr, char **endptr);
 extern double      c_strtod  (char const *nptr, char **endptr);
 extern long double c_strtold (char const *nptr, char **endptr);
 
 #ifdef __cplusplus
 }
 #endif
+
+/*
+ * Hey Emacs!
+ * Local Variables:
+ * coding: utf-8
+ * End:
+ */
