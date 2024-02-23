@@ -1032,12 +1032,16 @@ test_xfunction (uint32_t * (*my_xasprintf) (const char *, ...))
     int count = -1;
     uint32_t *result =
       my_xasprintf ("%d %n", 123, &count, 33, 44, 55);
+#if NEED_PRINTF_WITH_N_DIRECTIVE
     static const uint32_t expected[] =
       { '1', '2', '3', ' ', 0 };
     ASSERT (result != NULL);
     ASSERT (u32_strcmp (result, expected) == 0);
     ASSERT (count == 4);
     free (result);
+#else
+    ASSERT (result == NULL);
+#endif
   }
 
   /* Test the support of the POSIX/XSI format strings with positions.  */
