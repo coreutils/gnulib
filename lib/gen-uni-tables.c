@@ -26,6 +26,7 @@
                       /usr/local/share/www.unicode.org/Public/15.1.0/ucd/Scripts.txt \
                       /usr/local/share/www.unicode.org/Public/15.1.0/ucd/Blocks.txt \
                       /usr/local/share/www.unicode.org/Public/3.0-Update1/PropList-3.0.1.txt \
+                      /usr/local/share/www.unicode.org/Public/15.1.0/ucd/BidiMirroring.txt \
                       /usr/local/share/www.unicode.org/Public/15.1.0/ucd/EastAsianWidth.txt \
                       /usr/local/share/www.unicode.org/Public/15.1.0/ucd/LineBreak.txt \
                       /usr/local/share/www.unicode.org/Public/15.1.0/ucd/auxiliary/WordBreakProperty.txt \
@@ -2440,63 +2441,167 @@ output_numeric (const char *filename, const char *version)
 /* See Unicode 3.0 book, section 4.7,
        UAX #9.  */
 
-/* List of mirrored character pairs.  This is a subset of the characters
-   having the BidiMirrored property.  */
-static unsigned int mirror_pairs[][2] =
+/* A pair of mirrored characters.  */
+struct mirror_pair { unsigned int uc[2]; };
+
+/* List of mirrored character pairs, from the BidiMirroring.txt file.
+   This is a subset of the characters having the BidiMirrored property.  */
+static struct mirror_pair mirror_pairs[1000];
+static unsigned int mirror_pairs_count;
+
+/* Stores in mirror_pairs[] the mirrored character pairs from the
+   BidiMirroring.txt file.  */
+static void
+fill_mirror (const char *bidimirroring_filename)
 {
-  { 0x0028, 0x0029 },
-  { 0x003C, 0x003E },
-  { 0x005B, 0x005D },
-  { 0x007B, 0x007D },
-  { 0x00AB, 0x00BB },
-  { 0x2039, 0x203A },
-  { 0x2045, 0x2046 },
-  { 0x207D, 0x207E },
-  { 0x208D, 0x208E },
-  { 0x2208, 0x220B },
-  { 0x220A, 0x220D },
-  { 0x223C, 0x223D },
-  { 0x2243, 0x22CD },
-  { 0x2252, 0x2253 },
-  { 0x2254, 0x2255 },
-  { 0x2264, 0x2265 },
-  { 0x2266, 0x2267 },
-  { 0x226A, 0x226B },
-  { 0x2276, 0x2277 },
-  { 0x2278, 0x2279 },
-  { 0x227A, 0x227B },
-  { 0x227C, 0x227D },
-  { 0x2282, 0x2283 },
-  { 0x2286, 0x2287 },
-  { 0x228F, 0x2290 },
-  { 0x2291, 0x2292 },
-  { 0x22A2, 0x22A3 },
-  { 0x22B0, 0x22B1 },
-  { 0x22B2, 0x22B3 },
-  { 0x22B4, 0x22B5 },
-  { 0x22B6, 0x22B7 },
-  { 0x22C9, 0x22CA },
-  { 0x22CB, 0x22CC },
-  { 0x22D0, 0x22D1 },
-  { 0x22D6, 0x22D7 },
-  { 0x22D8, 0x22D9 },
-  { 0x22DA, 0x22DB },
-  { 0x22DC, 0x22DD },
-  { 0x22DE, 0x22DF },
-  { 0x22F0, 0x22F1 },
-  { 0x2308, 0x2309 },
-  { 0x230A, 0x230B },
-  { 0x2329, 0x232A },
-  { 0x3008, 0x3009 },
-  { 0x300A, 0x300B },
-  { 0x300C, 0x300D },
-  { 0x300E, 0x300F },
-  { 0x3010, 0x3011 },
-  { 0x3014, 0x3015 },
-  { 0x3016, 0x3017 },
-  { 0x3018, 0x3019 },
-  { 0x301A, 0x301B }
-};
+  FILE *stream;
+  char field0[FIELDLEN];
+  char field1[FIELDLEN];
+  char field2[FIELDLEN];
+  int lineno = 0;
+
+  stream = fopen (bidimirroring_filename, "r");
+  if (stream == NULL)
+    {
+      fprintf (stderr, "error during fopen of '%s'\n", bidimirroring_filename);
+      exit (1);
+    }
+
+  mirror_pairs_count = 0;
+  for (;;)
+    {
+      int n;
+      int c;
+      unsigned int uc1;
+      unsigned int uc2;
+      unsigned int i;
+
+      lineno++;
+      c = getc (stream);
+      if (c == EOF)
+        break;
+      if (c == '\n')
+        continue;
+      if (c == '#')
+        {
+          do c = getc (stream); while (c != EOF && c != '\n');
+          continue;
+        }
+      ungetc (c, stream);
+      n = getfield (stream, field0, ';');
+      do c = getc (stream); while (c == ' ');
+      ungetc (c, stream);
+      n += getfield (stream, field1, '#');
+      n += getfield (stream, field2, '\n');
+      if (n == 0)
+        break;
+      if (n != 3)
+        {
+          fprintf (stderr, "short line in '%s':%d\n",
+                   bidimirroring_filename, lineno);
+          exit (1);
+        }
+      /* Remove trailing spaces from field1.  */
+      while (strlen (field1) > 0 && field1[strlen (field1) - 1] == ' ')
+        field1[strlen (field1) - 1] = '\0';
+      /* The line should contain two characters.  */
+      uc1 = strtoul (field0, NULL, 16);
+      uc2 = strtoul (field1, NULL, 16);
+      if (uc1 == 0 || uc2 == 0 || uc1 == uc2)
+        {
+          fprintf (stderr, "parse error at '%s':%d\n",
+                   bidimirroring_filename, lineno);
+          exit (1);
+        }
+      /* Verify that uc1 and uc2 are in range.  */
+      if (!(uc1 < 0x110000))
+        {
+          fprintf (stderr, "%s mentions 0x%04X, which is out-of-range.\n",
+                   bidimirroring_filename, uc1);
+          exit (1);
+        }
+      if (!(uc2 < 0x110000))
+        {
+          fprintf (stderr, "%s mentions 0x%04X, which is out-of-range.\n",
+                   bidimirroring_filename, uc2);
+          exit (1);
+        }
+      /* Have we seen uc1 or uc2 already?  */
+      for (i = 0; i < mirror_pairs_count; i++)
+        {
+          if (uc1 == mirror_pairs[i].uc[0])
+            {
+              fprintf (stderr, "%s: mapping conflict for 0x%04X\n",
+                       bidimirroring_filename, uc1);
+              exit (1);
+            }
+          if (uc2 == mirror_pairs[i].uc[1])
+            {
+              fprintf (stderr, "%s: mapping conflict for 0x%04X\n",
+                       bidimirroring_filename, uc2);
+              exit (1);
+            }
+        }
+      for (i = 0; i < mirror_pairs_count; i++)
+        if (uc1 == mirror_pairs[i].uc[1] || uc2 == mirror_pairs[i].uc[0])
+          break;
+      if (i < mirror_pairs_count)
+        {
+          if (uc1 != mirror_pairs[i].uc[1])
+            {
+              /* uc1 != mirror_pairs[i].uc[1], uc2 == mirror_pairs[i].uc[0] */
+              fprintf (stderr, "%s: mapping conflict for 0x%04X\n",
+                       bidimirroring_filename, uc2);
+              exit (1);
+            }
+          if (uc2 != mirror_pairs[i].uc[0])
+            {
+              /* uc1 == mirror_pairs[i].uc[1], uc2 != mirror_pairs[i].uc[0] */
+              fprintf (stderr, "%s: mapping conflict for 0x%04X\n",
+                       bidimirroring_filename, uc1);
+              exit (1);
+            }
+          /* uc1 == mirror_pairs[i].uc[1], uc2 == mirror_pairs[i].uc[0].
+             (uc1, uc2) is the reverse pair of a pair that we already had
+             encountered: (uc2, uc1).  */
+        }
+      else
+        {
+          /* A new pair.  */
+          if (mirror_pairs_count == SIZEOF (mirror_pairs))
+            {
+              fprintf (stderr, "%s contains more pairs than expected, "
+                       "increase mirror_pairs' size.\n",
+                       bidimirroring_filename);
+              exit (1);
+            }
+          mirror_pairs[mirror_pairs_count].uc[0] = uc1;
+          mirror_pairs[mirror_pairs_count].uc[1] = uc2;
+          mirror_pairs_count++;
+        }
+      /* Verify that uc1 and uc2 have the BidiMirrored property.  */
+      if (!(unicode_attributes[uc1].name != NULL
+            && unicode_attributes[uc1].mirrored))
+        {
+          fprintf (stderr, "%s mentions 0x%04X, which is not BidiMirrored\n",
+                           bidimirroring_filename, uc1);
+          exit (1);
+        }
+      if (!(unicode_attributes[uc2].name != NULL
+            && unicode_attributes[uc2].mirrored))
+        {
+          fprintf (stderr, "%s mentions 0x%04X, which is not BidiMirrored\n",
+                           bidimirroring_filename, uc2);
+          exit (1);
+        }
+    }
+
+  if (ferror (stream) || fclose (stream))
+    {
+      fprintf (stderr, "error reading from '%s'\n", bidimirroring_filename);
+      exit (1);
+    }
+}
 
 static int
 get_mirror_value (unsigned int ch)
@@ -2508,15 +2613,15 @@ get_mirror_value (unsigned int ch)
   mirrored = (unicode_attributes[ch].name != NULL
               && unicode_attributes[ch].mirrored);
   mirror_char = 0xfffd;
-  for (i = 0; i < sizeof (mirror_pairs) / sizeof (mirror_pairs[0]); i++)
-    if (ch == mirror_pairs[i][0])
+  for (i = 0; i < mirror_pairs_count; i++)
+    if (ch == mirror_pairs[i].uc[0])
       {
-        mirror_char = mirror_pairs[i][1];
+        mirror_char = mirror_pairs[i].uc[1];
         break;
       }
-    else if (ch == mirror_pairs[i][1])
+    else if (ch == mirror_pairs[i].uc[1])
       {
-        mirror_char = mirror_pairs[i][0];
+        mirror_char = mirror_pairs[i].uc[0];
         break;
       }
   if (mirrored)
@@ -11829,6 +11934,7 @@ main (int argc, char * argv[])
   const char *scripts_filename;
   const char *blocks_filename;
   const char *proplist30_filename;
+  const char *bidimirroring_filename;
   const char *eastasianwidth_filename;
   const char *linebreak_filename;
   const char *wordbreakproperty_filename;
@@ -11838,9 +11944,9 @@ main (int argc, char * argv[])
   const char *casefolding_filename;
   const char *version;
 
-  if (argc != 17)
+  if (argc != 18)
     {
-      fprintf (stderr, "Usage: %s UnicodeData.txt PropList.txt DerivedCoreProperties.txt emoji-data.txt ArabicShaping.txt Scripts.txt Blocks.txt PropList-3.0.1.txt EastAsianWidth.txt LineBreak.txt WordBreakProperty.txt GraphemeBreakProperty.txt CompositionExclusions.txt SpecialCasing.txt CaseFolding.txt version\n",
+      fprintf (stderr, "Usage: %s UnicodeData.txt PropList.txt DerivedCoreProperties.txt emoji-data.txt ArabicShaping.txt Scripts.txt Blocks.txt PropList-3.0.1.txt BidiMirroring.txt EastAsianWidth.txt LineBreak.txt WordBreakProperty.txt GraphemeBreakProperty.txt CompositionExclusions.txt SpecialCasing.txt CaseFolding.txt version\n",
                argv[0]);
       exit (1);
     }
@@ -11853,14 +11959,15 @@ main (int argc, char * argv[])
   scripts_filename = argv[6];
   blocks_filename = argv[7];
   proplist30_filename = argv[8];
-  eastasianwidth_filename = argv[9];
-  linebreak_filename = argv[10];
-  wordbreakproperty_filename = argv[11];
-  graphemebreakproperty_filename = argv[12];
-  compositionexclusions_filename = argv[13];
-  specialcasing_filename = argv[14];
-  casefolding_filename = argv[15];
-  version = argv[16];
+  bidimirroring_filename = argv[9];
+  eastasianwidth_filename = argv[10];
+  linebreak_filename = argv[11];
+  wordbreakproperty_filename = argv[12];
+  graphemebreakproperty_filename = argv[13];
+  compositionexclusions_filename = argv[14];
+  specialcasing_filename = argv[15];
+  casefolding_filename = argv[16];
+  version = argv[17];
 
   fill_attributes (unicodedata_filename);
   clear_properties ();
@@ -11871,6 +11978,7 @@ main (int argc, char * argv[])
   fill_arabicshaping (arabicshaping_filename);
   fill_scripts (scripts_filename);
   fill_blocks (blocks_filename);
+  fill_mirror (bidimirroring_filename);
   fill_width (eastasianwidth_filename);
   fill_org_lbp (linebreak_filename);
   fill_org_wbp (wordbreakproperty_filename);
@@ -11954,6 +12062,7 @@ main (int argc, char * argv[])
  *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/15.1.0/ucd/Scripts.txt \\
  *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/15.1.0/ucd/Blocks.txt \\
  *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/3.0.1/PropList-3.0.1.txt \\
+ *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/15.1.0/ucd/BidiMirroring.txt \\
  *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/15.1.0/ucd/EastAsianWidth.txt \\
  *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/15.1.0/ucd/LineBreak.txt \\
  *        /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/15.1.0/ucd/auxiliary/WordBreakProperty.txt \\
