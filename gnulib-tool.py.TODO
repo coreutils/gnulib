@@ -18,7 +18,6 @@ The following commits to gnulib-tool have not yet been reflected in
 Implement the options:
   --extract-recursive-dependencies
   --extract-recursive-link-directive
-  --gnu-make
   --tests-makefile-name
   --automake-subdir
   -h | --hardlink
