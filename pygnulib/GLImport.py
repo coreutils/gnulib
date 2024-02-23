@@ -365,6 +365,7 @@ class GLImport(object):
         conddeps = self.config.checkCondDeps()
         libname = self.config.getLibName()
         lgpl = self.config.getLGPL()
+        gnu_make = self.config.getGnuMake()
         makefile_name = self.config.getMakefileName()
         libtool = self.config.checkLibtool()
         macro_prefix = self.config.getMacroPrefix()
@@ -407,6 +408,8 @@ class GLImport(object):
                 actioncmd += ' --lgpl'
             else:  # if lgpl != True
                 actioncmd += ' --lgpl=%s' % lgpl
+        if gnu_make:
+            actioncmd += ' --gnu-make'
         if makefile_name:
             actioncmd += ' --makefile-name=%s' % makefile_name
         if conddeps:
@@ -563,6 +566,7 @@ class GLImport(object):
         testsbase = self.config['testsbase']
         lgpl = self.config['lgpl']
         libname = self.config['libname']
+        gnu_make = self.config['gnu_make']
         makefile_name = self.config['makefile_name']
         conddeps = self.config['conddeps']
         libtool = self.config['libtool']
@@ -602,7 +606,7 @@ AC_DEFUN([%s_EARLY],
                         and file.count('/') > 1):
                     uses_subdirs = True
                     break
-        if uses_subdirs:
+        if not gnu_make and uses_subdirs:
             emit += '  AC_REQUIRE([AM_PROG_CC_C_O])\n'
         for module in moduletable['final']:
             emit += '  # Code from module %s:\n' % str(module)

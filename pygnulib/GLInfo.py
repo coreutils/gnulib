@@ -265,14 +265,16 @@ Options for --import, --add/remove-import:
                             placed (default \"tests\").
       --aux-dir=DIRECTORY   Directory relative to --dir where auxiliary build
                             tools are placed (default comes from configure.ac).
+      --gnu-make            Output for GNU Make instead of for the default
+                            Automake
       --lgpl[=2|=3orGPLv2|=3]
                             Abort if modules aren't available under the LGPL.
                             Also modify license template from GPL to LGPL.
                             The version number of the LGPL can be specified;
                             the default is currently LGPLv3.
-      --makefile-name=NAME  Name of makefile in automake syntax in the
-                            source-base and tests-base directories
-                            (default \"Makefile.am\").
+      --makefile-name=NAME  Name of makefile in the source-base and tests-base
+                            directories (default \"Makefile.am\", or
+                            \"Makefile.in\" if --gnu-make).
       --macro-prefix=PREFIX  Specify the prefix of the macros 'gl_EARLY' and
                             'gl_INIT'. Default is 'gl'.
       --po-domain=NAME      Specify the prefix of the i18n domain. Usually use

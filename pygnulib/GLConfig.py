@@ -56,7 +56,8 @@ class GLConfig(object):
                  sourcebase=None, m4base=None, pobase=None, docbase=None, testsbase=None,
                  modules=None, avoids=None, files=None,
                  incl_test_categories=None, excl_test_categories=None, libname=None,
-                 lgpl=None, makefile_name=None, libtool=None, conddeps=None, macro_prefix=None,
+                 lgpl=None, gnu_make=None, makefile_name=None, libtool=None,
+                 conddeps=None, macro_prefix=None,
                  podomain=None, witness_c_macro=None, vc_files=None, symbolic=None,
                  lsymbolic=None, configure_ac=None, ac_version=None,
                  libtests=None, single_configure=None, verbose=None, dryrun=None,
@@ -130,6 +131,10 @@ class GLConfig(object):
         self.resetLGPL()
         if lgpl != None:
             self.setLGPL(lgpl)
+        # gnu-make
+        self.resetGnuMake()
+        if gnu_make != None:
+            self.setGnuMake(gnu_make)
         # makefile_name
         self.resetMakefileName()
         if makefile_name != None:
@@ -775,6 +780,27 @@ class GLConfig(object):
         '''Disable abort if modules aren't available under the LGPL.
         Default value is None, which means that lgpl is disabled.'''
         self.table['lgpl'] = None
+
+    # Define gnu-make methods.
+    def getGnuMake(self):
+        '''Return a boolean value describing whether the --gnu-make argument
+        was used.'''
+        return self.table['gnu_make']
+
+    def setGnuMake(self, value):
+        '''Set the --gnu-make argument as if it were invoked using the
+        command-line or disable it.'''
+        if type(value) is bool:
+            self.table['gnu_make'] = value
+        else:  # if type(value) is not bool
+            raise TypeError('value must be a bool, not %s'
+                            % type(value).__name__)
+
+    def resetGnuMake(self):
+        '''Reset the --gnu-make argument to its default. This feature must be
+        explicitly enabled by programs who utilize GNU Make features instead
+        of Autmake.'''
+        self.table['gnu_make'] = False
 
     def getModuleIndicatorPrefix(self):
         '''Return module_indicator_prefix to use inside GLEmiter class.'''

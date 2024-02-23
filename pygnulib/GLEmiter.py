@@ -40,6 +40,7 @@ __copyright__ = constants.__copyright__
 #===============================================================================
 # Define global constants
 #===============================================================================
+UTILS = constants.UTILS
 TESTS = constants.TESTS
 joinpath = constants.joinpath
 relinverse = constants.relinverse
@@ -627,6 +628,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         libname = self.config['libname']
         pobase = self.config['pobase']
         auxdir = self.config['auxdir']
+        gnu_make = self.config['gnu_make']
         makefile_name = self.config['makefile_name']
         libtool = self.config['libtool']
         macro_prefix = self.config['macro_prefix']
@@ -639,9 +641,9 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         destfile = os.path.normpath(destfile)
         emit = ''
 
-        # When creating an includable Makefile.am snippet, augment variables with
-        # += instead of assigning them.
-        if makefile_name:
+        # When using GNU make, or when creating an includable Makefile.am snippet,
+        # augment variables with += instead of assigning them.
+        if gnu_make or makefile_name:
             assign = '+='
         else:  # if not makefile_name
             assign = '='
@@ -662,7 +664,8 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         else:  # if not for_test
             edit_check_PROGRAMS = False
         emit += "## DO NOT EDIT! GENERATED AUTOMATICALLY!\n"
-        emit += "## Process this file with automake to produce Makefile.in.\n"
+        if not gnu_make:
+            emit += "## Process this file with automake to produce Makefile.in.\n"
         emit += self.copyright_notice()
         if actioncmd:
             # The maximum line length (excluding the terminating newline) of
@@ -711,16 +714,33 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                                                 '$(' + module_indicator_prefix + '_GNULIB_')
                 # Skip the contents if it's entirely empty.
                 if not (amsnippet1 + amsnippet2).isspace():
-                    allsnippets += '## begin gnulib module %s\n\n' % str(module)
+                    allsnippets += '## begin gnulib module %s\n' % str(module)
+                    if gnu_make:
+                        allsnippets += 'ifeq (,$(OMIT_GNULIB_MODULE_%s))\n' % str(module)
+                        convert_to_gnu_make = True
+                    else:
+                        convert_to_gnu_make = False
+                    allsnippets += '\n'
                     if conddeps:
                         if moduletable.isConditional(module):
                             name = module.getConditionalName()
-                            allsnippets += 'if %s\n' % name
-                    allsnippets += amsnippet1
+                            if gnu_make:
+                                allsnippets += 'ifneq (,$(%s))\n' % name
+                            else:
+                                allsnippets += 'if %s\n' % name
+                    if convert_to_gnu_make:
+                        allsnippets += re.sub(r'^if (.*)', r'ifneq (,$(\1))', amsnippet1)
+                    else:
+                        allsnippets += amsnippet1
                     if conddeps:
                         if moduletable.isConditional(module):
                             allsnippets += 'endif\n'
-                    allsnippets += amsnippet2
+                    if convert_to_gnu_make:
+                        allsnippets += re.sub(r'^if (.*)', r'ifneq (,$(\1))', amsnippet2)
+                    else:
+                        allsnippets += amsnippet2
+                    if gnu_make:
+                        allsnippets += 'endif\n'
                     allsnippets += '## end   gnulib module %s\n\n' % str(module)
 
                     # Test whether there are some source files in subdirectories.
@@ -762,6 +782,24 @@ AC_DEFUN([%V1%_LIBSOURCES], [
             emit += 'CLEANFILES =\n'
             emit += 'DISTCLEANFILES =\n'
             emit += 'MAINTAINERCLEANFILES =\n'
+
+        if gnu_make:
+            emit += '# Start of GNU Make output.\n'
+            result = sp.run([UTILS['autoconf'], '-t', 'AC_SUBST:$1 = @$1@',
+                            joinpath(self.config['destdir'], 'configure.ac')],
+                            capture_output=True)
+            if result.returncode == 0:
+                # sort -u
+                emit += '\n'.join(sorted(list(set(x.strip() for x in
+                                                  result.stdout.decode(encoding='utf-8').splitlines()))))
+                emit += '\n'
+            else:
+                emit += '== gnulib-tool GNU Make output failed as follows ==\n'
+                emit += ['# stderr: ' + x + '\n' for x in
+                         result.stderr.decode(encoding='utf-8').splitlines()]
+            emit += '# End of GNU Make output.\n'
+        else:
+            emit += '# No GNU Make output.\n'
 
         # Execute edits that apply to the Makefile.am being generated.
         for current_edit in range(0, makefiletable.count()):
@@ -895,6 +933,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         m4base = self.config['m4base']
         pobase = self.config['pobase']
         testsbase = self.config['testsbase']
+        gnu_make = self.config['gnu_make']
         makefile_name = self.config['makefile_name']
         libtool = self.config['libtool']
         macro_prefix = self.config['macro_prefix']
@@ -964,9 +1003,16 @@ AC_DEFUN([%V1%_LIBSOURCES], [
 
                 # Skip the contents if it's entirely empty.
                 if not snippet.isspace():
-                    snippet = ('## begin gnulib module %s\n\n' % str(module)
-                               + snippet
-                               + '## end   gnulib module %s\n\n' % str(module))
+                    nonwrapped_snippet = snippet
+                    snippet = '## begin gnulib module %s\n' % str(module)
+                    if gnu_make:
+                        snippet += 'ifeq (,$(OMIT_GNULIB_MODULE_%s))\n' % str(module)
+                    snippet += '\n'
+                    snippet += nonwrapped_snippet
+                    if gnu_make:
+                        snippet += 'endif\n'
+                    snippet += '## end   gnulib module %s\n' % str(module)
+                    snippet += '\n'
                     # Mention long-running tests at the end.
                     if 'longrunning-test' in module.getStatuses():
                         longrun_snippets += snippet

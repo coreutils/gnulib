@@ -358,6 +358,11 @@ def main():
                         action='append',
                         choices=['2', '3orGPLv2', '3'],
                         nargs='?')
+    # gnu-make
+    parser.add_argument('--gnu-make',
+                        dest='gnu_make',
+                        default=None,
+                        action='store_true')
     # makefile-name
     parser.add_argument('--makefile-name',
                         dest='makefile_name',
@@ -602,6 +607,10 @@ def main():
     if cmdargs.pobase == None and cmdargs.podomain != None:
         message = '%s: warning: --po-domain has no effect without a --po-base option\n' % constants.APP['name']
         sys.stderr.write(message)
+    if modules != None and "tests" in mode and gnu_make:
+        message = '%s: --gnu-make not supported when including tests\n' % constants.APP['name']
+        sys.stderr.write(message)
+        sys.exit(1)
 
     # Determine specific settings.
     destdir = cmdargs.destdir
@@ -670,6 +679,7 @@ def main():
             lgpl = True
     cond_dependencies = cmdargs.cond_dependencies
     libtool = cmdargs.libtool
+    gnu_make = cmdargs.gnu_make == True
     makefile_name = cmdargs.makefile_name
     if makefile_name != None:
         makefile_name = makefile_name[0]
@@ -709,6 +719,7 @@ def main():
         excl_test_categories=excl_test_categories,
         libname=libname,
         lgpl=lgpl,
+        gnu_make=gnu_make,
         makefile_name=makefile_name,
         libtool=libtool,
         conddeps=cond_dependencies,

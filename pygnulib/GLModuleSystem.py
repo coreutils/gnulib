@@ -860,7 +860,7 @@ class GLModuleTable(object):
                         automake_snippet = \
                             module.getAutomakeSnippet_Conditional()
                         pattern = re.compile('^if', re.M)
-                        if not pattern.findall(automake_snippet):
+                        if not self.config['gnu_make'] and not pattern.findall(automake_snippet):
                             # A module whose Makefile.am snippet contains a
                             # reference to an automake conditional. If we were
                             # to use it conditionally, we would get an error
