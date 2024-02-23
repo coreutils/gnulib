@@ -6616,6 +6616,8 @@ fill_width (const char *width_filename)
       c = getc (stream);
       if (c == EOF)
         break;
+      if (c == '\n')
+        continue;
       if (c == '#')
         {
           do c = getc (stream); while (c != EOF && c != '\n');
@@ -8571,6 +8573,8 @@ fill_org_lbp (const char *linebreak_filename)
       c = getc (stream);
       if (c == EOF)
         break;
+      if (c == '\n')
+        continue;
       if (c == '#')
         {
           do c = getc (stream); while (c != EOF && c != '\n');
