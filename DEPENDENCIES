@@ -135,7 +135,8 @@ at any time.
 
 * GNU gperf 3.0.1 or newer.
   + 3.0.1 or newer is mandatory, but 3.1 or newer is recommended.
-    Needed if you use the 'iconv_open' module.
+    Needed if you use the 'iconv_open' module or some of the
+    unictype/*, unicase/*, uninorm/* modules.
   + Homepage:
     https://www.gnu.org/software/gperf/
   + Download:
