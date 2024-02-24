@@ -668,13 +668,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
             emit += "## Process this file with automake to produce Makefile.in.\n"
         emit += self.copyright_notice()
         if actioncmd:
-            # The maximum line length (excluding the terminating newline) of
-            # any file that is to be preprocessed by config.status is 3070.
-            # config.status uses awk, and the HP-UX 11.00 awk fails if a line
-            # has length >= 3071; similarly, the IRIX 6.5 awk fails if a line
-            # has length >= 3072.
-            if len(actioncmd) <= 3000:
-                emit += "# Reproduce by: %s\n" % actioncmd
+            emit += "# Reproduce by:\n%s\n" % actioncmd
         emit += '\n'
         uses_subdirs = False
 

@@ -779,17 +779,6 @@ Date:   Mon Sep 3 21:19:16 2018 +0200
 
 --------------------------------------------------------------------------------
 
-commit a1276e5bf2286afec7b0445040be05cad858cdd1
-Author: Paul Eggert <eggert@cs.ucla.edu>
-Date:   Tue Jul 17 15:20:39 2018 -0700
-
-    gnulib-tool: limit line length for git send-email
-
-    * gnulib-tool (func_import): Break actioncmd log line
-    into multiple lines.
-
---------------------------------------------------------------------------------
-
 commit 589e96475f8f2d21a83405ab0672ce95091b80e5
 Author: Bruno Haible <bruno@clisp.org>
 Date:   Fri Dec 29 00:29:23 2017 +0100

@@ -374,63 +374,73 @@ class GLImport(object):
         vc_files = self.config.checkVCFiles()
         verbose = self.config.getVerbosity()
 
-        # Create command-line invocation comment.
-        actioncmd = 'gnulib-tool --import'
-        actioncmd += ' --dir=%s' % destdir
-        for localdir in localpath:
-            actioncmd += ' --local-dir=%s' % localdir
-        actioncmd += ' --lib=%s' % libname
-        actioncmd += ' --source-base=%s' % sourcebase
-        actioncmd += ' --m4-base=%s' % m4base
+        # Command-line invocation printed in a comment in generated gnulib-cache.m4.
+        actioncmd = '# gnulib-tool --import'
+
+        # Break the action command log into multiple lines.
+        # Emacs puts some gnulib-tool log lines in its source repository, and
+        # git send-email rejects patch lines longer than 998 characters.
+        # Also, config.status uses awk, and the HP-UX 11.00 awk fails if a
+        # line has length >= 3071; similarly, the IRIX 6.5 awk fails if a
+        # line has length >= 3072.
+        if len(localpath) > 0:
+            actioncmd += ''.join([f" \\\n#  --local-dir={x}" for x in localpath])
+        actioncmd += ' \\\n#  --lib=%s' % libname
+        actioncmd += ' \\\n#  --source-base=%s' % sourcebase
+        actioncmd += ' \\\n#  --m4-base=%s' % m4base
         if pobase:
-            actioncmd += ' --po-base=%s' % pobase
-        actioncmd += ' --doc-base=%s' % docbase
-        actioncmd += ' --tests-base=%s' % testsbase
-        actioncmd += ' --aux-dir=%s' % auxdir
+            actioncmd += ' \\\n#  --po-base=%s' % pobase
+        actioncmd += ' \\\n#  --doc-base=%s' % docbase
+        actioncmd += ' \\\n#  --tests-base=%s' % testsbase
+        actioncmd += ' \\\n#  --aux-dir=%s' % auxdir
         if self.config.checkInclTestCategory(TESTS['tests']):
-            actioncmd += ' --with-tests'
+            actioncmd += ' \\\n#  --with-tests'
         if self.config.checkInclTestCategory(TESTS['obsolete']):
-            actioncmd += ' --with-obsolete'
+            actioncmd += ' \\\n#  --with-obsolete'
         if self.config.checkInclTestCategory(TESTS['c++-test']):
-            actioncmd += ' --with-c++-tests'
+            actioncmd += ' \\\n#  --with-c++-tests'
         if self.config.checkInclTestCategory(TESTS['longrunning-test']):
-            actioncmd += ' --with-longrunning-tests'
+            actioncmd += ' \\\n#  --with-longrunning-tests'
         if self.config.checkInclTestCategory(TESTS['privileged-test']):
-            actioncmd += ' --with-privileged-test'
+            actioncmd += ' \\\n#  --with-privileged-test'
         if self.config.checkInclTestCategory(TESTS['unportable-test']):
-            actioncmd += ' --with-unportable-tests'
+            actioncmd += ' \\\n#  --with-unportable-tests'
         if self.config.checkInclTestCategory(TESTS['all-test']):
-            actioncmd += ' --with-all-tests'
-        for module in avoids:
-            actioncmd += ' --avoid=%s' % module
+            actioncmd += ' \\\n#  --with-all-tests'
         if lgpl:
             if lgpl == True:
-                actioncmd += ' --lgpl'
+                actioncmd += ' \\\n#  --lgpl'
             else:  # if lgpl != True
-                actioncmd += ' --lgpl=%s' % lgpl
+                actioncmd += ' \\\n#  --lgpl=%s' % lgpl
         if gnu_make:
-            actioncmd += ' --gnu-make'
+            actioncmd += ' \\\n#  --gnu-make'
         if makefile_name:
-            actioncmd += ' --makefile-name=%s' % makefile_name
+            actioncmd += ' \\\n#  --makefile-name=%s' % makefile_name
+        # FIXME: Add the following options in this order when implemented.
+        # --tests-makefile-name
+        # --automake-subdir
+        # --automake-subdir-tests
         if conddeps:
-            actioncmd += ' --conditional-dependencies'
+            actioncmd += ' \\\n#  --conditional-dependencies'
         else:  # if not conddeps
-            actioncmd += ' --no-conditional-dependencies'
+            actioncmd += ' \\\n#  --no-conditional-dependencies'
         if libtool:
-            actioncmd += ' --libtool'
+            actioncmd += ' \\\n#  --libtool'
         else:  # if not libtool
-            actioncmd += ' --no-libtool'
-        actioncmd += ' --macro-prefix=%s' % macro_prefix
+            actioncmd += ' \\\n#  --no-libtool'
+        actioncmd += ' \\\n#  --macro-prefix=%s' % macro_prefix
         if podomain:
-            actioncmd = ' --podomain=%s' % podomain
+            actioncmd = ' \\\n#  --po-domain=%s' % podomain
         if witness_c_macro:
-            actioncmd += ' --witness_c_macro=%s' % witness_c_macro
+            actioncmd += ' \\\n#  --witness-c-macro=%s' % witness_c_macro
         if vc_files == True:
-            actioncmd += ' --vc-files'
+            actioncmd += ' \\\n#  --vc-files'
         elif vc_files == False:
-            actioncmd += ' --no-vc-files'
-        actioncmd += ' '  # Add a space
-        actioncmd += ' '.join(modules)
+            actioncmd += ' \\\n#  --no-vc-files'
+        if len(avoids) > 0:
+            actioncmd += ''.join([f" \\\n#  --avoid={x}" for x in sorted(avoids)])
+        if len(modules) > 0:
+            actioncmd += ''.join([f" \\\n#  {x}" for x in sorted(modules)])
         return actioncmd
 
     def relative_to_destdir(self, dir):
