@@ -607,7 +607,7 @@ def main():
     if cmdargs.pobase == None and cmdargs.podomain != None:
         message = '%s: warning: --po-domain has no effect without a --po-base option\n' % constants.APP['name']
         sys.stderr.write(message)
-    if modules != None and "tests" in mode and gnu_make:
+    if  mode != None and "tests" in mode and gnu_make:
         message = '%s: --gnu-make not supported when including tests\n' % constants.APP['name']
         sys.stderr.write(message)
         sys.exit(1)
