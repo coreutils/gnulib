@@ -261,12 +261,19 @@ bitset_stats_read (const char *file_name)
                  1, file) != 1)
         {
           if (ferror (file))
-            perror (_("cannot read stats file"));
+            fprintf (stderr, "%s\n", _("cannot read stats file"));
           else
             fprintf (stderr, "%s\n", _("bad stats file size"));
         }
       if (fclose (file) != 0)
-        perror (_("cannot read stats file"));
+        {
+#if defined _WIN32 && !defined __CYGWIN__
+          fprintf (stderr, "%s\n", _("cannot read stats file"));
+#else
+          /* fclose() sets errno.  */
+          perror (_("cannot read stats file"));
+#endif
+        }
     }
   bitset_stats_info_data.runs++;
 }
