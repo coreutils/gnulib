@@ -274,8 +274,6 @@ class GLConfig(object):
                 return 2.59
             elif key == 'verbosity':
                 return 0
-            elif key == 'copyrights':
-                return True
             elif key in ['modules', 'avoids', 'tests', 'incl_test_categories', 'excl_test_categories']:
                 return list()
             elif key in ['libtool', 'lgpl', 'gnu_make', 'conddeps', 'symbolic', 'lsymbolic',
@@ -960,10 +958,6 @@ class GLConfig(object):
         '''Specify preferred autoconf version. Default value is 2.59.'''
         self.table['ac_version'] = 2.59
 
-    def checkCopyrights(self):
-        '''Check if copyright notices in files should be replaced.'''
-        return self.table['copyrights']
-
     # Define symbolic methods.
     def checkSymbolic(self):
         '''Check if pygnulib will make symbolic links instead of copying files.'''
@@ -973,7 +967,6 @@ class GLConfig(object):
         '''Enable / disable creation of the symbolic links instead of copying files.'''
         if type(value) is bool:
             self.table['symbolic'] = value
-            self.table['copyrights'] = not value
         else:  # if type(value) is not bool
             raise TypeError('value must be a bool, not %s'
                             % type(value).__name__)
@@ -981,7 +974,6 @@ class GLConfig(object):
     def resetSymbolic(self):
         '''Reset creation of the symbolic links instead of copying files.'''
         self.table['symbolic'] = False
-        self.table['copyrights'] = True
 
     # Define lsymbolic methods.
     def checkLSymbolic(self):

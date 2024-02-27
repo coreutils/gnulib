@@ -781,7 +781,6 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         docbase = self.config['docbase']
         testsbase = self.config['testsbase']
         lgpl = self.config['lgpl']
-        copyrights = self.config['copyrights']
         libname = self.config['libname']
         makefile_name = self.config['makefile_name']
         conddeps = self.config['conddeps']
@@ -885,12 +884,6 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                 print(notice)
 
         # Determine script to apply to imported library files.
-        lgpl2gpl = '''
-      s/GNU Lesser General/GNU General/g
-      s/Lesser General Public License/General Public License/g
-      s/GNU Library General/GNU General/g
-      s/Library General Public License/General Public License/g
-      s/version 2\\(.1\\)\\{0,1\\}\\([ ,]\\)/version 3\\2/g'''
         sed_transform_lib_file = ''
         if 'config-h' in [ str(module)
                            for module in main_modules ]:
@@ -898,50 +891,12 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         s/^#ifdef[\t ]*HAVE_CONFIG_H[\t ]*$/#if 1/
       '''
         sed_transform_main_lib_file = sed_transform_lib_file
-        if copyrights:
-            if lgpl:  # if lgpl is enabled
-                if lgpl == True or lgpl == '3':
-                    sed_transform_main_lib_file += '''
-            s/GNU General/GNU Lesser General/g
-            s/General Public License/Lesser General Public License/g
-            s/Lesser Lesser General Public License/Lesser General Public License/g'''
-                elif lgpl == '3orGPLv2':
-                    sed_transform_main_lib_file += '''
-            /^ *This program is free software/i\\
-   This program is free software: you can redistribute it and\\/or\\
-   modify it under the terms of either:\\
-\\
-     * the GNU Lesser General Public License as published by the Free\\
-       Software Foundation; either version 3 of the License, or (at your\\
-       option) any later version.\\
-\\
-   or\\
-\\
-     * the GNU General Public License as published by the Free\\
-       Software Foundation; either version 2 of the License, or (at your\\
-       option) any later version.\\
-\\
-   or both in parallel, as here.
-            /^ *This program is free software/,/^$/d
-            '''
-                elif lgpl == '2':
-                    sed_transform_main_lib_file += '''
-            s/GNU General/GNU Lesser General/g
-            s/General Public License/Lesser General Public License/g
-            s/Lesser Lesser General Public License/Lesser General Public License/g
-            s/version [23]\\([ ,]\\)/version 2.1\\1/g'''
-            else:  # if lgpl is disabled
-                sed_transform_main_lib_file += lgpl2gpl
 
         # Determine script to apply to auxiliary files that go into $auxdir/.
         sed_transform_build_aux_file = ''
-        if copyrights:
-            sed_transform_build_aux_file += lgpl2gpl
 
         # Determine script to apply to library files that go into $testsbase/.
         sed_transform_testsrelated_lib_file = sed_transform_lib_file
-        if copyrights:
-            sed_transform_testsrelated_lib_file += lgpl2gpl
 
         # Determine the final file lists.
         main_filelist, tests_filelist = \
@@ -1018,7 +973,6 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         docbase = self.config['docbase']
         testsbase = self.config['testsbase']
         lgpl = self.config['lgpl']
-        copyrights = self.config['copyrights']
         libname = self.config['libname']
         makefile_name = self.config['makefile_name']
         conddeps = self.config['conddeps']
