@@ -1,0 +1,8 @@
+# .pylintrc
+
+[MESSAGES CONTROL]
+disable=C0103,C0114,C0121,C0209,C0301,C0302,R0902,R0912,R0913,R0914,R0915,R1705,R1702,R1720
+
+# Local Variables:
+# mode: conf
+# End:
