@@ -508,7 +508,7 @@ USE_MSGCTXT = no\n"""
         # arguments. The check is performed only when autoconf is run from the
         # directory where the configure.ac resides; if it is run from a different
         # directory, the check is skipped.
-        emit += r"""\
+        emit += r'''
   m4_ifval(%V1%_LIBSOURCES_LIST, [
     m4_syscmd([test ! -d ]m4_defn([%V1%_LIBSOURCES_DIR])[ ||
       for gl_file in ]%V1%_LIBSOURCES_LIST[ ; do
@@ -540,7 +540,8 @@ USE_MSGCTXT = no\n"""
     fi
     AC_SUBST([%V1%_LIBOBJS], [$%V1%_libobjs])
     AC_SUBST([%V1%_LTLIBOBJS], [$%V1%_ltlibobjs])
-  ])\n"""
+  ])
+'''
         emit = emit.replace('%V1%', macro_prefix_arg)
         return emit
 
