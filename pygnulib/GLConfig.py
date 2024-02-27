@@ -278,7 +278,7 @@ class GLConfig(object):
                 return True
             elif key in ['modules', 'avoids', 'tests', 'incl_test_categories', 'excl_test_categories']:
                 return list()
-            elif key in ['libtool', 'lgpl', 'conddeps', 'symbolic', 'lsymbolic',
+            elif key in ['libtool', 'lgpl', 'gnu_make', 'conddeps', 'symbolic', 'lsymbolic',
                          'libtests', 'dryrun']:
                 return False
             elif key == 'vc_files':
