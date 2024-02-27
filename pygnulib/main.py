@@ -24,11 +24,28 @@
 # - Place line breaks to help reading the code:
 #   Avoid line breaks inside expressions, if they can be avoided.
 #   Do use line breaks to separate the parts of [ ... for ... ] iterations.
+# - String literals: Use 'single-quotes'.
+#   Rationale: <https://lists.gnu.org/archive/html/bug-gnulib/2024-02/msg00226.html>
+# - Comparison operators:
+#   Use == and != for variables which can contain only strings, numbers, lists,
+#   and None.
+#   Use 'is' and 'is not' for variables which can contain only class instances
+#   (e.g. GLModule instances) and None.
+#   Rationale: <https://lists.gnu.org/archive/html/bug-gnulib/2024-02/msg00225.html>
+
 # You can use this command to check the style:
-#   $ pycodestyle --max-line-length=136 --ignore=E265,W503,E241,E711,E712,E201,E202,E221 pygnulib/*.py
+#   $ pycodestyle *.py
+# The pycodestyle configuration is found in the file setup.cfg.
+# Documentation:
+# <https://pycodestyle.pycqa.org/en/latest/intro.html#error-codes>
 
 # You can use this command to check for mistakes:
-#   $ pylint --disable=C0103,C0114,C0121,C0209,C0301,C0302,R0902,R0912,R0913,R0914,R0915,R1705,R1702,R1720 pygnulib/*.py
+#   $ pylint *.py
+# The pylint configuration is found in the file .pylintrc.
+# Note: This configuration is only effective when you invoke pylint from this
+# directory.
+# Documentation:
+# <https://pylint.readthedocs.io/en/latest/user_guide/messages/messages_overview.html>
 
 
 #===============================================================================
