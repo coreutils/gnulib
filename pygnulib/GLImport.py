@@ -858,8 +858,8 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         compatibilities['all'] = ['GPLv2+ build tool', 'GPLed build tool',
                                   'public domain', 'unlimited',
                                   'unmodifiable license text']
-        compatibilities['3']        = ['LGPLv2+', 'LGPLv3+ or GPLv2', 'LGPLv3+', 'LGPL']
-        compatibilities['3orGPLv2'] = ['LGPLv2+', 'LGPLv3+ or GPLv2']
+        compatibilities['3']        = ['LGPLv2+', 'LGPLv3+ or GPLv2+', 'LGPLv3+', 'LGPL']
+        compatibilities['3orGPLv2'] = ['LGPLv2+', 'LGPLv3+ or GPLv2+']
         compatibilities['2']        = ['LGPLv2+']
         if lgpl:
             for module in main_modules:

@@ -581,17 +581,6 @@ Date:   Thu Jun 10 21:26:53 2021 +0200
 
 --------------------------------------------------------------------------------
 
-commit 6d1cba373a8387aa2131e9dc3e94954c5669ca52
-Author: Bruno Haible <bruno@clisp.org>
-Date:   Sun May 30 14:37:06 2021 +0200
-
-    Write 'LGPLv3+ or GPLv2+' instead of 'LGPLv3+ or GPLv2'.
-
-    * modules/* (License): Change.
-    * gnulib-tool (func_import, func_create_testdir): Likewise.
-
---------------------------------------------------------------------------------
-
 commit 4b071c115309079528db7b60e8d2ffb22b129088
 Author: Paul Eggert <eggert@cs.ucla.edu>
 Date:   Mon Apr 26 23:31:29 2021 -0700
