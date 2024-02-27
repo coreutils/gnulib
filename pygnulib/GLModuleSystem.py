@@ -665,8 +665,8 @@ class GLModule(object):
                         raise GLError(18, str(self))
                     else:  # if not self.config['errors']
                         sys.stderr.write('gnulib-tool: warning: module %s lacks a License\n' % str(self))
-            if str(self) == 'parse-datetime':
-                # This module is under a weaker license only for the purpose of some
+            if str(self).startswith('parse-datetime'):
+                # These modules are under a weaker license only for the purpose of some
                 # users who hand-edit it and don't use gnulib-tool. For the regular
                 # gnulib users they are under a stricter license.
                 result = 'GPL'

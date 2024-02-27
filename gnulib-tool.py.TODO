@@ -605,20 +605,6 @@ Date:   Mon Apr 26 23:31:29 2021 -0700
 
 --------------------------------------------------------------------------------
 
-commit 487b9551b63ef936a6be6df38d1c9484cd97810c
-Author: Paul Eggert <eggert@cs.ucla.edu>
-Date:   Sat Mar 6 08:23:48 2021 -0800
-
-    parse-datetime2: fix licensing
-
-    Problem reported by Bruno Haible in:
-    https://lists.gnu.org/r/bug-gnulib/2021-03/msg00017.html
-    * gnulib-tool (func_get_license): Treat parse-datetime2
-    (actually, anything starting with "parse-datetime")
-    like parse-datetime, as far as licenses go.
-
---------------------------------------------------------------------------------
-
 commit 0be855ee827bf7e9043eeb626c4fd847704be2e6
 Author: Bruno Haible <bruno@clisp.org>
 Date:   Tue Dec 29 02:48:31 2020 +0100
