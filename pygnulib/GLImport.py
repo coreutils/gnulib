@@ -221,7 +221,9 @@ class GLImport(object):
                               for localdir in self.cache['localpath'] ]
                 self.config.setLocalPath(localpath)
 
-        if self.mode != MODES['import']:
+        if self.mode == MODES['import']:
+            self.config.setModules(sorted(self.config.getModules()))
+        else:
             if self.cache['m4base'] and (self.config['m4base'] != self.cache['m4base']):
                 raise GLError(5, m4base)
 
@@ -438,9 +440,9 @@ class GLImport(object):
         elif vc_files == False:
             actioncmd += ' \\\n#  --no-vc-files'
         if len(avoids) > 0:
-            actioncmd += ''.join([f" \\\n#  --avoid={x}" for x in sorted(avoids)])
+            actioncmd += ''.join([f' \\\n#  --avoid={x}' for x in avoids])
         if len(modules) > 0:
-            actioncmd += ''.join([f" \\\n#  {x}" for x in sorted(modules)])
+            actioncmd += ''.join([f' \\\n#  {x}' for x in modules])
         return actioncmd
 
     def relative_to_destdir(self, dir):
