@@ -421,6 +421,41 @@ func_exit ()
   (exit $1); exit $1
 }
 
+# func_fatal_error message
+# outputs to stderr a fatal error message, and terminates the program.
+# Input:
+# - progname                 name of this program
+func_fatal_error ()
+{
+  echo "$progname: *** $1" 1>&2
+  echo "$progname: *** Stop." 1>&2
+  func_exit 1
+}
+
+# func_warning message
+# Outputs to stderr a warning message,
+func_warning ()
+{
+  echo "gnulib-tool: warning: $1" 1>&2
+}
+
+# func_readlink SYMLINK
+# outputs the target of the given symlink.
+if (type readlink) > /dev/null 2>&1; then
+  func_readlink ()
+  {
+    # Use the readlink program from GNU coreutils.
+    readlink "$1"
+  }
+else
+  func_readlink ()
+  {
+    # Use two sed invocations. A single sed -n -e 's,^.* -> \(.*\)$,\1,p'
+    # would do the wrong thing if the link target contains " -> ".
+    LC_ALL=C ls -l "$1" | sed -e 's, -> ,#%%#,' | sed -n -e 's,^.*#%%#\(.*\)$,\1,p'
+  }
+fi
+
 # func_gnulib_dir
 # locates the directory where the gnulib repository lives
 # Input:
@@ -670,41 +705,6 @@ else
     eval "$1=\"\$value\""
   }
   fast_func_remove_suffix=false
-fi
-
-# func_fatal_error message
-# outputs to stderr a fatal error message, and terminates the program.
-# Input:
-# - progname                 name of this program
-func_fatal_error ()
-{
-  echo "$progname: *** $1" 1>&2
-  echo "$progname: *** Stop." 1>&2
-  func_exit 1
-}
-
-# func_warning message
-# Outputs to stderr a warning message,
-func_warning ()
-{
-  echo "gnulib-tool: warning: $1" 1>&2
-}
-
-# func_readlink SYMLINK
-# outputs the target of the given symlink.
-if (type readlink) > /dev/null 2>&1; then
-  func_readlink ()
-  {
-    # Use the readlink program from GNU coreutils.
-    readlink "$1"
-  }
-else
-  func_readlink ()
-  {
-    # Use two sed invocations. A single sed -n -e 's,^.* -> \(.*\)$,\1,p'
-    # would do the wrong thing if the link target contains " -> ".
-    LC_ALL=C ls -l "$1" | sed -e 's, -> ,#%%#,' | sed -n -e 's,^.*#%%#\(.*\)$,\1,p'
-  }
 fi
 
 # func_relativize DIR1 DIR2
