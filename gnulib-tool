@@ -359,10 +359,7 @@ func_version ()
 s/^Date:[	 ]*//p
 q
 }'
-    date=`cd "$gnulib_dir" && git log ChangeLog | sed -n -e "$sed_extract_first_date"`
-    # Turn "Fri Mar 21 07:16:51 2008 -0600" into "Mar 21 2008 07:16:51 -0600".
-    sed_year_before_time='s/^[^ ]* \([^ ]*\) \([0-9]*\) \([0-9:]*\) \([0-9]*\) /\1 \2 \4 \3 /'
-    date=`echo "$date" | sed -e "$sed_year_before_time"`
+    date=`cd "$gnulib_dir" && git log -n 1 --format=medium --date=iso ChangeLog | sed -n -e "$sed_extract_first_date"`
     # Use GNU date to compute the time in GMT.
     date=`date -d "$date" -u +"%Y-%m-%d %H:%M:%S"`
     version=' '`cd "$gnulib_dir" && ./build-aux/git-version-gen /dev/null | sed -e 's/-dirty/-modified/'`
