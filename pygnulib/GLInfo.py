@@ -106,10 +106,14 @@ class GLInfo(object):
                     result = sp.check_output(args, cwd=DIRS['root']).decode("UTF-8")
                     # Get date as "Fri Mar 21 07:16:51 2008 -0600" from string
                     pattern = re.compile('^Date:[\t ]*(.*?)$', re.M)
-                    result = pattern.findall(result)[0]
-                    # Turn "Fri Mar 21 07:16:51 2008 -0600" into "Mar 21 2008 07:16:51 -0600"
-                    pattern = re.compile('^[^ ]* ([^ ]*) ([0-9]*) ([0-9:]*) ([0-9]*) ')
-                    result = pattern.sub('\\1 \\2 \\4 \\3 ', result)
+                    result = pattern.findall(result)
+                    if (len(result) > 0):
+                        result = result[0]
+                        # Turn "Fri Mar 21 07:16:51 2008 -0600" into "Mar 21 2008 07:16:51 -0600"
+                        pattern = re.compile('^[^ ]* ([^ ]*) ([0-9]*) ([0-9:]*) ([0-9]*) ')
+                        result = pattern.sub('\\1 \\2 \\4 \\3 ', result)
+                    else:
+                        result = ''
                     # Use GNU date to compute the time in GMT
                     args = ['date', '-d', result, '-u', '+%Y-%m-%d %H:%M:%S']
                     proc = sp.check_output(args)
