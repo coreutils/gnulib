@@ -73,7 +73,7 @@ class GLEmiter(object):
         '''GLEmiter.copyright_notice() -> str
 
         Emit a header for a generated file.'''
-        emit = "# %s" % self.info.copyright()
+        emit = '# %s' % self.info.copyright_range()
         emit += """
 #
 # This file is free software; you can redistribute it and/or modify

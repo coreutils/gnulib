@@ -125,6 +125,10 @@ class GLInfo(object):
         result = re.compile(' .*').sub('', first_changelog_line)
         return result
 
+    def copyright_range(self):
+        '''Returns a formatted copyright string showing a year range.'''
+        return f'Copyright (C) {constants.__copyright__}'
+
     def usage(self):
         '''Show help message.'''
         result = '''\
