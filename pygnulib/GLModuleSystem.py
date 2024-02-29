@@ -616,15 +616,6 @@ class GLModule(object):
                     buildaux_files = joinpath('$(top_srcdir)', auxdir, buildaux_files)
                     result += 'EXTRA_DIST += %s' % buildaux_files
                     result += '\n\n'
-                # Synthesize an EXTRA_DIST augmentation also for the files from top/.
-                top_files = filter_filelist(constants.NL, all_files,
-                                            'top/', '', 'top/', '').split(constants.NL)
-                top_files = sorted(set(top_files))
-                if top_files != ['']:
-                    top_files = ''.join(top_files)
-                    top_files = joinpath('$(top_srcdir)', top_files)
-                    result += 'EXTRA_DIST += %s' % top_files
-                    result += '\n\n'
             result = constants.nlconvert(result)
             self.cache['makefile-unconditional'] = result
         return self.cache['makefile-unconditional']

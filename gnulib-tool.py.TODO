@@ -793,20 +793,6 @@ Date:   Sat May 20 13:24:37 2017 +0200
 
 --------------------------------------------------------------------------------
 
-commit f30205c5d59bab2c035165158e7d5d65b07b8363
-Author: Mathieu Lirzin <mthl@gnu.org>
-Date:   Tue Mar 14 12:19:40 2017 +0100
-
-    gnulib-tool: don't automatically distribute files from top/
-
-    * gnulib-tool (func_get_automake_snippet_unconditional): To be able to
-    not distribute top/README-release by default, don't distribute files
-    from top/ unconditionally.
-    * modules/gnumakefile (Makefile.am): Distribute top/GNUmakefile.
-    * modules/maintainer-makefile (Makefile.am): Distribute top/maint.mk.
-
---------------------------------------------------------------------------------
-
 commit 9bdf6c8a0cdeb13c12e4b65dee9538c5468dbe1d
 Author: Bruno Haible <bruno@clisp.org>
 Date:   Sun Aug 19 14:06:50 2012 +0200
