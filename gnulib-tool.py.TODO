@@ -830,18 +830,6 @@ Date:   Mon May 15 23:13:57 2017 +0200
 
 --------------------------------------------------------------------------------
 
-commit 363135016c25696d7a173094715e7f3f2dda3596
-Author: Bruno Haible <bruno@clisp.org>
-Date:   Wed Mar 15 23:24:03 2017 +0100
-
-    gnulib-tool: Don't produce a tests directory with only snippet .h files.
-
-    * gnulib-tool (func_modules_transitive_closure_separately): If
-    testsrelated_modules ends up with no "real" modules, aside from
-    modules with applicability 'all', set it to empty.
-
---------------------------------------------------------------------------------
-
 commit f30205c5d59bab2c035165158e7d5d65b07b8363
 Author: Mathieu Lirzin <mthl@gnu.org>
 Date:   Tue Mar 14 12:19:40 2017 +0100

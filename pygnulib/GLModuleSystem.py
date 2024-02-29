@@ -989,7 +989,16 @@ class GLModuleTable(object):
         #   + [ m
         #       for m in main_modules
         #       if m.getApplicability() != 'main' ]
-        tests_modules = sorted(set(tests_modules))
+        tests_modules = sorted(list(set(tests_modules)))
+        # If testsrelated_modules consists only of modules with applicability 'all',
+        # set it to empty (because such modules are only helper modules for other modules).
+        have_nontrivial_testsrelated_modules = False
+        for module in tests_modules:
+            if module.getApplicability() != 'all':
+                have_nontrivial_testsrelated_modules = True
+                break
+        if not have_nontrivial_testsrelated_modules:
+            tests_modules = []
         result = tuple([main_modules, tests_modules])
         return result
 
