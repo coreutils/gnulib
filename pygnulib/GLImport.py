@@ -112,7 +112,7 @@ class GLImport(object):
             version = sorted(set([ float(version)
                                    for version in versions ]))[-1]
             self.config.setAutoconfVersion(version)
-            if version < 2.59:
+            if version < 2.64:
                 raise GLError(4, version)
 
         # Get other cached variables.

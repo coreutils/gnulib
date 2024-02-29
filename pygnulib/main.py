@@ -1210,7 +1210,7 @@ if __name__ == '__main__':
             elif errno == 3:
                 message += 'cannot find %s - make sure you run gnulib-tool from within your package\'s directory' % errinfo
             elif errno == 4:
-                message += 'minimum supported autoconf version is 2.59. Try adding'
+                message += 'minimum supported autoconf version is 2.64. Try adding'
                 message += 'AC_PREREQ([%s])' % constants.DEFAULT_AUTOCONF_MINVERSION
                 message += ' to your configure.ac.'
             elif errno == 5:

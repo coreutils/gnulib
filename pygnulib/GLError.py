@@ -45,7 +45,7 @@ class GLError(Exception):
           1: file does not exist in GLFileSystem: <file>
           2: cannot patch file inside GLFileSystem: <file>
           3: configure file does not exist: <configure.ac>
-          4: minimum supported autoconf version is 2.59, not <version>
+          4: minimum supported autoconf version is 2.64, not <version>
           5: <gnulib-comp.m4> is expected to contain gl_M4_BASE([<m4base>])
           6: missing sourcebase argument
           7: missing docbase argument
@@ -78,7 +78,7 @@ class GLError(Exception):
             elif errno == 3:
                 message = "configure file does not exist: %s" % repr(errinfo)
             elif errno == 4:
-                message = "minimum supported autoconf version is 2.59, not %s" % repr(errinfo)
+                message = "minimum supported autoconf version is 2.64, not %s" % repr(errinfo)
             elif errno == 5:
                 message = "%s is expected to contain gl_M4_BASE([%s])" % (repr(os.path.join(errinfo, 'gnulib-comp.m4')), repr(errinfo))
             elif errno == 6:

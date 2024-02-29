@@ -271,7 +271,7 @@ class GLConfig(object):
             elif key == 'include_guard_prefix':
                 return 'GL'
             elif key == 'ac_version':
-                return 2.59
+                return 2.64
             elif key == 'verbosity':
                 return 0
             elif key in ['modules', 'avoids', 'tests', 'incl_test_categories', 'excl_test_categories']:
@@ -943,11 +943,11 @@ class GLConfig(object):
 
     # Define ac_version methods.
     def getAutoconfVersion(self):
-        '''Return preferred autoconf version. Default value is 2.59.'''
+        '''Return preferred autoconf version. Default value is 2.64.'''
         return self.table['ac_version']
 
     def setAutoconfVersion(self, ac_version):
-        '''Specify preferred autoconf version. Default value is 2.59.'''
+        '''Specify preferred autoconf version. Default value is 2.64.'''
         if type(ac_version) is float or type(ac_version) is int:
             self.table['ac_version'] = float(ac_version)
         else:  # if ac_version has not int or float type
@@ -955,8 +955,8 @@ class GLConfig(object):
                             % type(ac_version).__name__)
 
     def resetAutoconfVersion(self):
-        '''Specify preferred autoconf version. Default value is 2.59.'''
-        self.table['ac_version'] = 2.59
+        '''Specify preferred autoconf version. Default value is 2.64.'''
+        self.table['ac_version'] = 2.64
 
     # Define symbolic methods.
     def checkSymbolic(self):

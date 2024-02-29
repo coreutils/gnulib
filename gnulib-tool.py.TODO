@@ -620,32 +620,6 @@ Date:   Sun Dec 27 01:21:22 2020 +0100
 
 --------------------------------------------------------------------------------
 
-commit 15ce5a630b02af7c7104650dfb18e443b4111564
-Author: Bruno Haible <bruno@clisp.org>
-Date:   Sun Aug 16 12:12:32 2020 +0200
-
-    Assume autoconf >= 2.64.
-
-    * gnulib-tool (DEFAULT_AUTOCONF_MINVERSION): Set to 2.64.
-    * DEPENDENCIES: Require Autoconf 2.64 or newer.
-    * NEWS: Mention the changed requirement.
-    * m4/00gnulib.m4 (_m4_divert_diversion, AC_DEFUN_ONCE): Remove macros.
-    * m4/gnulib-common.m4 (AS_VAR_IF, AS_VAR_COPY): Remove macros.
-    * m4/absolute-header.m4 (gl_ABSOLUTE_HEADER): Quote pushdef'ed
-    variables.
-    * m4/include_next.m4 (gl_NEXT_HEADERS_INTERNAL): Likewise.
-    * m4/warn-on-use.m4 (gl_WARN_ON_USE_PREPARE): Likewise.
-    * m4/warnings.m4 (gl_COMPILER_OPTION_IF): Likewise.
-    (gl_UNKNOWN_WARNINGS_ARE_ERRORS(C), gl_UNKNOWN_WARNINGS_ARE_ERRORS(C++),
-    gl_UNKNOWN_WARNINGS_ARE_ERRORS(Objective C)): Define through AC_DEFUN.
-    * m4/manywarnings.m4 (gl_MANYWARN_ALL_GCC(C), gl_MANYWARN_ALL_GCC(C++)):
-    Likewise.
-    * m4/iconv.m4 (AM_ICONV): Define through AC_DEFUN_ONCE directly.
-    * m4/libunistring.m4 (gl_LIBUNISTRING): Likewise.
-    * m4/configmake.m4: Update comment.
-
---------------------------------------------------------------------------------
-
 commit baec1bac1602ba8534320c295e120f7b658400f4
 Author: Bruno Haible <bruno@clisp.org>
 Date:   Sat Feb 22 15:15:01 2020 +0100

@@ -121,8 +121,8 @@ TESTS = \
     }
 
 # Define AUTOCONF minimum version
-DEFAULT_AUTOCONF_MINVERSION = 2.59
-# You can set AUTOCONFPATH to empty if autoconf 2.57 is already in your PATH
+DEFAULT_AUTOCONF_MINVERSION = 2.64
+# You can set AUTOCONFPATH to empty if autoconf 2.64 is already in your PATH
 AUTOCONFPATH = ''
 # You can set AUTOMAKEPATH to empty if automake 1.9.x is already in your PATH
 AUTOMAKEPATH = ''
