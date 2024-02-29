@@ -159,14 +159,15 @@ class GLTestDir(object):
         if len(specified_modules) == 0:
             # All modules together.
             # Except config-h, which breaks all modules which use HAVE_CONFIG_H.
-            # Except non-recursive-gnulib-prefix-hack, which represents a
-            # nonstandard way of using Automake.
-            # Except mountlist, which aborts the configuration on mingw.
-            # Except lib-ignore, which leads to link errors when Sun C++ is used.
+            # Except non-recursive-gnulib-prefix-hack, which represents a nonstandard
+            # way of using Automake.
+            # Except timevar, which lacks the required file timevar.def.
+            # Except mountlist, which aborts the configuration on mingw. FIXME.
+            # Except lib-ignore, which leads to link errors when Sun C++ is used. FIXME.
             specified_modules = self.modulesystem.list()
             specified_modules = [module
                                  for module in specified_modules
-                                 if module not in ['config-h', 'non-recursive-gnulib-prefix-hack',
+                                 if module not in ['config-h', 'non-recursive-gnulib-prefix-hack', 'timevar',
                                                    'mountlist', 'lib-ignore']]
 
         # Canonicalize the list of specified modules.

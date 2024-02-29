@@ -729,16 +729,6 @@ Date:   Tue Oct 23 00:06:46 2018 +0200
 
 --------------------------------------------------------------------------------
 
-commit 98993f9d1b2ed03007be9dbcdc6bd9fe2d49777b
-Author: Bruno Haible <bruno@clisp.org>
-Date:   Mon Oct 22 20:32:41 2018 +0200
-
-    Fix failure of 'gnulib-tool --create-testdir' with all modules.
-
-    * gnulib-tool (func_create_testdir): Exclude 'timevar' module.
-
---------------------------------------------------------------------------------
-
 commit 8b1d4a63e34f3893036d82f39c5680e845de5ddf
 Author: Bruno Haible <bruno@clisp.org>
 Date:   Mon Sep 3 21:19:16 2018 +0200
