@@ -819,17 +819,6 @@ Date:   Sat May 20 13:24:37 2017 +0200
 
 --------------------------------------------------------------------------------
 
-commit 0414a24cf57f1569b0b4f2a0f22898a0943dfc14
-Author: Bruno Haible <bruno@clisp.org>
-Date:   Mon May 15 23:13:57 2017 +0200
-
-    gnulib-tool: Fix generated code when libtests contains module 'alloca'.
-
-    * gnulib-tool (func_emit_tests_Makefile_am): For libtests.a, use
-    @ALLOCA@, not @LTALLOCA@.
-
---------------------------------------------------------------------------------
-
 commit f30205c5d59bab2c035165158e7d5d65b07b8363
 Author: Mathieu Lirzin <mthl@gnu.org>
 Date:   Tue Mar 14 12:19:40 2017 +0100

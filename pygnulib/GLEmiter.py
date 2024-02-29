@@ -993,8 +993,8 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                                           include_guard_prefix)
                 # Check if module is 'alloca'.
                 if libtests and str(module) == 'alloca':
-                    snippet += 'libtests_a_LIBADD += @%sALLOCA@\n' % perhapsLT
-                    snippet += 'libtests_a_DEPENDENCIES += @%sALLOCA@\n' % perhapsLT
+                    snippet += 'libtests_a_LIBADD += @ALLOCA@\n'
+                    snippet += 'libtests_a_DEPENDENCIES += @ALLOCA@\n'
 
                 # Skip the contents if it's entirely empty.
                 if not snippet.isspace():
