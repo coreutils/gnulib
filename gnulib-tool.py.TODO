@@ -687,22 +687,6 @@ Date:   Fri Jan 4 19:34:19 2019 +0100
 
 --------------------------------------------------------------------------------
 
-commit 97eae14a5b2506457a72f89d5897a20730ab6eee
-Author: Bruno Haible <bruno@clisp.org>
-Date:   Tue Oct 23 00:06:46 2018 +0200
-
-    Assume Automake >= 1.11.
-
-    * m4/configmake.m4: Update comments.
-    * m4/lib-link.m4 (AC_LIB_RPATH): Assume AC_REQUIRE_AUX_FILE exists.
-    * m4/po.m4 (AM_PO_SUBDIRS, AM_POSTPROCESS_PO_MAKEFILE): Eliminate uses
-    of 'eval'.
-    * gnulib-tool (func_emit_lib_Makefile_am, func_emit_tests_Makefile_am,
-    func_create_testdir, func_create_megatestdir): Emit a Makefile.am that
-    requires Automake >= 1.11.
-
---------------------------------------------------------------------------------
-
 commit 8b1d4a63e34f3893036d82f39c5680e845de5ddf
 Author: Bruno Haible <bruno@clisp.org>
 Date:   Mon Sep 3 21:19:16 2018 +0200
