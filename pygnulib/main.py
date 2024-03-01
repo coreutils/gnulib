@@ -17,6 +17,8 @@
 # This program is meant for authors or maintainers which want to import
 # modules from gnulib into their packages.
 
+# This program assumes a Python version >= 3.7.
+
 # CODING STYLE for this file and its companions:
 # Like PEP 8 <https://peps.python.org/pep-0008/>, except
 # - Line length is not limited to 79 characters.
