@@ -640,6 +640,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         module_indicator_prefix = self.config.getModuleIndicatorPrefix()
         ac_version = self.config['ac_version']
         destfile = os.path.normpath(destfile)
+        convert_to_gnu_make_1 = (re.compile(r'^if (.*)', re.MULTILINE), r'ifneq (,$(\1))')
         emit = ''
 
         # When using GNU make, or when creating an includable Makefile.am snippet,
@@ -712,9 +713,6 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                     allsnippets += '## begin gnulib module %s\n' % str(module)
                     if gnu_make:
                         allsnippets += 'ifeq (,$(OMIT_GNULIB_MODULE_%s))\n' % str(module)
-                        convert_to_gnu_make = True
-                    else:
-                        convert_to_gnu_make = False
                     allsnippets += '\n'
                     if conddeps:
                         if moduletable.isConditional(module):
@@ -723,15 +721,15 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                                 allsnippets += 'ifneq (,$(%s))\n' % name
                             else:
                                 allsnippets += 'if %s\n' % name
-                    if convert_to_gnu_make:
-                        allsnippets += re.sub(r'^if (.*)', r'ifneq (,$(\1))', amsnippet1)
+                    if gnu_make:
+                        allsnippets += re.sub(convert_to_gnu_make_1[0], convert_to_gnu_make_1[1], amsnippet1)
                     else:
                         allsnippets += amsnippet1
                     if conddeps:
                         if moduletable.isConditional(module):
                             allsnippets += 'endif\n'
-                    if convert_to_gnu_make:
-                        allsnippets += re.sub(r'^if (.*)', r'ifneq (,$(\1))', amsnippet2)
+                    if gnu_make:
+                        allsnippets += re.sub(convert_to_gnu_make_1[0], convert_to_gnu_make_1[1], amsnippet2)
                     else:
                         allsnippets += amsnippet2
                     if gnu_make:
