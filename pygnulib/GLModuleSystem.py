@@ -571,7 +571,6 @@ class GLModule(object):
                 files = self.getFiles()
                 extra_files = filter_filelist(constants.NL, files,
                                               'tests/', '', 'tests/', '').split(constants.NL)
-                extra_files = sorted(set(extra_files))
                 if extra_files:
                     result += 'EXTRA_DIST += %s' % ' '.join(extra_files)
                     result += constants.NL * 2
