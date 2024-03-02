@@ -606,20 +606,6 @@ Date:   Tue Dec 29 02:48:31 2020 +0100
 
 --------------------------------------------------------------------------------
 
-commit 9f0ade083bf3250281cbf454da656a28270a0be5
-Author: Bruno Haible <bruno@clisp.org>
-Date:   Sun Dec 27 01:21:22 2020 +0100
-
-    gnulib-tool: Make --conditional-dependencies work with --with-tests.
-
-    Reported by Paul Eggert in
-    <https://lists.gnu.org/archive/html/bug-gnulib/2020-12/msg00236.html>.
-
-    * gnulib-tool (func_emit_tests_Makefile_am): Handle conditional
-    dependencies like func_emit_lib_Makefile_am.
-
---------------------------------------------------------------------------------
-
 commit baec1bac1602ba8534320c295e120f7b658400f4
 Author: Bruno Haible <bruno@clisp.org>
 Date:   Sat Feb 22 15:15:01 2020 +0100

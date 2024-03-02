@@ -885,8 +885,8 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         result = tuple([emit, uses_subdirs])
         return result
 
-    def tests_Makefile_am(self, destfile, modules, makefiletable,
-                          witness_macro, for_test):
+    def tests_Makefile_am(self, destfile, modules, moduletable,
+                          makefiletable, witness_macro, for_test):
         '''GLEmiter.tests_Makefile_am(destfile, modules, makefiletable,
              witness_c_macro, for_test) -> tuple of string and bool
 
@@ -938,6 +938,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         ac_version = self.config['ac_version']
         libtests = self.config['libtests']
         single_configure = self.config['single_configure']
+        convert_to_gnu_make_1 = (re.compile(r'^if (.*)', re.MULTILINE), r'ifneq (,$(\1))')
         emit = ''
 
         if libtool:
@@ -974,38 +975,63 @@ AC_DEFUN([%V1%_LIBSOURCES], [
             else:  # if for_test and not single_configure
                 accept = True
             if accept:
-                snippet = module.getAutomakeSnippet()
-                snippet = snippet.replace('lib_LIBRARIES', 'lib%_LIBRARIES')
-                snippet = snippet.replace('lib_LTLIBRARIES', 'lib%_LTLIBRARIES')
+                amsnippet1 = module.getAutomakeSnippet_Conditional()
+                amsnippet1 = amsnippet1.replace('lib_LIBRARIES', 'lib%_LIBRARIES')
+                amsnippet1 = amsnippet1.replace('lib_LTLIBRARIES', 'lib%_LTLIBRARIES')
                 if eliminate_LDFLAGS:
                     pattern = re.compile('^(lib_LDFLAGS[\t ]*\\+=.*$\n)', re.M)
-                    amsnippet1 = pattern.sub('', snippet)
+                    amsnippet1 = pattern.sub('', amsnippet1)
                 pattern = re.compile('lib_([A-Z][A-Z]*)', re.M)
-                snippet = pattern.sub('libtests_a_\\1', snippet)
-                snippet = snippet.replace('$(GNULIB_', '$(' + module_indicator_prefix + '_GNULIB_')
-                snippet = snippet.replace('lib%_LIBRARIES', 'lib_LIBRARIES')
-                snippet = snippet.replace('lib%_LTLIBRARIES', 'lib_LTLIBRARIES')
+                amsnippet1 = pattern.sub('libtests_a_\\1', amsnippet1)
+                amsnippet1 = amsnippet1.replace('$(GNULIB_', '$(' + module_indicator_prefix + '_GNULIB_')
+                amsnippet1 = amsnippet1.replace('lib%_LIBRARIES', 'lib_LIBRARIES')
+                amsnippet1 = amsnippet1.replace('lib%_LTLIBRARIES', 'lib_LTLIBRARIES')
                 if edit_check_PROGRAMS:
-                    snippet = snippet.replace('check_PROGRAMS', 'noinst_PROGRAMS')
-                snippet = snippet.replace('${gl_include_guard_prefix}',
-                                          include_guard_prefix)
+                    amsnippet1 = amsnippet1.replace('check_PROGRAMS', 'noinst_PROGRAMS')
+                amsnippet1 = amsnippet1.replace('${gl_include_guard_prefix}',
+                                                include_guard_prefix)
                 # Check if module is 'alloca'.
                 if libtests and str(module) == 'alloca':
-                    snippet += 'libtests_a_LIBADD += @ALLOCA@\n'
-                    snippet += 'libtests_a_DEPENDENCIES += @ALLOCA@\n'
+                    amsnippet1 += 'libtests_a_LIBADD += @ALLOCA@\n'
+                    amsnippet1 += 'libtests_a_DEPENDENCIES += @ALLOCA@\n'
 
+                amsnippet1 = constants.combine_lines_matching(re.compile('%s_%s_SOURCES' % (libname, libext)),
+                                                              amsnippet1)
+
+                # Get unconditional snippet, edit it and save to amsnippet2.
+                amsnippet2 = module.getAutomakeSnippet_Unconditional()
+                pattern = re.compile('lib_([A-Z][A-Z]*)', re.M)
+                amsnippet2 = pattern.sub('%s_%s_\\1' % (libname, libext),
+                                         amsnippet2)
+                amsnippet2 = amsnippet2.replace('$(GNULIB_',
+                                                '$(' + module_indicator_prefix + '_GNULIB_')
                 # Skip the contents if it's entirely empty.
-                if not snippet.isspace():
-                    nonwrapped_snippet = snippet
+                if not (amsnippet1 + amsnippet2).isspace():
                     snippet = '## begin gnulib module %s\n' % str(module)
                     if gnu_make:
                         snippet += 'ifeq (,$(OMIT_GNULIB_MODULE_%s))\n' % str(module)
                     snippet += '\n'
-                    snippet += nonwrapped_snippet
+                    if conddeps:
+                        if moduletable.isConditional(module):
+                            name = module.getConditionalName()
+                            if gnu_make:
+                                snippet += 'ifneq (,$(%s))\n' % name
+                            else:
+                                snippet += 'if %s\n' % name
+                    if gnu_make:
+                        snippet += re.sub(convert_to_gnu_make_1[0], convert_to_gnu_make_1[1], amsnippet1)
+                    else:
+                        snippet += amsnippet1
+                    if conddeps:
+                        if moduletable.isConditional(module):
+                            snippet += 'endif\n'
+                    if gnu_make:
+                        snippet += re.sub(convert_to_gnu_make_1[0], convert_to_gnu_make_1[1], amsnippet2)
+                    else:
+                        snippet += amsnippet2
                     if gnu_make:
                         snippet += 'endif\n'
-                    snippet += '## end   gnulib module %s\n' % str(module)
-                    snippet += '\n'
+                    snippet += '## end   gnulib module %s\n\n' % str(module)
                     # Mention long-running tests at the end.
                     if 'longrunning-test' in module.getStatuses():
                         longrun_snippets += snippet

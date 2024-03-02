@@ -393,8 +393,8 @@ class GLTestDir(object):
                 # Create $testsbase/Makefile.am.
                 destfile = joinpath(directory, 'Makefile.am')
                 witness_macro = '%stests_WITNESS' % macro_prefix
-                emit, uses_subdirs = self.emitter.tests_Makefile_am(destfile,
-                                                                    tests_modules, self.makefiletable, witness_macro, for_test)
+                emit, uses_subdirs = self.emitter.tests_Makefile_am(destfile, tests_modules, moduletable,
+                                                                    self.makefiletable, witness_macro, for_test)
                 with codecs.open(destfile, 'wb', 'UTF-8') as file:
                     file.write(emit)
             else:  # if not single_configure
@@ -402,8 +402,8 @@ class GLTestDir(object):
                 destfile = joinpath(directory, 'Makefile.am')
                 libtests = False
                 self.config.setLibtests(False)
-                emit, uses_subdirs = self.emitter.tests_Makefile_am(destfile,
-                                                                    modules, self.makefiletable, '', for_test)
+                emit, uses_subdirs = self.emitter.tests_Makefile_am(destfile, modules, moduletable,
+                                                                    self.makefiletable, '', for_test)
                 with codecs.open(destfile, 'wb', 'UTF-8') as file:
                     file.write(emit)
                 # Viewed from the $testsbase subdirectory, $auxdir is different.
