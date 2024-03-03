@@ -28,10 +28,19 @@ On a machine with GNU development tools installed and with a gnulib
 git checkout, use
 
 @example
-gnulib-tool --create-megatestdir --with-tests --dir=...
+gnulib-tool --create-testdir --with-tests --dir=...
 @end example
 
-Note: The created directory uses ca. 512 MB on disk.
+Alternatively, pick a small set of modules and run
+
+@example
+gnulib-tool --create-megatestdir --with-tests --dir=... autobuild MODULES
+@end example
+
+@noindent
+(You can't do this will all of Gnulib at once: @code{gnulib-tool} would run
+for a week and produce a directory that takes more than 100 GB, maybe even 1 TB,
+of disk space.)
 
 @item Transfer gnulib directory
 
