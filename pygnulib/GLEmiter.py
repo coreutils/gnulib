@@ -297,12 +297,12 @@ class GLEmiter(object):
                             if moduletable.isConditional(depmodule):
                                 shellfunc = depmodule.getShellFunc()
                                 condition = moduletable.getCondition(module, depmodule)
-                                if condition != None:
-                                    emit += '  if %s; then\n' % condition
-                                    emit += '    %s\n' % shellfunc
-                                    emit += '  fi\n'
-                                else:  # if condition == None
-                                    emit += '  %s\n' % shellfunc
+                                if condition != None and condition != True:
+                                    emit += '      if %s; then\n' % condition
+                                    emit += '        %s\n' % shellfunc
+                                    emit += '      fi\n'
+                                else:  # if condition == None or condition == True
+                                    emit += '      %s\n' % shellfunc
                             # if not moduletable.isConditional(depmodule)
                             else:
                                 # The autoconf code for $dep has already been emitted above and
@@ -329,11 +329,11 @@ class GLEmiter(object):
                             if moduletable.isConditional(depmodule):
                                 shellfunc = depmodule.getShellFunc()
                                 condition = moduletable.getCondition(module, depmodule)
-                                if condition != None:
+                                if condition != None and condition != True:
                                     emit += '  if %s; then\n' % condition
                                     emit += '    %s\n' % shellfunc
                                     emit += '  fi\n'
-                                else:  # if condition == None
+                                else:  # if condition == None or condition == True
                                     emit += '  %s\n' % shellfunc
                             # if not moduletable.isConditional(depmodule)
                             else:
