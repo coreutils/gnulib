@@ -887,8 +887,8 @@ AC_DEFUN([%V1%_LIBSOURCES], [
 
     def tests_Makefile_am(self, destfile, modules, moduletable,
                           makefiletable, witness_macro, for_test):
-        '''GLEmiter.tests_Makefile_am(destfile, modules, makefiletable,
-             witness_c_macro, for_test) -> tuple of string and bool
+        '''GLEmiter.tests_Makefile_am(destfile, modules, moduletable,
+             makefiletable, witness_c_macro, for_test) -> tuple of string and bool
 
         Emit the contents of the tests Makefile. Returns str and a bool variable
         which shows if subdirectories are used.
@@ -995,14 +995,13 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                     amsnippet1 += 'libtests_a_LIBADD += @ALLOCA@\n'
                     amsnippet1 += 'libtests_a_DEPENDENCIES += @ALLOCA@\n'
 
-                amsnippet1 = constants.combine_lines_matching(re.compile('%s_%s_SOURCES' % (libname, libext)),
+                amsnippet1 = constants.combine_lines_matching(re.compile('libtests_a_SOURCES'),
                                                               amsnippet1)
 
                 # Get unconditional snippet, edit it and save to amsnippet2.
                 amsnippet2 = module.getAutomakeSnippet_Unconditional()
                 pattern = re.compile('lib_([A-Z][A-Z]*)', re.M)
-                amsnippet2 = pattern.sub('%s_%s_\\1' % (libname, libext),
-                                         amsnippet2)
+                amsnippet2 = pattern.sub('libtests_a_\\1', amsnippet2)
                 amsnippet2 = amsnippet2.replace('$(GNULIB_',
                                                 '$(' + module_indicator_prefix + '_GNULIB_')
                 # Skip the contents if it's entirely empty.
