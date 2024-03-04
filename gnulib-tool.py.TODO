@@ -688,22 +688,6 @@ Date:   Mon Sep 3 21:19:16 2018 +0200
 
 --------------------------------------------------------------------------------
 
-commit 589e96475f8f2d21a83405ab0672ce95091b80e5
-Author: Bruno Haible <bruno@clisp.org>
-Date:   Fri Dec 29 00:29:23 2017 +0100
-
-    gnulib-tool: Make --conditional-dependencies work better.
-
-    Reported by Dmitry Selyutin <ghostman.sd@gmail.com>.
-
-    * gnulib-tool (Options): Don't reject the combination of
-    --conditional-dependencies with --with-tests.
-    (func_emit_autoconf_snippets): Add argument referenceable_modules.
-    Don't reference $modules.
-    (func_import, func_create_testdir): Pass it.
-
---------------------------------------------------------------------------------
-
 commit cd58dba367a3b8ffbebb23f2099a820106197fae
 Author: Bruno Haible <bruno@clisp.org>
 Date:   Sun Oct 29 16:57:32 2017 +0100

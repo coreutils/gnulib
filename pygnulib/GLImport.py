@@ -253,11 +253,6 @@ class GLImport(object):
                     self.config.update_key(config, key)
             self.config.setModules(modules)
 
-        # Check if conddeps is enabled together with inctests.
-        inctests = self.config.checkInclTestCategory(TESTS['tests'])
-        if self.config['conddeps'] and inctests:
-            raise GLError(10, None)
-
         # Define GLImport attributes.
         self.emitter = GLEmiter(self.config)
         self.filesystem = GLFileSystem(self.config)
@@ -651,7 +646,7 @@ AC_DEFUN([%s_INIT],
         if witness_c_macro:
             emit += '  m4_pushdef([gl_MODULE_INDICATOR_CONDITION], [%s])\n' % witness_c_macro
         # Emit main autoconf snippets.
-        emit += self.emitter.autoconfSnippets(moduletable['main'],
+        emit += self.emitter.autoconfSnippets(moduletable['main'], moduletable['main'],
                                               moduletable, 0, True, False, True, replace_auxdir)
         if witness_c_macro:
             emit += '  m4_popdef([gl_MODULE_INDICATOR_CONDITION])\n'
@@ -674,7 +669,7 @@ AC_DEFUN([%s_INIT],
         emit += '  m4_pushdef([gl_MODULE_INDICATOR_CONDITION], '
         emit += '[$gl_module_indicator_condition])\n'
         # Emit tests autoconf snippets.
-        emit += self.emitter.autoconfSnippets(moduletable['tests'],
+        emit += self.emitter.autoconfSnippets(moduletable['tests'], moduletable['main'] + moduletable['tests'],
                                               moduletable, 0, True, True, True, replace_auxdir)
         emit += '  m4_popdef([gl_MODULE_INDICATOR_CONDITION])\n'
         emit += self.emitter.initmacro_end('%stests' % macro_prefix)

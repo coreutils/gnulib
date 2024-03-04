@@ -178,7 +178,7 @@ class GLEmiter(object):
         emit = '%s\n' % '\n'.join(lines)
         return emit
 
-    def autoconfSnippets(self, modules, moduletable,
+    def autoconfSnippets(self, modules, referenceable_modules, moduletable,
                          verifier, toplevel, disable_libtool, disable_gettext, replace_auxdir):
         '''GLEmiter.autoconfSnippets(modules,
           verifier, toplevel, disable_libtool, disable_gettext, replace_auxdir) -> str
@@ -191,6 +191,8 @@ class GLEmiter(object):
           modules after they were processed.
         modules argument represents list of modules; every module in this list must
           be a GLModule instance.
+        referenceable_modules is the list of modules which may be referenced as
+          dependencies.
         moduletable is a GLModuleTable instance, which contains necessary
           information about dependencies of the modules.
         verifier is an integer, which can be 0, 1 or 2.
@@ -207,6 +209,9 @@ class GLEmiter(object):
         for module in modules:
             if type(module) is not GLModule:
                 raise TypeError('each module must be a GLModule instance')
+        for module in referenceable_modules:
+            if type(module) is not GLModule:
+                raise TypeError('each referenceable module must be a GLModule instance')
         if type(moduletable) is not GLModuleTable:
             raise TypeError('moduletable must be a GLFileAssistant, not %s'
                             % type(moduletable).__name__)
@@ -290,9 +295,7 @@ class GLEmiter(object):
                         emit += '      %s=true\n' % shellvar
                         depmodules = module.getDependenciesWithoutConditions()
                         # Intersect dependencies with the modules list.
-                        depmodules = [ dep
-                                       for dep in depmodules
-                                       if dep in modules ]   # TODO should this be basemodules or modules?
+                        depmodules = sorted(set(depmodules).intersection(referenceable_modules))
                         for depmodule in depmodules:
                             if moduletable.isConditional(depmodule):
                                 shellfunc = depmodule.getShellFunc()
@@ -322,9 +325,7 @@ class GLEmiter(object):
                     if not moduletable.isConditional(module):
                         depmodules = module.getDependenciesWithoutConditions()
                         # Intersect dependencies with the modules list.
-                        depmodules = [ dep
-                                       for dep in depmodules
-                                       if dep in modules ]   # TODO should this be basemodules or modules?
+                        depmodules = sorted(set(depmodules).intersection(referenceable_modules))
                         for depmodule in depmodules:
                             if moduletable.isConditional(depmodule):
                                 shellfunc = depmodule.getShellFunc()
