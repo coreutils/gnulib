@@ -927,7 +927,7 @@ class GLConfig(object):
         if type(configure_ac) is str:
             if configure_ac:
                 self.table['configure_ac'] = \
-                    relpath(self.table['destdir'], configure_ac)
+                    os.path.join(self.table['destdir'], configure_ac)
         else:  # if type of configure_ac is not str
             raise TypeError('configure_ac must be a string, not %s'
                             % type(configure_ac).__name__)
