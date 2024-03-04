@@ -469,7 +469,7 @@ and these flags have no effect after any system header file has been included.
 When including including specific header files, you need to use the
 @samp{#include <...>} syntax, not the @samp{#include "..."} syntax.
 This is true for the following POSIX or ISO C standardized header files:
-@itemize @w{}
+@itemize @asis{}
 @item @code{arpa/inet.h}
 @item @code{assert.h}
 @item @code{ctype.h}
@@ -529,7 +529,7 @@ This is true for the following POSIX or ISO C standardized header files:
 @noindent
 as well as for the following header files that exist in the GNU C library
 but are not standardized:
-@itemize @w{}
+@itemize @asis{}
 @item @code{alloca.h}
 @item @code{error.h}
 @item @code{getopt.h}
