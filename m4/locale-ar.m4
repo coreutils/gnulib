@@ -84,7 +84,7 @@ int main () {
           #   - The usual locale name:                         ar_SA
           #   - The locale name with explicit encoding suffix: ar_SA.ISO-8859-6
           #   - The HP-UX locale name:                         ar_SA.iso88596
-          #   - The Solaris 7 locale name:                     ar
+          #   - The Solaris 10 locale name:                    ar
           # Also try ar_EG instead of ar_SA because Egypt is a large country too.
           for gt_cv_locale_ar in ar_SA ar_SA.ISO-8859-6 ar_SA.iso88596 ar_EG ar_EG.ISO-8859-6 ar_EG.iso88596 ar none; do
             if test $gt_cv_locale_ar = none; then
