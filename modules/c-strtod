@@ -11,7 +11,7 @@ Depends-on:
 c99
 extensions
 locale
-strdup-posix
+c-ctype
 strtod
 
 configure.ac:

@@ -1,4 +1,4 @@
-# c-strtod.m4 serial 19
+# c-strtod.m4 serial 19.1
 
 # Copyright (C) 2004-2006, 2009-2024 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -12,6 +12,7 @@ AC_DEFUN([gl_C_STRTOD],
 [
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   AC_REQUIRE([gt_FUNC_USELOCALE])
+  gl_CHECK_FUNCS_ANDROID([nl_langinfo], [[#include <langinfo.h>]])
 
   AC_CHECK_HEADERS_ONCE([xlocale.h])
   dnl We can't use AC_CHECK_FUNC here, because strtod_l() is defined as a
@@ -47,5 +48,7 @@ AC_DEFUN([gl_C_STRTOLD],
 [
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   AC_REQUIRE([gt_FUNC_USELOCALE])
+  gl_CHECK_FUNCS_ANDROID([nl_langinfo], [[#include <langinfo.h>]])
+
   gl_CHECK_FUNCS_ANDROID([strtold_l], [[#include <stdlib.h>]])
 ])
