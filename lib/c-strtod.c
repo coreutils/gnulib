@@ -57,6 +57,35 @@ c_locale (void)
   return c_locale_cache;
 }
 
+#else
+
+# if HAVE_NL_LANGINFO
+#  include <langinfo.h>
+# endif
+# include "c-ctype.h"
+
+/* Determine the decimal-point character according to the current locale.  */
+static char
+decimal_point_char (void)
+{
+  const char *point;
+  /* Determine it in a multithread-safe way.  We know nl_langinfo is
+     multithread-safe on glibc systems and Mac OS X systems, but is not required
+     to be multithread-safe by POSIX.  sprintf(), however, is multithread-safe.
+     localeconv() is rarely multithread-safe.  */
+# if HAVE_NL_LANGINFO && (__GLIBC__ || defined __UCLIBC__ || (defined __APPLE__ && defined __MACH__))
+  point = nl_langinfo (RADIXCHAR);
+# elif 1
+  char pointbuf[5];
+  sprintf (pointbuf, "%#.0f", 1.0);
+  point = &pointbuf[1];
+# else
+  point = localeconv () -> decimal_point;
+# endif
+  /* The decimal point is always a single byte: either '.' or ','.  */
+  return (point[0] != '\0' ? point[0] : '.');
+}
+
 #endif
 
 DOUBLE
@@ -100,29 +129,201 @@ C_STRTOD (char const *nptr, char **endptr)
 
 #else
 
-  char *saved_locale = setlocale (LC_NUMERIC, NULL);
+  char decimal_point = decimal_point_char ();
 
-  if (saved_locale)
+  if (decimal_point == '.')
+    /* In this locale, C_STRTOD and STRTOD behave the same way.  */
+    r = STRTOD (nptr, endptr);
+  else
     {
-      saved_locale = strdup (saved_locale);
-      if (saved_locale == NULL)
+      /* Start and end of the floating-point number.  */
+      char const *start;
+      char const *end;
+      /* Position of the decimal point '.' in the floating-point number.
+         Either decimal_point_p == NULL or start <= decimal_point_p < end.  */
+      char const *decimal_point_p = NULL;
+      /* Set to true if we encountered decimal_point while parsing.  */
+      int seen_decimal_point = 0;
+
+      /* Parse
+         1. a sequence of white-space characters,
+         2. a subject sequence possibly containing a floating-point number,
+         as described in POSIX
+         <https://pubs.opengroup.org/onlinepubs/9699919799/functions/strtod.html>.
+       */
+      {
+        char const *p;
+
+        p = nptr;
+
+        /* Parse a sequence of white-space characters.  */
+        while (*p != '\0' && c_isspace ((unsigned char) *p))
+          p++;
+        start = p;
+        end = p;
+
+        /* Start to parse a subject sequence.  */
+        if (*p == '+' || *p == '-')
+          p++;
+        if (*p == '0')
+          {
+            end = p + 1;
+            if (p[1] == 'x' || p[1] == 'X')
+              {
+                size_t num_hex_digits = 0;
+                p += 2;
+                /* Parse a non-empty sequence of hexadecimal digits optionally
+                   containing the decimal point character '.'.  */
+                while (*p != '\0')
+                  {
+                    if (c_isxdigit ((unsigned char) *p))
+                      {
+                        num_hex_digits++;
+                        p++;
+                      }
+                    else if (*p == '.')
+                      {
+                        if (decimal_point_p == NULL)
+                          {
+                            decimal_point_p = p;
+                            p++;
+                          }
+                        else
+                          break;
+                      }
+                    else
+                      break;
+                  }
+                seen_decimal_point = (*p == decimal_point);
+                if (num_hex_digits > 0)
+                  {
+                    end = p;
+                    /* Parse the character 'p' or the character 'P', optionally
+                       followed by a '+' or '-' character, and then followed by
+                       one or more decimal digits.  */
+                    if (*p == 'p' || *p == 'P')
+                      {
+                        p++;
+                        if (*p == '+' || *p == '-')
+                          p++;
+                        if (*p != '\0' && c_isdigit ((unsigned char) *p))
+                          {
+                            p++;
+                            while (*p != '\0' && c_isdigit ((unsigned char) *p))
+                              p++;
+                            end = p;
+                          }
+                      }
+                  }
+                else
+                  decimal_point_p = NULL;
+                goto done_parsing;
+              }
+          }
         {
-          if (endptr)
-            *endptr = (char *) nptr;
-          return 0; /* errno is set here */
+          size_t num_digits = 0;
+          /* Parse a non-empty sequence of decimal digits optionally containing
+             the decimal point character '.'.  */
+          while (*p != '\0')
+            {
+              if (c_isdigit ((unsigned char) *p))
+                {
+                  num_digits++;
+                  p++;
+                }
+              else if (*p == '.')
+                {
+                  if (decimal_point_p == NULL)
+                    {
+                      decimal_point_p = p;
+                      p++;
+                    }
+                  else
+                    break;
+                }
+              else
+                break;
+            }
+          seen_decimal_point = (*p == decimal_point);
+          if (num_digits > 0)
+            {
+              end = p;
+              /* Parse the character 'e' or the character 'E', optionally
+                 followed by a '+' or '-' character, and then followed by one or
+                 more decimal digits.  */
+              if (*p == 'e' || *p == 'E')
+                {
+                  p++;
+                  if (*p == '+' || *p == '-')
+                    p++;
+                  if (*p != '\0' && c_isdigit ((unsigned char) *p))
+                    {
+                      p++;
+                      while (*p != '\0' && c_isdigit ((unsigned char) *p))
+                        p++;
+                      end = p;
+                    }
+                }
+            }
+          else
+            decimal_point_p = NULL;
         }
-      setlocale (LC_NUMERIC, "C");
-    }
+      }
+     done_parsing:
+      if (end == start || (decimal_point_p == NULL && !seen_decimal_point))
+        /* If end == start, we have not parsed anything.  The given string
+           might be "INF", "INFINITY", "NAN", "NAN(chars)", or invalid.
+           We can pass it to STRTOD.
+           If end > start and decimal_point_p == NULL, we have parsed a
+           floating-point number, and it does not have a '.' (and not a ','
+           either, of course).  If !seen_decimal_point, we did not
+           encounter decimal_point while parsing.  In this case, the
+           locale-dependent STRTOD function can handle it.  */
+        r = STRTOD (nptr, endptr);
+      else
+        {
+          /* Create a modified floating-point number, in which the character '.'
+             is replaced with the locale-dependent decimal_point.  */
+          size_t len = end - start;
+          char *buf;
+          char *buf_malloced = NULL;
+          char stackbuf[1000];
+          char *end_in_buf;
 
-  r = STRTOD (nptr, endptr);
+          if (len < sizeof (stackbuf))
+            buf = stackbuf;
+          else
+            {
+              buf = malloc (len + 1);
+              if (buf == NULL)
+                {
+                  /* Out of memory.
+                     Callers may not be prepared to see errno == ENOMEM.  But
+                     they should be prepared to see errno == EINVAL.  */
+                  errno = EINVAL;
+                  if (endptr != NULL)
+                    *endptr = (char *) nptr;
+                  return 0;
+                }
+              buf_malloced = buf;
+            }
 
-  if (saved_locale)
-    {
-      int saved_errno = errno;
+          memcpy (buf, start, len);
+          if (decimal_point_p != NULL)
+            buf[decimal_point_p - start] = decimal_point;
+          buf[len] = '\0';
 
-      setlocale (LC_NUMERIC, saved_locale);
-      free (saved_locale);
-      errno = saved_errno;
+          r = STRTOD (buf, &end_in_buf);
+          if (endptr != NULL)
+            *endptr = (char *) (start + (end_in_buf - buf));
+
+          if (buf_malloced != NULL)
+            {
+              int saved_errno = errno;
+              free (buf_malloced);
+              errno = saved_errno;
+            }
+        }
     }
 
 #endif
