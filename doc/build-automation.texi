@@ -38,7 +38,7 @@ gnulib-tool --create-megatestdir --with-tests --dir=... autobuild MODULES
 @end example
 
 @noindent
-(You can't do this will all of Gnulib at once: @code{gnulib-tool} would run
+(You can't do this with all of Gnulib at once: @code{gnulib-tool} would run
 for a week and produce a directory that takes more than 100 GB, maybe even 1 TB,
 of disk space.)
 
