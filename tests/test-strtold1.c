@@ -16,6 +16,7 @@
 
 #include <config.h>
 
+/* Specification.  */
 #include <stdlib.h>
 
 #include <errno.h>
