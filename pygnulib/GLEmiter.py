@@ -641,7 +641,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         module_indicator_prefix = self.config.getModuleIndicatorPrefix()
         ac_version = self.config['ac_version']
         destfile = os.path.normpath(destfile)
-        convert_to_gnu_make_1 = (re.compile(r'^if (.*)', re.MULTILINE), r'ifneq (,$(\1))')
+        convert_to_gnu_make_1 = (re.compile(r'^if (.*)', re.MULTILINE), r'ifneq (,$(\1_CONDITION))')
         emit = ''
 
         # When using GNU make, or when creating an includable Makefile.am snippet,
@@ -719,7 +719,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                         if moduletable.isConditional(module):
                             name = module.getConditionalName()
                             if gnu_make:
-                                allsnippets += 'ifneq (,$(%s))\n' % name
+                                allsnippets += 'ifneq (,$(%s_CONDITION))\n' % name
                             else:
                                 allsnippets += 'if %s\n' % name
                     if gnu_make:
@@ -939,7 +939,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         ac_version = self.config['ac_version']
         libtests = self.config['libtests']
         single_configure = self.config['single_configure']
-        convert_to_gnu_make_1 = (re.compile(r'^if (.*)', re.MULTILINE), r'ifneq (,$(\1))')
+        convert_to_gnu_make_1 = (re.compile(r'^if (.*)', re.MULTILINE), r'ifneq (,$(\1_CONDITION))')
         emit = ''
 
         if libtool:
@@ -1015,7 +1015,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                         if moduletable.isConditional(module):
                             name = module.getConditionalName()
                             if gnu_make:
-                                snippet += 'ifneq (,$(%s))\n' % name
+                                snippet += 'ifneq (,$(%s_CONDITION))\n' % name
                             else:
                                 snippet += 'if %s\n' % name
                     if gnu_make:

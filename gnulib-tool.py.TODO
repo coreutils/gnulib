@@ -319,19 +319,6 @@ Date:   Sun Dec 19 12:49:16 2021 +0100
 
 --------------------------------------------------------------------------------
 
-commit 415fae8ddcb39d33f364c81b0f199e28c65bb539
-Author: Bruno Haible <bruno@clisp.org>
-Date:   Sat Dec 18 11:43:20 2021 -0800
-
-    stdint: Fix handling of limits.h (regression 2021-12-16).
-
-    * modules/stdint (configure.ac): Revert last change.
-    * gnulib-tool (func_emit_lib_Makefile_am, func_emit_tests_Makefile_am):
-    If --gnu-make is used, assume that AC_SUBSTed variables for conditionals
-    are constructed by appending the suffix '_CONDITION'.
-
---------------------------------------------------------------------------------
-
 commit b8124d982f454b8526b5e11934a2f71faac2b600
 Author: Bruno Haible <bruno@clisp.org>
 Date:   Wed Dec 15 21:49:41 2021 +0100
