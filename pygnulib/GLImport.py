@@ -1279,9 +1279,9 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         if inctests:
             basename = joinpath(testsbase, makefile_am)
             tmpfile = self.assistant.tmpfilename(basename)
-            emit, uses_subdirs = self.emitter.lib_Makefile_am(basename,
-                                                              self.moduletable['tests'], self.moduletable, self.makefiletable,
-                                                              actioncmd, for_test)
+            emit, uses_subdirs = self.emitter.tests_Makefile_am(basename,
+                                                                self.moduletable['tests'], self.moduletable, self.makefiletable,
+                                                                '%stests_WITNESS' % macro_prefix, for_test)
             with codecs.open(tmpfile, 'wb', 'UTF-8') as file:
                 file.write(emit)
             filename, backup, flag = self.assistant.super_update(basename, tmpfile)
