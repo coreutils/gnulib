@@ -3,6 +3,8 @@ tests/test-c-strtof.c
 tests/test-strtof.h
 tests/test-c-strtof1.sh
 tests/test-c-strtof1.c
+tests/test-c-strtof-mt.sh
+tests/test-c-strtof-mt.c
 tests/minus-zero.h
 tests/macros.h
 m4/locale-fr.m4
@@ -13,6 +15,8 @@ float
 isnanf-nolibm
 signbit
 setlocale
+thread
+nanosleep
 
 configure.ac:
 gt_LOCALE_FR
@@ -22,10 +26,11 @@ Makefile.am:
 TESTS += test-c-strtof
 check_PROGRAMS += test-c-strtof
 
-TESTS += test-c-strtof1.sh
+TESTS += test-c-strtof1.sh test-c-strtof-mt.sh
 TESTS_ENVIRONMENT += \
   LOCALE_FR='@LOCALE_FR@' \
   LOCALE_FR_UTF8='@LOCALE_FR_UTF8@' \
   LC_NUMERIC_IMPLEMENTED='@LC_NUMERIC_IMPLEMENTED@'
-check_PROGRAMS += test-c-strtof1
+check_PROGRAMS += test-c-strtof1 test-c-strtof-mt
 test_c_strtof1_LDADD = $(LDADD) $(SETLOCALE_LIB)
+test_c_strtof_mt_LDADD = $(LDADD) $(SETLOCALE_LIB) $(LIBMULTITHREAD) $(NANOSLEEP_LIB)
