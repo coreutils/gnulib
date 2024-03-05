@@ -1,5 +1,6 @@
 Files:
 tests/test-strtof.c
+tests/test-strtof.h
 tests/test-strtof1.sh
 tests/test-strtof1.c
 tests/signature.h
