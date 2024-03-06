@@ -1156,8 +1156,6 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         emit += '  -I%s/%s -I$(srcdir)/%s/%s\n' % (testsbase_inverse, sourcebase, testsbase_inverse, sourcebase)
         emit += '\n'
 
-        ldadd_before = ''
-        ldadd_after = ''
         if libtests:
             # All test programs need to be linked with libtests.a.
             # It needs to be passed to the linker before ${libname}.${libext},
@@ -1168,13 +1166,13 @@ AC_DEFUN([%V1%_LIBSOURCES], [
             # voluntarily omitted).
             # The LIBTESTS_LIBDEPS can be passed to the linker once or twice, it
             # does not matter.
-            ldadd_before = ' libtests.a'
-            ldadd_after = ' libtests.a $(LIBTESTS_LIBDEPS)'
-        emit += 'LDADD =%s %s/%s/%s.%s libtests.a %s/%s/%s.%s%s\n\n' \
-                % (ldadd_before,
-                   testsbase_inverse, sourcebase, libname, libext,
-                   testsbase_inverse, sourcebase, libname, libext,
-                   ldadd_after)
+            emit += ("LDADD = libtests.a %s/%s/%s.%s libtests.a %s/%s/%s.%s libtests.a $(LIBTESTS_LIBDEPS)\n"
+                     % (testsbase_inverse, sourcebase, libname, libext,
+                        testsbase_inverse, sourcebase, libname, libext))
+        else:
+            emit += ("LDADD = %s/%s/%s.%s\n"
+                     % (testsbase_inverse, sourcebase, libname, libext))
+        emit += '\n'
         if libtests:
             emit += 'libtests_a_SOURCES =\n'
             # Here we use $(LIBOBJS), not @LIBOBJS@. The value is the same. However,
