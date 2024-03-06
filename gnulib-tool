@@ -1072,23 +1072,38 @@ for signal in HUP INT QUIT PIPE TERM; do
 done
 signal=EXIT
 
-# The 'join' program does not exist on all platforms, and
+# The 'join' program does not exist on all platforms (e.g. Alpine Linux), and
 # on macOS 12.6, FreeBSD 14.0, NetBSD 9.3 it is buggy, see
 # <https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=232405>.
-# In these cases, bail out. Otherwise, we can use it.
-if (type join) >/dev/null 2>&1; then
-  echo a > "$tmp"/join-input-1
-  { echo; echo a; } > "$tmp"/join-input-2
-  if LC_ALL=C join "$tmp"/join-input-1 "$tmp"/join-input-2 | grep a >/dev/null \
-     && LC_ALL=C join "$tmp"/join-input-2 "$tmp"/join-input-1 | grep a >/dev/null; then
-    :
-  else
-    echo "$progname: 'join' program is buggy. Consider installing GNU coreutils." >&2
-    func_exit 1
-  fi
+# Search for a working 'join' program, by trying $JOIN, join, gjoin,
+# in this order.
+echo a > "$tmp"/join-input-1
+{ echo; echo a; } > "$tmp"/join-input-2
+if test -n "$JOIN" \
+   && LC_ALL=C $JOIN "$tmp"/join-input-1 "$tmp"/join-input-2 >/dev/null \
+   && LC_ALL=C $JOIN "$tmp"/join-input-1 "$tmp"/join-input-2 | grep a >/dev/null \
+   && LC_ALL=C $JOIN "$tmp"/join-input-2 "$tmp"/join-input-1 | grep a >/dev/null; then
+  :
 else
-  echo "$progname: 'join' program not found. Consider installing GNU coreutils." >&2
-  func_exit 1
+  if (type join) >/dev/null 2>&1 \
+     && LC_ALL=C join "$tmp"/join-input-1 "$tmp"/join-input-2 | grep a >/dev/null \
+     && LC_ALL=C join "$tmp"/join-input-2 "$tmp"/join-input-1 | grep a >/dev/null; then
+    JOIN=join
+  else
+    if (type gjoin) >/dev/null 2>&1 \
+       && LC_ALL=C gjoin "$tmp"/join-input-1 "$tmp"/join-input-2 | grep a >/dev/null \
+       && LC_ALL=C gjoin "$tmp"/join-input-2 "$tmp"/join-input-1 | grep a >/dev/null; then
+      JOIN=gjoin
+    else
+      if (type join) >/dev/null 2>&1; then
+        echo "$progname: 'join' program is buggy. Consider installing GNU coreutils." >&2
+        func_exit 1
+      else
+        echo "$progname: 'join' program not found. Consider installing GNU coreutils." >&2
+        func_exit 1
+      fi
+    fi
+  fi
 fi
 
 # Unset CDPATH.  Otherwise, output from 'cd dir' can surprise callers.
@@ -2596,7 +2611,7 @@ func_get_automake_snippet_unconditional ()
       # Remove $already_mentioned_files from $lib_files.
       echo "$lib_files" | LC_ALL=C sort -u > "$tmp"/lib-files
       extra_files=`for f in $already_mentioned_files; do echo $f; done \
-                   | LC_ALL=C sort -u | LC_ALL=C join -v 2 - "$tmp"/lib-files`
+                   | LC_ALL=C sort -u | LC_ALL=C $JOIN -v 2 - "$tmp"/lib-files`
       if test -n "$extra_files"; then
         echo "EXTRA_DIST +=" $extra_files
         echo
@@ -2863,7 +2878,7 @@ func_get_dependencies_recursively ()
     handledmodules=`for m in $handledmodules $inmodules_this_round; do echo $m; done | LC_ALL=C sort -u`
     # Remove $handledmodules from $inmodules.
     for m in $inmodules; do echo $m; done | LC_ALL=C sort -u > "$tmp"/queued-modules
-    inmodules=`echo "$handledmodules" | LC_ALL=C join -v 2 - "$tmp"/queued-modules`
+    inmodules=`echo "$handledmodules" | LC_ALL=C $JOIN -v 2 - "$tmp"/queued-modules`
   done
   rm -f "$tmp"/queued-modules
   for m in $outmodules; do echo $m; done | LC_ALL=C sort -u
@@ -2904,7 +2919,7 @@ func_get_link_directive_recursively ()
     handledmodules=`for m in $handledmodules $inmodules_this_round; do echo $m; done | LC_ALL=C sort -u`
     # Remove $handledmodules from $inmodules.
     for m in $inmodules; do echo $m; done | LC_ALL=C sort -u > "$tmp"/queued-modules
-    inmodules=`echo "$handledmodules" | LC_ALL=C join -v 2 - "$tmp"/queued-modules`
+    inmodules=`echo "$handledmodules" | LC_ALL=C $JOIN -v 2 - "$tmp"/queued-modules`
   done
   rm -f "$tmp"/queued-modules
   for m in $outmodules; do func_get_link_directive "$m"; done | LC_ALL=C sort -u | sed -e '/^$/d'
@@ -3218,7 +3233,7 @@ func_modules_transitive_closure ()
     handledmodules=`for m in $handledmodules $inmodules_this_round; do echo $m; done | LC_ALL=C sort -u`
     # Remove $handledmodules from $inmodules.
     for m in $inmodules; do echo $m; done | LC_ALL=C sort -u > "$tmp"/queued-modules
-    inmodules=`echo "$handledmodules" | LC_ALL=C join -v 2 - "$tmp"/queued-modules`
+    inmodules=`echo "$handledmodules" | LC_ALL=C $JOIN -v 2 - "$tmp"/queued-modules`
     fmtc_inc_all_tests="$inc_all_indirect_tests"
   done
   modules=`for m in $outmodules; do echo $m; done | LC_ALL=C sort -u`
@@ -3246,7 +3261,7 @@ func_show_module_list ()
   echo "Module list with included dependencies (indented):"
   echo "$specified_modules" | sed -e '/^$/d' -e 's/$/| /' > "$tmp"/specified-modules
   echo "$modules" | sed -e '/^$/d' \
-    | LC_ALL=C join -t '|' -a2 "$tmp"/specified-modules - \
+    | LC_ALL=C $JOIN -t '|' -a2 "$tmp"/specified-modules - \
     | sed -e 's/^\(.*\)|.*/|\1/' -e 's/^/    /' -e 's/^    |\(.*\)$/  '"${bold_on}"'\1'"${bold_off}"'/'
 }
 
@@ -3318,7 +3333,7 @@ func_modules_transitive_closure_separately ()
                             echo $module
                           fi
                         done \
-                        | LC_ALL=C sort -u | LC_ALL=C join -v 2 - "$tmp"/final-modules`
+                        | LC_ALL=C sort -u | LC_ALL=C $JOIN -v 2 - "$tmp"/final-modules`
   # If testsrelated_modules consists only of modules with applicability 'all',
   # set it to empty (because such modules are only helper modules for other modules).
   have_nontrivial_testsrelated_modules=
@@ -4746,7 +4761,7 @@ func_emit_autoconf_snippets ()
           echo "      $shellvar=true"
           deps=`func_get_dependencies $module | sed -e "$sed_dependencies_without_conditions"`
           # Intersect $deps with the modules list $1.
-          deps=`for m in $deps; do echo $m; done | LC_ALL=C sort -u | LC_ALL=C join - "$tmp"/modules`
+          deps=`for m in $deps; do echo $m; done | LC_ALL=C sort -u | LC_ALL=C $JOIN - "$tmp"/modules`
           for dep in $deps; do
             if func_cond_module_p "$dep"; then
               func_module_shellfunc_name "$dep"
@@ -4778,7 +4793,7 @@ func_emit_autoconf_snippets ()
         else
           deps=`func_get_dependencies $module | sed -e "$sed_dependencies_without_conditions"`
           # Intersect $deps with the modules list $1.
-          deps=`for m in $deps; do echo $m; done | LC_ALL=C sort -u | LC_ALL=C join - "$tmp"/modules`
+          deps=`for m in $deps; do echo $m; done | LC_ALL=C sort -u | LC_ALL=C $JOIN - "$tmp"/modules`
           for dep in $deps; do
             if func_cond_module_p "$dep"; then
               func_module_shellfunc_name "$dep"
@@ -5446,7 +5461,7 @@ s,^\(.................................................[^ ]*\) *,                
     > "$tmp"/new-files
   # First the files that are in old-files, but not in new-files:
   sed_take_first_column='s,'"$delimiter"'.*,,'
-  for g in `LC_ALL=C join -t"$delimiter" -v1 "$tmp"/old-files "$tmp"/new-files | sed -e "$sed_take_first_column"`; do
+  for g in `LC_ALL=C $JOIN -t"$delimiter" -v1 "$tmp"/old-files "$tmp"/new-files | sed -e "$sed_take_first_column"`; do
     # Remove the file. Do nothing if the user already removed it.
     if test -f "$destdir/$g" || test -h "$destdir/$g"; then
       if $doit; then
@@ -5520,7 +5535,7 @@ s,^\(.................................................[^ ]*\) *,                
   # Then the files that are in new-files, but not in old-files:
   sed_take_last_column='s,^.*'"$delimiter"',,'
   already_present=
-  LC_ALL=C join -t"$delimiter" -v2 "$tmp"/old-files "$tmp"/new-files \
+  LC_ALL=C $JOIN -t"$delimiter" -v2 "$tmp"/old-files "$tmp"/new-files \
     | sed -e "$sed_take_last_column" \
     | sed -e "s,^.*\$,&$delimiter&," -e "$sed_rewrite_new_files" > "$tmp"/added-files
   { # Rearrange file descriptors. Needed because "while ... done < ..."
@@ -5533,7 +5548,7 @@ s,^\(.................................................[^ ]*\) *,                
   }
   # Then the files that are in new-files and in old-files:
   already_present=true
-  LC_ALL=C join -t"$delimiter" "$tmp"/old-files "$tmp"/new-files \
+  LC_ALL=C $JOIN -t"$delimiter" "$tmp"/old-files "$tmp"/new-files \
     | sed -e "$sed_take_last_column" \
     | sed -e "s,^.*\$,&$delimiter&," -e "$sed_rewrite_new_files" > "$tmp"/kept-files
   { # Rearrange file descriptors. Needed because "while ... done < ..."
@@ -6225,7 +6240,7 @@ s,//*$,/,'
           if test -n "$dir_added" || test -n "$dir_removed"; then
             sed -e "s|^$anchor||" < "$destdir/$dir$ignore" | LC_ALL=C sort > "$tmp"/ignore
             (echo "$dir_added" | sed -e '/^$/d' | LC_ALL=C sort -u \
-               | LC_ALL=C join -v 1 - "$tmp"/ignore > "$tmp"/ignore-added
+               | LC_ALL=C $JOIN -v 1 - "$tmp"/ignore > "$tmp"/ignore-added
              echo "$dir_removed" | sed -e '/^$/d' | LC_ALL=C sort -u \
                > "$tmp"/ignore-removed
             )
@@ -6312,7 +6327,7 @@ s,//*$,/,'
   # First the #include <...> directives without #ifs, sorted for convenience,
   # then the #include "..." directives without #ifs, sorted for convenience,
   # then the #include directives that are surrounded by #ifs. Not sorted.
-  for module in `LC_ALL=C join "$tmp"/modules1 "$tmp"/modules2`; do
+  for module in `LC_ALL=C $JOIN "$tmp"/modules1 "$tmp"/modules2`; do
     include_directive=`func_get_include_directive "$module"`
     case "$nl$include_directive" in
       *"$nl#if"*)
