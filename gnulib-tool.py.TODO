@@ -619,18 +619,6 @@ Date:   Mon Nov 18 13:32:46 2019 +0100
 
 --------------------------------------------------------------------------------
 
-commit dc135c4fd14cdc219d316c61f344e64090cb33fd
-Author: Bruno Haible <bruno@clisp.org>
-Date:   Fri Feb 15 21:27:44 2019 +0100
-
-    gnulib-tool: Support --import with just a few tests, not --with-tests.
-
-    * gnulib-tool (func_import): New variable 'gentests'. Use it instead of
-    'inctests' when generating files; use 'inctests' only for computing the
-    transitive closure.
-
---------------------------------------------------------------------------------
-
 commit 425ee42259b04956aae20afc5204775ae6e79744
 Author: Bruno Haible <bruno@clisp.org>
 Date:   Wed Jan 23 05:11:54 2019 +0100

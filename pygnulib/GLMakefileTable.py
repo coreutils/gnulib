@@ -80,13 +80,16 @@ class GLMakefileTable(object):
         dictionary = {'dir': dir, 'var': var, 'val': val, 'dotfirst': dotfirst}
         self.table += [dictionary]
 
-    def parent(self):
-        '''GLMakefileTable.parent()
+    def parent(self, gentests):
+        '''GLMakefileTable.parent(gentests)
 
         Add a special row to Makefile.am table with the first parent directory
         which contains or will contain Makefile.am file.
         GLConfig: sourcebase, m4base, testsbase, incl_test_categories,
-        excl_test_categories, makefile_name.'''
+        excl_test_categories, makefile_name.
+        gentests is a bool that is True if files are placed in $testsbase.'''
+        if type(gentests) is not bool:
+            raise TypeError('gentests must be a bool, not %s' % (type(gentests).__name__))
         m4base = self.config['m4base']
         sourcebase = self.config['sourcebase']
         testsbase = self.config['testsbase']
@@ -102,7 +105,7 @@ class GLMakefileTable(object):
         while (dir1
                and (joinpath(self.config['destdir'], dir1, mfd)
                     or joinpath(dir1, mfd) == joinpath(sourcebase, mfx)
-                    or (inctests and joinpath(dir1, mfd) == joinpath(testsbase, mfx)))):
+                    or (gentests and joinpath(dir1, mfd) == joinpath(testsbase, mfx)))):
             dir2 = joinpath(os.path.basename(dir1), dir2)
             dir1 = os.path.dirname(dir1)
         self.editor(dir1, 'EXTRA_DIST', joinpath(dir2, 'gnulib-cache.m4'))

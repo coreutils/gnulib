@@ -983,6 +983,12 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         verbose = self.config['verbosity']
         actioncmd = self.actioncmd()
 
+        # Determine whether to put anything into $testsbase.
+        testsfiles = [ file
+                       for file in filetable['all']
+                       if file.startswith('tests/') or file.startswith('tests=lib/') ]
+        gentests = len(testsfiles) > 0
+
         # Create all necessary directories.
         dirs = list()
         if pobase:
@@ -991,6 +997,8 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
              for file in filetable['all']
              if file.startswith('doc/') ]:
             dirs += [docbase]
+        if gentests:
+            dirs += [testsbase]
         dirs += [sourcebase, m4base, auxdir]
         dirs += [ os.path.dirname(pair[0])
                   for pair in filetable['new'] ]
@@ -1095,7 +1103,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                 testsbase_base = os.path.basename(testsbase)
                 self.makefiletable.editor(testsbase_dir, 'SUBDIRS', testsbase_base, True)
         self.makefiletable.editor('', 'ACLOCAL_AMFLAGS', '-I %s' % m4base)
-        self.makefiletable.parent()
+        self.makefiletable.parent(gentests)
 
         # Create library makefile.
         basename = joinpath(sourcebase, makefile_am)
@@ -1275,8 +1283,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
             os.remove(tmpfile)
 
         # Create tests Makefile.
-        inctests = self.config.checkInclTestCategory(TESTS['tests'])
-        if inctests:
+        if gentests:
             basename = joinpath(testsbase, makefile_am)
             tmpfile = self.assistant.tmpfilename(basename)
             emit, uses_subdirs = self.emitter.tests_Makefile_am(basename,
@@ -1386,7 +1393,7 @@ in <library>_a_LDFLAGS or <library>_la_LDFLAGS when linking a library.''')
             print('  - "include %s" from within "%s/Makefile.am",' % (makefile_name, sourcebase))
         if pobase:
             print('  - add "%s/Makefile.in to AC_CONFIG_FILES in %s,' % (pobase, configure_ac))
-        if inctests:
+        if gentests:
             if makefile_am == 'Makefile.am':
                 print('  - add "%s/Makefile" to AC_CONFIG_FILES in %s,' % (testsbase, configure_ac))
             else:  # if makefile_am != 'Makefile.am'
