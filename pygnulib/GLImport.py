@@ -509,7 +509,7 @@ class GLImport(object):
 
 
 # Specification in the form of a command-line invocation:
-#   %s
+%s
 
 # Specification in the form of a few gnulib-tool.m4 macro invocations:\n''' % actioncmd
         # Store the localpath relative to destdir.
