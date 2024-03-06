@@ -87,7 +87,7 @@ class GLMakefileTable(object):
         which contains or will contain Makefile.am file.
         GLConfig: sourcebase, m4base, testsbase, incl_test_categories,
         excl_test_categories, makefile_name.
-        gentests is a bool that is True if files are placed in $testsbase.'''
+        gentests is a bool that is True if any files are to be placed in $testsbase.'''
         if type(gentests) is not bool:
             raise TypeError('gentests must be a bool, not %s' % (type(gentests).__name__))
         m4base = self.config['m4base']
