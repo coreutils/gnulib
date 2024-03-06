@@ -1093,7 +1093,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
             if makefile_am == 'Makefile.am':
                 testsbase_dir = os.path.dirname(testsbase)
                 testsbase_base = os.path.basename(testsbase)
-                self.makefiletable.editor(testsbase_dir, 'SUBDIRS', testsbase_base)
+                self.makefiletable.editor(testsbase_dir, 'SUBDIRS', testsbase_base, True)
         self.makefiletable.editor('', 'ACLOCAL_AMFLAGS', '-I %s' % m4base)
         self.makefiletable.parent()
 

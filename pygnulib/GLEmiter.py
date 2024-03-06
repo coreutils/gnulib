@@ -800,7 +800,12 @@ AC_DEFUN([%V1%_LIBSOURCES], [
             dictionary = makefiletable[current_edit]
             if dictionary['var']:
                 if destfile == joinpath(dictionary['dir'], 'Makefile.am'):
-                    emit += '%s += %s\n' % (dictionary['var'], dictionary['val'])
+                    val = dictionary['val']
+                    if dictionary['var'] == 'SUBDIRS' and dictionary['dotfirst']:
+                        # The added subdirectory ${val} needs to be mentioned after '.'.
+                        # Since we don't have '.' among SUBDIRS so far, add it now.
+                        val = f'. {val}'
+                    emit += '%s += %s\n' % (dictionary['var'], val)
                     dictionary.pop('var')
 
         # Define two parts of cppflags variable.
@@ -1099,7 +1104,12 @@ AC_DEFUN([%V1%_LIBSOURCES], [
             dictionary = makefiletable[current_edit]
             if dictionary['var']:
                 if destfile == joinpath(dictionary['dir'], 'Makefile.am'):
-                    emit += '%s += %s\n' % (dictionary['var'], dictionary['val'])
+                    val = dictionary['val']
+                    if dictionary['var'] == 'SUBDIRS' and dictionary['dotfirst']:
+                        # The added subdirectory ${val} needs to be mentioned after '.'.
+                        # But we have '.' among SUBDIRS already, so do nothing.
+                        pass
+                    emit += '%s += %s\n' % (dictionary['var'], val)
                     dictionary.pop('var')
 
         emit += '\nAM_CPPFLAGS = \\\n'

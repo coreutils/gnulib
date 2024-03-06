@@ -61,18 +61,23 @@ class GLMakefileTable(object):
         result = self.table[y]
         return dict(result)
 
-    def editor(self, dir, var, val):
-        '''GLMakefileTable.editor(dir, var, val)
+    def editor(self, dir, var, val, dotfirst=False):
+        '''GLMakefileTable.editor(dir, var, val, dotfirst)
 
         This method is used to remember that ${dir}Makefile.am needs to be edited
-        to that ${var} mentions ${val}.'''
+        to that ${var} mentions ${val}.
+        If ${dotfirst} is non-empty, this mention needs to be present after '.'.
+        This is a special hack for the SUBDIRS variable, cf.
+        <https://www.gnu.org/software/automake/manual/html_node/Subdirectories.html>.'''
         if type(dir) is not str:
             raise TypeError('dir must be a string, not %s' % (type(dir).__name__))
         if type(var) is not str:
             raise TypeError('var must be a string, not %s' % (type(var).__name__))
         if type(val) is not str:
             raise TypeError('val must be a string, not %s' % (type(val).__name__))
-        dictionary = {'dir': dir, 'var': var, 'val': val}
+        if type(dotfirst) is not bool:
+            raise TypeError('dotfirst must be a bool, not %s' % (type(dotfirst).__name__))
+        dictionary = {'dir': dir, 'var': var, 'val': val, 'dotfirst': dotfirst}
         self.table += [dictionary]
 
     def parent(self):
