@@ -529,28 +529,6 @@ Date:   Sun Aug 8 03:52:01 2021 +0200
 
 --------------------------------------------------------------------------------
 
-commit 39d08c09b444db57f45804bfe86ee17203c45a8a
-Author: Bruno Haible <bruno@clisp.org>
-Date:   Fri Jun 11 15:55:33 2021 +0200
-
-    Make message in last commit more precise.
-
-    Suggested by Eric Blake.
-
-    * gnulib-tool (func_emit_tests_Makefile_am): Add more precision to
-    'check-notice' message.
-
-commit d465dd70e1ec5fe332160780eb66511028f5897b
-Author: Bruno Haible <bruno@clisp.org>
-Date:   Thu Jun 10 21:43:59 2021 +0200
-
-    Clarify where to report test failures from Gnulib tests.
-
-    * gnulib-tool (func_emit_tests_Makefile_am): Emit a dependency of
-    'check-am' on 'check-notice' that prints a notice.
-
---------------------------------------------------------------------------------
-
 commit 4b071c115309079528db7b60e8d2ffb22b129088
 Author: Paul Eggert <eggert@cs.ucla.edu>
 Date:   Mon Apr 26 23:31:29 2021 -0700
