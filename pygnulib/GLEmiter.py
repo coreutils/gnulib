@@ -1122,6 +1122,8 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                     emit += '%s += %s\n' % (dictionary['var'], val)
                     dictionary.pop('var')
 
+        emit += '\n'
+
         # Insert a '-Wno-error' option in the compilation commands emitted by
         # Automake, between $(AM_CPPFLAGS) and before the reference to @CFLAGS@.
         # Why?
@@ -1138,10 +1140,10 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         #   CFLAGS, they have asked for errors, they will get errors. But they have
         #   no right to complain about these errors, because Gnulib does not support
         #   '-Werror'.
-        emit += '\n'
         emit += 'CFLAGS = @GL_CFLAG_ALLOW_WARNINGS@ @CFLAGS@\n'
         emit += 'CXXFLAGS = @GL_CXXFLAG_ALLOW_WARNINGS@ @CXXFLAGS@\n'
         emit += '\n'
+
         emit += 'AM_CPPFLAGS = \\\n'
         if for_test:
             emit += '  -DGNULIB_STRICT_CHECKING=1 \\\n'
