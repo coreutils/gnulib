@@ -555,12 +555,16 @@ class GLImport(object):
             emit += 'gl_VC_FILES([%s])\n' % vc_files
         return constants.nlconvert(emit)
 
-    def gnulib_comp(self, files):
+    def gnulib_comp(self, files, gentests):
         '''GLImport.gnulib_comp(files) -> str
 
         Emit the contents of generated $m4base/gnulib-comp.m4 file.
         GLConfig: destdir, localpath, tests, sourcebase, m4base, pobase, docbase,
-        testsbase, conddeps, libtool, macro_prefix, podomain, vc_files.'''
+        testsbase, conddeps, libtool, macro_prefix, podomain, vc_files.
+
+        files is the list of files to use.
+        gentests is True if a tests Makefile.am is being generated, False
+          otherwise.'''
         emit = ''
         assistant = self.assistant
         moduletable = self.moduletable
@@ -641,7 +645,7 @@ AC_DEFUN([%s_INIT],
         if auxdir != 'build-aux':
             replace_auxdir = True
         emit += '  gl_m4_base=\'%s\'\n' % m4base
-        emit += self.emitter.initmacro_start(macro_prefix)
+        emit += self.emitter.initmacro_start(macro_prefix, False)
         emit += '  gl_source_base=\'%s\'\n' % sourcebase
         if witness_c_macro:
             emit += '  m4_pushdef([gl_MODULE_INDICATOR_CONDITION], [%s])\n' % witness_c_macro
@@ -654,7 +658,7 @@ AC_DEFUN([%s_INIT],
         emit += self.emitter.initmacro_end(macro_prefix)
         emit += '  gltests_libdeps=\n'
         emit += '  gltests_ltlibdeps=\n'
-        emit += self.emitter.initmacro_start('%stests' % macro_prefix)
+        emit += self.emitter.initmacro_start('%stests' % macro_prefix, gentests)
         emit += '  gl_source_base=\'%s\'\n' % testsbase
         # Define a tests witness macro that depends on the package.
         # PACKAGE is defined by AM_INIT_AUTOMAKE, PACKAGE_TARNAME is defined by
@@ -1260,7 +1264,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         # Create m4/gnulib-comp.m4.
         basename = joinpath(m4base, 'gnulib-comp.m4')
         tmpfile = self.assistant.tmpfilename(basename)
-        emit = self.gnulib_comp(filetable['all'])
+        emit = self.gnulib_comp(filetable['all'], gentests)
         with codecs.open(tmpfile, 'wb', 'UTF-8') as file:
             file.write(emit)
         filename, backup, flag = self.assistant.super_update(basename, tmpfile)

@@ -551,23 +551,6 @@ Date:   Thu Jun 10 21:43:59 2021 +0200
 
 --------------------------------------------------------------------------------
 
-commit 16c3e1868a15a5946c0f0f7df6e107e9b3c6389d
-Author: Bruno Haible <bruno@clisp.org>
-Date:   Thu Jun 10 21:26:53 2021 +0200
-
-    Clarify that compiler warnings in the Gnulib tests can be ignored.
-
-    * gnulib-tool (func_emit_tests_Makefile_am): Emit overrides for CFLAGS
-    and CXXFLAGS. Emit a dependency of 'all' on 'all-notice' that prints a
-    notice.
-    (func_emit_initmacro_start): Add a second argument. If it is true, emit
-    code to require gl_CC_ALLOW_WARNINGS and gl_CXX_ALLOW_WARNINGS.
-    (func_import, func_create_testdir): All callers updated.
-    * m4/gnulib-common.m4 (gl_CC_ALLOW_WARNINGS, gl_CXX_ALLOW_WARNINGS): New
-    macros.
-
---------------------------------------------------------------------------------
-
 commit 4b071c115309079528db7b60e8d2ffb22b129088
 Author: Paul Eggert <eggert@cs.ucla.edu>
 Date:   Mon Apr 26 23:31:29 2021 -0700

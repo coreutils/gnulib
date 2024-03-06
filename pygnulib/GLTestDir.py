@@ -465,7 +465,7 @@ class GLTestDir(object):
                 emit += 'AC_DEFUN([gl_INIT], [\n'
                 replace_auxdir = True
                 emit += "gl_m4_base='../%s'\n" % m4base
-                emit += self.emitter.initmacro_start(macro_prefix)
+                emit += self.emitter.initmacro_start(macro_prefix, True)
                 # We don't have explicit ordering constraints between the various
                 # autoconf snippets. It's cleanest to put those of the library before
                 # those of the tests.
@@ -585,7 +585,7 @@ class GLTestDir(object):
         else:  # auxdir == 'build-aux'
             replace_auxdir = False
         emit += 'gl_m4_base=\'%s\'\n' % m4base
-        emit += self.emitter.initmacro_start(macro_prefix)
+        emit += self.emitter.initmacro_start(macro_prefix, False)
         emit += 'gl_source_base=\'%s\'\n' % sourcebase
         if single_configure:
             emit += self.emitter.autoconfSnippets(main_modules, main_modules, moduletable,
@@ -597,7 +597,7 @@ class GLTestDir(object):
         if single_configure:
             emit += '  gltests_libdeps=\n'
             emit += '  gltests_ltlibdeps=\n'
-            emit += self.emitter.initmacro_start('%stests' % macro_prefix)
+            emit += self.emitter.initmacro_start('%stests' % macro_prefix, True)
             emit += '  gl_source_base=\'%s\'\n' % testsbase
             # Define a tests witness macro.
             emit += '  %stests_WITNESS=IN_GNULIB_TESTS\n' % macro_prefix

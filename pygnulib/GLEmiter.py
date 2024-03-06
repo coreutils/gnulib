@@ -457,13 +457,20 @@ USE_MSGCTXT = no\n"""
                 emit += '%s\n' % constants.substart('lib/', sourcebase, file)
         return emit
 
-    def initmacro_start(self, macro_prefix_arg):
-        '''GLEmiter.initmacro_start(macro_prefix_arg) -> str
+    def initmacro_start(self, macro_prefix_arg, gentests):
+        '''GLEmiter.initmacro_start(macro_prefix_arg, gentests) -> str
 
-        Emit the first few statements of the gl_INIT macro.'''
+        Emit the first few statements of the gl_INIT macro.
+
+        macro_prefix_arg is the prefix of gl_EARLY and gl_INIT macros to use.
+        gentests is True if a tests Makefile.am is being generated, False
+          otherwise.'''
         if type(macro_prefix_arg) is not str:
             raise TypeError('macro_prefix_arg must be a string, not %s'
                             % type(macro_prefix_arg).__name__)
+        if type(gentests) is not bool:
+            raise TypeError('gentests must be a bool, not %s'
+                            % type(gentests).__name__)
         module_indicator_prefix = self.config.getModuleIndicatorPrefix()
         emit = ''
         # Overriding AC_LIBOBJ and AC_REPLACE_FUNCS has the effect of storing
@@ -495,6 +502,9 @@ USE_MSGCTXT = no\n"""
         # Scope the GNULIB_<modulename> variables.
         emit += "  m4_pushdef([GL_MODULE_INDICATOR_PREFIX], [%s])\n" % module_indicator_prefix
         emit += "  gl_COMMON\n"
+        if gentests:
+            emit += '  AC_REQUIRE([gl_CC_ALLOW_WARNINGS])\n'
+            emit += '  AC_REQUIRE([gl_CXX_ALLOW_WARNINGS])\n'
         return emit
 
     def initmacro_end(self, macro_prefix_arg):
@@ -1112,7 +1122,27 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                     emit += '%s += %s\n' % (dictionary['var'], val)
                     dictionary.pop('var')
 
-        emit += '\nAM_CPPFLAGS = \\\n'
+        # Insert a '-Wno-error' option in the compilation commands emitted by
+        # Automake, between $(AM_CPPFLAGS) and before the reference to @CFLAGS@.
+        # Why?
+        # 1) Because parts of the Gnulib tests exercise corner cases (invalid
+        #    arguments, endless recursions, etc.) that a compiler may warn about,
+        #    even with just the normal '-Wall' option.
+        # 2) Because every package maintainer has their preferred set of warnings
+        #    that they may want to enforce in the main source code of their package.
+        #    But Gnulib tests are maintained in Gnulib and don't end up in binaries
+        #    that that package installs; therefore it does not make sense for
+        #    package maintainers to enforce the absence of warnings on these tests.
+        # Why before @CFLAGS@?
+        # - Because "the user is always right": If a user adds '-Werror' to their
+        #   CFLAGS, they have asked for errors, they will get errors. But they have
+        #   no right to complain about these errors, because Gnulib does not support
+        #   '-Werror'.
+        emit += '\n'
+        emit += 'CFLAGS = @GL_CFLAG_ALLOW_WARNINGS@ @CFLAGS@\n'
+        emit += 'CXXFLAGS = @GL_CXXFLAG_ALLOW_WARNINGS@ @CXXFLAGS@\n'
+        emit += '\n'
+        emit += 'AM_CPPFLAGS = \\\n'
         if for_test:
             emit += '  -DGNULIB_STRICT_CHECKING=1 \\\n'
         if witness_c_macro:
@@ -1160,6 +1190,14 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         all_snippets = all_snippets.replace('$(top_srcdir)/build-aux/',
                                             '$(top_srcdir)/%s/' % auxdir)
         emit += all_snippets
+        # Arrange to print a message before compiling the files in this directory.
+        emit += 'all: all-notice\n'
+        emit += 'all-notice:\n'
+        emit += '\t@echo \'## ---------------------------------------------------- ##\'\n'
+        emit += '\t@echo \'## ------------------- Gnulib tests ------------------- ##\'\n'
+        emit += '\t@echo \'## You can ignore compiler warnings in this directory.  ##\'\n'
+        emit += '\t@echo \'## ---------------------------------------------------- ##\'\n'
+        emit += '\n'
         emit += '# Clean up after Solaris cc.\n'
         emit += 'clean-local:\n'
         emit += '\trm -rf SunWS_cache\n\n'
