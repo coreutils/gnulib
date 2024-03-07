@@ -56,8 +56,8 @@ class GLConfig(object):
                  sourcebase=None, m4base=None, pobase=None, docbase=None, testsbase=None,
                  modules=None, avoids=None, files=None,
                  incl_test_categories=None, excl_test_categories=None, libname=None,
-                 lgpl=None, gnu_make=None, makefile_name=None, libtool=None,
-                 conddeps=None, macro_prefix=None,
+                 lgpl=None, gnu_make=None, makefile_name=None, tests_makefile_name=None,
+                 libtool=None, conddeps=None, macro_prefix=None,
                  podomain=None, witness_c_macro=None, vc_files=None, symbolic=None,
                  lsymbolic=None, configure_ac=None, ac_version=None,
                  libtests=None, single_configure=None, verbose=None, dryrun=None,
@@ -139,6 +139,10 @@ class GLConfig(object):
         self.resetMakefileName()
         if makefile_name != None:
             self.setMakefileName(makefile_name)
+        # tests_makefile_name
+        self.resetTestsMakefileName()
+        if tests_makefile_name != None:
+            self.setTestsMakefileName(tests_makefile_name)
         # libtool
         self.resetLibtool()
         if libtool != None:
@@ -839,13 +843,13 @@ class GLConfig(object):
 
     # Define makefile_name methods.
     def getMakefileName(self):
-        '''Return the name of makefile in automake syntax in the source-base and
-        tests-base directories. Default is 'Makefile.am'.'''
+        '''Return the name of makefile in automake syntax in the sourcebase directory.
+        Default is 'Makefile.am'.'''
         return self.table['makefile_name']
 
     def setMakefileName(self, makefile_name):
-        '''Specify the name of makefile in automake syntax in the source-base and
-        tests-base directories. Default is 'Makefile.am'.'''
+        '''Specify the name of makefile in automake syntax in the sourcebase directory.
+        Default is 'Makefile.am'.'''
         if type(makefile_name) is str:
             if makefile_name:
                 self.table['makefile_name'] = makefile_name
@@ -854,9 +858,30 @@ class GLConfig(object):
                             % type(makefile_name).__name__)
 
     def resetMakefileName(self):
-        '''Reset the name of makefile in automake syntax in the source-base and
-        tests-base directories. Default is 'Makefile.am'.'''
+        '''Reset the name of makefile in automake syntax in the sourcebase directory.
+        Default is 'Makefile.am'.'''
         self.table['makefile_name'] = ''
+
+    # Define tests_makefile_name methods.
+    def getTestsMakefileName(self):
+        '''Return the name of makefile in automake syntax in the testsbase directory.
+        Default is the the value of 'makefile_name'.'''
+        return self.table['tests_makefile_name']
+
+    def setTestsMakefileName(self, tests_makefile_name):
+        '''Specify the name of makefile in automake syntax in the testsbase directory.
+        Default is the value of 'makefile_name'.'''
+        if type(tests_makefile_name) is str:
+            if tests_makefile_name:
+                self.table['tests_makefile_name'] = tests_makefile_name
+        else:  # if type of tests_makefile_name is not str
+            raise TypeError('tests_makefile_name must be a string, not %s'
+                            % type(tests_makefile_name).__name__)
+
+    def resetTestsMakefileName(self):
+        '''Reset the name of makefile in automake syntax in the testsbase directory.
+        Default is the value of 'makefile_name'.'''
+        self.table['tests_makefile_name'] = ''
 
     # Define podomain methods.
     def getPoDomain(self):

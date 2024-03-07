@@ -127,8 +127,8 @@ class GLImport(object):
                 [
                     'gl_LOCAL_DIR', 'gl_MODULES', 'gl_AVOID', 'gl_SOURCE_BASE',
                     'gl_M4_BASE', 'gl_PO_BASE', 'gl_DOC_BASE', 'gl_TESTS_BASE',
-                    'gl_MAKEFILE_NAME', 'gl_MACRO_PREFIX', 'gl_PO_DOMAIN',
-                    'gl_WITNESS_C_MACRO', 'gl_VC_FILES', 'gl_LIB',
+                    'gl_MAKEFILE_NAME', 'gl_TESTS_MAKEFILE_NAME', 'gl_MACRO_PREFIX',
+                    'gl_PO_DOMAIN', 'gl_WITNESS_C_MACRO', 'gl_VC_FILES', 'gl_LIB',
                 ]
 
             # Find bool values.
@@ -193,6 +193,8 @@ class GLImport(object):
                 self.cache.setTestsBase(cleaner(tempdict['gl_TESTS_BASE']))
             if tempdict['gl_MAKEFILE_NAME']:
                 self.cache.setMakefileName(cleaner(tempdict['gl_MAKEFILE_NAME']))
+            if tempdict['gl_TESTS_MAKEFILE_NAME']:
+                self.cache.setTestsMakefileName(cleaner(tempdict['gl_TESTS_MAKEFILE_NAME']))
             if tempdict['gl_MACRO_PREFIX']:
                 self.cache.setMacroPrefix(cleaner(tempdict['gl_MACRO_PREFIX']))
             if tempdict['gl_PO_DOMAIN']:
@@ -364,6 +366,7 @@ class GLImport(object):
         lgpl = self.config.getLGPL()
         gnu_make = self.config.getGnuMake()
         makefile_name = self.config.getMakefileName()
+        tests_makefile_name = self.config.getTestsMakefileName()
         libtool = self.config.checkLibtool()
         macro_prefix = self.config.getMacroPrefix()
         witness_c_macro = self.config.getWitnessCMacro()
@@ -413,8 +416,9 @@ class GLImport(object):
             actioncmd += ' \\\n#  --gnu-make'
         if makefile_name:
             actioncmd += ' \\\n#  --makefile-name=%s' % makefile_name
+        if tests_makefile_name:
+            actioncmd += ' \\\n#  --tests-makefile-name=%s' % tests_makefile_name
         # FIXME: Add the following options in this order when implemented.
-        # --tests-makefile-name
         # --automake-subdir
         # --automake-subdir-tests
         if conddeps:
@@ -491,6 +495,7 @@ class GLImport(object):
         lgpl = self.config['lgpl']
         libname = self.config['libname']
         makefile_name = self.config['makefile_name']
+        tests_makefile_name = self.config['tests_makefile_name']
         conddeps = self.config['conddeps']
         libtool = self.config['libtool']
         macro_prefix = self.config['macro_prefix']
@@ -544,6 +549,8 @@ class GLImport(object):
             else:  # if lgpl != True
                 emit += 'gl_LGPL([%s])\n' % lgpl
         emit += 'gl_MAKEFILE_NAME([%s])\n' % makefile_name
+        if tests_makefile_name:
+            emit += 'gl_TESTS_MAKEFILE_NAME([%s])\n' % tests_makefile_name
         if conddeps:
             emit += 'gl_CONDITIONAL_DEPENDENCIES\n'
         if libtool:
@@ -976,6 +983,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         lgpl = self.config['lgpl']
         libname = self.config['libname']
         makefile_name = self.config['makefile_name']
+        tests_makefile_name = self.config['tests_makefile_name']
         conddeps = self.config['conddeps']
         libtool = self.config['libtool']
         macro_prefix = self.config['macro_prefix']
@@ -1080,11 +1088,16 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         # Determine include_guard_prefix.
         include_guard_prefix = self.config['include_guard_prefix']
 
-        # Determine makefile name.
-        if not makefile_name:
-            makefile_am = 'Makefile.am'
-        else:  # if makefile_name
-            makefile_am = makefile_name
+        # Default the source makefile name to Makefile.am.
+        if makefile_name:
+            source_makefile_am = makefile_name
+        else:
+            source_makefile_am = 'Makefile.am'
+        # Default the tests makefile name to the source makefile name.
+        if tests_makefile_name:
+            tests_makefile_am = tests_makefile_name
+        else:
+            tests_makefile_am = source_makefile_am
 
         # Create normal Makefile.ams.
         for_test = False
@@ -1093,7 +1106,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         # Some of these edits apply to files that we will generate; others are
         # under the responsibility of the developer.
         makefile_am_edits = dict()
-        if makefile_am == 'Makefile.am':
+        if source_makefile_am == 'Makefile.am':
             sourcebase_dir = os.path.dirname(sourcebase)
             sourcebase_base = os.path.basename(sourcebase)
             self.makefiletable.editor(sourcebase_dir, 'SUBDIRS', sourcebase_base)
@@ -1102,15 +1115,15 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
             pobase_base = os.path.basename(pobase)
             self.makefiletable.editor(pobase_dir, 'SUBDIRS', pobase_base)
         if self.config.checkInclTestCategory(TESTS['tests']):
-            if makefile_am == 'Makefile.am':
+            if tests_makefile_am == 'Makefile.am':
                 testsbase_dir = os.path.dirname(testsbase)
                 testsbase_base = os.path.basename(testsbase)
                 self.makefiletable.editor(testsbase_dir, 'SUBDIRS', testsbase_base, True)
         self.makefiletable.editor('', 'ACLOCAL_AMFLAGS', '-I %s' % m4base)
-        self.makefiletable.parent(gentests)
+        self.makefiletable.parent(gentests, source_makefile_am, tests_makefile_am)
 
         # Create library makefile.
-        basename = joinpath(sourcebase, makefile_am)
+        basename = joinpath(sourcebase, source_makefile_am)
         tmpfile = self.assistant.tmpfilename(basename)
         emit, uses_subdirs = self.emitter.lib_Makefile_am(basename,
                                                           self.moduletable['main'], self.moduletable, self.makefiletable,
@@ -1288,7 +1301,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
 
         # Create tests Makefile.
         if gentests:
-            basename = joinpath(testsbase, makefile_am)
+            basename = joinpath(testsbase, tests_makefile_am)
             tmpfile = self.assistant.tmpfilename(basename)
             emit, uses_subdirs = self.emitter.tests_Makefile_am(basename,
                                                                 self.moduletable['tests'], self.moduletable, self.makefiletable,
@@ -1391,17 +1404,17 @@ in <library>_a_LDFLAGS or <library>_la_LDFLAGS when linking a library.''')
         # Print reminders.
         print('')
         print('Don\'t forget to')
-        if makefile_am == 'Makefile.am':
+        if source_makefile_am == 'Makefile.am':
             print('  - add "%s/Makefile" to AC_CONFIG_FILES in %s,' % (sourcebase, configure_ac))
         else:  # if makefile_am != 'Makefile.am'
-            print('  - "include %s" from within "%s/Makefile.am",' % (makefile_name, sourcebase))
+            print('  - "include %s" from within "%s/Makefile.am",' % (source_makefile_am, sourcebase))
         if pobase:
             print('  - add "%s/Makefile.in to AC_CONFIG_FILES in %s,' % (pobase, configure_ac))
         if gentests:
-            if makefile_am == 'Makefile.am':
+            if tests_makefile_am == 'Makefile.am':
                 print('  - add "%s/Makefile" to AC_CONFIG_FILES in %s,' % (testsbase, configure_ac))
             else:  # if makefile_am != 'Makefile.am'
-                print('  - "include %s" from within "%s/Makefile.am",' % (makefile_name, testsbase))
+                print('  - "include %s" from within "%s/Makefile.am",' % (tests_makefile_am, testsbase))
         # Print makefile edits.
         current_edit = int()
         makefile_am_edits = self.makefiletable.count()

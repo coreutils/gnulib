@@ -18,7 +18,6 @@ The following commits to gnulib-tool have not yet been reflected in
 Implement the options:
   --extract-recursive-dependencies
   --extract-recursive-link-directive
-  --tests-makefile-name
   --automake-subdir
   -h | --hardlink
   --local-hardlink
@@ -487,29 +486,6 @@ Date:   Mon Dec 13 02:43:21 2021 +0100
     * m4/non-recursive-gnulib-prefix-hack.m4
     (gl_NON_RECURSIVE_GNULIB_PREFIX_HACK): Don't invoke
     AC_CONFIG_LIBOBJ_DIR.
-
---------------------------------------------------------------------------------
-
-commit 1cc82c4280bb76f677f3604bdef7116922d77511
-Author: Bruno Haible <bruno@clisp.org>
-Date:   Sat Jan 8 23:28:29 2022 +0100
-
-    gnulib-tool: Fix "Don't forget" messages (regression 2021-12-12).
-
-    * gnulib-tool (func_import): Fix variable references in "Don't forget"
-    messages.
-
-commit 9e8aac033ffe63761ca6ddc8a3f672d1b7104cb5
-Author: Bruno Haible <bruno@clisp.org>
-Date:   Sun Dec 12 21:13:54 2021 +0100
-
-    gnulib-tool: Support different basenames for the lib/,tests/ Makefiles.
-
-    * gnulib-tool: New option --tests-makefile-name.
-    (tests_makefile_name): New variable.
-    (func_import): Add support for --tests-makefile-name. Replace local
-    variable makefile_am with two local variables source_makefile_am,
-    tests_makefile_am.
 
 --------------------------------------------------------------------------------
 

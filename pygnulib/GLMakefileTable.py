@@ -80,32 +80,31 @@ class GLMakefileTable(object):
         dictionary = {'dir': dir, 'var': var, 'val': val, 'dotfirst': dotfirst}
         self.table += [dictionary]
 
-    def parent(self, gentests):
+    def parent(self, gentests, source_makefile_am, tests_makefile_am):
         '''GLMakefileTable.parent(gentests)
 
         Add a special row to Makefile.am table with the first parent directory
         which contains or will contain Makefile.am file.
         GLConfig: sourcebase, m4base, testsbase, incl_test_categories,
         excl_test_categories, makefile_name.
-        gentests is a bool that is True if any files are to be placed in $testsbase.'''
+        gentests is a bool that is True if any files are to be placed in $testsbase.
+        source_makefile_am is the name of the source Makefile.am.
+        tests_makefile_am is the name of the tests Makefile.am.'''
         if type(gentests) is not bool:
             raise TypeError('gentests must be a bool, not %s' % (type(gentests).__name__))
+        if type(source_makefile_am) is not str:
+            raise TypeError('source_makefile_am must be a str, not %s' % (type(source_makefile_am).__name__))
+        if type(tests_makefile_am) is not str:
+            raise TypeError('tests_makefile_am must be a str, not %s' % (type(tests_makefile_am).__name__))
         m4base = self.config['m4base']
         sourcebase = self.config['sourcebase']
         testsbase = self.config['testsbase']
-        makefile_name = self.config['makefile_name']
-        inctests = self.config.checkInclTestCategory(TESTS['tests'])
         dir1 = '%s%s' % (m4base, os.path.sep)
-        mfd = 'Makefile.am'
-        if not makefile_name:
-            mfx = 'Makefile.am'
-        else:  # if makefile_name
-            mfx = makefile_name
         dir2 = ''
         while (dir1
-               and (joinpath(self.config['destdir'], dir1, mfd)
-                    or joinpath(dir1, mfd) == joinpath(sourcebase, mfx)
-                    or (gentests and joinpath(dir1, mfd) == joinpath(testsbase, mfx)))):
+               and (joinpath(self.config['destdir'], dir1, 'Makefile.am')
+                    or joinpath(dir1, 'Makefile.am') == joinpath(sourcebase, source_makefile_am)
+                    or (gentests and joinpath(dir1, 'Makefile.am') == joinpath(testsbase, tests_makefile_am)))):
             dir2 = joinpath(os.path.basename(dir1), dir2)
             dir1 = os.path.dirname(dir1)
         self.editor(dir1, 'EXTRA_DIST', joinpath(dir2, 'gnulib-cache.m4'))
