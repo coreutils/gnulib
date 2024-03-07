@@ -81,18 +81,6 @@ Date:   Tue Mar 1 10:01:22 2022 -0800
 
 --------------------------------------------------------------------------------
 
-commit 3a24ff8a1045d8d38824088c0984bb59d0192e65
-Author: Simon Josefsson <simon@josefsson.org>
-Date:   Tue Feb 22 12:47:14 2022 +0100
-
-    gnulib-tool: Bump automake dependency.
-
-    * gnulib-tool (func_emit_lib_Makefile_am)
-    (func_emit_tests_Makefile_am): Demand Automake ≥ 1.14, for
-    %reldir%.
-
---------------------------------------------------------------------------------
-
 commit 4bf9c96497946ce6f7b84f6527ed0291657cf728
 Author: Bruno Haible <bruno@clisp.org>
 Date:   Sun Jan 9 15:38:51 2022 +0100

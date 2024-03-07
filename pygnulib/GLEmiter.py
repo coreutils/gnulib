@@ -761,7 +761,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
             # object files (example: hash.c and libxml/hash.c).
             if uses_subdirs:
                 subdir_options = ' subdir-objects'
-            emit += 'AUTOMAKE_OPTIONS = 1.11 gnits%s\n' % subdir_options
+            emit += 'AUTOMAKE_OPTIONS = 1.14 gnits%s\n' % subdir_options
         emit += '\n'
         if not makefile_name:
             emit += 'SUBDIRS =\n'
@@ -1067,7 +1067,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         subdir_options = ''
         if uses_subdirs:
             subdir_options = ' subdir-objects'
-        emit += 'AUTOMAKE_OPTIONS = 1.11 foreign%s\n\n' % subdir_options
+        emit += 'AUTOMAKE_OPTIONS = 1.14 foreign%s\n\n' % subdir_options
         if for_test and not single_configure:
             emit += 'ACLOCAL_AMFLAGS = -I %s/%s\n\n' % (testsbase_inverse, m4base)
 
