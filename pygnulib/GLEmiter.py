@@ -47,6 +47,23 @@ relinverse = constants.relinverse
 isfile = os.path.isfile
 normpath = os.path.normpath
 
+# Regular expressions used to convert Automake conditionals to GNU Make syntax.
+# Each tuple is the arguments given to re.sub in the correct order.
+_CONVERT_TO_GNU_MAKE = [
+    (re.compile(r'^if (.*)', re.MULTILINE), r'ifneq (,$(\1_CONDITION))'),
+    (re.compile(r'%reldir%/'), r''),
+    (re.compile(r'%reldir%'), r'.')
+]
+
+
+def _convert_to_gnu_make(snippet: str) -> str:
+    '''Convert a Automake snippet to GNU Make syntax.'''
+    if type(snippet) is not str:
+        raise TypeError(f'snippet must be a str, not {type(snippet).__name__}')
+    for regexp in _CONVERT_TO_GNU_MAKE:
+        snippet = re.sub(regexp[0], regexp[1], snippet)
+    return snippet
+
 
 #===============================================================================
 # Define GLEmiter class
@@ -651,7 +668,6 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         module_indicator_prefix = self.config.getModuleIndicatorPrefix()
         ac_version = self.config['ac_version']
         destfile = os.path.normpath(destfile)
-        convert_to_gnu_make_1 = (re.compile(r'^if (.*)', re.MULTILINE), r'ifneq (,$(\1_CONDITION))')
         emit = ''
 
         # When using GNU make, or when creating an includable Makefile.am snippet,
@@ -733,14 +749,14 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                             else:
                                 allsnippets += 'if %s\n' % name
                     if gnu_make:
-                        allsnippets += re.sub(convert_to_gnu_make_1[0], convert_to_gnu_make_1[1], amsnippet1)
+                        allsnippets += _convert_to_gnu_make(amsnippet1)
                     else:
                         allsnippets += amsnippet1
                     if conddeps:
                         if moduletable.isConditional(module):
                             allsnippets += 'endif\n'
                     if gnu_make:
-                        allsnippets += re.sub(convert_to_gnu_make_1[0], convert_to_gnu_make_1[1], amsnippet2)
+                        allsnippets += _convert_to_gnu_make(amsnippet2)
                     else:
                         allsnippets += amsnippet2
                     if gnu_make:
@@ -954,7 +970,6 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         ac_version = self.config['ac_version']
         libtests = self.config['libtests']
         single_configure = self.config['single_configure']
-        convert_to_gnu_make_1 = (re.compile(r'^if (.*)', re.MULTILINE), r'ifneq (,$(\1_CONDITION))')
         emit = ''
 
         if libtool:
@@ -1034,14 +1049,14 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                             else:
                                 snippet += 'if %s\n' % name
                     if gnu_make:
-                        snippet += re.sub(convert_to_gnu_make_1[0], convert_to_gnu_make_1[1], amsnippet1)
+                        snippet += _convert_to_gnu_make(amsnippet1)
                     else:
                         snippet += amsnippet1
                     if conddeps:
                         if moduletable.isConditional(module):
                             snippet += 'endif\n'
                     if gnu_make:
-                        snippet += re.sub(convert_to_gnu_make_1[0], convert_to_gnu_make_1[1], amsnippet2)
+                        snippet += _convert_to_gnu_make(amsnippet2)
                     else:
                         snippet += amsnippet2
                     if gnu_make:
