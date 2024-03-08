@@ -3773,9 +3773,9 @@ func_emit_lib_Makefile_am ()
   # Replace NMD, so as to remove redundant "$(MKDIR_P) '.'" invocations.
   # The logic is similar to how we define gl_source_base_prefix.
   if $automake_subdir; then
-    sed_eliminate_NMD='s/@NMD@//;/@!NMD@/d'
+    sed_eliminate_NMD='s/^@NMD@//;/^@!NMD@/d'
   else
-    sed_eliminate_NMD='/@NMD@/d;s/@!NMD@//'
+    sed_eliminate_NMD='/^@NMD@/d;s/^@!NMD@//'
   fi
   if $for_test; then
     # When creating a package for testing: Attempt to provoke failures,
