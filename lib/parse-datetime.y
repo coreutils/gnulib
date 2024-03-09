@@ -244,7 +244,7 @@ debugging (parser_control const *pc)
 
 union YYSTYPE;
 static int yylex (union YYSTYPE *, parser_control *);
-static int yyerror (parser_control const *, char const *);
+static void yyerror (parser_control const *, char const *);
 static bool time_zone_hhmm (parser_control *, textint, intmax_t);
 
 /* Extract into *PC any date and time info from a string of digits
@@ -1539,11 +1539,10 @@ yylex (union YYSTYPE *lvalp, parser_control *pc)
 }
 
 /* Do nothing if the parser reports an error.  */
-static int
+static void
 yyerror (_GL_UNUSED parser_control const *pc,
          _GL_UNUSED char const *s)
 {
-  return 0;
 }
 
 /* If *TM0 is the old and *TM1 is the new value of a struct tm after
