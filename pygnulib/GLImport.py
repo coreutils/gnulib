@@ -562,16 +562,21 @@ class GLImport(object):
             emit += 'gl_VC_FILES([%s])\n' % vc_files
         return constants.nlconvert(emit)
 
-    def gnulib_comp(self, files, gentests):
+    def gnulib_comp(self, filetable, gentests):
         '''GLImport.gnulib_comp(files) -> str
 
         Emit the contents of generated $m4base/gnulib-comp.m4 file.
         GLConfig: destdir, localpath, tests, sourcebase, m4base, pobase, docbase,
         testsbase, conddeps, libtool, macro_prefix, podomain, vc_files.
 
-        files is the list of files to use.
+        filetable is a dictionary with a category used as a key to access
+          a list of files.
         gentests is True if a tests Makefile.am is being generated, False
           otherwise.'''
+        if type(filetable) is not dict:
+            raise TypeError(f'filetable should be a dict, not {type(filetable).__name__}')
+        if type(gentests) is not bool:
+            raise TypeError(f'gentests should be a bool, not {type(gentests).__name__}')
         emit = ''
         assistant = self.assistant
         moduletable = self.moduletable
@@ -640,6 +645,21 @@ AC_DEFUN([%s_EARLY],
 # "Check for header files, types and library functions".
 AC_DEFUN([%s_INIT],
 [\n''' % (configure_ac, macro_prefix)
+
+        # This AC_CONFIG_LIBOBJ_DIR invocation silences an error from the automake
+        # front end:
+        #   error: required file './alloca.c' not found
+        # It is needed because of the last remaining use of AC_LIBSOURCES in
+        # _AC_LIBOBJ_ALLOCA, invoked from AC_FUNC_ALLOCA.
+        # All the m4_pushdef/m4_popdef logic in func_emit_initmacro_start/_end
+        # does not help to avoid this error.
+        newfile_set = {x[1] for x in filetable['new']}
+        if 'lib/alloca.c' in newfile_set:
+            emit += '  AC_CONFIG_LIBOBJ_DIR([%s])\n' % sourcebase
+        elif 'tests=lib/alloca.c' in newfile_set:
+            # alloca.c will be present in $testsbase.
+            emit += '  AC_CONFIG_LIBOBJ_DIR([%s])\n' % testsbase
+
         if libtool:
             emit += '  AM_CONDITIONAL([GL_COND_LIBTOOL], [true])\n'
             emit += '  gl_cond_libtool=true\n'
@@ -702,7 +722,7 @@ AC_DEFUN([%s_INIT],
 # This macro records the list of files which have been installed by
 # gnulib-tool and may be removed by future gnulib-tool invocations.
 AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
-        emit += '  %s\n' % '\n  '.join(files)
+        emit += '  %s\n' % '\n  '.join(filetable['all'])
         emit += '])\n'
         return emit
 
@@ -1277,7 +1297,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         # Create m4/gnulib-comp.m4.
         basename = joinpath(m4base, 'gnulib-comp.m4')
         tmpfile = self.assistant.tmpfilename(basename)
-        emit = self.gnulib_comp(filetable['all'], gentests)
+        emit = self.gnulib_comp(filetable, gentests)
         with codecs.open(tmpfile, 'wb', 'UTF-8') as file:
             file.write(emit)
         filename, backup, flag = self.assistant.super_update(basename, tmpfile)

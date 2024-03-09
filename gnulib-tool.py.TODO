@@ -344,26 +344,6 @@ Date:   Wed Dec 15 19:18:31 2021 +0100
 
 --------------------------------------------------------------------------------
 
-commit dc08febea1fc0a8c902dfa89d0abc2952873529b
-Author: Bruno Haible <bruno@clisp.org>
-Date:   Mon Dec 13 03:03:13 2021 +0100
-
-    gnulib-tool: Fix mistake in last commit.
-
-commit 4e7b4cc6fb3e3b659c98baf6db26d8a06099fbee
-Author: Bruno Haible <bruno@clisp.org>
-Date:   Mon Dec 13 02:43:21 2021 +0100
-
-    gnulib-tool: Support non-recursive-gnulib-prefix-hack with tests.
-
-    * gnulib-tool (func_import): Synthesize an AC_CONFIG_LIBOBJ_DIR
-    invocation.
-    * m4/non-recursive-gnulib-prefix-hack.m4
-    (gl_NON_RECURSIVE_GNULIB_PREFIX_HACK): Don't invoke
-    AC_CONFIG_LIBOBJ_DIR.
-
---------------------------------------------------------------------------------
-
 commit 4b071c115309079528db7b60e8d2ffb22b129088
 Author: Paul Eggert <eggert@cs.ucla.edu>
 Date:   Mon Apr 26 23:31:29 2021 -0700
