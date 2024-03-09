@@ -60,13 +60,20 @@ normpath = os.path.normpath
 def _patch_test_driver() -> None:
     '''Patch the test-driver script in testdirs.'''
     test_driver = joinpath('build-aux', 'test-driver')
-    diff = joinpath(DIRS['root'], joinpath('build-aux', 'test-driver.diff'))
-    command = f'patch {test_driver} < {diff}'
-    try:
-        result = sp.call(command, shell=True)
-        if result != 0:
+    diffs = [ joinpath(DIRS['root'], name)
+              for name in [joinpath('build-aux', 'test-driver.diff'),
+                           joinpath('build-aux', 'test-driver-1.16.3.diff')]]
+    patched = False
+    for diff in diffs:
+        command = f'patch {test_driver} < {diff}'
+        try:
+            result = sp.call(command, shell=True)
+        except OSError:
             raise GLError(20, None)
-    except OSError:
+        if result == 0:
+            patched = True
+            break
+    if not patched:
         raise GLError(20, None)
 
 

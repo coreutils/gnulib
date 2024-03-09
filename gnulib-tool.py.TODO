@@ -364,22 +364,6 @@ Date:   Mon Dec 13 02:43:21 2021 +0100
 
 --------------------------------------------------------------------------------
 
-commit 6ccfbd6495f2849b1aeea84f73327f6ced0080a7
-Author: Bruno Haible <bruno@clisp.org>
-Date:   Sun Aug 8 03:52:01 2021 +0200
-
-    gnulib-tool: Add support for Automake 1.16.4.
-
-    Reported by <shoober420@gmail.com> in
-    <https://lists.gnu.org/archive/html/bug-libunistring/2021-08/msg00000.html>.
-
-    * build-aux/test-driver-1.16.3.diff: Renamed from build-aux/test-driver.diff.
-    * build-aux/test-driver.diff: Update to match Automake 1.16.4.
-    * gnulib-tool (func_create_testdir, func_create_megatestdir): Try both
-    .diff files.
-
---------------------------------------------------------------------------------
-
 commit 4b071c115309079528db7b60e8d2ffb22b129088
 Author: Paul Eggert <eggert@cs.ucla.edu>
 Date:   Mon Apr 26 23:31:29 2021 -0700
