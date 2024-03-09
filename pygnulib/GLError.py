@@ -61,6 +61,7 @@ class GLError(Exception):
          17: cannot update the given file: <file>
          18: module lacks a license: <module>
          19: could not create destination directory: <directory>
+         20: could not patch test-driver script
         errinfo: additional information'''
         self.errno = errno
         self.errinfo = errinfo
@@ -109,5 +110,7 @@ class GLError(Exception):
                 message = "module lacks a license: %s" % repr(errinfo)
             elif errno == 19:
                 message = "error when running subprocess: %s" % repr(errinfo)
+            elif errno == 20:
+                message = 'could not patch test-driver script'
             self.message = '[Errno %d] %s' % (errno, message)
         return self.message

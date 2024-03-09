@@ -1272,6 +1272,8 @@ if __name__ == '__main__':
                 message += 'module %s lacks a license' % errinfo
             elif errno == 19:
                 message += 'could not create destination directory: %s' % errinfo
+            elif errno == 20:
+                message += 'could not patch test-driver script'
             message += '\n%s: *** Stop.\n' % constants.APP['name']
             sys.stderr.write(message)
             sys.exit(1)

@@ -57,6 +57,19 @@ isfile = os.path.isfile
 normpath = os.path.normpath
 
 
+def _patch_test_driver() -> None:
+    '''Patch the test-driver script in testdirs.'''
+    test_driver = joinpath('build-aux', 'test-driver')
+    diff = joinpath(DIRS['root'], joinpath('build-aux', 'test-driver.diff'))
+    command = f'patch {test_driver} < {diff}'
+    try:
+        result = sp.call(command, shell=True)
+        if result != 0:
+            raise GLError(20, None)
+    except OSError:
+        raise GLError(20, None)
+
+
 #===============================================================================
 # Define GLTestDir class
 #===============================================================================
@@ -841,6 +854,10 @@ class GLTestDir(object):
                     'LIBTOOLIZE=%s' % UTILS['libtoolize'],
                     'distclean']
             sp.call(args)
+        os.chdir(self.testdir)
+        if isfile(joinpath('build-aux', 'test-driver')):
+            _patch_test_driver()
+        os.chdir(DIRS['cwd'])
         sp.call(['rm', '-rf', self.config['tempdir']], shell=False)
 
 
@@ -999,5 +1016,7 @@ class GLMegaTestDir(object):
         args = [UTILS['automake'], '--add-missing', '--copy']
         constants.execute(args, verbose)
         shutil.rmtree('autom4te.cache')
+        if isfile(joinpath('build-aux', 'test-driver')):
+            _patch_test_driver()
         os.chdir(DIRS['cwd'])
         sp.call(['rm', '-rf', self.config['tempdir']], shell=False)

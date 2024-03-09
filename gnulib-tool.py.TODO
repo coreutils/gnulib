@@ -431,18 +431,6 @@ Date:   Mon Nov 18 13:32:46 2019 +0100
 
 --------------------------------------------------------------------------------
 
-commit 425ee42259b04956aae20afc5204775ae6e79744
-Author: Bruno Haible <bruno@clisp.org>
-Date:   Wed Jan 23 05:11:54 2019 +0100
-
-    gnulib-tool: Support running testdirs on Android.
-
-    * build-aux/test-driver.diff: New file.
-    * gnulib-tool (func_create_testdir, func_create_megatestdir): Patch
-    build-aux/test-driver after running automake.
-
---------------------------------------------------------------------------------
-
 commit ce8a5edbc49dea0cb859207c2d063dbd3be0f96c
 Author: Bruno Haible <bruno@clisp.org>
 Date:   Fri Jan 4 19:34:19 2019 +0100
