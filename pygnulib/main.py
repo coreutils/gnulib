@@ -34,6 +34,9 @@
 #   Use 'is' and 'is not' for variables which can contain only class instances
 #   (e.g. GLModule instances) and None.
 #   Rationale: <https://lists.gnu.org/archive/html/bug-gnulib/2024-02/msg00225.html>
+# - Avoid conditional expressions as in PEP 308 <https://peps.python.org/pep-0308/>.
+#   Rationale: They violate the principle that in conditional code, the
+#   condition comes first.
 
 # You can use this command to check the style:
 #   $ pycodestyle *.py
