@@ -4164,7 +4164,7 @@ func_emit_tests_Makefile_am ()
   fi
   # Replace NMD, so as to remove redundant "$(MKDIR_P) '.'" invocations.
   # The logic is similar to how we define gl_source_base_prefix.
-  sed_eliminate_NMD='/@NMD@/d;s/@!NMD@//'
+  sed_eliminate_NMD='/^@NMD@/d;s/^@!NMD@//'
   if $for_test; then
     # When creating a package for testing: Attempt to provoke failures,
     # especially link errors, already during "make" rather than during
