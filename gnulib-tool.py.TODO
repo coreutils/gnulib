@@ -18,7 +18,6 @@ The following commits to gnulib-tool have not yet been reflected in
 Implement the options:
   --extract-recursive-dependencies
   --extract-recursive-link-directive
-  --automake-subdir
   -h | --hardlink
   --local-hardlink
   -S | --more-symlinks
@@ -314,33 +313,6 @@ Date:   Wed Dec 15 21:49:41 2021 +0100
 
     * gnulib-tool: Look for the automake options also in the first argument
     of the AM_INIT_AUTOMAKE invocation in configure.ac.
-
---------------------------------------------------------------------------------
-
-commit b2bd0a9041ed7401fb69f59f7450abb8b3249ecb
-Author: Bruno Haible <bruno@clisp.org>
-Date:   Wed Dec 15 19:18:31 2021 +0100
-
-    Accommodate non-recursive Automake in a less hacky way.
-
-    * gnulib-tool: New option --automake-subdir.
-    (automake_subdir): New variable.
-    (func_emit_initmacro_end): Add a second argument. Use it to prefix each
-    object file name in *_LIBOBJS and *_LTLIBOBJS.
-    (func_emit_shellvars_init): New function.
-    (func_import): Add support for --automake-subdir. Invoke
-    prefix-gnulib-mk. Update calls to func_emit_initmacro_end. Call
-    func_emit_shellvars_init.
-    (func_create_testdir): Update calls to func_emit_initmacro_end. Call
-    func_emit_shellvars_init.
-    * m4/gnulib-tool.m4 (gl_AUTOMAKE_SUBDIR): New macro.
-    * m4/gnulib-common.m4 (gl_CONDITIONAL_HEADER): Use the value of the
-    gl_source_base_prefix variable.
-    * build-aux/prefix-gnulib-mk: New options --from-gnulib-tool, --prefix.
-    (contents_of_file): Renamed from contents.
-    (contents_of_stdin): New function.
-    (process): Inline and remove function.
-    * doc/gnulib-tool.texi (Non-recursive make): New section.
 
 --------------------------------------------------------------------------------
 

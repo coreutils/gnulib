@@ -57,7 +57,7 @@ class GLConfig(object):
                  modules=None, avoids=None, files=None,
                  incl_test_categories=None, excl_test_categories=None, libname=None,
                  lgpl=None, gnu_make=None, makefile_name=None, tests_makefile_name=None,
-                 libtool=None, conddeps=None, macro_prefix=None,
+                 automake_subdir=None, libtool=None, conddeps=None, macro_prefix=None,
                  podomain=None, witness_c_macro=None, vc_files=None, symbolic=None,
                  lsymbolic=None, configure_ac=None, ac_version=None,
                  libtests=None, single_configure=None, verbose=None, dryrun=None,
@@ -143,6 +143,10 @@ class GLConfig(object):
         self.resetTestsMakefileName()
         if tests_makefile_name != None:
             self.setTestsMakefileName(tests_makefile_name)
+        # automake-subdir
+        self.resetAutomakeSubdir()
+        if automake_subdir != None:
+            self.setAutomakeSubdir(automake_subdir)
         # libtool
         self.resetLibtool()
         if libtool != None:
@@ -280,8 +284,8 @@ class GLConfig(object):
                 return 0
             elif key in ['modules', 'avoids', 'tests', 'incl_test_categories', 'excl_test_categories']:
                 return list()
-            elif key in ['libtool', 'lgpl', 'gnu_make', 'conddeps', 'symbolic', 'lsymbolic',
-                         'libtests', 'dryrun']:
+            elif key in ['libtool', 'lgpl', 'gnu_make', 'automake_subdir', 'conddeps', 'symbolic',
+                         'lsymbolic', 'libtests', 'dryrun']:
                 return False
             elif key == 'vc_files':
                 return None
@@ -882,6 +886,25 @@ class GLConfig(object):
         '''Reset the name of makefile in automake syntax in the testsbase directory.
         Default is the value of 'makefile_name'.'''
         self.table['tests_makefile_name'] = ''
+
+    # Define automake_subdir methods.
+    def getAutomakeSubdir(self) -> bool:
+        '''Return a bool describing whether --automake-subdir is in use
+        or not.'''
+        return self.table['automake_subdir']
+
+    def setAutomakeSubdir(self, automake_subdir: bool) -> None:
+        '''Set the value describing whether --automake-subdir is in use.'''
+        if type(automake_subdir) is bool:
+            self.table['automake_subdir'] = automake_subdir
+        else:  # if type of automake_subdir is not bool
+            raise TypeError('automake_subdir must be a bool, not %s'
+                            % type(automake_subdir).__name__)
+
+    def resetAutomakeSubdir(self) -> None:
+        '''Set the value describing whether --automake-subdir is in use.
+        Default is False.'''
+        self.table['automake_subdir'] = False
 
     # Define podomain methods.
     def getPoDomain(self):

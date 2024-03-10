@@ -62,6 +62,7 @@ class GLError(Exception):
          18: module lacks a license: <module>
          19: could not create destination directory: <directory>
          20: could not patch test-driver script
+         21: Option --automake-subdir is only supported if the definition of AUTOMAKE_OPTIONS in Makefile.am contains 'subdir-objects'.
         errinfo: additional information'''
         self.errno = errno
         self.errinfo = errinfo
@@ -112,5 +113,8 @@ class GLError(Exception):
                 message = "error when running subprocess: %s" % repr(errinfo)
             elif errno == 20:
                 message = 'could not patch test-driver script'
+            elif errno == 21:
+                message = ('Option --automake-subdir is only supported if the definition of AUTOMAKE_OPTIONS '
+                           'in Makefile.am contains \'subdir-objects\'.')
             self.message = '[Errno %d] %s' % (errno, message)
         return self.message

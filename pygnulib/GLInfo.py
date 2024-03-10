@@ -282,7 +282,10 @@ Options for --import, --add/remove-import:
                             \"Makefile.in\" if --gnu-make).
       --tests-makefile-name=NAME
                             Name of makefile in the tests-base directory
-                            (default as specified through --makefile-name)
+                            (default as specified through --makefile-name).
+      --automake-subdir     Specify that the makefile in the source-base
+                            directory be generated in such a way that it can
+                            be 'include'd from the toplevel Makefile.am.
       --macro-prefix=PREFIX  Specify the prefix of the macros 'gl_EARLY' and
                             'gl_INIT'. Default is 'gl'.
       --po-domain=NAME      Specify the prefix of the i18n domain. Usually use

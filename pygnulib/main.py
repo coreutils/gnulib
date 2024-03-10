@@ -393,6 +393,11 @@ def main():
                         dest='tests_makefile_name',
                         default=None,
                         nargs=1)
+    # automake-subdir
+    parser.add_argument('--automake-subdir',
+                        dest='automake_subdir',
+                        default=None,
+                        action='store_true')
     # macro-prefix
     parser.add_argument('--macro-prefix',
                         dest='macro_prefix',
@@ -615,6 +620,7 @@ def main():
                  or cmdargs.avoids != None or cmdargs.lgpl != None
                  or cmdargs.makefile_name != None
                  or cmdargs.tests_makefile_name != None
+                 or cmdargs.automake_subdir != None
                  or cmdargs.macro_prefix != None or cmdargs.podomain != None
                  or cmdargs.witness_c_macro != None or cmdargs.vc_files != None))):
         message = '%s: *** ' % constants.APP['name']
@@ -712,6 +718,7 @@ def main():
     tests_makefile_name = cmdargs.tests_makefile_name
     if tests_makefile_name != None:
         tests_makefile_name = tests_makefile_name[0]
+    automake_subdir = cmdargs.automake_subdir == True
     macro_prefix = cmdargs.macro_prefix
     if macro_prefix != None:
         macro_prefix = macro_prefix[0]
@@ -751,6 +758,7 @@ def main():
         gnu_make=gnu_make,
         makefile_name=makefile_name,
         tests_makefile_name=tests_makefile_name,
+        automake_subdir=automake_subdir,
         libtool=libtool,
         conddeps=cond_dependencies,
         macro_prefix=macro_prefix,
@@ -1277,6 +1285,9 @@ if __name__ == '__main__':
                 message += 'could not create destination directory: %s' % errinfo
             elif errno == 20:
                 message += 'could not patch test-driver script'
+            elif errno == 21:
+                message = ('Option --automake-subdir is only supported if the definition of AUTOMAKE_OPTIONS '
+                           'in Makefile.am contains \'subdir-objects\'.')
             message += '\n%s: *** Stop.\n' % constants.APP['name']
             sys.stderr.write(message)
             sys.exit(1)

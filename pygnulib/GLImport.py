@@ -42,6 +42,7 @@ __copyright__ = constants.__copyright__
 #===============================================================================
 # Define global constants
 #===============================================================================
+APP = constants.APP
 DIRS = constants.DIRS
 MODES = constants.MODES
 TESTS = constants.TESTS
@@ -162,6 +163,9 @@ class GLImport(object):
             if 'gl_WITH_ALL_TESTS' in data:
                 self.cache.enableInclTestCategory(TESTS['all-test'])
                 data = data.replace('gl_WITH_ALL_TESTS', '')
+            if 'gl_AUTOMAKE_SUBDIR' in data:
+                self.cache.setAutomakeSubdir(True)
+                data = data.replace('gl_AUTOMAKE_SUBDIR', '')
             # Find string values
             result = dict(pattern.findall(data))
             values = cleaner([ result.get(key, '')
@@ -254,6 +258,25 @@ class GLImport(object):
                 if not config.isdefault(key, value):
                     self.config.update_key(config, key)
             self.config.setModules(modules)
+
+        if self.config['automake_subdir']:
+            found_subdir_objects = False
+            if self.config['destdir']:
+                base = self.config['destdir']
+            else:
+                base = '.'
+            if isfile(joinpath(base, 'Makefile.am')):
+                pattern = re.compile(r'^AUTOMAKE_OPTIONS[\t| ]*=(.*)$', re.MULTILINE)
+                with open(joinpath(base, 'Makefile.am'), encoding='utf-8') as file:
+                    data = file.read()
+                automake_options = pattern.findall(data)
+                if automake_options:
+                    automake_options = { x
+                                         for y in automake_options
+                                         for x in y.split() }
+                    found_subdir_objects = 'subdir-objects' in automake_options
+            if not found_subdir_objects:
+                raise GLError(21, None)
 
         # Define GLImport attributes.
         self.emitter = GLEmiter(self.config)
@@ -367,6 +390,7 @@ class GLImport(object):
         gnu_make = self.config.getGnuMake()
         makefile_name = self.config.getMakefileName()
         tests_makefile_name = self.config.getTestsMakefileName()
+        automake_subdir = self.config.getAutomakeSubdir()
         libtool = self.config.checkLibtool()
         macro_prefix = self.config.getMacroPrefix()
         witness_c_macro = self.config.getWitnessCMacro()
@@ -418,8 +442,9 @@ class GLImport(object):
             actioncmd += ' \\\n#  --makefile-name=%s' % makefile_name
         if tests_makefile_name:
             actioncmd += ' \\\n#  --tests-makefile-name=%s' % tests_makefile_name
+        if automake_subdir:
+            actioncmd += ' \\\n#  --automake-subdir'
         # FIXME: Add the following options in this order when implemented.
-        # --automake-subdir
         # --automake-subdir-tests
         if conddeps:
             actioncmd += ' \\\n#  --conditional-dependencies'
@@ -496,6 +521,7 @@ class GLImport(object):
         libname = self.config['libname']
         makefile_name = self.config['makefile_name']
         tests_makefile_name = self.config['tests_makefile_name']
+        automake_subdir = self.config['automake_subdir']
         conddeps = self.config['conddeps']
         libtool = self.config['libtool']
         macro_prefix = self.config['macro_prefix']
@@ -551,6 +577,8 @@ class GLImport(object):
         emit += 'gl_MAKEFILE_NAME([%s])\n' % makefile_name
         if tests_makefile_name:
             emit += 'gl_TESTS_MAKEFILE_NAME([%s])\n' % tests_makefile_name
+        if automake_subdir:
+            emit += 'gl_AUTOMAKE_SUBDIR\n'
         if conddeps:
             emit += 'gl_CONDITIONAL_DEPENDENCIES\n'
         if libtool:
@@ -673,6 +701,7 @@ AC_DEFUN([%s_INIT],
             replace_auxdir = True
         emit += '  gl_m4_base=\'%s\'\n' % m4base
         emit += self.emitter.initmacro_start(macro_prefix, False)
+        emit += self.emitter.shellvars_init(False, sourcebase)
         emit += '  gl_source_base=\'%s\'\n' % sourcebase
         if witness_c_macro:
             emit += '  m4_pushdef([gl_MODULE_INDICATOR_CONDITION], [%s])\n' % witness_c_macro
@@ -682,10 +711,11 @@ AC_DEFUN([%s_INIT],
         if witness_c_macro:
             emit += '  m4_popdef([gl_MODULE_INDICATOR_CONDITION])\n'
         emit += '  # End of code from modules\n'
-        emit += self.emitter.initmacro_end(macro_prefix)
+        emit += self.emitter.initmacro_end(macro_prefix, False)
         emit += '  gltests_libdeps=\n'
         emit += '  gltests_ltlibdeps=\n'
         emit += self.emitter.initmacro_start('%stests' % macro_prefix, gentests)
+        emit += self.emitter.shellvars_init(True, testsbase)
         emit += '  gl_source_base=\'%s\'\n' % testsbase
         # Define a tests witness macro that depends on the package.
         # PACKAGE is defined by AM_INIT_AUTOMAKE, PACKAGE_TARNAME is defined by
@@ -703,7 +733,7 @@ AC_DEFUN([%s_INIT],
         emit += self.emitter.autoconfSnippets(moduletable['tests'], moduletable['main'] + moduletable['tests'],
                                               moduletable, 0, True, True, True, replace_auxdir)
         emit += '  m4_popdef([gl_MODULE_INDICATOR_CONDITION])\n'
-        emit += self.emitter.initmacro_end('%stests' % macro_prefix)
+        emit += self.emitter.initmacro_end('%stests' % macro_prefix, gentests)
         # _LIBDEPS and _LTLIBDEPS variables are not needed if this library is
         # created using libtool, because libtool already handles the dependencies.
         if not libtool:
@@ -1004,6 +1034,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         libname = self.config['libname']
         makefile_name = self.config['makefile_name']
         tests_makefile_name = self.config['tests_makefile_name']
+        automake_subdir = self.config['automake_subdir']
         conddeps = self.config['conddeps']
         libtool = self.config['libtool']
         macro_prefix = self.config['macro_prefix']
@@ -1148,6 +1179,10 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         emit, uses_subdirs = self.emitter.lib_Makefile_am(basename,
                                                           self.moduletable['main'], self.moduletable, self.makefiletable,
                                                           actioncmd, for_test)
+        if automake_subdir:
+            emit = sp.run([joinpath(APP['root'], 'build-aux/prefix-gnulib-mk'), '--from-gnulib-tool',
+                           f'--lib-name={libname}', f'--prefix={sourcebase}/'],
+                          input=emit, text=True, capture_output=True).stdout
         with codecs.open(tmpfile, 'wb', 'UTF-8') as file:
             file.write(emit)
         filename, backup, flag = self.assistant.super_update(basename, tmpfile)

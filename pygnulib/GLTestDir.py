@@ -489,15 +489,15 @@ class GLTestDir(object):
                 # We don't have explicit ordering constraints between the various
                 # autoconf snippets. It's cleanest to put those of the library before
                 # those of the tests.
-                emit += "gl_source_base='../%s'\n" % sourcebase
+                emit += self.emitter.shellvars_init(True, f'../{sourcebase}')
                 emit += self.emitter.autoconfSnippets(modules, modules,
                                                       moduletable, 1, False, False, False,
                                                       replace_auxdir)
-                emit += "gl_source_base='.'"
+                emit += self.emitter.shellvars_init(True, '.')
                 emit += self.emitter.autoconfSnippets(modules, modules,
                                                       moduletable, 2, False, False, False,
                                                       replace_auxdir)
-                emit += self.emitter.initmacro_end(macro_prefix)
+                emit += self.emitter.initmacro_end(macro_prefix, True)
                 # _LIBDEPS and _LTLIBDEPS variables are not needed if this library is
                 # created using libtool, because libtool already handles the
                 # dependencies.
@@ -606,19 +606,19 @@ class GLTestDir(object):
             replace_auxdir = False
         emit += 'gl_m4_base=\'%s\'\n' % m4base
         emit += self.emitter.initmacro_start(macro_prefix, False)
-        emit += 'gl_source_base=\'%s\'\n' % sourcebase
+        emit += self.emitter.shellvars_init(False, sourcebase)
         if single_configure:
             emit += self.emitter.autoconfSnippets(main_modules, main_modules, moduletable,
                                                   0, False, False, False, replace_auxdir)
         else:  # if not single_configure
             emit += self.emitter.autoconfSnippets(modules, modules, moduletable,
                                                   1, False, False, False, replace_auxdir)
-        emit += self.emitter.initmacro_end(macro_prefix)
+        emit += self.emitter.initmacro_end(macro_prefix, False)
         if single_configure:
             emit += '  gltests_libdeps=\n'
             emit += '  gltests_ltlibdeps=\n'
             emit += self.emitter.initmacro_start('%stests' % macro_prefix, True)
-            emit += '  gl_source_base=\'%s\'\n' % testsbase
+            emit += self.emitter.shellvars_init(True, testsbase)
             # Define a tests witness macro.
             emit += '  %stests_WITNESS=IN_GNULIB_TESTS\n' % macro_prefix
             emit += '  AC_SUBST([%stests_WITNESS])\n' % macro_prefix
@@ -629,7 +629,7 @@ class GLTestDir(object):
                                                      moduletable, 1, True, False, False, replace_auxdir)
             emit += snippets.strip()
             emit += '  m4_popdef([gl_MODULE_INDICATOR_CONDITION])\n'
-            emit += self.emitter.initmacro_end('%stests' % macro_prefix)
+            emit += self.emitter.initmacro_end('%stests' % macro_prefix, True)
         # _LIBDEPS and _LTLIBDEPS variables are not needed if this library is
         # created using libtool, because libtool already handles the dependencies.
         if not libtool:
