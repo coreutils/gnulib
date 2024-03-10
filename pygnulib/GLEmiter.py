@@ -566,7 +566,7 @@ USE_MSGCTXT = no\n"""
         # arguments. The check is performed only when autoconf is run from the
         # directory where the configure.ac resides; if it is run from a different
         # directory, the check is skipped.
-        if automake_subdir and not gentests and sourcebase and sourcebase != '.':
+        if automake_subdir and not gentests and sourcebase != '' and sourcebase != '.':
             subdir = f'{sourcebase}/'
         else:
             subdir = ''

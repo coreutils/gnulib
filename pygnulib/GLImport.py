@@ -259,6 +259,7 @@ class GLImport(object):
                     self.config.update_key(config, key)
             self.config.setModules(modules)
 
+        # Determine whether --automake-subdir is supported.
         if self.config['automake_subdir']:
             found_subdir_objects = False
             if self.config['destdir']:
@@ -266,7 +267,7 @@ class GLImport(object):
             else:
                 base = '.'
             if isfile(joinpath(base, 'Makefile.am')):
-                pattern = re.compile(r'^AUTOMAKE_OPTIONS[\t| ]*=(.*)$', re.MULTILINE)
+                pattern = re.compile(r'^AUTOMAKE_OPTIONS[\t ]*=(.*)$', re.MULTILINE)
                 with open(joinpath(base, 'Makefile.am'), encoding='utf-8') as file:
                     data = file.read()
                 automake_options = pattern.findall(data)
@@ -702,7 +703,6 @@ AC_DEFUN([%s_INIT],
         emit += '  gl_m4_base=\'%s\'\n' % m4base
         emit += self.emitter.initmacro_start(macro_prefix, False)
         emit += self.emitter.shellvars_init(False, sourcebase)
-        emit += '  gl_source_base=\'%s\'\n' % sourcebase
         if witness_c_macro:
             emit += '  m4_pushdef([gl_MODULE_INDICATOR_CONDITION], [%s])\n' % witness_c_macro
         # Emit main autoconf snippets.
@@ -716,7 +716,6 @@ AC_DEFUN([%s_INIT],
         emit += '  gltests_ltlibdeps=\n'
         emit += self.emitter.initmacro_start('%stests' % macro_prefix, gentests)
         emit += self.emitter.shellvars_init(True, testsbase)
-        emit += '  gl_source_base=\'%s\'\n' % testsbase
         # Define a tests witness macro that depends on the package.
         # PACKAGE is defined by AM_INIT_AUTOMAKE, PACKAGE_TARNAME is defined by
         # AC_INIT.
