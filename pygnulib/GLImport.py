@@ -261,31 +261,32 @@ class GLImport(object):
 
         # Determine whether --automake-subdir is supported.
         if self.config['automake_subdir']:
-            automake_options = set()
+            found_subdir_objects = False
             if self.config['destdir']:
-                pattern = re.compile(r'^.*AM_INIT_AUTOMAKE\([\[ ]*([^\]\)]*).*$', re.MULTILINE)
                 with open(self.config['configure_ac'], encoding='utf-8') as file:
                     data = file.read()
+                pattern = re.compile(r'^.*AM_INIT_AUTOMAKE\([\[ ]*([^\]\)]*).*$', re.MULTILINE)
                 configure_ac_automake_options = pattern.findall(data)
                 if configure_ac_automake_options:
                     automake_options = { x
                                          for y in configure_ac_automake_options
                                          for x in y.split() }
-            found_subdir_objects = 'subdir-objects' in automake_options
-            if self.config['destdir']:
-                base = self.config['destdir']
-            else:
-                base = '.'
-            if not found_subdir_objects and isfile(joinpath(base, 'Makefile.am')):
-                pattern = re.compile(r'^AUTOMAKE_OPTIONS[\t ]*=(.*)$', re.MULTILINE)
-                with open(joinpath(base, 'Makefile.am'), encoding='utf-8') as file:
-                    data = file.read()
-                automake_options = pattern.findall(data)
-                if automake_options:
-                    automake_options = { x
-                                         for y in automake_options
-                                         for x in y.split() }
                     found_subdir_objects = 'subdir-objects' in automake_options
+            if not found_subdir_objects:
+                if self.config['destdir']:
+                    base = self.config['destdir']
+                else:
+                    base = '.'
+                if isfile(joinpath(base, 'Makefile.am')):
+                    with open(joinpath(base, 'Makefile.am'), encoding='utf-8') as file:
+                        data = file.read()
+                    pattern = re.compile(r'^AUTOMAKE_OPTIONS[\t ]*=(.*)$', re.MULTILINE)
+                    automake_options = pattern.findall(data)
+                    if automake_options:
+                        automake_options = { x
+                                             for y in automake_options
+                                             for x in y.split() }
+                        found_subdir_objects = 'subdir-objects' in automake_options
             if not found_subdir_objects:
                 raise GLError(21, None)
 
