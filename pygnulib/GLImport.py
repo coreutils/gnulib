@@ -261,12 +261,22 @@ class GLImport(object):
 
         # Determine whether --automake-subdir is supported.
         if self.config['automake_subdir']:
-            found_subdir_objects = False
+            automake_options = set()
+            if self.config['destdir']:
+                pattern = re.compile(r'^.*AM_INIT_AUTOMAKE\([\[ ]*([^\]\)]*).*$', re.MULTILINE)
+                with open(self.config['configure_ac'], encoding='utf-8') as file:
+                    data = file.read()
+                configure_ac_automake_options = pattern.findall(data)
+                if configure_ac_automake_options:
+                    automake_options = { x
+                                         for y in configure_ac_automake_options
+                                         for x in y.split() }
+            found_subdir_objects = 'subdir-objects' in automake_options
             if self.config['destdir']:
                 base = self.config['destdir']
             else:
                 base = '.'
-            if isfile(joinpath(base, 'Makefile.am')):
+            if not found_subdir_objects and isfile(joinpath(base, 'Makefile.am')):
                 pattern = re.compile(r'^AUTOMAKE_OPTIONS[\t ]*=(.*)$', re.MULTILINE)
                 with open(joinpath(base, 'Makefile.am'), encoding='utf-8') as file:
                     data = file.read()

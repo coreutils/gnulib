@@ -305,17 +305,6 @@ Date:   Sun Dec 19 12:49:16 2021 +0100
 
 --------------------------------------------------------------------------------
 
-commit b8124d982f454b8526b5e11934a2f71faac2b600
-Author: Bruno Haible <bruno@clisp.org>
-Date:   Wed Dec 15 21:49:41 2021 +0100
-
-    automake-subdir support: Look for 'subdir-objects' also in configure.ac.
-
-    * gnulib-tool: Look for the automake options also in the first argument
-    of the AM_INIT_AUTOMAKE invocation in configure.ac.
-
---------------------------------------------------------------------------------
-
 commit 4b071c115309079528db7b60e8d2ffb22b129088
 Author: Paul Eggert <eggert@cs.ucla.edu>
 Date:   Mon Apr 26 23:31:29 2021 -0700
