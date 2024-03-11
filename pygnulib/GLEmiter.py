@@ -13,6 +13,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+from __future__ import annotations
 #===============================================================================
 # Define global imports
 #===============================================================================
@@ -63,6 +64,27 @@ def _convert_to_gnu_make(snippet: str) -> str:
     for regexp in _CONVERT_TO_GNU_MAKE:
         snippet = re.sub(regexp[0], regexp[1], snippet)
     return snippet
+
+
+def _eliminate_NMD_from_line(line: str, automake_subdir: bool) -> str | None:
+    '''Eliminate occurrences of @NMD@ from the given line. The modified
+    line is returned or None if the line should be removed.'''
+    if line.startswith('@NMD@'):
+        if automake_subdir:
+            line = line.replace('@NMD@', '')
+        else:
+            line = None
+    return line
+
+
+def _eliminate_NMD(snippet: str, automake_subdir: bool) -> str:
+    '''Return the Automake snippet with occurrences of @NMD@ removed.'''
+    result = []
+    for line in snippet.splitlines():
+        line = _eliminate_NMD_from_line(line, automake_subdir)
+        if line != None:
+            result.append(line)
+    return '\n'.join(result) + '\n'
 
 
 #===============================================================================
@@ -694,6 +716,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         auxdir = self.config['auxdir']
         gnu_make = self.config['gnu_make']
         makefile_name = self.config['makefile_name']
+        automake_subdir = self.config['automake_subdir']
         libtool = self.config['libtool']
         macro_prefix = self.config['macro_prefix']
         podomain = self.config['podomain']
@@ -747,6 +770,9 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                 if eliminate_LDFLAGS:
                     pattern = re.compile('^(lib_LDFLAGS[\t ]*\\+=.*$\n)', re.M)
                     amsnippet1 = pattern.sub('', amsnippet1)
+                # Replace NMD, so as to remove redundant "$(MKDIR_P) '.'" invocations.
+                # The logic is similar to how we define gl_source_base_prefix.
+                amsnippet1 = _eliminate_NMD(amsnippet1, automake_subdir)
                 pattern = re.compile('lib_([A-Z][A-Z]*)', re.M)
                 amsnippet1 = pattern.sub('%s_%s_\\1' % (libname, libext),
                                          amsnippet1)
@@ -1047,6 +1073,9 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                 if eliminate_LDFLAGS:
                     pattern = re.compile('^(lib_LDFLAGS[\t ]*\\+=.*$\n)', re.M)
                     amsnippet1 = pattern.sub('', amsnippet1)
+                # Replace NMD, so as to remove redundant "$(MKDIR_P) '.'" invocations.
+                # The logic is similar to how we define gl_source_base_prefix.
+                amsnippet1 = _eliminate_NMD(amsnippet1, False)
                 pattern = re.compile('lib_([A-Z][A-Z]*)', re.M)
                 amsnippet1 = pattern.sub('libtests_a_\\1', amsnippet1)
                 amsnippet1 = amsnippet1.replace('$(GNULIB_', '$(' + module_indicator_prefix + '_GNULIB_')
