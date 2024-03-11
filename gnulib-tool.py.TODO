@@ -169,44 +169,6 @@ Date:   Sat Dec 25 12:19:13 2021 +0100
 
 --------------------------------------------------------------------------------
 
-commit b4c57b4240992832fa89a02dc620c4fa5ac36973
-Author: Paul Eggert <eggert@cs.ucla.edu>
-Date:   Fri Dec 24 17:22:00 2021 -0800
-
-    maint: avoid empty lines in recipes
-
-    AIX 7.2 ‘make’ complains about recipe lines that are empty after
-    macro expansion, and I suppose there’s a good chance some
-    non-POSIX ‘make’ would prohibit them.  Rework macros so
-    that we can avoid them.
-    * gnulib-tool (func_emit_lib_Makefile_am)
-    (func_emit_lib_Makefile_am): Support @!NMD@ too.
-    * modules/gen-header (@gl_V_at): New macro.
-    * modules/alloca-opt, modules/argz, modules/assert-h:
-    * modules/byteswap, modules/configmake, modules/ctype:
-    * modules/dirent, modules/errno, modules/execinfo, modules/fcntl-h:
-    * modules/float, modules/fnmatch-h, modules/getopt-posix:
-    * modules/glob-h, modules/iconv-h, modules/ieee754-h:
-    * modules/inttypes-incomplete, modules/langinfo:
-    * modules/libtextstyle-optional, modules/limits-h, modules/locale:
-    * modules/malloc-h, modules/math, modules/monetary, modules/netdb:
-    * modules/openmp-init, modules/poll-h, modules/posix-shell:
-    * modules/pthread-h, modules/pty, modules/sched, modules/search:
-    * modules/signal-h, modules/sigsegv, modules/snippet/link-warning:
-    * modules/spawn, modules/stdalign, modules/stdarg, modules/stdbool:
-    * modules/stddef, modules/stdint, modules/stdio, modules/stdlib:
-    * modules/stdnoreturn, modules/string, modules/strings:
-    * modules/sysexits, modules/termios, modules/threads-h:
-    * modules/time, modules/uchar, modules/unicase/base:
-    * modules/uniconv/base, modules/unictype/base, modules/unigbrk/base:
-    * modules/unilbrk/base, modules/uniname/base, modules/uninorm/base:
-    * modules/unistd, modules/unistdio/base, modules/unistr/base:
-    * modules/unitypes, modules/uniwbrk/base, modules/uniwidth/base:
-    * modules/utime-h, modules/wchar, modules/wctype-h:
-    Use it.
-
---------------------------------------------------------------------------------
-
 commit 4bdc327dbda59dcdbfa0f983a4f35c4a4ec3578c
 Author: Bruno Haible <bruno@clisp.org>
 Date:   Sun Dec 19 12:49:16 2021 +0100

@@ -71,18 +71,34 @@ def _convert_to_gnu_make(snippet: str) -> str:
 
 
 def _eliminate_NMD_from_line(line: str, automake_subdir: bool) -> str | None:
-    '''Eliminate occurrences of @NMD@ from the given line. The modified
-    line is returned or None if the line should be removed.'''
-    if line.startswith('@NMD@'):
-        if automake_subdir:
-            line = line.replace('@NMD@', '')
-        else:
-            line = None
+    '''Eliminate occurrences of @NMD@ and @!NMD@ from the given line. The
+    modified line is returned or None if the line should be removed.
+
+    line is the current line in the snippet being operated on.
+    automake_subdir is a bool that is True if --automake-subdir is in use,
+      else False.'''
+    if automake_subdir:
+        clean = '@NMD@'
+        eliminate = '@!NMD@'
+    else:
+        clean = '@!NMD@'
+        eliminate = '@NMD@'
+    # Check if we should eliminate the line from the output.
+    if line.startswith(eliminate):
+        return None
+    # Check if we should clean the mark but keep the line.
+    if line.startswith(clean):
+        return line.replace(clean, '')
     return line
 
 
 def _eliminate_NMD(snippet: str, automake_subdir: bool) -> str:
-    '''Return the Automake snippet with occurrences of @NMD@ removed.'''
+    '''Return the Automake snippet with occurrences of @NMD@ and @!NMD@
+    removed.
+
+    snippet is the Automake snippet being operated on.
+    automake_subdir is a bool that is True if --automake-subdir is in use,
+      else False.'''
     result = []
     for line in snippet.splitlines():
         line = _eliminate_NMD_from_line(line, automake_subdir)
