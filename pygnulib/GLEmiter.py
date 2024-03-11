@@ -13,7 +13,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+# Allow the use of union type specifiers, using the syntax Type1 | Type2,
+# in Python ≥ 3.7.  Cf. <https://docs.python.org/3/library/__future__.html>
+# and <https://stackoverflow.com/questions/73879925/>.
 from __future__ import annotations
+
 #===============================================================================
 # Define global imports
 #===============================================================================
@@ -84,7 +88,10 @@ def _eliminate_NMD(snippet: str, automake_subdir: bool) -> str:
         line = _eliminate_NMD_from_line(line, automake_subdir)
         if line != None:
             result.append(line)
-    return '\n'.join(result) + '\n'
+    if len(result) > 0:
+        return '\n'.join(result) + '\n'
+    else:
+        return ''
 
 
 #===============================================================================
