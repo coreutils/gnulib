@@ -24,8 +24,6 @@ Implement the options:
   -H | --more-hardlinks
   --help (same output)
 
-Remove exit() in GLImport.py.
-
 Optimize:
   - os.chdir around subprocess creation -> cwd=... argument instead.
   - Inline all 'sed' invocations.
@@ -153,19 +151,6 @@ Date:   Sun Dec 19 12:49:16 2021 +0100
     (--import, --add-import, --remove-import, --update): To find the m4
     directories, look also for AC_CONFIG_MACRO_DIR and AC_CONFIG_MACRO_DIRS
     invocations in configure.ac.
-
---------------------------------------------------------------------------------
-
-commit 4b071c115309079528db7b60e8d2ffb22b129088
-Author: Paul Eggert <eggert@cs.ucla.edu>
-Date:   Mon Apr 26 23:31:29 2021 -0700
-
-    gnulib-tool: port better to current Autoconf
-
-    * doc/gnulib-tool.texi (Initial import): Don’t mention
-    AC_PROG_CC_STDC as it’s deprecated in current Autoconf.
-    * gnulib-tool (func_done_dir): Suggest replacing
-    AC_PROG_CC_STDC and AC_PROG_CC_C99, as per current Autoconf.
 
 --------------------------------------------------------------------------------
 

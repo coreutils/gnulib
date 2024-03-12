@@ -1417,7 +1417,6 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                 elif operand == '|R|':
                     last_dirs_removed += [filename]
             self._done_dir_(last_dir, last_dirs_added, last_dirs_removed)
-        exit()
 
         # Finish the work.
         print('Finished.\n')
@@ -1499,8 +1498,10 @@ in <library>_a_LDFLAGS or <library>_la_LDFLAGS when linking a library.''')
         match_result2 = \
             bool(re.compile('^ *AC_PROG_CC_C99', re.M).findall(data))
         if match_result1:
+            print('  - replace AC_PROG_CC_STDC with AC_PROG_CC in %s,' % (configure_ac))
             position_early_after = 'AC_PROG_CC_STDC'
         elif match_result2:
+            print('  - replace AC_PROG_CC_C99 with AC_PROG_CC in %s,' % (configure_ac))
             position_early_after = 'AC_PROG_CC_C99'
         else:  # if not any([match_result1, match_result2])
             position_early_after = 'AC_PROG_CC'
