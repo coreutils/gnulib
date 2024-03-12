@@ -98,36 +98,6 @@ Date:   Sun Jan 9 15:38:51 2022 +0100
 
 --------------------------------------------------------------------------------
 
-commit 9abc30c383303fab68aa5ed2841113876bfa90d1
-Author: Bruno Haible <bruno@clisp.org>
-Date:   Sat Jan 8 22:10:54 2022 +0100
-
-    gnulib-tool: Remove all *.Po files upon distclean (regr. 2022-01-05).
-
-    Reported by Mohammad Akhlaghi <mohammad@akhlaghi.org> in
-    <https://lists.gnu.org/archive/html/bug-gnulib/2022-01/msg00061.html>.
-
-    * gnulib-tool (func_emit_initmacro_end): Collect the *.Po or *.Plo files
-    to remove into an AC_SUBSTed variable gl_LIBOBJDEPS.
-    (func_emit_lib_Makefile_am): Extend the distclean and maintainer-clean
-    rules.
-
-commit 0c8a563f65d44752b33aec42cceec25bd485f2d5
-Author: Bruno Haible <bruno@clisp.org>
-Date:   Wed Jan 5 18:21:55 2022 +0100
-
-    gnulib-tool: Avoid known warnings that reflect Gnulib's coding style.
-
-    * m4/gnulib-common.m4 (gl_CC_GNULIB_WARNINGS): New macro.
-    * gnulib-tool (func_emit_lib_Makefile_am): Add the
-    GL_CFLAG_GNULIB_WARNINGS to the CFLAGS of all the compilation units of
-    the library.
-    (func_emit_tests_Makefile_am): Add the GL_CFLAG_GNULIB_WARNINGS to the
-    CFLAGS.
-    (func_import): Emit an invocation of gl_CC_GNULIB_WARNINGS.
-
---------------------------------------------------------------------------------
-
 commit 87e6634b28df65084321fed22f60d114a0931d21
 Author: Bernhard Voelker <mail@bernhard-voelker.de>
 Date:   Tue Jan 4 00:16:50 2022 +0100

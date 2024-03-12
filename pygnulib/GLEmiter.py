@@ -606,6 +606,7 @@ USE_MSGCTXT = no\n"""
                             % type(gentests).__name__)
         sourcebase = self.config['sourcebase']
         automake_subdir = self.config['automake_subdir']
+        libtool = self.config['libtool']
         emit = ''
         # Check the presence of files that are mentioned as AC_LIBSOURCES
         # arguments. The check is performed only when autoconf is run from the
@@ -615,12 +616,16 @@ USE_MSGCTXT = no\n"""
             subdir = f'{sourcebase}/'
         else:
             subdir = ''
-        emit += r'''
-  m4_ifval(%V1%_LIBSOURCES_LIST, [
-    m4_syscmd([test ! -d ]m4_defn([%V1%_LIBSOURCES_DIR])[ ||
-      for gl_file in ]%V1%_LIBSOURCES_LIST[ ; do
-        if test ! -r ]m4_defn([%V1%_LIBSOURCES_DIR])[/$gl_file ; then
-          echo "missing file ]m4_defn([%V1%_LIBSOURCES_DIR])[/$gl_file" >&2
+        if libtool:
+            libobjdeps = f'{macro_prefix_arg}_libobjdeps="${macro_prefix_arg}_libobjdeps {subdir}$i_dir/\$(DEPDIR)/$i_base.Plo"'
+        else:
+            libobjdeps = f'{macro_prefix_arg}_libobjdeps="${macro_prefix_arg}_libobjdeps {subdir}$i_dir/\$(DEPDIR)/$i_base.Po"'
+        emit += fr'''
+  m4_ifval({macro_prefix_arg}_LIBSOURCES_LIST, [
+    m4_syscmd([test ! -d ]m4_defn([{macro_prefix_arg}_LIBSOURCES_DIR])[ ||
+      for gl_file in ]{macro_prefix_arg}_LIBSOURCES_LIST[ ; do
+        if test ! -r ]m4_defn([{macro_prefix_arg}_LIBSOURCES_DIR])[/$gl_file ; then
+          echo "missing file ]m4_defn([{macro_prefix_arg}_LIBSOURCES_DIR])[/$gl_file" >&2
           exit 1
         fi
       done])dnl
@@ -629,28 +634,38 @@ USE_MSGCTXT = no\n"""
   ])
   m4_popdef([GL_MODULE_INDICATOR_PREFIX])
   m4_popdef([GL_MACRO_PREFIX])
-  m4_popdef([%V1%_LIBSOURCES_DIR])
-  m4_popdef([%V1%_LIBSOURCES_LIST])
+  m4_popdef([{macro_prefix_arg}_LIBSOURCES_DIR])
+  m4_popdef([{macro_prefix_arg}_LIBSOURCES_LIST])
   m4_popdef([AC_LIBSOURCES])
   m4_popdef([AC_REPLACE_FUNCS])
   m4_popdef([AC_LIBOBJ])
   AC_CONFIG_COMMANDS_PRE([
-    %V1%_libobjs=
-    %V1%_ltlibobjs=
-    if test -n "$%V1%_LIBOBJS"; then
+    {macro_prefix_arg}_libobjs=
+    {macro_prefix_arg}_ltlibobjs=
+    {macro_prefix_arg}_libobjdeps=
+    if test -n "${macro_prefix_arg}_LIBOBJS"; then
       # Remove the extension.
+changequote(,)dnl
       sed_drop_objext='s/\.o$//;s/\.obj$//'
-      for i in `for i in $%V1%_LIBOBJS; do echo "$i"; done | sed -e "$sed_drop_objext" | sort | uniq`; do
-        %V1%_libobjs="$%V1%_libobjs %V2%$i.$ac_objext"
-        %V1%_ltlibobjs="$%V1%_ltlibobjs %V2%$i.lo"
+      sed_dirname1='s,//*,/,g'
+      sed_dirname2='s,\(.\)/$,\1,'
+      sed_dirname3='s,^[^/]*$,.,'
+      sed_dirname4='s,\(.\)/[^/]*$,\1,'
+      sed_basename1='s,.*/,,'
+changequote([, ])dnl
+      for i in `for i in ${macro_prefix_arg}_LIBOBJS; do echo "$i"; done | sed -e "$sed_drop_objext" | sort | uniq`; do
+        {macro_prefix_arg}_libobjs="${macro_prefix_arg}_libobjs {subdir}$i.$ac_objext"
+        {macro_prefix_arg}_ltlibobjs="${macro_prefix_arg}_ltlibobjs {subdir}$i.lo"
+        i_dir=`echo "$i" | sed -e "$sed_dirname1" -e "$sed_dirname2" -e "$sed_dirname3" -e "$sed_dirname4"`
+        i_base=`echo "$i" | sed -e "$sed_basename1"`
+        {libobjdeps}
       done
     fi
-    AC_SUBST([%V1%_LIBOBJS], [$%V1%_libobjs])
-    AC_SUBST([%V1%_LTLIBOBJS], [$%V1%_ltlibobjs])
+    AC_SUBST([{macro_prefix_arg}_LIBOBJS], [${macro_prefix_arg}_libobjs])
+    AC_SUBST([{macro_prefix_arg}_LTLIBOBJS], [${macro_prefix_arg}_ltlibobjs])
+    AC_SUBST([{macro_prefix_arg}_LIBOBJDEPS], [${macro_prefix_arg}_libobjdeps])
   ])
 '''
-        emit = emit.replace('%V1%', macro_prefix_arg)
-        emit = emit.replace('%V2%', subdir)
         return emit
 
     def initmacro_done(self, macro_prefix_arg, sourcebase_arg):
@@ -960,6 +975,8 @@ AC_DEFUN([%V1%_LIBSOURCES], [
 
         emit += '\n'
         emit += '%s_%s_SOURCES =\n' % (libname, libext)
+        if not for_test:
+            emit += '%s_%s_CFLAGS = $(AM_CFLAGS) $(GL_CFLAG_GNULIB_WARNINGS)\n' % (libname, libext)
         # Here we use $(LIBOBJS), not @LIBOBJS@. The value is the same. However,
         # automake during its analysis looks for $(LIBOBJS), not for @LIBOBJS@.
         emit += '%s_%s_LIBADD = $(%s_%sLIBOBJS)\n' % (libname, libext, macro_prefix, perhapsLT)
@@ -998,6 +1015,13 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         emit += '\t  fi; \\\n'
         emit += '\tdone; \\\n'
         emit += '\t:\n'
+        # Emit rules to erase .Po and .Plo files for AC_LIBOBJ invocations.
+        # Extend the 'distclean' rule.
+        emit += 'distclean-local: distclean-gnulib-libobjs\n'
+        emit += 'distclean-gnulib-libobjs:\n'
+        emit += '\t-rm -f @%s_LIBOBJDEPS@\n' % (macro_prefix)
+        # Extend the 'maintainer-clean' rule.
+        emit += 'maintainer-clean-local: distclean-gnulib-libobjs\n'
         result = tuple([emit, uses_subdirs])
         return result
 
@@ -1242,7 +1266,11 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         #   CFLAGS, they have asked for errors, they will get errors. But they have
         #   no right to complain about these errors, because Gnulib does not support
         #   '-Werror'.
-        emit += 'CFLAGS = @GL_CFLAG_ALLOW_WARNINGS@ @CFLAGS@\n'
+        cflags_for_gnulib_code = ''
+        if not for_test:
+            # Enable or disable warnings as suitable for the Gnulib coding style.
+            cflags_for_gnulib_code = ' $(GL_CFLAG_GNULIB_WARNINGS)'
+        emit += 'CFLAGS = @GL_CFLAG_ALLOW_WARNINGS@%s @CFLAGS@\n' % (cflags_for_gnulib_code)
         emit += 'CXXFLAGS = @GL_CXXFLAG_ALLOW_WARNINGS@ @CXXFLAGS@\n'
         emit += '\n'
 

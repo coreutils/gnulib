@@ -744,6 +744,7 @@ AC_DEFUN([%s_INIT],
                                               moduletable, 0, True, True, True, replace_auxdir)
         emit += '  m4_popdef([gl_MODULE_INDICATOR_CONDITION])\n'
         emit += self.emitter.initmacro_end('%stests' % macro_prefix, gentests)
+        emit += '  AC_REQUIRE([gl_CC_GNULIB_WARNINGS])\n'
         # _LIBDEPS and _LTLIBDEPS variables are not needed if this library is
         # created using libtool, because libtool already handles the dependencies.
         if not libtool:
