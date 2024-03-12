@@ -617,9 +617,9 @@ USE_MSGCTXT = no\n"""
         else:
             subdir = ''
         if libtool:
-            libobjdeps = f'{macro_prefix_arg}_libobjdeps="${macro_prefix_arg}_libobjdeps {subdir}$i_dir/\$(DEPDIR)/$i_base.Plo"'
+            libobjdeps = f'{macro_prefix_arg}_libobjdeps="${macro_prefix_arg}_libobjdeps {subdir}$i_dir/\\$(DEPDIR)/$i_base.Plo"'
         else:
-            libobjdeps = f'{macro_prefix_arg}_libobjdeps="${macro_prefix_arg}_libobjdeps {subdir}$i_dir/\$(DEPDIR)/$i_base.Po"'
+            libobjdeps = f'{macro_prefix_arg}_libobjdeps="${macro_prefix_arg}_libobjdeps {subdir}$i_dir/\\$(DEPDIR)/$i_base.Po"'
         emit += fr'''
   m4_ifval({macro_prefix_arg}_LIBSOURCES_LIST, [
     m4_syscmd([test ! -d ]m4_defn([{macro_prefix_arg}_LIBSOURCES_DIR])[ ||
