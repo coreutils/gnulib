@@ -1,0 +1,11 @@
+Files:
+tests/test-sig2str.c
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-sig2str
+check_PROGRAMS += test-sig2str
