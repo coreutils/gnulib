@@ -130,6 +130,20 @@ func_gnulib_dir ()
 
 func_gnulib_dir
 
+# Check the Python version.
+if (python3 --version) >/dev/null 2>/dev/null; then
+  case `python3 --version 2>&1` in
+    Python\ 3.[0-6] | Python\ 3.[0-6].*)
+      func_fatal_error "python3 is too old (minimum required version is 3.7); try setting GNULIB_TOOL_IMPL=sh" ;;
+    Python\ 3.*)
+      ;;
+    *)
+      func_fatal_error "python3 version is unsupported" ;;
+  esac
+else
+  func_fatal_error "python3 not found; try setting GNULIB_TOOL_IMPL=sh"
+fi
+
 # Setting the PYTHONPATH environment variable is needed to avoid an error:
 #   from . import constants          =>   ImportError: attempted relative import with no known parent package
 #   from pygnulib import constants   =>   ModuleNotFoundError: No module named 'pygnulib'
