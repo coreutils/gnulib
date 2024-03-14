@@ -18,17 +18,17 @@
 
 #include <config.h>
 
+/* Specification.  */
 #include "sig2str.h"
 
 #include <string.h>
 
 #include "macros.h"
 
-int
-main (void)
+static void
+test_sig2str (void)
 {
   char buffer[SIG2STR_MAX];
-  int signo;
 
   /* Test sig2str on signals specified by ISO C.  */
 
@@ -50,6 +50,16 @@ main (void)
   ASSERT (sig2str (SIGTERM, buffer) == 0);
   ASSERT (STREQ (buffer, "TERM"));
 
+  /* Check behavior of sig2str on invalid signals.  */
+
+  ASSERT (sig2str (-714, buffer) == -1);
+}
+
+static void
+test_str2sig (void)
+{
+  int signo;
+
   /* Test str2sig on signals specified by ISO C.  */
 
   ASSERT (str2sig ("ABRT", &signo) == 0);
@@ -70,13 +80,16 @@ main (void)
   ASSERT (str2sig ("TERM", &signo) == 0);
   ASSERT (signo == SIGTERM);
 
-  /* Check behavior of sig2str on invalid signals.  */
-
-  ASSERT (sig2str (-714, buffer) == -1);
-
   /* Check behavior of str2sig on invalid signals.  */
 
   ASSERT (str2sig ("Not a signal", &signo) == -1);
+}
+
+int
+main (void)
+{
+  test_sig2str ();
+  test_str2sig ();
 
   return 0;
 }
