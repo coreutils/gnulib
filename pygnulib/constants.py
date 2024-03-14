@@ -249,6 +249,7 @@ def cleaner(sequence):
         sequence = [ True if value == 'true' else value
                      for value in sequence ]
         sequence = [ value.strip()
+                     if type(value) is str else value
                      for value in sequence ]
     return sequence
 

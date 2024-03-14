@@ -858,7 +858,10 @@ def main():
 
         else:  # if mode != MODE['--import']
             if m4base:
+                # Apply func_import to a particular gnulib directory.
+                # Any number of additional modules can be given.
                 if not isfile(joinpath(destdir, m4base, 'gnulib-cache.m4')):
+                    # First use of gnulib in the given m4base.
                     if not sourcebase:
                         sourcebase = 'lib'
                     if not docbase:
@@ -877,8 +880,13 @@ def main():
                 filetable, transformers = importer.prepare()
                 importer.execute(filetable, transformers)
             else:  # if not m4base
-                m4dirs = list()
-                dirisnext = bool()
+                # Apply func_import to all gnulib directories.
+                # To get this list of directories, look at Makefile.am. (Not at
+                # configure, because it may be omitted from version control. Also,
+                # don't run "find $destdir -name gnulib-cache.m4", as it might be
+                # too expensive.)
+                m4dirs = []
+                dirisnext = False
                 filepath = joinpath(destdir, 'Makefile.am')
                 if isfile(filepath):
                     with codecs.open(filepath, 'rb', 'UTF-8') as file:
@@ -888,14 +896,18 @@ def main():
                     aclocal_amflags = data.split()
                     for aclocal_amflag in aclocal_amflags:
                         if dirisnext:
+                            # Ignore absolute directory pathnames, like /usr/local/share/aclocal.
                             if not isabs(aclocal_amflag):
-                                m4dirs += [aclocal_amflag]
+                                if isfile(joinpath(destdir, joinpath(aclocal_amflag, 'gnulib-cache.m4'))):
+                                    m4dirs += [aclocal_amflag]
+                            dirisnext = False
                         else:  # if not dirisnext
                             if aclocal_amflag == '-I':
                                 dirisnext = True
                             else:  # if aclocal_amflag != '-I'
                                 dirisnext = False
                 else:  # if not isfile(filepath)
+                    # No Makefile.am! Oh well. Look at the last generated aclocal.m4.
                     filepath = joinpath(destdir, 'aclocal.m4')
                     if isfile(filepath):
                         pattern = re.compile(r'm4_include\(\[(.*?)\]\)')
@@ -929,6 +941,8 @@ def main():
                     filetable, transformers = importer.prepare()
                     importer.execute(filetable, transformers)
                 elif len(m4dirs) == 1:
+                    # There's only one use of gnulib here. Assume the user means it.
+                    # Any number of additional modules can be given.
                     m4base = m4dirs[-1]
                     config.setM4Base(m4base)
                     # Perform GLImport actions.
@@ -936,6 +950,7 @@ def main():
                     filetable, transformers = importer.prepare()
                     importer.execute(filetable, transformers)
                 else:  # if len(m4dirs) > 1
+                    # No further arguments. Guess the user wants to update all of them.
                     for m4base in m4dirs:
                         config.setM4Base(m4base)
                         # Perform GLImport actions.
