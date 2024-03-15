@@ -498,11 +498,12 @@ files.  This directory should normally be @file{/usr/local/etc}, but
 write it as @file{$(prefix)/etc}.
 (If you are using Autoconf, write it as @samp{@@sysconfdir@@}.)
 
-Do not install executables here in this directory (they probably belong
-in @file{$(libexecdir)} or @file{$(sbindir)}).  Also do not install
-files that are modified in the normal course of their use (programs
-whose purpose is to change the configuration of the system excluded).
-Those probably belong in @file{$(localstatedir)}.
+This directory is not the right place to install executables built by
+running @samp{make}---they probably belong in @file{$(libexecdir)} or
+@file{$(sbindir)}.  Also do not install here files that will be
+modified in the normal course of their use (programs whose purpose is
+to change the configuration of the system excluded).  Those probably
+belong in @file{$(localstatedir)}.
 
 @item sharedstatedir
 The directory for installing architecture-independent data files which
