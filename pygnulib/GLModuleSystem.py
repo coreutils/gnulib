@@ -329,6 +329,75 @@ class GLModule(object):
         result = self.modulesystem.find(self.getTestsName())
         return result
 
+    def getDependenciesRecursively(self) -> str:
+        '''Return a list of recursive dependencies of this module separated
+        by a newline.'''
+        handledmodules = set()
+        inmodules = set()
+        outmodules = set()
+
+        # In order to process every module only once (for speed), process an "input
+        # list" of modules, producing an "output list" of modules. During each round,
+        # more modules can be queued in the input list. Once a module on the input
+        # list has been processed, it is added to the "handled list", so we can avoid
+        # to process it again.
+        inmodules.add(self)
+        while len(inmodules) > 0:
+            inmodules_this_round = inmodules
+            inmodules = set()  # Accumulator, queue for next round
+            for module in inmodules_this_round:
+                outmodules.add(module)
+                inmodules = inmodules.union(module.getDependenciesWithoutConditions())
+            handledmodules = handledmodules.union(inmodules_this_round)
+            # Remove handledmodules from inmodules.
+            inmodules = inmodules.difference(handledmodules)
+
+        if len(outmodules) > 0:
+            module_names = sorted([ str(module)
+                                    for module in outmodules ])
+            return '\n'.join(module_names) + '\n'
+        else:
+            return ''
+
+    def getLinkDirectiveRecursively(self) -> str:
+        '''Return a list of the link directives of this module separated
+        by a newline.'''
+        handledmodules = set()
+        inmodules = set()
+        outmodules = set()
+
+        # In order to process every module only once (for speed), process an "input
+        # list" of modules, producing an "output list" of modules. During each round,
+        # more modules can be queued in the input list. Once a module on the input
+        # list has been processed, it is added to the "handled list", so we can avoid
+        # to process it again.
+        inmodules.add(self)
+        while len(inmodules) > 0:
+            inmodules_this_round = inmodules
+            inmodules = set()  # Accumulator, queue for next round
+            for module in inmodules_this_round:
+                if self.getLink() != '':
+                    # The module description has a 'Link:' field. Ignore the dependencies.
+                    outmodules.add(module)
+                else:
+                    # The module description has no 'Link:' field. Recurse through the dependencies.
+                    inmodules = inmodules.union(module.getDependenciesWithoutConditions())
+            handledmodules = handledmodules.union(inmodules_this_round)
+            # Remove handledmodules from inmodules.
+            inmodules = inmodules.difference(handledmodules)
+
+        if len(outmodules) > 0:
+            # Remove whitespace from sections.
+            link_sections = [ module.getLink().strip()
+                              for module in outmodules ]
+            # Sort the link directives.
+            directives = sorted([ line
+                                  for section in link_sections
+                                  for line in section.splitlines() ])
+            return '\n'.join(directives) + '\n'
+        else:
+            return ''
+
     def getShellFunc(self):
         '''GLModule.getShellFunc() -> str
 

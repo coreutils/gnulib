@@ -16,8 +16,6 @@ The following commits to gnulib-tool have not yet been reflected in
 --------------------------------------------------------------------------------
 
 Implement the options:
-  --extract-recursive-dependencies
-  --extract-recursive-link-directive
   -h | --hardlink
   --local-hardlink
   -S | --more-symlinks
@@ -93,21 +91,6 @@ Date:   Sun Jan 9 15:38:51 2022 +0100
     * gnulib-tool (func_modules_transitive_closure): Don't inhibit
     conditional dependencies processing on a module that uses an Automake
     conditional.
-
---------------------------------------------------------------------------------
-
-commit 87e6634b28df65084321fed22f60d114a0931d21
-Author: Bernhard Voelker <mail@bernhard-voelker.de>
-Date:   Tue Jan 4 00:16:50 2022 +0100
-
-    license: fix GPLv3 texts to use a comma instead of semicolon.
-
-    See: https://www.gnu.org/licenses/gpl-3.0.html#howto
-    Run:
-      $ git grep -l 'Foundation; either version 3' \
-          | xargs sed -i '/Foundation; either version 3/ s/n; e/n, e/'
-
-    * All files using GPLv3: Adjust via the above command.
 
 --------------------------------------------------------------------------------
 
@@ -189,23 +172,6 @@ Date:   Mon Nov 18 13:32:46 2019 +0100
 
     * gnulib-tool (func_modules_add_dummy): Ignore modules that are
     conditionally enabled.
-
---------------------------------------------------------------------------------
-
-commit ce8a5edbc49dea0cb859207c2d063dbd3be0f96c
-Author: Bruno Haible <bruno@clisp.org>
-Date:   Fri Jan 4 19:34:19 2019 +0100
-
-    gnulib-tool: New option --extract-recursive-link-directive.
-
-    * gnulib-tool (func_usage): Document the new options
-    --extract-recursive-dependencies, --extract-recursive-link-directive.
-    (func_verify_module): Document output variables.
-    (func_get_dependencies_recursively): New function.
-    (func_get_link_directive_recursively): New function.
-    Use them to implement the new options
-    --extract-recursive-dependencies, --extract-recursive-link-directive.
-    * doc/gnulib-tool.texi (Link-time requirements): New section.
 
 --------------------------------------------------------------------------------
 

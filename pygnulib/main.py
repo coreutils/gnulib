@@ -176,6 +176,10 @@ def main():
                         dest='mode_xdependencies',
                         default=None,
                         action='store_true')
+    parser.add_argument('--extract-recursive-dependencies',
+                        dest='mode_xrecursive_dependencies',
+                        default=None,
+                        action='store_true')
     parser.add_argument('--extract-autoconf-snippet',
                         dest='mode_xautoconf',
                         default=None,
@@ -190,6 +194,10 @@ def main():
                         action='store_true')
     parser.add_argument('--extract-link-directive',
                         dest='mode_xlink',
+                        default=None,
+                        action='store_true')
+    parser.add_argument('--extract-recursive-link-directive',
+                        dest='mode_xrecursive_link',
                         default=None,
                         action='store_true')
     parser.add_argument('--extract-license',
@@ -572,11 +580,17 @@ def main():
     if cmdargs.mode_xdependencies != None:
         mode = 'extract-dependencies'
         modules = list(cmdargs.non_option_arguments)
+    if cmdargs.mode_xrecursive_dependencies != None:
+        mode = 'extract-recursive-dependencies'
+        modules = list(cmdargs.non_option_arguments)
     if cmdargs.mode_xinclude != None:
         mode = 'extract-include-directive'
         modules = list(cmdargs.non_option_arguments)
     if cmdargs.mode_xlink != None:
         mode = 'extract-link-directive'
+        modules = list(cmdargs.non_option_arguments)
+    if cmdargs.mode_xrecursive_link != None:
+        mode = 'extract-recursive-link-directive'
         modules = list(cmdargs.non_option_arguments)
     if cmdargs.mode_xlicense != None:
         mode = 'extract-license'
@@ -1101,6 +1115,19 @@ def main():
             if module:
                 sys.stdout.write(module.getDependencies())
 
+    elif mode == 'extract-recursive-dependencies':
+        if avoids:
+            message = '%s: *** ' % constants.APP['name']
+            message += 'cannot combine --avoid and --extract-recursive-dependencies\n'
+            message += '%s: *** Stop.\n' % constants.APP['name']
+            sys.stderr.write(message)
+            sys.exit(1)
+        modulesystem = classes.GLModuleSystem(config)
+        for name in modules:
+            module = modulesystem.find(name)
+            if module:
+                sys.stdout.write(module.getDependenciesRecursively())
+
     elif mode == 'extract-autoconf-snippet':
         modulesystem = classes.GLModuleSystem(config)
         for name in modules:
@@ -1128,6 +1155,19 @@ def main():
             module = modulesystem.find(name)
             if module:
                 sys.stdout.write(module.getLink())
+
+    elif mode == 'extract-recursive-link-directive':
+        if avoids:
+            message = '%s: *** ' % constants.APP['name']
+            message += 'cannot combine --avoid and --extract-recursive-link-directive\n'
+            message += '%s: *** Stop.\n' % constants.APP['name']
+            sys.stderr.write(message)
+            sys.exit(1)
+        modulesystem = classes.GLModuleSystem(config)
+        for name in modules:
+            module = modulesystem.find(name)
+            if module:
+                sys.stdout.write(module.getLinkDirectiveRecursively())
 
     elif mode == 'extract-license':
         modulesystem = classes.GLModuleSystem(config)

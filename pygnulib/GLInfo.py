@@ -149,10 +149,12 @@ Usage: gnulib-tool --list
        gnulib-tool --extract-applicability module
        gnulib-tool --extract-filelist module
        gnulib-tool --extract-dependencies module
+       gnulib-tool --extract-recursive-dependencies module
        gnulib-tool --extract-autoconf-snippet module
        gnulib-tool --extract-automake-snippet module
        gnulib-tool --extract-include-directive module
        gnulib-tool --extract-link-directive module
+       gnulib-tool --extract-recursive-link-directive module
        gnulib-tool --extract-license module
        gnulib-tool --extract-maintainer module
        gnulib-tool --extract-tests-module module
@@ -185,10 +187,16 @@ Operation modes:
       --extract-applicability      extract the applicability
       --extract-filelist           extract the list of files
       --extract-dependencies       extract the dependencies
+      --extract-recursive-dependencies  extract the dependencies of the module
+                                        and its dependencies, recursively, all
+                                        together, but without the conditions
       --extract-autoconf-snippet   extract the snippet for configure.ac
       --extract-automake-snippet   extract the snippet for library makefile
       --extract-include-directive  extract the #include directive
       --extract-link-directive     extract the linker directive
+      --extract-recursive-link-directive  extract the linker directive of the
+                                          module and its dependencies,
+                                          recursively, all together
       --extract-license            report the license terms of the source files
                                    under lib/
       --extract-maintainer         report the maintainer(s) inside gnulib
