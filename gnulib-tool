@@ -179,10 +179,14 @@ case "$GNULIB_TOOL_IMPL" in
         "$gnulib_dir/gnulib-tool.sh" "$@" >"$tmp-sh-out" 2>"$tmp-sh-err"
         shrc=$?
         if test $shrc != 0; then
-          cat "$tmp-sh-out"
-          cat "$tmp-sh-err" >&2
-          rm -rf "$tmp" "$tmp-sh-out" "$tmp-sh-err" "$tmp-py-out" "$tmp-py-err"
-          exit $shrc
+          if test $pyrc = 0; then
+            func_fatal_error "gnulib-tool.sh failed but gnulib-tool.py succeeded! Inspect $tmp-sh-err and $tmp-py-err."
+          else
+            cat "$tmp-sh-out"
+            cat "$tmp-sh-err" >&2
+            rm -rf "$tmp" "$tmp-sh-out" "$tmp-sh-err" "$tmp-py-out" "$tmp-py-err"
+            exit $shrc
+          fi
         fi
         if test $pyrc != 0; then
           func_fatal_error "gnulib-tool.sh succeeded but gnulib-tool.py failed! Inspect $tmp/ and $tmp-py-err."
@@ -218,10 +222,14 @@ case "$GNULIB_TOOL_IMPL" in
         "$gnulib_dir/gnulib-tool.sh" "$@" >"$tmp-sh-out" 2>"$tmp-sh-err"
         shrc=$?
         if test $shrc != 0; then
-          cat "$tmp-sh-out"
-          cat "$tmp-sh-err" >&2
-          rm -rf "$tmp" "$tmp-sh-out" "$tmp-sh-err" "$tmp-py-out" "$tmp-py-err"
-          exit $shrc
+          if test $pyrc = 0; then
+            func_fatal_error "gnulib-tool.sh failed but gnulib-tool.py succeeded! Inspect $tmp-sh-err and $tmp-py-err."
+          else
+            cat "$tmp-sh-out"
+            cat "$tmp-sh-err" >&2
+            rm -rf "$tmp" "$tmp-sh-out" "$tmp-sh-err" "$tmp-py-out" "$tmp-py-err"
+            exit $shrc
+          fi
         fi
         if test $pyrc != 0; then
           func_fatal_error "gnulib-tool.sh succeeded but gnulib-tool.py failed! Inspect $tmp/ and $tmp-py-err."
@@ -248,10 +256,14 @@ case "$GNULIB_TOOL_IMPL" in
         "$gnulib_dir/gnulib-tool.sh" "$@" >"$tmp-sh-out" 2>"$tmp-sh-err"
         shrc=$?
         if test $shrc != 0; then
-          cat "$tmp-sh-out"
-          cat "$tmp-sh-err" >&2
-          rm -rf "$tmp-sh-out" "$tmp-sh-err" "$tmp-py-out" "$tmp-py-err"
-          exit $shrc
+          if test $pyrc = 0; then
+            func_fatal_error "gnulib-tool.sh failed but gnulib-tool.py succeeded! Inspect $tmp-sh-err and $tmp-py-err."
+          else
+            cat "$tmp-sh-out"
+            cat "$tmp-sh-err" >&2
+            rm -rf "$tmp-sh-out" "$tmp-sh-err" "$tmp-py-out" "$tmp-py-err"
+            exit $shrc
+          fi
         fi
         if test $pyrc != 0; then
           func_fatal_error "gnulib-tool.sh succeeded but gnulib-tool.py failed! Inspect $tmp-py-err."
