@@ -1279,7 +1279,7 @@ def main():
         sys.stderr.write(message)
         sys.exit(1)
 
-    if copymode != classes.CopyAction.Copy or lcopymode != classes.CopyAction.Copy:
+    if copymode == classes.CopyAction.Hardlink or lcopymode == classes.CopyAction.Hardlink:
         # Setting hard links modifies the ctime of files in the gnulib checkout.
         # This disturbs the result of the next "gitk" invocation.
         # Workaround: Let git scan the files. This can be done through
@@ -1287,9 +1287,9 @@ def main():
         if isdir(joinpath(APP['root'], '.git')):
             try:
                 sp.run(['git', 'update-index', '--refresh'],
-                       cwd=APP['root'], stdout=sp.DEVNULL, stderr=sp.DEVNULL)
-            except Exception:
-                # We did our best...
+                       cwd=APP['root'], stdout=sp.DEVNULL)
+            except FileNotFoundError:
+                # No 'git' program was found.
                 pass
 
 
