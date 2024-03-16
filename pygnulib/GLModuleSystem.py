@@ -228,7 +228,7 @@ class GLModule(object):
 
     def __eq__(self, module):
         '''x.__eq__(y) <==> x==y'''
-        result = bool()
+        result = False
         if type(module) is GLModule:
             if self.path == module.path:
                 result = True
@@ -236,7 +236,7 @@ class GLModule(object):
 
     def __ne__(self, module):
         '''x.__ne__(y) <==> x!=y'''
-        result = bool()
+        result = False
         if type(module) is GLModule:
             if self.path != module.path:
                 result = True
@@ -244,7 +244,7 @@ class GLModule(object):
 
     def __ge__(self, module):
         '''x.__ge__(y) <==> x>=y'''
-        result = bool()
+        result = False
         if type(module) is GLModule:
             if self.path >= module.path:
                 result = True
@@ -252,7 +252,7 @@ class GLModule(object):
 
     def __gt__(self, module):
         '''x.__gt__(y) <==> x>y'''
-        result = bool()
+        result = False
         if type(module) is GLModule:
             if self.path > module.path:
                 result = True
@@ -265,7 +265,7 @@ class GLModule(object):
 
     def __le__(self, module):
         '''x.__le__(y) <==> x<=y'''
-        result = bool()
+        result = False
         if type(module) is GLModule:
             if self.path <= module.path:
                 result = True
@@ -273,7 +273,7 @@ class GLModule(object):
 
     def __lt__(self, module):
         '''x.__lt__(y) <==> x<y'''
-        result = bool()
+        result = False
         if type(module) is GLModule:
             if self.path < module.path:
                 result = True
