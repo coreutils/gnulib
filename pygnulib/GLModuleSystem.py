@@ -314,7 +314,7 @@ class GLModule(object):
         '''GLModule.isTests() -> bool
 
         Check whether module is not a -tests version of module.'''
-        result = not(self.isTests())
+        result = not self.isTests()
         return result
 
     def getTestsName(self):
