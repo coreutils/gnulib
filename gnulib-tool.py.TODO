@@ -172,17 +172,6 @@ Date:   Mon Nov 18 13:32:46 2019 +0100
 
 --------------------------------------------------------------------------------
 
-commit cd58dba367a3b8ffbebb23f2099a820106197fae
-Author: Bruno Haible <bruno@clisp.org>
-Date:   Sun Oct 29 16:57:32 2017 +0100
-
-    gnulib-tool: Avoid unnecessary config.h.in remaking in testdirs.
-
-    * gnulib-tool (func_create_testdir): Use workaround against 'autoheader'
-    bug reported at <https://savannah.gnu.org/support/index.php?109406>.
-
---------------------------------------------------------------------------------
-
 commit 30459fe101541698ec704acb224946d73676750e
 Author: Bruno Haible <bruno@clisp.org>
 Date:   Thu Jun 8 15:09:31 2017 +0200

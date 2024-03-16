@@ -22,6 +22,7 @@ import sys
 import codecs
 import subprocess as sp
 import shutil
+from pathlib import Path
 from . import constants
 from .GLError import GLError
 from .GLConfig import GLConfig
@@ -696,6 +697,7 @@ class GLTestDir(object):
         # autoheader
         args = [UTILS['autoheader']]
         constants.execute(args, verbose)
+        Path('config.h.in').touch()
         # automake
         args = [UTILS['automake'], '--add-missing', '--copy']
         constants.execute(args, verbose)
@@ -727,6 +729,7 @@ class GLTestDir(object):
             # autoheader
             args = [UTILS['autoheader']]
             constants.execute(args, verbose)
+            Path('config.h.in').touch()
             # automake
             args = [UTILS['automake'], '--add-missing', '--copy']
             constants.execute(args, verbose)
