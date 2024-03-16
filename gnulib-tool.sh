@@ -5563,13 +5563,6 @@ s,^\(.................................................[^ ]*\) *,                
   # Command-line invocation printed in a comment in generated gnulib-cache.m4.
   actioncmd="# gnulib-tool --import"
 
-  # Local helper.
-  func_append_local_dir ()
-  {
-    func_append "$1" " --local-dir=$2"
-  }
-  func_path_foreach "$local_gnulib_path" func_append_local_dir actioncmd %dir%
-
   # Break the action command log into multiple lines.
   # Emacs puts some gnulib-tool log lines in its source repository, and
   # git send-email rejects patch lines longer than 998 characters.
@@ -5580,6 +5573,14 @@ s,^\(.................................................[^ ]*\) *,                
   {
     func_append actioncmd " \\$nl#  $1"
   }
+
+  # Local helper.
+  func_append_actioncmd_local_dir ()
+  {
+    func_append_actionarg "--local-dir=$1"
+  }
+  func_path_foreach "$local_gnulib_path" func_append_actioncmd_local_dir %dir%
+
   func_append_actionarg "--lib=$libname"
   func_append_actionarg "--source-base=$sourcebase"
   func_append_actionarg "--m4-base=$m4base"
