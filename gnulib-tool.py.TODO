@@ -16,10 +16,7 @@ The following commits to gnulib-tool have not yet been reflected in
 --------------------------------------------------------------------------------
 
 Implement the options:
-  -h | --hardlink
-  --local-hardlink
-  -S | --more-symlinks
-  -H | --more-hardlinks
+  --automake-subdir-tests
   --help (same output)
 
 Optimize:
@@ -195,32 +192,6 @@ Date:   Thu Jun 8 15:09:31 2017 +0200
     * gnulib-tool (func_symlink_target): New function, extracted from
     func_symlink.
     (func_symlink, func_symlink_if_changed): Use it.
-
---------------------------------------------------------------------------------
-
-commit 306be564ba47ec412ca158f66ffa90a058f5253b
-Author: Bruno Haible <bruno@clisp.org>
-Date:   Mon May 22 01:39:59 2017 +0200
-
-    gnulib-tool: Add options to create hard links.
-
-    * gnulib-tool (func_usage): Document options --hardlink,
-    --local-hardlink, --more-hardlinks.
-    (func_symlink): Renamed from func_ln.
-    (func_symlink_if_changed): Renamed from func_ln_if_changed.
-    (func_hardlink): New function.
-    (copymode, lcopymode): New variables.
-    (symbolic, lsymbolic): Remove variables.
-    (Options): Implement options --hardlink, --local-hardlink,
-    --more-hardlinks.
-    (func_should_link): Renamed from func_should_symlink. Set copyaction.
-    (func_add_file, func_update_file): Update invocation of
-    func_should_link. Invoke func_hardlink when appropriate.
-    (func_import): Update comments.
-    (func_create_testdir): Update invocation of func_should_link. Invoke
-    func_hardlink when appropriate.
-    Finally, invoke 'git update-index --refresh' to mitigate the effects of
-    the hard links on git.
 
 --------------------------------------------------------------------------------
 

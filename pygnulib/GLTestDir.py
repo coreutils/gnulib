@@ -344,7 +344,7 @@ class GLTestDir(object):
                        for file in self.rewrite_files(filelist)]
         directories = sorted(set(directories))
 
-        # Copy files or make symbolic links.
+        # Copy files or make symbolic links or hard links.
         filetable = list()
         for src in filelist:
             dest = self.rewrite_files([src])[-1]
@@ -366,6 +366,8 @@ class GLTestDir(object):
             else:  # if not flag
                 if self.filesystem.shouldLink(src, lookedup) == CopyAction.Symlink:
                     constants.link_relative(lookedup, destpath)
+                elif self.filesystem.shouldLink(src, lookedup) == CopyAction.Hardlink:
+                    constants.hardlink(lookedup, destpath)
                 else:
                     copyfile(lookedup, destpath)
 

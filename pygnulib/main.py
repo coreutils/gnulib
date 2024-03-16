@@ -436,15 +436,25 @@ def main():
                         default=None,
                         action='store_true')
     # symlink
-    parser.add_argument('-s', '--symbolic', '--symlink',
-                        dest='symlink',
+    parser.add_argument('-s', '-S', '--symbolic', '--symlink', '--more-symlinks',
+                        dest='copymode',
                         default=None,
-                        action='store_true')
+                        action='store_const', const=classes.CopyAction.Symlink)
     # local-symlink
     parser.add_argument('--local-symlink',
-                        dest='lsymlink',
+                        dest='lcopymode',
                         default=None,
-                        action='store_true')
+                        action='store_const', const=classes.CopyAction.Symlink)
+    # hardlink
+    parser.add_argument('-h', '-H', '--hardlink', '--more-hardlinks',
+                        dest='copymode',
+                        default=None,
+                        action='store_const', const=classes.CopyAction.Hardlink)
+    # local-hardlink
+    parser.add_argument('--local-hardlink',
+                        dest='lcopymode',
+                        default=None,
+                        action='store_const', const=classes.CopyAction.Hardlink)
     # All other arguments are collected.
     parser.add_argument("non_option_arguments",
                         nargs='*')
@@ -748,8 +758,8 @@ def main():
         avoids = [ module
                    for list1 in avoids
                    for module in list1 ]
-    symlink = cmdargs.symlink == True
-    lsymlink = cmdargs.lsymlink == True
+    copymode = cmdargs.copymode
+    lcopymode = cmdargs.lcopymode
     single_configure = cmdargs.single_configure
     docbase = None
 
@@ -779,8 +789,8 @@ def main():
         podomain=podomain,
         witness_c_macro=witness_c_macro,
         vc_files=vc_files,
-        symbolic=symlink,
-        lsymbolic=lsymlink,
+        copymode=copymode,
+        lcopymode=lcopymode,
         single_configure=single_configure,
         verbose=verbose,
         dryrun=dryrun,
@@ -1268,6 +1278,19 @@ def main():
         message += '%s: *** Stop.\n' % constants.APP['name']
         sys.stderr.write(message)
         sys.exit(1)
+
+    if copymode != classes.CopyAction.Copy or lcopymode != classes.CopyAction.Copy:
+        # Setting hard links modifies the ctime of files in the gnulib checkout.
+        # This disturbs the result of the next "gitk" invocation.
+        # Workaround: Let git scan the files. This can be done through
+        # "git update-index --refresh" or "git status" or "git diff".
+        if isdir(joinpath(APP['root'], '.git')):
+            try:
+                sp.run(['git', 'update-index', '--refresh'],
+                       cwd=APP['root'], stdout=sp.DEVNULL, stderr=sp.DEVNULL)
+            except Exception:
+                # We did our best...
+                pass
 
 
 if __name__ == '__main__':

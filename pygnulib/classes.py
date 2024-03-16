@@ -30,6 +30,7 @@ try:
     from .GLInfo import GLInfo
 
     # File system
+    from .GLFileSystem import CopyAction
     from .GLFileSystem import GLFileSystem
     from .GLFileSystem import GLFileAssistant
 
@@ -56,6 +57,7 @@ except ValueError as error:
     from GLInfo import GLInfo
 
     # File system
+    from GLFileSystem import CopyAction
     from GLFileSystem import GLFileSystem
     from GLFileSystem import GLFileAssistant
 
@@ -75,7 +77,7 @@ except ValueError as error:
 
 # Append modules to namespace.
 __all__ += ['GLConfig', 'GLError', 'GLInfo']
-__all__ += ['GLFileSystem', 'GLFileAssistant']
+__all__ += ['CopyAction', 'GLFileSystem', 'GLFileAssistant']
 __all__ += ['GLModule', 'GLModuleSystem', 'GLModuleTable']
 __all__ += ['GLImport', 'GLEmiter', 'GLTestDir']
 __all__ += ['GLMakefileTable']

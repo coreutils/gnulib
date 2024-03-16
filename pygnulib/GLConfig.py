@@ -21,6 +21,7 @@ import copy
 import tempfile
 from . import constants
 from .GLError import GLError
+from pygnulib import classes
 
 
 #===============================================================================
@@ -58,10 +59,9 @@ class GLConfig(object):
                  incl_test_categories=None, excl_test_categories=None, libname=None,
                  lgpl=None, gnu_make=None, makefile_name=None, tests_makefile_name=None,
                  automake_subdir=None, libtool=None, conddeps=None, macro_prefix=None,
-                 podomain=None, witness_c_macro=None, vc_files=None, symbolic=None,
-                 lsymbolic=None, configure_ac=None, ac_version=None,
-                 libtests=None, single_configure=None, verbose=None, dryrun=None,
-                 errors=None):
+                 podomain=None, witness_c_macro=None, vc_files=None, copymode=None,
+                 lcopymode=None, configure_ac=None, ac_version=None, libtests=None,
+                 single_configure=None, verbose=None, dryrun=None, errors=None):
         '''GLConfig.__init__(arguments) -> GLConfig
 
         Create new GLConfig instance.'''
@@ -171,14 +171,18 @@ class GLConfig(object):
         self.resetVCFiles()
         if vc_files != None:
             self.setVCFiles(vc_files)
-        # symbolic
-        self.resetSymbolic()
-        if symbolic != None:
-            self.setSymbolic(symbolic)
-        # lsymbolic
-        self.resetLSymbolic()
-        if lsymbolic != None:
-            self.setLSymbolic(lsymbolic)
+        # copymode (--symlink and --hardlink)
+        self.resetCopyMode()
+        if copymode == None:
+            # Default to copying.
+            copymode = classes.CopyAction.Copy
+        self.setCopyMode(copymode)
+        # lcopymode (--local-symlink and --local-hardlink)
+        self.resetLCopyMode()
+        if lcopymode == None:
+            # Default to copying.
+            lcopymode = classes.CopyAction.Copy
+        self.setLCopyMode(lcopymode)
         # configure_ac
         self.resetAutoconfFile()
         if configure_ac != None:
@@ -285,9 +289,11 @@ class GLConfig(object):
             elif key in ['localpath', 'modules', 'avoids', 'tests',
                          'incl_test_categories', 'excl_test_categories']:
                 return list()
-            elif key in ['libtool', 'gnu_make', 'automake_subdir', 'conddeps', 'symbolic',
-                         'lsymbolic', 'libtests', 'dryrun']:
+            elif key in ['libtool', 'gnu_make', 'automake_subdir', 'conddeps',
+                         'libtests', 'dryrun']:
                 return False
+            elif key in ['copymode', 'lcopymode']:
+                return classes.CopyAction.Copy
             elif key in ['lgpl', 'vc_files']:
                 return None
             elif key == 'errors':
@@ -1007,42 +1013,42 @@ class GLConfig(object):
         '''Specify preferred autoconf version. Default value is 2.64.'''
         self.table['ac_version'] = 2.64
 
-    # Define symbolic methods.
-    def checkSymbolic(self):
-        '''Check if pygnulib will make symbolic links instead of copying files.'''
-        return self.table['symbolic']
+    # Define copymode methods.
+    def checkCopyMode(self):
+        '''Check if pygnulib will copy files, create symlinks, or create hard links.'''
+        return self.table['copymode']
 
-    def setSymbolic(self, value):
-        '''Enable / disable creation of the symbolic links instead of copying files.'''
-        if type(value) is bool:
-            self.table['symbolic'] = value
-        else:  # if type(value) is not bool
-            raise TypeError('value must be a bool, not %s'
+    def setCopyMode(self, value):
+        '''Change the method used for copying / linking files.'''
+        if type(value) is classes.CopyAction:
+            self.table['copymode'] = value
+        else:  # if type(value) is not CopyAction
+            raise TypeError('value must be a CopyAction, not %s'
                             % type(value).__name__)
 
-    def resetSymbolic(self):
-        '''Reset creation of the symbolic links instead of copying files.'''
-        self.table['symbolic'] = False
+    def resetCopyMode(self):
+        '''Reset the method used for creating files to copying instead of linking.'''
+        self.table['copymode'] = classes.CopyAction.Copy
 
-    # Define lsymbolic methods.
-    def checkLSymbolic(self):
-        '''Check if pygnulib will make symbolic links instead of copying files,
+    # Define lcopymode methods.
+    def checkLCopyMode(self):
+        '''Check if pygnulib will copy files, create symlinks, or create hard links,
         only for files from the local override directories.'''
-        return self.table['lsymbolic']
+        return self.table['lcopymode']
 
-    def setLSymbolic(self, value):
-        '''Enable / disable creation of symbolic links instead of copying files,
-        only for files from the local override directories.'''
-        if type(value) is bool:
-            self.table['lsymbolic'] = value
-        else:  # if type(value) is not bool
-            raise TypeError('value must be a bool, not %s'
+    def setLCopyMode(self, value):
+        '''Change the method used for copying / linking files, only for files from
+        the local override directories.'''
+        if type(value) is classes.CopyAction:
+            self.table['lcopymode'] = value
+        else:  # if type(value) is not CopyAction
+            raise TypeError('value must be a CopyAction, not %s'
                             % type(value).__name__)
 
-    def resetLSymbolic(self):
-        '''Reset creation of symbolic links instead of copying files, only for
-        files from the local override directories.'''
-        self.table['lsymbolic'] = False
+    def resetLCopyMode(self):
+        '''Reset the method used for creating files to copying instead of linking,
+        only for files from the local override directories.'''
+        self.table['lcopymode'] = classes.CopyAction.Copy
 
     # Define verbosity methods.
     def getVerbosity(self):

@@ -38,11 +38,15 @@ __copyright__ = constants.__copyright__
 # Define global constants
 #===============================================================================
 DIRS = constants.DIRS
+substart = constants.substart
 joinpath = constants.joinpath
 copyfile = constants.copyfile
 movefile = constants.movefile
+hardlink = constants.hardlink
+link_if_changed = constants.link_if_changed
 isdir = os.path.isdir
 isfile = os.path.isfile
+islink = os.path.islink
 
 
 #===============================================================================
@@ -51,6 +55,7 @@ isfile = os.path.isfile
 class CopyAction(Enum):
     Copy = 0
     Symlink = 1
+    Hardlink = 2
 
 
 #===============================================================================
@@ -134,18 +139,20 @@ class GLFileSystem(object):
     def shouldLink(self, original, lookedup):
         '''GLFileSystem.shouldLink(original, lookedup)
 
-        Determines whether the original file should be copied or symlinked.
+        Determines whether the original file should be copied, symlinked,
+          or hardlinked.
         Returns a CopyAction.'''
-        symbolic = self.config['symbolic']
-        lsymbolic = self.config['lsymbolic']
+        copymode = self.config['copymode']
+        lcopymode = self.config['lcopymode']
         localpath = self.config['localpath']
-        if symbolic:
-            return CopyAction.Symlink
-        if lsymbolic:
+
+        # Don't bother checking the localpath's if we end up performing the same
+        # action anyways.
+        if copymode != lcopymode:
             for localdir in localpath:
                 if lookedup == joinpath(localdir, original):
-                    return CopyAction.Symlink
-        return CopyAction.Copy
+                    return lcopymode
+        return copymode
 
 
 #===============================================================================
@@ -259,12 +266,16 @@ class GLFileAssistant(object):
             print('Copying file %s' % rewritten)
             if self.filesystem.shouldLink(original, lookedup) == CopyAction.Symlink \
                     and not tmpflag and filecmp.cmp(lookedup, tmpfile):
-                constants.link_if_changed(lookedup, joinpath(destdir, rewritten))
+                link_if_changed(lookedup, joinpath(destdir, rewritten))
             else:  # if any of these conditions is not met
-                try:  # Try to move file
-                    movefile(tmpfile, joinpath(destdir, rewritten))
-                except Exception as error:
-                    raise GLError(17, original)
+                if self.filesystem.shouldLink(original, lookedup) == CopyAction.Hardlink \
+                   and not tmpflag and filecmp.cmp(lookedup, tmpfile):
+                    hardlink(lookedup, joinpath(destdir, rewritten))
+                else:  # Move instead of linking.
+                    try:  # Try to move file
+                        movefile(tmpfile, joinpath(destdir, rewritten))
+                    except Exception as error:
+                        raise GLError(17, original)
         else:  # if self.config['dryrun']
             print('Copy file %s' % rewritten)
 
@@ -308,14 +319,18 @@ class GLFileAssistant(object):
                     raise GLError(17, original)
                 if self.filesystem.shouldLink(original, lookedup) == CopyAction.Symlink \
                         and not tmpflag and filecmp.cmp(lookedup, tmpfile):
-                    constants.link_if_changed(lookedup, basepath)
+                    link_if_changed(lookedup, basepath)
                 else:  # if any of these conditions is not met
-                    try:  # Try to move file
-                        if os.path.exists(basepath):
-                            os.remove(basepath)
-                        copyfile(tmpfile, rewritten)
-                    except Exception as error:
-                        raise GLError(17, original)
+                    if self.filesystem.shouldLink(original, lookedup) == CopyAction.Hardlink \
+                       and not tmpflag and filecmp.cmp(lookedup, tmpfile):
+                        hardlink(lookedup, basepath)
+                    else:  # Move instead of linking.
+                        try:  # Try to move file
+                            if os.path.exists(basepath):
+                                os.remove(basepath)
+                            copyfile(tmpfile, joinpath(destdir, rewritten))
+                        except Exception as error:
+                            raise GLError(17, original)
             else:  # if self.config['dryrun']
                 if already_present:
                     print('Update file %s (backup in %s)' % (rewritten, backupname))
@@ -337,7 +352,7 @@ class GLFileAssistant(object):
                             % type(already_present).__name__)
         xoriginal = original
         if original.startswith('tests=lib/'):
-            xoriginal = constants.substart('tests=lib/', 'lib/', original)
+            xoriginal = substart('tests=lib/', 'lib/', original)
         lookedup, tmpflag = self.filesystem.lookup(xoriginal)
         tmpfile = self.tmpfilename(rewritten)
         sed_transform_lib_file = self.transformers.get('lib', '')
@@ -372,11 +387,15 @@ class GLFileAssistant(object):
                     file.write(data)
         path = joinpath(self.config['destdir'], rewritten)
         if isfile(path):
+            # The file already exists.
             self.update(lookedup, tmpflag, tmpfile, already_present)
-            os.remove(tmpfile)
         else:  # if not isfile(path)
+            # Install the file.
+            # Don't protest if the file should be there but isn't: it happens
+            # frequently that developers don't put autogenerated files under version control.
             self.add(lookedup, tmpflag, tmpfile)
             self.addFile(rewritten)
+        os.remove(tmpfile)
 
     def super_update(self, basename, tmpfile):
         '''GLFileAssistant.super_update(basename, tmpfile) -> tuple

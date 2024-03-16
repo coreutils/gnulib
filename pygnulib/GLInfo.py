@@ -315,10 +315,14 @@ Options for --import, --add/remove-import, --update,
   -s, --symbolic, --symlink Make symbolic links instead of copying files.
       --local-symlink       Make symbolic links instead of copying files, only
                             for files from the local override directory.
+  -h, --hardlink            Make hard links instead of copying files.
+      --local-hardlink      Make hard links instead of copying files, only
+                            for files from the local override directory.
 
 Options for --import, --add/remove-import, --update:
 
   -S, --more-symlinks       Deprecated; equivalent to --symlink.
+  -H, --more-hardlinks      Deprecated; equivalent to --hardlink.
 
 Report bugs to <bug-gnulib@gnu.org>.'''
         return result

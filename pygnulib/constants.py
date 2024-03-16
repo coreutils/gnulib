@@ -412,6 +412,26 @@ def link_if_changed(src, dest):
         symlink_relative(link_value, dest)
 
 
+def hardlink(src: str, dest: str) -> None:
+    '''Like ln, except use cp -p if ln fails.
+    src is either absolute or relative to the directory of dest.'''
+    try:
+        os.link(src, dest)
+    except PermissionError:
+        sys.stderr.write('%s: ln failed; falling back on cp -p\n' % APP['name'])
+        if src.startswith('/') or (len(src) >= 2 and src[1] == ':'):
+            # src is absolute.
+            cp_src = src
+        else:
+            # src is relative to the directory of dest.
+            last_slash = dest.rfind('/')
+            if last_slash >= 0:
+                cp_src = joinpath(dest[0: last_slash - 1], src)
+            else:
+                cp_src = src
+        copyfile2(cp_src, dest)
+
+
 def filter_filelist(separator, filelist,
                     prefix, suffix, removed_prefix, removed_suffix,
                     added_prefix='', added_suffix=''):
