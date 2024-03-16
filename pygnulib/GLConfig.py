@@ -285,10 +285,10 @@ class GLConfig(object):
             elif key in ['localpath', 'modules', 'avoids', 'tests',
                          'incl_test_categories', 'excl_test_categories']:
                 return list()
-            elif key in ['libtool', 'lgpl', 'gnu_make', 'automake_subdir', 'conddeps', 'symbolic',
+            elif key in ['libtool', 'gnu_make', 'automake_subdir', 'conddeps', 'symbolic',
                          'lsymbolic', 'libtests', 'dryrun']:
                 return False
-            elif key == 'vc_files':
+            elif key in ['lgpl', 'vc_files']:
                 return None
             elif key == 'errors':
                 return True
