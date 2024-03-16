@@ -282,7 +282,8 @@ class GLConfig(object):
                 return 2.64
             elif key == 'verbosity':
                 return 0
-            elif key in ['modules', 'avoids', 'tests', 'incl_test_categories', 'excl_test_categories']:
+            elif key in ['localpath', 'modules', 'avoids', 'tests',
+                         'incl_test_categories', 'excl_test_categories']:
                 return list()
             elif key in ['libtool', 'lgpl', 'gnu_make', 'automake_subdir', 'conddeps', 'symbolic',
                          'lsymbolic', 'libtests', 'dryrun']:
