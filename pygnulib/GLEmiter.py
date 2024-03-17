@@ -620,8 +620,7 @@ USE_MSGCTXT = no\n"""
             libobjdeps = f'{macro_prefix_arg}_libobjdeps="${macro_prefix_arg}_libobjdeps {subdir}$i_dir/\\$(DEPDIR)/$i_base.Plo"'
         else:
             libobjdeps = f'{macro_prefix_arg}_libobjdeps="${macro_prefix_arg}_libobjdeps {subdir}$i_dir/\\$(DEPDIR)/$i_base.Po"'
-        emit += fr'''
-  m4_ifval({macro_prefix_arg}_LIBSOURCES_LIST, [
+        emit += fr'''  m4_ifval({macro_prefix_arg}_LIBSOURCES_LIST, [
     m4_syscmd([test ! -d ]m4_defn([{macro_prefix_arg}_LIBSOURCES_DIR])[ ||
       for gl_file in ]{macro_prefix_arg}_LIBSOURCES_LIST[ ; do
         if test ! -r ]m4_defn([{macro_prefix_arg}_LIBSOURCES_DIR])[/$gl_file ; then
