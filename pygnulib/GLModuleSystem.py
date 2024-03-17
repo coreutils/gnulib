@@ -916,18 +916,6 @@ class GLModuleTable(object):
                 if module not in self.avoids:
                     outmodules += [module]
                     if self.config['conddeps']:
-                        automake_snippet = \
-                            module.getAutomakeSnippet_Conditional()
-                        pattern = re.compile('^if', re.M)
-                        if not self.config['gnu_make'] and not pattern.findall(automake_snippet):
-                            # A module whose Makefile.am snippet contains a
-                            # reference to an automake conditional. If we were
-                            # to use it conditionally, we would get an error
-                            #   configure: error: conditional "..." was never defined.
-                            # because automake 1.11.1 does not handle nested
-                            # conditionals correctly. As a workaround, make the
-                            # module unconditional.
-                            self.addUnconditional(module)
                         conditional = self.isConditional(module)
                     dependencies = module.getDependenciesWithConditions()
                     depmodules = [ pair[0]

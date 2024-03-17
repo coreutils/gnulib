@@ -73,24 +73,6 @@ Date:   Tue Mar 1 10:01:22 2022 -0800
 
 --------------------------------------------------------------------------------
 
-commit 4bf9c96497946ce6f7b84f6527ed0291657cf728
-Author: Bruno Haible <bruno@clisp.org>
-Date:   Sun Jan 9 15:38:51 2022 +0100
-
-    Remove influence of Automake conditionals on conditional dependencies.
-
-    * m4/gnulib-common.m4 (gl_CONDITIONAL): New macro.
-    (gl_CONDITIONAL_HEADER): Use it instead of AM_CONDITIONAL.
-    * m4/libgmp.m4 (gl_LIBGMP): Likewise.
-    * modules/posix_spawn_file_actions_addfchdir-tests (configure.ac):
-    Likewise.
-    * modules/uchar-c++-tests (configure.ac): Likewise.
-    * gnulib-tool (func_modules_transitive_closure): Don't inhibit
-    conditional dependencies processing on a module that uses an Automake
-    conditional.
-
---------------------------------------------------------------------------------
-
 commit 9af17c55629c4cbe2facdc9edb5242136567ebba
 Author: Bruno Haible <bruno@clisp.org>
 Date:   Sat Dec 25 14:30:57 2021 +0100
