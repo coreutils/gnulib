@@ -1526,6 +1526,10 @@ func_determine_path_separator
       --version | --versio | --versi | --vers )
         func_version
         func_exit $? ;;
+      # Undocumented option. Only used for the gnulib-tool test suite.
+      --gnulib-dir=* )
+        gnulib_dir=`echo "X$1" | sed -e 's/^X--gnulib-dir=//'`
+        shift ;;
       -- )
         # Stop option processing
         shift

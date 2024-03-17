@@ -77,17 +77,18 @@ APP['root'] = os.path.dirname(os.path.dirname(APP['path'])) # file name of <gnul
 APP['name'] = os.path.join(APP['root'], 'gnulib-tool.py')
 
 # Set DIRS directory
-DIRS['root'] = APP['root']
 DIRS['cwd'] = os.getcwd()
-DIRS['build-aux'] = os.path.join(DIRS['root'], 'build-aux')
-DIRS['config'] = os.path.join(DIRS['root'], 'config')
-DIRS['doc'] = os.path.join(DIRS['root'], 'doc')
-DIRS['lib'] = os.path.join(DIRS['root'], 'lib')
-DIRS['m4'] = os.path.join(DIRS['root'], 'm4')
-DIRS['modules'] = os.path.join(DIRS['root'], 'modules')
-DIRS['tests'] = os.path.join(DIRS['root'], 'tests')
-DIRS['git'] = os.path.join(DIRS['root'], '.git')
-DIRS['cvs'] = os.path.join(DIRS['root'], 'CVS')
+def init_DIRS(gnulib_dir):
+    DIRS['root'] = gnulib_dir
+    DIRS['build-aux'] = os.path.join(gnulib_dir, 'build-aux')
+    DIRS['config'] = os.path.join(gnulib_dir, 'config')
+    DIRS['doc'] = os.path.join(gnulib_dir, 'doc')
+    DIRS['lib'] = os.path.join(gnulib_dir, 'lib')
+    DIRS['m4'] = os.path.join(gnulib_dir, 'm4')
+    DIRS['modules'] = os.path.join(gnulib_dir, 'modules')
+    DIRS['tests'] = os.path.join(gnulib_dir, 'tests')
+    DIRS['git'] = os.path.join(gnulib_dir, '.git')
+    DIRS['cvs'] = os.path.join(gnulib_dir, 'CVS')
 
 # Set MODES dictionary
 MODES = \

@@ -1191,7 +1191,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                                                           self.moduletable['main'], self.moduletable, self.makefiletable,
                                                           actioncmd, for_test)
         if automake_subdir:
-            emit = sp.run([joinpath(APP['root'], 'build-aux/prefix-gnulib-mk'), '--from-gnulib-tool',
+            emit = sp.run([joinpath(DIRS['root'], 'build-aux/prefix-gnulib-mk'), '--from-gnulib-tool',
                            f'--lib-name={libname}', f'--prefix={sourcebase}/'],
                           input=emit, text=True, capture_output=True).stdout
         with codecs.open(tmpfile, 'wb', 'UTF-8') as file:

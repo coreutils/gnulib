@@ -455,6 +455,11 @@ def main():
                         dest='lcopymode',
                         default=None,
                         action='store_const', const=classes.CopyAction.Hardlink)
+    # Undocumented option. Only used for the gnulib-tool test suite.
+    parser.add_argument('--gnulib-dir',
+                        dest='gnulib_dir',
+                        default=None,
+                        nargs=1)
     # All other arguments are collected.
     parser.add_argument("non_option_arguments",
                         nargs='*')
@@ -462,6 +467,14 @@ def main():
     # Parse the given arguments. Don't signal an error if non-option arguments
     # occur between or after options.
     cmdargs, unhandled = parser.parse_known_args()
+
+    # Handle --gnulib-dir and finalize DIRS.
+    gnulib_dir = cmdargs.gnulib_dir
+    if gnulib_dir != None:
+        gnulib_dir = gnulib_dir[0]
+    else:
+        gnulib_dir = APP['root']
+    constants.init_DIRS(gnulib_dir)
 
     # Handle --help and --version, ignoring all other options.
     if cmdargs.help != None:
@@ -1284,10 +1297,10 @@ def main():
         # This disturbs the result of the next "gitk" invocation.
         # Workaround: Let git scan the files. This can be done through
         # "git update-index --refresh" or "git status" or "git diff".
-        if isdir(joinpath(APP['root'], '.git')):
+        if isdir(joinpath(DIRS['root'], '.git')):
             try:
                 sp.run(['git', 'update-index', '--refresh'],
-                       cwd=APP['root'], stdout=sp.DEVNULL)
+                       cwd=DIRS['root'], stdout=sp.DEVNULL)
             except FileNotFoundError:
                 # No 'git' program was found.
                 pass
