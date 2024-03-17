@@ -161,17 +161,6 @@ Date:   Sat Feb 22 15:15:01 2020 +0100
 
 --------------------------------------------------------------------------------
 
-commit 0d41dbc7c88b10d16751466ec91efa75951426bb
-Author: Bruno Haible <bruno@clisp.org>
-Date:   Mon Nov 18 13:32:46 2019 +0100
-
-    gnulib-tool: Fix build error on macOS with --conditional-dependencies.
-
-    * gnulib-tool (func_modules_add_dummy): Ignore modules that are
-    conditionally enabled.
-
---------------------------------------------------------------------------------
-
 commit 30459fe101541698ec704acb224946d73676750e
 Author: Bruno Haible <bruno@clisp.org>
 Date:   Thu Jun 8 15:09:31 2017 +0200

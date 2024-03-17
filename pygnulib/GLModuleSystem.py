@@ -1066,9 +1066,10 @@ class GLModuleTable(object):
 
         Add dummy package to list of modules if dummy package is needed. If not,
         return original list of modules.
-        GLConfig: auxdir, ac_version.'''
+        GLConfig: auxdir, ac_version, conddeps.'''
         auxdir = self.config['auxdir']
         ac_version = self.config['ac_version']
+        conddeps = self.config['conddeps']
         for module in modules:
             if type(module) is not GLModule:
                 raise TypeError('each module must be a GLModule instance')
@@ -1076,17 +1077,22 @@ class GLModuleTable(object):
         have_lib_sources = False
         for module in modules:
             if not module.isTests():
-                snippet = module.getAutomakeSnippet()
-                # Extract the value of "lib_SOURCES += ...".
-                snippet = constants.remove_backslash_newline(snippet)
-                pattern = re.compile('^lib_SOURCES[\t ]*\\+=([^#]*).*$', re.M)
-                for matching_rhs in pattern.findall(snippet):
-                    files = matching_rhs.split(' ')
-                    for file in files:
-                        # Ignore .h files since they are not compiled.
-                        if not file.endswith('.h'):
-                            have_lib_sources = True
-                            break
+                if conddeps and self.isConditional(module):
+                    # Ignore conditional modules, since they are not guaranteed to
+                    # contribute to lib_SOURCES.
+                    pass
+                else:
+                    snippet = module.getAutomakeSnippet()
+                    # Extract the value of "lib_SOURCES += ...".
+                    snippet = constants.remove_backslash_newline(snippet)
+                    pattern = re.compile('^lib_SOURCES[\t ]*\\+=([^#]*).*$', re.M)
+                    for matching_rhs in pattern.findall(snippet):
+                        files = matching_rhs.split(' ')
+                        for file in files:
+                            # Ignore .h files since they are not compiled.
+                            if not file.endswith('.h'):
+                                have_lib_sources = True
+                                break
         # Add the dummy module, to make sure the library will be non-empty.
         if not have_lib_sources:
             dummy = self.modulesystem.find('dummy')
