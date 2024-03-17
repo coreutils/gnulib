@@ -116,18 +116,6 @@ Date:   Sun Dec 19 12:49:16 2021 +0100
 
 --------------------------------------------------------------------------------
 
-commit 0be855ee827bf7e9043eeb626c4fd847704be2e6
-Author: Bruno Haible <bruno@clisp.org>
-Date:   Tue Dec 29 02:48:31 2020 +0100
-
-    gnulib-tool: Fix logic whether to add a dummy.c.
-
-    * gnulib-tool (func_remove_if_blocks): New function.
-    (func_modules_add_dummy): Use it to eliminate all conditional statements
-    from the automake snippet.
-
---------------------------------------------------------------------------------
-
 commit 30459fe101541698ec704acb224946d73676750e
 Author: Bruno Haible <bruno@clisp.org>
 Date:   Thu Jun 8 15:09:31 2017 +0200

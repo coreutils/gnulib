@@ -1049,6 +1049,26 @@ class GLModuleTable(object):
         result = tuple([main_modules, tests_modules])
         return result
 
+    def remove_if_blocks(self, snippet: str) -> str:
+        '''Removes if...endif blocks from an automake snippet.'''
+        lines = snippet.splitlines()
+        cleansed = []
+        depth = 0
+        for line in lines:
+            if line.startswith('if '):
+                depth += 1
+            elif line.startswith('endif'):
+                depth -= 1
+                # Make sure gnulib-tool.py and gnulib-tool.sh produce the same
+                # output.
+                cleansed.append(line[5:])
+            elif depth == 0:
+                cleansed.append(line)
+        if len(cleansed) > 0:
+            return '\n'.join(cleansed)
+        else:
+            return ''
+
     def add_dummy(self, modules):
         '''GLModuleTable.add_dummy(modules) -> list
 
@@ -1071,8 +1091,9 @@ class GLModuleTable(object):
                     pass
                 else:
                     snippet = module.getAutomakeSnippet()
-                    # Extract the value of "lib_SOURCES += ...".
+                    # Extract the value of unconditional "lib_SOURCES += ..." augmentations.
                     snippet = constants.remove_backslash_newline(snippet)
+                    snippet = self.remove_if_blocks(snippet)
                     pattern = re.compile('^lib_SOURCES[\t ]*\\+=([^#]*).*$', re.M)
                     for matching_rhs in pattern.findall(snippet):
                         files = matching_rhs.split(' ')
