@@ -70,6 +70,10 @@ static int
 renameat2ish (int fd1, char const *src, int fd2, char const *dst,
               unsigned int flags)
 {
+# ifdef RENAME_SWAP
+  if (flags & RENAME_EXCHANGE)
+    return renameatx_np (fd1, src, fd2, dst, RENAME_SWAP);
+# endif
 # ifdef RENAME_EXCL
   if (flags)
     {
@@ -145,6 +149,10 @@ renameatu (int fd1, char const *src, int fd2, char const *dst,
       dst_found_nonexistent = true;
       break;
 
+    case RENAME_EXCHANGE:
+#ifdef RENAME_SWAP
+      break;
+#endif
     default:
       return errno_fail (ENOTSUP);
     }

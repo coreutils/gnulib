@@ -205,6 +205,13 @@ main (void)
            == -1)
           && errno == EEXIST);
 
+  errno = 0;
+  ASSERT (renameatu (dfd, BASE "sub2", dfd, BASE "sub1", RENAME_EXCHANGE) < 0
+          ? errno == EINVAL || errno == ENOSYS || errno == ENOTSUP
+          : (renameatu (dfd, BASE "sub1/file", dfd, BASE "sub2/file",
+                        RENAME_NOREPLACE)
+             == 0));
+
   /* Cleanup.  */
   ASSERT (close (dfd) == 0);
   ASSERT (unlink (BASE "sub2/file") == 0);
