@@ -81,6 +81,7 @@ TESTS = constants.TESTS
 joinpath = constants.joinpath
 copyfile = constants.copyfile
 ensure_writable = constants.ensure_writable
+lines_to_multiline = constants.lines_to_multiline
 isabs = os.path.isabs
 isdir = os.path.isdir
 isfile = os.path.isfile
@@ -814,9 +815,9 @@ def main():
     if mode == 'list':
         modulesystem = classes.GLModuleSystem(config)
         listing = modulesystem.list()
-        result = '\n'.join(listing)
+        result = lines_to_multiline(listing)
         os.rmdir(config['tempdir'])
-        print(result)
+        print(result, end='')
 
     elif mode == 'find':
         modulesystem = classes.GLModuleSystem(config)
@@ -1124,7 +1125,7 @@ def main():
             module = modulesystem.find(name)
             if module:
                 files = module.getFiles()
-                print('\n'.join(files))
+                print(lines_to_multiline(files), end='')
 
     elif mode == 'extract-dependencies':
         if avoids:

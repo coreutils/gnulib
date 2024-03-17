@@ -54,6 +54,7 @@ relinverse = constants.relinverse
 copyfile = constants.copyfile
 ensure_writable = constants.ensure_writable
 movefile = constants.movefile
+lines_to_multiline = constants.lines_to_multiline
 isdir = os.path.isdir
 isfile = os.path.isfile
 normpath = os.path.normpath
@@ -461,7 +462,7 @@ class GLTestDir(object):
                         lines = [ line
                                   for line in snippet.split('\n')
                                   if line.strip() ]
-                        snippet = '\n'.join(lines)
+                        snippet = lines_to_multiline(lines)
                         pattern = re.compile('AC_REQUIRE\\(\\[([^()]*)\\]\\)', re.M)
                         snippet = pattern.sub('\\1', snippet)
                         snippet = snippet.strip()
@@ -469,7 +470,7 @@ class GLTestDir(object):
                 snippets = [ snippet
                              for snippet in snippets
                              if snippet.strip()]
-                emit += '%s\n' % '\n'.join(snippets)
+                emit += lines_to_multiline(snippets)
                 if libtool:
                     emit += 'LT_INIT([win32-dll])\n'
                     emit += 'LT_LANG([C++])\n'
@@ -578,7 +579,7 @@ class GLTestDir(object):
                 lines = [ line
                           for line in snippet.split('\n')
                           if line.strip() ]
-                snippet = '\n'.join(lines)
+                snippet = lines_to_multiline(lines)
                 pattern = re.compile('AC_REQUIRE\\(\\[([^()]*)\\]\\)', re.M)
                 snippet = pattern.sub('\\1', snippet)
                 snippet = snippet.strip()
@@ -586,7 +587,7 @@ class GLTestDir(object):
         snippets = [ snippet
                      for snippet in snippets
                      if snippet.strip() ]
-        emit += '%s\n' % '\n'.join(snippets)
+        emit += lines_to_multiline(snippets)
         if libtool:
             emit += 'LT_INIT([win32-dll])\n'
             emit += 'LT_LANG([C++])\n'

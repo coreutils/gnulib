@@ -49,6 +49,7 @@ UTILS = constants.UTILS
 TESTS = constants.TESTS
 joinpath = constants.joinpath
 relinverse = constants.relinverse
+lines_to_multiline = constants.lines_to_multiline
 isfile = os.path.isfile
 normpath = os.path.normpath
 
@@ -104,10 +105,7 @@ def _eliminate_NMD(snippet: str, automake_subdir: bool) -> str:
         line = _eliminate_NMD_from_line(line, automake_subdir)
         if line != None:
             result.append(line)
-    if len(result) > 0:
-        return '\n'.join(result) + '\n'
-    else:
-        return ''
+    return lines_to_multiline(result)
 
 
 #===============================================================================
@@ -230,7 +228,7 @@ class GLEmiter(object):
             lines = [ line
                       for line in snippet.split('\n')
                       if line.strip() ]
-            snippet = '%s\n' % '\n'.join(lines)
+            snippet = lines_to_multiline(lines)
             pattern = re.compile('^(.*)$', re.M)
             snippet = pattern.sub('%s\\1' % indentation, snippet)
             if disable_libtool:
@@ -258,7 +256,7 @@ class GLEmiter(object):
         lines = [ line
                   for line in emit.split('\n')
                   if line.strip() ]
-        emit = '%s\n' % '\n'.join(lines)
+        emit = lines_to_multiline(lines)
         return emit
 
     def autoconfSnippets(self, modules, referenceable_modules, moduletable,
@@ -441,7 +439,7 @@ class GLEmiter(object):
         lines = [ line
                   for line in emit.split('\n')
                   if line.strip() ]
-        emit = '%s\n' % '\n'.join(lines)
+        emit = lines_to_multiline(lines)
         return emit
 
     def preEarlyMacros(self, require, indentation, modules):
@@ -908,9 +906,8 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                             capture_output=True)
             if result.returncode == 0:
                 # sort -u
-                emit += '\n'.join(sorted(list(set(x.strip() for x in
-                                                  result.stdout.decode(encoding='utf-8').splitlines()))))
-                emit += '\n'
+                emit += lines_to_multiline(sorted(list(set(x.strip()
+                                                           for x in result.stdout.decode(encoding='utf-8').splitlines()))))
             else:
                 emit += '== gnulib-tool GNU Make output failed as follows ==\n'
                 emit += ['# stderr: ' + x + '\n' for x in

@@ -44,6 +44,7 @@ ENCS = constants.ENCS
 TESTS = constants.TESTS
 joinpath = constants.joinpath
 subend = constants.subend
+lines_to_multiline = constants.lines_to_multiline
 isdir = os.path.isdir
 isfile = os.path.isfile
 filter_filelist = constants.filter_filelist
@@ -352,12 +353,9 @@ class GLModule(object):
             # Remove handledmodules from inmodules.
             inmodules = inmodules.difference(handledmodules)
 
-        if len(outmodules) > 0:
-            module_names = sorted([ str(module)
-                                    for module in outmodules ])
-            return '\n'.join(module_names) + '\n'
-        else:
-            return ''
+        module_names = sorted([ str(module)
+                                for module in outmodules ])
+        return lines_to_multiline(module_names)
 
     def getLinkDirectiveRecursively(self) -> str:
         '''Return a list of the link directives of this module separated
@@ -386,17 +384,14 @@ class GLModule(object):
             # Remove handledmodules from inmodules.
             inmodules = inmodules.difference(handledmodules)
 
-        if len(outmodules) > 0:
-            # Remove whitespace from sections.
-            link_sections = [ module.getLink().strip()
-                              for module in outmodules ]
-            # Sort the link directives.
-            directives = sorted([ line
-                                  for section in link_sections
-                                  for line in section.splitlines() ])
-            return '\n'.join(directives) + '\n'
-        else:
-            return ''
+        # Remove whitespace from sections.
+        link_sections = [ module.getLink().strip()
+                          for module in outmodules ]
+        # Sort the link directives.
+        directives = sorted([ line
+                              for section in link_sections
+                              for line in section.splitlines() ])
+        return lines_to_multiline(directives)
 
     def getShellFunc(self):
         '''GLModule.getShellFunc() -> str
@@ -1064,10 +1059,7 @@ class GLModuleTable(object):
                 cleansed.append(line[5:])
             elif depth == 0:
                 cleansed.append(line)
-        if len(cleansed) > 0:
-            return '\n'.join(cleansed)
-        else:
-            return ''
+        return lines_to_multiline(cleansed)
 
     def add_dummy(self, modules):
         '''GLModuleTable.add_dummy(modules) -> list

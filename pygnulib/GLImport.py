@@ -51,6 +51,7 @@ cleaner = constants.cleaner
 copyfile = constants.copyfile
 copyfile2 = constants.copyfile2
 movefile = constants.movefile
+lines_to_multiline = constants.lines_to_multiline
 isabs = os.path.isabs
 isdir = os.path.isdir
 isfile = os.path.isfile
@@ -803,7 +804,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                 dirs_ignore = [ line
                                 for line in dirs_ignore
                                 if line.strip() ]
-                srcdata = '\n'.join(sorted(set(dirs_ignore))).strip()
+                srcdata = lines_to_multiline(sorted(set(dirs_ignore)))
                 dirs_ignore += [ d
                                  for d in dirs_added
                                  if d not in dirs_ignore ]
@@ -813,7 +814,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                 dirs_ignore = [ '%s%s' % (anchor, d)
                                 for d in dirs_ignore ]
                 dirs_ignore = sorted(set(dirs_ignore))
-                destdata = '\n'.join(sorted(set(dirs_ignore))).strip()
+                destdata = lines_to_multiline(sorted(set(dirs_ignore)))
                 if srcdata != destdata:
                     if not self.config['dryrun']:
                         print('Updating %s (backup in %s)' % (srcpath, backupname))
@@ -833,8 +834,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                     if ignore == '.cvsignore':
                         dirs_added = ['.deps', '.dirstamp'] + dirs_added
                     with codecs.open(joinpath(destdir, srcpath), 'wb', 'UTF-8') as file:
-                        file.write('\n'.join(dirs_added))
-                        file.write('\n')
+                        file.write(lines_to_multiline(dirs_added))
                 else:  # if self.config['dryrun']
                     print('Create %s' % srcpath)
 
@@ -1297,7 +1297,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                 data = '# Set of available languages.\n'
                 files = [ constants.subend('.po', '', file)
                           for file in os.listdir(joinpath(destdir, pobase)) ]
-                data += '\n'.join(files)
+                data += lines_to_multiline(files)
                 with codecs.open(tmpfile, 'wb', 'UTF-8') as file:
                     file.write(data)
                 filename, backup, flag = self.assistant.super_update(basename, tmpfile)

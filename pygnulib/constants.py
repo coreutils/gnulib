@@ -465,6 +465,17 @@ def filter_filelist(separator, filelist,
     return result
 
 
+def lines_to_multiline(lines):
+    '''lines_to_multiline(List[str]) -> str
+
+    Combine the lines to a single string, terminating each line with a newline
+    character.'''
+    if len(lines) > 0:
+        return '\n'.join(lines) + '\n'
+    else:
+        return ''
+
+
 def substart(orig, repl, data):
     '''Replaces the start portion of a string.
 
@@ -493,18 +504,6 @@ def nlconvert(text):
     text = text.replace('\r\n', '\n')
     if system == 'windows':
         text = text.replace('\n', '\r\n')
-    return text
-
-
-def nlremove(text):
-    '''Remove empty lines from the source text.'''
-    text = nlconvert(text)
-    text = text.replace('\r\n', '\n')
-    lines = [ line
-              for line in text.split('\n')
-              if line != '' ]
-    text = '\n'.join(lines)
-    text = nlconvert(text)
     return text
 
 
