@@ -52,6 +52,7 @@ TESTS = constants.TESTS
 joinpath = constants.joinpath
 relinverse = constants.relinverse
 copyfile = constants.copyfile
+ensure_writable = constants.ensure_writable
 movefile = constants.movefile
 isdir = os.path.isdir
 isfile = os.path.isfile
@@ -364,6 +365,7 @@ class GLTestDir(object):
                 os.remove(destpath)
             if flag:
                 copyfile(lookedup, destpath)
+                ensure_writable(destpath)
             else:  # if not flag
                 if self.filesystem.shouldLink(src, lookedup) == CopyAction.Symlink:
                     constants.link_relative(lookedup, destpath)
@@ -371,6 +373,7 @@ class GLTestDir(object):
                     constants.hardlink(lookedup, destpath)
                 else:
                     copyfile(lookedup, destpath)
+                    ensure_writable(destpath)
 
         # Create $sourcebase/Makefile.am.
         for_test = True

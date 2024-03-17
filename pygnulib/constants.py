@@ -22,6 +22,7 @@ from __future__ import unicode_literals
 import re
 import os
 import sys
+import stat
 import platform
 import shutil
 import tempfile
@@ -300,6 +301,14 @@ def relconcat(dir1, dir2):
     return os.path.normpath(os.path.join(dir1, dir2))
 
 
+def ensure_writable(dest: str) -> None:
+    '''Ensure that the file dest is writable.'''
+    # os.stat throws FileNotFoundError error but we assume it exists.
+    st = os.stat(dest)
+    if not (st.st_mode & stat.S_IWUSR):
+        os.chmod(dest, st.st_mode | stat.S_IWUSR)
+
+
 def relinverse(dir):
     '''Compute the inverse of dir. Namely, a relative pathname consisting only
     of '..' components, such that dir/relinverse = '.'.
@@ -367,6 +376,7 @@ def symlink_relative(src, dest):
             else:
                 cp_src = src
         copyfile2(cp_src, dest)
+        ensure_writable(dest)
 
 
 def as_link_value_at_dest(src, dest):
@@ -431,6 +441,7 @@ def hardlink(src: str, dest: str) -> None:
             else:
                 cp_src = src
         copyfile2(cp_src, dest)
+        ensure_writable(dest)
 
 
 def filter_filelist(separator, filelist,

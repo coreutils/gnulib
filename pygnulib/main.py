@@ -80,6 +80,7 @@ MODES = constants.MODES
 TESTS = constants.TESTS
 joinpath = constants.joinpath
 copyfile = constants.copyfile
+ensure_writable = constants.ensure_writable
 isabs = os.path.isabs
 isdir = os.path.isdir
 isfile = os.path.isfile
@@ -1270,6 +1271,7 @@ def main():
         assistant = classes.GLFileAssistant(config)
         tmpfile = assistant.tmpfilename(destpath)
         copyfile(lookedup, tmpfile)
+        ensure_writable(tmpfile)
         assistant.setOriginal(srcpath)
         assistant.config.setDestDir(destdir)
         assistant.setRewritten(destpath)

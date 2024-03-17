@@ -43,6 +43,7 @@ joinpath = constants.joinpath
 copyfile = constants.copyfile
 movefile = constants.movefile
 hardlink = constants.hardlink
+ensure_writable = constants.ensure_writable
 link_if_changed = constants.link_if_changed
 isdir = os.path.isdir
 isfile = os.path.isfile
@@ -123,6 +124,7 @@ class GLFileSystem(object):
                 if isfile(tempFile):
                     os.remove(tempFile)
                 copyfile(lookedupFile, tempFile)
+                ensure_writable(tempFile)
                 for diff_in_localdir in reversed(lookedupPatches):
                     command = 'patch -s "%s" < "%s" >&2' % (tempFile, diff_in_localdir)
                     try:  # Try to apply patch
@@ -361,6 +363,7 @@ class GLFileAssistant(object):
         sed_transform_testsrelated_lib_file = self.transformers.get('tests', '')
         try:  # Try to copy lookedup file to tmpfile
             copyfile(lookedup, tmpfile)
+            ensure_writable(tmpfile)
         except Exception as error:
             raise GLError(15, lookedup)
         # Don't process binary files with sed.

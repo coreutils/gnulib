@@ -128,21 +128,6 @@ Date:   Tue Dec 29 02:48:31 2020 +0100
 
 --------------------------------------------------------------------------------
 
-commit baec1bac1602ba8534320c295e120f7b658400f4
-Author: Bruno Haible <bruno@clisp.org>
-Date:   Sat Feb 22 15:15:01 2020 +0100
-
-    gnulib-tool: Ensure copied files are writable.
-
-    Reported by Benno Fünfstück <benno.fuenfstueck@gmail.com> in
-    <https://lists.gnu.org/archive/html/bug-gnulib/2020-02/msg00101.html>.
-
-    * gnulib-tool (func_ensure_writable): New function.
-    (func_ln_s, func_hardlink, func_lookup_file, func_import,
-    func_create_testdir, copy-file): Invoke it after copying a file.
-
---------------------------------------------------------------------------------
-
 commit 30459fe101541698ec704acb224946d73676750e
 Author: Bruno Haible <bruno@clisp.org>
 Date:   Thu Jun 8 15:09:31 2017 +0200
