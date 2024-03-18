@@ -872,6 +872,17 @@ def main():
             destdir = '.'
         config.setDestDir(destdir)
 
+        # Analyze configure.ac.
+        with open(joinpath(destdir, 'configure.ac'), 'r', encoding='utf-8') as file:
+            configure_ac_data = file.read()
+
+        guessed_m4dirs = []
+        pattern = re.compile(r'^.*AC_CONFIG_MACRO_DIRS?\([\[ ]*([^\]"\$`\\\)]*).*$', re.MULTILINE)
+        match = pattern.findall(configure_ac_data)
+        # Append the match to guessed_m4dirs.
+        if match:
+            guessed_m4dirs += match
+
         if mode == MODES['import']:
             # Set variables to default values.
             if not sourcebase:
@@ -937,7 +948,7 @@ def main():
                         if dirisnext:
                             # Ignore absolute directory pathnames, like /usr/local/share/aclocal.
                             if not isabs(aclocal_amflag):
-                                if isfile(joinpath(destdir, joinpath(aclocal_amflag, 'gnulib-cache.m4'))):
+                                if isfile(joinpath(destdir, aclocal_amflag, 'gnulib-cache.m4')):
                                     m4dirs += [aclocal_amflag]
                             dirisnext = False
                         else:  # if not dirisnext
@@ -945,6 +956,11 @@ def main():
                                 dirisnext = True
                             else:  # if aclocal_amflag != '-I'
                                 dirisnext = False
+                    for arg in guessed_m4dirs:
+                        # Ignore absolute directory pathnames, like /usr/local/share/aclocal.
+                        if not isabs(arg):
+                            if isfile(joinpath(destdir, arg, 'gnulib-cache.m4')):
+                                m4dirs += [arg]
                 else:  # if not isfile(filepath)
                     # No Makefile.am! Oh well. Look at the last generated aclocal.m4.
                     filepath = joinpath(destdir, 'aclocal.m4')

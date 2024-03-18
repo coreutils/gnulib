@@ -1181,7 +1181,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                 testsbase_dir = os.path.dirname(testsbase)
                 testsbase_base = os.path.basename(testsbase)
                 self.makefiletable.editor(testsbase_dir, 'SUBDIRS', testsbase_base, True)
-        self.makefiletable.editor('', 'ACLOCAL_AMFLAGS', '-I %s' % m4base)
+        self.makefiletable.editor('', 'ACLOCAL_AMFLAGS', m4base)
         self.makefiletable.parent(gentests, source_makefile_am, tests_makefile_am)
 
         # Create library makefile.
@@ -1481,13 +1481,19 @@ in <library>_a_LDFLAGS or <library>_la_LDFLAGS when linking a library.''')
             else:  # if makefile_am != 'Makefile.am'
                 print('  - "include %s" from within "%s/Makefile.am",' % (tests_makefile_am, testsbase))
         # Print makefile edits.
-        current_edit = int()
+        current_edit = 0
         makefile_am_edits = self.makefiletable.count()
         while current_edit != makefile_am_edits:
             dictionary = self.makefiletable[current_edit]
             if dictionary['var']:
-                print('  - mention "%s" in %s in %s,'
-                      % (dictionary['val'], dictionary['var'], joinpath(dictionary['dir'], 'Makefile.am')))
+                if dictionary['var'] == 'ACLOCAL_AMFLAGS':
+                    print('  - mention "-I %s" in %s in %s'
+                          % (dictionary['val'], dictionary['var'], joinpath(dictionary['dir'], 'Makefile.am')))
+                    print('    or add an AC_CONFIG_MACRO_DIRS([%s]) invocation in %s,'
+                          % (dictionary['val'], configure_ac))
+                else:
+                    print('  - mention "%s" in %s in %s,'
+                          % (dictionary['val'], dictionary['var'], joinpath(dictionary['dir'], 'Makefile.am')))
             current_edit += 1
 
         # Detect position_early_after.

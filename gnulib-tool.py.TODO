@@ -88,23 +88,6 @@ Date:   Sat Dec 25 14:30:57 2021 +0100
 
 --------------------------------------------------------------------------------
 
-commit 4bdc327dbda59dcdbfa0f983a4f35c4a4ec3578c
-Author: Bruno Haible <bruno@clisp.org>
-Date:   Sun Dec 19 12:49:16 2021 +0100
-
-    gnulib-tool: Don't insist on ACLOCAL_AMFLAGS.
-
-    Reported by Bjarni Ingi Gislason <bjarniig@rhi.hi.is> in
-    <https://lists.gnu.org/archive/html/bug-gnulib/2021-12/msg00112.html>.
-
-    * gnulib-tool (func_import): Mention an AC_CONFIG_MACRO_DIRS invocation
-    as an alternative to augmenting ACLOCAL_AMFLAGS.
-    (--import, --add-import, --remove-import, --update): To find the m4
-    directories, look also for AC_CONFIG_MACRO_DIR and AC_CONFIG_MACRO_DIRS
-    invocations in configure.ac.
-
---------------------------------------------------------------------------------
-
 commit 30459fe101541698ec704acb224946d73676750e
 Author: Bruno Haible <bruno@clisp.org>
 Date:   Thu Jun 8 15:09:31 2017 +0200
