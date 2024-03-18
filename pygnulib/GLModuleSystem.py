@@ -307,14 +307,15 @@ class GLModule(object):
     def isTests(self):
         '''GLModule.isTests() -> bool
 
-        Check whether module is a -tests version of module.'''
+        Check whether module is a *-tests module or a module of
+        applicability 'all'.'''
         result = self.getApplicability() != 'main'
         return result
 
     def isNonTests(self):
-        '''GLModule.isTests() -> bool
+        '''GLModule.isNonTests() -> bool
 
-        Check whether module is not a -tests version of module.'''
+        Check whether module is not a *-tests module.'''
         result = not self.getName().endswith('-tests')
         return result
 
