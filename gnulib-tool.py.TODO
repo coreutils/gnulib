@@ -88,17 +88,6 @@ Date:   Sat Dec 25 14:30:57 2021 +0100
 
 --------------------------------------------------------------------------------
 
-commit 83948c64d10c77fb964e6523a9524729d6a66f32
-Author: Bruno Haible <bruno@clisp.org>
-Date:   Sat Dec 25 12:19:13 2021 +0100
-
-    gnulib-tool: Respect applicability 'all' without --single-configure.
-
-    * gnulib-tool (func_verify_tests_module): Treat modules with
-    applicability 'all' like 'tests' modules, not like 'main' modules.
-
---------------------------------------------------------------------------------
-
 commit 4bdc327dbda59dcdbfa0f983a4f35c4a4ec3578c
 Author: Bruno Haible <bruno@clisp.org>
 Date:   Sun Dec 19 12:49:16 2021 +0100

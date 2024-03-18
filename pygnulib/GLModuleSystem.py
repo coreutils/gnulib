@@ -308,14 +308,14 @@ class GLModule(object):
         '''GLModule.isTests() -> bool
 
         Check whether module is a -tests version of module.'''
-        result = self.getName().endswith('-tests')
+        result = self.getApplicability() != 'main'
         return result
 
     def isNonTests(self):
         '''GLModule.isTests() -> bool
 
         Check whether module is not a -tests version of module.'''
-        result = not self.isTests()
+        result = not self.getName().endswith('-tests')
         return result
 
     def getTestsName(self):
@@ -498,7 +498,7 @@ class GLModule(object):
             result = result.strip()
             if not result:
                 # The default is 'main' or 'tests', depending on the module's name.
-                if self.isTests():
+                if self.getName().endswith('-tests'):
                     result = 'tests'
                 else:
                     result = 'main'
@@ -529,7 +529,7 @@ class GLModule(object):
         if 'dependencies' not in self.cache:
             result = ''
             # ${module}-tests implicitly depends on ${module}, if that module exists.
-            if self.isTests():
+            if self.getName().endswith('-tests'):
                 main_module = subend('-tests', '', self.getName())
                 if self.modulesystem.exists(main_module):
                     result += '%s\n' % main_module
@@ -631,7 +631,7 @@ class GLModule(object):
         ac_version = self.config['ac_version']
         result = ''
         if 'makefile-unconditional' not in self.cache:
-            if self.isTests():
+            if self.getName().endswith('-tests'):
                 files = self.getFiles()
                 extra_files = filter_filelist(constants.NL, files,
                                               'tests/', '', 'tests/', '').split(constants.NL)
@@ -713,7 +713,7 @@ class GLModule(object):
         if 'license' not in self.cache:
             license = self.getLicense_Raw().strip()
             # Warn if the License field is missing.
-            if not self.isTests():
+            if not self.getName().endswith('-tests'):
                 if not license:
                     if self.config['errors']:
                         raise GLError(18, str(self))
@@ -1076,7 +1076,7 @@ class GLModuleTable(object):
         # Determine whether any module provides a lib_SOURCES augmentation.
         have_lib_sources = False
         for module in modules:
-            if not module.isTests():
+            if module.isNonTests():
                 if conddeps and self.isConditional(module):
                     # Ignore conditional modules, since they are not guaranteed to
                     # contribute to lib_SOURCES.

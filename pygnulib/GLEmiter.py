@@ -797,7 +797,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         # Compute allsnippets variable.
         allsnippets = ''
         for module in modules:
-            if not module.isTests():
+            if module.isNonTests():
                 # Get conditional snippet, edit it and save to amsnippet1.
                 amsnippet1 = module.getAutomakeSnippet_Conditional()
                 amsnippet1 = amsnippet1.replace('lib_LIBRARIES', 'lib%_LIBRARIES')
@@ -985,7 +985,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
             # the link dependencies of all modules.
             links = [ module.getLink()
                       for module in modules
-                      if not module.isTests() ]
+                      if module.isNonTests() ]
             lines = [ line
                       for link in links
                       for line in link.split('\n')
