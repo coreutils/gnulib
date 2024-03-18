@@ -321,11 +321,15 @@ class GLTestDir(object):
         if single_configure:
             main_filelist, tests_filelist = \
                 moduletable.filelist_separately(main_modules, tests_modules)
-            filelist = sorted(set(main_filelist + tests_filelist))
         else:  # if not single_configure
-            filelist = moduletable.filelist(modules)
+            main_modules = modules
+            tests_modules = [ module
+                              for module in modules
+                              if module.repeatModuleInTests() ]
+            main_filelist, tests_filelist = \
+                moduletable.filelist_separately(main_modules, tests_modules)
 
-        filelist = sorted(set(filelist))
+        filelist = sorted(set(main_filelist + tests_filelist))
 
         # Print list of files.
         if verbose >= 0:

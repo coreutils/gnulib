@@ -1106,7 +1106,10 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         longrun_snippets = ''
         for module in modules:
             if for_test and not single_configure:
-                accept = module.isTests()
+                if module.repeatModuleInTests():
+                    accept = True
+                else:
+                    accept = module.isTests()
             else:  # if for_test and not single_configure
                 accept = True
             if accept:

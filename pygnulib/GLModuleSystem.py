@@ -331,6 +331,18 @@ class GLModule(object):
         result = self.modulesystem.find(self.getTestsName())
         return result
 
+    def repeatModuleInTests(self) -> bool:
+        '''Tests whether, when the tests have their own configure.ac script,
+        a given module should be repeated in the tests, although it was
+        already among the main modules.'''
+        # This module is special because it relies on a gl_LIBTEXTSTYLE_OPTIONAL
+        # invocation that it does not itself do or require. Therefore if the
+        # tests contain such an invocation, the module - as part of tests -
+        # will produce different AC_SUBSTed variable values than the same module
+        # - as part of the main configure.ac -.
+        result = self.getName() == 'libtextstyle-optional'
+        return result
+
     def getDependenciesRecursively(self) -> str:
         '''Return a list of recursive dependencies of this module separated
         by a newline.'''

@@ -73,21 +73,6 @@ Date:   Tue Mar 1 10:01:22 2022 -0800
 
 --------------------------------------------------------------------------------
 
-commit 9af17c55629c4cbe2facdc9edb5242136567ebba
-Author: Bruno Haible <bruno@clisp.org>
-Date:   Sat Dec 25 14:30:57 2021 +0100
-
-    gnulib-tool: Fix handling of module libtextstyle-optional.
-
-    Reported by Paul Eggert in
-    <https://lists.gnu.org/archive/html/bug-gnulib/2021-12/msg00152.html>.
-
-    * gnulib-tool (func_repeat_module_in_tests): New function.
-    (func_emit_tests_Makefile_am, func_create_testdir): Use it for the file
-    list and when creating tests/Makefile.am.
-
---------------------------------------------------------------------------------
-
 commit 30459fe101541698ec704acb224946d73676750e
 Author: Bruno Haible <bruno@clisp.org>
 Date:   Thu Jun 8 15:09:31 2017 +0200
