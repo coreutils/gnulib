@@ -294,6 +294,8 @@ Options for --import, --add/remove-import:
       --automake-subdir     Specify that the makefile in the source-base
                             directory be generated in such a way that it can
                             be 'include'd from the toplevel Makefile.am.
+      --automake-subdir-tests
+                            Likewise, but for the tests directory.
       --macro-prefix=PREFIX  Specify the prefix of the macros 'gl_EARLY' and
                             'gl_INIT'. Default is 'gl'.
       --po-domain=NAME      Specify the prefix of the i18n domain. Usually use

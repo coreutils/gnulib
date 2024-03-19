@@ -168,11 +168,21 @@ class GLEmiter(object):
             raise TypeError(f'gentests must be a bool, not {type(gentests).__name__}')
         if type(base) is not str:
             raise TypeError(f'base must be a str, not {type(base).__name__}')
+        sourcebase = self.config['sourcebase']
+        testsbase = self.config['testsbase']
         automake_subdir = self.config['automake_subdir']
+        automake_subdir_tests = self.config['automake_subdir_tests']
         # Define the base directory, relative to the top-level directory.
         emit = f'  gl_source_base=\'{base}\'\n'
         # Define the prefix for the file name of generated files.
-        if automake_subdir and not gentests:
+        if gentests and automake_subdir_tests:
+            # When tests share the same Makefile as the whole project, they
+            # share the same base prefix.
+            if base == testsbase:
+                emit += f'  gl_source_base_prefix=\'$(top_build_prefix){sourcebase}/\'\n'
+            else:
+                emit += f'  gl_source_base_prefix=\'$(top_build_prefix){base}/\'\n'
+        elif not gentests and automake_subdir:
             emit += f'  gl_source_base_prefix=\'$(top_build_prefix){base}/\'\n'
         else:
             emit += '  gl_source_base_prefix=\n'
@@ -603,7 +613,9 @@ USE_MSGCTXT = no\n"""
             raise TypeError('gentests must be a bool, not %s'
                             % type(gentests).__name__)
         sourcebase = self.config['sourcebase']
+        testsbase = self.config['testsbase']
         automake_subdir = self.config['automake_subdir']
+        automake_subdir_tests = self.config['automake_subdir_tests']
         libtool = self.config['libtool']
         emit = ''
         # Check the presence of files that are mentioned as AC_LIBSOURCES
@@ -612,6 +624,8 @@ USE_MSGCTXT = no\n"""
         # directory, the check is skipped.
         if automake_subdir and not gentests and sourcebase != '' and sourcebase != '.':
             subdir = f'{sourcebase}/'
+        elif automake_subdir_tests and gentests and testsbase != '' and testsbase != '.':
+            subdir = f'{testsbase}/'
         else:
             subdir = ''
         if libtool:

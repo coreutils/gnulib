@@ -114,7 +114,8 @@ class GLError(Exception):
             elif errno == 20:
                 message = 'could not patch test-driver script'
             elif errno == 21:
-                message = ('Option --automake-subdir is only supported if the definition of AUTOMAKE_OPTIONS '
-                           'in Makefile.am contains \'subdir-objects\'.')
+                message = ('Option --automake-subdir/--automake-subdir-tests are only '
+                           'supported if the definition of AUTOMAKE_OPTIONS in '
+                           'Makefile.am contains \'subdir-objects\'.')
             self.message = '[Errno %d] %s' % (errno, message)
         return self.message

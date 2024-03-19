@@ -260,8 +260,8 @@ class GLImport(object):
                     self.config.update_key(config, key)
             self.config.setModules(modules)
 
-        # Determine whether --automake-subdir is supported.
-        if self.config['automake_subdir']:
+        # Determine whether --automake-subdir/--automake-subdir-tests are supported.
+        if self.config['automake_subdir'] or self.config['automake_subdir_tests']:
             found_subdir_objects = False
             if self.config['destdir']:
                 with open(self.config['configure_ac'], encoding='utf-8') as file:
@@ -404,6 +404,7 @@ class GLImport(object):
         makefile_name = self.config.getMakefileName()
         tests_makefile_name = self.config.getTestsMakefileName()
         automake_subdir = self.config.getAutomakeSubdir()
+        automake_subdir_tests = self.config.getAutomakeSubdirTests()
         libtool = self.config.checkLibtool()
         macro_prefix = self.config.getMacroPrefix()
         witness_c_macro = self.config.getWitnessCMacro()
@@ -457,8 +458,8 @@ class GLImport(object):
             actioncmd += ' \\\n#  --tests-makefile-name=%s' % tests_makefile_name
         if automake_subdir:
             actioncmd += ' \\\n#  --automake-subdir'
-        # FIXME: Add the following options in this order when implemented.
-        # --automake-subdir-tests
+        if automake_subdir_tests:
+            actioncmd += ' \\\n#  --automake-subdir-tests'
         if conddeps:
             actioncmd += ' \\\n#  --conditional-dependencies'
         else:  # if not conddeps

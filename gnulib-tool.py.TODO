@@ -16,29 +16,11 @@ The following commits to gnulib-tool have not yet been reflected in
 --------------------------------------------------------------------------------
 
 Implement the options:
-  --automake-subdir-tests
   --help (same output)
 
 Optimize:
   - os.chdir around subprocess creation -> cwd=... argument instead.
   - Inline all 'sed' invocations.
-
---------------------------------------------------------------------------------
-
-commit 76c7703cb2e9e0e803d1296618d8ab9e86e13d6c
-Author: Akim Demaille <akim.demaille@gmail.com>
-Date:   Mon Jul 4 07:18:07 2022 +0200
-
-    gnulib-tool: add support for --automake-subdir-tests
-
-    <https://lists.gnu.org/r/bug-gnulib/2022-01/msg00111.html>
-
-    * gnulib-tool (main): Handle --automake-subdir-tests.
-    (func_emit_shellvars_init, func_emit_lib_Makefile_am): Use
-    $sourcebase when handling tests and --automake-subdir-tests is
-    given.
-    (func_append_actionarg): Support --automake-subdir-tests.
-    (func_create_testdir): Add missing argument for func_emit_initmacro_end.
 
 --------------------------------------------------------------------------------
 

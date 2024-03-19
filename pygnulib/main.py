@@ -408,6 +408,11 @@ def main():
                         dest='automake_subdir',
                         default=None,
                         action='store_true')
+    # automake-subdir-tests
+    parser.add_argument('--automake-subdir-tests',
+                        dest='automake_subdir_tests',
+                        default=None,
+                        action='store_true')
     # macro-prefix
     parser.add_argument('--macro-prefix',
                         dest='macro_prefix',
@@ -660,6 +665,7 @@ def main():
                  or cmdargs.makefile_name != None
                  or cmdargs.tests_makefile_name != None
                  or cmdargs.automake_subdir != None
+                 or cmdargs.automake_subdir_tests != None
                  or cmdargs.macro_prefix != None or cmdargs.podomain != None
                  or cmdargs.witness_c_macro != None or cmdargs.vc_files != None))):
         message = '%s: *** ' % constants.APP['name']
@@ -758,6 +764,7 @@ def main():
     if tests_makefile_name != None:
         tests_makefile_name = tests_makefile_name[0]
     automake_subdir = cmdargs.automake_subdir == True
+    automake_subdir_tests = cmdargs.automake_subdir_tests == True
     macro_prefix = cmdargs.macro_prefix
     if macro_prefix != None:
         macro_prefix = macro_prefix[0]
@@ -798,6 +805,7 @@ def main():
         makefile_name=makefile_name,
         tests_makefile_name=tests_makefile_name,
         automake_subdir=automake_subdir,
+        automake_subdir_tests=automake_subdir_tests,
         libtool=libtool,
         conddeps=cond_dependencies,
         macro_prefix=macro_prefix,
@@ -1396,8 +1404,9 @@ if __name__ == '__main__':
             elif errno == 20:
                 message += 'could not patch test-driver script'
             elif errno == 21:
-                message = ('Option --automake-subdir is only supported if the definition of AUTOMAKE_OPTIONS '
-                           'in Makefile.am contains \'subdir-objects\'.')
+                message += ('Option --automake-subdir/--automake-subdir-tests are only '
+                            'supported if the definition of AUTOMAKE_OPTIONS in '
+                            'Makefile.am contains \'subdir-objects\'.')
             message += '\n%s: *** Stop.\n' % constants.APP['name']
             sys.stderr.write(message)
             sys.exit(1)
