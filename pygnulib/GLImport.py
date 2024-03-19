@@ -1206,8 +1206,8 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                     else:  # if self.config['dryrun']:
                         print('Create %s' % filename)
                     filetable['added'] += [filename]
-            if isfile(tmpfile):
-                os.remove(tmpfile)
+                if isfile(tmpfile):
+                    os.remove(tmpfile)
 
             # Create po makefile parameterization, part 1.
             basename = joinpath(pobase, 'Makevars')
