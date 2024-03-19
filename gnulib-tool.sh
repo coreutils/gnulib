@@ -1529,6 +1529,7 @@ func_determine_path_separator
       # Undocumented option. Only used for the gnulib-tool test suite.
       --gnulib-dir=* )
         gnulib_dir=`echo "X$1" | sed -e 's/^X--gnulib-dir=//'`
+        gnulib_dir=`cd "$gnulib_dir" && pwd`
         shift ;;
       -- )
         # Stop option processing
@@ -7098,6 +7099,7 @@ func_create_megatestdir ()
 
   # Create autobuild.
   cvsdate=`vc_witness="$gnulib_dir/.git/refs/heads/master"; \
+           test -f "$vc_witness" || vc_witness="$gnulib_dir/ChangeLog"
            sh "$gnulib_dir/build-aux/mdate-sh" "$vc_witness" \
              | sed -e 's,January,01,'   -e 's,Jan,01,' \
                    -e 's,February,02,'  -e 's,Feb,02,' \

@@ -960,6 +960,8 @@ class GLMegaTestDir(object):
         repdict['Nov'] = repdict['November'] = '11'
         repdict['Dec'] = repdict['December'] = '12'
         vc_witness = joinpath(DIRS['root'], '.git', 'refs', 'heads', 'master')
+        if not isfile(vc_witness):
+            vc_witness = joinpath(DIRS['root'], 'ChangeLog')
         mdate_sh = joinpath(DIRS['root'], 'build-aux', 'mdate-sh')
         args = ['sh', mdate_sh, vc_witness]
         cvsdate = sp.check_output(args).decode("UTF-8").strip()

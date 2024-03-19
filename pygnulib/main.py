@@ -473,7 +473,7 @@ def main():
     # Handle --gnulib-dir and finalize DIRS.
     gnulib_dir = cmdargs.gnulib_dir
     if gnulib_dir != None:
-        gnulib_dir = gnulib_dir[0]
+        gnulib_dir = os.path.abspath(gnulib_dir[0])
     else:
         gnulib_dir = APP['root']
     constants.init_DIRS(gnulib_dir)
