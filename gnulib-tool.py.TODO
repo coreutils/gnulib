@@ -61,18 +61,6 @@ Date:   Fri Jun 3 17:52:19 2022 -0700
 
 --------------------------------------------------------------------------------
 
-commit 8c4f4d7a3c28f88b64fce2fb1d0dc0e570d1a482
-Author: Paul Eggert <eggert@cs.ucla.edu>
-Date:   Tue Mar 1 10:01:22 2022 -0800
-
-    Create lib/Makefile.am after gnulib-comp.m4
-
-    * gnulib-tool (func_import): Create library makefile after
-    creating gnulib-comp.m4.  With --gnu-make, the latter depends on
-    the former.  See <https://bugs.gnu.org/32452#109>.
-
---------------------------------------------------------------------------------
-
 commit 30459fe101541698ec704acb224946d73676750e
 Author: Bruno Haible <bruno@clisp.org>
 Date:   Thu Jun 8 15:09:31 2017 +0200

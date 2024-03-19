@@ -1184,33 +1184,6 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         self.makefiletable.editor('', 'ACLOCAL_AMFLAGS', m4base)
         self.makefiletable.parent(gentests, source_makefile_am, tests_makefile_am)
 
-        # Create library makefile.
-        basename = joinpath(sourcebase, source_makefile_am)
-        tmpfile = self.assistant.tmpfilename(basename)
-        emit, uses_subdirs = self.emitter.lib_Makefile_am(basename,
-                                                          self.moduletable['main'], self.moduletable, self.makefiletable,
-                                                          actioncmd, for_test)
-        if automake_subdir:
-            emit = sp.run([joinpath(DIRS['root'], 'build-aux/prefix-gnulib-mk'), '--from-gnulib-tool',
-                           f'--lib-name={libname}', f'--prefix={sourcebase}/'],
-                          input=emit, text=True, capture_output=True).stdout
-        with codecs.open(tmpfile, 'wb', 'UTF-8') as file:
-            file.write(emit)
-        filename, backup, flag = self.assistant.super_update(basename, tmpfile)
-        if flag == 1:
-            if not self.config['dryrun']:
-                print('Updating %s (backup in %s)' % (filename, backup))
-            else:  # if self.config['dryrun']
-                print('Update %s (backup in %s)' % (filename, backup))
-        elif flag == 2:
-            if not self.config['dryrun']:
-                print('Creating %s' % filename)
-            else:  # if self.config['dryrun']:
-                print('Create %s' % filename)
-            filetable['added'] += [filename]
-        if isfile(tmpfile):
-            os.remove(tmpfile)
-
         # Create po/ directory.
         filesystem = GLFileSystem(self.config)
         if pobase:
@@ -1362,6 +1335,35 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                 elif emit[-1:] == '\n':
                     emit = emit[:-1]
                 print(emit)
+        if isfile(tmpfile):
+            os.remove(tmpfile)
+
+        # Create library makefile.
+        # Do this after creating gnulib-comp.m4, because func_emit_lib_Makefile_am
+        # can run 'autoconf -t', which reads gnulib-comp.m4.
+        basename = joinpath(sourcebase, source_makefile_am)
+        tmpfile = self.assistant.tmpfilename(basename)
+        emit, uses_subdirs = self.emitter.lib_Makefile_am(basename,
+                                                          self.moduletable['main'], self.moduletable, self.makefiletable,
+                                                          actioncmd, for_test)
+        if automake_subdir:
+            emit = sp.run([joinpath(DIRS['root'], 'build-aux/prefix-gnulib-mk'), '--from-gnulib-tool',
+                           f'--lib-name={libname}', f'--prefix={sourcebase}/'],
+                          input=emit, text=True, capture_output=True).stdout
+        with codecs.open(tmpfile, 'wb', 'UTF-8') as file:
+            file.write(emit)
+        filename, backup, flag = self.assistant.super_update(basename, tmpfile)
+        if flag == 1:
+            if not self.config['dryrun']:
+                print('Updating %s (backup in %s)' % (filename, backup))
+            else:  # if self.config['dryrun']
+                print('Update %s (backup in %s)' % (filename, backup))
+        elif flag == 2:
+            if not self.config['dryrun']:
+                print('Creating %s' % filename)
+            else:  # if self.config['dryrun']:
+                print('Create %s' % filename)
+            filetable['added'] += [filename]
         if isfile(tmpfile):
             os.remove(tmpfile)
 
