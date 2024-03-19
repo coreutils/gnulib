@@ -469,7 +469,7 @@ class GLImport(object):
             actioncmd += ' \\\n#  --no-libtool'
         actioncmd += ' \\\n#  --macro-prefix=%s' % macro_prefix
         if podomain:
-            actioncmd = ' \\\n#  --po-domain=%s' % podomain
+            actioncmd += ' \\\n#  --po-domain=%s' % podomain
         if witness_c_macro:
             actioncmd += ' \\\n#  --witness-c-macro=%s' % witness_c_macro
         if vc_files == True:
