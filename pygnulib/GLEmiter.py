@@ -846,7 +846,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                 amsnippet2 = amsnippet2.replace('$(GNULIB_',
                                                 '$(' + module_indicator_prefix + '_GNULIB_')
                 # Skip the contents if it's entirely empty.
-                if not (amsnippet1 + amsnippet2).isspace():
+                if (amsnippet1 + amsnippet2).strip() != '':
                     allsnippets += '## begin gnulib module %s\n' % str(module)
                     if gnu_make:
                         allsnippets += 'ifeq (,$(OMIT_GNULIB_MODULE_%s))\n' % str(module)
@@ -1160,7 +1160,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                 amsnippet2 = amsnippet2.replace('$(GNULIB_',
                                                 '$(' + module_indicator_prefix + '_GNULIB_')
                 # Skip the contents if it's entirely empty.
-                if not (amsnippet1 + amsnippet2).isspace():
+                if (amsnippet1 + amsnippet2).strip() != '':
                     snippet = '## begin gnulib module %s\n' % str(module)
                     if gnu_make:
                         snippet += 'ifeq (,$(OMIT_GNULIB_MODULE_%s))\n' % str(module)
