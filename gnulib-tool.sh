@@ -228,8 +228,6 @@ General options:
                             directory.
       --local-dir=DIRECTORY  Specify a local override directory where to look
                             up files before looking in gnulib's directory.
-      --cache-modules       Enable module caching optimization.
-      --no-cache-modules    Disable module caching optimization.
       --verbose             Increase verbosity. May be repeated.
       --quiet               Decrease verbosity. May be repeated.
 
