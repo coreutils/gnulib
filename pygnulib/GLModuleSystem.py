@@ -387,7 +387,7 @@ class GLModule(object):
             inmodules_this_round = inmodules
             inmodules = set()  # Accumulator, queue for next round
             for module in inmodules_this_round:
-                if self.getLink() != '':
+                if module.getLink() != '':
                     # The module description has a 'Link:' field. Ignore the dependencies.
                     outmodules.add(module)
                 else:
@@ -401,9 +401,9 @@ class GLModule(object):
         link_sections = [ module.getLink().strip()
                           for module in outmodules ]
         # Sort the link directives.
-        directives = sorted([ line
+        directives = sorted({ line
                               for section in link_sections
-                              for line in section.splitlines() ])
+                              for line in section.splitlines() })
         return lines_to_multiline(directives)
 
     def getShellFunc(self):
