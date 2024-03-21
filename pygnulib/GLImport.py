@@ -781,6 +781,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
             self._update_ignorelist_(directory, '.cvsignore',
                                      dirs_added, dirs_removed)
         if (isdir(joinpath(destdir, '.git'))
+                or isfile(joinpath(destdir, '.gitignore'))
                 or isfile(joinpath(destdir, directory, '.gitignore'))):
             self._update_ignorelist_(directory, '.gitignore',
                                      dirs_added, dirs_removed)

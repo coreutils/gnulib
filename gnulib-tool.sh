@@ -6290,7 +6290,7 @@ s,//*$,/,'
         if test -d "$destdir/CVS" || test -d "$destdir/${dir}CVS" || test -f "$destdir/${dir}.cvsignore"; then
           func_update_ignorelist .cvsignore
         fi
-        if test -d "$destdir/.git" || test -f "$destdir/${dir}.gitignore"; then
+        if test -d "$destdir/.git" || test -f "$destdir/.gitignore" || test -f "$destdir/${dir}.gitignore"; then
           func_update_ignorelist .gitignore
         fi
       }
