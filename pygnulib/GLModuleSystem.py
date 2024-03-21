@@ -518,13 +518,17 @@ class GLModule(object):
             self.cache['applicability'] = result
         return self.cache['applicability']
 
+    def getFiles_Raw(self) -> str:
+        '''Return the unmodified list of files as a string.'''
+        return self.sections.get('Files', '')
+
     def getFiles(self):
         '''GLModule.getFiles() -> list
 
         Return list of files.
         GLConfig: ac_version.'''
         if 'files' not in self.cache:
-            snippet = self.sections.get('Files', '')
+            snippet = self.getFiles_Raw()
             result = [ line.strip()
                        for line in snippet.split('\n')
                        if line.strip() ]

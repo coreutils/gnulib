@@ -1148,8 +1148,11 @@ def main():
         for name in modules:
             module = modulesystem.find(name)
             if module:
-                files = module.getFiles()
-                print(lines_to_multiline(files), end='')
+                files = module.getFiles_Raw()
+                files += 'm4/00gnulib.m4\n'
+                files += 'm4/zzgnulib.m4\n'
+                files += 'm4/gnulib-common.m4\n'
+                print(files, end='')
 
     elif mode == 'extract-dependencies':
         if avoids:
