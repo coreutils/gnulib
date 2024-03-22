@@ -7071,11 +7071,12 @@ func_create_testdir ()
   fi
   (cd "$testdir"
    if test -f build-aux/test-driver; then
-     patch build-aux/test-driver < "$gnulib_dir"/build-aux/test-driver.diff \
+     echo "patching file build-aux/test-driver"
+     patch build-aux/test-driver < "$gnulib_dir"/build-aux/test-driver.diff >/dev/null 2>&1 \
        || { rm -f build-aux/test-driver.orig build-aux/test-driver.rej
-            patch build-aux/test-driver < "$gnulib_dir"/build-aux/test-driver-1.16.3.diff \
+            patch build-aux/test-driver < "$gnulib_dir"/build-aux/test-driver-1.16.3.diff >/dev/null 2>&1 \
             || { rm -f build-aux/test-driver.orig build-aux/test-driver.rej
-                 func_exit 1
+                 func_fatal_error "could not patch test-driver script"
                }
           }
    fi
@@ -7182,11 +7183,12 @@ func_create_megatestdir ()
    func_execute_command ${AUTOMAKE} --add-missing --copy || func_exit 1
    rm -rf autom4te.cache
    if test -f build-aux/test-driver; then
-     patch build-aux/test-driver < "$gnulib_dir"/build-aux/test-driver.diff \
+     echo "patching file build-aux/test-driver"
+     patch build-aux/test-driver < "$gnulib_dir"/build-aux/test-driver.diff >/dev/null 2>&1 \
        || { rm -f build-aux/test-driver.orig build-aux/test-driver.rej
-            patch build-aux/test-driver < "$gnulib_dir"/build-aux/test-driver-1.16.3.diff \
+            patch build-aux/test-driver < "$gnulib_dir"/build-aux/test-driver-1.16.3.diff >/dev/null 2>&1 \
             || { rm -f build-aux/test-driver.orig build-aux/test-driver.rej
-                 func_exit 1
+                 func_fatal_error "could not patch test-driver script"
                }
           }
    fi
