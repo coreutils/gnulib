@@ -1400,11 +1400,19 @@ func_determine_path_separator
         if test $# = 0; then
           func_fatal_error "missing argument for --avoid"
         fi
-        func_append avoidlist " $1"
+        if test -z "$avoidlist"; then
+          avoidlist="$1"
+        else
+          func_append avoidlist " $1"
+        fi
         shift ;;
       --avoid=* )
         arg=`echo "X$1" | sed -e 's/^X--avoid=//'`
-        func_append avoidlist " $arg"
+        if test -z "$avoidlist"; then
+          avoidlist="$arg"
+        else
+          func_append avoidlist " $arg"
+        fi
         shift ;;
       --conditional-dependencies | --conditional-dependencie | --conditional-dependenci | --conditional-dependenc | --conditional-dependen | --conditional-depende | --conditional-depend | --conditional-depen | --conditional-depe | --conditional-dep | --conditional-de | --conditional-d | --conditional- | --conditional | --conditiona | --condition | --conditio | --conditi | --condit | --condi | --cond | --con)
         cond_dependencies=true
