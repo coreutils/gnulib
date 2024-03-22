@@ -835,8 +835,8 @@ class GLTestDir(object):
                                                 for file in tests_built_sources
                                                 if file not in cleaned_files]
 
+        os.chdir(self.testdir)
         if distributed_built_sources or tests_distributed_built_sources:
-            os.chdir(self.testdir)
             sp.call('./configure')
             if distributed_built_sources:
                 os.chdir(sourcebase)
@@ -874,7 +874,6 @@ class GLTestDir(object):
                     'LIBTOOLIZE=%s' % UTILS['libtoolize'],
                     'distclean']
             sp.call(args)
-        os.chdir(self.testdir)
         if isfile(joinpath('build-aux', 'test-driver')):
             _patch_test_driver()
         os.chdir(DIRS['cwd'])
