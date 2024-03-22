@@ -72,10 +72,18 @@ def _patch_test_driver() -> None:
         try:
             result = sp.call(command, shell=True)
         except OSError:
+            if isfile(f'{test_driver}.orig'):
+                os.remove(f'{test_driver}.orig')
+            if isfile(f'{test_driver}.rej'):
+                os.remove(f'{test_driver}.rej')
             raise GLError(20, None)
         if result == 0:
             patched = True
             break
+        if isfile(f'{test_driver}.orig'):
+            os.remove(f'{test_driver}.orig')
+        if isfile(f'{test_driver}.rej'):
+            os.remove(f'{test_driver}.rej')
     if not patched:
         raise GLError(20, None)
 

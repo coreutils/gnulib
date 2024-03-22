@@ -7072,8 +7072,12 @@ func_create_testdir ()
   (cd "$testdir"
    if test -f build-aux/test-driver; then
      patch build-aux/test-driver < "$gnulib_dir"/build-aux/test-driver.diff \
-       || patch build-aux/test-driver < "$gnulib_dir"/build-aux/test-driver-1.16.3.diff \
-       || func_exit 1
+       || { rm -f build-aux/test-driver.orig build-aux/test-driver.rej
+            patch build-aux/test-driver < "$gnulib_dir"/build-aux/test-driver-1.16.3.diff \
+            || { rm -f build-aux/test-driver.orig build-aux/test-driver.rej
+                 func_exit 1
+               }
+          }
    fi
   ) || func_exit 1
 }
@@ -7179,8 +7183,12 @@ func_create_megatestdir ()
    rm -rf autom4te.cache
    if test -f build-aux/test-driver; then
      patch build-aux/test-driver < "$gnulib_dir"/build-aux/test-driver.diff \
-       || patch build-aux/test-driver < "$gnulib_dir"/build-aux/test-driver-1.16.3.diff \
-       || func_exit 1
+       || { rm -f build-aux/test-driver.orig build-aux/test-driver.rej
+            patch build-aux/test-driver < "$gnulib_dir"/build-aux/test-driver-1.16.3.diff \
+            || { rm -f build-aux/test-driver.orig build-aux/test-driver.rej
+                 func_exit 1
+               }
+          }
    fi
   ) || func_exit 1
 }
