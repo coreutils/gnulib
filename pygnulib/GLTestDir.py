@@ -580,6 +580,7 @@ class GLTestDir(object):
         emit += self.emitter.preEarlyMacros(False, '', modules)
         if any_uses_subdirs:
             emit += 'AM_PROG_CC_C_O\n'
+            emit += '\n'
         snippets = list()
         for module in final_modules:
             if single_configure:
@@ -1018,7 +1019,7 @@ class GLMegaTestDir(object):
 
         emit = '# Process this file with autoconf '
         emit += 'to produce a configure script.\n'
-        emit += 'AC_INIT([dummy], [0])\n\n'
+        emit += 'AC_INIT([dummy], [0])\n'
         if auxdir != '.':
             emit += 'AC_CONFIG_AUX_DIR([%s])\n' % auxdir
         emit += 'AM_INIT_AUTOMAKE\n\n'
