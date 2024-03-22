@@ -647,7 +647,7 @@ class GLTestDir(object):
             emit += '[$gl_module_indicator_condition])\n'
             snippets = self.emitter.autoconfSnippets(tests_modules, main_modules + tests_modules,
                                                      moduletable, 1, True, False, False, replace_auxdir)
-            emit += snippets.strip()
+            emit += snippets
             emit += '  m4_popdef([gl_MODULE_INDICATOR_CONDITION])\n'
             emit += self.emitter.initmacro_end('%stests' % macro_prefix, True)
         # _LIBDEPS and _LTLIBDEPS variables are not needed if this library is
