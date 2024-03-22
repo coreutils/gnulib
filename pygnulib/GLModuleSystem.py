@@ -649,52 +649,61 @@ class GLModule(object):
         result = ''
         if 'makefile-unconditional' not in self.cache:
             if self.getName().endswith('-tests'):
+                # *-tests module live in tests/, not lib/.
+                # Synthesize an EXTRA_DIST augmentation.
                 files = self.getFiles()
                 extra_files = filter_filelist(constants.NL, files,
-                                              'tests/', '', 'tests/', '').split(constants.NL)
-                if extra_files:
-                    result += 'EXTRA_DIST += %s' % ' '.join(extra_files)
+                                              'tests/', '', 'tests/', '')
+                if extra_files != '':
+                    result += 'EXTRA_DIST += %s' % ' '.join(extra_files.split(constants.NL))
                     result += constants.NL * 2
             else:  # if not tests module
-                # TODO: unconditional automake snippet for nontests modules
+                # Synthesize an EXTRA_DIST augmentation.
                 snippet = self.getAutomakeSnippet_Conditional()
                 snippet = constants.combine_lines(snippet)
-                pattern = re.compile('^lib_SOURCES[\t ]*\\+=[\t ]*(.*)$', re.M)
-                mentioned_files = pattern.findall(snippet)
-                if mentioned_files != list():
-                    mentioned_files = mentioned_files[-1].split(' ')
-                    mentioned_files = [ f.strip()
-                                        for f in mentioned_files ]
-                    mentioned_files = [ f
-                                        for f in mentioned_files
-                                        if f != '' ]
-                    mentioned_files = sorted(set(mentioned_files))
+                pattern = re.compile(r'^lib_SOURCES[\t ]*\+=[\t ]*(.*)$', re.MULTILINE)
+                mentioned_files = set(pattern.findall(snippet))
+                if mentioned_files:
+                    # Get all the file names from 'lib_SOURCES += ...'.
+                    mentioned_files = { filename
+                                        for line in mentioned_files
+                                        for filename in line.split() }
                 all_files = self.getFiles()
                 lib_files = filter_filelist(constants.NL, all_files,
-                                            'lib/', '', 'lib/', '').split(constants.NL)
-                extra_files = [ f
-                                for f in lib_files
-                                if f not in mentioned_files ]
-                extra_files = sorted(set(extra_files))
-                if extra_files != [''] and extra_files:
+                                            'lib/', '', 'lib/', '')
+                if lib_files != '':
+                    lib_files = set(lib_files.split(constants.NL))
+                else:
+                    lib_files = set()
+                # Remove mentioned_files from lib_files.
+                extra_files = sorted(lib_files.difference(mentioned_files))
+                if extra_files:
                     result += 'EXTRA_DIST += %s' % ' '.join(extra_files)
                     result += '\n\n'
-                # Synthesize also an EXTRA_lib_SOURCES augmentation
+                # Synthesize also an EXTRA_lib_SOURCES augmentation.
+                # This is necessary so that automake can generate the right list of
+                # dependency rules.
+                # A possible approach would be to use autom4te --trace of the redefined
+                # AC_LIBOBJ and AC_REPLACE_FUNCS macros when creating the Makefile.am
+                # (use autom4te --trace, not just grep, so that AC_LIBOBJ invocations
+                # inside autoconf's built-in macros are not missed).
+                # But it's simpler and more robust to do it here, based on the file list.
+                # If some .c file exists and is not used with AC_LIBOBJ - for example,
+                # a .c file is preprocessed into another .c file for BUILT_SOURCES -,
+                # automake will generate a useless dependency; this is harmless.
                 if str(self) != 'relocatable-prog-wrapper' and str(self) != 'pt_chown':
                     extra_files = filter_filelist(constants.NL, extra_files,
-                                                  '', '.c', '', '').split(constants.NL)
-                    extra_files = sorted(set(extra_files))
-                    if extra_files != ['']:
-                        result += 'EXTRA_lib_SOURCES += %s' % ' '.join(extra_files)
+                                                  '', '.c', '', '')
+                    if extra_files != '':
+                        result += 'EXTRA_lib_SOURCES += %s' % ' '.join(sorted(set(extra_files.split(constants.NL))))
                         result += '\n\n'
                 # Synthesize an EXTRA_DIST augmentation also for the files in build-aux
                 buildaux_files = filter_filelist(constants.NL, all_files,
-                                                 'build-aux/', '', 'build-aux/', '').split(constants.NL)
-                buildaux_files = sorted(set(buildaux_files))
-                if buildaux_files != ['']:
-                    buildaux_files = ''.join(buildaux_files)
-                    buildaux_files = joinpath('$(top_srcdir)', auxdir, buildaux_files)
-                    result += 'EXTRA_DIST += %s' % buildaux_files
+                                                 'build-aux/', '', 'build-aux/', '')
+                if buildaux_files != '':
+                    buildaux_files = [ joinpath('$(top_srcdir)', auxdir, filename)
+                                       for filename in sorted(set(buildaux_files.split(constants.NL))) ]
+                    result += 'EXTRA_DIST += %s' % ' '.join(buildaux_files)
                     result += '\n\n'
             result = constants.nlconvert(result)
             self.cache['makefile-unconditional'] = result

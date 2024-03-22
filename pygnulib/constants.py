@@ -447,7 +447,7 @@ def hardlink(src: str, dest: str) -> None:
 def filter_filelist(separator, filelist,
                     prefix, suffix, removed_prefix, removed_suffix,
                     added_prefix='', added_suffix=''):
-    '''filter_filelist(*args) -> list
+    '''filter_filelist(*args) -> str
 
     Filter the given list of files. Filtering: Only the elements starting with
     prefix and ending with suffix are considered. Processing: removed_prefix
@@ -461,7 +461,12 @@ def filter_filelist(separator, filelist,
             result = pattern.sub('%s\\1%s'
                                  % (added_prefix, added_suffix), filename)
             listing += [result]
-    result = separator.join(listing)
+    # Return an empty string if no files were matched, else combine them
+    # with the given separator.
+    if listing:
+        result = separator.join(listing)
+    else:
+        result = ''
     return result
 
 
