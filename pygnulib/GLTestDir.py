@@ -714,6 +714,8 @@ class GLTestDir(object):
         # autoheader
         args = [UTILS['autoheader']]
         constants.execute(args, verbose)
+        # Explicit 'touch config.h.in': see <https://savannah.gnu.org/support/index.php?109406>.
+        print('executing touch config.h.in')
         Path('config.h.in').touch()
         # automake
         args = [UTILS['automake'], '--add-missing', '--copy']
@@ -746,6 +748,8 @@ class GLTestDir(object):
             # autoheader
             args = [UTILS['autoheader']]
             constants.execute(args, verbose)
+            # Explicit 'touch config.h.in': see <https://savannah.gnu.org/support/index.php?109406>.
+            print('executing touch config.h.in')
             Path('config.h.in').touch()
             # automake
             args = [UTILS['automake'], '--add-missing', '--copy']
