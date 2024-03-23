@@ -769,8 +769,8 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         emit += '])\n'
         return emit
 
-    def _done_dir_(self, directory, dirs_added, dirs_removed):
-        '''GLImport._done_dir_(directory, dirs_added, dirs_removed)
+    def _done_dir_(self, directory, files_added, files_removed):
+        '''GLImport._done_dir_(directory, files_added, files_removed)
 
         This method is used to determine ignore argument for _update_ignorelist_
         method and then call it.'''
@@ -779,35 +779,36 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                 or isdir(joinpath(destdir, directory, 'CVS'))
                 or isfile(joinpath(destdir, directory, '.cvsignore'))):
             self._update_ignorelist_(directory, '.cvsignore',
-                                     dirs_added, dirs_removed)
+                                     files_added, files_removed)
         if (isdir(joinpath(destdir, '.git'))
                 or isfile(joinpath(destdir, '.gitignore'))
                 or isfile(joinpath(destdir, directory, '.gitignore'))):
             self._update_ignorelist_(directory, '.gitignore',
-                                     dirs_added, dirs_removed)
+                                     files_added, files_removed)
 
-    def _update_ignorelist_(self, directory, ignore, dirs_added, dirs_removed):
-        '''GLImport._update_ignorelist_(directory, ignore, dirs_added, dirs_removed)
+    def _update_ignorelist_(self, directory, ignore, files_added, files_removed):
+        '''GLImport._update_ignorelist_(directory, ignore, files_added, files_removed)
 
         Update .gitignore or .cvsignore files.'''
         destdir = self.config['destdir']
         if ignore == '.gitignore':
+            # In a .gitignore file, "foo" applies to the current directory and all
+            # subdirectories, whereas "/foo" applies to the current directory only.
             anchor = '/'
         else:
             anchor = ''
         srcpath = joinpath(directory, ignore)
         backupname = '%s~' % srcpath
         if isfile(joinpath(destdir, srcpath)):
-            if dirs_added or dirs_removed:
+            if files_added or files_removed:
                 with codecs.open(joinpath(destdir, srcpath), 'rb', 'UTF-8') as file:
                     srcdata = file.read()
-                dirs_ignore = { filename
-                                if not filename.startswith(anchor) else filename[len(anchor):]
+                dirs_ignore = { constants.substart(anchor, '', filename)
                                 for filename in srcdata.split('\n')
                                 if filename.strip() }
                 srcdata = lines_to_multiline(sorted(dirs_ignore))
                 dirs_ignore = [ '%s%s' % (anchor, d)
-                                for d in set(dirs_added).difference(dirs_ignore) ]
+                                for d in set(files_added).difference(dirs_ignore) ]
                 destdata = lines_to_multiline(sorted(dirs_ignore))
                 if srcdata != destdata:
                     if not self.config['dryrun']:
@@ -818,16 +819,17 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                     else:  # if self.config['dryrun']
                         print('Update %s (backup in %s)' % (srcpath, backupname))
         else:  # if not isfile(joinpath(destdir, srcpath))
-            if dirs_added:
+            if files_added:
                 if not self.config['dryrun']:
                     print('Creating %s' % srcpath)
-                    dirs_added = sorted(set(dirs_added))
-                    dirs_added = [ '%s%s' % (anchor, d)
-                                   for d in dirs_added ]
+                    files_added = sorted(set(files_added))
+                    files_added = [ '%s%s' % (anchor, f)
+                                    for f in files_added ]
                     if ignore == '.cvsignore':
-                        dirs_added = ['.deps', '.dirstamp'] + dirs_added
+                        # Automake generates Makefile rules that create .dirstamp files.
+                        files_added = ['.deps', '.dirstamp'] + files_added
                     with codecs.open(joinpath(destdir, srcpath), 'wb', 'UTF-8') as file:
-                        file.write(lines_to_multiline(dirs_added))
+                        file.write(lines_to_multiline(files_added))
                 else:  # if self.config['dryrun']
                     print('Create %s' % srcpath)
 
@@ -1398,22 +1400,22 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                 directory, basename = os.path.split(file)
                 ignorelist += [tuple([directory, '|R|', basename])]
             last_dir = ''
-            last_dirs_added = list()
-            last_dirs_removed = list()
+            last_dir_files_added = list()
+            last_dir_files_removed = list()
             for row in ignorelist:
                 next_dir = row[0]
                 operand = row[1]
                 filename = row[2]
                 if next_dir != last_dir:
-                    self._done_dir_(last_dir, last_dirs_added, last_dirs_removed)
+                    self._done_dir_(last_dir, last_dir_files_added, last_dir_files_removed)
                     last_dir = next_dir
-                    last_dirs_added = list()
-                    last_dirs_removed = list()
+                    last_dir_files_added = list()
+                    last_dir_files_removed = list()
                 if operand == '|A|':
-                    last_dirs_added += [filename]
+                    last_dir_files_added += [filename]
                 elif operand == '|R|':
-                    last_dirs_removed += [filename]
-            self._done_dir_(last_dir, last_dirs_added, last_dirs_removed)
+                    last_dir_files_removed += [filename]
+            self._done_dir_(last_dir, last_dir_files_added, last_dir_files_removed)
 
         # Finish the work.
         print('Finished.\n')
