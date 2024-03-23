@@ -65,15 +65,4 @@ Date:   Sat May 20 13:24:37 2017 +0200
 
 --------------------------------------------------------------------------------
 
-commit 9bdf6c8a0cdeb13c12e4b65dee9538c5468dbe1d
-Author: Bruno Haible <bruno@clisp.org>
-Date:   Sun Aug 19 14:06:50 2012 +0200
-
-    gnulib-tool: Remove old file names from .cvsignore, .gitignore.
-
-    * gnulib-tool (func_update_ignorelist): Don't use 'join -v 1' command
-    on the list of removed files.
-
---------------------------------------------------------------------------------
-
 ================================================================================

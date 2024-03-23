@@ -790,7 +790,6 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         '''GLImport._update_ignorelist_(directory, ignore, dirs_added, dirs_removed)
 
         Update .gitignore or .cvsignore files.'''
-        result = ''
         destdir = self.config['destdir']
         if ignore == '.gitignore':
             anchor = '/'
@@ -802,26 +801,18 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
             if dirs_added or dirs_removed:
                 with codecs.open(joinpath(destdir, srcpath), 'rb', 'UTF-8') as file:
                     srcdata = file.read()
-                dirs_ignore = sorted(set(srcdata.split('\n')))
-                dirs_ignore = [ line
-                                for line in dirs_ignore
-                                if line.strip() ]
-                srcdata = lines_to_multiline(sorted(set(dirs_ignore)))
-                dirs_ignore += [ d
-                                 for d in dirs_added
-                                 if d not in dirs_ignore ]
-                dirs_ignore = [ d
-                                for d in dirs_ignore
-                                if d in dirs_removed ]
+                dirs_ignore = { filename
+                                if not filename.startswith(anchor) else filename[len(anchor):]
+                                for filename in srcdata.split('\n')
+                                if filename.strip() }
+                srcdata = lines_to_multiline(sorted(dirs_ignore))
                 dirs_ignore = [ '%s%s' % (anchor, d)
-                                for d in dirs_ignore ]
-                dirs_ignore = sorted(set(dirs_ignore))
-                destdata = lines_to_multiline(sorted(set(dirs_ignore)))
+                                for d in set(dirs_added).difference(dirs_ignore) ]
+                destdata = lines_to_multiline(sorted(dirs_ignore))
                 if srcdata != destdata:
                     if not self.config['dryrun']:
                         print('Updating %s (backup in %s)' % (srcpath, backupname))
                         copyfile2(joinpath(destdir, srcpath), joinpath(destdir, backupname))
-                        result = ''
                         with codecs.open(joinpath(destdir, srcpath), 'ab', 'UTF-8') as file:
                             file.write(destdata)
                     else:  # if self.config['dryrun']
@@ -1396,6 +1387,8 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         if vc_files != False:
             # Update the .cvsignore and .gitignore files.
             ignorelist = list()
+            # Treat gnulib-comp.m4 like an added file, even if it already existed.
+            filetable['added'] += [joinpath(m4base, 'gnulib-comp.m4')]
             filetable['added'] = sorted(set(filetable['added']))
             filetable['removed'] = sorted(set(filetable['added']))
             for file in filetable['added']:
