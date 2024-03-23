@@ -63,6 +63,7 @@ normpath = os.path.normpath
 def _patch_test_driver() -> None:
     '''Patch the test-driver script in testdirs.'''
     test_driver = joinpath('build-aux', 'test-driver')
+    print('patching file %s' % test_driver)
     diffs = [ joinpath(DIRS['root'], name)
               for name in [joinpath('build-aux', 'test-driver.diff'),
                            joinpath('build-aux', 'test-driver-1.16.3.diff')]]
@@ -70,7 +71,7 @@ def _patch_test_driver() -> None:
     for diff in diffs:
         command = f'patch {test_driver} < {diff}'
         try:
-            result = sp.call(command, shell=True)
+            result = sp.call(command, shell=True, stdout=sp.DEVNULL, stderr=sp.DEVNULL)
         except OSError:
             if isfile(f'{test_driver}.orig'):
                 os.remove(f'{test_driver}.orig')
