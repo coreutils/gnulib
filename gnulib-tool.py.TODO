@@ -1,68 +1,20 @@
 
 ================================================================================
 
-Have gnulib-tool.py generate the same files and the same output as
-gnulib-tool. Test cases:
-
-1) In a checkout of https://gitlab.com/gnuwget/wget2.git :
-   $ git checkout e8ca510eda2cfc75f4c4a4e8e83e19b90af0309c
-   $ $GNULIB_SRCDIR/gnulib-tool.py --no-changelog --aux-dir=build-aux --doc-base=doc --lib=libgnu --m4-base=m4/ --source-base=lib/ --tests-base=lib/tests --local-dir=gl --makefile-name=gnulib.mk --libtool --import accept access arpa_inet atoll bind c-strcase c-strcasestr c-ctype calloc-posix canonicalize-lgpl clock-time close closedir cond connect crypto/md2 crypto/md5 crypto/sha1 crypto/sha256 crypto/sha512 dirname dup dup2 errno fclose fcntl fdopen fflush flock fnmatch-gnu fopen freopen fstat fsync ftruncate futimens getaddrinfo getpass getsockname gettext-h gettime gitlog-to-changelog glob iconv inet_pton inline inttypes ioctl isatty lib-symbol-visibility limits-h link listen lock maintainer-makefile malloc-posix memchr mkdir mkstemp msvc-nothrow nanosleep netdb netinet_in nl_langinfo open opendir pclose pipe-posix progname popen poll posix_spawn pwrite qsort_r random_r read readdir realloc-posix recv recvfrom regex rename safe-read safe-write select send sendto servent setlocale setsockopt socket sockets socklen spawn-pipe stdarg stdbool stddef stdint stat strcase strchrnul strdup-posix strerror strndup strpbrk strstr strtoll sys_file sys_socket sys_stat sys_time sys_types sys_uio thread time_r unistd unlink update-copyright warnings wcwidth write xgethostname
+Make the unit tests work with GNULIB_TOOL_IMPL=py.
 
 ================================================================================
 
-The following commits to gnulib-tool have not yet been reflected in
-{gnulib-tool.py,pygnulib/*.py}.
-
---------------------------------------------------------------------------------
-
-Implement the options:
-  --help (same output)
-
 Optimize:
   - os.chdir around subprocess creation -> cwd=... argument instead.
-  - Inline all 'sed' invocations.
+  - Inline all 'sed' invocations:
+    main.py:1387:                args = ['sed', '-e', sed_table, tempname]
+    GLFileSystem.py:382:                args = ['sed', '-e', transformer]
 
---------------------------------------------------------------------------------
+Various other refactorings, as deemed useful.
 
-commit 762bd0aa660b0c1c02597e0d2e5c5fbf9bab1b91
-Author: Paul Eggert <eggert@cs.ucla.edu>
-Date:   Fri Jun 3 17:52:19 2022 -0700
+================================================================================
 
-    regex-quote: \] -> ] in EREs and BREs
-
-    * build-aux/bootstrap:
-    * build-aux/bootstrap.conf (gettext_external):
-    * check-AC_LIBOBJ:
-    * lib/regex-quote.c (bre_special, ere_special):
-    * gnulib-tool (func_modules_transitive_closure)
-    (func_emit_autoconf_snippet, func_import, func_create_testdir):
-    * tests/test-regex-quote.c (test_bre, test_ere):
-    * top/maint.mk (longopt_re, gpg_key_ID):
-    Don’t use \] in BREs and EREs, as POSIX says the interpretation is
-    undefined.
-
---------------------------------------------------------------------------------
-
-commit 30459fe101541698ec704acb224946d73676750e
-Author: Bruno Haible <bruno@clisp.org>
-Date:   Thu Jun 8 15:09:31 2017 +0200
-
-    gnulib-tool: Fix bug in func_symlink_if_changed, from 2006-11-13.
-
-    * gnulib-tool (func_symlink_target): New function, extracted from
-    func_symlink.
-    (func_symlink, func_symlink_if_changed): Use it.
-
---------------------------------------------------------------------------------
-
-commit f5142421c62024efa22cd4429100c4d9c1cc2ac4
-Author: Bruno Haible <bruno@clisp.org>
-Date:   Sat May 20 13:24:37 2017 +0200
-
-    gnulib-tool: Don't create hard links between gnulib and its testdirs.
-
-    * gnulib-tool (func_create_testdir): Don't invoke 'ln'.
-
---------------------------------------------------------------------------------
+Bootstrap various other packages (from users.txt), with GNULIB_TOOL_IMPL=sh+py.
 
 ================================================================================
