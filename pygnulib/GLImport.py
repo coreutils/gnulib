@@ -601,7 +601,8 @@ class GLImport(object):
         emit += 'gl_PO_DOMAIN([%s])\n' % podomain
         emit += 'gl_WITNESS_C_MACRO([%s])\n' % witness_c_macro
         if vc_files != None:
-            emit += 'gl_VC_FILES([%s])\n' % vc_files
+            # Convert Python bools to shell (True -> true).
+            emit += 'gl_VC_FILES([%s])\n' % str(vc_files).lower()
         return constants.nlconvert(emit)
 
     def gnulib_comp(self, filetable, gentests):
