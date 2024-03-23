@@ -630,10 +630,10 @@ class GLTestDir(object):
         emit += self.emitter.shellvars_init(False, sourcebase)
         if single_configure:
             emit += self.emitter.autoconfSnippets(main_modules, main_modules, moduletable,
-                                                  0, False, False, False, replace_auxdir)
+                                                  0, True, False, False, replace_auxdir)
         else:  # if not single_configure
             emit += self.emitter.autoconfSnippets(modules, modules, moduletable,
-                                                  1, False, False, False, replace_auxdir)
+                                                  1, True, False, False, replace_auxdir)
         emit += self.emitter.initmacro_end(macro_prefix, False)
         if single_configure:
             emit += '  gltests_libdeps=\n'
@@ -647,7 +647,7 @@ class GLTestDir(object):
             emit += '  m4_pushdef([gl_MODULE_INDICATOR_CONDITION], '
             emit += '[$gl_module_indicator_condition])\n'
             snippets = self.emitter.autoconfSnippets(tests_modules, main_modules + tests_modules,
-                                                     moduletable, 1, True, False, False, replace_auxdir)
+                                                     moduletable, 0, True, False, False, replace_auxdir)
             emit += snippets
             emit += '  m4_popdef([gl_MODULE_INDICATOR_CONDITION])\n'
             emit += self.emitter.initmacro_end('%stests' % macro_prefix, True)
