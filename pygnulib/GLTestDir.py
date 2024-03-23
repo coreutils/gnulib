@@ -764,12 +764,6 @@ class GLTestDir(object):
         with codecs.open(path, 'rb', 'UTF-8') as file:
             snippet = file.read()
         snippet = constants.remove_backslash_newline(snippet)
-        cleaned_files = list()
-        tests_cleaned_files = list()
-        built_sources = list()
-        tests_built_sources = list()
-        distributed_built_sources = list()
-        tests_distributed_built_sources = list()
 
         # Extract the value of "CLEANFILES += ..." and "MOSTLYCLEANFILES += ...".
         regex_find = list()
@@ -780,6 +774,7 @@ class GLTestDir(object):
         regex_find = [ line.strip()
                        for line in regex_find
                        if line.strip() ]
+        cleaned_files = []
         for part in regex_find:
             cleaned_files += \
                 [ line.strip()
@@ -794,6 +789,7 @@ class GLTestDir(object):
         regex_find = [ line.strip()
                        for line in regex_find
                        if line.strip()]
+        built_sources = []
         for part in regex_find:
             built_sources += \
                 [ line.strip()
@@ -806,6 +802,7 @@ class GLTestDir(object):
                                       for file in built_sources
                                       if file not in cleaned_files ]
 
+        tests_distributed_built_sources = []
         if inctests:
             # Likewise for built files in the $testsbase directory.
             path = joinpath(self.testdir, testsbase, 'Makefile.am')
@@ -822,6 +819,7 @@ class GLTestDir(object):
             regex_find = [ line.strip()
                            for line in regex_find
                            if line.strip() ]
+            tests_cleaned_files = []
             for part in regex_find:
                 tests_cleaned_files += \
                     [ line.strip()
@@ -831,12 +829,12 @@ class GLTestDir(object):
             # Extract the value of "BUILT_SOURCES += ...". Remove variable references
             # such $(FOO_H) because they don't refer to distributed files.
             regex_find = list()
-            tests_built_sources = list()
             pattern = re.compile('^BUILT_SOURCES[\t ]*\\+=(.*)$', re.M)
             regex_find += pattern.findall(snippet)
             regex_find = [ line.strip()
                            for line in regex_find
                            if line.strip() ]
+            tests_built_sources = []
             for part in regex_find:
                 tests_built_sources += \
                     [ line.strip()
@@ -847,7 +845,7 @@ class GLTestDir(object):
                                     if not bool(re.compile('[$]\\([A-Za-z0-9_]*\\)$').findall(line)) ]
             tests_distributed_built_sources = [ file
                                                 for file in tests_built_sources
-                                                if file not in cleaned_files]
+                                                if file not in tests_cleaned_files]
 
         os.chdir(self.testdir)
         if distributed_built_sources or tests_distributed_built_sources:
