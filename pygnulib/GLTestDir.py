@@ -269,10 +269,12 @@ class GLTestDir(object):
                 bold_on = '\x1b[1m'
                 bold_off = '\x1b[0m'
             print('Module list with included dependencies (indented):')
+            specified_modules_set = { str(module)
+                                      for module in specified_modules }
             for module in final_modules:
-                if str(module) in self.config.getModules():
+                if str(module) in specified_modules_set:
                     print('  %s%s%s' % (bold_on, module, bold_off))
-                else:  # if str(module) not in self.config.getModules()
+                else:  # if str(module) not in specified_modules_set
                     print('    %s' % module)
 
         # Generate lists of the modules.
