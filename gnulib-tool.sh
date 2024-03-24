@@ -2579,6 +2579,7 @@ func_get_automake_snippet_conditional ()
 # Input:
 # - local_gnulib_path  from --local-dir
 # - modcache          true or false, from --cache-modules/--no-cache-modules
+# - auxdir            directory relative to destdir where to place build aux files
 func_get_automake_snippet_unconditional ()
 {
   case "$1" in
@@ -2664,6 +2665,7 @@ func_get_automake_snippet_unconditional ()
 # Input:
 # - local_gnulib_path  from --local-dir
 # - modcache          true or false, from --cache-modules/--no-cache-modules
+# - auxdir            directory relative to destdir where to place build aux files
 func_get_automake_snippet ()
 {
   func_get_automake_snippet_conditional "$1"
@@ -7573,6 +7575,7 @@ s/\([.*$]\)/[\1]/g'
     ;;
 
   extract-automake-snippet )
+    test -n "$auxdir" || auxdir="build-aux"
     for module
     do
       func_verify_module
