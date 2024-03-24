@@ -1393,13 +1393,15 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
             # Treat gnulib-comp.m4 like an added file, even if it already existed.
             filetable['added'] += [joinpath(m4base, 'gnulib-comp.m4')]
             filetable['added'] = sorted(set(filetable['added']))
-            filetable['removed'] = sorted(set(filetable['added']))
+            filetable['removed'] = sorted(set(filetable['removed']))
             for file in filetable['added']:
                 directory, basename = os.path.split(file)
                 ignorelist += [tuple([directory, '|A|', basename])]
             for file in filetable['removed']:
                 directory, basename = os.path.split(file)
                 ignorelist += [tuple([directory, '|R|', basename])]
+            # Sort ignorelist by directory.
+            ignorelist = sorted(ignorelist, key=lambda row: row[0])
             last_dir = ''
             last_dir_files_added = list()
             last_dir_files_removed = list()
