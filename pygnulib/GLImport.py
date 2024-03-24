@@ -939,14 +939,14 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                 raise GLError(11, listing)
 
         # Print notices from modules.
-        for module in main_modules:
-            notice = module.getNotice()
-            notice = notice.strip()
-            if notice:
-                print('Notice from module %s:' % str(module))
-                pattern = re.compile('^(.*?)$', re.S | re.M)
-                notice = pattern.sub('  \\1', notice)
-                print(notice)
+        if verbose >= -1:
+            for module in main_modules:
+                notice = module.getNotice().strip('\n')
+                if notice:
+                    print('Notice from module %s:' % str(module))
+                    pattern = re.compile('^(.*?)$', re.S | re.M)
+                    notice = pattern.sub('  \\1', notice)
+                    print(notice)
 
         # Determine script to apply to imported library files.
         sed_transform_lib_file = ''

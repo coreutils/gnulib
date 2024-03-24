@@ -312,21 +312,23 @@ class GLTestDir(object):
 
         # Show banner notice of every module.
         if single_configure:
-            for module in main_modules:
-                notice = module.getNotice()
-                if notice:
-                    print('Notice from module %s:' % str(module))
-                    pattern = re.compile('^(.*)$', re.M)
-                    notice = pattern.sub('  \\1', notice)
-                    print(notice)
+            if verbose >= -1:
+                for module in main_modules:
+                    notice = module.getNotice().strip('\n')
+                    if notice:
+                        print('Notice from module %s:' % str(module))
+                        pattern = re.compile('^(.*)$', re.M)
+                        notice = pattern.sub('  \\1', notice)
+                        print(notice)
         else:  # if not single_configure
-            for module in modules:
-                notice = module.getNotice()
-                if notice:
-                    print('Notice from module %s:' % str(module))
-                    pattern = re.compile('^(.*)$', re.M)
-                    notice = pattern.sub('  \\1', notice)
-                    print(notice)
+            if verbose >= -1:
+                for module in modules:
+                    notice = module.getNotice().strip('\n')
+                    if notice:
+                        print('Notice from module %s:' % str(module))
+                        pattern = re.compile('^(.*)$', re.M)
+                        notice = pattern.sub('  \\1', notice)
+                        print(notice)
 
         # Determine final file list.
         if single_configure:
