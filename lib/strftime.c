@@ -1336,7 +1336,7 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
 # endif
             if (len != 0)
               {
-# if defined __NetBSD__ || defined __sun /* NetBSD, Solaris */
+# if (__GLIBC__ == 2 && __GLIBC_MINOR__ < 31) || defined __NetBSD__ || defined __sun /* glibc < 2.31, NetBSD, Solaris */
                 if (format_char == L_('c'))
                   {
                     /* The output of the strftime %c directive consists of the
@@ -1374,7 +1374,7 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
                           }
                       }
                   }
-#  if REQUIRE_GNUISH_STRFTIME_AM_PM
+#  if (defined __NetBSD__ || defined __sun) && REQUIRE_GNUISH_STRFTIME_AM_PM
                 /* The output of the strftime %p and %r directives contains
                    an AM/PM indicator even for locales where it is not
                    suitable, such as French.  Remove this indicator.  */
