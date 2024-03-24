@@ -206,10 +206,19 @@ else:
 #===============================================================================
 # Define global functions
 #===============================================================================
+
+def force_output():
+    '''This function is to be invoked before invoking external programs.
+    It initiates bringing the the contents of process-internal output buffers
+    to their respective destinations.'''
+    sys.stdout.flush()
+    sys.stderr.flush()
+
+
 def execute(args, verbose):
     '''Execute the given shell command.'''
     if verbose >= 0:
-        print("executing %s" % ' '.join(args))
+        print("executing %s" % ' '.join(args), flush=True)
         try:  # Try to run
             retcode = sp.call(args)
         except Exception as error:
