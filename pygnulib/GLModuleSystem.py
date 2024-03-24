@@ -695,14 +695,14 @@ class GLModule(object):
                     extra_files = filter_filelist(constants.NL, extra_files,
                                                   '', '.c', '', '')
                     if extra_files != '':
-                        result += 'EXTRA_lib_SOURCES += %s' % ' '.join(sorted(set(extra_files.split(constants.NL))))
+                        result += 'EXTRA_lib_SOURCES += %s' % ' '.join(extra_files.split(constants.NL))
                         result += '\n\n'
                 # Synthesize an EXTRA_DIST augmentation also for the files in build-aux
                 buildaux_files = filter_filelist(constants.NL, all_files,
                                                  'build-aux/', '', 'build-aux/', '')
                 if buildaux_files != '':
                     buildaux_files = [ joinpath('$(top_srcdir)', auxdir, filename)
-                                       for filename in sorted(set(buildaux_files.split(constants.NL))) ]
+                                       for filename in buildaux_files.split(constants.NL) ]
                     result += 'EXTRA_DIST += %s' % ' '.join(buildaux_files)
                     result += '\n\n'
             result = constants.nlconvert(result)
