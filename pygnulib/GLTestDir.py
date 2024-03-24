@@ -317,8 +317,8 @@ class GLTestDir(object):
                     notice = module.getNotice().strip('\n')
                     if notice:
                         print('Notice from module %s:' % str(module))
-                        pattern = re.compile('^(.*)$', re.M)
-                        notice = pattern.sub('  \\1', notice)
+                        pattern = re.compile(r'^(.*)$', re.M)
+                        notice = pattern.sub(r'  \1', notice)
                         print(notice)
         else:  # if not single_configure
             if verbose >= -1:
@@ -326,8 +326,8 @@ class GLTestDir(object):
                     notice = module.getNotice().strip('\n')
                     if notice:
                         print('Notice from module %s:' % str(module))
-                        pattern = re.compile('^(.*)$', re.M)
-                        notice = pattern.sub('  \\1', notice)
+                        pattern = re.compile(r'^(.*)$', re.M)
+                        notice = pattern.sub(r'  \1', notice)
                         print(notice)
 
         # Determine final file list.
@@ -480,8 +480,8 @@ class GLTestDir(object):
                                   for line in snippet.split('\n')
                                   if line.strip() ]
                         snippet = lines_to_multiline(lines)
-                        pattern = re.compile('AC_REQUIRE\\(\\[([^()]*)\\]\\)', re.M)
-                        snippet = pattern.sub('\\1', snippet)
+                        pattern = re.compile(r'AC_REQUIRE\(\[([^()]*)\]\)', re.M)
+                        snippet = pattern.sub(r'\1', snippet)
                         snippet = snippet.strip()
                         snippets += [snippet]
                 snippets = [ snippet
@@ -598,8 +598,8 @@ class GLTestDir(object):
                           for line in snippet.split('\n')
                           if line.strip() ]
                 snippet = lines_to_multiline(lines)
-                pattern = re.compile('AC_REQUIRE\\(\\[([^()]*)\\]\\)', re.M)
-                snippet = pattern.sub('\\1', snippet)
+                pattern = re.compile(r'AC_REQUIRE\(\[([^()]*)\]\)', re.M)
+                snippet = pattern.sub(r'\1', snippet)
                 snippet = snippet.strip()
                 snippets += [snippet]
         snippets = [ snippet
@@ -772,9 +772,9 @@ class GLTestDir(object):
 
         # Extract the value of "CLEANFILES += ..." and "MOSTLYCLEANFILES += ...".
         regex_find = list()
-        pattern = re.compile('^CLEANFILES[\t ]*\\+=(.*)$', re.M)
+        pattern = re.compile(r'^CLEANFILES[\t ]*\+=(.*)$', re.M)
         regex_find += pattern.findall(snippet)
-        pattern = re.compile('^MOSTLYCLEANFILES[\t ]*\\+=(.*)$', re.M)
+        pattern = re.compile(r'^MOSTLYCLEANFILES[\t ]*\+=(.*)$', re.M)
         regex_find += pattern.findall(snippet)
         regex_find = [ line.strip()
                        for line in regex_find
@@ -789,7 +789,7 @@ class GLTestDir(object):
         # Extract the value of "BUILT_SOURCES += ...". Remove variable references
         # such $(FOO_H) because they don't refer to distributed files.
         regex_find = list()
-        pattern = re.compile('^BUILT_SOURCES[\t ]*\\+=(.*)$', re.M)
+        pattern = re.compile(r'^BUILT_SOURCES[\t ]*\+=(.*)$', re.M)
         regex_find += pattern.findall(snippet)
         regex_find = [ line.strip()
                        for line in regex_find
@@ -802,7 +802,7 @@ class GLTestDir(object):
                   if line.strip()]
         built_sources = [ line
                           for line in built_sources
-                          if not bool(re.compile('[$]\\([A-Za-z0-9_]*\\)$').findall(line)) ]
+                          if not bool(re.compile(r'[$]\([A-Za-z0-9_]*\)$').findall(line)) ]
         distributed_built_sources = [ file
                                       for file in built_sources
                                       if file not in cleaned_files ]
@@ -817,9 +817,9 @@ class GLTestDir(object):
 
             # Extract the value of "CLEANFILES += ..." and "MOSTLYCLEANFILES += ...".
             regex_find = list()
-            pattern = re.compile('^CLEANFILES[\t ]*\\+=(.*)$', re.M)
+            pattern = re.compile(r'^CLEANFILES[\t ]*\+=(.*)$', re.M)
             regex_find += pattern.findall(snippet)
-            pattern = re.compile('^MOSTLYCLEANFILES[\t ]*\\+=(.*)$', re.M)
+            pattern = re.compile(r'^MOSTLYCLEANFILES[\t ]*\+=(.*)$', re.M)
             regex_find += pattern.findall(snippet)
             regex_find = [ line.strip()
                            for line in regex_find
@@ -834,7 +834,7 @@ class GLTestDir(object):
             # Extract the value of "BUILT_SOURCES += ...". Remove variable references
             # such $(FOO_H) because they don't refer to distributed files.
             regex_find = list()
-            pattern = re.compile('^BUILT_SOURCES[\t ]*\\+=(.*)$', re.M)
+            pattern = re.compile(r'^BUILT_SOURCES[\t ]*\+=(.*)$', re.M)
             regex_find += pattern.findall(snippet)
             regex_find = [ line.strip()
                            for line in regex_find
@@ -847,7 +847,7 @@ class GLTestDir(object):
                       if line.strip() ]
             tests_built_sources = [ line
                                     for line in tests_built_sources
-                                    if not bool(re.compile('[$]\\([A-Za-z0-9_]*\\)$').findall(line)) ]
+                                    if not bool(re.compile(r'[$]\([A-Za-z0-9_]*\)$').findall(line)) ]
             tests_distributed_built_sources = [ file
                                                 for file in tests_built_sources
                                                 if file not in tests_cleaned_files]

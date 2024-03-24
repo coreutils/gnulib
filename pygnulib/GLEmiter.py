@@ -239,8 +239,8 @@ class GLEmiter(object):
                       for line in snippet.split('\n')
                       if line.strip() ]
             snippet = lines_to_multiline(lines)
-            pattern = re.compile('^(.*)$', re.M)
-            snippet = pattern.sub('%s\\1' % indentation, snippet)
+            pattern = re.compile(r'^(.*)$', re.M)
+            snippet = pattern.sub(r'%s\1' % indentation, snippet)
             if disable_libtool:
                 snippet = snippet.replace('$gl_cond_libtool', 'false')
                 snippet = snippet.replace('gl_libdeps', 'gltests_libdeps')
@@ -251,7 +251,7 @@ class GLEmiter(object):
             else:
                 # Don't indent AM_GNU_GETTEXT_VERSION line, as that confuses
                 # autopoint through at least GNU gettext version 0.18.2.
-                snippet = re.compile('^ *AM_GNU_GETTEXT_VERSION', re.M).sub('AM_GNU_GETTEXT_VERSION', snippet)
+                snippet = re.compile(r'^ *AM_GNU_GETTEXT_VERSION', re.M).sub(r'AM_GNU_GETTEXT_VERSION', snippet)
             emit += snippet
             if str(module) == 'alloca' and libtool and not disable_libtool:
                 emit += 'changequote(,)dnl\n'
@@ -259,8 +259,8 @@ class GLEmiter(object):
                 emit += 'changequote([, ])dnl\n'
                 emit += 'AC_SUBST([LTALLOCA])'
             if replace_auxdir:
-                regex = 'AC_CONFIG_FILES\\(\\[(.*)\\:build-aux/(.*)\\]\\)'
-                repl = 'AC_CONFIG_FILES([\\1:%s/\\2])' % auxdir
+                regex = r'AC_CONFIG_FILES\(\[(.*)\:build-aux/(.*)\]\)'
+                repl = r'AC_CONFIG_FILES([\1:%s/\2])' % auxdir
                 pattern = re.compile(regex, re.M)
                 emit = pattern.sub(repl, emit)
         lines = [ line
@@ -817,13 +817,13 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                 amsnippet1 = amsnippet1.replace('lib_LIBRARIES', 'lib%_LIBRARIES')
                 amsnippet1 = amsnippet1.replace('lib_LTLIBRARIES', 'lib%_LTLIBRARIES')
                 if eliminate_LDFLAGS:
-                    pattern = re.compile('^(lib_LDFLAGS[\t ]*\\+=.*$\n)', re.M)
-                    amsnippet1 = pattern.sub('', amsnippet1)
+                    pattern = re.compile(r'^(lib_LDFLAGS[\t ]*\+=.*$\n)', re.M)
+                    amsnippet1 = pattern.sub(r'', amsnippet1)
                 # Replace NMD, so as to remove redundant "$(MKDIR_P) '.'" invocations.
                 # The logic is similar to how we define gl_source_base_prefix.
                 amsnippet1 = _eliminate_NMD(amsnippet1, automake_subdir)
-                pattern = re.compile('lib_([A-Z][A-Z]*)', re.M)
-                amsnippet1 = pattern.sub('%s_%s_\\1' % (libname, libext),
+                pattern = re.compile(r'lib_([A-Z][A-Z]*)', re.M)
+                amsnippet1 = pattern.sub(r'%s_%s_\1' % (libname, libext),
                                          amsnippet1)
                 amsnippet1 = amsnippet1.replace('$(GNULIB_', '$(' + module_indicator_prefix + '_GNULIB_')
                 amsnippet1 = amsnippet1.replace('lib%_LIBRARIES', 'lib_LIBRARIES')
@@ -835,13 +835,13 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                 if str(module) == 'alloca':
                     amsnippet1 += '%s_%s_LIBADD += @%sALLOCA@\n' % (libname, libext, perhapsLT)
                     amsnippet1 += '%s_%s_DEPENDENCIES += @%sALLOCA@\n' % (libname, libext, perhapsLT)
-                amsnippet1 = constants.combine_lines_matching(re.compile('%s_%s_SOURCES' % (libname, libext)),
+                amsnippet1 = constants.combine_lines_matching(re.compile(r'%s_%s_SOURCES' % (libname, libext)),
                                                               amsnippet1)
 
                 # Get unconditional snippet, edit it and save to amsnippet2.
                 amsnippet2 = module.getAutomakeSnippet_Unconditional()
-                pattern = re.compile('lib_([A-Z][A-Z]*)', re.M)
-                amsnippet2 = pattern.sub('%s_%s_\\1' % (libname, libext),
+                pattern = re.compile(r'lib_([A-Z][A-Z]*)', re.M)
+                amsnippet2 = pattern.sub(r'%s_%s_\1' % (libname, libext),
                                          amsnippet2)
                 amsnippet2 = amsnippet2.replace('$(GNULIB_',
                                                 '$(' + module_indicator_prefix + '_GNULIB_')
@@ -900,7 +900,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
             #  * https://debbugs.gnu.org/10997
             #  * https://debbugs.gnu.org/11030
             # So we need this workaround.
-            pattern = re.compile('^pkgdata_DATA *\\+=', re.M)
+            pattern = re.compile(r'^pkgdata_DATA *\+=', re.M)
             if pattern.findall(allsnippets):
                 emit += 'pkgdata_DATA =\n'
             emit += 'EXTRA_DIST =\n'
@@ -966,7 +966,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         # it should not be installed.
         # First test if allsnippets already specify an installation location.
         lib_gets_installed = False
-        regex = '^[a-zA-Z0-9_]*_%sLIBRARIES *\\+{0,1}= *%s\\.%s' % (perhapsLT, libname, libext)
+        regex = r'^[a-zA-Z0-9_]*_%sLIBRARIES *\+{0,1}= *%s\.%s' % (perhapsLT, libname, libext)
         pattern = re.compile(regex, re.M)
         if pattern.findall(allsnippets):
             lib_gets_installed = True
@@ -1004,8 +1004,8 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                       for link in links
                       for line in link.split('\n')
                       if line != '' ]
-            pattern = re.compile(' when linking with libtool.*')
-            lines = [ pattern.sub('', line)
+            pattern = re.compile(r' when linking with libtool.*')
+            lines = [ pattern.sub(r'', line)
                       for line in lines ]
             lines = sorted(set(lines))
             for line in lines:
@@ -1131,13 +1131,13 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                 amsnippet1 = amsnippet1.replace('lib_LIBRARIES', 'lib%_LIBRARIES')
                 amsnippet1 = amsnippet1.replace('lib_LTLIBRARIES', 'lib%_LTLIBRARIES')
                 if eliminate_LDFLAGS:
-                    pattern = re.compile('^(lib_LDFLAGS[\t ]*\\+=.*$\n)', re.M)
-                    amsnippet1 = pattern.sub('', amsnippet1)
+                    pattern = re.compile(r'^(lib_LDFLAGS[\t ]*\+=.*$\n)', re.M)
+                    amsnippet1 = pattern.sub(r'', amsnippet1)
                 # Replace NMD, so as to remove redundant "$(MKDIR_P) '.'" invocations.
                 # The logic is similar to how we define gl_source_base_prefix.
                 amsnippet1 = _eliminate_NMD(amsnippet1, False)
-                pattern = re.compile('lib_([A-Z][A-Z]*)', re.M)
-                amsnippet1 = pattern.sub('libtests_a_\\1', amsnippet1)
+                pattern = re.compile(r'lib_([A-Z][A-Z]*)', re.M)
+                amsnippet1 = pattern.sub(r'libtests_a_\1', amsnippet1)
                 amsnippet1 = amsnippet1.replace('$(GNULIB_', '$(' + module_indicator_prefix + '_GNULIB_')
                 amsnippet1 = amsnippet1.replace('lib%_LIBRARIES', 'lib_LIBRARIES')
                 amsnippet1 = amsnippet1.replace('lib%_LTLIBRARIES', 'lib_LTLIBRARIES')
@@ -1150,13 +1150,13 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                     amsnippet1 += 'libtests_a_LIBADD += @ALLOCA@\n'
                     amsnippet1 += 'libtests_a_DEPENDENCIES += @ALLOCA@\n'
 
-                amsnippet1 = constants.combine_lines_matching(re.compile('libtests_a_SOURCES'),
+                amsnippet1 = constants.combine_lines_matching(re.compile(r'libtests_a_SOURCES'),
                                                               amsnippet1)
 
                 # Get unconditional snippet, edit it and save to amsnippet2.
                 amsnippet2 = module.getAutomakeSnippet_Unconditional()
-                pattern = re.compile('lib_([A-Z][A-Z]*)', re.M)
-                amsnippet2 = pattern.sub('libtests_a_\\1', amsnippet2)
+                pattern = re.compile(r'lib_([A-Z][A-Z]*)', re.M)
+                amsnippet2 = pattern.sub(r'libtests_a_\1', amsnippet2)
                 amsnippet2 = amsnippet2.replace('$(GNULIB_',
                                                 '$(' + module_indicator_prefix + '_GNULIB_')
                 # Skip the contents if it's entirely empty.
@@ -1235,7 +1235,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         #  * https://debbugs.gnu.org/10997
         #  * https://debbugs.gnu.org/11030
         # So we need this workaround.
-        pattern = re.compile('^pkgdata_DATA *\\+=', re.M)
+        pattern = re.compile(r'^pkgdata_DATA *\+=', re.M)
         if pattern.findall(main_snippets) or pattern.findall(longrun_snippets):
             emit += 'pkgdata_DATA =\n'
 

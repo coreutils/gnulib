@@ -124,7 +124,7 @@ class GLImport(object):
                 data = file.read()
 
             # Create regex object and keys.
-            pattern = re.compile('^(gl_.*?)\\((.*?)\\)$', re.S | re.M)
+            pattern = re.compile(r'^(gl_.*?)\((.*?)\)$', re.S | re.M)
             keys = \
                 [
                     'gl_LOCAL_DIR', 'gl_MODULES', 'gl_AVOID', 'gl_SOURCE_BASE',
@@ -215,7 +215,7 @@ class GLImport(object):
             if isfile(path):
                 with codecs.open(path, 'rb', 'UTF-8') as file:
                     data = file.read()
-                regex = 'AC_DEFUN\\(\\[%s_FILE_LIST\\], \\[(.*?)\\]\\)' % self.cache['macro_prefix']
+                regex = r'AC_DEFUN\(\[%s_FILE_LIST\], \[(.*?)\]\)' % self.cache['macro_prefix']
                 pattern = re.compile(regex, re.S | re.M)
                 self.cache.setFiles(pattern.findall(data)[-1].strip().split())
 
@@ -944,8 +944,8 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                 notice = module.getNotice().strip('\n')
                 if notice:
                     print('Notice from module %s:' % str(module))
-                    pattern = re.compile('^(.*?)$', re.S | re.M)
-                    notice = pattern.sub('  \\1', notice)
+                    pattern = re.compile(r'^(.*?)$', re.S | re.M)
+                    notice = pattern.sub(r'  \1', notice)
                     print(notice)
 
         # Determine script to apply to imported library files.
@@ -1500,9 +1500,9 @@ in <library>_a_LDFLAGS or <library>_la_LDFLAGS when linking a library.''')
         with codecs.open(configure_ac, 'rb', 'UTF-8') as file:
             data = file.read()
         match_result1 = \
-            bool(re.compile('^ *AC_PROG_CC_STDC', re.M).findall(data))
+            bool(re.compile(r'^ *AC_PROG_CC_STDC', re.M).findall(data))
         match_result2 = \
-            bool(re.compile('^ *AC_PROG_CC_C99', re.M).findall(data))
+            bool(re.compile(r'^ *AC_PROG_CC_C99', re.M).findall(data))
         if match_result1:
             print('  - replace AC_PROG_CC_STDC with AC_PROG_CC in %s,' % (configure_ac))
             position_early_after = 'AC_PROG_CC_STDC'

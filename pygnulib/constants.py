@@ -465,9 +465,9 @@ def filter_filelist(separator, filelist,
     listing = list()
     for filename in filelist:
         if filename.startswith(prefix) and filename.endswith(suffix):
-            pattern = re.compile('^%s(.*)%s$'
+            pattern = re.compile(r'^%s(.*)%s$'
                                  % (removed_prefix, removed_suffix))
-            result = pattern.sub('%s\\1%s'
+            result = pattern.sub(r'%s\1%s'
                                  % (added_prefix, added_suffix), filename)
             listing += [result]
     # Return an empty string if no files were matched, else combine them

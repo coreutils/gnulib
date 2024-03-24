@@ -28,6 +28,12 @@
 #   Do use line breaks to separate the parts of [ ... for ... ] iterations.
 # - String literals: Use 'single-quotes'.
 #   Rationale: <https://lists.gnu.org/archive/html/bug-gnulib/2024-02/msg00226.html>
+# - Use raw string syntax for regular expression pattern strings and repl
+#   strings:
+#     re.compile(r'...').sub(r'...', ...)
+#     re.sub(r'...', r'...', ...)
+#   Rationale: This avoids the need to double backslashes, making the pattern
+#   and repl strings easier to understand.
 # - Comparison operators:
 #   Use == and != for variables which can contain only strings, numbers, lists,
 #   and None.
@@ -837,7 +843,7 @@ def main():
                 # Convert the file name to a POSIX basic regex.
                 # Needs to handle . [ \ * ^ $.
                 filename_regex = filename.replace('\\', '\\\\').replace('[', '\\[').replace('^', '\\^')
-                filename_regex = re.compile('([.*$])').sub('[\\1]', filename_regex)
+                filename_regex = re.compile(r'([.*$])').sub(r'[\1]', filename_regex)
                 filename_line_regex = '^' + filename_regex + '$'
                 # Read module candidates from gnulib root directory.
                 command = "find modules -type f -print | xargs -n 100 grep -l %s /dev/null | sed -e 's,^modules/,,'" % shlex.quote(filename_line_regex)
@@ -857,7 +863,7 @@ def main():
                             for line in result.split('\n')
                             if line.strip() ]
                 # Remove modules/ prefix from each file name.
-                pattern = re.compile('^modules/')
+                pattern = re.compile(r'^modules/')
                 listing = [ pattern.sub('', line)
                             for line in listing ]
                 # Filter out undesired file names.

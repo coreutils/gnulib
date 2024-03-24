@@ -81,7 +81,7 @@ class GLInfo(object):
         The special __copyright__ variable is used (type is str).'''
         copyright = __copyright__
         # Per the GNU Coding Standards, show only the last year.
-        copyright = re.compile('^[0-9]*-').sub('', copyright)
+        copyright = re.compile(r'^[0-9]*-').sub(r'', copyright)
         result = 'Copyright (C) %s' % copyright
         return result
 
@@ -105,7 +105,7 @@ class GLInfo(object):
                     args = ['git', 'log', '-n', '1', '--format=medium', '--date=iso', 'ChangeLog']
                     result = sp.check_output(args, cwd=DIRS['root']).decode("UTF-8")
                     # Get date as "2008-03-21 07:16:51 -0600" from string
-                    pattern = re.compile('^Date:[\t ]*(.*?)$', re.M)
+                    pattern = re.compile(r'^Date:[\t ]*(.*?)$', re.M)
                     result = pattern.findall(result)
                     if (len(result) > 0):
                         result = result[0]
@@ -122,7 +122,7 @@ class GLInfo(object):
         with codecs.open(os.path.join(DIRS['root'], 'ChangeLog'), 'rb', 'UTF-8') as file:
             line = file.readline()
             first_changelog_line = line.rstrip()
-        result = re.compile(' .*').sub('', first_changelog_line)
+        result = re.compile(r' .*').sub(r'', first_changelog_line)
         return result
 
     def copyright_range(self):

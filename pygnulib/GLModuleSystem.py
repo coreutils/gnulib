@@ -161,8 +161,8 @@ class GLModuleSystem(object):
             listing = [ subend('.diff', '', line)
                         for line in listing ]
         # Remove modules/ prefix from each file name.
-        pattern = re.compile('^modules/')
-        listing = [ pattern.sub('', line)
+        pattern = re.compile(r'^modules/')
+        listing = [ pattern.sub(r'', line)
                     for line in listing ]
         # Filter out undesired file names.
         listing = [ line
@@ -181,9 +181,9 @@ class GLModule(object):
     files, etc.'''
 
     section_label_pattern = \
-        re.compile('^(Description|Comment|Status|Notice|Applicability|'
-                   + 'Files|Depends-on|configure\\.ac-early|configure\\.ac|'
-                   + 'Makefile\\.am|Include|Link|License|Maintainer):$',
+        re.compile(r'^(Description|Comment|Status|Notice|Applicability|'
+                   + r'Files|Depends-on|configure\.ac-early|configure\.ac|'
+                   + r'Makefile\.am|Include|Link|License|Maintainer):$',
                    re.M)
 
     # List of characters allowed in shell identifiers.
@@ -553,7 +553,7 @@ class GLModule(object):
             # Then the explicit dependencies listed in the module description.
             snippet = self.sections.get('Depends-on', '')
             # Remove comment lines.
-            snippet = re.compile('^#.*$[\n]', re.M).sub('', snippet)
+            snippet = re.compile(r'^#.*$[\n]', re.M).sub(r'', snippet)
             result += snippet
             self.cache['dependencies'] = result
         return self.cache['dependencies']
@@ -568,8 +568,8 @@ class GLModule(object):
             lines = [ line.strip()
                       for line in snippet.split('\n')
                       if line.strip() ]
-            pattern = re.compile(' *\\[.*$')
-            lines = [ pattern.sub('', line)
+            pattern = re.compile(r' *\[.*$')
+            lines = [ pattern.sub(r'', line)
                       for line in lines ]
             result = [ self.modulesystem.find(module)
                        for module in lines
@@ -589,7 +589,7 @@ class GLModule(object):
             lines = [ line.strip()
                       for line in snippet.split('\n')
                       if line.strip() ]
-            pattern = re.compile(' *\\[')
+            pattern = re.compile(r' *\[')
             result = []
             for line in lines:
                 match = pattern.search(line)
@@ -715,8 +715,8 @@ class GLModule(object):
         Return include directive.'''
         if 'include' not in self.cache:
             snippet = self.sections.get('Include', '')
-            pattern = re.compile('^(["<])', re.M)
-            result = pattern.sub('#include \\1', snippet)
+            pattern = re.compile(r'^(["<])', re.M)
+            result = pattern.sub(r'#include \1', snippet)
             self.cache['include'] = result
         return self.cache['include']
 
@@ -1112,7 +1112,7 @@ class GLModuleTable(object):
                     # Extract the value of unconditional "lib_SOURCES += ..." augmentations.
                     snippet = constants.remove_backslash_newline(snippet)
                     snippet = self.remove_if_blocks(snippet)
-                    pattern = re.compile('^lib_SOURCES[\t ]*\\+=([^#]*).*$', re.M)
+                    pattern = re.compile(r'^lib_SOURCES[\t ]*\+=([^#]*).*$', re.M)
                     for matching_rhs in pattern.findall(snippet):
                         files = matching_rhs.split(' ')
                         for file in files:
