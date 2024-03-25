@@ -713,6 +713,7 @@ class GLTestDir(object):
         args = [UTILS['aclocal'], '-I', m4base]
         constants.execute(args, verbose)
         if not isdir('build-aux'):
+            print('executing mkdir build-aux')
             os.mkdir('build-aux')
         # autoconf
         args = [UTILS['autoconf']]
@@ -747,6 +748,7 @@ class GLTestDir(object):
             args = [UTILS['aclocal'], '-I', joinpath('..', m4base)]
             constants.execute(args, verbose)
             if not isdir(joinpath('../build-aux')):
+                print('executing mkdir ../build-aux')
                 os.mkdir('../build-aux')
             # autoconf
             args = [UTILS['autoconf']]
@@ -1048,6 +1050,7 @@ class GLMegaTestDir(object):
         constants.execute(args, verbose)
         try:  # Try to make a directory
             if not isdir('build-aux'):
+                print('executing mkdir build-aux')
                 os.mkdir('build-aux')
         except Exception as error:
             pass
