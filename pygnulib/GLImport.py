@@ -1434,34 +1434,36 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         # Finish the work.
         print('Finished.\n')
         print('You may need to add #include directives for the following .h files.')
-        modules = sorted(set([ module
-                               for module in self.moduletable['base']
-                               if module in self.moduletable['main'] ]))
+        # Intersect 'base' modules and 'main' modules
+        # (since 'base' modules is not necessarily of subset of 'main' modules
+        # - some may have been skipped through --avoid, and since the elements of
+        # 'main' modules but not in 'base' modules can go away without explicit
+        # notice - through changes in the module dependencies).
+        modules = sorted(set(self.moduletable['base']).intersection(self.moduletable['main']))
         # First the #include <...> directives without #ifs, sorted for convenience,
         # then the #include "..." directives without #ifs, sorted for convenience,
         # then the #include directives that are surrounded by #ifs. Not sorted.
-        includes_angles = list()
-        includes_quotes = list()
-        includes_if = list()
+        include_angles = []
+        include_quotes = []
+        include_if = []
         for module in modules:
             include = module.getInclude()
-            for include in include.split('\n'):
-                if '%s#if' % constants.NL in '%s%s' % (constants.NL, include):
-                    includes_if += [include]
-                # if '%s#if' % constants.NL in '%s%s' % (constants.NL, include)
-                else:
-                    if 'include "' in include:
-                        includes_quotes += [include]
-                    else:  # if 'include "' not in include
-                        includes_angles += [include]
-        includes_angles = sorted(set(includes_angles))
-        includes_quotes = sorted(set(includes_quotes))
-        includes = includes_angles + includes_quotes + includes_if
-        includes = [ include
-                     for include in includes
-                     if include.split() ]
-        for include in includes:
-            print('  %s' % include)
+            if '\n#if' in include:
+                include_if += [ f'  {line}'
+                                for line in include.split('\n')
+                                if line.strip() ]
+            else:
+                include_angles += [ f'  {line}'
+                                    for line in include.split('\n')
+                                    if 'include "' not in line and line.strip() ]
+                include_quotes += [ f'  {line}'
+                                    for line in include.split('\n')
+                                    if 'include "' in line and line.strip() ]
+
+        includes = lines_to_multiline(sorted(set(include_angles)))
+        includes += lines_to_multiline(sorted(set(include_quotes)))
+        includes += lines_to_multiline(include_if)
+        print(includes, end='')
 
         # Get link directives.
         links = [ module.getLink()
