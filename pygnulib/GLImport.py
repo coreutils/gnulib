@@ -1448,7 +1448,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         include_if = []
         for module in modules:
             include = module.getInclude()
-            if '\n#if' in include:
+            if '\n#if' in '\n'+include:
                 include_if += [ f'  {line}'
                                 for line in include.split('\n')
                                 if line.strip() ]
