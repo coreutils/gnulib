@@ -805,25 +805,27 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                 with codecs.open(joinpath(destdir, srcpath), 'rb', 'UTF-8') as file:
                     original_lines = file.readlines()
                 # Clean the newlines but not trailing whitespace.
-                original_lines = [ line if not line.endswith('\n') else line[:-1]
+                original_lines = [ line.rstrip('\n')
                                    for line in original_lines ]
-                dirs_ignore = { constants.substart(anchor, '', filename)
-                                for filename in original_lines
-                                if filename.strip() }
-                dirs_added = set(files_added).difference(dirs_ignore)
-                dirs_removed = set(files_removed)
-                if dirs_added or dirs_removed:
+                already_listed_filenames = { constants.substart(anchor, '', filename)
+                                             for filename in original_lines
+                                             if filename.strip() }
+                filenames_to_add = set(files_added).difference(already_listed_filenames)
+                filenames_to_remove = set(files_removed)
+                if filenames_to_add or filenames_to_remove:
                     if not self.config['dryrun']:
                         print('Updating %s (backup in %s)' % (srcpath, backupname))
                         copyfile2(joinpath(destdir, srcpath), joinpath(destdir, backupname))
                         new_lines = original_lines + [ f'{anchor}{filename}'
-                                                       for filename in sorted(dirs_added) ]
+                                                       for filename in sorted(filenames_to_add) ]
                         if anchor != '':
-                            dirs_removed = dirs_removed.union({ f'{anchor}{filename}'
-                                                                for filename in dirs_removed })
+                            lines_to_remove = filenames_to_remove.union({ f'{anchor}{filename}'
+                                                                          for filename in filenames_to_remove })
+                        else:
+                            lines_to_remove = filenames_to_remove
                         new_lines = [ line
                                       for line in new_lines
-                                      if line not in dirs_removed ]
+                                      if line not in lines_to_remove ]
                         with codecs.open(joinpath(destdir, srcpath), 'wb', 'UTF-8') as file:
                             file.write(lines_to_multiline(new_lines))
                     else:  # if self.config['dryrun']
