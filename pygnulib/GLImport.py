@@ -1081,8 +1081,8 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         if gentests:
             dirs += [testsbase]
         dirs += [auxdir]
-        dirs += sorted(list(dict.fromkeys([ os.path.dirname(pair[0])
-                                            for pair in filetable['new'] ])))
+        dirs += sorted([ os.path.dirname(pair[0])
+                         for pair in filetable['new'] ])
         dirs = [ os.path.join(destdir, d)
                  for d in dirs ]
         for directory in dirs:
