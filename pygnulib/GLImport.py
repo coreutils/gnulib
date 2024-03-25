@@ -1071,7 +1071,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         gentests = len(testsfiles) > 0
 
         # Create all necessary directories.
-        dirs = list()
+        dirs = [sourcebase, m4base]
         if pobase:
             dirs += [pobase]
         if [ file
@@ -1080,11 +1080,11 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
             dirs += [docbase]
         if gentests:
             dirs += [testsbase]
-        dirs += [sourcebase, m4base, auxdir]
-        dirs += [ os.path.dirname(pair[0])
-                  for pair in filetable['new'] ]
-        dirs = sorted(set([ joinpath(destdir, d)
-                            for d in dirs ]))
+        dirs += [auxdir]
+        dirs += sorted(list(dict.fromkeys([ os.path.dirname(pair[0])
+                                            for pair in filetable['new'] ])))
+        dirs = [ os.path.join(destdir, d)
+                 for d in dirs ]
         for directory in dirs:
             if not isdir(directory):
                 print('Creating directory %s' % directory)
