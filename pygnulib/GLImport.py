@@ -803,20 +803,29 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         if isfile(joinpath(destdir, srcpath)):
             if files_added or files_removed:
                 with codecs.open(joinpath(destdir, srcpath), 'rb', 'UTF-8') as file:
-                    srcdata = file.read()
+                    original_lines = file.readlines()
+                # Clean the newlines but not trailing whitespace.
+                original_lines = [ line if not line.endswith('\n') else line[:-1]
+                                   for line in original_lines ]
                 dirs_ignore = { constants.substart(anchor, '', filename)
-                                for filename in srcdata.split('\n')
+                                for filename in original_lines
                                 if filename.strip() }
-                srcdata = lines_to_multiline(sorted(dirs_ignore))
-                dirs_ignore = [ '%s%s' % (anchor, d)
-                                for d in set(files_added).difference(dirs_ignore) ]
-                destdata = lines_to_multiline(sorted(dirs_ignore))
-                if srcdata != destdata:
+                dirs_added = set(files_added).difference(dirs_ignore)
+                dirs_removed = set(files_removed)
+                if dirs_added or dirs_removed:
                     if not self.config['dryrun']:
                         print('Updating %s (backup in %s)' % (srcpath, backupname))
                         copyfile2(joinpath(destdir, srcpath), joinpath(destdir, backupname))
-                        with codecs.open(joinpath(destdir, srcpath), 'ab', 'UTF-8') as file:
-                            file.write(destdata)
+                        new_lines = original_lines + [ f'{anchor}{filename}'
+                                                       for filename in sorted(dirs_added) ]
+                        if anchor != '':
+                            dirs_removed = dirs_removed.union({ f'{anchor}{filename}'
+                                                                for filename in dirs_removed })
+                        new_lines = [ line
+                                      for line in new_lines
+                                      if line not in dirs_removed ]
+                        with codecs.open(joinpath(destdir, srcpath), 'wb', 'UTF-8') as file:
+                            file.write(lines_to_multiline(new_lines))
                     else:  # if self.config['dryrun']
                         print('Update %s (backup in %s)' % (srcpath, backupname))
         else:  # if not isfile(joinpath(destdir, srcpath))
