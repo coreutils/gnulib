@@ -34,6 +34,9 @@
 #if defined __sgi
 # include <sys/cachectl.h>
 #endif
+#if defined __sun
+# include <stddef.h>
+#endif
 
 /* Clears the instruction cache for addresses
    start <= address < end.
