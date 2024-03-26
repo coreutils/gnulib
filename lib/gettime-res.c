@@ -38,16 +38,28 @@ gcd (long int a, long int b)
 long int
 gettime_res (void)
 {
-  struct timespec res;
-#if defined CLOCK_REALTIME && HAVE_CLOCK_GETRES
-  clock_getres (CLOCK_REALTIME, &res);
-#elif defined HAVE_TIMESPEC_GETRES
-  timespec_getres (&res, TIME_UTC);
+#if defined __sun && defined __sparc
+  /* On Solaris 11.4/SPARC (with a SPARC-M8 CPU)
+     clock_getres (CLOCK_REALTIME, ...) returns a resolution of 1000000 ns,
+     and clock_gettime (CLOCK_REALTIME) returns a multiple of 5 ns with a
+     probability of ca. 1 - 1/300000.  Thus the heuristic below with the
+     32 samples guesses a resolution of 5 ns with a probability of ca.
+     1 - 1/10000.  But occasionally clock_gettime (CLOCK_REALTIME) returns
+     only a multiple of 1 ns.
+     Simple guesswork is not enough to cope with this irregular behaviour.
+     Therefore, here is an override.  */
+  return 1;
 #else
+  struct timespec res;
+# if defined CLOCK_REALTIME && HAVE_CLOCK_GETRES
+  clock_getres (CLOCK_REALTIME, &res);
+# elif defined HAVE_TIMESPEC_GETRES
+  timespec_getres (&res, TIME_UTC);
+# else
   /* Guess high and let the later code deduce better.  */
   res.tv_sec = 1;
   res.tv_nsec = 0;
-#endif
+# endif
 
   /* On all Gnulib platforms the following calculations do not overflow.  */
 
@@ -83,6 +95,7 @@ gettime_res (void)
     }
 
   return r;
+#endif
 }
 
 /*
