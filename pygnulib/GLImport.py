@@ -89,13 +89,7 @@ class GLImport(object):
 
         # Get cached auxdir and libtool from configure.ac/in.
         self.cache.setAuxDir('.')
-        path = joinpath(self.config['destdir'], 'configure.ac')
-        if not isfile(path):
-            path = joinpath(self.config['destdir'], 'configure.in')
-            if not isfile(path):
-                raise GLError(3, path)
-        self.config.setAutoconfFile(path)
-        with codecs.open(path, 'rb', 'UTF-8') as file:
+        with codecs.open(self.config.getAutoconfFile(), 'rb', 'UTF-8') as file:
             data = file.read()
         pattern = re.compile(r'^AC_CONFIG_AUX_DIR\((.*)\)$', re.M)
         match = pattern.findall(data)

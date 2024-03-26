@@ -886,8 +886,19 @@ def main():
             destdir = '.'
         config.setDestDir(destdir)
 
+        # Prefer configure.ac but also look for configure.in.
+        if isfile(joinpath(destdir, 'configure.ac')):
+            configure_ac = joinpath(destdir, 'configure.ac')
+        elif isfile(joinpath(destdir, 'configure.in')):
+            configure_ac = joinpath(destdir, 'configure.in')
+        else:
+            raise classes.GLError(3, joinpath(destdir, 'configure.ac'))
+
+        # Save the Autoconf file path for the rest of the import.
+        config.setAutoconfFile(configure_ac)
+
         # Analyze configure.ac.
-        with open(joinpath(destdir, 'configure.ac'), 'r', encoding='utf-8') as file:
+        with open(configure_ac, 'r', encoding='utf-8') as file:
             configure_ac_data = file.read()
 
         guessed_m4dirs = []
