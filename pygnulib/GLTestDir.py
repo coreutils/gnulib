@@ -13,6 +13,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+from __future__ import annotations
+
 #===============================================================================
 # Define global imports
 #===============================================================================
@@ -96,10 +98,8 @@ class GLTestDir(object):
     '''GLTestDir class is used to create a scratch package with the given
     list of the modules.'''
 
-    def __init__(self, config, testdir):
-        '''GLTestDir.__init__(config, testdir) -> GLTestDir
-
-        Create new GLTestDir instance.'''
+    def __init__(self, config: GLConfig, testdir: str) -> None:
+        '''Create new GLTestDir instance.'''
         if type(config) is not GLConfig:
             raise TypeError('config must be a GLConfig, not %s'
                             % type(config).__name__)
@@ -130,11 +130,9 @@ class GLTestDir(object):
         self.config.resetWitnessCMacro()
         self.config.resetVCFiles()
 
-    def rewrite_files(self, files):
-        '''GLTestDir.rewrite_files(files)
-
-        Replace auxdir, docbase, sourcebase, m4base and testsbase from default
-        to their version from config.'''
+    def rewrite_files(self, files: list[str]) -> list[str]:
+        '''Replace auxdir, docbase, sourcebase, m4base and testsbase from
+        default to their version from config.'''
         if type(files) is not list:
             raise TypeError('files argument must have list type, not %s'
                             % type(files).__name__)
@@ -169,10 +167,8 @@ class GLTestDir(object):
         result = sorted(set(result))
         return list(result)
 
-    def execute(self):
-        '''GLTestDir.execute()
-
-        Create a scratch package with the given modules.'''
+    def execute(self) -> None:
+        '''Create a scratch package with the given modules.'''
         auxdir = self.config['auxdir']
         sourcebase = self.config['sourcebase']
         m4base = self.config['m4base']
@@ -907,10 +903,8 @@ class GLMegaTestDir(object):
     '''GLMegaTestDir class is used to create a mega scratch package with the
     given modules one by one and all together.'''
 
-    def __init__(self, config, megatestdir):
-        '''GLMegaTestDir.__init__(config, megatestdir) -> GLMegaTestDir
-
-        Create new GLTestDir instance.'''
+    def __init__(self, config: GLConfig, megatestdir: str) -> None:
+        '''Create new GLTestDir instance.'''
         if type(config) is not GLConfig:
             raise TypeError('config must be a GLConfig, not %s'
                             % type(config).__name__)
@@ -930,11 +924,9 @@ class GLMegaTestDir(object):
         self.assistant = GLFileAssistant(self.config)
         self.makefiletable = GLMakefileTable(self.config)
 
-    def execute(self):
-        '''GLMegaTestDir.execute()
-
-        Create a mega scratch package with the given modules one by one and all
-        together.'''
+    def execute(self) -> None:
+        '''Create a mega scratch package with the given modules one by one
+        and all together.'''
         auxdir = self.config['auxdir']
         verbose = self.config['verbosity']
 

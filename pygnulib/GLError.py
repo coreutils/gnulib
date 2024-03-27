@@ -13,6 +13,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+from __future__ import annotations
+
 #===============================================================================
 # Define global imports
 #===============================================================================
@@ -39,7 +41,7 @@ __copyright__ = constants.__copyright__
 class GLError(Exception):
     '''Exception handler for pygnulib classes.'''
 
-    def __init__(self, errno, errinfo=None):
+    def __init__(self, errno: int, errinfo: str | float | None = None) -> None:
         '''Each error has following parameters:
         errno: code of error; used to catch error type
           1: file does not exist in GLFileSystem: <file>
@@ -68,7 +70,7 @@ class GLError(Exception):
         self.errinfo = errinfo
         self.args = (self.errno, self.errinfo)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         errno = self.errno
         errinfo = self.errinfo
         if self.message == None:

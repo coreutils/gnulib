@@ -13,6 +13,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+from __future__ import annotations
+
 #===============================================================================
 # Define global imports
 #===============================================================================
@@ -68,7 +70,7 @@ class GLFileSystem(object):
     Its main method lookup(file) is used to find file in these directories or
     combine it using Linux 'patch' utility.'''
 
-    def __init__(self, config):
+    def __init__(self, config: GLConfig) -> None:
         '''Create new GLFileSystem instance. The only argument is localpath,
         which can be an empty list.'''
         if type(config) is not GLConfig:
@@ -76,15 +78,13 @@ class GLFileSystem(object):
                             % type(config).__name__)
         self.config = config
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         '''x.__repr__ <==> repr(x)'''
         result = '<pygnulib.GLFileSystem %s>' % hex(id(self))
         return result
 
-    def lookup(self, name):
-        '''GLFileSystem.lookup(name) -> tuple
-
-        Lookup a file in gnulib and localpath directories or combine it using
+    def lookup(self, name: str) -> tuple[str, bool]:
+        '''Lookup a file in gnulib and localpath directories or combine it using
         'patch' utility. If file was found, method returns string, else it raises
         GLError telling that file was not found. Function also returns flag which
         indicates whether file is a temporary file.
@@ -138,7 +138,7 @@ class GLFileSystem(object):
             raise GLError(1, name)
         return result
 
-    def shouldLink(self, original, lookedup):
+    def shouldLink(self, original: str, lookedup: str) -> bool:
         '''GLFileSystem.shouldLink(original, lookedup)
 
         Determines whether the original file should be copied, symlinked,
@@ -163,7 +163,7 @@ class GLFileSystem(object):
 class GLFileAssistant(object):
     '''GLFileAssistant is used to help with file processing.'''
 
-    def __init__(self, config, transformers=dict()):
+    def __init__(self, config: GLConfig, transformers: dict = dict()):
         '''Create GLFileAssistant instance.'''
         if type(config) is not GLConfig:
             raise TypeError('config must be a GLConfig, not %s'
@@ -186,15 +186,13 @@ class GLFileAssistant(object):
         self.transformers = transformers
         self.filesystem = GLFileSystem(self.config)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         '''x.__repr__() <==> repr(x)'''
         result = '<pygnulib.GLFileAssistant %s>' % hex(id(self))
         return result
 
-    def tmpfilename(self, path):
-        '''GLFileAssistant.tmpfilename() -> str
-
-        Return the name of a temporary file (file is relative to destdir).'''
+    def tmpfilename(self, path: str) -> str:
+        '''Return the name of a temporary file (file is relative to destdir).'''
         if type(path) is not str:
             raise TypeError('path must be a string, not %s'
                             % (type(path).__name__))
@@ -215,46 +213,36 @@ class GLFileAssistant(object):
                 os.makedirs(dirname)
         return result
 
-    def setOriginal(self, original):
-        '''GLFileAssistant.setOriginal(original)
-
-        Set the name of the original file which will be used.'''
+    def setOriginal(self, original: str) -> None:
+        '''Set the name of the original file which will be used.'''
         if type(original) is not str:
             raise TypeError('original must be a string, not %s'
                             % (type(original).__name__))
         self.original = original
 
-    def setRewritten(self, rewritten):
-        '''GLFileAssistant.setRewritten(rewritten)
-
-        Set the name of the rewritten file which will be used.'''
+    def setRewritten(self, rewritten: str) -> None:
+        '''Set the name of the rewritten file which will be used.'''
         if type(rewritten) is not str:
             raise TypeError('rewritten must be a string, not %s'
                             % type(rewritten).__name__)
         self.rewritten = rewritten
 
-    def addFile(self, file):
-        '''GLFileAssistant.addFile(file)
-
-        Add file to the list of added files.'''
+    def addFile(self, file: str) -> None:
+        '''Add file to the list of added files.'''
         if file not in self.added:
             self.added += [file]
 
-    def removeFile(self, file):
-        '''GLFileAssistant.removeFile(file)
-
-        Remove file from the list of added files.'''
+    def removeFile(self, file: str) -> None:
+        '''Remove file from the list of added files.'''
         if file in self.added:
             self.added.pop(file)
 
-    def getFiles(self):
+    def getFiles(self) -> list[str]:
         '''Return list of the added files.'''
         return list(self.added)
 
-    def add(self, lookedup, tmpflag, tmpfile):
-        '''GLFileAssistant.add(lookedup, tmpflag, tmpfile)
-
-        This method copies a file from gnulib into the destination directory.
+    def add(self, lookedup: str, tmpflag: bool, tmpfile: str) -> None:
+        '''This method copies a file from gnulib into the destination directory.
         The destination is known to exist. If tmpflag is True, then lookedup file
         is a temporary one.'''
         original = self.original
@@ -281,10 +269,8 @@ class GLFileAssistant(object):
         else:  # if self.config['dryrun']
             print('Copy file %s' % rewritten)
 
-    def update(self, lookedup, tmpflag, tmpfile, already_present):
-        '''GLFileAssistant.update(lookedup, tmpflag, tmpfile, already_present)
-
-        This method copies a file from gnulib into the destination directory.
+    def update(self, lookedup: str, tmpflag: bool, tmpfile: str, already_present: bool) -> None:
+        '''This method copies a file from gnulib into the destination directory.
         The destination is known to exist. If tmpflag is True, then lookedup file
         is a temporary one.'''
         original = self.original
@@ -339,10 +325,8 @@ class GLFileAssistant(object):
                 else:  # if not already_present
                     print('Replace file %s (backup in %s)' % (rewritten, backupname))
 
-    def add_or_update(self, already_present):
-        '''GLFileAssistant.add_or_update(already_present)
-
-        This method handles a file that ought to be present afterwards.'''
+    def add_or_update(self, already_present: bool) -> None:
+        '''This method handles a file that ought to be present afterwards.'''
         original = self.original
         rewritten = self.rewritten
         if original == None:
@@ -401,10 +385,8 @@ class GLFileAssistant(object):
         if isfile(tmpfile):
             os.remove(tmpfile)
 
-    def super_update(self, basename, tmpfile):
-        '''GLFileAssistant.super_update(basename, tmpfile) -> tuple
-
-        Move tmpfile to destdir/basename path, making a backup of it.
+    def super_update(self, basename: str, tmpfile: str) -> tuple[str, str, int]:
+        '''Move tmpfile to destdir/basename path, making a backup of it.
         Returns tuple, which contains basename, backupname and status.
           0: tmpfile is the same as destfile;
           1: tmpfile was used to update destfile;

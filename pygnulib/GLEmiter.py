@@ -13,9 +13,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Allow the use of union type specifiers, using the syntax Type1 | Type2,
-# in Python ≥ 3.7.  Cf. <https://docs.python.org/3/library/__future__.html>
-# and <https://stackoverflow.com/questions/73879925/>.
 from __future__ import annotations
 
 #===============================================================================
@@ -114,25 +111,21 @@ def _eliminate_NMD(snippet: str, automake_subdir: bool) -> str:
 class GLEmiter(object):
     '''This class is used to emit the contents of necessary files.'''
 
-    def __init__(self, config):
-        '''GLEmiter.__init__(config) -> GLEmiter
-
-        Create GLEmiter instance.'''
+    def __init__(self, config: GLConfig) -> None:
+        '''Create GLEmiter instance.'''
         self.info = GLInfo()
         if type(config) is not GLConfig:
             raise TypeError('config must be a GLConfig, not %s'
                             % type(config).__name__)
         self.config = config
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         '''x.__repr__() <==> repr(x)'''
         result = '<pygnulib.GLEmiter %s>' % hex(id(self))
         return result
 
-    def copyright_notice(self):
-        '''GLEmiter.copyright_notice() -> str
-
-        Emit a header for a generated file.'''
+    def copyright_notice(self) -> str:
+        '''Emit a header for a generated file.'''
         emit = '# %s' % self.info.copyright_range()
         emit += """
 #
@@ -188,12 +181,9 @@ class GLEmiter(object):
             emit += '  gl_source_base_prefix=\n'
         return emit
 
-    def autoconfSnippet(self, module, toplevel,
-                        disable_libtool, disable_gettext, replace_auxdir, indentation):
-        '''GLEmiter.autoconfSnippet(module, toplevel,
-          disable_libtool, disable_gettext, replace_auxdir, indentation) -> str
-
-        Emit the autoconf snippet of a module.
+    def autoconfSnippet(self, module: GLModule, toplevel: bool, disable_libtool: bool,
+                        disable_gettext: bool, replace_auxdir: bool, indentation: str) -> str:
+        '''Emit the autoconf snippet of a module.
         GLConfig: include_guard_prefix.
 
         module is a GLModule instance, which is processed.
@@ -269,12 +259,10 @@ class GLEmiter(object):
         emit = lines_to_multiline(lines)
         return emit
 
-    def autoconfSnippets(self, modules, referenceable_modules, moduletable,
-                         verifier, toplevel, disable_libtool, disable_gettext, replace_auxdir):
-        '''GLEmiter.autoconfSnippets(modules,
-          verifier, toplevel, disable_libtool, disable_gettext, replace_auxdir) -> str
-
-        Collect and emit the autoconf snippets of a set of modules.
+    def autoconfSnippets(self, modules: list[GLModule], referenceable_modules: list[GLModule],
+                         moduletable: GLModuleTable, verifier: int, toplevel: bool,
+                         disable_libtool: bool, disable_gettext: bool, replace_auxdir: bool) -> str:
+        '''Collect and emit the autoconf snippets of a set of modules.
         GLConfig: conddeps.
 
         basemodules argument represents list of modules; every module in this list
@@ -452,10 +440,8 @@ class GLEmiter(object):
         emit = lines_to_multiline(lines)
         return emit
 
-    def preEarlyMacros(self, require, indentation, modules):
-        '''GLEmiter.preEarlyMacros(require, indentation, modules) -> str
-
-        Collect and emit the pre-early section.
+    def preEarlyMacros(self, require: bool, indentation: str, modules: list[GLModule]) -> str:
+        '''Collect and emit the pre-early section.
 
         require parameter can be True (AC_REQUIRE) or False (direct call).
         indentation parameter is a string.
@@ -476,10 +462,8 @@ class GLEmiter(object):
         emit += '\n'
         return emit
 
-    def po_Makevars(self):
-        '''GLEmiter.po_Makevars() -> str
-
-        Emit the contents of po/ makefile parameterization.
+    def po_Makevars(self) -> str:
+        '''Emit the contents of po/ makefile parameterization.
         GLConfig: pobase, podomain.'''
         pobase = self.config['pobase']
         podomain = self.config['podomain']
@@ -533,10 +517,8 @@ EXTRA_LOCALE_CATEGORIES =
 USE_MSGCTXT = no\n"""
         return emit
 
-    def po_POTFILES_in(self, files):
-        '''GLEmiter.po_POTFILES_in(files) -> str
-
-        Emit the file list to be passed to xgettext.
+    def po_POTFILES_in(self, files: list[str]) -> str:
+        '''Emit the file list to be passed to xgettext.
         GLConfig: sourcebase.'''
         sourcebase = self.config['sourcebase'] + os.path.sep
         emit = ''
@@ -548,10 +530,8 @@ USE_MSGCTXT = no\n"""
                 emit += '%s\n' % constants.substart('lib/', sourcebase, file)
         return emit
 
-    def initmacro_start(self, macro_prefix_arg, gentests):
-        '''GLEmiter.initmacro_start(macro_prefix_arg, gentests) -> str
-
-        Emit the first few statements of the gl_INIT macro.
+    def initmacro_start(self, macro_prefix_arg: str, gentests: bool) -> str:
+        '''Emit the first few statements of the gl_INIT macro.
 
         macro_prefix_arg is the prefix of gl_EARLY and gl_INIT macros to use.
         gentests is True if a tests Makefile.am is being generated, False
@@ -598,10 +578,8 @@ USE_MSGCTXT = no\n"""
             emit += '  AC_REQUIRE([gl_CXX_ALLOW_WARNINGS])\n'
         return emit
 
-    def initmacro_end(self, macro_prefix_arg, gentests):
-        '''GLEmiter.initmacro_end(macro_prefix_arg) -> str
-
-        Emit the last few statements of the gl_INIT macro.
+    def initmacro_end(self, macro_prefix_arg: str, gentests: bool) -> str:
+        '''Emit the last few statements of the gl_INIT macro.
 
         macro_prefix_arg is the prefix of gl_EARLY, gl_INIT macros to use.
         gentests is a bool that is True if a tests Makefile.am is being
@@ -679,10 +657,8 @@ changequote([, ])dnl
 '''
         return emit
 
-    def initmacro_done(self, macro_prefix_arg, sourcebase_arg):
-        '''GLEmiter.initmacro_done(macro_prefix_arg, sourcebase_arg) -> str
-
-        Emit a few statements after the gl_INIT macro.
+    def initmacro_done(self, macro_prefix_arg: str, sourcebase_arg: str) -> str:
+        '''Emit a few statements after the gl_INIT macro.
         GLConfig: sourcebase.'''
         if type(macro_prefix_arg) is not str:
             raise TypeError('macro_prefix_arg must be a string, not %s'
@@ -723,12 +699,9 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         emit = emit.replace('%V2%', sourcebase_arg)
         return emit
 
-    def lib_Makefile_am(self, destfile, modules,
-                        moduletable, makefiletable, actioncmd, for_test):
-        '''GLEmiter.lib_Makefile_am(destfile, modules, moduletable, makefiletable,
-             actioncmd, for_test) -> tuple of str and bool
-
-        Emit the contents of the library Makefile. Returns str and a bool
+    def lib_Makefile_am(self, destfile: str, modules: list[GLModule], moduletable: GLModuleTable,
+                        makefiletable: GLMakefileTable, actioncmd: str, for_test: bool) -> tuple[str, bool]:
+        '''Emit the contents of the library Makefile. Returns str and a bool
         variable which shows if subdirectories are used.
         GLConfig: localpath, sourcebase, libname, pobase, auxdir, makefile_name, libtool,
         macro_prefix, podomain, conddeps, witness_c_macro.
@@ -1035,12 +1008,9 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         result = tuple([emit, uses_subdirs])
         return result
 
-    def tests_Makefile_am(self, destfile, modules, moduletable,
-                          makefiletable, witness_macro, for_test):
-        '''GLEmiter.tests_Makefile_am(destfile, modules, moduletable,
-             makefiletable, witness_c_macro, for_test) -> tuple of string and bool
-
-        Emit the contents of the tests Makefile. Returns str and a bool variable
+    def tests_Makefile_am(self, destfile: str, modules: list[GLModule], moduletable: GLModuleTable,
+                          makefiletable: GLMakefileTable, witness_macro: str, for_test: bool) -> tuple[str, bool]:
+        '''Emit the contents of the tests Makefile. Returns str and a bool variable
         which shows if subdirectories are used.
         GLConfig: localpath, modules, libname, auxdir, makefile_name, libtool,
         sourcebase, m4base, testsbase, macro_prefix, witness_c_macro,

@@ -16,6 +16,8 @@
 '''An easy access to pygnulib constants.'''
 
 from __future__ import unicode_literals
+from __future__ import annotations
+
 #===============================================================================
 # Define global imports
 #===============================================================================
@@ -29,7 +31,6 @@ import tempfile
 import codecs
 import subprocess as sp
 import __main__ as interpreter
-
 
 #===============================================================================
 # Define module information
@@ -79,7 +80,7 @@ APP['name'] = os.path.join(APP['root'], 'gnulib-tool.py')
 
 # Set DIRS directory
 DIRS['cwd'] = os.getcwd()
-def init_DIRS(gnulib_dir):
+def init_DIRS(gnulib_dir: str) -> None:
     DIRS['root'] = gnulib_dir
     DIRS['build-aux'] = os.path.join(gnulib_dir, 'build-aux')
     DIRS['config'] = os.path.join(gnulib_dir, 'config')
@@ -207,7 +208,7 @@ else:
 # Define global functions
 #===============================================================================
 
-def force_output():
+def force_output() -> None:
     '''This function is to be invoked before invoking external programs.
     It initiates bringing the the contents of process-internal output buffers
     to their respective destinations.'''
@@ -215,7 +216,7 @@ def force_output():
     sys.stderr.flush()
 
 
-def execute(args, verbose):
+def execute(args: list[str], verbose: int) -> None:
     '''Execute the given shell command.'''
     if verbose >= 0:
         print("executing %s" % ' '.join(args), flush=True)
@@ -245,7 +246,7 @@ def execute(args, verbose):
             sys.exit(retcode)
 
 
-def cleaner(sequence):
+def cleaner(sequence: str | list[str]) -> str | list[str | bool]:
     '''Clean string or list of strings after using regex.'''
     if type(sequence) is str:
         sequence = sequence.replace('[', '')
@@ -265,10 +266,8 @@ def cleaner(sequence):
     return sequence
 
 
-def joinpath(head, *tail):
-    '''joinpath(head, *tail) -> str
-
-    Join two or more pathname components, inserting '/' as needed. If any
+def joinpath(head: str, *tail: str) -> str:
+    '''Join two or more pathname components, inserting '/' as needed. If any
     component is an absolute path, all previous path components will be
     discarded.'''
     newtail = list()
@@ -278,7 +277,7 @@ def joinpath(head, *tail):
     return result
 
 
-def relativize(dir1, dir2):
+def relativize(dir1: str, dir2: str) -> str:
     '''Compute a relative pathname reldir such that dir1/reldir = dir2.
     dir1 and dir2 must be relative pathnames.'''
     dir0 = os.getcwd()
@@ -303,7 +302,7 @@ def relativize(dir1, dir2):
     return result
 
 
-def relconcat(dir1, dir2):
+def relconcat(dir1: str, dir2: str) -> str:
     '''Compute a relative pathname dir1/dir2, with obvious simplifications.
     dir1 and dir2 must be relative pathnames.
     dir2 is considered to be relative to dir1.'''
@@ -318,7 +317,7 @@ def ensure_writable(dest: str) -> None:
         os.chmod(dest, st.st_mode | stat.S_IWUSR)
 
 
-def relinverse(dir):
+def relinverse(dir: str) -> str:
     '''Compute the inverse of dir. Namely, a relative pathname consisting only
     of '..' components, such that dir/relinverse = '.'.
     dir must be a relative pathname.'''
@@ -333,7 +332,7 @@ def relinverse(dir):
         return os.path.normpath(inverse)
 
 
-def copyfile(src, dest):
+def copyfile(src: str, dest: str) -> None:
     '''Copy file src to file dest. Like shutil.copy, but ignore errors e.g. on
     VFAT file systems.'''
     shutil.copyfile(src, dest)
@@ -343,7 +342,7 @@ def copyfile(src, dest):
         pass
 
 
-def copyfile2(src, dest):
+def copyfile2(src: str, dest: str) -> None:
     '''Copy file src to file dest, preserving modification time. Like
     shutil.copy2, but ignore errors e.g. on VFAT file systems. This function
     is to be used for backup files.'''
@@ -354,7 +353,7 @@ def copyfile2(src, dest):
         pass
 
 
-def movefile(src, dest):
+def movefile(src: str, dest: str) -> None:
     '''Move/rename file src to file dest. Like shutil.move, but gracefully
     handle common errors.'''
     try:
@@ -367,7 +366,7 @@ def movefile(src, dest):
         os.remove(src)
 
 
-def symlink_relative(src, dest):
+def symlink_relative(src: str, dest: str) -> None:
     '''Like ln -s, except use cp -p if ln -s fails.
     src is either absolute or relative to the directory of dest.'''
     try:
@@ -388,7 +387,7 @@ def symlink_relative(src, dest):
         ensure_writable(dest)
 
 
-def as_link_value_at_dest(src, dest):
+def as_link_value_at_dest(src: str, dest: str) -> str:
     '''Compute the symbolic link value to place at dest, such that the
     resulting symbolic link points to src. src is given relative to the
     current directory (or absolute).'''
@@ -409,7 +408,7 @@ def as_link_value_at_dest(src, dest):
             return relativize(destdir, src)
 
 
-def link_relative(src, dest):
+def link_relative(src: str, dest: str) -> None:
     '''Like ln -s, except that src is given relative to the current directory
     (or absolute), not given relative to the directory of dest.'''
     if type(src) is not str:
@@ -420,7 +419,7 @@ def link_relative(src, dest):
     symlink_relative(link_value, dest)
 
 
-def link_if_changed(src, dest):
+def link_if_changed(src: str, dest: str) -> None:
     '''Create a symlink, but avoids munging timestamps if the link is correct.'''
     link_value = as_link_value_at_dest(src, dest)
     if not (os.path.islink(dest) and os.readlink(dest) == link_value):
@@ -453,12 +452,10 @@ def hardlink(src: str, dest: str) -> None:
         ensure_writable(dest)
 
 
-def filter_filelist(separator, filelist,
-                    prefix, suffix, removed_prefix, removed_suffix,
-                    added_prefix='', added_suffix=''):
-    '''filter_filelist(*args) -> str
-
-    Filter the given list of files. Filtering: Only the elements starting with
+def filter_filelist(separator: str, filelist: str, prefix: str, suffix: str,
+                    removed_prefix: str, removed_suffix: str,
+                    added_prefix: str = '', added_suffix: str = '') -> str:
+    '''Filter the given list of files. Filtering: Only the elements starting with
     prefix and ending with suffix are considered. Processing: removed_prefix
     and removed_suffix are removed from each element, added_prefix and
     added_suffix are added to each element.'''
@@ -479,18 +476,16 @@ def filter_filelist(separator, filelist,
     return result
 
 
-def lines_to_multiline(lines):
-    '''lines_to_multiline(List[str]) -> str
-
-    Combine the lines to a single string, terminating each line with a newline
-    character.'''
+def lines_to_multiline(lines: list[str]) -> str:
+    '''Combine the lines to a single string, terminating each line with a
+    newline character.'''
     if len(lines) > 0:
         return '\n'.join(lines) + '\n'
     else:
         return ''
 
 
-def substart(orig, repl, data):
+def substart(orig: str, repl: str, data: str) -> str:
     '''Replaces the start portion of a string.
 
     Returns data with orig replaced by repl, but only at the beginning of data.
@@ -501,7 +496,7 @@ def substart(orig, repl, data):
     return result
 
 
-def subend(orig, repl, data):
+def subend(orig: str, repl: str, data: str) -> str:
     '''Replaces the end portion of a string.
 
     Returns data with orig replaced by repl, but only at the end of data.
@@ -512,7 +507,7 @@ def subend(orig, repl, data):
     return result
 
 
-def nlconvert(text):
+def nlconvert(text: str) -> str:
     '''Convert line-endings to specific for this platform.'''
     system = platform.system().lower()
     text = text.replace('\r\n', '\n')
@@ -521,7 +516,7 @@ def nlconvert(text):
     return text
 
 
-def remove_trailing_slashes(text):
+def remove_trailing_slashes(text: str) -> str:
     '''Remove trailing slashes from a file name, except when the file name
     consists only of slashes.'''
     result = text
@@ -533,21 +528,21 @@ def remove_trailing_slashes(text):
     return result
 
 
-def remove_backslash_newline(text):
+def remove_backslash_newline(text: str) -> str:
     '''Given a multiline string text, join lines:
     When a line ends in a backslash, remove the backslash and join the next
     line to it.'''
     return text.replace('\\\n', '')
 
 
-def combine_lines(text):
+def combine_lines(text: str) -> str:
     '''Given a multiline string text, join lines by spaces:
     When a line ends in a backslash, remove the backslash and join the next
     line to it, inserting a space between them.'''
     return text.replace('\\\n', ' ')
 
 
-def combine_lines_matching(pattern, text):
+def combine_lines_matching(pattern: re.Pattern, text: str) -> str:
     '''Given a multiline string text, join lines by spaces, when the first
     such line matches a given RegexObject pattern.
     When a line that matches the pattern ends in a backslash, remove the

@@ -43,6 +43,15 @@
 # - Avoid conditional expressions as in PEP 308 <https://peps.python.org/pep-0308/>.
 #   Rationale: They violate the principle that in conditional code, the
 #   condition comes first.
+# - Use type hints to document functions and catch programming mistakes.
+#   To allow for type annotations and union type specifiers, using the
+#   syntax Type1 | Type2, for all versions of Python ≥ 3.7 use the
+#   'from __future__ import annotations' import at the top of files.
+#   Cf. <https://docs.python.org/3/library/__future__.html>
+#   and <https://stackoverflow.com/questions/73879925/>.
+# - Prefer the standard collection type hints over those provided in the
+#   typing module. The latter are deprecated and may be removed.
+#   Cf. <https://peps.python.org/pep-0585/>.
 
 # You can use this command to check the style:
 #   $ pycodestyle *.py
@@ -58,6 +67,7 @@
 # Documentation:
 # <https://pylint.readthedocs.io/en/latest/user_guide/messages/messages_overview.html>
 
+from __future__ import annotations
 
 #===============================================================================
 # Define global imports
@@ -96,7 +106,7 @@ isfile = os.path.isfile
 #===============================================================================
 # Define main part
 #===============================================================================
-def main():
+def main() -> None:
     info = classes.GLInfo()
     parser = argparse.ArgumentParser(
         prog=constants.APP['name'],

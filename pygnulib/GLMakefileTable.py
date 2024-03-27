@@ -13,6 +13,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+from __future__ import annotations
+
 #===============================================================================
 # Define global imports
 #===============================================================================
@@ -43,17 +45,15 @@ class GLMakefileTable(object):
     '''This class is used to edit Makefile and store edits as table.
     When user creates  Makefile, he may need to use this class.'''
 
-    def __init__(self, config):
-        '''GLMakefileTable.__init__(config) -> GLMakefileTable
-
-        Create GLMakefileTable instance.'''
+    def __init__(self, config: GLConfig) -> None:
+        '''Create GLMakefileTable instance.'''
         if type(config) is not GLConfig:
             raise TypeError('config must be a GLConfig, not %s'
                             % type(config).__name__)
         self.config = config
         self.table = list()
 
-    def __getitem__(self, y):
+    def __getitem__(self, y: int) -> dict[str, bool]:
         '''x.__getitem__(y) = x[y]'''
         if type(y) is not int:
             raise TypeError('indices must be integers, not %s'
@@ -61,10 +61,8 @@ class GLMakefileTable(object):
         result = self.table[y]
         return dict(result)
 
-    def editor(self, dir, var, val, dotfirst=False):
-        '''GLMakefileTable.editor(dir, var, val, dotfirst)
-
-        This method is used to remember that ${dir}Makefile.am needs to be edited
+    def editor(self, dir: str, var: str, val: str, dotfirst: bool = False) -> None:
+        '''This method is used to remember that ${dir}Makefile.am needs to be edited
         to that ${var} mentions ${val}.
         If ${dotfirst} is non-empty, this mention needs to be present after '.'.
         This is a special hack for the SUBDIRS variable, cf.
@@ -80,10 +78,8 @@ class GLMakefileTable(object):
         dictionary = {'dir': dir, 'var': var, 'val': val, 'dotfirst': dotfirst}
         self.table += [dictionary]
 
-    def parent(self, gentests, source_makefile_am, tests_makefile_am):
-        '''GLMakefileTable.parent(gentests)
-
-        Add a special row to Makefile.am table with the first parent directory
+    def parent(self, gentests: bool, source_makefile_am: str, tests_makefile_am: str) -> None:
+        '''Add a special row to Makefile.am table with the first parent directory
         which contains or will contain Makefile.am file.
         GLConfig: sourcebase, m4base, testsbase, incl_test_categories,
         excl_test_categories, makefile_name.
@@ -109,8 +105,6 @@ class GLMakefileTable(object):
             dir1 = os.path.dirname(dir1)
         self.editor(dir1, 'EXTRA_DIST', joinpath(dir2, 'gnulib-cache.m4'))
 
-    def count(self):
-        '''GLMakefileTable.count() -> int
-
-        Count number of edits which were applied.'''
+    def count(self) -> int:
+        '''Count number of edits which were applied.'''
         return len(self.table)

@@ -13,6 +13,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+from __future__ import annotations
+
 #===============================================================================
 # Define global imports
 #===============================================================================
@@ -68,7 +70,7 @@ class GLImport(object):
     scripts. However, if user needs just to use power of gnulib-tool, this class
     is a very good choice.'''
 
-    def __init__(self, config, mode):
+    def __init__(self, config: GLConfig, mode: int) -> None:
         '''Create GLImport instance.
         The first variable, mode, must be one of the values of the MODES dict
         object, which is accessible from constants module. The second one, config,
@@ -294,15 +296,13 @@ class GLImport(object):
                                          self.config.checkInclTestCategory(TESTS['all-tests']))
         self.makefiletable = GLMakefileTable(self.config)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         '''x.__repr__ <==> repr(x)'''
         result = '<pygnulib.GLImport %s>' % hex(id(self))
         return result
 
-    def rewrite_old_files(self, files):
-        '''GLImport.rewrite_old_files(files) -> list
-
-        Replace auxdir, docbase, sourcebase, m4base and testsbase from default
+    def rewrite_old_files(self, files: list[str]) -> list[str]:
+        '''Replace auxdir, docbase, sourcebase, m4base and testsbase from default
         to their version from cached config.'''
         if type(files) is not list:
             raise TypeError('files argument must has list type, not %s'
@@ -340,11 +340,9 @@ class GLImport(object):
         result = sorted(set(result))
         return list(result)
 
-    def rewrite_new_files(self, files):
-        '''GLImport.rewrite_new_files(files)
-
-        Replace auxdir, docbase, sourcebase, m4base and testsbase from default
-        to their version from config.'''
+    def rewrite_new_files(self, files: list[str]) -> list[str]:
+        '''Replace auxdir, docbase, sourcebase, m4base and testsbase from
+        default to their version from config.'''
         if type(files) is not list:
             raise TypeError('files argument must has list type, not %s'
                             % type(files).__name__)
@@ -379,7 +377,7 @@ class GLImport(object):
         result = sorted(set(result))
         return list(result)
 
-    def actioncmd(self):
+    def actioncmd(self) -> str:
         '''Return command-line invocation comment.'''
         modules = self.config.getModules()
         avoids = self.config.getAvoids()
@@ -477,11 +475,9 @@ class GLImport(object):
             actioncmd += ''.join([f' \\\n#  {x}' for x in modules])
         return actioncmd
 
-    def relative_to_destdir(self, dir):
-        '''GLImport.relative_to_destdir(dir) -> str
-
-        Convert a filename that represents dir, relative to the current directory,
-        to a filename relative to destdir.
+    def relative_to_destdir(self, dir: str) -> str:
+        '''Convert a filename that represents dir, relative to the current
+        directory, to a filename relative to destdir.
         GLConfig: destdir.'''
         destdir = self.config['destdir']
         if dir.startswith('/'):
@@ -493,10 +489,8 @@ class GLImport(object):
             else:
                 return constants.relativize(destdir, dir)
 
-    def relative_to_currdir(self, dir):
-        '''GLImport.relative_to_currdir(dir) -> str
-
-        The opposite of GLImport.relative_to_destdir:
+    def relative_to_currdir(self, dir: str) -> str:
+        '''The opposite of GLImport.relative_to_destdir:
         Convert a filename that represents dir, relative to destdir,
         to a filename relative to the current directory.
         GLConfig: destdir.'''
@@ -510,10 +504,8 @@ class GLImport(object):
             else:
                 return constants.relconcat(destdir, dir)
 
-    def gnulib_cache(self):
-        '''GLImport.gnulib_cache() -> str
-
-        Emit the contents of generated $m4base/gnulib-cache.m4 file.
+    def gnulib_cache(self) -> str:
+        '''Emit the contents of generated $m4base/gnulib-cache.m4 file.
         GLConfig: destdir, localpath, tests, sourcebase, m4base, pobase, docbase,
         testsbase, conddeps, libtool, macro_prefix, podomain, vc_files.'''
         emit = ''
@@ -599,10 +591,8 @@ class GLImport(object):
             emit += 'gl_VC_FILES([%s])\n' % str(vc_files).lower()
         return constants.nlconvert(emit)
 
-    def gnulib_comp(self, filetable, gentests):
-        '''GLImport.gnulib_comp(files) -> str
-
-        Emit the contents of generated $m4base/gnulib-comp.m4 file.
+    def gnulib_comp(self, filetable: dict[str, list[str]], gentests: bool) -> str:
+        '''Emit the contents of generated $m4base/gnulib-comp.m4 file.
         GLConfig: destdir, localpath, tests, sourcebase, m4base, pobase, docbase,
         testsbase, conddeps, libtool, macro_prefix, podomain, vc_files.
 
@@ -764,10 +754,8 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         emit += '])\n'
         return emit
 
-    def _done_dir_(self, directory, files_added, files_removed):
-        '''GLImport._done_dir_(directory, files_added, files_removed)
-
-        This method is used to determine ignore argument for _update_ignorelist_
+    def _done_dir_(self, directory: str, files_added: list[str], files_removed: list[str]) -> None:
+        '''This method is used to determine ignore argument for _update_ignorelist_
         method and then call it.'''
         destdir = self.config['destdir']
         if (isdir(joinpath(destdir, 'CVS'))
@@ -781,10 +769,9 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
             self._update_ignorelist_(directory, '.gitignore',
                                      files_added, files_removed)
 
-    def _update_ignorelist_(self, directory, ignore, files_added, files_removed):
-        '''GLImport._update_ignorelist_(directory, ignore, files_added, files_removed)
-
-        Update .gitignore or .cvsignore files.'''
+    def _update_ignorelist_(self, directory: str, ignore: str, files_added: list[str],
+                            files_removed: list[str]) -> None:
+        '''Update .gitignore or .cvsignore files.'''
         destdir = self.config['destdir']
         if ignore == '.gitignore':
             # In a .gitignore file, "foo" applies to the current directory and all
@@ -839,7 +826,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                 else:  # if self.config['dryrun']
                     print('Create %s' % srcpath)
 
-    def prepare(self):
+    def prepare(self) -> tuple[dict[str, list[str]], dict[str, str]]:
         '''Make all preparations before the execution of the code.
         Returns filetable and sed transformers, which change the license.'''
         destdir = self.config['destdir']
@@ -1024,7 +1011,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         result = tuple([filetable, transformers])
         return result
 
-    def execute(self, filetable, transformers):
+    def execute(self, filetable: dict[str, list[str]], transformers: dict[str, str]) -> None:
         '''Perform operations on the lists of files, which are given in a special
         format except filelist argument. Such lists of files can be created using
         GLImport.prepare() function.'''

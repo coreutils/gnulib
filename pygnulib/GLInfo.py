@@ -13,6 +13,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+from __future__ import annotations
+
 #===============================================================================
 # Define global imports
 #===============================================================================
@@ -48,17 +50,17 @@ class GLInfo(object):
     anywhere else. The return values are not the same as for the module,
     but still depends on them.'''
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         '''x.__repr__ <==> repr(x)'''
         result = '<pygnulib.GLInfo %s>' % hex(id(self))
         return result
 
-    def package(self):
+    def package(self) -> str:
         '''Return formatted string which contains name of the package.'''
         result = 'GNU gnulib'
         return result
 
-    def authors(self):
+    def authors(self) -> str:
         '''Return formatted string which contains authors.
         The special __author__ variable is used (type is list).'''
         result = ''
@@ -69,14 +71,14 @@ class GLInfo(object):
                 result += '%s, ' % item
         return result
 
-    def license(self):
+    def license(self) -> str:
         '''Return formatted string which contains license and its description.'''
         result = 'License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>\n'
         result += 'This is free software: you are free to change and redistribute it.\n'
         result += 'There is NO WARRANTY, to the extent permitted by law.'
         return result
 
-    def copyright(self):
+    def copyright(self) -> str:
         '''Return formatted string which contains copyright.
         The special __copyright__ variable is used (type is str).'''
         copyright = __copyright__
@@ -85,7 +87,7 @@ class GLInfo(object):
         result = 'Copyright (C) %s' % copyright
         return result
 
-    def date(self):
+    def date(self) -> str:
         '''Return formatted string which contains date and time in GMT format.'''
         if isdir(DIRS['git']):
             have_git = None
@@ -125,11 +127,11 @@ class GLInfo(object):
         result = re.compile(r' .*').sub(r'', first_changelog_line)
         return result
 
-    def copyright_range(self):
+    def copyright_range(self) -> str:
         '''Returns a formatted copyright string showing a year range.'''
         return f'Copyright (C) {constants.__copyright__}'
 
-    def usage(self):
+    def usage(self) -> str:
         '''Show help message.'''
         result = '''\
 Usage: gnulib-tool --list
@@ -329,7 +331,7 @@ Options for --import, --add/remove-import, --update:
 Report bugs to <bug-gnulib@gnu.org>.'''
         return result
 
-    def version(self):
+    def version(self) -> str:
         '''Return formatted string which contains git version.'''
         if isdir(DIRS['git']):
             have_git = None

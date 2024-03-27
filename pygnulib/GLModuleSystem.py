@@ -13,6 +13,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+from __future__ import annotations
+
 #===============================================================================
 # Define global imports
 #===============================================================================
@@ -57,10 +59,8 @@ class GLModuleSystem(object):
     '''GLModuleSystem is used to operate with module system using dynamic
     searching and patching.'''
 
-    def __init__(self, config):
-        '''GLModuleSystem.__init__(config) -> GLModuleSystem
-
-        Create new GLModuleSystem instance. Some functions use GLFileSystem class
+    def __init__(self, config: GLConfig) -> None:
+        '''Create new GLModuleSystem instance. Some functions use GLFileSystem class
         to look up a file in localpath or gnulib directories, or combine it through
         'patch' utility.'''
         self.args = dict()
@@ -70,15 +70,13 @@ class GLModuleSystem(object):
         self.config = config
         self.filesystem = GLFileSystem(self.config)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         '''x.__repr__ <==> repr(x)'''
         result = '<pygnulib.GLModuleSystem %s>' % hex(id(self))
         return result
 
-    def exists(self, module):
-        '''GLModuleSystem.exists(module) -> bool
-
-        Check whether the given module exists.
+    def exists(self, module: str) -> bool:
+        '''Check whether the given module exists.
         GLConfig: localpath.'''
         if type(module) is not str:
             raise TypeError('module must be a string, not %s'
@@ -97,10 +95,8 @@ class GLModuleSystem(object):
                         break
         return result
 
-    def find(self, module):
-        '''GLModuleSystem.find(module) -> GLModule
-
-        Find the given module.'''
+    def find(self, module: str) -> GLModule | None:
+        '''Find the given module.'''
         if type(module) is not str:
             raise TypeError('module must be a string, not %s'
                             % type(module).__name__)
@@ -115,7 +111,7 @@ class GLModuleSystem(object):
                 sys.stderr.write('gnulib-tool: warning: ')
                 sys.stderr.write('file %s does not exist\n' % str(module))
 
-    def file_is_module(self, filename):
+    def file_is_module(self, filename: str) -> bool:
         '''Given the name of a file in the modules/ directory, return true
         if should be viewed as a module description file.'''
         return not (filename == 'ChangeLog' or filename.endswith('/ChangeLog')
@@ -129,10 +125,8 @@ class GLModuleSystem(object):
                     or filename.endswith('.rej')
                     or filename.endswith('~'))
 
-    def list(self):
-        '''GLModuleSystem.list() -> list
-
-        Return the available module names as tuple. We could use a combination
+    def list(self) -> list[str]:
+        '''Return the available module names as tuple. We could use a combination
         of os.walk() function and re module. However, it takes too much time to
         complete, so this version uses subprocess to run shell commands.'''
         result = ''
@@ -189,10 +183,8 @@ class GLModule(object):
     # List of characters allowed in shell identifiers.
     shell_id_chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_'
 
-    def __init__(self, config, path, patched=False):
-        '''GLModule.__init__(config, path[, patched]) -> GLModule
-
-        Create new GLModule instance. Arguments are path and patched, where
+    def __init__(self, config: GLConfig, path: str, patched: bool = False) -> None:
+        '''Create new GLModule instance. Arguments are path and patched, where
         path is a string representing the path to the module and patched is a
         bool indicating that module was created after applying patch.'''
         self.args = dict()
@@ -227,7 +219,7 @@ class GLModule(object):
         if last_section_label != None:
             self.sections[last_section_label] = self.content[last_section_start:]
 
-    def __eq__(self, module):
+    def __eq__(self, module: object) -> bool:
         '''x.__eq__(y) <==> x==y'''
         result = False
         if type(module) is GLModule:
@@ -235,7 +227,7 @@ class GLModule(object):
                 result = True
         return result
 
-    def __ne__(self, module):
+    def __ne__(self, module: object) -> bool:
         '''x.__ne__(y) <==> x!=y'''
         result = False
         if type(module) is GLModule:
@@ -243,7 +235,7 @@ class GLModule(object):
                 result = True
         return result
 
-    def __ge__(self, module):
+    def __ge__(self, module: object) -> bool:
         '''x.__ge__(y) <==> x>=y'''
         result = False
         if type(module) is GLModule:
@@ -251,7 +243,7 @@ class GLModule(object):
                 result = True
         return result
 
-    def __gt__(self, module):
+    def __gt__(self, module: object) -> bool:
         '''x.__gt__(y) <==> x>y'''
         result = False
         if type(module) is GLModule:
@@ -259,12 +251,12 @@ class GLModule(object):
                 result = True
         return result
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         '''x.__hash__() <==> hash(x)'''
         result = hash(self.path) ^ hash(self.patched)
         return result
 
-    def __le__(self, module):
+    def __le__(self, module: object) -> bool:
         '''x.__le__(y) <==> x<=y'''
         result = False
         if type(module) is GLModule:
@@ -272,7 +264,7 @@ class GLModule(object):
                 result = True
         return result
 
-    def __lt__(self, module):
+    def __lt__(self, module: object) -> bool:
         '''x.__lt__(y) <==> x<y'''
         result = False
         if type(module) is GLModule:
@@ -280,53 +272,45 @@ class GLModule(object):
                 result = True
         return result
 
-    def __str__(self):
+    def __str__(self) -> str:
         '''x.__str__() <==> str(x)'''
         result = self.getName()
         return result
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         '''x.__repr__ <==> repr(x)'''
         result = '<pygnulib.GLModule %s %s>' % (repr(self.getName()), hex(id(self)))
         return result
 
-    def getName(self):
-        '''GLModule.getName() -> str
-
-        Return the name of the module.'''
+    def getName(self) -> str:
+        '''Return the name of the module.'''
         pattern = re.compile(joinpath('modules', '(.*)$'))
         result = pattern.findall(self.path)[0]
         return result
 
-    def isPatched(self):
-        '''GLModule.isPatched() -> bool
-
-        Check whether module was created after applying patch.'''
+    def isPatched(self) -> bool:
+        '''Check whether module was created after applying patch.'''
         return self.patched
 
-    def isTests(self):
-        '''GLModule.isTests() -> bool
-
-        Check whether module is a *-tests module or a module of
+    def isTests(self) -> bool:
+        '''Check whether module is a *-tests module or a module of
         applicability 'all'.'''
         result = self.getApplicability() != 'main'
         return result
 
-    def isNonTests(self):
-        '''GLModule.isNonTests() -> bool
-
-        Check whether module is not a *-tests module.'''
+    def isNonTests(self) -> bool:
+        '''Check whether module is not a *-tests module.'''
         result = not self.getName().endswith('-tests')
         return result
 
-    def getTestsName(self):
+    def getTestsName(self) -> str:
         '''Return -tests version of the module name.'''
         result = self.getName()
         if not result.endswith('-tests'):
             result += '-tests'
         return result
 
-    def getTestsModule(self):
+    def getTestsModule(self) -> GLModule | None:
         '''Return -tests version of the module as GLModule.'''
         result = self.modulesystem.find(self.getTestsName())
         return result
@@ -406,11 +390,9 @@ class GLModule(object):
                               for line in section.splitlines() })
         return lines_to_multiline(directives)
 
-    def getShellFunc(self):
-        '''GLModule.getShellFunc() -> str
-
-        Computes the shell function name that will contain the m4 macros for the
-        module.'''
+    def getShellFunc(self) -> str:
+        '''Computes the shell function name that will contain the m4 macros
+        for the module.'''
         macro_prefix = self.config['macro_prefix']
         valid_shell_id = True
         for char in self.getName():
@@ -426,11 +408,9 @@ class GLModule(object):
         result = 'func_%s_gnulib_m4code_%s' % (macro_prefix, identifier)
         return result
 
-    def getShellVar(self):
-        '''GLModule.getShellVar() -> str
-
-        Compute the shell variable name the will be set to true once the m4 macros
-        for the module have been executed.'''
+    def getShellVar(self) -> str:
+        '''Compute the shell variable name the will be set to true once the
+        m4 macros for the module have been executed.'''
         macro_prefix = self.config['macro_prefix']
         valid_shell_id = True
         for char in self.getName():
@@ -446,10 +426,8 @@ class GLModule(object):
         result = '%s_gnulib_enabled_%s' % (macro_prefix, identifier)
         return result
 
-    def getConditionalName(self):
-        '''GLModule.getConditionalName() -> str
-
-        Return the automake conditional name.
+    def getConditionalName(self) -> str:
+        '''Return the automake conditional name.
         GLConfig: macro_prefix.'''
         macro_prefix = self.config['macro_prefix']
         valid_shell_id = True
@@ -466,28 +444,20 @@ class GLModule(object):
         result = '%s_GNULIB_ENABLED_%s' % (macro_prefix, identifier)
         return result
 
-    def getDescription(self):
-        '''GLModule.getDescription() -> str
-
-        Return description of the module.'''
+    def getDescription(self) -> str:
+        '''Return description of the module.'''
         return self.sections.get('Description', '')
 
-    def getComment(self):
-        '''GLModule.getComment() -> str
-
-        Return comment to module.'''
+    def getComment(self) -> str:
+        '''Return comment to module.'''
         return self.sections.get('Comment', '')
 
-    def getStatus(self):
-        '''GLModule.getStatus() -> str
-
-        Return module status.'''
+    def getStatus(self) -> str:
+        '''Return module status.'''
         return self.sections.get('Status', '')
 
-    def getStatuses(self):
-        '''GLModule.getStatuses() -> list
-
-        Return module status.'''
+    def getStatuses(self) -> list[str]:
+        '''Return module status.'''
         if 'statuses' not in self.cache:
             snippet = self.getStatus()
             result = [ line.strip()
@@ -496,16 +466,12 @@ class GLModule(object):
             self.cache['statuses'] = result
         return self.cache['statuses']
 
-    def getNotice(self):
-        '''GLModule.getNotice() -> str
-
-        Return notice to module.'''
+    def getNotice(self) -> str:
+        '''Return notice to module.'''
         return self.sections.get('Notice', '')
 
-    def getApplicability(self):
-        '''GLModule.getApplicability() -> str
-
-        Return applicability of module.'''
+    def getApplicability(self) -> str:
+        '''Return applicability of module.'''
         if 'applicability' not in self.cache:
             result = self.sections.get('Applicability', '')
             result = result.strip()
@@ -522,10 +488,8 @@ class GLModule(object):
         '''Return the unmodified list of files as a string.'''
         return self.sections.get('Files', '')
 
-    def getFiles(self):
-        '''GLModule.getFiles() -> list
-
-        Return list of files.
+    def getFiles(self) -> list[str]:
+        '''Return list of files.
         GLConfig: ac_version.'''
         if 'files' not in self.cache:
             snippet = self.getFiles_Raw()
@@ -538,10 +502,8 @@ class GLModule(object):
             self.cache['files'] = result
         return self.cache['files']
 
-    def getDependencies(self):
-        '''GLModule.getDependencies() -> str
-
-        Return list of dependencies, as a snippet.
+    def getDependencies(self) -> str:
+        '''Return list of dependencies, as a snippet.
         GLConfig: localpath.'''
         if 'dependencies' not in self.cache:
             result = ''
@@ -558,10 +520,8 @@ class GLModule(object):
             self.cache['dependencies'] = result
         return self.cache['dependencies']
 
-    def getDependenciesWithoutConditions(self):
-        '''GLModule.getDependenciesWithoutConditions() -> list
-
-        Return list of dependencies, as a list of GLModule objects.
+    def getDependenciesWithoutConditions(self) -> list[GLModule | None]:
+        '''Return list of dependencies, as a list of GLModule objects.
         GLConfig: localpath.'''
         if 'dependenciesWithoutCond' not in self.cache:
             snippet = self.getDependencies()
@@ -577,10 +537,8 @@ class GLModule(object):
             self.cache['dependenciesWithoutCond'] = result
         return self.cache['dependenciesWithoutCond']
 
-    def getDependenciesWithConditions(self):
-        '''GLModule.getDependenciesWithConditions() -> list
-
-        Return list of dependencies, as a list of pairs (GLModule object, condition).
+    def getDependenciesWithConditions(self) -> list[tuple[GLModule, str | None]]:
+        '''Return list of dependencies, as a list of pairs (GLModule object, condition).
         The "true" condition is denoted by None.
         GLConfig: localpath.'''
 
@@ -607,22 +565,16 @@ class GLModule(object):
             self.cache['dependenciesWithCond'] = result
         return self.cache['dependenciesWithCond']
 
-    def getAutoconfEarlySnippet(self):
-        '''GLModule.getAutoconfEarlySnippet() -> str
-
-        Return autoconf-early snippet.'''
+    def getAutoconfEarlySnippet(self) -> str:
+        '''Return autoconf-early snippet.'''
         return self.sections.get('configure.ac-early', '')
 
-    def getAutoconfSnippet(self):
-        '''GLModule.getAutoconfSnippet() -> str
-
-        Return autoconf snippet.'''
+    def getAutoconfSnippet(self) -> str:
+        '''Return autoconf snippet.'''
         return self.sections.get('configure.ac', '')
 
-    def getAutomakeSnippet(self):
-        '''getAutomakeSnippet() -> str
-
-        Get automake snippet.
+    def getAutomakeSnippet(self) -> str:
+        '''Get automake snippet.
         GLConfig: auxdir, ac_version.'''
         result = ''
         conditional = self.getAutomakeSnippet_Conditional()
@@ -633,16 +585,12 @@ class GLModule(object):
         result += self.getAutomakeSnippet_Unconditional()
         return result
 
-    def getAutomakeSnippet_Conditional(self):
-        '''GLModule.getAutomakeSnippet_Conditional() -> str
-
-        Return conditional automake snippet.'''
+    def getAutomakeSnippet_Conditional(self) -> str:
+        '''Return conditional automake snippet.'''
         return self.sections.get('Makefile.am', '')
 
-    def getAutomakeSnippet_Unconditional(self):
-        '''GLModule.getAutomakeSnippet_Unconditional() -> str
-
-        Return unconditional automake snippet.
+    def getAutomakeSnippet_Unconditional(self) -> str:
+        '''Return unconditional automake snippet.
         GLConfig: auxdir, ac_version.'''
         auxdir = self.config['auxdir']
         ac_version = self.config['ac_version']
@@ -709,10 +657,8 @@ class GLModule(object):
             self.cache['makefile-unconditional'] = result
         return self.cache['makefile-unconditional']
 
-    def getInclude(self):
-        '''GLModule.getInclude() -> str
-
-        Return include directive.'''
+    def getInclude(self) -> str:
+        '''Return include directive.'''
         if 'include' not in self.cache:
             snippet = self.sections.get('Include', '')
             pattern = re.compile(r'^(["<])', re.M)
@@ -720,22 +666,16 @@ class GLModule(object):
             self.cache['include'] = result
         return self.cache['include']
 
-    def getLink(self):
-        '''GLModule.getLink() -> str
-
-        Return link directive.'''
+    def getLink(self) -> str:
+        '''Return link directive.'''
         return self.sections.get('Link', '')
 
-    def getLicense_Raw(self):
-        '''GLModule.getLicense_Raw() -> str
-
-        Return module license.'''
+    def getLicense_Raw(self) -> str:
+        '''Return module license.'''
         return self.sections.get('License', '')
 
-    def getLicense(self):
-        '''GLModule.getLicense(self) -> str
-
-        Get license and warn user if module lacks a license.'''
+    def getLicense(self) -> str:
+        '''Get license and warn user if module lacks a license.'''
         if 'license' not in self.cache:
             license = self.getLicense_Raw().strip()
             # Warn if the License field is missing.
@@ -758,10 +698,8 @@ class GLModule(object):
             self.cache['license'] = result
         return self.cache['license']
 
-    def getMaintainer(self):
-        '''GLModule.getMaintainer() -> str
-
-        Return maintainer directive.'''
+    def getMaintainer(self) -> str:
+        '''Return maintainer directive.'''
         return self.sections.get('Maintainer', '')
 
 
@@ -771,10 +709,8 @@ class GLModule(object):
 class GLModuleTable(object):
     '''GLModuleTable is used to work with the list of the modules.'''
 
-    def __init__(self, config, inc_all_direct_tests, inc_all_indirect_tests):
-        '''GLModuleTable.__init__(config, inc_all_direct_tests, inc_all_indirect_tests) -> GLModuleTable
-
-        Create new GLModuleTable instance. If modules are specified, then add
+    def __init__(self, config: GLConfig, inc_all_direct_tests: bool, inc_all_indirect_tests: bool) -> None:
+        '''Create new GLModuleTable instance. If modules are specified, then add
         every module from iterable as unconditional module. If avoids is specified,
         then in transitive_closure every dependency which is in avoids won't be
         included in the final modules list. If conddeps are enabled,
@@ -824,12 +760,12 @@ class GLModuleTable(object):
             if module:
                 self.avoids.append(module)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         '''x.__repr__() <==> repr(x)'''
         result = '<pygnulib.GLModuleTable %s>' % hex(id(self))
         return result
 
-    def __getitem__(self, y):
+    def __getitem__(self, y: str) -> list[GLModule]:
         '''x.__getitem__(y) <==> x[y]'''
         if y in ['base', 'final', 'main', 'tests', 'avoids']:
             if y == 'base':
@@ -845,10 +781,8 @@ class GLModuleTable(object):
         else:  # if y is not in list
             raise KeyError('GLModuleTable does not contain key: %s' % repr(y))
 
-    def addConditional(self, parent, module, condition):
-        '''GLModuleTable.addConditional(module, condition)
-
-        Add new conditional dependency from parent to module with condition.'''
+    def addConditional(self, parent: GLModule, module: GLModule, condition: str | bool) -> None:
+        '''Add new conditional dependency from parent to module with condition.'''
         if type(parent) is not GLModule:
             raise TypeError('parent must be a GLModule, not %s'
                             % type(parent).__name__)
@@ -867,10 +801,8 @@ class GLModuleTable(object):
             key = '%s---%s' % (str(parent), str(module))
             self.conditionals[key] = condition
 
-    def addUnconditional(self, module):
-        '''GLModuleTable.addUnconditional(module)
-
-        Add module as unconditional dependency.'''
+    def addUnconditional(self, module: GLModule) -> None:
+        '''Add module as unconditional dependency.'''
         if type(module) is not GLModule:
             raise TypeError('module must be a GLModule, not %s'
                             % type(module).__name__)
@@ -878,20 +810,16 @@ class GLModuleTable(object):
         if str(module) in self.dependers:
             self.dependers.pop(str(module))
 
-    def isConditional(self, module):
-        '''GLModuleTable.isConditional(module) -> bool
-
-        Check whether module is unconditional.'''
+    def isConditional(self, module: GLModule) -> bool:
+        '''Check whether module is unconditional.'''
         if type(module) is not GLModule:
             raise TypeError('module must be a GLModule, not %s'
                             % type(module).__name__)
         result = str(module) in self.dependers
         return result
 
-    def getCondition(self, parent, module):
-        '''GLModuleTable.getCondition(module) -> str or True
-
-        Return condition from parent to module. Condition can be string or True.
+    def getCondition(self, parent: GLModule, module: GLModule) -> str | bool:
+        '''Return condition from parent to module. Condition can be string or True.
         If module is not in the list of conddeps, method returns None.'''
         if type(parent) is not GLModule:
             raise TypeError('parent must be a GLModule, not %s'
@@ -903,10 +831,8 @@ class GLModuleTable(object):
         result = self.conditionals.get(key, None)
         return result
 
-    def transitive_closure(self, modules):
-        '''GLModuleTable.transitive_closure(modules) -> list
-
-        Use transitive closure to add module and its dependencies. Add every
+    def transitive_closure(self, modules: list[GLModule]) -> list[GLModule]:
+        '''Use transitive closure to add module and its dependencies. Add every
         module and its dependencies from modules list, but do not add dependencies
         which contain in avoids list. If any incl_test_categories is enabled, then
         add dependencies which are in these categories. If any excl_test_categories,
@@ -1015,10 +941,9 @@ class GLModuleTable(object):
         self.modules = modules
         return list(modules)
 
-    def transitive_closure_separately(self, basemodules, finalmodules):
-        '''GLModuleTable.transitive_closure_separately(*args, **kwargs) -> tuple
-
-        Determine main module list and tests-related module list separately.
+    def transitive_closure_separately(self, basemodules: list[GLModule],
+                                      finalmodules: list[GLModule]) -> tuple[list[GLModule], list[GLModule]]:
+        '''Determine main module list and tests-related module list separately.
         The main module list is the transitive closure of the specified modules,
         ignoring tests modules. Its lib/* sources go into $sourcebase/. If lgpl is
         specified, it will consist only of LGPLed source.
@@ -1087,11 +1012,9 @@ class GLModuleTable(object):
                 cleansed.append(line)
         return lines_to_multiline(cleansed)
 
-    def add_dummy(self, modules):
-        '''GLModuleTable.add_dummy(modules) -> list
-
-        Add dummy package to list of modules if dummy package is needed. If not,
-        return original list of modules.
+    def add_dummy(self, modules: list[GLModule]) -> list[GLModule]:
+        '''Add dummy package to list of modules if dummy package is needed.
+        If not, return original list of modules.
         GLConfig: auxdir, ac_version, conddeps.'''
         auxdir = self.config['auxdir']
         ac_version = self.config['ac_version']
@@ -1128,11 +1051,9 @@ class GLModuleTable(object):
                     modules = sorted(set(modules)) + [dummy]
         return list(modules)
 
-    def filelist(self, modules):
-        '''GLModuleTable.filelist(modules) -> list
-
-        Determine the final file list for the given list of modules. The list of
-        modules must already include dependencies.
+    def filelist(self, modules: list[GLModule]) -> list[str]:
+        '''Determine the final file list for the given list of modules.
+        The list of modules must already include dependencies.
         GLConfig: ac_version.'''
         ac_version = self.config['ac_version']
         filelist = list()
@@ -1147,10 +1068,9 @@ class GLModuleTable(object):
                     filelist += [file]
         return filelist
 
-    def filelist_separately(self, main_modules, tests_modules):
-        '''GLModuleTable.filelist_separately(**kwargs) -> list
-
-        Determine the final file lists. They must be computed separately, because
+    def filelist_separately(self, main_modules: list[GLModule],
+                            tests_modules: list[GLModule]) -> tuple[list[str], list[str]]:
+        '''Determine the final file lists. They must be computed separately, because
         files in lib/* go into $sourcebase/ if they are in the main file list but
         into $testsbase/ if they are in the tests-related file list. Furthermore
         lib/dummy.c can be in both.'''
@@ -1162,76 +1082,56 @@ class GLModuleTable(object):
         result = tuple([main_filelist, tests_filelist])
         return result
 
-    def getAvoids(self):
-        '''GLModuleTable.getAvoids() -> list
-
-        Return list of avoids.'''
+    def getAvoids(self) -> list[GLModule]:
+        '''Return list of avoids.'''
         return list(self.avoids)
 
-    def setAvoids(self, modules):
-        '''GLModuleTable.setAvoids(modules)
-
-        Specify list of avoids.'''
+    def setAvoids(self, modules: list[GLModule]) -> None:
+        '''Specify list of avoids.'''
         for module in modules:
             if type(module) is not GLModule:
                 raise TypeError('each module must be a GLModule instance')
         self.avoids = sorted(set(modules))
 
-    def getBaseModules(self):
-        '''GLModuleTable.getBaseModules() -> list
-
-        Return list of base modules.'''
+    def getBaseModules(self) -> list[GLModule]:
+        '''Return list of base modules.'''
         return list(self.base_modules)
 
-    def setBaseModules(self, modules):
-        '''GLModuleTable.setBaseModules(modules)
-
-        Specify list of base modules.'''
+    def setBaseModules(self, modules: list[GLModule]) -> None:
+        '''Specify list of base modules.'''
         for module in modules:
             if type(module) is not GLModule:
                 raise TypeError('each module must be a GLModule instance')
         self.base_modules = sorted(set(modules))
 
-    def getFinalModules(self):
-        '''GLModuleTable.getFinalModules() -> list
-
-        Return list of final modules.'''
+    def getFinalModules(self) -> list[GLModule]:
+        '''Return list of final modules.'''
         return list(self.final_modules)
 
-    def setFinalModules(self, modules):
-        '''GLModuleTable.setFinalModules(modules)
-
-        Specify list of final modules.'''
+    def setFinalModules(self, modules: list[GLModule]) -> None:
+        '''Specify list of final modules.'''
         for module in modules:
             if type(module) is not GLModule:
                 raise TypeError('each module must be a GLModule instance')
         self.final_modules = sorted(set(modules))
 
-    def getMainModules(self):
-        '''GLModuleTable.getMainModules() -> list
-
-        Return list of main modules.'''
+    def getMainModules(self) -> list[GLModule]:
+        '''Return list of main modules.'''
         return list(self.main_modules)
 
-    def setMainModules(self, modules):
-        '''GLModuleTable.setMainModules(modules)
-
-        Specify list of main modules.'''
+    def setMainModules(self, modules: list[GLModule]) -> None:
+        '''Specify list of main modules.'''
         for module in modules:
             if type(module) is not GLModule:
                 raise TypeError('each module must be a GLModule instance')
         self.main_modules = sorted(set(modules))
 
-    def getTestsModules(self):
-        '''GLModuleTable.getTestsModules() -> list
-
-        Return list of tests modules.'''
+    def getTestsModules(self) -> list[GLModule]:
+        '''Return list of tests modules.'''
         return list(self.tests_modules)
 
-    def setTestsModules(self, modules):
-        '''GLModuleTable.setTestsModules(modules)
-
-        Specify list of tests modules.'''
+    def setTestsModules(self, modules: list[GLModule]) -> None:
+        '''Specify list of tests modules.'''
         for module in modules:
             if type(module) is not GLModule:
                 raise TypeError('each module must be a GLModule instance')
