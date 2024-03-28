@@ -370,10 +370,10 @@ class GLFileAssistant(object):
                     transformer = sed_transform_testsrelated_lib_file
             if transformer != None:
                 # Read the file that we looked up.
-                with open(lookedup, 'rb', encoding='utf-8') as file:
+                with open(lookedup, 'r', newline='\n', encoding='utf-8') as file:
                     src_data = file.read()
                 # Write the transformed data to the temporary file.
-                with open(tmpfile, 'wb', encoding='utf-8') as file:
+                with open(tmpfile, 'w', newline='\n', encoding='utf-8') as file:
                     file.write(re.sub(transformer[0], transformer[1], src_data))
         path = joinpath(self.config['destdir'], rewritten)
         if isfile(path):
