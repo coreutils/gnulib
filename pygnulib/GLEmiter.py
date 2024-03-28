@@ -225,12 +225,10 @@ class GLEmiter(object):
             snippet = module.getAutoconfSnippet()
             snippet = snippet.replace('${gl_include_guard_prefix}',
                                       include_guard_prefix)
-            lines = [ line
+            lines = [ f'{indentation}{line}'
                       for line in snippet.split('\n')
                       if line.strip() ]
             snippet = lines_to_multiline(lines)
-            pattern = re.compile(r'^(.*)$', re.M)
-            snippet = pattern.sub(r'%s\1' % indentation, snippet)
             if disable_libtool:
                 snippet = snippet.replace('$gl_cond_libtool', 'false')
                 snippet = snippet.replace('gl_libdeps', 'gltests_libdeps')
