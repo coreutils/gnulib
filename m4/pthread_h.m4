@@ -1,10 +1,10 @@
-# pthread_h.m4 serial 8
-dnl Copyright (C) 2009-2023 Free Software Foundation, Inc.
+# pthread_h.m4 serial 8.1
+dnl Copyright (C) 2009-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 
-AC_DEFUN_ONCE([gl_PTHREAD_H],
+AC_DEFUN_ONCE([gl_PTHREAD_H_PART1],
 [
   dnl Ensure to expand the default settings once only, before all statements
   dnl that occur in other macros.
@@ -41,6 +41,14 @@ AC_DEFUN_ONCE([gl_PTHREAD_H],
   if test $ac_cv_type_pthread_spinlock_t != yes; then
     HAVE_PTHREAD_SPINLOCK_T=0
   fi
+])
+
+AC_DEFUN([gl_PTHREAD_H],
+[
+  AC_REQUIRE([gl_PTHREAD_H_PART1])
+
+  dnl Set HAVE_PTHREAD_SPIN_INIT, REPLACE_PTHREAD_SPIN_INIT.
+  gl_PTHREAD_SPIN
 
   dnl Constants may be defined as C preprocessor macros or as enum items.
 
