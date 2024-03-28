@@ -7,10 +7,11 @@ Make the unit tests work with GNULIB_TOOL_IMPL=py.
 
 Optimize:
   - os.chdir around subprocess creation -> cwd=... argument instead.
-  - Inline all 'sed' invocations:
-    main.py:1387:                args = ['sed', '-e', sed_table, tempname]
 
-Various other refactorings, as deemed useful.
+Various other refactorings, as deemed useful:
+  - Use an enum for verifier=0,1,2.
+  - Use an enum for 'all', 'old', 'new', 'added', 'removed' in GLImport.py.
+  - sp.call(['rm', '-rf' ...]) versus shutil.rmtree ?
 
 ================================================================================
 
