@@ -9,7 +9,6 @@ Optimize:
   - os.chdir around subprocess creation -> cwd=... argument instead.
   - Inline all 'sed' invocations:
     main.py:1387:                args = ['sed', '-e', sed_table, tempname]
-    GLFileSystem.py:382:                args = ['sed', '-e', transformer]
 
 Various other refactorings, as deemed useful.
 

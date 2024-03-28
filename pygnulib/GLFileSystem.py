@@ -19,6 +19,7 @@ from __future__ import annotations
 # Define global imports
 #===============================================================================
 import os
+import re
 import codecs
 import filecmp
 import subprocess as sp
@@ -163,8 +164,13 @@ class GLFileSystem(object):
 class GLFileAssistant(object):
     '''GLFileAssistant is used to help with file processing.'''
 
-    def __init__(self, config: GLConfig, transformers: dict = dict()):
-        '''Create GLFileAssistant instance.'''
+    def __init__(self, config: GLConfig, transformers: dict[str, tuple[re.Pattern, str] | None] = {}) -> None:
+        '''Create GLFileAssistant instance.
+
+        config stores information shared between classes.
+        transformers is a dictionary which uses a file category as the key. The
+          value accessed is a tuple containing arguments for re.sub() or None if
+          no transformations are needed.'''
         if type(config) is not GLConfig:
             raise TypeError('config must be a GLConfig, not %s'
                             % type(config).__name__)
@@ -173,11 +179,11 @@ class GLFileAssistant(object):
                             % type(transformers).__name__)
         for key in ['lib', 'aux', 'main', 'tests']:
             if key not in transformers:
-                transformers[key] = 's,x,x,'
+                transformers[key] = None
             else:  # if key in transformers
                 value = transformers[key]
-                if type(value) is not str:
-                    raise TypeError('transformers[%s] must be a string, not %s'
+                if type(value) is not tuple and value != None:
+                    raise TypeError('transformers[%s] must be a tuple or None, not %s'
                                     % (key, type(value).__name__))
         self.original = None
         self.rewritten = None
@@ -341,10 +347,10 @@ class GLFileAssistant(object):
             xoriginal = substart('tests=lib/', 'lib/', original)
         lookedup, tmpflag = self.filesystem.lookup(xoriginal)
         tmpfile = self.tmpfilename(rewritten)
-        sed_transform_lib_file = self.transformers.get('lib', '')
-        sed_transform_build_aux_file = self.transformers.get('aux', '')
-        sed_transform_main_lib_file = self.transformers.get('main', '')
-        sed_transform_testsrelated_lib_file = self.transformers.get('tests', '')
+        sed_transform_lib_file = self.transformers.get('lib')
+        sed_transform_build_aux_file = self.transformers.get('aux')
+        sed_transform_main_lib_file = self.transformers.get('main')
+        sed_transform_testsrelated_lib_file = self.transformers.get('tests')
         try:  # Try to copy lookedup file to tmpfile
             copyfile(lookedup, tmpfile)
             ensure_writable(tmpfile)
@@ -352,7 +358,7 @@ class GLFileAssistant(object):
             raise GLError(15, lookedup)
         # Don't process binary files with sed.
         if not (original.endswith(".class") or original.endswith(".mo")):
-            transformer = ''
+            transformer = None
             if original.startswith('lib/'):
                 if sed_transform_main_lib_file:
                     transformer = sed_transform_main_lib_file
@@ -362,16 +368,13 @@ class GLFileAssistant(object):
             elif original.startswith('tests=lib/'):
                 if sed_transform_testsrelated_lib_file:
                     transformer = sed_transform_testsrelated_lib_file
-            if transformer:
-                args = ['sed', '-e', transformer]
-                stdin = codecs.open(lookedup, 'rb', 'UTF-8')
-                try:  # Try to transform file
-                    data = sp.check_output(args, stdin=stdin, shell=False)
-                    data = data.decode("UTF-8")
-                except Exception as error:
-                    raise GLError(16, lookedup)
-                with codecs.open(tmpfile, 'wb', 'UTF-8') as file:
-                    file.write(data)
+            if transformer != None:
+                # Read the file that we looked up.
+                with open(lookedup, 'rb', encoding='utf-8') as file:
+                    src_data = file.read()
+                # Write the transformed data to the temporary file.
+                with open(tmpfile, 'wb', encoding='utf-8') as file:
+                    file.write(re.sub(transformer[0], transformer[1], src_data))
         path = joinpath(self.config['destdir'], rewritten)
         if isfile(path):
             # The file already exists.

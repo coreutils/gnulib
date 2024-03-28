@@ -941,16 +941,15 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                     print(notice)
 
         # Determine script to apply to imported library files.
-        sed_transform_lib_file = ''
+        sed_transform_lib_file = None
         if 'config-h' in [ str(module)
                            for module in main_modules ]:
-            sed_transform_lib_file += '''
-        s/^#ifdef[\t ]*HAVE_CONFIG_H[\t ]*$/#if 1/
-      '''
+            sed_transform_lib_file = (re.compile(r'^#ifdef[\t ]*HAVE_CONFIG_H[\t ]*$', re.MULTILINE), r'#if 1')
+
         sed_transform_main_lib_file = sed_transform_lib_file
 
         # Determine script to apply to auxiliary files that go into $auxdir/.
-        sed_transform_build_aux_file = ''
+        sed_transform_build_aux_file = None
 
         # Determine script to apply to library files that go into $testsbase/.
         sed_transform_testsrelated_lib_file = sed_transform_lib_file
