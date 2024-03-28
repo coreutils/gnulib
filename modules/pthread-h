@@ -5,6 +5,7 @@ Files:
 lib/pthread.in.h
 m4/pthread_h.m4
 m4/threadlib.m4
+m4/pthread-spin.m4
 
 Depends-on:
 extensions

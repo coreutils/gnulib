@@ -417,16 +417,21 @@ typedef pthread_mutex_t pthread_spinlock_t;
 #else
 # if @HAVE_PTHREAD_SPINLOCK_T@
 /* <pthread.h> exists and defines pthread_spinlock_t.  */
-#  if !(((__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 7) \
-          || __clang_major__ > 3 || (__clang_major__ == 3 && __clang_minor__ >= 1)) \
-         || (((__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 1)) \
-              && !defined __ANDROID__) \
-             || __clang_major__ >= 3)) \
-        && !defined __ibmxl__)
+#  if !@HAVE_PTHREAD_SPIN_INIT@ || @REPLACE_PTHREAD_SPIN_INIT@
+/* If the 'pthread-spin' module is in use, it defines all the pthread_spin*
+   functions.  Prepare for it by overriding pthread_spinlock_t if that might
+   be needed.  */
+#   if !(((__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 7) \
+           || __clang_major__ > 3 || (__clang_major__ == 3 && __clang_minor__ >= 1)) \
+          || (((__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 1)) \
+               && !defined __ANDROID__) \
+              || __clang_major__ >= 3)) \
+         && !defined __ibmxl__)
 /* We can't use GCC built-ins.  Approximate spinlocks with mutexes.  */
-#   if !GNULIB_defined_pthread_spin_types
-#    define pthread_spinlock_t pthread_mutex_t
-#    define GNULIB_defined_pthread_spin_types 1
+#    if !GNULIB_defined_pthread_spin_types
+#     define pthread_spinlock_t pthread_mutex_t
+#     define GNULIB_defined_pthread_spin_types 1
+#    endif
 #   endif
 #  endif
 # else

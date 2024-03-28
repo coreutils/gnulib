@@ -1,12 +1,12 @@
-# pthread-spin.m4 serial 4.1
+# pthread-spin.m4 serial 4.2
 dnl Copyright (C) 2019-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 
-AC_DEFUN([gl_PTHREAD_SPIN],
+AC_DEFUN_ONCE([gl_PTHREAD_SPIN],
 [
-  AC_REQUIRE([gl_PTHREAD_H])
+  AC_REQUIRE([gl_PTHREAD_H_PART1])
   AC_REQUIRE([AC_CANONICAL_HOST])
 
   if { case "$host_os" in mingw* | windows*) true;; *) false;; esac; } \
