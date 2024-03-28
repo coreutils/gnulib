@@ -648,16 +648,6 @@ AC_DEFUN([%s_EARLY],
   m4_pattern_allow([^gl_LIBOBJS$])dnl a variable
   m4_pattern_allow([^gl_LTLIBOBJS$])dnl a variable\n''' % (configure_ac, macro_prefix)
         emit += self.emitter.preEarlyMacros(True, '  ', moduletable['final'])
-        uses_subdirs = False
-        for module in moduletable['main']:
-            # Test whether there are some source files in subdirectories.
-            for file in module.getFiles():
-                if (file.startswith('lib/') and file.endswith('.c')
-                        and file.count('/') > 1):
-                    uses_subdirs = True
-                    break
-        if not gnu_make and uses_subdirs:
-            emit += '  AC_REQUIRE([AM_PROG_CC_C_O])\n'
         for module in moduletable['final']:
             emit += '  # Code from module %s:\n' % str(module)
             snippet = module.getAutoconfEarlySnippet()
@@ -1330,9 +1320,9 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         # can run 'autoconf -t', which reads gnulib-comp.m4.
         basename = joinpath(sourcebase, source_makefile_am)
         tmpfile = self.assistant.tmpfilename(basename)
-        emit, uses_subdirs = self.emitter.lib_Makefile_am(basename,
-                                                          self.moduletable['main'], self.moduletable, self.makefiletable,
-                                                          actioncmd, for_test)
+        emit = self.emitter.lib_Makefile_am(basename,
+                                            self.moduletable['main'], self.moduletable, self.makefiletable,
+                                            actioncmd, for_test)
         if automake_subdir:
             emit = sp.run([joinpath(DIRS['root'], 'build-aux/prefix-gnulib-mk'), '--from-gnulib-tool',
                            f'--lib-name={libname}', f'--prefix={sourcebase}/'],
@@ -1358,9 +1348,9 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         if gentests:
             basename = joinpath(testsbase, tests_makefile_am)
             tmpfile = self.assistant.tmpfilename(basename)
-            emit, uses_subdirs = self.emitter.tests_Makefile_am(basename,
-                                                                self.moduletable['tests'], self.moduletable, self.makefiletable,
-                                                                '%stests_WITNESS' % macro_prefix, for_test)
+            emit = self.emitter.tests_Makefile_am(basename,
+                                                  self.moduletable['tests'], self.moduletable, self.makefiletable,
+                                                  '%stests_WITNESS' % macro_prefix, for_test)
             with codecs.open(tmpfile, 'wb', 'UTF-8') as file:
                 file.write(emit)
             filename, backup, flag = self.assistant.super_update(basename, tmpfile)

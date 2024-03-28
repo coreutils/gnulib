@@ -125,11 +125,11 @@ TESTS = \
 
 # Define AUTOCONF minimum version
 DEFAULT_AUTOCONF_MINVERSION = 2.64
-# You can set AUTOCONFPATH to empty if autoconf 2.64 is already in your PATH
+# You can set AUTOCONFPATH to empty if autoconf ≥ 2.64 is already in your PATH
 AUTOCONFPATH = ''
-# You can set AUTOMAKEPATH to empty if automake 1.11 is already in your PATH
+# You can set AUTOMAKEPATH to empty if automake ≥ 1.14 is already in your PATH
 AUTOMAKEPATH = ''
-# You can set GETTEXTPATH to empty if autopoint 0.15 is already in your PATH
+# You can set GETTEXTPATH to empty if autopoint ≥ 0.15 is already in your PATH
 GETTEXTPATH = ''
 # You can set LIBTOOLPATH to empty if libtoolize 2.x is already in your PATH
 LIBTOOLPATH = ''

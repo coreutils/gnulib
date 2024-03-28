@@ -48,7 +48,7 @@ nl='
 '
 IFS=" ""	$nl"
 
-# You can set AUTOCONFPATH to empty if autoconf 2.64 is already in your PATH.
+# You can set AUTOCONFPATH to empty if autoconf ≥ 2.64 is already in your PATH.
 AUTOCONFPATH=
 #case $USER in
 #  bruno )
@@ -57,10 +57,10 @@ AUTOCONFPATH=
 #    ;;
 #esac
 
-# You can set AUTOMAKEPATH to empty if automake 1.11 is already in your PATH.
+# You can set AUTOMAKEPATH to empty if automake ≥ 1.14 is already in your PATH.
 AUTOMAKEPATH=
 
-# You can set GETTEXTPATH to empty if autopoint 0.15 is already in your PATH.
+# You can set GETTEXTPATH to empty if autopoint ≥ 0.15 is already in your PATH.
 GETTEXTPATH=
 
 # You can set LIBTOOLPATH to empty if libtoolize 2.x is already in your PATH.
@@ -3763,8 +3763,6 @@ func_update_file ()
 # Input/Output:
 # - makefile_am_edits and makefile_am_edit${edit}_{dir,var,val,dotfirst}
 #                   list of edits to be done to Makefile.am variables
-# Output:
-# - uses_subdirs    nonempty if object files in subdirs exist
 func_emit_lib_Makefile_am ()
 {
   # When using GNU make, or when creating an includable Makefile.am snippet,
@@ -3912,15 +3910,7 @@ func_emit_lib_Makefile_am ()
     echo "noinst_HEADERS ="
     echo "noinst_LIBRARIES ="
     echo "noinst_LTLIBRARIES ="
-    # Automake versions < 1.11.4 create an empty pkgdatadir at
-    # installation time if you specify pkgdata_DATA to empty.
-    # See automake bugs #10997 and #11030:
-    #  * https://debbugs.gnu.org/10997
-    #  * https://debbugs.gnu.org/11030
-    # So we need this workaround.
-    if grep '^pkgdata_DATA *+=' "$tmp"/allsnippets > /dev/null; then
-      echo "pkgdata_DATA ="
-    fi
+    echo "pkgdata_DATA ="
     echo "EXTRA_DIST ="
     echo "BUILT_SOURCES ="
     echo "SUFFIXES ="
@@ -4161,8 +4151,6 @@ func_emit_po_POTFILES_in ()
 # Input/Output:
 # - makefile_am_edits and makefile_am_edit${edit}_{dir,var,val,dotfirst}
 #                   list of edits to be done to Makefile.am variables
-# Output:
-# - uses_subdirs    nonempty if object files in subdirs exist
 func_emit_tests_Makefile_am ()
 {
   witness_macro="$1"
@@ -4332,15 +4320,7 @@ func_emit_tests_Makefile_am ()
       echo "check_LIBRARIES = libtests.a"
     fi
   fi
-  # Automake versions < 1.11.4 create an empty pkgdatadir at
-  # installation time if you specify pkgdata_DATA to empty.
-  # See automake bugs #10997 and #11030:
-  #  * https://debbugs.gnu.org/10997
-  #  * https://debbugs.gnu.org/11030
-  # So we need this workaround.
-  if grep '^pkgdata_DATA *+=' "$tmp"/main_snippets "$tmp"/longrunning_snippets > /dev/null; then
-    echo "pkgdata_DATA ="
-  fi
+  echo "pkgdata_DATA ="
   echo "EXTRA_DIST ="
   echo "BUILT_SOURCES ="
   echo "SUFFIXES ="
@@ -6027,9 +6007,6 @@ s,//*$,/,'
 
     func_emit_pre_early_macros : '  ' "$final_modules"
 
-    if ! $gnu_make && test -n "$uses_subdirs"; then
-      echo "  AC_REQUIRE([AM_PROG_CC_C_O])"
-    fi
     for module in $final_modules; do
       func_verify_module
       if test -n "$module"; then
@@ -6682,7 +6659,6 @@ func_create_testdir ()
     modules="$main_modules"
   fi
   func_emit_lib_Makefile_am > "$testdir/$sourcebase/Makefile.am"
-  any_uses_subdirs="$uses_subdirs"
 
   # Create $m4base/Makefile.am.
   mkdir -p "$testdir/$m4base"
@@ -6724,7 +6700,6 @@ func_create_testdir ()
       use_libtests=false
       destfile="$testsbase/Makefile.am"
       func_emit_tests_Makefile_am "" > "$testdir/$testsbase/Makefile.am"
-      any_uses_subdirs="$any_uses_subdirs$uses_subdirs"
       # Create $testsbase/configure.ac.
       (echo "# Process this file with autoconf to produce a configure script."
        echo "AC_INIT([dummy], [0])"
@@ -6739,10 +6714,6 @@ func_create_testdir ()
 
        func_emit_pre_early_macros false '' "$modules"
 
-       if test -n "$uses_subdirs"; then
-         echo "AM_PROG_CC_C_O"
-         echo
-       fi
        for module in $modules; do
          func_verify_module
          if test -n "$module"; then
@@ -6822,7 +6793,7 @@ func_create_testdir ()
   # Create Makefile.am.
   (echo "## Process this file with automake to produce Makefile.in."
    echo
-   echo "AUTOMAKE_OPTIONS = 1.11 foreign"
+   echo "AUTOMAKE_OPTIONS = 1.14 foreign"
    echo
    echo "SUBDIRS = $subdirs"
    echo
@@ -6854,10 +6825,6 @@ func_create_testdir ()
 
    func_emit_pre_early_macros false '' "$final_modules"
 
-   if test -n "$any_uses_subdirs"; then
-     echo "AM_PROG_CC_C_O"
-     echo
-   fi
    for module in $final_modules; do
      if $single_configure; then
        func_verify_module
@@ -7152,7 +7119,7 @@ func_create_megatestdir ()
   # Create Makefile.am.
   (echo "## Process this file with automake to produce Makefile.in."
    echo
-   echo "AUTOMAKE_OPTIONS = 1.11 foreign"
+   echo "AUTOMAKE_OPTIONS = 1.14 foreign"
    echo
    echo "SUBDIRS = $megasubdirs"
    echo

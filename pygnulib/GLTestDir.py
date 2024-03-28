@@ -396,14 +396,13 @@ class GLTestDir(object):
             os.mkdir(directory)
         destfile = joinpath(directory, 'Makefile.am')
         if single_configure:
-            emit, uses_subdirs = self.emitter.lib_Makefile_am(destfile, main_modules,
-                                                              moduletable, self.makefiletable, '', for_test)
+            emit = self.emitter.lib_Makefile_am(destfile, main_modules,
+                                                moduletable, self.makefiletable, '', for_test)
         else:  # if not single_configure
-            emit, uses_subdirs = self.emitter.lib_Makefile_am(destfile, modules,
-                                                              moduletable, self.makefiletable, '', for_test)
+            emit = self.emitter.lib_Makefile_am(destfile, modules,
+                                                moduletable, self.makefiletable, '', for_test)
         with codecs.open(destfile, 'wb', 'UTF-8') as file:
             file.write(emit)
-        any_uses_subdirs = uses_subdirs
 
         # Create $m4base/Makefile.am.
         directory = joinpath(self.testdir, m4base)
@@ -433,8 +432,8 @@ class GLTestDir(object):
                 # Create $testsbase/Makefile.am.
                 destfile = joinpath(directory, 'Makefile.am')
                 witness_macro = '%stests_WITNESS' % macro_prefix
-                emit, uses_subdirs = self.emitter.tests_Makefile_am(destfile, tests_modules, moduletable,
-                                                                    self.makefiletable, witness_macro, for_test)
+                emit = self.emitter.tests_Makefile_am(destfile, tests_modules, moduletable,
+                                                      self.makefiletable, witness_macro, for_test)
                 with codecs.open(destfile, 'wb', 'UTF-8') as file:
                     file.write(emit)
             else:  # if not single_configure
@@ -442,8 +441,8 @@ class GLTestDir(object):
                 destfile = joinpath(directory, 'Makefile.am')
                 libtests = False
                 self.config.setLibtests(False)
-                emit, uses_subdirs = self.emitter.tests_Makefile_am(destfile, modules, moduletable,
-                                                                    self.makefiletable, '', for_test)
+                emit = self.emitter.tests_Makefile_am(destfile, modules, moduletable,
+                                                      self.makefiletable, '', for_test)
                 with codecs.open(destfile, 'wb', 'UTF-8') as file:
                     file.write(emit)
                 # Viewed from the $testsbase subdirectory, $auxdir is different.
@@ -462,8 +461,6 @@ class GLTestDir(object):
                 emit += 'AC_PROG_INSTALL\n'
                 emit += 'AC_PROG_MAKE_SET\n'
                 emit += self.emitter.preEarlyMacros(False, '', modules)
-                if uses_subdirs:
-                    emit += 'AM_PROG_CC_C_O\n\n'
                 snippets = list()
                 for module in modules:
                     if str(module) in ['gnumakefile', 'maintainer-makefile']:
@@ -552,7 +549,7 @@ class GLTestDir(object):
 
         # Create Makefile.am.
         emit = '## Process this file with automake to produce Makefile.in.\n\n'
-        emit += 'AUTOMAKE_OPTIONS = 1.11 foreign\n\n'
+        emit += 'AUTOMAKE_OPTIONS = 1.14 foreign\n\n'
         emit += 'SUBDIRS = %s\n\n' % ' '.join(subdirs)
         emit += 'ACLOCAL_AMFLAGS = -I %s\n' % m4base
         emit = constants.nlconvert(emit)
@@ -579,9 +576,6 @@ class GLTestDir(object):
         emit += 'm4_pattern_allow([^gl_LIBOBJS$])dnl a variable\n'
         emit += 'm4_pattern_allow([^gl_LTLIBOBJS$])dnl a variable\n'
         emit += self.emitter.preEarlyMacros(False, '', modules)
-        if any_uses_subdirs:
-            emit += 'AM_PROG_CC_C_O\n'
-            emit += '\n'
         snippets = list()
         for module in final_modules:
             if single_configure:
@@ -1012,7 +1006,7 @@ class GLMegaTestDir(object):
 
         # Create Makefile.am.
         emit = '## Process this file with automake to produce Makefile.in.\n\n'
-        emit += 'AUTOMAKE_OPTIONS = 1.11 foreign\n\n'
+        emit += 'AUTOMAKE_OPTIONS = 1.14 foreign\n\n'
         emit += 'SUBDIRS = %s\n\n' % ' '.join(megasubdirs)
         emit += 'EXTRA_DIST = do-autobuild\n'
         emit = constants.nlconvert(emit)

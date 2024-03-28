@@ -698,9 +698,8 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         return emit
 
     def lib_Makefile_am(self, destfile: str, modules: list[GLModule], moduletable: GLModuleTable,
-                        makefiletable: GLMakefileTable, actioncmd: str, for_test: bool) -> tuple[str, bool]:
-        '''Emit the contents of the library Makefile. Returns str and a bool
-        variable which shows if subdirectories are used.
+                        makefiletable: GLMakefileTable, actioncmd: str, for_test: bool) -> str:
+        '''Emit the contents of the library Makefile. Returns it as a string.
         GLConfig: localpath, sourcebase, libname, pobase, auxdir, makefile_name, libtool,
         macro_prefix, podomain, conddeps, witness_c_macro.
 
@@ -865,15 +864,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
             emit += 'noinst_HEADERS =\n'
             emit += 'noinst_LIBRARIES =\n'
             emit += 'noinst_LTLIBRARIES =\n'
-            # Automake versions < 1.11.4 create an empty pkgdatadir at
-            # installation time if you specify pkgdata_DATA to empty.
-            # See automake bugs #10997 and #11030:
-            #  * https://debbugs.gnu.org/10997
-            #  * https://debbugs.gnu.org/11030
-            # So we need this workaround.
-            pattern = re.compile(r'^pkgdata_DATA *\+=', re.M)
-            if pattern.findall(allsnippets):
-                emit += 'pkgdata_DATA =\n'
+            emit += 'pkgdata_DATA =\n'
             emit += 'EXTRA_DIST =\n'
             emit += 'BUILT_SOURCES =\n'
             emit += 'SUFFIXES =\n'
@@ -1003,13 +994,11 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         emit += '\t-rm -f @%s_LIBOBJDEPS@\n' % (macro_prefix)
         # Extend the 'maintainer-clean' rule.
         emit += 'maintainer-clean-local: distclean-gnulib-libobjs\n'
-        result = tuple([emit, uses_subdirs])
-        return result
+        return emit
 
     def tests_Makefile_am(self, destfile: str, modules: list[GLModule], moduletable: GLModuleTable,
-                          makefiletable: GLMakefileTable, witness_macro: str, for_test: bool) -> tuple[str, bool]:
-        '''Emit the contents of the tests Makefile. Returns str and a bool variable
-        which shows if subdirectories are used.
+                          makefiletable: GLMakefileTable, witness_macro: str, for_test: bool) -> str:
+        '''Emit the contents of the tests Makefile. Returns it as a string.
         GLConfig: localpath, modules, libname, auxdir, makefile_name, libtool,
         sourcebase, m4base, testsbase, macro_prefix, witness_c_macro,
         single_configure, libtests.
@@ -1196,17 +1185,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                 emit += 'noinst_LIBRARIES += libtests.a\n'
             else:  # if not for_test
                 emit += 'check_LIBRARIES = libtests.a\n'
-
-        # Automake versions < 1.11.4 create an empty pkgdatadir at
-        # installation time if you specify pkgdata_DATA to empty.
-        # See automake bugs #10997 and #11030:
-        #  * https://debbugs.gnu.org/10997
-        #  * https://debbugs.gnu.org/11030
-        # So we need this workaround.
-        pattern = re.compile(r'^pkgdata_DATA *\+=', re.M)
-        if pattern.findall(main_snippets) or pattern.findall(longrun_snippets):
-            emit += 'pkgdata_DATA =\n'
-
+        emit += 'pkgdata_DATA =\n'
         emit += 'EXTRA_DIST =\n'
         emit += 'BUILT_SOURCES =\n'
         emit += 'SUFFIXES =\n'
@@ -1327,5 +1306,4 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         emit += '\t  fi; \\\n'
         emit += '\tdone; \\\n'
         emit += '\t:\n'
-        result = tuple([emit, uses_subdirs])
-        return result
+        return emit
