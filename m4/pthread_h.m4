@@ -1,4 +1,4 @@
-# pthread_h.m4 serial 9
+# pthread_h.m4 serial 10
 dnl Copyright (C) 2009-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -41,6 +41,8 @@ AC_DEFUN_ONCE([gl_PTHREAD_H],
   if test $ac_cv_type_pthread_spinlock_t != yes; then
     HAVE_PTHREAD_SPINLOCK_T=0
   fi
+  dnl Set HAVE_PTHREAD_SPIN_INIT, REPLACE_PTHREAD_SPIN_INIT.
+  gl_PTHREAD_SPIN
 
   dnl Constants may be defined as C preprocessor macros or as enum items.
 
