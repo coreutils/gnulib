@@ -1,6 +1,6 @@
 /* intprops-internal.h -- properties of integer types not visible to users
 
-   Copyright (C) 2001-2023 Free Software Foundation, Inc.
+   Copyright (C) 2001-2024 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify it
    under the terms of the GNU Lesser General Public License as published
@@ -164,7 +164,9 @@
    /* Work around GCC bug 91450.  */
 #  define _GL_INT_MULTIPLY_WRAPV(a, b, r) \
     ((!_GL_SIGNED_TYPE_OR_EXPR (*(r)) && _GL_EXPR_SIGNED (a) && _GL_EXPR_SIGNED (b) \
-      && _GL_INT_MULTIPLY_RANGE_OVERFLOW (a, b, 0, (__typeof__ (*(r))) -1)) \
+      && _GL_INT_MULTIPLY_RANGE_OVERFLOW (a, b, \
+                                          (__typeof__ (*(r))) 0, \
+                                          (__typeof__ (*(r))) -1)) \
      ? ((void) __builtin_mul_overflow (a, b, r), 1) \
      : __builtin_mul_overflow (a, b, r))
 # endif
