@@ -568,4 +568,42 @@ def combine_lines_matching(pattern: re.Pattern, text: str) -> str:
     return text
 
 
+def get_terminfo_string(capability: str) -> str:
+    '''Returns the value of a string-type terminfo capability for the current value of $TERM.
+    Returns the empty string if not defined.'''
+    value = ''
+    try:
+        value = sp.run(['tput', capability], stdout=sp.PIPE, stderr=sp.DEVNULL).stdout.decode('utf-8')
+    except Exception:
+        pass
+    return value
+
+
+def bold_escapes() -> tuple[str, str]:
+    '''Returns the escape sequences for turning bold-face on and off.'''
+    term = os.getenv('TERM', '')
+    if term != '' and os.isatty(1):
+        if term.startswith('xterm'):
+            # Assume xterm compatible escape sequences.
+            bold_on = '\033[1m'
+            bold_off = '\033[0m'
+        else:
+            # Use the terminfo capability strings for "bold" and "sgr0".
+            if term == 'sun-color' and get_terminfo_string('smso') != get_terminfo_string('rev'):
+                # Solaris 11 OmniOS: `tput smso` renders as bold,
+                #                    `tput rmso` is the same as `tput sgr0`.
+                bold_on = get_terminfo_string('smso')
+                bold_off = get_terminfo_string('rmso')
+            else:
+                bold_on = get_terminfo_string('bold')
+                bold_off = get_terminfo_string('sgr0')
+            if bold_on == '' or bold_off == '':
+                bold_on = ''
+                bold_off = ''
+    else:
+        bold_on = ''
+        bold_off = ''
+    return (bold_on, bold_off)
+
+
 __all__ += ['APP', 'DIRS', 'MODES', 'UTILS']

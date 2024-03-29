@@ -258,12 +258,7 @@ class GLTestDir(object):
 
         # Show final module list.
         if verbose >= 0:
-            bold_on = ''
-            bold_off = ''
-            term = os.getenv('TERM', '')
-            if term.startswith('xterm') and os.isatty(1):
-                bold_on = '\033[1m'
-                bold_off = '\033[0m'
+            (bold_on, bold_off) = constants.bold_escapes()
             print('Module list with included dependencies (indented):')
             specified_modules_set = { str(module)
                                       for module in specified_modules }

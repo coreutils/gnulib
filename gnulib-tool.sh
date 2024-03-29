@@ -3260,13 +3260,30 @@ func_modules_transitive_closure ()
 # - tmp             pathname of a temporary directory
 func_show_module_list ()
 {
-  if case "$TERM" in
-       xterm*) test -t 1;;
-       *) false;;
-     esac; then
-    # Assume xterm compatible escape sequences.
-    bold_on=`printf '\033[1m'`
-    bold_off=`printf '\033[0m'`
+  if test -n "$TERM" && test -t 1; then
+    case "$TERM" in
+      xterm*)
+        # Assume xterm compatible escape sequences.
+        bold_on=`printf '\033[1m'`
+        bold_off=`printf '\033[0m'`
+        ;;
+      *)
+        # Use the terminfo capability strings for "bold" and "sgr0".
+        if test "$TERM" = sun-color && test "`tput smso`" != "`tput rev`"; then
+          # Solaris 11 OmniOS: `tput smso` renders as bold,
+          #                    `tput rmso` is the same as `tput sgr0`.
+          bold_on=`tput smso 2>/dev/null`
+          bold_off=`tput rmso 2>/dev/null`
+        else
+          bold_on=`tput bold 2>/dev/null`
+          bold_off=`tput sgr0 2>/dev/null`
+        fi
+        if test -z "$bold_on" || test -z "$bold_off"; then
+          bold_on=
+          bold_off=
+        fi
+        ;;
+    esac
   else
     bold_on=
     bold_off=
