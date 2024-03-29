@@ -895,7 +895,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         # Execute edits that apply to the Makefile.am being generated.
         for current_edit in range(0, makefiletable.count()):
             dictionary = makefiletable[current_edit]
-            if dictionary['var']:
+            if 'var' in dictionary:
                 if destfile == joinpath(dictionary['dir'], 'Makefile.am'):
                     val = dictionary['val']
                     if dictionary['var'] == 'SUBDIRS' and dictionary['dotfirst']:
@@ -903,7 +903,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                         # Since we don't have '.' among SUBDIRS so far, add it now.
                         val = f'. {val}'
                     emit += '%s += %s\n' % (dictionary['var'], val)
-                    dictionary.pop('var')
+                    del dictionary['var']
 
         # Define two parts of cppflags variable.
         cppflags_part1 = ''
@@ -1198,7 +1198,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         # Execute edits that apply to the Makefile.am being generated.
         for current_edit in range(0, makefiletable.count()):
             dictionary = makefiletable[current_edit]
-            if dictionary['var']:
+            if 'var' in dictionary:
                 if destfile == joinpath(dictionary['dir'], 'Makefile.am'):
                     val = dictionary['val']
                     if dictionary['var'] == 'SUBDIRS' and dictionary['dotfirst']:
@@ -1206,7 +1206,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                         # But we have '.' among SUBDIRS already, so do nothing.
                         pass
                     emit += '%s += %s\n' % (dictionary['var'], val)
-                    dictionary.pop('var')
+                    del dictionary['var']
 
         emit += '\n'
 

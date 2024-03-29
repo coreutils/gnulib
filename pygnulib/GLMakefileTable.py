@@ -44,7 +44,11 @@ joinpath = constants.joinpath
 #===============================================================================
 class GLMakefileTable(object):
     '''This class is used to edit Makefile and store edits as table.
-    When user creates  Makefile, he may need to use this class.'''
+    When user creates Makefile.am, he may need to use this class.
+    The internal representation consists of a list of edits.
+    Each edit is a dictionary with keys 'dir', 'var', 'val', 'dotfirst'.
+    An edit may be removed; this is done by removing its 'var' key but
+    keeping it in the list. Removed edits must be ignored.'''
 
     def __init__(self, config: GLConfig) -> None:
         '''Create GLMakefileTable instance.'''
@@ -60,7 +64,9 @@ class GLMakefileTable(object):
             raise TypeError('indices must be integers, not %s'
                             % type(y).__name__)
         result = self.table[y]
-        return dict(result)
+        # Do *not* clone the result here. We want GLEmiter to be able to make
+        # side effects on the result.
+        return result
 
     def editor(self, dir: str, var: str, val: str, dotfirst: bool = False) -> None:
         '''This method is used to remember that ${dir}Makefile.am needs to be edited
@@ -107,5 +113,5 @@ class GLMakefileTable(object):
         self.editor(dir1, 'EXTRA_DIST', joinpath(dir2, 'gnulib-cache.m4'))
 
     def count(self) -> int:
-        '''Count number of edits which were applied.'''
+        '''Count number of edits which are stored, including the removed ones.'''
         return len(self.table)
