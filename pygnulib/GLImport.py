@@ -849,10 +849,10 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         if verbose >= 0:
             bold_on = ''
             bold_off = ''
-            term = os.getenv('TERM')
-            if term == 'xterm':
-                bold_on = '\x1b[1m'
-                bold_off = '\x1b[0m'
+            term = os.getenv('TERM', '')
+            if term.startswith('xterm') and os.isatty(1):
+                bold_on = '\033[1m'
+                bold_off = '\033[0m'
             print('Module list with included dependencies (indented):')
             for module in final_modules:
                 if str(module) in self.config.getModules():
