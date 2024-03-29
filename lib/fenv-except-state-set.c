@@ -441,15 +441,16 @@ fesetexceptflag (fexcept_t const *saved_flags, int exceptions)
 /* The compiler does not support __asm__ statements or equivalent
    intrinsics.  */
 
-# if defined __sun && ((defined __x86_64__ || defined _M_X64) || (defined __i386 || defined _M_IX86)) && defined __SUNPRO_C
-/* Solaris/i386, Solaris/x86_64.  */
+# if (defined __sun || __GLIBC__ >= 2) && ((defined __x86_64__ || defined _M_X64) || (defined __i386 || defined _M_IX86)) && defined __SUNPRO_C
+/* Solaris/i386, Solaris/x86_64, glibc/i386, glibc/x86_64, with SunPRO C.  */
 
-/* On these platforms, fpsetsticky cannot be used here, because it may generate
-   traps (since fpsetsticky calls _putsw, which modifies the control word of the
-   387 unit).  Instead, we need to modify only the flags in the SSE unit.  */
+/* On these Solaris platforms, fpsetsticky cannot be used here, because it may
+   generate traps (since fpsetsticky calls _putsw, which modifies the control
+   word of the 387 unit).  Instead, we need to modify only the flags in the SSE
+   unit.  */
 
-/* Accessors for the mxcsr register.  Fortunately, the Solaris cc supports a
-   poor form of 'asm'.  */
+/* Accessors for the mxcsr register.  Fortunately, the SunPRO C compiler
+   supports a poor form of 'asm'.  */
 
 static void
 getssecw (unsigned int *mxcsr_p)
@@ -477,6 +478,26 @@ setssecw (unsigned int const *mxcsr_p)
 #  endif
 }
 
+#  if __GLIBC__ >= 2
+/* Clears flags in the 387 unit.  */
+static void
+mask387cw (unsigned short mask)
+{
+#   if defined __x86_64__ || defined _M_X64
+  asm ("fnstenv -32(%rsp)");
+  asm ("andw %di,-28(%rsp)");
+  asm ("fldenv -32(%rsp)");
+#   else
+  /* The compiler generates a stack frame.  Therefore the first argument is in
+     8(%ebp), not in 4(%esp).  */
+  asm ("movl 8(%ebp),%eax");
+  asm ("fnstenv -32(%esp)");
+  asm ("andw %ax,-28(%esp)");
+  asm ("fldenv -32(%esp)");
+#   endif
+}
+#  endif
+
 int
 fesetexceptflag (fexcept_t const *saved_flags, int exceptions)
 {
@@ -489,6 +510,12 @@ fesetexceptflag (fexcept_t const *saved_flags, int exceptions)
   mxcsr = orig_mxcsr ^ ((orig_mxcsr ^ desired_flags) & exceptions);
   if (mxcsr != orig_mxcsr)
     setssecw (&mxcsr);
+
+#  if __GLIBC__ >= 2
+  /* Modify the flags in the 387 unit, but only by clearing bits, not by
+     setting bits.  */
+  mask387cw (~ (exceptions & ~desired_flags));
+#  endif
 
   return 0;
 }
