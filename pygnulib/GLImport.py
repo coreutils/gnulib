@@ -860,12 +860,6 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
             self.moduletable.transitive_closure_separately(base_modules, final_modules)
         main_modules, tests_modules = modules
 
-        # Transmit base_modules, final_modules, main_modules and tests_modules.
-        self.moduletable.setBaseModules(base_modules)
-        self.moduletable.setFinalModules(final_modules)
-        self.moduletable.setMainModules(main_modules)
-        self.moduletable.setTestsModules(tests_modules)
-
         # Print main_modules and tests_modules.
         if verbose >= 1:
             print('Main module list:')
@@ -891,6 +885,12 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         if libtests:  # if we need to use libtests.a
             # Add the dummy module to the tests-related module list if needed.
             tests_modules = self.moduletable.add_dummy(tests_modules)
+
+        # Transmit base_modules, final_modules, main_modules and tests_modules.
+        self.moduletable.setBaseModules(base_modules)
+        self.moduletable.setFinalModules(final_modules)
+        self.moduletable.setMainModules(main_modules)
+        self.moduletable.setTestsModules(tests_modules)
 
         # Check license incompatibilities.
         listing = list()

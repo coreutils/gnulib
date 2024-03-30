@@ -1102,7 +1102,7 @@ class GLModuleTable(object):
         for module in modules:
             if type(module) is not GLModule:
                 raise TypeError('each module must be a GLModule instance')
-        self.base_modules = sorted(set(modules))
+        self.base_modules = modules
 
     def getFinalModules(self) -> list[GLModule]:
         '''Return list of final modules.'''
@@ -1113,7 +1113,7 @@ class GLModuleTable(object):
         for module in modules:
             if type(module) is not GLModule:
                 raise TypeError('each module must be a GLModule instance')
-        self.final_modules = sorted(set(modules))
+        self.final_modules = modules
 
     def getMainModules(self) -> list[GLModule]:
         '''Return list of main modules.'''
@@ -1124,7 +1124,7 @@ class GLModuleTable(object):
         for module in modules:
             if type(module) is not GLModule:
                 raise TypeError('each module must be a GLModule instance')
-        self.main_modules = sorted(set(modules))
+        self.main_modules = modules
 
     def getTestsModules(self) -> list[GLModule]:
         '''Return list of tests modules.'''
@@ -1135,4 +1135,4 @@ class GLModuleTable(object):
         for module in modules:
             if type(module) is not GLModule:
                 raise TypeError('each module must be a GLModule instance')
-        self.tests_modules = sorted(set(modules))
+        self.tests_modules = modules
