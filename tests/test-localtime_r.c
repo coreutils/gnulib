@@ -58,7 +58,7 @@ main (void)
            && result->tm_yday == 0
            && result->tm_isdst == 0))
       {
-        fputs ("Skipping test: TZ='Europe/Paris' is not Paris time\n",
+        fputs ("Skipping test: TZ='" FRENCH_TZ "' is not Paris time\n",
                stderr);
         return 77;
       }
