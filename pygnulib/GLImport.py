@@ -202,7 +202,7 @@ class GLImport(object):
                 self.cache.setPoDomain(cleaner(tempdict['gl_PO_DOMAIN']))
             if tempdict['gl_WITNESS_C_MACRO']:
                 self.cache.setWitnessCMacro(cleaner(tempdict['gl_WITNESS_C_MACRO']))
-            if tempdict['gl_VC_FILES']:
+            if tempdict['gl_VC_FILES'] != '':
                 self.cache.setVCFiles(cleaner(tempdict['gl_VC_FILES']))
 
             # Get cached filelist from gnulib-comp.m4.
