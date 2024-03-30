@@ -43,6 +43,27 @@ main (void)
 {
   setenv ("TZ", FRENCH_TZ, 1);
 
+  /* Check that this TZ works.  */
+  {
+    time_t t = 0; /* 1970-01-01 01:00:00 */
+    struct tm *result = localtime (&t);
+    if (! (result
+           && result->tm_sec == 0
+           && result->tm_min == 0
+           && result->tm_hour == 1
+           && result->tm_mday == 1
+           && result->tm_mon == 1 - 1
+           && result->tm_year == 1970 - 1900
+           && result->tm_wday == 4
+           && result->tm_yday == 0
+           && result->tm_isdst == 0))
+      {
+        fputs ("Skipping test: TZ='Europe/Paris' is not Paris time\n",
+               stderr);
+        return 77;
+      }
+  }
+
   /* Note: The result->tm_gmtoff values and the result->tm_zone values are the
      same (3600, "CET" or 7200, "CEST") across all tested platforms:
      glibc, musl, macOS, FreeBSD, NetBSD, OpenBSD, Minix, Cygwin, Android.  */
