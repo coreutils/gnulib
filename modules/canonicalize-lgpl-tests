@@ -1,5 +1,4 @@
 Files:
-m4/musl.m4
 tests/test-canonicalize-lgpl.c
 tests/signature.h
 tests/null-ptr.h
@@ -11,7 +10,6 @@ same-inode
 symlink
 
 configure.ac:
-gl_MUSL_LIBC
 
 Makefile.am:
 TESTS += test-canonicalize-lgpl
