@@ -102,7 +102,7 @@ class GLModuleSystem(object):
                             % type(module).__name__)
         if self.exists(module):
             path, istemp = self.filesystem.lookup(joinpath('modules', module))
-            result = GLModule(self.config, path, istemp)
+            result = GLModule(self.config, module, path, istemp)
             return result
         else:  # if not self.exists(module)
             if self.config['errors']:
@@ -183,22 +183,27 @@ class GLModule(object):
     # List of characters allowed in shell identifiers.
     shell_id_chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_'
 
-    def __init__(self, config: GLConfig, path: str, patched: bool = False) -> None:
-        '''Create new GLModule instance. Arguments are path and patched, where
-        path is a string representing the path to the module and patched is a
-        bool indicating that module was created after applying patch.'''
+    def __init__(self, config: GLConfig, name: str, path: str, patched: bool = False) -> None:
+        '''Create new GLModule instance. Arguments are:
+        - name, the name of the module,
+        - path, the file name of the (possibly patched) module description,
+        - patched, indicating whether that module description was created by applying a patch.'''
         self.args = dict()
         self.cache = dict()
         self.content = ''
         if type(config) is not GLConfig:
             raise TypeError('config must be a GLConfig, not %s'
                             % type(config).__name__)
+        if type(name) is not str:
+            raise TypeError('name must be a string, not %s'
+                            % type(name).__name__)
         if type(path) is not str:
             raise TypeError('path must be a string, not %s'
                             % type(path).__name__)
         if type(patched) is not bool:
             raise TypeError('patched must be a bool, not %s'
                             % type(patched).__name__)
+        self.name = name
         self.path = path
         self.patched = patched
         self.config = config
@@ -284,9 +289,7 @@ class GLModule(object):
 
     def getName(self) -> str:
         '''Return the name of the module.'''
-        pattern = re.compile(joinpath('modules', '(.*)$'))
-        result = pattern.findall(self.path)[0]
-        return result
+        return self.name
 
     def isPatched(self) -> bool:
         '''Check whether module was created after applying patch.'''
