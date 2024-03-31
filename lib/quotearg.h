@@ -80,7 +80,8 @@ enum quoting_style
 
     /* Quote names for the shell if they contain shell metacharacters
        or other problematic characters (ls --quoting-style=shell-escape).
-       Non printable characters are quoted using the $'...' syntax,
+       Non printable characters are quoted using the $'...' syntax
+       <https://www.gnu.org/software/bash/manual/html_node/ANSI_002dC-Quoting.html>,
        which originated in ksh93 and is widely supported by most shells,
        and proposed for inclusion in POSIX.
 
@@ -95,7 +96,8 @@ enum quoting_style
 
     /* Quote names for the shell even if they would normally not
        require quoting (ls --quoting-style=shell-escape).
-       Non printable characters are quoted using the $'...' syntax,
+       Non printable characters are quoted using the $'...' syntax
+       <https://www.gnu.org/software/bash/manual/html_node/ANSI_002dC-Quoting.html>,
        which originated in ksh93 and is widely supported by most shells,
        and proposed for inclusion in POSIX.  Behaves like
        shell_escape_quoting_style if QA_ELIDE_OUTER_QUOTES is in effect.
@@ -253,7 +255,11 @@ enum quoting_flags
 
     /* Omit the surrounding quote characters if no escaped characters
        are encountered.  Note that if no other character needs
-       escaping, then neither does the escape character.  */
+       escaping, then neither does the escape character.
+       *Attention!*  This flag is unsupported in combination with the styles
+       shell_escape_quoting_style and shell_escape_always_quoting_style
+       (because in this situation it cannot handle strings that start
+       with a non-printable character).  */
     QA_ELIDE_OUTER_QUOTES = 0x02,
 
     /* In the c_quoting_style and c_maybe_quoting_style, split ANSI
