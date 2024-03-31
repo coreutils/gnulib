@@ -228,7 +228,7 @@ class GLModule(object):
         '''x.__eq__(y) <==> x==y'''
         result = False
         if type(module) is GLModule:
-            if self.path == module.path:
+            if self.name == module.name:
                 result = True
         return result
 
@@ -236,7 +236,7 @@ class GLModule(object):
         '''x.__ne__(y) <==> x!=y'''
         result = False
         if type(module) is GLModule:
-            if self.path != module.path:
+            if self.name != module.name:
                 result = True
         return result
 
@@ -244,7 +244,7 @@ class GLModule(object):
         '''x.__ge__(y) <==> x>=y'''
         result = False
         if type(module) is GLModule:
-            if self.path >= module.path:
+            if self.name >= module.name:
                 result = True
         return result
 
@@ -252,20 +252,20 @@ class GLModule(object):
         '''x.__gt__(y) <==> x>y'''
         result = False
         if type(module) is GLModule:
-            if self.path > module.path:
+            if self.name > module.name:
                 result = True
         return result
 
     def __hash__(self) -> int:
         '''x.__hash__() <==> hash(x)'''
-        result = hash(self.path) ^ hash(self.patched)
+        result = hash(self.name) ^ hash(self.patched)
         return result
 
     def __le__(self, module: object) -> bool:
         '''x.__le__(y) <==> x<=y'''
         result = False
         if type(module) is GLModule:
-            if self.path <= module.path:
+            if self.name <= module.name:
                 result = True
         return result
 
@@ -273,7 +273,7 @@ class GLModule(object):
         '''x.__lt__(y) <==> x<y'''
         result = False
         if type(module) is GLModule:
-            if self.path < module.path:
+            if self.name < module.name:
                 result = True
         return result
 
