@@ -28,7 +28,6 @@ from .GLConfig import GLConfig
 from .GLModuleSystem import GLModule
 from .GLModuleSystem import GLModuleTable
 from .GLMakefileTable import GLMakefileTable
-from .GLFileSystem import GLFileAssistant
 
 
 #===============================================================================
@@ -290,7 +289,7 @@ class GLEmiter(object):
             if type(module) is not GLModule:
                 raise TypeError('each referenceable module must be a GLModule instance')
         if type(moduletable) is not GLModuleTable:
-            raise TypeError('moduletable must be a GLFileAssistant, not %s'
+            raise TypeError('moduletable must be a GLModuleTable, not %s'
                             % type(moduletable).__name__)
         if type(verifier) is not int:
             raise TypeError('verifier must be an int, not %s'

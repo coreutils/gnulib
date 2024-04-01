@@ -20,10 +20,8 @@ from __future__ import annotations
 #===============================================================================
 import os
 import re
-import codecs
 import filecmp
 import subprocess as sp
-from enum import Enum
 from . import constants
 from pygnulib.enums import CopyAction
 from .GLError import GLError
