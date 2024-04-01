@@ -29,6 +29,7 @@ Using git
     Copyright-paperwork-exempt: Yes
   - use the 'git commit' option --author="Contributor Name <email@address>"
 
+
 License Notices
 ===============
 
@@ -43,11 +44,13 @@ use the license notices from etc/license-notices/ . This avoids gratuitous
 differences in wording, as well misunderstandings when a license notice
 would say "This program ...".
 
+
 Test Suite
 ==========
 
 When adding a module, add a unit test module as well.  This is our best
 chance to catch portability problems.
+
 
 Warning Options
 ===============
@@ -514,3 +517,55 @@ https://releases.llvm.org/16.0.0/tools/clang/docs/DiagnosticsReference.html :
   $ make
 Again, use your own judgement to determine whether to fix or ignore a
 specific warning.
+
+
+Debugging the Python implementation of gnulib-tool
+==================================================
+
+With Eclipse and PyDev as IDE
+-----------------------------
+
+* Download and configuration:
+  - Eclipse IDE from https://www.eclipse.org/downloads/packages/
+    (either the build for Java or for C/C++ should work fine;
+    either use the Eclipse Installer program at the top of the page,
+    or one of the individual download links below).
+  - PyDev from https://www.pydev.org/download.html
+    section "Install as Plugin".
+    (Don't use LiClipse, since the license costs money.)
+  - Follow https://www.pydev.org/manual_101_install.html,
+    replacing http://www.pydev.org/updates
+    with      https://www.pydev.org/updates
+  - Once installed, restart the IDE.
+  - Window > Preferences > PyDev > Interpreters > Python Interpreter:
+    New > path: /usr/bin/python3
+
+* Create a project:
+  Let GNULIB_DIR be my gnulib checkout.
+  - File > New > Project... > PyDev > PyDev Project. Call it 'gnulib-tool'.
+    Note that this is a project inside the Eclipse workspace, so far
+    unrelated to the GNULIB_DIR.
+  - Popup menu > New > Link to Existing Source
+    Name: gnulib
+    Path: <GNULIB_DIR>
+
+* Create a run configuration:
+  - Run > Run Configurations... > Python Run
+    Popup menu > New configuration
+      Name: gnulib-tool.py
+      Main > Project: gnulib-tool
+      Main > Main Module: ${workspace_loc:gnulib-tool/gnulib/.gnulib-tool.py}
+      Arguments > Program arguments: --help
+  - Test it: Run this configuration.
+
+* Create a debug configuration:
+  - Run > Debug Configurations... > gnulib-tool.py
+    Popup menu > Duplicate
+  - In the duplicate, set
+    Arguments > Working directory: /tmp/oath-toolkit/lib
+    Arguments > Program arguments: --add-import
+
+* Debug it:
+  - Open GLImport.py.
+  - On the left-hand border of this editor, do "Add breakpoint".
+  - Run > Debug Configurations... > pick the duplicate. Press Debug.
