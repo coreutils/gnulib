@@ -23,7 +23,7 @@ import copy
 import tempfile
 from . import constants
 from .GLError import GLError
-from pygnulib import classes
+from pygnulib.enums import CopyAction
 
 
 #===============================================================================
@@ -82,8 +82,8 @@ class GLConfig(object):
                  podomain: str | None = None,
                  witness_c_macro: str | None = None,
                  vc_files: bool | None = None,
-                 copymode: classes.CopyAction | None = None,
-                 lcopymode: classes.CopyAction | None = None,
+                 copymode: CopyAction | None = None,
+                 lcopymode: CopyAction | None = None,
                  configure_ac: str | None = None,
                  ac_version: float | int | None = None,
                  libtests: bool | None = None,
@@ -206,13 +206,13 @@ class GLConfig(object):
         self.resetCopyMode()
         if copymode == None:
             # Default to copying.
-            copymode = classes.CopyAction.Copy
+            copymode = CopyAction.Copy
         self.setCopyMode(copymode)
         # lcopymode (--local-symlink and --local-hardlink)
         self.resetLCopyMode()
         if lcopymode == None:
             # Default to copying.
-            lcopymode = classes.CopyAction.Copy
+            lcopymode = CopyAction.Copy
         self.setLCopyMode(lcopymode)
         # configure_ac
         self.resetAutoconfFile()
@@ -248,7 +248,7 @@ class GLConfig(object):
         '''x.__repr__() <==> repr(x)'''
         return '<pygnulib.GLConfig>'
 
-    def __getitem__(self, y: str) -> str | float | int | bool | classes.CopyAction | list[str] | None:
+    def __getitem__(self, y: str) -> str | float | int | bool | CopyAction | list[str] | None:
         '''x.__getitem__(y) <==> x[y]'''
         if y in self.table:
             result = self.table[y]
@@ -262,7 +262,7 @@ class GLConfig(object):
         else:  # if y not in self.table
             raise KeyError('GLConfig does not contain key: %s' % repr(y))
 
-    def dictionary(self) -> dict[str, str | float | int | bool | classes.CopyAction | list[str] | None]:
+    def dictionary(self) -> dict[str, str | float | int | bool | CopyAction | list[str] | None]:
         '''Return the configuration as a dict object.'''
         return dict(self.table)
 
@@ -304,7 +304,7 @@ class GLConfig(object):
         else:  # if key not in self.table
             raise KeyError('GLConfig does not contain key: %s' % repr(key))
 
-    def default(self, key: str) -> str | float | int | bool | classes.CopyAction | list[str] | None:
+    def default(self, key: str) -> str | float | int | bool | CopyAction | list[str] | None:
         '''Return default value for the given key.'''
         if key in self.table:
             if key == 'libname':
@@ -325,7 +325,7 @@ class GLConfig(object):
                          'libtests', 'dryrun']:
                 return False
             elif key in ['copymode', 'lcopymode']:
-                return classes.CopyAction.Copy
+                return CopyAction.Copy
             elif key in ['lgpl', 'vc_files']:
                 return None
             elif key == 'errors':
@@ -335,7 +335,7 @@ class GLConfig(object):
         else:  # if key not in self.table
             raise KeyError('GLConfig does not contain key: %s' % repr(key))
 
-    def isdefault(self, key: str, value: str | float | int | bool | classes.CopyAction | list[str] | None) -> bool:
+    def isdefault(self, key: str, value: str | float | int | bool | CopyAction | list[str] | None) -> bool:
         '''Check whether the value for the given key is a default value.'''
         if key in self.table:
             default = self.default(key)
@@ -347,7 +347,7 @@ class GLConfig(object):
         '''Return list of keys.'''
         return list(self.table.keys())
 
-    def values(self) -> list[str | float | int | bool | classes.CopyAction | list[str] | None]:
+    def values(self) -> list[str | float | int | bool | CopyAction | list[str] | None]:
         '''Return list of values.'''
         return list(self.table.values())
 
@@ -1065,13 +1065,13 @@ class GLConfig(object):
         self.table['ac_version'] = 2.64
 
     # Define copymode methods.
-    def checkCopyMode(self) -> classes.CopyAction:
+    def checkCopyMode(self) -> CopyAction:
         '''Check if pygnulib will copy files, create symlinks, or create hard links.'''
         return self.table['copymode']
 
-    def setCopyMode(self, value: classes.CopyAction) -> None:
+    def setCopyMode(self, value: CopyAction) -> None:
         '''Change the method used for copying / linking files.'''
-        if type(value) is classes.CopyAction:
+        if type(value) is CopyAction:
             self.table['copymode'] = value
         else:  # if type(value) is not CopyAction
             raise TypeError('value must be a CopyAction, not %s'
@@ -1079,18 +1079,18 @@ class GLConfig(object):
 
     def resetCopyMode(self) -> None:
         '''Reset the method used for creating files to copying instead of linking.'''
-        self.table['copymode'] = classes.CopyAction.Copy
+        self.table['copymode'] = CopyAction.Copy
 
     # Define lcopymode methods.
-    def checkLCopyMode(self) -> classes.CopyAction:
+    def checkLCopyMode(self) -> CopyAction:
         '''Check if pygnulib will copy files, create symlinks, or create hard links,
         only for files from the local override directories.'''
         return self.table['lcopymode']
 
-    def setLCopyMode(self, value: classes.CopyAction) -> None:
+    def setLCopyMode(self, value: CopyAction) -> None:
         '''Change the method used for copying / linking files, only for files from
         the local override directories.'''
-        if type(value) is classes.CopyAction:
+        if type(value) is CopyAction:
             self.table['lcopymode'] = value
         else:  # if type(value) is not CopyAction
             raise TypeError('value must be a CopyAction, not %s'
@@ -1099,7 +1099,7 @@ class GLConfig(object):
     def resetLCopyMode(self) -> None:
         '''Reset the method used for creating files to copying instead of linking,
         only for files from the local override directories.'''
-        self.table['lcopymode'] = classes.CopyAction.Copy
+        self.table['lcopymode'] = CopyAction.Copy
 
     # Define verbosity methods.
     def getVerbosity(self) -> int:

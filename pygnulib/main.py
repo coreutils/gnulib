@@ -82,7 +82,16 @@ import subprocess as sp
 import shlex
 from tempfile import mktemp
 from pygnulib import constants
-from pygnulib import classes
+from pygnulib.enums import CopyAction
+from pygnulib.GLConfig import GLConfig
+from pygnulib.GLError import GLError
+from pygnulib.GLFileSystem import GLFileSystem
+from pygnulib.GLFileSystem import GLFileAssistant
+from pygnulib.GLImport import GLImport
+from pygnulib.GLInfo import GLInfo
+from pygnulib.GLModuleSystem import GLModuleSystem
+from pygnulib.GLTestDir import GLTestDir
+from pygnulib.GLTestDir import GLMegaTestDir
 
 
 #===============================================================================
@@ -107,7 +116,7 @@ isfile = os.path.isfile
 # Define main part
 #===============================================================================
 def main() -> None:
-    info = classes.GLInfo()
+    info = GLInfo()
     parser = argparse.ArgumentParser(
         prog=constants.APP['name'],
         usage='gnulib-tool.py --help',
@@ -462,22 +471,22 @@ def main() -> None:
     parser.add_argument('-s', '-S', '--symbolic', '--symlink', '--more-symlinks',
                         dest='copymode',
                         default=None,
-                        action='store_const', const=classes.CopyAction.Symlink)
+                        action='store_const', const=CopyAction.Symlink)
     # local-symlink
     parser.add_argument('--local-symlink',
                         dest='lcopymode',
                         default=None,
-                        action='store_const', const=classes.CopyAction.Symlink)
+                        action='store_const', const=CopyAction.Symlink)
     # hardlink
     parser.add_argument('-h', '-H', '--hardlink', '--more-hardlinks',
                         dest='copymode',
                         default=None,
-                        action='store_const', const=classes.CopyAction.Hardlink)
+                        action='store_const', const=CopyAction.Hardlink)
     # local-hardlink
     parser.add_argument('--local-hardlink',
                         dest='lcopymode',
                         default=None,
-                        action='store_const', const=classes.CopyAction.Hardlink)
+                        action='store_const', const=CopyAction.Hardlink)
     # Undocumented option. Only used for the gnulib-tool test suite.
     parser.add_argument('--gnulib-dir',
                         dest='gnulib_dir',
@@ -802,7 +811,7 @@ def main() -> None:
     docbase = None
 
     # Create pygnulib configuration.
-    config = classes.GLConfig(
+    config = GLConfig(
         destdir=destdir,
         localpath=localpath,
         m4base=m4base,
@@ -837,14 +846,14 @@ def main() -> None:
 
     # Work in the given mode.
     if mode == 'list':
-        modulesystem = classes.GLModuleSystem(config)
+        modulesystem = GLModuleSystem(config)
         listing = modulesystem.list()
         result = lines_to_multiline(listing)
         os.rmdir(config['tempdir'])
         print(result, end='')
 
     elif mode == 'find':
-        modulesystem = classes.GLModuleSystem(config)
+        modulesystem = GLModuleSystem(config)
         for filename in files:
             if (isfile(joinpath(DIRS['root'], filename))
                     or (localpath != None
@@ -902,7 +911,7 @@ def main() -> None:
         elif isfile(joinpath(destdir, 'configure.in')):
             configure_ac = joinpath(destdir, 'configure.in')
         else:
-            raise classes.GLError(3, joinpath(destdir, 'configure.ac'))
+            raise GLError(3, joinpath(destdir, 'configure.ac'))
 
         # Save the Autoconf file path for the rest of the import.
         config.setAutoconfFile(configure_ac)
@@ -937,7 +946,7 @@ def main() -> None:
             config.setMacroPrefix(macro_prefix)
 
             # Perform GLImport actions.
-            importer = classes.GLImport(config, mode)
+            importer = GLImport(config, mode)
             filetable, transformers = importer.prepare()
             importer.execute(filetable, transformers)
 
@@ -961,7 +970,7 @@ def main() -> None:
                     config.setTestsBase(testsbase)
                     config.setMacroPrefix(macro_prefix)
                 # Perform GLImport actions.
-                importer = classes.GLImport(config, mode)
+                importer = GLImport(config, mode)
                 filetable, transformers = importer.prepare()
                 importer.execute(filetable, transformers)
             else:  # if not m4base
@@ -1027,7 +1036,7 @@ def main() -> None:
                     config.setTestsBase(testsbase)
                     config.setMacroPrefix(macro_prefix)
                     # Perform GLImport actions.
-                    importer = classes.GLImport(config, mode)
+                    importer = GLImport(config, mode)
                     filetable, transformers = importer.prepare()
                     importer.execute(filetable, transformers)
                 elif len(m4dirs) == 1:
@@ -1036,7 +1045,7 @@ def main() -> None:
                     m4base = m4dirs[-1]
                     config.setM4Base(m4base)
                     # Perform GLImport actions.
-                    importer = classes.GLImport(config, mode)
+                    importer = GLImport(config, mode)
                     filetable, transformers = importer.prepare()
                     importer.execute(filetable, transformers)
                 else:  # if len(m4dirs) > 1
@@ -1044,7 +1053,7 @@ def main() -> None:
                     for m4base in m4dirs:
                         config.setM4Base(m4base)
                         # Perform GLImport actions.
-                        importer = classes.GLImport(config, mode)
+                        importer = GLImport(config, mode)
                         filetable, transformers = importer.prepare()
                         importer.execute(filetable, transformers)
 
@@ -1058,7 +1067,7 @@ def main() -> None:
         if not auxdir:
             auxdir = 'build-aux'
         config.setAuxDir(auxdir)
-        testdir = classes.GLTestDir(config, destdir)
+        testdir = GLTestDir(config, destdir)
         testdir.execute()
 
     elif mode == 'create-megatestdir':
@@ -1071,7 +1080,7 @@ def main() -> None:
         if not auxdir:
             auxdir = 'build-aux'
         config.setAuxDir(auxdir)
-        testdir = classes.GLMegaTestDir(config, destdir)
+        testdir = GLMegaTestDir(config, destdir)
         testdir.execute()
 
     elif mode == 'test':
@@ -1080,7 +1089,7 @@ def main() -> None:
         if not auxdir:
             auxdir = 'build-aux'
         config.setAuxDir(auxdir)
-        testdir = classes.GLTestDir(config, destdir)
+        testdir = GLTestDir(config, destdir)
         testdir.execute()
         constants.force_output()
         os.chdir(destdir)
@@ -1113,7 +1122,7 @@ def main() -> None:
         if not auxdir:
             auxdir = 'build-aux'
         config.setAuxDir(auxdir)
-        testdir = classes.GLMegaTestDir(config, destdir)
+        testdir = GLMegaTestDir(config, destdir)
         testdir.execute()
         constants.force_output()
         os.chdir(destdir)
@@ -1138,42 +1147,42 @@ def main() -> None:
         sp.call(['rm', '-rf', destdir], shell=False)
 
     elif mode == 'extract-description':
-        modulesystem = classes.GLModuleSystem(config)
+        modulesystem = GLModuleSystem(config)
         for name in modules:
             module = modulesystem.find(name)
             if module:
                 sys.stdout.write(module.getDescription())
 
     elif mode == 'extract-comment':
-        modulesystem = classes.GLModuleSystem(config)
+        modulesystem = GLModuleSystem(config)
         for name in modules:
             module = modulesystem.find(name)
             if module:
                 sys.stdout.write(module.getComment())
 
     elif mode == 'extract-status':
-        modulesystem = classes.GLModuleSystem(config)
+        modulesystem = GLModuleSystem(config)
         for name in modules:
             module = modulesystem.find(name)
             if module:
                 sys.stdout.write(module.getStatus())
 
     elif mode == 'extract-notice':
-        modulesystem = classes.GLModuleSystem(config)
+        modulesystem = GLModuleSystem(config)
         for name in modules:
             module = modulesystem.find(name)
             if module:
                 sys.stdout.write(module.getNotice())
 
     elif mode == 'extract-applicability':
-        modulesystem = classes.GLModuleSystem(config)
+        modulesystem = GLModuleSystem(config)
         for name in modules:
             module = modulesystem.find(name)
             if module:
                 print(module.getApplicability())
 
     elif mode == 'extract-filelist':
-        modulesystem = classes.GLModuleSystem(config)
+        modulesystem = GLModuleSystem(config)
         for name in modules:
             module = modulesystem.find(name)
             if module:
@@ -1190,7 +1199,7 @@ def main() -> None:
             message += '%s: *** Stop.\n' % constants.APP['name']
             sys.stderr.write(message)
             sys.exit(1)
-        modulesystem = classes.GLModuleSystem(config)
+        modulesystem = GLModuleSystem(config)
         for name in modules:
             module = modulesystem.find(name)
             if module:
@@ -1203,35 +1212,35 @@ def main() -> None:
             message += '%s: *** Stop.\n' % constants.APP['name']
             sys.stderr.write(message)
             sys.exit(1)
-        modulesystem = classes.GLModuleSystem(config)
+        modulesystem = GLModuleSystem(config)
         for name in modules:
             module = modulesystem.find(name)
             if module:
                 sys.stdout.write(module.getDependenciesRecursively())
 
     elif mode == 'extract-autoconf-snippet':
-        modulesystem = classes.GLModuleSystem(config)
+        modulesystem = GLModuleSystem(config)
         for name in modules:
             module = modulesystem.find(name)
             if module:
                 sys.stdout.write(module.getAutoconfSnippet())
 
     elif mode == 'extract-automake-snippet':
-        modulesystem = classes.GLModuleSystem(config)
+        modulesystem = GLModuleSystem(config)
         for name in modules:
             module = modulesystem.find(name)
             if module:
                 sys.stdout.write(module.getAutomakeSnippet())
 
     elif mode == 'extract-include-directive':
-        modulesystem = classes.GLModuleSystem(config)
+        modulesystem = GLModuleSystem(config)
         for name in modules:
             module = modulesystem.find(name)
             if module:
                 sys.stdout.write(module.getInclude())
 
     elif mode == 'extract-link-directive':
-        modulesystem = classes.GLModuleSystem(config)
+        modulesystem = GLModuleSystem(config)
         for name in modules:
             module = modulesystem.find(name)
             if module:
@@ -1244,28 +1253,28 @@ def main() -> None:
             message += '%s: *** Stop.\n' % constants.APP['name']
             sys.stderr.write(message)
             sys.exit(1)
-        modulesystem = classes.GLModuleSystem(config)
+        modulesystem = GLModuleSystem(config)
         for name in modules:
             module = modulesystem.find(name)
             if module:
                 sys.stdout.write(module.getLinkDirectiveRecursively())
 
     elif mode == 'extract-license':
-        modulesystem = classes.GLModuleSystem(config)
+        modulesystem = GLModuleSystem(config)
         for name in modules:
             module = modulesystem.find(name)
             if module:
                 print(module.getLicense())
 
     elif mode == 'extract-maintainer':
-        modulesystem = classes.GLModuleSystem(config)
+        modulesystem = GLModuleSystem(config)
         for name in modules:
             module = modulesystem.find(name)
             if module:
                 sys.stdout.write(module.getMaintainer())
 
     elif mode == 'extract-tests-module':
-        modulesystem = classes.GLModuleSystem(config)
+        modulesystem = GLModuleSystem(config)
         for name in modules:
             module = modulesystem.find(name)
             if module and modulesystem.exists(module.getTestsName()):
@@ -1294,7 +1303,7 @@ def main() -> None:
         config.setM4Base(m4base)
         config.setDocBase(docbase)
         config.setTestsBase(testsbase)
-        filesystem = classes.GLFileSystem(config)
+        filesystem = GLFileSystem(config)
         lookedup, flag = filesystem.lookup(srcpath)
         if isdir(dest):
             destdir = dest
@@ -1324,7 +1333,7 @@ def main() -> None:
                 except FileExistsError:
                     pass
         # Copy the file.
-        assistant = classes.GLFileAssistant(config)
+        assistant = GLFileAssistant(config)
         tmpfile = assistant.tmpfilename(destpath)
         copyfile(lookedup, tmpfile)
         ensure_writable(tmpfile)
@@ -1350,7 +1359,7 @@ def main() -> None:
         sys.stderr.write(message)
         sys.exit(1)
 
-    if copymode == classes.CopyAction.Hardlink or lcopymode == classes.CopyAction.Hardlink:
+    if copymode == CopyAction.Hardlink or lcopymode == CopyAction.Hardlink:
         # Setting hard links modifies the ctime of files in the gnulib checkout.
         # This disturbs the result of the next "gitk" invocation.
         # Workaround: Let git scan the files. This can be done through
@@ -1367,7 +1376,7 @@ def main() -> None:
 if __name__ == '__main__':
     try:  # Try to execute
         main()
-    except classes.GLError as error:
+    except GLError as error:
         errmode = 0  # gnulib-style errors
         errno = error.errno
         errinfo = error.errinfo

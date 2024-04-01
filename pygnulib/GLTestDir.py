@@ -26,11 +26,11 @@ import subprocess as sp
 import shutil
 from pathlib import Path
 from . import constants
+from .enums import CopyAction
 from .GLError import GLError
 from .GLConfig import GLConfig
 from .GLModuleSystem import GLModuleTable
 from .GLModuleSystem import GLModuleSystem
-from .GLFileSystem import CopyAction
 from .GLFileSystem import GLFileSystem
 from .GLFileSystem import GLFileAssistant
 from .GLMakefileTable import GLMakefileTable

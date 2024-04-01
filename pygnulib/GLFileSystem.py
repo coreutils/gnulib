@@ -25,6 +25,7 @@ import filecmp
 import subprocess as sp
 from enum import Enum
 from . import constants
+from pygnulib.enums import CopyAction
 from .GLError import GLError
 from .GLConfig import GLConfig
 
@@ -51,15 +52,6 @@ link_if_changed = constants.link_if_changed
 isdir = os.path.isdir
 isfile = os.path.isfile
 islink = os.path.islink
-
-
-#===============================================================================
-# Define CopyAction class
-#===============================================================================
-class CopyAction(Enum):
-    Copy = 0
-    Symlink = 1
-    Hardlink = 2
 
 
 #===============================================================================
