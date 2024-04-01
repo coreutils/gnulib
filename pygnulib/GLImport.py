@@ -1455,7 +1455,7 @@ in <library>_a_LDFLAGS or <library>_la_LDFLAGS when linking a library.''')
         else:  # if makefile_am != 'Makefile.am'
             print('  - "include %s" from within "%s/Makefile.am",' % (source_makefile_am, sourcebase))
         if pobase:
-            print('  - add "%s/Makefile.in to AC_CONFIG_FILES in %s,' % (pobase, configure_ac))
+            print('  - add "%s/Makefile.in" to AC_CONFIG_FILES in %s,' % (pobase, configure_ac))
         if gentests:
             if tests_makefile_am == 'Makefile.am':
                 print('  - add "%s/Makefile" to AC_CONFIG_FILES in %s,' % (testsbase, configure_ac))
