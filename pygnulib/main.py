@@ -1268,9 +1268,8 @@ def main() -> None:
         modulesystem = classes.GLModuleSystem(config)
         for name in modules:
             module = modulesystem.find(name)
-            if module:
-                if module.getTestsModule():
-                    print(module.getTestsName())
+            if module and modulesystem.exists(module.getTestsName()):
+                print(module.getTestsName())
 
     elif mode == 'copy-file':
         srcpath = files[0]
