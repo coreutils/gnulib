@@ -942,7 +942,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         # Determine the final file lists.
         main_filelist, tests_filelist = \
             self.moduletable.filelist_separately(main_modules, tests_modules)
-        filelist = sorted(set(main_filelist + tests_filelist), key=str.lower)
+        filelist = sorted(set(main_filelist + tests_filelist))
         if not filelist:
             raise GLError(12, None)
 
