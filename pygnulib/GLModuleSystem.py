@@ -308,10 +308,7 @@ class GLModule(object):
 
     def getTestsName(self) -> str:
         '''Return -tests version of the module name.'''
-        result = self.getName()
-        if not result.endswith('-tests'):
-            result += '-tests'
-        return result
+        return f'{self.name}-tests'
 
     def getTestsModule(self) -> GLModule | None:
         '''Return -tests version of the module as GLModule.'''
