@@ -1373,7 +1373,7 @@ def main() -> None:
                 pass
 
 
-if __name__ == '__main__':
+def main_with_exception_handling() -> None:
     try:  # Try to execute
         main()
     except GLError as error:

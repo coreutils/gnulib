@@ -74,8 +74,8 @@ if ENCS['shell'] == None:
     ENCS['shell'] = 'UTF-8'
 
 # Set APP dictionary
-APP['path'] = os.path.realpath(sys.argv[0])                 # file name of <gnulib>/pygnulib/main.py
-APP['root'] = os.path.dirname(os.path.dirname(APP['path'])) # file name of <gnulib>
+APP['path'] = os.path.realpath(sys.argv[0])                 # file name of <gnulib>/.gnulib-tool.py
+APP['root'] = os.path.dirname(APP['path'])                  # file name of <gnulib>
 APP['name'] = os.path.join(APP['root'], 'gnulib-tool.py')
 
 # Set DIRS directory

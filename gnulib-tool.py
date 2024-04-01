@@ -144,8 +144,4 @@ else
   func_fatal_error "python3 not found; try setting GNULIB_TOOL_IMPL=sh"
 fi
 
-# Setting the PYTHONPATH environment variable is needed to avoid an error:
-#   from . import constants          =>   ImportError: attempted relative import with no known parent package
-#   from pygnulib import constants   =>   ModuleNotFoundError: No module named 'pygnulib'
-# Explanation: https://stackoverflow.com/questions/16981921/relative-imports-in-python-3
-exec env PYTHONPATH="$gnulib_dir" python3 "$gnulib_dir/pygnulib/main.py" "$@"
+exec python3 "$gnulib_dir/.gnulib-tool.py" "$@"
