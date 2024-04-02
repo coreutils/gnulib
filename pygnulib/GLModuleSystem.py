@@ -1031,9 +1031,9 @@ class GLModuleTable(object):
                     # Extract the value of unconditional "lib_SOURCES += ..." augmentations.
                     snippet = combine_lines(snippet)
                     snippet = self.remove_if_blocks(snippet)
-                    pattern = re.compile(r'^lib_SOURCES[\t ]*\+=([^#]*).*$', re.M)
-                    for matching_rhs in pattern.findall(snippet):
-                        files = matching_rhs.split(' ')
+                    pattern = re.compile(r'^lib_SOURCES[\t ]*\+=[\t ]*([^#]+?)$', re.MULTILINE)
+                    for matching_rhs in re.finditer(pattern, snippet):
+                        files = matching_rhs.group(1).split()
                         for file in files:
                             # Ignore .h files since they are not compiled.
                             if not file.endswith('.h'):
