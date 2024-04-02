@@ -100,7 +100,7 @@ class GLImport(object):
             self.cache.setAuxDir(joinpath(self.config['destdir'], result))
         pattern = re.compile(r'A[CM]_PROG_LIBTOOL', re.M)
         guessed_libtool = bool(pattern.findall(data))
-        if self.config['auxdir'] == None:
+        if self.config['auxdir'] == '':
             self.config.setAuxDir(self.cache['auxdir'])
 
         # Guess autoconf version.

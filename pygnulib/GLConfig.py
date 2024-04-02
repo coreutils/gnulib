@@ -251,10 +251,6 @@ class GLConfig(object):
     def __getitem__(self, y: str) -> str | float | int | bool | CopyAction | list[str] | None:
         '''x.__getitem__(y) <==> x[y]'''
         if y in self.table:
-            if y == "auxdir":
-                if self.table['auxdir']:
-                    return self.table['auxdir']
-                return "build-aux"
             return self.table[y]
         else:  # if y not in self.table
             raise KeyError('GLConfig does not contain key: %s' % repr(y))
