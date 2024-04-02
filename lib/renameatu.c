@@ -78,7 +78,7 @@ renameat2ish (int fd1, char const *src, int fd2, char const *dst,
   if (flags)
     {
       int r = renameatx_np (fd1, src, fd2, dst, RENAME_EXCL);
-      if (r == 0 || errno != ENOTSUP)
+      if (r == 0 || (errno != ENOTSUP && errno != ENOSYS))
         return r;
     }
 # endif
