@@ -130,7 +130,6 @@ class GLModuleSystem(object):
         of os.walk() function and re module. However, it takes too much time to
         complete, so this version uses subprocess to run shell commands.'''
         result = ''
-        listing = list()
         localpath = self.config['localpath']
         find_args = ['find', 'modules', '-type', 'f', '-print']
 
@@ -489,8 +488,7 @@ class GLModule(object):
         return self.sections.get('Files', '')
 
     def getFiles(self) -> list[str]:
-        '''Return list of files.
-        GLConfig: ac_version.'''
+        '''Return list of files.'''
         if 'files' not in self.cache:
             snippet = self.getFiles_Raw()
             result = [ line.strip()
@@ -575,7 +573,7 @@ class GLModule(object):
 
     def getAutomakeSnippet(self) -> str:
         '''Get automake snippet.
-        GLConfig: auxdir, ac_version.'''
+        GLConfig: auxdir.'''
         result = ''
         conditional = self.getAutomakeSnippet_Conditional()
         if conditional.strip():
@@ -591,9 +589,8 @@ class GLModule(object):
 
     def getAutomakeSnippet_Unconditional(self) -> str:
         '''Return unconditional automake snippet.
-        GLConfig: auxdir, ac_version.'''
+        GLConfig: auxdir'''
         auxdir = self.config['auxdir']
-        ac_version = self.config['ac_version']
         result = ''
         if 'makefile-unconditional' not in self.cache:
             if self.getName().endswith('-tests'):
@@ -1015,9 +1012,7 @@ class GLModuleTable(object):
     def add_dummy(self, modules: list[GLModule]) -> list[GLModule]:
         '''Add dummy package to list of modules if dummy package is needed.
         If not, return original list of modules.
-        GLConfig: auxdir, ac_version, conddeps.'''
-        auxdir = self.config['auxdir']
-        ac_version = self.config['ac_version']
+        GLConfig: conddeps.'''
         conddeps = self.config['conddeps']
         for module in modules:
             if type(module) is not GLModule:
@@ -1053,9 +1048,7 @@ class GLModuleTable(object):
 
     def filelist(self, modules: list[GLModule]) -> list[str]:
         '''Determine the final file list for the given list of modules.
-        The list of modules must already include dependencies.
-        GLConfig: ac_version.'''
-        ac_version = self.config['ac_version']
+        The list of modules must already include dependencies.'''
         filelist = list()
         for module in modules:
             if type(module) is not GLModule:
@@ -1074,7 +1067,6 @@ class GLModuleTable(object):
         files in lib/* go into $sourcebase/ if they are in the main file list but
         into $testsbase/ if they are in the tests-related file list. Furthermore
         lib/dummy.c can be in both.'''
-        ac_version = self.config['ac_version']
         main_filelist = self.filelist(main_modules)
         tests_filelist = self.filelist(tests_modules)
         tests_filelist = [ file.replace('lib/', 'tests=lib/', 1) if file.startswith('lib/') else file

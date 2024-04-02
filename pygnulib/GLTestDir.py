@@ -111,7 +111,7 @@ class GLTestDir(object):
         if not os.path.exists(self.testdir):
             try:  # Try to create directory
                 os.mkdir(self.testdir)
-            except Exception as error:
+            except Exception:
                 raise GLError(19, self.testdir)
         self.emitter = GLEmiter(self.config)
         self.filesystem = GLFileSystem(self.config)
@@ -172,14 +172,10 @@ class GLTestDir(object):
         auxdir = self.config['auxdir']
         sourcebase = self.config['sourcebase']
         m4base = self.config['m4base']
-        pobase = self.config['pobase']
-        docbase = self.config['docbase']
         testsbase = self.config['testsbase']
         libname = self.config['libname']
         libtool = self.config['libtool']
-        witness_c_macro = self.config['witness_c_macro']
         single_configure = self.config['single_configure']
-        include_guard_prefix = self.config['include_guard_prefix']
         macro_prefix = self.config['macro_prefix']
         verbose = self.config['verbosity']
 
@@ -417,7 +413,6 @@ class GLTestDir(object):
         subdirs = [sourcebase, m4base]
         subdirs_with_configure_ac = list()
 
-        testsbase_append = False
         inctests = self.config.checkInclTestCategory(TESTS['tests'])
         if inctests:
             directory = joinpath(self.testdir, testsbase)
@@ -540,7 +535,6 @@ class GLTestDir(object):
                 subdirs_with_configure_ac += [testsbase]
 
             subdirs += [testsbase]
-            testsbase_append = True
 
         # Create Makefile.am.
         emit = '## Process this file with automake to produce Makefile.in.\n\n'
@@ -905,7 +899,7 @@ class GLMegaTestDir(object):
         if not os.path.exists(self.megatestdir):
             try:  # Try to create directory
                 os.mkdir(self.megatestdir)
-            except Exception as error:
+            except Exception:
                 raise GLError(19, self.megatestdir)
         self.emitter = GLEmiter(self.config)
         self.filesystem = GLFileSystem(self.config)
@@ -1033,7 +1027,7 @@ class GLMegaTestDir(object):
             if not isdir('build-aux'):
                 print('executing mkdir build-aux')
                 os.mkdir('build-aux')
-        except Exception as error:
+        except Exception:
             pass
         args = [UTILS['autoconf']]
         constants.execute(args, verbose)

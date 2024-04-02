@@ -110,7 +110,7 @@ class GLFileSystem(object):
                 tempFile = joinpath(self.config['tempdir'], name)
                 try:  # Try to create directories
                     os.makedirs(os.path.dirname(tempFile))
-                except OSError as error:
+                except OSError:
                     pass  # Skip errors if directory exists
                 if isfile(tempFile):
                     os.remove(tempFile)
@@ -120,7 +120,7 @@ class GLFileSystem(object):
                     command = 'patch -s "%s" < "%s" >&2' % (tempFile, diff_in_localdir)
                     try:  # Try to apply patch
                         sp.check_call(command, shell=True)
-                    except sp.CalledProcessError as error:
+                    except sp.CalledProcessError:
                         raise GLError(2, name)
                 result = (tempFile, True)
             else:
@@ -260,7 +260,7 @@ class GLFileAssistant(object):
                 else:  # Move instead of linking.
                     try:  # Try to move file
                         movefile(tmpfile, joinpath(destdir, rewritten))
-                    except Exception as error:
+                    except Exception:
                         raise GLError(17, original)
         else:  # if self.config['dryrun']
             print('Copy file %s' % rewritten)
@@ -299,7 +299,7 @@ class GLFileAssistant(object):
                     os.remove(backuppath)
                 try:  # Try to replace the given file
                     movefile(basepath, backuppath)
-                except Exception as error:
+                except Exception:
                     raise GLError(17, original)
                 if self.filesystem.shouldLink(original, lookedup) == CopyAction.Symlink \
                         and not tmpflag and filecmp.cmp(lookedup, tmpfile):
@@ -313,7 +313,7 @@ class GLFileAssistant(object):
                             if os.path.exists(basepath):
                                 os.remove(basepath)
                             copyfile(tmpfile, joinpath(destdir, rewritten))
-                        except Exception as error:
+                        except Exception:
                             raise GLError(17, original)
             else:  # if self.config['dryrun']
                 if already_present:
@@ -337,14 +337,13 @@ class GLFileAssistant(object):
             xoriginal = substart('tests=lib/', 'lib/', original)
         lookedup, tmpflag = self.filesystem.lookup(xoriginal)
         tmpfile = self.tmpfilename(rewritten)
-        sed_transform_lib_file = self.transformers.get('lib')
         sed_transform_build_aux_file = self.transformers.get('aux')
         sed_transform_main_lib_file = self.transformers.get('main')
         sed_transform_testsrelated_lib_file = self.transformers.get('tests')
         try:  # Try to copy lookedup file to tmpfile
             copyfile(lookedup, tmpfile)
             ensure_writable(tmpfile)
-        except Exception as error:
+        except Exception:
             raise GLError(15, lookedup)
         # Don't process binary files with sed.
         if not (original.endswith(".class") or original.endswith(".mo")):

@@ -120,7 +120,6 @@ class GLInfo(object):
                     result = result.rstrip(os.linesep)
                     return result
         # gnulib copy without versioning information.
-        first_changelog_line = None
         with codecs.open(os.path.join(DIRS['root'], 'ChangeLog'), 'rb', 'UTF-8') as file:
             line = file.readline()
             first_changelog_line = line.rstrip()

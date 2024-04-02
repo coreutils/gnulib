@@ -4173,11 +4173,9 @@ func_emit_tests_Makefile_am ()
   witness_macro="$1"
   if test "$libtool" = true; then
     libext=la
-    perhapsLT=LT
     sed_eliminate_LDFLAGS="$sed_noop"
   else
     libext=a
-    perhapsLT=
     sed_eliminate_LDFLAGS='/^lib_LDFLAGS[	 ]*+=/d'
   fi
   # Replace NMD, so as to remove redundant "$(MKDIR_P) '.'" invocations.

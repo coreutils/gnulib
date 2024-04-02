@@ -308,7 +308,6 @@ class GLEmiter(object):
         if type(replace_auxdir) is not bool:
             raise TypeError('replace_auxdir must be a bool, not %s'
                             % type(replace_auxdir).__name__)
-        auxdir = self.config['auxdir']
         conddeps = self.config['conddeps']
         macro_prefix = self.config['macro_prefix']
         emit = ''
@@ -742,7 +741,6 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         witness_c_macro = self.config['witness_c_macro']
         include_guard_prefix = self.config['include_guard_prefix']
         module_indicator_prefix = self.config.getModuleIndicatorPrefix()
-        ac_version = self.config['ac_version']
         destfile = os.path.normpath(destfile)
         emit = ''
 
@@ -1030,29 +1028,23 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         sourcebase = self.config['sourcebase']
         libname = self.config['libname']
         m4base = self.config['m4base']
-        pobase = self.config['pobase']
         testsbase = self.config['testsbase']
         gnu_make = self.config['gnu_make']
-        makefile_name = self.config['makefile_name']
         libtool = self.config['libtool']
         macro_prefix = self.config['macro_prefix']
-        podomain = self.config['podomain']
         conddeps = self.config['conddeps']
         witness_c_macro = self.config['witness_c_macro']
         include_guard_prefix = self.config['include_guard_prefix']
         module_indicator_prefix = self.config.getModuleIndicatorPrefix()
-        ac_version = self.config['ac_version']
         libtests = self.config['libtests']
         single_configure = self.config['single_configure']
         emit = ''
 
         if libtool:
             libext = 'la'
-            perhapsLT = 'LT'
             eliminate_LDFLAGS = False
         else:  # if not libtool
             libext = 'a'
-            perhapsLT = ''
             eliminate_LDFLAGS = True
         if for_test:
             # When creating a package for testing: Attempt to provoke failures,

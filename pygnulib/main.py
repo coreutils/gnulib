@@ -1100,7 +1100,7 @@ def main() -> None:
             sp.call([UTILS['make']])
             sp.call([UTILS['make'], 'check'])
             sp.call([UTILS['make'], 'distclean'])
-        except Exception as error:
+        except Exception:
             sys.exit(1)
         args = ['find', '.', '-type', 'f', '-print']
         remaining = sp.check_output(args).decode(ENCS['shell'])

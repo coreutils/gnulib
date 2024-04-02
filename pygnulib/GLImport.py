@@ -381,7 +381,6 @@ class GLImport(object):
         '''Return command-line invocation comment.'''
         modules = self.config.getModules()
         avoids = self.config.getAvoids()
-        destdir = self.config.getDestDir()
         localpath = self.config.getLocalPath()
         auxdir = self.config.getAuxDir()
         sourcebase = self.config.getSourceBase()
@@ -402,7 +401,6 @@ class GLImport(object):
         witness_c_macro = self.config.getWitnessCMacro()
         podomain = self.config.getPoDomain()
         vc_files = self.config.checkVCFiles()
-        verbose = self.config.getVerbosity()
 
         # Command-line invocation printed in a comment in generated gnulib-cache.m4.
         actioncmd = '# gnulib-tool --import'
@@ -605,29 +603,17 @@ class GLImport(object):
         if type(gentests) is not bool:
             raise TypeError(f'gentests should be a bool, not {type(gentests).__name__}')
         emit = ''
-        assistant = self.assistant
         moduletable = self.moduletable
-        destdir = self.config['destdir']
         auxdir = self.config['auxdir']
         sourcebase = self.config['sourcebase']
         m4base = self.config['m4base']
-        pobase = self.config['pobase']
-        docbase = self.config['docbase']
         testsbase = self.config['testsbase']
-        lgpl = self.config['lgpl']
         libname = self.config['libname']
-        gnu_make = self.config['gnu_make']
-        makefile_name = self.config['makefile_name']
-        conddeps = self.config['conddeps']
         libtool = self.config['libtool']
         macro_prefix = self.config['macro_prefix']
-        podomain = self.config['podomain']
         witness_c_macro = self.config['witness_c_macro']
         configure_ac = self.config['configure_ac']
-        vc_files = self.config['vc_files']
         libtests = self.config['libtests']
-        modules = [ str(module)
-                    for module in moduletable['base'] ]
         emit += '# DO NOT EDIT! GENERATED AUTOMATICALLY!\n'
         emit += self.emitter.copyright_notice()
         emit += '''#
@@ -820,24 +806,9 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         '''Make all preparations before the execution of the code.
         Returns filetable and sed transformers, which change the license.'''
         destdir = self.config['destdir']
-        auxdir = self.config['auxdir']
         modules = list(self.config['modules'])
-        sourcebase = self.config['sourcebase']
         m4base = self.config['m4base']
-        pobase = self.config['pobase']
-        docbase = self.config['docbase']
-        testsbase = self.config['testsbase']
         lgpl = self.config['lgpl']
-        libname = self.config['libname']
-        makefile_name = self.config['makefile_name']
-        conddeps = self.config['conddeps']
-        libtool = self.config['libtool']
-        macro_prefix = self.config['macro_prefix']
-        podomain = self.config['podomain']
-        witness_c_macro = self.config['witness_c_macro']
-        vc_files = self.config['vc_files']
-        configure_ac = self.config['configure_ac']
-        ac_version = self.config['ac_version']
         verbose = self.config['verbosity']
         base_modules = sorted(set([ self.modulesystem.find(m)
                                     for m in modules ]))
@@ -895,7 +866,6 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         # Check license incompatibilities.
         listing = list()
         compatibilities = dict()
-        incompatibilities = ''
         compatibilities['all'] = ['GPLv2+ build tool', 'GPLed build tool',
                                   'public domain', 'unlimited',
                                   'unmodifiable license text']
@@ -1007,26 +977,18 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                 raise KeyError('filetable must contain key %s' % repr(key))
         destdir = self.config['destdir']
         auxdir = self.config['auxdir']
-        modules = list(self.config['modules'])
         sourcebase = self.config['sourcebase']
         m4base = self.config['m4base']
         pobase = self.config['pobase']
         docbase = self.config['docbase']
         testsbase = self.config['testsbase']
-        lgpl = self.config['lgpl']
         libname = self.config['libname']
         makefile_name = self.config['makefile_name']
         tests_makefile_name = self.config['tests_makefile_name']
         automake_subdir = self.config['automake_subdir']
-        conddeps = self.config['conddeps']
-        libtool = self.config['libtool']
         macro_prefix = self.config['macro_prefix']
-        podomain = self.config['podomain']
-        witness_c_macro = self.config['witness_c_macro']
         vc_files = self.config['vc_files']
         configure_ac = self.config['configure_ac']
-        ac_version = self.config['ac_version']
-        verbose = self.config['verbosity']
         actioncmd = self.actioncmd()
 
         # Determine whether to put anything into $testsbase.
@@ -1056,7 +1018,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                 if not self.config['dryrun']:
                     try:  # Try to create directory
                         os.makedirs(directory)
-                    except Exception as error:
+                    except Exception:
                         raise GLError(13, directory)
                 else:  # if self.config['dryrun']
                     print('Create directory %s' % directory)
@@ -1081,7 +1043,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                         if os.path.exists(backup):
                             os.remove(backup)
                         movefile(path, '%s~' % path)
-                    except Exception as error:
+                    except Exception:
                         raise GLError(14, file)
                 else:  # if self.config['dryrun']
                     print('Remove file %s (backup in %s~)' % (path, path))
@@ -1119,9 +1081,6 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         filetable['added'] += self.assistant.getFiles()
         filetable['added'] = sorted(set(filetable['added']))
 
-        # Determine include_guard_prefix.
-        include_guard_prefix = self.config['include_guard_prefix']
-
         # Default the source makefile name to Makefile.am.
         if makefile_name:
             source_makefile_am = makefile_name
@@ -1139,7 +1098,6 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         # Setup list of Makefile.am edits that are to be performed afterwards.
         # Some of these edits apply to files that we will generate; others are
         # under the responsibility of the developer.
-        makefile_am_edits = dict()
         if source_makefile_am == 'Makefile.am':
             sourcebase_dir = os.path.dirname(sourcebase)
             sourcebase_base = os.path.basename(sourcebase)
