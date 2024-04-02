@@ -47,6 +47,7 @@ TESTS = constants.TESTS
 joinpath = constants.joinpath
 subend = constants.subend
 lines_to_multiline = constants.lines_to_multiline
+combine_lines = constants.combine_lines
 isdir = os.path.isdir
 isfile = os.path.isfile
 filter_filelist = constants.filter_filelist
@@ -1028,7 +1029,7 @@ class GLModuleTable(object):
                 else:
                     snippet = module.getAutomakeSnippet()
                     # Extract the value of unconditional "lib_SOURCES += ..." augmentations.
-                    snippet = constants.remove_backslash_newline(snippet)
+                    snippet = combine_lines(snippet)
                     snippet = self.remove_if_blocks(snippet)
                     pattern = re.compile(r'^lib_SOURCES[\t ]*\+=([^#]*).*$', re.M)
                     for matching_rhs in pattern.findall(snippet):

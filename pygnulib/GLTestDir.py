@@ -57,6 +57,7 @@ copyfile = constants.copyfile
 ensure_writable = constants.ensure_writable
 movefile = constants.movefile
 lines_to_multiline = constants.lines_to_multiline
+combine_lines = constants.combine_lines
 isdir = os.path.isdir
 isfile = os.path.isfile
 normpath = os.path.normpath
@@ -749,7 +750,7 @@ class GLTestDir(object):
         path = joinpath(self.testdir, sourcebase, 'Makefile.am')
         with codecs.open(path, 'rb', 'UTF-8') as file:
             snippet = file.read()
-        snippet = constants.remove_backslash_newline(snippet)
+        snippet = combine_lines(snippet)
 
         # Extract the value of "CLEANFILES += ..." and "MOSTLYCLEANFILES += ...".
         regex_find = list()
@@ -794,7 +795,7 @@ class GLTestDir(object):
             path = joinpath(self.testdir, testsbase, 'Makefile.am')
             with codecs.open(path, 'rb', 'UTF-8') as file:
                 snippet = file.read()
-            snippet = constants.remove_backslash_newline(snippet)
+            snippet = combine_lines(snippet)
 
             # Extract the value of "CLEANFILES += ..." and "MOSTLYCLEANFILES += ...".
             regex_find = list()

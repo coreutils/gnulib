@@ -528,13 +528,6 @@ def remove_trailing_slashes(text: str) -> str:
     return result
 
 
-def remove_backslash_newline(text: str) -> str:
-    '''Given a multiline string text, join lines:
-    When a line ends in a backslash, remove the backslash and join the next
-    line to it.'''
-    return text.replace('\\\n', '')
-
-
 def combine_lines(text: str) -> str:
     '''Given a multiline string text, join lines by spaces:
     When a line ends in a backslash, remove the backslash and join the next
