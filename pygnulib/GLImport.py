@@ -318,7 +318,7 @@ class GLImport(object):
         sourcebase = self.cache['sourcebase']
         m4base = self.cache['m4base']
         testsbase = self.cache['testsbase']
-        result = list()
+        result = []
         for file in files:
             if file.startswith('build-aux/'):
                 path = constants.substart('build-aux/', '%s/' % auxdir, file)
@@ -355,7 +355,7 @@ class GLImport(object):
         sourcebase = self.config['sourcebase']
         m4base = self.config['m4base']
         testsbase = self.config['testsbase']
-        result = list()
+        result = []
         for file in files:
             if file.startswith('build-aux/'):
                 path = constants.substart('build-aux/', '%s/' % auxdir, file)
@@ -864,7 +864,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         self.moduletable.setTestsModules(tests_modules)
 
         # Check license incompatibilities.
-        listing = list()
+        listing = []
         compatibilities = dict()
         compatibilities['all'] = ['GPLv2+ build tool', 'GPLed build tool',
                                   'public domain', 'unlimited',
@@ -940,8 +940,8 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         transformers['aux'] = sed_transform_build_aux_file
         transformers['main'] = sed_transform_main_lib_file
         transformers['tests'] = sed_transform_testsrelated_lib_file
-        old_table = list()
-        new_table = list()
+        old_table = []
+        new_table = []
         for src in old_files:
             dest = self.rewrite_old_files([src])[-1]
             old_table += [tuple([dest, src])]
@@ -958,8 +958,8 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
             sorted(set(old_table), key=lambda t: tuple(t[0].lower()))
         filetable['new'] = \
             sorted(set(new_table), key=lambda t: tuple(t[0].lower()))
-        filetable['added'] = list()
-        filetable['removed'] = list()
+        filetable['added'] = []
+        filetable['removed'] = []
 
         # Return the result.
         result = tuple([filetable, transformers])
@@ -1324,7 +1324,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
 
         if vc_files != False:
             # Update the .cvsignore and .gitignore files.
-            ignorelist = list()
+            ignorelist = []
             # Treat gnulib-comp.m4 like an added file, even if it already existed.
             filetable['added'] += [joinpath(m4base, 'gnulib-comp.m4')]
             filetable['added'] = sorted(set(filetable['added']))
@@ -1338,8 +1338,8 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
             # Sort ignorelist by directory.
             ignorelist = sorted(ignorelist, key=lambda row: row[0])
             last_dir = ''
-            last_dir_files_added = list()
-            last_dir_files_removed = list()
+            last_dir_files_added = []
+            last_dir_files_removed = []
             for row in ignorelist:
                 next_dir = row[0]
                 operand = row[1]
@@ -1347,8 +1347,8 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                 if next_dir != last_dir:
                     self._done_dir_(last_dir, last_dir_files_added, last_dir_files_removed)
                     last_dir = next_dir
-                    last_dir_files_added = list()
-                    last_dir_files_removed = list()
+                    last_dir_files_added = []
+                    last_dir_files_removed = []
                 if operand == '|A|':
                     last_dir_files_added += [filename]
                 elif operand == '|R|':

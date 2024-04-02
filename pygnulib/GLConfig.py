@@ -311,7 +311,7 @@ class GLConfig(object):
                 return 0
             elif key in ['localpath', 'modules', 'avoids', 'tests',
                          'incl_test_categories', 'excl_test_categories']:
-                return list()
+                return []
             elif key in ['libtool', 'gnu_make', 'automake_subdir',
                          'automake_subdir_tests', 'conddeps',
                          'libtests', 'dryrun']:
@@ -535,7 +535,7 @@ class GLConfig(object):
         '''Set the modules list.'''
         if type(modules) is list or type(modules) is tuple:
             old_modules = self.table['modules']
-            self.table['modules'] = list()
+            self.table['modules'] = []
             for module in modules:
                 try:  # Try to add each module
                     self.addModule(module)
@@ -551,7 +551,7 @@ class GLConfig(object):
 
     def resetModules(self) -> None:
         '''Reset the list of the modules.'''
-        self.table['modules'] = list()
+        self.table['modules'] = []
 
     # Define avoids methods.
     def addAvoid(self, module: str) -> None:
@@ -581,7 +581,7 @@ class GLConfig(object):
         '''Specify the modules which will be avoided.'''
         if type(modules) is list or type(modules) is tuple:
             old_avoids = self.table['avoids']
-            self.table['avoids'] = list()
+            self.table['avoids'] = []
             for module in modules:
                 try:  # Try to add each module
                     self.addAvoid(module)
@@ -597,7 +597,7 @@ class GLConfig(object):
 
     def resetAvoids(self) -> None:
         '''Reset the list of the avoided modules.'''
-        self.table['avoids'] = list()
+        self.table['avoids'] = []
 
     # Define files methods.
     def addFile(self, file: str) -> None:
@@ -626,7 +626,7 @@ class GLConfig(object):
         '''Specify the list of files.'''
         if type(files) is list or type(files) is tuple:
             old_files = self.table['files']
-            self.table['files'] = list()
+            self.table['files'] = []
             for file in files:
                 try:  # Try to add each file
                     self.addFile(file)
@@ -642,7 +642,7 @@ class GLConfig(object):
 
     def resetFiles(self) -> None:
         '''Reset the list of files.'''
-        self.table['files'] = list()
+        self.table['files'] = []
 
     # Define incl_test_categories methods
     def checkInclTestCategory(self, category: int) -> bool:
@@ -684,7 +684,7 @@ class GLConfig(object):
         '''Specify the test categories that should be included.'''
         if type(categories) is list or type(categories) is tuple:
             old_categories = self.table['incl_test_categories']
-            self.table['incl_test_categories'] = list()
+            self.table['incl_test_categories'] = []
             for category in categories:
                 try:  # Try to enable each category
                     self.enableInclTestCategory(category)
@@ -697,7 +697,7 @@ class GLConfig(object):
 
     def resetInclTestCategories(self) -> None:
         '''Reset test categories.'''
-        self.table['incl_test_categories'] = list()
+        self.table['incl_test_categories'] = []
 
     # Define excl_test_categories methods
     def checkExclTestCategory(self, category: int) -> bool:
@@ -732,7 +732,7 @@ class GLConfig(object):
         '''Specify the test categories that should be excluded.'''
         if type(categories) is list or type(categories) is tuple:
             old_categories = self.table['excl_test_categories']
-            self.table['excl_test_categories'] = list()
+            self.table['excl_test_categories'] = []
             for category in categories:
                 try:  # Try to enable each category
                     self.enableExclTestCategory(category)
@@ -745,7 +745,7 @@ class GLConfig(object):
 
     def resetExclTestCategories(self) -> None:
         '''Reset test categories.'''
-        self.table['excl_test_categories'] = list()
+        self.table['excl_test_categories'] = []
 
     # Define libname methods.
     def getLibName(self) -> str:

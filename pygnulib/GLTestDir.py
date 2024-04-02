@@ -146,7 +146,7 @@ class GLTestDir(object):
         sourcebase = self.config['sourcebase']
         m4base = self.config['m4base']
         testsbase = self.config['testsbase']
-        result = list()
+        result = []
         for file in files:
             if file.startswith('build-aux/'):
                 path = constants.substart('build-aux/', '%s/' % auxdir, file)
@@ -353,7 +353,7 @@ class GLTestDir(object):
         directories = sorted(set(directories))
 
         # Copy files or make symbolic links or hard links.
-        filetable = list()
+        filetable = []
         for src in filelist:
             dest = self.rewrite_files([src])[-1]
             filetable += [tuple([dest, src])]
@@ -412,7 +412,7 @@ class GLTestDir(object):
             file.write(emit)
 
         subdirs = [sourcebase, m4base]
-        subdirs_with_configure_ac = list()
+        subdirs_with_configure_ac = []
 
         inctests = self.config.checkInclTestCategory(TESTS['tests'])
         if inctests:
@@ -452,7 +452,7 @@ class GLTestDir(object):
                 emit += 'AC_PROG_INSTALL\n'
                 emit += 'AC_PROG_MAKE_SET\n'
                 emit += self.emitter.preEarlyMacros(False, '', modules)
-                snippets = list()
+                snippets = []
                 for module in modules:
                     if str(module) in ['gnumakefile', 'maintainer-makefile']:
                         # These are meant to be used only in the top-level directory.
@@ -566,7 +566,7 @@ class GLTestDir(object):
         emit += 'm4_pattern_allow([^gl_LIBOBJS$])dnl a variable\n'
         emit += 'm4_pattern_allow([^gl_LTLIBOBJS$])dnl a variable\n'
         emit += self.emitter.preEarlyMacros(False, '', modules)
-        snippets = list()
+        snippets = []
         for module in final_modules:
             if single_configure:
                 solution = True
@@ -753,7 +753,7 @@ class GLTestDir(object):
         snippet = combine_lines(snippet)
 
         # Extract the value of "CLEANFILES += ..." and "MOSTLYCLEANFILES += ...".
-        regex_find = list()
+        regex_find = []
         pattern = re.compile(r'^CLEANFILES[\t ]*\+=(.*)$', re.M)
         regex_find += pattern.findall(snippet)
         pattern = re.compile(r'^MOSTLYCLEANFILES[\t ]*\+=(.*)$', re.M)
@@ -770,7 +770,7 @@ class GLTestDir(object):
 
         # Extract the value of "BUILT_SOURCES += ...". Remove variable references
         # such $(FOO_H) because they don't refer to distributed files.
-        regex_find = list()
+        regex_find = []
         pattern = re.compile(r'^BUILT_SOURCES[\t ]*\+=(.*)$', re.M)
         regex_find += pattern.findall(snippet)
         regex_find = [ line.strip()
@@ -798,7 +798,7 @@ class GLTestDir(object):
             snippet = combine_lines(snippet)
 
             # Extract the value of "CLEANFILES += ..." and "MOSTLYCLEANFILES += ...".
-            regex_find = list()
+            regex_find = []
             pattern = re.compile(r'^CLEANFILES[\t ]*\+=(.*)$', re.M)
             regex_find += pattern.findall(snippet)
             pattern = re.compile(r'^MOSTLYCLEANFILES[\t ]*\+=(.*)$', re.M)
@@ -815,7 +815,7 @@ class GLTestDir(object):
 
             # Extract the value of "BUILT_SOURCES += ...". Remove variable references
             # such $(FOO_H) because they don't refer to distributed files.
-            regex_find = list()
+            regex_find = []
             pattern = re.compile(r'^BUILT_SOURCES[\t ]*\+=(.*)$', re.M)
             regex_find += pattern.findall(snippet)
             regex_find = [ line.strip()
@@ -914,7 +914,7 @@ class GLMegaTestDir(object):
         auxdir = self.config['auxdir']
         verbose = self.config['verbosity']
 
-        megasubdirs = list()
+        megasubdirs = []
         modules = [ self.modulesystem.find(m)
                     for m in self.config['modules'] ]
         if not modules:

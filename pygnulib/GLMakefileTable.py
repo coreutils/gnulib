@@ -56,7 +56,7 @@ class GLMakefileTable(object):
             raise TypeError('config must be a GLConfig, not %s'
                             % type(config).__name__)
         self.config = config
-        self.table = list()
+        self.table = []
 
     def __getitem__(self, y: int) -> dict[str, bool]:
         '''x.__getitem__(y) = x[y]'''

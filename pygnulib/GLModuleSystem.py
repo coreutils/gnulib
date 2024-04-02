@@ -737,10 +737,10 @@ class GLModuleTable(object):
         self.dependers = dict()  # Dependencies
         self.conditionals = dict()  # Conditional modules
         self.unconditionals = dict()  # Unconditional modules
-        self.base_modules = list()  # Base modules
-        self.main_modules = list()  # Main modules
-        self.tests_modules = list()  # Tests modules
-        self.final_modules = list()  # Final modules
+        self.base_modules = []  # Base modules
+        self.main_modules = []  # Main modules
+        self.tests_modules = []  # Tests modules
+        self.final_modules = []  # Final modules
         if type(config) is not GLConfig:
             raise TypeError('config must be a GLConfig, not %s'
                             % type(config).__name__)
@@ -752,7 +752,7 @@ class GLModuleTable(object):
                             % type(inc_all_direct_tests).__name__)
         self.inc_all_direct_tests = inc_all_direct_tests
         self.inc_all_indirect_tests = inc_all_indirect_tests
-        self.avoids = list()  # Avoids
+        self.avoids = []  # Avoids
         for avoid in self.config.getAvoids():
             module = self.modulesystem.find(avoid)
             if module:
@@ -793,7 +793,7 @@ class GLModuleTable(object):
         if not str(module) in self.unconditionals:
             # No unconditional dependency to the given module is known at this point.
             if str(module) not in self.dependers:
-                self.dependers[str(module)] = list()
+                self.dependers[str(module)] = []
             if str(parent) not in self.dependers[str(module)]:
                 self.dependers[str(module)].append(str(parent))
             key = '%s---%s' % (str(parent), str(module))
@@ -847,16 +847,16 @@ class GLModuleTable(object):
         # module on the input list has been processed, it is added to the
         # "handled list", so we can avoid to process it again.
         inc_all_tests = self.inc_all_direct_tests
-        handledmodules = list()
+        handledmodules = []
         inmodules = modules
-        outmodules = list()
+        outmodules = []
         if self.config['conddeps']:
             for module in modules:
                 if module not in self.avoids:
                     self.addUnconditional(module)
         while inmodules:
             inmodules_this_round = inmodules
-            inmodules = list()               # Accumulator, queue for next round
+            inmodules = []               # Accumulator, queue for next round
             for module in inmodules_this_round:
                 if module not in self.avoids:
                     outmodules += [module]
@@ -1050,7 +1050,7 @@ class GLModuleTable(object):
     def filelist(self, modules: list[GLModule]) -> list[str]:
         '''Determine the final file list for the given list of modules.
         The list of modules must already include dependencies.'''
-        filelist = list()
+        filelist = []
         for module in modules:
             if type(module) is not GLModule:
                 raise TypeError('each module must be a GLModule instance')

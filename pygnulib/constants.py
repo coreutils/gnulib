@@ -35,7 +35,7 @@ import __main__ as interpreter
 #===============================================================================
 # Define module information
 #===============================================================================
-__all__ = list()
+__all__ = []
 __author__ = \
     [
         'Bruno Haible',
@@ -270,7 +270,7 @@ def joinpath(head: str, *tail: str) -> str:
     '''Join two or more pathname components, inserting '/' as needed. If any
     component is an absolute path, all previous path components will be
     discarded.'''
-    newtail = list()
+    newtail = []
     for item in tail:
         newtail += [item]
     result = os.path.normpath(os.path.join(head, *tail))
@@ -459,7 +459,7 @@ def filter_filelist(separator: str, filelist: str, prefix: str, suffix: str,
     prefix and ending with suffix are considered. Processing: removed_prefix
     and removed_suffix are removed from each element, added_prefix and
     added_suffix are added to each element.'''
-    listing = list()
+    listing = []
     for filename in filelist:
         if filename.startswith(prefix) and filename.endswith(suffix):
             pattern = re.compile(r'^%s(.*)%s$'

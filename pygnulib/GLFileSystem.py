@@ -177,7 +177,7 @@ class GLFileAssistant(object):
                                     % (key, type(value).__name__))
         self.original = None
         self.rewritten = None
-        self.added = list()
+        self.added = []
         self.config = config
         self.transformers = transformers
         self.filesystem = GLFileSystem(self.config)
