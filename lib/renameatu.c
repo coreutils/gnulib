@@ -1,5 +1,5 @@
 /* Rename a file relative to open directories.
-   Copyright (C) 2009-2023 Free Software Foundation, Inc.
+   Copyright (C) 2009-2024 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -74,7 +74,7 @@ renameat2ish (int fd1, char const *src, int fd2, char const *dst,
   if (flags)
     {
       int r = renameatx_np (fd1, src, fd2, dst, RENAME_EXCL);
-      if (r == 0 || errno != ENOTSUP)
+      if (r == 0 || (errno != ENOTSUP && errno != ENOSYS))
         return r;
     }
 # endif
