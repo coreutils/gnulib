@@ -539,6 +539,8 @@ With Eclipse and PyDev as IDE
   - Once installed, restart the IDE.
   - Window > Preferences > PyDev > Interpreters > Python Interpreter:
     New > path: /usr/bin/python3
+  - Window > Preferences > PyDev > Editor > Code Analysis:
+    Others > Redefinition of builtin symbols: Ignore
 
 * Create a project:
   Let GNULIB_DIR be my gnulib checkout.
