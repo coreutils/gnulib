@@ -260,7 +260,6 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
   bool backslash_escapes = false;
   bool unibyte_locale = MB_CUR_MAX == 1;
   bool elide_outer_quotes = (flags & QA_ELIDE_OUTER_QUOTES) != 0;
-  bool pending_shell_escape_end = false;
   bool encountered_single_quote = false;
   bool all_c_and_shell_quote_compat = true;
 
@@ -303,7 +302,8 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
       } \
     while (0)
 
- process_input:
+ process_input: ;
+  bool pending_shell_escape_end = false;
 
   switch (quoting_style)
     {
