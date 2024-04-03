@@ -2653,7 +2653,11 @@ func_get_automake_snippet_unconditional ()
       # Synthesize an EXTRA_DIST augmentation also for the files in build-aux/.
       func_filter_filelist buildaux_files "$nl" "$all_files" 'build-aux/' '' 'build-aux/' ''
       if test -n "$buildaux_files"; then
-        sed_prepend_auxdir='s,^,$(top_srcdir)/'"$auxdir"'/,'
+        if test "$auxdir" != "."; then
+          sed_prepend_auxdir='s,^,$(top_srcdir)/'"$auxdir"'/,'
+        else
+          sed_prepend_auxdir='s,^,$(top_srcdir)/,'
+        fi
         echo "EXTRA_DIST += "`echo "$buildaux_files" | sed -e "$sed_prepend_auxdir"`
         echo
       fi
