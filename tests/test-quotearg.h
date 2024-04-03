@@ -21,6 +21,7 @@ struct result_strings {
   char const *str2; /* Translation of "\0""1\0".  */
   size_t len2; /* Length of str2.  */
   char const *str3; /* Translation of "simple".  */
+  char const *str4q; /* Translation of "\t'\t".  */
   char const *str4; /* Translation of " \t\n'\"\033?""?/\\".  */
   char const *str5; /* Translation of "a:b".  */
   char const *str6; /* Translation of "a\\b".  */
@@ -43,7 +44,7 @@ struct result_groups {
 # define RQ_ESC "\\\302\273"
 
 static struct result_strings inputs = {
-  "", "\0001\0", 3, "simple", " \t\n'\"\033?""?/\\", "a:b", "a\\b",
+  "", "\0001\0", 3, "simple", "\t'\t", " \t\n'\"\033?""?/\\", "a:b", "a\\b",
   "a' b", LQ RQ, NULL
 };
 
@@ -73,6 +74,10 @@ compare_strings (char *(func) (char const *, size_t *),
   len = SIZE_MAX;
   p = func (inputs.str3, &len);
   compare (results->str3, strlen (results->str3), p, len);
+
+  len = strlen (inputs.str4q);
+  p = func (inputs.str4q, &len);
+  compare (results->str4q, strlen (results->str4q), p, len);
 
   len = strlen (inputs.str4);
   p = func (inputs.str4, &len);

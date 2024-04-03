@@ -34,24 +34,24 @@
 
 static struct result_groups locale_results[] = {
   /* locale_quoting_style */
-  { { LQ RQ, LQ "\\0001\\0" RQ, 11, LQ "simple" RQ,
+  { { LQ RQ, LQ "\\0001\\0" RQ, 11, LQ "simple" RQ, LQ "\\t'\\t" RQ,
       LQ " \\t\\n'\"\\033?""?/\\\\" RQ, LQ "a:b" RQ, LQ "a\\\\b" RQ,
       LQ "a' b" RQ, LQ LQ RQ_ESC RQ, LQ LQ RQ_ESC RQ },
-    { LQ RQ, LQ "\\0001\\0" RQ, 11, LQ "simple" RQ,
+    { LQ RQ, LQ "\\0001\\0" RQ, 11, LQ "simple" RQ, LQ "\\t'\\t" RQ,
       LQ " \\t\\n'\"\\033?""?/\\\\" RQ, LQ "a:b" RQ, LQ "a\\\\b" RQ,
       LQ "a' b" RQ, LQ LQ RQ_ESC RQ, LQ LQ RQ_ESC RQ},
-    { LQ RQ, LQ "\\0001\\0" RQ, 11, LQ "simple" RQ,
+    { LQ RQ, LQ "\\0001\\0" RQ, 11, LQ "simple" RQ, LQ "\\t'\\t" RQ,
       LQ " \\t\\n'\"\\033?""?/\\\\" RQ, LQ "a\\:b" RQ, LQ "a\\\\b" RQ,
       LQ "a' b" RQ, LQ LQ RQ_ESC RQ, LQ LQ RQ_ESC RQ } },
 
   /* clocale_quoting_style */
-  { { LQ RQ, LQ "\\0001\\0" RQ, 11, LQ "simple" RQ,
+  { { LQ RQ, LQ "\\0001\\0" RQ, 11, LQ "simple" RQ, LQ "\\t'\\t" RQ,
       LQ " \\t\\n'\"\\033?""?/\\\\" RQ, LQ "a:b" RQ, LQ "a\\\\b" RQ,
       LQ "a' b" RQ, LQ LQ RQ_ESC RQ, LQ LQ RQ_ESC RQ },
-    { LQ RQ, LQ "\\0001\\0" RQ, 11, LQ "simple" RQ,
+    { LQ RQ, LQ "\\0001\\0" RQ, 11, LQ "simple" RQ, LQ "\\t'\\t" RQ,
       LQ " \\t\\n'\"\\033?""?/\\\\" RQ, LQ "a:b" RQ, LQ "a\\\\b" RQ,
       LQ "a' b" RQ, LQ LQ RQ_ESC RQ, LQ LQ RQ_ESC RQ },
-    { LQ RQ, LQ "\\0001\\0" RQ, 11, LQ "simple" RQ,
+    { LQ RQ, LQ "\\0001\\0" RQ, 11, LQ "simple" RQ, LQ "\\t'\\t" RQ,
       LQ " \\t\\n'\"\\033?""?/\\\\" RQ, LQ "a\\:b" RQ, LQ "a\\\\b" RQ,
       LQ "a' b" RQ, LQ LQ RQ_ESC RQ, LQ LQ RQ_ESC RQ } }
 };
