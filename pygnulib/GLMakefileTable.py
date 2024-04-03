@@ -42,7 +42,7 @@ joinpath = constants.joinpath
 #===============================================================================
 # Define GLMakefileTable class
 #===============================================================================
-class GLMakefileTable(object):
+class GLMakefileTable:
     '''This class is used to edit Makefile and store edits as table.
     When user creates Makefile.am, he may need to use this class.
     The internal representation consists of a list of edits.

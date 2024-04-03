@@ -49,7 +49,7 @@ normpath = os.path.normpath
 #===============================================================================
 # Define GLConfig class
 #===============================================================================
-class GLConfig(object):
+class GLConfig:
     '''This class is used to store intermediate settings for all pygnulib
     classes. It contains all necessary attributes to setup any other class.
     By default all attributes are set to empty string, empty list or zero.

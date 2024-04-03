@@ -56,7 +56,7 @@ filter_filelist = constants.filter_filelist
 #===============================================================================
 # Define GLModuleSystem class
 #===============================================================================
-class GLModuleSystem(object):
+class GLModuleSystem:
     '''GLModuleSystem is used to operate with module system using dynamic
     searching and patching.'''
 
@@ -169,7 +169,7 @@ class GLModuleSystem(object):
 #===============================================================================
 # Define GLModule class
 #===============================================================================
-class GLModule(object):
+class GLModule:
     '''GLModule is used to create a module object from the file with the given
     path. GLModule can get all information about module, get its dependencies,
     files, etc.'''
@@ -704,7 +704,7 @@ class GLModule(object):
 #===============================================================================
 # Define GLModuleTable class
 #===============================================================================
-class GLModuleTable(object):
+class GLModuleTable:
     '''GLModuleTable is used to work with the list of the modules.'''
 
     def __init__(self, config: GLConfig, inc_all_direct_tests: bool, inc_all_indirect_tests: bool) -> None:

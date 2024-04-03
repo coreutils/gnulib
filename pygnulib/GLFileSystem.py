@@ -55,7 +55,7 @@ islink = os.path.islink
 #===============================================================================
 # Define GLFileSystem class
 #===============================================================================
-class GLFileSystem(object):
+class GLFileSystem:
     '''GLFileSystem class is used to create virtual filesystem, which is based
     on the gnulib directory and directories specified by localpath argument.
     Its main method lookup(file) is used to find file in these directories or
@@ -151,7 +151,7 @@ class GLFileSystem(object):
 #===============================================================================
 # Define GLFileAssistant class
 #===============================================================================
-class GLFileAssistant(object):
+class GLFileAssistant:
     '''GLFileAssistant is used to help with file processing.'''
 
     def __init__(self, config: GLConfig, transformers: dict[str, tuple[re.Pattern, str] | None] = {}) -> None:

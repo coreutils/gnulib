@@ -63,7 +63,7 @@ normpath = os.path.normpath
 #===============================================================================
 # Define GLImport class
 #===============================================================================
-class GLImport(object):
+class GLImport:
     '''GLImport class is used to provide methods for --import, --add-import,
     --remove-import and --update actions. This is a high-level class, so
     developers may  have to use lower-level classes to create their own
