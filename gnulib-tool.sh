@@ -2654,10 +2654,11 @@ func_get_automake_snippet_unconditional ()
       func_filter_filelist buildaux_files "$nl" "$all_files" 'build-aux/' '' 'build-aux/' ''
       if test -n "$buildaux_files"; then
         if test "$auxdir" != "."; then
-          sed_prepend_auxdir='s,^,$(top_srcdir)/'"$auxdir"'/,'
+          auxdir_subdir="$auxdir/"
         else
-          sed_prepend_auxdir='s,^,$(top_srcdir)/,'
+          auxdir_subdir=
         fi
+        sed_prepend_auxdir='s,^,$(top_srcdir)/'"$auxdir_subdir"','
         echo "EXTRA_DIST += "`echo "$buildaux_files" | sed -e "$sed_prepend_auxdir"`
         echo
       fi
