@@ -738,6 +738,9 @@ def main() -> None:
     pobase = cmdargs.pobase
     if pobase != None:
         pobase = cmdargs.pobase[0]
+    docbase = cmdargs.docbase
+    if docbase != None:
+        docbase = cmdargs.docbase[0]
     testsbase = cmdargs.testsbase
     if testsbase != None:
         testsbase = cmdargs.testsbase[0]
@@ -808,7 +811,6 @@ def main() -> None:
     copymode = cmdargs.copymode
     lcopymode = cmdargs.lcopymode
     single_configure = cmdargs.single_configure
-    docbase = None
 
     # Create pygnulib configuration.
     config = GLConfig(
