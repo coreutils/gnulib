@@ -52,6 +52,8 @@
 # - Prefer the standard collection type hints over those provided in the
 #   typing module. The latter are deprecated and may be removed.
 #   Cf. <https://peps.python.org/pep-0585/>.
+# - Never use the {} literal, because it denotes a dictionary,
+#   as opposed to {x}, {x,y}, etc., which denote sets.
 
 # You can use this command to check the style:
 #   $ pycodestyle *.py

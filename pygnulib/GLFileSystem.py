@@ -154,7 +154,7 @@ class GLFileSystem:
 class GLFileAssistant:
     '''GLFileAssistant is used to help with file processing.'''
 
-    def __init__(self, config: GLConfig, transformers: dict[str, tuple[re.Pattern, str] | None] = {}) -> None:
+    def __init__(self, config: GLConfig, transformers: dict[str, tuple[re.Pattern, str] | None] = dict()) -> None:
         '''Create GLFileAssistant instance.
 
         config stores information shared between classes.
