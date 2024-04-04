@@ -1018,8 +1018,8 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                 if not self.config['dryrun']:
                     try:  # Try to create directory
                         os.makedirs(directory)
-                    except Exception:
-                        raise GLError(13, directory)
+                    except Exception as exc:
+                        raise GLError(13, directory) from exc
                 else:  # if self.config['dryrun']
                     print('Create directory %s' % directory)
 
@@ -1043,8 +1043,8 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                         if os.path.exists(backup):
                             os.remove(backup)
                         movefile(path, '%s~' % path)
-                    except Exception:
-                        raise GLError(14, file)
+                    except Exception as exc:
+                        raise GLError(14, file) from exc
                 else:  # if self.config['dryrun']
                     print('Remove file %s (backup in %s~)' % (path, path))
                 filetable['removed'] += [file]

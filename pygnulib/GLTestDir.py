@@ -75,12 +75,12 @@ def _patch_test_driver() -> None:
         command = f'patch {test_driver} < {diff}'
         try:
             result = sp.call(command, shell=True, stdout=sp.DEVNULL, stderr=sp.DEVNULL)
-        except OSError:
+        except OSError as exc:
             if isfile(f'{test_driver}.orig'):
                 os.remove(f'{test_driver}.orig')
             if isfile(f'{test_driver}.rej'):
                 os.remove(f'{test_driver}.rej')
-            raise GLError(20, None)
+            raise GLError(20, None) from exc
         if result == 0:
             patched = True
             break
@@ -112,8 +112,8 @@ class GLTestDir:
         if not os.path.exists(self.testdir):
             try:  # Try to create directory
                 os.mkdir(self.testdir)
-            except Exception:
-                raise GLError(19, self.testdir)
+            except Exception as exc:
+                raise GLError(19, self.testdir) from exc
         self.emitter = GLEmiter(self.config)
         self.filesystem = GLFileSystem(self.config)
         self.modulesystem = GLModuleSystem(self.config)
@@ -900,8 +900,8 @@ class GLMegaTestDir:
         if not os.path.exists(self.megatestdir):
             try:  # Try to create directory
                 os.mkdir(self.megatestdir)
-            except Exception:
-                raise GLError(19, self.megatestdir)
+            except Exception as exc:
+                raise GLError(19, self.megatestdir) from exc
         self.emitter = GLEmiter(self.config)
         self.filesystem = GLFileSystem(self.config)
         self.modulesystem = GLModuleSystem(self.config)

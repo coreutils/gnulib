@@ -120,8 +120,8 @@ class GLFileSystem:
                     command = 'patch -s "%s" < "%s" >&2' % (tempFile, diff_in_localdir)
                     try:  # Try to apply patch
                         sp.check_call(command, shell=True)
-                    except sp.CalledProcessError:
-                        raise GLError(2, name)
+                    except sp.CalledProcessError as exc:
+                        raise GLError(2, name) from exc
                 result = (tempFile, True)
             else:
                 result = (lookedupFile, False)
@@ -260,8 +260,8 @@ class GLFileAssistant:
                 else:  # Move instead of linking.
                     try:  # Try to move file
                         movefile(tmpfile, joinpath(destdir, rewritten))
-                    except Exception:
-                        raise GLError(17, original)
+                    except Exception as exc:
+                        raise GLError(17, original) from exc
         else:  # if self.config['dryrun']
             print('Copy file %s' % rewritten)
 
@@ -299,8 +299,8 @@ class GLFileAssistant:
                     os.remove(backuppath)
                 try:  # Try to replace the given file
                     movefile(basepath, backuppath)
-                except Exception:
-                    raise GLError(17, original)
+                except Exception as exc:
+                    raise GLError(17, original) from exc
                 if self.filesystem.shouldLink(original, lookedup) == CopyAction.Symlink \
                         and not tmpflag and filecmp.cmp(lookedup, tmpfile):
                     link_if_changed(lookedup, basepath)
@@ -313,8 +313,8 @@ class GLFileAssistant:
                             if os.path.exists(basepath):
                                 os.remove(basepath)
                             copyfile(tmpfile, joinpath(destdir, rewritten))
-                        except Exception:
-                            raise GLError(17, original)
+                        except Exception as exc:
+                            raise GLError(17, original) from exc
             else:  # if self.config['dryrun']
                 if already_present:
                     print('Update file %s (backup in %s)' % (rewritten, backupname))
@@ -343,8 +343,8 @@ class GLFileAssistant:
         try:  # Try to copy lookedup file to tmpfile
             copyfile(lookedup, tmpfile)
             ensure_writable(tmpfile)
-        except Exception:
-            raise GLError(15, lookedup)
+        except Exception as exc:
+            raise GLError(15, lookedup) from exc
         # Don't process binary files with sed.
         if not (original.endswith(".class") or original.endswith(".mo")):
             transformer = None

@@ -539,9 +539,9 @@ class GLConfig:
             for module in modules:
                 try:  # Try to add each module
                     self.addModule(module)
-                except TypeError:
+                except TypeError as exc:
                     self.table['modules'] = old_modules
-                    raise TypeError('each module must be a string')
+                    raise TypeError('each module must be a string') from exc
                 except GLError:
                     self.table['modules'] = old_modules
                     raise
@@ -585,9 +585,9 @@ class GLConfig:
             for module in modules:
                 try:  # Try to add each module
                     self.addAvoid(module)
-                except TypeError:
+                except TypeError as exc:
                     self.table['avoids'] = old_avoids
-                    raise TypeError('each module must be a string')
+                    raise TypeError('each module must be a string') from exc
                 except GLError:
                     self.table['avoids'] = old_avoids
                     raise
@@ -630,9 +630,9 @@ class GLConfig:
             for file in files:
                 try:  # Try to add each file
                     self.addFile(file)
-                except TypeError:
+                except TypeError as exc:
                     self.table['files'] = old_files
-                    raise TypeError('each file must be a string')
+                    raise TypeError('each file must be a string') from exc
                 except GLError:
                     self.table['files'] = old_files
                     raise
@@ -688,9 +688,9 @@ class GLConfig:
             for category in categories:
                 try:  # Try to enable each category
                     self.enableInclTestCategory(category)
-                except TypeError:
+                except TypeError as exc:
                     self.table['incl_test_categories'] = old_categories
-                    raise TypeError('each category must be one of TESTS integers')
+                    raise TypeError('each category must be one of TESTS integers') from exc
         else:  # if type of categories is not list or tuple
             raise TypeError('categories must be a list or a tuple, not %s'
                             % type(categories).__name__)
@@ -736,9 +736,9 @@ class GLConfig:
             for category in categories:
                 try:  # Try to enable each category
                     self.enableExclTestCategory(category)
-                except TypeError:
+                except TypeError as exc:
                     self.table['excl_test_categories'] = old_categories
-                    raise TypeError('each category must be one of TESTS integers')
+                    raise TypeError('each category must be one of TESTS integers') from exc
         else:  # if type of categories is not list or tuple
             raise TypeError('categories must be a list or a tuple, not %s'
                             % type(categories).__name__)
