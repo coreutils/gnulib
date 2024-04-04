@@ -1,10 +1,12 @@
+# largefile.m4
+# serial 1
+dnl Copyright 1992-1996, 1998-2024 Free Software Foundation, Inc.
+dnl This file is free software; the Free Software Foundation
+dnl gives unlimited permission to copy and/or distribute it,
+dnl with or without modifications, as long as this notice is preserved.
+
 # Enable large files on systems where this is not the default.
 # Enable support for files on Linux file systems with 64-bit inode numbers.
-
-# Copyright 1992-1996, 1998-2024 Free Software Foundation, Inc.
-# This file is free software; the Free Software Foundation
-# gives unlimited permission to copy and/or distribute it,
-# with or without modifications, as long as this notice is preserved.
 
 # The following macro works around a problem in Autoconf's AC_FUNC_FSEEKO:
 # It does not set _LARGEFILE_SOURCE=1 on HP-UX/ia64 32-bit, although this

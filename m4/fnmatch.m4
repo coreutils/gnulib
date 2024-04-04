@@ -1,9 +1,11 @@
-# Check for fnmatch - serial 20  -*- coding: utf-8 -*-
+# fnmatch.m4
+# serial 20  -*- coding: utf-8 -*-
+dnl Copyright (C) 2000-2007, 2009-2024 Free Software Foundation, Inc.
+dnl This file is free software; the Free Software Foundation
+dnl gives unlimited permission to copy and/or distribute it,
+dnl with or without modifications, as long as this notice is preserved.
 
-# Copyright (C) 2000-2007, 2009-2024 Free Software Foundation, Inc.
-# This file is free software; the Free Software Foundation
-# gives unlimited permission to copy and/or distribute it,
-# with or without modifications, as long as this notice is preserved.
+# Check for fnmatch
 
 # Autoconf defines AC_FUNC_FNMATCH, but that is obsolescent.
 # New applications should use the macros below instead.

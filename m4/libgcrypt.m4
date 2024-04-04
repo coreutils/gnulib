@@ -1,4 +1,5 @@
-# libgcrypt.m4 - Autoconf macros to detect libgcrypt
+# libgcrypt.m4
+# serial 1
 # Copyright (C) 2002, 2003, 2004, 2011, 2014, 2018, 2020 g10 Code GmbH
 #
 # This file is free software; as a special exception the author gives
@@ -11,6 +12,7 @@
 #
 # Last-changed: 2022-11-01
 
+# libgcrypt.m4 - Autoconf macros to detect libgcrypt
 
 dnl AM_PATH_LIBGCRYPT([MINIMUM-VERSION,
 dnl                   [ACTION-IF-FOUND [, ACTION-IF-NOT-FOUND ]]])

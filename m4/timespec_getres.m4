@@ -1,4 +1,5 @@
-# timespec_getres serial 2
+# timespec_getres.m4
+# serial 2
 dnl Copyright 2021-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,

@@ -1,10 +1,11 @@
+# posix-shell.m4
+# serial 1
+dnl Copyright (C) 2007-2024 Free Software Foundation, Inc.
+dnl This file is free software; the Free Software Foundation
+dnl gives unlimited permission to copy and/or distribute it,
+dnl with or without modifications, as long as this notice is preserved.
+
 # Find a POSIX-conforming shell.
-
-# Copyright (C) 2007-2024 Free Software Foundation, Inc.
-
-# This file is free software; the Free Software Foundation
-# gives unlimited permission to copy and/or distribute it,
-# with or without modifications, as long as this notice is preserved.
 
 # Written by Paul Eggert.
 
