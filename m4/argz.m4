@@ -1,13 +1,13 @@
-# Portability macros for glibc argz.                    -*- Autoconf -*-
-#
-#   Copyright (C) 2004-2024 Free Software Foundation, Inc.
-#   Written by Gary V. Vaughan <gary@gnu.org>
-#
-# This file is free software; the Free Software Foundation gives
-# unlimited permission to copy and/or distribute it, with or without
-# modifications, as long as this notice is preserved.
+# argz.m4
+# serial 15
+dnl Copyright (C) 2004-2024 Free Software Foundation, Inc.
+dnl This file is free software; the Free Software Foundation
+dnl gives unlimited permission to copy and/or distribute it,
+dnl with or without modifications, as long as this notice is preserved.
 
-# serial 15 argz.m4
+# Portability macros for glibc argz.                    -*- Autoconf -*-
+
+# Written by Gary V. Vaughan <gary@gnu.org>
 
 AC_DEFUN([gl_FUNC_ARGZ],
 [gl_PREREQ_ARGZ

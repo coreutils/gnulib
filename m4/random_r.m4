@@ -1,3 +1,4 @@
+# random_r.m4
 # serial 5
 dnl Copyright (C) 2008-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation

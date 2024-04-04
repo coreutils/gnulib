@@ -1,11 +1,11 @@
-# Configure a GNU-like replacement for <utmp.h>.
-
-# Copyright (C) 2023-2024 Free Software Foundation, Inc.
-# This file is free software; the Free Software Foundation
-# gives unlimited permission to copy and/or distribute it,
-# with or without modifications, as long as this notice is preserved.
-
+# utmp_h.m4
 # serial 2
+dnl Copyright (C) 2023-2024 Free Software Foundation, Inc.
+dnl This file is free software; the Free Software Foundation
+dnl gives unlimited permission to copy and/or distribute it,
+dnl with or without modifications, as long as this notice is preserved.
+
+# Configure a GNU-like replacement for <utmp.h>.
 
 AC_DEFUN_ONCE([gl_UTMP_H],
 [

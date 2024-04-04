@@ -1,10 +1,11 @@
-# Configure a replacement for <sys/file.h>.
+# sys_file_h.m4
 # serial 9
+dnl Copyright (C) 2008-2024 Free Software Foundation, Inc.
+dnl This file is free software; the Free Software Foundation
+dnl gives unlimited permission to copy and/or distribute it,
+dnl with or without modifications, as long as this notice is preserved.
 
-# Copyright (C) 2008-2024 Free Software Foundation, Inc.
-# This file is free software; the Free Software Foundation
-# gives unlimited permission to copy and/or distribute it,
-# with or without modifications, as long as this notice is preserved.
+# Configure a replacement for <sys/file.h>.
 
 # Written by Richard W.M. Jones.
 

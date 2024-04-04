@@ -1,9 +1,9 @@
+# bison.m4
 # serial 10
-
-# Copyright (C) 2002-2006, 2008-2024 Free Software Foundation, Inc.
-# This file is free software; the Free Software Foundation
-# gives unlimited permission to copy and/or distribute it,
-# with or without modifications, as long as this notice is preserved.
+dnl Copyright (C) 2002-2006, 2008-2024 Free Software Foundation, Inc.
+dnl This file is free software; the Free Software Foundation
+dnl gives unlimited permission to copy and/or distribute it,
+dnl with or without modifications, as long as this notice is preserved.
 
 # There are two types of parser skeletons:
 #
