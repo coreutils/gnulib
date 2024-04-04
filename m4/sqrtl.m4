@@ -1,4 +1,5 @@
-# sqrtl.m4 serial 13
+# sqrtl.m4
+# serial 13
 dnl Copyright (C) 2010-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,

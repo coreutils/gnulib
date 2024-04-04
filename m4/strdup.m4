@@ -1,4 +1,5 @@
-# strdup.m4 serial 15
+# strdup.m4
+# serial 15
 
 dnl Copyright (C) 2002-2024 Free Software Foundation, Inc.
 

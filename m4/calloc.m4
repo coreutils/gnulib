@@ -1,4 +1,5 @@
-# calloc.m4 serial 31
+# calloc.m4
+# serial 31
 
 # Copyright (C) 2004-2024 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation

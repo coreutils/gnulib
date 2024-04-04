@@ -1,4 +1,5 @@
-# fileblocks.m4 serial 6
+# fileblocks.m4
+# serial 6
 dnl Copyright (C) 2002, 2005-2006, 2009-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,

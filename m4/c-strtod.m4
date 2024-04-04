@@ -1,4 +1,5 @@
-# c-strtod.m4 serial 21
+# c-strtod.m4
+# serial 21
 
 # Copyright (C) 2004-2006, 2009-2024 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation

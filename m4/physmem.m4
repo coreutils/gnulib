@@ -1,4 +1,5 @@
-# physmem.m4 serial 12
+# physmem.m4
+# serial 12
 dnl Copyright (C) 2002-2003, 2005-2006, 2008-2024 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation

@@ -1,4 +1,5 @@
-# wcrtomb.m4 serial 19
+# wcrtomb.m4
+# serial 19
 dnl Copyright (C) 2008-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,

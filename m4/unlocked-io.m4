@@ -1,4 +1,5 @@
-# unlocked-io.m4 serial 16
+# unlocked-io.m4
+# serial 16
 
 # Copyright (C) 1998-2006, 2009-2024 Free Software Foundation, Inc.
 #

@@ -1,4 +1,5 @@
-# mbiter.m4 serial 7
+# mbiter.m4
+# serial 7
 dnl Copyright (C) 2005, 2008-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,

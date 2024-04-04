@@ -1,4 +1,5 @@
-# mprotect.m4 serial 3
+# mprotect.m4
+# serial 3
 dnl Copyright (C) 1993-2024 Free Software Foundation, Inc.
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License as published by the Free Software Foundation;

@@ -1,4 +1,5 @@
-# longlong.m4 serial 19
+# longlong.m4
+# serial 19
 dnl Copyright (C) 1999-2007, 2009-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,

@@ -1,4 +1,5 @@
-# stpncpy.m4 serial 22
+# stpncpy.m4
+# serial 22
 dnl Copyright (C) 2002-2003, 2005-2007, 2009-2024 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation

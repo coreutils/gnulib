@@ -1,4 +1,5 @@
-# fflush.m4 serial 19
+# fflush.m4
+# serial 19
 
 # Copyright (C) 2007-2024 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation

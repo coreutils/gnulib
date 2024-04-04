@@ -1,4 +1,5 @@
-# mkdtemp.m4 serial 8
+# mkdtemp.m4
+# serial 8
 dnl Copyright (C) 2001-2003, 2006-2007, 2009-2024 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
