@@ -1,5 +1,5 @@
 # log1pl.m4
-# serial 12
+# serial 13
 dnl Copyright (C) 2012-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -112,7 +112,8 @@ int main (int argc, char *argv[])
 ])
 
 dnl Test whether log1pl() works.
-dnl On musl 1.2.2/{arm64,s390x}, the result is accurate to only 16 digits.
+dnl On musl 1.2.2/{arm64,s390x} and NetBSD 10.0, the result is accurate to only
+dnl 16 digits.
 AC_DEFUN([gl_FUNC_LOG1PL_WORKS],
 [
   AC_REQUIRE([AC_PROG_CC])
@@ -166,7 +167,7 @@ int main (int argc, char *argv[])
 {
   long double (* volatile my_log1pl) (long double) = argc ? log1pl : dummy;
   int result = 0;
-  /* This test fails on musl 1.2.2/arm64, musl 1.2.2/s390x.  */
+  /* This test fails on musl 1.2.2/arm64, musl 1.2.2/s390x, NetBSD 10.0.  */
   {
     const long double TWO_LDBL_MANT_DIG = /* 2^LDBL_MANT_DIG */
       (long double) (1U << ((LDBL_MANT_DIG - 1) / 5))
@@ -192,6 +193,8 @@ int main (int argc, char *argv[])
            *-gnu* | gnu*)      gl_cv_func_log1pl_works="guessing yes" ;;
                                # Guess no on musl systems.
            *-musl* | midipix*) gl_cv_func_log1pl_works="guessing no" ;;
+                               # Guess no on NetBSD.
+           netbsd*)            gl_cv_func_log1pl_works="guessing no" ;;
                                # Guess yes on native Windows.
            mingw* | windows*)  gl_cv_func_log1pl_works="guessing yes" ;;
                                # If we don't know, obey --enable-cross-guesses.

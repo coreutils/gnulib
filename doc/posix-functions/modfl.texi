@@ -16,7 +16,7 @@ This function is only defined as a macro with arguments on some platforms:
 MSVC 14.
 @item
 This function produces wrong results on some platforms:
-NetBSD 9.3/arm64.
+NetBSD 10.0/arm64.
 @end itemize
 
 Portability problems fixed by Gnulib module @code{modfl-ieee}:

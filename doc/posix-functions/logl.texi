@@ -20,7 +20,7 @@ glibc 2.7 on Linux/SPARC64.
 @item
 This function produces results which are accurate to only 16 digits on some
 platforms:
-musl libc 1.2.2/arm64, musl libc 1.2.2/s390x, NetBSD 9.3.
+musl libc 1.2.2/arm64, musl libc 1.2.2/s390x, NetBSD 10.0.
 @end itemize
 
 Portability problems not fixed by Gnulib:

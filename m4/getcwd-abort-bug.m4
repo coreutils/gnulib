@@ -1,5 +1,5 @@
 # getcwd-abort-bug.m4
-# serial 16
+# serial 17
 dnl Copyright (C) 2006, 2009-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -130,7 +130,7 @@ main ()
        [gl_cv_func_getcwd_succeeds_beyond_4k=yes],
        [dnl An abort will provoke an exit code of something like 134 (128 + 6).
         dnl An exit code of 4 can also occur (for example in
-        dnl musl libc 1.2.2/powerpc64le, NetBSD 9.0, OpenBSD 6.7:
+        dnl musl libc 1.2.2/powerpc64le, NetBSD 10.0, OpenBSD 6.7:
         dnl getcwd (NULL, 0) fails rather than returning a string longer than
         dnl PATH_MAX.  This may be POSIX compliant (in some interpretations of
         dnl POSIX).  But gnulib's getcwd module wants to provide a non-NULL

@@ -14,7 +14,7 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-NetBSD 9.0, Minix 3.1.8, mingw, MSVC 14, Android 9.0.
+NetBSD 10.0, Minix 3.1.8, mingw, MSVC 14, Android 9.0.
 @item
 POSIX says this function is obsolescent and it is planned to be
 removed in POSIX 202x.

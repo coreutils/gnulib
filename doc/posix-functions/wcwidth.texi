@@ -17,7 +17,7 @@ glibc 2.8.
 @item
 This function handles combining characters in UTF-8 locales incorrectly on some
 platforms:
-macOS 12.5, NetBSD 9.0, OpenBSD 5.8, MidnightBSD 1.1.
+macOS 12.5, NetBSD 9.3, OpenBSD 5.8, MidnightBSD 1.1.
 @item
 This function returns 2 for characters with ambiguous east asian width, even in
 Western locales, on some platforms:

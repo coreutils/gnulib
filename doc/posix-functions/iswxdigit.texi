@@ -17,7 +17,7 @@ on some platforms:
 OS X 10.8.
 @item
 This function is not ISO C 99 compliant on some platforms:
-FreeBSD 14.0, NetBSD 9.0, Solaris 11.4, MSVC 14.
+FreeBSD 14.0, NetBSD 10.0, Solaris 11.4, MSVC 14.
 @end itemize
 
 Portability problems not fixed by Gnulib:

@@ -22,7 +22,7 @@ IRIX 6.5.
 @item
 This header file does not define @code{AI_ALL}, @code{AI_V4MAPPED}
 on some platforms:
-NetBSD 9.0.
+NetBSD 10.0.
 
 @item
 This header file does not define @code{AI_ADDRCONFIG} on some platforms:

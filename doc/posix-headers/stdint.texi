@@ -44,7 +44,7 @@ albeit with the correct value:
 32-bit glibc 2.24 (on s390 architecture), Mac OS X 10.7.
 @item
 Macros like @code{INTMAX_WIDTH} are not defined on some platforms:
-glibc 2.24, NetBSD 9.0, many others.
+glibc 2.24, NetBSD 10.0, many others.
 @end itemize
 
 Portability problems not fixed by Gnulib:

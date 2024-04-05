@@ -1,5 +1,5 @@
 # wcsncmp.m4
-# serial 4
+# serial 5
 dnl Copyright (C) 2011-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -22,7 +22,7 @@ AC_DEFUN([gl_FUNC_WCSNCMP],
             {
               int result = 0;
               { /* This test fails on glibc < 2.15, musl libc 1.2.3, macOS 12.5,
-                   FreeBSD 13.2, NetBSD 9.0, OpenBSD 7.2, Solaris 11.4.  */
+                   FreeBSD 13.2, NetBSD 10.0, OpenBSD 7.2, Solaris 11.4.  */
                 wchar_t a[2] = { (wchar_t) 0x76547654, 0 };
                 wchar_t b[2] = { (wchar_t) 0x9abc9abc, 0 };
                 int cmp = wcsncmp (a, b, 1);

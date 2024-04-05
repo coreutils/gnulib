@@ -17,7 +17,7 @@ IRIX 6.5.
 @item
 This function produces results which are accurate to only 16 digits on some
 platforms:
-NetBSD 9.3.
+NetBSD 10.0.
 @end itemize
 
 Portability problems fixed by Gnulib module @code{exp2l-ieee}:

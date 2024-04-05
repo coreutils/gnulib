@@ -39,7 +39,7 @@ single-byte range on some platforms:
 @c fnmatch ("x?y", "x\250\271y", 0) == 0
 @c fnmatch ("x?y", "x\201\060\211\070y", 0) == 0
 @c fnmatch ("x?y", "x\224\071\375\067y", 0) == 0
-NetBSD 9.3,
+NetBSD 10.0,
 @c Failing test cases:
 @c fnmatch ("x?y", "x\303\274y", 0) == 0
 @c fnmatch ("x?y", "x\303\237y", 0) == 0
@@ -84,7 +84,7 @@ bracket expressions are not supported on some platforms:
 @c etc.
 @c https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=57911
 FreeBSD 13.2,
-NetBSD 9.3, Solaris 11 OpenIndiana, Cygwin 3.4.6.
+NetBSD 10.0, Solaris 11 OpenIndiana, Cygwin 3.4.6.
 @item
 In the pattern, character classes (such as @code{[:alnum:]}) inside
 bracket expressions fail to match characters outside the single-byte
@@ -135,7 +135,7 @@ macOS 12.5,
 @c Failing test cases:
 @c fnmatch ("[", "[", 0) == 0
 @c fnmatch ("[/-/]", "/", 0) == 0
-NetBSD 9.3.
+NetBSD 10.0.
 @end itemize
 
 Portability problems fixed by Gnulib module @code{fnmatch-gnu}:
@@ -155,7 +155,7 @@ The flag @code{FNM_CASEFOLD} does not work in many situations on some platforms:
 @c etc.
 @c fnmatch ("\201\060\213\062zg\250\271r", "\201\060\211\060ZG\201\060\211\065R", FNM_CASEFOLD) == 0
 @c etc.
-NetBSD 9.3.
+NetBSD 10.0.
 @item
 The flag @code{FNM_CASEFOLD} does not work for multibyte characters
 consisting of more than one byte on some platforms:
@@ -166,11 +166,11 @@ Android 13.
 @item
 This function does not support the flag @code{FNM_EXTMATCH}
 on all non-glibc platforms:
-musl libc, macOS 12.5, FreeBSD 13.2, NetBSD 9.3, OpenBSD 7.2, Minix 3.3, AIX 7.2, HP-UX 11.31, IRIX 6.5, Solaris 11.4, Cygwin 3.4.6, Android 13.
+musl libc, macOS 12.5, FreeBSD 13.2, NetBSD 10.0, OpenBSD 7.2, Minix 3.3, AIX 7.2, HP-UX 11.31, IRIX 6.5, Solaris 11.4, Cygwin 3.4.6, Android 13.
 @item
 This function does not support the flag @code{FNM_FILE_NAME} as an
 alias of @code{FNM_PATHNAME} on some platforms:
-NetBSD 9.3, AIX 7.2, HP-UX 11.31, IRIX 6.5, Solaris 10.
+NetBSD 10.0, AIX 7.2, HP-UX 11.31, IRIX 6.5, Solaris 10.
 @end itemize
 
 Portability problems not fixed by Gnulib:

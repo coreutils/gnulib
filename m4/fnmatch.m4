@@ -1,5 +1,5 @@
 # fnmatch.m4
-# serial 20  -*- coding: utf-8 -*-
+# serial 21  -*- coding: utf-8 -*-
 dnl Copyright (C) 2000-2007, 2009-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -121,7 +121,7 @@ AC_DEFUN([gl_FUNC_FNMATCH_POSIX],
               if (__GLIBC__ == 2 && __GLIBC_MINOR__ < 22)
                 result |= 4;
               #endif
-              /* This test fails on FreeBSD 13.2, NetBSD 9.3, Cygwin 3.4.6.  */
+              /* This test fails on FreeBSD 13.2, NetBSD 10.0, Cygwin 3.4.6.  */
               if (!y ("[[:alnum:]]", "a", 0))
                 result |= 8;
               $gl_fnmatch_gnu_start /* ==== Start of GNU extensions tests ==== */
@@ -147,7 +147,7 @@ AC_DEFUN([gl_FUNC_FNMATCH_POSIX],
                   if (!n ("[!a-z]", "", 0))
                     result |= 16;
                 }
-              /* This test fails on NetBSD 9.3, Android 13.  */
+              /* This test fails on NetBSD 10.0, Android 13.  */
               if (setlocale (LC_ALL, "C.UTF-8") != NULL)
                 {
                   if (!y ("x?y", "x\\303\\274y", 0))

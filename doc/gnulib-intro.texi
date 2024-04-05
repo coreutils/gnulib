@@ -140,7 +140,7 @@ FreeBSD 13.0 or newer is occasionally tested.
 @item
 OpenBSD 7.0 or newer is occasionally tested.
 @item
-NetBSD 9.0 or newer is occasionally tested.
+NetBSD 10.0 or newer is occasionally tested.
 @item
 AIX 7.1 and 7.2 are occasionally tested.
 @item

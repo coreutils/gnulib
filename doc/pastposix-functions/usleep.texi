@@ -11,7 +11,7 @@ Portability problems fixed by Gnulib:
 @item
 On some systems, @code{usleep} rejects attempts to sleep longer than 1
 second, as allowed by POSIX:
-NetBSD 9.0, mingw.
+NetBSD 10.0, mingw.
 @end itemize
 
 Portability problems not fixed by Gnulib:

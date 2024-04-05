@@ -1,5 +1,5 @@
 # wctrans.m4
-# serial 3
+# serial 4
 dnl Copyright (C) 2011-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -20,7 +20,7 @@ AC_DEFUN_ONCE([gl_FUNC_WCTRANS],
             #include <wctype.h>
             int main ()
             {
-              /* This test fails on NetBSD 9.3.  */
+              /* This test fails on NetBSD 10.0.  */
               return (wctrans ("tolower") == (wctrans_t)0);
             }
          ]])],

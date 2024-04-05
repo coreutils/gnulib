@@ -29,7 +29,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-glibc 2.36, FreeBSD 13.1, NetBSD 9.3, OpenBSD 7.2, macOS 13, Solaris 11.4, Android API level 33,
+glibc 2.36, FreeBSD 13.1, NetBSD 10.0, OpenBSD 7.2, macOS 13, Solaris 11.4, Android API level 33,
 and many other systems.
 @end itemize
 

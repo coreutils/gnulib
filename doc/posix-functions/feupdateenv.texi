@@ -35,7 +35,8 @@ This function does not trigger traps on
 @c https://sourceware.org/bugzilla/show_bug.cgi?id=31023
 glibc 2.37/hppa,
 musl libc/s390x,
-NetBSD 9.3/powerpc.
+@c src/sys/arch/powerpc/include/fenv.h src/lib/libm/arch/powerpc/fenv.c
+NetBSD 10.0/powerpc.
 @item
 This function may fail on some platforms:
 MSVC 14.

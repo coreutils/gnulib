@@ -14,7 +14,7 @@ HP-UX 11.00, IRIX 6.5, MSVC 14.
 @item
 This function compares the wide characters as if they were unsigned, although
 @code{wchar_t} is signed, on some platforms:
-glibc 2.14.1 on x86 or x86_64, musl libc 1.2.3, NetBSD 9.0, OpenBSD 7.2, Solaris 11.4.
+glibc 2.14.1 on x86 or x86_64, musl libc 1.2.3, NetBSD 10.0, OpenBSD 7.2, Solaris 11.4.
 @end itemize
 
 Portability problems not fixed by Gnulib:

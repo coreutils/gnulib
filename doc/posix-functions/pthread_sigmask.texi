@@ -36,5 +36,6 @@ On platforms that do not natively support this function,
 it has unspecified behavior in a multi-threaded process.
 @item
 In case of failure, the return value is wrong on some platforms:
-NetBSD 9.0 when libpthread is not in use.
+@c https://gnats.netbsd.org/cgi-bin/query-pr-single.pl?number=57214
+NetBSD 9.3 when libpthread is not in use.
 @end itemize

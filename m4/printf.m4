@@ -1,5 +1,5 @@
 # printf.m4
-# serial 90
+# serial 91
 dnl Copyright (C) 2003, 2007-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -2040,7 +2040,7 @@ static wchar_t buf[100];
 int main ()
 {
   int result = 0;
-  /* This catches a glibc 2.15 and Haiku 2022 bug.  */
+  /* This catches a glibc 2.15, Haiku 2022, NetBSD 10.0 bug.  */
   if (swprintf (buf, sizeof (buf) / sizeof (wchar_t),
                 L"%La %d", 3.1416015625L, 33, 44, 55) < 0
       || (wcscmp (buf, L"0x1.922p+1 33") != 0
@@ -2070,6 +2070,8 @@ int main ()
            *-musl* | midipix*) gl_cv_func_swprintf_directive_la="guessing yes";;
                                # Guess yes on Android.
            linux*-android*)    gl_cv_func_swprintf_directive_la="guessing yes";;
+                               # Guess no on NetBSD.
+           netbsd*)            gl_cv_func_swprintf_directive_la="guessing no";;
                                # Guess no on native Windows.
            mingw* | windows*)  gl_cv_func_swprintf_directive_la="guessing no";;
                                # If we don't know, obey --enable-cross-guesses.

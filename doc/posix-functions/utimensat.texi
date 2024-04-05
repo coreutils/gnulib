@@ -31,7 +31,7 @@ Linux kernel 2.6.25.
 @item
 When using @code{UTIME_OMIT} for the modification time, but specifying
 an access time, some systems fail to update the change time:
-Linux kernel 2.6.32, macOS 11.1, NetBSD 9.0, Solaris 11.1.
+Linux kernel 2.6.32, macOS 11.1, NetBSD 10.0, Solaris 11.1.
 @item
 Out-of-range values of @code{tv_nsec} do not lead to a failure on some
 platforms:

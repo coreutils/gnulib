@@ -1,5 +1,5 @@
 # fenv-environment.m4
-# serial 3
+# serial 4
 dnl Copyright (C) 2023-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -11,7 +11,7 @@ AC_DEFUN([gl_FENV_ENVIRONMENT],
   AC_REQUIRE([AC_CANONICAL_HOST])
 
   dnl FE_DFL_ENV references an undefined global variable on
-  dnl NetBSD 9.3/{hppa,sparc} and Cygwin 2.9.0 (see
+  dnl NetBSD 10.0/{hppa,sparc} and Cygwin 2.9.0 (see
   dnl <https://sourceware.org/pipermail/cygwin/2018-July/237888.html>).
   AC_CACHE_CHECK([whether FE_DFL_ENV is usable],
     [gl_cv_var_FE_DFL_ENV_works],
@@ -305,8 +305,8 @@ AC_DEFUN([gl_FENV_ENVIRONMENT],
     dnl <https://sourceware.org/git/?p=glibc.git;a=commitdiff;h=a8c79c4088e8c04e4297936efa0dee6c8e6e974d>)
     dnl and on Mac OS X 10.5/{i386,x86_64} (where it forgets about the currently
     dnl set floating-point exception flags)
-    dnl and on musl libc/s390x and NetBSD 9.3/powerpc (where it does not trigger
-    dnl traps)
+    dnl and on musl libc/s390x and NetBSD 10.0/powerpc (where it does not
+    dnl trigger traps)
     dnl and on musl libc/{i386,x86_64} and AIX and Solaris and mingw 10 (where
     dnl it fails to restore the exception trap bits),
     dnl and on FreeBSD 12.2/arm64 (see

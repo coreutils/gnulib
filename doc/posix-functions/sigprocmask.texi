@@ -17,7 +17,8 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 In case of failure, the return value is wrong on some platforms:
-NetBSD 9.0 when libpthread is in use.
+@c https://gnats.netbsd.org/cgi-bin/query-pr-single.pl?number=57213
+NetBSD 10.0 when libpthread is in use.
 @end itemize
 
 Note: Although @code{sigprocmask} officially has undefined behaviour in

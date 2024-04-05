@@ -25,7 +25,7 @@ Note that the gnulib replacement code is functional but not atomic.
 @item
 The @code{F_DUPFD_CLOEXEC} action of this function does not set the
 @code{FD_CLOEXEC} flag on some platforms:
-NetBSD 9.0.
+NetBSD 10.0.
 
 @item
 The @code{F_DUPFD_CLOEXEC} action of this function sets the

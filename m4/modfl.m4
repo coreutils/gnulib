@@ -1,5 +1,5 @@
 # modfl.m4
-# serial 13
+# serial 14
 dnl Copyright (C) 2011-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -39,7 +39,7 @@ int main (int argc, char *argv[])
   long double i;
   long double f;
   /* Test modfl(5.972406760L,...).
-     This test fails on NetBSD 9.3/arm64.  */
+     This test fails on NetBSD 10.0/arm64.  */
   f = my_modfl (5.972406760L, &i);
   if (!(f < 1.0L && i == 5.0L))
     return 1;

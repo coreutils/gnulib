@@ -22,7 +22,11 @@ musl libc/i386, musl libc/x86_64, AIX 7.3, Solaris 10 and 11, MSVC 14.
 @item
 The macro @code{FE_DFL_ENV} cannot be used because it leads to a link error
 on some platforms:
-NetBSD 9.3/hppa, NetBSD 9.3/sparc, Cygwin 2.9.0.
+@c src/sys/arch/hppa/include/fenv.h src/lib/libm/arch/hppa/fenv.c
+NetBSD 10.0/hppa,
+@c src/sys/arch/{sparc,sparc64}/include/fenv.h src/lib/libm/arch/{sparc,sparc64}/fenv.c
+NetBSD 10.0/sparc,
+Cygwin 2.9.0.
 @item
 This function, when called with @code{FE_DFL_ENV} argument, has no effect
 on the x86 @code{mxcsr} register and thus on floating-point operations

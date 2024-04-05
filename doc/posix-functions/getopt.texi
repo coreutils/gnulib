@@ -50,7 +50,7 @@ where all disambiguations are equivalent on some platforms:
 OpenBSD 5.0.
 @item
 The function @code{getopt_long_only} is missing on some platforms:
-FreeBSD 5.2.1, NetBSD 9.0, AIX 5.1, HP-UX 11, IRIX 6.5, Solaris 9, mingw, MSVC 14.
+FreeBSD 5.2.1, NetBSD 10.0, AIX 5.1, HP-UX 11, IRIX 6.5, Solaris 9, mingw, MSVC 14.
 @item
 This function crashes if the option string includes @code{W;} on some
 platforms:

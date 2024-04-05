@@ -30,5 +30,5 @@ have this limitation.
 This function returns wrong values even for the ASCII characters
 in a zh_CN.GB18030 locale on some platforms:
 @c https://gnats.netbsd.org/cgi-bin/query-pr-single.pl?number=57339
-NetBSD 9.0.
+NetBSD 10.0.
 @end itemize
