@@ -1,4 +1,4 @@
-# exp2l.m4 serial 12
+# exp2l.m4 serial 12.1
 dnl Copyright (C) 2010-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -80,7 +80,7 @@ int main (int argc, char *argv[])
 {
   long double (* volatile my_exp2l) (long double) = argc ? exp2l : dummy;
   int result = 0;
-  /* This test fails on NetBSD 9.0.  */
+  /* This test fails on NetBSD NetBSD 10.0/x86_64.  */
   {
     const long double TWO_LDBL_MANT_DIG = /* 2^LDBL_MANT_DIG */
       (long double) (1U << ((LDBL_MANT_DIG - 1) / 5))
@@ -92,6 +92,13 @@ int main (int argc, char *argv[])
     long double err = (my_exp2l (x) * my_exp2l (- x) - 1.0L) * TWO_LDBL_MANT_DIG;
     if (!(err >= -100.0L && err <= 100.0L))
       result |= 1;
+  }
+  /* This test fails on NetBSD 10.0/i386.  */
+  {
+    long double x = LDBL_MAX_EXP - 1;
+    long double z = my_exp2l (x);
+    if (z + z == z) /* isinf (z) */
+      result |= 2;
   }
   return result;
 }
