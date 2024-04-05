@@ -1,4 +1,4 @@
-# roundl.m4 serial 22
+# roundl.m4 serial 22.1
 dnl Copyright (C) 2007, 2009-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -13,7 +13,7 @@ AC_DEFUN([gl_FUNC_ROUNDL],
   dnl Persuade glibc <math.h> to declare roundl().
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
 
-  gl_CHECK_MATH_LIB([ROUNDL_LIBM], [x = roundl (x);],
+  gl_CHECK_MATH_LIB([ROUNDL_LIBM], [long double], [x = roundl (x);],
     [extern
      #ifdef __cplusplus
      "C"

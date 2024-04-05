@@ -1,4 +1,4 @@
-# roundf.m4 serial 27
+# roundf.m4 serial 27.1
 dnl Copyright (C) 2007-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -12,7 +12,7 @@ AC_DEFUN([gl_FUNC_ROUNDF],
   dnl Persuade glibc <math.h> to declare roundf().
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
 
-  gl_CHECK_MATH_LIB([ROUNDF_LIBM], [x = roundf (x);],
+  gl_CHECK_MATH_LIB([ROUNDF_LIBM], [float], [x = roundf (x);],
     [extern
      #ifdef __cplusplus
      "C"

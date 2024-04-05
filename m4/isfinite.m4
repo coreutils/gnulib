@@ -1,4 +1,4 @@
-# isfinite.m4 serial 19
+# isfinite.m4 serial 19.1
 dnl Copyright (C) 2007-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -12,8 +12,8 @@ AC_DEFUN([gl_ISFINITE],
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   AC_CHECK_DECLS([isfinite], , , [[#include <math.h>]])
   if test "$ac_cv_have_decl_isfinite" = yes; then
-    gl_CHECK_MATH_LIB([ISFINITE_LIBM],
-     [x = isfinite (x) + isfinite ((float) x);])
+    gl_CHECK_MATH_LIB([ISFINITE_LIBM], [double],
+      [x = isfinite (x) + isfinite ((float) x);])
     if test "$ISFINITE_LIBM" != missing; then
       dnl Test whether isfinite() on 'long double' works.
       gl_ISFINITEL_WORKS
