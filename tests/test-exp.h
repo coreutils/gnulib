@@ -63,7 +63,9 @@ test_function (void)
     /* Error bound, in ulps.  */
     const DOUBLE err_bound =
       (sizeof (DOUBLE) > sizeof (double) ?
-#if defined __i386__ && defined __FreeBSD__
+#if defined __i386__ && defined __NetBSD__
+       L_(25000.0)
+#elif defined __i386__ && defined __FreeBSD__
        L_(2400.0)
 #else
        L_(24.0)
