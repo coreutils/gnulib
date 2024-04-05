@@ -21,6 +21,7 @@ from __future__ import annotations
 import os
 import copy
 import tempfile
+from typing import Any
 from . import constants
 from .GLError import GLError
 from pygnulib.enums import CopyAction
@@ -248,14 +249,14 @@ class GLConfig:
         '''x.__repr__() <==> repr(x)'''
         return '<pygnulib.GLConfig>'
 
-    def __getitem__(self, y: str) -> str | float | int | bool | CopyAction | list[str] | None:
+    def __getitem__(self, y: str) -> Any:
         '''x.__getitem__(y) <==> x[y]'''
         if y in self.table:
             return self.table[y]
         else:  # if y not in self.table
             raise KeyError('GLConfig does not contain key: %s' % repr(y))
 
-    def dictionary(self) -> dict[str, str | float | int | bool | CopyAction | list[str] | None]:
+    def dictionary(self) -> dict[str, Any]:
         '''Return the configuration as a dict object.'''
         return dict(self.table)
 
@@ -296,7 +297,7 @@ class GLConfig:
         else:  # if key not in self.table
             raise KeyError('GLConfig does not contain key: %s' % repr(key))
 
-    def default(self, key: str) -> str | float | int | bool | CopyAction | list[str] | None:
+    def default(self, key: str) -> Any:
         '''Return default value for the given key.'''
         if key in self.table:
             if key == 'libname':
@@ -327,7 +328,7 @@ class GLConfig:
         else:  # if key not in self.table
             raise KeyError('GLConfig does not contain key: %s' % repr(key))
 
-    def isdefault(self, key: str, value: str | float | int | bool | CopyAction | list[str] | None) -> bool:
+    def isdefault(self, key: str, value: Any) -> bool:
         '''Check whether the value for the given key is a default value.'''
         if key in self.table:
             default = self.default(key)
@@ -339,7 +340,7 @@ class GLConfig:
         '''Return list of keys.'''
         return list(self.table.keys())
 
-    def values(self) -> list[str | float | int | bool | CopyAction | list[str] | None]:
+    def values(self) -> list[Any]:
         '''Return list of values.'''
         return list(self.table.values())
 
