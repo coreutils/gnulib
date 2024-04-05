@@ -107,8 +107,8 @@ class GLImport:
         pattern = re.compile(r'.*AC_PREREQ\((.*)\)', re.M)
         versions = cleaner(pattern.findall(data))
         if versions:
-            version = sorted(set([ float(version)
-                                   for version in versions ]))[-1]
+            version = max({ float(version)
+                            for version in versions })
             self.config.setAutoconfVersion(version)
             if version < 2.64:
                 raise GLError(4, version)
@@ -810,8 +810,8 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         m4base = self.config['m4base']
         lgpl = self.config['lgpl']
         verbose = self.config['verbosity']
-        base_modules = sorted(set([ self.modulesystem.find(m)
-                                    for m in modules ]))
+        base_modules = sorted({ self.modulesystem.find(m)
+                                for m in modules })
 
         # Perform transitive closure.
         final_modules = self.moduletable.transitive_closure(base_modules)
