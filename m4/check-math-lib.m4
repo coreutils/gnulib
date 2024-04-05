@@ -1,17 +1,17 @@
-# check-math-lib.m4 serial 4
-dnl Copyright (C) 2007, 2009-2023 Free Software Foundation, Inc.
+# check-math-lib.m4 serial 4.1
+dnl Copyright (C) 2007, 2009-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 dnl
-dnl gl_CHECK_MATH_LIB (VARIABLE, EXPRESSION [, EXTRA-CODE])
+dnl gl_CHECK_MATH_LIB (VARIABLE, TYPE, EXPRESSION [, EXTRA-CODE])
 dnl
 dnl Sets the shell VARIABLE according to the libraries needed by EXPRESSION
-dnl to compile and link: to the empty string if no extra libraries are needed,
-dnl to "-lm" if -lm is needed, or to "missing" if it does not compile and
-dnl link either way.
+dnl (that operates on a variable x of type TYPE) to compile and link: to the
+dnl empty string if no extra libraries are needed, to "-lm" if -lm is needed,
+dnl or to "missing" if it does not compile and link either way.
 dnl
-dnl Example: gl_CHECK_MATH_LIB([ROUNDF_LIBM], [x = roundf (x);])
+dnl Example: gl_CHECK_MATH_LIB([ROUNDF_LIBM], [float], [x = roundf (x);])
 AC_DEFUN([gl_CHECK_MATH_LIB], [
   save_LIBS=$LIBS
   $1=missing
@@ -22,9 +22,9 @@ AC_DEFUN([gl_CHECK_MATH_LIB], [
          # define __NO_MATH_INLINES 1 /* for glibc */
          #endif
          #include <math.h>
-         $3
-         double x;]],
-      [$2])],
+         $4
+         $2 x;]],
+      [$3])],
       [$1=$libm
 break])
   done

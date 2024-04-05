@@ -1,5 +1,5 @@
-# round.m4 serial 24
-dnl Copyright (C) 2007, 2009-2023 Free Software Foundation, Inc.
+# round.m4 serial 24.1
+dnl Copyright (C) 2007, 2009-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -12,7 +12,7 @@ AC_DEFUN([gl_FUNC_ROUND],
   dnl Persuade glibc <math.h> to declare round().
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
 
-  gl_CHECK_MATH_LIB([ROUND_LIBM], [x = round (x);],
+  gl_CHECK_MATH_LIB([ROUND_LIBM], [double], [x = round (x);],
     [extern
      #ifdef __cplusplus
      "C"
