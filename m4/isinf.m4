@@ -1,5 +1,5 @@
 # isinf.m4
-# serial 14
+# serial 15
 dnl Copyright (C) 2007-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -18,7 +18,8 @@ AC_DEFUN([gl_ISINF],
       #endif
     ]])
   if test "$ac_cv_have_decl_isinf" = yes; then
-    gl_CHECK_MATH_LIB([ISINF_LIBM], [x = isinf (x) + isinf ((float) x);])
+    gl_CHECK_MATH_LIB([ISINF_LIBM], [double],
+      [x = isinf (x) + isinf ((float) x);])
     if test "$ISINF_LIBM" != missing; then
       dnl Test whether isinf() on 'long double' works.
       gl_ISINFL_WORKS
