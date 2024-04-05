@@ -19,6 +19,166 @@
 progname=$0
 package=gnulib
 
+# func_exit STATUS
+# exits with a given status.
+# This function needs to be used, rather than 'exit', when a 'trap' handler is
+# in effect that refers to $?.
+func_exit ()
+{
+  (exit $1); exit $1
+}
+
+# func_fatal_error message
+# outputs to stderr a fatal error message, and terminates the program.
+# Input:
+# - progname                 name of this program
+func_fatal_error ()
+{
+  echo "$progname: *** $1" 1>&2
+  echo "$progname: *** Stop." 1>&2
+  func_exit 1
+}
+
+# func_readlink SYMLINK
+# outputs the target of the given symlink.
+if (type readlink) > /dev/null 2>&1; then
+  func_readlink ()
+  {
+    # Use the readlink program from GNU coreutils.
+    readlink "$1"
+  }
+else
+  func_readlink ()
+  {
+    # Use two sed invocations. A single sed -n -e 's,^.* -> \(.*\)$,\1,p'
+    # would do the wrong thing if the link target contains " -> ".
+    LC_ALL=C ls -l "$1" | sed -e 's, -> ,#%%#,' | sed -n -e 's,^.*#%%#\(.*\)$,\1,p'
+  }
+fi
+
+# func_gnulib_dir
+# locates the directory where the gnulib repository lives
+# Input:
+# - progname                 name of this program
+# Sets variables
+# - self_abspathname         absolute pathname of this program
+# - gnulib_dir               absolute pathname of gnulib repository
+func_gnulib_dir ()
+{
+  case "$progname" in
+    /* | ?:*) self_abspathname="$progname" ;;
+    */*) self_abspathname=`pwd`/"$progname" ;;
+    *)
+      # Look in $PATH.
+      # Iterate through the elements of $PATH.
+      # We use IFS=: instead of
+      #   for d in `echo ":$PATH:" | sed -e 's/:::*/:.:/g' | sed -e 's/:/ /g'`
+      # because the latter does not work when some PATH element contains spaces.
+      # We use a canonicalized $pathx instead of $PATH, because empty PATH
+      # elements are by definition equivalent to '.', however field splitting
+      # according to IFS=: loses empty fields in many shells:
+      #   - /bin/sh on OSF/1 and Solaris loses all empty fields (at the
+      #     beginning, at the end, and in the middle),
+      #   - /bin/sh on IRIX and /bin/ksh on IRIX and OSF/1 lose empty fields
+      #     at the beginning and at the end,
+      #   - GNU bash, /bin/sh on AIX and HP-UX, and /bin/ksh on AIX, HP-UX,
+      #     Solaris lose empty fields at the end.
+      # The 'case' statement is an optimization, to avoid evaluating the
+      # explicit canonicalization command when $PATH contains no empty fields.
+      self_abspathname=
+      if test "${PATH_SEPARATOR+set}" != set; then
+        # Determine PATH_SEPARATOR by trying to find /bin/sh in a PATH which
+        # contains only /bin. Note that ksh looks also at the FPATH variable,
+        # so we have to set that as well for the test.
+        PATH_SEPARATOR=:
+        (PATH='/bin;/bin'; FPATH=$PATH; sh -c :) >/dev/null 2>&1 \
+          && { (PATH='/bin:/bin'; FPATH=$PATH; sh -c :) >/dev/null 2>&1 \
+                 || PATH_SEPARATOR=';'
+             }
+      fi
+      if test "${PATH_SEPARATOR+set}" != set; then
+        # Determine PATH_SEPARATOR by trying to find /bin/sh in a PATH which
+        # contains only /bin. Note that ksh looks also at the FPATH variable,
+        # so we have to set that as well for the test.
+        PATH_SEPARATOR=:
+        (PATH='/bin;/bin'; FPATH=$PATH; sh -c :) >/dev/null 2>&1 \
+          && { (PATH='/bin:/bin'; FPATH=$PATH; sh -c :) >/dev/null 2>&1 \
+                 || PATH_SEPARATOR=';'
+             }
+      fi
+      if test "$PATH_SEPARATOR" = ";"; then
+        # On Windows, programs are searched in "." before $PATH.
+        pathx=".;$PATH"
+      else
+        # On Unix, we have to convert empty PATH elements to ".".
+        pathx="$PATH"
+        case :$PATH: in
+          *::*)
+            pathx=`echo ":$PATH:" | sed -e 's/:::*/:.:/g' -e 's/^://' -e 's/:\$//'`
+            ;;
+        esac
+      fi
+      saved_IFS="$IFS"
+      IFS="$PATH_SEPARATOR"
+      for d in $pathx; do
+        IFS="$saved_IFS"
+        test -z "$d" && d=.
+        if test -x "$d/$progname" && test ! -d "$d/$progname"; then
+          self_abspathname="$d/$progname"
+          break
+        fi
+      done
+      IFS="$saved_IFS"
+      if test -z "$self_abspathname"; then
+        func_fatal_error "could not locate the posix-modules program - how did you invoke it?"
+      fi
+      ;;
+  esac
+  while test -h "$self_abspathname"; do
+    # Resolve symbolic link.
+    linkval=`func_readlink "$self_abspathname"`
+    test -n "$linkval" || break
+    case "$linkval" in
+      /* | ?:* ) self_abspathname="$linkval" ;;
+      * ) self_abspathname=`echo "$self_abspathname" | sed -e 's,/[^/]*$,,'`/"$linkval" ;;
+    esac
+  done
+  gnulib_dir=`echo "$self_abspathname" | sed -e 's,/[^/]*$,,'`
+}
+
+# func_tmpdir
+# creates a temporary directory.
+# Input:
+# - progname                 name of this program
+# Sets variable
+# - tmp             pathname of freshly created temporary directory
+func_tmpdir ()
+{
+  # Use the environment variable TMPDIR, falling back to /tmp. This allows
+  # users to specify a different temporary directory, for example, if their
+  # /tmp is filled up or too small.
+  : "${TMPDIR=/tmp}"
+  {
+    # Use the mktemp program if available. If not available, hide the error
+    # message.
+    tmp=`(umask 077 && mktemp -d "$TMPDIR/glXXXXXX") 2>/dev/null` &&
+    test -n "$tmp" && test -d "$tmp"
+  } ||
+  {
+    # Use a simple mkdir command. It is guaranteed to fail if the directory
+    # already exists.  $RANDOM is bash specific and expands to empty in shells
+    # other than bash, ksh and zsh.  Its use does not increase security;
+    # rather, it minimizes the probability of failure in a very cluttered /tmp
+    # directory.
+    tmp=$TMPDIR/gl$$-$RANDOM
+    (umask 077 && mkdir "$tmp")
+  } ||
+  {
+    echo "$progname: cannot create a temporary directory in $TMPDIR" >&2
+    func_exit 1
+  }
+}
+
 # func_usage
 # outputs to stdout the --help usage message.
 func_usage ()
@@ -71,156 +231,6 @@ There is NO WARRANTY, to the extent permitted by law.
 
 Written by" "Bruno Haible"
 }
-
-# func_exit STATUS
-# exits with a given status.
-# This function needs to be used, rather than 'exit', when a 'trap' handler is
-# in effect that refers to $?.
-func_exit ()
-{
-  (exit $1); exit $1
-}
-
-# func_gnulib_dir
-# locates the directory where the gnulib repository lives
-# Input:
-# - progname                 name of this program
-# Sets variables
-# - self_abspathname         absolute pathname of this program
-# - gnulib_dir               absolute pathname of gnulib repository
-func_gnulib_dir ()
-{
-  case "$progname" in
-    /*) self_abspathname="$progname" ;;
-    */*) self_abspathname=`pwd`/"$progname" ;;
-    *)
-      # Look in $PATH.
-      # Iterate through the elements of $PATH.
-      # We use IFS=: instead of
-      #   for d in `echo ":$PATH:" | sed -e 's/:::*/:.:/g' | sed -e 's/:/ /g'`
-      # because the latter does not work when some PATH element contains spaces.
-      # We use a canonicalized $pathx instead of $PATH, because empty PATH
-      # elements are by definition equivalent to '.', however field splitting
-      # according to IFS=: loses empty fields in many shells:
-      #   - /bin/sh on OSF/1 and Solaris loses all empty fields (at the
-      #     beginning, at the end, and in the middle),
-      #   - /bin/sh on IRIX and /bin/ksh on IRIX and OSF/1 lose empty fields
-      #     at the beginning and at the end,
-      #   - GNU bash, /bin/sh on AIX and HP-UX, and /bin/ksh on AIX, HP-UX,
-      #     Solaris lose empty fields at the end.
-      # The 'case' statement is an optimization, to avoid evaluating the
-      # explicit canonicalization command when $PATH contains no empty fields.
-      self_abspathname=
-      if test "${PATH_SEPARATOR+set}" != set; then
-        # Determine PATH_SEPARATOR by trying to find /bin/sh in a PATH which
-        # contains only /bin. Note that ksh looks also at the FPATH variable,
-        # so we have to set that as well for the test.
-        PATH_SEPARATOR=:
-        (PATH='/bin;/bin'; FPATH=$PATH; sh -c :) >/dev/null 2>&1 \
-          && { (PATH='/bin:/bin'; FPATH=$PATH; sh -c :) >/dev/null 2>&1 \
-                 || PATH_SEPARATOR=';'
-             }
-      fi
-      if test "$PATH_SEPARATOR" = ";"; then
-        # On Windows, programs are searched in "." before $PATH.
-        pathx=".;$PATH"
-      else
-        # On Unix, we have to convert empty PATH elements to ".".
-        pathx="$PATH"
-        case :$PATH: in
-          *::*)
-            pathx=`echo ":$PATH:" | sed -e 's/:::*/:.:/g' -e 's/^://' -e 's/:\$//'`
-            ;;
-        esac
-      fi
-      saved_IFS="$IFS"
-      IFS="$PATH_SEPARATOR"
-      for d in $pathx; do
-        IFS="$saved_IFS"
-        test -z "$d" && d=.
-        if test -x "$d/$progname" && test ! -d "$d/$progname"; then
-          self_abspathname="$d/$progname"
-          break
-        fi
-      done
-      IFS="$saved_IFS"
-      if test -z "$self_abspathname"; then
-        func_fatal_error "could not locate the posix-modules program - how did you invoke it?"
-      fi
-      ;;
-  esac
-  while test -h "$self_abspathname"; do
-    # Resolve symbolic link.
-    linkval=`func_readlink "$self_abspathname"`
-    test -n "$linkval" || break
-    case "$linkval" in
-      /* ) self_abspathname="$linkval" ;;
-      * ) self_abspathname=`echo "$self_abspathname" | sed -e 's,/[^/]*$,,'`/"$linkval" ;;
-    esac
-  done
-  gnulib_dir=`echo "$self_abspathname" | sed -e 's,/[^/]*$,,'`
-}
-
-# func_tmpdir
-# creates a temporary directory.
-# Input:
-# - progname                 name of this program
-# Sets variable
-# - tmp             pathname of freshly created temporary directory
-func_tmpdir ()
-{
-  # Use the environment variable TMPDIR, falling back to /tmp. This allows
-  # users to specify a different temporary directory, for example, if their
-  # /tmp is filled up or too small.
-  : "${TMPDIR=/tmp}"
-  {
-    # Use the mktemp program if available. If not available, hide the error
-    # message.
-    tmp=`(umask 077 && mktemp -d "$TMPDIR/glXXXXXX") 2>/dev/null` &&
-    test -n "$tmp" && test -d "$tmp"
-  } ||
-  {
-    # Use a simple mkdir command. It is guaranteed to fail if the directory
-    # already exists.  $RANDOM is bash specific and expands to empty in shells
-    # other than bash, ksh and zsh.  Its use does not increase security;
-    # rather, it minimizes the probability of failure in a very cluttered /tmp
-    # directory.
-    tmp=$TMPDIR/gl$$-$RANDOM
-    (umask 077 && mkdir "$tmp")
-  } ||
-  {
-    echo "$progname: cannot create a temporary directory in $TMPDIR" >&2
-    func_exit 1
-  }
-}
-
-# func_fatal_error message
-# outputs to stderr a fatal error message, and terminates the program.
-# Input:
-# - progname                 name of this program
-func_fatal_error ()
-{
-  echo "$progname: *** $1" 1>&2
-  echo "$progname: *** Stop." 1>&2
-  func_exit 1
-}
-
-# func_readlink SYMLINK
-# outputs the target of the given symlink.
-if (type -p readlink) > /dev/null 2>&1; then
-  func_readlink ()
-  {
-    # Use the readlink program from GNU coreutils.
-    readlink "$1"
-  }
-else
-  func_readlink ()
-  {
-    # Use two sed invocations. A single sed -n -e 's,^.* -> \(.*\)$,\1,p'
-    # would do the wrong thing if the link target contains " -> ".
-    LC_ALL=C ls -l "$1" | sed -e 's, -> ,#%%#,' | sed -n -e 's,^.*#%%#\(.*\)$,\1,p'
-  }
-fi
 
 # Excludes for mingw.
 exclude_for_mingw=
