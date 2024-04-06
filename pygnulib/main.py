@@ -910,12 +910,14 @@ def main() -> None:
         config.setDestDir(destdir)
 
         # Prefer configure.ac but also look for configure.in.
-        if isfile(joinpath(destdir, 'configure.ac')):
-            configure_ac = joinpath(destdir, 'configure.ac')
-        elif isfile(joinpath(destdir, 'configure.in')):
-            configure_ac = joinpath(destdir, 'configure.in')
+        # NOTE: Use os.path.join so the leading './' is not removed. This
+        # is to make the gnulib-tool test suite happy.
+        if isfile(os.path.join(destdir, 'configure.ac')):
+            configure_ac = os.path.join(destdir, 'configure.ac')
+        elif isfile(os.path.join(destdir, 'configure.in')):
+            configure_ac = os.path.join(destdir, 'configure.in')
         else:
-            raise GLError(3, joinpath(destdir, 'configure.ac'))
+            raise GLError(3, os.path.join(destdir, 'configure.ac'))
 
         # Save the Autoconf file path for the rest of the import.
         config.setAutoconfFile(configure_ac)
