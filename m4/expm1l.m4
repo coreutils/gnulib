@@ -1,5 +1,5 @@
-# expm1l.m4 serial 10
-dnl Copyright (C) 2010-2023 Free Software Foundation, Inc.
+# expm1l.m4 serial 10.1
+dnl Copyright (C) 2010-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -124,7 +124,7 @@ int main (int argc, char *argv[])
   long double (* volatile my_expm1l) (long double) = argc ? expm1l : dummy;
   int result = 0;
   /* This test fails on musl 1.2.2/arm64, musl 1.2.2/s390x, Mac OS X 10.5,
-     NetBSD 8.0.  */
+     NetBSD 10.0/x86_64.  */
   {
     const long double TWO_LDBL_MANT_DIG = /* 2^LDBL_MANT_DIG */
       (long double) (1U << ((LDBL_MANT_DIG - 1) / 5))
@@ -139,6 +139,18 @@ int main (int argc, char *argv[])
     long double err = (y + t) * TWO_LDBL_MANT_DIG;
     if (!(err >= -100.0L && err <= 100.0L))
       result |= 1;
+  }
+  /* This test fails on NetBSD 10.0/i386.  */
+  {
+    int i;
+    long double x;
+    volatile long double y;
+    for (i = -1, x = 0.5L; i > LDBL_MIN_EXP; i--, x *= 0.5L)
+      ;
+    /* Here i = LDBL_MIN_EXP, x = 2^LDBL_MIN_EXP.  */
+    y = my_expm1l (x);
+    if (!(y >= x))
+      result |= 2;
   }
   return result;
 }

@@ -1,5 +1,5 @@
 /* Test of expm1*() function family.
-   Copyright (C) 2012-2023 Free Software Foundation, Inc.
+   Copyright (C) 2012-2024 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -52,7 +52,9 @@ test_function (void)
     /* Error bound, in ulps.  */
     const DOUBLE err_bound =
       (sizeof (DOUBLE) > sizeof (double) ?
-#if defined __i386__ && defined __FreeBSD__
+#if defined __i386__ && defined __NetBSD__
+       L_(1025.0)
+#elif defined __i386__ && defined __FreeBSD__
        /* On FreeBSD/x86 6.4, the 'long double' type really has only 53 bits of
           precision in the compiler but 64 bits of precision at runtime.  See
           <https://lists.gnu.org/r/bug-gnulib/2008-07/msg00063.html>.
@@ -83,6 +85,8 @@ test_function (void)
       (sizeof (DOUBLE) > sizeof (double) ?
 #if defined __i386__ && defined __FreeBSD__
        L_(1536.0)
+#elif defined __i386__ && defined __NetBSD__
+       L_(1026.0)
 #else
        L_(11.0)
 #endif
