@@ -93,11 +93,10 @@ class GLImport:
         self.cache.setAuxDir('.')
         with codecs.open(self.config.getAutoconfFile(), 'rb', 'UTF-8') as file:
             data = file.read()
-        pattern = re.compile(r'^AC_CONFIG_AUX_DIR\((.*)\)$', re.M)
-        match = pattern.findall(data)
+        pattern = re.compile(r'^AC_CONFIG_AUX_DIR\([\[ ]*([^\]"\$`\\\)]+).*?$', re.MULTILINE)
+        match = pattern.search(data)
         if match:
-            result = cleaner(match)[0]
-            self.cache.setAuxDir(joinpath(self.config['destdir'], result))
+            self.cache.setAuxDir(match.group(1))
         pattern = re.compile(r'A[CM]_PROG_LIBTOOL', re.M)
         guessed_libtool = bool(pattern.findall(data))
         if self.config['auxdir'] == '':
