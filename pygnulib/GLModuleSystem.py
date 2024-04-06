@@ -645,7 +645,7 @@ class GLModule:
                 buildaux_files = filter_filelist(constants.NL, all_files,
                                                  'build-aux/', '', 'build-aux/', '')
                 if buildaux_files != '':
-                    buildaux_files = [ joinpath('$(top_srcdir)', auxdir, filename)
+                    buildaux_files = [ os.path.join('$(top_srcdir)', joinpath(auxdir, filename))
                                        for filename in buildaux_files.split(constants.NL) ]
                     result += 'EXTRA_DIST += %s' % ' '.join(buildaux_files)
                     result += '\n\n'
