@@ -1,5 +1,5 @@
 /* Test the stack overflow handler.
-   Copyright (C) 2002-2023 Free Software Foundation, Inc.
+   Copyright (C) 2002-2024 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -55,7 +55,26 @@ static volatile char *stack_upper_bound;
 static void
 stackoverflow_handler_continuation (void *arg1, void *arg2, void *arg3)
 {
+#if defined __NetBSD__ && defined __i386__
+  /* On NetBSD 10.0/i386, when built as part of a testdir-all (but not as part
+     of a testdir for just the module 'sigsegv'!) this program crashes.  The
+     cause is that:
+       - The alternate stack is not aligned (which is intentional, see
+         altstack-util.h) and NetBSD does not align the stack pointer while
+         switching to the alternate stack.
+       - When %esp is not aligned, the dynamic linker crashes in function
+         _rtld_bind while resolving the symbol 'longjmp'.
+     We would around this by aligning the stack pointer, to a multiple of 8.  */
+  int *argp;
+  __asm__ __volatile__ ("movl %1,%0" : "=r" (argp) : "r" (&arg1));
+  unsigned long sp;
+  __asm__ __volatile__ ("movl %%esp,%0" : "=r" (sp));
+  sp &= ~7UL;
+  __asm__ __volatile__ ("movl %0,%%esp" : : "r" (sp));
+  int arg = *argp;
+#else
   int arg = (int) (long) arg1;
+#endif
   longjmp (mainloop, arg);
 }
 
