@@ -559,8 +559,7 @@ class GLConfig:
         '''Avoid including the given module. Useful if you have code that provides
         equivalent functionality.'''
         if type(module) is str:
-            if module not in self.table['avoids']:
-                self.table['avoids'].append(module)
+            self.table['avoids'].append(module)
         else:  # if module has not str type
             raise TypeError('avoid must be a string, not %s'
                             % type(module).__name__)
