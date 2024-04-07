@@ -269,7 +269,10 @@ def cleaner(sequence: str | list[str]) -> str | list[str | bool]:
 def joinpath(head: str, *tail: str) -> str:
     '''Join two or more pathname components, inserting '/' as needed. If any
     component is an absolute path, all previous path components will be
-    discarded.'''
+    discarded.
+    This function also replaces SUBDIR/../ with empty; therefore it is not
+    suitable when some of the pathname components use Makefile variables
+    such as '$(srcdir)'.'''
     newtail = []
     for item in tail:
         newtail += [item]
