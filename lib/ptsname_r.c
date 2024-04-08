@@ -68,11 +68,34 @@ ptsname_r (int fd, char *buf, size_t buflen)
 #undef ptsname_r
 {
 #if HAVE_ESSENTIALLY_WORKING_PTSNAME_R
+# if defined __NetBSD__
+  char tmpbuf[32];
+  if (buf == NULL)
+    return EINVAL;
+  if (buflen >= sizeof (tmpbuf))
+    /* ERANGE should not happen in this case.  */
+    return ptsname_r (fd, buf, buflen);
+  else
+    {
+      int ret = ptsname_r (fd, tmpbuf, sizeof (tmpbuf));
+      if (ret != 0)
+        return ret;
+      else
+        {
+          size_t len = strlen (tmpbuf);
+          if (len >= buflen)
+            return ERANGE;
+          memcpy (buf, tmpbuf, len + 1);
+          return 0;
+        }
+    }
+# else
   int ret = ptsname_r (fd, buf, buflen);
   if (ret == 0)
     return 0;
   else
     return errno;
+# endif
 #elif defined __DragonFly__
   int saved_errno = errno;
   char tmpbuf[5 + 4 + 10 + 1];

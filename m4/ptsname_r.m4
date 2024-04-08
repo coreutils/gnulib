@@ -1,5 +1,5 @@
 # ptsname_r.m4
-# serial 9
+# serial 10
 dnl Copyright (C) 2010-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -73,6 +73,13 @@ main (void)
       case "$gl_cv_func_ptsname_r_retval_ok" in
         *yes) ;;
         *) REPLACE_PTSNAME_R=1 ;;
+      esac
+      dnl On NetBSD 10.0, when ptsname_r fails with ERANGE, it clobbers the
+      dnl result buffer. We don't use an AC_RUN_IFELSE test here, because
+      dnl while the bug exists on all platforms, only NetBSD/i386 has the
+      dnl files /dev/ptyp[01] on which the bug becomes apparent.
+      case "$host_os" in
+        netbsd*) REPLACE_PTSNAME_R=1 ;;
       esac
     fi
   fi
