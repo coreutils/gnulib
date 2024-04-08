@@ -76,43 +76,43 @@ class GLError(Exception):
         if self.message == None:
             message = None
             if errno == 1:
-                message = "file does not exist in GLFileSystem: %s" % repr(errinfo)
+                message = 'file does not exist in GLFileSystem: %s' % repr(errinfo)
             elif errno == 2:
-                message = "cannot patch file inside GLFileSystem: %s" % repr(errinfo)
+                message = 'cannot patch file inside GLFileSystem: %s' % repr(errinfo)
             elif errno == 3:
-                message = "configure file does not exist: %s" % repr(errinfo)
+                message = 'configure file does not exist: %s' % repr(errinfo)
             elif errno == 4:
-                message = "minimum supported autoconf version is 2.64, not %s" % repr(errinfo)
+                message = 'minimum supported autoconf version is 2.64, not %s' % repr(errinfo)
             elif errno == 5:
-                message = "%s is expected to contain gl_M4_BASE([%s])" % (repr(os.path.join(errinfo, 'gnulib-comp.m4')), repr(errinfo))
+                message = '%s is expected to contain gl_M4_BASE([%s])' % (repr(os.path.join(errinfo, 'gnulib-comp.m4')), repr(errinfo))
             elif errno == 6:
                 message = "missing sourcebase argument; cache file doesn't contain it, so you might have to set this argument"
             elif errno == 7:
-                message = "missing docbase argument; you might have to create GLImport instance with mode 0 and docbase argument"
+                message = 'missing docbase argument; you might have to create GLImport instance with mode 0 and docbase argument'
             elif errno == 8:
                 message = "missing testsbase argument; cache file doesn't contain it, so you might have to set this argument"
             elif errno == 9:
                 message = "missing libname argument; cache file doesn't contain it, so you might have to set this argument"
             elif errno == 10:
-                message = "conddeps are not supported with inctests"
+                message = 'conddeps are not supported with inctests'
             elif errno == 11:
-                message = "incompatible licenses on modules: %s" % repr(errinfo)
+                message = 'incompatible licenses on modules: %s' % repr(errinfo)
             elif errno == 12:
-                message = "cannot process empty filelist"
+                message = 'cannot process empty filelist'
             elif errno == 13:
-                message = "cannot create the given directory: %s" % repr(errinfo)
+                message = 'cannot create the given directory: %s' % repr(errinfo)
             elif errno == 14:
-                message = "cannot remove the given file: %s" % repr(errinfo)
+                message = 'cannot remove the given file: %s' % repr(errinfo)
             elif errno == 15:
-                message = "cannot create the given file: %s" % repr(errinfo)
+                message = 'cannot create the given file: %s' % repr(errinfo)
             elif errno == 16:
-                message = "cannot transform the given file: %s" % repr(errinfo)
+                message = 'cannot transform the given file: %s' % repr(errinfo)
             elif errno == 17:
-                message = "cannot update/replace the given file: %s" % repr(errinfo)
+                message = 'cannot update/replace the given file: %s' % repr(errinfo)
             elif errno == 18:
-                message = "module lacks a license: %s" % repr(errinfo)
+                message = 'module lacks a license: %s' % repr(errinfo)
             elif errno == 19:
-                message = "error when running subprocess: %s" % repr(errinfo)
+                message = 'error when running subprocess: %s' % repr(errinfo)
             elif errno == 20:
                 message = 'could not patch test-driver script'
             elif errno == 21:

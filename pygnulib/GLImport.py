@@ -409,7 +409,7 @@ class GLImport:
         # line has length >= 3071; similarly, the IRIX 6.5 awk fails if a
         # line has length >= 3072.
         if len(localpath) > 0:
-            actioncmd += ''.join([f" \\\n#  --local-dir={x}" for x in localpath])
+            actioncmd += ''.join([f' \\\n#  --local-dir={x}' for x in localpath])
         actioncmd += ' \\\n#  --lib=%s' % libname
         actioncmd += ' \\\n#  --source-base=%s' % sourcebase
         actioncmd += ' \\\n#  --m4-base=%s' % m4base

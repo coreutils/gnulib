@@ -105,7 +105,7 @@ class GLInfo:
                     have_GNU_date = False
                 if have_GNU_date:
                     args = ['git', 'log', '-n', '1', '--format=medium', '--date=iso', 'ChangeLog']
-                    result = sp.check_output(args, cwd=DIRS['root']).decode("UTF-8")
+                    result = sp.check_output(args, cwd=DIRS['root']).decode('UTF-8')
                     # Get date as "2008-03-21 07:16:51 -0600" from string
                     pattern = re.compile(r'^Date:[\t ]*(.*?)$', re.M)
                     result = pattern.findall(result)
@@ -116,7 +116,7 @@ class GLInfo:
                     # Use GNU date to compute the time in GMT
                     args = ['date', '-d', result, '-u', '+%Y-%m-%d %H:%M:%S']
                     proc = sp.check_output(args)
-                    result = str(proc, "UTF-8")
+                    result = str(proc, 'UTF-8')
                     result = result.rstrip(os.linesep)
                     return result
         # gnulib copy without versioning information.
@@ -342,7 +342,7 @@ Report bugs to <bug-gnulib@gnu.org>.'''
             if have_git:
                 version_gen = joinpath(DIRS['build-aux'], 'git-version-gen')
                 args = [version_gen, '/dev/null']
-                result = sp.check_output(args, cwd=DIRS['root']).decode("UTF-8")
+                result = sp.check_output(args, cwd=DIRS['root']).decode('UTF-8')
                 result = result.strip()
                 result = result.replace('-dirty', '-modified')
                 if result == 'UNKNOWN':

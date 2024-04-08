@@ -219,7 +219,7 @@ def force_output() -> None:
 def execute(args: list[str], verbose: int) -> None:
     '''Execute the given shell command.'''
     if verbose >= 0:
-        print("executing %s" % ' '.join(args), flush=True)
+        print('executing %s' % ' '.join(args), flush=True)
         try:  # Try to run
             retcode = sp.call(args)
         except Exception as error:
@@ -238,7 +238,7 @@ def execute(args: list[str], verbose: int) -> None:
         if retcode == 0:
             os.remove(temp)
         else:
-            print("executing %s" % ' '.join(args))
+            print('executing %s' % ' '.join(args))
             with codecs.open(temp, 'rb') as file:
                 cmdout = file.read()
             print(cmdout)

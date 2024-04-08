@@ -396,7 +396,7 @@ class GLConfig:
         placed. Default comes from configure.ac or configure.in.'''
         if self.table['auxdir']:
             return self.table['auxdir']
-        return "build-aux"
+        return 'build-aux'
 
     def setAuxDir(self, auxdir: str) -> None:
         '''Specify directory relative to --dir where auxiliary build tools are

@@ -359,20 +359,20 @@ def main() -> None:
     parser.add_argument('--conditional-dependencies',
                         dest='cond_dependencies',
                         default=None,
-                        action="store_true")
+                        action='store_true')
     parser.add_argument('--no-conditional-dependencies',
                         dest='cond_dependencies',
                         default=None,
-                        action="store_false")
+                        action='store_false')
     # libtool
     parser.add_argument('--libtool',
                         dest='libtool',
                         default=None,
-                        action="store_true")
+                        action='store_true')
     parser.add_argument('--no-libtool',
                         dest='libtool',
                         default=None,
-                        action="store_false")
+                        action='store_false')
     # libname
     parser.add_argument('--lib',
                         dest='libname',
@@ -495,7 +495,7 @@ def main() -> None:
                         default=None,
                         nargs=1)
     # All other arguments are collected.
-    parser.add_argument("non_option_arguments",
+    parser.add_argument('non_option_arguments',
                         nargs='*')
 
     # Parse the given arguments. Don't signal an error if non-option arguments
@@ -872,7 +872,7 @@ def main() -> None:
                 command = "find modules -type f -print | xargs -n 100 grep -l %s /dev/null | sed -e 's,^modules/,,'" % shlex.quote(filename_line_regex)
                 os.chdir(constants.DIRS['root'])
                 with sp.Popen(command, shell=True, stdout=sp.PIPE) as proc:
-                    result = proc.stdout.read().decode("UTF-8")
+                    result = proc.stdout.read().decode('UTF-8')
                 os.chdir(DIRS['cwd'])
                 # Read module candidates from local directories.
                 if localpath != None and len(localpath) > 0:
@@ -880,7 +880,7 @@ def main() -> None:
                     for localdir in localpath:
                         os.chdir(localdir)
                         with sp.Popen(command, shell=True, stdout=sp.PIPE) as proc:
-                            result += proc.stdout.read().decode("UTF-8")
+                            result += proc.stdout.read().decode('UTF-8')
                         os.chdir(DIRS['cwd'])
                 listing = [ line
                             for line in result.split('\n')

@@ -341,7 +341,7 @@ class GLFileAssistant:
         except Exception as exc:
             raise GLError(15, lookedup) from exc
         # Don't process binary files with sed.
-        if not (original.endswith(".class") or original.endswith(".mo")):
+        if not (original.endswith('.class') or original.endswith('.mo')):
             transformer = None
             if original.startswith('lib/'):
                 if sed_transform_main_lib_file:
