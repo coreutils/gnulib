@@ -28,6 +28,10 @@ MSVC 14.
 When this function fails, it returns -1 instead of the error code
 on some platforms:
 macOS 11.1, FreeBSD 14.0, Android 4.3.
+@item
+When this function fails with ERANGE, it stores an empty string as result
+on some platforms:
+NetBSD 10.0.
 @end itemize
 
 Portability problems not fixed by Gnulib:
