@@ -228,11 +228,6 @@ class GLFileAssistant:
         if file not in self.added:
             self.added += [file]
 
-    def removeFile(self, file: str) -> None:
-        '''Remove file from the list of added files.'''
-        if file in self.added:
-            self.added.pop(file)
-
     def getFiles(self) -> list[str]:
         '''Return list of the added files.'''
         return list(self.added)
