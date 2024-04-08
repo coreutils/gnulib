@@ -336,8 +336,7 @@ class GLImport:
             else:  # file is not a special file
                 path = file
             result += [os.path.normpath(path)]
-        result = sorted(set(result))
-        return list(result)
+        return sorted(set(result))
 
     def rewrite_new_files(self, files: list[str]) -> list[str]:
         '''Replace auxdir, docbase, sourcebase, m4base and testsbase from
@@ -373,8 +372,7 @@ class GLImport:
             else:  # file is not a special file
                 path = file
             result += [os.path.normpath(path)]
-        result = sorted(set(result))
-        return list(result)
+        return sorted(set(result))
 
     def actioncmd(self) -> str:
         '''Return command-line invocation comment.'''

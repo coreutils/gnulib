@@ -879,8 +879,8 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                             capture_output=True)
             if result.returncode == 0:
                 # sort -u
-                emit += lines_to_multiline(sorted(list(set(x.strip()
-                                                           for x in result.stdout.decode(encoding='utf-8').splitlines()))))
+                emit += lines_to_multiline(sorted({ x.strip()
+                                                    for x in result.stdout.decode(encoding='utf-8').splitlines() }))
             else:
                 emit += '== gnulib-tool GNU Make output failed as follows ==\n'
                 emit += ['# stderr: ' + x + '\n' for x in

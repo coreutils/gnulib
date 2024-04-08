@@ -935,7 +935,7 @@ class GLModuleTable:
             inc_all_tests = self.inc_all_indirect_tests
         modules = sorted(set(outmodules))
         self.modules = modules
-        return list(modules)
+        return modules
 
     def transitive_closure_separately(self, basemodules: list[GLModule],
                                       finalmodules: list[GLModule]) -> tuple[list[GLModule], list[GLModule]]:
@@ -978,7 +978,7 @@ class GLModuleTable:
         #   + [ m
         #       for m in main_modules
         #       if m.getApplicability() != 'main' ]
-        tests_modules = sorted(list(set(tests_modules)))
+        tests_modules = sorted(set(tests_modules))
         # If testsrelated_modules consists only of modules with applicability 'all',
         # set it to empty (because such modules are only helper modules for other modules).
         have_nontrivial_testsrelated_modules = False

@@ -165,8 +165,7 @@ class GLTestDir:
             else:  # file is not a special file
                 path = file
             result += [os.path.normpath(path)]
-        result = sorted(set(result))
-        return list(result)
+        return sorted(set(result))
 
     def execute(self) -> None:
         '''Create a scratch package with the given modules.'''
