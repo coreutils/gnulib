@@ -83,7 +83,7 @@ class GLMakefileTable:
         if type(dotfirst) is not bool:
             raise TypeError('dotfirst must be a bool, not %s' % (type(dotfirst).__name__))
         dictionary = {'dir': dir, 'var': var, 'val': val, 'dotfirst': dotfirst}
-        self.table += [dictionary]
+        self.table.append(dictionary)
 
     def parent(self, gentests: bool, source_makefile_am: str, tests_makefile_am: str) -> None:
         '''Add a special row to Makefile.am table with the first parent directory

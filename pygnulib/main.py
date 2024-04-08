@@ -757,28 +757,28 @@ def main() -> None:
             inctests = True
     incl_test_categories = []
     if inctests:
-        incl_test_categories += [constants.TESTS['tests']]
+        incl_test_categories.append(constants.TESTS['tests'])
     if cmdargs.obsolete:
-        incl_test_categories += [constants.TESTS['obsolete']]
+        incl_test_categories.append(constants.TESTS['obsolete'])
     if cmdargs.inc_cxx_tests:
-        incl_test_categories += [constants.TESTS['cxx-tests']]
+        incl_test_categories.append(constants.TESTS['cxx-tests'])
     if cmdargs.inc_longrunning_tests:
-        incl_test_categories += [constants.TESTS['longrunning-tests']]
+        incl_test_categories.append(constants.TESTS['longrunning-tests'])
     if cmdargs.inc_privileged_tests:
-        incl_test_categories += [constants.TESTS['privileged-tests']]
+        incl_test_categories.append(constants.TESTS['privileged-tests'])
     if cmdargs.inc_unportable_tests:
-        incl_test_categories += [constants.TESTS['unportable-tests']]
+        incl_test_categories.append(constants.TESTS['unportable-tests'])
     if cmdargs.alltests:
-        incl_test_categories += [constants.TESTS['all-tests']]
+        incl_test_categories.append(constants.TESTS['all-tests'])
     excl_test_categories = []
     if cmdargs.excl_cxx_tests:
-        excl_test_categories += [constants.TESTS['cxx-tests']]
+        excl_test_categories.append(constants.TESTS['cxx-tests'])
     if cmdargs.excl_longrunning_tests:
-        excl_test_categories += [constants.TESTS['longrunning-tests']]
+        excl_test_categories.append(constants.TESTS['longrunning-tests'])
     if cmdargs.excl_privileged_tests:
-        excl_test_categories += [constants.TESTS['privileged-tests']]
+        excl_test_categories.append(constants.TESTS['privileged-tests'])
     if cmdargs.excl_unportable_tests:
-        excl_test_categories += [constants.TESTS['unportable-tests']]
+        excl_test_categories.append(constants.TESTS['unportable-tests'])
     lgpl = cmdargs.lgpl
     if lgpl != None:
         lgpl = lgpl[-1]
@@ -999,7 +999,7 @@ def main() -> None:
                             # Ignore absolute directory pathnames, like /usr/local/share/aclocal.
                             if not isabs(aclocal_amflag):
                                 if isfile(joinpath(destdir, aclocal_amflag, 'gnulib-cache.m4')):
-                                    m4dirs += [aclocal_amflag]
+                                    m4dirs.append(aclocal_amflag)
                             dirisnext = False
                         else:  # if not dirisnext
                             if aclocal_amflag == '-I':
@@ -1010,7 +1010,7 @@ def main() -> None:
                         # Ignore absolute directory pathnames, like /usr/local/share/aclocal.
                         if not isabs(arg):
                             if isfile(joinpath(destdir, arg, 'gnulib-cache.m4')):
-                                m4dirs += [arg]
+                                m4dirs.append(arg)
                 else:  # if not isfile(filepath)
                     # No Makefile.am! Oh well. Look at the last generated aclocal.m4.
                     filepath = joinpath(destdir, 'aclocal.m4')

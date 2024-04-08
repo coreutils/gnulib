@@ -514,7 +514,7 @@ class GLConfig:
         '''Add the module to the modules list.'''
         if type(module) is str:
             if module not in self.table['modules']:
-                self.table['modules'] += [module]
+                self.table['modules'].append(module)
         else:  # if module has not str type
             raise TypeError('module must be a string, not %s'
                             % type(module).__name__)

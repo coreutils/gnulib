@@ -164,7 +164,7 @@ class GLTestDir:
                 path = constants.substart('top/', '', file)
             else:  # file is not a special file
                 path = file
-            result += [os.path.normpath(path)]
+            result.append(os.path.normpath(path))
         return sorted(set(result))
 
     def execute(self) -> None:
@@ -355,7 +355,7 @@ class GLTestDir:
         filetable = []
         for src in filelist:
             dest = self.rewrite_files([src])[-1]
-            filetable += [tuple([dest, src])]
+            filetable.append(tuple([dest, src]))
         for row in filetable:
             src = row[1]
             dest = row[0]
@@ -466,7 +466,7 @@ class GLTestDir:
                         pattern = re.compile(r'AC_REQUIRE\(\[([^()]*)\]\)', re.M)
                         snippet = pattern.sub(r'\1', snippet)
                         snippet = snippet.strip()
-                        snippets += [snippet]
+                        snippets.append(snippet)
                 snippets = [ snippet
                              for snippet in snippets
                              if snippet.strip()]
@@ -532,9 +532,9 @@ class GLTestDir:
                 # Restore changed variables.
                 self.config.setAuxDir(saved_auxdir)
                 auxdir = self.config['auxdir']
-                subdirs_with_configure_ac += [testsbase]
+                subdirs_with_configure_ac.append(testsbase)
 
-            subdirs += [testsbase]
+            subdirs.append(testsbase)
 
         # Create Makefile.am.
         emit = '## Process this file with automake to produce Makefile.in.\n\n'
@@ -580,7 +580,7 @@ class GLTestDir:
                 pattern = re.compile(r'AC_REQUIRE\(\[([^()]*)\]\)', re.M)
                 snippet = pattern.sub(r'\1', snippet)
                 snippet = snippet.strip()
-                snippets += [snippet]
+                snippets.append(snippet)
         snippets = [ snippet
                      for snippet in snippets
                      if snippet.strip() ]
@@ -659,7 +659,7 @@ class GLTestDir:
         for directory in subdirs:
             # For subdirs that have a configure.ac by their own, it's the subdir's
             # configure.ac which creates the subdir's Makefile.am, not this one.
-            makefiles += [joinpath(directory, 'Makefile')]
+            makefiles.append(joinpath(directory, 'Makefile'))
         if not single_configure:
             makefiles = makefiles[:-1]
         emit += 'AC_CONFIG_FILES([%s])\n' % ' '.join(makefiles)
@@ -926,7 +926,7 @@ class GLMegaTestDir:
         for module in modules:
             self.config.setModules([str(module)])
             GLTestDir(self.config, joinpath(self.megatestdir, str(module))).execute()
-            megasubdirs += [str(module)]
+            megasubdirs.append(str(module))
 
         # Then, all modules all together.
         # Except config-h, which breaks all modules which use HAVE_CONFIG_H.
@@ -936,7 +936,7 @@ class GLMegaTestDir:
         self.config.setModules([ str(module)
                                  for module in modules ])
         GLTestDir(self.config, joinpath(self.megatestdir, 'ALL')).execute()
-        megasubdirs += ['ALL']
+        megasubdirs.append('ALL')
 
         # Create autobuild.
         emit = ''

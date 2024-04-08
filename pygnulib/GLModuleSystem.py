@@ -856,7 +856,7 @@ class GLModuleTable:
             inmodules = []               # Accumulator, queue for next round
             for module in inmodules_this_round:
                 if module not in self.avoids:
-                    outmodules += [module]
+                    outmodules.append(module)
                     if self.config['conddeps']:
                         conditional = self.isConditional(module)
                     dependencies = module.getDependenciesWithConditions()
@@ -878,8 +878,8 @@ class GLModuleTable:
                         testsname = module.getTestsName()
                         if self.modulesystem.exists(testsname):
                             testsmodule = self.modulesystem.find(testsname)
-                            depmodules += [testsmodule]
-                            conditions += [None]
+                            depmodules.append(testsmodule)
+                            conditions.append(None)
                     for depmodule in depmodules:
                         # Determine whether to include the dependency or tests module.
                         include = True
@@ -912,7 +912,7 @@ class GLModuleTable:
                                 if not inc_all_tests:
                                     include = False
                         if include and depmodule not in self.avoids:
-                            inmodules += [depmodule]
+                            inmodules.append(depmodule)
                             if self.config['conddeps']:
                                 index = depmodules.index(depmodule)
                                 condition = conditions[index]
@@ -1056,7 +1056,7 @@ class GLModuleTable:
         for listing in listings:
             for file in listing:
                 if file not in filelist:
-                    filelist += [file]
+                    filelist.append(file)
         return filelist
 
     def filelist_separately(self, main_modules: list[GLModule],

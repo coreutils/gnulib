@@ -335,7 +335,7 @@ class GLImport:
                 path = constants.substart('top/', '', file)
             else:  # file is not a special file
                 path = file
-            result += [os.path.normpath(path)]
+            result.append(os.path.normpath(path))
         return sorted(set(result))
 
     def rewrite_new_files(self, files: list[str]) -> list[str]:
@@ -371,7 +371,7 @@ class GLImport:
                 path = constants.substart('top/', '', file)
             else:  # file is not a special file
                 path = file
-            result += [os.path.normpath(path)]
+            result.append(os.path.normpath(path))
         return sorted(set(result))
 
     def actioncmd(self) -> str:
@@ -929,7 +929,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         old_files = list(self.cache['files'])
         path = joinpath(destdir, m4base, 'gnulib-tool.m4')
         if isfile(path):
-            old_files += [joinpath('m4', 'gnulib-tool.m4')]
+            old_files.append(joinpath('m4', 'gnulib-tool.m4'))
 
         # Construct tables and transformers.
         transformers = dict()
@@ -941,10 +941,10 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         new_table = []
         for src in old_files:
             dest = self.rewrite_old_files([src])[-1]
-            old_table += [tuple([dest, src])]
+            old_table.append(tuple([dest, src]))
         for src in new_files:
             dest = self.rewrite_new_files([src])[-1]
-            new_table += [tuple([dest, src])]
+            new_table.append(tuple([dest, src]))
         old_table = sorted(set(old_table))
         new_table = sorted(set(new_table))
 
@@ -997,14 +997,14 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         # Create all necessary directories.
         dirs = [sourcebase, m4base]
         if pobase:
-            dirs += [pobase]
+            dirs.append(pobase)
         if [ file
              for file in filetable['all']
              if file.startswith('doc/') ]:
-            dirs += [docbase]
+            dirs.append(docbase)
         if gentests:
-            dirs += [testsbase]
-        dirs += [auxdir]
+            dirs.append(testsbase)
+        dirs.append(auxdir)
         dirs += sorted([ os.path.dirname(pair[0])
                          for pair in filetable['new'] ])
         dirs = [ os.path.join(destdir, d)
@@ -1044,7 +1044,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                         raise GLError(14, file) from exc
                 else:  # if self.config['dryrun']
                     print('Remove file %s (backup in %s~)' % (path, path))
-                filetable['removed'] += [file]
+                filetable['removed'].append(file)
 
         # Files which are in filetable['new'] and not in filetable['old'].
         # They will be added/updated and added to filetable['added'] list.
@@ -1132,7 +1132,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                         print('Creating %s' % filename)
                     else:  # if self.config['dryrun']:
                         print('Create %s' % filename)
-                    filetable['added'] += [filename]
+                    filetable['added'].append(filename)
                 if isfile(tmpfile):
                     os.remove(tmpfile)
 
@@ -1153,7 +1153,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                     print('Creating %s' % filename)
                 else:  # if self.config['dryrun']:
                     print('Create %s' % filename)
-                filetable['added'] += [filename]
+                filetable['added'].append(filename)
             if isfile(tmpfile):
                 os.remove(tmpfile)
 
@@ -1174,7 +1174,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                     print('Creating %s' % filename)
                 else:  # if self.config['dryrun']:
                     print('Create %s' % filename)
-                filetable['added'] += [filename]
+                filetable['added'].append(filename)
             if isfile(tmpfile):
                 os.remove(tmpfile)
 
@@ -1206,7 +1206,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                     print('Updating %s (backup in %s)' % (filename, backup))
                 elif flag == 2:
                     print('Creating %s' % filename)
-                    filetable['added'] += [filename]
+                    filetable['added'].append(filename)
                 if isfile(tmpfile):
                     os.remove(tmpfile)
             else:  # if not self.config['dryrun']
@@ -1291,7 +1291,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                 print('Creating %s' % filename)
             else:  # if self.config['dryrun']:
                 print('Create %s' % filename)
-            filetable['added'] += [filename]
+            filetable['added'].append(filename)
         if isfile(tmpfile):
             os.remove(tmpfile)
 
@@ -1315,7 +1315,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                     print('Creating %s' % filename)
                 else:  # if self.config['dryrun']:
                     print('Create %s' % filename)
-                filetable['added'] += [filename]
+                filetable['added'].append(filename)
             if isfile(tmpfile):
                 os.remove(tmpfile)
 
@@ -1323,15 +1323,15 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
             # Update the .cvsignore and .gitignore files.
             ignorelist = []
             # Treat gnulib-comp.m4 like an added file, even if it already existed.
-            filetable['added'] += [joinpath(m4base, 'gnulib-comp.m4')]
+            filetable['added'].append(joinpath(m4base, 'gnulib-comp.m4'))
             filetable['added'] = sorted(set(filetable['added']))
             filetable['removed'] = sorted(set(filetable['removed']))
             for file in filetable['added']:
                 directory, basename = os.path.split(file)
-                ignorelist += [tuple([directory, '|A|', basename])]
+                ignorelist.append(tuple([directory, '|A|', basename]))
             for file in filetable['removed']:
                 directory, basename = os.path.split(file)
-                ignorelist += [tuple([directory, '|R|', basename])]
+                ignorelist.append(tuple([directory, '|R|', basename]))
             # Sort ignorelist by directory.
             ignorelist = sorted(ignorelist, key=lambda row: row[0])
             last_dir = ''
@@ -1347,9 +1347,9 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                     last_dir_files_added = []
                     last_dir_files_removed = []
                 if operand == '|A|':
-                    last_dir_files_added += [filename]
+                    last_dir_files_added.append(filename)
                 elif operand == '|R|':
-                    last_dir_files_removed += [filename]
+                    last_dir_files_removed.append(filename)
             self._done_dir_(last_dir, last_dir_files_added, last_dir_files_removed)
 
         # Finish the work.

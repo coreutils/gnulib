@@ -275,7 +275,7 @@ def joinpath(head: str, *tail: str) -> str:
     such as '$(srcdir)'.'''
     newtail = []
     for item in tail:
-        newtail += [item]
+        newtail.append(item)
     result = os.path.normpath(os.path.join(head, *tail))
     return result
 
@@ -469,7 +469,7 @@ def filter_filelist(separator: str, filelist: str, prefix: str, suffix: str,
                                  % (removed_prefix, removed_suffix))
             result = pattern.sub(r'%s\1%s'
                                  % (added_prefix, added_suffix), filename)
-            listing += [result]
+            listing.append(result)
     # Return an empty string if no files were matched, else combine them
     # with the given separator.
     if listing:

@@ -226,7 +226,7 @@ class GLFileAssistant:
     def addFile(self, file: str) -> None:
         '''Add file to the list of added files.'''
         if file not in self.added:
-            self.added += [file]
+            self.added.append(file)
 
     def getFiles(self) -> list[str]:
         '''Return list of the added files.'''
