@@ -813,7 +813,7 @@ class GLModuleTable:
         result = str(module) in self.dependers
         return result
 
-    def getCondition(self, parent: GLModule, module: GLModule) -> str | bool:
+    def getCondition(self, parent: GLModule, module: GLModule) -> str | bool | None:
         '''Return condition from parent to module. Condition can be string or True.
         If module is not in the list of conddeps, method returns None.'''
         if type(parent) is not GLModule:
