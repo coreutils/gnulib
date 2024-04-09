@@ -57,6 +57,11 @@ totalorder (double const *x, double const *y)
   xu.f = *x;
   yu.f = *y;
 #else
+# ifdef __clang__
+  /* Prevent clang 16.0.6 on OpenBSD 7.5 from reusing the values of *x and *y
+     (fetched above) in optimized inlined memcpy expansions.  */
+  __asm__ __volatile__ ("" : : : "memory");
+# endif
   /* On 32-bit x86 processors, as well as on x86_64 processors with
      CC="gcc -mfpmath=387", the evaluation of *x and *y above is done through
      an 'fldl' instruction, which converts a signalling NaN to a quiet NaN. See
