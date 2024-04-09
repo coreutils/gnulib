@@ -465,7 +465,7 @@ class GLEmiter:
         podomain = self.config['podomain']
         emit = ''
         emit += '## DO NOT EDIT! GENERATED AUTOMATICALLY!\n'
-        emit += "%s\n" % self.copyright_notice()
+        emit += '%s\n' % self.copyright_notice()
         emit += '# Usually the message domain is the same as the package name.\n'
         emit += "# But here it has a '-gnulib' suffix.\n"
         emit += 'DOMAIN = %s-gnulib\n\n' % podomain
