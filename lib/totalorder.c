@@ -57,9 +57,11 @@ totalorder (double const *x, double const *y)
   xu.f = *x;
   yu.f = *y;
 #else
-# ifdef __clang__
-  /* Prevent clang 16.0.6 on OpenBSD 7.5 from reusing the values of *x and *y
-     (fetched above) in optimized inlined memcpy expansions.  */
+# if defined __GNUC__ || defined __clang__
+  /* Prevent gcc and clang from reusing the values of *x and *y (fetched above)
+     in optimized inlined memcpy expansions.
+     Seen with gcc <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=114659>
+     and with clang 16.0.6 on OpenBSD 7.5.  */
   __asm__ __volatile__ ("" : : : "memory");
 # endif
   /* On 32-bit x86 processors, as well as on x86_64 processors with
