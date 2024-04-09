@@ -1057,17 +1057,6 @@ class GLModuleTable:
         result = tuple([main_filelist, tests_filelist])
         return result
 
-    def getAvoids(self) -> list[GLModule]:
-        '''Return list of avoids.'''
-        return list(self.avoids)
-
-    def setAvoids(self, modules: list[GLModule]) -> None:
-        '''Specify list of avoids.'''
-        for module in modules:
-            if type(module) is not GLModule:
-                raise TypeError('each module must be a GLModule instance')
-        self.avoids = sorted(set(modules))
-
     def getBaseModules(self) -> list[GLModule]:
         '''Return list of base modules.'''
         return list(self.base_modules)
