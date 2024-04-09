@@ -524,7 +524,7 @@ class GLImport:
         witness_c_macro = self.config['witness_c_macro']
         vc_files = self.config['vc_files']
         modules = [ str(module)
-                    for module in moduletable['base'] ]
+                    for module in moduletable.getBaseModules() ]
         avoids = self.config['avoids']
         emit += self.emitter.copyright_notice()
         emit += '''#
@@ -630,8 +630,8 @@ AC_DEFUN([%s_EARLY],
   m4_pattern_allow([^gl_ES$])dnl a valid locale name
   m4_pattern_allow([^gl_LIBOBJS$])dnl a variable
   m4_pattern_allow([^gl_LTLIBOBJS$])dnl a variable\n''' % (configure_ac, macro_prefix)
-        emit += self.emitter.preEarlyMacros(True, '  ', moduletable['final'])
-        for module in moduletable['final']:
+        emit += self.emitter.preEarlyMacros(True, '  ', moduletable.getFinalModules())
+        for module in moduletable.getFinalModules():
             emit += '  # Code from module %s:\n' % str(module)
             snippet = module.getAutoconfEarlySnippet()
             lines = [ line
@@ -677,7 +677,7 @@ AC_DEFUN([%s_INIT],
         if witness_c_macro:
             emit += '  m4_pushdef([gl_MODULE_INDICATOR_CONDITION], [%s])\n' % witness_c_macro
         # Emit main autoconf snippets.
-        emit += self.emitter.autoconfSnippets(moduletable['main'], moduletable['main'],
+        emit += self.emitter.autoconfSnippets(moduletable.getMainModules(), moduletable.getMainModules(),
                                               moduletable, 0, True, False, True, replace_auxdir)
         if witness_c_macro:
             emit += '  m4_popdef([gl_MODULE_INDICATOR_CONDITION])\n'
@@ -700,7 +700,8 @@ AC_DEFUN([%s_INIT],
         emit += '  m4_pushdef([gl_MODULE_INDICATOR_CONDITION], '
         emit += '[$gl_module_indicator_condition])\n'
         # Emit tests autoconf snippets.
-        emit += self.emitter.autoconfSnippets(moduletable['tests'], moduletable['main'] + moduletable['tests'],
+        emit += self.emitter.autoconfSnippets(moduletable.getTestsModules(),
+                                              moduletable.getMainModules() + moduletable.getTestsModules(),
                                               moduletable, 0, True, True, True, replace_auxdir)
         emit += '  m4_popdef([gl_MODULE_INDICATOR_CONDITION])\n'
         emit += self.emitter.initmacro_end('%stests' % macro_prefix, gentests)
@@ -1271,8 +1272,8 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         # can run 'autoconf -t', which reads gnulib-comp.m4.
         basename = joinpath(sourcebase, source_makefile_am)
         tmpfile = self.assistant.tmpfilename(basename)
-        emit = self.emitter.lib_Makefile_am(basename,
-                                            self.moduletable['main'], self.moduletable, self.makefiletable,
+        emit = self.emitter.lib_Makefile_am(basename, self.moduletable.getMainModules(),
+                                            self.moduletable, self.makefiletable,
                                             actioncmd, for_test)
         if automake_subdir:
             emit = sp.run([joinpath(DIRS['root'], 'build-aux/prefix-gnulib-mk'), '--from-gnulib-tool',
@@ -1299,8 +1300,8 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         if gentests:
             basename = joinpath(testsbase, tests_makefile_am)
             tmpfile = self.assistant.tmpfilename(basename)
-            emit = self.emitter.tests_Makefile_am(basename,
-                                                  self.moduletable['tests'], self.moduletable, self.makefiletable,
+            emit = self.emitter.tests_Makefile_am(basename, self.moduletable.getTestsModules(),
+                                                  self.moduletable, self.makefiletable,
                                                   '%stests_WITNESS' % macro_prefix, for_test)
             with codecs.open(tmpfile, 'wb', 'UTF-8') as file:
                 file.write(emit)
@@ -1360,7 +1361,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         # - some may have been skipped through --avoid, and since the elements of
         # 'main' modules but not in 'base' modules can go away without explicit
         # notice - through changes in the module dependencies).
-        modules = sorted(set(self.moduletable['base']).intersection(self.moduletable['main']))
+        modules = sorted(set(self.moduletable.getBaseModules()).intersection(self.moduletable.getMainModules()))
         # First the #include <...> directives without #ifs, sorted for convenience,
         # then the #include "..." directives without #ifs, sorted for convenience,
         # then the #include directives that are surrounded by #ifs. Not sorted.
@@ -1388,7 +1389,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
 
         # Get link directives.
         links = [ module.getLink()
-                  for module in self.moduletable['main'] ]
+                  for module in self.moduletable.getMainModules() ]
         lines = [ line
                   for link in links
                   for line in link.split('\n')

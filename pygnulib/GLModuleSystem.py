@@ -761,21 +761,6 @@ class GLModuleTable:
         result = '<pygnulib.GLModuleTable %s>' % hex(id(self))
         return result
 
-    def __getitem__(self, y: str) -> list[GLModule]:
-        '''x.__getitem__(y) <==> x[y]'''
-        if y == 'base':
-            return self.getBaseModules()
-        elif y == 'final':
-            return self.getFinalModules()
-        elif y == 'main':
-            return self.getMainModules()
-        elif y == 'tests':
-            return self.getTestsModules()
-        elif y == 'avoids':
-            return self.getAvoids()
-        else:  # if y is not in list
-            raise KeyError('GLModuleTable does not contain key: %s' % repr(y))
-
     def addConditional(self, parent: GLModule, module: GLModule, condition: str | bool) -> None:
         '''Add new conditional dependency from parent to module with condition.'''
         if type(parent) is not GLModule:
