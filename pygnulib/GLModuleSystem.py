@@ -750,11 +750,11 @@ class GLModuleTable:
                             % type(inc_all_direct_tests).__name__)
         self.inc_all_direct_tests = inc_all_direct_tests
         self.inc_all_indirect_tests = inc_all_indirect_tests
-        self.avoids = []  # Avoids
+        self.avoids = set()
         for avoid in self.config.getAvoids():
             module = self.modulesystem.find(avoid)
             if module:
-                self.avoids.append(module)
+                self.avoids.add(module)
 
     def __repr__(self) -> str:
         '''x.__repr__() <==> repr(x)'''
