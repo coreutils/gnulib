@@ -21,6 +21,8 @@
 /* Specification.  */
 #include <math.h>
 
+#include <string.h>
+
 int
 totalorder (double const *x, double const *y)
 {
@@ -50,8 +52,18 @@ totalorder (double const *x, double const *y)
   /* Invert the most significant bit of the mantissa field.  Cf. snan.h.  */
   extended_sign ^= (1ULL << 51);
 #endif
-  union { unsigned long long i; double f; } volatile xu = {0}, yu = {0};
+  union { unsigned long long i; double f; } xu = {0}, yu = {0};
+#if 0
   xu.f = *x;
   yu.f = *y;
+#else
+  /* On 32-bit x86 processors, as well as on x86_64 processors with
+     CC="gcc -mfpmath=387", the evaluation of *x and *y above is done through
+     an 'fldl' instruction, which converts a signalling NaN to a quiet NaN. See
+     <https://lists.gnu.org/archive/html/bug-gnulib/2023-10/msg00060.html>
+     for details.  Use memcpy to avoid this.  */
+  memcpy (&xu.f, x, sizeof (double));
+  memcpy (&yu.f, y, sizeof (double));
+#endif
   return (xu.i ^ extended_sign) <= (yu.i ^ extended_sign);
 }
