@@ -20,7 +20,7 @@
 #include <math.h>
 
 #include "signature.h"
-SIGNATURE_CHECK (totalorderf, int, (const float *, const float *));
+SIGNATURE_CHECK (totalorder, int, (const double *, const double *));
 
 #define TOTALORDER totalorder
 #define TOTALORDER_TYPE memory_double
