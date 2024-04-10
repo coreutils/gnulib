@@ -678,7 +678,7 @@ AC_DEFUN([%s_INIT],
             emit += '  m4_pushdef([gl_MODULE_INDICATOR_CONDITION], [%s])\n' % witness_c_macro
         # Emit main autoconf snippets.
         emit += self.emitter.autoconfSnippets(moduletable.getMainModules(), moduletable.getMainModules(),
-                                              moduletable, 0, True, False, True, replace_auxdir)
+                                              moduletable, lambda module: True, True, False, True, replace_auxdir)
         if witness_c_macro:
             emit += '  m4_popdef([gl_MODULE_INDICATOR_CONDITION])\n'
         emit += '  # End of code from modules\n'
@@ -702,7 +702,7 @@ AC_DEFUN([%s_INIT],
         # Emit tests autoconf snippets.
         emit += self.emitter.autoconfSnippets(moduletable.getTestsModules(),
                                               moduletable.getMainModules() + moduletable.getTestsModules(),
-                                              moduletable, 0, True, True, True, replace_auxdir)
+                                              moduletable, lambda module: True, True, True, True, replace_auxdir)
         emit += '  m4_popdef([gl_MODULE_INDICATOR_CONDITION])\n'
         emit += self.emitter.initmacro_end('%stests' % macro_prefix, gentests)
         emit += '  AC_REQUIRE([gl_CC_GNULIB_WARNINGS])\n'

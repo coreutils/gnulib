@@ -497,13 +497,13 @@ class GLTestDir:
                 # autoconf snippets. It's cleanest to put those of the library before
                 # those of the tests.
                 emit += self.emitter.shellvars_init(True, f'../{sourcebase}')
-                emit += self.emitter.autoconfSnippets(modules, modules,
-                                                      moduletable, 1, False, False, False,
-                                                      replace_auxdir)
+                emit += self.emitter.autoconfSnippets(modules, modules, moduletable,
+                                                      lambda module: module.isNonTests(),
+                                                      False, False, False, replace_auxdir)
                 emit += self.emitter.shellvars_init(True, '.')
-                emit += self.emitter.autoconfSnippets(modules, modules,
-                                                      moduletable, 2, False, False, False,
-                                                      replace_auxdir)
+                emit += self.emitter.autoconfSnippets(modules, modules, moduletable,
+                                                      lambda module: module.isTests(),
+                                                      False, False, False, replace_auxdir)
                 emit += self.emitter.initmacro_end(macro_prefix, True)
                 # _LIBDEPS and _LTLIBDEPS variables are not needed if this library is
                 # created using libtool, because libtool already handles the
@@ -613,10 +613,12 @@ class GLTestDir:
         emit += self.emitter.shellvars_init(False, sourcebase)
         if single_configure:
             emit += self.emitter.autoconfSnippets(main_modules, main_modules, moduletable,
-                                                  0, True, False, False, replace_auxdir)
+                                                  lambda module: True,
+                                                  True, False, False, replace_auxdir)
         else:  # if not single_configure
             emit += self.emitter.autoconfSnippets(modules, modules, moduletable,
-                                                  1, True, False, False, replace_auxdir)
+                                                  lambda module: module.isNonTests(),
+                                                  True, False, False, replace_auxdir)
         emit += self.emitter.initmacro_end(macro_prefix, False)
         if single_configure:
             emit += '  gltests_libdeps=\n'
@@ -630,7 +632,8 @@ class GLTestDir:
             emit += '  m4_pushdef([gl_MODULE_INDICATOR_CONDITION], '
             emit += '[$gl_module_indicator_condition])\n'
             snippets = self.emitter.autoconfSnippets(tests_modules, main_modules + tests_modules,
-                                                     moduletable, 0, True, False, False, replace_auxdir)
+                                                     moduletable, lambda module: True,
+                                                     True, False, False, replace_auxdir)
             emit += snippets
             emit += '  m4_popdef([gl_MODULE_INDICATOR_CONDITION])\n'
             emit += self.emitter.initmacro_end('%stests' % macro_prefix, True)

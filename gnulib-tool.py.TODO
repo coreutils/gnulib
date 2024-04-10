@@ -1,15 +1,10 @@
 
 ================================================================================
 
-Make the unit tests work with GNULIB_TOOL_IMPL=py.
-
-================================================================================
-
 Optimize:
   - os.chdir around subprocess creation -> cwd=... argument instead.
 
 Various other refactorings, as deemed useful:
-  - Use an enum for verifier=0,1,2.
   - Use an enum for 'all', 'old', 'new', 'added', 'removed' in GLImport.py.
   - sp.call(['rm', '-rf' ...]) versus shutil.rmtree ?
   - go through all the open() and codecs.open() calls and turn them into

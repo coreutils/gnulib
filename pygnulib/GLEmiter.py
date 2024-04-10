@@ -22,6 +22,7 @@ import os
 import re
 import codecs
 import subprocess as sp
+from collections.abc import Callable
 from . import constants
 from .GLInfo import GLInfo
 from .GLConfig import GLConfig
@@ -257,7 +258,7 @@ class GLEmiter:
         return emit
 
     def autoconfSnippets(self, modules: list[GLModule], referenceable_modules: list[GLModule],
-                         moduletable: GLModuleTable, verifier: int, toplevel: bool,
+                         moduletable: GLModuleTable, module_filter: Callable[[GLModule], bool], toplevel: bool,
                          disable_libtool: bool, disable_gettext: bool, replace_auxdir: bool) -> str:
         '''Collect and emit the autoconf snippets of a set of modules.
         GLConfig: conddeps.
@@ -271,10 +272,8 @@ class GLEmiter:
           dependencies.
         moduletable is a GLModuleTable instance, which contains necessary
           information about dependencies of the modules.
-        verifier is an integer, which can be 0, 1 or 2.
-          if verifier == 0, then process every module;
-          if verifier == 1, then process only non-tests modules;
-          if verifier == 2, then process only tests modules.
+        module_filter is a function that accepts a GLModule and returns a bool describing
+          whether or not Autoconf snippets should be emitted for it.
         toplevel is a bool variable, False means a subordinate use of pygnulib.
         disable_libtool is a bool variable; it tells whether to disable libtool
           handling even if it has been specified through the GLConfig class.
@@ -291,11 +290,9 @@ class GLEmiter:
         if type(moduletable) is not GLModuleTable:
             raise TypeError('moduletable must be a GLModuleTable, not %s'
                             % type(moduletable).__name__)
-        if type(verifier) is not int:
-            raise TypeError('verifier must be an int, not %s'
-                            % type(verifier).__name__)
-        if not (0 <= verifier <= 2):
-            raise ValueError('verifier must be 0, 1 or 2, not %d' % verifier)
+        if not callable(module_filter):
+            raise TypeError('module_filter must be a function, not %s'
+                            % type(module_filter).__name__)
         if type(toplevel) is not bool:
             raise TypeError('toplevel must be a bool, not %s'
                             % type(toplevel).__name__)
@@ -314,37 +311,19 @@ class GLEmiter:
         if not conddeps:
             # Ignore the conditions, and enable all modules unconditionally.
             for module in modules:
-                if verifier == 0:
-                    solution = True
-                elif verifier == 1:
-                    solution = module.isNonTests()
-                elif verifier == 2:
-                    solution = module.isTests()
-                if solution:
+                if module_filter(module):
                     emit += self.autoconfSnippet(module, toplevel,
                                                  disable_libtool, disable_gettext, replace_auxdir, '  ')
         else:  # if conddeps
             # Emit the autoconf code for the unconditional modules.
             for module in modules:
-                if verifier == 0:
-                    solution = True
-                elif verifier == 1:
-                    solution = module.isNonTests()
-                elif verifier == 2:
-                    solution = module.isTests()
-                if solution:
+                if module_filter(module):
                     if not moduletable.isConditional(module):
                         emit += self.autoconfSnippet(module, toplevel,
                                                      disable_libtool, disable_gettext, replace_auxdir, '  ')
             # Initialize the shell variables indicating that the modules are enabled.
             for module in modules:
-                if verifier == 0:
-                    solution = True
-                elif verifier == 1:
-                    solution = module.isNonTests()
-                elif verifier == 2:
-                    solution = module.isTests()
-                if solution:
+                if module_filter(module):
                     if moduletable.isConditional(module):
                         shellvar = module.getShellVar()
                         emit += '  %s=false\n' % module.getShellVar()
@@ -352,13 +331,7 @@ class GLEmiter:
             # function. This makes it possible to support cycles among conditional
             # modules.
             for module in modules:
-                if verifier == 0:
-                    solution = True
-                elif verifier == 1:
-                    solution = module.isNonTests()
-                elif verifier == 2:
-                    solution = module.isTests()
-                if solution:
+                if module_filter(module):
                     if moduletable.isConditional(module):
                         shellfunc = module.getShellFunc()
                         shellvar = module.getShellVar()
@@ -390,13 +363,7 @@ class GLEmiter:
                         emit += '  }\n'
             # Emit the dependencies from the unconditional to the conditional modules.
             for module in modules:
-                if verifier == 0:
-                    solution = True
-                elif verifier == 1:
-                    solution = module.isNonTests()
-                elif verifier == 2:
-                    solution = module.isTests()
-                if solution:
+                if module_filter(module):
                     if not moduletable.isConditional(module):
                         depmodules = module.getDependenciesWithoutConditions()
                         # Intersect dependencies with the modules list.
@@ -419,13 +386,7 @@ class GLEmiter:
             # Define the Automake conditionals.
             emit += '  m4_pattern_allow([^%s_GNULIB_ENABLED_])\n' % macro_prefix
             for module in modules:
-                if verifier == 0:
-                    solution = True
-                elif verifier == 1:
-                    solution = module.isNonTests()
-                elif verifier == 2:
-                    solution = module.isTests()
-                if solution:
+                if module_filter(module):
                     if moduletable.isConditional(module):
                         condname = module.getConditionalName()
                         shellvar = module.getShellVar()
