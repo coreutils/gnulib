@@ -523,8 +523,7 @@ class GLImport:
         podomain = self.config['podomain']
         witness_c_macro = self.config['witness_c_macro']
         vc_files = self.config['vc_files']
-        modules = [ str(module)
-                    for module in moduletable.getBaseModules() ]
+        modules = self.config['modules']
         avoids = self.config['avoids']
         emit += self.emitter.copyright_notice()
         emit += '''#
@@ -808,8 +807,12 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         m4base = self.config['m4base']
         lgpl = self.config['lgpl']
         verbose = self.config['verbosity']
-        base_modules = sorted({ self.modulesystem.find(m)
-                                for m in modules })
+        base_modules = set()
+        for name in modules:
+            module = self.modulesystem.find(name)
+            if module is not None:
+                base_modules.add(module)
+        base_modules = sorted(base_modules)
 
         # Perform transitive closure.
         final_modules = self.moduletable.transitive_closure(base_modules)

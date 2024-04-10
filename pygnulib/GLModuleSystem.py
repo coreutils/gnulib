@@ -110,7 +110,7 @@ class GLModuleSystem:
                 raise GLError(3, module)
             else:  # if not self.config['errors']
                 sys.stderr.write('gnulib-tool: warning: ')
-                sys.stderr.write('file %s does not exist\n' % str(module))
+                sys.stderr.write("module %s doesn't exist\n" % str(module))
 
     def file_is_module(self, filename: str) -> bool:
         '''Given the name of a file in the modules/ directory, return true
