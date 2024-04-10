@@ -1288,7 +1288,7 @@ def main() -> None:
 
     elif mode == 'copy-file':
         srcpath = files[0]
-        # The second argument is the destination; either a directory ot a file.
+        # The second argument is the destination; either a directory or a file.
         # It defaults to the current directory.
         if len(files) == 2:
             dest = files[1]

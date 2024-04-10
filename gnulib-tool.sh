@@ -7646,7 +7646,7 @@ s/\([.*$]\)/[\1]/g'
     # Verify the file exists.
     func_lookup_file "$f"
 
-    # The second argument is the destination; either a directory ot a file.
+    # The second argument is the destination; either a directory or a file.
     # It defaults to the current directory.
     dest="$2"
     test -n "$dest" || dest='.'
