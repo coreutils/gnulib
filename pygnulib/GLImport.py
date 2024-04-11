@@ -1199,9 +1199,9 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
             if not self.config['dryrun']:
                 tmpfile = self.assistant.tmpfilename(basename)
                 data = '# Set of available languages.\n'
-                files = [ constants.subend('.po', '', file)
-                          for file in os.listdir(joinpath(destdir, pobase))
-                          if file.endswith('.po') ]
+                files = sorted([ constants.subend('.po', '', file)
+                                 for file in os.listdir(joinpath(destdir, pobase))
+                                 if file.endswith('.po') ])
                 data += lines_to_multiline(files)
                 with codecs.open(tmpfile, 'wb', 'UTF-8') as file:
                     file.write(data)
