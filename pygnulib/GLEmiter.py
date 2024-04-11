@@ -750,7 +750,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                 # Replace NMD, so as to remove redundant "$(MKDIR_P) '.'" invocations.
                 # The logic is similar to how we define gl_source_base_prefix.
                 amsnippet1 = _eliminate_NMD(amsnippet1, automake_subdir)
-                pattern = re.compile(r'lib_([A-Z][A-Z]*)', re.M)
+                pattern = re.compile(r'lib_([A-Z]+)', re.M)
                 amsnippet1 = pattern.sub(r'%s_%s_\1' % (libname, libext),
                                          amsnippet1)
                 amsnippet1 = amsnippet1.replace('$(GNULIB_', '$(' + module_indicator_prefix + '_GNULIB_')
@@ -768,7 +768,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
 
                 # Get unconditional snippet, edit it and save to amsnippet2.
                 amsnippet2 = module.getAutomakeSnippet_Unconditional()
-                pattern = re.compile(r'lib_([A-Z][A-Z]*)', re.M)
+                pattern = re.compile(r'lib_([A-Z]+)', re.M)
                 amsnippet2 = pattern.sub(r'%s_%s_\1' % (libname, libext),
                                          amsnippet2)
                 amsnippet2 = amsnippet2.replace('$(GNULIB_',
@@ -1045,7 +1045,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                 # Replace NMD, so as to remove redundant "$(MKDIR_P) '.'" invocations.
                 # The logic is similar to how we define gl_source_base_prefix.
                 amsnippet1 = _eliminate_NMD(amsnippet1, False)
-                pattern = re.compile(r'lib_([A-Z][A-Z]*)', re.M)
+                pattern = re.compile(r'lib_([A-Z]+)', re.M)
                 amsnippet1 = pattern.sub(r'libtests_a_\1', amsnippet1)
                 amsnippet1 = amsnippet1.replace('$(GNULIB_', '$(' + module_indicator_prefix + '_GNULIB_')
                 amsnippet1 = amsnippet1.replace('lib%_LIBRARIES', 'lib_LIBRARIES')
@@ -1064,7 +1064,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
 
                 # Get unconditional snippet, edit it and save to amsnippet2.
                 amsnippet2 = module.getAutomakeSnippet_Unconditional()
-                pattern = re.compile(r'lib_([A-Z][A-Z]*)', re.M)
+                pattern = re.compile(r'lib_([A-Z]+)', re.M)
                 amsnippet2 = pattern.sub(r'libtests_a_\1', amsnippet2)
                 amsnippet2 = amsnippet2.replace('$(GNULIB_',
                                                 '$(' + module_indicator_prefix + '_GNULIB_')
