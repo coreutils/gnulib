@@ -5394,22 +5394,67 @@ s,^\(.................................................[^ ]*\) *,                
   fi
 
   rewritten='%REWRITTEN%'
+  if test "$auxdir" = '.'; then
+    auxdir_prefix=
+  else
+    auxdir_prefix="$auxdir/"
+  fi
+  if test "$cached_docbase" = '.'; then
+    cached_docbase_prefix=
+  else
+    cached_docbase_prefix="$cached_docbase/"
+  fi
+  if test "$cached_sourcebase" = '.'; then
+    cached_sourcebase_prefix=
+  else
+    cached_sourcebase_prefix="$cached_sourcebase/"
+  fi
+  if test "$cached_m4base" = '.'; then
+    cached_m4base_prefix=
+  else
+    cached_m4base_prefix="$cached_m4base/"
+  fi
+  if test "$cached_testsbase" = '.'; then
+    cached_testsbase_prefix=
+  else
+    cached_testsbase_prefix="$cached_testsbase/"
+  fi
+  if test "$docbase" = '.'; then
+    docbase_prefix=
+  else
+    docbase_prefix="$docbase/"
+  fi
+  if test "$sourcebase" = '.'; then
+    sourcebase_prefix=
+  else
+    sourcebase_prefix="$sourcebase/"
+  fi
+  if test "$m4base" = '.'; then
+    m4base_prefix=
+  else
+    m4base_prefix="$m4base/"
+  fi
+  if test "$testsbase" = '.'; then
+    testsbase_prefix=
+  else
+    testsbase_prefix="$testsbase/"
+  fi
   sed_rewrite_old_files="\
-    s,^build-aux/,$rewritten$auxdir/,
-    s,^doc/,$rewritten$cached_docbase/,
-    s,^lib/,$rewritten$cached_sourcebase/,
-    s,^m4/,$rewritten$cached_m4base/,
-    s,^tests/,$rewritten$cached_testsbase/,
-    s,^tests=lib/,$rewritten$cached_testsbase/,
+    s,^build-aux/,$rewritten$auxdir_prefix,
+    s,^doc/,$rewritten$cached_docbase_prefix,
+    s,^lib/,$rewritten$cached_sourcebase_prefix,
+    s,^m4/,$rewritten$cached_m4base_prefix,
+    s,^tests/,$rewritten$cached_testsbase_prefix,
+    s,^tests=lib/,$rewritten$cached_testsbase_prefix,
     s,^top/,$rewritten,
     s,^$rewritten,,"
   sed_rewrite_new_files="\
-    s,^build-aux/,$rewritten$auxdir/,
-    s,^doc/,$rewritten$docbase/,
-    s,^lib/,$rewritten$sourcebase/,
-    s,^m4/,$rewritten$m4base/,
-    s,^tests/,$rewritten$testsbase/,
-    s,^tests=lib/,$rewritten$testsbase/,
+    s,^build-aux/,$rewritten$auxdir_prefix,
+    s,^doc/,$rewritten$docbase_prefix,
+    s,^lib/,$rewritten$sourcebase_prefix,
+    s,^m4/,$rewritten$m4base_prefix,
+    s,^tests/,$rewritten$testsbase_prefix,
+    s,^tests=lib/,$rewritten$testsbase_prefix,
     s,^top/,$rewritten,
     s,^$rewritten,,"
 
