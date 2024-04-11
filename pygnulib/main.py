@@ -927,7 +927,7 @@ def main() -> None:
             configure_ac_data = file.read()
 
         guessed_m4dirs = []
-        pattern = re.compile(r'^.*AC_CONFIG_MACRO_DIRS?\([\[ ]*([^\]"\$`\\\)]*).*$', re.MULTILINE)
+        pattern = re.compile(r'^.*AC_CONFIG_MACRO_DIRS?\([\[ ]*([^]"$`\\)]*).*$', re.MULTILINE)
         match = pattern.findall(configure_ac_data)
         # Append the match to guessed_m4dirs.
         if match:
@@ -1015,7 +1015,7 @@ def main() -> None:
                     # No Makefile.am! Oh well. Look at the last generated aclocal.m4.
                     filepath = joinpath(destdir, 'aclocal.m4')
                     if isfile(filepath):
-                        pattern = re.compile(r'm4_include\(\[(.*?)\]\)')
+                        pattern = re.compile(r'm4_include\(\[(.*?)]\)')
                         with codecs.open(filepath, 'rb', 'UTF-8') as file:
                             m4dirs = pattern.findall(file.read())
                         m4dirs = [ os.path.dirname(m4dir)

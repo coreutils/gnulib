@@ -93,7 +93,7 @@ class GLImport:
         self.cache.setAuxDir('.')
         with codecs.open(self.config.getAutoconfFile(), 'rb', 'UTF-8') as file:
             data = file.read()
-        pattern = re.compile(r'^AC_CONFIG_AUX_DIR\([\[ ]*([^\]"\$`\\\)]+).*?$', re.MULTILINE)
+        pattern = re.compile(r'^AC_CONFIG_AUX_DIR\([\[ ]*([^]"$`\\)]+).*?$', re.MULTILINE)
         match = pattern.search(data)
         if match:
             self.cache.setAuxDir(match.group(1))
@@ -261,7 +261,7 @@ class GLImport:
             if self.config['destdir']:
                 with open(self.config['configure_ac'], encoding='utf-8') as file:
                     data = file.read()
-                pattern = re.compile(r'^.*AM_INIT_AUTOMAKE\([\[ ]*([^\]\)]*).*$', re.MULTILINE)
+                pattern = re.compile(r'^.*AM_INIT_AUTOMAKE\([\[ ]*([^])]*).*$', re.MULTILINE)
                 configure_ac_automake_options = pattern.findall(data)
                 if configure_ac_automake_options:
                     automake_options = { x
