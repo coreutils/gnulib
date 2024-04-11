@@ -6270,10 +6270,10 @@ s,//*$,/,'
 
   if test "$vc_files" != false; then
     # Update the .cvsignore and .gitignore files.
-    { echo "$added_files" | sed -e '/^$/d' -e 's,\([^/]*\)$,|A|\1,'
-      echo "$removed_files" | sed -e '/^$/d' -e 's,\([^/]*\)$,|R|\1,'
+    { echo "$added_files" | sed -e '/^$/d' -e 's,^\([^/]*\)$,./\1,' -e 's,/\([^/]*\)$,|A|\1,'
+      echo "$removed_files" | sed -e '/^$/d' -e 's,^\([^/]*\)$,./\1,' -e 's,/\([^/]*\)$,|R|\1,'
       # Treat gnulib-comp.m4 like an added file, even if it already existed.
-      echo "$m4base/|A|gnulib-comp.m4"
+      echo "$m4base|A|gnulib-comp.m4"
     } | LC_ALL=C sort -t'|' -k1,1 > "$tmp"/fileset-changes
     { # Rearrange file descriptors. Needed because "while ... done < ..."
       # constructs are executed in a subshell e.g. by Solaris 10 /bin/sh.
@@ -6353,8 +6353,13 @@ s,//*$,/,'
       last_dir_added=
       last_dir_removed=
       while read line; do
-        # Why not ''read next_dir op file'' ? Because the dir column can be empty.
+        # Why not ''read next_dir op file'' ? Because I hate working with IFS.
         next_dir=`echo "$line" | sed -e 's,|.*,,'`
+        if test "$next_dir" = '.'; then
+          next_dir=
+        else
+          next_dir="$next_dir/"
+        fi
         op=`echo "$line" | sed -e 's,^[^|]*|\([^|]*\)|.*$,\1,'`
         file=`echo "$line" | sed -e 's,^[^|]*|[^|]*|,,'`
         if test "$next_dir" != "$last_dir"; then
