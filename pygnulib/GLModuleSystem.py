@@ -829,7 +829,7 @@ class GLModuleTable:
         # module on the input list has been processed, it is added to the
         # "handled list", so we can avoid to process it again.
         inc_all_tests = self.inc_all_direct_tests
-        handledmodules = []
+        handledmodules = set()
         inmodules = modules
         outmodules = []
         if self.config['conddeps']:
@@ -910,11 +910,11 @@ class GLModuleTable:
                                         self.addConditional(module, depmodule, True)
                                     else:  # if not conditional
                                         self.addUnconditional(depmodule)
-            handledmodules = sorted(set(handledmodules + inmodules_this_round))
+            handledmodules = handledmodules.union(inmodules_this_round)
             # Remove handledmodules from inmodules.
-            inmodules = [module
-                         for module in inmodules
-                         if module not in handledmodules]
+            inmodules = [ module
+                          for module in inmodules
+                          if module not in handledmodules ]
             inmodules = sorted(set(inmodules))
             inc_all_tests = self.inc_all_indirect_tests
         modules = sorted(set(outmodules))
@@ -950,10 +950,11 @@ class GLModuleTable:
         main_modules = self.transitive_closure(basemodules)
         self.config.setInclTestCategory(TESTS['tests'], saved_inctests)
         # Determine tests-related module list.
+        main_modules_set = set(main_modules)
         tests_modules = \
             [ m
               for m in finalmodules
-              if not (m in main_modules and m.getApplicability() == 'main') ]
+              if not (m in main_modules_set and m.getApplicability() == 'main') ]
         # Note: Since main_modules is (hopefully) a subset of finalmodules, this
         # ought to be the same as
         #   [ m
