@@ -4,7 +4,6 @@ The following packages appear to be using gnulib and gnulib-tool:
   acct            https://svn.savannah.gnu.org/viewvc/trunk/?root=acct
   ale             https://repo.or.cz/Ale.git/tree
   amanda          https://github.com/zmanda/amanda
-  anubis          https://git.savannah.gnu.org/gitweb/?p=anubis.git;a=tree
   augeas          https://github.com/hercules-team/augeas
   autobuild       https://git.savannah.nongnu.org/gitweb/?p=autobuild.git;a=tree
   barcode         https://git.savannah.gnu.org/gitweb/?p=barcode.git;a=tree
@@ -35,8 +34,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   gettext         https://git.savannah.gnu.org/gitweb/?p=gettext.git;a=tree
   gengetopt       https://git.savannah.gnu.org/gitweb/?p=gengetopt.git;a=tree
   gmediaserver    https://cvs.savannah.gnu.org/viewvc/gmediaserver/gmediaserver/
-  gnuit           https://www.gnu.org/software/gnuit/
-                  https://git.savannah.gnu.org/gitweb/?p=gnuit.git;a=tree
+  gnuit           https://git.savannah.gnu.org/gitweb/?p=gnuit.git;a=tree
   gnutls          https://www.gnutls.org/
                   https://gitlab.com/gnutls/gnutls.git
   gpg             https://gnupg.org/
@@ -62,7 +60,6 @@ The following packages appear to be using gnulib and gnulib-tool:
   lbzip2          https://github.com/kjn/lbzip2
   libdap          https://github.com/OPENDAP/libdap
   libffcall       https://git.savannah.gnu.org/gitweb/?p=libffcall.git;a=tree
-  libgnupdf       https://bzr.savannah.gnu.org/lh/pdf/libgnupdf/trunk/files
   libguestfs      https://github.com/libguestfs/libguestfs
   libiconv        https://git.savannah.gnu.org/gitweb/?p=libiconv.git;a=tree
   libidn          https://git.savannah.gnu.org/gitweb/?p=libidn.git;a=tree
@@ -71,7 +68,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   libntlm         https://git.savannah.nongnu.org/gitweb/?p=libntlm.git;a=tree
   libprelude      https://www.prelude-siem.org/projects/libprelude/repository
   libpreludedb    https://www.prelude-siem.org/projects/libpreludedb/repository
-  libtasn1        https://git.savannah.gnu.org/gitweb/?p=libtasn1.git;a=tree
+  libtasn1        https://gitlab.com/gnutls/libtasn1.git
   libtool         https://git.savannah.gnu.org/gitweb/?p=libtool.git;a=tree
   libu2f-host     https://github.com/Yubico/libu2f-host
   libunistring    https://git.savannah.gnu.org/gitweb/?p=libunistring.git;a=tree
@@ -98,6 +95,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   pacemaker       https://github.com/ClusterLabs/pacemaker
   parted          https://git.savannah.gnu.org/gitweb/?p=parted.git;a=tree
   patch           https://git.savannah.gnu.org/gitweb/?p=patch.git;a=tree
+  pdf             https://git.savannah.gnu.org/gitweb/?p=pdf.git;a=tree
   poke            https://git.savannah.gnu.org/gitweb/?p=poke.git;a=tree
   prelude-lml     https://www.prelude-siem.org/projects/prelude-lml/repository
   prelude-manager https://www.prelude-siem.org/projects/prelude-manager/repository
