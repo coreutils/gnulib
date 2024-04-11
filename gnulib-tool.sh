@@ -6263,6 +6263,9 @@ s,//*$,/,'
                   if test -n "$anchor"; then sed -e 's,/,\\/,g' -e "s,^,/^${doubly_escaped_anchor}," -e 's,$,$/d,' < "$tmp"/ignore-removed; fi
                 } > "$tmp"/sed-ignore-removed
                 { cat "$destdir/$dir$ignore"~
+                  # Add a newline if the original $dir$ignore file ended
+                  # with a character other than a newline.
+                  if test `tail -c 1 < "$destdir/$dir$ignore"~ | tr -d '\n' | wc -c` = 1; then echo; fi
                   sed -e "s|^|$anchor|" < "$tmp"/ignore-added
                 } | sed -f "$tmp"/sed-ignore-removed \
                   > "$destdir/$dir$ignore"
