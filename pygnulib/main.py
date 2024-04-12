@@ -709,7 +709,7 @@ def main() -> None:
         sys.stderr.write(message)
         sys.exit(1)
     if cmdargs.pobase == None and cmdargs.podomain != None:
-        message = '%s: warning: --po-domain has no effect without a --po-base option\n' % constants.APP['name']
+        message = 'gnulib-tool: warning: --po-domain has no effect without a --po-base option\n'
         sys.stderr.write(message)
     if mode != None and 'test' in mode and cmdargs.gnu_make:
         message = '%s: --gnu-make not supported when including tests\n' % constants.APP['name']
@@ -900,7 +900,7 @@ def main() -> None:
                         if module.getFiles():
                             print(name)
             else:
-                message = '%s: warning: file %s does not exist\n' % (constants.APP['name'], filename)
+                message = 'gnulib-tool: warning: file %s does not exist\n' % filename
                 sys.stderr.write(message)
 
     elif mode in ['import', 'add-import', 'remove-import', 'update']:
