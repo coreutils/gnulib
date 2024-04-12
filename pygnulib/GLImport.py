@@ -548,6 +548,8 @@ class GLImport:
             emit += 'gl_WITH_OBSOLETE\n'
         if self.config.checkInclTestCategory(TESTS['cxx-tests']):
             emit += 'gl_WITH_CXX_TESTS\n'
+        if self.config.checkInclTestCategory(TESTS['longrunning-tests']):
+            emit += 'gl_WITH_LONGRUNNING_TESTS\n'
         if self.config.checkInclTestCategory(TESTS['privileged-tests']):
             emit += 'gl_WITH_PRIVILEGED_TESTS\n'
         if self.config.checkInclTestCategory(TESTS['unportable-tests']):
