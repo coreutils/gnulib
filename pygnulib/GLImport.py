@@ -114,12 +114,12 @@ class GLImport:
 
         # Get other cached variables.
         path = joinpath(self.config['m4base'], 'gnulib-cache.m4')
-        if isfile(joinpath(self.config['m4base'], 'gnulib-cache.m4')):
+        if isfile(path):
             with codecs.open(path, 'rb', 'UTF-8') as file:
                 data = file.read()
 
             # Create regex object and keys.
-            pattern = re.compile(r'^(gl_.*?)\((.*?)\)$', re.S | re.M)
+            pattern = re.compile(r'^(gl_[A-Z0-9_]*)\((.*?)\)$', re.S | re.M)
             keys = \
                 [
                     'gl_LOCAL_DIR', 'gl_MODULES', 'gl_AVOID', 'gl_SOURCE_BASE',
