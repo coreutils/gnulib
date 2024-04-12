@@ -118,20 +118,12 @@ class GLImport:
             with codecs.open(path, 'rb', 'UTF-8') as file:
                 data = file.read()
 
-            # Create regex object and keys.
-            pattern = re.compile(r'^(gl_[A-Z0-9_]*)\((.*?)\)$', re.S | re.M)
-            keys = \
-                [
-                    'gl_LOCAL_DIR', 'gl_MODULES', 'gl_AVOID', 'gl_SOURCE_BASE',
-                    'gl_M4_BASE', 'gl_PO_BASE', 'gl_DOC_BASE', 'gl_TESTS_BASE',
-                    'gl_MAKEFILE_NAME', 'gl_TESTS_MAKEFILE_NAME', 'gl_MACRO_PREFIX',
-                    'gl_PO_DOMAIN', 'gl_WITNESS_C_MACRO', 'gl_VC_FILES', 'gl_LIB',
-                ]
-
-            # Find bool values.
-            if 'gl_LGPL(' in data:
-                keys.append('gl_LGPL')
+            # gl_LGPL is special, because it can occur with or without
+            # an argument list.
+            pattern = re.compile(r'^gl_LGPL$', re.M)
+            if pattern.search(data):
                 self.cache.setLGPL(True)
+            # Find gl_* macros without an argument list.
             if 'gl_LIBTOOL' in data:
                 self.cache.setLibtool(True)
                 data = data.replace('gl_LIBTOOL', '')
@@ -162,7 +154,16 @@ class GLImport:
             if 'gl_AUTOMAKE_SUBDIR' in data:
                 self.cache.setAutomakeSubdir(True)
                 data = data.replace('gl_AUTOMAKE_SUBDIR', '')
-            # Find string values
+            # Find gl_* macros with an argument list.
+            pattern = re.compile(r'^(gl_[A-Z0-9_]*)\((.*?)\)$', re.S | re.M)
+            keys = \
+                [
+                    'gl_LOCAL_DIR', 'gl_MODULES', 'gl_AVOID', 'gl_SOURCE_BASE',
+                    'gl_M4_BASE', 'gl_PO_BASE', 'gl_DOC_BASE', 'gl_TESTS_BASE',
+                    'gl_LIB', 'gl_LGPL', 'gl_MAKEFILE_NAME', 'gl_TESTS_MAKEFILE_NAME',
+                    'gl_MACRO_PREFIX', 'gl_PO_DOMAIN', 'gl_WITNESS_C_MACRO',
+                    'gl_VC_FILES',
+                ]
             result = dict(pattern.findall(data))
             values = cleaner([ result.get(key, '')
                                for key in keys ])
