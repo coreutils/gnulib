@@ -5278,11 +5278,6 @@ func_import ()
     if test -z "$vc_files"; then
       vc_files="$cached_vc_files"
     fi
-    # Ensure constraints.
-    if test "$cond_dependencies" = true && $inctests; then
-      echo "gnulib-tool: option --conditional-dependencies is not supported with --with-tests" 1>&2
-      func_exit 1
-    fi
   fi
   # --without-*-tests options are not supported here.
   excl_cxx_tests=
