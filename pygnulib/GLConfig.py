@@ -318,13 +318,13 @@ class GLConfig:
             elif key in ['localpath', 'modules', 'avoids', 'tests',
                          'incl_test_categories', 'excl_test_categories']:
                 return []
-            elif key in ['incobsolete', 'libtool', 'gnu_make',
+            elif key in ['incobsolete', 'gnu_make',
                          'automake_subdir', 'automake_subdir_tests', 'conddeps',
                          'libtests', 'dryrun']:
                 return False
             elif key in ['copymode', 'lcopymode']:
                 return CopyAction.Copy
-            elif key in ['lgpl', 'vc_files']:
+            elif key in ['lgpl', 'libtool', 'vc_files']:
                 return None
             elif key == 'errors':
                 return True
@@ -788,7 +788,7 @@ class GLConfig:
         self.table['libname'] = 'libgnu'
 
     # Define libtool methods.
-    def checkLibtool(self) -> bool:
+    def checkLibtool(self) -> bool | None:
         '''Check if user enabled libtool rules.'''
         return self.table['libtool']
 
@@ -802,7 +802,7 @@ class GLConfig:
 
     def resetLibtool(self) -> None:
         '''Reset libtool rules.'''
-        self.table['libtool'] = False
+        self.table['libtool'] = None
 
     # Define conddeps methods.
     def checkCondDeps(self) -> bool:

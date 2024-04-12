@@ -448,9 +448,9 @@ class GLImport:
             actioncmd += ' \\\n#  --conditional-dependencies'
         else:  # if not conddeps
             actioncmd += ' \\\n#  --no-conditional-dependencies'
-        if libtool:
+        if libtool == True:
             actioncmd += ' \\\n#  --libtool'
-        else:  # if not libtool
+        else:  # if libtool == False or libtool == None
             actioncmd += ' \\\n#  --no-libtool'
         actioncmd += ' \\\n#  --macro-prefix=%s' % macro_prefix
         if podomain:
