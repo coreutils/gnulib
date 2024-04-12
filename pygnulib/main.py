@@ -748,6 +748,7 @@ def main() -> None:
         testsbase = cmdargs.testsbase[0]
     dryrun = cmdargs.dryrun
     verbose = -cmdargs.quiet + cmdargs.verbose
+    incobsolete = cmdargs.obsolete
     inctests = cmdargs.inctests
     # Canonicalize the inctests variable.
     if inctests == None:
@@ -758,8 +759,6 @@ def main() -> None:
     incl_test_categories = []
     if inctests:
         incl_test_categories.append(constants.TESTS['tests'])
-    if cmdargs.obsolete:
-        incl_test_categories.append(constants.TESTS['obsolete'])
     if cmdargs.inc_cxx_tests:
         incl_test_categories.append(constants.TESTS['cxx-tests'])
     if cmdargs.inc_longrunning_tests:
@@ -826,6 +825,7 @@ def main() -> None:
         pobase=pobase,
         docbase=docbase,
         testsbase=testsbase,
+        incobsolete=incobsolete,
         incl_test_categories=incl_test_categories,
         excl_test_categories=excl_test_categories,
         libname=libname,

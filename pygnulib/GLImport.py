@@ -134,7 +134,7 @@ class GLImport:
                 self.cache.enableInclTestCategory(TESTS['tests'])
                 data = data.replace('gl_WITH_TESTS', '')
             if 'gl_WITH_OBSOLETE' in data:
-                self.cache.enableInclTestCategory(TESTS['obsolete'])
+                self.cache.setIncObsolete(True)
                 data = data.replace('gl_WITH_OBSOLETE', '')
             if 'gl_WITH_CXX_TESTS' in data:
                 self.cache.enableInclTestCategory(TESTS['c++-test'])
@@ -421,7 +421,7 @@ class GLImport:
         actioncmd += ' \\\n#  --aux-dir=%s' % auxdir
         if self.config.checkInclTestCategory(TESTS['tests']):
             actioncmd += ' \\\n#  --with-tests'
-        if self.config.checkInclTestCategory(TESTS['obsolete']):
+        if self.config.checkIncObsolete():
             actioncmd += ' \\\n#  --with-obsolete'
         if self.config.checkInclTestCategory(TESTS['c++-test']):
             actioncmd += ' \\\n#  --with-c++-tests'
@@ -505,7 +505,6 @@ class GLImport:
         GLConfig: destdir, localpath, tests, sourcebase, m4base, pobase, docbase,
         testsbase, conddeps, libtool, macro_prefix, podomain, vc_files.'''
         emit = ''
-        moduletable = self.moduletable
         actioncmd = self.actioncmd()
         localpath = self.config['localpath']
         sourcebase = self.config['sourcebase']
@@ -545,7 +544,7 @@ class GLImport:
         emit += 'gl_MODULES([\n'
         emit += '  %s\n' % '\n  '.join(modules)
         emit += '])\n'
-        if self.config.checkInclTestCategory(TESTS['obsolete']):
+        if self.config.checkIncObsolete():
             emit += 'gl_WITH_OBSOLETE\n'
         if self.config.checkInclTestCategory(TESTS['cxx-tests']):
             emit += 'gl_WITH_CXX_TESTS\n'

@@ -68,6 +68,7 @@ class GLConfig:
                  modules: list[str] | None = None,
                  avoids: list[str] | None = None,
                  files: list[str] | None = None,
+                 incobsolete: bool | None = None,
                  incl_test_categories: list[int] | tuple[int] | None = None,
                  excl_test_categories: list[int] | tuple[int] | None = None,
                  libname: str | None = None,
@@ -143,6 +144,10 @@ class GLConfig:
         self.resetFiles()
         if files != None:
             self.setFiles(files)
+        # incobsolete
+        self.resetIncObsolete()
+        if incobsolete != None:
+            self.setIncObsolete(incobsolete)
         # test categories to include
         self.resetInclTestCategories()
         if incl_test_categories != None:
@@ -313,8 +318,8 @@ class GLConfig:
             elif key in ['localpath', 'modules', 'avoids', 'tests',
                          'incl_test_categories', 'excl_test_categories']:
                 return []
-            elif key in ['libtool', 'gnu_make', 'automake_subdir',
-                         'automake_subdir_tests', 'conddeps',
+            elif key in ['incobsolete', 'libtool', 'gnu_make',
+                         'automake_subdir', 'automake_subdir_tests', 'conddeps',
                          'libtests', 'dryrun']:
                 return False
             elif key in ['copymode', 'lcopymode']:
@@ -643,6 +648,23 @@ class GLConfig:
     def resetFiles(self) -> None:
         '''Reset the list of files.'''
         self.table['files'] = []
+
+    # Define incobsolete methods.
+    def checkIncObsolete(self) -> bool:
+        '''Check if user enabled inclusion of obsolete dependencies.'''
+        return self.table['incobsolete']
+
+    def setIncObsolete(self, value: bool) -> None:
+        '''Enable / disable inclusion of obsolete dependencies.'''
+        if type(value) is bool:
+            self.table['incobsolete'] = value
+        else:  # if type(value) is not bool
+            raise TypeError('value must be a bool, not %s'
+                            % type(value).__name__)
+
+    def resetIncObsolete(self) -> None:
+        '''Reset inclusion of obsolete dependencies.'''
+        self.table['incobsolete'] = False
 
     # Define incl_test_categories methods
     def checkInclTestCategory(self, category: int) -> bool:

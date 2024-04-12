@@ -871,7 +871,7 @@ class GLModuleTable:
                         statuses = depmodule.getStatuses()
                         for word in statuses:
                             if word == 'obsolete':
-                                if not self.config.checkInclTestCategory(TESTS['obsolete']):
+                                if not self.config.checkIncObsolete():
                                     include = False
                             elif word == 'c++-test':
                                 if self.config.checkExclTestCategory(TESTS['c++-test']):

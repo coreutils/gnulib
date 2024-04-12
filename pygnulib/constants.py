@@ -108,19 +108,18 @@ MODES['verbose-max'] = 2
 TESTS = \
     {
         'tests':             0,
-        'obsolete':          1,
-        'c++-test':          2,
-        'cxx-test':          2,
-        'c++-tests':         2,
-        'cxx-tests':         2,
-        'longrunning-test':  3,
-        'longrunning-tests': 3,
-        'privileged-test':   4,
-        'privileged-tests':  4,
-        'unportable-test':   5,
-        'unportable-tests':  5,
-        'all-test':          6,
-        'all-tests':         6,
+        'c++-test':          1,
+        'cxx-test':          1,
+        'c++-tests':         1,
+        'cxx-tests':         1,
+        'longrunning-test':  2,
+        'longrunning-tests': 2,
+        'privileged-test':   3,
+        'privileged-tests':  3,
+        'unportable-test':   4,
+        'unportable-tests':  4,
+        'all-test':          5,
+        'all-tests':         5,
     }
 
 # Define AUTOCONF minimum version
