@@ -259,14 +259,15 @@ class GLImport:
             # Merge the configuration found on disk.
             self.config.update(self.cache)
 
+            self.config.setModules(modules)
+
             # Merge with the configuration from the command-line parameters;
             # they override the configuration found on disk.
             for key in config.keys():
-                value = config[key]
-                if not config.isdefault(key, value):
-                    self.config.update_key(config, key)
-
-            self.config.setModules(modules)
+                if key not in ['modules', 'avoids']:
+                    value = config[key]
+                    if not config.isdefault(key, value):
+                        self.config.update_key(config, key)
 
         # Determine whether --automake-subdir/--automake-subdir-tests are supported.
         if self.config['automake_subdir'] or self.config['automake_subdir_tests']:

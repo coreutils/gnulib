@@ -290,7 +290,7 @@ class GLConfig:
                     if self.isdefault(key, dest):
                         value = src
                     else:  # if not self.isdefault(key, dest)
-                        if key in ['modules', 'avoids', 'tests']:
+                        if key in ['modules', 'avoids']:
                             value = sorted(set(src + dest))
                         else:
                             value = dest
