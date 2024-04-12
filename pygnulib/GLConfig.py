@@ -321,7 +321,7 @@ class GLConfig:
                 return 2.64
             elif key == 'verbosity':
                 return 0
-            elif key in ['localpath', 'modules', 'avoids', 'tests',
+            elif key in ['localpath', 'modules', 'avoids',
                          'incl_test_categories', 'excl_test_categories']:
                 return []
             elif key in ['incobsolete', 'gnu_make',
