@@ -427,7 +427,7 @@ class GLImport:
         if self.config.checkInclTestCategory(TESTS['longrunning-test']):
             actioncmd += ' \\\n#  --with-longrunning-tests'
         if self.config.checkInclTestCategory(TESTS['privileged-test']):
-            actioncmd += ' \\\n#  --with-privileged-test'
+            actioncmd += ' \\\n#  --with-privileged-tests'
         if self.config.checkInclTestCategory(TESTS['unportable-test']):
             actioncmd += ' \\\n#  --with-unportable-tests'
         if self.config.checkInclTestCategory(TESTS['all-test']):
