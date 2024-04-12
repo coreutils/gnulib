@@ -264,7 +264,8 @@ class GLImport:
             # Merge with the configuration from the command-line parameters;
             # they override the configuration found on disk.
             for key in config.keys():
-                if key not in ['modules', 'avoids']:
+                if key not in ['modules', 'avoids',
+                               'incl_test_categories', 'excl_test_categories']:
                     value = config[key]
                     if not config.isdefault(key, value):
                         self.config.update_key(config, key)
