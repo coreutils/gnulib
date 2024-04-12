@@ -319,12 +319,12 @@ class GLConfig:
                          'incl_test_categories', 'excl_test_categories']:
                 return []
             elif key in ['incobsolete', 'gnu_make',
-                         'automake_subdir', 'automake_subdir_tests', 'conddeps',
+                         'automake_subdir', 'automake_subdir_tests',
                          'libtests', 'dryrun']:
                 return False
             elif key in ['copymode', 'lcopymode']:
                 return CopyAction.Copy
-            elif key in ['lgpl', 'libtool', 'vc_files']:
+            elif key in ['lgpl', 'libtool', 'conddeps', 'vc_files']:
                 return None
             elif key == 'errors':
                 return True
@@ -805,7 +805,7 @@ class GLConfig:
         self.table['libtool'] = None
 
     # Define conddeps methods.
-    def checkCondDeps(self) -> bool:
+    def checkCondDeps(self) -> bool | None:
         '''Check if user enabled conditional dependencies.'''
         return self.table['conddeps']
 
@@ -819,7 +819,7 @@ class GLConfig:
 
     def resetCondDeps(self) -> None:
         '''Reset conditional dependencies (may save configure time and object code).'''
-        self.table['conddeps'] = False
+        self.table['conddeps'] = None
 
     # Define lgpl methods.
     def getLGPL(self) -> str | bool | None:

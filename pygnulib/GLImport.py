@@ -444,9 +444,9 @@ class GLImport:
             actioncmd += ' \\\n#  --automake-subdir'
         if automake_subdir_tests:
             actioncmd += ' \\\n#  --automake-subdir-tests'
-        if conddeps:
+        if conddeps == True:
             actioncmd += ' \\\n#  --conditional-dependencies'
-        else:  # if not conddeps
+        else:  # if conddeps == False or conddeps == None
             actioncmd += ' \\\n#  --no-conditional-dependencies'
         if libtool == True:
             actioncmd += ' \\\n#  --libtool'
