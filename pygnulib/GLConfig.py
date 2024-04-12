@@ -275,21 +275,27 @@ class GLConfig:
         if type(dictionary) is not GLConfig:
             raise TypeError('dictionary must be a GLConfig, not %s'
                             % type(dictionary).__name__)
-        dictionary = dict(dictionary.table)
+        dictionary = dictionary.table
         result = dict()
         for key in dictionary:
             src = self.table[key]
             dest = dictionary[key]
-            result[key] = src
-            if src != dest:
+            # Merge src and dest into a single value.
+            if src == dest:
+                value = src
+            else:
                 if self.isdefault(key, src):
-                    result[key] = dest
+                    value = dest
                 else:  # if not self.isdefault(key, src)
-                    if not self.isdefault(key, dest):
+                    if self.isdefault(key, dest):
+                        value = src
+                    else:  # if not self.isdefault(key, dest)
                         if key in ['modules', 'avoids', 'tests']:
-                            dest = sorted(set(src + dest))
-                        result[key] = dest
-        self.table = dict(result)
+                            value = sorted(set(src + dest))
+                        else:
+                            value = dest
+            result[key] = value
+        self.table = result
 
     def update_key(self, dictionary: GLConfig, key: str) -> None:
         '''Update the given key using value from the given dictionary.'''
@@ -297,7 +303,7 @@ class GLConfig:
             if type(dictionary) is not GLConfig:
                 raise TypeError('dictionary must be a GLConfig, not %s'
                                 % type(dictionary).__name__)
-            dictionary = dict(dictionary.table)
+            dictionary = dictionary.table
             self.table[key] = dictionary[key]
         else:  # if key not in self.table
             raise KeyError('GLConfig does not contain key: %s' % repr(key))
