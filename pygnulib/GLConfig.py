@@ -270,12 +270,12 @@ class GLConfig:
         table = copy.deepcopy(self)
         return table
 
-    def update(self, dictionary: GLConfig) -> None:
-        '''Specify the dictionary whose keys will be used to update config.'''
-        if type(dictionary) is not GLConfig:
-            raise TypeError('dictionary must be a GLConfig, not %s'
-                            % type(dictionary).__name__)
-        dictionary = dictionary.table
+    def update(self, other_config: GLConfig) -> None:
+        '''Merges all non-default values from other_config into this config.'''
+        if type(other_config) is not GLConfig:
+            raise TypeError('other_config must be a GLConfig, not %s'
+                            % type(other_config).__name__)
+        dictionary = other_config.table
         result = dict()
         for key in dictionary:
             src = self.table[key]
@@ -297,13 +297,13 @@ class GLConfig:
             result[key] = value
         self.table = result
 
-    def update_key(self, dictionary: GLConfig, key: str) -> None:
-        '''Update the given key using value from the given dictionary.'''
+    def update_key(self, other_config: GLConfig, key: str) -> None:
+        '''Copies the value for key from other_config into this config.'''
         if key in self.table:
-            if type(dictionary) is not GLConfig:
-                raise TypeError('dictionary must be a GLConfig, not %s'
-                                % type(dictionary).__name__)
-            dictionary = dictionary.table
+            if type(other_config) is not GLConfig:
+                raise TypeError('other_config must be a GLConfig, not %s'
+                                % type(other_config).__name__)
+            dictionary = other_config.table
             self.table[key] = dictionary[key]
         else:  # if key not in self.table
             raise KeyError('GLConfig does not contain key: %s' % repr(key))

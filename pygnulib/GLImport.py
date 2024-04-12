@@ -84,23 +84,35 @@ class GLImport:
             raise TypeError('mode must be 0 <= mode <= 3, not %s'
                             % repr(mode))
 
-        # Initialize some values.
-        self.cache = GLConfig()
+        # config contains the configuration, as specified through command-line
+        # parameters.
+
+        # self.config records the configuration that we are building/deducing.
+        # Initialize it with the properties from config.
         self.config = config.copy()
+
+        # self.cache is the configuration extracted from some files on the
+        # file system: configure.{ac,in}, gnulib-cache.m4, gnulib-comp.m4.
+        self.cache = GLConfig()
         os.rmdir(self.cache['tempdir'])
 
-        # Get cached auxdir and libtool from configure.ac/in.
-        self.cache.setAuxDir('.')
+        # Read configure.{ac,in}.
         with codecs.open(self.config.getAutoconfFile(), 'rb', 'UTF-8') as file:
             data = file.read()
+
+        # Get cached auxdir and libtool from configure.{ac,in}.
+        self.cache.setAuxDir('.')
         pattern = re.compile(r'^AC_CONFIG_AUX_DIR\([\[ ]*([^]"$`\\)]+).*?$', re.MULTILINE)
         match = pattern.search(data)
         if match:
             self.cache.setAuxDir(match.group(1))
-        pattern = re.compile(r'A[CM]_PROG_LIBTOOL', re.M)
-        guessed_libtool = bool(pattern.findall(data))
         if self.config['auxdir'] == '':
             self.config.setAuxDir(self.cache['auxdir'])
+
+        # Get libtool guess from configure.{ac,in}.
+        # XXX This is not actually used.
+        pattern = re.compile(r'A[CM]_PROG_LIBTOOL', re.M)
+        guessed_libtool = bool(pattern.findall(data))
 
         # Guess autoconf version.
         pattern = re.compile(r'.*AC_PREREQ\((.*)\)', re.M)
@@ -244,12 +256,16 @@ class GLImport:
             elif self.mode == MODES['update']:
                 modules = self.cache.getModules()
 
-            # Update configuration dictionary.
+            # Merge the configuration found on disk.
             self.config.update(self.cache)
+
+            # Merge with the configuration from the command-line parameters;
+            # they override the configuration found on disk.
             for key in config.keys():
                 value = config[key]
                 if not config.isdefault(key, value):
                     self.config.update_key(config, key)
+
             self.config.setModules(modules)
 
         # Determine whether --automake-subdir/--automake-subdir-tests are supported.
