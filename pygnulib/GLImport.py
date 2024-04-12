@@ -244,10 +244,6 @@ class GLImport:
             elif self.mode == MODES['update']:
                 modules = self.cache.getModules()
 
-            # If user tries to apply conddeps and TESTS['tests'] together.
-            if self.config.checkInclTestCategory(TESTS['tests']) and self.config['conddeps']:
-                raise GLError(10, None)
-
             # Update configuration dictionary.
             self.config.update(self.cache)
             for key in config.keys():

@@ -53,7 +53,6 @@ class GLError(Exception):
           7: missing docbase argument
           8: missing testsbase argument
           9: missing libname argument
-         10: conddeps are not supported with inctests
          11: incompatible licenses on modules: <modules>
          12: cannot process empty filelist
          13: cannot create the given directory: <directory>
@@ -93,8 +92,6 @@ class GLError(Exception):
                 message = "missing testsbase argument; cache file doesn't contain it, so you might have to set this argument"
             elif errno == 9:
                 message = "missing libname argument; cache file doesn't contain it, so you might have to set this argument"
-            elif errno == 10:
-                message = 'conddeps are not supported with inctests'
             elif errno == 11:
                 message = 'incompatible licenses on modules: %s' % repr(errinfo)
             elif errno == 12:

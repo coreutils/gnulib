@@ -1413,8 +1413,6 @@ def main_with_exception_handling() -> None:
                 message += 'missing --tests-base option'
             elif errno == 9:
                 message += 'missing --lib option'
-            elif errno == 10:
-                message = 'gnulib-tool: option --conditional-dependencies is not supported with --with-tests'
             elif errno == 11:
                 incompatibilities = ''
                 message += 'incompatible license on modules:%s' % constants.NL
