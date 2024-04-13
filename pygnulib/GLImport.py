@@ -1230,9 +1230,9 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                     os.remove(tmpfile)
             else:  # if not self.config['dryrun']
                 backupname = '%s~' % basename
-                if isfile(destdir, basename):
+                if isfile(joinpath(destdir, basename)):
                     print('Update %s (backup in %s)' % (basename, backupname))
-                else:  # if not isfile(destdir, basename)
+                else:  # if not isfile(joinpath(destdir, basename))
                     print('Create %s' % basename)
 
         # Create m4/gnulib-cache.m4.
