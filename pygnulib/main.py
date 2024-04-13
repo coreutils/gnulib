@@ -1339,12 +1339,12 @@ def main() -> None:
                 except FileExistsError:
                     pass
         # Copy the file.
+        config.setDestDir(destdir)
         assistant = GLFileAssistant(config)
         tmpfile = assistant.tmpfilename(destpath)
         copyfile(lookedup, tmpfile)
         ensure_writable(tmpfile)
         assistant.setOriginal(srcpath)
-        assistant.config.setDestDir(destdir)
         assistant.setRewritten(destpath)
         if isfile(joinpath(destdir, destpath)):
             # The file already exists.
