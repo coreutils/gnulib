@@ -463,6 +463,12 @@ prepare_GNULIB_SRCDIR ()
       || die "Error: --gnulib-srcdir or \$GNULIB_SRCDIR is specified," \
              "but does not contain gnulib-tool"
   elif $use_git; then
+    if git submodule -h | grep -- --reference > /dev/null; then
+      :
+    else
+      die "git version is too old, git >= 1.6.4 is required"
+    fi
+
     gnulib_path=$(git_modules_config submodule.gnulib.path)
     test -z "$gnulib_path" && gnulib_path=gnulib
 
@@ -473,25 +479,8 @@ prepare_GNULIB_SRCDIR ()
        && git_modules_config submodule.gnulib.url >/dev/null; then
       # Use GNULIB_REFDIR as a reference.
       echo "$0: getting gnulib files..."
-      if git submodule -h|grep -- --reference > /dev/null; then
-        # Prefer the one-liner available in git 1.6.4 or newer.
-        git submodule update --init --reference "$GNULIB_REFDIR" \
-          "$gnulib_path" || exit $?
-      else
-        # This fallback allows at least git 1.5.5.
-        if test -f "$gnulib_path"/gnulib-tool; then
-          # Since file already exists, assume submodule init already complete.
-          git submodule update -- "$gnulib_path" || exit $?
-        else
-          # Older git can't clone into an empty directory.
-          rmdir "$gnulib_path" 2>/dev/null
-          git clone --reference "$GNULIB_REFDIR" \
-            "$(git_modules_config submodule.gnulib.url)" "$gnulib_path" \
-            && git submodule init -- "$gnulib_path" \
-            && git submodule update -- "$gnulib_path" \
-            || exit $?
-        fi
-      fi
+      git submodule update --init --reference "$GNULIB_REFDIR" \
+        "$gnulib_path" || exit $?
     else
       # GNULIB_REFDIR is not set or not usable. Ignore it.
       if git_modules_config submodule.gnulib.url >/dev/null; then
