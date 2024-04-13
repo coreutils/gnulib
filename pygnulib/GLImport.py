@@ -99,7 +99,7 @@ class GLImport:
         with open(self.config.getAutoconfFile(), mode='r', newline='\n', encoding='utf-8') as file:
             data = file.read()
 
-        # Get cached auxdir and libtool from configure.{ac,in}.
+        # Get cached auxdir from configure.{ac,in}.
         self.cache.setAuxDir('.')
         pattern = re.compile(r'^AC_CONFIG_AUX_DIR\([\[ ]*([^]"$`\\)]+).*?$', re.MULTILINE)
         match = pattern.search(data)

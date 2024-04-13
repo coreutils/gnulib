@@ -990,8 +990,8 @@ def main() -> None:
                 if isfile(filepath):
                     with open(filepath, mode='r', newline='\n', encoding='utf-8') as file:
                         data = file.read()
-                        data = data.split('ACLOCAL_AMFLAGS')[1]
-                        data = data[data.find('=') + 1:data.find('\n')]
+                    data = data.split('ACLOCAL_AMFLAGS')[1]
+                    data = data[data.find('=') + 1 : data.find('\n')]
                     aclocal_amflags = data.split()
                     for aclocal_amflag in aclocal_amflags:
                         if dirisnext:
