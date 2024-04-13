@@ -3,7 +3,7 @@
 
 # Bootstrap this package from checked-out sources.
 
-scriptversion=2023-12-10.18; # UTC
+scriptversion=2024-04-13.15; # UTC
 
 # Copyright (C) 2003-2024 Free Software Foundation, Inc.
 #
@@ -37,7 +37,7 @@ medir=`dirname "$me"`
 
 # A library of shell functions for autopull.sh, autogen.sh, and bootstrap.
 
-scriptlibversion=2023-12-10.18; # UTC
+scriptlibversion=2024-04-13.15; # UTC
 
 # Copyright (C) 2003-2024 Free Software Foundation, Inc.
 #
@@ -647,7 +647,8 @@ fi
 autopull_usage() {
   cat <<EOF
 Usage: $me [OPTION]...
-Bootstrap this package from the checked-out sources.
+Bootstrap this package from the checked-out sources, phase 1:
+Pull files from the network.
 
 Optional environment variables:
   GNULIB_SRCDIR            Specifies the local directory where gnulib
@@ -664,18 +665,19 @@ Optional environment variables:
                            which is Gnulib's upstream repository.
 
 Options:
-  --bootstrap-sync         if this bootstrap script is not identical to
+
+  --bootstrap-sync         If this bootstrap script is not identical to
                            the version in the local gnulib sources,
                            update this script, and then restart it with
-                           /bin/sh or the shell \$CONFIG_SHELL
-  --no-bootstrap-sync      do not check whether bootstrap is out of sync
-  --force                  attempt to bootstrap even if the sources seem
-                           not to have been checked out
-  --no-git                 do not use git to update gnulib.  Requires that
-                           \$GNULIB_SRCDIR or the --gnulib-srcdir option
-                           points to a gnulib repository with the correct
-                           revision
-  --skip-po                do not download po files
+                           /bin/sh or the shell \$CONFIG_SHELL.
+  --no-bootstrap-sync      Do not check whether bootstrap is out of sync.
+
+  --force                  Attempt to bootstrap even if the sources seem
+                           not to have been checked out.
+  --no-git                 Do not use git to update gnulib.  Requires that
+                           \$GNULIB_SRCDIR points to a gnulib repository
+                           with the correct revision.
+  --skip-po                Do not download *.po files.
 EOF
   bootstrap_print_option_usage_hook
   cat <<EOF
@@ -687,17 +689,16 @@ are honored.
 
 Gnulib sources can be fetched in various ways:
 
- * If the environment variable GNULIB_SRCDIR is set (either as an
-   environment variable or via the --gnulib-srcdir option), then sources
-   are fetched from that local directory.  If it is a git repository and
-   the configuration variable GNULIB_REVISION is set in bootstrap.conf,
-   then that revision is checked out.
+ * If the environment variable GNULIB_SRCDIR is set, then sources are
+   fetched from that local directory.  If it is a git repository and the
+   configuration variable GNULIB_REVISION is set in bootstrap.conf, then
+   that revision is checked out.
 
  * Otherwise, if this package is in a git repository with a 'gnulib'
    submodule configured, then that submodule is initialized and updated
-   and sources are fetched from there.  If GNULIB_REFDIR is set (either
-   as an environment variable or via the --gnulib-refdir option) and is
-   a git repository, then it is used as a reference.
+   and sources are fetched from there.  If the environment variable
+   GNULIB_REFDIR is set and is a git repository, then it is used as a
+   reference.
 
  * Otherwise, if the 'gnulib' directory does not exist, Gnulib sources
    are cloned into that directory using git from \$GNULIB_URL, defaulting
@@ -890,7 +891,8 @@ update_po_files() {
 autogen_usage() {
   cat <<EOF
 Usage: $me [OPTION]...
-Bootstrap this package from the checked-out sources.
+Bootstrap this package from the checked-out sources, phase 2:
+Generate files from local files (no network access).
 
 Optional environment variables:
   GNULIB_SRCDIR            Specifies the local directory where gnulib
@@ -899,9 +901,9 @@ Optional environment variables:
                            you want to use these sources.
 
 Options:
-  --copy                   copy files instead of creating symbolic links
-  --force                  attempt to bootstrap even if the sources seem
-                           not to have been checked out
+  --copy                   Copy files instead of creating symbolic links.
+  --force                  Attempt to bootstrap even if the sources seem
+                           not to have been checked out.
 EOF
   bootstrap_print_option_usage_hook
   cat <<EOF
@@ -1347,44 +1349,55 @@ Optional environment variables:
   GNULIB_SRCDIR            Specifies the local directory where gnulib
                            sources reside.  Use this if you already
                            have gnulib sources on your machine, and
-                           do not want to waste your bandwidth downloading
-                           them again.
-  GNULIB_URL               URL of the gnulib repository.  The default is
-                           $default_gnulib_url,
-                           which is Gnulib's upstream repository.
-
-Options:
-
-  --pull                   Do phase 1: pull files from network
-  --gen                    Do phase 2: generate from local files.
-                           (The default is to do both phases.)
-
-  --gnulib-srcdir=DIRNAME  specify the local directory where gnulib
-                           sources reside.  Use this if you already
-                           have gnulib sources on your machine, and
-                           you want to use these sources.  Defaults
-                           to \$GNULIB_SRCDIR
-  --gnulib-refdir=DIRNAME  specify the local directory where a gnulib
+                           you want to use these sources.
+  GNULIB_REFDIR            Specifies the local directory where a gnulib
                            repository (with a .git subdirectory) resides.
                            Use this if you already have gnulib sources
                            and history on your machine, and do not want
                            to waste your bandwidth downloading them again.
-                           Defaults to \$GNULIB_REFDIR
+                           Only used for phase 1 (--pull).
+  GNULIB_URL               URL of the gnulib repository.  The default is
+                           $default_gnulib_url,
+                           which is Gnulib's upstream repository.
+                           Only used for phase 1 (--pull).
 
-  --bootstrap-sync         if this bootstrap script is not identical to
+Options:
+
+  --pull                   Do phase 1: Pull files from the network.
+  --gen                    Do phase 2: Generate files from local files
+                           (no network access).
+                           (The default is to do both phases.)
+
+  --gnulib-srcdir=DIRNAME  Specifies the local directory where gnulib
+                           sources reside.  Use this if you already
+                           have gnulib sources on your machine, and
+                           you want to use these sources.  Defaults
+                           to \$GNULIB_SRCDIR.
+  --gnulib-refdir=DIRNAME  Specifies the local directory where a gnulib
+                           repository (with a .git subdirectory) resides.
+                           Use this if you already have gnulib sources
+                           and history on your machine, and do not want
+                           to waste your bandwidth downloading them again.
+                           Defaults to \$GNULIB_REFDIR.
+                           Only used for phase 1 (--pull).
+
+  --bootstrap-sync         If this bootstrap script is not identical to
                            the version in the local gnulib sources,
                            update this script, and then restart it with
-                           /bin/sh or the shell \$CONFIG_SHELL
-  --no-bootstrap-sync      do not check whether bootstrap is out of sync
+                           /bin/sh or the shell \$CONFIG_SHELL.
+  --no-bootstrap-sync      Do not check whether bootstrap is out of sync.
 
-  --copy                   copy files instead of creating symbolic links
-  --force                  attempt to bootstrap even if the sources seem
-                           not to have been checked out
-  --no-git                 do not use git to update gnulib.  Requires that
+  --copy                   Copy files instead of creating symbolic links.
+                           Only used for phase 2 (--gen).
+  --force                  Attempt to bootstrap even if the sources seem
+                           not to have been checked out.
+  --no-git                 Do not use git to update gnulib.  Requires that
                            \$GNULIB_SRCDIR or the --gnulib-srcdir option
                            points to a gnulib repository with the correct
-                           revision
-  --skip-po                do not download po files
+                           revision.
+                           Only used for phase 1 (--pull).
+  --skip-po                Do not download *.po files.
+                           Only used for phase 1 (--pull).
 EOF
   bootstrap_print_option_usage_hook
   cat <<EOF
@@ -1396,11 +1409,11 @@ are honored.
 
 Gnulib sources can be fetched in various ways:
 
- * If the environment variable GNULIB_SRCDIR is set (either as an
-   environment variable or via the --gnulib-srcdir option), then sources
-   are fetched from that local directory.  If it is a git repository and
-   the configuration variable GNULIB_REVISION is set in bootstrap.conf,
-   then that revision is checked out.
+ * If GNULIB_SRCDIR is set (either as an environment variable or via the
+   --gnulib-srcdir option), then sources are fetched from that local
+   directory.  If it is a git repository and the configuration variable
+   GNULIB_REVISION is set in bootstrap.conf, then that revision is
+   checked out.
 
  * Otherwise, if this package is in a git repository with a 'gnulib'
    submodule configured, then that submodule is initialized and updated
