@@ -441,10 +441,9 @@ find_tool ()
 # --------------------- Preparing GNULIB_SRCDIR for use. ---------------------
 # This is part of autopull.sh, but bootstrap needs it too, for self-upgrading.
 
+# cleanup_gnulib fails, removing the directory $gnulib_path first.
 cleanup_gnulib() {
   status=$?
-  # XXX It's a bad idea to erase the submodule directory if it contains local
-  #     modifications.
   rm -fr "$gnulib_path"
   exit $status
 }
@@ -462,37 +461,44 @@ prepare_GNULIB_SRCDIR ()
     test -f "$GNULIB_SRCDIR/gnulib-tool" \
       || die "Error: --gnulib-srcdir or \$GNULIB_SRCDIR is specified," \
              "but does not contain gnulib-tool"
-  elif $use_git; then
+    if test -n "$GNULIB_REVISION" && $use_git; then
+      (cd "$GNULIB_SRCDIR" && git checkout "$GNULIB_REVISION") || exit $?
+    fi
+  else
+    if ! $use_git; then
+      die "Error: --no-git is specified," \
+          "but neither --gnulib-srcdir nor \$GNULIB_SRCDIR is specified"
+    fi
     if git submodule -h | grep -- --reference > /dev/null; then
       :
     else
       die "git version is too old, git >= 1.6.4 is required"
     fi
-
     gnulib_path=$(git_modules_config submodule.gnulib.path)
-    test -z "$gnulib_path" && gnulib_path=gnulib
-
-    # Get gnulib files.  Populate $gnulib_path, possibly updating a
-    # submodule, for use in the rest of the script.
-
-    if test -n "$GNULIB_REFDIR" && test -d "$GNULIB_REFDIR"/.git \
-       && git_modules_config submodule.gnulib.url >/dev/null; then
-      # Use GNULIB_REFDIR as a reference.
-      echo "$0: getting gnulib files..."
-      git submodule update --init --reference "$GNULIB_REFDIR" \
-        "$gnulib_path" || exit $?
+    if test -n "$gnulib_path"; then
+      # A submodule 'gnulib' is configured.
+      # Get gnulib files.  Populate $gnulib_path, updating the submodule.
+      if test -n "$GNULIB_REFDIR" && test -d "$GNULIB_REFDIR"/.git; then
+        # Use GNULIB_REFDIR as a reference.
+        echo "$0: getting gnulib files..."
+        git submodule update --init --reference "$GNULIB_REFDIR" "$gnulib_path" \
+          || exit $?
+      else
+        # GNULIB_REFDIR is not set or not usable. Ignore it.
+        if git_modules_config submodule.gnulib.url >/dev/null; then
+          echo "$0: getting gnulib files..."
+          git submodule init -- "$gnulib_path" || exit $?
+          git submodule update -- "$gnulib_path" || exit $?
+        else
+          die "Error: submodule 'gnulib' has no configured url"
+        fi
+      fi
     else
-      # GNULIB_REFDIR is not set or not usable. Ignore it.
-      if git_modules_config submodule.gnulib.url >/dev/null; then
+      gnulib_path='gnulib'
+      if test ! -d "$gnulib_path"; then
+        # The subdirectory 'gnulib' does not yet exist. Clone into it.
         echo "$0: getting gnulib files..."
-        git submodule init -- "$gnulib_path" || exit $?
-        git submodule update -- "$gnulib_path" || exit $?
-
-      elif [ ! -d "$gnulib_path" ]; then
-        echo "$0: getting gnulib files..."
-
         trap cleanup_gnulib HUP INT PIPE TERM
-
         shallow=
         if test -z "$GNULIB_REVISION"; then
           if git clone -h 2>&1 | grep -- --depth > /dev/null; then
@@ -514,30 +520,32 @@ prepare_GNULIB_SRCDIR ()
           # is without fetching all commits. So fall back to fetching all
           # commits.
           git -C "$gnulib_path" init
-          git -C "$gnulib_path" remote add origin \
-              ${GNULIB_URL:-$default_gnulib_url}
+          git -C "$gnulib_path" remote add origin ${GNULIB_URL:-$default_gnulib_url}
           git -C "$gnulib_path" fetch $shallow origin "$GNULIB_REVISION" \
             || git -C "$gnulib_path" fetch origin \
             || cleanup_gnulib
           git -C "$gnulib_path" reset --hard FETCH_HEAD
+          (cd "$gnulib_path" && git checkout "$GNULIB_REVISION") || cleanup_gnulib
         fi
-
         trap - HUP INT PIPE TERM
+      else
+        # The subdirectory 'gnulib' already exists.
+        if test -n "$GNULIB_REVISION"; then
+          if test -d "$gnulib_path/.git"; then
+            (cd "$gnulib_path" && git checkout "$GNULIB_REVISION") || exit 1
+          else
+            die "Error: GNULIB_REVISION is specified in bootstrap.conf," \
+                "but '$gnulib_path' contains no git history"
+          fi
+        fi
       fi
     fi
-    GNULIB_SRCDIR=$gnulib_path
-    # Verify that the submodule contains a gnulib checkout.
+    # Verify that $gnulib_path contains a gnulib checkout.
     test -f "$gnulib_path/gnulib-tool" \
-      || die "Error: $gnulib_path is supposed to contain a gnulib checkout," \
+      || die "Error: '$gnulib_path' is supposed to contain a gnulib checkout," \
              "but does not contain gnulib-tool"
+    GNULIB_SRCDIR=$gnulib_path
   fi
-
-  # XXX Should this be done if $use_git is false?
-  if test -d "$GNULIB_SRCDIR"/.git && test -n "$GNULIB_REVISION" \
-     && ! git_modules_config submodule.gnulib.url >/dev/null; then
-    (cd "$GNULIB_SRCDIR" && git checkout "$GNULIB_REVISION") || cleanup_gnulib
-  fi
-
   # $GNULIB_SRCDIR now points to the version of gnulib to use, and
   # we no longer need to use git or $gnulib_path below here.
 }

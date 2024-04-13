@@ -228,10 +228,10 @@ if $pull && { $use_git || test -z "$SKIP_PO"; }; then
 fi
 
 if $gen; then
- autogen \
-    `if $copy; then echo ' --copy'; fi` \
-    `if test -z "$checkout_only_file"; then echo ' --force'; fi` \
-  || die "could not generate auxiliary files"
+  autogen \
+      `if $copy; then echo ' --copy'; fi` \
+      `if test -z "$checkout_only_file"; then echo ' --force'; fi` \
+    || die "could not generate auxiliary files"
 fi
 
 # ----------------------------------------------------------------------------
