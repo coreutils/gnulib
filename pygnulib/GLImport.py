@@ -20,7 +20,6 @@ from __future__ import annotations
 #===============================================================================
 import os
 import re
-import codecs
 import subprocess as sp
 from . import constants
 from .GLError import GLError
@@ -97,7 +96,7 @@ class GLImport:
         os.rmdir(self.cache['tempdir'])
 
         # Read configure.{ac,in}.
-        with codecs.open(self.config.getAutoconfFile(), 'rb', 'UTF-8') as file:
+        with open(self.config.getAutoconfFile(), mode='r', newline='\n', encoding='utf-8') as file:
             data = file.read()
 
         # Get cached auxdir and libtool from configure.{ac,in}.
@@ -127,7 +126,7 @@ class GLImport:
         # Get other cached variables.
         path = joinpath(self.config['m4base'], 'gnulib-cache.m4')
         if isfile(path):
-            with codecs.open(path, 'rb', 'UTF-8') as file:
+            with open(path, mode='r', newline='\n', encoding='utf-8') as file:
                 data = file.read()
 
             # gl_LGPL is special, because it can occur with or without
@@ -221,7 +220,7 @@ class GLImport:
             destdir, m4base = self.config.getDestDir(), self.config.getM4Base()
             path = joinpath(destdir, m4base, 'gnulib-comp.m4')
             if isfile(path):
-                with codecs.open(path, 'rb', 'UTF-8') as file:
+                with open(path, mode='r', newline='\n', encoding='utf-8') as file:
                     data = file.read()
                 regex = r'AC_DEFUN\(\[%s_FILE_LIST\], \[(.*?)\]\)' % self.cache['macro_prefix']
                 pattern = re.compile(regex, re.S | re.M)
@@ -274,7 +273,7 @@ class GLImport:
         if self.config['automake_subdir'] or self.config['automake_subdir_tests']:
             found_subdir_objects = False
             if self.config['destdir']:
-                with open(self.config['configure_ac'], encoding='utf-8') as file:
+                with open(self.config['configure_ac'], mode='r', newline='\n', encoding='utf-8') as file:
                     data = file.read()
                 pattern = re.compile(r'^.*AM_INIT_AUTOMAKE\([\[ ]*([^])]*).*$', re.MULTILINE)
                 configure_ac_automake_options = pattern.findall(data)
@@ -289,7 +288,7 @@ class GLImport:
                 else:
                     base = '.'
                 if isfile(joinpath(base, 'Makefile.am')):
-                    with open(joinpath(base, 'Makefile.am'), encoding='utf-8') as file:
+                    with open(joinpath(base, 'Makefile.am'), mode='r', newline='\n', encoding='utf-8') as file:
                         data = file.read()
                     pattern = re.compile(r'^AUTOMAKE_OPTIONS[\t ]*=(.*)$', re.MULTILINE)
                     automake_options = pattern.findall(data)
@@ -772,7 +771,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         backupname = '%s~' % srcpath
         if isfile(joinpath(destdir, srcpath)):
             if files_added or files_removed:
-                with codecs.open(joinpath(destdir, srcpath), 'rb', 'UTF-8') as file:
+                with open(joinpath(destdir, srcpath), mode='r', newline='\n', encoding='utf-8') as file:
                     original_lines = file.readlines()
                 # Clean the newlines but not trailing whitespace.
                 original_lines = [ line.rstrip('\n')
@@ -796,7 +795,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                         new_lines = [ line
                                       for line in new_lines
                                       if line not in lines_to_remove ]
-                        with codecs.open(joinpath(destdir, srcpath), 'wb', 'UTF-8') as file:
+                        with open(joinpath(destdir, srcpath), mode='w', newline='\n', encoding='utf-8') as file:
                             file.write(lines_to_multiline(new_lines))
                     else:  # if self.config['dryrun']
                         print('Update %s (backup in %s)' % (srcpath, backupname))
@@ -810,7 +809,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                     if ignore == '.cvsignore':
                         # Automake generates Makefile rules that create .dirstamp files.
                         files_added = ['.deps', '.dirstamp'] + files_added
-                    with codecs.open(joinpath(destdir, srcpath), 'wb', 'UTF-8') as file:
+                    with open(joinpath(destdir, srcpath), mode='w', newline='\n', encoding='utf-8') as file:
                         file.write(lines_to_multiline(files_added))
                 else:  # if self.config['dryrun']
                     print('Create %s' % srcpath)
@@ -1160,7 +1159,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
             basename = joinpath(pobase, 'Makevars')
             tmpfile = self.assistant.tmpfilename(basename)
             emit = self.emitter.po_Makevars()
-            with codecs.open(tmpfile, 'wb', 'UTF-8') as file:
+            with open(tmpfile, mode='w', newline='\n', encoding='utf-8') as file:
                 file.write(emit)
             filename, backup, flag = self.assistant.super_update(basename, tmpfile)
             if flag == 1:
@@ -1180,7 +1179,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
             # Create po makefile parameterization, part 2.
             basename = joinpath(pobase, 'POTFILES.in')
             tmpfile = self.assistant.tmpfilename(basename)
-            with codecs.open(tmpfile, 'wb', 'UTF-8') as file:
+            with open(tmpfile, mode='w', newline='\n', encoding='utf-8') as file:
                 file.write(self.emitter.po_POTFILES_in(filetable['all']))
             basename = joinpath(pobase, 'POTFILES.in')
             filename, backup, flag = self.assistant.super_update(basename, tmpfile)
@@ -1219,7 +1218,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                                  for file in os.listdir(joinpath(destdir, pobase))
                                  if file.endswith('.po') ])
                 data += lines_to_multiline(files)
-                with codecs.open(tmpfile, 'wb', 'UTF-8') as file:
+                with open(tmpfile, mode='w', newline='\n', encoding='utf-8') as file:
                     file.write(data)
                 filename, backup, flag = self.assistant.super_update(basename, tmpfile)
                 if flag == 1:
@@ -1240,7 +1239,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         basename = joinpath(m4base, 'gnulib-cache.m4')
         tmpfile = self.assistant.tmpfilename(basename)
         emit = self.gnulib_cache()
-        with codecs.open(tmpfile, 'wb', 'UTF-8') as file:
+        with open(tmpfile, mode='w', newline='\n', encoding='utf-8') as file:
             file.write(emit)
         filename, backup, flag = self.assistant.super_update(basename, tmpfile)
         if flag == 1:
@@ -1265,7 +1264,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         basename = joinpath(m4base, 'gnulib-comp.m4')
         tmpfile = self.assistant.tmpfilename(basename)
         emit = self.gnulib_comp(filetable, gentests)
-        with codecs.open(tmpfile, 'wb', 'UTF-8') as file:
+        with open(tmpfile, mode='w', newline='\n', encoding='utf-8') as file:
             file.write(emit)
         filename, backup, flag = self.assistant.super_update(basename, tmpfile)
         if flag == 1:
@@ -1298,7 +1297,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
             emit = sp.run([joinpath(DIRS['root'], 'build-aux/prefix-gnulib-mk'), '--from-gnulib-tool',
                            f'--lib-name={libname}', f'--prefix={sourcebase}/'],
                           input=emit, text=True, capture_output=True).stdout
-        with codecs.open(tmpfile, 'wb', 'UTF-8') as file:
+        with open(tmpfile, mode='w', newline='\n', encoding='utf-8') as file:
             file.write(emit)
         filename, backup, flag = self.assistant.super_update(basename, tmpfile)
         if flag == 1:
@@ -1322,7 +1321,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
             emit = self.emitter.tests_Makefile_am(basename, self.moduletable.getTestsModules(),
                                                   self.moduletable, self.makefiletable,
                                                   '%stests_WITNESS' % macro_prefix, for_test)
-            with codecs.open(tmpfile, 'wb', 'UTF-8') as file:
+            with open(tmpfile, mode='w', newline='\n', encoding='utf-8') as file:
                 file.write(emit)
             filename, backup, flag = self.assistant.super_update(basename, tmpfile)
             if flag == 1:
@@ -1450,7 +1449,7 @@ in <library>_a_LDFLAGS or <library>_la_LDFLAGS when linking a library.''')
                           % (dictionary['val'], dictionary['var'], joinpath(dictionary['dir'], 'Makefile.am')))
 
         # Detect position_early_after.
-        with codecs.open(configure_ac, 'rb', 'UTF-8') as file:
+        with open(configure_ac, mode='r', newline='\n', encoding='utf-8') as file:
             data = file.read()
         match_result1 = \
             bool(re.compile(r'^ *AC_PROG_CC_STDC', re.M).findall(data))

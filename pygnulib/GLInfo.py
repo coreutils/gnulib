@@ -20,7 +20,6 @@ from __future__ import annotations
 #===============================================================================
 import os
 import re
-import codecs
 import subprocess as sp
 from . import constants
 
@@ -120,7 +119,7 @@ class GLInfo:
                     result = result.rstrip(os.linesep)
                     return result
         # gnulib copy without versioning information.
-        with codecs.open(os.path.join(DIRS['root'], 'ChangeLog'), 'rb', 'UTF-8') as file:
+        with open(os.path.join(DIRS['root'], 'ChangeLog'), mode='r', newline='\n', encoding='utf-8') as file:
             line = file.readline()
             first_changelog_line = line.rstrip()
         result = re.compile(r' .*').sub(r'', first_changelog_line)

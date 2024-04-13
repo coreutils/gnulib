@@ -20,7 +20,6 @@ from __future__ import annotations
 #===============================================================================
 import os
 import re
-import codecs
 import subprocess as sp
 from collections.abc import Callable
 from . import constants
@@ -895,7 +894,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
             if makefile_name:
                 path = joinpath(sourcebase, 'Makefile.am')
                 if isfile(path):
-                    with codecs.open(path, 'rb', 'UTF-8') as file:
+                    with open(path, mode='r', newline='\n', encoding='utf-8') as file:
                         data = file.read()
                     if pattern.findall(data):
                         lib_gets_installed = True

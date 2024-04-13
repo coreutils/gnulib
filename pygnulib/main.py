@@ -77,7 +77,6 @@ from __future__ import annotations
 import os
 import re
 import sys
-import codecs
 import random
 import argparse
 import subprocess as sp
@@ -923,7 +922,7 @@ def main() -> None:
         config.setAutoconfFile(configure_ac)
 
         # Analyze configure.ac.
-        with open(configure_ac, 'r', encoding='utf-8') as file:
+        with open(configure_ac, mode='r', newline='\n', encoding='utf-8') as file:
             configure_ac_data = file.read()
 
         guessed_m4dirs = []
@@ -989,7 +988,7 @@ def main() -> None:
                 dirisnext = False
                 filepath = joinpath(destdir, 'Makefile.am')
                 if isfile(filepath):
-                    with codecs.open(filepath, 'rb', 'UTF-8') as file:
+                    with open(filepath, mode='r', newline='\n', encoding='utf-8') as file:
                         data = file.read()
                         data = data.split('ACLOCAL_AMFLAGS')[1]
                         data = data[data.find('=') + 1:data.find('\n')]
@@ -1016,7 +1015,7 @@ def main() -> None:
                     filepath = joinpath(destdir, 'aclocal.m4')
                     if isfile(filepath):
                         pattern = re.compile(r'm4_include\(\[(.*?)]\)')
-                        with codecs.open(filepath, 'rb', 'UTF-8') as file:
+                        with open(filepath, mode='r', newline='\n', encoding='utf-8') as file:
                             m4dirs = pattern.findall(file.read())
                         m4dirs = [ os.path.dirname(m4dir)
                                    for m4dir in m4dirs ]
@@ -1421,7 +1420,7 @@ def main_with_exception_handling() -> None:
                     incompatibilities += ' %s' % pair[1]
                     incompatibilities += constants.NL
                 tempname = mktemp()
-                with codecs.open(tempname, 'wb', 'UTF-8') as file:
+                with open(tempname, mode='w', newline='\n', encoding='utf-8') as file:
                     file.write(incompatibilities)
                 sed_table = 's,^\\([^ ]*\\) ,\\1' + ' ' * 51 + ',\n'
                 sed_table += 's,^\\(' + '.' * 49 + '[^ ]*\\) *,' + ' ' * 17 + '\\1 ,'

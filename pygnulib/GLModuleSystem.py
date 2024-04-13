@@ -21,7 +21,6 @@ from __future__ import annotations
 import os
 import re
 import sys
-import codecs
 import hashlib
 import subprocess as sp
 from . import constants
@@ -208,7 +207,7 @@ class GLModule:
         self.filesystem = GLFileSystem(self.config)
         self.modulesystem = GLModuleSystem(self.config)
         # Read the module description file into memory.
-        with codecs.open(path, 'rb', 'UTF-8') as file:
+        with open(path, mode='r', newline='\n', encoding='utf-8') as file:
             self.content = file.read().replace('\r\n', '\n')
         # Dissect it into sections.
         self.sections = dict()

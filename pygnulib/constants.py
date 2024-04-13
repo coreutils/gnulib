@@ -28,7 +28,6 @@ import stat
 import platform
 import shutil
 import tempfile
-import codecs
 import subprocess as sp
 import __main__ as interpreter
 
@@ -238,7 +237,7 @@ def execute(args: list[str], verbose: int) -> None:
             os.remove(temp)
         else:
             print('executing %s' % ' '.join(args))
-            with codecs.open(temp, 'rb') as file:
+            with open(temp, mode='r', newline='\n', encoding='utf-8') as file:
                 cmdout = file.read()
             print(cmdout)
             os.remove(temp)
