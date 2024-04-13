@@ -454,6 +454,20 @@ def hardlink(src: str, dest: str) -> None:
         ensure_writable(dest)
 
 
+def rmtree(dest: str) -> None:
+    '''Removes the file or directory tree at dest, if it exists.'''
+    # These two implementations are nearly equivalent.
+    # Speed: 'rm -rf' can be a little faster.
+    # Exceptions: shutil.rmtree raises Python exceptions, e.g. PermissionError.
+    if True:
+        sp.run(['rm', '-rf', dest], shell=False)
+    else:
+        try:
+            shutil.rmtree(dest)
+        except FileNotFoundError:
+            pass
+
+
 def filter_filelist(separator: str, filelist: str, prefix: str, suffix: str,
                     removed_prefix: str, removed_suffix: str,
                     added_prefix: str = '', added_suffix: str = '') -> str:

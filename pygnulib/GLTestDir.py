@@ -23,7 +23,6 @@ import re
 import sys
 import codecs
 import subprocess as sp
-import shutil
 from pathlib import Path
 from . import constants
 from .enums import CopyAction
@@ -709,7 +708,7 @@ class GLTestDir:
         # automake
         args = [UTILS['automake'], '--add-missing', '--copy']
         constants.execute(args, verbose)
-        shutil.rmtree('autom4te.cache')
+        constants.rmtree('autom4te.cache')
         os.chdir(DIRS['cwd'])
         if inctests and not single_configure:
             # Do not use "${AUTORECONF} --force --install", because it may invoke
@@ -744,7 +743,7 @@ class GLTestDir:
             # automake
             args = [UTILS['automake'], '--add-missing', '--copy']
             constants.execute(args, verbose)
-            shutil.rmtree('autom4te.cache')
+            constants.rmtree('autom4te.cache')
             os.chdir(DIRS['cwd'])
 
         # Need to run configure and make once, to create built files that are to be
@@ -879,7 +878,7 @@ class GLTestDir:
         if isfile(joinpath('build-aux', 'test-driver')):
             _patch_test_driver()
         os.chdir(DIRS['cwd'])
-        sp.call(['rm', '-rf', self.config['tempdir']], shell=False)
+        constants.rmtree(self.config['tempdir'])
 
 
 #===============================================================================
@@ -1036,8 +1035,8 @@ class GLMegaTestDir:
         constants.execute(args, verbose)
         args = [UTILS['automake'], '--add-missing', '--copy']
         constants.execute(args, verbose)
-        shutil.rmtree('autom4te.cache')
+        constants.rmtree('autom4te.cache')
         if isfile(joinpath('build-aux', 'test-driver')):
             _patch_test_driver()
         os.chdir(DIRS['cwd'])
-        sp.call(['rm', '-rf', self.config['tempdir']], shell=False)
+        constants.rmtree(self.config['tempdir'])

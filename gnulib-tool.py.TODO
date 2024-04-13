@@ -10,7 +10,6 @@ Optimize:
 
 Various other refactorings, as deemed useful:
   - Use an enum for 'all', 'old', 'new', 'added', 'removed' in GLImport.py.
-  - sp.call(['rm', '-rf' ...]) versus shutil.rmtree ?
   - go through all the open() and codecs.open() calls and turn them into
         with open(file_name, 'r', newline='\n', encoding='utf-8') as file:
     or

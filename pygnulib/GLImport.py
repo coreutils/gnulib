@@ -1466,4 +1466,4 @@ in <library>_a_LDFLAGS or <library>_la_LDFLAGS when linking a library.''')
             position_early_after = 'AC_PROG_CC'
         print('  - invoke %s_EARLY in %s, right after %s,' % (macro_prefix, configure_ac, position_early_after))
         print('  - invoke %s_INIT in %s.' % (macro_prefix, configure_ac))
-        sp.call(['rm', '-rf', self.config['tempdir']], shell=False)
+        constants.rmtree(self.config['tempdir'])

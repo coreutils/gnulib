@@ -1120,7 +1120,7 @@ def main() -> None:
             sys.stderr.write(message)
             sys.exit(1)
         os.chdir('../..')
-        sp.call(['rm', '-rf', destdir], shell=False)
+        constants.rmtree(destdir)
 
     elif mode == 'megatest':
         if not destdir:
@@ -1150,7 +1150,7 @@ def main() -> None:
             sys.stderr.write(message)
             sys.exit(1)
         os.chdir('../..')
-        sp.call(['rm', '-rf', destdir], shell=False)
+        constants.rmtree(destdir)
 
     elif mode == 'extract-description':
         modulesystem = GLModuleSystem(config)
