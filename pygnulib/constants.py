@@ -464,7 +464,7 @@ def rmtree(dest: str) -> None:
             pass
 
 
-def filter_filelist(separator: str, filelist: str, prefix: str, suffix: str,
+def filter_filelist(separator: str, filelist: list[str], prefix: str, suffix: str,
                     removed_prefix: str, removed_suffix: str,
                     added_prefix: str = '', added_suffix: str = '') -> str:
     '''Filter the given list of files. Filtering: Only the elements starting with
