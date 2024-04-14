@@ -649,7 +649,7 @@ AC_DEFUN([%s_EARLY],
             emit += '  # Code from module %s:\n' % str(module)
             snippet = module.getAutoconfEarlySnippet()
             lines = [ line
-                      for line in snippet.split(constants.NL)
+                      for line in snippet.split('\n')
                       if line != '' ]
             if lines:
                 emit += '  %s\n' % '\n  '.join(lines)

@@ -592,11 +592,11 @@ class GLModule:
                 # *-tests module live in tests/, not lib/.
                 # Synthesize an EXTRA_DIST augmentation.
                 files = self.getFiles()
-                extra_files = filter_filelist(constants.NL, files,
+                extra_files = filter_filelist('\n', files,
                                               'tests/', '', 'tests/', '')
                 if extra_files != '':
-                    result += 'EXTRA_DIST += %s' % ' '.join(extra_files.split(constants.NL))
-                    result += constants.NL * 2
+                    result += 'EXTRA_DIST += %s' % ' '.join(extra_files.split('\n'))
+                    result += '\n' * 2
             else:  # if not tests module
                 # Synthesize an EXTRA_DIST augmentation.
                 snippet = self.getAutomakeSnippet_Conditional()
@@ -609,10 +609,10 @@ class GLModule:
                                         for line in mentioned_files
                                         for filename in line.split() }
                 all_files = self.getFiles()
-                lib_files = filter_filelist(constants.NL, all_files,
+                lib_files = filter_filelist('\n', all_files,
                                             'lib/', '', 'lib/', '')
                 if lib_files != '':
-                    lib_files = set(lib_files.split(constants.NL))
+                    lib_files = set(lib_files.split('\n'))
                 else:
                     lib_files = set()
                 # Remove mentioned_files from lib_files.
@@ -632,17 +632,17 @@ class GLModule:
                 # a .c file is preprocessed into another .c file for BUILT_SOURCES -,
                 # automake will generate a useless dependency; this is harmless.
                 if str(self) != 'relocatable-prog-wrapper' and str(self) != 'pt_chown':
-                    extra_files = filter_filelist(constants.NL, extra_files,
+                    extra_files = filter_filelist('\n', extra_files,
                                                   '', '.c', '', '')
                     if extra_files != '':
-                        result += 'EXTRA_lib_SOURCES += %s' % ' '.join(extra_files.split(constants.NL))
+                        result += 'EXTRA_lib_SOURCES += %s' % ' '.join(extra_files.split('\n'))
                         result += '\n\n'
                 # Synthesize an EXTRA_DIST augmentation also for the files in build-aux
-                buildaux_files = filter_filelist(constants.NL, all_files,
+                buildaux_files = filter_filelist('\n', all_files,
                                                  'build-aux/', '', 'build-aux/', '')
                 if buildaux_files != '':
                     buildaux_files = [ os.path.join('$(top_srcdir)', joinpath(auxdir, filename))
-                                       for filename in buildaux_files.split(constants.NL) ]
+                                       for filename in buildaux_files.split('\n') ]
                     result += 'EXTRA_DIST += %s' % ' '.join(buildaux_files)
                     result += '\n\n'
             self.cache['makefile-unconditional'] = result

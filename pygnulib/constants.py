@@ -55,8 +55,6 @@ UTILS = dict()  # Utilities
 ENCS = dict()  # Encodings
 MODES = dict()  # Modes
 TESTS = dict()  # Tests
-NL = '''
-'''  # Newline character
 
 # Set ENCS dictionary
 if not hasattr(interpreter, '__file__'):

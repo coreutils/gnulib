@@ -1414,11 +1414,11 @@ def main_with_exception_handling() -> None:
                 message += 'missing --lib option'
             elif errno == 11:
                 incompatibilities = ''
-                message += 'incompatible license on modules:%s' % constants.NL
+                message += 'incompatible license on modules:\n'
                 for pair in errinfo:
                     incompatibilities += pair[0]
                     incompatibilities += ' %s' % pair[1]
-                    incompatibilities += constants.NL
+                    incompatibilities += '\n'
                 tempname = mktemp()
                 with open(tempname, mode='w', newline='\n', encoding='utf-8') as file:
                     file.write(incompatibilities)
