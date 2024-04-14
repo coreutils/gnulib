@@ -25,7 +25,6 @@ import re
 import os
 import sys
 import stat
-import platform
 import shutil
 import tempfile
 import subprocess as sp
@@ -520,15 +519,6 @@ def subend(orig: str, repl: str, data: str) -> str:
     if data.endswith(orig):
         result = data[:-len(orig)] + repl
     return result
-
-
-def nlconvert(text: str) -> str:
-    '''Convert line-endings to specific for this platform.'''
-    system = platform.system().lower()
-    text = text.replace('\r\n', '\n')
-    if system == 'windows':
-        text = text.replace('\n', '\r\n')
-    return text
 
 
 def remove_trailing_slashes(text: str) -> str:

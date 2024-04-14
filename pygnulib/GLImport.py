@@ -598,7 +598,7 @@ class GLImport:
         if vc_files != None:
             # Convert Python bools to shell (True -> true).
             emit += 'gl_VC_FILES([%s])\n' % str(vc_files).lower()
-        return constants.nlconvert(emit)
+        return emit
 
     def gnulib_comp(self, filetable: dict[str, list[str]], gentests: bool) -> str:
         '''Emit the contents of generated $m4base/gnulib-comp.m4 file.

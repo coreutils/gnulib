@@ -404,7 +404,6 @@ class GLTestDir:
             if file.startswith('m4/'):
                 file = constants.substart('m4/', '', file)
                 emit += 'EXTRA_DIST += %s\n' % file
-        emit = constants.nlconvert(emit)
         with open(destfile, mode='w', newline='\n', encoding='utf-8') as file:
             file.write(emit)
 
@@ -522,7 +521,6 @@ class GLTestDir:
                 emit += 'AH_TOP([#include \"../config.h\"])\n\n'
                 emit += 'AC_CONFIG_FILES([Makefile])\n'
                 emit += 'AC_OUTPUT\n'
-                emit = constants.nlconvert(emit)
                 path = joinpath(self.testdir, testsbase, 'configure.ac')
                 with open(path, mode='w', newline='\n', encoding='utf-8') as file:
                     file.write(emit)
@@ -539,7 +537,6 @@ class GLTestDir:
         emit += 'AUTOMAKE_OPTIONS = 1.14 foreign\n\n'
         emit += 'SUBDIRS = %s\n\n' % ' '.join(subdirs)
         emit += 'ACLOCAL_AMFLAGS = -I %s\n' % m4base
-        emit = constants.nlconvert(emit)
         path = joinpath(self.testdir, 'Makefile.am')
         with open(path, mode='w', newline='\n', encoding='utf-8') as file:
             file.write(emit)
@@ -989,7 +986,6 @@ class GLMegaTestDir:
         emit += '  ) 2>&1 | { if test -n "$AUTOBUILD_SUBST"; then '
         emit += 'sed -e "$AUTOBUILD_SUBST"; else cat; fi; } > logs/$safemodule\n'
         emit += 'done\n'
-        emit = constants.nlconvert(emit)
         path = joinpath(self.megatestdir, 'do-autobuild')
         with open(path, mode='w', newline='\n', encoding='utf-8') as file:
             file.write(emit)
@@ -999,7 +995,6 @@ class GLMegaTestDir:
         emit += 'AUTOMAKE_OPTIONS = 1.14 foreign\n\n'
         emit += 'SUBDIRS = %s\n\n' % ' '.join(megasubdirs)
         emit += 'EXTRA_DIST = do-autobuild\n'
-        emit = constants.nlconvert(emit)
         path = joinpath(self.megatestdir, 'Makefile.am')
         with open(path, mode='w', newline='\n', encoding='utf-8') as file:
             file.write(emit)
@@ -1014,7 +1009,6 @@ class GLMegaTestDir:
         emit += 'AC_CONFIG_SUBDIRS([%s])\n' % ' '.join(megasubdirs)
         emit += 'AC_CONFIG_FILES([Makefile])\n'
         emit += 'AC_OUTPUT\n'
-        emit = constants.nlconvert(emit)
         path = joinpath(self.megatestdir, 'configure.ac')
         with open(path, mode='w', newline='\n', encoding='utf-8') as file:
             file.write(emit)

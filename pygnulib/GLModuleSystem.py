@@ -645,7 +645,6 @@ class GLModule:
                                        for filename in buildaux_files.split(constants.NL) ]
                     result += 'EXTRA_DIST += %s' % ' '.join(buildaux_files)
                     result += '\n\n'
-            result = constants.nlconvert(result)
             self.cache['makefile-unconditional'] = result
         return self.cache['makefile-unconditional']
 
