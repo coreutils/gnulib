@@ -154,7 +154,7 @@ class GLFileSystem:
 class GLFileAssistant:
     '''GLFileAssistant is used to help with file processing.'''
 
-    def __init__(self, config: GLConfig, transformers: dict[str, tuple[re.Pattern, str] | None] = dict()) -> None:
+    def __init__(self, config: GLConfig, transformers: dict[str, tuple[re.Pattern, str] | None] | None = None) -> None:
         '''Create GLFileAssistant instance.
 
         config stores information shared between classes.
@@ -164,7 +164,9 @@ class GLFileAssistant:
         if type(config) is not GLConfig:
             raise TypeError('config must be a GLConfig, not %s'
                             % type(config).__name__)
-        if type(transformers) is not dict:
+        if transformers == None:
+            transformers = dict()
+        elif type(transformers) is not dict:
             raise TypeError('transformers must be a dict, not %s'
                             % type(transformers).__name__)
         for key in ['lib', 'aux', 'main', 'tests']:
