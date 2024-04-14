@@ -396,7 +396,6 @@ class GLModule:
             if char not in GLModule.shell_id_chars:
                 valid_shell_id = False
                 break
-        identifier = None
         if valid_shell_id:
             identifier = self.getName()
         else:
@@ -414,7 +413,6 @@ class GLModule:
             if char not in GLModule.shell_id_chars:
                 valid_shell_id = False
                 break
-        identifier = None
         if valid_shell_id:
             identifier = self.getName()
         else:
@@ -432,7 +430,6 @@ class GLModule:
             if char not in GLModule.shell_id_chars:
                 valid_shell_id = False
                 break
-        identifier = None
         if valid_shell_id:
             identifier = self.getName()
         else:

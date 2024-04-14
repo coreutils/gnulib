@@ -89,14 +89,12 @@ class GLInfo:
     def date(self) -> str:
         '''Return formatted string which contains date and time in GMT format.'''
         if isdir(DIRS['git']):
-            have_git = None
             try:
                 sp.check_call(['git', '--version'], stdout=sp.DEVNULL)
                 have_git = True
             except:
                 have_git = False
             if have_git:
-                have_GNU_date = None
                 try:
                     sp.check_call(['date', '--version'], stdout=sp.DEVNULL)
                     have_GNU_date = True
@@ -332,7 +330,6 @@ Report bugs to <bug-gnulib@gnu.org>.'''
     def version(self) -> str:
         '''Return formatted string which contains git version.'''
         if isdir(DIRS['git']):
-            have_git = None
             try:
                 sp.check_call(['git', '--version'], stdout=sp.DEVNULL)
                 have_git = True

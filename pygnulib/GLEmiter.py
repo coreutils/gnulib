@@ -324,7 +324,6 @@ class GLEmiter:
             for module in modules:
                 if module_filter(module):
                     if moduletable.isConditional(module):
-                        shellvar = module.getShellVar()
                         emit += '  %s=false\n' % module.getShellVar()
             # Emit the autoconf code for the conditional modules, each in a separate
             # function. This makes it possible to support cycles among conditional
