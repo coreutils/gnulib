@@ -11,14 +11,13 @@ The following packages appear to be using gnulib and gnulib-tool:
   bison           https://git.savannah.gnu.org/gitweb/?p=bison.git;a=tree
   cgminer         https://github.com/ckolivas/cgminer
   clisp           https://gitlab.com/gnu-clisp/clisp
+  cmogstored      https://yhbt.net/cmogstored/
   collectd        https://github.com/collectd/collectd
   complexity      https://git.savannah.gnu.org/gitweb/?p=complexity.git;a=tree
   coreutils       https://git.savannah.gnu.org/gitweb/?p=coreutils.git;a=tree
-  cmogstored      https://yhbt.net/cmogstored/
   cpio            https://git.savannah.gnu.org/gitweb/?p=cpio.git;a=tree
   CSSC            https://git.savannah.gnu.org/gitweb/?p=cssc.git;a=tree
   cvs             https://cvs.savannah.gnu.org/viewcvs/cvs/ccvs/
-  cvsps           https://sourceforge.net/projects/cvsps/
   datamash        https://git.savannah.gnu.org/gitweb/?p=datamash.git;a=tree
   dc3dd           https://sourceforge.net/p/dc3dd/code/HEAD/tree/
   dico            https://git.savannah.gnu.org/gitweb/?p=dico.git;a=tree
@@ -31,26 +30,21 @@ The following packages appear to be using gnulib and gnulib-tool:
   fuse-overlayfs  https://github.com/containers/fuse-overlayfs
   gcal            https://git.savannah.gnu.org/gitweb/?p=gcal.git;a=tree
   gdb             https://sourceware.org/git/?p=gdb.git;a=tree
-  gettext         https://git.savannah.gnu.org/gitweb/?p=gettext.git;a=tree
   gengetopt       https://git.savannah.gnu.org/gitweb/?p=gengetopt.git;a=tree
+  gettext         https://git.savannah.gnu.org/gitweb/?p=gettext.git;a=tree
   gmediaserver    https://cvs.savannah.gnu.org/viewvc/gmediaserver/gmediaserver/
   gnuit           https://git.savannah.gnu.org/gitweb/?p=gnuit.git;a=tree
   gnutls          https://www.gnutls.org/
                   https://gitlab.com/gnutls/gnutls.git
-  gpg             https://gnupg.org/
-                  https://git.gnupg.org/
+  grep            https://git.savannah.gnu.org/gitweb/?p=grep.git;a=tree
   groff           https://git.savannah.gnu.org/gitweb/?p=groff.git;a=tree
   grub            https://git.savannah.gnu.org/gitweb/?p=grub.git;a=tree
   gsasl           https://git.savannah.gnu.org/gitweb/?p=gsasl.git;a=tree
   gsequencer      https://git.savannah.gnu.org/gitweb/?p=gsequencer.git;a=tree
   gss             https://git.savannah.gnu.org/gitweb/?p=gss.git;a=tree
-  gtkreindeer     https://git.savannah.gnu.org/gitweb/?p=gtkreindeer.git;a=tree
-  gtk-vnc         https://gitlab.gnome.org/GNOME/gtk-vnc/tree/master/
-  grep            https://git.savannah.gnu.org/gitweb/?p=grep.git;a=tree
   guile           https://git.savannah.gnu.org/gitweb/?p=guile.git;a=tree
   gzip            https://git.savannah.gnu.org/gitweb/?p=gzip.git;a=tree
   hello           https://git.savannah.gnu.org/gitweb/?p=hello.git;a=tree
-  hivex           https://github.com/libguestfs/hivex
   icoutils        https://git.savannah.nongnu.org/gitweb/?p=icoutils.git;a=tree
   idutils         https://git.savannah.gnu.org/gitweb/?p=idutils.git;a=tree
   inetutils       https://git.savannah.gnu.org/gitweb/?p=inetutils.git;a=tree
@@ -60,11 +54,9 @@ The following packages appear to be using gnulib and gnulib-tool:
   lbzip2          https://github.com/kjn/lbzip2
   libdap          https://github.com/OPENDAP/libdap
   libffcall       https://git.savannah.gnu.org/gitweb/?p=libffcall.git;a=tree
-  libguestfs      https://github.com/libguestfs/libguestfs
   libiconv        https://git.savannah.gnu.org/gitweb/?p=libiconv.git;a=tree
   libidn          https://git.savannah.gnu.org/gitweb/?p=libidn.git;a=tree
   libidn2         https://gitlab.com/libidn/libidn2
-  libksba         https://www.gnupg.org/related_software/libksba/index.html
   libntlm         https://git.savannah.nongnu.org/gitweb/?p=libntlm.git;a=tree
   libprelude      https://www.prelude-siem.org/projects/libprelude/repository
   libpreludedb    https://www.prelude-siem.org/projects/libpreludedb/repository
@@ -72,26 +64,18 @@ The following packages appear to be using gnulib and gnulib-tool:
   libtool         https://git.savannah.gnu.org/gitweb/?p=libtool.git;a=tree
   libu2f-host     https://github.com/Yubico/libu2f-host
   libunistring    https://git.savannah.gnu.org/gitweb/?p=libunistring.git;a=tree
-  libvirt         https://libvirt.org/
-                  https://libvirt.org/git/?p=libvirt.git;a=tree
   licenseutils    https://git.savannah.gnu.org/gitweb/?p=licenseutils.git;a=tree
-  m4              https://git.savannah.gnu.org/gitweb/?p=m4.git;a=tree
-  mailfromd       http://git.gnu.org.ua/cgit/mailfromd.git/tree/
+  m4              https://git.savannah.gnu.org/gitweb/?p=m4.git;a=tree;h=refs/heads/branch-1.4;hb=refs/heads/branch-1.4
   mailutils       https://git.savannah.gnu.org/gitweb/?p=mailutils.git;a=tree
-  man-db          https://bazaar.launchpad.net/~cjwatson/man-db/master/files
-  miktex          https://miktex.org/
-                  https://github.com/MiKTeX/miktex
+  man-db          https://gitlab.com/man-db/man-db
   mini-httpd      https://git.savannah.gnu.org/gitweb/?p=mini-httpd.git;a=tree
   mmv             https://github.com/rrthomas/mmv
-  msmtp           https://git.marlam.de/gitweb/?p=msmtp.git;a=tree
   myserver        https://git.savannah.gnu.org/gitweb/?p=myserver.git;a=summary
   nagios-plugins  https://github.com/nagios-plugins/nagios-plugins
   nano            https://git.savannah.gnu.org/gitweb/?p=nano.git;a=tree
-  Net::CDP        http://cpansearch.perl.org/src/MCHAPMAN/Net-CDP-0.09/libcdp/
   netcf           https://pagure.io/netcf/tree/master
   OATH Toolkit    https://gitlab.com/oath-toolkit/oath-toolkit/
   octave          https://hg.savannah.gnu.org/hgweb/octave/file/
-  OPeNDAP         https://scm.opendap.org/svn/trunk/
   pacemaker       https://github.com/ClusterLabs/pacemaker
   parted          https://git.savannah.gnu.org/gitweb/?p=parted.git;a=tree
   patch           https://git.savannah.gnu.org/gitweb/?p=patch.git;a=tree
@@ -101,9 +85,9 @@ The following packages appear to be using gnulib and gnulib-tool:
   prelude-manager https://www.prelude-siem.org/projects/prelude-manager/repository
   pspp            https://git.savannah.gnu.org/gitweb/?p=pspp.git;a=tree
   radius          https://git.savannah.gnu.org/gitweb/?p=radius.git;a=tree
+  rcs             https://git.savannah.gnu.org/gitweb/?p=rcs.git;a=tree
   recutils        https://git.savannah.gnu.org/gitweb/?p=recutils.git;a=tree
   reindeer        https://git.savannah.gnu.org/gitweb/?p=reindeer.git;a=tree
-  rcs             https://git.savannah.gnu.org/gitweb/?p=rcs.git;a=tree
   sed             https://git.savannah.gnu.org/gitweb/?p=sed.git;a=tree
   sharutils       https://git.savannah.gnu.org/gitweb/?p=sharutils.git;a=tree
   shishi          https://git.savannah.gnu.org/gitweb/?p=shishi.git;a=tree
@@ -117,14 +101,20 @@ The following packages appear to be using gnulib and gnulib-tool:
   wdiff           https://bzr.savannah.gnu.org/lh/wdiff/trunk/files
   wget            https://git.savannah.gnu.org/gitweb/?p=wget.git;a=tree
   wget2           https://git.savannah.gnu.org/gitweb/?p=wget/wget2.git;a=tree
-  wydawca         http://git.gnu.org.ua/cgit/wydawca.git/tree/
-  wyslij-po       http://svn.gnu.org.ua/viewvc/wyslij-po/trunk/
   zile            https://git.savannah.gnu.org/gitweb/?p=zile.git;a=tree
 
 The following packages are using gnulib without gnulib-tool:
 
   gawk            https://git.savannah.gnu.org/gitweb/?p=gawk.git;a=tree
-  libgcrypt       https://git.gnupg.org/cgi-bin/gitweb.cgi?p=libgcrypt.git;a=tree
+  gtk-vnc         https://gitlab.gnome.org/GNOME/gtk-vnc/tree/master/
+  hivex           https://github.com/libguestfs/hivex
+  libguestfs      https://github.com/libguestfs/libguestfs
+  libksba         git://git.gnupg.org/libksba.git
+  miktex          https://miktex.org/
+                  https://github.com/MiKTeX/miktex
+  Net::CDP        https://st.aticpan.org/source/MCHAPMAN/Net-CDP-0.09/libcdp/
+  wydawca         http://git.gnu.org.ua/cgit/wydawca.git/tree/
+  wyslij-po       https://git.gnu.org.ua/wyslij-po.git/tree/
 
 Articles:
 
