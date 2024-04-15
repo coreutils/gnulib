@@ -7062,6 +7062,7 @@ for use with GNU Automake (in particular).
 * manywarnings::
 * Running self-tests under valgrind::
 * VCS To ChangeLog::
+* gitlog-to-changelog::
 @end menu
 
 @include havelib.texi
@@ -7079,6 +7080,8 @@ for use with GNU Automake (in particular).
 @include valgrind-tests.texi
 
 @include vcs-to-changelog.texi
+
+@include gitlog-to-changelog.texi
 
 
 @node Build Infrastructure Files

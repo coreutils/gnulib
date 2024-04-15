@@ -1,0 +1,81 @@
+@node gitlog-to-changelog
+@section gitlog-to-changelog
+
+@c Copyright (C) 2024 Free Software Foundation, Inc.
+
+@c Permission is granted to copy, distribute and/or modify this document
+@c under the terms of the GNU Free Documentation License, Version 1.3 or
+@c any later version published by the Free Software Foundation; with no
+@c Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.  A
+@c copy of the license is at <https://www.gnu.org/licenses/fdl-1.3.en.html>.
+
+@cindex gitlog
+@cindex changelog
+
+Gnulib have a module @code{gitlog-to-changelog} to parse @code{git log}
+output and generate @code{ChangeLog} files, see
+@ifinfo
+@ref{Change Logs,,,standards}.
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/prep/standards/html_node/Change-Logs.html}.
+@end ifnotinfo
+
+You would typically use it by extending the @code{dist-hook} in the
+top-level @code{Makefile.am} like this:
+
+@example
+dist-hook: gen-ChangeLog
+...
+.PHONY: gen-ChangeLog
+gen-ChangeLog:
+        $(AM_V_GEN)if test -e .git; then                               \
+                $(top_srcdir)/build-aux/gitlog-to-changelog >          \
+                        $(distdir)/cl-t &&                             \
+                @{ rm -f $(distdir)/ChangeLog &&                        \
+                  mv $(distdir)/cl-t $(distdir)/ChangeLog; @}           \
+        fi
+@end example
+
+See @code{gitlog-to-changelog --help} for complete documentation.
+
+The tool prints timestamps using @code{localtime}, so its output may be
+different depending on what locale the developer that runs the tool is
+using.  If your project desire reproducible ChangeLog files that doesn't
+depend on locale settings, use something like the following.
+
+@example
+gen-ChangeLog:
+        $(AM_V_GEN)if test -e .git; then                               \
+                env LC_ALL=en_US.UTF-8 TZ=UTC=0                        \
+                        $(top_srcdir)/build-aux/gitlog-to-changelog >  \
+                        $(distdir)/cl-t &&                             \
+                @{ rm -f $(distdir)/ChangeLog &&                        \
+                  mv $(distdir)/cl-t $(distdir)/ChangeLog; @}           \
+        fi
+@end example
+
+
+If you wish to limit the ChangeLog entries (perhaps for size issues) to
+only contain entries since a particular git tag, use something like the
+following:
+
+@example
+dist-hook: gen-ChangeLog
+...
+gen_start_ver = 8.31
+.PHONY: gen-ChangeLog
+gen-ChangeLog:
+        $(AM_V_GEN)if test -e .git; then                               \
+          log_fix="$(srcdir)/build-aux/git-log-fix";                   \
+          test -e "$$log_fix"                                          \
+            && amend_git_log="--amend=$$log_fix"                       \
+            || amend_git_log=;                                         \
+          $(top_srcdir)/build-aux/gitlog-to-changelog $$amend_git_log  \
+            -- v$(gen_start_ver)~.. > $(distdir)/cl-t &&               \
+            @{ printf '\n\nSee the source repo for older entries\n'     \
+              >> $(distdir)/cl-t &&                                    \
+              rm -f $(distdir)/ChangeLog &&                            \
+              mv $(distdir)/cl-t $(distdir)/ChangeLog; @}               \
+        fi
+@end example

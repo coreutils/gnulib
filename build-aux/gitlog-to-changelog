@@ -35,7 +35,7 @@
 eval 'exec perl -wSx "$0" "$@"'
      if 0;
 
-my $VERSION = '2024-04-12 15:23'; # UTC
+my $VERSION = '2023-06-24 21:59'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -360,7 +360,7 @@ sub git_dir_option($)
                   ? '  (tiny change)' : '');
 
       my $date_line = sprintf "%s  %s$tiny\n",
-        strftime ("%Y-%m-%d", gmtime ($1)), $2;
+        strftime ("%Y-%m-%d", localtime ($1)), $2;
 
       my @coauthors = grep /^Co-authored-by:.*$/, @line;
       # Omit meta-data lines we've already interpreted.
