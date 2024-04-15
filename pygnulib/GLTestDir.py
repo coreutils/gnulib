@@ -345,9 +345,12 @@ class GLTestDir:
         filelist = sorted(set(filelist))
 
         # Create directories.
-        directories = [os.path.dirname(file)
-                       for file in self.rewrite_files(filelist)]
+        directories = [ joinpath(self.testdir, os.path.dirname(file))
+                        for file in self.rewrite_files(filelist) ]
         directories = sorted(set(directories))
+        for directory in directories:
+            if not isdir(directory):
+                os.makedirs(directory)
 
         # Copy files or make symbolic links or hard links.
         filetable = []
@@ -358,9 +361,6 @@ class GLTestDir:
             src = row[1]
             dest = row[0]
             destpath = joinpath(self.testdir, dest)
-            dirname = os.path.dirname(destpath)
-            if not isdir(dirname):
-                os.makedirs(dirname)
             if src.startswith('tests=lib/'):
                 src = constants.substart('tests=lib/', 'lib/', src)
             lookedup, flag = self.filesystem.lookup(src)
