@@ -1,0 +1,39 @@
+Description:
+setpayloadl function: construct a quiet NaN with a given payload
+
+Files:
+lib/setpayloadl.c
+m4/mathfunc.m4
+m4/setpayload.m4
+m4/exponentl.m4
+
+Depends-on:
+math
+extensions
+setpayload      [test $HAVE_SETPAYLOADL = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1]
+float           [test $HAVE_SETPAYLOADL = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
+stdint          [test $HAVE_SETPAYLOADL = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
+signed-nan      [test $HAVE_SETPAYLOADL = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
+snan            [test $HAVE_SETPAYLOADL = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
+
+configure.ac:
+gl_FUNC_SETPAYLOADL
+gl_CONDITIONAL([GL_COND_OBJ_SETPAYLOADL], [test $HAVE_SETPAYLOADL = 0])
+gl_MATH_MODULE_INDICATOR([setpayloadl])
+
+Makefile.am:
+if GL_COND_OBJ_SETPAYLOADL
+lib_SOURCES += setpayloadl.c
+endif
+
+Include:
+<math.h>
+
+Link:
+$(SETPAYLOADL_LIBM)
+
+License:
+LGPL
+
+Maintainer:
+all
