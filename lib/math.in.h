@@ -2774,6 +2774,20 @@ _GL_WARN_REAL_FLOATING_DECL (signbit);
 #endif
 
 
+#if @GNULIB_SETPAYLOADF@
+# if !@HAVE_SETPAYLOADF@
+_GL_FUNCDECL_SYS (setpayloadf, int, (float *, float));
+# endif
+_GL_CXXALIAS_SYS (setpayloadf, int, (float *, float));
+_GL_CXXALIASWARN (setpayloadf);
+#elif defined GNULIB_POSIXCHECK
+# undef setpayloadf
+# if HAVE_RAW_DECL_SETPAYLOADF
+_GL_WARN_ON_USE (setpayloadf, "setpayloadf is unportable - "
+                 "use gnulib module setpayloadf for portability");
+# endif
+#endif
+
 #if @GNULIB_SETPAYLOAD@
 # if !@HAVE_SETPAYLOAD@
 _GL_FUNCDECL_SYS (setpayload, int, (double *, double));
