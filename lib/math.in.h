@@ -2845,6 +2845,20 @@ _GL_WARN_ON_USE (setpayloadsig, "setpayloadsig is unportable - "
 # endif
 #endif
 
+#if @GNULIB_SETPAYLOADSIGL@
+# if !@HAVE_SETPAYLOADSIGL@
+_GL_FUNCDECL_SYS (setpayloadsigl, int, (long double *, long double));
+# endif
+_GL_CXXALIAS_SYS (setpayloadsigl, int, (long double *, long double));
+_GL_CXXALIASWARN (setpayloadsigl);
+#elif defined GNULIB_POSIXCHECK
+# undef setpayloadsigl
+# if HAVE_RAW_DECL_SETPAYLOADSIGL
+_GL_WARN_ON_USE (setpayloadsigl, "setpayloadsigl is unportable - "
+                 "use gnulib module setpayloadsigl for portability");
+# endif
+#endif
+
 
 #if @GNULIB_TOTALORDERF@
 # if @REPLACE_TOTALORDERF@

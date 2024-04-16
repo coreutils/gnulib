@@ -1,0 +1,38 @@
+Description:
+setpayloadsigl function: construct a signalling NaN with a given payload
+
+Files:
+lib/setpayloadsigl.c
+m4/mathfunc.m4
+m4/setpayloadsig.m4
+m4/exponentl.m4
+
+Depends-on:
+math
+extensions
+setpayloadsig   [test $HAVE_SETPAYLOADSIGL = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1]
+float           [test $HAVE_SETPAYLOADSIGL = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
+stdint          [test $HAVE_SETPAYLOADSIGL = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
+signed-snan     [test $HAVE_SETPAYLOADSIGL = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
+
+configure.ac:
+gl_FUNC_SETPAYLOADSIGL
+gl_CONDITIONAL([GL_COND_OBJ_SETPAYLOADSIGL], [test $HAVE_SETPAYLOADSIGL = 0])
+gl_MATH_MODULE_INDICATOR([setpayloadsigl])
+
+Makefile.am:
+if GL_COND_OBJ_SETPAYLOADSIGL
+lib_SOURCES += setpayloadsigl.c
+endif
+
+Include:
+<math.h>
+
+Link:
+$(SETPAYLOADSIGL_LIBM)
+
+License:
+LGPL
+
+Maintainer:
+all
