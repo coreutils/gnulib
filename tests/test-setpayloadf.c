@@ -26,6 +26,8 @@ SIGNATURE_CHECK (setpayloadf, int, (float *, float));
 #include "isnanf-nolibm.h"
 #include "macros.h"
 
+#define PAYLOAD_BITS (24 - 2) /* = (FLT_MANT_DIG - 2) */
+
 int
 main ()
 {
@@ -34,7 +36,7 @@ main ()
 
   {
     /* Test valid payloads.  */
-    for (i = 0, p = 1.0f; i < 24 - 2; i++, p *= 2.0f)
+    for (i = 0, p = 1.0f; i < PAYLOAD_BITS; i++, p *= 2.0f)
       {
         int ret;
         float x;
