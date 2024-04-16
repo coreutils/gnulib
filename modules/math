@@ -120,6 +120,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's/@''GNULIB_ROUND''@/$(GNULIB_ROUND)/g' \
 	      -e 's/@''GNULIB_ROUNDF''@/$(GNULIB_ROUNDF)/g' \
 	      -e 's/@''GNULIB_ROUNDL''@/$(GNULIB_ROUNDL)/g' \
+	      -e 's/@''GNULIB_SETPAYLOAD''@/$(GNULIB_SETPAYLOAD)/g' \
 	      -e 's/@''GNULIB_SIGNBIT''@/$(GNULIB_SIGNBIT)/g' \
 	      -e 's/@''GNULIB_SINF''@/$(GNULIB_SINF)/g' \
 	      -e 's/@''GNULIB_SINL''@/$(GNULIB_SINL)/g' \
@@ -195,6 +196,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's|@''HAVE_REMAINDERF''@|$(HAVE_REMAINDERF)|g' \
 	      -e 's|@''HAVE_RINT''@|$(HAVE_RINT)|g' \
 	      -e 's|@''HAVE_RINTL''@|$(HAVE_RINTL)|g' \
+	      -e 's|@''HAVE_SETPAYLOAD''@|$(HAVE_SETPAYLOAD)|g' \
 	      -e 's|@''HAVE_SINF''@|$(HAVE_SINF)|g' \
 	      -e 's|@''HAVE_SINL''@|$(HAVE_SINL)|g' \
 	      -e 's|@''HAVE_SINHF''@|$(HAVE_SINHF)|g' \

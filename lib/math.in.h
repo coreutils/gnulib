@@ -2774,6 +2774,21 @@ _GL_WARN_REAL_FLOATING_DECL (signbit);
 #endif
 
 
+#if @GNULIB_SETPAYLOAD@
+# if !@HAVE_SETPAYLOAD@
+_GL_FUNCDECL_SYS (setpayload, int, (double *, double));
+# endif
+_GL_CXXALIAS_SYS (setpayload, int, (double *, double));
+_GL_CXXALIASWARN (setpayload);
+#elif defined GNULIB_POSIXCHECK
+# undef setpayload
+# if HAVE_RAW_DECL_SETPAYLOAD
+_GL_WARN_ON_USE (setpayload, "setpayload is unportable - "
+                 "use gnulib module setpayload for portability");
+# endif
+#endif
+
+
 #if @GNULIB_TOTALORDERF@
 # if @REPLACE_TOTALORDERF@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
@@ -2848,6 +2863,7 @@ _GL_WARN_ON_USE (totalorderl, "totalorderl is unportable - "
                  "use gnulib module totalorderl for portability");
 # endif
 #endif
+
 
 _GL_INLINE_HEADER_END
 
