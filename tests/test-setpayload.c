@@ -26,6 +26,8 @@ SIGNATURE_CHECK (setpayload, int, (double *, double));
 #include "isnand-nolibm.h"
 #include "macros.h"
 
+#define PAYLOAD_BITS (53 - 2) /* = (DBL_MANT_DIG - 2) */
+
 int
 main ()
 {
@@ -34,7 +36,7 @@ main ()
 
   {
     /* Test valid payloads.  */
-    for (i = 0, p = 1.0; i < 53 - 2; i++, p *= 2.0)
+    for (i = 0, p = 1.0; i < PAYLOAD_BITS; i++, p *= 2.0)
       {
         int ret;
         double x;
