@@ -255,7 +255,7 @@ class GLModule:
 
     def __hash__(self) -> int:
         '''x.__hash__() <==> hash(x)'''
-        result = hash(self.name) ^ hash(self.patched)
+        result = hash(self.name)
         return result
 
     def __le__(self, module: object) -> bool:
