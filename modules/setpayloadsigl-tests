@@ -1,0 +1,15 @@
+Files:
+tests/test-setpayloadsigl.c
+tests/infinity.h
+tests/signature.h
+tests/macros.h
+
+Depends-on:
+isnanl-nolibm
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-setpayloadsigl
+check_PROGRAMS += test-setpayloadsigl
+test_setpayloadsigl_LDADD = $(LDADD) @SETPAYLOADSIGL_LIBM@
