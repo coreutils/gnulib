@@ -727,13 +727,13 @@ class GLModuleTable:
           returns the condition when B should be enabled as a dependency of A,
           once the m4 code for A has been executed.
         '''
-        self.dependers = dict()  # Dependencies
-        self.conditionals = dict()  # Conditional modules
-        self.unconditionals = dict()  # Unconditional modules
-        self.base_modules = []  # Base modules
-        self.main_modules = []  # Main modules
-        self.tests_modules = []  # Tests modules
-        self.final_modules = []  # Final modules
+        self.dependers = dict()
+        self.conditionals = dict()
+        self.unconditionals = set()
+        self.base_modules = []
+        self.main_modules = []
+        self.tests_modules = []
+        self.final_modules = []
         if type(config) is not GLConfig:
             raise TypeError('config must be a GLConfig, not %s'
                             % type(config).__name__)
@@ -781,7 +781,7 @@ class GLModuleTable:
         if type(module) is not GLModule:
             raise TypeError('module must be a GLModule, not %s'
                             % type(module).__name__)
-        self.unconditionals[str(module)] = True
+        self.unconditionals.add(str(module))
         if str(module) in self.dependers:
             self.dependers.pop(str(module))
 
