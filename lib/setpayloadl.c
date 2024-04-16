@@ -80,9 +80,8 @@ setpayloadl (long double *result, long double payload)
       x.word[1] = (x.word[1] & 0xC0000000U) | (uint32_t) (pl >> 32);
       x.word[0] = (uint32_t) pl;
 #   elif LDBL_EXPBIT0_WORD == 0 && LDBL_EXPBIT0_BIT == 16 /* on m68k */
-      x.word[0] = (x.word[0] & 0xFFFFC000U) | (uint32_t) (pl >> 48)
-      x.word[1] = (uint32_t) (pl >> 16);
-      x.word[2] = (uint32_t) (pl << 16);
+      x.word[1] = (x.word[1] & 0xC0000000U) | (uint32_t) (pl >> 32);
+      x.word[2] = (uint32_t) pl;
 #   else
 #    error "Please port gnulib setpayloadl.c to your platform!"
 #   endif
@@ -103,8 +102,8 @@ setpayloadl (long double *result, long double payload)
 #   if LDBL_EXPBIT0_BIT == 16
       memory_long_double pl;
       pl.value = payload + TWO_LDBL_MANT_DIG;
-      x.word[LDBL_EXPBIT0_WORD] = (x.word[LDBL_EXPBIT0_WORD] & 0xFFFFC000U)
-                                  | (pl.word[LDBL_EXPBIT0_WORD] & 0x00003FFFU);
+      x.word[LDBL_EXPBIT0_WORD] = (x.word[LDBL_EXPBIT0_WORD] & 0xFFFF8000U)
+                                  | (pl.word[LDBL_EXPBIT0_WORD] & 0x00007FFFU);
       x.word[LDBL_EXPBIT0_WORD + (LDBL_EXPBIT0_WORD == 0 ? 1 : -1)] =
         pl.word[LDBL_EXPBIT0_WORD + (LDBL_EXPBIT0_WORD == 0 ? 1 : -1)];
       x.word[LDBL_EXPBIT0_WORD + (LDBL_EXPBIT0_WORD == 0 ? 2 : -2)] =
