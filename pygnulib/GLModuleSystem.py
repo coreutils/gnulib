@@ -767,7 +767,7 @@ class GLModuleTable:
         if not (type(condition) is str or condition == True):
             raise TypeError('condition must be a string or True, not %s'
                             % type(condition).__name__)
-        if not str(module) in self.unconditionals:
+        if str(module) not in self.unconditionals:
             # No unconditional dependency to the given module is known at this point.
             if str(module) not in self.dependers:
                 self.dependers[str(module)] = []

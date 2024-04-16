@@ -218,7 +218,7 @@ class GLEmiter:
         if str(module) in ['gnumakefile', 'maintainer-makefile']:
             # These modules are meant to be used only in the top-level directory.
             flag = toplevel
-        else:  # if not str(module) in ['gnumakefile', 'maintainer-makefile']
+        else:  # if str(module) not in ['gnumakefile', 'maintainer-makefile']
             flag = True
         if flag:
             snippet = module.getAutoconfSnippet()
