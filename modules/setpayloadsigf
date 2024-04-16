@@ -1,0 +1,36 @@
+Description:
+setpayloadsigf function: construct a signalling NaN with a given payload
+
+Files:
+lib/setpayloadsigf.c
+m4/mathfunc.m4
+m4/setpayloadsig.m4
+
+Depends-on:
+math
+extensions
+float           [test $HAVE_SETPAYLOADSIGF = 0]
+stdint          [test $HAVE_SETPAYLOADSIGF = 0]
+signed-snan     [test $HAVE_SETPAYLOADSIGF = 0]
+
+configure.ac:
+gl_FUNC_SETPAYLOADSIGF
+gl_CONDITIONAL([GL_COND_OBJ_SETPAYLOADSIGF], [test $HAVE_SETPAYLOADSIGF = 0])
+gl_MATH_MODULE_INDICATOR([setpayloadsigf])
+
+Makefile.am:
+if GL_COND_OBJ_SETPAYLOADSIGF
+lib_SOURCES += setpayloadsigf.c
+endif
+
+Include:
+<math.h>
+
+Link:
+$(SETPAYLOADSIGF_LIBM)
+
+License:
+LGPL
+
+Maintainer:
+all

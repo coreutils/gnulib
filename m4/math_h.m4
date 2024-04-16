@@ -1,5 +1,5 @@
 # math_h.m4
-# serial 130
+# serial 131
 dnl Copyright (C) 2007-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -52,7 +52,7 @@ AC_DEFUN_ONCE([gl_MATH_H],
      remainder remainderf remainderl
      rint rintf rintl round roundf roundl
      setpayload setpayloadf setpayloadl
-     setpayloadsig
+     setpayloadsig setpayloadsigf
      sinf sinl sinhf sqrtf sqrtl
      tanf tanl tanhf totalorder totalorderf totalorderl trunc truncf truncl])
 ])
@@ -164,6 +164,7 @@ AC_DEFUN([gl_MATH_H_REQUIRE_DEFAULTS],
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_SETPAYLOADF])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_SETPAYLOADL])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_SETPAYLOADSIG])
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_SETPAYLOADSIGF])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_SIGNBIT])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_SINF])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_SINL])
@@ -250,6 +251,7 @@ AC_DEFUN([gl_MATH_H_DEFAULTS],
   HAVE_SETPAYLOADF=1;               AC_SUBST([HAVE_SETPAYLOADF])
   HAVE_SETPAYLOADL=1;               AC_SUBST([HAVE_SETPAYLOADL])
   HAVE_SETPAYLOADSIG=1;             AC_SUBST([HAVE_SETPAYLOADSIG])
+  HAVE_SETPAYLOADSIGF=1;            AC_SUBST([HAVE_SETPAYLOADSIGF])
   HAVE_SINF=1;                      AC_SUBST([HAVE_SINF])
   HAVE_SINL=1;                      AC_SUBST([HAVE_SINL])
   HAVE_SINHF=1;                     AC_SUBST([HAVE_SINHF])
