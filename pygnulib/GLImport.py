@@ -1039,7 +1039,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                     print('Create directory %s' % directory)
 
         # Create GLFileAssistant instance to process files.
-        self.assistant = GLFileAssistant(self.config, transformers)
+        assistant = GLFileAssistant(self.config, transformers)
 
         # Files which are in filetable['old'] and not in filetable['new'].
         # They will be removed and added to filetable['removed'] list.
@@ -1074,9 +1074,9 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         for pair in pairs:
             original = pair[1]
             rewritten = pair[0]
-            self.assistant.setOriginal(original)
-            self.assistant.setRewritten(rewritten)
-            self.assistant.add_or_update(already_present)
+            assistant.setOriginal(original)
+            assistant.setRewritten(rewritten)
+            assistant.add_or_update(already_present)
 
         # Files which are in filetable['new'] and in filetable['old'].
         # They will be added/updated and added to filetable['added'] list.
@@ -1088,12 +1088,12 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         for pair in pairs:
             original = pair[1]
             rewritten = pair[0]
-            self.assistant.setOriginal(original)
-            self.assistant.setRewritten(rewritten)
-            self.assistant.add_or_update(already_present)
+            assistant.setOriginal(original)
+            assistant.setRewritten(rewritten)
+            assistant.add_or_update(already_present)
 
         # Add files which were added to the list of filetable['added'].
-        filetable['added'] += self.assistant.getFiles()
+        filetable['added'] += assistant.getFiles()
         filetable['added'] = sorted(set(filetable['added']))
 
         # Default the source makefile name to Makefile.am.
@@ -1134,12 +1134,12 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         if pobase:
             # Create po makefile and auxiliary files.
             for file in ['Makefile.in.in', 'remove-potcdate.sin']:
-                tmpfile = self.assistant.tmpfilename(joinpath(pobase, file))
+                tmpfile = assistant.tmpfilename(joinpath(pobase, file))
                 path = joinpath('build-aux', 'po', file)
                 lookedup, flag = filesystem.lookup(path)
                 copyfile(lookedup, tmpfile)
                 basename = joinpath(pobase, file)
-                filename, backup, flag = self.assistant.super_update(basename, tmpfile)
+                filename, backup, flag = assistant.super_update(basename, tmpfile)
                 if flag == 1:
                     if not self.config['dryrun']:
                         print('Updating %s (backup in %s)' % (filename, backup))
@@ -1156,11 +1156,11 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
 
             # Create po makefile parameterization, part 1.
             basename = joinpath(pobase, 'Makevars')
-            tmpfile = self.assistant.tmpfilename(basename)
+            tmpfile = assistant.tmpfilename(basename)
             emit = self.emitter.po_Makevars()
             with open(tmpfile, mode='w', newline='\n', encoding='utf-8') as file:
                 file.write(emit)
-            filename, backup, flag = self.assistant.super_update(basename, tmpfile)
+            filename, backup, flag = assistant.super_update(basename, tmpfile)
             if flag == 1:
                 if not self.config['dryrun']:
                     print('Updating %s (backup in %s)' % (filename, backup))
@@ -1177,11 +1177,11 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
 
             # Create po makefile parameterization, part 2.
             basename = joinpath(pobase, 'POTFILES.in')
-            tmpfile = self.assistant.tmpfilename(basename)
+            tmpfile = assistant.tmpfilename(basename)
             with open(tmpfile, mode='w', newline='\n', encoding='utf-8') as file:
                 file.write(self.emitter.po_POTFILES_in(filetable['all']))
             basename = joinpath(pobase, 'POTFILES.in')
-            filename, backup, flag = self.assistant.super_update(basename, tmpfile)
+            filename, backup, flag = assistant.super_update(basename, tmpfile)
             if flag == 1:
                 if not self.config['dryrun']:
                     print('Updating %s (backup in %s)' % (filename, backup))
@@ -1211,7 +1211,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
             # Create po/LINGUAS.
             basename = joinpath(pobase, 'LINGUAS')
             if not self.config['dryrun']:
-                tmpfile = self.assistant.tmpfilename(basename)
+                tmpfile = assistant.tmpfilename(basename)
                 data = '# Set of available languages.\n'
                 files = sorted([ constants.subend('.po', '', file)
                                  for file in os.listdir(joinpath(destdir, pobase))
@@ -1219,7 +1219,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                 data += lines_to_multiline(files)
                 with open(tmpfile, mode='w', newline='\n', encoding='utf-8') as file:
                     file.write(data)
-                filename, backup, flag = self.assistant.super_update(basename, tmpfile)
+                filename, backup, flag = assistant.super_update(basename, tmpfile)
                 if flag == 1:
                     print('Updating %s (backup in %s)' % (filename, backup))
                 elif flag == 2:
@@ -1236,11 +1236,11 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
 
         # Create m4/gnulib-cache.m4.
         basename = joinpath(m4base, 'gnulib-cache.m4')
-        tmpfile = self.assistant.tmpfilename(basename)
+        tmpfile = assistant.tmpfilename(basename)
         emit = self.gnulib_cache()
         with open(tmpfile, mode='w', newline='\n', encoding='utf-8') as file:
             file.write(emit)
-        filename, backup, flag = self.assistant.super_update(basename, tmpfile)
+        filename, backup, flag = assistant.super_update(basename, tmpfile)
         if flag == 1:
             if not self.config['dryrun']:
                 print('Updating %s (backup in %s)' % (filename, backup))
@@ -1261,11 +1261,11 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
 
         # Create m4/gnulib-comp.m4.
         basename = joinpath(m4base, 'gnulib-comp.m4')
-        tmpfile = self.assistant.tmpfilename(basename)
+        tmpfile = assistant.tmpfilename(basename)
         emit = self.gnulib_comp(filetable, gentests)
         with open(tmpfile, mode='w', newline='\n', encoding='utf-8') as file:
             file.write(emit)
-        filename, backup, flag = self.assistant.super_update(basename, tmpfile)
+        filename, backup, flag = assistant.super_update(basename, tmpfile)
         if flag == 1:
             if not self.config['dryrun']:
                 print('Updating %s (backup in %s)' % (filename, backup))
@@ -1288,7 +1288,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         # Do this after creating gnulib-comp.m4, because func_emit_lib_Makefile_am
         # can run 'autoconf -t', which reads gnulib-comp.m4.
         basename = joinpath(sourcebase, source_makefile_am)
-        tmpfile = self.assistant.tmpfilename(basename)
+        tmpfile = assistant.tmpfilename(basename)
         emit = self.emitter.lib_Makefile_am(basename, self.moduletable.getMainModules(),
                                             self.moduletable, self.makefiletable,
                                             actioncmd, for_test)
@@ -1298,7 +1298,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                           input=emit, text=True, capture_output=True).stdout
         with open(tmpfile, mode='w', newline='\n', encoding='utf-8') as file:
             file.write(emit)
-        filename, backup, flag = self.assistant.super_update(basename, tmpfile)
+        filename, backup, flag = assistant.super_update(basename, tmpfile)
         if flag == 1:
             if not self.config['dryrun']:
                 print('Updating %s (backup in %s)' % (filename, backup))
@@ -1316,13 +1316,13 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         # Create tests Makefile.
         if gentests:
             basename = joinpath(testsbase, tests_makefile_am)
-            tmpfile = self.assistant.tmpfilename(basename)
+            tmpfile = assistant.tmpfilename(basename)
             emit = self.emitter.tests_Makefile_am(basename, self.moduletable.getTestsModules(),
                                                   self.moduletable, self.makefiletable,
                                                   '%stests_WITNESS' % macro_prefix, for_test)
             with open(tmpfile, mode='w', newline='\n', encoding='utf-8') as file:
                 file.write(emit)
-            filename, backup, flag = self.assistant.super_update(basename, tmpfile)
+            filename, backup, flag = assistant.super_update(basename, tmpfile)
             if flag == 1:
                 if not self.config['dryrun']:
                     print('Updating %s (backup in %s)' % (filename, backup))
