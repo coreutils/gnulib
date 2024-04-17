@@ -2774,6 +2774,30 @@ _GL_WARN_REAL_FLOATING_DECL (signbit);
 #endif
 
 
+#if @GNULIB_GETPAYLOAD@
+# if @REPLACE_GETPAYLOAD@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef getpayload
+#   define getpayload rpl_getpayload
+#  endif
+_GL_FUNCDECL_RPL (getpayload, double, (const double *));
+_GL_CXXALIAS_RPL (getpayload, double, (const double *));
+# else
+#  if !@HAVE_GETPAYLOAD@
+_GL_FUNCDECL_SYS (getpayload, double, (const double *));
+#  endif
+_GL_CXXALIAS_SYS (getpayload, double, (const double *));
+# endif
+_GL_CXXALIASWARN (getpayload);
+#elif defined GNULIB_POSIXCHECK
+# undef getpayload
+# if HAVE_RAW_DECL_GETPAYLOAD
+_GL_WARN_ON_USE (getpayload, "getpayload is unportable - "
+                 "use gnulib module getpayload for portability");
+# endif
+#endif
+
+
 #if @GNULIB_SETPAYLOADF@
 # if !@HAVE_SETPAYLOADF@
 _GL_FUNCDECL_SYS (setpayloadf, int, (float *, float));
