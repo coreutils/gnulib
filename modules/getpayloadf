@@ -1,0 +1,37 @@
+Description:
+getpayloadf function: extract the payload of a NaN
+
+Files:
+lib/getpayloadf.c
+m4/mathfunc.m4
+m4/getpayload.m4
+
+Depends-on:
+math
+extensions
+float           [test $HAVE_GETPAYLOADF = 0 || test $REPLACE_GETPAYLOADF = 1]
+stdint          [test $HAVE_GETPAYLOADF = 0 || test $REPLACE_GETPAYLOADF = 1]
+isnanf          [test $HAVE_GETPAYLOADF = 0 || test $REPLACE_GETPAYLOADF = 1]
+
+configure.ac:
+gl_FUNC_GETPAYLOADF
+gl_CONDITIONAL([GL_COND_OBJ_GETPAYLOADF],
+               [test $HAVE_GETPAYLOADF = 0 || test $REPLACE_GETPAYLOADF = 1])
+gl_MATH_MODULE_INDICATOR([getpayloadf])
+
+Makefile.am:
+if GL_COND_OBJ_GETPAYLOADF
+lib_SOURCES += getpayloadf.c
+endif
+
+Include:
+<math.h>
+
+Link:
+$(GETPAYLOADF_LIBM)
+
+License:
+LGPL
+
+Maintainer:
+all

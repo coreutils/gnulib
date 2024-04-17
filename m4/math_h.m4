@@ -1,5 +1,5 @@
 # math_h.m4
-# serial 133
+# serial 134
 dnl Copyright (C) 2007-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -44,7 +44,7 @@ AC_DEFUN_ONCE([gl_MATH_H],
      expf expl exp2 exp2f exp2l expm1 expm1f expm1l
      fabsf fabsl floorf floorl fma fmaf fmal
      fmod fmodf fmodl frexpf frexpl
-     getpayload
+     getpayload getpayloadf
      hypotf hypotl
      ilogb ilogbf ilogbl
      ldexpf ldexpl
@@ -120,6 +120,7 @@ AC_DEFUN([gl_MATH_H_REQUIRE_DEFAULTS],
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_FREXP])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_FREXPL])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_GETPAYLOAD])
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_GETPAYLOADF])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_HYPOT])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_HYPOTF])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_HYPOTL])
@@ -227,6 +228,7 @@ AC_DEFUN([gl_MATH_H_DEFAULTS],
   HAVE_FMODL=1;                     AC_SUBST([HAVE_FMODL])
   HAVE_FREXPF=1;                    AC_SUBST([HAVE_FREXPF])
   HAVE_GETPAYLOAD=1;                AC_SUBST([HAVE_GETPAYLOAD])
+  HAVE_GETPAYLOADF=1;               AC_SUBST([HAVE_GETPAYLOADF])
   HAVE_HYPOTF=1;                    AC_SUBST([HAVE_HYPOTF])
   HAVE_HYPOTL=1;                    AC_SUBST([HAVE_HYPOTL])
   HAVE_ILOGB=1;                     AC_SUBST([HAVE_ILOGB])
@@ -337,6 +339,7 @@ AC_DEFUN([gl_MATH_H_DEFAULTS],
   REPLACE_FREXP=0;                  AC_SUBST([REPLACE_FREXP])
   REPLACE_FREXPL=0;                 AC_SUBST([REPLACE_FREXPL])
   REPLACE_GETPAYLOAD=0;             AC_SUBST([REPLACE_GETPAYLOAD])
+  REPLACE_GETPAYLOADF=0;            AC_SUBST([REPLACE_GETPAYLOADF])
   REPLACE_HUGE_VAL=0;               AC_SUBST([REPLACE_HUGE_VAL])
   REPLACE_HYPOT=0;                  AC_SUBST([REPLACE_HYPOT])
   REPLACE_HYPOTF=0;                 AC_SUBST([REPLACE_HYPOTF])
