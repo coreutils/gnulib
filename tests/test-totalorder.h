@@ -16,18 +16,37 @@
 
 #include <stdio.h>
 
+#include <math.h>
 #include "infinity.h"
 #include "macros.h"
 #include "minus-zero.h"
 #include "signed-nan.h"
 #include "signed-snan.h"
 
+static TOTALORDER_TYPE
+positive_NaN_with_payload (int payload)
+{
+  TOTALORDER_TYPE x;
+  ASSERT (TOTALORDER_SETPAYLOAD (&x.value, payload) == 0);
+  return x;
+}
+
+static TOTALORDER_TYPE
+negative_NaN_with_payload (int payload)
+{
+  TOTALORDER_TYPE x;
+  ASSERT (TOTALORDER_SETPAYLOAD (&x.value, payload) == 0);
+  x.value = - x.value;
+  return x;
+}
+
 int
 main ()
 {
   TOTALORDER_TYPE x[] =
     {
-      { TOTALORDER_NEGATIVE_NAN () },
+      negative_NaN_with_payload (1729),
+      negative_NaN_with_payload (641),
 #if TOTALORDER_HAVE_SNAN
       TOTALORDER_NEGATIVE_SNAN (),
 #endif
@@ -44,7 +63,8 @@ main ()
 #if TOTALORDER_HAVE_SNAN
       TOTALORDER_POSITIVE_SNAN (),
 #endif
-      { TOTALORDER_POSITIVE_NAN () }
+      positive_NaN_with_payload (641),
+      positive_NaN_with_payload (1729)
     };
   int n = SIZEOF (x);
   int result = 0;

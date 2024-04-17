@@ -9,10 +9,11 @@ tests/macros.h
 Depends-on:
 signed-nan
 signed-snan
+setpayloadl
 
 configure.ac:
 
 Makefile.am:
 TESTS += test-totalorderl
 check_PROGRAMS += test-totalorderl
-test_totalorderl_LDADD = $(LDADD) @TOTALORDERL_LIBM@
+test_totalorderl_LDADD = $(LDADD) @TOTALORDERL_LIBM@ $(SETPAYLOADL_LIBM)
