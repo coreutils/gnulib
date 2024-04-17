@@ -907,14 +907,14 @@ _GL_CXXALIAS_SYS (fwrite, size_t,
        && !defined __cplusplus)
 #   undef fwrite
 #   undef fwrite_unlocked
-extern size_t __REDIRECT (rpl_fwrite,
-                          (const void *__restrict, size_t, size_t,
-                           FILE *__restrict),
-                          fwrite);
-extern size_t __REDIRECT (rpl_fwrite_unlocked,
-                          (const void *__restrict, size_t, size_t,
-                           FILE *__restrict),
-                          fwrite_unlocked);
+_GL_EXTERN_C size_t __REDIRECT (rpl_fwrite,
+                                (const void *__restrict, size_t, size_t,
+                                 FILE *__restrict),
+                                fwrite);
+_GL_EXTERN_C size_t __REDIRECT (rpl_fwrite_unlocked,
+                                (const void *__restrict, size_t, size_t,
+                                 FILE *__restrict),
+                                fwrite_unlocked);
 #   define fwrite rpl_fwrite
 #   define fwrite_unlocked rpl_fwrite_unlocked
 #  endif

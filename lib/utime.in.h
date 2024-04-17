@@ -116,7 +116,7 @@ _GL_CXXALIASWARN (utime);
 #endif
 
 #if @GNULIB_UTIME@
-extern int _gl_utimens_windows (const char *filename, struct timespec ts[2]);
+_GL_EXTERN_C int _gl_utimens_windows (const char *filename, struct timespec ts[2]);
 #endif
 
 
