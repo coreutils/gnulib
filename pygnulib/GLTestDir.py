@@ -242,8 +242,8 @@ class GLTestDir:
                             if license not in ['LGPLv2+']:
                                 incompatible = True
                         if incompatible:
-                            errormsg = 'module %s depends on a module with an incompatible license: %s\n' % (requested_module, module)
-                            sys.stderr.write(errormsg)
+                            warningmsg = 'module %s depends on a module with an incompatible license: %s' % (requested_module, module)
+                            sys.stderr.write('gnulib-tool: warning: %s\n' % warningmsg)
         self.config.setInclTestCategory(TESTS['tests'], saved_inctests)
 
         # Determine final module list.
