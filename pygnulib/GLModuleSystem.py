@@ -913,7 +913,6 @@ class GLModuleTable:
             inmodules = sorted(set(inmodules))
             inc_all_tests = self.inc_all_indirect_tests
         modules = sorted(set(outmodules))
-        self.modules = modules
         return modules
 
     def transitive_closure_separately(self, basemodules: list[GLModule],
