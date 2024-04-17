@@ -1,0 +1,40 @@
+Description:
+getpayloadl function: extract the payload of a NaN
+
+Files:
+lib/getpayloadl.c
+m4/mathfunc.m4
+m4/getpayload.m4
+m4/exponentl.m4
+
+Depends-on:
+math
+extensions
+getpayload      [{ test $HAVE_GETPAYLOADL = 0 || test $REPLACE_GETPAYLOADL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1]
+float           [{ test $HAVE_GETPAYLOADL = 0 || test $REPLACE_GETPAYLOADL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
+stdint          [{ test $HAVE_GETPAYLOADL = 0 || test $REPLACE_GETPAYLOADL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
+isnanl          [{ test $HAVE_GETPAYLOADL = 0 || test $REPLACE_GETPAYLOADL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
+snan            [{ test $HAVE_GETPAYLOADL = 0 || test $REPLACE_GETPAYLOADL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
+
+configure.ac:
+gl_FUNC_GETPAYLOADL
+gl_CONDITIONAL([GL_COND_OBJ_GETPAYLOADL],
+               [test $HAVE_GETPAYLOADL = 0 || test $REPLACE_GETPAYLOADL = 1])
+gl_MATH_MODULE_INDICATOR([getpayloadl])
+
+Makefile.am:
+if GL_COND_OBJ_GETPAYLOADL
+lib_SOURCES += getpayloadl.c
+endif
+
+Include:
+<math.h>
+
+Link:
+$(GETPAYLOADL_LIBM)
+
+License:
+LGPL
+
+Maintainer:
+all

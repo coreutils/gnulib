@@ -2820,6 +2820,29 @@ _GL_WARN_ON_USE (getpayload, "getpayload is unportable - "
 # endif
 #endif
 
+#if @GNULIB_GETPAYLOADL@
+# if @REPLACE_GETPAYLOADL@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef getpayloadl
+#   define getpayloadl rpl_getpayloadl
+#  endif
+_GL_FUNCDECL_RPL (getpayloadl, long double, (const long double *));
+_GL_CXXALIAS_RPL (getpayloadl, long double, (const long double *));
+# else
+#  if !@HAVE_GETPAYLOADL@
+_GL_FUNCDECL_SYS (getpayloadl, long double, (const long double *));
+#  endif
+_GL_CXXALIAS_SYS (getpayloadl, long double, (const long double *));
+# endif
+_GL_CXXALIASWARN (getpayloadl);
+#elif defined GNULIB_POSIXCHECK
+# undef getpayloadl
+# if HAVE_RAW_DECL_GETPAYLOADL
+_GL_WARN_ON_USE (getpayloadl, "getpayloadl is unportable - "
+                 "use gnulib module getpayloadl for portability");
+# endif
+#endif
+
 
 #if @GNULIB_SETPAYLOADF@
 # if !@HAVE_SETPAYLOADF@
