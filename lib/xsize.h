@@ -40,6 +40,11 @@ _GL_INLINE_HEADER_BEGIN
 # define XSIZE_INLINE _GL_INLINE
 #endif
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /* The size of memory objects is often computed through expressions of
    type size_t. Example:
       void* p = malloc (header_size + n * element_size).
@@ -104,6 +109,11 @@ xmax (size_t size1, size_t size2)
 /* Check against overflow.  */
 #define size_in_bounds_p(SIZE) \
   ((SIZE) != SIZE_MAX)
+
+
+#ifdef __cplusplus
+}
+#endif
 
 _GL_INLINE_HEADER_END
 

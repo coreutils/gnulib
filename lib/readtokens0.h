@@ -18,11 +18,16 @@
    Written by Jim Meyering. */
 
 #ifndef READTOKENS0_H
-# define READTOKENS0_H 1
+#define READTOKENS0_H 1
 
-# include <stdio.h>
-# include <sys/types.h>
-# include "obstack.h"
+#include <stdio.h>
+#include <sys/types.h>
+#include "obstack.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 
 struct Tokens
 {
@@ -37,5 +42,10 @@ struct Tokens
 void readtokens0_init (struct Tokens *t);
 void readtokens0_free (struct Tokens *t);
 bool readtokens0 (FILE *in, struct Tokens *t);
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

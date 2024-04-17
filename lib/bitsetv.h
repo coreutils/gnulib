@@ -28,6 +28,11 @@
 
 #include "bitset.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 typedef bitset * bitsetv;
 
 /* Free vector of bitsets.  Do nothing if NULL.  */
@@ -67,5 +72,10 @@ void debug_bitsetv (bitsetv);
 
 /* Dump vector of bitsets as a matrix.  */
 void bitsetv_matrix_dump (FILE *, const char *, bitsetv);
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  /* _BITSETV_H  */

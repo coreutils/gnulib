@@ -23,6 +23,10 @@
 
 #include "nan.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 
 /* The bit that distinguishes a quiet NaN from a signalling NaN is, according to
    <https://en.wikipedia.org/wiki/NaN#Encoding>, the most significant bit of the
@@ -272,5 +276,9 @@ SNaNl ()
 
 #undef NWORDS
 
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _SNAN_H */

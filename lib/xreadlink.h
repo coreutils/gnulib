@@ -25,10 +25,20 @@
 
 #include <stdlib.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 extern char *xreadlink (char const *filename)
   _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE;
 
 #if GNULIB_XREADLINKAT
 extern char *xreadlinkat (int fd, char const *filename)
   _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE;
+#endif
+
+
+#ifdef __cplusplus
+}
 #endif

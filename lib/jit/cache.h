@@ -38,6 +38,11 @@
 # include <stddef.h>
 #endif
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /* Clears the instruction cache for addresses
    start <= address < end.
    We need this because some CPUs have separate data cache and instruction
@@ -186,3 +191,8 @@ clear_cache (void *start, void *end)
 # error "Don't know how to implement clear_cache on this platform."
 #endif
 }
+
+
+#ifdef __cplusplus
+}
+#endif

@@ -61,6 +61,11 @@
                                     'long double' safe operation precision
  */
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /* Inline assembler like this works only with GNU C and clang.  */
 #if (defined __i386__ || defined __x86_64__) && (defined __GNUC__ || defined __clang__)
 
@@ -103,6 +108,11 @@ typedef unsigned int fpucw_t;
 # define BEGIN_LONG_DOUBLE_ROUNDING()
 # define END_LONG_DOUBLE_ROUNDING()
 
+#endif
+
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif /* _FPUCW_H */

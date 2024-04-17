@@ -21,9 +21,19 @@
 
 #include <stddef.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /* Compute a hash code for a buffer starting at X and of size N,
    and return the hash code.  Note that unlike hash_pjw(), it does not
    return it modulo a table size.
    The result is platform dependent: it depends on the size of the 'size_t'
    type.  */
 extern size_t hash_pjw_bare (const void *x, size_t n) _GL_ATTRIBUTE_PURE;
+
+
+#ifdef __cplusplus
+}
+#endif

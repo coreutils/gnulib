@@ -25,6 +25,11 @@
 #include <stdarg.h>
 #include <stdio.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 extern int xprintf (char const *restrict format, ...)
 #if GNULIB_VPRINTF_POSIX
      _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_STANDARD, 1, 2))
@@ -57,5 +62,10 @@ extern int xvfprintf (FILE *restrict stream, char const *restrict format,
      _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_SYSTEM, 2, 0))
 #endif
      ;
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

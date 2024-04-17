@@ -20,6 +20,11 @@
 #ifndef LONG_OPTIONS_H_
 # define LONG_OPTIONS_H_ 1
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 void parse_long_options (int _argc,
                          char **_argv,
                          const char *_command_name,
@@ -36,5 +41,10 @@ void parse_gnu_standard_options_only (int argc,
                                       bool scan_all,
                                       void (*usage_func) (int),
                                       /* const char *author1, ...*/ ...);
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* LONG_OPTIONS_H_ */

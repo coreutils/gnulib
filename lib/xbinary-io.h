@@ -29,6 +29,11 @@ _GL_INLINE_HEADER_BEGIN
 # define XBINARY_IO_INLINE _GL_INLINE
 #endif
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 #if O_BINARY
 extern _Noreturn void xset_binary_mode_error (void);
 #else
@@ -44,6 +49,11 @@ xset_binary_mode (int fd, int mode)
   if (set_binary_mode (fd, mode) < 0)
     xset_binary_mode_error ();
 }
+
+
+#ifdef __cplusplus
+}
+#endif
 
 _GL_INLINE_HEADER_END
 

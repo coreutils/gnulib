@@ -30,12 +30,22 @@
 # include <readline/readline.h>
 #else
 # include <stdlib.h>
+
+# ifdef __cplusplus
+extern "C" {
+# endif
+
 /* Prints a prompt PROMPT and then reads and returns a single line of
    text from the user.  If PROMPT is NULL or the empty string, no
    prompt is displayed.  The returned line is allocated with malloc;
    the caller should free the line when it has finished with it. */
 extern char *readline (const char *prompt)
   _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE;
+
+# ifdef __cplusplus
+}
+# endif
+
 #endif
 
 #endif /* GL_READLINE_H */

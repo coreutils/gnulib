@@ -17,17 +17,22 @@
 /* Written by Paul Eggert, 2010.  */
 
 #ifndef _GL_INO_MAP_H
-# define _GL_INO_MAP_H
+#define _GL_INO_MAP_H
 
 /* This file uses _GL_ATTRIBUTE_DEALLOC, _GL_ATTRIBUTE_MALLOC,
    _GL_ATTRIBUTE_NONNULL.  */
-# if !_GL_CONFIG_H_INCLUDED
-#  error "Please include config.h first."
-# endif
+#if !_GL_CONFIG_H_INCLUDED
+# error "Please include config.h first."
+#endif
 
-# include <sys/types.h>
+#include <sys/types.h>
 
-# define INO_MAP_INSERT_FAILURE ((size_t) -1)
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+#define INO_MAP_INSERT_FAILURE ((size_t) -1)
 
 struct ino_map;
 
@@ -37,5 +42,10 @@ struct ino_map *ino_map_alloc (size_t)
   _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC (ino_map_free, 1);
 
 size_t ino_map_insert (struct ino_map *, ino_t) _GL_ATTRIBUTE_NONNULL ((1));
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

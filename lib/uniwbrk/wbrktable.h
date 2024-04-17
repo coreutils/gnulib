@@ -23,5 +23,13 @@
    License and of the GNU General Public License along with this
    program.  If not, see <https://www.gnu.org/licenses/>.  */
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 extern const int uniwbrk_prop_index[23];
 extern const unsigned char uniwbrk_table[12][12];
+
+#ifdef __cplusplus
+}
+#endif

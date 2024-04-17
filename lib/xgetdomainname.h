@@ -25,6 +25,11 @@
 
 #include <stdlib.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /* Return the NIS domain name of the machine, in malloc'd storage.
    WARNING! The NIS domain name is unrelated to the fully qualified host name
             of the machine.  It is also unrelated to email addresses.
@@ -34,5 +39,10 @@
    Upon any other failure, set errno and return NULL.  */
 extern char *xgetdomainname (void)
   _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE;
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _XGETDOMAINNAME_H */

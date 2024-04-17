@@ -17,8 +17,16 @@
 
 /* Written by Paul Eggert and Jim Meyering.  */
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #if UNLINK_CANNOT_UNLINK_DIR
 # define cannot_unlink_dir() true
 #else
 bool cannot_unlink_dir (void);
+#endif
+
+#ifdef __cplusplus
+}
 #endif

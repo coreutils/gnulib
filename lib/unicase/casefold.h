@@ -25,6 +25,16 @@
 
 #include "unitypes.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /* Return the casefold mapping of a Unicode character.  */
 extern ucs4_t
        uc_tocasefold (ucs4_t uc);
+
+
+#ifdef __cplusplus
+}
+#endif

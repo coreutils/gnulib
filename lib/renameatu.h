@@ -19,6 +19,12 @@
 /* Get RENAME_* macros from <stdio.h> if present, otherwise supply
    the traditional Linux values.  */
 #include <stdio.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 #ifndef RENAME_NOREPLACE
 # define RENAME_NOREPLACE  (1 << 0)
 # define RENAME_EXCHANGE   (1 << 1)
@@ -26,3 +32,8 @@
 #endif
 
 extern int renameatu (int, char const *, int, char const *, unsigned int);
+
+
+#ifdef __cplusplus
+}
+#endif

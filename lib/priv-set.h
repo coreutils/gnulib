@@ -32,6 +32,11 @@ _GL_INLINE_HEADER_BEGIN
 
 # include <priv.h>
 
+# ifdef __cplusplus
+extern "C" {
+# endif
+
+
 int priv_set_ismember (const char *priv);
 int priv_set_remove (const char *priv);
 int priv_set_restore (const char *priv);
@@ -61,6 +66,11 @@ priv_set_restore_linkdir (void)
 {
   return -1;
 }
+
+
+# ifdef __cplusplus
+}
+# endif
 
 #endif
 

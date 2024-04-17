@@ -17,6 +17,11 @@
 #include <selinux/selinux.h>
 #include <selinux/context.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /* These are the dir-fd-relative variants of the functions without the
    "at" suffix.  For example, getfileconat (AT_FDCWD, file, &c) is usually
    equivalent to getfilecon (file, &c).  The emulation is accomplished
@@ -50,3 +55,8 @@ int  setfileconat (int dir_fd, char const *file, char const *con);
    except when DIR_FD and FILE specify a symlink:  lsetfileconat operates on
    the symlink, while setfileconat operates on the referent of the symlink.  */
 int lsetfileconat (int dir_fd, char const *file, char const *con);
+
+
+#ifdef __cplusplus
+}
+#endif

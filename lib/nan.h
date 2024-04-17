@@ -17,13 +17,17 @@
 #ifndef _GL_NAN_H
 #define _GL_NAN_H
 
-
 /* IBM z/OS supports both hexadecimal and IEEE floating-point formats. The
    former does not support NaN and its isnan() implementation returns zero
    for all values.  */
 #if defined __MVS__ && defined __IBMC__ && !defined __BFP__
 # error "NaN is not supported with IBM's hexadecimal floating-point format; please re-compile with -qfloat=ieee"
 #endif
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 
 /* NaNf () returns a 'float' not-a-number.  */
 
@@ -93,5 +97,9 @@ NaNl ()
 # define NaNl() (0.0L / 0.0L)
 #endif
 
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _GL_NAN_H */

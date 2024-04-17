@@ -28,6 +28,11 @@
 
 #include "c-ctype.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 #define is_utf8_encoding unilbrk_is_utf8_encoding
 extern int is_utf8_encoding (const char *encoding);
 
@@ -37,3 +42,8 @@ extern int is_utf8_encoding (const char *encoding);
 extern int is_all_ascii (const char *s, size_t n);
 
 #endif /* C_CTYPE_ASCII */
+
+
+#ifdef __cplusplus
+}
+#endif

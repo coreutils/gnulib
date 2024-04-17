@@ -20,6 +20,10 @@
 #include "signed-nan.h"
 #include "snan.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 
 #if HAVE_SNANF
 
@@ -138,5 +142,9 @@ negative_SNaNl ()
 
 #endif
 
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _SIGNED_SNAN_H */

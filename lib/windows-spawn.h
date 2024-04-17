@@ -31,6 +31,11 @@
 #include <windows.h>
 
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /* Prepares an argument vector before calling spawn().
 
    Note that spawn() does not by itself call the command interpreter
@@ -186,5 +191,10 @@ extern intptr_t spawnpvech (int mode,
                             const char *currdir,
                             HANDLE stdin_handle, HANDLE stdout_handle,
                             HANDLE stderr_handle);
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _WINDOWS_SPAWN_H */

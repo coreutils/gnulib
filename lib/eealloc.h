@@ -45,6 +45,11 @@ _GL_INLINE_HEADER_BEGIN
 # define EEALLOC_INLINE _GL_INLINE
 #endif
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 #if MALLOC_0_IS_NONNULL
 # define eemalloc malloc
 #else
@@ -94,6 +99,11 @@ eerealloc (void *p, size_t n)
     eecalloc (size_t n, size_t s) - like eemalloc (n * s) followed by memset 0
     eenrealloc (void *p, size_t n, size_t s) - like eerealloc (p, n * s)
    If this would be useful in your application. please speak up.  */
+
+
+#ifdef __cplusplus
+}
+#endif
 
 _GL_INLINE_HEADER_END
 

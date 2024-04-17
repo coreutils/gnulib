@@ -51,6 +51,11 @@
  #error "Please include config.h first."
 #endif
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 #if !defined ALIGNMENT
 # error "ALIGNMENT is not defined"
 #endif
@@ -184,4 +189,9 @@ aligned_malloc (size_t size)
   return NULL;
 }
 
+#endif
+
+
+#ifdef __cplusplus
+}
 #endif

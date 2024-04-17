@@ -38,6 +38,11 @@ _GL_INLINE_HEADER_BEGIN
 # define ALIGNALLOC_INLINE _GL_INLINE
 #endif
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /* Whether aligned_alloc supports any power-of-two alignment,
    returns a nonnull pointer for size-zero allocations,
    and sets errno on failure.  */
@@ -117,6 +122,11 @@ void *alignalloc (idx_t, idx_t)
 void *xalignalloc (idx_t, idx_t)
   _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_ALLOC_SIZE ((2))
   _GL_ATTRIBUTE_RETURNS_NONNULL /* _GL_ATTRIBUTE_DEALLOC (alignfree, 1) */;
+
+
+#ifdef __cplusplus
+}
+#endif
 
 _GL_INLINE_HEADER_END
 

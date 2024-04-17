@@ -28,6 +28,11 @@
 #include "unitypes.h"
 #include "uninorm.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /* Return true if mapping NFD(S) to via MAPPING is a no-op.  */
 extern int
        u8_is_invariant (const uint8_t *s, size_t n,
@@ -50,3 +55,8 @@ extern int
                                                 uint32_t *resultbuf, size_t *lengthp),
                          const char *iso639_language,
                          bool *resultp);
+
+
+#ifdef __cplusplus
+}
+#endif

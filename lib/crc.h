@@ -17,10 +17,15 @@
 /* Written by Simon Josefsson.  */
 
 #ifndef CRC_H
-# define CRC_H 1
+#define CRC_H 1
 
 #include <stddef.h>
 #include <stdint.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 
 /* Compute CRC-32 value of LEN bytes long BUF, and return it. */
 extern uint32_t crc32 (const char *buf, size_t len);
@@ -43,5 +48,10 @@ extern uint32_t crc32_no_xor (const char *buf, size_t len);
    errors, this variant is sometimes used (i.e., in RFC 3961).  */
 extern uint32_t
 crc32_update_no_xor (uint32_t crc, const char *buf, size_t len);
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* CRC_H */

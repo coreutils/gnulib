@@ -74,6 +74,11 @@ _GL_INLINE_HEADER_BEGIN
 #include <stddef.h>
 #include <stdint.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /* Hash values are of type size_t.  For each level of the trie, we use
    5 bits (corresponding to lg2 of the width of a 32-bit word.  */
 #define _GL_HAMT_MAX_DEPTH ((SIZE_WIDTH + 4) / 5)
@@ -258,6 +263,11 @@ extern bool hamt_replace_x (Hamt *hamt, Hamt_entry *elt);
    destructively from the hamt and return true.  Otherwise, return
    false.  */
 extern bool hamt_remove_x (Hamt *hamt, Hamt_entry *elt);
+
+
+#ifdef __cplusplus
+}
+#endif
 
 _GL_INLINE_HEADER_END
 

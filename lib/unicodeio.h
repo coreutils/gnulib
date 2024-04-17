@@ -16,10 +16,15 @@
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 #ifndef UNICODEIO_H
-# define UNICODEIO_H
+#define UNICODEIO_H
 
-# include <stddef.h>
-# include <stdio.h>
+#include <stddef.h>
+#include <stdio.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 
 /* Converts the Unicode character CODE to its multibyte representation
    in the current locale and calls the SUCCESS callback on the resulting
@@ -44,5 +49,10 @@ extern void print_unicode_char (FILE *stream, unsigned int code,
    The STREAM is passed as callback_arg.  */
 extern long fwrite_success_callback (const char *buf, size_t buflen,
                                      void *callback_arg);
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

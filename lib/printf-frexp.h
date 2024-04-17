@@ -14,6 +14,11 @@
    You should have received a copy of the GNU Lesser General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /* Write a finite, positive number x as
      x = mantissa * 2^exp
    where exp >= DBL_MIN_EXP - 1,
@@ -21,3 +26,8 @@
          if x is not a denormalized number then mantissa >= 1.0.
    Store exp in *EXPPTR and return mantissa.  */
 extern double printf_frexp (double x, int *expptr);
+
+
+#ifdef __cplusplus
+}
+#endif

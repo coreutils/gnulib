@@ -16,9 +16,19 @@
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 #ifndef SAME_H_
-# define SAME_H_ 1
+#define SAME_H_ 1
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 
 bool same_name (const char *source, const char *dest);
 bool same_nameat (int, char const *, int, char const *);
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* SAME_H_ */

@@ -21,6 +21,11 @@
 #include <stdio.h>
 #include <sys/types.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 #define GETNLINE_NO_LIMIT ((size_t) -1)
 
 /* Read a line, up to the next newline, from STREAM, and store it in *LINEPTR.
@@ -43,5 +48,10 @@ extern ssize_t getnline (char **lineptr, size_t *linesize, size_t nmax,
    NUL terminator), or -1 on error or EOF.  */
 extern ssize_t getndelim (char **lineptr, size_t *linesize, size_t nmax,
                           int delimiter, FILE *stream);
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* GETNLINE_H */

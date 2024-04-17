@@ -17,5 +17,15 @@
 
 #include <stddef.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 int xmemcoll (char *restrict, size_t, char *restrict, size_t);
 int xmemcoll0 (char const *, size_t, char const *, size_t);
+
+
+#ifdef __cplusplus
+}
+#endif

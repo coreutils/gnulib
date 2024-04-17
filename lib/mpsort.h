@@ -17,4 +17,14 @@
 
 #include <stddef.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 void mpsort (void const **, size_t, int (*) (void const *, void const *));
+
+
+#ifdef __cplusplus
+}
+#endif

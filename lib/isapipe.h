@@ -20,9 +20,19 @@
  #error "Please include config.h first."
 #endif
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /* Whether pipes are FIFOs; -1 if not known.  */
 #ifndef HAVE_FIFO_PIPES
 # define HAVE_FIFO_PIPES (-1)
 #endif
 
 int isapipe (int fd);
+
+
+#ifdef __cplusplus
+}
+#endif

@@ -24,6 +24,11 @@
 #include <errno.h>
 #include <string.h>             /* Need size_t.  */
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 #ifndef __error_t_defined
 typedef int error_t;
 #endif
@@ -126,5 +131,9 @@ extern error_t argz_replace (char **restrict /*argz*/,
 extern char *argz_next (const char *restrict /*argz*/, size_t /*argz_len*/,
                         const char *restrict /*entry*/);
 
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* argz.h */

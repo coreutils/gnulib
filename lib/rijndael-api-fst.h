@@ -62,6 +62,11 @@
 
 #include <stdio.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /* Default number of bits in a cipher block */
 #define RIJNDAEL_BITSPERBLOCK 128
 
@@ -201,5 +206,10 @@ rijndaelPadDecrypt (rijndaelCipherInstance *cipher,
                     const rijndaelKeyInstance *key,
                     const char *input, size_t inputOctets,
                     char *restrict outBuffer);
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* __RIJNDAEL_API_FST_H */

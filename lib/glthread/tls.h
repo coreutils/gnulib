@@ -71,6 +71,10 @@
 
 # include <threads.h>
 
+# ifdef __cplusplus
+extern "C" {
+# endif
+
 /* ------------------------- gl_tls_key_t datatype ------------------------- */
 
 typedef tss_t gl_tls_key_t;
@@ -83,6 +87,10 @@ typedef tss_t gl_tls_key_t;
 # define glthread_tls_key_destroy(KEY) \
     (tss_delete (*(KEY)), 0)
 
+# ifdef __cplusplus
+}
+# endif
+
 #endif
 
 /* ========================================================================= */
@@ -92,6 +100,10 @@ typedef tss_t gl_tls_key_t;
 /* Use the POSIX threads library.  */
 
 # include <pthread.h>
+
+# ifdef __cplusplus
+extern "C" {
+# endif
 
 # if PTHREAD_IN_USE_DETECTION_HARD
 
@@ -151,6 +163,10 @@ typedef union
 # define glthread_tls_key_destroy(KEY) \
     (pthread_in_use () ? pthread_key_delete ((KEY)->key) : 0)
 
+# ifdef __cplusplus
+}
+# endif
+
 #endif
 
 /* ========================================================================= */
@@ -161,6 +177,10 @@ typedef union
 # include <windows.h>
 
 # include "windows-tls.h"
+
+# ifdef __cplusplus
+extern "C" {
+# endif
 
 /* ------------------------- gl_tls_key_t datatype ------------------------- */
 
@@ -174,6 +194,10 @@ typedef glwthread_tls_key_t gl_tls_key_t;
 # define glthread_tls_key_destroy(KEY) \
     glwthread_tls_key_delete (*(KEY))
 
+# ifdef __cplusplus
+}
+# endif
+
 #endif
 
 /* ========================================================================= */
@@ -181,6 +205,10 @@ typedef glwthread_tls_key_t gl_tls_key_t;
 #if !(USE_ISOC_THREADS || USE_POSIX_THREADS || USE_ISOC_AND_POSIX_THREADS || USE_WINDOWS_THREADS)
 
 /* Provide dummy implementation if threads are not supported.  */
+
+# ifdef __cplusplus
+extern "C" {
+# endif
 
 /* ------------------------- gl_tls_key_t datatype ------------------------- */
 
@@ -199,6 +227,10 @@ typedef struct
     ((KEY)->singlethread_value = (POINTER), 0)
 # define glthread_tls_key_destroy(KEY) \
     0
+
+# ifdef __cplusplus
+}
+# endif
 
 #endif
 

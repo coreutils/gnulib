@@ -18,11 +18,16 @@
 /* Written by Jim Meyering */
 
 #ifndef CYCLE_CHECK_H
-# define CYCLE_CHECK_H 1
+#define CYCLE_CHECK_H 1
 
-# include <stdint.h>
-# include "dev-ino.h"
-# include "same-inode.h"
+#include <stdint.h>
+#include "dev-ino.h"
+#include "same-inode.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 
 struct cycle_check_state
 {
@@ -34,7 +39,7 @@ struct cycle_check_state
 void cycle_check_init (struct cycle_check_state *state);
 bool cycle_check (struct cycle_check_state *state, struct stat const *sb);
 
-# define CYCLE_CHECK_REFLECT_CHDIR_UP(State, SB_dir, SB_subdir) \
+#define CYCLE_CHECK_REFLECT_CHDIR_UP(State, SB_dir, SB_subdir) \
   do                                                            \
     {                                                           \
       /* You must call cycle_check at least once before using this macro.  */ \
@@ -47,5 +52,10 @@ bool cycle_check (struct cycle_check_state *state, struct stat const *sb);
         }                                                       \
     }                                                           \
   while (0)
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

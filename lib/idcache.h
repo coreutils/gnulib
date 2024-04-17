@@ -17,13 +17,23 @@
 /* Written by Jim Meyering, 2007.  */
 
 #ifndef IDCACHE_H
-# define IDCACHE_H 1
+#define IDCACHE_H 1
 
-# include <sys/types.h>
+#include <sys/types.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 
 extern char *getuser (uid_t uid);
 extern char *getgroup (gid_t gid);
 extern uid_t *getuidbyname (const char *user);
 extern gid_t *getgidbyname (const char *group);
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

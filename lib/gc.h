@@ -17,15 +17,20 @@
  */
 
 #ifndef _GL_GC_H
-# define _GL_GC_H
+#define _GL_GC_H
 
 /* This file uses _GL_ATTRIBUTE_CONST.  */
-# if !_GL_CONFIG_H_INCLUDED
-#  error "Please include config.h first."
-# endif
+#if !_GL_CONFIG_H_INCLUDED
+# error "Please include config.h first."
+#endif
 
 /* Get size_t. */
-# include <stddef.h>
+#include <stddef.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 
 enum Gc_rc
 {
@@ -336,5 +341,10 @@ gc_pbkdf2_sha1 (const char *P, size_t Plen,
   Thanks,
   Simon
  */
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _GL_GC_H */

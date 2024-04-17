@@ -19,10 +19,15 @@
 /* Code from Libgcrypt adapted for gnulib by Simon Josefsson. */
 
 #ifndef ARCFOUR_H
-# define ARCFOUR_H
+#define ARCFOUR_H
 
-# include <stddef.h>
-# include <stdint.h>
+#include <stddef.h>
+#include <stdint.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 
 #define ARCFOUR_SBOX_SIZE 256
 
@@ -44,5 +49,10 @@ arcfour_stream (arcfour_context * context,
    length.  */
 extern void
 arcfour_setkey (arcfour_context * context, const char *key, size_t keylen);
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* ARCFOUR_H */

@@ -19,17 +19,27 @@
 /* Written by Paul Eggert and Jim Meyering.  */
 
 #ifndef FILE_TYPE_H
-# define FILE_TYPE_H 1
+#define FILE_TYPE_H 1
 
 /* This file uses _GL_ATTRIBUTE_PURE.  */
-# if !_GL_CONFIG_H_INCLUDED
-#  error "Please include config.h first."
-# endif
+#if !_GL_CONFIG_H_INCLUDED
+# error "Please include config.h first."
+#endif
 
-# include <sys/types.h>
-# include <sys/stat.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 
 char const *c_file_type (struct stat const *) _GL_ATTRIBUTE_PURE;
 char const *file_type (struct stat const *) _GL_ATTRIBUTE_PURE;
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* FILE_TYPE_H */

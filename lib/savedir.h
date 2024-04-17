@@ -29,6 +29,11 @@
 #include <dirent.h>
 #include <stdlib.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 enum savedir_option
   {
     SAVEDIR_SORT_NONE,
@@ -45,5 +50,10 @@ char *streamsavedir (DIR *, enum savedir_option)
   _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE;
 char *savedir (char const *, enum savedir_option)
   _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE;
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

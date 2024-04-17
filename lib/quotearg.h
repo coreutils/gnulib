@@ -19,14 +19,19 @@
 /* Written by Paul Eggert <eggert@twinsun.com> */
 
 #ifndef QUOTEARG_H_
-# define QUOTEARG_H_ 1
+#define QUOTEARG_H_ 1
 
 /* This file uses _GL_ATTRIBUTE_MALLOC, _GL_ATTRIBUTE_RETURNS_NONNULL.  */
-# if !_GL_CONFIG_H_INCLUDED
-#  error "Please include config.h first."
-# endif
+#if !_GL_CONFIG_H_INCLUDED
+# error "Please include config.h first."
+#endif
 
-# include <stdlib.h>
+#include <stdlib.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 
 /* Basic quoting styles.  For each style, an example is given on the
    input strings "simple", "\0 \t\n'\"\033?""?/\\", and "a:b", using
@@ -270,9 +275,9 @@ enum quoting_flags
   };
 
 /* For now, --quoting-style=literal is the default, but this may change.  */
-# ifndef DEFAULT_QUOTING_STYLE
-#  define DEFAULT_QUOTING_STYLE literal_quoting_style
-# endif
+#ifndef DEFAULT_QUOTING_STYLE
+# define DEFAULT_QUOTING_STYLE literal_quoting_style
+#endif
 
 /* Names of quoting styles and their corresponding values.  */
 extern char const *const quoting_style_args[];
@@ -438,5 +443,10 @@ char *quotearg_custom_mem (char const *left_quote,
 
 /* Free any dynamically allocated memory.  */
 void quotearg_free (void);
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* !QUOTEARG_H_ */

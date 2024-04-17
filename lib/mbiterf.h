@@ -92,6 +92,11 @@ _GL_INLINE_HEADER_BEGIN
 # define MBITERF_INLINE _GL_INLINE _GL_ATTRIBUTE_ALWAYS_INLINE
 #endif
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 struct mbif_state
 {
   #if !GNULIB_MBRTOC32_REGULAR
@@ -198,6 +203,11 @@ typedef struct mbif_state mbif_state_t;
 #endif
 #define mbif_next(st, iter, endptr) \
   mbiterf_next (&(st), (iter), (endptr))
+
+
+#ifdef __cplusplus
+}
+#endif
 
 _GL_INLINE_HEADER_END
 

@@ -20,7 +20,17 @@
 #ifndef PHYSMEM_H_
 # define PHYSMEM_H_ 1
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 double physmem_total (void);
 double physmem_available (void);
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* PHYSMEM_H_ */

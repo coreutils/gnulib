@@ -17,6 +17,11 @@
 
 /* Written by Paul Eggert.  */
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 int mkstemp_safer (char *);
 
 #if GNULIB_MKOSTEMP
@@ -29,4 +34,9 @@ int mkostemps_safer (char *, int, int);
 
 #if GNULIB_MKSTEMPS
 int mkstemps_safer (char *, int);
+#endif
+
+
+#ifdef __cplusplus
+}
 #endif

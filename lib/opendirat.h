@@ -22,5 +22,15 @@
 
 #include <dirent.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 DIR *opendirat (int, char const *, int, int *)
   _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC (closedir, 1);
+
+
+#ifdef __cplusplus
+}
+#endif

@@ -64,6 +64,11 @@ _GL_INLINE_HEADER_BEGIN
 # define MBFILE_INLINE _GL_INLINE
 #endif
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 struct mbfile_multi {
   FILE *fp;
   bool eof_seen;
@@ -261,6 +266,11 @@ typedef mbchar_t mbf_char_t;
 #define mbf_ungetc(mbc, mbf) mbfile_multi_ungetc (&(mbc), &(mbf))
 
 #define mb_iseof(mbc) ((mbc).bytes == 0)
+
+
+#ifdef __cplusplus
+}
+#endif
 
 _GL_INLINE_HEADER_END
 

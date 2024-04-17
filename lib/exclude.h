@@ -16,6 +16,9 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
+/* Written by Paul Eggert <eggert@twinsun.com>
+   and Sergey Poznyakoff <gray@gnu.org> */
+
 #ifndef _GL_EXCLUDE_H
 #define _GL_EXCLUDE_H 1
 
@@ -27,8 +30,10 @@
 
 #include <stdio.h>
 
-/* Written by Paul Eggert <eggert@twinsun.com>
-   and Sergey Poznyakoff <gray@gnu.org> */
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 
 /* Exclude options, which can be ORed with fnmatch options.  */
 
@@ -66,5 +71,10 @@ int add_exclude_fp (void (*) (struct exclude *, char const *, int, void *),
 bool excluded_file_name (struct exclude const *, char const *);
 void exclude_add_pattern_buffer (struct exclude *ex, char *buf);
 bool exclude_fnmatch (char const *, char const *, int);
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _GL_EXCLUDE_H */

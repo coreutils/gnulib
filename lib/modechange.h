@@ -17,15 +17,20 @@
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 #if ! defined MODECHANGE_H_
-# define MODECHANGE_H_
+#define MODECHANGE_H_
 
 /* This file uses _GL_ATTRIBUTE_MALLOC.  */
-# if !_GL_CONFIG_H_INCLUDED
-#  error "Please include config.h first."
-# endif
+#if !_GL_CONFIG_H_INCLUDED
+# error "Please include config.h first."
+#endif
 
-# include <stdlib.h>
-# include <sys/types.h>
+#include <stdlib.h>
+#include <sys/types.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 
 struct mode_change *mode_compile (const char *)
   _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE;
@@ -34,5 +39,10 @@ struct mode_change *mode_create_from_ref (const char *)
 mode_t mode_adjust (mode_t, bool, mode_t, struct mode_change const *,
                     mode_t *)
   _GL_ATTRIBUTE_PURE;
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

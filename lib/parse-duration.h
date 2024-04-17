@@ -79,6 +79,11 @@
 
 #include <time.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /* Return value when a valid duration cannot be parsed.  */
 #define BAD_TIME        ((time_t)~0)
 
@@ -86,5 +91,10 @@
    this duration is returned.  Otherwise, the return value is BAD_TIME,
    and errno is set to either EINVAL (bad syntax) or ERANGE (out of range).  */
 extern time_t parse_duration (char const * in_pz);
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* GNULIB_PARSE_DURATION_H */

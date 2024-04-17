@@ -15,4 +15,14 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 bool can_write_any_file (void);
+
+
+#ifdef __cplusplus
+}
+#endif

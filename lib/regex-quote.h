@@ -25,6 +25,11 @@
 
 #include <stdlib.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /* Specifies a quotation task for converting a fixed string to a regular
    expression pattern.  */
 struct regex_quote_spec
@@ -89,5 +94,9 @@ extern char *
        _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE
        _GL_ATTRIBUTE_RETURNS_NONNULL;
 
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _REGEX_QUOTE_H */

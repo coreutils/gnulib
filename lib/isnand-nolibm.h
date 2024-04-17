@@ -34,5 +34,9 @@
 /* Test whether X is a NaN.  */
 # undef isnand
 # define isnand rpl_isnand
-extern int isnand (double x);
+extern
+# ifdef __cplusplus
+"C"
+# endif
+int isnand (double x);
 #endif

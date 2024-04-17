@@ -32,6 +32,11 @@ _GL_INLINE_HEADER_BEGIN
 # define SAVEWD_INLINE _GL_INLINE
 #endif
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /* A saved working directory.  The member names and constants defined
    by this structure are private to the savewd module.  */
 struct savewd
@@ -148,6 +153,11 @@ void savewd_finish (struct savewd *wd);
 int savewd_process_files (int n_files, char **file,
                           int (*act) (char *, struct savewd *, void *),
                           void *options);
+
+
+#ifdef __cplusplus
+}
+#endif
 
 _GL_INLINE_HEADER_END
 

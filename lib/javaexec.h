@@ -18,6 +18,11 @@
 #ifndef _JAVAEXEC_H
 #define _JAVAEXEC_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 typedef bool execute_fn (const char *progname,
                          const char *prog_path, const char * const *prog_argv,
                          void *private_data);
@@ -44,5 +49,10 @@ extern bool execute_java_class (const char *class_name,
                                 const char * const *args,
                                 bool verbose, bool quiet,
                                 execute_fn *executer, void *private_data);
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _JAVAEXEC_H */

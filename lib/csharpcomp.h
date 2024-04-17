@@ -18,6 +18,11 @@
 #ifndef _CSHARPCOMP_H
 #define _CSHARPCOMP_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /* Compile a set of C# source files to bytecode.
    sources is an array of source file names, including resource files.
    libdirs is a list of directories to be searched for libraries.
@@ -34,5 +39,10 @@ extern bool compile_csharp_class (const char * const *sources,
                                   const char *output_file,
                                   bool optimize, bool debug,
                                   bool verbose);
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _CSHARPCOMP_H */

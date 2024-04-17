@@ -18,13 +18,18 @@
 /* Written by Paul Eggert and Larry McVoy.  */
 
 #ifndef HUMAN_H_
-# define HUMAN_H_ 1
+#define HUMAN_H_ 1
 
-# include <limits.h>
-# include <stdint.h>
-# include <unistd.h>
+#include <limits.h>
+#include <stdint.h>
+#include <unistd.h>
 
-# include <xstrtol.h>
+#include <xstrtol.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 
 /* A conservative bound on the maximum length of a human-readable string.
    The output can be the square of the largest uintmax_t, so double
@@ -34,7 +39,7 @@
    so multiply by MB_LEN_MAX + 1 and then subtract MB_LEN_MAX.
    Append 1 for a space before the suffix.
    Finally, append 3, the maximum length of a suffix.  */
-# define LONGEST_HUMAN_READABLE \
+#define LONGEST_HUMAN_READABLE \
   ((2 * sizeof (uintmax_t) * CHAR_BIT * 146 / 485 + 1) * (MB_LEN_MAX + 1) \
    - MB_LEN_MAX + 1 + 3)
 
@@ -78,5 +83,10 @@ enum
 char *human_readable (uintmax_t, char *, int, uintmax_t, uintmax_t);
 
 enum strtol_error human_options (char const *, int *, uintmax_t *);
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* HUMAN_H_ */

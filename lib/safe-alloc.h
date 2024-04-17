@@ -36,6 +36,11 @@ _GL_INLINE_HEADER_BEGIN
 # define SAFE_ALLOC_INLINE _GL_INLINE
 #endif
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /* Don't call these directly - use the macros below.  */
 SAFE_ALLOC_INLINE void *
 safe_alloc_realloc_n (void *ptr, size_t count, size_t size)
@@ -120,6 +125,11 @@ safe_alloc_check (void *ptr)
  * to NULL.
  */
 #define FREE(ptr) ((void) (free (ptr), (ptr) = NULL))
+
+
+#ifdef __cplusplus
+}
+#endif
 
 _GL_INLINE_HEADER_END
 

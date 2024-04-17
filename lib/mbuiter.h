@@ -110,6 +110,11 @@ _GL_INLINE_HEADER_BEGIN
 # define MBUITER_INLINE _GL_INLINE _GL_ATTRIBUTE_ALWAYS_INLINE
 #endif
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 struct mbuiter_multi
 {
   #if !GNULIB_MBRTOC32_REGULAR
@@ -261,6 +266,11 @@ typedef struct mbuiter_multi mbui_iterator_t;
 
 /* Copying an iterator.  */
 #define mbui_copy mbuiter_multi_copy
+
+
+#ifdef __cplusplus
+}
+#endif
 
 _GL_INLINE_HEADER_END
 

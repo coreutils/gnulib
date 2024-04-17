@@ -98,6 +98,16 @@
 #include <stddef.h>
 #include <uchar.h>
 
+_GL_INLINE_HEADER_BEGIN
+#ifndef MCEL_INLINE
+# define MCEL_INLINE _GL_INLINE
+#endif
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /* Pacify GCC re type limits.  */
 #if defined __GNUC__ && 4 < __GNUC__ + (3 <= __GNUC_MINOR__)
 # pragma GCC diagnostic ignored "-Wtype-limits"
@@ -145,11 +155,6 @@ static_assert (CHAR_BIT == 8);
 /* Rely on __builtin_expect, as provided by the module 'builtin-expect'.  */
 # define _GL_LIKELY(cond) __builtin_expect ((cond), 1)
 # define _GL_UNLIKELY(cond) __builtin_expect ((cond), 0)
-#endif
-
-_GL_INLINE_HEADER_BEGIN
-#ifndef MCEL_INLINE
-# define MCEL_INLINE _GL_INLINE
 #endif
 
 /* mcel_t constructors.  */
@@ -290,6 +295,11 @@ mcel_scanz (char const *p)
 {
   return mcel_scant (p, '\0');
 }
+
+
+#ifdef __cplusplus
+}
+#endif
 
 _GL_INLINE_HEADER_END
 

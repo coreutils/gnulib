@@ -29,6 +29,11 @@
 # include <uchar.h>
 #endif
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 struct localeinfo
 {
   /* MB_CUR_MAX > 1.  */
@@ -64,3 +69,8 @@ extern void init_localeinfo (struct localeinfo *);
 enum { CASE_FOLDED_BUFSIZE = 32 };
 
 extern int case_folded_counterparts (wint_t, char32_t[CASE_FOLDED_BUFSIZE]);
+
+
+#ifdef __cplusplus
+}
+#endif

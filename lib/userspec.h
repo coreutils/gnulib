@@ -17,9 +17,14 @@
 /* Written by Jim Meyering, 2003.  */
 
 #ifndef USERSPEC_H
-# define USERSPEC_H 1
+#define USERSPEC_H 1
 
-# include <sys/types.h>
+#include <sys/types.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 
 char const *
 parse_user_spec (char const *spec_arg, uid_t *uid, gid_t *gid,
@@ -27,5 +32,10 @@ parse_user_spec (char const *spec_arg, uid_t *uid, gid_t *gid,
 char const *
 parse_user_spec_warn (char const *spec_arg, uid_t *uid, gid_t *gid,
                       char **username_arg, char **groupname_arg, bool *pwarn);
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

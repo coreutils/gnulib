@@ -17,7 +17,17 @@
 
 #include <stddef.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /* Read COUNT bytes at BUF to descriptor FD, retrying if interrupted
    or if partial reads occur.  Return the number of bytes successfully
    read, setting errno if that is less than COUNT.  errno = 0 means EOF.  */
 extern size_t full_read (int fd, void *buf, size_t count);
+
+
+#ifdef __cplusplus
+}
+#endif

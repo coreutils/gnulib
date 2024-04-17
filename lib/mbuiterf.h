@@ -101,6 +101,11 @@ _GL_INLINE_HEADER_BEGIN
 # define MBUITERF_INLINE _GL_INLINE _GL_ATTRIBUTE_ALWAYS_INLINE
 #endif
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 struct mbuif_state
 {
   #if !GNULIB_MBRTOC32_REGULAR
@@ -207,6 +212,11 @@ typedef struct mbuif_state mbuif_state_t;
 #endif
 #define mbuif_next(st, iter) \
   mbuiterf_next (&(st), (iter))
+
+
+#ifdef __cplusplus
+}
+#endif
 
 _GL_INLINE_HEADER_END
 

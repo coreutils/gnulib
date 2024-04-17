@@ -21,6 +21,10 @@
 
 #include "nan.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 
 /* Returns a quiet 'float' NaN with sign bit == 0.  */
 _GL_UNUSED static float
@@ -84,5 +88,9 @@ negative_NaNl ()
   return (signbit (nan) ? nan : - nan);
 }
 
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _SIGNED_NAN_H */

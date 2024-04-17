@@ -19,7 +19,17 @@
 #ifndef CHECK_VERSION_H
 # define CHECK_VERSION_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 extern const char *
 check_version (const char *req_version);
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* CHECK_VERSION_H */

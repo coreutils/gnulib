@@ -23,6 +23,11 @@
 
 #include <stdlib.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /* Trim mode. */
 #define TRIM_TRAILING 0
 #define TRIM_LEADING 1
@@ -40,3 +45,8 @@
 char *trim2 (const char *, int)
   _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE
   _GL_ATTRIBUTE_RETURNS_NONNULL;
+
+
+#ifdef __cplusplus
+}
+#endif

@@ -15,4 +15,14 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 int posix2_version (void);
+
+
+#ifdef __cplusplus
+}
+#endif

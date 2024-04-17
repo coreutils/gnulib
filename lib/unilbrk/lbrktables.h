@@ -25,6 +25,11 @@
 
 #include "unitypes.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /* Line breaking classification.  */
 
 enum
@@ -119,3 +124,8 @@ extern const unsigned char unilbrk_table[40][40];
 
 /* We don't support line breaking of complex-context dependent characters
    (Thai, Lao, Myanmar, Khmer) yet, because it requires dictionary lookup. */
+
+
+#ifdef __cplusplus
+}
+#endif

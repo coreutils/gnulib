@@ -18,6 +18,11 @@
 #ifndef _JAVACOMP_H
 #define _JAVACOMP_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /* Compile a Java source file to bytecode.
    java_sources is an array of source file names.
    classpaths is a list of pathnames to be prepended to the CLASSPATH.
@@ -84,5 +89,10 @@ extern bool compile_java_class (const char * const *java_sources,
                                 bool optimize, bool debug,
                                 bool use_minimal_classpath,
                                 bool verbose);
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _JAVACOMP_H */

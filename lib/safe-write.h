@@ -29,9 +29,19 @@
 
 #include <stddef.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 #define SAFE_WRITE_ERROR ((size_t) -1)
 
 /* Write up to COUNT bytes at BUF to descriptor FD, retrying if interrupted.
    Return the actual number of bytes written, zero for EOF, or SAFE_WRITE_ERROR
    upon error.  */
 extern size_t safe_write (int fd, const void *buf, size_t count);
+
+
+#ifdef __cplusplus
+}
+#endif

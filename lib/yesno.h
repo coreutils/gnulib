@@ -17,6 +17,16 @@
 #ifndef YESNO_H_
 # define YESNO_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 bool yesno (void);
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

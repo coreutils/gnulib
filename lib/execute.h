@@ -18,6 +18,11 @@
 #ifndef _EXECUTE_H
 #define _EXECUTE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /* Execute a command, optionally redirecting any of the three standard file
    descriptors to /dev/null.  Return its exit code.
    If it didn't terminate correctly, exit if exit_on_error is true, otherwise
@@ -50,5 +55,10 @@ extern int execute (const char *progname,
                     bool null_stdin, bool null_stdout, bool null_stderr,
                     bool slave_process, bool exit_on_error,
                     int *termsigp);
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _EXECUTE_H */

@@ -19,11 +19,21 @@
 /* Written by Jim Meyering.  */
 
 #ifndef XSTRTOD_H
-# define XSTRTOD_H 1
+#define XSTRTOD_H 1
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 
 bool xstrtod (const char *str, const char **ptr, double *result,
               double (*convert) (char const *, char **));
 bool xstrtold (const char *str, const char **ptr, long double *result,
                long double (*convert) (char const *, char **));
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* not XSTRTOD_H */

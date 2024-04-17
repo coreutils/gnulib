@@ -20,6 +20,11 @@
 
 #include <sys/types.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 struct savewd;
 bool make_dir_parents (char *dir,
                        struct savewd *wd,
@@ -32,3 +37,8 @@ bool make_dir_parents (char *dir,
                        uid_t owner,
                        gid_t group,
                        bool preserve_existing);
+
+
+#ifdef __cplusplus
+}
+#endif

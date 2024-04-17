@@ -17,15 +17,20 @@
 /* Written by Jim Meyering, 2010.  */
 
 #ifndef _GL_DI_SET_H
-# define _GL_DI_SET_H
+#define _GL_DI_SET_H
 
 /* This file uses _GL_ATTRIBUTE_DEALLOC, _GL_ATTRIBUTE_MALLOC,
    _GL_ATTRIBUTE_NONNULL.  */
-# if !_GL_CONFIG_H_INCLUDED
-#  error "Please include config.h first."
-# endif
+#if !_GL_CONFIG_H_INCLUDED
+# error "Please include config.h first."
+#endif
 
-# include <sys/types.h>
+#include <sys/types.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 
 struct di_set;
 
@@ -38,5 +43,10 @@ int di_set_insert (struct di_set *, dev_t, ino_t) _GL_ATTRIBUTE_NONNULL ((1));
 
 int di_set_lookup (struct di_set *dis, dev_t dev, ino_t ino)
   _GL_ATTRIBUTE_NONNULL ((1));
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

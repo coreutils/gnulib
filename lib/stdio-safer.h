@@ -24,6 +24,11 @@
 
 #include <stdio.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 #if GNULIB_FOPEN_SAFER
 FILE *fopen_safer (char const *, char const *)
   _GL_ARG_NONNULL ((1, 2)) _GL_ATTRIBUTE_DEALLOC (fclose, 1);
@@ -42,4 +47,9 @@ FILE *popen_safer (char const *, char const *)
 #if GNULIB_TMPFILE_SAFER
 FILE *tmpfile_safer (void)
   _GL_ATTRIBUTE_DEALLOC (fclose, 1);
+#endif
+
+
+#ifdef __cplusplus
+}
 #endif

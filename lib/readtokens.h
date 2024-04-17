@@ -23,6 +23,11 @@
 
 # include <stdio.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /* FIXME: This header should use idx_t, not size_t.  */
 
 struct tokenbuffer
@@ -41,5 +46,10 @@ size_t
   readtokens (FILE *stream, size_t projected_n_tokens,
               const char *delim, size_t n_delim,
               char ***tokens_out, size_t **token_lengths);
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* not READTOKENS_H */

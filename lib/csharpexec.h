@@ -18,6 +18,11 @@
 #ifndef _CSHARPEXEC_H
 #define _CSHARPEXEC_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 typedef bool execute_fn (const char *progname,
                          const char *prog_path, const char * const *prog_argv,
                          void *private_data);
@@ -37,5 +42,10 @@ extern bool execute_csharp_program (const char *assembly_path,
                                     const char * const *args,
                                     bool verbose, bool quiet,
                                     execute_fn *executer, void *private_data);
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _CSHARPEXEC_H */

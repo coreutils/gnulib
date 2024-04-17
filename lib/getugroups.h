@@ -15,5 +15,16 @@
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 #include <sys/types.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 int getugroups (int maxcount, gid_t *grouplist, char const *username,
                 gid_t gid);
+
+
+#ifdef __cplusplus
+}
+#endif

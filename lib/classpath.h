@@ -20,6 +20,11 @@
  #error "Please include config.h first."
 #endif
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /* Return the new CLASSPATH value.  The given classpaths are prepended to
    the current CLASSPATH value.   If use_minimal_classpath, the current
    CLASSPATH is ignored.  */
@@ -35,3 +40,8 @@ extern char * set_classpath (const char * const *classpaths,
 
 /* Restore CLASSPATH to its previous value.  */
 extern void reset_classpath (char *old_classpath);
+
+
+#ifdef __cplusplus
+}
+#endif

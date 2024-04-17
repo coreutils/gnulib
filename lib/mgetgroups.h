@@ -16,7 +16,17 @@
 
 #include <sys/types.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 int mgetgroups (const char *username, gid_t gid, gid_t **groups);
 #if GNULIB_XGETGROUPS
 int xgetgroups (const char *username, gid_t gid, gid_t **groups);
+#endif
+
+
+#ifdef __cplusplus
+}
 #endif

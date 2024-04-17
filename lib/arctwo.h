@@ -19,10 +19,15 @@
 /* Code from Libgcrypt adapted for gnulib by Simon Josefsson. */
 
 #ifndef ARCTWO_H
-# define ARCTWO_H
+#define ARCTWO_H
 
-# include <stddef.h>
-# include <stdint.h>
+#include <stddef.h>
+#include <stdint.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 
 typedef struct
 {
@@ -57,5 +62,10 @@ arctwo_encrypt (arctwo_context *context, const char *inbuf,
 extern void
 arctwo_decrypt (arctwo_context *context, const char *inbuf,
                 char *restrict outbuf, size_t length);
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* ARCTWO_H */

@@ -24,6 +24,11 @@
 /* Definition of _GL_ARG_NONNULL.  */
 #include "arg-nonnull.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 struct argv_iterator;
 
 enum argv_iter_err
@@ -45,3 +50,8 @@ char *argv_iter (struct argv_iterator *, enum argv_iter_err *)
   _GL_ARG_NONNULL ((1, 2));
 size_t argv_iter_n_args (struct argv_iterator const *)
   _GL_ATTRIBUTE_PURE _GL_ARG_NONNULL ((1));
+
+
+#ifdef __cplusplus
+}
+#endif

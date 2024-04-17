@@ -17,15 +17,25 @@
 /* Written by Jim Meyering, 2003.  */
 
 #ifndef DEV_INO_H
-# define DEV_INO_H 1
+#define DEV_INO_H 1
 
-# include <sys/types.h>
-# include <sys/stat.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 
 struct dev_ino
 {
   ino_t st_ino;
   dev_t st_dev;
 };
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

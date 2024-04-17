@@ -17,9 +17,14 @@
 /* Written by Simon Josefsson.  */
 
 #ifndef HMAC_H
-# define HMAC_H 1
+#define HMAC_H 1
 
 #include <stddef.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 
 /* Compute Hashed Message Authentication Code with MD5, as described
    in RFC 2104, over BUFFER data of BUFLEN bytes using the KEY of
@@ -52,5 +57,10 @@ hmac_sha256 (const void *key, size_t keylen,
 int
 hmac_sha512 (const void *key, size_t keylen,
              const void *in, size_t inlen, void *restrict resbuf);
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* HMAC_H */
