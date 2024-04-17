@@ -302,7 +302,6 @@ class GLImport:
 
         # Define GLImport attributes.
         self.emitter = GLEmiter(self.config)
-        self.filesystem = GLFileSystem(self.config)
         self.modulesystem = GLModuleSystem(self.config)
         self.moduletable = GLModuleTable(self.config,
                                          self.config.checkInclTestCategory(TESTS['all-tests']),
