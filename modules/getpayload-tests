@@ -1,0 +1,18 @@
+Files:
+tests/test-getpayload.c
+tests/minus-zero.h
+tests/infinity.h
+tests/signature.h
+tests/macros.h
+
+Depends-on:
+setpayload
+setpayloadsig
+signed-snan
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-getpayload
+check_PROGRAMS += test-getpayload
+test_getpayload_LDADD = $(LDADD) @GETPAYLOAD_LIBM@ $(SETPAYLOAD_LIBM) $(SETPAYLOADSIG_LIBM)
