@@ -54,6 +54,9 @@
 #   Cf. <https://peps.python.org/pep-0585/>.
 # - Never use the {} literal, because it denotes a dictionary,
 #   as opposed to {x}, {x,y}, etc., which denote sets.
+# - Use a leading underscore to indicate that functions and instance variables
+#   should be considered private. This is a widely accepted convention from
+#   PEP 8 <https://peps.python.org/pep-0008/#method-names-and-instance-variables>.
 
 # You can use this command to check the style:
 #   $ pycodestyle *.py
