@@ -1,5 +1,5 @@
 # totalorder.m4
-# serial 1
+# serial 2
 dnl Copyright 2023-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -85,6 +85,7 @@ AC_DEFUN([gl_FUNC_TOTALORDERL],
 [
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
+  AC_REQUIRE([gl_LONG_DOUBLE_VS_DOUBLE])
 
   dnl glibc versions < 2.31 had an incompatible declaration of this function,
   dnl see <https://sourceware.org/git/?p=glibc.git;a=commitdiff;h=42760d764649ad82f5fe45a26cbdf2c2500409f7>
@@ -115,7 +116,13 @@ AC_DEFUN([gl_FUNC_TOTALORDERL],
     fi
   fi
   if test $HAVE_TOTALORDERL = 0 || test $REPLACE_TOTALORDERL = 1; then
-    TOTALORDERL_LIBM='$(ISNANL_LIBM)'
+    dnl Find libraries needed to link lib/totalorderl.c.
+    if test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1; then
+      AC_REQUIRE([gl_FUNC_TOTALORDER])
+      TOTALORDERL_LIBM="$TOTALORDER_LIBM"
+    else
+      TOTALORDERL_LIBM='$(ISNANL_LIBM)'
+    fi
     dnl Prerequisite of lib/totalorderl.c.
     gl_LONG_DOUBLE_SIGN_LOCATION
   fi

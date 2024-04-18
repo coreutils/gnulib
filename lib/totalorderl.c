@@ -21,11 +21,21 @@
 /* Specification.  */
 #include <math.h>
 
-#include <float.h>
+#if HAVE_SAME_LONG_DOUBLE_AS_DOUBLE
 
-#ifndef LDBL_SIGNBIT_WORD
-# define LDBL_SIGNBIT_WORD (-1)
-#endif
+int
+totalorderl (long double const *x, long double const *y)
+{
+  return totalorder ((double const *) x, (double const *) y);
+}
+
+#else
+
+# include <float.h>
+
+# ifndef LDBL_SIGNBIT_WORD
+#  define LDBL_SIGNBIT_WORD (-1)
+# endif
 
 int
 totalorderl (long double const *x, long double const *y)
@@ -52,28 +62,14 @@ totalorderl (long double const *x, long double const *y)
   /* At this point, *X and *Y are NaNs with the same sign bit.  */
 
   unsigned long long extended_sign = -!!xs;
-
-  if (sizeof (long double) <= sizeof (unsigned long long))
-    {
-#if defined __hppa || defined __mips__ || defined __sh__
-      /* Invert the most significant bit of the mantissa field.  Cf. snan.h.  */
-      extended_sign ^= (1ULL << 51);
-#endif
-      union { unsigned long long i; long double f; } volatile
-        xu = {0}, yu = {0};
-      xu.f = *x;
-      yu.f = *y;
-      return (xu.i ^ extended_sign) <= (yu.i ^ extended_sign);
-    }
-
   unsigned long long extended_sign_hi = extended_sign;
-#if defined __hppa || defined __mips__ || defined __sh__
+# if defined __hppa || defined __mips__ || defined __sh__
   /* Invert the most significant bit of the mantissa field.  Cf. snan.h.  */
   extended_sign_hi ^=
     (1ULL << (LDBL_MANT_DIG == 106
               ? 51                          /* double-double representation */
               : (LDBL_MANT_DIG - 2) - 64)); /* quad precision representation */
-#endif
+# endif
   union u { unsigned long long i[2]; long double f; } volatile xu, yu;
   /* Although it is tempting to initialize with {0}, Solaris cc (Sun C 5.8)
      on x86_64 miscompiles {0}: it initializes only the lower 80 bits,
@@ -104,3 +100,5 @@ totalorderl (long double const *x, long double const *y)
     ylo = yu.i[ bigendian] ^ extended_sign;
   return (xhi < yhi) | ((xhi == yhi) & (xlo <= ylo));
 }
+
+#endif
