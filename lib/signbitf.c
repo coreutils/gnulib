@@ -32,7 +32,7 @@ gl_signbitf (float arg)
 {
 #if defined FLT_SIGNBIT_WORD && defined FLT_SIGNBIT_BIT
   /* The use of a union to extract the bits of the representation of a
-     'long double' is safe in practice, despite of the "aliasing rules" of
+     'float' is safe in practice, despite of the "aliasing rules" of
      C99, because the GCC docs say
        "Even with '-fstrict-aliasing', type-punning is allowed, provided the
         memory is accessed through the union type."
