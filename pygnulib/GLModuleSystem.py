@@ -63,7 +63,6 @@ class GLModuleSystem:
         '''Create new GLModuleSystem instance. Some functions use GLFileSystem class
         to look up a file in localpath or gnulib directories, or combine it through
         'patch' utility.'''
-        self.args = dict()
         if type(config) is not GLConfig:
             raise TypeError('config must be a GLConfig, not %s'
                             % type(config).__name__)
@@ -185,7 +184,6 @@ class GLModule:
         - name, the name of the module,
         - path, the file name of the (possibly patched) module description,
         - patched, indicating whether that module description was created by applying a patch.'''
-        self.args = dict()
         self.cache = dict()
         self.content = ''
         if type(config) is not GLConfig:
