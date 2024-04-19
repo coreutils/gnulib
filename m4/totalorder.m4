@@ -38,6 +38,8 @@ AC_DEFUN([gl_FUNC_TOTALORDERF],
   fi
   if test $HAVE_TOTALORDERF = 0 || test $REPLACE_TOTALORDERF = 1; then
     TOTALORDERF_LIBM='$(ISNANF_LIBM)'
+    dnl Prerequisite of lib/totalorderf.c.
+    gl_NAN_MIPS
   fi
   AC_SUBST([TOTALORDERF_LIBM])
 ])
@@ -76,6 +78,8 @@ AC_DEFUN([gl_FUNC_TOTALORDER],
   fi
   if test $HAVE_TOTALORDER = 0 || test $REPLACE_TOTALORDER = 1; then
     TOTALORDER_LIBM='$(ISNAND_LIBM)'
+    dnl Prerequisite of lib/totalorder.c.
+    gl_NAN_MIPS
   fi
   AC_SUBST([TOTALORDER_LIBM])
 ])
@@ -117,6 +121,7 @@ AC_DEFUN([gl_FUNC_TOTALORDERL],
     TOTALORDERL_LIBM='$(ISNANL_LIBM)'
     dnl Prerequisite of lib/totalorderl.c.
     gl_LONG_DOUBLE_SIGN_LOCATION
+    gl_NAN_MIPS
   fi
   AC_SUBST([TOTALORDERL_LIBM])
 ])
