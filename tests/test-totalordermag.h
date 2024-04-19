@@ -36,7 +36,7 @@ negative_NaN_with_payload (int payload)
 {
   TOTALORDER_TYPE x;
   ASSERT (TOTALORDER_SETPAYLOAD (&x.value, payload) == 0);
-  x.value = - x.value;
+  x.value = TOTALORDER_MINUS (x.value);
   return x;
 }
 

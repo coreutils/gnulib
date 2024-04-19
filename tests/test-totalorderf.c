@@ -26,6 +26,7 @@ SIGNATURE_CHECK (totalorderf, int, (const float *, const float *));
 #define TOTALORDER_TYPE memory_float
 #define TOTALORDER_INF Infinityf
 #define TOTALORDER_MINUS_ZERO minus_zerof
+#define TOTALORDER_MINUS minus_NaNf
 #define TOTALORDER_SETPAYLOAD setpayloadf
 #define TOTALORDER_HAVE_SNAN HAVE_SNANF
 #define TOTALORDER_POSITIVE_SNAN memory_positive_SNaNf

@@ -26,6 +26,7 @@ SIGNATURE_CHECK (totalordermag, int, (const double *, const double *));
 #define TOTALORDER_TYPE memory_double
 #define TOTALORDER_INF Infinityd
 #define TOTALORDER_MINUS_ZERO minus_zerod
+#define TOTALORDER_MINUS minus_NaNd
 #define TOTALORDER_SETPAYLOAD setpayload
 #define TOTALORDER_HAVE_SNAN HAVE_SNAND
 #define TOTALORDER_POSITIVE_SNAN memory_positive_SNaNd
