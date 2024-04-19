@@ -40,6 +40,7 @@ __author__ = \
         'Paul Eggert',
         'Simon Josefsson',
         'Dmitry Selyutin',
+        'Collin Funk',
     ]
 __license__ = 'GNU GPLv3+'
 __copyright__ = '2002-2024 Free Software Foundation, Inc.'
