@@ -10,13 +10,9 @@ Documentation:@*
 @url{https://www.gnu.org/software/libc/manual/html_node/FP-Comparison-Functions.html}.
 @end ifnotinfo
 
-Gnulib module: ---
+Gnulib module: totalordermagl
 
 Portability problems fixed by Gnulib:
-@itemize
-@end itemize
-
-Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on all non-glibc platforms:
@@ -24,4 +20,8 @@ glibc 2.24, macOS 11.1, FreeBSD 14.0, NetBSD 10.0, OpenBSD 6.7, Minix 3.1.8, AIX
 @item
 This function has a different signature on some platforms:
 glibc 2.30.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
 @end itemize
