@@ -5,6 +5,7 @@ Files:
 lib/totalorder.c
 m4/mathfunc.m4
 m4/totalorder.m4
+m4/nan-mips.m4
 
 Depends-on:
 math

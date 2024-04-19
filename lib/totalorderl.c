@@ -63,7 +63,7 @@ totalorderl (long double const *x, long double const *y)
 
   unsigned long long extended_sign = -!!xs;
   unsigned long long extended_sign_hi = extended_sign;
-# if defined __hppa || defined __mips__ || defined __sh__
+# if defined __hppa || (defined __mips__ && !MIPS_NAN2008_LONG_DOUBLE) || defined __sh__
   /* Invert the most significant bit of the mantissa field.  Cf. snan.h.  */
   extended_sign_hi ^=
     (1ULL << (LDBL_MANT_DIG == 106
