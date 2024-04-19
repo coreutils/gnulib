@@ -1200,11 +1200,9 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
             TP_URL = 'https://translationproject.org/latest/'
             if not self.config['dryrun']:
                 print('Fetching gnulib PO files from %s' % TP_URL)
-                os.chdir(joinpath(destdir, pobase))
                 args = ['wget', '--no-verbose', '--mirror', '--level=1', '-nd', '-A.po', '-P', '.',
                         '%sgnulib/' % TP_URL]
-                sp.call(args)
-                os.chdir(DIRS['cwd'])
+                sp.call(args, cwd=joinpath(destdir, pobase))
             else:  # if self.config['dryrun']
                 print('Fetch gnulib PO files from %s' % TP_URL)
 

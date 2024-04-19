@@ -872,18 +872,14 @@ def main() -> None:
                 filename_line_regex = '^' + filename_regex + '$'
                 # Read module candidates from gnulib root directory.
                 command = "find modules -type f -print | xargs -n 100 grep -l %s /dev/null | sed -e 's,^modules/,,'" % shlex.quote(filename_line_regex)
-                os.chdir(constants.DIRS['root'])
-                with sp.Popen(command, shell=True, stdout=sp.PIPE) as proc:
+                with sp.Popen(command, shell=True, cwd=constants.DIRS['root'], stdout=sp.PIPE) as proc:
                     result = proc.stdout.read().decode('UTF-8')
-                os.chdir(DIRS['cwd'])
                 # Read module candidates from local directories.
                 if localpath != None and len(localpath) > 0:
                     command = "find modules -type f -print | xargs -n 100 grep -l %s /dev/null | sed -e 's,^modules/,,' -e 's,\\.diff$,,'" % shlex.quote(filename_line_regex)
                     for localdir in localpath:
-                        os.chdir(localdir)
-                        with sp.Popen(command, shell=True, stdout=sp.PIPE) as proc:
+                        with sp.Popen(command, shell=True, cwd=localdir, stdout=sp.PIPE) as proc:
                             result += proc.stdout.read().decode('UTF-8')
-                        os.chdir(DIRS['cwd'])
                 listing = [ line
                             for line in result.split('\n')
                             if line.strip() ]

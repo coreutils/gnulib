@@ -133,16 +133,12 @@ class GLModuleSystem:
         find_args = ['find', 'modules', '-type', 'f', '-print']
 
         # Read modules from gnulib root directory.
-        os.chdir(constants.DIRS['root'])
-        result += sp.run(find_args, text=True, capture_output=True, check=False).stdout
-        os.chdir(DIRS['cwd'])
+        result += sp.run(find_args, cwd=constants.DIRS['root'], text=True, capture_output=True, check=False).stdout
 
         # Read modules from local directories.
         if len(localpath) > 0:
             for localdir in localpath:
-                os.chdir(localdir)
-                result += sp.run(find_args, text=True, capture_output=True, check=False).stdout
-                os.chdir(DIRS['cwd'])
+                result += sp.run(find_args, cwd=localdir, text=True, capture_output=True, check=False).stdout
 
         listing = [ line
                     for line in result.split('\n')
