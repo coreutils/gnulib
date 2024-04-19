@@ -21,7 +21,9 @@
 #include <unistd.h>
 
 #include "signature.h"
+#if !defined __sun /* On Solaris, the second parameter is of type 'int'.  */
 SIGNATURE_CHECK (getlogin_r, int, (char *, size_t));
+#endif
 
 #include "test-getlogin.h"
 
