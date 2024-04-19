@@ -50,6 +50,11 @@ Portability problems not fixed by Gnulib:
 Cygwin's @code{stat} function sometimes sets @code{errno} to @code{EACCES} when
 @code{ENOENT} would be more appropriate.
 @item
+This function sets @code{st_ino} only to the low-order 32 bits of
+the inode number of a socket or pipe, which thus can disagree
+with the @code{st_ino} obtained by @code{fstat}:
+macOS 14.
+@item
 Because of the definition of @code{struct stat}, it is not possible to
 portably replace @code{stat} via an object-like macro.  Therefore,
 expressions such as @code{(islnk ? lstat : stat) (name, buf)} are not

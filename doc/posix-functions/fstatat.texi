@@ -40,5 +40,10 @@ This function does not fail when the second argument is an empty string
 on some platforms, even when @code{AT_EMPTY_PATH} is not used:
 glibc 2.7, Linux 2.6.38.
 @item
+This function sets @code{st_ino} only to the low-order 32 bits of
+the inode number of a socket or pipe, which thus can disagree
+with the @code{st_ino} obtained by @code{fstat}:
+macOS 14.
+@item
 @xref{sys/stat.h}, for general portability problems with @code{struct stat}.
 @end itemize
