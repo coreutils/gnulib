@@ -1,5 +1,5 @@
 /* Test of getting user name.
-   Copyright (C) 2010-2023 Free Software Foundation, Inc.
+   Copyright (C) 2010-2024 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -21,7 +21,9 @@
 #include <unistd.h>
 
 #include "signature.h"
+#if !defined __sun /* On Solaris, the second parameter is of type 'int'.  */
 SIGNATURE_CHECK (getlogin_r, int, (char *, size_t));
+#endif
 
 #include "test-getlogin.h"
 
