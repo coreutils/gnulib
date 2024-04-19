@@ -7,6 +7,7 @@ m4/memset_explicit.m4
 
 Depends-on:
 string
+extensions
 
 configure.ac:
 gl_FUNC_MEMSET_EXPLICIT
