@@ -8,6 +8,7 @@ tests/macros.h
 Depends-on:
 setpayloadl
 setpayloadsigl
+signed-nan
 signed-snan
 
 configure.ac:

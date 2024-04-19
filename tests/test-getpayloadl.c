@@ -24,6 +24,7 @@ SIGNATURE_CHECK (getpayloadl, long double, (const long double *));
 
 #include "minus-zero.h"
 #include "infinity.h"
+#include "signed-nan.h"
 #include "signed-snan.h"
 #include "macros.h"
 
@@ -79,7 +80,7 @@ main ()
         ret = getpayloadl (&arg);
         ASSERT (ret == p);
         /* Test quiet NaNs with sign bit == 1.  */
-        arg = - arg;
+        arg = minus_NaNl (arg);
         ret = getpayloadl (&arg);
         ASSERT (ret == p);
       }
