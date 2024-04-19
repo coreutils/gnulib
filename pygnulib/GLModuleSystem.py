@@ -23,6 +23,7 @@ import re
 import sys
 import hashlib
 import subprocess as sp
+from collections import defaultdict
 from . import constants
 from .GLError import GLError
 from .GLConfig import GLConfig
@@ -721,7 +722,7 @@ class GLModuleTable:
           returns the condition when B should be enabled as a dependency of A,
           once the m4 code for A has been executed.
         '''
-        self.dependers = dict()
+        self.dependers = defaultdict(set)
         self.conditionals = dict()
         self.unconditionals = set()
         self.base_modules = []
@@ -763,10 +764,7 @@ class GLModuleTable:
                             % type(condition).__name__)
         if str(module) not in self.unconditionals:
             # No unconditional dependency to the given module is known at this point.
-            if str(module) not in self.dependers:
-                self.dependers[str(module)] = []
-            if str(parent) not in self.dependers[str(module)]:
-                self.dependers[str(module)].append(str(parent))
+            self.dependers[str(module)].add(str(parent))
             key = '%s---%s' % (str(parent), str(module))
             self.conditionals[key] = condition
 
