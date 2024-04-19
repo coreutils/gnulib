@@ -1,0 +1,39 @@
+Description:
+totalordermag function: total order of absolute value on double
+
+Files:
+lib/totalordermag.c
+m4/mathfunc.m4
+m4/totalordermag.m4
+m4/nan-mips.m4
+m4/signbit.m4
+
+Depends-on:
+math
+extensions
+verify          [test $HAVE_TOTALORDERMAG = 0 || test $REPLACE_TOTALORDERMAG = 1]
+isnand          [test $HAVE_TOTALORDERMAG = 0 || test $REPLACE_TOTALORDERMAG = 1]
+signbit         [test $HAVE_TOTALORDERMAG = 0 || test $REPLACE_TOTALORDERMAG = 1]
+
+configure.ac:
+gl_FUNC_TOTALORDERMAG
+gl_CONDITIONAL([GL_COND_OBJ_TOTALORDERMAG],
+               [test $HAVE_TOTALORDERMAG = 0 || test $REPLACE_TOTALORDERMAG = 1])
+gl_MATH_MODULE_INDICATOR([totalordermag])
+
+Makefile.am:
+if GL_COND_OBJ_TOTALORDERMAG
+lib_SOURCES += totalordermag.c
+endif
+
+Include:
+<math.h>
+
+Link:
+$(TOTALORDERMAG_LIBM)
+
+License:
+LGPL
+
+Maintainer:
+all

@@ -1,5 +1,5 @@
 # math_h.m4
-# serial 135
+# serial 136
 dnl Copyright (C) 2007-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -56,7 +56,8 @@ AC_DEFUN_ONCE([gl_MATH_H],
      setpayload setpayloadf setpayloadl
      setpayloadsig setpayloadsigf setpayloadsigl
      sinf sinl sinhf sqrtf sqrtl
-     tanf tanl tanhf totalorder totalorderf totalorderl trunc truncf truncl])
+     tanf tanl tanhf totalorder totalorderf totalorderl totalordermag
+     trunc truncf truncl])
 ])
 
 # gl_MATH_MODULE_INDICATOR([modulename])
@@ -183,6 +184,7 @@ AC_DEFUN([gl_MATH_H_REQUIRE_DEFAULTS],
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_TOTALORDER])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_TOTALORDERF])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_TOTALORDERL])
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_TOTALORDERMAG])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_TRUNC])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_TRUNCF])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_TRUNCL])
@@ -273,6 +275,7 @@ AC_DEFUN([gl_MATH_H_DEFAULTS],
   HAVE_TOTALORDER=1;                AC_SUBST([HAVE_TOTALORDER])
   HAVE_TOTALORDERF=1;               AC_SUBST([HAVE_TOTALORDERF])
   HAVE_TOTALORDERL=1;               AC_SUBST([HAVE_TOTALORDERL])
+  HAVE_TOTALORDERMAG=1;             AC_SUBST([HAVE_TOTALORDERMAG])
   HAVE_DECL_ACOSL=1;                AC_SUBST([HAVE_DECL_ACOSL])
   HAVE_DECL_ASINL=1;                AC_SUBST([HAVE_DECL_ASINL])
   HAVE_DECL_ATANL=1;                AC_SUBST([HAVE_DECL_ATANL])
@@ -392,6 +395,7 @@ AC_DEFUN([gl_MATH_H_DEFAULTS],
   REPLACE_TOTALORDER=0;             AC_SUBST([REPLACE_TOTALORDER])
   REPLACE_TOTALORDERF=0;            AC_SUBST([REPLACE_TOTALORDERF])
   REPLACE_TOTALORDERL=0;            AC_SUBST([REPLACE_TOTALORDERL])
+  REPLACE_TOTALORDERMAG=0;          AC_SUBST([REPLACE_TOTALORDERMAG])
   REPLACE_TRUNC=0;                  AC_SUBST([REPLACE_TRUNC])
   REPLACE_TRUNCF=0;                 AC_SUBST([REPLACE_TRUNCF])
   REPLACE_TRUNCL=0;                 AC_SUBST([REPLACE_TRUNCL])
