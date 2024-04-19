@@ -230,6 +230,11 @@ construct_memory_SNaNl (long double quiet_value)
     m.word[LDBL_EXPBIT0_WORD + (LDBL_EXPBIT0_WORD < HNWORDS / 2 ? 1 : - 1)]
       ^= (unsigned int) 1 << (sizeof (unsigned int) * CHAR_BIT - 2);
    #endif
+  #elif (defined __m68k__ && LDBL_MANT_DIG == 64) && !HAVE_SAME_LONG_DOUBLE_AS_DOUBLE
+  /* In this representation, there is a 16-bits gap between the exponent and
+     the mantissa, and the leading 1 of the mantissa is explicitly stored.  */
+    m.word[LDBL_EXPBIT0_WORD + 1]
+      ^= (unsigned int) 1 << (sizeof (unsigned int) * CHAR_BIT - 2);
   #else
   /* In this representation, the leading 1 of the mantissa is implicit.  */
    #if LDBL_EXPBIT0_BIT > 0
