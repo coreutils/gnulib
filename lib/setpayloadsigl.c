@@ -49,7 +49,7 @@ setpayloadsigl (long double *result, long double payload)
 # if (LDBL_MANT_DIG == 64 || LDBL_MANT_DIG == 106 || LDBL_MANT_DIG == 113) \
      && defined LDBL_EXPBIT0_WORD && defined LDBL_EXPBIT0_BIT
   if (
-#  if defined __hppa || defined __mips__ || defined __sh__
+#  if defined __hppa || (defined __mips__ && !MIPS_NAN2008_LONG_DOUBLE) || defined __sh__
       payload >= 0.0L
 #  else
       /* A zero payload is not allowed, because that would denote Infinity.
