@@ -1,0 +1,19 @@
+Files:
+tests/test-totalordermag.c
+tests/test-totalordermag.h
+tests/minus-zero.h
+tests/infinity.h
+tests/signature.h
+tests/macros.h
+
+Depends-on:
+signed-nan
+signed-snan
+setpayload
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-totalordermag
+check_PROGRAMS += test-totalordermag
+test_totalordermag_LDADD = $(LDADD) @TOTALORDERMAG_LIBM@ $(SETPAYLOAD_LIBM)
