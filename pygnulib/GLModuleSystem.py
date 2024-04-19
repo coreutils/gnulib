@@ -762,27 +762,26 @@ class GLModuleTable:
         if not (type(condition) is str or condition == True):
             raise TypeError('condition must be a string or True, not %s'
                             % type(condition).__name__)
-        if str(module) not in self.unconditionals:
+        if module not in self.unconditionals:
             # No unconditional dependency to the given module is known at this point.
-            self.dependers[str(module)].add(str(parent))
-            key = '%s---%s' % (str(parent), str(module))
-            self.conditionals[key] = condition
+            self.dependers[module].add(parent)
+            self.conditionals[(parent, module)] = condition
 
     def addUnconditional(self, module: GLModule) -> None:
         '''Add module as unconditional dependency.'''
         if type(module) is not GLModule:
             raise TypeError('module must be a GLModule, not %s'
                             % type(module).__name__)
-        self.unconditionals.add(str(module))
-        if str(module) in self.dependers:
-            self.dependers.pop(str(module))
+        self.unconditionals.add(module)
+        if module in self.dependers:
+            self.dependers.pop(module)
 
     def isConditional(self, module: GLModule) -> bool:
         '''Check whether module is unconditional.'''
         if type(module) is not GLModule:
             raise TypeError('module must be a GLModule, not %s'
                             % type(module).__name__)
-        result = str(module) in self.dependers
+        result = module in self.dependers
         return result
 
     def getCondition(self, parent: GLModule, module: GLModule) -> str | bool | None:
@@ -794,8 +793,7 @@ class GLModuleTable:
         if type(module) is not GLModule:
             raise TypeError('module must be a GLModule, not %s'
                             % type(module).__name__)
-        key = '%s---%s' % (str(parent), str(module))
-        result = self.conditionals.get(key, None)
+        result = self.conditionals.get((parent, module), None)
         return result
 
     def transitive_closure(self, modules: list[GLModule]) -> list[GLModule]:
