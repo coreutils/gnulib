@@ -1,0 +1,39 @@
+Description:
+totalordermagf function: total order of absolute value on float
+
+Files:
+lib/totalordermagf.c
+m4/mathfunc.m4
+m4/totalordermag.m4
+m4/nan-mips.m4
+m4/signbit.m4
+
+Depends-on:
+math
+extensions
+verify          [test $HAVE_TOTALORDERMAGF = 0 || test $REPLACE_TOTALORDERMAGF = 1]
+isnanf          [test $HAVE_TOTALORDERMAGF = 0 || test $REPLACE_TOTALORDERMAGF = 1]
+signbit         [test $HAVE_TOTALORDERMAGF = 0 || test $REPLACE_TOTALORDERMAGF = 1]
+
+configure.ac:
+gl_FUNC_TOTALORDERMAGF
+gl_CONDITIONAL([GL_COND_OBJ_TOTALORDERMAGF],
+               [test $HAVE_TOTALORDERMAGF = 0 || test $REPLACE_TOTALORDERMAGF = 1])
+gl_MATH_MODULE_INDICATOR([totalordermagf])
+
+Makefile.am:
+if GL_COND_OBJ_TOTALORDERMAGF
+lib_SOURCES += totalordermagf.c
+endif
+
+Include:
+<math.h>
+
+Link:
+$(TOTALORDERMAGF_LIBM)
+
+License:
+LGPL
+
+Maintainer:
+all

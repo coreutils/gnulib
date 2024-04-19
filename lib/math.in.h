@@ -3006,6 +3006,31 @@ _GL_WARN_ON_USE (totalorderl, "totalorderl is unportable - "
 #endif
 
 
+#if @GNULIB_TOTALORDERMAGF@
+# if @REPLACE_TOTALORDERMAGF@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef totalordermagf
+#   define totalordermagf rpl_totalordermagf
+#  endif
+_GL_FUNCDECL_RPL (totalordermagf, int, (float const *, float const *));
+_GL_CXXALIAS_RPL (totalordermagf, int, (float const *, float const *));
+# else
+#  if !@HAVE_TOTALORDERMAGF@
+_GL_FUNCDECL_SYS (totalordermagf, int, (float const *, float const *));
+#  endif
+_GL_CXXALIAS_SYS (totalordermagf, int, (float const *, float const *));
+# endif
+# if __GLIBC__ >= 2
+_GL_CXXALIASWARN1 (totalordermagf, int, (float const *, float const *));
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef totalordermagf
+# if HAVE_RAW_DECL_TOTALORDERMAGF
+_GL_WARN_ON_USE (totalordermagf, "totalordermagf is unportable - "
+                 "use gnulib module totalordermagf for portability");
+# endif
+#endif
+
 #if @GNULIB_TOTALORDERMAG@
 # if @REPLACE_TOTALORDERMAG@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
