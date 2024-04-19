@@ -1,5 +1,5 @@
 # setpayload.m4
-# serial 1
+# serial 2
 dnl Copyright 2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -17,6 +17,8 @@ AC_DEFUN([gl_FUNC_SETPAYLOADF],
   fi
   if test $HAVE_SETPAYLOADF = 0; then
     SETPAYLOADF_LIBM=
+    dnl Prerequisite of lib/setpayloadf.c.
+    gl_NAN_MIPS
   fi
   AC_SUBST([SETPAYLOADF_LIBM])
 ])
@@ -33,6 +35,8 @@ AC_DEFUN_ONCE([gl_FUNC_SETPAYLOAD],
   fi
   if test $HAVE_SETPAYLOAD = 0; then
     SETPAYLOAD_LIBM=
+    dnl Prerequisite of lib/setpayload.c.
+    gl_NAN_MIPS
   fi
   AC_SUBST([SETPAYLOAD_LIBM])
 ])
@@ -58,6 +62,7 @@ AC_DEFUN([gl_FUNC_SETPAYLOADL],
     fi
     dnl Prerequisite of lib/setpayloadl.c.
     gl_LONG_DOUBLE_EXPONENT_LOCATION
+    gl_NAN_MIPS
   fi
   AC_SUBST([SETPAYLOADL_LIBM])
 ])

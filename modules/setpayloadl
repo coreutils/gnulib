@@ -6,6 +6,7 @@ lib/setpayloadl.c
 m4/mathfunc.m4
 m4/setpayload.m4
 m4/exponentl.m4
+m4/nan-mips.m4
 
 Depends-on:
 math

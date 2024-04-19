@@ -31,7 +31,7 @@ setpayloadf (float *result, float payload)
 {
 #if FLT_MANT_DIG == 24
   if (
-# if defined __hppa || defined __mips__ || defined __sh__
+# if defined __hppa || (defined __mips__ && !MIPS_NAN2008_FLOAT) || defined __sh__
       /* A zero payload is not allowed, because that would denote Infinity.
          Cf. snan.h.  */
       payload > 0.0f
