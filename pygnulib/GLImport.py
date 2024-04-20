@@ -943,11 +943,14 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
 
         # Prepare basic filelist and basic old_files/new_files variables.
         filelist = sorted(set(filelist))
+        # Add m4/gnulib-tool.m4 to the file list. It is not part of any module.
         new_files = filelist + ['m4/gnulib-tool.m4']
         old_files = list(self.cache['files'])
         path = joinpath(destdir, m4base, 'gnulib-tool.m4')
         if isfile(path):
             old_files.append(joinpath('m4', 'gnulib-tool.m4'))
+        # old_files is the list of files according to the last gnulib-tool invocation.
+        # new_files is the list of files after this gnulib-tool invocation.
 
         # Construct tables and transformers.
         transformers = dict()
@@ -965,14 +968,18 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
             new_table.append(tuple([dest, src]))
         old_table = sorted(set(old_table))
         new_table = sorted(set(new_table))
+        # old_table is a table with two columns: (rewritten-file-name original-file-name),
+        # representing the files according to the last gnulib-tool invocation.
+        # new_table is a table with two columns: (rewritten-file-name original-file-name),
+        # representing the files after this gnulib-tool invocation.
 
         # Prepare the filetable.
         filetable = dict()
         filetable['all'] = sorted(set(filelist))
         filetable['old'] = \
-            sorted(set(old_table), key=lambda t: tuple(t[0].lower()))
+            sorted(set(old_table), key=lambda pair: pair[0])
         filetable['new'] = \
-            sorted(set(new_table), key=lambda t: tuple(t[0].lower()))
+            sorted(set(new_table), key=lambda pair: pair[0])
         filetable['added'] = []
         filetable['removed'] = []
 
@@ -1046,7 +1053,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         pairs = [ f
                   for f in filetable['old']
                   if f not in filetable['new'] ]
-        pairs = sorted(set(pairs), key=lambda t: tuple(t[0].lower()))
+        pairs = sorted(set(pairs), key=lambda pair: pair[0])
         files = sorted(set(pair[0] for pair in pairs))
         for file in files:
             path = joinpath(destdir, file)
