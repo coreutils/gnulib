@@ -192,7 +192,14 @@ case "$GNULIB_TOOL_IMPL" in
           func_fatal_error "gnulib-tool.sh succeeded but gnulib-tool.py failed! Inspect $tmp/ and $tmp-py-err."
         fi
         # Compare the two results on the file system.
-        diff -r -q . "$tmp" >/dev/null ||
+        # GNU diffutils 3.3 or newer support option --no-dereference. This
+        # option avoids errors on dangling links.
+        if LC_ALL=C diff --help 2>/dev/null | grep no-dereference >/dev/null; then
+          diff_options='--no-dereference'
+        else
+          diff_options=
+        fi
+        diff -r $diff_options -q . "$tmp" >/dev/null ||
           func_fatal_error "gnulib-tool.py produced different files than gnulib-tool.sh! Compare `pwd` and $tmp."
         # Compare the two outputs.
         diff -q "$tmp-sh-out" "$tmp-py-out" >/dev/null ||
@@ -235,7 +242,14 @@ case "$GNULIB_TOOL_IMPL" in
           func_fatal_error "gnulib-tool.sh succeeded but gnulib-tool.py failed! Inspect $tmp/ and $tmp-py-err."
         fi
         # Compare the two results on the file system.
-        diff -r -q "$dir" "$tmp" >/dev/null ||
+        # GNU diffutils 3.3 or newer support option --no-dereference. This
+        # option avoids errors on dangling links.
+        if LC_ALL=C diff --help 2>/dev/null | grep no-dereference >/dev/null; then
+          diff_options='--no-dereference'
+        else
+          diff_options=
+        fi
+        diff -r $diff_options -q "$dir" "$tmp" >/dev/null ||
           func_fatal_error "gnulib-tool.py produced different files than gnulib-tool.sh! Compare $dir and $tmp."
         # Compare the two outputs.
         diff -q "$tmp-sh-out" "$tmp-py-out" >/dev/null ||
