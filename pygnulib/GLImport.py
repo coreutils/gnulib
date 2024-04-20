@@ -1048,11 +1048,18 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         # Create GLFileAssistant instance to process files.
         assistant = GLFileAssistant(self.config, transformers)
 
+        # Set of rewritten-file-names from filetable['old'].
+        old_rewritten_files = { pair[0]
+                                for pair in filetable['old'] }
+        # Set of rewritten-file-names from filetable['new'].
+        new_rewritten_files = { pair[0]
+                                for pair in filetable['new'] }
+
         # Files which are in filetable['old'] and not in filetable['new'].
         # They will be removed and added to filetable['removed'] list.
-        pairs = [ f
-                  for f in filetable['old']
-                  if f not in filetable['new'] ]
+        pairs = [ pair
+                  for pair in filetable['old']
+                  if pair[0] not in new_rewritten_files ]
         pairs = sorted(set(pairs), key=lambda pair: pair[0])
         files = sorted(set(pair[0] for pair in pairs))
         for file in files:
@@ -1074,9 +1081,9 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         # Files which are in filetable['new'] and not in filetable['old'].
         # They will be added/updated and added to filetable['added'] list.
         already_present = False
-        pairs = [ f
-                  for f in filetable['new']
-                  if f not in filetable['old'] ]
+        pairs = [ pair
+                  for pair in filetable['new']
+                  if pair[0] not in old_rewritten_files ]
         pairs = sorted(set(pairs))
         for pair in pairs:
             original = pair[1]
@@ -1088,9 +1095,9 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         # Files which are in filetable['new'] and in filetable['old'].
         # They will be added/updated and added to filetable['added'] list.
         already_present = True
-        pairs = [ f
-                  for f in filetable['new']
-                  if f in filetable['old'] ]
+        pairs = [ pair
+                  for pair in filetable['new']
+                  if pair[0] in old_rewritten_files ]
         pairs = sorted(set(pairs))
         for pair in pairs:
             original = pair[1]
