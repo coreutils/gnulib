@@ -21,15 +21,8 @@ from __future__ import annotations
 import os
 import re
 import subprocess as sp
+from pygnulib import __author__, __copyright__
 from . import constants
-
-
-#===============================================================================
-# Define module information
-#===============================================================================
-__author__ = constants.__author__
-__license__ = constants.__license__
-__copyright__ = constants.__copyright__
 
 
 #===============================================================================
@@ -125,7 +118,7 @@ class GLInfo:
 
     def copyright_range(self) -> str:
         '''Returns a formatted copyright string showing a year range.'''
-        return f'Copyright (C) {constants.__copyright__}'
+        return f'Copyright (C) {__copyright__}'
 
     def usage(self) -> str:
         '''Show help message.'''

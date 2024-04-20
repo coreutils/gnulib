@@ -34,16 +34,6 @@ import __main__ as interpreter
 # Define module information
 #===============================================================================
 __all__ = []
-__author__ = \
-    [
-        'Bruno Haible',
-        'Paul Eggert',
-        'Simon Josefsson',
-        'Dmitry Selyutin',
-        'Collin Funk',
-    ]
-__license__ = 'GNU GPLv3+'
-__copyright__ = '2002-2024 Free Software Foundation, Inc.'
 
 
 #===============================================================================

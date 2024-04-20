@@ -28,14 +28,6 @@ from pygnulib.enums import CopyAction
 
 
 #===============================================================================
-# Define module information
-#===============================================================================
-__author__ = constants.__author__
-__license__ = constants.__license__
-__copyright__ = constants.__copyright__
-
-
-#===============================================================================
 # Define global constants
 #===============================================================================
 MODES = constants.MODES
