@@ -973,7 +973,7 @@ class GLMegaTestDir:
         emit += 'for module in %s; do\n' % ' '.join(megasubdirs)
         emit += '  echo "Working on module $module..."\n'
         emit += '  safemodule=`echo $module | sed -e \'s|/|-|g\'`\n'
-        emit += '  (echo "To: gnulib@autobuild.josefsson.org"\\\n'
+        emit += '  (echo "To: gnulib@autobuild.josefsson.org"\n'
         emit += '   echo\n'
         emit += '   set -x\n'
         emit += '   : autobuild project... $module\n'
