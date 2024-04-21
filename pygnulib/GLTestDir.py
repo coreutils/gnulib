@@ -185,9 +185,12 @@ class GLTestDir:
                                                    'mountlist', 'lib-ignore']]
 
         # Canonicalize the list of specified modules.
-        specified_modules = sorted(set(specified_modules))
-        specified_modules = [ self.modulesystem.find(m)
-                              for m in specified_modules ]
+        modules = set()
+        for name in specified_modules:
+            module = self.modulesystem.find(name)
+            if module is not None:
+                modules.add(module)
+        specified_modules = sorted(modules)
 
         # Test modules which invoke AC_CONFIG_FILES cannot be used with
         # --with-tests --single-configure. Avoid them.

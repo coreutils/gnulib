@@ -88,7 +88,9 @@ class GLModuleSystem:
         return result
 
     def find(self, module: str) -> GLModule | None:
-        '''Find the given module.'''
+        '''Return the GLModule object given the module name,
+        or None if the module description file with that name does not exist.
+        - module, The name of the module.'''
         if type(module) is not str:
             raise TypeError('module must be a string, not %s'
                             % type(module).__name__)
