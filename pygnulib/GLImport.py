@@ -805,9 +805,9 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                 else:  # if self.config['dryrun']
                     print('Create %s' % srcpath)
 
-    def prepare(self) -> tuple[dict[str, list[str]], dict[str, str]]:
-        '''Make all preparations before the execution of the code.
-        Returns filetable and sed transformers, which change the license.'''
+    def prepare(self) -> tuple[dict[str, list[str]], dict[str, tuple[re.Pattern, str] | None]]:
+        '''Perform preperations before GLImport.execute().
+        Returns a filetable and the transformers passed to GLFileAssistant().'''
         destdir = self.config['destdir']
         modules = list(self.config['modules'])
         m4base = self.config['m4base']
@@ -979,7 +979,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         result = tuple([filetable, transformers])
         return result
 
-    def execute(self, filetable: dict[str, list[str]], transformers: dict[str, str]) -> None:
+    def execute(self, filetable: dict[str, list[str]], transformers: dict[str, tuple[re.Pattern, str] | None]) -> None:
         '''Perform operations on the lists of files, which are given in a special
         format except filelist argument. Such lists of files can be created using
         GLImport.prepare() function.'''
