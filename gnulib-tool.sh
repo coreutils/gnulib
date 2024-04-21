@@ -6504,6 +6504,9 @@ func_create_testdir ()
     # Except lib-ignore, which leads to link errors when Sun C++ is used. FIXME.
     modules=`func_all_modules`
     modules=`for m in $modules; do case $m in config-h | non-recursive-gnulib-prefix-hack | timevar | mountlist | lib-ignore) ;; *) echo $m;; esac; done`
+  else
+    # Validate the list of specified modules.
+    modules=`for module in $modules; do func_verify_module; if test -n "$module"; then echo "$module"; fi; done`
   fi
   specified_modules="$modules"
 
