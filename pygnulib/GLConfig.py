@@ -87,7 +87,7 @@ class GLConfig:
                  errors: bool | None = None) -> None:
         '''Create new GLConfig instance.'''
         self.table = dict()
-        self.table['tempdir'] = tempfile.mkdtemp()
+        self.table['tempdir'] = tempfile.mkdtemp(prefix='glpy')
         # Check and store the attributes.
         # Remove trailing slashes from the directory names. This is necessary
         # for m4base (to avoid an error in func_import) and optional for the
