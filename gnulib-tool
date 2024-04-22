@@ -199,7 +199,7 @@ case "$GNULIB_TOOL_IMPL" in
         else
           diff_options=
         fi
-        diff -r $diff_options -q . "$tmp" >/dev/null ||
+        diff -r $diff_options --exclude=__pycache__ -q . "$tmp" >/dev/null ||
           func_fatal_error "gnulib-tool.py produced different files than gnulib-tool.sh! Compare `pwd` and $tmp."
         # Compare the two outputs.
         diff -q "$tmp-sh-out" "$tmp-py-out" >/dev/null ||
