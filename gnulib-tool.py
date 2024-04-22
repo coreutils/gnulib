@@ -144,6 +144,12 @@ else
   func_fatal_error "python3 not found; try setting GNULIB_TOOL_IMPL=sh"
 fi
 
+# Tell Python to store the compiled bytecode outside the gnulib directory.
+if test -z "$PYTHONPYCACHEPREFIX"; then
+  PYTHONPYCACHEPREFIX="${TMPDIR-/tmp}/gnulib-python-cache-${USER-$LOGNAME}"
+  export PYTHONPYCACHEPREFIX
+fi
+
 profiler_args=
 # For profiling, cf. <https://docs.python.org/3/library/profile.html>.
 #profiler_args="-m cProfile -s tottime"
