@@ -24,25 +24,19 @@ import sys
 import hashlib
 import subprocess as sp
 from collections import defaultdict
-from . import constants
+from .constants import (
+    DIRS,
+    ENCS,
+    TESTS,
+    combine_lines,
+    filter_filelist,
+    joinpath,
+    lines_to_multiline,
+    subend,
+)
 from .GLError import GLError
 from .GLConfig import GLConfig
 from .GLFileSystem import GLFileSystem
-
-
-#===============================================================================
-# Define global constants
-#===============================================================================
-DIRS = constants.DIRS
-ENCS = constants.ENCS
-TESTS = constants.TESTS
-joinpath = constants.joinpath
-subend = constants.subend
-lines_to_multiline = constants.lines_to_multiline
-combine_lines = constants.combine_lines
-isdir = os.path.isdir
-isfile = os.path.isfile
-filter_filelist = constants.filter_filelist
 
 
 #===============================================================================
@@ -78,11 +72,11 @@ class GLModuleSystem:
         badnames = ['ChangeLog', 'COPYING', 'README', 'TEMPLATE',
                     'TEMPLATE-EXTENDED', 'TEMPLATE-TESTS']
         if module not in badnames:
-            result = isfile(joinpath(DIRS['modules'], module))
+            result = os.path.isfile(joinpath(DIRS['modules'], module))
             if not result:
                 for localdir in localpath:
-                    if (isdir(joinpath(localdir, 'modules'))
-                            and isfile(joinpath(localdir, 'modules', module))):
+                    if (os.path.isdir(joinpath(localdir, 'modules'))
+                            and os.path.isfile(joinpath(localdir, 'modules', module))):
                         result = True
                         break
         return result
@@ -128,7 +122,7 @@ class GLModuleSystem:
         find_args = ['find', 'modules', '-type', 'f', '-print']
 
         # Read modules from gnulib root directory.
-        result += sp.run(find_args, cwd=constants.DIRS['root'], text=True, capture_output=True, check=False).stdout
+        result += sp.run(find_args, cwd=DIRS['root'], text=True, capture_output=True, check=False).stdout
 
         # Read modules from local directories.
         if len(localpath) > 0:
@@ -589,7 +583,7 @@ class GLModule:
             else:  # if not tests module
                 # Synthesize an EXTRA_DIST augmentation.
                 snippet = self.getAutomakeSnippet_Conditional()
-                snippet = constants.combine_lines(snippet)
+                snippet = combine_lines(snippet)
                 pattern = re.compile(r'^lib_SOURCES[\t ]*\+=[\t ]*(.*)$', re.MULTILINE)
                 mentioned_files = set(pattern.findall(snippet))
                 if mentioned_files:

@@ -23,7 +23,25 @@ import re
 import sys
 import subprocess as sp
 from pathlib import Path
-from . import constants
+from .constants import (
+    DIRS,
+    TESTS,
+    UTILS,
+    combine_lines,
+    execute,
+    ensure_writable,
+    force_output,
+    hardlink,
+    joinpath,
+    link_relative,
+    lines_to_multiline,
+    movefile,
+    copyfile,
+    substart,
+    bold_escapes,
+    relinverse,
+    rmtree,
+)
 from .enums import CopyAction
 from .GLError import GLError
 from .GLConfig import GLConfig
@@ -33,24 +51,6 @@ from .GLFileSystem import GLFileSystem
 from .GLFileSystem import GLFileAssistant
 from .GLMakefileTable import GLMakefileTable
 from .GLEmiter import GLEmiter
-
-
-#===============================================================================
-# Define global constants
-#===============================================================================
-DIRS = constants.DIRS
-UTILS = constants.UTILS
-TESTS = constants.TESTS
-joinpath = constants.joinpath
-relinverse = constants.relinverse
-copyfile = constants.copyfile
-ensure_writable = constants.ensure_writable
-movefile = constants.movefile
-lines_to_multiline = constants.lines_to_multiline
-combine_lines = constants.combine_lines
-isdir = os.path.isdir
-isfile = os.path.isfile
-normpath = os.path.normpath
 
 
 def _patch_test_driver() -> None:
@@ -66,17 +66,17 @@ def _patch_test_driver() -> None:
         try:
             result = sp.call(command, shell=True, stdout=sp.DEVNULL, stderr=sp.DEVNULL)
         except OSError as exc:
-            if isfile(f'{test_driver}.orig'):
+            if os.path.isfile(f'{test_driver}.orig'):
                 os.remove(f'{test_driver}.orig')
-            if isfile(f'{test_driver}.rej'):
+            if os.path.isfile(f'{test_driver}.rej'):
                 os.remove(f'{test_driver}.rej')
             raise GLError(20, None) from exc
         if result == 0:
             patched = True
             break
-        if isfile(f'{test_driver}.orig'):
+        if os.path.isfile(f'{test_driver}.orig'):
             os.remove(f'{test_driver}.orig')
-        if isfile(f'{test_driver}.rej'):
+        if os.path.isfile(f'{test_driver}.rej'):
             os.remove(f'{test_driver}.rej')
     if not patched:
         raise GLError(20, None)
@@ -139,19 +139,19 @@ class GLTestDir:
         result = []
         for file in files:
             if file.startswith('build-aux/'):
-                path = constants.substart('build-aux/', '%s/' % auxdir, file)
+                path = substart('build-aux/', '%s/' % auxdir, file)
             elif file.startswith('doc/'):
-                path = constants.substart('doc/', '%s/' % docbase, file)
+                path = substart('doc/', '%s/' % docbase, file)
             elif file.startswith('lib/'):
-                path = constants.substart('lib/', '%s/' % sourcebase, file)
+                path = substart('lib/', '%s/' % sourcebase, file)
             elif file.startswith('m4/'):
-                path = constants.substart('m4/', '%s/' % m4base, file)
+                path = substart('m4/', '%s/' % m4base, file)
             elif file.startswith('tests/'):
-                path = constants.substart('tests/', '%s/' % testsbase, file)
+                path = substart('tests/', '%s/' % testsbase, file)
             elif file.startswith('tests=lib/'):
-                path = constants.substart('tests=lib/', '%s/' % testsbase, file)
+                path = substart('tests=lib/', '%s/' % testsbase, file)
             elif file.startswith('top/'):
-                path = constants.substart('top/', '', file)
+                path = substart('top/', '', file)
             else:  # file is not a special file
                 path = file
             result.append(os.path.normpath(path))
@@ -247,7 +247,7 @@ class GLTestDir:
 
         # Show final module list.
         if verbose >= 0:
-            (bold_on, bold_off) = constants.bold_escapes()
+            (bold_on, bold_off) = bold_escapes()
             print('Module list with included dependencies (indented):')
             specified_modules_set = { str(module)
                                       for module in specified_modules }
@@ -344,7 +344,7 @@ class GLTestDir:
                         for file in self.rewrite_files(filelist) ]
         directories = sorted(set(directories))
         for directory in directories:
-            if not isdir(directory):
+            if not os.path.isdir(directory):
                 os.makedirs(directory)
 
         # Copy files or make symbolic links or hard links.
@@ -357,18 +357,18 @@ class GLTestDir:
             dest = row[0]
             destpath = joinpath(self.testdir, dest)
             if src.startswith('tests=lib/'):
-                src = constants.substart('tests=lib/', 'lib/', src)
+                src = substart('tests=lib/', 'lib/', src)
             lookedup, flag = self.filesystem.lookup(src)
-            if isfile(destpath):
+            if os.path.isfile(destpath):
                 os.remove(destpath)
             if flag:
                 copyfile(lookedup, destpath)
                 ensure_writable(destpath)
             else:  # if not flag
                 if self.filesystem.shouldLink(src, lookedup) == CopyAction.Symlink:
-                    constants.link_relative(lookedup, destpath)
+                    link_relative(lookedup, destpath)
                 elif self.filesystem.shouldLink(src, lookedup) == CopyAction.Hardlink:
-                    constants.hardlink(lookedup, destpath)
+                    hardlink(lookedup, destpath)
                 else:
                     copyfile(lookedup, destpath)
                     ensure_writable(destpath)
@@ -376,7 +376,7 @@ class GLTestDir:
         # Create $sourcebase/Makefile.am.
         for_test = True
         directory = joinpath(self.testdir, sourcebase)
-        if not isdir(directory):
+        if not os.path.isdir(directory):
             os.mkdir(directory)
         destfile = joinpath(directory, 'Makefile.am')
         if single_configure:
@@ -390,14 +390,14 @@ class GLTestDir:
 
         # Create $m4base/Makefile.am.
         directory = joinpath(self.testdir, m4base)
-        if not isdir(directory):
+        if not os.path.isdir(directory):
             os.mkdir(directory)
         destfile = joinpath(directory, 'Makefile.am')
         emit = '## Process this file with automake to produce Makefile.in.\n\n'
         emit += 'EXTRA_DIST =\n'
         for file in filelist:
             if file.startswith('m4/'):
-                file = constants.substart('m4/', '', file)
+                file = substart('m4/', '', file)
                 emit += 'EXTRA_DIST += %s\n' % file
         with open(destfile, mode='w', newline='\n', encoding='utf-8') as file:
             file.write(emit)
@@ -408,7 +408,7 @@ class GLTestDir:
         inctests = self.config.checkInclTestCategory(TESTS['tests'])
         if inctests:
             directory = joinpath(self.testdir, testsbase)
-            if not isdir(directory):
+            if not os.path.isdir(directory):
                 os.mkdir(directory)
             if single_configure:
                 # Create $testsbase/Makefile.am.
@@ -664,77 +664,77 @@ class GLTestDir:
         # Create autogenerated files.
         # Do not use "${AUTORECONF} --force --install", because it may invoke
         # autopoint, which brings in older versions of some of our .m4 files.
-        constants.force_output()
+        force_output()
         os.chdir(self.testdir)
         # gettext
-        if isfile(joinpath(m4base, 'gettext.m4')):
+        if os.path.isfile(joinpath(m4base, 'gettext.m4')):
             args = [UTILS['autopoint'], '--force']
-            constants.execute(args, verbose)
+            execute(args, verbose)
             for src in os.listdir(m4base):
                 src = joinpath(m4base, src)
                 if src.endswith('.m4~'):
                     dest = src[:-1]
-                    if isfile(dest):
+                    if os.path.isfile(dest):
                         os.remove(dest)
                     movefile(src, dest)
         # libtoolize
         if libtool:
             args = [UTILS['libtoolize'], '--copy']
-            constants.execute(args, verbose)
+            execute(args, verbose)
         # aclocal
         args = [UTILS['aclocal'], '-I', m4base]
-        constants.execute(args, verbose)
-        if not isdir('build-aux'):
+        execute(args, verbose)
+        if not os.path.isdir('build-aux'):
             print('executing mkdir build-aux')
             os.mkdir('build-aux')
         # autoconf
         args = [UTILS['autoconf']]
-        constants.execute(args, verbose)
+        execute(args, verbose)
         # autoheader
         args = [UTILS['autoheader']]
-        constants.execute(args, verbose)
+        execute(args, verbose)
         # Explicit 'touch config.h.in': see <https://savannah.gnu.org/support/index.php?109406>.
         print('executing touch config.h.in')
         Path('config.h.in').touch()
         # automake
         args = [UTILS['automake'], '--add-missing', '--copy']
-        constants.execute(args, verbose)
-        constants.rmtree('autom4te.cache')
+        execute(args, verbose)
+        rmtree('autom4te.cache')
         os.chdir(DIRS['cwd'])
         if inctests and not single_configure:
             # Do not use "${AUTORECONF} --force --install", because it may invoke
             # autopoint, which brings in older versions of some of our .m4 files.
             os.chdir(joinpath(self.testdir, testsbase))
             # gettext
-            if isfile(joinpath(m4base, 'gettext.m4')):
+            if os.path.isfile(joinpath(m4base, 'gettext.m4')):
                 args = [UTILS['autopoint'], '--force']
-                constants.execute(args, verbose)
+                execute(args, verbose)
                 for src in os.listdir(m4base):
                     src = joinpath(m4base, src)
                     if src.endswith('.m4~'):
                         dest = src[:-1]
-                        if isfile(dest):
+                        if os.path.isfile(dest):
                             os.remove(dest)
                         movefile(src, dest)
             # aclocal
             args = [UTILS['aclocal'], '-I', joinpath('..', m4base)]
-            constants.execute(args, verbose)
-            if not isdir(joinpath('../build-aux')):
+            execute(args, verbose)
+            if not os.path.isdir(joinpath('../build-aux')):
                 print('executing mkdir ../build-aux')
                 os.mkdir('../build-aux')
             # autoconf
             args = [UTILS['autoconf']]
-            constants.execute(args, verbose)
+            execute(args, verbose)
             # autoheader
             args = [UTILS['autoheader']]
-            constants.execute(args, verbose)
+            execute(args, verbose)
             # Explicit 'touch config.h.in': see <https://savannah.gnu.org/support/index.php?109406>.
             print('executing touch config.h.in')
             Path('config.h.in').touch()
             # automake
             args = [UTILS['automake'], '--add-missing', '--copy']
-            constants.execute(args, verbose)
-            constants.rmtree('autom4te.cache')
+            execute(args, verbose)
+            rmtree('autom4te.cache')
             os.chdir(DIRS['cwd'])
 
         # Need to run configure and make once, to create built files that are to be
@@ -828,7 +828,7 @@ class GLTestDir:
 
         os.chdir(self.testdir)
         if distributed_built_sources or tests_distributed_built_sources:
-            constants.force_output()
+            force_output()
             sp.call('./configure')
             if distributed_built_sources:
                 os.chdir(sourcebase)
@@ -866,10 +866,10 @@ class GLTestDir:
                     'LIBTOOLIZE=%s' % UTILS['libtoolize'],
                     'distclean']
             sp.call(args)
-        if isfile(joinpath('build-aux', 'test-driver')):
+        if os.path.isfile(joinpath('build-aux', 'test-driver')):
             _patch_test_driver()
         os.chdir(DIRS['cwd'])
-        constants.rmtree(self.config['tempdir'])
+        rmtree(self.config['tempdir'])
 
 
 #===============================================================================
@@ -947,7 +947,7 @@ class GLMegaTestDir:
         repdict['Nov'] = repdict['November'] = '11'
         repdict['Dec'] = repdict['December'] = '12'
         vc_witness = joinpath(DIRS['root'], '.git', 'refs', 'heads', 'master')
-        if not isfile(vc_witness):
+        if not os.path.isfile(vc_witness):
             vc_witness = joinpath(DIRS['root'], 'ChangeLog')
         mdate_sh = joinpath(DIRS['root'], 'build-aux', 'mdate-sh')
         args = ['sh', mdate_sh, vc_witness]
@@ -1009,22 +1009,22 @@ class GLMegaTestDir:
             file.write(emit)
 
         # Create autogenerated files.
-        constants.force_output()
+        force_output()
         os.chdir(self.megatestdir)
         args = [UTILS['aclocal']]
-        constants.execute(args, verbose)
+        execute(args, verbose)
         try:  # Try to make a directory
-            if not isdir('build-aux'):
+            if not os.path.isdir('build-aux'):
                 print('executing mkdir build-aux')
                 os.mkdir('build-aux')
         except Exception:
             pass
         args = [UTILS['autoconf']]
-        constants.execute(args, verbose)
+        execute(args, verbose)
         args = [UTILS['automake'], '--add-missing', '--copy']
-        constants.execute(args, verbose)
-        constants.rmtree('autom4te.cache')
-        if isfile(joinpath('build-aux', 'test-driver')):
+        execute(args, verbose)
+        rmtree('autom4te.cache')
+        if os.path.isfile(joinpath('build-aux', 'test-driver')):
             _patch_test_driver()
         os.chdir(DIRS['cwd'])
-        constants.rmtree(self.config['tempdir'])
+        rmtree(self.config['tempdir'])

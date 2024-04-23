@@ -19,17 +19,8 @@ from __future__ import annotations
 # Define global imports
 #===============================================================================
 import os
-from . import constants
+from .constants import joinpath
 from .GLConfig import GLConfig
-
-
-#===============================================================================
-# Define global constants
-#===============================================================================
-TESTS = constants.TESTS
-isfile = os.path.isfile
-joinpath = constants.joinpath
-
 
 #===============================================================================
 # Define GLMakefileTable class
@@ -97,7 +88,7 @@ class GLMakefileTable:
         dir1 = '%s%s' % (m4base, os.path.sep)
         dir2 = ''
         while (dir1
-               and not (isfile(joinpath(self.config['destdir'], dir1, 'Makefile.am'))
+               and not (os.path.isfile(joinpath(self.config['destdir'], dir1, 'Makefile.am'))
                         or joinpath(dir1, 'Makefile.am') == joinpath(sourcebase, source_makefile_am)
                         or (gentests and joinpath(dir1, 'Makefile.am') == joinpath(testsbase, tests_makefile_am)))):
             dir2 = joinpath(os.path.basename(dir1), dir2)

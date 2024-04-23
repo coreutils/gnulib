@@ -22,15 +22,7 @@ import os
 import re
 import subprocess as sp
 from pygnulib import __author__, __copyright__
-from . import constants
-
-
-#===============================================================================
-# Define global constants
-#===============================================================================
-DIRS = constants.DIRS
-joinpath = constants.joinpath
-isdir = os.path.isdir
+from .constants import DIRS, joinpath
 
 
 #===============================================================================
@@ -81,7 +73,7 @@ class GLInfo:
 
     def date(self) -> str:
         '''Return formatted string which contains date and time in GMT format.'''
-        if isdir(DIRS['git']):
+        if os.path.isdir(DIRS['git']):
             try:
                 sp.check_call(['git', '--version'], stdout=sp.DEVNULL)
                 have_git = True
@@ -322,7 +314,7 @@ Report bugs to <bug-gnulib@gnu.org>.'''
 
     def version(self) -> str:
         '''Return formatted string which contains git version.'''
-        if isdir(DIRS['git']):
+        if os.path.isdir(DIRS['git']):
             try:
                 sp.check_call(['git', '--version'], stdout=sp.DEVNULL)
                 have_git = True

@@ -22,21 +22,14 @@ import os
 import copy
 import tempfile
 from typing import Any
-from . import constants
+from .constants import (
+    MODES,
+    TESTS,
+    joinpath,
+    remove_trailing_slashes,
+)
 from .GLError import GLError
 from pygnulib.enums import CopyAction
-
-
-#===============================================================================
-# Define global constants
-#===============================================================================
-MODES = constants.MODES
-TESTS = constants.TESTS
-joinpath = constants.joinpath
-relpath = constants.relativize
-remove_trailing_slashes = constants.remove_trailing_slashes
-isfile = os.path.isfile
-normpath = os.path.normpath
 
 
 #===============================================================================
@@ -1053,9 +1046,9 @@ class GLConfig:
     def resetAutoconfFile(self) -> None:
         '''Reset path of autoconf file relative to destdir.'''
         configure_ac = ''
-        if isfile(joinpath(self.table['destdir'], 'configure.ac')):
+        if os.path.isfile(joinpath(self.table['destdir'], 'configure.ac')):
             configure_ac = joinpath(self.table['destdir'], 'configure.ac')
-        elif isfile(joinpath(self.table['destdir'], 'configure.in')):
+        elif os.path.isfile(joinpath(self.table['destdir'], 'configure.in')):
             configure_ac = joinpath(self.table['destdir'], 'configure.in')
         self.table['configure_ac'] = configure_ac
 

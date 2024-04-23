@@ -85,7 +85,23 @@ import argparse
 import subprocess as sp
 import shlex
 from tempfile import mktemp
-from pygnulib import constants
+from pygnulib.constants import (
+    APP,
+    DIRS,
+    TESTS,
+    UTILS,
+    MODES,
+    ENCS,
+    joinpath,
+    lines_to_multiline,
+    ensure_writable,
+    copyfile,
+    substart,
+    force_output,
+    init_DIRS,
+    rmtree,
+    DEFAULT_AUTOCONF_MINVERSION,
+)
 from pygnulib.enums import CopyAction
 from pygnulib.GLConfig import GLConfig
 from pygnulib.GLError import GLError
@@ -99,30 +115,12 @@ from pygnulib.GLTestDir import GLMegaTestDir
 
 
 #===============================================================================
-# Define global constants
-#===============================================================================
-APP = constants.APP
-DIRS = constants.DIRS
-ENCS = constants.ENCS
-UTILS = constants.UTILS
-MODES = constants.MODES
-TESTS = constants.TESTS
-joinpath = constants.joinpath
-copyfile = constants.copyfile
-ensure_writable = constants.ensure_writable
-lines_to_multiline = constants.lines_to_multiline
-isabs = os.path.isabs
-isdir = os.path.isdir
-isfile = os.path.isfile
-
-
-#===============================================================================
 # Define main part
 #===============================================================================
 def main() -> None:
     info = GLInfo()
     parser = argparse.ArgumentParser(
-        prog=constants.APP['name'],
+        prog=APP['name'],
         usage='gnulib-tool.py --help',
         add_help=False)
 
@@ -510,7 +508,7 @@ def main() -> None:
         gnulib_dir = os.path.abspath(gnulib_dir[0])
     else:
         gnulib_dir = APP['root']
-    constants.init_DIRS(gnulib_dir)
+    init_DIRS(gnulib_dir)
 
     # Handle --help and --version, ignoring all other options.
     if cmdargs.help != None:
@@ -529,7 +527,7 @@ def main() -> None:
     # Report unhandled arguments.
     for arg in unhandled:
         if arg.startswith('-'):
-            message = '%s: Unrecognized option \'%s\'.\n' % (constants.APP['name'], arg)
+            message = '%s: Unrecognized option \'%s\'.\n' % (APP['name'], arg)
             message += 'Try \'gnulib-tool --help\' for more information.\n'
             sys.stderr.write(message)
             sys.exit(1)
@@ -568,7 +566,7 @@ def main() -> None:
                  for arg in args
                  if arg != None ]
     if len(overflow) > 1:
-        message = '%s: Unable to combine different modes of work.\n' % constants.APP['name']
+        message = '%s: Unable to combine different modes of work.\n' % APP['name']
         message += 'Try \'gnulib-tool --help\' for more information.\n'
         sys.stderr.write(message)
         sys.exit(1)
@@ -663,10 +661,10 @@ def main() -> None:
     if cmdargs.mode_copy_file != None:
         mode = 'copy-file'
         if len(cmdargs.non_option_arguments) < 1 or len(cmdargs.non_option_arguments) > 2:
-            message = '%s: *** ' % constants.APP['name']
+            message = '%s: *** ' % APP['name']
             message += 'invalid number of arguments for --%s\n' % mode
             message += 'Try \'gnulib-tool --help\' for more information.\n'
-            message += '%s: *** Stop.\n' % constants.APP['name']
+            message += '%s: *** Stop.\n' % APP['name']
             sys.stderr.write(message)
             sys.exit(1)
         files = list(cmdargs.non_option_arguments)
@@ -697,24 +695,24 @@ def main() -> None:
                  or cmdargs.automake_subdir_tests != None
                  or cmdargs.macro_prefix != None or cmdargs.podomain != None
                  or cmdargs.witness_c_macro != None or cmdargs.vc_files != None))):
-        message = '%s: *** ' % constants.APP['name']
+        message = '%s: *** ' % APP['name']
         message += 'invalid options for --%s mode\n' % mode
         message += 'Try \'gnulib-tool --help\' for more information.\n'
-        message += '%s: *** Stop.\n' % constants.APP['name']
+        message += '%s: *** Stop.\n' % APP['name']
         sys.stderr.write(message)
         sys.exit(1)
     if cmdargs.pobase != None and cmdargs.podomain == None:
-        message = '%s: *** ' % constants.APP['name']
+        message = '%s: *** ' % APP['name']
         message += 'together with --po-base, you need to specify --po-domain\n'
         message += 'Try \'gnulib-tool --help\' for more information.\n'
-        message += '%s: *** Stop.\n' % constants.APP['name']
+        message += '%s: *** Stop.\n' % APP['name']
         sys.stderr.write(message)
         sys.exit(1)
     if cmdargs.pobase == None and cmdargs.podomain != None:
         message = 'gnulib-tool: warning: --po-domain has no effect without a --po-base option\n'
         sys.stderr.write(message)
     if mode != None and 'test' in mode and cmdargs.gnu_make:
-        message = '%s: --gnu-make not supported when including tests\n' % constants.APP['name']
+        message = '%s: --gnu-make not supported when including tests\n' % APP['name']
         sys.stderr.write(message)
         sys.exit(1)
 
@@ -760,26 +758,26 @@ def main() -> None:
             inctests = True
     incl_test_categories = []
     if inctests:
-        incl_test_categories.append(constants.TESTS['tests'])
+        incl_test_categories.append(TESTS['tests'])
     if cmdargs.inc_cxx_tests:
-        incl_test_categories.append(constants.TESTS['cxx-tests'])
+        incl_test_categories.append(TESTS['cxx-tests'])
     if cmdargs.inc_longrunning_tests:
-        incl_test_categories.append(constants.TESTS['longrunning-tests'])
+        incl_test_categories.append(TESTS['longrunning-tests'])
     if cmdargs.inc_privileged_tests:
-        incl_test_categories.append(constants.TESTS['privileged-tests'])
+        incl_test_categories.append(TESTS['privileged-tests'])
     if cmdargs.inc_unportable_tests:
-        incl_test_categories.append(constants.TESTS['unportable-tests'])
+        incl_test_categories.append(TESTS['unportable-tests'])
     if cmdargs.alltests:
-        incl_test_categories.append(constants.TESTS['all-tests'])
+        incl_test_categories.append(TESTS['all-tests'])
     excl_test_categories = []
     if cmdargs.excl_cxx_tests:
-        excl_test_categories.append(constants.TESTS['cxx-tests'])
+        excl_test_categories.append(TESTS['cxx-tests'])
     if cmdargs.excl_longrunning_tests:
-        excl_test_categories.append(constants.TESTS['longrunning-tests'])
+        excl_test_categories.append(TESTS['longrunning-tests'])
     if cmdargs.excl_privileged_tests:
-        excl_test_categories.append(constants.TESTS['privileged-tests'])
+        excl_test_categories.append(TESTS['privileged-tests'])
     if cmdargs.excl_unportable_tests:
-        excl_test_categories.append(constants.TESTS['unportable-tests'])
+        excl_test_categories.append(TESTS['unportable-tests'])
     lgpl = cmdargs.lgpl
     if lgpl != None:
         lgpl = lgpl[-1]
@@ -861,9 +859,9 @@ def main() -> None:
     elif mode == 'find':
         modulesystem = GLModuleSystem(config)
         for filename in files:
-            if (isfile(joinpath(DIRS['root'], filename))
+            if (os.path.isfile(joinpath(DIRS['root'], filename))
                     or (localpath != None
-                        and any([ isfile(joinpath(localdir, filename))
+                        and any([ os.path.isfile(joinpath(localdir, filename))
                                   for localdir in localpath ]))):
                 # Convert the file name to a POSIX basic regex.
                 # Needs to handle . [ \ * ^ $.
@@ -872,7 +870,7 @@ def main() -> None:
                 filename_line_regex = '^' + filename_regex + '$'
                 # Read module candidates from gnulib root directory.
                 command = "find modules -type f -print | xargs -n 100 grep -l %s /dev/null | sed -e 's,^modules/,,'" % shlex.quote(filename_line_regex)
-                with sp.Popen(command, shell=True, cwd=constants.DIRS['root'], stdout=sp.PIPE) as proc:
+                with sp.Popen(command, shell=True, cwd=DIRS['root'], stdout=sp.PIPE) as proc:
                     result = proc.stdout.read().decode('UTF-8')
                 # Read module candidates from local directories.
                 if localpath != None and len(localpath) > 0:
@@ -910,9 +908,9 @@ def main() -> None:
         # Prefer configure.ac but also look for configure.in.
         # NOTE: Use os.path.join so the leading './' is not removed. This
         # is to make the gnulib-tool test suite happy.
-        if isfile(os.path.join(destdir, 'configure.ac')):
+        if os.path.isfile(os.path.join(destdir, 'configure.ac')):
             configure_ac = os.path.join(destdir, 'configure.ac')
-        elif isfile(os.path.join(destdir, 'configure.in')):
+        elif os.path.isfile(os.path.join(destdir, 'configure.in')):
             configure_ac = os.path.join(destdir, 'configure.in')
         else:
             raise GLError(3, os.path.join(destdir, 'configure.ac'))
@@ -958,7 +956,7 @@ def main() -> None:
             if m4base:
                 # Apply func_import to a particular gnulib directory.
                 # Any number of additional modules can be given.
-                if not isfile(joinpath(destdir, m4base, 'gnulib-cache.m4')):
+                if not os.path.isfile(joinpath(destdir, m4base, 'gnulib-cache.m4')):
                     # First use of gnulib in the given m4base.
                     if not sourcebase:
                         sourcebase = 'lib'
@@ -986,7 +984,7 @@ def main() -> None:
                 m4dirs = []
                 dirisnext = False
                 filepath = joinpath(destdir, 'Makefile.am')
-                if isfile(filepath):
+                if os.path.isfile(filepath):
                     with open(filepath, mode='r', newline='\n', encoding='utf-8') as file:
                         data = file.read()
                     data = data.split('ACLOCAL_AMFLAGS')[1]
@@ -995,8 +993,8 @@ def main() -> None:
                     for aclocal_amflag in aclocal_amflags:
                         if dirisnext:
                             # Ignore absolute directory pathnames, like /usr/local/share/aclocal.
-                            if not isabs(aclocal_amflag):
-                                if isfile(joinpath(destdir, aclocal_amflag, 'gnulib-cache.m4')):
+                            if not os.path.isabs(aclocal_amflag):
+                                if os.path.isfile(joinpath(destdir, aclocal_amflag, 'gnulib-cache.m4')):
                                     m4dirs.append(aclocal_amflag)
                             dirisnext = False
                         else:  # if not dirisnext
@@ -1006,13 +1004,13 @@ def main() -> None:
                                 dirisnext = False
                     for arg in guessed_m4dirs:
                         # Ignore absolute directory pathnames, like /usr/local/share/aclocal.
-                        if not isabs(arg):
-                            if isfile(joinpath(destdir, arg, 'gnulib-cache.m4')):
+                        if not os.path.isabs(arg):
+                            if os.path.isfile(joinpath(destdir, arg, 'gnulib-cache.m4')):
                                 m4dirs.append(arg)
-                else:  # if not isfile(filepath)
+                else:  # if not os.path.isfile(filepath)
                     # No Makefile.am! Oh well. Look at the last generated aclocal.m4.
                     filepath = joinpath(destdir, 'aclocal.m4')
-                    if isfile(filepath):
+                    if os.path.isfile(filepath):
                         pattern = re.compile(r'm4_include\(\[(.*?)]\)')
                         with open(filepath, mode='r', newline='\n', encoding='utf-8') as file:
                             m4dirs = pattern.findall(file.read())
@@ -1020,7 +1018,7 @@ def main() -> None:
                                    for m4dir in m4dirs ]
                         m4dirs = [ m4dir
                                    for m4dir in m4dirs
-                                   if isfile(joinpath(destdir, m4dir, 'gnulib-cache.m4')) ]
+                                   if os.path.isfile(joinpath(destdir, m4dir, 'gnulib-cache.m4')) ]
                         m4dirs = sorted(set(m4dirs))
                 if len(m4dirs) == 0:
                     # First use of gnulib in a package.
@@ -1063,9 +1061,9 @@ def main() -> None:
 
     elif mode == 'create-testdir':
         if not destdir:
-            message = '%s: *** ' % constants.APP['name']
+            message = '%s: *** ' % APP['name']
             message += 'please specify --dir option\n'
-            message += '%s: *** Stop.\n' % constants.APP['name']
+            message += '%s: *** Stop.\n' % APP['name']
             sys.stderr.write(message)
             sys.exit(1)
         if not auxdir:
@@ -1076,9 +1074,9 @@ def main() -> None:
 
     elif mode == 'create-megatestdir':
         if not destdir:
-            message = '%s: *** ' % constants.APP['name']
+            message = '%s: *** ' % APP['name']
             message += 'please specify --dir option\n'
-            message += '%s: *** Stop.\n' % constants.APP['name']
+            message += '%s: *** Stop.\n' % APP['name']
             sys.stderr.write(message)
             sys.exit(1)
         if not auxdir:
@@ -1095,7 +1093,7 @@ def main() -> None:
         config.setAuxDir(auxdir)
         testdir = GLTestDir(config, destdir)
         testdir.execute()
-        constants.force_output()
+        force_output()
         os.chdir(destdir)
         os.mkdir('build')
         os.chdir('build')
@@ -1118,7 +1116,7 @@ def main() -> None:
             sys.stderr.write(message)
             sys.exit(1)
         os.chdir('../..')
-        constants.rmtree(destdir)
+        rmtree(destdir)
 
     elif mode == 'megatest':
         if not destdir:
@@ -1128,7 +1126,7 @@ def main() -> None:
         config.setAuxDir(auxdir)
         testdir = GLMegaTestDir(config, destdir)
         testdir.execute()
-        constants.force_output()
+        force_output()
         os.chdir(destdir)
         os.mkdir('build')
         os.chdir('build')
@@ -1148,7 +1146,7 @@ def main() -> None:
             sys.stderr.write(message)
             sys.exit(1)
         os.chdir('../..')
-        constants.rmtree(destdir)
+        rmtree(destdir)
 
     elif mode == 'extract-description':
         modulesystem = GLModuleSystem(config)
@@ -1198,9 +1196,9 @@ def main() -> None:
 
     elif mode == 'extract-dependencies':
         if avoids:
-            message = '%s: *** ' % constants.APP['name']
+            message = '%s: *** ' % APP['name']
             message += 'cannot combine --avoid and --extract-dependencies\n'
-            message += '%s: *** Stop.\n' % constants.APP['name']
+            message += '%s: *** Stop.\n' % APP['name']
             sys.stderr.write(message)
             sys.exit(1)
         modulesystem = GLModuleSystem(config)
@@ -1211,9 +1209,9 @@ def main() -> None:
 
     elif mode == 'extract-recursive-dependencies':
         if avoids:
-            message = '%s: *** ' % constants.APP['name']
+            message = '%s: *** ' % APP['name']
             message += 'cannot combine --avoid and --extract-recursive-dependencies\n'
-            message += '%s: *** Stop.\n' % constants.APP['name']
+            message += '%s: *** Stop.\n' % APP['name']
             sys.stderr.write(message)
             sys.exit(1)
         modulesystem = GLModuleSystem(config)
@@ -1252,9 +1250,9 @@ def main() -> None:
 
     elif mode == 'extract-recursive-link-directive':
         if avoids:
-            message = '%s: *** ' % constants.APP['name']
+            message = '%s: *** ' % APP['name']
             message += 'cannot combine --avoid and --extract-recursive-link-directive\n'
-            message += '%s: *** Stop.\n' % constants.APP['name']
+            message += '%s: *** Stop.\n' % APP['name']
             sys.stderr.write(message)
             sys.exit(1)
         modulesystem = GLModuleSystem(config)
@@ -1309,29 +1307,29 @@ def main() -> None:
         config.setTestsBase(testsbase)
         filesystem = GLFileSystem(config)
         lookedup, flag = filesystem.lookup(srcpath)
-        if isdir(dest):
+        if os.path.isdir(dest):
             destdir = dest
             if srcpath.startswith('build-aux/'):
-                destpath = constants.substart('build-aux/', '%s/' % auxdir, srcpath)
+                destpath = substart('build-aux/', '%s/' % auxdir, srcpath)
             elif srcpath.startswith('doc/'):
-                destpath = constants.substart('doc/', '%s/' % docbase, srcpath)
+                destpath = substart('doc/', '%s/' % docbase, srcpath)
             elif srcpath.startswith('lib/'):
-                destpath = constants.substart('lib/', '%s/' % sourcebase, srcpath)
+                destpath = substart('lib/', '%s/' % sourcebase, srcpath)
             elif srcpath.startswith('m4/'):
-                destpath = constants.substart('m4/', '%s/' % m4base, srcpath)
+                destpath = substart('m4/', '%s/' % m4base, srcpath)
             elif srcpath.startswith('tests/'):
-                destpath = constants.substart('tests/', '%s/' % testsbase, srcpath)
+                destpath = substart('tests/', '%s/' % testsbase, srcpath)
             elif srcpath.startswith('top/'):
-                destpath = constants.substart('top/', '', srcpath)
+                destpath = substart('top/', '', srcpath)
             else:  # either case
                 destpath = srcpath
-        else:  # if not isdir(dest)
+        else:  # if not os.path.isdir(dest)
             destdir = os.path.dirname(dest)
             destpath = os.path.basename(dest)
         # Create the directory for destfile.
         dirname = os.path.dirname(joinpath(destdir, destpath))
         if not config['dryrun']:
-            if dirname and not isdir(dirname):
+            if dirname and not os.path.isdir(dirname):
                 try:  # Try to create directories
                     os.makedirs(dirname)
                 except FileExistsError:
@@ -1344,22 +1342,22 @@ def main() -> None:
         ensure_writable(tmpfile)
         assistant.setOriginal(srcpath)
         assistant.setRewritten(destpath)
-        if isfile(joinpath(destdir, destpath)):
+        if os.path.isfile(joinpath(destdir, destpath)):
             # The file already exists.
             assistant.update(lookedup, flag, tmpfile, True)
-        else:  # if not isfile(joinpath(destdir, destpath))
+        else:  # if not os.path.isfile(joinpath(destdir, destpath))
             # Install the file.
             # Don't protest if the file should be there but isn't: it happens
             # frequently that developers don't put autogenerated files under
             # version control.
             assistant.add(lookedup, flag, tmpfile)
-        if isfile(tmpfile):
+        if os.path.isfile(tmpfile):
             os.remove(tmpfile)
 
     else:
-        message = '%s: *** ' % constants.APP['name']
+        message = '%s: *** ' % APP['name']
         message += 'no mode specified\n'
-        message += '%s: *** Stop.\n' % constants.APP['name']
+        message += '%s: *** Stop.\n' % APP['name']
         sys.stderr.write(message)
         sys.exit(1)
 
@@ -1368,7 +1366,7 @@ def main() -> None:
         # This disturbs the result of the next "gitk" invocation.
         # Workaround: Let git scan the files. This can be done through
         # "git update-index --refresh" or "git status" or "git diff".
-        if isdir(joinpath(DIRS['root'], '.git')):
+        if os.path.isdir(joinpath(DIRS['root'], '.git')):
             try:
                 sp.run(['git', 'update-index', '--refresh'],
                        cwd=DIRS['root'], stdout=sp.DEVNULL)
@@ -1385,7 +1383,7 @@ def main_with_exception_handling() -> None:
         errno = error.errno
         errinfo = error.errinfo
         if errmode == 0:
-            message = '%s: *** ' % constants.APP['name']
+            message = '%s: *** ' % APP['name']
             if errinfo == None:
                 errinfo = ''
             if errno == 1:
@@ -1396,7 +1394,7 @@ def main_with_exception_handling() -> None:
                 message += 'cannot find %s - make sure you run gnulib-tool from within your package\'s directory' % errinfo
             elif errno == 4:
                 message += 'minimum supported autoconf version is 2.64. Try adding'
-                message += 'AC_PREREQ([%s])' % constants.DEFAULT_AUTOCONF_MINVERSION
+                message += 'AC_PREREQ([%s])' % DEFAULT_AUTOCONF_MINVERSION
                 message += ' to your configure.ac.'
             elif errno == 5:
                 message += '%s is expected to contain gl_M4_BASE([%s])' % (repr(os.path.join(errinfo, 'gnulib-comp.m4')), repr(errinfo))
@@ -1449,6 +1447,6 @@ def main_with_exception_handling() -> None:
                 message += ('Option --automake-subdir/--automake-subdir-tests are only '
                             'supported if the definition of AUTOMAKE_OPTIONS in '
                             'Makefile.am contains \'subdir-objects\'.')
-            message += '\n%s: *** Stop.\n' % constants.APP['name']
+            message += '\n%s: *** Stop.\n' % APP['name']
             sys.stderr.write(message)
             sys.exit(1)

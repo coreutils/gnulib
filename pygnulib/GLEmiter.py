@@ -22,24 +22,20 @@ import os
 import re
 import subprocess as sp
 from collections.abc import Callable
-from . import constants
+from .constants import (
+    UTILS,
+    joinpath,
+    lines_to_multiline,
+    combine_lines_matching,
+    substart,
+    relinverse,
+)
 from .GLInfo import GLInfo
 from .GLConfig import GLConfig
 from .GLModuleSystem import GLModule
 from .GLModuleSystem import GLModuleTable
 from .GLMakefileTable import GLMakefileTable
 
-
-#===============================================================================
-# Define global constants
-#===============================================================================
-UTILS = constants.UTILS
-TESTS = constants.TESTS
-joinpath = constants.joinpath
-relinverse = constants.relinverse
-lines_to_multiline = constants.lines_to_multiline
-isfile = os.path.isfile
-normpath = os.path.normpath
 
 # Regular expressions used to convert Automake conditionals to GNU Make syntax.
 # Each tuple is the arguments given to re.sub in the correct order.
@@ -474,7 +470,7 @@ USE_MSGCTXT = no\n'''
         emit += '# List of files which contain translatable strings.\n'
         for file in files:
             if file.startswith('lib/'):
-                emit += '%s\n' % constants.substart('lib/', sourcebase, file)
+                emit += '%s\n' % substart('lib/', sourcebase, file)
         return emit
 
     def initmacro_start(self, macro_prefix_arg: str, gentests: bool) -> str:
@@ -753,8 +749,8 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                 if str(module) == 'alloca':
                     amsnippet1 += '%s_%s_LIBADD += @%sALLOCA@\n' % (libname, libext, perhapsLT)
                     amsnippet1 += '%s_%s_DEPENDENCIES += @%sALLOCA@\n' % (libname, libext, perhapsLT)
-                amsnippet1 = constants.combine_lines_matching(re.compile(r'%s_%s_SOURCES' % (libname, libext)),
-                                                              amsnippet1)
+                amsnippet1 = combine_lines_matching(re.compile(r'%s_%s_SOURCES' % (libname, libext)),
+                                                    amsnippet1)
 
                 # Get unconditional snippet, edit it and save to amsnippet2.
                 amsnippet2 = module.getAutomakeSnippet_Unconditional()
@@ -884,7 +880,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
             # Then test if $sourcebase/Makefile.am (if it exists) specifies it.
             if makefile_name:
                 path = joinpath(sourcebase, 'Makefile.am')
-                if isfile(path):
+                if os.path.isfile(path):
                     with open(path, mode='r', newline='\n', encoding='utf-8') as file:
                         data = file.read()
                     if pattern.findall(data):
@@ -1049,8 +1045,8 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                     amsnippet1 += 'libtests_a_LIBADD += @ALLOCA@\n'
                     amsnippet1 += 'libtests_a_DEPENDENCIES += @ALLOCA@\n'
 
-                amsnippet1 = constants.combine_lines_matching(re.compile(r'libtests_a_SOURCES'),
-                                                              amsnippet1)
+                amsnippet1 = combine_lines_matching(re.compile(r'libtests_a_SOURCES'),
+                                                    amsnippet1)
 
                 # Get unconditional snippet, edit it and save to amsnippet2.
                 amsnippet2 = module.getAutomakeSnippet_Unconditional()

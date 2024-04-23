@@ -21,7 +21,23 @@ from __future__ import annotations
 import os
 import re
 import subprocess as sp
-from . import constants
+from .constants import (
+    DIRS,
+    MODES,
+    TESTS,
+    cleaner,
+    joinpath,
+    lines_to_multiline,
+    movefile,
+    copyfile,
+    copyfile2,
+    substart,
+    subend,
+    bold_escapes,
+    relconcat,
+    relativize,
+    rmtree,
+)
 from .GLError import GLError
 from .GLConfig import GLConfig
 from .GLModuleSystem import GLModuleTable
@@ -30,25 +46,6 @@ from .GLFileSystem import GLFileSystem
 from .GLFileSystem import GLFileAssistant
 from .GLMakefileTable import GLMakefileTable
 from .GLEmiter import GLEmiter
-
-
-#===============================================================================
-# Define global constants
-#===============================================================================
-APP = constants.APP
-DIRS = constants.DIRS
-MODES = constants.MODES
-TESTS = constants.TESTS
-joinpath = constants.joinpath
-cleaner = constants.cleaner
-copyfile = constants.copyfile
-copyfile2 = constants.copyfile2
-movefile = constants.movefile
-lines_to_multiline = constants.lines_to_multiline
-isabs = os.path.isabs
-isdir = os.path.isdir
-isfile = os.path.isfile
-normpath = os.path.normpath
 
 
 #===============================================================================
@@ -117,7 +114,7 @@ class GLImport:
 
         # Get other cached variables.
         path = joinpath(self.config['m4base'], 'gnulib-cache.m4')
-        if isfile(path):
+        if os.path.isfile(path):
             with open(path, mode='r', newline='\n', encoding='utf-8') as file:
                 data = file.read()
 
@@ -211,7 +208,7 @@ class GLImport:
             # Get cached filelist from gnulib-comp.m4.
             destdir, m4base = self.config.getDestDir(), self.config.getM4Base()
             path = joinpath(destdir, m4base, 'gnulib-comp.m4')
-            if isfile(path):
+            if os.path.isfile(path):
                 with open(path, mode='r', newline='\n', encoding='utf-8') as file:
                     data = file.read()
                 regex = r'AC_DEFUN\(\[%s_FILE_LIST\], \[(.*?)\]\)' % self.cache['macro_prefix']
@@ -279,7 +276,7 @@ class GLImport:
                     base = self.config['destdir']
                 else:
                     base = '.'
-                if isfile(joinpath(base, 'Makefile.am')):
+                if os.path.isfile(joinpath(base, 'Makefile.am')):
                     with open(joinpath(base, 'Makefile.am'), mode='r', newline='\n', encoding='utf-8') as file:
                         data = file.read()
                     pattern = re.compile(r'^AUTOMAKE_OPTIONS[\t ]*=(.*)$', re.MULTILINE)
@@ -325,19 +322,19 @@ class GLImport:
         result = []
         for file in files:
             if file.startswith('build-aux/'):
-                path = constants.substart('build-aux/', '%s/' % auxdir, file)
+                path = substart('build-aux/', '%s/' % auxdir, file)
             elif file.startswith('doc/'):
-                path = constants.substart('doc/', '%s/' % docbase, file)
+                path = substart('doc/', '%s/' % docbase, file)
             elif file.startswith('lib/'):
-                path = constants.substart('lib/', '%s/' % sourcebase, file)
+                path = substart('lib/', '%s/' % sourcebase, file)
             elif file.startswith('m4/'):
-                path = constants.substart('m4/', '%s/' % m4base, file)
+                path = substart('m4/', '%s/' % m4base, file)
             elif file.startswith('tests/'):
-                path = constants.substart('tests/', '%s/' % testsbase, file)
+                path = substart('tests/', '%s/' % testsbase, file)
             elif file.startswith('tests=lib/'):
-                path = constants.substart('tests=lib/', '%s/' % testsbase, file)
+                path = substart('tests=lib/', '%s/' % testsbase, file)
             elif file.startswith('top/'):
-                path = constants.substart('top/', '', file)
+                path = substart('top/', '', file)
             else:  # file is not a special file
                 path = file
             result.append(os.path.normpath(path))
@@ -361,19 +358,19 @@ class GLImport:
         result = []
         for file in files:
             if file.startswith('build-aux/'):
-                path = constants.substart('build-aux/', '%s/' % auxdir, file)
+                path = substart('build-aux/', '%s/' % auxdir, file)
             elif file.startswith('doc/'):
-                path = constants.substart('doc/', '%s/' % docbase, file)
+                path = substart('doc/', '%s/' % docbase, file)
             elif file.startswith('lib/'):
-                path = constants.substart('lib/', '%s/' % sourcebase, file)
+                path = substart('lib/', '%s/' % sourcebase, file)
             elif file.startswith('m4/'):
-                path = constants.substart('m4/', '%s/' % m4base, file)
+                path = substart('m4/', '%s/' % m4base, file)
             elif file.startswith('tests/'):
-                path = constants.substart('tests/', '%s/' % testsbase, file)
+                path = substart('tests/', '%s/' % testsbase, file)
             elif file.startswith('tests=lib/'):
-                path = constants.substart('tests=lib/', '%s/' % testsbase, file)
+                path = substart('tests=lib/', '%s/' % testsbase, file)
             elif file.startswith('top/'):
-                path = constants.substart('top/', '', file)
+                path = substart('top/', '', file)
             else:  # file is not a special file
                 path = file
             result.append(os.path.normpath(path))
@@ -487,7 +484,7 @@ class GLImport:
                 # XXX This doesn't look right.
                 return dir
             else:
-                return constants.relativize(destdir, dir)
+                return relativize(destdir, dir)
 
     def relative_to_currdir(self, dir: str) -> str:
         '''The opposite of GLImport.relative_to_destdir:
@@ -502,7 +499,7 @@ class GLImport:
                 # XXX This doesn't look right.
                 return joinpath(destdir, dir)
             else:
-                return constants.relconcat(destdir, dir)
+                return relconcat(destdir, dir)
 
     def gnulib_cache(self) -> str:
         '''Emit the contents of generated $m4base/gnulib-cache.m4 file.
@@ -737,14 +734,14 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         '''This method is used to determine ignore argument for _update_ignorelist_
         method and then call it.'''
         destdir = self.config['destdir']
-        if (isdir(joinpath(destdir, 'CVS'))
-                or isdir(joinpath(destdir, directory, 'CVS'))
-                or isfile(joinpath(destdir, directory, '.cvsignore'))):
+        if (os.path.isdir(joinpath(destdir, 'CVS'))
+                or os.path.isdir(joinpath(destdir, directory, 'CVS'))
+                or os.path.isfile(joinpath(destdir, directory, '.cvsignore'))):
             self._update_ignorelist_(directory, '.cvsignore',
                                      files_added, files_removed)
-        if (isdir(joinpath(destdir, '.git'))
-                or isfile(joinpath(destdir, '.gitignore'))
-                or isfile(joinpath(destdir, directory, '.gitignore'))):
+        if (os.path.isdir(joinpath(destdir, '.git'))
+                or os.path.isfile(joinpath(destdir, '.gitignore'))
+                or os.path.isfile(joinpath(destdir, directory, '.gitignore'))):
             self._update_ignorelist_(directory, '.gitignore',
                                      files_added, files_removed)
 
@@ -760,14 +757,14 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
             anchor = ''
         srcpath = joinpath(directory, ignore)
         backupname = '%s~' % srcpath
-        if isfile(joinpath(destdir, srcpath)):
+        if os.path.isfile(joinpath(destdir, srcpath)):
             if files_added or files_removed:
                 with open(joinpath(destdir, srcpath), mode='r', newline='\n', encoding='utf-8') as file:
                     original_lines = file.readlines()
                 # Clean the newlines but not trailing whitespace.
                 original_lines = [ line.rstrip('\n')
                                    for line in original_lines ]
-                already_listed_filenames = { constants.substart(anchor, '', filename)
+                already_listed_filenames = { substart(anchor, '', filename)
                                              for filename in original_lines
                                              if filename.strip() }
                 filenames_to_add = set(files_added).difference(already_listed_filenames)
@@ -790,7 +787,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                             file.write(lines_to_multiline(new_lines))
                     else:  # if self.config['dryrun']
                         print('Update %s (backup in %s)' % (srcpath, backupname))
-        else:  # if not isfile(joinpath(destdir, srcpath))
+        else:  # if not os.path.isfile(joinpath(destdir, srcpath))
             if files_added:
                 if not self.config['dryrun']:
                     print('Creating %s' % srcpath)
@@ -825,7 +822,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
 
         # Show final module list.
         if verbose >= 0:
-            (bold_on, bold_off) = constants.bold_escapes()
+            (bold_on, bold_off) = bold_escapes()
             print('Module list with included dependencies (indented):')
             for module in final_modules:
                 if str(module) in self.config.getModules():
@@ -939,7 +936,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         new_files = filelist + ['m4/gnulib-tool.m4']
         old_files = list(self.cache['files'])
         path = joinpath(destdir, m4base, 'gnulib-tool.m4')
-        if isfile(path):
+        if os.path.isfile(path):
             old_files.append(joinpath('m4', 'gnulib-tool.m4'))
         # old_files is the list of files according to the last gnulib-tool invocation.
         # new_files is the list of files after this gnulib-tool invocation.
@@ -1027,7 +1024,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         dirs = [ os.path.join(destdir, d)
                  for d in dirs ]
         for directory in dirs:
-            if not isdir(directory):
+            if not os.path.isdir(directory):
                 print('Creating directory %s' % directory)
                 if not self.config['dryrun']:
                     try:  # Try to create directory
@@ -1056,7 +1053,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         files = sorted(set(pair[0] for pair in pairs))
         for file in files:
             path = joinpath(destdir, file)
-            if isfile(path) or os.path.islink(path):
+            if os.path.isfile(path) or os.path.islink(path):
                 if not self.config['dryrun']:
                     backup = '%s~' % path
                     print('Removing file %s (backup in %s)' % (path, backup))
@@ -1157,7 +1154,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                     else:  # if self.config['dryrun']:
                         print('Create %s' % filename)
                     filetable['added'].append(filename)
-                if isfile(tmpfile):
+                if os.path.isfile(tmpfile):
                     os.remove(tmpfile)
 
             # Create po makefile parameterization, part 1.
@@ -1178,7 +1175,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                 else:  # if self.config['dryrun']:
                     print('Create %s' % filename)
                 filetable['added'].append(filename)
-            if isfile(tmpfile):
+            if os.path.isfile(tmpfile):
                 os.remove(tmpfile)
 
             # Create po makefile parameterization, part 2.
@@ -1199,7 +1196,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                 else:  # if self.config['dryrun']:
                     print('Create %s' % filename)
                 filetable['added'].append(filename)
-            if isfile(tmpfile):
+            if os.path.isfile(tmpfile):
                 os.remove(tmpfile)
 
             # Fetch PO files.
@@ -1217,7 +1214,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
             if not self.config['dryrun']:
                 tmpfile = assistant.tmpfilename(basename)
                 data = '# Set of available languages.\n'
-                files = sorted([ constants.subend('.po', '', file)
+                files = sorted([ subend('.po', '', file)
                                  for file in os.listdir(joinpath(destdir, pobase))
                                  if file.endswith('.po') ])
                 data += lines_to_multiline(files)
@@ -1229,13 +1226,13 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                 elif flag == 2:
                     print('Creating %s' % filename)
                     filetable['added'].append(filename)
-                if isfile(tmpfile):
+                if os.path.isfile(tmpfile):
                     os.remove(tmpfile)
             else:  # if not self.config['dryrun']
                 backupname = '%s~' % basename
-                if isfile(joinpath(destdir, basename)):
+                if os.path.isfile(joinpath(destdir, basename)):
                     print('Update %s (backup in %s)' % (basename, backupname))
-                else:  # if not isfile(joinpath(destdir, basename))
+                else:  # if not os.path.isfile(joinpath(destdir, basename))
                     print('Create %s' % basename)
 
         # Create m4/gnulib-cache.m4.
@@ -1260,7 +1257,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                 elif emit[-1:] == '\n':
                     emit = emit[:-1]
                 print(emit)
-        if isfile(tmpfile):
+        if os.path.isfile(tmpfile):
             os.remove(tmpfile)
 
         # Create m4/gnulib-comp.m4.
@@ -1285,7 +1282,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                 elif emit[-1:] == '\n':
                     emit = emit[:-1]
                 print(emit)
-        if isfile(tmpfile):
+        if os.path.isfile(tmpfile):
             os.remove(tmpfile)
 
         # Create library makefile.
@@ -1314,7 +1311,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
             else:  # if self.config['dryrun']:
                 print('Create %s' % filename)
             filetable['added'].append(filename)
-        if isfile(tmpfile):
+        if os.path.isfile(tmpfile):
             os.remove(tmpfile)
 
         # Create tests Makefile.
@@ -1338,7 +1335,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                 else:  # if self.config['dryrun']:
                     print('Create %s' % filename)
                 filetable['added'].append(filename)
-            if isfile(tmpfile):
+            if os.path.isfile(tmpfile):
                 os.remove(tmpfile)
 
         if vc_files != False:
@@ -1468,4 +1465,4 @@ in <library>_a_LDFLAGS or <library>_la_LDFLAGS when linking a library.''')
             position_early_after = 'AC_PROG_CC'
         print('  - invoke %s_EARLY in %s, right after %s,' % (macro_prefix, configure_ac, position_early_after))
         print('  - invoke %s_INIT in %s.' % (macro_prefix, configure_ac))
-        constants.rmtree(self.config['tempdir'])
+        rmtree(self.config['tempdir'])
