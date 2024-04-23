@@ -18,8 +18,13 @@ Using git
   recommended that you configure git with 'git config pull.rebase = true'.
 
 * Before pushing a commit, it is highly recommended that you review it in
-  its entirety. The easiest way to do so is to run
-    $ gitk
+  its entirety. The easiest ways to do so are
+    * to run
+        $ git format-patch -1
+      and then read the patch in an editor that has syntax-colouring of patch
+      files, or
+    * to run
+        $ gitk
 
 * We update the ChangeLog by hand.  The commit message is usually identical
   to the ChangeLog entry, with the date and author line removed, with
