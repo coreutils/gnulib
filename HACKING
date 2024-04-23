@@ -14,10 +14,30 @@ Using git
   to update the copyright year of each modified file (since we don't run
   "make update-copyright" on the stable branches).
 
+* We use a linear git history — no merges. To work in this setting, it's
+  recommended that you configure git with 'git config pull.rebase = true'.
+
+* Before pushing a commit, it is highly recommended that you review it in
+  its entirety. The easiest way to do so is to run
+    $ gitk
+
 * We update the ChangeLog by hand.  The commit message is usually identical
   to the ChangeLog entry, with the date and author line removed, with
   the leading tabs removed, and with a blank line after the commit's
   summary line.
+  In order to work efficiently with ChangeLog files, it is recommended that
+  you configure git to use the git-merge-changelog driver; see the instructions
+  in the lib/git-merge-changelog.c file.
+  Note: This driver reasonably keeps the ChangeLog entries together; however,
+  it does not always keep them in the order you would desire. For example,
+  when you had prepared a commit, you try to "git push" it but that fails due
+  to someone else's commit that came earlier, what you need to do is:
+    1. $ git pull
+    2. Verify that your ChangeLog entry is still the top-most one.
+    3. If it is not, then edit ChangeLog to move it to the top, and
+       $ git commit --amend ChangeLog
+    4. $ gitk
+    5. $ git push
 
 * When you commit a contributor's patch, please
   - add a reasonable ChangeLog entry in the usual style (meaningful
@@ -50,6 +70,30 @@ Test Suite
 
 When adding a module, add a unit test module as well.  This is our best
 chance to catch portability problems.
+
+
+Maintaining high quality
+========================
+
+It is a good idea to occasionally create a testdir of all of Gnulib:
+  $ rm -rf ../testdir-all; ./gnulib-tool --create-testdir --dir=../testdir-all --with-c++-tests --without-privileged-tests --single-configure `./all-modules`
+and test this directory on various plaforms:
+  - Linux/glibc systems,
+  - Linux/musl systems,
+  - macOS,
+  - FreeBSD,
+  - NetBSD,
+  - OpenBSD,
+  - AIX,
+  - Solaris 10 and 11,
+  - Cygwin,
+  - Haiku,
+  - Android,
+  - and other platforms of your choice.
+
+There is a continuous integration that regularly performs this testing
+on a Linux/glibc system: https://gitlab.com/gnulib/gnulib-ci
+But this will catch only the most blatant mistakes.
 
 
 Warning Options
@@ -519,6 +563,29 @@ Again, use your own judgement to determine whether to fix or ignore a
 specific warning.
 
 
+Information for gnulib-tool maintenance
+***************************************
+
+Running the unit tests
+======================
+
+The unit tests of gnulib-tool reside in the maint-tools repository, that is a
+satellite repository of the main gnulib repository. Instructions how to obtain
+it are in https://savannah.gnu.org/git/?group=gnulib .
+
+To run the unit tests of gnulib-tool.sh:
+  $ cd maint-tools/gnulib-tool-tests/
+  $ GNULIB_TOOL_IMPL=sh ./test-all.sh
+
+To run the unit tests of gnulib-tool.py:
+  $ cd maint-tools/gnulib-tool-tests/
+  $ GNULIB_TOOL_IMPL=py ./test-all.sh
+
+It is *mandatory* that you run the test suite before pushing any change to
+gnulib-tool.sh or gnulib-tool.py! If you fail to do so, and your change contains
+a bug, it will start to affect users immediately.
+
+
 Debugging the Python implementation of gnulib-tool
 ==================================================
 
@@ -571,3 +638,10 @@ With Eclipse and PyDev as IDE
   - Open GLImport.py.
   - On the left-hand border of this editor, do "Add breakpoint".
   - Run > Debug Configurations... > pick the duplicate. Press Debug.
+
+
+Maintaining high quality
+========================
+
+There is a continuous integration of gnulib-tool.py that runs the unit tests,
+at https://gitlab.com/gnulib/gnulib-tool-ci/ .
