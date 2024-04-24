@@ -46,6 +46,7 @@ from .GLFileSystem import GLFileSystem
 from .GLFileSystem import GLFileAssistant
 from .GLMakefileTable import GLMakefileTable
 from .GLEmiter import GLEmiter
+from .GLFileTable import GLFileTable
 
 
 #===============================================================================
@@ -588,17 +589,17 @@ class GLImport:
             emit += 'gl_VC_FILES([%s])\n' % str(vc_files).lower()
         return emit
 
-    def gnulib_comp(self, filetable: dict[str, list[str]], gentests: bool) -> str:
+    def gnulib_comp(self, filetable: GLFileTable, gentests: bool) -> str:
         '''Emit the contents of generated $m4base/gnulib-comp.m4 file.
         GLConfig: destdir, localpath, tests, sourcebase, m4base, pobase, docbase,
         testsbase, conddeps, libtool, macro_prefix, podomain, vc_files.
 
-        filetable is a dictionary with a category used as a key to access
-          a list of files.
+        filetable is a GLFileTable containing file information for this
+          import.
         gentests is True if a tests Makefile.am is being generated, False
           otherwise.'''
-        if type(filetable) is not dict:
-            raise TypeError(f'filetable should be a dict, not {type(filetable).__name__}')
+        if type(filetable) is not GLFileTable:
+            raise TypeError(f'filetable should be a GLFileTable, not {type(filetable).__name__}')
         if type(gentests) is not bool:
             raise TypeError(f'gentests should be a bool, not {type(gentests).__name__}')
         emit = ''
@@ -655,7 +656,8 @@ AC_DEFUN([%s_INIT],
         # _AC_LIBOBJ_ALLOCA, invoked from AC_FUNC_ALLOCA.
         # All the m4_pushdef/m4_popdef logic in func_emit_initmacro_start/_end
         # does not help to avoid this error.
-        newfile_set = {x[1] for x in filetable['new']}
+        newfile_set = { pair[1]
+                        for pair in filetable.new_files }
         if 'lib/alloca.c' in newfile_set:
             emit += '  AC_CONFIG_LIBOBJ_DIR([%s])\n' % sourcebase
         elif 'tests=lib/alloca.c' in newfile_set:
@@ -726,7 +728,7 @@ AC_DEFUN([%s_INIT],
 # This macro records the list of files which have been installed by
 # gnulib-tool and may be removed by future gnulib-tool invocations.
 AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
-        emit += '  %s\n' % '\n  '.join(filetable['all'])
+        emit += '  %s\n' % '\n  '.join(filetable.all_files)
         emit += '])\n'
         return emit
 
@@ -802,7 +804,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                 else:  # if self.config['dryrun']
                     print('Create %s' % srcpath)
 
-    def prepare(self) -> tuple[dict[str, list[str]], dict[str, tuple[re.Pattern, str] | None]]:
+    def prepare(self) -> tuple[GLFileTable, dict[str, tuple[re.Pattern, str] | None]]:
         '''Perform preperations before GLImport.execute().
         Returns a filetable and the transformers passed to GLFileAssistant().'''
         destdir = self.config['destdir']
@@ -963,29 +965,21 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         # representing the files after this gnulib-tool invocation.
 
         # Prepare the filetable.
-        filetable = dict()
-        filetable['all'] = sorted(set(filelist))
-        filetable['old'] = \
-            sorted(set(old_table), key=lambda pair: pair[0])
-        filetable['new'] = \
-            sorted(set(new_table), key=lambda pair: pair[0])
-        filetable['added'] = []
-        filetable['removed'] = []
+        filetable = GLFileTable(sorted(set(filelist)))
+        filetable.old_files = sorted(set(old_table), key=lambda pair: pair[0])
+        filetable.new_files = sorted(set(new_table), key=lambda pair: pair[0])
 
         # Return the result.
         result = tuple([filetable, transformers])
         return result
 
-    def execute(self, filetable: dict[str, list[str]], transformers: dict[str, tuple[re.Pattern, str] | None]) -> None:
+    def execute(self, filetable: GLFileTable, transformers: dict[str, tuple[re.Pattern, str] | None]) -> None:
         '''Perform operations on the lists of files, which are given in a special
         format except filelist argument. Such lists of files can be created using
         GLImport.prepare() function.'''
-        if type(filetable) is not dict:
-            raise TypeError('filetable must be a dict, not %s'
+        if type(filetable) is not GLFileTable:
+            raise TypeError('filetable must be a GLFileTable, not %s'
                             % type(filetable).__name__)
-        for key in ['all', 'old', 'new', 'added', 'removed']:
-            if key not in filetable:
-                raise KeyError('filetable must contain key %s' % repr(key))
         destdir = self.config['destdir']
         auxdir = self.config['auxdir']
         sourcebase = self.config['sourcebase']
@@ -1004,7 +998,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
 
         # Determine whether to put anything into $testsbase.
         testsfiles = [ file
-                       for file in filetable['all']
+                       for file in filetable.all_files
                        if file.startswith('tests/') or file.startswith('tests=lib/') ]
         gentests = len(testsfiles) > 0
 
@@ -1013,14 +1007,14 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         if pobase:
             dirs.append(pobase)
         if [ file
-             for file in filetable['all']
+             for file in filetable.all_files
              if file.startswith('doc/') ]:
             dirs.append(docbase)
         if gentests:
             dirs.append(testsbase)
         dirs.append(auxdir)
         dirs += sorted([ os.path.dirname(pair[0])
-                         for pair in filetable['new'] ])
+                         for pair in filetable.new_files ])
         dirs = [ os.path.join(destdir, d)
                  for d in dirs ]
         for directory in dirs:
@@ -1037,17 +1031,17 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         # Create GLFileAssistant instance to process files.
         assistant = GLFileAssistant(self.config, transformers)
 
-        # Set of rewritten-file-names from filetable['old'].
+        # Set of rewritten-file-names from filetable.old_files.
         old_rewritten_files = { pair[0]
-                                for pair in filetable['old'] }
-        # Set of rewritten-file-names from filetable['new'].
+                                for pair in filetable.old_files }
+        # Set of rewritten-file-names from filetable.new_files.
         new_rewritten_files = { pair[0]
-                                for pair in filetable['new'] }
+                                for pair in filetable.new_files }
 
-        # Files which are in filetable['old'] and not in filetable['new'].
-        # They will be removed and added to filetable['removed'] list.
+        # Files which are in filetable.old_files and not in filetable.new_files.
+        # They will be removed and added to filetable.removed_files list.
         pairs = [ pair
-                  for pair in filetable['old']
+                  for pair in filetable.old_files
                   if pair[0] not in new_rewritten_files ]
         pairs = sorted(set(pairs), key=lambda pair: pair[0])
         files = sorted(set(pair[0] for pair in pairs))
@@ -1065,13 +1059,13 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                         raise GLError(14, file) from exc
                 else:  # if self.config['dryrun']
                     print('Remove file %s (backup in %s~)' % (path, path))
-                filetable['removed'].append(file)
+                filetable.removed_files.append(file)
 
-        # Files which are in filetable['new'] and not in filetable['old'].
-        # They will be added/updated and added to filetable['added'] list.
+        # Files which are in filetable.new_files and not in filetable.old_files.
+        # They will be added/updated and added to filetable.added_files list.
         already_present = False
         pairs = [ pair
-                  for pair in filetable['new']
+                  for pair in filetable.new_files
                   if pair[0] not in old_rewritten_files ]
         pairs = sorted(set(pairs))
         for pair in pairs:
@@ -1081,11 +1075,11 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
             assistant.setRewritten(rewritten)
             assistant.add_or_update(already_present)
 
-        # Files which are in filetable['new'] and in filetable['old'].
-        # They will be added/updated and added to filetable['added'] list.
+        # Files which are in filetable.new_files and in filetable.old_files.
+        # They will be added/updated and added to filetable.added_files list.
         already_present = True
         pairs = [ pair
-                  for pair in filetable['new']
+                  for pair in filetable.new_files
                   if pair[0] in old_rewritten_files ]
         pairs = sorted(set(pairs))
         for pair in pairs:
@@ -1095,9 +1089,9 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
             assistant.setRewritten(rewritten)
             assistant.add_or_update(already_present)
 
-        # Add files which were added to the list of filetable['added'].
-        filetable['added'] += assistant.getFiles()
-        filetable['added'] = sorted(set(filetable['added']))
+        # Add files which were added to the list of filetable.added_files.
+        filetable.added_files += assistant.getFiles()
+        filetable.added_files = sorted(set(filetable.added_files))
 
         # Default the source makefile name to Makefile.am.
         if makefile_name:
@@ -1153,7 +1147,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                         print('Creating %s' % filename)
                     else:  # if self.config['dryrun']:
                         print('Create %s' % filename)
-                    filetable['added'].append(filename)
+                    filetable.added_files.append(filename)
                 if os.path.isfile(tmpfile):
                     os.remove(tmpfile)
 
@@ -1174,7 +1168,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                     print('Creating %s' % filename)
                 else:  # if self.config['dryrun']:
                     print('Create %s' % filename)
-                filetable['added'].append(filename)
+                filetable.added_files.append(filename)
             if os.path.isfile(tmpfile):
                 os.remove(tmpfile)
 
@@ -1182,7 +1176,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
             basename = joinpath(pobase, 'POTFILES.in')
             tmpfile = assistant.tmpfilename(basename)
             with open(tmpfile, mode='w', newline='\n', encoding='utf-8') as file:
-                file.write(self.emitter.po_POTFILES_in(filetable['all']))
+                file.write(self.emitter.po_POTFILES_in(filetable.all_files))
             basename = joinpath(pobase, 'POTFILES.in')
             filename, backup, flag = assistant.super_update(basename, tmpfile)
             if flag == 1:
@@ -1195,7 +1189,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                     print('Creating %s' % filename)
                 else:  # if self.config['dryrun']:
                     print('Create %s' % filename)
-                filetable['added'].append(filename)
+                filetable.added_files.append(filename)
             if os.path.isfile(tmpfile):
                 os.remove(tmpfile)
 
@@ -1225,7 +1219,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                     print('Updating %s (backup in %s)' % (filename, backup))
                 elif flag == 2:
                     print('Creating %s' % filename)
-                    filetable['added'].append(filename)
+                    filetable.added_files.append(filename)
                 if os.path.isfile(tmpfile):
                     os.remove(tmpfile)
             else:  # if not self.config['dryrun']
@@ -1310,7 +1304,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                 print('Creating %s' % filename)
             else:  # if self.config['dryrun']:
                 print('Create %s' % filename)
-            filetable['added'].append(filename)
+            filetable.added_files.append(filename)
         if os.path.isfile(tmpfile):
             os.remove(tmpfile)
 
@@ -1334,7 +1328,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                     print('Creating %s' % filename)
                 else:  # if self.config['dryrun']:
                     print('Create %s' % filename)
-                filetable['added'].append(filename)
+                filetable.added_files.append(filename)
             if os.path.isfile(tmpfile):
                 os.remove(tmpfile)
 
@@ -1342,13 +1336,13 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
             # Update the .cvsignore and .gitignore files.
             ignorelist = []
             # Treat gnulib-comp.m4 like an added file, even if it already existed.
-            filetable['added'].append(joinpath(m4base, 'gnulib-comp.m4'))
-            filetable['added'] = sorted(set(filetable['added']))
-            filetable['removed'] = sorted(set(filetable['removed']))
-            for file in filetable['added']:
+            filetable.added_files.append(joinpath(m4base, 'gnulib-comp.m4'))
+            filetable.added_files = sorted(set(filetable.added_files))
+            filetable.removed_files = sorted(set(filetable.removed_files))
+            for file in filetable.added_files:
                 directory, basename = os.path.split(file)
                 ignorelist.append(tuple([directory, '|A|', basename]))
-            for file in filetable['removed']:
+            for file in filetable.removed_files:
                 directory, basename = os.path.split(file)
                 ignorelist.append(tuple([directory, '|R|', basename]))
             # Sort ignorelist by directory.

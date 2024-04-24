@@ -51,6 +51,7 @@ from .GLFileSystem import GLFileSystem
 from .GLFileSystem import GLFileAssistant
 from .GLMakefileTable import GLMakefileTable
 from .GLEmiter import GLEmiter
+from .GLFileTable import GLFileTable
 
 
 def _patch_test_driver() -> None:
@@ -336,23 +337,24 @@ class GLTestDir:
 
         # Add files for which the copy in gnulib is newer than the one that
         # "automake --add-missing --copy" would provide.
-        filelist += ['build-aux/config.guess', 'build-aux/config.sub']
-        filelist = sorted(set(filelist))
+        filelist = sorted(set(filelist + ['build-aux/config.guess', 'build-aux/config.sub']))
+
+        # Setup the file table.
+        filetable = GLFileTable(filelist)
 
         # Create directories.
         directories = [ joinpath(self.testdir, os.path.dirname(file))
-                        for file in self.rewrite_files(filelist) ]
+                        for file in self.rewrite_files(filetable.all_files) ]
         directories = sorted(set(directories))
         for directory in directories:
             if not os.path.isdir(directory):
                 os.makedirs(directory)
 
         # Copy files or make symbolic links or hard links.
-        filetable = []
-        for src in filelist:
+        for src in filetable.all_files:
             dest = self.rewrite_files([src])[-1]
-            filetable.append(tuple([dest, src]))
-        for row in filetable:
+            filetable.new_files.append(tuple([dest, src]))
+        for row in filetable.new_files:
             src = row[1]
             dest = row[0]
             destpath = joinpath(self.testdir, dest)
@@ -395,7 +397,7 @@ class GLTestDir:
         destfile = joinpath(directory, 'Makefile.am')
         emit = '## Process this file with automake to produce Makefile.in.\n\n'
         emit += 'EXTRA_DIST =\n'
-        for file in filelist:
+        for file in filetable.all_files:
             if file.startswith('m4/'):
                 file = substart('m4/', '', file)
                 emit += 'EXTRA_DIST += %s\n' % file
