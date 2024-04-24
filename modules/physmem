@@ -8,6 +8,7 @@ m4/physmem.m4
 
 Depends-on:
 unistd
+full-read
 
 configure.ac:
 gl_PHYSMEM
