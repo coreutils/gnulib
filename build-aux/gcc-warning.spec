@@ -13,6 +13,7 @@
 -Waliasing				fortran
 -Walign-commons				fortran
 -Waligned-new=[none|global|all]		c++
+-Walloc-size				enabled by -Wextra
 -Walloc-size-larger-than=<bytes>	defaults to PTRDIFF_MAX
 -Walloc-zero				Gnulib fixes this problem
 -Walloca				we like alloca in small doses
@@ -34,6 +35,7 @@
 -Wanalyzer-file-leak			enabled by -fanalyzer
 -Wanalyzer-free-of-non-heap		enabled by -fanalyzer
 -Wanalyzer-imprecise-fp-arithmetic	enabled by -fanalyzer
+-Wanalyzer-infinite-loop		enabled by -fanalyzer
 -Wanalyzer-infinite-recursion		enabled by -fanalyzer
 -Wanalyzer-jump-through-null		enabled by -fanalyzer
 -Wanalyzer-malloc-leak			enabled by -fanalyzer
@@ -41,18 +43,21 @@
 -Wanalyzer-null-argument		enabled by -fanalyzer
 -Wanalyzer-null-dereference		enabled by -fanalyzer
 -Wanalyzer-out-of-bounds		enabled by -fanalyzer
+-Wanalyzer-overlapping-buffers		enabled by -fanalyzer
 -Wanalyzer-possible-null-argument	enabled by -fanalyzer
 -Wanalyzer-possible-null-dereference	enabled by -fanalyzer
 -Wanalyzer-putenv-of-auto-var		enabled by -fanalyzer
 -Wanalyzer-shift-count-negative		enabled by -fanalyzer
 -Wanalyzer-shift-count-overflow		enabled by -fanalyzer
 -Wanalyzer-stale-setjmp-buffer		implied by -fanalyzer
+-Wanalyzer-symbol-too-complex	        warns about compiler not about program
 -Wanalyzer-tainted-allocation-size	FIXME requires -fanalyzer-checker=taint
 -Wanalyzer-tainted-array-index		FIXME requires -fanalyzer-checker=taint
 -Wanalyzer-tainted-assertion		FIXME requires -fanalyzer-checker=taint
 -Wanalyzer-tainted-divisor		FIXME requires -fanalyzer-checker=taint
 -Wanalyzer-tainted-offset		FIXME requires -fanalyzer-checker=taint
 -Wanalyzer-tainted-size			FIXME requires -fanalyzer-checker=taint
+-Wanalyzer-undefined-behavior-strtok	enabled by -fanalyzer
 -Wanalyzer-va-arg-type-mismatch		enabled by -fanalyzer
 -Wanalyzer-va-list-exhausted		enabled by -fanalyzer
 -Wanalyzer-va-list-leak			enabled by -fanalyzer
@@ -93,11 +98,13 @@
 -Wc++20-compat				c++
 -Wc++20-extensions			c++
 -Wc++23-extensions			c++
+-Wc++26-extensions			c++
 -Wc++2a-compat				c++
 -Wc-binding-type			fortran
--Wc11-c2x-compat			c compatibility
+-Wc11-c23-compat			c compatibility
 -Wc90-c99-compat			c compatibility
 -Wc99-c11-compat			c compatibility
+-Wcalloc-transposed-args		enabled by -Wextra
 -Wcannot-profile			default
 -Wcast-align				enabled by -Wcast-align=strict
 -Wcast-function-type			enabled by -Wextra
@@ -115,10 +122,12 @@
 -Wcomma-subscript			c++ and objc++
 -Wcomment				enabled by -Wall
 -Wcomments				alias for -Wcomment
+-Wcompare-distinct-pointer-types	default
 -Wcompare-reals				fortran
 -Wcomplain-wrong-lang			default
 -Wconditionally-supported		c++ and objc++
 -Wconversion				FIXME maybe? too much noise; encourages bad changes
+-Wcoverage-too-many-conditions		default
 -Wconversion-extra			fortran
 -Wconversion-null			c++ and objc++
 -Wcoverage-invalid-line-number		default if --coverage
@@ -131,6 +140,7 @@
 -Wdangling-pointer=<0,2>		enabled by -Wall
 -Wdangling-reference			c++ and objc++
 -Wdeclaration-after-statement		needed only for pre-C99, so obsolete
+-Wdeclaration-missing-parameter-type	default
 -Wdelete-incomplete			c++ and objc++
 -Wdelete-non-virtual-dtor		c++
 -Wdeprecated				default
@@ -146,6 +156,7 @@
 -Wdiv-by-zero				default
 -Wduplicate-decl-specifier		enabled by -Wall
 -Weffc++				c++
+-Welaborated-enum-base			default, c++11+
 -Wempty-body				enabled by -Wextra
 -Wenum-compare				enabled by -Wall
 -Wenum-conversion			enabled by -Wextra
@@ -174,6 +185,8 @@
 -Wframe-larger-than=<byte-size>		FIXME: choose something sane?
 -Wfree-nonheap-object			default
 -Wfunction-elimination			fortran
+-Wglobal-module				default, c++ and objc++
+-Whardened				default
 -Whsa					default
 -Wif-not-aligned			default
 -Wignored-attributes			default
@@ -217,6 +230,7 @@
 -Wmisleading-indentation		enabled by -Wall
 -Wmismatched-dealloc			default
 -Wmismatched-new-delete			default, c++ and objc++
+-Wmismatched-special-enum		d
 -Wmismatched-tags			c++ and objc++
 -Wmissing-attributes			enabled by -Wall
 -Wmissing-braces			enabled by -Wall
@@ -252,6 +266,7 @@
 -Wold-style-cast			c++ and objc++
 -Wold-style-declaration			enabled by -Wextra
 -Wopenacc-parallelism			OpenACC
+-Wopenmp				default
 -Woverflow				default
 -Woverloaded-virtual			c++
 -Woverloaded-virtual=<0,2>		c++
@@ -286,6 +301,7 @@
 -Wreorder				c++ and objc++
 -Wrestrict				enabled by -Wall
 -Wreturn-local-addr			default
+-Wreturn-mismatch			default
 -Wreturn-type				enabled by -Wall
 -Wscalar-storage-order			default
 -Wselector				objc and objc++
@@ -322,6 +338,7 @@
 -Wstringop-overread			default
 -Wstringop-truncation			default
 -Wsubobject-linkage			c++ and objc++
+-Wsuggest-attribute=returns_nonnull	https://gcc.gnu.org/bugzilla/show_bug.cgi?id=114833
 -Wsuggest-override			c++ and objc++
 -Wsurprising				fortran
 -Wswitch				enabled by -Wall
@@ -334,6 +351,7 @@
 -Wtabs					fortran
 -Wtarget-lifetime			fortran
 -Wtautological-compare			enabled by -Wall
+-Wtemplate-id-cdtor			default, c++ and objc++
 -Wtemplates				c++ and objc++
 -Wterminate				c++ and objc++
 -Wtraditional				obsolescent
