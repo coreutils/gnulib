@@ -1,5 +1,5 @@
 /* Convert 32-bit wide string to string.
-   Copyright (C) 2008-2023 Free Software Foundation, Inc.
+   Copyright (C) 2008-2024 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2020.
 
    This file is free software: you can redistribute it and/or modify
@@ -20,6 +20,7 @@
 #include <wchar.h>
 
 /* Internal state used by the functions c32srtombs() and c32snrtombs().  */
+extern mbstate_t _gl_c32srtombs_state;
 mbstate_t _gl_c32srtombs_state
 /* The state must initially be in the "initial state"; so, zero-initialize it.
    On most systems, putting it into BSS is sufficient.  Not so on Mac OS X 10.3,
