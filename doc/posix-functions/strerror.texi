@@ -21,7 +21,7 @@ FreeBSD 8.2, NetBSD 10.0, OpenBSD 4.7, macOS 11.1.
 @item
 This function fails to return a string for out-of-range integers on
 some platforms:
-HP-UX 11, IRIX 6.5.
+HP-UX 11.
 (Some return NULL which is a POSIX violation, others return the empty
 string which is valid but not as useful); this can still cause bugs
 because most programs call @code{strerror} without setting and testing

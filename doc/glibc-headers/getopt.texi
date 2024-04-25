@@ -27,10 +27,10 @@ This header file is missing on some platforms:
 AIX 7.2, HP-UX 11, MSVC 14.
 @item
 The function @code{getopt_long} is missing on some platforms:
-IRIX 6.5, Solaris 9.
+Solaris 9.
 @item
 The function @code{getopt_long_only} is missing on some platforms:
-FreeBSD 5.2.1, NetBSD 10.0, IRIX 6.5, Solaris 9, mingw.
+FreeBSD 5.2.1, NetBSD 10.0, Solaris 9, mingw.
 @item
 The method to reset options is incompatible on some platforms:
 FreeBSD 6.0, NetBSD 10.0(?), OpenBSD 6.7, Cygwin 1.5.x, mingw.

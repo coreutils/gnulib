@@ -20,9 +20,6 @@ mingw, MSVC 14.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
-This function is missing on some platforms:
-IRIX 6.5.
-@item
 On Windows platforms (excluding Cygwin), this function does not set @code{errno}
 upon failure.
 @item

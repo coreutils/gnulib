@@ -9,7 +9,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This header file is missing on some platforms:
-OpenBSD 3.8, AIX 5.1, HP-UX 11.11, IRIX 6.5, MSVC 9.
+OpenBSD 3.8, AIX 5.1, HP-UX 11.11, MSVC 9.
 @item
 This header file is very incomplete on some platforms.
 @item

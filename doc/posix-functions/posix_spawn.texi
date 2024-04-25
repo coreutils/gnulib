@@ -10,7 +10,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, Minix 3.3, AIX 5.1, HP-UX 11, IRIX 6.5, Solaris 9, Cygwin 1.7.x, mingw, MSVC 14, Android 8.1.
+FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, Minix 3.3, AIX 5.1, HP-UX 11, Solaris 9, Cygwin 1.7.x, mingw, MSVC 14, Android 8.1.
 @item
 When this function fails, it causes the stdio buffer contents to be output
 twice on some platforms:

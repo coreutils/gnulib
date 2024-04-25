@@ -24,7 +24,7 @@ or @code{strcasestr}:
 @itemize
 @item
 This function is missing on some platforms:
-AIX 7.2, HP-UX 11, IRIX 6.5, Solaris 10, Cygwin 1.5.x, mingw, MSVC 14.
+AIX 7.2, HP-UX 11, Solaris 10, Cygwin 1.5.x, mingw, MSVC 14.
 @item
 This function can trigger memchr bugs on some platforms:
 glibc 2.10.

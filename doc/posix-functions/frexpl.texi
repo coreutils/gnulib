@@ -10,7 +10,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-FreeBSD 5.2.1, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, HP-UX 11, IRIX 6.5, Solaris 9, Cygwin 1.7.x, Android 4.4.
+FreeBSD 5.2.1, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, HP-UX 11, Solaris 9, Cygwin 1.7.x, Android 4.4.
 @item
 This function is only defined as a macro with arguments on some platforms:
 MSVC 14.
@@ -22,7 +22,7 @@ This function does not work on denormalized numbers on some platforms:
 macOS 10.13/i386.
 @item
 This function does not work on infinite numbers on some platforms:
-IRIX 6.5, mingw, MSVC 14.
+mingw, MSVC 14.
 @end itemize
 
 Portability problems not fixed by Gnulib:

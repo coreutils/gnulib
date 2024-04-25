@@ -40,17 +40,17 @@ do not exist on some platforms:
 macOS, old FreeBSD, NetBSD, OpenBSD, Minix.
 @item
 The @code{struct utmp} field @code{ut_host} does not exist on some platforms:
-IRIX, Solaris.
+Solaris.
 @item
 The @code{struct utmp} field @code{ut_exit} does not exist on some platforms:
 macOS, old FreeBSD, NetBSD, OpenBSD, Minix, Cygwin.
 @item
 The @code{struct utmp} field @code{ut_session} does not exist on some platforms:
-macOS, old FreeBSD, NetBSD, OpenBSD, Minix, AIX, HP-UX, IRIX, Solaris, Cygwin.
+macOS, old FreeBSD, NetBSD, OpenBSD, Minix, AIX, HP-UX, Solaris, Cygwin.
 @item
 The @code{struct utmp} field @code{ut_addr} or @code{ut_addr_v6} does not exist
 on some platforms:
-macOS, old FreeBSD, NetBSD, OpenBSD, Minix, AIX, IRIX, Solaris.
+macOS, old FreeBSD, NetBSD, OpenBSD, Minix, AIX, Solaris.
 @item
 On some platforms, this API does not support timestamps past the
 year 2038:

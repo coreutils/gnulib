@@ -17,13 +17,13 @@ Portability problems fixed by Gnulib module @code{fnmatch-gnu}, together with mo
 @item
 The macros @code{FNM_LEADING_DIR} and @code{FNM_CASEFOLD} are not defined
 on some platforms:
-AIX 7.2, HP-UX 11.31, IRIX 6.5, Solaris 10.
+AIX 7.2, HP-UX 11.31, Solaris 10.
 @item
 The macro @code{FNM_EXTMATCH} is not defined on all non-glibc platforms:
-musl libc, macOS 12.5, FreeBSD 14.0, NetBSD 10.0, OpenBSD 7.2, Minix 3.3, AIX 7.2, HP-UX 11.31, IRIX 6.5, Solaris 11.4, Cygwin 3.4.6, Android 13.
+musl libc, macOS 12.5, FreeBSD 14.0, NetBSD 10.0, OpenBSD 7.2, Minix 3.3, AIX 7.2, HP-UX 11.31, Solaris 11.4, Cygwin 3.4.6, Android 13.
 @item
 The macro @code{FNM_FILE_NAME} is not defined on some platforms:
-NetBSD 10.0, AIX 7.2, HP-UX 11.31, IRIX 6.5, Solaris 10.
+NetBSD 10.0, AIX 7.2, HP-UX 11.31, Solaris 10.
 @end itemize
 
 Portability problems not fixed by Gnulib:

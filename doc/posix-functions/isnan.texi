@@ -16,12 +16,10 @@ MSVC 9.
 on pre-C99 systems.
 @item
 @code{isnan} is not a macro on some platforms:
-IRIX 6.5, Solaris 11.4.
+Solaris 11.4.
 @item
 This macro does not work on some platforms:
 MSVC 14.
-@item
-On IRIX 6.5 with @code{cc}, @code{isnan} does not recognize some NaNs.
 @end itemize
 
 Portability problems not fixed by Gnulib:

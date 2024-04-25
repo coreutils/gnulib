@@ -10,7 +10,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function may clobber @code{errno} on many platforms:
-glibc 2.32, Mac OS X, FreeBSD, NetBSD, OpenBSD 4.4, Minix, AIX, HP-UX, IRIX, Cygwin, mingw, MSVC.
+glibc 2.32, Mac OS X, FreeBSD, NetBSD, OpenBSD 4.4, Minix, AIX, HP-UX, Cygwin, mingw, MSVC.
 @end itemize
 
 Portability problems not fixed by Gnulib:

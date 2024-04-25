@@ -23,7 +23,7 @@ Portability problems not fixed by Gnulib:
 Although many systems define a @code{struct dirent} member named
 @code{d_type} and directory entry type macros like @code{DT_DIR} and
 @code{DT_LNK}, some do not:
-Minix 3.1.8, AIX 7.2, HP-UX 11, IRIX 6.5, Solaris 11.4, mingw.
+Minix 3.1.8, AIX 7.2, HP-UX 11, Solaris 11.4, mingw.
 
 @item
 On systems with @code{d_type}, not every filesystem supports

@@ -10,10 +10,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-FreeBSD 6.0, NetBSD 9.3, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, HP-UX 11, older IRIX 6.5, Solaris 9, Cygwin 1.7.x, mingw, MSVC 9, Android 4.4.
-@item
-This function is not declared on some platforms:
-IRIX 6.5.
+FreeBSD 6.0, NetBSD 9.3, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, HP-UX 11, Solaris 9, Cygwin 1.7.x, mingw, MSVC 9, Android 4.4.
 @item
 This function returns 0 instead of small positive values on some platforms:
 NetBSD 10.0/i386.

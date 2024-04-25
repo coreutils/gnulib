@@ -27,7 +27,7 @@ macOS, FreeBSD, AIX, HP-UX, Cygwin.
 @item
 The @code{struct utmpx} field @code{ut_addr} or @code{ut_addr_v6} or
 @code{ut_ss} does not exist on some platforms:
-macOS, FreeBSD, AIX, IRIX, Solaris.
+macOS, FreeBSD, AIX, Solaris.
 @item
 On some platforms, this API does not support timestamps past the
 year 2038:

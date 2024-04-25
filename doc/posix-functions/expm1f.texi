@@ -11,9 +11,6 @@ Portability problems fixed by either Gnulib module @code{expm1f} or @code{expm1f
 @item
 This function is missing on some platforms:
 Minix 3.1.8, AIX 5.1, HP-UX 11, Solaris 9, mingw, MSVC 9.
-@item
-This function produces wrong results for arguments <= @minus{}17.32868 on some platforms:
-IRIX 6.5.
 @end itemize
 
 Portability problems fixed by Gnulib module @code{expm1f-ieee}:

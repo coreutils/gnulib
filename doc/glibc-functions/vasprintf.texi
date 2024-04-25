@@ -23,7 +23,7 @@ Portability problems fixed by either Gnulib module @code{vasprintf} or @code{vas
 @itemize
 @item
 This function is missing on some platforms:
-AIX 5.1, HP-UX 11, IRIX 6.5, Solaris 10, mingw, MSVC 14.
+AIX 5.1, HP-UX 11, Solaris 10, mingw, MSVC 14.
 @end itemize
 
 Portability problems fixed by either Gnulib module @code{vasprintf-posix} or @code{vasprintf-gnu}:

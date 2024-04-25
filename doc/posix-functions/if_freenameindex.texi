@@ -14,7 +14,7 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-OpenBSD 3.8, Minix 3.1.8, HP-UX 11.23, IRIX 6.5, Cygwin 1.5.x, mingw, MSVC 14, Android 6.0.
+OpenBSD 3.8, Minix 3.1.8, HP-UX 11.23, Cygwin 1.5.x, mingw, MSVC 14, Android 6.0.
 
 @item
 This is available only as a macro, rather than a function, on some

@@ -26,4 +26,4 @@ multi-threaded programs, in practice it is essentially equivalent to
 @code{pthread_sigmask}, with only a difference regarding the error
 return convention.  It's simpler to use @code{sigprocmask}, since it does
 not require linking with @code{-lpthread} on some platforms:
-glibc, NetBSD, OpenBSD, AIX, IRIX.
+glibc, NetBSD, OpenBSD, AIX.

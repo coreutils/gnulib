@@ -10,7 +10,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This macro is missing on some platforms:
-AIX 5.1, IRIX 6.5, Solaris 11.4.
+AIX 5.1, Solaris 11.4.
 @end itemize
 
 Portability problems not fixed by Gnulib:

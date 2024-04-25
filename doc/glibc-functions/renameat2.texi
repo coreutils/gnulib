@@ -15,7 +15,7 @@ Portability problems not fixed by Gnulib:
 @item
 This function exists only on Linux and is therefore
 missing on many platforms:
-glibc 2.27, macOS 11.1, FreeBSD 14.0, NetBSD 10.0, OpenBSD 6.7, Minix 3.1.8, AIX 7.1, HP-UX 11.31, IRIX 6.5, Solaris 11.4, Cygwin 1.7.x, mingw, MSVC 14, Android API level 29.
+glibc 2.27, macOS 11.1, FreeBSD 14.0, NetBSD 10.0, OpenBSD 6.7, Minix 3.1.8, AIX 7.1, HP-UX 11.31, Solaris 11.4, Cygwin 1.7.x, mingw, MSVC 14, Android API level 29.
 @end itemize
 
 The @code{renameatu} module addresses some of these portability issues.

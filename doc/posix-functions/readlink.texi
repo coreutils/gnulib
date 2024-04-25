@@ -46,8 +46,7 @@ directories, Cygwin sets @code{errno} to @code{ENOENT} or @code{EIO} instead of
 this function.
 @item
 When this function is called on a file that is not a symbolic link:
-IRIX may set @code{errno} to @code{ENXIO} instead of @code{EINVAL}.  Cygwin
-may set errno to @code{EACCES} instead of @code{EINVAL}.
+Cygwin may set errno to @code{EACCES} instead of @code{EINVAL}.
 @item
 When this function fails because it is called on an existing
 non-directory's name concatenated to @file{/},

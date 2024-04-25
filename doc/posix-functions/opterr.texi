@@ -14,5 +14,5 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This variable is missing on some platforms:
-IRIX 6.5, MSVC 14.
+MSVC 14.
 @end itemize

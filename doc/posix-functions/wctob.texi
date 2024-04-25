@@ -17,9 +17,6 @@ Cygwin 1.7.5.
 @item
 This function does not work on some platforms:
 Solaris 9.
-@item
-This function is missing a declaration on some platforms:
-IRIX 6.5.
 @end itemize
 
 Portability problems not fixed by Gnulib:

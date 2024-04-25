@@ -15,9 +15,6 @@ Minix 3.1.8, HP-UX 11.00, mingw.
 This function returns WEOF for a NUL argument on some platforms:
 Cygwin 1.7.2.
 @item
-This function does not return WEOF for an EOF argument on some platforms:
-IRIX 6.5.
-@item
 In the C or POSIX locales, this function is not consistent with
 Gnulib's @code{mbrtowc} and can return @code{WEOF}:
 glibc 2.35, MirOS BSD #10.

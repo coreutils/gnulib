@@ -22,7 +22,7 @@ Cygwin 1.7.9, Android 11.
 @item
 This function fails to print a useful a string for out-of-range integers on
 some platforms:
-HP-UX 11, IRIX 6.5.
+HP-UX 11.
 @end itemize
 
 Portability problems not fixed by Gnulib:

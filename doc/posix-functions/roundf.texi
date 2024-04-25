@@ -10,10 +10,10 @@ Portability problems fixed by either Gnulib module @code{roundf} or @code{roundf
 @itemize
 @item
 This function is missing on some platforms:
-FreeBSD 5.2.1, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, HP-UX 11, older IRIX 6.5, Solaris 9, MSVC 9.
+FreeBSD 5.2.1, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, HP-UX 11, Solaris 9, MSVC 9.
 @item
 This function is not declared on some platforms:
-glibc 2.8, IRIX 6.5.
+glibc 2.8.
 @item
 This functions returns a wrong result for @math{x = 1/2 - 2^-25}
 on some platforms:

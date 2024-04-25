@@ -40,5 +40,5 @@ MSVC 14.
 @item
 @code{fflush} on an input stream right after @code{ungetc} does not discard
 the @code{ungetc} buffer, on some platforms:
-AIX 5.1, HP-UX 11, IRIX 6.5, Solaris 11 2010-11, mingw, MSVC 14.
+AIX 5.1, HP-UX 11, Solaris 11 2010-11, mingw, MSVC 14.
 @end itemize

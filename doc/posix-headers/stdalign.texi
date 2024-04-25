@@ -25,7 +25,7 @@ not be included.  (Gnulib-using code should not include
 @code{stdalign} module.)
 @item
 This header file is missing on many platforms:
-FreeBSD 6.4, NetBSD 7.1, OpenBSD 6.7, Minix 3.3.0, AIX 7.1, HP-UX 11.31, IRIX 6.5, Solaris 11.3, mingw, MSVC 14, Android 9.0.
+FreeBSD 6.4, NetBSD 7.1, OpenBSD 6.7, Minix 3.3.0, AIX 7.1, HP-UX 11.31, Solaris 11.3, mingw, MSVC 14, Android 9.0.
 @item
 Clang 3.0's @code{<stdalign.h>} does not define @code{alignof}.
 @item

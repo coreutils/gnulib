@@ -10,7 +10,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-OpenBSD 3.8, Minix 3.1.8, AIX 5.1, HP-UX 11.23, IRIX 6.5, Solaris 9, Cygwin 1.5.x, mingw, MSVC 14, Android 4.4.
+OpenBSD 3.8, Minix 3.1.8, AIX 5.1, HP-UX 11.23, Solaris 9, Cygwin 1.5.x, mingw, MSVC 14, Android 4.4.
 However, the replacement may fail with @code{ENOSYS} or @code{ENOENT} on
 some platforms.
 @end itemize

@@ -16,9 +16,6 @@ mingw, MSVC 14.
 @item
 The functions @code{isw*} are missing on some platforms:
 FreeBSD 4.11.
-@item
-The function @code{iswblank} is declared but not defined on some platforms:
-IRIX 6.5.30.
 @end itemize
 
 Portability problems not fixed by Gnulib:

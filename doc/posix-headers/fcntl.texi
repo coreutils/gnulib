@@ -17,7 +17,7 @@ MSVC 14.
 
 @item
 @samp{O_CLOEXEC} is not defined on some platforms:
-Mac OS X 10.6, FreeBSD 8.4, NetBSD 5.1, OpenBSD 4.9, Minix 3.1.8, AIX 7.1, HP-UX 11.31, IRIX 6.5, Solaris 10, Cygwin 1.7.1, mingw, MSVC 14.
+Mac OS X 10.6, FreeBSD 8.4, NetBSD 5.1, OpenBSD 4.9, Minix 3.1.8, AIX 7.1, HP-UX 11.31, Solaris 10, Cygwin 1.7.1, mingw, MSVC 14.
 
 @item
 @samp{O_DIRECTORY}, @samp{O_DSYNC}, @samp{O_NOCTTY},
@@ -74,14 +74,13 @@ mingw, MSVC 14.
 
 @item
 @samp{F_DUPFD_CLOEXEC} is not defined on some platforms:
-Mac OS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 6.7, AIX 5.1, HP-UX 11,
-IRIX 6.5, Solaris 11 2010-11, Cygwin 1.7.1, mingw, MSVC 14.
+Mac OS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 6.7, AIX 5.1, HP-UX 11, Solaris 11 2010-11, Cygwin 1.7.1, mingw, MSVC 14.
 
 @item
 @samp{AT_FDCWD}, @samp{AT_EACCESS}, @samp{AT_SYMLINK_NOFOLLOW},
 @samp{AT_SYMLINK_FOLLOW}, and @samp{AT_REMOVEDIR}
 are not defined on many platforms:
-glibc 2.3.6, Mac OS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 6.7, AIX 5.1, HP-UX 11, IRIX 6.5, Cygwin 1.5.x, mingw, MSVC 14.
+glibc 2.3.6, Mac OS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 6.7, AIX 5.1, HP-UX 11, Cygwin 1.5.x, mingw, MSVC 14.
 
 @item
 @samp{AT_FDCWD} is defined with a value too large for an @code{int} on some
@@ -94,7 +93,7 @@ Portability problems not fixed by Gnulib:
 
 @item
 @samp{O_PATH} is not defined on some platforms:
-glibc 2.13, macOS 13, FreeBSD 13.0, NetBSD 9.2, OpenBSD 7.1, Minix 3.3.0, AIX 7.3, HP-UX 11.31, IRIX 6.5, Solaris 11.4, Cygwin 2.9, mingw, MSVC 14.
+glibc 2.13, macOS 13, FreeBSD 13.0, NetBSD 9.2, OpenBSD 7.1, Minix 3.3.0, AIX 7.3, HP-UX 11.31, Solaris 11.4, Cygwin 2.9, mingw, MSVC 14.
 
 @item
 @samp{F_SETFD}, @samp{F_GETFL}, @samp{F_SETFL}, @samp{F_GETLK},

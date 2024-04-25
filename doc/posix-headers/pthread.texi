@@ -22,8 +22,4 @@ mingw 3.0.
 
 Portability problems not fixed by Gnulib:
 @itemize
-@item
-This header file lacks the declaration of @code{pthread_atfork} on some
-platforms:
-IRIX 6.5.
 @end itemize

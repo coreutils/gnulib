@@ -10,7 +10,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-Minix 3.1.8, HP-UX 11.00, IRIX 6.5, mingw, MSVC 9, Android 7.1.
+Minix 3.1.8, HP-UX 11.00, mingw, MSVC 9, Android 7.1.
 @item
 This function does not support the @code{"tolower"} and @code{"toupper"}
 mappings on some platforms:

@@ -10,7 +10,7 @@ Portability problems fixed by either Gnulib module @code{log1pl} or @code{log1pl
 @itemize
 @item
 This function is missing on some platforms:
-FreeBSD 6.0, NetBSD 9.3, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, HP-UX 11, IRIX 6.5, Solaris 9, Cygwin 1.7.x, MSVC 9, Android 4.4.
+FreeBSD 6.0, NetBSD 9.3, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, HP-UX 11, Solaris 9, Cygwin 1.7.x, MSVC 9, Android 4.4.
 @item
 This function produces results which are accurate to only 16 digits on some
 platforms:
@@ -21,7 +21,7 @@ Portability problems fixed by Gnulib module @code{log1pl-ieee}:
 @itemize
 @item
 This function has problems when the argument is minus zero on some platforms:
-AIX 7.1, IRIX 6.5.
+AIX 7.1.
 @end itemize
 
 Portability problems not fixed by Gnulib:

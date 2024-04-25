@@ -10,7 +10,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-IRIX 6.5, Solaris 9, mingw, MSVC 9.
+Solaris 9, mingw, MSVC 9.
 @item
 This function cannot be called from plain inline or extern inline functions
 on some platforms:

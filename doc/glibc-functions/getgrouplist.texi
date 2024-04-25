@@ -31,7 +31,7 @@ on some platforms: OS X 10.11.
 
 @item
 This function is missing on some platforms:
-Minix 3.1.8, AIX 5.1, HP-UX 11, IRIX 6.5, Solaris 11.0, Cygwin 1.7.9, mingw, MSVC 14.
+Minix 3.1.8, AIX 5.1, HP-UX 11, Solaris 11.0, Cygwin 1.7.9, mingw, MSVC 14.
 @end itemize
 
 The Gnulib module @code{getugroups} provides a similar API.

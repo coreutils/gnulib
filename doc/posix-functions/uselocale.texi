@@ -15,7 +15,7 @@ Portability problems not fixed by Gnulib:
 @item
 This function is missing on many platforms:
 @c For NetBSD, see https://mail-index.netbsd.org/tech-userlevel/2015/12/29/msg009556.html
-FreeBSD 9.0, NetBSD 10.0, OpenBSD 6.1, Minix 3.1.8, AIX 6.1, HP-UX 11, IRIX 6.5, Solaris 11.3, Cygwin 2.5.x, mingw, MSVC 14, Android API level 20.
+FreeBSD 9.0, NetBSD 10.0, OpenBSD 6.1, Minix 3.1.8, AIX 6.1, HP-UX 11, Solaris 11.3, Cygwin 2.5.x, mingw, MSVC 14, Android API level 20.
 @item
 This function is not documented and leads to crashes in subsequent
 @code{setlocale} invocations on some platforms:

@@ -16,7 +16,7 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-IRIX 6.5, mingw, MSVC 14.
+mingw, MSVC 14.
 @item
 glibc and Android have two different functions @code{basename}: the POSIX
 version and the GNU version.

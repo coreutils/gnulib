@@ -10,7 +10,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function is missing on many non-glibc platforms:
-glibc 2.6, Mac OS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, HP-UX 11, IRIX 6.5, Solaris 11.4, Cygwin 1.7.5, mingw, MSVC 14, Android 5.1.
+glibc 2.6, Mac OS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, HP-UX 11, Solaris 11.4, Cygwin 1.7.5, mingw, MSVC 14, Android 5.1.
 @item
 This function is declared in @code{<unistd.h>} instead of @code{<stdlib.h>}
 on some platforms:

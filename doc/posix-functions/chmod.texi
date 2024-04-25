@@ -11,7 +11,7 @@ Portability problems fixed by Gnulib:
 @item
 This function does not fail when the file name argument ends in a slash
 and (without the slash) names a non-directory, on some platforms:
-AIX 7.2, IRIX 6.5.
+AIX 7.2.
 @item
 This function fails with a wrong error code (EINVAL instead of ENOTDIR)
 when the file name argument ends in a slash and (without the slash) names

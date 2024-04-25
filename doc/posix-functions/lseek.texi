@@ -30,11 +30,6 @@ POSIX does not specify which file descriptors support seeking and which don't.
 In practice, regular files and block devices support seeking, and ttys, pipes,
 and most character devices don't support it.
 @item
-When the third argument is invalid, POSIX says that @code{lseek} should set
-@code{errno} to @code{EINVAL} and return @minus{}1, but in this situation a
-@code{SIGSYS} signal is raised on some platforms:
-IRIX 6.5.
-@item
 Some systems do not support @code{SEEK_DATA} and @code{SEEK_HOLE}:
 AIX, HP-UX, Microsoft Windows, NetBSD, OpenBSD.
 @item

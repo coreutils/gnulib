@@ -39,5 +39,5 @@ Solaris 11 2010-11.
 @item
 The second parameter is @code{int} instead of @code{size_t}
 on some platforms:
-macOS 12.5, FreeBSD 14.0, MidnightBSD 3.0, IRIX 6.5, Solaris 11 2010-11, Solaris 11 OpenIndiana, Solaris 11 OmniOS.
+macOS 12.5, FreeBSD 14.0, MidnightBSD 3.0, Solaris 11 2010-11, Solaris 11 OpenIndiana, Solaris 11 OmniOS.
 @end itemize
