@@ -42,6 +42,7 @@ from .constants import (
     relinverse,
     rmtree,
 )
+from .functions import rewrite_file_name
 from .enums import CopyAction
 from .GLError import GLError
 from .GLConfig import GLConfig
@@ -121,42 +122,6 @@ class GLTestDir:
         self.config.resetPoDomain()
         self.config.resetWitnessCMacro()
         self.config.resetVCFiles()
-
-    def rewrite_files(self, files: list[str]) -> list[str]:
-        '''Replace auxdir, docbase, sourcebase, m4base and testsbase from
-        default to their version from config.'''
-        if type(files) is not list:
-            raise TypeError('files argument must have list type, not %s'
-                            % type(files).__name__)
-        for file in files:
-            if type(file) is not str:
-                raise TypeError('each file must be a string instance')
-        files = sorted(set(files))
-        auxdir = self.config['auxdir']
-        docbase = self.config['docbase']
-        sourcebase = self.config['sourcebase']
-        m4base = self.config['m4base']
-        testsbase = self.config['testsbase']
-        result = []
-        for file in files:
-            if file.startswith('build-aux/'):
-                path = substart('build-aux/', '%s/' % auxdir, file)
-            elif file.startswith('doc/'):
-                path = substart('doc/', '%s/' % docbase, file)
-            elif file.startswith('lib/'):
-                path = substart('lib/', '%s/' % sourcebase, file)
-            elif file.startswith('m4/'):
-                path = substart('m4/', '%s/' % m4base, file)
-            elif file.startswith('tests/'):
-                path = substart('tests/', '%s/' % testsbase, file)
-            elif file.startswith('tests=lib/'):
-                path = substart('tests=lib/', '%s/' % testsbase, file)
-            elif file.startswith('top/'):
-                path = substart('top/', '', file)
-            else:  # file is not a special file
-                path = file
-            result.append(os.path.normpath(path))
-        return sorted(set(result))
 
     def execute(self) -> None:
         '''Create a scratch package with the given modules.'''
@@ -339,24 +304,24 @@ class GLTestDir:
         # "automake --add-missing --copy" would provide.
         filelist = sorted(set(filelist + ['build-aux/config.guess', 'build-aux/config.sub']))
 
+        # new_table is a table with two columns: (rewritten-file-name original-file-name),
+        # representing the files after this gnulib-tool invocation.
+        new_table = { (rewrite_file_name(file_name, self.config, True), file_name)
+                      for file_name in filelist }
+
         # Setup the file table.
         filetable = GLFileTable(filelist)
+        filetable.new_files = sorted(new_table, key=lambda pair: pair[0])
 
         # Create directories.
-        directories = [ joinpath(self.testdir, os.path.dirname(file))
-                        for file in self.rewrite_files(filetable.all_files) ]
-        directories = sorted(set(directories))
+        directories = sorted({ joinpath(self.testdir, os.path.dirname(pair[0]))
+                               for pair in filetable.new_files })
         for directory in directories:
             if not os.path.isdir(directory):
                 os.makedirs(directory)
 
         # Copy files or make symbolic links or hard links.
-        for src in filetable.all_files:
-            dest = self.rewrite_files([src])[-1]
-            filetable.new_files.append(tuple([dest, src]))
-        for row in filetable.new_files:
-            src = row[1]
-            dest = row[0]
+        for (dest, src) in filetable.new_files:
             destpath = joinpath(self.testdir, dest)
             if src.startswith('tests=lib/'):
                 src = substart('tests=lib/', 'lib/', src)

@@ -96,12 +96,12 @@ from pygnulib.constants import (
     lines_to_multiline,
     ensure_writable,
     copyfile,
-    substart,
     force_output,
     init_DIRS,
     rmtree,
     DEFAULT_AUTOCONF_MINVERSION,
 )
+from pygnulib.functions import rewrite_file_name
 from pygnulib.enums import CopyAction
 from pygnulib.GLConfig import GLConfig
 from pygnulib.GLError import GLError
@@ -1309,20 +1309,7 @@ def main() -> None:
         lookedup, flag = filesystem.lookup(srcpath)
         if os.path.isdir(dest):
             destdir = dest
-            if srcpath.startswith('build-aux/'):
-                destpath = substart('build-aux/', '%s/' % auxdir, srcpath)
-            elif srcpath.startswith('doc/'):
-                destpath = substart('doc/', '%s/' % docbase, srcpath)
-            elif srcpath.startswith('lib/'):
-                destpath = substart('lib/', '%s/' % sourcebase, srcpath)
-            elif srcpath.startswith('m4/'):
-                destpath = substart('m4/', '%s/' % m4base, srcpath)
-            elif srcpath.startswith('tests/'):
-                destpath = substart('tests/', '%s/' % testsbase, srcpath)
-            elif srcpath.startswith('top/'):
-                destpath = substart('top/', '', srcpath)
-            else:  # either case
-                destpath = srcpath
+            destpath = rewrite_file_name(srcpath, config)
         else:  # if not os.path.isdir(dest)
             destdir = os.path.dirname(dest)
             destpath = os.path.basename(dest)

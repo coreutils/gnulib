@@ -38,6 +38,7 @@ from .constants import (
     relativize,
     rmtree,
 )
+from .functions import rewrite_file_name
 from .GLError import GLError
 from .GLConfig import GLConfig
 from .GLModuleSystem import GLModuleTable
@@ -302,80 +303,6 @@ class GLImport:
         '''x.__repr__ <==> repr(x)'''
         result = '<pygnulib.GLImport %s>' % hex(id(self))
         return result
-
-    def rewrite_old_files(self, files: list[str]) -> list[str]:
-        '''Replace auxdir, docbase, sourcebase, m4base and testsbase from default
-        to their version from cached config.'''
-        if type(files) is not list:
-            raise TypeError('files argument must has list type, not %s'
-                            % type(files).__name__)
-        for file in files:
-            if type(file) is not str:
-                raise TypeError('each file must be a string instance')
-        files = sorted(set(files))
-        files = [ '%s%s' % (file, os.path.sep)
-                  for file in files ]
-        auxdir = self.cache['auxdir']
-        docbase = self.cache['docbase']
-        sourcebase = self.cache['sourcebase']
-        m4base = self.cache['m4base']
-        testsbase = self.cache['testsbase']
-        result = []
-        for file in files:
-            if file.startswith('build-aux/'):
-                path = substart('build-aux/', '%s/' % auxdir, file)
-            elif file.startswith('doc/'):
-                path = substart('doc/', '%s/' % docbase, file)
-            elif file.startswith('lib/'):
-                path = substart('lib/', '%s/' % sourcebase, file)
-            elif file.startswith('m4/'):
-                path = substart('m4/', '%s/' % m4base, file)
-            elif file.startswith('tests/'):
-                path = substart('tests/', '%s/' % testsbase, file)
-            elif file.startswith('tests=lib/'):
-                path = substart('tests=lib/', '%s/' % testsbase, file)
-            elif file.startswith('top/'):
-                path = substart('top/', '', file)
-            else:  # file is not a special file
-                path = file
-            result.append(os.path.normpath(path))
-        return sorted(set(result))
-
-    def rewrite_new_files(self, files: list[str]) -> list[str]:
-        '''Replace auxdir, docbase, sourcebase, m4base and testsbase from
-        default to their version from config.'''
-        if type(files) is not list:
-            raise TypeError('files argument must has list type, not %s'
-                            % type(files).__name__)
-        for file in files:
-            if type(file) is not str:
-                raise TypeError('each file must be a string instance')
-        files = sorted(set(files))
-        auxdir = self.config['auxdir']
-        docbase = self.config['docbase']
-        sourcebase = self.config['sourcebase']
-        m4base = self.config['m4base']
-        testsbase = self.config['testsbase']
-        result = []
-        for file in files:
-            if file.startswith('build-aux/'):
-                path = substart('build-aux/', '%s/' % auxdir, file)
-            elif file.startswith('doc/'):
-                path = substart('doc/', '%s/' % docbase, file)
-            elif file.startswith('lib/'):
-                path = substart('lib/', '%s/' % sourcebase, file)
-            elif file.startswith('m4/'):
-                path = substart('m4/', '%s/' % m4base, file)
-            elif file.startswith('tests/'):
-                path = substart('tests/', '%s/' % testsbase, file)
-            elif file.startswith('tests=lib/'):
-                path = substart('tests=lib/', '%s/' % testsbase, file)
-            elif file.startswith('top/'):
-                path = substart('top/', '', file)
-            else:  # file is not a special file
-                path = file
-            result.append(os.path.normpath(path))
-        return sorted(set(result))
 
     def actioncmd(self) -> str:
         '''Return command-line invocation comment.'''
@@ -943,31 +870,27 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         # old_files is the list of files according to the last gnulib-tool invocation.
         # new_files is the list of files after this gnulib-tool invocation.
 
-        # Construct tables and transformers.
+        # Construct the transformers.
         transformers = dict()
         transformers['lib'] = sed_transform_lib_file
         transformers['aux'] = sed_transform_build_aux_file
         transformers['main'] = sed_transform_main_lib_file
         transformers['tests'] = sed_transform_testsrelated_lib_file
-        old_table = []
-        new_table = []
-        for src in old_files:
-            dest = self.rewrite_old_files([src])[-1]
-            old_table.append(tuple([dest, src]))
-        for src in new_files:
-            dest = self.rewrite_new_files([src])[-1]
-            new_table.append(tuple([dest, src]))
-        old_table = sorted(set(old_table))
-        new_table = sorted(set(new_table))
+
         # old_table is a table with two columns: (rewritten-file-name original-file-name),
         # representing the files according to the last gnulib-tool invocation.
+        old_table = { (rewrite_file_name(file_name, self.cache, True), file_name)
+                      for file_name in old_files }
+
         # new_table is a table with two columns: (rewritten-file-name original-file-name),
         # representing the files after this gnulib-tool invocation.
+        new_table = { (rewrite_file_name(file_name, self.config, True), file_name)
+                      for file_name in new_files }
 
         # Prepare the filetable.
         filetable = GLFileTable(sorted(set(filelist)))
-        filetable.old_files = sorted(set(old_table), key=lambda pair: pair[0])
-        filetable.new_files = sorted(set(new_table), key=lambda pair: pair[0])
+        filetable.old_files = sorted(old_table, key=lambda pair: pair[0])
+        filetable.new_files = sorted(new_table, key=lambda pair: pair[0])
 
         # Return the result.
         result = tuple([filetable, transformers])
