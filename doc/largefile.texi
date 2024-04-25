@@ -6,7 +6,7 @@ device or inode numbers exceeding 32 bits.
 To this effect, it attempts to ensure that types like @code{off_t} and
 @code{ino_t} are 64-bit,
 at least on the following platforms:
-glibc, Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, IRIX, Solaris,
+glibc, Mac OS X, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, Solaris,
 Cygwin, mingw, MSVC.
 
 If the types cannot be made 64-bit, @command{configure} issues a
