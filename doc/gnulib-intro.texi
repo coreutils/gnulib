@@ -113,15 +113,15 @@ take longer.
 @node Supported Platforms
 @subsection Supported Platforms
 
-As of 2023, the list of supported platforms is the following:
+As of 2024, the list of supported platforms is the following:
 
 @itemize
 @item
 glibc systems.  With glibc 2.19 or newer, they are frequently tested.
 @c [Not very relevant in the long term.]
-@c The distributions Ubuntu, Fedora, RHEL, Arch Linux are frequently tested.
-@c CentOS is occasionally tested.
-@c Debian, gNewSense, Trisquel, OpenSUSE are rarely tested.
+@c The distributions Ubuntu, Debian, Fedora, CentOS are frequently tested.
+@c Arch Linux is occasionally tested.
+@c gNewSense, Trisquel, OpenSUSE are rarely tested.
 About the kernels:
 @itemize
 @item
@@ -129,27 +129,27 @@ glibc on Linux is frequently tested.
 @item
 glibc on kFreeBSD is rarely tested.
 @item
-@c There is Alpine Linux 3.14, and also musl-gcc on Ubuntu.
+@c There is Alpine Linux 3.19, and also musl-gcc on Ubuntu.
 musl libc on Linux is occasionally tested.
 @end itemize
 @item
 macOS@.  In versions 12.5, it's occasionally tested.  In version
 10.5, it's rarely tested.
 @item
-FreeBSD 13.0 or newer is occasionally tested.
+FreeBSD 14.0 or newer is occasionally tested.
 @item
 OpenBSD 7.0 or newer is occasionally tested.
 @item
 NetBSD 10.0 or newer is occasionally tested.
 @item
-AIX 7.1 and 7.2 are occasionally tested.
+AIX 7.1 and 7.3 are occasionally tested.
 @item
 Solaris 10 and 11.4 are occasionally tested.  Solaris 9 is rarely
 tested and low priority.
 @item
 Android is occasionally tested, through the Termux app on Android 11.
 @item
-Cygwin 2.9 is occasionally tested.  Cygwin 1.7.x is rarely tested.
+Cygwin 2.9 and 3.4 are occasionally tested.  Cygwin 1.7.x no longer tested.
 @item
 Native Windows:
 @itemize
@@ -169,9 +169,6 @@ Note that some modules are currently unsupported on native Windows:
 The versions of Windows that are supported are Windows 10 and newer.
 @item
 GNU Hurd 0.9 is rarely tested.
-@item
-@c IRIX 6.5 cc has no option for C99 support. You would need to use gcc instead.
-IRIX 6.5 is very rarely tested.
 @item
 Minix 3.3.0 is no longer tested.
 @item
@@ -197,7 +194,8 @@ AIX 6 and older.
 @item
 HP-UX 11.31.
 @item
-IRIX 6.4 and older.
+@c IRIX 6.5 cc has no option for C99 support. You would need to use gcc instead.
+IRIX 6.5 and older.
 @item
 OSF/1 5.1.
 @item
