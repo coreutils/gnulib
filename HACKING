@@ -82,7 +82,7 @@ Maintaining high quality
 
 It is a good idea to occasionally create a testdir of all of Gnulib:
   $ rm -rf ../testdir-all; ./gnulib-tool --create-testdir --dir=../testdir-all --with-c++-tests --without-privileged-tests --single-configure `./all-modules`
-and test this directory on various plaforms:
+and test this directory on various platforms:
   - Linux/glibc systems,
   - Linux/musl systems,
   - macOS,
