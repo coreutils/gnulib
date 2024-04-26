@@ -102,6 +102,19 @@ at any time.
   + Download:
     https://ftp.gnu.org/gnu/gawk/
 
+* Python 3.7 or newer.
+  * Recommended.
+    Without it, gnulib-tool is between 8 times and 100 times slower and may lack
+    functionality added after April 2024.
+  + Homepage:
+    https://www.python.org/
+  + Download:
+    https://www.python.org/downloads/
+  + Pre-built package name:
+    - On Debian and Debian-based systems: python3,
+    - On Red Hat distributions: python3.
+    - Other: https://repology.org/project/python/versions
+
 * GNU gettext.
   + If your project wants to follow GNU Coding Standards:
     + Always use the newest available gettext release, see
