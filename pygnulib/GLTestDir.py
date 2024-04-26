@@ -861,11 +861,7 @@ class GLMegaTestDir:
                 os.mkdir(self.megatestdir)
             except Exception as exc:
                 raise GLError(19, self.megatestdir) from exc
-        self.emitter = GLEmiter(self.config)
-        self.filesystem = GLFileSystem(self.config)
         self.modulesystem = GLModuleSystem(self.config)
-        self.assistant = GLFileAssistant(self.config)
-        self.makefiletable = GLMakefileTable(self.config)
 
     def execute(self) -> None:
         '''Create a mega scratch package with the given modules one by one
