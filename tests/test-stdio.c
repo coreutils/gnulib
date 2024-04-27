@@ -36,6 +36,7 @@ off_t t2;
 size_t t3;
 ssize_t t4;
 va_list t5;
+off64_t t6;
 
 #include <string.h>
 

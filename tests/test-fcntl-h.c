@@ -35,6 +35,7 @@ int i = FD_CLOEXEC;
 pid_t t1;
 off_t t2;
 mode_t t3;
+off64_t t4;
 
 int
 main (void)

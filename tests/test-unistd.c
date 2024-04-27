@@ -46,6 +46,7 @@ pid_t t6;
 useconds_t t7;
 intptr_t t8;
 #endif
+off64_t t9;
 
 int
 main (void)

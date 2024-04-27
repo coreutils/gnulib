@@ -77,7 +77,8 @@
 
 /* Get off_t and ssize_t.  Needed on many systems, including glibc 2.8
    and eglibc 2.11.2.
-   May also define off_t to a 64-bit type on native Windows.  */
+   May also define off_t to a 64-bit type on native Windows.
+   Also defines off64_t on macOS, NetBSD, OpenBSD, MSVC, Cygwin, Haiku.  */
 #include <sys/types.h>
 
 /* Solaris 10 and NetBSD 7.0 declare renameat in <unistd.h>, not in <stdio.h>.  */
