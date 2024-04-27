@@ -876,7 +876,12 @@ class GLMegaTestDir:
             modules = self.modulesystem.list()
             modules = [ self.modulesystem.find(m)
                         for m in modules ]
-        modules = sorted(set(modules))
+        # Preserve ordering from the command-line, but remove duplicates.
+        # This allows control over the SUBDIRS variable in the top-level Makefile.am.
+        module_set = set(modules)
+        modules = [ module
+                    for module in modules
+                    if module in module_set ]
 
         # First, all modules one by one.
         for module in modules:
