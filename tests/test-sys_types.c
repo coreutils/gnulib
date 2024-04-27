@@ -26,6 +26,7 @@ size_t t2;
 ssize_t t3;
 off_t t4;
 mode_t t5;
+off64_t t6;
 
 int
 main (void)

@@ -5,12 +5,16 @@ Files:
 lib/sys_types.in.h
 m4/sys_types_h.m4
 m4/off_t.m4
+m4/off64_t.m4
 m4/pid_t.m4
 
 Depends-on:
 gen-header
 include_next
 ssize_t
+
+configure.ac-early:
+AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
 
 configure.ac:
 gl_SYS_TYPES_H
@@ -31,6 +35,7 @@ sys/types.h: sys_types.in.h $(top_builddir)/config.status
 	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
 	      -e 's|@''NEXT_SYS_TYPES_H''@|$(NEXT_SYS_TYPES_H)|g' \
 	      -e 's|@''WINDOWS_64_BIT_OFF_T''@|$(WINDOWS_64_BIT_OFF_T)|g' \
+	      -e 's|@''HAVE_OFF64_T''@|$(HAVE_OFF64_T)|g' \
 	      -e 's|@''WINDOWS_STAT_INODES''@|$(WINDOWS_STAT_INODES)|g' \
 	      $(srcdir)/sys_types.in.h > $@-t
 	$(AM_V_at)mv $@-t $@
