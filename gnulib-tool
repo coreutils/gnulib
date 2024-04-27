@@ -143,12 +143,7 @@ case "$GNULIB_TOOL_IMPL" in
   '')
     # Use the Python implementation if a suitable Python version is found
     # in $PATH. This is the same Python version test as in gnulib-tool.py.
-    if (python3 --version) >/dev/null 2>/dev/null \
-       && case `python3 --version 2>&1` in
-            Python\ 3.[0-6] | Python\ 3.[0-6].*) false ;;
-            Python\ 3.*) true ;;
-            *) false ;;
-          esac; then
+    if (python3 -c 'import sys; sys.exit(not sys.version_info >= (3,7))') 2>/dev/null; then
       exec "$gnulib_dir/gnulib-tool.py" "$@"
     else
       echo "gnulib-tool: warning: python3 not found or too old, using the slow shell-based implementation" 1>&2
