@@ -4,6 +4,7 @@ tests/test-login_tty.c
 Depends-on:
 openpty
 tcgetsid
+ignore-value
 
 configure.ac:
 
