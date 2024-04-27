@@ -1,6 +1,6 @@
 /* A substitute for POSIX 2008 <stddef.h>, for platforms that have issues.
 
-   Copyright (C) 2009-2023 Free Software Foundation, Inc.
+   Copyright (C) 2009-2024 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as
@@ -72,6 +72,12 @@ typedef long max_align_t;
 #    define __CLANG_MAX_ALIGN_T_DEFINED
 #    define GNULIB_defined_max_align_t 1
 #   endif
+#  endif
+
+#  if !defined _GCC_NULLPTR_T && !@NULLPTR_T_NEEDS_STDDEF@
+    /* Suppress unwanted nullptr_t typedef.  See
+       <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=114869>.  */
+#   define _GCC_NULLPTR_T
 #  endif
 
 /* The include_next requires a split double-inclusion guard.  */
