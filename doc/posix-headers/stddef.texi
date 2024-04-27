@@ -46,6 +46,11 @@ which Gnulib cannot usefully emulate:
 GCC 12, Clang 15, and other pre-2023 C compilers.
 
 @item
+Some platforms define @code{nullptr_t} even when @code{<stddef.h>} is
+not included:
+GCC 14.0.
+
+@item
 Some platforms provide an @code{offsetof} macro that cannot be used in
 arbitrary expressions:
 Solaris 11.4
