@@ -1,6 +1,6 @@
 # A library of shell functions for autopull.sh, autogen.sh, and bootstrap.
 
-scriptlibversion=2024-04-13.15; # UTC
+scriptlibversion=2024-04-27.17; # UTC
 
 # Copyright (C) 2003-2024 Free Software Foundation, Inc.
 #
@@ -462,7 +462,17 @@ prepare_GNULIB_SRCDIR ()
       || die "Error: --gnulib-srcdir or \$GNULIB_SRCDIR is specified," \
              "but does not contain gnulib-tool"
     if test -n "$GNULIB_REVISION" && $use_git; then
-      (cd "$GNULIB_SRCDIR" && git checkout "$GNULIB_REVISION") || exit $?
+      # The 'git checkout "$GNULIB_REVISION"' command succeeds if the
+      # GNULIB_REVISION is a commit hash that exists locally, or if it is
+      # branch name that can be fetched from origin. It fails, however,
+      # if the GNULIB_REVISION is a commit hash that only exists in origin.
+      # In this case, we need a 'git fetch' and then retry
+      # 'git checkout "$GNULIB_REVISION"'.
+      (cd "$GNULIB_SRCDIR" \
+       && { git checkout "$GNULIB_REVISION" 2>/dev/null \
+            || { git fetch origin && git checkout "$GNULIB_REVISION"; }
+          }
+      ) || exit $?
     fi
   else
     if ! $use_git; then
