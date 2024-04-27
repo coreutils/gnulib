@@ -48,7 +48,7 @@ GCC 12, Clang 15, and other pre-2023 C compilers.
 @item
 Some platforms define @code{nullptr_t} even when @code{<stddef.h>} is
 not included:
-GCC 14.0.
+GCC 14.0.1 20240411 (Red Hat 14.0.1-0).
 
 @item
 Some platforms provide an @code{offsetof} macro that cannot be used in
