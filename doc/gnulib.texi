@@ -978,6 +978,10 @@ Portability problems fixed by Gnulib:
 Some platforms lack @code{nullptr}:
 For C: GCC 12, Clang 15, and other pre-2023 C compilers.
 For C++: pre-2011 C++ compilers.
+
+@item
+Some platforms incorrectly warn when @code{nullptr} is a sentinel argument:
+GCC 13.2 and 14.0.
 @end itemize
 
 Portability problems not fixed by Gnulib:
