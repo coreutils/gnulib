@@ -26,6 +26,8 @@
 #include <termios.h>
 #include <unistd.h>
 
+#include "ignore-value.h"
+
 int
 main ()
 {
@@ -63,7 +65,7 @@ main ()
     for (fd = 0; fd < 3; fd++)
       if (!(tcgetpgrp (fd) == getpid ()))
         {
-          freopen ("err", "w+", stderr);
+          ignore_value (freopen ("err", "w+", stderr));
           fprintf (stderr, "tcgetpgrp(%d) = %ld whereas getpid() = %ld\n",
                    fd, (long) tcgetpgrp (fd), (long) getpid ());
           fflush (stderr);
@@ -76,7 +78,7 @@ main ()
           {
             if (!(errno == ENOSYS))
               {
-                freopen ("err", "w+", stderr);
+                ignore_value (freopen ("err", "w+", stderr));
                 fprintf (stderr, "tcgetsid(%d) = -1 and errno = %d\n",
                          fd, errno);
                 fflush (stderr);
@@ -87,7 +89,7 @@ main ()
           {
             if (!(sid == getpid ()))
               {
-                freopen ("err", "w+", stderr);
+                ignore_value (freopen ("err", "w+", stderr));
                 fprintf (stderr, "tcgetsid(%d) = %ld whereas getpid() = %ld\n",
                          fd, (long) tcgetsid (fd), (long) getpid ());
                 fflush (stderr);
