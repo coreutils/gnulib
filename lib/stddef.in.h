@@ -74,6 +74,12 @@ typedef long max_align_t;
 #   endif
 #  endif
 
+#  if !defined _GCC_NULLPTR_T && !@NULLPTR_T_NEEDS_STDDEF@
+    /* Suppress unwanted nullptr_t typedef.  See
+       <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=114869>.  */
+#   define _GCC_NULLPTR_T
+#  endif
+
 /* The include_next requires a split double-inclusion guard.  */
 
 #  @INCLUDE_NEXT@ @NEXT_STDDEF_H@
