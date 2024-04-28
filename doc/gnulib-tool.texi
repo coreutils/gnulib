@@ -374,9 +374,44 @@ manually copy the @file{gnulib-cache.m4} into the new M4 macro directory.
 
 In the @file{gnulib-cache.m4} file, the macros have the following meaning:
 @table @code
+@item gl_LOCAL_DIR
+The argument is a colon separated list of local directories where
+@code{gnulib-tool} will search before looking at gnulib's directory.
+Corresponds to the @samp{--local-dir} command line argument.
+
 @item gl_MODULES
 The argument is a space separated list of the requested modules, not including
 dependencies.
+
+@item gl_WITH_OBSOLETE
+The presence of this macro corresponds to the @samp{--with-obsolete} command
+line argument.  It takes no arguments.
+
+@item gl_WITH_CXX_TESTS
+The presence of this macro corresponds to the @samp{--with-c++-tests} command
+line argument and to the absence of the @samp{--without-c++-tests} command line
+argument.  It takes no arguments.
+
+@item gl_WITH_LONGRUNNING_TESTS
+The presence of this macro corresponds to the @samp{--with-longrunning-tests}
+command line argument and to the absence of the
+@samp{--without-longrunning-tests} command line argument.  It takes no
+arguments.
+
+@item gl_WITH_PRIVILEGED_TESTS
+The presence of this macro corresponds to the @samp{--with-longrunning-tests}
+command line argument and to the absence of the
+@samp{--without-longrunning-tests} command line argument.  It takes no
+arguments.
+
+@item gl_WITH_UNPORTABLE_TESTS
+The presence of this macro corresponds to the @samp{--with-unportable-tests}
+command line argument and to the absence of the
+@samp{--without-unportable-tests} command line argument.  It takes no arguments.
+
+@item gl_WITH_ALL_TESTS
+The presence of this macro corresponds to the @samp{--with-all-tests} command
+line argument.  It takes no arguments.
 
 @item gl_AVOID
 The argument is a space separated list of modules that should not be used,
@@ -393,9 +428,21 @@ The argument is the relative file name of the directory containing the gnulib
 M4 macros (*.m4 files).  Corresponds to the @samp{--m4-base} command line
 argument.
 
+@item gl_PO_BASE
+The argument is the relative file name of the directory containing *.po files.
+Corresponds to the @samp{--po-base} command line argument.
+
+@item gl_DOC_BASE
+The argument is the relative file name of the directory containing documentation
+files.  Corresponds to the @samp{--doc-base} command line argument.
+
 @item gl_TESTS_BASE
 The argument is the relative file name of the directory containing the gnulib
 unit test files.  Corresponds to the @samp{--tests-base} command line argument.
+
+@item gl_WITH_TESTS
+The presence of this macro corresponds to the @samp{--with-tests} command line
+argument.  It takes no arguments.
 
 @item gl_LIB
 The argument is the name of the library to be created.  Corresponds to the
@@ -407,6 +454,24 @@ command line argument.  The presence of this macro with an argument (whose
 value must be 2 or 3) corresponds to the @samp{--lgpl=@var{arg}} command line
 argument.
 
+@item gl_MAKEFILE_NAME
+The argument is the name of the makefile in the source-base and tests-base
+directories.  Corresponds to the @samp{--makefile-name} command line argument.
+
+@item gl_TESTS_MAKEFILE_NAME
+The argument is the name of the makefile in the tests-base directory.
+Corresponds to the @samp{--tests-makefile-name} command line argument.
+
+@item gl_AUTOMAKE_SUBDIR
+The presence of this macro corresponds to the @samp{--automake-subdir} command
+line argument.  It takes no arguments.
+
+@item gl_CONDITIONAL_DEPENDENCIES
+The presence of this macro corresponds to the @samp{--conditional-dependencies}
+command line argument and to the absence of the
+@samp{--no-conditional-dependencies} command line argument.  It takes no
+arguments.
+
 @item gl_LIBTOOL
 The presence of this macro corresponds to the @samp{--libtool} command line
 argument and to the absence of the @samp{--no-libtool} command line argument.
@@ -415,6 +480,20 @@ It takes no arguments.
 @item gl_MACRO_PREFIX
 The argument is the prefix to use for macros in the @file{gnulib-comp.m4}
 file.  Corresponds to the @samp{--macro-prefix} command line argument.
+
+@item gl_PO_DOMAIN
+The argument is the prefix of the i18n domain, typically matching the package
+name.  Corresponds to the @samp{--po-domain} command line argument.
+
+@item gl_WITNESS_C_MACRO
+The argument is the C macro that is defined when the sources in this directory
+are compiled or used.  Corresponds to the @samp{--witness-c-macro} command line
+argument.
+
+@item gl_VC_FILES
+The argument to this macro is @code{true} or @code{false}.  The former
+corresponds to the @samp{--vc-files} command line argument and the latter
+corresponds to the @samp{--no-vc-files} command line argument.
 @end table
 
 @end itemize
