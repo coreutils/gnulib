@@ -156,6 +156,7 @@ Don't forget to
   - add "lib/Makefile" to AC_CONFIG_FILES in ./configure.ac,
   - mention "lib" in SUBDIRS in Makefile.am,
   - mention "-I m4" in ACLOCAL_AMFLAGS in Makefile.am,
+    or add an AC_CONFIG_MACRO_DIRS([m4]) invocation in ./configure.ac,
   - invoke gl_EARLY in ./configure.ac, right after AC_PROG_CC,
   - invoke gl_INIT in ./configure.ac.
 ~/src/libfoo$
@@ -221,6 +222,13 @@ your top-level @file{Makefile.am} file, as in:
 
 @example
 ACLOCAL_AMFLAGS = -I m4
+@end example
+
+Alternatively, add an @code{AC_CONFIG_MACRO_DIRS} invocation in your
+@file{configure.ac} file, as in:
+
+@example
+AC_CONFIG_MACRO_DIRS([m4])
 @end example
 
 You are now ready to call the M4 macros in @code{gnulib-comp.m4} from
