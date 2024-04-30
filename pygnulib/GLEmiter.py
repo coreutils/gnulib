@@ -98,6 +98,9 @@ def _eliminate_NMD(snippet: str, automake_subdir: bool) -> str:
 class GLEmiter:
     '''This class is used to emit the contents of necessary files.'''
 
+    info: GLInfo
+    config: GLConfig
+
     def __init__(self, config: GLConfig) -> None:
         '''Create GLEmiter instance.'''
         self.info = GLInfo()

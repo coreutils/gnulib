@@ -41,6 +41,8 @@ class GLConfig:
     By default all attributes are set to empty string, empty list or zero.
     The most common value, however, is a None value.'''
 
+    table: dict[str, Any]
+
     def __init__(self,
                  destdir: str | None = None,
                  localpath: list[str] | None = None,

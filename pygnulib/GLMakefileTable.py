@@ -33,6 +33,9 @@ class GLMakefileTable:
     An edit may be removed; this is done by removing its 'var' key but
     keeping it in the list. Removed edits must be ignored.'''
 
+    config: GLConfig
+    table: list[dict[str, str | bool]]
+
     def __init__(self, config: GLConfig) -> None:
         '''Create GLMakefileTable instance.'''
         if type(config) is not GLConfig:
@@ -41,7 +44,7 @@ class GLMakefileTable:
         self.config = config
         self.table = []
 
-    def __getitem__(self, y: int) -> dict[str, bool]:
+    def __getitem__(self, y: int) -> dict[str, str | bool]:
         '''x.__getitem__(y) = x[y]'''
         if type(y) is not int:
             raise TypeError('indices must be integers, not %s'

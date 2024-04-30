@@ -24,6 +24,7 @@ import sys
 import hashlib
 import subprocess as sp
 from collections import defaultdict
+from typing import Any, ClassVar
 from .constants import (
     DIRS,
     ENCS,
@@ -45,6 +46,9 @@ from .GLFileSystem import GLFileSystem
 class GLModuleSystem:
     '''GLModuleSystem is used to operate with module system using dynamic
     searching and patching.'''
+
+    config: GLConfig
+    filesystem: GLFileSystem
 
     def __init__(self, config: GLConfig) -> None:
         '''Create new GLModuleSystem instance. Some functions use GLFileSystem class
@@ -155,14 +159,25 @@ class GLModule:
     path. GLModule can get all information about module, get its dependencies,
     files, etc.'''
 
-    section_label_pattern = \
+    # Regular expression matching the start of a section in the module description.
+    section_label_pattern: ClassVar[re.Pattern] = \
         re.compile(r'^(Description|Comment|Status|Notice|Applicability|'
                    + r'Files|Depends-on|configure\.ac-early|configure\.ac|'
                    + r'Makefile\.am|Include|Link|License|Maintainer):$',
                    re.M)
 
     # List of characters allowed in shell identifiers.
-    shell_id_chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_'
+    shell_id_chars: ClassVar[str] = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_'
+
+    cache: dict[str, Any]
+    content: str
+    name: str
+    path: str
+    patched: bool
+    config: GLConfig
+    filesystem: GLFileSystem
+    modulesystem: GLModuleSystem
+    sections: dict[str, str]
 
     def __init__(self, config: GLConfig, name: str, path: str, patched: bool = False) -> None:
         '''Create new GLModule instance. Arguments are:
@@ -682,6 +697,20 @@ class GLModule:
 #===============================================================================
 class GLModuleTable:
     '''GLModuleTable is used to work with the list of the modules.'''
+
+    dependers: defaultdict[GLModule, set[GLModule]]
+    conditionals: dict[tuple[GLModule, GLModule], str | bool]
+    unconditionals: set[GLModule]
+    base_modules: list[GLModule]
+    main_modules: list[GLModule]
+    tests_modules: list[GLModule]
+    final_modules: list[GLModule]
+    config: GLConfig
+    filesystem: GLFileSystem
+    modulesystem: GLModuleSystem
+    inc_all_direct_tests: bool
+    inc_all_indirect_tests: bool
+    avoids: set[GLModule]
 
     def __init__(self, config: GLConfig, inc_all_direct_tests: bool, inc_all_indirect_tests: bool) -> None:
         '''Create new GLModuleTable instance. If modules are specified, then add

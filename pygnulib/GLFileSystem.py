@@ -46,6 +46,8 @@ class GLFileSystem:
     Its main method lookup(file) is used to find file in these directories or
     combine it using Linux 'patch' utility.'''
 
+    config: GLConfig
+
     def __init__(self, config: GLConfig) -> None:
         '''Create new GLFileSystem instance. The only argument is localpath,
         which can be an empty list.'''
@@ -138,6 +140,13 @@ class GLFileSystem:
 #===============================================================================
 class GLFileAssistant:
     '''GLFileAssistant is used to help with file processing.'''
+
+    original: str | None
+    rewritten: str | None
+    added: list[str]
+    config: GLConfig
+    transformers: dict[str, tuple[re.Pattern, str] | None]
+    filesystem: GLFileSystem
 
     def __init__(self, config: GLConfig, transformers: dict[str, tuple[re.Pattern, str] | None] | None = None) -> None:
         '''Create GLFileAssistant instance.

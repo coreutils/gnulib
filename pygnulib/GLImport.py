@@ -60,6 +60,14 @@ class GLImport:
     scripts. However, if user needs just to use power of gnulib-tool, this class
     is a very good choice.'''
 
+    mode: int
+    config: GLConfig
+    cache: GLConfig
+    emitter: GLEmiter
+    modulesystem: GLModuleSystem
+    moduletable: GLModuleTable
+    makefiletable: GLMakefileTable
+
     def __init__(self, config: GLConfig, mode: int) -> None:
         '''Create GLImport instance.
         The first variable, mode, must be one of the values of the MODES dict

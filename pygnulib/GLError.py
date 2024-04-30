@@ -19,6 +19,7 @@ from __future__ import annotations
 # Define global imports
 #===============================================================================
 import os
+from typing import Any
 
 
 #===============================================================================
@@ -27,7 +28,11 @@ import os
 class GLError(Exception):
     '''Exception handler for pygnulib classes.'''
 
-    def __init__(self, errno: int, errinfo: str | float | None = None) -> None:
+    errno: int
+    errinfo: Any
+    args: tuple[int, Any]
+
+    def __init__(self, errno: int, errinfo: Any = None) -> None:
         '''Each error has following parameters:
         errno: code of error; used to catch error type
           1: file does not exist in GLFileSystem: <file>

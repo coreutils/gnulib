@@ -91,6 +91,14 @@ class GLTestDir:
     '''GLTestDir class is used to create a scratch package with the given
     list of the modules.'''
 
+    config: GLConfig
+    testdir: str
+    emitter: GLEmiter
+    filesystem: GLFileSystem
+    modulesystem: GLModuleSystem
+    assistant: GLFileAssistant
+    makefiletable: GLMakefileTable
+
     def __init__(self, config: GLConfig, testdir: str) -> None:
         '''Create new GLTestDir instance.'''
         if type(config) is not GLConfig:
@@ -844,6 +852,10 @@ class GLTestDir:
 class GLMegaTestDir:
     '''GLMegaTestDir class is used to create a mega scratch package with the
     given modules one by one and all together.'''
+
+    config: GLConfig
+    megatestdir: str
+    modulesystem: GLModuleSystem
 
     def __init__(self, config: GLConfig, megatestdir: str) -> None:
         '''Create new GLTestDir instance.'''
