@@ -1,5 +1,5 @@
 # vsnprintf-posix.m4
-# serial 22
+# serial 23
 dnl Copyright (C) 2007-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -27,7 +27,7 @@ AC_DEFUN([gl_FUNC_VSNPRINTF_IS_POSIX],
   AC_REQUIRE([gl_PRINTF_DIRECTIVE_A])
   AC_REQUIRE([gl_PRINTF_DIRECTIVE_B])
   AC_REQUIRE([gl_PRINTF_DIRECTIVE_F])
-  AC_REQUIRE([gl_PRINTF_DIRECTIVE_N])
+  m4_ifdef([gl_PRINTF_SUPPORT_N_DIRECTIVE],[AC_REQUIRE([gl_PRINTF_DIRECTIVE_N])])
   AC_REQUIRE([gl_PRINTF_DIRECTIVE_LS])
   AC_REQUIRE([gl_PRINTF_DIRECTIVE_LC])
   AC_REQUIRE([gl_PRINTF_POSITIONS])
