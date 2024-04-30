@@ -1,5 +1,5 @@
 # printf.m4
-# serial 91
+# serial 92
 dnl Copyright (C) 2003, 2007-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -896,6 +896,7 @@ AC_DEFUN([gl_PRINTF_DIRECTIVE_N],
 #include <stdlib.h>
 #include <string.h>
 #ifdef _MSC_VER
+#include <crtdbg.h>
 #include <inttypes.h>
 /* See page about "Parameter Validation" on msdn.microsoft.com.
    <https://docs.microsoft.com/en-us/cpp/c-runtime-library/parameter-validation>
@@ -922,6 +923,9 @@ int main ()
   int count = -1;
 #ifdef _MSC_VER
   _set_invalid_parameter_handler (invalid_parameter_handler);
+  /* Also avoid an Abort/Retry/Ignore dialog in debug builds.
+     <https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/crtsetreportmode>  */
+  _CrtSetReportMode (_CRT_ASSERT, 0);
 #endif
   signal (SIGABRT, abort_handler);
   /* Copy the format string.  Some systems (glibc with _FORTIFY_SOURCE=2)
