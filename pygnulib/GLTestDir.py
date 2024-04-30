@@ -244,8 +244,7 @@ class GLTestDir:
                     if file.startswith('lib/'):
                         libtests = True
                         break
-            if libtests:
-                self.config.setLibtests(True)
+            self.emitter.config.setLibtests(libtests)
 
         if single_configure:
             # Add the dummy module to the main module list if needed.
