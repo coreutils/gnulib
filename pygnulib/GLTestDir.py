@@ -96,7 +96,6 @@ class GLTestDir:
     emitter: GLEmiter
     filesystem: GLFileSystem
     modulesystem: GLModuleSystem
-    assistant: GLFileAssistant
     makefiletable: GLMakefileTable
 
     def __init__(self, config: GLConfig, testdir: str) -> None:
@@ -117,7 +116,6 @@ class GLTestDir:
         self.emitter = GLEmiter(self.config)
         self.filesystem = GLFileSystem(self.config)
         self.modulesystem = GLModuleSystem(self.config)
-        self.assistant = GLFileAssistant(self.config)
         self.makefiletable = GLMakefileTable(self.config)
 
         # Subdirectory names.

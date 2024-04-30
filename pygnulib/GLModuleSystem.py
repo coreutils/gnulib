@@ -175,7 +175,6 @@ class GLModule:
     path: str
     patched: bool
     config: GLConfig
-    filesystem: GLFileSystem
     modulesystem: GLModuleSystem
     sections: dict[str, str]
 
@@ -202,7 +201,6 @@ class GLModule:
         self.path = path
         self.patched = patched
         self.config = config
-        self.filesystem = GLFileSystem(self.config)
         self.modulesystem = GLModuleSystem(self.config)
         # Read the module description file into memory.
         with open(path, mode='r', newline='\n', encoding='utf-8') as file:
@@ -706,7 +704,6 @@ class GLModuleTable:
     tests_modules: list[GLModule]
     final_modules: list[GLModule]
     config: GLConfig
-    filesystem: GLFileSystem
     modulesystem: GLModuleSystem
     inc_all_direct_tests: bool
     inc_all_indirect_tests: bool
@@ -750,7 +747,6 @@ class GLModuleTable:
             raise TypeError('config must be a GLConfig, not %s'
                             % type(config).__name__)
         self.config = config
-        self.filesystem = GLFileSystem(self.config)
         self.modulesystem = GLModuleSystem(self.config)
         if type(inc_all_direct_tests) is not bool:
             raise TypeError('inc_all_direct_tests must be a bool, not %s'
