@@ -65,43 +65,43 @@ class GLModuleSystem:
         result = '<pygnulib.GLModuleSystem %s>' % hex(id(self))
         return result
 
-    def exists(self, module: str) -> bool:
+    def exists(self, module_name: str) -> bool:
         '''Check whether the given module exists.
         GLConfig: localpath.'''
-        if type(module) is not str:
-            raise TypeError('module must be a string, not %s'
-                            % type(module).__name__)
+        if type(module_name) is not str:
+            raise TypeError('module_name must be a string, not %s'
+                            % type(module_name).__name__)
         localpath = self.config['localpath']
         result = False
         badnames = ['ChangeLog', 'COPYING', 'README', 'TEMPLATE',
                     'TEMPLATE-EXTENDED', 'TEMPLATE-TESTS']
-        if module not in badnames:
-            result = os.path.isfile(joinpath(DIRS['modules'], module))
+        if module_name not in badnames:
+            result = os.path.isfile(joinpath(DIRS['modules'], module_name))
             if not result:
                 for localdir in localpath:
                     if (os.path.isdir(joinpath(localdir, 'modules'))
-                            and os.path.isfile(joinpath(localdir, 'modules', module))):
+                            and os.path.isfile(joinpath(localdir, 'modules', module_name))):
                         result = True
                         break
         return result
 
-    def find(self, module: str) -> GLModule | None:
+    def find(self, module_name: str) -> GLModule | None:
         '''Return the GLModule object given the module name,
         or None if the module description file with that name does not exist.
-        - module, The name of the module.'''
-        if type(module) is not str:
-            raise TypeError('module must be a string, not %s'
-                            % type(module).__name__)
-        if self.exists(module):
-            path, istemp = self.filesystem.lookup(joinpath('modules', module))
-            result = GLModule(self.config, module, path, istemp)
+        - module_name, The name of the module.'''
+        if type(module_name) is not str:
+            raise TypeError('module_name must be a string, not %s'
+                            % type(module_name).__name__)
+        if self.exists(module_name):
+            path, istemp = self.filesystem.lookup(joinpath('modules', module_name))
+            result = GLModule(self.config, module_name, path, istemp)
             return result
         else:  # if not self.exists(module)
             if self.config['errors']:
-                raise GLError(3, module)
+                raise GLError(3, module_name)
             else:  # if not self.config['errors']
                 sys.stderr.write('gnulib-tool: warning: ')
-                sys.stderr.write("module %s doesn't exist\n" % module.name)
+                sys.stderr.write("module %s doesn't exist\n" % module_name)
 
     def file_is_module(self, filename: str) -> bool:
         '''Given the name of a file in the modules/ directory, return true
