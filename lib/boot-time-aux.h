@@ -306,7 +306,8 @@ get_windows_boot_time (struct timespec *p_boot_time)
      process, namely C:\pagefile.sys.  */
   const char * const boot_touched_file =
     #if defined __CYGWIN__ && !defined _WIN32
-    "/cygdrive/c/pagefile.sys"
+    /* It is more portable to use /proc/cygdrive/c than /cygdrive/c.  */
+    "/proc/cygdrive/c/pagefile.sys"
     #else
     "C:\\pagefile.sys"
     #endif
