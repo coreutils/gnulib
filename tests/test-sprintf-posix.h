@@ -3170,6 +3170,9 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
         as if by a call to the wcrtomb function with a pointer to storage of
         at least MB_CUR_MAX bytes, the wint_t argument converted to wchar_t,
         and an initial shift state."  */
+    /* This test is known to fail
+         - on musl libc,
+         - with gcc 14 <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=114876>  */
     ASSERT (memcmp (result, "a\0z 33\0", 6 + 1) == 0);
     ASSERT (retval == 6);
   }
