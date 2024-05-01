@@ -101,7 +101,7 @@ class GLModuleSystem:
                 raise GLError(3, module)
             else:  # if not self.config['errors']
                 sys.stderr.write('gnulib-tool: warning: ')
-                sys.stderr.write("module %s doesn't exist\n" % str(module))
+                sys.stderr.write("module %s doesn't exist\n" % module.name)
 
     def file_is_module(self, filename: str) -> bool:
         '''Given the name of a file in the modules/ directory, return true
@@ -272,17 +272,12 @@ class GLModule:
 
     def __str__(self) -> str:
         '''x.__str__() <==> str(x)'''
-        result = self.getName()
-        return result
+        return self.name
 
     def __repr__(self) -> str:
         '''x.__repr__ <==> repr(x)'''
-        result = '<pygnulib.GLModule %s %s>' % (repr(self.getName()), hex(id(self)))
+        result = '<pygnulib.GLModule %s %s>' % (repr(self.name), hex(id(self)))
         return result
-
-    def getName(self) -> str:
-        '''Return the name of the module.'''
-        return self.name
 
     def isPatched(self) -> bool:
         '''Check whether module was created after applying patch.'''
@@ -296,7 +291,7 @@ class GLModule:
 
     def isNonTests(self) -> bool:
         '''Check whether module is not a *-tests module.'''
-        result = not self.getName().endswith('-tests')
+        result = not self.name.endswith('-tests')
         return result
 
     def getTestsName(self) -> str:
@@ -317,7 +312,7 @@ class GLModule:
         # tests contain such an invocation, the module - as part of tests -
         # will produce different AC_SUBSTed variable values than the same module
         # - as part of the main configure.ac -.
-        result = self.getName() == 'libtextstyle-optional'
+        result = self.name == 'libtextstyle-optional'
         return result
 
     def getDependenciesRecursively(self) -> str:
@@ -343,7 +338,7 @@ class GLModule:
             # Remove handledmodules from inmodules.
             inmodules = inmodules.difference(handledmodules)
 
-        module_names = sorted([ str(module)
+        module_names = sorted([ module.name
                                 for module in outmodules ])
         return lines_to_multiline(module_names)
 
@@ -388,14 +383,14 @@ class GLModule:
         for the module.'''
         macro_prefix = self.config['macro_prefix']
         valid_shell_id = True
-        for char in self.getName():
+        for char in self.name:
             if char not in GLModule.shell_id_chars:
                 valid_shell_id = False
                 break
         if valid_shell_id:
-            identifier = self.getName()
+            identifier = self.name
         else:
-            hash_input = '%s\n' % self.getName()
+            hash_input = '%s\n' % self.name
             identifier = hashlib.md5(hash_input.encode(ENCS['default'])).hexdigest()
         result = 'func_%s_gnulib_m4code_%s' % (macro_prefix, identifier)
         return result
@@ -405,14 +400,14 @@ class GLModule:
         m4 macros for the module have been executed.'''
         macro_prefix = self.config['macro_prefix']
         valid_shell_id = True
-        for char in self.getName():
+        for char in self.name:
             if char not in GLModule.shell_id_chars:
                 valid_shell_id = False
                 break
         if valid_shell_id:
-            identifier = self.getName()
+            identifier = self.name
         else:
-            hash_input = '%s\n' % self.getName()
+            hash_input = '%s\n' % self.name
             identifier = hashlib.md5(hash_input.encode(ENCS['default'])).hexdigest()
         result = '%s_gnulib_enabled_%s' % (macro_prefix, identifier)
         return result
@@ -422,14 +417,14 @@ class GLModule:
         GLConfig: macro_prefix.'''
         macro_prefix = self.config['macro_prefix']
         valid_shell_id = True
-        for char in self.getName():
+        for char in self.name:
             if char not in GLModule.shell_id_chars:
                 valid_shell_id = False
                 break
         if valid_shell_id:
-            identifier = self.getName()
+            identifier = self.name
         else:
-            hash_input = '%s\n' % self.getName()
+            hash_input = '%s\n' % self.name
             identifier = hashlib.md5(hash_input.encode(ENCS['default'])).hexdigest()
         result = '%s_GNULIB_ENABLED_%s' % (macro_prefix, identifier)
         return result
@@ -467,7 +462,7 @@ class GLModule:
             result = result.strip()
             if not result:
                 # The default is 'main' or 'tests', depending on the module's name.
-                if self.getName().endswith('-tests'):
+                if self.name.endswith('-tests'):
                     result = 'tests'
                 else:
                     result = 'main'
@@ -497,8 +492,8 @@ class GLModule:
         if 'dependencies' not in self.cache:
             result = ''
             # ${module}-tests implicitly depends on ${module}, if that module exists.
-            if self.getName().endswith('-tests'):
-                main_module = subend('-tests', '', self.getName())
+            if self.name.endswith('-tests'):
+                main_module = subend('-tests', '', self.name)
                 if self.modulesystem.exists(main_module):
                     result += '%s\n' % main_module
             # Then the explicit dependencies listed in the module description.
@@ -584,7 +579,7 @@ class GLModule:
         auxdir = self.config['auxdir']
         result = ''
         if 'makefile-unconditional' not in self.cache:
-            if self.getName().endswith('-tests'):
+            if self.name.endswith('-tests'):
                 # *-tests module live in tests/, not lib/.
                 # Synthesize an EXTRA_DIST augmentation.
                 files = self.getFiles()
@@ -627,7 +622,7 @@ class GLModule:
                 # If some .c file exists and is not used with AC_LIBOBJ - for example,
                 # a .c file is preprocessed into another .c file for BUILT_SOURCES -,
                 # automake will generate a useless dependency; this is harmless.
-                if str(self) != 'relocatable-prog-wrapper' and str(self) != 'pt_chown':
+                if self.name != 'relocatable-prog-wrapper' and self.name != 'pt_chown':
                     extra_files = filter_filelist('\n', extra_files,
                                                   '', '.c', '', '')
                     if extra_files != '':
@@ -666,13 +661,13 @@ class GLModule:
         if 'license' not in self.cache:
             license = self.getLicense_Raw().strip()
             # Warn if the License field is missing.
-            if not self.getName().endswith('-tests'):
+            if not self.name.endswith('-tests'):
                 if not license:
                     if self.config['errors']:
-                        raise GLError(18, str(self))
+                        raise GLError(18, self.name)
                     else:  # if not self.config['errors']
-                        sys.stderr.write('gnulib-tool: warning: module %s lacks a License\n' % str(self))
-            if str(self).startswith('parse-datetime'):
+                        sys.stderr.write('gnulib-tool: warning: module %s lacks a License\n' % self.name)
+            if self.name.startswith('parse-datetime'):
                 # These modules are under a weaker license only for the purpose of some
                 # users who hand-edit it and don't use gnulib-tool. For the regular
                 # gnulib users they are under a stricter license.
@@ -852,7 +847,7 @@ class GLModuleTable:
                                              for depmodule in set(depmodules)
                                              if depmodules.count(depmodule) > 1 ]
                     if duplicate_depmodules:
-                        duplicate_depmodule_names = [ str(depmodule)
+                        duplicate_depmodule_names = [ depmodule.name
                                                       for depmodule in duplicate_depmodules ]
                         message = ('gnulib-tool: warning: module %s has duplicated dependencies: %s\n'
                                    % (module, duplicate_depmodule_names))

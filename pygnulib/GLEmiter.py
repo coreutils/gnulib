@@ -206,10 +206,10 @@ class GLEmiter:
         libtool = self.config['libtool']
         include_guard_prefix = self.config['include_guard_prefix']
         emit = ''
-        if str(module) in ['gnumakefile', 'maintainer-makefile']:
+        if module.name in ['gnumakefile', 'maintainer-makefile']:
             # These modules are meant to be used only in the top-level directory.
             flag = toplevel
-        else:  # if str(module) not in ['gnumakefile', 'maintainer-makefile']
+        else:  # if module.name not in ['gnumakefile', 'maintainer-makefile']
             flag = True
         if flag:
             snippet = module.getAutoconfSnippet()
@@ -231,7 +231,7 @@ class GLEmiter:
                 # autopoint through at least GNU gettext version 0.18.2.
                 snippet = re.compile(r'^ *AM_GNU_GETTEXT_VERSION', re.M).sub(r'AM_GNU_GETTEXT_VERSION', snippet)
             emit += snippet
-            if str(module) == 'alloca' and libtool and not disable_libtool:
+            if module.name == 'alloca' and libtool and not disable_libtool:
                 emit += 'changequote(,)dnl\n'
                 emit += "LTALLOCA=`echo \"$ALLOCA\" | sed -e 's/\\.[^.]* /.lo /g;s/\\.[^.]*$/.lo/'`\n"
                 emit += 'changequote([, ])dnl\n'
@@ -396,7 +396,7 @@ class GLEmiter:
         emit = '\n' + indentation + '# Pre-early section.\n'
         # We need to call gl_USE_SYSTEM_EXTENSIONS before gl_PROG_AR_RANLIB.
         # Doing AC_REQUIRE in configure-ac.early is not early enough.
-        if any(str(module) == 'extensions' for module in modules):
+        if any(module.name == 'extensions' for module in modules):
             if require:
                 emit += indentation + 'AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])\n'
             else:
@@ -749,7 +749,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                     amsnippet1 = amsnippet1.replace('check_PROGRAMS', 'noinst_PROGRAMS')
                 amsnippet1 = amsnippet1.replace('${gl_include_guard_prefix}',
                                                 include_guard_prefix)
-                if str(module) == 'alloca':
+                if module.name == 'alloca':
                     amsnippet1 += '%s_%s_LIBADD += @%sALLOCA@\n' % (libname, libext, perhapsLT)
                     amsnippet1 += '%s_%s_DEPENDENCIES += @%sALLOCA@\n' % (libname, libext, perhapsLT)
                 amsnippet1 = combine_lines_matching(re.compile(r'%s_%s_SOURCES' % (libname, libext)),
@@ -764,9 +764,9 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                                                 '$(' + module_indicator_prefix + '_GNULIB_')
                 # Skip the contents if it's entirely empty.
                 if (amsnippet1 + amsnippet2).strip() != '':
-                    allsnippets += '## begin gnulib module %s\n' % str(module)
+                    allsnippets += '## begin gnulib module %s\n' % module.name
                     if gnu_make:
-                        allsnippets += 'ifeq (,$(OMIT_GNULIB_MODULE_%s))\n' % str(module)
+                        allsnippets += 'ifeq (,$(OMIT_GNULIB_MODULE_%s))\n' % module.name
                     allsnippets += '\n'
                     if conddeps:
                         if moduletable.isConditional(module):
@@ -788,7 +788,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                         allsnippets += amsnippet2
                     if gnu_make:
                         allsnippets += 'endif\n'
-                    allsnippets += '## end   gnulib module %s\n\n' % str(module)
+                    allsnippets += '## end   gnulib module %s\n\n' % module.name
 
                     # Test whether there are some source files in subdirectories.
                     for file in module.getFiles():
@@ -1044,7 +1044,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                 amsnippet1 = amsnippet1.replace('${gl_include_guard_prefix}',
                                                 include_guard_prefix)
                 # Check if module is 'alloca'.
-                if libtests and str(module) == 'alloca':
+                if libtests and module.name == 'alloca':
                     amsnippet1 += 'libtests_a_LIBADD += @ALLOCA@\n'
                     amsnippet1 += 'libtests_a_DEPENDENCIES += @ALLOCA@\n'
 
@@ -1059,9 +1059,9 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                                                 '$(' + module_indicator_prefix + '_GNULIB_')
                 # Skip the contents if it's entirely empty.
                 if (amsnippet1 + amsnippet2).strip() != '':
-                    snippet = '## begin gnulib module %s\n' % str(module)
+                    snippet = '## begin gnulib module %s\n' % module.name
                     if gnu_make:
-                        snippet += 'ifeq (,$(OMIT_GNULIB_MODULE_%s))\n' % str(module)
+                        snippet += 'ifeq (,$(OMIT_GNULIB_MODULE_%s))\n' % module.name
                     snippet += '\n'
                     if conddeps:
                         if moduletable.isConditional(module):
@@ -1083,7 +1083,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                         snippet += amsnippet2
                     if gnu_make:
                         snippet += 'endif\n'
-                    snippet += '## end   gnulib module %s\n\n' % str(module)
+                    snippet += '## end   gnulib module %s\n\n' % module.name
                     # Mention long-running tests at the end.
                     if 'longrunning-test' in module.getStatuses():
                         longrun_snippets += snippet

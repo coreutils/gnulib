@@ -570,7 +570,7 @@ AC_DEFUN([%s_EARLY],
   m4_pattern_allow([^gl_LTLIBOBJS$])dnl a variable\n''' % (configure_ac, macro_prefix)
         emit += self.emitter.preEarlyMacros(True, '  ', moduletable.getFinalModules())
         for module in moduletable.getFinalModules():
-            emit += '  # Code from module %s:\n' % str(module)
+            emit += '  # Code from module %s:\n' % module.name
             snippet = module.getAutoconfEarlySnippet()
             lines = [ line
                       for line in snippet.split('\n')
@@ -762,10 +762,10 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
             (bold_on, bold_off) = bold_escapes()
             print('Module list with included dependencies (indented):')
             for module in final_modules:
-                if str(module) in self.config.getModules():
-                    print('  %s%s%s' % (bold_on, module, bold_off))
-                else:  # if str(module) not in self.config.getModules()
-                    print('    %s' % module)
+                if module.name in self.config.getModules():
+                    print('  %s%s%s' % (bold_on, module.name, bold_off))
+                else:  # if module.name not in self.config.getModules()
+                    print('    %s' % module.name)
 
         # Separate modules into main_modules and tests_modules.
         modules = \
@@ -776,10 +776,10 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         if verbose >= 1:
             print('Main module list:')
             for module in main_modules:
-                print('  %s' % str(module))
+                print('  %s' % module.name)
             print('Tests-related module list:')
             for module in tests_modules:
-                print('  %s' % str(module))
+                print('  %s' % module.name)
 
         # Determine whether a $testsbase/libtests.a is needed.
         libtests = False
@@ -819,10 +819,10 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                 if license not in compatibilities['all']:
                     if lgpl == True:
                         if license not in compatibilities['3']:
-                            listing.append(tuple([str(module), license]))
+                            listing.append(tuple([module.name, license]))
                     else:
                         if license not in compatibilities[lgpl]:
-                            listing.append(tuple([str(module), license]))
+                            listing.append(tuple([module.name, license]))
             if listing:
                 raise GLError(11, listing)
 
@@ -831,14 +831,14 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
             for module in main_modules:
                 notice = module.getNotice().strip('\n')
                 if notice:
-                    print('Notice from module %s:' % str(module))
+                    print('Notice from module %s:' % module.name)
                     pattern = re.compile(r'^(.*?)$', re.S | re.M)
                     notice = pattern.sub(r'  \1', notice)
                     print(notice)
 
         # Determine script to apply to imported library files.
         sed_transform_lib_file = None
-        if 'config-h' in [ str(module)
+        if 'config-h' in [ module.name
                            for module in main_modules ]:
             sed_transform_lib_file = (re.compile(r'^#ifdef[\t ]*HAVE_CONFIG_H[\t ]*$', re.MULTILINE), r'#if 1')
 

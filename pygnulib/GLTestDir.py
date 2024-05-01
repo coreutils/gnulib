@@ -221,13 +221,13 @@ class GLTestDir:
         if verbose >= 0:
             (bold_on, bold_off) = bold_escapes()
             print('Module list with included dependencies (indented):')
-            specified_modules_set = { str(module)
+            specified_modules_set = { module.name
                                       for module in specified_modules }
             for module in final_modules:
-                if str(module) in specified_modules_set:
-                    print('  %s%s%s' % (bold_on, module, bold_off))
-                else:  # if str(module) not in specified_modules_set
-                    print('    %s' % module)
+                if module.name in specified_modules_set:
+                    print('  %s%s%s' % (bold_on, module.name, bold_off))
+                else:  # if module.name not in specified_modules_set
+                    print('    %s' % module.name)
 
         # Generate lists of the modules.
         if single_configure:
@@ -238,10 +238,10 @@ class GLTestDir:
             if verbose >= 1:
                 print('Main module list:')
                 for module in main_modules:
-                    print('  %s' % str(module))
+                    print('  %s' % module.name)
                 print('Tests-related module list:')
                 for module in tests_modules:
-                    print('  %s' % str(module))
+                    print('  %s' % module.name)
             # Determine whether a $testsbase/libtests.a is needed.
             libtests = False
             for module in tests_modules:
@@ -267,7 +267,7 @@ class GLTestDir:
                 for module in main_modules:
                     notice = module.getNotice().strip('\n')
                     if notice:
-                        print('Notice from module %s:' % str(module))
+                        print('Notice from module %s:' % module.name)
                         pattern = re.compile(r'^(.*)$', re.M)
                         notice = pattern.sub(r'  \1', notice)
                         print(notice)
@@ -276,7 +276,7 @@ class GLTestDir:
                 for module in modules:
                     notice = module.getNotice().strip('\n')
                     if notice:
-                        print('Notice from module %s:' % str(module))
+                        print('Notice from module %s:' % module.name)
                         pattern = re.compile(r'^(.*)$', re.M)
                         notice = pattern.sub(r'  \1', notice)
                         print(notice)
@@ -417,10 +417,10 @@ class GLTestDir:
                 emit += self.emitter.preEarlyMacros(False, '', modules)
                 snippets = []
                 for module in modules:
-                    if str(module) in ['gnumakefile', 'maintainer-makefile']:
+                    if module.name in ['gnumakefile', 'maintainer-makefile']:
                         # These are meant to be used only in the top-level directory.
                         pass
-                    # if str(module) not in ['gnumakefile', 'maintainer-makefile']
+                    # if module.name not in ['gnumakefile', 'maintainer-makefile']
                     else:
                         snippet = module.getAutoconfEarlySnippet()
                         lines = [ line
@@ -894,16 +894,16 @@ class GLMegaTestDir:
 
         # First, all modules one by one.
         for module in modules:
-            self.config.setModules([str(module)])
-            GLTestDir(self.config, joinpath(self.megatestdir, str(module))).execute()
-            megasubdirs.append(str(module))
+            self.config.setModules([module.name])
+            GLTestDir(self.config, joinpath(self.megatestdir, module.name)).execute()
+            megasubdirs.append(module.name)
 
         # Then, all modules all together.
         # Except config-h, which breaks all modules which use HAVE_CONFIG_H.
         modules = [ module
                     for module in modules
-                    if str(module) != 'config-h' ]
-        self.config.setModules([ str(module)
+                    if module.name != 'config-h' ]
+        self.config.setModules([ module.name
                                  for module in modules ])
         GLTestDir(self.config, joinpath(self.megatestdir, 'ALL')).execute()
         megasubdirs.append('ALL')
