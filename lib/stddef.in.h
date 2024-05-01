@@ -27,9 +27,13 @@
 #endif
 @PRAGMA_COLUMNS@
 
-#if defined __need_wchar_t || defined __need_size_t  \
-  || defined __need_ptrdiff_t || defined __need_NULL \
-  || defined __need_wint_t
+#if (defined __need_wchar_t || defined __need_size_t                \
+     || defined __need_ptrdiff_t || defined __need_NULL             \
+     || defined __need_wint_t)                                      \
+    /* Avoid warning triggered by "gcc -std=gnu23 -Wsystem-headers" \
+       in Fedora 40 with gcc 14.0.1.                                \
+       <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=114870>.  */   \
+    && !@STDDEF_NOT_IDEMPOTENT@
 /* Special invocation convention inside gcc header files.  In
    particular, gcc provides a version of <stddef.h> that blindly
    redefines NULL even when __need_wint_t was defined, even though
@@ -52,6 +56,13 @@
 # endif
 
 #else
+/* For @STDDEF_NOT_IDEMPOTENT@.  */
+# undef __need_wchar_t
+# undef __need_size_t
+# undef __need_ptrdiff_t
+# undef __need_NULL
+# undef __need_wint_t
+
 /* Normal invocation convention.  */
 
 # ifndef _@GUARD_PREFIX@_STDDEF_H
