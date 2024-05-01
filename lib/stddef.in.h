@@ -27,10 +27,9 @@
 #endif
 @PRAGMA_COLUMNS@
 
-#if (!defined _@GUARD_PREFIX@_STDDEF_H \
-     && (defined __need_wchar_t || defined __need_size_t \
-         || defined __need_ptrdiff_t || defined __need_NULL \
-         || defined __need_wint_t))
+#if (defined __need_wchar_t || defined __need_size_t \
+     || defined __need_ptrdiff_t || defined __need_NULL \
+     || defined __need_wint_t)
 /* Special invocation convention inside gcc header files.  In
    particular, <stddef.h> in some ancient versions of GCC blindly
    redefined NULL when __need_wint_t was defined, even though wint_t
@@ -38,7 +37,7 @@
    (FIXME: It's not clear what GCC versions those were - perhaps so
    ancient that we can stop worrying about this?)
    Although glibc 2.26 (2017) and later do not use __need_wint_t,
-   for portability to older Glibc + GCC,
+   for portability to macOS, Cygwin, Haiku, and older Glibc + GCC,
    remember if special invocation has ever been used to obtain wint_t,
    in which case we need to clean up NULL yet again.  */
 
