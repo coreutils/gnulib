@@ -84,7 +84,7 @@ import random
 import argparse
 import subprocess as sp
 import shlex
-from tempfile import mktemp
+import tempfile
 from pygnulib.constants import (
     APP,
     DIRS,
@@ -117,7 +117,7 @@ from pygnulib.GLTestDir import GLMegaTestDir
 #===============================================================================
 # Define main part
 #===============================================================================
-def main() -> None:
+def main(temp_directory: str) -> None:
     info = GLInfo()
     parser = argparse.ArgumentParser(
         prog=APP['name'],
@@ -815,6 +815,7 @@ def main() -> None:
 
     # Create pygnulib configuration.
     config = GLConfig(
+        tempdir=temp_directory,
         destdir=destdir,
         localpath=localpath,
         m4base=m4base,
@@ -853,7 +854,6 @@ def main() -> None:
         modulesystem = GLModuleSystem(config)
         listing = modulesystem.list()
         result = lines_to_multiline(listing)
-        os.rmdir(config['tempdir'])
         print(result, end='')
 
     elif mode == 'find':
@@ -1364,7 +1364,8 @@ def main() -> None:
 
 def main_with_exception_handling() -> None:
     try:  # Try to execute
-        main()
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            main(temporary_directory)
     except GLError as error:
         errmode = 0  # gnulib-style errors
         errno = error.errno

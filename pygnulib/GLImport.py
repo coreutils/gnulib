@@ -92,7 +92,6 @@ class GLImport:
         # self.cache is the configuration extracted from some files on the
         # file system: configure.{ac,in}, gnulib-cache.m4, gnulib-comp.m4.
         self.cache = GLConfig()
-        os.rmdir(self.cache['tempdir'])
 
         # Read configure.{ac,in}.
         with open(self.config.getAutoconfFile(), mode='r', newline='\n', encoding='utf-8') as file:
@@ -1390,4 +1389,3 @@ in <library>_a_LDFLAGS or <library>_la_LDFLAGS when linking a library.''')
             position_early_after = 'AC_PROG_CC'
         print('  - invoke %s_EARLY in %s, right after %s,' % (macro_prefix, configure_ac, position_early_after))
         print('  - invoke %s_INIT in %s.' % (macro_prefix, configure_ac))
-        rmtree(self.config['tempdir'])

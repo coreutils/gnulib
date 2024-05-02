@@ -840,7 +840,6 @@ class GLTestDir:
         if os.path.isfile(joinpath('build-aux', 'test-driver')):
             _patch_test_driver()
         os.chdir(DIRS['cwd'])
-        rmtree(self.config['tempdir'])
 
 
 #===============================================================================
@@ -1003,4 +1002,3 @@ class GLMegaTestDir:
         if os.path.isfile(joinpath('build-aux', 'test-driver')):
             _patch_test_driver()
         os.chdir(DIRS['cwd'])
-        rmtree(self.config['tempdir'])

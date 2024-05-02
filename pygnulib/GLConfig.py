@@ -20,7 +20,6 @@ from __future__ import annotations
 #===============================================================================
 import os
 import copy
-import tempfile
 from typing import Any
 from .constants import (
     MODES,
@@ -44,6 +43,7 @@ class GLConfig:
     table: dict[str, Any]
 
     def __init__(self,
+                 tempdir: str | None = None,
                  destdir: str | None = None,
                  localpath: list[str] | None = None,
                  auxdir: str | None = None,
@@ -82,7 +82,7 @@ class GLConfig:
                  errors: bool | None = None) -> None:
         '''Create new GLConfig instance.'''
         self.table = dict()
-        self.table['tempdir'] = tempfile.mkdtemp(prefix='glpy')
+        self.table['tempdir'] = tempdir
         # Check and store the attributes.
         # Remove trailing slashes from the directory names. This is necessary
         # for m4base (to avoid an error in func_import) and optional for the
