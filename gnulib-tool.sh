@@ -1584,7 +1584,7 @@ func_determine_path_separator
       echo "gnulib-tool: invalid options for 'update' mode" 1>&2
       echo "Try 'gnulib-tool --help' for more information." 1>&2
       echo "If you really want to modify the gnulib configuration of your project," 1>&2
-      echo "you need to use 'gnulib --import' - at your own risk!" 1>&2
+      echo "you need to use 'gnulib-tool --import' - at your own risk!" 1>&2
       func_exit 1
     fi
   fi
