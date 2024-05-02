@@ -20,7 +20,9 @@ from __future__ import annotations
 #===============================================================================
 import os
 import re
+import sys
 import filecmp
+import shlex
 import subprocess as sp
 from .constants import (
     DIRS,
@@ -32,7 +34,7 @@ from .constants import (
     copyfile,
     substart,
 )
-from pygnulib.enums import CopyAction
+from .enums import CopyAction
 from .GLError import GLError
 from .GLConfig import GLConfig
 
@@ -104,9 +106,9 @@ class GLFileSystem:
                 copyfile(lookedupFile, tempFile)
                 ensure_writable(tempFile)
                 for diff_in_localdir in reversed(lookedupPatches):
-                    command = 'patch -s "%s" < "%s" >&2' % (tempFile, diff_in_localdir)
+                    command = f'patch -s {shlex.quote(tempFile)} < {shlex.quote(diff_in_localdir)}'
                     try:  # Try to apply patch
-                        sp.check_call(command, shell=True)
+                        sp.check_call(command, shell=True, stdout=sys.stderr)
                     except sp.CalledProcessError as exc:
                         raise GLError(2, name) from exc
                 result = (tempFile, True)

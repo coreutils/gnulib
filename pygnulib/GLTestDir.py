@@ -21,6 +21,7 @@ from __future__ import annotations
 import os
 import re
 import sys
+import shlex
 import subprocess as sp
 from pathlib import Path
 from .constants import (
@@ -46,10 +47,8 @@ from .functions import rewrite_file_name
 from .enums import CopyAction
 from .GLError import GLError
 from .GLConfig import GLConfig
-from .GLModuleSystem import GLModuleTable
-from .GLModuleSystem import GLModuleSystem
+from .GLModuleSystem import GLModuleTable, GLModuleSystem
 from .GLFileSystem import GLFileSystem
-from .GLFileSystem import GLFileAssistant
 from .GLMakefileTable import GLMakefileTable
 from .GLEmiter import GLEmiter
 from .GLFileTable import GLFileTable
@@ -61,10 +60,10 @@ def _patch_test_driver() -> None:
     print('patching file %s' % test_driver)
     diffs = [ joinpath(DIRS['root'], name)
               for name in [joinpath('build-aux', 'test-driver.diff'),
-                           joinpath('build-aux', 'test-driver-1.16.3.diff')]]
+                           joinpath('build-aux', 'test-driver-1.16.3.diff')] ]
     patched = False
     for diff in diffs:
-        command = f'patch {test_driver} < {diff}'
+        command = f'patch {shlex.quote(test_driver)} < {shlex.quote(diff)}'
         try:
             result = sp.call(command, shell=True, stdout=sp.DEVNULL, stderr=sp.DEVNULL)
         except OSError as exc:
