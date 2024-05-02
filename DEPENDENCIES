@@ -197,3 +197,20 @@ at any time.
     https://www.gnu.org/software/tar/
   + Download:
     https://ftp.gnu.org/gnu/tar/
+
+
+Prerequisites needed on specific platforms
+==========================================
+
+Prerequisites on Windows
+------------------------
+
+* Cygwin
+  + Required.
+    Provides a POSIX-like environment and binary packages necessary to
+    build and run software. Native Windows binaries can be built with
+    a packaged mingw tool chain. This method is preferred over MSYS2.
+  + Homepage:
+    https://cygwin.com/
+  + Download:
+    https://cygwin.com/install.html
