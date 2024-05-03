@@ -1660,7 +1660,7 @@ refresh-po:
 
 # Indentation
 
-indent_args ?= -ppi 1
+indent_args ?= --ignore-profile --preprocessor-indentation 1
 C_SOURCES ?= $$($(VC_LIST_EXCEPT) | grep '\.[ch]\(.in\)\?$$')
 INDENT_SOURCES ?= $(C_SOURCES)
 exclude_file_name_regexp--indent ?= $(exclude_file_name_regexp--sc_indent)
