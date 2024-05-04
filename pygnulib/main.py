@@ -1364,7 +1364,7 @@ def main(temp_directory: str) -> None:
 
 def main_with_exception_handling() -> None:
     try:  # Try to execute
-        with tempfile.TemporaryDirectory() as temporary_directory:
+        with tempfile.TemporaryDirectory(prefix='glpy') as temporary_directory:
             main(temporary_directory)
     except GLError as error:
         errmode = 0  # gnulib-style errors
@@ -1404,7 +1404,7 @@ def main_with_exception_handling() -> None:
                     incompatibilities += pair[0]
                     incompatibilities += ' %s' % pair[1]
                     incompatibilities += '\n'
-                tempname = mktemp()
+                tempname = tempfile.mktemp()
                 with open(tempname, mode='w', newline='\n', encoding='utf-8') as file:
                     file.write(incompatibilities)
                 sed_table = 's,^\\([^ ]*\\) ,\\1' + ' ' * 51 + ',\n'
