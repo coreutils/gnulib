@@ -948,7 +948,7 @@ def main(temp_directory: str) -> None:
             config.setMacroPrefix(macro_prefix)
 
             # Perform GLImport actions.
-            importer = GLImport(config, mode)
+            importer = GLImport(config, mode, guessed_m4dirs)
             filetable, transformers = importer.prepare()
             importer.execute(filetable, transformers)
 
@@ -972,7 +972,7 @@ def main(temp_directory: str) -> None:
                     config.setTestsBase(testsbase)
                     config.setMacroPrefix(macro_prefix)
                 # Perform GLImport actions.
-                importer = GLImport(config, mode)
+                importer = GLImport(config, mode, guessed_m4dirs)
                 filetable, transformers = importer.prepare()
                 importer.execute(filetable, transformers)
             else:  # if not m4base
@@ -1038,7 +1038,7 @@ def main(temp_directory: str) -> None:
                     config.setTestsBase(testsbase)
                     config.setMacroPrefix(macro_prefix)
                     # Perform GLImport actions.
-                    importer = GLImport(config, mode)
+                    importer = GLImport(config, mode, guessed_m4dirs)
                     filetable, transformers = importer.prepare()
                     importer.execute(filetable, transformers)
                 elif len(m4dirs) == 1:
@@ -1047,7 +1047,7 @@ def main(temp_directory: str) -> None:
                     m4base = m4dirs[-1]
                     config.setM4Base(m4base)
                     # Perform GLImport actions.
-                    importer = GLImport(config, mode)
+                    importer = GLImport(config, mode, guessed_m4dirs)
                     filetable, transformers = importer.prepare()
                     importer.execute(filetable, transformers)
                 else:  # if len(m4dirs) > 1
@@ -1055,7 +1055,7 @@ def main(temp_directory: str) -> None:
                     for m4base in m4dirs:
                         config.setM4Base(m4base)
                         # Perform GLImport actions.
-                        importer = GLImport(config, mode)
+                        importer = GLImport(config, mode, guessed_m4dirs)
                         filetable, transformers = importer.prepare()
                         importer.execute(filetable, transformers)
 

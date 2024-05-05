@@ -23,6 +23,7 @@ import re
 import subprocess as sp
 from .constants import (
     DIRS,
+    UTILS,
     MODES,
     TESTS,
     cleaner,
@@ -61,6 +62,7 @@ class GLImport:
     is a very good choice.'''
 
     mode: int
+    m4dirs: list[str]
     config: GLConfig
     cache: GLConfig
     emitter: GLEmiter
@@ -68,19 +70,23 @@ class GLImport:
     moduletable: GLModuleTable
     makefiletable: GLMakefileTable
 
-    def __init__(self, config: GLConfig, mode: int) -> None:
+    def __init__(self, config: GLConfig, mode: int, m4dirs: list[str]) -> None:
         '''Create GLImport instance.
-        The first variable, mode, must be one of the values of the MODES dict
-        object, which is accessible from constants module. The second one, config,
-        must be a GLConfig object.'''
+        config - must be a GLConfig object.
+        mode - must be one of the values of the constants.MODES values.
+        m4dirs - list of all directories that contain relevant .m4 files.'''
         if type(config) is not GLConfig:
             raise TypeError('config must have GLConfig type, not %s'
                             % repr(config))
-        if type(mode) is int and MODES['import'] <= mode <= MODES['update']:
-            self.mode = mode
-        else:  # if mode is not int or is not 0-3
+        if not (type(mode) is int and MODES['import'] <= mode <= MODES['update']):
             raise TypeError('mode must be 0 <= mode <= 3, not %s'
                             % repr(mode))
+        if type(m4dirs) is not list:
+            raise TypeError('m4dirs must be a list of strings, not %s'
+                            % repr(m4dirs))
+
+        self.mode = mode
+        self.m4dirs = m4dirs
 
         # config contains the configuration, as specified through command-line
         # parameters.
@@ -1208,6 +1214,17 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                 print(emit)
         if os.path.isfile(tmpfile):
             os.remove(tmpfile)
+
+        if self.config['gnu_make']:
+            # Regenerate aclocal.m4.
+            # This is needed because the next step may run 'autoconf -t' and
+            # the preceding steps may have added new *.m4 files (which need to
+            # be reflected in aclocal.m4 before 'autoconf -t' is run).
+            aclocal_args = []
+            for dir in self.m4dirs:
+                aclocal_args.append('-I')
+                aclocal_args.append(dir)
+            sp.run([UTILS['aclocal']] + aclocal_args, cwd=destdir)
 
         # Create library makefile.
         # Do this after creating gnulib-comp.m4, because func_emit_lib_Makefile_am
