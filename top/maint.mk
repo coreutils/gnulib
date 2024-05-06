@@ -854,6 +854,24 @@ sc_obsolete_symbols:
 	halt='do not use HAVE''_FCNTL_H or O'_NDELAY			\
 	  $(_sc_search_regexp)
 
+# Prohibit BSD4.3/SysV u_char, u_short, u_int and u_long usage.
+sc_unsigned_char:
+	@prohibit=u''_char \
+	halt='don'\''t use u''_char; instead use unsigned char'	\
+	  $(_sc_search_regexp)
+sc_unsigned_short:
+	@prohibit=u''_short \
+	halt='don'\''t use u''_short; instead use unsigned short' \
+	  $(_sc_search_regexp)
+sc_unsigned_int:
+	@prohibit=u''_int \
+	halt='don'\''t use u''_int; instead use unsigned int' \
+	  $(_sc_search_regexp)
+sc_unsigned_long:
+	@prohibit=u''_long \
+	halt='don'\''t use u''_long; instead use unsigned long'	\
+	  $(_sc_search_regexp)
+
 # FIXME: warn about definitions of EXIT_FAILURE, EXIT_SUCCESS, STREQ
 
 # Each nonempty ChangeLog line must start with a year number, or a TAB.
