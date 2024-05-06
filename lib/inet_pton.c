@@ -217,8 +217,8 @@ inet_pton6 (const char *restrict src, unsigned char *restrict dst)
             }
           if (tp + NS_INT16SZ > endp)
             return (0);
-          *tp++ = (u_char) (val >> 8) & 0xff;
-          *tp++ = (u_char) val & 0xff;
+          *tp++ = (unsigned char) (val >> 8) & 0xff;
+          *tp++ = (unsigned char) val & 0xff;
           saw_xdigit = 0;
           val = 0;
           continue;
@@ -236,8 +236,8 @@ inet_pton6 (const char *restrict src, unsigned char *restrict dst)
     {
       if (tp + NS_INT16SZ > endp)
         return (0);
-      *tp++ = (u_char) (val >> 8) & 0xff;
-      *tp++ = (u_char) val & 0xff;
+      *tp++ = (unsigned char) (val >> 8) & 0xff;
+      *tp++ = (unsigned char) val & 0xff;
     }
   if (colonp != NULL)
     {
