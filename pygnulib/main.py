@@ -1130,10 +1130,13 @@ def main(temp_directory: str) -> None:
         os.chdir(destdir)
         os.mkdir('build')
         os.chdir('build')
-        sp.call(['../configure'])
-        sp.call([UTILS['make']])
-        sp.call([UTILS['make'], 'check'])
-        sp.call([UTILS['make'], 'distclean'])
+        try:  # Try to execute commands
+            sp.run(['../configure'], check=True)
+            sp.run([UTILS['make']], check=True)
+            sp.run([UTILS['make'], 'check'], check=True)
+            sp.run([UTILS['make'], 'distclean'], check=True)
+        except Exception:
+            sys.exit(1)
         args = ['find', '.', '-type', 'f', '-print']
         remaining = sp.check_output(args).decode(ENCS['shell'])
         lines = [ line.strip()

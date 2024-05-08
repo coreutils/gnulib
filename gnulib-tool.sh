@@ -7501,10 +7501,10 @@ s/\([.*$]\)/[\1]/g'
     cd "$destdir"
       mkdir build
       cd build
-        ../configure
-        $MAKE
-        $MAKE check
-        $MAKE distclean
+        ../configure || func_exit 1
+        $MAKE || func_exit 1
+        $MAKE check || func_exit 1
+        $MAKE distclean || func_exit 1
         remaining=`find . -type f -print`
         if test -n "$remaining"; then
           echo "Remaining files:" $remaining 1>&2
