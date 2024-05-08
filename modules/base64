@@ -11,6 +11,7 @@ extern-inline
 ialloc
 stdbool
 memchr
+stdckdint
 
 configure.ac:
 gl_FUNC_BASE64
