@@ -504,7 +504,7 @@ class GLModule:
             self.cache['dependencies'] = result
         return self.cache['dependencies']
 
-    def getDependenciesWithoutConditions(self) -> list[GLModule | None]:
+    def getDependenciesWithoutConditions(self) -> list[GLModule]:
         '''Return list of dependencies, as a list of GLModule objects.
         GLConfig: localpath.'''
         if 'dependenciesWithoutCond' not in self.cache:
@@ -518,6 +518,9 @@ class GLModule:
             result = [ self.modulesystem.find(module)
                        for module in lines
                        if module != '' ]
+            result = [ module
+                       for module in result
+                       if module is not None ]
             self.cache['dependenciesWithoutCond'] = result
         return self.cache['dependenciesWithoutCond']
 
