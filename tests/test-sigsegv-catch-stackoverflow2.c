@@ -1,5 +1,5 @@
 /* Test that stack overflow and SIGSEGV are correctly distinguished.
-   Copyright (C) 2002-2023 Free Software Foundation, Inc.
+   Copyright (C) 2002-2024 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -24,6 +24,14 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <limits.h>
+
+/* Skip this test when an address sanitizer is in use.  */
+#ifndef __has_feature
+# define __has_feature(a) 0
+#endif
+#if defined __SANITIZE_ADDRESS__ || __has_feature (address_sanitizer)
+# undef HAVE_STACK_OVERFLOW_RECOVERY
+#endif
 
 #if HAVE_STACK_OVERFLOW_RECOVERY && HAVE_SIGSEGV_RECOVERY
 

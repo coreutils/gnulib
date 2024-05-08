@@ -24,6 +24,14 @@
 #include <stdio.h>
 #include <limits.h>
 
+/* Skip this test when an address sanitizer is in use.  */
+#ifndef __has_feature
+# define __has_feature(a) 0
+#endif
+#if defined __SANITIZE_ADDRESS__ || __has_feature (address_sanitizer)
+# undef HAVE_STACK_OVERFLOW_RECOVERY
+#endif
+
 #if HAVE_STACK_OVERFLOW_RECOVERY
 
 # if defined _WIN32 && !defined __CYGWIN__
