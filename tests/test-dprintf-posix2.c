@@ -20,6 +20,21 @@
 
 #include <stdio.h>
 
+/* Skip this test when an address sanitizer is in use, since it would fail.  */
+#ifndef __has_feature
+# define __has_feature(a) 0
+#endif
+#if defined __SANITIZE_ADDRESS__ || __has_feature (address_sanitizer)
+
+int
+main ()
+{
+  fprintf (stderr, "Skipping test: address sanitizer's malloc behaves differently\n");
+  return 80;
+}
+
+#else
+
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
@@ -92,7 +107,7 @@ main (int argc, char *argv[])
       if (memory == NULL)
         return 1;
       memset (memory, 17, MAX_ALLOC_TOTAL);
-      result = 80;
+      result = 81;
     }
   else
     {
@@ -117,3 +132,5 @@ main (int argc, char *argv[])
 
   return result;
 }
+
+#endif /* ! address sanitizer enabled */
