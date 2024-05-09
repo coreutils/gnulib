@@ -11,7 +11,7 @@ unistdio/u16-vasnprintf
 errno
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([1.2], [unistdio/u16-vasprintf])
+gl_LIBUNISTRING_MODULE(m4_ifdef([gl_PRINTF_SUPPORT_N_DIRECTIVE],[999.9],[1.2]), [unistdio/u16-vasprintf])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNISTDIO_U16_VASPRINTF

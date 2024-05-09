@@ -12,7 +12,7 @@ unistr/u16-cpy
 errno
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([1.2], [unistdio/u16-u16-vsnprintf])
+gl_LIBUNISTRING_MODULE(m4_ifdef([gl_PRINTF_SUPPORT_N_DIRECTIVE],[999.9],[1.2]), [unistdio/u16-u16-vsnprintf])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNISTDIO_U16_U16_VSNPRINTF

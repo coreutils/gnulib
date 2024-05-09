@@ -11,7 +11,7 @@ unistdio/base
 unistdio/u8-u8-vasnprintf
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([1.2], [unistdio/u8-u8-asnprintf])
+gl_LIBUNISTRING_MODULE(m4_ifdef([gl_PRINTF_SUPPORT_N_DIRECTIVE],[999.9],[1.2]), [unistdio/u8-u8-asnprintf])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNISTDIO_U8_U8_ASNPRINTF

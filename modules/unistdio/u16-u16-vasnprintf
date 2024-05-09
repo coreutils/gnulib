@@ -52,7 +52,7 @@ mbszero
 
 configure.ac:
 gl_PREREQ_VASNPRINTF_WITH_POSIX_EXTRAS
-gl_LIBUNISTRING_MODULE([1.2], [unistdio/u16-u16-vasnprintf])
+gl_LIBUNISTRING_MODULE(m4_ifdef([gl_PRINTF_SUPPORT_N_DIRECTIVE],[999.9],[1.2]), [unistdio/u16-u16-vasnprintf])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNISTDIO_U16_U16_VASNPRINTF
