@@ -1,5 +1,5 @@
 /* Test of POSIX compatible fprintf() function.
-   Copyright (C) 2009-2023 Free Software Foundation, Inc.
+   Copyright (C) 2009-2024 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -34,6 +34,21 @@ main ()
 {
   fprintf (stderr, "Skipping test: cannot trust address space size on this platform\n");
   return 78;
+}
+
+#else
+
+/* Skip this test when an address sanitizer is in use, since it would fail.  */
+#ifndef __has_feature
+# define __has_feature(a) 0
+#endif
+#if defined __SANITIZE_ADDRESS__ || __has_feature (address_sanitizer)
+
+int
+main ()
+{
+  fprintf (stderr, "Skipping test: address sanitizer's malloc behaves differently\n");
+  return 80;
 }
 
 #else
@@ -109,7 +124,7 @@ main (int argc, char *argv[])
       if (memory == NULL)
         return 1;
       memset (memory, 17, MAX_ALLOC_TOTAL);
-      result = 80;
+      result = 81;
     }
   else
     {
@@ -135,4 +150,5 @@ main (int argc, char *argv[])
   return result;
 }
 
+#endif /* ! address sanitizer enabled */
 #endif /* !macOS */
