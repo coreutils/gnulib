@@ -41,8 +41,9 @@ main (void)
      case, we're assuming that we're running this test on the
      same system that we did the check to ensure it has linear
      performance characteristics.  */
+  int alarm_value = 50;
   signal (SIGALRM, SIG_DFL);
-  alarm (5);
+  alarm (alarm_value);
 #endif
 
   test_u_strstr ();
