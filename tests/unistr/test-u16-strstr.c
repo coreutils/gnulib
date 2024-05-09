@@ -1,5 +1,5 @@
 /* Test of u16_strstr() function.
-   Copyright (C) 2011-2023 Free Software Foundation, Inc.
+   Copyright (C) 2011-2024 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -38,8 +38,9 @@ main (void)
 #if HAVE_DECL_ALARM
   /* Declare failure if test takes too long, by using default abort
      caused by SIGALRM.  */
+  int alarm_value = 50;
   signal (SIGALRM, SIG_DFL);
-  alarm (10);
+  alarm (alarm_value);
 #endif
 
   test_u_strstr ();

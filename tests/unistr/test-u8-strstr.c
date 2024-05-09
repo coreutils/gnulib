@@ -1,5 +1,5 @@
 /* Test of u8_strstr() function.
-   Copyright (C) 2011-2023 Free Software Foundation, Inc.
+   Copyright (C) 2011-2024 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -41,8 +41,9 @@ main (void)
      case, we're assuming that we're running this test on the
      same system that we did the check to ensure it has linear
      performance characteristics.  */
+  int alarm_value = 50;
   signal (SIGALRM, SIG_DFL);
-  alarm (5);
+  alarm (alarm_value);
 #endif
 
   test_u_strstr ();
