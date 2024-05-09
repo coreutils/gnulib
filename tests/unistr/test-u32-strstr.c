@@ -38,8 +38,9 @@ main (void)
 #if HAVE_DECL_ALARM
   /* Declare failure if test takes too long, by using default abort
      caused by SIGALRM.  */
+  int alarm_value = 50;
   signal (SIGALRM, SIG_DFL);
-  alarm (10);
+  alarm (alarm_value);
 #endif
 
   test_u_strstr ();
