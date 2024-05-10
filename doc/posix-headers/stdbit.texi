@@ -1,0 +1,25 @@
+@node stdbit.h
+@section @file{stdbit.h}
+
+Gnulib module: stdbit
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This header file is missing on many non-C23 platforms:
+glibc 2.38, FreeBSD 14.0, NetBSD 10.0, OpenBSD 7.5,
+AIX 7.3, HP-UX 11.31, Solaris 11.4, mingw, MSVC 17, Android 15.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+On older non-C23 platforms lacking @code{typeof} or equivalent, a call
+to @code{stdc_bit_floor} and @code{stdc_bit_ceil} may yield a type
+that is wider than its argument.  Although C23 seems to allow this,
+it differs from GNU behavior.
+
+@item
+On non-C23 platforms, type-generic functions apply portably only to
+the standard unsigned integer types specified by C17 or earlier.
+@end itemize

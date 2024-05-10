@@ -585,6 +585,7 @@ This is true for the following POSIX or ISO C standardized header files:
 @item @code{spawn.h}
 @item @code{stdalign.h}
 @item @code{stdarg.h}
+@item @code{stdbit.h}
 @item @code{stddef.h}
 @item @code{stdint.h}
 @item @code{stdio.h}
