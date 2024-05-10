@@ -7,9 +7,6 @@ lib/stdbit.in.h
 m4/stdbit_h.m4
 
 Depends-on:
-count-leading-zeros	[$GL_GENERATE_STDBIT_H]
-count-trailing-zeros	[$GL_GENERATE_STDBIT_H]
-count-one-bits		[$GL_GENERATE_STDBIT_H]
 stdbool                 [$GL_GENERATE_STDBIT_H]
 
 configure.ac:

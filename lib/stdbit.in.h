@@ -25,9 +25,360 @@
  #error "Please include config.h first."
 #endif
 
-#include <count-leading-zeros.h>
-#include <count-trailing-zeros.h>
-#include <count-one-bits.h>
+/* Taken from count-leading-zeros.h.  */
+#include <limits.h>
+#include <stdlib.h>
+
+_GL_INLINE_HEADER_BEGIN
+#ifndef COUNT_LEADING_ZEROS_INLINE
+# define COUNT_LEADING_ZEROS_INLINE _GL_INLINE
+#endif
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/* Assuming the GCC builtin is BUILTIN and the MSC builtin is MSC_BUILTIN,
+   expand to code that computes the number of leading zeros of the local
+   variable 'x' of type TYPE (an unsigned integer type) and return it
+   from the current function.  */
+#if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4) \
+    || (__clang_major__ >= 4)
+# define COUNT_LEADING_ZEROS(BUILTIN, MSC_BUILTIN, TYPE)                \
+  return x ? BUILTIN (x) : CHAR_BIT * sizeof x;
+#elif _MSC_VER
+# pragma intrinsic (_BitScanReverse)
+# if defined _M_X64
+#  pragma intrinsic (_BitScanReverse64)
+# endif
+# define COUNT_LEADING_ZEROS(BUILTIN, MSC_BUILTIN, TYPE)                \
+    do                                                                  \
+      {                                                                 \
+        unsigned long result;                                           \
+        if (MSC_BUILTIN (&result, x))                                   \
+          return CHAR_BIT * sizeof x - 1 - result;                      \
+        return CHAR_BIT * sizeof x;                                     \
+      }                                                                 \
+    while (0)
+#else
+# define COUNT_LEADING_ZEROS(BUILTIN, MSC_BUILTIN, TYPE)                \
+    do                                                                  \
+      {                                                                 \
+        int count;                                                      \
+        unsigned int leading_32;                                        \
+        if (! x)                                                        \
+          return CHAR_BIT * sizeof x;                                   \
+        for (count = 0;                                                 \
+             (leading_32 = ((x >> (sizeof (TYPE) * CHAR_BIT - 32))      \
+                            & 0xffffffffU),                             \
+              count < CHAR_BIT * sizeof x - 32 && !leading_32);         \
+             count += 32)                                               \
+          x = x << 31 << 1;                                             \
+        return count + count_leading_zeros_32 (leading_32);             \
+      }                                                                 \
+    while (0)
+
+/* Compute and return the number of leading zeros in X,
+   where 0 < X < 2**32.  */
+COUNT_LEADING_ZEROS_INLINE int
+count_leading_zeros_32 (unsigned int x)
+{
+  /* <https://github.com/gibsjose/BitHacks>
+     <https://www.fit.vutbr.cz/~ibarina/pub/bithacks.pdf> */
+  static const char de_Bruijn_lookup[32] = {
+    31, 22, 30, 21, 18, 10, 29, 2, 20, 17, 15, 13, 9, 6, 28, 1,
+    23, 19, 11, 3, 16, 14, 7, 24, 12, 4, 8, 25, 5, 26, 27, 0
+  };
+
+  x |= x >> 1;
+  x |= x >> 2;
+  x |= x >> 4;
+  x |= x >> 8;
+  x |= x >> 16;
+  return de_Bruijn_lookup[((x * 0x07c4acddU) & 0xffffffffU) >> 27];
+}
+#endif
+
+/* Compute and return the number of leading zeros in X. */
+COUNT_LEADING_ZEROS_INLINE int
+count_leading_zeros (unsigned int x)
+{
+  COUNT_LEADING_ZEROS (__builtin_clz, _BitScanReverse, unsigned int);
+}
+
+/* Compute and return the number of leading zeros in X. */
+COUNT_LEADING_ZEROS_INLINE int
+count_leading_zeros_l (unsigned long int x)
+{
+  COUNT_LEADING_ZEROS (__builtin_clzl, _BitScanReverse, unsigned long int);
+}
+
+/* Compute and return the number of leading zeros in X. */
+COUNT_LEADING_ZEROS_INLINE int
+count_leading_zeros_ll (unsigned long long int x)
+{
+#if (defined _MSC_VER && !defined __clang__) && !defined _M_X64
+  /* 32-bit MSVC does not have _BitScanReverse64, only _BitScanReverse.  */
+  unsigned long result;
+  if (_BitScanReverse (&result, (unsigned long) (x >> 32)))
+    return CHAR_BIT * sizeof x - 1 - 32 - result;
+  if (_BitScanReverse (&result, (unsigned long) x))
+    return CHAR_BIT * sizeof x - 1 - result;
+  return CHAR_BIT * sizeof x;
+#else
+  COUNT_LEADING_ZEROS (__builtin_clzll, _BitScanReverse64,
+                       unsigned long long int);
+#endif
+}
+
+#ifdef __cplusplus
+}
+#endif
+
+_GL_INLINE_HEADER_END
+
+/* Taken from count-trailing-zeros.h.  */
+#include <limits.h>
+#include <stdlib.h>
+
+_GL_INLINE_HEADER_BEGIN
+#ifndef COUNT_TRAILING_ZEROS_INLINE
+# define COUNT_TRAILING_ZEROS_INLINE _GL_INLINE
+#endif
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/* Assuming the GCC builtin is BUILTIN and the MSC builtin is MSC_BUILTIN,
+   expand to code that computes the number of trailing zeros of the local
+   variable 'x' of type TYPE (an unsigned integer type) and return it
+   from the current function.  */
+#if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4) \
+    || (__clang_major__ >= 4)
+# define COUNT_TRAILING_ZEROS(BUILTIN, MSC_BUILTIN, TYPE)               \
+  return x ? BUILTIN (x) : CHAR_BIT * sizeof x;
+#elif _MSC_VER
+# pragma intrinsic (_BitScanForward)
+# if defined _M_X64
+#  pragma intrinsic (_BitScanForward64)
+# endif
+# define COUNT_TRAILING_ZEROS(BUILTIN, MSC_BUILTIN, TYPE)               \
+    do                                                                  \
+      {                                                                 \
+        unsigned long result;                                           \
+        return MSC_BUILTIN (&result, x) ? result : CHAR_BIT * sizeof x; \
+      }                                                                 \
+    while (0)
+#else
+# define COUNT_TRAILING_ZEROS(BUILTIN, MSC_BUILTIN, TYPE)               \
+    do                                                                  \
+      {                                                                 \
+        int count = 0;                                                  \
+        if (! x)                                                        \
+          return CHAR_BIT * sizeof x;                                   \
+        for (count = 0;                                                 \
+             (count < CHAR_BIT * sizeof x - 32                          \
+              && ! (x & 0xffffffffU));                                  \
+             count += 32)                                               \
+          x = x >> 31 >> 1;                                             \
+        return count + count_trailing_zeros_32 (x);                     \
+      }                                                                 \
+    while (0)
+
+/* Compute and return the number of trailing zeros in the least
+   significant 32 bits of X.  One of these bits must be nonzero.  */
+COUNT_TRAILING_ZEROS_INLINE int
+count_trailing_zeros_32 (unsigned int x)
+{
+  /* <https://github.com/gibsjose/BitHacks>
+     <https://www.fit.vutbr.cz/~ibarina/pub/bithacks.pdf> */
+  static const char de_Bruijn_lookup[32] = {
+    0, 1, 28, 2, 29, 14, 24, 3, 30, 22, 20, 15, 25, 17, 4, 8,
+    31, 27, 13, 23, 21, 19, 16, 7, 26, 12, 18, 6, 11, 5, 10, 9
+  };
+  return de_Bruijn_lookup[(((x & -x) * 0x077cb531U) & 0xffffffffU) >> 27];
+}
+#endif
+
+/* Compute and return the number of trailing zeros in X. */
+COUNT_TRAILING_ZEROS_INLINE int
+count_trailing_zeros (unsigned int x)
+{
+  COUNT_TRAILING_ZEROS (__builtin_ctz, _BitScanForward, unsigned int);
+}
+
+/* Compute and return the number of trailing zeros in X. */
+COUNT_TRAILING_ZEROS_INLINE int
+count_trailing_zeros_l (unsigned long int x)
+{
+  COUNT_TRAILING_ZEROS (__builtin_ctzl, _BitScanForward, unsigned long int);
+}
+
+/* Compute and return the number of trailing zeros in X. */
+COUNT_TRAILING_ZEROS_INLINE int
+count_trailing_zeros_ll (unsigned long long int x)
+{
+#if (defined _MSC_VER && !defined __clang__) && !defined _M_X64
+  /* 32-bit MSVC does not have _BitScanForward64, only _BitScanForward.  */
+  unsigned long result;
+  if (_BitScanForward (&result, (unsigned long) x))
+    return result;
+  if (_BitScanForward (&result, (unsigned long) (x >> 32)))
+    return result + 32;
+  return CHAR_BIT * sizeof x;
+#else
+  COUNT_TRAILING_ZEROS (__builtin_ctzll, _BitScanForward64,
+                        unsigned long long int);
+#endif
+}
+
+#ifdef __cplusplus
+}
+#endif
+
+_GL_INLINE_HEADER_END
+
+/* Taken from count-one-bits.h.  */
+#include <limits.h>
+#include <stdlib.h>
+
+_GL_INLINE_HEADER_BEGIN
+#ifndef COUNT_ONE_BITS_INLINE
+# define COUNT_ONE_BITS_INLINE _GL_INLINE
+#endif
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/* Assuming the GCC builtin is GCC_BUILTIN and the MSC builtin is MSC_BUILTIN,
+   expand to code that computes the number of 1-bits of the local
+   variable 'x' of type TYPE (an unsigned integer type) and return it
+   from the current function.  */
+#if (__GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4)) \
+    || (__clang_major__ >= 4)
+# define COUNT_ONE_BITS(GCC_BUILTIN, MSC_BUILTIN, TYPE) \
+    return GCC_BUILTIN (x)
+#else
+
+/* Compute and return the number of 1-bits set in the least
+   significant 32 bits of X. */
+COUNT_ONE_BITS_INLINE int
+count_one_bits_32 (unsigned int x)
+{
+  x = ((x & 0xaaaaaaaaU) >> 1) + (x & 0x55555555U);
+  x = ((x & 0xccccccccU) >> 2) + (x & 0x33333333U);
+  x = (x >> 16) + (x & 0xffff);
+  x = ((x & 0xf0f0) >> 4) + (x & 0x0f0f);
+  return (x >> 8) + (x & 0x00ff);
+}
+
+/* Expand to code that computes the number of 1-bits of the local
+   variable 'x' of type TYPE (an unsigned integer type) and return it
+   from the current function.  */
+# define COUNT_ONE_BITS_GENERIC(TYPE)                                   \
+    do                                                                  \
+      {                                                                 \
+        int count = 0;                                                  \
+        int bits;                                                       \
+        for (bits = 0; bits < sizeof (TYPE) * CHAR_BIT; bits += 32)     \
+          {                                                             \
+            count += count_one_bits_32 (x);                             \
+            x = x >> 31 >> 1;                                           \
+          }                                                             \
+        return count;                                                   \
+      }                                                                 \
+    while (0)
+
+# if 1500 <= _MSC_VER && (defined _M_IX86 || defined _M_X64)
+
+/* While gcc falls back to its own generic code if the machine
+   on which it's running doesn't support popcount, with Microsoft's
+   compiler we need to detect and fallback ourselves.  */
+
+#  if 0
+#   include <intrin.h>
+#  else
+    /* Don't pollute the namespace with too many MSVC intrinsics.  */
+#   pragma intrinsic (__cpuid)
+#   pragma intrinsic (__popcnt)
+#   if defined _M_X64
+#    pragma intrinsic (__popcnt64)
+#   endif
+#  endif
+
+#  if !defined _M_X64
+static inline __popcnt64 (unsigned long long x)
+{
+  return __popcnt ((unsigned int) (x >> 32)) + __popcnt ((unsigned int) x);
+}
+#  endif
+
+/* Return nonzero if popcount is supported.  */
+
+/* 1 if supported, 0 if not supported, -1 if unknown.  */
+extern int popcount_support;
+
+COUNT_ONE_BITS_INLINE int
+popcount_supported (void)
+{
+  if (popcount_support < 0)
+    {
+      /* Do as described in
+         <https://docs.microsoft.com/en-us/cpp/intrinsics/popcnt16-popcnt-popcnt64> */
+      int cpu_info[4];
+      __cpuid (cpu_info, 1);
+      popcount_support = (cpu_info[2] >> 23) & 1;
+    }
+  return popcount_support;
+}
+
+#  define COUNT_ONE_BITS(GCC_BUILTIN, MSC_BUILTIN, TYPE) \
+     do                                                  \
+       {                                                 \
+         if (popcount_supported ())                      \
+           return MSC_BUILTIN (x);                       \
+         else                                            \
+           COUNT_ONE_BITS_GENERIC (TYPE);                \
+       }                                                 \
+     while (0)
+
+# else
+
+#  define COUNT_ONE_BITS(GCC_BUILTIN, MSC_BUILTIN, TYPE) \
+     COUNT_ONE_BITS_GENERIC (TYPE)
+
+# endif
+#endif
+
+/* Compute and return the number of 1-bits set in X. */
+COUNT_ONE_BITS_INLINE int
+count_one_bits (unsigned int x)
+{
+  COUNT_ONE_BITS (__builtin_popcount, __popcnt, unsigned int);
+}
+
+/* Compute and return the number of 1-bits set in X. */
+COUNT_ONE_BITS_INLINE int
+count_one_bits_l (unsigned long int x)
+{
+  COUNT_ONE_BITS (__builtin_popcountl, __popcnt, unsigned long int);
+}
+
+/* Compute and return the number of 1-bits set in X. */
+COUNT_ONE_BITS_INLINE int
+count_one_bits_ll (unsigned long long int x)
+{
+  COUNT_ONE_BITS (__builtin_popcountll, __popcnt64, unsigned long long int);
+}
+
+#ifdef __cplusplus
+}
+#endif
+
+_GL_INLINE_HEADER_END
+
 
 /* An expression, preferably with the type of A, that has the value of B.  */
 #if ((defined __GNUC__ && 2 <= __GNUC__) \
