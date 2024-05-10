@@ -63,22 +63,23 @@ _GL_INLINE_HEADER_BEGIN
 extern "C" {
 #endif
 
-_GL_STDBIT_INLINE unsigned int
-stdc_leading_zeros_uc (unsigned char n)
-{
-  return count_leading_zeros (n) - 8 * (sizeof 0u - sizeof n);
-}
-
-_GL_STDBIT_INLINE unsigned int
-stdc_leading_zeros_us (unsigned short int n)
-{
-  return count_leading_zeros (n) - 8 * (sizeof 0u - sizeof n);
-}
 
 _GL_STDBIT_INLINE unsigned int
 stdc_leading_zeros_ui (unsigned int n)
 {
   return count_leading_zeros (n);
+}
+
+_GL_STDBIT_INLINE unsigned int
+stdc_leading_zeros_uc (unsigned char n)
+{
+  return stdc_leading_zeros_ui (n) - 8 * (sizeof 0u - sizeof n);
+}
+
+_GL_STDBIT_INLINE unsigned int
+stdc_leading_zeros_us (unsigned short int n)
+{
+  return stdc_leading_zeros_ui (n) - 8 * (sizeof 0u - sizeof n);
 }
 
 _GL_STDBIT_INLINE unsigned int
@@ -104,33 +105,31 @@ stdc_leading_zeros_ull (unsigned long long int n)
 _GL_STDBIT_INLINE unsigned int
 stdc_leading_ones_uc (unsigned char n)
 {
-  unsigned int ui = n;
-  return count_leading_zeros (~(ui << 8 * (sizeof ui - sizeof n)));
+  return stdc_leading_zeros_uc (~n);
 }
 
 _GL_STDBIT_INLINE unsigned int
 stdc_leading_ones_us (unsigned short int n)
 {
-  unsigned int ui = n;
-  return count_leading_zeros (~(ui << 8 * (sizeof ui - sizeof n)));
+  return stdc_leading_zeros_us (~n);
 }
 
 _GL_STDBIT_INLINE unsigned int
 stdc_leading_ones_ui (unsigned int n)
 {
-  return count_leading_zeros (~n);
+  return stdc_leading_zeros_ui (~n);
 }
 
 _GL_STDBIT_INLINE unsigned int
 stdc_leading_ones_ul (unsigned long int n)
 {
-  return count_leading_zeros_l (~n);
+  return stdc_leading_zeros_ul (~n);
 }
 
 _GL_STDBIT_INLINE unsigned int
 stdc_leading_ones_ull (unsigned long long int n)
 {
-  return count_leading_zeros_ll (~n);
+  return stdc_leading_zeros_ull (~n);
 }
 
 #define stdc_leading_ones(n) \
@@ -142,21 +141,21 @@ stdc_leading_ones_ull (unsigned long long int n)
 
 
 _GL_STDBIT_INLINE unsigned int
+stdc_trailing_zeros_ui (unsigned int n)
+{
+  return count_trailing_zeros (n);
+}
+
+_GL_STDBIT_INLINE unsigned int
 stdc_trailing_zeros_uc (unsigned char n)
 {
-  return count_trailing_zeros (n | (1 + (unsigned char) -1));
+  return stdc_trailing_zeros_ui (n | (1 + (unsigned char) -1));
 }
 
 _GL_STDBIT_INLINE unsigned int
 stdc_trailing_zeros_us (unsigned short int n)
 {
-  return count_trailing_zeros (n | (1 + (unsigned short int) -1));
-}
-
-_GL_STDBIT_INLINE unsigned int
-stdc_trailing_zeros_ui (unsigned int n)
-{
-  return count_trailing_zeros (n);
+  return stdc_trailing_zeros_ui (n | (1 + (unsigned short int) -1));
 }
 
 _GL_STDBIT_INLINE unsigned int
@@ -182,33 +181,31 @@ stdc_trailing_zeros_ull (unsigned long long int n)
 _GL_STDBIT_INLINE unsigned int
 stdc_trailing_ones_uc (unsigned char n)
 {
-  unsigned int ui = n;
-  return count_trailing_zeros (~ui);
+  return stdc_trailing_zeros_uc (~n);
 }
 
 _GL_STDBIT_INLINE unsigned int
 stdc_trailing_ones_us (unsigned short int n)
 {
-  unsigned int ui = n;
-  return count_trailing_zeros (~ui);
+  return stdc_trailing_zeros_us (~n);
 }
 
 _GL_STDBIT_INLINE unsigned int
 stdc_trailing_ones_ui (unsigned int n)
 {
-  return count_trailing_zeros (~n);
+  return stdc_trailing_zeros_ui (~n);
 }
 
 _GL_STDBIT_INLINE unsigned int
 stdc_trailing_ones_ul (unsigned long int n)
 {
-  return count_trailing_zeros_l (~n);
+  return stdc_trailing_zeros_ul (~n);
 }
 
 _GL_STDBIT_INLINE unsigned int
 stdc_trailing_ones_ull (unsigned long long int n)
 {
-  return count_trailing_zeros_ll (~n);
+  return stdc_trailing_zeros_ull (~n);
 }
 
 #define stdc_trailing_ones(n) \
@@ -392,61 +389,21 @@ stdc_first_trailing_one_ull (unsigned long long int n)
 
 
 _GL_STDBIT_INLINE unsigned int
-stdc_count_zeros_uc (unsigned char n)
+stdc_count_ones_ui (unsigned int n)
 {
-  unsigned int ui = n;
-  return count_one_bits (~ui) - 8 * (sizeof ui - sizeof n);
+  return count_one_bits (n);
 }
-
-_GL_STDBIT_INLINE unsigned int
-stdc_count_zeros_us (unsigned short int n)
-{
-  unsigned int ui = n;
-  return count_one_bits (~ui) - 8 * (sizeof ui - sizeof n);
-}
-
-_GL_STDBIT_INLINE unsigned int
-stdc_count_zeros_ui (unsigned int n)
-{
-  return count_one_bits (~n);
-}
-
-_GL_STDBIT_INLINE unsigned int
-stdc_count_zeros_ul (unsigned long int n)
-{
-  return count_one_bits_l (~n);
-}
-
-_GL_STDBIT_INLINE unsigned int
-stdc_count_zeros_ull (unsigned long long int n)
-{
-  return count_one_bits_ll (~n);
-}
-
-#define stdc_count_zeros(n) \
-  (sizeof (n) == 1 ? stdc_count_zeros_uc (n) \
-   : sizeof (n) == sizeof (unsigned short int) ? stdc_count_zeros_us (n) \
-   : sizeof (n) == sizeof 0u ? stdc_count_zeros_ui (n) \
-   : sizeof (n) == sizeof 0ul ? stdc_count_zeros_ul (n) \
-   : stdc_count_zeros_ull (n))
-
 
 _GL_STDBIT_INLINE unsigned int
 stdc_count_ones_uc (unsigned char n)
 {
-  return count_one_bits (n);
+  return stdc_count_ones_ui (n);
 }
 
 _GL_STDBIT_INLINE unsigned int
 stdc_count_ones_us (unsigned short int n)
 {
-  return count_one_bits (n);
-}
-
-_GL_STDBIT_INLINE unsigned int
-stdc_count_ones_ui (unsigned int n)
-{
-  return count_one_bits (n);
+  return stdc_count_ones_ui (n);
 }
 
 _GL_STDBIT_INLINE unsigned int
@@ -467,6 +424,44 @@ stdc_count_ones_ull (unsigned long long int n)
    : sizeof (n) == sizeof 0u ? stdc_count_ones_ui (n) \
    : sizeof (n) == sizeof 0ul ? stdc_count_ones_ul (n) \
    : stdc_count_ones_ull (n))
+
+
+_GL_STDBIT_INLINE unsigned int
+stdc_count_zeros_uc (unsigned char n)
+{
+  return stdc_count_ones_uc (~n);
+}
+
+_GL_STDBIT_INLINE unsigned int
+stdc_count_zeros_us (unsigned short int n)
+{
+  return stdc_count_ones_us (~n);
+}
+
+_GL_STDBIT_INLINE unsigned int
+stdc_count_zeros_ui (unsigned int n)
+{
+  return stdc_count_ones_ui (~n);
+}
+
+_GL_STDBIT_INLINE unsigned int
+stdc_count_zeros_ul (unsigned long int n)
+{
+  return stdc_count_ones_ul (~n);
+}
+
+_GL_STDBIT_INLINE unsigned int
+stdc_count_zeros_ull (unsigned long long int n)
+{
+  return stdc_count_ones_ull (~n);
+}
+
+#define stdc_count_zeros(n) \
+  (sizeof (n) == 1 ? stdc_count_zeros_uc (n) \
+   : sizeof (n) == sizeof (unsigned short int) ? stdc_count_zeros_us (n) \
+   : sizeof (n) == sizeof 0u ? stdc_count_zeros_ui (n) \
+   : sizeof (n) == sizeof 0ul ? stdc_count_zeros_ul (n) \
+   : stdc_count_zeros_ull (n))
 
 
 _GL_STDBIT_INLINE bool

@@ -1,0 +1,42 @@
+Files:
+tests/macros.h
+tests/support/test-driver.c
+tests/tst-stdbit.h
+tests/tst-stdc_bit_ceil.c
+tests/tst-stdc_bit_floor.c
+tests/tst-stdc_bit_width.c
+tests/tst-stdc_count_ones.c
+tests/tst-stdc_count_zeros.c
+tests/tst-stdc_first_leading_one.c
+tests/tst-stdc_first_leading_zero.c
+tests/tst-stdc_first_trailing_one.c
+tests/tst-stdc_first_trailing_zero.c
+tests/tst-stdc_has_single_bit.c
+tests/tst-stdc_leading_ones.c
+tests/tst-stdc_leading_zeros.c
+tests/tst-stdc_trailing_ones.c
+tests/tst-stdc_trailing_zeros.c
+
+Depends-on:
+assert-h
+libc-config
+stdint
+
+configure.ac:
+
+Makefile.am:
+TESTS += \
+   tst-stdc_bit_ceil tst-stdc_bit_floor tst-stdc_bit_width \
+   tst-stdc_count_ones tst-stdc_count_zeros tst-stdc_first_leading_one \
+   tst-stdc_first_leading_zero tst-stdc_first_trailing_one \
+   tst-stdc_first_trailing_zero tst-stdc_has_single_bit \
+   tst-stdc_leading_ones tst-stdc_leading_zeros tst-stdc_trailing_ones \
+   tst-stdc_trailing_zeros
+
+check_PROGRAMS += \
+   tst-stdc_bit_ceil tst-stdc_bit_floor tst-stdc_bit_width \
+   tst-stdc_count_ones tst-stdc_count_zeros tst-stdc_first_leading_one \
+   tst-stdc_first_leading_zero tst-stdc_first_trailing_one \
+   tst-stdc_first_trailing_zero tst-stdc_has_single_bit \
+   tst-stdc_leading_ones tst-stdc_leading_zeros tst-stdc_trailing_ones \
+   tst-stdc_trailing_zeros
