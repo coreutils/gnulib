@@ -17,19 +17,21 @@ Documentation:
 @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/backtrace_symbols_fd.3.html,,man backtrace_symbols_fd}.
 @end itemize
 
-Gnulib module: ---
+Gnulib module: execinfo
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+This function is missing on many platforms:
+FreeBSD 9.3, NetBSD 6.1, OpenBSD 6.9, Minix 3.1.8, AIX 5.1, HP-UX 11, Solaris 10, Cygwin 2.9, mingw, MSVC 14, Android API level 32.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
 @item
-This function is missing on many platforms:
-FreeBSD 9.3, NetBSD 6.1, OpenBSD 6.9, Minix 3.1.8, AIX 5.1, HP-UX 11, Solaris 10, Cygwin 2.9, mingw, MSVC 14, Android API level 32.
-
-@item
 The second argument is of type @code{size_t}, not @code{int}, on some platforms:
 FreeBSD, NetBSD, OpenBSD.
+@item
+On platforms where the function is missing,
+the Gnulib substitute implementation is just a stub, and does nothing.
 @end itemize

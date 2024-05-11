@@ -17,7 +17,7 @@ Documentation:
 @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/backtrace.3.html,,man backtrace}.
 @end itemize
 
-Gnulib module: ---
+Gnulib module: execinfo
 
 Portability problems fixed by Gnulib:
 @itemize
