@@ -1,5 +1,5 @@
 /* Declarations for error-reporting functions.
-   Copyright (C) 1995-1997, 2003, 2006, 2008-2023 Free Software Foundation,
+   Copyright (C) 1995-1997, 2003, 2006, 2008-2024 Free Software Foundation,
    Inc.
    This file is part of the GNU C Library.
 
@@ -23,7 +23,7 @@
    or error_at_line(...) invocations.  */
 
 /* The include_next requires a split double-inclusion guard.  */
-#if @HAVE_ERROR_H@
+#if @HAVE_ERROR_H@ && !defined __MINGW32__
 # @INCLUDE_NEXT@ @NEXT_ERROR_H@
 #endif
 
