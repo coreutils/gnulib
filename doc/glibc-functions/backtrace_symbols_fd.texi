@@ -32,6 +32,11 @@ Portability problems not fixed by Gnulib:
 The second argument is of type @code{size_t}, not @code{int}, on some platforms:
 FreeBSD, NetBSD, OpenBSD.
 @item
+The strings printed by this function not the same as the strings returned by
+@code{backtrace_symbols} on some platforms:
+@c https://sourceware.org/bugzilla/show_bug.cgi?id=31730
+glibc 2.39.
+@item
 On platforms where the function is missing,
 the Gnulib substitute implementation is just a stub, and does nothing.
 @end itemize

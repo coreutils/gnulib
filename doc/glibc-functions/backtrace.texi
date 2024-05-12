@@ -32,6 +32,16 @@ Portability problems not fixed by Gnulib:
 The second argument is of type @code{size_t}, not @code{int}, on some platforms:
 FreeBSD, NetBSD, OpenBSD.
 @item
+The return value may be @code{(size_t)(-1)} instead of 0 on some platforms:
+FreeBSD 12.4/i386.
+@item
+The returned stack trace is empty if it would not entirely fit into the
+provided buffer on some platforms:
+FreeBSD 14.0, NetBSD 10.0, OpenBSD 7.5.
+@item
+The returned stack trace is always empty on some platforms:
+FreeBSD 11.0/i386, FreeBSD 12.2/sparc64.
+@item
 On platforms where the function is missing,
 the Gnulib substitute implementation is just a stub, and does nothing.
 @end itemize
