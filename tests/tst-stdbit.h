@@ -19,14 +19,14 @@
 #ifndef _TST_STDBIT_H
 #define _TST_STDBIT_H
 
-#if HAVE_CONFIG_H
+#if GNULIB_TEST_STDBIT
 # include <libc-config.h>
 #endif
 
 #include <stdbit.h>
 #include <stdbool.h>
 
-#if !HAVE_CONFIG_H
+#if !GNULIB_TEST_STDBIT
 # include <array_length.h>
 # include <support/check.h>
 #else
@@ -46,7 +46,7 @@ struct stdbit_test
   uint64_t res_8, res_16, res_32, res_64;
 };
 
-#if !HAVE_CONFIG_H
+#if !GNULIB_TEST_STDBIT
 # define TEST_TYPE(EXPR, TYPE)						\
   _Static_assert (_Generic ((EXPR), TYPE: 1, default: 0), "bad type")
 #elif ((defined __GNUC__ && 2 <= __GNUC__) \

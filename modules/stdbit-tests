@@ -23,6 +23,8 @@ libc-config
 stdint
 
 configure.ac:
+AC_DEFINE([GNULIB_TEST_STDBIT], [1],
+  [Define to 1 so that stdbit tests use the Gnulib framework, not glibc's.])
 
 Makefile.am:
 TESTS += \
