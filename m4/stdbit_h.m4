@@ -1,4 +1,4 @@
-# stddef_h.m4
+# stdbit_h.m4
 # serial 1
 dnl Copyright 2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
