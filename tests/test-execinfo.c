@@ -27,17 +27,28 @@
 #include "macros.h"
 
 static void
-test_backtrace (void)
+test_backtrace (int pass)
 {
   void *buffer[10];
-  char **symbols;
+  int max_size;
   int size;
+  char **symbols;
 
-  size = backtrace (buffer, SIZEOF (buffer));
+  max_size = (pass == 0 ? SIZEOF (buffer) : 1);
+  size = backtrace (buffer, max_size);
+  ASSERT (size >= 0 && size <= max_size);
+
+  /* Print the backtrace to a file descriptor.  */
+  backtrace_symbols_fd (buffer, size, 1);
+  printf ("\n");
+
   symbols = backtrace_symbols (buffer, size);
+  if (size > 0)
+    /* We have enough memory available.  */
+    ASSERT (symbols != NULL);
 
   /* Print the backtrace if possible.  */
-  if (0 < size && symbols != NULL)
+  if (symbols != NULL)
     {
       for (int i = 0; i < size; ++i)
         printf ("%s\n", symbols[i]);
@@ -48,7 +59,10 @@ test_backtrace (void)
 int
 main (void)
 {
-  test_backtrace ();
+  printf ("Full stack trace:\n"); fflush (stdout);
+  test_backtrace (0);
+  printf ("\nTruncated stack trace:\n"); fflush (stdout);
+  test_backtrace (1);
 
   return 0;
 }

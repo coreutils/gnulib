@@ -9,4 +9,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-execinfo
 check_PROGRAMS += test-execinfo
-test_execinfo_LDADD = $(LDADD) $(LIB_EXECINFO)
+test_execinfo_LDADD = $(LDADD) @LIB_EXECINFO@
