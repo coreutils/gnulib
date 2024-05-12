@@ -1502,7 +1502,7 @@ vc-diff-check:
 rel-files = $(DIST_ARCHIVES)
 
 gnulib-version = $$(cd $(gnulib_dir)				\
-                    && { git describe || git rev-parse --short=10 HEAD; } )
+                    && { git describe 2> /dev/null || git rev-parse --short=10 HEAD; } )
 bootstrap-tools ?= autoconf,automake,gnulib
 
 gpgv = $$(gpgv2 --version >/dev/null && echo gpgv2 || echo gpgv)
