@@ -538,17 +538,18 @@ class GLModule:
             result = []
             for line in lines:
                 match = pattern.search(line)
-                if match:
-                    module = line[0 : match.start()]
+                if not match:
+                    module_name = line
+                    condition = None
+                else:
+                    module_name = line[0 : match.start()]
                     condition = line[match.end() :]
                     condition = subend(']', '', condition)
-                else:
-                    module = line
-                    condition = None
-                if module != '':
                     if condition == 'true':
                         condition = None
-                    result.append(tuple([self.modulesystem.find(module), condition]))
+                module = self.modulesystem.find(module_name)
+                if module is not None:
+                    result.append((module, condition))
             self.cache['dependenciesWithCond'] = result
         return self.cache['dependenciesWithCond']
 
