@@ -34,10 +34,6 @@ _GL_INLINE_HEADER_BEGIN
 extern "C" {
 #endif
 
-/* Bytes must be 8 bits, as POSIX requires.  This implementation uses
-   8 instead of CHAR_BIT to avoid namespace pollution.  */
-static_assert ((unsigned char) -1 == (1 << 8) - 1);
-
 /* An expression, preferably with the type of A, that has the value of B.  */
 #if ((defined __GNUC__ && 2 <= __GNUC__) \
      || (defined __clang_major__ && 4 <= __clang_major__) \
@@ -131,13 +127,15 @@ extern char const __gl_stdbit_clztab[256];
 _GL_STDBIT_INLINE int
 __gl_stdbit_clzll (unsigned long long int n)
 {
-  static_assert (8 * sizeof n <= 1 << 7);
   int r = 0;
-  int a6 = (0xffffffffffffffff < n) << 6; n >>= a6; r |= a6;
-  int a5 = (0x00000000ffffffff < n) << 5; n >>= a5; r |= a5;
-  int a4 = (0x000000000000ffff < n) << 4; n >>= a4; r |= a4;
-  int a3 = (0x00000000000000ff < n) << 3; n >>= a3; r |= a3;
-  return (8 * (sizeof n - 1) - r) | __gl_stdbit_clztab[n];
+  for (int i = 8 * sizeof n >> 1; 1 << 6 <= i; i >>= 1)
+    {
+      int a = (1ull << i <= n) * i; n >>= a; r += a;
+    }
+  int a5 = (0x00000000ffffffff < n) << 5; n >>= a5; r += a5;
+  int a4 = (0x000000000000ffff < n) << 4; n >>= a4; r += a4;
+  int a3 = (0x00000000000000ff < n) << 3; n >>= a3; r += a3;
+  return (8 * (sizeof n - 1) - r) + __gl_stdbit_clztab[n];
 }
 _GL_STDBIT_INLINE int
 __gl_stdbit_clz (unsigned int n)
@@ -212,22 +210,50 @@ __gl_stdbit_ctzll (unsigned long long int n)
 #else
 /* Count the number of 1 bits in N.  */
 _GL_STDBIT_INLINE int
-__gl_stdbit_popcount255 (unsigned long long int n)
+__gl_stdbit_popcount_wide (unsigned long long int n)
 {
-  unsigned long long int
-    max = -1ull,
-    x555555 = max / (1 << 1 | 1),	/* 0x555555... */
-    x333333 = max / (1 << 2 | 1),	/* 0x333333... */
-    x0f0f0f = max / (1 << 4 | 1),	/* 0x0f0f0f... */
-    x010101 = max / ((1 << 8) - 1);	/* 0x010101... */
-  n -= (n >> 1) & x555555;
-  n = (n & x333333) + ((n >> 2) & x333333);
-  n = (n + (n >> 4)) & x0f0f0f;
+  if (sizeof n & (sizeof n - 1))
+    {
+      /* Use a simple O(log N) loop on theoretical platforms where N's
+         width is not a power of 2.  */
+      int count = 0;
+      for (int i = 0; i < 8 * sizeof n; i++, n >>= 1)
+        count += n & 1;
+      return count;
+    }
+  else
+    {
+      /* N's width is a power of 2; count in parallel.  */
+      unsigned long long int
+        max = -1ull,
+        x555555 = max / (1 << 1 | 1),	/* 0x555555... */
+        x333333 = max / (1 << 2 | 1),	/* 0x333333... */
+        x0f0f0f = max / (1 << 4 | 1),	/* 0x0f0f0f... */
+        x010101 = max / ((1 << 8) - 1),	/* 0x010101... */
+        x000_7f = max / 0xffffffffffffffff * 0x7f; /* 0x000000000000007f... */
+      n -= (n >> 1) & x555555;
+      n = (n & x333333) + ((n >> 2) & x333333);
+      n = (n + (n >> 4)) & x0f0f0f;
 
-  /* The multiplication means the popcount should fit in the leading 8
-     bits of the product, so N should be narrower than 256 bits.  */
-  static_assert (8 * sizeof n < 1 << 8);
-  return n * x010101 >> 8 * (sizeof n - 1);
+      /* If the popcount always fits in 8 bits, multiply so that the
+         popcount is in the leading 8 bits of the product; these days
+         this is typically faster than the alternative below.  */
+      if (8 * sizeof n < 1 << 8)
+        return n * x010101 >> 8 * (sizeof n - 1);
+
+      /* N is at least 256 bits wide!  Fall back on an O(log log N)
+         loop that a compiler could unroll.  Unroll the first three
+         iterations by hand, to skip some division and masking.  This
+         is the most we can easily do without hassling with constants
+         that a typical-platform compiler would reject.  */
+      n += n >> (1 << 3);
+      n += n >> (1 << 4);
+      n += n >> (1 << 5);
+      n &= x000_7f;
+      for (int i = 64; i < 8 * sizeof n; i <<= 1)
+        n = (n + (n >> i)) & max / (1ull << i | 1);
+      return n;
+    }
 }
 
 # ifdef _MSC_VER
@@ -268,26 +294,26 @@ __gl_stdbit_popcount (unsigned int n)
 {
   return (__gl_stdbit_popcount_supported ()
           ? __popcnt (n)
-          : __gl_stdbit_popcount255 (n));
+          : __gl_stdbit_popcount_wide (n));
 }
 _GL_STDBIT_INLINE int
 __gl_stdbit_popcountl (unsigned long int n)
 {
   return (__gl_stdbit_popcount_supported ()
           ? __popcnt (n)
-          : __gl_stdbit_popcount255 (n));
+          : __gl_stdbit_popcount_wide (n));
 }
 _GL_STDBIT_INLINE int
 __gl_stdbit_popcountll (unsigned long long int n)
 {
   return (__gl_stdbit_popcount_supported ()
           ? __popcnt64 (n)
-          : __gl_stdbit_popcount255 (n));
+          : __gl_stdbit_popcount_wide (n));
 }
 # else /* !_MSC_VER */
-#  define __gl_stdbit_popcount __gl_stdbit_popcount255
-#  define __gl_stdbit_popcountl __gl_stdbit_popcount255
-#  define __gl_stdbit_popcountll __gl_stdbit_popcount255
+#  define __gl_stdbit_popcount __gl_stdbit_popcount_wide
+#  define __gl_stdbit_popcountl __gl_stdbit_popcount_wide
+#  define __gl_stdbit_popcountll __gl_stdbit_popcount_wide
 # endif
 #endif
 
