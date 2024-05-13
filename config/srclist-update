@@ -1,28 +1,33 @@
 #!/bin/sh
-# Check for files in directory $1 being up to date, according to the
+# Usage: ./srclist-update DIR
+# Check for files in directory DIR being up to date, according to the
 # list on stdin.  Don't actually make any changes, just show the diffs.
-#
+
+# This script is used in gnulib and texinfo; the input files are named
+# srclist.txt.
+
+# Format of srclist.txt:
 # Empty (or only whitespace) input lines are ignored.
 # Lines beginning with # are ignored.
 # Lines with just one word are ignored.
 # Otherwise, the line has two or more whitespace-separated words:
-#   the first word is the source directory, which can be a top-level
-#   directory of source archive,
-#   the second word is the source file name relative to the source
-#   directory, and
-#   the third word is the destination, other optional words are
-#   options.
-# The possible options are "gpl" (to replace the license with the GPL)
-#   and "doclicense" (to replace @include doclicense.texi with fdl.texi)
-#   and "strip-trailing-space" (to strip trailing white space from lines)
-#   and "release" (to use the release version instead of the
-#   development version).
-#   Unrecognized options are ignored.
+#   - the first word is the source directory, which can be a top-level
+#     directory of source archive,
+#   - the second word is the source file name relative to the source
+#     directory,
+#   - the third word is the destination, either as a directory (to be
+#     combined with the basename of the the source file name) or as a
+#     file name that includes the basename, and
+#   - other optional words are options.
+# The possible options are
+#   - "gpl" (to replace the license with the GPL)
+#   - "doclicense" (to replace @include doclicense.texi with fdl.texi)
+#   - "strip-trailing-space" (to strip trailing white space from lines)
+#   - "release" (to use the release version instead of the development
+#     version).
+# Unrecognized options are ignored.
 # $VARIABLE expansions are done (with sh eval).
-#
-# This script is used in gnulib and texinfo; the input files are named
-# srclist.txt.
-#
+
 # Copyright (C) 2002-2003, 2005, 2007-2024 Free Software Foundation, Inc.
 #
 # This program is free software: you can redistribute it and/or modify
