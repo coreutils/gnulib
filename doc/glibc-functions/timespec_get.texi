@@ -2,7 +2,7 @@
 @subsection @code{timespec_get}
 @findex timespec_get
 
-ISO C23 specification:@* @url{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n3047.pdf} section 7.29.2.6
+ISO C23 specification:@* @url{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n3096.pdf} section 7.29.2.6
 
 Gnulib module: timespec_get
 

@@ -4,7 +4,7 @@
 
 Documentation:@*
 ISO C23 (latest free draft
-@url{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n3047.pdf})
+@url{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n3096.pdf})
 section 7.18.14.
 
 Gnulib module: stdbit

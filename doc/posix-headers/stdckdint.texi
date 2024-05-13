@@ -3,7 +3,7 @@
 
 POSIX specification:@* Not in POSIX yet, but we expect it will be.
 ISO draft C23
-(@url{https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3047.pdf})
+(@url{https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3096.pdf})
 section 7.20.
 
 Gnulib module: stdckdint
