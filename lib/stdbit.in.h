@@ -272,7 +272,7 @@ __popcnt64 (unsigned long long int n)
 #  endif
 
 /* 1 if supported, -1 if not, 0 if unknown.  */
-extern signed char __gl_stdint_popcount_support;
+extern signed char __gl_stdbit_popcount_support;
 
 _GL_STDBIT_INLINE bool
 __gl_stdbit_popcount_supported (void)
