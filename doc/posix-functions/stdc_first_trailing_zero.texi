@@ -1,0 +1,21 @@
+@node stdc_first_trailing_zero
+@section @code{stdc_first_trailing_zero}
+@findex stdc_first_trailing_zero
+
+Documentation:@*
+ISO C23 (latest free draft
+@url{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n3047.pdf})
+section 7.18.9.
+
+Gnulib module: stdbit
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This macro is missing on many platforms:
+glibc 2.38, macOS 12.5, FreeBSD 14.0, NetBSD 10.0, OpenBSD 7.5, AIX 7.3.1, HP-UX 11.31, Solaris 11.4, Cygwin 3.5.3, mingw, MSVC 17, Android 15.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize
