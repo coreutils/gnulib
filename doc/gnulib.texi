@@ -584,6 +584,27 @@ The Autoconf macros are often large enough that splitting them eases
 maintenance.
 @end enumerate
 
+Autoconf macro files in Gnulib all start with a header consisting of
+@c https://lists.gnu.org/archive/html/bug-gnulib/2024-04/msg00053.html
+@enumerate
+@item
+A comment line with the file name.
+This is useful because in some cases the generated @code{aclocal.m4}
+file does not contain a reference to the @code{.m4} file but its entire
+contents.
+The comment makes it clear which @code{.m4} file is where in the
+@code{aclocal.m4} file.
+@item
+A comment line with a serial number.
+This is useful when people use the @samp{aclocal --install} command.
+@code{aclocal} will then refrain from copying a file with a smaller
+serial number onto a file with a larger serial number.
+The serial number should be a positive integer on the main branch,
+or a positive fractional number on a stable branch.
+@item
+The copyright and license header, as usual.
+@end enumerate
+
 
 @node Using @code{AC_LIBOBJ}
 @section Making proper use of @code{AC_LIBOBJ}
