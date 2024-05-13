@@ -122,8 +122,6 @@ __gl_stdbit_clzll (unsigned long long int n)
 
 #else /* !_MSC_VER */
 
-extern char const __gl_stdbit_clztab[256];
-
 _GL_STDBIT_INLINE int
 __gl_stdbit_clzll (unsigned long long int n)
 {
@@ -135,7 +133,8 @@ __gl_stdbit_clzll (unsigned long long int n)
   int a5 = (0x00000000ffffffff < n) << 5; n >>= a5; r += a5;
   int a4 = (0x000000000000ffff < n) << 4; n >>= a4; r += a4;
   int a3 = (0x00000000000000ff < n) << 3; n >>= a3; r += a3;
-  return (8 * (sizeof n - 1) - r) + __gl_stdbit_clztab[n];
+  int a2 = (0x000000000000000f < n) << 2; n >>= a2; r += a2;
+  return (8 * sizeof n - (1 << 2) - r) + ((0x11112234ull >> (n << 2)) & 0xf);
 }
 _GL_STDBIT_INLINE int
 __gl_stdbit_clz (unsigned int n)
