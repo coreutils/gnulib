@@ -1,21 +1,21 @@
 Files:
 tests/macros.h
-tests/support/test-driver.c
-tests/tst-stdbit.h
-tests/tst-stdc_bit_ceil.c
-tests/tst-stdc_bit_floor.c
-tests/tst-stdc_bit_width.c
-tests/tst-stdc_count_ones.c
-tests/tst-stdc_count_zeros.c
-tests/tst-stdc_first_leading_one.c
-tests/tst-stdc_first_leading_zero.c
-tests/tst-stdc_first_trailing_one.c
-tests/tst-stdc_first_trailing_zero.c
-tests/tst-stdc_has_single_bit.c
-tests/tst-stdc_leading_ones.c
-tests/tst-stdc_leading_zeros.c
-tests/tst-stdc_trailing_ones.c
-tests/tst-stdc_trailing_zeros.c
+tests/from-glibc/support/test-driver.c
+tests/from-glibc/tst-stdbit.h
+tests/from-glibc/tst-stdc_bit_ceil.c
+tests/from-glibc/tst-stdc_bit_floor.c
+tests/from-glibc/tst-stdc_bit_width.c
+tests/from-glibc/tst-stdc_count_ones.c
+tests/from-glibc/tst-stdc_count_zeros.c
+tests/from-glibc/tst-stdc_first_leading_one.c
+tests/from-glibc/tst-stdc_first_leading_zero.c
+tests/from-glibc/tst-stdc_first_trailing_one.c
+tests/from-glibc/tst-stdc_first_trailing_zero.c
+tests/from-glibc/tst-stdc_has_single_bit.c
+tests/from-glibc/tst-stdc_leading_ones.c
+tests/from-glibc/tst-stdc_leading_zeros.c
+tests/from-glibc/tst-stdc_trailing_ones.c
+tests/from-glibc/tst-stdc_trailing_zeros.c
 
 Depends-on:
 assert-h
@@ -26,33 +26,61 @@ configure.ac:
 
 Makefile.am:
 TESTS += \
-   tst-stdc_bit_ceil tst-stdc_bit_floor tst-stdc_bit_width \
-   tst-stdc_count_ones tst-stdc_count_zeros tst-stdc_first_leading_one \
-   tst-stdc_first_leading_zero tst-stdc_first_trailing_one \
-   tst-stdc_first_trailing_zero tst-stdc_has_single_bit \
-   tst-stdc_leading_ones tst-stdc_leading_zeros tst-stdc_trailing_ones \
-   tst-stdc_trailing_zeros
+   test-stdc_bit_ceil test-stdc_bit_floor test-stdc_bit_width \
+   test-stdc_count_ones test-stdc_count_zeros test-stdc_first_leading_one \
+   test-stdc_first_leading_zero test-stdc_first_trailing_one \
+   test-stdc_first_trailing_zero test-stdc_has_single_bit \
+   test-stdc_leading_ones test-stdc_leading_zeros test-stdc_trailing_ones \
+   test-stdc_trailing_zeros
 
 check_PROGRAMS += \
-   tst-stdc_bit_ceil tst-stdc_bit_floor tst-stdc_bit_width \
-   tst-stdc_count_ones tst-stdc_count_zeros tst-stdc_first_leading_one \
-   tst-stdc_first_leading_zero tst-stdc_first_trailing_one \
-   tst-stdc_first_trailing_zero tst-stdc_has_single_bit \
-   tst-stdc_leading_ones tst-stdc_leading_zeros tst-stdc_trailing_ones \
-   tst-stdc_trailing_zeros
+   test-stdc_bit_ceil test-stdc_bit_floor test-stdc_bit_width \
+   test-stdc_count_ones test-stdc_count_zeros test-stdc_first_leading_one \
+   test-stdc_first_leading_zero test-stdc_first_trailing_one \
+   test-stdc_first_trailing_zero test-stdc_has_single_bit \
+   test-stdc_leading_ones test-stdc_leading_zeros test-stdc_trailing_ones \
+   test-stdc_trailing_zeros
 
-TEST_STDBIT_CPPFLAGS = $(AM_CPPFLAGS) -DGNULIB_TEST_STDBIT
-tst_stdc_bit_ceil_CPPFLAGS            = $(TEST_STDBIT_CPPFLAGS)
-tst_stdc_bit_floor_CPPFLAGS           = $(TEST_STDBIT_CPPFLAGS)
-tst_stdc_bit_width_CPPFLAGS           = $(TEST_STDBIT_CPPFLAGS)
-tst_stdc_count_ones_CPPFLAGS          = $(TEST_STDBIT_CPPFLAGS)
-tst_stdc_count_zeros_CPPFLAGS         = $(TEST_STDBIT_CPPFLAGS)
-tst_stdc_first_leading_one_CPPFLAGS   = $(TEST_STDBIT_CPPFLAGS)
-tst_stdc_first_leading_zero_CPPFLAGS  = $(TEST_STDBIT_CPPFLAGS)
-tst_stdc_first_trailing_one_CPPFLAGS  = $(TEST_STDBIT_CPPFLAGS)
-tst_stdc_first_trailing_zero_CPPFLAGS = $(TEST_STDBIT_CPPFLAGS)
-tst_stdc_has_single_bit_CPPFLAGS      = $(TEST_STDBIT_CPPFLAGS)
-tst_stdc_leading_ones_CPPFLAGS        = $(TEST_STDBIT_CPPFLAGS)
-tst_stdc_leading_zeros_CPPFLAGS       = $(TEST_STDBIT_CPPFLAGS)
-tst_stdc_trailing_ones_CPPFLAGS       = $(TEST_STDBIT_CPPFLAGS)
-tst_stdc_trailing_zeros_CPPFLAGS      = $(TEST_STDBIT_CPPFLAGS)
+TEST_STDBIT_CPPFLAGS = $(AM_CPPFLAGS) -I$(srcdir)/from-glibc -DGNULIB_TEST_STDBIT
+
+test_stdc_bit_ceil_SOURCES             = from-glibc/tst-stdc_bit_ceil.c
+test_stdc_bit_ceil_CPPFLAGS            = $(TEST_STDBIT_CPPFLAGS)
+
+test_stdc_bit_floor_SOURCES            = from-glibc/tst-stdc_bit_floor.c
+test_stdc_bit_floor_CPPFLAGS           = $(TEST_STDBIT_CPPFLAGS)
+
+test_stdc_bit_width_SOURCES            = from-glibc/tst-stdc_bit_width.c
+test_stdc_bit_width_CPPFLAGS           = $(TEST_STDBIT_CPPFLAGS)
+
+test_stdc_count_ones_SOURCES           = from-glibc/tst-stdc_count_ones.c
+test_stdc_count_ones_CPPFLAGS          = $(TEST_STDBIT_CPPFLAGS)
+
+test_stdc_count_zeros_SOURCES          = from-glibc/tst-stdc_count_zeros.c
+test_stdc_count_zeros_CPPFLAGS         = $(TEST_STDBIT_CPPFLAGS)
+
+test_stdc_first_leading_one_SOURCES    = from-glibc/tst-stdc_first_leading_one.c
+test_stdc_first_leading_one_CPPFLAGS   = $(TEST_STDBIT_CPPFLAGS)
+
+test_stdc_first_leading_zero_SOURCES   = from-glibc/tst-stdc_first_leading_zero.c
+test_stdc_first_leading_zero_CPPFLAGS  = $(TEST_STDBIT_CPPFLAGS)
+
+test_stdc_first_trailing_one_SOURCES   = from-glibc/tst-stdc_first_trailing_one.c
+test_stdc_first_trailing_one_CPPFLAGS  = $(TEST_STDBIT_CPPFLAGS)
+
+test_stdc_first_trailing_zero_SOURCES  = from-glibc/tst-stdc_first_trailing_zero.c
+test_stdc_first_trailing_zero_CPPFLAGS = $(TEST_STDBIT_CPPFLAGS)
+
+test_stdc_has_single_bit_SOURCES       = from-glibc/tst-stdc_has_single_bit.c
+test_stdc_has_single_bit_CPPFLAGS      = $(TEST_STDBIT_CPPFLAGS)
+
+test_stdc_leading_ones_SOURCES         = from-glibc/tst-stdc_leading_ones.c
+test_stdc_leading_ones_CPPFLAGS        = $(TEST_STDBIT_CPPFLAGS)
+
+test_stdc_leading_zeros_SOURCES        = from-glibc/tst-stdc_leading_zeros.c
+test_stdc_leading_zeros_CPPFLAGS       = $(TEST_STDBIT_CPPFLAGS)
+
+test_stdc_trailing_ones_SOURCES        = from-glibc/tst-stdc_trailing_ones.c
+test_stdc_trailing_ones_CPPFLAGS       = $(TEST_STDBIT_CPPFLAGS)
+
+test_stdc_trailing_zeros_SOURCES       = from-glibc/tst-stdc_trailing_zeros.c
+test_stdc_trailing_zeros_CPPFLAGS      = $(TEST_STDBIT_CPPFLAGS)
