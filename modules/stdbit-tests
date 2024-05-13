@@ -23,8 +23,6 @@ libc-config
 stdint
 
 configure.ac:
-AC_DEFINE([GNULIB_TEST_STDBIT], [1],
-  [Define to 1 so that stdbit tests use the Gnulib framework, not glibc's.])
 
 Makefile.am:
 TESTS += \
@@ -42,3 +40,19 @@ check_PROGRAMS += \
    tst-stdc_first_trailing_zero tst-stdc_has_single_bit \
    tst-stdc_leading_ones tst-stdc_leading_zeros tst-stdc_trailing_ones \
    tst-stdc_trailing_zeros
+
+TEST_STDBIT_CPPFLAGS = $(AM_CPPFLAGS) -DGNULIB_TEST_STDBIT
+tst_stdc_bit_ceil_CPPFLAGS            = $(TEST_STDBIT_CPPFLAGS)
+tst_stdc_bit_floor_CPPFLAGS           = $(TEST_STDBIT_CPPFLAGS)
+tst_stdc_bit_width_CPPFLAGS           = $(TEST_STDBIT_CPPFLAGS)
+tst_stdc_count_ones_CPPFLAGS          = $(TEST_STDBIT_CPPFLAGS)
+tst_stdc_count_zeros_CPPFLAGS         = $(TEST_STDBIT_CPPFLAGS)
+tst_stdc_first_leading_one_CPPFLAGS   = $(TEST_STDBIT_CPPFLAGS)
+tst_stdc_first_leading_zero_CPPFLAGS  = $(TEST_STDBIT_CPPFLAGS)
+tst_stdc_first_trailing_one_CPPFLAGS  = $(TEST_STDBIT_CPPFLAGS)
+tst_stdc_first_trailing_zero_CPPFLAGS = $(TEST_STDBIT_CPPFLAGS)
+tst_stdc_has_single_bit_CPPFLAGS      = $(TEST_STDBIT_CPPFLAGS)
+tst_stdc_leading_ones_CPPFLAGS        = $(TEST_STDBIT_CPPFLAGS)
+tst_stdc_leading_zeros_CPPFLAGS       = $(TEST_STDBIT_CPPFLAGS)
+tst_stdc_trailing_ones_CPPFLAGS       = $(TEST_STDBIT_CPPFLAGS)
+tst_stdc_trailing_zeros_CPPFLAGS      = $(TEST_STDBIT_CPPFLAGS)
