@@ -1439,7 +1439,7 @@ def main_with_exception_handling() -> None:
                             'supported if the definition of AUTOMAKE_OPTIONS in '
                             'Makefile.am contains \'subdir-objects\'.')
             elif errno == 22:
-                message = 'not overwriting destination directory: %s' % errinfo
+                message += 'not overwriting destination directory: %s' % errinfo
             message += '\n%s: *** Stop.\n' % APP['name']
             sys.stderr.write(message)
             sys.exit(1)
