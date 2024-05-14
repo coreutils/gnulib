@@ -107,11 +107,14 @@ class GLTestDir:
                             % type(testdir).__name__)
         self.config = config
         self.testdir = os.path.normpath(testdir)
-        if not os.path.exists(self.testdir):
-            try:  # Try to create directory
-                os.mkdir(self.testdir)
-            except Exception as exc:
-                raise GLError(19, self.testdir) from exc
+        # Don't overwrite the directory.
+        if os.path.exists(self.testdir):
+            raise GLError(22, self.testdir)
+        # Try to create directory.
+        try:
+            os.mkdir(self.testdir)
+        except Exception as exc:
+            raise GLError(19, self.testdir) from exc
         self.emitter = GLEmiter(self.config)
         self.filesystem = GLFileSystem(self.config)
         self.modulesystem = GLModuleSystem(self.config)
@@ -863,11 +866,14 @@ class GLMegaTestDir:
                             % type(megatestdir).__name__)
         self.config = config
         self.megatestdir = os.path.normpath(megatestdir)
-        if not os.path.exists(self.megatestdir):
-            try:  # Try to create directory
-                os.mkdir(self.megatestdir)
-            except Exception as exc:
-                raise GLError(19, self.megatestdir) from exc
+        # Don't overwrite the directory.
+        if os.path.exists(self.megatestdir):
+            raise GLError(22, self.megatestdir)
+        # Try to create directory.
+        try:
+            os.mkdir(self.megatestdir)
+        except Exception as exc:
+            raise GLError(19, self.megatestdir) from exc
         self.modulesystem = GLModuleSystem(self.config)
 
     def execute(self) -> None:
