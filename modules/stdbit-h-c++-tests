@@ -1,0 +1,17 @@
+Files:
+tests/test-stdbit-h-c++.cc
+
+Status:
+c++-test
+
+Depends-on:
+ansi-c++-opt
+
+configure.ac:
+
+Makefile.am:
+if ANSICXX
+TESTS += test-stdbit-h-c++
+check_PROGRAMS += test-stdbit-h-c++
+test_stdbit_h_c___SOURCES = test-stdbit-h-c++.cc
+endif

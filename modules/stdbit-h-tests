@@ -1,0 +1,12 @@
+Files:
+tests/test-stdbit-h.c
+tests/macros.h
+
+Depends-on:
+stdbit-h-c++-tests
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-stdbit-h
+check_PROGRAMS += test-stdbit-h
