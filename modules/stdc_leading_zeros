@@ -1,0 +1,27 @@
+Description:
+stdc_leading_zeros macro, stdc_leading_zeros_* functions:
+Return the number of leading 0 bits in an unsigned integer.
+
+Files:
+lib/stdc_leading_zeros.c
+
+Depends-on:
+stdbit-h
+
+configure.ac:
+AC_REQUIRE([gl_STDBIT_H])
+GL_STDC_LEADING_ZEROS=1
+
+Makefile.am:
+if GL_GENERATE_STDBIT_H
+lib_SOURCES += stdc_leading_zeros.c
+endif
+
+Include:
+<stdbit.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+all

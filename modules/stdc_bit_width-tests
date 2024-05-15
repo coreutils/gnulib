@@ -1,0 +1,19 @@
+Files:
+tests/from-glibc/tst-stdc_bit_width.c
+tests/from-glibc/tst-stdbit.h
+tests/from-glibc/support/test-driver.c
+tests/macros.h
+
+Depends-on:
+libc-config
+stdbool
+stdint
+assert-h
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-stdc_bit_width
+check_PROGRAMS += test-stdc_bit_width
+test_stdc_bit_width_SOURCES = from-glibc/tst-stdc_bit_width.c
+test_stdc_bit_width_CPPFLAGS = $(AM_CPPFLAGS) -I$(srcdir)/from-glibc -DGNULIB_TEST_STDBIT

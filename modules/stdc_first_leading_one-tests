@@ -1,0 +1,19 @@
+Files:
+tests/from-glibc/tst-stdc_first_leading_one.c
+tests/from-glibc/tst-stdbit.h
+tests/from-glibc/support/test-driver.c
+tests/macros.h
+
+Depends-on:
+libc-config
+stdbool
+stdint
+assert-h
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-stdc_first_leading_one
+check_PROGRAMS += test-stdc_first_leading_one
+test_stdc_first_leading_one_SOURCES = from-glibc/tst-stdc_first_leading_one.c
+test_stdc_first_leading_one_CPPFLAGS = $(AM_CPPFLAGS) -I$(srcdir)/from-glibc -DGNULIB_TEST_STDBIT

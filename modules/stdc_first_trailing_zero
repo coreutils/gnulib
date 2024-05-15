@@ -1,0 +1,29 @@
+Description:
+stdc_first_trailing_zero macro, stdc_first_trailing_zero_* functions:
+Return the number of bits, from the least significant 0 bit to the least
+significant bit, in an unsigned integer.
+
+Files:
+lib/stdc_first_trailing_zero.c
+
+Depends-on:
+stdbit-h
+stdc_trailing_ones
+
+configure.ac:
+AC_REQUIRE([gl_STDBIT_H])
+GL_STDC_FIRST_TRAILING_ZERO=1
+
+Makefile.am:
+if GL_GENERATE_STDBIT_H
+lib_SOURCES += stdc_first_trailing_zero.c
+endif
+
+Include:
+<stdbit.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+all

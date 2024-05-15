@@ -1,0 +1,29 @@
+Description:
+stdc_bit_width macro, stdc_bit_width_* functions:
+Return the minimum number of bits required to represent an unsigned integer
+value.
+
+Files:
+lib/stdc_bit_width.c
+
+Depends-on:
+stdbit-h
+stdc_leading_zeros
+
+configure.ac:
+AC_REQUIRE([gl_STDBIT_H])
+GL_STDC_BIT_WIDTH=1
+
+Makefile.am:
+if GL_GENERATE_STDBIT_H
+lib_SOURCES += stdc_bit_width.c
+endif
+
+Include:
+<stdbit.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+all

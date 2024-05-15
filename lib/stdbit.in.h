@@ -26,8 +26,51 @@
 #endif
 
 _GL_INLINE_HEADER_BEGIN
+
 #ifndef _GL_STDBIT_INLINE
 # define _GL_STDBIT_INLINE _GL_INLINE
+#endif
+#ifndef _GL_STDC_LEADING_ZEROS_INLINE
+# define _GL_STDC_LEADING_ZEROS_INLINE _GL_INLINE
+#endif
+#ifndef _GL_STDC_LEADING_ONES_INLINE
+# define _GL_STDC_LEADING_ONES_INLINE _GL_INLINE
+#endif
+#ifndef _GL_STDC_TRAILING_ZEROS_INLINE
+# define _GL_STDC_TRAILING_ZEROS_INLINE _GL_INLINE
+#endif
+#ifndef _GL_STDC_TRAILING_ONES_INLINE
+# define _GL_STDC_TRAILING_ONES_INLINE _GL_INLINE
+#endif
+#ifndef _GL_STDC_FIRST_LEADING_ZERO_INLINE
+# define _GL_STDC_FIRST_LEADING_ZERO_INLINE _GL_INLINE
+#endif
+#ifndef _GL_STDC_FIRST_LEADING_ONE_INLINE
+# define _GL_STDC_FIRST_LEADING_ONE_INLINE _GL_INLINE
+#endif
+#ifndef _GL_STDC_FIRST_TRAILING_ZERO_INLINE
+# define _GL_STDC_FIRST_TRAILING_ZERO_INLINE _GL_INLINE
+#endif
+#ifndef _GL_STDC_FIRST_TRAILING_ONE_INLINE
+# define _GL_STDC_FIRST_TRAILING_ONE_INLINE _GL_INLINE
+#endif
+#ifndef _GL_STDC_COUNT_ZEROS_INLINE
+# define _GL_STDC_COUNT_ZEROS_INLINE _GL_INLINE
+#endif
+#ifndef _GL_STDC_COUNT_ONES_INLINE
+# define _GL_STDC_COUNT_ONES_INLINE _GL_INLINE
+#endif
+#ifndef _GL_STDC_HAS_SINGLE_BIT_INLINE
+# define _GL_STDC_HAS_SINGLE_BIT_INLINE _GL_INLINE
+#endif
+#ifndef _GL_STDC_BIT_WIDTH_INLINE
+# define _GL_STDC_BIT_WIDTH_INLINE _GL_INLINE
+#endif
+#ifndef _GL_STDC_BIT_FLOOR_INLINE
+# define _GL_STDC_BIT_FLOOR_INLINE _GL_INLINE
+#endif
+#ifndef _GL_STDC_BIT_CEIL_INLINE
+# define _GL_STDC_BIT_CEIL_INLINE _GL_INLINE
 #endif
 
 #ifdef __cplusplus
@@ -49,7 +92,13 @@ extern "C" {
 # define _GL_STDBIT_TYPEOF_CAST(a, b) (b)
 #endif
 
+
+/* ISO C 23 § 7.18.1 General  */
+
 #define __STDC_VERSION_STDBIT_H__ 202311L
+
+
+/* ISO C 23 § 7.18.2 Endian  */
 
 #define __STDC_ENDIAN_BIG__ 4321
 #define __STDC_ENDIAN_LITTLE__ 1234
@@ -58,6 +107,7 @@ extern "C" {
 #else
 # define __STDC_ENDIAN_NATIVE__ __STDC_ENDIAN_LITTLE__
 #endif
+
 
 #ifdef __cplusplus
 extern "C" {
@@ -223,13 +273,14 @@ __gl_stdbit_ctzll (unsigned long long int n)
 }
 #endif
 
+#if @GL_STDC_COUNT_ONES@
 /* Count 1 bits in N.  */
-#ifdef _GL_STDBIT_HAS_BUILTIN_POPCOUNT
-# define __gl_stdbit_popcount __builtin_popcount
-# define __gl_stdbit_popcountl __builtin_popcountl
-# define __gl_stdbit_popcountll __builtin_popcountll
-#else
-_GL_STDBIT_INLINE int
+# ifdef _GL_STDBIT_HAS_BUILTIN_POPCOUNT
+#  define __gl_stdbit_popcount __builtin_popcount
+#  define __gl_stdbit_popcountl __builtin_popcountl
+#  define __gl_stdbit_popcountll __builtin_popcountll
+# else
+_GL_STDC_COUNT_ONES_INLINE int
 __gl_stdbit_popcount_wide (unsigned long long int n)
 {
   if (sizeof n & (sizeof n - 1))
@@ -276,25 +327,25 @@ __gl_stdbit_popcount_wide (unsigned long long int n)
     }
 }
 
-# ifdef _MSC_VER
-#  if 1500 <= _MSC_VER && (defined _M_IX86 || defined _M_X64)
-#   pragma intrinsic (__cpuid)
-#   pragma intrinsic (__popcnt)
-#   ifdef _M_X64
-#    pragma intrinsic (__popcnt64)
-#   else
-_GL_STDBIT_INLINE int
+#  ifdef _MSC_VER
+#   if 1500 <= _MSC_VER && (defined _M_IX86 || defined _M_X64)
+#    pragma intrinsic (__cpuid)
+#    pragma intrinsic (__popcnt)
+#    ifdef _M_X64
+#     pragma intrinsic (__popcnt64)
+#    else
+_GL_STDC_COUNT_ONES_INLINE int
 __popcnt64 (unsigned long long int n)
 {
   return __popcnt (n >> 32) + __popcnt (n);
 }
+#    endif
 #   endif
-#  endif
 
 /* 1 if supported, -1 if not, 0 if unknown.  */
 extern signed char __gl_stdbit_popcount_support;
 
-_GL_STDBIT_INLINE bool
+_GL_STDC_COUNT_ONES_INLINE bool
 __gl_stdbit_popcount_supported (void)
 {
   if (!__gl_stdbit_popcount_support)
@@ -309,188 +360,217 @@ __gl_stdbit_popcount_supported (void)
     }
   return 0 < __gl_stdbit_popcount_support;
 }
-_GL_STDBIT_INLINE int
+_GL_STDC_COUNT_ONES_INLINE int
 __gl_stdbit_popcount (unsigned int n)
 {
   return (__gl_stdbit_popcount_supported ()
           ? __popcnt (n)
           : __gl_stdbit_popcount_wide (n));
 }
-_GL_STDBIT_INLINE int
+_GL_STDC_COUNT_ONES_INLINE int
 __gl_stdbit_popcountl (unsigned long int n)
 {
   return (__gl_stdbit_popcount_supported ()
           ? __popcnt (n)
           : __gl_stdbit_popcount_wide (n));
 }
-_GL_STDBIT_INLINE int
+_GL_STDC_COUNT_ONES_INLINE int
 __gl_stdbit_popcountll (unsigned long long int n)
 {
   return (__gl_stdbit_popcount_supported ()
           ? __popcnt64 (n)
           : __gl_stdbit_popcount_wide (n));
 }
-# else /* !_MSC_VER */
-#  define __gl_stdbit_popcount __gl_stdbit_popcount_wide
-#  define __gl_stdbit_popcountl __gl_stdbit_popcount_wide
-#  define __gl_stdbit_popcountll __gl_stdbit_popcount_wide
+#  else /* !_MSC_VER */
+#   define __gl_stdbit_popcount __gl_stdbit_popcount_wide
+#   define __gl_stdbit_popcountl __gl_stdbit_popcount_wide
+#   define __gl_stdbit_popcountll __gl_stdbit_popcount_wide
+#  endif
 # endif
 #endif
 
 
-_GL_STDBIT_INLINE unsigned int
+/* ISO C 23 § 7.18.3 Count Leading Zeros  */
+
+#if @GL_STDC_LEADING_ZEROS@
+
+_GL_STDC_LEADING_ZEROS_INLINE unsigned int
 stdc_leading_zeros_ui (unsigned int n)
 {
   return __gl_stdbit_clz (n);
 }
 
-_GL_STDBIT_INLINE unsigned int
+_GL_STDC_LEADING_ZEROS_INLINE unsigned int
 stdc_leading_zeros_uc (unsigned char n)
 {
   return stdc_leading_zeros_ui (n) - 8 * (sizeof 0u - sizeof n);
 }
 
-_GL_STDBIT_INLINE unsigned int
+_GL_STDC_LEADING_ZEROS_INLINE unsigned int
 stdc_leading_zeros_us (unsigned short int n)
 {
   return stdc_leading_zeros_ui (n) - 8 * (sizeof 0u - sizeof n);
 }
 
-_GL_STDBIT_INLINE unsigned int
+_GL_STDC_LEADING_ZEROS_INLINE unsigned int
 stdc_leading_zeros_ul (unsigned long int n)
 {
   return __gl_stdbit_clzl (n);
 }
 
-_GL_STDBIT_INLINE unsigned int
+_GL_STDC_LEADING_ZEROS_INLINE unsigned int
 stdc_leading_zeros_ull (unsigned long long int n)
 {
   return __gl_stdbit_clzll (n);
 }
 
-#define stdc_leading_zeros(n) \
+# define stdc_leading_zeros(n) \
   (sizeof (n) == 1 ? stdc_leading_zeros_uc (n)	\
    : sizeof (n) == sizeof (unsigned short int) ? stdc_leading_zeros_us (n) \
    : sizeof (n) == sizeof 0u ? stdc_leading_zeros_ui (n) \
    : sizeof (n) == sizeof 0ul ? stdc_leading_zeros_ul (n) \
    : stdc_leading_zeros_ull (n))
 
+#endif
 
-_GL_STDBIT_INLINE unsigned int
+
+/* ISO C 23 § 7.18.4 Count Leading Ones  */
+
+#if @GL_STDC_LEADING_ONES@
+
+_GL_STDC_LEADING_ONES_INLINE unsigned int
 stdc_leading_ones_uc (unsigned char n)
 {
   return stdc_leading_zeros_uc (~n);
 }
 
-_GL_STDBIT_INLINE unsigned int
+_GL_STDC_LEADING_ONES_INLINE unsigned int
 stdc_leading_ones_us (unsigned short int n)
 {
   return stdc_leading_zeros_us (~n);
 }
 
-_GL_STDBIT_INLINE unsigned int
+_GL_STDC_LEADING_ONES_INLINE unsigned int
 stdc_leading_ones_ui (unsigned int n)
 {
   return stdc_leading_zeros_ui (~n);
 }
 
-_GL_STDBIT_INLINE unsigned int
+_GL_STDC_LEADING_ONES_INLINE unsigned int
 stdc_leading_ones_ul (unsigned long int n)
 {
   return stdc_leading_zeros_ul (~n);
 }
 
-_GL_STDBIT_INLINE unsigned int
+_GL_STDC_LEADING_ONES_INLINE unsigned int
 stdc_leading_ones_ull (unsigned long long int n)
 {
   return stdc_leading_zeros_ull (~n);
 }
 
-#define stdc_leading_ones(n) \
+# define stdc_leading_ones(n) \
   (sizeof (n) == 1 ? stdc_leading_ones_uc (n)	\
    : sizeof (n) == sizeof (unsigned short int) ? stdc_leading_ones_us (n) \
    : sizeof (n) == sizeof 0u ? stdc_leading_ones_ui (n) \
    : sizeof (n) == sizeof 0ul ? stdc_leading_ones_ul (n) \
    : stdc_leading_ones_ull (n))
 
+#endif
 
-_GL_STDBIT_INLINE unsigned int
+
+/* ISO C 23 § 7.18.5 Count Trailing Zeros  */
+
+#if @GL_STDC_TRAILING_ZEROS@
+
+_GL_STDC_TRAILING_ZEROS_INLINE unsigned int
 stdc_trailing_zeros_ui (unsigned int n)
 {
   return __gl_stdbit_ctz (n);
 }
 
-_GL_STDBIT_INLINE unsigned int
+_GL_STDC_TRAILING_ZEROS_INLINE unsigned int
 stdc_trailing_zeros_uc (unsigned char n)
 {
   return stdc_trailing_zeros_ui (n | (1 + (unsigned char) -1));
 }
 
-_GL_STDBIT_INLINE unsigned int
+_GL_STDC_TRAILING_ZEROS_INLINE unsigned int
 stdc_trailing_zeros_us (unsigned short int n)
 {
   return stdc_trailing_zeros_ui (n | (1 + (unsigned short int) -1));
 }
 
-_GL_STDBIT_INLINE unsigned int
+_GL_STDC_TRAILING_ZEROS_INLINE unsigned int
 stdc_trailing_zeros_ul (unsigned long int n)
 {
   return __gl_stdbit_ctzl (n);
 }
 
-_GL_STDBIT_INLINE unsigned int
+_GL_STDC_TRAILING_ZEROS_INLINE unsigned int
 stdc_trailing_zeros_ull (unsigned long long int n)
 {
   return __gl_stdbit_ctzll (n);
 }
 
-#define stdc_trailing_zeros(n) \
+# define stdc_trailing_zeros(n) \
   (sizeof (n) == 1 ? stdc_trailing_zeros_uc (n)	\
    : sizeof (n) == sizeof (unsigned short int) ? stdc_trailing_zeros_us (n) \
    : sizeof (n) == sizeof 0u ? stdc_trailing_zeros_ui (n) \
    : sizeof (n) == sizeof 0ul ? stdc_trailing_zeros_ul (n) \
    : stdc_trailing_zeros_ull (n))
 
+#endif
 
-_GL_STDBIT_INLINE unsigned int
+
+/* ISO C 23 § 7.18.6 Count Trailing Ones  */
+
+#if @GL_STDC_TRAILING_ONES@
+
+_GL_STDC_TRAILING_ONES_INLINE unsigned int
 stdc_trailing_ones_uc (unsigned char n)
 {
   return stdc_trailing_zeros_uc (~n);
 }
 
-_GL_STDBIT_INLINE unsigned int
+_GL_STDC_TRAILING_ONES_INLINE unsigned int
 stdc_trailing_ones_us (unsigned short int n)
 {
   return stdc_trailing_zeros_us (~n);
 }
 
-_GL_STDBIT_INLINE unsigned int
+_GL_STDC_TRAILING_ONES_INLINE unsigned int
 stdc_trailing_ones_ui (unsigned int n)
 {
   return stdc_trailing_zeros_ui (~n);
 }
 
-_GL_STDBIT_INLINE unsigned int
+_GL_STDC_TRAILING_ONES_INLINE unsigned int
 stdc_trailing_ones_ul (unsigned long int n)
 {
   return stdc_trailing_zeros_ul (~n);
 }
 
-_GL_STDBIT_INLINE unsigned int
+_GL_STDC_TRAILING_ONES_INLINE unsigned int
 stdc_trailing_ones_ull (unsigned long long int n)
 {
   return stdc_trailing_zeros_ull (~n);
 }
 
-#define stdc_trailing_ones(n) \
+# define stdc_trailing_ones(n) \
   (sizeof (n) == 1 ? stdc_trailing_ones_uc (n)	\
    : sizeof (n) == sizeof (unsigned short int) ? stdc_trailing_ones_us (n) \
    : sizeof (n) == sizeof 0u ? stdc_trailing_ones_ui (n) \
    : sizeof (n) == sizeof 0ul ? stdc_trailing_ones_ul (n) \
    : stdc_trailing_ones_ull (n))
 
+#endif
 
-_GL_STDBIT_INLINE unsigned int
+
+/* ISO C 23 § 7.18.7 First Leading Zero  */
+
+#if @GL_STDC_FIRST_LEADING_ZERO@
+
+_GL_STDC_FIRST_LEADING_ZERO_INLINE unsigned int
 stdc_first_leading_zero_uc (unsigned char n)
 {
   unsigned int count = stdc_leading_ones_uc (n);
@@ -498,7 +578,7 @@ stdc_first_leading_zero_uc (unsigned char n)
   return count % bits + (count < bits);
 }
 
-_GL_STDBIT_INLINE unsigned int
+_GL_STDC_FIRST_LEADING_ZERO_INLINE unsigned int
 stdc_first_leading_zero_us (unsigned short int n)
 {
   unsigned int count = stdc_leading_ones_us (n);
@@ -506,7 +586,7 @@ stdc_first_leading_zero_us (unsigned short int n)
   return count % bits + (count < bits);
 }
 
-_GL_STDBIT_INLINE unsigned int
+_GL_STDC_FIRST_LEADING_ZERO_INLINE unsigned int
 stdc_first_leading_zero_ui (unsigned int n)
 {
   unsigned int count = stdc_leading_ones_ui (n);
@@ -514,7 +594,7 @@ stdc_first_leading_zero_ui (unsigned int n)
   return count % bits + (count < bits);
 }
 
-_GL_STDBIT_INLINE unsigned int
+_GL_STDC_FIRST_LEADING_ZERO_INLINE unsigned int
 stdc_first_leading_zero_ul (unsigned long int n)
 {
   unsigned int count = stdc_leading_ones_ul (n);
@@ -522,7 +602,7 @@ stdc_first_leading_zero_ul (unsigned long int n)
   return count % bits + (count < bits);
 }
 
-_GL_STDBIT_INLINE unsigned int
+_GL_STDC_FIRST_LEADING_ZERO_INLINE unsigned int
 stdc_first_leading_zero_ull (unsigned long long int n)
 {
   unsigned int count = stdc_leading_ones_ull (n);
@@ -530,15 +610,21 @@ stdc_first_leading_zero_ull (unsigned long long int n)
   return count % bits + (count < bits);
 }
 
-#define stdc_first_leading_zero(n) \
+# define stdc_first_leading_zero(n) \
   (sizeof (n) == 1 ? stdc_first_leading_zero_uc (n) \
    : sizeof (n) == sizeof (unsigned short) ? stdc_first_leading_zero_us (n) \
    : sizeof (n) == sizeof 0u ? stdc_first_leading_zero_ui (n) \
    : sizeof (n) == sizeof 0ul ? stdc_first_leading_zero_ul (n) \
    : stdc_first_leading_zero_ull (n))
 
+#endif
 
-_GL_STDBIT_INLINE unsigned int
+
+/* ISO C 23 § 7.18.8 First Leading One  */
+
+#if @GL_STDC_FIRST_LEADING_ONE@
+
+_GL_STDC_FIRST_LEADING_ONE_INLINE unsigned int
 stdc_first_leading_one_uc (unsigned char n)
 {
   unsigned int count = stdc_leading_zeros_uc (n);
@@ -546,7 +632,7 @@ stdc_first_leading_one_uc (unsigned char n)
   return count % bits + (count < bits);
 }
 
-_GL_STDBIT_INLINE unsigned int
+_GL_STDC_FIRST_LEADING_ONE_INLINE unsigned int
 stdc_first_leading_one_us (unsigned short int n)
 {
   unsigned int count = stdc_leading_zeros_us (n);
@@ -554,7 +640,7 @@ stdc_first_leading_one_us (unsigned short int n)
   return count % bits + (count < bits);
 }
 
-_GL_STDBIT_INLINE unsigned int
+_GL_STDC_FIRST_LEADING_ONE_INLINE unsigned int
 stdc_first_leading_one_ui (unsigned int n)
 {
   unsigned int count = stdc_leading_zeros_ui (n);
@@ -562,7 +648,7 @@ stdc_first_leading_one_ui (unsigned int n)
   return count % bits + (count < bits);
 }
 
-_GL_STDBIT_INLINE unsigned int
+_GL_STDC_FIRST_LEADING_ONE_INLINE unsigned int
 stdc_first_leading_one_ul (unsigned long int n)
 {
   unsigned int count = stdc_leading_zeros_ul (n);
@@ -570,7 +656,7 @@ stdc_first_leading_one_ul (unsigned long int n)
   return count % bits + (count < bits);
 }
 
-_GL_STDBIT_INLINE unsigned int
+_GL_STDC_FIRST_LEADING_ONE_INLINE unsigned int
 stdc_first_leading_one_ull (unsigned long long int n)
 {
   unsigned int count = stdc_leading_zeros_ull (n);
@@ -578,15 +664,21 @@ stdc_first_leading_one_ull (unsigned long long int n)
   return count % bits + (count < bits);
 }
 
-#define stdc_first_leading_one(n) \
+# define stdc_first_leading_one(n) \
   (sizeof (n) == 1 ? stdc_first_leading_one_uc (n) \
    : sizeof (n) == sizeof (unsigned short) ? stdc_first_leading_one_us (n) \
    : sizeof (n) == sizeof 0u ? stdc_first_leading_one_ui (n) \
    : sizeof (n) == sizeof 0ul ? stdc_first_leading_one_ul (n) \
    : stdc_first_leading_one_ull (n))
 
+#endif
 
-_GL_STDBIT_INLINE unsigned int
+
+/* ISO C 23 § 7.18.9 First Trailing Zero  */
+
+#if @GL_STDC_FIRST_TRAILING_ZERO@
+
+_GL_STDC_FIRST_TRAILING_ZERO_INLINE unsigned int
 stdc_first_trailing_zero_uc (unsigned char n)
 {
   unsigned int count = stdc_trailing_ones_uc (n);
@@ -594,7 +686,7 @@ stdc_first_trailing_zero_uc (unsigned char n)
   return count % bits + (count < bits);
 }
 
-_GL_STDBIT_INLINE unsigned int
+_GL_STDC_FIRST_TRAILING_ZERO_INLINE unsigned int
 stdc_first_trailing_zero_us (unsigned short int n)
 {
   unsigned int count = stdc_trailing_ones_us (n);
@@ -602,7 +694,7 @@ stdc_first_trailing_zero_us (unsigned short int n)
   return count % bits + (count < bits);
 }
 
-_GL_STDBIT_INLINE unsigned int
+_GL_STDC_FIRST_TRAILING_ZERO_INLINE unsigned int
 stdc_first_trailing_zero_ui (unsigned int n)
 {
   unsigned int count = stdc_trailing_ones_ui (n);
@@ -610,7 +702,7 @@ stdc_first_trailing_zero_ui (unsigned int n)
   return count % bits + (count < bits);
 }
 
-_GL_STDBIT_INLINE unsigned int
+_GL_STDC_FIRST_TRAILING_ZERO_INLINE unsigned int
 stdc_first_trailing_zero_ul (unsigned long int n)
 {
   unsigned int count = stdc_trailing_ones_ul (n);
@@ -618,7 +710,7 @@ stdc_first_trailing_zero_ul (unsigned long int n)
   return count % bits + (count < bits);
 }
 
-_GL_STDBIT_INLINE unsigned int
+_GL_STDC_FIRST_TRAILING_ZERO_INLINE unsigned int
 stdc_first_trailing_zero_ull (unsigned long long int n)
 {
   unsigned int count = stdc_trailing_ones_ull (n);
@@ -626,15 +718,21 @@ stdc_first_trailing_zero_ull (unsigned long long int n)
   return count % bits + (count < bits);
 }
 
-#define stdc_first_trailing_zero(n) \
+# define stdc_first_trailing_zero(n) \
   (sizeof (n) == 1 ? stdc_first_trailing_zero_uc (n) \
    : sizeof (n) == sizeof (unsigned short) ? stdc_first_trailing_zero_us (n) \
    : sizeof (n) == sizeof 0u ? stdc_first_trailing_zero_ui (n) \
    : sizeof (n) == sizeof 0ul ? stdc_first_trailing_zero_ul (n) \
    : stdc_first_trailing_zero_ull (n))
 
+#endif
 
-_GL_STDBIT_INLINE unsigned int
+
+/* ISO C 23 § 7.18.10 First Trailing One  */
+
+#if @GL_STDC_FIRST_TRAILING_ONE@
+
+_GL_STDC_FIRST_TRAILING_ONE_INLINE unsigned int
 stdc_first_trailing_one_uc (unsigned char n)
 {
   unsigned int count = stdc_trailing_zeros_uc (n);
@@ -642,7 +740,7 @@ stdc_first_trailing_one_uc (unsigned char n)
   return count % bits + (count < bits);
 }
 
-_GL_STDBIT_INLINE unsigned int
+_GL_STDC_FIRST_TRAILING_ONE_INLINE unsigned int
 stdc_first_trailing_one_us (unsigned short int n)
 {
   unsigned int count = stdc_trailing_zeros_us (n);
@@ -650,7 +748,7 @@ stdc_first_trailing_one_us (unsigned short int n)
   return count % bits + (count < bits);
 }
 
-_GL_STDBIT_INLINE unsigned int
+_GL_STDC_FIRST_TRAILING_ONE_INLINE unsigned int
 stdc_first_trailing_one_ui (unsigned int n)
 {
   unsigned int count = stdc_trailing_zeros_ui (n);
@@ -658,7 +756,7 @@ stdc_first_trailing_one_ui (unsigned int n)
   return count % bits + (count < bits);
 }
 
-_GL_STDBIT_INLINE unsigned int
+_GL_STDC_FIRST_TRAILING_ONE_INLINE unsigned int
 stdc_first_trailing_one_ul (unsigned long int n)
 {
   unsigned int count = stdc_trailing_zeros_ul (n);
@@ -666,7 +764,7 @@ stdc_first_trailing_one_ul (unsigned long int n)
   return count % bits + (count < bits);
 }
 
-_GL_STDBIT_INLINE unsigned int
+_GL_STDC_FIRST_TRAILING_ONE_INLINE unsigned int
 stdc_first_trailing_one_ull (unsigned long long int n)
 {
   unsigned int count = stdc_trailing_zeros_ull (n);
@@ -681,119 +779,137 @@ stdc_first_trailing_one_ull (unsigned long long int n)
    : sizeof (n) == sizeof 0ul ? stdc_first_trailing_one_ul (n) \
    : stdc_first_trailing_one_ull (n))
 
+#endif
 
-_GL_STDBIT_INLINE unsigned int
+
+/* ISO C 23 § 7.18.12 Count Ones  */
+
+#if @GL_STDC_COUNT_ONES@
+
+_GL_STDC_COUNT_ONES_INLINE unsigned int
 stdc_count_ones_ui (unsigned int n)
 {
   return __gl_stdbit_popcount (n);
 }
 
-_GL_STDBIT_INLINE unsigned int
+_GL_STDC_COUNT_ONES_INLINE unsigned int
 stdc_count_ones_uc (unsigned char n)
 {
   return stdc_count_ones_ui (n);
 }
 
-_GL_STDBIT_INLINE unsigned int
+_GL_STDC_COUNT_ONES_INLINE unsigned int
 stdc_count_ones_us (unsigned short int n)
 {
   return stdc_count_ones_ui (n);
 }
 
-_GL_STDBIT_INLINE unsigned int
+_GL_STDC_COUNT_ONES_INLINE unsigned int
 stdc_count_ones_ul (unsigned long int n)
 {
   return __gl_stdbit_popcountl (n);
 }
 
-_GL_STDBIT_INLINE unsigned int
+_GL_STDC_COUNT_ONES_INLINE unsigned int
 stdc_count_ones_ull (unsigned long long int n)
 {
   return __gl_stdbit_popcountll (n);
 }
 
-#define stdc_count_ones(n) \
+# define stdc_count_ones(n) \
   (sizeof (n) == 1 ? stdc_count_ones_uc (n) \
    : sizeof (n) == sizeof (unsigned short int) ? stdc_count_ones_us (n) \
    : sizeof (n) == sizeof 0u ? stdc_count_ones_ui (n) \
    : sizeof (n) == sizeof 0ul ? stdc_count_ones_ul (n) \
    : stdc_count_ones_ull (n))
 
+#endif
 
-_GL_STDBIT_INLINE unsigned int
+
+/* ISO C 23 § 7.18.11 Count Zeros  */
+
+#if @GL_STDC_COUNT_ZEROS@
+
+_GL_STDC_COUNT_ZEROS_INLINE unsigned int
 stdc_count_zeros_uc (unsigned char n)
 {
   return stdc_count_ones_uc (~n);
 }
 
-_GL_STDBIT_INLINE unsigned int
+_GL_STDC_COUNT_ZEROS_INLINE unsigned int
 stdc_count_zeros_us (unsigned short int n)
 {
   return stdc_count_ones_us (~n);
 }
 
-_GL_STDBIT_INLINE unsigned int
+_GL_STDC_COUNT_ZEROS_INLINE unsigned int
 stdc_count_zeros_ui (unsigned int n)
 {
   return stdc_count_ones_ui (~n);
 }
 
-_GL_STDBIT_INLINE unsigned int
+_GL_STDC_COUNT_ZEROS_INLINE unsigned int
 stdc_count_zeros_ul (unsigned long int n)
 {
   return stdc_count_ones_ul (~n);
 }
 
-_GL_STDBIT_INLINE unsigned int
+_GL_STDC_COUNT_ZEROS_INLINE unsigned int
 stdc_count_zeros_ull (unsigned long long int n)
 {
   return stdc_count_ones_ull (~n);
 }
 
-#define stdc_count_zeros(n) \
+# define stdc_count_zeros(n) \
   (sizeof (n) == 1 ? stdc_count_zeros_uc (n) \
    : sizeof (n) == sizeof (unsigned short int) ? stdc_count_zeros_us (n) \
    : sizeof (n) == sizeof 0u ? stdc_count_zeros_ui (n) \
    : sizeof (n) == sizeof 0ul ? stdc_count_zeros_ul (n) \
    : stdc_count_zeros_ull (n))
 
+#endif
 
-_GL_STDBIT_INLINE bool
+
+/* ISO C 23 § 7.18.13 Single-bit Check  */
+
+#if @GL_STDC_HAS_SINGLE_BIT@
+
+_GL_STDC_HAS_SINGLE_BIT_INLINE bool
 stdc_has_single_bit_uc (unsigned char n)
 {
   unsigned char n_1 = n - 1, nx = n_1 ^ n;
   return n_1 < nx;
 }
 
-_GL_STDBIT_INLINE bool
+_GL_STDC_HAS_SINGLE_BIT_INLINE bool
 stdc_has_single_bit_us (unsigned short int n)
 {
   unsigned short int n_1 = n - 1, nx = n_1 ^ n;
   return n_1 < nx;
 }
 
-_GL_STDBIT_INLINE bool
+_GL_STDC_HAS_SINGLE_BIT_INLINE bool
 stdc_has_single_bit_ui (unsigned int n)
 {
   unsigned int n_1 = n - 1, nx = n_1 ^ n;
   return n_1 < nx;
 }
 
-_GL_STDBIT_INLINE bool
+_GL_STDC_HAS_SINGLE_BIT_INLINE bool
 stdc_has_single_bit_ul (unsigned long int n)
 {
   unsigned long int n_1 = n - 1, nx = n_1 ^ n;
   return n_1 < nx;
 }
 
-_GL_STDBIT_INLINE bool
+_GL_STDC_HAS_SINGLE_BIT_INLINE bool
 stdc_has_single_bit_ull (unsigned long long int n)
 {
   unsigned long long int n_1 = n - 1, nx = n_1 ^ n;
   return n_1 < nx;
 }
 
-#define stdc_has_single_bit(n) \
+# define stdc_has_single_bit(n) \
   ((bool) \
    (sizeof (n) == 1 ? stdc_has_single_bit_uc (n) \
     : sizeof (n) == sizeof (unsigned short int) ? stdc_has_single_bit_us (n) \
@@ -801,76 +917,88 @@ stdc_has_single_bit_ull (unsigned long long int n)
     : sizeof (n) == sizeof 0ul ? stdc_has_single_bit_ul (n) \
     : stdc_has_single_bit_ull (n)))
 
+#endif
 
-_GL_STDBIT_INLINE unsigned int
+
+/* ISO C 23 § 7.18.14 Bit Width  */
+
+#if @GL_STDC_BIT_WIDTH@
+
+_GL_STDC_BIT_WIDTH_INLINE unsigned int
 stdc_bit_width_uc (unsigned char n)
 {
   return 8 * sizeof n - stdc_leading_zeros_uc (n);
 }
 
-_GL_STDBIT_INLINE unsigned int
+_GL_STDC_BIT_WIDTH_INLINE unsigned int
 stdc_bit_width_us (unsigned short int n)
 {
   return 8 * sizeof n - stdc_leading_zeros_us (n);
 }
 
-_GL_STDBIT_INLINE unsigned int
+_GL_STDC_BIT_WIDTH_INLINE unsigned int
 stdc_bit_width_ui (unsigned int n)
 {
   return 8 * sizeof n - stdc_leading_zeros_ui (n);
 }
 
-_GL_STDBIT_INLINE unsigned int
+_GL_STDC_BIT_WIDTH_INLINE unsigned int
 stdc_bit_width_ul (unsigned long int n)
 {
   return 8 * sizeof n - stdc_leading_zeros_ul (n);
 }
 
-_GL_STDBIT_INLINE unsigned int
+_GL_STDC_BIT_WIDTH_INLINE unsigned int
 stdc_bit_width_ull (unsigned long long int n)
 {
   return 8 * sizeof n - stdc_leading_zeros_ull (n);
 }
 
-#define stdc_bit_width(n) \
+# define stdc_bit_width(n) \
   (sizeof (n) == 1 ? stdc_bit_width_uc (n) \
    : sizeof (n) == sizeof (unsigned short int) ? stdc_bit_width_us (n) \
    : sizeof (n) == sizeof 0u ? stdc_bit_width_ui (n) \
    : sizeof (n) == sizeof 0ul ? stdc_bit_width_ul (n) \
    : stdc_bit_width_ull (n))
 
+#endif
 
-_GL_STDBIT_INLINE unsigned char
+
+/* ISO C 23 § 7.18.15 Bit Floor  */
+
+#if @GL_STDC_BIT_FLOOR@
+
+_GL_STDC_BIT_FLOOR_INLINE unsigned char
 stdc_bit_floor_uc (unsigned char n)
 {
   return n ? 1u << (stdc_bit_width_uc (n) - 1) : 0;
 }
 
-_GL_STDBIT_INLINE unsigned short int
+_GL_STDC_BIT_FLOOR_INLINE unsigned short int
 stdc_bit_floor_us (unsigned short int n)
 {
   return n ? 1u << (stdc_bit_width_us (n) - 1) : 0;
 }
 
-_GL_STDBIT_INLINE unsigned int
+_GL_STDC_BIT_FLOOR_INLINE unsigned int
 stdc_bit_floor_ui (unsigned int n)
 {
   return n ? 1u << (stdc_bit_width_ui (n) - 1) : 0;
 }
 
-_GL_STDBIT_INLINE unsigned long int
+_GL_STDC_BIT_FLOOR_INLINE unsigned long int
 stdc_bit_floor_ul (unsigned long int n)
 {
   return n ? 1ul << (stdc_bit_width_ul (n) - 1) : 0;
 }
 
-_GL_STDBIT_INLINE unsigned long long int
+_GL_STDC_BIT_FLOOR_INLINE unsigned long long int
 stdc_bit_floor_ull (unsigned long long int n)
 {
   return n ? 1ull << (stdc_bit_width_ull (n) - 1) : 0;
 }
 
-#define stdc_bit_floor(n) \
+# define stdc_bit_floor(n) \
   (_GL_STDBIT_TYPEOF_CAST \
    (n, \
     (sizeof (n) == 1 ? stdc_bit_floor_uc (n) \
@@ -879,38 +1007,44 @@ stdc_bit_floor_ull (unsigned long long int n)
      : sizeof (n) == sizeof 0ul ? stdc_bit_floor_ul (n) \
      : stdc_bit_floor_ull (n))))
 
+#endif
 
-_GL_STDBIT_INLINE unsigned char
+
+/* ISO C 23 § 7.18.16 Bit Ceiling  */
+
+#if @GL_STDC_BIT_CEIL@
+
+_GL_STDC_BIT_CEIL_INLINE unsigned char
 stdc_bit_ceil_uc (unsigned char n)
 {
   return n <= 1 ? 1 : 2u << (stdc_bit_width_uc (n - 1) - 1);
 }
 
-_GL_STDBIT_INLINE unsigned short int
+_GL_STDC_BIT_CEIL_INLINE unsigned short int
 stdc_bit_ceil_us (unsigned short int n)
 {
   return n <= 1 ? 1 : 2u << (stdc_bit_width_us (n - 1) - 1);
 }
 
-_GL_STDBIT_INLINE unsigned int
+_GL_STDC_BIT_CEIL_INLINE unsigned int
 stdc_bit_ceil_ui (unsigned int n)
 {
   return n <= 1 ? 1 : 2u << (stdc_bit_width_ui (n - 1) - 1);
 }
 
-_GL_STDBIT_INLINE unsigned long int
+_GL_STDC_BIT_CEIL_INLINE unsigned long int
 stdc_bit_ceil_ul (unsigned long int n)
 {
   return n <= 1 ? 1 : 2ul << (stdc_bit_width_ul (n - 1) - 1);
 }
 
-_GL_STDBIT_INLINE unsigned long long int
+_GL_STDC_BIT_CEIL_INLINE unsigned long long int
 stdc_bit_ceil_ull (unsigned long long int n)
 {
   return n <= 1 ? 1 : 2ull << (stdc_bit_width_ull (n - 1) - 1);
 }
 
-#define stdc_bit_ceil(n) \
+# define stdc_bit_ceil(n) \
   (_GL_STDBIT_TYPEOF_CAST \
    (n, \
     (sizeof (n) == 1 ? stdc_bit_ceil_uc (n) \
@@ -918,6 +1052,8 @@ stdc_bit_ceil_ull (unsigned long long int n)
      : sizeof (n) == sizeof 0u ? stdc_bit_ceil_ui (n) \
      : sizeof (n) == sizeof 0ul ? stdc_bit_ceil_ul (n) \
      : stdc_bit_ceil_ull (n))))
+
+#endif
 
 
 #ifdef __cplusplus

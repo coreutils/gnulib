@@ -1,0 +1,28 @@
+Description:
+stdc_bit_floor macro, stdc_bit_floor_* functions:
+Return the largest power of 2 that is ≤ a given unsigned integer.
+
+Files:
+lib/stdc_bit_floor.c
+
+Depends-on:
+stdbit-h
+stdc_bit_width
+
+configure.ac:
+AC_REQUIRE([gl_STDBIT_H])
+GL_STDC_BIT_FLOOR=1
+
+Makefile.am:
+if GL_GENERATE_STDBIT_H
+lib_SOURCES += stdc_bit_floor.c
+endif
+
+Include:
+<stdbit.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+all

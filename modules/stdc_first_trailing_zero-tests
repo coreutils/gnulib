@@ -1,0 +1,19 @@
+Files:
+tests/from-glibc/tst-stdc_first_trailing_zero.c
+tests/from-glibc/tst-stdbit.h
+tests/from-glibc/support/test-driver.c
+tests/macros.h
+
+Depends-on:
+libc-config
+stdbool
+stdint
+assert-h
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-stdc_first_trailing_zero
+check_PROGRAMS += test-stdc_first_trailing_zero
+test_stdc_first_trailing_zero_SOURCES = from-glibc/tst-stdc_first_trailing_zero.c
+test_stdc_first_trailing_zero_CPPFLAGS = $(AM_CPPFLAGS) -I$(srcdir)/from-glibc -DGNULIB_TEST_STDBIT

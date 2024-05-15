@@ -1,0 +1,29 @@
+Description:
+stdc_first_leading_zero macro, stdc_first_leading_zero_* functions:
+Return the number of bits, from the most significant 0 bit to the most
+significant bit, in an unsigned integer.
+
+Files:
+lib/stdc_first_leading_zero.c
+
+Depends-on:
+stdbit-h
+stdc_leading_ones
+
+configure.ac:
+AC_REQUIRE([gl_STDBIT_H])
+GL_STDC_FIRST_LEADING_ZERO=1
+
+Makefile.am:
+if GL_GENERATE_STDBIT_H
+lib_SOURCES += stdc_first_leading_zero.c
+endif
+
+Include:
+<stdbit.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+all

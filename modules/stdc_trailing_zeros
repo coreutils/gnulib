@@ -1,0 +1,27 @@
+Description:
+stdc_trailing_zeros macro, stdc_trailing_zeros_* functions:
+Return the number of trailing 0 bits in an unsigned integer.
+
+Files:
+lib/stdc_trailing_zeros.c
+
+Depends-on:
+stdbit-h
+
+configure.ac:
+AC_REQUIRE([gl_STDBIT_H])
+GL_STDC_TRAILING_ZEROS=1
+
+Makefile.am:
+if GL_GENERATE_STDBIT_H
+lib_SOURCES += stdc_trailing_zeros.c
+endif
+
+Include:
+<stdbit.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+all

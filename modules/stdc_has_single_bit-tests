@@ -1,0 +1,19 @@
+Files:
+tests/from-glibc/tst-stdc_has_single_bit.c
+tests/from-glibc/tst-stdbit.h
+tests/from-glibc/support/test-driver.c
+tests/macros.h
+
+Depends-on:
+libc-config
+stdbool
+stdint
+assert-h
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-stdc_has_single_bit
+check_PROGRAMS += test-stdc_has_single_bit
+test_stdc_has_single_bit_SOURCES = from-glibc/tst-stdc_has_single_bit.c
+test_stdc_has_single_bit_CPPFLAGS = $(AM_CPPFLAGS) -I$(srcdir)/from-glibc -DGNULIB_TEST_STDBIT

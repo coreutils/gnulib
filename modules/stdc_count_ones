@@ -1,0 +1,27 @@
+Description:
+stdc_count_ones macro, stdc_count_ones_* functions:
+Return the number of 1 bits in an unsigned integer.
+
+Files:
+lib/stdc_count_ones.c
+
+Depends-on:
+stdbit-h
+
+configure.ac:
+AC_REQUIRE([gl_STDBIT_H])
+GL_STDC_COUNT_ONES=1
+
+Makefile.am:
+if GL_GENERATE_STDBIT_H
+lib_SOURCES += stdc_count_ones.c
+endif
+
+Include:
+<stdbit.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+all

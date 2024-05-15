@@ -7,7 +7,7 @@ ISO C23 (latest free draft
 @url{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n3096.pdf})
 section 7.18.11.
 
-Gnulib module: stdbit
+Gnulib module: stdc_count_zeros
 
 Portability problems fixed by Gnulib:
 @itemize

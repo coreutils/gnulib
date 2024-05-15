@@ -1,0 +1,28 @@
+Description:
+stdc_trailing_ones macro, stdc_trailing_ones_* functions:
+Return the number of trailing 1 bits in an unsigned integer.
+
+Files:
+lib/stdc_trailing_ones.c
+
+Depends-on:
+stdbit-h
+stdc_trailing_zeros
+
+configure.ac:
+AC_REQUIRE([gl_STDBIT_H])
+GL_STDC_TRAILING_ONES=1
+
+Makefile.am:
+if GL_GENERATE_STDBIT_H
+lib_SOURCES += stdc_trailing_ones.c
+endif
+
+Include:
+<stdbit.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+all
