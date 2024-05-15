@@ -1,0 +1,12 @@
+Files:
+tests/test-getusershell.c
+tests/macros.h
+
+Depends-on:
+strdup
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-getusershell
+check_PROGRAMS += test-getusershell
