@@ -18,7 +18,14 @@
 
 #include <config.h>
 
+/* Specification.  */
 #include <unistd.h>
+
+#include "signature.h"
+SIGNATURE_CHECK (getusershell, char *, (void));
+SIGNATURE_CHECK (setusershell, void, (void));
+SIGNATURE_CHECK (endusershell, void, (void));
+
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>

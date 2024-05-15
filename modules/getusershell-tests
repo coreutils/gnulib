@@ -1,5 +1,6 @@
 Files:
 tests/test-getusershell.c
+tests/signature.h
 tests/macros.h
 
 Depends-on:
