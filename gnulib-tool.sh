@@ -7454,6 +7454,9 @@ s/\([.*$]\)/[\1]/g'
     if test -z "$destdir"; then
       func_fatal_error "please specify --dir option"
     fi
+    if test -d "$destdir"; then
+      func_fatal_error "not overwriting destination directory: $destdir"
+    fi
     mkdir "$destdir"
     test -d "$destdir" \
       || func_fatal_error "could not create destination directory"
@@ -7464,6 +7467,9 @@ s/\([.*$]\)/[\1]/g'
   create-megatestdir )
     if test -z "$destdir"; then
       func_fatal_error "please specify --dir option"
+    fi
+    if test -d "$destdir"; then
+      func_fatal_error "not overwriting destination directory: $destdir"
     fi
     mkdir "$destdir" || func_fatal_error "could not create destination directory"
     test -n "$auxdir" || auxdir="build-aux"
