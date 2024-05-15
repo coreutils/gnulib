@@ -494,35 +494,40 @@ _GL_STDBIT_INLINE unsigned int
 stdc_first_leading_zero_uc (unsigned char n)
 {
   unsigned int count = stdc_leading_ones_uc (n);
-  return count == 8 * sizeof n ? 0 : count + 1;
+  unsigned int bits = 8 * sizeof n;
+  return count % bits + (count < bits);
 }
 
 _GL_STDBIT_INLINE unsigned int
 stdc_first_leading_zero_us (unsigned short int n)
 {
   unsigned int count = stdc_leading_ones_us (n);
-  return count == 8 * sizeof n ? 0 : count + 1;
+  unsigned int bits = 8 * sizeof n;
+  return count % bits + (count < bits);
 }
 
 _GL_STDBIT_INLINE unsigned int
 stdc_first_leading_zero_ui (unsigned int n)
 {
   unsigned int count = stdc_leading_ones_ui (n);
-  return count == 8 * sizeof n ? 0 : count + 1;
+  unsigned int bits = 8 * sizeof n;
+  return count % bits + (count < bits);
 }
 
 _GL_STDBIT_INLINE unsigned int
 stdc_first_leading_zero_ul (unsigned long int n)
 {
   unsigned int count = stdc_leading_ones_ul (n);
-  return count == 8 * sizeof n ? 0 : count + 1;
+  unsigned int bits = 8 * sizeof n;
+  return count % bits + (count < bits);
 }
 
 _GL_STDBIT_INLINE unsigned int
 stdc_first_leading_zero_ull (unsigned long long int n)
 {
   unsigned int count = stdc_leading_ones_ull (n);
-  return count == 8 * sizeof n ? 0 : count + 1;
+  unsigned int bits = 8 * sizeof n;
+  return count % bits + (count < bits);
 }
 
 #define stdc_first_leading_zero(n) \
@@ -537,35 +542,40 @@ _GL_STDBIT_INLINE unsigned int
 stdc_first_leading_one_uc (unsigned char n)
 {
   unsigned int count = stdc_leading_zeros_uc (n);
-  return count == 8 * sizeof n ? 0 : count + 1;
+  unsigned int bits = 8 * sizeof n;
+  return count % bits + (count < bits);
 }
 
 _GL_STDBIT_INLINE unsigned int
 stdc_first_leading_one_us (unsigned short int n)
 {
   unsigned int count = stdc_leading_zeros_us (n);
-  return count == 8 * sizeof n ? 0 : count + 1;
+  unsigned int bits = 8 * sizeof n;
+  return count % bits + (count < bits);
 }
 
 _GL_STDBIT_INLINE unsigned int
 stdc_first_leading_one_ui (unsigned int n)
 {
   unsigned int count = stdc_leading_zeros_ui (n);
-  return count == 8 * sizeof n ? 0 : count + 1;
+  unsigned int bits = 8 * sizeof n;
+  return count % bits + (count < bits);
 }
 
 _GL_STDBIT_INLINE unsigned int
 stdc_first_leading_one_ul (unsigned long int n)
 {
   unsigned int count = stdc_leading_zeros_ul (n);
-  return count == 8 * sizeof n ? 0 : count + 1;
+  unsigned int bits = 8 * sizeof n;
+  return count % bits + (count < bits);
 }
 
 _GL_STDBIT_INLINE unsigned int
 stdc_first_leading_one_ull (unsigned long long int n)
 {
   unsigned int count = stdc_leading_zeros_ull (n);
-  return count == 8 * sizeof n ? 0 : count + 1;
+  unsigned int bits = 8 * sizeof n;
+  return count % bits + (count < bits);
 }
 
 #define stdc_first_leading_one(n) \
@@ -580,35 +590,40 @@ _GL_STDBIT_INLINE unsigned int
 stdc_first_trailing_zero_uc (unsigned char n)
 {
   unsigned int count = stdc_trailing_ones_uc (n);
-  return count == 8 * sizeof n ? 0 : count + 1;
+  unsigned int bits = 8 * sizeof n;
+  return count % bits + (count < bits);
 }
 
 _GL_STDBIT_INLINE unsigned int
 stdc_first_trailing_zero_us (unsigned short int n)
 {
   unsigned int count = stdc_trailing_ones_us (n);
-  return count == 8 * sizeof n ? 0 : count + 1;
+  unsigned int bits = 8 * sizeof n;
+  return count % bits + (count < bits);
 }
 
 _GL_STDBIT_INLINE unsigned int
 stdc_first_trailing_zero_ui (unsigned int n)
 {
   unsigned int count = stdc_trailing_ones_ui (n);
-  return count == 8 * sizeof n ? 0 : count + 1;
+  unsigned int bits = 8 * sizeof n;
+  return count % bits + (count < bits);
 }
 
 _GL_STDBIT_INLINE unsigned int
 stdc_first_trailing_zero_ul (unsigned long int n)
 {
   unsigned int count = stdc_trailing_ones_ul (n);
-  return count == 8 * sizeof n ? 0 : count + 1;
+  unsigned int bits = 8 * sizeof n;
+  return count % bits + (count < bits);
 }
 
 _GL_STDBIT_INLINE unsigned int
 stdc_first_trailing_zero_ull (unsigned long long int n)
 {
   unsigned int count = stdc_trailing_ones_ull (n);
-  return count == 8 * sizeof n ? 0 : count + 1;
+  unsigned int bits = 8 * sizeof n;
+  return count % bits + (count < bits);
 }
 
 #define stdc_first_trailing_zero(n) \
@@ -623,35 +638,40 @@ _GL_STDBIT_INLINE unsigned int
 stdc_first_trailing_one_uc (unsigned char n)
 {
   unsigned int count = stdc_trailing_zeros_uc (n);
-  return count == 8 * sizeof n ? 0 : count + 1;
+  unsigned int bits = 8 * sizeof n;
+  return count % bits + (count < bits);
 }
 
 _GL_STDBIT_INLINE unsigned int
 stdc_first_trailing_one_us (unsigned short int n)
 {
   unsigned int count = stdc_trailing_zeros_us (n);
-  return count == 8 * sizeof n ? 0 : count + 1;
+  unsigned int bits = 8 * sizeof n;
+  return count % bits + (count < bits);
 }
 
 _GL_STDBIT_INLINE unsigned int
 stdc_first_trailing_one_ui (unsigned int n)
 {
   unsigned int count = stdc_trailing_zeros_ui (n);
-  return count == 8 * sizeof n ? 0 : count + 1;
+  unsigned int bits = 8 * sizeof n;
+  return count % bits + (count < bits);
 }
 
 _GL_STDBIT_INLINE unsigned int
 stdc_first_trailing_one_ul (unsigned long int n)
 {
   unsigned int count = stdc_trailing_zeros_ul (n);
-  return count == 8 * sizeof n ? 0 : count + 1;
+  unsigned int bits = 8 * sizeof n;
+  return count % bits + (count < bits);
 }
 
 _GL_STDBIT_INLINE unsigned int
 stdc_first_trailing_one_ull (unsigned long long int n)
 {
   unsigned int count = stdc_trailing_zeros_ull (n);
-  return count == 8 * sizeof n ? 0 : count + 1;
+  unsigned int bits = 8 * sizeof n;
+  return count % bits + (count < bits);
 }
 
 #define stdc_first_trailing_one(n) \
