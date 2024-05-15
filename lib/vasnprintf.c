@@ -408,6 +408,9 @@ is_infinite_or_zerol (long double x)
 
 #if NEED_PRINTF_LONG_DOUBLE || NEED_PRINTF_DOUBLE
 
+/* An indicator for a failed memory allocation.  */
+# define NOMEM_PTR ((void *) (-1))
+
 /* Converting 'long double' to decimal without rare rounding bugs requires
    real bignums.  We use the naming conventions of GNU gmp, but vastly simpler
    (and slower) algorithms.  */
@@ -428,8 +431,8 @@ typedef struct
 } mpn_t;
 
 /* Compute the product of two bignums >= 0.
-   Return the allocated memory in case of success, NULL in case of memory
-   allocation failure.  */
+   Return the allocated memory (possibly NULL) in case of success, NOMEM_PTR
+   in case of memory allocation failure.  */
 static void *
 multiply (mpn_t src1, mpn_t src2, mpn_t *dest)
 {
@@ -457,7 +460,7 @@ multiply (mpn_t src1, mpn_t src2, mpn_t *dest)
     {
       /* src1 or src2 is zero.  */
       dest->nlimbs = 0;
-      dest->limbs = (mp_limb_t *) malloc (1);
+      dest->limbs = NULL;
     }
   else
     {
@@ -469,7 +472,7 @@ multiply (mpn_t src1, mpn_t src2, mpn_t *dest)
       dlen = len1 + len2;
       dp = (mp_limb_t *) malloc (dlen * sizeof (mp_limb_t));
       if (dp == NULL)
-        return NULL;
+        return NOMEM_PTR;
       for (k = len2; k > 0; )
         dp[--k] = 0;
       for (i = 0; i < len1; i++)
@@ -500,8 +503,8 @@ multiply (mpn_t src1, mpn_t src2, mpn_t *dest)
    the remainder.
    Finally, round-to-even is performed: If r > b/2 or if r = b/2 and q is odd,
    q is incremented.
-   Return the allocated memory in case of success, NULL in case of memory
-   allocation failure.  */
+   Return the allocated memory (possibly NULL) in case of success, NOMEM_PTR
+   in case of memory allocation failure.  */
 static void *
 divide (mpn_t a, mpn_t b, mpn_t *q)
 {
@@ -572,7 +575,7 @@ divide (mpn_t a, mpn_t b, mpn_t *q)
      final rounding of q.)  */
   roomptr = (mp_limb_t *) malloc ((a_len + 2) * sizeof (mp_limb_t));
   if (roomptr == NULL)
-    return NULL;
+    return NOMEM_PTR;
 
   /* Normalise a.  */
   while (a_len > 0 && a_ptr[a_len - 1] == 0)
@@ -708,7 +711,7 @@ divide (mpn_t a, mpn_t b, mpn_t *q)
           if (tmp_roomptr == NULL)
             {
               free (roomptr);
-              return NULL;
+              return NOMEM_PTR;
             }
           {
             const mp_limb_t *sourceptr = b_ptr;
@@ -1306,7 +1309,7 @@ scale10_round_decimal_decoded (int e, mpn_t m, void *memory, int n)
           mpn_t denominator;
           void *tmp_memory;
           tmp_memory = multiply (m, pow5, &numerator);
-          if (tmp_memory == NULL)
+          if (tmp_memory == NOMEM_PTR)
             {
               free (pow5_ptr);
               free (memory);
@@ -1379,7 +1382,7 @@ scale10_round_decimal_decoded (int e, mpn_t m, void *memory, int n)
 
   /* Here y = round (x * 10^n) = z * 10^extra_zeroes.  */
 
-  if (z_memory == NULL)
+  if (z_memory == NOMEM_PTR)
     return NULL;
   digits = convert_to_decimal (z, extra_zeroes);
   free (z_memory);
