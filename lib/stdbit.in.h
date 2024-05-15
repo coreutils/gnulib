@@ -73,10 +73,6 @@ _GL_INLINE_HEADER_BEGIN
 # define _GL_STDC_BIT_CEIL_INLINE _GL_INLINE
 #endif
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 /* An expression, preferably with the type of A, that has the value of B.  */
 #if ((defined __GNUC__ && 2 <= __GNUC__) \
      || (defined __clang_major__ && 4 <= __clang_major__) \
