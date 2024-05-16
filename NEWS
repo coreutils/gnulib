@@ -74,6 +74,8 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2024-05-16  putenv          This module is renamed to 'putenv-gnu'.
+
 2024-02-21  *printf-posix   These modules no longer support the 'n' directive
                             by default.  In order to keep the 'n' directive
                             enabled, you need to additionally request the

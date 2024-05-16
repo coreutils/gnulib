@@ -4,7 +4,7 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/putenv.html}
 
-Gnulib module: ---
+Gnulib module: putenv-gnu
 
 Portability problems fixed by Gnulib:
 @itemize
@@ -14,6 +14,6 @@ Portability problems not fixed by Gnulib:
 @itemize
 @end itemize
 
-Extension: Gnulib provides a module @samp{putenv} that substitutes a
+Extension: Gnulib provides a module @samp{putenv-gnu} that substitutes a
 @code{putenv} implementation that can also be used to remove environment
 variables.
