@@ -4,7 +4,7 @@ tests/signature.h
 tests/macros.h
 
 Depends-on:
-putenv
+putenv-gnu
 
 configure.ac:
 
