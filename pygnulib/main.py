@@ -1365,7 +1365,18 @@ def main(temp_directory: str) -> None:
                 pass
 
 
+def cli_exception(exc_type, exc_value, exc_traceback) -> None:
+    '''Exception hook that does not print a traceback for KeyboardInterrupts
+    thrown when Ctrl-C is pressed.'''
+    if not issubclass(exc_type, KeyboardInterrupt):
+        sys.__excepthook__(exc_type, exc_value, exc_traceback)
+
+
 def main_with_exception_handling() -> None:
+    # Don't print tracebacks for KeyboardInterrupts when stdin is a tty.
+    if sys.stdin and sys.stdin.isatty():
+        sys.excepthook = cli_exception
+
     try:  # Try to execute
         with tempfile.TemporaryDirectory(prefix='glpy') as temporary_directory:
             main(temporary_directory)
