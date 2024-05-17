@@ -169,7 +169,7 @@ __gl_stdbit_clzll (unsigned long long int n)
 {
 # ifdef _M_X64
   unsigned long int r;
-  return 8 * sizeof n - (_BitScanReverse (&r, n) ? r + 1 : 0);
+  return 8 * sizeof n - (_BitScanReverse64 (&r, n) ? r + 1 : 0);
 # else
   unsigned long int hi = n >> 32;
   return __gl_stdbit_clzl (hi ? hi : n) + (hi ? 0 : 32);
