@@ -1,0 +1,33 @@
+Description:
+abort() function that prints a stack trace before aborting.
+
+Files:
+lib/abort-debug.c
+m4/abort-debug.m4
+
+Depends-on:
+stdlib
+execinfo
+
+configure.ac-early:
+AC_REQUIRE([gl_ABORT_DEBUG_EARLY])
+export LDFLAGS
+
+configure.ac:
+gl_ABORT_DEBUG
+gl_CONDITIONAL([GL_COND_OBJ_ABORT_DEBUG], [test $REPLACE_ABORT = 1])
+gl_STDLIB_MODULE_INDICATOR([abort-debug])
+
+Makefile.am:
+if GL_COND_OBJ_ABORT_DEBUG
+lib_SOURCES += abort-debug.c
+endif
+
+Include:
+<stdlib.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+all
