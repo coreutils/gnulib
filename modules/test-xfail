@@ -1,0 +1,65 @@
+Description:
+Define Automake conditionals that can be used to mark expected failures.
+
+Files:
+m4/musl.m4
+
+Depends-on:
+
+configure.ac:
+gl_MUSL_LIBC
+gl_CONDITIONAL([LIBC_IS_GNU],
+               [case "$host_os" in *-gnu* | gnu*) true ;; *) false ;; esac])
+gl_CONDITIONAL([LIBC_IS_MUSL],
+               [case "$host_os" in *-musl* | midipix*) true ;; *) false ;; esac])
+gl_CONDITIONAL([OS_IS_MACOS],
+               [case "$host_os" in darwin*) true ;; *) false ;; esac])
+gl_CONDITIONAL([OS_IS_MACOS11],
+               [case "$host_os" in darwin20.*) true ;; *) false ;; esac])
+gl_CONDITIONAL([OS_IS_MACOS12],
+               [case "$host_os" in darwin21.*) true ;; *) false ;; esac])
+gl_CONDITIONAL([OS_IS_MACOS13],
+               [case "$host_os" in darwin22.*) true ;; *) false ;; esac])
+gl_CONDITIONAL([OS_IS_MACOS14],
+               [case "$host_os" in darwin23.*) true ;; *) false ;; esac])
+gl_CONDITIONAL([OS_IS_FREEBSD],
+               [case "$host_os" in freebsd* | dragonfly*) true ;; *) false ;; esac])
+gl_CONDITIONAL([OS_IS_NETBSD],
+               [case "$host_os" in netbsd*) true ;; *) false ;; esac])
+gl_CONDITIONAL([OS_IS_OPENBSD],
+               [case "$host_os" in openbsd*) true ;; *) false ;; esac])
+gl_CONDITIONAL([OS_IS_AIX],
+               [case "$host_os" in aix*) true ;; *) false ;; esac])
+gl_CONDITIONAL([OS_IS_SOLARIS11],
+               [case "$host_os" in solaris2.11*) true ;; *) false ;; esac])
+gl_CONDITIONAL([OS_IS_CYGWIN],
+               [case "$host_os" in cygwin*) true ;; *) false ;; esac])
+gl_CONDITIONAL([OS_IS_NATIVE_WINDOWS],
+               [case "$host_os" in mingw* | windows*) true ;; *) false ;; esac])
+
+is_mingw=false; is_msvc=false
+case "$host_os" in
+  windows*-msvc*) is_msvc=true ;;
+  mingw* | windows*)
+    AC_EGREP_CPP([Special], [
+#ifdef _MSC_VER
+ Special
+#endif
+], [is_msvc=true], [is_mingw=true])
+    ;;
+esac
+gl_CONDITIONAL([PLATFORM_IS_MINGW], [$is_mingw])
+gl_CONDITIONAL([PLATFORM_IS_MSVC], [$is_msvc])
+
+gl_CONDITIONAL([OS_IS_ANDROID],
+               [case "$host_os" in linux-androideabi*) true ;; *) false ;; esac])
+
+Makefile.am:
+
+Include:
+
+License:
+GPL
+
+Maintainer:
+all
