@@ -29,7 +29,7 @@ do_allocation (int n)
   (void) ptr;
 }
 
-void (*func) (int) = do_allocation;
+void (*volatile func) (int) = do_allocation;
 
 #endif
 
