@@ -23,7 +23,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This header file is missing on some platforms:
-FreeBSD 9.3, NetBSD 6.1, OpenBSD 6.9, Minix 3.1.8, AIX 5.1, HP-UX 11, Solaris 10, Cygwin, mingw, MSVC 14, Android 9.0.
+musl libc, FreeBSD 9.3, NetBSD 6.1, OpenBSD 6.9, Minix 3.1.8, AIX 5.1, HP-UX 11, Solaris 10, Cygwin, mingw, MSVC 14, Android 9.0.
 @end itemize
 
 Portability problems not fixed by Gnulib:
