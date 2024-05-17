@@ -2,18 +2,32 @@
 @section @code{putenv}
 @findex putenv
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/putenv.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/putenv.html},
+amended through @url{https://www.austingroupbugs.net/view.php?id=1598}.
+
+Documentation:@*
+@ifinfo
+@ref{Environment Access,,Environment Access,libc}.
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Environment-Access.html}.
+@end ifnotinfo
+
+Note: POSIX @code{putenv} supports
+adding or changing the value of an environment variable,
+while glibc also supports removing an environment variable
+(as if by @code{unsetenv}).
 
 Gnulib module: putenv-gnu
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+This function does not support removing an environment variable
+on some platforms:
+macOS 12.5, FreeBSD 14.0, NetBSD 10.0, OpenBSD 7.5, AIX 7.3.1, HP-UX 11.31, Solaris 11.4, mingw, MSVC 14, Android 11.0.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
 @end itemize
-
-Extension: Gnulib provides a module @samp{putenv-gnu} that substitutes a
-@code{putenv} implementation that can also be used to remove environment
-variables.
