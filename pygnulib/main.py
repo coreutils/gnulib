@@ -1380,6 +1380,9 @@ def main_with_exception_handling() -> None:
     try:  # Try to execute
         with tempfile.TemporaryDirectory(prefix='glpy') as temporary_directory:
             main(temporary_directory)
+    except KeyboardInterrupt:
+        sys.stderr.write('%s: *** Stop.\n' % APP['name'])
+        sys.exit(1)
     except GLError as error:
         errmode = 0  # gnulib-style errors
         errno = error.errno
