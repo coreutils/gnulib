@@ -247,7 +247,6 @@ __gl_stdbit_ctzll (unsigned long long int n)
   unsigned int lo = n;
   return __gl_stdbit_ctzl (lo ? lo : n >> 32) + (lo ? 0 : 32);
 # endif
-_GL_STDBIT_INLINE int
 }
 
 #else /* !_MSC_VER */
