@@ -3,6 +3,7 @@ tests/test-byteswap.c
 tests/macros.h
 
 Depends-on:
+stdint
 
 configure.ac:
 
