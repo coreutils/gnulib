@@ -56,47 +56,52 @@ extern "C" {
 
 /* Given an unsigned 16-bit argument X, return the value corresponding to
    X with reversed byte order.  */
-_GL_BYTESWAP_INLINE uint16_t
-bswap_16 (uint16_t x)
+_GL_BYTESWAP_INLINE uint_least16_t
+bswap_16 (uint_least16_t x)
 {
 #ifdef _GL_BYTESWAP_HAS_BUILTIN_BSWAP16
   return __builtin_bswap16 (x);
 #else
-  return (((((x) >> 8) & 0xff) | (((x) & 0xff) << 8)));
+  return (  (x & 0xff00) >> 8
+          | (x & 0x00ff) << 8);
 #endif
 }
 
 /* Given an unsigned 32-bit argument X, return the value corresponding to
    X with reversed byte order.  */
-_GL_BYTESWAP_INLINE uint32_t
-bswap_32 (uint32_t x)
+_GL_BYTESWAP_INLINE uint_least32_t
+bswap_32 (uint_least32_t x)
 {
 #ifdef _GL_BYTESWAP_HAS_BUILTIN_BSWAP32
   return __builtin_bswap32 (x);
 #else
-  return ((((x) & 0xff000000u) >> 24) | (((x) & 0x00ff0000u) >> 8)
-          | (((x) & 0x0000ff00u) << 8) | (((x) & 0x000000ffu) << 24));
+  return (  (x & 0xff000000) >> 24
+          | (x & 0x00ff0000) >>  8
+          | (x & 0x0000ff00) <<  8
+          | (x & 0x000000ff) << 24);
 #endif
 }
 
+#ifdef UINT_LEAST64_MAX
 /* Given an unsigned 64-bit argument X, return the value corresponding to
    X with reversed byte order.  */
-_GL_BYTESWAP_INLINE uint64_t
-bswap_64 (uint64_t x)
+_GL_BYTESWAP_INLINE uint_least64_t
+bswap_64 (uint_least64_t x)
 {
-#ifdef _GL_BYTESWAP_HAS_BUILTIN_BSWAP64
+# ifdef _GL_BYTESWAP_HAS_BUILTIN_BSWAP64
   return __builtin_bswap64 (x);
-#else
-  return ((((x) & 0xff00000000000000ull) >> 56)
-          | (((x) & 0x00ff000000000000ull) >> 40)
-          | (((x) & 0x0000ff0000000000ull) >> 24)
-          | (((x) & 0x000000ff00000000ull) >> 8)
-          | (((x) & 0x00000000ff000000ull) << 8)
-          | (((x) & 0x0000000000ff0000ull) << 24)
-          | (((x) & 0x000000000000ff00ull) << 40)
-          | (((x) & 0x00000000000000ffull) << 56));
-#endif
+# else
+  return (  (x & 0xff00000000000000) >> 56
+          | (x & 0x00ff000000000000) >> 40
+          | (x & 0x0000ff0000000000) >> 24
+          | (x & 0x000000ff00000000) >>  8
+          | (x & 0x00000000ff000000) <<  8
+          | (x & 0x0000000000ff0000) << 24
+          | (x & 0x000000000000ff00) << 40
+          | (x & 0x00000000000000ff) << 56);
+# endif
 }
+#endif
 
 #ifdef __cplusplus
 }
