@@ -5,6 +5,7 @@ tests/macros.h
 
 Depends-on:
 close
+test-framework-sh
 
 configure.ac:
 
