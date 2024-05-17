@@ -3,10 +3,13 @@ Swap bytes of 16, 32 and 64 bit values.
 
 Files:
 lib/byteswap.in.h
+lib/byteswap.c
 m4/byteswap.m4
 
 Depends-on:
 gen-header
+extern-inline           [$GL_GENERATE_BYTESWAP_H]
+stdint                  [$GL_GENERATE_BYTESWAP_H]
 
 configure.ac:
 gl_BYTESWAP
@@ -23,6 +26,7 @@ byteswap.h: byteswap.in.h $(top_builddir)/config.status
 @NMD@	$(AM_V_GEN)$(MKDIR_P) '%reldir%'
 	$(gl_V_at)$(SED_HEADER_TO_AT_t) $(srcdir)/byteswap.in.h
 	$(AM_V_at)mv $@-t $@
+lib_SOURCES += byteswap.c
 else
 byteswap.h: $(top_builddir)/config.status
 	rm -f $@
