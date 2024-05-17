@@ -5,6 +5,7 @@ tests/test-argp-version-etc-1.sh
 Depends-on:
 argp
 version-etc-fsf
+test-framework-sh
 
 Makefile.am:
 TESTS += test-argp-version-etc test-argp-version-etc-1.sh

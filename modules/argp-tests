@@ -4,6 +4,7 @@ tests/test-argp-2.sh
 tests/macros.h
 
 Depends-on:
+test-framework-sh
 
 Makefile.am:
 TESTS += test-argp test-argp-2.sh
