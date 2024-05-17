@@ -4,7 +4,6 @@ tests/test-xstdopen.sh
 tests/macros.h
 
 Depends-on:
-test-framework-sh
 
 Makefile.am:
 TESTS += test-xstdopen.sh

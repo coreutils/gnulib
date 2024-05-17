@@ -11,6 +11,7 @@ stdlib
 string
 unistd
 regex
+test-framework-sh
 
 configure.ac:
 

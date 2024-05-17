@@ -4,6 +4,7 @@ tests/test-verror.c
 tests/macros.h
 
 Depends-on:
+test-framework-sh
 
 configure.ac:
 
