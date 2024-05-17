@@ -34,13 +34,32 @@ _GL_INLINE_HEADER_BEGIN
 extern "C" {
 #endif
 
+#if __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 8)
+# define _GL_BYTESWAP_HAS_BUILTIN_BSWAP16 true
+#elif defined __has_builtin
+# if __has_builtin (__builtin_bswap16)
+#  define _GL_BYTESWAP_HAS_BUILTIN_BSWAP16 true
+# endif
+#endif
+
+#if __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 3)
+# define _GL_BYTESWAP_HAS_BUILTIN_BSWAP32 true
+# define _GL_BYTESWAP_HAS_BUILTIN_BSWAP64 true
+#elif defined __has_builtin
+# if __has_builtin (__builtin_bswap32)
+#  define _GL_BYTESWAP_HAS_BUILTIN_BSWAP32 true
+# endif
+# if __has_builtin (__builtin_bswap64)
+#  define _GL_BYTESWAP_HAS_BUILTIN_BSWAP64 true
+# endif
+#endif
+
 /* Given an unsigned 16-bit argument X, return the value corresponding to
    X with reversed byte order.  */
 _GL_BYTESWAP_INLINE uint16_t
 bswap_16 (uint16_t x)
 {
-#if (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 8))            \
-     || (defined __has_builtin && __has_builtin (__builtin_bswap16))
+#ifdef _GL_BYTESWAP_HAS_BUILTIN_BSWAP16
   return __builtin_bswap16 (x);
 #else
   return (((((x) >> 8) & 0xff) | (((x) & 0xff) << 8)));
@@ -52,8 +71,7 @@ bswap_16 (uint16_t x)
 _GL_BYTESWAP_INLINE uint32_t
 bswap_32 (uint32_t x)
 {
-#if (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 3))            \
-     || (defined __has_builtin && __has_builtin (__builtin_bswap32))
+#ifdef _GL_BYTESWAP_HAS_BUILTIN_BSWAP32
   return __builtin_bswap32 (x);
 #else
   return ((((x) & 0xff000000u) >> 24) | (((x) & 0x00ff0000u) >> 8)
@@ -66,8 +84,7 @@ bswap_32 (uint32_t x)
 _GL_BYTESWAP_INLINE uint64_t
 bswap_64 (uint64_t x)
 {
-#if (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 3))            \
-     || (defined __has_builtin && __has_builtin (__builtin_bswap64))
+#ifdef _GL_BYTESWAP_HAS_BUILTIN_BSWAP64
   return __builtin_bswap64 (x);
 #else
   return ((((x) & 0xff00000000000000ull) >> 56)
