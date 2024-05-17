@@ -16,6 +16,7 @@ stdckdint
 symlink
 timespec
 utimecmp
+test-xfail
 
 configure.ac:
 
@@ -23,3 +24,7 @@ Makefile.am:
 TESTS += test-utimens
 check_PROGRAMS += test-utimens
 test_utimens_LDADD = $(LDADD) $(CLOCK_TIME_LIB) $(NANOSLEEP_LIB) @LIBINTL@
+
+if OS_IS_NETBSD
+XFAIL_TESTS += test-utimens
+endif

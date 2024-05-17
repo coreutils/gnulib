@@ -13,6 +13,7 @@ nanosleep
 stdckdint
 timespec
 utimecmp
+test-xfail
 
 configure.ac:
 
@@ -20,3 +21,7 @@ Makefile.am:
 TESTS += test-utimensat
 check_PROGRAMS += test-utimensat
 test_utimensat_LDADD = $(LDADD) $(CLOCK_TIME_LIB) $(NANOSLEEP_LIB) @LIBINTL@
+
+if OS_IS_NETBSD
+XFAIL_TESTS += test-utimensat
+endif
