@@ -11,3 +11,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-getusershell
 check_PROGRAMS += test-getusershell
+test_getusershell_LDADD = $(LDADD) $(LIBINTL)
