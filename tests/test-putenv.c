@@ -39,7 +39,7 @@ main (void)
 
   /* Verify adding an environment variable.  */
   {
-    ASSERT (putenv ("TEST_VAR=abc") == 0);
+    ASSERT (putenv ((char []) {"TEST_VAR=abc"}) == 0);
     ptr = getenv ("TEST_VAR");
     ASSERT (ptr != NULL);
     ASSERT (STREQ (ptr, "abc"));
@@ -47,13 +47,13 @@ main (void)
 
   /* Verify removing an environment variable.  */
   {
-    ASSERT (putenv ("TEST_VAR") == 0);
+    ASSERT (putenv ((char []) {"TEST_VAR"}) == 0);
     ASSERT (getenv ("TEST_VAR") == NULL);
   }
 
   /* Verify the behavior when removing a variable not in the environment.  */
   {
-    ASSERT (putenv ("TEST_VAR") == 0);
+    ASSERT (putenv ((char []) {"TEST_VAR"}) == 0);
     ASSERT (getenv ("TEST_VAR") == NULL);
   }
 
