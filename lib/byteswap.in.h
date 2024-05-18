@@ -62,8 +62,9 @@ bswap_16 (uint_least16_t x)
 #ifdef _GL_BYTESWAP_HAS_BUILTIN_BSWAP16
   return __builtin_bswap16 (x);
 #else
-  return (  (x & 0xff00) >> 8
-          | (x & 0x00ff) << 8);
+  uint_fast16_t mask = 0xff;
+  return (  (x & mask << 8 * 1) >> 8 * 1
+          | (x & mask << 8 * 0) << 8 * 1);
 #endif
 }
 
@@ -75,10 +76,11 @@ bswap_32 (uint_least32_t x)
 #ifdef _GL_BYTESWAP_HAS_BUILTIN_BSWAP32
   return __builtin_bswap32 (x);
 #else
-  return (  (x & 0xff000000) >> 24
-          | (x & 0x00ff0000) >>  8
-          | (x & 0x0000ff00) <<  8
-          | (x & 0x000000ff) << 24);
+  uint_fast32_t mask = 0xff;
+  return (  (x & mask << 8 * 3) >> 8 * 3
+          | (x & mask << 8 * 2) >> 8 * 1
+          | (x & mask << 8 * 1) << 8 * 1
+          | (x & mask << 8 * 0) << 8 * 3);
 #endif
 }
 
@@ -91,14 +93,15 @@ bswap_64 (uint_least64_t x)
 # ifdef _GL_BYTESWAP_HAS_BUILTIN_BSWAP64
   return __builtin_bswap64 (x);
 # else
-  return (  (x & 0xff00000000000000) >> 56
-          | (x & 0x00ff000000000000) >> 40
-          | (x & 0x0000ff0000000000) >> 24
-          | (x & 0x000000ff00000000) >>  8
-          | (x & 0x00000000ff000000) <<  8
-          | (x & 0x0000000000ff0000) << 24
-          | (x & 0x000000000000ff00) << 40
-          | (x & 0x00000000000000ff) << 56);
+  uint_fast64_t mask = 0xff;
+  return (  (x & mask << 8 * 7) >> 8 * 7
+          | (x & mask << 8 * 6) >> 8 * 5
+          | (x & mask << 8 * 5) >> 8 * 3
+          | (x & mask << 8 * 4) >> 8 * 1
+          | (x & mask << 8 * 3) << 8 * 1
+          | (x & mask << 8 * 2) << 8 * 3
+          | (x & mask << 8 * 1) << 8 * 5
+          | (x & mask << 8 * 0) << 8 * 7);
 # endif
 }
 #endif
