@@ -42,6 +42,7 @@
 static FILE *myerr;
 
 /* In this file, we use only system functions, no overrides from gnulib.  */
+#undef abort
 #undef atoi
 #undef close
 #undef fcntl
