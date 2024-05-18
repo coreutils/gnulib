@@ -149,10 +149,16 @@ __gl_stdbit_clzll (unsigned long long int n)
   return n ? __builtin_clzll (n) : 8 * sizeof n;
 }
 #elif defined _MSC_VER
+
+/* Declare the few MSVC intrinsics that we need.  We prefer not to include
+   <intrin.h> because it would pollute the namespace.  */
+extern unsigned char _BitScanReverse (unsigned long *, unsigned long);
 # pragma intrinsic (_BitScanReverse)
 # ifdef _M_X64
+extern unsigned char _BitScanReverse64 (unsigned long *, unsigned long long);
 #  pragma intrinsic (_BitScanReverse64)
 # endif
+
 _GL_STDBIT_INLINE int
 __gl_stdbit_clzl (unsigned long int n)
 {
@@ -222,10 +228,16 @@ __gl_stdbit_ctzll (unsigned long long int n)
   return n ? __builtin_ctzll (n) : 8 * sizeof n;
 }
 #elif defined _MSC_VER
+
+/* Declare the few MSVC intrinsics that we need.  We prefer not to include
+   <intrin.h> because it would pollute the namespace.  */
+extern unsigned char _BitScanForward (unsigned long *, unsigned long);
 # pragma intrinsic (_BitScanForward)
 # ifdef _M_X64
+extern unsigned char _BitScanForward64 (unsigned long *, unsigned long long);
 #  pragma intrinsic (_BitScanForward64)
 # endif
+
 _GL_STDBIT_INLINE int
 __gl_stdbit_ctzl (unsigned long int n)
 {
@@ -324,9 +336,14 @@ __gl_stdbit_popcount_wide (unsigned long long int n)
 
 #  ifdef _MSC_VER
 #   if 1500 <= _MSC_VER && (defined _M_IX86 || defined _M_X64)
+/* Declare the few MSVC intrinsics that we need.  We prefer not to include
+   <intrin.h> because it would pollute the namespace.  */
+extern void __cpuid (int[4], int);
 #    pragma intrinsic (__cpuid)
+extern unsigned int __popcnt (unsigned int);
 #    pragma intrinsic (__popcnt)
 #    ifdef _M_X64
+extern unsigned long long __popcnt64 (unsigned long long);
 #     pragma intrinsic (__popcnt64)
 #    else
 _GL_STDC_COUNT_ONES_INLINE int
