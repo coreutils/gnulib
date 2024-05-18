@@ -33,5 +33,5 @@ main ()
   ASSERT (strcmp (uc_indic_conjunct_break_name (UC_INDIC_CONJUNCT_BREAK_EXTEND),    "Extend") == 0);
   ASSERT (uc_indic_conjunct_break_name (-1) == NULL);
 
-  return 0;
+  return test_exit_status;
 }

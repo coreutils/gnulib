@@ -38,5 +38,5 @@ main ()
   z = pow (x, y);
   ASSERT (z >= 728.9999999 && z <= 729.0000001);
 
-  return 0;
+  return test_exit_status;
 }

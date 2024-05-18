@@ -71,5 +71,5 @@ main (void)
   ASSERT (*str);
   ASSERT (errno == 0 || errno == EINVAL);
 
-  return 0;
+  return test_exit_status;
 }

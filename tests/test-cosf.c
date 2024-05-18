@@ -36,5 +36,5 @@ main ()
   y = cosf (x);
   ASSERT (y >= 0.8253355f && y <= 0.8253357f);
 
-  return 0;
+  return test_exit_status;
 }

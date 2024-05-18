@@ -131,5 +131,5 @@ main (int argc, char *argv[])
 {
   test_obstack_vprintf ();
   test_obstack_printf ();
-  return 0;
+  return test_exit_status;
 }

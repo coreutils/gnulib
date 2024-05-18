@@ -148,5 +148,5 @@ main (int argc, char *argv[])
   ASSERT (strlen (nl_langinfo (YESEXPR)) > 0);
   ASSERT (strlen (nl_langinfo (NOEXPR)) > 0);
 
-  return 0;
+  return test_exit_status;
 }

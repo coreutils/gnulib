@@ -48,5 +48,5 @@ main ()
   for (; c < 0x110000; c++)
     ASSERT (uc_joining_group (c) == UC_JOINING_GROUP_NONE);
 
-  return 0;
+  return test_exit_status;
 }

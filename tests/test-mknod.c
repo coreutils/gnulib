@@ -51,5 +51,6 @@ main (void)
 
   /* We can only portably test creation of fifos.  Anything else
      requires root privileges and knowledge of device numbers.  */
-  return test_mkfifo (do_mknod, true);
+  int result = test_mkfifo (do_mknod, true);
+  return (result ? result : test_exit_status);
 }

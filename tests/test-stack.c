@@ -69,5 +69,5 @@ main (void)
   ASSERT (string_stack_empty (string_stack));
   string_stack_destroy (string_stack);
 
-  return EXIT_SUCCESS;
+  return test_exit_status;
 }

@@ -141,7 +141,7 @@ main (int argc, char *argv[])
                 ASSERT (mbsinit (&state));
               }
         }
-        return 0;
+        return test_exit_status;
 
       case '2':
         /* Locale encoding is ISO-8859-1 or ISO-8859-15.  */
@@ -173,7 +173,7 @@ main (int argc, char *argv[])
           ASSERT (ret == 1);
           ASSERT (mbsinit (&state));
         }
-        return 0;
+        return test_exit_status;
 
       case '3':
         /* Locale encoding is UTF-8.  */
@@ -211,7 +211,7 @@ main (int argc, char *argv[])
           ASSERT (ret == 1);
           ASSERT (mbsinit (&state));
         }
-        return 0;
+        return test_exit_status;
 
       case '4':
         /* Locale encoding is EUC-JP.  */
@@ -250,7 +250,7 @@ main (int argc, char *argv[])
           ASSERT (ret == 1);
           ASSERT (mbsinit (&state));
         }
-        return 0;
+        return test_exit_status;
 
       case '5':
         /* Locale encoding is GB18030.  */
@@ -290,7 +290,7 @@ main (int argc, char *argv[])
           ASSERT (ret == 1);
           ASSERT (mbsinit (&state));
         }
-        return 0;
+        return test_exit_status;
       }
 
   return 1;

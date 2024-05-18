@@ -125,5 +125,5 @@ main ()
   ASSERT (uc_bidi_class_byname ("X") < 0);
   ASSERT (uc_bidi_class_byname ("") < 0);
 
-  return 0;
+  return test_exit_status;
 }

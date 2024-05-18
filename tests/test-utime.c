@@ -137,5 +137,5 @@ main (void)
   ignore_value (system ("rm -rf " BASE "*"));
 
   result1 = test_utime (true);
-  return result1;
+  return (result1 ? result1 : test_exit_status);
 }

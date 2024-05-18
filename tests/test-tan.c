@@ -36,5 +36,5 @@ main ()
   y = tan (x);
   ASSERT (y >= 0.6841368083 && y <= 0.6841368084);
 
-  return 0;
+  return test_exit_status;
 }

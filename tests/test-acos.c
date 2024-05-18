@@ -36,5 +36,5 @@ main ()
   y = acos (x);
   ASSERT (y >= 0.9272952180 && y <= 0.9272952181);
 
-  return 0;
+  return test_exit_status;
 }

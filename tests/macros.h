@@ -29,10 +29,31 @@
 # endif
 #endif
 
+/* Define NO_MAIN_HERE before including this file, if this compilation unit
+   does not contain a main() function.  */
+
+/* Optionally define CONTINUE_AFTER_ASSERT to 1 before including this file,
+   if you wish execution to continue after an ASSERT or ASSERT_NO_STDIO
+   failure.  */
+#ifndef CONTINUE_AFTER_ASSERT
+# define CONTINUE_AFTER_ASSERT 0
+#endif
+
 /* Define ASSERT_STREAM before including this file if ASSERT must
    target a stream other than stderr.  */
 #ifndef ASSERT_STREAM
 # define ASSERT_STREAM stderr
+#endif
+
+/* Exit status of the test.
+   Initialized to EXIT_SUCCESS.
+   Set to EXIT_FAILURE when an ASSERT or ASSERT_NO_STDIO fails.  */
+/* To satisfy the "one definition rule", we define the variable in the
+   compilation unit that contains the main() function.  */
+#ifdef NO_MAIN_HERE
+extern int volatile test_exit_status;
+#else
+int volatile test_exit_status = EXIT_SUCCESS;
 #endif
 
 /* ASSERT (condition);
@@ -59,7 +80,10 @@
           fprintf (ASSERT_STREAM, "%s:%d: assertion '%s' failed\n",          \
                    __FILE__, __LINE__, #expr);                               \
           fflush (ASSERT_STREAM);                                            \
-          abort ();                                                          \
+          if (CONTINUE_AFTER_ASSERT)                                         \
+            test_exit_status = EXIT_FAILURE;                                 \
+          else                                                               \
+            abort ();                                                        \
         }                                                                    \
     }                                                                        \
   while (0)
@@ -77,7 +101,10 @@
           WRITE_TO_STDERR (": assertion '");                \
           WRITE_TO_STDERR (#expr);                          \
           WRITE_TO_STDERR ("' failed\n");                   \
-          abort ();                                         \
+          if (CONTINUE_AFTER_ASSERT)                        \
+            test_exit_status = EXIT_FAILURE;                \
+          else                                              \
+            abort ();                                       \
         }                                                   \
     }                                                       \
   while (0)

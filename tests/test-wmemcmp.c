@@ -91,5 +91,5 @@ main (int argc, char *argv[])
     ASSERT (wmemcmp (input2, input1, 1) > 0);
   }
 
-  return 0;
+  return test_exit_status;
 }

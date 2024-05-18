@@ -42,5 +42,6 @@ main (void)
   /* Remove any leftovers from a previous partial run.  */
   ignore_value (system ("rm -rf " BASE "*"));
 
-  return test_mkfifo (mkfifo, true);
+  int result = test_mkfifo (mkfifo, true);
+  return (result ? result : test_exit_status);
 }

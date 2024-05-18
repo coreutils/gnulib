@@ -74,5 +74,5 @@ main ()
   test_ascii (u32_is_uppercase);
   test_nonascii (u32_is_uppercase);
 
-  return 0;
+  return test_exit_status;
 }

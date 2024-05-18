@@ -210,7 +210,7 @@ main ()
   test_rwlock ();
   printf (" OK\n"); fflush (stdout);
 
-  return 0;
+  return test_exit_status;
 }
 
 #else

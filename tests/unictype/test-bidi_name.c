@@ -28,5 +28,5 @@ main ()
   ASSERT (strcmp (uc_bidi_class_name (UC_BIDI_NSM), "NSM") == 0);
   ASSERT (uc_bidi_class_name (-1) == NULL);
 
-  return 0;
+  return test_exit_status;
 }

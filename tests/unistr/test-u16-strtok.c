@@ -33,5 +33,5 @@ main (void)
 {
   test_u_strtok ();
 
-  return 0;
+  return test_exit_status;
 }

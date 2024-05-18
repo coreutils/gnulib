@@ -70,5 +70,5 @@ main (int argc, _GL_UNUSED char **argv)
       ASSERT (fseeko (stdin, 0, SEEK_END) == 0);
       ASSERT (!feof (stdin));
     }
-  return 0;
+  return test_exit_status;
 }

@@ -68,5 +68,5 @@ main ()
     ASSERT (l->int_n_sep_by_space == CHAR_MAX);
   }
 
-  return 0;
+  return test_exit_status;
 }

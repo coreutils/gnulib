@@ -93,5 +93,5 @@ main (void)
   ASSERT (freopen ("/dev/null", "w+", fp) == fp);
   ASSERT (STDERR_FILENO < fileno (fp));
 
-  return 0;
+  return test_exit_status;
 }

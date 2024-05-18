@@ -60,5 +60,5 @@ main (int argc, char *argv[])
   free (name1);
   free (name2);
 
-  return 0;
+  return test_exit_status;
 }

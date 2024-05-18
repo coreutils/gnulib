@@ -83,5 +83,5 @@ main (void)
     unlink (BASE "link");
   }
 
-  return 0;
+  return test_exit_status;
 }

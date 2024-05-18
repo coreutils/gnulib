@@ -244,5 +244,5 @@ main (void)
   test_birthtime (statinfo, modtimes, birthtimes);
 
   cleanup (0);
-  return 0;
+  return test_exit_status;
 }

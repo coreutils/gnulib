@@ -436,5 +436,5 @@ main (void)
   ASSERT (remove (BASE) == 0);
   ASSERT (remove ("ise") == 0);
 
-  return 0;
+  return test_exit_status;
 }

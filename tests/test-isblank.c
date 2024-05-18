@@ -46,5 +46,5 @@ main ()
     ASSERT (!isblank (c) == !(c == ' ' || c == '\t'));
   ASSERT (!isblank (EOF));
 
-  return 0;
+  return test_exit_status;
 }

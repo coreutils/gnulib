@@ -40,5 +40,5 @@ main (int argc, char *argv[])
   language = uc_locale_language ();
   ASSERT (strcmp (language, expected) == 0);
 
-  return 0;
+  return test_exit_status;
 }

@@ -53,5 +53,5 @@ main ()
   ASSERT (sizeof (g.gl_pathv));
   ASSERT (sizeof (g.gl_offs));
 
-  return 0;
+  return test_exit_status;
 }

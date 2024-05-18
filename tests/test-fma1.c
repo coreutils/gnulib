@@ -43,5 +43,5 @@ main ()
 {
   test_function (fma);
 
-  return 0;
+  return test_exit_status;
 }

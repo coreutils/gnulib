@@ -35,7 +35,7 @@ int
 main (int argc, char *argv[])
 {
   test_function (printf);
-  return 0;
+  return test_exit_status;
 }
 
 /* Test whether __attribute__ (__format__ (...)) still works.  */

@@ -84,5 +84,5 @@ main (void)
   if (result == 77)
     fputs ("skipping test: symlinks not supported on this file system\n",
            stderr);
-  return result;
+  return (result ? result : test_exit_status);
 }

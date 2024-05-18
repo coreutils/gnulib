@@ -41,7 +41,7 @@ main (int argc, char **argv)
   if (argc == 1)
     {
       ASSERT (ftell (stdin) == -1);
-      return 0;
+      return test_exit_status;
     }
 
   /* mingw ftell is unreliable on text mode input.  */
@@ -103,5 +103,5 @@ main (int argc, char **argv)
   ASSERT (ftell (stdin) == ch + 10);
 #endif
 
-  return 0;
+  return test_exit_status;
 }

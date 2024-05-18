@@ -119,5 +119,5 @@ main (int argc, char *argv[])
     ASSERT (err == 0);
   }
 
-  return exitcode;
+  return (exitcode ? exitcode : test_exit_status);
 }

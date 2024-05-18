@@ -90,7 +90,7 @@ main ()
      from "gcc -fsanitize=thread".  */
   ASSERT (pthread_join (killer_thread, NULL) == 0);
 
-  return 0;
+  return test_exit_status;
 }
 
 #else

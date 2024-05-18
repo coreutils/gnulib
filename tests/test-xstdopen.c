@@ -28,5 +28,5 @@ main (void)
   xstdopen ();
   ASSERT (open ("Makefile", O_RDONLY) >= 3);
 
-  return 0;
+  return test_exit_status;
 }

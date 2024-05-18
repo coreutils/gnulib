@@ -55,5 +55,5 @@ main ()
   ASSERT (floorl (Infinityl ()) == Infinityl ());
   ASSERT (floorl (- Infinityl ()) == - Infinityl ());
 
-  return 0;
+  return test_exit_status;
 }

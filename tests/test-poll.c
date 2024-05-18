@@ -390,5 +390,5 @@ main ()
   result += test (test_accept_first, "General socket test with fork");
   result += test (test_pipe, "Pipe test");
 
-  exit (result);
+  return (result ? result : test_exit_status);
 }

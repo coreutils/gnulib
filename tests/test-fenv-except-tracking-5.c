@@ -64,7 +64,7 @@ main ()
   a = 1.0; b = a + a;
   al = 1.0L; bl = al + al;
 
-  return 0;
+  return test_exit_status;
 }
 
 #else

@@ -84,5 +84,5 @@ main (void)
     ASSERT (priv_set_remove_linkdir () == -1);
 #endif
 
-    return 0;
+    return test_exit_status;
 }

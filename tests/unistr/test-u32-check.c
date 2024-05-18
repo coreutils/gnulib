@@ -62,5 +62,5 @@ main ()
     ASSERT (u32_check (input, SIZEOF (input)) == input + 2);
   }
 
-  return 0;
+  return test_exit_status;
 }

@@ -65,7 +65,7 @@ main ()
   resultd = nand + 42.0;
   resultl = nanl + 42.0L;
 
-  return 0;
+  return test_exit_status;
 }
 
 #else

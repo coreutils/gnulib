@@ -230,5 +230,5 @@ main (int argc, char *argv[])
     return 1;
 
   test_vasnprintf ();
-  return 0;
+  return test_exit_status;
 }

@@ -90,5 +90,5 @@ main (void)
   free (line);
   fclose (f);
   remove ("test-getdelim.txt");
-  return 0;
+  return test_exit_status;
 }

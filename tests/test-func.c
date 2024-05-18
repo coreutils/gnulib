@@ -36,5 +36,5 @@ main ()
   ASSERT (strcmp (__func__, "main") == 0
           || strcmp (__func__, "<unknown function>") == 0);
 
-  return 0;
+  return test_exit_status;
 }

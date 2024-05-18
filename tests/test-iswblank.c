@@ -36,5 +36,5 @@ main (void)
   ASSERT (iswblank (L'\t'));
   ASSERT (!iswblank (L'\n'));
 
-  return 0;
+  return test_exit_status;
 }

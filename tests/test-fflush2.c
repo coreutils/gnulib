@@ -60,7 +60,7 @@ main (int argc, char **argv)
         c = fgetc (stdin);
         ASSERT (c == '/');
 
-        return 0;
+        return test_exit_status;
 
       case '2':
         /* Check fflush after a non-backup ungetc() call.  This is case 2a in
@@ -95,7 +95,7 @@ main (int argc, char **argv)
         c = fgetc (stdin);
         ASSERT (c == '/');
 
-        return 0;
+        return test_exit_status;
       }
 
   return 1;

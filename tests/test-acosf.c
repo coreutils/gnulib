@@ -36,5 +36,5 @@ main ()
   y = acosf (x);
   ASSERT (y >= 0.9272951f && y <= 0.9272953f);
 
-  return 0;
+  return test_exit_status;
 }

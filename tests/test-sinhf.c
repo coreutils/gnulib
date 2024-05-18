@@ -36,5 +36,5 @@ main ()
   y = sinhf (x);
   ASSERT (y >= 0.6366535f && y <= 0.6366537f);
 
-  return 0;
+  return test_exit_status;
 }

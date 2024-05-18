@@ -51,5 +51,5 @@ main ()
     ASSERT (mbspbrk (input, "\303") == NULL); /* invalid multibyte sequence */
   }
 
-  return 0;
+  return test_exit_status;
 }

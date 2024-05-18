@@ -1349,5 +1349,5 @@ main (void)
   ASSERT (strerrorname_np (20200830) == NULL);
   ASSERT (strerrorname_np (-714) == NULL);
 
-  return 0;
+  return test_exit_status;
 }

@@ -121,5 +121,5 @@ main (void)
   ASSERT (unlink (witness) == 0);
   ASSERT (close (dfd) == 0);
 
-  return 0;
+  return test_exit_status;
 }

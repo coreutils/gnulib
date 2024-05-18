@@ -39,8 +39,6 @@
 
 #define EXPECTED_DATA_FILE "t-sq-data.tmp"
 
-static int failed;
-
 static void
 check_one (enum system_command_interpreter interpreter, const char *prog,
            const char *input)
@@ -93,7 +91,7 @@ check_one (enum system_command_interpreter interpreter, const char *prog,
             {
               fprintf (stderr, "for input = |%s|: system() command failed with status %d: %s\n",
                        input, exitcode, command);
-              failed = 1;
+              test_exit_status = EXIT_FAILURE;
             }
         }
         {
@@ -103,7 +101,7 @@ check_one (enum system_command_interpreter interpreter, const char *prog,
             {
               fprintf (stderr, "for input = |%s|: popen() command failed with status %d: %s\n",
                        input, exitcode, command);
-              failed = 1;
+              test_exit_status = EXIT_FAILURE;
             }
         }
         break;
@@ -136,21 +134,21 @@ check_one (enum system_command_interpreter interpreter, const char *prog,
                         {
                           fprintf (stderr, "for input = |%s|: CreateProcess() command failed with status %d: %s\n",
                                    input, exitcode, command);
-                          failed = 1;
+                          test_exit_status = EXIT_FAILURE;
                         }
                     }
                   else
                     {
                       fprintf (stderr, "for input = |%s|: GetExitCodeProcess failed, GetLastError() = %u\n",
                                input, GetLastError ());
-                      failed = 1;
+                      test_exit_status = EXIT_FAILURE;
                     }
                 }
               else
                 {
                   fprintf (stderr, "for input = |%s|: WaitForSingleObject failed\n",
                            input);
-                  failed = 1;
+                  test_exit_status = EXIT_FAILURE;
                 }
               CloseHandle (pinfo.hProcess);
             }
@@ -158,7 +156,7 @@ check_one (enum system_command_interpreter interpreter, const char *prog,
             {
               fprintf (stderr, "for input = |%s|: CreateProcess failed, GetLastError() = %u\n",
                        input, GetLastError ());
-              failed = 1;
+              test_exit_status = EXIT_FAILURE;
             }
         }
         break;
@@ -345,5 +343,5 @@ main (int argc, char *argv[])
   /* Clean up.  */
   unlink (EXPECTED_DATA_FILE);
 
-  return failed;
+  return test_exit_status;
 }

@@ -436,6 +436,8 @@ main (int argc, _GL_UNUSED char *argv[])
 
   /* Test whether F_DUPFD_CLOEXEC is effective.  */
   ASSERT (fcntl (1, F_DUPFD_CLOEXEC, 10) >= 0);
+  if (test_exit_status)
+    return test_exit_status;
 #if defined _WIN32 && !defined __CYGWIN__
   return _execl ("./test-fcntl", "./test-fcntl", "child", NULL);
 #else

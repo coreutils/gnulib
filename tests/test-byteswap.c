@@ -72,5 +72,5 @@ main (void)
   test_bswap_eval_once ();
   test_bswap_double ();
 
-  return 0;
+  return test_exit_status;
 }

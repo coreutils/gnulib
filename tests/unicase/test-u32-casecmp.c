@@ -317,5 +317,5 @@ main ()
   test_ascii (u32_casecmp, UNINORM_NFD);
   test_nonascii (u32_casecmp);
 
-  return 0;
+  return test_exit_status;
 }

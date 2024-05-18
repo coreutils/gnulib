@@ -48,5 +48,6 @@ main (void)
   /* Remove any leftovers from a previous partial run.  */
   ignore_value (system ("rm -rf " BASE "*"));
 
-  return test_areadlink (do_areadlink, true);
+  int result = test_areadlink (do_areadlink, true);
+  return (result ? result : test_exit_status);
 }

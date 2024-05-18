@@ -90,5 +90,5 @@ main (void)
   free (line);
   fclose (f);
   remove ("test-getline.txt");
-  return 0;
+  return test_exit_status;
 }

@@ -45,5 +45,6 @@ my_select (int nfds, fd_set *readfds, fd_set *writefds, fd_set *exceptfds,
 int
 main (void)
 {
-  return test_function (my_select);
+  int result = test_function (my_select);
+  return (result ? result : test_exit_status);
 }

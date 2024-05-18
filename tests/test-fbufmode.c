@@ -96,7 +96,7 @@ main ()
   if (ret != 0)
     goto fail;
 
-  return 0;
+  return test_exit_status;
 
  fail:
   return ret;

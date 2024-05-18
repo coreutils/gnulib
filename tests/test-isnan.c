@@ -167,5 +167,5 @@ main ()
   test_float ();
   test_double ();
   test_long_double ();
-  return 0;
+  return test_exit_status;
 }

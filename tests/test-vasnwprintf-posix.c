@@ -5326,5 +5326,5 @@ main (int argc, char *argv[])
 {
   test_vasnwprintf ();
   test_asnwprintf ();
-  return 0;
+  return test_exit_status;
 }

@@ -615,7 +615,7 @@ main (int argc, char *argv[])
       {
       case '1':
         /* C or POSIX locale.  */
-        return 0;
+        return test_exit_status;
 
       case '2':
         /* Locale encoding is ISO-8859-1 or ISO-8859-15.  */
@@ -671,7 +671,7 @@ main (int argc, char *argv[])
         ASSERT (fnmatch ("H\366hLe", "H\326hle", FNM_CASEFOLD) == 0);
         #endif
 
-        return 0;
+        return test_exit_status;
 
       case '3':
         /* Locale encoding is UTF-8.  */
@@ -766,7 +766,7 @@ main (int argc, char *argv[])
         }
         #endif
 
-        return 0;
+        return test_exit_status;
 
       case '4':
         /* Locale encoding is EUC-JP.  */
@@ -849,7 +849,7 @@ main (int argc, char *argv[])
         }
         #endif
 
-        return 0;
+        return test_exit_status;
 
       case '5':
         /* Locale encoding is GB18030.  */
@@ -956,7 +956,7 @@ main (int argc, char *argv[])
         }
         #endif
 
-        return 0;
+        return test_exit_status;
       }
 
   return 1;

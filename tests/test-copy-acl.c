@@ -69,5 +69,5 @@ main (int argc, char *argv[])
   close (fd2);
   close (fd1);
 
-  return 0;
+  return test_exit_status;
 }

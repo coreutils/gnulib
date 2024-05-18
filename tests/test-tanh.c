@@ -36,5 +36,5 @@ main ()
   y = tanh (x);
   ASSERT (y >= 0.5370495669 && y <= 0.5370495670);
 
-  return 0;
+  return test_exit_status;
 }

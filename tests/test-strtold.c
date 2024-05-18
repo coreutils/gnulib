@@ -40,5 +40,5 @@ main (void)
 {
   test_function (strtold);
 
-  return 0;
+  return test_exit_status;
 }

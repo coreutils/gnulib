@@ -50,5 +50,5 @@ main ()
   ASSERT (trunc (Infinityd ()) == Infinityd ());
   ASSERT (trunc (- Infinityd ()) == - Infinityd ());
 
-  return 0;
+  return test_exit_status;
 }

@@ -29,5 +29,5 @@ main ()
   ASSERT (strcmp (uc_general_category_long_name (UC_CATEGORY_Nl), "Letter Number") == 0);
   ASSERT (uc_general_category_long_name (uc_general_category_or (UC_CATEGORY_Z, UC_CATEGORY_Nl)) == NULL);
 
-  return 0;
+  return test_exit_status;
 }

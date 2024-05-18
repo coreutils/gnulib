@@ -70,5 +70,5 @@ main (int argc, char *argv[])
   printf ("no\n");
 #endif
 
-  return 0;
+  return test_exit_status;
 }

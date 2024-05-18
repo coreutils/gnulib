@@ -270,5 +270,5 @@ main (int argc, char *argv[])
     free (haystack);
   }
 
-  return 0;
+  return test_exit_status;
 }

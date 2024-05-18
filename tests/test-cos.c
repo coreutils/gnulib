@@ -36,5 +36,5 @@ main ()
   y = cos (x);
   ASSERT (y >= 0.8253356149 && y <= 0.8253356150);
 
-  return 0;
+  return test_exit_status;
 }

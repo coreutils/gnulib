@@ -30,5 +30,5 @@ main ()
   ASSERT (uninorm_decomposing_form (UNINORM_NFKC) == UNINORM_NFKD);
   ASSERT (uninorm_decomposing_form (UNINORM_NFKD) == UNINORM_NFKD);
 
-  return 0;
+  return test_exit_status;
 }

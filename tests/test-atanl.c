@@ -41,5 +41,5 @@ main ()
   y = atanl (x);
   ASSERT (y >= 0.5404195002L && y <= 0.5404195003L);
 
-  return 0;
+  return test_exit_status;
 }

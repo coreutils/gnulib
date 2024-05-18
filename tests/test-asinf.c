@@ -36,5 +36,5 @@ main ()
   y = asinf (x);
   ASSERT (y >= 0.6435011f && y <= 0.6435013f);
 
-  return 0;
+  return test_exit_status;
 }

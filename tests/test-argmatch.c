@@ -185,5 +185,5 @@ main (int argc, char *argv[])
 
   argmatch_backup_usage (stdout);
 
-  return 0;
+  return test_exit_status;
 }

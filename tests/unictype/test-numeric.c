@@ -55,5 +55,5 @@ main ()
       ASSERT (value.numerator == 0 && value.denominator == 0);
     }
 
-  return 0;
+  return test_exit_status;
 }

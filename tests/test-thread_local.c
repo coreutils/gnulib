@@ -177,7 +177,7 @@ main ()
   test_thread_local ();
   printf (" OK\n"); fflush (stdout);
 
-  return 0;
+  return test_exit_status;
 }
 
 #else

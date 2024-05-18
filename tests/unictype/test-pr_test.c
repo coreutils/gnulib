@@ -31,5 +31,5 @@ main ()
   for (c = 0; c < 0x110000; c++)
     ASSERT (uc_is_property (c, pr) == uc_is_property_composite (c));
 
-  return 0;
+  return test_exit_status;
 }

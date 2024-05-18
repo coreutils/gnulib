@@ -271,5 +271,5 @@ main (int argc, char *argv[])
 {
   test_vasprintf ();
   test_asprintf ();
-  return 0;
+  return test_exit_status;
 }

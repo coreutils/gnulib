@@ -47,5 +47,5 @@ main (int argc, char *argv[])
 
   main_reader_loop (test, SOCKET_DATA_BLOCK_SIZE, client_socket);
 
-  return 0;
+  return test_exit_status;
 }

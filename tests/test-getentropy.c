@@ -50,5 +50,5 @@ main (int argc, char *argv[])
     ASSERT (memcmp (buf1, buf2, sizeof (buf1)) != 0);
   }
 
-  return 0;
+  return test_exit_status;
 }

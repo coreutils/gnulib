@@ -67,15 +67,14 @@ main ()
       positive_NaN_with_payload (1729)
     };
   int n = SIZEOF (x);
-  int result = 0;
 
   for (int i = 0; i < n; i++)
     for (int j = 0; j < n; j++)
       if (!(!!TOTALORDER (&x[i].value, &x[j].value) == (i <= j)))
         {
           fprintf (stderr, "Failed: i=%d j=%d\n", i, j);
-          result = 1;
+          test_exit_status = EXIT_FAILURE;
         }
 
-  return result;
+  return test_exit_status;
 }

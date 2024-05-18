@@ -52,5 +52,5 @@ main ()
     ASSERT (U_CMP2 (input2, 4, input1, 5) > 0);
   }
 
-  return 0;
+  return test_exit_status;
 }

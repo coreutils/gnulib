@@ -64,5 +64,5 @@ main (int argc, char *argv[])
   ASSERT (c_strcasecmp ("TURK\304\260SH", "turkish") > 0);
 #endif
 
-  return 0;
+  return test_exit_status;
 }

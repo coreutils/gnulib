@@ -95,5 +95,5 @@ main ()
   ASSERT (fetestexcept (FE_INEXACT) == FE_INEXACT);
 
 
-  return 0;
+  return test_exit_status;
 }

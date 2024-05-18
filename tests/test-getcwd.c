@@ -266,5 +266,6 @@ main ()
 {
   int err1 = test_abort_bug ();
   int err2 = test_long_name ();
-  return err1 * 10 + (err1 != 0 && err2 == 77 ? 0 : err2);
+  int result = err1 * 10 + (err1 != 0 && err2 == 77 ? 0 : err2);
+  return (result ? result : test_exit_status);
 }

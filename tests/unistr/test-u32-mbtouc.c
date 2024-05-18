@@ -29,5 +29,5 @@ main ()
 {
   test_function (u32_mbtouc);
 
-  return 0;
+  return test_exit_status;
 }

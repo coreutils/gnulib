@@ -252,5 +252,5 @@ main (void)
 
   ASSERT (sigdescr_np (-714) == NULL);
 
-  return 0;
+  return test_exit_status;
 }

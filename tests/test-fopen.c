@@ -30,5 +30,6 @@ SIGNATURE_CHECK (fopen, FILE *, (char const *, char const *));
 int
 main (void)
 {
-  return test_fopen ();
+  int result = test_fopen ();
+  return (result ? result : test_exit_status);
 }

@@ -86,5 +86,5 @@ main ()
   ASSERT (strcmp (uc_joining_group_name (UC_JOINING_GROUP_ZHAIN),                 "Zhain") == 0);
   ASSERT (uc_joining_group_name (-1) == NULL);
 
-  return 0;
+  return test_exit_status;
 }

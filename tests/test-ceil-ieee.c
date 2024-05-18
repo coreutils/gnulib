@@ -50,5 +50,5 @@ main ()
   ASSERT (ceil (Infinityd ()) == Infinityd ());
   ASSERT (ceil (- Infinityd ()) == - Infinityd ());
 
-  return 0;
+  return test_exit_status;
 }

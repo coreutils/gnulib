@@ -69,5 +69,5 @@ main ()
   /* NaNs.  */
   ASSERT (isnanl (ceill (NaNl ())));
 
-  return 0;
+  return test_exit_status;
 }

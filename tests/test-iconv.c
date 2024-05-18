@@ -155,5 +155,5 @@ main ()
 
 #endif /* HAVE_ICONV */
 
-  return 0;
+  return test_exit_status;
 }

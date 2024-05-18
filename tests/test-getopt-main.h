@@ -72,5 +72,5 @@ main (void)
   ASSERT (fclose (stderr) == 0);
   ASSERT (remove (TEST_GETOPT_TMP_NAME) == 0);
 
-  return 0;
+  return test_exit_status;
 }

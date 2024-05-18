@@ -45,5 +45,7 @@ main ()
     }
 
   /* Fail if none of the numbers were larger than RAND_MAX / 2.  */
-  return !n_big;
+  if (!n_big)
+    return 1;
+  return test_exit_status;
 }

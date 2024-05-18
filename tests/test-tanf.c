@@ -36,5 +36,5 @@ main ()
   y = tanf (x);
   ASSERT (y >= 0.6841368f && y <= 0.6841369f);
 
-  return 0;
+  return test_exit_status;
 }

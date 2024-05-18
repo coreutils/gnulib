@@ -29,5 +29,5 @@ main ()
   ASSERT (uc_bidi_class (0x05D7) == UC_BIDI_R);
   ASSERT (uc_bidi_class ('7') == UC_BIDI_EN);
 
-  return 0;
+  return test_exit_status;
 }

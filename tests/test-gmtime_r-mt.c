@@ -104,7 +104,7 @@ main (int argc, char *argv[])
     nanosleep (&duration, NULL);
   }
 
-  return 0;
+  return test_exit_status;
 }
 
 #else

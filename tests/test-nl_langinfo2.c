@@ -138,7 +138,7 @@ main (int argc, char *argv[])
       return 77;
     }
 
-  return 0;
+  return test_exit_status;
 #else
   fputs ("Skipping test: uselocale() not available\n", stderr);
   return 77;

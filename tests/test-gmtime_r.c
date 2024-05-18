@@ -52,5 +52,5 @@ main (void)
 #endif
   }
 
-  return 0;
+  return test_exit_status;
 }

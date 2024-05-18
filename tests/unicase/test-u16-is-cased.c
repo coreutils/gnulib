@@ -32,5 +32,5 @@ main ()
 {
   test_ascii (u16_is_cased);
 
-  return 0;
+  return test_exit_status;
 }

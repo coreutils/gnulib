@@ -129,7 +129,7 @@ main (int argc, char *argv[])
       {
       case '0':
         /* C locale; tested above.  */
-        return 0;
+        return test_exit_status;
 
       case '1':
         /* Locale encoding is ISO-8859-1 or ISO-8859-15.  */
@@ -141,7 +141,7 @@ main (int argc, char *argv[])
           is = for_character ("\330", 1);
           ASSERT (is != 0);
         }
-        return 0;
+        return test_exit_status;
 
       case '2':
         /* Locale encoding is EUC-JP.  */
@@ -171,7 +171,7 @@ main (int argc, char *argv[])
           ASSERT (is != 0);
         #endif
         }
-        return 0;
+        return test_exit_status;
 
       case '3':
         /* Locale encoding is UTF-8.  */
@@ -208,7 +208,7 @@ main (int argc, char *argv[])
           is = for_character ("\363\240\201\241", 4);
           ASSERT (is == 0);
         }
-        return 0;
+        return test_exit_status;
 
       case '4':
         /* Locale encoding is GB18030.  */
@@ -253,7 +253,7 @@ main (int argc, char *argv[])
           is = for_character ("\323\066\237\065", 4);
           ASSERT (is == 0);
         }
-        return 0;
+        return test_exit_status;
 
       }
 

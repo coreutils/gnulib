@@ -88,7 +88,7 @@ main (int argc, char *argv[])
       free (aligned64_blocks[i]);
     }
 
-  return 0;
+  return test_exit_status;
 }
 
 #else

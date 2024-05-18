@@ -35,5 +35,5 @@ main ()
   ASSERT (strcmp (uc_joining_type_long_name (UC_JOINING_TYPE_D), "Dual Joining") == 0);
   ASSERT (uc_joining_type_long_name (-1) == NULL);
 
-  return 0;
+  return test_exit_status;
 }

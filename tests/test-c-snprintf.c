@@ -54,5 +54,5 @@ main (int argc, char *argv[])
     ASSERT (!strcmp (s, "1."));
   }
 
-  return 0;
+  return test_exit_status;
 }

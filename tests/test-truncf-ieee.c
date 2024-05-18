@@ -50,5 +50,5 @@ main ()
   ASSERT (truncf (Infinityf ()) == Infinityf ());
   ASSERT (truncf (- Infinityf ()) == - Infinityf ());
 
-  return 0;
+  return test_exit_status;
 }

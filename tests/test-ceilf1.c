@@ -75,5 +75,5 @@ main (int argc, _GL_UNUSED char **argv)
   /* NaNs.  */
   ASSERT (isnanf (my_ceilf (NaNf ())));
 
-  return 0;
+  return test_exit_status;
 }

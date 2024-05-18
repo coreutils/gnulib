@@ -25,7 +25,6 @@
 int
 main ()
 {
-
   /* Simple string.  */
   { /* "Grüß Gott. Здравствуйте! x=(-b±sqrt(b²-4ac))/(2a)  日本語,中文,한글" */
     static const uint32_t input[] =
@@ -59,5 +58,6 @@ main ()
         ASSERT (len == n);
       }
   }
-  return 0;
+
+  return test_exit_status;
 }

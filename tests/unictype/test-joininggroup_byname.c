@@ -174,5 +174,5 @@ main ()
   ASSERT (uc_joining_group_byname ("X") < 0);
   ASSERT (uc_joining_group_byname ("") < 0);
 
-  return 0;
+  return test_exit_status;
 }

@@ -86,5 +86,5 @@ main ()
   y = yn (10, x);
   ASSERT (y >= -284.4645273 && y <= -284.4645272);
 
-  return 0;
+  return test_exit_status;
 }

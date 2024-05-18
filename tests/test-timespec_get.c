@@ -53,5 +53,5 @@ main (void)
   ASSERT (tt2 <= ts3.tv_sec);
   ASSERT (ts3.tv_sec <= tt4);
 
-  return 0;
+  return test_exit_status;
 }

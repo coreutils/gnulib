@@ -56,5 +56,5 @@ main (_GL_UNUSED int argc, char *argv[])
     close (fd);
   }
 
-  return 0;
+  return test_exit_status;
 }

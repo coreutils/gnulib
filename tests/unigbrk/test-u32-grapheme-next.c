@@ -100,5 +100,5 @@ main (void)
   test_u32_grapheme_next (1, NEUTRAL_FACE, -1);
   test_u32_grapheme_next (2, NEUTRAL_FACE, GRAVE, -1);
 
-  return 0;
+  return test_exit_status;
 }

@@ -93,5 +93,5 @@ main (_GL_UNUSED int argc, char *argv[])
   ASSERT (rmdir (BASE "dir1") == 0);
   ASSERT (rmdir (BASE "dir2") == 0);
 
-  return result;
+  return (result ? result : test_exit_status);
 }

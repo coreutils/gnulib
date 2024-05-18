@@ -140,5 +140,5 @@ main ()
     ASSERT (u8_mbsnlen (input, 5) == 5);
   }
 
-  return 0;
+  return test_exit_status;
 }

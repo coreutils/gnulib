@@ -212,7 +212,7 @@ main ()
   test_pthread_spin ();
   printf (" OK\n"); fflush (stdout);
 
-  return 0;
+  return test_exit_status;
 }
 
 #else

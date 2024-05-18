@@ -131,5 +131,5 @@ main (_GL_UNUSED int argc, char *argv[])
   test_xvasprintf ();
   test_xasprintf ();
 
-  return 0;
+  return test_exit_status;
 }

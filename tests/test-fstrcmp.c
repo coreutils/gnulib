@@ -71,5 +71,5 @@ main (int argc, char *argv[])
   ASSERT (check_fstrcmp ("George Bush", "Abraham Lincoln", 2./13.));
   ASSERT (check_fstrcmp ("George Bush", "George \"Bugs\" Moran", 2./3.));
 
-  return 0;
+  return test_exit_status;
 }

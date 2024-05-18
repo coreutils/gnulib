@@ -45,5 +45,5 @@ main (int argc, _GL_UNUSED char **argv)
     }
 
   free (p);
-  return 0;
+  return test_exit_status;
 }

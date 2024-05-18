@@ -41,5 +41,5 @@ main ()
   y = tanl (x);
   ASSERT (y >= 0.6841368083L && y <= 0.6841368084L);
 
-  return 0;
+  return test_exit_status;
 }

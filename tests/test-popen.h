@@ -89,5 +89,5 @@ main (int argc, char **argv)
         }
     }
   free (cmd);
-  return 0;
+  return test_exit_status;
 }

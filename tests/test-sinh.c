@@ -36,5 +36,5 @@ main ()
   y = sinh (x);
   ASSERT (y >= 0.6366535821 && y <= 0.6366535822);
 
-  return 0;
+  return test_exit_status;
 }

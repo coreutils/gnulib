@@ -114,5 +114,5 @@ main ()
   ASSERT (uc_combining_class_byname ("Iota_Subscript") == UC_CCC_IS);
   ASSERT (uc_combining_class_byname ("IotaSubscript") == UC_CCC_IS);
 
-  return 0;
+  return test_exit_status;
 }

@@ -51,5 +51,5 @@ main ()
   ASSERT (mbscasecmp ("turkish", "TURK\304\260SH") == 0);
   ASSERT (mbscasecmp ("TURK\304\260SH", "turkish") == 0);
 
-  return 0;
+  return test_exit_status;
 }

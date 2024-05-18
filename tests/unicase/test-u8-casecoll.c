@@ -35,5 +35,5 @@ main ()
      on ASCII strings should behave like strcasecmp.  */
   test_ascii (u8_casecoll, UNINORM_NFC);
 
-  return 0;
+  return test_exit_status;
 }

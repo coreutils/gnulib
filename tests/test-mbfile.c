@@ -62,5 +62,5 @@ main ()
   mbf_getc (next, mbstdin);
   ASSERT (mb_iseof (next));
 
-  return 0;
+  return test_exit_status;
 }

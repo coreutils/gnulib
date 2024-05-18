@@ -36,5 +36,5 @@ main ()
   y = asin (x);
   ASSERT (y >= 0.6435011087 && y <= 0.6435011088);
 
-  return 0;
+  return test_exit_status;
 }

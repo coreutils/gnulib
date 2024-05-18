@@ -377,7 +377,7 @@ main ()
     END_LONG_DOUBLE_ROUNDING ();
   }
 
-  return 0;
+  return test_exit_status;
 }
 
 #else

@@ -30,5 +30,5 @@ main ()
 {
   test_u8_strcmp ();
 
-  return 0;
+  return test_exit_status;
 }

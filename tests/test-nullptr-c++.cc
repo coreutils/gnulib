@@ -54,4 +54,6 @@ int
 main ()
 {
   varargs_callee ("type", nullptr, "foo", nullptr);
+
+  return test_exit_status;
 }

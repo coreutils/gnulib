@@ -98,5 +98,5 @@ main (int argc, char *argv[])
       aligned32_free (aligned32_blocks[i]);
     }
 
-  return 0;
+  return test_exit_status;
 }

@@ -119,5 +119,5 @@ main ()
   /* Check that it's clear in both units.  */
   ASSERT (fetestexcept (FE_INVALID) == 0);
 
-  return 0;
+  return test_exit_status;
 }

@@ -17,6 +17,7 @@
 #include <config.h>
 
 /* Specification.  */
+#define NO_MAIN_HERE
 #include "macros.h"
 
 /* Some numbers in the interval [0,1).  */

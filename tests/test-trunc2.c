@@ -173,5 +173,5 @@ main ()
                      >> NUM_HIGHBITS);
         error |= check (janus.f);
       }
-  return (error ? 1 : 0);
+  return (error ? 1 : test_exit_status);
 }

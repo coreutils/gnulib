@@ -55,5 +55,5 @@ main ()
   ASSERT (roundl (Infinityl ()) == Infinityl ());
   ASSERT (roundl (- Infinityl ()) == - Infinityl ());
 
-  return 0;
+  return test_exit_status;
 }

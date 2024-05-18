@@ -80,5 +80,5 @@ main (void)
     free (ptr);
   }
 
-  return 0;
+  return test_exit_status;
 }

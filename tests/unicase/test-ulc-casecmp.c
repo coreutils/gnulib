@@ -382,12 +382,12 @@ main (int argc, char *argv[])
       case '1':
         /* Locale encoding is ISO-8859-1 or ISO-8859-15.  */
         test_iso_8859_1 (ulc_casecmp);
-        return 0;
+        return test_exit_status;
 
       case '2':
         /* Locale encoding is UTF-8.  */
         test_utf_8 (ulc_casecmp);
-        return 0;
+        return test_exit_status;
       }
 
   return 1;

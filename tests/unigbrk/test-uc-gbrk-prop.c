@@ -85,5 +85,5 @@ main (void)
     }
   ASSERT (uc == 0x110000);
 
-  return 0;
+  return test_exit_status;
 }

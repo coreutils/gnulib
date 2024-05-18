@@ -42,5 +42,6 @@ main (void)
   /* Remove any garbage left from previous partial runs.  */
   ignore_value (system ("rm -rf " BASE "*"));
 
-  return test_rename (rename, true);
+  int result = test_rename (rename, true);
+  return (result ? result : test_exit_status);
 }

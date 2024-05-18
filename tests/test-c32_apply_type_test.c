@@ -166,5 +166,5 @@ main (int argc, char *argv[])
   ASSERT (! c32_apply_type_test ((char32_t) '\0', desc));
   ASSERT (! c32_apply_type_test (WEOF, desc));
 
-  return 0;
+  return test_exit_status;
 }

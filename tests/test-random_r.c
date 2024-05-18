@@ -64,5 +64,5 @@ main ()
   for (alignment = 0; alignment < sizeof (int32_t); alignment++)
     if (test_failed (alignment))
       return 1;
-  return 0;
+  return test_exit_status;
 }

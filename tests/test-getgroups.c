@@ -84,5 +84,5 @@ main (int argc, _GL_UNUSED char **argv)
         printf ("%d\n", (int) groups[i]);
     }
   free (groups);
-  return 0;
+  return test_exit_status;
 }

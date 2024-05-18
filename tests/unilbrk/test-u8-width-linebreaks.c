@@ -75,5 +75,5 @@ main ()
   test_function (u8_width_linebreaks, 1);
 #endif
 
-  return 0;
+  return test_exit_status;
 }

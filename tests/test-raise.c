@@ -32,7 +32,7 @@ SIGNATURE_CHECK (raise, int, (int));
 static _Noreturn void
 handler (_GL_UNUSED int sig)
 {
-  _exit (0);
+  _exit (test_exit_status);
 }
 
 int

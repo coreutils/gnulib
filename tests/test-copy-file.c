@@ -42,5 +42,5 @@ main (int argc, char *argv[])
   else
     copy_file_preserving (file1, file2);
 
-  return 0;
+  return test_exit_status;
 }

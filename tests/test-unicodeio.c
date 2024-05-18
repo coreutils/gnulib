@@ -99,5 +99,5 @@ main (int argc, char *argv[])
       ASSERT (0);
     }
 
-  return 0;
+  return test_exit_status;
 }

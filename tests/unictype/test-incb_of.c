@@ -48,5 +48,5 @@ main ()
   for (; c < 0x110000; c++)
     ASSERT (uc_indic_conjunct_break (c) == UC_INDIC_CONJUNCT_BREAK_NONE);
 
-  return 0;
+  return test_exit_status;
 }

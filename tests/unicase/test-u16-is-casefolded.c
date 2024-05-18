@@ -46,5 +46,5 @@ main ()
   test_ascii (u16_is_casefolded);
   test_nonascii (u16_is_casefolded);
 
-  return 0;
+  return test_exit_status;
 }

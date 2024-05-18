@@ -98,7 +98,6 @@ main (int argc, char *argv[])
 {
   const char *filename;
   char line[1024];
-  int exit_code;
   FILE *stream;
   int lineno;
 
@@ -118,7 +117,6 @@ main (int argc, char *argv[])
       exit (1);
     }
 
-  exit_code = 0;
   lineno = 0;
   while (fgets (line, sizeof line, stream))
     {
@@ -186,5 +184,5 @@ main (int argc, char *argv[])
         test_uc_grapheme_breaks (breaks, s, i, filename, lineno);
     }
 
-  return exit_code;
+  return test_exit_status;
 }

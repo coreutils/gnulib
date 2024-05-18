@@ -69,5 +69,5 @@ main ()
         ASSERT (feenableexcept (0) == uint_to_exceptions (c));
       }
 
-  return 0;
+  return test_exit_status;
 }

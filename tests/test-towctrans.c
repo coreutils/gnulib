@@ -56,5 +56,5 @@ main (int argc, char *argv[])
   ASSERT (towctrans ((wchar_t) 0, desc) == 0);
   ASSERT (towctrans (WEOF, desc) == WEOF);
 
-  return 0;
+  return test_exit_status;
 }

@@ -61,5 +61,5 @@ main ()
   /* NaNs.  */
   ASSERT (isnanf (truncf (NaNf ())));
 
-  return 0;
+  return test_exit_status;
 }

@@ -165,5 +165,5 @@ main (int argc, char *argv[])
 
   test_update (GL_RBTREE_OSET);
 
-  return 0;
+  return test_exit_status;
 }

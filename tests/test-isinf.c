@@ -184,5 +184,5 @@ main ()
   test_isinff ();
   test_isinfd ();
   test_isinfl ();
-  return 0;
+  return test_exit_status;
 }

@@ -45,5 +45,5 @@ main (void)
   tt3 = time (NULL);
   ASSERT (tt3 >= tv2.tv_sec);
 
-  return 0;
+  return test_exit_status;
 }

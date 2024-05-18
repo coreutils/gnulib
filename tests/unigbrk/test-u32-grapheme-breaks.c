@@ -115,5 +115,5 @@ main (void)
                             '.', 0x1F1E9, 0x1F1EA, 0x1F1EB, 0x1F1F7, '.',
                             -1);
 
-  return 0;
+  return test_exit_status;
 }

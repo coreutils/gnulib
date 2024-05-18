@@ -44,5 +44,5 @@ main ()
       ASSERT (uc_is_bidi_class (c, uc_bidi_class (c)));
   }
 
-  return 0;
+  return test_exit_status;
 }

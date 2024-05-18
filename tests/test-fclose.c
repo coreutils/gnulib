@@ -112,5 +112,5 @@ main (int argc, char **argv)
   /* Clean up.  */
   ASSERT (remove (BASE) == 0);
 
-  return 0;
+  return test_exit_status;
 }

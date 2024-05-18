@@ -146,7 +146,7 @@ main (int argc, char *argv[])
         ASSERT (is != 0);
         is = for_character ("`", 1);
         ASSERT (is != 0);
-        return 0;
+        return test_exit_status;
       }
 
   return 1;

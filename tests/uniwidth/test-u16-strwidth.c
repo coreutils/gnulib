@@ -54,5 +54,5 @@ main ()
     ASSERT (u16_strwidth (input, "GB2312") == 6);
   }
 
-  return 0;
+  return test_exit_status;
 }

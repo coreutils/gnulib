@@ -194,5 +194,5 @@ main (int argc, char *argv[])
   ASSERT (! iswctype (L'\0', desc));
   ASSERT (! iswctype (WEOF, desc));
 
-  return 0;
+  return test_exit_status;
 }

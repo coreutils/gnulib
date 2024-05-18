@@ -34,5 +34,5 @@ main ()
   ASSERT (!uc_is_general_category_withtable ('7', ctmask));
   ASSERT (uc_is_general_category_withtable (0x00B2, ctmask));
 
-  return 0;
+  return test_exit_status;
 }

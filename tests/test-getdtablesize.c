@@ -37,5 +37,5 @@ main ()
   ASSERT (dup2 (0, getdtablesize() - 1) == getdtablesize () - 1);
   ASSERT (dup2 (0, getdtablesize()) == -1);
 
-  return 0;
+  return test_exit_status;
 }

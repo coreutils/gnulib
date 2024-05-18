@@ -33,5 +33,6 @@
 int
 main (void)
 {
-  return test_open (open, true);
+  int result = test_open (open, true);
+  return (result ? result : test_exit_status);
 }

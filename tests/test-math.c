@@ -100,5 +100,5 @@ main (void)
   /* Check the value of FP_ILOGBNAN.  */
   ASSERT (FP_ILOGBNAN == INT_MIN || FP_ILOGBNAN == INT_MAX);
 
-  return 0;
+  return test_exit_status;
 }

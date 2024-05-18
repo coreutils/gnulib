@@ -76,5 +76,5 @@ main ()
   test_function (ulc_possible_linebreaks, 1);
 #endif
 
-  return 0;
+  return test_exit_status;
 }

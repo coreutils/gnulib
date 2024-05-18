@@ -118,5 +118,5 @@ main (void)
   ASSERT (old_sa.sa_handler == SIG_IGN);
   ASSERT (raise (SIGABRT) == 0);
 
-  return 0;
+  return test_exit_status;
 }

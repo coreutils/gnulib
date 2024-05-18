@@ -72,5 +72,5 @@ main (void)
   ASSERT (close (master) == 0);
   ASSERT (close (slave) == 0);
 
-  return 0;
+  return test_exit_status;
 }

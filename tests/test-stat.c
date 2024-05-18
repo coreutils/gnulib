@@ -51,5 +51,6 @@ do_stat (char const *name, struct stat *st)
 int
 main (void)
 {
-  return test_stat_func (do_stat, true);
+  int result = test_stat_func (do_stat, true);
+  return (result ? result : test_exit_status);
 }

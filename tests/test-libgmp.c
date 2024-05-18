@@ -70,5 +70,5 @@ main ()
   ASSERT (mpz_get_si (four) == 4);
   mpz_clear (four);
 
-  return 0;
+  return test_exit_status;
 }

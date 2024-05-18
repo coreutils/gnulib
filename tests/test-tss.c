@@ -522,5 +522,5 @@ main ()
   test_tss_racecheck ();
   printf (" OK\n"); fflush (stdout);
 
-  return 0;
+  return test_exit_status;
 }

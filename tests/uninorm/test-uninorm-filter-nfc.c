@@ -105,5 +105,5 @@ main ()
     ASSERT (check (decomposed, SIZEOF (decomposed), input, SIZEOF (input)) == 0);
   }
 
-  return 0;
+  return test_exit_status;
 }

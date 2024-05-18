@@ -354,5 +354,5 @@ main (int argc, char *argv[])
     }
   }
 
-  return 0;
+  return test_exit_status;
 }

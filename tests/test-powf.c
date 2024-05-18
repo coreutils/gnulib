@@ -38,5 +38,5 @@ main ()
   z = powf (x, y);
   ASSERT (z >= 728.999f && z <= 729.001f);
 
-  return 0;
+  return test_exit_status;
 }

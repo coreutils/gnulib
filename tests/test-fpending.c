@@ -37,5 +37,5 @@ main (void)
   fflush (stdout);
   ASSERT (__fpending (stdout) == 0);
 
-  exit (0);
+  return test_exit_status;
 }

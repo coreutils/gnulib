@@ -62,5 +62,5 @@ main (int argc, _GL_UNUSED char **argv)
   /* NaNs.  */
   ASSERT (isnand (floor (NaNd ())));
 
-  return 0;
+  return test_exit_status;
 }

@@ -66,6 +66,6 @@ main ()
       ASSERT (value3 > value1);
 #endif
 
-      return 0;
+      return test_exit_status;
     }
 }

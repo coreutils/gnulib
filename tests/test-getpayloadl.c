@@ -116,5 +116,5 @@ main ()
     ASSERT (neg_ret == pos_ret);
   }
 
-  return 0;
+  return test_exit_status;
 }

@@ -50,17 +50,17 @@ main (int argc, char *argv[])
       case '2':
         /* Locale encoding is ISO-8859-1 or ISO-8859-15.  */
         test_iso_8859_1 (mbmemcasecoll_hard, false);
-        return 0;
+        return test_exit_status;
 
       case '3':
         /* Locale encoding is UTF-8, locale is not Turkish.  */
         test_utf_8 (mbmemcasecoll_hard, false);
-        return 0;
+        return test_exit_status;
 
       case '4':
         /* Locale encoding is UTF-8, locale is Turkish.  */
         test_utf_8 (mbmemcasecoll_hard, true);
-        return 0;
+        return test_exit_status;
       }
 
   return 1;

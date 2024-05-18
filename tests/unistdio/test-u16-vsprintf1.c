@@ -64,5 +64,5 @@ main (int argc, char *argv[])
 {
   test_vsprintf ();
 
-  return 0;
+  return test_exit_status;
 }

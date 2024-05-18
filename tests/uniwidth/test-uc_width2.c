@@ -82,5 +82,5 @@ main ()
     }
   finish_interval ();
 
-  return 0;
+  return test_exit_status;
 }

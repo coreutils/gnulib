@@ -97,5 +97,5 @@ main (void)
   unlink (BASE "link1");
   unlink (BASE "file");
 
-  return 0;
+  return test_exit_status;
 }

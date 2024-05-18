@@ -119,7 +119,7 @@ main (int argc, char *argv[])
       {
       case '1':
         /* C or POSIX locale.  */
-        return 0;
+        return test_exit_status;
 
       case '2':
         /* Locale encoding is UTF-8.  */
@@ -133,7 +133,7 @@ main (int argc, char *argv[])
           ASSERT (strcmp (result, "\302\267foo") == 0);
           free (result);
         }
-        return 0;
+        return test_exit_status;
 
       case '3':
         /* Locale encoding is GB18030.  */
@@ -151,7 +151,7 @@ main (int argc, char *argv[])
           free (result);
         }
         #endif
-        return 0;
+        return test_exit_status;
       }
 
   return 1;

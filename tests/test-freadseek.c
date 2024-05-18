@@ -94,5 +94,5 @@ main (int argc, char **argv)
   free (buf3);
   free (buf1);
 
-  return 0;
+  return test_exit_status;
 }

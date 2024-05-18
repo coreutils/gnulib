@@ -49,5 +49,5 @@ main ()
   y = nextafter (x, x);
   ASSERT (y == x);
 
-  return 0;
+  return test_exit_status;
 }

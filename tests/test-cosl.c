@@ -41,5 +41,5 @@ main ()
   y = cosl (x);
   ASSERT (y >= 0.8253356149L && y <= 0.8253356150L);
 
-  return 0;
+  return test_exit_status;
 }

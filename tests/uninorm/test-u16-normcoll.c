@@ -31,5 +31,5 @@ main ()
      on ASCII strings should behave like strcmp as well.  */
   test_ascii (u16_normcoll, UNINORM_NFC);
 
-  return 0;
+  return test_exit_status;
 }

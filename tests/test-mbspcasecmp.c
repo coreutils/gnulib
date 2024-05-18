@@ -86,5 +86,5 @@ main ()
     ASSERT (mbspcasecmp (string, "turkish") == string + 8);
   }
 
-  return 0;
+  return test_exit_status;
 }

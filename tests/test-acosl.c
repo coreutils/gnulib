@@ -41,5 +41,5 @@ main ()
   y = acosl (x);
   ASSERT (y >= 0.9272952180L && y <= 0.9272952181L);
 
-  return 0;
+  return test_exit_status;
 }

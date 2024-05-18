@@ -55,5 +55,6 @@ main (void)
   /* Remove any leftovers from a previous partial run.  */
   ignore_value (system ("rm -rf " BASE "*"));
 
-  return test_lstat_func (do_lstat, true);
+  int result = test_lstat_func (do_lstat, true);
+  return (result ? result : test_exit_status);
 }

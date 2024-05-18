@@ -112,5 +112,5 @@ main ()
   test_ascii (u8_normcmp, UNINORM_NFD);
   test_nonascii (u8_normcmp);
 
-  return 0;
+  return test_exit_status;
 }

@@ -383,5 +383,6 @@ main (void)
   ASSERT (unlink (BASE "link4") == 0);
   ASSERT (unlink (BASE "link5") == 0);
   free (cwd);
-  return result;
+
+  return (result ? result : test_exit_status);
 }

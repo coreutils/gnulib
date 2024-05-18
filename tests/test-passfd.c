@@ -124,7 +124,7 @@ main ()
       ASSERT (fd == -1);
       ASSERT (errno == ENOTCONN);
 
-      return 0;
+      return test_exit_status;
     }
 #else
   errno = 0;

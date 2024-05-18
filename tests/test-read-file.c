@@ -120,5 +120,5 @@ main (void)
   ASSERT (!test_read_file (RF_SENSITIVE));
   ASSERT (!test_read_file (RF_BINARY | RF_SENSITIVE));
 
-  return 0;
+  return test_exit_status;
 }

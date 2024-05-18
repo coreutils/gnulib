@@ -271,5 +271,5 @@ main (void)
   ok = base32_decode_alloc_ctx (NULL, "FZ======FY======", 16, &p, &len);
   ASSERT (!ok);
 
-  return 0;
+  return test_exit_status;
 }

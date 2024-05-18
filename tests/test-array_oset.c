@@ -188,5 +188,5 @@ main (int argc, char *argv[])
 
   test_update (GL_ARRAY_OSET);
 
-  return 0;
+  return test_exit_status;
 }

@@ -59,5 +59,5 @@ main (int argc, char **argv)
         ASSERT (freadptrbufsize (stdin) != 0);
     }
 
-  return 0;
+  return test_exit_status;
 }

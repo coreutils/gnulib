@@ -126,5 +126,5 @@ main ()
     scratch_buffer_free (&buf);
   }
 
-  return 0;
+  return test_exit_status;
 }

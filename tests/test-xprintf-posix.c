@@ -32,5 +32,5 @@ int
 main (_GL_UNUSED int argc, char *argv[])
 {
   test_function (xprintf);
-  return 0;
+  return test_exit_status;
 }

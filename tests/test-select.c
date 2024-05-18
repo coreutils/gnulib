@@ -31,5 +31,6 @@ SIGNATURE_CHECK (select, int, (int, fd_set *, fd_set *, fd_set *,
 int
 main (void)
 {
-  return test_function (select);
+  int result = test_function (select);
+  return (result ? result : test_exit_status);
 }

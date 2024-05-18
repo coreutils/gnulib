@@ -20,6 +20,8 @@
 
 #include "uninorm.h"
 
+#include "macros.h"
+
 #if !(((defined _WIN32 || defined __CYGWIN__) && (HAVE_LIBUNISTRING || WOE32DLL)) || defined __ANDROID__)
 /* Check that UNINORM_NFKC is defined and links.  */
 uninorm_t n = UNINORM_NFKC;
@@ -40,5 +42,5 @@ main ()
   test_u16_nfkc ();
   test_u8_nfkc ();
 
-  return 0;
+  return test_exit_status;
 }

@@ -377,5 +377,5 @@ main (void)
   test_destructive_update ();
   test_iterator ();
 
-  return 0;
+  return test_exit_status;
 }

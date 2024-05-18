@@ -146,5 +146,6 @@ main (void)
   ASSERT (chdir ("..") == 0);
   ASSERT (unlink (BASE "dir/file") == 0);
   ASSERT (rmdir (BASE "dir") == 0);
-  return result1 | result2 | result3;
+  int result = result1 | result2 | result3;
+  return (result ? result : test_exit_status);
 }

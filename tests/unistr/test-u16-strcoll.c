@@ -37,5 +37,5 @@ main ()
 
   test_u16_strcmp ();
 
-  return 0;
+  return test_exit_status;
 }

@@ -38,5 +38,5 @@ main ()
     ASSERT (! uc_property_is_valid (pr));
   }
 
-  return 0;
+  return test_exit_status;
 }

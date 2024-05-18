@@ -197,5 +197,5 @@ main ()
     ASSERT (check (input, SIZEOF (input), NULL, UNINORM_NFC, casefolded_normalized, SIZEOF (casefolded_normalized)) == 0);
   }
 
-  return 0;
+  return test_exit_status;
 }

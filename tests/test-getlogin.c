@@ -41,5 +41,5 @@ main (void)
 #endif
   test_getlogin_result (buf, err);
 
-  return 0;
+  return test_exit_status;
 }

@@ -152,5 +152,5 @@ main ()
   /* Clean up data file.  */
   unlink (DATA_FILENAME);
 
-  return 0;
+  return test_exit_status;
 }

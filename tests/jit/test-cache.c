@@ -351,5 +351,5 @@ main ()
   clear_cache (start, end);
   ASSERT (f () == 2);
 
-  return 0;
+  return test_exit_status;
 }

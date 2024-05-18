@@ -69,5 +69,5 @@ main (void)
   /* Clean up.  */
   unlink (filename);
 
-  return 0;
+  return test_exit_status;
 }

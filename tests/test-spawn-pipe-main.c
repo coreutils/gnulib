@@ -133,5 +133,5 @@ main (int argc, char *argv[])
 
   test_pipe (argv[1], test >= 4);
 
-  return 0;
+  return test_exit_status;
 }

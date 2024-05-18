@@ -91,5 +91,5 @@ main (void)
   test_sig2str ();
   test_str2sig ();
 
-  return 0;
+  return test_exit_status;
 }

@@ -248,7 +248,7 @@ signal_sending_thread (void *arg)
   printf ("Sent %u signals. Received %u signals. Done after %u mutations.\n",
           num_signals_sent, num_signals_arrived, num_mutations);
 
-  exit (0);
+  exit (test_exit_status);
 
   /*NOTREACHED*/
 }

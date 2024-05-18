@@ -60,5 +60,5 @@ main (int argc, char *argv[])
       printf ("uname -m = machine or cpu = %s\n", buf.machine);
     }
 
-  return 0;
+  return test_exit_status;
 }

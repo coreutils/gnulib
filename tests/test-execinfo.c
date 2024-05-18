@@ -64,5 +64,5 @@ main (void)
   printf ("\nTruncated stack trace:\n"); fflush (stdout);
   test_backtrace (1);
 
-  return 0;
+  return test_exit_status;
 }

@@ -50,5 +50,5 @@ main ()
   FREE (p);
   ASSERT (p == NULL);
 
-  return 0;
+  return test_exit_status;
 }

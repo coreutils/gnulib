@@ -106,5 +106,5 @@ main (void)
     }
 
   free (cwd);
-  return 0;
+  return test_exit_status;
 }

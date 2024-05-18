@@ -507,7 +507,7 @@ main (int argc, char *argv[])
         }
     }
 
-  return 0;
+  return test_exit_status;
 
  skip:
   fputs ("Skipping test: trapping floating-point exceptions are not supported on this machine.\n", stderr);

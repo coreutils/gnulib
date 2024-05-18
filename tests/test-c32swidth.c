@@ -124,5 +124,5 @@ main ()
     ASSERT (w == 4);
   }
 
-  return 0;
+  return test_exit_status;
 }

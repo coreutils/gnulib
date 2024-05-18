@@ -48,5 +48,5 @@ main ()
     check (input, SIZEOF (input));
   }
 
-  return 0;
+  return test_exit_status;
 }

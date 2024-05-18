@@ -93,5 +93,5 @@ main (int argc, char **argv)
 
   ASSERT ( ! ferror (stdin));
 
-  return 0;
+  return test_exit_status;
 }

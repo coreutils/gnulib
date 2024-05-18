@@ -265,5 +265,5 @@ main ()
   test_function (u8_mbtouc);
   test_safe_function (u8_mbtouc);
 
-  return 0;
+  return test_exit_status;
 }

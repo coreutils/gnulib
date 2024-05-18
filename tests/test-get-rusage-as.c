@@ -70,6 +70,6 @@ main ()
       #endif
         ASSERT (value3 > value1);
 
-      return 0;
+      return test_exit_status;
     }
 }

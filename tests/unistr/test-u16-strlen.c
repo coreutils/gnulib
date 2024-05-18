@@ -53,5 +53,5 @@ main ()
     ASSERT (u16_strlen (input) == SIZEOF (input) - 1);
   }
 
-  return 0;
+  return test_exit_status;
 }

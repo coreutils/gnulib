@@ -37,5 +37,5 @@ main ()
   ASSERT (uc_mirror_char ('}', &mirrored) && mirrored == '{');
   ASSERT (!uc_mirror_char ('X', &mirrored));
 
-  return 0;
+  return test_exit_status;
 }

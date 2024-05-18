@@ -109,7 +109,7 @@ main ()
   if (fclose (fp))
     goto skip;
 
-  return 0;
+  return test_exit_status;
 
  skip:
   fprintf (stderr, "Skipping test: file operations failed.\n");

@@ -68,5 +68,5 @@ main ()
     ASSERT (retval == strlen (result));
   }
 
-  return 0;
+  return test_exit_status;
 }

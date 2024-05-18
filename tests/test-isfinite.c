@@ -178,5 +178,5 @@ main ()
   test_isfinitef ();
   test_isfinited ();
   test_isfinitel ();
-  return 0;
+  return test_exit_status;
 }

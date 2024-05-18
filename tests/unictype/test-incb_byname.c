@@ -39,5 +39,5 @@ main ()
   ASSERT (uc_indic_conjunct_break_byname ("X") < 0);
   ASSERT (uc_indic_conjunct_break_byname ("") < 0);
 
-  return 0;
+  return test_exit_status;
 }

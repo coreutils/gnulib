@@ -33,5 +33,5 @@ main ()
   for (; c < 0x110000; c++)
     ASSERT (!PREDICATE (c));
 
-  return 0;
+  return test_exit_status;
 }

@@ -46,5 +46,5 @@ main ()
 
   ino_map_free (ino_map);
 
-  return 0;
+  return test_exit_status;
 }

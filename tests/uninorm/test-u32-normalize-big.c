@@ -28,6 +28,7 @@
 
 #include "xalloc.h"
 #include "unistr.h"
+#define NO_MAIN_HERE
 #include "macros.h"
 
 #define ASSERT_WITH_LINE(expr, file, line) \

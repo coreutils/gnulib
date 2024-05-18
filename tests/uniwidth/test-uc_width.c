@@ -52,5 +52,5 @@ main ()
   ASSERT (uc_width (0x20369, "UTF-8") == 2);
   ASSERT (uc_width (0x2F876, "UTF-8") == 2);
 
-  return 0;
+  return test_exit_status;
 }

@@ -38,5 +38,5 @@ main ()
   ASSERT (uc_is_block (0x2A6D6, &b));
   ASSERT (!uc_is_block (0x2A6D7, &b));
 
-  return 0;
+  return test_exit_status;
 }

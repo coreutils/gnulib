@@ -331,5 +331,5 @@ main ()
   printf (" OK\n"); fflush (stdout);
 #endif
 
-  return 0;
+  return test_exit_status;
 }

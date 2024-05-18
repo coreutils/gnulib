@@ -57,5 +57,5 @@ main (void)
     ASSERT (getenv ("TEST_VAR") == NULL);
   }
 
-  return 0;
+  return test_exit_status;
 }

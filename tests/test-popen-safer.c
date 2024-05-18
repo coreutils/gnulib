@@ -72,5 +72,6 @@ main (int argc, char **argv)
   status = pclose (fp);
   ASSERT (WIFEXITED (status));
   ASSERT (!WEXITSTATUS (status));
-  return 0;
+
+  return test_exit_status;
 }

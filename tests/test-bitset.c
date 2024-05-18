@@ -425,5 +425,5 @@ int main (void)
   compare (BITSET_VARIABLE, BITSET_GREEDY);
 
   bitset_stats_dump (stderr);
-  return 0;
+  return test_exit_status;
 }

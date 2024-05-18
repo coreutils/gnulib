@@ -838,5 +838,5 @@ main ()
   test_locale_name_environ ();
   test_locale_name_default ();
 
-  return 0;
+  return test_exit_status;
 }

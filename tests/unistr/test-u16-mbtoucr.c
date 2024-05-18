@@ -86,5 +86,5 @@ main ()
     ASSERT (uc == 0xFFFD);
   }
 
-  return 0;
+  return test_exit_status;
 }

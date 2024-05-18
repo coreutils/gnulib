@@ -41,5 +41,5 @@ main (int argc, _GL_UNUSED char **argv)
       ASSERT (errno == ENOMEM);
     }
 
-  return 0;
+  return test_exit_status;
 }

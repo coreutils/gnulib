@@ -37,6 +37,7 @@
 
 #define BACKUP_STDERR_FILENO 10
 #define ASSERT_STREAM myerr
+#undef CONTINUE_AFTER_ASSERT
 #include "macros.h"
 
 static FILE *myerr;
@@ -148,5 +149,5 @@ main (int argc, char *argv[])
         ASSERT (errno == EBADF);
       }
 
-  return 0;
+  return test_exit_status;
 }

@@ -49,5 +49,5 @@ main ()
   /* HANGUL SYLLABLE GEUL */
   ASSERT (uc_composition (0xADF8, 0x11AF) == 0xAE00);
 
-  return 0;
+  return test_exit_status;
 }

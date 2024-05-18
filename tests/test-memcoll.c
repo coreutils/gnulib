@@ -48,5 +48,5 @@ main (void)
   ASSERT (memcoll0 ("x\0""1", 4, "x\0""2", 4) < 0);
   ASSERT (memcoll0 ("x\0""2", 4, "x\0""1", 4) > 0);
 
-  return 0;
+  return test_exit_status;
 }

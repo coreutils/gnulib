@@ -89,7 +89,7 @@ main (int argc, char *argv[])
       free (aligned64_blocks[i]);
     }
 
-  return 0;
+  return test_exit_status;
 #else
   fputs ("Skipping test: function 'aligned_alloc' does not exist\n", stderr);
   return 77;

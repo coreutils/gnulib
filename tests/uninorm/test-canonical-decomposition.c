@@ -139,5 +139,5 @@ main ()
   ASSERT (decomposed[0] == 0x1100);
   ASSERT (decomposed[1] == 0x1173);
 
-  return 0;
+  return test_exit_status;
 }

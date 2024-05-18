@@ -130,5 +130,5 @@ main ()
       ASSERT (mantissa == my_ldexp (x, - exp));
     }
 
-  return 0;
+  return test_exit_status;
 }

@@ -68,5 +68,5 @@ main (void)
 
   posix_spawn_file_actions_destroy (&actions);
 
-  return 0;
+  return test_exit_status;
 }

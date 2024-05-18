@@ -190,5 +190,5 @@ main (int argc, char *argv[])
 
   close (fd3);
 
-  return 0;
+  return test_exit_status;
 }

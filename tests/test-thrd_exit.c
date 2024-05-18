@@ -67,7 +67,7 @@ main ()
       /* Check that worker_thread_func () has finished executing.  */
       ASSERT (work_done);
 
-      return 0;
+      return test_exit_status;
     }
   else
     {

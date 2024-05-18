@@ -56,5 +56,5 @@ main ()
   z = atan2f (y, x);
   ASSERT (z >= -0.9272953f && z <= -0.92729515f);
 
-  return 0;
+  return test_exit_status;
 }

@@ -62,5 +62,5 @@ main (int argc, char *argv[])
       ASSERT (integer_length_l (-5UL << i) == NBITS);
       ASSERT (integer_length_l (-7UL << i) == NBITS);
     }
-  return 0;
+  return test_exit_status;
 }

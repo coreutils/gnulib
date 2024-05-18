@@ -121,5 +121,5 @@ main (void)
   ASSERT (remove (BASE "link") == 0);
   ASSERT (remove (BASE "file") == 0);
 
-  return 0;
+  return test_exit_status;
 }

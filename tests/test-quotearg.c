@@ -93,7 +93,7 @@ main (_GL_UNUSED int argc, char *argv[])
         compare_strings (use_quotearg_colon, &locale_results[1].group3, false);
 
         quotearg_free ();
-        return 0;
+        return test_exit_status;
       }
   }
 

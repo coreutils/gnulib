@@ -74,5 +74,5 @@ main ()
   test_ascii (u16_is_lowercase);
   test_nonascii (u16_is_lowercase);
 
-  return 0;
+  return test_exit_status;
 }

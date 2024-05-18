@@ -36,5 +36,5 @@ main ()
   y = atanf (x);
   ASSERT (y >= 0.5404194f && y <= 0.5404196f);
 
-  return 0;
+  return test_exit_status;
 }

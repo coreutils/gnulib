@@ -489,5 +489,5 @@ main (int argc, char *argv[])
     free (contents);
   }
 
-  return 0;
+  return test_exit_status;
 }

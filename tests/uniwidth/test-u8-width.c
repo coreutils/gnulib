@@ -58,5 +58,5 @@ main ()
     ASSERT (u8_width (input + INPUT4_OFFSET, INPUT4_LENGTH, "GB2312") == 6);
   }
 
-  return 0;
+  return test_exit_status;
 }

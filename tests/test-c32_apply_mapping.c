@@ -56,5 +56,5 @@ main (int argc, char *argv[])
   ASSERT (c32_apply_mapping ((char32_t) 0, desc) == 0);
   ASSERT (c32_apply_mapping (WEOF, desc) == WEOF);
 
-  return 0;
+  return test_exit_status;
 }

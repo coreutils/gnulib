@@ -497,5 +497,5 @@ main (_GL_UNUSED int argc, char **argv)
             && result.tv_nsec == 123456789);
   }
 
-  return 0;
+  return test_exit_status;
 }

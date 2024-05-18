@@ -234,5 +234,5 @@ main ()
       ASSERT (!uc_is_general_category (c, ct));
   }
 
-  return 0;
+  return test_exit_status;
 }

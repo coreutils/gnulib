@@ -85,7 +85,7 @@ main (void)
       CK (uintmax_t,    umaxtostr);
       CK (intmax_t,     imaxtostr);
       free (b);
-      return 0;
+      return test_exit_status;
     }
 
   /* snprintf doesn't accept %ju; skip this test.  */

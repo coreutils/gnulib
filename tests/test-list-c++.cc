@@ -75,5 +75,5 @@ main (int argc, char *argv[])
   list2.free ();
   list1.free ();
 
-  return 0;
+  return test_exit_status;
 }

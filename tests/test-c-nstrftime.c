@@ -52,5 +52,5 @@ main (void)
   fail |= quarter_test ();
   fail |= errno_test ();
   fail |= locales_test (english);
-  return fail;
+  return (fail ? fail : test_exit_status);
 }

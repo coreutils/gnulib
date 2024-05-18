@@ -77,5 +77,5 @@ main (void)
   test_u8_grapheme_prev ("e"ACUTE"x", 4, 1);
   test_u8_grapheme_prev ("e"ACUTE "e"ACUTE, 6, 3);
 
-  return 0;
+  return test_exit_status;
 }

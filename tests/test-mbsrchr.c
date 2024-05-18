@@ -58,5 +58,5 @@ main ()
     ASSERT (result == input + 5);
   }
 
-  return 0;
+  return test_exit_status;
 }

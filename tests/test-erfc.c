@@ -36,5 +36,5 @@ main ()
   y = erfc (x);
   ASSERT (y >= 0.3961439091 && y <= 0.3961439092);
 
-  return 0;
+  return test_exit_status;
 }

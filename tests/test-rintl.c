@@ -95,7 +95,7 @@ main ()
 
       test_function ();
 
-      return 0;
+      return test_exit_status;
     }
   else
     {

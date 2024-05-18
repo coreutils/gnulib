@@ -75,5 +75,5 @@ main (void)
   ASSERT (str != (char *) -1);
   ASSERT (strlen (str));
 
-  return 0;
+  return test_exit_status;
 }

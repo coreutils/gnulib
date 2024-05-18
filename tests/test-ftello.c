@@ -114,5 +114,5 @@ main (int argc, _GL_UNUSED char **argv)
   ASSERT (ftello (stdin) == ch + 10);
 #endif
 
-  return 0;
+  return test_exit_status;
 }

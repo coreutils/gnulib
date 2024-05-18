@@ -82,5 +82,5 @@ main (void)
     ASSERT (spent_utime + spent_stime > 10000U);
   }
 
-  return 0;
+  return test_exit_status;
 }

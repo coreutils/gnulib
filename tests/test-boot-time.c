@@ -46,5 +46,5 @@ main (int argc, char *argv[])
   ASSERT (tim >= now - 157680000);
   ASSERT (tim <= now + 604800);
 
-  return 0;
+  return test_exit_status;
 }

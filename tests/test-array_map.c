@@ -216,5 +216,5 @@ main (int argc, char *argv[])
     gl_list_free (values);
   }
 
-  return 0;
+  return test_exit_status;
 }

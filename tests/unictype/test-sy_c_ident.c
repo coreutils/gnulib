@@ -34,5 +34,5 @@ main ()
   ASSERT (uc_c_ident_category (0x001B) == UC_IDENTIFIER_INVALID);
   ASSERT (uc_c_ident_category (0xE0001) == UC_IDENTIFIER_INVALID);
 
-  return 0;
+  return test_exit_status;
 }

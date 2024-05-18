@@ -26,6 +26,7 @@
 
 #include "unistr.h"
 #include "test-u32-normalize-big.h"
+#include "macros.h"
 
 static int
 check (const uint32_t *c1, size_t c1_length,
@@ -105,7 +106,7 @@ main (int argc, char *argv[])
 
   free_normalization_test_file (&file);
 
-  return 0;
+  return test_exit_status;
 }
 
 #else

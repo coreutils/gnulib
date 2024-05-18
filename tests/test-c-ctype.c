@@ -224,5 +224,5 @@ main ()
   setlocale (LC_ALL, "ja_JP.EUC-JP");
   test_all ();
 
-  return 0;
+  return test_exit_status;
 }

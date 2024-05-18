@@ -67,6 +67,9 @@ main ()
       }
   }
 
+  if (test_exit_status != EXIT_SUCCESS)
+    return test_exit_status;
+
 #if defined _WIN32 && !defined __CYGWIN__
   /* On native Windows, scripts - even with '#!' marker - are not executable.
      Only .bat and .cmd files are.  */
@@ -98,6 +101,6 @@ main ()
     ASSERT (fclose (fp) == 0);
   }
 
-  return 0;
+  return test_exit_status;
 #endif
 }

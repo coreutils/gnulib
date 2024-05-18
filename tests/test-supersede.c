@@ -58,5 +58,5 @@ main (void)
   test_fopen_supersede (true, false);
   test_fopen_supersede (true, true);
 
-  return 0;
+  return test_exit_status;
 }

@@ -69,5 +69,5 @@ main (void)
       fail |= locales_test (french);
 #endif
     }
-  return fail;
+  return (fail ? fail : test_exit_status);
 }

@@ -36,5 +36,5 @@ main (void)
 {
   test_function (c_strtof);
 
-  return 0;
+  return test_exit_status;
 }

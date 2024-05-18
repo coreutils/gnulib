@@ -47,5 +47,5 @@ main (void)
     ASSERT (result.rem == -3);
   }
 
-  return 0;
+  return test_exit_status;
 }

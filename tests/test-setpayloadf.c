@@ -84,5 +84,5 @@ main ()
     ASSERT (x == 0.0f);
   }
 
-  return 0;
+  return test_exit_status;
 }

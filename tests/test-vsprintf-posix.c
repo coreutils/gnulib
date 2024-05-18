@@ -51,5 +51,5 @@ int
 main (int argc, char *argv[])
 {
   test_function (my_sprintf);
-  return 0;
+  return test_exit_status;
 }

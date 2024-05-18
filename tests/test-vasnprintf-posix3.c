@@ -88,7 +88,7 @@ main (int argc, char *argv[])
   test_vasnprintf ();
   test_asnprintf ();
 
-  return 0;
+  return test_exit_status;
 #else
   fprintf (stderr, "Skipping test: not a glibc >= 2.3 system\n");
   return 77;

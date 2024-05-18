@@ -42,5 +42,6 @@ main (void)
   /* Clean up any trash from prior testsuite runs.  */
   ignore_value (system ("rm -rf " BASE "*"));
 
-  return test_mkdir (mkdir, true);
+  int result = test_mkdir (mkdir, true);
+  return (result ? result : test_exit_status);
 }

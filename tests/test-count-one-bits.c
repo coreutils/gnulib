@@ -69,5 +69,5 @@ main (int argc, char *argv[])
   TEST_COUNT_ONE_BITS (count_one_bits_ll, unsigned long long int,
                        ULLONG_BIT, ULLONG_MAX, 1ULL);
 
-  return 0;
+  return test_exit_status;
 }

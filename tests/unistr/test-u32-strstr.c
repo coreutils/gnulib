@@ -45,5 +45,5 @@ main (void)
 
   test_u_strstr ();
 
-  return 0;
+  return test_exit_status;
 }

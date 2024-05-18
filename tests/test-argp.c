@@ -486,5 +486,5 @@ main (int argc, char **argv)
   if (failure_count)
     return 1;
 
-  return 0;
+  return test_exit_status;
 }

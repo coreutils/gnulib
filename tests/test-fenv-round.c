@@ -193,5 +193,5 @@ main ()
   test_tonearest ();
   ASSERT (fegetround () == FE_TONEAREST);
 
-  return 0;
+  return test_exit_status;
 }

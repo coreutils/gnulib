@@ -98,5 +98,5 @@ main (int argc, char **argv)
   free (pwd1);
   free (pwd2);
 
-  return 0;
+  return test_exit_status;
 }

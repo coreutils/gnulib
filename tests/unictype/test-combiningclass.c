@@ -31,5 +31,5 @@ main ()
   ASSERT (uc_combining_class (0x0327) == UC_CCC_ATB);
   ASSERT (uc_combining_class (0x093C) == UC_CCC_NK);
 
-  return 0;
+  return test_exit_status;
 }

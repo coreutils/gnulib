@@ -50,5 +50,5 @@ main ()
   ASSERT (roundf (Infinityf ()) == Infinityf ());
   ASSERT (roundf (- Infinityf ()) == - Infinityf ());
 
-  return 0;
+  return test_exit_status;
 }

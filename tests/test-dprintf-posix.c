@@ -168,5 +168,5 @@ int
 main (int argc, char *argv[])
 {
   test_function (dprintf);
-  return 0;
+  return test_exit_status;
 }

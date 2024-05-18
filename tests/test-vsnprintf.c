@@ -81,5 +81,5 @@ main (int argc, char *argv[])
     ASSERT (retval == strlen (result));
   }
 
-  return 0;
+  return test_exit_status;
 }

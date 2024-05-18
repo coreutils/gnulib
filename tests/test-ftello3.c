@@ -69,7 +69,7 @@ main (void)
   /* The file's contents is now "foogarsh!".  */
 
   remove (TESTFILE);
-  return 0;
+  return test_exit_status;
 
  skip:
   fprintf (stderr, "Skipping test: prerequisite file operations failed.\n");

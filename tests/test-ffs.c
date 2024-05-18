@@ -64,5 +64,5 @@ main (int argc, char *argv[])
       ASSERT (ffs (7U << i) == i + 1);
       ASSERT (ffs (-7U << i) == i + 1);
     }
-  return 0;
+  return test_exit_status;
 }

@@ -44,5 +44,6 @@ main (void)
   /* Remove any leftovers from a previous partial run.  */
   ignore_value (system ("rm -rf " BASE "*"));
 
-  return test_unlink_func (unlink, true);
+  int result = test_unlink_func (unlink, true);
+  return (result ? result : test_exit_status);
 }

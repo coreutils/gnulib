@@ -105,5 +105,5 @@ main (int argc, char **argv)
     default:
       return 1;
     }
-  return 0;
+  return test_exit_status;
 }

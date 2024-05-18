@@ -51,5 +51,5 @@ main ()
       ASSERT (uc_is_general_category (c, lowercase_letters));
   }
 
-  return 0;
+  return test_exit_status;
 }

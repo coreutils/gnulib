@@ -85,5 +85,5 @@ main ()
   /* Test error() function with nonzero STATUS.  */
   error (4, 0, "fatal error");
 
-  return 0;
+  return test_exit_status;
 }

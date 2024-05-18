@@ -184,5 +184,5 @@ main ()
     ASSERT (u8_check (input, sizeof (input) - 1) == input + 4);
   }
 
-  return 0;
+  return test_exit_status;
 }

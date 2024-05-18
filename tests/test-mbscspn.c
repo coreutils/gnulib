@@ -57,5 +57,5 @@ main ()
     ASSERT (mbscspn (input, "\303") == 14); /* invalid multibyte sequence */
   }
 
-  return 0;
+  return test_exit_status;
 }

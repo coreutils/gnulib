@@ -95,6 +95,6 @@ main ()
   CHECK_ALIGNED (static_struct2_alignas);
   CHECK_ALIGNED (static_struct3_alignas);
   CHECK_ALIGNED (static_struct4_alignas);
-  return 0;
+  return test_exit_status;
 #endif
 }

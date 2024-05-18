@@ -41,5 +41,5 @@ main ()
   y = asinl (x);
   ASSERT (y >= 0.6435011087L && y <= 0.6435011088L);
 
-  return 0;
+  return test_exit_status;
 }

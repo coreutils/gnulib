@@ -179,5 +179,5 @@ main (void)
   ASSERT (close (fd) == 0);
   ASSERT (unlink (witness) == 0);
 
-  return 0;
+  return test_exit_status;
 }

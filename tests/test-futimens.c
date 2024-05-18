@@ -46,5 +46,6 @@ main (void)
   /* Clean up any trash from prior testsuite runs.  */
   ignore_value (system ("rm -rf " BASE "*"));
 
-  return test_futimens (futimens, true);
+  int result = test_futimens (futimens, true);
+  return (result ? result : test_exit_status);
 }

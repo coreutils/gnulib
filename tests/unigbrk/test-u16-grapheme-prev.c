@@ -101,5 +101,5 @@ main (void)
   test_u16_grapheme_prev (2, 0xd83d, 0xde10, -1); /* 😐: neutral face. */
   test_u16_grapheme_prev (3, 0xd83d, 0xde10, GRAVE, -1);
 
-  return 0;
+  return test_exit_status;
 }

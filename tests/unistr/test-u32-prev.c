@@ -127,5 +127,5 @@ main ()
     ASSERT (check_invalid (input, SIZEOF (input)) == 0);
   }
 
-  return 0;
+  return test_exit_status;
 }

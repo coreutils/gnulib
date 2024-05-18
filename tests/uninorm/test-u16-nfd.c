@@ -27,6 +27,7 @@
 #include <unistd.h>
 
 #include "unistr.h"
+#define NO_MAIN_HERE
 #include "macros.h"
 
 static int

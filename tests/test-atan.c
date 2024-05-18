@@ -36,5 +36,5 @@ main ()
   y = atan (x);
   ASSERT (y >= 0.5404195002 && y <= 0.5404195003);
 
-  return 0;
+  return test_exit_status;
 }

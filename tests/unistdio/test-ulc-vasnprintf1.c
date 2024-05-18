@@ -69,5 +69,5 @@ int
 main (int argc, char *argv[])
 {
   test_vasnprintf ();
-  return 0;
+  return test_exit_status;
 }

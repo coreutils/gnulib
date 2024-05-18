@@ -51,5 +51,5 @@ main (int argc, char *argv[])
       ASSERT (!mbsinit (&state));
     }
 
-  return 0;
+  return test_exit_status;
 }

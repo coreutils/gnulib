@@ -100,5 +100,5 @@ main (void)
     ASSERT (memcmp (ret, "[[Hello world!]]", 16 + 1) == 0);
   }
 
-  return 0;
+  return test_exit_status;
 }

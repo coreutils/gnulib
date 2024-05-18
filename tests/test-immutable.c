@@ -153,5 +153,5 @@ main (int argc, char *argv[])
     default:
       ASSERT (false);
     }
-  return 0;
+  return test_exit_status;
 }

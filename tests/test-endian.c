@@ -209,5 +209,5 @@ main (void)
   test_convert_eval_once ();
   test_convert_double ();
 
-  return 0;
+  return test_exit_status;
 }

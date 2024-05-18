@@ -59,5 +59,5 @@ main (void)
   ASSERT (o == 8);
   ASSERT (i_ring_empty (&ir));
 
-  return 0;
+  return test_exit_status;
 }

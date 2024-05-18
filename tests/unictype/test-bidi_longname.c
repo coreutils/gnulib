@@ -46,5 +46,5 @@ main ()
   ASSERT (strcmp (uc_bidi_class_long_name (UC_BIDI_WS), "White Space") == 0);
   ASSERT (uc_bidi_class_long_name (-1) == NULL);
 
-  return 0;
+  return test_exit_status;
 }

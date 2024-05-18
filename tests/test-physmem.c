@@ -34,5 +34,5 @@ main (int argc, char *argv[])
   ASSERT (physmem_total () >= physmem_available ());
   ASSERT (physmem_available () >= 4 * 1024 * 1024);
 
-  return 0;
+  return test_exit_status;
 }

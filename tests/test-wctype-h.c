@@ -107,5 +107,5 @@ main (void)
   ASSERT (towlower (e) == e);
   ASSERT (towupper (e) == e);
 
-  return 0;
+  return test_exit_status;
 }

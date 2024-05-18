@@ -66,5 +66,5 @@ main ()
   ASSERT (fetestexceptflag (&saved_flags_2, FE_INVALID) == FE_INVALID);
   ASSERT (fetestexceptflag (&saved_flags_2, FE_OVERFLOW) == 0);
 
-  return 0;
+  return test_exit_status;
 }

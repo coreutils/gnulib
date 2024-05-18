@@ -151,5 +151,5 @@ main (int argc, char *argv[])
     gl_oset_free (set2);
   }
 
-  return 0;
+  return test_exit_status;
 }

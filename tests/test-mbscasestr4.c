@@ -52,5 +52,5 @@ main ()
     ASSERT (mbscasestr (input, "TB\304\260L\304\260S\304\260 \304\260m\304\260n\304\260") == input + 1); /* TBİLİSİ İmİnİ */
   }
 
-  return 0;
+  return test_exit_status;
 }

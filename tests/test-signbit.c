@@ -131,5 +131,5 @@ main ()
   test_signbitf ();
   test_signbitd ();
   test_signbitl ();
-  return 0;
+  return test_exit_status;
 }

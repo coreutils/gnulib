@@ -36,5 +36,5 @@ main ()
   y = cosh (x);
   ASSERT (y >= 1.185465218 && y <= 1.185465219);
 
-  return 0;
+  return test_exit_status;
 }

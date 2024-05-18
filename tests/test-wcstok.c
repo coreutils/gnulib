@@ -49,5 +49,5 @@ main ()
   ret = wcstok (NULL, delim, &ptr);
   ASSERT (ret == NULL);
 
-  return 0;
+  return test_exit_status;
 }

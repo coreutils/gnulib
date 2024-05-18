@@ -37,5 +37,5 @@ main (int argc, char *argv[])
 
   set_acl (file, -1, mode);
 
-  return 0;
+  return test_exit_status;
 }

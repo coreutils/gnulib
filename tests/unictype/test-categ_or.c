@@ -32,5 +32,5 @@ main ()
   ASSERT (uc_is_general_category ('7', ct));
   ASSERT (!uc_is_general_category ('$', ct));
 
-  return 0;
+  return test_exit_status;
 }

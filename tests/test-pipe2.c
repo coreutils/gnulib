@@ -142,5 +142,5 @@ main ()
         ASSERT (close (fd[1]) == 0);
       }
 
-  return 0;
+  return test_exit_status;
 }

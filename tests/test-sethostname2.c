@@ -129,5 +129,5 @@ main (int argc, _GL_UNUSED char *argv[])
   /* restore the original name. */
   ASSERT (sethostname (origname, strlen (origname)) == 0);
 
-  return 0;
+  return test_exit_status;
 }

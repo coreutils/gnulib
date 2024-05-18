@@ -84,5 +84,5 @@ main (void)
     }
 
   ASSERT (close (dfd) == 0);
-  return result;
+  return (result ? result : test_exit_status);
 }

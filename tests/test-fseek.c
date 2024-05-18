@@ -66,5 +66,5 @@ main (int argc, char **argv)
       ASSERT (fseek (stdin, 0, SEEK_END) == 0);
       ASSERT (!feof (stdin));
     }
-  return 0;
+  return test_exit_status;
 }

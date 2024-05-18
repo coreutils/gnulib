@@ -35,5 +35,5 @@ int
 main (int argc, char *argv[])
 {
   test_function (snprintf);
-  return 0;
+  return test_exit_status;
 }

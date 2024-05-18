@@ -69,5 +69,5 @@ main (int argc, char *argv[])
   desc = wctype ("print");
   ASSERT (desc != (wctype_t) 0);
 
-  return 0;
+  return test_exit_status;
 }

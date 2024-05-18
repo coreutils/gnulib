@@ -64,5 +64,5 @@ main (void)
     ASSERT (strverscmp (b, a) < 0);
   }
 
-  return 0;
+  return test_exit_status;
 }

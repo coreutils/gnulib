@@ -36,5 +36,5 @@ main (void)
           ? 0 < ts.tv_nsec && ts.tv_nsec < 1000000000
           : ts.tv_sec == 1 && ts.tv_nsec == 0);
 
-  return 0;
+  return test_exit_status;
 }

@@ -112,5 +112,5 @@ main ()
     ASSERT (s == NULL);
   }
 
-  return 0;
+  return test_exit_status;
 }

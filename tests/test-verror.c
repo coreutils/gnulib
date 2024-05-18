@@ -127,5 +127,5 @@ main (int argc, char *argv[])
   /* Test verror() function with nonzero STATUS.  */
   test_fatal ("fatal error");
 
-  return 0;
+  return test_exit_status;
 }

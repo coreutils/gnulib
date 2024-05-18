@@ -64,5 +64,5 @@ main (int argc, char *argv[])
       ASSERT (ffsl (7UL << i) == i + 1);
       ASSERT (ffsl (-7UL << i) == i + 1);
     }
-  return 0;
+  return test_exit_status;
 }

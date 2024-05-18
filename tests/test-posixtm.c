@@ -117,7 +117,6 @@ int
 main (void)
 {
   unsigned int i;
-  int fail = 0;
   char curr_year_str[30];
   struct tm *tm;
   time_t t_now;
@@ -176,7 +175,7 @@ main (void)
         {
           printf ("%s return value mismatch: got %d, expected %d\n",
                   T[i].in, !!ok, T[i].valid);
-          fail = 1;
+          test_exit_status = EXIT_FAILURE;
           continue;
         }
 
@@ -187,11 +186,11 @@ main (void)
         {
           printf ("%s mismatch (-: actual; +:expected)\n-%12ld\n+%12ld\n",
                   T[i].in, (long) t_out, (long) t_exp);
-          fail = 1;
+          test_exit_status = EXIT_FAILURE;
         }
     }
 
-  return fail;
+  return test_exit_status;
 }
 
 /*

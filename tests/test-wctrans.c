@@ -39,5 +39,5 @@ main (int argc, char *argv[])
   desc = wctrans ("toupper");
   ASSERT (desc != (wctrans_t) 0);
 
-  return 0;
+  return test_exit_status;
 }

@@ -55,5 +55,5 @@ main ()
   ASSERT (truncl (Infinityl ()) == Infinityl ());
   ASSERT (truncl (- Infinityl ()) == - Infinityl ());
 
-  return 0;
+  return test_exit_status;
 }

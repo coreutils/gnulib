@@ -135,6 +135,6 @@ main ()
     a = 0; b = a / a;
   }
 
-  return 0;
+  return test_exit_status;
 #endif
 }

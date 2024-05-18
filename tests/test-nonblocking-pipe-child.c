@@ -45,5 +45,5 @@ main (int argc, char *argv[])
 
   main_reader_loop (test, PIPE_DATA_BLOCK_SIZE, STDIN_FILENO);
 
-  return 0;
+  return test_exit_status;
 }

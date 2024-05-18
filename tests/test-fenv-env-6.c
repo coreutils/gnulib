@@ -60,7 +60,7 @@ main ()
      env1 has trapping on FE_INVALID enabled, this should trap. */
   ASSERT (feupdateenv (&env1) == 0);
 
-  return 0;
+  return test_exit_status;
 }
 
 #else

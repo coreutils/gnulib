@@ -45,5 +45,5 @@ main ()
   for (; c < 0x110000; c++)
     ASSERT (uc_digit_value (c) == -1);
 
-  return 0;
+  return test_exit_status;
 }

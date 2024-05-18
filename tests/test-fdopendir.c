@@ -76,5 +76,5 @@ main ()
   ASSERT (dup2 (fd, fd) == -1);
   ASSERT (errno == EBADF);
 
-  return 0;
+  return test_exit_status;
 }

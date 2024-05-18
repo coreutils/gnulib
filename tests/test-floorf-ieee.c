@@ -63,5 +63,5 @@ main (int argc, _GL_UNUSED char **argv)
   ASSERT (floorf (Infinityf ()) == Infinityf ());
   ASSERT (floorf (- Infinityf ()) == - Infinityf ());
 
-  return 0;
+  return test_exit_status;
 }

@@ -32,5 +32,5 @@ main ()
 {
   test_ascii (u8_is_titlecase);
 
-  return 0;
+  return test_exit_status;
 }

@@ -20,6 +20,8 @@
 
 #include "uninorm.h"
 
+#include "macros.h"
+
 #if !(((defined _WIN32 || defined __CYGWIN__) && (HAVE_LIBUNISTRING || WOE32DLL)) || defined __ANDROID__)
 /* Check that UNINORM_NFD is defined and links.  */
 uninorm_t n = UNINORM_NFD;
@@ -40,5 +42,5 @@ main ()
   test_u16_nfd ();
   test_u8_nfd ();
 
-  return 0;
+  return test_exit_status;
 }

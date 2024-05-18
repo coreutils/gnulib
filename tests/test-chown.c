@@ -44,5 +44,6 @@ main (void)
   /* Remove any leftovers from a previous partial run.  */
   ignore_value (system ("rm -rf " BASE "*"));
 
-  return test_chown (chown, true);
+  int result = test_chown (chown, true);
+  return (result ? result : test_exit_status);
 }

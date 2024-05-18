@@ -242,5 +242,5 @@ main (void)
   ok = base64_decode_alloc_ctx (NULL, "TWF=TWE=", 8, &p, &len);
   ASSERT (!ok);
 
-  return 0;
+  return test_exit_status;
 }

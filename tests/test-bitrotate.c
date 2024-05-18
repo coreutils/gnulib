@@ -275,5 +275,5 @@ main (void)
   ASSERT (rotr64 (16045690984503098046ULL, 63) == 13644637895296644477ULL);
 #endif /* UINT64_MAX */
 
-  return 0;
+  return test_exit_status;
 }

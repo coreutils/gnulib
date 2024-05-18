@@ -61,5 +61,5 @@ main ()
   ASSERT (uc_joining_type (0x0613) == UC_JOINING_TYPE_T);
   ASSERT (uc_joining_type (0x0614) == UC_JOINING_TYPE_T);
 
-  return 0;
+  return test_exit_status;
 }

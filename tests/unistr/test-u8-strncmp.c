@@ -49,5 +49,5 @@ main ()
     ASSERT (U_STRNCMP (input2, input1, 1000000) < 0);
   }
 
-  return 0;
+  return test_exit_status;
 }

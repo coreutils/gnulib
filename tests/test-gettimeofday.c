@@ -84,5 +84,5 @@ main (void)
   test_clobber ();
   test_consistency ();
 
-  return 0;
+  return test_exit_status;
 }

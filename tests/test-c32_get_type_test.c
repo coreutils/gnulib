@@ -69,5 +69,5 @@ main (int argc, char *argv[])
   desc = c32_get_type_test ("print");
   ASSERT (desc != (c32_type_test_t) 0);
 
-  return 0;
+  return test_exit_status;
 }

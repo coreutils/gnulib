@@ -36,5 +36,5 @@ main ()
 {
   test_access (euidaccess);
 
-  return 0;
+  return test_exit_status;
 }

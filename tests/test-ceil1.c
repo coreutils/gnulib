@@ -64,5 +64,5 @@ main ()
   /* NaNs.  */
   ASSERT (isnand (ceil (NaNd ())));
 
-  return 0;
+  return test_exit_status;
 }

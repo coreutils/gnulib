@@ -73,5 +73,5 @@ main (int argc, char **argv)
   /* Free memory allocated during ungetc().  */
   fclose (stdin);
 
-  return 0;
+  return test_exit_status;
 }

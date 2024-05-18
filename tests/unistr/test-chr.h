@@ -138,5 +138,5 @@ main (void)
   if (sizeof (UNIT) != sizeof (uint32_t))
     free (input32);
 
-  return 0;
+  return test_exit_status;
 }

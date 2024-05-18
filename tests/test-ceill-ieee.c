@@ -55,5 +55,5 @@ main ()
   ASSERT (ceill (Infinityl ()) == Infinityl ());
   ASSERT (ceill (- Infinityl ()) == - Infinityl ());
 
-  return 0;
+  return test_exit_status;
 }

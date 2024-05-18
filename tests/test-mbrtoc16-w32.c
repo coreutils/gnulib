@@ -755,11 +755,9 @@ main (int argc, char *argv[])
     }
 
   if (result == 77)
-    {
-      fprintf (stderr, "Skipping test: found no locale with codepage %d\n",
-               codepage);
-    }
-  return result;
+    fprintf (stderr, "Skipping test: found no locale with codepage %d\n",
+             codepage);
+  return (result ? result : test_exit_status);
 }
 
 #else

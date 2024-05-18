@@ -444,5 +444,5 @@ main (void)
   CHECK_REMAINDER (37*39u - 1, -39, true);
   CHECK_REMAINDER (LONG_MAX, -INT_MAX, false);
 
-  return 0;
+  return test_exit_status;
 }

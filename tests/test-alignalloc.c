@@ -59,5 +59,5 @@ main ()
   /* Check that alignfree is a no-op on null pointers.  */
   alignfree (NULL);
 
-  return 0;
+  return test_exit_status;
 }

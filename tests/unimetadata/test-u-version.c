@@ -35,5 +35,5 @@ main ()
   ASSERT (v >= (15 << 8));
   ASSERT (v < (100 << 8));
 
-  return 0;
+  return test_exit_status;
 }
