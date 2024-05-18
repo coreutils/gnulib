@@ -561,6 +561,7 @@ This is true for the following POSIX or ISO C standardized header files:
 @item @code{assert.h}
 @item @code{ctype.h}
 @item @code{dirent.h}
+@item @code{endian.h}
 @item @code{errno.h}
 @item @code{fcntl.h}
 @item @code{fenv.h}

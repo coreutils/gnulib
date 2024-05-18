@@ -1,0 +1,44 @@
+Description:
+A POSIX-like <endian.h>.
+
+Files:
+lib/endian.in.h
+lib/endian.c
+m4/endian_h.m4
+
+Depends-on:
+gen-header
+extern-inline           [$GL_GENERATE_ENDIAN_H]
+byteswap                [$GL_GENERATE_ENDIAN_H]
+stdint                  [$GL_GENERATE_ENDIAN_H]
+
+configure.ac:
+gl_ENDIAN_H
+gl_CONDITIONAL_HEADER([endian.h])
+AC_PROG_MKDIR_P
+
+Makefile.am:
+BUILT_SOURCES += $(ENDIAN_H)
+
+# We need the following in order to create <endian.h> when the system
+# doesn't have one.
+if GL_GENERATE_ENDIAN_H
+endian.h: endian.in.h $(top_builddir)/config.status
+@NMD@	$(AM_V_GEN)$(MKDIR_P) '%reldir%'
+	$(gl_V_at)$(SED_HEADER_TO_AT_t) $(srcdir)/endian.in.h
+	$(AM_V_at)mv $@-t $@
+lib_SOURCES += endian.c
+else
+endian.h: $(top_builddir)/config.status
+	rm -f $@
+endif
+MOSTLYCLEANFILES += endian.h endian.h-t
+
+Include:
+<endian.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+all
