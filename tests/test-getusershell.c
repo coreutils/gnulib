@@ -46,11 +46,13 @@ first_pass (void)
   /* Avoid reallocation.  */
   shell_count = 16;
   shells = malloc (shell_count * sizeof (char *));
+  ASSERT (shells != NULL);
 
   for (; (ptr = getusershell ()); ++i)
     {
-      /* Make sure comments are ignored.  */
+      /* Make sure comments and empty lines are ignored.  */
       ASSERT (ptr[0] != '#');
+      ASSERT (ptr[0] != '\0');
       if (i >= shell_count)
         {
           shell_count *= 2;
