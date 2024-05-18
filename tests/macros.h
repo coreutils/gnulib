@@ -81,7 +81,10 @@ int volatile test_exit_status = EXIT_SUCCESS;
                    __FILE__, __LINE__, #expr);                               \
           fflush (ASSERT_STREAM);                                            \
           if (CONTINUE_AFTER_ASSERT)                                         \
-            test_exit_status = EXIT_FAILURE;                                 \
+            {                                                                \
+              _gl_pre_abort ();                                              \
+              test_exit_status = EXIT_FAILURE;                               \
+            }                                                                \
           else                                                               \
             abort ();                                                        \
         }                                                                    \
@@ -102,7 +105,10 @@ int volatile test_exit_status = EXIT_SUCCESS;
           WRITE_TO_STDERR (#expr);                          \
           WRITE_TO_STDERR ("' failed\n");                   \
           if (CONTINUE_AFTER_ASSERT)                        \
-            test_exit_status = EXIT_FAILURE;                \
+            {                                               \
+              _gl_pre_abort ();                             \
+              test_exit_status = EXIT_FAILURE;              \
+            }                                               \
           else                                              \
             abort ();                                       \
         }                                                   \

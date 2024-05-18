@@ -56,6 +56,19 @@ print_stack_trace (FILE *stream)
 #endif
 
 void
+_gl_pre_abort (void)
+{
+#if HAVE_EXECINFO_H
+  print_stack_trace (stderr);
+#endif
+}
+
+/*   rpl_abort ();
+   is equivalent to
+     _gl_pre_abort ();
+     original abort (); // i.e. raise (SIGABRT);
+ */
+void
 rpl_abort (void)
 {
 #if HAVE_EXECINFO_H
