@@ -17,8 +17,30 @@
 
 /* Written by Collin Funk.  */
 
-#ifndef _GL_ENDIAN_H
-#define _GL_ENDIAN_H 1
+#ifndef _@GUARD_PREFIX@_ENDIAN_H
+
+#if __GNUC__ >= 3
+@PRAGMA_SYSTEM_HEADER@
+#endif
+@PRAGMA_COLUMNS@
+
+#if @HAVE_ENDIAN_H@
+
+/* The include_next requires a split double-inclusion guard.  */
+# @INCLUDE_NEXT@ @NEXT_ENDIAN_H@
+
+#endif
+
+
+/* glibc defines all macros and functions but is missing types from
+   stdint.h.  */
+#if @ENDIAN_H_JUST_MISSING_STDINT@
+# include <stdint.h>
+#else
+
+/* Others platforms.  */
+#ifndef _@GUARD_PREFIX@_ENDIAN_H
+#define _@GUARD_PREFIX@_ENDIAN_H 1
 
 /* This file uses _GL_INLINE, WORDS_BIGENDIAN.  */
 #if !_GL_CONFIG_H_INCLUDED
@@ -45,6 +67,22 @@ _GL_INLINE_HEADER_BEGIN
 # define BYTE_ORDER BIG_ENDIAN
 #else
 # define BYTE_ORDER LITTLE_ENDIAN
+#endif
+
+/* Make sure function-like macros get undefined.  */
+#if @HAVE_ENDIAN_H@
+# undef be16toh
+# undef be32toh
+# undef be64toh
+# undef htobe16
+# undef htobe32
+# undef htobe64
+# undef le16toh
+# undef le32toh
+# undef le64toh
+# undef htole16
+# undef htole32
+# undef htole64
 #endif
 
 #ifdef __cplusplus
@@ -193,4 +231,6 @@ htole64 (uint64_t x)
 
 _GL_INLINE_HEADER_END
 
-#endif /* _GL_ENDIAN_H */
+#endif /* @ENDIAN_H_JUST_MISSING_STDINT@ */
+#endif /* _@GUARD_PREFIX@_ENDIAN_H */
+#endif /* _@GUARD_PREFIX@_ENDIAN_H */
