@@ -30,7 +30,17 @@ uint32_t t2;
 uint64_t t3;
 #endif
 
+/* "These macros shall be suitable for use in #if preprocessing directives."  */
+#if BYTE_ORDER == LITTLE_ENDIAN
+int a = 17;
+#endif
+#if BYTE_ORDER == BIG_ENDIAN
+int a = 19;
+#endif
+
+/* "The macros BIG_ENDIAN and LITTLE_ENDIAN shall have distinct values."  */
 static_assert (LITTLE_ENDIAN != BIG_ENDIAN);
+
 static_assert (BYTE_ORDER == LITTLE_ENDIAN || BYTE_ORDER == BIG_ENDIAN);
 
 #include <stdint.h>

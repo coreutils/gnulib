@@ -1,7 +1,11 @@
 @node endian.h
 @section @file{endian.h}
 
-Describe's the platform's endianness (byte ordering of words stored in memory).
+LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/libc-ddefs.html}
+
+Future POSIX specification:@* @url{https://www.austingroupbugs.net/view.php?id=162}
+
+Describes the platform's endianness (byte ordering of words stored in memory).
 Defines the macros @code{BYTE_ORDER}, @code{LITTLE_ENDIAN}, @code{BIG_ENDIAN},
 @code{PDP_ENDIAN}.
 
@@ -11,7 +15,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This header file is missing on some platforms:
-macOS 11.1, FreeBSD 13.0, NetBSD 7.1, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, HP-UX 11, Solaris 11.4, mingw, MSVC 14.
+macOS 11.1, FreeBSD 13.0, NetBSD 7.1, OpenBSD 3.8, Minix 3.1.8, AIX 7.3.1, HP-UX 11.31, Solaris 11.4, mingw, MSVC 14.
 @end itemize
 
 Portability problems not fixed by Gnulib:
