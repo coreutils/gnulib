@@ -1,0 +1,17 @@
+Files:
+tests/test-endian-c++.cc
+
+Status:
+c++-test
+
+Depends-on:
+ansi-c++-opt
+
+configure.ac:
+
+Makefile.am:
+if ANSICXX
+TESTS += test-endian-c++
+check_PROGRAMS += test-endian-c++
+test_endian_c___SOURCES = test-endian-c++.cc
+endif

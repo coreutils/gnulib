@@ -5,6 +5,7 @@ tests/macros.h
 Depends-on:
 assert-h
 stdint
+endian-c++-tests
 
 configure.ac:
 
