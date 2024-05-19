@@ -1,5 +1,5 @@
 # mkfifoat.m4
-# serial 10
+# serial 11
 dnl Copyright (C) 2009-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -22,7 +22,7 @@ AC_DEFUN([gl_FUNC_MKFIFOAT],
   gl_CHECK_FUNCS_ANDROID_MACOS([mknodat], [[#include <sys/stat.h>]])
   gl_CHECK_FUNCS_ANDROID_MACOS([mkfifoat], [[#include <sys/stat.h>]])
   if test $ac_cv_func_mkfifoat = yes; then
-    dnl Check for AIX 7.2 bug with trailing slash.
+    dnl Check for AIX 7.2 bug and macOS 14 bugs with trailing slash.
     AC_CACHE_CHECK([whether mkfifoat rejects trailing slashes],
       [gl_cv_func_mkfifoat_works],
       [rm -f conftest.tmp
@@ -30,10 +30,16 @@ AC_DEFUN([gl_FUNC_MKFIFOAT],
          [AC_LANG_PROGRAM(
             [[#include <fcntl.h>
               #include <sys/stat.h>
+              #include <unistd.h>
             ]],
             [[int result = 0;
+              /* This test fails on AIX 7.2.  */
               if (!mkfifoat (AT_FDCWD, "conftest.tmp/", 0600))
                 result |= 1;
+              /* This test fails on macOS 14.  */
+              if (!symlink ("conftest.fifo", "conftest.tmp")
+                  && !mkfifoat (AT_FDCWD, "conftest.tmp/", 0600))
+                result |= 2;
               return result;
             ]])
          ],
@@ -44,6 +50,8 @@ AC_DEFUN([gl_FUNC_MKFIFOAT],
             linux-* | linux) gl_cv_func_mkfifoat_works="guessing yes" ;;
                              # Guess yes on glibc systems.
             *-gnu* | gnu*)   gl_cv_func_mkfifoat_works="guessing yes" ;;
+                             # Guess no on macOS systems.
+            darwin*)         gl_cv_func_mkfifoat_works="guessing no" ;;
                              # Guess no on AIX systems.
             aix*)            gl_cv_func_mkfifoat_works="guessing no" ;;
                              # If we don't know, obey --enable-cross-guesses.
