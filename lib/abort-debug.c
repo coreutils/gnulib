@@ -21,7 +21,26 @@
 
 #include <signal.h>
 
-#if HAVE_EXECINFO_H
+#if HAVE_LIBBACKTRACE
+
+# include <backtrace.h>
+
+static struct backtrace_state *state /* = NULL */;
+
+static inline void
+# if (__GNUC__ >= 3) || (__clang_major__ >= 4)
+__attribute__ ((always_inline))
+# endif
+print_stack_trace (FILE *stream)
+{
+  if (state == NULL)
+    state = backtrace_create_state (NULL, 0, NULL, NULL);
+  /* Pass skip=0, to work around <https://github.com/ianlancetaylor/libbacktrace/issues/60>.  */
+  fprintf (stream, "Stack trace:\n");
+  backtrace_print (state, 0, stream);
+}
+
+#elif HAVE_EXECINFO_H
 
 # include <stdio.h>
 
@@ -58,7 +77,7 @@ print_stack_trace (FILE *stream)
 void
 _gl_pre_abort (void)
 {
-#if HAVE_EXECINFO_H
+#if HAVE_LIBBACKTRACE || HAVE_EXECINFO_H
   print_stack_trace (stderr);
 #endif
 }
@@ -71,7 +90,7 @@ _gl_pre_abort (void)
 void
 rpl_abort (void)
 {
-#if HAVE_EXECINFO_H
+#if HAVE_LIBBACKTRACE || HAVE_EXECINFO_H
   print_stack_trace (stderr);
 #endif
   raise (SIGABRT);
