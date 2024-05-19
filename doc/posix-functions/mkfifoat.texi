@@ -16,6 +16,10 @@ But the replacement function is not safe to be used in libraries and is not mult
 This function does not fail when the file name argument ends in a slash
 and (without the slash) names a nonexistent file, on some platforms:
 AIX 7.2.
+@item
+This function does not fail when the file name argument ends in a slash
+and (without the slash) names a symbolic link, on some platforms:
+macOS 14.
 @end itemize
 
 Portability problems not fixed by Gnulib:
