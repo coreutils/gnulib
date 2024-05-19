@@ -6,7 +6,9 @@ lib/u64.h
 lib/u64.c
 
 Depends-on:
+byteswap
 extern-inline
+stdbool
 stdint
 
 configure.ac:

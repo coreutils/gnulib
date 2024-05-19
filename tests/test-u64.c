@@ -43,5 +43,12 @@ main (void)
   if (u64lt (k, l) || u64lt (l, k))
     return 1;
 
+  u64
+    m = u64hilo (0x01020304, 0x05060708),
+    n = u64hilo (0x08070605, 0x04030201),
+    o = u64bswap (m);
+  if (u64lt (n, o) || u64lt (o, n))
+    return 1;
+
   return 0;
 }
