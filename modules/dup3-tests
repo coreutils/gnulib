@@ -8,14 +8,9 @@ getdtablesize
 msvc-nothrow
 open
 close
-test-xfail
 
 configure.ac:
 
 Makefile.am:
 TESTS += test-dup3
 check_PROGRAMS += test-dup3
-
-if OS_IS_NETBSD
-XFAIL_TESTS += test-dup3
-endif

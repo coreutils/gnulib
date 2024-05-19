@@ -15,6 +15,11 @@ glibc 2.8, macOS 11.1, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, AIX 5.
 @item
 This function can crash on some platforms:
 Cygwin 1.7.25.
+
+@item
+This function mistakenly succeeds when given two equal file descriptors on some platforms:
+@c https://gnats.netbsd.org/cgi-bin/query-pr-single.pl?number=58266
+NetBSD 10.0.
 @end itemize
 
 Portability problems not fixed by Gnulib:
