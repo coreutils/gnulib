@@ -12,6 +12,7 @@ lib/getopt-pfx-core.h
 lib/getopt-pfx-ext.h
 lib/getopt_int.h
 m4/getopt.m4
+m4/sys_cdefs_h.m4
 
 Depends-on:
 unistd
