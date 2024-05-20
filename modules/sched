@@ -5,6 +5,7 @@ Files:
 lib/sched.in.h
 m4/sched_h.m4
 m4/pid_t.m4
+m4/sys_cdefs_h.m4
 
 Depends-on:
 gen-header
