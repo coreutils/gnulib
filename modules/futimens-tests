@@ -15,7 +15,6 @@ stdckdint
 timespec
 dup
 utimecmp
-test-xfail
 
 configure.ac:
 
@@ -23,7 +22,3 @@ Makefile.am:
 TESTS += test-futimens
 check_PROGRAMS += test-futimens
 test_futimens_LDADD = $(LDADD) $(CLOCK_TIME_LIB) $(NANOSLEEP_LIB) @LIBINTL@
-
-if OS_IS_NETBSD
-XFAIL_TESTS += test-futimens
-endif

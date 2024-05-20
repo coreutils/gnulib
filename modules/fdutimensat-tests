@@ -16,7 +16,6 @@ stdckdint
 timespec
 dup
 utimecmp
-test-xfail
 
 configure.ac:
 
@@ -25,7 +24,3 @@ TESTS += test-fdutimensat
 check_PROGRAMS += test-fdutimensat
 test_fdutimensat_LDADD = $(LDADD) $(CLOCK_TIME_LIB) \
   $(NANOSLEEP_LIB) @LIBINTL@
-
-if OS_IS_NETBSD
-XFAIL_TESTS += test-fdutimensat
-endif
