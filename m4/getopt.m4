@@ -1,5 +1,5 @@
-# getopt.m4 serial 48
-dnl Copyright (C) 2002-2006, 2008-2023 Free Software Foundation, Inc.
+# getopt.m4 serial 48.1
+dnl Copyright (C) 2002-2006, 2008-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -365,14 +365,7 @@ dnl is ambiguous with environment values that contain newlines.
 
 AC_DEFUN([gl_GETOPT_SUBSTITUTE_HEADER],
 [
-  AC_CHECK_HEADERS_ONCE([sys/cdefs.h])
-  if test $ac_cv_header_sys_cdefs_h = yes; then
-    HAVE_SYS_CDEFS_H=1
-  else
-    HAVE_SYS_CDEFS_H=0
-  fi
-  AC_SUBST([HAVE_SYS_CDEFS_H])
-
+  gl_CHECK_HEADER_SYS_CDEFS_H
   AC_DEFINE([__GETOPT_PREFIX], [[rpl_]],
     [Define to rpl_ if the getopt replacement functions and variables
      should be used.])
