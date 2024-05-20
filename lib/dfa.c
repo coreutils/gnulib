@@ -1221,8 +1221,7 @@ lex (struct dfa *dfa)
     {
       /* This loop should consume at most a backslash and some other
          character.  */
-      if (2 <= i)
-        abort ();
+      assume (i < 2);
 
       if (! dfa->lex.left)
         return dfa->lex.lasttok = END;
@@ -3727,7 +3726,7 @@ maybe_disable_superset_dfa (struct dfa *d)
         {
         case ANYCHAR:
           /* Lowered.  */
-          abort ();
+          assume (false);
         case BACKREF:
           have_backref = true;
           break;
