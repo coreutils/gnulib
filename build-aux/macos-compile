@@ -1,0 +1,129 @@
+#!/bin/sh
+# Wrapper for compilers on macOS
+# that lose debug information in the final link of an executable.
+scriptversion=2024-05-20.15; # UTC
+
+# Copyright (C) 2024 Free Software Foundation, Inc.
+#
+# This file is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published
+# by the Free Software Foundation, either version 3 of the License,
+# or (at your option) any later version.
+#
+# This file is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+# Written by Bruno Haible <bruno@clisp.org>, 2024.
+
+# The problem:
+# 1) On macOS, debug information for executables is not stored in the
+#    executable itself, but in a separate file: If the executable is in
+#      ${DIR}/${BASENAME}
+#    the debug info is in
+#      ${DIR}/${BASENAME}.dSYM/Contents/Resources/DWARF/${BASENAME}
+# 2) The Apple compilers on macOS, in the linking step that creates an
+#    executable from object files, do not create this debug info.
+#    An extra command
+#      dsymutil ${DIR}/${BASENAME}
+#    is necessary in order to create it.
+#
+# See
+# https://stackoverflow.com/questions/32297349/why-does-a-2-stage-command-line-build-with-clang-not-generate-a-dsym-directory
+# https://stackoverflow.com/questions/10044697/where-how-does-apples-gcc-store-dwarf-inside-an-executable/12827463#12827463
+# https://wiki.dwarfstd.org/Apple%27s_%22Lazy%22_DWARF_Scheme.md
+
+# The solution:
+# Make
+#   macos-compile clang [OPTION...] FILE...
+# behave like
+#   clang [OPTION...] FILE...
+# does on other platforms, namely to create the debug info during linking
+# of the executable (instead of leaving it for later).
+
+# Note: 1) is also a problem for the 'install' command that installs an
+# executable in a public location. This is not handled here.
+
+# func_usage
+# outputs to stdout the --help usage message.
+func_usage ()
+{
+  echo "\
+Usage: macos-compile COMPILER [OPTION...] FILE...
+
+Invokes  COMPILER [OPTION...] FILE...  and handles debug information.
+
+Report bugs to <bug-gnulib@gnu.org>."
+}
+
+# Handle --help and --version.
+case "$1" in
+  --help)
+    func_usage
+    exit $?
+    ;;
+  --version)
+    echo "macos-compile (GNU gnulib) $scriptversion
+Copyright (C) 2024 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+Written by Bruno Haible."
+    exit $?
+    ;;
+esac
+
+# Set to true for the linking step that creates an executable.
+linking=true
+# The executable created by the command.
+output_file='a.out'
+output_file_is_next=false
+# Whether debug information is requested.
+debugging=false
+
+# Process the command-line options.
+first=true
+for arg
+do
+  if $first; then
+    first=false
+    set -- "$arg"
+  else
+    if $output_file_is_next; then
+      output_file="$arg"
+      output_file_is_next=false
+    else
+      case "$arg" in
+        -c | -E | -S | -fdriver-only | --precompile )
+          linking=false
+          ;;
+        -o )
+          output_file_is_next=true
+          ;;
+        -g* )
+          debugging=true
+          ;;
+      esac
+    fi
+    set -- "$@" "$arg"
+  fi
+done
+
+# Execute the command and the $output_file.dSYM workaround.
+if $linking; then
+  rm -rf "$output_file.dSYM"
+fi
+"$@" || exit $?
+if $linking; then
+  # Do this dsymutil invocation also when not $debugging.
+  # The linking step is supposed to copy and link the debug information from
+  # the previous steps always.
+  # Example: $CC -g -O2 -c foo.c && $CC foo.o
+  dsymutil "$output_file" || exit $?
+fi
+exit 0
