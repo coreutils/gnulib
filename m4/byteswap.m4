@@ -15,6 +15,10 @@ AC_DEFUN([gl_BYTESWAP],
     AC_CACHE_CHECK([for working bswap_16, bswap_32, bswap_64],
       [gl_cv_header_working_byteswap_h],
       [gl_cv_header_working_byteswap_h=no
+       dnl Check that floating point arguments work.
+       dnl This also checks C libraries with implementations like
+       dnl '#define bswap_16(x) (((x) >> 8 & 0xff) | (((x) & 0xff) << 8))'
+       dnl that mistakenly evaluate their arguments multiple times.
        AC_COMPILE_IFELSE(
          [AC_LANG_PROGRAM(
             [[#include <byteswap.h>
