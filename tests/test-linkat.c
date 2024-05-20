@@ -141,7 +141,7 @@ main (void)
   /* Skip the rest of the test if the file system does not support hard links
      and symlinks.  */
   if (result)
-    return result;
+    return test_exit_status ? test_exit_status : result;
 
   /* Create locations to manipulate.  */
   ASSERT (mkdir (BASE "sub1", 0700) == 0);
@@ -202,10 +202,13 @@ main (void)
       ASSERT (rmdir (BASE "sub1") == 0);
       ASSERT (rmdir (BASE "sub2") == 0);
       free (cwd);
-      if (!result)
-        fputs ("skipping test: symlinks not supported on this file system\n",
-               stderr);
-      return result;
+      if (!test_exit_status)
+        {
+          fputs ("skipping test: symlinks not supported on this file system\n",
+                 stderr);
+          return 77;
+        }
+      return test_exit_status;
     }
   dfd = open (".", O_RDONLY);
   ASSERT (0 <= dfd);
@@ -384,5 +387,5 @@ main (void)
   ASSERT (unlink (BASE "link5") == 0);
   free (cwd);
 
-  return (result ? result : test_exit_status);
+  return test_exit_status;
 }
