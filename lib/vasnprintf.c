@@ -86,7 +86,7 @@
 #include <wchar.h>      /* mbstate_t, mbrtowc(), mbrlen(), wcrtomb(), mbszero() */
 #include <errno.h>      /* errno */
 #include <limits.h>     /* CHAR_BIT, INT_WIDTH, LONG_WIDTH */
-#include <float.h>      /* DBL_MAX_EXP, LDBL_MAX_EXP */
+#include <float.h>      /* DBL_MAX_EXP, LDBL_MAX_EXP, LDBL_MANT_DIG */
 #if HAVE_NL_LANGINFO
 # include <langinfo.h>
 #endif
@@ -403,6 +403,40 @@ is_infinite_or_zerol (long double x)
 {
   return isnanl (x) || x + x == x;
 }
+
+#endif
+
+#if NEED_PRINTF_LONG_DOUBLE
+
+/* Like frexpl, except that it supports even "unsupported" numbers.  */
+# if (LDBL_MANT_DIG == 64 && (defined __ia64 || (defined __x86_64__ || defined __amd64__) || (defined __i386 || defined __i386__ || defined _I386 || defined _M_IX86 || defined _X86_))) && (defined __APPLE__ && defined __MACH__)
+/* Don't assume that frexpl can handle pseudo-denormals; it does not on
+   macOS 12/x86_64.  Therefore test for a pseudo-denormal explicitly.  */
+
+static
+long double safe_frexpl (long double x, int *exp)
+{
+  union
+    {
+      long double value;
+      struct { unsigned int mant_word[2]; unsigned short sign_exp_word; } r;
+    }
+  u;
+  u.value = x;
+  if (u.r.sign_exp_word == 0 && (u.r.mant_word[1] & 0x80000000u) != 0)
+    {
+      /* Pseudo-Denormal.  */
+      *exp = LDBL_MIN_EXP;
+      u.r.sign_exp_word = 1 - LDBL_MIN_EXP;
+      return u.value;
+    }
+  else
+    return frexpl (x, exp);
+}
+
+# else
+#  define safe_frexpl frexpl
+# endif
 
 #endif
 
@@ -1015,7 +1049,7 @@ decode_long_double (long double x, int *ep, mpn_t *mp)
   if (m.limbs == NULL)
     return NULL;
   /* Split into exponential part and mantissa.  */
-  y = frexpl (x, &exp);
+  y = safe_frexpl (x, &exp);
   if (!(y >= 0.0L && y < 1.0L))
     abort ();
   /* x = 2^exp * y = 2^(exp - LDBL_MANT_BIT) * (y * 2^LDBL_MANT_BIT), and the
@@ -1442,7 +1476,7 @@ floorlog10l (long double x)
   double l;
 
   /* Split into exponential part and mantissa.  */
-  y = frexpl (x, &exp);
+  y = safe_frexpl (x, &exp);
   if (!(y >= 0.0L && y < 1.0L))
     abort ();
   if (y == 0.0L)
