@@ -1,5 +1,5 @@
 # byteswap.m4
-# serial 6
+# serial 7
 dnl Copyright (C) 2005, 2007, 2009-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -33,7 +33,7 @@ AC_DEFUN([gl_BYTESWAP],
          [gl_cv_header_working_byteswap_h=no])
       ])
   fi
-  if test $gl_cv_header_working_byteswap_h = yes; then
+  if test "$gl_cv_header_working_byteswap_h" = yes; then
     GL_GENERATE_BYTESWAP_H=false
   else
     GL_GENERATE_BYTESWAP_H=true
