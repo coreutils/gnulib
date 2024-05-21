@@ -11,3 +11,7 @@ configure.ac:
 Makefile.am:
 TESTS += test-flock
 check_PROGRAMS += test-flock
+
+if GL_COND_OBJ_FLOCK
+XFAIL_TESTS += test-flock
+endif
