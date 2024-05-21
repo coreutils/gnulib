@@ -144,7 +144,7 @@ main (int argc, char *argv[])
           free (result);
         }
         #endif
-        #if !(defined __FreeBSD__ || defined __DragonFly__)
+        #if !(defined __FreeBSD__ || defined __DragonFly__ || defined __illumos__)
         { /* U+3000 IDEOGRAPHIC SPACE */
           char *result = trim ("\241\241\241\244foo\241\241");
           ASSERT (strcmp (result, "\241\244foo") == 0);
