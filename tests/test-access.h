@@ -88,9 +88,15 @@ test_access (int (*func) (const char * /*file*/, int /*mode*/))
     /* X_OK works like R_OK.  */
     ASSERT (func (BASE "f2", X_OK) == 0);
 #else
-    errno = 0;
-    ASSERT (func (BASE "f2", X_OK) == -1);
-    ASSERT (errno == EACCES);
+    /* On Solaris, for the root user, X_OK is allowed.  */
+# if defined __sun
+    if (geteuid () != ROOT_UID)
+# endif
+      {
+        errno = 0;
+        ASSERT (func (BASE "f2", X_OK) == -1);
+        ASSERT (errno == EACCES);
+      }
 #endif
   }
 

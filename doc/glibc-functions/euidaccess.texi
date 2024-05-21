@@ -27,4 +27,7 @@ this function, especially in a set-uid or set-gid program.
 This function does not have an option for not following symbolic links
 (like @code{stat} versus @code{lstat}).  If you need this option, use
 the Gnulib module @code{faccessat} with the @code{AT_EACCESS} flag.
+@item
+On Solaris, for the root user, any file is @code{X_OK} even if the file
+does not have the @code{x} permission bit set.
 @end itemize
