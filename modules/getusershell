@@ -9,7 +9,8 @@ Depends-on:
 unistd
 extensions
 fopen-safer          [test $HAVE_GETUSERSHELL = 0 || test $REPLACE_GETUSERSHELL = 1]
-unlocked-io-internal [test $HAVE_GETUSERSHELL = 0 || test $REPLACE_GETUSERSHELL = 1]
+getline              [test $HAVE_GETUSERSHELL = 0 || test $REPLACE_GETUSERSHELL = 1]
+filename             [test $HAVE_GETUSERSHELL = 0 || test $REPLACE_GETUSERSHELL = 1]
 xalloc               [test $HAVE_GETUSERSHELL = 0 || test $REPLACE_GETUSERSHELL = 1]
 
 configure.ac:

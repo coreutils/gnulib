@@ -293,10 +293,6 @@ This macro optimizes the functions @code{mbrtowc}, @code{mbrtoc32}, and
 You can get this macro defined by including the Gnulib module
 @code{wchar-single}.
 @item
-You may define the C macro @code{GNULIB_GETUSERSHELL_SINGLE_THREAD}, if all the
-programs in your package invoke the functions @code{setusershell},
-@code{getusershell}, @code{endusershell} only from a single thread.
-@item
 You may define the C macro @code{GNULIB_EXCLUDE_SINGLE_THREAD}, if all the
 programs in your package invoke the functions of the @code{exclude} module
 only from a single thread.

@@ -34,16 +34,12 @@
 #endif
 
 #include <stdlib.h>
+#include <string.h>
 #include <ctype.h>
 
 #include "stdio--.h"
+#include "filename.h"
 #include "xalloc.h"
-
-#if GNULIB_GETUSERSHELL_SINGLE_THREAD
-# include "unlocked-io.h"
-#endif
-
-static idx_t readname (char **, idx_t *, FILE *);
 
 #if ! defined ADDITIONAL_DEFAULT_SHELLS && defined __MSDOS__
 # define ADDITIONAL_DEFAULT_SHELLS \
@@ -70,7 +66,7 @@ static FILE *shellstream = NULL;
 static char *line = NULL;
 
 /* Number of bytes allocated for 'line'. */
-static idx_t line_size = 0;
+static size_t line_size = 0;
 
 /* Return an entry from the shells file, ignoring comment lines.
    If the file doesn't exist, use the list in DEFAULT_SHELLS (above).
@@ -99,12 +95,46 @@ getusershell (void)
         }
     }
 
-  while (readname (&line, &line_size, shellstream))
+  for (;;)
     {
-      if (*line != '#')
-        return line;
+      ssize_t nread = getline (&line, &line_size, shellstream);
+
+      /* End of file.  */
+      if (nread == -1)
+        return NULL;
+      /* Skip empty lines. */
+      else if (nread > 1)
+        {
+          char *start = line;
+          char *comment = strchr (start, '#');
+          char *end;
+
+          if (comment != NULL)
+            {
+              /* Trim the comment mark.  */
+              comment = '\0';
+              end = comment;
+            }
+          else
+            {
+              /* Trim the newline.  */
+              end = start + nread;
+              if (end[-1] == '\n')
+                *--end = '\0';
+            }
+
+          /* Skip leading whitespace.  */
+          while (start < end && isspace ((unsigned char) start[0]))
+            start++;
+          /* Trim trailing whitespace.  */
+          while (start < end && isspace ((unsigned char) end[-1]))
+            *--end = '\0';
+
+          /* Only return absolute file names. */
+          if (start < end && IS_ABSOLUTE_FILE_NAME (start))
+            return start;
+        }
     }
-  return NULL;                  /* End of file. */
 }
 
 /* Rewind the shells file. */
@@ -127,37 +157,6 @@ endusershell (void)
       fclose (shellstream);
       shellstream = NULL;
     }
-}
-
-/* Read a line from STREAM, removing any newline at the end.
-   Place the result in *NAME, which is malloc'd
-   and/or realloc'd as necessary and can start out NULL,
-   and whose size is passed and returned in *SIZE.
-
-   Return the number of bytes placed in *NAME
-   if some nonempty sequence was found, otherwise 0.  */
-
-static idx_t
-readname (char **name, idx_t *size, FILE *stream)
-{
-  int c;
-  size_t name_index = 0;
-
-  /* Skip blank space.  */
-  while ((c = getc (stream)) != EOF && isspace (c))
-    /* Do nothing. */ ;
-
-  for (;;)
-    {
-      if (*size <= name_index)
-        *name = xpalloc (*name, size, 1, -1, sizeof **name);
-      if (c == EOF || isspace (c))
-        break;
-      (*name)[name_index++] = c;
-      c = getc (stream);
-    }
-  (*name)[name_index] = '\0';
-  return name_index;
 }
 
 #ifdef TEST
