@@ -893,7 +893,7 @@ main (int argc, char *argv[])
         /* U+20000 <CJK Ideograph> */
         ASSERT (fnmatch ("x[[:print:]]y", "x\225\062\202\066y", 0) == 0);
         #endif
-        #if !(defined __FreeBSD__ || defined __DragonFly__)
+        #if !(defined __FreeBSD__ || defined __DragonFly__ || defined __illumos__)
         /* U+00D7 MULTIPLICATION SIGN */
         ASSERT (fnmatch ("x[[:punct:]]y", "x\241\301y", 0) == 0);
         #endif
