@@ -1,13 +1,32 @@
 Files:
+tests/test-mcel-1.sh
+tests/test-mcel-2.sh
+tests/test-mcel-3.sh
+tests/test-mcel-4.sh
+tests/test-mcel-5.sh
 tests/test-mcel.c
+tests/macros.h
+m4/locale-fr.m4
+m4/locale-ja.m4
+m4/locale-zh.m4
+m4/codeset.m4
 
 Depends-on:
-assert-h
 setlocale
 
 configure.ac:
+gt_LOCALE_FR
+gt_LOCALE_FR_UTF8
+gt_LOCALE_JA
+gt_LOCALE_ZH_CN
 
 Makefile.am:
-TESTS += test-mcel
+TESTS += \
+  test-mcel-1.sh test-mcel-2.sh test-mcel-3.sh test-mcel-4.sh test-mcel-5.sh
+TESTS_ENVIRONMENT += \
+  LOCALE_FR='@LOCALE_FR@' \
+  LOCALE_FR_UTF8='@LOCALE_FR_UTF8@' \
+  LOCALE_JA='@LOCALE_JA@' \
+  LOCALE_ZH_CN='@LOCALE_ZH_CN@'
 check_PROGRAMS += test-mcel
 test_mcel_LDADD = $(LDADD) $(LIBUNISTRING) $(SETLOCALE_LIB) $(MBRTOWC_LIB) $(LIBC32CONV)
