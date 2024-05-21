@@ -108,8 +108,16 @@ get_linux_boot_time_fallback (struct timespec *p_boot_time)
       struct stat statbuf;
       if (stat (filename, &statbuf) >= 0)
         {
-          *p_boot_time = get_stat_mtime (&statbuf);
-          return 0;
+          struct timespec boot_time = get_stat_mtime (&statbuf);
+          /* On Alpine 3.20.0_rc2 /var/run/utmp was observed with bogus
+             timestamps of ~10 s.  Reject timestamps before
+             2005-07-25 23:34:15 UTC (1122334455), as neither Alpine
+             nor Devuan existed then.  */
+          if (boot_time.tv_sec >= 1122334455)
+            {
+              *p_boot_time = boot_time;
+              return 0;
+            }
         }
     }
   return -1;
