@@ -18,7 +18,7 @@ Portability problems handled by Gnulib
 @itemize
 @item
 Failures are not distinguishable from successful returns on some platforms:
-AIX 5.1..7.2, Solaris 10.
+macOS 14.4, AIX 5.1..7.2, Solaris 10.
 @item
 A buffer overrun can occur on some platforms:
 AIX 6.1..7.1.
