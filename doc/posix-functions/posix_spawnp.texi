@@ -19,7 +19,8 @@ AIX 6.1.
 When the program to be invoked is an executable script without a @samp{#!}
 marker in the first line, this function executes the script as if it were
 a shell script, on some platforms:
-glibc 2.14/Linux, glibc 2.32/Hurd, macOS 12.5, FreeBSD 14.0, OpenBSD 7.2, AIX 7.2, Solaris 11.4, Cygwin 3.4.x.
+@c https://www.austingroupbugs.net/view.php?id=1674
+glibc 2.14/Linux, glibc 2.32/Hurd, macOS 12.5, FreeBSD 14.0, OpenBSD 7.2, AIX 7.2, Solaris 11.4, Cygwin 3.4.6.
 @end itemize
 
 Portability problems not fixed by Gnulib:

@@ -31,7 +31,7 @@ In practice, regular files and block devices support seeking, and ttys, pipes,
 and most character devices don't support it.
 @item
 Some systems do not support @code{SEEK_DATA} and @code{SEEK_HOLE}:
-AIX, HP-UX, Microsoft Windows, NetBSD, OpenBSD.
+AIX, HP-UX, Microsoft Windows, NetBSD, OpenBSD, Cygwin 3.4.6.
 @item
 Some systems have a buggy @code{SEEK_DATA} and @code{SEEK_HOLE},
 and Gnulib works around the problem via @code{#undef SEEK_DATA}
