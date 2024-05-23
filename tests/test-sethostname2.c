@@ -45,7 +45,6 @@ main (int argc, _GL_UNUSED char *argv[])
 {
   char origname[HOST_NAME_MAX];
   char newname[HOST_NAME_MAX];
-  char longname[HOST_NAME_MAX + 2];
   int rcs, i;
 
   /* skip the tests if we don't have root privilege.  this does not
@@ -108,23 +107,31 @@ main (int argc, _GL_UNUSED char *argv[])
 #endif
     }
 
-  /* glibc does allow setting a zero length name, so the lower bound
-     needs no test. validate that we are constrained by
-     HOST_NAME_MAX */
-  for (i = 0; i < (HOST_NAME_MAX + 1); i++)
-    longname[i] = 'a';
+  /* Known Cygwin bug:
+     <https://cygwin.com/pipermail/cygwin/2024-May/255986.html>  */
+#if !defined __CYGWIN__
+  {
+    char longname[HOST_NAME_MAX + 2];
 
-  longname[i] = '\0';
+    /* glibc does allow setting a zero length name, so the lower bound
+       needs no test. validate that we are constrained by
+       HOST_NAME_MAX */
+    for (i = 0; i < (HOST_NAME_MAX + 1); i++)
+      longname[i] = 'a';
 
-  rcs = sethostname (longname, (HOST_NAME_MAX + 1));
+    longname[i] = '\0';
 
-  if (rcs != -1)
-    {
-      /* attempt to restore the original name. */
-      ASSERT (sethostname (origname, strlen (origname)) == 0);
-      fprintf (stderr, "setting a too long hostname succeeded.\n");
-      return 1;
-    }
+    rcs = sethostname (longname, (HOST_NAME_MAX + 1));
+
+    if (rcs != -1)
+      {
+        /* attempt to restore the original name. */
+        ASSERT (sethostname (origname, strlen (origname)) == 0);
+        fprintf (stderr, "setting a too long hostname succeeded.\n");
+        return 1;
+      }
+  }
+#endif
 
   /* restore the original name. */
   ASSERT (sethostname (origname, strlen (origname)) == 0);
