@@ -291,6 +291,33 @@ main (int argc, char *argv[])
           ASSERT (wc == '!');
           ASSERT (mbsinit (&state));
         }
+        { /* \360\237\220\203 = U+0001F403 */
+          memset (&state, '\0', sizeof (mbstate_t));
+
+          wc = (char32_t) 0xBADFACE;
+          ret = mbrtoc32 (&wc, "\360", 1, &state);
+          ASSERT (ret == (size_t)(-2));
+          ASSERT (wc == (char32_t) 0xBADFACE);
+          ASSERT (!mbsinit (&state));
+
+          wc = (char32_t) 0xBADFACE;
+          ret = mbrtoc32 (&wc, "\237", 1, &state);
+          ASSERT (ret == (size_t)(-2));
+          ASSERT (wc == (char32_t) 0xBADFACE);
+          ASSERT (!mbsinit (&state));
+
+          wc = (char32_t) 0xBADFACE;
+          ret = mbrtoc32 (&wc, "\220", 1, &state);
+          ASSERT (ret == (size_t)(-2));
+          ASSERT (wc == (char32_t) 0xBADFACE);
+          ASSERT (!mbsinit (&state));
+
+          wc = (char32_t) 0xBADFACE;
+          ret = mbrtoc32 (&wc, "\203", 1, &state);
+          ASSERT (ret == 1);
+          ASSERT (wc == 0x0001F403);
+          ASSERT (mbsinit (&state));
+        }
         return test_exit_status;
 
       case '4':
@@ -432,6 +459,33 @@ main (int argc, char *argv[])
           ret = mbrtoc32 (&wc, input + 11, 1, &state);
           ASSERT (ret == 1);
           ASSERT (wc == '!');
+          ASSERT (mbsinit (&state));
+        }
+        { /* \224\071\311\067 = U+0001F403 */
+          memset (&state, '\0', sizeof (mbstate_t));
+
+          wc = (char32_t) 0xBADFACE;
+          ret = mbrtoc32 (&wc, "\224", 1, &state);
+          ASSERT (ret == (size_t)(-2));
+          ASSERT (wc == (char32_t) 0xBADFACE);
+          ASSERT (!mbsinit (&state));
+
+          wc = (char32_t) 0xBADFACE;
+          ret = mbrtoc32 (&wc, "\071", 1, &state);
+          ASSERT (ret == (size_t)(-2));
+          ASSERT (wc == (char32_t) 0xBADFACE);
+          ASSERT (!mbsinit (&state));
+
+          wc = (char32_t) 0xBADFACE;
+          ret = mbrtoc32 (&wc, "\311", 1, &state);
+          ASSERT (ret == (size_t)(-2));
+          ASSERT (wc == (char32_t) 0xBADFACE);
+          ASSERT (!mbsinit (&state));
+
+          wc = (char32_t) 0xBADFACE;
+          ret = mbrtoc32 (&wc, "\067", 1, &state);
+          ASSERT (ret == 1);
+          ASSERT (wc == 0x0001F403);
           ASSERT (mbsinit (&state));
         }
         return test_exit_status;
