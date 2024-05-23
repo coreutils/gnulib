@@ -4,6 +4,7 @@ tests/macros.h
 
 Depends-on:
 sys_wait
+test-xfail
 
 configure.ac:
 AC_CHECK_DECLS_ONCE([alarm])
@@ -13,3 +14,7 @@ Makefile.am:
 TESTS += test-passfd
 check_PROGRAMS += test-passfd
 test_passfd_LDADD = $(LDADD) @LIBSOCKET@
+
+if OS_IS_CYGWIN
+XFAIL_TESTS += test-passfd
+endif

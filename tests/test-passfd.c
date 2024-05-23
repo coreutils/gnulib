@@ -34,7 +34,12 @@
 int
 main ()
 {
-#if HAVE_SOCKETPAIR
+#if defined __CYGWIN__
+  /* Cygwin does not support file-descriptor passing: As on Cygwin 3.5.3,
+     the only cmsg_type that winsup/cygwin/fhandler/socket_unix.cc handles
+     is SCM_CREDENTIALS.  Not SCM_RIGHTS.  */
+  return 90;
+#elif HAVE_SOCKETPAIR
   int pair[2];
   int ret;
   pid_t pid;
