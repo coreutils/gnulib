@@ -26,5 +26,5 @@ thus busy wait.
 @item
 On some platforms, file descriptors other than sockets do not support
 POLLHUP; they will return a "readable" or "writable" status instead:
-AIX 7.2, HP NonStop, mingw, MSVC.
+AIX 7.2, Cygwin 3.4.6, HP NonStop, mingw, MSVC.
 @end itemize

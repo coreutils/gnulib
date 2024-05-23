@@ -1,5 +1,5 @@
 /* Test of poll() function.
-   Copyright (C) 2008-2023 Free Software Foundation, Inc.
+   Copyright (C) 2008-2024 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -362,7 +362,7 @@ test_pipe (void)
   test_pair (fd[0], fd[1]);
   close (fd[0]);
   int revents = poll1_wait (fd[1], POLLIN | POLLOUT);
-#if !(defined _AIX || (defined _WIN32 && !defined __CYGWIN__))
+#if !(defined _AIX || defined __CYGWIN__ || (defined _WIN32 && !defined __CYGWIN__))
   if ((revents & (POLLHUP | POLLERR)) == 0)
     failed ("expecting POLLHUP after shutdown");
 #else
