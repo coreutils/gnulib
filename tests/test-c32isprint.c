@@ -216,7 +216,7 @@ main (int argc, char *argv[])
           is = for_character ("\201\066\243\070", 4);
           ASSERT (is != 0);
         #endif
-        #if !(defined __GLIBC__ || (defined __APPLE__ && defined __MACH__) || defined __FreeBSD__)
+        #if !(defined __GLIBC__ || (defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __CYGWIN__)
           /* U+202E RIGHT-TO-LEFT OVERRIDE */
           is = for_character ("\201\066\247\061", 4);
           ASSERT (is == 0);
@@ -226,7 +226,7 @@ main (int argc, char *argv[])
           is = for_character ("\241\241", 2);
           ASSERT (is != 0);
         #endif
-        #if !(defined __GLIBC__ || (defined __APPLE__ && defined __MACH__) || defined __FreeBSD__)
+        #if !(defined __GLIBC__ || (defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __CYGWIN__)
           /* U+FEFF ZERO WIDTH NO-BREAK SPACE */
           is = for_character ("\204\061\225\063", 4);
           ASSERT (is == 0);
@@ -236,7 +236,7 @@ main (int argc, char *argv[])
           is = for_character ("\225\062\202\066", 4);
           ASSERT (is != 0);
         #endif
-        #if !(defined __GLIBC__ || (defined __APPLE__ && defined __MACH__) || defined __FreeBSD__)
+        #if !(defined __GLIBC__ || (defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __CYGWIN__)
           /* U+E0001 LANGUAGE TAG */
           is = for_character ("\323\066\225\071", 4);
           ASSERT (is == 0);

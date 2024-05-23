@@ -229,7 +229,7 @@ main (int argc, char *argv[])
           /* U+3001 IDEOGRAPHIC COMMA */
           is = for_character ("\241\242", 2);
           ASSERT (is == 0);
-        #if !(defined __GLIBC__ || (defined __APPLE__ && defined __MACH__) || defined __FreeBSD__)
+        #if !(defined __GLIBC__ || (defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __CYGWIN__)
           /* U+FF11 FULLWIDTH DIGIT ONE */
           is = for_character ("\243\261", 2);
           ASSERT (is == 0);

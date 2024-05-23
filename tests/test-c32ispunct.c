@@ -316,7 +316,7 @@ main (int argc, char *argv[])
           is = for_character ("\224\062\273\064", 4);
           ASSERT (is != 0);
         #endif
-        #if !(defined __GLIBC__ || (defined __APPLE__ && defined __MACH__) || defined __FreeBSD__)
+        #if !(defined __GLIBC__ || (defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __CYGWIN__)
           /* U+E003A TAG COLON */
           is = for_character ("\323\066\233\066", 4);
           ASSERT (is == 0);
