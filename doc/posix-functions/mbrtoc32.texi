@@ -33,6 +33,12 @@ FreeBSD 13.2,
 Solaris 11.4, mingw, MSVC 14.
 @c For MSVC this is because it assumes that the input is always UTF-8 encoded.
 @c See https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/mbrtoc16-mbrtoc323
+@item
+This function does not work when it's fed the input bytes one-by-one
+on some platforms:
+@c https://cygwin.com/pipermail/cygwin/2024-May/255989.html
+@c https://cygwin.com/pipermail/cygwin/2024-May/255990.html
+Cygwin 3.5.3.
 @end itemize
 
 Portability problems fixed by Gnulib module @code{mbrtoc32-regular}:
