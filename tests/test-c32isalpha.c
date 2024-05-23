@@ -1,5 +1,5 @@
 /* Test of c32isalpha() function.
-   Copyright (C) 2020-2023 Free Software Foundation, Inc.
+   Copyright (C) 2020-2024 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -229,7 +229,7 @@ main (int argc, char *argv[])
           /* U+3001 IDEOGRAPHIC COMMA */
           is = for_character ("\241\242", 2);
           ASSERT (is == 0);
-        #if !(defined __GLIBC__ || (defined __APPLE__ && defined __MACH__) || defined __FreeBSD__)
+        #if !(defined __GLIBC__ || (defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __CYGWIN__)
           /* U+FF11 FULLWIDTH DIGIT ONE */
           is = for_character ("\243\261", 2);
           ASSERT (is == 0);
