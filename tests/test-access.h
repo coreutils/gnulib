@@ -77,12 +77,16 @@ test_access (int (*func) (const char * /*file*/, int /*mode*/))
 
     ASSERT (func (BASE "f2", R_OK) == 0);
 
+    /* On Cygwin, for users that are in the 'Administrators' group,
+       W_OK is allowed.  */
+#if !defined __CYGWIN__
     if (geteuid () != ROOT_UID)
       {
         errno = 0;
         ASSERT (func (BASE "f2", W_OK) == -1);
         ASSERT (errno == EACCES);
       }
+#endif
 
 #if defined _WIN32 && !defined __CYGWIN__
     /* X_OK works like R_OK.  */
