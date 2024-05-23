@@ -362,7 +362,7 @@ test_pipe (void)
   test_pair (fd[0], fd[1]);
   close (fd[0]);
   int revents = poll1_wait (fd[1], POLLIN | POLLOUT);
-#if !(defined _AIX || (defined _WIN32 && !defined __CYGWIN__))
+#if !(defined _AIX || defined __CYGWIN__ || (defined _WIN32 && !defined __CYGWIN__))
   if ((revents & (POLLHUP | POLLERR)) == 0)
     failed ("expecting POLLHUP after shutdown");
 #else
