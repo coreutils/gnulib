@@ -102,7 +102,7 @@ renameatu (int fd1, char const *src, int fd2, char const *dst,
   int ret_val = -1;
   int err = EINVAL;
 
-#ifdef HAVE_RENAMEAT2
+#if HAVE_WORKING_RENAMEAT2
   ret_val = renameat2 (fd1, src, fd2, dst, flags);
   err = errno;
 #elif defined SYS_renameat2
