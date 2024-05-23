@@ -357,7 +357,7 @@ main (int argc, char *argv[])
           mb = for_character ("\201\060\205\065", 4);
           ASSERT (mb.nbytes == 4);
           ASSERT (memcmp (mb.buf, "\201\060\205\065", 4) == 0);
-        #if !(defined __GLIBC__ || defined __FreeBSD__ || (defined __APPLE__ && defined __MACH__) || defined __NetBSD__)
+        #if !(defined __GLIBC__ || defined __FreeBSD__ || (defined __APPLE__ && defined __MACH__) || defined __NetBSD__ || defined __CYGWIN__)
           /* U+00B5 MICRO SIGN */
           mb = for_character ("\201\060\205\070", 4);
           ASSERT (mb.nbytes == 4);
