@@ -38,7 +38,8 @@ test_readlink (ssize_t (*func) (char const *, char *, size_t), bool print)
   ASSERT (errno == ENOENT);
   errno = 0;
   ASSERT (func ("", buf, sizeof buf) == -1);
-  ASSERT (errno == ENOENT || errno == EINVAL);
+  ASSERT (errno == ENOENT || errno == EINVAL
+          || errno == EBADF /* Cygwin < 3.5 */);
   errno = 0;
   ASSERT (func (".", buf, sizeof buf) == -1);
   ASSERT (errno == EINVAL);
