@@ -315,7 +315,7 @@ main (int argc, char *argv[])
           wc = (char32_t) 0xBADFACE;
           ret = mbrtoc32 (&wc, "\203", 1, &state);
           ASSERT (ret == 1);
-          ASSERT (wc == 0x0001F403);
+          ASSERT (wc == 0x1F403); /* expect Unicode encoding */
           ASSERT (mbsinit (&state));
         }
         return test_exit_status;
@@ -485,7 +485,9 @@ main (int argc, char *argv[])
           wc = (char32_t) 0xBADFACE;
           ret = mbrtoc32 (&wc, "\067", 1, &state);
           ASSERT (ret == 1);
-          ASSERT (wc == 0x0001F403);
+          #if GL_CHAR32_T_IS_UNICODE
+          ASSERT (wc == 0x1F403); /* expect Unicode encoding */
+          #endif
           ASSERT (mbsinit (&state));
         }
         return test_exit_status;
