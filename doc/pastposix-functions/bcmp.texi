@@ -2,7 +2,8 @@
 @section @code{bcmp}
 @findex bcmp
 
-POSIX specification: @url{https://pubs.opengroup.org/onlinepubs/009695399/functions/bcmp.html}
+Removed in POSIX.1-2008.
+POSIX.1-2004 specification: @url{https://pubs.opengroup.org/onlinepubs/009695399/functions/bcmp.html}
 
 Gnulib module: ---
 
@@ -16,6 +17,6 @@ Portability problems not fixed by Gnulib:
 This function is missing on some platforms:
 mingw, MSVC 14, Android 9.0.
 @item
-This function is marked as ``legacy'' in POSIX@.  Better use @code{memcmp}
+This function is removed in POSIX.1-2008.  Better use @code{memcmp}
 instead.
 @end itemize

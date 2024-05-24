@@ -2,7 +2,8 @@
 @subsection @code{setresuid}
 @findex setresuid
 
-Future POSIX specification:@* @url{https://www.austingroupbugs.net/view.php?id=1344}
+Specified in POSIX.1-2024.
+Draft specification:@* @url{https://www.austingroupbugs.net/view.php?id=1344}
 
 Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/setresuid.2.html,,man setresuid}
 

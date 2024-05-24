@@ -2,6 +2,9 @@
 @subsection @code{pthread_cond_clockwait}
 @findex pthread_cond_clockwait
 
+Specified in POSIX.1-2024.
+Draft specification:@* @url{https://www.austingroupbugs.net/view.php?id=1485#c5385}
+
 Documentation:
 @itemize
 @item

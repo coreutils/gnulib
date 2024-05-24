@@ -2,7 +2,8 @@
 @section @code{sigrelse}
 @findex sigrelse
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/sigrelse.html}
+Removed in POSIX.1-2024.
+POSIX.1-2017 specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/sigrelse.html}
 
 Gnulib module: ---
 
@@ -16,7 +17,6 @@ Portability problems not fixed by Gnulib:
 This function is missing on some platforms:
 FreeBSD 6.0, OpenBSD 6.7, Minix 3.1.8, mingw, MSVC 14, Android 7.1.
 @item
-POSIX says this function is obsolescent and it is planned to be
-removed in POSIX 202x.
+This function is removed in POSIX.1-2024.
 Use the function @code{sigprocmask} instead.
 @end itemize

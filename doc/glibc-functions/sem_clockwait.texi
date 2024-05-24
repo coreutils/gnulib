@@ -2,6 +2,9 @@
 @subsection @code{sem_clockwait}
 @findex sem_clockwait
 
+Specified in POSIX.1-2024.
+Draft specification:@* @url{https://www.austingroupbugs.net/view.php?id=1216}
+
 Documentation:
 @itemize
 @item

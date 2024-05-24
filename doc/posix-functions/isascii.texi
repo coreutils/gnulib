@@ -2,7 +2,8 @@
 @section @code{isascii}
 @findex isascii
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/isascii.html}
+Removed in POSIX.1-2024.
+POSIX.1-2017 specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/isascii.html}
 
 Gnulib module: ctype
 
@@ -17,8 +18,7 @@ OS X 10.8.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
-POSIX says this function is obsolescent and it is planned to be
-removed in POSIX 202x.
+This function is removed in POSIX.1-2024.
 @end itemize
 
 Note: This function's behaviour depends on the locale, but requires special

@@ -4,7 +4,8 @@
 
 LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-textdomain.html}
 
-Future POSIX specification:@* @url{https://www.austingroupbugs.net/view.php?id=1122}
+Specified in POSIX.1-2024.
+Draft specification:@* @url{https://www.austingroupbugs.net/view.php?id=1122}
 
 Documentation:
 @itemize

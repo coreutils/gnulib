@@ -1,7 +1,8 @@
 @node ulimit.h
 @section @file{ulimit.h}
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/ulimit.h.html}
+Removed in POSIX.1-2024.
+POSIX.1-2017 specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/ulimit.h.html}
 
 Gnulib module: ---
 
@@ -14,4 +15,6 @@ Portability problems not fixed by Gnulib:
 @item
 This header file is missing on some platforms:
 OpenBSD 6.7, Minix 3.1.8, Cygwin, mingw, MSVC 14, Android 9.0.
+@item
+This header is removed in POSIX.1-2024.
 @end itemize

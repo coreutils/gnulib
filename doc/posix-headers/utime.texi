@@ -1,7 +1,8 @@
 @node utime.h
 @section @file{utime.h}
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/utime.h.html}
+Removed in POSIX.1-2024.
+POSIX.1-2017 specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/utime.h.html}
 
 Gnulib module: utime-h
 
@@ -13,4 +14,6 @@ This header file is missing on some platforms: MSVC 14.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+This header is removed in POSIX.1-2024.
 @end itemize

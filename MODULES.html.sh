@@ -21,8 +21,8 @@
 # Extend the PATH so that gnulib-tool is found.
 PATH=`dirname "$0"`:$PATH; export PATH
 
-POSIX2001_URL='https://pubs.opengroup.org/onlinepubs/009695399'
-POSIX2008_URL='https://pubs.opengroup.org/onlinepubs/9699919799'
+POSIX2004_URL='https://pubs.opengroup.org/onlinepubs/009695399'
+POSIX2017_URL='https://pubs.opengroup.org/onlinepubs/9699919799'
 
 # repo_url_prefix and repo_url_suffix are chosen such that
 #   <A HREF="${repo_url_prefix}FILENAME${repo_url_suffix}">...</A>
@@ -165,7 +165,7 @@ wchar
 wctype
 wordexp
 ' | sed -e "$sed_alt1" | tr -d "$trnl" | sed -e "$sed_alt2" -e "$sed_alt3"`
-posix2001_headers=`echo '
+posix2004_headers=`echo '
 sys/timeb
 ucontext
 ' | sed -e "$sed_alt1" | tr -d "$trnl" | sed -e "$sed_alt2" -e "$sed_alt3"`
@@ -1363,7 +1363,7 @@ y0
 y1
 yn
 ' | sed -e "$sed_alt1" | tr -d "$trnl" | sed -e "$sed_alt2" -e "$sed_alt3"`
-posix2001_functions=`echo '
+posix2004_functions=`echo '
 bcmp
 bcopy
 bsd_signal
@@ -1553,12 +1553,12 @@ func_module ()
       '$sed_remove_trailing_empty_line'
       s,^, ,
       s,$, ,
-      s,\([^a-zA-Z_]\)'$posix_functions'() \(function\|macro\),\1<A HREF="'$POSIX2008_URL'/functions/\2.html">\2</A> \3,g
-      s,\([^a-zA-Z_]\)'$posix_functions' \(function\|macro\),\1<A HREF="'$POSIX2008_URL'/functions/\2.html">\2</A> \3,g
-      s,\([^a-zA-Z_]\)'$posix_functions'(),\1<A HREF="'$POSIX2008_URL'/functions/\2.html">\2</A> <SPAN STYLE="color:#FF0000;">what?? If you mean a function\, please say so.</SPAN>,g
-      s,\([^a-zA-Z_]\)'$posix2001_functions'() \(function\|macro\),\1<A HREF="'$POSIX2001_URL'/functions/\2.html">\2</A> \3,g
-      s,\([^a-zA-Z_]\)'$posix2001_functions' \(function\|macro\),\1<A HREF="'$POSIX2001_URL'/functions/\2.html">\2</A> \3,g
-      s,\([^a-zA-Z_]\)'$posix2001_functions'(),\1<A HREF="'$POSIX2001_URL'/functions/\2.html">\2</A> <SPAN STYLE="color:#FF0000;">what?? If you mean a function\, please say so.</SPAN>,g
+      s,\([^a-zA-Z_]\)'$posix_functions'() \(function\|macro\),\1<A HREF="'$POSIX2017_URL'/functions/\2.html">\2</A> \3,g
+      s,\([^a-zA-Z_]\)'$posix_functions' \(function\|macro\),\1<A HREF="'$POSIX2017_URL'/functions/\2.html">\2</A> \3,g
+      s,\([^a-zA-Z_]\)'$posix_functions'(),\1<A HREF="'$POSIX2017_URL'/functions/\2.html">\2</A> <SPAN STYLE="color:#FF0000;">what?? If you mean a function\, please say so.</SPAN>,g
+      s,\([^a-zA-Z_]\)'$posix2004_functions'() \(function\|macro\),\1<A HREF="'$POSIX2004_URL'/functions/\2.html">\2</A> \3,g
+      s,\([^a-zA-Z_]\)'$posix2004_functions' \(function\|macro\),\1<A HREF="'$POSIX2004_URL'/functions/\2.html">\2</A> \3,g
+      s,\([^a-zA-Z_]\)'$posix2004_functions'(),\1<A HREF="'$POSIX2004_URL'/functions/\2.html">\2</A> <SPAN STYLE="color:#FF0000;">what?? If you mean a function\, please say so.</SPAN>,g
       s,\([^a-zA-Z_]\)\([a-zA-Z_][a-zA-Z0-9_]*\)() \(function\|macro\),\1\2 \3,g
       s,\([^a-zA-Z_]\)\([a-zA-Z_][a-zA-Z0-9_]*\)(),\1\2 <SPAN STYLE="color:#FF0000;">what?? If you mean a function\, please say so.</SPAN>,g
       s, '"'"'\([a-zA-Z0-9_ -]*\)'"'"'\([^a-zA-Z0-9_]\), <CODE>\1</CODE>\2,g
@@ -1586,9 +1586,9 @@ func_module ()
       '$sed_gt'
       '$sed_remove_trailing_empty_line'
       s,^#include "\(.*\)"$,#include "<A HREF="'$repo_url_prefix'lib/\1'$repo_url_suffix_repl'">\1</A>",
-      s,^#include &lt;'$posix_headers'\.h&gt;$,#include \&lt;<A HREF="'$POSIX2008_URL'/basedefs/\1.h.html">\1.h</A>\&gt;,
-      s,<A HREF="'$POSIX2008_URL'/basedefs/\([a-zA-Z0-9_]*\)/\([a-zA-Z0-9_]*\)\.h\.html">,<A HREF="'$POSIX2008_URL'/basedefs/\1_\2.h.html">,
-      s,^#include &lt;'$posix2001_headers'\.h&gt;$,#include \&lt;<A HREF="'$POSIX2001_URL'/basedefs/\1.h.html">\1.h</A>\&gt;,
+      s,^#include &lt;'$posix_headers'\.h&gt;$,#include \&lt;<A HREF="'$POSIX2017_URL'/basedefs/\1.h.html">\1.h</A>\&gt;,
+      s,<A HREF="'$POSIX2017_URL'/basedefs/\([a-zA-Z0-9_]*\)/\([a-zA-Z0-9_]*\)\.h\.html">,<A HREF="'$POSIX2017_URL'/basedefs/\1_\2.h.html">,
+      s,^#include &lt;'$posix2004_headers'\.h&gt;$,#include \&lt;<A HREF="'$POSIX2004_URL'/basedefs/\1.h.html">\1.h</A>\&gt;,
       s/$/<BR>/
     '
     element=`echo "$includes" \
@@ -2509,7 +2509,7 @@ func_all_modules ()
   func_module libc-config
   func_end_table
 
-  element="Support for obsolete systems lacking POSIX:2008"
+  element="Support for obsolete systems lacking POSIX"
   func_section_wrap posix_sup_obsolete
   func_wrap H2
   func_echo "$element"
@@ -2521,7 +2521,7 @@ func_all_modules ()
   func_echo 'These modules are not listed among dependencies below, for simplicity.'
   func_echo 'If your package requires portability to old, obsolete systems, you need to list these modules explicitly among the modules to import through gnulib-tool.'
 
-  element="Support for systems lacking POSIX:2008"
+  element="Support for systems lacking POSIX"
   func_section_wrap posix_sup
   func_wrap H2
   func_echo "$element"
@@ -2717,7 +2717,7 @@ func_all_modules ()
   func_module write
   func_end_table
 
-  element="Compatibility checks for POSIX:2008 functions"
+  element="Compatibility checks for POSIX functions"
   func_section_wrap posix_compat
   func_wrap H2
   func_echo "$element"
@@ -2735,7 +2735,7 @@ func_all_modules ()
   func_module winsz-termios
   func_end_table
 
-  element="Enhancements for POSIX:2008 functions"
+  element="Enhancements for POSIX functions"
   func_section_wrap posix_enh
   func_wrap H2
   func_echo "$element"
@@ -2755,7 +2755,7 @@ func_all_modules ()
   func_module exclude
   func_end_table
 
-  element="Extra functions based on POSIX:2008"
+  element="Extra functions based on POSIX"
   func_section_wrap posix_ext
   func_wrap H2
   func_echo "$element"

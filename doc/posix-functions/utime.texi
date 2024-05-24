@@ -2,7 +2,8 @@
 @section @code{utime}
 @findex utime
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/utime.html}
+Removed in POSIX.1-2024.
+POSIX.1-2017 specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/utime.html}
 
 Gnulib module: utime
 
@@ -32,7 +33,6 @@ This function cannot set full timestamp resolution.  Use
 @code{utimensat(AT_FDCWD,file,times,0)}, or the gnulib module @code{utimens},
 instead.
 @item
-POSIX says this function is obsolescent and it is planned to be
-removed in POSIX 202x.
+This function is removed in POSIX.1-2024.
 You can use Gnulib module @code{utimens} instead.
 @end itemize

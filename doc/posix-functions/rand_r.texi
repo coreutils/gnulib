@@ -2,7 +2,8 @@
 @section @code{rand_r}
 @findex rand_r
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/rand_r.html}
+Removed in POSIX.1-2024.
+POSIX.1-2017 specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/rand_r.html}
 
 Gnulib module: ---
 
@@ -16,7 +17,6 @@ Portability problems not fixed by Gnulib:
 This function is missing on some platforms:
 Minix 3.1.8, mingw, MSVC 14, Android 4.4.
 @item
-POSIX says this function is obsolescent and it is planned to be
-removed in POSIX 202x.
+This function is removed in POSIX.1-2024.
 Use the function @code{random_r} from Gnulib module @code{random_r} instead.
 @end itemize

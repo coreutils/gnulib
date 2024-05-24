@@ -2,7 +2,8 @@
 @section @code{ftime}
 @findex ftime
 
-POSIX specification: @url{https://pubs.opengroup.org/onlinepubs/009695399/functions/ftime.html}
+Removed in POSIX.1-2008.
+POSIX.1-2004 specification: @url{https://pubs.opengroup.org/onlinepubs/009695399/functions/ftime.html}
 
 Gnulib module: ---
 
@@ -22,7 +23,7 @@ Android 13.
 On native Windows platforms (mingw, MSVC), this function works incorrectly
 when the environment variable @code{TZ} has been set by Cygwin.
 @item
-This function is marked as ``legacy'' in POSIX@.  Better use @code{gettimeofday}
-or @code{clock_gettime} instead, and use @code{ftime} only as a fallback for
+This function is removed in POSIX.1-2008.  Better use
+@code{clock_gettime} instead, and use @code{ftime} only as a fallback for
 portability to Windows platforms.
 @end itemize

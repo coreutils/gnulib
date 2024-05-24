@@ -2,7 +2,8 @@
 @section @code{_longjmp}
 @findex _longjmp
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/_longjmp.html}
+Removed in POSIX.1-2024.
+POSIX.1-2017 specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/_longjmp.html}
 
 Gnulib module: ---
 
@@ -16,11 +17,10 @@ Portability problems not fixed by Gnulib:
 This function is missing on some platforms:
 mingw, MSVC 14.
 @item
-POSIX says this function is obsolescent and it is planned to be
-removed in POSIX 202x.
+This function is removed in POSIX.1-2024.
 @end itemize
 
-Note: Despite its being removed from POSIX, in 2023 on all
+Note: Despite its being removed from POSIX, in 2024 on all
 systems which have @code{_setjmp}, it is the fastest way to save the
 registers but not the signal mask (up to 30 times faster than @code{setjmp}
 on some systems).

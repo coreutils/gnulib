@@ -2,7 +2,8 @@
 @section @code{mktemp}
 @findex mktemp
 
-POSIX specification: @url{https://pubs.opengroup.org/onlinepubs/009695399/functions/mktemp.html}
+Removed in POSIX.1-2008.
+POSIX.1-2004 specification: @url{https://pubs.opengroup.org/onlinepubs/009695399/functions/mktemp.html}
 
 Gnulib module: ---
 
@@ -14,6 +15,6 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is not appropriate for creating temporary files.  (It has
-security risks.)  Therefore it is marked as ``legacy'' in POSIX@.  Better use
+security risks.)  Therefore it is removed in POSIX.1-2008.  Better use
 @code{mkstemp} instead.
 @end itemize

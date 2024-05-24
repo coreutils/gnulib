@@ -2,7 +2,8 @@
 @section @code{bcopy}
 @findex bcopy
 
-POSIX specification: @url{https://pubs.opengroup.org/onlinepubs/009695399/functions/bcopy.html}
+Removed in POSIX.1-2008.
+POSIX.1-2004 specification: @url{https://pubs.opengroup.org/onlinepubs/009695399/functions/bcopy.html}
 
 Gnulib module: bcopy
 
@@ -16,6 +17,6 @@ mingw, MSVC 14, Android 9.0.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
-This function is marked as ``legacy'' in POSIX@.  Better use @code{memcpy}
+This function is removed in POSIX.1-2008.  Better use @code{memcpy}
 or @code{memmove} instead.
 @end itemize

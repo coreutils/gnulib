@@ -2,9 +2,8 @@
 @section @code{ctime_r}
 @findex ctime_r
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/ctime_r.html}
-
-Future POSIX removal:@* @url{https://www.austingroupbugs.net/view.php?id=1410}
+Removed in POSIX.1-2024.
+POSIX.1-2017 specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/ctime_r.html}
 
 Gnulib module: extensions
 
@@ -21,8 +20,7 @@ Portability problems not fixed by Gnulib:
 This function is missing on some platforms:
 mingw, MSVC 14.
 @item
-POSIX says this function is obsolescent and it is planned to be
-removed in a future version.
+This function is removed in POSIX.1-2024.
 Use the functions @code{localtime_r} and @code{strftime}
 (or even @code{sprintf}) instead.
 However, @code{localtime_r} can fail and @code{strftime} is locale dependent.

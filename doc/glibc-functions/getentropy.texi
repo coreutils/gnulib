@@ -2,7 +2,8 @@
 @subsection @code{getentropy}
 @findex getentropy
 
-Future POSIX specification:@* @url{https://www.austingroupbugs.net/view.php?id=1134}
+Specified in POSIX.1-2024.
+Draft specification:@* @url{https://www.austingroupbugs.net/view.php?id=1134}
 
 Documentation:
 @itemize

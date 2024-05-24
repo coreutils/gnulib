@@ -2,6 +2,9 @@
 @subsection @code{ptsname_r}
 @findex ptsname_r
 
+Specified in POSIX.1-2024.
+Draft specification:@* @url{https://www.austingroupbugs.net/view.php?id=508}
+
 Documentation:
 @itemize
 @item

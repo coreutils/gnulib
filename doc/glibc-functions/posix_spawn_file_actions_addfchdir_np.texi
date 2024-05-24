@@ -2,7 +2,9 @@
 @subsection @code{posix_spawn_file_actions_addfchdir_np}
 @findex posix_spawn_file_actions_addfchdir_np
 
-Future POSIX specification:@* @url{https://www.austingroupbugs.net/view.php?id=1208}
+@code{posix_spawn_file_actions_addfchdir} is
+specified in POSIX.1-2024.
+Draft specification:@* @url{https://www.austingroupbugs.net/view.php?id=1208}
 
 Gnulib module: ---
 

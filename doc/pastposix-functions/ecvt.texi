@@ -2,7 +2,8 @@
 @section @code{ecvt}
 @findex ecvt
 
-POSIX specification: @url{https://pubs.opengroup.org/onlinepubs/009695399/functions/ecvt.html}
+Removed in POSIX.1-2008.
+POSIX.1-2004 specification: @url{https://pubs.opengroup.org/onlinepubs/009695399/functions/ecvt.html}
 
 Gnulib module: ---
 
@@ -19,6 +20,6 @@ FreeBSD 14.0, NetBSD 10.0, Android 9.0.
 This function is not declared on some platforms:
 Cygwin 2.9.
 @item
-This function is marked as ``legacy'' in POSIX@.  Better use @code{sprintf}
+This function is removed in POSIX.1-2008.  Better use @code{sprintf}
 instead.
 @end itemize
