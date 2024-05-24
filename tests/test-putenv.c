@@ -37,9 +37,13 @@ main (void)
   unsetenv ("TEST_VAR");
   ASSERT (getenv ("TEST_VAR") == NULL);
 
+  /* Use static on variables passed to the environment to pacify
+     -Wanalyzer-putenv-of-auto-var.  */
+
   /* Verify adding an environment variable.  */
   {
-    ASSERT (putenv ((char []) {"TEST_VAR=abc"}) == 0);
+    static char *var = "TEST_VAR=abc";
+    ASSERT (putenv (var) == 0);
     ptr = getenv ("TEST_VAR");
     ASSERT (ptr != NULL);
     ASSERT (STREQ (ptr, "abc"));
@@ -47,13 +51,15 @@ main (void)
 
   /* Verify removing an environment variable.  */
   {
-    ASSERT (putenv ((char []) {"TEST_VAR"}) == 0);
+    static char *var = "TEST_VAR";
+    ASSERT (putenv (var) == 0);
     ASSERT (getenv ("TEST_VAR") == NULL);
   }
 
   /* Verify the behavior when removing a variable not in the environment.  */
   {
-    ASSERT (putenv ((char []) {"TEST_VAR"}) == 0);
+    static char *var = "TEST_VAR";
+    ASSERT (putenv (var) == 0);
     ASSERT (getenv ("TEST_VAR") == NULL);
   }
 
