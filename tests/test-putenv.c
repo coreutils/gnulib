@@ -42,7 +42,7 @@ main (void)
 
   /* Verify adding an environment variable.  */
   {
-    static char *var = "TEST_VAR=abc";
+    static char var[] = "TEST_VAR=abc";
     ASSERT (putenv (var) == 0);
     ptr = getenv ("TEST_VAR");
     ASSERT (ptr != NULL);
@@ -51,14 +51,14 @@ main (void)
 
   /* Verify removing an environment variable.  */
   {
-    static char *var = "TEST_VAR";
+    static char var[] = "TEST_VAR";
     ASSERT (putenv (var) == 0);
     ASSERT (getenv ("TEST_VAR") == NULL);
   }
 
   /* Verify the behavior when removing a variable not in the environment.  */
   {
-    static char *var = "TEST_VAR";
+    static char var[] = "TEST_VAR";
     ASSERT (putenv (var) == 0);
     ASSERT (getenv ("TEST_VAR") == NULL);
   }
