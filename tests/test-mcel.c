@@ -109,7 +109,7 @@ main (void)
     }
 
   for (int i = CHAR_MIN; i <= CHAR_MAX; i++)
-    for (int j = CHAR_MIN; i <= CHAR_MAX; i++)
+    for (int j = CHAR_MIN; j <= CHAR_MAX; j++)
       for (int k = CHAR_MIN; k <= CHAR_MAX; k++)
         {
           char const ijk[] = {i, j, k};
