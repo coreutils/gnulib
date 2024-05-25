@@ -1,5 +1,5 @@
 /* Conversion between the current locale's character encoding and Unicode.
-   Copyright (C) 2023 Free Software Foundation, Inc.
+   Copyright (C) 2023-2024 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as
@@ -107,6 +107,7 @@ get_converters (const char *encoding)
           return NULL;
         }
       strcpy (conv->encoding, encoding);
+      gl_tls_set (converters_key, conv);
     }
   else if (strcmp (conv->encoding, encoding) != 0)
     {
