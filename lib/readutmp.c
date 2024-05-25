@@ -51,6 +51,13 @@
 # include <OS.h>
 #endif
 
+#if defined _WIN32 && ! defined __CYGWIN__
+# define WIN32_LEAN_AND_MEAN
+# include <windows.h>
+# include <sysinfoapi.h>
+# include <sys/time.h>
+#endif
+
 #include "stat-time.h"
 #include "xalloc.h"
 
@@ -657,6 +664,22 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
     {
       struct timespec boot_time;
       if (get_windows_boot_time (&boot_time) >= 0)
+        a = add_utmp (a, options,
+                      "reboot", strlen ("reboot"),
+                      "", 0,
+                      "", 0,
+                      "", 0,
+                      0, BOOT_TIME, boot_time, 0, 0, 0);
+    }
+# endif
+
+# if defined _WIN32 && ! defined __CYGWIN__
+  if ((options & (READ_UTMP_USER_PROCESS | READ_UTMP_NO_BOOT_TIME)) == 0
+      && strcmp (file, UTMP_FILE) == 0
+      && !have_boot_time (a))
+    {
+      struct timespec boot_time;
+      if (get_windows_boot_time_fallback (&boot_time) >= 0)
         a = add_utmp (a, options,
                       "reboot", strlen ("reboot"),
                       "", 0,
