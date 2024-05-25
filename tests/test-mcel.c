@@ -44,7 +44,7 @@ test_mcel_vs_mbrtoc32 (unsigned char uc, mcel_t c, size_t n, char32_t ch)
 }
 
 int
-main (void)
+main (int argc, char *argv[])
 {
   /* configure should already have checked that the locale is supported.  */
   if (setlocale (LC_ALL, "") == NULL)
@@ -75,6 +75,18 @@ main (void)
       if (ch == CHAR_MAX)
         break;
     }
+
+  if (argc > 1 && argv[1][0] == '5')
+    {
+      /* Locale encoding is GB18030.  */
+      if (test_exit_status != EXIT_SUCCESS)
+        return test_exit_status;
+      #if (defined __GLIBC__ && __GLIBC__ == 2 && __GLIBC_MINOR__ >= 13 && __GLIBC_MINOR__ <= 15) || (GL_CHAR32_T_IS_UNICODE && (defined __FreeBSD__ || defined __NetBSD__ || defined __sun))
+      fputs ("Skipping test: The GB18030 converter in this system's iconv is broken.\n", stderr);
+      return 77;
+      #endif
+    }
+
   for (int ch = 0x80; ch < 0x200; ch++)
     {
       mcel_t c = mcel_ch (ch, 2);
