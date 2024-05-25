@@ -12,6 +12,7 @@ Depends-on:
 extensions
 idx
 stat-time
+gettimeofday
 stdbool
 stdint
 strnlen
