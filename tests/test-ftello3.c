@@ -72,7 +72,9 @@ main (void)
   return test_exit_status;
 
  skip:
-  fprintf (stderr, "Skipping test: prerequisite file operations failed.\n");
   remove (TESTFILE);
+  if (test_exit_status != EXIT_SUCCESS)
+    return test_exit_status;
+  fprintf (stderr, "Skipping test: prerequisite file operations failed.\n");
   return 77;
 }

@@ -100,6 +100,8 @@ test_utime (bool print)
   if (symlink (BASE "file", BASE "link"))
     {
       ASSERT (unlink (BASE "file") == 0);
+      if (test_exit_status != EXIT_SUCCESS)
+        return test_exit_status;
       if (print)
         fputs ("skipping test: symlinks not supported on this file system\n",
                stderr);

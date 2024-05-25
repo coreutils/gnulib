@@ -226,6 +226,8 @@ main ()
 
   if (skipped)
     {
+      if (test_exit_status != EXIT_SUCCESS)
+        return test_exit_status;
       fprintf (stderr, "Skipping test: Spanish Unicode locale is not installed\n");
       return 77;
     }

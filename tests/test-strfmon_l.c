@@ -55,11 +55,15 @@ main (void)
      glibc bug <https://sourceware.org/bugzilla/show_bug.cgi?id=19633>.  */
   if (setlocale (LC_ALL, "en_US.UTF-8") == NULL)
     {
+      if (test_exit_status != EXIT_SUCCESS)
+        return test_exit_status;
       fprintf (stderr, "Skipping test: English Unicode locale is not installed\n");
       return 77;
     }
   if (setlocale (LC_ALL, "de_DE.UTF-8") == NULL)
     {
+      if (test_exit_status != EXIT_SUCCESS)
+        return test_exit_status;
       fprintf (stderr, "Skipping test: English Unicode locale is not installed\n");
       return 77;
     }

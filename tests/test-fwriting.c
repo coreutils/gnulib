@@ -159,6 +159,8 @@ main ()
   return test_exit_status;
 
  skip:
+  if (test_exit_status != EXIT_SUCCESS)
+    return test_exit_status;
   fprintf (stderr, "Skipping test: file operations failed.\n");
   return 77;
 }

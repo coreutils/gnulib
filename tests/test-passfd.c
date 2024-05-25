@@ -140,6 +140,8 @@ main ()
   ASSERT(recvfd (0, 0) == -1);
   ASSERT(errno == ENOSYS);
 
+  if (test_exit_status != EXIT_SUCCESS)
+    return test_exit_status;
   fputs ("skipping test: socketpair not supported on this system\n",
          stderr);
   return 77;

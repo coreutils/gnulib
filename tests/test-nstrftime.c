@@ -61,6 +61,8 @@ main (void)
 #if MUSL_LIBC
       if (fail == 0)
         {
+          if (test_exit_status != EXIT_SUCCESS)
+            return test_exit_status;
           fputs ("Skipping test: musl libc does not come with localizations\n",
                  stderr);
           return 77;

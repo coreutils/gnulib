@@ -93,6 +93,8 @@ main ()
 #if defined _WIN32 && !defined __CYGWIN__
   /* On native Windows, scripts - even with '#!' marker - are not executable.
      Only .bat and .cmd files are.  */
+  if (test_exit_status != EXIT_SUCCESS)
+    return test_exit_status;
   fprintf (stderr, "Skipping test: scripts are not executable on this platform.\n");
   return 77;
 #else

@@ -181,6 +181,8 @@ main (void)
     {
       ASSERT (remove (BASE "/tra") == 0);
       ASSERT (rmdir (BASE) == 0);
+      if (test_exit_status != EXIT_SUCCESS)
+        return test_exit_status;
       fputs ("skipping test: symlinks not supported on this file system\n",
              stderr);
       return 77;

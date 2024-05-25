@@ -134,6 +134,8 @@ main (int argc, char *argv[])
 
   if (skipped_all)
     {
+      if (test_exit_status != EXIT_SUCCESS)
+        return test_exit_status;
       fputs ("Skipping test: French locale is not installed\n", stderr);
       return 77;
     }

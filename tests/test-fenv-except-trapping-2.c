@@ -492,6 +492,8 @@ main (int argc, char *argv[])
       #endif
       if (known_failure)
         {
+          if (test_exit_status != EXIT_SUCCESS)
+            return test_exit_status;
           fputs ("Skipping test: known failure on this platform\n", stderr);
           return 77;
         }
@@ -510,6 +512,8 @@ main (int argc, char *argv[])
   return test_exit_status;
 
  skip:
+  if (test_exit_status != EXIT_SUCCESS)
+    return test_exit_status;
   fputs ("Skipping test: trapping floating-point exceptions are not supported on this machine.\n", stderr);
   return 77;
 }

@@ -202,13 +202,11 @@ main (void)
       ASSERT (rmdir (BASE "sub1") == 0);
       ASSERT (rmdir (BASE "sub2") == 0);
       free (cwd);
-      if (!test_exit_status)
-        {
-          fputs ("skipping test: symlinks not supported on this file system\n",
-                 stderr);
-          return 77;
-        }
-      return test_exit_status;
+      if (test_exit_status != EXIT_SUCCESS)
+        return test_exit_status;
+      fputs ("skipping test: symlinks not supported on this file system\n",
+             stderr);
+      return 77;
     }
   dfd = open (".", O_RDONLY);
   ASSERT (0 <= dfd);

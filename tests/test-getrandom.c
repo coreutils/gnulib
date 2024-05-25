@@ -84,6 +84,8 @@ main (void)
   if (getrandom (buf1, 1, 0) < 1)
     if (getrandom (buf1, 1, GRND_RANDOM) < 1)
       {
+        if (test_exit_status != EXIT_SUCCESS)
+          return test_exit_status;
         fputs ("Skipping test: getrandom is ineffective\n", stderr);
         return 77;
       }

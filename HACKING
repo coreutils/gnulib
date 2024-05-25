@@ -76,6 +76,41 @@ Test Suite
 When adding a module, add a unit test module as well.  This is our best
 chance to catch portability problems.
 
+A unit test can have many sub-tests. Try to make the sub-tests independent
+of each other, so that it becomes easy to disable some sub-tests by enclosing
+them in #if 0 ... #endif.
+
+The main() function's exit code meaning is:
+  - 0: PASS
+  - 77: SKIP; you should print the reason why the test is skipped.
+  - 99: ERROR, i.e. test framework error
+  - any other exit code < 126: FAIL
+
+In tests that #include "macros.h" and use the ASSERT macro:
+The main() function should, before it returns 0 (for PASS) or 77 (for SKIP)
+test the value of test_exit_status and return that instead. So:
+  - not
+        return 0;
+    but instead
+        return test_exit_status;
+  - not
+        return result; // where result can be 0 or 1
+    but instead
+        return (result ? result : test_exit_status);
+  - not
+        fputs ("Skipping test: <reason>\n", stderr);
+        return 77;
+    but instead
+        if (test_exit_status != EXIT_SUCCESS)
+          return test_exit_status;
+        fputs ("Skipping test: <reason>\n", stderr);
+        return 77;
+    Only at the beginning of the main() function, when ASSERT has not yet been
+    invoked, we know that test_exit_status must be zero and can therefore write
+        fputs ("Skipping test: <reason>\n", stderr);
+        return 77;
+    directly.
+
 
 Maintaining high quality
 ========================

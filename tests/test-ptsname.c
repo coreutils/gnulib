@@ -87,6 +87,8 @@ main (void)
     fd = open ("/dev/tty", O_RDONLY);
     if (fd < 0)
       {
+        if (test_exit_status != EXIT_SUCCESS)
+          return test_exit_status;
         fprintf (stderr, "Skipping test: cannot open controlling tty\n");
         return 77;
       }
@@ -114,6 +116,8 @@ main (void)
     fd = open ("/dev/ptmx", O_RDWR | O_NOCTTY);
     if (fd < 0)
       {
+        if (test_exit_status != EXIT_SUCCESS)
+          return test_exit_status;
         fprintf (stderr, "Skipping test: cannot open pseudo-terminal\n");
         return 77;
       }
@@ -142,6 +146,8 @@ main (void)
     fd = open ("/dev/ptc", O_RDWR | O_NOCTTY);
     if (fd < 0)
       {
+        if (test_exit_status != EXIT_SUCCESS)
+          return test_exit_status;
         fprintf (stderr, "Skipping test: cannot open pseudo-terminal\n");
         return 77;
       }
