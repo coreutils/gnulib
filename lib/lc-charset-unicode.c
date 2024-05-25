@@ -107,6 +107,7 @@ get_converters (const char *encoding)
           return NULL;
         }
       strcpy (conv->encoding, encoding);
+      gl_tls_set (converters_key, conv);
     }
   else if (strcmp (conv->encoding, encoding) != 0)
     {
