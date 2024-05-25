@@ -75,30 +75,30 @@ main (_GL_UNUSED int argc, char *argv[])
   {
     const char *locale_name = getenv ("LOCALE");
 
-    if (locale_name != NULL && strcmp (locale_name, "none") != 0
-        && setenv ("LC_ALL", locale_name, 1) == 0
-        && setlocale (LC_ALL, "") != NULL)
+    if (!(locale_name != NULL && strcmp (locale_name, "none") != 0
+          && setenv ("LC_ALL", locale_name, 1) == 0
+          && setlocale (LC_ALL, "") != NULL))
       {
-        textdomain ("test-quotearg");
-        bindtextdomain ("test-quotearg", getenv ("LOCALEDIR"));
-
-        set_quoting_style (NULL, locale_quoting_style);
-        compare_strings (use_quotearg_buffer, &locale_results[0].group1, false);
-        compare_strings (use_quotearg, &locale_results[0].group2, false);
-        compare_strings (use_quotearg_colon, &locale_results[0].group3, false);
-
-        set_quoting_style (NULL, clocale_quoting_style);
-        compare_strings (use_quotearg_buffer, &locale_results[1].group1, false);
-        compare_strings (use_quotearg, &locale_results[1].group2, false);
-        compare_strings (use_quotearg_colon, &locale_results[1].group3, false);
-
-        quotearg_free ();
-        return test_exit_status;
+        fputs ("Skipping test: no french Unicode locale is installed\n", stderr);
+        return 77;
       }
+    textdomain ("test-quotearg");
+    bindtextdomain ("test-quotearg", getenv ("LOCALEDIR"));
+
+    set_quoting_style (NULL, locale_quoting_style);
+    compare_strings (use_quotearg_buffer, &locale_results[0].group1, false);
+    compare_strings (use_quotearg, &locale_results[0].group2, false);
+    compare_strings (use_quotearg_colon, &locale_results[0].group3, false);
+
+    set_quoting_style (NULL, clocale_quoting_style);
+    compare_strings (use_quotearg_buffer, &locale_results[1].group1, false);
+    compare_strings (use_quotearg, &locale_results[1].group2, false);
+    compare_strings (use_quotearg_colon, &locale_results[1].group3, false);
+
+    quotearg_free ();
+    return test_exit_status;
   }
 
-  fputs ("Skipping test: no french Unicode locale is installed\n", stderr);
-  return 77;
 #else
   fputs ("Skipping test: internationalization is disabled\n", stderr);
   return 77;
