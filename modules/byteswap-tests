@@ -4,6 +4,7 @@ tests/macros.h
 
 Depends-on:
 stdint
+byteswap-c++-tests
 
 configure.ac:
 
