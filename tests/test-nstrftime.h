@@ -222,7 +222,7 @@ tzalloc_test (void)
                  && STREQ (buf + n - sizeof "(GMT)" + 1, "(GMT)"))
 #if defined _WIN32 && !defined __CYGWIN__
              /* On native Windows, the time zone is printed differently.  */
-             || strncmp (buf, LT[i].exp, 21) == 0
+             || strncmp (buf, LT[i].exp, 20) == 0
 #endif
          )  )
         {
