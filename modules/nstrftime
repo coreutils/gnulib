@@ -14,6 +14,7 @@ c99
 errno
 extensions
 intprops
+hard-locale
 libc-config
 localename-unsafe-limited
 stdbool
@@ -28,6 +29,9 @@ lib_SOURCES += nstrftime.c
 
 Include:
 "strftime.h"
+
+Link:
+$(HARD_LOCALE_LIB)
 
 License:
 LGPL
