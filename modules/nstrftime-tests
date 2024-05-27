@@ -14,3 +14,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-nstrftime
 check_PROGRAMS += test-nstrftime
+test_nstrftime_LDADD = $(LDADD) $(HARD_LOCALE_LIB)
