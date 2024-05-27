@@ -12,6 +12,7 @@ Depends-on:
 atoll
 c99
 intprops
+setlocale
 strerror
 
 configure.ac:
