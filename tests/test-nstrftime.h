@@ -76,6 +76,7 @@ posixtm_test (void)
         {
           fail = 1;
           printf ("%s failed with format %s\n", FUNC_NAME, T[i].fmt);
+          fflush (stdout);
         }
 
       if (! STREQ (buf, T[i].exp))
@@ -83,6 +84,7 @@ posixtm_test (void)
           fail = 1;
           printf ("%s: result mismatch: got %s, expected %s\n",
                   T[i].fmt, buf, T[i].exp);
+          fflush (stdout);
         }
     }
 
@@ -188,6 +190,7 @@ tzalloc_test (void)
             {
               fail = 1;
               printf ("%s: tzalloc: %s\n", TZ[i].setting, strerror (errno));
+              fflush (stdout);
               continue;
             }
           tza->tz = tz;
@@ -200,6 +203,7 @@ tzalloc_test (void)
           fail = 1;
           printf ("%s: %ld: localtime_rz: %s\n", setting, lt,
                   strerror (errno));
+          fflush (stdout);
           continue;
         }
 
@@ -208,6 +212,7 @@ tzalloc_test (void)
         {
           fail = 1;
           printf ("%s: %ld: %s failed\n", setting, lt, FUNC_NAME);
+          fflush (stdout);
           continue;
         }
 
@@ -222,6 +227,7 @@ tzalloc_test (void)
             fail = 1;
           printf ("%s: expected \"%s\", got \"%s\"\n",
                   setting, LT[i].exp, buf);
+          fflush (stdout);
         }
     }
 
@@ -248,6 +254,7 @@ quarter_test (void)
       if (r == 0)
         {
           printf ("%s(\"%%q\") failed\n", FUNC_NAME);
+          fflush (stdout);
           fail = 1;
           break;
         }
@@ -256,6 +263,7 @@ quarter_test (void)
       if (strcmp (out, exp) != 0)
         {
           printf ("%s %%q: expected \"%s\", got \"%s\"\n", FUNC_NAME, exp, out);
+          fflush (stdout);
           fail = 1;
           break;
         }
@@ -281,6 +289,7 @@ errno_test (void)
     {
       fail = 1;
       printf ("%s failed to set errno = ERANGE\n", FUNC_NAME);
+      fflush (stdout);
     }
 
   errno = 0;
@@ -289,6 +298,7 @@ errno_test (void)
     {
       fail = 1;
       printf ("%s failed to leave errno alone\n", FUNC_NAME);
+      fflush (stdout);
     }
 
 
@@ -301,6 +311,7 @@ errno_test (void)
         {
           fail = 1;
           printf ("%s failed to set errno = EOVERFLOW\n", FUNC_NAME);
+          fflush (stdout);
         }
 
       if (mktime_z (0, &tm) != (time_t) -1)
@@ -308,6 +319,7 @@ errno_test (void)
           fail = 1;
           printf ("%s %%s failed but mktime_z worked for tm_year=%d\n",
                   FUNC_NAME, bigyear);
+          fflush (stdout);
         }
     }
   else
@@ -322,6 +334,7 @@ errno_test (void)
             {
               fail = 1;
               printf ("gmtime failed on %s result\n", FUNC_NAME);
+              fflush (stdout);
             }
           else
             {
@@ -333,6 +346,7 @@ errno_test (void)
                   fail = 1;
                   printf ("%s %%s first returned '%s', then '%s'\n",
                           FUNC_NAME, buf, buf1);
+                  fflush (stdout);
                 }
             }
         }
@@ -361,6 +375,7 @@ locales_test (language_t language)
   n = FUNC_CHECKED (buf, sizeof buf, "%+4Y-%m-%d %H:%M:%S.%N", tm, 0, ns);
   ASSERT (n > 0);
   printf ("Format as ISO 8601: %s\n", buf);
+  fflush (stdout);
   ASSERT (STREQ (buf, "2017-10-26 06:40:03.123456789"));
 
   /* Exercise various POSIX format directives.  */
@@ -368,6 +383,7 @@ locales_test (language_t language)
   n = FUNC_CHECKED (buf, sizeof buf, "%a", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%a directive: %s\n", buf);
+  fflush (stdout);
   switch (language)
     {
     case english:
@@ -382,6 +398,7 @@ locales_test (language_t language)
   n = FUNC_CHECKED (buf, sizeof buf, "%A", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%A directive: %s\n", buf);
+  fflush (stdout);
   switch (language)
     {
     case english:
@@ -396,6 +413,7 @@ locales_test (language_t language)
   n = FUNC_CHECKED (buf, sizeof buf, "%b", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%b directive: %s\n", buf);
+  fflush (stdout);
   switch (language)
     {
     case english:
@@ -410,6 +428,7 @@ locales_test (language_t language)
   n = FUNC_CHECKED (buf, sizeof buf, "%B", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%B directive: %s\n", buf);
+  fflush (stdout);
   switch (language)
     {
     case english:
@@ -423,6 +442,7 @@ locales_test (language_t language)
   n = FUNC_CHECKED (buf, sizeof buf, "%c", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%c directive: %s\n", buf);
+  fflush (stdout);
   switch (language)
     {
     case english:
@@ -441,41 +461,49 @@ locales_test (language_t language)
   n = FUNC_CHECKED (buf, sizeof buf, "%C", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%C directive: %s\n", buf);
+  fflush (stdout);
   ASSERT (STREQ (buf, "20"));
 
   n = FUNC_CHECKED (buf, sizeof buf, "%d", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%d directive: %s\n", buf);
+  fflush (stdout);
   ASSERT (STREQ (buf, "26"));
 
   n = FUNC_CHECKED (buf, sizeof buf, "%D", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%D directive: %s\n", buf);
+  fflush (stdout);
   ASSERT (STREQ (buf, "10/26/17"));
 
   n = FUNC_CHECKED (buf, sizeof buf, "%e", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%e directive: %s\n", buf);
+  fflush (stdout);
   ASSERT (STREQ (buf, "26"));
 
   n = FUNC_CHECKED (buf, sizeof buf, "%F", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%F directive: %s\n", buf);
+  fflush (stdout);
   ASSERT (STREQ (buf, "2017-10-26"));
 
   n = FUNC_CHECKED (buf, sizeof buf, "%g", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%g directive: %s\n", buf);
+  fflush (stdout);
   ASSERT (STREQ (buf, "17"));
 
   n = FUNC_CHECKED (buf, sizeof buf, "%G", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%G directive: %s\n", buf);
+  fflush (stdout);
   ASSERT (STREQ (buf, "2017"));
 
   n = FUNC_CHECKED (buf, sizeof buf, "%h", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%h directive: %s\n", buf);
+  fflush (stdout);
   switch (language)
     {
     case english:
@@ -490,31 +518,37 @@ locales_test (language_t language)
   n = FUNC_CHECKED (buf, sizeof buf, "%H", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%H directive: %s\n", buf);
+  fflush (stdout);
   ASSERT (STREQ (buf, "06"));
 
   n = FUNC_CHECKED (buf, sizeof buf, "%I", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%I directive: %s\n", buf);
+  fflush (stdout);
   ASSERT (STREQ (buf, "06"));
 
   n = FUNC_CHECKED (buf, sizeof buf, "%j", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%j directive: %s\n", buf);
+  fflush (stdout);
   ASSERT (STREQ (buf, "299"));
 
   n = FUNC_CHECKED (buf, sizeof buf, "%m", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%m directive: %s\n", buf);
+  fflush (stdout);
   ASSERT (STREQ (buf, "10"));
 
   n = FUNC_CHECKED (buf, sizeof buf, "%M", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%M directive: %s\n", buf);
+  fflush (stdout);
   ASSERT (STREQ (buf, "40"));
 
   n = FUNC_CHECKED (buf, sizeof buf, "%n", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%n directive: %s\n", buf);
+  fflush (stdout);
   ASSERT (STREQ (buf, "\n"));
 
   n = FUNC_CHECKED (buf, sizeof buf, "%p", tm, 0, ns);
@@ -523,6 +557,7 @@ locales_test (language_t language)
     case english:
       ASSERT (n > 0);
       printf ("%%p directive: %s\n", buf);
+      fflush (stdout);
       ASSERT (STREQ (buf, "AM"));
       break;
     case french:
@@ -533,6 +568,7 @@ locales_test (language_t language)
   n = FUNC_CHECKED (buf, sizeof buf, "%r", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%r directive: %s\n", buf);
+  fflush (stdout);
   switch (language)
     {
     case english:
@@ -548,51 +584,61 @@ locales_test (language_t language)
   n = FUNC_CHECKED (buf, sizeof buf, "%R", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%R directive: %s\n", buf);
+  fflush (stdout);
   ASSERT (STREQ (buf, "06:40"));
 
   n = FUNC_CHECKED (buf, sizeof buf, "%S", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%S directive: %s\n", buf);
+  fflush (stdout);
   ASSERT (STREQ (buf, "03"));
 
   n = FUNC_CHECKED (buf, sizeof buf, "%t", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%t directive: %s\n", buf);
+  fflush (stdout);
   ASSERT (STREQ (buf, "\t"));
 
   n = FUNC_CHECKED (buf, sizeof buf, "%T", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%T directive: %s\n", buf);
+  fflush (stdout);
   ASSERT (STREQ (buf, "06:40:03"));
 
   n = FUNC_CHECKED (buf, sizeof buf, "%u", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%u directive: %s\n", buf);
+  fflush (stdout);
   ASSERT (STREQ (buf, "4"));
 
   n = FUNC_CHECKED (buf, sizeof buf, "%U", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%U directive: %s\n", buf);
+  fflush (stdout);
   ASSERT (STREQ (buf, "43"));
 
   n = FUNC_CHECKED (buf, sizeof buf, "%V", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%V directive: %s\n", buf);
+  fflush (stdout);
   ASSERT (STREQ (buf, "43"));
 
   n = FUNC_CHECKED (buf, sizeof buf, "%w", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%w directive: %s\n", buf);
+  fflush (stdout);
   ASSERT (STREQ (buf, "4"));
 
   n = FUNC_CHECKED (buf, sizeof buf, "%W", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%W directive: %s\n", buf);
+  fflush (stdout);
   ASSERT (STREQ (buf, "43"));
 
   n = FUNC_CHECKED (buf, sizeof buf, "%x", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%x directive: %s\n", buf);
+  fflush (stdout);
   switch (language)
     {
     case english:
@@ -607,32 +653,38 @@ locales_test (language_t language)
   n = FUNC_CHECKED (buf, sizeof buf, "%X", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%X directive: %s\n", buf);
+  fflush (stdout);
   ASSERT (STREQ (buf, "06:40:03"));
 
   n = FUNC_CHECKED (buf, sizeof buf, "%y", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%y directive: %s\n", buf);
+  fflush (stdout);
   ASSERT (STREQ (buf, "17"));
 
   n = FUNC_CHECKED (buf, sizeof buf, "%Y", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%Y directive: %s\n", buf);
+  fflush (stdout);
   ASSERT (STREQ (buf, "2017"));
 
   n = FUNC_CHECKED (buf, sizeof buf, "%z", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%z directive: %s\n", buf);
+  fflush (stdout);
   ASSERT (STREQ (buf, "+0000"));
 
   n = FUNC_CHECKED (buf, sizeof buf, "%Z", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%Z directive: %s\n", buf);
+  fflush (stdout);
   ASSERT (STREQ (buf, "GMT") /* glibc, NetBSD, OpenBSD, AIX, Solaris, Cygwin, Android */
           || STREQ (buf, "UTC") /* musl, macOS, FreeBSD */);
 
   n = FUNC_CHECKED (buf, sizeof buf, "%%", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%%% directive: %s\n", buf);
+  fflush (stdout);
   ASSERT (STREQ (buf, "%"));
 
   /* Exercise various GNU extensions from glibc.  */
@@ -640,11 +692,13 @@ locales_test (language_t language)
   n = FUNC_CHECKED (buf, sizeof buf, "%k", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%k directive: %s\n", buf);
+  fflush (stdout);
   ASSERT (STREQ (buf, " 6"));
 
   n = FUNC_CHECKED (buf, sizeof buf, "%l", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%l directive: %s\n", buf);
+  fflush (stdout);
   ASSERT (STREQ (buf, " 6"));
 
   n = FUNC_CHECKED (buf, sizeof buf, "%P", tm, 0, ns);
@@ -653,6 +707,7 @@ locales_test (language_t language)
     case english:
       ASSERT (n > 0);
       printf ("%%P directive: %s\n", buf);
+      fflush (stdout);
       ASSERT (STREQ (buf, "am"));
       break;
     case french:
@@ -663,6 +718,7 @@ locales_test (language_t language)
   n = FUNC_CHECKED (buf, sizeof buf, "%s", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%s directive: %s\n", buf);
+  fflush (stdout);
   ASSERT (STREQ (buf, "1509000003"));
 
   /* Exercise various GNU extensions from gnulib.  */
@@ -670,6 +726,7 @@ locales_test (language_t language)
   n = FUNC_CHECKED (buf, sizeof buf, "%N", tm, 0, ns);
   ASSERT (n > 0);
   printf ("%%N directive: %s\n", buf);
+  fflush (stdout);
   ASSERT (STREQ (buf, "123456789"));
 
   return fail;
