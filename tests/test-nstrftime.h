@@ -219,7 +219,12 @@ tzalloc_test (void)
       if (! (STREQ (buf, LT[i].exp)
              || (!tz && n == strlen (LT[i].exp)
                  && memcmp (buf, LT[i].exp, n - sizeof "(GMT)" + 1) == 0
-                 && STREQ (buf + n - sizeof "(GMT)" + 1, "(GMT)"))))
+                 && STREQ (buf + n - sizeof "(GMT)" + 1, "(GMT)"))
+#if defined _WIN32 && !defined __CYGWIN__
+             /* On native Windows, the time zone is printed differently.  */
+             || strncmp (buf, LT[i].exp, 21) == 0
+#endif
+         )  )
         {
           /* Don't fail for unhandled dst in ahistorical entries,
              as gnulib doesn't currently fix that issue, seen on Darwin 14.  */
