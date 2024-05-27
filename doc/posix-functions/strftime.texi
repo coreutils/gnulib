@@ -28,6 +28,9 @@ mingw, MSVC.
 The %h specifier produces empty output on some platforms:
 mingw, MSVC.
 @item
+The %r specifier produces empty output on some platforms:
+mingw, MSVC.
+@item
 The %r specifier produces empty output, at least in a French locale,
 on some platforms:
 macOS 12.5, FreeBSD 14.0.
