@@ -4,6 +4,7 @@ tests/locale.c
 m4/musl.m4
 
 Depends-on:
+setlocale
 
 configure.ac:
 gl_MUSL_LIBC

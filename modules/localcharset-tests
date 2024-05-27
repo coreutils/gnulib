@@ -2,6 +2,7 @@ Files:
 tests/test-localcharset.c
 
 Depends-on:
+setlocale
 
 configure.ac:
 
