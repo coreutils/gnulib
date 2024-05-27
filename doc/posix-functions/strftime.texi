@@ -20,6 +20,9 @@ The %c specifier produces no weekday name and no month name, only a
 potentially ambiguous numerical output, on some platforms:
 mingw, MSVC.
 @item
+The %h specifier produces empty output on some platforms:
+mingw, MSVC.
+@item
 The Windows C runtime library (which is used by MinGW) does not
 support the %e specifier (and possibly the other more recent SUS
 specifiers too, i.e., %C, %D, %h, %n, %r, %R, %t, and %T).

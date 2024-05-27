@@ -807,6 +807,9 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
             cpy (am_len, a_month);
           break;
 #else
+# if defined _WIN32 && !defined __CYGWIN__
+          format_char = L_('b');
+# endif
           goto underlying_strftime;
 #endif
 
