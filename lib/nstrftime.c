@@ -67,6 +67,9 @@ extern char *tzname[];
 #include <stdlib.h>
 #include <string.h>
 
+#include <locale.h>
+#include "hard-locale.h"
+
 #include "attribute.h"
 #include <intprops.h>
 
@@ -835,6 +838,12 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
                                                      NLW(ERA_D_T_FMT)))
                      != '\0')))
             subfmt = (const CHAR_T *) _NL_CURRENT (LC_TIME, NLW(D_T_FMT));
+#elif defined _WIN32 && !defined __CYGWIN__
+          /* On native Windows, "%c" is "%d/%m/%Y %H:%M:%S" by default.  */
+          if (hard_locale (LC_TIME))
+            subfmt = L_("%a %e %b %Y %H:%M:%S");
+          else
+            subfmt = L_("%a %b %e %H:%M:%S %Y");
 #else
           goto underlying_strftime;
 #endif
