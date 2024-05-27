@@ -103,18 +103,29 @@ static struct tzalloc_test TZ[] =
   {
 #define Pacific 0
     { 0, "PST8PDT,M3.2.0,M11.1.0"      },
+
 #define Arizona 1
     { 0, "MST7"                        },
+
 #define UTC 2
     { 0, 0                             },
+
 #define CentEur 3
     { 0, "CET-1CEST,M3.5.0,M10.5.0/3"  },
+
 #define Japan 4
     { 0, "JST-9"                       },
+
 #define NZ 5
+#if defined _WIN32 && !defined __CYGWIN__
+    { 0, "NST-13NDT"                   },
+#else
     { 0, "NZST-12NZDT,M9.5.0,M4.1.0/3" },
+#endif
+
 #define Unknown 6
     { 0, "<-00>0" },
+
     { 0 }
   };
 
@@ -157,7 +168,9 @@ static struct localtime_rz_test LT[] =
     { TZ+UTC    , 1000000002, "2001-09-09 01:46:42 +0000 (UTC)",  0 },
     { TZ+CentEur, 1000000002, "2001-09-09 03:46:42 +0200 (CEST)", 0 },
     { TZ+Japan  , 1000000002, "2001-09-09 10:46:42 +0900 (JST)",  0 },
+#if !(defined _WIN32 && !defined __CYGWIN__)
     { TZ+NZ     , 1000000002, "2001-09-09 13:46:42 +1200 (NZST)", 0 },
+#endif
 #if TZ_ANGLE_BRACKETS_SHOULD_WORK && !defined __FreeBSD__
     { TZ+Unknown,          0, "1970-01-01 00:00:00 -0000 (-00)",  0 },
     { TZ+Unknown,  500000001, "1985-11-05 00:53:21 -0000 (-00)",  0 },
