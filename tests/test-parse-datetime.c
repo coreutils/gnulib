@@ -110,6 +110,17 @@ gmt_offset (time_t s)
   return gmtoff;
 }
 
+/* Define SOME_TIMEPOINT to some tv_sec value that is supported by the
+   platform's localtime() function and that is on the same weekday as
+   the Unix epoch.  */
+#if defined _WIN32 && !defined __CYGWIN__
+/* On native Windows, localtime() fails for all time_t values < 0.  */
+# define SOME_TIMEPOINT (700 * 86400)
+#else
+/* The Unix epoch.  */
+# define SOME_TIMEPOINT 0
+#endif
+
 int
 main (_GL_UNUSED int argc, char **argv)
 {
@@ -127,6 +138,7 @@ main (_GL_UNUSED int argc, char **argv)
      a problem with glibc on sites that default to leap seconds; see
      <https://bugs.gnu.org/12206>.  */
   ASSERT (setenv ("TZ", "EST5EDT,M3.2.0,M11.1.0", 1) == 0);
+  tzset ();
 
   gmtoff = gmt_offset (ref_time);
 
@@ -225,14 +237,14 @@ main (_GL_UNUSED int argc, char **argv)
           && expected.tv_nsec == result.tv_nsec);
 
 
-  now.tv_sec = 4711;
+  now.tv_sec = SOME_TIMEPOINT + 4711;
   now.tv_nsec = 1267;
   p = "now";
   ASSERT (parse_datetime (&result, p, &now));
   LOG (p, now, result);
   ASSERT (now.tv_sec == result.tv_sec && now.tv_nsec == result.tv_nsec);
 
-  now.tv_sec = 4711;
+  now.tv_sec = SOME_TIMEPOINT + 4711;
   now.tv_nsec = 1267;
   p = "tomorrow";
   ASSERT (parse_datetime (&result, p, &now));
@@ -240,7 +252,7 @@ main (_GL_UNUSED int argc, char **argv)
   ASSERT (now.tv_sec + 24 * 60 * 60 == result.tv_sec
           && now.tv_nsec == result.tv_nsec);
 
-  now.tv_sec = 4711;
+  now.tv_sec = SOME_TIMEPOINT + 4711;
   now.tv_nsec = 1267;
   p = "yesterday";
   ASSERT (parse_datetime (&result, p, &now));
@@ -248,7 +260,7 @@ main (_GL_UNUSED int argc, char **argv)
   ASSERT (now.tv_sec - 24 * 60 * 60 == result.tv_sec
           && now.tv_nsec == result.tv_nsec);
 
-  now.tv_sec = 4711;
+  now.tv_sec = SOME_TIMEPOINT + 4711;
   now.tv_nsec = 1267;
   p = "4 hours";
   ASSERT (parse_datetime (&result, p, &now));
@@ -257,7 +269,7 @@ main (_GL_UNUSED int argc, char **argv)
           && now.tv_nsec == result.tv_nsec);
 
   /* test if timezone is not being ignored for day offset */
-  now.tv_sec = 4711;
+  now.tv_sec = SOME_TIMEPOINT + 4711;
   now.tv_nsec = 1267;
   p = "UTC+400 +24 hours";
   ASSERT (parse_datetime (&result, p, &now));
@@ -269,7 +281,7 @@ main (_GL_UNUSED int argc, char **argv)
           && result.tv_nsec == result2.tv_nsec);
 
   /* test if several time zones formats are handled same way */
-  now.tv_sec = 4711;
+  now.tv_sec = SOME_TIMEPOINT + 4711;
   now.tv_nsec = 1267;
   p = "UTC+14:00";
   ASSERT (parse_datetime (&result, p, &now));
@@ -285,7 +297,7 @@ main (_GL_UNUSED int argc, char **argv)
   ASSERT (result.tv_sec == result2.tv_sec
           && result.tv_nsec == result2.tv_nsec);
 
-  now.tv_sec = 4711;
+  now.tv_sec = SOME_TIMEPOINT + 4711;
   now.tv_nsec = 1267;
   p = "UTC-14:00";
   ASSERT (parse_datetime (&result, p, &now));
@@ -301,7 +313,7 @@ main (_GL_UNUSED int argc, char **argv)
   ASSERT (result.tv_sec == result2.tv_sec
           && result.tv_nsec == result2.tv_nsec);
 
-  now.tv_sec = 4711;
+  now.tv_sec = SOME_TIMEPOINT + 4711;
   now.tv_nsec = 1267;
   p = "UTC+0:15";
   ASSERT (parse_datetime (&result, p, &now));
@@ -312,7 +324,7 @@ main (_GL_UNUSED int argc, char **argv)
   ASSERT (result.tv_sec == result2.tv_sec
           && result.tv_nsec == result2.tv_nsec);
 
-  now.tv_sec = 4711;
+  now.tv_sec = SOME_TIMEPOINT + 4711;
   now.tv_nsec = 1267;
   p = "UTC-1:30";
   ASSERT (parse_datetime (&result, p, &now));
@@ -325,13 +337,13 @@ main (_GL_UNUSED int argc, char **argv)
 
 
   /* TZ out of range should cause parse_datetime failure */
-  now.tv_sec = 4711;
+  now.tv_sec = SOME_TIMEPOINT + 4711;
   now.tv_nsec = 1267;
   p = "UTC+25:00";
   ASSERT (!parse_datetime (&result, p, &now));
 
-        /* Check for several invalid countable dayshifts */
-  now.tv_sec = 4711;
+  /* Check for several invalid countable dayshifts */
+  now.tv_sec = SOME_TIMEPOINT + 4711;
   now.tv_nsec = 1267;
   p = "UTC+4:00 +40 yesterday";
   ASSERT (!parse_datetime (&result, p, &now));
@@ -349,7 +361,7 @@ main (_GL_UNUSED int argc, char **argv)
   ASSERT (!parse_datetime (&result, p, &now));
 
   /* And check correct usage of dayshifts */
-  now.tv_sec = 4711;
+  now.tv_sec = SOME_TIMEPOINT + 4711;
   now.tv_nsec = 1267;
   p = "UTC+400 tomorrow";
   ASSERT (parse_datetime (&result, p, &now));
@@ -364,7 +376,7 @@ main (_GL_UNUSED int argc, char **argv)
   LOG (p, now, result2);
   ASSERT (result.tv_sec == result2.tv_sec
           && result.tv_nsec == result2.tv_nsec);
-  now.tv_sec = 4711;
+  now.tv_sec = SOME_TIMEPOINT + 4711;
   now.tv_nsec = 1267;
   p = "UTC+400 yesterday";
   ASSERT (parse_datetime (&result, p, &now));
@@ -374,7 +386,7 @@ main (_GL_UNUSED int argc, char **argv)
   LOG (p, now, result2);
   ASSERT (result.tv_sec == result2.tv_sec
           && result.tv_nsec == result2.tv_nsec);
-  now.tv_sec = 4711;
+  now.tv_sec = SOME_TIMEPOINT + 4711;
   now.tv_nsec = 1267;
   p = "UTC+400 now";
   ASSERT (parse_datetime (&result, p, &now));
@@ -386,7 +398,12 @@ main (_GL_UNUSED int argc, char **argv)
           && result.tv_nsec == result2.tv_nsec);
 
   /* If this platform has TZDB, check for GNU Bug#48085.  */
+#if defined _WIN32 && !defined __CYGWIN__
+  ASSERT (setenv ("TZ", "US Eastern Standard Time", 1) == 0);
+#else
   ASSERT (setenv ("TZ", "America/Indiana/Indianapolis", 1) == 0);
+#endif
+  tzset ();
   now.tv_sec = 1619641490;
   now.tv_nsec = 0;
   struct tm *tm = localtime (&now.tv_sec);
@@ -404,9 +421,10 @@ main (_GL_UNUSED int argc, char **argv)
 
   /* Check that some "next Monday", "last Wednesday", etc. are correct.  */
   ASSERT (setenv ("TZ", "UTC0", 1) == 0);
+  tzset ();
   for (i = 0; day_table[i]; i++)
     {
-      unsigned int thur2 = 7 * 24 * 3600; /* 2nd thursday */
+      unsigned int thur2 = SOME_TIMEPOINT + 7 * 24 * 3600; /* 2nd thursday */
       char tmp[32];
       sprintf (tmp, "NEXT %s", day_table[i]);
       now.tv_sec = thur2 + 4711;
@@ -425,6 +443,8 @@ main (_GL_UNUSED int argc, char **argv)
       ASSERT (result.tv_sec == thur2 + ((i + 3) % 7 - 7) * 24 * 3600);
     }
 
+/* On native Windows, localtime() fails for all time_t values < 0.  */
+#if !(defined _WIN32 && !defined __CYGWIN__)
   p = "1970-12-31T23:59:59+00:00 - 1 year";  /* Bug#50115 */
   now.tv_sec = -1;
   now.tv_nsec = 0;
@@ -448,6 +468,7 @@ main (_GL_UNUSED int argc, char **argv)
   LOG (p, now, result);
   ASSERT (result.tv_sec == 24 * 3600
           && result.tv_nsec == now.tv_nsec);
+#endif
 
   /* Exercise a sign-extension bug.  Before July 2012, an input
      starting with a high-bit-set byte would be treated like "0".  */

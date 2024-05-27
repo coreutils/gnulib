@@ -29,6 +29,10 @@ On some platforms, this function yields incorrect values for
 timestamps before the year 1:
 MacOS X 10.5, Solaris 11.3.
 @item
+On some platforms, this function returns NULL for negative arguments, that is,
+for timestamps before 1970-01-01 00:00:00 local time:
+mingw, MSVC.
+@item
 Native Windows platforms (mingw, MSVC) support only a subset of time
 zones supported by GNU or specified by POSIX@.  @xref{tzset}.
 @end itemize
