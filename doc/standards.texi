@@ -1,9 +1,10 @@
+1716739442 WARNING torsocks[111891]: [syscall] Unsupported syscall number 318. Denying the call (in tsocks_syscall() at syscall.c:551)
 \input texinfo @c -*-texinfo-*-
 @c %**start of header
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate August 17, 2021
+@set lastupdate May 26, 2024
 @c %**end of header
 
 @dircategory GNU organization
@@ -1066,7 +1067,7 @@ copyright notice.  If more than one copyright notice is called for, put
 each on a separate line.
 
 Next should follow a line stating the license, preferably using one of
-abbreviations below, and a brief statement that the program is free
+the abbreviations below, and a brief statement that the program is free
 software, and that users are free to copy and change it.  Also mention
 that there is no warranty, to the extent permitted by law.  See
 recommended wording below.
@@ -2137,7 +2138,7 @@ Used in GDB.
 @samp{-s} in @code{tac}.
 
 @item sequence
-Used by @code{recode} to chose files or pipes for sequencing passes.
+Used by @code{recode} to choose files or pipes for sequencing passes.
 
 @item shell
 @samp{-s} in @code{su}.
