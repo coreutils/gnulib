@@ -13,6 +13,10 @@ This function is missing on some platforms:
 Minix 3.1.8, mingw, MSVC 14.
 But the provided replacement is just a dummy on some of these platforms:
 Minix 3.1.8.
+@item
+This function makes applications hang forever on some platforms:
+@c https://cygwin.com/pipermail/cygwin/2024-May/255987.html
+Cygwin 3.5.3.
 @end itemize
 
 Portability problems not fixed by Gnulib:
