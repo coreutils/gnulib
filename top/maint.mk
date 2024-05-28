@@ -538,13 +538,16 @@ sc_require_config_h_first:
 	fi
 
 # Generated headers that override system headers.
-# Keep sorted.
+# These are documented in gnulib-tool.texi.  Keep sorted.
+# sed -n -e 's/^@item[[:space:]]\{1,\}@code{\([^}]\{1,\}\)}$/\1/p' $GNULIB_SRCDIR/doc/gnulib-tool.texi  | sort -u
 gl_prefer_angle_bracket_headers_ ?= \
   alloca.h		\
   arpa/inet.h		\
   assert.h		\
+  byteswap.h		\
   ctype.h		\
   dirent.h		\
+  endian.h		\
   errno.h		\
   error.h		\
   fcntl.h		\
@@ -575,6 +578,7 @@ gl_prefer_angle_bracket_headers_ ?= \
   spawn.h		\
   stdalign.h		\
   stdarg.h		\
+  stdbit.h		\
   stddef.h		\
   stdint.h		\
   stdio.h		\
