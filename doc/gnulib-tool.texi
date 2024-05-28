@@ -620,6 +620,7 @@ as well as for the following header files that exist in the GNU C library
 but are not standardized:
 @itemize @asis{}
 @item @code{alloca.h}
+@item @code{byteswap.h}
 @item @code{error.h}
 @item @code{getopt.h}
 @item @code{malloc.h}
