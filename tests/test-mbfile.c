@@ -21,13 +21,20 @@
 #include "mbfile.h"
 
 #include <locale.h>
+#include <string.h>
 
+#include "localcharset.h"
 #include "macros.h"
 
 int
 main ()
 {
-  if (setlocale (LC_ALL, "en_US.UTF-8") == NULL)
+  /* Switch to an UTF-8 locale.  */
+  if (!(setlocale (LC_ALL, "en_US.UTF-8") != NULL
+        /* Check whether it's really an UTF-8 locale.
+           On native Windows, this setlocale call succeeds but the encoding
+           of this locale is CP1252, not UTF-8.  */
+        && strcmp (locale_charset (), "UTF-8") == 0))
     {
       fprintf (stderr, "Skipping test: English Unicode locale is not installed\n");
       return 77;
