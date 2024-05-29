@@ -167,7 +167,7 @@ class GLModule:
                    re.M)
 
     # Regular expression matching module names that can be used as shell ids.
-    shell_id_pattern: ClassVar[re.Pattern] = re.compile(r'^\w*$')
+    shell_id_pattern: ClassVar[re.Pattern] = re.compile(r'^\w*$', re.ASCII)
 
     cache: dict[str, Any]
     content: str
