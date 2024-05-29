@@ -166,8 +166,8 @@ class GLModule:
                    + r'Makefile\.am|Include|Link|License|Maintainer):$',
                    re.M)
 
-    # List of characters allowed in shell identifiers.
-    shell_id_chars: ClassVar[str] = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_'
+    # Regular expression matching module names that can be used as shell ids.
+    shell_id_pattern: ClassVar[re.Pattern] = re.compile(r'^\w*$')
 
     cache: dict[str, Any]
     content: str
@@ -378,56 +378,28 @@ class GLModule:
                               for line in section.splitlines() })
         return lines_to_multiline(directives)
 
+    def getShellId(self) -> str:
+        if re.match(self.shell_id_pattern, self.name):
+            return self.name
+        return hashlib.md5(f'{self.name}\n'.encode(ENCS['default'])).hexdigest()
+
     def getShellFunc(self) -> str:
         '''Computes the shell function name that will contain the m4 macros
         for the module.'''
         macro_prefix = self.config['macro_prefix']
-        valid_shell_id = True
-        for char in self.name:
-            if char not in GLModule.shell_id_chars:
-                valid_shell_id = False
-                break
-        if valid_shell_id:
-            identifier = self.name
-        else:
-            hash_input = '%s\n' % self.name
-            identifier = hashlib.md5(hash_input.encode(ENCS['default'])).hexdigest()
-        result = 'func_%s_gnulib_m4code_%s' % (macro_prefix, identifier)
-        return result
+        return 'func_%s_gnulib_m4code_%s' % (macro_prefix, self.getShellId())
 
     def getShellVar(self) -> str:
         '''Compute the shell variable name the will be set to true once the
         m4 macros for the module have been executed.'''
         macro_prefix = self.config['macro_prefix']
-        valid_shell_id = True
-        for char in self.name:
-            if char not in GLModule.shell_id_chars:
-                valid_shell_id = False
-                break
-        if valid_shell_id:
-            identifier = self.name
-        else:
-            hash_input = '%s\n' % self.name
-            identifier = hashlib.md5(hash_input.encode(ENCS['default'])).hexdigest()
-        result = '%s_gnulib_enabled_%s' % (macro_prefix, identifier)
-        return result
+        return '%s_gnulib_enabled_%s' % (macro_prefix, self.getShellId())
 
     def getConditionalName(self) -> str:
         '''Return the automake conditional name.
         GLConfig: macro_prefix.'''
         macro_prefix = self.config['macro_prefix']
-        valid_shell_id = True
-        for char in self.name:
-            if char not in GLModule.shell_id_chars:
-                valid_shell_id = False
-                break
-        if valid_shell_id:
-            identifier = self.name
-        else:
-            hash_input = '%s\n' % self.name
-            identifier = hashlib.md5(hash_input.encode(ENCS['default'])).hexdigest()
-        result = '%s_GNULIB_ENABLED_%s' % (macro_prefix, identifier)
-        return result
+        return '%s_GNULIB_ENABLED_%s' % (macro_prefix, self.getShellId())
 
     def getDescription(self) -> str:
         '''Return description of the module.'''
