@@ -4,6 +4,7 @@ tests/test-mbfile.c
 tests/macros.h
 
 Depends-on:
+localcharset
 setlocale
 
 configure.ac:
