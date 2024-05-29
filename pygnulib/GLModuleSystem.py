@@ -379,8 +379,11 @@ class GLModule:
         return lines_to_multiline(directives)
 
     def getShellId(self) -> str:
+        '''Return an unique id suitable for use in shell scripts. If the
+        module name is not a valid shell identifier use its MD5 digest.'''
         if re.match(self.shell_id_pattern, self.name):
             return self.name
+        # Newline character needed for compatibility with gnulib-tool.sh.
         return hashlib.md5(f'{self.name}\n'.encode(ENCS['default'])).hexdigest()
 
     def getShellFunc(self) -> str:
