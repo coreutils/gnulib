@@ -10,6 +10,7 @@ m4/pthread_rwlock_rdlock.m4
 Depends-on:
 extensions
 threadlib
+pthread-once     [test $gl_threads_api = posix]
 windows-mutex    [test $gl_threads_api = windows]
 windows-rwlock   [test $gl_threads_api = windows]
 windows-recmutex [test $gl_threads_api = windows]
