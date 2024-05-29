@@ -6,6 +6,7 @@ tests/macros.h
 Depends-on:
 pthread-thread
 pthread-mutex
+pthread-rwlock
 sched_yield
 
 configure.ac:
