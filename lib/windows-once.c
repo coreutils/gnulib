@@ -29,6 +29,7 @@ glwthread_once (glwthread_once_t *once_control, void (*initfunction) (void))
 {
   if (once_control->inited <= 0)
     {
+      InterlockedIncrement (&once_control->num_threads);
       if (InterlockedIncrement (&once_control->started) == 0)
         {
           /* This thread is the first one to come to this once_control.  */
@@ -58,5 +59,11 @@ glwthread_once (glwthread_once_t *once_control, void (*initfunction) (void))
                 abort ();
             }
         }
+      /* Here once_control->inited > 0.  */
+      if (InterlockedDecrement (&once_control->num_threads) == 0)
+        /* once_control->num_threads is now zero, and once_control->inited is 1.
+           No other thread will need to use the lock.
+           We can therefore destroy the lock, to free resources.  */
+        DeleteCriticalSection (&once_control->lock);
     }
 }
