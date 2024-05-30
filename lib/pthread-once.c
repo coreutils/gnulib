@@ -77,52 +77,31 @@ pthread_once (pthread_once_t *once_control, void (*initfunction) (void))
      In other words:
        state = { unsigned int num_threads : 31; unsigned int done : 1; }
    */
+  _Atomic unsigned int *state_p = (_Atomic unsigned int *) &once_control->state;
   /* Test the 'done' bit.  */
-  if ((* (unsigned int volatile *) &once_control->state & 1) == 0)
+  if ((*state_p & 1) == 0)
     {
       /* The 'done' bit is still zero.  Increment num_threads (atomically).  */
-      for (;;)
-        {
-          unsigned int prev = * (unsigned int volatile *) &once_control->state;
-          if (__sync_bool_compare_and_swap ((unsigned int *) &once_control->state,
-                                            prev, prev + 2))
-            break;
-        }
+      *state_p += 2;
       /* We have incremented num_threads.  Now take the lock.  */
       pthread_mutex_lock (&once_control->mutex);
       /* Test the 'done' bit again.  */
-      if ((* (unsigned int volatile *) &once_control->state & 1) == 0)
+      if ((*state_p & 1) == 0)
         {
           /* Execute the initfunction.  */
           (*initfunction) ();
           /* Set the 'done' bit to 1 (atomically).  */
-          for (;;)
-            {
-              unsigned int prev = * (unsigned int volatile *) &once_control->state;
-              if (__sync_bool_compare_and_swap ((unsigned int *) &once_control->state,
-                                                prev, prev | 1))
-                break;
-            }
+          *state_p |= 1;
         }
       /* Now the 'done' bit is 1.  Release the lock.  */
       pthread_mutex_unlock (&once_control->mutex);
       /* Decrement num_threads (atomically).  */
-      for (;;)
-        {
-          unsigned int prev = * (unsigned int volatile *) &once_control->state;
-          if (prev < 2)
-            abort ();
-          if (__sync_bool_compare_and_swap ((unsigned int *) &once_control->state,
-                                            prev, prev - 2))
-            {
-              if (prev - 2 == 1)
-                /* num_threads is now zero, and done is 1.
-                   No other thread will need to use the lock.
-                   We can therefore destroy the lock, to free resources.  */
-                pthread_mutex_destroy (&once_control->mutex);
-              break;
-            }
-        }
+      unsigned int new_state = (*state_p -= 2);
+      if (new_state == 1)
+        /* num_threads is now zero, and done is 1.
+           No other thread will need to use the lock.
+           We can therefore destroy the lock, to free resources.  */
+        pthread_mutex_destroy (&once_control->mutex);
     }
 #  endif
   return 0;
