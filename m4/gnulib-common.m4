@@ -203,7 +203,8 @@ AC_DEFUN([gl_COMMON_BODY], [
 # endif
 #endif
 
-/* It is OK for a compiler to move calls to the function and to omit
+/* _GL_ATTRIBUTE_CONST declares:
+   It is OK for a compiler to move calls to the function and to omit
    calls to the function if another call has the same arguments or the
    result is not used.
    This attribute is safe for a function that neither depends on
@@ -521,7 +522,8 @@ AC_DEFUN([gl_COMMON_BODY], [
 # endif
 #endif
 
-/* It is OK for a compiler to move calls to the function and to omit
+/* _GL_ATTRIBUTE_PURE declares:
+   It is OK for a compiler to move calls to the function and to omit
    calls to the function if another call has the same arguments or the
    result is not used, and if observable state is the same.
    This attribute is safe for a function that does not affect observable state
@@ -539,7 +541,8 @@ AC_DEFUN([gl_COMMON_BODY], [
 # endif
 #endif
 
-/* It is OK for a compiler to move calls to the function and to omit duplicate
+/* _GL_ATTRIBUTE_REPRODUCIBLE declares:
+   It is OK for a compiler to move calls to the function and to omit duplicate
    calls to the function with the same arguments, so long as the state
    addressed by its arguments is the same and is updated in time for
    the rest of the program.
@@ -584,7 +587,8 @@ AC_DEFUN([gl_COMMON_BODY], [
 # endif
 #endif
 
-/* It is OK for a compiler to move calls to the function and to omit duplicate
+/* _GL_ATTRIBUTE_UNSEQUENCED declares:
+   It is OK for a compiler to move calls to the function and to omit duplicate
    calls to the function with the same arguments, so long as the state
    addressed by its arguments is the same.
    This attribute is safe for a function that is effectless, idempotent,
