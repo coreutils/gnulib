@@ -53,7 +53,13 @@ call_once (once_flag *flagp, void (*func) (void))
 void
 call_once (once_flag *flagp, void (*func) (void))
 {
+# if defined __CYGWIN__
+  /* Verify that once_flag and pthread_once_t are of the same size.  */
+  struct _ { int v [sizeof (once_flag) == sizeof (pthread_once_t) ? 1 : -1]; };
+  pthread_once ((pthread_once_t *) flagp, func);
+# else
   pthread_once (flagp, func);
+# endif
 }
 
 #endif
