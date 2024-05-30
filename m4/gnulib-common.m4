@@ -1,5 +1,5 @@
 # gnulib-common.m4
-# serial 94
+# serial 95
 dnl Copyright (C) 2007-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -556,9 +556,14 @@ AC_DEFUN([gl_COMMON_BODY], [
    <https://stackoverflow.com/questions/76847905/>.  */
 /* Applies to: functions, pointer to functions, function types.  */
 #ifndef _GL_ATTRIBUTE_REPRODUCIBLE
-# if _GL_HAS_ATTRIBUTE (reproducible)
-#  define _GL_ATTRIBUTE_REPRODUCIBLE [[reproducible]]
-# else
+/* This may be revisited when gcc and clang support [[reproducible]] or possibly
+   __attribute__ ((__reproducible__)).  */
+# ifndef _GL_BRACKET_BEFORE_ATTRIBUTE
+#  if _GL_HAS_ATTRIBUTE (reproducible)
+#   define _GL_ATTRIBUTE_REPRODUCIBLE [[reproducible]]
+#  endif
+# endif
+# ifndef _GL_ATTRIBUTE_REPRODUCIBLE
 #  define _GL_ATTRIBUTE_REPRODUCIBLE
 # endif
 #endif
@@ -602,9 +607,14 @@ AC_DEFUN([gl_COMMON_BODY], [
    <https://stackoverflow.com/questions/76847905/>.  */
 /* Applies to: functions, pointer to functions, function types.  */
 #ifndef _GL_ATTRIBUTE_UNSEQUENCED
-# if _GL_HAS_ATTRIBUTE (unsequenced)
-#  define _GL_ATTRIBUTE_UNSEQUENCED [[unsequenced]]
-# else
+/* This may be revisited when gcc and clang support [[unsequenced]] or possibly
+   __attribute__ ((__unsequenced__)).  */
+# ifndef _GL_BRACKET_BEFORE_ATTRIBUTE
+#  if _GL_HAS_ATTRIBUTE (unsequenced)
+#   define _GL_ATTRIBUTE_UNSEQUENCED [[unsequenced]]
+#  endif
+# endif
+# ifndef _GL_ATTRIBUTE_UNSEQUENCED
 #  define _GL_ATTRIBUTE_UNSEQUENCED
 # endif
 #endif
