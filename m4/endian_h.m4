@@ -1,5 +1,5 @@
 # endian_h.m4
-# serial 3
+# serial 4
 dnl Copyright 2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -13,7 +13,7 @@ AC_DEFUN_ONCE([gl_ENDIAN_H],
 
   AC_CHECK_HEADERS_ONCE([endian.h])
   gl_CHECK_NEXT_HEADERS([endian.h])
-  if test "$ac_cv_header_endian_h" = yes; then
+  if test $ac_cv_header_endian_h = yes; then
     HAVE_ENDIAN_H=1
     dnl Check if endian.h defines uint16_t, uint32_t, and uint64_t.
     AC_CACHE_CHECK([if endian.h defines stdint types],
@@ -88,7 +88,7 @@ return !(value16_1 + value32_1 + value64_1
   fi
 
   dnl Check if endian.h works but is missing types from stdint.h.
-  if test "$GL_GENERATE_ENDIAN_H"; then
+  if test $GL_GENERATE_ENDIAN_H; then
     if test "$gl_cv_header_working_endian_h" = yes; then
       ENDIAN_H_JUST_MISSING_STDINT=1
     else
