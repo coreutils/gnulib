@@ -30,7 +30,8 @@ glwthread_once (glwthread_once_t *once_control, void (*initfunction) (void))
   if (once_control->inited <= 0)
     {
       InterlockedIncrement (&once_control->num_threads);
-      if (InterlockedIncrement (&once_control->started) == 0)
+      /* If once_control->started is == -1, set it to 0.  */
+      if (InterlockedCompareExchange (&once_control->started, 0, -1) < 0)
         {
           /* This thread is the first one to come to this once_control.  */
           InitializeCriticalSection (&once_control->lock);
@@ -42,8 +43,6 @@ glwthread_once (glwthread_once_t *once_control, void (*initfunction) (void))
         }
       else
         {
-          /* Don't let once_control->started grow and wrap around.  */
-          InterlockedDecrement (&once_control->started);
           /* Some other thread has already started the initialization.
              Yield the CPU while waiting for the other thread to finish
              initializing and taking the lock.  */
