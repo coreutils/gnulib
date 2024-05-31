@@ -73,31 +73,35 @@ pthread_once (pthread_once_t *once_control, void (*initfunction) (void))
        typedef struct { pthread_mutex_t mutex; int state; } pthread_once_t;
        #define PTHREAD_ONCE_INIT { PTHREAD_MUTEX_INITIALIZER, 0 }
      while assigning the following meaning to the state:
-       state = 2 * <number of waiting threads> + <1 if done>
+       state = (<number of waiting threads> << 16) + <1 if done>
      In other words:
-       state = { unsigned int num_threads : 31; unsigned int done : 1; }
+       state = { unsigned int num_threads : 16; unsigned int done : 16; }
    */
-  _Atomic unsigned int *state_p = (_Atomic unsigned int *) &once_control->state;
+  struct actual_state
+    {
+      _Atomic unsigned short num_threads;
+      _Atomic unsigned short done;
+    };
+  struct actual_state *state_p = (struct actual_state *) &once_control->state;
   /* Test the 'done' bit.  */
-  if ((*state_p & 1) == 0)
+  if (state_p->done == 0)
     {
       /* The 'done' bit is still zero.  Increment num_threads (atomically).  */
-      *state_p += 2;
+      state_p->num_threads += 1;
       /* We have incremented num_threads.  Now take the lock.  */
       pthread_mutex_lock (&once_control->mutex);
       /* Test the 'done' bit again.  */
-      if ((*state_p & 1) == 0)
+      if (state_p->done == 0)
         {
           /* Execute the initfunction.  */
           (*initfunction) ();
           /* Set the 'done' bit to 1 (atomically).  */
-          *state_p |= 1;
+          state_p->done = 1;
         }
       /* Now the 'done' bit is 1.  Release the lock.  */
       pthread_mutex_unlock (&once_control->mutex);
       /* Decrement num_threads (atomically).  */
-      unsigned int new_state = (*state_p -= 2);
-      if (new_state == 1)
+      if ((state_p->num_threads -= 1) == 0)
         /* num_threads is now zero, and done is 1.
            No other thread will need to use the lock.
            We can therefore destroy the lock, to free resources.  */
