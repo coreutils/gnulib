@@ -25,7 +25,7 @@
 
 typedef struct
         {
-          volatile int inited;
+          volatile LONG inited;
           volatile LONG num_threads;
           volatile LONG started;
           CRITICAL_SECTION lock;
