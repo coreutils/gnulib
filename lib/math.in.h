@@ -2557,7 +2557,7 @@ _GL_EXTERN_C int isnanf (float x);
        GCC >= 4.0 also provides __builtin_isnanf, but clang doesn't.  */
 #    undef isnanf
 #    define isnanf(x) __builtin_isnan ((float)(x))
-#   elif defined isnan
+#   elif defined isnan && !defined HAVE_ISNANF_NOLIBM
 #    undef isnanf
 #    define isnanf(x) isnan ((float)(x))
 #   endif
@@ -2586,7 +2586,7 @@ _GL_EXTERN_C int isnand (double x);
     /* GCC >= 4.0 and clang provide a type-generic built-in for isnan.  */
 #    undef isnand
 #    define isnand(x) __builtin_isnan ((double)(x))
-#   else
+#   elif !defined HAVE_ISNAND_NOLIBM
 #    undef isnand
 #    define isnand(x) isnan ((double)(x))
 #   endif
@@ -2609,7 +2609,7 @@ _GL_EXTERN_C int isnand (double x);
        GCC >= 4.0 also provides __builtin_isnanl, but clang doesn't.  */
 #   undef isnanl
 #   define isnanl(x) __builtin_isnan ((long double)(x))
-#  elif defined isnan
+#  elif defined isnan && !defined HAVE_ISNANL_NOLIBM
 #   undef isnanl
 #   define isnanl(x) isnan ((long double)(x))
 #  endif
