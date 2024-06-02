@@ -16,11 +16,28 @@
 
 #include <stdio.h>
 
-#include "infinity.h"
-#include "macros.h"
-#include "minus-zero.h"
-#include "signed-nan.h"
-#include "signed-snan.h"
+/* Specification.  */
+#include <math.h>
+
+#if defined __IBMC__
+/* The IBM XL C compiler cannot compile the initializer of x[] below.  */
+
+# include <stdio.h>
+
+int
+main ()
+{
+  fputs ("Skipping test: broken C compiler\n", stderr);
+  return 77;
+}
+
+#else
+
+# include "infinity.h"
+# include "macros.h"
+# include "minus-zero.h"
+# include "signed-nan.h"
+# include "signed-snan.h"
 
 int
 main ()
@@ -28,9 +45,9 @@ main ()
   TOTALORDER_TYPE x[] =
     {
       { TOTALORDER_NEGATIVE_NAN () },
-#if TOTALORDER_HAVE_SNAN
+# if TOTALORDER_HAVE_SNAN
       TOTALORDER_NEGATIVE_SNAN (),
-#endif
+# endif
       { -TOTALORDER_INF () },
       { -1e37 },
       { -1 },
@@ -41,9 +58,9 @@ main ()
       { 1 },
       { 1e37 },
       { TOTALORDER_INF () },
-#if TOTALORDER_HAVE_SNAN
+# if TOTALORDER_HAVE_SNAN
       TOTALORDER_POSITIVE_SNAN (),
-#endif
+# endif
       { TOTALORDER_POSITIVE_NAN () }
     };
   int n = SIZEOF (x);
@@ -59,3 +76,5 @@ main ()
 
   return result;
 }
+
+#endif
