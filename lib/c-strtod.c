@@ -47,6 +47,9 @@
 # define STRTOD strtod
 #endif
 
+/* Here we don't need the newlocale override that supports gl_locale_name().  */
+#undef newlocale
+
 #if defined LC_ALL_MASK && (HAVE_GOOD_STRTOD_L || HAVE_WORKING_USELOCALE)
 
 /* Cache for the C locale object.
