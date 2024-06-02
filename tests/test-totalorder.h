@@ -16,12 +16,28 @@
 
 #include <stdio.h>
 
+/* Specification.  */
 #include <math.h>
-#include "infinity.h"
-#include "macros.h"
-#include "minus-zero.h"
-#include "signed-nan.h"
-#include "signed-snan.h"
+
+#if defined __IBMC__
+/* The IBM XL C compiler cannot compile the initializer of x[] below.  */
+
+# include <stdio.h>
+
+int
+main ()
+{
+  fputs ("Skipping test: broken C compiler\n", stderr);
+  return 77;
+}
+
+#else
+
+# include "infinity.h"
+# include "macros.h"
+# include "minus-zero.h"
+# include "signed-nan.h"
+# include "signed-snan.h"
 
 static TOTALORDER_TYPE
 positive_NaN_with_payload (int payload)
@@ -47,9 +63,9 @@ main ()
     {
       negative_NaN_with_payload (1729),
       negative_NaN_with_payload (641),
-#if TOTALORDER_HAVE_SNAN
+# if TOTALORDER_HAVE_SNAN
       TOTALORDER_NEGATIVE_SNAN (),
-#endif
+# endif
       { -TOTALORDER_INF () },
       { -1e37 },
       { -1 },
@@ -60,9 +76,9 @@ main ()
       { 1 },
       { 1e37 },
       { TOTALORDER_INF () },
-#if TOTALORDER_HAVE_SNAN
+# if TOTALORDER_HAVE_SNAN
       TOTALORDER_POSITIVE_SNAN (),
-#endif
+# endif
       positive_NaN_with_payload (641),
       positive_NaN_with_payload (1729)
     };
@@ -78,3 +94,5 @@ main ()
 
   return test_exit_status;
 }
+
+#endif
