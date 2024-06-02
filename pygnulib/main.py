@@ -987,7 +987,7 @@ def main(temp_directory: str) -> None:
                 if os.path.isfile(filepath):
                     with open(filepath, mode='r', newline='\n', encoding='utf-8') as file:
                         data = file.read()
-                    pattern = re.compile(r'^ACLOCAL_AMFLAGS[\t ]*=[\t ]*([^#]+?)$', re.MULTILINE)
+                    pattern = re.compile(r'^ACLOCAL_AMFLAGS[\t ]*=[\t ]*(.+?)[\t ]*(?:#|$)', re.MULTILINE)
                     match = re.search(pattern, data)
                     if match:
                         aclocal_amflags = match.group(1).split()
