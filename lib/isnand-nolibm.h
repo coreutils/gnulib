@@ -1,5 +1,5 @@
 /* Test for NaN that does not need libm.
-   Copyright (C) 2007-2023 Free Software Foundation, Inc.
+   Copyright (C) 2007-2024 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as
@@ -36,3 +36,6 @@
 # define isnand rpl_isnand
 extern int isnand (double x);
 #endif
+
+/* Tell <math.h> that our isnand does not need libm.  */
+#define HAVE_ISNAND_NOLIBM 1
