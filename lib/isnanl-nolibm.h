@@ -41,3 +41,6 @@ extern
 # endif
 int isnanl (long double x);
 #endif
+
+/* Tell <math.h> that our isnanl does not need libm.  */
+#define HAVE_ISNANL_NOLIBM 1

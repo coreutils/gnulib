@@ -40,3 +40,6 @@ extern
 # endif
 int isnand (double x);
 #endif
+
+/* Tell <math.h> that our isnand does not need libm.  */
+#define HAVE_ISNAND_NOLIBM 1

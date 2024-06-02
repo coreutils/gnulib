@@ -52,3 +52,6 @@ extern
 # endif
 int isnanf (float x);
 #endif
+
+/* Tell <math.h> that our isnanf does not need libm.  */
+#define HAVE_ISNANF_NOLIBM 1
