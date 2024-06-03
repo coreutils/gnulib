@@ -12,6 +12,7 @@ random
 
 configure.ac:
 AC_CHECK_HEADERS_ONCE([semaphore.h])
+AC_CHECK_DECLS_ONCE([alarm])
 AC_REQUIRE([gl_SEMAPHORE])
 
 Makefile.am:
