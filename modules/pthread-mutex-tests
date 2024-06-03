@@ -2,6 +2,7 @@ Files:
 tests/test-pthread-mutex.c
 tests/atomic-int-posix.h
 tests/macros.h
+m4/semaphore.m4
 
 Depends-on:
 pthread-thread
@@ -9,6 +10,8 @@ sched_yield
 random
 
 configure.ac:
+AC_CHECK_HEADERS_ONCE([semaphore.h])
+AC_REQUIRE([gl_SEMAPHORE])
 
 Makefile.am:
 TESTS += test-pthread-mutex
