@@ -40,6 +40,21 @@ from .GLConfig import GLConfig
 from .GLFileSystem import GLFileSystem
 
 
+# Regular expression matching a 'lib_SOURCES += ...' variable with the file
+# names in capture group 1.
+_LIB_SOURCES_PATTERN = re.compile(r'^lib_SOURCES[\t ]*\+=[\t ]*(.+?)[\t ]*(?:#|$)', re.MULTILINE)
+
+
+def _extract_lib_SOURCES(snippet: str) -> list[str]:
+    '''Return the file names specified in the lib_SOURCES variable of
+    a Makefile.am snippet.'''
+    lines = [ line.group(1)
+              for line in re.finditer(_LIB_SOURCES_PATTERN, snippet) ]
+    return [ file_name
+             for line in lines
+             for file_name in line.split() ]
+
+
 #===============================================================================
 # Define GLModuleSystem class
 #===============================================================================
@@ -571,13 +586,8 @@ class GLModule:
                 # Synthesize an EXTRA_DIST augmentation.
                 snippet = self.getAutomakeSnippet_Conditional()
                 snippet = combine_lines(snippet)
-                pattern = re.compile(r'^lib_SOURCES[\t ]*\+=[\t ]*(.*)$', re.MULTILINE)
-                mentioned_files = set(pattern.findall(snippet))
-                if mentioned_files:
-                    # Get all the file names from 'lib_SOURCES += ...'.
-                    mentioned_files = { filename
-                                        for line in mentioned_files
-                                        for filename in line.split() }
+                # Get all the file names from 'lib_SOURCES += ...'.
+                mentioned_files = _extract_lib_SOURCES(snippet)
                 all_files = self.getFiles()
                 lib_files = filter_filelist('\n', all_files,
                                             'lib/', '', 'lib/', '')
@@ -985,14 +995,14 @@ class GLModuleTable:
                     # Extract the value of unconditional "lib_SOURCES += ..." augmentations.
                     snippet = combine_lines(snippet)
                     snippet = self.remove_if_blocks(snippet)
-                    pattern = re.compile(r'^lib_SOURCES[\t ]*\+=[\t ]*([^#]+?)$', re.MULTILINE)
-                    for matching_rhs in re.finditer(pattern, snippet):
-                        files = matching_rhs.group(1).split()
-                        for file in files:
-                            # Ignore .h files since they are not compiled.
-                            if not file.endswith('.h'):
-                                have_lib_sources = True
-                                break
+                    file_names = _extract_lib_SOURCES(snippet)
+                    for file_name in file_names:
+                        # Ignore .h files since they are not compiled.
+                        if not file_name.endswith('.h'):
+                            have_lib_sources = True
+                            break
+                    if have_lib_sources:
+                        break
         # Add the dummy module, to make sure the library will be non-empty.
         if not have_lib_sources:
             dummy = self.modulesystem.find('dummy')
