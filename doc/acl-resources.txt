@@ -7,6 +7,9 @@ POSIX ACLs
 Documents from POSIX.1e (headers & functions) and POSIX.2c (utilities):
   http://wt.tuxomania.net/publications/posix.1e/download.html
 
+Explanation of mask:
+  https://unix.stackexchange.com/questions/475698/
+
 
 Linux ACLs
 
