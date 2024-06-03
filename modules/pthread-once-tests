@@ -10,6 +10,7 @@ pthread-rwlock
 sched_yield
 
 configure.ac:
+AC_CHECK_DECLS_ONCE([alarm])
 
 Makefile.am:
 TESTS += test-pthread-once1 test-pthread-once2
