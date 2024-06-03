@@ -587,7 +587,7 @@ class GLModule:
                 snippet = self.getAutomakeSnippet_Conditional()
                 snippet = combine_lines(snippet)
                 # Get all the file names from 'lib_SOURCES += ...'.
-                mentioned_files = _extract_lib_SOURCES(snippet)
+                mentioned_files = set(_extract_lib_SOURCES(snippet))
                 all_files = self.getFiles()
                 lib_files = filter_filelist('\n', all_files,
                                             'lib/', '', 'lib/', '')
