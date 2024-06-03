@@ -419,6 +419,17 @@ main (void)
     free (result4);
   }
 
+#if !(defined _WIN32 && !defined __CYGWIN__)
+  /* Check a device file.  */
+  {
+    char *result1 = canonicalize_file_name ("/dev/null");
+    char *result2 = canonicalize_filename_mode ("/dev/null", CAN_ALL_BUT_LAST);
+    ASSERT (result1 != NULL);
+    ASSERT (result2 != NULL);
+    ASSERT (strcmp (result1, result2) == 0);
+  }
+#endif
+
   /* Cleanup.  */
   ASSERT (remove (BASE "/droot") == 0);
   ASSERT (remove (BASE "/d/1") == 0);
