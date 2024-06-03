@@ -1,5 +1,5 @@
 /* Test of execution of file name canonicalization.
-   Copyright (C) 2007-2023 Free Software Foundation, Inc.
+   Copyright (C) 2007-2024 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -279,6 +279,13 @@ main (void)
     free (result2);
   }
 
+#if !(defined _WIN32 && !defined __CYGWIN__)
+  /* Check a device file.  */
+  {
+    char *result = canonicalize_file_name ("/dev/null");
+    ASSERT (result != NULL);
+  }
+#endif
 
   /* Cleanup.  */
   ASSERT (remove (BASE "/droot") == 0);
