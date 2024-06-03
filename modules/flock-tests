@@ -5,6 +5,7 @@ tests/macros.h
 
 Depends-on:
 unistd
+test-xfail
 
 configure.ac:
 
@@ -13,5 +14,7 @@ TESTS += test-flock
 check_PROGRAMS += test-flock
 
 if GL_COND_OBJ_FLOCK
+if !OS_IS_NATIVE_WINDOWS
 XFAIL_TESTS += test-flock
+endif
 endif
