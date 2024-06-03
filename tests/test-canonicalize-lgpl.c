@@ -283,6 +283,13 @@ main (void)
     free (result2);
   }
 
+#if !(defined _WIN32 && !defined __CYGWIN__)
+  /* Check a device file.  */
+  {
+    char *result = canonicalize_file_name ("/dev/null");
+    ASSERT (result != NULL);
+  }
+#endif
 
   /* Cleanup.  */
   ASSERT (remove (BASE "/droot") == 0);
