@@ -92,12 +92,13 @@ extern char *tzname[];
 #include <stdlib.h>
 #include <string.h>
 
-#include <locale.h>
-#if (defined __NetBSD__ || defined __sun) && REQUIRE_GNUISH_STRFTIME_AM_PM
-# include "localename.h"
+#if USE_C_LOCALE && HAVE_STRFTIME_L
+# include <locale.h>
 #endif
-#if !USE_C_LOCALE
-# include "hard-locale.h"
+
+#if (defined __NetBSD__ || defined __sun) && REQUIRE_GNUISH_STRFTIME_AM_PM
+# include <locale.h>
+# include "localename.h"
 #endif
 
 #include "attribute.h"
@@ -1292,10 +1293,7 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
           subfmt = L_("%a %b %e %H:%M:%S %Y");
 #elif defined _WIN32 && !defined __CYGWIN__
           /* On native Windows, "%c" is "%d/%m/%Y %H:%M:%S" by default.  */
-          if (hard_locale (LC_TIME))
-            subfmt = L_("%a %e %b %Y %H:%M:%S");
-          else
-            subfmt = L_("%a %b %e %H:%M:%S %Y");
+          subfmt = L_("%a %b %e %H:%M:%S %Y");
 #else
           goto underlying_strftime;
 #endif

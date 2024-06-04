@@ -26,4 +26,4 @@ TESTS_ENVIRONMENT += \
   LOCALE_FR='@LOCALE_FR@' \
   LOCALE_FR_UTF8='@LOCALE_FR_UTF8@'
 check_PROGRAMS += test-nstrftime
-test_nstrftime_LDADD = $(LDADD) $(SETLOCALE_LIB) $(HARD_LOCALE_LIB)
+test_nstrftime_LDADD = $(LDADD) $(SETLOCALE_LIB)
