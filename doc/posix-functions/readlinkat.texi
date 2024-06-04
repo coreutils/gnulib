@@ -19,6 +19,10 @@ OS X 10.10.
 On some platforms, this function returns @code{int} instead of
 @code{ssize_t}:
 AIX 7.1.
+@item
+For the file name @file{/dev/null}, this function returns @file{\Device\Null},
+which is unusable, on some platforms:
+Cygwin 3.3.6.
 @end itemize
 
 Portability problems mostly fixed by Gnulib:
