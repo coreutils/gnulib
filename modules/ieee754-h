@@ -6,6 +6,7 @@ lib/ieee754.in.h
 m4/ieee754-h.m4
 
 Depends-on:
+endian           [$GL_GENERATE_IEEE754_H]
 gen-header
 
 configure.ac:
