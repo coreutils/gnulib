@@ -1,4 +1,4 @@
-/* Copyright (C) 1991, 1994, 1997-1998, 2000, 2003-2023 Free Software
+/* Copyright (C) 1991, 1994, 1997-1998, 2000, 2003-2024 Free Software
    Foundation, Inc.
 
    NOTE: The canonical source of this file is maintained with the GNU C
@@ -68,9 +68,6 @@ static int
 _unsetenv (const char *name)
 {
   size_t len;
-#if !HAVE_DECL__PUTENV
-  char **ep;
-#endif
 
   if (name == NULL || *name == '\0' || strchr (name, '=') != NULL)
     {
@@ -80,7 +77,18 @@ _unsetenv (const char *name)
 
   len = strlen (name);
 
-#if HAVE_DECL__PUTENV
+#if HAVE_DECL__PUTENV /* native Windows */
+  /* The Microsoft documentation
+     <https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/putenv-wputenv>
+     says:
+       "Don't change an environment entry directly: instead,
+        use _putenv or _wputenv to change it."
+     Note: Microsoft's _putenv updates not only the contents of _environ but
+     also the contents of _wenviron, so that both are in kept in sync.
+
+     The way to remove an environment variable is to pass to _putenv a string
+     of the form "NAME=".  (NB: This is a different convention than with glibc
+     putenv, which expects a string of the form "NAME"!)  */
   {
     int putenv_result;
     char *name_ = malloc (len + 2);
@@ -88,6 +96,8 @@ _unsetenv (const char *name)
     name_[len] = '=';
     name_[len + 1] = 0;
     putenv_result = _putenv (name_);
+    /* In this particular case it is OK to free() the argument passed to
+       _putenv.  */
     free (name_);
     return putenv_result;
   }
@@ -95,7 +105,7 @@ _unsetenv (const char *name)
 
   LOCK;
 
-  ep = environ;
+  char **ep = environ;
   while (*ep != NULL)
     if (!strncmp (*ep, name, len) && (*ep)[len] == '=')
       {
@@ -131,10 +141,18 @@ putenv (char *string)
       return _unsetenv (string);
     }
 
-#if HAVE_DECL__PUTENV
-  /* Rely on _putenv to allocate the new environment.  If other
-     parts of the application use _putenv, the !HAVE_DECL__PUTENV code
-     would fight over who owns the environ vector, causing a crash.  */
+#if HAVE_DECL__PUTENV /* native Windows */
+  /* The Microsoft documentation
+     <https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/putenv-wputenv>
+     says:
+       "Don't change an environment entry directly: instead,
+        use _putenv or _wputenv to change it."
+     Note: Microsoft's _putenv updates not only the contents of _environ but
+     also the contents of _wenviron, so that both are in kept in sync.
+
+     If we didn't follow this advice, our code and other parts of the
+     application (that use _putenv) would fight over who owns the environ vector
+     and thus cause a crash.  */
   if (name_end[1])
     return _putenv (string);
   else
