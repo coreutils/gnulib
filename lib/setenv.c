@@ -215,8 +215,7 @@ __add_to_environ (const char *name, const char *value, const char *combined,
         }
 
       if (__environ != last_environ)
-        memcpy ((char *) new_environ, (char *) __environ,
-                size * sizeof (char *));
+        memcpy (new_environ, __environ, size * sizeof (char *));
 
       new_environ[size + 1] = NULL;
 
