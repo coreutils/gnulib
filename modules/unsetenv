@@ -9,6 +9,8 @@ Depends-on:
 stdlib
 unistd          [test $HAVE_UNSETENV = 0 || test $REPLACE_UNSETENV = 1]
 environ         [test $HAVE_UNSETENV = 0 || test $REPLACE_UNSETENV = 1]
+free-posix      [test $HAVE_UNSETENV = 0 || test $REPLACE_UNSETENV = 1]
+malloc-posix    [test $HAVE_UNSETENV = 0 || test $REPLACE_UNSETENV = 1]
 
 configure.ac:
 gl_FUNC_UNSETENV
