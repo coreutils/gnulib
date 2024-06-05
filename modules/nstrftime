@@ -29,9 +29,6 @@ lib_SOURCES += nstrftime.c
 Include:
 "strftime.h"
 
-Link:
-$(HARD_LOCALE_LIB)
-
 License:
 LGPL
 

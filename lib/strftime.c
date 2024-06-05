@@ -92,13 +92,11 @@ extern char *tzname[];
 #include <stdlib.h>
 #include <string.h>
 
-#if USE_C_LOCALE && HAVE_STRFTIME_L
-# include <locale.h>
-#endif
-
+#include <locale.h>
 #if (defined __NetBSD__ || defined __sun) && REQUIRE_GNUISH_STRFTIME_AM_PM
-# include <locale.h>
 # include "localename.h"
+#elif defined _WIN32 && !defined __CYGWIN__
+# include <wchar.h>
 #endif
 
 #include "attribute.h"
@@ -1293,7 +1291,21 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
           subfmt = L_("%a %b %e %H:%M:%S %Y");
 #elif defined _WIN32 && !defined __CYGWIN__
           /* On native Windows, "%c" is "%d/%m/%Y %H:%M:%S" by default.  */
-          subfmt = L_("%a %b %e %H:%M:%S %Y");
+          bool is_c_locale;
+          /* This code is equivalent to is_c_locale = !hard_locale (LC_TIME). */
+# if defined _MSC_VER
+          const wchar_t *locale = _wsetlocale (LC_TIME, NULL);
+          is_c_locale =
+            (wstrcmp (locale, L"C") == 0 || wstrcmp (locale, L"POSIX") == 0);
+# else
+          const char *locale = setlocale (LC_TIME, NULL);
+          is_c_locale =
+            (strcmp (locale, "C") == 0 || strcmp (locale, "POSIX") == 0);
+# endif
+          if (is_c_locale)
+            subfmt = L_("%a %b %e %H:%M:%S %Y");
+          else
+            subfmt = L_("%a %e %b %Y %H:%M:%S");
 #else
           goto underlying_strftime;
 #endif

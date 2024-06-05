@@ -482,7 +482,6 @@ locales_test (language_t language)
       ASSERT (STREQ (buf, "jeu. 26 oct. 2017 06:40:03") /* glibc, Cygwin */
               || STREQ (buf, "jeu. 26 oct. 06:40:03 2017") /* FreeBSD */
               || STREQ (buf, "Jeu 26 oct 06:40:03 2017") /* macOS, older FreeBSD */
-              || STREQ (buf, "Jeu oct. 26 06:40:03 2017") /* MS-Windows */
               || STREQ (buf, "26 octobre 2017 06:40:03") /* NetBSD */
               || STREQ (buf, "26 octobre 2017 à 06:40:03") /* Solaris (UTF-8) */
               || STREQ (buf, "26 octobre 2017 \340 06:40:03") /* Solaris (ISO-8859-1) */);
