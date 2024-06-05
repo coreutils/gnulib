@@ -1301,7 +1301,7 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
 # if defined _MSC_VER
           const wchar_t *locale = _wsetlocale (LC_TIME, NULL);
           is_c_locale =
-            (wstrcmp (locale, L"C") == 0 || wstrcmp (locale, L"POSIX") == 0);
+            (wcscmp (locale, L"C") == 0 || wcscmp (locale, L"POSIX") == 0);
 # else
           const char *locale = setlocale (LC_TIME, NULL);
           is_c_locale =
