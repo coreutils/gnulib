@@ -92,7 +92,12 @@ extern char *tzname[];
 #include <stdlib.h>
 #include <string.h>
 
-#include <locale.h>
+#if (((defined __NetBSD__ || defined __sun) && REQUIRE_GNUISH_STRFTIME_AM_PM) \
+     || (defined _WIN32 && !defined __CYGWIN__) \
+     || (USE_C_LOCALE && HAVE_STRFTIME_L))
+# include <locale.h>
+#endif
+
 #if (defined __NetBSD__ || defined __sun) && REQUIRE_GNUISH_STRFTIME_AM_PM
 # include "localename.h"
 #elif defined _WIN32 && !defined __CYGWIN__
@@ -1727,7 +1732,8 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
 #elif USE_C_LOCALE && !HAVE_STRFTIME_L
           subfmt = L_("%I:%M:%S %p");
           goto subformat;
-#elif (defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || (defined _WIN32 && !defined __CYGWIN__)
+#elif ((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ \
+       || (defined _WIN32 && !defined __CYGWIN__))
           /* macOS, FreeBSD, native Windows strftime() may produce empty output
              for "%r".  */
           subfmt = L_("%I:%M:%S %p");
