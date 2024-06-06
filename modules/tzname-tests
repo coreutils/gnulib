@@ -1,0 +1,11 @@
+Files:
+tests/test-tzname.c
+
+Depends-on:
+tzset
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-tzname
+check_PROGRAMS += test-tzname
