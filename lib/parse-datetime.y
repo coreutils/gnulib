@@ -1863,11 +1863,8 @@ parse_datetime_body (struct timespec *result, char const *p,
       }
   }
 #else
-#if HAVE_TZNAME
+#if HAVE_TZNAME_ARRAY
   {
-# if !HAVE_DECL_TZNAME
-    extern char *tzname[];
-# endif
     int i;
     for (i = 0; i < 2; i++)
       {
