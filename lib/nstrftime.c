@@ -19,7 +19,7 @@
 # define HAVE_STRUCT_ERA_ENTRY 1
 # define HAVE_TM_GMTOFF 1
 # define HAVE_STRUCT_TM_TM_ZONE 1
-# define HAVE_TZNAME 1
+# define HAVE_TZNAME_ARRAY 1
 # include "../locale/localeinfo.h"
 #else
 # include <libc-config.h>
@@ -34,10 +34,6 @@
 #include <ctype.h>
 #include <errno.h>
 #include <time.h>
-
-#if HAVE_TZNAME && !HAVE_DECL_TZNAME
-extern char *tzname[];
-#endif
 
 /* Do multibyte processing if multibyte encodings are supported, unless
    multibyte sequences are safe in formats.  Multibyte sequences are
@@ -483,7 +479,7 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
 # define aam_len STRLEN (a_altmonth)
 # define ap_len STRLEN (ampm)
 #endif
-#if HAVE_TZNAME
+#if HAVE_TZNAME_ARRAY
   char **tzname_vec = tzname;
 #endif
   const char *zone;
@@ -504,7 +500,7 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
      POSIX does not require it.  Do the right thing instead.  */
   zone = (const char *) tp->tm_zone;
 #endif
-#if HAVE_TZNAME
+#if HAVE_TZNAME_ARRAY
   if (!tz)
     {
       if (! (zone && *zone))

@@ -18,6 +18,7 @@ libc-config
 stdbool
 stdckdint
 time_rz
+tzname
 
 configure.ac:
 gl_FUNC_GNU_STRFTIME
