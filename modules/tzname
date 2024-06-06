@@ -1,0 +1,23 @@
+Description:
+tzname variable: abbreviated time zone names, set by the tzset() function.
+
+Files:
+m4/tzname.m4
+
+Depends-on:
+time-h
+
+configure.ac:
+gl_TZNAME
+gl_TIME_MODULE_INDICATOR([tzname])
+
+Makefile.am:
+
+Include:
+<time.h>
+
+License:
+LGPL
+
+Maintainer:
+all
