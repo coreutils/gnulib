@@ -4,17 +4,17 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/tzname.html}
 
-Gnulib module: ---
+Gnulib module: tzname
 
 Portability problems fixed by Gnulib:
-@itemize
-@end itemize
-
-Portability problems not fixed by Gnulib:
 @itemize
 @item
 This variable is called @code{_tzname} on some platforms:
 mingw with @code{-DNO_OLDNAMES}, MSVC.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
 @item
 The address of this variable is not a compile-time constant on some platforms:
 Cygwin, mingw, MSVC.
