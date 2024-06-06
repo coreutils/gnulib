@@ -9,6 +9,7 @@ Depends-on:
 stdlib
 malloca         [test $HAVE_SETENV = 0 || test $REPLACE_SETENV = 1]
 alloca-opt      [test $HAVE_SETENV = 0 || test $REPLACE_SETENV = 1]
+malloc-posix    [test $HAVE_SETENV = 0 || test $REPLACE_SETENV = 1]
 unistd          [test $HAVE_SETENV = 0 || test $REPLACE_SETENV = 1]
 environ         [test $HAVE_SETENV = 0 || test $REPLACE_SETENV = 1]
 
