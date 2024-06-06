@@ -70,7 +70,7 @@ tzalloc (char const *name)
   if (tz)
     {
       tz->next = NULL;
-#if HAVE_TZNAME && !HAVE_STRUCT_TM_TM_ZONE
+#if HAVE_TZNAME_ARRAY && !HAVE_STRUCT_TM_TM_ZONE
       tz->tzname_copy[0] = tz->tzname_copy[1] = NULL;
 #endif
       tz->tz_is_set = !!name;
@@ -81,18 +81,19 @@ tzalloc (char const *name)
   return tz;
 }
 
-/* Save into TZ any nontrivial time zone abbreviation used by TM, and
-   update *TM (if HAVE_STRUCT_TM_TM_ZONE) or *TZ (if
-   !HAVE_STRUCT_TM_TM_ZONE && HAVE_TZNAME) if they use the abbreviation.
+/* Save into TZ any nontrivial time zone abbreviation used by TM, and update
+      *TM (if HAVE_STRUCT_TM_TM_ZONE)
+   or *TZ (if !HAVE_STRUCT_TM_TM_ZONE && HAVE_TZNAME_ARRAY)
+   if they use the abbreviation.
    Return true if successful, false (setting errno) otherwise.  */
 static bool
 save_abbr (timezone_t tz, struct tm *tm)
 {
-#if HAVE_STRUCT_TM_TM_ZONE || HAVE_TZNAME
+#if HAVE_STRUCT_TM_TM_ZONE || HAVE_TZNAME_ARRAY
   char const *zone = NULL;
   char *zone_copy = (char *) "";
 
-# if HAVE_TZNAME
+# if HAVE_TZNAME_ARRAY
   int tzname_index = -1;
 # endif
 
@@ -100,7 +101,7 @@ save_abbr (timezone_t tz, struct tm *tm)
   zone = tm->tm_zone;
 # endif
 
-# if HAVE_TZNAME
+# if HAVE_TZNAME_ARRAY
   if (! (zone && *zone) && 0 <= tm->tm_isdst)
     {
       tzname_index = tm->tm_isdst != 0;
@@ -302,7 +303,7 @@ mktime_z (timezone_t tz, struct tm *tm)
           tm_1.tm_isdst = tm->tm_isdst;
           time_t t = mktime (&tm_1);
           bool ok = 0 <= tm_1.tm_yday;
-#if HAVE_STRUCT_TM_TM_ZONE || HAVE_TZNAME
+#if HAVE_STRUCT_TM_TM_ZONE || HAVE_TZNAME_ARRAY
           ok = ok && save_abbr (tz, &tm_1);
 #endif
           if (revert_tz (old_tz) && ok)
