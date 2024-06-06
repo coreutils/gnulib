@@ -10,6 +10,7 @@ Depends-on:
 c99
 extensions
 time-h
+tzname
 flexmember     [test $HAVE_TIMEZONE_T = 0]
 idx            [test $HAVE_TIMEZONE_T = 0]
 setenv         [test $HAVE_TIMEZONE_T = 0]

@@ -1,6 +1,6 @@
 /* Time internal interface
 
-   Copyright 2015-2023 Free Software Foundation, Inc.
+   Copyright 2015-2024 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as
@@ -24,7 +24,7 @@ struct tm_zone
      members are zero.  */
   struct tm_zone *next;
 
-#if HAVE_TZNAME && !HAVE_STRUCT_TM_TM_ZONE
+#if HAVE_TZNAME_ARRAY && !HAVE_STRUCT_TM_TM_ZONE
   /* Copies of recent strings taken from tzname[0] and tzname[1].
      The copies are in ABBRS, so that they survive tzset.  Null if unknown.  */
   char *tzname_copy[2];
