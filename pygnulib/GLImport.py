@@ -1392,10 +1392,8 @@ in <library>_a_LDFLAGS or <library>_la_LDFLAGS when linking a library.''')
         # Detect position_early_after.
         with open(configure_ac, mode='r', newline='\n', encoding='utf-8') as file:
             data = file.read()
-        match_result1 = \
-            bool(re.compile(r'^ *AC_PROG_CC_STDC', re.M).findall(data))
-        match_result2 = \
-            bool(re.compile(r'^ *AC_PROG_CC_C99', re.M).findall(data))
+        match_result1 = re.compile(r'^ *AC_PROG_CC_STDC', re.MULTILINE).search(data)
+        match_result2 = re.compile(r'^ *AC_PROG_CC_C99', re.MULTILINE).search(data)
         if match_result1:
             print('  - replace AC_PROG_CC_STDC with AC_PROG_CC in %s,' % (configure_ac))
             position_early_after = 'AC_PROG_CC_STDC'
