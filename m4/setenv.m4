@@ -1,5 +1,5 @@
 # setenv.m4
-# serial 34
+# serial 35
 dnl Copyright (C) 2001-2004, 2006-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -155,6 +155,7 @@ AC_DEFUN([gl_PREREQ_SETENV],
   AC_REQUIRE([gl_ENVIRON])
   AC_CHECK_HEADERS_ONCE([unistd.h])
   AC_CHECK_HEADERS([search.h])
+  AC_CHECK_DECLS_ONCE([_putenv])
   gl_CHECK_FUNCS_ANDROID([tsearch], [[#include <search.h>]])
 ])
 
