@@ -12,7 +12,7 @@ Portability problems fixed by Gnulib:
 @item
 The times that are set on the file are affected by the current time zone and
 by the DST flag of the current time zone on some platforms:
-mingw, MSVC 14 (when the environment variable @code{TZ} is set).
+mingw, MSVC 14 (when the environment variable @env{TZ} is set).
 @item
 On some platforms, the prototype for @code{utime} omits @code{const}
 for the second argument:

@@ -10,7 +10,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 On native Windows platforms (mingw, MSVC), this function works incorrectly
-when the environment variable @code{TZ} has been set by Cygwin.
+when the environment variable @env{TZ} has been set by Cygwin.
 @item
 @code{mktime} may go into an endless loop on some platforms.
 @item

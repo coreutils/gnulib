@@ -21,7 +21,7 @@ file systems such as XFS (typically on large disks) and NFS.
 The @code{st_atime}, @code{st_ctime}, @code{st_mtime} fields are affected by
 the current time zone and by the DST flag of the current time zone on some
 platforms:
-mingw, MSVC 14 (when the environment variable @code{TZ} is set).
+mingw, MSVC 14 (when the environment variable @env{TZ} is set).
 @item
 On MSVC 14, this function fails with error @code{ENOENT}
 on files such as @samp{C:\pagefile.sys} and

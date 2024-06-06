@@ -13,6 +13,9 @@ Portability problems fixed by Gnulib:
 Portability problems not fixed by Gnulib:
 @itemize
 @item
+This variable's contents are unreliable if you use a geographical
+@env{TZ} setting like @code{TZ="America/Los_Angeles"}.
+@item
 This variable is missing on some platforms:
 FreeBSD 14.0, OpenBSD 5.7.
 @item
@@ -26,5 +29,7 @@ Native Windows platforms (mingw, MSVC) support only a subset of time
 zones supported by GNU or specified by POSIX@.  @xref{tzset}.
 @end itemize
 
+This variable is vestigial: it is not needed and does not suffice in general.
+It is planned to be removed from a future version of POSIX@.
 A more portable way of getting the UTC offset is to use
 @code{strftime} with the @code{%z} format.  @xref{strftime}.

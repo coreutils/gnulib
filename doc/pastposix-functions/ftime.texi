@@ -21,7 +21,7 @@ This function is not declared on some platforms:
 Android 13.
 @item
 On native Windows platforms (mingw, MSVC), this function works incorrectly
-when the environment variable @code{TZ} has been set by Cygwin.
+when the environment variable @env{TZ} has been set by Cygwin.
 @item
 This function is removed in POSIX.1-2008.  Better use
 @code{clock_gettime} instead, and use @code{ftime} only as a fallback for
