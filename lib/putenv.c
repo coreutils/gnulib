@@ -92,6 +92,8 @@ _unsetenv (const char *name)
   {
     int putenv_result;
     char *name_ = malloc (len + 2);
+    if (name_ == NULL)
+      return -1;
     memcpy (name_, name, len);
     name_[len] = '=';
     name_[len + 1] = 0;
