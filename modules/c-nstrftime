@@ -20,6 +20,7 @@ locale
 stdbool
 stdckdint
 time_rz
+tzname
 
 configure.ac:
 gl_C_GNU_STRFTIME

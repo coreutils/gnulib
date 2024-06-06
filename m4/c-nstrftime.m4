@@ -1,5 +1,5 @@
 # c-nstrftime.m4
-# serial 1
+# serial 2
 dnl Copyright (C) 1996-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,9 +8,6 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_C_GNU_STRFTIME],
 [
   AC_REQUIRE([AC_C_RESTRICT])
-
-  # This defines (or not) HAVE_TZNAME and HAVE_STRUCT_TM_TM_ZONE.
-  AC_REQUIRE([AC_STRUCT_TIMEZONE])
 
   AC_REQUIRE([gl_TM_GMTOFF])
 
