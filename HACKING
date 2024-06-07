@@ -131,9 +131,36 @@ and test this directory on various platforms:
   - Android,
   - and other platforms of your choice.
 
-There is a continuous integration that regularly performs this testing
-on a Linux/glibc system: https://gitlab.com/gnulib/gnulib-ci
-But this will catch only the most blatant mistakes.
+There are two continuous integrations that regularly perform this testing:
+* On a Linux/glibc system only:
+  https://gitlab.com/gnulib/gnulib-ci
+  This one will catch only the most blatant mistakes.
+* On many platforms:
+  https://github.com/gnu-gnulib/ci-testdir-check/actions
+  This one runs on many platforms, currently (as of June 2024):
+  - Ubuntu GNU/Linux 22.04
+  - CentOS GNU/Linux 7
+  - Alpine Linux
+  - macOS 11, 12, 13 (all x86_64)
+  - macOS 14 (arm64)
+  - FreeBSD 14.0
+  - NetBSD 10.0
+  - OpenBSD 7.5
+  - Solaris 11.4
+  - Solaris 11 OmniOS
+  - Cygwin 3.3.6 (32 bit) and 3.5.3 (64 bit)
+  - mingw (32 bit and 64 bit)
+  - MSVC (32 bit and 64 bit)
+  and also
+  - on Ubuntu GNU/Linux 22.04 with clang's UBSAN and ASAN sanitizers.
+  This one catches real portability problems.
+  Note that the following platforms are not covered and thus still require
+  occasional manual testing:
+  - AIX
+  - Solaris 10
+  - Haiku
+  - Android
+  - and other platforms of your choice.
 
 
 Warning Options
