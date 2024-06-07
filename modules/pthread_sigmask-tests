@@ -8,11 +8,16 @@ Depends-on:
 inttypes
 sleep
 pthread-thread
+test-xfail
 
 configure.ac:
 
 Makefile.am:
-TESTS += test-pthread_sigmask1 test-pthread_sigmask2
+# Work around https://gnats.netbsd.org/cgi-bin/query-pr-single.pl?number=57214
+if !OS_IS_NETBSD
+TESTS += test-pthread_sigmask1
+endif
+TESTS += test-pthread_sigmask2
 check_PROGRAMS += test-pthread_sigmask1 test-pthread_sigmask2
 test_pthread_sigmask1_LDADD = $(LDADD) @PTHREAD_SIGMASK_LIB@
 test_pthread_sigmask2_LDADD = $(LDADD) @PTHREAD_SIGMASK_LIB@ @LIBMULTITHREAD@
