@@ -6,9 +6,13 @@ tests/macros.h
 Depends-on:
 inttypes
 sleep
+test-xfail
 
 configure.ac:
 
 Makefile.am:
+# Work around https://gnats.netbsd.org/cgi-bin/query-pr-single.pl?number=57213
+if !OS_IS_NETBSD
 TESTS += test-sigprocmask
+endif
 check_PROGRAMS += test-sigprocmask
