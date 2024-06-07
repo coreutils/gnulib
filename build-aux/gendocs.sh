@@ -2,7 +2,7 @@
 # gendocs.sh -- generate a GNU manual in many formats.  This script is
 #   mentioned in maintain.texi.  See the help message below for usage details.
 
-scriptversion=2024-01-27.16
+scriptversion=2024-06-07.07
 
 # Copyright 2003-2024 Free Software Foundation, Inc.
 #
@@ -437,7 +437,7 @@ d=`dirname $srcfile`
     done
 
     # if $MAKEINFO is recent enough, use --trace-includes on the
-    # $srcfile to get the included files of the targetted manual only
+    # $srcfile to get the included files of the targeted manual only
     base=`basename "$srcfile"`
 
     cmd="$SETLANG $MAKEINFO $commonarg --trace-includes \"$base\""
