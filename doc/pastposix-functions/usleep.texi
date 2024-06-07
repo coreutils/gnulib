@@ -20,4 +20,7 @@ Portability problems not fixed by Gnulib:
 According to POSIX, the @code{usleep} function may interfere with the program's
 use of the @code{SIGALRM} signal.  On Linux, it doesn't; on other platforms,
 it may.
+@item
+On some systems, @code{usleep} may sleep for less than the indicated duration:
+Cygwin 3.5.3.
 @end itemize
