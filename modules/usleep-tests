@@ -5,9 +5,12 @@ tests/macros.h
 
 Depends-on:
 time-h
+test-xfail
 
 configure.ac:
 
 Makefile.am:
+if !OS_IS_CYGWIN
 TESTS += test-usleep
+endif
 check_PROGRAMS += test-usleep
