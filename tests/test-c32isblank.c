@@ -1,5 +1,5 @@
 /* Test of c32isblank() function.
-   Copyright (C) 2020-2023 Free Software Foundation, Inc.
+   Copyright (C) 2020-2024 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -77,7 +77,9 @@ main (int argc, char *argv[])
         #if !(defined __FreeBSD__ || defined __NetBSD__)
         case '\v':
         #endif
+        #if !defined __NetBSD__
         case '\f':
+        #endif
         case ' ': case '!': case '"': case '#': case '%':
         case '&': case '\'': case '(': case ')': case '*':
         case '+': case ',': case '-': case '.': case '/':
