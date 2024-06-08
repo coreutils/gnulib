@@ -77,7 +77,9 @@ main (int argc, char *argv[])
         #if !(defined __FreeBSD__ || defined __NetBSD__)
         case '\v':
         #endif
+        #if !defined __NetBSD__
         case '\f':
+        #endif
         case ' ': case '!': case '"': case '#': case '%':
         case '&': case '\'': case '(': case ')': case '*':
         case '+': case ',': case '-': case '.': case '/':
