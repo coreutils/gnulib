@@ -344,7 +344,7 @@ mktempd_ ()
   esac
 
   # First, try to use mktemp.
-  d=`unset TMPDIR; { mktemp -d -t -p "$destdir_" "$template_"; } 2>/dev/null` &&
+  d=`unset TMPDIR; { mktemp -d -p "$destdir_" "$template_"; } 2>/dev/null` &&
 
   # The resulting name must be in the specified directory.
   case $d in "$destdir_slash_"*) :;; *) false;; esac &&
