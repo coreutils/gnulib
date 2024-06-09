@@ -36,7 +36,7 @@ size_t
 c32rtomb (char *s, char32_t wc, mbstate_t *ps)
 #undef c32rtomb
 {
-#if HAVE_WORKING_MBRTOC32
+#if HAVE_WORKING_MBRTOC32 && HAVE_WORKING_C32RTOMB
 
 # if C32RTOMB_RETVAL_BUG
   if (s == NULL)
