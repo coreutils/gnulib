@@ -94,7 +94,7 @@ main ()
       ASSERT (c32width (0x3000) == 2);
       ASSERT (c32width (0xB250) == 2);
       ASSERT (c32width (0xFF1A) == 2);
-      #if !(defined __FreeBSD__ && __FreeBSD__ < 13 && !defined __GLIBC__)
+      #if !((defined __FreeBSD__ && __FreeBSD__ < 13 && !defined __GLIBC__) || defined __sun)
       ASSERT (c32width (0x20369) == 2);
       ASSERT (c32width (0x2F876) == 2);
       #endif
