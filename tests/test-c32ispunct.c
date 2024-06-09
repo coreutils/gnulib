@@ -277,7 +277,7 @@ main (int argc, char *argv[])
           is = for_character ("\201\060\206\067", 4);
           ASSERT (is != 0);
         #endif
-        #if !(defined __FreeBSD__ || defined __DragonFly__)
+        #if !(defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
           /* U+00D7 MULTIPLICATION SIGN */
           is = for_character ("\241\301", 2);
           ASSERT (is != 0);
@@ -296,7 +296,7 @@ main (int argc, char *argv[])
           is = for_character ("\201\060\374\067", 4);
           ASSERT (is != 0);
         #endif
-        #if !(defined __FreeBSD__ || defined __DragonFly__)
+        #if !(defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
           /* U+2192 RIGHTWARDS ARROW */
           is = for_character ("\241\372", 2);
           ASSERT (is != 0);
