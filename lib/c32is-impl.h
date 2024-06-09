@@ -1,5 +1,5 @@
 /* Test whether a 32-bit wide character belongs to a specific character class.
-   Copyright (C) 2020-2023 Free Software Foundation, Inc.
+   Copyright (C) 2020-2024 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as
@@ -57,7 +57,7 @@ FUNC (wint_t wc)
   else
     return 0;
 
-#elif HAVE_WORKING_MBRTOC32             /* glibc, Android */
+#elif HAVE_WORKING_MBRTOC32 && HAVE_WORKING_C32RTOMB /* glibc, Android */
   /* mbrtoc32() is essentially defined by the system libc.  */
 
 # if _GL_WCHAR_T_IS_UCS4

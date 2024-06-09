@@ -5,6 +5,7 @@ a 32-bit wide character.
 Files:
 lib/c32width.c
 m4/mbrtoc32.m4
+m4/c32rtomb.m4
 m4/mbrtowc.m4
 m4/locale-fr.m4
 m4/locale-ja.m4
@@ -23,6 +24,7 @@ dnl Determine REPLACE_MBSTATE_T, from which GNULIB_defined_mbstate_t is
 dnl determined.  It describes how mbrtoc32 is implemented.
 AC_REQUIRE([gl_MBSTATE_T_BROKEN])
 AC_REQUIRE([gl_MBRTOC32_SANITYCHECK])
+AC_REQUIRE([gl_C32RTOMB_SANITYCHECK])
 gl_UCHAR_MODULE_INDICATOR([c32width])
 
 Makefile.am:

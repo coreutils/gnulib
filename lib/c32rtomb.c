@@ -1,5 +1,5 @@
 /* Convert 32-bit wide character to multibyte character.
-   Copyright (C) 2020-2023 Free Software Foundation, Inc.
+   Copyright (C) 2020-2024 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as
@@ -36,7 +36,7 @@ size_t
 c32rtomb (char *s, char32_t wc, mbstate_t *ps)
 #undef c32rtomb
 {
-#if HAVE_WORKING_MBRTOC32
+#if HAVE_WORKING_MBRTOC32 && HAVE_WORKING_C32RTOMB
 
 # if C32RTOMB_RETVAL_BUG
   if (s == NULL)
