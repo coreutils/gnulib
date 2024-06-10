@@ -362,7 +362,7 @@ def symlink_relative(src: str, dest: str) -> None:
         os.symlink(src, dest)
     except PermissionError:
         sys.stderr.write('%s: ln -s failed; falling back on cp -p\n' % APP['name'])
-        if src.startswith('/') or (len(src) >= 2 and src[1] == ':'):
+        if os.path.isabs(src):
             # src is absolute.
             cp_src = src
         else:
@@ -384,12 +384,11 @@ def as_link_value_at_dest(src: str, dest: str) -> str:
         raise TypeError('src must be a string, not %s' % (type(src).__name__))
     if type(dest) is not str:
         raise TypeError('dest must be a string, not %s' % (type(dest).__name__))
-    if src.startswith('/') or (len(src) >= 2 and src[1] == ':'):
+    if os.path.isabs(src):
         return src
     else:  # if src is not absolute
-        if dest.startswith('/') or (len(dest) >= 2 and dest[1] == ':'):
-            cwd = os.getcwd()
-            return joinpath(cwd, src)
+        if os.path.isabs(dest):
+            return joinpath(os.getcwd(), src)
         else:  # if dest is not absolute
             destdir = os.path.dirname(dest)
             if not destdir:
@@ -427,7 +426,7 @@ def hardlink(src: str, dest: str) -> None:
         os.link(src, dest)
     except PermissionError:
         sys.stderr.write('%s: ln failed; falling back on cp -p\n' % APP['name'])
-        if src.startswith('/') or (len(src) >= 2 and src[1] == ':'):
+        if os.path.isabs(src):
             # src is absolute.
             cp_src = src
         else:

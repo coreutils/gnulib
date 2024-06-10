@@ -418,10 +418,10 @@ class GLImport:
         directory, to a filename relative to destdir.
         GLConfig: destdir.'''
         destdir = self.config['destdir']
-        if dir.startswith('/'):
+        if os.path.isabs(dir):
             return dir
         else:
-            if destdir.startswith('/'):
+            if os.path.isabs(destdir):
                 # XXX This doesn't look right.
                 return dir
             else:
@@ -433,10 +433,10 @@ class GLImport:
         to a filename relative to the current directory.
         GLConfig: destdir.'''
         destdir = self.config['destdir']
-        if dir.startswith('/'):
+        if os.path.isabs(dir):
             return dir
         else:
-            if destdir.startswith('/'):
+            if os.path.isabs(destdir):
                 # XXX This doesn't look right.
                 return joinpath(destdir, dir)
             else:
