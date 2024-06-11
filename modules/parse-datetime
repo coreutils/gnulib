@@ -46,7 +46,7 @@ Makefile.am:
 # Additionally, here we assume GNU Bison and therefore don't need the ylwrap
 # script.
 # Therefore we override this rule.
-parse-datetime.c: parse-datetime.y
+$(srcdir)/parse-datetime.c: parse-datetime.y
 	$(AM_V_YACC)$(PARSE_DATETIME_BISON) $(YFLAGS) $(AM_YFLAGS) $(srcdir)/parse-datetime.y \
 	&& test ':' = '$(PARSE_DATETIME_BISON)' || { \
 	  sed -e 's|".*/parse-datetime\.y"|"parse-datetime.y"|' \
