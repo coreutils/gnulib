@@ -1888,7 +1888,7 @@ _gl_tight_scope: $(bin_PROGRAMS)
 	for sig in 1 2 3 13 15; do					\
 	  eval "trap 'v=`expr $$sig + 128`; (exit $$v); exit $$v' $$sig"; \
 	done;								\
-	src=`for f in $(SOURCES); do					\
+	src=`for f in $(sort $(SOURCES)); do				\
 	       test -f $$f && d= || d=$(srcdir)/; echo $$d$$f; done`;	\
 	hdr=`for f in $(_gl_TS_headers); do				\
 	       test -f $$f && d= || d=$(srcdir)/; echo $$d$$f; done`;	\
