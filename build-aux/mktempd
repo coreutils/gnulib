@@ -1,7 +1,7 @@
 #!/bin/sh
 # Create a temporary directory, much like mktemp -d does.
 
-# Copyright (C) 2007-2023 Free Software Foundation, Inc.
+# Copyright (C) 2007-2024 Free Software Foundation, Inc.
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -91,7 +91,7 @@ mktempd()
   fail=0
 
   # First, try to use mktemp.
-  d=`env -u TMPDIR mktemp -d -t -p "$destdir" "$template" 2>/dev/null` \
+  d=`env -u TMPDIR mktemp -d -p "$destdir" "$template" 2>/dev/null` \
     || fail=1
 
   # The resulting name must be in the specified directory.
