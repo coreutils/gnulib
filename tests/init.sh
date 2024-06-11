@@ -598,6 +598,7 @@ fi
 #   returns_ 1 command ... || fail
 returns_ () {
   # Disable tracing so it doesn't interfere with stderr of the wrapped command
+  local is_tracing=`{ :; } 2>&1`
   { set +x; } 2>/dev/null
 
   local exp_exit="$1"
@@ -605,7 +606,8 @@ returns_ () {
   "$@"
   test $? -eq $exp_exit && ret_=0 || ret_=1
 
-  if test "$VERBOSE" = yes && test "$gl_set_x_corrupts_stderr_" = false; then
+  # Restore tracing if it was enabled.
+  if test -n "$is_tracing"; then
     set -x
   fi
   { return $ret_; } 2>/dev/null
