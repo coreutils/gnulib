@@ -338,13 +338,17 @@ mktempd_ ()
   esac
 
   case $template_ in
+  -*) fail _ \
+       "invalid template: $template_ (must not begin with '-')";;
   *XXXX) ;;
   *) fail_ \
        "invalid template: $template_ (must have a suffix of at least 4 X's)";;
   esac
 
-  # First, try to use mktemp.
-  d=`unset TMPDIR; { mktemp -d -p "$destdir_" "$template_"; } 2>/dev/null` &&
+  # First, try GNU mktemp, where -t has no option-argument.
+  # Put -t last, as GNU mktemp allows, so that the incompatible NetBSD mktemp
+  # (where -t has an option-argument) fails instead of creating a junk dir.
+  d=`unset TMPDIR; { mktemp -d -p "$destdir_" "$template_" -t; } 2>/dev/null` &&
 
   # The resulting name must be in the specified directory.
   case $d in "$destdir_slash_"*) :;; *) false;; esac &&

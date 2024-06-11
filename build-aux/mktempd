@@ -84,14 +84,17 @@ mktempd()
   esac
 
   case $template in
+  -*) die "invalid template: $template (cannot start with '-')";;
   *XXXX) ;;
   *) die "invalid template: $template (must have a suffix of at least 4 X's)";;
   esac
 
   fail=0
 
-  # First, try to use mktemp.
-  d=`env -u TMPDIR mktemp -d -p "$destdir" "$template" 2>/dev/null` \
+  # First, try GNU mktemp, where -t has no option-argument.
+  # Put -t last, as GNU mktemp allows, so that the incompatible NetBSD mktemp
+  # (where -t has an option-argument) fails instead of creating a junk dir.
+  d=`env -u TMPDIR mktemp -d -p "$destdir" "$template" -t 2>/dev/null` \
     || fail=1
 
   # The resulting name must be in the specified directory.
