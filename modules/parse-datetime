@@ -46,7 +46,10 @@ Makefile.am:
 # Additionally, here we assume GNU Bison and therefore don't need the ylwrap
 # script.
 # Therefore we override this rule.
-$(srcdir)/parse-datetime.c: parse-datetime.y
+# Unfortunately, overriding the Automake generated .y.c rule does not work in
+# VPATH builds with OpenBSD make. Therefore, for VPATH builds on OpenBSD, the
+# user will need GNU make.
+parse-datetime.c: parse-datetime.y
 	$(AM_V_YACC)$(PARSE_DATETIME_BISON) $(YFLAGS) $(AM_YFLAGS) $(srcdir)/parse-datetime.y \
 	&& test ':' = '$(PARSE_DATETIME_BISON)' || { \
 	  sed -e 's|".*/parse-datetime\.y"|"parse-datetime.y"|' \
