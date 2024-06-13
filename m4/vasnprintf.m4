@@ -1,5 +1,5 @@
 # vasnprintf.m4
-# serial 52
+# serial 53
 dnl Copyright (C) 2002-2004, 2006-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -42,7 +42,6 @@ AC_DEFUN([gl_FUNC_VASNWPRINTF],
 # Prerequisites of lib/printf-args.h, lib/printf-args.c.
 AC_DEFUN([gl_PREREQ_PRINTF_ARGS],
 [
-  AC_REQUIRE([gt_TYPE_WCHAR_T])
   AC_REQUIRE([gt_TYPE_WINT_T])
 ])
 
@@ -51,7 +50,6 @@ AC_DEFUN([gl_PREREQ_PRINTF_ARGS],
 AC_DEFUN([gl_PREREQ_PRINTF_PARSE],
 [
   AC_REQUIRE([gl_FEATURES_H])
-  AC_REQUIRE([gt_TYPE_WCHAR_T])
   AC_REQUIRE([gt_TYPE_WINT_T])
   AC_REQUIRE([AC_TYPE_SIZE_T])
   AC_CHECK_TYPE([ptrdiff_t], ,
@@ -185,7 +183,6 @@ int main()
 AC_DEFUN_ONCE([gl_PREREQ_VASNXPRINTF],
 [
   AC_REQUIRE([AC_FUNC_ALLOCA])
-  AC_REQUIRE([gt_TYPE_WCHAR_T])
   AC_REQUIRE([gt_TYPE_WINT_T])
   AC_CHECK_FUNCS([wcslen])
   dnl Knowing DBL_EXPBIT0_WORD and DBL_EXPBIT0_BIT enables an optimization

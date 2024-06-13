@@ -3912,7 +3912,6 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   }
 #endif
 
-#if HAVE_WCHAR_T
   static wchar_t L_xyz[4] = { 'x', 'y', 'z', 0 };
 
   { /* Width.  */
@@ -3954,7 +3953,6 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
     ASSERT (length == wcslen (result));
     free (result);
   }
-#endif
 
   /* To verify that these tests succeed, it is necessary to run them under
      a tool that checks against invalid memory accesses, such as ElectricFence
@@ -3984,7 +3982,6 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
         free (block);
       }
   }
-#if HAVE_WCHAR_T
   {
     size_t i;
 
@@ -4007,9 +4004,7 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
         free (block);
       }
   }
-#endif
 
-#if HAVE_WCHAR_T
   /* Test that converting an invalid wchar_t[] to char[] fails with EILSEQ.  */
   {
     static const wchar_t input[] = { (wchar_t) 1702057263, 114, 0 };
@@ -4047,7 +4042,6 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
     else
       free (result);
   }
-#endif
 
   /* Test the support of the %c format directive.  */
 
@@ -4135,7 +4129,6 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
   }
 #endif
 
-#if HAVE_WCHAR_T
   static wint_t L_x = (wchar_t) 'x';
 
   { /* Width.  */
@@ -4224,7 +4217,6 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
     ASSERT (length == 13);
     free (result);
   }
-#endif
 
   /* Test the support of the 'x' conversion specifier for hexadecimal output of
      integers.  */

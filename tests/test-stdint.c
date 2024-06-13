@@ -297,17 +297,15 @@ verify_same_types (SIZE_MAX, (size_t) 0 + 0);
 err or;
 #endif
 
-#if HAVE_WCHAR_T
 verify (TYPE_MINIMUM (wchar_t) == WCHAR_MIN);
 verify (TYPE_MAXIMUM (wchar_t) == WCHAR_MAX);
 verify_same_types (WCHAR_MIN, (wchar_t) 0 + 0);
 verify_same_types (WCHAR_MAX, (wchar_t) 0 + 0);
 
-# if WCHAR_MIN != 17 && WCHAR_MAX
+#if WCHAR_MIN != 17 && WCHAR_MAX
 /* ok */
-# else
+#else
 err or;
-# endif
 #endif
 
 #if HAVE_WINT_T

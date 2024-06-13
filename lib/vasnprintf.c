@@ -247,7 +247,7 @@ local_strnlen (const char *string, size_t maxlen)
 # endif
 #endif
 
-#if (((!USE_SNPRINTF || WIDE_CHAR_VERSION || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF || NEED_WPRINTF_DIRECTIVE_LC) && WIDE_CHAR_VERSION) || ((!USE_SNPRINTF || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF || NEED_PRINTF_DIRECTIVE_LS) && !WIDE_CHAR_VERSION && DCHAR_IS_TCHAR)) && HAVE_WCHAR_T
+#if ((!USE_SNPRINTF || WIDE_CHAR_VERSION || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF || NEED_WPRINTF_DIRECTIVE_LC) && WIDE_CHAR_VERSION) || ((!USE_SNPRINTF || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF || NEED_PRINTF_DIRECTIVE_LS) && !WIDE_CHAR_VERSION && DCHAR_IS_TCHAR)
 # if HAVE_WCSLEN
 #  define local_wcslen wcslen
 # else
@@ -270,7 +270,7 @@ local_wcslen (const wchar_t *s)
 # endif
 #endif
 
-#if (!USE_SNPRINTF || (WIDE_CHAR_VERSION && DCHAR_IS_TCHAR) || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF) && HAVE_WCHAR_T && WIDE_CHAR_VERSION
+#if (!USE_SNPRINTF || (WIDE_CHAR_VERSION && DCHAR_IS_TCHAR) || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF) && WIDE_CHAR_VERSION
 # if HAVE_WCSNLEN && HAVE_DECL_WCSNLEN
 #  define local_wcsnlen wcsnlen
 # else
@@ -289,7 +289,7 @@ local_wcsnlen (const wchar_t *s, size_t maxlen)
 # endif
 #endif
 
-#if (((!USE_SNPRINTF || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF || NEED_PRINTF_DIRECTIVE_LS || ENABLE_WCHAR_FALLBACK) && HAVE_WCHAR_T) || ((NEED_PRINTF_DIRECTIVE_LC || ENABLE_WCHAR_FALLBACK) && HAVE_WINT_T)) && !WIDE_CHAR_VERSION
+#if ((!USE_SNPRINTF || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF || NEED_PRINTF_DIRECTIVE_LS || ENABLE_WCHAR_FALLBACK) || ((NEED_PRINTF_DIRECTIVE_LC || ENABLE_WCHAR_FALLBACK) && HAVE_WINT_T)) && !WIDE_CHAR_VERSION
 # if ENABLE_WCHAR_FALLBACK
 static size_t
 wctomb_fallback (char *s, wchar_t wc)
@@ -2148,10 +2148,9 @@ MAX_ROOM_NEEDED (const arguments *ap, size_t arg_index, FCHAR_T conversion,
       break;
 
     case 's':
-# if HAVE_WCHAR_T
       if (type == TYPE_WIDE_STRING)
         {
-#  if WIDE_CHAR_VERSION
+# if WIDE_CHAR_VERSION
           /* ISO C says about %ls in fwprintf:
                "If the precision is not specified or is greater than the size
                 of the array, the array shall contain a null wide character."
@@ -2162,7 +2161,7 @@ MAX_ROOM_NEEDED (const arguments *ap, size_t arg_index, FCHAR_T conversion,
             tmp_length = local_wcsnlen (arg, precision);
           else
             tmp_length = local_wcslen (arg);
-#  else
+# else
           /* ISO C says about %ls in fprintf:
                "If a precision is specified, no more than that many bytes are
                 written (including shift sequences, if any), and the array
@@ -2173,10 +2172,9 @@ MAX_ROOM_NEEDED (const arguments *ap, size_t arg_index, FCHAR_T conversion,
              So if there is a precision, we must not use wcslen.  */
           /* This case has already been handled separately in VASNPRINTF.  */
           abort ();
-#  endif
+# endif
         }
       else
-# endif
         {
 # if WIDE_CHAR_VERSION
           /* ISO C says about %s in fwprintf:
@@ -2949,7 +2947,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                 }
               }
 #endif
-#if (!USE_SNPRINTF || WIDE_CHAR_VERSION || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF || NEED_PRINTF_DIRECTIVE_LS || ENABLE_WCHAR_FALLBACK) && HAVE_WCHAR_T
+#if !USE_SNPRINTF || WIDE_CHAR_VERSION || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF || NEED_PRINTF_DIRECTIVE_LS || ENABLE_WCHAR_FALLBACK
             else if (dp->conversion == 's'
 # if WIDE_CHAR_VERSION
                      && a.arg[dp->arg_index].type != TYPE_WIDE_STRING
@@ -6021,9 +6019,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                   #if HAVE_WINT_T
                   case TYPE_WIDE_CHAR:
                   #endif
-                  #if HAVE_WCHAR_T
                   case TYPE_WIDE_STRING:
-                  #endif
                     *fbp++ = 'l';
                     break;
                   case TYPE_LONGDOUBLE:
@@ -6395,14 +6391,12 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                           SNPRINTF_BUF (arg);
                         }
                         break;
-#if HAVE_WCHAR_T
                       case TYPE_WIDE_STRING:
                         {
                           const wchar_t *arg = a.arg[dp->arg_index].a.a_wide_string;
                           SNPRINTF_BUF (arg);
                         }
                         break;
-#endif
                       case TYPE_POINTER:
                         {
                           void *arg = a.arg[dp->arg_index].a.a_pointer;
@@ -6976,7 +6970,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
     errno = ENOMEM;
     goto fail_with_errno;
 
-#if ENABLE_UNISTDIO || ((!USE_SNPRINTF || WIDE_CHAR_VERSION || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF || NEED_PRINTF_DIRECTIVE_LS || ENABLE_WCHAR_FALLBACK) && HAVE_WCHAR_T) || ((NEED_PRINTF_DIRECTIVE_LC || ENABLE_WCHAR_FALLBACK) && HAVE_WINT_T && !WIDE_CHAR_VERSION) || (NEED_WPRINTF_DIRECTIVE_C && WIDE_CHAR_VERSION)
+#if ENABLE_UNISTDIO || (!USE_SNPRINTF || WIDE_CHAR_VERSION || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF || NEED_PRINTF_DIRECTIVE_LS || ENABLE_WCHAR_FALLBACK) || ((NEED_PRINTF_DIRECTIVE_LC || ENABLE_WCHAR_FALLBACK) && HAVE_WINT_T && !WIDE_CHAR_VERSION) || (NEED_WPRINTF_DIRECTIVE_C && WIDE_CHAR_VERSION)
   fail_with_EILSEQ:
     errno = EILSEQ;
     goto fail_with_errno;

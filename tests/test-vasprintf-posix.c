@@ -3872,7 +3872,6 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
     free (result);
   }
 
-#if HAVE_WCHAR_T
   static wchar_t L_xyz[4] = { 'x', 'y', 'z', 0 };
 
   { /* Width.  */
@@ -3914,7 +3913,6 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
     ASSERT (retval == strlen (result));
     free (result);
   }
-#endif
 
   /* To verify that these tests succeed, it is necessary to run them under
      a tool that checks against invalid memory accesses, such as ElectricFence
@@ -3939,7 +3937,6 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
         free (block);
       }
   }
-#if HAVE_WCHAR_T
   {
     size_t i;
 
@@ -3962,7 +3959,6 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
         free (block);
       }
   }
-#endif
 
   /* Test the support of the %c format directive.  */
 
@@ -4024,7 +4020,6 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
     free (result);
   }
 
-#if HAVE_WCHAR_T
   static wint_t L_x = (wchar_t) 'x';
 
   { /* Width.  */
@@ -4110,7 +4105,6 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
     if (retval >= 0)
       free (result);
   }
-#endif
 
   /* Test the support of the 'x' conversion specifier for hexadecimal output of
      integers.  */

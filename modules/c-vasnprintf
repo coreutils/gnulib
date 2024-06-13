@@ -11,7 +11,6 @@ lib/printf-parse.h
 lib/printf-parse.c
 lib/vasnprintf.h
 lib/vasnprintf.c
-m4/wchar_t.m4
 m4/wint_t.m4
 m4/intmax_t.m4
 m4/stdint_h.m4

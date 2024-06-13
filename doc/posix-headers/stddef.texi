@@ -20,9 +20,6 @@ NetBSD 8.0, Solaris 11.0, and others.
 NetBSD 8.0/x86, AIX 7.2 with xlc in 64-bit mode.
 
 @item
-Some old platforms fail to provide @code{wchar_t}.
-
-@item
 Some platforms provide a @code{NULL} macro that cannot be used in arbitrary
 expressions:
 NetBSD 5.0

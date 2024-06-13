@@ -12,7 +12,6 @@ lib/vasnwprintf.h
 lib/vasnwprintf.c
 lib/vasnprintf.c
 lib/asnwprintf.c
-m4/wchar_t.m4
 m4/wint_t.m4
 m4/intmax_t.m4
 m4/stdint_h.m4
