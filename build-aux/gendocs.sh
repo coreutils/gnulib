@@ -256,8 +256,8 @@ BEGIN {
 /<img src="(.*?)"/g && ++$need{$1};
 
 END {
-  #print "$me: @{[keys %need]}\n";  # for debugging, show images found.
-  FILE: for my $f (keys %need) {
+  #print "$me: @{[sort keys %need]}\n";  # for debugging, show images found.
+  FILE: for my $f (sort keys %need) {
     for my $d (@dirs) {
       if (-f "$d/$f") {
         use File::Basename;
