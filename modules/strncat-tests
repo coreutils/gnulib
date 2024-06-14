@@ -8,7 +8,6 @@ m4/mmap-anon.m4
 
 Depends-on:
 extensions
-getpagesize
 
 configure.ac:
 gl_FUNC_MMAP_ANON

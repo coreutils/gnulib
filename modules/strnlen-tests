@@ -7,7 +7,6 @@ m4/mmap-anon.m4
 
 Depends-on:
 extensions
-getpagesize
 
 configure.ac:
 dnl Check for prerequisites for memory fence checks.

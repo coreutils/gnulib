@@ -7,7 +7,6 @@ m4/mmap-anon.m4
 
 Depends-on:
 extensions
-getpagesize
 unistr/u32-set
 
 configure.ac:

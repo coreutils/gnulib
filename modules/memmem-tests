@@ -8,7 +8,6 @@ m4/mmap-anon.m4
 Depends-on:
 c99
 extensions
-getpagesize
 
 configure.ac:
 gl_FUNC_MMAP_ANON
@@ -19,4 +18,3 @@ AC_CHECK_DECLS_ONCE([alarm])
 Makefile.am:
 TESTS += test-memmem
 check_PROGRAMS += test-memmem
-
