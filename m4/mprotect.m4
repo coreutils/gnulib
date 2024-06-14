@@ -1,5 +1,5 @@
 # mprotect.m4
-# serial 3
+# serial 4
 dnl Copyright (C) 1993-2024 Free Software Foundation, Inc.
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License as published by the Free Software Foundation;
@@ -25,24 +25,20 @@ AC_DEFUN([gl_FUNC_MPROTECT_WORKS],
            #include <sys/types.h>
            /* Declare malloc().  */
            #include <stdlib.h>
-           /* Declare getpagesize().  */
-           #if HAVE_UNISTD_H
-            #include <unistd.h>
-           #endif
-           #ifdef __hpux
-            extern
-            #ifdef __cplusplus
-            "C"
-            #endif
-            int getpagesize (void);
-           #endif
+           /* Declare sysconf().  */
+           #include <unistd.h>
            /* Declare mprotect().  */
            #include <sys/mman.h>
            char foo;
+           static unsigned long int pagesize;
+           static char *
+           page_align (char *address)
+           {
+             return address - ((unsigned long int) address & (pagesize - 1));
+           }
            int main ()
            {
-             unsigned long pagesize = getpagesize ();
-           #define page_align(address)  (char*)((unsigned long)(address) & -pagesize)
+             pagesize = sysconf (_SC_PAGESIZE);
          '
          no_mprotect=
          AC_RUN_IFELSE(
