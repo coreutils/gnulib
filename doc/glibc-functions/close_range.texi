@@ -1,0 +1,29 @@
+@node close_range
+@subsection @code{close_range}
+@findex close_range
+
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Opening and Closing Files,,Opening and Closing Files,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Opening-and-Closing-Files.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man2/close_range.2.html,,man close_range}.
+@end itemize
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on many platforms:
+glibc 2.33, macOS 14, FreeBSD 12.4, NetBSD 10.0, OpenBSD 7.5, Minix 3.3.0, AIX 7.3.1, HP-UX 11.31, Solaris 11.4, Cygwin 3.4.6, mingw, MSVC 14, Android API level 33.
+@end itemize
