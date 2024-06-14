@@ -121,7 +121,7 @@ main ()
   if (open ("/proc/sys/vm/max_map_count", O_RDONLY) >= 0)
     {
       /* Preparations.  */
-      size_t pagesize = getpagesize ();
+      size_t pagesize = sysconf (_SC_PAGESIZE);
       void *firstpage_backup = malloc (pagesize);
       void *lastpage_backup = malloc (pagesize);
       /* Allocate a large memory area, as a bumper, so that the MAP_FIXED
