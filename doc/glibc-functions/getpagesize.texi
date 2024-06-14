@@ -33,5 +33,18 @@ mingw.
 @end itemize
 
 Portability problems not fixed by Gnulib:
+
 @itemize
+@item
+The function has never been in POSIX and was removed from the Single
+UNIX Specification in SUSv3 (2001).
+Although portable programs are supposed to use @code{sysconf (_SC_PAGESIZE)}
+instead, in practice @code{getpagesize} can be a little faster.
+
+@item
+On typical platforms this function's API limits page sizes to at most 1 GiB@,
+even though @code{sysconf (_SC_PAGESIZE)} does not have this limitation.
+However, this has not been a practical problem yet,
+and so many programs use @code{getpagesize} that it's unlikely that
+new platforms would introduce larger page sizes any time soon.
 @end itemize
