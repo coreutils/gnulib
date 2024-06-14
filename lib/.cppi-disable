@@ -13,7 +13,6 @@ getopt.h
 getopt1.c
 getopt.in.h
 getopt_int.h
-getpagesize.h
 getpass.c
 gettext.h
 localcharset.h
