@@ -40,7 +40,7 @@
 
 # if SIGSEGV_FAULT_ADDRESS_ALIGNMENT > 1UL
 #  include <unistd.h>
-#  define SIGSEGV_FAULT_ADDRESS_ROUNDOFF_BITS (getpagesize () - 1)
+#  define SIGSEGV_FAULT_ADDRESS_ROUNDOFF_BITS (sysconf (_SC_PAGESIZE) - 1)
 # else
 #  define SIGSEGV_FAULT_ADDRESS_ROUNDOFF_BITS 0
 # endif
