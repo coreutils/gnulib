@@ -30,17 +30,8 @@
 
 #else
 
-/* Declare getpagesize(). */
+/* Declare sysconf().  */
 # include <unistd.h>
-/* On HP-UX, getpagesize exists, but it is not declared in <unistd.h> even if
-   the compiler options -D_HPUX_SOURCE -D_XOPEN_SOURCE=600 are used.  */
-# ifdef __hpux
-extern
-#  ifdef __cplusplus
-       "C"
-#  endif
-       int getpagesize (void);
-# endif
 
 /* Declare mmap().  */
 # include <sys/types.h>
@@ -72,7 +63,7 @@ init_pagesize (void)
   GetSystemInfo (&info);
   pagesize = info.dwPageSize;
 #else
-  pagesize = getpagesize ();
+  pagesize = sysconf (_SC_PAGESIZE);
 #endif
 }
 
