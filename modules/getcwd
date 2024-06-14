@@ -6,7 +6,6 @@ lib/getcwd.c
 m4/getcwd-abort-bug.m4
 m4/getcwd-path-max.m4
 m4/getcwd.m4
-m4/getpagesize.m4
 m4/pathmax.m4
 
 Depends-on:
