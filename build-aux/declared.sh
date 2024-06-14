@@ -39,7 +39,7 @@ Options:
       --help           print this help and exit
       --version        print version information and exit
 
-Report bugs to <bruno@clisp.org>."
+Send patches and bug reports to <bug-gnulib@gnu.org>."
 }
 
 # func_version
@@ -47,11 +47,12 @@ Report bugs to <bruno@clisp.org>."
 func_version ()
 {
   echo "declared.sh (GNU gnulib)"
-  echo "Copyright (C) 2022 Free Software Foundation, Inc.
+  echo "Copyright (C) 2024 Free Software Foundation, Inc.
 License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>
 This is free software: you are free to change and redistribute it.
 There is NO WARRANTY, to the extent permitted by law."
-  echo "Written by" "Bruno Haible"
+  echo
+  printf 'Written by %s.\n' "Bruno Haible"
 }
 
 # func_fatal_error message

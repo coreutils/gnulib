@@ -42,7 +42,7 @@
 #   - It does not enforce that applying the third or fourth rule is only
 #     possible after applying the second rule.
 
-scriptversion=2022-01-27
+scriptversion=2024-06-13
 
 # func_usage
 # outputs to stdout the --help usage message.
@@ -63,7 +63,7 @@ Options:
       --help           print this help and exit
       --version        print version information and exit
 
-Report bugs to <bruno@clisp.org>."
+Send patches and bug reports to <bug-gnulib@gnu.org>."
 }
 
 # func_version

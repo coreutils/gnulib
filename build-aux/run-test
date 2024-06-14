@@ -39,7 +39,7 @@ configured with
                        wrapper scripts, and
   CFLAGS=\"-g\"          so that valgrind shows line numbers.
 
-Report bugs to Bruno Haible."
+Send patches and bug reports to <bug-gnulib@gnu.org>."
 }
 
 # func_version
@@ -48,12 +48,12 @@ func_version ()
 {
   echo "\
 run-test (GNU gnulib)
-Copyright (C) 2019 Free Software Foundation, Inc.
+Copyright (C) 2024 Free Software Foundation, Inc.
 License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>
 This is free software: you are free to change and redistribute it.
-There is NO WARRANTY, to the extent permitted by law.
-
-Written by" "Bruno Haible"
+There is NO WARRANTY, to the extent permitted by law."
+  echo
+  printf 'Written by %s.\n' "Bruno Haible"
 }
 
 # func_fatal_error message
