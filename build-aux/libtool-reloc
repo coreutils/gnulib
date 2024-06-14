@@ -16,7 +16,43 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Usage: libtool-reloc libtool LIBTOOL_ARGUMENTS
+# func_usage
+# outputs to stdout the --help usage message.
+func_usage ()
+{
+  echo "\
+Usage: libtool-reloc [OPTION]... libtool LIBTOOL_ARGUMENTS
+
+Invokes GNU libtool, with support for relocatable programs.
+
+Options:
+      --help           print this help and exit
+      --version        print version information and exit
+
+Send patches and bug reports to <bug-gnulib@gnu.org>."
+}
+
+# func_version
+# outputs to stdout the --version message.
+func_version ()
+{
+  echo "libtool-reloc (GNU gnulib, module relocatable-prog)"
+  echo "Copyright (C) 2024 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law."
+  echo
+  printf 'Written by %s.\n' "Bruno Haible"
+}
+
+# func_fatal_error message
+# outputs to stderr a fatal error message, and terminates the program.
+func_fatal_error ()
+{
+  echo "libtool-reloc: *** $1" 1>&2
+  echo "libtool-reloc: *** Stop." 1>&2
+  exit 1
+}
 
 # Outputs a command and runs it.
 func_verbose ()
@@ -26,6 +62,29 @@ func_verbose ()
   echo "$@" | sed -e 's/\([\\"$]\)/\\\1/g'
   "$@"
 }
+
+# Command-line option processing.
+while test $# -gt 0; do
+  case "$1" in
+    --help | --hel | --he | --h )
+      func_usage
+      exit 0 ;;
+   --version | --versio | --versi | --vers | --ver | --ve | --v )
+      func_version
+      exit 0 ;;
+    -- )      # Stop option processing
+      shift; break ;;
+    -* )
+      func_fatal_error "unrecognized option: $1"
+      ;;
+    * )
+      break ;;
+  esac
+done
+
+if test $# -lt 1; then
+  func_fatal_error "too few arguments"
+fi
 
 # Determine the mode from the arguments.
 mode=
