@@ -20,6 +20,7 @@
 
 #include "vasnwprintf.h"
 
+#include <errno.h>
 #include <stdarg.h>
 #include <stdlib.h>
 #include <string.h>
@@ -87,6 +88,58 @@ test_function (wchar_t * (*my_asnwprintf) (wchar_t *, size_t *, const wchar_t *,
       if (result != buf)
         free (result);
     }
+
+  /* Verify that [v]asnwprintf() rejects a width > 2 GiB, < 4 GiB.  */
+  {
+    size_t length;
+    wchar_t *s = my_asnwprintf (NULL, &length, L"x%03000000000dy\n", -17);
+    ASSERT (s == NULL);
+    ASSERT (errno == EOVERFLOW);
+  }
+  {
+    size_t length;
+    wchar_t *s = my_asnwprintf (NULL, &length, L"x%03000000000cy\n", '@');
+    ASSERT (s == NULL);
+    ASSERT (errno == EOVERFLOW);
+  }
+
+  /* Verify that [v]asnwprintf() rejects a width > 4 GiB.  */
+  {
+    size_t length;
+    wchar_t *s =
+      my_asnwprintf (NULL, &length,
+                     L"x%04294967306dy\n", /* 2^32 + 10 */
+                     -17);
+    ASSERT (s == NULL);
+    ASSERT (errno == EOVERFLOW);
+  }
+  {
+    size_t length;
+    wchar_t *s =
+      my_asnwprintf (NULL, &length,
+                     L"x%04294967306cy\n", /* 2^32 + 10 */
+                     '@');
+    ASSERT (s == NULL);
+    ASSERT (errno == EOVERFLOW);
+  }
+  {
+    size_t length;
+    wchar_t *s =
+      my_asnwprintf (NULL, &length,
+                     L"x%018446744073709551626dy\n", /* 2^64 + 10 */
+                     -17);
+    ASSERT (s == NULL);
+    ASSERT (errno == EOVERFLOW);
+  }
+  {
+    size_t length;
+    wchar_t *s =
+      my_asnwprintf (NULL, &length,
+                     L"x%018446744073709551626cy\n", /* 2^64 + 10 */
+                     '@');
+    ASSERT (s == NULL);
+    ASSERT (errno == EOVERFLOW);
+  }
 }
 
 static wchar_t *

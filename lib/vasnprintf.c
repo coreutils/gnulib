@@ -85,7 +85,7 @@
 #include <string.h>     /* memcpy(), strlen() */
 #include <wchar.h>      /* mbstate_t, mbrtowc(), mbrlen(), wcrtomb(), mbszero() */
 #include <errno.h>      /* errno */
-#include <limits.h>     /* CHAR_BIT, INT_WIDTH, LONG_WIDTH */
+#include <limits.h>     /* CHAR_BIT, INT_MAX, INT_WIDTH, LONG_WIDTH */
 #include <float.h>      /* DBL_MAX_EXP, LDBL_MAX_EXP, LDBL_MANT_DIG */
 #if HAVE_NL_LANGINFO
 # include <langinfo.h>
@@ -2458,6 +2458,8 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                           width = xsum (xtimes (width, 10), *digitp++ - '0');
                         while (digitp != dp->width_end);
                       }
+                    if (width > (size_t) INT_MAX)
+                      goto overflow;
                     has_width = 1;
                   }
 
@@ -2845,6 +2847,8 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                           width = xsum (xtimes (width, 10), *digitp++ - '0');
                         while (digitp != dp->width_end);
                       }
+                    if (width > (size_t) INT_MAX)
+                      goto overflow;
                   }
 
                 {
@@ -3000,6 +3004,8 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                           width = xsum (xtimes (width, 10), *digitp++ - '0');
                         while (digitp != dp->width_end);
                       }
+                    if (width > (size_t) INT_MAX)
+                      goto overflow;
                     has_width = 1;
                   }
 
@@ -3441,6 +3447,8 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                           width = xsum (xtimes (width, 10), *digitp++ - '0');
                         while (digitp != dp->width_end);
                       }
+                    if (width > (size_t) INT_MAX)
+                      goto overflow;
                     has_width = 1;
                   }
 
@@ -3629,6 +3637,8 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                           width = xsum (xtimes (width, 10), *digitp++ - '0');
                         while (digitp != dp->width_end);
                       }
+                    if (width > (size_t) INT_MAX)
+                      goto overflow;
                   }
 
                 /* %c in vasnwprintf.  See the specification of fwprintf.  */
@@ -3717,6 +3727,8 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                           width = xsum (xtimes (width, 10), *digitp++ - '0');
                         while (digitp != dp->width_end);
                       }
+                    if (width > (size_t) INT_MAX)
+                      goto overflow;
                     has_width = 1;
                   }
 
@@ -4031,6 +4043,8 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                           width = xsum (xtimes (width, 10), *digitp++ - '0');
                         while (digitp != dp->width_end);
                       }
+                    if (width > (size_t) INT_MAX)
+                      goto overflow;
                   }
 
                 has_precision = 0;
@@ -4536,6 +4550,8 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                           width = xsum (xtimes (width, 10), *digitp++ - '0');
                         while (digitp != dp->width_end);
                       }
+                    if (width > (size_t) INT_MAX)
+                      goto overflow;
                   }
 
                 has_precision = 0;
@@ -5718,6 +5734,9 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                           width = xsum (xtimes (width, 10), *digitp++ - '0');
                         while (digitp != dp->width_end);
                       }
+                    if (width > (size_t) INT_MAX)
+                      goto overflow;
+# define WIDTH_IS_CHECKED 1
 # if (WIDE_CHAR_VERSION && MUSL_LIBC) || !DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_LEFTADJUST || NEED_PRINTF_FLAG_ZERO || NEED_PRINTF_FLAG_ALT_PRECISION_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION
                     has_width = 1;
 # endif
@@ -5867,6 +5886,43 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                     if (dp->width_start != dp->width_end)
                       {
                         size_t n = dp->width_end - dp->width_start;
+#if !WIDTH_IS_CHECKED
+                        size_t width;
+                        /* Reject an out-of-range width.
+                           The underlying SNPRINTF already does this on some
+                           platforms (glibc, musl, macOS, FreeBSD, NetBSD,
+                           OpenBSD, Cygwin, Solaris, MSVC).  However, on others
+                           (AIX, mingw), it doesn't; thus this vasnprintf
+                           invocation would succeed and produce a wrong result.
+                           So, this is redundant on some platforms, but it's a
+                           quick check anyway.  */
+                        if (dp->width_arg_index != ARG_NONE)
+                          {
+                            int arg;
+
+                            if (!(a.arg[dp->width_arg_index].type == TYPE_INT))
+                              abort ();
+                            arg = a.arg[dp->width_arg_index].a.a_int;
+                            width = arg;
+                            if (arg < 0)
+                              {
+                                /* "A negative field width is taken as a '-' flag
+                                    followed by a positive field width."  */
+                                width = -width;
+                              }
+                          }
+                        else
+                          {
+                            const FCHAR_T *digitp = dp->width_start;
+
+                            width = 0;
+                            do
+                              width = xsum (xtimes (width, 10), *digitp++ - '0');
+                            while (digitp != dp->width_end);
+                          }
+                        if (width > (size_t) INT_MAX)
+                          goto overflow;
+#endif
                         /* The width specification is known to consist only
                            of standard ASCII characters.  */
                         if (sizeof (FCHAR_T) == sizeof (TCHAR_T))
@@ -6960,11 +7016,9 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
        not have this limitation.  */
     return result;
 
-#if USE_SNPRINTF
   overflow:
     errno = EOVERFLOW;
     goto fail_with_errno;
-#endif
 
   out_of_memory:
     errno = ENOMEM;

@@ -20,6 +20,7 @@
 
 #include "unistdio.h"
 
+#include <errno.h>
 #include <stdarg.h>
 #include <stddef.h>
 #include <stdint.h>

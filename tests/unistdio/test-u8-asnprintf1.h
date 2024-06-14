@@ -54,4 +54,59 @@ test_function (uint8_t * (*my_asnprintf) (uint8_t *, size_t *, const char *, ...
       if (result != buf)
         free (result);
     }
+
+  /* Verify that u8_[v]asnprintf() rejects a width > 2 GiB, < 4 GiB.  */
+  {
+    size_t length;
+    uint8_t *s = my_asnprintf (NULL, &length, "x%03000000000dy\n", -17);
+    ASSERT (s == NULL);
+    ASSERT (errno == EOVERFLOW);
+  }
+  {
+    static const uint8_t arg[] = { '@', 0 };
+    size_t length;
+    uint8_t *s = my_asnprintf (NULL, &length, "x%03000000000Uy\n", arg);
+    ASSERT (s == NULL);
+    ASSERT (errno == EOVERFLOW);
+  }
+
+  /* Verify that u8_[v]asnprintf() rejects a width > 4 GiB.  */
+  {
+    size_t length;
+    uint8_t *s =
+      my_asnprintf (NULL, &length,
+                    "x%04294967306dy\n", /* 2^32 + 10 */
+                    -17);
+    ASSERT (s == NULL);
+    ASSERT (errno == EOVERFLOW);
+  }
+  {
+    static const uint8_t arg[] = { '@', 0 };
+    size_t length;
+    uint8_t *s =
+      my_asnprintf (NULL, &length,
+                    "x%04294967306Uy\n", /* 2^32 + 10 */
+                    arg);
+    ASSERT (s == NULL);
+    ASSERT (errno == EOVERFLOW);
+  }
+  {
+    size_t length;
+    uint8_t *s =
+      my_asnprintf (NULL, &length,
+                    "x%018446744073709551626dy\n", /* 2^64 + 10 */
+                    -17);
+    ASSERT (s == NULL);
+    ASSERT (errno == EOVERFLOW);
+  }
+  {
+    static const uint8_t arg[] = { '@', 0 };
+    size_t length;
+    uint8_t *s =
+      my_asnprintf (NULL, &length,
+                    "x%018446744073709551626Uy\n", /* 2^64 + 10 */
+                    arg);
+    ASSERT (s == NULL);
+    ASSERT (errno == EOVERFLOW);
+  }
 }
