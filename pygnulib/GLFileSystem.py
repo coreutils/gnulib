@@ -28,7 +28,6 @@ from .constants import (
     DIRS,
     ensure_writable,
     hardlink,
-    joinpath,
     link_if_changed,
     movefile,
     copyfile,
@@ -80,23 +79,23 @@ class GLFileSystem:
         lookedupFile = None
         lookedupPatches = []
         for localdir in localpath:
-            file_in_localdir = joinpath(localdir, name)
+            file_in_localdir = os.path.join(localdir, name)
             if os.path.isfile(file_in_localdir):
                 lookedupFile = file_in_localdir
                 break
-            diff_in_localdir = joinpath(localdir, '%s.diff' % name)
+            diff_in_localdir = os.path.join(localdir, '%s.diff' % name)
             if os.path.isfile(diff_in_localdir):
                 lookedupPatches.append(diff_in_localdir)
         # Treat the gnulib dir like a lowest-priority --local-dir, except that
         # here we don't look for .diff files.
         if lookedupFile == None:
-            file_in_localdir = joinpath(DIRS['root'], name)
+            file_in_localdir = os.path.join(DIRS['root'], name)
             if os.path.isfile(file_in_localdir):
                 lookedupFile = file_in_localdir
         if lookedupFile != None:
             if len(lookedupPatches) > 0:
                 # Apply the patches, from lowest-priority to highest-priority.
-                tempFile = joinpath(self.config['tempdir'], name)
+                tempFile = os.path.join(self.config['tempdir'], name)
                 try:  # Try to create directories
                     os.makedirs(os.path.dirname(tempFile))
                 except OSError:
@@ -132,7 +131,7 @@ class GLFileSystem:
         # action anyways.
         if copymode != lcopymode:
             for localdir in localpath:
-                if lookedup == joinpath(localdir, original):
+                if lookedup == os.path.join(localdir, original):
                     return lcopymode
         return copymode
 
@@ -193,7 +192,7 @@ class GLFileAssistant:
         if not self.config['dryrun']:
             # Put the new contents of $file in a file in the same directory (needed
             # to guarantee that an 'mv' to "$destdir/$file" works).
-            result = joinpath(self.config['destdir'], '%s.tmp' % path)
+            result = os.path.join(self.config['destdir'], '%s.tmp' % path)
             dirname = os.path.dirname(result)
             if dirname and not os.path.isdir(dirname):
                 os.makedirs(dirname)
@@ -201,7 +200,7 @@ class GLFileAssistant:
             # Put the new contents of $file in a file in a temporary directory
             # (because the directory of "$file" might not exist).
             tempdir = self.config['tempdir']
-            result = joinpath(tempdir, '%s.tmp' % os.path.basename(path))
+            result = os.path.join(tempdir, '%s.tmp' % os.path.basename(path))
             dirname = os.path.dirname(result)
             if not os.path.isdir(dirname):
                 os.makedirs(dirname)
@@ -245,14 +244,14 @@ class GLFileAssistant:
             print('Copying file %s' % rewritten)
             if self.filesystem.shouldLink(original, lookedup) == CopyAction.Symlink \
                     and not tmpflag and filecmp.cmp(lookedup, tmpfile):
-                link_if_changed(lookedup, joinpath(destdir, rewritten))
+                link_if_changed(lookedup, os.path.join(destdir, rewritten))
             else:  # if any of these conditions is not met
                 if self.filesystem.shouldLink(original, lookedup) == CopyAction.Hardlink \
                    and not tmpflag and filecmp.cmp(lookedup, tmpfile):
-                    hardlink(lookedup, joinpath(destdir, rewritten))
+                    hardlink(lookedup, os.path.join(destdir, rewritten))
                 else:  # Move instead of linking.
                     try:  # Try to move file
-                        movefile(tmpfile, joinpath(destdir, rewritten))
+                        movefile(tmpfile, os.path.join(destdir, rewritten))
                     except Exception as exc:
                         raise GLError(17, original) from exc
         else:  # if self.config['dryrun']
@@ -277,8 +276,8 @@ class GLFileAssistant:
                             % type(already_present).__name__)
         basename = rewritten
         backupname = '%s~' % basename
-        basepath = joinpath(destdir, basename)
-        backuppath = joinpath(destdir, backupname)
+        basepath = os.path.join(destdir, basename)
+        backuppath = os.path.join(destdir, backupname)
         if not filecmp.cmp(basepath, tmpfile):
             if not self.config['dryrun']:
                 if already_present:
@@ -305,7 +304,7 @@ class GLFileAssistant:
                         try:  # Try to move file
                             if os.path.exists(basepath):
                                 os.remove(basepath)
-                            copyfile(tmpfile, joinpath(destdir, rewritten))
+                            copyfile(tmpfile, os.path.join(destdir, rewritten))
                         except Exception as exc:
                             raise GLError(17, original) from exc
             else:  # if self.config['dryrun']
@@ -357,7 +356,7 @@ class GLFileAssistant:
                 # Write the transformed data to the temporary file.
                 with open(tmpfile, mode='w', newline='\n', encoding='utf-8') as file:
                     file.write(re.sub(transformer[0], transformer[1], src_data))
-        path = joinpath(self.config['destdir'], rewritten)
+        path = os.path.join(self.config['destdir'], rewritten)
         if os.path.isfile(path):
             # The file already exists.
             self.update(lookedup, tmpflag, tmpfile, already_present)
@@ -377,8 +376,8 @@ class GLFileAssistant:
           1: tmpfile was used to update destfile;
           2: destfile was created, because it didn't exist.'''
         backupname = '%s~' % basename
-        basepath = joinpath(self.config['destdir'], basename)
-        backuppath = joinpath(self.config['destdir'], backupname)
+        basepath = os.path.join(self.config['destdir'], basename)
+        backuppath = os.path.join(self.config['destdir'], backupname)
         if os.path.isfile(basepath):
             if filecmp.cmp(basepath, tmpfile):
                 result_flag = 0

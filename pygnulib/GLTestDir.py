@@ -33,7 +33,6 @@ from .constants import (
     ensure_writable,
     force_output,
     hardlink,
-    joinpath,
     link_relative,
     lines_to_multiline,
     movefile,
@@ -56,11 +55,11 @@ from .GLFileTable import GLFileTable
 
 def _patch_test_driver() -> None:
     '''Patch the test-driver script in testdirs.'''
-    test_driver = joinpath('build-aux', 'test-driver')
+    test_driver = os.path.join('build-aux', 'test-driver')
     print('patching file %s' % test_driver)
-    diffs = [ joinpath(DIRS['root'], name)
-              for name in [joinpath('build-aux', 'test-driver.diff'),
-                           joinpath('build-aux', 'test-driver-1.16.3.diff')] ]
+    diffs = [ os.path.join(DIRS['root'], name)
+              for name in [os.path.join('build-aux', 'test-driver.diff'),
+                           os.path.join('build-aux', 'test-driver-1.16.3.diff')] ]
     patched = False
     for diff in diffs:
         command = f'patch {shlex.quote(test_driver)} < {shlex.quote(diff)}'
@@ -321,7 +320,7 @@ class GLTestDir:
         filetable.new_files = sorted(new_table, key=lambda pair: pair[0])
 
         # Create directories.
-        directories = sorted({ joinpath(self.testdir, os.path.dirname(pair[0]))
+        directories = sorted({ os.path.join(self.testdir, os.path.dirname(pair[0]))
                                for pair in filetable.new_files })
         for directory in directories:
             if not os.path.isdir(directory):
@@ -329,7 +328,7 @@ class GLTestDir:
 
         # Copy files or make symbolic links or hard links.
         for (dest, src) in filetable.new_files:
-            destpath = joinpath(self.testdir, dest)
+            destpath = os.path.join(self.testdir, dest)
             if src.startswith('tests=lib/'):
                 src = substart('tests=lib/', 'lib/', src)
             lookedup, flag = self.filesystem.lookup(src)
@@ -349,10 +348,10 @@ class GLTestDir:
 
         # Create $sourcebase/Makefile.am.
         for_test = True
-        directory = joinpath(self.testdir, sourcebase)
+        directory = os.path.join(self.testdir, sourcebase)
         if not os.path.isdir(directory):
             os.mkdir(directory)
-        destfile = joinpath(directory, 'Makefile.am')
+        destfile = os.path.join(directory, 'Makefile.am')
         if single_configure:
             emit = self.emitter.lib_Makefile_am(destfile, main_modules,
                                                 moduletable, self.makefiletable, '', for_test)
@@ -363,10 +362,10 @@ class GLTestDir:
             file.write(emit)
 
         # Create $m4base/Makefile.am.
-        directory = joinpath(self.testdir, m4base)
+        directory = os.path.join(self.testdir, m4base)
         if not os.path.isdir(directory):
             os.mkdir(directory)
-        destfile = joinpath(directory, 'Makefile.am')
+        destfile = os.path.join(directory, 'Makefile.am')
         emit = '## Process this file with automake to produce Makefile.in.\n\n'
         emit += 'EXTRA_DIST =\n'
         for file in filetable.all_files:
@@ -381,12 +380,12 @@ class GLTestDir:
 
         inctests = self.config.checkInclTestCategory(TESTS['tests'])
         if inctests:
-            directory = joinpath(self.testdir, testsbase)
+            directory = os.path.join(self.testdir, testsbase)
             if not os.path.isdir(directory):
                 os.mkdir(directory)
             if single_configure:
                 # Create $testsbase/Makefile.am.
-                destfile = joinpath(directory, 'Makefile.am')
+                destfile = os.path.join(directory, 'Makefile.am')
                 witness_macro = '%stests_WITNESS' % macro_prefix
                 emit = self.emitter.tests_Makefile_am(destfile, tests_modules, moduletable,
                                                       self.makefiletable, witness_macro, for_test)
@@ -394,7 +393,7 @@ class GLTestDir:
                     file.write(emit)
             else:  # if not single_configure
                 # Create $testsbase/Makefile.am.
-                destfile = joinpath(directory, 'Makefile.am')
+                destfile = os.path.join(directory, 'Makefile.am')
                 libtests = False
                 self.config.setLibtests(False)
                 emit = self.emitter.tests_Makefile_am(destfile, modules, moduletable,
@@ -404,7 +403,7 @@ class GLTestDir:
                 # Viewed from the $testsbase subdirectory, $auxdir is different.
                 emit = ''
                 saved_auxdir = auxdir
-                auxdir = os.path.normpath(joinpath(relinverse(testsbase), auxdir))
+                auxdir = os.path.normpath(os.path.join(relinverse(testsbase), auxdir))
                 self.config.setAuxDir(auxdir)
                 # Create $testsbase/configure.ac.
                 emit += '# Process this file with autoconf '
@@ -490,7 +489,7 @@ class GLTestDir:
                 emit += 'AH_TOP([#include \"../config.h\"])\n\n'
                 emit += 'AC_CONFIG_FILES([Makefile])\n'
                 emit += 'AC_OUTPUT\n'
-                path = joinpath(self.testdir, testsbase, 'configure.ac')
+                path = os.path.join(self.testdir, testsbase, 'configure.ac')
                 with open(path, mode='w', newline='\n', encoding='utf-8') as file:
                     file.write(emit)
 
@@ -506,7 +505,7 @@ class GLTestDir:
         emit += 'AUTOMAKE_OPTIONS = 1.14 foreign\n\n'
         emit += 'SUBDIRS = %s\n\n' % ' '.join(subdirs)
         emit += 'ACLOCAL_AMFLAGS = -I %s\n' % m4base
-        path = joinpath(self.testdir, 'Makefile.am')
+        path = os.path.join(self.testdir, 'Makefile.am')
         with open(path, mode='w', newline='\n', encoding='utf-8') as file:
             file.write(emit)
 
@@ -626,12 +625,12 @@ class GLTestDir:
         for directory in subdirs:
             # For subdirs that have a configure.ac by their own, it's the subdir's
             # configure.ac which creates the subdir's Makefile.am, not this one.
-            makefiles.append(joinpath(directory, 'Makefile'))
+            makefiles.append(os.path.join(directory, 'Makefile'))
         if not single_configure:
             makefiles = makefiles[:-1]
         emit += 'AC_CONFIG_FILES([%s])\n' % ' '.join(makefiles)
         emit += 'AC_OUTPUT\n'
-        path = joinpath(self.testdir, 'configure.ac')
+        path = os.path.join(self.testdir, 'configure.ac')
         with open(path, mode='w', newline='\n', encoding='utf-8') as file:
             file.write(emit)
 
@@ -641,11 +640,11 @@ class GLTestDir:
         force_output()
         os.chdir(self.testdir)
         # gettext
-        if os.path.isfile(joinpath(m4base, 'gettext.m4')):
+        if os.path.isfile(os.path.join(m4base, 'gettext.m4')):
             args = [UTILS['autopoint'], '--force']
             execute(args, verbose)
             for src in os.listdir(m4base):
-                src = joinpath(m4base, src)
+                src = os.path.join(m4base, src)
                 if src.endswith('.m4~'):
                     dest = src[:-1]
                     if os.path.isfile(dest):
@@ -678,22 +677,22 @@ class GLTestDir:
         if inctests and not single_configure:
             # Do not use "${AUTORECONF} --force --install", because it may invoke
             # autopoint, which brings in older versions of some of our .m4 files.
-            os.chdir(joinpath(self.testdir, testsbase))
+            os.chdir(os.path.join(self.testdir, testsbase))
             # gettext
-            if os.path.isfile(joinpath(m4base, 'gettext.m4')):
+            if os.path.isfile(os.path.join(m4base, 'gettext.m4')):
                 args = [UTILS['autopoint'], '--force']
                 execute(args, verbose)
                 for src in os.listdir(m4base):
-                    src = joinpath(m4base, src)
+                    src = os.path.join(m4base, src)
                     if src.endswith('.m4~'):
                         dest = src[:-1]
                         if os.path.isfile(dest):
                             os.remove(dest)
                         movefile(src, dest)
             # aclocal
-            args = [UTILS['aclocal'], '-I', joinpath('..', m4base)]
+            args = [UTILS['aclocal'], '-I', os.path.join('..', m4base)]
             execute(args, verbose)
-            if not os.path.isdir(joinpath('../build-aux')):
+            if not os.path.isdir(os.path.join('../build-aux')):
                 print('executing mkdir ../build-aux')
                 os.mkdir('../build-aux')
             # autoconf
@@ -713,7 +712,7 @@ class GLTestDir:
 
         # Need to run configure and make once, to create built files that are to be
         # distributed (such as parse-datetime.c).
-        path = joinpath(self.testdir, sourcebase, 'Makefile.am')
+        path = os.path.join(self.testdir, sourcebase, 'Makefile.am')
         with open(path, mode='r', newline='\n', encoding='utf-8') as file:
             snippet = file.read()
         snippet = combine_lines(snippet)
@@ -758,7 +757,7 @@ class GLTestDir:
         tests_distributed_built_sources = []
         if inctests:
             # Likewise for built files in the $testsbase directory.
-            path = joinpath(self.testdir, testsbase, 'Makefile.am')
+            path = os.path.join(self.testdir, testsbase, 'Makefile.am')
             with open(path, mode='r', newline='\n', encoding='utf-8') as file:
                 snippet = file.read()
             snippet = combine_lines(snippet)
@@ -840,7 +839,7 @@ class GLTestDir:
                     'LIBTOOLIZE=%s' % UTILS['libtoolize'],
                     'distclean']
             sp.call(args)
-        if os.path.isfile(joinpath('build-aux', 'test-driver')):
+        if os.path.isfile(os.path.join('build-aux', 'test-driver')):
             _patch_test_driver()
         os.chdir(DIRS['cwd'])
 
@@ -899,7 +898,7 @@ class GLMegaTestDir:
         # First, all modules one by one.
         for module in modules:
             self.config.setModules([module.name])
-            GLTestDir(self.config, joinpath(self.megatestdir, module.name)).execute()
+            GLTestDir(self.config, os.path.join(self.megatestdir, module.name)).execute()
             megasubdirs.append(module.name)
 
         # Then, all modules all together.
@@ -909,7 +908,7 @@ class GLMegaTestDir:
                     if module.name != 'config-h' ]
         self.config.setModules([ module.name
                                  for module in modules ])
-        GLTestDir(self.config, joinpath(self.megatestdir, 'ALL')).execute()
+        GLTestDir(self.config, os.path.join(self.megatestdir, 'ALL')).execute()
         megasubdirs.append('ALL')
 
         # Create autobuild.
@@ -927,10 +926,10 @@ class GLMegaTestDir:
         repdict['Oct'] = repdict['October'] = '10'
         repdict['Nov'] = repdict['November'] = '11'
         repdict['Dec'] = repdict['December'] = '12'
-        vc_witness = joinpath(DIRS['root'], '.git', 'refs', 'heads', 'master')
+        vc_witness = os.path.join(DIRS['root'], '.git', 'refs', 'heads', 'master')
         if not os.path.isfile(vc_witness):
-            vc_witness = joinpath(DIRS['root'], 'ChangeLog')
-        mdate_sh = joinpath(DIRS['root'], 'build-aux', 'mdate-sh')
+            vc_witness = os.path.join(DIRS['root'], 'ChangeLog')
+        mdate_sh = os.path.join(DIRS['root'], 'build-aux', 'mdate-sh')
         args = ['sh', mdate_sh, vc_witness]
         cvsdate = sp.check_output(args).decode('UTF-8').strip()
         for key in repdict:
@@ -962,7 +961,7 @@ class GLMegaTestDir:
         emit += '  ) 2>&1 | { if test -n "$AUTOBUILD_SUBST"; then '
         emit += 'sed -e "$AUTOBUILD_SUBST"; else cat; fi; } > logs/$safemodule\n'
         emit += 'done\n'
-        path = joinpath(self.megatestdir, 'do-autobuild')
+        path = os.path.join(self.megatestdir, 'do-autobuild')
         with open(path, mode='w', newline='\n', encoding='utf-8') as file:
             file.write(emit)
 
@@ -971,7 +970,7 @@ class GLMegaTestDir:
         emit += 'AUTOMAKE_OPTIONS = 1.14 foreign\n\n'
         emit += 'SUBDIRS = %s\n\n' % ' '.join(megasubdirs)
         emit += 'EXTRA_DIST = do-autobuild\n'
-        path = joinpath(self.megatestdir, 'Makefile.am')
+        path = os.path.join(self.megatestdir, 'Makefile.am')
         with open(path, mode='w', newline='\n', encoding='utf-8') as file:
             file.write(emit)
 
@@ -985,7 +984,7 @@ class GLMegaTestDir:
         emit += 'AC_CONFIG_SUBDIRS([%s])\n' % ' '.join(megasubdirs)
         emit += 'AC_CONFIG_FILES([Makefile])\n'
         emit += 'AC_OUTPUT\n'
-        path = joinpath(self.megatestdir, 'configure.ac')
+        path = os.path.join(self.megatestdir, 'configure.ac')
         with open(path, mode='w', newline='\n', encoding='utf-8') as file:
             file.write(emit)
 
@@ -1005,6 +1004,6 @@ class GLMegaTestDir:
         args = [UTILS['automake'], '--add-missing', '--copy']
         execute(args, verbose)
         rmtree('autom4te.cache')
-        if os.path.isfile(joinpath('build-aux', 'test-driver')):
+        if os.path.isfile(os.path.join('build-aux', 'test-driver')):
             _patch_test_driver()
         os.chdir(DIRS['cwd'])
