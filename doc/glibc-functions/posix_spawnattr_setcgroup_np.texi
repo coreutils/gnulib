@@ -1,0 +1,18 @@
+@node posix_spawnattr_setcgroup_np
+@subsection @code{posix_spawnattr_setcgroup_np}
+@findex posix_spawnattr_setcgroup_np
+
+Documentation:@* @uref{https://sourceware.org/pipermail/libc-alpha/2023-August/151106.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on all non-glibc platforms:
+glibc 2.38, macOS 14, FreeBSD 14.0, NetBSD 10.0, OpenBSD 7.5, Minix 3.3.0, AIX 7.3.1, HP-UX 11.31, Solaris 11.4, Cygwin 3.5.3, mingw, MSVC 14, Android.
+@end itemize

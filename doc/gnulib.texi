@@ -6017,16 +6017,24 @@ This list of functions is sorted according to the header that declares them.
 @section Glibc Extensions to @code{<spawn.h>}
 
 @menu
+* pidfd_spawn::
+* pidfd_spawnp::
 * posix_spawn_file_actions_addchdir_np::
 * posix_spawn_file_actions_addclosefrom_np::
 * posix_spawn_file_actions_addfchdir_np::
 * posix_spawn_file_actions_addtcsetpgrp_np::
+* posix_spawnattr_getcgroup_np::
+* posix_spawnattr_setcgroup_np::
 @end menu
 
+@include glibc-functions/pidfd_spawn.texi
+@include glibc-functions/pidfd_spawnp.texi
 @include glibc-functions/posix_spawn_file_actions_addchdir_np.texi
 @include glibc-functions/posix_spawn_file_actions_addclosefrom_np.texi
 @include glibc-functions/posix_spawn_file_actions_addfchdir_np.texi
 @include glibc-functions/posix_spawn_file_actions_addtcsetpgrp_np.texi
+@include glibc-functions/posix_spawnattr_getcgroup_np.texi
+@include glibc-functions/posix_spawnattr_setcgroup_np.texi
 
 @c @node Glibc stdarg.h
 @c @section Glibc Extensions to @code{<stdarg.h>}
@@ -6460,11 +6468,13 @@ This list of functions is sorted according to the header that declares them.
 
 @menu
 * pidfd_getfd::
+* pidfd_getpid::
 * pidfd_open::
 * pidfd_send_signal::
 @end menu
 
 @include glibc-functions/pidfd_getfd.texi
+@include glibc-functions/pidfd_getpid.texi
 @include glibc-functions/pidfd_open.texi
 @include glibc-functions/pidfd_send_signal.texi
 
