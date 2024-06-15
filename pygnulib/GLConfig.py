@@ -24,6 +24,7 @@ from typing import Any
 from .constants import (
     MODES,
     TESTS,
+    joinpath,
     remove_trailing_slashes,
 )
 from .GLError import GLError
@@ -1047,10 +1048,10 @@ class GLConfig:
     def resetAutoconfFile(self) -> None:
         '''Reset path of autoconf file relative to destdir.'''
         configure_ac = ''
-        if os.path.isfile(os.path.join(self.table['destdir'], 'configure.ac')):
-            configure_ac = os.path.join(self.table['destdir'], 'configure.ac')
-        elif os.path.isfile(os.path.join(self.table['destdir'], 'configure.in')):
-            configure_ac = os.path.join(self.table['destdir'], 'configure.in')
+        if os.path.isfile(joinpath(self.table['destdir'], 'configure.ac')):
+            configure_ac = joinpath(self.table['destdir'], 'configure.ac')
+        elif os.path.isfile(joinpath(self.table['destdir'], 'configure.in')):
+            configure_ac = joinpath(self.table['destdir'], 'configure.in')
         self.table['configure_ac'] = configure_ac
 
     # Define ac_version methods.

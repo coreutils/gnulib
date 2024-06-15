@@ -252,6 +252,16 @@ def cleaner(sequence: str | list[str]) -> str | list[str | bool]:
     return sequence
 
 
+def joinpath(head: str, *tail: str) -> str:
+    '''Join two or more pathname components, inserting '/' as needed. If any
+    component is an absolute path, all previous path components will be
+    discarded.
+    This function also replaces SUBDIR/../ with empty; therefore it is not
+    suitable when some of the pathname components use Makefile variables
+    such as '$(srcdir)'.'''
+    return os.path.normpath(os.path.join(head, *tail))
+
+
 def relativize(dir1: str, dir2: str) -> str:
     '''Compute a relative pathname reldir such that dir1/reldir = dir2.
     dir1 and dir2 must be relative pathnames.'''
@@ -262,7 +272,7 @@ def relativize(dir1: str, dir2: str) -> str:
         first = dir1[:dir1.find(os.path.sep)]
         if first != '.':
             if first == '..':
-                dir2 = os.path.join(os.path.basename(dir0), dir2)
+                dir2 = joinpath(os.path.basename(dir0), dir2)
                 dir0 = os.path.dirname(dir0)
             else:  # if first != '..'
                 # Get first component of dir2
@@ -270,8 +280,8 @@ def relativize(dir1: str, dir2: str) -> str:
                 if first == first2:
                     dir2 = dir2[dir2.find(os.path.sep) + 1:]
                 else:  # if first != first2
-                    dir2 = os.path.join('..', dir2)
-                dir0 = os.path.join(dir0, first)
+                    dir2 = joinpath('..', dir2)
+                dir0 = joinpath(dir0, first)
         dir1 = dir1[dir1.find(os.path.sep) + 1:]
     result = os.path.normpath(dir2)
     return result
@@ -355,7 +365,7 @@ def symlink_relative(src: str, dest: str) -> None:
             # src is relative to the directory of dest.
             last_slash = dest.rfind('/')
             if last_slash >= 0:
-                cp_src = os.path.join(dest[0:last_slash-1], src)
+                cp_src = joinpath(dest[0:last_slash-1], src)
             else:
                 cp_src = src
         copyfile2(cp_src, dest)
@@ -374,7 +384,7 @@ def as_link_value_at_dest(src: str, dest: str) -> str:
         return src
     else:  # if src is not absolute
         if os.path.isabs(dest):
-            return os.path.join(os.getcwd(), src)
+            return joinpath(os.getcwd(), src)
         else:  # if dest is not absolute
             destdir = os.path.dirname(dest)
             if not destdir:
@@ -419,7 +429,7 @@ def hardlink(src: str, dest: str) -> None:
             # src is relative to the directory of dest.
             last_slash = dest.rfind('/')
             if last_slash >= 0:
-                cp_src = os.path.join(dest[0: last_slash - 1], src)
+                cp_src = joinpath(dest[0: last_slash - 1], src)
             else:
                 cp_src = src
         copyfile2(cp_src, dest)

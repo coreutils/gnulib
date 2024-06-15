@@ -19,6 +19,7 @@ from __future__ import annotations
 # Define global imports
 #===============================================================================
 import os
+from .constants import joinpath
 from .GLConfig import GLConfig
 
 #===============================================================================
@@ -90,12 +91,12 @@ class GLMakefileTable:
         dir1 = '%s%s' % (m4base, os.path.sep)
         dir2 = ''
         while (dir1
-               and not (os.path.isfile(os.path.join(self.config['destdir'], dir1, 'Makefile.am'))
-                        or os.path.join(dir1, 'Makefile.am') == os.path.join(sourcebase, source_makefile_am)
-                        or (gentests and os.path.join(dir1, 'Makefile.am') == os.path.join(testsbase, tests_makefile_am)))):
-            dir2 = os.path.join(os.path.basename(dir1), dir2)
+               and not (os.path.isfile(joinpath(self.config['destdir'], dir1, 'Makefile.am'))
+                        or joinpath(dir1, 'Makefile.am') == joinpath(sourcebase, source_makefile_am)
+                        or (gentests and joinpath(dir1, 'Makefile.am') == joinpath(testsbase, tests_makefile_am)))):
+            dir2 = joinpath(os.path.basename(dir1), dir2)
             dir1 = os.path.dirname(dir1)
-        self.editor(dir1, 'EXTRA_DIST', os.path.join(dir2, 'gnulib-cache.m4'))
+        self.editor(dir1, 'EXTRA_DIST', joinpath(dir2, 'gnulib-cache.m4'))
 
     def count(self) -> int:
         '''Count number of edits which are stored, including the removed ones.'''

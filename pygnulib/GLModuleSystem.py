@@ -31,6 +31,7 @@ from .constants import (
     TESTS,
     combine_lines,
     filter_filelist,
+    joinpath,
     lines_to_multiline,
     subend,
 )
@@ -90,11 +91,11 @@ class GLModuleSystem:
         badnames = ['ChangeLog', 'COPYING', 'README', 'TEMPLATE',
                     'TEMPLATE-EXTENDED', 'TEMPLATE-TESTS']
         if module_name not in badnames:
-            result = os.path.isfile(os.path.join(DIRS['modules'], module_name))
+            result = os.path.isfile(joinpath(DIRS['modules'], module_name))
             if not result:
                 for localdir in localpath:
-                    if (os.path.isdir(os.path.join(localdir, 'modules'))
-                            and os.path.isfile(os.path.join(localdir, 'modules', module_name))):
+                    if (os.path.isdir(joinpath(localdir, 'modules'))
+                            and os.path.isfile(joinpath(localdir, 'modules', module_name))):
                         result = True
                         break
         return result
@@ -107,7 +108,7 @@ class GLModuleSystem:
             raise TypeError('module_name must be a string, not %s'
                             % type(module_name).__name__)
         if self.exists(module_name):
-            path, istemp = self.filesystem.lookup(os.path.join('modules', module_name))
+            path, istemp = self.filesystem.lookup(joinpath('modules', module_name))
             result = GLModule(self.config, module_name, path, istemp)
             return result
         else:  # if not self.exists(module)
@@ -469,9 +470,9 @@ class GLModule:
             result = [ line.strip()
                        for line in snippet.split('\n')
                        if line.strip() ]
-            result.append(os.path.join('m4', '00gnulib.m4'))
-            result.append(os.path.join('m4', 'zzgnulib.m4'))
-            result.append(os.path.join('m4', 'gnulib-common.m4'))
+            result.append(joinpath('m4', '00gnulib.m4'))
+            result.append(joinpath('m4', 'zzgnulib.m4'))
+            result.append(joinpath('m4', 'gnulib-common.m4'))
             self.cache['files'] = result
         return self.cache['files']
 
@@ -620,8 +621,7 @@ class GLModule:
                 buildaux_files = filter_filelist('\n', all_files,
                                                  'build-aux/', '', 'build-aux/', '')
                 if buildaux_files != '':
-                    # Don't let os.path.normpath() remove $(top_srcdir) when auxdir starts with '..'.
-                    buildaux_files = [ os.path.join('$(top_srcdir)', os.path.normpath(os.path.join(auxdir, filename)))
+                    buildaux_files = [ os.path.join('$(top_srcdir)', joinpath(auxdir, filename))
                                        for filename in buildaux_files.split('\n') ]
                     result += 'EXTRA_DIST += %s' % ' '.join(buildaux_files)
                     result += '\n\n'

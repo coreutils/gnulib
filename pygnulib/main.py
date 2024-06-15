@@ -92,6 +92,7 @@ from pygnulib.constants import (
     UTILS,
     MODES,
     ENCS,
+    joinpath,
     lines_to_multiline,
     ensure_writable,
     copyfile,
@@ -858,9 +859,9 @@ def main(temp_directory: str) -> None:
     elif mode == 'find':
         modulesystem = GLModuleSystem(config)
         for filename in files:
-            if (os.path.isfile(os.path.join(DIRS['root'], filename))
+            if (os.path.isfile(joinpath(DIRS['root'], filename))
                     or (localpath != None
-                        and any([ os.path.isfile(os.path.join(localdir, filename))
+                        and any([ os.path.isfile(joinpath(localdir, filename))
                                   for localdir in localpath ]))):
                 # Convert the file name to a POSIX basic regex.
                 # Needs to handle . [ \ * ^ $.
@@ -955,7 +956,7 @@ def main(temp_directory: str) -> None:
             if m4base:
                 # Apply func_import to a particular gnulib directory.
                 # Any number of additional modules can be given.
-                if not os.path.isfile(os.path.join(destdir, m4base, 'gnulib-cache.m4')):
+                if not os.path.isfile(joinpath(destdir, m4base, 'gnulib-cache.m4')):
                     # First use of gnulib in the given m4base.
                     if not sourcebase:
                         sourcebase = 'lib'
@@ -982,7 +983,7 @@ def main(temp_directory: str) -> None:
                 # too expensive.)
                 m4dirs = []
                 dirisnext = False
-                filepath = os.path.join(destdir, 'Makefile.am')
+                filepath = joinpath(destdir, 'Makefile.am')
                 if os.path.isfile(filepath):
                     with open(filepath, mode='r', newline='\n', encoding='utf-8') as file:
                         data = file.read()
@@ -996,7 +997,7 @@ def main(temp_directory: str) -> None:
                         if dirisnext:
                             # Ignore absolute directory pathnames, like /usr/local/share/aclocal.
                             if not os.path.isabs(aclocal_amflag):
-                                if os.path.isfile(os.path.join(destdir, aclocal_amflag, 'gnulib-cache.m4')):
+                                if os.path.isfile(joinpath(destdir, aclocal_amflag, 'gnulib-cache.m4')):
                                     m4dirs.append(aclocal_amflag)
                             dirisnext = False
                         else:  # if not dirisnext
@@ -1007,11 +1008,11 @@ def main(temp_directory: str) -> None:
                     for arg in guessed_m4dirs:
                         # Ignore absolute directory pathnames, like /usr/local/share/aclocal.
                         if not os.path.isabs(arg):
-                            if os.path.isfile(os.path.join(destdir, arg, 'gnulib-cache.m4')):
+                            if os.path.isfile(joinpath(destdir, arg, 'gnulib-cache.m4')):
                                 m4dirs.append(arg)
                 else:  # if not os.path.isfile(filepath)
                     # No Makefile.am! Oh well. Look at the last generated aclocal.m4.
-                    filepath = os.path.join(destdir, 'aclocal.m4')
+                    filepath = joinpath(destdir, 'aclocal.m4')
                     if os.path.isfile(filepath):
                         pattern = re.compile(r'm4_include\(\[(.*?)]\)')
                         with open(filepath, mode='r', newline='\n', encoding='utf-8') as file:
@@ -1020,7 +1021,7 @@ def main(temp_directory: str) -> None:
                                    for m4dir in m4dirs ]
                         m4dirs = [ m4dir
                                    for m4dir in m4dirs
-                                   if os.path.isfile(os.path.join(destdir, m4dir, 'gnulib-cache.m4')) ]
+                                   if os.path.isfile(joinpath(destdir, m4dir, 'gnulib-cache.m4')) ]
                         m4dirs = sorted(set(m4dirs))
                 if len(m4dirs) == 0:
                     # First use of gnulib in a package.
@@ -1319,7 +1320,7 @@ def main(temp_directory: str) -> None:
             destdir = os.path.dirname(dest)
             destpath = os.path.basename(dest)
         # Create the directory for destfile.
-        dirname = os.path.dirname(os.path.join(destdir, destpath))
+        dirname = os.path.dirname(joinpath(destdir, destpath))
         if not config['dryrun']:
             if dirname and not os.path.isdir(dirname):
                 try:  # Try to create directories
@@ -1334,10 +1335,10 @@ def main(temp_directory: str) -> None:
         ensure_writable(tmpfile)
         assistant.setOriginal(srcpath)
         assistant.setRewritten(destpath)
-        if os.path.isfile(os.path.join(destdir, destpath)):
+        if os.path.isfile(joinpath(destdir, destpath)):
             # The file already exists.
             assistant.update(lookedup, flag, tmpfile, True)
-        else:  # if not os.path.isfile(os.path.join(destdir, destpath))
+        else:  # if not os.path.isfile(joinpath(destdir, destpath))
             # Install the file.
             # Don't protest if the file should be there but isn't: it happens
             # frequently that developers don't put autogenerated files under
@@ -1358,7 +1359,7 @@ def main(temp_directory: str) -> None:
         # This disturbs the result of the next "gitk" invocation.
         # Workaround: Let git scan the files. This can be done through
         # "git update-index --refresh" or "git status" or "git diff".
-        if os.path.isdir(os.path.join(DIRS['root'], '.git')):
+        if os.path.isdir(joinpath(DIRS['root'], '.git')):
             try:
                 sp.run(['git', 'update-index', '--refresh'],
                        cwd=DIRS['root'], stdout=sp.DEVNULL)

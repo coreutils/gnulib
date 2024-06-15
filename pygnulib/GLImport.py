@@ -27,6 +27,7 @@ from .constants import (
     MODES,
     TESTS,
     cleaner,
+    joinpath,
     lines_to_multiline,
     movefile,
     copyfile,
@@ -127,7 +128,7 @@ class GLImport:
                 raise GLError(4, version)
 
         # Get other cached variables.
-        path = os.path.join(self.config['m4base'], 'gnulib-cache.m4')
+        path = joinpath(self.config['m4base'], 'gnulib-cache.m4')
         if os.path.isfile(path):
             with open(path, mode='r', newline='\n', encoding='utf-8') as file:
                 data = file.read()
@@ -221,7 +222,7 @@ class GLImport:
 
             # Get cached filelist from gnulib-comp.m4.
             destdir, m4base = self.config.getDestDir(), self.config.getM4Base()
-            path = os.path.join(destdir, m4base, 'gnulib-comp.m4')
+            path = joinpath(destdir, m4base, 'gnulib-comp.m4')
             if os.path.isfile(path):
                 with open(path, mode='r', newline='\n', encoding='utf-8') as file:
                     data = file.read()
@@ -290,8 +291,8 @@ class GLImport:
                     base = self.config['destdir']
                 else:
                     base = '.'
-                if os.path.isfile(os.path.join(base, 'Makefile.am')):
-                    with open(os.path.join(base, 'Makefile.am'), mode='r', newline='\n', encoding='utf-8') as file:
+                if os.path.isfile(joinpath(base, 'Makefile.am')):
+                    with open(joinpath(base, 'Makefile.am'), mode='r', newline='\n', encoding='utf-8') as file:
                         data = file.read()
                     pattern = re.compile(r'^AUTOMAKE_OPTIONS[\t ]*=(.*)$', re.MULTILINE)
                     automake_options = pattern.findall(data)
@@ -437,7 +438,7 @@ class GLImport:
         else:
             if os.path.isabs(destdir):
                 # XXX This doesn't look right.
-                return os.path.join(destdir, dir)
+                return joinpath(destdir, dir)
             else:
                 return relconcat(destdir, dir)
 
@@ -675,14 +676,14 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         '''This method is used to determine ignore argument for _update_ignorelist_
         method and then call it.'''
         destdir = self.config['destdir']
-        if (os.path.isdir(os.path.join(destdir, 'CVS'))
-                or os.path.isdir(os.path.join(destdir, directory, 'CVS'))
-                or os.path.isfile(os.path.join(destdir, directory, '.cvsignore'))):
+        if (os.path.isdir(joinpath(destdir, 'CVS'))
+                or os.path.isdir(joinpath(destdir, directory, 'CVS'))
+                or os.path.isfile(joinpath(destdir, directory, '.cvsignore'))):
             self._update_ignorelist_(directory, '.cvsignore',
                                      files_added, files_removed)
-        if (os.path.isdir(os.path.join(destdir, '.git'))
-                or os.path.isfile(os.path.join(destdir, '.gitignore'))
-                or os.path.isfile(os.path.join(destdir, directory, '.gitignore'))):
+        if (os.path.isdir(joinpath(destdir, '.git'))
+                or os.path.isfile(joinpath(destdir, '.gitignore'))
+                or os.path.isfile(joinpath(destdir, directory, '.gitignore'))):
             self._update_ignorelist_(directory, '.gitignore',
                                      files_added, files_removed)
 
@@ -696,11 +697,11 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
             anchor = '/'
         else:
             anchor = ''
-        srcpath = os.path.join(directory, ignore)
+        srcpath = joinpath(directory, ignore)
         backupname = '%s~' % srcpath
-        if os.path.isfile(os.path.join(destdir, srcpath)):
+        if os.path.isfile(joinpath(destdir, srcpath)):
             if files_added or files_removed:
-                with open(os.path.join(destdir, srcpath), mode='r', newline='\n', encoding='utf-8') as file:
+                with open(joinpath(destdir, srcpath), mode='r', newline='\n', encoding='utf-8') as file:
                     original_lines = file.readlines()
                 # Clean the newlines but not trailing whitespace.
                 original_lines = [ line.rstrip('\n')
@@ -713,7 +714,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                 if filenames_to_add or filenames_to_remove:
                     if not self.config['dryrun']:
                         print('Updating %s (backup in %s)' % (srcpath, backupname))
-                        copyfile2(os.path.join(destdir, srcpath), os.path.join(destdir, backupname))
+                        copyfile2(joinpath(destdir, srcpath), joinpath(destdir, backupname))
                         new_lines = original_lines + [ f'{anchor}{filename}'
                                                        for filename in sorted(filenames_to_add) ]
                         if anchor != '':
@@ -724,11 +725,11 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                         new_lines = [ line
                                       for line in new_lines
                                       if line not in lines_to_remove ]
-                        with open(os.path.join(destdir, srcpath), mode='w', newline='\n', encoding='utf-8') as file:
+                        with open(joinpath(destdir, srcpath), mode='w', newline='\n', encoding='utf-8') as file:
                             file.write(lines_to_multiline(new_lines))
                     else:  # if self.config['dryrun']
                         print('Update %s (backup in %s)' % (srcpath, backupname))
-        else:  # if not os.path.isfile(os.path.join(destdir, srcpath))
+        else:  # if not os.path.isfile(joinpath(destdir, srcpath))
             if files_added:
                 if not self.config['dryrun']:
                     print('Creating %s' % srcpath)
@@ -738,7 +739,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                     if ignore == '.cvsignore':
                         # Automake generates Makefile rules that create .dirstamp files.
                         files_added = ['.deps', '.dirstamp'] + files_added
-                    with open(os.path.join(destdir, srcpath), mode='w', newline='\n', encoding='utf-8') as file:
+                    with open(joinpath(destdir, srcpath), mode='w', newline='\n', encoding='utf-8') as file:
                         file.write(lines_to_multiline(files_added))
                 else:  # if self.config['dryrun']
                     print('Create %s' % srcpath)
@@ -876,9 +877,9 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         # Add m4/gnulib-tool.m4 to the file list. It is not part of any module.
         new_files = filelist + ['m4/gnulib-tool.m4']
         old_files = list(self.cache['files'])
-        path = os.path.join(destdir, m4base, 'gnulib-tool.m4')
+        path = joinpath(destdir, m4base, 'gnulib-tool.m4')
         if os.path.isfile(path):
-            old_files.append(os.path.join('m4', 'gnulib-tool.m4'))
+            old_files.append(joinpath('m4', 'gnulib-tool.m4'))
         # old_files is the list of files according to the last gnulib-tool invocation.
         # new_files is the list of files after this gnulib-tool invocation.
 
@@ -981,7 +982,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         pairs = sorted(set(pairs), key=lambda pair: pair[0])
         files = sorted(set(pair[0] for pair in pairs))
         for file in files:
-            path = os.path.normpath(os.path.join(destdir, file))
+            path = joinpath(destdir, file)
             if os.path.isfile(path) or os.path.islink(path):
                 if not self.config['dryrun']:
                     backup = '%s~' % path
@@ -1066,11 +1067,11 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         if pobase:
             # Create po makefile and auxiliary files.
             for file in ['Makefile.in.in', 'remove-potcdate.sin']:
-                tmpfile = assistant.tmpfilename(os.path.join(pobase, file))
-                path = os.path.join('build-aux', 'po', file)
+                tmpfile = assistant.tmpfilename(joinpath(pobase, file))
+                path = joinpath('build-aux', 'po', file)
                 lookedup, flag = filesystem.lookup(path)
                 copyfile(lookedup, tmpfile)
-                basename = os.path.join(pobase, file)
+                basename = joinpath(pobase, file)
                 filename, backup, flag = assistant.super_update(basename, tmpfile)
                 if flag == 1:
                     if not self.config['dryrun']:
@@ -1087,7 +1088,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                     os.remove(tmpfile)
 
             # Create po makefile parameterization, part 1.
-            basename = os.path.join(pobase, 'Makevars')
+            basename = joinpath(pobase, 'Makevars')
             tmpfile = assistant.tmpfilename(basename)
             emit = self.emitter.po_Makevars()
             with open(tmpfile, mode='w', newline='\n', encoding='utf-8') as file:
@@ -1108,11 +1109,11 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                 os.remove(tmpfile)
 
             # Create po makefile parameterization, part 2.
-            basename = os.path.join(pobase, 'POTFILES.in')
+            basename = joinpath(pobase, 'POTFILES.in')
             tmpfile = assistant.tmpfilename(basename)
             with open(tmpfile, mode='w', newline='\n', encoding='utf-8') as file:
                 file.write(self.emitter.po_POTFILES_in(filetable.all_files))
-            basename = os.path.join(pobase, 'POTFILES.in')
+            basename = joinpath(pobase, 'POTFILES.in')
             filename, backup, flag = assistant.super_update(basename, tmpfile)
             if flag == 1:
                 if not self.config['dryrun']:
@@ -1134,17 +1135,17 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                 print('Fetching gnulib PO files from %s' % TP_URL)
                 args = ['wget', '--no-verbose', '--mirror', '--level=1', '-nd', '-A.po', '-P', '.',
                         '%sgnulib/' % TP_URL]
-                sp.call(args, cwd=os.path.join(destdir, pobase))
+                sp.call(args, cwd=joinpath(destdir, pobase))
             else:  # if self.config['dryrun']
                 print('Fetch gnulib PO files from %s' % TP_URL)
 
             # Create po/LINGUAS.
-            basename = os.path.join(pobase, 'LINGUAS')
+            basename = joinpath(pobase, 'LINGUAS')
             if not self.config['dryrun']:
                 tmpfile = assistant.tmpfilename(basename)
                 data = '# Set of available languages.\n'
                 files = sorted([ subend('.po', '', file)
-                                 for file in os.listdir(os.path.join(destdir, pobase))
+                                 for file in os.listdir(joinpath(destdir, pobase))
                                  if file.endswith('.po') ])
                 data += lines_to_multiline(files)
                 with open(tmpfile, mode='w', newline='\n', encoding='utf-8') as file:
@@ -1159,13 +1160,13 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                     os.remove(tmpfile)
             else:  # if not self.config['dryrun']
                 backupname = '%s~' % basename
-                if os.path.isfile(os.path.join(destdir, basename)):
+                if os.path.isfile(joinpath(destdir, basename)):
                     print('Update %s (backup in %s)' % (basename, backupname))
-                else:  # if not os.path.isfile(os.path.join(destdir, basename))
+                else:  # if not os.path.isfile(joinpath(destdir, basename))
                     print('Create %s' % basename)
 
         # Create m4/gnulib-cache.m4.
-        basename = os.path.join(m4base, 'gnulib-cache.m4')
+        basename = joinpath(m4base, 'gnulib-cache.m4')
         tmpfile = assistant.tmpfilename(basename)
         emit = self.gnulib_cache()
         with open(tmpfile, mode='w', newline='\n', encoding='utf-8') as file:
@@ -1190,7 +1191,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
             os.remove(tmpfile)
 
         # Create m4/gnulib-comp.m4.
-        basename = os.path.join(m4base, 'gnulib-comp.m4')
+        basename = joinpath(m4base, 'gnulib-comp.m4')
         tmpfile = assistant.tmpfilename(basename)
         emit = self.gnulib_comp(filetable, gentests)
         with open(tmpfile, mode='w', newline='\n', encoding='utf-8') as file:
@@ -1228,13 +1229,13 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         # Create library makefile.
         # Do this after creating gnulib-comp.m4, because func_emit_lib_Makefile_am
         # can run 'autoconf -t', which reads gnulib-comp.m4.
-        basename = os.path.join(sourcebase, source_makefile_am)
+        basename = joinpath(sourcebase, source_makefile_am)
         tmpfile = assistant.tmpfilename(basename)
         emit = self.emitter.lib_Makefile_am(basename, self.moduletable.getMainModules(),
                                             self.moduletable, self.makefiletable,
                                             actioncmd, for_test)
         if automake_subdir:
-            emit = sp.run([os.path.join(DIRS['root'], 'build-aux/prefix-gnulib-mk'), '--from-gnulib-tool',
+            emit = sp.run([joinpath(DIRS['root'], 'build-aux/prefix-gnulib-mk'), '--from-gnulib-tool',
                            f'--lib-name={libname}', f'--prefix={sourcebase}/'],
                           input=emit, text=True, capture_output=True).stdout
         with open(tmpfile, mode='w', newline='\n', encoding='utf-8') as file:
@@ -1256,7 +1257,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
 
         # Create tests Makefile.
         if gentests:
-            basename = os.path.join(testsbase, tests_makefile_am)
+            basename = joinpath(testsbase, tests_makefile_am)
             tmpfile = assistant.tmpfilename(basename)
             emit = self.emitter.tests_Makefile_am(basename, self.moduletable.getTestsModules(),
                                                   self.moduletable, self.makefiletable,
@@ -1282,7 +1283,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
             # Update the .cvsignore and .gitignore files.
             ignorelist = []
             # Treat gnulib-comp.m4 like an added file, even if it already existed.
-            filetable.added_files.append(os.path.join(m4base, 'gnulib-comp.m4'))
+            filetable.added_files.append(joinpath(m4base, 'gnulib-comp.m4'))
             filetable.added_files = sorted(set(filetable.added_files))
             filetable.removed_files = sorted(set(filetable.removed_files))
             for file in filetable.added_files:
@@ -1381,12 +1382,12 @@ in <library>_a_LDFLAGS or <library>_la_LDFLAGS when linking a library.''')
             if 'var' in dictionary:
                 if dictionary['var'] == 'ACLOCAL_AMFLAGS':
                     print('  - mention "-I %s" in %s in %s'
-                          % (dictionary['val'], dictionary['var'], os.path.join(dictionary['dir'], 'Makefile.am')))
+                          % (dictionary['val'], dictionary['var'], joinpath(dictionary['dir'], 'Makefile.am')))
                     print('    or add an AC_CONFIG_MACRO_DIRS([%s]) invocation in %s,'
                           % (dictionary['val'], configure_ac))
                 else:
                     print('  - mention "%s" in %s in %s,'
-                          % (dictionary['val'], dictionary['var'], os.path.join(dictionary['dir'], 'Makefile.am')))
+                          % (dictionary['val'], dictionary['var'], joinpath(dictionary['dir'], 'Makefile.am')))
 
         # Detect position_early_after.
         with open(configure_ac, mode='r', newline='\n', encoding='utf-8') as file:

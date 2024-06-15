@@ -22,7 +22,7 @@ import os
 import re
 import subprocess as sp
 from pygnulib import __author__, __copyright__
-from .constants import DIRS
+from .constants import DIRS, joinpath
 
 
 #===============================================================================
@@ -321,7 +321,7 @@ Report bugs to <bug-gnulib@gnu.org>.'''
             except:
                 have_git = False
             if have_git:
-                version_gen = os.path.join(DIRS['build-aux'], 'git-version-gen')
+                version_gen = joinpath(DIRS['build-aux'], 'git-version-gen')
                 args = [version_gen, '/dev/null']
                 result = sp.check_output(args, cwd=DIRS['root']).decode('UTF-8')
                 result = result.strip()

@@ -24,6 +24,7 @@ import subprocess as sp
 from collections.abc import Callable
 from .constants import (
     UTILS,
+    joinpath,
     lines_to_multiline,
     combine_lines_matching,
     substart,
@@ -824,7 +825,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         if gnu_make:
             emit += '# Start of GNU Make output.\n'
             result = sp.run([UTILS['autoconf'], '-t', 'AC_SUBST:$1 = @$1@',
-                             os.path.join(self.config['destdir'], 'configure.ac')],
+                             joinpath(self.config['destdir'], 'configure.ac')],
                             capture_output=True)
             if result.returncode == 0:
                 # sort -u
@@ -842,7 +843,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         for current_edit in range(0, makefiletable.count()):
             dictionary = makefiletable[current_edit]
             if 'var' in dictionary:
-                if destfile == os.path.join(dictionary['dir'], 'Makefile.am'):
+                if destfile == joinpath(dictionary['dir'], 'Makefile.am'):
                     val = dictionary['val']
                     if dictionary['var'] == 'SUBDIRS' and dictionary['dotfirst']:
                         # The added subdirectory ${val} needs to be mentioned after '.'.
@@ -881,7 +882,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         else:
             # Then test if $sourcebase/Makefile.am (if it exists) specifies it.
             if makefile_name:
-                path = os.path.join(sourcebase, 'Makefile.am')
+                path = joinpath(sourcebase, 'Makefile.am')
                 if os.path.isfile(path):
                     with open(path, mode='r', newline='\n', encoding='utf-8') as file:
                         data = file.read()
@@ -1139,7 +1140,7 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         for current_edit in range(0, makefiletable.count()):
             dictionary = makefiletable[current_edit]
             if 'var' in dictionary:
-                if destfile == os.path.join(dictionary['dir'], 'Makefile.am'):
+                if destfile == joinpath(dictionary['dir'], 'Makefile.am'):
                     val = dictionary['val']
                     if dictionary['var'] == 'SUBDIRS' and dictionary['dotfirst']:
                         # The added subdirectory ${val} needs to be mentioned after '.'.
