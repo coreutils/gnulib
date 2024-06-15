@@ -1,0 +1,18 @@
+@node ns_name_uncompress
+@subsection @code{ns_name_uncompress}
+@findex ns_name_uncompress
+
+Documentation:@* @uref{http://web.deu.edu.tr/doc/oreily/networking/dnsbind/ch14_02.htm}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+glibc 2.33, macOS 11.1, FreeBSD 14.0, NetBSD 10.0, OpenBSD 7.5, Minix 3.3.0, HP-UX 11.11, Cygwin 2.9, mingw, MSVC 14, Android 9.0.
+@end itemize

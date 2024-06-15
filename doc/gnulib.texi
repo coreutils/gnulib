@@ -4049,6 +4049,7 @@ This list of functions is sorted according to the header that declares them.
 * Glibc argp.h::
 * Glibc argz.h::
 * Glibc arpa/inet.h::
+* Glibc arpa/nameser.h::
 * Glibc byteswap.h::
 * Glibc complex.h::
 * Glibc ctype.h::
@@ -4284,6 +4285,27 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/inet_network.texi
 @include glibc-functions/inet_nsap_addr.texi
 @include glibc-functions/inet_nsap_ntoa.texi
+
+@node Glibc arpa/nameser.h
+@section Glibc Extensions to @code{<arpa/nameser.h>}
+
+@menu
+* ns_name_compress::
+* ns_name_ntop::
+* ns_name_pack::
+* ns_name_pton::
+* ns_name_skip::
+* ns_name_uncompress::
+* ns_name_unpack::
+@end menu
+
+@include glibc-functions/ns_name_compress.texi
+@include glibc-functions/ns_name_ntop.texi
+@include glibc-functions/ns_name_pack.texi
+@include glibc-functions/ns_name_pton.texi
+@include glibc-functions/ns_name_skip.texi
+@include glibc-functions/ns_name_uncompress.texi
+@include glibc-functions/ns_name_unpack.texi
 
 @c @node Glibc assert.h
 @c @section Glibc Extensions to @code{<assert.h>}
