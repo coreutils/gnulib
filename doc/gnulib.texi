@@ -4190,6 +4190,7 @@ This list of functions is sorted according to the header that declares them.
 * Glibc sys/mman.h::
 * Glibc sys/mount.h::
 * Glibc sys/personality.h::
+* Glibc sys/pidfd.h::
 * Glibc sys/prctl.h::
 * Glibc sys/profil.h::
 * Glibc sys/ptrace.h::
@@ -6094,6 +6095,9 @@ This list of functions is sorted according to the header that declares them.
 @section Glibc Extensions to @code{<stdlib.h>}
 
 @menu
+* arc4random::
+* arc4random_buf::
+* arc4random_uniform::
 * canonicalize_file_name::
 * cfree::
 * clearenv::
@@ -6139,6 +6143,9 @@ This list of functions is sorted according to the header that declares them.
 * valloc::
 @end menu
 
+@include glibc-functions/arc4random.texi
+@include glibc-functions/arc4random_buf.texi
+@include glibc-functions/arc4random_uniform.texi
 @include glibc-functions/canonicalize_file_name.texi
 @include glibc-functions/cfree.texi
 @include glibc-functions/clearenv.texi
@@ -6386,6 +6393,8 @@ This list of functions is sorted according to the header that declares them.
 * pkey_get::
 * pkey_mprotect::
 * pkey_set::
+* process_madvise::
+* process_mrelease::
 * remap_file_pages::
 @end menu
 
@@ -6399,18 +6408,34 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/pkey_get.texi
 @include glibc-functions/pkey_mprotect.texi
 @include glibc-functions/pkey_set.texi
+@include glibc-functions/process_madvise.texi
+@include glibc-functions/process_mrelease.texi
 @include glibc-functions/remap_file_pages.texi
 
 @node Glibc sys/mount.h
 @section Glibc @code{<sys/mount.h>}
 
 @menu
+* fsconfig::
+* fsmount::
+* fsopen::
+* fspick::
 * mount::
+* mount_setattr::
+* move_mount::
+* open_tree::
 * umount::
 * umount2::
 @end menu
 
+@include glibc-functions/fsconfig.texi
+@include glibc-functions/fsmount.texi
+@include glibc-functions/fsopen.texi
+@include glibc-functions/fspick.texi
 @include glibc-functions/mount.texi
+@include glibc-functions/mount_setattr.texi
+@include glibc-functions/move_mount.texi
+@include glibc-functions/open_tree.texi
 @include glibc-functions/umount.texi
 @include glibc-functions/umount2.texi
 
@@ -6425,6 +6450,19 @@ This list of functions is sorted according to the header that declares them.
 @end menu
 
 @include glibc-functions/personality.texi
+
+@node Glibc sys/pidfd.h
+@section Glibc @code{<sys/pidfd.h>}
+
+@menu
+* pidfd_getfd::
+* pidfd_open::
+* pidfd_send_signal::
+@end menu
+
+@include glibc-functions/pidfd_getfd.texi
+@include glibc-functions/pidfd_open.texi
+@include glibc-functions/pidfd_send_signal.texi
 
 @node Glibc sys/prctl.h
 @section Glibc @code{<sys/prctl.h>}

@@ -1,0 +1,19 @@
+@node process_madvise
+@subsection @code{process_madvise}
+@findex process_madvise
+
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/process_madvise.2.html,,man process_madvise}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function exists only on Linux and is therefore
+missing on many non-glibc platforms:
+glibc 2.35, macOS 14, FreeBSD 14.0, NetBSD 10.0, OpenBSD 7.5, Minix 3.3.0, AIX 7.3.1, HP-UX 11.31, Solaris 11.4, Cygwin 3.5.3, mingw, MSVC 14, Android.
+@end itemize

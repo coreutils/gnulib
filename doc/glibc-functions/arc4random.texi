@@ -1,0 +1,29 @@
+@node arc4random
+@subsection @code{arc4random}
+@findex arc4random
+
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{High Quality Random,,High Quality Random Number Functions,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/High-Quality-Random.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/arc4random.3.html,,man arc4random}.
+@end itemize
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+glibc 2.35, AIX 7.3.1, HP-UX 11.31, Solaris 11.3, Cygwin 1.7.x, mingw, MSVC 14.
+@end itemize
