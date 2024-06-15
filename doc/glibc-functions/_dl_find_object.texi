@@ -1,0 +1,24 @@
+@node _dl_find_object
+@subsection @code{_dl_find_object}
+@findex _dl_find_object
+
+Documentation:@*
+@ifinfo
+@ref{Dynamic Linker Introspection,,Dynamic Linker Introspection,libc}.
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Dynamic-Linker-Introspection.html}.
+@end ifnotinfo
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on all non-glibc platforms:
+glibc 2.34, macOS 14, FreeBSD 14.0, NetBSD 10.0, OpenBSD 7.5, Minix 3.3.0, AIX 7.3.1, HP-UX 11.31, Solaris 11.4, Cygwin 3.5.3, mingw, MSVC 14, Android.
+@end itemize

@@ -1445,6 +1445,7 @@ problems are not worked around by Gnulib.
 * dbm_open::
 * dbm_store::
 * ddivl::
+* dfmal::
 * difftime::
 * dirfd::
 * dirname::
@@ -1456,6 +1457,7 @@ problems are not worked around by Gnulib.
 * dmull::
 * dprintf::
 * drand48::
+* dsqrtl::
 * dsubl::
 * dup::
 * dup2::
@@ -1535,6 +1537,8 @@ problems are not worked around by Gnulib.
 * feupdateenv::
 * fexecve::
 * fflush::
+* ffma::
+* ffmal::
 * ffs::
 * fgetc::
 * fgetpos::
@@ -1551,6 +1555,18 @@ problems are not worked around by Gnulib.
 * fmal::
 * fmax::
 * fmaxf::
+* fmaximum::
+* fmaximumf::
+* fmaximuml::
+* fmaximum_mag::
+* fmaximum_magf::
+* fmaximum_magl::
+* fmaximum_mag_num::
+* fmaximum_mag_numf::
+* fmaximum_mag_numl::
+* fmaximum_num::
+* fmaximum_numf::
+* fmaximum_numl::
 * fmaxl::
 * fmaxmag::
 * fmaxmagf::
@@ -1558,6 +1574,18 @@ problems are not worked around by Gnulib.
 * fmemopen::
 * fmin::
 * fminf::
+* fminimum::
+* fminimumf::
+* fminimuml::
+* fminimum_mag::
+* fminimum_magf::
+* fminimum_magl::
+* fminimum_mag_num::
+* fminimum_mag_numf::
+* fminimum_mag_numl::
+* fminimum_num::
+* fminimum_numf::
+* fminimum_numl::
 * fminl::
 * fminmag::
 * fminmagf::
@@ -1596,6 +1624,8 @@ problems are not worked around by Gnulib.
 * fseek::
 * fseeko::
 * fsetpos::
+* fsqrt::
+* fsqrtl::
 * fstat::
 * fstatat::
 * fstatvfs::
@@ -2755,6 +2785,7 @@ problems are not worked around by Gnulib.
 @include posix-functions/dbm_open.texi
 @include posix-functions/dbm_store.texi
 @include posix-functions/ddivl.texi
+@include posix-functions/dfmal.texi
 @include posix-functions/difftime.texi
 @include posix-functions/dirfd.texi
 @include posix-functions/dirname.texi
@@ -2766,6 +2797,7 @@ problems are not worked around by Gnulib.
 @include posix-functions/dmull.texi
 @include posix-functions/dprintf.texi
 @include posix-functions/drand48.texi
+@include posix-functions/dsqrtl.texi
 @include posix-functions/dsubl.texi
 @include posix-functions/dup.texi
 @include posix-functions/dup2.texi
@@ -2845,6 +2877,8 @@ problems are not worked around by Gnulib.
 @include posix-functions/feupdateenv.texi
 @include posix-functions/fexecve.texi
 @include posix-functions/fflush.texi
+@include posix-functions/ffma.texi
+@include posix-functions/ffmal.texi
 @include posix-functions/ffs.texi
 @include posix-functions/fgetc.texi
 @include posix-functions/fgetpos.texi
@@ -2861,6 +2895,18 @@ problems are not worked around by Gnulib.
 @include posix-functions/fmal.texi
 @include posix-functions/fmax.texi
 @include posix-functions/fmaxf.texi
+@include posix-functions/fmaximum.texi
+@include posix-functions/fmaximumf.texi
+@include posix-functions/fmaximuml.texi
+@include posix-functions/fmaximum_mag.texi
+@include posix-functions/fmaximum_magf.texi
+@include posix-functions/fmaximum_magl.texi
+@include posix-functions/fmaximum_mag_num.texi
+@include posix-functions/fmaximum_mag_numf.texi
+@include posix-functions/fmaximum_mag_numl.texi
+@include posix-functions/fmaximum_num.texi
+@include posix-functions/fmaximum_numf.texi
+@include posix-functions/fmaximum_numl.texi
 @include posix-functions/fmaxl.texi
 @include posix-functions/fmaxmag.texi
 @include posix-functions/fmaxmagf.texi
@@ -2868,6 +2914,18 @@ problems are not worked around by Gnulib.
 @include posix-functions/fmemopen.texi
 @include posix-functions/fmin.texi
 @include posix-functions/fminf.texi
+@include posix-functions/fminimum.texi
+@include posix-functions/fminimumf.texi
+@include posix-functions/fminimuml.texi
+@include posix-functions/fminimum_mag.texi
+@include posix-functions/fminimum_magf.texi
+@include posix-functions/fminimum_magl.texi
+@include posix-functions/fminimum_mag_num.texi
+@include posix-functions/fminimum_mag_numf.texi
+@include posix-functions/fminimum_mag_numl.texi
+@include posix-functions/fminimum_num.texi
+@include posix-functions/fminimum_numf.texi
+@include posix-functions/fminimum_numl.texi
 @include posix-functions/fminl.texi
 @include posix-functions/fminmag.texi
 @include posix-functions/fminmagf.texi
@@ -2906,6 +2964,8 @@ problems are not worked around by Gnulib.
 @include posix-functions/fseek.texi
 @include posix-functions/fseeko.texi
 @include posix-functions/fsetpos.texi
+@include posix-functions/fsqrt.texi
+@include posix-functions/fsqrtl.texi
 @include posix-functions/fstat.texi
 @include posix-functions/fstatat.texi
 @include posix-functions/fstatvfs.texi
@@ -4373,6 +4433,7 @@ This list of functions is sorted according to the header that declares them.
 * dlinfo::
 * dlmopen::
 * dlvsym::
+* _dl_find_object::
 @end menu
 
 @include glibc-functions/dladdr.texi
@@ -4380,6 +4441,7 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/dlinfo.texi
 @include glibc-functions/dlmopen.texi
 @include glibc-functions/dlvsym.texi
+@include glibc-functions/_dl_find_object.texi
 
 @c @node Glibc endian.h
 @c @section Glibc @code{<endian.h>}
@@ -5953,11 +6015,13 @@ This list of functions is sorted according to the header that declares them.
 * posix_spawn_file_actions_addchdir_np::
 * posix_spawn_file_actions_addclosefrom_np::
 * posix_spawn_file_actions_addfchdir_np::
+* posix_spawn_file_actions_addtcsetpgrp_np::
 @end menu
 
 @include glibc-functions/posix_spawn_file_actions_addchdir_np.texi
 @include glibc-functions/posix_spawn_file_actions_addclosefrom_np.texi
 @include glibc-functions/posix_spawn_file_actions_addfchdir_np.texi
+@include glibc-functions/posix_spawn_file_actions_addtcsetpgrp_np.texi
 
 @c @node Glibc stdarg.h
 @c @section Glibc Extensions to @code{<stdarg.h>}
@@ -6194,6 +6258,7 @@ This list of functions is sorted according to the header that declares them.
 * epoll_create1::
 * epoll_ctl::
 * epoll_pwait::
+* epoll_pwait2::
 * epoll_wait::
 @end menu
 
@@ -6201,6 +6266,7 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/epoll_create1.texi
 @include glibc-functions/epoll_ctl.texi
 @include glibc-functions/epoll_pwait.texi
+@include glibc-functions/epoll_pwait2.texi
 @include glibc-functions/epoll_wait.texi
 
 @node Glibc sys/eventfd.h
