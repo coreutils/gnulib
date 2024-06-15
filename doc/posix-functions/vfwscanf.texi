@@ -18,6 +18,12 @@ Portability problems not fixed by Gnulib:
 This function is missing on some platforms:
 NetBSD 3.0, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, HP-UX 11.23, Cygwin 1.5.x, Android 4.4.
 @item
+This function does not support size specifiers as in C23 (@code{w8},
+@code{w16}, @code{w32}, @code{w64}, @code{wf8}, @code{wf16}, @code{wf32},
+@code{wf64}) on some platforms:
+glibc 2.38, musl libc, macOS 12.5, FreeBSD 13.2, NetBSD 10.0, OpenBSD 7.2,
+AIX 7.2, HP-UX 11, Solaris 11.4, Cygwin 2.9.0, mingw, MSVC 14.
+@item
 On Windows and 32-bit AIX platforms, @code{wchar_t} is a 16-bit type and therefore cannot
 accommodate all Unicode characters.
 @end itemize
