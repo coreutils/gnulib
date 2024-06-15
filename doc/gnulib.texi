@@ -2380,6 +2380,8 @@ problems are not worked around by Gnulib.
 * strfroml::
 * strftime::
 * strftime_l::
+* strlcat::
+* strlcpy::
 * strlen::
 * strncasecmp::
 * strncasecmp_l::
@@ -3720,6 +3722,8 @@ problems are not worked around by Gnulib.
 @include posix-functions/strfroml.texi
 @include posix-functions/strftime.texi
 @include posix-functions/strftime_l.texi
+@include posix-functions/strlcat.texi
+@include posix-functions/strlcpy.texi
 @include posix-functions/strlen.texi
 @include posix-functions/strncasecmp.texi
 @include posix-functions/strncasecmp_l.texi

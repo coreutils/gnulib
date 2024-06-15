@@ -47,7 +47,7 @@ NetBSD 10.0.
 This function does not support size specifiers as in C23 (@code{w8},
 @code{w16}, @code{w32}, @code{w64}, @code{wf8}, @code{wf16}, @code{wf32},
 @code{wf64}) on some platforms:
-glibc, musl libc, macOS 12.5, FreeBSD 13.2, NetBSD 10.0, OpenBSD 7.2,
+glibc 2.37, musl libc, macOS 12.5, FreeBSD 13.2, NetBSD 10.0, OpenBSD 7.2,
 AIX 7.2, HP-UX 11, Solaris 11.4, Cygwin 2.9.0, mingw, MSVC 14.
 @item
 This function ignores the minimum field width in the @samp{lc} directive

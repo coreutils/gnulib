@@ -28,4 +28,9 @@ macros such as @code{PRIdMAX}.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+The @code{PRIb*}, @code{PRIB*}, @code{SCNb*} macros,
+that were added in ISO C 23,
+are missing on many platforms:
+glibc 2.37 and many others.
 @end itemize
