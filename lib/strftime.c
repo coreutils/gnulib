@@ -2020,16 +2020,6 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
                 struct tm ltm;
                 time_t lt;
 
-                /* POSIX.1 requires that local time zone information be used as
-                   though strftime called tzset.  */
-# ifndef my_strftime
-                if (!*tzset_called)
-                  {
-                    tzset ();
-                    *tzset_called = true;
-                  }
-# endif
-
                 ltm = *tp;
                 ltm.tm_wday = -1;
                 lt = mktime_z (tz, &ltm);
