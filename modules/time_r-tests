@@ -1,4 +1,5 @@
 Files:
+m4/tm_gmtoff.m4
 tests/test-gmtime_r.c
 tests/test-gmtime_r-mt.c
 tests/test-localtime_r.c
@@ -11,9 +12,7 @@ thread
 nanosleep
 
 configure.ac:
-AC_CHECK_MEMBERS([struct tm.tm_gmtoff, struct tm.tm_zone], [], [],
-  [[#include <time.h>
-  ]])
+gl_TM_GMTOFF
 
 Makefile.am:
 TESTS += \
