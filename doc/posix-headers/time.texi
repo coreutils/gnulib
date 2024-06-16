@@ -30,7 +30,22 @@ glibc 2.34+ atop 32-bit x86 or ARM Linux.
 @end itemize
 
 Portability problems not fixed by Gnulib:
+
 @itemize
+@item
+On some platforms @code{struct tm} lacks the the @code{tm_gmtoff} and
+@code{tm_zone} members:
+AIX 7.3, HP-UX 11, Solaris 11.4, mingw, MSVC 14.
+
+@item
+On some platforms the global state variables @code{daylight},
+@code{timezone} and @code{tzname} are not available.  Even on
+platforms where they are available, their contents are often unreliable,
+even in single-threaded programs.
+Portable code can instead use @code{struct tm}'s @code{tm_gmtoff} and
+@code{tm_zone} members when available, and the @code{strftime} function
+with @code{%z} or @code{%Z} conversion specifiers otherwise.
+
 @item
 On platforms where @code{time_t} is always 32-bit, functions like
 @code{stat} can fail with @code{errno == EOVERFLOW} when a timestamp
