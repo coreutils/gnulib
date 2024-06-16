@@ -25,7 +25,7 @@
 #ifdef _LIBC
 # define USE_IN_EXTENDED_LOCALE_MODEL 1
 # define HAVE_STRUCT_ERA_ENTRY 1
-# define HAVE_TM_GMTOFF 1
+# define HAVE_STRUCT_TM_TM_GMTOFF 1
 # define HAVE_STRUCT_TM_TM_ZONE 1
 # define HAVE_TZNAME_ARRAY 1
 # include "../locale/localeinfo.h"
@@ -746,7 +746,7 @@ should_remove_ampm (void)
 #endif
 
 
-#if ! HAVE_TM_GMTOFF
+#if ! HAVE_STRUCT_TM_TM_GMTOFF
 /* Yield the difference between *A and *B,
    measured in seconds, ignoring leap seconds.  */
 # define tm_diff ftime_tm_diff
@@ -771,7 +771,7 @@ tm_diff (const struct tm *a, const struct tm *b)
                 + (a->tm_min - b->tm_min))
           + (a->tm_sec - b->tm_sec));
 }
-#endif /* ! HAVE_TM_GMTOFF */
+#endif
 
 
 
@@ -1998,7 +1998,7 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
             int hour_diff;
             int min_diff;
             int sec_diff;
-#if HAVE_TM_GMTOFF
+#if HAVE_STRUCT_TM_TM_GMTOFF
             diff = tp->tm_gmtoff;
 #else
             if (!tz)

@@ -1311,7 +1311,7 @@ lookup_zone (parser_control const *pc, char const *name)
   return NULL;
 }
 
-#if ! HAVE_TM_GMTOFF
+#if ! HAVE_STRUCT_TM_TM_GMTOFF
 /* Yield the difference between *A and *B,
    measured in seconds, ignoring leap seconds.
    The body of this function is taken directly from the GNU C Library;
@@ -1336,7 +1336,7 @@ tm_diff (const struct tm *a, const struct tm *b)
                 + (a->tm_min - b->tm_min))
           + (a->tm_sec - b->tm_sec));
 }
-#endif /* ! HAVE_TM_GMTOFF */
+#endif
 
 static table const *
 lookup_word (parser_control const *pc, char *word)
@@ -2221,7 +2221,7 @@ parse_datetime_body (struct timespec *result, char const *p,
       if (pc.zones_seen)
         {
           bool overflow = false;
-#ifdef HAVE_TM_GMTOFF
+#ifdef HAVE_STRUCT_TM_TM_GMTOFF
           long int utcoff = tm.tm_gmtoff;
 #else
           time_t t = Start;
@@ -2337,7 +2337,7 @@ parse_datetime_body (struct timespec *result, char const *p,
                                         dbg_tm, sizeof dbg_tm));
       if (localtime_rz (tz, &result->tv_sec, &lmt))
         {
-#ifdef HAVE_TM_GMTOFF
+#ifdef HAVE_STRUCT_TM_TM_GMTOFF
           bool got_utcoff = true;
           long int utcoff = lmt.tm_gmtoff;
 #else

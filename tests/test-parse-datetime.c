@@ -49,7 +49,7 @@ static const char *const day_table[] =
 };
 
 
-#if ! HAVE_TM_GMTOFF
+#if ! HAVE_STRUCT_TM_TM_GMTOFF
 /* Shift A right by B bits portably, by dividing A by 2**B and
    truncating towards minus infinity.  A and B should be free of side
    effects, and B should be in the range 0 <= B <= INT_BITS - 2, where
@@ -91,14 +91,14 @@ tm_diff (struct tm const *a, struct tm const *b)
                 + (a->tm_min - b->tm_min))
           + (a->tm_sec - b->tm_sec));
 }
-#endif /* ! HAVE_TM_GMTOFF */
+#endif
 
 static long
 gmt_offset (time_t s)
 {
   long gmtoff;
 
-#if !HAVE_TM_GMTOFF
+#if !HAVE_STRUCT_TM_TM_GMTOFF
   struct tm tm_local = *localtime (&s);
   struct tm tm_gmt   = *gmtime (&s);
 
