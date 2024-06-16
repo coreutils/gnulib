@@ -144,6 +144,9 @@ typedef struct
 /* Meridian: am, pm, or 24-hour style.  */
 enum { MERam, MERpm, MER24 };
 
+/* Maximum length of a time zone abbreviation, plus 1.  */
+enum { TIME_ZONE_BUFSIZE = INT_STRLEN_BOUND (intmax_t) + sizeof ":MM:SS" };
+
 /* A reasonable upper bound for the buffer used in debug output.  */
 enum { DBGBUFSIZE = 100 };
 
@@ -230,6 +233,11 @@ typedef struct
 
   /* Table of local time zone abbreviations, terminated by a null entry.  */
   table local_time_zone_table[3];
+
+#if !HAVE_STRUCT_TM_TM_ZONE
+  /* The abbreviations in LOCAL_TIME_ZONE_TABLE.  */
+  char tz_abbr[2][TIME_ZONE_BUFSIZE];
+#endif
 } parser_control;
 
 static bool
@@ -385,8 +393,6 @@ str_days (parser_control *pc, char *buffer, int n)
 }
 
 /* Convert a time zone to its string representation.  */
-
-enum { TIME_ZONE_BUFSIZE = INT_STRLEN_BOUND (intmax_t) + sizeof ":MM:SS" } ;
 
 static char const *
 time_zone_str (int time_zone, char time_zone_buf[TIME_ZONE_BUFSIZE])
@@ -1565,6 +1571,33 @@ mktime_ok (struct tm const *tm0, struct tm const *tm1)
             | (tm0->tm_year ^ tm1->tm_year));
 }
 
+/* Populate PC's local time zone table with information from TM.  */
+
+static void
+populate_local_time_zone_table (parser_control *pc, struct tm const *tm)
+{
+  bool first_entry_exists = !!pc->local_time_zone_table[0].name;
+
+  /* The table entry to be filled in.  There are only two, so this is
+     the first entry if it is missing, the second entry otherwise.  */
+  table *e = &pc->local_time_zone_table[first_entry_exists];
+
+  e->type = tLOCAL_ZONE;
+  e->value = tm->tm_isdst;
+
+  char const *zone = NULL;
+#if HAVE_STRUCT_TM_TM_ZONE
+  if (tm->tm_zone[0])
+    zone = tm->tm_zone;
+#else
+  char *tz_abbr = pc->tz_abbr[first_entry_exists];
+  if (nstrftime (tz_abbr, TIME_ZONE_BUFSIZE, "%Z", tm, 0, 0))
+    zone = tz_abbr;
+#endif
+  e->name = zone;
+  e[1].name = NULL;
+}
+
 /* Debugging: format a 'struct tm' into a buffer, taking the parser's
    timezone information into account (if pc != NULL).  */
 static char const *
@@ -1833,61 +1866,37 @@ parse_datetime_body (struct timespec *result, char const *p,
   pc.debug_year_seen = false;
   pc.debug_ordinal_day_seen = false;
 
-#if HAVE_STRUCT_TM_TM_ZONE
-  pc.local_time_zone_table[0].name = tmp.tm_zone;
-  pc.local_time_zone_table[0].type = tLOCAL_ZONE;
-  pc.local_time_zone_table[0].value = tmp.tm_isdst;
-  pc.local_time_zone_table[1].name = NULL;
+  pc.local_time_zone_table[0].name = NULL;
+  populate_local_time_zone_table (&pc, &tmp);
 
   /* Probe the names used in the next three calendar quarters, looking
      for a tm_isdst different from the one we already have.  */
-  {
-    int quarter;
-    for (quarter = 1; quarter <= 3; quarter++)
-      {
-        time_t probe;
-        if (ckd_add (&probe, Start, quarter * (90 * 24 * 60 * 60)))
-          break;
-        struct tm probe_tm;
-        if (localtime_rz (tz, &probe, &probe_tm) && probe_tm.tm_zone
-            && probe_tm.tm_isdst != pc.local_time_zone_table[0].value)
-          {
-              {
-                pc.local_time_zone_table[1].name = probe_tm.tm_zone;
-                pc.local_time_zone_table[1].type = tLOCAL_ZONE;
-                pc.local_time_zone_table[1].value = probe_tm.tm_isdst;
-                pc.local_time_zone_table[2].name = NULL;
-              }
-            break;
-          }
-      }
-  }
-#else
-#if HAVE_TZNAME_ARRAY
-  {
-    int i;
-    for (i = 0; i < 2; i++)
-      {
-        pc.local_time_zone_table[i].name = tzname[i];
-        pc.local_time_zone_table[i].type = tLOCAL_ZONE;
-        pc.local_time_zone_table[i].value = i;
-      }
-    pc.local_time_zone_table[i].name = NULL;
-  }
-#else
-  pc.local_time_zone_table[0].name = NULL;
-#endif
-#endif
-
-  if (pc.local_time_zone_table[0].name && pc.local_time_zone_table[1].name
-      && ! strcmp (pc.local_time_zone_table[0].name,
-                   pc.local_time_zone_table[1].name))
+  for (int quarter = 1; quarter <= 3; quarter++)
     {
-      /* This locale uses the same abbreviation for standard and
-         daylight times.  So if we see that abbreviation, we don't
-         know whether it's daylight time.  */
-      pc.local_time_zone_table[0].value = -1;
-      pc.local_time_zone_table[1].name = NULL;
+      time_t probe;
+      if (ckd_add (&probe, Start, quarter * (90 * 24 * 60 * 60)))
+        break;
+      struct tm probe_tm;
+      if (localtime_rz (tz, &probe, &probe_tm)
+          && (! pc.local_time_zone_table[0].name
+              || probe_tm.tm_isdst != pc.local_time_zone_table[0].value))
+        {
+          populate_local_time_zone_table (&pc, &probe_tm);
+          if (pc.local_time_zone_table[1].name)
+            {
+              if (! strcmp (pc.local_time_zone_table[0].name,
+                            pc.local_time_zone_table[1].name))
+                {
+                  /* This locale uses the same abbreviation for standard and
+                     daylight times.  So if we see that abbreviation, we don't
+                     know whether it's daylight time.  */
+                  pc.local_time_zone_table[0].value = -1;
+                  pc.local_time_zone_table[1].name = NULL;
+                }
+
+              break;
+            }
+        }
     }
 
   if (yyparse (&pc) != 0)

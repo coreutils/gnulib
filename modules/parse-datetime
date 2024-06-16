@@ -5,8 +5,8 @@ Files:
 doc/parse-datetime.texi
 lib/parse-datetime.h
 lib/parse-datetime.y
-m4/tm_gmtoff.m4
 m4/parse-datetime.m4
+m4/tm_gmtoff.m4
 
 Depends-on:
 assert-h
@@ -28,7 +28,6 @@ time-h
 time_r
 time_rz
 timegm
-tzname
 
 configure.ac:
 gl_PARSE_DATETIME
