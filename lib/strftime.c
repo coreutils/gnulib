@@ -27,7 +27,6 @@
 # define HAVE_STRUCT_ERA_ENTRY 1
 # define HAVE_STRUCT_TM_TM_GMTOFF 1
 # define HAVE_STRUCT_TM_TM_ZONE 1
-# define HAVE_TZNAME_ARRAY 1
 # include "../locale/localeinfo.h"
 #else
 # include <libc-config.h>
@@ -809,9 +808,9 @@ static CHAR_T const c_month_names[][sizeof "September"] =
 #endif
 
 
-/* When compiling this file, GNU applications can #define my_strftime
-   to a symbol (typically nstrftime) to get an extended strftime with
-   extra arguments TZ and NS.  */
+/* When compiling this file, Gnulib-using applications should #define
+   my_strftime to a symbol (typically nstrftime) to name their
+   extended strftime with extra arguments TZ and NS.  */
 
 #ifdef my_strftime
 # define extra_args , tz, ns
@@ -926,9 +925,6 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
 # define ampm (L_("AMPM") + 2 * (tp->tm_hour > 11))
 # define ap_len 2
 #endif
-#if HAVE_TZNAME_ARRAY
-  char **tzname_vec = tzname;
-#endif
   const char *zone;
   size_t i = 0;
   STREAM_OR_CHAR_T *p = s;
@@ -946,37 +942,13 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
      This is bogus: though POSIX allows bad behavior like this,
      POSIX does not require it.  Do the right thing instead.  */
   zone = (const char *) tp->tm_zone;
-#endif
-#if HAVE_TZNAME_ARRAY
+#else
   if (!tz)
     {
       if (! (zone && *zone))
         zone = "GMT";
     }
-  else
-    {
-# if !HAVE_STRUCT_TM_TM_ZONE
-      /* Infer the zone name from *TZ instead of from TZNAME.  */
-      tzname_vec = tz->tzname_copy;
-# endif
-    }
-  /* The tzset() call might have changed the value.  */
-  if (!(zone && *zone) && tp->tm_isdst >= 0)
-    {
-      /* POSIX.1 requires that local time zone information be used as
-         though strftime called tzset.  */
-# ifndef my_strftime
-      if (!*tzset_called)
-        {
-          tzset ();
-          *tzset_called = true;
-        }
-# endif
-      zone = tzname_vec[tp->tm_isdst != 0];
-    }
 #endif
-  if (! zone)
-    zone = "";
 
   if (hour12 > 12)
     hour12 -= 12;
@@ -1007,6 +979,9 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
       bool change_case = false;
       int format_char;
       int subwidth;
+#ifndef _LIBC
+      bool set_and_revert_tz = false;
+#endif
 
 #if DO_MULTIBYTE && !defined COMPILE_WIDE
       switch (*f)
@@ -1327,40 +1302,56 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
           }
           break;
 
-#if !((defined _NL_CURRENT && HAVE_STRUCT_ERA_ENTRY) || (USE_C_LOCALE && !HAVE_STRFTIME_L))
+#ifndef _LIBC
         underlying_strftime:
           {
-            /* The relevant information is available only via the
-               underlying strftime implementation, so use that.  */
-            char ufmt[5];
-            char *u = ufmt;
             char ubuf[1024]; /* enough for any single format in practice */
             size_t len;
-            /* Make sure we're calling the actual underlying strftime.
-               In some cases, config.h contains something like
-               "#define strftime rpl_strftime".  */
+            if (set_and_revert_tz && !tz)
+              {
+                memcpy (ubuf, " UTC", 4);
+                len = 4;
+              }
+            else
+              {
+                /* The relevant information is available only via the
+                   underlying strftime implementation, so use that.  */
+                char ufmt[5];
+                char *u = ufmt;
+                /* Make sure we're calling the actual underlying strftime.
+                   In some cases, time.h contains something like
+                   "#define strftime rpl_strftime".  */
 # ifdef strftime
 #  undef strftime
-            size_t strftime (char *, size_t, const char *, struct tm const *);
 # endif
 
-            /* The space helps distinguish strftime failure from empty
-               output.  */
-            *u++ = ' ';
-            *u++ = '%';
-            if (modifier != 0)
-              *u++ = modifier;
-            *u++ = format_char;
-            *u = '\0';
+                /* The space helps distinguish strftime failure from empty
+                   output.  */
+                *u++ = ' ';
+                *u++ = '%';
+                if (modifier != 0)
+                  *u++ = modifier;
+                *u++ = format_char;
+                *u = '\0';
 
-# if USE_C_LOCALE /* implies HAVE_STRFTIME_L */
-            locale_t locale = c_locale ();
-            if (!locale)
-              return 0; /* errno is set here */
-            len = strftime_l (ubuf, sizeof ubuf, ufmt, tp, locale);
+                timezone_t old_tz = NULL;
+                if (set_and_revert_tz)
+                  {
+                    old_tz = set_tz (tz);
+                    if (!old_tz)
+                      return 0;
+                  }
+# if USE_C_LOCALE && HAVE_STRFTIME_L
+                locale_t locale = c_locale ();
+                if (!locale)
+                  return 0; /* errno is set here */
+                len = strftime_l (ubuf, sizeof ubuf, ufmt, tp, locale);
 # else
-            len = strftime (ubuf, sizeof ubuf, ufmt, tp);
+                len = strftime (ubuf, sizeof ubuf, ufmt, tp);
 # endif
+                if (old_tz && !revert_tz (old_tz))
+                  return 0;
+              }
             if (len != 0)
               {
 # if (__GLIBC__ == 2 && __GLIBC_MINOR__ < 31) || defined __NetBSD__ || defined __sun /* glibc < 2.31, NetBSD, Solaris */
@@ -1940,6 +1931,26 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
               to_uppcase = false;
               to_lowcase = true;
             }
+
+          /* The tzset() call might have changed the value.  */
+          if (!(zone && *zone) && tp->tm_isdst >= 0)
+            {
+#ifdef _LIBC
+              /* POSIX.1 requires that local time zone information be used as
+                 though strftime called tzset.  */
+              if (!*tzset_called)
+                {
+                  tzset ();
+                  *tzset_called = true;
+                }
+              zone = tp->tm_isdst <= 1 ? tzname[tp->tm_isdst] : "?";
+#else
+              set_and_revert_tz = tz != local_tz;
+              goto underlying_strftime;
+#endif
+            }
+          if (! zone)
+            zone = "";
 
 #ifdef COMPILE_WIDE
           {

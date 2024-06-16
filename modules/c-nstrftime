@@ -5,8 +5,8 @@ Files:
 lib/strftime.h
 lib/c-nstrftime.c
 lib/strftime.c
-m4/tm_gmtoff.m4
 m4/c-nstrftime.m4
+m4/tm_gmtoff.m4
 
 Depends-on:
 attribute
@@ -20,7 +20,6 @@ locale
 stdbool
 stdckdint
 time_rz
-tzname
 
 configure.ac:
 gl_C_GNU_STRFTIME
