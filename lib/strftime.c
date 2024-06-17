@@ -38,6 +38,8 @@
 # include "time-internal.h"
 #endif
 
+#define HAVE_NATIVE_TIME_Z (USE_C_LOCALE ? HAVE_STRFTIME_LZ : HAVE_STRFTIME_Z)
+
 /* Whether to require GNU behavior for AM and PM indicators, even on
    other platforms.  This matters only in non-C locales.
    The default is to require it; you can override this via
@@ -1336,6 +1338,7 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
                 *u++ = format_char;
                 *u = '\0';
 
+# if !HAVE_NATIVE_TIME_Z
                 timezone_t old_tz = NULL;
                 if (set_and_revert_tz)
                   {
@@ -1343,16 +1346,27 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
                     if (!old_tz)
                       return 0;
                   }
-# if USE_C_LOCALE && HAVE_STRFTIME_L
+# endif
+# if USE_C_LOCALE && (HAVE_STRFTIME_L || HAVE_STRFTIME_LZ)
                 locale_t locale = c_locale ();
                 if (!locale)
                   return 0; /* errno is set here */
-                len = strftime_l (ubuf, sizeof ubuf, ufmt, tp, locale);
+# if HAVE_STRFTIME_LZ
+                len = strftime_lz (tz, ubuf, sizeof ubuf, ufmt, tp, locale);
 # else
-                len = strftime (ubuf, sizeof ubuf, ufmt, tp);
+                len = strftime_l (ubuf, sizeof ubuf, ufmt, tp, locale);
 # endif
+# else
+#  if HAVE_STRFTIME_Z
+                len = strftime_z (tz, ubuf, sizeof ubuf, ufmt, tp);
+#  else
+                len = strftime (ubuf, sizeof ubuf, ufmt, tp);
+#  endif
+# endif
+# if !HAVE_NATIVE_TIME_Z
                 if (old_tz && !revert_tz (old_tz))
                   return 0;
+# endif
               }
             if (len != 0)
               {

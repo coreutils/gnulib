@@ -3,7 +3,6 @@ Reentrant time zone functions: localtime_rz, mktime_z, etc.
 
 Files:
 lib/time-internal.h
-lib/time-internal.c
 lib/time_rz.c
 m4/time_rz.m4
 
@@ -11,14 +10,14 @@ Depends-on:
 c99
 extensions
 time-h
-flexmember
-setenv
-stdbool
-tzset
-unsetenv
+flexmember     [test $HAVE_TIMEZONE_T = 0]
 idx            [test $HAVE_TIMEZONE_T = 0]
+setenv         [test $HAVE_TIMEZONE_T = 0]
+stdbool        [test $HAVE_TIMEZONE_T = 0]
 time_r         [test $HAVE_TIMEZONE_T = 0]
 timegm         [test $HAVE_TIMEZONE_T = 0]
+tzset          [test $HAVE_TIMEZONE_T = 0]
+unsetenv       [test $HAVE_TIMEZONE_T = 0]
 
 configure.ac:
 gl_TIME_RZ
@@ -26,7 +25,6 @@ gl_CONDITIONAL([GL_COND_OBJ_TIME_RZ], [test $HAVE_TIMEZONE_T = 0])
 gl_TIME_MODULE_INDICATOR([time_rz])
 
 Makefile.am:
-lib_SOURCES += time-internal.c
 if GL_COND_OBJ_TIME_RZ
 lib_SOURCES += time_rz.c
 endif
