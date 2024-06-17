@@ -36,7 +36,7 @@
 eval 'exec perl -wSx "$0" "$@"'
      if 0;
 
-my $VERSION = '2022-01-27 18:51'; # UTC
+my $VERSION = '2024-06-17 03:44'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -106,7 +106,7 @@ EOF
 sub is_NULL ($)
 {
   my ($expr) = @_;
-  return ($expr eq 'NULL' || $expr eq '0');
+  return ($expr eq 'NULL' || $expr eq 'nullptr' || $expr eq '0');
 }
 
 {
@@ -211,7 +211,7 @@ free=xfree
 git grep -l -z "$free *(" \
   | xargs -0 useless-if-before-free -l --name="$free" \
   | xargs -0 perl -0x3b -pi -e \
-   's/\bif\s*\(\s*(\S+?)(?:\s*!=\s*(?:0|NULL))?\s*\)\s+('"$free"'\s*\((?:\s*\([^)]+\))?\s*\1\s*\)\s*;)/$2/s'
+   's/\bif\s*\(\s*(\S+?)(?:\s*!=\s*(?:0|NULL|nullptr))?\s*\)\s+('"$free"'\s*\((?:\s*\([^)]+\))?\s*\1\s*\)\s*;)/$2/s'
 
 # Use the following to remove redundant uses of kfree inside braces.
 # Note that -0777 puts perl in slurp-whole-file mode;
@@ -220,7 +220,7 @@ free=kfree
 git grep -l -z "$free *(" \
   | xargs -0 useless-if-before-free -l --name="$free" \
   | xargs -0 perl -0777 -pi -e \
-     's/\bif\s*\(\s*(\S+?)(?:\s*!=\s*(?:0|NULL))?\s*\)\s*\{\s*('"$free"'\s*\((?:\s*\([^)]+\))?\s*\1\s*\);)\s*\}[^\n]*$/$2/gms'
+     's/\bif\s*\(\s*(\S+?)(?:\s*!=\s*(?:0|NULL|nullptr))?\s*\)\s*\{\s*('"$free"'\s*\((?:\s*\([^)]+\))?\s*\1\s*\);)\s*\}[^\n]*$/$2/gms'
 
 Be careful that the result of the above transformation is valid.
 If the matched string is followed by "else", then obviously, it won't be.
