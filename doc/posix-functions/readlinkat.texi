@@ -14,7 +14,7 @@ glibc 2.3.6, Mac OS X 10.9, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, A
 But the replacement function is not safe to be used in libraries and is not multithread-safe.
 @item
 Some platforms mistakenly succeed on file names ending in @file{/}:
-OS X 10.10.
+macOS 14.
 @item
 On some platforms, this function returns @code{int} instead of
 @code{ssize_t}:

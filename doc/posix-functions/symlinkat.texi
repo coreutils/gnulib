@@ -19,7 +19,7 @@ Cygwin 1.7.1.
 @item
 On some systems, @code{symlinkat(value, fd, "name/")} mistakenly creates a
 symlink:
-macOS 11.1, AIX 7.1.
+macOS 14, AIX 7.1.
 @end itemize
 
 Portability problems not fixed by Gnulib:

@@ -15,7 +15,7 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-macOS 11.1, FreeBSD 14.0, NetBSD 10.0, Android 9.0.
+Mac OS X 10.3, FreeBSD 14.0, NetBSD 10.0, Android 9.0.
 @item
 This function is not declared on some platforms:
 Cygwin 2.9.

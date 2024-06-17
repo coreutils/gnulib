@@ -19,7 +19,7 @@ end of the previous buffer, on some platforms: mingw, MSVC 14.
 @item
 @code{fflush} on an input stream right after @code{ungetc} does not discard
 the @code{ungetc} buffer, on some platforms:
-macOS 11.1, FreeBSD 6.0, NetBSD 10.0, OpenBSD 6.7, Cygwin 1.5.25-10.
+macOS 14, FreeBSD 6.0, NetBSD 10.0, OpenBSD 6.7, Cygwin 1.5.25-10.
 @end itemize
 
 Portability problems not fixed by Gnulib:

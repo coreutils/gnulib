@@ -16,5 +16,5 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This header file is missing on some platforms:
-macOS 11.1, AIX 7.1, HP-UX 11.31, Cygwin 2.9.0, mingw, MSVC 14.
+macOS 14, AIX 7.1, HP-UX 11.31, Cygwin 2.9.0, mingw, MSVC 14.
 @end itemize

@@ -20,5 +20,5 @@ This function is only defined as an inline function on some platforms:
 Android 4.4.
 @item
 This function is not multithread-safe on some platforms:
-musl libc, macOS 12.5, FreeBSD 13.2, NetBSD 10.0, AIX 7.1, Solaris 11.4.
+musl libc, macOS 14, FreeBSD 13.2, NetBSD 10.0, AIX 7.1, Solaris 11.4.
 @end itemize

@@ -18,7 +18,7 @@ Portability problems fixed by Gnulib module @code{wcsstr}:
 @item
 This function has quadratic instead of linear worst-case complexity on some
 platforms:
-glibc 2.39, macOS 12.5, FreeBSD 13.1, NetBSD 10.0, OpenBSD 7.2, AIX 7.2, HP-UX 11, Solaris 11.4, Cygwin 2.9.0, mingw, MSVC 14.
+glibc 2.39, macOS 14, FreeBSD 13.1, NetBSD 10.0, OpenBSD 7.2, AIX 7.2, HP-UX 11, Solaris 11.4, Cygwin 2.9.0, mingw, MSVC 14.
 @end itemize
 
 Portability problems not fixed by Gnulib:

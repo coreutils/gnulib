@@ -17,7 +17,7 @@ Portability problems fixed by either Gnulib module
 @itemize
 @item
 This function is missing on all non-glibc platforms:
-macOS 11.1, FreeBSD 14.0, NetBSD 10.0, OpenBSD 6.7, Minix 3.1.8, AIX 5.1, HP-UX 11, Solaris 11.4, Cygwin 2.9, mingw, MSVC 14, Android 9.0.
+macOS 14, FreeBSD 14.0, NetBSD 10.0, OpenBSD 6.7, Minix 3.1.8, AIX 5.1, HP-UX 11, Solaris 11.4, Cygwin 2.9, mingw, MSVC 14, Android 9.0.
 @end itemize
 
 Portability problems fixed by either Gnulib module @code{obstack-printf-posix} or @code{obstack-printf-gnu}:
@@ -41,7 +41,7 @@ Solaris 11.4, Cygwin 1.5.x, mingw, MSVC 14.
 @item
 This function does not support the @samp{b} directive, required by ISO C23,
 on some platforms:
-glibc 2.34, musl libc, macOS 12.5, FreeBSD 13.2, NetBSD 10.0, OpenBSD 7.2,
+glibc 2.34, musl libc, macOS 14, FreeBSD 13.2, NetBSD 10.0, OpenBSD 7.2,
 AIX 7.2, HP-UX 11, Solaris 11.4, Cygwin 2.9.0, mingw, MSVC 14.
 @item
 This function does not support the @samp{F} directive on some platforms:
@@ -90,7 +90,7 @@ Portability problems fixed by Gnulib module @code{obstack-printf-gnu}:
 @itemize
 @item
 This function does not support the @samp{B} directive on some platforms:
-glibc 2.34, FreeBSD 13.2, NetBSD 10.0, OpenBSD 7.2, macOS 12.5, AIX 7.2, Solaris 11.4, and others.
+glibc 2.34, FreeBSD 13.2, NetBSD 10.0, OpenBSD 7.2, macOS 14, AIX 7.2, Solaris 11.4, and others.
 @end itemize
 
 Portability problems fixed by either Gnulib module @code{obstack-printf-posix} or @code{obstack-printf-gnu}

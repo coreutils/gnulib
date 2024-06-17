@@ -17,7 +17,7 @@ MSVC 14.
 
 @item
 The type @code{off64_t} is not defined on some platforms:
-macOS 12.5, FreeBSD 10.4, NetBSD 10.0, OpenBSD 7.5, MSVC 14, Cygwin, Haiku, Minix 3.3.
+macOS 14, FreeBSD 10.4, NetBSD 10.0, OpenBSD 7.5, MSVC 14, Cygwin, Haiku, Minix 3.3.
 
 @item
 @samp{O_CLOEXEC} is not defined on some platforms:

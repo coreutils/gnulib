@@ -11,7 +11,7 @@ Portability problems fixed by Gnulib:
 @item
 On some platforms, @code{lseek (fd, offset, SEEK_DATA)} returns a value
 greater than @code{offset} even when @code{offset} addresses data:
-macOS 12
+macOS 14.
 @item
 This function is declared in a different header file (namely, @code{<io.h>})
 on some platforms:

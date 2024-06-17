@@ -11,7 +11,7 @@ Portability problems fixed by Gnulib:
 @item
 On some systems, @code{symlink(value,"name/")} mistakenly creates a
 symlink:
-macOS 11.1, FreeBSD 7.2, AIX 7.1, Solaris 9.
+macOS 14, FreeBSD 7.2, AIX 7.1, Solaris 9.
 @item
 This function is missing on some platforms; however, the replacement
 always fails with @code{EPERM}:

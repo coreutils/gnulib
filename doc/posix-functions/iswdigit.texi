@@ -14,7 +14,7 @@ Minix 3.1.8.
 @item
 This function cannot be called from plain inline or extern inline functions
 on some platforms:
-OS X 10.8.
+macOS 10.8.
 @item
 This function is not ISO C 99 compliant on some platforms:
 FreeBSD 14.0, NetBSD 10.0, Solaris 11.4, mingw, MSVC 14.

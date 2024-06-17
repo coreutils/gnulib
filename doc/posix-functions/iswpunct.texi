@@ -14,7 +14,7 @@ Minix 3.1.8.
 @item
 This function cannot be called from plain inline or extern inline functions
 on some platforms:
-OS X 10.8.
+macOS 10.8.
 @item
 This function is inconsistent with the @code{ispunct} function, because it
 returns false for the characters @code{'$'}, @code{'+'}, @code{'<'},

@@ -23,7 +23,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-macOS 11.1, musl libc, FreeBSD 5.2.1, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, HP-UX 11, Solaris 11.4, Cygwin 1.7.7, mingw, MSVC 14, Android 4.4.
+macOS 14, musl libc, FreeBSD 5.2.1, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, HP-UX 11, Solaris 11.4, Cygwin 1.7.7, mingw, MSVC 14, Android 4.4.
 @item
 This function does not detect failures on
 glibc 2.19/aarch64, FreeBSD 12.2/arm, FreeBSD 12.2/arm64,
@@ -36,5 +36,5 @@ Portability problems not fixed by Gnulib:
 @item
 The resulting signal is @code{SIGILL} instead of @code{SIGFPE}
 on some platforms:
-Linux/hppa, macOS 12.5/arm64.
+Linux/hppa, macOS 14/arm64.
 @end itemize

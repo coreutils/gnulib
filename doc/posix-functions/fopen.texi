@@ -33,7 +33,7 @@ This function does not support the mode character
 @samp{e} (corresponding to @code{O_CLOEXEC}),
 introduced into a future POSIX revision through
 @url{https://www.austingroupbugs.net/view.php?id=411}, on some platforms:
-glibc 2.6, macOS 11.1, FreeBSD 9.0, NetBSD 5.1, OpenBSD 5.6, Minix 3.2, AIX 7.2, HP-UX 11.31, Solaris 11.3, Cygwin 1.7.16 (2012), mingw, MSVC 14.
+glibc 2.6, macOS 14, FreeBSD 9.0, NetBSD 5.1, OpenBSD 5.6, Minix 3.2, AIX 7.2, HP-UX 11.31, Solaris 11.3, Cygwin 1.7.16 (2012), mingw, MSVC 14.
 @end itemize
 
 Portability problems not fixed by Gnulib:

@@ -20,7 +20,7 @@ MSVC 14.
 @item
 The value of @code{optind} after a missing required argument is wrong
 on some platforms:
-macOS 11.1, AIX 7.1, mingw.
+macOS 14, AIX 7.1, mingw.
 @end itemize
 
 Portability problems fixed by Gnulib module @code{getopt-gnu}:
@@ -28,7 +28,7 @@ Portability problems fixed by Gnulib module @code{getopt-gnu}:
 @item
 The function @code{getopt} does not support the @samp{+} flag in the options
 string on some platforms:
-macOS 11.1, AIX 5.2, HP-UX 11, Solaris 11 2010-11.
+macOS 14, AIX 5.2, HP-UX 11, Solaris 11 2010-11.
 @item
 The function @code{getopt} does not obey the combination of @samp{+}
 and @samp{:} flags in the options string on some platforms:
@@ -40,7 +40,7 @@ Cygwin 1.7.0.
 @item
 The function @code{getopt} does not support options with optional arguments
 on some platforms:
-macOS 11.1, OpenBSD 4.0, AIX 5.2, HP-UX 11, Solaris 11 2010-11, Cygwin 1.5.x.
+macOS 14, OpenBSD 4.0, AIX 5.2, HP-UX 11, Solaris 11 2010-11, Cygwin 1.5.x.
 @item
 The function @code{getopt_long} is missing on some platforms:
 AIX 5.1, HP-UX 11, Solaris 9, MSVC 14.

@@ -14,7 +14,7 @@ NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, HP-UX 11, Solaris 10, Cygwin 1.5.x, mingw,
 @item
 This function cannot be called from plain inline or extern inline functions
 on some platforms:
-OS X 10.8.
+macOS 10.8.
 @end itemize
 
 Portability problems not fixed by Gnulib:

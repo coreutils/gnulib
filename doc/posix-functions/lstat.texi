@@ -24,7 +24,7 @@ Solaris 9.
 @item
 On some platforms, @code{lstat("file/",buf)} succeeds instead of
 failing with @code{ENOTDIR}.
-macOS 11.1, Solaris 9.
+macOS 14, Solaris 9.
 @item
 On macOS 12.6, when this function yields a timestamp with a
 nonpositive @code{tv_sec} value, @code{tv_nsec} might be in the range

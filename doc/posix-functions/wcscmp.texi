@@ -11,7 +11,7 @@ Portability problems fixed by Gnulib:
 @item
 This function compares the wide characters as if they were unsigned, although
 @code{wchar_t} is signed, on some platforms:
-glibc 2.14.1 on x86 or x86_64, musl libc 1.2.3, macOS 12.5,
+glibc 2.14.1 on x86 or x86_64, musl libc 1.2.3, macOS 14,
 @c https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=272914
 FreeBSD 13.2,
 NetBSD 10.0, OpenBSD 7.2, Solaris 11.4.

@@ -24,7 +24,7 @@ MSVC 14.
 @item
 This function does not support the @samp{n} directive on some platforms:
 glibc when used with @code{_FORTIFY_SOURCE >= 2} (set by default on Ubuntu),
-Android, OpenBSD, macOS 11.1, MSVC 14.
+macOS 14, OpenBSD, MSVC 14, Android.
 @item
 This function sometimes returns a wrong value through the @samp{n} directive
 on some platforms:
@@ -47,7 +47,7 @@ NetBSD 10.0.
 This function does not support size specifiers as in C23 (@code{w8},
 @code{w16}, @code{w32}, @code{w64}, @code{wf8}, @code{wf16}, @code{wf32},
 @code{wf64}) on some platforms:
-glibc 2.37, musl libc, macOS 12.5, FreeBSD 13.2, NetBSD 10.0, OpenBSD 7.2,
+glibc 2.37, musl libc, macOS 14, FreeBSD 13.2, NetBSD 10.0, OpenBSD 7.2,
 AIX 7.2, HP-UX 11, Solaris 11.4, Cygwin 2.9.0, mingw, MSVC 14.
 @item
 This function ignores the minimum field width in the @samp{lc} directive
@@ -59,12 +59,11 @@ This function is broken when it produces output that contains null wide
 characters on some platforms:
 @c https://www.openwall.com/lists/musl/2023/03/22/9
 musl libc 1.2.3,
-FreeBSD 13.1, NetBSD 10.0, OpenBSD 7.2, macOS 12.5, AIX 7.2,
-mingw.
+macOS 14, FreeBSD 13.1, NetBSD 10.0, OpenBSD 7.2, AIX 7.2, mingw.
 @item
 This function does not support the @samp{b} directive, required by ISO C23,
 on some platforms:
-glibc 2.34, musl libc, macOS 12.5, FreeBSD 13.2, NetBSD 10.0, OpenBSD 7.2,
+glibc 2.34, musl libc, macOS 14, FreeBSD 13.2, NetBSD 10.0, OpenBSD 7.2,
 AIX 7.2, HP-UX 11, Solaris 11.4, Cygwin 2.9.0, mingw, MSVC 14.
 @item
 printf @code{"%#.0x"} or @code{"%#.0X"} with a zero argument yields an

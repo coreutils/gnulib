@@ -29,7 +29,7 @@ on directories such as @samp{C:\System Volume Information}.
 @item
 On some platforms, @code{stat("link-to-file/",buf)} succeeds instead
 of failing with @code{ENOTDIR}.
-macOS 11.1, FreeBSD 7.2, AIX 7.1, Solaris 9, mingw64.
+macOS 14, FreeBSD 7.2, AIX 7.1, Solaris 9, mingw64.
 @item
 On some platforms, @code{stat(".",buf)} and @code{stat("./",buf)} give
 different results:

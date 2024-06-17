@@ -16,7 +16,7 @@ AIX 5.1, HP-UX 11.23, Solaris 9, Cygwin 1.5.24, old mingw, MSVC 9.
 This function does not support size specifiers as in C23 (@code{w8},
 @code{w16}, @code{w32}, @code{w64}, @code{wf8}, @code{wf16}, @code{wf32},
 @code{wf64}) on some platforms:
-glibc 2.37, musl libc, macOS 12.5, FreeBSD 13.2, NetBSD 10.0, OpenBSD 7.2,
+glibc 2.37, musl libc, macOS 14, FreeBSD 13.2, NetBSD 10.0, OpenBSD 7.2,
 AIX 7.2, HP-UX 11, Solaris 11.4, Cygwin 2.9.0, mingw, MSVC 14.
 @item
 printf of @samp{long double} numbers is unsupported on some platforms:
@@ -33,7 +33,7 @@ Solaris 11.4, Cygwin 1.5.x, mingw, MSVC 14.
 @item
 This function does not support the @samp{b} directive, required by ISO C23,
 on some platforms:
-glibc 2.34, musl libc, macOS 12.5, FreeBSD 13.2, NetBSD 10.0, OpenBSD 7.2,
+glibc 2.34, musl libc, macOS 14, FreeBSD 13.2, NetBSD 10.0, OpenBSD 7.2,
 AIX 7.2, HP-UX 11, Solaris 11.4, Cygwin 2.9.0, mingw, MSVC 14.
 @item
 This function does not support the @samp{F} directive on some platforms:
@@ -56,7 +56,7 @@ NetBSD 3.0, Cygwin 1.5.24, mingw, MSVC 14.
 @item
 This function does not round the argument of the @samp{a} directive correctly
 on some platforms:
-Mac OS X 10.12, FreeBSD 14.0.
+macOS 14, FreeBSD 14.0.
 @item
 printf @code{"%010f"} of NaN and Infinity yields an incorrect result (padded
 with zeroes, or wrong capitalization) on some platforms:
@@ -87,7 +87,7 @@ Portability problems fixed by Gnulib module @code{printf-gnu}:
 @itemize
 @item
 This function does not support the @samp{B} directive on some platforms:
-glibc 2.34, FreeBSD 13.2, NetBSD 10.0, OpenBSD 7.2, macOS 12.5, AIX 7.2, Solaris 11.4, and others.
+glibc 2.34, macOS 14, FreeBSD 13.2, NetBSD 10.0, OpenBSD 7.2, AIX 7.2, Solaris 11.4, and others.
 @end itemize
 
 Portability problems fixed by either Gnulib module @code{printf-posix} or @code{printf-gnu}
@@ -96,7 +96,7 @@ and additionally the Gnulib module @code{printf-with-n-directive}:
 @item
 This function does not support the @samp{n} directive on some platforms:
 glibc when used with @code{_FORTIFY_SOURCE >= 2} (set by default on Ubuntu),
-Android, OpenBSD, macOS 11.1, MSVC 14.
+macOS 14, OpenBSD, MSVC 14, Android.
 @end itemize
 
 Portability problems fixed by Gnulib module @code{stdio} or @code{printf-posix} or @code{printf-gnu}, together with module @code{nonblocking}:

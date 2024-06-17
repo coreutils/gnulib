@@ -14,7 +14,7 @@ Minix 3.1.8.
 @item
 This function cannot be called from plain inline or extern inline functions
 on some platforms:
-OS X 10.8.
+macOS 10.8.
 @end itemize
 
 Portability problems not fixed by Gnulib:
@@ -28,5 +28,5 @@ have this limitation.
 @item
 This function returns 0 for U+2028 (LINE SEPARATOR) and
 U+2029 (PARAGRAPH SEPARATOR) on some platforms:
-macOS 11.1.
+macOS 14.
 @end itemize

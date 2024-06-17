@@ -10,7 +10,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function is missing on many non-glibc platforms:
-glibc 2.10, macOS 11.1, FreeBSD 14.0, NetBSD 7.1, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, HP-UX 11, Solaris 11.3, Cygwin 1.5.x, mingw, Android 4.4.
+glibc 2.10, macOS 14, FreeBSD 14.0, NetBSD 7.1, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, HP-UX 11, Solaris 11.3, Cygwin 1.5.x, mingw, Android 4.4.
 @item
 This function is not declared on some platforms:
 AIX 7.1.

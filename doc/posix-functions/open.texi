@@ -19,7 +19,7 @@ correctly with files 2 GiB and larger.  @xref{Large File Support}.
 This function does not fail when the file name argument ends in a slash
 and (without the slash) names a nonexistent file or a file that is not a
 directory, on some platforms:
-macOS 11.1, FreeBSD 7.2, AIX 7.1, HP-UX 11.00, Solaris 9.
+macOS 14, FreeBSD 7.2, AIX 7.1, HP-UX 11.00, Solaris 9.
 @item
 This function does not support the @code{O_NONBLOCK} flag when it is defined
 by the gnulib module @code{nonblocking} on some platforms:

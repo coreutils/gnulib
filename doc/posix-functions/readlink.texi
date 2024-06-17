@@ -13,7 +13,7 @@ This function is missing on some platforms:
 mingw, MSVC 14.
 @item
 Some platforms mistakenly succeed on file names ending in @file{/}:
-FreeBSD 7.2, Solaris 9, Mac OS X 10.10.
+FreeBSD 7.2, Solaris 9, macOS 14.
 @item
 On some platforms, this function returns @code{int} instead of
 @code{ssize_t}:

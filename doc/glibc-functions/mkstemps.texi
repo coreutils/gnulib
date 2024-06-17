@@ -15,7 +15,7 @@ Cygwin 1.5.x, mingw, MSVC 14.
 @item
 This function is declared in @code{<unistd.h>} instead of @code{<stdlib.h>}
 on some platforms:
-macOS 11.1.
+macOS 14.
 @item
 On platforms where @code{off_t} is a 32-bit type, @code{mkstemps} may not work
 correctly to create files larger than 2 GB@.  (Cf. @code{AC_SYS_LARGEFILE}.)

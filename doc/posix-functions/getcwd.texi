@@ -38,7 +38,7 @@ Portability problems fixed by Gnulib module @code{getcwd}:
 @item
 This function does not handle long file names (greater than @code{PATH_MAX})
 correctly on some platforms:
-glibc on Linux 2.4.20, musl libc 1.2.2/powerpc64le, macOS 11.1, FreeBSD 6.4, NetBSD 10.0, OpenBSD 6.7, AIX 7.1.
+glibc on Linux 2.4.20, musl libc 1.2.2/powerpc64le, macOS 13, FreeBSD 6.4, NetBSD 10.0, OpenBSD 6.7, AIX 7.1.
 @end itemize
 
 Portability problems not fixed by Gnulib:

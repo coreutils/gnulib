@@ -22,11 +22,11 @@ Solaris 10.
 @item
 This function fails to detect trailing slashes on non-directories on
 some platforms:
-glibc 2.3.5, macOS 11.1, OpenBSD 6.0.
+glibc 2.3.5, macOS 14, OpenBSD 6.0.
 @item
 This function fails to recognize non-directories or symlinks to non-directories
 followed by @samp{..} on some platforms:
-Cygwin 2.9.
+macOS 14, Cygwin 2.9.
 @item
 This function misbehaves on consecutive slashes on some platforms:
 musl libc 1.2.2, AIX 7.
