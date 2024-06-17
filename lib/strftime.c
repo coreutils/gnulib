@@ -949,6 +949,8 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
         zone = "GMT";
     }
 #endif
+  if (! zone)
+    zone = "";
 
   if (hour12 > 12)
     hour12 -= 12;
