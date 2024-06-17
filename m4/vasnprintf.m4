@@ -1,5 +1,5 @@
 # vasnprintf.m4
-# serial 53
+# serial 54
 dnl Copyright (C) 2002-2004, 2006-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -7,8 +7,40 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_FUNC_VASNPRINTF],
 [
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CHECK_FUNCS_ONCE([vasnprintf])
-  if test $ac_cv_func_vasnprintf = no; then
+  if test $ac_cv_func_vasnprintf = yes; then
+    dnl On Cygwin, in directives with a huge width, the width is ignored, and
+    dnl the function returns a wrong result.
+    AC_CACHE_CHECK([whether vasnprintf works],
+      [gl_cv_func_vasnprintf_works],
+      [AC_RUN_IFELSE(
+         [AC_LANG_SOURCE(
+            [[#include <stdio.h>
+            ]],
+            [[size_t len;
+              char *res = vasnprintf (NULL, &len, "x%03000000000dy\n", -17);
+              /* On Cygwin 3.4.6, res is "x-17y\n" and len == 6: wrong.  */
+              return (res != NULL && len < 10);
+            ]])
+         ],
+         [gl_cv_func_vasnprintf_works=yes],
+         [gl_cv_func_vasnprintf_works=no],
+         [case "$host_os" in
+                     # Guess no on Cygwin.
+            cygwin*) gl_cv_func_vasnprintf_works="guessing no";;
+                     # If we don't know, obey --enable-cross-guesses.
+            *)       gl_cv_func_vasnprintf_works="$gl_cross_guess_normal";;
+          esac
+         ])
+      ])
+  fi
+  if test $ac_cv_func_vasnprintf != yes \
+     || case "$gl_cv_func_vasnprintf_works" in
+          *yes) false;;
+          *)    true;;
+        esac
+  then
     gl_REPLACE_VASNPRINTF
   fi
 ])
