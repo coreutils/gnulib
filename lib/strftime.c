@@ -38,8 +38,6 @@
 # include "time-internal.h"
 #endif
 
-#define HAVE_NATIVE_TIME_Z (USE_C_LOCALE ? HAVE_STRFTIME_LZ : HAVE_STRFTIME_Z)
-
 /* Whether to require GNU behavior for AM and PM indicators, even on
    other platforms.  This matters only in non-C locales.
    The default is to require it; you can override this via
@@ -376,6 +374,15 @@ memcpy_uppcase (CHAR_T *dest, const CHAR_T *src, size_t len LOCALE_PARAM)
 }
 #endif
 
+
+/* Note: We assume that HAVE_STRFTIME_LZ implies HAVE_STRFTIME_L.
+   Otherwise, we would have to write (HAVE_STRFTIME_L || HAVE_STRFTIME_LZ)
+   instead of HAVE_STRFTIME_L everywhere.  */
+
+/* Define to 1 if we can use the system's native functions that takes a
+   timezone_t argument.  As of 2024, this is only true on NetBSD.  */
+#define HAVE_NATIVE_TIME_Z \
+  (USE_C_LOCALE && HAVE_STRFTIME_L ? HAVE_STRFTIME_LZ : HAVE_STRFTIME_Z)
 
 #if USE_C_LOCALE && HAVE_STRFTIME_L
 
@@ -837,7 +844,8 @@ static size_t __strftime_internal (STREAM_OR_CHAR_T *, STRFTIME_ARG (size_t)
                                    bool, enum pad_style, int, bool *
                                    extra_args_spec LOCALE_PARAM);
 
-#ifndef _LIBC
+#if !defined _LIBC \
+    && (!(USE_C_LOCALE && !HAVE_STRFTIME_L) || !HAVE_STRUCT_TM_TM_ZONE)
 
 /* Make sure we're calling the actual underlying strftime.
    In some cases, time.h contains something like
@@ -869,17 +877,17 @@ underlying_strftime (timezone_t tz, char *ubuf, size_t ubufsize,
   *u++ = format_char;
   *u = '\0';
 
-#if !HAVE_NATIVE_TIME_Z
+# if !HAVE_NATIVE_TIME_Z
   if (tz && tz != local_tz)
     {
       tz = set_tz (tz);
       if (!tz)
         return 0;
     }
-#endif
+# endif
 
   size_t len;
-# if USE_C_LOCALE && (HAVE_STRFTIME_L || HAVE_STRFTIME_LZ)
+# if USE_C_LOCALE && HAVE_STRFTIME_L
   locale_t locale = c_locale ();
   if (!locale)
     return 0; /* errno is set here */
@@ -1467,7 +1475,7 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
           }
           break;
 
-#ifndef _LIBC
+#if !defined _LIBC && !(USE_C_LOCALE && !HAVE_STRFTIME_L)
         underlying_strftime:
           {
             char ubuf[1024]; /* enough for any single format in practice */
