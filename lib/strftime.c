@@ -1351,11 +1351,11 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
                 locale_t locale = c_locale ();
                 if (!locale)
                   return 0; /* errno is set here */
-# if HAVE_STRFTIME_LZ
+#  if HAVE_STRFTIME_LZ
                 len = strftime_lz (tz, ubuf, sizeof ubuf, ufmt, tp, locale);
-# else
+#  else
                 len = strftime_l (ubuf, sizeof ubuf, ufmt, tp, locale);
-# endif
+#  endif
 # else
 #  if HAVE_STRFTIME_Z
                 len = strftime_z (tz, ubuf, sizeof ubuf, ufmt, tp);
