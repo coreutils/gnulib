@@ -837,6 +837,190 @@ static size_t __strftime_internal (STREAM_OR_CHAR_T *, STRFTIME_ARG (size_t)
                                    bool, enum pad_style, int, bool *
                                    extra_args_spec LOCALE_PARAM);
 
+#ifndef _LIBC
+
+/* Make sure we're calling the actual underlying strftime.
+   In some cases, time.h contains something like
+   "#define strftime rpl_strftime".  */
+# ifdef strftime
+#  undef strftime
+# endif
+
+/* Assuming the time zone is TZ, store into UBUF, of size UBUFSIZE, a
+   ' ' followed by the result of calling strftime with the format
+   "%MF" where M is MODIFIER (or is omitted if !MODIFIER) and F is
+   FORMAT_CHAR, along with the time information specified by *TP.
+   Return the number of bytes stored if successful, zero otherwise.  */
+static size_t
+underlying_strftime (timezone_t tz, char *ubuf, size_t ubufsize,
+                     char modifier, char format_char, struct tm const *tp)
+{
+  /* The relevant information is available only via the
+     underlying strftime implementation, so use that.  */
+  char ufmt[5];
+  char *u = ufmt;
+
+  /* The space helps distinguish strftime failure from empty
+     output.  */
+  *u++ = ' ';
+  *u++ = '%';
+  *u = modifier;
+  u += !!modifier;
+  *u++ = format_char;
+  *u = '\0';
+
+#if !HAVE_NATIVE_TIME_Z
+  if (tz && tz != local_tz)
+    {
+      tz = set_tz (tz);
+      if (!tz)
+        return 0;
+    }
+#endif
+
+  size_t len;
+# if USE_C_LOCALE && (HAVE_STRFTIME_L || HAVE_STRFTIME_LZ)
+  locale_t locale = c_locale ();
+  if (!locale)
+    return 0; /* errno is set here */
+#  if HAVE_STRFTIME_LZ
+  len = strftime_lz (tz, ubuf, ubufsize, ufmt, tp, locale);
+#  else
+  len = strftime_l (ubuf, ubufsize, ufmt, tp, locale);
+#  endif
+# else
+#  if HAVE_STRFTIME_Z
+  len = strftime_z (tz, ubuf, ubufsize, ufmt, tp);
+#  else
+  len = strftime (ubuf, ubufsize, ufmt, tp);
+#  endif
+# endif
+
+# if !HAVE_NATIVE_TIME_Z
+  if (tz && !revert_tz (tz))
+    return 0;
+# endif
+
+  if (len != 0)
+    {
+# if ((__GLIBC__ == 2 && __GLIBC_MINOR__ < 31) \
+      || defined __NetBSD__ || defined __sun)
+      /* glibc < 2.31, NetBSD, Solaris */
+      if (format_char == 'c')
+        {
+          /* The output of the strftime %c directive consists of the
+             date, the time, and the time zone.  But the time zone is
+             wrong, since neither TZ nor ZONE was passed as argument.
+             Therefore, remove the the last space-delimited word.
+             In order not to accidentally remove a date or a year
+             (that contains no letter) or an AM/PM indicator (that has
+             length 2), remove that last word only if it contains a
+             letter and has length >= 3.  */
+          char *space;
+          for (space = ubuf + len - 1; *space != ' '; space--)
+            continue;
+          if (space > ubuf)
+            {
+              /* Found a space.  */
+              if (strlen (space + 1) >= 3)
+                {
+                  /* The last word has length >= 3.  */
+                  bool found_letter = false;
+                  const char *p;
+                  for (p = space + 1; *p != '\0'; p++)
+                    if ((*p >= 'A' && *p <= 'Z')
+                        || (*p >= 'a' && *p <= 'z'))
+                      {
+                        found_letter = true;
+                        break;
+                      }
+                  if (found_letter)
+                    {
+                      /* The last word contains a letter.  */
+                      *space = '\0';
+                      len = space - ubuf;
+                    }
+                }
+            }
+        }
+#  if (defined __NetBSD__ || defined __sun) && REQUIRE_GNUISH_STRFTIME_AM_PM
+      /* The output of the strftime %p and %r directives contains
+         an AM/PM indicator even for locales where it is not
+         suitable, such as French.  Remove this indicator.  */
+      if (format_char == 'p')
+        {
+          bool found_ampm = (len > 1);
+          if (found_ampm && should_remove_ampm ())
+            {
+              ubuf[1] = '\0';
+              len = 1;
+            }
+        }
+      else if (format_char == 'r')
+        {
+          char last_char = ubuf[len - 1];
+          bool found_ampm = !(last_char >= '0' && last_char <= '9');
+          if (found_ampm && should_remove_ampm ())
+            {
+              char *space;
+              for (space = ubuf + len - 1; *space != ' '; space--)
+                continue;
+              if (space > ubuf)
+                {
+                  *space = '\0';
+                  len = space - ubuf;
+                }
+            }
+        }
+#  endif
+# endif
+    }
+  return len;
+}
+#endif
+
+/* Return a time zone abbreviation for TZ.  Use BUF, of size BUFSIZE,
+   to store it if needed.  If MODIFIER use the strftime format
+   "%mZ" to format it, where m is the MODIFIER; otherwise
+   use plain "%Z".  Format an abbreviation appropriate for
+   TP and EXTRA_ARGS_SPEC.  Return the empty string on failure.  */
+static char const *
+get_tm_zone (timezone_t tz, char *ubuf, int ubufsize, int modifier,
+             struct tm const *tp)
+{
+#if HAVE_STRUCT_TM_TM_ZONE
+  /* The POSIX test suite assumes that setting
+     the environment variable TZ to a new value before calling strftime()
+     will influence the result (the %Z format) even if the information in
+     *TP is computed with a totally different time zone.
+     This is bogus: though POSIX allows bad behavior like this,
+     POSIX does not require it.  Do the right thing instead.  */
+  return tp->tm_zone;
+#else
+  if (!tz)
+    return "UTC";
+
+# if !HAVE_NATIVE_TIME_Z
+  timezone_t old_tz = tz;
+  if (tz != local_tz)
+    {
+      old_tz = set_tz (tz);
+      if (!old_tz)
+        return "";
+    }
+# endif
+
+  int zsize = underlying_strftime (tz, ubuf, ubufsize, 0, 'Z', tp);
+
+# if !HAVE_NATIVE_TIME_Z
+  if (!revert_tz (old_tz))
+    return "";
+# endif
+
+  return zsize ? ubuf + 1 : "";
+#endif
+}
+
 /* Write information from TP into S according to the format
    string FORMAT, writing no more that MAXSIZE characters
    (including the terminating '\0') and returning number of
@@ -927,32 +1111,12 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
 # define ampm (L_("AMPM") + 2 * (tp->tm_hour > 11))
 # define ap_len 2
 #endif
-  const char *zone;
   size_t i = 0;
   STREAM_OR_CHAR_T *p = s;
   const CHAR_T *f;
 #if DO_MULTIBYTE && !defined COMPILE_WIDE
   const char *format_end = NULL;
 #endif
-
-  zone = NULL;
-#if HAVE_STRUCT_TM_TM_ZONE
-  /* The POSIX test suite assumes that setting
-     the environment variable TZ to a new value before calling strftime()
-     will influence the result (the %Z format) even if the information in
-     TP is computed with a totally different time zone.
-     This is bogus: though POSIX allows bad behavior like this,
-     POSIX does not require it.  Do the right thing instead.  */
-  zone = (const char *) tp->tm_zone;
-#else
-  if (!tz)
-    {
-      if (! (zone && *zone))
-        zone = "GMT";
-    }
-#endif
-  if (! zone)
-    zone = "";
 
   if (hour12 > 12)
     hour12 -= 12;
@@ -983,9 +1147,6 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
       bool change_case = false;
       int format_char;
       int subwidth;
-#ifndef _LIBC
-      bool set_and_revert_tz = false;
-#endif
 
 #if DO_MULTIBYTE && !defined COMPILE_WIDE
       switch (*f)
@@ -1311,63 +1472,8 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
           {
             char ubuf[1024]; /* enough for any single format in practice */
             size_t len;
-            if (set_and_revert_tz && !tz)
-              {
-                memcpy (ubuf, " UTC", 4);
-                len = 4;
-              }
-            else
-              {
-                /* The relevant information is available only via the
-                   underlying strftime implementation, so use that.  */
-                char ufmt[5];
-                char *u = ufmt;
-                /* Make sure we're calling the actual underlying strftime.
-                   In some cases, time.h contains something like
-                   "#define strftime rpl_strftime".  */
-# ifdef strftime
-#  undef strftime
-# endif
-
-                /* The space helps distinguish strftime failure from empty
-                   output.  */
-                *u++ = ' ';
-                *u++ = '%';
-                if (modifier != 0)
-                  *u++ = modifier;
-                *u++ = format_char;
-                *u = '\0';
-
-# if !HAVE_NATIVE_TIME_Z
-                timezone_t old_tz = NULL;
-                if (set_and_revert_tz)
-                  {
-                    old_tz = set_tz (tz);
-                    if (!old_tz)
-                      return 0;
-                  }
-# endif
-# if USE_C_LOCALE && (HAVE_STRFTIME_L || HAVE_STRFTIME_LZ)
-                locale_t locale = c_locale ();
-                if (!locale)
-                  return 0; /* errno is set here */
-#  if HAVE_STRFTIME_LZ
-                len = strftime_lz (tz, ubuf, sizeof ubuf, ufmt, tp, locale);
-#  else
-                len = strftime_l (ubuf, sizeof ubuf, ufmt, tp, locale);
-#  endif
-# else
-#  if HAVE_STRFTIME_Z
-                len = strftime_z (tz, ubuf, sizeof ubuf, ufmt, tp);
-#  else
-                len = strftime (ubuf, sizeof ubuf, ufmt, tp);
-#  endif
-# endif
-# if !HAVE_NATIVE_TIME_Z
-                if (old_tz && !revert_tz (old_tz))
-                  return 0;
-# endif
-              }
+            len = underlying_strftime (tz, ubuf, sizeof ubuf,
+                                       modifier, format_char, tp);
             if (len != 0)
               {
 # if (__GLIBC__ == 2 && __GLIBC_MINOR__ < 31) || defined __NetBSD__ || defined __sun /* glibc < 2.31, NetBSD, Solaris */
@@ -1948,28 +2054,30 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
               to_lowcase = true;
             }
 
-          /* The tzset() call might have changed the value.  */
-          if (!(zone && *zone) && tp->tm_isdst >= 0)
-            {
+         {
+            char const *zone;
 #ifdef _LIBC
-              /* POSIX.1 requires that local time zone information be used as
-                 though strftime called tzset.  */
-              if (!*tzset_called)
-                {
-                  tzset ();
-                  *tzset_called = true;
-                }
-              zone = tp->tm_isdst <= 1 ? tzname[tp->tm_isdst] : "?";
+            zone = tp->tm_zone;
+            /* The tzset() call might have changed the value.  */
+            if (!(zone && *zone) && tp->tm_isdst >= 0)
+              {
+                /* POSIX.1 requires that local time zone information be used as
+                   though strftime called tzset.  */
+                if (!*tzset_called)
+                  {
+                    tzset ();
+                    *tzset_called = true;
+                  }
+                zone = tp->tm_isdst <= 1 ? tzname[tp->tm_isdst] : "?";
+              }
+            if (! zone)
+              zone = "";
 #else
-              set_and_revert_tz = tz != local_tz;
-              goto underlying_strftime;
+            char zonebuf[128]; /* Enough for any time zone abbreviation.  */
+            zone = get_tm_zone (tz, zonebuf, sizeof zonebuf, modifier, tp);
 #endif
-            }
-          if (! zone)
-            zone = "";
 
 #ifdef COMPILE_WIDE
-          {
             /* The zone string is always given in multibyte form.  We have
                to convert it to wide character.  */
             size_t w = pad == NO_PAD || width < 0 ? 0 : width;
@@ -1997,10 +2105,10 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
                 p += incr;
               }
             i += incr;
-          }
 #else
-          cpy (strlen (zone), zone);
+            cpy (strlen (zone), zone);
 #endif
+          }
           break;
 
         case L_(':'):
@@ -2045,7 +2153,14 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
               }
 #endif
 
-            negative_number = diff < 0 || (diff == 0 && *zone == '-');
+            negative_number = diff < 0;
+            if (diff == 0)
+              {
+                char zonebuf[128]; /* Enough for any time zone abbreviation.  */
+                negative_number = (*get_tm_zone (tz, zonebuf, sizeof zonebuf,
+                                                 0, tp)
+                                   == '-');
+              }
             hour_diff = diff / 60 / 60;
             min_diff = diff / 60 % 60;
             sec_diff = diff % 60;
