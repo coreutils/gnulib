@@ -3190,7 +3190,6 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 #  if !DCHAR_IS_TCHAR
                   /* This code assumes that TCHAR_T is 'char'.  */
                   static_assert (sizeof (TCHAR_T) == 1);
-                  TCHAR_T *tmpsrc;
                   DCHAR_T *tmpdst;
                   size_t tmpdst_len;
 #  endif
@@ -3266,50 +3265,54 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 #  endif
 
 #  if !DCHAR_IS_TCHAR
-                  /* Convert the string into a piece of temporary memory.  */
-                  tmpsrc = (TCHAR_T *) malloc (characters * sizeof (TCHAR_T));
-                  if (tmpsrc == NULL)
-                    goto out_of_memory;
                   {
-                    TCHAR_T *tmpptr = tmpsrc;
-                    size_t remaining;
-#   if HAVE_WCRTOMB && !defined GNULIB_defined_mbstate_t
-                    mbstate_t state;
-                    mbszero (&state);
-#   endif
-                    for (remaining = characters; remaining > 0; )
-                      {
-                        char cbuf[64]; /* Assume MB_CUR_MAX <= 64.  */
-                        int count;
+                    TCHAR_T *tmpsrc;
 
-                        if (*arg == 0)
-                          abort ();
-                        count = local_wcrtomb (cbuf, *arg, &state);
-                        if (count <= 0)
-                          /* Inconsistency.  */
-                          abort ();
-                        memcpy (tmpptr, cbuf, count);
-                        tmpptr += count;
-                        arg++;
-                        remaining -= count;
-                      }
-                    if (!(arg == arg_end))
-                      abort ();
-                  }
-
-                  /* Convert from TCHAR_T[] to DCHAR_T[].  */
-                  tmpdst =
-                    DCHAR_CONV_FROM_ENCODING (locale_charset (),
-                                              iconveh_question_mark,
-                                              tmpsrc, characters,
-                                              NULL,
-                                              NULL, &tmpdst_len);
-                  if (tmpdst == NULL)
+                    /* Convert the string into a piece of temporary memory.  */
+                    tmpsrc = (TCHAR_T *) malloc (characters * sizeof (TCHAR_T));
+                    if (tmpsrc == NULL)
+                      goto out_of_memory;
                     {
-                      free (tmpsrc);
-                      goto fail_with_errno;
+                      TCHAR_T *tmpptr = tmpsrc;
+                      size_t remaining;
+#   if HAVE_WCRTOMB && !defined GNULIB_defined_mbstate_t
+                      mbstate_t state;
+                      mbszero (&state);
+#   endif
+                      for (remaining = characters; remaining > 0; )
+                        {
+                          char cbuf[64]; /* Assume MB_CUR_MAX <= 64.  */
+                          int count;
+
+                          if (*arg == 0)
+                            abort ();
+                          count = local_wcrtomb (cbuf, *arg, &state);
+                          if (count <= 0)
+                            /* Inconsistency.  */
+                            abort ();
+                          memcpy (tmpptr, cbuf, count);
+                          tmpptr += count;
+                          arg++;
+                          remaining -= count;
+                        }
+                      if (!(arg == arg_end))
+                        abort ();
                     }
-                  free (tmpsrc);
+
+                    /* Convert from TCHAR_T[] to DCHAR_T[].  */
+                    tmpdst =
+                      DCHAR_CONV_FROM_ENCODING (locale_charset (),
+                                                iconveh_question_mark,
+                                                tmpsrc, characters,
+                                                NULL,
+                                                NULL, &tmpdst_len);
+                    if (tmpdst == NULL)
+                      {
+                        free (tmpsrc);
+                        goto fail_with_errno;
+                      }
+                    free (tmpsrc);
+                  }
 #  endif
 
                   if (has_width)
@@ -3459,7 +3462,6 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 # if !DCHAR_IS_TCHAR
                   /* This code assumes that TCHAR_T is 'char'.  */
                   static_assert (sizeof (TCHAR_T) == 1);
-                  TCHAR_T tmpsrc[64]; /* Assume MB_CUR_MAX <= 64.  */
                   DCHAR_T *tmpdst;
                   size_t tmpdst_len;
 # endif
@@ -3493,32 +3495,36 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 # endif
 
 # if !DCHAR_IS_TCHAR
-                  /* Convert the string into a piece of temporary memory.  */
-                  if (characters > 0)
-                    {
-                      char cbuf[64]; /* Assume MB_CUR_MAX <= 64.  */
-                      int count;
+                  {
+                    TCHAR_T tmpsrc[64]; /* Assume MB_CUR_MAX <= 64.  */
+
+                    /* Convert the string into a piece of temporary memory.  */
+                    if (characters > 0)
+                      {
+                        char cbuf[64]; /* Assume MB_CUR_MAX <= 64.  */
+                        int count;
 #  if HAVE_WCRTOMB && !defined GNULIB_defined_mbstate_t
-                      mbstate_t state;
-                      mbszero (&state);
+                        mbstate_t state;
+                        mbszero (&state);
 #  endif
 
-                      count = local_wcrtomb (cbuf, arg, &state);
-                      if (count <= 0)
-                        /* Inconsistency.  */
-                        abort ();
-                      memcpy (tmpsrc, cbuf, count);
-                    }
+                        count = local_wcrtomb (cbuf, arg, &state);
+                        if (count <= 0)
+                          /* Inconsistency.  */
+                          abort ();
+                        memcpy (tmpsrc, cbuf, count);
+                      }
 
-                  /* Convert from TCHAR_T[] to DCHAR_T[].  */
-                  tmpdst =
-                    DCHAR_CONV_FROM_ENCODING (locale_charset (),
-                                              iconveh_question_mark,
-                                              tmpsrc, characters,
-                                              NULL,
-                                              NULL, &tmpdst_len);
-                  if (tmpdst == NULL)
-                    goto fail_with_errno;
+                    /* Convert from TCHAR_T[] to DCHAR_T[].  */
+                    tmpdst =
+                      DCHAR_CONV_FROM_ENCODING (locale_charset (),
+                                                iconveh_question_mark,
+                                                tmpsrc, characters,
+                                                NULL,
+                                                NULL, &tmpdst_len);
+                    if (tmpdst == NULL)
+                      goto fail_with_errno;
+                  }
 # endif
 
                   if (has_width)
