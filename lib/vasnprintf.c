@@ -3186,7 +3186,10 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                 {
                   const wchar_t *arg = a.arg[dp->arg_index].a.a_wide_string;
                   const wchar_t *arg_end;
+                  size_t bytes;
+#  if ENABLE_UNISTDIO && DCHAR_IS_TCHAR
                   size_t characters;
+#  endif
 #  if !DCHAR_IS_TCHAR
                   /* This code assumes that TCHAR_T is 'char'.  */
                   static_assert (sizeof (TCHAR_T) == 1);
@@ -3204,7 +3207,10 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                       mbszero (&state);
 #  endif
                       arg_end = arg;
+                      bytes = 0;
+#  if ENABLE_UNISTDIO && DCHAR_IS_TCHAR
                       characters = 0;
+#  endif
                       while (precision > 0)
                         {
                           char cbuf[64]; /* Assume MB_CUR_MAX <= 64.  */
@@ -3220,7 +3226,10 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                           if (precision < (unsigned int) count)
                             break;
                           arg_end++;
-                          characters += count;
+                          bytes += count;
+#  if ENABLE_UNISTDIO && DCHAR_IS_TCHAR
+                          characters += mbsnlen (cbuf, count);
+#  endif
                           precision -= count;
                         }
                     }
@@ -3237,7 +3246,10 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                       mbszero (&state);
 #  endif
                       arg_end = arg;
+                      bytes = 0;
+#  if ENABLE_UNISTDIO && DCHAR_IS_TCHAR
                       characters = 0;
+#  endif
                       for (;;)
                         {
                           char cbuf[64]; /* Assume MB_CUR_MAX <= 64.  */
@@ -3251,7 +3263,10 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                             /* Cannot convert.  */
                             goto fail_with_EILSEQ;
                           arg_end++;
-                          characters += count;
+                          bytes += count;
+#  if ENABLE_UNISTDIO && DCHAR_IS_TCHAR
+                          characters += mbsnlen (cbuf, count);
+#  endif
                         }
                     }
 #  if DCHAR_IS_TCHAR
@@ -3259,8 +3274,12 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                     {
                       /* Use the entire string.  */
                       arg_end = arg + local_wcslen (arg);
-                      /* The number of bytes doesn't matter.  */
+                      /* The number of bytes and characters doesn't matter,
+                         because !has_width and therefore width==0.  */
+                      bytes = 0;
+#   if ENABLE_UNISTDIO
                       characters = 0;
+#   endif
                     }
 #  endif
 
@@ -3269,7 +3288,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                     TCHAR_T *tmpsrc;
 
                     /* Convert the string into a piece of temporary memory.  */
-                    tmpsrc = (TCHAR_T *) malloc (characters * sizeof (TCHAR_T));
+                    tmpsrc = (TCHAR_T *) malloc (bytes * sizeof (TCHAR_T));
                     if (tmpsrc == NULL)
                       goto out_of_memory;
                     {
@@ -3279,7 +3298,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                       mbstate_t state;
                       mbszero (&state);
 #   endif
-                      for (remaining = characters; remaining > 0; )
+                      for (remaining = bytes; remaining > 0; )
                         {
                           char cbuf[64]; /* Assume MB_CUR_MAX <= 64.  */
                           int count;
@@ -3303,7 +3322,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                     tmpdst =
                       DCHAR_CONV_FROM_ENCODING (locale_charset (),
                                                 iconveh_question_mark,
-                                                tmpsrc, characters,
+                                                tmpsrc, bytes,
                                                 NULL,
                                                 NULL, &tmpdst_len);
                     if (tmpdst == NULL)
@@ -3321,11 +3340,15 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                       /* Outside POSIX, it's preferable to compare the width
                          against the number of _characters_ of the converted
                          value.  */
-                      w = DCHAR_MBSNLEN (result + length, characters);
+#   if DCHAR_IS_TCHAR
+                      w = characters;
+#   else
+                      w = DCHAR_MBSNLEN (tmpdst, tmpdst_len);
+#   endif
 #  else
                       /* The width is compared against the number of _bytes_
                          of the converted value, says POSIX.  */
-                      w = characters;
+                      w = bytes;
 #  endif
                     }
                   else
@@ -3349,8 +3372,8 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                       mbstate_t state;
                       mbszero (&state);
 #   endif
-                      ENSURE_ALLOCATION (xsum (length, characters));
-                      for (remaining = characters; remaining > 0; )
+                      ENSURE_ALLOCATION (xsum (length, bytes));
+                      for (remaining = bytes; remaining > 0; )
                         {
                           char cbuf[64]; /* Assume MB_CUR_MAX <= 64.  */
                           int count;
@@ -3458,7 +3481,10 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                 /* %lc in vasnprintf.  See the specification of fprintf.  */
                 {
                   wchar_t arg = (wchar_t) a.arg[dp->arg_index].a.a_wide_char;
+                  size_t bytes;
+# if ENABLE_UNISTDIO && DCHAR_IS_TCHAR
                   size_t characters;
+# endif
 # if !DCHAR_IS_TCHAR
                   /* This code assumes that TCHAR_T is 'char'.  */
                   static_assert (sizeof (TCHAR_T) == 1);
@@ -3472,7 +3498,6 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 # endif
                     {
                       /* Count the number of bytes.  */
-                      characters = 0;
                       char cbuf[64]; /* Assume MB_CUR_MAX <= 64.  */
                       int count;
 # if HAVE_WCRTOMB && !defined GNULIB_defined_mbstate_t
@@ -3484,13 +3509,20 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                       if (count < 0)
                         /* Cannot convert.  */
                         goto fail_with_EILSEQ;
-                      characters = count;
+                      bytes = count;
+# if ENABLE_UNISTDIO && DCHAR_IS_TCHAR
+                      characters = mbsnlen (cbuf, count);
+# endif
                     }
 # if DCHAR_IS_TCHAR
                   else
                     {
-                      /* The number of bytes doesn't matter.  */
+                      /* The number of bytes and characters doesn't matter,
+                         because !has_width and therefore width==0.  */
+                      bytes = 0;
+#  if ENABLE_UNISTDIO
                       characters = 0;
+#  endif
                     }
 # endif
 
@@ -3499,7 +3531,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                     TCHAR_T tmpsrc[64]; /* Assume MB_CUR_MAX <= 64.  */
 
                     /* Convert the string into a piece of temporary memory.  */
-                    if (characters > 0)
+                    if (bytes > 0)
                       {
                         char cbuf[64]; /* Assume MB_CUR_MAX <= 64.  */
                         int count;
@@ -3519,7 +3551,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                     tmpdst =
                       DCHAR_CONV_FROM_ENCODING (locale_charset (),
                                                 iconveh_question_mark,
-                                                tmpsrc, characters,
+                                                tmpsrc, bytes,
                                                 NULL,
                                                 NULL, &tmpdst_len);
                     if (tmpdst == NULL)
@@ -3533,11 +3565,15 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                       /* Outside POSIX, it's preferable to compare the width
                          against the number of _characters_ of the converted
                          value.  */
-                      w = DCHAR_MBSNLEN (result + length, characters);
+#  if DCHAR_IS_TCHAR
+                      w = characters;
+#  else
+                      w = DCHAR_MBSNLEN (tmpdst, tmpdst_len);
+#  endif
 # else
                       /* The width is compared against the number of _bytes_
                          of the converted value, says POSIX.  */
-                      w = characters;
+                      w = bytes;
 # endif
                     }
                   else
@@ -3556,8 +3592,8 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                   if (has_width)
                     {
                       /* We know the number of bytes in advance.  */
-                      ENSURE_ALLOCATION (xsum (length, characters));
-                      if (characters > 0)
+                      ENSURE_ALLOCATION (xsum (length, bytes));
+                      if (bytes > 0)
                         {
                           int count;
 #  if HAVE_WCRTOMB && !defined GNULIB_defined_mbstate_t
