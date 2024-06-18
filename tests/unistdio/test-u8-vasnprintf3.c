@@ -77,6 +77,54 @@ test_function (uint8_t * (*my_asnprintf) (uint8_t *, size_t *, const char *, ...
       free (result);
     }
   }
+
+  /* Test the support of the 'ls' conversion specifier for wide strings.  */
+
+  {
+    const char *locale_string = "h\303\251t\303\251rog\303\251n\303\251it\303\251"; /* hétérogénéité */
+    wchar_t wide_string[20];
+    ASSERT (mbstowcs (wide_string, locale_string, SIZEOF (wide_string)) == 13);
+    {
+      size_t length;
+      uint8_t *result =
+        my_asnprintf (NULL, &length, "%ls %d", wide_string, 33, 44, 55);
+      static const uint8_t expected[] = "h\303\251t\303\251rog\303\251n\303\251it\303\251 33";
+      ASSERT (result != NULL);
+      ASSERT (u8_strcmp (result, expected) == 0);
+      ASSERT (length == u8_strlen (result));
+      free (result);
+    }
+    { /* Width.  */
+      size_t length;
+      uint8_t *result =
+        my_asnprintf (NULL, &length, "%20ls %d", wide_string, 33, 44, 55);
+      static const uint8_t expected[] = "       h\303\251t\303\251rog\303\251n\303\251it\303\251 33";
+      ASSERT (result != NULL);
+      ASSERT (u8_strcmp (result, expected) == 0);
+      ASSERT (length == u8_strlen (result));
+      free (result);
+    }
+    { /* FLAG_LEFT.  */
+      size_t length;
+      uint8_t *result =
+        my_asnprintf (NULL, &length, "%-20ls %d", wide_string, 33, 44, 55);
+      static const uint8_t expected[] = "h\303\251t\303\251rog\303\251n\303\251it\303\251        33";
+      ASSERT (result != NULL);
+      ASSERT (u8_strcmp (result, expected) == 0);
+      ASSERT (length == u8_strlen (result));
+      free (result);
+    }
+    { /* FLAG_ZERO: no effect.  */
+      size_t length;
+      uint8_t *result =
+        my_asnprintf (NULL, &length, "%020ls %d", wide_string, 33, 44, 55);
+      static const uint8_t expected[] = "       h\303\251t\303\251rog\303\251n\303\251it\303\251 33";
+      ASSERT (result != NULL);
+      ASSERT (u8_strcmp (result, expected) == 0);
+      ASSERT (length == u8_strlen (result));
+      free (result);
+    }
+  }
 }
 
 static uint8_t *

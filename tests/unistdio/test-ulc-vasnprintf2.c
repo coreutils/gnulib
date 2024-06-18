@@ -214,6 +214,50 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
       free (result);
     }
   }
+
+  /* Test the support of the 'ls' conversion specifier for wide strings.  */
+
+  {
+    const char *locale_string = "h\351t\351rog\351n\351it\351"; /* hétérogénéité */
+    wchar_t wide_string[20];
+    ASSERT (mbstowcs (wide_string, locale_string, SIZEOF (wide_string)) == 13);
+    {
+      size_t length;
+      char *result =
+        my_asnprintf (NULL, &length, "%ls %d", wide_string, 33, 44, 55);
+      ASSERT (result != NULL);
+      ASSERT (strcmp (result, "h\351t\351rog\351n\351it\351 33") == 0);
+      ASSERT (length == strlen (result));
+      free (result);
+    }
+    { /* Width.  */
+      size_t length;
+      char *result =
+        my_asnprintf (NULL, &length, "%20ls %d", wide_string, 33, 44, 55);
+      ASSERT (result != NULL);
+      ASSERT (strcmp (result, "       h\351t\351rog\351n\351it\351 33") == 0);
+      ASSERT (length == strlen (result));
+      free (result);
+    }
+    { /* FLAG_LEFT.  */
+      size_t length;
+      char *result =
+        my_asnprintf (NULL, &length, "%-20ls %d", wide_string, 33, 44, 55);
+      ASSERT (result != NULL);
+      ASSERT (strcmp (result, "h\351t\351rog\351n\351it\351        33") == 0);
+      ASSERT (length == strlen (result));
+      free (result);
+    }
+    { /* FLAG_ZERO: no effect.  */
+      size_t length;
+      char *result =
+        my_asnprintf (NULL, &length, "%020ls %d", wide_string, 33, 44, 55);
+      ASSERT (result != NULL);
+      ASSERT (strcmp (result, "       h\351t\351rog\351n\351it\351 33") == 0);
+      ASSERT (length == strlen (result));
+      free (result);
+    }
+  }
 }
 
 static char *
