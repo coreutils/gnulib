@@ -403,6 +403,25 @@ c_locale (void)
 
 #endif
 
+#if HAVE_NATIVE_TIME_Z
+
+/* Cache for the UTC time zone object.
+   Marked volatile so that different threads see the same value
+   (avoids locking).  */
+static volatile timezone_t utc_timezone_cache;
+
+/* Return the UTC time zone object, or (timezone_t) 0 with errno set
+   if it cannot be created.  */
+static timezone_t
+utc_timezone (void)
+{
+  if (!utc_timezone_cache)
+    utc_timezone_cache = tzalloc ("UTC");
+  return utc_timezone_cache;
+}
+
+#endif
+
 
 #if (defined __NetBSD__ || defined __sun) && REQUIRE_GNUISH_STRFTIME_AM_PM
 
@@ -876,6 +895,15 @@ underlying_strftime (timezone_t tz, char *ubuf, size_t ubufsize,
   u += !!modifier;
   *u++ = format_char;
   *u = '\0';
+
+# if HAVE_NATIVE_TIME_Z
+  if (!tz)
+    {
+      tz = utc_timezone ();
+      if (!tz)
+        return 0; /* errno is set here */
+    }
+# endif
 
 # if !HAVE_NATIVE_TIME_Z
   if (tz && tz != local_tz)
