@@ -405,9 +405,10 @@ c_locale (void)
 
 #if HAVE_NATIVE_TIME_Z
 
-/* Cache for the UTC time zone object.
-   Marked volatile so that different threads see the same value
-   (avoids locking).  */
+/* On NetBSD a null tz has undefined behavior, so use a non-null tz.
+   Cache the UTC time zone object in a volatile variable for improved
+   thread safety.  This is good enough in practice, although in theory
+   stdatomic.h should be used.  */
 static volatile timezone_t utc_timezone_cache;
 
 /* Return the UTC time zone object, or (timezone_t) 0 with errno set
@@ -415,9 +416,10 @@ static volatile timezone_t utc_timezone_cache;
 static timezone_t
 utc_timezone (void)
 {
-  if (!utc_timezone_cache)
-    utc_timezone_cache = tzalloc ("UTC");
-  return utc_timezone_cache;
+  timezone_t tz = utc_timezone_cache;
+  if (!tz)
+    utc_timezone_cache = tz = tzalloc ("UTC0");
+  return tz;
 }
 
 #endif
