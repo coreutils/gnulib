@@ -26,12 +26,21 @@ SIGNATURE_CHECK (copysignl, long double, (long double, long double));
 #include "macros.h"
 #include "minus-zero.h"
 
+#include <float.h>
 #include <string.h>
 
 volatile long double x;
 volatile long double y;
 long double z;
 long double zero = 0.0L;
+
+/* Number of bytes occupied by a 'long double' in memory.  */
+#if (defined __ia64 || (defined __x86_64__ || defined __amd64__) || (defined __i386 || defined __i386__ || defined _I386 || defined _M_IX86 || defined _X86_)) && LDBL_MANT_DIG == 64
+/* 'long double' is little-endian 80-bits "extended precision".  */
+# define LDBL_BYTES 10
+#else
+# define LDBL_BYTES sizeof (long double)
+#endif
 
 int
 main ()
@@ -87,25 +96,25 @@ main ()
   y = 1.0L;
   z = copysignl (x, y);
   ASSERT (z == 0.0L);
-  ASSERT (memcmp (&z, &zero, sizeof z) == 0);
+  ASSERT (memcmp (&z, &zero, LDBL_BYTES) == 0);
 
   x = 0.0L;
   y = -1.0L;
   z = copysignl (x, y);
   ASSERT (z == 0.0L);
-  ASSERT (memcmp (&z, &zero, sizeof z) != 0);
+  ASSERT (memcmp (&z, &zero, LDBL_BYTES) != 0);
 
   x = minus_zerol;
   y = 1.0L;
   z = copysignl (x, y);
   ASSERT (z == 0.0L);
-  ASSERT (memcmp (&z, &zero, sizeof z) == 0);
+  ASSERT (memcmp (&z, &zero, LDBL_BYTES) == 0);
 
   x = minus_zerol;
   y = -1.0L;
   z = copysignl (x, y);
   ASSERT (z == 0.0L);
-  ASSERT (memcmp (&z, &zero, sizeof z) != 0);
+  ASSERT (memcmp (&z, &zero, LDBL_BYTES) != 0);
 
   return test_exit_status;
 }
