@@ -1,0 +1,18 @@
+Status:
+longrunning-test
+
+Files:
+tests/test-vasnprintf-big.c
+tests/macros.h
+
+Depends-on:
+stdbool
+stdint
+physmem
+
+configure.ac:
+AC_CHECK_FUNCS_ONCE([setrlimit])
+
+Makefile.am:
+TESTS += test-vasnprintf-big
+check_PROGRAMS += test-vasnprintf-big

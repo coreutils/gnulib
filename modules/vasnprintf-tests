@@ -3,10 +3,10 @@ tests/test-vasnprintf.c
 tests/macros.h
 
 Depends-on:
+vasnprintf-extra-tests
 
 configure.ac:
 
 Makefile.am:
 TESTS += test-vasnprintf
 check_PROGRAMS += test-vasnprintf
-
