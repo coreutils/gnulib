@@ -9,6 +9,7 @@ Depends-on:
 stdbool
 stdint
 physmem
+unistr/u8-strlen
 
 configure.ac:
 AC_CHECK_FUNCS_ONCE([setrlimit])

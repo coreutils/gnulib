@@ -31,6 +31,7 @@
 #include <errno.h>
 #include <stdio.h>
 #include <string.h>
+#include <unistr.h>
 
 #if HAVE_SETRLIMIT
 # include <sys/types.h>
@@ -94,7 +95,7 @@ main ()
                   }
                 else
                   {
-                    ASSERT (strlen (s) == len);
+                    ASSERT (u8_strlen (s) == len);
                     ASSERT (len == n1 + n2 + 3);
                     size_t i;
                     for (i = 0; i <= len; i++)
@@ -133,7 +134,7 @@ main ()
               }
             else
               {
-                ASSERT (strlen (s) == len);
+                ASSERT (u8_strlen (s) == len);
                 ASSERT (len == n1 + 2);
                 size_t i;
                 for (i = 0; i <= len; i++)
@@ -170,7 +171,7 @@ main ()
                   }
                 else
                   {
-                    ASSERT (strlen (s) == len);
+                    ASSERT (u8_strlen (s) == len);
                     ASSERT (len == n1 + 2);
                     size_t i;
                     for (i = 0; i <= len; i++)
