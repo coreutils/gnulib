@@ -80,6 +80,7 @@
 #endif
 
 #include <locale.h>     /* localeconv() */
+#include <stdint.h>     /* PTRDIFF_MAX */
 #include <stdio.h>      /* snprintf(), sprintf() */
 #include <stdlib.h>     /* abort(), malloc(), realloc(), free() */
 #include <string.h>     /* memcpy(), strlen() */
@@ -231,7 +232,7 @@
 #undef remainder
 #define remainder rem
 
-#if (!USE_SNPRINTF || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF) && !WIDE_CHAR_VERSION
+#if (!USE_SNPRINTF || !HAVE_SNPRINTF_RETVAL_C99 || USE_MSVC__SNPRINTF || (PTRDIFF_MAX > INT_MAX)) && !WIDE_CHAR_VERSION
 # if (HAVE_STRNLEN && !defined _AIX)
 #  define local_strnlen strnlen
 # else
@@ -2807,6 +2808,189 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                   default:
                     abort ();
                   }
+              }
+#endif
+#if !WIDE_CHAR_VERSION && (PTRDIFF_MAX > INT_MAX)
+            else if (dp->conversion == 's'
+                     && a.arg[dp->arg_index].type != TYPE_WIDE_STRING)
+              {
+                /* %s in vasnprintf.  See the specification of fprintf.
+                   We handle it ourselves here, because the string may be longer
+                   than INT_MAX characters, whence snprintf or sprintf would
+                   fail to process it.  */
+                int flags = dp->flags;
+                int has_width;
+                size_t width;
+                int has_precision;
+                size_t precision;
+
+                has_width = 0;
+                width = 0;
+                if (dp->width_start != dp->width_end)
+                  {
+                    if (dp->width_arg_index != ARG_NONE)
+                      {
+                        int arg;
+
+                        if (!(a.arg[dp->width_arg_index].type == TYPE_INT))
+                          abort ();
+                        arg = a.arg[dp->width_arg_index].a.a_int;
+                        width = arg;
+                        if (arg < 0)
+                          {
+                            /* "A negative field width is taken as a '-' flag
+                                followed by a positive field width."  */
+                            flags |= FLAG_LEFT;
+                            width = -width;
+                          }
+                      }
+                    else
+                      {
+                        const FCHAR_T *digitp = dp->width_start;
+
+                        do
+                          width = xsum (xtimes (width, 10), *digitp++ - '0');
+                        while (digitp != dp->width_end);
+                      }
+                    if (width > (size_t) INT_MAX)
+                      goto overflow;
+                    has_width = 1;
+                  }
+
+                has_precision = 0;
+                precision = 6;
+                if (dp->precision_start != dp->precision_end)
+                  {
+                    if (dp->precision_arg_index != ARG_NONE)
+                      {
+                        int arg;
+
+                        if (!(a.arg[dp->precision_arg_index].type == TYPE_INT))
+                          abort ();
+                        arg = a.arg[dp->precision_arg_index].a.a_int;
+                        /* "A negative precision is taken as if the precision
+                            were omitted."  */
+                        if (arg >= 0)
+                          {
+                            precision = arg;
+                            has_precision = 1;
+                          }
+                      }
+                    else
+                      {
+                        const FCHAR_T *digitp = dp->precision_start + 1;
+
+                        precision = 0;
+                        while (digitp != dp->precision_end)
+                          precision = xsum (xtimes (precision, 10), *digitp++ - '0');
+                        has_precision = 1;
+                      }
+                  }
+
+                {
+                  const char *arg = a.arg[dp->arg_index].a.a_string;
+                  size_t bytes;
+# if ENABLE_UNISTDIO && DCHAR_IS_TCHAR
+                  size_t characters;
+# endif
+# if !DCHAR_IS_TCHAR
+                  /* This code assumes that TCHAR_T is 'char'.  */
+                  static_assert (sizeof (TCHAR_T) == 1);
+                  DCHAR_T *tmpdst;
+                  size_t tmpdst_len;
+# endif
+                  size_t w;
+
+                  if (has_precision)
+                    {
+                      /* Use only at most PRECISION bytes, from the left.  */
+                      bytes = local_strnlen (arg, precision);
+                    }
+                  else
+                    {
+                      /* Use the entire string, and count the number of
+                         bytes.  */
+                      bytes = strlen (arg);
+                    }
+
+# if ENABLE_UNISTDIO && DCHAR_IS_TCHAR
+                  if (has_width)
+                    characters = mbsnlen (arg, bytes);
+                  else
+                    {
+                      /* The number of characters doesn't matter,
+                         because !has_width and therefore width==0.  */
+                      characters = 0;
+                    }
+# endif
+
+# if !DCHAR_IS_TCHAR
+                  /* Convert from TCHAR_T[] to DCHAR_T[].  */
+                  tmpdst =
+                    DCHAR_CONV_FROM_ENCODING (locale_charset (),
+                                              iconveh_question_mark,
+                                              arg, bytes,
+                                              NULL,
+                                              NULL, &tmpdst_len);
+                  if (tmpdst == NULL)
+                    goto fail_with_errno;
+# endif
+
+                  if (has_width)
+                    {
+# if ENABLE_UNISTDIO
+                      /* Outside POSIX, it's preferable to compare the width
+                         against the number of _characters_ of the converted
+                         value.  */
+#  if DCHAR_IS_TCHAR
+                      w = characters;
+#  else
+                      w = DCHAR_MBSNLEN (tmpdst, tmpdst_len);
+#  endif
+# else
+                      /* The width is compared against the number of _bytes_
+                         of the converted value, says POSIX.  */
+                      w = bytes;
+# endif
+                    }
+                  else
+                    /* w doesn't matter.  */
+                    w = 0;
+
+                  {
+# if DCHAR_IS_TCHAR
+                    size_t total = bytes + (w < width ? width - w : 0);
+                    ENSURE_ALLOCATION (xsum (length, total));
+# else
+                    size_t total = tmpdst_len + (w < width ? width - w : 0);
+                    ENSURE_ALLOCATION_ELSE (xsum (length, total),
+                      { free (tmpdst); goto out_of_memory; });
+# endif
+
+                    if (w < width && !(flags & FLAG_LEFT))
+                      {
+                        size_t n = width - w;
+                        DCHAR_SET (result + length, ' ', n);
+                        length += n;
+                      }
+
+# if DCHAR_IS_TCHAR
+                    memcpy (result + length, arg, bytes);
+                    length += bytes;
+# else
+                    DCHAR_CPY (result + length, tmpdst, tmpdst_len);
+                    free (tmpdst);
+                    length += tmpdst_len;
+# endif
+
+                    if (w < width && (flags & FLAG_LEFT))
+                      {
+                        size_t n = width - w;
+                        DCHAR_SET (result + length, ' ', n);
+                        length += n;
+                      }
+                  }
+                }
               }
 #endif
 #if WIDE_CHAR_VERSION && (!DCHAR_IS_TCHAR || NEED_WPRINTF_DIRECTIVE_LC)
