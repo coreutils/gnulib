@@ -3708,24 +3708,26 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                     /* Invalid or incomplete multibyte character.  */
                     goto fail_with_EILSEQ;
 
-                  if (1 < width && !(flags & FLAG_LEFT))
-                    {
-                      size_t n = width - 1;
-                      ENSURE_ALLOCATION (xsum (length, n));
-                      DCHAR_SET (result + length, ' ', n);
-                      length += n;
-                    }
+                  {
+                    size_t total = (1 < width ? width : 1);
+                    ENSURE_ALLOCATION (xsum (length, total));
 
-                  ENSURE_ALLOCATION (xsum (length, 1));
-                  result[length++] = wc;
+                    if (1 < width && !(flags & FLAG_LEFT))
+                      {
+                        size_t n = width - 1;
+                        DCHAR_SET (result + length, ' ', n);
+                        length += n;
+                      }
 
-                  if (1 < width && (flags & FLAG_LEFT))
-                    {
-                      size_t n = width - 1;
-                      ENSURE_ALLOCATION (xsum (length, n));
-                      DCHAR_SET (result + length, ' ', n);
-                      length += n;
-                    }
+                    result[length++] = wc;
+
+                    if (1 < width && (flags & FLAG_LEFT))
+                      {
+                        size_t n = width - 1;
+                        DCHAR_SET (result + length, ' ', n);
+                        length += n;
+                      }
+                  }
                 }
               }
 #endif
