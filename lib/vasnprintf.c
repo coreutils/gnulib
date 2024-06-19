@@ -2538,7 +2538,8 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                         {
                           /* Use the entire string.  */
                           arg_end = arg + u8_strlen (arg);
-                          /* The number of characters doesn't matter.  */
+                          /* The number of characters doesn't matter,
+                             because !has_width and therefore width==0.  */
                           characters = 0;
                         }
 
@@ -2640,7 +2641,8 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                         {
                           /* Use the entire string.  */
                           arg_end = arg + u16_strlen (arg);
-                          /* The number of characters doesn't matter.  */
+                          /* The number of characters doesn't matter,
+                             because !has_width and therefore width==0.  */
                           characters = 0;
                         }
 
@@ -2742,7 +2744,8 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                         {
                           /* Use the entire string.  */
                           arg_end = arg + u32_strlen (arg);
-                          /* The number of characters doesn't matter.  */
+                          /* The number of characters doesn't matter,
+                             because !has_width and therefore width==0.  */
                           characters = 0;
                         }
 
