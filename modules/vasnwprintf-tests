@@ -6,6 +6,7 @@ Depends-on:
 wcscmp
 wmemcmp
 wmemcpy
+vasnwprintf-extra-tests
 
 configure.ac:
 
