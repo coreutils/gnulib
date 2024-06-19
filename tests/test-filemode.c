@@ -1,4 +1,4 @@
-/* Test the sig2str and str2sig functions.
+/* Test the strmode function.
    Copyright (C) 2024 Free Software Foundation, Inc.
 
    This file is free software: you can redistribute it and/or modify
