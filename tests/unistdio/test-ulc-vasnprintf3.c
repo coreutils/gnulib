@@ -72,6 +72,16 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
       free (result);
     }
   }
+  { /* Width with a non-BMP argument.  */
+    static const uint8_t unicode_string[] = "\360\237\220\203"; /* 🐃 */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%10U %d", unicode_string, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "         \360\237\220\203 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
 
   {
     static const uint16_t unicode_string[] = /* Rafał Maszkowski */
@@ -116,6 +126,16 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
       free (result);
     }
   }
+  { /* Width with a non-BMP argument.  */
+    static const uint16_t unicode_string[] = { 0xd83d, 0xdc03, 0 }; /* 🐃 */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%10lU %d", unicode_string, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "         \360\237\220\203 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
 
   {
     static const uint32_t unicode_string[] = /* Rafał Maszkowski */
@@ -159,6 +179,16 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
       ASSERT (length == strlen (result));
       free (result);
     }
+  }
+  { /* Width with a non-BMP argument.  */
+    static const uint32_t unicode_string[] = { 0x1f403, 0 }; /* 🐃 */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%10llU %d", unicode_string, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "         \360\237\220\203 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
   }
 
   /* Test the support of the 's' conversion specifier for strings.  */

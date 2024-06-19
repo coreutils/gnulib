@@ -110,6 +110,26 @@ test_xfunction (uint8_t * (*my_xasprintf) (const char *, ...))
       free (result);
     }
   }
+  { /* Width with a non-ASCII argument.  */
+    static const uint8_t unicode_string[] = /* hétérogénéité */
+      "h\303\251t\303\251rog\303\251n\303\251it\303\251";
+    uint8_t *result =
+      my_xasprintf ("%20U %d", unicode_string, 33, 44, 55);
+    static const uint8_t expected[] =
+      "       h\303\251t\303\251rog\303\251n\303\251it\303\251 33";
+    ASSERT (result != NULL);
+    ASSERT (u8_strcmp (result, expected) == 0);
+    free (result);
+  }
+  { /* Width with a non-BMP argument.  */
+    static const uint8_t unicode_string[] = "\360\237\220\203"; /* 🐃 */
+    uint8_t *result =
+      my_xasprintf ("%10U %d", unicode_string, 33, 44, 55);
+    static const uint8_t expected[] = "         \360\237\220\203 33";
+    ASSERT (result != NULL);
+    ASSERT (u8_strcmp (result, expected) == 0);
+    free (result);
+  }
 
   {
     static const uint16_t unicode_string[] = { 'H', 'e', 'l', 'l', 'o', 0 };
@@ -162,6 +182,28 @@ test_xfunction (uint8_t * (*my_xasprintf) (const char *, ...))
       free (result);
     }
   }
+  { /* Width with a non-ASCII argument.  */
+    static const uint16_t unicode_string[] = /* hétérogénéité */
+      { 'h', 0x00e9, 't', 0x00e9, 'r', 'o', 'g', 0x00e9, 'n', 0x00e9,
+        'i', 't', 0x00e9, 0
+      };
+    uint8_t *result =
+      my_xasprintf ("%20lU %d", unicode_string, 33, 44, 55);
+    static const uint8_t expected[] =
+      "       h\303\251t\303\251rog\303\251n\303\251it\303\251 33";
+    ASSERT (result != NULL);
+    ASSERT (u8_strcmp (result, expected) == 0);
+    free (result);
+  }
+  { /* Width with a non-BMP argument.  */
+    static const uint16_t unicode_string[] = { 0xd83d, 0xdc03, 0 }; /* 🐃 */
+    uint8_t *result =
+      my_xasprintf ("%10lU %d", unicode_string, 33, 44, 55);
+    static const uint8_t expected[] = "         \360\237\220\203 33";
+    ASSERT (result != NULL);
+    ASSERT (u8_strcmp (result, expected) == 0);
+    free (result);
+  }
 
   {
     static const uint32_t unicode_string[] = { 'H', 'e', 'l', 'l', 'o', 0 };
@@ -213,6 +255,28 @@ test_xfunction (uint8_t * (*my_xasprintf) (const char *, ...))
       ASSERT (u8_strcmp (result, expected) == 0);
       free (result);
     }
+  }
+  { /* Width with a non-ASCII argument.  */
+    static const uint32_t unicode_string[] = /* hétérogénéité */
+      { 'h', 0x00e9, 't', 0x00e9, 'r', 'o', 'g', 0x00e9, 'n', 0x00e9,
+        'i', 't', 0x00e9, 0
+      };
+    uint8_t *result =
+      my_xasprintf ("%20llU %d", unicode_string, 33, 44, 55);
+    static const uint8_t expected[] =
+      "       h\303\251t\303\251rog\303\251n\303\251it\303\251 33";
+    ASSERT (result != NULL);
+    ASSERT (u8_strcmp (result, expected) == 0);
+    free (result);
+  }
+  { /* Width with a non-BMP argument.  */
+    static const uint32_t unicode_string[] = { 0x1f403, 0 }; /* 🐃 */
+    uint8_t *result =
+      my_xasprintf ("%10llU %d", unicode_string, 33, 44, 55);
+    static const uint8_t expected[] = "         \360\237\220\203 33";
+    ASSERT (result != NULL);
+    ASSERT (u8_strcmp (result, expected) == 0);
+    free (result);
   }
 
   /* Test the support of the 's' conversion specifier for strings.  */
