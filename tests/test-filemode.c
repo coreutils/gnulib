@@ -24,8 +24,8 @@
 #include <sys/stat.h>
 
 /* The strmode function is already defined on some systems in <string.h> or
-   <unistd.h>.  On FreeBSD versions 13 and lower the function takes an int
-   instead of a mode_t (uint16_t) as it's first argument.  Include these
+   <unistd.h>.  On macOS, FreeBSD < 14.0, OpenBSD, the function takes an int
+   instead of a mode_t (uint16_t) as its first argument.  Include these
    headers here to make sure our declaration doesn't conflict with system
    functions.  */
 #include <string.h>

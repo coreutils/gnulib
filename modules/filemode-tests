@@ -3,6 +3,7 @@ tests/test-filemode.c
 tests/macros.h
 
 Depends-on:
+unistd
 
 configure.ac:
 
