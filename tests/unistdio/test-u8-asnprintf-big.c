@@ -55,9 +55,14 @@ main ()
   rl.rlim_cur = rl.rlim_max = 0;
   setrlimit (RLIMIT_CORE, &rl);
 # endif
-  /* The test below needs about 12 GiB of memory:
-     3 GiB for the inputs and up to 9 GiB for temporary output buffers.  */
-  double needed = 12.0 * 1024 * 1024 * 1024;
+  /* The test below needs about 15 GiB of memory:
+       $ time /usr/bin/time -f "Max RSS: %M KiB" ./test-u8-asnprintf-big
+       Max RSS: 15730356 KiB
+       real    0m58,011s
+       user    0m46,403s
+       sys     0m11,604s
+     5 GiB for the inputs and up to 10 GiB for temporary output buffers.  */
+  double needed = 15.0 * 1024 * 1024 * 1024;
   double avail = physmem_claimable (1.0);
   printf ("memory needed = %g MiB, available = %g MiB\n",
           needed / 1024 / 1024, avail / 1024 / 1024);
