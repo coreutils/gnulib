@@ -40,7 +40,7 @@ mbsnlen (const char *string, size_t len)
       const char *string_end = string + len;
 
 #if GNULIB_MCEL_PREFER
-      for (; *string; string += mcel_scan (string, string_end).len)
+      for (; string < string_end; string += mcel_scan (string, string_end).len)
         count++;
 #else
       mbif_state_t state;
