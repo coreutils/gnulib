@@ -1,0 +1,20 @@
+Status:
+longrunning-test
+
+Files:
+tests/unistdio/test-u8-asnprintf-big.c
+tests/macros.h
+
+Depends-on:
+stdbool
+stdint
+physmem
+
+configure.ac:
+AC_CHECK_FUNCS_ONCE([setrlimit])
+
+Makefile.am:
+TESTS += test-u8-asnprintf-big
+check_PROGRAMS += test-u8-asnprintf-big
+test_u8_asnprintf_big_SOURCES = unistdio/test-u8-asnprintf-big.c
+test_u8_asnprintf_big_LDADD = $(LDADD) $(LIBUNISTRING) @LIBICONV@

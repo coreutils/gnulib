@@ -5,6 +5,7 @@ tests/unistdio/test-u8-printf1.h
 tests/macros.h
 
 Depends-on:
+unistdio/u8-asnprintf-extra-tests
 
 configure.ac:
 
