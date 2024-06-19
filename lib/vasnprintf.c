@@ -2580,7 +2580,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                         if (converted != result + length)
                           {
                             ENSURE_ALLOCATION_ELSE (xsum (length, converted_len),
-                                                    { free (converted); goto out_of_memory; });
+                              { free (converted); goto out_of_memory; });
                             DCHAR_CPY (result + length, converted, converted_len);
                             free (converted);
                           }
@@ -2683,7 +2683,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                         if (converted != result + length)
                           {
                             ENSURE_ALLOCATION_ELSE (xsum (length, converted_len),
-                                                    { free (converted); goto out_of_memory; });
+                              { free (converted); goto out_of_memory; });
                             DCHAR_CPY (result + length, converted, converted_len);
                             free (converted);
                           }
@@ -2786,7 +2786,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                         if (converted != result + length)
                           {
                             ENSURE_ALLOCATION_ELSE (xsum (length, converted_len),
-                                                    { free (converted); goto out_of_memory; });
+                              { free (converted); goto out_of_memory; });
                             DCHAR_CPY (result + length, converted, converted_len);
                             free (converted);
                           }
@@ -3361,7 +3361,12 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                   if (w < width && !(flags & FLAG_LEFT))
                     {
                       size_t n = width - w;
+#  if DCHAR_IS_TCHAR
                       ENSURE_ALLOCATION (xsum (length, n));
+#  else
+                      ENSURE_ALLOCATION_ELSE (xsum (length, n),
+                        { free (tmpdst); goto out_of_memory; });
+#  endif
                       DCHAR_SET (result + length, ' ', n);
                       length += n;
                     }
@@ -3420,7 +3425,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                     }
 #  else
                   ENSURE_ALLOCATION_ELSE (xsum (length, tmpdst_len),
-                                          { free (tmpdst); goto out_of_memory; });
+                    { free (tmpdst); goto out_of_memory; });
                   DCHAR_CPY (result + length, tmpdst, tmpdst_len);
                   free (tmpdst);
                   length += tmpdst_len;
@@ -3586,7 +3591,12 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                   if (w < width && !(flags & FLAG_LEFT))
                     {
                       size_t n = width - w;
+#  if DCHAR_IS_TCHAR
                       ENSURE_ALLOCATION (xsum (length, n));
+#  else
+                      ENSURE_ALLOCATION_ELSE (xsum (length, n),
+                        { free (tmpdst); goto out_of_memory; });
+#  endif
                       DCHAR_SET (result + length, ' ', n);
                       length += n;
                     }
@@ -3630,7 +3640,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                     }
 # else
                   ENSURE_ALLOCATION_ELSE (xsum (length, tmpdst_len),
-                                          { free (tmpdst); goto out_of_memory; });
+                    { free (tmpdst); goto out_of_memory; });
                   DCHAR_CPY (result + length, tmpdst, tmpdst_len);
                   free (tmpdst);
                   length += tmpdst_len;
@@ -4025,7 +4035,8 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                   {
                     size_t n = xsum (length, count);
 
-                    ENSURE_ALLOCATION (n);
+                    ENSURE_ALLOCATION_ELSE (n,
+                      { if (tmp != tmpbuf) free (tmp); goto out_of_memory; });
                   }
 
                 /* Append the result.  */
@@ -4517,7 +4528,8 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                   {
                     size_t n = xsum (length, count);
 
-                    ENSURE_ALLOCATION (n);
+                    ENSURE_ALLOCATION_ELSE (n,
+                      { if (tmp != tmpbuf) free (tmp); goto out_of_memory; });
                   }
 
                 /* Append the result.  */
@@ -5702,7 +5714,8 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                   {
                     size_t n = xsum (length, count);
 
-                    ENSURE_ALLOCATION (n);
+                    ENSURE_ALLOCATION_ELSE (n,
+                      { if (tmp != tmpbuf) free (tmp); goto out_of_memory; });
                   }
 
                 /* Append the result.  */
@@ -6809,7 +6822,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                           goto fail_with_errno;
 # endif
                         ENSURE_ALLOCATION_ELSE (xsum (length, tmpdst_len),
-                                                { free (tmpdst); goto out_of_memory; });
+                          { free (tmpdst); goto out_of_memory; });
                         DCHAR_CPY (result + length, tmpdst, tmpdst_len);
                         free (tmpdst);
                         count = tmpdst_len;
