@@ -55,14 +55,16 @@ main ()
   rl.rlim_cur = rl.rlim_max = 0;
   setrlimit (RLIMIT_CORE, &rl);
 # endif
-  /* The test below needs about 25 GiB of memory:
+  /* The test below needs about 40 GiB of memory:
        $ time /usr/bin/time -f "Max RSS: %M KiB" ./test-vasnwprintf-big
-       Max RSS: 26216204 KiB
-       real    4m22,540s
-       user    4m6,322s
-       sys     0m16,203s
-     5 GiB for the inputs and up to 20 GiB for temporary output buffers.  */
-  double needed = 25.0 * 1024 * 1024 * 1024;
+       Max RSS: 41944784 KiB
+       real    5m8,508s
+       user    4m38,035s
+       sys     0m30,456s
+     5 GiB for the inputs in the %s tests,
+     or 20 GiB for the inputs in the %ls tests,
+     and up to 20 GiB for temporary output buffers.  */
+  double needed = 40.0 * 1024 * 1024 * 1024;
   double avail = physmem_claimable (1.0);
   printf ("memory needed = %g MiB, available = %g MiB\n",
           needed / 1024 / 1024, avail / 1024 / 1024);
@@ -70,7 +72,7 @@ main ()
     {
       /* Note: The malloc() calls can fail, due to ulimit of RLIMIT_DATA.
          For example, on OpenBSD 7.5, the soft limit is 1.0 GiB or 1.5 GiB,
-         and you need "ulimit -d 26214400".  */
+         and you need "ulimit -d 42991616".  */
 
       /* Verify that asnwprintf() can return a string of size > 4 GiB.  */
       {
@@ -169,6 +171,79 @@ main ()
 
                 size_t len;
                 wchar_t *s = asnwprintf (NULL, &len, L"x%sy", s1);
+                if (s == NULL)
+                  {
+                    ASSERT (errno == ENOMEM);
+                    skipped = true;
+                  }
+                else
+                  {
+                    ASSERT (wcslen (s) == len);
+                    ASSERT (len == n1 + 2);
+                    size_t i;
+                    for (i = 0; i <= len; i++)
+                      s[i] = (i == 0 ? 'x' :
+                              i <= n1 ? 'a' :
+                              i == n1 + 1 ? 'y' :
+                              '\0');
+                    free (s);
+                  }
+                free (s1);
+              }
+          }
+      }
+
+      /* Verify that asnwprintf() can take a wide string with an element count
+         > 2^31, < 2^32 as argument.  */
+      {
+        size_t n1 = 3 * (size_t) (INT_MAX / 2) + 10;
+        wchar_t *s1;
+
+        s1 = (wchar_t *) malloc ((n1 + 1) * sizeof (wchar_t));
+        if (s1 != NULL)
+          {
+            wmemset (s1, L'a', n1);
+            s1[n1] = L'\0';
+
+            size_t len;
+            wchar_t *s = asnwprintf (NULL, &len, L"x%lsy", s1);
+            if (s == NULL)
+              {
+                ASSERT (errno == ENOMEM);
+                skipped = true;
+              }
+            else
+              {
+                ASSERT (wcslen (s) == len);
+                ASSERT (len == n1 + 2);
+                size_t i;
+                for (i = 0; i <= len; i++)
+                  s[i] = (i == 0 ? 'x' :
+                          i <= n1 ? 'a' :
+                          i == n1 + 1 ? 'y' :
+                          '\0');
+                free (s);
+              }
+            free (s1);
+          }
+      }
+
+      /* Verify that asnwprintf() can take a wide string with an element count
+         > 2^32 as argument.  */
+      {
+        size_t n1 = 5 * (size_t) (INT_MAX / 2) + 10;
+        if (n1 > (size_t) INT_MAX)
+          {
+            wchar_t *s1;
+
+            s1 = (wchar_t *) malloc ((n1 + 1) * sizeof (wchar_t));
+            if (s1 != NULL)
+              {
+                wmemset (s1, L'a', n1);
+                s1[n1] = L'\0';
+
+                size_t len;
+                wchar_t *s = asnwprintf (NULL, &len, L"x%lsy", s1);
                 if (s == NULL)
                   {
                     ASSERT (errno == ENOMEM);
