@@ -31,6 +31,7 @@
 #include <errno.h>
 #include <stdio.h>
 #include <string.h>
+#include <wchar.h>
 
 #if HAVE_SETRLIMIT
 # include <sys/types.h>
@@ -54,14 +55,17 @@ main ()
   rl.rlim_cur = rl.rlim_max = 0;
   setrlimit (RLIMIT_CORE, &rl);
 # endif
-  /* The test below needs about 15 GiB of memory:
+  /* The test below needs about 25 GiB of memory:
        $ time /usr/bin/time -f "Max RSS: %M KiB" ./test-ulc-asnprintf-big
-       Max RSS: 15730376 KiB
-       real    1m13,702s
-       user    1m0,184s
-       sys     0m13,512s
-     5 GiB for the inputs and up to 10 GiB for temporary output buffers.  */
-  double needed = 15.0 * 1024 * 1024 * 1024;
+       Max RSS: 26216192 KiB
+       real    4m34,682s
+       user    4m8,592s
+       sys     0m26,063s
+     - In the %s tests:
+       5 GiB for the inputs and up to 10 GiB for temporary output buffers.
+     - In the %ls tests:
+       20 GiB for the inputs and up to 5 GiB for temporary output buffers.  */
+  double needed = 25.0 * 1024 * 1024 * 1024;
   double avail = physmem_claimable (1.0);
   printf ("memory needed = %g MiB, available = %g MiB\n",
           needed / 1024 / 1024, avail / 1024 / 1024);
@@ -69,7 +73,7 @@ main ()
     {
       /* Note: The malloc() calls can fail, due to ulimit of RLIMIT_DATA.
          For example, on OpenBSD 7.5, the soft limit is 1.0 GiB or 1.5 GiB,
-         and you need "ulimit -d 15728640".  */
+         and you need "ulimit -d 27262976".  */
 
       /* Verify that ulc_asnprintf() can return a string of size > 4 GiB.  */
       {
@@ -239,6 +243,79 @@ main ()
                     }
                 }
 
+                free (s1);
+              }
+          }
+      }
+
+      /* Verify that ulc_asnprintf() can take a wide string with an element count
+         > 2^31, < 2^32 as argument.  */
+      {
+        size_t n1 = 3 * (size_t) (INT_MAX / 2) + 10;
+        wchar_t *s1;
+
+        s1 = (wchar_t *) malloc ((n1 + 1) * sizeof (wchar_t));
+        if (s1 != NULL)
+          {
+            wmemset (s1, L'a', n1);
+            s1[n1] = L'\0';
+
+            size_t len;
+            char *s = ulc_asnprintf (NULL, &len, "x%lsy", s1);
+            if (s == NULL)
+              {
+                ASSERT (errno == ENOMEM);
+                skipped = true;
+              }
+            else
+              {
+                ASSERT (strlen (s) == len);
+                ASSERT (len == n1 + 2);
+                size_t i;
+                for (i = 0; i <= len; i++)
+                  s[i] = (i == 0 ? 'x' :
+                          i <= n1 ? 'a' :
+                          i == n1 + 1 ? 'y' :
+                          '\0');
+                free (s);
+              }
+            free (s1);
+          }
+      }
+
+      /* Verify that ulc_asnprintf() can take a wide string with an element count
+         > 2^32 as argument.  */
+      {
+        size_t n1 = 5 * (size_t) (INT_MAX / 2) + 10;
+        if (n1 > (size_t) INT_MAX)
+          {
+            wchar_t *s1;
+
+            s1 = (wchar_t *) malloc ((n1 + 1) * sizeof (wchar_t));
+            if (s1 != NULL)
+              {
+                wmemset (s1, L'a', n1);
+                s1[n1] = L'\0';
+
+                size_t len;
+                char *s = ulc_asnprintf (NULL, &len, "x%lsy", s1);
+                if (s == NULL)
+                  {
+                    ASSERT (errno == ENOMEM);
+                    skipped = true;
+                  }
+                else
+                  {
+                    ASSERT (strlen (s) == len);
+                    ASSERT (len == n1 + 2);
+                    size_t i;
+                    for (i = 0; i <= len; i++)
+                      s[i] = (i == 0 ? 'x' :
+                              i <= n1 ? 'a' :
+                              i == n1 + 1 ? 'y' :
+                              '\0');
+                    free (s);
+                  }
                 free (s1);
               }
           }
