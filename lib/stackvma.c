@@ -176,7 +176,7 @@ rof_open (struct rofile *rof, const char *filename)
       /* Attempt to read the contents in a single system call.  */
       if (size > MIN_LEFTOVER)
         {
-          int n = read (fd, rof->buffer, size);
+          ssize_t n = read (fd, rof->buffer, size);
           if (n < 0 && errno == EINTR)
             goto retry;
 # if defined __DragonFly__
@@ -186,7 +186,7 @@ rof_open (struct rofile *rof, const char *filename)
               if (n <= 0)
                 /* Empty file.  */
                 goto fail1;
-              if (n + MIN_LEFTOVER <= size)
+              if (MIN_LEFTOVER <= size - n)
                 {
                   /* The buffer was sufficiently large.  */
                   rof->filled = n;
@@ -201,15 +201,15 @@ rof_open (struct rofile *rof, const char *filename)
                       if (n < 0)
                         /* Some error.  */
                         goto fail1;
-                      if (n + MIN_LEFTOVER > size - rof->filled)
-                        /* Allocate a larger buffer.  */
-                        break;
                       if (n == 0)
                         {
                           /* Reached the end of file.  */
                           close (fd);
                           return 0;
                         }
+                      if (size - rof->filled - n < MIN_LEFTOVER)
+                        /* Allocate a larger buffer.  */
+                        break;
                       rof->filled += n;
                     }
 # else
