@@ -598,7 +598,7 @@ fi
 #   returns_ 1 command ... || fail
 returns_ () {
   # Disable tracing so it doesn't interfere with stderr of the wrapped command
-  local is_tracing=`{ :; } 2>&1` 2>/dev/null
+  { local is_tracing=`{ :; } 2>&1`; } 2>/dev/null
   { set +x; } 2>/dev/null
 
   local exp_exit="$1"
