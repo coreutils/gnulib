@@ -1872,6 +1872,9 @@ _GL_CXXALIAS_SYS (vzsprintf, ptrdiff_t,
 #endif
 
 #if @GNULIB_VSPRINTF_POSIX@
+/* Prints formatted output to string STR.
+   Returns the string length of the formatted string.  Upon failure,
+   returns a negative value.  */
 # if @REPLACE_VSPRINTF@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define vsprintf rpl_vsprintf

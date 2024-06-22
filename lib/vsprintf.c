@@ -25,53 +25,19 @@
 #include <limits.h>
 #include <stdarg.h>
 #include <stdint.h>
-#include <stdlib.h>
 
-#include "vasnprintf.h"
-
-#ifndef SIZE_MAX
-# define SIZE_MAX ((size_t) -1)
-#endif
-
-/* Print formatted output to string STR.
-   Return string length of formatted string.  On error, return a negative
-   value.  */
 int
 vsprintf (char *str, const char *format, va_list args)
 {
-  char *output;
-  size_t len;
-  size_t lenbuf;
+  ptrdiff_t ret = vzsprintf (str, format, args);
 
-  /* vasnprintf fails with EOVERFLOW when the buffer size argument is larger
-     than INT_MAX (if that fits into a 'size_t' at all).
-     Also note that glibc's iconv fails with E2BIG when we pass a length that
-     is so large that str + lenbuf wraps around, i.e.
-     (uintptr_t) (str + lenbuf) < (uintptr_t) str.
-     Therefore set lenbuf = min (SIZE_MAX, INT_MAX, - (uintptr_t) str - 1).  */
-  lenbuf = (SIZE_MAX < INT_MAX ? SIZE_MAX : INT_MAX);
-  if (lenbuf > ~ (uintptr_t) str)
-    lenbuf = ~ (uintptr_t) str;
-
-  output = vasnprintf (str, &lenbuf, format, args);
-  len = lenbuf;
-
-  if (!output)
-    return -1;
-
-  if (output != str)
-    {
-      /* len is near SIZE_MAX.  */
-      free (output);
-      errno = EOVERFLOW;
-      return -1;
-    }
-
-  if (len > INT_MAX)
+#if PTRDIFF_MAX > INT_MAX
+  if (ret > INT_MAX)
     {
       errno = EOVERFLOW;
       return -1;
     }
+#endif
 
-  return len;
+  return ret;
 }
