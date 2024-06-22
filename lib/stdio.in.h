@@ -1603,6 +1603,29 @@ _GL_WARN_ON_USE (tmpfile, "tmpfile is not usable on mingw - "
 # endif
 #endif
 
+#if @GNULIB_VAZSPRINTF@
+/* Prints formatted output to a string dynamically allocated with malloc().
+   If the memory allocation succeeds, it stores the address of the string in
+   *RESULT and returns the number of resulting bytes, excluding the trailing
+   NUL.  Upon memory allocation error, or some other error, it returns -1
+   with errno set.
+   Failure code EOVERFLOW can only occur when a width > INT_MAX is used.
+   Therefore, if the format string is valid and does not use %ls/%lc
+   directives nor widths, the only possible failure code is ENOMEM.  */
+_GL_FUNCDECL_SYS (azsprintf, ptrdiff_t,
+                  (char **result, const char *format, ...)
+                  _GL_ATTRIBUTE_FORMAT_PRINTF_STANDARD (2, 3)
+                  _GL_ARG_NONNULL ((1, 2)));
+_GL_CXXALIAS_SYS (azsprintf, ptrdiff_t,
+                  (char **result, const char *format, ...));
+_GL_FUNCDECL_SYS (vazsprintf, ptrdiff_t,
+                  (char **result, const char *format, va_list args)
+                  _GL_ATTRIBUTE_FORMAT_PRINTF_STANDARD (2, 0)
+                  _GL_ARG_NONNULL ((1, 2)));
+_GL_CXXALIAS_SYS (vazsprintf, ptrdiff_t,
+                  (char **result, const char *format, va_list args));
+#endif
+
 #if @GNULIB_VASPRINTF@
 /* Write formatted output to a string dynamically allocated with malloc().
    If the memory allocation succeeds, store the address of the string in
