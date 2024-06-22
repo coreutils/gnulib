@@ -1,5 +1,5 @@
 # strerrorname_np.m4
-# serial 5
+# serial 6
 dnl Copyright (C) 2020-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,6 +9,21 @@ AC_DEFUN([gl_FUNC_STRERRORNAME_NP],
 [
   AC_REQUIRE([gl_STRING_H_DEFAULTS])
 
+  AC_REQUIRE([gl_CHECK_STRERRORNAME_NP])
+  if test $ac_cv_func_strerrorname_np = yes; then
+    case "$gl_cv_func_strerrorname_np_works" in
+      *yes) ;;
+      *) REPLACE_STRERRORNAME_NP=1 ;;
+    esac
+  else
+    HAVE_STRERRORNAME_NP=0
+  fi
+])
+
+# Check for a working strerrorname_np function.
+# Sets ac_cv_func_strerrorname_np, gl_cv_func_strerrorname_np_works.
+AC_DEFUN([gl_CHECK_STRERRORNAME_NP],
+[
   dnl Persuade glibc <string.h> to declare strerrorname_np().
   AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
 
@@ -54,11 +69,19 @@ AC_DEFUN([gl_FUNC_STRERRORNAME_NP],
           esac
          ])
       ])
+  fi
+])
+
+# Prerequisite for using strerrorname_np when available.
+AC_DEFUN_ONCE([gl_OPTIONAL_STRERRORNAME_NP],
+[
+  AC_REQUIRE([gl_CHECK_STRERRORNAME_NP])
+  if test $ac_cv_func_strerrorname_np = yes; then
     case "$gl_cv_func_strerrorname_np_works" in
-      *yes) ;;
-      *) REPLACE_STRERRORNAME_NP=1 ;;
+      *yes)
+        AC_DEFINE([HAVE_WORKING_STRERRORNAME_NP], [1],
+          [Define to 1 if the function strerrorname_np exists and works.])
+        ;;
     esac
-  else
-    HAVE_STRERRORNAME_NP=0
   fi
 ])

@@ -74,6 +74,10 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2024-06-22  xvasprintf      It is now the programmer's responsibility to pass
+                            a valid format string without %ls, %lc directives
+                            and that all widths are >= -INT_MAX and <= INT_MAX.
+
 2024-05-16  putenv          This module is renamed to 'putenv-gnu'.
 
 2024-02-21  *printf-posix   These modules no longer support the 'n' directive

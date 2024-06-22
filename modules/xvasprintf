@@ -7,10 +7,12 @@ lib/xvasprintf.c
 lib/xasprintf.c
 lib/xalloc.h
 m4/xvasprintf.m4
+m4/strerrorname_np.m4
 
 Depends-on:
+extensions
 stdio
-vasprintf
+vazsprintf
 xalloc
 xalloc-die
 extern-inline

@@ -21,8 +21,9 @@
 
 #include <errno.h>
 #include <limits.h>
-#include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #include "xalloc.h"
 
@@ -48,14 +49,10 @@ xstrcat (size_t argcount, va_list args)
     }
   va_end (ap);
 
-  /* Test for overflow in the summing pass above or in (totalsize + 1) below.
-     Also, don't return a string longer than INT_MAX, for consistency with
-     vasprintf().  */
-  if (totalsize == SIZE_MAX || totalsize > INT_MAX)
-    {
-      errno = EOVERFLOW;
-      return NULL;
-    }
+  /* Test for overflow in the summing pass above or in (totalsize + 1)
+     below.  */
+  if (totalsize == SIZE_MAX)
+    xalloc_die ();
 
   /* Allocate and fill the result string.  */
   result = XNMALLOC (totalsize + 1, char);
@@ -99,11 +96,38 @@ xvasprintf (const char *format, va_list args)
       }
   }
 
-  if (vasprintf (&result, format, args) < 0)
+  if (vazsprintf (&result, format, args) < 0)
     {
       if (errno == ENOMEM)
         xalloc_die ();
-      return NULL;
+      else
+        {
+          /* The programmer ought to have ensured that none of the other errors
+             can occur.  */
+          int err = errno;
+          char errbuf[20];
+          const char *errname;
+#if HAVE_WORKING_STRERRORNAME_NP
+          errname = strerrorname_np (err);
+          if (errname == NULL)
+#else
+          if (err == EINVAL)
+            errname = "EINVAL";
+          else if (err == EILSEQ)
+            errname = "EILSEQ";
+          else if (err == EOVERFLOW)
+            errname = "EOVERFLOW";
+          else
+#endif
+            {
+              sprintf (errbuf, "%d", err);
+              errname = errbuf;
+            }
+          fprintf (stderr, "vasprintf failed! format=\"%s\", errno=%s\n",
+                   format, errname);
+          fflush (stderr);
+          abort ();
+        }
     }
 
   return result;
