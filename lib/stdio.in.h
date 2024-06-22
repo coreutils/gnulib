@@ -1854,6 +1854,23 @@ _GL_WARN_ON_USE (vsnprintf, "vsnprintf is unportable - "
 # endif
 #endif
 
+#if @GNULIB_VZSPRINTF@
+/* Prints formatted output to string STR.
+   Returns the string length of the formatted string.  Upon failure,
+   returns -1 with errno set.
+   Failure code EOVERFLOW can only occur when a width > INT_MAX is used.
+   Therefore, if the format string is valid and does not use %ls/%lc
+   directives nor widths, the only possible failure code is ENOMEM.  */
+_GL_FUNCDECL_SYS (vzsprintf, ptrdiff_t,
+                  (char *restrict str,
+                   const char *restrict format, va_list args)
+                  _GL_ATTRIBUTE_FORMAT_PRINTF_STANDARD (2, 0)
+                  _GL_ARG_NONNULL ((1, 2)));
+_GL_CXXALIAS_SYS (vzsprintf, ptrdiff_t,
+                  (char *restrict str,
+                   const char *restrict format, va_list args));
+#endif
+
 #if @GNULIB_VSPRINTF_POSIX@
 # if @REPLACE_VSPRINTF@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
