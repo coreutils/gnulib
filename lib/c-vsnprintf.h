@@ -51,6 +51,14 @@ extern ptrdiff_t c_vzsnprintf (char *restrict str, size_t size,
                                const char *format, va_list args)
        _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_STANDARD, 3, 0));
 
+/* Prints formatted output to string STR.  Similar to sprintf, but the
+   additional parameter SIZE limits how much is written into STR.
+   STR may be NULL, in which case nothing will be written.
+   Returns the string length of the formatted string (which may be larger
+   than SIZE).  Upon failure, returns -1 with errno set.
+
+   Formatting takes place in the C locale, that is, the decimal point
+   used in floating-point formatting directives is always '.'. */
 extern int c_vsnprintf (char *restrict str, size_t size,
                         const char *format, va_list args)
        _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_STANDARD, 3, 0));

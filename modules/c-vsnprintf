@@ -7,8 +7,9 @@ lib/c-vsnprintf.h
 lib/c-vsnprintf.c
 
 Depends-on:
+stdint
 stdio
-c-vasnprintf
+c-vzsnprintf
 
 configure.ac:
 AC_REQUIRE([AC_C_RESTRICT])
@@ -20,7 +21,7 @@ Include:
 "c-vsnprintf.h"
 
 License:
-GPL
+LGPLv2+
 
 Maintainer:
-Ben Pfaff
+all
