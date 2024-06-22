@@ -1,18 +1,18 @@
 /* vsnprintf in C locale.
    Copyright (C) 2012-2024 Free Software Foundation, Inc.
 
-   This program is free software; you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3, or (at your option)
-   any later version.
+   This file is free software: you can redistribute it and/or modify
+   it under the terms of the GNU Lesser General Public License as
+   published by the Free Software Foundation; either version 2.1 of the
+   License, or (at your option) any later version.
 
-   This program is distributed in the hope that it will be useful,
+   This file is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+   GNU Lesser General Public License for more details.
 
-   You should have received a copy of the GNU General Public License along
-   with this program; if not, see <https://www.gnu.org/licenses/>.  */
+   You should have received a copy of the GNU Lesser General Public License
+   along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 #ifndef _C_VSNPRINTF_H
 #define _C_VSNPRINTF_H
@@ -22,7 +22,7 @@
  #error "Please include config.h first."
 #endif
 
-/* Get size_t.  */
+/* Get size_t, ptrdiff_t.  */
 #include <stddef.h>
 
 /* Get va_list. */
@@ -34,6 +34,22 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+/* Prints formatted output to string STR.  Similar to vsprintf, but the
+   additional parameter SIZE limits how much is written into STR.
+   STR may be NULL, in which case nothing will be written.
+   Returns the string length of the formatted string (which may be larger
+   than SIZE).  Upon failure, returns -1 with errno set.
+
+   Failure code EOVERFLOW can only occur when a width > INT_MAX is used.
+   Therefore, if the format string is valid and does not use %ls/%lc
+   directives nor widths, the only possible failure code is ENOMEM.
+
+   Formatting takes place in the C locale, that is, the decimal point
+   used in floating-point formatting directives is always '.'. */
+extern ptrdiff_t c_vzsnprintf (char *restrict str, size_t size,
+                               const char *format, va_list args)
+       _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_STANDARD, 3, 0));
 
 extern int c_vsnprintf (char *restrict str, size_t size,
                         const char *format, va_list args)
