@@ -1494,6 +1494,23 @@ _GL_WARN_ON_USE (snprintf, "snprintf is unportable - "
 # endif
 #endif
 
+#if @GNULIB_ZSPRINTF@
+/* Prints formatted output to string STR.
+   Returns the string length of the formatted string.  Upon failure,
+   returns -1 with errno set.
+   Failure code EOVERFLOW can only occur when a width > INT_MAX is used.
+   Therefore, if the format string is valid and does not use %ls/%lc
+   directives nor widths, the only possible failure code is ENOMEM.  */
+_GL_FUNCDECL_SYS (zsprintf, ptrdiff_t,
+                  (char *restrict str,
+                   const char *restrict format, ...)
+                  _GL_ATTRIBUTE_FORMAT_PRINTF_STANDARD (2, 3)
+                  _GL_ARG_NONNULL ((1, 2)));
+_GL_CXXALIAS_SYS (zsprintf, ptrdiff_t,
+                  (char *restrict str,
+                   const char *restrict format, ...));
+#endif
+
 /* Some people would argue that all sprintf uses should be warned about
    (for example, OpenBSD issues a link warning for it),
    since it can cause security holes due to buffer overruns.

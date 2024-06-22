@@ -1,5 +1,5 @@
 # stdio_h.m4
-# serial 66
+# serial 67
 dnl Copyright (C) 2007-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -189,6 +189,7 @@ AC_DEFUN([gl_STDIO_H_REQUIRE_DEFAULTS],
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_VZSNPRINTF])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_VZSPRINTF])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_ZSNPRINTF])
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_ZSPRINTF])
     dnl Support Microsoft deprecated alias function names by default.
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_MDA_FCLOSEALL], [1])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_MDA_FDOPEN], [1])

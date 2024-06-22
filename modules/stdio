@@ -124,6 +124,7 @@ stdio.h: stdio.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) 
 	      -e 's/@''GNULIB_VZSNPRINTF''@/$(GNULIB_VZSNPRINTF)/g' \
 	      -e 's/@''GNULIB_VZSPRINTF''@/$(GNULIB_VZSPRINTF)/g' \
 	      -e 's/@''GNULIB_ZSNPRINTF''@/$(GNULIB_ZSNPRINTF)/g' \
+	      -e 's/@''GNULIB_ZSPRINTF''@/$(GNULIB_ZSPRINTF)/g' \
 	      -e 's/@''GNULIB_MDA_FCLOSEALL''@/$(GNULIB_MDA_FCLOSEALL)/g' \
 	      -e 's/@''GNULIB_MDA_FDOPEN''@/$(GNULIB_MDA_FDOPEN)/g' \
 	      -e 's/@''GNULIB_MDA_FILENO''@/$(GNULIB_MDA_FILENO)/g' \
