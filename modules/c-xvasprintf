@@ -5,13 +5,16 @@ Files:
 lib/c-xvasprintf.h
 lib/c-xasprintf.c
 lib/c-xvasprintf.c
+m4/strerrorname_np.m4
 
 Depends-on:
+extensions
 stdio
-c-vasprintf
+c-vazsprintf
 xalloc-die
 
 configure.ac:
+gl_OPTIONAL_STRERRORNAME_NP
 
 Makefile.am:
 lib_SOURCES += c-xasprintf.c c-xvasprintf.c
@@ -23,4 +26,4 @@ License:
 GPL
 
 Maintainer:
-Ben Pfaff
+all

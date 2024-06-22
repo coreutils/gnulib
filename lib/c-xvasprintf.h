@@ -17,7 +17,8 @@
 #ifndef _C_XVASPRINTF_H
 #define _C_XVASPRINTF_H
 
-/* This file uses _GL_ATTRIBUTE_FORMAT, _GL_ATTRIBUTE_MALLOC.  */
+/* This file uses _GL_ATTRIBUTE_FORMAT, _GL_ATTRIBUTE_MALLOC,
+  _GL_ATTRIBUTE_RETURNS_NONNULL.  */
 #if !_GL_CONFIG_H_INCLUDED
  #error "Please include config.h first."
 #endif
@@ -34,22 +35,30 @@
 extern "C" {
 #endif
 
-/* Write formatted output to a string dynamically allocated with malloc(),
-   and return it.  Upon [ENOMEM] memory allocation error, call xalloc_die.
-   On some other error
-     - [EOVERFLOW] resulting string length is > INT_MAX,
+/* Prints formatted output to a string dynamically allocated with malloc(),
+   and returns it.  Upon [ENOMEM] memory allocation error, it calls xalloc_die.
+
+   It is the responsibility of the programmer to ensure that
+     - the format string is valid,
+     - the format string does not use %ls or %lc directives, and
+     - all widths in the format string and passed as arguments are >= -INT_MAX
+       and <= INT_MAX,
+   so that other errors
      - [EINVAL] invalid format string,
      - [EILSEQ] error during conversion between wide and multibyte characters,
-   return NULL.
+     - [EOVERFLOW] some specified width is > INT_MAX,
+   cannot occur.
 
    Formatting takes place in the C locale, that is, the decimal point
    used in floating-point formatting directives is always '.'. */
 extern char *c_xasprintf (const char *format, ...)
   _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_STANDARD, 1, 2))
-  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE;
+  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE
+  _GL_ATTRIBUTE_RETURNS_NONNULL;
 extern char *c_xvasprintf (const char *format, va_list args)
   _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_STANDARD, 1, 0))
-  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE;
+  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE
+  _GL_ATTRIBUTE_RETURNS_NONNULL;
 
 #ifdef __cplusplus
 }

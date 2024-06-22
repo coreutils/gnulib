@@ -21,6 +21,8 @@
 
 #include <errno.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #include "c-vasprintf.h"
 #include "xalloc.h"
@@ -30,11 +32,38 @@ c_xvasprintf (const char *format, va_list args)
 {
   char *result;
 
-  if (c_vasprintf (&result, format, args) < 0)
+  if (c_vazsprintf (&result, format, args) < 0)
     {
       if (errno == ENOMEM)
         xalloc_die ();
-      return NULL;
+      else
+        {
+          /* The programmer ought to have ensured that none of the other errors
+             can occur.  */
+          int err = errno;
+          char errbuf[20];
+          const char *errname;
+#if HAVE_WORKING_STRERRORNAME_NP
+          errname = strerrorname_np (err);
+          if (errname == NULL)
+#else
+          if (err == EINVAL)
+            errname = "EINVAL";
+          else if (err == EILSEQ)
+            errname = "EILSEQ";
+          else if (err == EOVERFLOW)
+            errname = "EOVERFLOW";
+          else
+#endif
+            {
+              sprintf (errbuf, "%d", err);
+              errname = errbuf;
+            }
+          fprintf (stderr, "c_vasprintf failed! format=\"%s\", errno=%s\n",
+                   format, errname);
+          fflush (stderr);
+          abort ();
+        }
     }
 
   return result;
