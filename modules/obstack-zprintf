@@ -1,0 +1,26 @@
+Description:
+Formatted printing into an obstack (without INT_MAX limitation).
+
+Files:
+lib/obstack_zprintf.c
+lib/obstack_printf.c
+
+Depends-on:
+obstack
+stdio
+vasnprintf
+
+configure.ac:
+gl_STDIO_MODULE_INDICATOR([obstack-zprintf])
+
+Makefile.am:
+lib_SOURCES += obstack_zprintf.c
+
+Include:
+<stdio.h>
+
+License:
+GPL
+
+Maintainer:
+all

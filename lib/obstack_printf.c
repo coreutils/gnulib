@@ -26,20 +26,26 @@
 #include <stdarg.h>
 #include <stdlib.h>
 
+#ifndef RESULT_TYPE
+# define RESULT_TYPE int
+# define OBSTACK_PRINTF obstack_printf
+# define OBSTACK_VPRINTF obstack_vprintf
+#endif
+
 /* Grow an obstack with formatted output.  Return the number of bytes
    added to OBS.  No trailing nul byte is added, and the object should
    be closed with obstack_finish before use.
 
    Upon memory allocation error, call obstack_alloc_failed_handler.
    Upon other error, return -1.  */
-int
-obstack_printf (struct obstack *obs, const char *format, ...)
+RESULT_TYPE
+OBSTACK_PRINTF (struct obstack *obs, const char *format, ...)
 {
   va_list args;
-  int result;
+  RESULT_TYPE result;
 
   va_start (args, format);
-  result = obstack_vprintf (obs, format, args);
+  result = OBSTACK_VPRINTF (obs, format, args);
   va_end (args);
   return result;
 }
@@ -50,8 +56,8 @@ obstack_printf (struct obstack *obs, const char *format, ...)
 
    Upon memory allocation error, call obstack_alloc_failed_handler.
    Upon other error, return -1.  */
-int
-obstack_vprintf (struct obstack *obs, const char *format, va_list args)
+RESULT_TYPE
+OBSTACK_VPRINTF (struct obstack *obs, const char *format, va_list args)
 {
   /* If we are close to the end of the current obstack chunk, use a
      stack-allocated buffer and copy, to reduce the likelihood of a

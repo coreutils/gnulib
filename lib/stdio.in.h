@@ -1075,13 +1075,39 @@ _GL_CXXALIASWARN (getw);
 # endif
 #endif
 
+#if @GNULIB_OBSTACK_ZPRINTF@
+struct obstack;
+/* Grows an obstack with formatted output.  Returns the number of
+   bytes added to OBS.  No trailing nul byte is added, and the
+   object should be closed with obstack_finish before use.
+   Upon memory allocation error, calls obstack_alloc_failed_handler.
+   Upon other error, returns -1 with errno set.
+
+   Failure code EOVERFLOW can only occur when a width > INT_MAX is used.
+   Therefore, if the format string is valid and does not use %ls/%lc
+   directives nor widths, the only possible failure code is through
+   obstack_alloc_failed_handler.  */
+_GL_FUNCDECL_SYS (obstack_zprintf, ptrdiff_t,
+                  (struct obstack *obs, const char *format, ...)
+                  _GL_ATTRIBUTE_FORMAT_PRINTF_STANDARD (2, 3)
+                  _GL_ARG_NONNULL ((1, 2)));
+_GL_CXXALIAS_SYS (obstack_zprintf, ptrdiff_t,
+                  (struct obstack *obs, const char *format, ...));
+_GL_FUNCDECL_SYS (obstack_vzprintf, ptrdiff_t,
+                  (struct obstack *obs, const char *format, va_list args)
+                  _GL_ATTRIBUTE_FORMAT_PRINTF_STANDARD (2, 0)
+                  _GL_ARG_NONNULL ((1, 2)));
+_GL_CXXALIAS_SYS (obstack_vzprintf, ptrdiff_t,
+                  (struct obstack *obs, const char *format, va_list args));
+#endif
+
 #if @GNULIB_OBSTACK_PRINTF@ || @GNULIB_OBSTACK_PRINTF_POSIX@
 struct obstack;
-/* Grow an obstack with formatted output.  Return the number of
+/* Grows an obstack with formatted output.  Returns the number of
    bytes added to OBS.  No trailing nul byte is added, and the
-   object should be closed with obstack_finish before use.  Upon
-   memory allocation error, call obstack_alloc_failed_handler.  Upon
-   other error, return -1.  */
+   object should be closed with obstack_finish before use.
+   Upon memory allocation error, calls obstack_alloc_failed_handler.
+   Upon other error, returns -1.  */
 # if @REPLACE_OBSTACK_PRINTF@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define obstack_printf rpl_obstack_printf
