@@ -1789,6 +1789,11 @@ _GL_CXXALIAS_SYS (vzsnprintf, ptrdiff_t,
 #endif
 
 #if @GNULIB_VSNPRINTF@
+/* Prints formatted output to string STR.  Similar to vsprintf, but the
+   additional parameter SIZE limits how much is written into STR.
+   STR may be NULL, in which case nothing will be written.
+   Returns the string length of the formatted string (which may be larger
+   than SIZE).  Upon failure, returns a negative value.  */
 # if @REPLACE_VSNPRINTF@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define vsnprintf rpl_vsnprintf
