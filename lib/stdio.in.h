@@ -1433,6 +1433,25 @@ _GL_CXXALIASWARN (scanf);
 # endif
 #endif
 
+#if @GNULIB_ZSNPRINTF@
+/* Prints formatted output to string STR.  Similar to sprintf, but the
+   additional parameter SIZE limits how much is written into STR.
+   STR may be NULL, in which case nothing will be written.
+   Returns the string length of the formatted string (which may be larger
+   than SIZE).  Upon failure, returns -1 with errno set.
+   Failure code EOVERFLOW can only occur when a width > INT_MAX is used.
+   Therefore, if the format string is valid and does not use %ls/%lc
+   directives nor widths, the only possible failure code is ENOMEM.  */
+_GL_FUNCDECL_SYS (zsnprintf, ptrdiff_t,
+                  (char *restrict str, size_t size,
+                   const char *restrict format, ...)
+                  _GL_ATTRIBUTE_FORMAT_PRINTF_STANDARD (3, 4)
+                  _GL_ARG_NONNULL ((3)));
+_GL_CXXALIAS_SYS (zsnprintf, ptrdiff_t,
+                  (char *restrict str, size_t size,
+                   const char *restrict format, ...));
+#endif
+
 #if @GNULIB_SNPRINTF@
 # if @REPLACE_SNPRINTF@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
