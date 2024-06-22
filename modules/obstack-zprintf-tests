@@ -1,0 +1,15 @@
+Files:
+tests/test-obstack-zprintf.c
+tests/test-obstack-printf.h
+tests/signature.h
+tests/macros.h
+
+Depends-on:
+xalloc
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-obstack-zprintf
+check_PROGRAMS += test-obstack-zprintf
+test_obstack_zprintf_LDADD = $(LDADD) @LIBINTL@

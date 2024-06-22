@@ -1,5 +1,6 @@
 Files:
 tests/test-obstack-printf.c
+tests/test-obstack-printf.h
 tests/signature.h
 tests/macros.h
 
