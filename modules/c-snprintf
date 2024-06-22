@@ -6,8 +6,9 @@ lib/c-snprintf.h
 lib/c-snprintf.c
 
 Depends-on:
+stdint
 stdio
-c-vasnprintf
+c-vzsnprintf
 
 configure.ac:
 AC_REQUIRE([AC_C_RESTRICT])
@@ -19,7 +20,7 @@ Include:
 "c-snprintf.h"
 
 License:
-GPL
+LGPLv2+
 
 Maintainer:
-Ben Pfaff
+all
