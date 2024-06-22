@@ -18,7 +18,7 @@ stdio
 nocrash
 printf-safe
 multiarch
-vasnprintf      [test $REPLACE_SPRINTF = 1]
+vzsprintf       [test $REPLACE_SPRINTF = 1]
 isnand-nolibm   [test $REPLACE_SPRINTF = 1]
 isnanl-nolibm   [test $REPLACE_SPRINTF = 1]
 frexp-nolibm    [test $REPLACE_SPRINTF = 1]

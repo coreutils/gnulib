@@ -1521,6 +1521,9 @@ _GL_CXXALIAS_SYS (zsprintf, ptrdiff_t,
    GNULIB_POSIXCHECK is defined.  */
 
 #if @GNULIB_SPRINTF_POSIX@
+/* Prints formatted output to string STR.
+   Returns the string length of the formatted string.  Upon failure,
+   returns a negative value.  */
 # if @REPLACE_SPRINTF@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define sprintf rpl_sprintf
