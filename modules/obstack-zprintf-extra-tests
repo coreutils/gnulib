@@ -1,0 +1,17 @@
+Status:
+longrunning-test
+
+Files:
+tests/test-obstack-zprintf-big.c
+tests/macros.h
+
+Depends-on:
+physmem
+
+configure.ac:
+AC_CHECK_FUNCS_ONCE([setrlimit])
+
+Makefile.am:
+TESTS += test-obstack-zprintf-big
+check_PROGRAMS += test-obstack-zprintf-big
+test_obstack_zprintf_big_LDADD = $(LDADD) @LIBINTL@
