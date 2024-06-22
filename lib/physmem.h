@@ -39,7 +39,7 @@ double physmem_available (void);
    aggressivity.
    For AGGRESSIVITY == 0.0, the result is like physmem_available (): the amount
    of memory the application can use without hindering any other process.
-   For AGGRESSIVITY == 1,0, the result is the amount of memory the application
+   For AGGRESSIVITY == 1.0, the result is the amount of memory the application
    can use, while causing memory shortage to other processes, but without
    bringing the machine into an out-of-memory state.
    Values in between, for example AGGRESSIVITY == 0.5, are a reasonable middle
