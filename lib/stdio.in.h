@@ -1453,6 +1453,11 @@ _GL_CXXALIAS_SYS (zsnprintf, ptrdiff_t,
 #endif
 
 #if @GNULIB_SNPRINTF@
+/* Prints formatted output to string STR.  Similar to sprintf, but the
+   additional parameter SIZE limits how much is written into STR.
+   STR may be NULL, in which case nothing will be written.
+   Returns the string length of the formatted string (which may be larger
+   than SIZE).  Upon failure, returns a negative value.  */
 # if @REPLACE_SNPRINTF@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define snprintf rpl_snprintf
