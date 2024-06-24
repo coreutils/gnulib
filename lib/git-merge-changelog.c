@@ -962,6 +962,9 @@ conflict_write (FILE *fp, struct conflict *c)
   idx_t i;
 
   /* Use the same syntax as git's default merge driver.
+     The spaces after <<<<<<< and >>>>>>> are for compatibility with
+     git/rerere.c, function 'is_cmarker'.  Usually they would be followed by
+     branch or version names, but this info is not available to us here.
      Don't indent the contents of the entries (with things like ">" or "-"),
      otherwise the user needs more textual editing to resolve the conflict.  */
   fputs ("<<<<<<< \n", fp);
