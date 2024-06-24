@@ -13,6 +13,7 @@ m4/vasnwprintf-gnu.m4
 
 Depends-on:
 vasnwprintf-posix
+mixin/printf-gnu
 
 configure.ac:
 gl_FUNC_VASNWPRINTF_GNU

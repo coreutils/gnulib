@@ -12,6 +12,7 @@ m4/sprintf-gnu.m4
 
 Depends-on:
 sprintf-posix
+mixin/printf-gnu
 
 configure.ac:
 gl_FUNC_SPRINTF_GNU

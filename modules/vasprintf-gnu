@@ -12,6 +12,7 @@ m4/vasprintf-gnu.m4
 
 Depends-on:
 vasprintf-posix
+mixin/printf-gnu
 
 configure.ac:
 gl_FUNC_VASPRINTF_GNU

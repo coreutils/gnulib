@@ -12,6 +12,7 @@ m4/fprintf-gnu.m4
 
 Depends-on:
 fprintf-posix
+mixin/printf-gnu
 
 configure.ac:
 gl_FUNC_FPRINTF_GNU

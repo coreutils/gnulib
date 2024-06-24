@@ -13,6 +13,7 @@ m4/vprintf-gnu.m4
 
 Depends-on:
 vprintf-posix
+mixin/printf-gnu
 
 configure.ac:
 gl_FUNC_VPRINTF_GNU

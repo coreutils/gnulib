@@ -1,0 +1,21 @@
+Description:
+Module dependencies that are needed to compile lib/vasnprintf.c
+with all extras for POSIX compliance and GNU compatibility.
+
+Files:
+
+Depends-on:
+mixin/printf-posix
+
+configure.ac:
+# Conditionally invoke gl_PREREQ_VASNPRINTF_WITH_GNU_EXTRAS.
+
+Makefile.am:
+
+Include:
+
+License:
+LGPLv2+
+
+Maintainer:
+all

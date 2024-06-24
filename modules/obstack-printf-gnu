@@ -12,6 +12,7 @@ m4/obstack-printf-gnu.m4
 
 Depends-on:
 obstack-printf-posix
+mixin/printf-gnu
 
 configure.ac:
 gl_FUNC_OBSTACK_PRINTF_GNU

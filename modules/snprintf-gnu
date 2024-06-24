@@ -13,6 +13,7 @@ m4/snprintf-gnu.m4
 
 Depends-on:
 snprintf-posix
+mixin/printf-gnu
 
 configure.ac:
 gl_FUNC_SNPRINTF_GNU
