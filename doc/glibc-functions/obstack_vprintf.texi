@@ -32,7 +32,7 @@ mingw, MSVC 14.
 @item
 printf @code{"%f"}, @code{"%e"}, @code{"%g"} of Infinity and NaN yields an
 incorrect result on some platforms:
-AIX 5.2, Solaris 11.0, mingw, MSVC 14.
+AIX 7.3, Solaris 11.4, mingw, MSVC 14.
 @item
 This function does not support the @samp{a} and @samp{A} directives on some
 platforms:
@@ -68,7 +68,7 @@ macOS 14, FreeBSD 14.0, NetBSD 10.0, OpenBSD 7.5, AIX 7.3, Solaris 11.4.
 @item
 printf @code{"%010f"} of NaN and Infinity yields an incorrect result (padded
 with zeroes) on some platforms:
-Mac OS X 10.5, FreeBSD 6.0, NetBSD 5.0, AIX 5.2, Solaris 11.0, Cygwin 1.5.x, mingw, MSVC/clang.
+Mac OS X 10.5, FreeBSD 6.0, NetBSD 5.0, AIX 7.3, Solaris 11.4, Cygwin 1.5.x, mingw, MSVC/clang.
 @item
 printf @code{"%#.0x"} or @code{"%#.0X"} with a zero argument yields an
 incorrect result (non-empty) on some platforms:
