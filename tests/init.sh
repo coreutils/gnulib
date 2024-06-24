@@ -338,7 +338,7 @@ mktempd_ ()
   esac
 
   case $template_ in
-  -*) fail _ \
+  -*) fail_ \
        "invalid template: $template_ (must not begin with '-')";;
   *XXXX) ;;
   *) fail_ \
