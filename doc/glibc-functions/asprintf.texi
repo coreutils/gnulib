@@ -39,7 +39,7 @@ Solaris 11.0.
 @item
 This function does not support the @samp{a} and @samp{A} directives on some
 platforms:
-glibc-2.3.6, Mac OS X 10.5, NetBSD 10.0, OpenBSD 4.0, Solaris 11.4, Cygwin 1.5.x.
+FreeBSD 5.2.1, OpenBSD 4.0, Solaris 11.4, Cygwin 1.5.x.
 @item
 This function does not support the @samp{b} directive, required by ISO C23,
 on some platforms:
@@ -65,7 +65,7 @@ NetBSD 3.0, Cygwin 1.5.24.
 @item
 This function does not round the argument of the @samp{a} directive correctly
 on some platforms:
-macOS 14, FreeBSD 14.0.
+macOS 14, FreeBSD 14.0, NetBSD 10.0, OpenBSD 7.5, AIX 7.3, Solaris 11.4.
 @item
 printf @code{"%010f"} of NaN and Infinity yields an incorrect result (padded
 with zeroes) on some platforms:

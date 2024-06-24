@@ -28,7 +28,7 @@ Solaris 11.4.
 @item
 This function does not support the @samp{a} and @samp{A} directives on some
 platforms:
-glibc-2.3.6, Solaris 11.4.
+Solaris 11.4.
 @item
 This function does not support the @samp{b} directive, required by ISO C23,
 on some platforms:
@@ -38,6 +38,10 @@ AIX 7.2, Solaris 11.4, Cygwin 2.9.0.
 This function does not support precisions in the @samp{ls} directive correctly
 on some platforms:
 Solaris 11.4.
+@item
+This function does not round the argument of the @samp{a} directive correctly
+on some platforms:
+macOS 14, FreeBSD 14.0, NetBSD 10.0, OpenBSD 7.5, AIX 7.3, Solaris 11.4.
 @item
 printf @code{"%010f"} of NaN and Infinity yields an incorrect result (padded
 with zeroes, or wrong capitalization) on some platforms:

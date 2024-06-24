@@ -28,7 +28,7 @@ AIX 5.2, Solaris 11.4, mingw, MSVC 14.
 @item
 This function does not support the @samp{a} and @samp{A} directives on some
 platforms:
-glibc-2.3.6, Mac OS X 10.5, NetBSD 10.0, OpenBSD 4.0, AIX 5.2, HP-UX 11,
+FreeBSD 5.2.1, OpenBSD 4.0, AIX 5.2, HP-UX 11,
 Solaris 11.4, Cygwin 1.5.x, mingw, MSVC 14.
 @item
 This function does not support the @samp{b} directive, required by ISO C23,
@@ -56,7 +56,7 @@ NetBSD 3.0, Cygwin 1.5.24, mingw, MSVC 14.
 @item
 This function does not round the argument of the @samp{a} directive correctly
 on some platforms:
-macOS 14, FreeBSD 14.0.
+macOS 14, FreeBSD 14.0, NetBSD 10.0, OpenBSD 7.5, AIX 7.3, Solaris 11.4.
 @item
 printf @code{"%010f"} of NaN and Infinity yields an incorrect result (padded
 with zeroes, or wrong capitalization) on some platforms:
