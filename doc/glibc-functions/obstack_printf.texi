@@ -17,7 +17,7 @@ Portability problems fixed by either Gnulib module
 @itemize
 @item
 This function is missing on all non-glibc platforms:
-macOS 14, FreeBSD 14.0, NetBSD 10.0, OpenBSD 6.7, Minix 3.1.8, AIX 5.1, HP-UX 11, Solaris 11.4, Cygwin 2.9, mingw, MSVC 14, Android 9.0.
+musl libc, macOS 14, FreeBSD 14.0, NetBSD 10.0, OpenBSD 7.5, Minix 3.1.8, AIX 7.3, HP-UX 11, Solaris 11.4, Cygwin 3.5.3, mingw, MSVC 14, Android 9.0.
 @end itemize
 
 Portability problems fixed by either Gnulib module @code{obstack-printf-posix} or @code{obstack-printf-gnu}:
