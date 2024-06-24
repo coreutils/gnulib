@@ -1,0 +1,28 @@
+Description:
+Module dependencies that are needed to compile lib/vasnprintf.c
+with all extras for POSIX compliance.
+
+Files:
+
+Depends-on:
+isnand-nolibm
+isnanl-nolibm
+frexp-nolibm
+frexpl-nolibm
+printf-frexp
+printf-frexpl
+signbit
+fpucw
+
+configure.ac:
+# Conditionally invoke gl_PREREQ_VASNPRINTF_WITH_POSIX_EXTRAS.
+
+Makefile.am:
+
+Include:
+
+License:
+LGPLv2+
+
+Maintainer:
+all

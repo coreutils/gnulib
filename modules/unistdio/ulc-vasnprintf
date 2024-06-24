@@ -29,13 +29,7 @@ unistr/u32-strmblen
 attribute
 stdint
 mbsnlen
-isnand-nolibm
-isnanl-nolibm
-frexpl-nolibm
-printf-frexp
-printf-frexpl
-signbit
-fpucw
+mixin/printf-posix
 nocrash
 printf-safe
 alloca-opt

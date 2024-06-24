@@ -18,17 +18,10 @@ stdio
 nocrash
 printf-safe
 multiarch
-vzsprintf       [test $REPLACE_SPRINTF = 1]
-isnand-nolibm   [test $REPLACE_SPRINTF = 1]
-isnanl-nolibm   [test $REPLACE_SPRINTF = 1]
-frexp-nolibm    [test $REPLACE_SPRINTF = 1]
-frexpl-nolibm   [test $REPLACE_SPRINTF = 1]
-printf-frexp    [test $REPLACE_SPRINTF = 1]
-printf-frexpl   [test $REPLACE_SPRINTF = 1]
-signbit         [test $REPLACE_SPRINTF = 1]
-fpucw           [test $REPLACE_SPRINTF = 1]
-stdint          [test $REPLACE_SPRINTF = 1]
-errno           [test $REPLACE_SPRINTF = 1]
+vzsprintf          [test $REPLACE_SPRINTF = 1]
+mixin/printf-posix [test $REPLACE_SPRINTF = 1]
+stdint             [test $REPLACE_SPRINTF = 1]
+errno              [test $REPLACE_SPRINTF = 1]
 
 configure.ac:
 gl_FUNC_SPRINTF_POSIX

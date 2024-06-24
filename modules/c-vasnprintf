@@ -26,13 +26,7 @@ attribute
 limits-h
 stdint
 stdio
-isnand-nolibm
-isnanl-nolibm
-frexpl-nolibm
-printf-frexp
-printf-frexpl
-signbit
-fpucw
+mixin/printf-posix
 free-posix
 nocrash
 printf-safe

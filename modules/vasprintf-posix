@@ -14,15 +14,8 @@ m4/math_h.m4
 
 Depends-on:
 vasprintf
-vasnprintf     [test $HAVE_VASPRINTF = 0 || test $REPLACE_VASPRINTF = 1]
-isnand-nolibm
-isnanl-nolibm
-frexp-nolibm
-frexpl-nolibm
-printf-frexp
-printf-frexpl
-signbit
-fpucw
+vasnprintf         [test $HAVE_VASPRINTF = 0 || test $REPLACE_VASPRINTF = 1]
+mixin/printf-posix [test $HAVE_VASPRINTF = 0 || test $REPLACE_VASPRINTF = 1]
 nocrash
 printf-safe
 multiarch

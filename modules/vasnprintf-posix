@@ -15,14 +15,7 @@ m4/math_h.m4
 
 Depends-on:
 vasnprintf
-isnand-nolibm
-isnanl-nolibm
-frexp-nolibm
-frexpl-nolibm
-printf-frexp
-printf-frexpl
-signbit
-fpucw
+mixin/printf-posix
 nocrash
 printf-safe
 multiarch
