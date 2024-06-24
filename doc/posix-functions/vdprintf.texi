@@ -32,8 +32,8 @@ Solaris 11.4.
 @item
 This function does not support the @samp{b} directive, required by ISO C23,
 on some platforms:
-glibc 2.34, musl libc, macOS 14, FreeBSD 13.2, NetBSD 10.0, OpenBSD 7.2,
-AIX 7.2, Solaris 11.4, Cygwin 2.9.0.
+glibc 2.34, musl libc, macOS 14, FreeBSD 13.2, NetBSD 10.0, OpenBSD 7.5,
+AIX 7.3, HP-UX 11, Solaris 11.4, Cygwin 3.5.3, mingw, MSVC 14, Android 9.0.
 @item
 This function does not support precisions in the @samp{ls} directive correctly
 on some platforms:
