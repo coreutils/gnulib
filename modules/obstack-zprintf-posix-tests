@@ -1,0 +1,14 @@
+Files:
+tests/test-obstack-zprintf-posix.c
+tests/infinity.h
+tests/macros.h
+
+Depends-on:
+nan
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-obstack-zprintf-posix
+check_PROGRAMS += test-obstack-zprintf-posix
+test_obstack_zprintf_posix_LDADD = $(LDADD) @LIBINTL@
