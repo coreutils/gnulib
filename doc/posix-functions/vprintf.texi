@@ -87,7 +87,7 @@ Portability problems fixed by Gnulib module @code{vprintf-gnu}:
 @itemize
 @item
 This function does not support the @samp{B} directive on some platforms:
-glibc 2.34, macOS 14, FreeBSD 13.2, NetBSD 10.0, OpenBSD 7.2, AIX 7.2, Solaris 11.4, and others.
+glibc 2.34, musl libc, macOS 14, FreeBSD 13.2, NetBSD 10.0, OpenBSD 7.5, AIX 7.3, Solaris 11.4, Cygwin 3.5.3, mingw, MSVC, Android 9.0.
 @end itemize
 
 Portability problems fixed by either Gnulib module @code{vprintf-posix} or @code{vprintf-gnu}

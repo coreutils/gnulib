@@ -66,6 +66,9 @@ on some platforms:
 glibc 2.34, musl libc, macOS 14, FreeBSD 13.2, NetBSD 10.0, OpenBSD 7.5,
 AIX 7.3, HP-UX 11, Solaris 11.4, Cygwin 3.5.3, mingw, MSVC 14, Android 9.0.
 @item
+This function does not support the @samp{B} directive on some platforms:
+glibc 2.34, musl libc, macOS 14, FreeBSD 13.2, NetBSD 10.0, OpenBSD 7.5, AIX 7.3, Solaris 11.4, Cygwin 3.5.3, mingw, MSVC, Android 9.0.
+@item
 printf @code{"%#.0x"} or @code{"%#.0X"} with a zero argument yields an
 incorrect result (non-empty) on some platforms:
 Mac OS X 10.6.
