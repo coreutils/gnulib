@@ -54,7 +54,7 @@ Include:
 "c-vasnprintf.h"
 
 License:
-GPL
+LGPLv2+
 
 Maintainer:
-Ben Pfaff
+all
