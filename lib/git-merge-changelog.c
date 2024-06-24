@@ -964,13 +964,13 @@ conflict_write (FILE *fp, struct conflict *c)
   /* Use the same syntax as git's default merge driver.
      Don't indent the contents of the entries (with things like ">" or "-"),
      otherwise the user needs more textual editing to resolve the conflict.  */
-  fputs ("<<<<<<<\n", fp);
+  fputs ("<<<<<<< \n", fp);
   for (i = 0; i < c->num_old_entries; i++)
     entry_write (fp, c->old_entries[i]);
   fputs ("=======\n", fp);
   for (i = 0; i < c->num_modified_entries; i++)
     entry_write (fp, c->modified_entries[i]);
-  fputs (">>>>>>>\n", fp);
+  fputs (">>>>>>> \n", fp);
 }
 
 /* Long options.  */
