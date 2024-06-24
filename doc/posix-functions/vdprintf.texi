@@ -19,8 +19,7 @@ Portability problems fixed by either Gnulib module @code{vdprintf-posix} or @cod
 This function does not support size specifiers as in C23 (@code{w8},
 @code{w16}, @code{w32}, @code{w64}, @code{wf8}, @code{wf16}, @code{wf32},
 @code{wf64}) on some platforms:
-glibc 2.37, musl libc, macOS 14, FreeBSD 13.2, NetBSD 10.0, OpenBSD 7.2,
-AIX 7.2, Solaris 11.4, Cygwin 2.9.0.
+glibc 2.37, musl libc, macOS 14, FreeBSD 13.2, NetBSD 10.0, OpenBSD 7.5, AIX 7.3, Solaris 11.4, Cygwin 3.5.3, mingw, MSVC, Android 9.0.
 @item
 printf @code{"%f"}, @code{"%e"}, @code{"%g"} of Infinity and NaN yields an
 incorrect result on some platforms:
