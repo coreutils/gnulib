@@ -1,0 +1,12 @@
+Files:
+tests/test-obstack-zprintf-gnu.c
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-obstack-zprintf-gnu
+check_PROGRAMS += test-obstack-zprintf-gnu
+test_obstack_zprintf_gnu_LDADD = $(LDADD) @LIBINTL@
