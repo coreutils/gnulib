@@ -1,0 +1,11 @@
+Files:
+tests/test-vazsprintf-gnu.c
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-vazsprintf-gnu
+check_PROGRAMS += test-vazsprintf-gnu
