@@ -1,0 +1,12 @@
+Files:
+tests/test-zsnprintf-gnu.c
+tests/test-zsnprintf-gnu.h
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-zsnprintf-gnu
+check_PROGRAMS += test-zsnprintf-gnu
