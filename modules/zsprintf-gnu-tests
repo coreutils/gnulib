@@ -1,0 +1,12 @@
+Files:
+tests/test-zsprintf-gnu.c
+tests/test-zsprintf-gnu.h
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-zsprintf-gnu
+check_PROGRAMS += test-zsprintf-gnu
