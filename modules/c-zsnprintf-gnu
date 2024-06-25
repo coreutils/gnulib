@@ -1,0 +1,23 @@
+Description:
+c_zsnprintf() function
+with POSIX compliant and GNU compatible format string interpretation
+
+Files:
+
+Depends-on:
+c-zsnprintf
+mixin/printf-gnu
+
+configure.ac:
+gl_PREREQ_VASNPRINTF_WITH_GNU_EXTRAS
+
+Makefile.am:
+
+Include:
+"c-snprintf.h"
+
+License:
+LGPLv2+
+
+Maintainer:
+all
