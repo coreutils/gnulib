@@ -45,6 +45,10 @@ multiarch
 
 configure.ac:
 AC_REQUIRE([AC_C_RESTRICT])
+AC_LIBOBJ([printf-args])
+AC_LIBOBJ([printf-parse])
+gl_PREREQ_PRINTF_ARGS
+gl_PREREQ_PRINTF_PARSE
 gl_PREREQ_VASNPRINTF_WITH_POSIX_EXTRAS
 
 Makefile.am:
