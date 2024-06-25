@@ -31,24 +31,7 @@
 
 #include "macros.h"
 
-static void
-test_function (ptrdiff_t (*my_azsprintf) (char **, const char *, ...))
-{
-  char result[5000];
-
-  /* Test the support of the 'B' conversion specifier for binary output of
-     integers.  */
-
-  { /* This test would fail on all platforms other than glibc ≥ 2.35.  */
-    char *result;
-    ptrdiff_t retval =
-      my_azsprintf (&result, "%#B %d", 12345, 33, 44, 55);
-    ASSERT (result != NULL);
-    ASSERT (strcmp (result, "0B11000000111001 33") == 0);
-    ASSERT (retval == strlen (result));
-    free (result);
-  }
-}
+#include "test-vazsprintf-gnu.h"
 
 static ptrdiff_t
 my_azsprintf (char **result, const char *format, ...)
