@@ -26,10 +26,10 @@ int
 idpriv_drop (void)
 {
 #if HAVE_GETUID
-  int uid = getuid ();
+  uid_t uid = getuid ();
 #endif
 #if HAVE_GETGID
-  int gid = getgid ();
+  gid_t gid = getgid ();
 #endif
 
   /* Drop the gid privilege first, because in some cases the gid privilege
