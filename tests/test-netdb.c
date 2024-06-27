@@ -17,7 +17,11 @@
 /* Written by Simon Josefsson <simon@josefsson.org>, 2008.  */
 
 #include <config.h>
+
 #include <netdb.h>
+
+static_assert (NI_MAXHOST == 1025);
+static_assert (NI_MAXSERV == 32);
 
 /* Check that the 'struct hostent' type is defined.  */
 struct hostent t1;

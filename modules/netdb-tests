@@ -3,6 +3,7 @@ tests/test-netdb.c
 
 Depends-on:
 netdb-c++-tests
+assert-h
 
 configure.ac:
 
