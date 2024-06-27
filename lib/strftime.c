@@ -82,16 +82,11 @@
 #endif
 
 #include <limits.h>
+#include <locale.h>
 #include <stdckdint.h>
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
-
-#if (((defined __NetBSD__ || defined __sun) && REQUIRE_GNUISH_STRFTIME_AM_PM) \
-     || (defined _WIN32 && !defined __CYGWIN__) \
-     || (USE_C_LOCALE && HAVE_STRFTIME_L))
-# include <locale.h>
-#endif
 
 #if (defined __NetBSD__ || defined __sun) && REQUIRE_GNUISH_STRFTIME_AM_PM
 # include "localename.h"
