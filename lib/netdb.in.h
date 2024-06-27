@@ -54,21 +54,13 @@
 /* Declarations for a platform that lacks <netdb.h>, or where it is
    incomplete.  */
 
-/* Maximumn length of a fully-qualified domain name.  */
-#ifndef NI_MAXHOST
-# define NI_MAXHOST 1025
-#elif NI_MAXHOST != 1025
-# undef NI_MAXHOST
-# define NI_MAXHOST 1025
-#endif
+/* Maximum length of a fully-qualified domain name.  */
+#undef NI_MAXHOST
+#define NI_MAXHOST 1025
 
-/* Maximumn length of a service.  */
-#ifndef NI_MAXSERV
-# define NI_MAXSERV 32
-#elif NI_MAXSERV != 32
-# undef NI_MAXSERV 32
-# define NI_MAXSERV 32
-#endif
+/* Maximum length of a service.  */
+#undef NI_MAXSERV
+#define NI_MAXSERV 32
 
 #if @GNULIB_GETADDRINFO@
 
