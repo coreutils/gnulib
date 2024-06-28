@@ -59,7 +59,7 @@
 /*
  * Condition check
  */
-static int cond_value = 0;
+static int cond_value;
 gl_cond_define_initialized(static, condtest)
 gl_lock_define_initialized(static, lockcond)
 
@@ -81,20 +81,26 @@ cond_routine (void *arg)
 static void
 test_cond ()
 {
-  int remain = 2;
   gl_thread_t thread;
 
   cond_value = 0;
 
+  /* Create a separate thread.  */
   thread = gl_thread_create (cond_routine, NULL);
-  do
-    {
-      yield ();
-      remain = sleep (remain);
-    }
-  while (remain);
 
-  /* signal condition */
+  /* Sleep for 2 seconds.  */
+  {
+    int remaining = 2;
+
+    do
+      {
+        yield ();
+       remaining = sleep (remaining);
+      }
+    while (remaining);
+  }
+
+  /* Tell one of the waiting threads (if any) to continue.  */
   gl_lock_lock (lockcond);
   cond_value = 1;
   gl_cond_signal (condtest);
@@ -110,8 +116,9 @@ test_cond ()
 /*
  * Timed Condition check
  */
-static int cond_timeout;
+static int cond_timed_out;
 
+/* Stores in *TS the current time plus 1 second.  */
 static void
 get_ts (struct timespec *ts)
 {
@@ -135,7 +142,7 @@ timedcond_routine (void *arg)
       get_ts (&ts);
       ret = glthread_cond_timedwait (&condtest, &lockcond, &ts);
       if (ret == ETIMEDOUT)
-        cond_timeout = 1;
+        cond_timed_out = 1;
     }
   gl_lock_unlock (lockcond);
 
@@ -145,20 +152,26 @@ timedcond_routine (void *arg)
 static void
 test_timedcond (void)
 {
-  int remain = 2;
   gl_thread_t thread;
 
-  cond_value = cond_timeout = 0;
+  cond_value = cond_timed_out = 0;
 
+  /* Create a separate thread.  */
   thread = gl_thread_create (timedcond_routine, NULL);
-  do
-    {
-      yield ();
-      remain = sleep (remain);
-    }
-  while (remain);
 
-  /* signal condition */
+  /* Sleep for 2 seconds.  */
+  {
+    int remaining = 2;
+
+    do
+      {
+        yield ();
+        remaining = sleep (remaining);
+      }
+    while (remaining);
+  }
+
+  /* Tell one of the waiting threads (if any) to continue.  */
   gl_lock_lock (lockcond);
   cond_value = 1;
   gl_cond_signal (condtest);
@@ -166,7 +179,7 @@ test_timedcond (void)
 
   gl_thread_join (thread, NULL);
 
-  if (!cond_timeout)
+  if (!cond_timed_out)
     abort ();
 }
 

@@ -59,7 +59,7 @@
 /*
  * Condition check
  */
-static int cond_value = 0;
+static int cond_value;
 static cnd_t condtest;
 static mtx_t lockcond;
 
@@ -81,25 +81,31 @@ cnd_wait_routine (void *arg)
 static void
 test_cnd_wait ()
 {
-  struct timespec remain;
   thrd_t thread;
   int ret;
 
-  remain.tv_sec = 2;
-  remain.tv_nsec = 0;
-
   cond_value = 0;
 
+  /* Create a separate thread.  */
   ASSERT (thrd_create (&thread, cnd_wait_routine, NULL) == thrd_success);
-  do
-    {
-      yield ();
-      ret = thrd_sleep (&remain, &remain);
-      ASSERT (ret >= -1);
-    }
-  while (ret == -1 && (remain.tv_sec != 0 || remain.tv_nsec != 0));
 
-  /* signal condition */
+  /* Sleep for 2 seconds.  */
+  {
+    struct timespec remaining;
+
+    remaining.tv_sec = 2;
+    remaining.tv_nsec = 0;
+
+    do
+      {
+        yield ();
+        ret = thrd_sleep (&remaining, &remaining);
+        ASSERT (ret >= -1);
+      }
+    while (ret == -1 && (remaining.tv_sec != 0 || remaining.tv_nsec != 0));
+  }
+
+  /* Tell one of the waiting threads (if any) to continue.  */
   ASSERT (mtx_lock (&lockcond) == thrd_success);
   cond_value = 1;
   ASSERT (cnd_signal (&condtest) == thrd_success);
@@ -115,8 +121,9 @@ test_cnd_wait ()
 /*
  * Timed Condition check
  */
-static int cond_timeout;
+static int cond_timed_out;
 
+/* Stores in *TS the current time plus 1 second.  */
 static void
 get_ts (struct timespec *ts)
 {
@@ -140,7 +147,7 @@ cnd_timedwait_routine (void *arg)
       get_ts (&ts);
       ret = cnd_timedwait (&condtest, &lockcond, &ts);
       if (ret == thrd_timedout)
-        cond_timeout = 1;
+        cond_timed_out = 1;
     }
   ASSERT (mtx_unlock (&lockcond) == thrd_success);
 
@@ -150,25 +157,31 @@ cnd_timedwait_routine (void *arg)
 static void
 test_cnd_timedwait (void)
 {
-  struct timespec remain;
   thrd_t thread;
   int ret;
 
-  remain.tv_sec = 2;
-  remain.tv_nsec = 0;
+  cond_value = cond_timed_out = 0;
 
-  cond_value = cond_timeout = 0;
-
+  /* Create a separate thread.  */
   ASSERT (thrd_create (&thread, cnd_timedwait_routine, NULL) == thrd_success);
-  do
-    {
-      yield ();
-      ret = thrd_sleep (&remain, &remain);
-      ASSERT (ret >= -1);
-    }
-  while (ret == -1 && (remain.tv_sec != 0 || remain.tv_nsec != 0));
 
-  /* signal condition */
+  /* Sleep for 2 seconds.  */
+  {
+    struct timespec remaining;
+
+    remaining.tv_sec = 2;
+    remaining.tv_nsec = 0;
+
+    do
+      {
+        yield ();
+        ret = thrd_sleep (&remaining, &remaining);
+        ASSERT (ret >= -1);
+      }
+    while (ret == -1 && (remaining.tv_sec != 0 || remaining.tv_nsec != 0));
+  }
+
+  /* Tell one of the waiting threads (if any) to continue.  */
   ASSERT (mtx_lock (&lockcond) == thrd_success);
   cond_value = 1;
   ASSERT (cnd_signal (&condtest) == thrd_success);
@@ -176,7 +189,7 @@ test_cnd_timedwait (void)
 
   ASSERT (thrd_join (thread, NULL) == thrd_success);
 
-  if (!cond_timeout)
+  if (!cond_timed_out)
     abort ();
 }
 

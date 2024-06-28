@@ -64,7 +64,7 @@
 /*
  * Condition check
  */
-static int cond_value = 0;
+static int cond_value;
 static pthread_cond_t condtest;
 static pthread_mutex_t lockcond;
 
@@ -86,25 +86,31 @@ pthread_cond_wait_routine (void *arg)
 static void
 test_pthread_cond_wait ()
 {
-  struct timespec remain;
   pthread_t thread;
   int ret;
 
-  remain.tv_sec = 2;
-  remain.tv_nsec = 0;
-
   cond_value = 0;
 
+  /* Create a separate thread.  */
   ASSERT (pthread_create (&thread, NULL, pthread_cond_wait_routine, NULL) == 0);
-  do
-    {
-      yield ();
-      ret = nanosleep (&remain, &remain);
-      ASSERT (ret >= -1);
-    }
-  while (ret == -1 && (remain.tv_sec != 0 || remain.tv_nsec != 0));
 
-  /* signal condition */
+  /* Sleep for 2 seconds.  */
+  {
+    struct timespec remaining;
+
+    remaining.tv_sec = 2;
+    remaining.tv_nsec = 0;
+
+    do
+      {
+        yield ();
+        ret = nanosleep (&remaining, &remaining);
+        ASSERT (ret >= -1);
+      }
+    while (ret == -1 && (remaining.tv_sec != 0 || remaining.tv_nsec != 0));
+  }
+
+  /* Tell one of the waiting threads (if any) to continue.  */
   ASSERT (pthread_mutex_lock (&lockcond) == 0);
   cond_value = 1;
   ASSERT (pthread_cond_signal (&condtest) == 0);
@@ -120,8 +126,9 @@ test_pthread_cond_wait ()
 /*
  * Timed Condition check
  */
-static int cond_timeout;
+static int cond_timed_out;
 
+/* Stores in *TS the current time plus 1 second.  */
 static void
 get_ts (struct timespec *ts)
 {
@@ -145,7 +152,7 @@ pthread_cond_timedwait_routine (void *arg)
       get_ts (&ts);
       ret = pthread_cond_timedwait (&condtest, &lockcond, &ts);
       if (ret == ETIMEDOUT)
-        cond_timeout = 1;
+        cond_timed_out = 1;
     }
   ASSERT (pthread_mutex_unlock (&lockcond) == 0);
 
@@ -155,26 +162,32 @@ pthread_cond_timedwait_routine (void *arg)
 static void
 test_pthread_cond_timedwait (void)
 {
-  struct timespec remain;
   pthread_t thread;
   int ret;
 
-  remain.tv_sec = 2;
-  remain.tv_nsec = 0;
+  cond_value = cond_timed_out = 0;
 
-  cond_value = cond_timeout = 0;
-
+  /* Create a separate thread.  */
   ASSERT (pthread_create (&thread, NULL, pthread_cond_timedwait_routine, NULL)
           == 0);
-  do
-    {
-      yield ();
-      ret = nanosleep (&remain, &remain);
-      ASSERT (ret >= -1);
-    }
-  while (ret == -1 && (remain.tv_sec != 0 || remain.tv_nsec != 0));
 
-  /* signal condition */
+  /* Sleep for 2 seconds.  */
+  {
+    struct timespec remaining;
+
+    remaining.tv_sec = 2;
+    remaining.tv_nsec = 0;
+
+    do
+      {
+        yield ();
+        ret = nanosleep (&remaining, &remaining);
+        ASSERT (ret >= -1);
+      }
+    while (ret == -1 && (remaining.tv_sec != 0 || remaining.tv_nsec != 0));
+  }
+
+  /* Tell one of the waiting threads (if any) to continue.  */
   ASSERT (pthread_mutex_lock (&lockcond) == 0);
   cond_value = 1;
   ASSERT (pthread_cond_signal (&condtest) == 0);
@@ -182,7 +195,7 @@ test_pthread_cond_timedwait (void)
 
   ASSERT (pthread_join (thread, NULL) == 0);
 
-  if (!cond_timeout)
+  if (!cond_timed_out)
     abort ();
 }
 
