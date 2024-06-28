@@ -12,7 +12,10 @@ Portability problems fixed by Gnulib:
 This function is not consistent with @code{gettimeofday} and @code{timespec_get}
 on some platforms:
 @c https://sourceware.org/bugzilla/show_bug.cgi?id=30200
-glibc 2.31 or newer on Linux, FreeBSD 12.2/sparc64, AIX 7.2, native Windows.
+glibc 2.31 or newer on Linux,
+@c Only seen on machines with 2 or more CPUs.
+FreeBSD 14.0,
+AIX 7.2, native Windows.
 Namely, in the first 1 to 2.5 milliseconds of every second (or, on AIX and
 Windows, in the first 5 milliseconds of every second), @code{time} returns
 a value that is one less than the @code{tv_sec} part of the return value of
