@@ -2,7 +2,8 @@
 @section @code{usleep}
 @findex usleep
 
-POSIX specification: @url{https://pubs.opengroup.org/onlinepubs/009695399/functions/usleep.html}
+Removed in POSIX.1-2008.
+POSIX.1-2004 specification: @url{https://pubs.opengroup.org/onlinepubs/009695399/functions/usleep.html}
 
 Gnulib module: usleep
 

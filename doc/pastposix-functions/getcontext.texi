@@ -2,7 +2,8 @@
 @section @code{getcontext}
 @findex getcontext
 
-POSIX specification: @url{https://pubs.opengroup.org/onlinepubs/009695399/functions/getcontext.html}
+Removed in POSIX.1-2008.
+POSIX.1-2004 specification: @url{https://pubs.opengroup.org/onlinepubs/009695399/functions/getcontext.html}
 
 Gnulib module: ---
 

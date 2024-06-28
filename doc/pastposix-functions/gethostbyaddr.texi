@@ -2,7 +2,8 @@
 @section @code{gethostbyaddr}
 @findex gethostbyaddr
 
-POSIX specification: @url{https://pubs.opengroup.org/onlinepubs/009695399/functions/gethostbyaddr.html}
+Removed in POSIX.1-2008.
+POSIX.1-2004 specification: @url{https://pubs.opengroup.org/onlinepubs/009695399/functions/gethostbyaddr.html}
 
 Gnulib module: ---
 
