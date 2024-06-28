@@ -59,7 +59,10 @@
 /*
  * Condition check
  */
-static int cond_value;
+
+/* Marked volatile so that different threads see the same value.  This is
+   good enough in practice, although in theory stdatomic.h should be used.  */
+static int volatile cond_value;
 static cnd_t condtest;
 static mtx_t lockcond;
 
@@ -121,7 +124,10 @@ test_cnd_wait ()
 /*
  * Timed Condition check
  */
-static int cond_timed_out;
+
+/* Marked volatile so that different threads see the same value.  This is
+   good enough in practice, although in theory stdatomic.h should be used.  */
+static int volatile cond_timed_out;
 
 /* Stores in *TS the current time plus 1 second.  */
 static void
@@ -192,6 +198,7 @@ test_cnd_timedwait (void)
   if (!cond_timed_out)
     abort ();
 }
+
 
 int
 main ()

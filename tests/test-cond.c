@@ -59,7 +59,10 @@
 /*
  * Condition check
  */
-static int cond_value;
+
+/* Marked volatile so that different threads see the same value.  This is
+   good enough in practice, although in theory stdatomic.h should be used.  */
+static int volatile cond_value;
 gl_cond_define_initialized(static, condtest)
 gl_lock_define_initialized(static, lockcond)
 
@@ -116,7 +119,10 @@ test_cond ()
 /*
  * Timed Condition check
  */
-static int cond_timed_out;
+
+/* Marked volatile so that different threads see the same value.  This is
+   good enough in practice, although in theory stdatomic.h should be used.  */
+static int volatile cond_timed_out;
 
 /* Stores in *TS the current time plus 1 second.  */
 static void
@@ -182,6 +188,7 @@ test_timedcond (void)
   if (!cond_timed_out)
     abort ();
 }
+
 
 int
 main ()
