@@ -75,9 +75,19 @@ static void *
 pthread_cond_wait_routine (void *arg)
 {
   ASSERT (pthread_mutex_lock (&lockcond) == 0);
-  while (!cond_value)
+  if (cond_value)
     {
-      ASSERT (pthread_cond_wait (&condtest, &lockcond) == 0);
+      /* The main thread already slept, and nevertheless this thread comes
+         too late.  */
+      *(int *)arg = 1;
+    }
+  else
+    {
+      do
+        {
+          ASSERT (pthread_cond_wait (&condtest, &lockcond) == 0);
+        }
+      while (!cond_value);
     }
   ASSERT (pthread_mutex_unlock (&lockcond) == 0);
 
@@ -86,16 +96,18 @@ pthread_cond_wait_routine (void *arg)
   return NULL;
 }
 
-static void
+static int
 test_pthread_cond_wait ()
 {
+  int skipped = 0;
   pthread_t thread;
   int ret;
 
   cond_value = 0;
 
   /* Create a separate thread.  */
-  ASSERT (pthread_create (&thread, NULL, pthread_cond_wait_routine, NULL) == 0);
+  ASSERT (pthread_create (&thread, NULL, pthread_cond_wait_routine, &skipped)
+          == 0);
 
   /* Sleep for 2 seconds.  */
   {
@@ -123,6 +135,8 @@ test_pthread_cond_wait ()
 
   if (cond_value != 2)
     abort ();
+
+  return skipped;
 }
 
 
@@ -153,28 +167,40 @@ pthread_cond_timedwait_routine (void *arg)
   struct timespec ts;
 
   ASSERT (pthread_mutex_lock (&lockcond) == 0);
-  while (!cond_value)
+  if (cond_value)
     {
-      get_ts (&ts);
-      ret = pthread_cond_timedwait (&condtest, &lockcond, &ts);
-      if (ret == ETIMEDOUT)
-        cond_timed_out = 1;
+      /* The main thread already slept, and nevertheless this thread comes
+         too late.  */
+      *(int *)arg = 1;
+    }
+  else
+    {
+      do
+        {
+          get_ts (&ts);
+          ret = pthread_cond_timedwait (&condtest, &lockcond, &ts);
+          if (ret == ETIMEDOUT)
+            cond_timed_out = 1;
+        }
+      while (!cond_value);
     }
   ASSERT (pthread_mutex_unlock (&lockcond) == 0);
 
   return NULL;
 }
 
-static void
+static int
 test_pthread_cond_timedwait (void)
 {
+  int skipped = 0;
   pthread_t thread;
   int ret;
 
   cond_value = cond_timed_out = 0;
 
   /* Create a separate thread.  */
-  ASSERT (pthread_create (&thread, NULL, pthread_cond_timedwait_routine, NULL)
+  ASSERT (pthread_create (&thread, NULL,
+                          pthread_cond_timedwait_routine, &skipped)
           == 0);
 
   /* Sleep for 2 seconds.  */
@@ -203,6 +229,8 @@ test_pthread_cond_timedwait (void)
 
   if (!cond_timed_out)
     abort ();
+
+  return skipped;
 }
 
 
@@ -230,13 +258,17 @@ main ()
 
 #if DO_TEST_COND
   printf ("Starting test_pthread_cond_wait ..."); fflush (stdout);
-  test_pthread_cond_wait ();
-  printf (" OK\n"); fflush (stdout);
+  {
+    int skipped = test_pthread_cond_wait ();
+    printf (skipped ? " SKIP\n" : " OK\n"); fflush (stdout);
+  }
 #endif
 #if DO_TEST_TIMEDCOND
   printf ("Starting test_pthread_cond_timedwait ..."); fflush (stdout);
-  test_pthread_cond_timedwait ();
-  printf (" OK\n"); fflush (stdout);
+  {
+    int skipped = test_pthread_cond_timedwait ();
+    printf (skipped ? " SKIP\n" : " OK\n"); fflush (stdout);
+  }
 #endif
 
   return test_exit_status;

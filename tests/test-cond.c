@@ -70,9 +70,19 @@ static void *
 cond_routine (void *arg)
 {
   gl_lock_lock (lockcond);
-  while (!cond_value)
+  if (cond_value)
     {
-      gl_cond_wait (condtest, lockcond);
+      /* The main thread already slept, and nevertheless this thread comes
+         too late.  */
+      *(int *)arg = 1;
+    }
+  else
+    {
+      do
+        {
+          gl_cond_wait (condtest, lockcond);
+        }
+      while (!cond_value);
     }
   gl_lock_unlock (lockcond);
 
@@ -81,15 +91,16 @@ cond_routine (void *arg)
   return NULL;
 }
 
-static void
+static int
 test_cond ()
 {
+  int skipped = 0;
   gl_thread_t thread;
 
   cond_value = 0;
 
   /* Create a separate thread.  */
-  thread = gl_thread_create (cond_routine, NULL);
+  thread = gl_thread_create (cond_routine, &skipped);
 
   /* Sleep for 2 seconds.  */
   {
@@ -113,6 +124,8 @@ test_cond ()
 
   if (cond_value != 2)
     abort ();
+
+  return skipped;
 }
 
 
@@ -143,27 +156,38 @@ timedcond_routine (void *arg)
   struct timespec ts;
 
   gl_lock_lock (lockcond);
-  while (!cond_value)
+  if (cond_value)
     {
-      get_ts (&ts);
-      ret = glthread_cond_timedwait (&condtest, &lockcond, &ts);
-      if (ret == ETIMEDOUT)
-        cond_timed_out = 1;
+      /* The main thread already slept, and nevertheless this thread comes
+         too late.  */
+      *(int *)arg = 1;
+    }
+  else
+    {
+      do
+        {
+          get_ts (&ts);
+          ret = glthread_cond_timedwait (&condtest, &lockcond, &ts);
+          if (ret == ETIMEDOUT)
+            cond_timed_out = 1;
+        }
+      while (!cond_value);
     }
   gl_lock_unlock (lockcond);
 
   return NULL;
 }
 
-static void
+static int
 test_timedcond (void)
 {
+  int skipped = 0;
   gl_thread_t thread;
 
   cond_value = cond_timed_out = 0;
 
   /* Create a separate thread.  */
-  thread = gl_thread_create (timedcond_routine, NULL);
+  thread = gl_thread_create (timedcond_routine, &skipped);
 
   /* Sleep for 2 seconds.  */
   {
@@ -187,6 +211,8 @@ test_timedcond (void)
 
   if (!cond_timed_out)
     abort ();
+
+  return skipped;
 }
 
 
@@ -195,13 +221,17 @@ main ()
 {
 #if DO_TEST_COND
   printf ("Starting test_cond ..."); fflush (stdout);
-  test_cond ();
-  printf (" OK\n"); fflush (stdout);
+  {
+    int skipped = test_cond ();
+    printf (skipped ? " SKIP\n" : " OK\n"); fflush (stdout);
+  }
 #endif
 #if DO_TEST_TIMEDCOND
   printf ("Starting test_timedcond ..."); fflush (stdout);
-  test_timedcond ();
-  printf (" OK\n"); fflush (stdout);
+  {
+    int skipped = test_timedcond ();
+    printf (skipped ? " SKIP\n" : " OK\n"); fflush (stdout);
+  }
 #endif
 
   return 0;

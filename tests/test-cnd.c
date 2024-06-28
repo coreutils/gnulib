@@ -70,9 +70,19 @@ static int
 cnd_wait_routine (void *arg)
 {
   ASSERT (mtx_lock (&lockcond) == thrd_success);
-  while (!cond_value)
+  if (cond_value)
     {
-      ASSERT (cnd_wait (&condtest, &lockcond) == thrd_success);
+      /* The main thread already slept, and nevertheless this thread comes
+         too late.  */
+      *(int *)arg = 1;
+    }
+  else
+    {
+      do
+        {
+          ASSERT (cnd_wait (&condtest, &lockcond) == thrd_success);
+        }
+      while (!cond_value);
     }
   ASSERT (mtx_unlock (&lockcond) == thrd_success);
 
@@ -81,16 +91,17 @@ cnd_wait_routine (void *arg)
   return 0;
 }
 
-static void
+static int
 test_cnd_wait ()
 {
+  int skipped = 0;
   thrd_t thread;
   int ret;
 
   cond_value = 0;
 
   /* Create a separate thread.  */
-  ASSERT (thrd_create (&thread, cnd_wait_routine, NULL) == thrd_success);
+  ASSERT (thrd_create (&thread, cnd_wait_routine, &skipped) == thrd_success);
 
   /* Sleep for 2 seconds.  */
   {
@@ -118,6 +129,8 @@ test_cnd_wait ()
 
   if (cond_value != 2)
     abort ();
+
+  return skipped;
 }
 
 
@@ -148,28 +161,40 @@ cnd_timedwait_routine (void *arg)
   struct timespec ts;
 
   ASSERT (mtx_lock (&lockcond) == thrd_success);
-  while (!cond_value)
+  if (cond_value)
     {
-      get_ts (&ts);
-      ret = cnd_timedwait (&condtest, &lockcond, &ts);
-      if (ret == thrd_timedout)
-        cond_timed_out = 1;
+      /* The main thread already slept, and nevertheless this thread comes
+         too late.  */
+      *(int *)arg = 1;
+    }
+  else
+    {
+      do
+        {
+          get_ts (&ts);
+          ret = cnd_timedwait (&condtest, &lockcond, &ts);
+          if (ret == thrd_timedout)
+            cond_timed_out = 1;
+        }
+      while (!cond_value);
     }
   ASSERT (mtx_unlock (&lockcond) == thrd_success);
 
   return 0;
 }
 
-static void
+static int
 test_cnd_timedwait (void)
 {
+  int skipped = 0;
   thrd_t thread;
   int ret;
 
   cond_value = cond_timed_out = 0;
 
   /* Create a separate thread.  */
-  ASSERT (thrd_create (&thread, cnd_timedwait_routine, NULL) == thrd_success);
+  ASSERT (thrd_create (&thread, cnd_timedwait_routine, &skipped)
+          == thrd_success);
 
   /* Sleep for 2 seconds.  */
   {
@@ -197,6 +222,8 @@ test_cnd_timedwait (void)
 
   if (!cond_timed_out)
     abort ();
+
+  return skipped;
 }
 
 
@@ -216,13 +243,17 @@ main ()
 
 #if DO_TEST_COND
   printf ("Starting test_cnd_wait ..."); fflush (stdout);
-  test_cnd_wait ();
-  printf (" OK\n"); fflush (stdout);
+  {
+    int skipped = test_cnd_wait ();
+    printf (skipped ? " SKIP\n" : " OK\n"); fflush (stdout);
+  }
 #endif
 #if DO_TEST_TIMEDCOND
   printf ("Starting test_cnd_timedwait ..."); fflush (stdout);
-  test_cnd_timedwait ();
-  printf (" OK\n"); fflush (stdout);
+  {
+    int skipped = test_cnd_timedwait ();
+    printf (skipped ? " SKIP\n" : " OK\n"); fflush (stdout);
+  }
 #endif
 
   return test_exit_status;
