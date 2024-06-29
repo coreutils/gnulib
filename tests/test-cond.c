@@ -43,6 +43,8 @@
 #include "glthread/thread.h"
 #include "glthread/yield.h"
 
+#include "virtualbox.h"
+
 #if ENABLE_DEBUGGING
 # define dbgprintf printf
 #else
@@ -219,6 +221,16 @@ test_timedcond (void)
 int
 main ()
 {
+  /* This test occasionally fails on Linux (glibc or musl libc), in a
+     VirtualBox VM with paravirtualization = Default or KVM, with ≥ 2 CPUs.
+     Skip the test in this situation.  */
+  if (is_running_under_virtualbox_kvm () && num_cpus () > 1)
+    {
+      fputs ("Skipping test: avoiding VirtualBox bug with KVM paravirtualization\n",
+             stderr);
+      return 77;
+    }
+
 #if DO_TEST_COND
   printf ("Starting test_cond ..."); fflush (stdout);
   {

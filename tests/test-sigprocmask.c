@@ -29,6 +29,7 @@ SIGNATURE_CHECK (sigprocmask, int, (int, const sigset_t *, sigset_t *));
 #include <stdlib.h>
 #include <unistd.h>
 
+#include "virtualbox.h"
 #include "macros.h"
 
 #if !(defined _WIN32 && !defined __CYGWIN__)
@@ -44,6 +45,16 @@ sigint_handler (_GL_UNUSED int sig)
 int
 main ()
 {
+  /* This test occasionally fails on Linux (glibc or musl libc), in a
+     VirtualBox VM with paravirtualization = Default or KVM, with ≥ 2 CPUs.
+     Skip the test in this situation.  */
+  if (is_running_under_virtualbox_kvm () && num_cpus () > 1)
+    {
+      fputs ("Skipping test: avoiding VirtualBox bug with KVM paravirtualization\n",
+             stderr);
+      return 77;
+    }
+
   sigset_t set;
   intmax_t pid = getpid ();
   char command[80];

@@ -41,6 +41,7 @@
 # include <unistd.h>
 #endif
 
+#include "virtualbox.h"
 #include "macros.h"
 
 #if ENABLE_DEBUGGING
@@ -230,6 +231,16 @@ test_cnd_timedwait (void)
 int
 main ()
 {
+  /* This test occasionally fails on Linux (glibc or musl libc), in a
+     VirtualBox VM with paravirtualization = Default or KVM, with ≥ 2 CPUs.
+     Skip the test in this situation.  */
+  if (is_running_under_virtualbox_kvm () && num_cpus () > 1)
+    {
+      fputs ("Skipping test: avoiding VirtualBox bug with KVM paravirtualization\n",
+             stderr);
+      return 77;
+    }
+
 #if HAVE_DECL_ALARM
   /* Declare failure if test takes too long, by using default abort
      caused by SIGALRM.  */

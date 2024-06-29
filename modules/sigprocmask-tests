@@ -1,6 +1,7 @@
 Files:
 tests/test-sigprocmask.c
 tests/signature.h
+tests/virtualbox.h
 tests/macros.h
 
 Depends-on:

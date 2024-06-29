@@ -1,5 +1,6 @@
 Files:
 tests/test-pthread-cond.c
+tests/virtualbox.h
 tests/macros.h
 
 Depends-on:

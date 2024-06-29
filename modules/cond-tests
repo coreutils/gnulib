@@ -1,5 +1,6 @@
 Files:
 tests/test-cond.c
+tests/virtualbox.h
 
 Depends-on:
 lock

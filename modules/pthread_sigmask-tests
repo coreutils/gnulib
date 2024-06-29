@@ -2,6 +2,7 @@ Files:
 tests/test-pthread_sigmask1.c
 tests/test-pthread_sigmask2.c
 tests/signature.h
+tests/virtualbox.h
 tests/macros.h
 
 Depends-on:
