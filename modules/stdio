@@ -113,7 +113,7 @@ stdio.h: stdio.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) 
 	      -e 's/@''GNULIB_STDIO_H_SIGPIPE''@/$(GNULIB_STDIO_H_SIGPIPE)/g' \
 	      -e 's/@''GNULIB_TMPFILE''@/$(GNULIB_TMPFILE)/g' \
 	      -e 's/@''GNULIB_VASPRINTF''@/$(GNULIB_VASPRINTF)/g' \
-	      -e 's/@''GNULIB_VAZSPRINTF''@/$(GNULIB_VAZSPRINTF)/g' \
+	      -e 's/@''GNULIB_VASZPRINTF''@/$(GNULIB_VASZPRINTF)/g' \
 	      -e 's/@''GNULIB_VDPRINTF''@/$(GNULIB_VDPRINTF)/g' \
 	      -e 's/@''GNULIB_VFPRINTF''@/$(GNULIB_VFPRINTF)/g' \
 	      -e 's/@''GNULIB_VFPRINTF_POSIX''@/$(GNULIB_VFPRINTF_POSIX)/g' \
@@ -123,10 +123,10 @@ stdio.h: stdio.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) 
 	      -e 's/@''GNULIB_VPRINTF_POSIX''@/$(GNULIB_VPRINTF_POSIX)/g' \
 	      -e 's/@''GNULIB_VSNPRINTF''@/$(GNULIB_VSNPRINTF)/g' \
 	      -e 's/@''GNULIB_VSPRINTF_POSIX''@/$(GNULIB_VSPRINTF_POSIX)/g' \
-	      -e 's/@''GNULIB_VZSNPRINTF''@/$(GNULIB_VZSNPRINTF)/g' \
-	      -e 's/@''GNULIB_VZSPRINTF''@/$(GNULIB_VZSPRINTF)/g' \
-	      -e 's/@''GNULIB_ZSNPRINTF''@/$(GNULIB_ZSNPRINTF)/g' \
-	      -e 's/@''GNULIB_ZSPRINTF''@/$(GNULIB_ZSPRINTF)/g' \
+	      -e 's/@''GNULIB_VSNZPRINTF''@/$(GNULIB_VSNZPRINTF)/g' \
+	      -e 's/@''GNULIB_VSZPRINTF''@/$(GNULIB_VSZPRINTF)/g' \
+	      -e 's/@''GNULIB_SNZPRINTF''@/$(GNULIB_SNZPRINTF)/g' \
+	      -e 's/@''GNULIB_SZPRINTF''@/$(GNULIB_SZPRINTF)/g' \
 	      -e 's/@''GNULIB_MDA_FCLOSEALL''@/$(GNULIB_MDA_FCLOSEALL)/g' \
 	      -e 's/@''GNULIB_MDA_FDOPEN''@/$(GNULIB_MDA_FDOPEN)/g' \
 	      -e 's/@''GNULIB_MDA_FILENO''@/$(GNULIB_MDA_FILENO)/g' \

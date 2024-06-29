@@ -10,7 +10,7 @@ m4/strerrorname_np.m4
 Depends-on:
 extensions
 stdio
-c-vazsprintf
+c-vaszprintf
 xalloc-die
 
 configure.ac:

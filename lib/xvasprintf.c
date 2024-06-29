@@ -96,7 +96,7 @@ xvasprintf (const char *format, va_list args)
       }
   }
 
-  if (vazsprintf (&result, format, args) < 0)
+  if (vaszprintf (&result, format, args) < 0)
     {
       if (errno == ENOMEM)
         xalloc_die ();

@@ -1,0 +1,27 @@
+Description:
+szprintf() function: print formatted output to a string (without INT_MAX
+limitation)
+
+Files:
+lib/szprintf.c
+
+Depends-on:
+stdio
+vasnprintf
+errno
+stdint
+
+configure.ac:
+gl_STDIO_MODULE_INDICATOR([szprintf])
+
+Makefile.am:
+lib_SOURCES += szprintf.c
+
+Include:
+<stdio.h>
+
+License:
+LGPL
+
+Maintainer:
+all

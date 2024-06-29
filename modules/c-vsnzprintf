@@ -1,0 +1,27 @@
+Description:
+c_vsnzprintf(): print formatted output from an stdarg argument list to a
+fixed length string (without INT_MAX limitation) in C locale
+
+Files:
+lib/c-vsnprintf.h
+lib/c-vsnzprintf.c
+
+Depends-on:
+stdint
+stdio
+c-vasnprintf
+
+configure.ac:
+AC_REQUIRE([AC_C_RESTRICT])
+
+Makefile.am:
+lib_SOURCES += c-vsnzprintf.c
+
+Include:
+"c-vsnprintf.h"
+
+License:
+LGPLv2+
+
+Maintainer:
+all

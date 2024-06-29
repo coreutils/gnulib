@@ -1,0 +1,26 @@
+Description:
+aszprintf() and vaszprintf() in C locale
+
+Files:
+lib/c-vasprintf.h
+lib/c-aszprintf.c
+lib/c-vaszprintf.c
+
+Depends-on:
+stdint
+stdio
+c-vasnprintf
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += c-aszprintf.c c-vaszprintf.c
+
+Include:
+"c-vasprintf.h"
+
+License:
+LGPLv2+
+
+Maintainer:
+all

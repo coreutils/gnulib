@@ -8,7 +8,7 @@ lib/c-snprintf.c
 Depends-on:
 stdint
 stdio
-c-vzsnprintf
+c-vsnzprintf
 
 configure.ac:
 AC_REQUIRE([AC_C_RESTRICT])

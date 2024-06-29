@@ -1,0 +1,30 @@
+Description:
+vsprintf (without INT_MAX limitation) with automatic memory allocation
+
+Files:
+lib/vaszprintf.c
+lib/aszprintf.c
+
+Depends-on:
+stdio
+vasnprintf
+errno
+stdint
+
+configure.ac:
+gl_STDIO_MODULE_INDICATOR([vaszprintf])
+m4_ifdef([AM_XGETTEXT_OPTION],
+  [AM_][XGETTEXT_OPTION([--flag=aszprintf:2:c-format])
+   AM_][XGETTEXT_OPTION([--flag=vaszprintf:2:c-format])])
+
+Makefile.am:
+lib_SOURCES += vaszprintf.c aszprintf.c
+
+Include:
+<stdio.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+all

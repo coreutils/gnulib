@@ -47,7 +47,7 @@ extern "C" {
 
    Formatting takes place in the C locale, that is, the decimal point
    used in floating-point formatting directives is always '.'. */
-extern ptrdiff_t c_vzsnprintf (char *restrict str, size_t size,
+extern ptrdiff_t c_vsnzprintf (char *restrict str, size_t size,
                                const char *format, va_list args)
        _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_STANDARD, 3, 0));
 

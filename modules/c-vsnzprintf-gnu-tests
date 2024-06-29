@@ -1,0 +1,19 @@
+Files:
+tests/test-c-vsnzprintf-gnu.c
+tests/test-snzprintf-gnu.h
+tests/test-c-vsnzprintf-gnu.sh
+tests/macros.h
+m4/locale-fr.m4
+m4/codeset.m4
+
+Depends-on:
+setlocale
+
+configure.ac:
+gt_LOCALE_FR
+
+Makefile.am:
+TESTS += test-c-vsnzprintf-gnu.sh
+TESTS_ENVIRONMENT += LOCALE_FR='@LOCALE_FR@'
+check_PROGRAMS += test-c-vsnzprintf-gnu
+test_c_vsnzprintf_gnu_LDADD = $(LDADD) $(SETLOCALE_LIB)

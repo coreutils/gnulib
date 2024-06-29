@@ -47,9 +47,9 @@ extern "C" {
 
    Formatting takes place in the C locale, that is, the decimal point
    used in floating-point formatting directives is always '.'. */
-ptrdiff_t c_azsprintf (char **resultp, const char *format, ...)
+ptrdiff_t c_aszprintf (char **resultp, const char *format, ...)
        _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_STANDARD, 2, 3));
-ptrdiff_t c_vazsprintf (char **resultp, const char *format, va_list args)
+ptrdiff_t c_vaszprintf (char **resultp, const char *format, va_list args)
        _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_STANDARD, 2, 0));
 
 /* Prints formatted output to a string dynamically allocated with malloc().

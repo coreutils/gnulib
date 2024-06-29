@@ -10,7 +10,7 @@ Depends-on:
 stdio
 errno           [test $ac_cv_func_snprintf = no || test $REPLACE_SNPRINTF = 1]
 stdint          [test $ac_cv_func_snprintf = no || test $REPLACE_SNPRINTF = 1]
-vzsnprintf      [test $ac_cv_func_snprintf = no || test $REPLACE_SNPRINTF = 1]
+vsnzprintf      [test $ac_cv_func_snprintf = no || test $REPLACE_SNPRINTF = 1]
 
 configure.ac:
 gl_FUNC_SNPRINTF

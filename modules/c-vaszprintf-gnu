@@ -1,0 +1,23 @@
+Description:
+c_aszprintf() and c_vaszprintf() functions
+with POSIX compliant and GNU compatible format string interpretation
+
+Files:
+
+Depends-on:
+c-vaszprintf
+mixin/printf-gnu
+
+configure.ac:
+gl_PREREQ_VASNPRINTF_WITH_GNU_EXTRAS
+
+Makefile.am:
+
+Include:
+"c-vasprintf.h"
+
+License:
+LGPLv2+
+
+Maintainer:
+all

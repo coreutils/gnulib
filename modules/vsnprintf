@@ -11,7 +11,7 @@ Depends-on:
 stdio
 errno           [test $ac_cv_func_vsnprintf = no || test $REPLACE_VSNPRINTF = 1]
 stdint          [test $ac_cv_func_vsnprintf = no || test $REPLACE_VSNPRINTF = 1]
-vzsnprintf      [test $ac_cv_func_vsnprintf = no || test $REPLACE_VSNPRINTF = 1]
+vsnzprintf      [test $ac_cv_func_vsnprintf = no || test $REPLACE_VSNPRINTF = 1]
 
 configure.ac:
 gl_FUNC_VSNPRINTF

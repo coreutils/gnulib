@@ -1,0 +1,14 @@
+Files:
+tests/test-vszprintf-posix.c
+tests/test-szprintf-posix.h
+tests/infinity.h
+tests/macros.h
+
+Depends-on:
+nan
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-vszprintf-posix
+check_PROGRAMS += test-vszprintf-posix

@@ -33,7 +33,7 @@ sprintf (char *str, const char *format, ...)
   ptrdiff_t ret;
 
   va_start (args, format);
-  ret = vzsprintf (str, format, args);
+  ret = vszprintf (str, format, args);
   va_end (args);
 
 #if PTRDIFF_MAX > INT_MAX

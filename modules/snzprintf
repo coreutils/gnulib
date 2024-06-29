@@ -1,0 +1,27 @@
+Description:
+snzprintf() function: print formatted output to a fixed length string
+(without INT_MAX limitation)
+
+Files:
+lib/snzprintf.c
+
+Depends-on:
+stdio
+vasnprintf
+errno
+stdint
+
+configure.ac:
+gl_STDIO_MODULE_INDICATOR([snzprintf])
+
+Makefile.am:
+lib_SOURCES += snzprintf.c
+
+Include:
+<stdio.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+all

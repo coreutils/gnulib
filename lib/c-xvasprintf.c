@@ -32,7 +32,7 @@ c_xvasprintf (const char *format, va_list args)
 {
   char *result;
 
-  if (c_vazsprintf (&result, format, args) < 0)
+  if (c_vaszprintf (&result, format, args) < 0)
     {
       if (errno == ENOMEM)
         xalloc_die ();

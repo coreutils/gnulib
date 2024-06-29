@@ -18,7 +18,7 @@ stdio
 nocrash
 printf-safe
 multiarch
-vzsprintf          [test $REPLACE_SPRINTF = 1]
+vszprintf          [test $REPLACE_SPRINTF = 1]
 mixin/printf-posix [test $REPLACE_SPRINTF = 1]
 stdint             [test $REPLACE_SPRINTF = 1]
 errno              [test $REPLACE_SPRINTF = 1]

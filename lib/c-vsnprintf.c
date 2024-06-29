@@ -29,7 +29,7 @@
 int
 c_vsnprintf (char *str, size_t size, const char *format, va_list args)
 {
-  ptrdiff_t ret = c_vzsnprintf (str, size, format, args);
+  ptrdiff_t ret = c_vsnzprintf (str, size, format, args);
 
 #if PTRDIFF_MAX > INT_MAX
   if (ret > INT_MAX)

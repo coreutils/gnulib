@@ -1,0 +1,27 @@
+Description:
+vszprintf() function: print formatted output from an stdarg argument list
+to a string (without INT_MAX limitation)
+
+Files:
+lib/vszprintf.c
+
+Depends-on:
+stdio
+vasnprintf
+errno
+stdint
+
+configure.ac:
+gl_STDIO_MODULE_INDICATOR([vszprintf])
+
+Makefile.am:
+lib_SOURCES += vszprintf.c
+
+Include:
+<stdio.h>
+
+License:
+LGPL
+
+Maintainer:
+all

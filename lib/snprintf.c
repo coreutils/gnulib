@@ -31,7 +31,7 @@ snprintf (char *str, size_t size, const char *format, ...)
   ptrdiff_t ret;
 
   va_start (args, format);
-  ret = vzsnprintf (str, size, format, args);
+  ret = vsnzprintf (str, size, format, args);
   va_end (args);
 
 #if PTRDIFF_MAX > INT_MAX
