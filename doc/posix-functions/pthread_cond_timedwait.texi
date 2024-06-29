@@ -17,4 +17,9 @@ Minix 3.1.8.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+This function sometimes waits indefinitely
+instead of up to the specified time point,
+on some platforms (glibc/Linux, musl libc) in some hypervisors:
+VirtualBox 6.1.50_Ubuntu with paravirtualization set to "Default" or "KVM".
 @end itemize
