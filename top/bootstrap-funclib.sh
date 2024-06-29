@@ -1,6 +1,6 @@
 # A library of shell functions for autopull.sh, autogen.sh, and bootstrap.
 
-scriptlibversion=2024-04-28.09; # UTC
+scriptlibversion=2024-06-29.23; # UTC
 
 # Copyright (C) 2003-2024 Free Software Foundation, Inc.
 #
@@ -515,7 +515,7 @@ prepare_GNULIB_SRCDIR ()
           if git clone -h 2>&1 | grep -- --depth > /dev/null; then
             shallow='--depth 2'
           fi
-          git clone $shallow "$gnulib_url" "$gnulib_path"\
+          git clone $shallow "$gnulib_url" "$gnulib_path" \
             || cleanup_gnulib
         else
           if git fetch -h 2>&1 | grep -- --depth > /dev/null; then
@@ -536,7 +536,8 @@ prepare_GNULIB_SRCDIR ()
             || git -C "$gnulib_path" fetch origin \
             || cleanup_gnulib
           git -C "$gnulib_path" reset --hard FETCH_HEAD
-          (cd "$gnulib_path" && git checkout "$GNULIB_REVISION")||cleanup_gnulib
+          (cd "$gnulib_path" && git checkout "$GNULIB_REVISION") \
+            || cleanup_gnulib
         fi
         trap - HUP INT PIPE TERM
       else
