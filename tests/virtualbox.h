@@ -24,7 +24,7 @@
 
 /* This function determines whether the current system is Linux and running
    under the VirtualBox emulator.  */
-static bool
+_GL_ATTRIBUTE_MAYBE_UNUSED static bool
 is_running_under_virtualbox (void)
 {
 #ifdef __linux__
