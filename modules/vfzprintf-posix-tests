@@ -1,0 +1,16 @@
+Files:
+tests/test-vfzprintf-posix.sh
+tests/test-vfzprintf-posix.c
+tests/test-fprintf-posix.h
+tests/test-printf-posix.output
+tests/infinity.h
+tests/macros.h
+
+Depends-on:
+stdint
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-vfzprintf-posix.sh
+check_PROGRAMS += test-vfzprintf-posix
