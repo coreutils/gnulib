@@ -30,6 +30,7 @@ SIGNATURE_CHECK (fprintf, int, (FILE *, char const *, ...));
 
 #include "macros.h"
 
+#define RETTYPE int
 #include "test-fprintf-posix.h"
 
 int
