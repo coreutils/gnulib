@@ -1,6 +1,6 @@
 Description:
 Formatted printing into an obstack (without INT_MAX limitation)
-with POSIX compliant and GNU compatible format string interpretation
+with POSIX and GNU compatible format string interpretation
 
 Files:
 

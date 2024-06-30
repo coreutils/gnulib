@@ -1,5 +1,5 @@
 Description:
-vszprintf() function with POSIX compliant format string interpretation
+vszprintf() function with POSIX compatible format string interpretation
 
 Files:
 

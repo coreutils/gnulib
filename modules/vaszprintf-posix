@@ -1,6 +1,6 @@
 Description:
 aszprintf() and vaszprintf() functions
-with POSIX compliant format string interpretation
+with POSIX compatible format string interpretation
 
 Files:
 

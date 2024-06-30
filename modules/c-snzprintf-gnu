@@ -1,6 +1,6 @@
 Description:
 c_snzprintf() function
-with POSIX compliant and GNU compatible format string interpretation
+with POSIX and GNU compatible format string interpretation
 
 Files:
 

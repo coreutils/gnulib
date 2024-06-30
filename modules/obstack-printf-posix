@@ -1,5 +1,6 @@
 Description:
-POSIX formatted printing into an obstack.
+Formatted printing into an obstack
+with POSIX compatible format string interpretation
 
 Comment:
 This module should not be used as a dependency from a test module,
