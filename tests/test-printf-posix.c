@@ -29,6 +29,7 @@ SIGNATURE_CHECK (printf, int, (char const *, ...));
 
 #include "macros.h"
 
+#define RETTYPE int
 #include "test-printf-posix.h"
 
 int

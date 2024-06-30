@@ -26,6 +26,7 @@
 
 #include "macros.h"
 
+#define RETTYPE int
 #include "test-printf-posix.h"
 
 int

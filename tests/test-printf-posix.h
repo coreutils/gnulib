@@ -1,4 +1,4 @@
-/* Test of POSIX compatible vprintf() and printf() functions.
+/* Test of POSIX compatible v[z]printf() and printf() functions.
    Copyright (C) 2007-2024 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -19,7 +19,7 @@
 #include "infinity.h"
 
 static void
-test_function (int (*my_printf) (const char *, ...))
+test_function (RETTYPE (*my_printf) (const char *, ...))
 {
   /* Here we don't test output that may be platform dependent.
      The bulk of the tests is done as part of the 'vasnprintf-posix' module.  */

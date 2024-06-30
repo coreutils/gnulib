@@ -30,6 +30,7 @@ SIGNATURE_CHECK (vprintf, int, (char const *, va_list));
 
 #include "macros.h"
 
+#define RETTYPE int
 #include "test-printf-posix.h"
 
 static int
