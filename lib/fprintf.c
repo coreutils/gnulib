@@ -24,50 +24,26 @@
 #include <errno.h>
 #include <limits.h>
 #include <stdarg.h>
-#include <stdlib.h>
 
 #include "fseterr.h"
-#include "vasnprintf.h"
+#include "intprops.h"
 
-/* Print formatted output to the stream FP.
-   Return string length of formatted string.  On error, return a negative
-   value.  */
 int
 fprintf (FILE *fp, const char *format, ...)
 {
-  char buf[2000];
-  char *output;
-  size_t len;
-  size_t lenbuf = sizeof (buf);
   va_list args;
+  off64_t ret;
 
   va_start (args, format);
-  output = vasnprintf (buf, &lenbuf, format, args);
-  len = lenbuf;
+  ret = vfzprintf (fp, format, args);
   va_end (args);
 
-  if (!output)
+  if (TYPE_MAXIMUM (off64_t) > INT_MAX && ret > INT_MAX)
     {
       fseterr (fp);
-      return -1;
-    }
-
-  if (fwrite (output, 1, len, fp) < len)
-    {
-      if (output != buf)
-        free (output);
-      return -1;
-    }
-
-  if (output != buf)
-    free (output);
-
-  if (len > INT_MAX)
-    {
       errno = EOVERFLOW;
-      fseterr (fp);
       return -1;
     }
 
-  return len;
+  return ret;
 }

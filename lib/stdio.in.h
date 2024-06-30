@@ -583,6 +583,9 @@ _GL_CXXALIAS_SYS (fzprintf, off64_t,
 #endif
 
 #if @GNULIB_FPRINTF_POSIX@ || @GNULIB_FPRINTF@
+/* Prints formatted output to stream FP.
+   Returns the number of bytes written to the stream.  Upon failure,
+   returns a negative value with the stream's error indicator set.  */
 # if (@GNULIB_FPRINTF_POSIX@ && @REPLACE_FPRINTF@) \
      || (@GNULIB_FPRINTF@ && @REPLACE_STDIO_WRITE_FUNCS@ && (@GNULIB_STDIO_H_NONBLOCKING@ || @GNULIB_STDIO_H_SIGPIPE@))
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)

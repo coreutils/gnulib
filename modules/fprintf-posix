@@ -19,10 +19,10 @@ nocrash
 printf-safe
 errno
 multiarch
-fseterr            [test $REPLACE_FPRINTF = 1]
-vasnprintf         [test $REPLACE_FPRINTF = 1]
+vfzprintf          [test $REPLACE_FPRINTF = 1]
 mixin/printf-posix [test $REPLACE_FPRINTF = 1]
-free-posix         [test $REPLACE_FPRINTF = 1]
+intprops           [test $REPLACE_FPRINTF = 1]
+fseterr            [test $REPLACE_FPRINTF = 1]
 
 configure.ac:
 gl_FUNC_FPRINTF_POSIX
