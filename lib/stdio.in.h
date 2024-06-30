@@ -297,6 +297,9 @@ _GL_CXXALIAS_SYS (dzprintf, off64_t,
 #endif
 
 #if @GNULIB_DPRINTF@
+/* Prints formatted output to file descriptor FD.
+   Returns the number of bytes written to the file descriptor.  Upon
+   failure, returns a negative value.  */
 # if @REPLACE_DPRINTF@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define dprintf rpl_dprintf
