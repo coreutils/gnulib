@@ -7,9 +7,8 @@ m4/vdprintf.m4
 
 Depends-on:
 stdio
-vasnprintf      [test $ac_cv_func_vdprintf = no || test $REPLACE_VDPRINTF = 1]
-free-posix      [test $ac_cv_func_vdprintf = no || test $REPLACE_VDPRINTF = 1]
-full-write      [test $ac_cv_func_vdprintf = no || test $REPLACE_VDPRINTF = 1]
+vdzprintf       [test $ac_cv_func_vdprintf = no || test $REPLACE_VDPRINTF = 1]
+intprops        [test $ac_cv_func_vdprintf = no || test $REPLACE_VDPRINTF = 1]
 errno           [test $ac_cv_func_vdprintf = no || test $REPLACE_VDPRINTF = 1]
 
 configure.ac:
