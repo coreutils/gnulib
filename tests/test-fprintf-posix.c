@@ -23,7 +23,6 @@
 #include "signature.h"
 SIGNATURE_CHECK (fprintf, int, (FILE *, char const *, ...));
 
-#include <stdarg.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <string.h>
