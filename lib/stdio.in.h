@@ -1900,6 +1900,9 @@ _GL_CXXALIAS_SYS (vzprintf, off64_t,
 #endif
 
 #if @GNULIB_VPRINTF_POSIX@ || @GNULIB_VPRINTF@
+/* Prints formatted output to standard output.
+   Returns the number of bytes written to standard output.  Upon failure,
+   returns a negative value with stdout's error indicator set.  */
 # if (@GNULIB_VPRINTF_POSIX@ && @REPLACE_VPRINTF@) \
      || (@GNULIB_VPRINTF@ && @REPLACE_STDIO_WRITE_FUNCS@ && (@GNULIB_STDIO_H_NONBLOCKING@ || @GNULIB_STDIO_H_SIGPIPE@))
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
