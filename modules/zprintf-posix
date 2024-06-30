@@ -1,0 +1,22 @@
+Description:
+zprintf() function with POSIX compatible format string interpretation
+
+Files:
+
+Depends-on:
+zprintf
+mixin/printf-posix
+
+configure.ac:
+gl_PREREQ_VASNPRINTF_WITH_POSIX_EXTRAS
+
+Makefile.am:
+
+Include:
+<stdio.h>
+
+License:
+LGPL
+
+Maintainer:
+all
