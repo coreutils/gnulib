@@ -1,4 +1,4 @@
-/* Test of POSIX and GNU compatible vprintf() and printf() functions.
+/* Test of POSIX and GNU compatible [v][z]printf() functions.
    Copyright (C) 2007-2024 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -17,7 +17,7 @@
 /* Written by Bruno Haible <bruno@clisp.org>, 2023.  */
 
 static void
-test_function (int (*my_printf) (const char *, ...))
+test_function (RETTYPE (*my_printf) (const char *, ...))
 {
   /* Here we don't test output that may be platform dependent.
      The bulk of the tests is done as part of the 'vasnprintf-posix' module.  */

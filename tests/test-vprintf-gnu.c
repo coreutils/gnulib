@@ -1,4 +1,4 @@
-/* Test of POSIX and GNU compatible vfprintf() function.
+/* Test of POSIX and GNU compatible vprintf() function.
    Copyright (C) 2007-2024 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -26,6 +26,7 @@
 
 #include "macros.h"
 
+#define RETTYPE int
 #include "test-printf-gnu.h"
 
 static int

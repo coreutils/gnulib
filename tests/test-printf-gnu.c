@@ -25,6 +25,7 @@
 
 #include "macros.h"
 
+#define RETTYPE int
 #include "test-printf-gnu.h"
 
 int
