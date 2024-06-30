@@ -1,4 +1,4 @@
-/* Test of POSIX and GNU compatible vaszprintf() and aszprintf() functions.
+/* Test of POSIX and GNU compatible [v]aszprintf(), c_[v]aszprintf() functions.
    Copyright (C) 2007-2024 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify

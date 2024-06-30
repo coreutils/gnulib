@@ -1,4 +1,4 @@
-/* Test of POSIX and GNU compatible vsnzprintf() and snzprintf() functions.
+/* Test of POSIX and GNU compatible [v]snzprintf(), c_[v]snzprintf() functions.
    Copyright (C) 2007-2024 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
