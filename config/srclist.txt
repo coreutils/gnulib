@@ -190,7 +190,6 @@ $LIBCSRC time/mktime-internal.h		lib
 #$LIBCSRC string/strcasecmp.c			lib gpl
 #$LIBCSRC string/strchrnul.c			lib gpl
 #$LIBCSRC string/strerror.c			lib gpl
-#$LIBCSRC string/strnlen.c			lib gpl
 #$LIBCSRC sysdeps/posix/gettimeofday.c		lib gpl
 #$LIBCSRC sysdeps/posix/rename.c		lib gpl
 #$LIBCSRC sysdeps/unix/mkdir.c			lib gpl
