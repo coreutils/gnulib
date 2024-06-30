@@ -23,9 +23,6 @@
 
 #include <stdarg.h>
 
-/* Print formatted output to standard output.
-   Return string length of formatted string.  On error, return a negative
-   value.  */
 int
 printf (const char *format, ...)
 {

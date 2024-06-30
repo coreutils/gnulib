@@ -1280,6 +1280,9 @@ _GL_CXXALIAS_SYS (zprintf, off64_t, (const char *restrict format, ...));
 #endif
 
 #if @GNULIB_PRINTF_POSIX@ || @GNULIB_PRINTF@
+/* Prints formatted output to standard output.
+   Returns the number of bytes written to standard output.  Upon failure,
+   returns a negative value with stdout's error indicator set.  */
 # if (@GNULIB_PRINTF_POSIX@ && @REPLACE_PRINTF@) \
      || (@GNULIB_PRINTF@ && @REPLACE_STDIO_WRITE_FUNCS@ && (@GNULIB_STDIO_H_NONBLOCKING@ || @GNULIB_STDIO_H_SIGPIPE@))
 #  if defined __GNUC__ || defined __clang__
