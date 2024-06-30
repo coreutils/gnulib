@@ -147,6 +147,12 @@ test_function (int (*my_fprintf) (FILE *, const char *, ...))
   /* Precision with rounding.  */
   my_fprintf (stdout, "%.2LF %d\n", 999.996L, 33, 44, 55);
 
+  /* Test the support of the %b format directive.  */
+
+  /* This test would fail on glibc 2.34, musl libc, macOS 14,
+     FreeBSD 13.2, NetBSD 10.0, OpenBSD 7.5, AIX 7.3, Solaris 11.4.  */
+  my_fprintf (stdout, "%b %d\n", 12345, 33, 44, 55);
+
   /* Test the support of the POSIX/XSI format strings with positions.  */
 
   my_fprintf (stdout, "%2$d %1$d\n", 33, 55);
