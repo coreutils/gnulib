@@ -1,5 +1,5 @@
 # stdio_h.m4
-# serial 72
+# serial 73
 dnl Copyright (C) 2007-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -154,6 +154,7 @@ AC_DEFUN([gl_STDIO_H_REQUIRE_DEFAULTS],
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_FTELL])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_FTELLO])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_FWRITE])
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_FZPRINTF])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_GETC])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_GETCHAR])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_GETDELIM])

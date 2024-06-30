@@ -566,6 +566,22 @@ _GL_WARN_ON_USE (fopen, "fopen on native Windows platforms is not POSIX complian
 # endif
 #endif
 
+#if @GNULIB_FZPRINTF@
+/* Prints formatted output to stream FP.
+   Returns the number of bytes written to the stream.  Upon failure,
+   returns -1 with the stream's error indicator set.
+   Failure cause EOVERFLOW can only occur when a width > INT_MAX is used.
+   Therefore, if the format string is valid and does not use %ls/%lc
+   directives nor widths, the only possible failure causes are ENOMEM
+   and the possible failure causes from fwrite().  */
+_GL_FUNCDECL_SYS (fzprintf, off64_t,
+                  (FILE *restrict fp, const char *restrict format, ...)
+                  _GL_ATTRIBUTE_FORMAT_PRINTF_STANDARD (2, 3)
+                  _GL_ARG_NONNULL ((1, 2)));
+_GL_CXXALIAS_SYS (fzprintf, off64_t,
+                  (FILE *restrict fp, const char *restrict format, ...));
+#endif
+
 #if @GNULIB_FPRINTF_POSIX@ || @GNULIB_FPRINTF@
 # if (@GNULIB_FPRINTF_POSIX@ && @REPLACE_FPRINTF@) \
      || (@GNULIB_FPRINTF@ && @REPLACE_STDIO_WRITE_FUNCS@ && (@GNULIB_STDIO_H_NONBLOCKING@ || @GNULIB_STDIO_H_SIGPIPE@))

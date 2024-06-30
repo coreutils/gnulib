@@ -1,0 +1,29 @@
+Description:
+fzprintf() function: print formatted output (without INT_MAX limitation)
+to a stream
+
+Files:
+lib/fzprintf.c
+
+Depends-on:
+stdio
+vasnprintf
+intprops
+free-posix
+fseterr
+errno
+
+configure.ac:
+gl_STDIO_MODULE_INDICATOR([fzprintf])
+
+Makefile.am:
+lib_SOURCES += fzprintf.c
+
+Include:
+<stdio.h>
+
+License:
+LGPL
+
+Maintainer:
+all

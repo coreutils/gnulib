@@ -89,6 +89,7 @@ stdio.h: stdio.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) 
 	      -e 's/@''GNULIB_FTELL''@/$(GNULIB_FTELL)/g' \
 	      -e 's/@''GNULIB_FTELLO''@/$(GNULIB_FTELLO)/g' \
 	      -e 's/@''GNULIB_FWRITE''@/$(GNULIB_FWRITE)/g' \
+	      -e 's/@''GNULIB_FZPRINTF''@/$(GNULIB_FZPRINTF)/g' \
 	      -e 's/@''GNULIB_GETC''@/$(GNULIB_GETC)/g' \
 	      -e 's/@''GNULIB_GETCHAR''@/$(GNULIB_GETCHAR)/g' \
 	      -e 's/@''GNULIB_GETDELIM''@/$(GNULIB_GETDELIM)/g' \
