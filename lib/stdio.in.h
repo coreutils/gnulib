@@ -1703,6 +1703,22 @@ _GL_CXXALIAS_SYS (vasprintf, int,
 _GL_CXXALIASWARN (vasprintf);
 #endif
 
+#if @GNULIB_VDZPRINTF@
+/* Prints formatted output to file descriptor FD.
+   Returns the number of bytes written to the file descriptor.  Upon
+   failure, returns -1 with errno set.
+   Failure code EOVERFLOW can only occur when a width > INT_MAX is used.
+   Therefore, if the format string is valid and does not use %ls/%lc
+   directives nor widths, the only possible failure codes are ENOMEM
+   and the possible failure codes from write(), excluding EINTR.  */
+_GL_FUNCDECL_SYS (vdzprintf, off64_t,
+                  (int fd, const char *restrict format, va_list args)
+                  _GL_ATTRIBUTE_FORMAT_PRINTF_STANDARD (2, 0)
+                  _GL_ARG_NONNULL ((2)));
+_GL_CXXALIAS_SYS (vdzprintf, off64_t,
+                  (int fd, const char *restrict format, va_list args));
+#endif
+
 #if @GNULIB_VDPRINTF@
 # if @REPLACE_VDPRINTF@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)

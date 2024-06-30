@@ -1,0 +1,29 @@
+Description:
+vdzprintf() function: print formatted output (without INT_MAX limitation)
+to a file descriptor
+
+Files:
+lib/vdzprintf.c
+
+Depends-on:
+stdio
+vasnprintf
+intprops
+free-posix
+full-write
+errno
+
+configure.ac:
+gl_STDIO_MODULE_INDICATOR([vdzprintf])
+
+Makefile.am:
+lib_SOURCES += vdzprintf.c
+
+Include:
+<stdio.h>
+
+License:
+LGPL
+
+Maintainer:
+all
