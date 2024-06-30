@@ -280,6 +280,22 @@
 #endif
 
 
+#if @GNULIB_DZPRINTF@
+/* Prints formatted output to file descriptor FD.
+   Returns the number of bytes written to the file descriptor.  Upon
+   failure, returns -1 with errno set.
+   Failure code EOVERFLOW can only occur when a width > INT_MAX is used.
+   Therefore, if the format string is valid and does not use %ls/%lc
+   directives nor widths, the only possible failure codes are ENOMEM
+   and the possible failure codes from write(), excluding EINTR.  */
+_GL_FUNCDECL_SYS (dzprintf, off64_t,
+                  (int fd, const char *restrict format, ...)
+                  _GL_ATTRIBUTE_FORMAT_PRINTF_STANDARD (2, 3)
+                  _GL_ARG_NONNULL ((2)));
+_GL_CXXALIAS_SYS (dzprintf, off64_t,
+                  (int fd, const char *restrict format, ...));
+#endif
+
 #if @GNULIB_DPRINTF@
 # if @REPLACE_DPRINTF@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
