@@ -1775,6 +1775,24 @@ _GL_WARN_ON_USE (vdprintf, "vdprintf is unportable - "
 # endif
 #endif
 
+#if @GNULIB_VFZPRINTF@
+/* Prints formatted output to stream FP.
+   Returns the number of bytes written to the stream.  Upon failure,
+   returns -1 with the stream's error indicator set.
+   Failure cause EOVERFLOW can only occur when a width > INT_MAX is used.
+   Therefore, if the format string is valid and does not use %ls/%lc
+   directives nor widths, the only possible failure causes are ENOMEM
+   and the possible failure causes from fwrite().  */
+_GL_FUNCDECL_SYS (vfzprintf, off64_t,
+                  (FILE *restrict fp,
+                   const char *restrict format, va_list args)
+                  _GL_ATTRIBUTE_FORMAT_PRINTF_STANDARD (2, 0)
+                  _GL_ARG_NONNULL ((1, 2)));
+_GL_CXXALIAS_SYS (vfzprintf, off64_t,
+                  (FILE *restrict fp,
+                   const char *restrict format, va_list args));
+#endif
+
 #if @GNULIB_VFPRINTF_POSIX@ || @GNULIB_VFPRINTF@
 # if (@GNULIB_VFPRINTF_POSIX@ && @REPLACE_VFPRINTF@) \
      || (@GNULIB_VFPRINTF@ && @REPLACE_STDIO_WRITE_FUNCS@ && (@GNULIB_STDIO_H_NONBLOCKING@ || @GNULIB_STDIO_H_SIGPIPE@))
