@@ -1,0 +1,16 @@
+Files:
+tests/test-vdzprintf-gnu.sh
+tests/test-vdzprintf-gnu.c
+tests/test-fprintf-gnu.h
+tests/test-printf-gnu.output
+tests/infinity.h
+tests/macros.h
+
+Depends-on:
+stdint
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-vdzprintf-gnu.sh
+check_PROGRAMS += test-vdzprintf-gnu
