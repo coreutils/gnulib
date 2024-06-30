@@ -1,4 +1,4 @@
-/* Test of POSIX compatible vfprintf() function.
+/* Test of POSIX compatible vprintf() function.
    Copyright (C) 2007-2024 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
