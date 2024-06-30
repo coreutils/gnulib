@@ -1,6 +1,7 @@
 Files:
 tests/test-dprintf-gnu.sh
 tests/test-dprintf-gnu.c
+tests/test-dprintf-gnu.h
 tests/test-printf-gnu.output
 tests/macros.h
 

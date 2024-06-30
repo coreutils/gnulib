@@ -25,69 +25,8 @@
 
 #include "macros.h"
 
-static void
-test_function (int (*my_dprintf) (int, const char *, ...))
-{
-  /* Here we don't test output that may be platform dependent.
-     The bulk of the tests is done as part of the 'vasnprintf-posix' module.  */
-
-  /* Test the support of the 'B' conversion specifier for binary output of
-     integers.  */
-
-  /* Zero.  */
-  my_dprintf (fileno (stdout), "%B %d\n", 0, 33, 44, 55);
-
-  /* A positive number.  */
-  my_dprintf (fileno (stdout), "%B %d\n", 12345, 33, 44, 55);
-
-  /* A large positive number.  */
-  my_dprintf (fileno (stdout), "%B %d\n", 0xFFFFFFFEU, 33, 44, 55);
-
-  /* Width.  */
-  my_dprintf (fileno (stdout), "%20B %d\n", 12345, 33, 44, 55);
-
-  /* Width given as argument.  */
-  my_dprintf (fileno (stdout), "%*B %d\n", 20, 12345, 33, 44, 55);
-
-  /* Negative width given as argument (cf. FLAG_LEFT below).  */
-  my_dprintf (fileno (stdout), "%*B %d\n", -20, 12345, 33, 44, 55);
-
-  /* Precision.  */
-  my_dprintf (fileno (stdout), "%.20B %d\n", 12345, 33, 44, 55);
-
-  /* Zero precision and a positive number.  */
-  my_dprintf (fileno (stdout), "%.0B %d\n", 12345, 33, 44, 55);
-
-  /* Zero precision and a zero number.  */
-  my_dprintf (fileno (stdout), "%.0B %d\n", 0, 33, 44, 55);
-
-  /* Width and precision.  */
-  my_dprintf (fileno (stdout), "%25.20B %d\n", 12345, 33, 44, 55);
-
-  /* FLAG_LEFT.  */
-  my_dprintf (fileno (stdout), "%-20B %d\n", 12345, 33, 44, 55);
-
-  /* FLAG_ALT with zero.  */
-  my_dprintf (fileno (stdout), "%#B %d\n", 0, 33, 44, 55);
-
-  /* FLAG_ALT with a positive number.  */
-  my_dprintf (fileno (stdout), "%#B %d\n", 12345, 33, 44, 55);
-
-  /* FLAG_ALT with a positive number and width.  */
-  my_dprintf (fileno (stdout), "%#20B %d\n", 12345, 33, 44, 55);
-
-  /* FLAG_ALT with a positive number and padding.  */
-  my_dprintf (fileno (stdout), "%0#20B %d\n", 12345, 33, 44, 55);
-
-  /* FLAG_ALT with a positive number and precision.  */
-  my_dprintf (fileno (stdout), "%0#.20B %d\n", 12345, 33, 44, 55);
-
-  /* FLAG_ALT with a positive number and width and precision.  */
-  my_dprintf (fileno (stdout), "%#25.20B %d\n", 12345, 33, 44, 55);
-
-  /* FLAG_ALT with a zero precision and a zero number.  */
-  my_dprintf (fileno (stdout), "%#.0B %d\n", 0, 33, 44, 55);
-}
+#define RETTYPE int
+#include "test-dprintf-gnu.h"
 
 int
 main (int argc, char *argv[])
