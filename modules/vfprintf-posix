@@ -18,10 +18,10 @@ stdio
 nocrash
 printf-safe
 multiarch
-free-posix         [test $REPLACE_VFPRINTF = 1]
-fseterr            [test $REPLACE_VFPRINTF = 1]
-vasnprintf         [test $REPLACE_VFPRINTF = 1]
+vfzprintf          [test $REPLACE_VFPRINTF = 1]
 mixin/printf-posix [test $REPLACE_VFPRINTF = 1]
+intprops           [test $REPLACE_VFPRINTF = 1]
+fseterr            [test $REPLACE_VFPRINTF = 1]
 errno              [test $REPLACE_VFPRINTF = 1]
 
 configure.ac:
