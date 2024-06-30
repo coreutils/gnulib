@@ -1,0 +1,16 @@
+Files:
+tests/test-zprintf-posix.sh
+tests/test-zprintf-posix.c
+tests/test-printf-posix.h
+tests/test-printf-posix.output
+tests/infinity.h
+tests/macros.h
+
+Depends-on:
+stdint
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-zprintf-posix.sh
+check_PROGRAMS += test-zprintf-posix

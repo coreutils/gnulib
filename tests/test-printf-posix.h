@@ -1,4 +1,4 @@
-/* Test of POSIX compatible v[z]printf() and printf() functions.
+/* Test of POSIX compatible v[z]printf() and [z]printf() functions.
    Copyright (C) 2007-2024 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
