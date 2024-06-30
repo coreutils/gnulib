@@ -20,6 +20,6 @@ This function is not declared in @code{<stdlib.h>}
 (without @code{-D_GNU_SOURCE}) on some platforms:
 glibc (at least 2.11--2.13).
 @item
-POSIX 202x says this function is obsolescent and it is planned to be
+POSIX.1-2024 says this function is obsolescent and it is planned to be
 removed in a future version.
 @end itemize

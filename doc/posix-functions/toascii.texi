@@ -2,7 +2,8 @@
 @section @code{toascii}
 @findex toascii
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/toascii.html}
+Removed in POSIX.1-2024.
+POSIX.1-2017 specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/toascii.html}
 
 Gnulib module: ctype
 
@@ -16,7 +17,4 @@ macOS 10.8.
 
 Portability problems not fixed by Gnulib:
 @itemize
-@item
-POSIX says this function is obsolescent and it is planned to be
-removed in POSIX 202x.
 @end itemize
