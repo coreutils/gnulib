@@ -1884,6 +1884,21 @@ _GL_CXXALIASWARN (vfscanf);
 # endif
 #endif
 
+#if @GNULIB_VZPRINTF@
+/* Prints formatted output to standard output.
+   Returns the number of bytes written to standard output.  Upon failure,
+   returns -1 with stdout's error indicator set.
+   Failure cause EOVERFLOW can only occur when a width > INT_MAX is used.
+   Therefore, if the format string is valid and does not use %ls/%lc
+   directives nor widths, the only possible failure causes are ENOMEM
+   and the possible failure causes from fwrite().  */
+_GL_FUNCDECL_SYS (vzprintf, off64_t, (const char *restrict format, va_list args)
+                                     _GL_ATTRIBUTE_FORMAT_PRINTF_STANDARD (1, 0)
+                                     _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_SYS (vzprintf, off64_t,
+                  (const char *restrict format, va_list args));
+#endif
+
 #if @GNULIB_VPRINTF_POSIX@ || @GNULIB_VPRINTF@
 # if (@GNULIB_VPRINTF_POSIX@ && @REPLACE_VPRINTF@) \
      || (@GNULIB_VPRINTF@ && @REPLACE_STDIO_WRITE_FUNCS@ && (@GNULIB_STDIO_H_NONBLOCKING@ || @GNULIB_STDIO_H_SIGPIPE@))

@@ -1,0 +1,25 @@
+Description:
+vzprintf() function: print formatted output (without INT_MAX limitation)
+to standard output
+
+Files:
+lib/vzprintf.c
+
+Depends-on:
+stdio
+vfzprintf
+
+configure.ac:
+gl_STDIO_MODULE_INDICATOR([vzprintf])
+
+Makefile.am:
+lib_SOURCES += vzprintf.c
+
+Include:
+<stdio.h>
+
+License:
+LGPL
+
+Maintainer:
+all
