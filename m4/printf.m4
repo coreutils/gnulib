@@ -1,5 +1,5 @@
 # printf.m4
-# serial 94
+# serial 95
 dnl Copyright (C) 2003, 2007-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -897,8 +897,12 @@ AC_DEFUN([gl_PRINTF_DIRECTIVE_N],
         [AC_LANG_SOURCE([[
 #include <signal.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
+#if defined _WIN32 && !defined __CYGWIN__
+# include <stdlib.h>
+#else
+# include <unistd.h>
+#endif
 #ifdef _MSC_VER
 #include <crtdbg.h>
 #include <inttypes.h>
@@ -1717,6 +1721,11 @@ AC_DEFUN([gl_SNPRINTF_DIRECTIVE_N],
 #include <signal.h>
 #include <stdio.h>
 #include <string.h>
+#if defined _WIN32 && !defined __CYGWIN__
+# include <stdlib.h>
+#else
+# include <unistd.h>
+#endif
 #if HAVE_SNPRINTF
 # define my_snprintf snprintf
 #else
