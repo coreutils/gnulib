@@ -1,4 +1,4 @@
-# strstr.m4 serial 24
+# strstr.m4 serial 25
 dnl Copyright (C) 2008-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -94,7 +94,7 @@ static void quit (int sig) { _exit (sig + 128); }
     char *haystack = (char *) malloc (2 * m + 2);
     char *needle = (char *) malloc (m + 2);
     /* Failure to compile this test due to missing alarm is okay,
-       since all such platforms (mingw) also have quadratic strstr.  */
+       since all such platforms (mingw, MSVC) also have quadratic strstr.  */
     signal (SIGALRM, quit);
     alarm (5);
     /* Check for quadratic performance.  */

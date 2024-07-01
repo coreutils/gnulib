@@ -1,4 +1,4 @@
-# sleep.m4 serial 13
+# sleep.m4 serial 14
 dnl Copyright (C) 2007-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -32,7 +32,7 @@ handle_alarm (int sig)
 }
 ]], [[
     /* Failure to compile this test due to missing alarm is okay,
-       since all such platforms (mingw) also lack sleep.  */
+       since all such platforms (mingw, MSVC) also lack sleep.  */
     unsigned int pentecost = 50 * 24 * 60 * 60; /* 50 days.  */
     unsigned int remaining;
     signal (SIGALRM, handle_alarm);
