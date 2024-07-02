@@ -1,5 +1,5 @@
 /* git-merge-changelog - git "merge" driver for GNU style ChangeLog files.
-   Copyright (C) 2008-2021 Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2008-2024 Bruno Haible <bruno@clisp.org>
 
    This file is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published
@@ -55,8 +55,8 @@
                   name = GNU-style ChangeLog merge driver
                   driver = /usr/local/bin/git-merge-changelog %O %A %B
 
-     - In every directory that contains a ChangeLog file, add a file
-       '.gitattributes' with this line:
+     - Add to the top-level directory of the checkout a file '.gitattributes'
+       with this line:
 
           ChangeLog    merge=merge-changelog
 
@@ -77,12 +77,12 @@
    Additionally, for hg users:
      - Add to your $HOME/.hgrc the lines
 
-        [merge-patterns]
-        ChangeLog = git-merge-changelog
+          [merge-patterns]
+          ChangeLog = git-merge-changelog
 
-        [merge-tools]
-        git-merge-changelog.executable = /usr/local/bin/git-merge-changelog
-        git-merge-changelog.args = $base $local $other
+          [merge-tools]
+          git-merge-changelog.executable = /usr/local/bin/git-merge-changelog
+          git-merge-changelog.args = $base $local $other
 
        See <https://www.selenic.com/mercurial/hgrc.5.html> section merge-tools
        for reference.
