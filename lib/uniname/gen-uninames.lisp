@@ -1,6 +1,7 @@
-#!/usr/local/bin/clisp -C
+#!/usr/bin/env -S clisp -C
 
-;;; Creation of gnulib's uninames.h from the UnicodeData.txt table.
+;;; Creation of gnulib's uninames.h from the UnicodeData.txt and NameAliases.txt
+;;; tables.
 
 ;;; Copyright (C) 2000-2024 Free Software Foundation, Inc.
 ;;; Written by Bruno Haible <bruno@clisp.org>, 2000-12-28.
@@ -48,8 +49,8 @@
   length                        ; number of words
 )
 
-(defun main (inputfile outputfile aliasfile)
-  (declare (type string inputfile outputfile aliasfile))
+(defun main (inputfile aliasfile outputfile)
+  (declare (type string inputfile aliasfile outputfile))
   #+UNICODE (setq *default-file-encoding* charset:utf-8)
   (let ((all-chars '())
         (all-chars-hashed (make-hash-table :test #'equal))

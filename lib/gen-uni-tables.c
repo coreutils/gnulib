@@ -12075,8 +12075,8 @@ main (int argc, char * argv[])
  *   && diff uniwbrk/wbrkprop_org.txt uniwbrk/wbrkprop.txt              \\
  *   && clisp -C uniname/gen-uninames.lisp                              \\
  *            /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/15.1.0/ucd/UnicodeData.txt \\
- *            uniname/uninames.h                                        \\
  *            /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/15.1.0/ucd/NameAliases.txt \\
+ *            uniname/uninames.h                                        \\
  *   && { sed -e 's/^/# /' -e 's/ $//' < /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/license.txt; \\
  *        echo; \\
  *        cat /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/15.1.0/ucd/NameAliases.txt; } \\
