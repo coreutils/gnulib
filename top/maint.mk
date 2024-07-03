@@ -124,8 +124,10 @@ release_archive_dir ?= ../release
 # If RELEASE_TYPE is undefined, but RELEASE is, use its second word.
 # But overwrite VERSION.
 ifdef RELEASE
-  VERSION := $(word 1, $(RELEASE))
-  RELEASE_TYPE ?= $(word 2, $(RELEASE))
+  ifeq ($(origin RELEASE),command line)
+    VERSION := $(word 1,$(RELEASE))
+    RELEASE_TYPE ?= $(word 2,$(RELEASE))
+  endif
 endif
 
 # Validate and return $(RELEASE_TYPE), or die.
