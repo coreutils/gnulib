@@ -43,6 +43,51 @@ you want to generate reproducible @file{ChangeLog} files that do not
 depend on the developer's locale and time zone.  Omit this line if you
 prefer @file{ChangeLog} files that depend on these developer settings.
 
+If you wish to output the @file{ChangeLog} with dates respecting the
+time zone each individual commit was made in you can use the
+@option{--commit-timezone} option.  For example:
+
+@example
+dist-hook: gen-ChangeLog
+.PHONY: gen-ChangeLog
+gen-ChangeLog:
+        $(AM_V_GEN)if test -e .git; then                                 \
+          $(top_srcdir)/build-aux/gitlog-to-changelog --commit-timezone  \
+            > $(distdir)/ChangeLog.tmp &&                                \
+          mv -f $(distdir)/ChangeLog.tmp $(distdir)/ChangeLog;           \
+        fi
+@end example
+
+The use of @option{--commit-timezone} means that @file{ChangeLog} dates
+correctly represent when a committer pushed a change according to their
+time zone.  However, as a consequence @file{ChangeLog} dates will no
+longer be monotonically increasing.  This behavior may be undesired,
+especially when developers are spread across many different time zones.
+For example, the following three commits were made in a short period of
+time across two different time zones:
+
+@example
+2024-06-19  Bruno Haible  <bruno@@clisp.org>
+
+	filemode tests: Tweak.
+	* tests/test-filemode.c: Update comment.
+	* modules/filemode-tests (Depends-on): Add unistd.
+
+2024-06-18  Collin Funk  <collin.funk1@@gmail.com>
+
+	filemode: Add tests.
+	* modules/filemode-tests: New file.
+	* tests/test-filemode.c: New file.
+
+2024-06-19  Bruno Haible  <bruno@@clisp.org>
+
+	copysignl tests: Avoid failure on Solaris 11.4.
+	* tests/test-copysignl.c: Include <float.h>.
+	(LDBL_BYTES): New macro.
+	(main): Use it instead of sizeof (long double).
+	* modules/copysignl-tests (Depends-on): Add float.
+@end example
+
 If you wish to limit the @file{ChangeLog} entries (perhaps for size
 issues) to contain only entries since a particular git tag, you can
 use a @code{gen-ChangeLog} rule like the following:
