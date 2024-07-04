@@ -35,7 +35,7 @@
 eval 'exec perl -wSx "$0" "$@"'
      if 0;
 
-my $VERSION = '2023-12-29 18:26'; # UTC
+my $VERSION = '2024-07-04 10:55'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -695,7 +695,7 @@ EOF
 ## perl-label-offset: -2
 ## perl-extra-newline-before-brace: t
 ## perl-merge-trailing-else: nil
-## eval: (add-hook 'before-save-hook 'time-stamp)
+## eval: (add-hook 'before-save-hook 'time-stamp nil t)
 ## time-stamp-line-limit: 50
 ## time-stamp-start: "my $VERSION = '"
 ## time-stamp-format: "%:y-%02m-%02d %02H:%02M"
