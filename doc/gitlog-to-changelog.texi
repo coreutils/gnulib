@@ -61,31 +61,24 @@ gen-ChangeLog:
 The use of @option{--commit-timezone} means that @file{ChangeLog} dates
 correctly represent when a committer pushed a change according to their
 time zone.  However, as a consequence @file{ChangeLog} dates will no
-longer be monotonically increasing.  This behavior may be undesired,
-especially when developers are spread across many different time zones.
+longer be monotonically increasing, if the developers are spread across
+different time zones.
 For example, the following three commits were made in a short period of
-time across two different time zones:
+time across two different time zones.
+This behavior may be undesired.
 
 @example
 2024-06-19  Bruno Haible  <bruno@@clisp.org>
 
-	filemode tests: Tweak.
-	* tests/test-filemode.c: Update comment.
-	* modules/filemode-tests (Depends-on): Add unistd.
+	...
 
 2024-06-18  Collin Funk  <collin.funk1@@gmail.com>
 
-	filemode: Add tests.
-	* modules/filemode-tests: New file.
-	* tests/test-filemode.c: New file.
+	...
 
 2024-06-19  Bruno Haible  <bruno@@clisp.org>
 
-	copysignl tests: Avoid failure on Solaris 11.4.
-	* tests/test-copysignl.c: Include <float.h>.
-	(LDBL_BYTES): New macro.
-	(main): Use it instead of sizeof (long double).
-	* modules/copysignl-tests (Depends-on): Add float.
+	...
 @end example
 
 If you wish to limit the @file{ChangeLog} entries (perhaps for size
