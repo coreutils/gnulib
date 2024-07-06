@@ -128,7 +128,19 @@ func_gnulib_dir ()
   gnulib_dir=`echo "$self_abspathname" | sed -e 's,/[^/]*$,,'`
 }
 
-func_gnulib_dir
+# If $progname contains '/' and is not a symlink, it suffices for $prog to be
+# the same as $progname with except with basename '.gnulib-tool.py'; this
+# speeds startup and might avoid problems in oddball development environments.
+# Otherwise, $prog is the absolute name of the .gnulib-tool.py file.
+if case $progname in
+     */*) test -h "$0" ;;
+   esac
+then
+  func_gnulib_dir
+  prog=$gnulib_dir/.gnulib-tool.py
+else
+  prog=${progname%/*}/.gnulib-tool.py
+fi
 
 # Check the Python version.
 if (python3 -c 'import sys; sys.exit(not sys.version_info >= (3,7))') 2>/dev/null; then
@@ -157,4 +169,4 @@ fi
 profiler_args=
 # For profiling, cf. <https://docs.python.org/3/library/profile.html>.
 #profiler_args="-m cProfile -s tottime"
-exec python3 $profiler_args "$gnulib_dir/.gnulib-tool.py" "$@"
+exec python3 $profiler_args -- "$prog" "$@"

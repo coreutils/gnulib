@@ -137,23 +137,35 @@ func_gnulib_dir ()
   gnulib_dir=`echo "$self_abspathname" | sed -e 's,/[^/]*$,,'`
 }
 
-func_gnulib_dir
+# If $progname contains '/' and is not a symlink, it suffices for $prog to be
+# the same as $progname with except with basename 'gnulib-tool’; this
+# speeds startup and might avoid problems in oddball development environments.
+# Otherwise, $prog is the absolute name of the gnulib-tool executable.
+if case $progname in
+     */*) test -h "$0" ;;
+   esac
+then
+  func_gnulib_dir
+  prog=$gnulib_dir/gnulib-tool
+else
+  prog=${progname%/*}/gnulib-tool
+fi
 
 case "$GNULIB_TOOL_IMPL" in
   '')
     # Use the Python implementation if a suitable Python version is found
     # in $PATH. This is the same Python version test as in gnulib-tool.py.
     if (python3 -c 'import sys; sys.exit(not sys.version_info >= (3,7))') 2>/dev/null; then
-      exec "$gnulib_dir/gnulib-tool.py" "$@"
+      exec "$prog.py" "$@"
     else
       echo "gnulib-tool: warning: python3 not found or too old, using the slow shell-based implementation" 1>&2
-      exec "$gnulib_dir/gnulib-tool.sh" "$@"
+      exec "$prog.sh" "$@"
     fi
     ;;
   sh)
-    exec "$gnulib_dir/gnulib-tool.sh" "$@" ;;
+    exec "$prog.sh" "$@" ;;
   py)
-    exec "$gnulib_dir/gnulib-tool.py" "$@" ;;
+    exec "$prog.py" "$@" ;;
   sh+py)
     case " $* " in
       *" --import"* | *" --add-import"* | *" --remove-import"* | *" --update"* | *" --copy-file"*)
@@ -183,10 +195,14 @@ case "$GNULIB_TOOL_IMPL" in
           func_exit 1
         }
         # Execute gnulib-tool.py in the clone directory.
-        (cd "$tmp" && "$gnulib_dir/gnulib-tool.py" "$@" >"$tmp-py-out" 2>"$tmp-py-err")
+        case $prog in
+          /*) absprog=$prog ;;
+          *)  absprog=$PWD/prog ;;
+        esac
+        (cd "$tmp" && "$absprog.py" "$@" >"$tmp-py-out" 2>"$tmp-py-err")
         pyrc=$?
         # Execute gnulib-tool.sh in the current directory.
-        "$gnulib_dir/gnulib-tool.sh" "$@" >"$tmp-sh-out" 2>"$tmp-sh-err"
+        "$prog.sh" "$@" >"$tmp-sh-out" 2>"$tmp-sh-err"
         shrc=$?
         if test $shrc != 0; then
           if test $pyrc = 0; then
@@ -233,10 +249,10 @@ case "$GNULIB_TOOL_IMPL" in
         # Find another directory name.
         tmp="$dir-glpy$$"
         # Execute gnulib-tool.py, creating a different directory.
-        "$gnulib_dir/gnulib-tool.py" "$@" --dir="$tmp" >"$tmp-py-out" 2>"$tmp-py-err"
+        "$prog.py" "$@" --dir="$tmp" >"$tmp-py-out" 2>"$tmp-py-err"
         pyrc=$?
         # Execute gnulib-tool.sh, creating the intended directory.
-        "$gnulib_dir/gnulib-tool.sh" "$@" >"$tmp-sh-out" 2>"$tmp-sh-err"
+        "$prog.sh" "$@" >"$tmp-sh-out" 2>"$tmp-sh-err"
         shrc=$?
         if test $shrc != 0; then
           if test $pyrc = 0; then
@@ -274,10 +290,10 @@ case "$GNULIB_TOOL_IMPL" in
         # A gnulib-tool invocation that produces only output, no files.
         tmp="glpy$$"
         # Execute gnulib-tool.py.
-        "$gnulib_dir/gnulib-tool.py" "$@" >"$tmp-py-out" 2>"$tmp-py-err"
+        "$prog.py" "$@" >"$tmp-py-out" 2>"$tmp-py-err"
         pyrc=$?
         # Execute gnulib-tool.sh.
-        "$gnulib_dir/gnulib-tool.sh" "$@" >"$tmp-sh-out" 2>"$tmp-sh-err"
+        "$prog.sh" "$@" >"$tmp-sh-out" 2>"$tmp-sh-err"
         shrc=$?
         if test $shrc != 0; then
           if test $pyrc = 0; then
