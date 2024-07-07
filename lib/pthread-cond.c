@@ -22,7 +22,7 @@
 #include <pthread.h>
 
 #if (defined _WIN32 && ! defined __CYGWIN__) && USE_WINDOWS_THREADS
-# include "windows-thread.h"
+# include "windows-cond.h"
 #else
 # include <errno.h>
 # include <limits.h>
