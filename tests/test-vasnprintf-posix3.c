@@ -79,7 +79,8 @@ main (int argc, char *argv[])
 {
 #if (__GLIBC__ > 2 || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 3)) && !defined __UCLIBC__
   /* Select a locale with Arabic 'outdigits'.  */
-  if (setlocale (LC_ALL, "fa_IR.UTF-8") == NULL)
+  if (setlocale (LC_ALL, "fa_IR.UTF-8") == NULL
+      && setlocale (LC_ALL, "fa_IR") == NULL)
     {
       fprintf (stderr, "Skipping test: no Iranian locale is installed\n");
       return 77;

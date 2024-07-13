@@ -23,6 +23,7 @@
 #include <ctype.h>
 #include <limits.h>
 #include <locale.h>
+#include <stdlib.h>
 
 #include "macros.h"
 
@@ -218,11 +219,16 @@ main ()
 
   test_all ();
 
-  setlocale (LC_ALL, "de_DE");
-  test_all ();
+  /* Run the tests in a German unibyte locale.  */
+  if ((setlocale (LC_ALL, "de_DE") != NULL
+       || setlocale (LC_ALL, "de_DE.ISO-8859-1") != NULL)
+      && MB_CUR_MAX == 1)
+    test_all ();
 
-  setlocale (LC_ALL, "ja_JP.EUC-JP");
-  test_all ();
+  /* Run the tests in a traditional Japanese locale.  */
+  if (setlocale (LC_ALL, "ja_JP.EUC-JP") != NULL
+      && MB_CUR_MAX == 2)
+    test_all ();
 
   return test_exit_status;
 }
