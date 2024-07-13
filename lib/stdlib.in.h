@@ -20,9 +20,18 @@
 #endif
 @PRAGMA_COLUMNS@
 
-#if defined __need_system_stdlib_h || defined __need_malloc_and_calloc
+#if (defined __need_system_stdlib_h && !defined _GLIBCXX_STDLIB_H) || defined __need_malloc_and_calloc
 /* Special invocation conventions inside some gnulib header files,
-   and inside some glibc header files, respectively.  */
+   and inside some glibc header files, respectively.
+   Do not recognize this special invocation convention when GCC's
+   c++/11/stdlib.h is being included or has been included. This is needed
+   to support the use of clang+llvm binaries on Ubuntu 22.04 with
+   CXX="$clangdir/bin/clang++ -I/usr/include/c++/11 \
+                              -I/usr/include/x86_64-linux-gnu/c++/11
+                              -L/usr/lib/gcc/x86_64-linux-gnu/11
+                              -Wl,-rpath,$clangdir/lib"
+   because in this case /usr/include/c++/11/stdlib.h (which does not support
+   the convention) is seen before the gnulib-generated stdlib.h.  */
 
 #@INCLUDE_NEXT@ @NEXT_STDLIB_H@
 
