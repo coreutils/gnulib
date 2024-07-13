@@ -1,10 +1,21 @@
-The following packages are needed by maintainers for using
-'gnulib-tool'.  In general, Gnulib prefers the latest stable
-version of each package, but in some cases it also supports
-older versions; this caters to commonly-used software
-distributions that may lag behind the latest stable package.
-Support for older versions is not guaranteed, though, and
-the version numbers in the following list may be incremented
+Table of contents:
+1) Dependencies for using gnulib-tool (maintainer environment)
+2) Dependencies for building the imported code (target environment)
+
+
+1) Dependencies for using gnulib-tool (maintainer environment)
+**************************************************************
+
+The following packages are needed by maintainers for using 'gnulib-tool'.
+We call this the "maintainer environment", although it is not necessarily
+a maintainer's or developer's machine; it can also be some containerized
+environment.
+
+In general, Gnulib prefers the latest stable version of each package,
+but in some cases it also supports older versions; this caters to
+commonly-used software distributions that may lag behind the latest
+stable package. Support for older versions is not guaranteed, though,
+and the version numbers in the following list may be incremented
 at any time.
 
 * A C runtime, compiler, linker, etc.
@@ -17,8 +28,8 @@ at any time.
 
 * A 'make' utility.
   + Mandatory. Using the platform's native 'make' gives good portability
-    exposure for in-tree builds, but VPATH builds require GNU Make 3.79.1 or
-    newer.
+    exposure for in-tree builds, but VPATH builds on OpenBSD or Solaris
+    require GNU Make 3.79.1 or newer.
   + GNU Make Homepage:
     https://www.gnu.org/software/make/
   + Download:
@@ -190,7 +201,7 @@ at any time.
     https://ftp.gnu.org/gnu/libtool/
 
 * GNU tar 1.28 or newer.
-  + Recommended.
+  + Optional.
     Needed if you use the 'gnumakefile' module, which sets TAR_OPTIONS
     to --sort=names (added in version 1.28) in GNUmakefile for 'make dist'.
   + Homepage:
@@ -198,9 +209,77 @@ at any time.
   + Download:
     https://ftp.gnu.org/gnu/tar/
 
+Note: Solaris 10 is no longer supported as maintainer environment.
+<https://lists.gnu.org/archive/html/bug-gnulib/2024-07/msg00076.html>
 
-Prerequisites needed on specific platforms
-==========================================
+
+2) Dependencies for building the imported code (target environment)
+*******************************************************************
+
+The following packages are needed for building the package that imports
+code from Gnulib.
+
+* A C runtime, compiler, linker, etc.
+  + Mandatory. Using the platform's native 'cc' gives good portability
+    exposure, but you can also use GCC 3.1 or newer.
+  + GCC Homepage:
+    https://gcc.gnu.org/
+  + Download:
+    https://ftp.gnu.org/gnu/gcc/
+
+* A 'make' utility.
+  + Mandatory. Using the platform's native 'make' gives good portability
+    exposure for in-tree builds, but VPATH builds on OpenBSD or Solaris
+    require GNU Make 3.79.1 or newer.
+  + GNU Make Homepage:
+    https://www.gnu.org/software/make/
+  + Download:
+    https://ftp.gnu.org/gnu/make/
+
+* A shell
+  + Mandatory. Using the platform's native 'sh' gives good portability
+    exposure, but you can also use Bash.
+  + Homepage:
+    https://www.gnu.org/software/bash/
+  + Download:
+    https://ftp.gnu.org/gnu/bash/
+
+* Core POSIX utilities, including:
+    [ basename cat chgrp chmod chown cp dd echo expand expr
+    false hostname install kill ln ls md5sum mkdir mkfifo
+    mknod mv printenv pwd rm rmdir sleep sort tee test touch
+    true uname
+  + Mandatory. Using the platform's native utilities gives good portability
+    exposure, but you can also use GNU coreutils.
+  + Homepage:
+    https://www.gnu.org/software/coreutils/
+  + Download:
+    https://ftp.gnu.org/gnu/coreutils/
+
+* The comparison utilities 'cmp' and 'diff'.
+  + Mandatory. Using the platform's native utilities gives good portability
+    exposure, but you can also use GNU diffutils.
+  + Homepage:
+    https://www.gnu.org/software/diffutils/
+  + Download:
+    https://ftp.gnu.org/gnu/diffutils/
+
+* Grep.
+  + Mandatory. Using the platform's native grep gives good portability
+    exposure, but you can also use GNU grep.
+  + Homepage:
+    https://www.gnu.org/software/grep/
+  + Download:
+    https://ftp.gnu.org/gnu/grep/
+
+* Awk.
+  + Mandatory.
+    Using the platform's native awk, mawk, or nawk gives good portability
+    exposure, but you can also use GNU awk.
+  + Homepage:
+    https://www.gnu.org/software/gawk/
+  + Download:
+    https://ftp.gnu.org/gnu/gawk/
 
 Prerequisites on Windows
 ------------------------
@@ -214,3 +293,36 @@ Prerequisites on Windows
     https://cygwin.com/
   + Download:
     https://cygwin.com/install.html
+
+Locales
+-------
+
+If your package includes the tests for the Gnulib modules that you imported,
+you will want to maximize the test coverage of these tests, that is, to
+minimize the number of tests that are skipped. To this effect, you need to
+install a couple of locales, used by the tests.
+
+You can get a listing of the locales installed by default through
+  $ locale -a
+(Note: On glibc systems, this command displays the encoding names in a
+mutilated form, e.g. it transforms "en_US.UTF-8" to "en_US.utf8".)
+
+To install the needed locales on glibc systems:
+
+$ sudo localedef -i en_US -f UTF-8 en_US.UTF-8
+$ sudo localedef -i ar_SA -f ISO-8859-6 ar_SA.ISO-8859-6
+$ sudo localedef -i de_DE -f UTF-8 de_DE.UTF-8
+$ sudo localedef -i es_ES -f UTF-8 es_ES.UTF-8
+$ sudo localedef -i fa_IR -f UTF-8 fa_IR
+$ sudo localedef -i fr_FR -f ISO-8859-1 fr_FR.ISO-8859-1
+$ sudo localedef -i fr_FR -f UTF-8 fr_FR.UTF-8
+$ sudo localedef -i ja_JP -f EUC-JP ja_JP.EUC-JP
+$ sudo localedef -i tr_TR -f UTF-8 tr_TR.UTF-8
+$ sudo localedef -i zh_CN -f GB18030 zh_CN.GB18030
+$ sudo localedef -i zh_HK -f BIG5-HKSCS zh_HK.BIG5-HKSCS
+
+On Debian and Debian-based systems, if you want these locales to be
+persistent across automatic system updates, the approach is different:
+There, you need to enable the locales in the file /etc/locale.gen and
+then run
+$ sudo locale-gen
