@@ -9,6 +9,7 @@ lib/ldtoastr.c
 Depends-on:
 extensions
 intprops
+strtold
 
 configure.ac:
 
