@@ -17,6 +17,7 @@ signbit
 setlocale
 thread
 nanosleep
+strtold
 
 configure.ac:
 gt_LOCALE_FR
