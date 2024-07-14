@@ -47,6 +47,13 @@
 # elif STRTOLD_HAS_UNDERFLOW_BUG
    /* strtold would not set errno=ERANGE upon underflow.  */
 #  define HAVE_UNDERLYING_STRTOD 0
+# elif defined __MINGW32__ && __MINGW64_VERSION_MAJOR < 10
+   /* strtold is broken in mingw versions before 10.0:
+      - Up to mingw 5.0.x, it leaks memory at every invocation.
+      - Up to mingw 9.0.x, it allocates an unbounded amount of stack.
+      See <https://github.com/mingw-w64/mingw-w64/commit/450309b97b2e839ea02887dfaf0f1d10fb5d40cc>
+      and <https://github.com/mingw-w64/mingw-w64/commit/73806c0709b7e6c0f6587f11a955743670e85470>.  */
+#  define HAVE_UNDERLYING_STRTOD 0
 # else
 #  define HAVE_UNDERLYING_STRTOD HAVE_STRTOLD
 # endif

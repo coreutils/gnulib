@@ -67,6 +67,10 @@ HP-UX 11.31/ia64.
 This function fails to set @code{errno} upon underflow on some platforms:
 @c https://cygwin.com/ml/cygwin/2019-12/msg00072.html
 Cygwin 2.9.
+
+@item
+This function leaks memory on mingw 5.0
+and allocates an unbounded amount of stack on mingw 9.0.
 @end itemize
 
 Portability problems not fixed by Gnulib:
