@@ -117,6 +117,17 @@ struct random_data
 # include <unistd.h>
 #endif
 
+#if ((@GNULIB_STRTOL@ && @REPLACE_STRTOL@) || (@GNULIB_STRTOLL@ && @REPLACE_STRTOLL@) || (@GNULIB_STRTOUL@ && @REPLACE_STRTOUL@) || (@GNULIB_STRTOULL@ && @REPLACE_STRTOULL@)) && defined __cplusplus && !defined GNULIB_NAMESPACE && defined __GNUG__ && !defined __clang__ && defined __sun
+/* When strtol, strtoll, strtoul, or strtoull is going to be defined as a macro
+   below, this may cause compilation errors later in the libstdc++ header files
+   (that are part of GCC), such as:
+     error: 'rpl_strtol' is not a member of 'std'
+   To avoid this, include the relevant header files here, before these symbols
+   get defined as macros.  But do so only on Solaris 11 (where it is needed),
+   not on mingw (where it would cause other compilation errors).  */
+# include <string>
+#endif
+
 /* _GL_ATTRIBUTE_DEALLOC (F, I) declares that the function returns pointers
    that can be freed by passing them as the Ith argument to the
    function F.  */
