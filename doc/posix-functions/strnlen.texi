@@ -9,15 +9,15 @@ Gnulib module: strnlen
 Portability problems fixed by Gnulib:
 @itemize
 @item
+On some platforms, calls like @code{strnlen (s, maxlen)} can crash if
+@var{s} is null-terminated but address arithmetic overflows
+(i.e., @code{s + maxlen < s}):
+Android 5.0.
+@item
 This function is missing on some platforms:
 Mac OS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, HP-UX 11, Solaris 10, mingw.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
-@item
-On some platforms, calls like @code{strnlen (s, maxlen)} can crash if
-@var{s} is null-terminated but address arithmetic overflows
-(i.e., @code{s + maxlen < s}):
-Android 5.0.
 @end itemize
