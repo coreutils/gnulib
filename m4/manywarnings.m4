@@ -1,4 +1,4 @@
-# manywarnings.m4 serial 24.1
+# manywarnings.m4 serial 24.2
 dnl Copyright (C) 2008-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -140,7 +140,6 @@ AC_DEFUN([gl_MANYWARN_ALL_GCC(C)],
     -Wsuggest-final-methods \
     -Wsuggest-final-types \
     -Wsync-nand \
-    -Wsystem-headers \
     -Wtrampolines \
     -Wuninitialized \
     -Wunknown-pragmas \
