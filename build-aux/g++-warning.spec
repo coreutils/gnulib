@@ -85,6 +85,7 @@
 -Wswitch-default			https://lists.gnu.org/r/bug-gnulib/2018-05/msg00179.html
 -Wswitch-enum				FIXME maybe? borderline.  some will want this
 -Wsynth					deprecated
+-Wsystem-headers			warns about system headers on macOS and #include_next in gnulib headers
 -Wtabs					fortran
 -Wtarget-lifetime			fortran
 -Wtraditional-conversion		obsolescent
