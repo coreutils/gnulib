@@ -348,6 +348,7 @@
 -Wswitch-outside-range			default
 -Wswitch-unreachable			default
 -Wsynth					deprecated
+-Wsystem-headers			warns about system headers on macOS and #include_next in gnulib headers
 -Wtabs					fortran
 -Wtarget-lifetime			fortran
 -Wtautological-compare			enabled by -Wall
