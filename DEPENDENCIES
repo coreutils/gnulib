@@ -294,6 +294,146 @@ Prerequisites on Windows
   + Download:
     https://cygwin.com/install.html
 
+Libraries
+---------
+
+Various modules work best with certain libraries installed. These are runtime
+dependencies that are also build dependencies.
+
+For module 'abort-debug':
+  * libbacktrace
+    + Recommended.
+      Needed for producing C stack traces with source file names and
+      line numbers.
+    + Homepage:
+      https://github.com/ianlancetaylor/libbacktrace
+    + Download:
+      https://github.com/ianlancetaylor/libbacktrace
+    + Pre-built package name:
+      - On Debian and Debian-based systems: libgcc-N-dev,
+      - On Red Hat distributions: --.
+      - Other: https://repology.org/project/libbacktrace/versions
+
+For module 'acl':
+  * libacl
+    + Recommended on Linux systems.
+      Needed so that the creation of backup files respects the access control
+      lists (ACLs) set on the original files.
+    + Homepage:
+      https://savannah.nongnu.org/projects/acl/
+    + Download:
+      https://download.savannah.nongnu.org/releases/acl/
+    + Pre-built package name:
+      - On Debian and Debian-based systems: libacl1-dev,
+      - On Red Hat distributions: libacl-devel.
+      - Other: https://repology.org/project/acl/versions
+  * libattr
+    + Recommended on Linux systems.
+      Needed so that the creation of backup files respects the access control
+      lists (ACLs) set on the original files, with fewer system calls.
+    + Homepage:
+      https://savannah.nongnu.org/projects/attr/
+    + Download:
+      https://download.savannah.nongnu.org/releases/attr/
+    + Pre-built package name:
+      - On Debian and Debian-based systems: libattr1-dev,
+      - On Red Hat distributions: libattr-devel.
+      - Other: https://repology.org/project/attr/versions
+
+For module 'gettext-h':
+  * libintl, part of GNU gettext
+    + Not needed on systems with glibc.
+      But highly recommended on all other systems.
+      Needed for localization (translation) of messages to the user's
+      native language.
+    + Homepage:
+      https://www.gnu.org/software/gettext/
+    + Download:
+      https://ftp.gnu.org/gnu/gettext/
+    + Pre-built package name:
+      - On Debian and Debian-based systems: --,
+      - On Red Hat distributions: --.
+      - Other: https://repology.org/project/gettext/versions
+    + If it is installed in a nonstandard directory, pass the option
+      --with-libintl-prefix=DIR to 'configure'.
+
+For module 'iconv':
+  * GNU libiconv
+    + Not needed on systems with glibc and on NetBSD.
+      But highly recommended on all other systems.
+      Needed for character set conversion of strings from/to Unicode.
+    + Homepage:
+      https://www.gnu.org/software/libiconv/
+    + Download:
+      https://ftp.gnu.org/gnu/libiconv/
+    + Pre-built package name:
+      - On Debian and Debian-based systems: --,
+      - On Red Hat distributions: --.
+      - Other: https://repology.org/project/libiconv/versions
+    + If it is installed in a nonstandard directory, pass the option
+      --with-libiconv-prefix=DIR to 'configure'.
+    + On mingw, a slim alternative is the 'win-iconv' package version 0.0.8
+      from https://github.com/win-iconv/win-iconv .
+
+For module 'libgmp':
+  * GNU gmp.
+    + Recommended.
+      Needed for fast multiprecision computations.
+    + Homepage:
+      https://www.gnu.org/software/gmp/
+    + Download:
+      https://ftp.gnu.org/gnu/gmp/
+    + Pre-built package name:
+      - On Debian and Debian-based systems: libgmp-dev,
+      - On Red Hat distributions: gmp-devel.
+      - Other: https://repology.org/project/gmp/versions
+    + If it is installed in a nonstandard directory, pass the option
+      --with-libgmp-prefix to 'configure'.
+
+For module 'readline':
+  * GNU readline
+    + Recommended.
+      Needed for interactive editing of textual input.
+    + Homepage:
+      https://www.gnu.org/software/readline/
+    + Download:
+      https://ftp.gnu.org/gnu/readline/
+    + Pre-built package name:
+      - On Debian and Debian-based systems: libreadline-dev,
+      - On Red Hat distributions: readline-devel.
+      - Other: https://repology.org/project/readline/versions
+    + If it is installed in a nonstandard directory, pass the option
+      --with-libreadline-prefix=DIR to 'configure'.
+
+For modules 'terminfo' and 'termcap':
+  * GNU ncurses (preferred)
+    or libtermcap (discouraged) or a curses library (legacy).
+    + Recommended.
+      Needed for fancy input/output in terminal emulators.
+    + Homepage:
+      https://www.gnu.org/software/ncurses/
+    + Download:
+      https://ftp.gnu.org/gnu/ncurses/
+    + Pre-built package name:
+      - On Debian and Debian-based systems: libncurses-dev,
+      - On Red Hat distributions: ncurses-devel.
+      - Other: https://repology.org/project/ncurses/versions
+    + If it is installed in a nonstandard directory, pass the option
+      --with-libncurses-prefix=DIR or --with-libtermcap-prefix to 'configure'.
+
+For modules 'crypto/md5-buffer', 'crypto/sha*-buffer':
+  * OpenSSL.
+    + Optional.
+      Needed for optimized crypto hash sums.
+    + Homepage:
+      https://www.openssl.org/
+    + Download:
+      https://www.openssl.org/source/
+    + Pre-built package name:
+      - On Debian and Debian-based systems: libssl-dev,
+      - On Red Hat distributions: openssl-devel.
+      - Other: https://repology.org/project/openssl/versions
+
 Locales
 -------
 
