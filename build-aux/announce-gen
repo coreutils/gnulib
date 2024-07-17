@@ -35,7 +35,7 @@
 eval 'exec perl -wSx "$0" "$@"'
      if 0;
 
-my $VERSION = '2024-07-14 03:11'; # UTC
+my $VERSION = '2024-07-17 02:16'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -102,6 +102,7 @@ The following are optional:
    --help             display this help and exit
    --version          output version information and exit
 
+Send patches and bug reports to <bug-gnulib\@gnu.org>.
 EOF
     }
   exit $exit_code;
