@@ -26,13 +26,14 @@
 /*   rpl_abort ();
    is equivalent to
      print_stack_trace ();
-     original abort (); // i.e. raise (SIGABRT);
+     original abort (); // essentially raise (SIGABRT);
  */
 void
 rpl_abort (void)
+#undef abort
 {
 #if HAVE_LIBBACKTRACE || HAVE_LIBASAN || HAVE_EXECINFO_H
   print_stack_trace_to (stderr);
 #endif
-  raise (SIGABRT);
+  abort ();
 }
