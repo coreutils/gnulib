@@ -18,6 +18,7 @@ configure.ac:
 gl_STACK_TRACE
 gl_CONDITIONAL([GL_COND_OBJ_STACK_TRACE], [test $CAN_PRINT_STACK_TRACE = 1])
 gl_STDLIB_MODULE_INDICATOR([stack-trace])
+gl_MODULE_INDICATOR([stack-trace])
 
 Makefile.am:
 if GL_COND_OBJ_STACK_TRACE

@@ -1600,12 +1600,16 @@ _GL_WARN_ON_USE (setenv, "setenv is unportable - "
 # endif
 #endif
 
-#if @GNULIB_STACK_TRACE@ && @CAN_PRINT_STACK_TRACE@
+#if @GNULIB_STACK_TRACE@
+/* Prints a stack trace of the current thread to standard error,
+   if possible.  */
+# if @CAN_PRINT_STACK_TRACE@
 _GL_EXTERN_C void print_stack_trace (void);
-#else
-# if !GNULIB_defined_print_stack_trace
-#  define print_stack_trace() /* nothing */
-#  define GNULIB_defined_print_stack_trace 1
+# else
+#  if !GNULIB_defined_print_stack_trace
+#   define print_stack_trace() /* nothing */
+#   define GNULIB_defined_print_stack_trace 1
+#  endif
 # endif
 #endif
 

@@ -45,6 +45,12 @@
 # define ASSERT_STREAM stderr
 #endif
 
+/* Define print_stack_trace() to a no-op, if the module 'stack-trace' is not
+   in use.  */
+#if !GNULIB_STACK_TRACE
+# define print_stack_trace() /* nothing */
+#endif
+
 /* Exit status of the test.
    Initialized to EXIT_SUCCESS.
    Set to EXIT_FAILURE when an ASSERT or ASSERT_NO_STDIO fails.  */
