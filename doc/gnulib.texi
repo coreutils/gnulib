@@ -7156,6 +7156,7 @@ to POSIX that it can be treated like any other Unix-like platform.
 * Closed standard fds::
 * Handling strings with NUL characters::
 * Container data types::
+* Stack traces::
 * Recognizing Option Arguments::
 * Quoting::
 * progname and getprogname::
@@ -7196,6 +7197,8 @@ to POSIX that it can be treated like any other Unix-like platform.
 @include string-desc.texi
 
 @include containers.texi
+
+@include stack-trace.texi
 
 @include argmatch.texi
 
