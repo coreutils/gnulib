@@ -83,7 +83,7 @@ __xstrtol (const char *s, char **ptr, int strtol_base,
   __strtol_t tmp;
   strtol_error err = LONGINT_OK;
 
-  assure (0 <= strtol_base && strtol_base <= 36);
+  assure (0 == strtol_base || (2 <= strtol_base && strtol_base <= 36));
 
   p = (ptr ? ptr : &t_ptr);
 
