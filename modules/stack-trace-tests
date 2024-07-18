@@ -1,0 +1,11 @@
+Files:
+tests/test-stack-trace.c
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-stack-trace
+check_PROGRAMS += test-stack-trace
