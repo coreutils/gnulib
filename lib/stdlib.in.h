@@ -256,11 +256,11 @@ _GL_CXXALIASWARN (abort);
 # endif
 #endif
 #if @GNULIB_ABORT_DEBUG@ && @REPLACE_ABORT@
-_GL_EXTERN_C void _gl_pre_abort (void);
+_GL_EXTERN_C void print_stack_trace (void);
 #else
-# if !GNULIB_defined_gl_pre_abort
-#  define _gl_pre_abort() /* nothing */
-#  define GNULIB_defined_gl_pre_abort 1
+# if !GNULIB_defined_print_stack_trace
+#  define print_stack_trace() /* nothing */
+#  define GNULIB_defined_print_stack_trace 1
 # endif
 #endif
 

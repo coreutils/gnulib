@@ -82,7 +82,7 @@ int volatile test_exit_status = EXIT_SUCCESS;
           fflush (ASSERT_STREAM);                                            \
           if (CONTINUE_AFTER_ASSERT)                                         \
             {                                                                \
-              _gl_pre_abort ();                                              \
+              print_stack_trace ();                                          \
               test_exit_status = EXIT_FAILURE;                               \
             }                                                                \
           else                                                               \
@@ -106,7 +106,7 @@ int volatile test_exit_status = EXIT_SUCCESS;
           WRITE_TO_STDERR ("' failed\n");                   \
           if (CONTINUE_AFTER_ASSERT)                        \
             {                                               \
-              _gl_pre_abort ();                             \
+              print_stack_trace ();                         \
               test_exit_status = EXIT_FAILURE;              \
             }                                               \
           else                                              \

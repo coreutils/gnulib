@@ -31,7 +31,7 @@ static inline void
 # if (__GNUC__ >= 3) || (__clang_major__ >= 4)
 __attribute__ ((always_inline))
 # endif
-print_stack_trace (FILE *stream)
+print_stack_trace_to (FILE *stream)
 {
   if (state == NULL)
     state = backtrace_create_state (NULL, 0, NULL, NULL);
@@ -50,7 +50,7 @@ static inline void
 # if (__GNUC__ >= 3) || (__clang_major__ >= 4)
 __attribute__ ((always_inline))
 # endif
-print_stack_trace (FILE *stream)
+print_stack_trace_to (FILE *stream)
 {
   void *buffer[100];
   int max_size = sizeof (buffer) / sizeof (buffer[0]);
@@ -75,23 +75,23 @@ print_stack_trace (FILE *stream)
 #endif
 
 void
-_gl_pre_abort (void)
+print_stack_trace (void)
 {
 #if HAVE_LIBBACKTRACE || HAVE_EXECINFO_H
-  print_stack_trace (stderr);
+  print_stack_trace_to (stderr);
 #endif
 }
 
 /*   rpl_abort ();
    is equivalent to
-     _gl_pre_abort ();
+     print_stack_trace ();
      original abort (); // i.e. raise (SIGABRT);
  */
 void
 rpl_abort (void)
 {
 #if HAVE_LIBBACKTRACE || HAVE_EXECINFO_H
-  print_stack_trace (stderr);
+  print_stack_trace_to (stderr);
 #endif
   raise (SIGABRT);
 }
