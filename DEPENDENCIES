@@ -300,7 +300,7 @@ Libraries
 Various modules work best with certain libraries installed. These are runtime
 dependencies that are also build dependencies.
 
-For module 'abort-debug':
+For modules 'abort-debug' and 'stack-trace':
   * libbacktrace
     + Recommended.
       Needed for producing C stack traces with source file names and

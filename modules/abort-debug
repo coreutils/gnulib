@@ -7,11 +7,7 @@ m4/abort-debug.m4
 
 Depends-on:
 stdlib
-execinfo
-
-configure.ac-early:
-AC_REQUIRE([gl_ABORT_DEBUG_EARLY])
-export LDFLAGS
+stack-trace
 
 configure.ac:
 gl_ABORT_DEBUG

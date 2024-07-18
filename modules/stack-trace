@@ -1,0 +1,34 @@
+Description:
+print_stack_trace() function that prints a stack trace.
+
+Files:
+lib/stack-trace-impl.h
+lib/stack-trace.c
+m4/stack-trace.m4
+
+Depends-on:
+stdlib
+execinfo
+
+configure.ac-early:
+AC_REQUIRE([gl_STACK_TRACE_EARLY])
+export LDFLAGS
+
+configure.ac:
+gl_STACK_TRACE
+gl_CONDITIONAL([GL_COND_OBJ_STACK_TRACE], [test $CAN_PRINT_STACK_TRACE = 1])
+gl_STDLIB_MODULE_INDICATOR([stack-trace])
+
+Makefile.am:
+if GL_COND_OBJ_STACK_TRACE
+lib_SOURCES += stack-trace.c
+endif
+
+Include:
+<stdlib.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+all

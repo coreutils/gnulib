@@ -255,14 +255,6 @@ _GL_CXXALIAS_SYS (abort, void, (void));
 _GL_CXXALIASWARN (abort);
 # endif
 #endif
-#if @GNULIB_ABORT_DEBUG@ && @REPLACE_ABORT@
-_GL_EXTERN_C void print_stack_trace (void);
-#else
-# if !GNULIB_defined_print_stack_trace
-#  define print_stack_trace() /* nothing */
-#  define GNULIB_defined_print_stack_trace 1
-# endif
-#endif
 
 
 #if @GNULIB_FREE_POSIX@
@@ -1605,6 +1597,15 @@ _GL_CXXALIASWARN (setenv);
 # if HAVE_RAW_DECL_SETENV
 _GL_WARN_ON_USE (setenv, "setenv is unportable - "
                  "use gnulib module setenv for portability");
+# endif
+#endif
+
+#if @GNULIB_STACK_TRACE@ && @CAN_PRINT_STACK_TRACE@
+_GL_EXTERN_C void print_stack_trace (void);
+#else
+# if !GNULIB_defined_print_stack_trace
+#  define print_stack_trace() /* nothing */
+#  define GNULIB_defined_print_stack_trace 1
 # endif
 #endif
 

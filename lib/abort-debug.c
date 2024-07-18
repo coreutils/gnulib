@@ -21,66 +21,7 @@
 
 #include <signal.h>
 
-#if HAVE_LIBBACKTRACE
-
-# include <backtrace.h>
-
-static struct backtrace_state *state /* = NULL */;
-
-static inline void
-# if (__GNUC__ >= 3) || (__clang_major__ >= 4)
-__attribute__ ((always_inline))
-# endif
-print_stack_trace_to (FILE *stream)
-{
-  if (state == NULL)
-    state = backtrace_create_state (NULL, 0, NULL, NULL);
-  /* Pass skip=0, to work around <https://github.com/ianlancetaylor/libbacktrace/issues/60>.  */
-  fprintf (stream, "Stack trace:\n");
-  backtrace_print (state, 0, stream);
-}
-
-#elif HAVE_EXECINFO_H
-
-# include <stdio.h>
-
-# include "execinfo.h"
-
-static inline void
-# if (__GNUC__ >= 3) || (__clang_major__ >= 4)
-__attribute__ ((always_inline))
-# endif
-print_stack_trace_to (FILE *stream)
-{
-  void *buffer[100];
-  int max_size = sizeof (buffer) / sizeof (buffer[0]);
-  int size = backtrace (buffer, max_size);
-  if (size > 0)
-    {
-      char **symbols = backtrace_symbols (buffer, size);
-      if (symbols != NULL)
-        {
-          int i;
-
-          fprintf (stream, "Stack trace:\n");
-          for (i = 0; i < size; i++)
-            fprintf (stream, "%s\n", symbols[i]);
-          fflush (stream);
-
-          free (symbols);
-        }
-    }
-}
-
-#endif
-
-void
-print_stack_trace (void)
-{
-#if HAVE_LIBBACKTRACE || HAVE_EXECINFO_H
-  print_stack_trace_to (stderr);
-#endif
-}
+#include "stack-trace-impl.h"
 
 /*   rpl_abort ();
    is equivalent to
