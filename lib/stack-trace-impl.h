@@ -28,9 +28,31 @@ print_stack_trace_to (FILE *stream)
 {
   if (state == NULL)
     state = backtrace_create_state (NULL, 0, NULL, NULL);
-  /* Pass skip=0, to work around <https://github.com/ianlancetaylor/libbacktrace/issues/60>.  */
   fprintf (stream, "Stack trace:\n");
+  /* Pass skip=0, to work around <https://github.com/ianlancetaylor/libbacktrace/issues/60>.  */
   backtrace_print (state, 0, stream);
+}
+
+#elif HAVE_LIBASAN
+
+# include <stdio.h>
+
+/* We need only one declaration from <sanitizer/asan_interface.h>.  */
+extern
+# ifdef __cplusplus
+"C"
+# endif
+void __sanitizer_print_stack_trace (void);
+
+/* The only supported stream, in this case, is stderr.  */
+static inline void
+# if (__GNUC__ >= 3) || (__clang_major__ >= 4)
+__attribute__ ((always_inline))
+# endif
+print_stack_trace_to (FILE *stream)
+{
+  fprintf (stream, "Stack trace:\n");
+  __sanitizer_print_stack_trace ();
 }
 
 #elif HAVE_EXECINFO_H

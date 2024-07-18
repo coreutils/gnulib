@@ -24,7 +24,7 @@
 void
 print_stack_trace (void)
 {
-#if HAVE_LIBBACKTRACE || HAVE_EXECINFO_H
+#if HAVE_LIBBACKTRACE || HAVE_LIBASAN || HAVE_EXECINFO_H
   print_stack_trace_to (stderr);
 #endif
 }
