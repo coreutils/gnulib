@@ -65,3 +65,9 @@ it prints the stack trace of the current thread, before actually aborting.
 Thus, @code{abort ()} remains the idiom of choice
 for signaling a fatal situation that requires developer attention:
 it is useful both in debugging environments and production code.
+
+Note:
+While the original @code{abort} function is safe to call in signal handlers,
+the overridden @code{abort} function is not.
+In signal handlers, you will need to call the original @code{abort} function,
+by doing @code{#undef abort} first.

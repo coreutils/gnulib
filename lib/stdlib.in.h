@@ -241,6 +241,9 @@ _GL_WARN_ON_USE (_Exit, "_Exit is unportable - "
 
 
 #if @GNULIB_ABORT_DEBUG@
+/* Terminates the current process with signal SIGABRT.
+   Note: While the original abort() function is safe to call in signal handlers,
+   the overridden abort() function is not.  */
 # if @REPLACE_ABORT@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   undef abort
