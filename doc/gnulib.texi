@@ -1907,6 +1907,7 @@ problems are not worked around by Gnulib.
 * lseek::
 * lstat::
 * malloc::
+* math_errhandling::
 * mblen::
 * mbrlen::
 * mbrtoc8::
@@ -3303,6 +3304,7 @@ problems are not worked around by Gnulib.
 @include posix-functions/lseek.texi
 @include posix-functions/lstat.texi
 @include posix-functions/malloc.texi
+@include posix-functions/math_errhandling.texi
 @include posix-functions/mblen.texi
 @include posix-functions/mbrlen.texi
 @include posix-functions/mbrtoc8.texi

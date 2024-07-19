@@ -1,0 +1,34 @@
+@node math_errhandling
+@section @code{math_errhandling}
+@findex math_errhandling
+
+ISO C23 specification:@* @url{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n3096.pdf} section 7.12.1
+
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man7/math_error.7.html,,man math_error}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This macro is missing on some platforms:
+NetBSD 10.0, mingw.
+@item
+This macro does not describe the error behaviour
+of elementary arithmetic operations (+, -, *, /)
+and of mathematical operations for which the compiler emits inline code
+(such as @code{sqrt} on some CPUs).
+@item
+This macro does not describe the error behaviour of functions
+such as @code{strtod}.
+@item
+For mathematical operations in general, it is a safer bet to look
+at the exceptions set in the floating-point environment
+(by calling @code{feclearexcept (FE_ALL_EXCEPT)} before the operation
+and @code{fetestexcept} after the operation),
+regardless of @code{math_errhandling}.
+@end itemize
