@@ -27,7 +27,6 @@ extern "C" {
 #endif
 
 
-#ifndef _STRTOL_ERROR
 enum strtol_error
   {
     LONGINT_OK = 0,
@@ -42,7 +41,6 @@ enum strtol_error
     LONGINT_INVALID = 4
   };
 typedef enum strtol_error strtol_error;
-#endif
 
 /* Act like the system's strtol (NPTR, ENDPTR, BASE) except:
    - The TYPE of the result might be something other than long int.
@@ -59,8 +57,11 @@ typedef enum strtol_error strtol_error;
      'c' for 1, and 'w' for 2.  */
 
 #define _DECLARE_XSTRTOL(name, type) \
-  strtol_error name (char const *restrict, char **restrict, int, \
-                     type *restrict, char const *restrict);
+  strtol_error name (char const *restrict /*nptr*/,             \
+                     char **restrict /*endptr*/,                \
+                     int /*base*/,                              \
+                     type *restrict /*val*/,                    \
+                     char const *restrict /*valid_suffixes*/);
 _DECLARE_XSTRTOL (xstrtol, long int)
 _DECLARE_XSTRTOL (xstrtoul, unsigned long int)
 _DECLARE_XSTRTOL (xstrtoll, long long int)
