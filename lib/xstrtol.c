@@ -71,9 +71,8 @@ strtol_error
 __xstrtol (char const *nptr, char **endptr, int base,
            __strtol_t *val, char const *valid_suffixes)
 {
-  char *t_ptr;
+  char *t_ptr = nullptr;
   char **p = endptr ? endptr : &t_ptr;
-  *p = (char *) nptr;
 
   if (! TYPE_SIGNED (__strtol_t))
     {
@@ -82,14 +81,20 @@ __xstrtol (char const *nptr, char **endptr, int base,
       while (isspace (ch))
         ch = *++q;
       if (ch == '-')
-        return LONGINT_INVALID;
+        {
+          *p = (char *) nptr;
+          return LONGINT_INVALID;
+        }
     }
 
   errno = 0;
-  __strtol_t tmp = __strtol (nptr, p, base);
+  __strtol_t tmp = __strtol (nptr, &t_ptr, base);
+  if (!t_ptr)
+    return LONGINT_INVALID;
+  *p = t_ptr;
   strtol_error err = LONGINT_OK;
 
-  if (*p == nptr)
+  if (*p == nptr && (errno == 0 || errno == EINVAL))
     {
       /* If there is no number but there is a valid suffix, assume the
          number is 1.  The string is invalid otherwise.  */
