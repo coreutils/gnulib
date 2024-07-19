@@ -44,8 +44,23 @@ enum strtol_error
 typedef enum strtol_error strtol_error;
 #endif
 
+/* Act like the system's strtol (NPTR, ENDPTR, BASE) except:
+   - The TYPE of the result might be something other than long int.
+   - Return strtol_error, and store any result through an additional
+     TYPE *VAL pointer instead of returning the result.
+   - If TYPE is unsigned, reject leading '-'.
+   - Accept an additional char const *VALID_SUFFIXES pointer to a
+     possibly-empty string containing allowed numeric suffixes,
+     which multiply the value.  These include SI suffixes like 'k' and 'M';
+     these normally stand for powers of 1024, but if VALID_SUFFIXES also
+     includes '0' they can be followed by "B" to stand for the usual
+     SI powers of 1000 (or by "iB" to stand for powers of 1024 as before).
+     Other supported suffixes include 'K' for 1024 or 1000, 'b' for 512,
+     'c' for 1, and 'w' for 2.  */
+
 #define _DECLARE_XSTRTOL(name, type) \
-  strtol_error name (const char *, char **, int, type *, const char *);
+  strtol_error name (char const *restrict, char **restrict, int, \
+                     type *restrict, char const *restrict);
 _DECLARE_XSTRTOL (xstrtol, long int)
 _DECLARE_XSTRTOL (xstrtoul, unsigned long int)
 _DECLARE_XSTRTOL (xstrtoll, long long int)

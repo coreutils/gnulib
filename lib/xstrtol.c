@@ -30,10 +30,6 @@
 
 #include "xstrtol.h"
 
-/* Some pre-ANSI implementations (e.g. SunOS 4)
-   need stderr defined if assertion checking is enabled.  */
-#include <stdio.h>
-
 #include <ctype.h>
 #include <errno.h>
 #include <limits.h>
@@ -45,7 +41,6 @@
 # include <inttypes.h>
 #endif
 
-#include "assure.h"
 #include "intprops.h"
 
 static strtol_error
@@ -72,26 +67,17 @@ bkm_scale_by_power (__strtol_t *x, int base, int power)
   return err;
 }
 
-/* FIXME: comment.  */
-
 strtol_error
-__xstrtol (const char *s, char **ptr, int strtol_base,
-           __strtol_t *val, const char *valid_suffixes)
+__xstrtol (char const *nptr, char **endptr, int base,
+           __strtol_t *val, char const *valid_suffixes)
 {
   char *t_ptr;
-  char **p;
-  __strtol_t tmp;
-  strtol_error err = LONGINT_OK;
-
-  assure (0 == strtol_base || (2 <= strtol_base && strtol_base <= 36));
-
-  p = (ptr ? ptr : &t_ptr);
-
-  errno = 0;
+  char **p = endptr ? endptr : &t_ptr;
+  *p = (char *) nptr;
 
   if (! TYPE_SIGNED (__strtol_t))
     {
-      const char *q = s;
+      char const *q = nptr;
       unsigned char ch = *q;
       while (isspace (ch))
         ch = *++q;
@@ -99,16 +85,17 @@ __xstrtol (const char *s, char **ptr, int strtol_base,
         return LONGINT_INVALID;
     }
 
-  tmp = __strtol (s, p, strtol_base);
+  errno = 0;
+  __strtol_t tmp = __strtol (nptr, p, base);
+  strtol_error err = LONGINT_OK;
 
-  if (*p == s)
+  if (*p == nptr)
     {
       /* If there is no number but there is a valid suffix, assume the
          number is 1.  The string is invalid otherwise.  */
-      if (valid_suffixes && **p && strchr (valid_suffixes, **p))
-        tmp = 1;
-      else
+      if (! (valid_suffixes && *nptr && strchr (valid_suffixes, *nptr)))
         return LONGINT_INVALID;
+      tmp = 1;
     }
   else if (errno != 0)
     {
@@ -128,7 +115,7 @@ __xstrtol (const char *s, char **ptr, int strtol_base,
 
   if (**p != '\0')
     {
-      int base = 1024;
+      int xbase = 1024;
       int suffixes = 1;
       strtol_error overflow;
 
@@ -160,7 +147,7 @@ __xstrtol (const char *s, char **ptr, int strtol_base,
 
               case 'B':
               case 'D': /* 'D' is obsolescent */
-                base = 1000;
+                xbase = 1000;
                 suffixes++;
                 break;
               }
@@ -184,39 +171,39 @@ __xstrtol (const char *s, char **ptr, int strtol_base,
           break;
 
         case 'E': /* exa or exbi */
-          overflow = bkm_scale_by_power (&tmp, base, 6);
+          overflow = bkm_scale_by_power (&tmp, xbase, 6);
           break;
 
         case 'G': /* giga or gibi */
         case 'g': /* 'g' is undocumented; for compatibility only */
-          overflow = bkm_scale_by_power (&tmp, base, 3);
+          overflow = bkm_scale_by_power (&tmp, xbase, 3);
           break;
 
         case 'k': /* kilo */
         case 'K': /* kibi */
-          overflow = bkm_scale_by_power (&tmp, base, 1);
+          overflow = bkm_scale_by_power (&tmp, xbase, 1);
           break;
 
         case 'M': /* mega or mebi */
         case 'm': /* 'm' is undocumented; for compatibility only */
-          overflow = bkm_scale_by_power (&tmp, base, 2);
+          overflow = bkm_scale_by_power (&tmp, xbase, 2);
           break;
 
         case 'P': /* peta or pebi */
-          overflow = bkm_scale_by_power (&tmp, base, 5);
+          overflow = bkm_scale_by_power (&tmp, xbase, 5);
           break;
 
         case 'Q': /* quetta or 2**100 */
-          overflow = bkm_scale_by_power (&tmp, base, 10);
+          overflow = bkm_scale_by_power (&tmp, xbase, 10);
           break;
 
         case 'R': /* ronna or 2**90 */
-          overflow = bkm_scale_by_power (&tmp, base, 9);
+          overflow = bkm_scale_by_power (&tmp, xbase, 9);
           break;
 
         case 'T': /* tera or tebi */
         case 't': /* 't' is undocumented; for compatibility only */
-          overflow = bkm_scale_by_power (&tmp, base, 4);
+          overflow = bkm_scale_by_power (&tmp, xbase, 4);
           break;
 
         case 'w':
@@ -224,11 +211,11 @@ __xstrtol (const char *s, char **ptr, int strtol_base,
           break;
 
         case 'Y': /* yotta or 2**80 */
-          overflow = bkm_scale_by_power (&tmp, base, 8);
+          overflow = bkm_scale_by_power (&tmp, xbase, 8);
           break;
 
         case 'Z': /* zetta or 2**70 */
-          overflow = bkm_scale_by_power (&tmp, base, 7);
+          overflow = bkm_scale_by_power (&tmp, xbase, 7);
           break;
 
         default:

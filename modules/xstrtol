@@ -8,7 +8,6 @@ lib/xstrtoul.c
 m4/xstrtol.m4
 
 Depends-on:
-assure
 intprops
 stdckdint
 stdint
