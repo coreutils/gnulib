@@ -2,6 +2,8 @@
 @section @code{setpayload}
 @findex setpayload
 
+ISO C23 specification:@* @url{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n3096.pdf} section F.10.13.2
+
 Documentation:@*
 @ifinfo
 @ref{FP Bit Twiddling,,Setting and modifying single bits of FP values,libc}.
