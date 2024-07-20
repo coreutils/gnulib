@@ -1,5 +1,5 @@
 # getpayload.m4
-# serial 1
+# serial 2
 dnl Copyright 2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -20,7 +20,12 @@ AC_DEFUN([gl_FUNC_GETPAYLOADF],
     dnl see <https://sourceware.org/bugzilla/show_bug.cgi?id=26073>.
     AC_CACHE_CHECK([whether getpayloadf works],
       [gl_cv_func_getpayloadf_works],
-      [AC_RUN_IFELSE(
+      [
+       saved_LIBS="$LIBS"
+       if test $gl_cv_func_getpayloadf_no_libm != yes; then
+         LIBS="$LIBS -lm"
+       fi
+       AC_RUN_IFELSE(
          [AC_LANG_PROGRAM(
             [[#include <math.h>
             ]],
@@ -49,6 +54,7 @@ AC_DEFUN([gl_FUNC_GETPAYLOADF],
             *) gl_cv_func_getpayloadf_works="guessing yes" ;;
           esac
          ])
+       LIBS="$saved_LIBS"
       ])
     case "$gl_cv_func_getpayloadf_works" in
       *yes) ;;
@@ -76,7 +82,12 @@ AC_DEFUN_ONCE([gl_FUNC_GETPAYLOAD],
     dnl see <https://sourceware.org/bugzilla/show_bug.cgi?id=26073>.
     AC_CACHE_CHECK([whether getpayload works],
       [gl_cv_func_getpayload_works],
-      [AC_RUN_IFELSE(
+      [
+       saved_LIBS="$LIBS"
+       if test $gl_cv_func_getpayload_no_libm != yes; then
+         LIBS="$LIBS -lm"
+       fi
+       AC_RUN_IFELSE(
          [AC_LANG_PROGRAM(
             [[#include <math.h>
             ]],
@@ -105,6 +116,7 @@ AC_DEFUN_ONCE([gl_FUNC_GETPAYLOAD],
             *) gl_cv_func_getpayload_works="guessing yes" ;;
           esac
          ])
+       LIBS="$saved_LIBS"
       ])
     case "$gl_cv_func_getpayload_works" in
       *yes) ;;
@@ -133,7 +145,12 @@ AC_DEFUN([gl_FUNC_GETPAYLOADL],
     dnl see <https://sourceware.org/bugzilla/show_bug.cgi?id=26073>.
     AC_CACHE_CHECK([whether getpayloadl works],
       [gl_cv_func_getpayloadl_works],
-      [AC_RUN_IFELSE(
+      [
+       saved_LIBS="$LIBS"
+       if test $gl_cv_func_getpayloadl_no_libm != yes; then
+         LIBS="$LIBS -lm"
+       fi
+       AC_RUN_IFELSE(
          [AC_LANG_PROGRAM(
             [[#include <math.h>
             ]],
@@ -162,6 +179,7 @@ AC_DEFUN([gl_FUNC_GETPAYLOADL],
             *) gl_cv_func_getpayloadl_works="guessing yes" ;;
           esac
          ])
+       LIBS="$saved_LIBS"
       ])
     case "$gl_cv_func_getpayloadl_works" in
       *yes) ;;
