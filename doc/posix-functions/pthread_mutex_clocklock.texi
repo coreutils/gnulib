@@ -2,6 +2,8 @@
 @section @code{pthread_mutex_clocklock}
 @findex pthread_mutex_clocklock
 
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_mutex_clocklock.html}
+
 Documentation: ---
 
 Gnulib module: ---

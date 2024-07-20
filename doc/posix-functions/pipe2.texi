@@ -2,6 +2,8 @@
 @section @code{pipe2}
 @findex pipe2
 
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pipe2.html}
+
 Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/pipe2.2.html,,man pipe2}
 
 Gnulib module: pipe2

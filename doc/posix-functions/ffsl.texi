@@ -2,6 +2,8 @@
 @section @code{ffsl}
 @findex ffsl
 
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/ffsl.html}
+
 Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/ffsl.3.html,,man ffsl}
 
 Gnulib module: ffsl

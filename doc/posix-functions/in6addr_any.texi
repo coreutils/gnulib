@@ -2,6 +2,8 @@
 @section @code{in6addr_any}
 @findex in6addr_any
 
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/in6addr_any.html}
+
 Documentation:@*
 @ifinfo
 @ref{Host Address Data Type,,Host Address Data Type,libc}.

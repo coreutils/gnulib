@@ -2,6 +2,8 @@
 @section @code{_Fork}
 @findex _Fork
 
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/_Fork.html}
+
 Documentation:@*
 @ifinfo
 @ref{Creating a Process,,Creating a Process,libc}

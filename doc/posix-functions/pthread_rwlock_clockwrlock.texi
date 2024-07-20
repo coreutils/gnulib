@@ -2,8 +2,7 @@
 @section @code{pthread_rwlock_clockwrlock}
 @findex pthread_rwlock_clockwrlock
 
-Specified in POSIX.1-2024.
-Draft specification:@* @url{https://www.austingroupbugs.net/view.php?id=1216}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_rwlock_clockwrlock.html}
 
 Documentation:
 @itemize

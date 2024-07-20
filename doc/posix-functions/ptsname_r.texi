@@ -2,8 +2,7 @@
 @section @code{ptsname_r}
 @findex ptsname_r
 
-Specified in POSIX.1-2024.
-Draft specification:@* @url{https://www.austingroupbugs.net/view.php?id=508}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/ptsname_r.html}
 
 Documentation:
 @itemize

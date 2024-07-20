@@ -2,6 +2,8 @@
 @section @code{secure_getenv}
 @findex secure_getenv
 
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/secure_getenv.html}
+
 Documentation:
 @itemize
 @item

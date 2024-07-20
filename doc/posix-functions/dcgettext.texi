@@ -2,10 +2,7 @@
 @section @code{dcgettext}
 @findex dcgettext
 
-LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-dcgettext.html}
-
-Specified in POSIX.1-2024.
-Draft specification:@* @url{https://www.austingroupbugs.net/view.php?id=1122}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/dcgettext.html}
 
 Documentation:
 @itemize

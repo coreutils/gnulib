@@ -2,6 +2,8 @@
 @section @code{qsort_r}
 @findex qsort_r
 
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/qsort_r.html}
+
 Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/qsort_r.3.html,,man qsort_r}
 
 Gnulib module: ---

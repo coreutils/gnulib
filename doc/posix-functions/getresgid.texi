@@ -2,8 +2,7 @@
 @section @code{getresgid}
 @findex getresgid
 
-Specified in POSIX.1-2024.
-Draft specification:@* @url{https://www.austingroupbugs.net/view.php?id=1344}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/getresgid.html}
 
 Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/getresgid.2.html,,man getresgid}
 

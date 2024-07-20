@@ -2,6 +2,8 @@
 @section @code{dup3}
 @findex dup3
 
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/dup3.html}
+
 Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/dup3.2.html,,man dup3}
 
 Gnulib module: dup3

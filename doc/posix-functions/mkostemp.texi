@@ -2,6 +2,8 @@
 @section @code{mkostemp}
 @findex mkostemp
 
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/mkostemp.html}
+
 Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/mkostemp.3.html,,man mkostemp}
 
 Gnulib module: mkostemp

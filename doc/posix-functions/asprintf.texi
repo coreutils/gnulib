@@ -2,7 +2,7 @@
 @section @code{asprintf}
 @findex asprintf
 
-LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-asprintf.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/asprintf.html}
 
 Documentation:
 @itemize

@@ -2,6 +2,8 @@
 @section @code{accept4}
 @findex accept4
 
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/accept4.html}
+
 Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/accept4.2.html,,man accept4}
 
 Gnulib module: accept4
