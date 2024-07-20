@@ -1,0 +1,22 @@
+@node pthread_getconcurrency
+@section @code{pthread_getconcurrency}
+@findex pthread_getconcurrency
+
+Removed in POSIX.1-2024.
+POSIX.1-2017 specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/pthread_getconcurrency.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+NetBSD 10.0, Minix 3.1.8, mingw, MSVC 14, Android 9.0.
+@item
+This function is removed in POSIX.1-2024.
+You can remove calls to this function.
+@end itemize

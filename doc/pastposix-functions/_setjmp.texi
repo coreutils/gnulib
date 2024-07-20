@@ -1,0 +1,23 @@
+@node _setjmp
+@section @code{_setjmp}
+@findex _setjmp
+
+Removed in POSIX.1-2024.
+POSIX.1-2017 specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/_setjmp.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is removed in POSIX.1-2024.
+@end itemize
+
+Note: Despite its being removed from POSIX, in 2024 on all
+systems which have @code{_setjmp}, it is the fastest way to save the
+registers but not the signal mask (up to 30 times faster than @code{setjmp}
+on some systems).

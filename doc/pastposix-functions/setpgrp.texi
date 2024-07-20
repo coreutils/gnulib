@@ -1,0 +1,22 @@
+@node setpgrp
+@section @code{setpgrp}
+@findex setpgrp
+
+Removed in POSIX.1-2024.
+POSIX.1-2017 specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/setpgrp.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+Minix 3.1.8, mingw, MSVC 14.
+@item
+This function is removed in POSIX.1-2024.
+Use the function @code{setpgid} or @code{setsid} instead, as appropriate.
+@end itemize
