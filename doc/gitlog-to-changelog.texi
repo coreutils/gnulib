@@ -51,10 +51,10 @@ time zone each individual commit was made in you can use the
 dist-hook: gen-ChangeLog
 .PHONY: gen-ChangeLog
 gen-ChangeLog:
-        $(AM_V_GEN)if test -e .git; then                                 \
-          $(top_srcdir)/build-aux/gitlog-to-changelog --commit-timezone  \
-            > $(distdir)/ChangeLog.tmp &&                                \
-          mv -f $(distdir)/ChangeLog.tmp $(distdir)/ChangeLog;           \
+        $(AM_V_GEN)if test -e .git; then                       \
+          $(top_srcdir)/build-aux/gitlog-to-changelog          \
+            --commit-timezone > $(distdir)/ChangeLog.tmp &&    \
+          mv -f $(distdir)/ChangeLog.tmp $(distdir)/ChangeLog; \
         fi
 @end example
 
