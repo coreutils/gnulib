@@ -1,0 +1,21 @@
+@node getresuid
+@section @code{getresuid}
+@findex getresuid
+
+Specified in POSIX.1-2024.
+Draft specification:@* @url{https://www.austingroupbugs.net/view.php?id=1344}
+
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/getresuid.2.html,,man getresuid}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+macOS 14, NetBSD 10.0, Minix 3.1.8, AIX 5.1, HP-UX 11.00, Solaris 11.4, Cygwin 2.9, mingw, MSVC 14.
+@end itemize

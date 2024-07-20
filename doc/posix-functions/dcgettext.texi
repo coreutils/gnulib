@@ -1,0 +1,39 @@
+@node dcgettext
+@section @code{dcgettext}
+@findex dcgettext
+
+LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-dcgettext.html}
+
+Specified in POSIX.1-2024.
+Draft specification:@* @url{https://www.austingroupbugs.net/view.php?id=1122}
+
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Translation with gettext,,What has to be done to translate a message?,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Translation-with-gettext.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/dcgettext.3.html,,man dcgettext}.
+@end itemize
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+macOS 14, FreeBSD 14.0, OpenBSD 6.7, Minix 3.1.8, HP-UX 11, Cygwin 2.9, mingw, MSVC 14, Android 9.0.
+@item
+This function does not treat a @code{LANGUAGE} environment variable
+with an empty value like an unset @code{LANGUAGE} environment variable
+on some platforms:
+NetBSD 10.0.
+@end itemize

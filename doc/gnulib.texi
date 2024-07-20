@@ -1259,10 +1259,12 @@ problems are not worked around by Gnulib.
 * FD_ZERO::
 * _Exit::
 * _exit::
+* _Fork::
 * a64l::
 * abort::
 * abs::
 * accept::
+* accept4::
 * access::
 * acos::
 * acosf::
@@ -1294,6 +1296,7 @@ problems are not worked around by Gnulib.
 * asinpi::
 * asinpif::
 * asinpil::
+* asprintf::
 * assert::
 * atan::
 * atan2::
@@ -1317,6 +1320,8 @@ problems are not worked around by Gnulib.
 * atoll::
 * basename::
 * bind::
+* bind_textdomain_codeset::
+* bindtextdomain::
 * bsearch::
 * btowc::
 * c8rtomb::
@@ -1458,23 +1463,29 @@ problems are not worked around by Gnulib.
 * dbm_nextkey::
 * dbm_open::
 * dbm_store::
+* dcgettext::
+* dcngettext::
 * ddivl::
 * dfmal::
+* dgettext::
 * difftime::
 * dirfd::
 * dirname::
 * div::
+* dladdr::
 * dlclose::
 * dlerror::
 * dlopen::
 * dlsym::
 * dmull::
+* dngettext::
 * dprintf::
 * drand48::
 * dsqrtl::
 * dsubl::
 * dup::
 * dup2::
+* dup3::
 * duplocale::
 * encrypt::
 * endgrent::
@@ -1561,6 +1572,8 @@ problems are not worked around by Gnulib.
 * ffma::
 * ffmal::
 * ffs::
+* ffsl::
+* ffsll::
 * fgetc::
 * fgetpos::
 * fgets::
@@ -1675,6 +1688,7 @@ problems are not worked around by Gnulib.
 * getdate_err::
 * getdelim::
 * getegid::
+* getentropy::
 * getenv::
 * geteuid::
 * getgid::
@@ -1712,6 +1726,8 @@ problems are not worked around by Gnulib.
 * getpwnam_r::
 * getpwuid::
 * getpwuid_r::
+* getresgid::
+* getresuid::
 * getrlimit::
 * getrusage::
 * getservbyname::
@@ -1721,6 +1737,7 @@ problems are not worked around by Gnulib.
 * getsockname::
 * getsockopt::
 * getsubopt::
+* gettext::
 * getuid::
 * getutxent::
 * getutxid::
@@ -1752,6 +1769,8 @@ problems are not worked around by Gnulib.
 * ilogbl::
 * imaxabs::
 * imaxdiv::
+* in6addr_any::
+* in6addr_loopback::
 * inet_addr::
 * inet_ntoa::
 * inet_ntop::
@@ -1908,6 +1927,7 @@ problems are not worked around by Gnulib.
 * memchr::
 * memcmp::
 * memcpy::
+* memmem::
 * memmove::
 * memset::
 * memset_explicit::
@@ -1918,6 +1938,7 @@ problems are not worked around by Gnulib.
 * mkfifoat::
 * mknod::
 * mknodat::
+* mkostemp::
 * mkstemp::
 * mktime::
 * mlock::
@@ -1973,6 +1994,7 @@ problems are not worked around by Gnulib.
 * nextupf::
 * nextupl::
 * nftw::
+* ngettext::
 * nice::
 * nl_langinfo::
 * nl_langinfo_l::
@@ -1994,6 +2016,7 @@ problems are not worked around by Gnulib.
 * pclose::
 * perror::
 * pipe::
+* pipe2::
 * poll::
 * popen::
 * posix_fadvise::
@@ -2034,6 +2057,7 @@ problems are not worked around by Gnulib.
 * powr::
 * powrf::
 * powrl::
+* ppoll::
 * pread::
 * printf::
 * pselect::
@@ -2069,6 +2093,7 @@ problems are not worked around by Gnulib.
 * pthread_cleanup_pop::
 * pthread_cleanup_push::
 * pthread_cond_broadcast::
+* pthread_cond_clockwait::
 * pthread_cond_destroy::
 * pthread_cond_init::
 * pthread_cond_signal::
@@ -2091,6 +2116,7 @@ problems are not worked around by Gnulib.
 * pthread_key_create::
 * pthread_key_delete::
 * pthread_kill::
+* pthread_mutex_clocklock::
 * pthread_mutex_consistent::
 * pthread_mutex_destroy::
 * pthread_mutex_getprioceiling::
@@ -2113,6 +2139,8 @@ problems are not worked around by Gnulib.
 * pthread_mutexattr_setrobust::
 * pthread_mutexattr_settype::
 * pthread_once::
+* pthread_rwlock_clockrdlock::
+* pthread_rwlock_clockwrlock::
 * pthread_rwlock_destroy::
 * pthread_rwlock_init::
 * pthread_rwlock_rdlock::
@@ -2140,6 +2168,7 @@ problems are not worked around by Gnulib.
 * pthread_spin_unlock::
 * pthread_testcancel::
 * ptsname::
+* ptsname_r::
 * putc::
 * putc_unlocked::
 * putchar::
@@ -2151,6 +2180,7 @@ problems are not worked around by Gnulib.
 * putwchar::
 * pwrite::
 * qsort::
+* qsort_r::
 * quick_exit::
 * raise::
 * rand::
@@ -2163,6 +2193,7 @@ problems are not worked around by Gnulib.
 * readlinkat::
 * readv::
 * realloc::
+* reallocarray::
 * realpath::
 * recv::
 * recvfrom::
@@ -2215,9 +2246,11 @@ problems are not worked around by Gnulib.
 * sched_setparam::
 * sched_setscheduler::
 * sched_yield::
+* secure_getenv::
 * seed48::
 * seekdir::
 * select::
+* sem_clockwait::
 * sem_close::
 * sem_destroy::
 * sem_getvalue::
@@ -2257,6 +2290,8 @@ problems are not worked around by Gnulib.
 * setprotoent::
 * setpwent::
 * setregid::
+* setresgid::
+* setresuid::
 * setreuid::
 * setrlimit::
 * setservent::
@@ -2413,6 +2448,7 @@ problems are not worked around by Gnulib.
 * tcsetpgrp::
 * tdelete::
 * telldir::
+* textdomain::
 * tfind::
 * tgamma::
 * tgammaf::
@@ -2433,6 +2469,7 @@ problems are not worked around by Gnulib.
 * timer_gettime::
 * timer_settime::
 * times::
+* timespec_get::
 * timespec_getres::
 * timezone::
 * tmpfile::
@@ -2488,6 +2525,7 @@ problems are not worked around by Gnulib.
 * va_copy::
 * va_end::
 * va_start::
+* vasprintf::
 * vdprintf::
 * vfprintf::
 * vfscanf::
@@ -2575,10 +2613,12 @@ problems are not worked around by Gnulib.
 @include posix-functions/FD_ZERO.texi
 @include posix-functions/_Exit_C99.texi
 @include posix-functions/_exit.texi
+@include posix-functions/_Fork.texi
 @include posix-functions/a64l.texi
 @include posix-functions/abort.texi
 @include posix-functions/abs.texi
 @include posix-functions/accept.texi
+@include posix-functions/accept4.texi
 @include posix-functions/access.texi
 @include posix-functions/acos.texi
 @include posix-functions/acosf.texi
@@ -2610,6 +2650,7 @@ problems are not worked around by Gnulib.
 @include posix-functions/asinpi.texi
 @include posix-functions/asinpif.texi
 @include posix-functions/asinpil.texi
+@include posix-functions/asprintf.texi
 @include posix-functions/assert.texi
 @include posix-functions/atan.texi
 @include posix-functions/atan2.texi
@@ -2633,6 +2674,8 @@ problems are not worked around by Gnulib.
 @include posix-functions/atoll.texi
 @include posix-functions/basename.texi
 @include posix-functions/bind.texi
+@include posix-functions/bind_textdomain_codeset.texi
+@include posix-functions/bindtextdomain.texi
 @include posix-functions/bsearch.texi
 @include posix-functions/btowc.texi
 @include posix-functions/c8rtomb.texi
@@ -2774,23 +2817,29 @@ problems are not worked around by Gnulib.
 @include posix-functions/dbm_nextkey.texi
 @include posix-functions/dbm_open.texi
 @include posix-functions/dbm_store.texi
+@include posix-functions/dcgettext.texi
+@include posix-functions/dcngettext.texi
 @include posix-functions/ddivl.texi
 @include posix-functions/dfmal.texi
+@include posix-functions/dgettext.texi
 @include posix-functions/difftime.texi
 @include posix-functions/dirfd.texi
 @include posix-functions/dirname.texi
 @include posix-functions/div.texi
+@include posix-functions/dladdr.texi
 @include posix-functions/dlclose.texi
 @include posix-functions/dlerror.texi
 @include posix-functions/dlopen.texi
 @include posix-functions/dlsym.texi
 @include posix-functions/dmull.texi
+@include posix-functions/dngettext.texi
 @include posix-functions/dprintf.texi
 @include posix-functions/drand48.texi
 @include posix-functions/dsqrtl.texi
 @include posix-functions/dsubl.texi
 @include posix-functions/dup.texi
 @include posix-functions/dup2.texi
+@include posix-functions/dup3.texi
 @include posix-functions/duplocale.texi
 @include posix-functions/encrypt.texi
 @include posix-functions/endgrent.texi
@@ -2877,6 +2926,8 @@ problems are not worked around by Gnulib.
 @include posix-functions/ffma.texi
 @include posix-functions/ffmal.texi
 @include posix-functions/ffs.texi
+@include posix-functions/ffsl.texi
+@include posix-functions/ffsll.texi
 @include posix-functions/fgetc.texi
 @include posix-functions/fgetpos.texi
 @include posix-functions/fgets.texi
@@ -2991,6 +3042,7 @@ problems are not worked around by Gnulib.
 @include posix-functions/getdate_err.texi
 @include posix-functions/getdelim.texi
 @include posix-functions/getegid.texi
+@include posix-functions/getentropy.texi
 @include posix-functions/getenv.texi
 @include posix-functions/geteuid.texi
 @include posix-functions/getgid.texi
@@ -3028,6 +3080,8 @@ problems are not worked around by Gnulib.
 @include posix-functions/getpwnam_r.texi
 @include posix-functions/getpwuid.texi
 @include posix-functions/getpwuid_r.texi
+@include posix-functions/getresgid.texi
+@include posix-functions/getresuid.texi
 @include posix-functions/getrlimit.texi
 @include posix-functions/getrusage.texi
 @include posix-functions/getservbyname.texi
@@ -3037,6 +3091,7 @@ problems are not worked around by Gnulib.
 @include posix-functions/getsockname.texi
 @include posix-functions/getsockopt.texi
 @include posix-functions/getsubopt.texi
+@include posix-functions/gettext.texi
 @include posix-functions/getuid.texi
 @include posix-functions/getutxent.texi
 @include posix-functions/getutxid.texi
@@ -3068,6 +3123,8 @@ problems are not worked around by Gnulib.
 @include posix-functions/ilogbl.texi
 @include posix-functions/imaxabs.texi
 @include posix-functions/imaxdiv.texi
+@include posix-functions/in6addr_any.texi
+@include posix-functions/in6addr_loopback.texi
 @include posix-functions/inet_addr.texi
 @include posix-functions/inet_ntoa.texi
 @include posix-functions/inet_ntop.texi
@@ -3224,6 +3281,7 @@ problems are not worked around by Gnulib.
 @include posix-functions/memchr.texi
 @include posix-functions/memcmp.texi
 @include posix-functions/memcpy.texi
+@include posix-functions/memmem.texi
 @include posix-functions/memmove.texi
 @include posix-functions/memset.texi
 @include posix-functions/memset_explicit.texi
@@ -3234,6 +3292,7 @@ problems are not worked around by Gnulib.
 @include posix-functions/mkfifoat.texi
 @include posix-functions/mknod.texi
 @include posix-functions/mknodat.texi
+@include posix-functions/mkostemp.texi
 @include posix-functions/mkstemp.texi
 @include posix-functions/mktime.texi
 @include posix-functions/mlock.texi
@@ -3289,6 +3348,7 @@ problems are not worked around by Gnulib.
 @include posix-functions/nextupf.texi
 @include posix-functions/nextupl.texi
 @include posix-functions/nftw.texi
+@include posix-functions/ngettext.texi
 @include posix-functions/nice.texi
 @include posix-functions/nl_langinfo.texi
 @include posix-functions/nl_langinfo_l.texi
@@ -3310,6 +3370,7 @@ problems are not worked around by Gnulib.
 @include posix-functions/pclose.texi
 @include posix-functions/perror.texi
 @include posix-functions/pipe.texi
+@include posix-functions/pipe2.texi
 @include posix-functions/poll.texi
 @include posix-functions/popen.texi
 @include posix-functions/posix_fadvise.texi
@@ -3350,6 +3411,7 @@ problems are not worked around by Gnulib.
 @include posix-functions/powr.texi
 @include posix-functions/powrf.texi
 @include posix-functions/powrl.texi
+@include posix-functions/ppoll.texi
 @include posix-functions/pread.texi
 @include posix-functions/printf.texi
 @include posix-functions/pselect.texi
@@ -3385,6 +3447,7 @@ problems are not worked around by Gnulib.
 @include posix-functions/pthread_cleanup_pop.texi
 @include posix-functions/pthread_cleanup_push.texi
 @include posix-functions/pthread_cond_broadcast.texi
+@include posix-functions/pthread_cond_clockwait.texi
 @include posix-functions/pthread_cond_destroy.texi
 @include posix-functions/pthread_cond_init.texi
 @include posix-functions/pthread_cond_signal.texi
@@ -3407,6 +3470,7 @@ problems are not worked around by Gnulib.
 @include posix-functions/pthread_key_create.texi
 @include posix-functions/pthread_key_delete.texi
 @include posix-functions/pthread_kill.texi
+@include posix-functions/pthread_mutex_clocklock.texi
 @include posix-functions/pthread_mutex_consistent.texi
 @include posix-functions/pthread_mutex_destroy.texi
 @include posix-functions/pthread_mutex_getprioceiling.texi
@@ -3429,6 +3493,8 @@ problems are not worked around by Gnulib.
 @include posix-functions/pthread_mutexattr_setrobust.texi
 @include posix-functions/pthread_mutexattr_settype.texi
 @include posix-functions/pthread_once.texi
+@include posix-functions/pthread_rwlock_clockrdlock.texi
+@include posix-functions/pthread_rwlock_clockwrlock.texi
 @include posix-functions/pthread_rwlock_destroy.texi
 @include posix-functions/pthread_rwlock_init.texi
 @include posix-functions/pthread_rwlock_rdlock.texi
@@ -3456,6 +3522,7 @@ problems are not worked around by Gnulib.
 @include posix-functions/pthread_spin_unlock.texi
 @include posix-functions/pthread_testcancel.texi
 @include posix-functions/ptsname.texi
+@include posix-functions/ptsname_r.texi
 @include posix-functions/putc.texi
 @include posix-functions/putc_unlocked.texi
 @include posix-functions/putchar.texi
@@ -3467,6 +3534,7 @@ problems are not worked around by Gnulib.
 @include posix-functions/putwchar.texi
 @include posix-functions/pwrite.texi
 @include posix-functions/qsort.texi
+@include posix-functions/qsort_r.texi
 @include posix-functions/quick_exit.texi
 @include posix-functions/raise.texi
 @include posix-functions/rand.texi
@@ -3479,6 +3547,7 @@ problems are not worked around by Gnulib.
 @include posix-functions/readlinkat.texi
 @include posix-functions/readv.texi
 @include posix-functions/realloc.texi
+@include posix-functions/reallocarray.texi
 @include posix-functions/realpath.texi
 @include posix-functions/recv.texi
 @include posix-functions/recvfrom.texi
@@ -3531,9 +3600,11 @@ problems are not worked around by Gnulib.
 @include posix-functions/sched_setparam.texi
 @include posix-functions/sched_setscheduler.texi
 @include posix-functions/sched_yield.texi
+@include posix-functions/secure_getenv.texi
 @include posix-functions/seed48.texi
 @include posix-functions/seekdir.texi
 @include posix-functions/select.texi
+@include posix-functions/sem_clockwait.texi
 @include posix-functions/sem_close.texi
 @include posix-functions/sem_destroy.texi
 @include posix-functions/sem_getvalue.texi
@@ -3573,6 +3644,8 @@ problems are not worked around by Gnulib.
 @include posix-functions/setprotoent.texi
 @include posix-functions/setpwent.texi
 @include posix-functions/setregid.texi
+@include posix-functions/setresgid.texi
+@include posix-functions/setresuid.texi
 @include posix-functions/setreuid.texi
 @include posix-functions/setrlimit.texi
 @include posix-functions/setservent.texi
@@ -3729,6 +3802,7 @@ problems are not worked around by Gnulib.
 @include posix-functions/tcsetpgrp.texi
 @include posix-functions/tdelete.texi
 @include posix-functions/telldir.texi
+@include posix-functions/textdomain.texi
 @include posix-functions/tfind.texi
 @include posix-functions/tgamma.texi
 @include posix-functions/tgammaf.texi
@@ -3749,6 +3823,7 @@ problems are not worked around by Gnulib.
 @include posix-functions/timer_gettime.texi
 @include posix-functions/timer_settime.texi
 @include posix-functions/times.texi
+@include posix-functions/timespec_get.texi
 @include posix-functions/timespec_getres.texi
 @include posix-functions/timezone.texi
 @include posix-functions/tmpfile.texi
@@ -3804,6 +3879,7 @@ problems are not worked around by Gnulib.
 @include posix-functions/va_copy.texi
 @include posix-functions/va_end.texi
 @include posix-functions/va_start.texi
+@include posix-functions/vasprintf.texi
 @include posix-functions/vdprintf.texi
 @include posix-functions/vfprintf.texi
 @include posix-functions/vfscanf.texi
@@ -4245,7 +4321,6 @@ This list of functions is sorted according to the header that declares them.
 * Glibc grp.h::
 * Glibc gshadow.h::
 * Glibc ifaddrs.h::
-* Glibc libintl.h::
 * Glibc link.h::
 * Glibc malloc.h::
 * Glibc math.h::
@@ -4255,7 +4330,6 @@ This list of functions is sorted according to the header that declares them.
 * Glibc netinet/ether.h::
 * Glibc netinet/in.h::
 * Glibc obstack.h::
-* Glibc poll.h::
 * Glibc printf.h::
 * Glibc pthread.h::
 * Glibc pty.h::
@@ -4282,7 +4356,6 @@ This list of functions is sorted according to the header that declares them.
 * Glibc sched.h::
 * Glibc search.h::
 * Glibc selinux/selinux.h::
-* Glibc semaphore.h::
 * Glibc shadow.h::
 * Glibc signal.h::
 * Glibc spawn.h::
@@ -4543,7 +4616,6 @@ This list of functions is sorted according to the header that declares them.
 @section Glibc Extensions to @code{<dlfcn.h>}
 
 @menu
-* dladdr::
 * dladdr1::
 * dlinfo::
 * dlmopen::
@@ -4551,7 +4623,6 @@ This list of functions is sorted according to the header that declares them.
 * _dl_find_object::
 @end menu
 
-@include glibc-functions/dladdr.texi
 @include glibc-functions/dladdr1.texi
 @include glibc-functions/dlinfo.texi
 @include glibc-functions/dlmopen.texi
@@ -4839,30 +4910,8 @@ This list of functions is sorted according to the header that declares them.
 @c @node Glibc libgen.h
 @c @section Glibc Extensions to @code{<libgen.h>}
 
-@node Glibc libintl.h
-@section Glibc @code{<libintl.h>}
-
-@menu
-* bind_textdomain_codeset::
-* bindtextdomain::
-* dcgettext::
-* dcngettext::
-* dgettext::
-* dngettext::
-* gettext::
-* ngettext::
-* textdomain::
-@end menu
-
-@include glibc-functions/bind_textdomain_codeset.texi
-@include glibc-functions/bindtextdomain.texi
-@include glibc-functions/dcgettext.texi
-@include glibc-functions/dcngettext.texi
-@include glibc-functions/dgettext.texi
-@include glibc-functions/dngettext.texi
-@include glibc-functions/gettext.texi
-@include glibc-functions/ngettext.texi
-@include glibc-functions/textdomain.texi
+@c @node Glibc libintl.h
+@c @section Glibc @code{<libintl.h>}
 
 @c @node Glibc limits.h
 @c @section Glibc Extensions to @code{<limits.h>}
@@ -5131,8 +5180,6 @@ This list of functions is sorted according to the header that declares them.
 * bindresvport::
 * getipv4sourcefilter::
 * getsourcefilter::
-* in6addr_any::
-* in6addr_loopback::
 * inet6_option_alloc::
 * inet6_option_append::
 * inet6_option_find::
@@ -5159,8 +5206,6 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/bindresvport.texi
 @include glibc-functions/getipv4sourcefilter.texi
 @include glibc-functions/getsourcefilter.texi
-@include glibc-functions/in6addr_any.texi
-@include glibc-functions/in6addr_loopback.texi
 @include glibc-functions/inet6_option_alloc.texi
 @include glibc-functions/inet6_option_append.texi
 @include glibc-functions/inet6_option_find.texi
@@ -5206,14 +5251,8 @@ This list of functions is sorted according to the header that declares them.
 @c @node Glibc paths.h
 @c @section Glibc @code{<paths.h>}
 
-@node Glibc poll.h
-@section Glibc Extensions to @code{<poll.h>}
-
-@menu
-* ppoll::
-@end menu
-
-@include glibc-functions/ppoll.texi
+@c @node Glibc poll.h
+@c @section Glibc Extensions to @code{<poll.h>}
 
 @node Glibc printf.h
 @section Glibc @code{<printf.h>}
@@ -5245,15 +5284,11 @@ This list of functions is sorted according to the header that declares them.
 * pthread_attr_getsigmask_np::
 * pthread_attr_setsigmask_np::
 * pthread_clockjoin_np::
-* pthread_cond_clockwait::
 * pthread_getaffinity_np::
 * pthread_getattr_default_np::
 * pthread_getattr_np::
 * pthread_getname_np::
 * pthread_kill_other_threads_np::
-* pthread_mutex_clocklock::
-* pthread_rwlock_clockrdlock::
-* pthread_rwlock_clockwrlock::
 * pthread_rwlockattr_getkind_np::
 * pthread_rwlockattr_setkind_np::
 * pthread_setaffinity_np::
@@ -5269,15 +5304,11 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/pthread_attr_getsigmask_np.texi
 @include glibc-functions/pthread_attr_setsigmask_np.texi
 @include glibc-functions/pthread_clockjoin_np.texi
-@include glibc-functions/pthread_cond_clockwait.texi
 @include glibc-functions/pthread_getaffinity_np.texi
 @include glibc-functions/pthread_getattr_default_np.texi
 @include glibc-functions/pthread_getattr_np.texi
 @include glibc-functions/pthread_getname_np.texi
 @include glibc-functions/pthread_kill_other_threads_np.texi
-@include glibc-functions/pthread_mutex_clocklock.texi
-@include glibc-functions/pthread_rwlock_clockrdlock.texi
-@include glibc-functions/pthread_rwlock_clockwrlock.texi
 @include glibc-functions/pthread_rwlockattr_getkind_np.texi
 @include glibc-functions/pthread_rwlockattr_setkind_np.texi
 @include glibc-functions/pthread_setaffinity_np.texi
@@ -6037,14 +6068,8 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/getfilecon.texi
 @include glibc-functions/lgetfilecon.texi
 
-@node Glibc semaphore.h
-@section Glibc Extensions to @code{<semaphore.h>}
-
-@menu
-* sem_clockwait::
-@end menu
-
-@include glibc-functions/sem_clockwait.texi
+@c @node Glibc semaphore.h
+@c @section Glibc Extensions to @code{<semaphore.h>}
 
 @c @node Glibc setjmp.h
 @c @section Glibc Extensions to @code{<setjmp.h>}
@@ -6156,7 +6181,6 @@ This list of functions is sorted according to the header that declares them.
 @section Glibc Extensions to @code{<stdio.h>}
 
 @menu
-* asprintf::
 * cuserid::
 * clearerr_unlocked::
 * fcloseall::
@@ -6179,10 +6203,8 @@ This list of functions is sorted according to the header that declares them.
 * sys_errlist::
 * sys_nerr::
 * tmpnam_r::
-* vasprintf::
 @end menu
 
-@include glibc-functions/asprintf.texi
 @include glibc-functions/cuserid.texi
 @include glibc-functions/clearerr_unlocked.texi
 @include glibc-functions/fcloseall.texi
@@ -6205,7 +6227,6 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/sys_errlist.texi
 @include glibc-functions/sys_nerr.texi
 @include glibc-functions/tmpnam_r.texi
-@include glibc-functions/vasprintf.texi
 
 @node Glibc stdlib.h
 @section Glibc Extensions to @code{<stdlib.h>}
@@ -6227,22 +6248,18 @@ This list of functions is sorted according to the header that declares them.
 * jrand48_r::
 * lcong48_r::
 * lrand48_r::
-* mkostemp::
 * mkostemps::
 * mkstemps::
 * mrand48_r::
 * nrand48_r::
 * on_exit::
-* ptsname_r::
 * qecvt::
 * qecvt_r::
 * qfcvt::
 * qfcvt_r::
 * qgcvt::
-* qsort_r::
 * random_r::
 * rpmatch::
-* secure_getenv::
 * seed48_r::
 * setstate_r::
 * srand48_r::
@@ -6275,22 +6292,18 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/jrand48_r.texi
 @include glibc-functions/lcong48_r.texi
 @include glibc-functions/lrand48_r.texi
-@include glibc-functions/mkostemp.texi
 @include glibc-functions/mkostemps.texi
 @include glibc-functions/mkstemps.texi
 @include glibc-functions/mrand48_r.texi
 @include glibc-functions/nrand48_r.texi
 @include glibc-functions/on_exit.texi
-@include glibc-functions/ptsname_r.texi
 @include glibc-functions/qecvt.texi
 @include glibc-functions/qecvt_r.texi
 @include glibc-functions/qfcvt.texi
 @include glibc-functions/qfcvt_r.texi
 @include glibc-functions/qgcvt.texi
-@include glibc-functions/qsort_r.texi
 @include glibc-functions/random_r.texi
 @include glibc-functions/rpmatch.texi
-@include glibc-functions/secure_getenv.texi
 @include glibc-functions/seed48_r.texi
 @include glibc-functions/setstate_r.texi
 @include glibc-functions/srand48_r.texi
@@ -6311,10 +6324,7 @@ This list of functions is sorted according to the header that declares them.
 
 @menu
 * explicit_bzero::
-* ffsl::
-* ffsll::
 * memfrob::
-* memmem::
 * mempcpy::
 * memrchr::
 * rawmemchr::
@@ -6330,10 +6340,7 @@ This list of functions is sorted according to the header that declares them.
 @end menu
 
 @include glibc-functions/explicit_bzero.texi
-@include glibc-functions/ffsl.texi
-@include glibc-functions/ffsll.texi
 @include glibc-functions/memfrob.texi
-@include glibc-functions/memmem.texi
 @include glibc-functions/mempcpy.texi
 @include glibc-functions/memrchr.texi
 @include glibc-functions/rawmemchr.texi
@@ -6622,11 +6629,9 @@ This list of functions is sorted according to the header that declares them.
 @section Glibc @code{<sys/random.h>}
 
 @menu
-* getentropy::
 * getrandom::
 @end menu
 
-@include glibc-functions/getentropy.texi
 @include glibc-functions/getrandom.texi
 
 @node Glibc sys/reboot.h
@@ -6693,13 +6698,11 @@ This list of functions is sorted according to the header that declares them.
 @section Glibc Extensions to @code{<sys/socket.h>}
 
 @menu
-* accept4::
 * isfdtype::
 * recvmmsg::
 * sendmmsg::
 @end menu
 
-@include glibc-functions/accept4.texi
 @include glibc-functions/isfdtype.texi
 @include glibc-functions/recvmmsg.texi
 @include glibc-functions/sendmmsg.texi
@@ -6965,7 +6968,6 @@ This list of functions is sorted according to the header that declares them.
 * stime::
 * strptime_l::
 * timelocal::
-* timespec_get::
 @end menu
 
 @include glibc-functions/clock_adjtime.texi
@@ -6974,7 +6976,6 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/stime.texi
 @include glibc-functions/strptime_l.texi
 @include glibc-functions/timelocal.texi
-@include glibc-functions/timespec_get.texi
 
 @c @node Glibc trace.h
 @c @section Glibc Extensions to @code{<trace.h>}
@@ -7007,7 +7008,6 @@ This list of functions is sorted according to the header that declares them.
 @section Glibc Extensions to @code{<unistd.h>}
 
 @menu
-* _Fork::
 * acct::
 * brk::
 * chroot::
@@ -7015,7 +7015,6 @@ This list of functions is sorted according to the header that declares them.
 * close_range::
 * copy_file_range::
 * daemon::
-* dup3::
 * eaccess::
 * endusershell::
 * euidaccess::
@@ -7026,12 +7025,9 @@ This list of functions is sorted according to the header that declares them.
 * getdtablesize::
 * getpagesize::
 * getpass::
-* getresgid::
-* getresuid::
 * gettid::
 * getusershell::
 * group_member::
-* pipe2::
 * profil::
 * revoke::
 * sbrk::
@@ -7039,8 +7035,6 @@ This list of functions is sorted according to the header that declares them.
 * setdomainname::
 * sethostid::
 * sethostname::
-* setresgid::
-* setresuid::
 * setusershell::
 * syncfs::
 * syscall::
@@ -7048,7 +7042,6 @@ This list of functions is sorted according to the header that declares them.
 * vhangup::
 @end menu
 
-@include glibc-functions/_Fork.texi
 @include glibc-functions/acct.texi
 @include glibc-functions/brk.texi
 @include glibc-functions/chroot.texi
@@ -7056,7 +7049,6 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/close_range.texi
 @include glibc-functions/copy_file_range.texi
 @include glibc-functions/daemon.texi
-@include glibc-functions/dup3.texi
 @include glibc-functions/eaccess.texi
 @include glibc-functions/endusershell.texi
 @include glibc-functions/euidaccess.texi
@@ -7067,12 +7059,9 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/getdtablesize.texi
 @include glibc-functions/getpagesize.texi
 @include glibc-functions/getpass.texi
-@include glibc-functions/getresgid.texi
-@include glibc-functions/getresuid.texi
 @include glibc-functions/gettid.texi
 @include glibc-functions/getusershell.texi
 @include glibc-functions/group_member.texi
-@include glibc-functions/pipe2.texi
 @include glibc-functions/profil.texi
 @include glibc-functions/revoke.texi
 @include glibc-functions/sbrk.texi
@@ -7080,8 +7069,6 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/setdomainname.texi
 @include glibc-functions/sethostid.texi
 @include glibc-functions/sethostname.texi
-@include glibc-functions/setresgid.texi
-@include glibc-functions/setresuid.texi
 @include glibc-functions/setusershell.texi
 @include glibc-functions/syncfs.texi
 @include glibc-functions/syscall.texi

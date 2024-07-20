@@ -1,0 +1,30 @@
+@node pthread_rwlock_clockrdlock
+@section @code{pthread_rwlock_clockrdlock}
+@findex pthread_rwlock_clockrdlock
+
+Specified in POSIX.1-2024.
+Draft specification:@* @url{https://www.austingroupbugs.net/view.php?id=1216}
+
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Non-POSIX Extensions,,Non-POSIX Extensions,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Non_002dPOSIX-Extensions.html},
+@end ifnotinfo
+@end itemize
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on many platforms:
+macOS 14, FreeBSD 14.0, NetBSD 10.0, OpenBSD 6.7, Minix 3.1.8, AIX 5.1, HP-UX 11, Solaris 11.4, Cygwin 2.9, mingw, MSVC 14, Android API level 29.
+@end itemize
