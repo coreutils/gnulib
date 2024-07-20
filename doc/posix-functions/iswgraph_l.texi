@@ -1,5 +1,5 @@
 @node iswgraph_l
-@section @code{iswgraph_l}
+@subsection @code{iswgraph_l}
 @findex iswgraph_l
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/iswgraph_l.html}

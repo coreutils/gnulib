@@ -1,5 +1,5 @@
 @node sem_destroy
-@section @code{sem_destroy}
+@subsection @code{sem_destroy}
 @findex sem_destroy
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/sem_destroy.html}

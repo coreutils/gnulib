@@ -1,5 +1,5 @@
 @node getpgid
-@section @code{getpgid}
+@subsection @code{getpgid}
 @findex getpgid
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/getpgid.html}

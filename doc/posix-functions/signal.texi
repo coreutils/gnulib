@@ -1,5 +1,5 @@
 @node signal
-@section @code{signal}
+@subsection @code{signal}
 @findex signal
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/signal.html}

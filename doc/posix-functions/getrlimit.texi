@@ -1,5 +1,5 @@
 @node getrlimit
-@section @code{getrlimit}
+@subsection @code{getrlimit}
 @findex getrlimit
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/getrlimit.html}

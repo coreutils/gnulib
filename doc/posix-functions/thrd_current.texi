@@ -1,5 +1,5 @@
 @node thrd_current
-@section @code{thrd_current}
+@subsection @code{thrd_current}
 @findex thrd_current
 
 Documentation:@*

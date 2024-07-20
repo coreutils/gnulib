@@ -1,5 +1,5 @@
 @node fdimf
-@section @code{fdimf}
+@subsection @code{fdimf}
 @findex fdimf
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/fdimf.html}

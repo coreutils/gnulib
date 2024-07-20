@@ -1,5 +1,5 @@
 @node erff
-@section @code{erff}
+@subsection @code{erff}
 @findex erff
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/erff.html}

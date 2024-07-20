@@ -1,5 +1,5 @@
 @node dlclose
-@section @code{dlclose}
+@subsection @code{dlclose}
 @findex dlclose
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/dlclose.html}

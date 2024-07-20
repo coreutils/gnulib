@@ -1,5 +1,5 @@
 @node ctime_r
-@section @code{ctime_r}
+@subsection @code{ctime_r}
 @findex ctime_r
 
 Removed in POSIX.1-2024.

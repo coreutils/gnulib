@@ -1,5 +1,5 @@
 @node setreuid
-@section @code{setreuid}
+@subsection @code{setreuid}
 @findex setreuid
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/setreuid.html}

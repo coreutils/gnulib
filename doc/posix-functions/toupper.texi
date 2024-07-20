@@ -1,5 +1,5 @@
 @node toupper
-@section @code{toupper}
+@subsection @code{toupper}
 @findex toupper
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/toupper.html}

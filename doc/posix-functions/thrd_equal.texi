@@ -1,5 +1,5 @@
 @node thrd_equal
-@section @code{thrd_equal}
+@subsection @code{thrd_equal}
 @findex thrd_equal
 
 Documentation:@*

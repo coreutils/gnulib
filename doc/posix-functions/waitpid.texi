@@ -1,5 +1,5 @@
 @node waitpid
-@section @code{waitpid}
+@subsection @code{waitpid}
 @findex waitpid
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/waitpid.html}

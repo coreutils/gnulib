@@ -1,5 +1,5 @@
 @node dcngettext
-@section @code{dcngettext}
+@subsection @code{dcngettext}
 @findex dcngettext
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/dcngettext.html}

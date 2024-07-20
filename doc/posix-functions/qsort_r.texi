@@ -1,5 +1,5 @@
 @node qsort_r
-@section @code{qsort_r}
+@subsection @code{qsort_r}
 @findex qsort_r
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/qsort_r.html}

@@ -1,5 +1,5 @@
 @node fegetmode
-@section @code{fegetmode}
+@subsection @code{fegetmode}
 @findex fegetmode
 
 Documentation:@*

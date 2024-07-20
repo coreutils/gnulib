@@ -1,5 +1,5 @@
 @node fminl
-@section @code{fminl}
+@subsection @code{fminl}
 @findex fminl
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/fminl.html}

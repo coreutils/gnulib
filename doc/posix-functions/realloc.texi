@@ -1,5 +1,5 @@
 @node realloc
-@section @code{realloc}
+@subsection @code{realloc}
 @findex realloc
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/realloc.html}

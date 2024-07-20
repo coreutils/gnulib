@@ -1,5 +1,5 @@
 @node round
-@section @code{round}
+@subsection @code{round}
 @findex round
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/round.html}

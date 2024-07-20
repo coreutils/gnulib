@@ -1,5 +1,5 @@
 @node j0
-@section @code{j0}
+@subsection @code{j0}
 @findex j0
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/j0.html}

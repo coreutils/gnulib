@@ -1,5 +1,5 @@
 @node pthread_condattr_init
-@section @code{pthread_condattr_init}
+@subsection @code{pthread_condattr_init}
 @findex pthread_condattr_init
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_condattr_init.html}

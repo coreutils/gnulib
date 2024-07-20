@@ -1,5 +1,5 @@
 @node shmdt
-@section @code{shmdt}
+@subsection @code{shmdt}
 @findex shmdt
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/shmdt.html}

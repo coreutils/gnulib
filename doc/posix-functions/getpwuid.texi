@@ -1,5 +1,5 @@
 @node getpwuid
-@section @code{getpwuid}
+@subsection @code{getpwuid}
 @findex getpwuid
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/getpwuid.html}

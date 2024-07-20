@@ -1,5 +1,5 @@
 @node mbrtoc16
-@section @code{mbrtoc16}
+@subsection @code{mbrtoc16}
 @findex mbrtoc16
 
 Gnulib module: mbrtoc16

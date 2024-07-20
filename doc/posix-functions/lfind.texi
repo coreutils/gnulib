@@ -1,5 +1,5 @@
 @node lfind
-@section @code{lfind}
+@subsection @code{lfind}
 @findex lfind
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/lfind.html}

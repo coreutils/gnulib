@@ -1,5 +1,5 @@
 @node strncasecmp_l
-@section @code{strncasecmp_l}
+@subsection @code{strncasecmp_l}
 @findex strncasecmp_l
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/strncasecmp_l.html}

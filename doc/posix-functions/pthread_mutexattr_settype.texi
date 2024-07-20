@@ -1,5 +1,5 @@
 @node pthread_mutexattr_settype
-@section @code{pthread_mutexattr_settype}
+@subsection @code{pthread_mutexattr_settype}
 @findex pthread_mutexattr_settype
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_mutexattr_settype.html}

@@ -1,5 +1,5 @@
 @node pthread_kill
-@section @code{pthread_kill}
+@subsection @code{pthread_kill}
 @findex pthread_kill
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_kill.html}

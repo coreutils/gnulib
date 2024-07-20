@@ -1,5 +1,5 @@
 @node pthread_setspecific
-@section @code{pthread_setspecific}
+@subsection @code{pthread_setspecific}
 @findex pthread_setspecific
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_setspecific.html}

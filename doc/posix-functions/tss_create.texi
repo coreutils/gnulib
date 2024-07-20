@@ -1,5 +1,5 @@
 @node tss_create
-@section @code{tss_create}
+@subsection @code{tss_create}
 @findex tss_create
 
 Documentation:@*

@@ -1,5 +1,5 @@
 @node ctermid
-@section @code{ctermid}
+@subsection @code{ctermid}
 @findex ctermid
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/ctermid.html}

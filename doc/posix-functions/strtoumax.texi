@@ -1,5 +1,5 @@
 @node strtoumax
-@section @code{strtoumax}
+@subsection @code{strtoumax}
 @findex strtoumax
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/strtoumax.html}

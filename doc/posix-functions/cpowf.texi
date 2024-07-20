@@ -1,5 +1,5 @@
 @node cpowf
-@section @code{cpowf}
+@subsection @code{cpowf}
 @findex cpowf
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/cpowf.html}

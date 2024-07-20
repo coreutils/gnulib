@@ -1,5 +1,5 @@
 @node fchdir
-@section @code{fchdir}
+@subsection @code{fchdir}
 @findex fchdir
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/fchdir.html}

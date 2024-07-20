@@ -1,5 +1,5 @@
 @node ldiv
-@section @code{ldiv}
+@subsection @code{ldiv}
 @findex ldiv
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/ldiv.html}

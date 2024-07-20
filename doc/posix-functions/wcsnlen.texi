@@ -1,5 +1,5 @@
 @node wcsnlen
-@section @code{wcsnlen}
+@subsection @code{wcsnlen}
 @findex wcsnlen
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/wcsnlen.html}

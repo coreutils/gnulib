@@ -1,5 +1,5 @@
 @node fchmodat
-@section @code{fchmodat}
+@subsection @code{fchmodat}
 @findex fchmodat
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/fchmodat.html}

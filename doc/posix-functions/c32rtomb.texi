@@ -1,5 +1,5 @@
 @node c32rtomb
-@section @code{c32rtomb}
+@subsection @code{c32rtomb}
 @findex c32rtomb
 
 Gnulib module: c32rtomb

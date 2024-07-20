@@ -1,5 +1,5 @@
 @node tss_delete
-@section @code{tss_delete}
+@subsection @code{tss_delete}
 @findex tss_delete
 
 Documentation:@*

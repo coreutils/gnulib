@@ -1,5 +1,5 @@
 @node pthread_cleanup_pop
-@section @code{pthread_cleanup_pop}
+@subsection @code{pthread_cleanup_pop}
 @findex pthread_cleanup_pop
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_cleanup_pop.html}

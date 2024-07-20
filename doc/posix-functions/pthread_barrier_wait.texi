@@ -1,5 +1,5 @@
 @node pthread_barrier_wait
-@section @code{pthread_barrier_wait}
+@subsection @code{pthread_barrier_wait}
 @findex pthread_barrier_wait
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_barrier_wait.html}

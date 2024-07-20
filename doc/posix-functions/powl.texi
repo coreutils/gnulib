@@ -1,5 +1,5 @@
 @node powl
-@section @code{powl}
+@subsection @code{powl}
 @findex powl
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/powl.html}

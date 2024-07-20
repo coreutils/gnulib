@@ -1,5 +1,5 @@
 @node feclearexcept
-@section @code{feclearexcept}
+@subsection @code{feclearexcept}
 @findex feclearexcept
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/feclearexcept.html}

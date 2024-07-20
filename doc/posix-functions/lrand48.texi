@@ -1,5 +1,5 @@
 @node lrand48
-@section @code{lrand48}
+@subsection @code{lrand48}
 @findex lrand48
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/lrand48.html}

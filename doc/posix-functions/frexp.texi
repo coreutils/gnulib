@@ -1,5 +1,5 @@
 @node frexp
-@section @code{frexp}
+@subsection @code{frexp}
 @findex frexp
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/frexp.html}

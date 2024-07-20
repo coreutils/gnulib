@@ -1,5 +1,5 @@
 @node c8rtomb
-@section @code{c8rtomb}
+@subsection @code{c8rtomb}
 @findex c8rtomb
 
 Gnulib module: ---

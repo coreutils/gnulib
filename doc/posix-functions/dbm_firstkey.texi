@@ -1,5 +1,5 @@
 @node dbm_firstkey
-@section @code{dbm_firstkey}
+@subsection @code{dbm_firstkey}
 @findex dbm_firstkey
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/dbm_firstkey.html}

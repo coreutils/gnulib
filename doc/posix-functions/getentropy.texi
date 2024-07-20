@@ -1,5 +1,5 @@
 @node getentropy
-@section @code{getentropy}
+@subsection @code{getentropy}
 @findex getentropy
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/getentropy.html}

@@ -1,5 +1,5 @@
 @node thrd_create
-@section @code{thrd_create}
+@subsection @code{thrd_create}
 @findex thrd_create
 
 Documentation:@*

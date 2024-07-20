@@ -1,5 +1,5 @@
 @node difftime
-@section @code{difftime}
+@subsection @code{difftime}
 @findex difftime
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/difftime.html}

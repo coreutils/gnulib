@@ -1,5 +1,5 @@
 @node gethostid
-@section @code{gethostid}
+@subsection @code{gethostid}
 @findex gethostid
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/gethostid.html}

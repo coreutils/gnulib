@@ -1,5 +1,5 @@
 @node clock_nanosleep
-@section @code{clock_nanosleep}
+@subsection @code{clock_nanosleep}
 @findex clock_nanosleep
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/clock_nanosleep.html}

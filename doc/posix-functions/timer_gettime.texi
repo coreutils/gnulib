@@ -1,5 +1,5 @@
 @node timer_gettime
-@section @code{timer_gettime}
+@subsection @code{timer_gettime}
 @findex timer_gettime
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/timer_gettime.html}

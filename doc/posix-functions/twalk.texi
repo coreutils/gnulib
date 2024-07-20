@@ -1,5 +1,5 @@
 @node twalk
-@section @code{twalk}
+@subsection @code{twalk}
 @findex twalk
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/twalk.html}

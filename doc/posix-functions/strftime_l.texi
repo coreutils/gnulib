@@ -1,5 +1,5 @@
 @node strftime_l
-@section @code{strftime_l}
+@subsection @code{strftime_l}
 @findex strftime_l
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/strftime_l.html}

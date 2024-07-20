@@ -1,5 +1,5 @@
 @node getsockopt
-@section @code{getsockopt}
+@subsection @code{getsockopt}
 @findex getsockopt
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/getsockopt.html}

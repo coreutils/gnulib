@@ -1,5 +1,5 @@
 @node isgraph
-@section @code{isgraph}
+@subsection @code{isgraph}
 @findex isgraph
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/isgraph.html}

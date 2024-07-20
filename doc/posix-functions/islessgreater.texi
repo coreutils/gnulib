@@ -1,5 +1,5 @@
 @node islessgreater
-@section @code{islessgreater}
+@subsection @code{islessgreater}
 @findex islessgreater
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/islessgreater.html}

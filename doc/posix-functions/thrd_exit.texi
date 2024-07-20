@@ -1,5 +1,5 @@
 @node thrd_exit
-@section @code{thrd_exit}
+@subsection @code{thrd_exit}
 @findex thrd_exit
 
 Documentation:@*

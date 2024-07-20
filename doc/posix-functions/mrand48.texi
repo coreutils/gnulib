@@ -1,5 +1,5 @@
 @node mrand48
-@section @code{mrand48}
+@subsection @code{mrand48}
 @findex mrand48
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/mrand48.html}

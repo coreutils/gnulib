@@ -1,5 +1,5 @@
 @node crypt
-@section @code{crypt}
+@subsection @code{crypt}
 @findex crypt
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/crypt.html}

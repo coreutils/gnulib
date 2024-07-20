@@ -1,5 +1,5 @@
 @node erand48
-@section @code{erand48}
+@subsection @code{erand48}
 @findex erand48
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/erand48.html}

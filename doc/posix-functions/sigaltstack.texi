@@ -1,5 +1,5 @@
 @node sigaltstack
-@section @code{sigaltstack}
+@subsection @code{sigaltstack}
 @findex sigaltstack
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/sigaltstack.html}

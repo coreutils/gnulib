@@ -1,5 +1,5 @@
 @node fcntl
-@section @code{fcntl}
+@subsection @code{fcntl}
 @findex fcntl
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/fcntl.html}

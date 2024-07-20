@@ -1,5 +1,5 @@
 @node opterr
-@section @code{opterr}
+@subsection @code{opterr}
 @findex opterr
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/opterr.html}

@@ -1,5 +1,5 @@
 @node iswlower_l
-@section @code{iswlower_l}
+@subsection @code{iswlower_l}
 @findex iswlower_l
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/iswlower_l.html}

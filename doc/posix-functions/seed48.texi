@@ -1,5 +1,5 @@
 @node seed48
-@section @code{seed48}
+@subsection @code{seed48}
 @findex seed48
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/seed48.html}

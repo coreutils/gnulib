@@ -1,5 +1,5 @@
 @node fdivl
-@section @code{fdivl}
+@subsection @code{fdivl}
 @findex fdivl
 
 Documentation:@*

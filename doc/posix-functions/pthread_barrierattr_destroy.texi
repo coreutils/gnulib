@@ -1,5 +1,5 @@
 @node pthread_barrierattr_destroy
-@section @code{pthread_barrierattr_destroy}
+@subsection @code{pthread_barrierattr_destroy}
 @findex pthread_barrierattr_destroy
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_barrierattr_destroy.html}

@@ -1,5 +1,5 @@
 @node pthread_barrierattr_setpshared
-@section @code{pthread_barrierattr_setpshared}
+@subsection @code{pthread_barrierattr_setpshared}
 @findex pthread_barrierattr_setpshared
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_barrierattr_setpshared.html}

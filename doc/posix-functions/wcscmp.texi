@@ -1,5 +1,5 @@
 @node wcscmp
-@section @code{wcscmp}
+@subsection @code{wcscmp}
 @findex wcscmp
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/wcscmp.html}

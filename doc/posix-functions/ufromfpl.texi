@@ -1,5 +1,5 @@
 @node ufromfpl
-@section @code{ufromfpl}
+@subsection @code{ufromfpl}
 @findex ufromfpl
 
 Documentation:@*

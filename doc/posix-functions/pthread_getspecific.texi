@@ -1,5 +1,5 @@
 @node pthread_getspecific
-@section @code{pthread_getspecific}
+@subsection @code{pthread_getspecific}
 @findex pthread_getspecific
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_getspecific.html}

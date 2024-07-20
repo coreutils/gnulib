@@ -1,5 +1,5 @@
 @node stdc_bit_width
-@section @code{stdc_bit_width}
+@subsection @code{stdc_bit_width}
 @findex stdc_bit_width
 
 Documentation:@*

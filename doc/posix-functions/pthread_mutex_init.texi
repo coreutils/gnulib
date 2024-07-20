@@ -1,5 +1,5 @@
 @node pthread_mutex_init
-@section @code{pthread_mutex_init}
+@subsection @code{pthread_mutex_init}
 @findex pthread_mutex_init
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_mutex_init.html}

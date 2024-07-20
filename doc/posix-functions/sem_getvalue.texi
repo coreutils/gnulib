@@ -1,5 +1,5 @@
 @node sem_getvalue
-@section @code{sem_getvalue}
+@subsection @code{sem_getvalue}
 @findex sem_getvalue
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/sem_getvalue.html}

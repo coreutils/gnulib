@@ -1,5 +1,5 @@
 @node setresuid
-@section @code{setresuid}
+@subsection @code{setresuid}
 @findex setresuid
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/setresuid.html}

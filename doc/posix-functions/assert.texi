@@ -1,5 +1,5 @@
 @node assert
-@section @code{assert}
+@subsection @code{assert}
 @findex assert
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/assert.html}

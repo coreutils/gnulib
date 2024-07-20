@@ -1,5 +1,5 @@
 @node symlink
-@section @code{symlink}
+@subsection @code{symlink}
 @findex symlink
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/symlink.html}

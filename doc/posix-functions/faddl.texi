@@ -1,5 +1,5 @@
 @node faddl
-@section @code{faddl}
+@subsection @code{faddl}
 @findex faddl
 
 Documentation:@*

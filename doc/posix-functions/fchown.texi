@@ -1,5 +1,5 @@
 @node fchown
-@section @code{fchown}
+@subsection @code{fchown}
 @findex fchown
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/fchown.html}

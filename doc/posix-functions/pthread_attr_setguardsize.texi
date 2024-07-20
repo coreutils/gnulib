@@ -1,5 +1,5 @@
 @node pthread_attr_setguardsize
-@section @code{pthread_attr_setguardsize}
+@subsection @code{pthread_attr_setguardsize}
 @findex pthread_attr_setguardsize
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_attr_setguardsize.html}

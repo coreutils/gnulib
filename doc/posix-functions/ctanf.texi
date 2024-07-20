@@ -1,5 +1,5 @@
 @node ctanf
-@section @code{ctanf}
+@subsection @code{ctanf}
 @findex ctanf
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/ctanf.html}

@@ -1,5 +1,5 @@
 @node wmemcpy
-@section @code{wmemcpy}
+@subsection @code{wmemcpy}
 @findex wmemcpy
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/wmemcpy.html}

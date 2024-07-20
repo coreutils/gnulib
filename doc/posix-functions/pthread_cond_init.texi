@@ -1,5 +1,5 @@
 @node pthread_cond_init
-@section @code{pthread_cond_init}
+@subsection @code{pthread_cond_init}
 @findex pthread_cond_init
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_cond_init.html}

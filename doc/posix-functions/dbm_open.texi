@@ -1,5 +1,5 @@
 @node dbm_open
-@section @code{dbm_open}
+@subsection @code{dbm_open}
 @findex dbm_open
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/dbm_open.html}

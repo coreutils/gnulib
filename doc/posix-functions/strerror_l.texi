@@ -1,5 +1,5 @@
 @node strerror_l
-@section @code{strerror_l}
+@subsection @code{strerror_l}
 @findex strerror_l
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/strerror_l.html}

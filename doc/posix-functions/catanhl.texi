@@ -1,5 +1,5 @@
 @node catanhl
-@section @code{catanhl}
+@subsection @code{catanhl}
 @findex catanhl
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/catanhl.html}

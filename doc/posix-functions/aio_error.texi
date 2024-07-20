@@ -1,5 +1,5 @@
 @node aio_error
-@section @code{aio_error}
+@subsection @code{aio_error}
 @findex aio_error
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/aio_error.html}

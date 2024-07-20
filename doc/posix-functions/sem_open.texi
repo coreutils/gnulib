@@ -1,5 +1,5 @@
 @node sem_open
-@section @code{sem_open}
+@subsection @code{sem_open}
 @findex sem_open
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/sem_open.html}

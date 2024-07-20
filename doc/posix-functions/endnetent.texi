@@ -1,5 +1,5 @@
 @node endnetent
-@section @code{endnetent}
+@subsection @code{endnetent}
 @findex endnetent
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/endnetent.html}

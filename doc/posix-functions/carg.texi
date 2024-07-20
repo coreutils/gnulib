@@ -1,5 +1,5 @@
 @node carg
-@section @code{carg}
+@subsection @code{carg}
 @findex carg
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/carg.html}

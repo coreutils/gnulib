@@ -1,5 +1,5 @@
 @node remquol
-@section @code{remquol}
+@subsection @code{remquol}
 @findex remquol
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/remquol.html}

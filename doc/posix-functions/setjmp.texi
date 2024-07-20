@@ -1,5 +1,5 @@
 @node setjmp
-@section @code{setjmp}
+@subsection @code{setjmp}
 @findex setjmp
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/setjmp.html}

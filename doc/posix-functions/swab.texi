@@ -1,5 +1,5 @@
 @node swab
-@section @code{swab}
+@subsection @code{swab}
 @findex swab
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/swab.html}

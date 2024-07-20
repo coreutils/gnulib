@@ -1,5 +1,5 @@
 @node scalblnl
-@section @code{scalblnl}
+@subsection @code{scalblnl}
 @findex scalblnl
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/scalblnl.html}

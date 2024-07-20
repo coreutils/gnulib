@@ -1,5 +1,5 @@
 @node sqrtf
-@section @code{sqrtf}
+@subsection @code{sqrtf}
 @findex sqrtf
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/sqrtf.html}

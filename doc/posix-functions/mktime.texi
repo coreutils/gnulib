@@ -1,5 +1,5 @@
 @node mktime
-@section @code{mktime}
+@subsection @code{mktime}
 @findex mktime
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/mktime.html}

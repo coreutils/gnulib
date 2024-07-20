@@ -1,5 +1,5 @@
 @node stdc_bit_floor
-@section @code{stdc_bit_floor}
+@subsection @code{stdc_bit_floor}
 @findex stdc_bit_floor
 
 Documentation:@*

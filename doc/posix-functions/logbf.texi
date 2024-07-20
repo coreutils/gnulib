@@ -1,5 +1,5 @@
 @node logbf
-@section @code{logbf}
+@subsection @code{logbf}
 @findex logbf
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/logbf.html}

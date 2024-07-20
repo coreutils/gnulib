@@ -1,5 +1,5 @@
 @node exp10
-@section @code{exp10}
+@subsection @code{exp10}
 @findex exp10
 
 ISO C23 specification:@* @url{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n3220.pdf} section 7.12.6.2

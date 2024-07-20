@@ -1,5 +1,5 @@
 @node pthread_key_create
-@section @code{pthread_key_create}
+@subsection @code{pthread_key_create}
 @findex pthread_key_create
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_key_create.html}

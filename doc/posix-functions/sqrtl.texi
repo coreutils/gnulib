@@ -1,5 +1,5 @@
 @node sqrtl
-@section @code{sqrtl}
+@subsection @code{sqrtl}
 @findex sqrtl
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/sqrtl.html}

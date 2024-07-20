@@ -1,5 +1,5 @@
 @node call_once
-@section @code{call_once}
+@subsection @code{call_once}
 @findex call_once
 
 Documentation:@*

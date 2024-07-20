@@ -1,5 +1,5 @@
 @node strcasecmp_l
-@section @code{strcasecmp_l}
+@subsection @code{strcasecmp_l}
 @findex strcasecmp_l
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/strcasecmp_l.html}

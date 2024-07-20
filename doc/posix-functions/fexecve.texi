@@ -1,5 +1,5 @@
 @node fexecve
-@section @code{fexecve}
+@subsection @code{fexecve}
 @findex fexecve
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/fexecve.html}

@@ -1,5 +1,5 @@
 @node cproj
-@section @code{cproj}
+@subsection @code{cproj}
 @findex cproj
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/cproj.html}

@@ -1,5 +1,5 @@
 @node canonicalizel
-@section @code{canonicalizel}
+@subsection @code{canonicalizel}
 @findex canonicalizel
 
 Documentation:@*

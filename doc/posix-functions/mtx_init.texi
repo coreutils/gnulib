@@ -1,5 +1,5 @@
 @node mtx_init
-@section @code{mtx_init}
+@subsection @code{mtx_init}
 @findex mtx_init
 
 Documentation:@*

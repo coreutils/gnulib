@@ -1,5 +1,5 @@
 @node aio_suspend
-@section @code{aio_suspend}
+@subsection @code{aio_suspend}
 @findex aio_suspend
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/aio_suspend.html}

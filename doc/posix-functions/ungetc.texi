@@ -1,5 +1,5 @@
 @node ungetc
-@section @code{ungetc}
+@subsection @code{ungetc}
 @findex ungetc
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/ungetc.html}

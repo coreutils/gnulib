@@ -1,5 +1,5 @@
 @node erfc
-@section @code{erfc}
+@subsection @code{erfc}
 @findex erfc
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/erfc.html}

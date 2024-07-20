@@ -1,5 +1,5 @@
 @node memset_explicit
-@section @code{memset_explicit}
+@subsection @code{memset_explicit}
 @findex memset_explicit
 
 Documentation:

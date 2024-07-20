@@ -1,5 +1,5 @@
 @node wcwidth
-@section @code{wcwidth}
+@subsection @code{wcwidth}
 @findex wcwidth
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/wcwidth.html}

@@ -1,5 +1,5 @@
 @node mkfifoat
-@section @code{mkfifoat}
+@subsection @code{mkfifoat}
 @findex mkfifoat
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/mkfifoat.html}

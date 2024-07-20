@@ -1,5 +1,5 @@
 @node isxdigit_l
-@section @code{isxdigit_l}
+@subsection @code{isxdigit_l}
 @findex isxdigit_l
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/isxdigit_l.html}

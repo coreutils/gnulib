@@ -1,5 +1,5 @@
 @node gethostname
-@section @code{gethostname}
+@subsection @code{gethostname}
 @findex gethostname
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/gethostname.html}

@@ -1,5 +1,5 @@
 @node nextup
-@section @code{nextup}
+@subsection @code{nextup}
 @findex nextup
 
 Documentation:

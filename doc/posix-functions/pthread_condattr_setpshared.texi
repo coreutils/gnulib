@@ -1,5 +1,5 @@
 @node pthread_condattr_setpshared
-@section @code{pthread_condattr_setpshared}
+@subsection @code{pthread_condattr_setpshared}
 @findex pthread_condattr_setpshared
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_condattr_setpshared.html}

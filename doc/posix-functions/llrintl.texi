@@ -1,5 +1,5 @@
 @node llrintl
-@section @code{llrintl}
+@subsection @code{llrintl}
 @findex llrintl
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/llrintl.html}

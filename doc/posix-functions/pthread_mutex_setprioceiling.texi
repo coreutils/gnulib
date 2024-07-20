@@ -1,5 +1,5 @@
 @node pthread_mutex_setprioceiling
-@section @code{pthread_mutex_setprioceiling}
+@subsection @code{pthread_mutex_setprioceiling}
 @findex pthread_mutex_setprioceiling
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_mutex_setprioceiling.html}

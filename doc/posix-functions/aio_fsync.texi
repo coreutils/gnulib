@@ -1,5 +1,5 @@
 @node aio_fsync
-@section @code{aio_fsync}
+@subsection @code{aio_fsync}
 @findex aio_fsync
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/aio_fsync.html}

@@ -1,5 +1,5 @@
 @node csinl
-@section @code{csinl}
+@subsection @code{csinl}
 @findex csinl
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/csinl.html}

@@ -1,5 +1,5 @@
 @node socket
-@section @code{socket}
+@subsection @code{socket}
 @findex socket
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/socket.html}

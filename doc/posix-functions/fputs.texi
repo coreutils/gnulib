@@ -1,5 +1,5 @@
 @node fputs
-@section @code{fputs}
+@subsection @code{fputs}
 @findex fputs
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/fputs.html}

@@ -1,5 +1,5 @@
 @node va_arg
-@section @code{va_arg}
+@subsection @code{va_arg}
 @findex va_arg
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/va_arg.html}

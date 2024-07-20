@@ -1,5 +1,5 @@
 @node putwc
-@section @code{putwc}
+@subsection @code{putwc}
 @findex putwc
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/putwc.html}

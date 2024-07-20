@@ -1,5 +1,5 @@
 @node fmaxl
-@section @code{fmaxl}
+@subsection @code{fmaxl}
 @findex fmaxl
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/fmaxl.html}

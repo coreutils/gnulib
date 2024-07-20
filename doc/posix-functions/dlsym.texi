@@ -1,5 +1,5 @@
 @node dlsym
-@section @code{dlsym}
+@subsection @code{dlsym}
 @findex dlsym
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/dlsym.html}

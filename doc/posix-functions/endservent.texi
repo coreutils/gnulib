@@ -1,5 +1,5 @@
 @node endservent
-@section @code{endservent}
+@subsection @code{endservent}
 @findex endservent
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/endservent.html}

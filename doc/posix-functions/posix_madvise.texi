@@ -1,5 +1,5 @@
 @node posix_madvise
-@section @code{posix_madvise}
+@subsection @code{posix_madvise}
 @findex posix_madvise
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/posix_madvise.html}

@@ -1,5 +1,5 @@
 @node readlinkat
-@section @code{readlinkat}
+@subsection @code{readlinkat}
 @findex readlinkat
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/readlinkat.html}

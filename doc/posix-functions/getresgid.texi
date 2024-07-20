@@ -1,5 +1,5 @@
 @node getresgid
-@section @code{getresgid}
+@subsection @code{getresgid}
 @findex getresgid
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/getresgid.html}

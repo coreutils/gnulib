@@ -1,5 +1,5 @@
 @node futimens
-@section @code{futimens}
+@subsection @code{futimens}
 @findex futimens
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/futimens.html}

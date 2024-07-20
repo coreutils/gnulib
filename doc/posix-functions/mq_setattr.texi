@@ -1,5 +1,5 @@
 @node mq_setattr
-@section @code{mq_setattr}
+@subsection @code{mq_setattr}
 @findex mq_setattr
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/mq_setattr.html}

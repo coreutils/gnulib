@@ -1,5 +1,5 @@
 @node pthread_equal
-@section @code{pthread_equal}
+@subsection @code{pthread_equal}
 @findex pthread_equal
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_equal.html}

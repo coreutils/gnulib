@@ -1,5 +1,5 @@
 @node dprintf
-@section @code{dprintf}
+@subsection @code{dprintf}
 @findex dprintf
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/dprintf.html}

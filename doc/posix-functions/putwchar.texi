@@ -1,5 +1,5 @@
 @node putwchar
-@section @code{putwchar}
+@subsection @code{putwchar}
 @findex putwchar
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/putwchar.html}

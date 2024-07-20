@@ -1,5 +1,5 @@
 @node ttyname_r
-@section @code{ttyname_r}
+@subsection @code{ttyname_r}
 @findex ttyname_r
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/ttyname_r.html}

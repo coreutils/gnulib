@@ -1,5 +1,5 @@
 @node getgrgid_r
-@section @code{getgrgid_r}
+@subsection @code{getgrgid_r}
 @findex getgrgid_r
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/getgrgid_r.html}

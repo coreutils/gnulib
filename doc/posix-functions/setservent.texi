@@ -1,5 +1,5 @@
 @node setservent
-@section @code{setservent}
+@subsection @code{setservent}
 @findex setservent
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/setservent.html}

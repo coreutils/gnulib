@@ -1,5 +1,5 @@
 @node getnetbyaddr
-@section @code{getnetbyaddr}
+@subsection @code{getnetbyaddr}
 @findex getnetbyaddr
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/getnetbyaddr.html}

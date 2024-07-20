@@ -1,5 +1,5 @@
 @node expm1l
-@section @code{expm1l}
+@subsection @code{expm1l}
 @findex expm1l
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/expm1l.html}

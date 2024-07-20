@@ -1,5 +1,5 @@
 @node fromfp
-@section @code{fromfp}
+@subsection @code{fromfp}
 @findex fromfp
 
 Documentation:@*

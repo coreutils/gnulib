@@ -1,5 +1,5 @@
 @node nftw
-@section @code{nftw}
+@subsection @code{nftw}
 @findex nftw
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/nftw.html}

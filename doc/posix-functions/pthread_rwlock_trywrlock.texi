@@ -1,5 +1,5 @@
 @node pthread_rwlock_trywrlock
-@section @code{pthread_rwlock_trywrlock}
+@subsection @code{pthread_rwlock_trywrlock}
 @findex pthread_rwlock_trywrlock
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_rwlock_trywrlock.html}

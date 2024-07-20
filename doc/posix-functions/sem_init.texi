@@ -1,5 +1,5 @@
 @node sem_init
-@section @code{sem_init}
+@subsection @code{sem_init}
 @findex sem_init
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/sem_init.html}

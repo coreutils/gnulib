@@ -1,5 +1,5 @@
 @node c16rtomb
-@section @code{c16rtomb}
+@subsection @code{c16rtomb}
 @findex c16rtomb
 
 Gnulib module: ---

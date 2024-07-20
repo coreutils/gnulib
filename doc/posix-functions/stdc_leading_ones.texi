@@ -1,5 +1,5 @@
 @node stdc_leading_ones
-@section @code{stdc_leading_ones}
+@subsection @code{stdc_leading_ones}
 @findex stdc_leading_ones
 
 Documentation:@*

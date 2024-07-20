@@ -1,5 +1,5 @@
 @node sem_timedwait
-@section @code{sem_timedwait}
+@subsection @code{sem_timedwait}
 @findex sem_timedwait
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/sem_timedwait.html}

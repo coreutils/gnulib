@@ -1,5 +1,5 @@
 @node strcoll_l
-@section @code{strcoll_l}
+@subsection @code{strcoll_l}
 @findex strcoll_l
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/strcoll_l.html}

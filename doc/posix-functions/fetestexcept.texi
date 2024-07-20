@@ -1,5 +1,5 @@
 @node fetestexcept
-@section @code{fetestexcept}
+@subsection @code{fetestexcept}
 @findex fetestexcept
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/fetestexcept.html}

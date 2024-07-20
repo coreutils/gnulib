@@ -1,5 +1,5 @@
 @node wcstombs
-@section @code{wcstombs}
+@subsection @code{wcstombs}
 @findex wcstombs
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/wcstombs.html}

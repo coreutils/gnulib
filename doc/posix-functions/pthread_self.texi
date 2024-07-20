@@ -1,5 +1,5 @@
 @node pthread_self
-@section @code{pthread_self}
+@subsection @code{pthread_self}
 @findex pthread_self
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_self.html}

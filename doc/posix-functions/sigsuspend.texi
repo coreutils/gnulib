@@ -1,5 +1,5 @@
 @node sigsuspend
-@section @code{sigsuspend}
+@subsection @code{sigsuspend}
 @findex sigsuspend
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/sigsuspend.html}

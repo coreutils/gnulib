@@ -1,5 +1,5 @@
 @node munmap
-@section @code{munmap}
+@subsection @code{munmap}
 @findex munmap
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/munmap.html}

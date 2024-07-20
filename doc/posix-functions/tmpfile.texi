@@ -1,5 +1,5 @@
 @node tmpfile
-@section @code{tmpfile}
+@subsection @code{tmpfile}
 @findex tmpfile
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/tmpfile.html}

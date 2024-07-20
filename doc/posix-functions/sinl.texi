@@ -1,5 +1,5 @@
 @node sinl
-@section @code{sinl}
+@subsection @code{sinl}
 @findex sinl
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/sinl.html}

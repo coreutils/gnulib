@@ -1,5 +1,5 @@
 @node setkey
-@section @code{setkey}
+@subsection @code{setkey}
 @findex setkey
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/setkey.html}

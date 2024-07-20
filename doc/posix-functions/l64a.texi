@@ -1,5 +1,5 @@
 @node l64a
-@section @code{l64a}
+@subsection @code{l64a}
 @findex l64a
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/l64a.html}

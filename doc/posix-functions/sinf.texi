@@ -1,5 +1,5 @@
 @node sinf
-@section @code{sinf}
+@subsection @code{sinf}
 @findex sinf
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/sinf.html}

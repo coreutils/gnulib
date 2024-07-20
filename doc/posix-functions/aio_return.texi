@@ -1,5 +1,5 @@
 @node aio_return
-@section @code{aio_return}
+@subsection @code{aio_return}
 @findex aio_return
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/aio_return.html}

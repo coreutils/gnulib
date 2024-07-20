@@ -1,5 +1,5 @@
 @node log1pf
-@section @code{log1pf}
+@subsection @code{log1pf}
 @findex log1pf
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/log1pf.html}

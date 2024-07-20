@@ -1,5 +1,5 @@
 @node lroundf
-@section @code{lroundf}
+@subsection @code{lroundf}
 @findex lroundf
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/lroundf.html}

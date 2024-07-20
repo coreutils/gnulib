@@ -1,5 +1,5 @@
 @node pthread_spin_trylock
-@section @code{pthread_spin_trylock}
+@subsection @code{pthread_spin_trylock}
 @findex pthread_spin_trylock
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_spin_trylock.html}

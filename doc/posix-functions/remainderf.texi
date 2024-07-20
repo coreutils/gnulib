@@ -1,5 +1,5 @@
 @node remainderf
-@section @code{remainderf}
+@subsection @code{remainderf}
 @findex remainderf
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/remainderf.html}

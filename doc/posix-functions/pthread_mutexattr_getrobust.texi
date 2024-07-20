@@ -1,5 +1,5 @@
 @node pthread_mutexattr_getrobust
-@section @code{pthread_mutexattr_getrobust}
+@subsection @code{pthread_mutexattr_getrobust}
 @findex pthread_mutexattr_getrobust
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_mutexattr_getrobust.html}

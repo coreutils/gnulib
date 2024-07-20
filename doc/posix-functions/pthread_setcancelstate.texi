@@ -1,5 +1,5 @@
 @node pthread_setcancelstate
-@section @code{pthread_setcancelstate}
+@subsection @code{pthread_setcancelstate}
 @findex pthread_setcancelstate
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_setcancelstate.html}

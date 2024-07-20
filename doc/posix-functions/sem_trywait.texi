@@ -1,5 +1,5 @@
 @node sem_trywait
-@section @code{sem_trywait}
+@subsection @code{sem_trywait}
 @findex sem_trywait
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/sem_trywait.html}

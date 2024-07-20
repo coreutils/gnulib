@@ -1,5 +1,5 @@
 @node setgid
-@section @code{setgid}
+@subsection @code{setgid}
 @findex setgid
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/setgid.html}

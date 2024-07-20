@@ -1,5 +1,5 @@
 @node srand
-@section @code{srand}
+@subsection @code{srand}
 @findex srand
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/srand.html}

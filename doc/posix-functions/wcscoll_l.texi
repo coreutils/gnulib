@@ -1,5 +1,5 @@
 @node wcscoll_l
-@section @code{wcscoll_l}
+@subsection @code{wcscoll_l}
 @findex wcscoll_l
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/wcscoll_l.html}

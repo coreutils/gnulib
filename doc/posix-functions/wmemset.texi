@@ -1,5 +1,5 @@
 @node wmemset
-@section @code{wmemset}
+@subsection @code{wmemset}
 @findex wmemset
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/wmemset.html}

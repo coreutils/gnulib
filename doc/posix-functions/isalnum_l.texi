@@ -1,5 +1,5 @@
 @node isalnum_l
-@section @code{isalnum_l}
+@subsection @code{isalnum_l}
 @findex isalnum_l
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/isalnum_l.html}

@@ -1,5 +1,5 @@
 @node cnd_signal
-@section @code{cnd_signal}
+@subsection @code{cnd_signal}
 @findex cnd_signal
 
 Documentation:@*

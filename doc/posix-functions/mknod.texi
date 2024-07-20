@@ -1,5 +1,5 @@
 @node mknod
-@section @code{mknod}
+@subsection @code{mknod}
 @findex mknod
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/mknod.html}

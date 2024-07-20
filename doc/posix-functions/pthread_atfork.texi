@@ -1,5 +1,5 @@
 @node pthread_atfork
-@section @code{pthread_atfork}
+@subsection @code{pthread_atfork}
 @findex pthread_atfork
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_atfork.html}

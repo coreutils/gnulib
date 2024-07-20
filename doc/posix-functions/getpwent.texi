@@ -1,5 +1,5 @@
 @node getpwent
-@section @code{getpwent}
+@subsection @code{getpwent}
 @findex getpwent
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/getpwent.html}

@@ -1,5 +1,5 @@
 @node isalpha_l
-@section @code{isalpha_l}
+@subsection @code{isalpha_l}
 @findex isalpha_l
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/isalpha_l.html}

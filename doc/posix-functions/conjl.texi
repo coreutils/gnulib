@@ -1,5 +1,5 @@
 @node conjl
-@section @code{conjl}
+@subsection @code{conjl}
 @findex conjl
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/conjl.html}

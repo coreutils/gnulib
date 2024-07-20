@@ -1,5 +1,5 @@
 @node posix_spawnp
-@section @code{posix_spawnp}
+@subsection @code{posix_spawnp}
 @findex posix_spawnp
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/posix_spawnp.html}

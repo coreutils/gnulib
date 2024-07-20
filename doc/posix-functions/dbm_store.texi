@@ -1,5 +1,5 @@
 @node dbm_store
-@section @code{dbm_store}
+@subsection @code{dbm_store}
 @findex dbm_store
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/dbm_store.html}

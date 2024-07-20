@@ -1,5 +1,5 @@
 @node strrchr
-@section @code{strrchr}
+@subsection @code{strrchr}
 @findex strrchr
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/strrchr.html}

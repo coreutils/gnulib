@@ -1,5 +1,5 @@
 @node iswupper_l
-@section @code{iswupper_l}
+@subsection @code{iswupper_l}
 @findex iswupper_l
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/iswupper_l.html}

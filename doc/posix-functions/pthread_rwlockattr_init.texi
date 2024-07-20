@@ -1,5 +1,5 @@
 @node pthread_rwlockattr_init
-@section @code{pthread_rwlockattr_init}
+@subsection @code{pthread_rwlockattr_init}
 @findex pthread_rwlockattr_init
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_rwlockattr_init.html}

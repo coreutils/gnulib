@@ -1,5 +1,5 @@
 @node pthread_cancel
-@section @code{pthread_cancel}
+@subsection @code{pthread_cancel}
 @findex pthread_cancel
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_cancel.html}

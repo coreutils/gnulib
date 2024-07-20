@@ -1,5 +1,5 @@
 @node mq_unlink
-@section @code{mq_unlink}
+@subsection @code{mq_unlink}
 @findex mq_unlink
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/mq_unlink.html}

@@ -1,5 +1,5 @@
 @node erfl
-@section @code{erfl}
+@subsection @code{erfl}
 @findex erfl
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/erfl.html}

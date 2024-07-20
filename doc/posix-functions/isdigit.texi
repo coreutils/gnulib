@@ -1,5 +1,5 @@
 @node isdigit
-@section @code{isdigit}
+@subsection @code{isdigit}
 @findex isdigit
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/isdigit.html}

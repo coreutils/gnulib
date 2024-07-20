@@ -1,5 +1,5 @@
 @node wctrans_l
-@section @code{wctrans_l}
+@subsection @code{wctrans_l}
 @findex wctrans_l
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/wctrans_l.html}

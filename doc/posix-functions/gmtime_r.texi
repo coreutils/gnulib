@@ -1,5 +1,5 @@
 @node gmtime_r
-@section @code{gmtime_r}
+@subsection @code{gmtime_r}
 @findex gmtime_r
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/gmtime_r.html}

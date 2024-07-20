@@ -1,5 +1,5 @@
 @node inet_ntoa
-@section @code{inet_ntoa}
+@subsection @code{inet_ntoa}
 @findex inet_ntoa
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/inet_ntoa.html}

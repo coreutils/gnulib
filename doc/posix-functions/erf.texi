@@ -1,5 +1,5 @@
 @node erf
-@section @code{erf}
+@subsection @code{erf}
 @findex erf
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/erf.html}

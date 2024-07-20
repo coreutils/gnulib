@@ -1,5 +1,5 @@
 @node setsockopt
-@section @code{setsockopt}
+@subsection @code{setsockopt}
 @findex setsockopt
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/setsockopt.html}

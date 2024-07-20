@@ -1,5 +1,5 @@
 @node isupper
-@section @code{isupper}
+@subsection @code{isupper}
 @findex isupper
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/isupper.html}

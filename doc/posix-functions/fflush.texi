@@ -1,5 +1,5 @@
 @node fflush
-@section @code{fflush}
+@subsection @code{fflush}
 @findex fflush
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/fflush.html}

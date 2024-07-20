@@ -1,5 +1,5 @@
 @node tcsetpgrp
-@section @code{tcsetpgrp}
+@subsection @code{tcsetpgrp}
 @findex tcsetpgrp
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/tcsetpgrp.html}

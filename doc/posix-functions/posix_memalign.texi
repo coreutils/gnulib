@@ -1,5 +1,5 @@
 @node posix_memalign
-@section @code{posix_memalign}
+@subsection @code{posix_memalign}
 @findex posix_memalign
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/posix_memalign.html}

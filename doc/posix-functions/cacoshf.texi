@@ -1,5 +1,5 @@
 @node cacoshf
-@section @code{cacoshf}
+@subsection @code{cacoshf}
 @findex cacoshf
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/cacoshf.html}

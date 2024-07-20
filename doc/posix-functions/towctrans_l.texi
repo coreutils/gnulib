@@ -1,5 +1,5 @@
 @node towctrans_l
-@section @code{towctrans_l}
+@subsection @code{towctrans_l}
 @findex towctrans_l
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/towctrans_l.html}

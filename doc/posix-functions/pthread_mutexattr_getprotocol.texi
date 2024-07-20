@@ -1,5 +1,5 @@
 @node pthread_mutexattr_getprotocol
-@section @code{pthread_mutexattr_getprotocol}
+@subsection @code{pthread_mutexattr_getprotocol}
 @findex pthread_mutexattr_getprotocol
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_mutexattr_getprotocol.html}

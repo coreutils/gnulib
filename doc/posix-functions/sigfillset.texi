@@ -1,5 +1,5 @@
 @node sigfillset
-@section @code{sigfillset}
+@subsection @code{sigfillset}
 @findex sigfillset
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/sigfillset.html}

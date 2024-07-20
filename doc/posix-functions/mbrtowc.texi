@@ -1,5 +1,5 @@
 @node mbrtowc
-@section @code{mbrtowc}
+@subsection @code{mbrtowc}
 @findex mbrtowc
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/mbrtowc.html}

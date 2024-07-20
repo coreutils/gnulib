@@ -1,5 +1,5 @@
 @node wcstod
-@section @code{wcstod}
+@subsection @code{wcstod}
 @findex wcstod
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/wcstod.html}

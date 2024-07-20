@@ -1,5 +1,5 @@
 @node signbit
-@section @code{signbit}
+@subsection @code{signbit}
 @findex signbit
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/signbit.html}

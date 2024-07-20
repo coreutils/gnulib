@@ -1,5 +1,5 @@
 @node daddl
-@section @code{daddl}
+@subsection @code{daddl}
 @findex daddl
 
 Documentation:@*

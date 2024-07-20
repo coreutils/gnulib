@@ -1,5 +1,5 @@
 @node scanf
-@section @code{scanf}
+@subsection @code{scanf}
 @findex scanf
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/scanf.html}

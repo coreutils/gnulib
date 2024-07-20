@@ -1,5 +1,5 @@
 @node stdc_has_single_bit
-@section @code{stdc_has_single_bit}
+@subsection @code{stdc_has_single_bit}
 @findex stdc_has_single_bit
 
 Documentation:@*

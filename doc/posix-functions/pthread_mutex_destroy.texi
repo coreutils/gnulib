@@ -1,5 +1,5 @@
 @node pthread_mutex_destroy
-@section @code{pthread_mutex_destroy}
+@subsection @code{pthread_mutex_destroy}
 @findex pthread_mutex_destroy
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_mutex_destroy.html}

@@ -1,5 +1,5 @@
 @node frexpl
-@section @code{frexpl}
+@subsection @code{frexpl}
 @findex frexpl
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/frexpl.html}

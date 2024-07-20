@@ -1,5 +1,5 @@
 @node pthread_setschedprio
-@section @code{pthread_setschedprio}
+@subsection @code{pthread_setschedprio}
 @findex pthread_setschedprio
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_setschedprio.html}

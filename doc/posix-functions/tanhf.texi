@@ -1,5 +1,5 @@
 @node tanhf
-@section @code{tanhf}
+@subsection @code{tanhf}
 @findex tanhf
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/tanhf.html}

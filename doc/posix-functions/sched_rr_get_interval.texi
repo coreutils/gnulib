@@ -1,5 +1,5 @@
 @node sched_rr_get_interval
-@section @code{sched_rr_get_interval}
+@subsection @code{sched_rr_get_interval}
 @findex sched_rr_get_interval
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/sched_rr_get_interval.html}

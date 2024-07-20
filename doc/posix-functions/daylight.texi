@@ -1,5 +1,5 @@
 @node daylight
-@section @code{daylight}
+@subsection @code{daylight}
 @findex daylight
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/daylight.html}

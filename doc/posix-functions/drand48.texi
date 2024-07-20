@@ -1,5 +1,5 @@
 @node drand48
-@section @code{drand48}
+@subsection @code{drand48}
 @findex drand48
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/drand48.html}

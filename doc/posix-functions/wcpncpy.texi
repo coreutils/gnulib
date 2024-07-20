@@ -1,5 +1,5 @@
 @node wcpncpy
-@section @code{wcpncpy}
+@subsection @code{wcpncpy}
 @findex wcpncpy
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/wcpncpy.html}

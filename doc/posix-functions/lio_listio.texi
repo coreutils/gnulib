@@ -1,5 +1,5 @@
 @node lio_listio
-@section @code{lio_listio}
+@subsection @code{lio_listio}
 @findex lio_listio
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/lio_listio.html}

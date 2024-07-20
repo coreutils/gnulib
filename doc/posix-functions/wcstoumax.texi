@@ -1,5 +1,5 @@
 @node wcstoumax
-@section @code{wcstoumax}
+@subsection @code{wcstoumax}
 @findex wcstoumax
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/wcstoumax.html}

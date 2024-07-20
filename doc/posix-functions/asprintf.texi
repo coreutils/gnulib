@@ -1,5 +1,5 @@
 @node asprintf
-@section @code{asprintf}
+@subsection @code{asprintf}
 @findex asprintf
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/asprintf.html}

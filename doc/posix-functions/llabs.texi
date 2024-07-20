@@ -1,5 +1,5 @@
 @node llabs
-@section @code{llabs}
+@subsection @code{llabs}
 @findex llabs
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/llabs.html}

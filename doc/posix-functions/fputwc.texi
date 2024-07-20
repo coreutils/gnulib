@@ -1,5 +1,5 @@
 @node fputwc
-@section @code{fputwc}
+@subsection @code{fputwc}
 @findex fputwc
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/fputwc.html}

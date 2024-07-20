@@ -1,5 +1,5 @@
 @node strpbrk
-@section @code{strpbrk}
+@subsection @code{strpbrk}
 @findex strpbrk
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/strpbrk.html}

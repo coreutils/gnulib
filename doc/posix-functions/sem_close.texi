@@ -1,5 +1,5 @@
 @node sem_close
-@section @code{sem_close}
+@subsection @code{sem_close}
 @findex sem_close
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/sem_close.html}

@@ -1,5 +1,5 @@
 @node connect
-@section @code{connect}
+@subsection @code{connect}
 @findex connect
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/connect.html}

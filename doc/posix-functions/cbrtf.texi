@@ -1,5 +1,5 @@
 @node cbrtf
-@section @code{cbrtf}
+@subsection @code{cbrtf}
 @findex cbrtf
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/cbrtf.html}

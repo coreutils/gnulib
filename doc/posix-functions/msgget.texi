@@ -1,5 +1,5 @@
 @node msgget
-@section @code{msgget}
+@subsection @code{msgget}
 @findex msgget
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/msgget.html}

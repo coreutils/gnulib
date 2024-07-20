@@ -1,5 +1,5 @@
 @node stdc_trailing_ones
-@section @code{stdc_trailing_ones}
+@subsection @code{stdc_trailing_ones}
 @findex stdc_trailing_ones
 
 Documentation:@*

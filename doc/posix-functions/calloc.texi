@@ -1,5 +1,5 @@
 @node calloc
-@section @code{calloc}
+@subsection @code{calloc}
 @findex calloc
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/calloc.html}

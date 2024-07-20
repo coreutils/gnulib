@@ -1,5 +1,5 @@
 @node sem_unlink
-@section @code{sem_unlink}
+@subsection @code{sem_unlink}
 @findex sem_unlink
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/sem_unlink.html}

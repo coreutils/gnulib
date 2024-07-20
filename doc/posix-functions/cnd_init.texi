@@ -1,5 +1,5 @@
 @node cnd_init
-@section @code{cnd_init}
+@subsection @code{cnd_init}
 @findex cnd_init
 
 Documentation:@*

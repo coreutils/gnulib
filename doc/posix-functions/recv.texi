@@ -1,5 +1,5 @@
 @node recv
-@section @code{recv}
+@subsection @code{recv}
 @findex recv
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/recv.html}

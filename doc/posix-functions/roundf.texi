@@ -1,5 +1,5 @@
 @node roundf
-@section @code{roundf}
+@subsection @code{roundf}
 @findex roundf
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/roundf.html}

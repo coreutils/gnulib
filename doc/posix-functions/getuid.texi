@@ -1,5 +1,5 @@
 @node getuid
-@section @code{getuid}
+@subsection @code{getuid}
 @findex getuid
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/getuid.html}

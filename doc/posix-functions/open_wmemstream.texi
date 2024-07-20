@@ -1,5 +1,5 @@
 @node open_wmemstream
-@section @code{open_wmemstream}
+@subsection @code{open_wmemstream}
 @findex open_wmemstream
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/open_wmemstream.html}

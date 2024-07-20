@@ -1,5 +1,5 @@
 @node casinhf
-@section @code{casinhf}
+@subsection @code{casinhf}
 @findex casinhf
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/casinhf.html}

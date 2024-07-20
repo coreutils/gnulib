@@ -1,5 +1,5 @@
 @node strfmon_l
-@section @code{strfmon_l}
+@subsection @code{strfmon_l}
 @findex strfmon_l
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/strfmon_l.html}

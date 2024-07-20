@@ -1,5 +1,5 @@
 @node system
-@section @code{system}
+@subsection @code{system}
 @findex system
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/system.html}

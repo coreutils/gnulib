@@ -1,5 +1,5 @@
 @node tmpnam
-@section @code{tmpnam}
+@subsection @code{tmpnam}
 @findex tmpnam
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/tmpnam.html}

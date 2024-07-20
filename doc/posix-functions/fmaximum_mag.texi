@@ -1,5 +1,5 @@
 @node fmaximum_mag
-@section @code{fmaximum_mag}
+@subsection @code{fmaximum_mag}
 @findex fmaximum_mag
 
 ISO C23 specification:@* @url{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n3220.pdf} section 7.12.12.6

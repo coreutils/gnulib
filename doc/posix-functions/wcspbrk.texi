@@ -1,5 +1,5 @@
 @node wcspbrk
-@section @code{wcspbrk}
+@subsection @code{wcspbrk}
 @findex wcspbrk
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/wcspbrk.html}

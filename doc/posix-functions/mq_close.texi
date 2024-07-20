@@ -1,5 +1,5 @@
 @node mq_close
-@section @code{mq_close}
+@subsection @code{mq_close}
 @findex mq_close
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/mq_close.html}

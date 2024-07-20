@@ -1,5 +1,5 @@
 @node pthread_cleanup_push
-@section @code{pthread_cleanup_push}
+@subsection @code{pthread_cleanup_push}
 @findex pthread_cleanup_push
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_cleanup_push.html}

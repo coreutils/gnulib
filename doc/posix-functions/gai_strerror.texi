@@ -1,5 +1,5 @@
 @node gai_strerror
-@section @code{gai_strerror}
+@subsection @code{gai_strerror}
 @findex gai_strerror
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/gai_strerror.html}

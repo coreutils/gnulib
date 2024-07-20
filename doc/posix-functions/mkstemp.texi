@@ -1,5 +1,5 @@
 @node mkstemp
-@section @code{mkstemp}
+@subsection @code{mkstemp}
 @findex mkstemp
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/mkstemp.html}

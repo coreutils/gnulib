@@ -1,5 +1,5 @@
 @node endpwent
-@section @code{endpwent}
+@subsection @code{endpwent}
 @findex endpwent
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/endpwent.html}

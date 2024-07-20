@@ -1,5 +1,5 @@
 @node realpath
-@section @code{realpath}
+@subsection @code{realpath}
 @findex realpath
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/realpath.html}

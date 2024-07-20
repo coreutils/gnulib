@@ -1,5 +1,5 @@
 @node sigwaitinfo
-@section @code{sigwaitinfo}
+@subsection @code{sigwaitinfo}
 @findex sigwaitinfo
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/sigwaitinfo.html}

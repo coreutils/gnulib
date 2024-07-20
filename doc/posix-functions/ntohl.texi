@@ -1,5 +1,5 @@
 @node ntohl
-@section @code{ntohl}
+@subsection @code{ntohl}
 @findex ntohl
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/ntohl.html}

@@ -1,5 +1,5 @@
 @node coshf
-@section @code{coshf}
+@subsection @code{coshf}
 @findex coshf
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/coshf.html}

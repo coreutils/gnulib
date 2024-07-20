@@ -1,5 +1,5 @@
 @node gethostent
-@section @code{gethostent}
+@subsection @code{gethostent}
 @findex gethostent
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/gethostent.html}

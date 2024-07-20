@@ -1,5 +1,5 @@
 @node islower
-@section @code{islower}
+@subsection @code{islower}
 @findex islower
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/islower.html}

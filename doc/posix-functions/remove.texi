@@ -1,5 +1,5 @@
 @node remove
-@section @code{remove}
+@subsection @code{remove}
 @findex remove
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/remove.html}

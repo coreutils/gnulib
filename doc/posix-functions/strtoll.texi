@@ -1,5 +1,5 @@
 @node strtoll
-@section @code{strtoll}
+@subsection @code{strtoll}
 @findex strtoll
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/strtoll.html}

@@ -1,5 +1,5 @@
 @node times
-@section @code{times}
+@subsection @code{times}
 @findex times
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/times.html}

@@ -1,5 +1,5 @@
 @node nan
-@section @code{nan}
+@subsection @code{nan}
 @findex nan
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/nan.html}

@@ -1,5 +1,5 @@
 @node wcsnrtombs
-@section @code{wcsnrtombs}
+@subsection @code{wcsnrtombs}
 @findex wcsnrtombs
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/wcsnrtombs.html}

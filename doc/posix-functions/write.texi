@@ -1,5 +1,5 @@
 @node write
-@section @code{write}
+@subsection @code{write}
 @findex write
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/write.html}

@@ -1,5 +1,5 @@
 @node posix_spawnattr_init
-@section @code{posix_spawnattr_init}
+@subsection @code{posix_spawnattr_init}
 @findex posix_spawnattr_init
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/posix_spawnattr_init.html}

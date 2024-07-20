@@ -1,5 +1,5 @@
 @node srand48
-@section @code{srand48}
+@subsection @code{srand48}
 @findex srand48
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/srand48.html}

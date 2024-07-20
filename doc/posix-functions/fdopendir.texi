@@ -1,5 +1,5 @@
 @node fdopendir
-@section @code{fdopendir}
+@subsection @code{fdopendir}
 @findex fdopendir
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/fdopendir.html}

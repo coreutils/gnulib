@@ -1,5 +1,5 @@
 @node fscanf
-@section @code{fscanf}
+@subsection @code{fscanf}
 @findex fscanf
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/fscanf.html}

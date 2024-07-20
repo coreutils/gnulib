@@ -1,5 +1,5 @@
 @node lcong48
-@section @code{lcong48}
+@subsection @code{lcong48}
 @findex lcong48
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/lcong48.html}

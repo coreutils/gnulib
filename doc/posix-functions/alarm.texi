@@ -1,5 +1,5 @@
 @node alarm
-@section @code{alarm}
+@subsection @code{alarm}
 @findex alarm
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/alarm.html}

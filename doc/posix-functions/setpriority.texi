@@ -1,5 +1,5 @@
 @node setpriority
-@section @code{setpriority}
+@subsection @code{setpriority}
 @findex setpriority
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/setpriority.html}

@@ -1,5 +1,5 @@
 @node puts
-@section @code{puts}
+@subsection @code{puts}
 @findex puts
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/puts.html}

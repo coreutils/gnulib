@@ -1,5 +1,5 @@
 @node acosh
-@section @code{acosh}
+@subsection @code{acosh}
 @findex acosh
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/acosh.html}

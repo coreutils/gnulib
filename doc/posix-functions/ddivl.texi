@@ -1,5 +1,5 @@
 @node ddivl
-@section @code{ddivl}
+@subsection @code{ddivl}
 @findex ddivl
 
 Documentation:@*

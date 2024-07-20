@@ -1,5 +1,5 @@
 @node cbrtl
-@section @code{cbrtl}
+@subsection @code{cbrtl}
 @findex cbrtl
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/cbrtl.html}

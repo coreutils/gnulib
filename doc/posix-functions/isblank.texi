@@ -1,5 +1,5 @@
 @node isblank
-@section @code{isblank}
+@subsection @code{isblank}
 @findex isblank
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/isblank.html}

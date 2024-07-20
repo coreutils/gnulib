@@ -1,5 +1,5 @@
 @node basename
-@section @code{basename}
+@subsection @code{basename}
 @findex basename
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/basename.html}

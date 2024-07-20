@@ -1,5 +1,5 @@
 @node mtx_lock
-@section @code{mtx_lock}
+@subsection @code{mtx_lock}
 @findex mtx_lock
 
 Documentation:@*

@@ -1,5 +1,5 @@
 @node fopen
-@section @code{fopen}
+@subsection @code{fopen}
 @findex fopen
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/fopen.html}

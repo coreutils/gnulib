@@ -1,5 +1,5 @@
 @node chmod
-@section @code{chmod}
+@subsection @code{chmod}
 @findex chmod
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/chmod.html}

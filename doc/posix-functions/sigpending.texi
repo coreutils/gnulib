@@ -1,5 +1,5 @@
 @node sigpending
-@section @code{sigpending}
+@subsection @code{sigpending}
 @findex sigpending
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/sigpending.html}

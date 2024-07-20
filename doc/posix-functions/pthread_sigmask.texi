@@ -1,5 +1,5 @@
 @node pthread_sigmask
-@section @code{pthread_sigmask}
+@subsection @code{pthread_sigmask}
 @findex pthread_sigmask
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_sigmask.html}

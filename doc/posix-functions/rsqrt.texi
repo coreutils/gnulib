@@ -1,5 +1,5 @@
 @node rsqrt
-@section @code{rsqrt}
+@subsection @code{rsqrt}
 @findex rsqrt
 
 ISO C23 specification:@* @url{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n3220.pdf} section 7.12.7.9

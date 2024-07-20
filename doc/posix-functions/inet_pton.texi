@@ -1,5 +1,5 @@
 @node inet_pton
-@section @code{inet_pton}
+@subsection @code{inet_pton}
 @findex inet_pton
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/inet_pton.html}

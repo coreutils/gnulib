@@ -1,5 +1,5 @@
 @node roundevenf
-@section @code{roundevenf}
+@subsection @code{roundevenf}
 @findex roundevenf
 
 Documentation:@*

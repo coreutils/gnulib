@@ -1,5 +1,5 @@
 @node ufromfpxf
-@section @code{ufromfpxf}
+@subsection @code{ufromfpxf}
 @findex ufromfpxf
 
 Documentation:@*

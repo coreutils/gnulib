@@ -1,5 +1,5 @@
 @node stdc_first_leading_zero
-@section @code{stdc_first_leading_zero}
+@subsection @code{stdc_first_leading_zero}
 @findex stdc_first_leading_zero
 
 Documentation:@*

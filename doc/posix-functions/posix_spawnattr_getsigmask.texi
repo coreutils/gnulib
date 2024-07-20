@@ -1,5 +1,5 @@
 @node posix_spawnattr_getsigmask
-@section @code{posix_spawnattr_getsigmask}
+@subsection @code{posix_spawnattr_getsigmask}
 @findex posix_spawnattr_getsigmask
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/posix_spawnattr_getsigmask.html}

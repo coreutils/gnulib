@@ -1,5 +1,5 @@
 @node atanf
-@section @code{atanf}
+@subsection @code{atanf}
 @findex atanf
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/atanf.html}

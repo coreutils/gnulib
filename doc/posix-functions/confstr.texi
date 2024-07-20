@@ -1,5 +1,5 @@
 @node confstr
-@section @code{confstr}
+@subsection @code{confstr}
 @findex confstr
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/confstr.html}

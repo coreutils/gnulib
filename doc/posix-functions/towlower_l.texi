@@ -1,5 +1,5 @@
 @node towlower_l
-@section @code{towlower_l}
+@subsection @code{towlower_l}
 @findex towlower_l
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/towlower_l.html}

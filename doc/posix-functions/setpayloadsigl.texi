@@ -1,5 +1,5 @@
 @node setpayloadsigl
-@section @code{setpayloadsigl}
+@subsection @code{setpayloadsigl}
 @findex setpayloadsigl
 
 ISO C23 specification:@* @url{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n3220.pdf} section F.10.13.3

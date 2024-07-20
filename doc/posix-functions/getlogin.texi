@@ -1,5 +1,5 @@
 @node getlogin
-@section @code{getlogin}
+@subsection @code{getlogin}
 @findex getlogin
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/getlogin.html}

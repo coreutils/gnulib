@@ -1,5 +1,5 @@
 @node pthread_mutex_timedlock
-@section @code{pthread_mutex_timedlock}
+@subsection @code{pthread_mutex_timedlock}
 @findex pthread_mutex_timedlock
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_mutex_timedlock.html}

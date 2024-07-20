@@ -1,5 +1,5 @@
 @node pipe2
-@section @code{pipe2}
+@subsection @code{pipe2}
 @findex pipe2
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pipe2.html}

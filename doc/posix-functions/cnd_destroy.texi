@@ -1,5 +1,5 @@
 @node cnd_destroy
-@section @code{cnd_destroy}
+@subsection @code{cnd_destroy}
 @findex cnd_destroy
 
 Documentation:@*

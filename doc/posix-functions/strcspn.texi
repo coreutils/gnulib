@@ -1,5 +1,5 @@
 @node strcspn
-@section @code{strcspn}
+@subsection @code{strcspn}
 @findex strcspn
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/strcspn.html}

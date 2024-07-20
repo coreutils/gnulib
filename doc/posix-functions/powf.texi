@@ -1,5 +1,5 @@
 @node powf
-@section @code{powf}
+@subsection @code{powf}
 @findex powf
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/powf.html}

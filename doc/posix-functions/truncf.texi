@@ -1,5 +1,5 @@
 @node truncf
-@section @code{truncf}
+@subsection @code{truncf}
 @findex truncf
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/truncf.html}

@@ -1,5 +1,5 @@
 @node pthread_spin_destroy
-@section @code{pthread_spin_destroy}
+@subsection @code{pthread_spin_destroy}
 @findex pthread_spin_destroy
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_spin_destroy.html}

@@ -1,5 +1,5 @@
 @node ispunct_l
-@section @code{ispunct_l}
+@subsection @code{ispunct_l}
 @findex ispunct_l
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/ispunct_l.html}

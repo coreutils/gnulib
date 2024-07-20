@@ -1,5 +1,5 @@
 @node recvfrom
-@section @code{recvfrom}
+@subsection @code{recvfrom}
 @findex recvfrom
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/recvfrom.html}

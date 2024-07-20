@@ -1,5 +1,5 @@
 @node strxfrm_l
-@section @code{strxfrm_l}
+@subsection @code{strxfrm_l}
 @findex strxfrm_l
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/strxfrm_l.html}

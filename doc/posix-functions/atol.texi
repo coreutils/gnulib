@@ -1,5 +1,5 @@
 @node atol
-@section @code{atol}
+@subsection @code{atol}
 @findex atol
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/atol.html}

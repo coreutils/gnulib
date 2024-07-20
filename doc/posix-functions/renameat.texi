@@ -1,5 +1,5 @@
 @node renameat
-@section @code{renameat}
+@subsection @code{renameat}
 @findex renameat
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/renameat.html}

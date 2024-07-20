@@ -1,5 +1,5 @@
 @node canonicalize
-@section @code{canonicalize}
+@subsection @code{canonicalize}
 @findex canonicalize
 
 Documentation:@*

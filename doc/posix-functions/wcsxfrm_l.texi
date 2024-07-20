@@ -1,5 +1,5 @@
 @node wcsxfrm_l
-@section @code{wcsxfrm_l}
+@subsection @code{wcsxfrm_l}
 @findex wcsxfrm_l
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/wcsxfrm_l.html}

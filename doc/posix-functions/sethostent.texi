@@ -1,5 +1,5 @@
 @node sethostent
-@section @code{sethostent}
+@subsection @code{sethostent}
 @findex sethostent
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/sethostent.html}

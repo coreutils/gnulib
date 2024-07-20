@@ -1,5 +1,5 @@
 @node wscanf
-@section @code{wscanf}
+@subsection @code{wscanf}
 @findex wscanf
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/wscanf.html}

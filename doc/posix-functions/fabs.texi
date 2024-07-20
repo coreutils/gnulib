@@ -1,5 +1,5 @@
 @node fabs
-@section @code{fabs}
+@subsection @code{fabs}
 @findex fabs
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/fabs.html}

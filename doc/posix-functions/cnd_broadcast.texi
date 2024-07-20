@@ -1,5 +1,5 @@
 @node cnd_broadcast
-@section @code{cnd_broadcast}
+@subsection @code{cnd_broadcast}
 @findex cnd_broadcast
 
 Documentation:@*

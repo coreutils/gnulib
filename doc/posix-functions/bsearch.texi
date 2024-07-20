@@ -1,5 +1,5 @@
 @node bsearch
-@section @code{bsearch}
+@subsection @code{bsearch}
 @findex bsearch
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/bsearch.html}

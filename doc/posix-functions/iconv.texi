@@ -1,5 +1,5 @@
 @node iconv
-@section @code{iconv}
+@subsection @code{iconv}
 @findex iconv
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/iconv.html}

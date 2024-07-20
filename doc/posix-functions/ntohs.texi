@@ -1,5 +1,5 @@
 @node ntohs
-@section @code{ntohs}
+@subsection @code{ntohs}
 @findex ntohs
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/ntohs.html}

@@ -1,5 +1,5 @@
 @node casinf
-@section @code{casinf}
+@subsection @code{casinf}
 @findex casinf
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/casinf.html}

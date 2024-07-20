@@ -1,5 +1,5 @@
 @node atanl
-@section @code{atanl}
+@subsection @code{atanl}
 @findex atanl
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/atanl.html}

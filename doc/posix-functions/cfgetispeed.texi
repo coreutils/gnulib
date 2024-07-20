@@ -1,5 +1,5 @@
 @node cfgetispeed
-@section @code{cfgetispeed}
+@subsection @code{cfgetispeed}
 @findex cfgetispeed
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/cfgetispeed.html}

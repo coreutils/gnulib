@@ -1,5 +1,5 @@
 @node pthread_attr_getstacksize
-@section @code{pthread_attr_getstacksize}
+@subsection @code{pthread_attr_getstacksize}
 @findex pthread_attr_getstacksize
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_attr_getstacksize.html}

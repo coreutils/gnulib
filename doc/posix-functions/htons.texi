@@ -1,5 +1,5 @@
 @node htons
-@section @code{htons}
+@subsection @code{htons}
 @findex htons
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/htons.html}

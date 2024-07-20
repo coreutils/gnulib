@@ -1,5 +1,5 @@
 @node iswspace_l
-@section @code{iswspace_l}
+@subsection @code{iswspace_l}
 @findex iswspace_l
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/iswspace_l.html}

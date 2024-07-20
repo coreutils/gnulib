@@ -1,5 +1,5 @@
 @node mbrtoc8
-@section @code{mbrtoc8}
+@subsection @code{mbrtoc8}
 @findex mbrtoc8
 
 Gnulib module: ---

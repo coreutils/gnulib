@@ -1,5 +1,5 @@
 @node printf
-@section @code{printf}
+@subsection @code{printf}
 @findex printf
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/printf.html}

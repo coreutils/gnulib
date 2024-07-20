@@ -1,5 +1,5 @@
 @node remquo
-@section @code{remquo}
+@subsection @code{remquo}
 @findex remquo
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/remquo.html}

@@ -1,5 +1,5 @@
 @node isgreaterequal
-@section @code{isgreaterequal}
+@subsection @code{isgreaterequal}
 @findex isgreaterequal
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/isgreaterequal.html}

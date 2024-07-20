@@ -1,5 +1,5 @@
 @node fdopen
-@section @code{fdopen}
+@subsection @code{fdopen}
 @findex fdopen
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/fdopen.html}

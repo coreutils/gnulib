@@ -1,5 +1,5 @@
 @node wmemcmp
-@section @code{wmemcmp}
+@subsection @code{wmemcmp}
 @findex wmemcmp
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/wmemcmp.html}

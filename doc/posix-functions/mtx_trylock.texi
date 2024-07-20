@@ -1,5 +1,5 @@
 @node mtx_trylock
-@section @code{mtx_trylock}
+@subsection @code{mtx_trylock}
 @findex mtx_trylock
 
 Documentation:@*

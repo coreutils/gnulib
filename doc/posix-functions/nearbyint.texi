@@ -1,5 +1,5 @@
 @node nearbyint
-@section @code{nearbyint}
+@subsection @code{nearbyint}
 @findex nearbyint
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/nearbyint.html}

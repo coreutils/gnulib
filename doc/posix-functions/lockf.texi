@@ -1,5 +1,5 @@
 @node lockf
-@section @code{lockf}
+@subsection @code{lockf}
 @findex lockf
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/lockf.html}

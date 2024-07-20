@@ -1,5 +1,5 @@
 @node fminmag
-@section @code{fminmag}
+@subsection @code{fminmag}
 @findex fminmag
 
 Documentation:@*

@@ -1,5 +1,5 @@
 @node fmaxmagf
-@section @code{fmaxmagf}
+@subsection @code{fmaxmagf}
 @findex fmaxmagf
 
 Documentation:@*

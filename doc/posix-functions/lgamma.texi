@@ -1,5 +1,5 @@
 @node lgamma
-@section @code{lgamma}
+@subsection @code{lgamma}
 @findex lgamma
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/lgamma.html}

@@ -1,5 +1,5 @@
 @node strfroml
-@section @code{strfroml}
+@subsection @code{strfroml}
 @findex strfroml
 
 Documentation:

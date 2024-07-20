@@ -1,5 +1,5 @@
 @node fmtmsg
-@section @code{fmtmsg}
+@subsection @code{fmtmsg}
 @findex fmtmsg
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/fmtmsg.html}

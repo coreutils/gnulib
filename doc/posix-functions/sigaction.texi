@@ -1,5 +1,5 @@
 @node sigaction
-@section @code{sigaction}
+@subsection @code{sigaction}
 @findex sigaction
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/sigaction.html}

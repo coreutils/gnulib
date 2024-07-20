@@ -1,5 +1,5 @@
 @node pthread_mutexattr_getprioceiling
-@section @code{pthread_mutexattr_getprioceiling}
+@subsection @code{pthread_mutexattr_getprioceiling}
 @findex pthread_mutexattr_getprioceiling
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_mutexattr_getprioceiling.html}

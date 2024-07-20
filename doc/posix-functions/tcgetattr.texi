@@ -1,5 +1,5 @@
 @node tcgetattr
-@section @code{tcgetattr}
+@subsection @code{tcgetattr}
 @findex tcgetattr
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/tcgetattr.html}

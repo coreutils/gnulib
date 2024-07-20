@@ -1,5 +1,5 @@
 @node setuid
-@section @code{setuid}
+@subsection @code{setuid}
 @findex setuid
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/setuid.html}

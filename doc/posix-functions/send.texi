@@ -1,5 +1,5 @@
 @node send
-@section @code{send}
+@subsection @code{send}
 @findex send
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/send.html}

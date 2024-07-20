@@ -1,5 +1,5 @@
 @node msync
-@section @code{msync}
+@subsection @code{msync}
 @findex msync
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/msync.html}

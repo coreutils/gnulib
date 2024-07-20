@@ -1,5 +1,5 @@
 @node fmemopen
-@section @code{fmemopen}
+@subsection @code{fmemopen}
 @findex fmemopen
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/fmemopen.html}

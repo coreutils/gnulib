@@ -1,5 +1,5 @@
 @node pselect
-@section @code{pselect}
+@subsection @code{pselect}
 @findex pselect
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pselect.html}

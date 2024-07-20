@@ -1,5 +1,5 @@
 @node mtx_destroy
-@section @code{mtx_destroy}
+@subsection @code{mtx_destroy}
 @findex mtx_destroy
 
 Documentation:@*

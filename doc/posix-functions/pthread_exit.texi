@@ -1,5 +1,5 @@
 @node pthread_exit
-@section @code{pthread_exit}
+@subsection @code{pthread_exit}
 @findex pthread_exit
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_exit.html}

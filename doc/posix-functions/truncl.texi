@@ -1,5 +1,5 @@
 @node truncl
-@section @code{truncl}
+@subsection @code{truncl}
 @findex truncl
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/truncl.html}

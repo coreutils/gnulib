@@ -1,5 +1,5 @@
 @node ptsname_r
-@section @code{ptsname_r}
+@subsection @code{ptsname_r}
 @findex ptsname_r
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/ptsname_r.html}

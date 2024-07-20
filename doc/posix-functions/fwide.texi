@@ -1,5 +1,5 @@
 @node fwide
-@section @code{fwide}
+@subsection @code{fwide}
 @findex fwide
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/fwide.html}

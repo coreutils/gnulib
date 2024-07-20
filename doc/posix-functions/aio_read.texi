@@ -1,5 +1,5 @@
 @node aio_read
-@section @code{aio_read}
+@subsection @code{aio_read}
 @findex aio_read
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/aio_read.html}

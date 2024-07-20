@@ -1,5 +1,5 @@
 @node vfwprintf
-@section @code{vfwprintf}
+@subsection @code{vfwprintf}
 @findex vfwprintf
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/vfwprintf.html}

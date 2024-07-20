@@ -1,5 +1,5 @@
 @node sleep
-@section @code{sleep}
+@subsection @code{sleep}
 @findex sleep
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/sleep.html}

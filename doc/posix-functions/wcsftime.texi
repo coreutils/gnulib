@@ -1,5 +1,5 @@
 @node wcsftime
-@section @code{wcsftime}
+@subsection @code{wcsftime}
 @findex wcsftime
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/wcsftime.html}

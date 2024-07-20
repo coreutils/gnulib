@@ -1,5 +1,5 @@
 @node posix_typed_mem_open
-@section @code{posix_typed_mem_open}
+@subsection @code{posix_typed_mem_open}
 @findex posix_typed_mem_open
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/posix_typed_mem_open.html}

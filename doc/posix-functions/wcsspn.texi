@@ -1,5 +1,5 @@
 @node wcsspn
-@section @code{wcsspn}
+@subsection @code{wcsspn}
 @findex wcsspn
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/wcsspn.html}

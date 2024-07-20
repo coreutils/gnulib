@@ -1,5 +1,5 @@
 @node tcflush
-@section @code{tcflush}
+@subsection @code{tcflush}
 @findex tcflush
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/tcflush.html}

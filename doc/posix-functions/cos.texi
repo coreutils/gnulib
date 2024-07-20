@@ -1,5 +1,5 @@
 @node cos
-@section @code{cos}
+@subsection @code{cos}
 @findex cos
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/cos.html}

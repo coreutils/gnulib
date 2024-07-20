@@ -1,5 +1,5 @@
 @node select
-@section @code{select}
+@subsection @code{select}
 @findex select
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/select.html}

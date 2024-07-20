@@ -1,5 +1,5 @@
 @node ctime
-@section @code{ctime}
+@subsection @code{ctime}
 @findex ctime
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/ctime.html}

@@ -1,5 +1,5 @@
 @node pthread_spin_unlock
-@section @code{pthread_spin_unlock}
+@subsection @code{pthread_spin_unlock}
 @findex pthread_spin_unlock
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_spin_unlock.html}

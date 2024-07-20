@@ -1,5 +1,5 @@
 @node mbtowc
-@section @code{mbtowc}
+@subsection @code{mbtowc}
 @findex mbtowc
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/mbtowc.html}

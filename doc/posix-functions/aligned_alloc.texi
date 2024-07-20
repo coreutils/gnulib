@@ -1,5 +1,5 @@
 @node aligned_alloc
-@section @code{aligned_alloc}
+@subsection @code{aligned_alloc}
 @findex aligned_alloc
 
 Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/aligned_alloc.3.html,,man aligned_alloc}

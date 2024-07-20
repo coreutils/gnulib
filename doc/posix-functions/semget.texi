@@ -1,5 +1,5 @@
 @node semget
-@section @code{semget}
+@subsection @code{semget}
 @findex semget
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/semget.html}

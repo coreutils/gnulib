@@ -1,5 +1,5 @@
 @node remque
-@section @code{remque}
+@subsection @code{remque}
 @findex remque
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/remque.html}

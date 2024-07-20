@@ -1,5 +1,5 @@
 @node wprintf
-@section @code{wprintf}
+@subsection @code{wprintf}
 @findex wprintf
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/wprintf.html}

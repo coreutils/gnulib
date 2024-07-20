@@ -1,5 +1,5 @@
 @node tdelete
-@section @code{tdelete}
+@subsection @code{tdelete}
 @findex tdelete
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/tdelete.html}

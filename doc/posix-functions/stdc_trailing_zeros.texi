@@ -1,5 +1,5 @@
 @node stdc_trailing_zeros
-@section @code{stdc_trailing_zeros}
+@subsection @code{stdc_trailing_zeros}
 @findex stdc_trailing_zeros
 
 Documentation:@*

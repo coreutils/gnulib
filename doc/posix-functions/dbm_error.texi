@@ -1,5 +1,5 @@
 @node dbm_error
-@section @code{dbm_error}
+@subsection @code{dbm_error}
 @findex dbm_error
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/dbm_error.html}

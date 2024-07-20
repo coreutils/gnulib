@@ -1,5 +1,5 @@
 @node rand
-@section @code{rand}
+@subsection @code{rand}
 @findex rand
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/rand.html}

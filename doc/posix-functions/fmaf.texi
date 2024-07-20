@@ -1,5 +1,5 @@
 @node fmaf
-@section @code{fmaf}
+@subsection @code{fmaf}
 @findex fmaf
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/fmaf.html}

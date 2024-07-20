@@ -1,5 +1,5 @@
 @node posix_mem_offset
-@section @code{posix_mem_offset}
+@subsection @code{posix_mem_offset}
 @findex posix_mem_offset
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/posix_mem_offset.html}

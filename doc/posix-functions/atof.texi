@@ -1,5 +1,5 @@
 @node atof
-@section @code{atof}
+@subsection @code{atof}
 @findex atof
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/atof.html}

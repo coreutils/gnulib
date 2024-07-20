@@ -1,5 +1,5 @@
 @node cargf
-@section @code{cargf}
+@subsection @code{cargf}
 @findex cargf
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/cargf.html}

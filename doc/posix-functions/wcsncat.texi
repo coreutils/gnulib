@@ -1,5 +1,5 @@
 @node wcsncat
-@section @code{wcsncat}
+@subsection @code{wcsncat}
 @findex wcsncat
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/wcsncat.html}

@@ -1,5 +1,5 @@
 @node iswctype_l
-@section @code{iswctype_l}
+@subsection @code{iswctype_l}
 @findex iswctype_l
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/iswctype_l.html}

@@ -1,5 +1,5 @@
 @node timer_settime
-@section @code{timer_settime}
+@subsection @code{timer_settime}
 @findex timer_settime
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/timer_settime.html}

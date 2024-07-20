@@ -1,5 +1,5 @@
 @node fetestexceptflag
-@section @code{fetestexceptflag}
+@subsection @code{fetestexceptflag}
 @findex fetestexceptflag
 
 Documentation:@*

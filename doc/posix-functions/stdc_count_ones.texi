@@ -1,5 +1,5 @@
 @node stdc_count_ones
-@section @code{stdc_count_ones}
+@subsection @code{stdc_count_ones}
 @findex stdc_count_ones
 
 Documentation:@*

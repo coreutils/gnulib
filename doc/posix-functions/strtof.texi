@@ -1,5 +1,5 @@
 @node strtof
-@section @code{strtof}
+@subsection @code{strtof}
 @findex strtof
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/strtof.html}

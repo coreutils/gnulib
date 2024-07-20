@@ -1,5 +1,5 @@
 @node catanf
-@section @code{catanf}
+@subsection @code{catanf}
 @findex catanf
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/catanf.html}

@@ -1,5 +1,5 @@
 @node reallocarray
-@section @code{reallocarray}
+@subsection @code{reallocarray}
 @findex reallocarray
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/reallocarray.html}

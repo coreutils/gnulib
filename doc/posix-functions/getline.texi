@@ -1,5 +1,5 @@
 @node getline
-@section @code{getline}
+@subsection @code{getline}
 @findex getline
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/getline.html}

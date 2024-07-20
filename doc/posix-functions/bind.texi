@@ -1,5 +1,5 @@
 @node bind
-@section @code{bind}
+@subsection @code{bind}
 @findex bind
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/bind.html}

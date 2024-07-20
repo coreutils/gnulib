@@ -1,5 +1,5 @@
 @node setlocale
-@section @code{setlocale}
+@subsection @code{setlocale}
 @findex setlocale
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/setlocale.html}

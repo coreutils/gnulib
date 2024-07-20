@@ -1,5 +1,5 @@
 @node rand_r
-@section @code{rand_r}
+@subsection @code{rand_r}
 @findex rand_r
 
 Removed in POSIX.1-2024.

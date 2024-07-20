@@ -1,5 +1,5 @@
 @node pthread_condattr_setclock
-@section @code{pthread_condattr_setclock}
+@subsection @code{pthread_condattr_setclock}
 @findex pthread_condattr_setclock
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_condattr_setclock.html}

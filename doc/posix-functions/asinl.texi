@@ -1,5 +1,5 @@
 @node asinl
-@section @code{asinl}
+@subsection @code{asinl}
 @findex asinl
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/asinl.html}

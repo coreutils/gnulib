@@ -1,5 +1,5 @@
 @node fegetenv
-@section @code{fegetenv}
+@subsection @code{fegetenv}
 @findex fegetenv
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/fegetenv.html}

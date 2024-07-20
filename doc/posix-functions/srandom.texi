@@ -1,5 +1,5 @@
 @node srandom
-@section @code{srandom}
+@subsection @code{srandom}
 @findex srandom
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/srandom.html}

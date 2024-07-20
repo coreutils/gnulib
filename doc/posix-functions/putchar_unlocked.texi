@@ -1,5 +1,5 @@
 @node putchar_unlocked
-@section @code{putchar_unlocked}
+@subsection @code{putchar_unlocked}
 @findex putchar_unlocked
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/putchar_unlocked.html}

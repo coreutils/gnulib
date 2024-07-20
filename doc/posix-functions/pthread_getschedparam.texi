@@ -1,5 +1,5 @@
 @node pthread_getschedparam
-@section @code{pthread_getschedparam}
+@subsection @code{pthread_getschedparam}
 @findex pthread_getschedparam
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_getschedparam.html}

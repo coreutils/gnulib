@@ -1,5 +1,5 @@
 @node fclose
-@section @code{fclose}
+@subsection @code{fclose}
 @findex fclose
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/fclose.html}

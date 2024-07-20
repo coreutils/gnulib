@@ -1,5 +1,5 @@
 @node execvp
-@section @code{execvp}
+@subsection @code{execvp}
 @findex execvp
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/execvp.html}

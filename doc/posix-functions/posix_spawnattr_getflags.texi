@@ -1,5 +1,5 @@
 @node posix_spawnattr_getflags
-@section @code{posix_spawnattr_getflags}
+@subsection @code{posix_spawnattr_getflags}
 @findex posix_spawnattr_getflags
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/posix_spawnattr_getflags.html}

@@ -1,5 +1,5 @@
 @node stdc_count_zeros
-@section @code{stdc_count_zeros}
+@subsection @code{stdc_count_zeros}
 @findex stdc_count_zeros
 
 Documentation:@*

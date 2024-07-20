@@ -1,5 +1,5 @@
 @node sigaddset
-@section @code{sigaddset}
+@subsection @code{sigaddset}
 @findex sigaddset
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/sigaddset.html}

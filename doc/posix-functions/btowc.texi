@@ -1,5 +1,5 @@
 @node btowc
-@section @code{btowc}
+@subsection @code{btowc}
 @findex btowc
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/btowc.html}

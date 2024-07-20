@@ -1,5 +1,5 @@
 @node acoshf
-@section @code{acoshf}
+@subsection @code{acoshf}
 @findex acoshf
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/acoshf.html}

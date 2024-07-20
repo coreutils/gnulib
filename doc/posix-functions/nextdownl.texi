@@ -1,5 +1,5 @@
 @node nextdownl
-@section @code{nextdownl}
+@subsection @code{nextdownl}
 @findex nextdownl
 
 Documentation:

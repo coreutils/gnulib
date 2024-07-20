@@ -1,5 +1,5 @@
 @node setresgid
-@section @code{setresgid}
+@subsection @code{setresgid}
 @findex setresgid
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/setresgid.html}

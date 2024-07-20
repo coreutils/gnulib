@@ -1,5 +1,5 @@
 @node dlerror
-@section @code{dlerror}
+@subsection @code{dlerror}
 @findex dlerror
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/dlerror.html}

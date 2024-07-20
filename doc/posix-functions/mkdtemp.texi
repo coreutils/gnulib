@@ -1,5 +1,5 @@
 @node mkdtemp
-@section @code{mkdtemp}
+@subsection @code{mkdtemp}
 @findex mkdtemp
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/mkdtemp.html}

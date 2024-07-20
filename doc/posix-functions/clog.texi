@@ -1,5 +1,5 @@
 @node clog
-@section @code{clog}
+@subsection @code{clog}
 @findex clog
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/clog.html}

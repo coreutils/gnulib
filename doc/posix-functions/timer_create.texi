@@ -1,5 +1,5 @@
 @node timer_create
-@section @code{timer_create}
+@subsection @code{timer_create}
 @findex timer_create
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/timer_create.html}

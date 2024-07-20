@@ -1,5 +1,5 @@
 @node sem_clockwait
-@section @code{sem_clockwait}
+@subsection @code{sem_clockwait}
 @findex sem_clockwait
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/sem_clockwait.html}

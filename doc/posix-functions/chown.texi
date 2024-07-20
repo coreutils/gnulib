@@ -1,5 +1,5 @@
 @node chown
-@section @code{chown}
+@subsection @code{chown}
 @findex chown
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/chown.html}

@@ -1,5 +1,5 @@
 @node dbm_nextkey
-@section @code{dbm_nextkey}
+@subsection @code{dbm_nextkey}
 @findex dbm_nextkey
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/dbm_nextkey.html}

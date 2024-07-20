@@ -1,5 +1,5 @@
 @node jrand48
-@section @code{jrand48}
+@subsection @code{jrand48}
 @findex jrand48
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/jrand48.html}

@@ -1,5 +1,5 @@
 @node va_copy
-@section @code{va_copy}
+@subsection @code{va_copy}
 @findex va_copy
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/va_copy.html}

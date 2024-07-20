@@ -1,5 +1,5 @@
 @node iswcntrl_l
-@section @code{iswcntrl_l}
+@subsection @code{iswcntrl_l}
 @findex iswcntrl_l
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/iswcntrl_l.html}

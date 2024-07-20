@@ -1,5 +1,5 @@
 @node sched_get_priority_min
-@section @code{sched_get_priority_min}
+@subsection @code{sched_get_priority_min}
 @findex sched_get_priority_min
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/sched_get_priority_min.html}

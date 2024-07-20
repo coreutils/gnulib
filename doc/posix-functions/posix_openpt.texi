@@ -1,5 +1,5 @@
 @node posix_openpt
-@section @code{posix_openpt}
+@subsection @code{posix_openpt}
 @findex posix_openpt
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/posix_openpt.html}

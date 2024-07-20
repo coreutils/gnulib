@@ -1,5 +1,5 @@
 @node pthread_condattr_getclock
-@section @code{pthread_condattr_getclock}
+@subsection @code{pthread_condattr_getclock}
 @findex pthread_condattr_getclock
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_condattr_getclock.html}

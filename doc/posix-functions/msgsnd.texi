@@ -1,5 +1,5 @@
 @node msgsnd
-@section @code{msgsnd}
+@subsection @code{msgsnd}
 @findex msgsnd
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/msgsnd.html}

@@ -1,5 +1,5 @@
 @node getwchar
-@section @code{getwchar}
+@subsection @code{getwchar}
 @findex getwchar
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/getwchar.html}

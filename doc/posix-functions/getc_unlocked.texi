@@ -1,5 +1,5 @@
 @node getc_unlocked
-@section @code{getc_unlocked}
+@subsection @code{getc_unlocked}
 @findex getc_unlocked
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/getc_unlocked.html}

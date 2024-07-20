@@ -1,5 +1,5 @@
 @node if_nameindex
-@section @code{if_nameindex}
+@subsection @code{if_nameindex}
 @findex if_nameindex
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/if_nameindex.html}

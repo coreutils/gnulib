@@ -1,5 +1,5 @@
 @node ftrylockfile
-@section @code{ftrylockfile}
+@subsection @code{ftrylockfile}
 @findex ftrylockfile
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/ftrylockfile.html}

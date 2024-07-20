@@ -1,5 +1,5 @@
 @node pthread_setcanceltype
-@section @code{pthread_setcanceltype}
+@subsection @code{pthread_setcanceltype}
 @findex pthread_setcanceltype
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_setcanceltype.html}

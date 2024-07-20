@@ -1,5 +1,5 @@
 @node fdatasync
-@section @code{fdatasync}
+@subsection @code{fdatasync}
 @findex fdatasync
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/fdatasync.html}

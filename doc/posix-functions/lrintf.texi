@@ -1,5 +1,5 @@
 @node lrintf
-@section @code{lrintf}
+@subsection @code{lrintf}
 @findex lrintf
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/lrintf.html}

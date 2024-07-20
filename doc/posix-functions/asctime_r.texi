@@ -1,5 +1,5 @@
 @node asctime_r
-@section @code{asctime_r}
+@subsection @code{asctime_r}
 @findex asctime_r
 
 Removed in POSIX.1-2024.

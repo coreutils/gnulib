@@ -1,5 +1,5 @@
 @node endgrent
-@section @code{endgrent}
+@subsection @code{endgrent}
 @findex endgrent
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/endgrent.html}

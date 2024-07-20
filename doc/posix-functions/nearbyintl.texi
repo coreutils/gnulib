@@ -1,5 +1,5 @@
 @node nearbyintl
-@section @code{nearbyintl}
+@subsection @code{nearbyintl}
 @findex nearbyintl
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/nearbyintl.html}

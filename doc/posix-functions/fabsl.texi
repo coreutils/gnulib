@@ -1,5 +1,5 @@
 @node fabsl
-@section @code{fabsl}
+@subsection @code{fabsl}
 @findex fabsl
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/fabsl.html}

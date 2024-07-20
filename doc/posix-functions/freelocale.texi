@@ -1,5 +1,5 @@
 @node freelocale
-@section @code{freelocale}
+@subsection @code{freelocale}
 @findex freelocale
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/freelocale.html}

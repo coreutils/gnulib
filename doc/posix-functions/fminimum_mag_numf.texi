@@ -1,5 +1,5 @@
 @node fminimum_mag_numf
-@section @code{fminimum_mag_numf}
+@subsection @code{fminimum_mag_numf}
 @findex fminimum_mag_numf
 
 ISO C23 specification:@* @url{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n3220.pdf} section 7.12.12.11

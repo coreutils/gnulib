@@ -1,5 +1,5 @@
 @node a64l
-@section @code{a64l}
+@subsection @code{a64l}
 @findex a64l
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/a64l.html}

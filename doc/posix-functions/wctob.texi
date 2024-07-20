@@ -1,5 +1,5 @@
 @node wctob
-@section @code{wctob}
+@subsection @code{wctob}
 @findex wctob
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/wctob.html}

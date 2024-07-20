@@ -1,5 +1,5 @@
 @node fesetexcept
-@section @code{fesetexcept}
+@subsection @code{fesetexcept}
 @findex fesetexcept
 
 Documentation:@*

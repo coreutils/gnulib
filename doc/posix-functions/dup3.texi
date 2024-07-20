@@ -1,5 +1,5 @@
 @node dup3
-@section @code{dup3}
+@subsection @code{dup3}
 @findex dup3
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/dup3.html}

@@ -1,5 +1,5 @@
 @node llogb
-@section @code{llogb}
+@subsection @code{llogb}
 @findex llogb
 
 Documentation:@*

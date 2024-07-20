@@ -1,5 +1,5 @@
 @node thrd_sleep
-@section @code{thrd_sleep}
+@subsection @code{thrd_sleep}
 @findex thrd_sleep
 
 Documentation:@*

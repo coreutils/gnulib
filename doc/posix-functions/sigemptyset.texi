@@ -1,5 +1,5 @@
 @node sigemptyset
-@section @code{sigemptyset}
+@subsection @code{sigemptyset}
 @findex sigemptyset
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/sigemptyset.html}

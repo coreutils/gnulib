@@ -1,5 +1,5 @@
 @node fnmatch
-@section @code{fnmatch}
+@subsection @code{fnmatch}
 @findex fnmatch
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/fnmatch.html}

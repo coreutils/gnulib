@@ -1,5 +1,5 @@
 @node setenv
-@section @code{setenv}
+@subsection @code{setenv}
 @findex setenv
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/setenv.html}

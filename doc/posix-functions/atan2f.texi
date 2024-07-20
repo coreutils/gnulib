@@ -1,5 +1,5 @@
 @node atan2f
-@section @code{atan2f}
+@subsection @code{atan2f}
 @findex atan2f
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/atan2f.html}

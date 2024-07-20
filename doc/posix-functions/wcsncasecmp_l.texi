@@ -1,5 +1,5 @@
 @node wcsncasecmp_l
-@section @code{wcsncasecmp_l}
+@subsection @code{wcsncasecmp_l}
 @findex wcsncasecmp_l
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/wcsncasecmp_l.html}

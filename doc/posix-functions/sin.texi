@@ -1,5 +1,5 @@
 @node sin
-@section @code{sin}
+@subsection @code{sin}
 @findex sin
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/sin.html}

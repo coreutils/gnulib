@@ -1,5 +1,5 @@
 @node rintl
-@section @code{rintl}
+@subsection @code{rintl}
 @findex rintl
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/rintl.html}

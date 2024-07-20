@@ -1,5 +1,5 @@
 @node catanhf
-@section @code{catanhf}
+@subsection @code{catanhf}
 @findex catanhf
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/catanhf.html}

@@ -1,5 +1,5 @@
 @node textdomain
-@section @code{textdomain}
+@subsection @code{textdomain}
 @findex textdomain
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/textdomain.html}

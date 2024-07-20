@@ -1,5 +1,5 @@
 @node nextafterl
-@section @code{nextafterl}
+@subsection @code{nextafterl}
 @findex nextafterl
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/nextafterl.html}

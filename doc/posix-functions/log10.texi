@@ -1,5 +1,5 @@
 @node log10
-@section @code{log10}
+@subsection @code{log10}
 @findex log10
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/log10.html}

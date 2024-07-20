@@ -1,5 +1,5 @@
 @node imaxabs
-@section @code{imaxabs}
+@subsection @code{imaxabs}
 @findex imaxabs
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/imaxabs.html}

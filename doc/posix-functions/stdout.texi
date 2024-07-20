@@ -1,5 +1,5 @@
 @node stdout
-@section @code{stdout}
+@subsection @code{stdout}
 @findex stdout
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/stdout.html}

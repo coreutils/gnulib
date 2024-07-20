@@ -1,5 +1,5 @@
 @node posix_spawnattr_setschedparam
-@section @code{posix_spawnattr_setschedparam}
+@subsection @code{posix_spawnattr_setschedparam}
 @findex posix_spawnattr_setschedparam
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/posix_spawnattr_setschedparam.html}

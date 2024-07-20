@@ -1,5 +1,5 @@
 @node cimagl
-@section @code{cimagl}
+@subsection @code{cimagl}
 @findex cimagl
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/cimagl.html}

@@ -1,5 +1,5 @@
 @node pthread_cond_clockwait
-@section @code{pthread_cond_clockwait}
+@subsection @code{pthread_cond_clockwait}
 @findex pthread_cond_clockwait
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_cond_clockwait.html}

@@ -1,5 +1,5 @@
 @node log10p1l
-@section @code{log10p1l}
+@subsection @code{log10p1l}
 @findex log10p1l
 
 ISO C23 specification:@* @url{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n3220.pdf} section 7.12.6.13

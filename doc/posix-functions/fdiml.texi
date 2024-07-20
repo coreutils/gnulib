@@ -1,5 +1,5 @@
 @node fdiml
-@section @code{fdiml}
+@subsection @code{fdiml}
 @findex fdiml
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/fdiml.html}

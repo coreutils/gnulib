@@ -1,5 +1,5 @@
 @node posix_spawnattr_destroy
-@section @code{posix_spawnattr_destroy}
+@subsection @code{posix_spawnattr_destroy}
 @findex posix_spawnattr_destroy
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/posix_spawnattr_destroy.html}

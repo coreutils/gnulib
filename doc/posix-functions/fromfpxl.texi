@@ -1,5 +1,5 @@
 @node fromfpxl
-@section @code{fromfpxl}
+@subsection @code{fromfpxl}
 @findex fromfpxl
 
 Documentation:@*

@@ -1,5 +1,5 @@
 @node getutxent
-@section @code{getutxent}
+@subsection @code{getutxent}
 @findex getutxent
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/getutxent.html}

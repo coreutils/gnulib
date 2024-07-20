@@ -1,5 +1,5 @@
 @node munlockall
-@section @code{munlockall}
+@subsection @code{munlockall}
 @findex munlockall
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/munlockall.html}

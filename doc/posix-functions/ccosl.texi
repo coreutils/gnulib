@@ -1,5 +1,5 @@
 @node ccosl
-@section @code{ccosl}
+@subsection @code{ccosl}
 @findex ccosl
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/ccosl.html}

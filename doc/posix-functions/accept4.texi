@@ -1,5 +1,5 @@
 @node accept4
-@section @code{accept4}
+@subsection @code{accept4}
 @findex accept4
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/accept4.html}

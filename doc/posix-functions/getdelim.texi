@@ -1,5 +1,5 @@
 @node getdelim
-@section @code{getdelim}
+@subsection @code{getdelim}
 @findex getdelim
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/getdelim.html}

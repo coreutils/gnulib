@@ -1,5 +1,5 @@
 @node ccosh
-@section @code{ccosh}
+@subsection @code{ccosh}
 @findex ccosh
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/ccosh.html}

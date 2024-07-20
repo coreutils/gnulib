@@ -1,5 +1,5 @@
 @node dcgettext
-@section @code{dcgettext}
+@subsection @code{dcgettext}
 @findex dcgettext
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/dcgettext.html}

@@ -1,5 +1,5 @@
 @node vscanf
-@section @code{vscanf}
+@subsection @code{vscanf}
 @findex vscanf
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/vscanf.html}

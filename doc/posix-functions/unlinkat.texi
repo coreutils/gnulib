@@ -1,5 +1,5 @@
 @node unlinkat
-@section @code{unlinkat}
+@subsection @code{unlinkat}
 @findex unlinkat
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/unlinkat.html}

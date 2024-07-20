@@ -1,5 +1,5 @@
 @node localeconv
-@section @code{localeconv}
+@subsection @code{localeconv}
 @findex localeconv
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/localeconv.html}

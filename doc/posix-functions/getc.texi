@@ -1,5 +1,5 @@
 @node getc
-@section @code{getc}
+@subsection @code{getc}
 @findex getc
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/getc.html}

@@ -1,5 +1,5 @@
 @node strcpy
-@section @code{strcpy}
+@subsection @code{strcpy}
 @findex strcpy
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/strcpy.html}

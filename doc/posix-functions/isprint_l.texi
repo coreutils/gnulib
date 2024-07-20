@@ -1,5 +1,5 @@
 @node isprint_l
-@section @code{isprint_l}
+@subsection @code{isprint_l}
 @findex isprint_l
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/isprint_l.html}

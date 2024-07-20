@@ -1,5 +1,5 @@
 @node getdate
-@section @code{getdate}
+@subsection @code{getdate}
 @findex getdate
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/getdate.html}

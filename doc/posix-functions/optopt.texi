@@ -1,5 +1,5 @@
 @node optopt
-@section @code{optopt}
+@subsection @code{optopt}
 @findex optopt
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/optopt.html}

@@ -1,5 +1,5 @@
 @node fmodf
-@section @code{fmodf}
+@subsection @code{fmodf}
 @findex fmodf
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/fmodf.html}

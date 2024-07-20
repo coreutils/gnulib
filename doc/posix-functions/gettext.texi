@@ -1,5 +1,5 @@
 @node gettext
-@section @code{gettext}
+@subsection @code{gettext}
 @findex gettext
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/gettext.html}

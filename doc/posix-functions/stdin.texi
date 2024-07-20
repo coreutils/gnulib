@@ -1,5 +1,5 @@
 @node stdin
-@section @code{stdin}
+@subsection @code{stdin}
 @findex stdin
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/stdin.html}

@@ -1,5 +1,5 @@
 @node fsubl
-@section @code{fsubl}
+@subsection @code{fsubl}
 @findex fsubl
 
 Documentation:@*

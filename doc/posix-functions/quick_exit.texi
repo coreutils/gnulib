@@ -1,5 +1,5 @@
 @node quick_exit
-@section @code{quick_exit}
+@subsection @code{quick_exit}
 @findex quick_exit
 
 Gnulib module: ---

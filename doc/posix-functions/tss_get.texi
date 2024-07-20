@@ -1,5 +1,5 @@
 @node tss_get
-@section @code{tss_get}
+@subsection @code{tss_get}
 @findex tss_get
 
 Documentation:@*

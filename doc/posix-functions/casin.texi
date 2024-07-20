@@ -1,5 +1,5 @@
 @node casin
-@section @code{casin}
+@subsection @code{casin}
 @findex casin
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/casin.html}

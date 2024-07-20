@@ -1,5 +1,5 @@
 @node catanl
-@section @code{catanl}
+@subsection @code{catanl}
 @findex catanl
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/catanl.html}

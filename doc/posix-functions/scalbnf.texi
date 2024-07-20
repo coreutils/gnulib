@@ -1,5 +1,5 @@
 @node scalbnf
-@section @code{scalbnf}
+@subsection @code{scalbnf}
 @findex scalbnf
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/scalbnf.html}

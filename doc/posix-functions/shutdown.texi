@@ -1,5 +1,5 @@
 @node shutdown
-@section @code{shutdown}
+@subsection @code{shutdown}
 @findex shutdown
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/shutdown.html}

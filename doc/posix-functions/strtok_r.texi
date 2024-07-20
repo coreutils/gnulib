@@ -1,5 +1,5 @@
 @node strtok_r
-@section @code{strtok_r}
+@subsection @code{strtok_r}
 @findex strtok_r
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/strtok_r.html}

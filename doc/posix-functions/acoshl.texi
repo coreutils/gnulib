@@ -1,5 +1,5 @@
 @node acoshl
-@section @code{acoshl}
+@subsection @code{acoshl}
 @findex acoshl
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/acoshl.html}

@@ -1,5 +1,5 @@
 @node getsockname
-@section @code{getsockname}
+@subsection @code{getsockname}
 @findex getsockname
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/getsockname.html}

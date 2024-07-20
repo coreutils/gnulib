@@ -1,5 +1,5 @@
 @node ctanh
-@section @code{ctanh}
+@subsection @code{ctanh}
 @findex ctanh
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/ctanh.html}

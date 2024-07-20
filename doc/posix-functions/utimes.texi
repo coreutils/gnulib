@@ -1,5 +1,5 @@
 @node utimes
-@section @code{utimes}
+@subsection @code{utimes}
 @findex utimes
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/utimes.html}

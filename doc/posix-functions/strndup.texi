@@ -1,5 +1,5 @@
 @node strndup
-@section @code{strndup}
+@subsection @code{strndup}
 @findex strndup
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/strndup.html}

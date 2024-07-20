@@ -1,5 +1,5 @@
 @node mbrtoc32
-@section @code{mbrtoc32}
+@subsection @code{mbrtoc32}
 @findex mbrtoc32
 
 Gnulib module: mbrtoc32 or mbrtoc32-regular

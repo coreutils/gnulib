@@ -1,5 +1,5 @@
 @node sinhf
-@section @code{sinhf}
+@subsection @code{sinhf}
 @findex sinhf
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/sinhf.html}

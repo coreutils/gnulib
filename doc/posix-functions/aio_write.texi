@@ -1,5 +1,5 @@
 @node aio_write
-@section @code{aio_write}
+@subsection @code{aio_write}
 @findex aio_write
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/aio_write.html}

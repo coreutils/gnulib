@@ -1,5 +1,5 @@
 @node fmull
-@section @code{fmull}
+@subsection @code{fmull}
 @findex fmull
 
 Documentation:@*

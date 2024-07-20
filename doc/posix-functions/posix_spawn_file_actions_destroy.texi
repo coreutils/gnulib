@@ -1,5 +1,5 @@
 @node posix_spawn_file_actions_destroy
-@section @code{posix_spawn_file_actions_destroy}
+@subsection @code{posix_spawn_file_actions_destroy}
 @findex posix_spawn_file_actions_destroy
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/posix_spawn_file_actions_destroy.html}

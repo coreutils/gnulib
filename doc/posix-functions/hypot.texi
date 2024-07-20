@@ -1,5 +1,5 @@
 @node hypot
-@section @code{hypot}
+@subsection @code{hypot}
 @findex hypot
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/hypot.html}

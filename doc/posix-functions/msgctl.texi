@@ -1,5 +1,5 @@
 @node msgctl
-@section @code{msgctl}
+@subsection @code{msgctl}
 @findex msgctl
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/msgctl.html}

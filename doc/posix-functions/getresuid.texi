@@ -1,5 +1,5 @@
 @node getresuid
-@section @code{getresuid}
+@subsection @code{getresuid}
 @findex getresuid
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/getresuid.html}

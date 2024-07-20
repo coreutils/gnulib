@@ -1,5 +1,5 @@
 @node nl_langinfo_l
-@section @code{nl_langinfo_l}
+@subsection @code{nl_langinfo_l}
 @findex nl_langinfo_l
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/nl_langinfo_l.html}

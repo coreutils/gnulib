@@ -1,5 +1,5 @@
 @node hypotl
-@section @code{hypotl}
+@subsection @code{hypotl}
 @findex hypotl
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/hypotl.html}

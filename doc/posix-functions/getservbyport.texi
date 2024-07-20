@@ -1,5 +1,5 @@
 @node getservbyport
-@section @code{getservbyport}
+@subsection @code{getservbyport}
 @findex getservbyport
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/getservbyport.html}

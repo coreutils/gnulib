@@ -1,5 +1,5 @@
 @node globfree
-@section @code{globfree}
+@subsection @code{globfree}
 @findex globfree
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/globfree.html}

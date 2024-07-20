@@ -1,5 +1,5 @@
 @node writev
-@section @code{writev}
+@subsection @code{writev}
 @findex writev
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/writev.html}

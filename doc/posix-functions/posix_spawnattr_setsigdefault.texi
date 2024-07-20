@@ -1,5 +1,5 @@
 @node posix_spawnattr_setsigdefault
-@section @code{posix_spawnattr_setsigdefault}
+@subsection @code{posix_spawnattr_setsigdefault}
 @findex posix_spawnattr_setsigdefault
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/posix_spawnattr_setsigdefault.html}

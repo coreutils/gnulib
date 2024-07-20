@@ -1,5 +1,5 @@
 @node cnd_timedwait
-@section @code{cnd_timedwait}
+@subsection @code{cnd_timedwait}
 @findex cnd_timedwait
 
 Documentation:@*

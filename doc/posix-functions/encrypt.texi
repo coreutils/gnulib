@@ -1,5 +1,5 @@
 @node encrypt
-@section @code{encrypt}
+@subsection @code{encrypt}
 @findex encrypt
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/encrypt.html}

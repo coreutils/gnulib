@@ -1,5 +1,5 @@
 @node scandir
-@section @code{scandir}
+@subsection @code{scandir}
 @findex scandir
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/scandir.html}

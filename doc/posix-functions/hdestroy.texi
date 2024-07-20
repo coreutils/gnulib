@@ -1,5 +1,5 @@
 @node hdestroy
-@section @code{hdestroy}
+@subsection @code{hdestroy}
 @findex hdestroy
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/hdestroy.html}

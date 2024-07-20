@@ -1,5 +1,5 @@
 @node getsid
-@section @code{getsid}
+@subsection @code{getsid}
 @findex getsid
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/getsid.html}

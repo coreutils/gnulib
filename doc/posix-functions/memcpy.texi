@@ -1,5 +1,5 @@
 @node memcpy
-@section @code{memcpy}
+@subsection @code{memcpy}
 @findex memcpy
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/memcpy.html}

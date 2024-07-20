@@ -1,5 +1,5 @@
 @node ceilf
-@section @code{ceilf}
+@subsection @code{ceilf}
 @findex ceilf
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/ceilf.html}

@@ -1,5 +1,5 @@
 @node memcmp
-@section @code{memcmp}
+@subsection @code{memcmp}
 @findex memcmp
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/memcmp.html}

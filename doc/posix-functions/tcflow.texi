@@ -1,5 +1,5 @@
 @node tcflow
-@section @code{tcflow}
+@subsection @code{tcflow}
 @findex tcflow
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/tcflow.html}

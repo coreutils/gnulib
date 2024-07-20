@@ -1,5 +1,5 @@
 @node timer_delete
-@section @code{timer_delete}
+@subsection @code{timer_delete}
 @findex timer_delete
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/timer_delete.html}

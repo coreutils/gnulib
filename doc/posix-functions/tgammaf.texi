@@ -1,5 +1,5 @@
 @node tgammaf
-@section @code{tgammaf}
+@subsection @code{tgammaf}
 @findex tgammaf
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/tgammaf.html}

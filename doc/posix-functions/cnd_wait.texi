@@ -1,5 +1,5 @@
 @node cnd_wait
-@section @code{cnd_wait}
+@subsection @code{cnd_wait}
 @findex cnd_wait
 
 Documentation:@*

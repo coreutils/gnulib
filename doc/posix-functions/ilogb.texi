@@ -1,5 +1,5 @@
 @node ilogb
-@section @code{ilogb}
+@subsection @code{ilogb}
 @findex ilogb
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/ilogb.html}

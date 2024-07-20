@@ -1,5 +1,5 @@
 @node tcsetattr
-@section @code{tcsetattr}
+@subsection @code{tcsetattr}
 @findex tcsetattr
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/tcsetattr.html}

@@ -1,5 +1,5 @@
 @node read
-@section @code{read}
+@subsection @code{read}
 @findex read
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/read.html}

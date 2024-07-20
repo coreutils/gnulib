@@ -1,5 +1,5 @@
 @node dsubl
-@section @code{dsubl}
+@subsection @code{dsubl}
 @findex dsubl
 
 Documentation:@*

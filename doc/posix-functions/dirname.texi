@@ -1,5 +1,5 @@
 @node dirname
-@section @code{dirname}
+@subsection @code{dirname}
 @findex dirname
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/dirname.html}

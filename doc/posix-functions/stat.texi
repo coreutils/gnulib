@@ -1,5 +1,5 @@
 @node stat
-@section @code{stat}
+@subsection @code{stat}
 @findex stat
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/stat.html}

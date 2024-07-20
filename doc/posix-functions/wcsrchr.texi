@@ -1,5 +1,5 @@
 @node wcsrchr
-@section @code{wcsrchr}
+@subsection @code{wcsrchr}
 @findex wcsrchr
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/wcsrchr.html}

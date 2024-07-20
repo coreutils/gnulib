@@ -1,5 +1,5 @@
 @node sinh
-@section @code{sinh}
+@subsection @code{sinh}
 @findex sinh
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/sinh.html}

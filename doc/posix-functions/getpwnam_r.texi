@@ -1,5 +1,5 @@
 @node getpwnam_r
-@section @code{getpwnam_r}
+@subsection @code{getpwnam_r}
 @findex getpwnam_r
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/getpwnam_r.html}

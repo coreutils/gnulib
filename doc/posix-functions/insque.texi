@@ -1,5 +1,5 @@
 @node insque
-@section @code{insque}
+@subsection @code{insque}
 @findex insque
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/insque.html}

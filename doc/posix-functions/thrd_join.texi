@@ -1,5 +1,5 @@
 @node thrd_join
-@section @code{thrd_join}
+@subsection @code{thrd_join}
 @findex thrd_join
 
 Documentation:@*

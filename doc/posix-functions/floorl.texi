@@ -1,5 +1,5 @@
 @node floorl
-@section @code{floorl}
+@subsection @code{floorl}
 @findex floorl
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/floorl.html}

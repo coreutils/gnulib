@@ -1,5 +1,5 @@
 @node strlcat
-@section @code{strlcat}
+@subsection @code{strlcat}
 @findex strlcat
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/<2024>/functions/strlcat.html}

@@ -1,5 +1,5 @@
 @node thrd_yield
-@section @code{thrd_yield}
+@subsection @code{thrd_yield}
 @findex thrd_yield
 
 Documentation:@*

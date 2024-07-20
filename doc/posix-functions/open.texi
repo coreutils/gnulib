@@ -1,5 +1,5 @@
 @node open
-@section @code{open}
+@subsection @code{open}
 @findex open
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/open.html}

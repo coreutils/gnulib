@@ -1,5 +1,5 @@
 @node fdim
-@section @code{fdim}
+@subsection @code{fdim}
 @findex fdim
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/fdim.html}

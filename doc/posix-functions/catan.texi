@@ -1,5 +1,5 @@
 @node catan
-@section @code{catan}
+@subsection @code{catan}
 @findex catan
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/catan.html}

@@ -1,5 +1,5 @@
 @node pthread_mutexattr_setpshared
-@section @code{pthread_mutexattr_setpshared}
+@subsection @code{pthread_mutexattr_setpshared}
 @findex pthread_mutexattr_setpshared
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_mutexattr_setpshared.html}

@@ -1,5 +1,5 @@
 @node stdc_bit_ceil
-@section @code{stdc_bit_ceil}
+@subsection @code{stdc_bit_ceil}
 @findex stdc_bit_ceil
 
 Documentation:@*

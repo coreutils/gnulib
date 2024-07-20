@@ -1,5 +1,5 @@
 @node htonl
-@section @code{htonl}
+@subsection @code{htonl}
 @findex htonl
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/htonl.html}

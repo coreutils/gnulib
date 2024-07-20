@@ -1,5 +1,5 @@
 @node wcstoll
-@section @code{wcstoll}
+@subsection @code{wcstoll}
 @findex wcstoll
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/wcstoll.html}

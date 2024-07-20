@@ -1,5 +1,5 @@
 @node fmaximum_num
-@section @code{fmaximum_num}
+@subsection @code{fmaximum_num}
 @findex fmaximum_num
 
 ISO C23 specification:@* @url{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n3220.pdf} section 7.12.12.8

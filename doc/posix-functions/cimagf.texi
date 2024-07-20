@@ -1,5 +1,5 @@
 @node cimagf
-@section @code{cimagf}
+@subsection @code{cimagf}
 @findex cimagf
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/cimagf.html}

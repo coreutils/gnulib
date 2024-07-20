@@ -1,5 +1,5 @@
 @node logl
-@section @code{logl}
+@subsection @code{logl}
 @findex logl
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/logl.html}

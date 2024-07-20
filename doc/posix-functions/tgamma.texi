@@ -1,5 +1,5 @@
 @node tgamma
-@section @code{tgamma}
+@subsection @code{tgamma}
 @findex tgamma
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/tgamma.html}

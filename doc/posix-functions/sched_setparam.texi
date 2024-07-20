@@ -1,5 +1,5 @@
 @node sched_setparam
-@section @code{sched_setparam}
+@subsection @code{sched_setparam}
 @findex sched_setparam
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/sched_setparam.html}

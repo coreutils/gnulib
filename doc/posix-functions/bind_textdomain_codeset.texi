@@ -1,5 +1,5 @@
 @node bind_textdomain_codeset
-@section @code{bind_textdomain_codeset}
+@subsection @code{bind_textdomain_codeset}
 @findex bind_textdomain_codeset
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/bind_textdomain_codeset.html}
