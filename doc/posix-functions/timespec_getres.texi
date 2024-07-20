@@ -2,7 +2,7 @@
 @section @code{timespec_getres}
 @findex timespec_getres
 
-ISO C23 specification:@* @url{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n3096.pdf} section 7.29.2.7
+ISO C23 specification:@* @url{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n3220.pdf} section 7.29.2.7
 
 Gnulib module: timespec_getres
 

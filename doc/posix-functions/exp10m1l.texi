@@ -2,7 +2,7 @@
 @section @code{exp10m1l}
 @findex exp10m1l
 
-ISO C23 specification:@* @url{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n3096.pdf} section 7.12.6.3
+ISO C23 specification:@* @url{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n3220.pdf} section 7.12.6.3
 
 Gnulib module: ---
 

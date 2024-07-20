@@ -2,7 +2,7 @@
 @section @code{log10p1f}
 @findex log10p1f
 
-ISO C23 specification:@* @url{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n3096.pdf} section 7.12.6.13
+ISO C23 specification:@* @url{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n3220.pdf} section 7.12.6.13
 
 Gnulib module: ---
 
