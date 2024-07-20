@@ -2,7 +2,7 @@
 @section @code{ctanl}
 @findex ctanl
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/ctanl.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/ctanl.html}
 
 Gnulib module: ---
 

@@ -2,7 +2,7 @@
 @section @code{wctype_l}
 @findex wctype_l
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/wctype_l.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/wctype_l.html}
 
 Gnulib module: ---
 

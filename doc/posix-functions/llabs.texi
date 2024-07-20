@@ -2,7 +2,7 @@
 @section @code{llabs}
 @findex llabs
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/llabs.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/llabs.html}
 
 Gnulib module: ---
 

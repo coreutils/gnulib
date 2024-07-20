@@ -2,7 +2,7 @@
 @section @code{write}
 @findex write
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/write.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/write.html}
 
 Gnulib module: write, nonblocking, sigpipe
 

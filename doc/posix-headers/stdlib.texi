@@ -1,7 +1,7 @@
 @node stdlib.h
 @section @file{stdlib.h}
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/stdlib.h.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/stdlib.h.html}
 
 Gnulib module: stdlib, system-posix
 

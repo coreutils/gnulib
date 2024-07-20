@@ -2,7 +2,7 @@
 @section @code{wcswidth}
 @findex wcswidth
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/wcswidth.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/wcswidth.html}
 
 Gnulib module: wcswidth
 

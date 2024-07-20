@@ -2,7 +2,7 @@
 @section @code{strcspn}
 @findex strcspn
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/strcspn.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/strcspn.html}
 
 Gnulib module: strcspn
 

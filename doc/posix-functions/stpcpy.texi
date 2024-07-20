@@ -2,7 +2,7 @@
 @section @code{stpcpy}
 @findex stpcpy
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/stpcpy.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/stpcpy.html}
 
 Gnulib module: stpcpy
 

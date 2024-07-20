@@ -2,7 +2,7 @@
 @section @code{psiginfo}
 @findex psiginfo
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/psiginfo.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/psiginfo.html}
 
 Gnulib module: ---
 

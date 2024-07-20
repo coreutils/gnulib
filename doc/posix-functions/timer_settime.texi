@@ -2,7 +2,7 @@
 @section @code{timer_settime}
 @findex timer_settime
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/timer_settime.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/timer_settime.html}
 
 Gnulib module: timer-time
 

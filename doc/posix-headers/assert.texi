@@ -1,7 +1,7 @@
 @node assert.h
 @section @file{assert.h}
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/assert.h.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/assert.h.html}
 
 Gnulib module: assert-h
 

@@ -2,7 +2,7 @@
 @section @code{coshl}
 @findex coshl
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/coshl.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/coshl.html}
 
 Gnulib module: ---
 

@@ -2,7 +2,7 @@
 @section @code{strncpy}
 @findex strncpy
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/strncpy.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/strncpy.html}
 
 Gnulib module: string
 

@@ -2,7 +2,7 @@
 @section @code{environ}
 @findex environ
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/environ.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/environ.html}
 
 Gnulib module: environ
 

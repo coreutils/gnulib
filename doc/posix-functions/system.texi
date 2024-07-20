@@ -2,7 +2,7 @@
 @section @code{system}
 @findex system
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/system.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/system.html}
 
 LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-system-3.html}
 

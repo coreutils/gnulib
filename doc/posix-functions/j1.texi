@@ -2,7 +2,7 @@
 @section @code{j1}
 @findex j1
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/j1.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/j1.html}
 
 Gnulib module: j1
 

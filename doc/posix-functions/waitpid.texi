@@ -2,7 +2,7 @@
 @section @code{waitpid}
 @findex waitpid
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/waitpid.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/waitpid.html}
 
 LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-waitpid-3.html}
 

@@ -2,7 +2,7 @@
 @section @code{dprintf}
 @findex dprintf
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/dprintf.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/dprintf.html}
 
 Gnulib module: dprintf or dprintf-posix or dprintf-gnu
 

@@ -2,7 +2,7 @@
 @section @code{tanf}
 @findex tanf
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/tanf.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/tanf.html}
 
 Gnulib module: tanf
 

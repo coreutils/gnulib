@@ -2,7 +2,7 @@
 @section @code{wcsdup}
 @findex wcsdup
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/wcsdup.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/wcsdup.html}
 
 Gnulib module: wcsdup
 

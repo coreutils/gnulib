@@ -2,7 +2,7 @@
 @section @code{posix_mem_offset}
 @findex posix_mem_offset
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/posix_mem_offset.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/posix_mem_offset.html}
 
 Gnulib module: ---
 

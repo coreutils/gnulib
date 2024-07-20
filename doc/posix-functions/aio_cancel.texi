@@ -2,7 +2,7 @@
 @section @code{aio_cancel}
 @findex aio_cancel
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/aio_cancel.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/aio_cancel.html}
 
 Gnulib module: ---
 

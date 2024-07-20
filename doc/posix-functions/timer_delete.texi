@@ -2,7 +2,7 @@
 @section @code{timer_delete}
 @findex timer_delete
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/timer_delete.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/timer_delete.html}
 
 Gnulib module: timer-time
 

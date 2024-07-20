@@ -2,7 +2,7 @@
 @section @code{freopen}
 @findex freopen
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/freopen.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/freopen.html}
 
 Gnulib module: freopen
 

@@ -2,7 +2,7 @@
 @section @code{vdprintf}
 @findex vdprintf
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/vdprintf.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/vdprintf.html}
 
 Gnulib module: vdprintf or vdprintf-posix or vdprintf-gnu
 

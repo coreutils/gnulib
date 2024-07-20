@@ -2,7 +2,7 @@
 @section @code{clock_gettime}
 @findex clock_gettime
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/clock_gettime.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/clock_gettime.html}
 
 Gnulib module: ---
 

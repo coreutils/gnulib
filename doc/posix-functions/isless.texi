@@ -2,7 +2,7 @@
 @section @code{isless}
 @findex isless
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/isless.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/isless.html}
 
 Gnulib module: ---
 

@@ -2,7 +2,7 @@
 @section @code{tcsendbreak}
 @findex tcsendbreak
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/tcsendbreak.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/tcsendbreak.html}
 
 Gnulib module: ---
 

@@ -2,7 +2,7 @@
 @section @code{pthread_attr_getscope}
 @findex pthread_attr_getscope
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/pthread_attr_getscope.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_attr_getscope.html}
 
 Gnulib module: ---
 

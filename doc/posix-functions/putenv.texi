@@ -2,7 +2,7 @@
 @section @code{putenv}
 @findex putenv
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/putenv.html},
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/putenv.html},
 amended through @url{https://www.austingroupbugs.net/view.php?id=1598}.
 
 Documentation:@*

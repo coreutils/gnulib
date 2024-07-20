@@ -2,7 +2,7 @@
 @section @code{lstat}
 @findex lstat
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/lstat.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/lstat.html}
 
 Gnulib module: lstat
 

@@ -2,7 +2,7 @@
 @section @code{wcsrchr}
 @findex wcsrchr
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/wcsrchr.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/wcsrchr.html}
 
 Gnulib module: wcsrchr
 

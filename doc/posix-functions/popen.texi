@@ -2,7 +2,7 @@
 @section @code{popen}
 @findex popen
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/popen.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/popen.html}
 
 Gnulib module: popen
 

@@ -2,7 +2,7 @@
 @section @code{pthread_setcanceltype}
 @findex pthread_setcanceltype
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/pthread_setcanceltype.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_setcanceltype.html}
 
 Gnulib module: ---
 

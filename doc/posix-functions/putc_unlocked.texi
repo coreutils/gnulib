@@ -2,7 +2,7 @@
 @section @code{putc_unlocked}
 @findex putc_unlocked
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/putc_unlocked.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/putc_unlocked.html}
 
 Gnulib module: ---
 

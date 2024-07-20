@@ -1,7 +1,7 @@
 @node sys/times.h
 @section @file{sys/times.h}
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/sys_times.h.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/sys_times.h.html}
 
 Gnulib module: sys_times
 

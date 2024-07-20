@@ -2,7 +2,7 @@
 @section @code{remainderl}
 @findex remainderl
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/remainderl.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/remainderl.html}
 
 Gnulib module: remainderl or remainderl-ieee
 

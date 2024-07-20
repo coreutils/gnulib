@@ -2,7 +2,7 @@
 @section @code{dbm_delete}
 @findex dbm_delete
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/dbm_delete.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/dbm_delete.html}
 
 Gnulib module: ---
 

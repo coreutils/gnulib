@@ -2,7 +2,7 @@
 @section @code{mkdir}
 @findex mkdir
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/mkdir.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/mkdir.html}
 
 Gnulib module: sys_stat or mkdir
 

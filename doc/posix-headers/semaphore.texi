@@ -1,7 +1,7 @@
 @node semaphore.h
 @section @file{semaphore.h}
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/semaphore.h.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/semaphore.h.html}
 
 Gnulib module: ---
 

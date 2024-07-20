@@ -2,7 +2,7 @@
 @section @code{printf}
 @findex printf
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/printf.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/printf.html}
 
 Gnulib module: printf-posix or printf-gnu or stdio, nonblocking, sigpipe
 

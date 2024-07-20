@@ -2,7 +2,7 @@
 @section @code{getservent}
 @findex getservent
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/getservent.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/getservent.html}
 
 Gnulib module: ---
 

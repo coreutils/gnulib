@@ -2,7 +2,7 @@
 @section @code{dup}
 @findex dup
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/dup.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/dup.html}
 
 Gnulib module: dup
 

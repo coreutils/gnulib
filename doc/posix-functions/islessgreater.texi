@@ -2,7 +2,7 @@
 @section @code{islessgreater}
 @findex islessgreater
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/islessgreater.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/islessgreater.html}
 
 Gnulib module: ---
 

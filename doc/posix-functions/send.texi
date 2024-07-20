@@ -2,7 +2,7 @@
 @section @code{send}
 @findex send
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/send.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/send.html}
 
 Gnulib module: send
 

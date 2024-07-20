@@ -1,7 +1,7 @@
 @node ndbm.h
 @section @file{ndbm.h}
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/ndbm.h.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/ndbm.h.html}
 
 Gnulib module: ---
 

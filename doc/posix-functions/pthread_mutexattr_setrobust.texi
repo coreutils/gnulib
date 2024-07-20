@@ -2,7 +2,7 @@
 @section @code{pthread_mutexattr_setrobust}
 @findex pthread_mutexattr_setrobust
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/pthread_mutexattr_setrobust.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_mutexattr_setrobust.html}
 
 Gnulib module: pthread-mutex
 

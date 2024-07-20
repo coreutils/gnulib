@@ -2,7 +2,7 @@
 @section @code{setpriority}
 @findex setpriority
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/setpriority.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/setpriority.html}
 
 Gnulib module: ---
 

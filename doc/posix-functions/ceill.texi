@@ -2,7 +2,7 @@
 @section @code{ceill}
 @findex ceill
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/ceill.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/ceill.html}
 
 Gnulib module: ceill or ceill-ieee
 

@@ -2,7 +2,7 @@
 @section @code{pthread_condattr_getpshared}
 @findex pthread_condattr_getpshared
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/pthread_condattr_getpshared.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_condattr_getpshared.html}
 
 Gnulib module: ---
 

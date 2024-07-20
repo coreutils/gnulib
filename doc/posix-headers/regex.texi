@@ -1,7 +1,7 @@
 @node regex.h
 @section @file{regex.h}
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/regex.h.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/regex.h.html}
 
 Gnulib module: regex
 

@@ -1,7 +1,7 @@
 @node complex.h
 @section @file{complex.h}
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/complex.h.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/complex.h.html}
 
 Gnulib module: ---
 

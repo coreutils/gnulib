@@ -2,7 +2,7 @@
 @section @code{fesetround}
 @findex fesetround
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/fesetround.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/fesetround.html}
 
 Gnulib module: fenv-rounding
 

@@ -2,7 +2,7 @@
 @section @code{lroundl}
 @findex lroundl
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/lroundl.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/lroundl.html}
 
 Gnulib module: ---
 

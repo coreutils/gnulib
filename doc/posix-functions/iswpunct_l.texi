@@ -2,7 +2,7 @@
 @section @code{iswpunct_l}
 @findex iswpunct_l
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/iswpunct_l.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/iswpunct_l.html}
 
 Gnulib module: ---
 

@@ -2,7 +2,7 @@
 @section @code{strpbrk}
 @findex strpbrk
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/strpbrk.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/strpbrk.html}
 
 Gnulib module: strpbrk
 

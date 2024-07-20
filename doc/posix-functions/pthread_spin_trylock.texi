@@ -2,7 +2,7 @@
 @section @code{pthread_spin_trylock}
 @findex pthread_spin_trylock
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/pthread_spin_trylock.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_spin_trylock.html}
 
 Gnulib module: pthread-spin
 

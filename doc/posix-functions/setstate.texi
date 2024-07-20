@@ -2,7 +2,7 @@
 @section @code{setstate}
 @findex setstate
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/setstate.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/setstate.html}
 
 Gnulib module: random
 

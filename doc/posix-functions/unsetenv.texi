@@ -2,7 +2,7 @@
 @section @code{unsetenv}
 @findex unsetenv
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/unsetenv.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/unsetenv.html}
 
 Gnulib module: unsetenv
 

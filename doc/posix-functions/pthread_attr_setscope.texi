@@ -2,7 +2,7 @@
 @section @code{pthread_attr_setscope}
 @findex pthread_attr_setscope
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/pthread_attr_setscope.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_attr_setscope.html}
 
 Gnulib module: ---
 

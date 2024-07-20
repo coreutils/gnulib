@@ -2,7 +2,7 @@
 @section @code{mq_timedsend}
 @findex mq_timedsend
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/mq_timedsend.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/mq_timedsend.html}
 
 Gnulib module: ---
 

@@ -131,7 +131,7 @@ The ISO C API is never the best choice, as of this writing (2020).
 @section The POSIX multithreading API
 
 The POSIX multithreading API is documented in POSIX
-@url{https://pubs.opengroup.org/onlinepubs/9699919799/}.
+@url{https://pubs.opengroup.org/onlinepubs/9799919799/}.
 
 To make use of POSIX multithreading, even on platforms that don't support it
 natively (most prominently, native Windows), use the following Gnulib modules:

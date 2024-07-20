@@ -2,7 +2,7 @@
 @section @code{cfsetospeed}
 @findex cfsetospeed
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/cfsetospeed.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/cfsetospeed.html}
 
 Gnulib module: ---
 

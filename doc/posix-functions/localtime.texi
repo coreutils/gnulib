@@ -2,7 +2,7 @@
 @section @code{localtime}
 @findex localtime
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/localtime.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/localtime.html}
 
 Gnulib module: localtime
 

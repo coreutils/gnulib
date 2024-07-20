@@ -2,7 +2,7 @@
 @section @code{strsignal}
 @findex strsignal
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/strsignal.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/strsignal.html}
 
 Gnulib module: strsignal
 

@@ -2,7 +2,7 @@
 @section @code{fegetenv}
 @findex fegetenv
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/fegetenv.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/fegetenv.html}
 
 Gnulib module: fenv-environment
 

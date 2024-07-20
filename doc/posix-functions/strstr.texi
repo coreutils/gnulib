@@ -2,7 +2,7 @@
 @section @code{strstr}
 @findex strstr
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/strstr.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/strstr.html}
 
 Gnulib module: strstr or strstr-simple
 

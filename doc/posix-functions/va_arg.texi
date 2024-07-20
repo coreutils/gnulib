@@ -2,7 +2,7 @@
 @section @code{va_arg}
 @findex va_arg
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/va_arg.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/va_arg.html}
 
 Gnulib module: ---
 

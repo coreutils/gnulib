@@ -2,7 +2,7 @@
 @section @code{truncate}
 @findex truncate
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/truncate.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/truncate.html}
 
 Gnulib module: truncate
 

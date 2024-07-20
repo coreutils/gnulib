@@ -2,7 +2,7 @@
 @section @code{mq_notify}
 @findex mq_notify
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/mq_notify.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/mq_notify.html}
 
 Gnulib module: ---
 

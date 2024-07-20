@@ -2,7 +2,7 @@
 @section @code{isxdigit_l}
 @findex isxdigit_l
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/isxdigit_l.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/isxdigit_l.html}
 
 Gnulib module: ---
 

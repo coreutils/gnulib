@@ -2,7 +2,7 @@
 @section @code{if_freenameindex}
 @findex if_freenameindex
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/if_freenameindex.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/if_freenameindex.html}
 
 Gnulib module: ---
 

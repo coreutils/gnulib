@@ -2,7 +2,7 @@
 @section @code{fputc}
 @findex fputc
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/fputc.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/fputc.html}
 
 Gnulib module: stdio, nonblocking, sigpipe
 

@@ -2,7 +2,7 @@
 @section @code{pthread_cond_broadcast}
 @findex pthread_cond_broadcast
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/pthread_cond_broadcast.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_cond_broadcast.html}
 
 Gnulib module: pthread-cond
 

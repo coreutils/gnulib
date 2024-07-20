@@ -2,7 +2,7 @@
 @section @code{copysignl}
 @findex copysignl
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/copysignl.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/copysignl.html}
 
 Gnulib module: copysignl
 

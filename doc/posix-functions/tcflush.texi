@@ -2,7 +2,7 @@
 @section @code{tcflush}
 @findex tcflush
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/tcflush.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/tcflush.html}
 
 Gnulib module: ---
 

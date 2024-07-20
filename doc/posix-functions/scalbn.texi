@@ -2,7 +2,7 @@
 @section @code{scalbn}
 @findex scalbn
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/scalbn.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/scalbn.html}
 
 Gnulib module: ---
 

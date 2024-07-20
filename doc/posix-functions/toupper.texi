@@ -2,7 +2,7 @@
 @section @code{toupper}
 @findex toupper
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/toupper.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/toupper.html}
 
 Gnulib module: ctype
 

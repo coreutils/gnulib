@@ -1,7 +1,7 @@
 @node nl_types.h
 @section @file{nl_types.h}
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/nl_types.h.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/nl_types.h.html}
 
 Gnulib module: ---
 

@@ -2,7 +2,7 @@
 @section @code{dbm_nextkey}
 @findex dbm_nextkey
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/dbm_nextkey.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/dbm_nextkey.html}
 
 Gnulib module: ---
 

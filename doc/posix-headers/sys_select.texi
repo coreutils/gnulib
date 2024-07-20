@@ -1,7 +1,7 @@
 @node sys/select.h
 @section @file{sys/select.h}
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/sys_select.h.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/sys_select.h.html}
 
 Gnulib module: sys_select
 

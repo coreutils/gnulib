@@ -2,7 +2,7 @@
 @section @code{feraiseexcept}
 @findex feraiseexcept
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/feraiseexcept.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/feraiseexcept.html}
 
 Gnulib module: fenv-exceptions-tracking-c99
 

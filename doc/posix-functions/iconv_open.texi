@@ -2,7 +2,7 @@
 @section @code{iconv_open}
 @findex iconv_open
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/iconv_open.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/iconv_open.html}
 
 Gnulib module: iconv, iconv_open, iconv_open-utf
 

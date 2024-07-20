@@ -2,7 +2,7 @@
 @section @code{stat}
 @findex stat
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/stat.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/stat.html}
 
 Gnulib module: stat
 

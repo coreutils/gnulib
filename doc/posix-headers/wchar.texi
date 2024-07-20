@@ -1,7 +1,7 @@
 @node wchar.h
 @section @file{wchar.h}
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/wchar.h.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/wchar.h.html}
 
 Gnulib module: wchar
 

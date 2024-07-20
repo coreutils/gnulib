@@ -2,7 +2,7 @@
 @section @code{coshf}
 @findex coshf
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/coshf.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/coshf.html}
 
 Gnulib module: coshf
 

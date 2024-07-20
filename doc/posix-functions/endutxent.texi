@@ -2,7 +2,7 @@
 @section @code{endutxent}
 @findex endutxent
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/endutxent.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/endutxent.html}
 
 Gnulib module: ---
 

@@ -94,7 +94,7 @@ Documentation License''.
 @end menu
 
 @c Location of the POSIX specification on the web.
-@set POSIXURL http://pubs.opengroup.org/onlinepubs/9699919799
+@set POSIXURL http://pubs.opengroup.org/onlinepubs/9799919799
 
 @c Macro for referencing a POSIX header.
 @ifinfo

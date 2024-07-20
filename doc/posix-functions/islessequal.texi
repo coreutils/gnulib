@@ -2,7 +2,7 @@
 @section @code{islessequal}
 @findex islessequal
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/islessequal.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/islessequal.html}
 
 Gnulib module: ---
 

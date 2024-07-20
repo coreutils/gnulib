@@ -2,7 +2,7 @@
 @section @code{isalnum}
 @findex isalnum
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/isalnum.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/isalnum.html}
 
 Gnulib module: ctype
 

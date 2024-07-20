@@ -2,7 +2,7 @@
 @section @code{tolower_l}
 @findex tolower_l
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/tolower_l.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/tolower_l.html}
 
 Gnulib module: ---
 

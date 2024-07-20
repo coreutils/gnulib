@@ -2,7 +2,7 @@
 @section @code{ispunct}
 @findex ispunct
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/ispunct.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/ispunct.html}
 
 Gnulib module: ctype
 

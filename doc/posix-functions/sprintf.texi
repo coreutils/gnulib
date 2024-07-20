@@ -2,7 +2,7 @@
 @section @code{sprintf}
 @findex sprintf
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/sprintf.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/sprintf.html}
 
 Gnulib module: sprintf-posix or sprintf-gnu
 

@@ -2,7 +2,7 @@
 @section @code{isfinite}
 @findex isfinite
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/isfinite.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/isfinite.html}
 
 Gnulib module: isfinite
 

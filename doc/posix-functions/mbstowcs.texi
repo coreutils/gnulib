@@ -2,7 +2,7 @@
 @section @code{mbstowcs}
 @findex mbstowcs
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/mbstowcs.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/mbstowcs.html}
 
 Gnulib module: mbstowcs
 

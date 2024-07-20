@@ -2,7 +2,7 @@
 @section @code{cpow}
 @findex cpow
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/cpow.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/cpow.html}
 
 Gnulib module: ---
 

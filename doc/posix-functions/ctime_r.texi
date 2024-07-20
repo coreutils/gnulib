@@ -3,7 +3,7 @@
 @findex ctime_r
 
 Removed in POSIX.1-2024.
-POSIX.1-2017 specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/ctime_r.html}
+POSIX.1-2017 specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/ctime_r.html}
 
 Gnulib module: extensions
 

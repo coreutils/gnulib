@@ -2,7 +2,7 @@
 @section @code{setenv}
 @findex setenv
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/setenv.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/setenv.html}
 
 Gnulib module: setenv
 

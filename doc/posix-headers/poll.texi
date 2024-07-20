@@ -1,7 +1,7 @@
 @node poll.h
 @section @file{poll.h}
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/poll.h.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/poll.h.html}
 
 Gnulib module: poll-h
 

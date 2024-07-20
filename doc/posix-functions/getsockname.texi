@@ -2,7 +2,7 @@
 @section @code{getsockname}
 @findex getsockname
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/getsockname.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/getsockname.html}
 
 Gnulib module: getsockname
 

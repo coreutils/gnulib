@@ -2,7 +2,7 @@
 @section @code{ttyname}
 @findex ttyname
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/ttyname.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/ttyname.html}
 
 Gnulib module: ---
 

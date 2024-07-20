@@ -2,7 +2,7 @@
 @section @code{fgets}
 @findex fgets
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/fgets.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/fgets.html}
 
 Gnulib module: stdio, nonblocking
 

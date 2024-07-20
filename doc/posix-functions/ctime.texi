@@ -2,7 +2,7 @@
 @section @code{ctime}
 @findex ctime
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/ctime.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/ctime.html}
 
 Gnulib module: ctime
 

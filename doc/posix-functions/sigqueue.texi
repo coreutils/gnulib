@@ -2,7 +2,7 @@
 @section @code{sigqueue}
 @findex sigqueue
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/sigqueue.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/sigqueue.html}
 
 Gnulib module: ---
 

@@ -2,7 +2,7 @@
 @section @code{dbm_close}
 @findex dbm_close
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/dbm_close.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/dbm_close.html}
 
 Gnulib module: ---
 

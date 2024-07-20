@@ -2,7 +2,7 @@
 @section @code{sinf}
 @findex sinf
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/sinf.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/sinf.html}
 
 Gnulib module: sinf
 

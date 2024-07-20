@@ -2,7 +2,7 @@
 @section @code{powl}
 @findex powl
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/powl.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/powl.html}
 
 Gnulib module: ---
 

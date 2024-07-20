@@ -2,7 +2,7 @@
 @section @code{log1pf}
 @findex log1pf
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/log1pf.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/log1pf.html}
 
 Gnulib module: log1pf or log1pf-ieee
 

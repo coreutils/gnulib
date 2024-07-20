@@ -1,7 +1,7 @@
 @node string.h
 @section @file{string.h}
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/string.h.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/string.h.html}
 
 Gnulib module: string
 

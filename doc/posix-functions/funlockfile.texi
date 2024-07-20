@@ -2,7 +2,7 @@
 @section @code{funlockfile}
 @findex funlockfile
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/funlockfile.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/funlockfile.html}
 
 Gnulib module: ---
 

@@ -2,7 +2,7 @@
 @section @code{fwide}
 @findex fwide
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/fwide.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/fwide.html}
 
 Gnulib module: ---
 

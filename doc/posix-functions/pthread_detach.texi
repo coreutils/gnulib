@@ -2,7 +2,7 @@
 @section @code{pthread_detach}
 @findex pthread_detach
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/pthread_detach.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_detach.html}
 
 Gnulib module: pthread-thread
 

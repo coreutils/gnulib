@@ -2,7 +2,7 @@
 @section @code{hypot}
 @findex hypot
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/hypot.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/hypot.html}
 
 Gnulib module: hypot or hypot-ieee
 

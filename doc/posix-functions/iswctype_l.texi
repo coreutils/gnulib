@@ -2,7 +2,7 @@
 @section @code{iswctype_l}
 @findex iswctype_l
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/iswctype_l.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/iswctype_l.html}
 
 Gnulib module: ---
 

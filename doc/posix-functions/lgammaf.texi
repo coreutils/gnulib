@@ -2,7 +2,7 @@
 @section @code{lgammaf}
 @findex lgammaf
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/lgammaf.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/lgammaf.html}
 
 Gnulib module: ---
 

@@ -2,7 +2,7 @@
 @section @code{strtoumax}
 @findex strtoumax
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/strtoumax.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/strtoumax.html}
 
 Gnulib module: strtoumax
 

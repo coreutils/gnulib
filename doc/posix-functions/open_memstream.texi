@@ -2,7 +2,7 @@
 @section @code{open_memstream}
 @findex open_memstream
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/open_memstream.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/open_memstream.html}
 
 Gnulib module: ---
 

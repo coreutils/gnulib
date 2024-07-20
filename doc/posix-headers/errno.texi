@@ -1,7 +1,7 @@
 @node errno.h
 @section @file{errno.h}
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/errno.h.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/errno.h.html}
 
 Gnulib module: errno
 

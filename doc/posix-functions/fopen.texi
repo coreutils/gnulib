@@ -2,7 +2,7 @@
 @section @code{fopen}
 @findex fopen
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/fopen.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/fopen.html}
 
 Gnulib module: fopen or fopen-gnu
 

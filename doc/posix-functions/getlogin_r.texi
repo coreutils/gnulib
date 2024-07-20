@@ -2,7 +2,7 @@
 @section @code{getlogin_r}
 @findex getlogin_r
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/getlogin_r.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/getlogin_r.html}
 
 Gnulib module: getlogin_r
 

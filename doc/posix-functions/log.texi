@@ -2,7 +2,7 @@
 @section @code{log}
 @findex log
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/log.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/log.html}
 
 Gnulib module: log or log-ieee
 

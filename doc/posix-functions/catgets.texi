@@ -2,7 +2,7 @@
 @section @code{catgets}
 @findex catgets
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/catgets.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/catgets.html}
 
 Gnulib module: ---
 

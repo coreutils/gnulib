@@ -2,7 +2,7 @@
 @section @code{logf}
 @findex logf
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/logf.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/logf.html}
 
 Gnulib module: logf or logf-ieee
 

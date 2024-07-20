@@ -2,7 +2,7 @@
 @section @code{open_wmemstream}
 @findex open_wmemstream
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/open_wmemstream.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/open_wmemstream.html}
 
 Gnulib module: ---
 

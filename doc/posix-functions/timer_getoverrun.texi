@@ -2,7 +2,7 @@
 @section @code{timer_getoverrun}
 @findex timer_getoverrun
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/timer_getoverrun.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/timer_getoverrun.html}
 
 Gnulib module: ---
 

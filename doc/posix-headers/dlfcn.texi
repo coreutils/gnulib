@@ -1,7 +1,7 @@
 @node dlfcn.h
 @section @file{dlfcn.h}
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/dlfcn.h.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/dlfcn.h.html}
 
 Gnulib module: ---
 

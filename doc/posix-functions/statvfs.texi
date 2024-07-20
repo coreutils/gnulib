@@ -2,7 +2,7 @@
 @section @code{statvfs}
 @findex statvfs
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/statvfs.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/statvfs.html}
 
 Gnulib module: ---
 

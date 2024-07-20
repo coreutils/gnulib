@@ -2,7 +2,7 @@
 @section @code{cosh}
 @findex cosh
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/cosh.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/cosh.html}
 
 Gnulib module: cosh
 

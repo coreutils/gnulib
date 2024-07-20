@@ -2,7 +2,7 @@
 @section @code{strcasecmp}
 @findex strcasecmp
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/strcasecmp.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/strcasecmp.html}
 
 Gnulib module: strcase
 

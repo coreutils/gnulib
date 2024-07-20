@@ -2,7 +2,7 @@
 @section @code{posix_spawnattr_setsigmask}
 @findex posix_spawnattr_setsigmask
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/posix_spawnattr_setsigmask.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/posix_spawnattr_setsigmask.html}
 
 Gnulib module: posix_spawnattr_setsigmask
 

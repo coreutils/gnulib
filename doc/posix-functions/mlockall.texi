@@ -2,7 +2,7 @@
 @section @code{mlockall}
 @findex mlockall
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/mlockall.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/mlockall.html}
 
 Gnulib module: ---
 

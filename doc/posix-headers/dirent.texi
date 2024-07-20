@@ -1,7 +1,7 @@
 @node dirent.h
 @section @file{dirent.h}
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/dirent.h.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/dirent.h.html}
 
 Gnulib module: dirent
 

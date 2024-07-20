@@ -2,7 +2,7 @@
 @section @code{strftime_l}
 @findex strftime_l
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/strftime_l.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/strftime_l.html}
 
 Gnulib module: ---
 

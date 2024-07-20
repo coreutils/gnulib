@@ -2,7 +2,7 @@
 @section @code{erfcf}
 @findex erfcf
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/erfcf.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/erfcf.html}
 
 Gnulib module: ---
 

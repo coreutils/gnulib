@@ -2,7 +2,7 @@
 @section @code{iscntrl}
 @findex iscntrl
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/iscntrl.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/iscntrl.html}
 
 Gnulib module: ctype
 

@@ -1,7 +1,7 @@
 @node termios.h
 @section @file{termios.h}
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/termios.h.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/termios.h.html}
 
 Gnulib module: termios
 

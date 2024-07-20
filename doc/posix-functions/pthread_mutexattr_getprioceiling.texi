@@ -2,7 +2,7 @@
 @section @code{pthread_mutexattr_getprioceiling}
 @findex pthread_mutexattr_getprioceiling
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/pthread_mutexattr_getprioceiling.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_mutexattr_getprioceiling.html}
 
 Gnulib module: ---
 

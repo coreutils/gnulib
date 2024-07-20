@@ -2,7 +2,7 @@
 @section @code{pthread_attr_getstack}
 @findex pthread_attr_getstack
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/pthread_attr_getstack.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_attr_getstack.html}
 
 Gnulib module: ---
 

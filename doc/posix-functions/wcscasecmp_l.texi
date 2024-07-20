@@ -2,7 +2,7 @@
 @section @code{wcscasecmp_l}
 @findex wcscasecmp_l
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/wcscasecmp_l.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/wcscasecmp_l.html}
 
 Gnulib module: ---
 

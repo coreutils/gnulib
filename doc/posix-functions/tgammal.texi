@@ -2,7 +2,7 @@
 @section @code{tgammal}
 @findex tgammal
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/tgammal.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/tgammal.html}
 
 Gnulib module: ---
 

@@ -2,7 +2,7 @@
 @section @code{iswspace}
 @findex iswspace
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/iswspace.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/iswspace.html}
 
 Gnulib module: wctype-h
 

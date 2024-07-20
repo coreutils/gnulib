@@ -2,7 +2,7 @@
 @section @code{tzset}
 @findex tzset
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/tzset.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/tzset.html}
 
 Gnulib module: tzset
 

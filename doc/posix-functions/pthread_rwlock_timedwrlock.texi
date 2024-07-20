@@ -2,7 +2,7 @@
 @section @code{pthread_rwlock_timedwrlock}
 @findex pthread_rwlock_timedwrlock
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/pthread_rwlock_timedwrlock.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_rwlock_timedwrlock.html}
 
 Gnulib module: pthread-rwlock
 

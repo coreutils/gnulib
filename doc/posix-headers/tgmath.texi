@@ -1,7 +1,7 @@
 @node tgmath.h
 @section @file{tgmath.h}
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/tgmath.h.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/tgmath.h.html}
 
 Gnulib module: ---
 

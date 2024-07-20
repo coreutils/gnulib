@@ -2,7 +2,7 @@
 @section @code{mq_getattr}
 @findex mq_getattr
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/mq_getattr.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/mq_getattr.html}
 
 Gnulib module: ---
 

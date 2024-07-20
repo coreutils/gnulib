@@ -1,7 +1,7 @@
 @node sys/socket.h
 @section @file{sys/socket.h}
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/sys_socket.h.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/sys_socket.h.html}
 
 Gnulib module: sys_socket
 

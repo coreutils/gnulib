@@ -2,7 +2,7 @@
 @section @code{lrintf}
 @findex lrintf
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/lrintf.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/lrintf.html}
 
 Gnulib module: ---
 

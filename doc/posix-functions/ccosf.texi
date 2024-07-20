@@ -2,7 +2,7 @@
 @section @code{ccosf}
 @findex ccosf
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/ccosf.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/ccosf.html}
 
 Gnulib module: ---
 

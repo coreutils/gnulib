@@ -1,7 +1,7 @@
 @node netdb.h
 @section @file{netdb.h}
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/netdb.h.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/netdb.h.html}
 
 Gnulib module: netdb
 

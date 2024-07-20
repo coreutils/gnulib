@@ -2,7 +2,7 @@
 @section @code{sleep}
 @findex sleep
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/sleep.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/sleep.html}
 
 Gnulib module: sleep
 

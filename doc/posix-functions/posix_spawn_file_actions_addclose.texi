@@ -2,7 +2,7 @@
 @section @code{posix_spawn_file_actions_addclose}
 @findex posix_spawn_file_actions_addclose
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/posix_spawn_file_actions_addclose.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/posix_spawn_file_actions_addclose.html}
 
 Gnulib module: posix_spawn_file_actions_addclose
 

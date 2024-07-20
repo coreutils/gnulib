@@ -2,7 +2,7 @@
 @section @file{ulimit.h}
 
 Removed in POSIX.1-2024.
-POSIX.1-2017 specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/ulimit.h.html}
+POSIX.1-2017 specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/ulimit.h.html}
 
 Gnulib module: ---
 

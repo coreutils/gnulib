@@ -2,7 +2,7 @@
 @section @code{tzname}
 @findex tzname
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/tzname.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/tzname.html}
 
 Gnulib module: tzname
 

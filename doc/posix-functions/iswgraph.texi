@@ -2,7 +2,7 @@
 @section @code{iswgraph}
 @findex iswgraph
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/iswgraph.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/iswgraph.html}
 
 Gnulib module: wctype-h
 

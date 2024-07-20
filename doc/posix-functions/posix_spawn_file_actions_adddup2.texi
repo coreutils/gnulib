@@ -2,7 +2,7 @@
 @section @code{posix_spawn_file_actions_adddup2}
 @findex posix_spawn_file_actions_adddup2
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/posix_spawn_file_actions_adddup2.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/posix_spawn_file_actions_adddup2.html}
 
 Gnulib module: posix_spawn_file_actions_adddup2
 

@@ -2,7 +2,7 @@
 @section @code{dbm_error}
 @findex dbm_error
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/dbm_error.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/dbm_error.html}
 
 Gnulib module: ---
 

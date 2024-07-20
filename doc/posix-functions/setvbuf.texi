@@ -2,7 +2,7 @@
 @section @code{setvbuf}
 @findex setvbuf
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/setvbuf.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/setvbuf.html}
 
 Gnulib module: ---
 

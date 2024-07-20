@@ -2,7 +2,7 @@
 @section @code{execlp}
 @findex execlp
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/execlp.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/execlp.html}
 
 Gnulib module: execlp
 

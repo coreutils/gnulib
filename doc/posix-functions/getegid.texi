@@ -2,7 +2,7 @@
 @section @code{getegid}
 @findex getegid
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/getegid.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/getegid.html}
 
 Gnulib module: ---
 

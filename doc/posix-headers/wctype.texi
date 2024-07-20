@@ -1,7 +1,7 @@
 @node wctype.h
 @section @file{wctype.h}
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/wctype.h.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/wctype.h.html}
 
 Gnulib module: wctype-h
 

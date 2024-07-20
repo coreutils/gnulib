@@ -2,7 +2,7 @@
 @section @code{wcscspn}
 @findex wcscspn
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/wcscspn.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/wcscspn.html}
 
 Gnulib module: wcscspn
 

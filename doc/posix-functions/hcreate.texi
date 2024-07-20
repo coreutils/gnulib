@@ -2,7 +2,7 @@
 @section @code{hcreate}
 @findex hcreate
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/hcreate.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/hcreate.html}
 
 Gnulib module: ---
 

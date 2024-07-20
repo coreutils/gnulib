@@ -1,7 +1,7 @@
 @node langinfo.h
 @section @file{langinfo.h}
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/langinfo.h.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/langinfo.h.html}
 
 Gnulib module: langinfo
 

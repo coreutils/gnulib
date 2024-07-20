@@ -2,7 +2,7 @@
 @section @code{llroundf}
 @findex llroundf
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/llroundf.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/llroundf.html}
 
 Gnulib module: ---
 

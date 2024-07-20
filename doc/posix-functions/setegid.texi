@@ -2,7 +2,7 @@
 @section @code{setegid}
 @findex setegid
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/setegid.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/setegid.html}
 
 Gnulib module: ---
 

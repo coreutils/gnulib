@@ -2,7 +2,7 @@
 @section @code{trunc}
 @findex trunc
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/trunc.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/trunc.html}
 
 Gnulib module: trunc or trunc-ieee
 

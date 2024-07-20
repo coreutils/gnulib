@@ -1,7 +1,7 @@
 @node sys/shm.h
 @section @file{sys/shm.h}
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/sys_shm.h.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/sys_shm.h.html}
 
 Gnulib module: sys_shm
 

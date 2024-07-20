@@ -2,7 +2,7 @@
 @section @code{lsearch}
 @findex lsearch
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/lsearch.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/lsearch.html}
 
 Gnulib module: ---
 

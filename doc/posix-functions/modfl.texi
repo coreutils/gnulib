@@ -2,7 +2,7 @@
 @section @code{modfl}
 @findex modfl
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/modfl.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/modfl.html}
 
 Gnulib module: modfl or modfl-ieee
 

@@ -2,7 +2,7 @@
 @section @code{fflush}
 @findex fflush
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/fflush.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/fflush.html}
 
 Gnulib module: fflush
 

@@ -2,7 +2,7 @@
 @section @code{sched_getparam}
 @findex sched_getparam
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/sched_getparam.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/sched_getparam.html}
 
 Gnulib module: ---
 

@@ -2,7 +2,7 @@
 @section @code{fdimf}
 @findex fdimf
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/fdimf.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/fdimf.html}
 
 Gnulib module: ---
 

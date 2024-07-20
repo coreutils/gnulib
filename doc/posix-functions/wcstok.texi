@@ -2,7 +2,7 @@
 @section @code{wcstok}
 @findex wcstok
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/wcstok.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/wcstok.html}
 
 Gnulib module: wcstok
 

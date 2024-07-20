@@ -2,7 +2,7 @@
 @section @code{catclose}
 @findex catclose
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/catclose.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/catclose.html}
 
 Gnulib module: ---
 

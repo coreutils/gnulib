@@ -2,7 +2,7 @@
 @section @code{exp2f}
 @findex exp2f
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/exp2f.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/exp2f.html}
 
 Gnulib module: exp2f
 

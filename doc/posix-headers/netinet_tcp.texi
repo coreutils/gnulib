@@ -1,7 +1,7 @@
 @node netinet/tcp.h
 @section @file{netinet/tcp.h}
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/netinet_tcp.h.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/netinet_tcp.h.html}
 
 Gnulib module: ---
 

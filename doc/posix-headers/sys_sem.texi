@@ -1,7 +1,7 @@
 @node sys/sem.h
 @section @file{sys/sem.h}
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/sys_sem.h.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/sys_sem.h.html}
 
 Gnulib module: sys_sem
 

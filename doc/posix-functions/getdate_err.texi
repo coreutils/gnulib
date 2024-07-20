@@ -2,7 +2,7 @@
 @section @code{getdate_err}
 @findex getdate_err
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/getdate_err.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/getdate_err.html}
 
 Gnulib module: ---
 

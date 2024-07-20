@@ -2,7 +2,7 @@
 @section @code{getnameinfo}
 @findex getnameinfo
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/getnameinfo.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/getnameinfo.html}
 
 Gnulib module: getaddrinfo
 

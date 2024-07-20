@@ -2,7 +2,7 @@
 @section @code{srandom}
 @findex srandom
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/srandom.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/srandom.html}
 
 Gnulib module: random
 

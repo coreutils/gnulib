@@ -2,7 +2,7 @@
 @section @code{clogl}
 @findex clogl
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/clogl.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/clogl.html}
 
 Gnulib module: ---
 

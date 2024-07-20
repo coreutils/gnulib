@@ -2,7 +2,7 @@
 @section @code{remque}
 @findex remque
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/remque.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/remque.html}
 
 Gnulib module: ---
 

@@ -2,7 +2,7 @@
 @section @code{getpgid}
 @findex getpgid
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/getpgid.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/getpgid.html}
 
 Gnulib module: ---
 

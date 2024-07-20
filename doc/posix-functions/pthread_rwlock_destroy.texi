@@ -2,7 +2,7 @@
 @section @code{pthread_rwlock_destroy}
 @findex pthread_rwlock_destroy
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/pthread_rwlock_destroy.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_rwlock_destroy.html}
 
 Gnulib module: pthread-rwlock
 

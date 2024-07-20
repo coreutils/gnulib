@@ -2,7 +2,7 @@
 @section @code{iswcntrl}
 @findex iswcntrl
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/iswcntrl.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/iswcntrl.html}
 
 Gnulib module: wctype-h
 

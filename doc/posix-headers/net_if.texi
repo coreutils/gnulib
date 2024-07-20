@@ -1,7 +1,7 @@
 @node net/if.h
 @section @file{net/if.h}
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/net_if.h.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/net_if.h.html}
 
 Gnulib module: net_if
 

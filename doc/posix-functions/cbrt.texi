@@ -2,7 +2,7 @@
 @section @code{cbrt}
 @findex cbrt
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/cbrt.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/cbrt.html}
 
 Gnulib module: cbrt
 

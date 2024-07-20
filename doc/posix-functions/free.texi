@@ -2,7 +2,7 @@
 @section @code{free}
 @findex free
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/free.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/free.html}
 
 Gnulib module: free-posix
 

@@ -2,7 +2,7 @@
 @section @code{nearbyintf}
 @findex nearbyintf
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/nearbyintf.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/nearbyintf.html}
 
 Gnulib module: ---
 

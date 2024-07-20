@@ -1,7 +1,7 @@
 @node fcntl.h
 @section @file{fcntl.h}
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/fcntl.h.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/fcntl.h.html}
 
 Gnulib module: fcntl-h
 

@@ -2,7 +2,7 @@
 @section @code{realpath}
 @findex realpath
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/realpath.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/realpath.html}
 
 Gnulib module: canonicalize-lgpl
 

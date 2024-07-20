@@ -2,7 +2,7 @@
 @section @code{dlerror}
 @findex dlerror
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/dlerror.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/dlerror.html}
 
 Gnulib module: ---
 

@@ -2,7 +2,7 @@
 @section @code{pread}
 @findex pread
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/pread.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pread.html}
 
 Gnulib module: pread
 

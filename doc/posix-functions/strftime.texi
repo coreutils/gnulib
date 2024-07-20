@@ -2,7 +2,7 @@
 @section @code{strftime}
 @findex strftime
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/strftime.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/strftime.html}
 
 Gnulib module: strftime-fixes
 

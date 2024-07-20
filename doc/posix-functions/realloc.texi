@@ -2,7 +2,7 @@
 @section @code{realloc}
 @findex realloc
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/realloc.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/realloc.html}
 
 Gnulib module: realloc-posix
 

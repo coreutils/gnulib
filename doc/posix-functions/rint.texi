@@ -2,7 +2,7 @@
 @section @code{rint}
 @findex rint
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/rint.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/rint.html}
 
 Gnulib module: rint
 

@@ -2,7 +2,7 @@
 @section @code{shmat}
 @findex shmat
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/shmat.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/shmat.html}
 
 Gnulib module: ---
 

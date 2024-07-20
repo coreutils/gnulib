@@ -2,7 +2,7 @@
 @section @code{pthread_rwlock_init}
 @findex pthread_rwlock_init
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/pthread_rwlock_init.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_rwlock_init.html}
 
 Gnulib module: pthread-rwlock
 

@@ -2,7 +2,7 @@
 @section @code{wcpcpy}
 @findex wcpcpy
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/wcpcpy.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/wcpcpy.html}
 
 Gnulib module: wcpcpy
 

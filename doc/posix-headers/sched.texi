@@ -1,7 +1,7 @@
 @node sched.h
 @section @file{sched.h}
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/sched.h.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/sched.h.html}
 
 Gnulib module: sched
 

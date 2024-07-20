@@ -2,7 +2,7 @@
 @section @code{memmove}
 @findex memmove
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/memmove.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/memmove.html}
 
 Gnulib module: memmove
 

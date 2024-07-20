@@ -2,7 +2,7 @@
 @section @code{pthread_cleanup_pop}
 @findex pthread_cleanup_pop
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/pthread_cleanup_pop.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_cleanup_pop.html}
 
 Gnulib module: ---
 

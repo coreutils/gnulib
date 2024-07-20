@@ -2,7 +2,7 @@
 @section @code{pthread_mutex_lock}
 @findex pthread_mutex_lock
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/pthread_mutex_lock.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_mutex_lock.html}
 
 Gnulib module: pthread-mutex
 

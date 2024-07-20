@@ -2,7 +2,7 @@
 @section @code{casinf}
 @findex casinf
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/casinf.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/casinf.html}
 
 Gnulib module: ---
 

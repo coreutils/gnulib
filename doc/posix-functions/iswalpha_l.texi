@@ -2,7 +2,7 @@
 @section @code{iswalpha_l}
 @findex iswalpha_l
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/iswalpha_l.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/iswalpha_l.html}
 
 Gnulib module: ---
 

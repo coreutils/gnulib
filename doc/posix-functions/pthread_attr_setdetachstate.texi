@@ -2,7 +2,7 @@
 @section @code{pthread_attr_setdetachstate}
 @findex pthread_attr_setdetachstate
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/pthread_attr_setdetachstate.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_attr_setdetachstate.html}
 
 Gnulib module: pthread-thread
 

@@ -2,7 +2,7 @@
 @section @code{isblank_l}
 @findex isblank_l
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/isblank_l.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/isblank_l.html}
 
 Gnulib module: ---
 

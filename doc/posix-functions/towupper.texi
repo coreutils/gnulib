@@ -2,7 +2,7 @@
 @section @code{towupper}
 @findex towupper
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/towupper.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/towupper.html}
 
 Gnulib module: wctype-h
 

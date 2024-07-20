@@ -2,7 +2,7 @@
 @section @code{execve}
 @findex execve
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/execve.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/execve.html}
 
 Gnulib module: execve
 

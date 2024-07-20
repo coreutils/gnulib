@@ -2,7 +2,7 @@
 @section @code{open}
 @findex open
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/open.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/open.html}
 
 Gnulib module: open, fchdir
 

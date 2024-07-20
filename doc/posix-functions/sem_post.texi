@@ -2,7 +2,7 @@
 @section @code{sem_post}
 @findex sem_post
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/sem_post.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/sem_post.html}
 
 Gnulib module: ---
 

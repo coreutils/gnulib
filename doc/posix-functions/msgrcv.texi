@@ -2,7 +2,7 @@
 @section @code{msgrcv}
 @findex msgrcv
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/msgrcv.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/msgrcv.html}
 
 Gnulib module: ---
 

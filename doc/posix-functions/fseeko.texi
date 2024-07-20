@@ -2,7 +2,7 @@
 @section @code{fseeko}
 @findex fseeko
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/fseeko.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/fseeko.html}
 
 Gnulib module: fseeko
 

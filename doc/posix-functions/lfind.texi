@@ -2,7 +2,7 @@
 @section @code{lfind}
 @findex lfind
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/lfind.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/lfind.html}
 
 Gnulib module: ---
 

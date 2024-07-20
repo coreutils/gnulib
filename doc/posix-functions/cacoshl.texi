@@ -2,7 +2,7 @@
 @section @code{cacoshl}
 @findex cacoshl
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/cacoshl.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/cacoshl.html}
 
 Gnulib module: ---
 

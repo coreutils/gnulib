@@ -2,7 +2,7 @@
 @section @code{posix_fallocate}
 @findex posix_fallocate
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/posix_fallocate.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/posix_fallocate.html}
 
 Gnulib module: ---
 

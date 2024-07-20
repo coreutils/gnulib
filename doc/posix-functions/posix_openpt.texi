@@ -2,7 +2,7 @@
 @section @code{posix_openpt}
 @findex posix_openpt
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/posix_openpt.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/posix_openpt.html}
 
 Gnulib module: posix_openpt
 

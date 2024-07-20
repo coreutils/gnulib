@@ -2,7 +2,7 @@
 @section @code{sched_yield}
 @findex sched_yield
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/sched_yield.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/sched_yield.html}
 
 Gnulib module: sched_yield
 

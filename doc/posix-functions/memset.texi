@@ -2,7 +2,7 @@
 @section @code{memset}
 @findex memset
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/memset.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/memset.html}
 
 Gnulib module: memset
 

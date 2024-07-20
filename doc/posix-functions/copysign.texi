@@ -2,7 +2,7 @@
 @section @code{copysign}
 @findex copysign
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/copysign.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/copysign.html}
 
 Gnulib module: copysign
 

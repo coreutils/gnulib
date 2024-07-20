@@ -2,7 +2,7 @@
 @section @code{atol}
 @findex atol
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/atol.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/atol.html}
 
 Gnulib module: ---
 

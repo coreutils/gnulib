@@ -2,7 +2,7 @@
 @section @code{imaxabs}
 @findex imaxabs
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/imaxabs.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/imaxabs.html}
 
 Gnulib module: imaxabs
 

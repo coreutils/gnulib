@@ -2,7 +2,7 @@
 @section @code{clock_nanosleep}
 @findex clock_nanosleep
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/clock_nanosleep.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/clock_nanosleep.html}
 
 Gnulib module: ---
 

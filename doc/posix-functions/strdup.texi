@@ -2,7 +2,7 @@
 @section @code{strdup}
 @findex strdup
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/strdup.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/strdup.html}
 
 Gnulib module: strdup or strdup-posix
 

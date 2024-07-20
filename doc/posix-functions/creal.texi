@@ -2,7 +2,7 @@
 @section @code{creal}
 @findex creal
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/creal.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/creal.html}
 
 Gnulib module: ---
 

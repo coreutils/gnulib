@@ -2,7 +2,7 @@
 @section @code{mbrlen}
 @findex mbrlen
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/mbrlen.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/mbrlen.html}
 
 Gnulib module: mbrlen
 

@@ -2,7 +2,7 @@
 @section @code{shmctl}
 @findex shmctl
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/shmctl.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/shmctl.html}
 
 Gnulib module: ---
 

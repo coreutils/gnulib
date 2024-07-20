@@ -2,7 +2,7 @@
 @section @code{fseek}
 @findex fseek
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/fseek.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/fseek.html}
 
 Gnulib module: fseek
 

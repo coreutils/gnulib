@@ -2,7 +2,7 @@
 @section @code{daylight}
 @findex daylight
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/daylight.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/daylight.html}
 
 Gnulib module: ---
 

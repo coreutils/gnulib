@@ -2,7 +2,7 @@
 @section @code{strchr}
 @findex strchr
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/strchr.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/strchr.html}
 
 Gnulib module: ---
 

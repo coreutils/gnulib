@@ -2,7 +2,7 @@
 @section @code{siglongjmp}
 @findex siglongjmp
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/siglongjmp.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/siglongjmp.html}
 
 Gnulib module: ---
 

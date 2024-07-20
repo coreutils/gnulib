@@ -2,7 +2,7 @@
 @section @code{cabsf}
 @findex cabsf
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/cabsf.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/cabsf.html}
 
 Gnulib module: ---
 

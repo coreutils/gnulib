@@ -2,7 +2,7 @@
 @section @code{fesetexceptflag}
 @findex fesetexceptflag
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/fesetexceptflag.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/fesetexceptflag.html}
 
 Gnulib module: fenv-exceptions-state-c99
 

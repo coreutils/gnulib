@@ -2,7 +2,7 @@
 @section @code{unlinkat}
 @findex unlinkat
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/unlinkat.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/unlinkat.html}
 
 Gnulib module: unlinkat
 

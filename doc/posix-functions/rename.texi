@@ -2,7 +2,7 @@
 @section @code{rename}
 @findex rename
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/rename.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/rename.html}
 
 Gnulib module: rename
 

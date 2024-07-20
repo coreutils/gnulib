@@ -2,7 +2,7 @@
 @section @code{wcstof}
 @findex wcstof
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/wcstof.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/wcstof.html}
 
 Gnulib module: ---
 

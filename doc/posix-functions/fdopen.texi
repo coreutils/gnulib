@@ -2,7 +2,7 @@
 @section @code{fdopen}
 @findex fdopen
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/fdopen.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/fdopen.html}
 
 Gnulib module: fdopen
 

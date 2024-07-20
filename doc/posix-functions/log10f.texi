@@ -2,7 +2,7 @@
 @section @code{log10f}
 @findex log10f
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/log10f.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/log10f.html}
 
 Gnulib module: log10f or log10f-ieee
 

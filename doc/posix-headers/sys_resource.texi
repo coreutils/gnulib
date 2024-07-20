@@ -1,7 +1,7 @@
 @node sys/resource.h
 @section @file{sys/resource.h}
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/sys_resource.h.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/sys_resource.h.html}
 
 Gnulib module: sys_resource
 

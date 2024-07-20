@@ -2,7 +2,7 @@
 @section @code{fputs}
 @findex fputs
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/fputs.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/fputs.html}
 
 Gnulib module: stdio, nonblocking, sigpipe
 

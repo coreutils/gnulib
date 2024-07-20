@@ -2,7 +2,7 @@
 @section @code{pthread_getcpuclockid}
 @findex pthread_getcpuclockid
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/pthread_getcpuclockid.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_getcpuclockid.html}
 
 Gnulib module: ---
 

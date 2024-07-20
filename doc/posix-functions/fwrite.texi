@@ -2,7 +2,7 @@
 @section @code{fwrite}
 @findex fwrite
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/fwrite.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/fwrite.html}
 
 Gnulib module: stdio, nonblocking, sigpipe
 

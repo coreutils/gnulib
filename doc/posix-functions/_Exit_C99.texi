@@ -5,7 +5,7 @@
 @c with _exit.texi on case-insensitive file systems (Mac OS X HFS+ and Windows
 @c file systems).
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/_Exit.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/_Exit.html}
 
 Gnulib module: _Exit
 

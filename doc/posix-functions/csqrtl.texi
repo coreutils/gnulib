@@ -2,7 +2,7 @@
 @section @code{csqrtl}
 @findex csqrtl
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/csqrtl.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/csqrtl.html}
 
 Gnulib module: ---
 

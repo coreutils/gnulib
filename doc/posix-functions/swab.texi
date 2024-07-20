@@ -2,7 +2,7 @@
 @section @code{swab}
 @findex swab
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/swab.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/swab.html}
 
 Gnulib module: ---
 

@@ -2,7 +2,7 @@
 @section @code{pthread_mutex_trylock}
 @findex pthread_mutex_trylock
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/pthread_mutex_trylock.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_mutex_trylock.html}
 
 Gnulib module: pthread-mutex
 

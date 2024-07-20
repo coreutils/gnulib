@@ -2,7 +2,7 @@
 @section @code{pthread_barrier_wait}
 @findex pthread_barrier_wait
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/pthread_barrier_wait.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_barrier_wait.html}
 
 Gnulib module: ---
 

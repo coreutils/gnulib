@@ -1,7 +1,7 @@
 @node sys/uio.h
 @section @file{sys/uio.h}
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/sys_uio.h.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/sys_uio.h.html}
 
 Gnulib module: sys_uio
 

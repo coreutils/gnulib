@@ -2,7 +2,7 @@
 @section @code{getgrnam_r}
 @findex getgrnam_r
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/getgrnam_r.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/getgrnam_r.html}
 
 Gnulib module: extensions
 

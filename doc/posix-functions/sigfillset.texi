@@ -2,7 +2,7 @@
 @section @code{sigfillset}
 @findex sigfillset
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/sigfillset.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/sigfillset.html}
 
 Gnulib module: sigprocmask
 
