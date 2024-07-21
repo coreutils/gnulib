@@ -1,6 +1,6 @@
 # A library of shell functions for autopull.sh, autogen.sh, and bootstrap.
 
-scriptlibversion=2024-07-04.10; # UTC
+scriptlibversion=2024-07-21.12; # UTC
 
 # Copyright (C) 2003-2024 Free Software Foundation, Inc.
 #
@@ -1217,6 +1217,20 @@ autogen()
     echo "$0: $gnulib_tool $gnulib_tool_options --import ..."
     $gnulib_tool $gnulib_tool_options --import $gnulib_modules \
       || die "gnulib-tool failed"
+
+    if test $with_gettext = yes && test ! -f $m4_base/gettext.m4; then
+      # The gnulib-tool invocation has removed $m4_base/gettext.m4, that the
+      # AUTOPOINT invocation had installed. This can occur when the gnulib
+      # module 'gettext' was previously present but is now not present any more.
+      # Repeat the AUTOPOINT invocation and the gnulib-tool invocation.
+
+      echo "$0: $AUTOPOINT --force"
+      $AUTOPOINT --force || return
+
+      echo "$0: $gnulib_tool $gnulib_tool_options --import ..."
+      $gnulib_tool $gnulib_tool_options --import $gnulib_modules \
+        || die "gnulib-tool failed"
+    fi
 
     for file in $gnulib_files; do
       symlink_to_dir "$GNULIB_SRCDIR" $file \
