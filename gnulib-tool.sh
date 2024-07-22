@@ -4438,6 +4438,8 @@ func_emit_tests_Makefile_am ()
   # EXEEXT is defined by AC_PROG_CC through autoconf.
   # srcdir is defined by autoconf and automake.
   echo "TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@' srcdir='\$(srcdir)'"
+  # Omit logs of skipped tests from test-suite.log, if Automake ≥ 1.17 is used.
+  echo "IGNORE_SKIPPED_LOGS = 1"
   echo
   cat "$tmp"/main_snippets "$tmp"/longrunning_snippets \
     | sed -e 's|\$(top_srcdir)/build-aux/|$(top_srcdir)/'"$auxdir"'/|g'

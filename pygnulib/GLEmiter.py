@@ -1216,7 +1216,9 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         # Many test scripts use ${EXEEXT} or ${srcdir}.
         # EXEEXT is defined by AC_PROG_CC through autoconf.
         # srcdir is defined by autoconf and automake.
-        emit += "TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@' srcdir='$(srcdir)'\n\n"
+        emit += "TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@' srcdir='$(srcdir)'\n"
+        # Omit logs of skipped tests from test-suite.log, if Automake ≥ 1.17 is used.
+        emit += 'IGNORE_SKIPPED_LOGS = 1\n\n'
         all_snippets = main_snippets + longrun_snippets
         all_snippets = all_snippets.replace('$(top_srcdir)/build-aux/',
                                             '$(top_srcdir)/%s/' % auxdir)
