@@ -158,11 +158,20 @@ scale_radix_exp (DOUBLE x, int radix, long int exponent)
         {
           if (e < 0)
             {
-              while (e++ != 0)
+              for (;;)
                 {
-                  r /= radix;
-                  if (r == 0 && x != 0)
+                  if (e++ == 0)
                     {
+                      if (r < MIN && r > -MIN)
+                        /* Gradual underflow, resulting in a denormalized
+                           number.  */
+                        errno = ERANGE;
+                      break;
+                    }
+                  r /= radix;
+                  if (r == 0)
+                    {
+                      /* Flush-to-zero underflow.  */
                       errno = ERANGE;
                       break;
                     }
