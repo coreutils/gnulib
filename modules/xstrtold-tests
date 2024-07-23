@@ -1,0 +1,16 @@
+Files:
+tests/test-xstrtold.c
+tests/minus-zero.h
+tests/macros.h
+
+Depends-on:
+strtold
+float
+isnanl-nolibm
+signbit
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-xstrtold
+check_PROGRAMS += test-xstrtold
