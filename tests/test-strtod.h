@@ -546,7 +546,11 @@ test_function (double (*my_strtod) (const char *, char **))
     double result;
     errno = 0;
     result = my_strtod (input, &ptr);
+#if 1
+    ASSERT (result == 0.0);
+#else /* This is all that ISO C guarantees.  */
     ASSERT (0.0 <= result && result <= DBL_MIN);
+#endif
     ASSERT (!signbit (result));
     ASSERT (ptr == input + 9);
     ASSERT (errno == ERANGE);
@@ -557,7 +561,11 @@ test_function (double (*my_strtod) (const char *, char **))
     double result;
     errno = 0;
     result = my_strtod (input, &ptr);
+#if 1
+    ASSERT (result == 0.0);
+#else /* This is all that ISO C guarantees.  */
     ASSERT (-DBL_MIN <= result && result <= 0.0);
+#endif
     /* Negative underflow.  Expect a negative sign, although POSIX allows +0.0.
        See also <https://sourceware.org/bugzilla/show_bug.cgi?id=5995>.  */
     ASSERT (!!signbit (result) == !!signbit (minus_zerod)); /* glibc-2.3.6, mingw */

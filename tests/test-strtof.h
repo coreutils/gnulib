@@ -546,7 +546,11 @@ test_function (float (*my_strtof) (const char *, char **))
     float result;
     errno = 0;
     result = my_strtof (input, &ptr);
+#if 1
+    ASSERT (result == 0.0f);
+#else /* This is all that ISO C guarantees.  */
     ASSERT (0.0f <= result && result <= FLT_MIN);
+#endif
     ASSERT (!signbit (result));
     ASSERT (ptr == input + 9);
     ASSERT (errno == ERANGE);
@@ -557,7 +561,11 @@ test_function (float (*my_strtof) (const char *, char **))
     float result;
     errno = 0;
     result = my_strtof (input, &ptr);
+#if 1
+    ASSERT (result == 0.0f);
+#else /* This is all that ISO C guarantees.  */
     ASSERT (-FLT_MIN <= result && result <= 0.0f);
+#endif
     /* Negative underflow.  Expect a negative sign, although POSIX allows +0.0f.
        See also <https://sourceware.org/bugzilla/show_bug.cgi?id=5995>.  */
     ASSERT (!!signbit (result) == !!signbit (minus_zerof)); /* glibc-2.3.6, mingw */
