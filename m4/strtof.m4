@@ -1,5 +1,5 @@
 # strtof.m4
-# serial 3
+# serial 4
 dnl Copyright (C) 2002-2003, 2006-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -84,6 +84,17 @@ numeric_equal (float x, float y)
       result |= 8;
   }
   {
+    /* In mingw 5.0 without __USE_MINGW_ANSI_STDIO and __USE_MINGW_STRTOX,
+       strtof does not set errno upon overflow.  */
+    const char *string = "1e50";
+    char *term;
+    float value;
+    errno = 0;
+    value = strtof (string, &term);
+    if (value != HUGE_VAL || term != (string + 4) || errno != ERANGE)
+      result |= 8;
+  }
+  {
     /* glibc 2.7 and cygwin 1.5.24 misparse "nan()".  */
     const char *string = "nan()";
     char *term;
@@ -92,7 +103,7 @@ numeric_equal (float x, float y)
       result |= 16;
   }
   {
-    /* darwin 10.6.1 misparses "nan(".  */
+    /* Darwin 10.6.1 (macOS 10.6.6) misparses "nan(".  */
     const char *string = "nan(";
     char *term;
     float value = strtof (string, &term);
