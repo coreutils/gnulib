@@ -1,5 +1,5 @@
 # strtof.m4
-# serial 1
+# serial 2
 dnl Copyright (C) 2002-2003, 2006-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -19,6 +19,8 @@ AC_DEFUN([gl_FUNC_STRTOF],
     HAVE_STRTOF=0
   fi
   if test $HAVE_STRTOF = 1; then
+    AC_DEFINE([HAVE_STRTOF], [1],
+      [Define to 1 if you have the 'strtof' function.])
     AC_CACHE_CHECK([whether strtof obeys C99], [gl_cv_func_strtof_works],
       [AC_RUN_IFELSE([AC_LANG_PROGRAM([[
 #include <stdlib.h>
