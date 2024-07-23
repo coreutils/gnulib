@@ -17,6 +17,10 @@ This function returns a struct, not a @code{long double}, on some platforms:
 HP-UX 11.31/hppa.
 
 @item
+This function always returns a wrong value on some platforms:
+mingw 5.0.
+
+@item
 This function allows whitespace between @samp{e} and the exponent on
 some platforms:
 HP-UX 11.31/ia64.
@@ -50,6 +54,9 @@ and the exponent on some platforms:
 HP-UX 11.31/ia64.
 
 @item
+@c The term "underflow", as defined by ISO C23 § 7.12.1.(6), includes both
+@c "gradual underflow" (result is a denormalized number) and "flush-to-zero
+@c underflow" (result is zero).
 This function fails to set @code{errno} upon underflow on some platforms:
 @c https://cygwin.com/ml/cygwin/2019-12/msg00072.html
 Cygwin 2.9.
@@ -61,6 +68,11 @@ and allocates an unbounded amount of stack on mingw 9.0.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+This function fails to set @code{errno} upon gradual underflow (resulting
+in a denormalized number) on some platforms:
+MSVC 14.
+
 @item
 The replacement function does not always return correctly rounded results.
 @end itemize

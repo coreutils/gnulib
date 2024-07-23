@@ -481,7 +481,7 @@ test_function (long double (*my_strtold) (const char *, char **))
     ASSERT (errno == 0);
   }
 
-  /* Overflow/underflow.  */
+  /* Overflow.  */
   {
     const char input[] = "1E1000000";
     char *ptr;
@@ -502,6 +502,42 @@ test_function (long double (*my_strtold) (const char *, char **))
     ASSERT (ptr == input + 10);
     ASSERT (errno == ERANGE);
   }
+
+  /* Gradual underflow, resulting in a denormalized number.  */
+  {
+#if LDBL_MAX_EXP > 10000
+    const char input[] = "1e-4950";
+#else
+    const char input[] = "1e-320";
+#endif
+    char *ptr;
+    long double result;
+    errno = 0;
+    result = my_strtold (input, &ptr);
+    ASSERT (0.0L < result && result <= LDBL_MIN);
+    ASSERT (ptr == input + strlen (input));
+#if !defined _MSC_VER
+    ASSERT (errno == ERANGE);
+#endif
+  }
+  {
+#if LDBL_MAX_EXP > 10000
+    const char input[] = "-1e-4950";
+#else
+    const char input[] = "-1e-320";
+#endif
+    char *ptr;
+    long double result;
+    errno = 0;
+    result = my_strtold (input, &ptr);
+    ASSERT (-LDBL_MIN <= result && result < 0.0L);
+    ASSERT (ptr == input + strlen (input));
+#if !defined _MSC_VER
+    ASSERT (errno == ERANGE);
+#endif
+  }
+
+  /* Flush-to-zero underflow.  */
   {
     const char input[] = "1E-100000";
     char *ptr;
@@ -520,16 +556,14 @@ test_function (long double (*my_strtold) (const char *, char **))
     errno = 0;
     result = my_strtold (input, &ptr);
     ASSERT (-LDBL_MIN <= result && result <= 0.0L);
-#if 0
-    /* FIXME - this is glibc bug 5995; POSIX allows returning positive
-       0 on negative underflow, even though quality of implementation
-       demands preserving the sign.  Disable this test until fixed
-       glibc is more prevalent.  */
+    /* Negative underflow.  Expect a negative sign, although POSIX allows +0.0L.
+       See also <https://sourceware.org/bugzilla/show_bug.cgi?id=5995>.  */
     ASSERT (!!signbit (result) == !!signbit (minus_zerol)); /* glibc-2.3.2, Haiku */
-#endif
     ASSERT (ptr == input + 10);
     ASSERT (errno == ERANGE);
   }
+
+  /* Space before the exponent.  */
   {
     const char input[] = "1E 1000000";
     char *ptr;
