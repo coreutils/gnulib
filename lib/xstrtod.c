@@ -56,9 +56,10 @@ XSTRTOD (char const *str, char const **ptr, DOUBLE *result,
     ok = false;
   else
     {
-      /* Allow underflow (in which case CONVERT returns zero),
-         but flag overflow as an error.  The user can decide
-         to use the limits in RESULT upon ERANGE.  */
+      /* Flag overflow as an error.
+         Flag gradual underflow as an error.
+         Flag flush-to-zero underflow as no error.
+         In either case, the caller can inspect *RESULT to get more details.  */
       if (val != 0 && errno == ERANGE)
         ok = false;
     }
@@ -66,6 +67,8 @@ XSTRTOD (char const *str, char const **ptr, DOUBLE *result,
   if (ptr != NULL)
     *ptr = terminator;
 
+  /* Callers rely on *RESULT even when !ok.  */
   *result = val;
+
   return ok;
 }
