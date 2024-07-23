@@ -483,6 +483,16 @@ test_function (double (*my_strtod) (const char *, char **))
 
   /* Overflow.  */
   {
+    const char input[] = "1e500";
+    char *ptr;
+    double result;
+    errno = 0;
+    result = my_strtod (input, &ptr);
+    ASSERT (result == HUGE_VAL);
+    ASSERT (ptr == input + 5);          /* OSF/1 5.1 */
+    ASSERT (errno == ERANGE);
+  }
+  {
     const char input[] = "1E1000000";
     char *ptr;
     double result;
