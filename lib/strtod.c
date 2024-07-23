@@ -40,7 +40,13 @@
 #if defined USE_FLOAT
 # define STRTOD strtof
 # define LDEXP ldexpf
-# define HAVE_UNDERLYING_STRTOD HAVE_STRTOF
+# if STRTOF_HAS_UNDERFLOW_BUG
+   /* strtof would not set errno=ERANGE upon flush-to-zero underflow.  */
+#  define HAVE_UNDERLYING_STRTOD 0
+# else
+#  define HAVE_UNDERLYING_STRTOD HAVE_STRTOF
+# endif
+# define HAS_GRADUAL_UNDERFLOW_PROBLEM STRTOF_HAS_GRADUAL_UNDERFLOW_PROBLEM
 # define DOUBLE float
 # define MIN FLT_MIN
 # define MAX FLT_MAX
@@ -58,7 +64,7 @@
       not a 'long double'.  */
 #  define HAVE_UNDERLYING_STRTOD 0
 # elif STRTOLD_HAS_UNDERFLOW_BUG
-   /* strtold would not set errno=ERANGE upon underflow.  */
+   /* strtold would not set errno=ERANGE upon flush-to-zero underflow.  */
 #  define HAVE_UNDERLYING_STRTOD 0
 # elif defined __MINGW32__ && __MINGW64_VERSION_MAJOR < 10
    /* strtold is broken in mingw versions before 10.0:
@@ -70,6 +76,7 @@
 # else
 #  define HAVE_UNDERLYING_STRTOD HAVE_STRTOLD
 # endif
+# define HAS_GRADUAL_UNDERFLOW_PROBLEM STRTOLD_HAS_GRADUAL_UNDERFLOW_PROBLEM
 # define DOUBLE long double
 # define MIN LDBL_MIN
 # define MAX LDBL_MAX
@@ -82,7 +89,13 @@
 #else
 # define STRTOD strtod
 # define LDEXP ldexp
-# define HAVE_UNDERLYING_STRTOD 1
+# if STRTOD_HAS_UNDERFLOW_BUG
+   /* strtod would not set errno=ERANGE upon flush-to-zero underflow.  */
+#  define HAVE_UNDERLYING_STRTOD 0
+# else
+#  define HAVE_UNDERLYING_STRTOD 1
+# endif
+# define HAS_GRADUAL_UNDERFLOW_PROBLEM STRTOD_HAS_GRADUAL_UNDERFLOW_PROBLEM
 # define DOUBLE double
 # define MIN DBL_MIN
 # define MAX DBL_MAX
@@ -351,10 +364,22 @@ STRTOD (const char *nptr, char **endptr)
 # else
 #  undef strtod
 # endif
+# if HAS_GRADUAL_UNDERFLOW_PROBLEM
+#  define SET_ERRNO_UPON_GRADUAL_UNDERFLOW(RESULT) \
+    do                                                          \
+      {                                                         \
+        if ((RESULT) != 0 && (RESULT) < MIN && (RESULT) > -MIN) \
+          errno = ERANGE;                                       \
+      }                                                         \
+    while (0)
+# else
+#  define SET_ERRNO_UPON_GRADUAL_UNDERFLOW(RESULT) (void)0
+# endif
 #else
 # undef STRTOD
 # define STRTOD(NPTR,ENDPTR) \
    parse_number (NPTR, 10, 10, 1, radixchar, 'e', ENDPTR)
+# define SET_ERRNO_UPON_GRADUAL_UNDERFLOW(RESULT) (void)0
 #endif
 /* From here on, STRTOD refers to the underlying implementation.  It needs
    to handle only finite unsigned decimal numbers with non-null ENDPTR.  */
@@ -382,6 +407,7 @@ STRTOD (const char *nptr, char **endptr)
     ++s;
 
   num = STRTOD (s, &endbuf);
+  SET_ERRNO_UPON_GRADUAL_UNDERFLOW (num);
   end = endbuf;
 
   if (c_isdigit (s[*s == radixchar]))
@@ -424,6 +450,7 @@ STRTOD (const char *nptr, char **endptr)
                     {
                       dup[p - s] = '\0';
                       num = STRTOD (dup, &endbuf);
+                      SET_ERRNO_UPON_GRADUAL_UNDERFLOW (num);
                       saved_errno = errno;
                       free (dup);
                       errno = saved_errno;
@@ -454,6 +481,7 @@ STRTOD (const char *nptr, char **endptr)
                 {
                   dup[e - s] = '\0';
                   num = STRTOD (dup, &endbuf);
+                  SET_ERRNO_UPON_GRADUAL_UNDERFLOW (num);
                   saved_errno = errno;
                   free (dup);
                   errno = saved_errno;
