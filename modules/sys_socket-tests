@@ -2,6 +2,7 @@ Files:
 tests/test-sys_socket.c
 
 Depends-on:
+assert-h
 sys_socket-c++-tests
 
 configure.ac:

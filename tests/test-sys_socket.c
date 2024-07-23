@@ -20,10 +20,8 @@
 
 #include <sys/socket.h>
 
-#if HAVE_SHUTDOWN
-/* Check some integer constant expressions.  */
-int a[] = { SHUT_RD, SHUT_WR, SHUT_RDWR };
-#endif
+/* POSIX mandates that AF_UNSPEC shall be 0.  */
+static_assert (AF_UNSPEC == 0);
 
 /* Check that the 'socklen_t' type is defined.  */
 socklen_t t1;
@@ -58,6 +56,35 @@ main (void)
     case ESHUTDOWN:
       break;
     }
+
+  /* Check that each supported address family has a distinct value.  */
+  switch (0)
+    {
+    case AF_UNSPEC:
+#if HAVE_IPV4
+    case AF_INET:
+#endif
+#if HAVE_IPV6
+    case AF_INET6:
+#endif
+#if HAVE_UNIXSOCKET
+    case AF_UNIX:
+#endif
+    default:
+      break;
+    }
+
+  /* Check that the shutdown type macros are defined to distinct values.  */
+#if HAVE_SHUTDOWN
+  switch (0)
+    {
+    case SHUT_RD:
+    case SHUT_WR:
+    case SHUT_RDWR:
+    default:
+      break;
+    }
+#endif
 
   x.ss_family = 42;
   i = 42;
