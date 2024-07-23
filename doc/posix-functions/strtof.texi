@@ -19,7 +19,22 @@ glibc 2.4, Mac OS X 10.5, FreeBSD 6.2.
 
 @item
 This function fails to parse @samp{NaN()} on some platforms:
-glibc-2.5, FreeBSD 6.2.
+glibc 2.5, FreeBSD 6.2.
+
+@item
+This function misparses @samp{nan(} on some platforms:
+macOS 10.6.6.
+
+@item
+This function fails to set @code{errno} upon overflow on some platforms:
+mingw 5.0.
+
+@item
+@c The term "underflow", as defined by ISO C23 § 7.12.1.(6), includes both
+@c "gradual underflow" (result is a denormalized number) and "flush-to-zero
+@c underflow" (result is zero).
+This function fails to set @code{errno} upon underflow on some platforms:
+Cygwin 2.9, mingw 5.0.
 @end itemize
 
 Portability problems not fixed by Gnulib:
@@ -38,6 +53,11 @@ glibc 2.7, mingw, MSVC 14.
 This function fails to correctly parse very long strings on some
 platforms:
 Mac OS X 10.5, FreeBSD 6.2, NetBSD 5.0, Cygwin, mingw, MSVC 14.
+
+@item
+This function fails to set @code{errno} upon gradual underflow (resulting
+in a denormalized number) on some platforms:
+MSVC 14.
 
 @item
 The replacement function does not always return correctly rounded results.
