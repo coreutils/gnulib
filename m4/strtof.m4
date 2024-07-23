@@ -1,5 +1,5 @@
 # strtof.m4
-# serial 2
+# serial 3
 dnl Copyright (C) 2002-2003, 2006-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -24,6 +24,7 @@ AC_DEFUN([gl_FUNC_STRTOF],
     AC_CACHE_CHECK([whether strtof obeys C99], [gl_cv_func_strtof_works],
       [AC_RUN_IFELSE([AC_LANG_PROGRAM([[
 #include <stdlib.h>
+#include <float.h>
 #include <math.h>
 #include <errno.h>
 /* Compare two numbers with ==.
@@ -52,7 +53,7 @@ numeric_equal (float x, float y)
     char *term;
     strtof (string, &term);
     if (term != string && *(term - 1) == 0)
-      result |= 2;
+      result |= 1;
   }
   {
     /* Older glibc and Cygwin mis-parse "-0x".  */
@@ -61,7 +62,7 @@ numeric_equal (float x, float y)
     float value = strtof (string, &term);
     float zero = 0.0f;
     if (1.0f / value != -1.0f / zero || term != (string + 2))
-      result |= 4;
+      result |= 2;
   }
   {
     /* Many platforms do not parse hex floats.  */
@@ -69,7 +70,7 @@ numeric_equal (float x, float y)
     char *term;
     float value = strtof (string, &term);
     if (value != 20.0f || term != (string + 6))
-      result |= 8;
+      result |= 4;
   }
   {
     /* Many platforms do not parse infinities.  HP-UX 11.31 parses inf,
@@ -80,7 +81,7 @@ numeric_equal (float x, float y)
     errno = 0;
     value = strtof (string, &term);
     if (value != HUGE_VAL || term != (string + 3) || errno)
-      result |= 16;
+      result |= 8;
   }
   {
     /* glibc 2.7 and cygwin 1.5.24 misparse "nan()".  */
@@ -88,7 +89,7 @@ numeric_equal (float x, float y)
     char *term;
     float value = strtof (string, &term);
     if (numeric_equal (value, value) || term != (string + 5))
-      result |= 32;
+      result |= 16;
   }
   {
     /* darwin 10.6.1 misparses "nan(".  */
@@ -96,12 +97,47 @@ numeric_equal (float x, float y)
     char *term;
     float value = strtof (string, &term);
     if (numeric_equal (value, value) || term != (string + 3))
+      result |= 16;
+  }
+#ifndef _MSC_VER /* On MSVC, this is expected behaviour.  */
+  {
+    /* In Cygwin 2.9 and mingw 5.0, strtof does not set errno upon
+       gradual underflow.  */
+    const char *string = "1e-40";
+    char *term;
+    float value;
+    errno = 0;
+    value = strtof (string, &term);
+    if (term != (string + 5)
+        || (value > 0.0f && value <= FLT_MIN && errno != ERANGE))
+      result |= 32;
+  }
+#endif
+  {
+    /* In Cygwin 2.9 and mingw 5.0, strtof does not set errno upon
+       flush-to-zero underflow.  */
+    const char *string = "1E-100000";
+    char *term;
+    float value;
+    errno = 0;
+    value = strtof (string, &term);
+    if (term != (string + 9) || (value == 0.0L && errno != ERANGE))
       result |= 64;
   }
   return result;
 ]])],
         [gl_cv_func_strtof_works=yes],
-        [gl_cv_func_strtof_works=no],
+        [result=$?
+         if expr $result '>=' 64 >/dev/null; then
+           gl_cv_func_strtof_works="no (underflow problem)"
+         else
+           if expr $result '>=' 32 >/dev/null; then
+             gl_cv_func_strtof_works="no (gradual underflow problem)"
+           else
+             gl_cv_func_strtof_works=no
+           fi
+         fi
+        ],
         [dnl The last known bugs in glibc strtof(), as of this writing,
          dnl were fixed in version 2.8
          AC_EGREP_CPP([Lucky user],
@@ -118,8 +154,12 @@ numeric_equal (float x, float y)
            [case "$host_os" in
                                   # Guess yes on musl systems.
               *-musl* | midipix*) gl_cv_func_strtof_works="guessing yes" ;;
-                                  # Guess yes on native Windows.
-              mingw* | windows*)  gl_cv_func_strtof_works="guessing yes" ;;
+                                  # Guess 'no (underflow problem)' on Cygwin.
+              cygwin*)            gl_cv_func_strtof_works="guessing no (underflow problem)" ;;
+                                  # Guess 'no (underflow problem)' on mingw.
+                                  # (Although the results may vary depending on
+                                  # __USE_MINGW_ANSI_STDIO and __USE_MINGW_STRTOX.)
+              mingw* | windows*)  gl_cv_func_strtof_works="guessing no (underflow problem)" ;;
               *)                  gl_cv_func_strtof_works="$gl_cross_guess_normal" ;;
             esac
            ])
@@ -129,6 +169,16 @@ numeric_equal (float x, float y)
       *yes) ;;
       *)
         REPLACE_STRTOF=1
+        case "$gl_cv_func_strtof_works" in
+          *"no (underflow problem)")
+            AC_DEFINE([STRTOF_HAS_UNDERFLOW_BUG], [1],
+              [Define to 1 if strtof does not set errno upon flush-to-zero underflow.])
+            ;;
+          *"no (gradual underflow problem)")
+            AC_DEFINE([STRTOF_HAS_GRADUAL_UNDERFLOW_PROBLEM], [1],
+              [Define to 1 if strtof does not set errno upon gradual underflow.])
+            ;;
+        esac
         ;;
     esac
   fi
