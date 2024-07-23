@@ -481,7 +481,7 @@ test_function (double (*my_strtod) (const char *, char **))
     ASSERT (errno == 0);
   }
 
-  /* Overflow/underflow.  */
+  /* Overflow.  */
   {
     const char input[] = "1E1000000";
     char *ptr;
@@ -502,6 +502,34 @@ test_function (double (*my_strtod) (const char *, char **))
     ASSERT (ptr == input + 10);
     ASSERT (errno == ERANGE);
   }
+
+  /* Gradual underflow, resulting in a denormalized number.  */
+  {
+    const char input[] = "1e-320";
+    char *ptr;
+    double result;
+    errno = 0;
+    result = my_strtod (input, &ptr);
+    ASSERT (0.0 < result && result <= DBL_MIN);
+    ASSERT (ptr == input + 6);
+#if !defined _MSC_VER
+    ASSERT (errno == ERANGE);
+#endif
+  }
+  {
+    const char input[] = "-1e-320";
+    char *ptr;
+    double result;
+    errno = 0;
+    result = my_strtod (input, &ptr);
+    ASSERT (-DBL_MIN <= result && result < 0.0);
+    ASSERT (ptr == input + 7);
+#if !defined _MSC_VER
+    ASSERT (errno == ERANGE);
+#endif
+  }
+
+  /* Flush-to-zero underflow.  */
   {
     const char input[] = "1E-100000";
     char *ptr;
@@ -520,16 +548,14 @@ test_function (double (*my_strtod) (const char *, char **))
     errno = 0;
     result = my_strtod (input, &ptr);
     ASSERT (-DBL_MIN <= result && result <= 0.0);
-#if 0
-    /* FIXME - this is glibc bug 5995; POSIX allows returning positive
-       0 on negative underflow, even though quality of implementation
-       demands preserving the sign.  Disable this test until fixed
-       glibc is more prevalent.  */
+    /* Negative underflow.  Expect a negative sign, although POSIX allows +0.0.
+       See also <https://sourceware.org/bugzilla/show_bug.cgi?id=5995>.  */
     ASSERT (!!signbit (result) == !!signbit (minus_zerod)); /* glibc-2.3.6, mingw */
-#endif
     ASSERT (ptr == input + 10);
     ASSERT (errno == ERANGE);
   }
+
+  /* Space before the exponent.  */
   {
     const char input[] = "1E 1000000";
     char *ptr;

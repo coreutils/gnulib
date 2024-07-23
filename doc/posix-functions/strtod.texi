@@ -31,7 +31,7 @@ OpenBSD 4.0, HP-UX 11.11, Solaris 9, mingw, MSVC 14.
 
 @item
 This function fails to parse @samp{NaN()} on some platforms:
-glibc-2.3.6, Mac OS X 10.5, FreeBSD 6.2, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, Cygwin < 1.5.25-11, mingw, MSVC 14.
+glibc 2.3.6, Mac OS X 10.5, FreeBSD 6.2, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, Cygwin < 1.5.25-11, mingw, MSVC 14.
 
 @item
 This function fails to parse @samp{NaN(@var{n-char-sequence})} on some
@@ -41,7 +41,11 @@ OpenBSD 4.0, HP-UX 11.11, mingw, MSVC 14.
 @item
 This function parses @samp{NaN(@var{n-char-sequence})}, but returns
 the wrong end pointer on some platforms:
-glibc-2.4, AIX 7.1.
+glibc 2.4, AIX 7.1.
+
+@item
+This function misparses @samp{nan(} on some platforms:
+macOS 10.6.6.
 
 @item
 This function fails to parse C99 hexadecimal floating point on some
@@ -57,6 +61,14 @@ HP-UX 11.31/ia64.
 This function returns the wrong end pointer for @samp{0x1p} on some
 platforms:
 AIX 7.1.
+
+@item
+@c The term "underflow", as defined by ISO C23 § 7.12.1.(6), includes both
+@c "gradual underflow" (result is a denormalized number) and "flush-to-zero
+@c underflow" (result is zero).
+This function fails to set @code{errno} upon gradual underflow (resulting
+in a denormalized number) on some platforms:
+Cygwin 2.9.
 @end itemize
 
 Portability problems fixed by Gnulib module @code{strtod-obsolete}:
@@ -81,6 +93,11 @@ glibc 2.7, mingw, MSVC 14.
 This function fails to correctly parse very long strings on some
 platforms:
 Mac OS X 10.5, FreeBSD 6.2, NetBSD 5.0, OpenBSD 4.0, Cygwin, mingw, MSVC 14.
+
+@item
+This function fails to set @code{errno} upon gradual underflow (resulting
+in a denormalized number) on some platforms:
+MSVC 14.
 
 @item
 The replacement function does not always return correctly rounded results.
