@@ -504,8 +504,10 @@ _GL_CXXALIAS_SYS_CAST (getsockopt, int,
 # endif
 _GL_CXXALIASWARN (getsockopt);
 #elif @HAVE_WINSOCK2_H@
-# undef getsockopt
-# define getsockopt getsockopt_used_without_requesting_gnulib_module_getsockopt
+# if !GNULIB_GETSOCKOPT
+#  undef getsockopt
+#  define getsockopt getsockopt_used_without_requesting_gnulib_module_getsockopt
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef getsockopt
 # if HAVE_RAW_DECL_GETSOCKOPT
