@@ -720,8 +720,10 @@ _GL_CXXALIAS_SYS (shutdown, int, (int fd, int how));
 # endif
 _GL_CXXALIASWARN (shutdown);
 #elif @HAVE_WINSOCK2_H@
-# undef shutdown
-# define shutdown shutdown_used_without_requesting_gnulib_module_shutdown
+# if !GNULIB_SHUTDOWN
+#  undef shutdown
+#  define shutdown shutdown_used_without_requesting_gnulib_module_shutdown
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef shutdown
 # if HAVE_RAW_DECL_SHUTDOWN
