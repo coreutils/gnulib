@@ -590,8 +590,10 @@ _GL_CXXALIAS_SYS_CAST (send, ssize_t,
 # endif
 _GL_CXXALIASWARN (send);
 #elif @HAVE_WINSOCK2_H@
-# undef send
-# define send send_used_without_requesting_gnulib_module_send
+# if !GNULIB_SEND
+#  undef send
+#  define send send_used_without_requesting_gnulib_module_send
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef send
 # if HAVE_RAW_DECL_SEND
