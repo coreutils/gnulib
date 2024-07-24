@@ -560,8 +560,10 @@ _GL_CXXALIAS_SYS (fstatat, int,
 # endif
 _GL_CXXALIASWARN (fstatat);
 #elif @GNULIB_OVERRIDES_STRUCT_STAT@
-# undef fstatat
-# define fstatat fstatat_used_without_requesting_gnulib_module_fstatat
+# if !GNULIB_FSTATAT
+#  undef fstatat
+#  define fstatat fstatat_used_without_requesting_gnulib_module_fstatat
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef fstatat
 # if HAVE_RAW_DECL_FSTATAT
