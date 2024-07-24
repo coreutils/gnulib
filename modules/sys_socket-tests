@@ -9,6 +9,7 @@ sys_socket-c++-tests
 configure.ac:
 AC_CHECK_FUNCS_ONCE([shutdown])
 gl_SOCKET_FAMILIES
+gl_SOCKET_FAMILY_UNIX
 
 Makefile.am:
 TESTS += test-sys_socket
