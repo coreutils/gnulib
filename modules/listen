@@ -15,6 +15,7 @@ configure.ac:
 AC_REQUIRE([gl_SYS_SOCKET_H])
 gl_CONDITIONAL([GL_COND_OBJ_LISTEN], [test "$ac_cv_header_winsock2_h" = yes])
 gl_SYS_SOCKET_MODULE_INDICATOR([listen])
+gl_MODULE_INDICATOR([listen])
 
 Makefile.am:
 if GL_COND_OBJ_LISTEN
