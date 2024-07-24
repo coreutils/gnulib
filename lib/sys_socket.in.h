@@ -695,8 +695,10 @@ _GL_CXXALIAS_SYS_CAST (setsockopt, int,
 # endif
 _GL_CXXALIASWARN (setsockopt);
 #elif @HAVE_WINSOCK2_H@
-# undef setsockopt
-# define setsockopt setsockopt_used_without_requesting_gnulib_module_setsockopt
+# if !GNULIB_SETSOCKOPT
+#  undef setsockopt
+#  define setsockopt setsockopt_used_without_requesting_gnulib_module_setsockopt
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef setsockopt
 # if HAVE_RAW_DECL_SETSOCKOPT
