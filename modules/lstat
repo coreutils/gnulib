@@ -18,6 +18,7 @@ AM_COND_IF([GL_COND_OBJ_LSTAT], [
   gl_PREREQ_LSTAT
 ])
 gl_SYS_STAT_MODULE_INDICATOR([lstat])
+gl_MODULE_INDICATOR([lstat])
 
 Makefile.am:
 if GL_COND_OBJ_LSTAT
