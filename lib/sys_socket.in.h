@@ -470,8 +470,10 @@ _GL_CXXALIAS_SYS_CAST (getsockname, int,
 _GL_CXXALIASWARN (getsockname);
 # endif
 #elif @HAVE_WINSOCK2_H@
-# undef getsockname
-# define getsockname getsockname_used_without_requesting_gnulib_module_getsockname
+# if !GNULIB_GETSOCKNAME
+#  undef getsockname
+#  define getsockname getsockname_used_without_requesting_gnulib_module_getsockname
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef getsockname
 # if HAVE_RAW_DECL_GETSOCKNAME
