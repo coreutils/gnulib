@@ -518,8 +518,10 @@ _GL_CXXALIAS_SYS (fstat, int, (int fd, struct stat *buf));
 _GL_CXXALIASWARN (fstat);
 # endif
 #elif @GNULIB_OVERRIDES_STRUCT_STAT@
-# undef fstat
-# define fstat fstat_used_without_requesting_gnulib_module_fstat
+# if !GNULIB_FSTAT
+#  undef fstat
+#  define fstat fstat_used_without_requesting_gnulib_module_fstat
+# endif
 #elif @WINDOWS_64_BIT_ST_SIZE@
 /* Above, we define stat to _stati64.  */
 # define fstat _fstati64
