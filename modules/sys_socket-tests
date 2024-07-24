@@ -3,6 +3,7 @@ tests/test-sys_socket.c
 
 Depends-on:
 assert-h
+intprops
 sys_socket-c++-tests
 
 configure.ac:

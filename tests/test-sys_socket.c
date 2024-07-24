@@ -38,6 +38,16 @@ struct msghdr msg;
 
 #include <errno.h>
 
+#include "intprops.h"
+
+/* POSIX requires that 'socklen_t' is an integer type with a width of at
+   least 32 bits.  */
+static_assert (32 <= TYPE_WIDTH (socklen_t));
+
+/* POSIX requires that sa_family_t is an unsigned integer type.  */
+static_assert (! TYPE_SIGNED (sa_family_t));
+
+
 int
 main (void)
 {
