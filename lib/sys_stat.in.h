@@ -122,9 +122,11 @@
 # if @GNULIB_STAT@
 #  define stat rpl_stat
 # else
-   /* Provoke a clear link error if stat() is used as a function and
-      module 'stat' is not in use.  */
-#  define stat stat_used_without_requesting_gnulib_module_stat
+#  if !GNULIB_STAT
+    /* Provoke a clear link error if stat() is used as a function and
+       module 'stat' is not in use.  */
+#   define stat stat_used_without_requesting_gnulib_module_stat
+#  endif
 # endif
 
 # if !GNULIB_defined_struct_stat
