@@ -434,8 +434,10 @@ _GL_CXXALIAS_SYS_CAST (getpeername, int,
 _GL_CXXALIASWARN (getpeername);
 # endif
 #elif @HAVE_WINSOCK2_H@
-# undef getpeername
-# define getpeername getpeername_used_without_requesting_gnulib_module_getpeername
+# if !GNULIB_GETPEERNAME
+#  undef getpeername
+#  define getpeername getpeername_used_without_requesting_gnulib_module_getpeername
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef getpeername
 # if HAVE_RAW_DECL_GETPEERNAME
