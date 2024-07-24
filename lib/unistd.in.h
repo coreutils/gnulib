@@ -1318,8 +1318,10 @@ _GL_CXXALIAS_SYS_CAST (gethostname, int, (char *name, size_t len));
 # endif
 _GL_CXXALIASWARN (gethostname);
 #elif @UNISTD_H_HAVE_WINSOCK2_H@
-# undef gethostname
-# define gethostname gethostname_used_without_requesting_gnulib_module_gethostname
+# if !GNULIB_GETHOSTNAME
+#  undef gethostname
+#  define gethostname gethostname_used_without_requesting_gnulib_module_gethostname
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef gethostname
 # if HAVE_RAW_DECL_GETHOSTNAME
