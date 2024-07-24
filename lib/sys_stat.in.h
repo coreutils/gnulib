@@ -934,8 +934,10 @@ _GL_CXXALIAS_SYS (lstat, int,
 _GL_CXXALIASWARN (lstat);
 # endif
 #elif @GNULIB_OVERRIDES_STRUCT_STAT@
-# undef lstat
-# define lstat lstat_used_without_requesting_gnulib_module_lstat
+# if !GNULIB_LSTAT
+#  undef lstat
+#  define lstat lstat_used_without_requesting_gnulib_module_lstat
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef lstat
 # if HAVE_RAW_DECL_LSTAT
