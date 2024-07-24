@@ -366,8 +366,10 @@ _GL_CXXALIAS_SYS_CAST (accept, int,
 _GL_CXXALIASWARN (accept);
 # endif
 #elif @HAVE_WINSOCK2_H@
-# undef accept
-# define accept accept_used_without_requesting_gnulib_module_accept
+# if !GNULIB_ACCEPT
+#  undef accept
+#  define accept accept_used_without_requesting_gnulib_module_accept
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef accept
 # if HAVE_RAW_DECL_ACCEPT
