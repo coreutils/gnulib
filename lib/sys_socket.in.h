@@ -296,8 +296,10 @@ _GL_CXXALIAS_SYS (socket, int, (int domain, int type, int protocol));
 # endif
 _GL_CXXALIASWARN (socket);
 #elif @HAVE_WINSOCK2_H@
-# undef socket
-# define socket socket_used_without_requesting_gnulib_module_socket
+# if !GNULIB_SOCKET
+#  undef socket
+#  define socket socket_used_without_requesting_gnulib_module_socket
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef socket
 # if HAVE_RAW_DECL_SOCKET
