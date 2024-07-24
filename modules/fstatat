@@ -28,6 +28,7 @@ gl_FUNC_FSTATAT
 gl_CONDITIONAL([GL_COND_OBJ_FSTATAT],
                [test $HAVE_FSTATAT = 0 || test $REPLACE_FSTATAT = 1])
 gl_SYS_STAT_MODULE_INDICATOR([fstatat])
+gl_MODULE_INDICATOR([fstatat])
 
 Makefile.am:
 if GL_COND_OBJ_FSTATAT
