@@ -411,8 +411,10 @@ _GL_CXXALIAS_SYS (close, int, (int fd));
 # endif
 _GL_CXXALIASWARN (close);
 #elif @UNISTD_H_HAVE_WINSOCK2_H_AND_USE_SOCKETS@
-# undef close
-# define close close_used_without_requesting_gnulib_module_close
+# if !GNULIB_CLOSE
+#  undef close
+#  define close close_used_without_requesting_gnulib_module_close
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef close
 /* Assume close is always declared.  */
