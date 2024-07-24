@@ -529,8 +529,10 @@ _GL_CXXALIAS_SYS (listen, int, (int fd, int backlog));
 # endif
 _GL_CXXALIASWARN (listen);
 #elif @HAVE_WINSOCK2_H@
-# undef listen
-# define listen listen_used_without_requesting_gnulib_module_listen
+# if !GNULIB_LISTEN
+#  undef listen
+#  define listen listen_used_without_requesting_gnulib_module_listen
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef listen
 # if HAVE_RAW_DECL_LISTEN
