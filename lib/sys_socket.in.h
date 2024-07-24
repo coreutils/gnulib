@@ -663,8 +663,10 @@ _GL_CXXALIAS_SYS_CAST (sendto, ssize_t,
 # endif
 _GL_CXXALIASWARN (sendto);
 #elif @HAVE_WINSOCK2_H@
-# undef sendto
-# define sendto sendto_used_without_requesting_gnulib_module_sendto
+# if !GNULIB_SENDTO
+#  undef sendto
+#  define sendto sendto_used_without_requesting_gnulib_module_sendto
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef sendto
 # if HAVE_RAW_DECL_SENDTO
