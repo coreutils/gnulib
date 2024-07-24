@@ -328,8 +328,10 @@ _GL_CXXALIAS_SYS_CAST (connect, int,
 # endif
 _GL_CXXALIASWARN (connect);
 #elif @HAVE_WINSOCK2_H@
-# undef connect
-# define connect socket_used_without_requesting_gnulib_module_connect
+# if !GNULIB_CONNECT
+#  undef connect
+#  define connect connect_used_without_requesting_gnulib_module_connect
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef connect
 # if HAVE_RAW_DECL_CONNECT
