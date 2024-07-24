@@ -662,18 +662,10 @@ main ()
     const char *ptr;
     long double result = UNINIT;
     bool ok = xstrtold (input, &ptr, &result, strtold);
-#if defined _MSC_VER
     ASSERT (ok);
-#else
-    ASSERT (!ok);
-#endif
     ASSERT (0.0L < result && result <= LDBL_MIN);
     ASSERT (ptr == input + strlen (input));
-#if defined _MSC_VER
     ASSERT (errno == 0);
-#else
-    ASSERT (errno == ERANGE);
-#endif
   }
   {
 #if LDBL_MAX_EXP > 10000
@@ -684,18 +676,10 @@ main ()
     const char *ptr;
     long double result = UNINIT;
     bool ok = xstrtold (input, &ptr, &result, strtold);
-#if defined _MSC_VER
     ASSERT (ok);
-#else
-    ASSERT (!ok);
-#endif
     ASSERT (-LDBL_MIN <= result && result < 0.0L);
     ASSERT (ptr == input + strlen (input));
-#if defined _MSC_VER
     ASSERT (errno == 0);
-#else
-    ASSERT (errno == ERANGE);
-#endif
   }
 
   /* Flush-to-zero underflow.  */

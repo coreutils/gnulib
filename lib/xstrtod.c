@@ -57,11 +57,18 @@ XSTRTOD (char const *str, char const **ptr, DOUBLE *result,
   else
     {
       /* Flag overflow as an error.
-         Flag gradual underflow as an error.
+         Flag gradual underflow as no error.
          Flag flush-to-zero underflow as no error.
          In either case, the caller can inspect *RESULT to get more details.  */
       if (val != 0 && errno == ERANGE)
-        ok = false;
+        {
+          if (val >= 1 || val <= -1)
+            /* Overflow.  */
+            ok = false;
+          else
+            /* Gradual underflow.  */
+            errno = 0;
+        }
     }
 
   if (ptr != NULL)

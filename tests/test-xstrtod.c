@@ -658,36 +658,20 @@ main ()
     const char *ptr;
     double result = UNINIT;
     bool ok = xstrtod (input, &ptr, &result, strtod);
-#if defined _MSC_VER
     ASSERT (ok);
-#else
-    ASSERT (!ok);
-#endif
     ASSERT (0.0 < result && result <= DBL_MIN);
     ASSERT (ptr == input + 6);
-#if defined _MSC_VER
     ASSERT (errno == 0);
-#else
-    ASSERT (errno == ERANGE);
-#endif
   }
   {
     const char input[] = "-1e-320";
     const char *ptr;
     double result = UNINIT;
     bool ok = xstrtod (input, &ptr, &result, strtod);
-#if defined _MSC_VER
     ASSERT (ok);
-#else
-    ASSERT (!ok);
-#endif
     ASSERT (-DBL_MIN <= result && result < 0.0);
     ASSERT (ptr == input + 7);
-#if defined _MSC_VER
     ASSERT (errno == 0);
-#else
-    ASSERT (errno == ERANGE);
-#endif
   }
 
   /* Flush-to-zero underflow.  */

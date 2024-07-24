@@ -42,8 +42,7 @@ extern "C" {
    NaN                                                true    NaN         0
    ±Infinity                                          true    ±HUGE_VAL   0
    overflow                                           false   ±HUGE_VAL   ERANGE
-   gradual underflow [!MSVC]                          false   near zero   ERANGE
-   gradual underflow [MSVC]                           true    near zero   0
+   gradual underflow                                  true    near zero   0
    flush-to-zero underflow                            true    ±0.0        ERANGE
    other finite value                                 true    value       0
 
@@ -68,8 +67,7 @@ bool xstrtod (const char *str, const char **ptr, double *result,
    NaN                                                true    NaN         0
    ±Infinity                                          true    ±HUGE_VALL  0
    overflow                                           false   ±HUGE_VALL  ERANGE
-   gradual underflow [!MSVC]                          false   near zero   ERANGE
-   gradual underflow [MSVC]                           true    near zero   0
+   gradual underflow                                  true    near zero   0
    flush-to-zero underflow                            true    ±0.0L       ERANGE
    other finite value                                 true    value       0
 
