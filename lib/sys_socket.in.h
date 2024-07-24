@@ -558,8 +558,10 @@ _GL_CXXALIAS_SYS_CAST (recv, ssize_t, (int fd, void *buf, size_t len, int flags)
 # endif
 _GL_CXXALIASWARN (recv);
 #elif @HAVE_WINSOCK2_H@
-# undef recv
-# define recv recv_used_without_requesting_gnulib_module_recv
+# if !GNULIB_RECV
+#  undef recv
+#  define recv recv_used_without_requesting_gnulib_module_recv
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef recv
 # if HAVE_RAW_DECL_RECV
