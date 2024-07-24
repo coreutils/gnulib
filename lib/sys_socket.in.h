@@ -398,8 +398,10 @@ _GL_CXXALIAS_SYS_CAST (bind, int,
 # endif
 _GL_CXXALIASWARN (bind);
 #elif @HAVE_WINSOCK2_H@
-# undef bind
-# define bind bind_used_without_requesting_gnulib_module_bind
+# if !GNULIB_BIND
+#  undef bind
+#  define bind bind_used_without_requesting_gnulib_module_bind
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef bind
 # if HAVE_RAW_DECL_BIND
