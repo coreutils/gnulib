@@ -54,7 +54,9 @@ typedef enum strtol_error strtol_error;
      includes '0' they can be followed by "B" to stand for the usual
      SI powers of 1000 (or by "iB" to stand for powers of 1024 as before).
      Other supported suffixes include 'K' for 1024 or 1000, 'b' for 512,
-     'c' for 1, and 'w' for 2.  */
+     'c' for 1, and 'w' for 2.
+   - Suppose that after the initial whitespace, the number is missing
+     but there is a valid suffix.  Then the number is treated as 1.  */
 
 #define _DECLARE_XSTRTOL(name, type) \
   strtol_error name (char const *restrict /*nptr*/,             \
