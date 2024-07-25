@@ -3,6 +3,7 @@ tests/test-xstrtol.c
 tests/test-xstrtoll.c
 tests/test-xstrtoull.c
 tests/test-xstrtoll.sh
+tests/macros.h
 
 Depends-on:
 inttypes

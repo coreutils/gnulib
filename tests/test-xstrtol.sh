@@ -68,4 +68,7 @@ EOF
 
 compare expected out || result=1
 
+# Other misc tests.
+${CHECKER} test-xstrtol || result=1
+
 Exit $result

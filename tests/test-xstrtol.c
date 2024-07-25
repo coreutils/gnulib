@@ -21,6 +21,7 @@
 #include <stdio.h>
 
 #include <error.h>
+#include "macros.h"
 #include "xstrtol-error.h"
 
 #ifndef __xstrtol
@@ -38,25 +39,45 @@ print_no_progname (void)
 int
 main (int argc, char **argv)
 {
-  strtol_error s_err;
-  int i;
-
-  error_print_progname = print_no_progname;
-
-  for (i = 1; i < argc; i++)
+  if (argc > 1)
     {
-      char *p;
-      __strtol_t val;
+      /* Test cases given on the command line.  */
+      int i;
 
-      s_err = __xstrtol (argv[i], &p, 0, &val, "bckMw0");
-      if (s_err == LONGINT_OK)
+      error_print_progname = print_no_progname;
+
+      for (i = 1; i < argc; i++)
         {
-          printf ("%s->%" __spec " (%s)\n", argv[i], val, p);
+          char *p;
+          __strtol_t val;
+          strtol_error s_err = __xstrtol (argv[i], &p, 0, &val, "bckMw0");
+          if (s_err == LONGINT_OK)
+            {
+              printf ("%s->%" __spec " (%s)\n", argv[i], val, p);
+            }
+          else
+            {
+              xstrtol_fatal (s_err, -2, 'X', NULL, argv[i]);
+            }
         }
-      else
-        {
-          xstrtol_fatal (s_err, -2, 'X', NULL, argv[i]);
-        }
+
+      return 0;
     }
-  exit (0);
+  else
+    {
+      /* Miscellaneous test cases.  */
+
+      /* Test an invalid base.  Reported by Alejandro Colomar.  */
+      {
+        const char input[] = "k";
+        char *endp = NULL;
+        __strtol_t val = -17;
+        strtol_error s_err = __xstrtol (input, &endp, -1, &val, "k");
+        ASSERT (s_err == LONGINT_INVALID);
+        ASSERT (endp == NULL);
+        ASSERT (val == -17);
+      }
+
+      return test_exit_status;
+    }
 }
