@@ -73,9 +73,15 @@ main (int argc, char **argv)
         char *endp = NULL;
         __strtol_t val = -17;
         strtol_error s_err = __xstrtol (input, &endp, -1, &val, "k");
+#if defined __FreeBSD__
+        ASSERT (s_err == LONGINT_OK);
+        ASSERT (endp == input + 1);
+        ASSERT (val == 1024);
+#else
         ASSERT (s_err == LONGINT_INVALID);
         ASSERT (endp == NULL);
         ASSERT (val == -17);
+#endif
       }
 
       return test_exit_status;
