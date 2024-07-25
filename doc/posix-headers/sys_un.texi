@@ -3,17 +3,20 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/sys_un.h.html}
 
-Gnulib module: ---
+Gnulib module: sys_un
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+@c Added in Windows 10 Insider Build 17063:
+@c <https://devblogs.microsoft.com/commandline/af_unix-comes-to-windows/>
+@c <https://blogs.windows.com/windows-insider/2017/12/19/announcing-windows-10-insider-preview-build-17063-pc/>
+This header file is missing on some platforms:
+mingw, MSVC 14.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
-@item
-This header file is missing on some platforms:
-mingw, MSVC 14.
 @item
 This header requires <code>sys/socket.h</code> to be included first on
 some platforms:
