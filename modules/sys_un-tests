@@ -3,6 +3,7 @@ tests/test-sys_un.c
 
 Depends-on:
 assert-h
+sys_un-c++-tests
 
 configure.ac:
 
