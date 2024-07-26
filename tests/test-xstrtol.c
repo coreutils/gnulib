@@ -67,7 +67,8 @@ main (int argc, char **argv)
     {
       /* Miscellaneous test cases.  */
 
-      /* Test an invalid base.  Reported by Alejandro Colomar.  */
+      /* Test an invalid base (undefined behaviour, as documented in xstrtol.h).
+         Reported by Alejandro Colomar.  */
       {
         const char input[] = "k";
         char *endp = NULL;
