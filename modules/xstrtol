@@ -9,7 +9,6 @@ m4/xstrtol.m4
 
 Depends-on:
 intprops
-nullptr
 stdckdint
 stdint
 

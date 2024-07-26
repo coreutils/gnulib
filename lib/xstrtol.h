@@ -47,6 +47,8 @@ typedef enum strtol_error strtol_error;
    - Return strtol_error, and store any result through an additional
      TYPE *VAL pointer instead of returning the result.
    - If TYPE is unsigned, reject leading '-'.
+   - Behavior is undefined if BASE is negative, 1, or greater than 36.
+     (In this respect xstrtol acts like the C standard, not like POSIX.)
    - Accept an additional char const *VALID_SUFFIXES pointer to a
      possibly-empty string containing allowed numeric suffixes,
      which multiply the value.  These include SI suffixes like 'k' and 'M';
