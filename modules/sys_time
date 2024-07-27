@@ -44,6 +44,7 @@ sys/time.h: sys_time.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNU
 	      $(srcdir)/sys_time.in.h > $@-t
 	$(AM_V_at)mv $@-t $@
 MOSTLYCLEANFILES += sys/time.h sys/time.h-t
+MOSTLYCLEANDIRS += sys
 
 Include:
 <sys/time.h>
