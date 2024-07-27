@@ -544,6 +544,7 @@ sc_require_config_h_first:
 # sed -n -e 's/^@item[[:space:]]\{1,\}@code{\([^}]\{1,\}\)}$/\1/p' $GNULIB_SRCDIR/doc/gnulib-tool.texi  | sort -u
 gl_prefer_angle_bracket_headers_ ?= \
   alloca.h		\
+  argz.h		\
   arpa/inet.h		\
   assert.h		\
   byteswap.h		\
@@ -552,6 +553,7 @@ gl_prefer_angle_bracket_headers_ ?= \
   endian.h		\
   errno.h		\
   error.h		\
+  execinfo.h		\
   fcntl.h		\
   fenv.h		\
   float.h		\
@@ -559,6 +561,7 @@ gl_prefer_angle_bracket_headers_ ?= \
   getopt.h		\
   glob.h		\
   iconv.h		\
+  ieee754.h		\
   inttypes.h		\
   langinfo.h		\
   limits.h		\
@@ -569,22 +572,28 @@ gl_prefer_angle_bracket_headers_ ?= \
   netdb.h		\
   net/if.h		\
   netinet/in.h		\
+  obstack.h		\
   omp.h			\
   poll.h		\
   pthread.h		\
   pty.h			\
   sched.h		\
   search.h		\
+  selinux/context.h	\
+  selinux/label.h	\
   selinux/selinux.h	\
   signal.h		\
   spawn.h		\
   stdalign.h		\
   stdarg.h		\
   stdbit.h		\
+  stdbool.h		\
+  stdckdint.h		\
   stddef.h		\
   stdint.h		\
   stdio.h		\
   stdlib.h		\
+  stdnoreturn.h		\
   string.h		\
   strings.h		\
   sysexits.h		\
@@ -602,6 +611,7 @@ gl_prefer_angle_bracket_headers_ ?= \
   sys/times.h		\
   sys/types.h		\
   sys/uio.h		\
+  sys/un.h		\
   sys/utsname.h		\
   sys/wait.h		\
   termios.h		\
