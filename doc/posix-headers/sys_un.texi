@@ -18,7 +18,7 @@ mingw, MSVC 14.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
-This header requires <code>sys/socket.h</code> to be included first on
+This header requires @code{sys/socket.h} to be included first on
 some platforms:
 Cygwin 1.7.18.
 @end itemize
