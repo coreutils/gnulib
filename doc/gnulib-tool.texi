@@ -587,10 +587,13 @@ This is true for the following POSIX or ISO C standardized header files:
 @item @code{stdalign.h}
 @item @code{stdarg.h}
 @item @code{stdbit.h}
+@item @code{stdbool.h}
+@item @code{stdckdint.h}
 @item @code{stddef.h}
 @item @code{stdint.h}
 @item @code{stdio.h}
 @item @code{stdlib.h}
+@item @code{stdnoreturn.h}
 @item @code{string.h}
 @item @code{strings.h}
 @item @code{sys/msg.h}
@@ -604,6 +607,7 @@ This is true for the following POSIX or ISO C standardized header files:
 @item @code{sys/times.h}
 @item @code{sys/types.h}
 @item @code{sys/uio.h}
+@item @code{sys/un.h}
 @item @code{sys/utsname.h}
 @item @code{sys/wait.h}
 @item @code{termios.h}
@@ -620,17 +624,23 @@ as well as for the following header files that exist in the GNU C library
 but are not standardized:
 @itemize @asis{}
 @item @code{alloca.h}
+@item @code{argz.h}
 @item @code{byteswap.h}
 @item @code{error.h}
+@item @code{execinfo.h}
 @item @code{getopt.h}
+@item @code{ieee754.h}
 @item @code{malloc.h}
+@item @code{obstack.h}
 @item @code{omp.h}
 @item @code{pty.h}
+@item @code{selinux/context.h}
+@item @code{selinux/label.h}
 @item @code{selinux/selinux.h}
+@item @code{sysexits.h}
 @item @code{sys/file.h}
 @item @code{sys/ioctl.h}
 @item @code{sys/random.h}
-@item @code{sysexits.h}
 @item @code{utmp.h}
 @end itemize
 @noindent
