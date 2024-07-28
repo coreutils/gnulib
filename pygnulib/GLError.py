@@ -56,6 +56,7 @@ class GLError(Exception):
          20: could not patch test-driver script
          21: Option --automake-subdir is only supported if the definition of AUTOMAKE_OPTIONS in Makefile.am contains 'subdir-objects'.
          22: not overwriting destination directory: <directory>
+         23: module <module> doesn't exist
         errinfo: additional information'''
         self.errno = errno
         self.errinfo = errinfo
@@ -110,5 +111,7 @@ class GLError(Exception):
                            'Makefile.am contains \'subdir-objects\'.')
             elif errno == 22:
                 message = 'not overwriting destination directory: %s' % repr(errinfo)
+            elif errno == 23:
+                message = "module %s doesn't exist" % repr(errinfo)
             self.message = '[Errno %d] %s' % (errno, message)
         return self.message

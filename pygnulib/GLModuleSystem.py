@@ -113,7 +113,7 @@ class GLModuleSystem:
             return result
         else:  # if not self.exists(module)
             if self.config['errors']:
-                raise GLError(3, module_name)
+                raise GLError(23, module_name)
             else:  # if not self.config['errors']
                 sys.stderr.write('gnulib-tool: warning: ')
                 sys.stderr.write("module %s doesn't exist\n" % module_name)
