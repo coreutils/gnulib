@@ -134,6 +134,8 @@ Usage: gnulib-tool --list
        gnulib-tool --extract-filelist module
        gnulib-tool --extract-dependencies module
        gnulib-tool --extract-recursive-dependencies module
+       gnulib-tool --extract-dependents module
+       gnulib-tool --extract-recursive-dependents module
        gnulib-tool --extract-autoconf-snippet module
        gnulib-tool --extract-automake-snippet module
        gnulib-tool --extract-include-directive module
@@ -175,6 +177,11 @@ Operation modes:
       --extract-recursive-dependencies  extract the dependencies of the module
                                         and its dependencies, recursively, all
                                         together, but without the conditions
+      --extract-dependents         list the modules which depend on the given
+                                   module directly.  This is also known as the
+                                   "reverse dependencies".
+      --extract-recursive-dependents  list the modules which depend on the given
+                                      module directly or indirectly
       --extract-autoconf-snippet   extract the snippet for configure.ac
       --extract-automake-snippet   extract the snippet for library makefile
       --extract-include-directive  extract the #include directive

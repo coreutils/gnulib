@@ -23,6 +23,7 @@ import re
 import sys
 import hashlib
 import subprocess as sp
+import shlex
 from collections import defaultdict
 from typing import Any, ClassVar
 from .constants import (
@@ -330,33 +331,6 @@ class GLModule:
         result = self.name == 'libtextstyle-optional'
         return result
 
-    def getDependenciesRecursively(self) -> str:
-        '''Return a list of recursive dependencies of this module separated
-        by a newline.'''
-        handledmodules = set()
-        inmodules = set()
-        outmodules = set()
-
-        # In order to process every module only once (for speed), process an "input
-        # list" of modules, producing an "output list" of modules. During each round,
-        # more modules can be queued in the input list. Once a module on the input
-        # list has been processed, it is added to the "handled list", so we can avoid
-        # to process it again.
-        inmodules.add(self)
-        while len(inmodules) > 0:
-            inmodules_this_round = inmodules
-            inmodules = set()  # Accumulator, queue for next round
-            for module in inmodules_this_round:
-                outmodules.add(module)
-                inmodules = inmodules.union(module.getDependenciesWithoutConditions())
-            handledmodules = handledmodules.union(inmodules_this_round)
-            # Remove handledmodules from inmodules.
-            inmodules = inmodules.difference(handledmodules)
-
-        module_names = sorted([ module.name
-                                for module in outmodules ])
-        return lines_to_multiline(module_names)
-
     def getLinkDirectiveRecursively(self) -> str:
         '''Return a list of the link directives of this module separated
         by a newline.'''
@@ -553,6 +527,107 @@ class GLModule:
                     result.append((module, condition))
             self.cache['dependenciesWithCond'] = result
         return self.cache['dependenciesWithCond']
+
+    def getDependenciesRecursively(self) -> str:
+        '''Return a list of recursive dependencies of this module separated
+        by a newline.'''
+        handledmodules = set()
+        inmodules = set()
+        outmodules = set()
+
+        # In order to process every module only once (for speed), process an "input
+        # list" of modules, producing an "output list" of modules. During each round,
+        # more modules can be queued in the input list. Once a module on the input
+        # list has been processed, it is added to the "handled list", so we can avoid
+        # to process it again.
+        inmodules.add(self)
+        while len(inmodules) > 0:
+            inmodules_this_round = inmodules
+            inmodules = set()  # Accumulator, queue for next round
+            for module in inmodules_this_round:
+                outmodules.add(module)
+                inmodules = inmodules.union(module.getDependenciesWithoutConditions())
+            handledmodules = handledmodules.union(inmodules_this_round)
+            # Remove handledmodules from inmodules.
+            inmodules = inmodules.difference(handledmodules)
+
+        module_names = sorted([ module.name
+                                for module in outmodules ])
+        return lines_to_multiline(module_names)
+
+    def getDependents(self) -> list[GLModule]:
+        '''Return list of dependents (a.k.a. "reverse dependencies"),
+        as a list of GLModule objects.
+        GLConfig: localpath.'''
+        if 'dependents' not in self.cache:
+            localpath = self.config['localpath']
+            # Find a set of module candidates quickly.
+            # TODO: Optimize. This approach is fine for a single getDependents
+            #       invocation, but not for 100 or 1000 of them.
+            # Convert the module name to a POSIX basic regex.
+            # Needs to handle . [ \ * ^ $.
+            regex = self.name.replace('\\', '\\\\').replace('[', '\\[').replace('^', '\\^')
+            regex = re.compile(r'([.*$])').sub(r'[\1]', regex)
+            line_regex = '^' + regex
+            # We can't add a '$' to line_regex, because that would fail to match
+            # lines that denote conditional dependencies. We could invoke grep
+            # twice, once to search for  line_regex + '$'  and once to search
+            # for   line_regex + [ <TAB>]  but that would be twice as slow.
+            # Read module candidates from gnulib root directory.
+            command = "find modules -type f -print | xargs -n 100 grep -l %s /dev/null | sed -e 's,^modules/,,'" % shlex.quote(line_regex)
+            with sp.Popen(command, shell=True, cwd=DIRS['root'], stdout=sp.PIPE) as proc:
+                result = proc.stdout.read().decode('UTF-8')
+            # Read module candidates from local directories.
+            if localpath != None and len(localpath) > 0:
+                command = "find modules -type f -print | xargs -n 100 grep -l %s /dev/null | sed -e 's,^modules/,,' -e 's,\\.diff$,,'" % shlex.quote(line_regex)
+                for localdir in localpath:
+                    with sp.Popen(command, shell=True, cwd=localdir, stdout=sp.PIPE) as proc:
+                        result += proc.stdout.read().decode('UTF-8')
+            listing = [ line
+                        for line in result.split('\n')
+                        if line.strip() ]
+            # Remove modules/ prefix from each file name.
+            pattern = re.compile(r'^modules/')
+            listing = [ pattern.sub('', line)
+                        for line in listing ]
+            # Filter out undesired file names.
+            listing = [ line
+                        for line in listing
+                        if self.modulesystem.file_is_module(line) ]
+            candidates = sorted(set(listing))
+            result = []
+            for name in candidates:
+                module = self.modulesystem.find(name)
+                if module:  # Ignore module candidates that don't actually exist.
+                    if self in module.getDependenciesWithoutConditions():
+                        result.append(module)
+            self.cache['dependents'] = result
+        return self.cache['dependents']
+
+    def getDependentsRecursively(self) -> str:
+        '''Return a list of recursive dependents of this module,
+        as a list of GLModule objects.'''
+        handledmodules = set()
+        inmodules = set()
+        outmodules = set()
+
+        # In order to process every module only once (for speed), process an "input
+        # list" of modules, producing an "output list" of modules. During each round,
+        # more modules can be queued in the input list. Once a module on the input
+        # list has been processed, it is added to the "handled list", so we can avoid
+        # to process it again.
+        inmodules.add(self)
+        while len(inmodules) > 0:
+            inmodules_this_round = inmodules
+            inmodules = set()  # Accumulator, queue for next round
+            for module in inmodules_this_round:
+                outmodules.add(module)
+                inmodules = inmodules.union(module.getDependents())
+            handledmodules = handledmodules.union(inmodules_this_round)
+            # Remove handledmodules from inmodules.
+            inmodules = inmodules.difference(handledmodules)
+
+        return outmodules
 
     def getAutoconfEarlySnippet(self) -> str:
         '''Return autoconf-early snippet.'''

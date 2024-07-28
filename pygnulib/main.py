@@ -213,6 +213,14 @@ def main(temp_directory: str) -> None:
                         dest='mode_xrecursive_dependencies',
                         default=None,
                         action='store_true')
+    parser.add_argument('--extract-dependents',
+                        dest='mode_xdependents',
+                        default=None,
+                        action='store_true')
+    parser.add_argument('--extract-recursive-dependents',
+                        dest='mode_xrecursive_dependents',
+                        default=None,
+                        action='store_true')
     parser.add_argument('--extract-autoconf-snippet',
                         dest='mode_xautoconf',
                         default=None,
@@ -558,6 +566,9 @@ def main(temp_directory: str) -> None:
         cmdargs.mode_xusability_in_testdir,
         cmdargs.mode_xfilelist,
         cmdargs.mode_xdependencies,
+        cmdargs.mode_xrecursive_dependencies,
+        cmdargs.mode_xdependents,
+        cmdargs.mode_xrecursive_dependents,
         cmdargs.mode_xautoconf,
         cmdargs.mode_xautomake,
         cmdargs.mode_xinclude,
@@ -647,6 +658,12 @@ def main(temp_directory: str) -> None:
         modules = list(cmdargs.non_option_arguments)
     if cmdargs.mode_xrecursive_dependencies != None:
         mode = 'extract-recursive-dependencies'
+        modules = list(cmdargs.non_option_arguments)
+    if cmdargs.mode_xdependents != None:
+        mode = 'extract-dependents'
+        modules = list(cmdargs.non_option_arguments)
+    if cmdargs.mode_xrecursive_dependents != None:
+        mode = 'extract-recursive-dependents'
         modules = list(cmdargs.non_option_arguments)
     if cmdargs.mode_xinclude != None:
         mode = 'extract-include-directive'
@@ -1240,6 +1257,38 @@ def main(temp_directory: str) -> None:
             module = modulesystem.find(name)
             if module:
                 sys.stdout.write(module.getDependenciesRecursively())
+
+    elif mode == 'extract-dependents':
+        if avoids:
+            message = '%s: *** ' % APP['name']
+            message += 'cannot combine --avoid and --extract-dependents\n'
+            message += '%s: *** Stop.\n' % APP['name']
+            sys.stderr.write(message)
+            sys.exit(1)
+        modulesystem = GLModuleSystem(config)
+        for name in modules:
+            module = modulesystem.find(name)
+            if module:
+                dependents = module.getDependents()
+                dependents_names = sorted([ m.name
+                                            for m in dependents ])
+                sys.stdout.write(lines_to_multiline(dependents_names))
+
+    elif mode == 'extract-recursive-dependents':
+        if avoids:
+            message = '%s: *** ' % APP['name']
+            message += 'cannot combine --avoid and --extract-recursive-dependents\n'
+            message += '%s: *** Stop.\n' % APP['name']
+            sys.stderr.write(message)
+            sys.exit(1)
+        modulesystem = GLModuleSystem(config)
+        for name in modules:
+            module = modulesystem.find(name)
+            if module:
+                dependents = module.getDependentsRecursively()
+                dependents_names = sorted([ m.name
+                                            for m in dependents ])
+                sys.stdout.write(lines_to_multiline(dependents_names))
 
     elif mode == 'extract-autoconf-snippet':
         modulesystem = GLModuleSystem(config)
