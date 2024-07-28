@@ -1457,6 +1457,8 @@ def main_with_exception_handling() -> None:
                             'Makefile.am contains \'subdir-objects\'.')
             elif errno == 22:
                 message += 'not overwriting destination directory: %s' % errinfo
+            elif errno == 23:
+                message += "module %s doesn't exist" % errinfo
             message += '\n%s: *** Stop.\n' % APP['name']
             sys.stderr.write(message)
             sys.exit(1)
