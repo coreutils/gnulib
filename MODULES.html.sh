@@ -2457,6 +2457,7 @@ func_all_modules ()
   func_begin_table
   func_module alignasof
   func_module nullptr
+  func_module std-gnu23
   func_module stdckdint
   func_end_table
 

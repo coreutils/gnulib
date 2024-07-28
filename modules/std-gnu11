@@ -1,5 +1,5 @@
 Description:
-Prefer GNU C11 and C++11 to earlier versions.
+Prefer GNU C11 and C++11 to earlier versions, unless std-gnu23 is also used.
 
 Files:
 m4/std-gnu11.m4
