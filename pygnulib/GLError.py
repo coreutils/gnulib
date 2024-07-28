@@ -57,6 +57,7 @@ class GLError(Exception):
          21: Option --automake-subdir is only supported if the definition of AUTOMAKE_OPTIONS in Makefile.am contains 'subdir-objects'.
          22: not overwriting destination directory: <directory>
          23: module <module> doesn't exist
+         24: module <module> cannot be used in a testdir
         errinfo: additional information'''
         self.errno = errno
         self.errinfo = errinfo
@@ -113,5 +114,7 @@ class GLError(Exception):
                 message = 'not overwriting destination directory: %s' % repr(errinfo)
             elif errno == 23:
                 message = "module %s doesn't exist" % repr(errinfo)
+            elif errno == 24:
+                message = 'module %s cannot be used in a testdir' % repr(errinfo)
             self.message = '[Errno %d] %s' % (errno, message)
         return self.message

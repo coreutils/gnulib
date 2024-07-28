@@ -145,25 +145,26 @@ class GLTestDir:
 
         specified_modules = self.config['modules']
         if len(specified_modules) == 0:
-            # All modules together.
-            # Except config-h, which breaks all modules which use HAVE_CONFIG_H.
-            # Except non-recursive-gnulib-prefix-hack, which represents a nonstandard
-            # way of using Automake.
-            # Except timevar, which lacks the required file timevar.def.
-            # Except mountlist, which aborts the configuration on mingw. FIXME.
-            # Except lib-ignore, which leads to link errors when Sun C++ is used. FIXME.
+            # All modules together, except those that are not usable in a testdir.
             specified_modules = self.modulesystem.list()
-            specified_modules = [module
-                                 for module in specified_modules
-                                 if module not in ['config-h', 'non-recursive-gnulib-prefix-hack', 'timevar',
-                                                   'mountlist', 'lib-ignore']]
+            specified_modules = [ module_name
+                                  for module_name in specified_modules
+                                  if self.modulesystem.find(module_name) is not None \
+                                      and self.modulesystem.find(module_name).getUsabilityInTestdir() != 'no' ]
 
         # Canonicalize the list of specified modules.
         modules = set()
-        for name in specified_modules:
-            module = self.modulesystem.find(name)
+        for module_name in specified_modules:
+            module = self.modulesystem.find(module_name)
             if module is not None:
-                modules.add(module)
+                if module.getUsabilityInTestdir() == 'no':
+                    if self.config['errors']:
+                        raise GLError(24, module_name)
+                    else:  # if not self.config['errors']
+                        sys.stderr.write('gnulib-tool: warning: ')
+                        sys.stderr.write('module %s cannot be used in a testdir\n' % module_name)
+                else:
+                    modules.add(module)
         specified_modules = sorted(modules)
 
         # Test modules which invoke AC_CONFIG_FILES cannot be used with

@@ -130,6 +130,7 @@ Usage: gnulib-tool --list
        gnulib-tool --extract-status module
        gnulib-tool --extract-notice module
        gnulib-tool --extract-applicability module
+       gnulib-tool --extract-usability-in-testdir module
        gnulib-tool --extract-filelist module
        gnulib-tool --extract-dependencies module
        gnulib-tool --extract-recursive-dependencies module
@@ -168,6 +169,7 @@ Operation modes:
       --extract-status             extract the status (obsolete etc.)
       --extract-notice             extract the notice or banner
       --extract-applicability      extract the applicability
+      --extract-usability-in-testdir  extract the usability in testdirs
       --extract-filelist           extract the list of files
       --extract-dependencies       extract the dependencies
       --extract-recursive-dependencies  extract the dependencies of the module

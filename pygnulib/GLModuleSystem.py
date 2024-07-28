@@ -176,7 +176,7 @@ class GLModule:
 
     # Regular expression matching the start of a section in the module description.
     section_label_pattern: ClassVar[re.Pattern] = \
-        re.compile(r'^(Description|Comment|Status|Notice|Applicability|'
+        re.compile(r'^(Description|Comment|Status|Notice|Applicability|Usable-in-testdir|'
                    + r'Files|Depends-on|configure\.ac-early|configure\.ac|'
                    + r'Makefile\.am|Include|Link|License|Maintainer):$',
                    re.M)
@@ -458,6 +458,17 @@ class GLModule:
                     result = 'main'
             self.cache['applicability'] = result
         return self.cache['applicability']
+
+    def getUsabilityInTestdir(self) -> str:
+        '''Return the usability-in-testdir of module.'''
+        if 'usability-in-testdir' not in self.cache:
+            snippet = self.sections.get('Usable-in-testdir', '')
+            result = [ line.strip()
+                       for line in snippet.split('\n')
+                       if not line.startswith('#') and line.strip() ]
+            result = lines_to_multiline(result).strip()
+            self.cache['usability-in-testdir'] = result
+        return self.cache['usability-in-testdir']
 
     def getFiles_Raw(self) -> str:
         '''Return the unmodified list of files as a string.'''

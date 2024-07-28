@@ -1,6 +1,10 @@
 Description:
 Assume config.h exists, to avoid -DHAVE_CONFIG_H clutter in 'make' output.
 
+Usable-in-testdir:
+# This module breaks all modules which use HAVE_CONFIG_H.
+no
+
 Files:
 m4/config-h.m4
 

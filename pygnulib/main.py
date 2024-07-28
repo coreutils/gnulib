@@ -197,6 +197,10 @@ def main(temp_directory: str) -> None:
                         dest='mode_xapplicability',
                         default=None,
                         action='store_true')
+    parser.add_argument('--extract-usability-in-testdir',
+                        dest='mode_xusability_in_testdir',
+                        default=None,
+                        action='store_true')
     parser.add_argument('--extract-filelist',
                         dest='mode_xfilelist',
                         default=None,
@@ -551,6 +555,7 @@ def main(temp_directory: str) -> None:
         cmdargs.mode_xstatus,
         cmdargs.mode_xnotice,
         cmdargs.mode_xapplicability,
+        cmdargs.mode_xusability_in_testdir,
         cmdargs.mode_xfilelist,
         cmdargs.mode_xdependencies,
         cmdargs.mode_xautoconf,
@@ -624,6 +629,9 @@ def main(temp_directory: str) -> None:
         modules = list(cmdargs.non_option_arguments)
     if cmdargs.mode_xapplicability != None:
         mode = 'extract-applicability'
+        modules = list(cmdargs.non_option_arguments)
+    if cmdargs.mode_xusability_in_testdir != None:
+        mode = 'extract-usability-in-testdir'
         modules = list(cmdargs.non_option_arguments)
     if cmdargs.mode_xfilelist != None:
         mode = 'extract-filelist'
@@ -1189,6 +1197,13 @@ def main(temp_directory: str) -> None:
             if module:
                 print(module.getApplicability())
 
+    elif mode == 'extract-usability-in-testdir':
+        modulesystem = GLModuleSystem(config)
+        for name in modules:
+            module = modulesystem.find(name)
+            if module:
+                print(module.getUsabilityInTestdir())
+
     elif mode == 'extract-filelist':
         modulesystem = GLModuleSystem(config)
         for name in modules:
@@ -1459,6 +1474,8 @@ def main_with_exception_handling() -> None:
                 message += 'not overwriting destination directory: %s' % errinfo
             elif errno == 23:
                 message += "module %s doesn't exist" % errinfo
+            elif errno == 24:
+                message += 'module %s cannot be used in a testdir' % errinfo
             message += '\n%s: *** Stop.\n' % APP['name']
             sys.stderr.write(message)
             sys.exit(1)

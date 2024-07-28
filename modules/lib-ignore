@@ -1,6 +1,10 @@
 Description:
 If possible, ignore libraries that are not depended on.
 
+Usable-in-testdir:
+# This module leads to link errors when Sun C++ is used. FIXME
+no
+
 Files:
 m4/lib-ignore.m4
 

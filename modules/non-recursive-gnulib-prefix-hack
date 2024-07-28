@@ -11,6 +11,10 @@ This module is deprecated. Instead,
   - remove the explicit invocation of build-aux/prefix-gnulib-mk from your build
     system.
 
+Usable-in-testdir:
+# This module represents a nonstandard way of using Automake.
+no
+
 Files:
 build-aux/prefix-gnulib-mk
 m4/non-recursive-gnulib-prefix-hack.m4
