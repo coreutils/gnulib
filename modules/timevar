@@ -4,6 +4,7 @@ A simple self-profiling module based on timers.
 Files:
 lib/timevar.h
 lib/timevar.c
+lib/timevar.def
 
 Depends-on:
 c99
