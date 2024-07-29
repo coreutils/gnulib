@@ -17,7 +17,7 @@
 #ifndef _C_VASPRINTF_H
 #define _C_VASPRINTF_H
 
-/* This file uses _GL_ATTRIBUTE_FORMAT.  */
+/* This file uses _GL_ATTRIBUTE_FORMAT, _GL_ATTRIBUTE_NODISCARD.  */
 #if !_GL_CONFIG_H_INCLUDED
  #error "Please include config.h first."
 #endif
@@ -47,8 +47,10 @@ extern "C" {
 
    Formatting takes place in the C locale, that is, the decimal point
    used in floating-point formatting directives is always '.'. */
+_GL_ATTRIBUTE_NODISCARD
 ptrdiff_t c_aszprintf (char **resultp, const char *format, ...)
        _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_STANDARD, 2, 3));
+_GL_ATTRIBUTE_NODISCARD
 ptrdiff_t c_vaszprintf (char **resultp, const char *format, va_list args)
        _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_STANDARD, 2, 0));
 
@@ -59,8 +61,10 @@ ptrdiff_t c_vaszprintf (char **resultp, const char *format, va_list args)
 
    Formatting takes place in the C locale, that is, the decimal point
    used in floating-point formatting directives is always '.'. */
+_GL_ATTRIBUTE_NODISCARD
 int c_asprintf (char **resultp, const char *format, ...)
        _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_STANDARD, 2, 3));
+_GL_ATTRIBUTE_NODISCARD
 int c_vasprintf (char **resultp, const char *format, va_list args)
        _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_STANDARD, 2, 0));
 
