@@ -411,10 +411,6 @@ One sentence is enough.  For example, if it defines a single function
 Gnulib's documentation generator will automatically convert the first part
 to a hyperlink when it has this form.
 
-@item Usable-in-testdir
-This field should contain @samp{no} if the module cannot be used in a
-test directory created with @code{gnulib-tool --create-testdir}.
-
 @item Status
 This field is either empty/absent, or contains the word @samp{obsolete}.  In
 the latter case, @command{gnulib-tool} will, unless the option
@@ -438,6 +434,10 @@ is applied to @code{@var{tests_base}/Makefile.am} (normally
 @code{tests/Makefile.am}).  If this field is @samp{all}, it is applied to
 both @code{Makefile.am}s.  This is useful for modules which provide
 Makefile.am macros rather than compiled source code.
+
+@item Usable-in-testdir
+This field should contain @samp{no} if the module cannot be used in a
+test directory created with @code{gnulib-tool --create-testdir}.
 
 @item Files
 This field contains a newline separated list of the files that are part of

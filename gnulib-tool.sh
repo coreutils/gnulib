@@ -1951,6 +1951,7 @@ sed_extract_prog=':[	 ]*$/ {
     s/^Status:[	 ]*$//
     s/^Notice:[	 ]*$//
     s/^Applicability:[	 ]*$//
+    s/^Usable-in-testdir:[	 ]*$//
     s/^Files:[	 ]*$//
     s/^Depends-on:[	 ]*$//
     s/^configure\.ac-early:[	 ]*$//
@@ -1975,6 +1976,7 @@ sed_extract_field_header='
   s/^Status:[	 ]*$/status/
   s/^Notice:[	 ]*$/notice/
   s/^Applicability:[	 ]*$/applicability/
+  s/^Usable-in-testdir:[	 ]*$/usability_in_testdir/
   s/^Files:[	 ]*$/files/
   s/^Depends-on:[	 ]*$/dependson/
   s/^configure\.ac-early:[	 ]*$/configureac_early/
