@@ -1,11 +1,11 @@
 # log1p.m4
-# serial 11
+# serial 12
 dnl Copyright (C) 2012-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 
-AC_DEFUN([gl_FUNC_LOG1P],
+AC_DEFUN_ONCE([gl_FUNC_LOG1P],
 [
   m4_divert_text([DEFAULTS], [gl_log1p_required=plain])
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
