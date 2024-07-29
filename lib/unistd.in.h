@@ -340,7 +340,7 @@ _GL_CXXALIASWARN (chdir);
 #elif defined GNULIB_POSIXCHECK
 # undef chdir
 # if HAVE_RAW_DECL_CHDIR
-_GL_WARN_ON_USE (chown, "chdir is not always in <unistd.h> - "
+_GL_WARN_ON_USE (chdir, "chdir is not always in <unistd.h> - "
                  "use gnulib module chdir for portability");
 # endif
 #elif @GNULIB_MDA_CHDIR@
