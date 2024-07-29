@@ -1,5 +1,5 @@
 # math_h.m4
-# serial 138
+# serial 139
 dnl Copyright (C) 2007-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -49,7 +49,7 @@ AC_DEFUN_ONCE([gl_MATH_H],
      ilogb ilogbf ilogbl
      ldexpf ldexpl
      log logf logl log10 log10f log10l log1p log1pf log1pl log2 log2f log2l
-     logb logbf logbl
+     logb logbf logbl logp1
      modf modff modfl powf
      remainder remainderf remainderl
      rint rintf rintl round roundf roundl
@@ -153,6 +153,7 @@ AC_DEFUN([gl_MATH_H_REQUIRE_DEFAULTS],
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_LOGB])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_LOGBF])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_LOGBL])
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_LOGP1])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_MODF])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_MODFF])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_MODFL])
@@ -253,6 +254,7 @@ AC_DEFUN([gl_MATH_H_DEFAULTS],
   HAVE_LOG1PL=1;                    AC_SUBST([HAVE_LOG1PL])
   HAVE_LOGBF=1;                     AC_SUBST([HAVE_LOGBF])
   HAVE_LOGBL=1;                     AC_SUBST([HAVE_LOGBL])
+  HAVE_LOGP1=1;                     AC_SUBST([HAVE_LOGP1])
   HAVE_MODFF=1;                     AC_SUBST([HAVE_MODFF])
   HAVE_MODFL=1;                     AC_SUBST([HAVE_MODFL])
   HAVE_POWF=1;                      AC_SUBST([HAVE_POWF])

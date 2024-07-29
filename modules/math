@@ -110,6 +110,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's/@''GNULIB_LOGB''@/$(GNULIB_LOGB)/g' \
 	      -e 's/@''GNULIB_LOGBF''@/$(GNULIB_LOGBF)/g' \
 	      -e 's/@''GNULIB_LOGBL''@/$(GNULIB_LOGBL)/g' \
+	      -e 's/@''GNULIB_LOGP1''@/$(GNULIB_LOGP1)/g' \
 	      -e 's/@''GNULIB_MODF''@/$(GNULIB_MODF)/g' \
 	      -e 's/@''GNULIB_MODFF''@/$(GNULIB_MODFF)/g' \
 	      -e 's/@''GNULIB_MODFL''@/$(GNULIB_MODFL)/g' \
@@ -203,6 +204,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's|@''HAVE_LOG1PL''@|$(HAVE_LOG1PL)|g' \
 	      -e 's|@''HAVE_LOGBF''@|$(HAVE_LOGBF)|g' \
 	      -e 's|@''HAVE_LOGBL''@|$(HAVE_LOGBL)|g' \
+	      -e 's|@''HAVE_LOGP1''@|$(HAVE_LOGP1)|g' \
 	      -e 's|@''HAVE_MODFF''@|$(HAVE_MODFF)|g' \
 	      -e 's|@''HAVE_MODFL''@|$(HAVE_MODFL)|g' \
 	      -e 's|@''HAVE_POWF''@|$(HAVE_POWF)|g' \
