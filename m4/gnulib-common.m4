@@ -1,5 +1,5 @@
 # gnulib-common.m4
-# serial 96
+# serial 97
 dnl Copyright (C) 2007-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -139,7 +139,7 @@ AC_DEFUN([gl_COMMON_BODY], [
    various _GL_ATTRIBUTE_* can be cumulated on the same declaration in any
    order.  */
 #ifdef __cplusplus
-# if defined __clang__
+# if defined __clang__ && __clang_major__ < 16
 #  define _GL_BRACKET_BEFORE_ATTRIBUTE 1
 # endif
 #else
