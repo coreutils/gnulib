@@ -1,0 +1,39 @@
+Description:
+logp1l() function: natural logarithm of argument plus 1.
+
+Files:
+lib/logp1l.c
+m4/logp1l.m4
+m4/logp1.m4
+m4/isnand.m4
+m4/log.m4
+m4/round.m4
+m4/floor.m4
+m4/ceil.m4
+m4/mathfunc.m4
+
+Depends-on:
+math
+log1pl          [test $HAVE_LOGP1L = 0]
+
+configure.ac:
+gl_FUNC_LOGP1L
+gl_CONDITIONAL([GL_COND_OBJ_LOGP1L], [test $HAVE_LOGP1L = 0])
+gl_MATH_MODULE_INDICATOR([logp1l])
+
+Makefile.am:
+if GL_COND_OBJ_LOGP1L
+lib_SOURCES += logp1l.c
+endif
+
+Include:
+<math.h>
+
+Link:
+$(LOGP1L_LIBM)
+
+License:
+LGPL
+
+Maintainer:
+all

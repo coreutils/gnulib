@@ -49,7 +49,7 @@ AC_DEFUN_ONCE([gl_MATH_H],
      ilogb ilogbf ilogbl
      ldexpf ldexpl
      log logf logl log10 log10f log10l log1p log1pf log1pl log2 log2f log2l
-     logb logbf logbl logp1 log1pf
+     logb logbf logbl logp1 log1pf logp1l
      modf modff modfl powf
      remainder remainderf remainderl
      rint rintf rintl round roundf roundl
@@ -155,6 +155,7 @@ AC_DEFUN([gl_MATH_H_REQUIRE_DEFAULTS],
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_LOGBL])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_LOGP1])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_LOGP1F])
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_LOGP1L])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_MODF])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_MODFF])
     gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_MODFL])
@@ -257,6 +258,7 @@ AC_DEFUN([gl_MATH_H_DEFAULTS],
   HAVE_LOGBL=1;                     AC_SUBST([HAVE_LOGBL])
   HAVE_LOGP1=1;                     AC_SUBST([HAVE_LOGP1])
   HAVE_LOGP1F=1;                    AC_SUBST([HAVE_LOGP1F])
+  HAVE_LOGP1L=1;                    AC_SUBST([HAVE_LOGP1L])
   HAVE_MODFF=1;                     AC_SUBST([HAVE_MODFF])
   HAVE_MODFL=1;                     AC_SUBST([HAVE_MODFL])
   HAVE_POWF=1;                      AC_SUBST([HAVE_POWF])
