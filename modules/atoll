@@ -6,6 +6,7 @@ lib/atoll.c
 m4/atoll.m4
 
 Depends-on:
+stdlib
 strtoll         [test $HAVE_ATOLL = 0]
 
 configure.ac:
