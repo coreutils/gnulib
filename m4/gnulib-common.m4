@@ -1,5 +1,5 @@
 # gnulib-common.m4
-# serial 97
+# serial 98
 dnl Copyright (C) 2007-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -133,6 +133,20 @@ AC_DEFUN([gl_COMMON_BODY], [
 # define _GL_HAVE___HAS_C_ATTRIBUTE 0
 #endif
 
+/* Attributes in bracket syntax [[...]] vs. attributes in __attribute__((...))
+   syntax, in function declarations.  There are two problems here.
+   (Last tested with gcc/g++ 14 and clang/clang++ 18.)
+
+   1) We want that the _GL_ATTRIBUTE_* can be cumulated on the same declaration
+      in any order.
+      =========================== foo.c = foo.cc ===========================
+      __attribute__ ((__deprecated__)) [[__nodiscard__]] int bar1 (int);
+      [[__nodiscard__]] __attribute__ ((__deprecated__)) int bar2 (int);
+      ======================================================================
+      This gives a syntax error
+        - in C mode with gcc, and
+        - in C++ mode with clang++ version < 16.
+ */
 /* Define if, in a function declaration, the attributes in bracket syntax
    [[...]] must come before the attributes in __attribute__((...)) syntax.
    If this is defined, it is best to avoid the bracket syntax, so that the
@@ -146,6 +160,77 @@ AC_DEFUN([gl_COMMON_BODY], [
 # if defined __GNUC__ && !defined __clang__
 #  define _GL_BRACKET_BEFORE_ATTRIBUTE 1
 # endif
+#endif
+/*
+   2) We want that the _GL_ATTRIBUTE_* can be placed in a declaration
+        - without 'extern', in C as well as in C++,
+        - with 'extern', in C,
+        - with 'extern "C"', in C++
+      in the same position.  That is, we don't want to be forced to use a
+      macro which arranges for the attribute to come before 'extern' in
+      one case and after 'extern' in the other case, because such a macro
+      would make the source code of .h files pretty ugly.
+      =========================== foo.c = foo.cc ===========================
+      #ifdef __cplusplus
+      # define CC "C"
+      #else
+      # define CC
+      #endif
+
+      #define ND   [[__nodiscard__]]
+      #define WUR  __attribute__((__warn_unused_result__))
+
+      #ifdef __cplusplus
+      extern "C" {
+      #endif
+                                    // gcc   clang  g++   clang++
+
+      ND int foo (int);
+      int ND foo (int);             // warn  error  warn  error
+      int foo (int) ND;             // warn  error  warn  error
+
+      WUR int foo (int);
+      int WUR foo (int);
+      int foo (int) WUR;
+
+      #ifdef __cplusplus
+      }
+      #endif
+
+                                    // gcc   clang  g++   clang++
+
+      ND extern CC int foo (int);   //              error error
+      extern CC ND int foo (int);   // error error
+      extern CC int ND foo (int);   // warn  error  warn  error
+      extern CC int foo (int) ND;   // warn  error  warn  error
+
+      WUR extern CC int foo (int);  //              warn
+      extern CC WUR int foo (int);
+      extern CC int WUR foo (int);
+      extern CC int foo (int) WUR;
+      ======================================================================
+      So,
+      * If _GL_ATTRIBUTE_* expands to bracket syntax [[...]]
+        in both C and C++, there is no available position:
+        it would need to come before 'extern' in C but after 'extern "C"'
+        in C++.
+      * If _GL_ATTRIBUTE_* expands to __attribute__((...)) syntax
+        in both C and C++, there are several available positions:
+          - before the return type,
+          - between return type and function name,
+          - at the end of the declaration.
+      * If _GL_ATTRIBUTE_* expands to bracket syntax [[...]] in C and
+        to __attribute__((...)) syntax in C++, there is no available position:
+        it would need to come before 'extern' in C but after 'extern "C"'
+        in C++.
+      * If _GL_ATTRIBUTE_* expands to __attribute__((...)) syntax in C and
+        to bracket syntax [[...]] in C++, there is one available position:
+          - before the return type.
+ */
+/* Define if, in a function declaration, the attributes in bracket syntax
+   [[...]] are usable at all.  */
+#ifdef __cplusplus
+# define _GL_BRACKET_USABLE 1
 #endif
 ]dnl There is no _GL_ATTRIBUTE_ALIGNED; use stdalign's alignas instead.
 [
@@ -259,7 +344,7 @@ AC_DEFUN([gl_COMMON_BODY], [
      - typedef,
    in C++ also: namespace, class, template specialization.  */
 #ifndef _GL_ATTRIBUTE_DEPRECATED
-# ifndef _GL_BRACKET_BEFORE_ATTRIBUTE
+# if defined _GL_BRACKET_USABLE && !defined _GL_BRACKET_BEFORE_ATTRIBUTE
 #  if _GL_HAVE___HAS_C_ATTRIBUTE
 #   if __has_c_attribute (__deprecated__)
 #    define _GL_ATTRIBUTE_DEPRECATED [[__deprecated__]]
@@ -393,7 +478,7 @@ AC_DEFUN([gl_COMMON_BODY], [
    __has_c_attribute (__maybe_unused__) yields true but the use of
    [[__maybe_unused__]] nevertheless produces a warning.  */
 #ifndef _GL_ATTRIBUTE_MAYBE_UNUSED
-# ifndef _GL_BRACKET_BEFORE_ATTRIBUTE
+# if defined _GL_BRACKET_USABLE && !defined _GL_BRACKET_BEFORE_ATTRIBUTE
 #  if defined __clang__ && defined __cplusplus
 #   if !defined __apple_build_version__ && __clang_major__ >= 10
 #    define _GL_ATTRIBUTE_MAYBE_UNUSED [[__maybe_unused__]]
@@ -419,7 +504,7 @@ AC_DEFUN([gl_COMMON_BODY], [
    the return value, unless the caller uses something like ignore_value.  */
 /* Applies to: function, enumeration, class.  */
 #ifndef _GL_ATTRIBUTE_NODISCARD
-# ifndef _GL_BRACKET_BEFORE_ATTRIBUTE
+# if defined _GL_BRACKET_USABLE && !defined _GL_BRACKET_BEFORE_ATTRIBUTE
 #  if defined __clang__ && defined __cplusplus
   /* With clang up to 15.0.6 (at least), in C++ mode, [[__nodiscard__]] produces
      a warning.
@@ -558,7 +643,7 @@ AC_DEFUN([gl_COMMON_BODY], [
 #ifndef _GL_ATTRIBUTE_REPRODUCIBLE
 /* This may be revisited when gcc and clang support [[reproducible]] or possibly
    __attribute__ ((__reproducible__)).  */
-# ifndef _GL_BRACKET_BEFORE_ATTRIBUTE
+# if defined _GL_BRACKET_USABLE && !defined _GL_BRACKET_BEFORE_ATTRIBUTE
 #  if _GL_HAS_ATTRIBUTE (reproducible)
 #   define _GL_ATTRIBUTE_REPRODUCIBLE [[reproducible]]
 #  endif
@@ -609,7 +694,7 @@ AC_DEFUN([gl_COMMON_BODY], [
 #ifndef _GL_ATTRIBUTE_UNSEQUENCED
 /* This may be revisited when gcc and clang support [[unsequenced]] or possibly
    __attribute__ ((__unsequenced__)).  */
-# ifndef _GL_BRACKET_BEFORE_ATTRIBUTE
+# if defined _GL_BRACKET_USABLE && !defined _GL_BRACKET_BEFORE_ATTRIBUTE
 #  if _GL_HAS_ATTRIBUTE (unsequenced)
 #   define _GL_ATTRIBUTE_UNSEQUENCED [[unsequenced]]
 #  endif

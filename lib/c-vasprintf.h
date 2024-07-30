@@ -47,12 +47,12 @@ extern "C" {
 
    Formatting takes place in the C locale, that is, the decimal point
    used in floating-point formatting directives is always '.'. */
-_GL_ATTRIBUTE_NODISCARD
 ptrdiff_t c_aszprintf (char **resultp, const char *format, ...)
-       _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_STANDARD, 2, 3));
-_GL_ATTRIBUTE_NODISCARD
+       _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_STANDARD, 2, 3))
+       _GL_ATTRIBUTE_NODISCARD;
 ptrdiff_t c_vaszprintf (char **resultp, const char *format, va_list args)
-       _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_STANDARD, 2, 0));
+       _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_STANDARD, 2, 0))
+       _GL_ATTRIBUTE_NODISCARD;
 
 /* Prints formatted output to a string dynamically allocated with malloc().
    If the memory allocation succeeds, it stores the address of the string in
@@ -61,12 +61,12 @@ ptrdiff_t c_vaszprintf (char **resultp, const char *format, va_list args)
 
    Formatting takes place in the C locale, that is, the decimal point
    used in floating-point formatting directives is always '.'. */
-_GL_ATTRIBUTE_NODISCARD
 int c_asprintf (char **resultp, const char *format, ...)
-       _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_STANDARD, 2, 3));
-_GL_ATTRIBUTE_NODISCARD
+       _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_STANDARD, 2, 3))
+       _GL_ATTRIBUTE_NODISCARD;
 int c_vasprintf (char **resultp, const char *format, va_list args)
-       _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_STANDARD, 2, 0));
+       _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_STANDARD, 2, 0))
+       _GL_ATTRIBUTE_NODISCARD;
 
 #ifdef __cplusplus
 }

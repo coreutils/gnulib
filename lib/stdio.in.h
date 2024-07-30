@@ -1693,18 +1693,18 @@ _GL_WARN_ON_USE (tmpfile, "tmpfile is not usable on mingw - "
    Failure code EOVERFLOW can only occur when a width > INT_MAX is used.
    Therefore, if the format string is valid and does not use %ls/%lc
    directives nor widths, the only possible failure code is ENOMEM.  */
-_GL_ATTRIBUTE_NODISCARD
 _GL_FUNCDECL_SYS (aszprintf, ptrdiff_t,
                   (char **result, const char *format, ...)
                   _GL_ATTRIBUTE_FORMAT_PRINTF_STANDARD (2, 3)
-                  _GL_ARG_NONNULL ((1, 2)));
+                  _GL_ARG_NONNULL ((1, 2))
+                  _GL_ATTRIBUTE_NODISCARD);
 _GL_CXXALIAS_SYS (aszprintf, ptrdiff_t,
                   (char **result, const char *format, ...));
-_GL_ATTRIBUTE_NODISCARD
 _GL_FUNCDECL_SYS (vaszprintf, ptrdiff_t,
                   (char **result, const char *format, va_list args)
                   _GL_ATTRIBUTE_FORMAT_PRINTF_STANDARD (2, 0)
-                  _GL_ARG_NONNULL ((1, 2)));
+                  _GL_ARG_NONNULL ((1, 2))
+                  _GL_ATTRIBUTE_NODISCARD);
 _GL_CXXALIAS_SYS (vaszprintf, ptrdiff_t,
                   (char **result, const char *format, va_list args));
 #endif
@@ -1719,20 +1719,20 @@ _GL_CXXALIAS_SYS (vaszprintf, ptrdiff_t,
 #   define asprintf rpl_asprintf
 #  endif
 #  define GNULIB_overrides_asprintf
-_GL_ATTRIBUTE_NODISCARD
 _GL_FUNCDECL_RPL (asprintf, int,
                   (char **result, const char *format, ...)
                   _GL_ATTRIBUTE_FORMAT_PRINTF_STANDARD (2, 3)
-                  _GL_ARG_NONNULL ((1, 2)));
+                  _GL_ARG_NONNULL ((1, 2))
+                  _GL_ATTRIBUTE_NODISCARD);
 _GL_CXXALIAS_RPL (asprintf, int,
                   (char **result, const char *format, ...));
 # else
 #  if !@HAVE_VASPRINTF@
-_GL_ATTRIBUTE_NODISCARD
 _GL_FUNCDECL_SYS (asprintf, int,
                   (char **result, const char *format, ...)
                   _GL_ATTRIBUTE_FORMAT_PRINTF_STANDARD (2, 3)
-                  _GL_ARG_NONNULL ((1, 2)));
+                  _GL_ARG_NONNULL ((1, 2))
+                  _GL_ATTRIBUTE_NODISCARD);
 #  endif
 _GL_CXXALIAS_SYS (asprintf, int,
                   (char **result, const char *format, ...));
@@ -1743,20 +1743,20 @@ _GL_CXXALIASWARN (asprintf);
 #   define vasprintf rpl_vasprintf
 #  endif
 #  define GNULIB_overrides_vasprintf 1
-_GL_ATTRIBUTE_NODISCARD
 _GL_FUNCDECL_RPL (vasprintf, int,
                   (char **result, const char *format, va_list args)
                   _GL_ATTRIBUTE_FORMAT_PRINTF_STANDARD (2, 0)
-                  _GL_ARG_NONNULL ((1, 2)));
+                  _GL_ARG_NONNULL ((1, 2))
+                  _GL_ATTRIBUTE_NODISCARD);
 _GL_CXXALIAS_RPL (vasprintf, int,
                   (char **result, const char *format, va_list args));
 # else
 #  if !@HAVE_VASPRINTF@
-_GL_ATTRIBUTE_NODISCARD
 _GL_FUNCDECL_SYS (vasprintf, int,
                   (char **result, const char *format, va_list args)
                   _GL_ATTRIBUTE_FORMAT_PRINTF_STANDARD (2, 0)
-                  _GL_ARG_NONNULL ((1, 2)));
+                  _GL_ARG_NONNULL ((1, 2))
+                  _GL_ATTRIBUTE_NODISCARD);
 #  endif
 _GL_CXXALIAS_SYS (vasprintf, int,
                   (char **result, const char *format, va_list args));
