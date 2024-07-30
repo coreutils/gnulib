@@ -48,7 +48,7 @@
 #   define iconv_open rpl_iconv_open
 #  endif
 _GL_FUNCDECL_RPL (iconv_open, iconv_t,
-                  (const char *tocode, const char *fromcode)
+                  (const char *tocode, const char *fromcode),
                   _GL_ARG_NONNULL ((1, 2)));
 _GL_CXXALIAS_RPL (iconv_open, iconv_t,
                   (const char *tocode, const char *fromcode));

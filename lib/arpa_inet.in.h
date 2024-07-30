@@ -90,7 +90,7 @@
 #  endif
 _GL_FUNCDECL_RPL (inet_ntop, const char *,
                   (int af, const void *restrict src,
-                   char *restrict dst, socklen_t cnt)
+                   char *restrict dst, socklen_t cnt),
                   _GL_ARG_NONNULL ((2, 3)));
 _GL_CXXALIAS_RPL (inet_ntop, const char *,
                   (int af, const void *restrict src,
@@ -99,7 +99,7 @@ _GL_CXXALIAS_RPL (inet_ntop, const char *,
 #  if !@HAVE_DECL_INET_NTOP@
 _GL_FUNCDECL_SYS (inet_ntop, const char *,
                   (int af, const void *restrict src,
-                   char *restrict dst, socklen_t cnt)
+                   char *restrict dst, socklen_t cnt),
                   _GL_ARG_NONNULL ((2, 3)));
 #  endif
 /* Need to cast, because on NonStop Kernel, the fourth parameter is
@@ -126,14 +126,14 @@ _GL_WARN_ON_USE (inet_ntop, "inet_ntop is unportable - "
 #   define inet_pton rpl_inet_pton
 #  endif
 _GL_FUNCDECL_RPL (inet_pton, int,
-                  (int af, const char *restrict src, void *restrict dst)
+                  (int af, const char *restrict src, void *restrict dst),
                   _GL_ARG_NONNULL ((2, 3)));
 _GL_CXXALIAS_RPL (inet_pton, int,
                   (int af, const char *restrict src, void *restrict dst));
 # else
 #  if !@HAVE_DECL_INET_PTON@
 _GL_FUNCDECL_SYS (inet_pton, int,
-                  (int af, const char *restrict src, void *restrict dst)
+                  (int af, const char *restrict src, void *restrict dst),
                   _GL_ARG_NONNULL ((2, 3)));
 #  endif
 _GL_CXXALIAS_SYS (inet_pton, int,

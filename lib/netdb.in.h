@@ -184,7 +184,7 @@ _GL_FUNCDECL_RPL (getaddrinfo, int,
                   (const char *restrict nodename,
                    const char *restrict servname,
                    const struct addrinfo *restrict hints,
-                   struct addrinfo **restrict res)
+                   struct addrinfo **restrict res),
                   _GL_ARG_NONNULL ((4)));
 _GL_CXXALIAS_RPL (getaddrinfo, int,
                   (const char *restrict nodename,
@@ -197,7 +197,7 @@ _GL_FUNCDECL_SYS (getaddrinfo, int,
                   (const char *restrict nodename,
                    const char *restrict servname,
                    const struct addrinfo *restrict hints,
-                   struct addrinfo **restrict res)
+                   struct addrinfo **restrict res),
                   _GL_ARG_NONNULL ((4)));
 #  endif
 _GL_CXXALIAS_SYS (getaddrinfo, int,
@@ -216,12 +216,12 @@ _GL_CXXALIASWARN (getaddrinfo);
 #   undef freeaddrinfo
 #   define freeaddrinfo rpl_freeaddrinfo
 #  endif
-_GL_FUNCDECL_RPL (freeaddrinfo, void, (struct addrinfo *ai)
+_GL_FUNCDECL_RPL (freeaddrinfo, void, (struct addrinfo *ai),
                                       _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (freeaddrinfo, void, (struct addrinfo *ai));
 # else
 #  if !@HAVE_DECL_FREEADDRINFO@
-_GL_FUNCDECL_SYS (freeaddrinfo, void, (struct addrinfo *ai)
+_GL_FUNCDECL_SYS (freeaddrinfo, void, (struct addrinfo *ai),
                                       _GL_ARG_NONNULL ((1)));
 #  endif
 _GL_CXXALIAS_SYS (freeaddrinfo, void, (struct addrinfo *ai));
@@ -256,7 +256,7 @@ _GL_FUNCDECL_SYS (getnameinfo, int,
                   (const struct sockaddr *restrict sa, socklen_t salen,
                    char *restrict node, socklen_t nodelen,
                    char *restrict service, socklen_t servicelen,
-                   int flags)
+                   int flags),
                   _GL_ARG_NONNULL ((1)));
 # endif
 /* Need to cast, because on glibc systems, the seventh parameter is

@@ -436,7 +436,7 @@ struct stat
 #   undef chmod
 #   define chmod rpl_chmod
 #  endif
-_GL_FUNCDECL_RPL (chmod, int, (const char *filename, mode_t mode)
+_GL_FUNCDECL_RPL (chmod, int, (const char *filename, mode_t mode),
                                _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (chmod, int, (const char *filename, mode_t mode));
 # elif defined _WIN32 && !defined __CYGWIN__
@@ -481,14 +481,14 @@ _GL_CXXALIASWARN (chmod);
 #   define fchmodat rpl_fchmodat
 #  endif
 _GL_FUNCDECL_RPL (fchmodat, int,
-                  (int fd, char const *file, mode_t mode, int flag)
+                  (int fd, char const *file, mode_t mode, int flag),
                   _GL_ARG_NONNULL ((2)) _GL_ATTRIBUTE_NODISCARD);
 _GL_CXXALIAS_RPL (fchmodat, int,
                   (int fd, char const *file, mode_t mode, int flag));
 # else
 #  if !@HAVE_FCHMODAT@
 _GL_FUNCDECL_SYS (fchmodat, int,
-                  (int fd, char const *file, mode_t mode, int flag)
+                  (int fd, char const *file, mode_t mode, int flag),
                   _GL_ARG_NONNULL ((2)) _GL_ATTRIBUTE_NODISCARD);
 #  endif
 _GL_CXXALIAS_SYS (fchmodat, int,
@@ -510,7 +510,8 @@ _GL_WARN_ON_USE (fchmodat, "fchmodat is not portable - "
 #   undef fstat
 #   define fstat rpl_fstat
 #  endif
-_GL_FUNCDECL_RPL (fstat, int, (int fd, struct stat *buf) _GL_ARG_NONNULL ((2)));
+_GL_FUNCDECL_RPL (fstat, int, (int fd, struct stat *buf),
+                              _GL_ARG_NONNULL ((2)));
 _GL_CXXALIAS_RPL (fstat, int, (int fd, struct stat *buf));
 # else
 _GL_CXXALIAS_SYS (fstat, int, (int fd, struct stat *buf));
@@ -543,7 +544,7 @@ _GL_WARN_ON_USE (fstat, "fstat has portability problems - "
 #  endif
 _GL_FUNCDECL_RPL (fstatat, int,
                   (int fd, char const *restrict name, struct stat *restrict st,
-                   int flags)
+                   int flags),
                   _GL_ARG_NONNULL ((2, 3)));
 _GL_CXXALIAS_RPL (fstatat, int,
                   (int fd, char const *restrict name, struct stat *restrict st,
@@ -552,7 +553,7 @@ _GL_CXXALIAS_RPL (fstatat, int,
 #  if !@HAVE_FSTATAT@
 _GL_FUNCDECL_SYS (fstatat, int,
                   (int fd, char const *restrict name, struct stat *restrict st,
-                   int flags)
+                   int flags),
                   _GL_ARG_NONNULL ((2, 3)));
 #  endif
 _GL_CXXALIAS_SYS (fstatat, int,
@@ -607,7 +608,7 @@ _GL_WARN_ON_USE (futimens, "futimens is not portable - "
 #if @GNULIB_GETUMASK@
 # if !@HAVE_GETUMASK@
 #  if __GLIBC__ + (__GLIBC_MINOR__ >= 2) > 2
-_GL_FUNCDECL_SYS (getumask, mode_t, (void) _GL_ATTRIBUTE_NOTHROW);
+_GL_FUNCDECL_SYS (getumask, mode_t, (void)) _GL_ATTRIBUTE_NOTHROW;
 #  else
 _GL_FUNCDECL_SYS (getumask, mode_t, (void));
 #  endif
@@ -629,7 +630,7 @@ _GL_WARN_ON_USE (getumask, "getumask is not portable - "
 /* Change the mode of FILENAME to MODE, without dereferencing it if FILENAME
    denotes a symbolic link.  */
 # if !@HAVE_LCHMOD@ || defined __hpux
-_GL_FUNCDECL_SYS (lchmod, int, (const char *filename, mode_t mode)
+_GL_FUNCDECL_SYS (lchmod, int, (const char *filename, mode_t mode),
                                _GL_ARG_NONNULL ((1)));
 # endif
 _GL_CXXALIAS_SYS (lchmod, int, (const char *filename, mode_t mode));
@@ -649,7 +650,7 @@ _GL_WARN_ON_USE (lchmod, "lchmod is unportable - "
 #   undef mkdir
 #   define mkdir rpl_mkdir
 #  endif
-_GL_FUNCDECL_RPL (mkdir, int, (char const *name, mode_t mode)
+_GL_FUNCDECL_RPL (mkdir, int, (char const *name, mode_t mode),
                                _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (mkdir, int, (char const *name, mode_t mode));
 # elif defined _WIN32 && !defined __CYGWIN__
@@ -707,7 +708,7 @@ _GL_CXXALIASWARN (mkdir);
 
 #if @GNULIB_MKDIRAT@
 # if !@HAVE_MKDIRAT@
-_GL_FUNCDECL_SYS (mkdirat, int, (int fd, char const *file, mode_t mode)
+_GL_FUNCDECL_SYS (mkdirat, int, (int fd, char const *file, mode_t mode),
                                 _GL_ARG_NONNULL ((2)));
 # endif
 _GL_CXXALIAS_SYS (mkdirat, int, (int fd, char const *file, mode_t mode));
@@ -727,12 +728,12 @@ _GL_WARN_ON_USE (mkdirat, "mkdirat is not portable - "
 #   undef mkfifo
 #   define mkfifo rpl_mkfifo
 #  endif
-_GL_FUNCDECL_RPL (mkfifo, int, (char const *file, mode_t mode)
+_GL_FUNCDECL_RPL (mkfifo, int, (char const *file, mode_t mode),
                                _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (mkfifo, int, (char const *file, mode_t mode));
 # else
 #  if !@HAVE_MKFIFO@
-_GL_FUNCDECL_SYS (mkfifo, int, (char const *file, mode_t mode)
+_GL_FUNCDECL_SYS (mkfifo, int, (char const *file, mode_t mode),
                                _GL_ARG_NONNULL ((1)));
 #  endif
 _GL_CXXALIAS_SYS (mkfifo, int, (char const *file, mode_t mode));
@@ -753,12 +754,12 @@ _GL_WARN_ON_USE (mkfifo, "mkfifo is not portable - "
 #   undef mkfifoat
 #   define mkfifoat rpl_mkfifoat
 #  endif
-_GL_FUNCDECL_RPL (mkfifoat, int, (int fd, char const *file, mode_t mode)
+_GL_FUNCDECL_RPL (mkfifoat, int, (int fd, char const *file, mode_t mode),
                                  _GL_ARG_NONNULL ((2)));
 _GL_CXXALIAS_RPL (mkfifoat, int, (int fd, char const *file, mode_t mode));
 # else
 #  if !@HAVE_MKFIFOAT@
-_GL_FUNCDECL_SYS (mkfifoat, int, (int fd, char const *file, mode_t mode)
+_GL_FUNCDECL_SYS (mkfifoat, int, (int fd, char const *file, mode_t mode),
                                  _GL_ARG_NONNULL ((2)));
 #  endif
 _GL_CXXALIAS_SYS (mkfifoat, int, (int fd, char const *file, mode_t mode));
@@ -781,12 +782,12 @@ _GL_WARN_ON_USE (mkfifoat, "mkfifoat is not portable - "
 #   undef mknod
 #   define mknod rpl_mknod
 #  endif
-_GL_FUNCDECL_RPL (mknod, int, (char const *file, mode_t mode, dev_t dev)
+_GL_FUNCDECL_RPL (mknod, int, (char const *file, mode_t mode, dev_t dev),
                               _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (mknod, int, (char const *file, mode_t mode, dev_t dev));
 # else
 #  if !@HAVE_MKNOD@
-_GL_FUNCDECL_SYS (mknod, int, (char const *file, mode_t mode, dev_t dev)
+_GL_FUNCDECL_SYS (mknod, int, (char const *file, mode_t mode, dev_t dev),
                               _GL_ARG_NONNULL ((1)));
 #  endif
 /* Need to cast, because on OSF/1 5.1, the third parameter is '...'.  */
@@ -809,14 +810,14 @@ _GL_WARN_ON_USE (mknod, "mknod is not portable - "
 #   define mknodat rpl_mknodat
 #  endif
 _GL_FUNCDECL_RPL (mknodat, int,
-                  (int fd, char const *file, mode_t mode, dev_t dev)
+                  (int fd, char const *file, mode_t mode, dev_t dev),
                   _GL_ARG_NONNULL ((2)));
 _GL_CXXALIAS_RPL (mknodat, int,
                   (int fd, char const *file, mode_t mode, dev_t dev));
 # else
 #  if !@HAVE_MKNODAT@
 _GL_FUNCDECL_SYS (mknodat, int,
-                  (int fd, char const *file, mode_t mode, dev_t dev)
+                  (int fd, char const *file, mode_t mode, dev_t dev),
                   _GL_ARG_NONNULL ((2)));
 #  endif
 _GL_CXXALIAS_SYS (mknodat, int,
@@ -923,7 +924,7 @@ _GL_CXXALIAS_RPL_1 (lstat, stat, int,
 #   define lstat rpl_lstat
 #  endif
 _GL_FUNCDECL_RPL (lstat, int,
-                  (const char *restrict name, struct stat *restrict buf)
+                  (const char *restrict name, struct stat *restrict buf),
                   _GL_ARG_NONNULL ((1, 2)));
 _GL_CXXALIAS_RPL (lstat, int,
                   (const char *restrict name, struct stat *restrict buf));
@@ -977,14 +978,14 @@ _GL_CXXALIASWARN (umask);
 #   define utimensat rpl_utimensat
 #  endif
 _GL_FUNCDECL_RPL (utimensat, int, (int fd, char const *name,
-                                   struct timespec const times[2], int flag)
+                                   struct timespec const times[2], int flag),
                                   _GL_ARG_NONNULL ((2)));
 _GL_CXXALIAS_RPL (utimensat, int, (int fd, char const *name,
                                    struct timespec const times[2], int flag));
 # else
 #  if !@HAVE_UTIMENSAT@
 _GL_FUNCDECL_SYS (utimensat, int, (int fd, char const *name,
-                                   struct timespec const times[2], int flag)
+                                   struct timespec const times[2], int flag),
                                   _GL_ARG_NONNULL ((2)));
 #  endif
 _GL_CXXALIAS_SYS (utimensat, int, (int fd, char const *name,

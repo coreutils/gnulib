@@ -92,7 +92,7 @@ extern "C" {
 #  define error rpl_error
 # endif
 _GL_FUNCDECL_RPL (error, void,
-                  (int __status, int __errnum, const char *__format, ...)
+                  (int __status, int __errnum, const char *__format, ...),
                   _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_ERROR, 3, 4)));
 _GL_CXXALIAS_RPL (error, void,
                   (int __status, int __errnum, const char *__format, ...));
@@ -104,7 +104,7 @@ _GL_CXXALIAS_RPL (error, void,
 #else
 # if ! @HAVE_ERROR@
 _GL_FUNCDECL_SYS (error, void,
-                  (int __status, int __errnum, const char *__format, ...)
+                  (int __status, int __errnum, const char *__format, ...),
                   _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_ERROR, 3, 4)));
 # endif
 _GL_CXXALIAS_SYS (error, void,
@@ -147,7 +147,7 @@ _GL_CXXALIASWARN (error);
 # endif
 _GL_FUNCDECL_RPL (error_at_line, void,
                   (int __status, int __errnum, const char *__filename,
-                   unsigned int __lineno, const char *__format, ...)
+                   unsigned int __lineno, const char *__format, ...),
                   _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_ERROR, 5, 6)));
 _GL_CXXALIAS_RPL (error_at_line, void,
                   (int __status, int __errnum, const char *__filename,
@@ -161,7 +161,7 @@ _GL_CXXALIAS_RPL (error_at_line, void,
 # if ! @HAVE_ERROR_AT_LINE@
 _GL_FUNCDECL_SYS (error_at_line, void,
                   (int __status, int __errnum, const char *__filename,
-                   unsigned int __lineno, const char *__format, ...)
+                   unsigned int __lineno, const char *__format, ...),
                   _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_ERROR, 5, 6)));
 # endif
 _GL_CXXALIAS_SYS (error_at_line, void,

@@ -1130,12 +1130,12 @@ _GL_WARN_ON_USE (fmodl, "fmodl is unportable - "
 #   undef frexpf
 #   define frexpf rpl_frexpf
 #  endif
-_GL_FUNCDECL_RPL (frexpf, float, (float x, int *expptr) _GL_ARG_NONNULL ((2)));
+_GL_FUNCDECL_RPL (frexpf, float, (float x, int *expptr), _GL_ARG_NONNULL ((2)));
 _GL_CXXALIAS_RPL (frexpf, float, (float x, int *expptr));
 # else
 #  if !@HAVE_FREXPF@
 #   undef frexpf
-_GL_FUNCDECL_SYS (frexpf, float, (float x, int *expptr) _GL_ARG_NONNULL ((2)));
+_GL_FUNCDECL_SYS (frexpf, float, (float x, int *expptr), _GL_ARG_NONNULL ((2)));
 #  endif
 _GL_CXXALIAS_SYS (frexpf, float, (float x, int *expptr));
 # endif
@@ -1163,7 +1163,8 @@ _GL_WARN_ON_USE (frexpf, "frexpf is unportable - "
 #   undef frexp
 #   define frexp rpl_frexp
 #  endif
-_GL_FUNCDECL_RPL (frexp, double, (double x, int *expptr) _GL_ARG_NONNULL ((2)));
+_GL_FUNCDECL_RPL (frexp, double, (double x, int *expptr),
+                                 _GL_ARG_NONNULL ((2)));
 _GL_CXXALIAS_RPL (frexp, double, (double x, int *expptr));
 # else
 _GL_CXXALIAS_SYS (frexp, double, (double x, int *expptr));
@@ -1191,12 +1192,12 @@ _GL_WARN_ON_USE (frexp, "frexp is unportable - "
 #  define frexpl rpl_frexpl
 # endif
 _GL_FUNCDECL_RPL (frexpl, long double,
-                  (long double x, int *expptr) _GL_ARG_NONNULL ((2)));
+                  (long double x, int *expptr), _GL_ARG_NONNULL ((2)));
 _GL_CXXALIAS_RPL (frexpl, long double, (long double x, int *expptr));
 #else
 # if !@HAVE_DECL_FREXPL@
 _GL_FUNCDECL_SYS (frexpl, long double,
-                  (long double x, int *expptr) _GL_ARG_NONNULL ((2)));
+                  (long double x, int *expptr), _GL_ARG_NONNULL ((2)));
 # endif
 # if @GNULIB_FREXPL@
 _GL_CXXALIAS_SYS (frexpl, long double, (long double x, int *expptr));
@@ -1914,12 +1915,12 @@ _GL_WARN_ON_USE (logp1l, "logp1l is unportable - "
 #   undef modff
 #   define modff rpl_modff
 #  endif
-_GL_FUNCDECL_RPL (modff, float, (float x, float *iptr) _GL_ARG_NONNULL ((2)));
+_GL_FUNCDECL_RPL (modff, float, (float x, float *iptr), _GL_ARG_NONNULL ((2)));
 _GL_CXXALIAS_RPL (modff, float, (float x, float *iptr));
 # else
 #  if !@HAVE_MODFF@
 #   undef modff
-_GL_FUNCDECL_SYS (modff, float, (float x, float *iptr) _GL_ARG_NONNULL ((2)));
+_GL_FUNCDECL_SYS (modff, float, (float x, float *iptr), _GL_ARG_NONNULL ((2)));
 #  endif
 _GL_CXXALIAS_SYS (modff, float, (float x, float *iptr));
 # endif
@@ -1938,7 +1939,8 @@ _GL_WARN_ON_USE (modff, "modff is unportable - "
 #   undef modf
 #   define modf rpl_modf
 #  endif
-_GL_FUNCDECL_RPL (modf, double, (double x, double *iptr) _GL_ARG_NONNULL ((2)));
+_GL_FUNCDECL_RPL (modf, double, (double x, double *iptr),
+                                _GL_ARG_NONNULL ((2)));
 _GL_CXXALIAS_RPL (modf, double, (double x, double *iptr));
 # else
 _GL_CXXALIAS_SYS (modf, double, (double x, double *iptr));
@@ -1960,13 +1962,13 @@ _GL_WARN_ON_USE (modf, "modf has portability problems - "
 #   undef modfl
 #   define modfl rpl_modfl
 #  endif
-_GL_FUNCDECL_RPL (modfl, long double, (long double x, long double *iptr)
+_GL_FUNCDECL_RPL (modfl, long double, (long double x, long double *iptr),
                                       _GL_ARG_NONNULL ((2)));
 _GL_CXXALIAS_RPL (modfl, long double, (long double x, long double *iptr));
 # else
 #  if !@HAVE_MODFL@
 #   undef modfl
-_GL_FUNCDECL_SYS (modfl, long double, (long double x, long double *iptr)
+_GL_FUNCDECL_SYS (modfl, long double, (long double x, long double *iptr),
                                       _GL_ARG_NONNULL ((2)));
 #  endif
 _GL_CXXALIAS_SYS (modfl, long double, (long double x, long double *iptr));

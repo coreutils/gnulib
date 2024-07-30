@@ -149,7 +149,7 @@ typedef void (*_gl_search_action_fn) (const void *, VISIT, int);
 # if @REPLACE_TSEARCH@
 _GL_FUNCDECL_RPL (tsearch, void *,
                   (const void *key, void **vrootp,
-                   _gl_search_compar_fn compar)
+                   _gl_search_compar_fn compar),
                   _GL_ARG_NONNULL ((1, 2, 3)));
 _GL_CXXALIAS_RPL (tsearch, void *,
                   (const void *key, void **vrootp,
@@ -158,7 +158,7 @@ _GL_CXXALIAS_RPL (tsearch, void *,
 #  if !@HAVE_TSEARCH@
 _GL_FUNCDECL_SYS (tsearch, void *,
                   (const void *key, void **vrootp,
-                   _gl_search_compar_fn compar)
+                   _gl_search_compar_fn compar),
                   _GL_ARG_NONNULL ((1, 2, 3)));
 #  endif
 _GL_CXXALIAS_SYS (tsearch, void *,
@@ -174,7 +174,7 @@ _GL_CXXALIASWARN (tsearch);
 # if @REPLACE_TSEARCH@
 _GL_FUNCDECL_RPL (tfind, void *,
                   (const void *key, void *const *vrootp,
-                   _gl_search_compar_fn compar)
+                   _gl_search_compar_fn compar),
                   _GL_ARG_NONNULL ((1, 2, 3)));
 _GL_CXXALIAS_RPL (tfind, void *,
                   (const void *key, void *const *vrootp,
@@ -183,7 +183,7 @@ _GL_CXXALIAS_RPL (tfind, void *,
 #  if !@HAVE_TSEARCH@
 _GL_FUNCDECL_SYS (tfind, void *,
                   (const void *key, void *const *vrootp,
-                   _gl_search_compar_fn compar)
+                   _gl_search_compar_fn compar),
                   _GL_ARG_NONNULL ((1, 2, 3)));
 #  endif
 /* Need to cast, because on Cygwin 1.5.x systems, the second parameter is
@@ -202,7 +202,7 @@ _GL_CXXALIASWARN (tfind);
 # if @REPLACE_TSEARCH@
 _GL_FUNCDECL_RPL (tdelete, void *,
                   (const void *restrict key, void **restrict vrootp,
-                   _gl_search_compar_fn compar)
+                   _gl_search_compar_fn compar),
                   _GL_ARG_NONNULL ((1, 2, 3)));
 _GL_CXXALIAS_RPL (tdelete, void *,
                   (const void *restrict key, void **restrict vrootp,
@@ -211,7 +211,7 @@ _GL_CXXALIAS_RPL (tdelete, void *,
 #  if !@HAVE_TSEARCH@
 _GL_FUNCDECL_SYS (tdelete, void *,
                   (const void *restrict key, void **restrict vrootp,
-                   _gl_search_compar_fn compar)
+                   _gl_search_compar_fn compar),
                   _GL_ARG_NONNULL ((1, 2, 3)));
 #  endif
 _GL_CXXALIAS_SYS (tdelete, void *,
@@ -235,14 +235,14 @@ _GL_CXXALIASWARN (tdelete);
      3. the level of the node in the tree (0 for the root).  */
 # if @REPLACE_TWALK@
 _GL_FUNCDECL_RPL (twalk, void,
-                  (const void *vroot, _gl_search_action_fn action)
+                  (const void *vroot, _gl_search_action_fn action),
                   _GL_ARG_NONNULL ((2)));
 _GL_CXXALIAS_RPL (twalk, void,
                   (const void *vroot, _gl_search_action_fn action));
 # else
 #  if !@HAVE_TWALK@
 _GL_FUNCDECL_SYS (twalk, void,
-                  (const void *vroot, _gl_search_action_fn action)
+                  (const void *vroot, _gl_search_action_fn action),
                   _GL_ARG_NONNULL ((2)));
 #  endif
 _GL_CXXALIAS_SYS (twalk, void,

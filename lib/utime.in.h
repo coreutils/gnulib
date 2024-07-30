@@ -71,7 +71,7 @@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define utime rpl_utime
 #  endif
-_GL_FUNCDECL_RPL (utime, int, (const char *filename, const struct utimbuf *ts)
+_GL_FUNCDECL_RPL (utime, int, (const char *filename, const struct utimbuf *ts),
                               _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (utime, int, (const char *filename, const struct utimbuf *ts));
 # elif defined _WIN32 && !defined __CYGWIN__
@@ -82,7 +82,7 @@ _GL_CXXALIAS_RPL (utime, int, (const char *filename, const struct utimbuf *ts));
 _GL_CXXALIAS_MDA (utime, int, (const char *filename, const struct utimbuf *ts));
 # else
 #  if !@HAVE_UTIME@
-_GL_FUNCDECL_SYS (utime, int, (const char *filename, const struct utimbuf *ts)
+_GL_FUNCDECL_SYS (utime, int, (const char *filename, const struct utimbuf *ts),
                               _GL_ARG_NONNULL ((1)));
 #  endif
 _GL_CXXALIAS_SYS (utime, int, (const char *filename, const struct utimbuf *ts));

@@ -77,14 +77,14 @@
 #   define getrandom rpl_getrandom
 #  endif
 _GL_FUNCDECL_RPL (getrandom, ssize_t,
-                  (void *buffer, size_t length, unsigned int flags)
+                  (void *buffer, size_t length, unsigned int flags),
                   _GL_ARG_NONNULL ((1)) _GL_ATTRIBUTE_NODISCARD);
 _GL_CXXALIAS_RPL (getrandom, ssize_t,
                   (void *buffer, size_t length, unsigned int flags));
 # else
 #  if !@HAVE_GETRANDOM@
 _GL_FUNCDECL_SYS (getrandom, ssize_t,
-                  (void *buffer, size_t length, unsigned int flags)
+                  (void *buffer, size_t length, unsigned int flags),
                   _GL_ARG_NONNULL ((1)) _GL_ATTRIBUTE_NODISCARD);
 #  endif
 _GL_CXXALIAS_SYS (getrandom, ssize_t,

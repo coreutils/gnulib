@@ -88,7 +88,7 @@ extern "C" {
 #  endif
 _GL_FUNCDECL_RPL (strfmon_l, ssize_t,
                   (char *restrict s, size_t maxsize, locale_t locale,
-                   const char *restrict format, ...)
+                   const char *restrict format, ...),
                   _GL_ATTRIBUTE_FORMAT_STRFMON (4, 5)
                   _GL_ARG_NONNULL ((4)));
 _GL_CXXALIAS_RPL (strfmon_l, ssize_t,
