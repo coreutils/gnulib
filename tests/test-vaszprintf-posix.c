@@ -57,8 +57,6 @@ strisnan (const char *string, size_t start_index, size_t end_index, int uppercas
 static void
 test_function (ptrdiff_t (*my_aszprintf) (char **, const char *, ...))
 {
-  char result[5000];
-
   /* Test the support of the 'a' and 'A' conversion specifier for hexadecimal
      output of floating-point numbers.  */
 
