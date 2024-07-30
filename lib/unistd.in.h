@@ -69,8 +69,8 @@
 #if !defined _@GUARD_PREFIX@_UNISTD_H && !defined _GL_INCLUDING_WINSOCK2_H
 #define _@GUARD_PREFIX@_UNISTD_H
 
-/* This file uses _GL_INLINE_HEADER_BEGIN, _GL_INLINE, GNULIB_POSIXCHECK,
-   HAVE_RAW_DECL_*.  */
+/* This file uses _GL_ATTRIBUTE_NODISCARD, _GL_INLINE_HEADER_BEGIN, _GL_INLINE,
+   GNULIB_POSIXCHECK, HAVE_RAW_DECL_*.  */
 #if !_GL_CONFIG_H_INCLUDED
  #error "Please include config.h first."
 #endif
@@ -372,12 +372,12 @@ _GL_CXXALIASWARN (chdir);
 #   define chown rpl_chown
 #  endif
 _GL_FUNCDECL_RPL (chown, int, (const char *file, uid_t uid, gid_t gid)
-                              _GL_ARG_NONNULL ((1)));
+                              _GL_ARG_NONNULL ((1)) _GL_ATTRIBUTE_NODISCARD);
 _GL_CXXALIAS_RPL (chown, int, (const char *file, uid_t uid, gid_t gid));
 # else
 #  if !@HAVE_CHOWN@
 _GL_FUNCDECL_SYS (chown, int, (const char *file, uid_t uid, gid_t gid)
-                              _GL_ARG_NONNULL ((1)));
+                              _GL_ARG_NONNULL ((1)) _GL_ATTRIBUTE_NODISCARD);
 #  endif
 _GL_CXXALIAS_SYS (chown, int, (const char *file, uid_t uid, gid_t gid));
 # endif
@@ -476,7 +476,7 @@ _GL_WARN_ON_USE (copy_file_range,
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define dup rpl_dup
 #  endif
-_GL_FUNCDECL_RPL (dup, int, (int oldfd));
+_GL_FUNCDECL_RPL (dup, int, (int oldfd) _GL_ATTRIBUTE_NODISCARD);
 _GL_CXXALIAS_RPL (dup, int, (int oldfd));
 # elif defined _WIN32 && !defined __CYGWIN__
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
@@ -944,14 +944,14 @@ _GL_CXXALIASWARN (execvpe);
 #  endif
 _GL_FUNCDECL_RPL (faccessat, int,
                   (int fd, char const *name, int mode, int flag)
-                  _GL_ARG_NONNULL ((2)));
+                  _GL_ARG_NONNULL ((2)) _GL_ATTRIBUTE_NODISCARD);
 _GL_CXXALIAS_RPL (faccessat, int,
                   (int fd, char const *name, int mode, int flag));
 # else
 #  if !@HAVE_FACCESSAT@
 _GL_FUNCDECL_SYS (faccessat, int,
                   (int fd, char const *file, int mode, int flag)
-                  _GL_ARG_NONNULL ((2)));
+                  _GL_ARG_NONNULL ((2)) _GL_ATTRIBUTE_NODISCARD);
 #  endif
 _GL_CXXALIAS_SYS (faccessat, int,
                   (int fd, char const *file, int mode, int flag));
@@ -979,11 +979,11 @@ _GL_WARN_ON_USE (faccessat, "faccessat is not portable - "
 #   undef fchdir
 #   define fchdir rpl_fchdir
 #  endif
-_GL_FUNCDECL_RPL (fchdir, int, (int /*fd*/));
+_GL_FUNCDECL_RPL (fchdir, int, (int /*fd*/) _GL_ATTRIBUTE_NODISCARD);
 _GL_CXXALIAS_RPL (fchdir, int, (int /*fd*/));
 # else
 #  if !@HAVE_FCHDIR@ || !@HAVE_DECL_FCHDIR@
-_GL_FUNCDECL_SYS (fchdir, int, (int /*fd*/));
+_GL_FUNCDECL_SYS (fchdir, int, (int /*fd*/) _GL_ATTRIBUTE_NODISCARD);
 #  endif
 _GL_CXXALIAS_SYS (fchdir, int, (int /*fd*/));
 # endif
@@ -1013,14 +1013,14 @@ _GL_WARN_ON_USE (fchdir, "fchdir is unportable - "
 #  endif
 _GL_FUNCDECL_RPL (fchownat, int, (int fd, char const *file,
                                   uid_t owner, gid_t group, int flag)
-                                 _GL_ARG_NONNULL ((2)));
+                                 _GL_ARG_NONNULL ((2)) _GL_ATTRIBUTE_NODISCARD);
 _GL_CXXALIAS_RPL (fchownat, int, (int fd, char const *file,
                                   uid_t owner, gid_t group, int flag));
 # else
 #  if !@HAVE_FCHOWNAT@
 _GL_FUNCDECL_SYS (fchownat, int, (int fd, char const *file,
                                   uid_t owner, gid_t group, int flag)
-                                 _GL_ARG_NONNULL ((2)));
+                                 _GL_ARG_NONNULL ((2)) _GL_ATTRIBUTE_NODISCARD);
 #  endif
 _GL_CXXALIAS_SYS (fchownat, int, (int fd, char const *file,
                                   uid_t owner, gid_t group, int flag));
@@ -1094,13 +1094,17 @@ _GL_WARN_ON_USE (fsync, "fsync is unportable - "
 #   undef ftruncate
 #   define ftruncate rpl_ftruncate
 #  endif
-_GL_FUNCDECL_RPL (ftruncate, int, (int fd, off_t length));
-_GL_CXXALIAS_RPL (ftruncate, int, (int fd, off_t length));
+_GL_FUNCDECL_RPL (ftruncate, int,
+                  (int fd, off_t length) _GL_ATTRIBUTE_NODISCARD);
+_GL_CXXALIAS_RPL (ftruncate, int,
+                  (int fd, off_t length));
 # else
 #  if !@HAVE_FTRUNCATE@
-_GL_FUNCDECL_SYS (ftruncate, int, (int fd, off_t length));
+_GL_FUNCDECL_SYS (ftruncate, int,
+                  (int fd, off_t length) _GL_ATTRIBUTE_NODISCARD);
 #  endif
-_GL_CXXALIAS_SYS (ftruncate, int, (int fd, off_t length));
+_GL_CXXALIAS_SYS (ftruncate, int,
+                  (int fd, off_t length));
 # endif
 # if __GLIBC__ >= 2
 _GL_CXXALIASWARN (ftruncate);
@@ -1129,7 +1133,8 @@ _GL_WARN_ON_USE (ftruncate, "ftruncate is unportable - "
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define getcwd rpl_getcwd
 #  endif
-_GL_FUNCDECL_RPL (getcwd, char *, (char *buf, size_t size));
+_GL_FUNCDECL_RPL (getcwd, char *, (char *buf, size_t size)
+                                  _GL_ATTRIBUTE_NODISCARD);
 _GL_CXXALIAS_RPL (getcwd, char *, (char *buf, size_t size));
 # elif defined _WIN32 && !defined __CYGWIN__
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
@@ -1184,15 +1189,19 @@ _GL_CXXALIASWARN (getcwd);
 #   undef getdomainname
 #   define getdomainname rpl_getdomainname
 #  endif
-_GL_FUNCDECL_RPL (getdomainname, int, (char *name, size_t len)
-                                      _GL_ARG_NONNULL ((1)));
-_GL_CXXALIAS_RPL (getdomainname, int, (char *name, size_t len));
+_GL_FUNCDECL_RPL (getdomainname, int,
+                  (char *name, size_t len)
+                  _GL_ARG_NONNULL ((1)) _GL_ATTRIBUTE_NODISCARD);
+_GL_CXXALIAS_RPL (getdomainname, int,
+                  (char *name, size_t len));
 # else
 #  if !@HAVE_DECL_GETDOMAINNAME@
-_GL_FUNCDECL_SYS (getdomainname, int, (char *name, size_t len)
-                                      _GL_ARG_NONNULL ((1)));
+_GL_FUNCDECL_SYS (getdomainname, int,
+                  (char *name, size_t len)
+                  _GL_ARG_NONNULL ((1)) _GL_ATTRIBUTE_NODISCARD);
 #  endif
-_GL_CXXALIAS_SYS (getdomainname, int, (char *name, size_t len));
+_GL_CXXALIAS_SYS (getdomainname, int,
+                  (char *name, size_t len));
 # endif
 # if __GLIBC__ >= 2
 _GL_CXXALIASWARN (getdomainname);
@@ -1241,13 +1250,17 @@ _GL_WARN_ON_USE (getdtablesize, "getdtablesize is unportable - "
 #   undef getentropy
 #   define getentropy rpl_getentropy
 #  endif
-_GL_FUNCDECL_RPL (getentropy, int, (void *buffer, size_t length));
-_GL_CXXALIAS_RPL (getentropy, int, (void *buffer, size_t length));
+_GL_FUNCDECL_RPL (getentropy, int,
+                  (void *buffer, size_t length) _GL_ATTRIBUTE_NODISCARD);
+_GL_CXXALIAS_RPL (getentropy, int,
+                  (void *buffer, size_t length));
 # else
 #  if !@HAVE_GETENTROPY@
-_GL_FUNCDECL_SYS (getentropy, int, (void *buffer, size_t length));
+_GL_FUNCDECL_SYS (getentropy, int,
+                  (void *buffer, size_t length) _GL_ATTRIBUTE_NODISCARD);
 #  endif
-_GL_CXXALIAS_SYS (getentropy, int, (void *buffer, size_t length));
+_GL_CXXALIAS_SYS (getentropy, int,
+                  (void *buffer, size_t length));
 # endif
 # if __GLIBC__ >= 2
 _GL_CXXALIASWARN (getentropy);
@@ -1272,13 +1285,17 @@ _GL_WARN_ON_USE (getentropy, "getentropy is unportable - "
 #   undef getgroups
 #   define getgroups rpl_getgroups
 #  endif
-_GL_FUNCDECL_RPL (getgroups, int, (int n, gid_t *groups));
-_GL_CXXALIAS_RPL (getgroups, int, (int n, gid_t *groups));
+_GL_FUNCDECL_RPL (getgroups, int,
+                  (int n, gid_t *groups) _GL_ATTRIBUTE_NODISCARD);
+_GL_CXXALIAS_RPL (getgroups, int,
+                  (int n, gid_t *groups));
 # else
 #  if !@HAVE_GETGROUPS@
-_GL_FUNCDECL_SYS (getgroups, int, (int n, gid_t *groups));
+_GL_FUNCDECL_SYS (getgroups, int,
+                  (int n, gid_t *groups) _GL_ATTRIBUTE_NODISCARD);
 #  endif
-_GL_CXXALIAS_SYS (getgroups, int, (int n, gid_t *groups));
+_GL_CXXALIAS_SYS (getgroups, int,
+                  (int n, gid_t *groups));
 # endif
 _GL_CXXALIASWARN (getgroups);
 #elif defined GNULIB_POSIXCHECK
@@ -1679,12 +1696,12 @@ _GL_CXXALIASWARN (isatty);
 #   define lchown rpl_lchown
 #  endif
 _GL_FUNCDECL_RPL (lchown, int, (char const *file, uid_t owner, gid_t group)
-                               _GL_ARG_NONNULL ((1)));
+                               _GL_ARG_NONNULL ((1)) _GL_ATTRIBUTE_NODISCARD);
 _GL_CXXALIAS_RPL (lchown, int, (char const *file, uid_t owner, gid_t group));
 # else
 #  if !@HAVE_LCHOWN@
 _GL_FUNCDECL_SYS (lchown, int, (char const *file, uid_t owner, gid_t group)
-                               _GL_ARG_NONNULL ((1)));
+                               _GL_ARG_NONNULL ((1)) _GL_ATTRIBUTE_NODISCARD);
 #  endif
 _GL_CXXALIAS_SYS (lchown, int, (char const *file, uid_t owner, gid_t group));
 # endif
@@ -1708,12 +1725,12 @@ _GL_WARN_ON_USE (lchown, "lchown is unportable to pre-POSIX.1-2001 systems - "
 #   define link rpl_link
 #  endif
 _GL_FUNCDECL_RPL (link, int, (const char *path1, const char *path2)
-                             _GL_ARG_NONNULL ((1, 2)));
+                             _GL_ARG_NONNULL ((1, 2)) _GL_ATTRIBUTE_NODISCARD);
 _GL_CXXALIAS_RPL (link, int, (const char *path1, const char *path2));
 # else
 #  if !@HAVE_LINK@
 _GL_FUNCDECL_SYS (link, int, (const char *path1, const char *path2)
-                             _GL_ARG_NONNULL ((1, 2)));
+                             _GL_ARG_NONNULL ((1, 2)) _GL_ATTRIBUTE_NODISCARD);
 #  endif
 _GL_CXXALIAS_SYS (link, int, (const char *path1, const char *path2));
 # endif
@@ -1739,7 +1756,7 @@ _GL_WARN_ON_USE (link, "link is unportable - "
 _GL_FUNCDECL_RPL (linkat, int,
                   (int fd1, const char *path1, int fd2, const char *path2,
                    int flag)
-                  _GL_ARG_NONNULL ((2, 4)));
+                  _GL_ARG_NONNULL ((2, 4)) _GL_ATTRIBUTE_NODISCARD);
 _GL_CXXALIAS_RPL (linkat, int,
                   (int fd1, const char *path1, int fd2, const char *path2,
                    int flag));
@@ -1748,7 +1765,7 @@ _GL_CXXALIAS_RPL (linkat, int,
 _GL_FUNCDECL_SYS (linkat, int,
                   (int fd1, const char *path1, int fd2, const char *path2,
                    int flag)
-                  _GL_ARG_NONNULL ((2, 4)));
+                  _GL_ARG_NONNULL ((2, 4)) _GL_ATTRIBUTE_NODISCARD);
 #  endif
 _GL_CXXALIAS_SYS (linkat, int,
                   (int fd1, const char *path1, int fd2, const char *path2,
@@ -1815,7 +1832,8 @@ _GL_CXXALIASWARN (lseek);
    Store the read-end as fd[0] and the write-end as fd[1].
    Return 0 upon success, or -1 with errno set upon failure.  */
 # if !@HAVE_PIPE@
-_GL_FUNCDECL_SYS (pipe, int, (int fd[2]) _GL_ARG_NONNULL ((1)));
+_GL_FUNCDECL_SYS (pipe, int, (int fd[2])
+                             _GL_ARG_NONNULL ((1)) _GL_ATTRIBUTE_NODISCARD);
 # endif
 _GL_CXXALIAS_SYS (pipe, int, (int fd[2]));
 _GL_CXXALIASWARN (pipe);
@@ -1842,10 +1860,12 @@ _GL_WARN_ON_USE (pipe, "pipe is unportable - "
 #   undef pipe2
 #   define pipe2 rpl_pipe2
 #  endif
-_GL_FUNCDECL_RPL (pipe2, int, (int fd[2], int flags) _GL_ARG_NONNULL ((1)));
+_GL_FUNCDECL_RPL (pipe2, int, (int fd[2], int flags)
+                              _GL_ARG_NONNULL ((1)) _GL_ATTRIBUTE_NODISCARD);
 _GL_CXXALIAS_RPL (pipe2, int, (int fd[2], int flags));
 # else
-_GL_FUNCDECL_SYS (pipe2, int, (int fd[2], int flags) _GL_ARG_NONNULL ((1)));
+_GL_FUNCDECL_SYS (pipe2, int, (int fd[2], int flags)
+                              _GL_ARG_NONNULL ((1)) _GL_ATTRIBUTE_NODISCARD);
 _GL_CXXALIAS_SYS (pipe2, int, (int fd[2], int flags));
 # endif
 # if __GLIBC__ >= 2
@@ -1873,14 +1893,14 @@ _GL_WARN_ON_USE (pipe2, "pipe2 is unportable - "
 #  endif
 _GL_FUNCDECL_RPL (pread, ssize_t,
                   (int fd, void *buf, size_t bufsize, off_t offset)
-                  _GL_ARG_NONNULL ((2)));
+                  _GL_ARG_NONNULL ((2)) _GL_ATTRIBUTE_NODISCARD);
 _GL_CXXALIAS_RPL (pread, ssize_t,
                   (int fd, void *buf, size_t bufsize, off_t offset));
 # else
 #  if !@HAVE_PREAD@
 _GL_FUNCDECL_SYS (pread, ssize_t,
                   (int fd, void *buf, size_t bufsize, off_t offset)
-                  _GL_ARG_NONNULL ((2)));
+                  _GL_ARG_NONNULL ((2)) _GL_ATTRIBUTE_NODISCARD);
 #  endif
 _GL_CXXALIAS_SYS (pread, ssize_t,
                   (int fd, void *buf, size_t bufsize, off_t offset));
@@ -1910,14 +1930,14 @@ _GL_WARN_ON_USE (pread, "pread is unportable - "
 #  endif
 _GL_FUNCDECL_RPL (pwrite, ssize_t,
                   (int fd, const void *buf, size_t bufsize, off_t offset)
-                  _GL_ARG_NONNULL ((2)));
+                  _GL_ARG_NONNULL ((2)) _GL_ATTRIBUTE_NODISCARD);
 _GL_CXXALIAS_RPL (pwrite, ssize_t,
                   (int fd, const void *buf, size_t bufsize, off_t offset));
 # else
 #  if !@HAVE_PWRITE@
 _GL_FUNCDECL_SYS (pwrite, ssize_t,
                   (int fd, const void *buf, size_t bufsize, off_t offset)
-                  _GL_ARG_NONNULL ((2)));
+                  _GL_ARG_NONNULL ((2)) _GL_ATTRIBUTE_NODISCARD);
 #  endif
 _GL_CXXALIAS_SYS (pwrite, ssize_t,
                   (int fd, const void *buf, size_t bufsize, off_t offset));
@@ -1943,8 +1963,9 @@ _GL_WARN_ON_USE (pwrite, "pwrite is unportable - "
 #   undef read
 #   define read rpl_read
 #  endif
+
 _GL_FUNCDECL_RPL (read, ssize_t, (int fd, void *buf, size_t count)
-                                 _GL_ARG_NONNULL ((2)));
+                                 _GL_ARG_NONNULL ((2)) _GL_ATTRIBUTE_NODISCARD);
 _GL_CXXALIAS_RPL (read, ssize_t, (int fd, void *buf, size_t count));
 # elif defined _WIN32 && !defined __CYGWIN__
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
@@ -1986,7 +2007,7 @@ _GL_CXXALIASWARN (read);
 _GL_FUNCDECL_RPL (readlink, ssize_t,
                   (const char *restrict file,
                    char *restrict buf, size_t bufsize)
-                  _GL_ARG_NONNULL ((1, 2)));
+                  _GL_ARG_NONNULL ((1, 2)) _GL_ATTRIBUTE_NODISCARD);
 _GL_CXXALIAS_RPL (readlink, ssize_t,
                   (const char *restrict file,
                    char *restrict buf, size_t bufsize));
@@ -1995,7 +2016,7 @@ _GL_CXXALIAS_RPL (readlink, ssize_t,
 _GL_FUNCDECL_SYS (readlink, ssize_t,
                   (const char *restrict file,
                    char *restrict buf, size_t bufsize)
-                  _GL_ARG_NONNULL ((1, 2)));
+                  _GL_ARG_NONNULL ((1, 2)) _GL_ATTRIBUTE_NODISCARD);
 #  endif
 _GL_CXXALIAS_SYS (readlink, ssize_t,
                   (const char *restrict file,
@@ -2019,7 +2040,7 @@ _GL_WARN_ON_USE (readlink, "readlink is unportable - "
 _GL_FUNCDECL_RPL (readlinkat, ssize_t,
                   (int fd, char const *restrict file,
                    char *restrict buf, size_t len)
-                  _GL_ARG_NONNULL ((2, 3)));
+                  _GL_ARG_NONNULL ((2, 3)) _GL_ATTRIBUTE_NODISCARD);
 _GL_CXXALIAS_RPL (readlinkat, ssize_t,
                   (int fd, char const *restrict file,
                    char *restrict buf, size_t len));
@@ -2028,7 +2049,7 @@ _GL_CXXALIAS_RPL (readlinkat, ssize_t,
 _GL_FUNCDECL_SYS (readlinkat, ssize_t,
                   (int fd, char const *restrict file,
                    char *restrict buf, size_t len)
-                  _GL_ARG_NONNULL ((2, 3)));
+                  _GL_ARG_NONNULL ((2, 3)) _GL_ATTRIBUTE_NODISCARD);
 #  endif
 _GL_CXXALIAS_SYS (readlinkat, ssize_t,
                   (int fd, char const *restrict file,
@@ -2101,18 +2122,22 @@ _GL_CXXALIASWARN (rmdir);
 #   undef sethostname
 #   define sethostname rpl_sethostname
 #  endif
-_GL_FUNCDECL_RPL (sethostname, int, (const char *name, size_t len)
-                                    _GL_ARG_NONNULL ((1)));
-_GL_CXXALIAS_RPL (sethostname, int, (const char *name, size_t len));
+_GL_FUNCDECL_RPL (sethostname, int,
+                  (const char *name, size_t len)
+                  _GL_ARG_NONNULL ((1)) _GL_ATTRIBUTE_NODISCARD);
+_GL_CXXALIAS_RPL (sethostname, int,
+                  (const char *name, size_t len));
 # else
 #  if !@HAVE_SETHOSTNAME@ || !@HAVE_DECL_SETHOSTNAME@
-_GL_FUNCDECL_SYS (sethostname, int, (const char *name, size_t len)
-                                    _GL_ARG_NONNULL ((1)));
+_GL_FUNCDECL_SYS (sethostname, int,
+                  (const char *name, size_t len)
+                  _GL_ARG_NONNULL ((1)) _GL_ATTRIBUTE_NODISCARD);
 #  endif
 /* Need to cast, because on Solaris 11 2011-10, Mac OS X 10.5, IRIX 6.5
    and FreeBSD 6.4 the second parameter is int.  On Solaris 11
    2011-10, the first parameter is not const.  */
-_GL_CXXALIAS_SYS_CAST (sethostname, int, (const char *name, size_t len));
+_GL_CXXALIAS_SYS_CAST (sethostname, int,
+                       (const char *name, size_t len));
 # endif
 # if __GLIBC__ >= 2
 _GL_CXXALIASWARN (sethostname);
@@ -2185,15 +2210,19 @@ _GL_CXXALIASWARN (swab);
 #   undef symlink
 #   define symlink rpl_symlink
 #  endif
-_GL_FUNCDECL_RPL (symlink, int, (char const *contents, char const *file)
-                                _GL_ARG_NONNULL ((1, 2)));
-_GL_CXXALIAS_RPL (symlink, int, (char const *contents, char const *file));
+_GL_FUNCDECL_RPL (symlink, int,
+                  (char const *contents, char const *file)
+                  _GL_ARG_NONNULL ((1, 2)) _GL_ATTRIBUTE_NODISCARD);
+_GL_CXXALIAS_RPL (symlink, int,
+                  (char const *contents, char const *file));
 # else
 #  if !@HAVE_SYMLINK@
-_GL_FUNCDECL_SYS (symlink, int, (char const *contents, char const *file)
-                                _GL_ARG_NONNULL ((1, 2)));
+_GL_FUNCDECL_SYS (symlink, int,
+                  (char const *contents, char const *file)
+                  _GL_ARG_NONNULL ((1, 2)) _GL_ATTRIBUTE_NODISCARD);
 #  endif
-_GL_CXXALIAS_SYS (symlink, int, (char const *contents, char const *file));
+_GL_CXXALIAS_SYS (symlink, int,
+                  (char const *contents, char const *file));
 # endif
 _GL_CXXALIASWARN (symlink);
 #elif defined GNULIB_POSIXCHECK
@@ -2213,14 +2242,14 @@ _GL_WARN_ON_USE (symlink, "symlink is not portable - "
 #  endif
 _GL_FUNCDECL_RPL (symlinkat, int,
                   (char const *contents, int fd, char const *file)
-                  _GL_ARG_NONNULL ((1, 3)));
+                  _GL_ARG_NONNULL ((1, 3)) _GL_ATTRIBUTE_NODISCARD);
 _GL_CXXALIAS_RPL (symlinkat, int,
                   (char const *contents, int fd, char const *file));
 # else
 #  if !@HAVE_SYMLINKAT@
 _GL_FUNCDECL_SYS (symlinkat, int,
                   (char const *contents, int fd, char const *file)
-                  _GL_ARG_NONNULL ((1, 3)));
+                  _GL_ARG_NONNULL ((1, 3)) _GL_ATTRIBUTE_NODISCARD);
 #  endif
 _GL_CXXALIAS_SYS (symlinkat, int,
                   (char const *contents, int fd, char const *file));
@@ -2248,12 +2277,12 @@ _GL_WARN_ON_USE (symlinkat, "symlinkat is not portable - "
 #   define truncate rpl_truncate
 #  endif
 _GL_FUNCDECL_RPL (truncate, int, (const char *filename, off_t length)
-                                 _GL_ARG_NONNULL ((1)));
+                                 _GL_ARG_NONNULL ((1)) _GL_ATTRIBUTE_NODISCARD);
 _GL_CXXALIAS_RPL (truncate, int, (const char *filename, off_t length));
 # else
 #  if !@HAVE_DECL_TRUNCATE@
 _GL_FUNCDECL_SYS (truncate, int, (const char *filename, off_t length)
-                                 _GL_ARG_NONNULL ((1)));
+                                 _GL_ARG_NONNULL ((1)) _GL_ATTRIBUTE_NODISCARD);
 #  endif
 _GL_CXXALIAS_SYS (truncate, int, (const char *filename, off_t length));
 # endif
@@ -2278,13 +2307,15 @@ _GL_WARN_ON_USE (truncate, "truncate is unportable - "
 #   define ttyname_r rpl_ttyname_r
 #  endif
 _GL_FUNCDECL_RPL (ttyname_r, int,
-                  (int fd, char *buf, size_t buflen) _GL_ARG_NONNULL ((2)));
+                  (int fd, char *buf, size_t buflen)
+                  _GL_ARG_NONNULL ((2)) _GL_ATTRIBUTE_NODISCARD);
 _GL_CXXALIAS_RPL (ttyname_r, int,
                   (int fd, char *buf, size_t buflen));
 # else
 #  if !@HAVE_DECL_TTYNAME_R@
 _GL_FUNCDECL_SYS (ttyname_r, int,
-                  (int fd, char *buf, size_t buflen) _GL_ARG_NONNULL ((2)));
+                  (int fd, char *buf, size_t buflen)
+                  _GL_ARG_NONNULL ((2)) _GL_ATTRIBUTE_NODISCARD);
 #  endif
 _GL_CXXALIAS_SYS (ttyname_r, int,
                   (int fd, char *buf, size_t buflen));
@@ -2407,17 +2438,21 @@ _GL_WARN_ON_USE (usleep, "usleep is unportable - "
 #   undef write
 #   define write rpl_write
 #  endif
-_GL_FUNCDECL_RPL (write, ssize_t, (int fd, const void *buf, size_t count)
-                                  _GL_ARG_NONNULL ((2)));
-_GL_CXXALIAS_RPL (write, ssize_t, (int fd, const void *buf, size_t count));
+_GL_FUNCDECL_RPL (write, ssize_t,
+                  (int fd, const void *buf, size_t count)
+                  _GL_ARG_NONNULL ((2)) _GL_ATTRIBUTE_NODISCARD);
+_GL_CXXALIAS_RPL (write, ssize_t,
+                  (int fd, const void *buf, size_t count));
 # elif defined _WIN32 && !defined __CYGWIN__
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   undef write
 #   define write _write
 #  endif
-_GL_CXXALIAS_MDA (write, ssize_t, (int fd, const void *buf, size_t count));
+_GL_CXXALIAS_MDA (write, ssize_t,
+                  (int fd, const void *buf, size_t count));
 # else
-_GL_CXXALIAS_SYS (write, ssize_t, (int fd, const void *buf, size_t count));
+_GL_CXXALIAS_SYS (write, ssize_t,
+                  (int fd, const void *buf, size_t count));
 # endif
 _GL_CXXALIASWARN (write);
 #elif @GNULIB_MDA_WRITE@
@@ -2429,9 +2464,11 @@ _GL_CXXALIASWARN (write);
 #   undef write
 #   define write _write
 #  endif
-_GL_CXXALIAS_MDA_CAST (write, ssize_t, (int fd, const void *buf, unsigned int count));
+_GL_CXXALIAS_MDA_CAST (write, ssize_t,
+                       (int fd, const void *buf, unsigned int count));
 # else
-_GL_CXXALIAS_SYS (write, ssize_t, (int fd, const void *buf, size_t count));
+_GL_CXXALIAS_SYS (write, ssize_t,
+                  (int fd, const void *buf, size_t count));
 # endif
 _GL_CXXALIASWARN (write);
 #endif

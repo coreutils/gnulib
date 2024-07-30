@@ -55,7 +55,8 @@
 #ifndef _@GUARD_PREFIX@_SYS_STAT_H
 #define _@GUARD_PREFIX@_SYS_STAT_H
 
-/* This file uses _GL_ATTRIBUTE_NOTHROW, GNULIB_POSIXCHECK, HAVE_RAW_DECL_*.  */
+/* This file uses _GL_ATTRIBUTE_NODISCARD, _GL_ATTRIBUTE_NOTHROW,
+   GNULIB_POSIXCHECK, HAVE_RAW_DECL_*.  */
 #if !_GL_CONFIG_H_INCLUDED
  #error "Please include config.h first."
 #endif
@@ -481,14 +482,14 @@ _GL_CXXALIASWARN (chmod);
 #  endif
 _GL_FUNCDECL_RPL (fchmodat, int,
                   (int fd, char const *file, mode_t mode, int flag)
-                  _GL_ARG_NONNULL ((2)));
+                  _GL_ARG_NONNULL ((2)) _GL_ATTRIBUTE_NODISCARD);
 _GL_CXXALIAS_RPL (fchmodat, int,
                   (int fd, char const *file, mode_t mode, int flag));
 # else
 #  if !@HAVE_FCHMODAT@
 _GL_FUNCDECL_SYS (fchmodat, int,
                   (int fd, char const *file, mode_t mode, int flag)
-                  _GL_ARG_NONNULL ((2)));
+                  _GL_ARG_NONNULL ((2)) _GL_ATTRIBUTE_NODISCARD);
 #  endif
 _GL_CXXALIAS_SYS (fchmodat, int,
                   (int fd, char const *file, mode_t mode, int flag));

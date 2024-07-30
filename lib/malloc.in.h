@@ -46,8 +46,8 @@
 #ifndef _@GUARD_PREFIX@_MALLOC_H
 #define _@GUARD_PREFIX@_MALLOC_H
 
-/* This file uses _GL_ATTRIBUTE_DEALLOC, _GL_ATTRIBUTE_NOTHROW,
-   GNULIB_POSIXCHECK, HAVE_RAW_DECL_*.  */
+/* This file uses _GL_ATTRIBUTE_DEALLOC, _GL_ATTRIBUTE_NODISCARD,
+   _GL_ATTRIBUTE_NOTHROW, GNULIB_POSIXCHECK, HAVE_RAW_DECL_*.  */
 #if !_GL_CONFIG_H_INCLUDED
  #error "Please include config.h first."
 #endif
@@ -143,7 +143,8 @@ _GL_EXTERN_C void free (void *);
 #  endif
 _GL_FUNCDECL_RPL (memalign, void *,
                   (size_t alignment, size_t size)
-                  _GL_ATTRIBUTE_DEALLOC_FREE);
+                  _GL_ATTRIBUTE_DEALLOC_FREE
+                  _GL_ATTRIBUTE_NODISCARD);
 _GL_CXXALIAS_RPL (memalign, void *, (size_t alignment, size_t size));
 # else
 #  if @HAVE_MEMALIGN@
@@ -153,11 +154,13 @@ _GL_CXXALIAS_RPL (memalign, void *, (size_t alignment, size_t size));
 _GL_FUNCDECL_SYS (memalign, void *,
                   (size_t alignment, size_t size)
                   _GL_ATTRIBUTE_NOTHROW
-                  _GL_ATTRIBUTE_DEALLOC_FREE);
+                  _GL_ATTRIBUTE_DEALLOC_FREE
+                  _GL_ATTRIBUTE_NODISCARD);
 #    else
 _GL_FUNCDECL_SYS (memalign, void *,
                   (size_t alignment, size_t size)
-                  _GL_ATTRIBUTE_DEALLOC_FREE);
+                  _GL_ATTRIBUTE_DEALLOC_FREE
+                  _GL_ATTRIBUTE_NODISCARD);
 #    endif
 #   endif
 _GL_CXXALIAS_SYS (memalign, void *, (size_t alignment, size_t size));
