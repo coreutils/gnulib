@@ -5,6 +5,9 @@ tests/macros.h
 Depends-on:
 fpieee
 fpucw
+isnanf-nolibm
+isnand-nolibm
+isnanl-nolibm
 float-c++-tests
 
 configure.ac:

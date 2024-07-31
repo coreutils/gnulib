@@ -21,6 +21,26 @@ in the compiler, not the real 64-bit precision at runtime.
 On Linux/PowerPC with GCC 4.4, and on AIX 7.1 with GCC 4.2,
 they don't reflect the ``double double'' representation of @code{long double}
 correctly.
+@item
+The macros
+@code{FLT_HAS_SUBNORM}, @code{FLT_DECIMAL_DIG}, @code{FLT_TRUE_MIN},
+@code{DBL_HAS_SUBNORM}, @code{DBL_DECIMAL_DIG}, @code{DBL_TRUE_MIN},
+@code{LDBL_HAS_SUBNORM}, @code{LDBL_DECIMAL_DIG}, @code{LDBL_TRUE_MIN},
+that were added in ISO C 11, are missing on some platforms:
+gcc 4.5.4, clang 7, Solaris 11.3 with Sun C.
+@item
+The macro @code{LDBL_DECIMAL_DIG} is missing on some platforms:
+MSVC 14.
+@item
+The value of macro @code{FLT_TRUE_MIN} is not a @code{float} on some platforms:
+AIX 7.1 with xlc.
+@item
+The macros
+@code{FLT_IS_IEC_60559}, @code{FLT_NORM_MAX}, @code{FLT_SNAN},
+@code{DBL_IS_IEC_60559}, @code{DBL_NORM_MAX}, @code{DBL_SNAN},
+@code{LDBL_IS_IEC_60559}, @code{LDBL_NORM_MAX}, @code{LDBL_SNAN},
+that were added in ISO C 23, are missing on some platforms:
+gcc 14 without @code{-std=c23} or @code{-std=gnu23}, clang 18, musl libc 1.2.5, AIX 7.3 with xlclang, Solaris 11.3 with Sun C, MSVC 14.
 @end itemize
 
 Portability problems not fixed by Gnulib:
@@ -29,4 +49,11 @@ Portability problems not fixed by Gnulib:
 The macro @code{FLT_ROUNDS} is a constant expression and does not represent
 the current rounding mode on some platforms:
 glibc 2.11, HP-UX 11, mingw.
+@item
+The value of @code{FLT_TRUE_MIN} is not a constant on some platforms:
+FreeBSD/x86.
+@item
+The values of @code{FLT_SNAN}, @code{DBL_SNAN}, @code{LDBL_SNAN} are not
+constants on some platforms:
+AIX 7.3 with xlclang, and all platforms which use the gnulib replacements.
 @end itemize
