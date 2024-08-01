@@ -6,6 +6,10 @@ m4/extensions.m4
 
 Depends-on:
 
+configure.ac-early:
+# This is actually already done in the pre-early phase.
+# AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
+
 configure.ac:
 
 Makefile.am:

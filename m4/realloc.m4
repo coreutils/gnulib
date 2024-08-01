@@ -1,5 +1,5 @@
 # realloc.m4
-# serial 30
+# serial 31
 dnl Copyright (C) 2007, 2009-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -47,8 +47,7 @@ AC_DEFUN([gl_FUNC_REALLOC_GNU],
   AC_REQUIRE([gl_FUNC_REALLOC_POSIX])
 
   dnl This helps if !(__VEC__ || __AIXVEC), and shouldn't hurt otherwise.
-  AC_DEFINE([_LINUX_SOURCE_COMPAT], [1],
-    [Define so that AIX headers are more compatible with GNU/Linux.])
+  AC_REQUIRE([gl_USE_AIX_EXTENSIONS])
 
   if test $REPLACE_REALLOC_FOR_REALLOC_GNU = 0; then
     _AC_FUNC_REALLOC_IF([], [REPLACE_REALLOC_FOR_REALLOC_GNU=1])

@@ -8,6 +8,7 @@ m4/errno_h.m4
 Depends-on:
 gen-header
 include_next
+extensions-aix
 
 configure.ac:
 gl_HEADER_ERRNO_H

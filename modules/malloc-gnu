@@ -6,6 +6,7 @@ lib/malloc.c
 
 Depends-on:
 malloc-posix
+extensions-aix
 xalloc-oversized     [test $REPLACE_MALLOC_FOR_MALLOC_GNU = 1]
 
 configure.ac:

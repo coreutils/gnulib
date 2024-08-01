@@ -1,0 +1,22 @@
+Description:
+Enable extensions in AIX standard headers
+
+Files:
+m4/extensions-aix.m4
+
+Depends-on:
+
+configure.ac-early:
+AC_REQUIRE([gl_USE_AIX_EXTENSIONS])
+
+configure.ac:
+
+Makefile.am:
+
+Include:
+
+License:
+LGPLv2+
+
+Maintainer:
+all

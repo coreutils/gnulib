@@ -1,5 +1,5 @@
 # scandir.m4
-# serial 3
+# serial 4
 dnl Copyright (C) 2009-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -12,8 +12,7 @@ AC_DEFUN([gl_FUNC_SCANDIR],
   dnl Persuade glibc and Solaris <dirent.h> to declare scandir().
   AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
 
-  AC_DEFINE([_LINUX_SOURCE_COMPAT], [1],
-    [Define so that AIX headers are more compatible with GNU/Linux.])
+  AC_REQUIRE([gl_USE_AIX_EXTENSIONS])
 
   AC_CHECK_FUNCS([scandir])
   if test $ac_cv_func_scandir = no; then

@@ -1,5 +1,5 @@
 # malloc.m4
-# serial 32
+# serial 33
 dnl Copyright (C) 2007, 2009-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -47,8 +47,7 @@ AC_DEFUN([gl_FUNC_MALLOC_GNU],
   AC_REQUIRE([gl_FUNC_MALLOC_POSIX])
 
   dnl This helps if !(__VEC__ || __AIXVEC), and shouldn't hurt otherwise.
-  AC_DEFINE([_LINUX_SOURCE_COMPAT], [1],
-    [Define so that AIX headers are more compatible with GNU/Linux.])
+  AC_REQUIRE([gl_USE_AIX_EXTENSIONS])
 
   REPLACE_MALLOC_FOR_MALLOC_GNU="$REPLACE_MALLOC_FOR_MALLOC_POSIX"
   if test $REPLACE_MALLOC_FOR_MALLOC_GNU = 0; then

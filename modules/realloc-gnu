@@ -6,6 +6,7 @@ lib/realloc.c
 
 Depends-on:
 realloc-posix
+extensions-aix
 free-posix           [test $REPLACE_REALLOC_FOR_REALLOC_GNU = 1]
 malloc-gnu           [test $REPLACE_REALLOC_FOR_REALLOC_GNU = 1]
 xalloc-oversized     [test $REPLACE_REALLOC_FOR_REALLOC_GNU = 1]
