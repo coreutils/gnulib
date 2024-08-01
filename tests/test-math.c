@@ -20,8 +20,13 @@
 
 #include <math.h>
 
+#ifndef INFINITY
+# error INFINITY should be defined, added in ISO C 99
+choke me
+#endif
+
 #ifndef NAN
-# error NAN should be defined
+# error NAN should be defined, added in ISO C 99
 choke me
 #endif
 
@@ -50,10 +55,20 @@ choke me
 choke me
 #endif
 
-#if 0
+/* Check that INFINITY expands into a constant expression.  */
+float in = INFINITY;
+
 /* Check that NAN expands into a constant expression.  */
-static float n = NAN;
-#endif
+float na = NAN;
+
+/* Check that HUGE_VALF expands into a constant expression.  */
+float hf = HUGE_VALF;
+
+/* Check that HUGE_VAL expands into a constant expression.  */
+double hd = HUGE_VAL;
+
+/* Check that HUGE_VALL expands into a constant expression.  */
+long double hl = HUGE_VALL;
 
 #include <limits.h>
 
@@ -81,17 +96,28 @@ numeric_equall (long double x, long double y)
 int
 main (void)
 {
-  double d = NAN;
+  double d;
   double zero = 0.0;
+
+  /* Check that INFINITY is a float.  */
+  ASSERT (sizeof (INFINITY) == sizeof (float));
+
+  /* Check that NAN is a float.  */
+  ASSERT (sizeof (NAN) == sizeof (float));
+
+  /* Check the value of NAN.  */
+  d = NAN;
   ASSERT (!numeric_equald (d, d));
 
-  d = HUGE_VAL;
-  ASSERT (numeric_equald (d, 1.0 / zero));
-
+  /* Check the value of HUGE_VALF.  */
   ASSERT (numeric_equalf (HUGE_VALF, HUGE_VALF + HUGE_VALF));
 
+  /* Check the value of HUGE_VAL.  */
+  d = HUGE_VAL;
+  ASSERT (numeric_equald (d, 1.0 / zero));
   ASSERT (numeric_equald (HUGE_VAL, HUGE_VAL + HUGE_VAL));
 
+  /* Check the value of HUGE_VALL.  */
   ASSERT (numeric_equall (HUGE_VALL, HUGE_VALL + HUGE_VALL));
 
   /* Check the value of FP_ILOGB0.  */

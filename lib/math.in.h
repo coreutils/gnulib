@@ -160,12 +160,23 @@ static void (*_gl_math_fix_itold) (long double *, int) = _Qp_itoq;
 #endif
 
 
+/* Ensure that INFINITY is a constant expression, of type 'float'.  */
+#if !defined INFINITY || (defined __FreeBSD__ && __FreeBSD__ < 8) || defined _AIX
+# undef INFINITY
+# if defined __GNUC__ || defined __clang__
+#  define INFINITY (__builtin_inff ())
+# else
+#  define INFINITY (1.0f / 0.0f)
+# endif
+#endif
+
 /* POSIX allows platforms that don't support NAN.  But all major
    machines in the past 15 years have supported something close to
    IEEE NaN, so we define this unconditionally.  We also must define
    it on platforms like Solaris 10, where NAN is present but defined
-   as a function pointer rather than a floating point constant.  */
-#if !defined NAN || @REPLACE_NAN@
+   as a function pointer rather than a floating point constant.
+   Also ensure that it is a constant expression, of type 'float'.  */
+#if !defined NAN || @REPLACE_NAN@ || (defined __FreeBSD__ && __FreeBSD__ < 8) || defined _AIX
 # if !GNULIB_defined_NAN
 #  undef NAN
   /* The Compaq (ex-DEC) C 6.4 compiler and the Microsoft MSVC 9 compiler
@@ -178,6 +189,8 @@ _NaN ()
   return zero / zero;
 }
 #   define NAN (_NaN())
+#  elif defined __GNUC__ || defined __clang__
+#   define NAN (__builtin_nanf (""))
 #  else
 #   define NAN (0.0f / 0.0f)
 #  endif
@@ -197,30 +210,39 @@ _NaN ()
 #endif
 
 /* HUGE_VALF is a 'float' Infinity.  */
-#ifndef HUGE_VALF
+#if !defined HUGE_VALF || (defined __FreeBSD__ && __FreeBSD__ < 6)
+# undef HUGE_VALF
 # if defined _MSC_VER
 /* The Microsoft MSVC 9 compiler chokes on the expression 1.0f / 0.0f.  */
 #  define HUGE_VALF (1e25f * 1e25f)
+# elif defined __GNUC__ || defined __clang__
+#  define HUGE_VALF (__builtin_inff ())
 # else
 #  define HUGE_VALF (1.0f / 0.0f)
 # endif
 #endif
 
 /* HUGE_VAL is a 'double' Infinity.  */
-#ifndef HUGE_VAL
+#if !defined HUGE_VAL || (defined __FreeBSD__ && __FreeBSD__ < 6)
+# undef HUGE_VAL
 # if defined _MSC_VER
 /* The Microsoft MSVC 9 compiler chokes on the expression 1.0 / 0.0.  */
 #  define HUGE_VAL (1e250 * 1e250)
+# elif defined __GNUC__ || defined __clang__
+#  define HUGE_VAL (__builtin_inf ())
 # else
 #  define HUGE_VAL (1.0 / 0.0)
 # endif
 #endif
 
 /* HUGE_VALL is a 'long double' Infinity.  */
-#ifndef HUGE_VALL
+#if !defined HUGE_VALL || (defined __FreeBSD__ && __FreeBSD__ < 6)
+# undef HUGE_VALL
 # if defined _MSC_VER
 /* The Microsoft MSVC 9 compiler chokes on the expression 1.0L / 0.0L.  */
 #  define HUGE_VALL (1e250L * 1e250L)
+# elif defined __GNUC__ || defined __clang__
+#  define HUGE_VALL (__builtin_infl ())
 # else
 #  define HUGE_VALL (1.0L / 0.0L)
 # endif
