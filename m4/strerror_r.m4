@@ -1,5 +1,5 @@
 # strerror_r.m4
-# serial 27
+# serial 28
 dnl Copyright (C) 2002, 2007-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,13 +9,6 @@ AC_DEFUN([gl_FUNC_STRERROR_R],
 [
   AC_REQUIRE([gl_STRING_H_DEFAULTS])
   AC_REQUIRE([gl_FUNC_STRERROR_R_WORKS])
-
-  dnl On AIX, ask for the GNU/Linux API.  Other modules might ask for
-  dnl that API for other reasons, so we will will need override it because
-  dnl we cannot easily ask AIX for the GNU/Linux API for everything
-  dnl but strerror_r.
-  AC_DEFINE([_LINUX_SOURCE_COMPAT], [1],
-    [Define so that AIX headers are more compatible with GNU/Linux.])
 
   dnl Some systems don't declare strerror_r() if _THREAD_SAFE and _REENTRANT
   dnl are not defined.
