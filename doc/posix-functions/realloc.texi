@@ -40,7 +40,7 @@ It fixes these portability problems:
 @itemize
 @item
 @code{realloc (NULL, 0)} returns @code{NULL} on success on some platforms:
-AIX 7.2.
+AIX 7.3.
 
 @item
 On some platforms, @code{realloc (p, 0)} with non-null @code{p}

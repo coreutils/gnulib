@@ -1,5 +1,5 @@
 # passfd.m4
-# serial 9
+# serial 10
 dnl Copyright (C) 2011-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -13,7 +13,7 @@ AC_DEFUN([gl_PASSFD],
   dnl Persuade AIX 5.2 <sys/socket.h> to declare CMSG_SPACE, CMSG_LEN.
   dnl CMSG_FIRSTHDR is POSIX 2008, but CMSG_SPACE is only in RFC 3542.
   AC_DEFINE([_LINUX_SOURCE_COMPAT], [1],
-    [Define in order to get some macros on AIX systems.])
+    [Define so that AIX headers are more compatible with GNU/Linux.])
 
   dnl Passfd prefers the POSIX use of msg.msg_control if the CMSG_* macros
   dnl are present, but can fall back to BSD 4.3 style of msg.msg_accrights.

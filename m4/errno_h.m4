@@ -1,5 +1,5 @@
 # errno_h.m4
-# serial 14
+# serial 15
 dnl Copyright (C) 2004, 2006, 2008-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -10,6 +10,11 @@ AC_PREREQ([2.61])
 AC_DEFUN_ONCE([gl_HEADER_ERRNO_H],
 [
   AC_REQUIRE([AC_PROG_CC])
+
+  dnl Persuade AIX 7.3 errno.h to make EEXIST != ENOTEMPTY.
+  AC_DEFINE([_LINUX_SOURCE_COMPAT], [1],
+    [Define so that AIX headers are more compatible with GNU/Linux.])
+
   AC_CACHE_CHECK([for complete errno.h], [gl_cv_header_errno_h_complete], [
     AC_EGREP_CPP([booboo],[
 #include <errno.h>

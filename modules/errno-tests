@@ -2,6 +2,8 @@ Files:
 tests/test-errno.c
 
 Depends-on:
+assert-h
+c99
 errno-c++-tests
 
 configure.ac:
@@ -9,4 +11,3 @@ configure.ac:
 Makefile.am:
 TESTS += test-errno
 check_PROGRAMS += test-errno
-
