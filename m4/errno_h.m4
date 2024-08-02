@@ -1,5 +1,5 @@
 # errno_h.m4
-# serial 16
+# serial 17
 dnl Copyright (C) 2004, 2006, 2008-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -11,8 +11,9 @@ AC_DEFUN_ONCE([gl_HEADER_ERRNO_H],
 [
   AC_REQUIRE([AC_PROG_CC])
 
-  dnl Persuade AIX 7.3 errno.h to make EEXIST != ENOTEMPTY.
-  AC_REQUIRE([gl_USE_AIX_EXTENSIONS])
+  dnl Through the dependency on module extensions-aix, _LINUX_SOURCE_COMPAT
+  dnl gets defined already before this macro gets invoked.  This persuades
+  dnl AIX 7.3 errno.h to assign ENOTEMPTY a value different than EEXIST.
 
   AC_CACHE_CHECK([for complete errno.h], [gl_cv_header_errno_h_complete], [
     AC_EGREP_CPP([booboo],[
