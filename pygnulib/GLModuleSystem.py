@@ -604,9 +604,9 @@ class GLModule:
             self.cache['dependents'] = result
         return self.cache['dependents']
 
-    def getDependentsRecursively(self) -> str:
+    def getDependentsRecursively(self) -> set[GLModule]:
         '''Return a list of recursive dependents of this module,
-        as a list of GLModule objects.'''
+        as a set of GLModule objects.'''
         handledmodules = set()
         inmodules = set()
         outmodules = set()
