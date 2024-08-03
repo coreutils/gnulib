@@ -1256,7 +1256,10 @@ def main(temp_directory: str) -> None:
         for name in modules:
             module = modulesystem.find(name)
             if module:
-                sys.stdout.write(module.getDependenciesRecursively())
+                dependencies = module.getDependenciesRecursively()
+                dependencies_names = sorted([ m.name
+                                              for m in dependencies ])
+                sys.stdout.write(lines_to_multiline(dependencies_names))
 
     elif mode == 'extract-dependents':
         if avoids:

@@ -528,9 +528,9 @@ class GLModule:
             self.cache['dependenciesWithCond'] = result
         return self.cache['dependenciesWithCond']
 
-    def getDependenciesRecursively(self) -> str:
-        '''Return a list of recursive dependencies of this module separated
-        by a newline.'''
+    def getDependenciesRecursively(self) -> set[GLModule]:
+        '''Return a list of recursive dependencies of this module,
+        as a set of GLModule objects.'''
         handledmodules = set()
         inmodules = set()
         outmodules = set()
@@ -551,9 +551,7 @@ class GLModule:
             # Remove handledmodules from inmodules.
             inmodules = inmodules.difference(handledmodules)
 
-        module_names = sorted([ module.name
-                                for module in outmodules ])
-        return lines_to_multiline(module_names)
+        return outmodules
 
     def getDependents(self) -> list[GLModule]:
         '''Return list of dependents (a.k.a. "reverse dependencies"),
