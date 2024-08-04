@@ -23,7 +23,6 @@
 #include "glthread/thread.h"
 
 #include <stdlib.h>
-#include "glthread/lock.h"
 
 /* ========================================================================= */
 

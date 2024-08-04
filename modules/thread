@@ -10,7 +10,6 @@ Depends-on:
 threadlib
 stdint
 extern-inline
-lock
 windows-thread  [test $gl_threads_api = windows]
 pthread_sigmask [test $gl_threads_api = posix]
 
