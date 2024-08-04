@@ -11,7 +11,7 @@ wchar
 iconv
 localcharset
 streq
-lock
+once
 tls
 mbszero
 wcrtomb

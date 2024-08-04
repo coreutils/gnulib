@@ -36,7 +36,7 @@
 
 # include "localcharset.h"
 # include "streq.h"
-# include "glthread/lock.h"
+# include "glthread/once.h"
 # include "glthread/tls.h"
 # include "unistr.h"
 
