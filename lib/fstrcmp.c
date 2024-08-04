@@ -28,7 +28,7 @@
 #include <stdlib.h>
 #include <limits.h>
 
-#include "glthread/lock.h"
+#include "glthread/once.h"
 #include "glthread/tls.h"
 #include "minmax.h"
 #include "xalloc.h"
