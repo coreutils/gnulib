@@ -50,8 +50,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "glthread/lock.h"
-
 #if HAVE_DECL_ALARM
 # include <signal.h>
 # include <unistd.h>

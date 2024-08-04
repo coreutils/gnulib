@@ -6,7 +6,6 @@ m4/semaphore.m4
 
 Depends-on:
 thrd
-lock
 stdint
 random
 
