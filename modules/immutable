@@ -13,6 +13,7 @@ Depends-on:
 stdint
 pathmax
 open
+once
 ssfmalloc
 
 configure.ac:

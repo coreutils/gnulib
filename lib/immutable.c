@@ -76,7 +76,7 @@ extern
 #   define PATH_MAX 4096
 #  endif
 
-#  include "glthread/lock.h"
+#  include "glthread/once.h"
 
 # endif
 
