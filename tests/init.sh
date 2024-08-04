@@ -595,7 +595,7 @@ fi
 # I.e., just doing `command ... &&fail=1` will not catch
 # a segfault in command for example.  With this helper you
 # instead check an explicit exit code like
-#   returns_ 1 command ... || fail
+#   returns_ 1 command ... || fail=1
 returns_ () {
   # Disable tracing so it doesn't interfere with stderr of the wrapped command
   { local is_tracing=`{ :; } 2>&1`; } 2>/dev/null
