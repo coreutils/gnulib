@@ -1,0 +1,31 @@
+Description:
+Once-only initialization in multithreaded situations.
+
+Files:
+lib/glthread/once.h
+lib/glthread/once.c
+m4/once.m4
+
+Depends-on:
+extensions
+threadlib
+pthread-once     [test $gl_threads_api = posix]
+windows-once     [test $gl_threads_api = windows]
+
+configure.ac:
+gl_ONCE
+
+Makefile.am:
+lib_SOURCES += glthread/once.h glthread/once.c
+
+Include:
+"glthread/once.h"
+
+Link:
+$(LIBTHREAD)
+
+License:
+LGPLv2+
+
+Maintainer:
+all

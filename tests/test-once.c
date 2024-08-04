@@ -18,7 +18,7 @@
 
 #include <config.h>
 
-#include "glthread/lock.h"
+#include "glthread/once.h"
 
 #include "macros.h"
 

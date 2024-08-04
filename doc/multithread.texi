@@ -182,6 +182,8 @@ The Gnulib multithreading API is documented in the respective include files:
 @item
 @code{<glthread/lock.h>}
 @item
+@code{<glthread/once.h>}
+@item
 @code{<glthread/cond.h>}
 @item
 @code{<glthread/tls.h>}
@@ -195,7 +197,7 @@ To make use of Gnulib multithreading, use the following Gnulib modules:
 @item For thread creation and management:@tie{} @tab @code{thread}
 @item For simple locks, recursive locks, and read-write locks:@tie{}
       @tab @code{lock}
-@item For once-only execution:@tie{} @tab @code{lock}
+@item For once-only execution:@tie{} @tab @code{once}
 @item For ``condition variables'' (wait queues):@tie{} @tab @code{cond}
 @item For thread-local storage:@tie{} @tab @code{tls}
 @item For relinquishing control:@tie{} @tab @code{yield}
