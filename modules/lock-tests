@@ -1,7 +1,6 @@
 Files:
 tests/test-rwlock1.c
 tests/test-lock.c
-tests/test-once.c
 tests/atomic-int-gnulib.h
 tests/macros.h
 m4/semaphore.m4
@@ -19,11 +18,7 @@ AC_CHECK_DECLS_ONCE([alarm])
 AC_REQUIRE([gl_SEMAPHORE])
 
 Makefile.am:
-TESTS += test-rwlock1 test-lock test-once1 test-once2
-check_PROGRAMS += test-rwlock1 test-lock test-once1 test-once2
+TESTS += test-rwlock1 test-lock
+check_PROGRAMS += test-rwlock1 test-lock
 test_rwlock1_LDADD = $(LDADD) @LIBMULTITHREAD@ @YIELD_LIB@
 test_lock_LDADD = $(LDADD) @LIBMULTITHREAD@ @YIELD_LIB@ @LIB_SEMAPHORE@
-test_once1_SOURCES = test-once.c
-test_once1_LDADD = $(LDADD) @LIBTHREAD@
-test_once2_SOURCES = test-once.c
-test_once2_LDADD = $(LDADD) @LIBMULTITHREAD@
