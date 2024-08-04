@@ -25,7 +25,7 @@ path_prepend_ .
 
 fail=0
 
-LC_ALL=C returns_ 0 ${CHECKER} test-dfa-match-aux 'x+x+x+' xx > out 2>&1
+LC_ALL=C ${CHECKER} test-dfa-match-aux 'x+x+x+' xx > out 2>&1 || fail=1
 compare /dev/null out || fail=1
 
 Exit $fail
