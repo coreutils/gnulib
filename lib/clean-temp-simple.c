@@ -32,6 +32,7 @@
 #include "fatal-signal.h"
 #include "asyncsafe-spin.h"
 #include "glthread/lock.h"
+#include "glthread/once.h"
 #include "thread-optim.h"
 #include "gl_list.h"
 #include "gl_linkedhash_list.h"

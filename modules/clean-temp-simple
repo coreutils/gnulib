@@ -13,6 +13,7 @@ list
 asyncsafe-spin
 unistd
 lock
+once
 thread-optim
 error
 fatal-signal
