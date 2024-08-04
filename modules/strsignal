@@ -10,7 +10,7 @@ Depends-on:
 string
 extensions
 gettext-h       [test $HAVE_STRSIGNAL = 0 || test $REPLACE_STRSIGNAL = 1]
-lock            [test $HAVE_STRSIGNAL = 0 || test $REPLACE_STRSIGNAL = 1]
+once            [test $HAVE_STRSIGNAL = 0 || test $REPLACE_STRSIGNAL = 1]
 tls             [test $HAVE_STRSIGNAL = 0 || test $REPLACE_STRSIGNAL = 1]
 snprintf        [test $HAVE_STRSIGNAL = 0 || test $REPLACE_STRSIGNAL = 1]
 memset          [test $HAVE_STRSIGNAL = 0 || test $REPLACE_STRSIGNAL = 1]

@@ -37,7 +37,7 @@
 #ifdef _LIBC
 # include <bits/libc-lock.h>
 #else /* !_LIBC */
-# include "glthread/lock.h"
+# include "glthread/once.h"
 # include "glthread/tls.h"
 # define __libc_once_define(CLASS, NAME) gl_once_define (CLASS, NAME)
 # define __libc_once(NAME, INIT) gl_once ((NAME), (INIT))
