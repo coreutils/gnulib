@@ -89,6 +89,7 @@
 # endif
 #endif
 
+#include "glthread/once.h"
 #include "glthread/thread.h"
 #include "glthread/yield.h"
 
