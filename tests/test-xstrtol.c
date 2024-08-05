@@ -28,6 +28,7 @@
 # define __xstrtol xstrtol
 # define __strtol_t long int
 # define __spec "ld"
+# define is_GNULIB_strtol GNULIB_defined_strtol_function
 #endif
 
 /* Don't show the program name in error messages.  */
@@ -75,7 +76,7 @@ main (int argc, char **argv)
         char *endp = NULL;
         __strtol_t val = -17;
         strtol_error s_err = __xstrtol (input, &endp, -1, &val, "k");
-# if !(defined __GLIBC__ || defined __CYGWIN__)
+# if !(defined __GLIBC__ || defined __CYGWIN__ || is_GNULIB_strtol)
         ASSERT (s_err == LONGINT_OK);
         ASSERT (endp == input + 1);
         ASSERT (val == 1024);
