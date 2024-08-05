@@ -618,17 +618,13 @@ class GLTestDir:
             emit += self.emitter.initmacro_done('%stests' % macro_prefix, testsbase)
         emit += '\ngl_INIT\n\n'
         if subdirs_with_configure_ac:
-            if single_configure:
-                emit += 'AC_CONFIG_SUBDIRS([%s])\n' % ' '.join(subdirs_with_configure_ac[:-1])
-            else:  # if not single_configure
-                emit += 'AC_CONFIG_SUBDIRS([%s])\n' % ' '.join(subdirs_with_configure_ac)
+            emit += 'AC_CONFIG_SUBDIRS([%s])\n' % ' '.join(subdirs_with_configure_ac)
         makefiles = ['Makefile']
         for directory in subdirs:
             # For subdirs that have a configure.ac by their own, it's the subdir's
             # configure.ac which creates the subdir's Makefile.am, not this one.
-            makefiles.append(joinpath(directory, 'Makefile'))
-        if not single_configure:
-            makefiles = makefiles[:-1]
+            if not directory in subdirs_with_configure_ac:
+                makefiles.append(joinpath(directory, 'Makefile'))
         emit += 'AC_CONFIG_FILES([%s])\n' % ' '.join(makefiles)
         emit += 'AC_OUTPUT\n'
         path = joinpath(self.testdir, 'configure.ac')
