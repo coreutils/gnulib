@@ -223,7 +223,7 @@ _NaN ()
 #endif
 
 /* HUGE_VAL is a 'double' Infinity.  */
-#if !defined HUGE_VAL || (defined __FreeBSD__ && __FreeBSD__ < 6)
+#if !defined HUGE_VAL || (defined __FreeBSD__ && __FreeBSD__ < 6) || defined _AIX
 # undef HUGE_VAL
 # if defined _MSC_VER
 /* The Microsoft MSVC 9 compiler chokes on the expression 1.0 / 0.0.  */
@@ -236,7 +236,7 @@ _NaN ()
 #endif
 
 /* HUGE_VALL is a 'long double' Infinity.  */
-#if !defined HUGE_VALL || (defined __FreeBSD__ && __FreeBSD__ < 6)
+#if !defined HUGE_VALL || (defined __FreeBSD__ && __FreeBSD__ < 6) || defined _AIX
 # undef HUGE_VALL
 # if defined _MSC_VER
 /* The Microsoft MSVC 9 compiler chokes on the expression 1.0L / 0.0L.  */

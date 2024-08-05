@@ -45,7 +45,7 @@ Haiku 2022.
 @item
 @code{HUGE_VAL}, @code{HUGE_VALF}, @code{HUGE_VALL} are not compile time
 constants on some platforms:
-FreeBSD 5.2.
+FreeBSD 5.2, AIX 7.1.
 
 @item
 @code{INFINITY} and @code{NAN} are not compile time constants
