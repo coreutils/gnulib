@@ -1,0 +1,11 @@
+Files:
+tests/test-windows-mutex-type.c
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-windows-mutex-type
+check_PROGRAMS += test-windows-mutex-type
