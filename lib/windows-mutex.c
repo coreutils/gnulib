@@ -28,6 +28,7 @@
 void
 glwthread_mutex_init (glwthread_mutex_t *mutex)
 {
+  mutex->owner = 0;
   InitializeCriticalSection (&mutex->lock);
   mutex->guard.done = 1;
 }

@@ -40,6 +40,7 @@ glwthread_timedmutex_init (glwthread_timedmutex_t *mutex)
   if (event == INVALID_HANDLE_VALUE)
     return EAGAIN;
   mutex->event = event;
+  mutex->owner = 0;
   InitializeCriticalSection (&mutex->lock);
   mutex->guard.done = 1;
   return 0;
