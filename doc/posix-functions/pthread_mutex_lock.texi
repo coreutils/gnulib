@@ -17,4 +17,9 @@ Minix 3.1.8.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+This function does not behave as required by POSIX for mutexes of type
+NORMAL and ERRORCHECK, by allowing RECURSIVE locking,
+in programs linked without @code{-lpthread} on some platforms:
+FreeBSD 14.0, NetBSD 10.0.
 @end itemize

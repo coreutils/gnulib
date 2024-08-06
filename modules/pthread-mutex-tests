@@ -1,5 +1,6 @@
 Files:
 tests/test-pthread-mutex.c
+tests/test-pthread-mutex-type.c
 tests/atomic-int-posix.h
 tests/macros.h
 m4/semaphore.m4
@@ -15,6 +16,9 @@ AC_CHECK_DECLS_ONCE([alarm])
 AC_REQUIRE([gl_SEMAPHORE])
 
 Makefile.am:
-TESTS += test-pthread-mutex
-check_PROGRAMS += test-pthread-mutex
+TESTS += test-pthread-mutex test-pthread-mutex-type
+check_PROGRAMS += test-pthread-mutex test-pthread-mutex-type
 test_pthread_mutex_LDADD = $(LDADD) @LIBPMULTITHREAD@ @SCHED_YIELD_LIB@ @LIB_SEMAPHORE@
+# If we were to link test-pthread-mutex-type only with @LIBPTHREAD@ instead of
+# @LIBPMULTITHREAD@, this test would fail on FreeBSD and NetBSD.
+test_pthread_mutex_type_LDADD = $(LDADD) @LIBPMULTITHREAD@
