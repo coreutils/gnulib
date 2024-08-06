@@ -30,6 +30,7 @@
 typedef struct
         {
           glwthread_initguard_t guard; /* protects the initialization */
+          DWORD owner;
           HANDLE event;
           CRITICAL_SECTION lock;
         }
