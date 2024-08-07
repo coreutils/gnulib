@@ -12,7 +12,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-FreeBSD 5.2.1, NetBSD 10.0, OpenBSD 6.7, Minix 3.1.8, AIX 5.1, HP-UX 11, Solaris 10, Cygwin 1.7.x, mingw, MSVC 14, Android 9.0.
+FreeBSD 5.2.1, NetBSD 10.0, OpenBSD 7.5, Minix 3.1.8, AIX 5.1, HP-UX 11, Solaris 10, Cygwin 1.7.x, mingw, MSVC 14, Android 9.0.
 @item
 This function is declared in @code{<strings.h>} instead of @code{<string.h>}
 on some platforms:

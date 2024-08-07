@@ -10,7 +10,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function requires super-user privileges to create a fifo:
-FreeBSD 7.2, NetBSD 8.0, OpenBSD 6.7.
+FreeBSD 7.2, NetBSD 8.0, OpenBSD 7.5.
 @item
 This function mishandles trailing slash on some platforms:
 FreeBSD 7.2, Solaris 9.

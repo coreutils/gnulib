@@ -14,11 +14,11 @@ OpenBSD 4.0, mingw, MSVC 9.
 @item
 The macro @code{ENOLINK} is not defined
 on some platforms:
-OpenBSD 6.7, mingw, MSVC 9.
+OpenBSD 7.5, mingw, MSVC 9.
 @item
 The macro @code{EMULTIHOP} is not defined
 on some platforms:
-OpenBSD 6.7, mingw, MSVC 14.
+OpenBSD 7.5, mingw, MSVC 14.
 @item
 The macro @code{ECANCELED} is not defined on some platforms:
 OpenBSD 4.0, Cygwin, mingw, MSVC 9.

@@ -20,7 +20,7 @@ Use the function @code{fgets} instead.
 This function should never be used, because it can overflow any given buffer.
 @item
 This function is missing on some platforms:
-OpenBSD 6.7, Solaris 11.4.
+OpenBSD 7.5, Solaris 11.4.
 @item
 When reading from a non-blocking pipe whose buffer is empty, this function
 fails with @code{errno} being set to @code{EINVAL} instead of @code{EAGAIN} on

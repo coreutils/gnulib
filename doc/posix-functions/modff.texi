@@ -20,7 +20,7 @@ Portability problems fixed by Gnulib module @code{modff-ieee}:
 @itemize
 @item
 This function has problems with a NaN argument on some platforms:
-NetBSD 5.1, OpenBSD 6.7, Solaris 9, Cygwin.
+NetBSD 5.1, OpenBSD 7.5, Solaris 9, Cygwin.
 @item
 This function has problems with infinite arguments on some platforms:
 mingw.

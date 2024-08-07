@@ -13,5 +13,5 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This header file is missing on some platforms:
-OpenBSD 6.7, Android 9.0.
+OpenBSD 7.5, Android 9.0.
 @end itemize
