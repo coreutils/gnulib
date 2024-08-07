@@ -20,6 +20,10 @@
 
 #include <errno.h>
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 /* Check all POSIX-defined errno values, using M (v) to check value v.  */
 #define CHECK_POSIX_ERRNOS(m) \
   m (E2BIG) \
@@ -107,24 +111,51 @@
 #define POSITIVE_INTEGER_CONSTANT_EXPRESSION(e) static_assert (0 < (e) << 0);
 CHECK_POSIX_ERRNOS (POSITIVE_INTEGER_CONSTANT_EXPRESSION)
 
+/* Verify that errno values can all be used in #if.  */
+#define USABLE_IN_IF(e) ^ e
+#if 0 CHECK_POSIX_ERRNOS (USABLE_IN_IF)
+#endif
+
+/* Check that errno values all differ, except possibly for
+   EWOULDBLOCK == EAGAIN and ENOTSUP == EOPNOTSUPP.  */
+#define ERRTAB(e) { #e, e },
+static struct nameval { char const *name; int value; }
+  errtab[] = { CHECK_POSIX_ERRNOS (ERRTAB) };
+
+static int
+errtab_cmp (void const *va, void const *vb)
+{
+  struct nameval const *a = va, *b = vb;
+
+  /* Sort by value first, then by name (to simplify later tests).
+     Subtraction cannot overflow as both are positive.  */
+  int diff = a->value - b->value;
+  return diff ? diff : strcmp (a->name, b->name);
+}
+
 int
 main ()
 {
+  int test_exit_status = EXIT_SUCCESS;
+
   /* Verify that errno can be assigned.  */
   errno = EOVERFLOW;
 
   /* Check that errno values all differ, except possibly for
-     EWOULDBLOCK == EAGAIN and ENOTSUP == EOPNOTSUPP.  */
-  #define INDEXED_BY_ERRNO(e) [e] = 1,
-  #define ERRNO_COUNT(e) 0,
-  static char const
-    indexed_by_errno[] = { CHECK_POSIX_ERRNOS (INDEXED_BY_ERRNO) },
-    errno_count[] = { CHECK_POSIX_ERRNOS (ERRNO_COUNT) };
-  int distinct_errnos = 0;
-  for (int i = 0; i < sizeof indexed_by_errno; i++)
-    distinct_errnos += indexed_by_errno[i];
-  return ((sizeof errno_count
-           - (EWOULDBLOCK == EAGAIN)
-           - (ENOTSUP == EOPNOTSUPP))
-          != distinct_errnos);
+     EAGAIN == EWOULDBLOCK and ENOTSUP == EOPNOTSUPP.  */
+  int nerrtab = sizeof errtab / sizeof *errtab;
+  qsort (errtab, nerrtab, sizeof *errtab, errtab_cmp);
+  for (int i = 1; i < nerrtab; i++)
+    if (errtab[i - 1].value == errtab[i].value)
+      {
+        fprintf (stderr, "%s == %s == %d\n",
+                 errtab[i - 1].name, errtab[i].name, errtab[i].value);
+        if (! ((strcmp ("EAGAIN", errtab[i - 1].name) == 0
+                && strcmp ("EWOULDBLOCK", errtab[i].name) == 0)
+               || (strcmp ("ENOTSUP", errtab[i - 1].name) == 0
+                   && strcmp ("EOPNOTSUPP", errtab[i].name) == 0)))
+          test_exit_status = EXIT_FAILURE;
+      }
+
+  return test_exit_status;
 }
