@@ -13,15 +13,15 @@ This function is missing on some platforms:
 macOS 14, FreeBSD 5.2.1, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, HP-UX 11, Solaris 9, Cygwin 1.7.x, mingw, MSVC 14, Android 4.3.
 But the provided replacement is just a dummy on some of these platforms:
 Minix 3.1.8.
-@end itemize
-
-Portability problems not fixed by Gnulib:
-@itemize
 @item
 This function prefers readers to writers (meaning, when this function is
 called on an rwlock that is already taken by one or more readers, and
 another writer is already waiting to take it, this function may return
 successfully immediately) -- a behaviour that may lead to writer starvation --
 on some platforms:
-glibc 2.28.
+glibc 2.40.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
 @end itemize
