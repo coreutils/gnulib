@@ -1,4 +1,4 @@
-/* Implement the most essential subset of POSIX 1003.1-2008 pthread.h.
+/* Implement the most essential subset of POSIX pthread.h.
 
    Copyright (C) 2009-2024 Free Software Foundation, Inc.
 
@@ -275,7 +275,7 @@ typedef unsigned int pthread_rwlockattr_t;
 #  undef PTHREAD_RWLOCK_INITIALIZER
 #  define PTHREAD_RWLOCK_INITIALIZER { 0 }
 # endif
-#elif @GNULIB_PTHREAD_RWLOCK@ && @REPLACE_PTHREAD_RWLOCK_INIT@ /* i.e. PTHREAD_RWLOCK_UNIMPLEMENTED */
+#elif @GNULIB_PTHREAD_RWLOCK@ && @REPLACE_PTHREAD_RWLOCK_DESTROY@ /* i.e. PTHREAD_RWLOCK_UNIMPLEMENTED */
 # if @HAVE_PTHREAD_T@
 #  define pthread_rwlock_t rpl_pthread_rwlock_t
 #  define pthread_rwlockattr_t rpl_pthread_rwlockattr_t
@@ -296,6 +296,11 @@ typedef unsigned int pthread_rwlockattr_t;
 # undef PTHREAD_RWLOCK_INITIALIZER
 # define PTHREAD_RWLOCK_INITIALIZER \
    { PTHREAD_MUTEX_INITIALIZER, PTHREAD_COND_INITIALIZER, PTHREAD_COND_INITIALIZER, 0, 0 }
+#elif @GNULIB_PTHREAD_RWLOCK@ && @REPLACE_PTHREAD_RWLOCK_INIT@ /* i.e. PTHREAD_RWLOCK_BAD_WAITQUEUE */
+/* Use rwlocks of kind PREFER_WRITER or PREFER_WRITER_NONRECURSIVE instead of
+   the DEFAULT.  */
+# undef PTHREAD_RWLOCK_INITIALIZER
+# define PTHREAD_RWLOCK_INITIALIZER PTHREAD_RWLOCK_WRITER_NONRECURSIVE_INITIALIZER_NP
 #else
 # if @HAVE_PTHREAD_T@
 #  if !defined PTHREAD_RWLOCK_INITIALIZER && defined PTHREAD_RWLOCK_INITIALIZER_NP /* z/OS */

@@ -49,6 +49,29 @@ pthread_rwlockattr_destroy (_GL_UNUSED pthread_rwlockattr_t *attr)
   return 0;
 }
 
+#elif PTHREAD_RWLOCK_BAD_WAITQUEUE
+
+/* Override pthread_rwlockattr_init, to use the kind PREFER_WRITER_NONRECURSIVE
+   (or possibly PREFER_WRITER) instead of the kind DEFAULT.  */
+int
+pthread_rwlockattr_init (pthread_rwlockattr_t *attr)
+# undef pthread_rwlockattr_init
+{
+  int err;
+
+  err = pthread_rwlockattr_init (attr);
+  if (err != 0)
+    return err;
+  err = pthread_rwlockattr_setkind_np (attr,
+                                       PTHREAD_RWLOCK_PREFER_WRITER_NONRECURSIVE_NP);
+  if (err != 0)
+    {
+      pthread_rwlockattr_destroy (attr);
+      return err;
+    }
+  return 0;
+}
+
 #endif
 
 #if (defined _WIN32 && ! defined __CYGWIN__) && USE_WINDOWS_THREADS
@@ -363,7 +386,44 @@ pthread_rwlock_destroy (pthread_rwlock_t *lock)
   return 0;
 }
 
-# elif PTHREAD_RWLOCK_LACKS_TIMEOUT
+# else
+
+#  if PTHREAD_RWLOCK_BAD_WAITQUEUE
+
+/* Override pthread_rwlock_init, to use the kind PREFER_WRITER_NONRECURSIVE
+   (or possibly PREFER_WRITER) instead of the default, when no
+   pthread_rwlockattr_t object is specified.  */
+int
+pthread_rwlock_init (pthread_rwlock_t *lock, const pthread_rwlockattr_t *attr)
+#   undef pthread_rwlock_init
+{
+  int err;
+
+  if (attr != NULL)
+    err = pthread_rwlock_init (lock, attr);
+  else
+    {
+      pthread_rwlockattr_t replacement_attr;
+
+      err = pthread_rwlockattr_init (&replacement_attr);
+      if (err != 0)
+        return err;
+      err = pthread_rwlockattr_setkind_np (&replacement_attr,
+                                           PTHREAD_RWLOCK_PREFER_WRITER_NONRECURSIVE_NP);
+      if (err != 0)
+        {
+          pthread_rwlockattr_destroy (&replacement_attr);
+          return err;
+        }
+      err = pthread_rwlock_init (lock, &replacement_attr);
+      pthread_rwlockattr_destroy (&replacement_attr);
+    }
+  return err;
+}
+
+#  endif
+
+#  if PTHREAD_RWLOCK_LACKS_TIMEOUT
 
 int
 pthread_rwlock_timedrdlock (pthread_rwlock_t *lock,
@@ -478,6 +538,8 @@ pthread_rwlock_timedwrlock (pthread_rwlock_t *lock,
       nanosleep (&duration, NULL);
     }
 }
+
+#  endif
 
 # endif
 
