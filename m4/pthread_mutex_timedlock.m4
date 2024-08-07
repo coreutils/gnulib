@@ -1,5 +1,5 @@
 # pthread_mutex_timedlock.m4
-# serial 5
+# serial 6
 dnl Copyright (C) 2019-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -28,7 +28,8 @@ AC_DEFUN([gl_FUNC_PTHREAD_MUTEX_TIMEDLOCK],
                  #include <time.h>
                ]],
                [[pthread_mutex_t lock;
-                 return pthread_mutex_timedlock (&lock, (struct timespec *) 0);
+                 struct timespec ts = { 0 };
+                 return pthread_mutex_timedlock (&lock, &ts);
                ]])
             ],
             [gl_cv_func_pthread_mutex_timedlock_in_LIBMULTITHREAD=yes],

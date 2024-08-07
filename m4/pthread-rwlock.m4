@@ -1,5 +1,5 @@
 # pthread-rwlock.m4
-# serial 5
+# serial 6
 dnl Copyright (C) 2019-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -249,7 +249,7 @@ do_test (const char *rw_string)
   char **names = (char **) malloc (n * sizeof (char *));
   for (size_t i = 0; i < n; i++)
     {
-      char name[10];
+      char name[12];
       sprintf (name, "%c%u", rw_string[i], (unsigned int) (i+1));
       names[i] = strdup (name);
     }
