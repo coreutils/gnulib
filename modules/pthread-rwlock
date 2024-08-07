@@ -14,7 +14,7 @@ windows-timedrwlock [test $gl_threads_api = windows]
 configure.ac:
 gl_PTHREAD_RWLOCK
 gl_CONDITIONAL([GL_COND_OBJ_PTHREAD_RWLOCK],
-               [test $HAVE_PTHREAD_RWLOCK_TIMEDRDLOCK = 0 || test $REPLACE_PTHREAD_RWLOCK_TIMEDRDLOCK = 1])
+               [test $REPLACE_PTHREAD_RWLOCK_INIT = 1 || test $HAVE_PTHREAD_RWLOCK_TIMEDRDLOCK = 0 || test $REPLACE_PTHREAD_RWLOCK_TIMEDRDLOCK = 1])
 gl_PTHREAD_MODULE_INDICATOR([pthread-rwlock])
 
 Makefile.am:
