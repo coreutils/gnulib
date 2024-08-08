@@ -21,7 +21,7 @@ glibc 2.35, MirOS BSD #10.
 @item
 In the C or POSIX locales, this function is not consistent with @code{mbrtowc}
 on some platforms:
-mingw.
+Cygwin 3.4.x, mingw.
 @end itemize
 
 Portability problems not fixed by Gnulib:

@@ -26,7 +26,7 @@ macOS 14, FreeBSD 13.1, NetBSD 10.0, OpenBSD 7.5, Minix 3.1.8, AIX 5.1, HP-UX 11
 This function treats ASCII letters as smaller than a digit sequence
 on some platforms:
 @c https://git.musl-libc.org/cgit/musl/commit/src/string/strverscmp.c?id=b50eb8c36c20f967bd0ed70c0b0db38a450886ba
-musl libc 1.2.3, Cygwin 3.4.6.
+musl libc 1.2.3, Cygwin 3.4.x.
 @end itemize
 
 Portability problems not fixed by Gnulib:

@@ -11,7 +11,7 @@ Portability problems fixed by either Gnulib module @code{uchar} or @code{uchar-c
 @itemize
 @item
 This header file is missing on many non-glibc platforms:
-glibc 2.15, macOS 14, FreeBSD 6.4, NetBSD 10.0, OpenBSD 7.3, Minix 3.1.8, AIX 7.1, HP-UX 11.31, Solaris 11.3, Cygwin, mingw, MSVC 9.
+glibc 2.15, macOS 14, FreeBSD 6.4, NetBSD 10.0, OpenBSD 7.3, Minix 3.1.8, AIX 7.1, HP-UX 11.31, Solaris 11.3, Cygwin 3.4.x, mingw, MSVC 9.
 @item
 This file is not self-contained on some platforms:
 @c https://dev.haiku-os.org/ticket/17040

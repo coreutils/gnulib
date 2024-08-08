@@ -18,7 +18,7 @@ Cygwin 2.9.
 @item
 This function returns a wrong result for a NaN argument on some platforms:
 @c https://cygwin.com/pipermail/cygwin/2023-April/253511.html
-Cygwin 3.4.6.
+Cygwin 3.4.x.
 @item
 This function returns a wrong result for denormalized arguments on some platforms:
 AIX 7.1 64-bit, Haiku 2017.

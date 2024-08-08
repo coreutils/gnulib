@@ -14,5 +14,5 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-glibc 2.3.6, HP-UX 11.11, Cygwin 2.9, mingw, MSVC 14, Android 9.0.
+glibc 2.3.6, HP-UX 11.11, Cygwin 3.0.x, mingw, MSVC 14, Android 9.0.
 @end itemize

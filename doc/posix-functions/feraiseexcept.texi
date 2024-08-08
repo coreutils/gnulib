@@ -17,7 +17,7 @@ glibc 2.19/arm.
 @item
 This function does not trigger traps on
 @c https://sourceware.org/pipermail/cygwin/2023-October/254667.html
-Cygwin 3.4.9/x86_64.
+Cygwin 3.4.x/x86_64.
 @end itemize
 
 Portability problems not fixed by Gnulib:

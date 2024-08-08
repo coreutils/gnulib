@@ -14,7 +14,7 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on many platforms:
-glibc 2.9, macOS 14, FreeBSD 14.0, NetBSD 10.0, OpenBSD 7.5, Minix 3.1.8, AIX 5.1, HP-UX 11, Solaris 11.4, Cygwin 3.4.6, mingw, MSVC 14, Android 4.4.
+glibc 2.9, macOS 14, FreeBSD 14.0, NetBSD 10.0, OpenBSD 7.5, Minix 3.1.8, AIX 5.1, HP-UX 11, Solaris 11.4, Cygwin 3.4.x, mingw, MSVC 14, Android 4.4.
 @item
 On platforms where @code{off_t} is a 32-bit type, this function may not
 work correctly across the entire data range of files larger than 2 GB.

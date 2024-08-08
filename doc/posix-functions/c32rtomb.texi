@@ -8,7 +8,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function is missing on most non-glibc platforms:
-glibc 2.15, macOS 14, FreeBSD 6.4, NetBSD 10.0, OpenBSD 7.3, Minix 3.1.8, AIX 7.1, HP-UX 11.31, Solaris 11.3, Cygwin 3.4.6, mingw, MSVC 9, Android 4.4.
+glibc 2.15, macOS 14, FreeBSD 6.4, NetBSD 10.0, OpenBSD 7.3, Minix 3.1.8, AIX 7.1, HP-UX 11.31, Solaris 11.3, Cygwin 3.4.x, mingw, MSVC 9, Android 4.4.
 @item
 This function returns 0 when the first argument is NULL in some locales on some platforms:
 AIX 7.2.
