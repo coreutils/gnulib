@@ -1067,8 +1067,10 @@ which (known) portability problems are not worked around by Gnulib.
 * complex.h::
 * cpio.h::
 * ctype.h::
+* devctl.h::
 * dirent.h::
 * dlfcn.h::
+* endian.h::
 * errno.h::
 * fcntl.h::
 * fenv.h::
@@ -1083,6 +1085,7 @@ which (known) portability problems are not worked around by Gnulib.
 * iso646.h::
 * langinfo.h::
 * libgen.h::
+* libintl.h::
 * limits.h::
 * locale.h::
 * math.h::
@@ -1160,8 +1163,10 @@ which (known) portability problems are not worked around by Gnulib.
 @include posix-headers/complex.texi
 @include posix-headers/cpio.texi
 @include posix-headers/ctype.texi
+@include posix-headers/devctl.texi
 @include posix-headers/dirent.texi
 @include posix-headers/dlfcn.texi
+@include posix-headers/endian.texi
 @include posix-headers/errno.texi
 @include posix-headers/fcntl.texi
 @include posix-headers/fenv.texi
@@ -1176,6 +1181,7 @@ which (known) portability problems are not worked around by Gnulib.
 @include posix-headers/iso646.texi
 @include posix-headers/langinfo.texi
 @include posix-headers/libgen.texi
+@include posix-headers/libintl.texi
 @include posix-headers/limits.texi
 @include posix-headers/locale.texi
 @include posix-headers/math.texi
@@ -4843,7 +4849,6 @@ not worked around by Gnulib.
 * argz.h::
 * byteswap.h::
 * crypt.h::
-* endian.h::
 * envz.h::
 * err.h::
 * error.h::
@@ -4855,7 +4860,6 @@ not worked around by Gnulib.
 * gshadow.h::
 * ieee754.h::
 * ifaddrs.h::
-* libintl.h::
 * link.h::
 * malloc.h::
 * mcheck.h::
@@ -4882,7 +4886,6 @@ not worked around by Gnulib.
 @include glibc-headers/argz.texi
 @include glibc-headers/byteswap.texi
 @include glibc-headers/crypt.texi
-@include glibc-headers/endian.texi
 @include glibc-headers/envz.texi
 @include glibc-headers/err.texi
 @include glibc-headers/error.texi
@@ -4894,7 +4897,6 @@ not worked around by Gnulib.
 @include glibc-headers/gshadow.texi
 @include glibc-headers/ieee754.texi
 @include glibc-headers/ifaddrs.texi
-@include glibc-headers/libintl.texi
 @include glibc-headers/link.texi
 @include glibc-headers/malloc.texi
 @include glibc-headers/mcheck.texi

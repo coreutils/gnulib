@@ -1,0 +1,21 @@
+@node endian.h
+@section @file{endian.h}
+
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/endian.h.html}
+
+Describes the platform's endianness (byte ordering of words stored in memory).
+Defines the macros @code{BYTE_ORDER}, @code{LITTLE_ENDIAN}, @code{BIG_ENDIAN},
+@code{PDP_ENDIAN}.
+
+Gnulib module: endian
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This header file is missing on some platforms:
+macOS 14, FreeBSD 13.0, NetBSD 7.1, OpenBSD 3.8, Minix 3.1.8, AIX 7.3.1, HP-UX 11.31, Solaris 11.4, mingw, MSVC 14.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize
