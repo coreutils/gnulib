@@ -161,7 +161,7 @@ static void (*_gl_math_fix_itold) (long double *, int) = _Qp_itoq;
 
 
 /* Ensure that INFINITY is a constant expression, of type 'float'.  */
-#if !defined INFINITY || (defined __FreeBSD__ && __FreeBSD__ < 8) || defined _AIX
+#if !defined INFINITY || (defined __FreeBSD__ && __FreeBSD__ < 8) || defined _AIX || defined __MINGW32__
 # undef INFINITY
 # if defined __GNUC__ || defined __clang__
 #  define INFINITY (__builtin_inff ())
@@ -176,7 +176,7 @@ static void (*_gl_math_fix_itold) (long double *, int) = _Qp_itoq;
    it on platforms like Solaris 10, where NAN is present but defined
    as a function pointer rather than a floating point constant.
    Also ensure that it is a constant expression, of type 'float'.  */
-#if !defined NAN || @REPLACE_NAN@ || (defined __FreeBSD__ && __FreeBSD__ < 8) || defined _AIX
+#if !defined NAN || @REPLACE_NAN@ || (defined __FreeBSD__ && __FreeBSD__ < 8) || defined _AIX || defined __MINGW32__
 # if !GNULIB_defined_NAN
 #  undef NAN
   /* The Compaq (ex-DEC) C 6.4 compiler and the Microsoft MSVC 9 compiler

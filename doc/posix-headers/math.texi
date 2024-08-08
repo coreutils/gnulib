@@ -55,7 +55,7 @@ FreeBSD 5.2, AIX 7.1.
 @item
 @code{INFINITY} and @code{NAN} are of type @code{double} instead of @code{float}
 on some platforms:
-FreeBSD 7.1.
+FreeBSD 7.1, mingw 5.0.
 
 @item
 The macros @code{NAN}, @code{HUGE_VALL}, and @code{INFINITY} are not
