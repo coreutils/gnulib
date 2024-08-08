@@ -1,15 +1,11 @@
 @node stdalign.h
 @section @file{stdalign.h}
 
-POSIX specification:@* Not in POSIX yet, but we expect it will be,
-at least temporarily until it becomes obsolete due to its phasing
-out starting in C23.
-ISO C23 (latest free draft
-@url{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n3220.pdf})
-sections 6.5.3.4, 6.7.5, 7.15.
-C++11 (latest free draft
-@url{http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2011/n3242.pdf})
-section 18.10.
+ISO C23 specification:@* @url{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n3220.pdf} sections 6.5.3.4, 6.7.5, 7.15.
+
+C++11 specification:@* @url{http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2011/n3242.pdf} section 18.10.
+
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/stdalign.h.html}
 
 Gnulib module: alignasof
 

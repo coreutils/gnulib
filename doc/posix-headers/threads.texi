@@ -1,6 +1,10 @@
 @node threads.h
 @section @file{threads.h}
 
+ISO C23 specification:@* @url{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n3220.pdf} section 7.28.
+
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/threads.h.html}
+
 Defines the multithreading facility of ISO C11.
 
 Gnulib module: threads-h
