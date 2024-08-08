@@ -1,0 +1,20 @@
+@node atomic_compare_exchange_weak
+@subsection @code{atomic_compare_exchange_weak}
+@findex atomic_compare_exchange_weak
+
+ISO C23 specification:@* @url{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n3220.pdf} section 7.17.7.4.
+
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/atomic_compare_exchange_weak.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on many platforms:
+glibc with GCC 4.8.x or clang 2.8, FreeBSD 6.4, NetBSD 7.0, OpenBSD 6.5, OpenBSD 6.9 with gcc, Minix 3.3.0, AIX 7.2 with xlc or xlclang, HP-UX 11.31, Solaris 11.3 with Oracle Studio 12.4 (Sun C 5.13), Cygwin 1.5.19, mingw, MSVC 14..
+@end itemize

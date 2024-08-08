@@ -1,0 +1,20 @@
+@node CMPLXL
+@subsection @code{CMPLXL}
+@findex CMPLXL
+
+ISO C23 specification:@* @url{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n3220.pdf} section 7.3.9.3.
+
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/CMPLXL.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This macro is missing on many platforms:
+glibc with GCC 4.9.x or clang 18, Mac OS X 10.5, FreeBSD 6.4, NetBSD 10.0, OpenBSD 7.5, Minix 3.3.0, AIX 7.1, HP-UX 11.11, Solaris 11.0, Solaris 11 OpenIndiana, Cygwin, mingw, MSVC 14.
+@end itemize

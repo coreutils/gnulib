@@ -2,6 +2,10 @@
 @subsection @code{tss_create}
 @findex tss_create
 
+ISO C23 specification:@* @url{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n3220.pdf} section 7.28.6.1.
+
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/tss_create.html}
+
 Documentation:@*
 @ifinfo
 @ref{ISO C Thread-local Storage,,Thread-local Storage,libc}.

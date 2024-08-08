@@ -1,0 +1,20 @@
+@node at_quick_exit
+@subsection @code{at_quick_exit}
+@findex at_quick_exit
+
+ISO C23 specification:@* @url{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n3220.pdf} section 7.24.4.3.
+
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/at_quick_exit.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on many platforms:
+glibc 2.9, macOS 14, FreeBSD 6.4, NetBSD 5.0, OpenBSD 7.5, Minix 3.3.0, AIX 7.1, HP-UX 11.31, Solaris 11.3, Cygwin 1.7.x, mingw, MSVC 14, Android 4.3.
+@end itemize

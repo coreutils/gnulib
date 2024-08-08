@@ -2,6 +2,10 @@
 @subsection @code{thrd_exit}
 @findex thrd_exit
 
+ISO C23 specification:@* @url{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n3220.pdf} section 7.28.5.5.
+
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/thrd_exit.html}
+
 Documentation:@*
 @ifinfo
 @ref{ISO C Thread Management,,Creation and Control,libc}.

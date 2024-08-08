@@ -1305,6 +1305,7 @@ This list of functions is sorted according to the header that declares them.
 * Functions in <signal.h>::
 * Functions in <spawn.h>::
 * Functions in <stdarg.h>::
+* Functions in <stdatomic.h>::
 * Functions in <stdbit.h>::
 * Functions in <stdio.h>::
 * Functions in <stdlib.h>::
@@ -1396,6 +1397,9 @@ This list of functions is sorted according to the header that declares them.
 @section Functions in @code{<complex.h>}
 
 @menu
+* CMPLX::
+* CMPLXF::
+* CMPLXL::
 * cabs::
 * cabsf::
 * cabsl::
@@ -1464,6 +1468,9 @@ This list of functions is sorted according to the header that declares them.
 * ctanl::
 @end menu
 
+@include posix-functions/CMPLX.texi
+@include posix-functions/CMPLXF.texi
+@include posix-functions/CMPLXL.texi
 @include posix-functions/cabs.texi
 @include posix-functions/cabsf.texi
 @include posix-functions/cabsl.texi
@@ -3179,8 +3186,70 @@ This list of functions is sorted according to the header that declares them.
 @include posix-functions/va_end.texi
 @include posix-functions/va_start.texi
 
-@c @node Functions in <stdatomic.h>
-@c @section Functions in @code{<stdatomic.h>}
+@node Functions in <stdatomic.h>
+@section Functions in @code{<stdatomic.h>}
+
+@menu
+* atomic_compare_exchange_strong::
+* atomic_compare_exchange_strong_explicit::
+* atomic_compare_exchange_weak::
+* atomic_compare_exchange_weak_explicit::
+* atomic_exchange::
+* atomic_exchange_explicit::
+* atomic_fetch_add::
+* atomic_fetch_add_explicit::
+* atomic_fetch_and::
+* atomic_fetch_and_explicit::
+* atomic_fetch_or::
+* atomic_fetch_or_explicit::
+* atomic_fetch_sub::
+* atomic_fetch_sub_explicit::
+* atomic_fetch_xor::
+* atomic_fetch_xor_explicit::
+* atomic_flag_clear::
+* atomic_flag_clear_explicit::
+* atomic_flag_test_and_set::
+* atomic_flag_test_and_set_explicit::
+* atomic_init::
+* atomic_is_lock_free::
+* atomic_load::
+* atomic_load_explicit::
+* atomic_signal_fence::
+* atomic_store::
+* atomic_store_explicit::
+* atomic_thread_fence::
+* kill_dependency::
+@end menu
+
+@include posix-functions/atomic_compare_exchange_strong.texi
+@include posix-functions/atomic_compare_exchange_strong_explicit.texi
+@include posix-functions/atomic_compare_exchange_weak.texi
+@include posix-functions/atomic_compare_exchange_weak_explicit.texi
+@include posix-functions/atomic_exchange.texi
+@include posix-functions/atomic_exchange_explicit.texi
+@include posix-functions/atomic_fetch_add.texi
+@include posix-functions/atomic_fetch_add_explicit.texi
+@include posix-functions/atomic_fetch_and.texi
+@include posix-functions/atomic_fetch_and_explicit.texi
+@include posix-functions/atomic_fetch_or.texi
+@include posix-functions/atomic_fetch_or_explicit.texi
+@include posix-functions/atomic_fetch_sub.texi
+@include posix-functions/atomic_fetch_sub_explicit.texi
+@include posix-functions/atomic_fetch_xor.texi
+@include posix-functions/atomic_fetch_xor_explicit.texi
+@include posix-functions/atomic_flag_clear.texi
+@include posix-functions/atomic_flag_clear_explicit.texi
+@include posix-functions/atomic_flag_test_and_set.texi
+@include posix-functions/atomic_flag_test_and_set_explicit.texi
+@include posix-functions/atomic_init.texi
+@include posix-functions/atomic_is_lock_free.texi
+@include posix-functions/atomic_load.texi
+@include posix-functions/atomic_load_explicit.texi
+@include posix-functions/atomic_signal_fence.texi
+@include posix-functions/atomic_store.texi
+@include posix-functions/atomic_store_explicit.texi
+@include posix-functions/atomic_thread_fence.texi
+@include posix-functions/kill_dependency.texi
 
 @node Functions in <stdbit.h>
 @section Functions in @code{<stdbit.h>}
@@ -3387,6 +3456,7 @@ This list of functions is sorted according to the header that declares them.
 * abort::
 * abs::
 * aligned_alloc::
+* at_quick_exit::
 * atexit::
 * atof::
 * atoi::
@@ -3464,6 +3534,7 @@ This list of functions is sorted according to the header that declares them.
 @include posix-functions/abort.texi
 @include posix-functions/abs.texi
 @include posix-functions/aligned_alloc.texi
+@include posix-functions/at_quick_exit.texi
 @include posix-functions/atexit.texi
 @include posix-functions/atof.texi
 @include posix-functions/atoi.texi
