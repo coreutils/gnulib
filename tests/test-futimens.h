@@ -24,14 +24,14 @@ static int
 test_futimens (int (*func) (int, struct timespec const *),
                bool print)
 {
-  int fd = creat (BASE "file", 0600);
+  int fd = open (BASE "file", O_RDWR | O_CREAT | O_TRUNC, 0600);
   int result;
   struct stat st1;
   struct stat st2;
   ASSERT (0 <= fd);
+  bool check_atime = checkable_atime (fd, &st1);
 
   /* Sanity check.  */
-  ASSERT (fstat (fd, &st1) == 0);
   nap ();
   errno = 0;
   result = func (fd, NULL);
@@ -117,8 +117,11 @@ test_futimens (int (*func) (int, struct timespec const *),
     ASSERT (errno == EINVAL);
   }
   ASSERT (fstat (fd, &st2) == 0);
-  ASSERT (st1.st_atime == st2.st_atime);
-  ASSERT (get_stat_atime_ns (&st1) == get_stat_atime_ns (&st2));
+  if (check_atime)
+    {
+      ASSERT (st1.st_atime == st2.st_atime);
+      ASSERT (get_stat_atime_ns (&st1) == get_stat_atime_ns (&st2));
+    }
   ASSERT (utimecmp (BASE "file", &st1, &st2, 0) == 0);
 
   /* Set both times.  */
@@ -130,9 +133,12 @@ test_futimens (int (*func) (int, struct timespec const *),
     ts[1].tv_nsec = BILLION - 1;
     ASSERT (func (fd, ts) == 0);
     ASSERT (fstat (fd, &st2) == 0);
-    ASSERT (st2.st_atime == Y2K);
-    ASSERT (0 <= get_stat_atime_ns (&st2));
-    ASSERT (get_stat_atime_ns (&st2) < BILLION / 2);
+    if (check_atime)
+      {
+        ASSERT (st2.st_atime == Y2K);
+        ASSERT (0 <= get_stat_atime_ns (&st2));
+        ASSERT (get_stat_atime_ns (&st2) < BILLION / 2);
+      }
     ASSERT (st2.st_mtime == Y2K);
     ASSERT (0 <= get_stat_mtime_ns (&st2));
     ASSERT (get_stat_mtime_ns (&st2) < BILLION);
@@ -151,9 +157,12 @@ test_futimens (int (*func) (int, struct timespec const *),
     nap ();
     ASSERT (func (fd, ts) == 0);
     ASSERT (fstat (fd, &st3) == 0);
-    ASSERT (st3.st_atime == Y2K);
-    ASSERT (0 <= get_stat_atime_ns (&st3));
-    ASSERT (get_stat_atime_ns (&st3) <= BILLION / 2);
+    if (check_atime)
+      {
+        ASSERT (st3.st_atime == Y2K);
+        ASSERT (0 <= get_stat_atime_ns (&st3));
+        ASSERT (get_stat_atime_ns (&st3) <= BILLION / 2);
+      }
     ASSERT (utimecmp (BASE "file", &st1, &st3, UTIMECMP_TRUNCATE_SOURCE) <= 0);
     if (check_ctime)
       ASSERT (ctime_compare (&st2, &st3) < 0);
@@ -162,8 +171,11 @@ test_futimens (int (*func) (int, struct timespec const *),
     ts[1].tv_nsec = UTIME_OMIT;
     ASSERT (func (fd, ts) == 0);
     ASSERT (fstat (fd, &st2) == 0);
-    ASSERT (st2.st_atime == BILLION);
-    ASSERT (get_stat_atime_ns (&st2) == 0);
+    if (check_atime)
+      {
+        ASSERT (st2.st_atime == BILLION);
+        ASSERT (get_stat_atime_ns (&st2) == 0);
+      }
     ASSERT (st3.st_mtime == st2.st_mtime);
     ASSERT (get_stat_mtime_ns (&st3) == get_stat_mtime_ns (&st2));
     if (check_ctime > 0)

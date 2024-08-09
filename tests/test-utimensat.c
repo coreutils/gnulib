@@ -94,8 +94,11 @@ main (void)
   /* Directory-relative tests.  */
   ASSERT (mkdir (BASE "dir", 0700) == 0);
   ASSERT (chdir (BASE "dir") == 0);
-  fd = creat ("file", 0600);
+  fd = open ("file", O_RDWR | O_CREAT | O_TRUNC, 0600);
   ASSERT (0 <= fd);
+
+  bool check_atime = checkable_atime (fd, NULL);
+
   errno = 0;
   ASSERT (utimensat (fd, ".", NULL, 0) == -1);
   ASSERT (errno == ENOTDIR);
@@ -108,8 +111,11 @@ main (void)
     ts[1].tv_nsec = 0;
     ASSERT (utimensat (dfd, BASE "dir/file", ts, AT_SYMLINK_NOFOLLOW) == 0);
     ASSERT (stat ("file", &st) == 0);
-    ASSERT (st.st_atime == Y2K);
-    ASSERT (get_stat_atime_ns (&st) == 0);
+    if (check_atime)
+      {
+        ASSERT (st.st_atime == Y2K);
+        ASSERT (get_stat_atime_ns (&st) == 0);
+      }
     ASSERT (st.st_mtime == Y2K);
     ASSERT (get_stat_mtime_ns (&st) == 0);
   }

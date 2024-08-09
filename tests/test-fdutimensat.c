@@ -118,7 +118,7 @@ main (void)
   /* Directory relative tests.  */
   ASSERT (mkdir (BASE "dir", 0700) == 0);
   ASSERT (chdir (BASE "dir") == 0);
-  fd = creat ("file", 0600);
+  fd = open ("file", O_RDWR | O_CREAT | O_TRUNC, 0600);
   ASSERT (0 <= fd);
   errno = 0;
   ASSERT (fdutimensat (AT_FDCWD, fd, ".", NULL, 0) == -1);
@@ -126,13 +126,17 @@ main (void)
   {
     struct timespec ts[2];
     struct stat st;
+    bool check_atime = checkable_atime (fd, &st);
     ts[0].tv_sec = Y2K;
     ts[0].tv_nsec = 0;
     ts[1] = ts[0];
     ASSERT (fdutimensat (fd, dfd, BASE "dir/file", ts, 0) == 0);
     ASSERT (stat ("file", &st) == 0);
-    ASSERT (st.st_atime == Y2K);
-    ASSERT (get_stat_atime_ns (&st) == 0);
+    if (check_atime)
+      {
+        ASSERT (st.st_atime == Y2K);
+        ASSERT (get_stat_atime_ns (&st) == 0);
+      }
     ASSERT (st.st_mtime == Y2K);
     ASSERT (get_stat_mtime_ns (&st) == 0);
   }

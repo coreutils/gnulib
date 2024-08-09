@@ -27,7 +27,6 @@ test_lutimens (int (*func) (char const *, struct timespec const *), bool print)
   int saved_errno;
   struct stat st1;
   struct stat st2;
-  bool atime_supported = true;
 
   /* Non-symlinks should be handled just like utimens.  */
   errno = 0;
@@ -39,10 +38,15 @@ test_lutimens (int (*func) (char const *, struct timespec const *), bool print)
   errno = 0;
   ASSERT (func ("", NULL) == -1);
   ASSERT (errno == ENOENT);
-  ASSERT (close (creat (BASE "file", 0600)) == 0);
-  ASSERT (stat (BASE "file", &st1) == 0);
+
+  int fd = open (BASE "file", O_RDWR | O_CREAT | O_TRUNC, 0600);
+  ASSERT (0 <= fd);
+
+  bool check_atime = checkable_atime (fd, &st1);
+  ASSERT (close (fd) == 0);
   ASSERT (st1.st_atime != Y2K);
   ASSERT (st1.st_mtime != Y2K);
+
   {
     struct timespec ts[2];
     ts[0].tv_sec = Y2K;
@@ -52,7 +56,8 @@ test_lutimens (int (*func) (char const *, struct timespec const *), bool print)
     ASSERT (func (BASE "file/", ts) == -1);
     ASSERT (errno == ENOTDIR);
     ASSERT (stat (BASE "file", &st2) == 0);
-    ASSERT (st1.st_atime == st2.st_atime);
+    if (check_atime)
+      ASSERT (st1.st_atime == st2.st_atime);
     ASSERT (st1.st_mtime == st2.st_mtime);
   }
   {
@@ -64,7 +69,8 @@ test_lutimens (int (*func) (char const *, struct timespec const *), bool print)
     ASSERT (func (BASE "file", ts) == 0);
   }
   ASSERT (stat (BASE "file", &st2) == 0);
-  ASSERT (st2.st_atime == Y2K);
+  if (check_atime)
+    ASSERT (st2.st_atime == Y2K);
   ASSERT (st2.st_mtime == Y2K);
   if (check_ctime)
     ASSERT (ctime_compare (&st1, &st2) < 0);
@@ -83,10 +89,12 @@ test_lutimens (int (*func) (char const *, struct timespec const *), bool print)
   saved_errno = errno;
   /* Make sure we did not reference through link by accident.  */
   ASSERT (stat (BASE "file", &st1) == 0);
-  ASSERT (st1.st_atime == Y2K);
+  if (check_atime)
+    ASSERT (st1.st_atime == Y2K);
   ASSERT (st1.st_mtime == Y2K);
   ASSERT (lstat (BASE "link", &st1) == 0);
-  ASSERT (st1.st_atime != Y2K);
+  if (check_atime)
+    ASSERT (st1.st_atime != Y2K);
   ASSERT (st1.st_mtime != Y2K);
   ASSERT (unlink (BASE "file") == 0);
   if (result == -1 && saved_errno == ENOSYS)
@@ -100,13 +108,16 @@ test_lutimens (int (*func) (char const *, struct timespec const *), bool print)
     }
   ASSERT (!result);
   ASSERT (lstat (BASE "link", &st1) == 0);
-  /* On cygwin, lstat() changes atime of symlinks, so that lutimens
-     can only effectively modify mtime.  */
   nap ();
   ASSERT (lstat (BASE "link", &st2) == 0);
-  if (st1.st_atime != st2.st_atime
-      || get_stat_atime_ns (&st1) != get_stat_atime_ns (&st2))
-    atime_supported = false;
+
+  /* On cygwin, lstat() changes atime of symlinks, so that lutimens
+     can effectively modify only mtime.  */
+  bool check_atime_on_symlinks
+    = (check_atime
+       && st1.st_atime == st2.st_atime
+       && get_stat_atime_ns (&st1) == get_stat_atime_ns (&st2));
+
   ASSERT (st1.st_ctime == st2.st_ctime);
   ASSERT (get_stat_ctime_ns (&st1) == get_stat_ctime_ns (&st2));
 
@@ -132,7 +143,7 @@ test_lutimens (int (*func) (char const *, struct timespec const *), bool print)
     ASSERT (errno == EINVAL);
   }
   ASSERT (lstat (BASE "link", &st2) == 0);
-  if (atime_supported)
+  if (check_atime_on_symlinks)
     {
       ASSERT (st1.st_atime == st2.st_atime);
       ASSERT (get_stat_atime_ns (&st1) == get_stat_atime_ns (&st2));
@@ -149,7 +160,7 @@ test_lutimens (int (*func) (char const *, struct timespec const *), bool print)
     nap ();
     ASSERT (func (BASE "link", ts) == 0);
     ASSERT (lstat (BASE "link", &st2) == 0);
-    if (atime_supported)
+    if (check_atime_on_symlinks)
       {
         ASSERT (st2.st_atime == Y2K);
         ASSERT (0 <= get_stat_atime_ns (&st2));
@@ -173,7 +184,7 @@ test_lutimens (int (*func) (char const *, struct timespec const *), bool print)
     nap ();
     ASSERT (func (BASE "link", ts) == 0);
     ASSERT (lstat (BASE "link", &st3) == 0);
-    if (atime_supported)
+    if (check_atime_on_symlinks)
       {
         ASSERT (st3.st_atime == Y2K);
         ASSERT (0 <= get_stat_atime_ns (&st3));
@@ -187,7 +198,7 @@ test_lutimens (int (*func) (char const *, struct timespec const *), bool print)
     ts[1].tv_nsec = UTIME_OMIT;
     ASSERT (func (BASE "link", ts) == 0);
     ASSERT (lstat (BASE "link", &st2) == 0);
-    if (atime_supported)
+    if (check_atime_on_symlinks)
       {
         ASSERT (st2.st_atime == BILLION);
         ASSERT (get_stat_atime_ns (&st2) == 0);
@@ -214,13 +225,15 @@ test_lutimens (int (*func) (char const *, struct timespec const *), bool print)
   ASSERT (stat (BASE "dir", &st1) == 0);
   ASSERT (st1.st_mtime == Y2K);
   ASSERT (lstat (BASE "link", &st1) == 0);
-  ASSERT (st1.st_atime != Y2K);
+  if (check_atime)
+    ASSERT (st1.st_atime != Y2K);
   ASSERT (st1.st_mtime != Y2K);
   ASSERT (func (BASE "link", NULL) == 0);
   ASSERT (stat (BASE "dir", &st1) == 0);
   ASSERT (st1.st_mtime == Y2K);
   ASSERT (lstat (BASE "link", &st1) == 0);
-  ASSERT (st1.st_atime != Y2K);
+  if (check_atime)
+    ASSERT (st1.st_atime != Y2K);
   ASSERT (st1.st_mtime != Y2K);
 
   /* Cleanup.  */

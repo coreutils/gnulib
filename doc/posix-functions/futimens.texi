@@ -35,6 +35,10 @@ glibc 2.11, musl libc, Solaris 11.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
+On file systems mounted with the @code{noatime} attribute,
+this function might not modify the access time as requested:
+Linux kernel 6.9.
+@item
 Some platforms lack the ability to change the timestamps of a file
 descriptor, so the replacement can fail with @code{ENOSYS}; the gnulib
 module @samp{utimens} provides a more reliable interface @code{fdutimens}.
