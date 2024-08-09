@@ -139,6 +139,47 @@ typedef void (*sighandler_t) (int);
 #endif
 
 
+/* Maximum size of a signal name returned by sig2str(), including the
+   terminating NUL byte.  */
+#ifndef SIG2STR_MAX
+/* The longest one: "RTMAX", then "+" or "-", then up to 10 digits, then NUL.
+   Add + 2 as a reserve for the future.  */
+# define SIG2STR_MAX (5 + 1 + 10 + 1 + 2)
+#endif
+
+#if @GNULIB_SIG2STR@
+# if !@HAVE_SIG2STR@
+_GL_FUNCDECL_SYS (sig2str, int, (int signo, char *str));
+# endif
+_GL_CXXALIAS_SYS (sig2str, int, (int signo, char *str));
+# if __GLIBC__ >= 2
+_GL_CXXALIASWARN (sig2str);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef sig2str
+# if HAVE_RAW_DECL_SIG2STR
+_GL_WARN_ON_USE (sig2str, "sig2str is not portable - "
+                 "use gnulib module sig2str for portability");
+# endif
+#endif
+
+#if @GNULIB_SIG2STR@
+# if !@HAVE_STR2SIG@
+_GL_FUNCDECL_SYS (str2sig, int, (char const *str, int *signo_p));
+# endif
+_GL_CXXALIAS_SYS (str2sig, int, (char const *str, int *signo_p));
+# if __GLIBC__ >= 2
+_GL_CXXALIASWARN (str2sig);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef str2sig
+# if HAVE_RAW_DECL_STR2SIG
+_GL_WARN_ON_USE (str2sig, "str2sig is not portable - "
+                 "use gnulib module sig2str for portability");
+# endif
+#endif
+
+
 #if @GNULIB_PTHREAD_SIGMASK@
 # if @REPLACE_PTHREAD_SIGMASK@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
