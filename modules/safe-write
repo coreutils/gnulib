@@ -10,6 +10,7 @@ m4/safe-write.m4
 m4/safe-read.m4
 
 Depends-on:
+idx
 ssize_t
 write
 

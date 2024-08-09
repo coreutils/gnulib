@@ -74,6 +74,12 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2024-08-09  full-read       These modules now prefer signed types to size_t.
+            full-write      The preferred types are idx_t for object sizes and
+            safe-read       ptrdiff_t for values that are either a size or -1.
+            safe-write      SAFE_READ_ERROR and SAFE_WRITE_ERROR are now
+                            obsolescent; callers can just check for < 0.
+
 2024-06-22  xvasprintf      It is now the programmer's responsibility to pass
             c-xvasprintf    a valid format string without %ls, %lc directives
                             and that all widths are >= -INT_MAX and <= INT_MAX.

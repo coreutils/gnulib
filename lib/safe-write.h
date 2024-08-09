@@ -29,17 +29,20 @@
 
 #include <stddef.h>
 
+#include "idx.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 
-#define SAFE_WRITE_ERROR ((size_t) -1)
+/* This is present for backward compatibility with older versions of this code
+   where safe_read returned size_t, so SAFE_WRITE_ERROR was SIZE_MAX.  */
+#define SAFE_WRITE_ERROR ((ptrdiff_t) -1)
 
 /* Write up to COUNT bytes at BUF to descriptor FD, retrying if interrupted.
-   Return the actual number of bytes written, zero for EOF, or SAFE_WRITE_ERROR
-   upon error.  */
-extern size_t safe_write (int fd, const void *buf, size_t count);
+   Return the number of bytes written, zero for EOF, or -1 upon error.  */
+extern ptrdiff_t safe_write (int fd, const void *buf, idx_t count);
 
 
 #ifdef __cplusplus

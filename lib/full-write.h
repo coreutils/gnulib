@@ -17,6 +17,7 @@
 
 #include <stddef.h>
 
+#include "idx.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -26,7 +27,7 @@ extern "C" {
 /* Write COUNT bytes at BUF to descriptor FD, retrying if interrupted
    or if partial writes occur.  Return the number of bytes successfully
    written, setting errno if that is less than COUNT.  */
-extern size_t full_write (int fd, const void *buf, size_t count);
+extern idx_t full_write (int fd, const void *buf, idx_t count);
 
 
 #ifdef __cplusplus

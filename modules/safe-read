@@ -8,6 +8,7 @@ lib/sys-limits.h
 m4/safe-read.m4
 
 Depends-on:
+idx
 read
 ssize_t
 
