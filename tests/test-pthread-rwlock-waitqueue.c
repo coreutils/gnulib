@@ -55,11 +55,8 @@
 #elif (defined __FreeBSD__ || defined __DragonFly__) || (defined __linux__ && defined __hppa)
 /* FreeBSD, Linux/hppa */
 # define STEP_INTERVAL 20000000 /* nanoseconds */
-#elif defined __GNU__ || defined __sun || (defined __linux__ && (defined __aarch64__ || defined __m68k__))
-/* GNU/Hurd, Solaris, Linux/arm64, Linux/m68k */
-# define STEP_INTERVAL 10000000 /* nanoseconds */
 #else
-# define STEP_INTERVAL 5000000 /* nanoseconds */
+# define STEP_INTERVAL 10000000 /* nanoseconds */
 #endif
 
 static pthread_rwlock_t lock;

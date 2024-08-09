@@ -1,5 +1,5 @@
 # pthread-rwlock.m4
-# serial 6
+# serial 7
 dnl Copyright (C) 2019-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -127,10 +127,8 @@ AC_DEFUN([gl_PTHREAD_RWLOCK],
 
 #if defined __hppa
 # define STEP_INTERVAL 20000000 /* nanoseconds */
-#elif defined __aarch64__ || defined __m68k__
-# define STEP_INTERVAL 10000000 /* nanoseconds */
 #else
-# define STEP_INTERVAL 5000000 /* nanoseconds */
+# define STEP_INTERVAL 10000000 /* nanoseconds */
 #endif
 
 static pthread_rwlock_t lock;
