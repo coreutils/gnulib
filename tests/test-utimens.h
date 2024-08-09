@@ -26,13 +26,18 @@ test_utimens (int (*func) (char const *, struct timespec const *), bool print)
   struct stat st1;
   struct stat st2;
 
-  ASSERT (close (creat (BASE "file", 0600)) == 0);
+  int fd = open (BASE "file", O_RDWR | O_CREAT | O_TRUNC, 0600);
+  ASSERT (0 <= fd);
   /* If utimens truncates to worse resolution than the file system
      supports, then time can appear to go backwards between now and a
      follow-up utimens with UTIME_NOW or a NULL timespec.  Use
      UTIMECMP_TRUNCATE_SOURCE to compensate, with st1 as the
      source.  */
-  ASSERT (stat (BASE "file", &st1) == 0);
+  bool check_atime = checkable_atime (fd, &st1);
+  ASSERT (close (fd) == 0);
+  ASSERT (st1.st_atime != Y2K);
+  ASSERT (st1.st_mtime != Y2K);
+
   nap ();
   ASSERT (func (BASE "file", NULL) == 0);
   ASSERT (stat (BASE "file", &st2) == 0);
@@ -108,9 +113,12 @@ test_utimens (int (*func) (char const *, struct timespec const *), bool print)
     ts[1].tv_nsec = BILLION - 1;
     ASSERT (func (BASE "file", ts) == 0);
     ASSERT (stat (BASE "file", &st2) == 0);
-    ASSERT (st2.st_atime == Y2K);
-    ASSERT (0 <= get_stat_atime_ns (&st2));
-    ASSERT (get_stat_atime_ns (&st2) < BILLION / 2);
+    if (check_atime)
+      {
+        ASSERT (st2.st_atime == Y2K);
+        ASSERT (0 <= get_stat_atime_ns (&st2));
+        ASSERT (get_stat_atime_ns (&st2) < BILLION / 2);
+      }
     ASSERT (st2.st_mtime == Y2K);
     ASSERT (0 <= get_stat_mtime_ns (&st2));
     ASSERT (get_stat_mtime_ns (&st2) < BILLION);
@@ -129,9 +137,12 @@ test_utimens (int (*func) (char const *, struct timespec const *), bool print)
     nap ();
     ASSERT (func (BASE "file", ts) == 0);
     ASSERT (stat (BASE "file", &st3) == 0);
-    ASSERT (st3.st_atime == Y2K);
-    ASSERT (0 <= get_stat_atime_ns (&st3));
-    ASSERT (get_stat_atime_ns (&st3) < BILLION / 2);
+    if (check_atime)
+      {
+        ASSERT (st3.st_atime == Y2K);
+        ASSERT (0 <= get_stat_atime_ns (&st3));
+        ASSERT (get_stat_atime_ns (&st3) < BILLION / 2);
+      }
     /* See comment above about this utimecmp call.  */
     ASSERT (0 <= utimecmp (BASE "file", &st3, &st1, UTIMECMP_TRUNCATE_SOURCE));
     if (check_ctime)
@@ -141,8 +152,11 @@ test_utimens (int (*func) (char const *, struct timespec const *), bool print)
     ts[1].tv_nsec = UTIME_OMIT;
     ASSERT (func (BASE "file", ts) == 0);
     ASSERT (stat (BASE "file", &st2) == 0);
-    ASSERT (st2.st_atime == BILLION);
-    ASSERT (get_stat_atime_ns (&st2) == 0);
+    if (check_atime)
+      {
+        ASSERT (st2.st_atime == BILLION);
+        ASSERT (get_stat_atime_ns (&st2) == 0);
+      }
     ASSERT (st3.st_mtime == st2.st_mtime);
     ASSERT (get_stat_mtime_ns (&st3) == get_stat_mtime_ns (&st2));
     if (check_ctime > 0)
@@ -170,9 +184,19 @@ test_utimens (int (*func) (char const *, struct timespec const *), bool print)
     ts[1] = ts[0];
     ASSERT (func (BASE "link", ts) == 0);
     ASSERT (lstat (BASE "link", &st2) == 0);
-    /* Can't compare atimes, since lstat() changes symlink atime on cygwin.  */
+
+    /* Make sure symlink time hasn't been modified.
+       Can't compare symlink atimes, since when func follows the
+       symlink it might update the symlink atime.  */
     ASSERT (st1.st_mtime == st2.st_mtime);
+    ASSERT (get_stat_mtime_ns (&st1) == get_stat_mtime_ns (&st2));
+
     ASSERT (stat (BASE "link", &st2) == 0);
+    if (check_atime)
+      {
+        ASSERT (st2.st_atime == Y2K);
+        ASSERT (get_stat_atime_ns (&st2) == 0);
+      }
     ASSERT (st2.st_mtime == Y2K);
     ASSERT (get_stat_mtime_ns (&st2) == 0);
   }

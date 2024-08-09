@@ -79,4 +79,25 @@ ctime_compare (struct stat const *a, struct stat const *b)
     return 0;
 }
 
+/* Test whether FD's file access times are updated by the file system.
+   FD must be readable.  Set *ST to the file's status, after any
+   change to its access time due to the test.  */
+static bool
+checkable_atime (int fd, struct stat *st)
+{
+  char buf[1];
+  struct stat st1, st2;
+
+  ASSERT (fstat (fd, &st1) == 0);
+  nap ();
+  ASSERT (read (fd, buf, sizeof buf) == 0);
+  ASSERT (fstat (fd, &st2) == 0);
+  bool check_atime
+    = (st1.st_atime != st2.st_atime
+       || get_stat_atime_ns (&st1) != get_stat_atime_ns (&st2));
+  if (st)
+    *st = st2;
+  return check_atime;
+}
+
 #endif /* GL_TEST_UTIMENS_COMMON */

@@ -35,8 +35,11 @@ test_utime (bool print)
   struct stat st1;
   struct stat st2;
 
-  ASSERT (close (creat (BASE "file", 0600)) == 0);
-  ASSERT (stat (BASE "file", &st1) == 0);
+  int fd = open (BASE "file", O_RDWR | O_CREAT | O_TRUNC, 0600);
+  ASSERT (0 <= fd);
+  bool check_atime = checkable_atime (fd, &st1);
+  ASSERT (close (fd) == 0);
+
   nap ();
   ASSERT (utime (BASE "file", NULL) == 0);
   ASSERT (stat (BASE "file", &st2) == 0);
@@ -76,8 +79,11 @@ test_utime (bool print)
     ASSERT (errno == ENOTDIR || errno == EINVAL);
   }
   ASSERT (stat (BASE "file", &st2) == 0);
-  ASSERT (st1.st_atime == st2.st_atime);
-  ASSERT (get_stat_atime_ns (&st1) == get_stat_atime_ns (&st2));
+  if (check_atime)
+    {
+      ASSERT (st1.st_atime == st2.st_atime);
+      ASSERT (get_stat_atime_ns (&st1) == get_stat_atime_ns (&st2));
+    }
   ASSERT (utimecmp (BASE "file", &st1, &st2, 0) == 0);
 
   /* Set both times.  */
@@ -86,9 +92,12 @@ test_utime (bool print)
     ts.actime = ts.modtime = Y2K;
     ASSERT (utime (BASE "file", &ts) == 0);
     ASSERT (stat (BASE "file", &st2) == 0);
-    ASSERT (st2.st_atime == Y2K);
-    ASSERT (0 <= get_stat_atime_ns (&st2));
-    ASSERT (get_stat_atime_ns (&st2) < BILLION / 2);
+    if (check_atime)
+      {
+        ASSERT (st2.st_atime == Y2K);
+        ASSERT (0 <= get_stat_atime_ns (&st2));
+        ASSERT (get_stat_atime_ns (&st2) < BILLION / 2);
+      }
     ASSERT (st2.st_mtime == Y2K);
     ASSERT (0 <= get_stat_mtime_ns (&st2));
     ASSERT (get_stat_mtime_ns (&st2) < BILLION);
@@ -115,7 +124,9 @@ test_utime (bool print)
     ts.actime = ts.modtime = Y2K;
     ASSERT (utime (BASE "link", &ts) == 0);
     ASSERT (lstat (BASE "link", &st2) == 0);
-    /* Can't compare atimes, since lstat() changes symlink atime on cygwin.  */
+    /* Make sure symlink time hasn't been modified.
+       Can't compare symlink atimes, since when utime follows the
+       symlink it might update the symlink atime.  */
     ASSERT (st1.st_mtime == st2.st_mtime);
     ASSERT (stat (BASE "link", &st2) == 0);
     ASSERT (st2.st_mtime == Y2K);
