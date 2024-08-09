@@ -1270,8 +1270,10 @@ This list of functions is sorted according to the header that declares them.
 * Functions in <assert.h>::
 * Functions in <complex.h>::
 * Functions in <ctype.h>::
+* Functions in <devctl.h>::
 * Functions in <dirent.h>::
 * Functions in <dlfcn.h>::
+* Functions in <endian.h>::
 * Functions in <errno.h>::
 * Functions in <fcntl.h>::
 * Functions in <fenv.h>::
@@ -1604,6 +1606,15 @@ This list of functions is sorted according to the header that declares them.
 @include posix-functions/toupper.texi
 @include posix-functions/toupper_l.texi
 
+@node Functions in <devctl.h>
+@section Functions in @code{<devctl.h>}
+
+@menu
+* posix_devctl::
+@end menu
+
+@include posix-functions/posix_devctl.texi
+
 @node Functions in <dirent.h>
 @section Functions in @code{<dirent.h>}
 
@@ -1613,6 +1624,7 @@ This list of functions is sorted according to the header that declares them.
 * dirfd::
 * fdopendir::
 * opendir::
+* posix_getdents::
 * readdir::
 * readdir_r::
 * rewinddir::
@@ -1626,6 +1638,7 @@ This list of functions is sorted according to the header that declares them.
 @include posix-functions/dirfd.texi
 @include posix-functions/fdopendir.texi
 @include posix-functions/opendir.texi
+@include posix-functions/posix_getdents.texi
 @include posix-functions/readdir.texi
 @include posix-functions/readdir_r.texi
 @include posix-functions/rewinddir.texi
@@ -1649,6 +1662,37 @@ This list of functions is sorted according to the header that declares them.
 @include posix-functions/dlerror.texi
 @include posix-functions/dlopen.texi
 @include posix-functions/dlsym.texi
+
+@node Functions in <endian.h>
+@section Functions in @code{<endian.h>}
+
+@menu
+* be16toh::
+* be32toh::
+* be64toh::
+* htobe16::
+* htobe32::
+* htobe64::
+* htole16::
+* htole32::
+* htole64::
+* le16toh::
+* le32toh::
+* le64toh::
+@end menu
+
+@include posix-functions/be16toh.texi
+@include posix-functions/be32toh.texi
+@include posix-functions/be64toh.texi
+@include posix-functions/htobe16.texi
+@include posix-functions/htobe32.texi
+@include posix-functions/htobe64.texi
+@include posix-functions/htole16.texi
+@include posix-functions/htole32.texi
+@include posix-functions/htole64.texi
+@include posix-functions/le16toh.texi
+@include posix-functions/le32toh.texi
+@include posix-functions/le64toh.texi
 
 @node Functions in <errno.h>
 @section Functions in @code{<errno.h>}
@@ -1841,22 +1885,34 @@ This list of functions is sorted according to the header that declares them.
 * bind_textdomain_codeset::
 * bindtextdomain::
 * dcgettext::
+* dcgettext_l::
 * dcngettext::
+* dcngettext_l::
 * dgettext::
+* dgettext_l::
 * dngettext::
+* dngettext_l::
 * gettext::
+* gettext_l::
 * ngettext::
+* ngettext_l::
 * textdomain::
 @end menu
 
 @include posix-functions/bind_textdomain_codeset.texi
 @include posix-functions/bindtextdomain.texi
 @include posix-functions/dcgettext.texi
+@include posix-functions/dcgettext_l.texi
 @include posix-functions/dcngettext.texi
+@include posix-functions/dcngettext_l.texi
 @include posix-functions/dgettext.texi
+@include posix-functions/dgettext_l.texi
 @include posix-functions/dngettext.texi
+@include posix-functions/dngettext_l.texi
 @include posix-functions/gettext.texi
+@include posix-functions/gettext_l.texi
 @include posix-functions/ngettext.texi
+@include posix-functions/ngettext_l.texi
 @include posix-functions/textdomain.texi
 
 @c @node Functions in <limits.h>
@@ -1868,6 +1924,7 @@ This list of functions is sorted according to the header that declares them.
 @menu
 * duplocale::
 * freelocale::
+* getlocalename_l::
 * localeconv::
 * newlocale::
 * setlocale::
@@ -1876,6 +1933,7 @@ This list of functions is sorted according to the header that declares them.
 
 @include posix-functions/duplocale.texi
 @include posix-functions/freelocale.texi
+@include posix-functions/getlocalename_l.texi
 @include posix-functions/localeconv.texi
 @include posix-functions/newlocale.texi
 @include posix-functions/setlocale.texi
@@ -3079,6 +3137,7 @@ This list of functions is sorted according to the header that declares them.
 * pthread_kill::
 * pthread_sigmask::
 * raise::
+* sig2str::
 * sigaction::
 * sigaddset::
 * sigaltstack::
@@ -3094,6 +3153,7 @@ This list of functions is sorted according to the header that declares them.
 * sigtimedwait::
 * sigwait::
 * sigwaitinfo::
+* str2sig::
 @end menu
 
 @include posix-functions/kill.texi
@@ -3103,6 +3163,7 @@ This list of functions is sorted according to the header that declares them.
 @include posix-functions/pthread_kill.texi
 @include posix-functions/pthread_sigmask.texi
 @include posix-functions/raise.texi
+@include posix-functions/sig2str.texi
 @include posix-functions/sigaction.texi
 @include posix-functions/sigaddset.texi
 @include posix-functions/sigaltstack.texi
@@ -3118,14 +3179,17 @@ This list of functions is sorted according to the header that declares them.
 @include posix-functions/sigtimedwait.texi
 @include posix-functions/sigwait.texi
 @include posix-functions/sigwaitinfo.texi
+@include posix-functions/str2sig.texi
 
 @node Functions in <spawn.h>
 @section Functions in @code{<spawn.h>}
 
 @menu
 * posix_spawn::
+* posix_spawn_file_actions_addchdir::
 * posix_spawn_file_actions_addclose::
 * posix_spawn_file_actions_adddup2::
+* posix_spawn_file_actions_addfchdir::
 * posix_spawn_file_actions_addopen::
 * posix_spawn_file_actions_destroy::
 * posix_spawn_file_actions_init::
@@ -3147,8 +3211,10 @@ This list of functions is sorted according to the header that declares them.
 @end menu
 
 @include posix-functions/posix_spawn.texi
+@include posix-functions/posix_spawn_file_actions_addchdir.texi
 @include posix-functions/posix_spawn_file_actions_addclose.texi
 @include posix-functions/posix_spawn_file_actions_adddup2.texi
+@include posix-functions/posix_spawn_file_actions_addfchdir.texi
 @include posix-functions/posix_spawn_file_actions_addopen.texi
 @include posix-functions/posix_spawn_file_actions_destroy.texi
 @include posix-functions/posix_spawn_file_actions_init.texi
@@ -4025,8 +4091,10 @@ This list of functions is sorted according to the header that declares them.
 * tcflush::
 * tcgetattr::
 * tcgetsid::
+* tcgetwinsize::
 * tcsendbreak::
 * tcsetattr::
+* tcsetwinsize::
 @end menu
 
 @include posix-functions/cfgetispeed.texi
@@ -4038,8 +4106,10 @@ This list of functions is sorted according to the header that declares them.
 @include posix-functions/tcflush.texi
 @include posix-functions/tcgetattr.texi
 @include posix-functions/tcgetsid.texi
+@include posix-functions/tcgetwinsize.texi
 @include posix-functions/tcsendbreak.texi
 @include posix-functions/tcsetattr.texi
+@include posix-functions/tcsetwinsize.texi
 
 @c @node Functions in <tgmath.h>
 @c @section Functions in @code{<tgmath.h>}
@@ -4274,6 +4344,7 @@ This list of functions is sorted according to the header that declares them.
 * pause::
 * pipe::
 * pipe2::
+* posix_close::
 * pread::
 * pwrite::
 * read::
@@ -4370,6 +4441,7 @@ This list of functions is sorted according to the header that declares them.
 @include posix-functions/pause.texi
 @include posix-functions/pipe.texi
 @include posix-functions/pipe2.texi
+@include posix-functions/posix_close.texi
 @include posix-functions/pread.texi
 @include posix-functions/pwrite.texi
 @include posix-functions/read.texi
@@ -4468,6 +4540,8 @@ This list of functions is sorted according to the header that declares them.
 * wcscspn::
 * wcsdup::
 * wcsftime::
+* wcslcat::
+* wcslcpy::
 * wcslen::
 * wcsncasecmp::
 * wcsncasecmp_l::
@@ -4544,6 +4618,8 @@ This list of functions is sorted according to the header that declares them.
 @include posix-functions/wcscspn.texi
 @include posix-functions/wcsdup.texi
 @include posix-functions/wcsftime.texi
+@include posix-functions/wcslcat.texi
+@include posix-functions/wcslcpy.texi
 @include posix-functions/wcslen.texi
 @include posix-functions/wcsncasecmp.texi
 @include posix-functions/wcsncasecmp_l.texi

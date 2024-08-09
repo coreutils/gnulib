@@ -2,7 +2,15 @@
 @subsection @code{strlcat}
 @findex strlcat
 
-POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/<2024>/functions/strlcat.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/strlcat.html}
+
+Documentation:@*
+@ifinfo
+@ref{Truncating Strings,,Truncating Strings while Copying,libc}.
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Truncating-Strings.html}.
+@end ifnotinfo
 
 Gnulib module: ---
 

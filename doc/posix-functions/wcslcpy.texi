@@ -1,0 +1,26 @@
+@node wcslcpy
+@subsection @code{wcslcpy}
+@findex wcslcpy
+
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/wcslcpy.html}
+
+Documentation:@*
+@ifinfo
+@ref{Truncating Strings,,Truncating Strings while Copying,libc}.
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Truncating-Strings.html}.
+@end ifnotinfo
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on many platforms:
+glibc 2.37, Minix 3.3.0, AIX 7.3.1, HP-UX 11.31, Solaris 11.4, mingw, MSVC 14.
+@end itemize

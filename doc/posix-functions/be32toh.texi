@@ -1,0 +1,20 @@
+@node be32toh
+@subsection @code{be32toh}
+@findex be32toh
+
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/be32toh.html}
+
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/be32toh.3.html,,man be32toh}
+
+Gnulib module: endian
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This function is missing on many platforms:
+glibc 2.8, macOS 14, FreeBSD 13.0, NetBSD 7.2, OpenBSD 5.5, Minix 3.1.8, AIX 7.3.1, HP-UX 11.31, Solaris 11.4, Cygwin 1.7.x, mingw, MSVC 14.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize
