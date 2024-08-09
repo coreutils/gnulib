@@ -24,6 +24,10 @@ some platforms incorrectly round rather than truncate.  Use
 @code{utimensat(AT_FDCWD,file,times,0)}, or the gnulib module @code{utimens},
 instead.
 @item
+On file systems mounted with the @code{noatime} attribute,
+this function might not modify the access time as requested:
+Linux kernel 6.9.
+@item
 On some platforms, @code{utimes (file, NULL)} fails to set the
 file's timestamp to the current time:
 glibc 2.3.3.

@@ -44,6 +44,10 @@ AIX 7.2.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
+On file systems mounted with the @code{noatime} attribute,
+this function might not modify the access time as requested:
+Linux kernel 6.9.
+@item
 On some platforms, timestamps of symbolic links cannot be modified, so
 the replacement fails with @code{ENOSYS} if passed the flag
 @code{AT_SYMLINK_NOFOLLOW} on a symlink.
