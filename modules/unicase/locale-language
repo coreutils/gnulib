@@ -20,7 +20,10 @@ endif
 
 $(srcdir)/unicase/locale-languages.h: $(srcdir)/unicase/locale-languages.gperf
 	$(V_GPERF)$(GPERF) -m 10 $(srcdir)/unicase/locale-languages.gperf > $(srcdir)/unicase/locale-languages.h-t1 \
-	&& sed -e 's/^const/static const/' < $(srcdir)/unicase/locale-languages.h-t1 > $(srcdir)/unicase/locale-languages.h-t2 \
+	&& sed -e 's/^const/static const/' \
+	       -e 's|\([ "]\)[^ "]*/unicase/locale-languages\.gperf\([ "]\)|\1unicase/locale-languages.gperf\2|' \
+	       < $(srcdir)/unicase/locale-languages.h-t1 > $(srcdir)/unicase/locale-languages.h-t2 \
+	&& rm -f $(srcdir)/unicase/locale-languages.h-t1 \
 	&& mv $(srcdir)/unicase/locale-languages.h-t2 $(srcdir)/unicase/locale-languages.h
 BUILT_SOURCES        += unicase/locale-languages.h
 MOSTLYCLEANFILES     += unicase/locale-languages.h-t1 unicase/locale-languages.h-t2

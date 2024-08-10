@@ -17,10 +17,13 @@ Makefile.am:
 lib_SOURCES += unicase/special-casing.c
 
 $(srcdir)/unicase/special-casing-table.h: $(srcdir)/unicase/special-casing-table.gperf
-	$(V_GPERF)$(GPERF) -m 10 $(srcdir)/unicase/special-casing-table.gperf > $(srcdir)/unicase/special-casing-table.h-t && \
-	mv $(srcdir)/unicase/special-casing-table.h-t $(srcdir)/unicase/special-casing-table.h
+	$(V_GPERF)$(GPERF) -m 10 $(srcdir)/unicase/special-casing-table.gperf > $(srcdir)/unicase/special-casing-table.h-t1 \
+	&& sed -e 's|\([ "]\)[^ "]*/unicase/special-casing-table\.gperf\([ "]\)|\1unicase/special-casing-table.gperf\2|' \
+	       < $(srcdir)/unicase/special-casing-table.h-t1 > $(srcdir)/unicase/special-casing-table.h-t2 \
+	&& rm -f $(srcdir)/unicase/special-casing-table.h-t1 \
+	&& mv $(srcdir)/unicase/special-casing-table.h-t2 $(srcdir)/unicase/special-casing-table.h
 BUILT_SOURCES        += unicase/special-casing-table.h
-MOSTLYCLEANFILES     += unicase/special-casing-table.h-t
+MOSTLYCLEANFILES     += unicase/special-casing-table.h-t1 unicase/special-casing-table.h-t2
 MAINTAINERCLEANFILES += unicase/special-casing-table.h
 EXTRA_DIST           += unicase/special-casing-table.h
 

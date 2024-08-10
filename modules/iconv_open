@@ -39,25 +39,48 @@ lib_SOURCES += iconv.c iconv_close.c
 endif
 
 $(srcdir)/iconv_open-aix.h: $(srcdir)/iconv_open-aix.gperf
-	$(V_GPERF)$(GPERF) -m 10 $(srcdir)/iconv_open-aix.gperf > $(srcdir)/iconv_open-aix.h-t && \
-	mv $(srcdir)/iconv_open-aix.h-t $(srcdir)/iconv_open-aix.h
+	$(V_GPERF)$(GPERF) -m 10 $(srcdir)/iconv_open-aix.gperf > $(srcdir)/iconv_open-aix.h-t1 \
+	&& sed -e 's|\([ "]\)[^ "]*/iconv_open-aix\.gperf\([ "]\)|\1iconv_open-aix.gperf\2|' \
+	       < $(srcdir)/iconv_open-aix.h-t1 > $(srcdir)/iconv_open-aix.h-t2 \
+	&& rm -f $(srcdir)/iconv_open-aix.h-t1 \
+	&& mv $(srcdir)/iconv_open-aix.h-t2 $(srcdir)/iconv_open-aix.h
 $(srcdir)/iconv_open-hpux.h: $(srcdir)/iconv_open-hpux.gperf
-	$(V_GPERF)$(GPERF) -m 10 $(srcdir)/iconv_open-hpux.gperf > $(srcdir)/iconv_open-hpux.h-t && \
-	mv $(srcdir)/iconv_open-hpux.h-t $(srcdir)/iconv_open-hpux.h
+	$(V_GPERF)$(GPERF) -m 10 $(srcdir)/iconv_open-hpux.gperf > $(srcdir)/iconv_open-hpux.h-t1 \
+	&& sed -e 's|\([ "]\)[^ "]*/iconv_open-hpux\.gperf\([ "]\)|\1iconv_open-hpux.gperf\2|' \
+	       < $(srcdir)/iconv_open-hpux.h-t1 > $(srcdir)/iconv_open-hpux.h-t2 \
+	&& rm -f $(srcdir)/iconv_open-hpux.h-t1 \
+	&& mv $(srcdir)/iconv_open-hpux.h-t2 $(srcdir)/iconv_open-hpux.h
 $(srcdir)/iconv_open-irix.h: $(srcdir)/iconv_open-irix.gperf
-	$(V_GPERF)$(GPERF) -m 10 $(srcdir)/iconv_open-irix.gperf > $(srcdir)/iconv_open-irix.h-t && \
-	mv $(srcdir)/iconv_open-irix.h-t $(srcdir)/iconv_open-irix.h
+	$(V_GPERF)$(GPERF) -m 10 $(srcdir)/iconv_open-irix.gperf > $(srcdir)/iconv_open-irix.h-t1 \
+	&& sed -e 's|\([ "]\)[^ "]*/iconv_open-irix\.gperf\([ "]\)|\1iconv_open-irix.gperf\2|' \
+	       < $(srcdir)/iconv_open-irix.h-t1 > $(srcdir)/iconv_open-irix.h-t2 \
+	&& rm -f $(srcdir)/iconv_open-irix.h-t1 \
+	&& mv $(srcdir)/iconv_open-irix.h-t2 $(srcdir)/iconv_open-irix.h
 $(srcdir)/iconv_open-osf.h: $(srcdir)/iconv_open-osf.gperf
-	$(V_GPERF)$(GPERF) -m 10 $(srcdir)/iconv_open-osf.gperf > $(srcdir)/iconv_open-osf.h-t && \
-	mv $(srcdir)/iconv_open-osf.h-t $(srcdir)/iconv_open-osf.h
+	$(V_GPERF)$(GPERF) -m 10 $(srcdir)/iconv_open-osf.gperf > $(srcdir)/iconv_open-osf.h-t1 \
+	&& sed -e 's|\([ "]\)[^ "]*/iconv_open-osf\.gperf\([ "]\)|\1iconv_open-osf.gperf\2|' \
+	       < $(srcdir)/iconv_open-osf.h-t1 > $(srcdir)/iconv_open-osf.h-t2 \
+	&& rm -f $(srcdir)/iconv_open-osf.h-t1 \
+	&& mv $(srcdir)/iconv_open-osf.h-t2 $(srcdir)/iconv_open-osf.h
 $(srcdir)/iconv_open-solaris.h: $(srcdir)/iconv_open-solaris.gperf
-	$(V_GPERF)$(GPERF) -m 10 $(srcdir)/iconv_open-solaris.gperf > $(srcdir)/iconv_open-solaris.h-t && \
-	mv $(srcdir)/iconv_open-solaris.h-t $(srcdir)/iconv_open-solaris.h
+	$(V_GPERF)$(GPERF) -m 10 $(srcdir)/iconv_open-solaris.gperf > $(srcdir)/iconv_open-solaris.h-t1 \
+	&& sed -e 's|\([ "]\)[^ "]*/iconv_open-solaris\.gperf\([ "]\)|\1iconv_open-solaris.gperf\2|' \
+	       < $(srcdir)/iconv_open-solaris.h-t1 > $(srcdir)/iconv_open-solaris.h-t2 \
+	&& rm -f $(srcdir)/iconv_open-solaris.h-t1 \
+	&& mv $(srcdir)/iconv_open-solaris.h-t2 $(srcdir)/iconv_open-solaris.h
 $(srcdir)/iconv_open-zos.h: $(srcdir)/iconv_open-zos.gperf
-	$(V_GPERF)$(GPERF) -m 10 $(srcdir)/iconv_open-zos.gperf > $(srcdir)/iconv_open-zos.h-t && \
-	mv $(srcdir)/iconv_open-zos.h-t $(srcdir)/iconv_open-zos.h
+	$(V_GPERF)$(GPERF) -m 10 $(srcdir)/iconv_open-zos.gperf > $(srcdir)/iconv_open-zos.h-t1 \
+	&& sed -e 's|\([ "]\)[^ "]*/iconv_open-zos\.gperf\([ "]\)|\1iconv_open-zos.gperf\2|' \
+	       < $(srcdir)/iconv_open-zos.h-t1 > $(srcdir)/iconv_open-zos.h-t2 \
+	&& rm -f $(srcdir)/iconv_open-zos.h-t1 \
+	&& mv $(srcdir)/iconv_open-zos.h-t2 $(srcdir)/iconv_open-zos.h
 BUILT_SOURCES        += iconv_open-aix.h iconv_open-hpux.h iconv_open-irix.h iconv_open-osf.h iconv_open-solaris.h iconv_open-zos.h
-MOSTLYCLEANFILES     += iconv_open-aix.h-t iconv_open-hpux.h-t iconv_open-irix.h-t iconv_open-osf.h-t iconv_open-solaris.h-t iconv_open-zos.h-t
+MOSTLYCLEANFILES     += iconv_open-aix.h-t1 iconv_open-aix.h-t2 \
+                        iconv_open-hpux.h-t1 iconv_open-hpux.h-t2 \
+                        iconv_open-irix.h-t1 iconv_open-irix.h-t2 \
+                        iconv_open-osf.h-t1 iconv_open-osf.h-t2 \
+                        iconv_open-solaris.h-t1 iconv_open-solaris.h-t2 \
+                        iconv_open-zos.h-t1 iconv_open-zos.h-t2
 MAINTAINERCLEANFILES += iconv_open-aix.h iconv_open-hpux.h iconv_open-irix.h iconv_open-osf.h iconv_open-solaris.h iconv_open-zos.h
 EXTRA_DIST           += iconv_open-aix.h iconv_open-hpux.h iconv_open-irix.h iconv_open-osf.h iconv_open-solaris.h iconv_open-zos.h
 
