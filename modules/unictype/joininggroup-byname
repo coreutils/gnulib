@@ -19,7 +19,10 @@ endif
 
 $(srcdir)/unictype/joininggroup_byname.h: $(srcdir)/unictype/joininggroup_byname.gperf
 	$(V_GPERF)$(GPERF) -m 10 $(srcdir)/unictype/joininggroup_byname.gperf > $(srcdir)/unictype/joininggroup_byname.h-t1 \
-	&& sed -e 's/^const/static const/' < $(srcdir)/unictype/joininggroup_byname.h-t1 > $(srcdir)/unictype/joininggroup_byname.h-t2 \
+	&& sed -e 's/^const/static const/' \
+	       -e 's|\([ "]\)[^ "]*/unictype/joininggroup_byname\.gperf\([ "]\)|\1unictype/joininggroup_byname.gperf\2|' \
+	       < $(srcdir)/unictype/joininggroup_byname.h-t1 > $(srcdir)/unictype/joininggroup_byname.h-t2 \
+	&& rm -f $(srcdir)/unictype/joininggroup_byname.h-t1 \
 	&& mv $(srcdir)/unictype/joininggroup_byname.h-t2 $(srcdir)/unictype/joininggroup_byname.h
 BUILT_SOURCES        += unictype/joininggroup_byname.h
 MOSTLYCLEANFILES     += unictype/joininggroup_byname.h-t1 unictype/joininggroup_byname.h-t2
