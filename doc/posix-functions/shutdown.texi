@@ -9,6 +9,11 @@ Gnulib module: shutdown
 Portability problems fixed by Gnulib:
 @itemize
 @item
+This function is declared in @code{<winsock2.h>}
+instead of @code{<sys/socket.h>}
+on some platforms:
+mingw, MSVC 14.
+@item
 On Windows platforms (excluding Cygwin), error codes from this function
 are not placed in @code{errno}, and @code{WSAGetLastError} must be used
 instead.

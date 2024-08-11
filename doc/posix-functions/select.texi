@@ -9,6 +9,11 @@ Gnulib module: select
 Portability problems fixed by Gnulib:
 @itemize
 @item
+This function is declared in @code{<winsock2.h>}
+instead of @code{<sys/select.h>}
+on some platforms:
+mingw, MSVC 14.
+@item
 On Windows platforms (excluding Cygwin), @code{select} can only be
 called on descriptors created by the @code{socket} function, not on regular
 file descriptors.

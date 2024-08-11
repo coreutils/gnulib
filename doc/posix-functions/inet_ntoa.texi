@@ -13,7 +13,8 @@ Portability problems fixed by Gnulib:
 Portability problems not fixed by Gnulib:
 @itemize
 @item
-This function is missing on some platforms:
+This function is declared in @code{<winsock2.h>} instead of @code{<arpa/inet.h>}
+on some platforms:
 mingw, MSVC 14.
 @item
 POSIX.1-2024 says this function is obsolescent and it is planned to be

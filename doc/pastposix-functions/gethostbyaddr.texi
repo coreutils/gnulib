@@ -14,6 +14,7 @@ Portability problems fixed by Gnulib:
 Portability problems not fixed by Gnulib:
 @itemize
 @item
-This function is missing on some platforms:
+This function is declared in @code{<winsock2.h>} instead of @code{<netdb.h>}
+on some platforms:
 mingw, MSVC 14.
 @end itemize

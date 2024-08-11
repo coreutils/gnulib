@@ -10,7 +10,11 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-HP-UX 11, mingw, MSVC 14, Android 4.4.
+HP-UX 11, Android API level 20.
+@item
+This function is declared in @code{<winsock2.h>} instead of @code{<arpa/inet.h>}
+on some platforms:
+mingw, MSVC 14.
 @end itemize
 
 Portability problems not fixed by Gnulib:

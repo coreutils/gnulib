@@ -9,6 +9,11 @@ Gnulib module: socket
 Portability problems fixed by Gnulib:
 @itemize
 @item
+This function is declared in @code{<winsock2.h>}
+instead of @code{<sys/socket.h>}
+on some platforms:
+mingw, MSVC 14.
+@item
 On Windows platforms (excluding Cygwin), the descriptors returned by
 the @code{socket} function cannot be used in calls to @code{read},
 @code{write}, and @code{close}; you have to use @code{recv}, @code{send},
