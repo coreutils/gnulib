@@ -60,6 +60,60 @@
 # include <ws2tcpip.h>
 #endif
 
+#if @REPLACE_HTONL@
+# include <endian.h>
+#endif
+
+_GL_INLINE_HEADER_BEGIN
+#ifndef _GL_ARPA_INET_INLINE
+# define _GL_ARPA_INET_INLINE _GL_INLINE
+#endif
+
+
+#if @REPLACE_HTONL@
+
+/* Make sure we don't have any system definitions.  */
+# undef htons
+# undef htonl
+# undef ntohs
+# undef ntohl
+
+/* Define our own.  */
+# define htons rpl_htons
+# define htonl rpl_htonl
+# define ntohs rpl_ntohs
+# define ntohl rpl_ntohl
+
+/* Host to network byte order. */
+
+_GL_ARPA_INET_INLINE uint16_t
+htons (uint16_t value)
+{
+  return htobe16 (value);
+}
+
+_GL_ARPA_INET_INLINE uint32_t
+htonl (uint32_t value)
+{
+  return htobe32 (value);
+}
+
+/* Network to host byte order.  */
+
+_GL_ARPA_INET_INLINE uint16_t
+ntohs (uint16_t value)
+{
+  return htobe16 (value);
+}
+
+_GL_ARPA_INET_INLINE uint32_t
+ntohl (uint32_t value)
+{
+  return htobe32 (value);
+}
+
+#endif
+
 /* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
 
 /* The definition of _GL_ARG_NONNULL is copied here.  */
@@ -150,6 +204,7 @@ _GL_WARN_ON_USE (inet_pton, "inet_pton is unportable - "
 # endif
 #endif
 
+_GL_INLINE_HEADER_END
 
 #endif /* _@GUARD_PREFIX@_ARPA_INET_H */
 #endif /* _@GUARD_PREFIX@_ARPA_INET_H */

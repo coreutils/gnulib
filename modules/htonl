@@ -1,0 +1,26 @@
+Description:
+htonl, htons, ntohl, ntohs functions: convert between network and host
+byte order
+
+Files:
+m4/htonl.m4
+
+Depends-on:
+arpa_inet
+endian                  [test $REPLACE_HTONL = 1]
+
+configure.ac:
+gl_FUNC_HTONL
+
+Makefile.am:
+
+Include:
+<arpa/inet.h>
+
+Link:
+
+License:
+LGPLv2+
+
+Maintainer:
+all
