@@ -1,0 +1,13 @@
+Files:
+tests/test-htonl.c
+tests/macros.h
+
+Depends-on:
+endian
+stdint
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-htonl
+check_PROGRAMS += test-htonl
