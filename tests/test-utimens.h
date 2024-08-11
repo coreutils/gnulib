@@ -194,7 +194,7 @@ test_utimens (int (*func) (char const *, struct timespec const *), bool print)
     ASSERT (stat (BASE "link", &st2) == 0);
     if (check_atime)
       {
-        ASSERT (st2.st_atime == BILLION);
+        ASSERT (st2.st_atime == Y2K);
         ASSERT (get_stat_atime_ns (&st2) == 0);
       }
     ASSERT (st2.st_mtime == Y2K);
