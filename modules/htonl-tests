@@ -11,3 +11,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-htonl
 check_PROGRAMS += test-htonl
+test_htonl_LDADD = $(LDADD) @HTONL_LIB@

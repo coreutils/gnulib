@@ -4,10 +4,11 @@ byte order
 
 Files:
 m4/htonl.m4
+m4/sys_socket_h.m4
 
 Depends-on:
 arpa_inet
-endian                  [test $REPLACE_HTONL = 1]
+endian
 
 configure.ac:
 gl_FUNC_HTONL
@@ -18,6 +19,7 @@ Include:
 <arpa/inet.h>
 
 Link:
+$(HTONL_LIB)
 
 License:
 LGPLv2+

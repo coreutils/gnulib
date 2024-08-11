@@ -60,7 +60,7 @@
 # include <ws2tcpip.h>
 #endif
 
-#if @REPLACE_HTONL@
+#if !(@HAVE_DECL_HTONL@ || @HAVE_DECL_HTONS@ || @HAVE_DECL_NTOHL@ || @HAVE_DECL_NTOHS@)
 # include <endian.h>
 #endif
 
@@ -70,49 +70,42 @@ _GL_INLINE_HEADER_BEGIN
 #endif
 
 
-#if @REPLACE_HTONL@
-
-/* Make sure we don't have any system definitions.  */
-# undef htons
-# undef htonl
-# undef ntohs
-# undef ntohl
-
-/* Define our own.  */
-# define htons rpl_htons
-# define htonl rpl_htonl
-# define ntohs rpl_ntohs
-# define ntohl rpl_ntohl
-
 /* Host to network byte order. */
 
+#if !@HAVE_DECL_HTONS@
 _GL_ARPA_INET_INLINE uint16_t
 htons (uint16_t value)
 {
   return htobe16 (value);
 }
+#endif
 
+#if !@HAVE_DECL_HTONL@
 _GL_ARPA_INET_INLINE uint32_t
 htonl (uint32_t value)
 {
   return htobe32 (value);
 }
+#endif
 
 /* Network to host byte order.  */
 
+#if !@HAVE_DECL_NTOHS@
 _GL_ARPA_INET_INLINE uint16_t
 ntohs (uint16_t value)
 {
   return htobe16 (value);
 }
+#endif
 
+#if !@HAVE_DECL_NTOHL@
 _GL_ARPA_INET_INLINE uint32_t
 ntohl (uint32_t value)
 {
   return htobe32 (value);
 }
-
 #endif
+
 
 /* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
 
