@@ -20,8 +20,10 @@
 # define GLTEST_NAP_H
 
 # include <limits.h>
-
 # include <stdckdint.h>
+
+# include "concat-filename.h"
+# include "xgetcwd.h"
 
 /* Avoid a conflict with a function called nap() on UnixWare.  */
 # if defined _SCO_DS || (defined __SCO_VERSION__ || defined __sysv5__)  /* OpenServer, UnixWare */
@@ -32,6 +34,9 @@
 
 /* Name of the witness file.  */
 #define TEMPFILE BASE "nap.tmp"
+
+/* Absolute name of the witness file.  */
+static char *nap_file /* = NULL */;
 
 /* File descriptor used for the witness file.  */
 static int nap_fd = -1;
@@ -75,7 +80,7 @@ nap_get_stat (struct stat *st, int do_write)
          is closed. See
          <https://docs.microsoft.com/en-us/windows/desktop/api/fileapi/nf-fileapi-writefile> */
       close (nap_fd);
-      nap_fd = open (TEMPFILE, O_RDWR, 0600);
+      nap_fd = open (nap_file, O_RDWR, 0600);
       ASSERT (nap_fd != -1);
       lseek (nap_fd, 0, SEEK_END);
 #endif
@@ -108,7 +113,7 @@ clear_temp_file (void)
   if (0 <= nap_fd)
     {
       ASSERT (close (nap_fd) != -1);
-      ASSERT (unlink (TEMPFILE) != -1);
+      ASSERT (unlink (nap_file) != -1);
     }
 }
 
@@ -127,8 +132,9 @@ nap (void)
 
   if (-1 == nap_fd)
     {
+      nap_file = xconcatenated_filename (xgetcwd (), TEMPFILE, NULL);
       atexit (clear_temp_file);
-      ASSERT ((nap_fd = creat (TEMPFILE, 0600)) != -1);
+      ASSERT ((nap_fd = creat (nap_file, 0600)) != -1);
       nap_get_stat (&old_st, 0);
     }
   else

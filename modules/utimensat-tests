@@ -13,6 +13,8 @@ nanosleep
 stdckdint
 timespec
 utimecmp
+xconcat-filename
+xgetcwd
 
 configure.ac:
 

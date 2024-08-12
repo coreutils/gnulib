@@ -16,6 +16,8 @@ stdckdint
 timespec
 dup
 utimecmp
+xconcat-filename
+xgetcwd
 
 configure.ac:
 
