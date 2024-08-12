@@ -49,8 +49,11 @@
 
 /* Some platforms need a longer STEP_INTERVAL, otherwise some of the assertions
    RRR, RRRR, RRRRR fail.  */
-#if (defined __APPLE__ && defined __MACH__) || defined _WIN32 || defined __CYGWIN__
-/* macOS, Windows */
+#if (defined __APPLE__ && defined __MACH__)
+/* macOS */
+# define STEP_INTERVAL 100000000 /* nanoseconds */
+#elif defined _WIN32 || defined __CYGWIN__
+/* Windows */
 # define STEP_INTERVAL 50000000 /* nanoseconds */
 #elif (defined __FreeBSD__ || defined __DragonFly__) || (defined __linux__ && defined __hppa)
 /* FreeBSD, Linux/hppa */
