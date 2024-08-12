@@ -16,6 +16,8 @@ stdckdint
 symlink
 timespec
 utimecmp
+xconcat-filename
+xgetcwd
 
 configure.ac:
 

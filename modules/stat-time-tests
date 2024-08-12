@@ -8,6 +8,8 @@ nanosleep
 stdckdint
 time-h
 unistd
+xconcat-filename
+xgetcwd
 
 configure.ac:
 
