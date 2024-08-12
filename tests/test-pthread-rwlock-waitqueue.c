@@ -51,7 +51,7 @@
    RRR, RRRR, RRRRR fail.  */
 #if (defined __APPLE__ && defined __MACH__)
 /* macOS */
-# define STEP_INTERVAL 100000000 /* nanoseconds */
+# define STEP_INTERVAL 200000000 /* nanoseconds */
 #elif defined _WIN32 || defined __CYGWIN__
 /* Windows */
 # define STEP_INTERVAL 50000000 /* nanoseconds */
