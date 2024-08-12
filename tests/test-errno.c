@@ -107,9 +107,14 @@
   /* end of CHECK_POSIX_ERRNOS */
 
 /* Verify that the POSIX mandated errno values can be used as integer
-   constant expressions and are all positive.  */
-#define POSITIVE_INTEGER_CONSTANT_EXPRESSION(e) static_assert (0 < (e) << 0);
+   constant expressions and are all positive (except on Haiku).  */
+#if defined __HAIKU__
+# define NONZERO_INTEGER_CONSTANT_EXPRESSION(e) static_assert (0 != (e) << 0);
+CHECK_POSIX_ERRNOS (NONZERO_INTEGER_CONSTANT_EXPRESSION)
+#else
+# define POSITIVE_INTEGER_CONSTANT_EXPRESSION(e) static_assert (0 < (e) << 0);
 CHECK_POSIX_ERRNOS (POSITIVE_INTEGER_CONSTANT_EXPRESSION)
+#endif
 
 /* Verify that errno values can all be used in #if.  */
 #define USABLE_IN_IF(e) ^ e

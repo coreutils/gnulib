@@ -64,4 +64,7 @@ AIX 7.3.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+All error numbers are negative on some platforms:
+Haiku.
 @end itemize
