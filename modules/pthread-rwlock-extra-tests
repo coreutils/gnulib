@@ -1,0 +1,16 @@
+Files:
+tests/test-pthread-rwlock-waitqueue.c
+tests/macros.h
+
+Depends-on:
+extensions
+pthread-thread
+nanosleep
+stdbool
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-pthread-rwlock-waitqueue
+check_PROGRAMS += test-pthread-rwlock-waitqueue
+test_pthread_rwlock_waitqueue_LDADD = $(LDADD) @LIBPMULTITHREAD@ @NANOSLEEP_LIB@
