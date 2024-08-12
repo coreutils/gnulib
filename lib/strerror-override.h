@@ -57,7 +57,8 @@ extern "C" {
     || GNULIB_defined_ECANCELED \
     || GNULIB_defined_EOWNERDEAD \
     || GNULIB_defined_ENOTRECOVERABLE \
-    || GNULIB_defined_EILSEQ
+    || GNULIB_defined_EILSEQ \
+    || GNULIB_defined_ESOCKTNOSUPPORT
 extern const char *strerror_override (int errnum) _GL_ATTRIBUTE_CONST;
 #else
 # define strerror_override(ignored) NULL
