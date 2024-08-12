@@ -52,8 +52,8 @@
 #if defined _WIN32 || defined __CYGWIN__
 /* Windows */
 # define STEP_INTERVAL 50000000 /* nanoseconds */
-#elif (defined __FreeBSD__ || defined __DragonFly__) || (defined __linux__ && defined __hppa)
-/* FreeBSD, Linux/hppa */
+#elif (defined __APPLE__ && defined __MACH__) || (defined __FreeBSD__ || defined __DragonFly__) || (defined __linux__ && defined __hppa)
+/* macOS, FreeBSD, Linux/hppa */
 # define STEP_INTERVAL 20000000 /* nanoseconds */
 #else
 # define STEP_INTERVAL 10000000 /* nanoseconds */
