@@ -33,6 +33,8 @@ termios.h: termios.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(WARN_ON_USE
 	      -e 's/@''GNULIB_TCGETSID''@/$(GNULIB_TCGETSID)/g' \
 	      -e 's|@''HAVE_DECL_TCGETSID''@|$(HAVE_DECL_TCGETSID)|g' \
 	      -e 's|@''HAVE_TERMIOS_H''@|$(HAVE_TERMIOS_H)|g' \
+	      -e 's|@''TERMIOS_H_DEFINES_STRUCT_WINSIZE''@|$(TERMIOS_H_DEFINES_STRUCT_WINSIZE)|g' \
+	      -e 's|@''SYS_IOCTL_H_DEFINES_STRUCT_WINSIZE''@|$(SYS_IOCTL_H_DEFINES_STRUCT_WINSIZE)|g' \
 	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
 	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
 	      $(srcdir)/termios.in.h > $@-t

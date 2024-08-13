@@ -48,6 +48,23 @@ extern "C" {
 /* Get pid_t.  */
 #include <sys/types.h>
 
+#if ! @TERMIOS_H_DEFINES_STRUCT_WINSIZE@
+/* On glibc.  */
+# if @SYS_IOCTL_H_DEFINES_STRUCT_WINSIZE@
+#  include <sys/ioctl.h>
+# else
+/* On Windows.  */
+#  if !GNULIB_defined_struct_winsize
+struct winsize
+{
+  unsigned short ws_row;
+  unsigned short ws_col;
+};
+#   define GNULIB_defined_struct_winsize 1
+#  endif
+# endif
+#endif
+
 /* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
 
 /* The definition of _GL_WARN_ON_USE is copied here.  */

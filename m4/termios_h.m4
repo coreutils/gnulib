@@ -1,5 +1,5 @@
 # termios_h.m4
-# serial 7
+# serial 8
 dnl Copyright (C) 2010-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -16,6 +16,45 @@ AC_DEFUN_ONCE([gl_TERMIOS_H],
     HAVE_TERMIOS_H=0
   fi
 
+  if test $ac_cv_header_termios_h = yes; then
+    AC_CACHE_CHECK([for struct winsize in <termios.h>],
+      [gl_cv_struct_winsize_in_termios_h],
+      [AC_COMPILE_IFELSE(
+         [AC_LANG_PROGRAM(
+            [[#include <termios.h>
+            ]],
+            [[static struct winsize x; x.ws_row = x.ws_col;]])],
+         [gl_cv_struct_winsize_in_termios_h=yes],
+         [gl_cv_struct_winsize_in_termios_h=no])
+    ])
+    if test $gl_cv_struct_winsize_in_termios_h = no; then
+      AC_CHECK_HEADERS_ONCE([sys/ioctl.h])
+      if test $ac_cv_header_sys_ioctl_h = yes; then
+        AC_CACHE_CHECK([for struct winsize in <sys/ioctl.h>],
+          [gl_cv_struct_winsize_in_sys_ioctl_h],
+          [AC_COMPILE_IFELSE(
+             [AC_LANG_PROGRAM(
+                [[#include <sys/ioctl.h>
+                ]],
+                [[static struct winsize x; x.ws_row = x.ws_col;]])],
+             [gl_cv_struct_winsize_in_sys_ioctl_h=yes],
+             [gl_cv_struct_winsize_in_sys_ioctl_h=no])
+        ])
+      fi
+    fi
+  fi
+
+  TERMIOS_H_DEFINES_STRUCT_WINSIZE=0
+  SYS_IOCTL_H_DEFINES_STRUCT_WINSIZE=0
+  if test "$gl_cv_struct_winsize_in_termios_h" != yes \
+     || test "$gl_cv_struct_winsize_in_sys_ioctl_h" != yes; then
+    if test "$gl_cv_struct_winsize_in_termios_h" = yes; then
+      TERMIOS_H_DEFINES_STRUCT_WINSIZE=1
+    elif test "$gl_cv_struct_winsize_in_sys_ioctl_h" = yes; then
+      SYS_IOCTL_H_DEFINES_STRUCT_WINSIZE=1
+    fi
+  fi
+
   dnl Ensure the type pid_t gets defined.
   AC_REQUIRE([AC_TYPE_PID_T])
 
@@ -24,6 +63,9 @@ AC_DEFUN_ONCE([gl_TERMIOS_H],
   dnl guaranteed by C89.
   gl_WARN_ON_USE_PREPARE([[#include <termios.h>]],
     [tcgetsid])
+
+  AC_SUBST([TERMIOS_H_DEFINES_STRUCT_WINSIZE])
+  AC_SUBST([SYS_IOCTL_H_DEFINES_STRUCT_WINSIZE])
 ])
 
 # gl_TERMIOS_MODULE_INDICATOR([modulename])

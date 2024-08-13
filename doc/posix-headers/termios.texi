@@ -18,7 +18,13 @@ glibc on some architectures, FreeBSD 6.4, OpenBSD 4.9, Cygwin 1.7.11.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
-The types @code{struct termios}, @code{cc_t}, @code{speed_t}, @code{tcflag_t}
-are not defined on some platforms:
+The types @code{struct termios}, @code{struct winsize}, @code{cc_t},
+@code{speed_t}, @code{tcflag_t} are not defined on some platforms:
 mingw, MSVC 14.
+
+@item
+@code{struct winsize} is defined in @code{sys/ioctl.h} on some
+platforms:
+glibc
+
 @end itemize
