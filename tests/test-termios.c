@@ -22,6 +22,7 @@
 
 /* Check that the types are all defined.  */
 pid_t t1;
+struct winsize t2;
 
 int
 main (void)
