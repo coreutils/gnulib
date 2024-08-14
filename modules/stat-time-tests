@@ -16,4 +16,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-stat-time
 check_PROGRAMS += test-stat-time
-test_stat_time_LDADD = $(LDADD) $(NANOSLEEP_LIB)
+test_stat_time_LDADD = $(LDADD) $(NANOSLEEP_LIB) @LIBINTL@
