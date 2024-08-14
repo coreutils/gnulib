@@ -30,8 +30,8 @@
 #ifndef _@GUARD_PREFIX@_ERROR_H
 #define _@GUARD_PREFIX@_ERROR_H
 
-/* This file uses _GL_ATTRIBUTE_ALWAYS_INLINE, _GL_ATTRIBUTE_FORMAT,
-  _GL_ATTRIBUTE_MAYBE_UNUSED.  */
+/* This file uses _GL_ATTRIBUTE_ALWAYS_INLINE, _GL_ATTRIBUTE_COLD,
+   _GL_ATTRIBUTE_FORMAT, _GL_ATTRIBUTE_MAYBE_UNUSED.  */
 #if !_GL_CONFIG_H_INCLUDED
  #error "Please include config.h first."
 #endif
@@ -93,6 +93,7 @@ extern "C" {
 # endif
 _GL_FUNCDECL_RPL (error, void,
                   (int __status, int __errnum, const char *__format, ...),
+                  _GL_ATTRIBUTE_COLD
                   _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_ERROR, 3, 4)));
 _GL_CXXALIAS_RPL (error, void,
                   (int __status, int __errnum, const char *__format, ...));
@@ -105,6 +106,7 @@ _GL_CXXALIAS_RPL (error, void,
 # if ! @HAVE_ERROR@
 _GL_FUNCDECL_SYS (error, void,
                   (int __status, int __errnum, const char *__format, ...),
+                  _GL_ATTRIBUTE_COLD
                   _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_ERROR, 3, 4)));
 # endif
 _GL_CXXALIAS_SYS (error, void,
@@ -117,7 +119,7 @@ _GL_CXXALIAS_SYS (error, void,
 #    pragma GCC diagnostic ignored "-Wattributes"
 _GL_ATTRIBUTE_MAYBE_UNUSED
 static void
-_GL_ATTRIBUTE_ALWAYS_INLINE
+_GL_ATTRIBUTE_ALWAYS_INLINE _GL_ATTRIBUTE_COLD
 _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_ERROR, 3, 4))
 _gl_inline_error (int __status, int __errnum, const char *__format, ...)
 {
@@ -148,6 +150,7 @@ _GL_CXXALIASWARN (error);
 _GL_FUNCDECL_RPL (error_at_line, void,
                   (int __status, int __errnum, const char *__filename,
                    unsigned int __lineno, const char *__format, ...),
+                  _GL_ATTRIBUTE_COLD
                   _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_ERROR, 5, 6)));
 _GL_CXXALIAS_RPL (error_at_line, void,
                   (int __status, int __errnum, const char *__filename,
@@ -162,6 +165,7 @@ _GL_CXXALIAS_RPL (error_at_line, void,
 _GL_FUNCDECL_SYS (error_at_line, void,
                   (int __status, int __errnum, const char *__filename,
                    unsigned int __lineno, const char *__format, ...),
+                  _GL_ATTRIBUTE_COLD
                   _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_ERROR, 5, 6)));
 # endif
 _GL_CXXALIAS_SYS (error_at_line, void,
@@ -175,7 +179,7 @@ _GL_CXXALIAS_SYS (error_at_line, void,
 #    pragma GCC diagnostic ignored "-Wattributes"
 _GL_ATTRIBUTE_MAYBE_UNUSED
 static void
-_GL_ATTRIBUTE_ALWAYS_INLINE
+_GL_ATTRIBUTE_ALWAYS_INLINE _GL_ATTRIBUTE_COLD
 _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_ERROR, 5, 6))
 _gl_inline_error_at_line (int __status, int __errnum, const char *__filename,
                           unsigned int __lineno, const char *__format, ...)

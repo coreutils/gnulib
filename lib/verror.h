@@ -17,7 +17,7 @@
 #ifndef _VERROR_H
 #define _VERROR_H 1
 
-/* This file uses _GL_ATTRIBUTE_FORMAT.  */
+/* This file uses _GL_ATTRIBUTE_COLD, _GL_ATTRIBUTE_FORMAT.  */
 #if !_GL_CONFIG_H_INCLUDED
  #error "Please include config.h first."
 #endif
@@ -39,6 +39,7 @@ extern "C" {
 
 extern void verror (int __status, int __errnum, const char *__format,
                     va_list __args)
+     _GL_ATTRIBUTE_COLD
      _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_STANDARD, 3, 0));
 
 /* Print a message with 'vfprintf (stderr, FORMAT, ARGS)';
@@ -51,6 +52,7 @@ extern void verror (int __status, int __errnum, const char *__format,
 extern void verror_at_line (int __status, int __errnum, const char *__fname,
                             unsigned int __lineno, const char *__format,
                             va_list __args)
+     _GL_ATTRIBUTE_COLD
      _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_STANDARD, 5, 0));
 
 #ifdef __cplusplus
