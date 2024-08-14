@@ -1,3 +1,6 @@
+Status:
+longrunning-test
+
 Files:
 tests/test-pthread-rwlock-waitqueue.c
 tests/macros.h

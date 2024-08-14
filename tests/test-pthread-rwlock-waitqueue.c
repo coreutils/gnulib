@@ -48,7 +48,23 @@
    flavours of read-write locks.  */
 
 /* Some platforms need a longer STEP_INTERVAL, otherwise some of the assertions
-   RRR, RRRR, RRRRR fail.  */
+   RRR, RRRR, RRRRR fail.
+   Note: The probability of failing these assertions is higher when the machine
+   is under high load.  It can be worked around by increasing the STEP_INTERVAL.
+   However, increasing the STEP_INTERVAL means to increase the total duration
+   of this test:
+     STEP_INTERVAL  Duration (on glibc/Linux)
+         10 ms           29 sec
+         20 ms           57 sec
+         50 ms          2.4 min
+        100 ms          4.8 min
+        200 ms          9.6 min
+   There is no way to have this test be reasonably fast and 100% reliable at the
+   same time.  Therefore the compromise we have chosen is
+     - to pick STEP_INTERVAL so that the test succeeds on developer machines
+       with little load and on continuous integration machines,
+     - to exclude the test from packaging, unless the gnulib-tool option
+       '--with-longrunning-tests' is specified.  */
 #if (defined __APPLE__ && defined __MACH__)
 /* macOS */
 # define STEP_INTERVAL 200000000 /* nanoseconds */
