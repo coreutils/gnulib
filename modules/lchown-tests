@@ -23,4 +23,4 @@ AC_CHECK_FUNCS_ONCE([getgid getegid])
 Makefile.am:
 TESTS += test-lchown
 check_PROGRAMS += test-lchown
-test_lchown_LDADD = $(LDADD) $(NANOSLEEP_LIB)
+test_lchown_LDADD = $(LDADD) $(NANOSLEEP_LIB) @LIBINTL@
