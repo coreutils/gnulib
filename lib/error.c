@@ -131,8 +131,12 @@ int strerror_r (int errnum, char *buf, size_t buflen);
 #  define __strerror_r strerror_r
 # endif /* GNULIB_STRERROR_R_POSIX || HAVE_STRERROR_R || defined strerror_r */
 
-# undef verror
-# undef verror_at_line
+# if GNULIB_defined_verror
+#  undef verror
+# endif
+# if GNULIB_defined_verror_at_line
+#  undef verror_at_line
+# endif
 #endif  /* not _LIBC */
 
 #if !_LIBC
