@@ -74,6 +74,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2024-08-14  verror          The include file is changed from "verror.h"
+                            to <error.h>.
+
 2024-08-09  full-read       These modules now prefer signed types to size_t.
             full-write      The preferred types are idx_t for object sizes and
             safe-read       ptrdiff_t for values that are either a size or -1.

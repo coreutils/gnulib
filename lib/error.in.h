@@ -36,6 +36,9 @@
  #error "Please include config.h first."
 #endif
 
+/* Get va_list.  */
+#include <stdarg.h>
+
 /* Get 'unreachable'.  */
 #include <stddef.h>
 
@@ -199,6 +202,34 @@ _gl_inline_error_at_line (int __status, int __errnum, const char *__filename,
 # endif
 #endif
 _GL_CXXALIASWARN (error_at_line);
+
+/* Print a message with 'vfprintf (stderr, FORMAT, ARGS)';
+   if ERRNUM is nonzero, follow it with ": " and strerror (ERRNUM).
+   If STATUS is nonzero, terminate the program with 'exit (STATUS)'.
+   Use the globals error_print_progname and error_message_count similarly
+   to error().  */
+
+extern void verror (int __status, int __errnum, const char *__format,
+                    va_list __args)
+     _GL_ATTRIBUTE_COLD
+     _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_STANDARD, 3, 0));
+#define verror(status, ...) \
+   __gl_error_call (verror, status, __VA_ARGS__)
+
+/* Print a message with 'vfprintf (stderr, FORMAT, ARGS)';
+   if ERRNUM is nonzero, follow it with ": " and strerror (ERRNUM).
+   If STATUS is nonzero, terminate the program with 'exit (STATUS)'.
+   If FNAME is not NULL, prepend the message with "FNAME:LINENO:".
+   Use the globals error_print_progname, error_message_count, and
+   error_one_per_line similarly to error_at_line().  */
+
+extern void verror_at_line (int __status, int __errnum, const char *__fname,
+                            unsigned int __lineno, const char *__format,
+                            va_list __args)
+     _GL_ATTRIBUTE_COLD
+     _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_STANDARD, 5, 0));
+#define verror_at_line(status, ...) \
+   __gl_error_call (verror_at_line, status, __VA_ARGS__)
 
 /* If NULL, error will flush stdout, then print on stderr the program
    name, a colon and a space.  Otherwise, error will call this

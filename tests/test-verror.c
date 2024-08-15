@@ -18,7 +18,7 @@
 
 #include <config.h>
 
-#include "verror.h"
+#include <error.h>
 
 #include <errno.h>
 #include <stdarg.h>
