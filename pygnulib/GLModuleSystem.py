@@ -54,6 +54,10 @@ def _extract_lib_SOURCES(snippet: str) -> list[str]:
              for line in lines
              for file_name in line.split() ]
 
+def _isTestsModuleName(name: str) -> bool:
+    '''Determine whether a module is a tests module, given its name.'''
+    return name.endswith('-tests') and name != 'valgrind-tests'
+
 
 #===============================================================================
 # Define GLModuleSystem class
@@ -161,7 +165,7 @@ class GLModuleSystem:
         # Filter out undesired file names.
         listing = [ line
                     for line in listing
-                    if self.file_is_module(line) and not line.endswith('-tests') ]
+                    if self.file_is_module(line) and not _isTestsModuleName(line) ]
         modules = sorted(set(listing))
         return modules
 
@@ -306,7 +310,7 @@ class GLModule:
 
     def isNonTests(self) -> bool:
         '''Check whether module is not a *-tests module.'''
-        result = not self.name.endswith('-tests')
+        result = not _isTestsModuleName(self.name)
         return result
 
     def getTestsName(self) -> str:
@@ -452,7 +456,7 @@ class GLModule:
             result = result.strip()
             if not result:
                 # The default is 'main' or 'tests', depending on the module's name.
-                if self.name.endswith('-tests'):
+                if _isTestsModuleName(self.name):
                     result = 'tests'
                 else:
                     result = 'main'
@@ -482,7 +486,7 @@ class GLModule:
         if 'dependencies' not in self.cache:
             result = ''
             # ${module}-tests implicitly depends on ${module}, if that module exists.
-            if self.name.endswith('-tests'):
+            if _isTestsModuleName(self.name):
                 main_module = subend('-tests', '', self.name)
                 if self.modulesystem.exists(main_module):
                     result += '%s\n' % main_module
@@ -573,7 +577,7 @@ class GLModule:
         auxdir = self.config['auxdir']
         result = ''
         if 'makefile-unconditional' not in self.cache:
-            if self.name.endswith('-tests'):
+            if _isTestsModuleName(self.name):
                 # *-tests module live in tests/, not lib/.
                 # Synthesize an EXTRA_DIST augmentation.
                 files = self.getFiles()
@@ -650,7 +654,7 @@ class GLModule:
         if 'license' not in self.cache:
             license = self.getLicense_Raw().strip()
             # Warn if the License field is missing.
-            if not self.name.endswith('-tests'):
+            if not _isTestsModuleName(self.name):
                 if not license:
                     if self.config['errors']:
                         raise GLError(18, self.name)
