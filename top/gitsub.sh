@@ -392,7 +392,17 @@ func_upgrade ()
       case " $submodule_names " in *" $1 "*)
         # It's a submodule.
         if test -z "$needs_init"; then
-          (cd "$path" && git fetch && git merge origin/master) || func_fatal_error "git operation failed"
+          (cd "$path" \
+           && git fetch \
+           && branch=`git branch --show-current` \
+           && { test -n "$branch" || branch=HEAD; } \
+           && sed_escape_dots='s/\([.]\)/\\\1/g' \
+           && branch_escaped=`echo "$branch" | sed -e "${sed_escape_dots}"` \
+           && remote=`git branch -r | sed -n -e "s|  origin/${branch_escaped} -> ||p"` \
+           && { test -n "$remote" || remote="origin/${branch}"; } \
+           && echo "In subdirectory $path: Running \"git merge $remote\"" \
+           && git merge "$remote"
+          ) || func_fatal_error "git operation failed"
         fi
         ;;
       esac
