@@ -596,6 +596,11 @@ class GLModule:
             listing = [ line
                         for line in listing
                         if self.modulesystem.file_is_module(line) ]
+            # ${module}-tests implicitly depends on ${module}, if both exist.
+            if self.isNonTests():
+                implicit_dependent = self.name+'-tests'
+                if self.modulesystem.exists(implicit_dependent):
+                    listing.append(implicit_dependent)
             candidates = sorted(set(listing))
             result = []
             for name in candidates:
