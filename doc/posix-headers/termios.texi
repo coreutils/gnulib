@@ -23,8 +23,7 @@ The types @code{struct termios}, @code{struct winsize}, @code{cc_t},
 mingw, MSVC 14.
 
 @item
-@code{struct winsize} is defined in @code{sys/ioctl.h} on some
-platforms:
-glibc
+@code{struct winsize} is defined in @code{sys/ioctl.h} on some platforms:
+glibc, AIX.
 
 @end itemize
