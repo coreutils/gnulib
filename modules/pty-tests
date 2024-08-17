@@ -1,4 +1,5 @@
 Files:
+tests/test-pty.c
 
 Depends-on:
 pty-c++-tests
@@ -6,3 +7,5 @@ pty-c++-tests
 configure.ac:
 
 Makefile.am:
+TESTS += test-pty
+check_PROGRAMS += test-pty
