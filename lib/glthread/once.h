@@ -124,7 +124,10 @@ extern int glthread_in_use (void);
 #  pragma weak pthread_mutex_lock
 #  pragma weak pthread_mutex_unlock
 #  pragma weak pthread_mutex_destroy
-#  pragma weak pthread_rwlock_init
+/* Work around clang bug <https://github.com/llvm/llvm-project/issues/104670> */
+#  ifndef pthread_rwlock_init
+#   pragma weak pthread_rwlock_init
+#  endif
 #  pragma weak pthread_rwlock_rdlock
 #  pragma weak pthread_rwlock_wrlock
 #  pragma weak pthread_rwlock_unlock
@@ -138,7 +141,10 @@ extern int glthread_in_use (void);
 #  pragma weak pthread_mutexattr_init
 #  pragma weak pthread_mutexattr_settype
 #  pragma weak pthread_mutexattr_destroy
-#  pragma weak pthread_rwlockattr_init
+/* Work around clang bug <https://github.com/llvm/llvm-project/issues/104670> */
+#  ifndef pthread_rwlockattr_init
+#   pragma weak pthread_rwlockattr_init
+#  endif
 #  if __GNU_LIBRARY__ > 1
 #   pragma weak pthread_rwlockattr_setkind_np
 #  endif
