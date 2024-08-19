@@ -1,0 +1,11 @@
+Files:
+tests/test-hasmntopt.c
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-hasmntopt
+check_PROGRAMS += test-hasmntopt
