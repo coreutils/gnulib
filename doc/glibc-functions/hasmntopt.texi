@@ -15,15 +15,22 @@ Documentation:
 @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/hasmntopt.3.html,,man hasmntopt}.
 @end itemize
 
-Gnulib module: ---
+Gnulib module: hasmntopt
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+This function is missing on some platforms:
+Cygwin 3.5.3, Android API level 25.
+@item
+This function returns wrong results on some platforms:
+@c https://www.openwall.com/lists/musl/2024/08/19/1
+musl libc 1.2.5.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-macOS 14, FreeBSD 14.0, NetBSD 10.0, OpenBSD 7.5, Minix 3.1.8, Cygwin 2.9, mingw, MSVC 14, Android 7.1.
+macOS 14, FreeBSD 14.0, NetBSD 10.0, OpenBSD 7.5, Minix 3.1.8, mingw, MSVC 14.
 @end itemize

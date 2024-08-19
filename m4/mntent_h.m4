@@ -1,5 +1,5 @@
 # mntent_h.m4
-# serial 1
+# serial 2
 dnl Copyright (C) 2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -20,6 +20,12 @@ AC_DEFUN_ONCE([gl_MNTENT_H],
   else
     GL_GENERATE_MNTENT_H=false
   fi
+
+  dnl Check for declarations of anything we want to poison if the
+  dnl corresponding gnulib module is not in use.
+  gl_WARN_ON_USE_PREPARE([[#include <mntent.h>
+    ]],
+    [hasmntopt])
 ])
 
 # gl_MNTENT_MODULE_INDICATOR([modulename])
@@ -41,6 +47,7 @@ AC_DEFUN([gl_MNTENT_MODULE_INDICATOR],
 AC_DEFUN([gl_MNTENT_H_REQUIRE_DEFAULTS],
 [
   m4_defun(GL_MODULE_INDICATOR_PREFIX[_MNTENT_H_MODULE_INDICATOR_DEFAULTS], [
+    gl_MODULE_INDICATOR_INIT_VARIABLE([GNULIB_HASMNTOPT])
   ])
   m4_require(GL_MODULE_INDICATOR_PREFIX[_MNTENT_H_MODULE_INDICATOR_DEFAULTS])
   AC_REQUIRE([gl_MNTENT_H_DEFAULTS])
@@ -49,4 +56,7 @@ AC_DEFUN([gl_MNTENT_H_REQUIRE_DEFAULTS],
 AC_DEFUN([gl_MNTENT_H_DEFAULTS],
 [
   dnl Assume proper GNU behavior unless another module says otherwise.
+  HAVE_HASMNTOPT=1;      AC_SUBST([HAVE_HASMNTOPT])
+  HAVE_SETMNTENT=1;      AC_SUBST([HAVE_SETMNTENT])
+  REPLACE_HASMNTOPT=0;   AC_SUBST([REPLACE_HASMNTOPT])
 ])

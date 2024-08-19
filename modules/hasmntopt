@@ -1,0 +1,32 @@
+Description:
+hasmntopt() function: test for the presence of a mount option.
+
+Files:
+lib/hasmntopt.c
+m4/hasmntopt.m4
+
+Depends-on:
+mntent
+
+configure.ac:
+gl_FUNC_HASMNTOPT
+gl_CONDITIONAL([GL_COND_OBJ_HASMNTOPT],
+               [test $HAVE_SETMNTENT = 1 && { test $HAVE_HASMNTOPT = 0 || test $REPLACE_HASMNTOPT = 1; }])
+AM_COND_IF([GL_COND_OBJ_HASMNTOPT], [
+  gl_PREREQ_HASMNTOPT
+])
+gl_MNTENT_MODULE_INDICATOR([hasmntopt])
+
+Makefile.am:
+if GL_COND_OBJ_HASMNTOPT
+lib_SOURCES += hasmntopt.c
+endif
+
+Include:
+<mntent.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+glibc
