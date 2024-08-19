@@ -565,6 +565,7 @@ gl_prefer_angle_bracket_headers_ ?= \
   locale.h		\
   malloc.h		\
   math.h		\
+  mntent.h		\
   monetary.h		\
   net/if.h		\
   netdb.h		\

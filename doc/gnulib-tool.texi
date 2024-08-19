@@ -625,6 +625,7 @@ but are not standardized:
 @item @code{error.h}
 @item @code{getopt.h}
 @item @code{malloc.h}
+@item @code{mntent.h}
 @item @code{omp.h}
 @item @code{pty.h}
 @item @code{selinux/selinux.h}

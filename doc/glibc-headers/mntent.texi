@@ -19,7 +19,7 @@ Documentation:
 @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/setmntent.3.html,,man setmntent}.
 @end itemize
 
-Gnulib module: ---
+Gnulib module: mntent
 
 Portability problems fixed by Gnulib:
 @itemize
