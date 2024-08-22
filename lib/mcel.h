@@ -226,7 +226,8 @@ mcel_scan (char const *p, char const *lim)
 
   /* An initial mbstate_t; initialization optimized for some platforms.
      For details about these and other platforms, see wchar.in.h.  */
-#if defined __GLIBC__ && 2 < __GLIBC__ + (2 <= __GLIBC_MINOR__)
+#if (defined __GLIBC__ && 2 < __GLIBC__ + (2 <= __GLIBC_MINOR__) \
+     && !defined __UCLIBC__)
   /* Although only a trivial optimization, it's worth it for GNU.  */
   mbstate_t mbs; mbs.__count = 0;
 #elif (defined __FreeBSD__ || defined __DragonFly__ || defined __OpenBSD__ \
