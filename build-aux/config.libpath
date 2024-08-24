@@ -29,7 +29,7 @@
 func_usage ()
 {
   echo "\
-Usage: config.libpath [OPTION] HOST
+Usage: config.libpath [OPTION] HOST HOST_CPU_C_ABI_32BIT
 
 Prints shell variable assignments that describe how to set the
 run time search path of shared libraries in an executable at run time.
@@ -38,6 +38,9 @@ The first argument passed to this file is the canonical host specification,
    CPU_TYPE-MANUFACTURER-OPERATING_SYSTEM
 or
    CPU_TYPE-MANUFACTURER-KERNEL-OPERATING_SYSTEM
+
+The second argument passed to this file is 'yes' if the C language ABI
+is 32-bit, or 'no' if it is 64-bit.
 
 The environment variable LD should be set by the caller.
 
@@ -91,10 +94,10 @@ while test $# -gt 0; do
   esac
 done
 
-if test $# -gt 1; then
+if test $# -gt 2; then
   func_fatal_error "too many arguments"
 fi
-if test $# -lt 1; then
+if test $# -lt 2; then
   func_fatal_error "too few arguments"
 fi
 
@@ -102,6 +105,7 @@ host="$1"
 host_cpu=`echo "$host" | sed 's/^\([^-]*\)-\([^-]*\)-\(.*\)$/\1/'`
 host_vendor=`echo "$host" | sed 's/^\([^-]*\)-\([^-]*\)-\(.*\)$/\2/'`
 host_os=`echo "$host" | sed 's/^\([^-]*\)-\([^-]*\)-\(.*\)$/\3/'`
+abi_32bit="$2"
 
 shlibpath_var=
 case $host_os in
@@ -133,7 +137,18 @@ case $host_os in
     shlibpath_var=LD_LIBRARY_PATH
     ;;
   freebsd* | dragonfly* | midnightbsd*)
-    shlibpath_var=LD_LIBRARY_PATH
+    case $host_cpu in
+      powerpc64)
+        if test "$abi_32bit" != yes; then
+          shlibpath_var=LD_LIBRARY_PATH
+        else
+          shlibpath_var=LD_32_LIBRARY_PATH
+        fi
+        ;;
+      *)
+        shlibpath_var=LD_LIBRARY_PATH
+        ;;
+    esac
     ;;
   gnu*)
     shlibpath_var=LD_LIBRARY_PATH
