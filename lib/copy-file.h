@@ -26,7 +26,7 @@ extern "C" {
 #endif
 
 
-/* Error codes returned by qcopy_file_preserving.  */
+/* Error codes returned by qcopy_file_preserving or copy_file_to.  */
 enum
 {
   GL_COPY_ERR_OPEN_READ = -1,
@@ -38,10 +38,11 @@ enum
   GL_COPY_ERR_SET_ACL = -7
 };
 
+
 /* Copy a regular file: from src_filename to dest_filename.
    The destination file is assumed to be a backup file.
    Modification times, owner, group and access permissions are preserved as
-   far as possible.
+   far as possible (similarly to what 'cp -p SRC DEST' would do).
    Return 0 if successful, otherwise set errno and return one of the error
    codes above.  */
 extern int qcopy_file_preserving (const char *src_filename, const char *dest_filename);
@@ -49,12 +50,32 @@ extern int qcopy_file_preserving (const char *src_filename, const char *dest_fil
 /* Copy a regular file: from src_filename to dest_filename.
    The destination file is assumed to be a backup file.
    Modification times, owner, group and access permissions are preserved as
-   far as possible.
+   far as possible (similarly to what 'cp -p SRC DEST' would do).
    Exit upon failure.  */
 extern void xcopy_file_preserving (const char *src_filename, const char *dest_filename);
 
 /* Old name of xcopy_file_preserving.  */
 _GL_ATTRIBUTE_DEPRECATED void copy_file_preserving (const char *src_filename, const char *dest_filename);
+
+
+/* Copy a regular file: from src_filename to dest_filename.
+   The source file is assumed to be not confidential.
+   Modification times, owner, group and access permissions of src_filename
+   are *not* copied over to dest_filename (similarly to what 'cat SRC > DEST'
+   would do; if DEST already exists, this is the same as what 'cp SRC DEST'
+   would do.)
+   Return 0 if successful, otherwise set errno and return one of the error
+   codes above.  */
+extern int copy_file_to (const char *src_filename, const char *dest_filename);
+
+/* Copy a regular file: from src_filename to dest_filename.
+   The source file is assumed to be not confidential.
+   Modification times, owner, group and access permissions of src_filename
+   are *not* copied over to dest_filename (similarly to what 'cat SRC > DEST'
+   would do; if DEST already exists, this is the same as what 'cp SRC DEST'
+   would do.)
+   Exit upon failure.  */
+extern void xcopy_file_to (const char *src_filename, const char *dest_filename);
 
 
 #ifdef __cplusplus

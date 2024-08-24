@@ -43,8 +43,9 @@
 
 enum { IO_SIZE = 32 * 1024 };
 
-int
-qcopy_file_preserving (const char *src_filename, const char *dest_filename)
+static int
+copy_file_internal (const char *src_filename, const char *dest_filename,
+                    bool preserve)
 {
   int err = 0;
   int src_fd;
@@ -67,7 +68,11 @@ qcopy_file_preserving (const char *src_filename, const char *dest_filename)
 
   dest_fd = open (dest_filename,
                   O_WRONLY | O_CREAT | O_TRUNC | O_BINARY | O_CLOEXEC,
-                  0600);
+                  /* If preserve is true, we must assume that the file may
+                     have confidential contents.  Therefore open it with mode
+                     0600 and assign the permissions at the end.
+                     If preserve is false, open it with mode 0666 & ~umask.  */
+                  preserve ? 0600 : 0666);
   if (dest_fd < 0)
     {
       err = GL_COPY_ERR_OPEN_BACKUP_WRITE;
@@ -132,34 +137,37 @@ qcopy_file_preserving (const char *src_filename, const char *dest_filename)
     return GL_COPY_ERR_AFTER_READ;
 #endif
 
-  /* Preserve the access and modification times.  */
-  {
-    struct timespec ts[2];
+  if (preserve)
+    {
+      /* Preserve the access and modification times.  */
+      {
+        struct timespec ts[2];
 
-    ts[0] = get_stat_atime (&statbuf);
-    ts[1] = get_stat_mtime (&statbuf);
-    utimens (dest_filename, ts);
-  }
+        ts[0] = get_stat_atime (&statbuf);
+        ts[1] = get_stat_mtime (&statbuf);
+        utimens (dest_filename, ts);
+      }
 
 #if HAVE_CHOWN
-  /* Preserve the owner and group.  */
-  ignore_value (chown (dest_filename, statbuf.st_uid, statbuf.st_gid));
+      /* Preserve the owner and group.  */
+      ignore_value (chown (dest_filename, statbuf.st_uid, statbuf.st_gid));
 #endif
 
-  /* Preserve the access permissions.  */
+      /* Preserve the access permissions.  */
 #if USE_ACL
-  switch (qcopy_acl (src_filename, src_fd, dest_filename, dest_fd, mode))
-    {
-    case -2:
-      err = GL_COPY_ERR_GET_ACL;
-      goto error_src_dest;
-    case -1:
-      err = GL_COPY_ERR_SET_ACL;
-      goto error_src_dest;
-    }
+      switch (qcopy_acl (src_filename, src_fd, dest_filename, dest_fd, mode))
+        {
+        case -2:
+          err = GL_COPY_ERR_GET_ACL;
+          goto error_src_dest;
+        case -1:
+          err = GL_COPY_ERR_SET_ACL;
+          goto error_src_dest;
+        }
 #else
-  chmod (dest_filename, mode);
+      chmod (dest_filename, mode);
 #endif
+    }
 
 #if USE_ACL
   if (close (dest_fd) < 0)
@@ -180,10 +188,22 @@ qcopy_file_preserving (const char *src_filename, const char *dest_filename)
   return err;
 }
 
-void
-xcopy_file_preserving (const char *src_filename, const char *dest_filename)
+int
+qcopy_file_preserving (const char *src_filename, const char *dest_filename)
 {
-  switch (qcopy_file_preserving (src_filename, dest_filename))
+  return copy_file_internal (src_filename, dest_filename, true);
+}
+
+int
+copy_file_to (const char *src_filename, const char *dest_filename)
+{
+  return copy_file_internal (src_filename, dest_filename, false);
+}
+
+static void
+handle_error_code (int err, const char *src_filename, const char *dest_filename)
+{
+  switch (err)
     {
     case 0:
       return;
@@ -221,7 +241,21 @@ xcopy_file_preserving (const char *src_filename, const char *dest_filename)
 }
 
 void
+xcopy_file_preserving (const char *src_filename, const char *dest_filename)
+{
+  int err = qcopy_file_preserving (src_filename, dest_filename);
+  handle_error_code (err, src_filename, dest_filename);
+}
+
+void
 copy_file_preserving (const char *src_filename, const char *dest_filename)
 {
   xcopy_file_preserving (src_filename, dest_filename);
+}
+
+void
+xcopy_file_to (const char *src_filename, const char *dest_filename)
+{
+  int err = copy_file_to (src_filename, dest_filename);
+  handle_error_code (err, src_filename, dest_filename);
 }
