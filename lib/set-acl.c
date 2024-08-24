@@ -39,10 +39,16 @@
     return -1.  */
 
 int
-set_acl (char const *name, int desc, mode_t mode)
+xset_acl (char const *name, int desc, mode_t mode)
 {
   int ret = qset_acl (name, desc, mode);
   if (ret != 0)
     error (0, errno, _("setting permissions for %s"), quote (name));
   return ret;
+}
+
+int
+set_acl (char const *name, int desc, mode_t mode)
+{
+  return xset_acl (name, desc, mode);
 }

@@ -60,7 +60,7 @@ main (int argc, char *argv[])
     }
 
 #if USE_ACL
-  if (copy_acl (file1, fd1, file2, fd2, mode))
+  if (xcopy_acl (file1, fd1, file2, fd2, mode))
     exit (EXIT_FAILURE);
 #else
   chmod (file2, mode);
