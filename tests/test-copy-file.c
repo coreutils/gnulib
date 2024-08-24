@@ -40,7 +40,7 @@ main (int argc, char *argv[])
   if (null_stderr)
     ASSERT (qcopy_file_preserving (file1, file2) == 0);
   else
-    copy_file_preserving (file1, file2);
+    xcopy_file_preserving (file1, file2);
 
   return test_exit_status;
 }

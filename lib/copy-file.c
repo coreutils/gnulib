@@ -181,7 +181,7 @@ qcopy_file_preserving (const char *src_filename, const char *dest_filename)
 }
 
 void
-copy_file_preserving (const char *src_filename, const char *dest_filename)
+xcopy_file_preserving (const char *src_filename, const char *dest_filename)
 {
   switch (qcopy_file_preserving (src_filename, dest_filename))
     {
@@ -218,4 +218,10 @@ copy_file_preserving (const char *src_filename, const char *dest_filename)
     default:
       abort ();
     }
+}
+
+void
+copy_file_preserving (const char *src_filename, const char *dest_filename)
+{
+  xcopy_file_preserving (src_filename, dest_filename);
 }

@@ -16,6 +16,11 @@
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 
+/* This file uses _GL_ATTRIBUTE_DEPRECATED.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -46,7 +51,10 @@ extern int qcopy_file_preserving (const char *src_filename, const char *dest_fil
    Modification times, owner, group and access permissions are preserved as
    far as possible.
    Exit upon failure.  */
-extern void copy_file_preserving (const char *src_filename, const char *dest_filename);
+extern void xcopy_file_preserving (const char *src_filename, const char *dest_filename);
+
+/* Old name of xcopy_file_preserving.  */
+_GL_ATTRIBUTE_DEPRECATED void copy_file_preserving (const char *src_filename, const char *dest_filename);
 
 
 #ifdef __cplusplus
