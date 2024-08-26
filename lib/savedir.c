@@ -39,7 +39,7 @@
 #include "xalloc.h"
 
 /* Pacify GCC bug <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=113963>.  */
-#if 13 <= __GNUC__
+#if _GL_GNUC_PREREQ (13, 0)
 # pragma GCC diagnostic ignored "-Wanalyzer-malloc-leak"
 # pragma GCC diagnostic ignored "-Wanalyzer-null-dereference"
 #endif

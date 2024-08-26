@@ -24,7 +24,7 @@
 #include "macros.h"
 
 /* Tell GCC not to warn about the specific edge cases tested here.  */
-#if __GNUC__ >= 10
+#if _GL_GNUC_PREREQ (10, 0)
 # pragma GCC diagnostic ignored "-Wanalyzer-file-leak"
 #endif
 
