@@ -28,7 +28,7 @@
 #include <unistd.h>
 
 /* GCC 13 misunderstands the dup2 trickery in this file.  */
-#if 13 <= __GNUC__
+#if _GL_GNUC_PREREQ (13, 0)
 # pragma GCC diagnostic ignored "-Wanalyzer-fd-leak"
 #endif
 

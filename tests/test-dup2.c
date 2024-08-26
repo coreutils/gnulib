@@ -51,7 +51,7 @@ SIGNATURE_CHECK (dup2, int, (int, int));
 #include "macros.h"
 
 /* Tell GCC not to warn about the specific edge cases tested here.  */
-#if __GNUC__ >= 13
+#if _GL_GNUC_PREREQ (13, 0)
 # pragma GCC diagnostic ignored "-Wanalyzer-fd-leak"
 # pragma GCC diagnostic ignored "-Wanalyzer-fd-use-without-check"
 #endif

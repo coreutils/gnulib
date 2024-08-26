@@ -47,7 +47,7 @@
 #include "memchr2.h"
 
 /* Avoid false GCC warning "'c' may be used uninitialized".  */
-#if __GNUC__ + (__GNUC_MINOR__ >= 7) > 4
+#if _GL_GNUC_PREREQ (4, 7)
 # pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
 #endif
 

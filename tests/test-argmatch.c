@@ -22,7 +22,7 @@
 /* As of GCC 11.2.1, gcc -Wanalyzer-too-complex reports that main's
    use of CHECK macros expands to code that is too complicated for gcc
    -fanalyzer.  Suppress the resulting bogus warnings.  */
-#if 10 <= __GNUC__
+#if _GL_GNUC_PREREQ (10, 0)
 # pragma GCC diagnostic ignored "-Wanalyzer-null-argument"
 #endif
 

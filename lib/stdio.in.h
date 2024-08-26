@@ -177,7 +177,7 @@
    standardized by ISO C99 and POSIX.
    _GL_ATTRIBUTE_SPEC_PRINTF_STANDARD  */
 /* __gnu_printf__ is supported in GCC >= 4.4.  */
-#if __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4)
+#if (__GNUC__ + (__GNUC_MINOR__ >= 4) > 4) && !defined __clang__
 # define _GL_ATTRIBUTE_SPEC_PRINTF_STANDARD __gnu_printf__
 #else
 # define _GL_ATTRIBUTE_SPEC_PRINTF_STANDARD __printf__

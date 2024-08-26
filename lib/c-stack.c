@@ -130,7 +130,7 @@ null_action (_GL_UNUSED int signo)
 }
 
 /* Pacify GCC 9.3.1, which otherwise would complain about segv_handler.  */
-# if 4 < __GNUC__ + (6 <= __GNUC_MINOR__)
+# if _GL_GNUC_PREREQ (4, 6)
 #  pragma GCC diagnostic ignored "-Wsuggest-attribute=pure"
 # endif
 

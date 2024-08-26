@@ -64,7 +64,7 @@
 /* As of GCC 11.2.1, gcc -Wanalyzer-too-complex reports that main's
    use of CHECK macros expands to code that is too complicated for gcc
    -fanalyzer.  Suppress the resulting bogus warnings.  */
-#if 10 <= __GNUC__
+#if _GL_GNUC_PREREQ (10, 0)
 # pragma GCC diagnostic ignored "-Wanalyzer-null-argument"
 #endif
 
@@ -964,7 +964,7 @@ divide (mpn_t a, mpn_t b, mpn_t *q)
 /* Avoid pointless GCC warning "argument 1 value '18446744073709551615' exceeds
    maximum object size 9223372036854775807", triggered by the use of xsum as
    argument of malloc.  */
-# if __GNUC__ >= 7
+# if _GL_GNUC_PREREQ (7, 0)
 #  pragma GCC diagnostic push
 #  pragma GCC diagnostic ignored "-Walloc-size-larger-than="
 # endif
@@ -1025,7 +1025,7 @@ convert_to_decimal (mpn_t a, size_t extra_zeroes)
   return c_ptr;
 }
 
-# if __GNUC__ >= 7
+# if _GL_GNUC_PREREQ (7, 0)
 #  pragma GCC diagnostic pop
 # endif
 

@@ -44,7 +44,7 @@ static char zero[SECRET_SIZE] = { 0 };
 #endif
 
 /* Suppress GCC 13.2.1 false alarm, as this test needs a dangling pointer.  */
-#if 12 <= __GNUC__
+#if _GL_GNUC_PREREQ (12, 0)
 # pragma GCC diagnostic ignored "-Wdangling-pointer"
 #endif
 
@@ -178,10 +178,10 @@ test_stack (void)
    does not eliminate a call to memset_explicit, even if data flow analysis
    reveals that the stack area is dead at the end of the function.  */
 static bool _GL_ATTRIBUTE_NOINLINE
-# if __GNUC__ + (__GNUC_MINOR__ >= 5) > 4
+# if _GL_GNUC_PREREQ (4, 5)
 __attribute__ ((__noclone__))
 # endif
-# if __GNUC__ >= 8
+# if _GL_GNUC_PREREQ (8, 0)
 __attribute__ ((__noipa__))
 # endif
 do_secret_stuff (int volatile pass, char *volatile *volatile last_stackbuf)
