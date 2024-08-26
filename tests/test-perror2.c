@@ -23,7 +23,7 @@
 #include <unistd.h>
 
 /* Tell GCC not to warn about myerr being leaked.  */
-#if __GNUC__ >= 13
+#if _GL_GNUC_PREREQ (13, 0)
 # pragma GCC diagnostic ignored "-Wanalyzer-fd-leak"
 #endif
 

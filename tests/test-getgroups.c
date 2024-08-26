@@ -35,7 +35,7 @@ SIGNATURE_CHECK (getgroups, int, (int, gid_t[]));
    any -W options, because getgroups() is declared with
      __attribute__ ((__access__ (__write_only__, 2, 1)))
  */
-#if __GNUC__ >= 7
+#if _GL_GNUC_PREREQ (7, 0)
 # pragma GCC diagnostic ignored "-Wstringop-overflow"
 #endif
 

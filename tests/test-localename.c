@@ -36,7 +36,7 @@
 #endif
 
 /* Suppress GCC false positive.  */
-#if __GNUC__ >= 12
+#if _GL_GNUC_PREREQ (12, 0)
 # pragma GCC diagnostic ignored "-Wanalyzer-use-of-uninitialized-value"
 #endif
 
