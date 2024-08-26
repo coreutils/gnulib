@@ -450,11 +450,11 @@ main (int argc, char *argv[])
             only when a source operand is an SNaN. The COMISD instruction
             signals an invalid numeric exception only if a source operand is
             either an SNaN or a QNaN."
-         - gcc < 8 (except when option -mno-ieee-fp is used) generates 'ucom*'
-           or 'fucom*' instructions and thus fails the test.
+         - gcc < 8 (except when option -mno-ieee-fp is used) and clang generate
+           'ucom*' or 'fucom*' instructions and thus fail the test.
          - gcc >= 8 generates 'com*' or 'fcom*' instructions and thus passes
            the test.  */
-      #if (__GLIBC__ >= 2 && ((defined __x86_64__ || defined _M_X64) || (defined __i386 || defined _M_IX86)) && __GNUC__ < 8) \
+      #if (__GLIBC__ >= 2 && ((defined __x86_64__ || defined _M_X64) || (defined __i386 || defined _M_IX86)) && (__GNUC__ < 8 || defined __clang__)) \
           || (__GLIBC__ >= 2 && (defined __powerpc__ || (defined __s390__ || defined __s390x__))) \
           || (__GLIBC__ >= 2 && __FreeBSD_kernel__ && ((defined __x86_64__ || defined _M_X64) || (defined __i386 || defined _M_IX86))) \
           || (defined MUSL_LIBC && ((defined __i386 || defined _M_IX86) || defined __powerpc__)) \
