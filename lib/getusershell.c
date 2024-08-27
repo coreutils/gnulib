@@ -112,7 +112,7 @@ getusershell (void)
           if (comment != NULL)
             {
               /* Trim the comment mark.  */
-              comment = '\0';
+              *comment = '\0';
               end = comment;
             }
           else
