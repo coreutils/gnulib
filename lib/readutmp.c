@@ -867,6 +867,14 @@ read_utmp_from_systemd (idx_t *n_entries, STRUCT_UTMP **utmp_buf, int options)
                       else if (pty != NULL)
                         tty = pty;
                     }
+                  else if (strcmp (type, "web") == 0)
+                    {
+                      char *service;
+                      if (sd_session_get_service (session, &service) < 0)
+                        service = NULL;
+
+                      tty = service;
+                    }
                 }
 
               /* Create up to two USER_PROCESS entries: one for the seat,
