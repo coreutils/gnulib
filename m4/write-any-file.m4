@@ -10,5 +10,5 @@
 
 AC_DEFUN([gl_WRITE_ANY_FILE],
 [
-  AC_CHECK_HEADERS_ONCE([priv.h])
+  AC_CHECK_FUNCS_ONCE([geteuid])
 ])
