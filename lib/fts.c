@@ -1858,13 +1858,13 @@ fts_sort (FTS *sp, FTSENT *head, register size_t nitems)
            run-time representation, and one can convert sp->fts_compar to
            the type qsort expects without problem.  Use the heuristic that
            this is OK if the two pointer types are the same size, and if
-           converting FTSENT ** to long int is the same as converting
-           FTSENT ** to void * and then to long int.  This heuristic isn't
+           converting FTSENT ** to uintptr_t is the same as converting
+           FTSENT ** to void * and then to uintptr_t.  This heuristic isn't
            valid in general but we don't know of any counterexamples.  */
         FTSENT *dummy;
         int (*compare) (void const *, void const *) =
           ((sizeof &dummy == sizeof (void *)
-            && (long int) &dummy == (long int) (void *) &dummy)
+            && (uintptr_t) &dummy == (uintptr_t) (void *) &dummy)
            ? (int (*) (void const *, void const *)) sp->fts_compar
            : fts_compar);
 
