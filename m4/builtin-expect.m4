@@ -1,4 +1,4 @@
-dnl Check for __builtin_expect.
+dnl Provide a GCC-compatible __builtin_expect macro in <config.h>.
 
 dnl Copyright 2016-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
