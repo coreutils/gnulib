@@ -36,6 +36,10 @@
 #include "fcntl-safer.h"
 #include "filename.h"
 
+#if defined _WIN32 && !defined __CYGWIN__
+# define fork() (assure (false), -1)
+#endif
+
 /* Save the working directory into *WD, if it hasn't been saved
    already.  Return true if a child has been forked to do the real
    work.  */
@@ -54,7 +58,14 @@ savewd_save (struct savewd *wd)
             wd->val.fd = fd;
             break;
           }
-        if (errno != EACCES && errno != ESTALE)
+# if O_SEARCH != O_RDONLY || (defined _WIN32 && !defined __CYGWIN__)
+        /* There is no point to forking if O_SEARCH conforms to POSIX,
+           or on native MS-Windows which lacks 'fork'.  */
+        bool try_fork = false;
+# else
+        bool try_fork = errno == EACCES || errno == ESTALE;
+# endif
+        if (!try_fork)
           {
             wd->state = ERROR_STATE;
             wd->val.errnum = errno;
