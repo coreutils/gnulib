@@ -548,30 +548,24 @@ convert_CreateProcess_error (DWORD error)
     case ERROR_INVALID_NAME:
     case ERROR_DIRECTORY:
       return ENOENT;
-      break;
 
     case ERROR_ACCESS_DENIED:
     case ERROR_SHARING_VIOLATION:
       return EACCES;
-      break;
 
     case ERROR_OUTOFMEMORY:
       return ENOMEM;
-      break;
 
     case ERROR_BUFFER_OVERFLOW:
     case ERROR_FILENAME_EXCED_RANGE:
       return ENAMETOOLONG;
-      break;
 
     case ERROR_BAD_FORMAT:
     case ERROR_BAD_EXE_FORMAT:
       return ENOEXEC;
-      break;
 
     default:
       return EINVAL;
-      break;
     }
 }
 
