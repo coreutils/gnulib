@@ -673,12 +673,6 @@ _GL_CXXALIAS_RPL (mkdir, int, (char const *name, mode_t mode));
 _GL_CXXALIAS_SYS (mkdir, int, (char const *name, mode_t mode));
 # endif
 _GL_CXXALIASWARN (mkdir);
-#elif defined GNULIB_POSIXCHECK
-# undef mkdir
-# if HAVE_RAW_DECL_MKDIR
-_GL_WARN_ON_USE (mkdir, "mkdir does not always support two parameters - "
-                 "use gnulib module mkdir for portability");
-# endif
 #elif @GNULIB_MDA_MKDIR@
 /* On native Windows, map 'mkdir' to '_mkdir', so that -loldnames is not
    required.  In C++ with GNULIB_NAMESPACE, avoid differences between
@@ -701,6 +695,12 @@ _GL_CXXALIAS_RPL (mkdir, int, (char const *name, mode_t mode));
 _GL_CXXALIAS_SYS (mkdir, int, (char const *name, mode_t mode));
 # endif
 _GL_CXXALIASWARN (mkdir);
+#elif defined GNULIB_POSIXCHECK
+# undef mkdir
+# if HAVE_RAW_DECL_MKDIR
+_GL_WARN_ON_USE (mkdir, "mkdir does not always support two parameters - "
+                 "use gnulib module mkdir for portability");
+# endif
 #endif
 
 
