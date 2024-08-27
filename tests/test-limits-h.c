@@ -20,7 +20,7 @@
 
 #include <limits.h>
 
-#if 4 < __GNUC__ + (3 <= __GNUC_MINOR__)
+#if _GL_GNUC_PREREQ (4, 3)
 # pragma GCC diagnostic ignored "-Woverlength-strings"
 #endif
 

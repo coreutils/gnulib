@@ -80,7 +80,7 @@ c_isdigit (char c)
 #ifndef FALLTHROUGH
 # if 201710L < __STDC_VERSION__
 #  define FALLTHROUGH [[__fallthrough__]]
-# elif ((__GNUC__ >= 7) \
+# elif ((__GNUC__ >= 7 && !defined __clang__) \
         || (defined __apple_build_version__ \
             ? __apple_build_version__ >= 12000000 \
             : __clang_major__ >= 10))

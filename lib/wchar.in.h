@@ -95,7 +95,7 @@
    that can be freed by passing them as the Ith argument to the
    function F.  */
 #ifndef _GL_ATTRIBUTE_DEALLOC
-# if __GNUC__ >= 11
+# if __GNUC__ >= 11 && !defined __clang__
 #  define _GL_ATTRIBUTE_DEALLOC(f, i) __attribute__ ((__malloc__ (f, i)))
 # else
 #  define _GL_ATTRIBUTE_DEALLOC(f, i)
@@ -1326,7 +1326,8 @@ _GL_CXXALIAS_MDA (wcsdup, wchar_t *, (const wchar_t *s));
 /* On Solaris 11.3, the header files declare the function in the std::
    namespace, not in the global namespace.  So, force a declaration in
    the global namespace.  */
-#  if !@HAVE_WCSDUP@ || (defined __sun && defined __cplusplus) || __GNUC__ >= 11
+#  if !@HAVE_WCSDUP@ || (defined __sun && defined __cplusplus) \
+      || (__GNUC__ >= 11 && !defined __clang__)
 #   if __GLIBC__ + (__GLIBC_MINOR__ >= 2) > 2
 _GL_FUNCDECL_SYS (wcsdup, wchar_t *,
                   (const wchar_t *s),
@@ -1342,7 +1343,7 @@ _GL_CXXALIAS_SYS (wcsdup, wchar_t *, (const wchar_t *s));
 # endif
 _GL_CXXALIASWARN (wcsdup);
 #else
-# if __GNUC__ >= 11 && !defined wcsdup
+# if (__GNUC__ >= 11 && !defined __clang__) && !defined wcsdup
 /* For -Wmismatched-dealloc: Associate wcsdup with free or rpl_free.  */
 #  if __GLIBC__ + (__GLIBC_MINOR__ >= 2) > 2
 _GL_FUNCDECL_SYS (wcsdup, wchar_t *,

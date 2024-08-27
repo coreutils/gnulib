@@ -78,7 +78,7 @@ typedef struct gl_directory DIR;
    that can be freed by passing them as the Ith argument to the
    function F.  */
 #ifndef _GL_ATTRIBUTE_DEALLOC
-# if __GNUC__ >= 11
+# if __GNUC__ >= 11 && !defined __clang__
 #  define _GL_ATTRIBUTE_DEALLOC(f, i) __attribute__ ((__malloc__ (f, i)))
 # else
 #  define _GL_ATTRIBUTE_DEALLOC(f, i)
@@ -152,7 +152,7 @@ _GL_FUNCDECL_RPL (opendir, DIR *,
                   _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC (closedir, 1));
 _GL_CXXALIAS_RPL (opendir, DIR *, (const char *dir_name));
 # else
-#  if !@HAVE_OPENDIR@ || __GNUC__ >= 11
+#  if !@HAVE_OPENDIR@ || (__GNUC__ >= 11 && !defined __clang__)
 _GL_FUNCDECL_SYS (opendir, DIR *,
                   (const char *dir_name),
                   _GL_ARG_NONNULL ((1))
@@ -162,7 +162,8 @@ _GL_CXXALIAS_SYS (opendir, DIR *, (const char *dir_name));
 # endif
 _GL_CXXALIASWARN (opendir);
 #else
-# if @GNULIB_CLOSEDIR@ && !GNULIB_defined_DIR && __GNUC__ >= 11 && !defined opendir
+# if @GNULIB_CLOSEDIR@ && !GNULIB_defined_DIR \
+     && (__GNUC__ >= 11 && !defined __clang__) && !defined opendir
 /* For -Wmismatched-dealloc: Associate opendir with closedir or
    rpl_closedir.  */
 _GL_FUNCDECL_SYS (opendir, DIR *,
@@ -274,7 +275,8 @@ _GL_FUNCDECL_RPL (fdopendir, DIR *,
                   _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC (closedir, 1));
 _GL_CXXALIAS_RPL (fdopendir, DIR *, (int fd));
 # else
-#  if !@HAVE_FDOPENDIR@ || !@HAVE_DECL_FDOPENDIR@ || __GNUC__ >= 11
+#  if !@HAVE_FDOPENDIR@ || !@HAVE_DECL_FDOPENDIR@ \
+      || (__GNUC__ >= 11 && !defined __clang__)
 _GL_FUNCDECL_SYS (fdopendir, DIR *,
                   (int fd),
                   _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC (closedir, 1));
@@ -283,7 +285,8 @@ _GL_CXXALIAS_SYS (fdopendir, DIR *, (int fd));
 # endif
 _GL_CXXALIASWARN (fdopendir);
 #else
-# if @GNULIB_CLOSEDIR@ && __GNUC__ >= 11 && !defined fdopendir
+# if @GNULIB_CLOSEDIR@ \
+     && (__GNUC__ >= 11 && !defined __clang__) && !defined fdopendir
 /* For -Wmismatched-dealloc: Associate fdopendir with closedir or
    rpl_closedir.  */
 _GL_FUNCDECL_SYS (fdopendir, DIR *,

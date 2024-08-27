@@ -133,9 +133,12 @@ x86_387_fenv_t;
    occurring, trigger a trap rather than merely set the corresponding bit
    in the fpsr register.  */
 
-# if __GNUC__ >= 6
+# if __GNUC__ >= 6 && !defined __clang__
 #  define _FPU_GETCW(fpcr) (fpcr = __builtin_aarch64_get_fpcr ())
 #  define _FPU_SETCW(fpcr) __builtin_aarch64_set_fpcr (fpcr)
+# elif __clang_major__ >= 4
+#  define _FPU_GETCW(fpcr) (fpcr = __builtin_arm_rsr ("fpcr"))
+#  define _FPU_SETCW(fpcr) __builtin_arm_wsr ("fpcr", fpcr)
 # else
 #  define _FPU_GETCW(fpcr) \
    __asm__ __volatile__ ("mrs %0, fpcr" : "=r" (fpcr))
@@ -143,9 +146,12 @@ x86_387_fenv_t;
    __asm__ __volatile__ ("msr fpcr, %0" : : "r" (fpcr))
 # endif
 
-# if __GNUC__ >= 6
+# if __GNUC__ >= 6 && !defined __clang__
 #  define _FPU_GETFPSR(fpsr) (fpsr = __builtin_aarch64_get_fpsr ())
 #  define _FPU_SETFPSR(fpsr) __builtin_aarch64_set_fpsr (fpsr)
+# elif __clang_major__ >= 4
+#  define _FPU_GETFPSR(fpsr) (fpsr = __builtin_arm_rsr ("fpsr"))
+#  define _FPU_SETFPSR(fpsr) __builtin_arm_wsr ("fpsr", fpsr)
 # else
 #  define _FPU_GETFPSR(fpsr) \
    __asm__ __volatile__ ("mrs %0, fpsr" : "=r" (fpsr))

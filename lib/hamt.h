@@ -61,9 +61,10 @@ _GL_INLINE_HEADER_BEGIN
    the same hamt.  This is non-trivial as different hamts may share
    some structure.
    We can define it only when the compiler supports _Atomic.  For GCC,
-   it is supported starting with GCC 4.9.  */
+   it is supported starting with GCC 4.9.  For clang, with clang 4.  */
 
-#if (__GNUC__ + (__GNUC_MINOR__ >= 9) > 4) \
+#if (__GNUC__ + (__GNUC_MINOR__ >= 9) > 4 && !defined __clang \
+     || __clang_major__ >= 4) \
     && __STDC_VERSION__ >= 201112L && !defined __STD_NO_ATOMICS__ \
     && !defined __cplusplus
 # define GL_HAMT_THREAD_SAFE 1
