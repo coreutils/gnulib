@@ -14,5 +14,13 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-Minix 3.1.8, HP-UX 11, Cygwin 1.7.9, mingw, MSVC 14, Android 4.1.
+Minix 3.1.8, HP-UX 11, Cygwin 1.7.9, mingw, MSVC 14, Android API level 16.
+@item
+This function is declared in @code{<siginfo.h>}, not @code{<signal.h>},
+on some platforms:
+Solaris 11.3.
+@item
+The first parameter is of type @code{unsigned int}, not @code{int},
+on some platforms:
+macOS 13, FreeBSD 10.4, NetBSD 5.1, OpenBSD 7.5.
 @end itemize
