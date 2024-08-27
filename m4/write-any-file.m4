@@ -1,5 +1,5 @@
 # write-any-file.m4
-# serial 1
+# serial 2
 dnl Copyright (C) 2007, 2009-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -11,5 +11,5 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_WRITE_ANY_FILE],
 [
-  AC_CHECK_HEADERS_ONCE([priv.h])
+  AC_CHECK_FUNCS_ONCE([geteuid])
 ])
