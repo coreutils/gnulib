@@ -148,7 +148,7 @@
 /* Size of the ut->ut_host member.  */
 #define UT_HOST_SIZE  sizeof (((struct UTMP_STRUCT_NAME *) 0)->ut_host)
 
-#if 8 <= __GNUC__
+#if _GL_GNUC_PREREQ (8, 0)
 # pragma GCC diagnostic ignored "-Wsizeof-pointer-memaccess"
 #endif
 
