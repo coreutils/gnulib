@@ -1,5 +1,5 @@
 Description:
-Check for __builtin_expect.
+Provide a GCC-compatible __builtin_expect macro.
 
 Files:
 m4/builtin-expect.m4
