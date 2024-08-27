@@ -56,7 +56,8 @@ atomic_compare_and_swap_ptr (uintptr_t volatile *vp,
 {
   /* InterlockedCompareExchangePointer
      <https://docs.microsoft.com/en-us/windows/win32/api/winnt/nf-winnt-interlockedcompareexchangepointer>  */
-  return InterlockedCompareExchangePointer ((void * volatile *) vp,
+  return (uintptr_t)
+         InterlockedCompareExchangePointer ((void * volatile *) vp,
                                             (void *) newval, (void *) cmp);
 }
 
