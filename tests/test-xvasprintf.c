@@ -16,14 +16,14 @@
 
 /* Written by Bruno Haible <bruno@clisp.org>, 2007.  */
 
+#include <config.h>
+
 /* Tell GCC not to warn about the specific edge cases tested here.  */
-#if (__GNUC__ == 4 && 3 <= __GNUC_MINOR__) || 4 < __GNUC__
+#if _GL_GNUC_PREREQ (4, 3)
 # pragma GCC diagnostic ignored "-Wformat-zero-length"
 # pragma GCC diagnostic ignored "-Wformat-nonliteral"
 # pragma GCC diagnostic ignored "-Wformat-security"
 #endif
-
-#include <config.h>
 
 #include "xvasprintf.h"
 

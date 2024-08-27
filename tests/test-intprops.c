@@ -16,9 +16,12 @@
 
 /* Written by Paul Eggert.  */
 
+#include <config.h>
+
+#if _GL_GNUC_PREREQ (4, 3)
+
 /* Tell gcc not to warn about the long expressions that the overflow
    macros expand to, or about the (X < 0) expressions.  */
-#if 4 < __GNUC__ + (3 <= __GNUC_MINOR__)
 # pragma GCC diagnostic ignored "-Woverlength-strings"
 # pragma GCC diagnostic ignored "-Wtype-limits"
 
@@ -27,8 +30,6 @@
 # pragma GCC diagnostic ignored "-Woverflow"
 
 #endif
-
-#include <config.h>
 
 #ifdef TEST_STDCKDINT
 # include <stdckdint.h>

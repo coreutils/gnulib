@@ -99,7 +99,7 @@
 #include <uchar.h>
 
 /* Pacify GCC re type limits.  */
-#if defined __GNUC__ && 4 < __GNUC__ + (3 <= __GNUC_MINOR__)
+#if 4 < __GNUC__ + (3 <= __GNUC_MINOR__) && !defined __clang__
 # pragma GCC diagnostic ignored "-Wtype-limits"
 #endif
 

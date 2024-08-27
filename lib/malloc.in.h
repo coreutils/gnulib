@@ -147,7 +147,7 @@ _GL_FUNCDECL_RPL (memalign, void *,
 _GL_CXXALIAS_RPL (memalign, void *, (size_t alignment, size_t size));
 # else
 #  if @HAVE_MEMALIGN@
-#   if __GNUC__ >= 11
+#   if __GNUC__ >= 11 && !defined __clang__
 /* For -Wmismatched-dealloc: Associate memalign with free or rpl_free.  */
 #    if __GLIBC__ + (__GLIBC_MINOR__ >= 14) > 2
 _GL_FUNCDECL_SYS (memalign, void *,
@@ -167,7 +167,7 @@ _GL_CXXALIAS_SYS (memalign, void *, (size_t alignment, size_t size));
 _GL_CXXALIASWARN (memalign);
 # endif
 #else
-# if __GNUC__ >= 11 && !defined memalign
+# if (__GNUC__ >= 11 && !defined __clang__) && !defined memalign
 /* For -Wmismatched-dealloc: Associate memalign with free or rpl_free.  */
 #  if __GLIBC__ + (__GLIBC_MINOR__ >= 14) > 2
 _GL_FUNCDECL_SYS (memalign, void *,

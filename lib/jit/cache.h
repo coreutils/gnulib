@@ -162,7 +162,7 @@ clear_cache (void *start, void *end)
     : "d" (addr), "d" (len)
     : "%d0", "%d2", "%d3"
     );
-#elif (__GNUC__ + (__GNUC_MINOR__ >= 3) > 4) \
+#elif (__GNUC__ + (__GNUC_MINOR__ >= 3) > 4 && !defined __clang__) \
       || ((__clang_major__ + (__clang_minor__ >= 4) > 3) \
           && (defined __aarch64__ /* arm64 */ || defined __arm__))
   /* GCC >= 4.3 has a GCC built-in.

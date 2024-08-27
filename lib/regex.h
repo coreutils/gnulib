@@ -531,7 +531,8 @@ typedef struct
 # endif
 #endif
 
-#if defined __GNUC__ && 4 < __GNUC__ + (6 <= __GNUC_MINOR__)
+#if (defined __GNUC__ && 4 < __GNUC__ + (6 <= __GNUC_MINOR__) \
+     && !defined __clang__)
 # pragma GCC diagnostic push
 # pragma GCC diagnostic ignored "-Wvla"
 #endif
@@ -539,7 +540,7 @@ typedef struct
 #ifndef _Attr_access_
 # ifdef __attr_access
 #  define _Attr_access_(arg) __attr_access (arg)
-# elif defined __GNUC__ && 10 <= __GNUC__
+# elif defined __GNUC__ && 10 <= __GNUC__ && !defined __clang__
 #  define _Attr_access_(x) __attribute__ ((__access__ x))
 # else
 #  define _Attr_access_(x)
@@ -688,7 +689,8 @@ extern size_t regerror (int __errcode, const regex_t *_Restrict_ __preg,
 
 extern void regfree (regex_t *__preg);
 
-#if defined __GNUC__ && 4 < __GNUC__ + (6 <= __GNUC_MINOR__)
+#if (defined __GNUC__ && 4 < __GNUC__ + (6 <= __GNUC_MINOR__) \
+     && !defined __clang__)
 # pragma GCC diagnostic pop
 #endif
 

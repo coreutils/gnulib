@@ -59,7 +59,7 @@
 #endif
 #if ((ALIGNMENT) <= MALLOC_ALIGNMENT) || HAVE_POSIX_MEMALIGN || HAVE_ALIGNED_ALLOC || HAVE_MEMALIGN
 
-# if defined aligned_free || __GNUC__ >= 11
+# if defined aligned_free || (__GNUC__ >= 11 && !defined __clang__)
    /* The caller wants an inline function, not a macro,
       or we can use GCC's -Wmismatched-dealloc warning.  */
 static inline void
@@ -74,7 +74,7 @@ aligned_free (void *q)
 # if (ALIGNMENT) <= MALLOC_ALIGNMENT
 /* Simply use malloc.  */
 
-#  if defined aligned_malloc || __GNUC__ >= 11
+#  if defined aligned_malloc || (__GNUC__ >= 11 && !defined __clang__)
    /* The caller wants an inline function, not a macro,
       or GCC's -Wmismatched-dealloc warning might be in effect.  */
 static inline
