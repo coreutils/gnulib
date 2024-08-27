@@ -903,9 +903,9 @@ _GL_CXXALIAS_SYS (fwrite, size_t,
    which sometimes causes an unwanted diagnostic for fwrite calls.
    This affects only function declaration attributes under certain
    versions of gcc and clang, and is not needed for C++.  */
-#  if (0 < __USE_FORTIFY_LEVEL                                          \
+#  if (0 < __USE_FORTIFY_LEVEL                                            \
        && __GLIBC__ == 2 && 4 <= __GLIBC_MINOR__ && __GLIBC_MINOR__ <= 15 \
-       && 3 < __GNUC__ + (4 <= __GNUC_MINOR__)                          \
+       && (3 < __GNUC__ + (4 <= __GNUC_MINOR__) || defined __clang__)     \
        && !defined __cplusplus)
 #   undef fwrite
 #   undef fwrite_unlocked
