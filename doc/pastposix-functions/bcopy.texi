@@ -19,4 +19,6 @@ Portability problems not fixed by Gnulib:
 @item
 This function is removed in POSIX.1-2008.  Better use @code{memcpy}
 or @code{memmove} instead.
+@item
+This module does not arrange to declare this function.
 @end itemize
