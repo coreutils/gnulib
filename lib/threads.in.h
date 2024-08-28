@@ -97,7 +97,9 @@
    its expansion ends in a semicolon.  */
 # undef thread_local
 #endif
-#if !@HAVE_THREADS_H@ || !defined thread_local
+#if (!@HAVE_THREADS_H@ || !defined thread_local) \
+    && !(defined __cplusplus \
+         && (__cplusplus >= 201103L || (defined _MSC_VER && _MSC_VER >= 1900)))
 # define thread_local _Thread_local
 #endif
 /* Define the macro thread_local if and only if it actually works.  */
