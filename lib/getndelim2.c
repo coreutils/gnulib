@@ -47,8 +47,10 @@
 #include "memchr2.h"
 
 /* Avoid false GCC warning "'c' may be used uninitialized".  */
-#if _GL_GNUC_PREREQ (4, 7)
-# pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
+#if defined GCC_LINT || defined lint
+# define IF_LINT(Code) Code
+#else
+# define IF_LINT(Code) /* empty */
 #endif
 
 /* The maximum value that getndelim2 can return without suffering from
@@ -102,7 +104,7 @@ getndelim2 (char **lineptr, size_t *linesize, size_t offset, size_t nmax,
       /* Here always ptr + size == read_pos + nbytes_avail.
          Also nbytes_avail > 0 || size < nmax.  */
 
-      int c;
+      int c IF_LINT (= EOF);
       const char *buffer;
       size_t buffer_len;
 
