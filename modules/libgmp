@@ -1,47 +1,15 @@
 Description:
-GNU Multiple Precision Arithmetic library, or its mini-gmp substitute
+GNU Multiple Precision Arithmetic library,
+or its mini-gmp + mini-mpq substitute
 
 Files:
-lib/mini-gmp-gnulib.c
-lib/mini-gmp.c
-lib/mini-gmp.h
-m4/libgmp.m4
 
 Depends-on:
+libgmp-mpz
 
 configure.ac:
-gl_LIBGMP
-gl_CONDITIONAL_HEADER([gmp.h])
-AC_PROG_MKDIR_P
-gl_CONDITIONAL([GL_COND_OBJ_MINI_GMP_GNULIB], [test $HAVE_LIBGMP != yes])
 
 Makefile.am:
-BUILT_SOURCES += $(GMP_H)
-
-if GL_GENERATE_GMP_H
-if GL_GENERATE_MINI_GMP_H
-# Build gmp.h as a wrapper for mini-gmp.h when using mini-gmp.
-gmp.h: $(top_builddir)/config.status
-@NMD@	$(MKDIR_P) '%reldir%'
-	echo '#include "mini-gmp.h"' > $@-t
-	mv $@-t $@
-endif
-if GL_GENERATE_GMP_GMP_H
-# Build gmp.h as a wrapper for gmp/gmp.h.
-gmp.h: $(top_builddir)/config.status
-@NMD@	$(MKDIR_P) '%reldir%'
-	echo '#include <gmp/gmp.h>' > $@-t
-	mv $@-t $@
-endif
-else
-gmp.h: $(top_builddir)/config.status
-	rm -f $@
-endif
-MOSTLYCLEANFILES += gmp.h gmp.h-t
-
-if GL_COND_OBJ_MINI_GMP_GNULIB
-lib_SOURCES += mini-gmp-gnulib.c
-endif
 
 Include:
 <gmp.h>
