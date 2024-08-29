@@ -1,0 +1,24 @@
+Description:
+Determine the protection of a virtual memory area.
+
+Files:
+lib/vma-prot.h
+lib/vma-prot.c
+
+Depends-on:
+stdint
+vma-iter
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += vma-prot.c
+
+Include:
+"vma-prot.h"
+
+License:
+GPLv2+
+
+Maintainer:
+all
