@@ -6,6 +6,7 @@ Files:
 
 Depends-on:
 libgmp-mpz
+libgmp-mpq
 
 configure.ac:
 

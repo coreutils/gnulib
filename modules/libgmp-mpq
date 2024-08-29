@@ -1,0 +1,33 @@
+Description:
+GNU Multiple Precision Arithmetic library (mpq_* part),
+or its mini-mpq substitute
+
+Files:
+lib/mini-mpq-gnulib.c
+lib/mini-mpq.c
+lib/mini-mpq.h
+
+Depends-on:
+libgmp-mpz
+
+configure.ac:
+gl_LIBGMP
+gl_CONDITIONAL([GL_COND_OBJ_MINI_MPQ_GNULIB], [test $HAVE_LIBGMP != yes])
+gl_MODULE_INDICATOR([libgmp-mpq])
+
+Makefile.am:
+if GL_COND_OBJ_MINI_MPQ_GNULIB
+lib_SOURCES += mini-mpq-gnulib.c
+endif
+
+Include:
+<gmp.h>
+
+Link:
+$(LTLIBGMP) when linking with libtool, $(LIBGMP) otherwise
+
+License:
+LGPLv3+ or GPLv2+
+
+Maintainer:
+all

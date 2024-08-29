@@ -2499,6 +2499,8 @@ func_all_modules ()
 
   func_begin_table
   func_module libgmp
+  func_module libgmp-mpz
+  func_module libgmp-mpq
   func_end_table
 
   element="Support for sharing code with the GNU C Library"

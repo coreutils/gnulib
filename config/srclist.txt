@@ -19,6 +19,8 @@ $AUTOCONF doc/install.texi	doc
 
 $GMP mini-gmp/mini-gmp.c	lib
 $GMP mini-gmp/mini-gmp.h	lib
+$GMP mini-gmp/mini-mpq.c	lib
+$GMP mini-gmp/mini-mpq.h	lib
 
 $GNUSTANDARDS maintain.texi	doc strip-trailing-space
 $GNUSTANDARDS standards.texi	doc strip-trailing-space
