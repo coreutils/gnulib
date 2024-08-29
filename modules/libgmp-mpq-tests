@@ -1,0 +1,14 @@
+Files:
+tests/macros.h
+tests/test-libgmp-mpq.c
+
+Depends-on:
+assert-h
+c99
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-libgmp-mpq
+check_PROGRAMS += test-libgmp-mpq
+test_libgmp_mpq_LDADD = $(LDADD) @LIBGMP@
