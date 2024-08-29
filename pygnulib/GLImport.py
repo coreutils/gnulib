@@ -175,7 +175,8 @@ class GLImport:
                 [
                     'gl_LOCAL_DIR', 'gl_MODULES', 'gl_AVOID', 'gl_SOURCE_BASE',
                     'gl_M4_BASE', 'gl_PO_BASE', 'gl_DOC_BASE', 'gl_TESTS_BASE',
-                    'gl_LIB', 'gl_LGPL', 'gl_MAKEFILE_NAME', 'gl_TESTS_MAKEFILE_NAME',
+                    'gl_LIB', 'gl_LGPL', 'gl_GPL',
+                    'gl_MAKEFILE_NAME', 'gl_TESTS_MAKEFILE_NAME',
                     'gl_MACRO_PREFIX', 'gl_PO_DOMAIN', 'gl_WITNESS_C_MACRO',
                     'gl_VC_FILES',
                 ]
@@ -191,6 +192,8 @@ class GLImport:
                 self.cache.setLGPL(None)
             if tempdict['gl_LIB']:
                 self.cache.setLibName(cleaner(tempdict['gl_LIB']))
+            if tempdict['gl_GPL']:
+                self.cache.setLibName(cleaner(tempdict['gl_GPL']))
             if tempdict['gl_LOCAL_DIR']:
                 self.cache.setLocalPath(cleaner(tempdict['gl_LOCAL_DIR']).split(':'))
             if tempdict['gl_MODULES']:
@@ -331,6 +334,7 @@ class GLImport:
         conddeps = self.config.checkCondDeps()
         libname = self.config.getLibName()
         lgpl = self.config.getLGPL()
+        gpl = self.config.getGPL()
         gnu_make = self.config.getGnuMake()
         makefile_name = self.config.getMakefileName()
         tests_makefile_name = self.config.getTestsMakefileName()
@@ -380,6 +384,8 @@ class GLImport:
                 actioncmd += ' \\\n#  --lgpl'
             else:  # if lgpl != True
                 actioncmd += ' \\\n#  --lgpl=%s' % lgpl
+        if gpl:
+            actioncmd += ' \\\n#  --gpl=%s' % gpl
         if gnu_make:
             actioncmd += ' \\\n#  --gnu-make'
         if makefile_name:
@@ -455,6 +461,7 @@ class GLImport:
         docbase = self.config['docbase']
         testsbase = self.config['testsbase']
         lgpl = self.config['lgpl']
+        gpl = self.config['gpl']
         libname = self.config['libname']
         makefile_name = self.config['makefile_name']
         tests_makefile_name = self.config['tests_makefile_name']
@@ -512,6 +519,8 @@ class GLImport:
                 emit += 'gl_LGPL\n'
             else:  # if lgpl != True
                 emit += 'gl_LGPL([%s])\n' % lgpl
+        if gpl != None:
+            emit += 'gl_GPL([%s])\n' % gpl
         emit += 'gl_MAKEFILE_NAME([%s])\n' % makefile_name
         if tests_makefile_name:
             emit += 'gl_TESTS_MAKEFILE_NAME([%s])\n' % tests_makefile_name
@@ -751,6 +760,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         modules = list(self.config['modules'])
         m4base = self.config['m4base']
         lgpl = self.config['lgpl']
+        gpl = self.config['gpl']
         verbose = self.config['verbosity']
         base_modules = set()
         for name in modules:
@@ -815,18 +825,23 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         compatibilities['all'] = ['GPLv2+ build tool', 'GPLed build tool',
                                   'public domain', 'unlimited',
                                   'unmodifiable license text']
-        compatibilities['3']        = ['LGPLv2+', 'LGPLv3+ or GPLv2+', 'LGPLv3+', 'LGPL']
-        compatibilities['3orGPLv2'] = ['LGPLv2+', 'LGPLv3+ or GPLv2+']
-        compatibilities['2']        = ['LGPLv2+']
-        if lgpl:
+        compatibilities['GPLv3']         = ['LGPLv2+', 'LGPLv3+ or GPLv2+', 'LGPLv3+', 'LGPL', 'GPLv2+', 'GPLv3+', 'GPL']
+        compatibilities['GPLv2']         = ['LGPLv2+', 'LGPLv3+ or GPLv2+', 'GPLv2+']
+        compatibilities['LGPLv3']        = ['LGPLv2+', 'LGPLv3+ or GPLv2+', 'LGPLv3+', 'LGPL']
+        compatibilities['LGPLv3orGPLv2'] = ['LGPLv2+', 'LGPLv3+ or GPLv2+']
+        compatibilities['LGPLv2']        = ['LGPLv2+']
+        if lgpl or gpl:
             for module in main_modules:
                 license = module.getLicense()
                 if license not in compatibilities['all']:
                     if lgpl == True:
-                        if license not in compatibilities['3']:
+                        if license not in compatibilities['LGPLv3']:
                             listing.append(tuple([module.name, license]))
-                    else:
-                        if license not in compatibilities[lgpl]:
+                    elif lgpl:
+                        if license not in compatibilities['LGPLv'+lgpl]:
+                            listing.append(tuple([module.name, license]))
+                    elif gpl:
+                        if license not in compatibilities['GPLv'+gpl]:
                             listing.append(tuple([module.name, license]))
             if listing:
                 raise GLError(11, listing)

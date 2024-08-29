@@ -454,6 +454,10 @@ command line argument.  The presence of this macro with an argument (whose
 value must be 2 or 3) corresponds to the @samp{--lgpl=@var{arg}} command line
 argument.
 
+@item gl_GPL
+The presence of this macro with an argument (whose value must be 2 or 3)
+corresponds to the @samp{--gpl=@var{arg}} command line argument.
+
 @item gl_MAKEFILE_NAME
 The argument is the name of the makefile in the source-base and tests-base
 directories.  Corresponds to the @samp{--makefile-name} command line argument.

@@ -276,6 +276,8 @@ Options for --import, --add/remove-import:
                             Abort if modules aren't available under the LGPL.
                             The version number of the LGPL can be specified;
                             the default is currently LGPLv3.
+      --gpl=[2|3]           Abort if modules aren't available under the
+                            specified GPL version.
       --makefile-name=NAME  Name of makefile in the source-base and tests-base
                             directories (default \"Makefile.am\", or
                             \"Makefile.in\" if --gnu-make).

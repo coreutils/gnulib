@@ -1000,7 +1000,9 @@ class GLModuleTable:
         '''Determine main module list and tests-related module list separately.
         The main module list is the transitive closure of the specified modules,
         ignoring tests modules. Its lib/* sources go into $sourcebase/. If lgpl is
-        specified, it will consist only of LGPLed source.
+        specified, it will consist only of LGPLed source; if gpl is specified, it
+        will consist of only source than can be relicensed under the specified GPL
+        version.
         The tests-related module list is the transitive closure of the specified
         modules, including tests modules, minus the main module list excluding
         modules of applicability 'all'. Its lib/* sources (brought in through

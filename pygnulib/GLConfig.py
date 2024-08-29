@@ -60,6 +60,7 @@ class GLConfig:
                  excl_test_categories: list[int] | tuple[int] | None = None,
                  libname: str | None = None,
                  lgpl: str | bool | None = None,
+                 gpl: str | None = None,
                  gnu_make: bool | None = None,
                  makefile_name: str | None = None,
                  tests_makefile_name: str | None = None,
@@ -151,6 +152,10 @@ class GLConfig:
         self.resetLGPL()
         if lgpl != None:
             self.setLGPL(lgpl)
+        # gpl
+        self.resetGPL()
+        if gpl != None:
+            self.setGPL(gpl)
         # gnu-make
         self.resetGnuMake()
         if gnu_make != None:
@@ -318,7 +323,7 @@ class GLConfig:
                 return False
             elif key in ['copymode', 'lcopymode']:
                 return CopyAction.Copy
-            elif key in ['lgpl', 'libtool', 'conddeps', 'vc_files']:
+            elif key in ['lgpl', 'gpl', 'libtool', 'conddeps', 'vc_files']:
                 return None
             elif key == 'errors':
                 return True
@@ -833,6 +838,25 @@ class GLConfig:
         '''Disable abort if modules aren't available under the LGPL.
         Default value is None, which means that lgpl is disabled.'''
         self.table['lgpl'] = None
+
+    # Define gpl methods.
+    def getGPL(self) -> str | None:
+        '''Check for abort if modules aren't available under the GPL.
+        Default value is None, which means that gpl is disabled.'''
+        return self.table['gpl']
+
+    def setGPL(self, gpl: str | bool | None) -> None:
+        '''Abort if modules aren't available under the GPL.
+        Default value is None, which means that gpl is disabled.'''
+        if gpl in [None, '2', '3']:
+            self.table['gpl'] = gpl
+        else:
+            raise TypeError('invalid GPL version: %s' % repr(gpl))
+
+    def resetGPL(self) -> None:
+        '''Disable abort if modules aren't available under the GPL.
+        Default value is None, which means that gpl is disabled.'''
+        self.table['gpl'] = None
 
     # Define gnu-make methods.
     def getGnuMake(self) -> bool:

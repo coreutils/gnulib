@@ -427,6 +427,12 @@ def main(temp_directory: str) -> None:
                         action='append',
                         choices=['2', '3orGPLv2', '3'],
                         nargs='?')
+    # gpl
+    parser.add_argument('--gpl',
+                        dest='gpl',
+                        default=None,
+                        choices=['2', '3'],
+                        nargs=1)
     # gnu-make
     parser.add_argument('--gnu-make',
                         dest='gnu_make',
@@ -714,7 +720,7 @@ def main(temp_directory: str) -> None:
                  or cmdargs.excl_privileged_tests != None
                  or cmdargs.excl_unportable_tests != None
                  or cmdargs.avoids != None or cmdargs.lgpl != None
-                 or cmdargs.makefile_name != None
+                 or cmdargs.gpl != None or cmdargs.makefile_name != None
                  or cmdargs.tests_makefile_name != None
                  or cmdargs.automake_subdir != None
                  or cmdargs.automake_subdir_tests != None
@@ -729,6 +735,13 @@ def main(temp_directory: str) -> None:
     if cmdargs.pobase != None and cmdargs.podomain == None:
         message = '%s: *** ' % APP['name']
         message += 'together with --po-base, you need to specify --po-domain\n'
+        message += 'Try \'gnulib-tool --help\' for more information.\n'
+        message += '%s: *** Stop.\n' % APP['name']
+        sys.stderr.write(message)
+        sys.exit(1)
+    if cmdargs.lgpl != None and cmdargs.gpl != None:
+        message = '%s: *** ' % APP['name']
+        message += 'invalid options: cannot specify both --lgpl and --gpl\n'
         message += 'Try \'gnulib-tool --help\' for more information.\n'
         message += '%s: *** Stop.\n' % APP['name']
         sys.stderr.write(message)
@@ -808,6 +821,9 @@ def main(temp_directory: str) -> None:
         lgpl = lgpl[-1]
         if lgpl == None:
             lgpl = True
+    gpl = cmdargs.gpl
+    if gpl != None:
+        gpl = gpl[0]
     cond_dependencies = cmdargs.cond_dependencies
     libtool = cmdargs.libtool
     gnu_make = cmdargs.gnu_make == True
@@ -856,6 +872,7 @@ def main(temp_directory: str) -> None:
         excl_test_categories=excl_test_categories,
         libname=libname,
         lgpl=lgpl,
+        gpl=gpl,
         gnu_make=gnu_make,
         makefile_name=makefile_name,
         tests_makefile_name=tests_makefile_name,
