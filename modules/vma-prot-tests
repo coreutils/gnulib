@@ -1,0 +1,13 @@
+Files:
+tests/test-vma-prot.c
+tests/macros.h
+m4/mmap-anon.m4
+
+Depends-on:
+
+configure.ac:
+gl_FUNC_MMAP_ANON
+
+Makefile.am:
+TESTS += test-vma-prot
+check_PROGRAMS += test-vma-prot
