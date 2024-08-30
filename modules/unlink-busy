@@ -14,7 +14,7 @@ Makefile.am:
 Include:
 
 License:
-GPL
+unlimited
 
 Maintainer:
 Jim Meyering
