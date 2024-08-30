@@ -54,6 +54,12 @@ rpl_mknodat (int fd, char const *file, mode_t mode, dev_t dev)
       return -1;
     }
 
+# if defined __HAIKU__
+  /* POSIX requires mknodat to create fifos for non-privileged processes, but
+     on Haiku it fails with ENOTSUP.  */
+  if (S_ISFIFO (mode) && dev == 0)
+    return mkfifo (file, mode & ~S_IFIFO);
+# endif
   return mknodat (fd, file, mode, dev);
 }
 
