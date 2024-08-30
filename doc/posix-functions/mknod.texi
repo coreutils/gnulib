@@ -15,6 +15,11 @@ FreeBSD 7.2, NetBSD 8.0, OpenBSD 7.5.
 This function mishandles trailing slash on some platforms:
 FreeBSD 7.2, Solaris 9.
 @item
+This function does not handle the @code{S_IFIFO} flag on some platforms:
+macOS 14, DragonFly 6.0,
+@c https://dev.haiku-os.org/ticket/19032
+Haiku.
+@item
 This function is missing on some platforms; however, the replacement
 always fails with @code{ENOSYS}:
 mingw, MSVC 14.
