@@ -21,7 +21,7 @@ Link:
 $(LTLIBSIGSEGV) when linking with libtool, $(LIBSIGSEGV) otherwise
 
 License:
-GPL
+GPLv2+
 
 Maintainer:
 all
