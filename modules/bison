@@ -15,7 +15,7 @@ Makefile.am:
 Include:
 
 License:
-GPLed build tool
+unlimited
 
 Maintainer:
 all

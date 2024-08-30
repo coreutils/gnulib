@@ -14,7 +14,7 @@ Makefile.am:
 Include:
 
 License:
-GPLed build tool
+unlimited
 
 Maintainer:
 Jim Meyering
