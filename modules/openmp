@@ -19,7 +19,7 @@ Link:
 $(OPENMP_CFLAGS)
 
 License:
-LGPL
+unlimited
 
 Maintainer:
 all
