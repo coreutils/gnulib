@@ -58,6 +58,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   libidn          https://git.savannah.gnu.org/gitweb/?p=libidn.git;a=tree
   libidn2         https://gitlab.com/libidn/libidn2
   libntlm         https://git.savannah.nongnu.org/gitweb/?p=libntlm.git;a=tree
+  libpipeline     https://gitlab.com/libpipeline/libpipeline
   libprelude      https://www.prelude-siem.org/projects/libprelude/repository
   libpreludedb    https://www.prelude-siem.org/projects/libpreludedb/repository
   libtasn1        https://gitlab.com/gnutls/libtasn1.git
