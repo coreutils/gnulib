@@ -4,7 +4,7 @@ iswxdigit() function: test wide character for being a hexadecimal digit.
 Files:
 lib/iswxdigit.c
 m4/iswxdigit.m4
-m4/locale-fr.m4
+m4/locale-en.m4
 m4/locale-ja.m4
 m4/locale-zh.m4
 m4/codeset.m4
