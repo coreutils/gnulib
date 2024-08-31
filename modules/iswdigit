@@ -4,6 +4,7 @@ iswdigit() function: test wide character for being a digit.
 Files:
 lib/iswdigit.c
 m4/iswdigit.m4
+m4/locale-en.m4
 m4/locale-fr.m4
 m4/locale-ja.m4
 m4/locale-zh.m4
