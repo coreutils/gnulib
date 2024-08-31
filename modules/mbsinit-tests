@@ -3,6 +3,7 @@ tests/test-mbsinit.sh
 tests/test-mbsinit.c
 tests/signature.h
 tests/macros.h
+m4/locale-en.m4
 m4/locale-fr.m4
 m4/codeset.m4
 
@@ -11,10 +12,13 @@ mbrtowc
 setlocale
 
 configure.ac:
+gt_LOCALE_EN_UTF8
 gt_LOCALE_FR_UTF8
 
 Makefile.am:
 TESTS += test-mbsinit.sh
-TESTS_ENVIRONMENT += LOCALE_FR_UTF8='@LOCALE_FR_UTF8@'
+TESTS_ENVIRONMENT += \
+  LOCALE_EN_UTF8='@LOCALE_EN_UTF8@' \
+  LOCALE_FR_UTF8='@LOCALE_FR_UTF8@'
 check_PROGRAMS += test-mbsinit
 test_mbsinit_LDADD = $(LDADD) $(SETLOCALE_LIB) $(MBRTOWC_LIB)

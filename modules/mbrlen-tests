@@ -15,6 +15,7 @@ tests/test-mbrlen-w32-8.sh
 tests/test-mbrlen-w32.c
 tests/signature.h
 tests/macros.h
+m4/locale-en.m4
 m4/locale-fr.m4
 m4/locale-ja.m4
 m4/locale-zh.m4
@@ -27,6 +28,7 @@ setlocale
 localcharset
 
 configure.ac:
+gt_LOCALE_EN_UTF8
 gt_LOCALE_FR
 gt_LOCALE_FR_UTF8
 gt_LOCALE_JA
@@ -40,6 +42,7 @@ TESTS += \
   test-mbrlen-w32-5.sh test-mbrlen-w32-6.sh test-mbrlen-w32-7.sh \
   test-mbrlen-w32-8.sh
 TESTS_ENVIRONMENT += \
+  LOCALE_EN_UTF8='@LOCALE_EN_UTF8@' \
   LOCALE_FR='@LOCALE_FR@' \
   LOCALE_FR_UTF8='@LOCALE_FR_UTF8@' \
   LOCALE_JA='@LOCALE_JA@' \

@@ -2,6 +2,7 @@ Files:
 tests/test-mbsspn.sh
 tests/test-mbsspn.c
 tests/macros.h
+m4/locale-en.m4
 m4/locale-fr.m4
 m4/codeset.m4
 
@@ -9,10 +10,13 @@ Depends-on:
 setlocale
 
 configure.ac:
+gt_LOCALE_EN_UTF8
 gt_LOCALE_FR_UTF8
 
 Makefile.am:
 TESTS += test-mbsspn.sh
-TESTS_ENVIRONMENT += LOCALE_FR_UTF8='@LOCALE_FR_UTF8@'
+TESTS_ENVIRONMENT += \
+  LOCALE_EN_UTF8='@LOCALE_EN_UTF8@' \
+  LOCALE_FR_UTF8='@LOCALE_FR_UTF8@'
 check_PROGRAMS += test-mbsspn
 test_mbsspn_LDADD = $(LDADD) $(LIBUNISTRING) $(SETLOCALE_LIB) $(MBRTOWC_LIB) $(LIBC32CONV)

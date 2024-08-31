@@ -13,9 +13,16 @@ if test $LOCALE_FR != none; then
 fi
 
 # Test whether a specific UTF-8 locale is installed.
+: "${LOCALE_EN_UTF8=en_US.UTF-8}"
 : "${LOCALE_FR_UTF8=fr_FR.UTF-8}"
-if test $LOCALE_FR_UTF8 != none; then
-  LC_ALL=$LOCALE_FR_UTF8 \
+if test "$LOCALE_EN_UTF8" != none || test $LOCALE_FR_UTF8 != none; then
+  # It's sufficient to test in one of the two locales.
+  if test $LOCALE_FR_UTF8 != none; then
+    testlocale=$LOCALE_FR_UTF8
+  else
+    testlocale="$LOCALE_EN_UTF8"
+  fi
+  LC_ALL="$testlocale" \
   ${CHECKER} ./test-wcrtomb${EXEEXT} 3 \
   || exit 1
 fi

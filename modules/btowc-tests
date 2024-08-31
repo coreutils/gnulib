@@ -5,6 +5,7 @@ tests/test-btowc-3.sh
 tests/test-btowc.c
 tests/signature.h
 tests/macros.h
+m4/locale-en.m4
 m4/locale-fr.m4
 m4/codeset.m4
 
@@ -12,11 +13,15 @@ Depends-on:
 setlocale
 
 configure.ac:
+gt_LOCALE_EN_UTF8
 gt_LOCALE_FR
 gt_LOCALE_FR_UTF8
 
 Makefile.am:
 TESTS += test-btowc-1.sh test-btowc-2.sh test-btowc-3.sh
-TESTS_ENVIRONMENT += LOCALE_FR='@LOCALE_FR@' LOCALE_FR_UTF8='@LOCALE_FR_UTF8@'
+TESTS_ENVIRONMENT += \
+  LOCALE_EN_UTF8='@LOCALE_EN_UTF8@' \
+  LOCALE_FR='@LOCALE_FR@' \
+  LOCALE_FR_UTF8='@LOCALE_FR_UTF8@'
 check_PROGRAMS += test-btowc
 test_btowc_LDADD = $(LDADD) $(SETLOCALE_LIB)

@@ -5,6 +5,7 @@ tests/test-mbmemcasecmp-4.sh
 tests/test-mbmemcasecmp.c
 tests/test-mbmemcasecmp.h
 tests/macros.h
+m4/locale-en.m4
 m4/locale-fr.m4
 m4/locale-tr.m4
 m4/codeset.m4
@@ -16,6 +17,7 @@ mbrtowc
 wctype-h
 
 configure.ac:
+gt_LOCALE_EN_UTF8
 gt_LOCALE_FR
 gt_LOCALE_FR_UTF8
 gt_LOCALE_TR_UTF8
@@ -23,6 +25,7 @@ gt_LOCALE_TR_UTF8
 Makefile.am:
 TESTS += test-mbmemcasecmp-2.sh test-mbmemcasecmp-3.sh test-mbmemcasecmp-4.sh
 TESTS_ENVIRONMENT += \
+  LOCALE_EN_UTF8='@LOCALE_EN_UTF8@' \
   LOCALE_FR='@LOCALE_FR@' \
   LOCALE_FR_UTF8='@LOCALE_FR_UTF8@' \
   LOCALE_TR_UTF8='@LOCALE_TR_UTF8@'

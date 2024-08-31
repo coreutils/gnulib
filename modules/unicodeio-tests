@@ -4,6 +4,7 @@ tests/test-unicodeio2.sh
 tests/test-unicodeio3.sh
 tests/test-unicodeio.c
 tests/macros.h
+m4/locale-en.m4
 m4/locale-fr.m4
 m4/locale-zh.m4
 m4/codeset.m4
@@ -13,12 +14,14 @@ setlocale
 localcharset
 
 configure.ac:
+gt_LOCALE_EN_UTF8
 gt_LOCALE_FR_UTF8
 gt_LOCALE_ZH_CN
 
 Makefile.am:
 TESTS += test-unicodeio1.sh test-unicodeio2.sh test-unicodeio3.sh
 TESTS_ENVIRONMENT += \
+  LOCALE_EN_UTF8='@LOCALE_EN_UTF8@' \
   LOCALE_FR_UTF8='@LOCALE_FR_UTF8@' \
   LOCALE_ZH_CN='@LOCALE_ZH_CN@'
 check_PROGRAMS += test-unicodeio

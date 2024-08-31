@@ -7,6 +7,7 @@ tests/test-mbstowcs-5.sh
 tests/test-mbstowcs.c
 tests/signature.h
 tests/macros.h
+m4/locale-en.m4
 m4/locale-fr.m4
 m4/locale-ja.m4
 m4/locale-zh.m4
@@ -19,6 +20,7 @@ wctob
 setlocale
 
 configure.ac:
+gt_LOCALE_EN_UTF8
 gt_LOCALE_FR
 gt_LOCALE_FR_UTF8
 gt_LOCALE_JA
@@ -29,6 +31,7 @@ TESTS += \
   test-mbstowcs-1.sh test-mbstowcs-2.sh test-mbstowcs-3.sh test-mbstowcs-4.sh \
   test-mbstowcs-5.sh
 TESTS_ENVIRONMENT += \
+  LOCALE_EN_UTF8='@LOCALE_EN_UTF8@' \
   LOCALE_FR='@LOCALE_FR@' \
   LOCALE_FR_UTF8='@LOCALE_FR_UTF8@' \
   LOCALE_JA='@LOCALE_JA@' \
