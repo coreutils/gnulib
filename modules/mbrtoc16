@@ -4,6 +4,7 @@ mbrtoc16() function: convert multibyte character and return next 16-bit wide cha
 Files:
 lib/mbrtoc16.c
 m4/mbrtoc16.m4
+m4/locale-en.m4
 m4/locale-fr.m4
 m4/locale-zh.m4
 m4/codeset.m4

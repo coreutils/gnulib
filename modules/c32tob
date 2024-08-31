@@ -5,6 +5,7 @@ Files:
 lib/c32tob.c
 m4/mbrtoc32.m4
 m4/c32rtomb.m4
+m4/locale-en.m4
 m4/locale-fr.m4
 m4/locale-zh.m4
 m4/codeset.m4

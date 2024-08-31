@@ -1,5 +1,5 @@
 # mbrtoc16.m4
-# serial 2
+# serial 3
 dnl Copyright (C) 2014-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -73,7 +73,7 @@ AC_DEFUN([gl_MBRTOC16_NULL_DESTINATION],
 [
   AC_REQUIRE([AC_PROG_CC])
   AC_REQUIRE([gl_TYPE_CHAR16_T])
-  AC_REQUIRE([gt_LOCALE_FR_UTF8])
+  AC_REQUIRE([gt_LOCALE_EN_UTF8])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CACHE_CHECK([whether mbrtoc16 supports a NULL destination],
     [gl_cv_func_mbrtoc16_null_destination],
@@ -82,13 +82,15 @@ AC_DEFUN([gl_MBRTOC16_NULL_DESTINATION],
       dnl is present.
 changequote(,)dnl
       case "$host_os" in
-                       # Guess no on glibc systems.
-        *-gnu* | gnu*) gl_cv_func_mbrtoc16_null_destination="guessing no" ;;
-                       # Guess yes otherwise.
-        *)             gl_cv_func_mbrtoc16_null_destination="guessing yes" ;;
+          # Guess no on glibc systems, on OpenBSD, and on Android.
+        *-gnu* | gnu* | openbsd* | *-android*)
+          gl_cv_func_mbrtoc16_null_destination="guessing no" ;;
+          # Guess yes otherwise.
+        *)
+          gl_cv_func_mbrtoc16_null_destination="guessing yes" ;;
       esac
 changequote([,])dnl
-      if test $LOCALE_FR_UTF8 != none; then
+      if test $LOCALE_EN_UTF8 != none; then
         AC_RUN_IFELSE(
           [AC_LANG_SOURCE([[
              #include <locale.h>
@@ -100,7 +102,7 @@ changequote([,])dnl
              int
              main (void)
              {
-               if (setlocale (LC_ALL, "$LOCALE_FR_UTF8") == NULL
+               if (setlocale (LC_ALL, "$LOCALE_EN_UTF8") == NULL
                  return 1;
                mbstate_t state;
                size_t ret;

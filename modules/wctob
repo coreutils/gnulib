@@ -4,6 +4,7 @@ wctob() function: convert wide character to unibyte character.
 Files:
 lib/wctob.c
 m4/wctob.m4
+m4/locale-en.m4
 m4/locale-fr.m4
 m4/codeset.m4
 
