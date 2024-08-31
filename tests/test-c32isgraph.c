@@ -166,7 +166,7 @@ main (int argc, char *argv[])
           /* U+2002 EN SPACE */
           is = for_character ("\342\200\202", 3);
           ASSERT (is == 0);
-        #if !(defined __GLIBC__ || defined MUSL_LIBC || (defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __NetBSD__ || defined _AIX || defined __sun || defined __CYGWIN__)
+        #if !(defined __GLIBC__ || defined MUSL_LIBC || (defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __NetBSD__ || defined __OpenBSD__ || defined _AIX || defined __sun || defined __CYGWIN__)
           /* U+202E RIGHT-TO-LEFT OVERRIDE */
           is = for_character ("\342\200\256", 3);
           ASSERT (is == 0);
@@ -174,7 +174,7 @@ main (int argc, char *argv[])
           /* U+3000 IDEOGRAPHIC SPACE */
           is = for_character ("\343\200\200", 3);
           ASSERT (is == 0);
-        #if !(defined __GLIBC__ || defined MUSL_LIBC || (defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __NetBSD__ || defined _AIX || defined __sun || defined __CYGWIN__)
+        #if !(defined __GLIBC__ || defined MUSL_LIBC || (defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __NetBSD__ || defined __OpenBSD__ || defined _AIX || defined __sun || defined __CYGWIN__)
           /* U+FEFF ZERO WIDTH NO-BREAK SPACE */
           is = for_character ("\357\273\277", 3);
           ASSERT (is == 0);
@@ -184,7 +184,7 @@ main (int argc, char *argv[])
           is = for_character ("\360\240\200\200", 4);
           ASSERT (is != 0);
         #endif
-        #if !(defined __GLIBC__ || defined MUSL_LIBC || (defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __NetBSD__ || defined _AIX || defined __sun || defined __CYGWIN__ || (defined _WIN32 && !defined __CYGWIN__))
+        #if !(defined __GLIBC__ || defined MUSL_LIBC || (defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __NetBSD__ || defined __OpenBSD__ || defined _AIX || defined __sun || defined __CYGWIN__ || (defined _WIN32 && !defined __CYGWIN__))
           /* U+E0001 LANGUAGE TAG */
           is = for_character ("\363\240\200\201", 4);
           ASSERT (is == 0);

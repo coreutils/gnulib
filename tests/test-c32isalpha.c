@@ -186,7 +186,7 @@ main (int argc, char *argv[])
           /* U+3001 IDEOGRAPHIC COMMA */
           is = for_character ("\343\200\201", 3);
           ASSERT (is == 0);
-        #if !(defined __GLIBC__ || defined MUSL_LIBC || (defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __NetBSD__ || defined _AIX || defined __sun || defined __CYGWIN__)
+        #if !(defined __GLIBC__ || defined MUSL_LIBC || (defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __NetBSD__ || defined __OpenBSD__ || defined _AIX || defined __sun || defined __CYGWIN__)
           /* U+FF11 FULLWIDTH DIGIT ONE */
           is = for_character ("\357\274\221", 3);
           ASSERT (is == 0);

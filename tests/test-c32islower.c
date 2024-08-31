@@ -202,7 +202,7 @@ main (int argc, char *argv[])
           /* U+00B2 SUPERSCRIPT TWO */
           is = for_character ("\302\262", 2);
           ASSERT (is == 0);
-        #if !(defined __GLIBC__ || defined MUSL_LIBC || (defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__ || defined _AIX || defined __sun || defined __CYGWIN__ || (defined _WIN32 && !defined __CYGWIN__))
+        #if !(defined __GLIBC__ || defined MUSL_LIBC || (defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__ || defined __OpenBSD__ || defined _AIX || defined __sun || defined __CYGWIN__ || (defined _WIN32 && !defined __CYGWIN__))
           /* U+00B5 MICRO SIGN */
           is = for_character ("\302\265", 2);
           ASSERT (is == 0);
