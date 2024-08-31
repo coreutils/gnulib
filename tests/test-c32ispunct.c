@@ -255,7 +255,7 @@ main (int argc, char *argv[])
           is = for_character ("\360\235\204\200", 4);
           ASSERT (is != 0);
         #endif
-        #if !(defined __GLIBC__ || (defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __NetBSD__ || defined __OpenBSD__ || defined _AIX || defined __sun || defined __CYGWIN__ || (defined _WIN32 && !defined __CYGWIN__))
+        #if !(defined __GLIBC__ || (defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __NetBSD__ || defined __OpenBSD__ || defined _AIX || defined __sun || defined __CYGWIN__ || (defined _WIN32 && !defined __CYGWIN__) || defined __ANDROID__)
           /* U+E003A TAG COLON */
           is = for_character ("\363\240\200\272", 4);
           ASSERT (is == 0);
