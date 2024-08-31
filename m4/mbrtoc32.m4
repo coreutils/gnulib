@@ -1,4 +1,4 @@
-# mbrtoc32.m4 serial 20
+# mbrtoc32.m4 serial 21
 dnl Copyright (C) 2014-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -212,7 +212,7 @@ AC_DEFUN([gl_MBRTOC32_UTF8_LOCALE],
        [gl_cv_func_mbrtoc32_utf8_locale_works=no],
        [case "$host_os" in
                    # Guess no on Cygwin.
-          cygwin*) gl_cv_func_mbrtoc32_utf8_locale_works="guessing yes" ;;
+          cygwin*) gl_cv_func_mbrtoc32_utf8_locale_works="guessing no" ;;
           *)       gl_cv_func_mbrtoc32_utf8_locale_works="$gl_cross_guess_normal" ;;
         esac
        ])
