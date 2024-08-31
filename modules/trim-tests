@@ -12,6 +12,8 @@ Depends-on:
 setlocale
 
 configure.ac:
+gt_LOCALE_FR_UTF8
+gt_LOCALE_ZH_CN
 
 Makefile.am:
 TESTS += test-trim1.sh test-trim2.sh test-trim3.sh
