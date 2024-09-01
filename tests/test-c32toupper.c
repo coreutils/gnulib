@@ -163,7 +163,7 @@ main (int argc, char *argv[])
           mb = for_character ("\262", 1);
           ASSERT (mb.nbytes == 1);
           ASSERT (memcmp (mb.buf, "\262", 1) == 0);
-        #if !(defined __GLIBC__ || (defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __NetBSD__ || defined __sun || defined __CYGWIN__)
+        #if !(defined __GLIBC__ || (defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __NetBSD__ || defined __sun || defined __CYGWIN__ || (defined _WIN32 && !defined __CYGWIN__))
           /* U+00B5 MICRO SIGN */
           mb = for_character ("\265", 1);
           ASSERT (mb.nbytes == 1);
@@ -259,7 +259,7 @@ main (int argc, char *argv[])
           mb = for_character ("\302\262", 2);
           ASSERT (mb.nbytes == 2);
           ASSERT (memcmp (mb.buf, "\302\262", 2) == 0);
-        #if !(defined __GLIBC__ || defined MUSL_LIBC || (defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__ || defined __OpenBSD__ || defined _AIX || defined __sun || defined __CYGWIN__ || defined __ANDROID__)
+        #if !(defined __GLIBC__ || defined MUSL_LIBC || (defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__ || defined __OpenBSD__ || defined _AIX || defined __sun || defined __CYGWIN__ || (defined _WIN32 && !defined __CYGWIN__) || defined __ANDROID__)
           /* U+00B5 MICRO SIGN */
           mb = for_character ("\302\265", 2);
           ASSERT (mb.nbytes == 2);
@@ -275,7 +275,6 @@ main (int argc, char *argv[])
           ASSERT (mb.nbytes == 2);
           ASSERT (memcmp (mb.buf, "\303\237", 2) == 0);
         #endif
-        #if !(defined _WIN32 && !defined __CYGWIN__)
           /* U+00E9 LATIN SMALL LETTER E WITH ACUTE */
           mb = for_character ("\303\251", 2);
           ASSERT (mb.nbytes == 2);
@@ -284,7 +283,6 @@ main (int argc, char *argv[])
           mb = for_character ("\303\277", 2);
           ASSERT (mb.nbytes == 2);
           ASSERT (memcmp (mb.buf, "\305\270", 2) == 0);
-        #endif
           /* U+0141 LATIN CAPITAL LETTER L WITH STROKE */
           mb = for_character ("\305\201", 2);
           ASSERT (mb.nbytes == 2);
