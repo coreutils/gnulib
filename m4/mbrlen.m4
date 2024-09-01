@@ -1,5 +1,5 @@
 # mbrlen.m4
-# serial 13
+# serial 14
 dnl Copyright (C) 2008, 2010-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -107,7 +107,7 @@ changequote(,)dnl
         *)                gl_cv_func_mbrlen_retval="guessing yes" ;;
       esac
 changequote([,])dnl
-      if test $LOCALE_EN_UTF8 != none || test $LOCALE_JA != none; then
+      if test "$LOCALE_EN_UTF8" != none || test $LOCALE_JA != none; then
         AC_RUN_IFELSE(
           [AC_LANG_SOURCE([[
 #include <locale.h>

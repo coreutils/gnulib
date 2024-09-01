@@ -1,5 +1,5 @@
 # mbrtowc.m4
-# serial 45
+# serial 46
 dnl Copyright (C) 2001-2002, 2004-2005, 2008-2024 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -200,7 +200,7 @@ int main ()
           [gl_cv_func_mbrtowc_incomplete_state=no],
           [:])
       else
-        if test $LOCALE_EN_UTF8 != none; then
+        if test "$LOCALE_EN_UTF8" != none; then
           AC_RUN_IFELSE(
             [AC_LANG_SOURCE([[
 #include <locale.h>
@@ -303,7 +303,7 @@ changequote(,)dnl
         *)        gl_cv_func_mbrtowc_null_arg1="guessing yes" ;;
       esac
 changequote([,])dnl
-      if test $LOCALE_EN_UTF8 != none; then
+      if test "$LOCALE_EN_UTF8" != none; then
         AC_RUN_IFELSE(
           [AC_LANG_SOURCE([[
 #include <locale.h>
@@ -366,7 +366,7 @@ changequote(,)dnl
         *)    gl_cv_func_mbrtowc_null_arg2="guessing yes" ;;
       esac
 changequote([,])dnl
-      if test $LOCALE_EN_UTF8 != none; then
+      if test "$LOCALE_EN_UTF8" != none; then
         AC_RUN_IFELSE(
           [AC_LANG_SOURCE([[
 #include <locale.h>
@@ -422,7 +422,7 @@ changequote(,)dnl
           gl_cv_func_mbrtowc_retval="guessing yes" ;;
       esac
 changequote([,])dnl
-      if test $LOCALE_EN_UTF8 != none || test $LOCALE_JA != none \
+      if test "$LOCALE_EN_UTF8" != none || test $LOCALE_JA != none \
          || { case "$host_os" in mingw* | windows*) true;; *) false;; esac; }; then
         AC_RUN_IFELSE(
           [AC_LANG_SOURCE([[
@@ -650,7 +650,7 @@ int main ()
          ;;
        *)
          AC_REQUIRE([gt_LOCALE_EN_UTF8])
-         if test $LOCALE_EN_UTF8 != none; then
+         if test "$LOCALE_EN_UTF8" != none; then
            AC_RUN_IFELSE(
              [AC_LANG_SOURCE([[
 #include <locale.h>
