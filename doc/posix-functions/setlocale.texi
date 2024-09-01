@@ -59,3 +59,24 @@ On Android 5.0 and newer, the default locale (i.e.@: the locale in use when
 the @code{"C"} or @code{"POSIX"} locale actually sets an equivalent of the
 @code{"C.UTF-8"} locale.
 @end itemize
+
+Note: The names of locales with UTF-8 encoding are platform dependent:
+@itemize
+@item
+On most platforms, they follow the naming scheme @samp{@var{ll}_@var{CC}.UTF-8}.
+Here @samp{@var{ll}} is an @w{ISO 639} two-letter language code,
+and @samp{@var{CC}} is an @w{ISO 3166} two-letter country code.
+For example, @samp{en_US.UTF-8} (this locale exists on nearly all systems),
+@samp{fr_FR.UTF-8}, and similar.
+@item
+On native Windows with mingw, UTF-8 locales are not supported.
+@item
+On native Windows with MSVC (version 14 or newer,
+and with the @code{-MD} option in @code{CFLAGS}),
+they follow the naming scheme @samp{@var{language}_@var{country}.65001}
+or, equivalently, @samp{@var{language}_@var{country}.utf8},
+where @samp{@var{language}} is a language name in English
+and @samp{@var{country}} is a country name in English.
+For example @samp{English_United States.65001} (yes, with a space in it!)
+or @samp{French_France.65001}.
+@end itemize
