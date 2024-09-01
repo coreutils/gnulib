@@ -37,12 +37,6 @@ platforms:
 NetBSD 5.1, AIX 5.1, Solaris 9, MSVC 9.
 
 @item
-The macros @code{FP_ILOGB0} and @code{FP_ILOGBNAN} have wrong values on some
-platforms:
-@c https://dev.haiku-os.org/ticket/18351
-Haiku 2022.
-
-@item
 @code{HUGE_VAL}, @code{HUGE_VALF}, @code{HUGE_VALL} are not compile time
 constants on some platforms:
 FreeBSD 5.2, AIX 7.1.
@@ -71,4 +65,9 @@ OpenVMS.
 @item
 The macro or variable @code{math_errhandling} is not defined on some platforms:
 glibc 2.11, OpenBSD 4.9, NetBSD 5.1, UP-UX 11, Cygwin 1.7.9, mingw, MSVC 9.
+@item
+The macros @code{FP_ILOGB0} and @code{FP_ILOGBNAN} have wrong values on some
+platforms:
+@c https://dev.haiku-os.org/ticket/18351
+Haiku before 2023-04-08.
 @end itemize
