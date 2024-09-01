@@ -17,7 +17,7 @@ Portability problems not fixed by Gnulib:
 This function is missing on some platforms:
 Minix 3.1.8, mingw, MSVC 14.
 @item
-This funciton is removed in POSIX.1-2024.
+This function is removed in POSIX.1-2024.
 Use the function @code{sigaction} instead.
 @end itemize
 
