@@ -255,12 +255,10 @@ main (int argc, char *argv[])
           mb = for_character ("\302\265", 2);
           ASSERT (mb.nbytes == 2);
           ASSERT (memcmp (mb.buf, "\302\265", 2) == 0);
-        #if !(defined _WIN32 && !defined __CYGWIN__)
           /* U+00C9 LATIN CAPITAL LETTER E WITH ACUTE */
           mb = for_character ("\303\211", 2);
           ASSERT (mb.nbytes == 2);
           ASSERT (memcmp (mb.buf, "\303\251", 2) == 0);
-        #endif
           /* U+00DF LATIN SMALL LETTER SHARP S */
           mb = for_character ("\303\237", 2);
           ASSERT (mb.nbytes == 2);
