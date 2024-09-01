@@ -73,6 +73,10 @@
       See <https://github.com/mingw-w64/mingw-w64/commit/450309b97b2e839ea02887dfaf0f1d10fb5d40cc>
       and <https://github.com/mingw-w64/mingw-w64/commit/73806c0709b7e6c0f6587f11a955743670e85470>.  */
 #  define HAVE_UNDERLYING_STRTOD 0
+# elif defined __HAIKU__
+   /* Haiku's strtold maps denormalized numbers to zero.
+      <https://dev.haiku-os.org/ticket/19040>  */
+#  define HAVE_UNDERLYING_STRTOD 0
 # else
 #  define HAVE_UNDERLYING_STRTOD HAVE_STRTOLD
 # endif
