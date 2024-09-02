@@ -93,8 +93,15 @@ checkable_atime (int fd, struct stat *st)
   ASSERT (read (fd, buf, sizeof buf) == 0);
   ASSERT (fstat (fd, &st2) == 0);
   bool check_atime
+#if defined __HAIKU__
+  /* On Haiku, the st_atime field is always the current time.  It is as if there
+     was a daemon running (as root) that constantly reads from all files on all
+     disks at the same time.  See <https://dev.haiku-os.org/ticket/19038>.  */
+    = false;
+#else
     = (st1.st_atime != st2.st_atime
        || get_stat_atime_ns (&st1) != get_stat_atime_ns (&st2));
+#endif
   if (st)
     *st = st2;
   return check_atime;
