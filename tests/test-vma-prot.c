@@ -65,7 +65,7 @@ main (void)
       {
         prot = get_vma_prot (mem, 1024*1024);
         ASSERT (prot != -1);
-        ASSERT (prot == VMA_PROT_READ | VMA_PROT_WRITE);
+        ASSERT (prot == (VMA_PROT_READ | VMA_PROT_WRITE));
 
         size_t pagesize = sysconf (_SC_PAGESIZE);
         if (pagesize <= 512*1024
