@@ -1047,6 +1047,13 @@ sc_GFDL_version:
 	halt='GFDL vN, N!=3'						\
 	  $(_sc_search_regexp)
 
+# Look out for 'Franklin Street' addresses -- use URLs instead:
+# https://www.gnu.org/prep/maintain/html_node/License-Notices-for-Code.html
+sc_franklin_street:
+	@prohibit='Franklin.*Street'					\
+	halt='use URLs instead of old Franklin Street postal address'	\
+	 $(_sc_search_regexp)
+
 # Don't use Texinfo's @acronym{}.
 # https://lists.gnu.org/r/bug-gnulib/2010-03/msg00321.html
 texinfo_suffix_re_ ?= \.(txi|texi(nfo)?)$$
