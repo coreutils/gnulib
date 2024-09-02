@@ -9,7 +9,7 @@ Depends-on:
 error-h
 stddef
 stdio
-getprogname
+getprogname     [test $COMPILE_ERROR_C = 1]
 strerror        [test $COMPILE_ERROR_C = 1]
 unistd          [test $COMPILE_ERROR_C = 1]
 msvc-nothrow    [test $COMPILE_ERROR_C = 1]
