@@ -56,6 +56,13 @@ main ()
     ASSERT (fdopendir (99) == NULL);
     ASSERT (errno == EBADF);
   }
+#ifdef AT_FDCWD
+  {
+    errno = 0;
+    ASSERT (fdopendir (AT_FDCWD) == NULL);
+    ASSERT (errno == EBADF);
+  }
+#endif
 
   /* This should work.  */
   fd = open (".", O_RDONLY);

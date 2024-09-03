@@ -22,6 +22,7 @@
 SIGNATURE_CHECK (unlockpt, int, (int));
 
 #include <errno.h>
+#include <fcntl.h>
 #include <unistd.h>
 
 #include "macros.h"
@@ -46,6 +47,15 @@ main (void)
             || errno == EINVAL /* seen on FreeBSD 6.4 */
            );
   }
+# ifdef AT_FDCWD
+  {
+    errno = 0;
+    ASSERT (unlockpt (AT_FDCWD) == -1);
+    ASSERT (errno == EBADF
+            || errno == EINVAL /* seen on FreeBSD 6.4 */
+           );
+  }
+# endif
 #endif
 
   return test_exit_status;

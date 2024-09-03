@@ -56,6 +56,13 @@ main (void)
     ASSERT (fsync (99) == -1);
     ASSERT (errno == EBADF);
   }
+#ifdef AT_FDCWD
+  {
+    errno = 0;
+    ASSERT (fsync (AT_FDCWD) == -1);
+    ASSERT (errno == EBADF);
+  }
+#endif
 
   fd = open (file, O_WRONLY|O_CREAT|O_TRUNC, 0644);
   ASSERT (0 <= fd);

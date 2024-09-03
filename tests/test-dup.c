@@ -22,6 +22,7 @@
 SIGNATURE_CHECK (dup, int, (int));
 
 #include <errno.h>
+#include <fcntl.h>
 
 #include "macros.h"
 
@@ -40,6 +41,13 @@ main (void)
     ASSERT (dup (99) == -1);
     ASSERT (errno == EBADF);
   }
+#ifdef AT_FDCWD
+  {
+    errno = 0;
+    ASSERT (dup (AT_FDCWD) == -1);
+    ASSERT (errno == EBADF);
+  }
+#endif
 
   return test_exit_status;
 }

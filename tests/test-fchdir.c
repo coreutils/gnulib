@@ -56,6 +56,13 @@ main (void)
     ASSERT (fchdir (99) == -1);
     ASSERT (errno == EBADF);
   }
+#ifdef FD_ATCWD
+  {
+    errno = 0;
+    ASSERT (fchdir (FD_ATCWD) == -1);
+    ASSERT (errno == EBADF);
+  }
+#endif
 
   /* Check for other failure cases.  */
   {

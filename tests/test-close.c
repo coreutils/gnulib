@@ -22,6 +22,7 @@
 SIGNATURE_CHECK (close, int, (int));
 
 #include <errno.h>
+#include <fcntl.h>
 
 #include "macros.h"
 
@@ -40,6 +41,13 @@ main (void)
     ASSERT (close (99) == -1);
     ASSERT (errno == EBADF);
   }
+#ifdef AT_FDCWD
+  {
+    errno = 0;
+    ASSERT (close (AT_FDCWD) == -1);
+    ASSERT (errno == EBADF);
+  }
+#endif
 
   return test_exit_status;
 }
