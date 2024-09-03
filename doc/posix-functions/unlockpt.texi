@@ -17,5 +17,5 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function reports success for invalid file descriptors on some platforms:
-NetBSD 5.1, Cygwin 1.7.9.
+NetBSD 5.1, Cygwin 1.7.9, Haiku.
 @end itemize

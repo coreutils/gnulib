@@ -30,7 +30,7 @@ int
 main (void)
 {
   /* Test behaviour for invalid file descriptors.  */
-#if !defined __NetBSD__ /* known bug on NetBSD 5.1 */
+#if !(defined __NetBSD__ || defined __HAIKU__) /* known bug on NetBSD 5.1, Haiku */
   {
     errno = 0;
     ASSERT (unlockpt (-1) == -1);
