@@ -23,4 +23,8 @@ Portability problems not fixed by Gnulib:
 On some platforms, this function yields incorrect values for
 timestamps before the year 1:
 MacOS X 10.5, Solaris 11.3.
+@item
+This function sets the field @code{tm_zone} to @code{"GMT"}
+instead of @code{"UTC"} on some platforms:
+glibc, NetBSD, OpenBSD, Minix, Cygwin, Android.
 @end itemize
