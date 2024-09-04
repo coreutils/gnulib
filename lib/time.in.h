@@ -488,14 +488,24 @@ _GL_WARN_ON_USE (strftime, "strftime has portability problems - "
 #  endif
 # endif
 
-# if defined _GNU_SOURCE && @GNULIB_TIME_RZ@ && ! @HAVE_TIMEZONE_T@
+# if @GNULIB_TIME_RZ@
 /* Functions that use a first-class time zone data type, instead of
    relying on an implicit global time zone.
    Inspired by NetBSD.  */
 
 /* Represents a time zone.
    (timezone_t) NULL stands for UTC.  */
+#  if !@HAVE_TZALLOC@
+#   if !GNULIB_defined_timezone_t
+#    if !@HAVE_TIMEZONE_T@
 typedef struct tm_zone *timezone_t;
+#    else
+typedef struct tm_zone *rpl_timezone_t;
+#     define timezone_t rpl_timezone_t
+#    endif
+#    define GNULIB_defined_timezone_t 1
+#   endif
+#  endif
 
 /* tzalloc (name)
    Returns a time zone object for the given time zone NAME.  This object
@@ -505,37 +515,70 @@ typedef struct tm_zone *timezone_t;
    would use it the TZ environment variable was unset.
    May return NULL if NAME is invalid (this is platform dependent) or
    upon memory allocation failure.  */
+#  if !@HAVE_TZALLOC@
 _GL_FUNCDECL_SYS (tzalloc, timezone_t, (char const *__name));
 _GL_CXXALIAS_SYS (tzalloc, timezone_t, (char const *__name));
+#  endif
 
 /* tzfree (tz)
    Frees a time zone object.
    The argument must have been returned by tzalloc().  */
+#  if !@HAVE_TZALLOC@
 _GL_FUNCDECL_SYS (tzfree, void, (timezone_t __tz));
 _GL_CXXALIAS_SYS (tzfree, void, (timezone_t __tz));
+#  endif
 
 /* localtime_rz (tz, &t, &result)
    Converts an absolute time T to a broken-down time RESULT, assuming the
    time zone TZ.
    This function is like 'localtime_r', but relies on the argument TZ instead
    of an implicit global time zone.  */
+#  if @REPLACE_LOCALTIME_RZ@
+#   if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#    undef localtime_rz
+#    define localtime_rz rpl_localtime_rz
+#   endif
+_GL_FUNCDECL_RPL (localtime_rz, struct tm *,
+                  (timezone_t __tz, time_t const *restrict __timer,
+                   struct tm *restrict __result) _GL_ARG_NONNULL ((2, 3)));
+_GL_CXXALIAS_RPL (localtime_rz, struct tm *,
+                  (timezone_t __tz, time_t const *restrict __timer,
+                   struct tm *restrict __result));
+#  else
+#   if !@HAVE_TZALLOC@
 _GL_FUNCDECL_SYS (localtime_rz, struct tm *,
                   (timezone_t __tz, time_t const *restrict __timer,
                    struct tm *restrict __result) _GL_ARG_NONNULL ((2, 3)));
+#   endif
 _GL_CXXALIAS_SYS (localtime_rz, struct tm *,
                   (timezone_t __tz, time_t const *restrict __timer,
                    struct tm *restrict __result));
+#  endif
 
 /* mktime_z (tz, &tm)
    Normalizes the broken-down time TM and converts it to an absolute time,
    assuming the time zone TZ.  Returns the absolute time.
    This function is like 'mktime', but relies on the argument TZ instead
    of an implicit global time zone.  */
+#  if @REPLACE_MKTIME_Z@
+#   if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#    undef mktime_z
+#    define mktime_z rpl_mktime_z
+#   endif
+_GL_FUNCDECL_RPL (mktime_z, time_t,
+                  (timezone_t __tz, struct tm *restrict __tm)
+                  _GL_ARG_NONNULL ((2)));
+_GL_CXXALIAS_RPL (mktime_z, time_t,
+                  (timezone_t __tz, struct tm *restrict __tm));
+#  else
+#   if !@HAVE_TZALLOC@
 _GL_FUNCDECL_SYS (mktime_z, time_t,
                   (timezone_t __tz, struct tm *restrict __tm)
                   _GL_ARG_NONNULL ((2)));
+#   endif
 _GL_CXXALIAS_SYS (mktime_z, time_t,
                   (timezone_t __tz, struct tm *restrict __tm));
+#  endif
 
 /* Time zone abbreviation strings (returned by 'localtime_rz' or 'mktime_z'
    in the 'tm_zone' member of 'struct tm') are valid as long as
