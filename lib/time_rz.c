@@ -24,16 +24,41 @@
 
 #include <config.h>
 
+/* Specification.  */
 #include <time.h>
 
-#include <errno.h>
-#include <stddef.h>
-#include <stdlib.h>
-#include <string.h>
+#if NEED_TIMEZONE_NULL_SUPPORT          /* Android API level >= 35 */
 
-#include "flexmember.h"
-#include "idx.h"
-#include "time-internal.h"
+struct tm *
+localtime_rz (timezone_t tz, time_t const *t, struct tm *tm)
+# undef localtime_rz
+{
+  if (!tz)
+    return gmtime_r (t, tm);
+  else
+    return localtime_rz (tz, t, tm);
+}
+
+time_t
+mktime_z (timezone_t tz, struct tm *tm)
+# undef mktime_z
+{
+  if (!tz)
+    return timegm (tm);
+  else
+    return mktime_z (tz, tm);
+}
+
+#else
+
+# include <errno.h>
+# include <stddef.h>
+# include <stdlib.h>
+# include <string.h>
+
+# include "flexmember.h"
+# include "idx.h"
+# include "time-internal.h"
 
 /* The approximate size to use for small allocation requests.  This is
    the largest "small" request for the GNU C library malloc.  */
@@ -89,25 +114,25 @@ tzalloc (char const *name)
 static bool
 save_abbr (timezone_t tz, struct tm *tm)
 {
-#if HAVE_STRUCT_TM_TM_ZONE || HAVE_TZNAME_ARRAY
+# if HAVE_STRUCT_TM_TM_ZONE || HAVE_TZNAME_ARRAY
   char const *zone = NULL;
   char *zone_copy = (char *) "";
 
-# if HAVE_TZNAME_ARRAY
+#  if HAVE_TZNAME_ARRAY
   int tzname_index = -1;
-# endif
+#  endif
 
-# if HAVE_STRUCT_TM_TM_ZONE
+#  if HAVE_STRUCT_TM_TM_ZONE
   zone = tm->tm_zone;
-# endif
+#  endif
 
-# if HAVE_TZNAME_ARRAY
+#  if HAVE_TZNAME_ARRAY
   if (! (zone && *zone) && 0 <= tm->tm_isdst)
     {
       tzname_index = tm->tm_isdst != 0;
       zone = tzname[tzname_index];
     }
-# endif
+#  endif
 
   /* No need to replace null zones, or zones within the struct tm.  */
   if (!zone || ((char *) tm <= zone && zone < (char *) (tm + 1)))
@@ -145,13 +170,13 @@ save_abbr (timezone_t tz, struct tm *tm)
     }
 
   /* Replace the zone name so that its lifetime matches that of TZ.  */
-# if HAVE_STRUCT_TM_TM_ZONE
+#  if HAVE_STRUCT_TM_TM_ZONE
   tm->tm_zone = zone_copy;
-# else
+#  else
   if (0 <= tzname_index)
     tz->tzname_copy[tzname_index] = zone_copy;
+#  endif
 # endif
-#endif
 
   return true;
 }
@@ -172,21 +197,21 @@ tzfree (timezone_t tz)
 /* Get and set the TZ environment variable.  These functions can be
    overridden by programs like Emacs that manage their own environment.  */
 
-#ifndef getenv_TZ
+# ifndef getenv_TZ
 static char *
 getenv_TZ (void)
 {
   return getenv ("TZ");
 }
-#endif
+# endif
 
-#ifndef setenv_TZ
+# ifndef setenv_TZ
 static int
 setenv_TZ (char const *tz)
 {
   return tz ? setenv ("TZ", tz, 1) : unsetenv ("TZ");
 }
-#endif
+# endif
 
 /* Change the environment to match the specified timezone_t value.
    Return true if successful, false (setting errno) otherwise.  */
@@ -251,7 +276,7 @@ revert_tz (timezone_t tz)
 struct tm *
 localtime_rz (timezone_t tz, time_t const *t, struct tm *tm)
 {
-#ifdef HAVE_LOCALTIME_INFLOOP_BUG
+# ifdef HAVE_LOCALTIME_INFLOOP_BUG
   /* The -67768038400665599 comes from:
      https://lists.gnu.org/r/bug-gnulib/2017-07/msg00142.html
      On affected platforms the greatest POSIX-compatible time_t value
@@ -264,7 +289,7 @@ localtime_rz (timezone_t tz, time_t const *t, struct tm *tm)
       errno = EOVERFLOW;
       return NULL;
     }
-#endif
+# endif
 
   if (!tz)
     return gmtime_r (t, tm);
@@ -315,3 +340,5 @@ mktime_z (timezone_t tz, struct tm *tm)
       return -1;
     }
 }
+
+#endif
