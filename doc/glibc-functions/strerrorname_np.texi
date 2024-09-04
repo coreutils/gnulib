@@ -15,8 +15,8 @@ Gnulib module: strerrorname_np
 Portability problems fixed by Gnulib:
 @itemize
 @item
-This function is missing on all non-glibc platforms:
-glibc 2.31, macOS 14, FreeBSD 14.0, NetBSD 10.0, OpenBSD 7.5, Minix 3.1.8, AIX 7.1, HP-UX 11.31, Solaris 11.4, Cygwin 2.9, mingw, MSVC 14, Android 9.0.
+This function is missing on many platforms:
+glibc 2.31, macOS 14, FreeBSD 14.0, NetBSD 10.0, OpenBSD 7.5, Minix 3.1.8, AIX 7.1, HP-UX 11.31, Solaris 11.4, Cygwin 2.9, mingw, MSVC 14, Android API level 34.
 @item
 This function returns wrong values on some platforms:
 @c https://sourceware.org/bugzilla/show_bug.cgi?id=26555
