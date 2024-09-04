@@ -1,4 +1,4 @@
-# strerrorname_np.m4 serial 5
+# strerrorname_np.m4 serial 5.1
 dnl Copyright (C) 2020-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -13,7 +13,7 @@ AC_DEFUN([gl_FUNC_STRERRORNAME_NP],
 
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
 
-  AC_CHECK_FUNCS([strerrorname_np])
+  gl_CHECK_FUNCS_ANDROID([strerrorname_np], [[#include <string.h>]])
   if test $ac_cv_func_strerrorname_np = yes; then
     dnl In glibc 2.32, strerrorname_np returns English error descriptions, not
     dnl error names.
@@ -59,5 +59,8 @@ AC_DEFUN([gl_FUNC_STRERRORNAME_NP],
     esac
   else
     HAVE_STRERRORNAME_NP=0
+    case "$gl_cv_onwards_func_strerrorname_np" in
+      future*) REPLACE_STRERRORNAME_NP=1 ;;
+    esac
   fi
 ])
