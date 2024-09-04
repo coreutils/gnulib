@@ -10,18 +10,19 @@ Depends-on:
 c99
 extensions
 time-h
-flexmember     [test $HAVE_TIMEZONE_T = 0]
-idx            [test $HAVE_TIMEZONE_T = 0]
-setenv         [test $HAVE_TIMEZONE_T = 0]
-stdbool        [test $HAVE_TIMEZONE_T = 0]
-time_r         [test $HAVE_TIMEZONE_T = 0]
-timegm         [test $HAVE_TIMEZONE_T = 0]
-tzset          [test $HAVE_TIMEZONE_T = 0]
-unsetenv       [test $HAVE_TIMEZONE_T = 0]
+flexmember     [test $HAVE_TZALLOC = 0 || test $REPLACE_LOCALTIME_RZ = 1 || test $REPLACE_MKTIME_Z = 1]
+idx            [test $HAVE_TZALLOC = 0 || test $REPLACE_LOCALTIME_RZ = 1 || test $REPLACE_MKTIME_Z = 1]
+setenv         [test $HAVE_TZALLOC = 0 || test $REPLACE_LOCALTIME_RZ = 1 || test $REPLACE_MKTIME_Z = 1]
+stdbool        [test $HAVE_TZALLOC = 0 || test $REPLACE_LOCALTIME_RZ = 1 || test $REPLACE_MKTIME_Z = 1]
+time_r         [test $HAVE_TZALLOC = 0 || test $REPLACE_LOCALTIME_RZ = 1 || test $REPLACE_MKTIME_Z = 1]
+timegm         [test $HAVE_TZALLOC = 0 || test $REPLACE_LOCALTIME_RZ = 1 || test $REPLACE_MKTIME_Z = 1]
+tzset          [test $HAVE_TZALLOC = 0 || test $REPLACE_LOCALTIME_RZ = 1 || test $REPLACE_MKTIME_Z = 1]
+unsetenv       [test $HAVE_TZALLOC = 0 || test $REPLACE_LOCALTIME_RZ = 1 || test $REPLACE_MKTIME_Z = 1]
 
 configure.ac:
 gl_TIME_RZ
-gl_CONDITIONAL([GL_COND_OBJ_TIME_RZ], [test $HAVE_TIMEZONE_T = 0])
+gl_CONDITIONAL([GL_COND_OBJ_TIME_RZ],
+               [test $HAVE_TZALLOC = 0 || test $REPLACE_LOCALTIME_RZ = 1 || test $REPLACE_MKTIME_Z = 1])
 gl_TIME_MODULE_INDICATOR([time_rz])
 
 Makefile.am:
