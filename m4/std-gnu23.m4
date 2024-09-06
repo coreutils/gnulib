@@ -1,11 +1,11 @@
 # std-gnu23.m4
-# serial 1
+# serial 2
 
 # Prefer GNU C23 to earlier versions.
 
 # This implementation is taken from GNU Autoconf lib/autoconf/c.m4
-# commit 653956f44683e1daed9827de429590bdd2e317e7
-# dated Tue Apr 30 10:26:50 2024 -0700
+# commit 93b3d33c1d09b05601b240bf17b83f50ac4a148b
+# dated Thu Sep 5 18:19:36 2024 -0700
 # This implementation will be obsolete once we can assume Autoconf 2.73
 # or later is installed everywhere a Gnulib program might be developed.
 
@@ -14,9 +14,10 @@ m4_version_prereq([2.73], [], [
 
 # Copyright (C) 2001-2024 Free Software Foundation, Inc.
 
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
+# This file is part of Autoconf.  This program is free
+# software; you can redistribute it and/or modify it under the
+# terms of the GNU General Public License as published by the
+# Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
@@ -24,8 +25,15 @@ m4_version_prereq([2.73], [], [
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 #
+# Under Section 7 of GPL version 3, you are granted additional
+# permissions described in the Autoconf Configure Script Exception,
+# version 3.0, as published by the Free Software Foundation.
+#
 # You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+# and a copy of the Autoconf Configure Script Exception along with
+# this program; see the files COPYINGv3 and COPYING.EXCEPTION
+# respectively.  If not, see <https://www.gnu.org/licenses/> and
+# <https://git.savannah.gnu.org/gitweb/?p=autoconf.git;a=blob_plain;f=COPYING.EXCEPTION>.
 
 # Written by David MacKenzie, with help from
 # Akim Demaille, Paul Eggert,
