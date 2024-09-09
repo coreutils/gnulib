@@ -47,13 +47,8 @@ mem_cd_iconv (const char *src, size_t srclen, iconv_t cd,
   size_t length;
   char *result;
 
-  /* Avoid glibc-2.1 bug and Solaris 2.7-2.9 bug.  */
-# if defined _LIBICONV_VERSION \
-     || !(((__GLIBC__ == 2 && __GLIBC_MINOR__ <= 1) && !defined __UCLIBC__) \
-          || defined __sun)
   /* Set to the initial state.  */
   iconv (cd, NULL, NULL, NULL, NULL);
-# endif
 
   /* Determine the length we need.  */
   {
@@ -96,10 +91,6 @@ mem_cd_iconv (const char *src, size_t srclen, iconv_t cd,
 # endif
         count += outptr - tmpbuf;
       }
-    /* Avoid glibc-2.1 bug and Solaris 2.7 bug.  */
-# if defined _LIBICONV_VERSION \
-     || !(((__GLIBC__ == 2 && __GLIBC_MINOR__ <= 1) && !defined __UCLIBC__) \
-          || defined __sun)
     {
       char *outptr = tmpbuf;
       size_t outsize = tmpbufsize;
@@ -109,7 +100,6 @@ mem_cd_iconv (const char *src, size_t srclen, iconv_t cd,
         return -1;
       count += outptr - tmpbuf;
     }
-# endif
     length = count;
 # undef tmpbuf
   }
@@ -131,13 +121,8 @@ mem_cd_iconv (const char *src, size_t srclen, iconv_t cd,
         }
     }
 
-  /* Avoid glibc-2.1 bug and Solaris 2.7-2.9 bug.  */
-# if defined _LIBICONV_VERSION \
-     || !(((__GLIBC__ == 2 && __GLIBC_MINOR__ <= 1) && !defined __UCLIBC__) \
-          || defined __sun)
   /* Return to the initial state.  */
   iconv (cd, NULL, NULL, NULL, NULL);
-# endif
 
   /* Do the conversion for real.  */
   {
@@ -172,17 +157,12 @@ mem_cd_iconv (const char *src, size_t srclen, iconv_t cd,
           }
 # endif
       }
-    /* Avoid glibc-2.1 bug and Solaris 2.7 bug.  */
-# if defined _LIBICONV_VERSION \
-     || !(((__GLIBC__ == 2 && __GLIBC_MINOR__ <= 1) && !defined __UCLIBC__) \
-          || defined __sun)
     {
       size_t res = iconv (cd, NULL, NULL, &outptr, &outsize);
 
       if (res == (size_t)(-1))
         goto fail;
     }
-# endif
     if (outsize != 0)
       abort ();
   }
@@ -273,13 +253,8 @@ str_cd_iconv (const char *src, iconv_t cd)
       return NULL;
     }
 
-  /* Avoid glibc-2.1 bug and Solaris 2.7-2.9 bug.  */
-# if defined _LIBICONV_VERSION \
-     || !(((__GLIBC__ == 2 && __GLIBC_MINOR__ <= 1) && !defined __UCLIBC__) \
-          || defined __sun)
   /* Set to the initial state.  */
   iconv (cd, NULL, NULL, NULL, NULL);
-# endif
 
   /* Do the conversion.  */
   {
@@ -326,10 +301,6 @@ str_cd_iconv (const char *src, iconv_t cd)
         else
           break;
       }
-    /* Avoid glibc-2.1 bug and Solaris 2.7 bug.  */
-# if defined _LIBICONV_VERSION \
-     || !(((__GLIBC__ == 2 && __GLIBC_MINOR__ <= 1) && !defined __UCLIBC__) \
-          || defined __sun)
     for (;;)
       {
         /* Here outptr + outbytes_remaining = result + result_size - 1.  */
@@ -365,7 +336,6 @@ str_cd_iconv (const char *src, iconv_t cd)
         else
           break;
       }
-# endif
 
     /* Add the terminating NUL byte.  */
     *outptr++ = '\0';

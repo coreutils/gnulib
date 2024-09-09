@@ -395,13 +395,8 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
     const char *inptr = src;
     size_t insize = srclen;
 
-    /* Avoid glibc-2.1 bug and Solaris 2.7-2.9 bug.  */
-# if defined _LIBICONV_VERSION \
-     || !(((__GLIBC__ == 2 && __GLIBC_MINOR__ <= 1) && !defined __UCLIBC__) \
-          || defined __sun)
     /* Set to the initial state.  */
     iconv (cd, NULL, NULL, NULL, NULL);
-# endif
 
     while (insize > 0)
       {
@@ -608,16 +603,11 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
     bool do_final_flush1 = true;
     bool do_final_flush2 = true;
 
-    /* Avoid glibc-2.1 bug and Solaris 2.7-2.9 bug.  */
-# if defined _LIBICONV_VERSION \
-     || !(((__GLIBC__ == 2 && __GLIBC_MINOR__ <= 1) && !defined __UCLIBC__) \
-          || defined __sun)
     /* Set to the initial state.  */
     if (cd1 != (iconv_t)(-1))
       iconv (cd1, NULL, NULL, NULL, NULL);
     if (cd2 != (iconv_t)(-1))
       iconv (cd2, NULL, NULL, NULL, NULL);
-# endif
 
     while (in1size > 0 || do_final_flush1 || utf8len > 0 || do_final_flush2)
       {

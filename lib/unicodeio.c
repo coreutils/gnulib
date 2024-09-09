@@ -154,17 +154,10 @@ unicode_to_mb (unsigned int code,
          )
         return failure (code, NULL, callback_arg);
 
-      /* Avoid glibc-2.1 bug and Solaris 7 bug.  */
-# if defined _LIBICONV_VERSION \
-    || !(((__GLIBC__ - 0 == 2 && __GLIBC_MINOR__ - 0 <= 1) \
-          && !defined __UCLIBC__) \
-         || defined __sun)
-
       /* Get back to the initial shift state.  */
       res = iconv (utf8_to_local, NULL, NULL, &outptr, &outbytesleft);
       if (res == (size_t)(-1))
         return failure (code, NULL, callback_arg);
-# endif
 
       return success (outbuf, outptr - outbuf, callback_arg);
     }
