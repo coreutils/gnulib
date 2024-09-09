@@ -410,16 +410,6 @@ str_iconv (const char *src, const char *from_codeset, const char *to_codeset)
       iconv_t cd;
       char *result;
 
-      /* Avoid glibc-2.1 bug with EUC-KR.  */
-# if ((__GLIBC__ == 2 && __GLIBC_MINOR__ <= 1) && !defined __UCLIBC__) \
-     && !defined _LIBICONV_VERSION
-      if (c_strcasecmp (from_codeset, "EUC-KR") == 0
-          || c_strcasecmp (to_codeset, "EUC-KR") == 0)
-        {
-          errno = EINVAL;
-          return NULL;
-        }
-# endif
       cd = iconv_open (to_codeset, from_codeset);
       if (cd == (iconv_t) -1)
         return NULL;

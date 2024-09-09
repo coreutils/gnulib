@@ -50,17 +50,6 @@ iconveh_open (const char *to_codeset, const char *from_codeset, iconveh_t *cdp)
   iconv_t cd1;
   iconv_t cd2;
 
-  /* Avoid glibc-2.1 bug with EUC-KR.  */
-# if ((__GLIBC__ == 2 && __GLIBC_MINOR__ <= 1) && !defined __UCLIBC__) \
-     && !defined _LIBICONV_VERSION
-  if (c_strcasecmp (from_codeset, "EUC-KR") == 0
-      || c_strcasecmp (to_codeset, "EUC-KR") == 0)
-    {
-      errno = EINVAL;
-      return -1;
-    }
-# endif
-
   cd = iconv_open (to_codeset, from_codeset);
 
   if (STRCASEEQ (from_codeset, "UTF-8", 'U','T','F','-','8',0,0,0,0))
