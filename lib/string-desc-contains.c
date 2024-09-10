@@ -35,6 +35,8 @@ string_desc_contains (string_desc_t haystack, string_desc_t needle)
 {
   if (needle._nbytes == 0)
     return 0;
+  if (haystack._nbytes == 0)
+    return -1;
   void *found =
     memmem (haystack._data, haystack._nbytes, needle._data, needle._nbytes);
   if (found != NULL)
