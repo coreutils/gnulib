@@ -45,7 +45,7 @@ static_assert (sizeof (mbstate_t) >= 4);
 /* mbstate_t is defined in <bits/types/__mbstate_t.h>.
    For more details, see glibc/iconv/skeleton.c.  */
 # define SET_EXTRA_STATE(ps, c16) \
-    ((ps)->__count |= (c16 << 16))
+    ((ps)->__count |= ((unsigned int) (c16) << 16))
 # define GET_EXTRA_STATE(ps) \
     (((unsigned int) (ps)->__count) >> 16)
 # define RESET_EXTRA_STATE(ps) \
