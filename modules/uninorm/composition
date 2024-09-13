@@ -4,6 +4,7 @@ Composition of Unicode characters.
 Files:
 lib/uninorm/composition.c
 lib/uninorm/composition-table.gperf
+lib/uninorm/composition-table-bounds.h
 
 Depends-on:
 uninorm/base
