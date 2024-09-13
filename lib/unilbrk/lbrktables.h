@@ -34,22 +34,22 @@ extern "C" {
 
 enum
 {
-  /* Values >= 40 are resolved at run time. */
-  LBP_BK  = 40, /* mandatory break */
-  LBP_CR  = 41, /* carriage return */
-  LBP_LF  = 42, /* line feed */
-  LBP_CM  = 43, /* attached characters and combining marks */
+  /* Values >= 41 are resolved at run time. */
+  LBP_BK  = 41, /* mandatory break */
+  LBP_CR  = 42, /* carriage return */
+  LBP_LF  = 43, /* line feed */
+  LBP_CM  = 44, /* attached characters and combining marks */
 /*LBP_NL,          next line - not used here because it's equivalent to LBP_BK */
 /*LBP_SG,          surrogates - not used here because they are not characters */
   LBP_WJ  =  0, /* word joiner */
-  LBP_ZW  = 44, /* zero width space */
+  LBP_ZW  = 45, /* zero width space */
   LBP_GL  =  1, /* non-breaking (glue) */
-  LBP_SP  = 45, /* space */
+  LBP_SP  = 46, /* space */
   LBP_B2  =  2, /* break opportunity before and after */
   LBP_BA  =  3, /* break opportunity after */
   LBP_BB  =  4, /* break opportunity before */
   LBP_HY  =  5, /* hyphen */
-  LBP_CB  = 46, /* contingent break opportunity */
+  LBP_CB  = 47, /* contingent break opportunity */
   LBP_CL  =  6, /* closing punctuation */
   LBP_CP1 =  7, /* closing parenthesis, non-EastAsian character */
   LBP_CP2 =  8, /* closing parenthesis, EastAsian character */
@@ -66,34 +66,40 @@ enum
   LBP_PO  = 19, /* postfix (numeric) */
   LBP_PR  = 20, /* prefix (numeric) */
   LBP_SY  = 21, /* symbols allowing breaks */
-  LBP_AI  = 47, /* ambiguous (alphabetic or ideograph) */
-  LBP_AL  = 22, /* ordinary alphabetic and symbol characters */
+  LBP_AI  = 48, /* ambiguous (alphabetic or ideograph) */
+  LBP_AL1 = 22, /* ordinary alphabetic and symbol characters, != U+25CC */
+  LBP_AL2 = 23, /* ordinary alphabetic and symbol characters, == U+25CC */
 /*LBP_CJ,          conditional Japanese starter, resolved to NS */
-  LBP_H2  = 23, /* Hangul LV syllable */
-  LBP_H3  = 24, /* Hangul LVT syllable */
-  LBP_HL  = 30, /* Hebrew letter */
-  LBP_ID1 = 25, /* ideographic */
-  LBP_ID2 = 26, /* ideographic and potential future emoji */
-  LBP_JL  = 27, /* Hangul L Jamo */
-  LBP_JV  = 28, /* Hangul V Jamo */
-  LBP_JT  = 29, /* Hangul T Jamo */
-  LBP_AP  = 31, /* Brahmic scripts: pre-base repha */
-  LBP_AK  = 32, /* Brahmic scripts: consonants */
-  LBP_AS  = 33, /* Brahmic scripts: independent vowels */
-  LBP_VI  = 34, /* Brahmic scripts: conjoining viramas */
-  LBP_VF  = 35, /* Brahmic scripts: viramas for final consonants */
-  LBP_RI  = 36, /* regional indicator */
-  LBP_SA  = 48, /* complex context (South East Asian) */
-  LBP_ZWJ = 37, /* zero width joiner */
-  LBP_EB  = 38, /* emoji base */
-  LBP_EM  = 39, /* emoji modifier */
-  LBP_XX  = 49, /* unknown */
+  LBP_H2  = 24, /* Hangul LV syllable */
+  LBP_H3  = 25, /* Hangul LVT syllable */
+  LBP_HL  = 31, /* Hebrew letter */
+  LBP_ID1 = 26, /* ideographic */
+  LBP_ID2 = 27, /* ideographic and potential future emoji */
+  LBP_JL  = 28, /* Hangul L Jamo */
+  LBP_JV  = 29, /* Hangul V Jamo */
+  LBP_JT  = 30, /* Hangul T Jamo */
+  LBP_AP  = 32, /* Brahmic scripts: pre-base repha */
+  LBP_AK  = 33, /* Brahmic scripts: consonants */
+  LBP_AS  = 34, /* Brahmic scripts: independent vowels */
+  LBP_VI  = 35, /* Brahmic scripts: conjoining viramas */
+  LBP_VF  = 36, /* Brahmic scripts: viramas for final consonants */
+  LBP_RI  = 37, /* regional indicator */
+  LBP_SA  = 49, /* complex context (South East Asian) */
+  LBP_ZWJ = 38, /* zero width joiner */
+  LBP_EB  = 39, /* emoji base */
+  LBP_EM  = 40, /* emoji modifier */
+  LBP_XX  = 50, /* unknown */
   /* Artificial values that exist only at runtime, not in the tables. */
-  LBP_HL_BA = 100
+  LBP_AKLS_VI = 100,
+  LBP_HL_BA = 101
 };
 
 #include "lbrkprop1.h"
 
+/* Returns (prop << 1) | ea, where
+     - prop is the line breaking property,
+     - ea is the EastAsian property (1 bit)
+   of UC.  */
 static inline unsigned char
 unilbrkprop_lookup (ucs4_t uc)
 {
@@ -115,12 +121,20 @@ unilbrkprop_lookup (ucs4_t uc)
   return LBP_XX;
 }
 
+/* Splitting a table entry into prop and ea.  */
+#define PROP(entry) ((entry) >> 1)
+#define EA(entry) ((entry) & 1)
+
+/* Combining prop and ea to a table entry.  */
+#define PROP_EA(prop,ea) (((prop) << 1) | (ea))
+
+
 /* Table indexed by two line breaking classifications.  */
 #define D 1  /* direct break opportunity, empty in table 7.3 of UTR #14 */
 #define I 2  /* indirect break opportunity, '%' in table 7.3 of UTR #14 */
 #define P 3  /* prohibited break,           '^' in table 7.3 of UTR #14 */
 
-extern const unsigned char unilbrk_table[40][40];
+extern const unsigned char unilbrk_table[41][41];
 
 /* We don't support line breaking of complex-context dependent characters
    (Thai, Lao, Myanmar, Khmer) yet, because it requires dictionary lookup. */

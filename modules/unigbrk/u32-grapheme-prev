@@ -11,7 +11,7 @@ unistr/u32-prev
 
 configure.ac:
 gl_MODULE_INDICATOR([unigbrk/u32-grapheme-prev])
-gl_LIBUNISTRING_MODULE([1.1], [unigbrk/u32-grapheme-prev])
+gl_LIBUNISTRING_MODULE([1.3], [unigbrk/u32-grapheme-prev])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNIGBRK_U32_GRAPHEME_PREV

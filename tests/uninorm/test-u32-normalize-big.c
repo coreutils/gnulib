@@ -70,7 +70,7 @@ read_normalization_test_file (const char *filename,
       exit (1);
     }
 
-  for (part_index = 0; part_index < 4; part_index++)
+  for (part_index = 0; part_index < 6; part_index++)
     {
       file->parts[part_index].lines = NULL;
       file->parts[part_index].lines_length = 0;
@@ -132,7 +132,7 @@ read_normalization_test_file (const char *filename,
 
       /* It's a line containing 5 sequences of Unicode characters.
          Parse it and append it to the current part.  */
-      if (!(part_index >= 0 && part_index < 4))
+      if (!(part_index >= 0 && part_index < 6))
         {
           fprintf (stderr, "unexpected structure of '%s'\n", filename);
           exit (1);
@@ -249,7 +249,7 @@ test_specific (const struct normalization_test_file *file,
 {
   size_t part_index;
 
-  for (part_index = 0; part_index < 4; part_index++)
+  for (part_index = 0; part_index < 6; part_index++)
     {
       const struct normalization_test_part *p = &file->parts[part_index];
       size_t line_index;
@@ -309,7 +309,7 @@ free_normalization_test_file (struct normalization_test_file *file)
 {
   size_t part_index;
 
-  for (part_index = 0; part_index < 4; part_index++)
+  for (part_index = 0; part_index < 6; part_index++)
     {
       const struct normalization_test_part *p = &file->parts[part_index];
       size_t line_index;

@@ -575,7 +575,8 @@ enum
   UC_JOINING_GROUP_HANIFI_ROHINGYA_PA,       /* Hanifi_Rohingya_Pa */
   UC_JOINING_GROUP_HANIFI_ROHINGYA_KINNA_YA, /* Hanifi_Rohingya_Kinna_Ya */
   UC_JOINING_GROUP_THIN_YEH,                 /* Thin_Yeh */
-  UC_JOINING_GROUP_VERTICAL_TAIL             /* Vertical_Tail */
+  UC_JOINING_GROUP_VERTICAL_TAIL,            /* Vertical_Tail */
+  UC_JOINING_GROUP_KASHMIRI_YEH              /* Kashmiri_Yeh */
 };
 
 /* Return the name of a joining group.  */

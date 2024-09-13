@@ -43,7 +43,7 @@ struct normalization_test_part
 /* Representation of the entire NormalizationTest.txt file.  */
 struct normalization_test_file
 {
-  struct normalization_test_part parts[4];
+  struct normalization_test_part parts[6];
   /* The set of c1 values from part 1, sorted in ascending order, with a
      sentinel value of 0x110000 at the end.  */
   ucs4_t *part1_c1_sorted;

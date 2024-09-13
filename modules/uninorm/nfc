@@ -13,7 +13,7 @@ uninorm/nfd
 
 configure.ac:
 gl_UNINORM_H_REQUIRE_DEFAULTS
-gl_LIBUNISTRING_MODULE_WITH_VARIABLE([1.1], [uninorm/nfc])
+gl_LIBUNISTRING_MODULE_WITH_VARIABLE([1.3], [uninorm/nfc])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNINORM_NFC

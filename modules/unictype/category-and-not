@@ -10,7 +10,7 @@ unictype/category-none
 unictype/category-test-withtable
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([1.2], [unictype/category-and-not])
+gl_LIBUNISTRING_MODULE([1.3], [unictype/category-and-not])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNICTYPE_CATEGORY_AND_NOT

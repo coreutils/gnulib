@@ -11,7 +11,7 @@ unistr/u8-mbtouc
 
 configure.ac:
 gl_MODULE_INDICATOR([unigbrk/u8-grapheme-next])
-gl_LIBUNISTRING_MODULE([1.1], [unigbrk/u8-grapheme-next])
+gl_LIBUNISTRING_MODULE([1.3], [unigbrk/u8-grapheme-next])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNIGBRK_U8_GRAPHEME_NEXT

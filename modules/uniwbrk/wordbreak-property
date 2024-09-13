@@ -9,7 +9,7 @@ Depends-on:
 uniwbrk/base
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([1.2], [uniwbrk/wordbreak-property])
+gl_LIBUNISTRING_MODULE([1.3], [uniwbrk/wordbreak-property])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNIWBRK_WORDBREAK_PROPERTY

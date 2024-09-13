@@ -9,7 +9,7 @@ unimetadata/base
 
 configure.ac:
 gl_UNIMETADATA_H_REQUIRE_DEFAULTS
-gl_LIBUNISTRING_MODULE_WITH_VARIABLE([1.2], [unimetadata/u-version])
+gl_LIBUNISTRING_MODULE_WITH_VARIABLE([1.3], [unimetadata/u-version])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNIMETADATA_U_VERSION

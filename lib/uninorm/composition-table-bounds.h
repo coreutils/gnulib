@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Canonical composition of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 15.1.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 16.0.0.  */
 
 /* Copyright (C) 2009-2024 Free Software Foundation, Inc.
 
@@ -19,7 +19,7 @@
 
 /* Maximum value of the first argument for which gl_uninorm_compose_lookup
    can return a non-NULL value.  */
-#define UNINORM_COMPOSE_MAX_ARG1 0x11935
+#define UNINORM_COMPOSE_MAX_ARG1 0x16d69
 /* Maximum value of the second argument for which gl_uninorm_compose_lookup
    can return a non-NULL value.  */
-#define UNINORM_COMPOSE_MAX_ARG2 0x11930
+#define UNINORM_COMPOSE_MAX_ARG2 0x16d67

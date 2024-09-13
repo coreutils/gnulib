@@ -11,7 +11,7 @@ unictype/base
 
 configure.ac:
 AC_REQUIRE([AC_C_INLINE])
-gl_LIBUNISTRING_MODULE([1.2], [unictype/syntax-java-ident])
+gl_LIBUNISTRING_MODULE([1.3], [unictype/syntax-java-ident])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNICTYPE_SYNTAX_JAVA_IDENT

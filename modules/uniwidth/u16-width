@@ -10,7 +10,7 @@ uniwidth/width
 unistr/u16-mbtouc-unsafe
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([1.2], [uniwidth/u16-width])
+gl_LIBUNISTRING_MODULE([1.3], [uniwidth/u16-width])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNIWIDTH_U16_WIDTH

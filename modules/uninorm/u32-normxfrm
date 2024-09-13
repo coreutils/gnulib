@@ -13,7 +13,7 @@ localcharset
 amemxfrm
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([1.1], [uninorm/u32-normxfrm])
+gl_LIBUNISTRING_MODULE([1.3], [uninorm/u32-normxfrm])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNINORM_U32_NORMXFRM

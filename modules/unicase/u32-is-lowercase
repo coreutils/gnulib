@@ -10,7 +10,7 @@ unicase/u32-is-invariant
 unicase/u32-tolower
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([1.1], [unicase/u32-is-lowercase])
+gl_LIBUNISTRING_MODULE([1.3], [unicase/u32-is-lowercase])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNICASE_U32_IS_LOWERCASE

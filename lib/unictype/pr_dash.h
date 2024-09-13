@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Properties of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 15.1.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 16.0.0.  */
 
 /* Copyright (C) 2000-2024 Free Software Foundation, Inc.
 
@@ -35,7 +35,7 @@ struct
     int header[1];
     int level1[2];
     short level2[2 << 7];
-    unsigned int level3[10 << 4];
+    unsigned int level3[11 << 4];
   }
 u_property_dash =
 {
@@ -179,8 +179,8 @@ u_property_dash =
        -1,
        -1,
        -1,
-       -1,
         3 +   256 * sizeof (short) / sizeof (int) +   144,
+        3 +   256 * sizeof (short) / sizeof (int) +   160,
        -1,
        -1,
        -1,
@@ -338,6 +338,10 @@ u_property_dash =
     0x00000000U, 0x00060000U, 0x01000000U, 0x00000008U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00002000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
+    0x00000000U, 0x00000000U, 0x00000000U, 0x00004000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00000000U, 0x00000000U, 0x00000000U,
     0x00000000U, 0x00002000U, 0x00000000U, 0x00000000U,

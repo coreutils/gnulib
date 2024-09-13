@@ -11,7 +11,7 @@ uninorm/base
 gperf
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([0.9.11], [uninorm/composition])
+gl_LIBUNISTRING_MODULE([1.3], [uninorm/composition])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNINORM_COMPOSITION

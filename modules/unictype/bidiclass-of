@@ -9,7 +9,7 @@ Depends-on:
 unictype/base
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([1.2], [unictype/bidiclass-of])
+gl_LIBUNISTRING_MODULE([1.3], [unictype/bidiclass-of])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNICTYPE_BIDICLASS_OF

@@ -13,7 +13,7 @@ localcharset
 
 configure.ac:
 gl_MODULE_INDICATOR([unigbrk/ulc-grapheme-breaks])
-gl_LIBUNISTRING_MODULE([1.2], [unigbrk/ulc-grapheme-breaks])
+gl_LIBUNISTRING_MODULE([1.3], [unigbrk/ulc-grapheme-breaks])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNIGBRK_ULC_GRAPHEME_BREAKS

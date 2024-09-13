@@ -11,7 +11,7 @@ unistr/u16-prev
 
 configure.ac:
 gl_MODULE_INDICATOR([unigbrk/u16-grapheme-prev])
-gl_LIBUNISTRING_MODULE([1.1], [unigbrk/u16-grapheme-prev])
+gl_LIBUNISTRING_MODULE([1.3], [unigbrk/u16-grapheme-prev])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNIGBRK_U16_GRAPHEME_PREV

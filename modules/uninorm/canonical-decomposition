@@ -9,7 +9,7 @@ uninorm/base
 uninorm/decomposition-table
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([1.1], [uninorm/canonical-decomposition])
+gl_LIBUNISTRING_MODULE([1.3], [uninorm/canonical-decomposition])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNINORM_CANONICAL_DECOMPOSITION

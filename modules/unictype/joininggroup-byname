@@ -10,7 +10,7 @@ unictype/base
 gperf
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([0.9.11], [unictype/joininggroup-byname])
+gl_LIBUNISTRING_MODULE([1.3], [unictype/joininggroup-byname])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNICTYPE_JOININGGROUP_BYNAME

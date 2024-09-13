@@ -11,7 +11,7 @@ uninorm/u8-normxfrm
 memcmp2
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([1.1], [uninorm/u8-normcoll])
+gl_LIBUNISTRING_MODULE([1.3], [uninorm/u8-normcoll])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNINORM_U8_NORMCOLL
