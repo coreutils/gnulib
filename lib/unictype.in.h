@@ -651,6 +651,7 @@ extern @GNULIB_UNICTYPE_PROPERTY_GRAPHEME_BASE_DLL_VARIABLE@ const uc_property_t
 extern @GNULIB_UNICTYPE_PROPERTY_GRAPHEME_EXTEND_DLL_VARIABLE@ const uc_property_t UC_PROPERTY_GRAPHEME_EXTEND;
 extern @GNULIB_UNICTYPE_PROPERTY_OTHER_GRAPHEME_EXTEND_DLL_VARIABLE@ const uc_property_t UC_PROPERTY_OTHER_GRAPHEME_EXTEND;
 extern @GNULIB_UNICTYPE_PROPERTY_GRAPHEME_LINK_DLL_VARIABLE@ const uc_property_t UC_PROPERTY_GRAPHEME_LINK;
+extern @GNULIB_UNICTYPE_PROPERTY_MODIFIER_COMBINING_MARK_DLL_VARIABLE@ const uc_property_t UC_PROPERTY_MODIFIER_COMBINING_MARK;
 /* Bidi.  */
 extern @GNULIB_UNICTYPE_PROPERTY_BIDI_CONTROL_DLL_VARIABLE@ const uc_property_t UC_PROPERTY_BIDI_CONTROL;
 extern @GNULIB_UNICTYPE_PROPERTY_BIDI_LEFT_TO_RIGHT_DLL_VARIABLE@ const uc_property_t UC_PROPERTY_BIDI_LEFT_TO_RIGHT;
@@ -802,6 +803,8 @@ extern bool uc_is_property_grapheme_extend (ucs4_t uc)
 extern bool uc_is_property_other_grapheme_extend (ucs4_t uc)
        _UC_ATTRIBUTE_CONST;
 extern bool uc_is_property_grapheme_link (ucs4_t uc)
+       _UC_ATTRIBUTE_CONST;
+extern bool uc_is_property_modifier_combining_mark (ucs4_t uc)
        _UC_ATTRIBUTE_CONST;
 extern bool uc_is_property_bidi_control (ucs4_t uc)
        _UC_ATTRIBUTE_CONST;

@@ -3486,6 +3486,13 @@ is_property_grapheme_link (unsigned int ch)
 
 /* See PropList.txt, UCD.html.  */
 static bool
+is_property_modifier_combining_mark (unsigned int ch)
+{
+  return ((unicode_properties[ch] & (1ULL << PROP_MODIFIER_COMBINING_MARK)) != 0);
+}
+
+/* See PropList.txt, UCD.html.  */
+static bool
 is_property_bidi_control (unsigned int ch)
 {
   return ((unicode_properties[ch] & (1ULL << PROP_BIDI_CONTROL)) != 0);
@@ -4016,6 +4023,7 @@ output_properties (const char *version)
   PROPERTY(grapheme_extend)
   PROPERTY(other_grapheme_extend)
   PROPERTY(grapheme_link)
+  PROPERTY(modifier_combining_mark)
   PROPERTY(bidi_control)
   PROPERTY(bidi_left_to_right)
   PROPERTY(bidi_hebrew_right_to_left)

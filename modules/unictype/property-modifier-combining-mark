@@ -1,0 +1,29 @@
+Description:
+Test whether a Unicode character is "modifier combining mark".
+
+Files:
+lib/unictype/pr_modifier_combining_mark.c
+lib/unictype/pr_modifier_combining_mark.h
+lib/unictype/bitmap.h
+
+Depends-on:
+unictype/base
+
+configure.ac:
+AC_REQUIRE([AC_C_INLINE])
+gl_UNICTYPE_H_REQUIRE_DEFAULTS
+gl_LIBUNISTRING_MODULE_WITH_VARIABLE([1.3], [unictype/property-modifier-combining-mark])
+
+Makefile.am:
+if LIBUNISTRING_COMPILE_UNICTYPE_PROPERTY_MODIFIER_COMBINING_MARK
+lib_SOURCES += unictype/pr_modifier_combining_mark.c
+endif
+
+Include:
+"unictype.h"
+
+License:
+LGPLv3+ or GPLv2+
+
+Maintainer:
+all

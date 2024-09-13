@@ -64,6 +64,7 @@ unictype/property-line-separator
 unictype/property-logical-order-exception
 unictype/property-lowercase
 unictype/property-math
+unictype/property-modifier-combining-mark
 unictype/property-non-break
 unictype/property-not-a-character
 unictype/property-numeric

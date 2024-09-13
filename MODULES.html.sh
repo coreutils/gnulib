@@ -3438,6 +3438,7 @@ func_all_modules ()
   func_module unictype/property-logical-order-exception
   func_module unictype/property-lowercase
   func_module unictype/property-math
+  func_module unictype/property-modifier-combining-mark
   func_module unictype/property-non-break
   func_module unictype/property-not-a-character
   func_module unictype/property-numeric
