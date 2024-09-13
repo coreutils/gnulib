@@ -10765,10 +10765,16 @@ debug_output_composition_tables (const char *filename)
 }
 
 static void
-output_composition_tables (const char *filename, const char *version)
+output_composition_tables (const char *filename, const char *filename2,
+                           const char *version)
 {
+  unsigned int max_code1;
+  unsigned int max_code2;
   FILE *stream;
   unsigned int ch;
+
+  max_code1 = 0;
+  max_code2 = 0;
 
   stream = fopen (filename, "w");
   if (stream == NULL)
@@ -10844,6 +10850,11 @@ output_composition_tables (const char *filename, const char *version)
                  Verify this.  */
               assert (strcmp (unicode_attributes[combined].combining, "0") == 0);
 
+              if (max_code1 < code1)
+                max_code1 = code1;
+              if (max_code2 < code2)
+                max_code2 = code2;
+
               fprintf (stream, "\"\\x%02x\\x%02x\\x%02x\\x%02x\\x%02x\\x%02x\", 0x%04x\n",
                        (code1 >> 16) & 0xff, (code1 >> 8) & 0xff, code1 & 0xff,
                        (code2 >> 16) & 0xff, (code2 >> 8) & 0xff, code2 & 0xff,
@@ -10855,6 +10866,37 @@ output_composition_tables (const char *filename, const char *version)
   if (ferror (stream) || fclose (stream))
     {
       fprintf (stderr, "error writing to '%s'\n", filename);
+      exit (1);
+    }
+
+  stream = fopen (filename2, "w");
+  if (stream == NULL)
+    {
+      fprintf (stderr, "cannot open '%s' for writing\n", filename2);
+      exit (1);
+    }
+
+  fprintf (stream, "/* DO NOT EDIT! GENERATED AUTOMATICALLY! */\n");
+  fprintf (stream, "/* Canonical composition of Unicode characters.  */\n");
+  fprintf (stream, "/* Generated automatically by gen-uni-tables.c for Unicode %s.  */\n",
+           version);
+  fprintf (stream, "\n");
+
+  fprintf (stream, "/* Copyright (C) 2009-2024 Free Software Foundation, Inc.\n");
+  fprintf (stream, "\n");
+  output_library_license (stream, true);
+  fprintf (stream, "\n");
+
+  fprintf (stream, "/* Maximum value of the first argument for which gl_uninorm_compose_lookup\n"
+                   "   can return a non-NULL value.  */\n");
+  fprintf (stream, "#define UNINORM_COMPOSE_MAX_ARG1 0x%x\n", max_code1);
+  fprintf (stream, "/* Maximum value of the second argument for which gl_uninorm_compose_lookup\n"
+                   "   can return a non-NULL value.  */\n");
+  fprintf (stream, "#define UNINORM_COMPOSE_MAX_ARG2 0x%x\n", max_code2);
+
+  if (ferror (stream) || fclose (stream))
+    {
+      fprintf (stderr, "error writing to '%s'\n", filename2);
       exit (1);
     }
 }
@@ -12031,7 +12073,7 @@ main (int argc, char * argv[])
 
   output_decomposition_tables ("uninorm/decomposition-table1.h", "uninorm/decomposition-table2.h", version);
   debug_output_composition_tables ("uninorm/composition.txt");
-  output_composition_tables ("uninorm/composition-table.gperf", version);
+  output_composition_tables ("uninorm/composition-table.gperf", "uninorm/composition-table-bounds.h", version);
 
   output_simple_mapping_test ("../tests/unicase/test-uc_toupper.c", "uc_toupper", to_upper, version);
   output_simple_mapping_test ("../tests/unicase/test-uc_tolower.c", "uc_tolower", to_lower, version);

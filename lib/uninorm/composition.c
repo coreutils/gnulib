@@ -25,11 +25,12 @@
 struct composition_rule { char codes[6]; unsigned int combined; };
 
 #include "composition-table.h"
+#include "composition-table-bounds.h"
 
 ucs4_t
 uc_composition (ucs4_t uc1, ucs4_t uc2)
 {
-  if (uc1 < 0x12000 && uc2 < 0x12000)
+  if (uc1 <= UNINORM_COMPOSE_MAX_ARG1 && uc2 <= UNINORM_COMPOSE_MAX_ARG2)
     {
       if (uc2 >= 0x1161 && uc2 < 0x1161 + 21
           && uc1 >= 0x1100 && uc1 < 0x1100 + 19)
