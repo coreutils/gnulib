@@ -9406,7 +9406,7 @@ output_lbrk_rules_as_tables (const char *filename, const char *version)
      even with intervening spaces.  */
   before = LBP_CL; after = LBP_NS; set_table_cell (prohibited_no_sp, true);
                                    set_table_cell (prohibited_with_sp, true);
-  before = LBP_CL; after = LBP_CP; set_table_cell (prohibited_no_sp, true);
+  before = LBP_CP; after = LBP_NS; set_table_cell (prohibited_no_sp, true);
                                    set_table_cell (prohibited_with_sp, true);
 
   /* (LB15d) Do not break before ';', ',', '.', even after spaces.  */
