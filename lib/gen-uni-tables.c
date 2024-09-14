@@ -9480,10 +9480,10 @@ output_lbrk_rules_as_tables (const char *filename, const char *version)
   /* (LB10) Treat any remaining combining mark or ZWJ as AL.  */
   /* We resolve LBP_CM at runtime, before accessing the table.  */
   for (before = 0; before < NLBP; before++)
-    table[before][LBP_ZWJ] = table[before][LBP_AL];
+    table[before][LBP_ZWJ] = table[before][LBP_AL1];
   for (after = 0; after < NLBP; after++)
-    table[LBP_ZWJ][after] = table[LBP_AL][after];
-  table[LBP_ZWJ][LBP_ZWJ] = table[LBP_AL][LBP_AL];
+    table[LBP_ZWJ][after] = table[LBP_AL1][after];
+  table[LBP_ZWJ][LBP_ZWJ] = table[LBP_AL1][LBP_AL1];
 
   /* (LB8a) Do not break between a zero width joiner and an ideograph, emoji
      base or emoji modifier.  */
@@ -9495,12 +9495,25 @@ output_lbrk_rules_as_tables (const char *filename, const char *version)
   (LB30a) Break between two regional indicator symbols if and only if there are
           an even number of regional indicators preceding the position of the
           break.
-  (LB21a) Don't break after Hebrew + Hyphen.
+  (LB28a) Don't break inside orthographic syllables of Brahmic scripts, lines
+          3 and 4.
+  (LB25) Do not break between the following pairs of classes relevant to
+         numbers, lines with NU (SY|IS)* or OP NU or OP IS NU.
+  (LB21a) Don't break after Hebrew + Hyphen/Break-After, before non-Hebrew.
+  (LB20a) Don't break after a word-initial hyphen.
   (LB20) Break before and after unresolved CB.
          We resolve LBP_CB at runtime, before accessing the table.
+  (LB19a) Don't break on either side of ambiguous quotation marks, except next
+          to an EastAsian character.
+  (LB15c) Break before a decimal mark that follows a space.
+  Part of (LB15b) Do not break before an ambiguous quotation that is a final
+                  punctuation, even after spaces.
+  Part of (LB15a) Do not break before an ambiguous quotation that is an initial
+                  punctuation, even after spaces.
   (LB9) Do not break a combining character sequence; treat it as if it has the
         line breaking class of the base character in all of the following rules.
         Treat ZWJ as if it were CM.
+  Part of (LB8a) Don't break right after a zero-width joiner.
   (LB8) Break before any character following a zero-width space, even if one
         or more spaces intervene.
         We handle LBP_ZW at runtime, before accessing the table.
