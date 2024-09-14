@@ -96,6 +96,13 @@ enum
 
 #include "lbrkprop1.h"
 
+/* Combining prop and ea to a table entry.  */
+#define PROP_EA(prop,ea) (((prop) << 1) | (ea))
+
+/* Splitting a table entry into prop and ea.  */
+#define PROP(entry) ((entry) >> 1)
+#define EA(entry) ((entry) & 1)
+
 /* Returns (prop << 1) | ea, where
      - prop is the line breaking property,
      - ea is the EastAsian property (1 bit)
@@ -118,15 +125,8 @@ unilbrkprop_lookup (ucs4_t uc)
             }
         }
     }
-  return LBP_XX;
+  return PROP_EA (LBP_XX, 0);
 }
-
-/* Splitting a table entry into prop and ea.  */
-#define PROP(entry) ((entry) >> 1)
-#define EA(entry) ((entry) & 1)
-
-/* Combining prop and ea to a table entry.  */
-#define PROP_EA(prop,ea) (((prop) << 1) | (ea))
 
 
 /* Table indexed by two line breaking classifications.  */
