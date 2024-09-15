@@ -115,7 +115,7 @@ u32_possible_linebreaks_loop (const uint32_t *s, size_t n, const char *encoding,
               lookahead2_prop_ea = PROP_EA (LBP_BK, 0);
             }
 
-          bool nus = /* ending at the last character, there was a character
+          bool nus = /* ending at the previous character, there was a character
                         with line break property LBP_NU and since then only
                         characters with line break property LBP_SY or LBP_IS */
             (prev_prop == LBP_NU
@@ -129,10 +129,8 @@ u32_possible_linebreaks_loop (const uint32_t *s, size_t n, const char *encoding,
                  a CR-LF sequence.  */
               if (prev_prop == cr && prop == LBP_LF)
                 p[-1] = UC_BREAK_CR_BEFORE_LF;
-              prev_prop = prop;
               last_prop = LBP_BK;
               seen_space = NULL;
-              prev_initial_hyphen = false;
             }
           else
             {
@@ -378,33 +376,33 @@ u32_possible_linebreaks_loop (const uint32_t *s, size_t n, const char *encoding,
                   last_prop = prop;
                   seen_space = NULL;
                 }
-
-              /* (LB9) Treat X (CM | ZWJ)* as if it were X, where X is any line
-                 break class except BK, CR, LF, NL, SP, or ZW.  */
-              if (!((prop == LBP_CM || prop == LBP_ZWJ)
-                    && !(prev_prop == LBP_BK || prev_prop == LBP_LF || prev_prop == LBP_CR
-                         || prev_prop == LBP_SP || prev_prop == LBP_ZW)))
-                {
-                  prev_initial_hyphen =
-                    (prop == LBP_HY || uc == 0x2010)
-                    && (prev_prop == LBP_BK || prev_prop == LBP_CR || prev_prop == LBP_LF
-                        || prev_prop == LBP_SP || prev_prop == LBP_ZW
-                        || prev_prop == LBP_CB || prev_prop == LBP_GL);
-                  prev_prop = (prop == LBP_VI && (prev_prop == LBP_AK
-                                                  || prev_prop == LBP_AL2
-                                                  || prev_prop == LBP_AS)
-                               ? LBP_AKLS_VI :
-                               prev_prop == LBP_HL && (prop == LBP_HY
-                                                       || (prop == LBP_BA && !ea))
-                               ? LBP_HL_BA :
-                               prop);
-                  prev2_ea = prev_ea;
-                  prev_ea = ea;
-                }
-              preceding_prop = prop;
             }
 
-          prev_nus = nus;
+          /* (LB9) Treat X (CM | ZWJ)* as if it were X, where X is any line
+             break class except BK, CR, LF, NL, SP, or ZW.  */
+          if (!((prop == LBP_CM || prop == LBP_ZWJ)
+                && !(prev_prop == LBP_BK || prev_prop == LBP_LF || prev_prop == LBP_CR
+                     || prev_prop == LBP_SP || prev_prop == LBP_ZW)))
+            {
+              prev_initial_hyphen =
+                (prop == LBP_HY || uc == 0x2010)
+                && (prev_prop == LBP_BK || prev_prop == LBP_CR || prev_prop == LBP_LF
+                    || prev_prop == LBP_SP || prev_prop == LBP_ZW
+                    || prev_prop == LBP_CB || prev_prop == LBP_GL);
+              prev_prop = (prop == LBP_VI && (prev_prop == LBP_AK
+                                              || prev_prop == LBP_AL2
+                                              || prev_prop == LBP_AS)
+                           ? LBP_AKLS_VI :
+                           prev_prop == LBP_HL && (prop == LBP_HY
+                                                   || (prop == LBP_BA && !ea))
+                           ? LBP_HL_BA :
+                           prop);
+              prev2_ea = prev_ea;
+              prev_ea = ea;
+              prev_nus = nus;
+            }
+
+          preceding_prop = prop;
 
           if (prop == LBP_RI)
             ri_count++;
