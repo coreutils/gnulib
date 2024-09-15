@@ -65,10 +65,10 @@ int
 main (int argc, char *argv[])
 {
   const char *filename;
-  char line[4096];
-  int exit_code;
   FILE *stream;
+  int exit_code;
   int lineno;
+  char line[4096];
 
   if (argc != 2)
     {
@@ -88,25 +88,23 @@ main (int argc, char *argv[])
 
   exit_code = 0;
   lineno = 0;
-  while (fgets (line, sizeof line, stream))
+  while (fgets (line, sizeof (line), stream))
     {
-      char *comment;
-      const char *p;
-      uint32_t input[100];
-      char breaks[101];
-      char breaks_expected[101];
-      int i;
-
       lineno++;
 
-      memset (breaks, 0, sizeof (breaks));
-      memset (breaks_expected, 0, sizeof (breaks_expected));
-
-      comment = strchr (line, '#');
+      /* Cut off the trailing comment, if any.  */
+      char *comment = strchr (line, '#');
       if (comment != NULL)
         *comment = '\0';
+      /* Is the remaining line blank?  */
       if (line[strspn (line, " \t\r\n")] == '\0')
         continue;
+
+      const char *p;
+      uint32_t input[100];
+      char breaks[100];
+      char breaks_expected[101];
+      int i;
 
       i = 0;
       p = line;
@@ -170,7 +168,7 @@ main (int argc, char *argv[])
                        input[j], wordbreakproperty_to_string (input_wbp));
             }
           fprintf (stderr, "\n");
-          fprintf (stderr, "%s:%d: actual: ", filename, lineno);
+          fprintf (stderr, "%s:%d: actual:   ", filename, lineno);
           for (j = 0; j < i - 1; j++)
             {
               int input_wbp = uc_wordbreak_property (input[j]);
