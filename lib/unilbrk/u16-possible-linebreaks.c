@@ -158,51 +158,6 @@ u16_possible_linebreaks_loop (const uint16_t *s, size_t n, const char *encoding,
                   /* This is arbitrary.  */
                   prop = LBP_AL1;
                   break;
-                case LBP_QU2:
-                  /* For (LB15a): Replace LBP_QU2 with LBP_QU1 if the previous
-                     character's line break property was not one of
-                     BK, CR, LF, OP, QU, GL, SP, ZW.  */
-                  switch (prev_prop)
-                    {
-                    case LBP_BK:
-                    case LBP_CR:
-                    case LBP_LF:
-                    case LBP_OP1: case LBP_OP2:
-                    case LBP_QU1: case LBP_QU2: case LBP_QU3:
-                    case LBP_GL:
-                    case LBP_SP:
-                    case LBP_ZW:
-                      break;
-                    default:
-                      prop = LBP_QU1;
-                      break;
-                    }
-                  break;
-                case LBP_QU3:
-                  /* For (LB15b): Replace LBP_QU3 with LBP_QU1 if the next
-                     character's line break property is not one of
-                     BK, CR, LF, SP, GL, WJ, CL, QU, CP, EX, IS, SY, ZW.  */
-                  switch (PROP (lookahead1_prop_ea))
-                    {
-                    case LBP_BK:
-                    case LBP_CR:
-                    case LBP_LF:
-                    case LBP_SP:
-                    case LBP_GL:
-                    case LBP_WJ:
-                    case LBP_CL:
-                    case LBP_QU1: case LBP_QU2: case LBP_QU3:
-                    case LBP_CP1: case LBP_CP2:
-                    case LBP_EX:
-                    case LBP_IS:
-                    case LBP_SY:
-                    case LBP_ZW:
-                      break;
-                    default:
-                      prop = LBP_QU1;
-                      break;
-                    }
-                  break;
                 }
 
               /* Deal with spaces and combining characters.  */
@@ -343,7 +298,35 @@ u16_possible_linebreaks_loop (const uint16_t *s, size_t n, const char *encoding,
                     }
                   else
                     {
-                      switch (unilbrk_table [last_prop] [prop])
+                      int this_prop = prop;
+                      if (prop == LBP_QU3)
+                        {
+                          /* For (LB15b): Replace LBP_QU3 with LBP_QU1 if the
+                             next character's line break property is not one of
+                             BK, CR, LF, SP, GL, WJ, CL, QU, CP, EX, IS, SY, ZW.  */
+                          switch (PROP (lookahead1_prop_ea))
+                            {
+                            case LBP_BK:
+                            case LBP_CR:
+                            case LBP_LF:
+                            case LBP_SP:
+                            case LBP_GL:
+                            case LBP_WJ:
+                            case LBP_CL:
+                            case LBP_QU1: case LBP_QU2: case LBP_QU3:
+                            case LBP_CP1: case LBP_CP2:
+                            case LBP_EX:
+                            case LBP_IS:
+                            case LBP_SY:
+                            case LBP_ZW:
+                              break;
+                            default:
+                              this_prop = LBP_QU1;
+                              break;
+                            }
+                        }
+
+                      switch (unilbrk_table [last_prop] [this_prop])
                         {
                         case D:
                           *p = UC_BREAK_POSSIBLE;
@@ -358,6 +341,29 @@ u16_possible_linebreaks_loop (const uint16_t *s, size_t n, const char *encoding,
                           abort ();
                         }
                     }
+
+                  if (prop == LBP_QU2)
+                    {
+                      /* For (LB15a): Replace LBP_QU2 with LBP_QU1 if the
+                         previous character's line break property was not one of
+                         BK, CR, LF, OP, QU, GL, SP, ZW.  */
+                      switch (prev_prop)
+                        {
+                        case LBP_BK:
+                        case LBP_CR:
+                        case LBP_LF:
+                        case LBP_OP1: case LBP_OP2:
+                        case LBP_QU1: case LBP_QU2: case LBP_QU3:
+                        case LBP_GL:
+                        case LBP_SP:
+                        case LBP_ZW:
+                          break;
+                        default:
+                          prop = LBP_QU1;
+                          break;
+                        }
+                    }
+
                   last_prop = prop;
                   seen_space = NULL;
                 }

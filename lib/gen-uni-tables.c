@@ -9424,7 +9424,7 @@ output_lbrk_rules_as_tables (const char *filename, const char *version)
                        set_table_cell (prohibited_with_sp, true);
     }
 
-  /* (LB15a) Do not break before an ambiguous quotation that is an initial
+  /* (LB15a) Do not break after an ambiguous quotation that is an initial
      punctuation, even after spaces.  */
   for (after = 0; after < NLBP; after++)
     {
