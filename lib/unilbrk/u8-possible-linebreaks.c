@@ -78,17 +78,20 @@ u8_possible_linebreaks_loop (const uint8_t *s, size_t n, const char *encoding,
           lookahead2_prop_ea = PROP_EA (LBP_BK, 0);
         }
 
-      int prev_prop = LBP_BK; /* line break property of last character */
-      int prev_ea = 0;        /* EastAsian property of last character */
-      int prev2_ea = 0;       /* EastAsian property of character before the
-                                 last character */
-      bool prev_initial_hyphen = false; /* the last character was a word-initial
-                                           hyphen or U+2010 */
-      bool prev_nus = false; /* before the last character, there was a character
+      int preceding_prop = LBP_BK; /* line break property of preceding character */
+      int prev_prop = LBP_BK; /* line break property of previous character
+                                 (= last character, ignoring intervening characters of class CM or ZWJ) */
+      int prev_ea = 0;        /* EastAsian property of previous character
+                                 (= last character, ignoring intervening characters of class CM or ZWJ) */
+      int prev2_ea = 0;       /* EastAsian property of character before the previous character */
+      bool prev_initial_hyphen = false; /* the previous character was a
+                                           word-initial hyphen or U+2010 */
+      bool prev_nus = false; /* before the previous character, there was a character
                                 with line break property LBP_NU and since then
                                 only characters with line break property LBP_SY
                                 or LBP_IS */
-      int last_prop = LBP_BK; /* line break property of last non-space character */
+      int last_prop = LBP_BK; /* line break property of last non-space character
+                                 (= last character, ignoring intervening characters of class SP or CM or ZWJ) */
       char *seen_space = NULL; /* Was a space seen after the last non-space character? */
 
       /* Number of consecutive regional indicator (RI) characters seen
@@ -221,7 +224,7 @@ u8_possible_linebreaks_loop (const uint8_t *s, size_t n, const char *encoding,
                       /* (LB8) Break after zero-width space.  */
                       *p = UC_BREAK_POSSIBLE;
                     }
-                  else if (prev_prop == LBP_ZWJ)
+                  else if (preceding_prop == LBP_ZWJ)
                     {
                       /* (LB8a) Don't break right after a zero-width joiner.  */
                       *p = UC_BREAK_PROHIBITED;
@@ -368,21 +371,29 @@ u8_possible_linebreaks_loop (const uint8_t *s, size_t n, const char *encoding,
                   seen_space = NULL;
                 }
 
-              prev_initial_hyphen =
-                (prop == LBP_HY || uc == 0x2010)
-                && (prev_prop == LBP_BK || prev_prop == LBP_CR || prev_prop == LBP_LF
-                    || prev_prop == LBP_SP || prev_prop == LBP_ZW
-                    || prev_prop == LBP_CB || prev_prop == LBP_GL);
-              prev_prop = (prop == LBP_VI && (prev_prop == LBP_AK
-                                              || prev_prop == LBP_AL2
-                                              || prev_prop == LBP_AS)
-                           ? LBP_AKLS_VI :
-                           prev_prop == LBP_HL && (prop == LBP_HY
-                                                   || (prop == LBP_BA && !ea))
-                           ? LBP_HL_BA :
-                           prop);
-              prev2_ea = prev_ea;
-              prev_ea = ea;
+              /* (LB9) Treat X (CM | ZWJ)* as if it were X, where X is any line
+                 break class except BK, CR, LF, NL, SP, or ZW.  */
+              if (!((prop == LBP_CM || prop == LBP_ZWJ)
+                    && !(prev_prop == LBP_BK || prev_prop == LBP_LF || prev_prop == LBP_CR
+                         || prev_prop == LBP_SP || prev_prop == LBP_ZW)))
+                {
+                  prev_initial_hyphen =
+                    (prop == LBP_HY || uc == 0x2010)
+                    && (prev_prop == LBP_BK || prev_prop == LBP_CR || prev_prop == LBP_LF
+                        || prev_prop == LBP_SP || prev_prop == LBP_ZW
+                        || prev_prop == LBP_CB || prev_prop == LBP_GL);
+                  prev_prop = (prop == LBP_VI && (prev_prop == LBP_AK
+                                                  || prev_prop == LBP_AL2
+                                                  || prev_prop == LBP_AS)
+                               ? LBP_AKLS_VI :
+                               prev_prop == LBP_HL && (prop == LBP_HY
+                                                       || (prop == LBP_BA && !ea))
+                               ? LBP_HL_BA :
+                               prop);
+                  prev2_ea = prev_ea;
+                  prev_ea = ea;
+                }
+              preceding_prop = prop;
             }
 
           prev_nus = nus;
