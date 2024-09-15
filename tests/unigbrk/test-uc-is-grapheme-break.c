@@ -59,10 +59,10 @@ int
 main (int argc, char *argv[])
 {
   const char *filename;
-  char line[1024];
-  int exit_code;
   FILE *stream;
+  int exit_code;
   int lineno;
+  char line[1024];
 
   if (argc != 2)
     {
@@ -82,9 +82,18 @@ main (int argc, char *argv[])
 
   exit_code = 0;
   lineno = 0;
-  while (fgets (line, sizeof line, stream))
+  while (fgets (line, sizeof (line), stream))
     {
-      char *comment;
+      lineno++;
+
+      /* Cut off the trailing comment, if any.  */
+      char *comment = strchr (line, '#');
+      if (comment != NULL)
+        *comment = '\0';
+      /* Is the remaining line blank?  */
+      if (line[strspn (line, " \t\r\n")] == '\0')
+        continue;
+
       const char *p;
       ucs4_t prev;
       int last_char_prop;
@@ -94,14 +103,6 @@ main (int argc, char *argv[])
       bool emoji_modifier_sequence;
       bool emoji_modifier_sequence_before_last_char;
       size_t ri_count;
-
-      lineno++;
-
-      comment = strchr (line, '#');
-      if (comment != NULL)
-        *comment = '\0';
-      if (line[strspn (line, " \t\r\n")] == '\0')
-        continue;
 
       last_char_prop = -1;
       incb_consonant_extended = false;

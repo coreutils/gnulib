@@ -97,9 +97,9 @@ int
 main (int argc, char *argv[])
 {
   const char *filename;
-  char line[1024];
   FILE *stream;
   int lineno;
+  char line[1024];
 
   if (argc != 2)
     {
@@ -118,21 +118,22 @@ main (int argc, char *argv[])
     }
 
   lineno = 0;
-  while (fgets (line, sizeof line, stream))
+  while (fgets (line, sizeof (line), stream))
     {
-      char *comment;
+      lineno++;
+
+      /* Cut off the trailing comment, if any.  */
+      char *comment = strchr (line, '#');
+      if (comment != NULL)
+        *comment = '\0';
+      /* Is the remaining line blank?  */
+      if (line[strspn (line, " \t\r\n")] == '\0')
+        continue;
+
       const char *p;
       ucs4_t s[16];
       char breaks[16];
       size_t i = 0;
-
-      lineno++;
-
-      comment = strchr (line, '#');
-      if (comment != NULL)
-        *comment = '\0';
-      if (line[strspn (line, " \t\r\n")] == '\0')
-        continue;
 
       s[0] = 0;
       p = line;
