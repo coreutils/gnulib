@@ -54,7 +54,7 @@ const unsigned char unilbrk_table[41][41] =
 /* QU1 */ {  P,  I,  I,  I,  I,  I,  P,  P,  P,  P,  I,  I,  I,  I,  I,  I,  P,  P,  I,  I,  I,  P,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I, },
 /* QU2 */ {  P,  P,  P,  P,  P,  P,  P,  P,  P,  P,  P,  P,  P,  P,  P,  P,  P,  P,  P,  P,  P,  P,  P,  P,  P,  P,  P,  P,  P,  P,  P,  P,  P,  P,  P,  P,  P,  P,  P,  P,  P, },
 /* QU3 */ {  P,  I,  D,  I,  D,  I,  P,  P,  P,  P,  I,  I,  D,  D,  I,  D,  P,  P,  D,  D,  D,  P,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D, },
-/*  IS */ {  P,  I,  D,  I,  D,  I,  P,  P,  P,  P,  I,  I,  D,  D,  I,  D,  P,  P,  I,  D,  D,  P,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D,  D, },
+/*  IS */ {  P,  I,  D,  I,  D,  I,  P,  P,  P,  P,  I,  I,  D,  D,  I,  D,  P,  P,  I,  D,  D,  P,  I,  I,  D,  D,  D,  D,  D,  D,  D,  I,  D,  D,  D,  D,  D,  D,  I,  D,  D, },
 /*  NU */ {  P,  I,  D,  I,  D,  I,  P,  P,  P,  P,  I,  I,  I,  D,  I,  D,  P,  P,  D,  D,  D,  P,  I,  I,  D,  D,  D,  D,  D,  D,  D,  I,  D,  D,  D,  D,  D,  D,  I,  D,  D, },
 /*  PO */ {  P,  I,  D,  I,  D,  I,  P,  P,  P,  P,  I,  I,  D,  D,  I,  D,  P,  P,  I,  D,  D,  P,  I,  I,  D,  D,  D,  D,  D,  D,  D,  I,  D,  D,  D,  D,  D,  D,  I,  D,  D, },
 /*  PR */ {  P,  I,  D,  I,  D,  I,  P,  P,  P,  P,  I,  I,  D,  D,  I,  D,  P,  P,  I,  D,  D,  P,  I,  I,  I,  I,  I,  I,  I,  I,  I,  I,  D,  D,  D,  D,  D,  D,  I,  I,  I, },

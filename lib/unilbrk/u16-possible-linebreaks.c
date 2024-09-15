@@ -290,6 +290,14 @@ u16_possible_linebreaks_loop (const uint16_t *s, size_t n, const char *encoding,
                          Brahmic scripts, line 4.  */
                       *p = UC_BREAK_PROHIBITED;
                     }
+                  else if (last_prop == LBP_IS && uc == 0x003C)
+                    {
+                      /* Partially disable (LB29) Do not break between numeric
+                         punctuation and alphabetics ("e.g.").  We find it
+                         desirable to break before the HTML tag "</P>" in
+                         strings like "<P>Some sentence.</P>".  */
+                      *p = UC_BREAK_POSSIBLE;
+                    }
                   else if (last_prop == LBP_RI && prop == LBP_RI)
                     {
                       /* (LB30a) Break between two regional indicator symbols
