@@ -183,7 +183,12 @@ u32_possible_linebreaks_loop (const uint32_t *s, size_t n, const char *encoding,
                       last_prop = LBP_AL1;
                       seen_space = NULL;
                     }
-                  else if (last_prop == LBP_ZW || seen_space != NULL)
+                  else if (last_prop == LBP_ZW
+                           || (seen_space != NULL
+                               /* (LB14) has higher priority than (LB18).  */
+                               && !(last_prop == LBP_OP1 || last_prop == LBP_OP2)
+                               /* (LB15a) has higher priority than (LB18).  */
+                               && !(last_prop == LBP_QU2)))
                     {
                       /* (LB8) Break after zero-width space.  */
                       /* (LB18) Break after spaces.
@@ -229,7 +234,9 @@ u32_possible_linebreaks_loop (const uint32_t *s, size_t n, const char *encoding,
                       *p = UC_BREAK_POSSIBLE;
                     }
                   else if (((prop == LBP_QU1 || prop == LBP_QU2 || prop == LBP_QU3)
-                            && (! prev_ea || ! EA (lookahead1_prop_ea)))
+                            && (! prev_ea || ! EA (lookahead1_prop_ea))
+                            /* (LB18) has higher priority than (LB19a).  */
+                            && prev_prop != LBP_SP)
                            || ((prev_prop == LBP_QU1 || prev_prop == LBP_QU2 || prev_prop == LBP_QU3)
                                && (! prev2_ea || ! ea)))
                     {
