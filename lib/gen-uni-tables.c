@@ -12232,6 +12232,10 @@ main (int argc, char * argv[])
  *      > ../tests/unigbrk/GraphemeBreakTest.txt \\
  *   && { sed -e 's/^/# /' -e 's/ $//' < /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/license.txt; \\
  *        echo; \\
+ *        cat /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/16.0.0/ucd/auxiliary/LineBreakTest.txt; } \\
+ *      > ../tests/unilbrk/LineBreakTest.txt \\
+ *   && { sed -e 's/^/# /' -e 's/ $//' < /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/license.txt; \\
+ *        echo; \\
  *        cat /media/nas/bruno/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/16.0.0/ucd/auxiliary/WordBreakTest.txt; } \\
  *      > ../tests/uniwbrk/WordBreakTest.txt"
  * End:

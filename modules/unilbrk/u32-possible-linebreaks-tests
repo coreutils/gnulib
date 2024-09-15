@@ -1,5 +1,8 @@
 Files:
 tests/unilbrk/test-u32-possible-linebreaks.c
+tests/unilbrk/test-uc-possible-linebreaks.c
+tests/unilbrk/test-uc-possible-linebreaks.sh
+tests/unilbrk/LineBreakTest.txt
 tests/macros.h
 
 Depends-on:
@@ -7,7 +10,9 @@ Depends-on:
 configure.ac:
 
 Makefile.am:
-TESTS += test-u32-possible-linebreaks
-check_PROGRAMS += test-u32-possible-linebreaks
+TESTS += test-u32-possible-linebreaks unilbrk/test-uc-possible-linebreaks.sh
+check_PROGRAMS += test-u32-possible-linebreaks test-uc-possible-linebreaks
 test_u32_possible_linebreaks_SOURCES = unilbrk/test-u32-possible-linebreaks.c
 test_u32_possible_linebreaks_LDADD = $(LDADD) $(LIBUNISTRING)
+test_uc_possible_linebreaks_SOURCES = unilbrk/test-uc-possible-linebreaks.c
+test_uc_possible_linebreaks_LDADD = $(LDADD) $(LIBUNISTRING)
