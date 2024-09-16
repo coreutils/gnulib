@@ -33,10 +33,11 @@ lookup_withtable (ucs4_t uc)
       if (lookup1 >= 0)
         {
           unsigned int index2 = (uc >> category_header_2) & category_header_3;
-          int lookup2 = u_category.level2[lookup1 + index2];
-          if (lookup2 >= 0)
+          unsigned int lookup2 = u_category.level2[lookup1 + index2];
+          if (lookup2 > 0)
             {
-              unsigned int index3 = ((uc & category_header_4) + lookup2) * 5;
+              unsigned int index3 =
+                ((uc & category_header_4) + (lookup2 - 1)) * 5;
               /* level3 contains 5-bit values, packed into 16-bit words.  */
               unsigned int lookup3 =
                 (((unsigned int) u_category.level3[index3>>4]

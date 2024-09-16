@@ -1139,7 +1139,7 @@ output_category (const char *filename, const char *version)
   fprintf (stream, "struct\n");
   fprintf (stream, "  {\n");
   fprintf (stream, "    int level1[%zu];\n", t.level1_size);
-  fprintf (stream, "    short level2[%zu << %d];\n", t.level2_size, t.q);
+  fprintf (stream, "    unsigned short level2[%zu << %d];\n", t.level2_size, t.q);
   fprintf (stream, "    unsigned short level3[%zu * %d + 1];\n", t.level3_size,
            (1 << t.p) * 5 / 16);
   fprintf (stream, "  }\n");
@@ -1174,11 +1174,13 @@ output_category (const char *filename, const char *version)
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
       offset = ((uint32_t *) (t.result + level2_offset))[i];
+      /* To make the level2 values fit in 16 bits, we use 'unsigned short'
+         instead of 'short' and add 1 to each value.  */
       if (offset == 0)
-        fprintf (stream, " %5d", -1);
+        fprintf (stream, " %5d", -1 + 1);
       else
         fprintf (stream, " %5zu",
-                 (offset - level3_offset) / sizeof (uint8_t));
+                 (offset - level3_offset) / sizeof (uint8_t) + 1);
       if (i+1 < t.level2_size << t.q)
         fprintf (stream, ",");
     }
