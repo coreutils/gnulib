@@ -180,11 +180,11 @@ typedef unsigned long fenv_t;
 #   undef fegetenv
 #   define fegetenv rpl_fegetenv
 #  endif
-_GL_FUNCDECL_RPL (fegetenv, int, (fenv_t *envp));
+_GL_FUNCDECL_RPL (fegetenv, int, (fenv_t *envp), );
 _GL_CXXALIAS_RPL (fegetenv, int, (fenv_t *envp));
 # else
 #  if !@HAVE_FEGETENV@
-_GL_FUNCDECL_SYS (fegetenv, int, (fenv_t *envp));
+_GL_FUNCDECL_SYS (fegetenv, int, (fenv_t *envp), );
 #  endif
 _GL_CXXALIAS_SYS (fegetenv, int, (fenv_t *envp));
 # endif
@@ -201,11 +201,11 @@ _GL_CXXALIASWARN (fegetenv);
 #   undef fesetenv
 #   define fesetenv rpl_fesetenv
 #  endif
-_GL_FUNCDECL_RPL (fesetenv, int, (fenv_t const *envp));
+_GL_FUNCDECL_RPL (fesetenv, int, (fenv_t const *envp), );
 _GL_CXXALIAS_RPL (fesetenv, int, (fenv_t const *envp));
 # else
 #  if !@HAVE_FESETENV@
-_GL_FUNCDECL_SYS (fesetenv, int, (fenv_t const *envp));
+_GL_FUNCDECL_SYS (fesetenv, int, (fenv_t const *envp), );
 #  endif
 _GL_CXXALIAS_SYS (fesetenv, int, (fenv_t const *envp));
 # endif
@@ -223,11 +223,11 @@ _GL_CXXALIASWARN (fesetenv);
 #   undef feupdateenv
 #   define feupdateenv rpl_feupdateenv
 #  endif
-_GL_FUNCDECL_RPL (feupdateenv, int, (fenv_t const *envp));
+_GL_FUNCDECL_RPL (feupdateenv, int, (fenv_t const *envp), );
 _GL_CXXALIAS_RPL (feupdateenv, int, (fenv_t const *envp));
 # else
 #  if !@HAVE_FEUPDATEENV@
-_GL_FUNCDECL_SYS (feupdateenv, int, (fenv_t const *envp));
+_GL_FUNCDECL_SYS (feupdateenv, int, (fenv_t const *envp), );
 #  endif
 _GL_CXXALIAS_SYS (feupdateenv, int, (fenv_t const *envp));
 # endif
@@ -244,11 +244,11 @@ _GL_CXXALIASWARN (feupdateenv);
 #   undef feholdexcept
 #   define feholdexcept rpl_feholdexcept
 #  endif
-_GL_FUNCDECL_RPL (feholdexcept, int, (fenv_t *envp));
+_GL_FUNCDECL_RPL (feholdexcept, int, (fenv_t *envp), );
 _GL_CXXALIAS_RPL (feholdexcept, int, (fenv_t *envp));
 # else
 #  if !@HAVE_FEHOLDEXCEPT@
-_GL_FUNCDECL_SYS (feholdexcept, int, (fenv_t *envp));
+_GL_FUNCDECL_SYS (feholdexcept, int, (fenv_t *envp), );
 #  endif
 _GL_CXXALIAS_SYS (feholdexcept, int, (fenv_t *envp));
 # endif
@@ -384,11 +384,11 @@ _GL_CXXALIASWARN (feholdexcept);
 #   undef fegetround
 #   define fegetround rpl_fegetround
 #  endif
-_GL_FUNCDECL_RPL (fegetround, int, (void));
+_GL_FUNCDECL_RPL (fegetround, int, (void), );
 _GL_CXXALIAS_RPL (fegetround, int, (void));
 # else
 #  if !@HAVE_FEGETROUND@
-_GL_FUNCDECL_SYS (fegetround, int, (void));
+_GL_FUNCDECL_SYS (fegetround, int, (void), );
 #  endif
 _GL_CXXALIAS_SYS (fegetround, int, (void));
 # endif
@@ -404,11 +404,11 @@ _GL_CXXALIASWARN (fegetround);
 #   undef fesetround
 #   define fesetround rpl_fesetround
 #  endif
-_GL_FUNCDECL_RPL (fesetround, int, (int rounding_direction));
+_GL_FUNCDECL_RPL (fesetround, int, (int rounding_direction), );
 _GL_CXXALIAS_RPL (fesetround, int, (int rounding_direction));
 # else
 #  if !@HAVE_FESETROUND@
-_GL_FUNCDECL_SYS (fesetround, int, (int rounding_direction));
+_GL_FUNCDECL_SYS (fesetround, int, (int rounding_direction), );
 #  endif
 _GL_CXXALIAS_SYS (fesetround, int, (int rounding_direction));
 # endif
@@ -554,11 +554,11 @@ _GL_CXXALIASWARN (fesetround);
 #   undef feclearexcept
 #   define feclearexcept rpl_feclearexcept
 #  endif
-_GL_FUNCDECL_RPL (feclearexcept, int, (int exceptions));
+_GL_FUNCDECL_RPL (feclearexcept, int, (int exceptions), );
 _GL_CXXALIAS_RPL (feclearexcept, int, (int exceptions));
 # else
 #  if !@HAVE_FECLEAREXCEPT@
-_GL_FUNCDECL_SYS (feclearexcept, int, (int exceptions));
+_GL_FUNCDECL_SYS (feclearexcept, int, (int exceptions), );
 #  endif
 _GL_CXXALIAS_SYS (feclearexcept, int, (int exceptions));
 # endif
@@ -573,11 +573,11 @@ _GL_CXXALIASWARN (feclearexcept);
 #   undef feraiseexcept
 #   define feraiseexcept rpl_feraiseexcept
 #  endif
-_GL_FUNCDECL_RPL (feraiseexcept, int, (int exceptions));
+_GL_FUNCDECL_RPL (feraiseexcept, int, (int exceptions), );
 _GL_CXXALIAS_RPL (feraiseexcept, int, (int exceptions));
 # else
 #  if !@HAVE_FERAISEEXCEPT@
-_GL_FUNCDECL_SYS (feraiseexcept, int, (int exceptions));
+_GL_FUNCDECL_SYS (feraiseexcept, int, (int exceptions), );
 #  endif
 _GL_CXXALIAS_SYS (feraiseexcept, int, (int exceptions));
 # endif
@@ -592,11 +592,11 @@ _GL_CXXALIASWARN (feraiseexcept);
 #   undef fetestexcept
 #   define fetestexcept rpl_fetestexcept
 #  endif
-_GL_FUNCDECL_RPL (fetestexcept, int, (int exceptions));
+_GL_FUNCDECL_RPL (fetestexcept, int, (int exceptions), );
 _GL_CXXALIAS_RPL (fetestexcept, int, (int exceptions));
 # else
 #  if !@HAVE_FETESTEXCEPT@
-_GL_FUNCDECL_SYS (fetestexcept, int, (int exceptions));
+_GL_FUNCDECL_SYS (fetestexcept, int, (int exceptions), );
 #  endif
 _GL_CXXALIAS_SYS (fetestexcept, int, (int exceptions));
 # endif
@@ -613,11 +613,11 @@ _GL_CXXALIASWARN (fetestexcept);
 #   undef fesetexcept
 #   define fesetexcept rpl_fesetexcept
 #  endif
-_GL_FUNCDECL_RPL (fesetexcept, int, (int exceptions));
+_GL_FUNCDECL_RPL (fesetexcept, int, (int exceptions), );
 _GL_CXXALIAS_RPL (fesetexcept, int, (int exceptions));
 # else
 #  if !@HAVE_FESETEXCEPT@
-_GL_FUNCDECL_SYS (fesetexcept, int, (int exceptions));
+_GL_FUNCDECL_SYS (fesetexcept, int, (int exceptions), );
 #  endif
 _GL_CXXALIAS_SYS (fesetexcept, int, (int exceptions));
 # endif
@@ -646,11 +646,11 @@ _GL_WARN_ON_USE (fesetexcept, "fesetexcept is unportable - "
 #   undef feenableexcept
 #   define feenableexcept rpl_feenableexcept
 #  endif
-_GL_FUNCDECL_RPL (feenableexcept, int, (int exceptions));
+_GL_FUNCDECL_RPL (feenableexcept, int, (int exceptions), );
 _GL_CXXALIAS_RPL (feenableexcept, int, (int exceptions));
 # else
 #  if !@HAVE_FEENABLEEXCEPT@
-_GL_FUNCDECL_SYS (feenableexcept, int, (int exceptions));
+_GL_FUNCDECL_SYS (feenableexcept, int, (int exceptions), );
 #  endif
 _GL_CXXALIAS_SYS (feenableexcept, int, (int exceptions));
 # endif
@@ -676,11 +676,11 @@ _GL_WARN_ON_USE (feenableexcept, "feenableexcept is unportable - "
 #   undef fedisableexcept
 #   define fedisableexcept rpl_fedisableexcept
 #  endif
-_GL_FUNCDECL_RPL (fedisableexcept, int, (int exceptions));
+_GL_FUNCDECL_RPL (fedisableexcept, int, (int exceptions), );
 _GL_CXXALIAS_RPL (fedisableexcept, int, (int exceptions));
 # else
 #  if !@HAVE_FEDISABLEEXCEPT@
-_GL_FUNCDECL_SYS (fedisableexcept, int, (int exceptions));
+_GL_FUNCDECL_SYS (fedisableexcept, int, (int exceptions), );
 #  endif
 _GL_CXXALIAS_SYS (fedisableexcept, int, (int exceptions));
 # endif
@@ -707,11 +707,11 @@ _GL_WARN_ON_USE (fedisableexcept, "fedisableexcept is unportable - "
 #   undef fegetexcept
 #   define fegetexcept rpl_fegetexcept
 #  endif
-_GL_FUNCDECL_RPL (fegetexcept, int, (void));
+_GL_FUNCDECL_RPL (fegetexcept, int, (void), );
 _GL_CXXALIAS_RPL (fegetexcept, int, (void));
 # else
 #  if !@HAVE_FEGETEXCEPT@
-_GL_FUNCDECL_SYS (fegetexcept, int, (void));
+_GL_FUNCDECL_SYS (fegetexcept, int, (void), );
 #  endif
 _GL_CXXALIAS_SYS (fegetexcept, int, (void));
 # endif
@@ -803,13 +803,13 @@ typedef unsigned long fexcept_t;
 #   define fegetexceptflag rpl_fegetexceptflag
 #  endif
 _GL_FUNCDECL_RPL (fegetexceptflag, int,
-                  (fexcept_t *saved_flags, int exceptions));
+                  (fexcept_t *saved_flags, int exceptions), );
 _GL_CXXALIAS_RPL (fegetexceptflag, int,
                   (fexcept_t *saved_flags, int exceptions));
 # else
 #  if !@HAVE_FEGETEXCEPTFLAG@
 _GL_FUNCDECL_SYS (fegetexceptflag, int,
-                  (fexcept_t *saved_flags, int exceptions));
+                  (fexcept_t *saved_flags, int exceptions), );
 #  endif
 _GL_CXXALIAS_SYS (fegetexceptflag, int,
                   (fexcept_t *saved_flags, int exceptions));
@@ -826,13 +826,13 @@ _GL_CXXALIASWARN (fegetexceptflag);
 #   define fesetexceptflag rpl_fesetexceptflag
 #  endif
 _GL_FUNCDECL_RPL (fesetexceptflag, int,
-                  (fexcept_t const *saved_flags, int exceptions));
+                  (fexcept_t const *saved_flags, int exceptions), );
 _GL_CXXALIAS_RPL (fesetexceptflag, int,
                   (fexcept_t const *saved_flags, int exceptions));
 # else
 #  if !@HAVE_FESETEXCEPTFLAG@
 _GL_FUNCDECL_SYS (fesetexceptflag, int,
-                  (fexcept_t const *saved_flags, int exceptions));
+                  (fexcept_t const *saved_flags, int exceptions), );
 #  endif
 _GL_CXXALIAS_SYS (fesetexceptflag, int,
                   (fexcept_t const *saved_flags, int exceptions));
@@ -851,13 +851,13 @@ _GL_CXXALIASWARN (fesetexceptflag);
 #   define fetestexceptflag rpl_fetestexceptflag
 #  endif
 _GL_FUNCDECL_RPL (fetestexceptflag, int,
-                  (fexcept_t const *saved_flags, int exceptions));
+                  (fexcept_t const *saved_flags, int exceptions), );
 _GL_CXXALIAS_RPL (fetestexceptflag, int,
                   (fexcept_t const *saved_flags, int exceptions));
 # else
 #  if !@HAVE_FETESTEXCEPTFLAG@
 _GL_FUNCDECL_SYS (fetestexceptflag, int,
-                  (fexcept_t const *saved_flags, int exceptions));
+                  (fexcept_t const *saved_flags, int exceptions), );
 #  endif
 _GL_CXXALIAS_SYS (fetestexceptflag, int,
                   (fexcept_t const *saved_flags, int exceptions));

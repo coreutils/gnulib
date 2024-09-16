@@ -85,7 +85,7 @@
 #   define fnmatch rpl_fnmatch
 #  endif
 #  define GNULIB_defined_fnmatch_function 1
-_GL_FUNCATTR_RPL (fnmatch, int,
+_GL_FUNCDECL_RPL (fnmatch, int,
                   (const char *pattern, const char *name, int flags),
                   _GL_ARG_NONNULL ((1, 2)));
 _GL_CXXALIAS_RPL (fnmatch, int,
@@ -93,7 +93,7 @@ _GL_CXXALIAS_RPL (fnmatch, int,
 # else
 #  if !@HAVE_FNMATCH@
 #   define GNULIB_defined_fnmatch_function 1
-_GL_FUNCATTR_SYS (fnmatch, int,
+_GL_FUNCDECL_SYS (fnmatch, int,
                   (const char *pattern, const char *name, int flags),
                   _GL_ARG_NONNULL ((1, 2)));
 #  endif

@@ -52,14 +52,14 @@ extern "C" {
 #   undef hasmntopt
 #   define hasmntopt rpl_hasmntopt
 #  endif
-_GL_FUNCATTR_RPL (hasmntopt, char *,
+_GL_FUNCDECL_RPL (hasmntopt, char *,
                   (const struct mntent *me, const char *option),
                   _GL_ARG_NONNULL ((1, 2)));
 _GL_CXXALIAS_RPL (hasmntopt, char *,
                   (const struct mntent *me, const char *option));
 # else
 #  if !@HAVE_HASMNTOPT@
-_GL_FUNCATTR_SYS (hasmntopt, char *,
+_GL_FUNCDECL_SYS (hasmntopt, char *,
                   (const struct mntent *me, const char *option),
                   _GL_ARG_NONNULL ((1, 2)));
 #  endif

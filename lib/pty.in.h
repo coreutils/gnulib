@@ -72,7 +72,7 @@ struct termios;
 #  endif
 _GL_FUNCDECL_RPL (forkpty, int,
                   (int *amaster, char *name,
-                   struct termios const *termp, struct winsize const *winp));
+                   struct termios const *termp, struct winsize const *winp), );
 _GL_CXXALIAS_RPL (forkpty, int,
                   (int *amaster, char *name,
                    struct termios const *termp, struct winsize const *winp));
@@ -80,7 +80,7 @@ _GL_CXXALIAS_RPL (forkpty, int,
 #  if !@HAVE_FORKPTY@
 _GL_FUNCDECL_SYS (forkpty, int,
                   (int *amaster, char *name,
-                   struct termios const *termp, struct winsize const *winp));
+                   struct termios const *termp, struct winsize const *winp), );
 #  endif
 _GL_CXXALIAS_SYS (forkpty, int,
                   (int *amaster, char *name,
@@ -106,7 +106,7 @@ _GL_WARN_ON_USE (forkpty, "forkpty is not declared consistently - "
 #  endif
 _GL_FUNCDECL_RPL (openpty, int,
                   (int *amaster, int *aslave, char *name,
-                   struct termios const *termp, struct winsize const *winp));
+                   struct termios const *termp, struct winsize const *winp), );
 _GL_CXXALIAS_RPL (openpty, int,
                   (int *amaster, int *aslave, char *name,
                    struct termios const *termp, struct winsize const *winp));
@@ -114,7 +114,7 @@ _GL_CXXALIAS_RPL (openpty, int,
 #  if !@HAVE_OPENPTY@
 _GL_FUNCDECL_SYS (openpty, int,
                   (int *amaster, int *aslave, char *name,
-                   struct termios const *termp, struct winsize const *winp));
+                   struct termios const *termp, struct winsize const *winp), );
 #  endif
 _GL_CXXALIAS_SYS (openpty, int,
                   (int *amaster, int *aslave, char *name,

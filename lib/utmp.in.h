@@ -62,11 +62,11 @@
 #   undef login_tty
 #   define login_tty rpl_login_tty
 #  endif
-_GL_FUNCDECL_RPL (login_tty, int, (int fd));
+_GL_FUNCDECL_RPL (login_tty, int, (int fd), );
 _GL_CXXALIAS_RPL (login_tty, int, (int fd));
 # else
 #  if !@HAVE_LOGIN_TTY@
-_GL_FUNCDECL_SYS (login_tty, int, (int fd));
+_GL_FUNCDECL_SYS (login_tty, int, (int fd), );
 #  endif
 _GL_CXXALIAS_SYS (login_tty, int, (int fd));
 # endif

@@ -135,7 +135,7 @@ ntohl (uint32_t value)
 #   undef inet_ntop
 #   define inet_ntop rpl_inet_ntop
 #  endif
-_GL_FUNCATTR_RPL (inet_ntop, const char *,
+_GL_FUNCDECL_RPL (inet_ntop, const char *,
                   (int af, const void *restrict src,
                    char *restrict dst, socklen_t cnt),
                   _GL_ARG_NONNULL ((2, 3)));
@@ -144,7 +144,7 @@ _GL_CXXALIAS_RPL (inet_ntop, const char *,
                    char *restrict dst, socklen_t cnt));
 # else
 #  if !@HAVE_DECL_INET_NTOP@
-_GL_FUNCATTR_SYS (inet_ntop, const char *,
+_GL_FUNCDECL_SYS (inet_ntop, const char *,
                   (int af, const void *restrict src,
                    char *restrict dst, socklen_t cnt),
                   _GL_ARG_NONNULL ((2, 3)));
@@ -172,14 +172,14 @@ _GL_WARN_ON_USE (inet_ntop, "inet_ntop is unportable - "
 #   undef inet_pton
 #   define inet_pton rpl_inet_pton
 #  endif
-_GL_FUNCATTR_RPL (inet_pton, int,
+_GL_FUNCDECL_RPL (inet_pton, int,
                   (int af, const char *restrict src, void *restrict dst),
                   _GL_ARG_NONNULL ((2, 3)));
 _GL_CXXALIAS_RPL (inet_pton, int,
                   (int af, const char *restrict src, void *restrict dst));
 # else
 #  if !@HAVE_DECL_INET_PTON@
-_GL_FUNCATTR_SYS (inet_pton, int,
+_GL_FUNCDECL_SYS (inet_pton, int,
                   (int af, const char *restrict src, void *restrict dst),
                   _GL_ARG_NONNULL ((2, 3)));
 #  endif

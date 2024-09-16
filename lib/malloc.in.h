@@ -141,7 +141,7 @@ _GL_EXTERN_C void free (void *);
 #   undef memalign
 #   define memalign rpl_memalign
 #  endif
-_GL_FUNCATTR_RPL (memalign, void *,
+_GL_FUNCDECL_RPL (memalign, void *,
                   (size_t alignment, size_t size),
                   _GL_ATTRIBUTE_DEALLOC_FREE
                   _GL_ATTRIBUTE_NODISCARD);
@@ -151,13 +151,13 @@ _GL_CXXALIAS_RPL (memalign, void *, (size_t alignment, size_t size));
 #   if __GNUC__ >= 11 && !defined __clang__
 /* For -Wmismatched-dealloc: Associate memalign with free or rpl_free.  */
 #    if __GLIBC__ + (__GLIBC_MINOR__ >= 14) > 2
-_GL_FUNCATTR_SYS (memalign, void *,
+_GL_FUNCDECL_SYS (memalign, void *,
                   (size_t alignment, size_t size),
                   _GL_ATTRIBUTE_DEALLOC_FREE
                   _GL_ATTRIBUTE_NODISCARD)
                   _GL_ATTRIBUTE_NOTHROW;
 #    else
-_GL_FUNCATTR_SYS (memalign, void *,
+_GL_FUNCDECL_SYS (memalign, void *,
                   (size_t alignment, size_t size),
                   _GL_ATTRIBUTE_DEALLOC_FREE
                   _GL_ATTRIBUTE_NODISCARD);
@@ -173,12 +173,12 @@ _GL_CXXALIASWARN (memalign);
 # if (__GNUC__ >= 11 && !defined __clang__) && !defined memalign
 /* For -Wmismatched-dealloc: Associate memalign with free or rpl_free.  */
 #  if __GLIBC__ + (__GLIBC_MINOR__ >= 14) > 2
-_GL_FUNCATTR_SYS (memalign, void *,
+_GL_FUNCDECL_SYS (memalign, void *,
                   (size_t alignment, size_t size),
                   _GL_ATTRIBUTE_DEALLOC_FREE)
                   _GL_ATTRIBUTE_NOTHROW;
 #  else
-_GL_FUNCATTR_SYS (memalign, void *,
+_GL_FUNCDECL_SYS (memalign, void *,
                   (size_t alignment, size_t size),
                   _GL_ATTRIBUTE_DEALLOC_FREE);
 #  endif

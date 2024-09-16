@@ -147,7 +147,7 @@ typedef void (*_gl_search_action_fn) (const void *, VISIT, int);
    If one is found, it is returned.  Otherwise, a new element equal to KEY
    is inserted in the tree and is returned.  */
 # if @REPLACE_TSEARCH@
-_GL_FUNCATTR_RPL (tsearch, void *,
+_GL_FUNCDECL_RPL (tsearch, void *,
                   (const void *key, void **vrootp,
                    _gl_search_compar_fn compar),
                   _GL_ARG_NONNULL ((1, 2, 3)));
@@ -156,7 +156,7 @@ _GL_CXXALIAS_RPL (tsearch, void *,
                    _gl_search_compar_fn compar));
 # else
 #  if !@HAVE_TSEARCH@
-_GL_FUNCATTR_SYS (tsearch, void *,
+_GL_FUNCDECL_SYS (tsearch, void *,
                   (const void *key, void **vrootp,
                    _gl_search_compar_fn compar),
                   _GL_ARG_NONNULL ((1, 2, 3)));
@@ -172,7 +172,7 @@ _GL_CXXALIASWARN (tsearch);
 /* Searches an element in the tree *VROOTP that compares equal to KEY.
    If one is found, it is returned.  Otherwise, NULL is returned.  */
 # if @REPLACE_TSEARCH@
-_GL_FUNCATTR_RPL (tfind, void *,
+_GL_FUNCDECL_RPL (tfind, void *,
                   (const void *key, void *const *vrootp,
                    _gl_search_compar_fn compar),
                   _GL_ARG_NONNULL ((1, 2, 3)));
@@ -181,7 +181,7 @@ _GL_CXXALIAS_RPL (tfind, void *,
                    _gl_search_compar_fn compar));
 # else
 #  if !@HAVE_TSEARCH@
-_GL_FUNCATTR_SYS (tfind, void *,
+_GL_FUNCDECL_SYS (tfind, void *,
                   (const void *key, void *const *vrootp,
                    _gl_search_compar_fn compar),
                   _GL_ARG_NONNULL ((1, 2, 3)));
@@ -200,7 +200,7 @@ _GL_CXXALIASWARN (tfind);
    If one is found, it is removed from the tree, and its parent node is
    returned.  Otherwise, NULL is returned.  */
 # if @REPLACE_TSEARCH@
-_GL_FUNCATTR_RPL (tdelete, void *,
+_GL_FUNCDECL_RPL (tdelete, void *,
                   (const void *restrict key, void **restrict vrootp,
                    _gl_search_compar_fn compar),
                   _GL_ARG_NONNULL ((1, 2, 3)));
@@ -209,7 +209,7 @@ _GL_CXXALIAS_RPL (tdelete, void *,
                    _gl_search_compar_fn compar));
 # else
 #  if !@HAVE_TSEARCH@
-_GL_FUNCATTR_SYS (tdelete, void *,
+_GL_FUNCDECL_SYS (tdelete, void *,
                   (const void *restrict key, void **restrict vrootp,
                    _gl_search_compar_fn compar),
                   _GL_ARG_NONNULL ((1, 2, 3)));
@@ -234,14 +234,14 @@ _GL_CXXALIASWARN (tdelete);
      2. an indicator which visit of the node this is,
      3. the level of the node in the tree (0 for the root).  */
 # if @REPLACE_TWALK@
-_GL_FUNCATTR_RPL (twalk, void,
+_GL_FUNCDECL_RPL (twalk, void,
                   (const void *vroot, _gl_search_action_fn action),
                   _GL_ARG_NONNULL ((2)));
 _GL_CXXALIAS_RPL (twalk, void,
                   (const void *vroot, _gl_search_action_fn action));
 # else
 #  if !@HAVE_TWALK@
-_GL_FUNCATTR_SYS (twalk, void,
+_GL_FUNCDECL_SYS (twalk, void,
                   (const void *vroot, _gl_search_action_fn action),
                   _GL_ARG_NONNULL ((2)));
 #  endif

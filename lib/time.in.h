@@ -147,12 +147,12 @@ extern
 #    undef timespec_get
 #    define timespec_get rpl_timespec_get
 #   endif
-_GL_FUNCATTR_RPL (timespec_get, int, (struct timespec *ts, int base),
+_GL_FUNCDECL_RPL (timespec_get, int, (struct timespec *ts, int base),
                                      _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (timespec_get, int, (struct timespec *ts, int base));
 #  else
 #   if !@HAVE_TIMESPEC_GET@
-_GL_FUNCATTR_SYS (timespec_get, int, (struct timespec *ts, int base),
+_GL_FUNCDECL_SYS (timespec_get, int, (struct timespec *ts, int base),
                                      _GL_ARG_NONNULL ((1)));
 #   endif
 _GL_CXXALIAS_SYS (timespec_get, int, (struct timespec *ts, int base));
@@ -176,12 +176,12 @@ _GL_WARN_ON_USE (timespec_get, "timespec_get is unportable - "
 #    undef timespec_getres
 #    define timespec_getres rpl_timespec_getres
 #   endif
-_GL_FUNCATTR_RPL (timespec_getres, int, (struct timespec *ts, int base),
+_GL_FUNCDECL_RPL (timespec_getres, int, (struct timespec *ts, int base),
                                         _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (timespec_getres, int, (struct timespec *ts, int base));
 #  else
 #   if !@HAVE_TIMESPEC_GETRES@
-_GL_FUNCATTR_SYS (timespec_getres, int, (struct timespec *ts, int base),
+_GL_FUNCDECL_SYS (timespec_getres, int, (struct timespec *ts, int base),
                                         _GL_ARG_NONNULL ((1)));
 #   endif
 _GL_CXXALIAS_SYS (timespec_getres, int, (struct timespec *ts, int base));
@@ -201,7 +201,7 @@ _GL_WARN_ON_USE (timespec_getres, "timespec_getres is unportable - "
 #   if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #    define time rpl_time
 #   endif
-_GL_FUNCDECL_RPL (time, time_t, (time_t *__tp));
+_GL_FUNCDECL_RPL (time, time_t, (time_t *__tp), );
 _GL_CXXALIAS_RPL (time, time_t, (time_t *__tp));
 #  else
 _GL_CXXALIAS_SYS (time, time_t, (time_t *__tp));
@@ -225,14 +225,14 @@ _GL_WARN_ON_USE (time, "time has consistency problems - "
 #   if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #    define nanosleep rpl_nanosleep
 #   endif
-_GL_FUNCATTR_RPL (nanosleep, int,
+_GL_FUNCDECL_RPL (nanosleep, int,
                   (struct timespec const *__rqtp, struct timespec *__rmtp),
                   _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (nanosleep, int,
                   (struct timespec const *__rqtp, struct timespec *__rmtp));
 #  else
 #   if ! @HAVE_NANOSLEEP@
-_GL_FUNCATTR_SYS (nanosleep, int,
+_GL_FUNCDECL_SYS (nanosleep, int,
                   (struct timespec const *__rqtp, struct timespec *__rmtp),
                   _GL_ARG_NONNULL ((1)));
 #   endif
@@ -255,7 +255,7 @@ _GL_WARN_ON_USE (nanosleep, "nanosleep is unportable - "
 #    undef tzset
 #    define tzset rpl_tzset
 #   endif
-_GL_FUNCDECL_RPL (tzset, void, (void));
+_GL_FUNCDECL_RPL (tzset, void, (void), );
 _GL_CXXALIAS_RPL (tzset, void, (void));
 #  elif defined _WIN32 && !defined __CYGWIN__
 #   if !(defined __cplusplus && defined GNULIB_NAMESPACE)
@@ -295,7 +295,7 @@ _GL_WARN_ON_USE (tzset, "tzset has portability problems - "
 #   if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #    define mktime rpl_mktime
 #   endif
-_GL_FUNCATTR_RPL (mktime, time_t, (struct tm *__tp), _GL_ARG_NONNULL ((1)));
+_GL_FUNCDECL_RPL (mktime, time_t, (struct tm *__tp), _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (mktime, time_t, (struct tm *__tp));
 #  else
 _GL_CXXALIAS_SYS (mktime, time_t, (struct tm *__tp));
@@ -320,14 +320,14 @@ _GL_WARN_ON_USE (mktime, "mktime has portability problems - "
 #    undef localtime_r
 #    define localtime_r rpl_localtime_r
 #   endif
-_GL_FUNCATTR_RPL (localtime_r, struct tm *, (time_t const *restrict __timer,
+_GL_FUNCDECL_RPL (localtime_r, struct tm *, (time_t const *restrict __timer,
                                              struct tm *restrict __result),
                                             _GL_ARG_NONNULL ((1, 2)));
 _GL_CXXALIAS_RPL (localtime_r, struct tm *, (time_t const *restrict __timer,
                                              struct tm *restrict __result));
 #  else
 #   if ! @HAVE_DECL_LOCALTIME_R@
-_GL_FUNCATTR_SYS (localtime_r, struct tm *, (time_t const *restrict __timer,
+_GL_FUNCDECL_SYS (localtime_r, struct tm *, (time_t const *restrict __timer,
                                              struct tm *restrict __result),
                                             _GL_ARG_NONNULL ((1, 2)));
 #   endif
@@ -342,14 +342,14 @@ _GL_CXXALIASWARN (localtime_r);
 #    undef gmtime_r
 #    define gmtime_r rpl_gmtime_r
 #   endif
-_GL_FUNCATTR_RPL (gmtime_r, struct tm *, (time_t const *restrict __timer,
+_GL_FUNCDECL_RPL (gmtime_r, struct tm *, (time_t const *restrict __timer,
                                           struct tm *restrict __result),
                                          _GL_ARG_NONNULL ((1, 2)));
 _GL_CXXALIAS_RPL (gmtime_r, struct tm *, (time_t const *restrict __timer,
                                           struct tm *restrict __result));
 #  else
 #   if ! @HAVE_DECL_LOCALTIME_R@
-_GL_FUNCATTR_SYS (gmtime_r, struct tm *, (time_t const *restrict __timer,
+_GL_FUNCDECL_SYS (gmtime_r, struct tm *, (time_t const *restrict __timer,
                                           struct tm *restrict __result),
                                          _GL_ARG_NONNULL ((1, 2)));
 #   endif
@@ -381,7 +381,7 @@ _GL_WARN_ON_USE (gmtime_r, "gmtime_r is unportable - "
 #    undef localtime
 #    define localtime rpl_localtime
 #   endif
-_GL_FUNCATTR_RPL (localtime, struct tm *, (time_t const *__timer),
+_GL_FUNCDECL_RPL (localtime, struct tm *, (time_t const *__timer),
                                           _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (localtime, struct tm *, (time_t const *__timer));
 #  else
@@ -404,7 +404,7 @@ _GL_WARN_ON_USE (localtime, "localtime has portability problems - "
 #    undef gmtime
 #    define gmtime rpl_gmtime
 #   endif
-_GL_FUNCATTR_RPL (gmtime, struct tm *, (time_t const *__timer),
+_GL_FUNCDECL_RPL (gmtime, struct tm *, (time_t const *__timer),
                                        _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (gmtime, struct tm *, (time_t const *__timer));
 #  else
@@ -418,7 +418,7 @@ _GL_CXXALIASWARN (gmtime);
    <https://pubs.opengroup.org/onlinepubs/9699919799/functions/strptime.html>.  */
 # if @GNULIB_STRPTIME@
 #  if ! @HAVE_STRPTIME@
-_GL_FUNCATTR_SYS (strptime, char *, (char const *restrict __buf,
+_GL_FUNCDECL_SYS (strptime, char *, (char const *restrict __buf,
                                      char const *restrict __format,
                                      struct tm *restrict __tm),
                                     _GL_ARG_NONNULL ((1, 2, 3)));
@@ -445,7 +445,7 @@ _GL_WARN_ON_USE (strptime, "strptime is unportable - "
 #   ifndef __cplusplus
 _GL_ATTRIBUTE_DEPRECATED
 #   endif
-_GL_FUNCATTR_RPL (ctime, char *, (time_t const *__tp),
+_GL_FUNCDECL_RPL (ctime, char *, (time_t const *__tp),
                                  _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (ctime, char *, (time_t const *__tp));
 #  else
@@ -465,7 +465,7 @@ _GL_CXXALIASWARN (ctime);
 #   if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #    define strftime rpl_strftime
 #   endif
-_GL_FUNCATTR_RPL (strftime, size_t,
+_GL_FUNCDECL_RPL (strftime, size_t,
                   (char *restrict __buf, size_t __bufsize,
                    const char *restrict __fmt, const struct tm *restrict __tp),
                   _GL_ARG_NONNULL ((1, 3, 4)));
@@ -516,7 +516,7 @@ typedef struct tm_zone *rpl_timezone_t;
    May return NULL if NAME is invalid (this is platform dependent) or
    upon memory allocation failure.  */
 #  if !@HAVE_TZALLOC@
-_GL_FUNCDECL_SYS (tzalloc, timezone_t, (char const *__name));
+_GL_FUNCDECL_SYS (tzalloc, timezone_t, (char const *__name), );
 _GL_CXXALIAS_SYS (tzalloc, timezone_t, (char const *__name));
 #  endif
 
@@ -524,7 +524,7 @@ _GL_CXXALIAS_SYS (tzalloc, timezone_t, (char const *__name));
    Frees a time zone object.
    The argument must have been returned by tzalloc().  */
 #  if !@HAVE_TZALLOC@
-_GL_FUNCDECL_SYS (tzfree, void, (timezone_t __tz));
+_GL_FUNCDECL_SYS (tzfree, void, (timezone_t __tz), );
 _GL_CXXALIAS_SYS (tzfree, void, (timezone_t __tz));
 #  endif
 
@@ -538,7 +538,7 @@ _GL_CXXALIAS_SYS (tzfree, void, (timezone_t __tz));
 #    undef localtime_rz
 #    define localtime_rz rpl_localtime_rz
 #   endif
-_GL_FUNCATTR_RPL (localtime_rz, struct tm *,
+_GL_FUNCDECL_RPL (localtime_rz, struct tm *,
                   (timezone_t __tz, time_t const *restrict __timer,
                    struct tm *restrict __result),
                   _GL_ARG_NONNULL ((2, 3)));
@@ -547,7 +547,7 @@ _GL_CXXALIAS_RPL (localtime_rz, struct tm *,
                    struct tm *restrict __result));
 #  else
 #   if !@HAVE_TZALLOC@
-_GL_FUNCATTR_SYS (localtime_rz, struct tm *,
+_GL_FUNCDECL_SYS (localtime_rz, struct tm *,
                   (timezone_t __tz, time_t const *restrict __timer,
                    struct tm *restrict __result),
                   _GL_ARG_NONNULL ((2, 3)));
@@ -567,14 +567,14 @@ _GL_CXXALIAS_SYS (localtime_rz, struct tm *,
 #    undef mktime_z
 #    define mktime_z rpl_mktime_z
 #   endif
-_GL_FUNCATTR_RPL (mktime_z, time_t,
+_GL_FUNCDECL_RPL (mktime_z, time_t,
                   (timezone_t __tz, struct tm *restrict __tm),
                   _GL_ARG_NONNULL ((2)));
 _GL_CXXALIAS_RPL (mktime_z, time_t,
                   (timezone_t __tz, struct tm *restrict __tm));
 #  else
 #   if !@HAVE_TZALLOC@
-_GL_FUNCATTR_SYS (mktime_z, time_t,
+_GL_FUNCDECL_SYS (mktime_z, time_t,
                   (timezone_t __tz, struct tm *restrict __tm),
                   _GL_ARG_NONNULL ((2)));
 #   endif
@@ -597,11 +597,11 @@ _GL_CXXALIAS_SYS (mktime_z, time_t,
 #    undef timegm
 #    define timegm rpl_timegm
 #   endif
-_GL_FUNCATTR_RPL (timegm, time_t, (struct tm *__tm), _GL_ARG_NONNULL ((1)));
+_GL_FUNCDECL_RPL (timegm, time_t, (struct tm *__tm), _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (timegm, time_t, (struct tm *__tm));
 #  else
 #   if ! @HAVE_TIMEGM@
-_GL_FUNCATTR_SYS (timegm, time_t, (struct tm *__tm), _GL_ARG_NONNULL ((1)));
+_GL_FUNCDECL_SYS (timegm, time_t, (struct tm *__tm), _GL_ARG_NONNULL ((1)));
 #   endif
 _GL_CXXALIAS_SYS (timegm, time_t, (struct tm *__tm));
 #  endif

@@ -94,7 +94,7 @@ extern "C" {
 #  undef error
 #  define error rpl_error
 # endif
-_GL_FUNCATTR_RPL (error, void,
+_GL_FUNCDECL_RPL (error, void,
                   (int __status, int __errnum, const char *__format, ...),
                   _GL_ATTRIBUTE_COLD
                   _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_ERROR, 3, 4)));
@@ -107,7 +107,7 @@ _GL_CXXALIAS_RPL (error, void,
 # endif
 #else
 # if ! @HAVE_ERROR@
-_GL_FUNCATTR_SYS (error, void,
+_GL_FUNCDECL_SYS (error, void,
                   (int __status, int __errnum, const char *__format, ...),
                   _GL_ATTRIBUTE_COLD
                   _GL_ATTRIBUTE_FORMAT ((_GL_ATTRIBUTE_SPEC_PRINTF_ERROR, 3, 4)));
@@ -150,7 +150,7 @@ _GL_CXXALIASWARN (error);
 #  undef error_at_line
 #  define error_at_line rpl_error_at_line
 # endif
-_GL_FUNCATTR_RPL (error_at_line, void,
+_GL_FUNCDECL_RPL (error_at_line, void,
                   (int __status, int __errnum, const char *__filename,
                    unsigned int __lineno, const char *__format, ...),
                   _GL_ATTRIBUTE_COLD
@@ -165,7 +165,7 @@ _GL_CXXALIAS_RPL (error_at_line, void,
 # endif
 #else
 # if ! @HAVE_ERROR_AT_LINE@
-_GL_FUNCATTR_SYS (error_at_line, void,
+_GL_FUNCDECL_SYS (error_at_line, void,
                   (int __status, int __errnum, const char *__filename,
                    unsigned int __lineno, const char *__format, ...),
                   _GL_ATTRIBUTE_COLD
