@@ -38,7 +38,6 @@
 #include "idx.h"
 #include "intprops.h"
 #include "timespec.h"
-#include "strftime.h"
 
 /* There's no need to extend the stack, so there's no need to involve
    alloca.  */
