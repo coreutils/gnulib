@@ -20,14 +20,10 @@ idx
 intprops
 inttypes
 mktime
-nstrftime
-setenv
 stdckdint
-unsetenv
 time-h
 time_r
 time_rz
-timegm
 
 configure.ac:
 gl_PARSE_DATETIME

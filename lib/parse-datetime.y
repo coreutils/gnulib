@@ -1591,7 +1591,7 @@ populate_local_time_zone_table (parser_control *pc, struct tm const *tm)
     zone = tm->tm_zone;
 #else
   char *tz_abbr = pc->tz_abbr[first_entry_exists];
-  if (nstrftime (tz_abbr, TIME_ZONE_BUFSIZE, "%Z", tm, 0, 0))
+  if (strftime (tz_abbr, TIME_ZONE_BUFSIZE, "%Z", tm))
     zone = tz_abbr;
 #endif
   e->name = zone;
@@ -1613,21 +1613,18 @@ debug_strfdatetime (struct tm const *tm, parser_control const *pc,
         issues with the parsing - better to avoid formats that could
         be mis-interpreted (e.g., just YYYY-MM-DD).
 
-     2. Can strftime be used instead?
-        depends if it is portable and can print invalid dates on all systems.
+     2. Print timezone information ?
 
-     3. Print timezone information ?
+     3. Print DST information ?
 
-     4. Print DST information ?
-
-     5. Print nanosecond information ?
+     4. Print nanosecond information ?
 
      NOTE:
      Printed date/time values might not be valid, e.g., '2016-02-31'
      or '2016-19-2016' .  These are the values as parsed from the user
      string, before validation.
   */
-  int m = nstrftime (buf, n, "(Y-M-D) %Y-%m-%d %H:%M:%S", tm, 0, 0);
+  int m = strftime (buf, n, "(Y-M-D) %Y-%m-%d %H:%M:%S", tm);
 
   /* If parser_control information was provided (for timezone),
      and there's enough space in the buffer, add timezone info.  */
