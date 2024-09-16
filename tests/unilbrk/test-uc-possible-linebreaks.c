@@ -148,9 +148,9 @@ main (int argc, char *argv[])
                    the space.
                    Similarly when the first two characters at the start of the
                    text have property LBP_CM and LBP_ZWJ, respectively. (LB9).  */
-                if (!(((j == 1 || (j > 1 && (input[j - 2] >= 0x000A && input[j - 2] <= 0x000D || input[j - 2] == 0x0085)))
+                if (!(((j == 1 || (j > 1 && ((input[j - 2] >= 0x000A && input[j - 2] <= 0x000D) || input[j - 2] == 0x0085)))
                        && input[j - 1] == 0x0020)
-                      || ((j == 2 || (j > 2 && (input[j - 3] >= 0x000A && input[j - 3] <= 0x000D || input[j - 3] == 0x0085)))
+                      || ((j == 2 || (j > 2 && ((input[j - 3] >= 0x000A && input[j - 3] <= 0x000D) || input[j - 3] == 0x0085)))
                           && ((input[j - 2] == 0x0020 && input[j - 1] == 0x0020)
                               || (input[j - 2] == 0x0308 && input[j - 1] == 0x200D)
                               || (input[j - 2] == 0x200D && input[j - 1] == 0x0308)))))
