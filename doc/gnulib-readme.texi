@@ -377,6 +377,9 @@ it directly, preferring plain @code{bool} via the
 Compound literals and designated initializers.
 
 @item
+Empty arguments in macro calls.
+
+@item
 Variadic macros.@*
 @findex __VA_ARGS__
 Note: The handling of @code{__VA_ARGS__} in MSVC differs from the one
