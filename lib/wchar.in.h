@@ -269,11 +269,11 @@ _GL_EXTERN_C void free (void *);
 #   undef btowc
 #   define btowc rpl_btowc
 #  endif
-_GL_FUNCDECL_RPL (btowc, wint_t, (int c), _GL_ATTRIBUTE_PURE);
+_GL_FUNCATTR_RPL (btowc, wint_t, (int c), _GL_ATTRIBUTE_PURE);
 _GL_CXXALIAS_RPL (btowc, wint_t, (int c));
 # else
 #  if !@HAVE_BTOWC@
-_GL_FUNCDECL_SYS (btowc, wint_t, (int c), _GL_ATTRIBUTE_PURE);
+_GL_FUNCATTR_SYS (btowc, wint_t, (int c), _GL_ATTRIBUTE_PURE);
 #  endif
 /* Need to cast, because on mingw, the return type is 'unsigned short'.  */
 _GL_CXXALIAS_SYS_CAST (btowc, wint_t, (int c));
