@@ -969,7 +969,7 @@ _GL_WARN_ON_USE (imaxdiv, "imaxdiv is unportable - "
 #   undef strtoimax
 #   define strtoimax rpl_strtoimax
 #  endif
-_GL_FUNCDECL_RPL (strtoimax, intmax_t,
+_GL_FUNCATTR_RPL (strtoimax, intmax_t,
                   (const char *restrict, char **restrict, int),
                   _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (strtoimax, intmax_t,
@@ -977,7 +977,7 @@ _GL_CXXALIAS_RPL (strtoimax, intmax_t,
 # else
 #  if !@HAVE_DECL_STRTOIMAX@
 #   undef strtoimax
-_GL_FUNCDECL_SYS (strtoimax, intmax_t,
+_GL_FUNCATTR_SYS (strtoimax, intmax_t,
                   (const char *restrict, char **restrict, int),
                   _GL_ARG_NONNULL ((1)));
 #  endif
@@ -999,7 +999,7 @@ _GL_WARN_ON_USE (strtoimax, "strtoimax is unportable - "
 #   undef strtoumax
 #   define strtoumax rpl_strtoumax
 #  endif
-_GL_FUNCDECL_RPL (strtoumax, uintmax_t,
+_GL_FUNCATTR_RPL (strtoumax, uintmax_t,
                   (const char *restrict, char **restrict, int),
                   _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (strtoumax, uintmax_t,
@@ -1007,7 +1007,7 @@ _GL_CXXALIAS_RPL (strtoumax, uintmax_t,
 # else
 #  if !@HAVE_DECL_STRTOUMAX@
 #   undef strtoumax
-_GL_FUNCDECL_SYS (strtoumax, uintmax_t,
+_GL_FUNCATTR_SYS (strtoumax, uintmax_t,
                   (const char *restrict, char **restrict, int),
                   _GL_ARG_NONNULL ((1)));
 #  endif

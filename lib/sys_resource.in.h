@@ -110,7 +110,7 @@ struct rusage
 
 #if @GNULIB_GETRUSAGE@
 # if !@HAVE_GETRUSAGE@
-_GL_FUNCDECL_SYS (getrusage, int, (int who, struct rusage *usage_p),
+_GL_FUNCATTR_SYS (getrusage, int, (int who, struct rusage *usage_p),
                                   _GL_ARG_NONNULL ((2)));
 # endif
 _GL_CXXALIAS_SYS (getrusage, int, (int who, struct rusage *usage_p));

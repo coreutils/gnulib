@@ -86,7 +86,7 @@ extern "C" {
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define strfmon_l rpl_strfmon_l
 #  endif
-_GL_FUNCDECL_RPL (strfmon_l, ssize_t,
+_GL_FUNCATTR_RPL (strfmon_l, ssize_t,
                   (char *restrict s, size_t maxsize, locale_t locale,
                    const char *restrict format, ...),
                   _GL_ATTRIBUTE_FORMAT_STRFMON (4, 5)

@@ -107,7 +107,7 @@ typedef int (*_gl_glob_errfunc_fn) (const char *, int);
 
 #if @GNULIB_GLOB@
 # if @REPLACE_GLOB@
-_GL_FUNCDECL_RPL (glob, int, (const char *_Restrict_ __pattern, int __flags,
+_GL_FUNCATTR_RPL (glob, int, (const char *_Restrict_ __pattern, int __flags,
                               _gl_glob_errfunc_fn __errfunc,
                               glob_t *_Restrict_ __pglob),
                               _GL_ARG_NONNULL ((1)));
@@ -116,7 +116,7 @@ _GL_CXXALIAS_RPL (glob, int, (const char *_Restrict_ __pattern, int __flags,
                               glob_t *_Restrict_ __pglob));
 # else
 #  if !@HAVE_GLOB@
-_GL_FUNCDECL_SYS (glob, int, (const char *_Restrict_ __pattern, int __flags,
+_GL_FUNCATTR_SYS (glob, int, (const char *_Restrict_ __pattern, int __flags,
                               _gl_glob_errfunc_fn __errfunc,
                               glob_t *_Restrict_ __pglob),
                               _GL_ARG_NONNULL ((1)));
@@ -139,11 +139,11 @@ _GL_WARN_ON_USE (glob,
 
 #if @GNULIB_GLOB@
 # if @REPLACE_GLOB@
-_GL_FUNCDECL_RPL (globfree, void, (glob_t *__pglob), _GL_ARG_NONNULL ((1)));
+_GL_FUNCATTR_RPL (globfree, void, (glob_t *__pglob), _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (globfree, void, (glob_t *__pglob));
 # else
 #  if !@HAVE_GLOB@
-_GL_FUNCDECL_SYS (globfree, void, (glob_t *__pglob), _GL_ARG_NONNULL ((1)));
+_GL_FUNCATTR_SYS (globfree, void, (glob_t *__pglob), _GL_ARG_NONNULL ((1)));
 #  endif
 _GL_CXXALIAS_SYS (globfree, void, (glob_t *__pglob));
 # endif
@@ -159,12 +159,12 @@ _GL_WARN_ON_USE (globfree,
 
 #if @GNULIB_GLOB@
 # if @REPLACE_GLOB_PATTERN_P@
-_GL_FUNCDECL_RPL (glob_pattern_p, int, (const char *__pattern, int __quote),
+_GL_FUNCATTR_RPL (glob_pattern_p, int, (const char *__pattern, int __quote),
                                        _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (glob_pattern_p, int, (const char *__pattern, int __quote));
 # else
 #  if !@HAVE_GLOB_PATTERN_P@
-_GL_FUNCDECL_SYS (glob_pattern_p, int, (const char *__pattern, int __quote),
+_GL_FUNCATTR_SYS (glob_pattern_p, int, (const char *__pattern, int __quote),
                                        _GL_ARG_NONNULL ((1)));
 #  endif
 _GL_CXXALIAS_SYS (glob_pattern_p, int, (const char *__pattern, int __quote));

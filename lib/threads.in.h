@@ -163,12 +163,12 @@ typedef int (* thrd_start_t) (void *);
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define thrd_create rpl_thrd_create
 #  endif
-_GL_FUNCDECL_RPL (thrd_create, int, (thrd_t *, thrd_start_t, void *),
+_GL_FUNCATTR_RPL (thrd_create, int, (thrd_t *, thrd_start_t, void *),
                                     _GL_ARG_NONNULL ((1, 2)));
 _GL_CXXALIAS_RPL (thrd_create, int, (thrd_t *, thrd_start_t, void *));
 # else
 #  if !@HAVE_THREADS_H@
-_GL_FUNCDECL_SYS (thrd_create, int, (thrd_t *, thrd_start_t, void *),
+_GL_FUNCATTR_SYS (thrd_create, int, (thrd_t *, thrd_start_t, void *),
                                     _GL_ARG_NONNULL ((1, 2)));
 #  endif
 _GL_CXXALIAS_SYS (thrd_create, int, (thrd_t *, thrd_start_t, void *));
@@ -187,11 +187,11 @@ _GL_WARN_ON_USE (thrd_create, "thrd_create is unportable - "
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define thrd_current rpl_thrd_current
 #  endif
-_GL_FUNCDECL_RPL (thrd_current, thrd_t, (void), _GL_ATTRIBUTE_PURE);
+_GL_FUNCATTR_RPL (thrd_current, thrd_t, (void), _GL_ATTRIBUTE_PURE);
 _GL_CXXALIAS_RPL (thrd_current, thrd_t, (void));
 # else
 #  if !@HAVE_THREADS_H@
-_GL_FUNCDECL_SYS (thrd_current, thrd_t, (void), _GL_ATTRIBUTE_PURE);
+_GL_FUNCATTR_SYS (thrd_current, thrd_t, (void), _GL_ATTRIBUTE_PURE);
 #  endif
 _GL_CXXALIAS_SYS (thrd_current, thrd_t, (void));
 # endif
@@ -209,11 +209,11 @@ _GL_WARN_ON_USE (thrd_current, "thrd_current is unportable - "
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define thrd_equal rpl_thrd_equal
 #  endif
-_GL_FUNCDECL_RPL (thrd_equal, int, (thrd_t, thrd_t), _GL_ATTRIBUTE_PURE);
+_GL_FUNCATTR_RPL (thrd_equal, int, (thrd_t, thrd_t), _GL_ATTRIBUTE_PURE);
 _GL_CXXALIAS_RPL (thrd_equal, int, (thrd_t, thrd_t));
 # else
 #  if !@HAVE_THREADS_H@
-_GL_FUNCDECL_SYS (thrd_equal, int, (thrd_t, thrd_t), _GL_ATTRIBUTE_PURE);
+_GL_FUNCATTR_SYS (thrd_equal, int, (thrd_t, thrd_t), _GL_ATTRIBUTE_PURE);
 #  endif
 _GL_CXXALIAS_SYS (thrd_equal, int, (thrd_t, thrd_t));
 # endif
@@ -231,14 +231,14 @@ _GL_WARN_ON_USE (thrd_equal, "thrd_equal is unportable - "
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define thrd_sleep rpl_thrd_sleep
 #  endif
-_GL_FUNCDECL_RPL (thrd_sleep, int,
+_GL_FUNCATTR_RPL (thrd_sleep, int,
                               (const struct timespec *, struct timespec *),
                               _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (thrd_sleep, int,
                               (const struct timespec *, struct timespec *));
 # else
 #  if !@HAVE_THREADS_H@
-_GL_FUNCDECL_SYS (thrd_sleep, int,
+_GL_FUNCATTR_SYS (thrd_sleep, int,
                               (const struct timespec *, struct timespec *),
                               _GL_ARG_NONNULL ((1)));
 #  endif
@@ -392,11 +392,11 @@ typedef pthread_mutex_t mtx_t;
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define mtx_init rpl_mtx_init
 #  endif
-_GL_FUNCDECL_RPL (mtx_init, int, (mtx_t *, int), _GL_ARG_NONNULL ((1)));
+_GL_FUNCATTR_RPL (mtx_init, int, (mtx_t *, int), _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (mtx_init, int, (mtx_t *, int));
 # else
 #  if !@HAVE_THREADS_H@
-_GL_FUNCDECL_SYS (mtx_init, int, (mtx_t *, int), _GL_ARG_NONNULL ((1)));
+_GL_FUNCATTR_SYS (mtx_init, int, (mtx_t *, int), _GL_ARG_NONNULL ((1)));
 #  endif
 _GL_CXXALIAS_SYS (mtx_init, int, (mtx_t *, int));
 # endif
@@ -414,11 +414,11 @@ _GL_WARN_ON_USE (mtx_init, "mtx_init is unportable - "
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define mtx_lock rpl_mtx_lock
 #  endif
-_GL_FUNCDECL_RPL (mtx_lock, int, (mtx_t *), _GL_ARG_NONNULL ((1)));
+_GL_FUNCATTR_RPL (mtx_lock, int, (mtx_t *), _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (mtx_lock, int, (mtx_t *));
 # else
 #  if !@HAVE_THREADS_H@
-_GL_FUNCDECL_SYS (mtx_lock, int, (mtx_t *), _GL_ARG_NONNULL ((1)));
+_GL_FUNCATTR_SYS (mtx_lock, int, (mtx_t *), _GL_ARG_NONNULL ((1)));
 #  endif
 _GL_CXXALIAS_SYS (mtx_lock, int, (mtx_t *));
 # endif
@@ -436,11 +436,11 @@ _GL_WARN_ON_USE (mtx_lock, "mtx_lock is unportable - "
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define mtx_trylock rpl_mtx_trylock
 #  endif
-_GL_FUNCDECL_RPL (mtx_trylock, int, (mtx_t *), _GL_ARG_NONNULL ((1)));
+_GL_FUNCATTR_RPL (mtx_trylock, int, (mtx_t *), _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (mtx_trylock, int, (mtx_t *));
 # else
 #  if !@HAVE_THREADS_H@
-_GL_FUNCDECL_SYS (mtx_trylock, int, (mtx_t *), _GL_ARG_NONNULL ((1)));
+_GL_FUNCATTR_SYS (mtx_trylock, int, (mtx_t *), _GL_ARG_NONNULL ((1)));
 #  endif
 _GL_CXXALIAS_SYS (mtx_trylock, int, (mtx_t *));
 # endif
@@ -458,12 +458,12 @@ _GL_WARN_ON_USE (mtx_trylock, "mtx_trylock is unportable - "
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define mtx_timedlock rpl_mtx_timedlock
 #  endif
-_GL_FUNCDECL_RPL (mtx_timedlock, int, (mtx_t *, const struct timespec *),
+_GL_FUNCATTR_RPL (mtx_timedlock, int, (mtx_t *, const struct timespec *),
                                       _GL_ARG_NONNULL ((1, 2)));
 _GL_CXXALIAS_RPL (mtx_timedlock, int, (mtx_t *, const struct timespec *));
 # else
 #  if !@HAVE_THREADS_H@
-_GL_FUNCDECL_SYS (mtx_timedlock, int, (mtx_t *, const struct timespec *),
+_GL_FUNCATTR_SYS (mtx_timedlock, int, (mtx_t *, const struct timespec *),
                                       _GL_ARG_NONNULL ((1, 2)));
 #  endif
 _GL_CXXALIAS_SYS (mtx_timedlock, int, (mtx_t *, const struct timespec *));
@@ -482,11 +482,11 @@ _GL_WARN_ON_USE (mtx_timedlock, "mtx_timedlock is unportable - "
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define mtx_unlock rpl_mtx_unlock
 #  endif
-_GL_FUNCDECL_RPL (mtx_unlock, int, (mtx_t *), _GL_ARG_NONNULL ((1)));
+_GL_FUNCATTR_RPL (mtx_unlock, int, (mtx_t *), _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (mtx_unlock, int, (mtx_t *));
 # else
 #  if !@HAVE_THREADS_H@
-_GL_FUNCDECL_SYS (mtx_unlock, int, (mtx_t *), _GL_ARG_NONNULL ((1)));
+_GL_FUNCATTR_SYS (mtx_unlock, int, (mtx_t *), _GL_ARG_NONNULL ((1)));
 #  endif
 _GL_CXXALIAS_SYS (mtx_unlock, int, (mtx_t *));
 # endif
@@ -504,11 +504,11 @@ _GL_WARN_ON_USE (mtx_unlock, "mtx_unlock is unportable - "
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define mtx_destroy rpl_mtx_destroy
 #  endif
-_GL_FUNCDECL_RPL (mtx_destroy, void, (mtx_t *), _GL_ARG_NONNULL ((1)));
+_GL_FUNCATTR_RPL (mtx_destroy, void, (mtx_t *), _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (mtx_destroy, void, (mtx_t *));
 # else
 #  if !@HAVE_THREADS_H@
-_GL_FUNCDECL_SYS (mtx_destroy, void, (mtx_t *), _GL_ARG_NONNULL ((1)));
+_GL_FUNCATTR_SYS (mtx_destroy, void, (mtx_t *), _GL_ARG_NONNULL ((1)));
 #  endif
 _GL_CXXALIAS_SYS (mtx_destroy, void, (mtx_t *));
 # endif
@@ -550,12 +550,12 @@ typedef pthread_once_t once_flag;
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define call_once rpl_call_once
 #  endif
-_GL_FUNCDECL_RPL (call_once, void, (once_flag *, void (*) (void)),
+_GL_FUNCATTR_RPL (call_once, void, (once_flag *, void (*) (void)),
                                    _GL_ARG_NONNULL ((1, 2)));
 _GL_CXXALIAS_RPL (call_once, void, (once_flag *, void (*) (void)));
 # else
 #  if !@HAVE_THREADS_H@
-_GL_FUNCDECL_SYS (call_once, void, (once_flag *, void (*) (void)),
+_GL_FUNCATTR_SYS (call_once, void, (once_flag *, void (*) (void)),
                                    _GL_ARG_NONNULL ((1, 2)));
 #  endif
 _GL_CXXALIAS_SYS_CAST (call_once, void, (once_flag *, void (*) (void)));
@@ -595,11 +595,11 @@ typedef pthread_cond_t cnd_t;
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define cnd_init rpl_cnd_init
 #  endif
-_GL_FUNCDECL_RPL (cnd_init, int, (cnd_t *), _GL_ARG_NONNULL ((1)));
+_GL_FUNCATTR_RPL (cnd_init, int, (cnd_t *), _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (cnd_init, int, (cnd_t *));
 # else
 #  if !@HAVE_THREADS_H@
-_GL_FUNCDECL_SYS (cnd_init, int, (cnd_t *), _GL_ARG_NONNULL ((1)));
+_GL_FUNCATTR_SYS (cnd_init, int, (cnd_t *), _GL_ARG_NONNULL ((1)));
 #  endif
 _GL_CXXALIAS_SYS (cnd_init, int, (cnd_t *));
 # endif
@@ -617,11 +617,11 @@ _GL_WARN_ON_USE (cnd_init, "cnd_init is unportable - "
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define cnd_wait rpl_cnd_wait
 #  endif
-_GL_FUNCDECL_RPL (cnd_wait, int, (cnd_t *, mtx_t *), _GL_ARG_NONNULL ((1, 2)));
+_GL_FUNCATTR_RPL (cnd_wait, int, (cnd_t *, mtx_t *), _GL_ARG_NONNULL ((1, 2)));
 _GL_CXXALIAS_RPL (cnd_wait, int, (cnd_t *, mtx_t *));
 # else
 #  if !@HAVE_THREADS_H@
-_GL_FUNCDECL_SYS (cnd_wait, int, (cnd_t *, mtx_t *), _GL_ARG_NONNULL ((1, 2)));
+_GL_FUNCATTR_SYS (cnd_wait, int, (cnd_t *, mtx_t *), _GL_ARG_NONNULL ((1, 2)));
 #  endif
 _GL_CXXALIAS_SYS (cnd_wait, int, (cnd_t *, mtx_t *));
 # endif
@@ -639,14 +639,14 @@ _GL_WARN_ON_USE (cnd_wait, "cnd_wait is unportable - "
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define cnd_timedwait rpl_cnd_timedwait
 #  endif
-_GL_FUNCDECL_RPL (cnd_timedwait, int,
+_GL_FUNCATTR_RPL (cnd_timedwait, int,
                                  (cnd_t *, mtx_t *, const struct timespec *),
                                  _GL_ARG_NONNULL ((1, 2, 3)));
 _GL_CXXALIAS_RPL (cnd_timedwait, int,
                                  (cnd_t *, mtx_t *, const struct timespec *));
 # else
 #  if !@HAVE_THREADS_H@
-_GL_FUNCDECL_SYS (cnd_timedwait, int,
+_GL_FUNCATTR_SYS (cnd_timedwait, int,
                                  (cnd_t *, mtx_t *, const struct timespec *),
                                  _GL_ARG_NONNULL ((1, 2, 3)));
 #  endif
@@ -667,11 +667,11 @@ _GL_WARN_ON_USE (cnd_timedwait, "cnd_timedwait is unportable - "
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define cnd_signal rpl_cnd_signal
 #  endif
-_GL_FUNCDECL_RPL (cnd_signal, int, (cnd_t *), _GL_ARG_NONNULL ((1)));
+_GL_FUNCATTR_RPL (cnd_signal, int, (cnd_t *), _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (cnd_signal, int, (cnd_t *));
 # else
 #  if !@HAVE_THREADS_H@
-_GL_FUNCDECL_SYS (cnd_signal, int, (cnd_t *), _GL_ARG_NONNULL ((1)));
+_GL_FUNCATTR_SYS (cnd_signal, int, (cnd_t *), _GL_ARG_NONNULL ((1)));
 #  endif
 _GL_CXXALIAS_SYS (cnd_signal, int, (cnd_t *));
 # endif
@@ -689,11 +689,11 @@ _GL_WARN_ON_USE (cnd_signal, "cnd_signal is unportable - "
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define cnd_broadcast rpl_cnd_broadcast
 #  endif
-_GL_FUNCDECL_RPL (cnd_broadcast, int, (cnd_t *), _GL_ARG_NONNULL ((1)));
+_GL_FUNCATTR_RPL (cnd_broadcast, int, (cnd_t *), _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (cnd_broadcast, int, (cnd_t *));
 # else
 #  if !@HAVE_THREADS_H@
-_GL_FUNCDECL_SYS (cnd_broadcast, int, (cnd_t *), _GL_ARG_NONNULL ((1)));
+_GL_FUNCATTR_SYS (cnd_broadcast, int, (cnd_t *), _GL_ARG_NONNULL ((1)));
 #  endif
 _GL_CXXALIAS_SYS (cnd_broadcast, int, (cnd_t *));
 # endif
@@ -711,11 +711,11 @@ _GL_WARN_ON_USE (cnd_broadcast, "cnd_broadcast is unportable - "
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define cnd_destroy rpl_cnd_destroy
 #  endif
-_GL_FUNCDECL_RPL (cnd_destroy, void, (cnd_t *), _GL_ARG_NONNULL ((1)));
+_GL_FUNCATTR_RPL (cnd_destroy, void, (cnd_t *), _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (cnd_destroy, void, (cnd_t *));
 # else
 #  if !@HAVE_THREADS_H@
-_GL_FUNCDECL_SYS (cnd_destroy, void, (cnd_t *), _GL_ARG_NONNULL ((1)));
+_GL_FUNCATTR_SYS (cnd_destroy, void, (cnd_t *), _GL_ARG_NONNULL ((1)));
 #  endif
 _GL_CXXALIAS_SYS (cnd_destroy, void, (cnd_t *));
 # endif
@@ -771,12 +771,12 @@ typedef void (*tss_dtor_t) (void *);
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define tss_create rpl_tss_create
 #  endif
-_GL_FUNCDECL_RPL (tss_create, int, (tss_t *, tss_dtor_t),
+_GL_FUNCATTR_RPL (tss_create, int, (tss_t *, tss_dtor_t),
                                    _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (tss_create, int, (tss_t *, tss_dtor_t));
 # else
 #  if !@HAVE_THREADS_H@
-_GL_FUNCDECL_SYS (tss_create, int, (tss_t *, tss_dtor_t),
+_GL_FUNCATTR_SYS (tss_create, int, (tss_t *, tss_dtor_t),
                                    _GL_ARG_NONNULL ((1)));
 #  endif
 _GL_CXXALIAS_SYS (tss_create, int, (tss_t *, tss_dtor_t));

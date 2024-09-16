@@ -104,14 +104,14 @@ struct timeval
 #   undef gettimeofday
 #   define gettimeofday rpl_gettimeofday
 #  endif
-_GL_FUNCDECL_RPL (gettimeofday, int,
+_GL_FUNCATTR_RPL (gettimeofday, int,
                   (struct timeval *restrict, void *restrict),
                   _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (gettimeofday, int,
                   (struct timeval *restrict, void *restrict));
 # else
 #  if !@HAVE_GETTIMEOFDAY@
-_GL_FUNCDECL_SYS (gettimeofday, int,
+_GL_FUNCATTR_SYS (gettimeofday, int,
                   (struct timeval *restrict, void *restrict),
                   _GL_ARG_NONNULL ((1)));
 #  endif

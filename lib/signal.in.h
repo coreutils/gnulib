@@ -284,7 +284,7 @@ typedef int verify_NSIG_constraint[NSIG <= 32 ? 1 : -1];
 #   undef sigismember
 #  endif
 # else
-_GL_FUNCDECL_SYS (sigismember, int, (const sigset_t *set, int sig),
+_GL_FUNCATTR_SYS (sigismember, int, (const sigset_t *set, int sig),
                                     _GL_ARG_NONNULL ((1)));
 # endif
 _GL_CXXALIAS_SYS (sigismember, int, (const sigset_t *set, int sig));
@@ -297,7 +297,7 @@ _GL_CXXALIASWARN (sigismember);
 #   undef sigemptyset
 #  endif
 # else
-_GL_FUNCDECL_SYS (sigemptyset, int, (sigset_t *set), _GL_ARG_NONNULL ((1)));
+_GL_FUNCATTR_SYS (sigemptyset, int, (sigset_t *set), _GL_ARG_NONNULL ((1)));
 # endif
 _GL_CXXALIAS_SYS (sigemptyset, int, (sigset_t *set));
 _GL_CXXALIASWARN (sigemptyset);
@@ -309,7 +309,7 @@ _GL_CXXALIASWARN (sigemptyset);
 #   undef sigaddset
 #  endif
 # else
-_GL_FUNCDECL_SYS (sigaddset, int, (sigset_t *set, int sig),
+_GL_FUNCATTR_SYS (sigaddset, int, (sigset_t *set, int sig),
                                   _GL_ARG_NONNULL ((1)));
 # endif
 _GL_CXXALIAS_SYS (sigaddset, int, (sigset_t *set, int sig));
@@ -322,7 +322,7 @@ _GL_CXXALIASWARN (sigaddset);
 #   undef sigdelset
 #  endif
 # else
-_GL_FUNCDECL_SYS (sigdelset, int, (sigset_t *set, int sig),
+_GL_FUNCATTR_SYS (sigdelset, int, (sigset_t *set, int sig),
                                   _GL_ARG_NONNULL ((1)));
 # endif
 _GL_CXXALIAS_SYS (sigdelset, int, (sigset_t *set, int sig));
@@ -335,14 +335,14 @@ _GL_CXXALIASWARN (sigdelset);
 #   undef sigfillset
 #  endif
 # else
-_GL_FUNCDECL_SYS (sigfillset, int, (sigset_t *set), _GL_ARG_NONNULL ((1)));
+_GL_FUNCATTR_SYS (sigfillset, int, (sigset_t *set), _GL_ARG_NONNULL ((1)));
 # endif
 _GL_CXXALIAS_SYS (sigfillset, int, (sigset_t *set));
 _GL_CXXALIASWARN (sigfillset);
 
 /* Return the set of those blocked signals that are pending.  */
 # if !@HAVE_POSIX_SIGNALBLOCKING@
-_GL_FUNCDECL_SYS (sigpending, int, (sigset_t *set), _GL_ARG_NONNULL ((1)));
+_GL_FUNCATTR_SYS (sigpending, int, (sigset_t *set), _GL_ARG_NONNULL ((1)));
 # endif
 _GL_CXXALIAS_SYS (sigpending, int, (sigset_t *set));
 _GL_CXXALIASWARN (sigpending);

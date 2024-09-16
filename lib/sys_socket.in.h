@@ -314,7 +314,7 @@ _GL_WARN_ON_USE (socket, "socket is not always POSIX compliant - "
 #   undef connect
 #   define connect rpl_connect
 #  endif
-_GL_FUNCDECL_RPL (connect, int,
+_GL_FUNCATTR_RPL (connect, int,
                   (int fd, const struct sockaddr *addr, socklen_t addrlen),
                   _GL_ARG_NONNULL ((2)));
 _GL_CXXALIAS_RPL (connect, int,
@@ -384,7 +384,7 @@ _GL_WARN_ON_USE (accept, "accept is not always POSIX compliant - "
 #   undef bind
 #   define bind rpl_bind
 #  endif
-_GL_FUNCDECL_RPL (bind, int,
+_GL_FUNCATTR_RPL (bind, int,
                   (int fd, const struct sockaddr *addr, socklen_t addrlen),
                   _GL_ARG_NONNULL ((2)));
 _GL_CXXALIAS_RPL (bind, int,
@@ -416,7 +416,7 @@ _GL_WARN_ON_USE (bind, "bind is not always POSIX compliant - "
 #   undef getpeername
 #   define getpeername rpl_getpeername
 #  endif
-_GL_FUNCDECL_RPL (getpeername, int,
+_GL_FUNCATTR_RPL (getpeername, int,
                   (int fd, struct sockaddr *restrict addr,
                    socklen_t *restrict addrlen),
                   _GL_ARG_NONNULL ((2, 3)));
@@ -452,7 +452,7 @@ _GL_WARN_ON_USE (getpeername, "getpeername is not always POSIX compliant - "
 #   undef getsockname
 #   define getsockname rpl_getsockname
 #  endif
-_GL_FUNCDECL_RPL (getsockname, int,
+_GL_FUNCATTR_RPL (getsockname, int,
                   (int fd, struct sockaddr *restrict addr,
                    socklen_t *restrict addrlen),
                   _GL_ARG_NONNULL ((2, 3)));
@@ -488,7 +488,7 @@ _GL_WARN_ON_USE (getsockname, "getsockname is not always POSIX compliant - "
 #   undef getsockopt
 #   define getsockopt rpl_getsockopt
 #  endif
-_GL_FUNCDECL_RPL (getsockopt, int,
+_GL_FUNCATTR_RPL (getsockopt, int,
                   (int fd, int level, int optname,
                    void *restrict optval, socklen_t *restrict optlen),
                   _GL_ARG_NONNULL ((4, 5)));
@@ -547,7 +547,7 @@ _GL_WARN_ON_USE (listen, "listen is not always POSIX compliant - "
 #   undef recv
 #   define recv rpl_recv
 #  endif
-_GL_FUNCDECL_RPL (recv, ssize_t, (int fd, void *buf, size_t len, int flags),
+_GL_FUNCATTR_RPL (recv, ssize_t, (int fd, void *buf, size_t len, int flags),
                                  _GL_ARG_NONNULL ((2)));
 _GL_CXXALIAS_RPL (recv, ssize_t, (int fd, void *buf, size_t len, int flags));
 # else
@@ -576,7 +576,7 @@ _GL_WARN_ON_USE (recv, "recv is not always POSIX compliant - "
 #   undef send
 #   define send rpl_send
 #  endif
-_GL_FUNCDECL_RPL (send, ssize_t,
+_GL_FUNCATTR_RPL (send, ssize_t,
                   (int fd, const void *buf, size_t len, int flags),
                   _GL_ARG_NONNULL ((2)));
 _GL_CXXALIAS_RPL (send, ssize_t,
@@ -608,7 +608,7 @@ _GL_WARN_ON_USE (send, "send is not always POSIX compliant - "
 #   undef recvfrom
 #   define recvfrom rpl_recvfrom
 #  endif
-_GL_FUNCDECL_RPL (recvfrom, ssize_t,
+_GL_FUNCATTR_RPL (recvfrom, ssize_t,
                   (int fd, void *restrict buf, size_t len, int flags,
                    struct sockaddr *restrict from,
                    socklen_t *restrict fromlen),
@@ -647,7 +647,7 @@ _GL_WARN_ON_USE (recvfrom, "recvfrom is not always POSIX compliant - "
 #   undef sendto
 #   define sendto rpl_sendto
 #  endif
-_GL_FUNCDECL_RPL (sendto, ssize_t,
+_GL_FUNCATTR_RPL (sendto, ssize_t,
                   (int fd, const void *buf, size_t len, int flags,
                    const struct sockaddr *to, socklen_t tolen),
                   _GL_ARG_NONNULL ((2)));
@@ -681,7 +681,7 @@ _GL_WARN_ON_USE (sendto, "sendto is not always POSIX compliant - "
 #   undef setsockopt
 #   define setsockopt rpl_setsockopt
 #  endif
-_GL_FUNCDECL_RPL (setsockopt, int, (int fd, int level, int optname,
+_GL_FUNCATTR_RPL (setsockopt, int, (int fd, int level, int optname,
                                     const void * optval, socklen_t optlen),
                                    _GL_ARG_NONNULL ((4)));
 _GL_CXXALIAS_RPL (setsockopt, int, (int fd, int level, int optname,

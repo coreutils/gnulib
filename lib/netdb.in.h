@@ -180,7 +180,7 @@ struct addrinfo
 #   undef getaddrinfo
 #   define getaddrinfo rpl_getaddrinfo
 #  endif
-_GL_FUNCDECL_RPL (getaddrinfo, int,
+_GL_FUNCATTR_RPL (getaddrinfo, int,
                   (const char *restrict nodename,
                    const char *restrict servname,
                    const struct addrinfo *restrict hints,
@@ -193,7 +193,7 @@ _GL_CXXALIAS_RPL (getaddrinfo, int,
                    struct addrinfo **restrict res));
 # else
 #  if !@HAVE_DECL_GETADDRINFO@
-_GL_FUNCDECL_SYS (getaddrinfo, int,
+_GL_FUNCATTR_SYS (getaddrinfo, int,
                   (const char *restrict nodename,
                    const char *restrict servname,
                    const struct addrinfo *restrict hints,
@@ -216,12 +216,12 @@ _GL_CXXALIASWARN (getaddrinfo);
 #   undef freeaddrinfo
 #   define freeaddrinfo rpl_freeaddrinfo
 #  endif
-_GL_FUNCDECL_RPL (freeaddrinfo, void, (struct addrinfo *ai),
+_GL_FUNCATTR_RPL (freeaddrinfo, void, (struct addrinfo *ai),
                                       _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (freeaddrinfo, void, (struct addrinfo *ai));
 # else
 #  if !@HAVE_DECL_FREEADDRINFO@
-_GL_FUNCDECL_SYS (freeaddrinfo, void, (struct addrinfo *ai),
+_GL_FUNCATTR_SYS (freeaddrinfo, void, (struct addrinfo *ai),
                                       _GL_ARG_NONNULL ((1)));
 #  endif
 _GL_CXXALIAS_SYS (freeaddrinfo, void, (struct addrinfo *ai));
@@ -252,7 +252,7 @@ _GL_CXXALIASWARN (gai_strerror);
 /* Convert socket address to printable node and service names.
    For more details, see the POSIX:2008 specification
    <https://pubs.opengroup.org/onlinepubs/9699919799/functions/getnameinfo.html>.  */
-_GL_FUNCDECL_SYS (getnameinfo, int,
+_GL_FUNCATTR_SYS (getnameinfo, int,
                   (const struct sockaddr *restrict sa, socklen_t salen,
                    char *restrict node, socklen_t nodelen,
                    char *restrict service, socklen_t servicelen,
