@@ -20,7 +20,9 @@
 #endif
 @PRAGMA_COLUMNS@
 
-#if (defined __need_system_stdlib_h && !defined _GLIBCXX_STDLIB_H) || defined __need_malloc_and_calloc
+#if ((defined __need_system_stdlib_h && !defined _GLIBCXX_STDLIB_H) \
+     || defined __need_malloc_and_calloc) \
+    && !defined __SUNPRO_CC
 /* Special invocation conventions inside some gnulib header files,
    and inside some glibc header files, respectively.
    Do not recognize this special invocation convention when GCC's
