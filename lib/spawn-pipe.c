@@ -356,62 +356,43 @@ create_pipe (const char *progname,
     }
 
 # else /* __KLIBC__ */
-  if (!(directory == NULL || strcmp (directory, ".") == 0))
-    {
-      /* A directory argument is not supported in this implementation.  */
-      saved_errno = EINVAL;
-      goto fail_with_saved_errno;
-    }
-
-  int orig_stdin;
-  int orig_stdout;
-  int orig_stderr;
-
-  /* Save standard file handles of parent process.  */
-  if (pipe_stdin || prog_stdin != NULL)
-    orig_stdin = dup_safer_noinherit (STDIN_FILENO);
-  if (pipe_stdout || prog_stdout != NULL)
-    orig_stdout = dup_safer_noinherit (STDOUT_FILENO);
-  if (null_stderr)
-    orig_stderr = dup_safer_noinherit (STDERR_FILENO);
+  int new_stdin = STDIN_FILENO;
+  int new_stdout = STDOUT_FILENO;
+  int new_stderr = STDERR_FILENO;
 
   /* Create standard file handles of child process.  */
   nulloutfd = -1;
   stdinfd = -1;
   stdoutfd = -1;
-  if ((!pipe_stdin || dup2 (ofd[0], STDIN_FILENO) >= 0)
-      && (!pipe_stdout || dup2 (ifd[1], STDOUT_FILENO) >= 0)
+  if ((!pipe_stdin || (new_stdin = ofd[0]) >= 0)
+      && (!pipe_stdout || (new_stdout = ifd[1]) >= 0)
       && (!null_stderr
-          || ((nulloutfd = open ("NUL", O_RDWR, 0)) >= 0
-              && (nulloutfd == STDERR_FILENO
-                  || (dup2 (nulloutfd, STDERR_FILENO) >= 0
-                      && close (nulloutfd) >= 0))))
+          || ((nulloutfd = open ("NUL", O_RDWR | O_CLOEXEC, 0)) >= 0
+              && (new_stderr = nulloutfd) >= 0))
       && (pipe_stdin
           || prog_stdin == NULL
-          || ((stdinfd = open (prog_stdin, O_RDONLY, 0)) >= 0
-              && (stdinfd == STDIN_FILENO
-                  || (dup2 (stdinfd, STDIN_FILENO) >= 0
-                      && close (stdinfd) >= 0))))
+          || ((stdinfd = open (prog_stdin, O_RDONLY | O_CLOEXEC, 0)) >= 0
+              && (new_stdin = stdinfd) >= 0))
       && (pipe_stdout
           || prog_stdout == NULL
-          || ((stdoutfd = open (prog_stdout, O_WRONLY, 0)) >= 0
-              && (stdoutfd == STDOUT_FILENO
-                  || (dup2 (stdoutfd, STDOUT_FILENO) >= 0
-                      && close (stdoutfd) >= 0)))))
+          || ((stdoutfd = open (prog_stdout, O_WRONLY | O_CLOEXEC, 0)) >= 0
+              && (new_stdout = stdoutfd) >= 0)))
     /* The child process doesn't inherit ifd[0], ifd[1], ofd[0], ofd[1],
        but it inherits all open()ed or dup2()ed file handles (which is what
        we want in the case of STD*_FILENO).  */
     {
-      child = _spawnvpe (P_NOWAIT, prog_path, argv + 1,
-                         (const char **) environ);
+      child = spawnpvech (P_NOWAIT, prog_path, argv + 1,
+                          (const char **) environ, directory,
+                          new_stdin, new_stdout, new_stderr);
 #  if 0 /* Executing arbitrary files as shell scripts is unsecure.  */
       if (child == -1 && errno == ENOEXEC)
         {
           /* prog is not a native executable.  Try to execute it as a
              shell script.  Note that prepare_spawn() has already prepended
              a hidden element "sh.exe" to argv.  */
-          child = _spawnvpe (P_NOWAIT, argv[0], argv,
-                             (const char **) environ);
+          child = spawnpvech (P_NOWAIT, argv[0], argv,
+                              (const char **) environ, directory,
+                              new_stdin, new_stdout, new_stderr);
         }
 #  endif
     }
@@ -423,14 +404,6 @@ create_pipe (const char *progname,
     close (stdoutfd);
   if (nulloutfd >= 0)
     close (nulloutfd);
-
-  /* Restore standard file handles of parent process.  */
-  if (null_stderr)
-    undup_safer_noinherit (orig_stderr, STDERR_FILENO);
-  if (pipe_stdout || prog_stdout != NULL)
-    undup_safer_noinherit (orig_stdout, STDOUT_FILENO);
-  if (pipe_stdin || prog_stdin != NULL)
-    undup_safer_noinherit (orig_stdin, STDIN_FILENO);
 
   if (pipe_stdin)
     close (ofd[0]);
