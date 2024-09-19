@@ -7,14 +7,13 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_SPAWN_PIPE],
 [
+  AC_REQUIRE([AC_CANONICAL_HOST])
+
   dnl Prerequisites of lib/spawn-pipe.c.
   AC_REQUIRE([AC_TYPE_MODE_T])
 
-  AC_CHECK_HEADERS_ONCE([libcx/spawn2.h])
-  if test $ac_cv_header_libcx_spawn2_h = yes; then
-    HAVE_LIBCX_SPAWN2_H=1
-  else
-    HAVE_LIBCX_SPAWN2_H=0
-  fi
-  AC_SUBST(HAVE_LIBCX_SPAWN2_H)
+  dnl Prerequisites of lib/os2-spawn.c.
+  case "$host_os" in
+    os2*) AC_CHECK_HEADERS_ONCE([libcx/spawn2.h]) ;;
+  esac
 ])
