@@ -3,6 +3,7 @@ tests/jit/test-cache.c
 tests/macros.h
 m4/mmap-anon.m4
 m4/warnings.m4
+m4/libdl.m4
 
 Status:
 unportable-test
@@ -17,6 +18,7 @@ xalloc
 configure.ac:
 AC_CHECK_HEADERS_ONCE([sys/mman.h])
 gl_FUNC_MMAP_ANON
+gl_LIBDL
 dnl Disable the OpenBSD "retguard" stack protector for this test.
 gl_COMPILER_OPTION_IF([-fno-ret-protector],
   [DISABLE_OPENBSD_RETGUARD='-fno-ret-protector'],
@@ -29,4 +31,4 @@ TESTS += test-cache
 check_PROGRAMS += test-cache
 test_cache_SOURCES = jit/test-cache.c
 test_cache_CFLAGS = $(AM_CFLAGS) $(DISABLE_OPENBSD_RETGUARD)
-test_cache_LDADD = $(LDADD) $(LIBINTL)
+test_cache_LDADD = $(LDADD) $(LIBINTL) @LIBDL@
