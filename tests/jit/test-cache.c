@@ -39,10 +39,21 @@
 #include "xalloc.h"
 #include "macros.h"
 
-/*  On most platforms, function pointers are just a pointer to the
-    code, i.e. to the first instruction to be executed.  This,
-    however, is not universally true, see:
-    https://git.savannah.gnu.org/gitweb/?p=libffcall.git;a=blob;f=porting-tools/abis/function-pointer.txt.  */
+/* With clang ≥ 17, when the undefined-behaviour sanitizer is in use, 8 bytes of
+   meta-information precede each function: a magic number 0xC105CAFE and a word
+   that encodes the function's signature.  See
+   <https://reviews.llvm.org/D148665>
+   <https://github.com/llvm/llvm-project/issues/65253>
+   <https://www.reddit.com/r/C_Programming/comments/1dj9gg8/>  */
+#if defined __clang__ && __clang_major__ >= 17 && defined __ELF__
+# include <dlfcn.h>
+#endif
+static int clang_ubsan_workaround = 0;
+
+/* On most platforms, function pointers are just a pointer to the
+   code, i.e. to the first instruction to be executed.  This,
+   however, is not universally true, see:
+   https://git.savannah.gnu.org/gitweb/?p=libffcall.git;a=blob;f=porting-tools/abis/function-pointer.txt.  */
 
 #if ((defined __powerpc__ || defined __powerpc64__) && defined _AIX) || (defined __powerpc64__ && !defined __powerpc64_elfv2__ && defined __linux__)
 struct func
@@ -103,9 +114,9 @@ struct func
      ((void) ((funcptr) = \
               (void *) (((uintptr_t) (funcptr) & ~(intptr_t)1) | (is))))
 # else
-#  define CODE(funcptr) (funcptr)
+#  define CODE(funcptr) ((char *) (funcptr) - clang_ubsan_workaround)
 #  define SET_CODE(funcptr,code_addr) \
-     ((void) ((funcptr) = (void *) (code_addr)))
+     ((void) ((funcptr) = (void *) ((char *) (code_addr) + clang_ubsan_workaround)))
 #  define IS(funcptr) ((void) (funcptr), 0)
 #  define SET_IS(funcptr,is) ((void) (funcptr), (void) (is))
 # endif
@@ -234,6 +245,12 @@ unsigned int const return2_code[] = { 0x81c3e008, 0x90102002 };
 int
 main ()
 {
+#if defined __clang__ && __clang_major__ >= 17 && defined __ELF__
+  if (dlsym (RTLD_DEFAULT, "__ubsan_handle_function_type_mismatch") != NULL)
+    /* This program is built with clang ≥ 17 and its UBSAN.  */
+    clang_ubsan_workaround = 8;
+#endif
+
   void const *code_of_return1;
   void const *code_of_return2;
   size_t size_of_return1;
