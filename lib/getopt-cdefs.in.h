@@ -47,7 +47,7 @@
 #endif
 
 #ifndef __GNUC_PREREQ
-# if defined __GNUC__ && defined __GNUC_VERSION__
+# if defined __GNUC__ && defined __GNUC_MINOR__
 # define __GNUC_PREREQ(maj, min) \
         ((__GNUC__ << 16) + __GNUC_MINOR__ >= ((maj) << 16) + (min))
 # else
