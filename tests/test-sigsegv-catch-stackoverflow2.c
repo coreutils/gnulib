@@ -59,7 +59,7 @@ static sigset_t mainsigset;
 
 static volatile int pass = 0;
 static uintptr_t page;
-static volatile int *null_pointer_to_volatile_int /* = NULL */;
+static int *volatile null_pointer /* = NULL */;
 
 static void
 stackoverflow_handler_continuation (void *arg1, void *arg2, void *arg3)
@@ -193,7 +193,7 @@ main ()
       *(volatile int *) (page + 0x678) = 42;
       break;
     case 3:
-      *null_pointer_to_volatile_int = 42;
+      *null_pointer = 42;
       break;
     case 4:
       break;
