@@ -1,0 +1,23 @@
+Description:
+A string or file based input stream, that keeps track of a line number.
+
+Files:
+lib/sfl-istream.h
+lib/sfl-istream.c
+
+Depends-on:
+sf-istream
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += sfl-istream.c
+
+Include:
+"sfl-istream.h"
+
+License:
+LGPL
+
+Maintainer:
+all
