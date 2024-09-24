@@ -4,6 +4,7 @@ A buffer that accumulates a string by piecewise concatenation.
 Files:
 lib/string-buffer.h
 lib/string-buffer.c
+lib/string-buffer-printf.c
 
 Depends-on:
 stdbool
@@ -14,7 +15,7 @@ vsnprintf-posix
 configure.ac:
 
 Makefile.am:
-lib_SOURCES += string-buffer.c
+lib_SOURCES += string-buffer.c string-buffer-printf.c
 
 Include:
 "string-buffer.h"

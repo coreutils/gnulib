@@ -21,7 +21,10 @@
 /* Specification.  */
 #include "string-buffer.h"
 
-#include <stdarg.h>
+/* Undocumented.  */
+extern int sb_ensure_more_bytes (struct string_buffer *buffer,
+                                 size_t increment);
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -38,7 +41,7 @@ sb_init (struct string_buffer *buffer)
 /* Ensures that INCREMENT bytes are available beyond the current used length
    of BUFFER.
    Returns 0, or -1 in case of out-of-memory error.  */
-static int
+int
 sb_ensure_more_bytes (struct string_buffer *buffer, size_t increment)
 {
   size_t incremented_length = buffer->length + increment;
@@ -89,165 +92,6 @@ sb_append (struct string_buffer *buffer, const char *str)
   memcpy (buffer->data + buffer->length, str, len);
   buffer->length += len;
   return 0;
-}
-
-int
-sb_appendvf (struct string_buffer *buffer, const char *formatstring,
-             va_list list)
-{
-  va_list list_copy;
-
-  /* Make a bit of room, so that the probability that the first vsnprintf() call
-     succeeds is high.  */
-  size_t room = buffer->allocated - buffer->length;
-  if (room < 64)
-    {
-      if (sb_ensure_more_bytes (buffer, 64) < 0)
-        {
-          buffer->error = true;
-          return -1;
-        }
-      room = buffer->allocated - buffer->length;
-    }
-
-  va_copy (list_copy, list);
-
-  /* First vsnprintf() call.  */
-  int ret = vsnprintf (buffer->data + buffer->length, room, formatstring, list);
-  if (ret < 0)
-    {
-      /* Failed.  */
-      buffer->error = true;
-      ret = -1;
-    }
-  else
-    {
-      if ((size_t) ret <= room)
-        {
-          /* The result has fit into room bytes.  */
-          buffer->length += (size_t) ret;
-          ret = 0;
-        }
-      else
-        {
-          /* The result was truncated.  Make more room, for a second vsnprintf()
-             call.  */
-          if (sb_ensure_more_bytes (buffer, (size_t) ret) < 0)
-            {
-              buffer->error = true;
-              ret = -1;
-            }
-          else
-            {
-              /* Second vsnprintf() call.  */
-              room = buffer->allocated - buffer->length;
-              ret = vsnprintf (buffer->data + buffer->length, room,
-                               formatstring, list_copy);
-              if (ret < 0)
-                {
-                  /* Failed.  */
-                  buffer->error = true;
-                  ret = -1;
-                }
-              else
-                {
-                  if ((size_t) ret <= room)
-                    {
-                      /* The result has fit into room bytes.  */
-                      buffer->length += (size_t) ret;
-                      ret = 0;
-                    }
-                  else
-                    /* The return values of the vsnprintf() calls are not
-                       consistent.  */
-                    abort ();
-                }
-            }
-        }
-    }
-
-  va_end (list_copy);
-  return ret;
-}
-
-int
-sb_appendf (struct string_buffer *buffer, const char *formatstring, ...)
-{
-  va_list args;
-
-  /* Make a bit of room, so that the probability that the first vsnprintf() call
-     succeeds is high.  */
-  size_t room = buffer->allocated - buffer->length;
-  if (room < 64)
-    {
-      if (sb_ensure_more_bytes (buffer, 64) < 0)
-        {
-          buffer->error = true;
-          return -1;
-        }
-      room = buffer->allocated - buffer->length;
-    }
-
-  va_start (args, formatstring);
-
-  /* First vsnprintf() call.  */
-  int ret = vsnprintf (buffer->data + buffer->length, room, formatstring, args);
-  if (ret < 0)
-    {
-      /* Failed.  */
-      buffer->error = true;
-      ret = -1;
-    }
-  else
-    {
-      if ((size_t) ret <= room)
-        {
-          /* The result has fit into room bytes.  */
-          buffer->length += (size_t) ret;
-          ret = 0;
-        }
-      else
-        {
-          /* The result was truncated.  Make more room, for a second vsnprintf()
-             call.  */
-          if (sb_ensure_more_bytes (buffer, (size_t) ret) < 0)
-            {
-              buffer->error = true;
-              ret = -1;
-            }
-          else
-            {
-              /* Second vsnprintf() call.  */
-              room = buffer->allocated - buffer->length;
-              va_end (args);
-              va_start (args, formatstring);
-              ret = vsnprintf (buffer->data + buffer->length, room,
-                               formatstring, args);
-              if (ret < 0)
-                {
-                  /* Failed.  */
-                  buffer->error = true;
-                  ret = -1;
-                }
-              else
-                {
-                  if ((size_t) ret <= room)
-                    {
-                      /* The result has fit into room bytes.  */
-                      buffer->length += (size_t) ret;
-                      ret = 0;
-                    }
-                  else
-                    /* The return values of the vsnprintf() calls are not
-                       consistent.  */
-                    abort ();
-                }
-            }
-        }
-    }
-
-  va_end (args);
-  return ret;
 }
 
 void
