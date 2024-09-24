@@ -52,7 +52,10 @@ extern int sb_append (struct string_buffer *buffer, const char *str);
 
 /* Appends the result of the printf-compatible FORMATSTRING with the argument
    list LIST to BUFFER.
-   Returns 0, or -1 in case of error.  */
+   Returns 0, or -1 with errno set in case of error.
+   Error code EOVERFLOW can only occur when a width > INT_MAX is used.
+   Therefore, if the format string is valid and does not use %ls/%lc
+   directives nor widths, the only possible error code is ENOMEM.  */
 extern int sb_appendvf (struct string_buffer *buffer,
                         const char *formatstring, va_list list)
   #if (__GNUC__ + (__GNUC_MINOR__ >= 4) > 4) && !defined __clang__
@@ -64,7 +67,10 @@ extern int sb_appendvf (struct string_buffer *buffer,
 
 /* Appends the result of the printf-compatible FORMATSTRING with the following
    arguments to BUFFER.
-   Returns 0, or -1 in case of error.  */
+   Returns 0, or -1 with errno set in case of error.
+   Error code EOVERFLOW can only occur when a width > INT_MAX is used.
+   Therefore, if the format string is valid and does not use %ls/%lc
+   directives nor widths, the only possible error code is ENOMEM.  */
 extern int sb_appendf (struct string_buffer *buffer,
                         const char *formatstring, ...)
   #if (__GNUC__ + (__GNUC_MINOR__ >= 4) > 4) && !defined __clang__

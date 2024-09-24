@@ -20,6 +20,7 @@
 
 #include "string-buffer.h"
 
+#include <errno.h>
 #include <string.h>
 #include <wchar.h>
 
@@ -94,19 +95,33 @@ main ()
   /* Test printf-like formatting failure.
      On all systems except AIX, trying to convert the wide-character 0x76543210
      to a multibyte string (in the "C" locale) fails.
-     On all systems where REPLACE_VSNPRINTF=1 (this includes AIX), i.e. where
-     the Gnulib implementation of vsnprintf() is used), invalid format
-     directives make the *printf call fail.  */
+     On all systems, invalid format directives make the vsnzprintf() call
+     fail.  */
   {
     struct string_buffer buffer;
+    int ret;
 
     sb_init (&buffer);
     sb_append (&buffer, "<");
-    sb_appendf (&buffer, "%lc", (wint_t) 0x76543210);
+
+    ret = sb_appendf (&buffer, "%lc", (wint_t) 0x76543210);
+    #if !defined _AIX
+    ASSERT (ret < 0);
+    ASSERT (errno == EILSEQ);
+    #endif
+
     sb_append (&buffer, "|");
-    sb_appendf (&buffer, invalid_format_string_1, 1);
+
+    ret = sb_appendf (&buffer, invalid_format_string_1, 1);
+    ASSERT (ret < 0);
+    ASSERT (errno == EINVAL);
+
     sb_append (&buffer, "|");
-    sb_appendf (&buffer, invalid_format_string_2, 2);
+
+    ret = sb_appendf (&buffer, invalid_format_string_2, 2);
+    ASSERT (ret < 0);
+    ASSERT (errno == EINVAL);
+
     sb_append (&buffer, ">");
     char *s = sb_dupfree (&buffer);
     ASSERT (s == NULL);
