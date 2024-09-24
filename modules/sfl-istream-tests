@@ -1,0 +1,12 @@
+Files:
+tests/test-sfl-istream.c
+tests/macros.h
+
+Depends-on:
+unlink
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-sfl-istream
+check_PROGRAMS += test-sfl-istream
