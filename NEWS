@@ -74,6 +74,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2024-09-25  string-buffer   The function sb_append is renamed to sb_append_c.
+                            The function sb_dupfree is renamed to sb_dupfree_c.
+
 2024-08-14  verror          The include file is changed from "verror.h"
                             to <error.h>.
 

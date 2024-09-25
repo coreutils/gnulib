@@ -87,7 +87,33 @@ sb_ensure_more_bytes (struct string_buffer *buffer, size_t increment)
 }
 
 int
-sb_append (struct string_buffer *buffer, const char *str)
+sb_append1 (struct string_buffer *buffer, char c)
+{
+  if (sb_ensure_more_bytes (buffer, 1) < 0)
+    {
+      buffer->error = true;
+      return -1;
+    }
+  buffer->data[buffer->length++] = c;
+  return 0;
+}
+
+int
+sb_append_desc (struct string_buffer *buffer, string_desc_t s)
+{
+  size_t len = string_desc_length (s);
+  if (sb_ensure_more_bytes (buffer, len) < 0)
+    {
+      buffer->error = true;
+      return -1;
+    }
+  memcpy (buffer->data + buffer->length, string_desc_data (s), len);
+  buffer->length += len;
+  return 0;
+}
+
+int
+sb_append_c (struct string_buffer *buffer, const char *str)
 {
   size_t len = strlen (str);
   if (sb_ensure_more_bytes (buffer, len) < 0)
@@ -107,10 +133,57 @@ sb_free (struct string_buffer *buffer)
     free (buffer->data);
 }
 
-/* Returns the contents of BUFFER, and frees all other memory held
-   by BUFFER.  Returns NULL upon failure or if there was an error earlier.  */
-char *
+string_desc_t
+sb_contents (struct string_buffer *buffer)
+{
+  return string_desc_new_addr (buffer->length, buffer->data);
+}
+
+const char *
+sb_contents_c (struct string_buffer *buffer)
+{
+  if (sb_ensure_more_bytes (buffer, 1) < 0)
+    return NULL;
+  buffer->data[buffer->length] = '\0';
+
+  return buffer->data;
+}
+
+string_desc_t
 sb_dupfree (struct string_buffer *buffer)
+{
+  if (buffer->error)
+    goto fail;
+
+  size_t length = buffer->length;
+  if (buffer->data == buffer->space)
+    {
+      char *copy = (char *) malloc (length > 0 ? length : 1);
+      if (copy == NULL)
+        goto fail;
+      memcpy (copy, buffer->data, length);
+      return string_desc_new_addr (length, copy);
+    }
+  else
+    {
+      /* Shrink the string before returning it.  */
+      char *contents = buffer->data;
+      if (length < buffer->allocated)
+        {
+          contents = realloc (contents, length > 0 ? length : 1);
+          if (contents == NULL)
+            goto fail;
+        }
+      return string_desc_new_addr (length, contents);
+    }
+
+ fail:
+  sb_free (buffer);
+  return string_desc_new_addr (0, NULL);
+}
+
+char *
+sb_dupfree_c (struct string_buffer *buffer)
 {
   if (buffer->error)
     goto fail;
@@ -120,21 +193,22 @@ sb_dupfree (struct string_buffer *buffer)
   buffer->data[buffer->length] = '\0';
   buffer->length++;
 
+  size_t length = buffer->length;
   if (buffer->data == buffer->space)
     {
-      char *copy = (char *) malloc (buffer->length);
+      char *copy = (char *) malloc (length);
       if (copy == NULL)
         goto fail;
-      memcpy (copy, buffer->data, buffer->length);
+      memcpy (copy, buffer->data, length);
       return copy;
     }
   else
     {
       /* Shrink the string before returning it.  */
       char *contents = buffer->data;
-      if (buffer->length < buffer->allocated)
+      if (length < buffer->allocated)
         {
-          contents = realloc (contents, buffer->length);
+          contents = realloc (contents, length);
           if (contents == NULL)
             goto fail;
         }

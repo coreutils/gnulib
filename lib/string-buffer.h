@@ -29,6 +29,7 @@
 #include <stdlib.h>
 
 #include "attribute.h"
+#include "string-desc.h"
 
 typedef char * _GL_ATTRIBUTE_CAPABILITY_TYPE ("memory resource")
         sb_heap_allocated_pointer_t;
@@ -51,9 +52,17 @@ extern "C" {
 extern void sb_init (struct string_buffer *buffer)
   _GL_ATTRIBUTE_ACQUIRE_CAPABILITY (buffer->data);
 
-/* Appends the contents of STR to BUFFER.
+/* Appends the character C to BUFFER.
    Returns 0, or -1 in case of out-of-memory error.  */
-extern int sb_append (struct string_buffer *buffer, const char *str);
+extern int sb_append1 (struct string_buffer *buffer, char c);
+
+/* Appends the contents of the memory area STR to BUFFER.
+   Returns 0, or -1 in case of out-of-memory error.  */
+extern int sb_append_desc (struct string_buffer *buffer, string_desc_t s);
+
+/* Appends the contents of the C string STR to BUFFER.
+   Returns 0, or -1 in case of out-of-memory error.  */
+extern int sb_append_c (struct string_buffer *buffer, const char *str);
 
 /* Appends the result of the printf-compatible FORMATSTRING with the argument
    list LIST to BUFFER.
@@ -77,7 +86,7 @@ extern int sb_appendvf (struct string_buffer *buffer,
    Therefore, if the format string is valid and does not use %ls/%lc
    directives nor widths, the only possible error code is ENOMEM.  */
 extern int sb_appendf (struct string_buffer *buffer,
-                        const char *formatstring, ...)
+                       const char *formatstring, ...)
   #if (__GNUC__ + (__GNUC_MINOR__ >= 4) > 4) && !defined __clang__
   ATTRIBUTE_FORMAT ((__gnu_printf__, 2, 3))
   #else
@@ -89,10 +98,29 @@ extern int sb_appendf (struct string_buffer *buffer,
 extern void sb_free (struct string_buffer *buffer)
   _GL_ATTRIBUTE_RELEASE_CAPABILITY (buffer->data);
 
-/* Returns the contents of BUFFER, and frees all other memory held
-   by BUFFER.  Returns NULL upon failure or if there was an error earlier.
+/* Returns a read-only view of the current contents of BUFFER.
+   The result is only valid until the next operation on BUFFER.  */
+extern string_desc_t sb_contents (struct string_buffer *buffer);
+
+/* Ensures the contents of BUFFER is followed by a NUL byte (without
+   incrementing the length of the contents).
+   Then returns a read-only view of the current contents of BUFFER,
+   that is, the current contents of BUFFER as a C string.
+   Returns NULL upon out-of-memory error.
+   The result is only valid until the next operation on BUFFER.  */
+extern const char * sb_contents_c (struct string_buffer *buffer);
+
+/* Returns the contents of BUFFER and frees all other memory held by BUFFER.
+   Returns NULL upon failure or if there was an error earlier.
+   It is the responsibility of the caller to string_desc_free() the result.  */
+extern string_desc_t sb_dupfree (struct string_buffer *buffer)
+  _GL_ATTRIBUTE_RELEASE_CAPABILITY (buffer->data);
+
+/* Returns the contents of BUFFER (with an added trailing NUL, that is,
+   as a C string), and frees all other memory held by BUFFER.
+   Returns NULL upon failure or if there was an error earlier.
    It is the responsibility of the caller to free() the result.  */
-extern char * sb_dupfree (struct string_buffer *buffer)
+extern char * sb_dupfree_c (struct string_buffer *buffer)
   _GL_ATTRIBUTE_RELEASE_CAPABILITY (buffer->data);
 
 #ifdef __cplusplus

@@ -9,6 +9,7 @@ lib/string-buffer-printf.c
 Depends-on:
 stdbool
 attribute
+string-desc
 stdarg
 vsnzprintf-posix
 
