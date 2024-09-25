@@ -200,12 +200,37 @@ In your @file{Makefile.am}, for every program @command{foo} that gets
 installed in, say, @file{$(bindir)}, you add:
 
 @example
-foo_CPPFLAGS = -DINSTALLDIR=\"$(bindir)\"
+foo_CPPFLAGS = -DINSTALLDIR=$(bindir_c_make)
 if RELOCATABLE_VIA_LD
 foo_LDFLAGS = `$(RELOCATABLE_LDFLAGS) $(bindir)`
 endif
 @end example
 
+Similarly, if a program @command{foo} gets installed in @file{$(pkglibdir)},
+you add:
+
+@example
+foo_CPPFLAGS = -DINSTALLDIR=$(pkglibdir_c_make)
+if RELOCATABLE_VIA_LD
+foo_LDFLAGS = `$(RELOCATABLE_LDFLAGS) $(pkglibdir)`
+endif
+@end example
+
+The Makefile variables @code{bindir_c_make} or @code{pkglibdir_c_make}
+get defined by the Autoconf macros
+@code{gl_BUILD_TO_HOST_BINDIR} or @code{gl_BUILD_TO_HOST_PKGLIBDIR},
+respectively.
+These Autoconf macros are defined in the file @code{m4/build-to-host.m4}.
+You need to
+@itemize @bullet
+@item
+Import this file @code{m4/build-to-host.m4} into your package, for example
+by using of a command like @samp{gnulib-tool --copy m4/build-to-host.m4}.
+@item
+Invoke the corresponding macro(s) from your package's @file{configure.ac}.
+@end itemize
+
+@item
 When building gnulib to use with a relocatable library, you need to
 define the preprocessor symbol @code{IN_LIBRARY}.
 You may also want to build with @code{ENABLE_COSTLY_RELOCATABLE}, in which case
@@ -217,9 +242,9 @@ to build gnulib (@pxref{Modified build rules}).
 AM_CPPFLAGS += -DIN_LIBRARY -DENABLE_COSTLY_RELOCATABLE
 
 if SHLIBS_IN_BINDIR
-AM_CPPFLAGS += -DINSTALLDIR=\"$(bindir)\"
+AM_CPPFLAGS += -DINSTALLDIR=$(bindir_c_make)
 else
-AM_CPPFLAGS += -DINSTALLDIR=\"$(libdir)\"
+AM_CPPFLAGS += -DINSTALLDIR=$(libdir_c_make)
 endif
 @end example
 
