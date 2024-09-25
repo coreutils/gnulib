@@ -1,0 +1,25 @@
+Description:
+Error-checking functions on a string buffer.
+
+Files:
+lib/xstring-buffer.c
+lib/xstring-buffer-printf.c
+
+Depends-on:
+string-buffer
+xalloc-die
+
+configure.ac:
+gl_MODULE_INDICATOR([xstring-buffer])
+
+Makefile.am:
+lib_SOURCES += xstring-buffer.c xstring-buffer-printf.c
+
+Include:
+"string-buffer.h"
+
+License:
+GPL
+
+Maintainer:
+all
