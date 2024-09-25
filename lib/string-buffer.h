@@ -19,7 +19,8 @@
 #ifndef _STRING_BUFFER_H
 #define _STRING_BUFFER_H
 
-/* This file uses _GL_ATTRIBUTE_MALLOC.  */
+/* This file uses _GL_ATTRIBUTE_MALLOC, _GL_ATTRIBUTE_CAPABILITY_TYPE,
+   _GL_ATTRIBUTE_ACQUIRE_CAPABILITY, _GL_ATTRIBUTE_RELEASE_CAPABILITY.  */
 #if !_GL_CONFIG_H_INCLUDED
  #error "Please include config.h first."
 #endif
@@ -29,10 +30,13 @@
 
 #include "attribute.h"
 
+typedef char * _GL_ATTRIBUTE_CAPABILITY_TYPE ("memory resource")
+        sb_heap_allocated_pointer_t;
+
 /* A string buffer type.  */
 struct string_buffer
 {
-  char *data;
+  sb_heap_allocated_pointer_t data;
   size_t length;     /* used bytes, <= allocated */
   size_t allocated;  /* allocated bytes */
   bool error;        /* true if there was an error */
@@ -44,7 +48,8 @@ extern "C" {
 #endif
 
 /* Initializes BUFFER to the empty string.  */
-extern void sb_init (struct string_buffer *buffer);
+extern void sb_init (struct string_buffer *buffer)
+  _GL_ATTRIBUTE_ACQUIRE_CAPABILITY (buffer->data);
 
 /* Appends the contents of STR to BUFFER.
    Returns 0, or -1 in case of out-of-memory error.  */
@@ -81,13 +86,14 @@ extern int sb_appendf (struct string_buffer *buffer,
   ;
 
 /* Frees the memory held by BUFFER.  */
-extern void sb_free (struct string_buffer *buffer);
+extern void sb_free (struct string_buffer *buffer)
+  _GL_ATTRIBUTE_RELEASE_CAPABILITY (buffer->data);
 
 /* Returns the contents of BUFFER, and frees all other memory held
    by BUFFER.  Returns NULL upon failure or if there was an error earlier.
    It is the responsibility of the caller to free() the result.  */
 extern char * sb_dupfree (struct string_buffer *buffer)
-  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE;
+  _GL_ATTRIBUTE_RELEASE_CAPABILITY (buffer->data);
 
 #ifdef __cplusplus
 }

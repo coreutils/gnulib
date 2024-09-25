@@ -29,6 +29,12 @@ extern int sb_ensure_more_bytes (struct string_buffer *buffer,
 #include <stdlib.h>
 #include <string.h>
 
+/* The warnings about memory resource 'buffer->data' in this file are not
+   relevant.  Silence them.  */
+#if __clang_major__ >= 3
+# pragma clang diagnostic ignored "-Wthread-safety"
+#endif
+
 void
 sb_init (struct string_buffer *buffer)
 {
