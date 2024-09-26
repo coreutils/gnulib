@@ -155,7 +155,7 @@ main ()
     sb_append_c (&buffer, "<");
 
     ret = sb_appendf (&buffer, "%lc", (wint_t) 0x76543210);
-    #if !defined _AIX
+    #if !(defined _AIX || (defined _WIN32 && !defined __CYGWIN__))
     ASSERT (ret < 0);
     ASSERT (errno == EILSEQ);
     #endif
