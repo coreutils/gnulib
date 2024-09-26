@@ -1,5 +1,5 @@
 # manywarnings.m4
-# serial 27
+# serial 28
 dnl Copyright (C) 2008-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -184,6 +184,9 @@ AC_DEFUN([gl_MANYWARN_ALL_GCC(C)],
           ;;
     esac
   fi
+
+  # These options are not supported by gcc, but are useful with clang.
+  AS_VAR_APPEND([$1], [' -Wthread-safety'])
 
   # Disable specific options as needed.
   if test "$gl_cv_cc_nomfi_needed" = yes; then
