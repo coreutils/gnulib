@@ -47,6 +47,7 @@ m4/rawmemchr.m4
 m4/readlink.m4
 m4/realloc.m4
 m4/relocatable-lib.m4
+m4/build-to-host.m4
 m4/setenv.m4
 
 Depends-on:

@@ -1,5 +1,5 @@
 # relocatable-lib.m4
-# serial 7
+# serial 8
 dnl Copyright (C) 2003, 2005-2007, 2009-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -21,7 +21,9 @@ AC_DEFUN([gl_RELOCATABLE_LIBRARY_BODY],
   else
     reloc_final_prefix="$prefix"
   fi
-  AC_DEFINE_UNQUOTED([INSTALLPREFIX], ["${reloc_final_prefix}"],
+  dnl Define reloc_final_prefix_c and reloc_final_prefix_c_make.
+  gl_BUILD_TO_HOST([reloc_final_prefix])
+  AC_DEFINE_UNQUOTED([INSTALLPREFIX], [${reloc_final_prefix_c}],
     [Define to the value of ${prefix}, as a string.])
   if test $RELOCATABLE = yes; then
     AC_DEFINE([ENABLE_RELOCATABLE], [1],

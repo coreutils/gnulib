@@ -8,6 +8,7 @@ lib/relocatable.h
 lib/relocatable.c
 lib/relocatable.valgrind
 m4/relocatable-lib.m4
+m4/build-to-host.m4
 
 Depends-on:
 strdup
