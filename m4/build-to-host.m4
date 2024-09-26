@@ -223,3 +223,30 @@ AC_DEFUN_ONCE([gl_BUILD_TO_HOST_PKGLIBDIR],
   exec_prefix="${gl_saved_exec_prefix}"
   prefix="${gl_saved_prefix}"
 ])
+
+dnl Defines pkglibexecdir_c and pkglibexecdir_c_make,
+dnl where pkglibexecdir = $(libexecdir)/$(PACKAGE)
+AC_DEFUN_ONCE([gl_BUILD_TO_HOST_PKGLIBEXECDIR],
+[
+  dnl Find the final value of pkglibexecdir.
+  gl_saved_prefix="${prefix}"
+  gl_saved_exec_prefix="${exec_prefix}"
+  gl_saved_libexecdir="${libexecdir}"
+  gl_saved_pkglibexecdir="${pkglibexecdir}"
+  dnl Unfortunately, prefix and exec_prefix get only finally determined
+  dnl at the end of configure.
+  if test "X$prefix" = "XNONE"; then
+    prefix="$ac_default_prefix"
+  fi
+  if test "X$exec_prefix" = "XNONE"; then
+    exec_prefix='${prefix}'
+  fi
+  eval exec_prefix="$exec_prefix"
+  eval libexecdir="$libexecdir"
+  eval pkglibexecdir="$pkglibexecdir"
+  gl_BUILD_TO_HOST([pkglibexecdir])
+  pkglibexecdir="${gl_saved_pkglibexecdir}"
+  libexecdir="${gl_saved_libexecdir}"
+  exec_prefix="${gl_saved_exec_prefix}"
+  prefix="${gl_saved_prefix}"
+])
