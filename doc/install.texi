@@ -21,6 +21,9 @@ make install
 should configure, build, and install this package.
 The first line, which bootstraps, is intended for developers;
 when building from distribution tarballs it does nothing and can be skipped.
+A package might name the bootstrapping script differently;
+if the name is @file{autogen.sh}, for example, the first line should say
+@command{./autogen.sh} instead of @command{./bootstrap}.
 
 The following
 more-detailed instructions are generic; see the @file{README} file for
@@ -42,21 +45,21 @@ the GNU Coding Standards.
 Many packages have scripts meant for developers instead of ordinary
 builders, as they may use developer tools that are less commonly installed,
 or they may access the network, which has privacy implications.
-If the @command{bootstrap} shell script exists, it attempts to build the
-@command{configure} shell script and related files, possibly
+These scripts attempt to bootstrap by building the
+@command{configure} script and related files, possibly
 using developer tools or the network.  Because the output of
-@command{bootstrap} is system-independent, it is normally run by a
+bootstrapping is system-independent, it is normally run by a
 package developer so that its output can be put into the distribution
-tarball and ordinary builders and users need not run @command{bootstrap}.
+tarball and ordinary builders and users need not bootstrap.
 Some packages have commands like @command{./autopull.sh} and
 @command{./autogen.sh} that you can run instead of @command{./bootstrap},
 for more fine-grained control over bootstrapping.
 
-The @command{configure} shell script attempts to guess correct values
+The @command{configure} script attempts to guess correct values
 for various system-dependent variables used during compilation.  It uses
 those values to create a @file{Makefile} in each directory of the
 package.  It may also create one or more @file{.h} files containing
-system-dependent definitions.  Finally, it creates a shell script
+system-dependent definitions.  Finally, it creates a script
 @file{config.status} that you can run in the future to recreate the
 current configuration, and a file @file{config.log} containing
 output useful for debugging @command{configure}.
@@ -85,8 +88,9 @@ The simplest way to compile this package is:
 @command{cd} to the directory containing the package's source code.
 
 @item
-If this is a developer checkout and file @samp{configure} does not yet exist,
-type @samp{./bootstrap} to create it.
+If this is a developer checkout and file @file{configure} does not yet exist,
+run the bootstrapping script (typically @command{./bootstrap} or
+@command{./autogen.sh}) to bootstrap and create the file.
 You may need special developer tools and network access to bootstrap,
 and the network access may have privacy implications.
 
