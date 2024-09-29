@@ -1,5 +1,5 @@
 # selinux-selinux-h.m4
-# serial 8   -*- Autoconf -*-
+# serial 9   -*- Autoconf -*-
 dnl Copyright (C) 2006-2007, 2009-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -12,16 +12,8 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_HEADERS_SELINUX_SELINUX_H],
 [
-  AC_REQUIRE([gl_LIBSELINUX])
+  AC_REQUIRE([gl_CHECK_HEADER_SELINUX_SELINUX_H])
   if test "$with_selinux" != no; then
-    AC_CHECK_HEADERS([selinux/selinux.h])
-
-    if test $ac_cv_header_selinux_selinux_h = yes; then
-      HAVE_SELINUX_SELINUX_H=1
-    else
-      HAVE_SELINUX_SELINUX_H=0
-    fi
-
     if test "$ac_cv_header_selinux_selinux_h" = yes; then
       # We do have <selinux/selinux.h>, so do compile getfilecon.c
       # and arrange to use its wrappers.
@@ -39,6 +31,22 @@ AC_DEFUN([gl_HEADERS_SELINUX_SELINUX_H],
       AC_DEFINE([fgetfilecon_raw], [rpl_fgetfilecon_raw],
                 [Always use our fgetfilecon_raw wrapper.])
     fi
+  fi
+])
+
+# Check for <selinux/selinux.h>, if necessary.
+
+AC_DEFUN([gl_CHECK_HEADER_SELINUX_SELINUX_H],
+[
+  AC_REQUIRE([gl_LIBSELINUX])
+  if test "$with_selinux" != no; then
+    AC_CHECK_HEADERS_ONCE([selinux/selinux.h])
+
+    if test $ac_cv_header_selinux_selinux_h = yes; then
+      USE_SELINUX_SELINUX_H=1
+    else
+      USE_SELINUX_SELINUX_H=0
+    fi
 
     case "$ac_cv_search_setfilecon:$ac_cv_header_selinux_selinux_h" in
       no:*) # already warned
@@ -50,9 +58,11 @@ AC_DEFUN([gl_HEADERS_SELINUX_SELINUX_H],
   else
     # Do as if <selinux/selinux.h> does not exist, even if
     # AC_CHECK_HEADERS_ONCE has already determined that it exists.
-    HAVE_SELINUX_SELINUX_H=0
+    USE_SELINUX_SELINUX_H=0
   fi
-  AC_SUBST([HAVE_SELINUX_SELINUX_H])
+  AC_SUBST([USE_SELINUX_SELINUX_H])
+  AC_DEFINE_UNQUOTED([USE_SELINUX_SELINUX_H], [$USE_SELINUX_SELINUX_H],
+    [Define to 1 if <selinux/selinux.h> should be used, to 0 otherwise.])])
 ])
 
 AC_DEFUN([gl_LIBSELINUX],

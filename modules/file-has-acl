@@ -5,13 +5,16 @@ Files:
 lib/acl-internal.h
 lib/file-has-acl.c
 m4/acl.m4
+m4/selinux-selinux-h.m4
 
 Depends-on:
 acl-permissions
 attribute
+errno
 extern-inline
 minmax
 free-posix
+ssize_t
 stat
 stdbool
 stdckdint

@@ -31,8 +31,16 @@
 #include "attribute.h"
 #include "minmax.h"
 
-#if USE_ACL && HAVE_LINUX_XATTR_H && HAVE_LISTXATTR
+static char const UNKNOWN_SECURITY_CONTEXT[] = "?";
+
+#define USE_LINUX_XATTR (USE_ACL && HAVE_LINUX_XATTR_H && HAVE_LISTXATTR)
+
+#if USE_LINUX_XATTR
+# if USE_SELINUX_SELINUX_H
+#  include <selinux/selinux.h>
+# endif
 # include <stdckdint.h>
+# include <stdint.h>
 # include <string.h>
 # include <arpa/inet.h>
 # include <sys/xattr.h>
@@ -47,24 +55,183 @@
 #  define XATTR_NAME_POSIX_ACL_DEFAULT "system.posix_acl_default"
 # endif
 
+# ifdef HAVE_SMACK
+#  include <sys/smack.h>
+# else
+static char const *
+smack_smackfs_path (void)
+{
+  return NULL;
+}
+static ssize_t
+smack_new_label_from_path (MAYBE_UNUSED const char *path,
+                           MAYBE_UNUSED const char *xattr,
+                           MAYBE_UNUSED int follow, MAYBE_UNUSED char **label)
+{
+  return -1;
+}
+# endif
+static bool
+is_smack_enabled (void)
+{
+ return !!smack_smackfs_path ();
+}
+
 enum {
   /* ACE4_ACCESS_ALLOWED_ACE_TYPE = 0x00000000, */
   ACE4_ACCESS_DENIED_ACE_TYPE  = 0x00000001,
   ACE4_IDENTIFIER_GROUP        = 0x00000040
 };
 
-/* Return true if ATTR is in the set represented by the NUL-terminated
-   strings in LISTBUF, which is of size LISTSIZE.  */
+/* Does AI's xattr set contain XATTR?  */
 
-ATTRIBUTE_PURE static bool
-have_xattr (char const *attr, char const *listbuf, ssize_t listsize)
+bool
+aclinfo_has_xattr (struct aclinfo const *ai, char const *xattr)
 {
-  char const *blim = listbuf + listsize;
-  for (char const *b = listbuf; b < blim; b += strlen (b) + 1)
-    for (char const *a = attr; *a == *b; a++, b++)
-      if (!*a)
-        return true;
+  if (0 < ai->size)
+    {
+      char const *blim = ai->buf + ai->size;
+      for (char const *b = ai->buf; b < blim; b += strlen (b) + 1)
+        for (char const *a = xattr; *a == *b; a++, b++)
+          if (!*a)
+            return true;
+    }
   return false;
+}
+
+/* Get attributes of the file NAME into AI.
+   If FLAGS & ACL_SYMLINK_FOLLOW, follow symbolic links.  */
+static void
+get_aclinfo (char const *name, struct aclinfo *ai, int flags)
+{
+  int scontext_err = ENOTSUP;
+  ai->buf = ai->u.__gl_acl_ch;
+  ai->__gl_acl_alloc = sizeof ai->u.__gl_acl_ch;
+
+  ssize_t (*lsxattr) (char const *, char *, size_t)
+    = (flags & ACL_SYMLINK_FOLLOW ? listxattr : llistxattr);
+  while (true)
+    {
+      ai->size = lsxattr (name, ai->buf, ai->__gl_acl_alloc);
+      if (0 < ai->size)
+        break;
+      ai->u.err = ai->size < 0 ? errno : 0;
+      if (! (ai->size < 0 && ai->u.err == ERANGE))
+        break;
+
+      /* The buffer was too small.  Find how large it should have been.  */
+      ssize_t size = lsxattr (name, NULL, 0);
+      if (size <= 0)
+        {
+          ai->size = size;
+          ai->u.err = size < 0 ? errno : 0;
+          break;
+        }
+
+      /* Grow allocation to at least 'size'.  Grow it by a nontrivial
+         amount, to defend against denial of service by an adversary
+         that fiddles with ACLs.  */
+      ssize_t larger_alloc;
+      if (ckd_add (&larger_alloc, ai->__gl_acl_alloc, ai->__gl_acl_alloc >> 1))
+        {
+          ai->u.err = ENOMEM;
+          break;
+        }
+      if (ai->buf != ai->u.__gl_acl_ch)
+        {
+          free (ai->buf);
+          ai->buf = ai->u.__gl_acl_ch;
+          ai->__gl_acl_alloc = sizeof ai->u.__gl_acl_ch;
+        }
+      ssize_t newalloc = MAX (size, larger_alloc);
+      if (SIZE_MAX < newalloc)
+        {
+          ai->u.err = ENOMEM;
+          break;
+        }
+      char *newbuf = malloc (newalloc);
+      if (!newbuf)
+        {
+          ai->u.err = errno;
+          break;
+        }
+      ai->buf = newbuf;
+      ai->__gl_acl_alloc = newalloc;
+    }
+
+  if (0 < ai->size)
+    {
+      if (is_smack_enabled ())
+        {
+          if (aclinfo_has_xattr (ai, XATTR_NAME_SMACK))
+            {
+              ssize_t r = smack_new_label_from_path (name, "security.SMACK64",
+                                                     flags & ACL_SYMLINK_FOLLOW,
+                                                     &ai->scontext);
+              scontext_err = r < 0 ? errno : 0;
+            }
+        }
+      else
+        {
+# if USE_SELINUX_SELINUX_H
+          if (aclinfo_has_xattr (ai, XATTR_NAME_SELINUX))
+            {
+              ssize_t r =
+                ((flags & ACL_SYMLINK_FOLLOW ? getfilecon : lgetfilecon)
+                 (name, &ai->scontext));
+              scontext_err = r < 0 ? errno : 0;
+#  ifndef SE_SELINUX_INLINE
+              /* Gnulib's selinux-h module is not in use, so getfilecon and
+                 lgetfilecon can misbehave, be it via an old version of
+                 libselinux where these would return 0 and set the result
+                 context to NULL, or via a modern kernel+lib operating on a
+                 file from a disk whose attributes were set by a kernel from
+                 around 2006.  In that latter case, the functions return a
+                 length of 10 for the "unlabeled" context.  Map both failures
+                 to a return value of -1, and set errno to ENOTSUP in the
+                 first case, and ENODATA in the latter.  */
+              if (r == 0)
+                scontext_err = ENOTSUP;
+              if (r == 10 && memcmp (ai->scontext, "unlabeled", 10) == 0)
+                {
+                  freecon (ai->scontext);
+                  scontext_err = ENODATA;
+                }
+#  endif
+            }
+# endif
+        }
+    }
+  ai->scontext_err = scontext_err;
+  if (scontext_err)
+    ai->scontext = (char *) UNKNOWN_SECURITY_CONTEXT;
+}
+
+# ifndef aclinfo_scontext_free
+/* Free the pointer that file_has_aclinfo put into scontext.
+   However, do nothing if the argument is a null pointer;
+   This lets the caller replace the scontext member with a null pointer if it
+   is willing to own the member and call this function later.  */
+void
+aclinfo_scontext_free (char *scontext)
+{
+  if (scontext != UNKNOWN_SECURITY_CONTEXT)
+    {
+      if (is_smack_enabled ())
+        free (scontext);
+      else if (scontext)
+        freecon (scontext);
+    }
+}
+# endif
+
+/* Free AI's heap storage.  */
+void
+aclinfo_free (struct aclinfo *ai)
+{
+  if (ai->buf != ai->u.__gl_acl_ch)
+    free (ai->buf);
+  aclinfo_scontext_free (ai->scontext);
 }
 
 /* Return 1 if given ACL in XDR format is non-trivial, 0 if it is trivial.
@@ -151,86 +318,50 @@ acl_nfs4_nontrivial (uint32_t *xattr, ssize_t nbytes)
    and -1 (setting errno) on error.  Note callers can determine
    if ACLs are not supported as errno is set in that case also.
    SB must be set to the stat buffer of NAME,
-   obtained through stat() or lstat().  */
-
+   obtained through stat() or lstat().
+   Set *AI to the ACL info if available.
+   If FLAGS & AT_SYMLINK_FOLLOW, SB was gotten via stat and follow symlinks;
+   otherwise, SB was gotten vi lstat and do not follow them.  */
 int
-file_has_acl (char const *name, struct stat const *sb)
+file_has_aclinfo (char const *name, struct stat const *sb,
+                  struct aclinfo *ai, int flags)
 {
-#if USE_ACL
-  if (! S_ISLNK (sb->st_mode))
+#if USE_LINUX_XATTR
+  int initial_errno = errno;
+  get_aclinfo (name, ai, flags);
+
+  if (ai->size <= 0)
     {
-
-# if HAVE_LINUX_XATTR_H && HAVE_LISTXATTR
-      int initial_errno = errno;
-
-      /* The max length of a trivial NFSv4 ACL is 6 words for owner,
-         6 for group, 7 for everyone, all times 2 because there are
-         both allow and deny ACEs.  There are 6 words for owner
-         because of type, flag, mask, wholen, "OWNER@"+pad and
-         similarly for group; everyone is another word to hold
-         "EVERYONE@".  */
-      typedef uint32_t trivial_NFSv4_xattr_buf[2 * (6 + 6 + 7)];
-
-      /* A buffer large enough to hold any trivial NFSv4 ACL,
-         and also useful as a small array of char.  */
-      union {
-        trivial_NFSv4_xattr_buf xattr;
-        char ch[sizeof (trivial_NFSv4_xattr_buf)];
-      } stackbuf;
-
-      char *listbuf = stackbuf.ch;
-      ssize_t listbufsize = sizeof stackbuf.ch;
-      char *heapbuf = NULL;
-      ssize_t listsize;
-
-      /* Use listxattr first, as this means just one syscall in the
-         typical case where the file lacks an ACL.  Try stackbuf
-         first, falling back on malloc if stackbuf is too small.  */
-      while ((listsize = listxattr (name, listbuf, listbufsize)) < 0
-             && errno == ERANGE)
-        {
-          free (heapbuf);
-          ssize_t newsize = listxattr (name, NULL, 0);
-          if (newsize <= 0)
-            return newsize;
-
-          /* Grow LISTBUFSIZE to at least NEWSIZE.  Grow it by a
-             nontrivial amount too, to defend against denial of
-             service by an adversary that fiddles with ACLs.  */
-          bool overflow = ckd_add (&listbufsize, listbufsize, listbufsize >> 1);
-          listbufsize = MAX (listbufsize, newsize);
-          if (overflow || SIZE_MAX < listbufsize)
-            {
-              errno = ENOMEM;
-              return -1;
-            }
-
-          listbuf = heapbuf = malloc (listbufsize);
-          if (!listbuf)
-            return -1;
-        }
-
+      errno = ai->size < 0 ? ai->u.err : initial_errno;
+      return ai->size;
+    }
+  else
+    {
       /* In Fedora 39, a file can have both NFSv4 and POSIX ACLs,
          but if it has an NFSv4 ACL that's the one that matters.
          In earlier Fedora the two types of ACLs were mutually exclusive.
          Attempt to work correctly on both kinds of systems.  */
-      bool nfsv4_acl
-        = 0 < listsize && have_xattr (XATTR_NAME_NFSV4_ACL, listbuf, listsize);
+      bool nfsv4_acl = aclinfo_has_xattr (ai, XATTR_NAME_NFSV4_ACL);
       int ret
-        = (listsize <= 0 ? listsize
+        = (ai->size <= 0 ? ai->size
            : (nfsv4_acl
-              || have_xattr (XATTR_NAME_POSIX_ACL_ACCESS, listbuf, listsize)
+              || aclinfo_has_xattr (ai, XATTR_NAME_POSIX_ACL_ACCESS)
               || (S_ISDIR (sb->st_mode)
-                  && have_xattr (XATTR_NAME_POSIX_ACL_DEFAULT,
-                                 listbuf, listsize))));
-      free (heapbuf);
+                  && aclinfo_has_xattr (ai, XATTR_NAME_POSIX_ACL_DEFAULT))));
 
       /* If there is an NFSv4 ACL, follow up with a getxattr syscall
          to see whether the NFSv4 ACL is nontrivial.  */
       if (nfsv4_acl)
         {
-          ret = getxattr (name, XATTR_NAME_NFSV4_ACL,
-                          stackbuf.xattr, sizeof stackbuf.xattr);
+          /* A buffer large enough to hold any trivial NFSv4 ACL.
+             The max length of a trivial NFSv4 ACL is 6 words for owner,
+             6 for group, 7 for everyone, all times 2 because there are both
+             allow and deny ACEs.  There are 6 words for owner because of
+             type, flag, mask, wholen, "OWNER@"+pad and similarly for group;
+             everyone is another word to hold "EVERYONE@".  */
+          uint32_t buf[2 * (6 + 6 + 7)];
+
+          ret = getxattr (name, XATTR_NAME_NFSV4_ACL, buf, sizeof buf);
           if (ret < 0)
             switch (errno)
               {
@@ -240,7 +371,7 @@ file_has_acl (char const *name, struct stat const *sb)
           else
             {
               /* It looks like a trivial ACL, but investigate further.  */
-              ret = acl_nfs4_nontrivial (stackbuf.xattr, ret);
+              ret = acl_nfs4_nontrivial (buf, ret);
               if (ret < 0)
                 {
                   errno = EINVAL;
@@ -252,8 +383,18 @@ file_has_acl (char const *name, struct stat const *sb)
       if (ret < 0)
         return - acl_errno_valid (errno);
       return ret;
+    }
+#else
+  ai->size = -1;
+  ai->u.err = ENOTSUP;
+  ai->scontext = (char *) UNKNOWN_SECURITY_CONTEXT;
+  ai->scontext_err = ENOTSUP;
+#endif
 
-# elif HAVE_ACL_GET_FILE
+#if USE_ACL
+  if (! S_ISLNK (sb->st_mode))
+    {
+# if HAVE_ACL_GET_FILE
 
       /* POSIX 1003.1e (draft 17 -- abandoned) specific version.  */
       /* Linux, FreeBSD, Mac OS X, IRIX, Tru64, Cygwin >= 2.5 */
@@ -681,4 +822,19 @@ file_has_acl (char const *name, struct stat const *sb)
 #endif
 
   return 0;
+}
+
+/* Return 1 if NAME has a nontrivial access control list,
+   0 if ACLs are not supported, or if NAME has no or only a base ACL,
+   and -1 (setting errno) on error.  Note callers can determine
+   if ACLs are not supported as errno is set in that case also.
+   SB must be set to the stat buffer of NAME,
+   obtained through stat() or lstat().  */
+int
+file_has_acl (char const *name, struct stat const *sb)
+{
+  struct aclinfo ai;
+  int r = file_has_aclinfo (name, sb, &ai, 0);
+  aclinfo_free (&ai);
+  return r;
 }

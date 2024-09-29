@@ -22,6 +22,7 @@
 
 #include <signal.h>
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/types.h>
@@ -64,6 +65,16 @@ main (int argc, char *argv[])
         fprintf (stderr, "could not access the ACL of file \"%s\"\n", file);
         exit (EXIT_FAILURE);
       }
+
+    struct aclinfo ai;
+    int reti = file_has_aclinfo (file, &statbuf, &ai, 0);
+    if (reti != ret)
+      {
+        fprintf (stderr, "file_has_aclinfo failed for \"%s\"\n", file);
+        exit (EXIT_FAILURE);
+      }
+    aclinfo_free (&ai);
+
     printf ("%s\n", ret ? "yes" : "no");
   }
 #else
