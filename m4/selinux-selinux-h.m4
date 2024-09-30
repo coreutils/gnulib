@@ -1,5 +1,5 @@
 # selinux-selinux-h.m4
-# serial 9   -*- Autoconf -*-
+# serial 10   -*- Autoconf -*-
 dnl Copyright (C) 2006-2007, 2009-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -54,6 +54,7 @@ AC_DEFUN([gl_CHECK_HEADER_SELINUX_SELINUX_H],
       *:no)
         AC_MSG_WARN([libselinux was found but selinux/selinux.h is missing.])
         AC_MSG_WARN([AC_PACKAGE_NAME will be compiled without SELinux support.])
+        ;;
     esac
   else
     # Do as if <selinux/selinux.h> does not exist, even if
@@ -62,7 +63,7 @@ AC_DEFUN([gl_CHECK_HEADER_SELINUX_SELINUX_H],
   fi
   AC_SUBST([USE_SELINUX_SELINUX_H])
   AC_DEFINE_UNQUOTED([USE_SELINUX_SELINUX_H], [$USE_SELINUX_SELINUX_H],
-    [Define to 1 if <selinux/selinux.h> should be used, to 0 otherwise.])])
+    [Define to 1 if <selinux/selinux.h> should be used, to 0 otherwise.])
 ])
 
 AC_DEFUN([gl_LIBSELINUX],
