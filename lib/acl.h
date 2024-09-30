@@ -65,7 +65,10 @@ struct aclinfo
     int err;
 
     /* A small array of char, big enough for most listxattr results.
-       The size is somewhat arbitrary.  For internal use only.  */
+       The size is somewhat arbitrary; it equals the max length of a
+       trivial NFSv4 ACL (a size used by file-has-acl.c in 2023-2024
+       but no longer relevant now), and a different value might be
+       better once experience is gained.  For internal use only.  */
     char __gl_acl_ch[152];
   } u;
 };

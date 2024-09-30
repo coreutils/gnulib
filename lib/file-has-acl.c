@@ -349,8 +349,7 @@ file_has_aclinfo (char const *name, struct stat const *sb,
               || (S_ISDIR (sb->st_mode)
                   && aclinfo_has_xattr (ai, XATTR_NAME_POSIX_ACL_DEFAULT))));
 
-      /* If there is an NFSv4 ACL, follow up with a getxattr syscall
-         to see whether the NFSv4 ACL is nontrivial.  */
+      /* If there is an NFSv4 ACL, check whether it is nontrivial.  */
       if (nfsv4_acl)
         {
           /* A buffer large enough to hold any trivial NFSv4 ACL.
