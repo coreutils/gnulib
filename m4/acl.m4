@@ -1,5 +1,5 @@
 # acl.m4
-# serial 32
+# serial 33
 dnl Copyright (C) 2002, 2004-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -214,8 +214,8 @@ AC_DEFUN([gl_FILE_HAS_ACL],
   AS_CASE([$enable_acl,$with_selinux,$ac_cv_header_linux_xattr_h,$ac_cv_func_listxattr],
     [no,* | *,no,*], [],
     [*,*,yes,yes],
-      [gl_CHECK_HEADER_SELINUX_SELINUX_H
-       AS_IF([test "$USE_SELINUX_SELINUX_H" -ne 0 ],
+      [AC_REQUIRE([gl_CHECK_HEADER_SELINUX_SELINUX_H])
+       AS_IF([test $USE_SELINUX_SELINUX_H = 1],
          [FILE_HAS_ACL_LIB="$FILE_HAS_ACL_LIB $LIB_SELINUX"
           gl_file_has_acl_uses_selinux=yes])])
 
