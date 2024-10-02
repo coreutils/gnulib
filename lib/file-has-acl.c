@@ -418,76 +418,71 @@ file_has_aclinfo (char const *name, struct stat const *sb,
       /* Linux, FreeBSD, Mac OS X, IRIX, Tru64, Cygwin >= 2.5 */
       int ret;
 
-      if (HAVE_ACL_EXTENDED_FILE) /* Linux */
+#  if HAVE_ACL_EXTENDED_FILE /* Linux */
+        /* On Linux, acl_extended_file is an optimized function: It only
+           makes two calls to getxattr(), one for ACL_TYPE_ACCESS, one for
+           ACL_TYPE_DEFAULT.  */
+      ret = ((flags & ACL_SYMLINK_FOLLOW
+              ? acl_extended_file
+              : acl_extended_file_nofollow)
+             (name));
+#  elif HAVE_ACL_TYPE_EXTENDED /* Mac OS X */
+      /* On Mac OS X, acl_get_file (name, ACL_TYPE_ACCESS)
+         and acl_get_file (name, ACL_TYPE_DEFAULT)
+         always return NULL / EINVAL.  There is no point in making
+         these two useless calls.  The real ACL is retrieved through
+         acl_get_file (name, ACL_TYPE_EXTENDED).  */
+      acl_t acl = acl_get_file (name, ACL_TYPE_EXTENDED);
+      if (acl)
         {
-          /* On Linux, acl_extended_file is an optimized function: It only
-             makes two calls to getxattr(), one for ACL_TYPE_ACCESS, one for
-             ACL_TYPE_DEFAULT.  */
-          ret = ((flags & ACL_SYMLINK_FOLLOW
-                  ? acl_extended_file
-                  : acl_extended_file_nofollow)
-                 (name));
+          ret = acl_extended_nontrivial (acl);
+          acl_free (acl);
         }
-      else /* FreeBSD, Mac OS X, IRIX, Tru64, Cygwin >= 2.5 */
-        {
-#  if HAVE_ACL_TYPE_EXTENDED /* Mac OS X */
-          /* On Mac OS X, acl_get_file (name, ACL_TYPE_ACCESS)
-             and acl_get_file (name, ACL_TYPE_DEFAULT)
-             always return NULL / EINVAL.  There is no point in making
-             these two useless calls.  The real ACL is retrieved through
-             acl_get_file (name, ACL_TYPE_EXTENDED).  */
-          acl_t acl = acl_get_file (name, ACL_TYPE_EXTENDED);
-          if (acl)
-            {
-              ret = acl_extended_nontrivial (acl);
-              acl_free (acl);
-            }
-          else
-            ret = -1;
+      else
+        ret = -1;
 #  else /* FreeBSD, IRIX, Tru64, Cygwin >= 2.5 */
-          acl_t acl = acl_get_file (name, ACL_TYPE_ACCESS);
-          if (acl)
-            {
-              int saved_errno;
+      acl_t acl = acl_get_file (name, ACL_TYPE_ACCESS);
+      if (acl)
+        {
+          int saved_errno;
 
-              ret = acl_access_nontrivial (acl);
-              saved_errno = errno;
-              acl_free (acl);
-              errno = saved_errno;
+          ret = acl_access_nontrivial (acl);
+          saved_errno = errno;
+          acl_free (acl);
+          errno = saved_errno;
 #   if HAVE_ACL_FREE_TEXT /* Tru64 */
-              /* On OSF/1, acl_get_file (name, ACL_TYPE_DEFAULT) always
-                 returns NULL with errno not set.  There is no point in
-                 making this call.  */
+          /* On OSF/1, acl_get_file (name, ACL_TYPE_DEFAULT) always
+             returns NULL with errno not set.  There is no point in
+             making this call.  */
 #   else /* FreeBSD, IRIX, Cygwin >= 2.5 */
-              /* On Linux, FreeBSD, IRIX, acl_get_file (name, ACL_TYPE_ACCESS)
-                 and acl_get_file (name, ACL_TYPE_DEFAULT) on a directory
-                 either both succeed or both fail; it depends on the
-                 file system.  Therefore there is no point in making the second
-                 call if the first one already failed.  */
-              if (ret == 0 && S_ISDIR (sb->st_mode))
+          /* On Linux, FreeBSD, IRIX, acl_get_file (name, ACL_TYPE_ACCESS)
+             and acl_get_file (name, ACL_TYPE_DEFAULT) on a directory
+             either both succeed or both fail; it depends on the
+             file system.  Therefore there is no point in making the second
+             call if the first one already failed.  */
+          if (ret == 0 && S_ISDIR (sb->st_mode))
+            {
+              acl = acl_get_file (name, ACL_TYPE_DEFAULT);
+              if (acl)
                 {
-                  acl = acl_get_file (name, ACL_TYPE_DEFAULT);
-                  if (acl)
-                    {
 #    ifdef __CYGWIN__ /* Cygwin >= 2.5 */
-                      ret = acl_access_nontrivial (acl);
-                      saved_errno = errno;
-                      acl_free (acl);
-                      errno = saved_errno;
+                  ret = acl_access_nontrivial (acl);
+                  saved_errno = errno;
+                  acl_free (acl);
+                  errno = saved_errno;
 #    else
-                      ret = (0 < acl_entries (acl));
-                      acl_free (acl);
+                  ret = (0 < acl_entries (acl));
+                  acl_free (acl);
 #    endif
-                    }
-                  else
-                    ret = -1;
                 }
-#   endif
+              else
+                ret = -1;
             }
-          else
-            ret = -1;
-#  endif
+#   endif
         }
+      else
+        ret = -1;
+#  endif
       if (ret < 0)
         return - acl_errno_valid (errno);
       return ret;
