@@ -1597,9 +1597,8 @@ gl_locale_name_from_win32_LANGID (LANGID langid)
       case LANG_AZERI:
         switch (sub)
           {
-          /* FIXME: Adjust this when Azerbaijani locales appear on Unix.  */
-          case 0x1e: return "az@latin";
-          case SUBLANG_AZERI_LATIN: return "az_AZ@latin";
+          case 0x1e: return "az";
+          case SUBLANG_AZERI_LATIN: return "az_AZ";
           case 0x1d: return "az@cyrillic";
           case SUBLANG_AZERI_CYRILLIC: return "az_AZ@cyrillic";
           }
@@ -2011,7 +2010,6 @@ gl_locale_name_from_win32_LANGID (LANGID langid)
           }
         return "rw";
       case LANG_KONKANI:
-        /* FIXME: Adjust this when such locales appear on Unix.  */
         switch (sub)
           {
           case SUBLANG_KONKANI_INDIA: return "kok_IN";
@@ -2085,7 +2083,6 @@ gl_locale_name_from_win32_LANGID (LANGID langid)
           }
         return "mt";
       case LANG_MANIPURI:
-        /* FIXME: Adjust this when such locales appear on Unix.  */
         switch (sub)
           {
           case SUBLANG_DEFAULT: return "mni_IN";
@@ -2288,7 +2285,6 @@ gl_locale_name_from_win32_LANGID (LANGID langid)
           }
         return "so";
       case LANG_SORBIAN:
-        /* FIXME: Adjust this when such locales appear on Unix.  */
         switch (sub)
           {
           /* Upper Sorbian */
@@ -2379,10 +2375,9 @@ gl_locale_name_from_win32_LANGID (LANGID langid)
         /* Note: Microsoft uses the non-ISO language code "tmz".  */
         switch (sub)
           {
-          /* FIXME: Adjust this when Tamazight locales appear on Unix.  */
-          case SUBLANG_TAMAZIGHT_ARABIC: return "ber_MA@arabic";
+          case SUBLANG_TAMAZIGHT_ARABIC: return "ber_MA";
           case 0x1f: return "ber@latin";
-          case SUBLANG_TAMAZIGHT_ALGERIA_LATIN: return "ber_DZ@latin";
+          case SUBLANG_TAMAZIGHT_ALGERIA_LATIN: return "ber_DZ";
           }
         return "ber";
       case LANG_TAMIL:
