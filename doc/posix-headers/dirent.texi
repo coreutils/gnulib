@@ -12,6 +12,21 @@ This header file is missing on some platforms:
 MSVC 14.
 
 @item
+Although many systems define directory entry type macros like @code{DT_DIR},
+some do not:
+Minix 3.1.8, AIX 7.2, HP-UX 11, Solaris 11.4, mingw.
+
+@item
+The directory entry type macro @code{DT_WHT} is missing on many systems:
+All systems where @code{DT_DIR} is missing, plus OpenBSD 7.5.
+
+@item
+The conversion macros @code{DTTOIF} and @code{IFTODT} are missing on
+many systems (however, the Gnulib replacement macros
+may evaluate their arguments multiple times):
+All systems where @code{DT_DIR} is missing, plus OpenBSD 7.5.
+
+@item
 The type @code{ino_t} is missing on some platforms:
 glibc 2.23 and others.
 
@@ -21,13 +36,17 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 Although many systems define a @code{struct dirent} member named
-@code{d_type} and directory entry type macros like @code{DT_DIR} and
-@code{DT_LNK}, some do not:
+@code{d_type}, some do not:
 Minix 3.1.8, AIX 7.2, HP-UX 11, Solaris 11.4, mingw.
 
 @item
 On systems with @code{d_type}, not every filesystem supports
 @code{d_type}, and those lacking support will set it to @code{DT_UNKNOWN}.
+
+@item
+The POSIX.1-2024 directory entry type macros @code{DT_MQ},
+@code{DT_SEM}, @code{DT_SHM} and @code{DT_TMO} are missing on many
+platforms.
 
 @item
 Some systems define a @code{struct dirent} member named @code{d_namlen}

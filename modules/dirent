@@ -8,6 +8,8 @@ m4/unistd_h.m4
 m4/pid_t.m4
 
 Depends-on:
+assert-h
+extensions
 gen-header
 include_next
 snippet/arg-nonnull
