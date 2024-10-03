@@ -1,0 +1,24 @@
+Description:
+Support for locale names in BCP 47 syntax.
+
+Files:
+lib/bcp47.h
+lib/bcp47.c
+
+Depends-on:
+stdbool
+c-ctype
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += bcp47.c
+
+Include:
+"bcp47.h"
+
+License:
+LGPL
+
+Maintainer:
+all
