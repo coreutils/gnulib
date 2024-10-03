@@ -74,6 +74,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2024-10-02  file-has-acl    The file_has_aclinfo function introduced 3 days ago
+                            now has a different signature.
+
 2024-09-25  string-buffer   The function sb_append is renamed to sb_append_c.
                             The function sb_dupfree is renamed to sb_dupfree_c.
 

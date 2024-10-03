@@ -27,9 +27,14 @@
 
 #include "acl.h"
 
+#include <dirent.h>
+
 #include "acl-internal.h"
 #include "attribute.h"
 #include "minmax.h"
+
+/* Check the assumption that UCHAR_MAX < INT_MAX.  */
+static_assert (ACL_SYMLINK_FOLLOW & ~ (unsigned char) -1);
 
 static char const UNKNOWN_SECURITY_CONTEXT[] = "?";
 
@@ -321,16 +326,18 @@ acl_nfs4_nontrivial (uint32_t *xattr, ssize_t nbytes)
    0 if ACLs are not supported, or if NAME has no or only a base ACL,
    and -1 (setting errno) on error.  Note callers can determine
    if ACLs are not supported as errno is set in that case also.
-   SB must be set to the stat buffer of NAME,
-   obtained through stat() or lstat().
-   Set *AI to the ACL info if available.
-   If FLAGS & AT_SYMLINK_FOLLOW, SB was gotten via stat, otherwise lstat.
-   Also, if FLAGS & AT_SYMLINK_FOLLOW, follow symlinks when retrieving
-   ACL info, otherwise do not follow them if possible.  */
+   Set *AI to ACL info regardless of return value.
+   FLAGS should be a <dirent.h> d_type value, optionally ORed with
+   AT_SYMLINK_FOLLOW; if the d_type value is not known,
+   use DT_UNKNOWN though this may be less efficient.
+   If FLAGS & AT_SYMLINK_FOLLOW, follow symlinks when retrieving ACL info;
+   otherwise do not follow them if possible.  */
 int
-file_has_aclinfo (char const *name, struct stat const *sb,
-                  struct aclinfo *ai, int flags)
+file_has_aclinfo (MAYBE_UNUSED char const *restrict name,
+                  struct aclinfo *restrict ai, int flags)
 {
+  unsigned char d_type = flags & UCHAR_MAX;
+
   /* Symbolic links lack extended attributes and ACLs on all supported
      platforms, so don't bother trying to fetch them.  If the platform
      supports not following symlinks this defends against some races
@@ -338,7 +345,7 @@ file_has_aclinfo (char const *name, struct stat const *sb,
 
      First, initialize *AI for cases known to be unsupported.  */
 
-  if (!USE_LINUX_XATTR || S_ISLNK (sb->st_mode))
+  if (!USE_LINUX_XATTR || d_type == DT_LNK)
     {
       ai->buf = ai->u.__gl_acl_ch;
       ai->size = -1;
@@ -350,7 +357,7 @@ file_has_aclinfo (char const *name, struct stat const *sb,
   /* Now set *AI for cases that might be supported, then check for ACLs.  */
 
 #if USE_ACL
-  if (! S_ISLNK (sb->st_mode))
+  if (d_type != DT_LNK)
     {
 
 # if USE_LINUX_XATTR
@@ -368,45 +375,41 @@ file_has_aclinfo (char const *name, struct stat const *sb,
              but if it has an NFSv4 ACL that's the one that matters.
              In earlier Fedora the two types of ACLs were mutually exclusive.
              Attempt to work correctly on both kinds of systems.  */
-          bool nfsv4_acl = aclinfo_has_xattr (ai, XATTR_NAME_NFSV4_ACL);
-          int ret
-            = (ai->size <= 0 ? ai->size
-               : (nfsv4_acl
-                  || aclinfo_has_xattr (ai, XATTR_NAME_POSIX_ACL_ACCESS)
-                  || (S_ISDIR (sb->st_mode)
-                      && aclinfo_has_xattr (ai, XATTR_NAME_POSIX_ACL_DEFAULT))));
 
-          /* If there is an NFSv4 ACL, check whether it is nontrivial.  */
-          if (nfsv4_acl)
-            {
-              /* A buffer large enough to hold any trivial NFSv4 ACL.
-                 The max length of a trivial NFSv4 ACL is 6 words for owner,
-                 6 for group, 7 for everyone, all times 2 because there are both
-                 allow and deny ACEs.  There are 6 words for owner because of
-                 type, flag, mask, wholen, "OWNER@"+pad and similarly for group;
-                 everyone is another word to hold "EVERYONE@".  */
-              uint32_t buf[2 * (6 + 6 + 7)];
+          if (!aclinfo_has_xattr (ai, XATTR_NAME_NFSV4_ACL))
+            return
+              (aclinfo_has_xattr (ai, XATTR_NAME_POSIX_ACL_ACCESS)
+               || ((d_type == DT_DIR || d_type == DT_UNKNOWN)
+                   && aclinfo_has_xattr (ai, XATTR_NAME_POSIX_ACL_DEFAULT)));
 
-              ret = ((flags & ACL_SYMLINK_FOLLOW ? getxattr : lgetxattr)
+          /* A buffer large enough to hold any trivial NFSv4 ACL.
+             The max length of a trivial NFSv4 ACL is 6 words for owner,
+             6 for group, 7 for everyone, all times 2 because there are both
+             allow and deny ACEs.  There are 6 words for owner because of
+             type, flag, mask, wholen, "OWNER@"+pad and similarly for group;
+             everyone is another word to hold "EVERYONE@".  */
+          uint32_t buf[2 * (6 + 6 + 7)];
+
+          int ret = ((flags & ACL_SYMLINK_FOLLOW ? getxattr : lgetxattr)
                      (name, XATTR_NAME_NFSV4_ACL, buf, sizeof buf));
+          if (ret < 0)
+            switch (errno)
+              {
+              case ENODATA: return 0;
+              case ERANGE : return 1; /* ACL must be nontrivial.  */
+              }
+          else
+            {
+              /* It looks like a trivial ACL, but investigate further.  */
+              ret = acl_nfs4_nontrivial (buf, ret);
               if (ret < 0)
-                switch (errno)
-                  {
-                  case ENODATA: return 0;
-                  case ERANGE : return 1; /* ACL must be nontrivial.  */
-                  }
-              else
                 {
-                  /* It looks like a trivial ACL, but investigate further.  */
-                  ret = acl_nfs4_nontrivial (buf, ret);
-                  if (ret < 0)
-                    {
-                      errno = EINVAL;
-                      return ret;
-                    }
-                  errno = initial_errno;
+                  errno = EINVAL;
+                  return ret;
                 }
+              errno = initial_errno;
             }
+
           if (ret < 0)
             return - acl_errno_valid (errno);
           return ret;
@@ -460,7 +463,7 @@ file_has_aclinfo (char const *name, struct stat const *sb,
              either both succeed or both fail; it depends on the
              file system.  Therefore there is no point in making the second
              call if the first one already failed.  */
-          if (ret == 0 && S_ISDIR (sb->st_mode))
+          if (ret == 0 && (d_type == DT_DIR || d_type == DT_UNKNOWN))
             {
               acl = acl_get_file (name, ACL_TYPE_DEFAULT);
               if (acl)
@@ -849,7 +852,7 @@ int
 file_has_acl (char const *name, struct stat const *sb)
 {
   struct aclinfo ai;
-  int r = file_has_aclinfo (name, sb, &ai, 0);
+  int r = file_has_aclinfo (name, &ai, IFTODT (sb->st_mode));
   aclinfo_free (&ai);
   return r;
 }

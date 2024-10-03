@@ -20,6 +20,7 @@
 
 #include "acl.h"
 
+#include <dirent.h>
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -66,10 +67,20 @@ main (int argc, char *argv[])
       }
 
     struct aclinfo ai;
-    int reti = file_has_aclinfo (file, &statbuf, &ai, 0);
+    int reti = file_has_aclinfo (file, &ai, DT_UNKNOWN);
     if (reti != ret)
       {
         fprintf (stderr, "file_has_aclinfo failed for \"%s\"\n", file);
+        exit (EXIT_FAILURE);
+      }
+    aclinfo_free (&ai);
+
+    int retj = file_has_aclinfo (file, &ai, ACL_SYMLINK_FOLLOW | DT_UNKNOWN);
+    if (retj != ret)
+      {
+        fprintf (stderr,
+                 "file_has_aclinfo with ACL_SYMLINK_FOLLOW failed for \"%s\"\n",
+                 file);
         exit (EXIT_FAILURE);
       }
     aclinfo_free (&ai);

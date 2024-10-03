@@ -32,8 +32,9 @@
 extern "C" {
 #endif
 
-/* Follow symlinks when getting an ACL.  */
-enum { ACL_SYMLINK_FOLLOW = 1 };
+/* Follow symlinks when getting an ACL.  This is greater than any
+   unsigned char so that it can be ORed with any <dirent.h> DT_* value.  */
+enum { ACL_SYMLINK_FOLLOW = 1 + (unsigned char) -1 };
 
 /* Information about an ACL.  */
 struct aclinfo
@@ -75,7 +76,7 @@ struct aclinfo
 
 bool acl_errno_valid (int) _GL_ATTRIBUTE_CONST;
 int file_has_acl (char const *, struct stat const *);
-int file_has_aclinfo (char const *, struct stat const *, struct aclinfo *, int);
+int file_has_aclinfo (char const *restrict, struct aclinfo *restrict, int);
 
 #if USE_ACL && HAVE_LINUX_XATTR_H && HAVE_LISTXATTR
 bool aclinfo_has_xattr (struct aclinfo const *, char const *)
