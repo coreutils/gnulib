@@ -547,6 +547,11 @@ hosts.
 @item
 Adding zero to a null pointer does not change the pointer.
 For example, @code{0 + (char *) NULL == (char *) NULL}.
+Similarly, subtracting zero does not change a null pointer,
+and subtracting two null pointers results in zero.
+A future C standard is planned to require this behavior; see
+``@url{https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3322.pdf,
+Allow zero length operations on null pointers}'', WG14 N3322 (2024-08-28).
 @end itemize
 @end itemize
 
