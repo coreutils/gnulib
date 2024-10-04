@@ -51,7 +51,6 @@
 #include <string.h>
 
 #include <intprops.h>
-#include <verify.h>
 
 #ifndef NEED_MKTIME_INTERNAL
 # define NEED_MKTIME_INTERNAL 0
@@ -124,7 +123,7 @@ typedef long int long_int;
 # else
 typedef long long int long_int;
 # endif
-verify (INT_MAX <= TYPE_MAXIMUM (long_int) / 4 / 366 / 24 / 60 / 60);
+static_assert (INT_MAX <= TYPE_MAXIMUM (long_int) / 4 / 366 / 24 / 60 / 60);
 
 /* Shift A right by B bits portably, by dividing A by 2**B and
    truncating towards minus infinity.  B should be in the range 0 <= B
@@ -157,7 +156,7 @@ static long_int const mktime_max
 
 # define EPOCH_YEAR 1970
 # define TM_YEAR_BASE 1900
-verify (TM_YEAR_BASE % 100 == 0);
+static_assert (TM_YEAR_BASE % 100 == 0);
 
 /* Is YEAR + TM_YEAR_BASE a leap year?  */
 static bool
@@ -206,7 +205,7 @@ static long_int
 ydhms_diff (long_int year1, long_int yday1, int hour1, int min1, int sec1,
 	    int year0, int yday0, int hour0, int min0, int sec0)
 {
-  verify (-1 / 2 == 0);
+  static_assert (-1 / 2 == 0);
 
   /* Compute intervening leap days correctly even if year is negative.
      Take care to avoid integer overflow here.  */

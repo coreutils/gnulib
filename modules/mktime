@@ -10,12 +10,12 @@ Depends-on:
 time-h
 c99
 multiarch
+assert-h        [test $REPLACE_MKTIME = 1]
 intprops        [test $REPLACE_MKTIME = 1]
 libc-config     [test $REPLACE_MKTIME = 1]
 stdbool         [test $REPLACE_MKTIME = 1]
 stdckdint       [test $REPLACE_MKTIME = 1]
 time_r          [test $REPLACE_MKTIME = 1]
-verify          [test $REPLACE_MKTIME = 1]
 
 configure.ac:
 gl_FUNC_MKTIME
