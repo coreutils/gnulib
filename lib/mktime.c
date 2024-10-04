@@ -339,7 +339,9 @@ __mktime_internal (struct tm *tp, bool local, mktime_offset_t *offset)
   int mday = tp->tm_mday;
   int mon = tp->tm_mon;
   int year_requested = tp->tm_year;
-  int isdst = tp->tm_isdst;
+
+  /* If the timezone never observes DST, ignore any tm_isdst request.  */
+  int isdst = local && __daylight ? tp->tm_isdst : 0;
 
   /* 1 if the previous probe was DST.  */
   int dst2 = 0;
