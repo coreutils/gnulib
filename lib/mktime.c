@@ -119,11 +119,11 @@ my_tzset (void)
    __time64_t values that mktime can generate even on platforms where
    __time64_t is wider than the int components of struct tm.  */
 
-#if INT_MAX <= LONG_MAX / 4 / 366 / 24 / 60 / 60
+# if INT_MAX <= LONG_MAX / 4 / 366 / 24 / 60 / 60
 typedef long int long_int;
-#else
+# else
 typedef long long int long_int;
-#endif
+# endif
 verify (INT_MAX <= TYPE_MAXIMUM (long_int) / 4 / 366 / 24 / 60 / 60);
 
 /* Shift A right by B bits portably, by dividing A by 2**B and
@@ -155,8 +155,8 @@ static long_int const mktime_max
   = (TYPE_MAXIMUM (long_int) < TYPE_MAXIMUM (__time64_t)
      ? TYPE_MAXIMUM (long_int) : TYPE_MAXIMUM (__time64_t));
 
-#define EPOCH_YEAR 1970
-#define TM_YEAR_BASE 1900
+# define EPOCH_YEAR 1970
+# define TM_YEAR_BASE 1900
 verify (TM_YEAR_BASE % 100 == 0);
 
 /* Is YEAR + TM_YEAR_BASE a leap year?  */
@@ -172,9 +172,9 @@ leapyear (long_int year)
 }
 
 /* How many days come before each month (0-12).  */
-#ifndef _LIBC
+# ifndef _LIBC
 static
-#endif
+# endif
 const unsigned short int __mon_yday[2][13] =
   {
     /* Normal years.  */
