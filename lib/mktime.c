@@ -254,7 +254,7 @@ tm_diff (long_int year, long_int yday, int hour, int min, int sec,
    otherwise gmtime64_r.  T must be in range for __time64_t.  Return
    TM if successful, NULL (setting errno) on failure.  */
 static struct tm *
-convert_time (bool local, long_int t, struct tm *tm)
+convert_time (long_int t, bool local, struct tm *tm)
 {
   __time64_t x = t;
   if (local)
@@ -262,6 +262,8 @@ convert_time (bool local, long_int t, struct tm *tm)
   else
     return __gmtime64_r (&x, tm);
 }
+/* Call it __tzconvert to sync with other parts of glibc.  */
+#define __tz_convert convert_time
 
 /* Convert *T to a broken down time in *TP (as if by localtime if
    LOCAL, otherwise as if by gmtime).  If *T is out of range for
@@ -274,7 +276,7 @@ ranged_convert (bool local, long_int *t, struct tm *tp)
 {
   long_int t1 = (*t < mktime_min ? mktime_min
 		 : *t <= mktime_max ? *t : mktime_max);
-  struct tm *r = convert_time (local, t1, tp);
+  struct tm *r = __tz_convert (t1, local, tp);
   if (r)
     {
       *t = t1;
@@ -295,7 +297,7 @@ ranged_convert (bool local, long_int *t, struct tm *tp)
       long_int mid = long_int_avg (ok, bad);
       if (mid == ok || mid == bad)
 	break;
-      if (convert_time (local, mid, tp))
+      if (__tz_convert (mid, local, tp))
 	ok = mid, oktm = *tp;
       else if (errno != EOVERFLOW)
 	return NULL;
@@ -481,7 +483,7 @@ __mktime_internal (struct tm *tp, bool local, mktime_offset_t *offset)
 						&otm);
 		    if (mktime_min <= gt && gt <= mktime_max)
 		      {
-			if (convert_time (local, gt, &tm))
+			if (__tz_convert (gt, local, &tm))
 			  {
 			    t = gt;
 			    goto offset_found;
@@ -495,7 +497,7 @@ __mktime_internal (struct tm *tp, bool local, mktime_offset_t *offset)
 
       /* No unusual DST offset was found nearby.  Assume one-hour DST.  */
       t += 60 * 60 * dst_difference;
-      if (mktime_min <= t && t <= mktime_max && convert_time (local, t, &tm))
+      if (mktime_min <= t && t <= mktime_max && __tz_convert (t, local, &tm))
 	goto offset_found;
 
       __set_errno (EOVERFLOW);
@@ -522,7 +524,7 @@ __mktime_internal (struct tm *tp, bool local, mktime_offset_t *offset)
 	  __set_errno (EOVERFLOW);
 	  return -1;
 	}
-      if (! convert_time (local, t, &tm))
+      if (! __tz_convert (t, local, &tm))
 	return -1;
     }
 
