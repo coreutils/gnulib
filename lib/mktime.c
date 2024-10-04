@@ -536,9 +536,8 @@ __mktime_internal (struct tm *tp,
 __time64_t
 __mktime64 (struct tm *tp)
 {
-  /* POSIX.1 8.1.1 requires that whenever mktime() is called, the
-     time zone names contained in the external variable 'tzname' shall
-     be set as if the tzset() function had been called.  */
+  /* POSIX.1 requires mktime to set external variables like 'tzname'
+     as though tzset had been called.  */
   __tzset ();
 
 # if defined _LIBC || NEED_MKTIME_WORKING
