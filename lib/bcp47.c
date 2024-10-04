@@ -99,15 +99,92 @@ struct script
    <https://unicode.org/iso15924/iso15924-codes.html>.  */
 static const struct script scripts[] =
 {
+#define SCRIPT_LATIN      0
   { "latin",      "Latn" },
+#define SCRIPT_CYRILLIC   1
   { "cyrillic",   "Cyrl" },
+#define SCRIPT_HEBREW     2
   { "hebrew",     "Hebr" },
+#define SCRIPT_ARABIC     3
   { "arabic",     "Arab" },
+#define SCRIPT_DEVANAGARI 4
   { "devanagari", "Deva" },
+#define SCRIPT_GURMUKHI   5
   { "gurmukhi",   "Guru" },
+#define SCRIPT_MONGOLIAN  6
   { "mongolian",  "Mong" }
 };
 #define NUM_SCRIPTS (sizeof (scripts) / sizeof (scripts[0]))
+
+
+/* For a language that uses a different script depending on the territory,
+   other than Chinese, this function returns the default script in the given
+   territory, or NULL.  */
+static const struct script *
+default_script_in_territory (const char language[2], const char territory[2])
+{
+  if (memcmp (language, "az", 2) == 0)
+    {
+      if (memcmp (territory, "AZ", 2) == 0)
+        return &scripts[SCRIPT_LATIN];
+      else if (memcmp (territory, "IR", 2) == 0)
+        return &scripts[SCRIPT_ARABIC];
+    }
+  else if (memcmp (language, "ku", 2) == 0)
+    {
+      if (memcmp (territory, "IQ", 2) == 0
+          || memcmp (territory, "IR", 2) == 0)
+        return &scripts[SCRIPT_ARABIC];
+      else if (memcmp (territory, "SY", 2) == 0
+               || memcmp (territory, "TR", 2) == 0)
+        return &scripts[SCRIPT_LATIN];
+    }
+  else if (memcmp (language, "pa", 2) == 0)
+    {
+      if (memcmp (territory, "PK", 2) == 0)
+        return &scripts[SCRIPT_ARABIC];
+      else if (memcmp (territory, "IN", 2) == 0)
+        return &scripts[SCRIPT_GURMUKHI];
+    }
+  return NULL;
+}
+
+/* For a language that can be written using different scripts, independently of
+   the territory, other than Inuktitut and Min Nan Chinese, these functions
+   return the default (main) script, or NULL.  */
+static const struct script *
+default_script_for_language2 (const char language[2])
+{
+  if (memcmp (language, "be", 2) == 0)
+     return &scripts[SCRIPT_CYRILLIC];
+   else if (memcmp (language, "bs", 2) == 0)
+     return &scripts[SCRIPT_LATIN];
+   else if (memcmp (language, "ha", 2) == 0)
+     return &scripts[SCRIPT_LATIN];
+   else if (memcmp (language, "kk", 2) == 0)
+     return &scripts[SCRIPT_CYRILLIC];
+   else if (memcmp (language, "ks", 2) == 0)
+     return &scripts[SCRIPT_ARABIC];
+   else if (memcmp (language, "mn", 2) == 0)
+     return &scripts[SCRIPT_CYRILLIC];
+   else if (memcmp (language, "sd", 2) == 0)
+     return &scripts[SCRIPT_ARABIC];
+   else if (memcmp (language, "sr", 2) == 0)
+     return &scripts[SCRIPT_CYRILLIC];
+   else if (memcmp (language, "uz", 2) == 0)
+     return &scripts[SCRIPT_LATIN];
+   else if (memcmp (language, "yi", 2) == 0)
+     return &scripts[SCRIPT_HEBREW];
+   return NULL;
+}
+static const struct script *
+default_script_for_language3 (const char language[3])
+{
+   if (memcmp (language, "ber", 3) == 0)
+     return &scripts[SCRIPT_LATIN];
+   return NULL;
+}
+
 
 
 void
@@ -205,85 +282,37 @@ xpg_to_bcp47 (char *bcp47, const char *xpg)
   if (language_len > 0 && script_subtag == NULL)
     {
       /* Languages with a script that depends on the territory.  */
-      if (territory_len > 0)
+      if (language_len == 2 && territory_len == 2)
         {
-          if (language_len == 2)
+          const struct script *sp =
+            default_script_in_territory (language_start, territory_start);
+          if (sp != NULL)
+            script_subtag = sp->code;
+          else if (memcmp (language_start, "zh", 2) == 0)
             {
-              if (memcmp (language_start, "az", 2) == 0)
-                {
-                  if (territory_len == 2)
-                    {
-                      if (memcmp (territory_start, "AZ", 2) == 0)
-                        script_subtag = "Latn";
-                      else if (memcmp (territory_start, "IR", 2) == 0)
-                        script_subtag = "Arab";
-                    }
-                }
-              else if (memcmp (language_start, "ku", 2) == 0)
-                {
-                  if (territory_len == 2)
-                    {
-                      if (memcmp (territory_start, "IQ", 2) == 0
-                          || memcmp (territory_start, "IR", 2) == 0)
-                        script_subtag = "Arab";
-                      else if (memcmp (territory_start, "SY", 2) == 0
-                               || memcmp (territory_start, "TR", 2) == 0)
-                        script_subtag = "Latn";
-                    }
-                }
-              else if (memcmp (language_start, "pa", 2) == 0)
-                {
-                  if (territory_len == 2)
-                    {
-                      if (memcmp (territory_start, "PK", 2) == 0)
-                        script_subtag = "Arab";
-                      else if (memcmp (territory_start, "IN", 2) == 0)
-                        script_subtag = "Guru";
-                    }
-                }
-              else if (memcmp (language_start, "zh", 2) == 0)
-                {
-                  if (territory_len == 2)
-                    {
-                      if (memcmp (territory_start, "CN", 2) == 0
-                          || memcmp (territory_start, "SG", 2) == 0)
-                        script_subtag = "Hans";
-                      else
-                        script_subtag = "Hant";
-                    }
-                }
+              if (memcmp (territory_start, "CN", 2) == 0
+                  || memcmp (territory_start, "SG", 2) == 0)
+                script_subtag = "Hans";
+              else
+                script_subtag = "Hant";
             }
         }
       /* Languages with a main script and one or more alternate scripts.  */
       if (language_len == 2)
         {
-          if (memcmp (language_start, "be", 2) == 0)
-            script_subtag = "Cyrl";
-          else if (memcmp (language_start, "bs", 2) == 0)
-            script_subtag = "Latn";
-          else if (memcmp (language_start, "ha", 2) == 0)
-            script_subtag = "Latn";
+          const struct script *sp =
+            default_script_for_language2 (language_start);
+          if (sp != NULL)
+            script_subtag = sp->code;
           else if (memcmp (language_start, "iu", 2) == 0)
             script_subtag = "Cans";
-          else if (memcmp (language_start, "kk", 2) == 0)
-            script_subtag = "Cyrl";
-          else if (memcmp (language_start, "ks", 2) == 0)
-            script_subtag = "Arab";
-          else if (memcmp (language_start, "mn", 2) == 0)
-            script_subtag = "Cyrl";
-          else if (memcmp (language_start, "sd", 2) == 0)
-            script_subtag = "Arab";
-          else if (memcmp (language_start, "sr", 2) == 0)
-            script_subtag = "Cyrl";
-          else if (memcmp (language_start, "uz", 2) == 0)
-            script_subtag = "Latn";
-          else if (memcmp (language_start, "yi", 2) == 0)
-            script_subtag = "Hebr";
         }
       else if (language_len == 3)
         {
-          if (memcmp (language_start, "ber", 3) == 0)
-            script_subtag = "Latn";
+          const struct script *sp =
+            default_script_for_language3 (language_start);
+          if (sp != NULL)
+            script_subtag = sp->code;
           else if (memcmp (language_start, "nan", 3) == 0)
             script_subtag = "Hant";
         }
@@ -451,83 +480,29 @@ bcp47_to_xpg (char *xpg, const char *bcp47, const char *codeset)
   if (script != NULL)
     {
       /* Languages with a script that depends on the territory.  */
-      if (territory_len > 0)
+      if (language_len == 2 && territory_len == 2)
         {
-          if (language_len == 2)
+          const struct script *sp =
+            default_script_in_territory (xpg, territory);
+          if (sp != NULL)
             {
-              if (memcmp (xpg, "az", 2) == 0)
-                {
-                  if (territory_len == 2)
-                    {
-                      if (memcmp (territory, "AZ", 2) == 0)
-                        {
-                          if (strcmp (script, "latin") == 0)
-                            script = NULL;
-                        }
-                      else if (memcmp (territory, "IR", 2) == 0)
-                        {
-                          if (strcmp (script, "arabic") == 0)
-                            script = NULL;
-                        }
-                    }
-                }
-              else if (memcmp (xpg, "ku", 2) == 0)
-                {
-                  if (territory_len == 2)
-                    {
-                      if (memcmp (territory, "IQ", 2) == 0
-                          || memcmp (territory, "IR", 2) == 0)
-                        {
-                          if (strcmp (script, "arabic") == 0)
-                            script = NULL;
-                        }
-                      else if (memcmp (territory, "SY", 2) == 0
-                               || memcmp (territory, "TR", 2) == 0)
-                        {
-                          if (strcmp (script, "latin") == 0)
-                            script = NULL;
-                        }
-                    }
-                }
-              else if (memcmp (xpg, "pa", 2) == 0)
-                {
-                  if (territory_len == 2)
-                    {
-                      if (memcmp (territory, "PK", 2) == 0)
-                        {
-                          if (strcmp (script, "arabic") == 0)
-                            script = NULL;
-                        }
-                      else if (memcmp (territory, "IN", 2) == 0)
-                        {
-                          if (strcmp (script, "gurmukhi") == 0)
-                            script = NULL;
-                        }
-                    }
-                }
-              else if (memcmp (xpg, "zh", 2) == 0)
-                {
-                  /* "Hans" and "Hant" are not present in the scripts[] table,
-                     therefore nothing to do here.  */
-                }
+              if (strcmp (script, sp->name) == 0)
+                script = NULL;
+            }
+          else if (memcmp (xpg, "zh", 2) == 0)
+            {
+              /* "Hans" and "Hant" are not present in the scripts[] table,
+                 therefore nothing to do here.  */
             }
         }
       /* Languages with a main script and one or more alternate scripts.  */
       if (language_len == 2)
         {
-          if (memcmp (xpg, "be", 2) == 0)
+          const struct script *sp =
+            default_script_for_language2 (xpg);
+          if (sp != NULL)
             {
-              if (strcmp (script, "cyrillic") == 0)
-                script = NULL;
-            }
-          else if (memcmp (xpg, "bs", 2) == 0)
-            {
-              if (strcmp (script, "latin") == 0)
-                script = NULL;
-            }
-          else if (memcmp (xpg, "ha", 2) == 0)
-            {
-              if (strcmp (script, "latin") == 0)
+              if (strcmp (script, sp->name) == 0)
                 script = NULL;
             }
           else if (memcmp (xpg, "iu", 2) == 0)
@@ -535,47 +510,14 @@ bcp47_to_xpg (char *xpg, const char *bcp47, const char *codeset)
               /* "Cans" is not present in the scripts[] table,
                  therefore nothing to do here.  */
             }
-          else if (memcmp (xpg, "kk", 2) == 0)
-            {
-              if (strcmp (script, "cyrillic") == 0)
-                script = NULL;
-            }
-          else if (memcmp (xpg, "ks", 2) == 0)
-            {
-              if (strcmp (script, "arabic") == 0)
-                script = NULL;
-            }
-          else if (memcmp (xpg, "mn", 2) == 0)
-            {
-              if (strcmp (script, "cyrillic") == 0)
-                script = NULL;
-            }
-          else if (memcmp (xpg, "sd", 2) == 0)
-            {
-              if (strcmp (script, "arabic") == 0)
-                script = NULL;
-            }
-          else if (memcmp (xpg, "sr", 2) == 0)
-            {
-              if (strcmp (script, "cyrillic") == 0)
-                script = NULL;
-            }
-          else if (memcmp (xpg, "uz", 2) == 0)
-            {
-              if (strcmp (script, "latin") == 0)
-                script = NULL;
-            }
-          else if (memcmp (xpg, "yi", 2) == 0)
-            {
-              if (strcmp (script, "hebrew") == 0)
-                script = NULL;
-            }
         }
       else if (language_len == 3)
         {
-          if (memcmp (xpg, "ber", 3) == 0)
+          const struct script *sp =
+            default_script_for_language3 (xpg);
+          if (sp != NULL)
             {
-              if (strcmp (script, "latin") == 0)
+              if (strcmp (script, sp->name) == 0)
                 script = NULL;
             }
           else if (memcmp (xpg, "nan", 3) == 0)
