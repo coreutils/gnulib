@@ -89,9 +89,9 @@ $LIBCSRC stdlib/tst-stdc_leading_zeros.c	tests/from-glibc
 $LIBCSRC stdlib/tst-stdc_trailing_ones.c	tests/from-glibc
 $LIBCSRC stdlib/tst-stdc_trailing_zeros.c	tests/from-glibc
 #$LIBCSRC sysdeps/generic/eloop-threshold.h	lib
-$LIBCSRC time/timegm.c			lib
+#$LIBCSRC time/timegm.c			lib
 #$LIBCSRC time/mktime.c			lib
-$LIBCSRC time/mktime-internal.h		lib
+#$LIBCSRC time/mktime-internal.h	lib
 
 # 
 # All below here commented out in forlorn hope of future syncs.

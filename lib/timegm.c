@@ -31,7 +31,7 @@ __timegm64 (struct tm *tmp)
 {
   static mktime_offset_t gmtime_offset;
   tmp->tm_isdst = 0;
-  return __mktime_internal (tmp, __gmtime64_r, &gmtime_offset);
+  return __mktime_internal (tmp, false, &gmtime_offset);
 }
 
 #if defined _LIBC && __TIMESIZE != 64
