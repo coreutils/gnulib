@@ -251,29 +251,31 @@ tm_diff (long_int year, long_int yday, int hour, int min, int sec,
 		     tp->tm_hour, tp->tm_min, tp->tm_sec);
 }
 
-/* Use CONVERT to convert T to a struct tm value in *TM.  T must be in
-   range for __time64_t.  Return TM if successful, NULL (setting errno) on
-   failure.  */
+/* Convert T to a struct tm value in *TM.  Use localtime64_r if LOCAL,
+   otherwise gmtime64_r.  T must be in range for __time64_t.  Return
+   TM if successful, NULL (setting errno) on failure.  */
 static struct tm *
-convert_time (struct tm *(*convert) (const __time64_t *, struct tm *),
-	      long_int t, struct tm *tm)
+convert_time (bool local, long_int t, struct tm *tm)
 {
   __time64_t x = t;
-  return convert (&x, tm);
+  if (local)
+    return __localtime64_r (&x, tm);
+  else
+    return __gmtime64_r (&x, tm);
 }
 
-/* Use CONVERT to convert *T to a broken down time in *TP.
-   If *T is out of range for conversion, adjust it so that
-   it is the nearest in-range value and then convert that.
-   A value is in range if it fits in both __time64_t and long_int.
-   Return TP on success, NULL (setting errno) on failure.  */
+/* Convert *T to a broken down time in *TP (as if by localtime if
+   LOCAL, otherwise as if by gmtime).  If *T is out of range for
+   conversion, adjust it so that it is the nearest in-range value and
+   then convert that.  A value is in range if it fits in both
+   __time64_t and long_int.  Return TP on success, NULL (setting
+   errno) on failure.  */
 static struct tm *
-ranged_convert (struct tm *(*convert) (const __time64_t *, struct tm *),
-		long_int *t, struct tm *tp)
+ranged_convert (bool local, long_int *t, struct tm *tp)
 {
   long_int t1 = (*t < mktime_min ? mktime_min
 		 : *t <= mktime_max ? *t : mktime_max);
-  struct tm *r = convert_time (convert, t1, tp);
+  struct tm *r = convert_time (local, t1, tp);
   if (r)
     {
       *t = t1;
@@ -294,7 +296,7 @@ ranged_convert (struct tm *(*convert) (const __time64_t *, struct tm *),
       long_int mid = long_int_avg (ok, bad);
       if (mid == ok || mid == bad)
 	break;
-      if (convert_time (convert, mid, tp))
+      if (convert_time (local, mid, tp))
 	ok = mid, oktm = *tp;
       else if (errno != EOVERFLOW)
 	return NULL;
@@ -310,29 +312,28 @@ ranged_convert (struct tm *(*convert) (const __time64_t *, struct tm *),
 }
 
 
-/* Convert *TP to a __time64_t value, inverting
-   the monotonic and mostly-unit-linear conversion function CONVERT.
-   Use *OFFSET to keep track of a guess at the offset of the result,
+/* Convert *TP to a __time64_t value.  If LOCAL, the reverse mapping
+   is performed as if localtime, otherwise as if by gmtime.  Use
+   *OFFSET to keep track of a guess at the offset of the result,
    compared to what the result would be for UTC without leap seconds.
-   If *OFFSET's guess is correct, only one CONVERT call is needed.
-   If successful, set *TP to the canonicalized struct tm;
+   If *OFFSET's guess is correct, only one reverse mapping call is
+   needed.  If successful, set *TP to the canonicalized struct tm;
    otherwise leave *TP alone, return ((time_t) -1) and set errno.
    This function is external because it is used also by timegm.c.  */
 __time64_t
-__mktime_internal (struct tm *tp,
-		   struct tm *(*convert) (const __time64_t *, struct tm *),
-		   mktime_offset_t *offset)
+__mktime_internal (struct tm *tp, bool local, mktime_offset_t *offset)
 {
   struct tm tm;
 
-  /* The maximum number of probes (calls to CONVERT) should be enough
-     to handle any combinations of time zone rule changes, solar time,
-     leap seconds, and oscillations around a spring-forward gap.
-     POSIX.1 prohibits leap seconds, but some hosts have them anyway.  */
+  /* The maximum number of probes should be enough to handle any
+     combinations of time zone rule changes, solar time, leap seconds,
+     and oscillations around a spring-forward gap.  POSIX.1 prohibits
+     leap seconds, but some hosts have them anyway.  */
   int remaining_probes = 6;
 
-  /* Time requested.  Copy it in case CONVERT modifies *TP; this can
-     occur if TP is localtime's returned value and CONVERT is localtime.  */
+  /* Time requested.  Copy it in case gmtime/localtime modify *TP;
+     this can occur if TP is localtime's returned value and CONVERT is
+     localtime.  */
   int sec = tp->tm_sec;
   int min = tp->tm_min;
   int hour = tp->tm_hour;
@@ -390,7 +391,7 @@ __mktime_internal (struct tm *tp,
 
   while (true)
     {
-      if (! ranged_convert (convert, &t, &tm))
+      if (! ranged_convert (local, &t, &tm))
 	return -1;
       long_int dt = tm_diff (year, yday, hour, min, sec, &tm);
       if (dt == 0)
@@ -469,7 +470,7 @@ __mktime_internal (struct tm *tp,
 	    if (! ckd_add (&ot, t, delta * direction))
 	      {
 		struct tm otm;
-		if (! ranged_convert (convert, &ot, &otm))
+		if (! ranged_convert (local, &ot, &otm))
 		  return -1;
 		if (! isdst_differ (isdst, otm.tm_isdst))
 		  {
@@ -479,7 +480,7 @@ __mktime_internal (struct tm *tp,
 						&otm);
 		    if (mktime_min <= gt && gt <= mktime_max)
 		      {
-			if (convert_time (convert, gt, &tm))
+			if (convert_time (local, gt, &tm))
 			  {
 			    t = gt;
 			    goto offset_found;
@@ -493,7 +494,7 @@ __mktime_internal (struct tm *tp,
 
       /* No unusual DST offset was found nearby.  Assume one-hour DST.  */
       t += 60 * 60 * dst_difference;
-      if (mktime_min <= t && t <= mktime_max && convert_time (convert, t, &tm))
+      if (mktime_min <= t && t <= mktime_max && convert_time (local, t, &tm))
 	goto offset_found;
 
       __set_errno (EOVERFLOW);
@@ -520,7 +521,7 @@ __mktime_internal (struct tm *tp,
 	  __set_errno (EOVERFLOW);
 	  return -1;
 	}
-      if (! convert_time (convert, t, &tm))
+      if (! convert_time (local, t, &tm))
 	return -1;
     }
 
@@ -542,7 +543,7 @@ __mktime64 (struct tm *tp)
 
 # if defined _LIBC || NEED_MKTIME_WORKING
   static mktime_offset_t localtime_offset;
-  return __mktime_internal (tp, __localtime64_r, &localtime_offset);
+  return __mktime_internal (tp, true, &localtime_offset);
 # else
 #  undef mktime
   return mktime (tp);
