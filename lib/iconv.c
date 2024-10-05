@@ -195,7 +195,10 @@ utf32be_mbtowc (ucs4_t *pwc, const unsigned char *s, size_t n)
 {
   if (n >= 4)
     {
-      ucs4_t wc = (s[0] << 24) + (s[1] << 16) + (s[2] << 8) + s[3];
+      ucs4_t wc =   ((ucs4_t) s[0] << 24)
+                  + ((ucs4_t) s[1] << 16)
+                  + ((ucs4_t) s[2] << 8)
+                  +  (ucs4_t) s[3];
       if (wc < 0x110000 && !(wc >= 0xd800 && wc < 0xe000))
         {
           *pwc = wc;
@@ -237,7 +240,10 @@ utf32le_mbtowc (ucs4_t *pwc, const unsigned char *s, size_t n)
 {
   if (n >= 4)
     {
-      ucs4_t wc = s[0] + (s[1] << 8) + (s[2] << 16) + (s[3] << 24);
+      ucs4_t wc =    (ucs4_t) s[0]
+                  + ((ucs4_t) s[1] << 8)
+                  + ((ucs4_t) s[2] << 16)
+                  + ((ucs4_t) s[3] << 24);
       if (wc < 0x110000 && !(wc >= 0xd800 && wc < 0xe000))
         {
           *pwc = wc;
