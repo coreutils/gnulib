@@ -332,6 +332,14 @@ __mktime_internal (struct tm *tp, bool local, mktime_offset_t *offset)
      leap seconds, but some hosts have them anyway.  */
   int remaining_probes = 6;
 
+#ifndef _LIBC
+  /* Gnulib mktime doesn't lock the tz state, so it may need to probe
+     more often if some other thread changes local time while
+     __mktime_internal is probing.  Double the number of probes; this
+     should suffice for practical cases that are at all likely.  */
+  remaining_probes *= 2;
+#endif
+
   /* Time requested.  Copy it in case gmtime/localtime modify *TP;
      this can occur if TP is localtime's returned value and CONVERT is
      localtime.  */
