@@ -352,10 +352,7 @@ execute_and_read_line (const char *progname,
   /* Retrieve its result.  */
   fp = fdopen (fd[0], "r");
   if (fp == NULL)
-    {
-      error (0, errno, _("fdopen() failed"));
-      return NULL;
-    }
+    error (EXIT_FAILURE, errno, _("fdopen() failed"));
 
   line = NULL; linesize = 0;
   linelen = getline (&line, &linesize, fp);
