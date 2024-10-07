@@ -328,9 +328,9 @@ acl_nfs4_nontrivial (uint32_t *xattr, ssize_t nbytes)
    if ACLs are not supported as errno is set in that case also.
    Set *AI to ACL info regardless of return value.
    FLAGS should be a <dirent.h> d_type value, optionally ORed with
-   AT_SYMLINK_FOLLOW; if the d_type value is not known,
+   ACL_SYMLINK_FOLLOW; if the d_type value is not known,
    use DT_UNKNOWN though this may be less efficient.
-   If FLAGS & AT_SYMLINK_FOLLOW, follow symlinks when retrieving ACL info;
+   If FLAGS & ACL_SYMLINK_FOLLOW, follow symlinks when retrieving ACL info;
    otherwise do not follow them if possible.  */
 int
 file_has_aclinfo (MAYBE_UNUSED char const *restrict name,
