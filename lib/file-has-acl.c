@@ -483,7 +483,14 @@ file_has_aclinfo (MAYBE_UNUSED char const *restrict name,
 #    endif
                 }
               else
-                ret = -1;
+                {
+#    ifdef __CYGWIN__ /* Cygwin >= 2.5 */
+                  if (d_type == DT_UNKNOWN)
+                    ret = 0;
+                  else
+#    endif
+                    ret = -1;
+                }
             }
 #   endif
         }
