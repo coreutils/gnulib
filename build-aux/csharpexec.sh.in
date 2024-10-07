@@ -79,8 +79,16 @@ else
       @CLIX_PATH_VAR@="$CONF_CLIX_PATH"
     fi
     export @CLIX_PATH_VAR@
-    test -z "$CSHARP_VERBOSE" || echo clix "$@"
-    exec clix "$@"
+    shift
+    # On Windows, assume that 'clix' is a native Windows program,
+    # not a Cygwin program.
+    case "@build_os@" in
+      cygwin*)
+        prog=`cygpath -w "$prog"`
+        ;;
+    esac
+    test -z "$CSHARP_VERBOSE" || echo clix "$prog" "$@"
+    exec clix "$prog" "$@"
   else
     echo 'C# virtual machine not found, try installing mono, then reconfigure' 1>&2
     exit 1
