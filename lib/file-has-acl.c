@@ -328,8 +328,10 @@ acl_nfs4_nontrivial (uint32_t *xattr, ssize_t nbytes)
    if ACLs are not supported as errno is set in that case also.
    Set *AI to ACL info regardless of return value.
    FLAGS should be a <dirent.h> d_type value, optionally ORed with
-   ACL_SYMLINK_FOLLOW; if the d_type value is not known,
-   use DT_UNKNOWN though this may be less efficient.
+     - _GL_DT_NOTDIR if it is known that NAME is not a directory,
+     - ACL_SYMLINK_FOLLOW to follow the link if NAME is a symbolic link.
+   If the d_type value is not known, use DT_UNKNOWN though this may be less
+   efficient.
    If FLAGS & ACL_SYMLINK_FOLLOW, follow symlinks when retrieving ACL info;
    otherwise do not follow them if possible.  */
 int
@@ -463,7 +465,9 @@ file_has_aclinfo (MAYBE_UNUSED char const *restrict name,
              either both succeed or both fail; it depends on the
              file system.  Therefore there is no point in making the second
              call if the first one already failed.  */
-          if (ret == 0 && (d_type == DT_DIR || d_type == DT_UNKNOWN))
+          if (ret == 0
+              && (d_type == DT_DIR
+                  || (d_type == DT_UNKNOWN && !(flags & _GL_DT_NOTDIR))))
             {
               acl = acl_get_file (name, ACL_TYPE_DEFAULT);
               if (acl)
@@ -851,8 +855,11 @@ file_has_aclinfo (MAYBE_UNUSED char const *restrict name,
 int
 file_has_acl (char const *name, struct stat const *sb)
 {
+  int flags = IFTODT (sb->st_mode);
+  if (!S_ISDIR (sb->st_mode))
+    flags |= _GL_DT_NOTDIR;
   struct aclinfo ai;
-  int r = file_has_aclinfo (name, &ai, IFTODT (sb->st_mode));
+  int r = file_has_aclinfo (name, &ai, flags);
   aclinfo_free (&ai);
   return r;
 }

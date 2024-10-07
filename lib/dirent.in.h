@@ -54,6 +54,7 @@ struct dirent
    but not (yet) DT_MQ, DT_SEM, DT_SHM, DT_TMO.
    These macros can be useful even on platforms that do not support
    d_type or the corresponding file types.
+   The values of these macros are all in the 'unsigned char' range.
    Default to the Linux values which are also popular elsewhere,
    and check that all macros have distinct values.  */
 #ifndef DT_UNKNOWN
@@ -97,6 +98,9 @@ static_assert (DT_UNKNOWN != DT_FIFO && DT_UNKNOWN != DT_CHR
                && DT_LNK != DT_SOCK && DT_LNK != DT_WHT
                && DT_SOCK != DT_WHT);
 
+/* Other optional information about a directory entry.  */
+#define _GL_DT_NOTDIR 0x100   /* Not a directory */
+
 /* Conversion between S_IF* and DT_* file types.  */
 #if ! (defined IFTODT && defined DTTOIF)
 # include <sys/stat.h>
@@ -111,6 +115,7 @@ static_assert (DT_UNKNOWN != DT_FIFO && DT_UNKNOWN != DT_CHR
 #  define _GL_DIRENT_S_IFWHT (DT_WHT << 12) /* just a guess */
 # endif
 #endif
+/* Conversion from a 'stat' mode to a DT_* value.  */
 #ifndef IFTODT
 # define IFTODT(mode) \
    (S_ISREG (mode) ? DT_REG : S_ISDIR (mode) ? DT_DIR \
@@ -119,6 +124,7 @@ static_assert (DT_UNKNOWN != DT_FIFO && DT_UNKNOWN != DT_CHR
     : S_ISSOCK (mode) ? DT_SOCK \
     : _GL_DIRENT_S_ISWHT (mode) ? DT_WHT : DT_UNKNOWN)
 #endif
+/* Conversion from a DT_* value to a 'stat' mode.  */
 #ifndef DTTOIF
 # define DTTOIF(dirtype) \
    ((dirtype) == DT_REG ? S_IFREG : (dirtype) == DT_DIR ? S_IFDIR \

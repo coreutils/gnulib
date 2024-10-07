@@ -32,9 +32,9 @@
 extern "C" {
 #endif
 
-/* Follow symlinks when getting an ACL.  This is greater than any
-   unsigned char so that it can be ORed with any <dirent.h> DT_* value.  */
-enum { ACL_SYMLINK_FOLLOW = 1 + (unsigned char) -1 };
+/* Follow symlinks when getting an ACL.  This is a bitmask that is guaranteed
+   not to collide with any <dirent.h> DT_* or _GL_DT_* value.  */
+enum { ACL_SYMLINK_FOLLOW = 0x10000 };
 
 /* Information about an ACL.  */
 struct aclinfo
