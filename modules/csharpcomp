@@ -8,6 +8,7 @@ lib/csharpcomp.c
 Depends-on:
 stdbool
 xmalloca
+cygpath
 execute
 spawn-pipe
 wait-process
