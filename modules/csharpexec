@@ -9,6 +9,7 @@ lib/classpath.c
 
 Depends-on:
 stdbool
+cygpath
 execute
 xsetenv
 sh-quote
