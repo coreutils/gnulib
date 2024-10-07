@@ -24,10 +24,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <error.h>
+#include "cygpath.h"
 #include "execute.h"
 #include "sh-quote.h"
 #include "xmalloca.h"
-#include <error.h>
 #include "gettext.h"
 
 /* Handling of MONO_PATH is just like Java CLASSPATH.  */
@@ -178,6 +179,9 @@ execute_csharp_using_sscli (const char *assembly_path,
 
   if (clix_present)
     {
+      /* Here, we assume that 'clix' is a native Windows program, therefore
+         we need to use cygpath_w.  */
+      char *assembly_path_converted = cygpath_w (assembly_path);
       char *old_clixpath;
       const char **argv =
         (const char **) xmalloca ((2 + nargs + 1) * sizeof (const char *));
@@ -188,7 +192,7 @@ execute_csharp_using_sscli (const char *assembly_path,
       old_clixpath = set_clixpath (libdirs, libdirs_count, false, verbose);
 
       argv[0] = "clix";
-      argv[1] = assembly_path;
+      argv[1] = assembly_path_converted;
       for (i = 0; i <= nargs; i++)
         argv[2 + i] = args[i];
 
@@ -205,6 +209,7 @@ execute_csharp_using_sscli (const char *assembly_path,
       reset_clixpath (old_clixpath);
 
       freea (argv);
+      free (assembly_path_converted);
 
       return err;
     }
