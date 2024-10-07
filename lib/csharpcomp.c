@@ -26,13 +26,14 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <error.h>
+#include "cygpath.h"
 #include "execute.h"
 #include "spawn-pipe.h"
 #include "wait-process.h"
 #include "sh-quote.h"
 #include "safe-read.h"
 #include "xmalloca.h"
-#include <error.h>
 #include "gettext.h"
 
 #define _(str) gettext (str)
@@ -311,11 +312,20 @@ compile_csharp_using_sscli (const char * const *sources,
 
   if (csc_present)
     {
+      char **malloced;
+      char **mallocedp;
       unsigned int argc;
       const char **argv;
       const char **argp;
       int exitstatus;
       unsigned int i;
+
+      /* Here, we assume that 'csc' is a native Windows program, therefore
+         we need to use cygpath_w.  */
+      malloced =
+        (char **)
+        xmalloca ((1 + libdirs_count + sources_count * 2) * sizeof (char *));
+      mallocedp = malloced;
 
       argc =
         1 + 1 + 1 + libdirs_count + libraries_count
@@ -326,16 +336,21 @@ compile_csharp_using_sscli (const char * const *sources,
       *argp++ = "csc";
       *argp++ = (output_is_library ? "-target:library" : "-target:exe");
       {
-        char *option = (char *) xmalloca (5 + strlen (output_file) + 1);
+        char *output_file_converted = cygpath_w (output_file);
+        *mallocedp++ = output_file_converted;
+        char *option = (char *) xmalloca (5 + strlen (output_file_converted) + 1);
         memcpy (option, "-out:", 5);
-        strcpy (option + 5, output_file);
+        strcpy (option + 5, output_file_converted);
         *argp++ = option;
       }
       for (i = 0; i < libdirs_count; i++)
         {
-          char *option = (char *) xmalloca (5 + strlen (libdirs[i]) + 1);
+          const char *libdir = libdirs[i];
+          char *libdir_converted = cygpath_w (libdir);
+          *mallocedp++ = libdir_converted;
+          char *option = (char *) xmalloca (5 + strlen (libdir_converted) + 1);
           memcpy (option, "-lib:", 5);
-          strcpy (option + 5, libdirs[i]);
+          strcpy (option + 5, libdir_converted);
           *argp++ = option;
         }
       for (i = 0; i < libraries_count; i++)
@@ -353,18 +368,23 @@ compile_csharp_using_sscli (const char * const *sources,
       for (i = 0; i < sources_count; i++)
         {
           const char *source_file = sources[i];
-          if (strlen (source_file) >= 10
-              && memcmp (source_file + strlen (source_file) - 10, ".resources",
+          char *source_file_converted = cygpath_w (source_file);
+          *mallocedp++ = source_file_converted;
+          if (strlen (source_file_converted) >= 10
+              && memcmp (source_file_converted
+                         + strlen (source_file_converted) - 10,
+                         ".resources",
                          10) == 0)
             {
-              char *option = (char *) xmalloca (10 + strlen (source_file) + 1);
-
+              char *option =
+                (char *) xmalloc (10 + strlen (source_file_converted) + 1);
               memcpy (option, "-resource:", 10);
-              strcpy (option + 10, source_file);
+              strcpy (option + 10, source_file_converted);
+              *mallocedp++ = option;
               *argp++ = option;
             }
           else
-            *argp++ = source_file;
+            *argp++ = source_file_converted;
         }
       *argp = NULL;
       /* Ensure argv length was correctly calculated.  */
@@ -384,10 +404,10 @@ compile_csharp_using_sscli (const char * const *sources,
 
       for (i = 2; i < 3 + libdirs_count + libraries_count; i++)
         freea ((char *) argv[i]);
-      for (i = 0; i < sources_count; i++)
-        if (argv[argc - sources_count + i] != sources[i])
-          freea ((char *) argv[argc - sources_count + i]);
+      while (mallocedp > malloced)
+        free (*--mallocedp);
       freea (argv);
+      freea (malloced);
 
       return (exitstatus != 0);
     }
