@@ -7,15 +7,19 @@ lib/csharpcomp.c
 
 Depends-on:
 stdbool
-xmalloca
+error
+xconcat-filename
 cygpath
 execute
 spawn-pipe
 wait-process
 getline
+scandir
+alphasort
 sh-quote
 safe-read
-error
+xmalloca
+xvasprintf
 gettext-h
 memcmp
 csharpcomp-script
