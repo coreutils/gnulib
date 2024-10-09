@@ -68,7 +68,12 @@ name_is_dll (const struct dirent *d)
     {
       size_t d_name_len = strlen (d->d_name);
       if (d_name_len > 4 && memcmp (d->d_name + d_name_len - 4, ".dll", 4) == 0)
-        return 1;
+        /* Filter out files that start with a lowercase letter and files that
+           contain the substring ".Native.", since on Windows these files
+           produce an error "PE image doesn't contain managed metadata".  */
+        if (d->d_name[0] >= 'A' && d->d_name[0] <= 'Z'
+            && strstr (d->d_name, ".Native.") == NULL)
+          return 1;
     }
   return 0;
 }

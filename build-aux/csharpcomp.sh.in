@@ -180,8 +180,11 @@ else
         ;;
     esac
     options_csc="$options_csc -lib:"`echo "$arg" | sed -e "$sed_quote_subst"`
-    for file in `cd "$dotnet_runtime_dir" && echo *.dll`; do
-      options_csc="$options_csc -reference:"`echo "$file" | sed -e "$sed_quote_subst"`
+    for file in `cd "$dotnet_runtime_dir" && echo [ABCDEFGHIJKLMNOPQRSTUVWXYZ]*.dll`; do
+      case "$file" in
+        *.Native.*) ;;
+        *) options_csc="$options_csc -reference:"`echo "$file" | sed -e "$sed_quote_subst"` ;;
+      esac
     done
     csc="$dotnet_sdk_dir/Roslyn/bincore/csc.dll"
     case "@build_os@" in
