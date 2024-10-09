@@ -9,13 +9,24 @@ lib/classpath.c
 
 Depends-on:
 stdbool
+stat
+error
+dirname
+xconcat-filename
+canonicalize
 cygpath
 execute
+spawn-pipe
+wait-process
 xsetenv
+scandir
+alphasort
 sh-quote
 xalloc
 xmalloca
-error
+copy-file
+clean-temp-simple
+clean-temp
 gettext-h
 csharpexec-script
 
