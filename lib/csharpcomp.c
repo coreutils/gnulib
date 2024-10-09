@@ -324,7 +324,7 @@ compile_csharp_using_sscli (const char * const *sources,
          we need to use cygpath_w.  */
       malloced =
         (char **)
-        xmalloca ((1 + libdirs_count + sources_count) * sizeof (char *));
+        xmalloca ((1 + libdirs_count + sources_count * 2) * sizeof (char *));
       mallocedp = malloced;
 
       argc =
@@ -377,10 +377,10 @@ compile_csharp_using_sscli (const char * const *sources,
                          10) == 0)
             {
               char *option =
-                (char *) xmalloca (10 + strlen (source_file_converted) + 1);
-
+                (char *) xmalloc (10 + strlen (source_file_converted) + 1);
               memcpy (option, "-resource:", 10);
               strcpy (option + 10, source_file_converted);
+              *mallocedp++ = option;
               *argp++ = option;
             }
           else
@@ -404,9 +404,6 @@ compile_csharp_using_sscli (const char * const *sources,
 
       for (i = 2; i < 3 + libdirs_count + libraries_count; i++)
         freea ((char *) argv[i]);
-      for (i = 0; i < sources_count; i++)
-        if (argv[argc - sources_count + i] != sources[i])
-          freea ((char *) argv[argc - sources_count + i]);
       while (mallocedp > malloced)
         free (*--mallocedp);
       freea (argv);
