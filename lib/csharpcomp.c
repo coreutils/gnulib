@@ -328,12 +328,13 @@ compile_csharp_using_sscli (const char * const *sources,
       mallocedp = malloced;
 
       argc =
-        1 + 1 + 1 + libdirs_count + libraries_count
+        2 + 1 + 1 + libdirs_count + libraries_count
         + (optimize ? 1 : 0) + (debug ? 1 : 0) + sources_count;
       argv = (const char **) xmalloca ((argc + 1) * sizeof (const char *));
 
       argp = argv;
       *argp++ = "csc";
+      *argp++ = "-nologo";
       *argp++ = (output_is_library ? "-target:library" : "-target:exe");
       {
         char *output_file_converted = cygpath_w (output_file);
@@ -402,7 +403,7 @@ compile_csharp_using_sscli (const char * const *sources,
                             false, false, false, false,
                             true, true, NULL);
 
-      for (i = 2; i < 3 + libdirs_count + libraries_count; i++)
+      for (i = 3; i < 4 + libdirs_count + libraries_count; i++)
         freea ((char *) argv[i]);
       while (mallocedp > malloced)
         free (*--mallocedp);
