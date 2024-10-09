@@ -82,8 +82,8 @@ while test $# != 0; do
           ;;
       esac
       options_mcs="$options_mcs -out:"`echo "$2" | sed -e "$sed_quote_subst"`
-      # On Windows, assume that 'csc' is a native Windows program,
-      # not a Cygwin program.
+      # On Windows, assume that 'dotnet' and 'csc' are native Windows programs,
+      # not Cygwin programs.
       arg="$2"
       case "@build_os@" in
         cygwin*)
@@ -95,8 +95,8 @@ while test $# != 0; do
       ;;
     -L)
       options_mcs="$options_mcs -lib:"`echo "$2" | sed -e "$sed_quote_subst"`
-      # On Windows, assume that 'csc' is a native Windows program,
-      # not a Cygwin program.
+      # On Windows, assume that 'dotnet' and 'csc' are native Windows programs,
+      # not Cygwin programs.
       arg="$2"
       case "@build_os@" in
         cygwin*)
@@ -124,8 +124,8 @@ while test $# != 0; do
       ;;
     *.resources)
       options_mcs="$options_mcs -resource:"`echo "$1" | sed -e "$sed_quote_subst"`
-      # On Windows, assume that 'csc' is a native Windows program,
-      # not a Cygwin program.
+      # On Windows, assume that 'dotnet' and 'csc' are native Windows programs,
+      # not Cygwin programs.
       arg="$1"
       case "@build_os@" in
         cygwin*)
@@ -136,8 +136,8 @@ while test $# != 0; do
       ;;
     *.cs)
       sources="$sources "`echo "$1" | sed -e "$sed_quote_subst"`
-      # On Windows, assume that 'csc' is a native Windows program,
-      # not a Cygwin program.
+      # On Windows, assume that 'dotnet' and 'csc' are native Windows programs,
+      # not Cygwin programs.
       arg="$1"
       case "@build_os@" in
         cygwin*)
@@ -169,11 +169,35 @@ if test -n "@HAVE_MCS@"; then
   rm -rf "$tmp"
   exit $result
 else
-  if test -n "@HAVE_CSC@"; then
-    test -z "$CSHARP_VERBOSE" || echo csc $options_csc $sources_csc
-    exec csc $options_csc $sources_csc
+  if test -n "@HAVE_DOTNET_SDK@"; then
+    dotnet_runtime_dir=`dotnet --list-runtimes | sed -n -e 's/Microsoft.NETCore.App \([^ ]*\) \[\(.*\)\].*/\2\/\1/p' | sed -e 1q`
+    dotnet_sdk_dir=`dotnet --list-sdks | sed -e 's/\([^ ]*\) \[\(.*\)\].*/\2\/\1/p' | sed -e 1q`
+    # Add -lib and -reference options, so that the compiler finds Object, Console, String, etc.
+    arg="$dotnet_runtime_dir"
+    case "@build_os@" in
+      cygwin*)
+        arg=`cygpath -w "$arg"`
+        ;;
+    esac
+    options_csc="$options_csc -lib:"`echo "$arg" | sed -e "$sed_quote_subst"`
+    for file in `cd "$dotnet_runtime_dir" && echo *.dll`; do
+      options_csc="$options_csc -reference:"`echo "$file" | sed -e "$sed_quote_subst"`
+    done
+    csc="$dotnet_sdk_dir/Roslyn/bincore/csc.dll"
+    case "@build_os@" in
+      cygwin*)
+        csc=`cygpath -w "$csc"`
+        ;;
+    esac
+    test -z "$CSHARP_VERBOSE" || echo dotnet "$csc" $options_csc $sources_csc
+    exec dotnet "$csc" $options_csc $sources_csc
   else
-    echo 'C# compiler not found, try installing mono, then reconfigure' 1>&2
-    exit 1
+    if test -n "@HAVE_DOTNET_CSC@" || test -n "@HAVE_CSC@"; then
+      test -z "$CSHARP_VERBOSE" || echo csc $options_csc $sources_csc
+      exec csc $options_csc $sources_csc
+    else
+      echo 'C# compiler not found, try installing mono or dotnet, then reconfigure' 1>&2
+      exit 1
+    fi
   fi
 fi
