@@ -1,5 +1,5 @@
 # csharpcomp.m4
-# serial 10
+# serial 11
 dnl Copyright (C) 2003-2005, 2007, 2009-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -24,7 +24,7 @@ AC_DEFUN([gt_CSHARPCOMP],
   popdef([AC_MSG_RESULT])dnl
   popdef([AC_CHECKING])dnl
   popdef([AC_MSG_CHECKING])dnl
-  for impl in "$CSHARP_CHOICE" mono sscli no; do
+  for impl in "$CSHARP_CHOICE" mono dotnet sscli no; do
     case "$impl" in
       mono)
         if test -n "$HAVE_MCS_IN_PATH" \
