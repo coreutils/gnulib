@@ -1,5 +1,5 @@
 # csharpexec.m4
-# serial 9
+# serial 10
 dnl Copyright (C) 2003-2005, 2009-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,7 +8,7 @@ dnl with or without modifications, as long as this notice is preserved.
 # Prerequisites of csharpexec.sh.
 # Checks for a C# execution engine.
 # gt_CSHARPEXEC or gt_CSHARPEXEC(testexecutable, its-directory)
-# Sets at most one of HAVE_MONO, HAVE_CLIX.
+# Sets at most one of HAVE_MONO, HAVE_DOTNET, HAVE_CLIX.
 # Sets HAVE_CSHARPEXEC to nonempty if csharpexec.sh will work.
 AC_DEFUN([gt_CSHARPEXEC],
 [
@@ -25,11 +25,12 @@ AC_DEFUN([gt_CSHARPEXEC],
   pushdef([AC_CHECKING],[:])dnl
   pushdef([AC_MSG_RESULT],[:])dnl
   AC_CHECK_PROG([HAVE_MONO_IN_PATH], [mono], [yes])
+  AC_CHECK_PROG([HAVE_DOTNET_IN_PATH], [dotnet], [yes])
   AC_CHECK_PROG([HAVE_CLIX_IN_PATH], [clix], [yes])
   popdef([AC_MSG_RESULT])dnl
   popdef([AC_CHECKING])dnl
   popdef([AC_MSG_CHECKING])dnl
-  for impl in "$CSHARP_CHOICE" mono no; do
+  for impl in "$CSHARP_CHOICE" mono dotnet no; do
     case "$impl" in
       mono)
         if test -n "$HAVE_MONO_IN_PATH" \
@@ -37,6 +38,14 @@ AC_DEFUN([gt_CSHARPEXEC],
            m4_if([$1], , , [&& mono $2/$1 >/dev/null 2>/dev/null]); then
           HAVE_MONO=1
           ac_result="mono"
+          break
+        fi
+        ;;
+      dotnet)
+        if test -n "$HAVE_DOTNET_IN_PATH" \
+           && dotnet --list-runtimes >/dev/null 2>/dev/null; then
+          HAVE_DOTNET=1
+          ac_result="dotnet"
           break
         fi
         ;;
@@ -73,5 +82,6 @@ AC_DEFUN([gt_CSHARPEXEC],
   AC_SUBST([CLIX_PATH_VAR])
   AC_SUBST([CLIX_PATH])
   AC_SUBST([HAVE_MONO])
+  AC_SUBST([HAVE_DOTNET])
   AC_SUBST([HAVE_CLIX])
 ])
