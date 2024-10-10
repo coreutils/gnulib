@@ -64,21 +64,58 @@ func_tmpdir ()
   }
 }
 
+# In order to construct a command that invokes csc, we need 'eval', because
+# some of the arguments may contain spaces.
+command_for_print=
+command_for_eval=
+options_csc_for_print=
+options_csc_for_eval=
+sources_csc_for_print=
+sources_csc_for_eval=
+# Protecting special characters, hiding them from 'eval':
+# Double each backslash.
+sed_protect_1='s/\\/\\\\/g'
+# Escape each dollar, backquote, double-quote.
+sed_protect_2a='s/\$/\\$/g'
+sed_protect_2b='s/`/\\`/g'
+sed_protect_2c='s/"/\\"/g'
+# Add double-quotes at the beginning and end of the word.
+sed_protect_3a='1s/^/"/'
+sed_protect_3b='$s/$/"/'
+func_add_word_to_command ()
+{
+  command_for_print="${command_for_print:+$command_for_print }$1"
+  word_protected=`echo "$1" | sed -e "$sed_protect_1" -e "$sed_protect_2a" -e "$sed_protect_2b" -e "$sed_protect_2c" -e "$sed_protect_3a" -e "$sed_protect_3b"`
+  command_for_eval="${command_for_eval:+$command_for_eval }$word_protected"
+}
+func_add_word_to_options_csc ()
+{
+  options_csc_for_print="${options_csc_for_print:+$options_csc_for_print }$1"
+  word_protected=`echo "$1" | sed -e "$sed_protect_1" -e "$sed_protect_2a" -e "$sed_protect_2b" -e "$sed_protect_2c" -e "$sed_protect_3a" -e "$sed_protect_3b"`
+  options_csc_for_eval="${options_csc_for_eval:+$options_csc_for_eval }$word_protected"
+}
+func_add_word_to_sources_csc ()
+{
+  sources_csc_for_print="${sources_csc_for_print:+$sources_csc_for_print }$1"
+  word_protected=`echo "$1" | sed -e "$sed_protect_1" -e "$sed_protect_2a" -e "$sed_protect_2b" -e "$sed_protect_2c" -e "$sed_protect_3a" -e "$sed_protect_3b"`
+  sources_csc_for_eval="${sources_csc_for_eval:+$sources_csc_for_eval }$word_protected"
+}
+
 sed_quote_subst='s/\([|&;<>()$`"'"'"'*?[#~=% 	\\]\)/\\\1/g'
+
 options_mcs=
-options_csc="-nologo"
 sources=
-sources_csc=
+func_add_word_to_options_csc "-nologo"
 while test $# != 0; do
   case "$1" in
     -o)
       case "$2" in
         *.dll)
           options_mcs="$options_mcs -target:library"
-          options_csc="$options_csc -target:library"
+          func_add_word_to_options_csc "-target:library"
           ;;
         *.exe)
-          options_csc="$options_csc -target:exe"
+          func_add_word_to_options_csc "-target:exe"
           ;;
       esac
       options_mcs="$options_mcs -out:"`echo "$2" | sed -e "$sed_quote_subst"`
@@ -90,7 +127,7 @@ while test $# != 0; do
           arg=`cygpath -w "$arg"`
           ;;
       esac
-      options_csc="$options_csc -out:"`echo "$arg" | sed -e "$sed_quote_subst"`
+      func_add_word_to_options_csc "-out:$arg"
       shift
       ;;
     -L)
@@ -103,20 +140,20 @@ while test $# != 0; do
           arg=`cygpath -w "$arg"`
           ;;
       esac
-      options_csc="$options_csc -lib:"`echo "$arg" | sed -e "$sed_quote_subst"`
+      func_add_word_to_options_csc "-lib:$arg"
       shift
       ;;
     -l)
       options_mcs="$options_mcs -reference:"`echo "$2" | sed -e "$sed_quote_subst"`
-      options_csc="$options_csc -reference:"`echo "$2" | sed -e "$sed_quote_subst"`".dll"
+      func_add_word_to_options_csc "-reference:$2.dll"
       shift
       ;;
     -O)
-      options_csc="$options_csc -optimize+"
+      func_add_word_to_options_csc "-optimize+"
       ;;
     -g)
       options_mcs="$options_mcs -debug"
-      options_csc="$options_csc -debug+"
+      func_add_word_to_options_csc "-debug+"
       ;;
     -*)
       echo "csharpcomp: unknown option '$1'" 1>&2
@@ -132,7 +169,7 @@ while test $# != 0; do
           arg=`cygpath -w "$arg"`
           ;;
       esac
-      options_csc="$options_csc -resource:"`echo "$arg" | sed -e "$sed_quote_subst"`
+      func_add_word_to_options_csc "-resource:$arg"
       ;;
     *.cs)
       sources="$sources "`echo "$1" | sed -e "$sed_quote_subst"`
@@ -144,7 +181,7 @@ while test $# != 0; do
           arg=`cygpath -w "$arg"`
           ;;
       esac
-      sources_csc="$sources_csc "`echo "$arg" | sed -e "$sed_quote_subst"`
+      func_add_word_to_sources_csc "$arg"
       ;;
     *)
       echo "csharpcomp: unknown type of argument '$1'" 1>&2
@@ -179,25 +216,29 @@ else
         arg=`cygpath -w "$arg"`
         ;;
     esac
-    options_csc="$options_csc -lib:"`echo "$arg" | sed -e "$sed_quote_subst"`
+    func_add_word_to_options_csc "-lib:$arg"
     for file in `cd "$dotnet_runtime_dir" && echo [ABCDEFGHIJKLMNOPQRSTUVWXYZ]*.dll`; do
       case "$file" in
         *.Native.*) ;;
-        *) options_csc="$options_csc -reference:"`echo "$file" | sed -e "$sed_quote_subst"` ;;
+        *) func_add_word_to_options_csc "-reference:$file" ;;
       esac
     done
+    func_add_word_to_command dotnet
     csc="$dotnet_sdk_dir/Roslyn/bincore/csc.dll"
     case "@build_os@" in
       cygwin*)
         csc=`cygpath -w "$csc"`
         ;;
     esac
-    test -z "$CSHARP_VERBOSE" || echo dotnet "$csc" $options_csc $sources_csc 1>&2
-    exec dotnet "$csc" $options_csc $sources_csc
+    func_add_word_to_command "$csc"
+    test -z "$CSHARP_VERBOSE" || echo "$command_for_print $options_csc_for_print $sources_csc_for_print" 1>&2
+    eval "$command_for_eval $options_csc_for_eval $sources_csc_for_eval"
+    exit $?
   else
     if test -n "@HAVE_DOTNET_CSC@" || test -n "@HAVE_CSC@"; then
-      test -z "$CSHARP_VERBOSE" || echo csc $options_csc $sources_csc 1>&2
-      exec csc $options_csc $sources_csc
+      test -z "$CSHARP_VERBOSE" || echo "csc $options_csc_for_print $sources_csc_for_print" 1>&2
+      eval "csc $options_csc_for_eval $sources_csc_for_eval"
+      exit $?
     else
       echo 'C# compiler not found, try installing mono or dotnet, then reconfigure' 1>&2
       exit 1

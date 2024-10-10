@@ -59,7 +59,6 @@ func_tmpdir ()
   }
 }
 
-sed_quote_subst='s/\([|&;<>()$`"'"'"'*?[#~=% 	\\]\)/\\\1/g'
 libdirs_mono=
 libdirs_dotnet=
 prog=
