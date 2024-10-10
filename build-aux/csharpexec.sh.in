@@ -101,7 +101,7 @@ if test -n "@HAVE_MONO@"; then
     MONO_PATH="$CONF_MONO_PATH"
   fi
   export MONO_PATH
-  test -z "$CSHARP_VERBOSE" || echo mono "$@"
+  test -z "$CSHARP_VERBOSE" || echo mono "$@" 1>&2
   exec mono "$@"
 else
   if test -n "@HAVE_DOTNET@"; then
@@ -180,7 +180,7 @@ else
           runtimeconfig_arg=`cygpath -w "$runtimeconfig"`
           ;;
       esac
-      test -z "$CSHARP_VERBOSE" || echo dotnet exec --runtimeconfig "$runtimeconfig_arg" "$prog_arg" "$@"
+      test -z "$CSHARP_VERBOSE" || echo dotnet exec --runtimeconfig "$runtimeconfig_arg" "$prog_arg" "$@" 1>&2
       dotnet exec --runtimeconfig "$runtimeconfig_arg" "$prog_arg" "$@"
       result=$?
       rm -f "$runtimeconfig"
@@ -204,7 +204,7 @@ else
           prog=`cygpath -w "$prog"`
           ;;
       esac
-      test -z "$CSHARP_VERBOSE" || echo clix "$prog" "$@"
+      test -z "$CSHARP_VERBOSE" || echo clix "$prog" "$@" 1>&2
       exec clix "$prog" "$@"
     else
       echo 'C# virtual machine not found, try installing mono or dotnet, then reconfigure' 1>&2

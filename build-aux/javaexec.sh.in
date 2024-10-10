@@ -36,19 +36,19 @@ if test -n "@HAVE_JAVA_ENVVAR@"; then
     CLASSPATH="$CONF_CLASSPATH"
   fi
   export CLASSPATH
-  test -z "$JAVA_VERBOSE" || echo "$CONF_JAVA $@"
+  test -z "$JAVA_VERBOSE" || echo "$CONF_JAVA $@" 1>&2
   exec $CONF_JAVA "$@"
 else
   unset JAVA_HOME
   export CLASSPATH
   if test -n "@HAVE_JAVA@"; then
     # In this case, $CONF_JAVA is "java".
-    test -z "$JAVA_VERBOSE" || echo "$CONF_JAVA $@"
+    test -z "$JAVA_VERBOSE" || echo "$CONF_JAVA $@" 1>&2
     exec $CONF_JAVA "$@"
   else
     if test -n "@HAVE_JRE@"; then
       # In this case, $CONF_JAVA is "jre".
-      test -z "$JAVA_VERBOSE" || echo "$CONF_JAVA $@"
+      test -z "$JAVA_VERBOSE" || echo "$CONF_JAVA $@" 1>&2
       exec $CONF_JAVA "$@"
     else
       echo 'Java virtual machine not found, try setting $JAVA, then reconfigure' 1>&2

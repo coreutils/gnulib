@@ -162,7 +162,7 @@ if test -n "@HAVE_MCS@"; then
 }'
   func_tmpdir
   trap 'rm -rf "$tmp"' HUP INT QUIT TERM
-  test -z "$CSHARP_VERBOSE" || echo mcs $options_mcs $sources
+  test -z "$CSHARP_VERBOSE" || echo mcs $options_mcs $sources 1>&2
   mcs $options_mcs $sources > "$tmp"/mcs.err
   result=$?
   sed -e "$sed_drop_success_line" < "$tmp"/mcs.err >&2
@@ -192,11 +192,11 @@ else
         csc=`cygpath -w "$csc"`
         ;;
     esac
-    test -z "$CSHARP_VERBOSE" || echo dotnet "$csc" $options_csc $sources_csc
+    test -z "$CSHARP_VERBOSE" || echo dotnet "$csc" $options_csc $sources_csc 1>&2
     exec dotnet "$csc" $options_csc $sources_csc
   else
     if test -n "@HAVE_DOTNET_CSC@" || test -n "@HAVE_CSC@"; then
-      test -z "$CSHARP_VERBOSE" || echo csc $options_csc $sources_csc
+      test -z "$CSHARP_VERBOSE" || echo csc $options_csc $sources_csc 1>&2
       exec csc $options_csc $sources_csc
     else
       echo 'C# compiler not found, try installing mono or dotnet, then reconfigure' 1>&2
