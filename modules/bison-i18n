@@ -3,6 +3,7 @@ Support for internationalization of bison-generated parsers.
 
 Files:
 m4/bison-i18n.m4
+m4/build-to-host.m4
 
 Depends-on:
 gettext
