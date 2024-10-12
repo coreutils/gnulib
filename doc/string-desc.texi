@@ -21,7 +21,16 @@ handle strings that contain NUL characters: such strings will appear
 shorter than they were meant to be.  In most application areas, this is
 not a problem, and the @code{char *} type is well usable.
 
-In areas where strings with embedded NUL characters need to be handled,
+A second problem of this string representation is that
+taking a substring is not cheap:
+it either requires a memory allocation
+or a destructive modification of the string.
+The former has a runtime cost;
+the latter complicates the logic of the program.
+This matters for application areas that analyze text, such as parsers.
+
+In areas where strings with embedded NUL characters need to be handled
+or where taking substrings is a recurrent operation,
 the common approach is to use a @code{char *ptr} pointer variable
 together with a @code{size_t nbytes} variable (or an @code{idx_t nbytes}
 variable, if you want to avoid problems due to integer overflow).  This
