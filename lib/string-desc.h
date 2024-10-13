@@ -102,6 +102,12 @@ extern bool string_desc_endswith (string_desc_t s, string_desc_t suffix);
    'unsigned char'.  */
 extern int string_desc_cmp (string_desc_t a, string_desc_t b);
 
+/* Return > 0, == 0, or < 0 if A > B, A == B, A < B.
+   Either A or B must be entirely ASCII.
+   This uses a lexicographic ordering, where the bytes are compared as
+   'unsigned char', ignoring case, in the "C" locale.  */
+extern int string_desc_c_casecmp (string_desc_t a, string_desc_t b);
+
 /* Return the index of the first occurrence of C in S,
    or -1 if there is none.  */
 extern ptrdiff_t string_desc_index (string_desc_t s, char c);

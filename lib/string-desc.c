@@ -25,10 +25,12 @@
 /* Specification and inline definitions.  */
 #include "string-desc.h"
 
+#include <limits.h>
 #include <stdarg.h>
 #include <stdlib.h>
 #include <string.h>
 
+#include "c-ctype.h"
 #include "ialloc.h"
 #include "full-write.h"
 
@@ -81,6 +83,28 @@ string_desc_cmp (string_desc_t a, string_desc_t b)
         return 0;
       return memcmp (a._data, b._data, a._nbytes);
     }
+}
+
+int
+string_desc_c_casecmp (string_desc_t a, string_desc_t b)
+{
+  /* Don't use memcasecmp here, since it uses the current locale, not the
+     "C" locale.  */
+  idx_t an = string_desc_length (a);
+  idx_t bn = string_desc_length (b);
+  const char *ap = string_desc_data (a);
+  const char *bp = string_desc_data (b);
+  idx_t n = (an < bn ? an : bn);
+  idx_t i;
+  for (i = 0; i < n; i++)
+    {
+      int ac = c_tolower ((unsigned char) ap[i]);
+      int bc = c_tolower ((unsigned char) bp[i]);
+      if (ac != bc)
+        return (UCHAR_MAX <= INT_MAX ? ac - bc : _GL_CMP (ac, bc));
+    }
+  /* Here i = n = min (an, bn).  */
+  return _GL_CMP (an, bn);
 }
 
 ptrdiff_t

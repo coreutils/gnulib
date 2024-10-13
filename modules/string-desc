@@ -9,6 +9,7 @@ lib/string-desc-contains.c
 Depends-on:
 stdbool
 idx
+c-ctype
 ialloc
 extern-inline
 memchr
