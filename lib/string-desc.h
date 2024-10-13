@@ -117,6 +117,9 @@ extern ptrdiff_t string_desc_contains (string_desc_t haystack, string_desc_t nee
 /* Return an empty string.  */
 extern string_desc_t string_desc_new_empty (void);
 
+/* Construct and return a string of length N, at the given memory address.  */
+extern string_desc_t string_desc_new_addr (idx_t n, char *addr);
+
 /* Return a string that represents the C string S, of length strlen (S).  */
 extern string_desc_t string_desc_from_c (const char *s);
 
@@ -145,9 +148,6 @@ extern int string_desc_fwrite (FILE *fp, string_desc_t s);
    Upon error, return -1 with errno set.  */
 _GL_ATTRIBUTE_NODISCARD
 extern int string_desc_new (string_desc_t *resultp, idx_t n);
-
-/* Construct and return a string of length N, at the given memory address.  */
-extern string_desc_t string_desc_new_addr (idx_t n, char *addr);
 
 /* Construct a string of length N, filled with C.
    Return 0 if successful.

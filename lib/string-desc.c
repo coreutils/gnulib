@@ -120,6 +120,20 @@ string_desc_new_empty (void)
 }
 
 string_desc_t
+string_desc_new_addr (idx_t n, char *addr)
+{
+  string_desc_t result;
+
+  result._nbytes = n;
+  if (n == 0)
+    result._data = NULL;
+  else
+    result._data = addr;
+
+  return result;
+}
+
+string_desc_t
 string_desc_from_c (const char *s)
 {
   string_desc_t result;
@@ -189,20 +203,6 @@ string_desc_new (string_desc_t *resultp, idx_t n)
 
   *resultp = result;
   return 0;
-}
-
-string_desc_t
-string_desc_new_addr (idx_t n, char *addr)
-{
-  string_desc_t result;
-
-  result._nbytes = n;
-  if (n == 0)
-    result._data = NULL;
-  else
-    result._data = addr;
-
-  return result;
 }
 
 int
