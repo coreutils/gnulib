@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate May 26, 2024
+@set lastupdate May 27, 2024
 @c %**end of header
 
 @dircategory GNU organization
@@ -1007,8 +1007,8 @@ output the same information as invoking @samp{p.cgi --help} from the
 command line.
 
 @menu
-* --version::       The standard output for --version.
-* --help::          The standard output for --help.
+* --version::       The standard output for @option{--version}.
+* --help::          The standard output for @option{--help}.
 @end menu
 
 @node --version
