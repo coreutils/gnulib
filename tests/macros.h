@@ -146,3 +146,5 @@ int volatile test_exit_status = EXIT_SUCCESS;
 extern const float randomf[1000];
 extern const double randomd[1000];
 extern const long double randoml[1000];
+/* 4 KiB of random bytes.  */
+extern const unsigned char randomb[4096];

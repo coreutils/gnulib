@@ -1,10 +1,19 @@
 Files:
 tests/test-crc.c
+tests/macros.h
+tests/bench-crc.c
+tests/bench.h
+tests/randomb.c
 
 Depends-on:
+getrusage
+gettimeofday
 
 configure.ac:
 
 Makefile.am:
 TESTS += test-crc
 check_PROGRAMS += test-crc
+noinst_PROGRAMS += bench-crc
+bench_crc_SOURCES = bench-crc.c randomb.c
+bench_crc_CPPFLAGS = $(AM_CPPFLAGS) -DNDEBUG
