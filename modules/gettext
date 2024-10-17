@@ -6,16 +6,11 @@ The purpose of this module is:
     link errors on non-glibc platforms. We want to detect such link
     errors from within gnulib and fix them by adding $(LIBINTL) to
     various <program>_LDADD variables.
+  - To fix conflicts between older versions of 'gettextize' and the newer
+    versions of files found in gnulib.  See
+    https://www.gnu.org/software/gnulib/manual/html_node/gettextize-and-autopoint.html
   - As a prototype if/when we someday unify gnulib-tool, libtoolize, and
     gettextize in a single tool.
-
-Status:
-obsolete
-
-Notice:
-This module is obsolete. Use the module 'gettext-h' instead to make
-your program capable of internationalization, when GNU gettext is also
-used.
 
 Files:
 m4/gettext.m4
