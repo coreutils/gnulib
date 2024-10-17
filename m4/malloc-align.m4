@@ -4,6 +4,7 @@ dnl Copyright (C) 2020-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
+dnl This file is offered as-is, without any warranty.
 
 dnl Defines a C macro MALLOC_ALIGNMENT, whose value is a numeric constant,
 dnl a power of 2, with the property that

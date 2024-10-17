@@ -4,6 +4,7 @@ dnl Copyright (C) 2003, 2007-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
+dnl This file is offered as-is, without any warranty.
 
 dnl Test whether the *printf family of functions supports the 'j', 'z', 't',
 dnl 'L' size specifiers. (ISO C99, POSIX:2001)

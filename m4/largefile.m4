@@ -4,6 +4,7 @@ dnl Copyright 1992-1996, 1998-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
+dnl This file is offered as-is, without any warranty.
 
 # Enable large files on systems where this is not the default.
 # Enable support for files on Linux file systems with 64-bit inode numbers.

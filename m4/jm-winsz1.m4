@@ -4,6 +4,7 @@ dnl Copyright (C) 1996, 1999, 2001-2002, 2004, 2006, 2009-2024 Free Software Fou
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
+dnl This file is offered as-is, without any warranty.
 
 dnl From Jim Meyering and Paul Eggert.
 AC_DEFUN([gl_HEADER_TIOCGWINSZ_IN_TERMIOS_H],

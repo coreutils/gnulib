@@ -4,6 +4,7 @@ dnl Copyright (C) 1998-1999, 2001, 2004, 2008-2024 Free Software Foundation, Inc
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
+dnl This file is offered as-is, without any warranty.
 
 dnl based on code from Eleftherios Gkioulekas
 dnl Autoconf 2.60 provides AC_HEADER_ASSERT for the same purpose, but
