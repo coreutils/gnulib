@@ -497,7 +497,8 @@ Module description files are under this copyright:
 Copyright @copyright{} 20XX--20YY Free Software Foundation, Inc.@*
 Copying and distribution of this file, with or without modification,
 in any medium, are permitted without royalty provided the copyright
-notice and this notice are preserved.
+notice and this notice are preserved.  This file is offered as-is,
+without any warranty.
 @end quotation
 
 @item m4/
@@ -508,6 +509,7 @@ Copyright @copyright{} 20XX--20YY Free Software Foundation, Inc.@*
 This file is free software; the Free Software Foundation
 gives unlimited permission to copy and/or distribute it,
 with or without modifications, as long as this notice is preserved.
+This file is offered as-is, without any warranty.
 @end quotation
 
 or under this copyright:
