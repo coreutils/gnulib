@@ -26,12 +26,30 @@ NULL pointer argument, this is the same ambiguity as @code{malloc (0)}
 on whether a unique zero-size object is created.  With a non-NULL
 pointer argument @code{p}, C17 says that it is implementation-defined
 whether @code{realloc (p, 0)} frees @code{p}.
-Behavior varies on whether @code{realloc (p, 0)} always frees @code{p}
-and successfully returns a null pointer, or always
-fails and leaves @code{p} valid, or usually succeeds and returns a
-unique zero-size object; a program not suspecting these variations in
-semantics will leak memory (either the still-valid @code{p}, or the
-non-NULL return value).
+Behavior varies among systems: @code{realloc (p, 0)}
+@itemize
+@item
+always frees @code{p} and successfully returns a null pointer
+(on glibc, AIX, native Windows, Android).
+@item
+usually succeeds and
+returns a pointer to freshly-allocated memory of 1 byte
+(on musl libc, macOS, FreeBSD, NetBSD, OpenBSD, Solaris, Cygwin).
+@item
+always fails and leaves @code{p} valid (no known system does this), or
+@item
+usually succeeds and returns a unique zero-size object
+(no known system does this).
+@end itemize
+A program not suspecting these variations in semantics will
+@itemize
+@item
+either leak memory (the still-valid @code{p}),
+if it assumes the first behaviour but the system implements the second one,
+@item
+have double-free bugs,
+if it assumes the second behaviour but the system implements the first one.
+@end itemize
 
 Extension: Gnulib provides a module @samp{realloc-gnu} that substitutes a
 @code{realloc} implementation that behaves more like the glibc implementation.
