@@ -7,6 +7,7 @@ POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/fun
 Gnulib module: realloc-posix
 
 Portability problems fixed by Gnulib:
+
 @itemize
 @item
 Upon failure, the function does not set @code{errno} to @code{ENOMEM} on
@@ -22,37 +23,67 @@ so @code{realloc-posix} does not allow going over the limit.
 
 Without the @samp{realloc-gnu} module described below, it is not portable
 to call @code{realloc} with a size of 0.  With a
-NULL pointer argument, this is the same ambiguity as @code{malloc (0)}
-on whether a unique zero-size object is created.  With a non-NULL
-pointer argument @code{p}, C17 says that it is implementation-defined
-whether @code{realloc (p, 0)} frees @code{p}.
-Behavior varies among systems: @code{realloc (p, 0)}
+null pointer argument, this is the same ambiguity as @code{malloc (0)}
+on whether a unique zero-size memory region is created.
+
+Behavior is a real mess for @code{realloc (p, 0)} with non-null @code{p}.
+C23 says behavior is undefined.
+C17 says it is implementation-defined whether @code{realloc}
+returns a null pointer or a pointer to a new zero-sized memory region.
+C89 through C11 say @code{realloc} returns a null pointer.
+No standard says whether @code{errno} is preserved when
+@code{realloc} successfully returns a null pointer.
+In practice, platforms have one of the following behaviors:
+
+@enumerate
+@item
+Always free @code{p}, without changing @code{errno} and return a null pointer:
+(glibc 2.1.1--2.40, most likely glibc 2.41+ at least by default, Android).
+
+@item
+Always free @code{p}, possibly set @code{errno}, and return a null pointer:
+(AIX, mingw, MSVC).
+
+@item
+Always free @code{p} without changing @code{errno}
+and then return a pointer to a new region of size zero:
+(glibc 1--2.1, perhaps glibc 2.41+ in some configurations).
+
+@item
+When successful free @code{p}, possibly set @code{errno},
+and then return a pointer to a new region of size zero;
+when unsuccessful do not free @code{p}, set @code{errno},
+and return a null pointer:
+(musl libc, macOS, FreeBSD, NetBSD, OpenBSD, Solaris, Cygwin).
+@end enumerate
+
+@noindent
+A program not suspecting these variations in semantics will either:
+
 @itemize
 @item
-always frees @code{p} and successfully returns a null pointer
-(on glibc, AIX, native Windows, Android).
+Leak memory (the still-valid @code{p}),
+if it assumes behavior (1) or (2) but the system implements (3) or (4).
+
 @item
-usually succeeds and
-returns a pointer to freshly-allocated memory of 1 byte
-(on musl libc, macOS, FreeBSD, NetBSD, OpenBSD, Solaris, Cygwin).
-@item
-always fails and leaves @code{p} valid (no known system does this), or
-@item
-usually succeeds and returns a unique zero-size object
-(no known system does this).
+Falsely respond to memory exhaustion (if it checks for realloc failure,
+as it should) or have double-free bugs (if it does not check),
+if it assumes behavior (3) or (4) but the system implements (1) or (2).
 @end itemize
-A program not suspecting these variations in semantics will
+
+Portability problems not fixed by Gnulib:
+
 @itemize
 @item
-either leak memory (the still-valid @code{p}),
-if it assumes the first behaviour but the system implements the second one,
-@item
-have double-free bugs,
-if it assumes the second behaviour but the system implements the first one.
+When not growing an already-allocated region, i.e.,
+when @code{p} points to a region of size @code{psize} and @code{n <= psize},
+the standards allow @code{realloc (p, n)} to fail and return a null pointer.
+It is not known which, if any, implementations actually fail in this situation.
 @end itemize
 
 Extension: Gnulib provides a module @samp{realloc-gnu} that substitutes a
-@code{realloc} implementation that behaves more like the glibc implementation.
+@code{realloc} implementation that behaves more like the current
+glibc implementation.
 It fixes these portability problems:
 
 @itemize
