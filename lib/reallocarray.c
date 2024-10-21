@@ -33,6 +33,18 @@ reallocarray (void *ptr, size_t nmemb, size_t size)
       return NULL;
     }
 
-  /* Rely on the semantics of GNU realloc.  */
+  /* Avoid calling realloc (ptr, 0), since that is undefined behaviour in
+     ISO C 23 and since the GNU libc behaviour may possibly change.  */
+  if (nbytes == 0)
+    {
+      void *new_ptr = malloc (1);
+      if (new_ptr == NULL)
+        /* errno is set here.  */
+        return NULL;
+      free (ptr);
+      return new_ptr;
+    }
+
+  /* Call realloc, setting errno to ENOMEM on failure.  */
   return realloc (ptr, nbytes);
 }
