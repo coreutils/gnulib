@@ -42,8 +42,19 @@ rpl_realloc (void *p, size_t n)
 
   if (n == 0)
     {
+#if NEED_SANITIZED_REALLOC
+      /* ISO C 23 § 7.24.3.7.(3) says that this case is undefined behaviour.
+         Let the programmer know that it occurred.
+         When the undefined-behaviour sanitizers report this case, i.e. when
+         <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=117233> and
+         <https://github.com/llvm/llvm-project/issues/113065>
+         have been closed and new releases of GCC and clang have been made,
+         we can remove this code here.  */
+      abort ();
+#else
       free (p);
       return NULL;
+#endif
     }
 
   if (xalloc_oversized (n, 1))
