@@ -74,6 +74,17 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2024-10-22  spawn-pipe      The functions 'create_pipe_out', 'create_pipe_in',
+                            'create_pipe_bidi' now take a 4th argument
+                            'const char * const *dll_dirs'. To maintain the
+                            previous behaviour, insert NULL as additional 4th
+                            argument.
+
+2024-10-22  execute         The function 'execute' now takes a 4th argument
+                            'const char * const *dll_dirs'. To maintain the
+                            previous behaviour, insert NULL as additional 4th
+                            argument.
+
 2024-10-02  file-has-acl    The file_has_aclinfo function introduced 3 days ago
                             now has a different signature.
 

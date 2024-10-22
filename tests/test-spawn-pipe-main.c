@@ -51,7 +51,7 @@ test_pipe (const char *prog, bool stderr_closed)
   argv[0] = prog;
   argv[1] = (stderr_closed ? "1" : "0");
   argv[2] = NULL;
-  pid = create_pipe_bidi (prog, prog, argv, NULL, false, true, true, fd);
+  pid = create_pipe_bidi (prog, prog, argv, NULL, NULL, false, true, true, fd);
   ASSERT (0 <= pid);
   ASSERT (STDERR_FILENO < fd[0]);
   ASSERT (STDERR_FILENO < fd[1]);

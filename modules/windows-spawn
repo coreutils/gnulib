@@ -1,11 +1,14 @@
 Description:
-Auxiliary functions for the creation of subprocesses on native Windows.
+Auxiliary functions for the creation of subprocesses on Windows.
 
 Files:
+lib/windows-path.h
+lib/windows-path.c
 lib/windows-spawn.h
 lib/windows-spawn.c
 
 Depends-on:
+environ
 findprog-in
 msvc-nothrow
 stdbool
@@ -17,15 +20,21 @@ malloc-posix
 
 configure.ac:
 AC_REQUIRE([AC_CANONICAL_HOST])
+gl_CONDITIONAL([GL_COND_OBJ_WINDOWS_PATH],
+               [case "$host_os" in cygwin* | mingw* | windows*) true;; *) false;; esac])
 gl_CONDITIONAL([GL_COND_OBJ_WINDOWS_SPAWN],
                [case "$host_os" in mingw* | windows*) true;; *) false;; esac])
 
 Makefile.am:
+if GL_COND_OBJ_WINDOWS_PATH
+lib_SOURCES += windows-path.c
+endif
 if GL_COND_OBJ_WINDOWS_SPAWN
 lib_SOURCES += windows-spawn.c
 endif
 
 Include:
+"windows-path.h"
 "windows-spawn.h"
 
 License:

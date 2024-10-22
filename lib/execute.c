@@ -35,6 +35,7 @@
 #include "fatal-signal.h"
 #include "filename.h"
 #include "findprog.h"
+#include "windows-path.h"
 #include "wait-process.h"
 #include "xalloc.h"
 #include "gettext.h"
@@ -113,6 +114,7 @@ nonintr_open (const char *pathname, int oflag, mode_t mode)
 int
 execute (const char *progname,
          const char *prog_path, const char * const *prog_argv,
+         const char * const *dll_dirs,
          const char *directory,
          bool ignore_sigpipe,
          bool null_stdin, bool null_stdout, bool null_stderr,
@@ -203,7 +205,8 @@ execute (const char *progname,
         (HANDLE) _get_osfhandle (null_stderr ? nulloutfd : STDERR_FILENO);
 
       exitcode = spawnpvech (P_WAIT, prog_path, argv + 1,
-                             (const char * const *) environ, directory,
+                             (const char * const *) environ, dll_dirs,
+                             directory,
                              stdin_handle, stdout_handle, stderr_handle);
 # if 0 /* Executing arbitrary files as shell scripts is unsecure.  */
       if (exitcode == -1 && errno == ENOEXEC)
@@ -213,7 +216,8 @@ execute (const char *progname,
              a hidden element "sh.exe" to argv.  */
           argv[1] = prog_path;
           exitcode = spawnpvech (P_WAIT, argv[0], argv,
-                                 (const char * const *) environ, directory,
+                                 (const char * const *) environ, dll_dirs,
+                                 directory,
                                  stdin_handle, stdout_handle, stderr_handle);
         }
 # endif
@@ -254,6 +258,8 @@ execute (const char *progname,
      subprocess to exit with return code 127.  It is implementation
      dependent which error is reported which way.  We treat both cases as
      equivalent.  */
+  char **child_environ;
+  char **malloced_environ;
   sigset_t blocked_signals;
   posix_spawn_file_actions_t actions;
   bool actions_allocated;
@@ -261,6 +267,18 @@ execute (const char *progname,
   bool attrs_allocated;
   int err;
   pid_t child;
+
+  child_environ = environ;
+  malloced_environ = NULL;
+# if defined _WIN32 || defined __CYGWIN__
+  if (dll_dirs != NULL && dll_dirs[0] != NULL)
+    {
+      malloced_environ = extended_environ (dll_dirs);
+      if (malloced_environ == NULL)
+        goto fail_with_errno;
+      child_environ = malloced_environ;
+    }
+# endif
 
   if (slave_process)
     {
@@ -300,16 +318,18 @@ execute (const char *progname,
                                                          &blocked_signals))
                       != 0
                       || (err = posix_spawnattr_setflags (&attrs,
-                                                        POSIX_SPAWN_SETSIGMASK))
+                                                          POSIX_SPAWN_SETSIGMASK))
                          != 0)))
 # endif
           || (err = (directory != NULL
                      ? posix_spawn (&child, prog_path, &actions,
                                     attrs_allocated ? &attrs : NULL,
-                                    (char * const *) prog_argv, environ)
+                                    (char * const *) prog_argv,
+                                    child_environ)
                      : posix_spawnp (&child, prog_path, &actions,
                                      attrs_allocated ? &attrs : NULL,
-                                     (char * const *) prog_argv, environ)))
+                                     (char * const *) prog_argv,
+                                     child_environ)))
              != 0))
     {
       if (actions_allocated)
@@ -318,6 +338,11 @@ execute (const char *progname,
         posix_spawnattr_destroy (&attrs);
       if (slave_process)
         unblock_fatal_signals ();
+      if (malloced_environ != NULL)
+        {
+          free (malloced_environ[0]);
+          free (malloced_environ);
+        }
       free (prog_path_to_free);
       if (termsigp != NULL)
         *termsigp = 0;
@@ -331,6 +356,11 @@ execute (const char *progname,
     {
       register_slave_subprocess (child);
       unblock_fatal_signals ();
+    }
+  if (malloced_environ != NULL)
+    {
+      free (malloced_environ[0]);
+      free (malloced_environ);
     }
   free (prog_path_to_free);
 

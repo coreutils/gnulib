@@ -132,7 +132,7 @@ execute_csharp_using_mono (const char *assembly_path,
       argv[0] = "mono";
       argv[1] = "--version";
       argv[2] = NULL;
-      exitstatus = execute ("mono", "mono", argv, NULL,
+      exitstatus = execute ("mono", "mono", argv, NULL, NULL,
                             false, false, true, true,
                             true, false, NULL);
       mono_present = (exitstatus == 0);
@@ -196,7 +196,7 @@ execute_csharp_using_dotnet (const char *assembly_path,
       argv[0] = "dotnet";
       argv[1] = "--list-runtimes";
       argv[2] = NULL;
-      exitstatus = execute ("dotnet", "dotnet", argv, NULL,
+      exitstatus = execute ("dotnet", "dotnet", argv, NULL, NULL,
                             false, false, true, true,
                             true, false, NULL);
       dotnet_present = (exitstatus == 0);
@@ -382,7 +382,7 @@ execute_csharp_using_dotnet (const char *assembly_path,
 
             /* Open a pipe to the program.  */
             int fd[1];
-            pid_t child = create_pipe_in ("dotnet", "dotnet", argv, NULL,
+            pid_t child = create_pipe_in ("dotnet", "dotnet", argv, NULL, NULL,
                                           DEV_NULL, false, true, false, fd);
             if (child == -1)
               {
@@ -572,7 +572,7 @@ execute_csharp_using_sscli (const char *assembly_path,
 
       argv[0] = "clix";
       argv[1] = NULL;
-      exitstatus = execute ("clix", "clix", argv, NULL,
+      exitstatus = execute ("clix", "clix", argv, NULL, NULL,
                             false, false, true, true,
                             true, false, NULL);
       clix_present = (exitstatus == 0 || exitstatus == 1);

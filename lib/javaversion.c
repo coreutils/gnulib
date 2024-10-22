@@ -63,7 +63,7 @@ execute_and_read_line (const char *progname,
   size_t linelen;
 
   /* Open a pipe to the JVM.  */
-  child = create_pipe_in (progname, prog_path, prog_argv, NULL,
+  child = create_pipe_in (progname, prog_path, prog_argv, NULL, NULL,
                           DEV_NULL, false, true, false, fd);
 
   if (child == -1)

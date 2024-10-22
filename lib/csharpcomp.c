@@ -106,7 +106,7 @@ compile_csharp_using_mono (const char * const *sources,
       argv[0] = "mcs";
       argv[1] = "--version";
       argv[2] = NULL;
-      child = create_pipe_in ("mcs", "mcs", argv, NULL,
+      child = create_pipe_in ("mcs", "mcs", argv, NULL, NULL,
                               DEV_NULL, true, true, false, fd);
       mcs_present = false;
       if (child != -1)
@@ -215,7 +215,7 @@ compile_csharp_using_mono (const char * const *sources,
           free (command);
         }
 
-      child = create_pipe_in ("mcs", "mcs", argv, NULL,
+      child = create_pipe_in ("mcs", "mcs", argv, NULL, NULL,
                               NULL, false, true, true, fd);
 
       /* Read the subprocess output, copying it to stderr.  Drop the last
@@ -292,7 +292,7 @@ compile_csharp_using_dotnet (const char * const *sources,
         argv[0] = "dotnet";
         argv[1] = "--list-runtimes";
         argv[2] = NULL;
-        exitstatus = execute ("dotnet", "dotnet", argv, NULL,
+        exitstatus = execute ("dotnet", "dotnet", argv, NULL, NULL,
                               false, false, true, true,
                               true, false, NULL);
       }
@@ -305,7 +305,7 @@ compile_csharp_using_dotnet (const char * const *sources,
           argv[0] = "dotnet";
           argv[1] = "--list-sdks";
           argv[2] = NULL;
-          child = create_pipe_in ("dotnet", "dotnet", argv, NULL,
+          child = create_pipe_in ("dotnet", "dotnet", argv, NULL, NULL,
                                   DEV_NULL, true, true, false, fd);
           if (child != -1)
             {
@@ -353,7 +353,7 @@ compile_csharp_using_dotnet (const char * const *sources,
 
         /* Open a pipe to the program.  */
         int fd[1];
-        pid_t child = create_pipe_in ("dotnet", "dotnet", argv, NULL,
+        pid_t child = create_pipe_in ("dotnet", "dotnet", argv, NULL, NULL,
                                       DEV_NULL, false, true, false, fd);
         if (child == -1)
           {
@@ -445,7 +445,7 @@ compile_csharp_using_dotnet (const char * const *sources,
 
         /* Open a pipe to the program.  */
         int fd[1];
-        pid_t child = create_pipe_in ("dotnet", "dotnet", argv, NULL,
+        pid_t child = create_pipe_in ("dotnet", "dotnet", argv, NULL, NULL,
                                       DEV_NULL, false, true, false, fd);
         if (child == -1)
           {
@@ -651,7 +651,7 @@ compile_csharp_using_dotnet (const char * const *sources,
           free (command);
         }
 
-      exitstatus = execute ("dotnet", "dotnet", argv, NULL,
+      exitstatus = execute ("dotnet", "dotnet", argv, NULL, NULL,
                             false, false, false, false,
                             true, true, NULL);
 
@@ -691,7 +691,7 @@ compile_csharp_using_dotnet (const char * const *sources,
           argv[0] = "csc";
           argv[1] = "-help";
           argv[2] = NULL;
-          child = create_pipe_in ("csc", "csc", argv, NULL,
+          child = create_pipe_in ("csc", "csc", argv, NULL, NULL,
                                   DEV_NULL, true, true, false, fd);
           if (child != -1)
             {
@@ -825,7 +825,7 @@ compile_csharp_using_dotnet (const char * const *sources,
               free (command);
             }
 
-          exitstatus = execute ("csc", "csc", argv, NULL,
+          exitstatus = execute ("csc", "csc", argv, NULL, NULL,
                                 false, false, false, false,
                                 true, true, NULL);
 
@@ -870,7 +870,7 @@ compile_csharp_using_sscli (const char * const *sources,
       argv[0] = "csc";
       argv[1] = "-help";
       argv[2] = NULL;
-      child = create_pipe_in ("csc", "csc", argv, NULL,
+      child = create_pipe_in ("csc", "csc", argv, NULL, NULL,
                               DEV_NULL, true, true, false, fd);
       csc_present = false;
       if (child != -1)
@@ -997,7 +997,7 @@ compile_csharp_using_sscli (const char * const *sources,
           free (command);
         }
 
-      exitstatus = execute ("csc", "csc", argv, NULL,
+      exitstatus = execute ("csc", "csc", argv, NULL, NULL,
                             false, false, false, false,
                             true, true, NULL);
 

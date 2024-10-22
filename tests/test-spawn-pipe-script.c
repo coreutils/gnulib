@@ -50,7 +50,7 @@ main ()
           (i == 0 ? SRCDIR "executable-script" : SRCDIR "executable-script.sh");
         const char *prog_argv[2] = { prog_path, NULL };
 
-        pid = create_pipe_in (progname, prog_argv[0], prog_argv, NULL,
+        pid = create_pipe_in (progname, prog_argv[0], prog_argv, NULL, NULL,
                               NULL, false, true, false, fd);
         if (pid >= 0)
           {
@@ -80,7 +80,7 @@ main ()
     const char *prog_path = SRCDIR "executable-shell-script";
     const char *prog_argv[2] = { prog_path, NULL };
 
-    pid = create_pipe_in (progname, prog_argv[0], prog_argv, NULL,
+    pid = create_pipe_in (progname, prog_argv[0], prog_argv, NULL, NULL,
                           NULL, false, true, false, fd);
     ASSERT (pid >= 0);
     ASSERT (fd[0] > STDERR_FILENO);

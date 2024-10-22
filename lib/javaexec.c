@@ -205,7 +205,7 @@ execute_java_class (const char *class_name,
         argv[0] = "java";
         argv[1] = "-version";
         argv[2] = NULL;
-        exitstatus = execute ("java", "java", argv, NULL,
+        exitstatus = execute ("java", "java", argv, NULL, NULL,
                               false, false, true, true,
                               true, false, NULL);
         java_present = (exitstatus == 0);
@@ -261,7 +261,7 @@ execute_java_class (const char *class_name,
 
         argv[0] = "jre";
         argv[1] = NULL;
-        exitstatus = execute ("jre", "jre", argv, NULL,
+        exitstatus = execute ("jre", "jre", argv, NULL, NULL,
                               false, false, true, true,
                               true, false, NULL);
         jre_present = (exitstatus == 0 || exitstatus == 1);

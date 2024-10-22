@@ -243,7 +243,7 @@ compile_using_envjavac (const char *javac,
   argv[1] = "-c";
   argv[2] = command;
   argv[3] = NULL;
-  exitstatus = execute (javac, BOURNE_SHELL, argv, NULL,
+  exitstatus = execute (javac, BOURNE_SHELL, argv, NULL, NULL,
                         false, false, false, null_stderr,
                         true, true, NULL);
   err = (exitstatus != 0);
@@ -315,7 +315,7 @@ compile_using_javac (const char * const *java_sources,
       free (command);
     }
 
-  exitstatus = execute ("javac", "javac", argv, NULL,
+  exitstatus = execute ("javac", "javac", argv, NULL, NULL,
                         false, false, false,
                         null_stderr, true, true, NULL);
   err = (exitstatus != 0);
@@ -343,7 +343,7 @@ execute_and_read_line (const char *progname,
   int exitstatus;
 
   /* Open a pipe to the program.  */
-  child = create_pipe_in (progname, prog_path, prog_argv, NULL,
+  child = create_pipe_in (progname, prog_path, prog_argv, NULL, NULL,
                           DEV_NULL, false, true, false, fd);
 
   if (child == -1)
@@ -762,7 +762,7 @@ is_javac_present (void)
 
       argv[0] = "javac";
       argv[1] = NULL;
-      exitstatus = execute ("javac", "javac", argv, NULL,
+      exitstatus = execute ("javac", "javac", argv, NULL, NULL,
                             false, false, true, true,
                             true, false, NULL);
       javac_present = (exitstatus == 0 || exitstatus == 1 || exitstatus == 2);

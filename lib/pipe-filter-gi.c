@@ -496,7 +496,7 @@ pipe_filter_gi_create (const char *progname,
     (struct pipe_filter_gi *) xmalloc (sizeof (struct pipe_filter_gi));
 
   /* Open a bidirectional pipe to a subprocess.  */
-  filter->child = create_pipe_bidi (progname, prog_path, prog_argv,
+  filter->child = create_pipe_bidi (progname, prog_path, prog_argv, NULL,
                                     NULL, null_stderr, true, exit_on_error,
                                     filter->fd);
   filter->progname = progname;

@@ -57,7 +57,7 @@ main ()
           (i == 0 ? SRCDIR "executable-script" : SRCDIR "executable-script.sh");
         const char *prog_argv[2] = { prog_path, NULL };
 
-        int ret = execute (progname, prog_argv[0], prog_argv, NULL,
+        int ret = execute (progname, prog_argv[0], prog_argv, NULL, NULL,
                            false, false, false, false, true, false, NULL);
         ASSERT (ret == 127);
       }
@@ -78,7 +78,7 @@ main ()
     const char *prog_path = SRCDIR "executable-shell-script";
     const char *prog_argv[2] = { prog_path, NULL };
 
-    int ret = execute (progname, prog_argv[0], prog_argv, NULL,
+    int ret = execute (progname, prog_argv[0], prog_argv, NULL, NULL,
                        false, false, false, false, true, false, NULL);
     ASSERT (ret == 0);
 

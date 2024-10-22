@@ -37,6 +37,7 @@
 #include "fatal-signal.h"
 #include "filename.h"
 #include "findprog.h"
+#include "windows-path.h"
 #include "unistd-safer.h"
 #include "wait-process.h"
 #include "xalloc.h"
@@ -138,6 +139,7 @@ static pid_t
 create_pipe (const char *progname,
              const char *prog_path,
              const char * const *prog_argv,
+             const char * const *dll_dirs,
              const char *directory,
              bool pipe_stdin, bool pipe_stdout,
              const char *prog_stdin, const char *prog_stdout,
@@ -313,7 +315,8 @@ create_pipe (const char *progname,
         (HANDLE) _get_osfhandle (null_stderr ? nulloutfd : STDERR_FILENO);
 
       child = spawnpvech (P_NOWAIT, prog_path, argv + 1,
-                          (const char * const *) environ, directory,
+                          (const char * const *) environ, dll_dirs,
+                          directory,
                           stdin_handle, stdout_handle, stderr_handle);
 #  if 0 /* Executing arbitrary files as shell scripts is unsecure.  */
       if (child == -1 && errno == ENOEXEC)
@@ -323,7 +326,8 @@ create_pipe (const char *progname,
              a hidden element "sh.exe" to argv.  */
           argv[1] = prog_path;
           child = spawnpvech (P_NOWAIT, argv[0], argv,
-                              (const char * const *) environ, directory,
+                              (const char * const *) environ, dll_dirs,
+                              directory,
                               stdin_handle, stdout_handle, stderr_handle);
         }
 #  endif
@@ -433,6 +437,8 @@ create_pipe (const char *progname,
 #else
 
   /* Unix API.  */
+  char **child_environ;
+  char **malloced_environ;
   sigset_t blocked_signals;
   posix_spawn_file_actions_t actions;
   bool actions_allocated;
@@ -440,6 +446,18 @@ create_pipe (const char *progname,
   bool attrs_allocated;
   int err;
   pid_t child;
+
+  child_environ = environ;
+  malloced_environ = NULL;
+# if defined _WIN32 || defined __CYGWIN__
+  if (dll_dirs != NULL && dll_dirs[0] != NULL)
+    {
+      malloced_environ = extended_environ (dll_dirs);
+      if (malloced_environ == NULL)
+        goto fail_with_errno;
+      child_environ = malloced_environ;
+    }
+# endif
 
   if (slave_process)
     {
@@ -499,24 +517,26 @@ create_pipe (const char *progname,
 # if defined _WIN32 && !defined __CYGWIN__
                       (err = posix_spawnattr_setpgroup (&attrs, 0)) != 0
                       || (err = posix_spawnattr_setflags (&attrs,
-                                                         POSIX_SPAWN_SETPGROUP))
+                                                          POSIX_SPAWN_SETPGROUP))
                          != 0
 # else
                       (err = posix_spawnattr_setsigmask (&attrs,
                                                          &blocked_signals))
                       != 0
                       || (err = posix_spawnattr_setflags (&attrs,
-                                                        POSIX_SPAWN_SETSIGMASK))
+                                                          POSIX_SPAWN_SETSIGMASK))
                          != 0
 # endif
              )   )   )
           || (err = (directory != NULL
                      ? posix_spawn (&child, prog_path, &actions,
                                     attrs_allocated ? &attrs : NULL,
-                                    (char * const *) prog_argv, environ)
+                                    (char * const *) prog_argv,
+                                    child_environ)
                      : posix_spawnp (&child, prog_path, &actions,
                                      attrs_allocated ? &attrs : NULL,
-                                     (char * const *) prog_argv, environ)))
+                                     (char * const *) prog_argv,
+                                     child_environ)))
              != 0))
     {
       if (actions_allocated)
@@ -525,6 +545,11 @@ create_pipe (const char *progname,
         posix_spawnattr_destroy (&attrs);
       if (slave_process)
         unblock_fatal_signals ();
+      if (malloced_environ != NULL)
+        {
+          free (malloced_environ[0]);
+          free (malloced_environ);
+        }
       if (pipe_stdout)
         {
           close (ifd[0]);
@@ -546,6 +571,11 @@ create_pipe (const char *progname,
     {
       register_slave_subprocess (child);
       unblock_fatal_signals ();
+    }
+  if (malloced_environ != NULL)
+    {
+      free (malloced_environ[0]);
+      free (malloced_environ);
     }
   if (pipe_stdin)
     close (ofd[0]);
@@ -582,12 +612,14 @@ create_pipe (const char *progname,
 pid_t
 create_pipe_bidi (const char *progname,
                   const char *prog_path, const char * const *prog_argv,
+                  const char * const *dll_dirs,
                   const char *directory,
                   bool null_stderr,
                   bool slave_process, bool exit_on_error,
                   int fd[2])
 {
-  pid_t result = create_pipe (progname, prog_path, prog_argv, directory,
+  pid_t result = create_pipe (progname, prog_path, prog_argv, dll_dirs,
+                              directory,
                               true, true, NULL, NULL,
                               null_stderr, slave_process, exit_on_error,
                               fd);
@@ -604,13 +636,15 @@ create_pipe_bidi (const char *progname,
 pid_t
 create_pipe_in (const char *progname,
                 const char *prog_path, const char * const *prog_argv,
+                const char * const *dll_dirs,
                 const char *directory,
                 const char *prog_stdin, bool null_stderr,
                 bool slave_process, bool exit_on_error,
                 int fd[1])
 {
   int iofd[2];
-  pid_t result = create_pipe (progname, prog_path, prog_argv, directory,
+  pid_t result = create_pipe (progname, prog_path, prog_argv, dll_dirs,
+                              directory,
                               false, true, prog_stdin, NULL,
                               null_stderr, slave_process, exit_on_error,
                               iofd);
@@ -629,13 +663,15 @@ create_pipe_in (const char *progname,
 pid_t
 create_pipe_out (const char *progname,
                  const char *prog_path, const char * const *prog_argv,
+                 const char * const *dll_dirs,
                  const char *directory,
                  const char *prog_stdout, bool null_stderr,
                  bool slave_process, bool exit_on_error,
                  int fd[1])
 {
   int iofd[2];
-  pid_t result = create_pipe (progname, prog_path, prog_argv, directory,
+  pid_t result = create_pipe (progname, prog_path, prog_argv, dll_dirs,
+                              directory,
                               true, false, NULL, prog_stdout,
                               null_stderr, slave_process, exit_on_error,
                               iofd);
