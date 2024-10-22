@@ -15,5 +15,6 @@ Makefile.am:
 TESTS += test-crc
 check_PROGRAMS += test-crc
 noinst_PROGRAMS += bench-crc
+test_crc_SOURCES = test-crc.c randomb.c
 bench_crc_SOURCES = bench-crc.c randomb.c
 bench_crc_CPPFLAGS = $(AM_CPPFLAGS) -DNDEBUG
