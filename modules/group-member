@@ -9,7 +9,7 @@ Depends-on:
 unistd
 extensions
 getgroups        [test $HAVE_GROUP_MEMBER = 0]
-realloc-gnu      [test $HAVE_GROUP_MEMBER = 0]
+malloc-gnu       [test $HAVE_GROUP_MEMBER = 0]
 stdckdint        [test $HAVE_GROUP_MEMBER = 0]
 
 configure.ac:
