@@ -21,40 +21,50 @@ allowed by POSIX it can lead to behavior not defined by POSIX later,
 so @code{realloc-posix} does not allow going over the limit.
 @end itemize
 
-Without the @samp{realloc-gnu} module described below, it is not portable
-to call @code{realloc} with a size of 0.  With a
+It is not portable to call @code{realloc} with a size of 0.  With a
 null pointer argument, this is the same ambiguity as @code{malloc (0)}
-on whether a unique zero-size memory region is created.
+as to whether a successful call returns a null pointer or a pointer to a
+new zero-sized memory region.
 
 Behavior is a real mess for @code{realloc (p, 0)} with non-null @code{p}.
 C23 says behavior is undefined.
-C17 says it is implementation-defined whether @code{realloc}
-returns a null pointer or a pointer to a new zero-sized memory region.
-C89 through C11 say @code{realloc} returns a null pointer.
-No standard says whether @code{errno} is preserved when
-@code{realloc} successfully returns a null pointer.
+C89 through C17 say a successful call returns either a null pointer
+or a pointer to a new zero-sized memory region.
+POSIX.1-2017 extends C99 by saying that the call
+must set @code{errno} to an implementation-defined value,
+and POSIX.1-2024 extends C17 a bit further by saying that
+the call must set @code{errno} to @code{EINVAL}.
+It is not known what POSIX.1-2024's successor will say,
+though presumably it will extend C23.
 In practice, platforms have one of the following behaviors:
 
 @enumerate
 @item
-Always free @code{p}, without changing @code{errno} and return a null pointer:
-(glibc 2.1.1--2.40, most likely glibc 2.41+ at least by default, Android).
+Always free @code{p} without changing @code{errno} and return a null pointer,
+even though this does not conform to POSIX:
+glibc 2.1.1--2.40, most likely glibc 2.41+ at least by default, Android.
 
 @item
 Always free @code{p}, possibly set @code{errno}, and return a null pointer:
-(AIX, mingw, MSVC).
+mingw, MSVC.
+
+@item
+Always free @code{p}, set @code{errno} to @code{EINVAL},
+and return a null pointer:
+AIX 7.3 without @code{_LINUX_SOURCE_COMPAT}.
 
 @item
 Always free @code{p} without changing @code{errno}
-and then return a pointer to a new region of size zero:
-(glibc 1--2.1, perhaps glibc 2.41+ in some configurations).
+and return a pointer to a new region of size zero:
+AIX 7.3 with @code{_LINUX_SOURCE_COMPAT}, glibc 1--2.1,
+perhaps glibc 2.41+ in some configurations.
 
 @item
 When successful free @code{p}, possibly set @code{errno},
-and then return a pointer to a new region of size zero;
+and return a pointer to a new region of size zero;
 when unsuccessful do not free @code{p}, set @code{errno},
 and return a null pointer:
-(musl libc, macOS, FreeBSD, NetBSD, OpenBSD, Solaris, Cygwin).
+musl libc, macOS, FreeBSD, NetBSD, OpenBSD, Solaris, Cygwin.
 @end enumerate
 
 @noindent
@@ -62,13 +72,14 @@ A program not suspecting these variations in semantics will either:
 
 @itemize
 @item
-Leak memory (the still-valid @code{p}),
-if it assumes behavior (1) or (2) but the system implements (3) or (4).
+Leak memory (the still-valid @code{p}) if it unwisely does not check
+for @code{realloc} failure, when it assumes behavior (1), (2) or (3) but the
+system implements behavior (4) or (5).
 
 @item
-Falsely respond to memory exhaustion (if it checks for realloc failure,
-as it should) or have double-free bugs (if it does not check),
-if it assumes behavior (3) or (4) but the system implements (1) or (2).
+Falsely respond to memory exhaustion (if it wisely checks for
+@code{realloc} failure), or have double-free bugs (if it does not check),
+when it assumes behavior (4) or (5) but the system implements (1), (2) or (3).
 @end itemize
 
 Portability problems not fixed by Gnulib:
@@ -79,6 +90,13 @@ When not growing an already-allocated region, i.e.,
 when @code{p} points to a region of size @code{psize} and @code{n <= psize},
 the standards allow @code{realloc (p, n)} to fail and return a null pointer.
 It is not known which, if any, implementations actually fail in this situation.
+
+@item
+If @code{realloc (p, 0)} frees @code{p} and returns a null pointer,
+some platforms do not set @code{errno} to @code{EINVAL},
+even though POSIX.1-2024 requires this:
+glibc 2.1.1--2.40, most likely glibc 2.41+ at least by default,
+Android, mingw, MSVC.
 @end itemize
 
 Extension: Gnulib provides a module @samp{realloc-gnu} that substitutes a
