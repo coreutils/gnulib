@@ -10,7 +10,6 @@ calloc-gnu
 extern-inline
 idx
 malloc-gnu
-realloc-gnu
 reallocarray
 stdint
 
