@@ -70,9 +70,10 @@ irealloc (void *p, idx_t s)
 {
   if (s <= SIZE_MAX)
     {
-      /* Work around GNU realloc glitch by treating a zero size as if it
-         were 1, so that returning NULL is equivalent to failing.  */
-      p = realloc (p, s | !s);
+      /* Work around realloc glitch by treating a 0 size as if it were 1,
+         to avoid undefined behavior in strict C23 platforms,
+         and so that returning NULL is equivalent to failing.  */
+      p = realloc (p, s ? s : 1);
 #if defined __CHERI_PURE_CAPABILITY__
       if (p != NULL)
         p = cheri_bounds_set (p, s);
@@ -114,8 +115,8 @@ ireallocarray (void *p, idx_t n, idx_t s)
 {
   if (n <= SIZE_MAX && s <= SIZE_MAX)
     {
-      /* Work around GNU reallocarray glitch by treating a zero size as if
-         it were 1, so that returning NULL is equivalent to failing.  */
+      /* Work around reallocarray glitch by treating a 0 size as if it were 1,
+         so that returning NULL is equivalent to failing.  */
       size_t nx = n;
       size_t sx = s;
       if (n == 0 || s == 0)

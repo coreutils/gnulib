@@ -100,7 +100,9 @@ alignalloc (idx_t alignment, idx_t size)
   void *ptr = NULL;
   if (alignment < sizeof (void *))
     alignment = sizeof (void *);
-  errno = posix_memalign (&ptr, alignment, size | !size);
+  /* Work around posix_memalign glitch by treating a 0 size as if it were 1,
+     so that returning NULL is equivalent to failing.  */
+  errno = posix_memalign (&ptr, alignment, size ? size : 1);
 #  if defined __CHERI_PURE_CAPABILITY__
   if (ptr != NULL)
     ptr = cheri_bounds_set (ptr, size);

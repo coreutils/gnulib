@@ -80,11 +80,10 @@ EEALLOC_INLINE void *eerealloc (void *p, size_t n)
 EEALLOC_INLINE void *
 eerealloc (void *p, size_t n)
 {
-  /* If n is zero, allocate or keep a 1-byte block.  */
-  size_t nx = n;
-  if (n == 0)
-    nx = 1;
-  void *ptr = realloc (p, nx);
+  /* Work around realloc glitch by treating a 0 size as if it were 1,
+     to avoid undefined behavior in strict C23 platforms,
+     and so that returning NULL is equivalent to failing.  */
+  void *ptr = realloc (p, n ? n : 1);
 # if defined __CHERI_PURE_CAPABILITY__
   if (ptr != NULL)
     ptr = cheri_bounds_set (ptr, n);

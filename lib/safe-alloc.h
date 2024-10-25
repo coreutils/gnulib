@@ -45,6 +45,8 @@ extern "C" {
 SAFE_ALLOC_INLINE void *
 safe_alloc_realloc_n (void *ptr, size_t count, size_t size)
 {
+  /* Work around reallocarray glitch by treating a 0 size as if it were 1,
+     so that returning NULL is equivalent to failing.  */
   size_t countx = count;
   size_t sizex = size;
   if (count == 0 || size == 0)
