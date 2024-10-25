@@ -33,17 +33,11 @@ reallocarray (void *ptr, size_t nmemb, size_t size)
       return NULL;
     }
 
-  /* Avoid calling realloc (ptr, 0), since that is undefined behaviour in
-     ISO C 23 and since the GNU libc behaviour may possibly change.  */
+  /* Work around realloc glitch by treating a 0 size as if it were 1,
+     to avoid undefined behavior in strict C23 platforms,
+     and so that returning NULL is equivalent to failing.  */
   if (nbytes == 0)
-    {
-      void *new_ptr = malloc (1);
-      if (new_ptr == NULL)
-        /* errno is set here.  */
-        return NULL;
-      free (ptr);
-      return new_ptr;
-    }
+    nbytes = 1;
 
   /* Call realloc, setting errno to ENOMEM on failure.  */
   return realloc (ptr, nbytes);
