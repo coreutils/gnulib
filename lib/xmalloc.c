@@ -29,6 +29,10 @@
 #include <stdint.h>
 #include <string.h>
 
+#ifdef __CHERI_PURE_CAPABILITY__
+# include <cheri.h>
+#endif
+
 static void * _GL_ATTRIBUTE_PURE
 check_nonnull (void *p)
 {
@@ -63,9 +67,15 @@ xcharalloc (size_t n)
 void *
 xrealloc (void *p, size_t s)
 {
-  void *r = realloc (p, s);
-  if (!r && (!p || s))
+  /* Work around realloc glitch by treating a 0 size as if it were 1,
+     to avoid undefined behavior in strict C23 platforms,
+     so that returning NULL is equivalent to failing.  */
+  void *r = realloc (p, s ? s : 1);
+  if (!r)
     xalloc_die ();
+#ifdef __CHERI_PURE_CAPABILITY__
+  r = cheri_bounds_set (r, s);
+#endif
   return r;
 }
 
@@ -81,9 +91,19 @@ xirealloc (void *p, idx_t s)
 void *
 xreallocarray (void *p, size_t n, size_t s)
 {
-  void *r = reallocarray (p, n, s);
-  if (!r && (!p || (n && s)))
+  /* Work around reallocarray glitch by treating a 0 size as if it were 1,
+     so that returning NULL is equivalent to failing.  */
+  size_t nx = n;
+  size_t sx = s;
+  if (!n || !s)
+    nx = sx = 1;
+  void *r = reallocarray (p, nx, sx);
+  if (!r)
     xalloc_die ();
+#ifdef __CHERI_PURE_CAPABILITY__
+  if (!n || !s)
+    r = cheri_bounds_set (r, 0);
+#endif
   return r;
 }
 
