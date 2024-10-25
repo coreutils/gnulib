@@ -14,7 +14,7 @@ ialloc
 idx
 malloc-gnu
 minmax
-realloc-gnu
+realloc-posix
 reallocarray
 stdckdint
 stdint
