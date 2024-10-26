@@ -1,5 +1,5 @@
 Description:
-Memory allocation with expensive empty allocations (glibc compatible).
+Memory allocation with expensive empty allocations
 
 Files:
 lib/eealloc.h

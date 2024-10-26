@@ -19,15 +19,25 @@
 #ifndef _EEALLOC_H
 #define _EEALLOC_H
 
-/* malloc() and realloc() are allowed to return NULL when asked to allocate
-   a memory block of 0 bytes; this is not an out-of-memory condition.
-   (See ISO C 99 section 7.20.3.)  In some places, this is not welcome,
-   because it requires extra checking (so as not to confuse a zero-sized
-   allocation with an out-of-memory condition).  This file provides
-   malloc()/realloc() workalikes which return non-NULL pointers for
-   succeeding zero-sized allocations.  GNU libc already defines malloc()
-   and realloc() this way; on such platforms the workalikes are aliased
-   to the original malloc()/realloc() functions.  */
+/* malloc (0) and realloc (NULL, 0) can return NULL even when memory
+   is available; see ISO C 23 sections 7.24.3.
+
+   When P is non-null realloc (P, 0) is worse, in that C23 says the
+   behavior is undefined whereas POSIX.1-2024 (which extends C17) says
+   that realloc (P, 0) when successful behaves like either (free (P),
+   errno = EINVAL, NULL), or like (free (P), malloc (1)) returning non-null
+   so long as you do not dereference the non-null pointer;
+   and glibc does not conform to POSIX as it behaves like (free (P), NULL).
+   There are similar issues with reallocarray.
+
+   This behavior is sometimes unwelcome, as it entails extra checking
+   to avoid confusing a zero-sized allocation with memory exhaustion,
+   and to avoid undefined behavior in C23.
+
+   This file provides malloc and realloc workalikes that consistently
+   treat zero sizes as requests for zero-sized allocations instead of
+   for null pointers.  However, it does not provide workalikes for
+   related functions like aligned_alloc, calloc, and reallocarray.  */
 
 /* This file uses _GL_INLINE_HEADER_BEGIN, _GL_INLINE, _GL_ATTRIBUTE_ALLOC_SIZE,
    _GL_ATTRIBUTE_MALLOC.  */
