@@ -1,4 +1,4 @@
-# serial 76
+# serial 77
 
 # Copyright (C) 1996-2001, 2003-2024 Free Software Foundation, Inc.
 #
@@ -44,12 +44,12 @@ AC_DEFUN([gl_REGEX],
             # include <malloc.h> /* defines M_CHECK_ACTION on glibc */
             #endif
 
-            #if defined M_CHECK_ACTION || HAVE_DECL_ALARM
+            #if defined __HAIKU__ || defined M_CHECK_ACTION || HAVE_DECL_ALARM
             # include <signal.h>
             # include <unistd.h>
             #endif
 
-            #ifdef M_CHECK_ACTION
+            #if defined __HAIKU__ || defined M_CHECK_ACTION
             /* Exit with distinguishable exit code.  */
             static void sigabrt_no_core (int sig) { raise (SIGTERM); }
             #endif
@@ -67,6 +67,9 @@ AC_DEFUN([gl_REGEX],
 #if HAVE_DECL_ALARM
             signal (SIGALRM, SIG_DFL);
             alarm (2);
+#endif
+#ifdef __HAIKU__
+            signal (SIGABRT, sigabrt_no_core);
 #endif
 #ifdef M_CHECK_ACTION
             signal (SIGABRT, sigabrt_no_core);
