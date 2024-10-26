@@ -23,6 +23,8 @@
  #error "Please include config.h first."
 #endif
 
+#include <stdlib.h>
+
 
 #ifdef __cplusplus
 extern "C" {
