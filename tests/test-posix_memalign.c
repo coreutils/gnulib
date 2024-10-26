@@ -101,7 +101,7 @@ main (int argc, char *argv[])
 
   return test_exit_status;
 #else
-  fputs ("Skipping test: function 'aligned_alloc' does not exist\n", stderr);
+  fputs ("Skipping test: function 'posix_memalign' does not exist\n", stderr);
   return 77;
 #endif
 }
