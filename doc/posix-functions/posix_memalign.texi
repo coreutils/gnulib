@@ -6,6 +6,10 @@ POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/fun
 
 Gnulib module: posix_memalign
 
+Although this function is superseded by @code{aligned_alloc},
+it is more portable to older systems that do not support C11.
+@xref{aligned_alloc}.
+
 Portability problems fixed by Gnulib:
 @itemize
 @item
@@ -18,6 +22,10 @@ Portability problems not fixed by Gnulib:
 @item
 This function is missing on some platforms:
 Mac OS X 10.5, FreeBSD 6.0, NetBSD 3.0, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, HP-UX 11, Solaris 10, Cygwin 1.5.x, mingw, MSVC 14, Android 4.1.
+@item
+If the alignment and size are absurdly large, this function crashes:
+@c https://sourceware.org/bugzilla/show_bug.cgi?id=32301
+glibc 2.40.
 @end itemize
 
 The Gnulib module @code{aligned-malloc} provides functions for
