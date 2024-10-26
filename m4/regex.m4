@@ -1,5 +1,5 @@
 # regex.m4
-# serial 75
+# serial 76
 dnl Copyright (C) 1996-2001, 2003-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -39,13 +39,13 @@ AC_DEFUN([gl_REGEX],
             #include <limits.h>
             #include <string.h>
 
+            #if HAVE_MALLOC_H
+            # include <malloc.h> /* defines M_CHECK_ACTION on glibc */
+            #endif
+
             #if defined M_CHECK_ACTION || HAVE_DECL_ALARM
             # include <signal.h>
             # include <unistd.h>
-            #endif
-
-            #if HAVE_MALLOC_H
-            # include <malloc.h>
             #endif
 
             #ifdef M_CHECK_ACTION
