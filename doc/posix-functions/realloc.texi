@@ -99,20 +99,3 @@ even though POSIX.1-2024 requires this:
 glibc 2.1.1--2.40, most likely glibc 2.41+ at least by default,
 Android, mingw, MSVC.
 @end itemize
-
-@mindex realloc-gnu
-Extension: Gnulib provides a module @samp{realloc-gnu} that substitutes a
-@code{realloc} implementation that behaves more like the current
-glibc implementation.
-It fixes these portability problems:
-
-@itemize
-@item
-@code{realloc (NULL, 0)} returns @code{NULL} on success on some platforms:
-AIX 7.3.
-
-@item
-On some platforms, @code{realloc (p, 0)} with non-null @code{p}
-might not free @code{p}, or might clobber @code{errno},
-or might not return @code{NULL}.
-@end itemize

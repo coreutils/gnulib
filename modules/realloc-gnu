@@ -1,22 +1,18 @@
 Description:
 realloc() function that is glibc compatible.
 
+Status:
+deprecated
+
+Notice:
+This module is deprecated. Use the module 'filename' instead.
+
 Files:
-lib/realloc.c
 
 Depends-on:
 realloc-posix
-extensions-aix
-free-posix           [test $REPLACE_REALLOC_FOR_REALLOC_GNU = 1]
-malloc-gnu           [test $REPLACE_REALLOC_FOR_REALLOC_GNU = 1]
-xalloc-oversized     [test $REPLACE_REALLOC_FOR_REALLOC_GNU = 1]
 
 configure.ac:
-gl_FUNC_REALLOC_GNU
-if test $REPLACE_REALLOC_FOR_REALLOC_GNU = 1; then
-  AC_LIBOBJ([realloc])
-fi
-gl_STDLIB_MODULE_INDICATOR([realloc-gnu])
 
 Makefile.am:
 
@@ -27,4 +23,4 @@ License:
 LGPLv2+
 
 Maintainer:
-Jim Meyering
+all

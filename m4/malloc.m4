@@ -1,5 +1,5 @@
 # malloc.m4
-# serial 34
+# serial 35
 dnl Copyright (C) 2007, 2009-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -134,7 +134,7 @@ AC_DEFUN([gl_CHECK_MALLOC_POSIX],
       dnl some systems go to their knees when you do that. So assume that
       dnl all Unix implementations of the function set errno on failure,
       dnl except on those platforms where we have seen 'test-malloc-gnu',
-      dnl 'test-realloc-gnu', 'test-calloc-gnu' fail.
+      dnl 'test-realloc-posix', 'test-calloc-gnu' fail.
       case "$host_os" in
         mingw* | windows*)
           gl_cv_func_malloc_posix=no ;;

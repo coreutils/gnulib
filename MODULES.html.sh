@@ -1738,7 +1738,7 @@ func_all_modules ()
   func_module free-posix
   func_module malloc-gnu
   func_module memalign
-  func_module realloc-gnu
+  func_module realloc-posix
   func_module reallocarray
   func_module pagealign_alloc
   func_end_table

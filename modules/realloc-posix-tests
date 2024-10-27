@@ -1,0 +1,12 @@
+Files:
+tests/test-realloc-posix.c
+tests/macros.h
+
+Depends-on:
+stdint
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-realloc-posix
+check_PROGRAMS += test-realloc-posix
