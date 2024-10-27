@@ -5,7 +5,7 @@ Status:
 deprecated
 
 Notice:
-This module is deprecated. Use the module 'filename' instead.
+This module is deprecated. Use the module 'realloc-posix' instead.
 
 Files:
 
