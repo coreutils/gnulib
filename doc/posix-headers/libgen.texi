@@ -16,5 +16,6 @@ This header file is missing on some platforms:
 mingw, MSVC 14.
 @end itemize
 
+@mindex dirname
 The Gnulib module @code{dirname} provides similar API, with functions
 @code{base_name} and @code{dir_name} that also work with Windows file names.

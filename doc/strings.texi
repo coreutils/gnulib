@@ -202,6 +202,11 @@ modules for iterating forward through a string in this way.  Backward
 iteration, that is, from the string's end to start, is not provided,
 as it is too hairy in general.
 
+@mindex mbiter
+@mindex mbiterf
+@mindex mbuiter
+@mindex mbuiterf
+@mindex mcel
 @itemize
 @item
 The @code{mbiter} module iterates through a string whose length
@@ -241,6 +246,7 @@ The @code{mcel} module is simpler and can be faster than the
 @code{mbiter} family, and is more suitable for applications that do
 not need the @code{mbiter} family's special features.
 
+@mindex mcel-prefer
 The @code{mcel-prefer} module is like @code{mcel} except that it also
 causes some other modules, such as @code{mbscasecmp}, to use
 @code{mcel} rather than the @code{mbiter} family.  This can be simpler
@@ -286,6 +292,104 @@ section apply to string descriptors as well.
 
 This table summarizes the API functions available for strings, in POSIX
 and in Gnulib.
+
+@mindex c-strtod
+@mindex c-strtold
+@mindex c32snrtombs
+@mindex c32srtombs
+@mindex c32stombs
+@mindex c32swidth
+@mindex mbscasecmp
+@mindex mbscasestr
+@mindex mbschr
+@mindex mbscspn
+@mindex mbslen
+@mindex mbsncasecmp
+@mindex mbsnlen
+@mindex mbsnrtoc32s
+@mindex mbsnrtowcs
+@mindex mbspbrk
+@mindex mbspcasecmp
+@mindex mbsrchr
+@mindex mbsrtoc32s
+@mindex mbsrtowcs
+@mindex mbssep
+@mindex mbsspn
+@mindex mbsstr
+@mindex mbstoc32s
+@mindex mbstok_r
+@mindex mbstowcs
+@mindex mbswidth
+@mindex stpcpy
+@mindex stpncpy
+@mindex strcase
+@mindex strcasestr
+@mindex strcspn
+@mindex strdup
+@mindex string-desc
+@mindex strncat
+@mindex strndup
+@mindex strnlen
+@mindex strpbrk
+@mindex strsep
+@mindex strstr
+@mindex strtod
+@mindex strtof
+@mindex strtoimax
+@mindex strtok_r
+@mindex strtol
+@mindex strtold
+@mindex strtoll
+@mindex strtoul
+@mindex strtoull
+@mindex strtoumax
+@mindex unicase/u32-casecmp
+@mindex unistr/u32-mbsnlen
+@mindex unistr/u32-stpcpy
+@mindex unistr/u32-stpncpy
+@mindex unistr/u32-strcat
+@mindex unistr/u32-strchr
+@mindex unistr/u32-strcmp
+@mindex unistr/u32-strcoll
+@mindex unistr/u32-strcpy
+@mindex unistr/u32-strcspn
+@mindex unistr/u32-strdup
+@mindex unistr/u32-strlen
+@mindex unistr/u32-strncat
+@mindex unistr/u32-strncmp
+@mindex unistr/u32-strncpy
+@mindex unistr/u32-strnlen
+@mindex unistr/u32-strpbrk
+@mindex unistr/u32-strrchr
+@mindex unistr/u32-strspn
+@mindex unistr/u32-strstr
+@mindex unistr/u32-strtok
+@mindex uniwidth/u32-strwidth
+@mindex wcpcpy
+@mindex wcpncpy
+@mindex wcscasecmp
+@mindex wcscat
+@mindex wcschr
+@mindex wcscmp
+@mindex wcscoll
+@mindex wcscpy
+@mindex wcscspn
+@mindex wcsdup
+@mindex wcslen
+@mindex wcsncasecmp
+@mindex wcsncat
+@mindex wcsncmp
+@mindex wcsncpy
+@mindex wcsnlen
+@mindex wcsnrtombs
+@mindex wcspbrk
+@mindex wcsrchr
+@mindex wcsrtombs
+@mindex wcsspn
+@mindex wcsstr
+@mindex wcstok
+@mindex wcswidth
+@mindex wcsxfrm
 
 @multitable @columnfractions .17 .17 .17 .17 .16 .16
 @headitem unibyte strings only
@@ -753,6 +857,7 @@ values already always were 32-bit and Unicode code points.
 @code{*c32*} functions are optimized so that on glibc systems they
 immediately redirect to the corresponding @code{*wc*} functions.
 
+@mindex uchar-c23
 Gnulib implements the ISO C 23 semantics of @code{char32_t} when you
 import the @samp{uchar-c23} module.  Without this module, it implements
 only the ISO C 11 semantics; the effect is that on some platforms
@@ -781,6 +886,7 @@ representation is used.
 @node Reading multibyte strings
 @subsubsection Reading multibyte strings
 
+@mindex mbfile
 If you want to process (possibly multibyte) characters while reading
 them from a @code{FILE *} stream, without reading them into a string
 first, the @code{mbfile} module is made for this purpose.
@@ -790,6 +896,40 @@ first, the @code{mbfile} module is made for this purpose.
 
 This table summarizes the API functions available for characters, in
 POSIX and in Gnulib.
+
+@mindex c-ctype
+@mindex c32isalnum
+@mindex c32isalpha
+@mindex c32isblank
+@mindex c32iscntrl
+@mindex c32isdigit
+@mindex c32isgraph
+@mindex c32islower
+@mindex c32isprint
+@mindex c32ispunct
+@mindex c32isspace
+@mindex c32isupper
+@mindex c32isxdigit
+@mindex c32tolower
+@mindex c32toupper
+@mindex c32width
+@mindex c32_apply_mapping
+@mindex c32_apply_type_test
+@mindex c32_get_mapping
+@mindex c32_get_type_test
+@mindex c32tolower
+@mindex c32toupper
+@mindex isblank
+@mindex iswblank
+@mindex iswctype
+@mindex iswdigit
+@mindex iswpunct
+@mindex iswxdigit
+@mindex mbchar
+@mindex towctrans
+@mindex wctrans
+@mindex wctype
+@mindex wcwidth
 
 @multitable @columnfractions .2 .2 .2 .2 .2
 @headitem unibyte character

@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/posix_spawn_file_actions_addopen.html}
 
 Gnulib module: posix_spawn_file_actions_addopen
+@mindex posix_spawn_file_actions_addopen
 
 Portability problems fixed by Gnulib:
 @itemize

@@ -5,6 +5,8 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/truncl.html}
 
 Gnulib module: truncl or truncl-ieee
+@mindex truncl
+@mindex truncl-ieee
 
 Portability problems fixed by either Gnulib module @code{truncl} or @code{truncl-ieee}:
 @itemize

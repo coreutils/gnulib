@@ -6,6 +6,7 @@ networking functions.
 
 @subsection Getaddrinfo and WINVER
 
+@mindex getaddrinfo
 This was written for the @code{getaddrinfo} module, but may be applicable to
 other functions too.
 

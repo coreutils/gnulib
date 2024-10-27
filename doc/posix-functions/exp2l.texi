@@ -5,6 +5,8 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/exp2l.html}
 
 Gnulib module: exp2l or exp2l-ieee
+@mindex exp2l
+@mindex exp2l-ieee
 
 Portability problems fixed by either Gnulib module @code{exp2l} or @code{exp2l-ieee}:
 @itemize

@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/fesetround.html}
 
 Gnulib module: fenv-rounding
+@mindex fenv-rounding
 
 Portability problems fixed by Gnulib:
 @itemize

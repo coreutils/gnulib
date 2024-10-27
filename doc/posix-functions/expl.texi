@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/expl.html}
 
 Gnulib module: expl
+@mindex expl
 
 Portability problems fixed by Gnulib:
 @itemize

@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/sig2str.html}
 
 Gnulib module: sig2str
+@mindex sig2str
 
 Portability problems fixed by Gnulib:
 @itemize

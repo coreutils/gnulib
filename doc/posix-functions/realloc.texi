@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/realloc.html}
 
 Gnulib module: realloc-posix
+@mindex realloc-posix
 
 Portability problems fixed by Gnulib:
 
@@ -99,6 +100,7 @@ glibc 2.1.1--2.40, most likely glibc 2.41+ at least by default,
 Android, mingw, MSVC.
 @end itemize
 
+@mindex realloc-gnu
 Extension: Gnulib provides a module @samp{realloc-gnu} that substitutes a
 @code{realloc} implementation that behaves more like the current
 glibc implementation.

@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/iswxdigit.html}
 
 Gnulib module: iswxdigit
+@mindex iswxdigit
 
 Portability problems fixed by Gnulib:
 @itemize
@@ -25,6 +26,7 @@ Portability problems not fixed by Gnulib:
 @item
 On Windows and 32-bit AIX platforms, @code{wchar_t} is a 16-bit type and
 therefore cannot accommodate all Unicode characters.
+@mindex c32isxdigit
 However, the Gnulib function @code{c32isxdigit}, provided by Gnulib module
 @code{c32isxdigit}, operates on 32-bit wide characters and therefore does not
 have this limitation.

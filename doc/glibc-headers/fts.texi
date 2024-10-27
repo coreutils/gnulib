@@ -12,6 +12,7 @@ Documentation:
 @end itemize
 
 Gnulib module: fts
+@mindex fts
 
 Portability problems fixed by Gnulib:
 @itemize

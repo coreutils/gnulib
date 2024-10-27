@@ -18,6 +18,9 @@ Documentation:
 @end itemize
 
 Gnulib module: vasprintf or vasprintf-posix or vasprintf-gnu
+@mindex vasprintf
+@mindex vasprintf-posix
+@mindex vasprintf-gnu
 
 Portability problems fixed by either Gnulib module @code{vasprintf} or @code{vasprintf-posix} or @code{vasprintf-gnu}:
 @itemize

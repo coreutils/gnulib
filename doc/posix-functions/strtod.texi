@@ -5,6 +5,8 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/strtod.html}
 
 Gnulib module: strtod or strtod-obsolete
+@mindex strtod
+@mindex strtod-obsolete
 
 Portability problems fixed by either Gnulib module @code{strtod} or @code{strtod-obsolete}:
 @itemize

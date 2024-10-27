@@ -8,6 +8,7 @@ ISO C23 (latest free draft
 section 7.18.11.
 
 Gnulib module: stdc_count_zeros
+@mindex stdc_count_zeros
 
 Portability problems fixed by Gnulib:
 @itemize

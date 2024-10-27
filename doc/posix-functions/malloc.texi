@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/malloc.html}
 
 Gnulib module: malloc-posix
+@mindex malloc-posix
 
 Portability problems fixed by Gnulib:
 @itemize
@@ -20,6 +21,7 @@ allowed by POSIX it can lead to behavior not defined by POSIX later,
 so @code{malloc-posix} does not allow going over the limit.
 @end itemize
 
+@mindex malloc-gnu
 Extension: Gnulib provides a module @samp{malloc-gnu} that substitutes a
 @code{malloc} implementation that behaves more like the glibc implementation,
 by fixing this portability problem:

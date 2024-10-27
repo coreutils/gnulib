@@ -20,6 +20,7 @@ and moved programs, and invoke them through the symlink. It is
 possible to do the same thing with a hard link @emph{only} if the hard
 link file is in the same directory as the real program.
 
+@mindex relocatable-prog
 The @code{relocatable-prog} module aims to ease the process of making a
 GNU program relocatable.  It helps overcome two obstacles.  First, it aids
 with relocating the hard-coded references to absolute file names that
@@ -57,6 +58,8 @@ You can make your program relocatable by following these steps:
 
 @enumerate
 @item
+@mindex relocatable-lib
+@mindex relocatable-lib-lgpl
 Import the @code{relocatable-prog} module.  For libraries, use the
 @code{relocatable-lib} or @code{relocatable-lib-lgpl} module, if
 the libraries are independent.  For installing multiple libraries,
@@ -122,6 +125,7 @@ depend on that library, whether the program really uses the library or
 not, so this feature should be used with some caution.
 
 @item
+@mindex relocatable-script
 If your package installs shell scripts, also import the
 @code{relocatable-script} module.  Then, near the beginning of each
 shell script that your package installs, add the following:
@@ -161,6 +165,7 @@ where the script gets installed.  Also, at the end, instead of
 that you need.
 
 @item
+@mindex relocatable-perl
 If your package installs Perl scripts, also import the
 @code{relocatable-perl} module.  Then, near the beginning of each
 Perl script that your package installs, add the following:

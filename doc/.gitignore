@@ -1,3 +1,6 @@
+documented-modules.tmp
+all-modules.tmp
+undocumented-modules.texi
 gnulib.aux
 gnulib.cn
 gnulib.cp
@@ -6,6 +9,7 @@ gnulib.dvi
 gnulib.fn
 gnulib.ky
 gnulib.log
+gnulib.m
 gnulib.pg
 gnulib.toc
 gnulib.tp

@@ -16,6 +16,7 @@ Documentation:
 @end itemize
 
 Gnulib module: strchrnul
+@mindex strchrnul
 
 Portability problems fixed by Gnulib:
 @itemize

@@ -5,6 +5,7 @@
 Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/fts_set.3.html,,man fts_set}
 
 Gnulib module: fts
+@mindex fts
 
 Portability problems fixed by Gnulib:
 @itemize

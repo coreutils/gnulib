@@ -27,8 +27,9 @@ Portability problems not fixed by Gnulib:
 This function is missing on some platforms:
 OpenBSD 7.5, Minix 3.1.8, AIX 5.1, HP-UX 11, Solaris 11.4, mingw, MSVC 14, Android 7.1.
 @item
-This function cannot set full timestamp resolution.  Use
-@code{utimensat(AT_FDCWD,file,times,AT_SYMLINK_NOFOLLOW)}, or the
+This function cannot set full timestamp resolution.
+@mindex utimens
+Use @code{utimensat(AT_FDCWD,file,times,AT_SYMLINK_NOFOLLOW)}, or the
 gnulib module @code{utimens}, instead.
 @item
 The mere act of using @code{lstat} modifies the access time of

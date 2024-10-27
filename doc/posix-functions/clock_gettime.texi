@@ -21,6 +21,8 @@ uninitialized on some platforms:
 mingw in 32-bit mode.
 @end itemize
 
+@mindex gettime
+@mindex timespec_get
 The Gnulib modules @code{gettime} and @code{timespec_get} are partial
 substitutes; they implement the @code{CLOCK_REALTIME} functionality of
 @code{clock_gettime}.

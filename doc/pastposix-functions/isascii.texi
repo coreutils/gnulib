@@ -6,6 +6,7 @@ Removed in POSIX.1-2024.
 POSIX.1-2017 specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/isascii.html}
 
 Gnulib module: ctype
+@mindex ctype
 
 Portability problems fixed by Gnulib:
 @itemize
@@ -28,10 +29,12 @@ There are two alternative APIs:
 
 @table @code
 @item c_isascii
+@mindex c-ctype
 This function operates in a locale independent way and returns true only for
 ASCII characters.  It is provided by the Gnulib module @samp{c-ctype}.
 
 @item mb_isascii
+@mindex mbchar
 This function operates in a locale dependent way, on multibyte characters.
 It is provided by the Gnulib module @samp{mbchar}.
 @end table

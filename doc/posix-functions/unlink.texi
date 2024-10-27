@@ -7,6 +7,7 @@ POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/fun
 LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-unlink-3.html}
 
 Gnulib module: unlink
+@mindex unlink
 
 Portability problems fixed by Gnulib:
 @itemize
@@ -32,6 +33,7 @@ not always the POSIX value of @code{EPERM}.  Meanwhile, if a process
 has the ability to unlink directories, POSIX requires that
 @code{unlink("symlink-to-dir/")} remove @file{dir} and leave
 @file{symlink-to-dir} dangling; this behavior is counter-intuitive.
+@mindex unlinkdir
 The gnulib module @code{unlinkdir} can help determine whether code must be
 cautious of unlinking directories.
 @item

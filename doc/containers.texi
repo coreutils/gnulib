@@ -38,6 +38,12 @@ to organize collections of application-defined objects.
 @node Ordinary containers
 @subsection Ordinary container data types
 
+@mindex list
+@mindex set
+@mindex oset
+@mindex map
+@mindex omap
+
 @multitable @columnfractions .15 .5 .1 .1 .15
 @headitem Data type
 @tab Details
@@ -575,6 +581,12 @@ for the ``ordered map'' data type are:
 
 For C++, Gnulib provides a C++ template class for each of these container data types.
 
+@mindex list-c++
+@mindex set-c++
+@mindex oset-c++
+@mindex map-c++
+@mindex omap-c++
+
 @multitable @columnfractions .30 .20 .25 .25
 @headitem Data type
 @tab C++ class
@@ -605,6 +617,7 @@ For C++, Gnulib provides a C++ template class for each of these container data t
 @node Specialized containers
 @subsection Specialized container data types
 
+@mindex hamt
 The @code{hamt} module implements the hash array mapped trie (HAMT) data
 structure.  This is a data structure that contains (key, value) pairs.
 Lookup of a (key, value) pair given the key is on average an @math{O(1)}

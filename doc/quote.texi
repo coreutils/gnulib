@@ -12,6 +12,8 @@
 @cindex Quoting
 @findex quote
 @findex quotearg
+@mindex quote
+@mindex quotearg
 
 Gnulib provides @samp{quote} and @samp{quotearg} modules to help with
 quoting text, such as file names, in messages to the user.  Here's an

@@ -27,5 +27,6 @@ are hard-mounted and not available.  This affects
 Linux < 2.6.36.
 @end itemize
 
+@mindex fsusage
 Gnulib provides a module @code{fsusage} that provides similar information
 as @code{statvfs}.

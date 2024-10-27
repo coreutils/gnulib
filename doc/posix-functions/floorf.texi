@@ -5,6 +5,8 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/floorf.html}
 
 Gnulib module: floorf or floorf-ieee
+@mindex floorf
+@mindex floorf-ieee
 
 Portability problems fixed by either Gnulib module @code{floorf} or @code{floorf-ieee}:
 @itemize

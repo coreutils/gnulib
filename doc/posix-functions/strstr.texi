@@ -5,6 +5,8 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/strstr.html}
 
 Gnulib module: strstr or strstr-simple
+@mindex strstr
+@mindex strstr-simple
 
 Portability problems fixed by either Gnulib module @code{strstr-simple}
 or @code{strstr}:
@@ -33,6 +35,8 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function cannot work correctly on character strings in most multibyte
-locales.  Gnulib provides an alternative function @code{mbsstr} that works
+locales.
+@mindex mbsstr
+Gnulib provides an alternative function @code{mbsstr} that works
 on character strings in all locales.
 @end itemize

@@ -8,6 +8,7 @@ Defines the macros @code{BYTE_ORDER}, @code{LITTLE_ENDIAN}, @code{BIG_ENDIAN},
 @code{PDP_ENDIAN}.
 
 Gnulib module: endian
+@mindex endian
 
 Portability problems fixed by Gnulib:
 @itemize

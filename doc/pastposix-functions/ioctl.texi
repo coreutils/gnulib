@@ -16,6 +16,7 @@ LSB specification:
 @end itemize
 
 Gnulib module: ioctl
+@mindex ioctl
 
 Portability problems fixed by Gnulib:
 @itemize

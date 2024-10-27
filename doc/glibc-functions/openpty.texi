@@ -16,6 +16,7 @@ Documentation:
 @end itemize
 
 Gnulib module: openpty
+@mindex openpty
 
 Portability problems fixed by Gnulib:
 @itemize

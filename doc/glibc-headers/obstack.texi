@@ -13,6 +13,7 @@ Documentation:
 @end itemize
 
 Gnulib module: obstack
+@mindex obstack
 
 Portability problems fixed by Gnulib:
 @itemize

@@ -4,6 +4,8 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/limits.h.html}
 
 Gnulib module: limits-h or gethostname
+@mindex limits-h
+@mindex gethostname
 
 Portability problems fixed by Gnulib module @code{limits-h}:
 @itemize
@@ -47,6 +49,7 @@ albeit with the correct value:
 32-bit glibc 2.24 (on some architectures), Cygwin 2.5.2.
 @end itemize
 
+@mindex pathmax
 For @code{PATH_MAX}, Gnulib provides a module @code{pathmax} with a header
 file @code{"pathmax.h"}.  It defines @code{PATH_MAX} to a constant on
 platforms with a file name length limit.

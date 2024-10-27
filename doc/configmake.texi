@@ -1,7 +1,7 @@
 @node configmake
 @section configmake
 
-@findex configmake @r{module}
+@mindex configmake
 @cindex @file{configmake.h}, module for updating
 
 The @code{configmake} module builds a C include file named

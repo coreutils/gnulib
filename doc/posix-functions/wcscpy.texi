@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/wcscpy.html}
 
 Gnulib module: wcscpy
+@mindex wcscpy
 
 Portability problems fixed by Gnulib:
 @itemize

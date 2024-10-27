@@ -16,6 +16,7 @@ Documentation:
 @end itemize
 
 Gnulib module: canonicalize-lgpl
+@mindex canonicalize-lgpl
 
 Portability problems fixed by Gnulib:
 @itemize

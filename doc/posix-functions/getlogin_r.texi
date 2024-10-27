@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/getlogin_r.html}
 
 Gnulib module: getlogin_r
+@mindex getlogin_r
 
 Portability problems fixed by Gnulib:
 @itemize

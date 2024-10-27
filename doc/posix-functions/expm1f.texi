@@ -5,6 +5,8 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/expm1f.html}
 
 Gnulib module: expm1f or expm1f-ieee
+@mindex expm1f
+@mindex expm1f-ieee
 
 Portability problems fixed by either Gnulib module @code{expm1f} or @code{expm1f-ieee}:
 @itemize

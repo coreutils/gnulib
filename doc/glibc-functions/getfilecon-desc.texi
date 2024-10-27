@@ -1,5 +1,6 @@
 @macro getfileconDesc{fn}
 Gnulib module: selinux-h
+@mindex selinux-h
 
 Portability problems fixed by Gnulib:
 @itemize

@@ -17,5 +17,6 @@ This function is missing on some platforms:
 Mac OS X 10.5, FreeBSD 6.0, NetBSD 7.1, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, HP-UX 11, Solaris 11.3, Cygwin 1.5.x, mingw, MSVC 14, Android 5.1.
 @end itemize
 
+@mindex string-buffer
 An alternative to the @code{open_memstream} function is the Gnulib module
 @code{string-buffer}.

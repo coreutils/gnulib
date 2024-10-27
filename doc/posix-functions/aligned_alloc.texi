@@ -9,6 +9,7 @@ POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/fun
 Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/aligned_alloc.3.html,,man aligned_alloc}
 
 Gnulib module: aligned_alloc
+@mindex aligned_alloc
 
 Portability problems fixed by Gnulib:
 @itemize
@@ -40,16 +41,19 @@ that do not crash even if the AddressSanitizer bug is present:
 
 @itemize
 @item
+@mindex alignalloc
 The Gnulib module @code{alignalloc} provides a portable function
 @code{alignalloc} that is a near-substitute for glibc
 @code{aligned_alloc}, except that the result must be freed
 with @code{alignfree} rather than plain @code{free}.
 
 @item
+@mindex aligned-malloc
 The Gnulib module @code{aligned-malloc} provides functions for
 allocating and freeing blocks of suitably aligned memory.
 
 @item
+@mindex pagealign_alloc
 The Gnulib module @code{pagealign_alloc} provides a similar API for
 allocating and freeing blocks of memory aligned on a system page boundary.
 @end itemize

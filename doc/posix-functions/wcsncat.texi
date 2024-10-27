@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/wcsncat.html}
 
 Gnulib module: wcsncat
+@mindex wcsncat
 
 Portability problems fixed by Gnulib:
 @itemize

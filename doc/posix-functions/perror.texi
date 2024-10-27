@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/perror.html}
 
 Gnulib module: perror
+@mindex perror
 
 Portability problems fixed by Gnulib:
 @itemize

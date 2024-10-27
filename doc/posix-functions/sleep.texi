@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/sleep.html}
 
 Gnulib module: sleep
+@mindex sleep
 
 Portability problems fixed by Gnulib:
 @itemize

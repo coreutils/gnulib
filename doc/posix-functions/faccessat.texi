@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/faccessat.html}
 
 Gnulib module: faccessat
+@mindex faccessat
 
 Portability problems fixed by Gnulib:
 @itemize

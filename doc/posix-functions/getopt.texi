@@ -7,6 +7,8 @@ POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/fun
 LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/libutil-getopt-3.html}
 
 Gnulib module: getopt-posix or getopt-gnu
+@mindex getopt-posix
+@mindex getopt-gnu
 
 The module @code{getopt-gnu} has support for ``long options'' and for
 ``options that take optional arguments''.  Compared to the API defined by POSIX,

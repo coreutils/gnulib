@@ -18,6 +18,7 @@ Documentation:
 @end itemize
 
 Gnulib module: memrchr
+@mindex memrchr
 
 Portability problems fixed by Gnulib:
 @itemize

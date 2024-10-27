@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/wcstok.html}
 
 Gnulib module: wcstok
+@mindex wcstok
 
 Portability problems fixed by Gnulib:
 @itemize

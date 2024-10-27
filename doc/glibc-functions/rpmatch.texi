@@ -16,6 +16,7 @@ Documentation:
 @end itemize
 
 Gnulib module: rpmatch
+@mindex rpmatch
 
 Portability problems fixed by Gnulib:
 @itemize

@@ -7,6 +7,7 @@ POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/fun
 Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/ffsl.3.html,,man ffsl}
 
 Gnulib module: ffsl
+@mindex ffsl
 
 Portability problems fixed by Gnulib:
 @itemize

@@ -18,6 +18,7 @@ Documentation:@*
 @end itemize
 
 Gnulib module: totalorderl
+@mindex totalorderl
 
 Portability problems fixed by Gnulib:
 @itemize

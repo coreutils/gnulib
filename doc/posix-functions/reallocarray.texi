@@ -18,6 +18,7 @@ Documentation:
 @end itemize
 
 Gnulib module: reallocarray
+@mindex reallocarray
 
 Portability problems fixed by Gnulib:
 @itemize

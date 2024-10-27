@@ -5,6 +5,8 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/fopen.html}
 
 Gnulib module: fopen or fopen-gnu
+@mindex fopen
+@mindex fopen-gnu
 
 Portability problems fixed by either Gnulib module @code{fopen} or @code{fopen-gnu}:
 @itemize

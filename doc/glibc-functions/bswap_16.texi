@@ -5,6 +5,7 @@
 Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/bswap_16.3.html,,man bswap_16}
 
 Gnulib module: byteswap
+@mindex byteswap
 
 Portability problems fixed by Gnulib:
 @itemize

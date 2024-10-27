@@ -16,6 +16,8 @@ Documentation:
 @end itemize
 
 Gnulib module: getpass or getpass-gnu
+@mindex getpass
+@mindex getpass-gnu
 
 Portability problems fixed by either Gnulib module @code{getpass} or @code{getpass-gnu}:
 @itemize

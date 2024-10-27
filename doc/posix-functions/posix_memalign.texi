@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/posix_memalign.html}
 
 Gnulib module: posix_memalign
+@mindex posix_memalign
 
 Although this function is superseded by @code{aligned_alloc},
 it is more portable to older systems that do not support C11.
@@ -28,8 +29,10 @@ If the alignment and size are absurdly large, this function crashes:
 glibc 2.40.
 @end itemize
 
+@mindex aligned-malloc
 The Gnulib module @code{aligned-malloc} provides functions for
 allocating and freeing blocks of suitably aligned memory.
 
+@mindex pagealign_alloc
 The Gnulib module @code{pagealign_alloc} provides a similar API for
 allocating and freeing blocks of memory aligned on a system page boundary.

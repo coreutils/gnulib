@@ -5,6 +5,8 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/fmodl.html}
 
 Gnulib module: fmodl or fmodl-ieee
+@mindex fmodl
+@mindex fmodl-ieee
 
 Portability problems fixed by either Gnulib module @code{fmodl} or @code{fmodl-ieee}:
 @itemize

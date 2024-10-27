@@ -12,6 +12,7 @@ code and might make it harder to spot more serious problems.  The
 strategy chosen improves code readability and robustness.
 
 @cindex Aborting execution
+@mindex xalloc-die
 For most applications, aborting the application with an error message
 when the out of memory situation occurs is the best that can be wished
 for.  This is how the library behaves by default (using

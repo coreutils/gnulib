@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_mutexattr_setrobust.html}
 
 Gnulib module: pthread-mutex
+@mindex pthread-mutex
 
 Portability problems fixed by Gnulib:
 @itemize

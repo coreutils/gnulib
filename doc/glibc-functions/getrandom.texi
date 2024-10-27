@@ -16,6 +16,7 @@ Documentation:
 @end itemize
 
 Gnulib module: getrandom
+@mindex getrandom
 
 Portability problems fixed by Gnulib:
 @itemize
@@ -50,6 +51,8 @@ S@. @url{http://pages.cs.wisc.edu/~rist/papers/sslhedge.pdf, When good
 randomness goes bad: virtual machine vulnerabilities and hedging
 deployed cryptography}. NDSS 2010.}
 
+@mindex getentropy
+@mindex crypto/gc-random
 Related modules include @code{getentropy}, which has a simpler but
 more-limited API, and @code{crypto/gc-random}, which is likely a
 better match for code already using the other @code{crypto} APIs.

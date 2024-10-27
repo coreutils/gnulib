@@ -5,6 +5,8 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/remainderf.html}
 
 Gnulib module: remainderf or remainderf-ieee
+@mindex remainderf
+@mindex remainderf-ieee
 
 Portability problems fixed by either Gnulib module @code{remainderf} or @code{remainderf-ieee}:
 @itemize

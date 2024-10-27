@@ -11,8 +11,20 @@
 @end ignore
 @set txicodequoteundirected
 @set txicodequotebacktick
+@c Indices:
+@c   cp = concept              @cindex
+@c   fn = function             @findex
+@c   ky = keystroke            @kindex
+@c   m  = module               @mindex
+@c   pg = program              @pindex
+@c   tp = type                 @tindex
+@c   um = undocumented module  @umindex
+@c   vr = variable             @vindex
+@defcodeindex m
+@defcodeindex um
 @c Define a new index for the magic constants in regex.texi.
 @defcodeindex cn
+@c Define which indices are merged together.
 @syncodeindex fn cp
 @syncodeindex ky cp
 @syncodeindex pg cp
@@ -90,6 +102,8 @@ Documentation License''.
 * Release Management Files::        Non-modules files for preparing releases.
 * GNU Free Documentation License::  Copying and sharing this manual.
 * Gnulib history::
+* Module Index::
+* Undocumented Module Index::
 * Index::
 @end menu
 
@@ -938,6 +952,7 @@ substituted by Gnulib.
 @section @code{alignof} and @code{alignas}
 
 Gnulib module: alignasof
+@mindex alignasof
 
 The @code{alignasof} module arranges for @code{alignas} and @code{alignof}
 to be more like standard C@.
@@ -963,6 +978,7 @@ On pre-C23 platforms, @code{alignas} and @code{alignof} are macros.
 @section @code{bool}
 
 Gnulib module: stdbool
+@mindex stdbool
 
 Portability problems fixed by Gnulib:
 @itemize
@@ -984,6 +1000,7 @@ On pre-C23 platforms, the keyword substitutes assume C99 or later.
 @section @code{nullptr}
 
 Gnulib module: nullptr
+@mindex nullptr
 
 @cindex null pointer
 The @code{nullptr} module arranges for @code{nullptr} to act
@@ -1031,6 +1048,7 @@ limitations.
 @section @code{static_assert}
 
 Gnulib module: assert-h
+@mindex assert-h
 
 The @code{assert-h} module arranges for both @code{static_assert} and
 @code{<assert.h>} to be like standard C@.  @xref{assert.h}.
@@ -8408,6 +8426,7 @@ For background documentation, see
 @section Tools for uploading release tarballs
 
 @table @code
+@mindex gnupload
 @item build-aux/gnupload
 This program is a user-friendly way to upload a release tarball to one of
 the GNU servers (@code{ftp.gnu.org} or @code{alpha.gnu.org}).  It
@@ -8438,8 +8457,24 @@ This is a helper program that mimics the @code{ncftpput} program used by
 @include gnulib-history.texi
 
 
+@node Module Index
+@unnumbered Module Index
+
+@printindex m
+
+@node Undocumented Module Index
+@unnumbered Undocumented Module Index
+
+@include undocumented-modules.texi
+
+These are the modules that are not explicitly documented in this manual.
+Please look at the respective module description.
+(Ideally, this list should be as small as possible.)
+
+@printindex um
+
 @node Index
-@unnumbered Index
+@unnumbered General Index
 
 @printindex cp
 

@@ -19,6 +19,7 @@ Documentation:
 @end itemize
 
 Gnulib module: error-h
+@mindex error-h
 
 Portability problems fixed by Gnulib:
 @itemize

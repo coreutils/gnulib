@@ -17,6 +17,7 @@ Documentation:
 @end itemize
 
 Gnulib module: sys_random
+@mindex sys_random
 
 Portability problems fixed by Gnulib:
 @itemize

@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/cosl.html}
 
 Gnulib module: cosl
+@mindex cosl
 
 Portability problems fixed by Gnulib:
 @itemize

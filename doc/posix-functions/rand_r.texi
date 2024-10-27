@@ -18,5 +18,6 @@ This function is missing on some platforms:
 Minix 3.1.8, mingw, MSVC 14, Android 4.4.
 @item
 This function is removed in POSIX.1-2024.
+@mindex random_r
 Use the function @code{random_r} from Gnulib module @code{random_r} instead.
 @end itemize

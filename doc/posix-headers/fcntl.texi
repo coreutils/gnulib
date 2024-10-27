@@ -4,6 +4,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/fcntl.h.html}
 
 Gnulib module: fcntl-h
+@mindex fcntl-h
 
 Portability problems fixed by Gnulib:
 @itemize
@@ -31,8 +32,9 @@ When not otherwise defined, Gnulib defines these macros to 0,
 which is generally safe.
 
 @item
-@samp{O_NONBLOCK} is not defined on some platforms.  If the
-@samp{nonblocking} module is in use, gnulib guarantees a working
+@samp{O_NONBLOCK} is not defined on some platforms.
+@mindex nonblocking
+If the @samp{nonblocking} module is in use, gnulib guarantees a working
 non-zero value; otherwise, the gnulib replacement is 0.
 
 @item

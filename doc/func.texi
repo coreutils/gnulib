@@ -1,6 +1,7 @@
 @node func
 @section func
 
+@mindex func
 The @code{func} module makes sure that you can use the predefined
 identifier @code{__func__} as defined by C99 in your code.
 

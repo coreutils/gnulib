@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/sigaction.html}
 
 Gnulib module: sigaction
+@mindex sigaction
 
 Portability problems fixed by Gnulib:
 @itemize

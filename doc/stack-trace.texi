@@ -11,6 +11,8 @@
 
 @c Written by Bruno Haible.
 
+@mindex stack-trace
+
 Printing a stack trace
 was traditionally seen as a feature of the debugging environment
 and thus only implemented in the debuggers (@command{gdb} etc.).
@@ -59,6 +61,7 @@ When these requirements are not met, the function @code{print_stack_trace ()}
 either prints a stack trace without source file names and line numbers,
 or prints nothing at all.
 
+@mindex abort-debug
 Gnulib also provides a module @samp{abort-debug},
 that overrides the @code{abort} function so that
 it prints the stack trace of the current thread, before actually aborting.

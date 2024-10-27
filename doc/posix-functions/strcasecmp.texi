@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/strcasecmp.html}
 
 Gnulib module: strcase
+@mindex strcase
 
 Portability problems fixed by Gnulib:
 @itemize
@@ -17,6 +18,7 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function cannot work correctly on character strings in multibyte locales.
+@mindex mbscasecmp
 Gnulib provides an alternative function @code{mbscasecmp} that does a case
 insensitive comparison of character strings and that works in all locales.
 @end itemize

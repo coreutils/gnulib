@@ -5,6 +5,7 @@
 Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/euidaccess.3.html,,man euidaccess}
 
 Gnulib module: euidaccess
+@mindex euidaccess
 
 Portability problems fixed by Gnulib:
 @itemize

@@ -7,6 +7,7 @@ LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-gene
 Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/flock.2.html,,man flock}
 
 Gnulib module: flock
+@mindex flock
 
 Portability problems fixed by Gnulib:
 @itemize

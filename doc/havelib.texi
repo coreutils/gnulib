@@ -15,6 +15,7 @@ variable.
 
 @unnumberedsubsec Locating Libraries
 
+@mindex havelib
 The following macros, defined in the Gnulib module @code{havelib}, search for
 the location of certain C, C++, or Fortran library archive files and make the
 found location available to the compilation process and to further Autoconf

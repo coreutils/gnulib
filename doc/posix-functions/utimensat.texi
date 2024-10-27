@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/utimensat.html}
 
 Gnulib module: utimensat
+@mindex utimensat
 
 Portability problems fixed by Gnulib:
 @itemize
@@ -63,4 +64,5 @@ effectively change directory modification time:
 Cygwin 1.5.x.
 @end itemize
 
+@mindex fdutimensat
 The gnulib module @code{fdutimensat} provides a similar interface.

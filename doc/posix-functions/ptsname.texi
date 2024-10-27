@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/ptsname.html}
 
 Gnulib module: ptsname
+@mindex ptsname
 
 Portability problems fixed by Gnulib:
 @itemize
@@ -27,5 +28,6 @@ Cygwin 1.7.9.
 Likewise, the gnulib replacement is not thread-safe.
 @end itemize
 
+@mindex ptsname_r
 Note that the Gnulib module @code{ptsname_r} is a version of this
 function that is more likely to be thread-safe.

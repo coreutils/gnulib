@@ -4,6 +4,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/poll.h.html}
 
 Gnulib module: poll-h
+@mindex poll-h
 
 Portability problems fixed by Gnulib:
 @itemize

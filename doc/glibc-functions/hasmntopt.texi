@@ -16,6 +16,7 @@ Documentation:
 @end itemize
 
 Gnulib module: hasmntopt
+@mindex hasmntopt
 
 Portability problems fixed by Gnulib:
 @itemize

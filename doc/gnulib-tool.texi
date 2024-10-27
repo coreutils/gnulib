@@ -695,6 +695,7 @@ that makes this task easier.
 
 @enumerate
 @item
+@mindex posixcheck
 Add the Gnulib module @samp{posixcheck} to the Gnulib imports of your package,
 as described earlier in this chapter.
 
@@ -984,6 +985,7 @@ older Gnulib snapshot, it is the release that was the most recent release
 at the time the Gnulib snapshot was taken.
 
 @item
+@mindex gettext
 After running @code{gettextize}, invoke @code{gnulib-tool} and import
 the @code{gettext} module.  Also, copy the latest version of gnulib's
 @file{build-aux/po/Makefile.in.in} to your @file{po/} directory (this
@@ -1013,6 +1015,7 @@ older than version 0.17).  Run @code{autopoint} (not
 of gettext will install the older infrastructure that you requested).
 
 @item
+@mindex gettext-h
 Invoke @code{gnulib-tool}, and import the @code{gettext-h} module.
 @end enumerate
 

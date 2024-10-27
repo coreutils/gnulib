@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/localtime.html}
 
 Gnulib module: localtime
+@mindex localtime
 
 Portability problems fixed by Gnulib:
 @itemize
@@ -19,6 +20,7 @@ Portability problems not fixed by Gnulib:
 On some platforms, this function loops forever for values
 near extrema (such as the year @math{-2**31}):
 Mac OS X 10.6.
+@mindex time_rz
 You can use the @code{time_rz} module to work around the problem.
 @item
 On some platforms, this function returns nonsense values for

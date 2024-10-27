@@ -8,6 +8,7 @@
 @c Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.  A
 @c copy of the license is at <https://www.gnu.org/licenses/fdl-1.3.en.html>.
 
+@mindex c-strcase
 The @code{c-strcase} module contains case-insensitive string comparison
 functions operating on single-byte character strings, like the functions in
 @code{<strings.h>}, that operate as if the locale encoding was ASCII.
@@ -23,6 +24,10 @@ For case conversion here, only ASCII characters are considered to be
 upper case or lower case.
 
 Note: The functions @code{strcasecmp}, @code{strncasecmp} from
-@code{<strings.h>} support only unibyte locales; for multibyte locales,
+@code{<strings.h>} support only unibyte locales;
+@mindex mbscasecmp
+@mindex mbsncasecmp
+@mindex mbspcasecmp
+for multibyte locales,
 you need the functions @code{mbscasecmp}, @code{mbsncasecmp},
 @code{mbspcasecmp}.

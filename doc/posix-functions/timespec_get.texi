@@ -7,6 +7,7 @@ ISO C23 specification:@* @url{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n3
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/timespec_get.html}
 
 Gnulib module: timespec_get
+@mindex timespec_get
 
 Portability problems fixed by Gnulib:
 @itemize

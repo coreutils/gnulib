@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/exp2f.html}
 
 Gnulib module: exp2f
+@mindex exp2f
 
 Portability problems fixed by Gnulib:
 @itemize

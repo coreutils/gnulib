@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/inet_pton.html}
 
 Gnulib module: inet_pton
+@mindex inet_pton
 
 Portability problems fixed by Gnulib:
 @itemize

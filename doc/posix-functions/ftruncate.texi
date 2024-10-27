@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/ftruncate.html}
 
 Gnulib module: ftruncate
+@mindex ftruncate
 
 Portability problems fixed by Gnulib:
 @itemize

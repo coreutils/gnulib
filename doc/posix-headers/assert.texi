@@ -4,7 +4,10 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/assert.h.html}
 
 Gnulib module: assert-h
+@mindex assert-h
 
+@mindex assert
+@mindex verify
 See also the Gnulib modules @code{assert} and @code{verify}.
 
 Portability problems fixed by Gnulib:

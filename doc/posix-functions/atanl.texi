@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/atanl.html}
 
 Gnulib module: atanl
+@mindex atanl
 
 Portability problems fixed by Gnulib:
 @itemize

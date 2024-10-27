@@ -436,13 +436,16 @@ C++ language or from the Linux kernel.
 
 @subsection Interfaces to external libraries
 
+@mindex iconv
 Examples are the @samp{iconv} module, which interfaces to the
 @code{iconv} facility, regardless whether it is contained in libc or in
-an external @code{libiconv}.  Or the @samp{readline} module, which
-interfaces to the GNU readline library.
+an external @code{libiconv}.
+@mindex readline
+Or the @samp{readline} module, which interfaces to the GNU readline library.
 
 @subsection Build / maintenance infrastructure
 
+@mindex maintainer-makefile
 An example is the @samp{maintainer-makefile} module, which provides extra
 Makefile tags for maintaining a package.
 

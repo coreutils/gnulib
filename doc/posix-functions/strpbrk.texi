@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/strpbrk.html}
 
 Gnulib module: strpbrk
+@mindex strpbrk
 
 Portability problems fixed by Gnulib:
 @itemize
@@ -16,6 +17,7 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function cannot work correctly on character strings in multibyte locales.
+@mindex mbspbrk
 Gnulib provides an alternative function @code{mbspbrk} that works on character
 strings in all locales.
 @end itemize

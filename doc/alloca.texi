@@ -8,6 +8,7 @@
 @c Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.  A
 @c copy of the license is at <https://www.gnu.org/licenses/fdl-1.3.en.html>.
 
+@mindex alloca
 The @code{alloca} module provides for a function @code{alloca} which allocates
 memory on the stack, where the system allows it. A memory block allocated with
 @code{alloca} exists only until the function that calls @code{alloca} returns
@@ -39,4 +40,5 @@ __attribute__ ((__noinline__))
 #endif
 @end smallexample
 
+@mindex alloca-opt
 An alternative to this module is the @samp{alloca-opt} module.

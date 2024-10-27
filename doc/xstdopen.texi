@@ -13,18 +13,18 @@
 @node Closed standard fds
 @section Handling closed standard file descriptors
 
-@cindex xstdopen
+@mindex xstdopen
 @cindex stdopen
-@cindex dirent-safer
-@cindex fcntl-safer
-@cindex fopen-safer
-@cindex freopen-safer
-@cindex openat-safer
-@cindex pipe2-safer
-@cindex popen-safer
-@cindex stdlib-safer
-@cindex tmpfile-safer
-@cindex unistd-safer
+@mindex dirent-safer
+@mindex fcntl-safer
+@mindex fopen-safer
+@mindex freopen-safer
+@mindex openat-safer
+@mindex pipe2-safer
+@mindex popen-safer
+@mindex stdlib-safer
+@mindex tmpfile-safer
+@mindex unistd-safer
 
 Usually, when a program gets invoked, its file descriptors
 0 (for standard input), 1 (for standard output), and 2 (for standard error)

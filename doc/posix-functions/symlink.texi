@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/symlink.html}
 
 Gnulib module: symlink
+@mindex symlink
 
 Portability problems fixed by Gnulib:
 @itemize

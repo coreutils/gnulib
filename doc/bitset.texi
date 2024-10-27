@@ -1,6 +1,7 @@
 @node Bitsets
 @section Bitsets
 
+@mindex bitset
 The module @samp{bitset} provides a common interface to several
 implementations of bitsets.  It also provides routines for vectors of bitsets.
 

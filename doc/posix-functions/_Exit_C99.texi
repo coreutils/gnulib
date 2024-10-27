@@ -8,6 +8,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/_Exit.html}
 
 Gnulib module: _Exit
+@mindex _Exit
 
 Portability problems fixed by Gnulib:
 @itemize

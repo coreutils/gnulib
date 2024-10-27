@@ -16,6 +16,7 @@ Documentation:
 @end itemize
 
 Gnulib module: memalign
+@mindex memalign
 
 Portability problems fixed by Gnulib:
 @itemize
@@ -35,5 +36,6 @@ This function is missing on some platforms:
 macOS 14, FreeBSD 12.0, NetBSD 10.0, OpenBSD 7.5, Minix 3.1.8, AIX 5.1, HP-UX 11.00, mingw, MSVC 14.
 @end itemize
 
+@mindex aligned-malloc
 The Gnulib module @code{aligned-malloc} provides functions for
 allocating and freeing blocks of suitably aligned memory.

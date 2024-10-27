@@ -18,6 +18,7 @@ Documentation:
 @end itemize
 
 Gnulib module: getloadavg
+@mindex getloadavg
 
 Portability problems fixed by Gnulib:
 @itemize

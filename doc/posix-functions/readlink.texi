@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/readlink.html}
 
 Gnulib module: readlink
+@mindex readlink
 
 Portability problems fixed by Gnulib:
 @itemize
@@ -61,6 +62,8 @@ Symlink contents do not always have a trailing null byte, and there is
 no indication if symlink contents were truncated if the return value
 matches the length.  Furthermore,
 Linux sets @code{errno} to @code{EINVAL} if the
-requested length is zero.  Use the gnulib module @code{areadlink} for
+requested length is zero.
+@mindex areadlink
+Use the gnulib module @code{areadlink} for
 improved ability to read symlink contents.
 @end itemize

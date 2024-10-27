@@ -5,6 +5,9 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/iconv_open.html}
 
 Gnulib module: iconv, iconv_open, iconv_open-utf
+@mindex iconv
+@mindex iconv_open
+@mindex iconv_open-utf
 
 Portability problems fixed by either Gnulib module @code{iconv} or @code{iconv_open}:
 @itemize
@@ -46,7 +49,9 @@ when GNU libiconv is not installed.
 @item
 For some encodings A and B, this function cannot convert directly from A to B,
 although an indirect conversion from A through UTF-8 to B is possible.  This
-occurs on some platforms: Solaris 11 2010-11.  Gnulib provides a higher-level
+occurs on some platforms: Solaris 11 2010-11.
+@mindex striconveh
+Gnulib provides a higher-level
 facility @code{striconveh} (a wrapper around @code{iconv}) that deals with
 this problem.
 @item

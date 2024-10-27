@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/jn.html}
 
 Gnulib module: jn
+@mindex jn
 
 Portability problems fixed by Gnulib:
 @itemize

@@ -3,6 +3,7 @@
 @cindex DEF files
 @cindex LD DEF files
 
+@mindex lib-msvc-compat
 The @code{lib-msvc-compat} module detects whether the linker supports
 @code{--output-def} when building a library.  That parameter is used
 to generate a DEF file for a shared library (DLL).  DEF files are

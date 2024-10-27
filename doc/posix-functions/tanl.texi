@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/tanl.html}
 
 Gnulib module: tanl
+@mindex tanl
 
 Portability problems fixed by Gnulib:
 @itemize

@@ -20,6 +20,7 @@ Documentation:
 @end itemize
 
 Gnulib module: mntent
+@mindex mntent
 
 Portability problems fixed by Gnulib:
 @itemize
@@ -35,4 +36,5 @@ The function @code{getmntent_r} is missing on all non-glibc platforms:
 AIX 5.1, HP-UX 11, Cygwin, Android 9.0.
 @end itemize
 
+@mindex mountlist
 Gnulib module @code{mountlist} provides a higher-level abstraction.

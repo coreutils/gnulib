@@ -39,6 +39,9 @@ NUL characters.  But when it comes to @emph{storing} them, for example
 in an array or as key or value of a hash table, one needs a type that
 combines these two fields.
 
+@mindex string-desc
+@mindex xstring-desc
+@mindex string-desc-quotearg
 The Gnulib modules @code{string-desc}, @code{xstring-desc}, and
 @code{string-desc-quotearg} provide such a type.  We call it a
 ``string descriptor'' and name it @code{string_desc_t}.

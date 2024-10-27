@@ -5,6 +5,8 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/log1pl.html}
 
 Gnulib module: log1pl or log1pl-ieee
+@mindex log1pl
+@mindex log1pl-ieee
 
 Portability problems fixed by either Gnulib module @code{log1pl} or @code{log1pl-ieee}:
 @itemize

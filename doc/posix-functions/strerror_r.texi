@@ -13,6 +13,7 @@ LSB specification:
 @end itemize
 
 Gnulib module: strerror_r-posix
+@mindex strerror_r-posix
 
 Portability problems fixed by Gnulib:
 @itemize
@@ -88,6 +89,7 @@ Portability problems not fixed by Gnulib:
 @itemize
 @end itemize
 
+@mindex xstrerror
 Note: Gnulib has a module @code{xstrerror}, with the property that
 @code{xstrerror (NULL, errnum)} returns the value of @code{strerror_r}
 as a freshly allocated string.

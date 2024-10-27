@@ -5,6 +5,8 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/strdup.html}
 
 Gnulib module: strdup or strdup-posix
+@mindex strdup
+@mindex strdup-posix
 
 Portability problems fixed by either Gnulib module @code{strdup} or @code{strdup-posix}:
 @itemize

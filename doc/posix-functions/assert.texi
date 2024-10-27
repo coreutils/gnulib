@@ -14,5 +14,6 @@ Portability problems not fixed by Gnulib:
 @itemize
 @end itemize
 
+@mindex assert
 Extension: Gnulib offers a module @samp{assert} that allows the installer to
 disable assertions through a @samp{configure} option: @samp{--disable-assert}.

@@ -5,6 +5,8 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/wcsstr.html}
 
 Gnulib module: wcsstr or wcsstr-simple
+@mindex wcsstr
+@mindex wcsstr-simple
 
 Portability problems fixed by either Gnulib module @code{wcsstr-simple} or @code{wcsstr}:
 @itemize

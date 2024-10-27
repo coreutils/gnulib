@@ -5,6 +5,8 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/modfl.html}
 
 Gnulib module: modfl or modfl-ieee
+@mindex modfl
+@mindex modfl-ieee
 
 Portability problems fixed by either Gnulib module @code{modfl} or @code{modfl-ieee}:
 @itemize

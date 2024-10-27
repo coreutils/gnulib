@@ -8,6 +8,7 @@ after 2038-01-19 03:14:08 UTC@.  See
 @url{https://en.wikipedia.org/wiki/Year_2038_problem, Year 2038
 problem} for details.
 
+@mindex year2038
 The Gnulib module @samp{year2038} fixes this problem on some
 platforms, by making @code{time_t} wide enough to represent timestamps
 after 2038.  This has no effect on most current platforms, which have
@@ -26,6 +27,7 @@ suppresses support for post-2038 timestamps.  This may be useful if
 the package links to other libraries whose user-facing ABIs still
 require @code{time_t} to be 32-bit on your platform.
 
+@mindex year2038-recommended
 The Gnulib module @samp{year2038-recommended} is like @samp{year2038},
 except it by default rejects platforms where @code{time_t} cannot represent
 timestamps after 2038.  If this module is used and a 32-platform cannot support
@@ -42,6 +44,7 @@ after the year 2038.  If your package is commonly built on
 you can use the @samp{year2038} module instead, to save builders
 the trouble of configuring with @option{--disable-year2038}.
 
+@mindex largefile
 If the Gnulib module @samp{largefile} is used but neither
 @samp{year2038} nor @samp{year2038-recommended} is used,
 @command{configure} will have an option @option{--enable-year2038}

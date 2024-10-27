@@ -18,6 +18,8 @@ Documentation:
 @end itemize
 
 Gnulib module: memmem or memmem-simple
+@mindex memmem
+@mindex memmem-simple
 
 Both modules implement the same replacement for the @code{memmem} function
 with the @code{memmem} module providing a replacement on more platforms where

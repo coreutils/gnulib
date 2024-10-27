@@ -14,9 +14,11 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 stdout is created in 32-bit mode instead of 64-bit mode: Cygwin 1.5.x.
-One workaround is to use freopen(NULL, ``w'', stdout) on Cygwin 1.5.21
-or newer.  Another is to use the gnulib @code{ftello} module and do
-ftello(stdout).
+One workaround is to use @code{freopen(NULL, "w", stdout)} on Cygwin 1.5.21
+or newer.
+@mindex ftello
+Another is to use the gnulib @code{ftello} module and do
+@code{ftello(stdout)}.
 @item
 POSIX states that a setuid application can guarantee that fd 1 is
 open, but some systems guarantee this even for non-setuid programs.

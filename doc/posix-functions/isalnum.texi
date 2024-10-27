@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/isalnum.html}
 
 Gnulib module: ctype
+@mindex ctype
 
 Portability problems fixed by Gnulib:
 @itemize
@@ -25,26 +26,31 @@ There are five alternative APIs:
 
 @table @code
 @item c_isalnum
+@mindex c-ctype
 This function operates in a locale independent way and returns true only for
 ASCII characters.  It is provided by the Gnulib module @samp{c-ctype}.
 
 @item iswalnum
+@mindex wctype
 This function operates in a locale dependent way, on wide characters.  In
 order to use it, you first have to convert from multibyte to wide characters,
 using the @code{mbrtowc} function.  It is provided by the Gnulib module
 @samp{wctype}.
 
 @item c32isalnum
+@mindex c32isalnum
 This function operates in a locale dependent way, on 32-bit wide characters.
 In order to use it, you first have to convert from multibyte to 32-bit wide
 characters, using the @code{mbrtoc32} function.  It is provided by the
 Gnulib module @samp{c32isalnum}.
 
 @item mb_isalnum
+@mindex mbchar
 This function operates in a locale dependent way, on multibyte characters.
 It is provided by the Gnulib module @samp{mbchar}.
 
 @item uc_is_alnum
+@mindex unictype/ctype-alnum
 This function operates in a locale independent way, on Unicode characters.
 It is provided by the Gnulib module @samp{unictype/ctype-alnum}.
 @end table

@@ -6,6 +6,7 @@ Removed in POSIX.1-2024.
 POSIX.1-2017 specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/utime.html}
 
 Gnulib module: utime
+@mindex utime
 
 Portability problems fixed by Gnulib:
 @itemize
@@ -29,8 +30,10 @@ Portability problems not fixed by Gnulib:
 On some platforms, this function mis-handles a trailing slash:
 Solaris 9.
 @item
-This function cannot set full timestamp resolution.  Use
-@code{utimensat(AT_FDCWD,file,times,0)}, or the gnulib module @code{utimens},
+This function cannot set full timestamp resolution.
+@mindex utimens
+Use @code{utimensat(AT_FDCWD,file,times,0)},
+or the gnulib module @code{utimens},
 instead.
 @item
 This function is removed in POSIX.1-2024.

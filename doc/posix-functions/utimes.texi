@@ -20,8 +20,10 @@ On some platforms, this function mis-handles a trailing slash:
 FreeBSD 7.2, Solaris 9.
 @item
 This function cannot set full timestamp resolution.  In particular,
-some platforms incorrectly round rather than truncate.  Use
-@code{utimensat(AT_FDCWD,file,times,0)}, or the gnulib module @code{utimens},
+some platforms incorrectly round rather than truncate.
+@mindex utimens
+Use @code{utimensat(AT_FDCWD,file,times,0)},
+or the gnulib module @code{utimens},
 instead.
 @item
 On file systems mounted with the @code{noatime} attribute,
@@ -45,6 +47,7 @@ seconds.
 On OS/2, this function does not work on an opened file.
 @end itemize
 
+@mindex utimens
 Extension: Gnulib provides a module @samp{utimens} that works around these
 problems and allows to set the time with nanosecond resolution (as far as
 supported by the file system).

@@ -4,6 +4,8 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/stdbool.h.html}
 
 Gnulib module: stdbool-c99
+@mindex stdbool-c99
+@mindex stdbool
 
 The @code{stdbool-c99} module is present only for programs that
 formerly used the old @code{stdbool} module for C99 compatibility,

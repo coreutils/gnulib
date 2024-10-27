@@ -5,6 +5,8 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/hypotl.html}
 
 Gnulib module: hypotl or hypotl-ieee
+@mindex hypotl
+@mindex hypotl-ieee
 
 Portability problems fixed by either Gnulib module @code{hypotl} or @code{hypotl-ieee}:
 @itemize

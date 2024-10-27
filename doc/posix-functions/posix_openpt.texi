@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/posix_openpt.html}
 
 Gnulib module: posix_openpt
+@mindex posix_openpt
 
 Portability problems fixed by Gnulib:
 @itemize
@@ -21,5 +22,7 @@ Portability problems not fixed by Gnulib:
 
 Note that when using this function to open the master side of a
 pseudo-terminal, you still need platform dependent code to open the
-corresponding slave side.  The Gnulib module @code{openpty} provides
+corresponding slave side.
+@mindex openpty
+The Gnulib module @code{openpty} provides
 an easy-to-use API that does both at once.

@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/lstat.html}
 
 Gnulib module: lstat
+@mindex lstat
 
 Portability problems fixed by Gnulib:
 @itemize

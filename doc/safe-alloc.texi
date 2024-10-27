@@ -1,6 +1,7 @@
 @node Safe Allocation Macros
 @section Safe Allocation Macros
 
+@mindex safe-alloc
 The standard C library malloc/realloc/calloc/free APIs are prone to a
 number of common coding errors.  The @code{safe-alloc} module provides
 macros that make it easier to avoid many of them.  It still uses the

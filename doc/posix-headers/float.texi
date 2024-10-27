@@ -4,6 +4,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/float.h.html}
 
 Gnulib module: float
+@mindex float
 
 Portability problems fixed by Gnulib:
 @itemize

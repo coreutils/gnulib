@@ -4,6 +4,7 @@
 Declares the function @code{flock}.
 
 Gnulib module: sys_file
+@mindex sys_file
 
 Portability problems fixed by Gnulib:
 @itemize

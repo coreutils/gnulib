@@ -5,6 +5,8 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/setlocale.html}
 
 Gnulib module: setlocale, setlocale-null
+@mindex setlocale
+@mindex setlocale-null
 
 Portability problems fixed by Gnulib module @code{setlocale}:
 @itemize

@@ -6,6 +6,7 @@ Removed in POSIX.1-2024.
 POSIX.1-2017 specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/gettimeofday.html}
 
 Gnulib module: gettimeofday
+@mindex gettimeofday
 
 Portability problems fixed by Gnulib:
 @itemize
@@ -36,6 +37,8 @@ Behavior is non-portable if the second argument to @code{gettimeofday}
 is not @code{NULL}.
 @item
 This function is removed in POSIX.1-2024.
+@mindex gettime
+@mindex timespec_get
 Use the Gnulib module @code{gettime} or @code{timespec_get} instead.
 (POSIX recommends to use the function @code{clock_gettime}, but there is
 no corresponding Gnulib module for it yet.)

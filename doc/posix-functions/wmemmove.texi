@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/wmemmove.html}
 
 Gnulib module: wmemmove
+@mindex wmemmove
 
 Portability problems fixed by Gnulib:
 @itemize

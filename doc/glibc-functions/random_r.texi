@@ -18,6 +18,7 @@ Documentation:
 @end itemize
 
 Gnulib module: random_r
+@mindex random_r
 
 Portability problems fixed by Gnulib:
 @itemize

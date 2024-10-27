@@ -5,6 +5,8 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/cbrtl.html}
 
 Gnulib module: cbrtl or cbrtl-ieee
+@mindex cbrtl
+@mindex cbrtl-ieee
 
 Portability problems fixed by either Gnulib module @code{cbrtl} or @code{cbrtl-ieee}
 @itemize

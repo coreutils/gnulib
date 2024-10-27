@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/copysignl.html}
 
 Gnulib module: copysignl
+@mindex copysignl
 
 Portability problems fixed by Gnulib:
 @itemize

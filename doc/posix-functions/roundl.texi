@@ -5,6 +5,8 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/roundl.html}
 
 Gnulib module: roundl or roundl-ieee
+@mindex roundl
+@mindex roundl-ieee
 
 Portability problems fixed by either Gnulib module @code{roundl} or @code{roundl-ieee}:
 @itemize

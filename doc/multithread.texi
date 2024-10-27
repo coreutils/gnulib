@@ -50,6 +50,7 @@ Primitives for relinquishing control for some time and letting other threads
 go.
 @end itemize
 
+@mindex openmp
 Note: Programs that achieve multithreading through OpenMP (cf. the gnulib
 module @samp{openmp}) don't create and manage their threads themselves.
 Nevertheless, they need to use mutexes/locks in many cases.
@@ -135,6 +136,14 @@ The POSIX multithreading API is documented in POSIX
 
 To make use of POSIX multithreading, even on platforms that don't support it
 natively (most prominently, native Windows), use the following Gnulib modules:
+@mindex pthread-thread
+@mindex pthread-mutex
+@mindex pthread-rwlock
+@mindex pthread-once
+@mindex pthread-cond
+@mindex pthread-tss
+@mindex sched_yield
+@mindex pthread-spin
 @multitable @columnfractions .75 .25
 @headitem Purpose @tab Module
 @item For thread creation and management:@tie{} @tab @code{pthread-thread}
@@ -147,6 +156,7 @@ natively (most prominently, native Windows), use the following Gnulib modules:
 @item For spin locks:@tie{} @tab @code{pthread-spin}
 @end multitable
 
+@mindex pthread
 There is also a convenience module named @code{pthread} which depends on all
 of these (except @code{sched_yield}); so you don't need to enumerate these
 modules one by one.
@@ -159,6 +169,10 @@ The ISO C multithreading API is documented in ISO C 11
 
 To make use of ISO C multithreading, even on platforms that don't support it
 or have severe bugs, use the following Gnulib modules:
+@mindex thrd
+@mindex mtx
+@mindex cnd
+@mindex tss
 @multitable @columnfractions .85 .15
 @headitem Purpose @tab Module
 @item For thread creation and management:@tie{} @tab @code{thrd}
@@ -169,6 +183,7 @@ or have severe bugs, use the following Gnulib modules:
 @item For thread-local storage:@tie{} @tab @code{tss}
 @end multitable
 
+@mindex threads
 There is also a convenience module named @code{threads} which depends on all
 of these; so you don't need to enumerate these modules one by one.
 
@@ -192,6 +207,12 @@ The Gnulib multithreading API is documented in the respective include files:
 @end itemize
 
 To make use of Gnulib multithreading, use the following Gnulib modules:
+@mindex thread
+@mindex lock
+@mindex once
+@mindex cond
+@mindex tls
+@mindex yield
 @multitable @columnfractions .85 .15
 @headitem Purpose @tab Module
 @item For thread creation and management:@tie{} @tab @code{thread}
@@ -248,6 +269,7 @@ uses weak symbols to detect whether the program is linked with
 threads and must therefore be single-threaded.  This optimization applies
 to all the Gnulib multithreading API (locks, thread-local storage, and more).
 @item
+@mindex thread-optim
 The @code{thread-optim} module, on glibc @geq{} 2.32 systems, allows your code
 to skip locking between threads (regardless which of the three multithreading
 APIs you use).  You need extra code for this: include the
@@ -260,6 +282,7 @@ if (mt) gl_lock_lock (some_lock);
 if (mt) gl_lock_unlock (some_lock);
 @end smallexample
 @item
+@mindex unlocked-io
 You may use the @code{unlocked-io} module if you want the @code{FILE} stream
 functions @code{getc}, @code{putc}, etc.@: to use unlocked I/O if available,
 throughout the package.  Unlocked I/O can improve performance, sometimes
@@ -292,6 +315,7 @@ before the locale has been initialized.
 @end itemize
 This macro optimizes the functions @code{mbrtowc}, @code{mbrtoc32}, and
 @code{wcwidth}.
+@mindex wchar-single
 You can get this macro defined by including the Gnulib module
 @code{wchar-single}.
 @item

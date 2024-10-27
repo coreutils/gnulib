@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/posix_spawn_file_actions_destroy.html}
 
 Gnulib module: posix_spawn_file_actions_destroy
+@mindex posix_spawn_file_actions_destroy
 
 Portability problems fixed by Gnulib:
 @itemize

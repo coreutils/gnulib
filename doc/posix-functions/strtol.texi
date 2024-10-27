@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/strtol.html}
 
 Gnulib module: strtol
+@mindex strtol
 
 Portability problems fixed by Gnulib:
 @itemize

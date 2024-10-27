@@ -8,6 +8,7 @@ ISO C23 (latest free draft
 section 7.18.16.
 
 Gnulib module: stdc_bit_ceil
+@mindex stdc_bit_ceil
 
 Portability problems fixed by Gnulib:
 @itemize

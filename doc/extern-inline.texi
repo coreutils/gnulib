@@ -15,6 +15,7 @@
 
 @cindex extern inline
 @cindex inline
+@mindex extern-inline
 
 The @code{extern-inline} module supports the use of C99-style
 @code{extern inline} functions so that the code still runs on

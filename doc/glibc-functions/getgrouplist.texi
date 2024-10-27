@@ -34,4 +34,5 @@ This function is missing on some platforms:
 Minix 3.1.8, AIX 5.1, HP-UX 11, Solaris 11.0, Cygwin 1.7.9, mingw, MSVC 14.
 @end itemize
 
+@mindex getugroups
 The Gnulib module @code{getugroups} provides a similar API.

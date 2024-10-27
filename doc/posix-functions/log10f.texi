@@ -5,6 +5,8 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/log10f.html}
 
 Gnulib module: log10f or log10f-ieee
+@mindex log10f
+@mindex log10f-ieee
 
 Portability problems fixed by either Gnulib module @code{log10f} or @code{log10f-ieee}:
 @itemize

@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/strerror.html}
 
 Gnulib module: strerror
+@mindex strerror
 
 Portability problems fixed by Gnulib:
 @itemize

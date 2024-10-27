@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/iconv.html}
 
 Gnulib module: iconv
+@mindex iconv
 
 Portability problems fixed by Gnulib:
 @itemize
@@ -37,6 +38,8 @@ When @code{iconv} encounters an input character that is valid but that
 cannot be converted to the output character set, glibc's and GNU libiconv's
 @code{iconv} stop the conversion.  Some other implementations put an
 implementation-defined character into the output buffer.
+@mindex striconv
+@mindex striconveh
 Gnulib provides higher-level facilities @code{striconv} and @code{striconveh}
 (wrappers around @code{iconv}) that deal with conversion errors in a platform
 independent way.

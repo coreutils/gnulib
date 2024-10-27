@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/strtok_r.html}
 
 Gnulib module: strtok_r
+@mindex strtok_r
 
 Portability problems fixed by Gnulib:
 @itemize
@@ -21,6 +22,7 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function cannot work correctly on character strings in multibyte locales.
+@mindex mbstok_r
 Gnulib provides an alternative function @code{mbstok_r} that works on character
 strings in all locales.
 @end itemize

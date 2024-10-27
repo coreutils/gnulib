@@ -1,6 +1,7 @@
 @node LD Version Scripts
 @section LD Version Scripts
 
+@mindex lib-symbol-versions
 The @code{lib-symbol-versions} module can be used to add shared
 library versioning support.  Currently, only GNU LD and the Solaris
 linker supports this.

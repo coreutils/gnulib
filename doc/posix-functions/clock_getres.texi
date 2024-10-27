@@ -25,6 +25,7 @@ Conversely, on GNU/Linux it typically returns 1 nanosecond even
 though the clock resolution may be greater.
 @end itemize
 
+@mindex gettime-res
 The Gnulib module @code{gettime-res} is a partial substitute; it implements
 the @code{CLOCK_REALTIME} functionality of @code{clock_getres},
 and fixes the too-high resolution bug of platforms like AIX 7.2.

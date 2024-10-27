@@ -16,6 +16,7 @@ Documentation:
 @end itemize
 
 Gnulib module: explicit_bzero
+@mindex explicit_bzero
 
 The @code{explicit_bzero} function is an approximation to what is
 needed, and does not suffice in general to erase information.

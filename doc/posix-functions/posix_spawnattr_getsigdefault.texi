@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/posix_spawnattr_getsigdefault.html}
 
 Gnulib module: posix_spawnattr_getsigdefault
+@mindex posix_spawnattr_getsigdefault
 
 Portability problems fixed by Gnulib:
 @itemize

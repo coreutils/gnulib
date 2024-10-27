@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/atan2f.html}
 
 Gnulib module: atan2f
+@mindex atan2f
 
 Portability problems fixed by Gnulib:
 @itemize

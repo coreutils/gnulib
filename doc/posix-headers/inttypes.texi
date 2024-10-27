@@ -4,6 +4,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/inttypes.h.html}
 
 Gnulib module: inttypes
+@mindex inttypes
 
 Portability problems fixed by Gnulib:
 @itemize

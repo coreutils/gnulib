@@ -4,6 +4,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/pthread.h.html}
 
 Gnulib module: pthread-h
+@mindex pthread-h
 
 Portability problems fixed by Gnulib:
 @itemize

@@ -1,6 +1,7 @@
 @node manywarnings
 @section manywarnings
 
+@mindex manywarnings
 The @code{manywarnings} module enables many GCC warnings for your
 package.  Here is an example use:
 

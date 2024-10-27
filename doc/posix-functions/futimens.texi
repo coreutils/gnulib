@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/futimens.html}
 
 Gnulib module: futimens
+@mindex futimens
 
 Portability problems fixed by Gnulib:
 @itemize
@@ -40,8 +41,10 @@ this function might not modify the access time as requested:
 Linux kernel 6.9.
 @item
 Some platforms lack the ability to change the timestamps of a file
-descriptor, so the replacement can fail with @code{ENOSYS}; the gnulib
-module @samp{utimens} provides a more reliable interface @code{fdutimens}.
+descriptor, so the replacement can fail with @code{ENOSYS};
+@mindex utimens
+the gnulib module @samp{utimens} provides a more reliable interface
+@code{fdutimens}.
 @item
 The mere act of using @code{stat} modifies the access time of
 directories on some platforms, so @code{utimensat} can only

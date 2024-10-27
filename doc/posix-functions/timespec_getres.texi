@@ -5,6 +5,7 @@
 ISO C23 specification:@* @url{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n3220.pdf} section 7.29.2.7
 
 Gnulib module: timespec_getres
+@mindex timespec_getres
 
 Portability problems fixed by Gnulib:
 @itemize
@@ -22,5 +23,6 @@ differing timestamps.  For example, on GNU/Linux it typically returns
 1 nanosecond regardless of the actual clock resolution.
 @end itemize
 
+@mindex gettime-res
 The Gnulib module @code{gettime-res} is a partial substitute; it implements
 the @code{TIME_UTC} functionality of @code{timespec_getres}.

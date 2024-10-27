@@ -16,6 +16,7 @@ Documentation:
 @end itemize
 
 Gnulib module: timegm
+@mindex timegm
 
 Portability problems fixed by Gnulib:
 @itemize

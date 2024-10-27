@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/mkstemp.html}
 
 Gnulib module: mkstemp
+@mindex mkstemp
 
 Portability problems fixed by Gnulib:
 @itemize
@@ -24,5 +25,6 @@ Portability problems not fixed by Gnulib:
 @itemize
 @end itemize
 
+@mindex clean-temp
 The gnulib module @code{clean-temp} can create temporary files that will not
 be left behind after signals such as SIGINT.

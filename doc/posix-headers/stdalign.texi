@@ -8,6 +8,7 @@ C++11 specification:@* @url{http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/stdalign.h.html}
 
 Gnulib module: alignasof
+@mindex alignasof
 
 Portability problems fixed by Gnulib:
 @itemize
@@ -16,7 +17,9 @@ On older C platforms @code{<stdalign.h>} must be included before using
 @code{alignas} or @code{alignof}.  For example, GCC versions before 13 do not
 support these keywords, which were standardized by C23.
 On C23 and later platforms, @code{<stdalign.h>} has no effect and need
-not be included.  (Gnulib-using code should not include
+not be included.
+@mindex stdalign
+(Gnulib-using code should not include
 @code{<stdalign.h>} without also employing Gnulib's now-deprecated
 @code{stdalign} module.)
 @item

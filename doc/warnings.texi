@@ -1,6 +1,8 @@
 @node warnings
 @section warnings
 
+@mindex warnings
+@mindex manywarnings
 The @code{warnings} module allows to regularly build a package with more
 GCC warnings than the default warnings emitted by GCC.  It is often used
 indirectly through the @code{manywarnings} module

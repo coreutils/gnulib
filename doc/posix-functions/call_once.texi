@@ -15,6 +15,7 @@ Documentation:@*
 @end ifnotinfo
 
 Gnulib module: call_once
+@mindex call_once
 
 Portability problems fixed by Gnulib:
 @itemize

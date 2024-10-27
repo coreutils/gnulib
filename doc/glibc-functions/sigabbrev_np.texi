@@ -11,6 +11,7 @@ Documentation:@*
 @end ifnotinfo
 
 Gnulib module: sigabbrev_np
+@mindex sigabbrev_np
 
 Portability problems fixed by Gnulib:
 @itemize
@@ -23,6 +24,7 @@ Portability problems not fixed by Gnulib:
 @itemize
 @end itemize
 
+@mindex sig2str
 Note: Gnulib has a module @code{sig2str} that contains an equivalent function
 and also one that does the opposite conversion, from an abbreviated signal name
 to a signal number.

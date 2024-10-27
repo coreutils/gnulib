@@ -18,6 +18,7 @@ Documentation:
 @end itemize
 
 Gnulib module: getdomainname
+@mindex getdomainname
 
 Portability problems fixed by Gnulib:
 @itemize

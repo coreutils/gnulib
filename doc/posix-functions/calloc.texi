@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/calloc.html}
 
 Gnulib module: calloc-posix
+@mindex calloc-posix
 
 Portability problems fixed by Gnulib:
 @itemize
@@ -22,6 +23,7 @@ undefined behavior later, so @code{calloc-posix} does not allow
 going over the limit.
 @end itemize
 
+@mindex calloc-gnu
 Extension: Gnulib provides a module @samp{calloc-gnu} that substitutes a
 @code{calloc} implementation that behaves more like the glibc implementation.
 It fixes this portability problem:

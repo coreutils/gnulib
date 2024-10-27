@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/dup2.html}
 
 Gnulib module: dup2
+@mindex dup2
 
 Portability problems fixed by Gnulib:
 @itemize

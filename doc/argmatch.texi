@@ -1,6 +1,7 @@
 @node Recognizing Option Arguments
 @section Recognizing Option Arguments
 
+@mindex argmatch
 The module @samp{argmatch} provides a simple textual user interface to a
 finite choice.  It is for example well suited to recognize arguments of
 options or values of environment variables that accept a fixed set of valid

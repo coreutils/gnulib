@@ -3,6 +3,7 @@
 @findex lchmod
 
 Gnulib module: lchmod
+@mindex lchmod
 
 Portability problems fixed by Gnulib:
 @itemize

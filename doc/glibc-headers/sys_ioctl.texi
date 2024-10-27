@@ -17,6 +17,7 @@ Documentation:
 @end itemize
 
 Gnulib module: sys_ioctl
+@mindex sys_ioctl
 
 Portability problems fixed by Gnulib:
 @itemize

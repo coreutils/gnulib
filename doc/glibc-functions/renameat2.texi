@@ -21,4 +21,5 @@ and the source and destination are the same file, on some platforms:
 Cygwin 3.4.6.
 @end itemize
 
+@mindex renameatu
 The @code{renameatu} module addresses some of these portability issues.

@@ -1,6 +1,7 @@
 @node Profiling of program phases
 @section Profiling of program phases
 
+@mindex timevar
 The module @samp{timevar} provides a simple self-profiling facility,
 based on timers.
 

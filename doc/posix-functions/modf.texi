@@ -5,6 +5,8 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/modf.html}
 
 Gnulib module: modf or modf-ieee
+@mindex modf
+@mindex modf-ieee
 
 Portability problems fixed by either Gnulib module @code{modf} or @code{modf-ieee}:
 @itemize

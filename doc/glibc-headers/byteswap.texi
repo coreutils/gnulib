@@ -5,6 +5,7 @@ Defines the functions or function-like macros @code{bswap_16}, @code{bswap_32},
 @code{bswap_64}.
 
 Gnulib module: byteswap
+@mindex byteswap
 
 Portability problems fixed by Gnulib:
 @itemize

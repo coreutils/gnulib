@@ -4,6 +4,8 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/fnmatch.h.html}
 
 Gnulib module: fnmatch-h, fnmatch-gnu
+@mindex fnmatch-h
+@mindex fnmatch-gnu
 
 Portability problems fixed by Gnulib module @code{fnmatch-h}:
 @itemize

@@ -15,6 +15,7 @@ Documentation:@*
 @end ifnotinfo
 
 Gnulib module: tss
+@mindex tss
 
 Portability problems fixed by Gnulib:
 @itemize

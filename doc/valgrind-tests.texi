@@ -19,6 +19,7 @@ at the discretion of the developer.
 @node Using valgrind automatically
 @subsection Using valgrind without developer intervention
 
+@mindex valgrind-tests
 The @code{valgrind-tests} module searches for Valgrind at configure time
 and declares the @code{LOG_VALGRIND} automake variable for use with
 automake's @code{LOG_COMPILER}.

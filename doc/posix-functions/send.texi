@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/send.html}
 
 Gnulib module: send
+@mindex send
 
 Portability problems fixed by Gnulib:
 @itemize

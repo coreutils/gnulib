@@ -7,6 +7,7 @@ POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/fun
 Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/htobe32.3.html,,man htobe32}
 
 Gnulib module: endian
+@mindex endian
 
 Portability problems fixed by Gnulib:
 @itemize

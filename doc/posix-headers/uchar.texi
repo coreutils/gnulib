@@ -10,6 +10,8 @@ functions @code{mbrtoc16}, @code{c16rtomb}, @code{mbrtoc32},
 @code{c32rtomb}.
 
 Gnulib module: uchar or uchar-c23
+@mindex uchar
+@mindex uchar-c23
 
 Portability problems fixed by either Gnulib module @code{uchar} or @code{uchar-c23}:
 @itemize

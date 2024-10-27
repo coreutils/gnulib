@@ -18,6 +18,7 @@ Documentation:
 @end itemize
 
 Gnulib module: ptsname_r
+@mindex ptsname_r
 
 Portability problems fixed by Gnulib:
 @itemize

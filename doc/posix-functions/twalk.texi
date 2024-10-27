@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/twalk.html}
 
 Gnulib module: tsearch
+@mindex tsearch
 
 Portability problems fixed by Gnulib:
 @itemize

@@ -19,6 +19,7 @@ while glibc also supports removing an environment variable
 (as if by @code{unsetenv}).
 
 Gnulib module: putenv-gnu
+@mindex putenv-gnu
 
 Portability problems fixed by Gnulib:
 @itemize

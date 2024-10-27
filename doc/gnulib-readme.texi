@@ -297,6 +297,7 @@ Gnulib code is intended to port without problem to new hosts, e.g.,
 hosts conforming to recent C and POSIX standards.  Hence Gnulib code
 should avoid using constructs that these newer standards no longer
 require, without first testing for the presence of these constructs.
+@mindex vararrays
 For example, because C11 made variable length arrays optional, Gnulib
 code should avoid them unless it first uses the @code{vararrays}
 module to check whether they are supported.
@@ -364,13 +365,17 @@ A declaration after a statement, or as the first clause in a
 @code{long long int}.
 
 @item
-@code{<stdbool.h>}, although Gnulib code no longer uses
+@code{<stdbool.h>},
+@mindex stdbool
+although Gnulib code no longer uses
 it directly, preferring plain @code{bool} via the
 @code{stdbool} module instead.
 @xref{stdbool.h}.
 
 @item
-@code{<stdint.h>}, assuming the @code{stdint} module is used.
+@code{<stdint.h>},
+@mindex stdint
+assuming the @code{stdint} module is used.
 @xref{stdint.h}.
 
 @item
@@ -390,6 +395,7 @@ But usually this matters only for macros that decompose @code{__VA_ARGS__}.
 @code{static inline} functions.
 
 @item
+@mindex func
 @code{__func__}, assuming the @code{func} module is used.  @xref{func}.
 
 @item
@@ -399,6 +405,7 @@ This qualifier is sometimes implemented via a macro, so C++ code that
 uses Gnulib should avoid using @code{restrict} as an identifier.
 
 @item
+@mindex flexmember
 Flexible array members (however, see the @code{flexmember} module).
 @end itemize
 
@@ -413,6 +420,7 @@ feature should require the corresponding module.
 
 @itemize
 @item
+@mindex vla
 Variable length arrays (VLAs) or variably modified types,
 without checking whether @code{__STDC_NO_VLA__} is defined.
 See the @code{vararrays} and @code{vla} modules.

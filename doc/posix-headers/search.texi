@@ -4,6 +4,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/search.h.html}
 
 Gnulib module: search
+@mindex search
 
 Portability problems fixed by Gnulib:
 @itemize

@@ -20,6 +20,7 @@ mingw, MSVC 14.
 names in Windows syntax.
 @end itemize
 
+@mindex dirname
 The Gnulib module @code{dirname} provides similar API, with functions
 @code{dir_name} and @code{mdir_name}, that also works with Windows
 file names.

@@ -28,6 +28,7 @@ Documentation:
 @end itemize
 
 Gnulib module: gettext
+@mindex gettext
 
 Portability problems fixed by Gnulib, if GNU gettext is installed:
 @itemize

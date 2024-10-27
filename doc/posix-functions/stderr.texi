@@ -14,9 +14,11 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 stderr is created in 32-bit mode instead of 64-bit mode: Cygwin 1.5.x.
-One workaround is to use freopen(NULL, ``r+'', stderr) on Cygwin 1.5.21
-or newer.  Another is to use the gnulib @code{ftello} module and do
-ftello(stderr).
+One workaround is to use @code{freopen(NULL, "r+", stderr)} on Cygwin 1.5.21
+or newer.
+@mindex ftello
+Another is to use the gnulib @code{ftello} module and do
+@code{ftello(stderr)}.
 @item
 POSIX states that a setuid application can guarantee that fd 2 is
 open, but some systems guarantee this even for non-setuid programs.

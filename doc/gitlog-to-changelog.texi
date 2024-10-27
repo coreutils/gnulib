@@ -11,6 +11,7 @@
 
 @cindex gitlog
 @cindex changelog
+@mindex gitlog-to-changelog
 
 Gnulib has a module @code{gitlog-to-changelog} to parse @code{git log}
 output and generate @file{ChangeLog} files; see

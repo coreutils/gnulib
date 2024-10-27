@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/posix_spawnattr_getschedpolicy.html}
 
 Gnulib module: posix_spawnattr_getschedpolicy
+@mindex posix_spawnattr_getschedpolicy
 
 Portability problems fixed by Gnulib:
 @itemize

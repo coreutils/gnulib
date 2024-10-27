@@ -5,6 +5,9 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/write.html}
 
 Gnulib module: write, nonblocking, sigpipe
+@mindex write
+@mindex nonblocking
+@mindex sigpipe
 
 Portability problems fixed by Gnulib module @code{write}:
 @itemize
@@ -49,5 +52,6 @@ install any signal handlers, on some platforms:
 macOS 14.
 @end itemize
 
+@mindex safe-write
 For handling @code{EINTR}, Gnulib provides a module @samp{safe-write} with a
 function @code{safe_write}.

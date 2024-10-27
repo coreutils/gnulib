@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/unlinkat.html}
 
 Gnulib module: unlinkat
+@mindex unlinkat
 
 Portability problems fixed by Gnulib:
 @itemize
@@ -44,6 +45,7 @@ not always the POSIX value of @code{EPERM}.  Meanwhile, if a process
 has the ability to unlink directories, POSIX requires that
 @code{unlinkat(fd,"symlink-to-dir/",0)} remove @file{dir} and leave
 @file{symlink-to-dir} dangling; this behavior is counter-intuitive.
+@mindex unlinkdir
 The gnulib module @code{unlinkdir} can help determine whether code must be
 cautious of unlinking directories.
 @item

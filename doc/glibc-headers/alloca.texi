@@ -17,6 +17,7 @@ Documentation:
 @end itemize
 
 Gnulib module: alloca
+@mindex alloca
 
 Portability problems fixed by Gnulib:
 @itemize

@@ -5,6 +5,9 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/snprintf.html}
 
 Gnulib module: snprintf or snprintf-posix or snprintf-gnu
+@mindex snprintf
+@mindex snprintf-posix
+@mindex snprintf-gnu
 
 Portability problems fixed by either Gnulib module @code{snprintf} or @code{snprintf-posix} or @code{snprintf-gnu}:
 @itemize
@@ -106,6 +109,7 @@ This function does not support the @samp{B} directive on some platforms:
 glibc 2.34, musl libc, macOS 14, FreeBSD 13.2, NetBSD 10.0, OpenBSD 7.5, AIX 7.3, Solaris 11.4, Cygwin 3.5.3, mingw, MSVC, Android 9.0.
 @end itemize
 
+@mindex printf-with-n-directive
 Portability problems fixed by either Gnulib module @code{snprintf-posix} or @code{snprintf-gnu}
 and additionally the Gnulib module @code{printf-with-n-directive}:
 @itemize

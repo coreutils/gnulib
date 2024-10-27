@@ -5,6 +5,7 @@
 Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/execvpe.3.html,,man execvpe}
 
 Gnulib module: execvpe
+@mindex execvpe
 
 Portability problems fixed by Gnulib:
 @itemize

@@ -8,6 +8,7 @@ ISO C23 (latest free draft
 section 7.18.13.
 
 Gnulib module: stdc_has_single_bit
+@mindex stdc_has_single_bit
 
 Portability problems fixed by Gnulib:
 @itemize

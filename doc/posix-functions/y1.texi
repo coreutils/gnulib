@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/y1.html}
 
 Gnulib module: y1
+@mindex y1
 
 Portability problems fixed by Gnulib:
 @itemize

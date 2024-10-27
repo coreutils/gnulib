@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/socket.html}
 
 Gnulib module: socket
+@mindex socket
 
 Portability problems fixed by Gnulib:
 @itemize

@@ -25,5 +25,6 @@ version and the GNU version.
 names in Windows syntax.
 @end itemize
 
+@mindex basename-lgpl
 The Gnulib module @code{basename-lgpl} provides similar API, with a function
 @code{last_component}, that also works with Windows file names.

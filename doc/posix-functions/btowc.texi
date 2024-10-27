@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/btowc.html}
 
 Gnulib module: btowc
+@mindex btowc
 
 Portability problems fixed by Gnulib:
 @itemize
@@ -29,6 +30,7 @@ Portability problems not fixed by Gnulib:
 @item
 On Windows and 32-bit AIX platforms, @code{wchar_t} is a 16-bit type and
 therefore cannot accommodate all Unicode characters.
+@mindex btoc32
 However, the Gnulib function @code{btoc32}, provided by Gnulib module
 @code{btoc32}, operates on 32-bit wide characters and therefore does not have
 this limitation.

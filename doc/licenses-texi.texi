@@ -25,6 +25,11 @@ typically named @samp{COPYING} for the GNU GPL, or @samp{COPYING.LIB} or
 fulfills a legal obligation; see
 @url{https://www.gnu.org/licenses/gpl-faq.html#WhyMustIInclude}.
 
+@mindex gpl-3.0
+@mindex gpl-2.0
+@mindex lgpl-3.0
+@mindex lgpl-2.1
+@mindex agpl-3.0
 To make use of the code license in your documentation, you may request
 one of the modules @code{gpl-3.0}, @code{gpl-2.0}, @code{lgpl-3.0},
 @code{lgpl-2.1}, @code{agpl-3.0}, through a @code{gnulib-tool} invocation.

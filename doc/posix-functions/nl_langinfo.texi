@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/nl_langinfo.html}
 
 Gnulib module: nl_langinfo
+@mindex nl_langinfo
 
 Portability problems fixed by Gnulib:
 @itemize

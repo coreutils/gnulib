@@ -13,6 +13,7 @@ Documentation:
 @end itemize
 
 Gnulib module: argp
+@mindex argp
 
 Portability problems fixed by Gnulib:
 @itemize

@@ -5,6 +5,8 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/fmodf.html}
 
 Gnulib module: fmodf or fmodf-ieee
+@mindex fmodf
+@mindex fmodf-ieee
 
 Portability problems fixed by either Gnulib module @code{fmodf} or @code{fmodf-ieee}:
 @itemize

@@ -7,6 +7,7 @@ ISO C23 (latest free draft
 section 7.18.
 
 Gnulib module: stdbit
+@mindex stdbit
 
 Portability problems fixed by Gnulib:
 @itemize

@@ -8,6 +8,7 @@ ISO C23 (latest free draft
 section 7.18.9.
 
 Gnulib module: stdc_first_trailing_zero
+@mindex stdc_first_trailing_zero
 
 Portability problems fixed by Gnulib:
 @itemize

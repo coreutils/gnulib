@@ -7,6 +7,7 @@ ISO C23 specification:@* @url{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n3
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/mbrtoc16.html}
 
 Gnulib module: mbrtoc16
+@mindex mbrtoc16
 
 Portability problems fixed by Gnulib:
 @itemize

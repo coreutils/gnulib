@@ -16,6 +16,7 @@ Documentation:
 @end itemize
 
 Gnulib module: malloc-h
+@mindex malloc-h
 
 Portability problems fixed by Gnulib:
 @itemize

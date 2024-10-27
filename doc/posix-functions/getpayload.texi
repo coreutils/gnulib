@@ -13,6 +13,7 @@ Documentation:@*
 @end ifnotinfo
 
 Gnulib module: getpayload
+@mindex getpayload
 
 Portability problems fixed by Gnulib:
 @itemize

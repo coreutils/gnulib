@@ -6,6 +6,7 @@ Removed in POSIX.1-2024.
 POSIX.1-2017 specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/toascii.html}
 
 Gnulib module: ctype
+@mindex ctype
 
 Portability problems fixed by Gnulib:
 @itemize

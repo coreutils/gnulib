@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/j0.html}
 
 Gnulib module: j0
+@mindex j0
 
 Portability problems fixed by Gnulib:
 @itemize

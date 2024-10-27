@@ -16,6 +16,7 @@ Documentation:
 @end itemize
 
 Gnulib module: error
+@mindex error
 
 Portability problems fixed by Gnulib:
 @itemize

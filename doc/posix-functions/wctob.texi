@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/wctob.html}
 
 Gnulib module: wctob
+@mindex wctob
 
 Portability problems fixed by Gnulib:
 @itemize
@@ -24,6 +25,7 @@ Portability problems not fixed by Gnulib:
 @item
 On Windows and 32-bit AIX platforms, @code{wchar_t} is a 16-bit type and
 therefore cannot accommodate all Unicode characters.
+@mindex c32tob
 However, the Gnulib function @code{c32tob}, provided by Gnulib module
 @code{c32tob}, operates on 32-bit wide characters and therefore does not have
 this limitation.

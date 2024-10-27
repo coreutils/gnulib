@@ -1,6 +1,7 @@
 @node Library version handling
 @section Library version handling
 
+@mindex check-version
 The module @samp{check-version} can be useful when your gnulib
 application is a system library.  You will typically wrap the call to
 the @code{check_version} function through a library API, your library

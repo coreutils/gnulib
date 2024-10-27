@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_spin_trylock.html}
 
 Gnulib module: pthread-spin
+@mindex pthread-spin
 
 Portability problems fixed by Gnulib:
 @itemize

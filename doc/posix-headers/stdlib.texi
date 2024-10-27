@@ -4,6 +4,8 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/stdlib.h.html}
 
 Gnulib module: stdlib, system-posix
+@mindex stdlib
+@mindex system-posix
 
 Portability problems fixed by the Gnulib module @code{stdlib}:
 @itemize
@@ -36,6 +38,7 @@ Portability problems not fixed by Gnulib:
 The definition of the type @code{once_flag}, of the macro
 @code{ONCE_FLAG_INIT}, and the declaration of the function
 @code{call_once}, that are required by ISO C 23, are not provided.
+@mindex call_once
 To get them, import Gnulib module @code{call_once} and include
 @code{<threads.h>} rather than @code{<stdlib.h>}.
 @item

@@ -8,6 +8,7 @@ POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/bas
 Defines the multithreading facility of ISO C11.
 
 Gnulib module: threads-h
+@mindex threads-h
 
 Portability problems fixed by Gnulib:
 @itemize

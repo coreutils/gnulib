@@ -16,6 +16,7 @@ Documentation:
 @end itemize
 
 Gnulib module: forkpty
+@mindex forkpty
 
 Portability problems fixed by Gnulib:
 @itemize

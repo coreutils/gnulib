@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/isfinite.html}
 
 Gnulib module: isfinite
+@mindex isfinite
 
 Portability problems fixed by Gnulib:
 @itemize

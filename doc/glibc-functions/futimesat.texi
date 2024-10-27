@@ -26,5 +26,7 @@ file ? utimensat(fd, file, times, 0)
      : futimens(fd, times)
 @end example
 
-@noindent or the gnulib module @code{fdutimensat}, instead.
+@noindent or
+@mindex fdutimensat
+the gnulib module @code{fdutimensat}, instead.
 @end itemize

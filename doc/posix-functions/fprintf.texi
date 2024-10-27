@@ -5,6 +5,11 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/fprintf.html}
 
 Gnulib module: fprintf-posix or fprintf-gnu or stdio, nonblocking, sigpipe
+@mindex fprintf-posix
+@mindex fprintf-gnu
+@mindex stdio
+@mindex nonblocking
+@mindex sigpipe
 
 Portability problems fixed by either Gnulib module @code{fprintf-posix} or @code{fprintf-gnu}:
 @itemize
@@ -89,6 +94,7 @@ This function does not support the @samp{B} directive on some platforms:
 glibc 2.34, musl libc, macOS 14, FreeBSD 13.2, NetBSD 10.0, OpenBSD 7.5, AIX 7.3, Solaris 11.4, Cygwin 3.5.3, mingw, MSVC, Android 9.0.
 @end itemize
 
+@mindex printf-with-n-directive
 Portability problems fixed by either Gnulib module @code{fprintf-posix} or @code{fprintf-gnu}
 and additionally the Gnulib module @code{printf-with-n-directive}:
 @itemize

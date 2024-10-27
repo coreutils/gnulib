@@ -4,6 +4,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/errno.h.html}
 
 Gnulib module: errno
+@mindex errno
 
 Portability problems fixed by Gnulib:
 @itemize

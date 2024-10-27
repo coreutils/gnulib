@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/fsync.html}
 
 Gnulib module: fsync
+@mindex fsync
 
 Portability problems fixed by Gnulib:
 @itemize

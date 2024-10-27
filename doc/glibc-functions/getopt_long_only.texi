@@ -18,6 +18,7 @@ Documentation:
 @end itemize
 
 Gnulib module: getopt-gnu
+@mindex getopt-gnu
 
 Portability problems fixed by Gnulib:
 @itemize

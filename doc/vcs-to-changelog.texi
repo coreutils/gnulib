@@ -10,8 +10,8 @@
 @c copy of the license is at <https://www.gnu.org/licenses/fdl-1.3.en.html>.
 
 @cindex VCS To ChangeLog
-@findex vcs-to-changelog
 
+@mindex vcs-to-changelog
 Gnulib provides the @samp{vcs-to-changelog} module to generate an output
 similar to the GNU ChangeLog format from metadata of source control software
 such as git.  Here's an example of using @samp{vcs-to-changelog}:

@@ -6,6 +6,7 @@ Removed in POSIX.1-2024.
 POSIX.1-2017 specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/asctime_r.html}
 
 Gnulib module: extensions
+@mindex extensions
 
 Portability problems fixed by Gnulib:
 @itemize

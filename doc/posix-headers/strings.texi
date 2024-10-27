@@ -4,6 +4,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/strings.h.html}
 
 Gnulib module: strings
+@mindex strings
 
 Portability problems fixed by Gnulib:
 @itemize

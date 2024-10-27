@@ -17,6 +17,7 @@ Documentation:
 @end itemize
 
 Gnulib module: pty
+@mindex pty
 
 Portability problems fixed by Gnulib:
 @itemize

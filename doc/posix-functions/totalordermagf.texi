@@ -13,6 +13,7 @@ Documentation:@*
 @end ifnotinfo
 
 Gnulib module: totalordermagf
+@mindex totalordermagf
 
 Portability problems fixed by Gnulib:
 @itemize

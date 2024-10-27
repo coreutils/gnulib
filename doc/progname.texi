@@ -12,7 +12,7 @@
 Gnulib has two modules for retrieving the name of the currently executing
 program: @code{progname} and @code{getprogname}.
 
-@findex progname
+@mindex progname
 @vindex program_name
 The @code{progname} module defines a variable @code{program_name}.
 It contains the name of the currently executing program, on all platforms.
@@ -20,6 +20,7 @@ But it cannot be used implicitly:  It requires that every @code{main}
 function be modified to invoke @code{set_program_name (argv[0])} as one
 of its first actions.
 
+@mindex getprogname
 @findex getprogname
 The @code{getprogname} module defines a function @code{getprogname()}.
 It returns the name of the currently executing program, on most platforms.

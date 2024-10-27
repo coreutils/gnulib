@@ -18,6 +18,7 @@ Documentation:
 @end itemize
 
 Gnulib module: strsep
+@mindex strsep
 
 Portability problems fixed by Gnulib:
 @itemize

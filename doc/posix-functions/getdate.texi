@@ -17,6 +17,7 @@ This function is missing on some platforms:
 FreeBSD 14.0, NetBSD 5.0, OpenBSD 7.5, Minix 3.1.8, Cygwin 2.9, mingw, MSVC 14, Android 9.0.
 @end itemize
 
+@mindex parse-datetime
 Gnulib provides a module @code{parse-datetime} that contains a function
 @code{parse_datetime}
 that has similar functionality as the @code{getdate} function.

@@ -21,16 +21,22 @@ TEXI2HTML = $(MAKEINFO) $(manual_opts) --html
 # Needed so that tex finds a recent enough texinfo.tex.
 tex_opts = -I ../build-aux
 
-%.info: %.texi
+undocumented-modules.texi: force
+	grep -h '^@mindex ' `find . -name '*.texi'` | sed -e 's/@mindex //' | LC_ALL=C sort -u > documented-modules.tmp
+	(cd .. && ./gnulib-tool --list) | LC_ALL=C sort -u > all-modules.tmp
+	LC_ALL=C join -v1 all-modules.tmp documented-modules.tmp | sed -e 's/^/@umindex /' > undocumented-modules.texi
+	rm -f documented-modules.tmp all-modules.tmp
+
+%.info: %.texi undocumented-modules.texi
 	$(MAKEINFO) $(manual_opts) $<
 
-%.html: %.texi
+%.html: %.texi undocumented-modules.texi
 	$(TEXI2HTML) -o $@ $<
 
-%.dvi: %.texi
+%.dvi: %.texi undocumented-modules.texi
 	texi2dvi $(tex_opts) $< || { if texi2dvi $(tex_opts) $< 2>/dev/null | grep 'TeX capacity exceeded, sorry \[save size=' > /dev/null; then echo '*** You must increase the save_size in your texmf.cnf file, often located under /etc/texmf/.'; fi; exit 1; }
 
-%.pdf: %.texi
+%.pdf: %.texi undocumented-modules.texi
 	texi2pdf $(tex_opts) $< || { if texi2pdf $(tex_opts) $< 2>/dev/null | grep 'TeX capacity exceeded, sorry \[save size=' > /dev/null; then echo '*** You must increase the save_size in your texmf.cnf file, often located under /etc/texmf/.'; fi; exit 1; }
 
 all: info html dvi
@@ -78,8 +84,10 @@ gnulib.info gnulib.html gnulib.dvi gnulib.pdf: $(GNULIB_TEXI_FILES) updated-stam
 standards.info standards.html standards.dvi: standards.texi make-stds.texi fdl.texi
 
 mostlyclean:
-	rm -f *.aux *.cn *.cp *.cps *.fn *.ky *.log *.pg *.toc *.tp *.vr *.vrs
+	rm -f *.aux *.cn *.cp *.cps *.fn *.ky *.log *.m *.pg *.toc *.tmp *.tp *.vr *.vrs
 	rm -f updated-stamp
 
 clean: mostlyclean
 	rm -f *.info *.html *.dvi *.ps *.pdf
+
+force:

@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/getgroups.html}
 
 Gnulib module: getgroups
+@mindex getgroups
 
 Portability problems fixed by Gnulib:
 @itemize
@@ -36,4 +37,5 @@ effective group id twice, if it is also a member of the current
 supplemental group ids.
 @end itemize
 
+@mindex mgetgroups
 The Gnulib module @code{mgetgroups} provides a similar API.

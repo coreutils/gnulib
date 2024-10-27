@@ -5,6 +5,8 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/hypot.html}
 
 Gnulib module: hypot or hypot-ieee
+@mindex hypot
+@mindex hypot-ieee
 
 Portability problems fixed by either Gnulib module @code{hypot} or @code{hypot-ieee}:
 @itemize

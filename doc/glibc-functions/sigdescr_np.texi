@@ -11,6 +11,7 @@ Documentation:@*
 @end ifnotinfo
 
 Gnulib module: sigdescr_np
+@mindex sigdescr_np
 
 Portability problems fixed by Gnulib:
 @itemize

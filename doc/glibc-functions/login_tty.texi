@@ -16,6 +16,7 @@ Documentation:
 @end itemize
 
 Gnulib module: login_tty
+@mindex login_tty
 
 Portability problems fixed by Gnulib:
 @itemize

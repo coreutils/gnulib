@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/strtoull.html}
 
 Gnulib module: strtoull
+@mindex strtoull
 
 Portability problems fixed by Gnulib:
 @itemize

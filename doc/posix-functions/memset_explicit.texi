@@ -17,6 +17,7 @@ Documentation:
 @end itemize
 
 Gnulib module: memset_explicit
+@mindex memset_explicit
 
 The @code{memset_explicit} function is an approximation to what is
 needed, and does not suffice in general to erase information.

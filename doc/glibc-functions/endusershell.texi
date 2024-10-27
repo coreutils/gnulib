@@ -5,6 +5,7 @@
 Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/endusershell.3.html,,man endusershell}
 
 Gnulib module: getusershell
+@mindex getusershell
 
 Portability problems fixed by Gnulib:
 @itemize

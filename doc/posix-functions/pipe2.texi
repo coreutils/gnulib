@@ -7,6 +7,7 @@ POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/fun
 Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/pipe2.2.html,,man pipe2}
 
 Gnulib module: pipe2
+@mindex pipe2
 
 Portability problems fixed by Gnulib:
 @itemize
@@ -25,5 +26,6 @@ resources are left on some platforms:
 Cygwin 1.7.9.
 @end itemize
 
+@mindex nonblocking
 Note: This function portably supports the @code{O_NONBLOCK} flag only if the
 gnulib module @code{nonblocking} is also used.

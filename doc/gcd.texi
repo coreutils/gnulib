@@ -1,5 +1,6 @@
 @node gcd
 @section gcd: greatest common divisor
+@mindex gcd
 @findex gcd
 
 @c Copyright (C) 2006, 2009--2024 Free Software Foundation, Inc.

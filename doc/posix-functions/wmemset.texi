@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/wmemset.html}
 
 Gnulib module: wmemset
+@mindex wmemset
 
 Portability problems fixed by Gnulib:
 @itemize

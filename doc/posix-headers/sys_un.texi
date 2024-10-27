@@ -4,6 +4,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/sys_un.h.html}
 
 Gnulib module: sys_un
+@mindex sys_un
 
 Portability problems fixed by Gnulib:
 @itemize

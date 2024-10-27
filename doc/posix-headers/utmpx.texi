@@ -44,9 +44,12 @@ was historically 32 bits; however, glibc 2.40 is planned to support
 timestamps up to the year 2106, by changing @code{ut_tv.tv_sec}'s type
 to be a 32-bit unsigned integer.
 @item
+@mindex year2038
+@mindex year2038-recommended
 On some platforms, this header misbehaves if the @code{year2038} or
 @code{year2038-recommended} modules are used and the program is
 configured without the @option{--disable-year2038} option.
+@mindex readutmp
 The @code{readutmp} module works around this problem:
 glibc 2.38 on 32-bit platforms like x86 and ARM where @code{time_t}
 was historically 32 bits.

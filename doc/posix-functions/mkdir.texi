@@ -5,6 +5,8 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/mkdir.html}
 
 Gnulib module: sys_stat or mkdir
+@mindex sys_stat
+@mindex mkdir
 
 Portability problems fixed by either Gnulib module @code{sys_stat} or @code{mkdir}:
 @itemize

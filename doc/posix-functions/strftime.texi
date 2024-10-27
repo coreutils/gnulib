@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/strftime.html}
 
 Gnulib module: strftime-fixes
+@mindex strftime-fixes
 
 Portability problems fixed by Gnulib:
 @itemize
@@ -51,5 +52,6 @@ Native Windows platforms (mingw, MSVC) support only a subset of time
 zones supported by GNU or specified by POSIX@.  @xref{tzset}.
 @end itemize
 
+@mindex nstrftime
 Extension: Gnulib offers a module @samp{nstrftime} that provides an
 @code{nstrftime} function with various GNU extensions.

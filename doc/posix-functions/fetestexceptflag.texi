@@ -11,6 +11,7 @@ Documentation:@*
 @end ifnotinfo
 
 Gnulib module: fenv-exceptions-state-c23
+@mindex fenv-exceptions-state-c23
 
 Portability problems fixed by Gnulib:
 @itemize

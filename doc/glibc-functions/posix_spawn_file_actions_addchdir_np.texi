@@ -19,5 +19,6 @@ This function is missing on many platforms:
 glibc 2.28, macOS 10.14, FreeBSD 13.0, NetBSD 10.0, OpenBSD 7.5, Minix 3.1.8, AIX 7.1, HP-UX 11.31, Solaris 11.0, Cygwin 3.4.x, mingw, MSVC 14, Android API level 33.
 @end itemize
 
+@mindex posix_spawn_file_actions_addchdir
 Note: Gnulib has a module @code{posix_spawn_file_actions_addchdir} that
 provides equivalent functionality, just without the suffix @code{_np}.

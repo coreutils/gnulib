@@ -18,6 +18,7 @@ Documentation:
 @end itemize
 
 Gnulib module: sethostname
+@mindex sethostname
 
 Portability problems fixed by Gnulib:
 @itemize

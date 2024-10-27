@@ -8,6 +8,7 @@
 @c Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.  A
 @c copy of the license is at <https://www.gnu.org/licenses/fdl-1.3.en.html>.
 
+@mindex c-strcasestr
 The @code{c-strcasestr} module contains a case-insensitive string search
 function operating on single-byte character strings, that operate as if the
 locale encoding was ASCII.
@@ -22,5 +23,6 @@ For case conversion here, only ASCII characters are considered to be
 upper case or lower case.
 
 Note: The function @code{strcasestr} from @code{<string.h>} supports only
-unibyte locales; for multibyte locales, you need the function
-@code{mbscasestr}.
+unibyte locales;
+@mindex mbscasestr
+for multibyte locales, you need the function @code{mbscasestr}.

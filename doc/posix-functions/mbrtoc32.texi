@@ -7,6 +7,8 @@ ISO C23 specification:@* @url{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n3
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/mbrtoc32.html}
 
 Gnulib module: mbrtoc32 or mbrtoc32-regular
+@mindex mbrtoc32
+@mindex mbrtoc32-regular
 
 Portability problems fixed by either Gnulib module @code{mbrtoc32} or @code{mbrtoc32-regular}:
 @itemize
@@ -69,6 +71,7 @@ This function is only defined as an inline function on some platforms:
 Haiku 2020.
 @end itemize
 
+@mindex uchar-c23
 Note: If you want the guarantee that the @code{char32_t} values returned
 by this function are Unicode code points, you also need to request the
 @code{uchar-c23} module.

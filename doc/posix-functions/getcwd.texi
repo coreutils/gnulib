@@ -7,6 +7,8 @@ POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/fun
 LSB specification:@* @url{https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib-getcwd.html}
 
 Gnulib module: getcwd or getcwd-lgpl
+@mindex getcwd
+@mindex getcwd-lgpl
 
 Portability problems fixed by either Gnulib module @code{getcwd} or
 @code{getcwd-lgpl}:

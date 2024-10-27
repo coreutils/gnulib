@@ -5,6 +5,8 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/floorl.html}
 
 Gnulib module: floorl or floorl-ieee
+@mindex floorl
+@mindex floorl-ieee
 
 Portability problems fixed by Gnulib:
 @itemize

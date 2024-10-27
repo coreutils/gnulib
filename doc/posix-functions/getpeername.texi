@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/getpeername.html}
 
 Gnulib module: getpeername
+@mindex getpeername
 
 Portability problems fixed by Gnulib:
 @itemize

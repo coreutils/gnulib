@@ -5,6 +5,8 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/ceil.html}
 
 Gnulib module: ceil or ceil-ieee
+@mindex ceil
+@mindex ceil-ieee
 
 Portability problems fixed by either Gnulib module @code{ceil} or @code{ceil-ieee}:
 @itemize

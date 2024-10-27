@@ -1,6 +1,7 @@
 @node Inode numbers on Windows
 @section Inode numbers on Windows
 
+@mindex windows-stat-inodes
 The module @samp{windows-stat-inodes} ensures that,
 on native Windows platforms, @code{struct stat} contains
 @code{st_dev}, @code{st_ino} fields that are able to distinguish

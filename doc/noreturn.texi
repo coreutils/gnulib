@@ -36,6 +36,7 @@ Unfortunately, although this approach works for all current C versions,
 the @code{_Noreturn} keyword is obsolescent in C23.
 
 @item
+@mindex noreturn
 The @samp{noreturn} module.  It provides a way to put this declaration
 at function declarations, at function definitions, and in function
 pointer types.  The identifiers to use are:
@@ -56,5 +57,6 @@ you should use @code{_Noreturn}; otherwise the module
 @code{noreturn} provides for better data-flow analysis and thus for
 better warnings.
 
+@mindex stdnoreturn
 There is also an obsolete @code{stdnoreturn} module, but its use is no
 longer recommended.

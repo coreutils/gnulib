@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/toupper.html}
 
 Gnulib module: ctype
+@mindex ctype
 
 Portability problems fixed by Gnulib:
 @itemize
@@ -25,23 +26,27 @@ There are four alternative APIs:
 
 @table @code
 @item c_toupper
+@mindex c-ctype
 This function operates in a locale independent way and returns a different
 value than the argument only for lowercase ASCII characters.  It is provided
 by the Gnulib module @samp{c-ctype}.
 
 @item towupper
+@mindex wctype
 This function operates in a locale dependent way, on wide characters.  In
 order to use it, you first have to convert from multibyte to wide characters,
 using the @code{mbrtowc} function.  It is provided by the Gnulib module
 @samp{wctype}.
 
 @item c32toupper
+@mindex c32toupper
 This function operates in a locale dependent way, on 32-bit wide characters.
 In order to use it, you first have to convert from multibyte to 32-bit wide
 characters, using the @code{mbrtoc32} function.  It is provided by the
 Gnulib module @samp{c32toupper}.
 
 @item uc_toupper
+@mindex unicase/toupper
 This function operates in a locale independent way, on Unicode characters.
 It is provided by the Gnulib module @samp{unicase/toupper}.
 @end table

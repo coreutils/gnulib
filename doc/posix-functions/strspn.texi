@@ -14,6 +14,7 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function cannot work correctly on character strings in multibyte locales.
+@mindex mbsspn
 Gnulib provides an alternative function @code{mbsspn} that works on character
 strings in all locales.
 @end itemize

@@ -18,6 +18,7 @@ Documentation:
 @end itemize
 
 Gnulib module: fenv-exceptions-trapping
+@mindex fenv-exceptions-trapping
 
 Portability problems fixed by Gnulib:
 @itemize

@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/inet_ntop.html}
 
 Gnulib module: inet_ntop
+@mindex inet_ntop
 
 Portability problems fixed by Gnulib:
 @itemize

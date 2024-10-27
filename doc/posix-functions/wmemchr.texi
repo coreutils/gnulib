@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/wmemchr.html}
 
 Gnulib module: wmemchr
+@mindex wmemchr
 
 Portability problems fixed by Gnulib:
 @itemize

@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/freopen.html}
 
 Gnulib module: freopen
+@mindex freopen
 
 Portability problems fixed by Gnulib:
 @itemize
@@ -36,7 +37,9 @@ directory, on some platforms:
 HP-UX 11.00, Solaris 9.
 @item
 Applications should not assume that @code{fileno(f)} will be the same
-before and after a call to @code{freopen(name,mode,f)}.  However, the
+before and after a call to @code{freopen(name,mode,f)}.
+@mindex freopen-safer
+However, the
 module @code{freopen-safer} can at least protect @code{stdin}, @code{stdout},
 and @code{stderr}.
 @end itemize

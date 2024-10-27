@@ -5,6 +5,7 @@
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/posix_spawnp.html}
 
 Gnulib module: posix_spawnp
+@mindex posix_spawnp
 
 Portability problems fixed by Gnulib:
 @itemize
@@ -30,6 +31,8 @@ This function does not work on some platforms:
 AIX 6.1 (under particular circumstances).
 @end itemize
 
+@mindex posix_spawn_file_actions_addchdir
+@mindex posix_spawn_file_actions_addfchdir
 The Gnulib modules @code{posix_spawn_file_actions_addchdir} and
 @code{posix_spawn_file_actions_addfchdir} provide additional actions,
 that consist in changing the current directory of the child process
