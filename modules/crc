@@ -4,14 +4,28 @@ Compute cyclic redundancy codes.
 Files:
 lib/crc.h
 lib/crc.c
+lib/crc-generate-table.c
+m4/crc.m4
 
 Depends-on:
 stdint
+endian
 
 configure.ac:
+AC_REQUIRE([gl_CRC_SLICE_BY_8])
 
 Makefile.am:
 lib_SOURCES += crc.c
+
+$(srcdir)/crc-sliceby8.h: $(srcdir)/crc-generate-table.c
+	$(COMPILE) $(AM_LDFLAGS) $(LDFLAGS) -o crc-generate-table $(srcdir)/crc-generate-table.c \
+	&& ./crc-generate-table $(srcdir)/crc-sliceby8.h-t \
+	&& rm -f crc-generate-table \
+	&& mv $(srcdir)/crc-sliceby8.h-t $(srcdir)/crc-sliceby8.h
+BUILT_SOURCES        += crc-sliceby8.h
+MOSTLYCLEANFILES     += crc-sliceby8.h-t crc-generate-table
+MAINTAINERCLEANFILES += crc-sliceby8.h
+EXTRA_DIST           += crc-sliceby8.h
 
 Include:
 "crc.h"
