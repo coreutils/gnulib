@@ -3,6 +3,7 @@
 @setfilename gnulib.info
 @settitle GNU Gnulib
 @documentencoding UTF-8
+
 @c These two require Texinfo 5.0 or later, so we use the older
 @c equivalent @set variables supported in 4.11 and hence
 @ignore
@@ -11,6 +12,15 @@
 @end ignore
 @set txicodequoteundirected
 @set txicodequotebacktick
+
+@c In PDF output, use a brown colour for interactive links,
+@c like it was before commit
+@c https://git.savannah.gnu.org/gitweb/?p=texinfo.git;a=commitdiff;h=b4f50b9f4c083327e81ec5c7cde9b87234a19646
+@tex
+\global\def\linkcolor{\rgbDarkRed}
+\global\def\urlcolor{\rgbDarkRed}
+@end tex
+
 @c Indices:
 @c   cp = concept              @cindex
 @c   fn = function             @findex
@@ -31,6 +41,7 @@
 @syncodeindex tp cp
 @syncodeindex vr cp
 @syncodeindex cn cp
+
 @ifclear texi2html
 @firstparagraphindent insert
 @end ifclear
