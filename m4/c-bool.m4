@@ -1,5 +1,5 @@
 # c-bool.m4
-# serial 1
+# serial 2
 dnl Copyright 2022-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -35,7 +35,10 @@ AC_DEFUN([gl_C_BOOL],
   dnl define it to a bool expression equal to 1; this is needed in
   dnl Sun C++ 5.11 (Oracle Solaris Studio 12.2, 2010) and older.
   AH_VERBATIM([zzbool],
-[#ifndef HAVE_C_BOOL
+[#if !(defined __cplusplus ? 1 : \
+      defined __clang__ ? __STDC_VERSION__ >= 202000L && __clang_major__ >= 15 : \
+      defined __GNUC__ ? __STDC_VERSION__ >= 202000L && __GNUC__ >= 13 : \
+      defined HAVE_C_BOOL)
 # if !defined __cplusplus && !defined __bool_true_false_are_defined
 #  if HAVE_STDBOOL_H
 #   include <stdbool.h>
