@@ -1,5 +1,5 @@
 # realloc.m4
-# serial 34
+# serial 35
 dnl Copyright (C) 2007, 2009-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -18,8 +18,14 @@ AC_DEFUN([gl_FUNC_REALLOC_SANITIZED],
     [test -n "$gl_cv_func_realloc_sanitize" || gl_cv_func_realloc_sanitize=no])
 ])
 
-# This is adapted with modifications from upstream Autoconf here:
-# https://git.savannah.gnu.org/cgit/autoconf.git/tree/lib/autoconf/functions.m4?id=v2.70#n1455
+m4_version_prereq([2.73], [], [
+# This is copied from upstream Autoconf here:
+# https://git.savannah.gnu.org/cgit/autoconf.git/tree/lib/autoconf/functions.m4?id=74df3c673320c06481f5c5b18ff7979a3034a9e5#n1487
+# _AC_FUNC_REALLOC_IF(IF-WORKS, IF-NOT, UNKNOWN-ASSUME)
+# -----------------------------------------------------
+# If 'realloc (0, 0)' returns nonnull, run IF-WORKS, otherwise, IF-NOT.
+# If it is not known whether it works, assume the shell word UNKNOWN-ASSUME,
+# which should end in "yes" or in something else.
 AC_DEFUN([_AC_FUNC_REALLOC_IF],
 [
   AC_REQUIRE([AC_CANONICAL_HOST])dnl for cross-compiles
@@ -28,10 +34,11 @@ AC_DEFUN([_AC_FUNC_REALLOC_IF],
     [AC_RUN_IFELSE(
        [AC_LANG_PROGRAM(
           [[#include <stdlib.h>
-          ]],
-          [[void *p = realloc (0, 0);
-            void * volatile vp = p;
-            int result = !vp;
+            /* Use prealloc to test; 'volatile' prevents the compiler
+               from optimizing the realloc call away.  */
+            void *(*volatile prealloc) (void *, size_t) = realloc;]],
+          [[void *p = prealloc (0, 0);
+            int result = !p;
             free (p);
             return result;]])
        ],
@@ -43,13 +50,14 @@ AC_DEFUN([_AC_FUNC_REALLOC_IF],
           | gnu* | *-musl* | midipix* | midnightbsd* \
           | hpux* | solaris* | cygwin* | mingw* | windows* | msys* )
             ac_cv_func_realloc_0_nonnull="guessing yes" ;;
-          # If we don't know, obey --enable-cross-guesses.
-          *) ac_cv_func_realloc_0_nonnull="$gl_cross_guess_normal" ;;
+          # Guess as follows if we don't know.
+          *) ac_cv_func_realloc_0_nonnull=$3 ;;
         esac
        ])
     ])
   AS_CASE([$ac_cv_func_realloc_0_nonnull], [*yes], [$1], [$2])
-])# AC_FUNC_REALLOC
+])# _AC_FUNC_REALLOC_IF
+])
 
 # gl_FUNC_REALLOC_POSIX
 # ---------------------
