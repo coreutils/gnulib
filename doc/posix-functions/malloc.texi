@@ -29,5 +29,5 @@ by fixing this portability problem:
 @itemize
 @item
 @code{malloc (0)} returns @code{NULL} on success on some platforms:
-AIX 7.3 without @code{_LINUX_SOURCE_COMPAT}.
+AIX 7.3.
 @end itemize
