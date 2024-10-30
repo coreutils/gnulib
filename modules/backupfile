@@ -17,7 +17,6 @@ closedir
 d-ino
 fcntl-h
 ialloc
-irealloc
 memcmp
 opendirat
 readdir
