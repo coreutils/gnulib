@@ -35,7 +35,10 @@ main (int argc, char *argv[])
 {
 #if HAVE_ALIGNED_ALLOC
   static size_t sizes[] =
-    { 13, 8, 17, 450, 320, 1, 99, 4, 15, 16, 2, 76, 37, 127, 2406, 641, 5781 };
+    {
+      13, 8, 17, 450, 320, 1, 99, 4, 15, 16,
+      2, 76, 37, 127, 2406, 641, 5781, 0
+    };
   void *volatile aligned2_blocks[SIZEOF (sizes)];
   void *volatile aligned4_blocks[SIZEOF (sizes)];
   void *volatile aligned8_blocks[SIZEOF (sizes)];

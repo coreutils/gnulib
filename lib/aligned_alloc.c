@@ -23,6 +23,8 @@ void *
 aligned_alloc (size_t alignment, size_t size)
 #undef aligned_alloc
 {
+  if (size == 0)
+    size = 1;
   if (alignment >= sizeof (void *))
     return aligned_alloc (alignment, size);
   else
