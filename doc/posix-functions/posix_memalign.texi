@@ -14,6 +14,9 @@ it is more portable to older systems that do not support C11.
 Portability problems fixed by Gnulib:
 @itemize
 @item
+This function returns a null pointer if the size argument is zero:
+AIX 7.3.
+@item
 This function produces misaligned results on some platforms:
 OpenBSD 6.1.
 @end itemize

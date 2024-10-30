@@ -7,6 +7,7 @@ m4/posix_memalign.m4
 
 Depends-on:
 extensions
+stdckdint        [test $REPLACE_POSIX_MEMALIGN = 1]
 stdlib
 
 configure.ac:
