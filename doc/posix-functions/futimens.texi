@@ -40,6 +40,10 @@ On file systems mounted with the @code{noatime} attribute,
 this function might not modify the access time as requested:
 Linux kernel 6.9.
 @item
+This function sets a slightly different time stamp than the requested one:
+@c https://dev.haiku-os.org/ticket/19212
+Haiku.
+@item
 Some platforms lack the ability to change the timestamps of a file
 descriptor, so the replacement can fail with @code{ENOSYS};
 @mindex utimens

@@ -36,6 +36,10 @@ Use @code{utimensat(AT_FDCWD,file,times,0)},
 or the gnulib module @code{utimens},
 instead.
 @item
+This function sets a slightly different time stamp than the requested one:
+@c https://dev.haiku-os.org/ticket/19215
+Haiku.
+@item
 This function is removed in POSIX.1-2024.
 You can use Gnulib module @code{utimens} instead.
 @end itemize

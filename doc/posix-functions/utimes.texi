@@ -38,6 +38,10 @@ On some platforms, @code{utimes} failed on read-only files when
 @code{utime} worked fine.
 glibc 2.2.5.
 @item
+This function sets a slightly different time stamp than the requested one:
+@c https://dev.haiku-os.org/ticket/19214
+Haiku.
+@item
 On OS/2, this function cannot set the timestamp to earlier than the
 year 1980 in local time.
 @item

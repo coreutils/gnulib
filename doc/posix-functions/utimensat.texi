@@ -49,6 +49,10 @@ On file systems mounted with the @code{noatime} attribute,
 this function might not modify the access time as requested:
 Linux kernel 6.9.
 @item
+This function sets a slightly different time stamp than the requested one:
+@c https://dev.haiku-os.org/ticket/19213
+Haiku.
+@item
 On some platforms, timestamps of symbolic links cannot be modified, so
 the replacement fails with @code{ENOSYS} if passed the flag
 @code{AT_SYMLINK_NOFOLLOW} on a symlink.
