@@ -1,5 +1,5 @@
 # assert_h.m4
-# serial 2
+# serial 3
 dnl Copyright (C) 2011-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -50,6 +50,10 @@ AC_DEFUN([gl_ASSERT_H],
 
   dnl The "zz" puts this toward config.h's end, to avoid potential
   dnl collisions with other definitions.
+  dnl Hardcode the known configuration results for GCC and clang, so that
+  dnl a configuration made with the C compiler works also with the C++ compiler
+  dnl and vice versa.
+  dnl The seemingly redundant parentheses are necessary for MSVC 14.
   dnl #undef assert so that programs are not tempted to use it without
   dnl specifically including assert.h.
   dnl #undef __ASSERT_H__ so that on IRIX, when programs later include
@@ -60,12 +64,12 @@ AC_DEFUN([gl_ASSERT_H],
 [#if (!(defined __clang__ \
        ? (defined __cplusplus \
           ? __cplusplus >= 201703L \
-          : __STDC_VERSION__ >= 202000L && __clang_major__ >= 16) : \
-       defined __GNUC__ \
-       ? (defined __cplusplus \
-          ? __cplusplus >= 201103L && __GNUG__ >= 6 \
-          : __STDC_VERSION__ >= 202000L && __GNUC__ >= 13) : \
-       defined HAVE_C_STATIC_ASSERT) \
+          : __STDC_VERSION__ >= 202000L && __clang_major__ >= 16) \
+       : (defined __GNUC__ \
+          ? (defined __cplusplus \
+             ? __cplusplus >= 201103L && __GNUG__ >= 6 \
+             : __STDC_VERSION__ >= 202000L && __GNUC__ >= 13) \
+          : defined HAVE_C_STATIC_ASSERT)) \
      && !defined assert \
      && (!defined __cplusplus \
          || (__cpp_static_assert < 201411 \
