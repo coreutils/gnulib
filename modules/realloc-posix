@@ -7,10 +7,8 @@ m4/realloc.m4
 m4/malloc.m4
 
 Depends-on:
+stdckdint            [test $REPLACE_REALLOC_FOR_REALLOC_POSIX = 1]
 stdlib
-free-posix           [test $REPLACE_REALLOC_FOR_REALLOC_POSIX = 1]
-malloc-posix         [test $REPLACE_REALLOC_FOR_REALLOC_POSIX = 1]
-xalloc-oversized     [test $REPLACE_REALLOC_FOR_REALLOC_POSIX = 1]
 
 configure.ac:
 gl_FUNC_REALLOC_POSIX
