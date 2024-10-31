@@ -1,5 +1,5 @@
 # aligned_alloc.m4
-# serial 7
+# serial 8
 dnl Copyright (C) 2020-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -25,7 +25,7 @@ AC_DEFUN([gl_FUNC_ALIGNED_ALLOC],
          [AC_LANG_PROGRAM(
             [[#include <stdlib.h>
               /* Use paligned_alloc to test; 'volatile' prevents the compiler
-                 from optimizing the malloc call away.  */
+                 from optimizing the aligned_alloc call away.  */
               void *(*volatile paligned_alloc) (size_t, size_t)
                 = aligned_alloc;]],
             [[void *p = paligned_alloc (2, 18);
