@@ -13,8 +13,10 @@ endian
 
 configure.ac:
 AC_REQUIRE([gl_CRC_SLICE_BY_8])
-CROSS_COMPILING=$cross_compiling
-AC_SUBST([CROSS_COMPILING])
+# Set to 'yes' if executables created by the C compiler $CC can be run in the
+# build environment, or to 'no' otherwise.
+GL_CROSS_COMPILING=$cross_compiling
+AC_SUBST([GL_CROSS_COMPILING])
 AC_PROG_MKDIR_P
 
 Makefile.am:
@@ -28,7 +30,7 @@ lib_SOURCES += crc.c
 # $(AM_LDFLAGS).  And do the compilation in a temporary directory, where
 # gnulib-generated stdio.h and stdlib.h files are not visible.
 $(srcdir)/crc-sliceby8.h: $(srcdir)/crc-generate-table.c
-	if test @CROSS_COMPILING@ = no; then \
+	if test @GL_CROSS_COMPILING@ = no; then \
 	  $(MKDIR_P) crc-tmp \
 	  && abs_srcdir=`cd $(srcdir) && pwd` \
 	  && (cd crc-tmp \
