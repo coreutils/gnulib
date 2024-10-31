@@ -1,0 +1,12 @@
+Files:
+tests/test-calloc-posix.c
+tests/macros.h
+
+Depends-on:
+stdint
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-calloc-posix
+check_PROGRAMS += test-calloc-posix
