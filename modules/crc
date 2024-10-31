@@ -6,6 +6,7 @@ lib/crc.h
 lib/crc.c
 lib/crc-generate-table.c
 m4/crc.m4
+m4/build-cc.m4
 
 Depends-on:
 stdint
@@ -13,28 +14,25 @@ endian
 
 configure.ac:
 AC_REQUIRE([gl_CRC_SLICE_BY_8])
-# Set to 'yes' if executables created by the C compiler $CC can be run in the
-# build environment, or to 'no' otherwise.
-GL_CROSS_COMPILING=$cross_compiling
-AC_SUBST([GL_CROSS_COMPILING])
+gl_BUILD_CC
 AC_PROG_MKDIR_P
 
 Makefile.am:
 lib_SOURCES += crc.c
 
 # Generate crc-sliceby8.h.
-# Do so only when not cross-compiling.
+# Use a native compiler when cross-compiling.
 # Don't use any Gnulib modules (since libgnu.a will only be available after
 # this directory is built!).  Therefore, don't use any of the Automake variables
 # $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(AM_CFLAGS)
 # $(AM_LDFLAGS).  And do the compilation in a temporary directory, where
 # gnulib-generated stdio.h and stdlib.h files are not visible.
 $(srcdir)/crc-sliceby8.h: $(srcdir)/crc-generate-table.c
-	if test @GL_CROSS_COMPILING@ = no; then \
+	if test -n '$(BUILD_CC)'; then \
 	  $(MKDIR_P) crc-tmp \
 	  && abs_srcdir=`cd $(srcdir) && pwd` \
 	  && (cd crc-tmp \
-	      && $(CC) $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) -o crc-generate-table $$abs_srcdir/crc-generate-table.c) \
+	      && $(BUILD_CC) $(BUILD_CPPFLAGS) $(BUILD_CFLAGS) $(BUILD_LDFLAGS) -o crc-generate-table $$abs_srcdir/crc-generate-table.c) \
 	  && crc-tmp/crc-generate-table $(srcdir)/crc-sliceby8.h-t \
 	  && rm -rf crc-tmp \
 	  && mv $(srcdir)/crc-sliceby8.h-t $(srcdir)/crc-sliceby8.h; \
