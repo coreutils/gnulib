@@ -1,5 +1,5 @@
 # malloc.m4
-# serial 38
+# serial 39
 dnl Copyright (C) 2007, 2009-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -39,7 +39,7 @@ AC_DEFUN([_AC_FUNC_MALLOC_IF],
           | hpux* | solaris* | cygwin* | mingw* | windows* | msys* )
             ac_cv_func_malloc_0_nonnull="guessing yes" ;;
           # Guess as follows if we don't know.
-          *) ac_cv_func_malloc_0_nonnull=$3 ;;
+          *) ac_cv_func_malloc_0_nonnull=m4_if([$3],[],["guessing no"],[$3]) ;;
         esac
        ])
     ])
