@@ -52,8 +52,8 @@ main (int argc, _GL_UNUSED char **argv)
   if (PTRDIFF_MAX < SIZE_MAX)
     {
       size_t one = argc != 12345;
-      p = realloc (p, PTRDIFF_MAX + one);
-      ASSERT (p == NULL);
+      void *volatile r = realloc (p, PTRDIFF_MAX + one);
+      ASSERT (r == NULL);
       /* Avoid a test failure due to glibc bug
          <https://sourceware.org/bugzilla/show_bug.cgi?id=27870>.  */
       if (!getenv ("MALLOC_CHECK_"))
