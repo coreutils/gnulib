@@ -64,12 +64,19 @@ rpl_realloc (void *p, size_t n)
          Quite possibly future versions of POSIX will change,
          due either to C23 or to (a)'s semantics being messy.
          Act like (b), as that's easy, matches GNU, BSD and V7 malloc,
-         matches BSD and V7 realloc, and is convenient for Gnulib.
+         matches BSD and V7 realloc, and requires no extra code at
+         caller sites.
          Do not fail if P is nonnull, though, as it's natural for callers
          to assume that realloc (P, 0) can fail only when P is null.  */
 
       void *result = realloc (p, 1);
-      return result ? result : p;
+      if (result != NULL)
+        return result;
+#if !HAVE_MALLOC_POSIX
+      if (p == NULL)
+        errno = ENOMEM;
+#endif
+      return p;
     }
 
   ptrdiff_t signed_n;
