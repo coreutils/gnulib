@@ -94,12 +94,13 @@ print_header (FILE * stream)
         fprintf (stream, ",");
       fprintf (stream, "\n");
     }
-  fprintf (stream, "};\n\n");
+  fprintf (stream, "};\n");
 }
 
 void
 print_copyright_notice (FILE * stream)
 {
+  fprintf (stream, "/* DO NOT EDIT! GENERATED AUTOMATICALLY! */\n");
   fprintf (stream, "/* crc.c -- cyclic redundancy checks\n");
   fprintf (stream,
            "Copyright (C) 2005-2006, 2009-2024 Free Software Foundation, Inc.\n");
@@ -134,17 +135,23 @@ main (int argc, char *argv[])
       fprintf (stderr, " Usage: %s crc-sliceby8.h\n", argv[0]);
       exit (1);
     }
-  FILE *stream;
 
-  stream = fopen (argv[1], "w");
+  const char *filename = argv[1];
+  FILE *stream = fopen (filename, "w");
   if (stream == NULL)
     {
-      fprintf (stderr, "cannot open '%s' for writing\n", argv[1]);
+      fprintf (stderr, "cannot open '%s' for writing\n", filename);
       exit (1);
     }
 
   print_copyright_notice (stream);
   print_header (stream);
+
+  if (ferror (stream) || fclose (stream))
+    {
+      fprintf (stderr, "error writing to '%s'\n", filename);
+      exit (1);
+    }
 
   return 0;
 }
