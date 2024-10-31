@@ -60,6 +60,24 @@ main (int argc, _GL_UNUSED char **argv)
         ASSERT (errno == ENOMEM);
     }
 
+  /* Check that realloc sets errno when it fails.
+     Do this only in 64-bit processes, because there are many bi-arch systems
+     nowadays where a 32-bit process can actually allocate 2 GiB of RAM.  */
+  if (sizeof (size_t) >= 8)
+    {
+      void *volatile r;
+
+      errno = 0;
+      r = realloc (p, SIZE_MAX / 10);
+      ASSERT (r == NULL);
+      ASSERT (errno == ENOMEM);
+
+      errno = 0;
+      r = realloc (p, SIZE_MAX / 3);
+      ASSERT (r == NULL);
+      ASSERT (errno == ENOMEM);
+    }
+
   free (p);
   return test_exit_status;
 }
