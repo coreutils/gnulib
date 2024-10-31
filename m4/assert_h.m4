@@ -1,5 +1,5 @@
 # assert_h.m4
-# serial 3
+# serial 4
 dnl Copyright (C) 2011-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -80,8 +80,9 @@ AC_DEFUN([gl_ASSERT_H],
   #undef/**/__ASSERT_H__
  #endif
  /* Solaris 11.4 <assert.h> defines static_assert as a macro with 2 arguments.
-    We need it also to be invocable with a single argument.  */
- #if defined __sun && (__STDC_VERSION__ - 0 >= 201112L) && !defined __cplusplus
+    We need it also to be invocable with a single argument.
+    Haiku 2022 <assert.h> does not define static_assert at all.  */
+ #if (__STDC_VERSION__ - 0 >= 201112L) && !defined __cplusplus
   #undef/**/static_assert
   #define static_assert _Static_assert
  #endif
