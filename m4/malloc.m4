@@ -1,5 +1,5 @@
 # malloc.m4
-# serial 36
+# serial 37
 dnl Copyright (C) 2007, 2009-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -146,7 +146,21 @@ AC_DEFUN([gl_CHECK_MALLOC_POSIX],
       dnl 'test-realloc-posix', 'test-calloc-gnu' fail.
       case "$host_os" in
         mingw* | windows*)
-          gl_cv_func_malloc_posix=no ;;
+          dnl Old MSVCRT from 2001 did not set errno=ENOMEM when malloc failed.
+          dnl More recent MSVCRT from 2019 does so.
+          dnl UCRT is the successor of MSVCRT. Assume that UCRT does so as well.
+          AC_COMPILE_IFELSE(
+            [AC_LANG_PROGRAM(
+              [[#include <stdio.h>
+                #ifndef _UCRT
+                msvcrt yuck
+                #endif
+              ]],
+              [[]])
+            ],
+            [gl_cv_func_malloc_posix=yes],
+            [gl_cv_func_malloc_posix=no])
+          ;;
         irix* | solaris*)
           dnl On IRIX 6.5, the three functions return NULL with errno unset
           dnl when the argument is larger than PTRDIFF_MAX.
