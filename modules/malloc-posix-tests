@@ -1,0 +1,12 @@
+Files:
+tests/test-malloc-posix.c
+tests/macros.h
+
+Depends-on:
+stdint
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-malloc-posix
+check_PROGRAMS += test-malloc-posix
