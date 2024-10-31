@@ -81,7 +81,7 @@ crc32_update_no_xor_slice_by_8 (uint32_t crc, const char *buf)
   return crc;
 }
 
-uint32_t
+static uint32_t
 crc32_update_no_xor_slice_by_n (uint32_t crc, const char *buf,
                                 size_t num_bytes)
 {

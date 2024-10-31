@@ -40,7 +40,7 @@
  */
 unsigned long crc_table[256];
 
-void
+static void
 make_crc_table (int bits)
 {
   unsigned long c;
@@ -60,7 +60,7 @@ make_crc_table (int bits)
     }
 }
 
-void
+static void
 print_crc_table (FILE * stream, int bits)
 {
   make_crc_table (bits);
@@ -80,7 +80,7 @@ print_crc_table (FILE * stream, int bits)
   fprintf (stream, "  }");
 }
 
-void
+static void
 print_header (FILE * stream)
 {
   fprintf (stream, "/* Slice-by-8 lookup tables */\n");
@@ -95,7 +95,7 @@ print_header (FILE * stream)
   fprintf (stream, "};\n");
 }
 
-void
+static void
 print_copyright_notice (FILE * stream)
 {
   fprintf (stream, "/* DO NOT EDIT! GENERATED AUTOMATICALLY! */\n");
