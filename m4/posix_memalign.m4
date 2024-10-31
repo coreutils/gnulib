@@ -1,5 +1,5 @@
 # posix_memalign.m4
-# serial 5
+# serial 6
 dnl Copyright (C) 2020-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -26,7 +26,7 @@ AC_DEFUN([gl_FUNC_POSIX_MEMALIGN],
          [AC_LANG_PROGRAM(
             [[#include <stdlib.h>
               /* Use pposix_memalign to test; 'volatile' prevents the compiler
-                 from optimizing the malloc call away.  */
+                 from optimizing the posix_memalign call away.  */
               int (*volatile pposix_memalign) (void **, size_t, size_t)
                 = posix_memalign;]],
             [[void *p;
@@ -43,8 +43,8 @@ AC_DEFUN([gl_FUNC_POSIX_MEMALIGN],
          [gl_cv_func_posix_memalign_works=no],
          [case "$host_os" in
 changequote(,)dnl
-                     # Guess no on AIX.
-            aix*)    gl_cv_func_aligned_alloc_works="guessing no" ;;
+                      # Guess no on AIX.
+            aix*)     gl_cv_func_posix_memalign_works="guessing no" ;;
                       # Guess no on OpenBSD through 6.1.
             openbsd[1-5].* | openbsd6.[01] | openbsd6.[01].*)
                       gl_cv_func_posix_memalign_works="guessing no" ;;
