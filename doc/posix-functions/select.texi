@@ -42,4 +42,9 @@ thus busy wait.
 @item
 On Linux, when some file descriptor refers to a regular file, @code{select}
 may fail, setting @code{errno} to @code{EBADF}.
+@item
+On Haiku,
+@c https://dev.haiku-os.org/ticket/19220
+the maximum allowed value for the first argument is not @code{FD_SETSIZE}
+but @code{FD_SETSIZE / 2}.
 @end itemize
