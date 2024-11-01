@@ -1,5 +1,5 @@
 # malloc.m4
-# serial 39
+# serial 40
 dnl Copyright (C) 2007, 2009-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -119,16 +119,19 @@ AC_DEFUN([gl_FUNC_MALLOC_POSIX],
   AC_REQUIRE([gl_STDLIB_H_DEFAULTS])
   AC_REQUIRE([gl_FUNC_MALLOC_PTRDIFF])
   AC_REQUIRE([gl_CHECK_MALLOC_POSIX])
-  if test "$gl_cv_func_malloc_posix" = yes; then
-    AC_DEFINE([HAVE_MALLOC_POSIX], [1],
-      [Define if malloc, realloc, and calloc set errno on allocation failure.])
-  else
-    REPLACE_MALLOC_FOR_MALLOC_POSIX=1
-  fi
+  case "$gl_cv_func_malloc_posix" in
+    *yes)
+      AC_DEFINE([HAVE_MALLOC_POSIX], [1],
+        [Define if malloc, realloc, and calloc set errno on allocation failure.])
+      ;;
+    *)
+      REPLACE_MALLOC_FOR_MALLOC_POSIX=1
+      ;;
+  esac
 ])
 
 # Test whether malloc, realloc, calloc set errno to ENOMEM on failure.
-# Set gl_cv_func_malloc_posix to yes or no accordingly.
+# Set gl_cv_func_malloc_posix to *yes or *no accordingly.
 AC_DEFUN([gl_CHECK_MALLOC_POSIX],
 [
   AC_REQUIRE([AC_CANONICAL_HOST])
@@ -154,8 +157,8 @@ AC_DEFUN([gl_CHECK_MALLOC_POSIX],
               ]],
               [[]])
             ],
-            [gl_cv_func_malloc_posix=yes],
-            [gl_cv_func_malloc_posix=no])
+            [gl_cv_func_malloc_posix="guessing yes"],
+            [gl_cv_func_malloc_posix="guessing no"])
           ;;
         irix* | solaris*)
           dnl On IRIX 6.5, the three functions return NULL with errno unset
