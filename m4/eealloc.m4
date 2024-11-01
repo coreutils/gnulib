@@ -1,5 +1,5 @@
 # eealloc.m4
-# serial 5
+# serial 6
 dnl Copyright (C) 2003, 2009-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -14,10 +14,11 @@ AC_DEFUN([gl_EEALLOC],
 
 AC_DEFUN([gl_EEMALLOC],
 [
-  _AC_FUNC_MALLOC_IF(
-    [gl_cv_func_malloc_0_nonnull=1],
-    [gl_cv_func_malloc_0_nonnull=0],
-    ["$gl_cross_guess_normal"])
+  gl_CHECK_MALLOC_POSIX
+  case "$gl_cv_func_malloc_posix" in
+    *yes) gl_cv_func_malloc_0_nonnull=1 ;;
+    *)    gl_cv_func_malloc_0_nonnull=0 ;;
+  esac
   AC_DEFINE_UNQUOTED([MALLOC_0_IS_NONNULL], [$gl_cv_func_malloc_0_nonnull],
     [If malloc(0) is != NULL, define this to 1.  Otherwise define this
      to 0.])
