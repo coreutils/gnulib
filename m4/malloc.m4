@@ -8,12 +8,12 @@ dnl This file is offered as-is, without any warranty.
 
 m4_version_prereq([2.73], [], [
 # This is copied from upstream Autoconf here:
-# https://git.savannah.gnu.org/cgit/autoconf.git/tree/lib/autoconf/functions.m4?id=74df3c673320c06481f5c5b18ff7979a3034a9e5#n971
-# _AC_FUNC_MALLOC_IF(IF-WORKS, IF-NOT, UNKNOWN-ASSUME)
-# ----------------------------------------------------
+# https://git.savannah.gnu.org/cgit/autoconf.git/tree/lib/autoconf/functions.m4?id=f8c82d292699fbce6d60abb46259a3781578f7fc#n971
+# _AC_FUNC_MALLOC_IF(IF-WORKS, IF-NOT[, UNKNOWN-ASSUME])
+# ------------------------------------------------------
 # If 'malloc (0, 0)' returns nonnull, run IF-WORKS, otherwise, IF-NOT.
 # If it is not known whether it works, assume the shell word UNKNOWN-ASSUME,
-# which should end in "yes" or in something else.
+# which should end in "yes" or in something else (the latter is the default).
 AC_DEFUN([_AC_FUNC_MALLOC_IF],
 [
   AC_REQUIRE([AC_CANONICAL_HOST])dnl for cross-compiles
@@ -28,21 +28,17 @@ AC_DEFUN([_AC_FUNC_MALLOC_IF],
           [[void *p = pmalloc (0);
             int result = !p;
             free (p);
-            return result;]])
-       ],
+            return result;]])],
        [ac_cv_func_malloc_0_nonnull=yes],
        [ac_cv_func_malloc_0_nonnull=no],
-       [case "$host_os" in
-          # Guess yes on platforms where we know the result.
-          *-gnu* | freebsd* | netbsd* | openbsd* | bitrig* \
-          | gnu* | *-musl* | midipix* | midnightbsd* \
-          | hpux* | solaris* | cygwin* | mingw* | windows* | msys* )
-            ac_cv_func_malloc_0_nonnull="guessing yes" ;;
-          # Guess as follows if we don't know.
-          *) ac_cv_func_malloc_0_nonnull=m4_if([$3],[],["guessing no"],[$3]) ;;
-        esac
-       ])
-    ])
+       [AS_CASE([$host_os],
+          [# Guess yes on platforms where we know the result.
+           *-gnu* | freebsd* | netbsd* | openbsd* | bitrig* \
+           | gnu* | *-musl* | midipix* | midnightbsd* \
+           | hpux* | solaris* | cygwin* | mingw* | windows* | msys*],
+            [ac_cv_func_malloc_0_nonnull="guessing yes"],
+          [# Guess as follows if we don't know.
+           ac_cv_func_malloc_0_nonnull=m4_default([$3], ["guessing no"])])])])
   AS_CASE([$ac_cv_func_malloc_0_nonnull], [*yes], [$1], [$2])
 ])# _AC_FUNC_MALLOC_IF
 ])
