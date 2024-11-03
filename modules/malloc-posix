@@ -6,8 +6,8 @@ lib/malloc.c
 m4/malloc.m4
 
 Depends-on:
+stdckdint            [test $REPLACE_CALLOC_FOR_MALLOC_POSIX = 1]
 stdlib
-xalloc-oversized     [test $REPLACE_MALLOC_FOR_MALLOC_POSIX = 1]
 
 configure.ac:
 AC_REQUIRE([gl_FUNC_MALLOC_POSIX])
