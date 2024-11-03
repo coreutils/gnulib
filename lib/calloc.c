@@ -23,8 +23,7 @@
 #include <stdlib.h>
 
 #include <errno.h>
-
-#include "xalloc-oversized.h"
+#include <stdckdint.h>
 
 /* Call the system's calloc below.  */
 #undef calloc
@@ -38,7 +37,8 @@ rpl_calloc (size_t n, size_t s)
   if (n == 0 || s == 0)
     n = s = 1;
 
-  if (xalloc_oversized (n, s))
+  ptrdiff_t signed_n;
+  if (ckd_mul (&signed_n, n, s))
     {
       errno = ENOMEM;
       return NULL;
