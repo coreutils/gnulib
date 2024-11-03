@@ -1,8 +1,6 @@
 #!/bin/sh
 #! -*-perl-*-
 
-# Rewrite a gnulib.mk, adding prefixes to work with automake's subdir-objects.
-
 # Copyright (C) 2012-2024 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
@@ -33,6 +31,47 @@ my $VERSION = '2024-07-04 10:56'; # UTC
 # If you change this file with Emacs, please let the write hook
 # do its job.  Otherwise, update this string manually.
 
+# Overview
+# ========
+#
+# Automake is usually used with a separate Makefile.am in each subdirectory
+# that contains sources.  The advantage is that the build infrastructure of
+# the package is composable.
+#
+# An alternative way to use Automake is to have a Makefile.am at the top-level
+# only, and each subdirectory contains a Makefile.am fragment, called
+# <something>.mk, that is included by the top-level Makefile.am.
+# This is called "non-recursive Automake" and is explained in
+# <https://autotools.info/automake/nonrecursive.html>.  This way makes it
+# easier to use a library in one subdirectory from sources in another
+# subdirectory, and still have 'make' check dependencies in an optimal way.
+#
+# The "non-recursive Automake" is activated through the Automake option
+# 'subdir-objects'.
+#
+# There are two ways to support this mode with Gnulib:
+#   (a) The gnulib-tool option --automake-subdir.
+#   (b) The deprecated 'non-recursive-gnulib-prefix-hack' module.
+# Both make use of this script.  This script rewrites the a Makefile.am portion
+# made for the usual way, so that it can be used in the non-recursive way.
+#
+# This script can be invoked in two ways:
+#   (a) Through an invocation of build-aux/prefix-gnulib-mk from within
+#       gnulib-tool, with options such as
+#         --from-gnulib-tool --lib-name=libgnu --prefix=lib/
+#   (b) Through an invocation of build-aux/prefix-gnulib-mk from the package's
+#       build system (deprecated).
+#
+# The official way to write Makefile.am snippets that supports both ways is
+# through the %reldir% token, that is explained in
+# <https://www.gnu.org/software/automake/manual/html_node/Include.html>.
+# Doing this would, however, lead to hundreds of occurrences of %reldir%,
+# which is not pretty to work with.  Therefore, what Gnulib does is:
+#   - This script adds the prefix (e.g. 'lib/') in most places, based on
+#     simple patterns (e.g. before source file names and after $(MKDIR_P)).
+#   - In other places, that are not covered by this script, we use %reldir%
+#     explicitly.
+
 use strict;
 use IO::File;
 use Getopt::Long;
@@ -55,7 +94,7 @@ sub usage ($)
   else
     {
       print $STREAM <<EOF;
-Usage: $ME --lib-name=NAME FILE
+Usage: $ME --lib-name=NAME FILE  (deprecated)
    or: $ME [--help|--version]
 Rewrite a gnulib-tool-generated FILE like lib/gnulib.mk to work with
 automake's subdir-objects.
