@@ -2,6 +2,7 @@ Description:
 A GNU-like <stdlib.h>.
 
 Files:
+lib/stdlib.c
 lib/stdlib.in.h
 m4/stdlib_h.m4
 m4/locale-en.m4
@@ -9,6 +10,7 @@ m4/codeset.m4
 
 Depends-on:
 gen-header
+extern-inline
 include_next
 snippet/arg-nonnull
 snippet/c++defs
@@ -24,9 +26,8 @@ AC_PROG_MKDIR_P
 
 Makefile.am:
 BUILT_SOURCES += stdlib.h
+lib_SOURCES += stdlib.c
 
-# We need the following in order to create <stdlib.h> when the system
-# doesn't have one that works with the given compiler.
 stdlib.h: stdlib.in.h $(top_builddir)/config.status $(CXXDEFS_H) \
   $(_NORETURN_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
 @NMD@	$(AM_V_GEN)$(MKDIR_P) '%reldir%'

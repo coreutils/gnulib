@@ -54,7 +54,7 @@
 
 /* This file uses _Noreturn, _GL_ATTRIBUTE_DEALLOC, _GL_ATTRIBUTE_MALLOC,
    _GL_ATTRIBUTE_NODISCARD, _GL_ATTRIBUTE_NOTHROW, _GL_ATTRIBUTE_PURE,
-   GNULIB_POSIXCHECK, HAVE_RAW_DECL_*.  */
+   _GL_INLINE_HEADER_BEGIN, GNULIB_POSIXCHECK, HAVE_RAW_DECL_*.  */
 #if !_GL_CONFIG_H_INCLUDED
  #error "Please include config.h first."
 #endif
@@ -128,6 +128,11 @@ struct random_data
    get defined as macros.  But do so only on Solaris 11 (where it is needed),
    not on mingw (where it would cause other compilation errors).  */
 # include <string>
+#endif
+
+_GL_INLINE_HEADER_BEGIN
+#ifndef _GL_STDLIB_INLINE
+# define _GL_STDLIB_INLINE _GL_INLINE
 #endif
 
 /* _GL_ATTRIBUTE_DEALLOC (F, I) declares that the function returns pointers
@@ -740,11 +745,12 @@ _GL_WARN_ON_USE (malloc, "malloc is not POSIX compliant everywhere - "
 /* Return maximum number of bytes of a multibyte character.  */
 #if @REPLACE_MB_CUR_MAX@
 # if !GNULIB_defined_MB_CUR_MAX
-static inline
-int gl_MB_CUR_MAX (void)
+_GL_STDLIB_INLINE int
+gl_MB_CUR_MAX (void)
 {
   /* Turn the value 3 to the value 4, as needed for the UTF-8 encoding.  */
-  return MB_CUR_MAX + (MB_CUR_MAX == 3);
+  int gl_mb_cur_max = MB_CUR_MAX;
+  return gl_mb_cur_max == 3 ? 4 : gl_mb_cur_max;
 }
 #  undef MB_CUR_MAX
 #  define MB_CUR_MAX gl_MB_CUR_MAX ()
@@ -1966,6 +1972,8 @@ _GL_CXXALIASWARN (wctomb);
 # endif
 #endif
 
+
+_GL_INLINE_HEADER_END
 
 #endif /* _@GUARD_PREFIX@_STDLIB_H */
 #endif /* _@GUARD_PREFIX@_STDLIB_H */
