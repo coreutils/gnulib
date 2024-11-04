@@ -367,7 +367,7 @@ _GL_WARN_ON_USE (atoll, "atoll is unportable - "
 #endif
 
 #if @GNULIB_CALLOC_POSIX@
-# if (@GNULIB_CALLOC_POSIX@ && @REPLACE_CALLOC_FOR_CALLOC_POSIX@) \
+# if @REPLACE_CALLOC_FOR_CALLOC_POSIX@ \
      || (@GNULIB_CALLOC_GNU@ && @REPLACE_CALLOC_FOR_CALLOC_GNU@)
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   undef calloc
@@ -681,7 +681,7 @@ _GL_WARN_ON_USE (grantpt, "grantpt is not portable - "
    by never specifying a zero size), so it does not need malloc or
    realloc to be redefined.  */
 #if @GNULIB_MALLOC_POSIX@
-# if (@GNULIB_MALLOC_POSIX@ && @REPLACE_MALLOC_FOR_MALLOC_POSIX@) \
+# if @REPLACE_MALLOC_FOR_MALLOC_POSIX@ \
      || (@GNULIB_MALLOC_GNU@ && @REPLACE_MALLOC_FOR_MALLOC_GNU@)
 #  if !((defined __cplusplus && defined GNULIB_NAMESPACE) \
         || _GL_USE_STDLIB_ALLOC)
@@ -1454,7 +1454,7 @@ _GL_WARN_ON_USE (setstate_r, "setstate_r is unportable - "
 
 
 #if @GNULIB_REALLOC_POSIX@
-# if (@GNULIB_REALLOC_POSIX@ && @REPLACE_REALLOC_FOR_REALLOC_POSIX@)
+# if @REPLACE_REALLOC_FOR_REALLOC_POSIX@
 #  if !((defined __cplusplus && defined GNULIB_NAMESPACE) \
         || _GL_USE_STDLIB_ALLOC)
 #   undef realloc
