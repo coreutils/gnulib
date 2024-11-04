@@ -27,7 +27,8 @@
 
 /* Work around clang bug
    <https://github.com/llvm/llvm-project/issues/114772>.  */
-void *(* volatile my_calloc) (size_t, size_t) = calloc;
+void *(*volatile my_calloc) (size_t, size_t) = calloc;
+#undef calloc
 #define calloc my_calloc
 
 int
@@ -38,7 +39,7 @@ main ()
      nowadays where a 32-bit process can actually allocate 2 GiB of RAM.  */
   if (sizeof (size_t) >= 8)
     {
-      void *volatile p;
+      void *p;
 
       errno = 0;
       p = calloc (SIZE_MAX / 20, 2);

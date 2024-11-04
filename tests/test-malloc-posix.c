@@ -27,7 +27,8 @@
 
 /* Work around clang bug
    <https://github.com/llvm/llvm-project/issues/114772>.  */
-void *(* volatile my_malloc) (size_t) = malloc;
+void *(*volatile my_malloc) (size_t) = malloc;
+#undef malloc
 #define malloc my_malloc
 
 int
@@ -38,7 +39,7 @@ main ()
      nowadays where a 32-bit process can actually allocate 2 GiB of RAM.  */
   if (sizeof (size_t) >= 8)
     {
-      void *volatile p;
+      void *p;
 
       errno = 0;
       p = malloc (SIZE_MAX / 10);

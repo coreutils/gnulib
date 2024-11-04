@@ -26,13 +26,14 @@
 
 /* Work around clang bug
    <https://github.com/llvm/llvm-project/issues/114772>.  */
-void *(* volatile my_realloc) (void *, size_t) = realloc;
+void *(*volatile my_realloc) (void *, size_t) = realloc;
+#undef realloc
 #define realloc my_realloc
 
 int
 main (int argc, _GL_UNUSED char **argv)
 {
-  void *volatile p;
+  void *p;
 
   /* Check that realloc (NULL, 0) is not a NULL pointer.  */
   p = realloc (NULL, 0);
@@ -57,7 +58,7 @@ main (int argc, _GL_UNUSED char **argv)
   if (PTRDIFF_MAX < SIZE_MAX)
     {
       size_t one = argc != 12345;
-      void *volatile r = realloc (p, PTRDIFF_MAX + one);
+      void *r = realloc (p, PTRDIFF_MAX + one);
       ASSERT (r == NULL);
       /* Avoid a test failure due to glibc bug
          <https://sourceware.org/bugzilla/show_bug.cgi?id=27870>.  */
@@ -70,7 +71,7 @@ main (int argc, _GL_UNUSED char **argv)
      nowadays where a 32-bit process can actually allocate 2 GiB of RAM.  */
   if (sizeof (size_t) >= 8)
     {
-      void *volatile r;
+      void *r;
 
       errno = 0;
       r = realloc (p, SIZE_MAX / 10);

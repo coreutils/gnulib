@@ -28,6 +28,10 @@
 
 #include "macros.h"
 
+void *(*volatile my_aligned_alloc) (size_t, size_t) = aligned_alloc;
+#undef aligned_alloc
+#define aligned_alloc my_aligned_alloc
+
 #define ROUNDUP(x,y) (((x) + (y) - 1) & - (y))
 
 int
@@ -40,12 +44,12 @@ main (int argc, char *argv[])
       /* Test also a zero size.  */
       0
     };
-  void *volatile aligned2_blocks[SIZEOF (sizes)];
-  void *volatile aligned4_blocks[SIZEOF (sizes)];
-  void *volatile aligned8_blocks[SIZEOF (sizes)];
-  void *volatile aligned16_blocks[SIZEOF (sizes)];
-  void *volatile aligned32_blocks[SIZEOF (sizes)];
-  void *volatile aligned64_blocks[SIZEOF (sizes)];
+  void *aligned2_blocks[SIZEOF (sizes)];
+  void *aligned4_blocks[SIZEOF (sizes)];
+  void *aligned8_blocks[SIZEOF (sizes)];
+  void *aligned16_blocks[SIZEOF (sizes)];
+  void *aligned32_blocks[SIZEOF (sizes)];
+  void *aligned64_blocks[SIZEOF (sizes)];
   size_t i;
 
   for (i = 0; i < SIZEOF (sizes); i++)

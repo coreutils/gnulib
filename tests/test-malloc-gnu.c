@@ -24,11 +24,17 @@
 
 #include "macros.h"
 
+/* Work around clang bug
+   <https://github.com/llvm/llvm-project/issues/114772>.  */
+void *(*volatile my_malloc) (size_t) = malloc;
+#undef malloc
+#define malloc my_malloc
+
 int
 main (int argc, _GL_UNUSED char **argv)
 {
   /* Check that malloc (0) is not a NULL pointer.  */
-  void *volatile p = malloc (0);
+  void *p = malloc (0);
   ASSERT (p != NULL);
   free (p);
 

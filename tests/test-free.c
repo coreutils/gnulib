@@ -37,14 +37,9 @@
    a GCC optimization.  Without it, when optimizing, GCC would "know" that errno
    is unchanged by calling free(ptr), when ptr was the result of a malloc(...)
    call in the same function.  */
-static int
-get_errno (void)
-{
-  volatile int err = errno;
-  return err;
-}
-
-static int (* volatile get_errno_func) (void) = get_errno;
+void (*volatile my_free) (void *) = free;
+#undef free
+#define free my_free
 
 int
 main ()
@@ -53,11 +48,11 @@ main ()
   {
     errno = 1789; /* Liberté, égalité, fraternité.  */
     free (NULL);
-    ASSERT_NO_STDIO (get_errno_func () == 1789);
+    ASSERT_NO_STDIO (errno == 1789);
   }
   { /* Small memory allocations.  */
     #define N 10000
-    void * volatile ptrs[N];
+    void *ptrs[N];
     size_t i;
     for (i = 0; i < N; i++)
       ptrs[i] = malloc (15);
@@ -65,13 +60,13 @@ main ()
       {
         errno = 1789;
         free (ptrs[i]);
-        ASSERT_NO_STDIO (get_errno_func () == 1789);
+        ASSERT_NO_STDIO (errno == 1789);
       }
     #undef N
   }
   { /* Medium memory allocations.  */
     #define N 1000
-    void * volatile ptrs[N];
+    void *ptrs[N];
     size_t i;
     for (i = 0; i < N; i++)
       ptrs[i] = malloc (729);
@@ -79,13 +74,13 @@ main ()
       {
         errno = 1789;
         free (ptrs[i]);
-        ASSERT_NO_STDIO (get_errno_func () == 1789);
+        ASSERT_NO_STDIO (errno == 1789);
       }
     #undef N
   }
   { /* Large memory allocations.  */
     #define N 10
-    void * volatile ptrs[N];
+    void *ptrs[N];
     size_t i;
     for (i = 0; i < N; i++)
       ptrs[i] = malloc (5318153);
@@ -93,7 +88,7 @@ main ()
       {
         errno = 1789;
         free (ptrs[i]);
-        ASSERT_NO_STDIO (get_errno_func () == 1789);
+        ASSERT_NO_STDIO (errno == 1789);
       }
     #undef N
   }
@@ -138,7 +133,7 @@ main ()
         {
           /* Do a large memory allocation.  */
           size_t big_size = 0x1000000;
-          void * volatile ptr = malloc (big_size - 0x100);
+          void *ptr = malloc (big_size - 0x100);
           char *ptr_aligned = (char *) ((uintptr_t) ptr & ~(pagesize - 1));
           /* This large memory allocation allocated a memory area
              from ptr_aligned to ptr_aligned + big_size.
@@ -171,7 +166,7 @@ main ()
                  which increases the number of VMAs by 1, which is supposed
                  to fail.  */
               free (ptr);
-              ASSERT_NO_STDIO (get_errno_func () == 1789);
+              ASSERT_NO_STDIO (errno == 1789);
             }
         }
     }
