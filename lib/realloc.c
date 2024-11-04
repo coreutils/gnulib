@@ -65,18 +65,14 @@ rpl_realloc (void *p, size_t n)
          due either to C23 or to (a)'s semantics being messy.
          Act like (b), as that's easy, matches GNU, BSD and V7 malloc,
          matches BSD and V7 realloc, and requires no extra code at
-         caller sites.
-         Do not fail if P is nonnull, though, as it's natural for callers
-         to assume that realloc (P, 0) can fail only when P is null.  */
+         caller sites.  */
 
       void *result = realloc (p, 1);
-      if (result != NULL)
-        return result;
 #if !HAVE_MALLOC_POSIX
-      if (p == NULL)
+      if (result == NULL)
         errno = ENOMEM;
 #endif
-      return p;
+      return result;
     }
 
   ptrdiff_t signed_n;

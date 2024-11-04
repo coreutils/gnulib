@@ -89,8 +89,8 @@ Portability problems not fixed by Gnulib:
 @item
 When not growing an already-allocated region, i.e.,
 when @code{p} points to a region of size @code{psize} and @code{n <= psize},
-the standards allow @code{realloc (p, n)} to fail and return a null pointer.
-It is not known which, if any, implementations actually fail in this situation.
+@code{realloc (p, n)} can fail and return a null pointer:
+glibc 2.40 and probably other platforms.
 
 @item
 If @code{realloc (p, 0)} frees @code{p} and returns a null pointer,
