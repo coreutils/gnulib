@@ -34,15 +34,19 @@
 void *
 rpl_calloc (size_t n, size_t s)
 {
+#if !HAVE_MALLOC_0_NONNULL
   if (n == 0 || s == 0)
     n = s = 1;
+#endif
 
+#if !HAVE_MALLOC_PTRDIFF
   ptrdiff_t signed_n;
   if (ckd_mul (&signed_n, n, s))
     {
       errno = ENOMEM;
       return NULL;
     }
+#endif
 
   void *result = calloc (n, s);
 

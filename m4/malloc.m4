@@ -1,5 +1,5 @@
 # malloc.m4
-# serial 40
+# serial 41
 dnl Copyright (C) 2007, 2009-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -45,6 +45,7 @@ AC_DEFUN([_AC_FUNC_MALLOC_IF],
 
 # gl_FUNC_MALLOC_GNU
 # ------------------
+# Define HAVE_MALLOC_0_NONNULL if malloc (0) returns nonnull.
 # Replace malloc if it is not compatible with GNU libc.
 AC_DEFUN([gl_FUNC_MALLOC_GNU],
 [
@@ -55,11 +56,12 @@ AC_DEFUN([gl_FUNC_MALLOC_GNU],
   dnl gets defined already before this macro gets invoked.  This helps
   dnl if !(__VEC__ || __AIXVEC), and doesn't hurt otherwise.
 
-  REPLACE_MALLOC_FOR_MALLOC_GNU="$REPLACE_MALLOC_FOR_MALLOC_POSIX"
-  if test $REPLACE_MALLOC_FOR_MALLOC_GNU = 0; then
-    _AC_FUNC_MALLOC_IF([], [REPLACE_MALLOC_FOR_MALLOC_GNU=1],
-      ["$gl_cross_guess_normal"])
-  fi
+  _AC_FUNC_MALLOC_IF(
+    [AC_DEFINE([HAVE_MALLOC_0_NONNULL], [1],
+       [Define to 1 if malloc (0) returns nonnull.])
+     REPLACE_MALLOC_FOR_MALLOC_GNU=$REPLACE_MALLOC_FOR_MALLOC_POSIX],
+    [REPLACE_MALLOC_FOR_MALLOC_GNU=1],
+    ["$gl_cross_guess_normal"])
 ])
 
 # gl_FUNC_MALLOC_PTRDIFF
@@ -70,12 +72,16 @@ AC_DEFUN([gl_FUNC_MALLOC_PTRDIFF],
 [
   AC_REQUIRE([gl_STDLIB_H_DEFAULTS])
   AC_REQUIRE([gl_CHECK_MALLOC_PTRDIFF])
-  test "$gl_cv_malloc_ptrdiff" = yes || REPLACE_MALLOC_FOR_MALLOC_POSIX=1
+  AS_IF([test "$gl_cv_malloc_ptrdiff" = yes],
+    [AC_DEFINE([HAVE_MALLOC_PTRDIFF], 1,
+       [Define to 1 if malloc-like functions do not allocate objects
+        larger than PTRDIFF_MAX bytes.])],
+    [REPLACE_MALLOC_FOR_MALLOC_POSIX=1])
 ])
 
 # Test whether malloc, realloc, calloc refuse to create objects
 # larger than what can be expressed in ptrdiff_t.
-# Set gl_cv_func_malloc_gnu to yes or no accordingly.
+# Set gl_cv_func_malloc_gnu and define MALLOC_PTRDIFF accordingly.
 AC_DEFUN([gl_CHECK_MALLOC_PTRDIFF],
 [
   AC_CACHE_CHECK([whether malloc is ptrdiff_t safe],
