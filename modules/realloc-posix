@@ -7,6 +7,7 @@ m4/realloc.m4
 m4/malloc.m4
 
 Depends-on:
+extensions-aix
 stdckdint            [test $REPLACE_REALLOC_FOR_REALLOC_POSIX = 1]
 stdlib
 

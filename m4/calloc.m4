@@ -72,9 +72,7 @@ AC_DEFUN([gl_FUNC_CALLOC_POSIX],
 [
   AC_REQUIRE([gl_STDLIB_H_DEFAULTS])
   AC_REQUIRE([gl_FUNC_MALLOC_POSIX])
-  if test $REPLACE_MALLOC_FOR_MALLOC_POSIX = 1; then
-    REPLACE_CALLOC_FOR_CALLOC_POSIX=1
-  fi
+  REPLACE_CALLOC_FOR_CALLOC_POSIX=$REPLACE_MALLOC_FOR_MALLOC_POSIX
   dnl Although in theory we should also test for size_t overflow,
   dnl in practice testing for ptrdiff_t overflow suffices
   dnl since PTRDIFF_MAX <= SIZE_MAX on all known Gnulib porting targets.

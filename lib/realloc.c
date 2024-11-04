@@ -51,15 +51,19 @@ rpl_realloc (void *p, size_t n)
         abort ();
 #endif
 
-      /* When P is null, act like glibc malloc, i.e., like malloc (1)
+      /* realloc (NULL, 0) acts like glibc malloc (0), i.e., like malloc (1)
          except the caller cannot dereference any non-null return.
 
-         When P is non-null, POSIX.1-2024 extends C17 to say that
-         realloc (P, 0) either fails and returns a null pointer,
+         realloc (P, 0) with non-null P is a messier situation.
+         As mentioned above, C23 says behavior is undefined.
+         POSIX.1-2024 extends C17 to say realloc (P, 0)
+         either fails by setting errno and returning a null pointer,
          or succeeds by freeing P and then either:
            (a) setting errno=EINVAL and returning a null pointer; or
            (b) acting like a successful malloc (0).
-         GNU realloc acts like (a) except it does not set errno;
+         glibc 1 through 2.1 realloc acted like (b),
+         which conforms to C17, to C23 and to POSIX.1-2024.
+         glibc 2.1.1+ realloc acts like (a) except it does not set errno;
          this conforms to C17 and to C23 but not to POSIX.1-2024.
          Quite possibly future versions of POSIX will change,
          due either to C23 or to (a)'s semantics being messy.
@@ -67,20 +71,19 @@ rpl_realloc (void *p, size_t n)
          matches BSD and V7 realloc, and requires no extra code at
          caller sites.  */
 
-      void *result = realloc (p, 1);
-#if !HAVE_MALLOC_POSIX
-      if (result == NULL)
-        errno = ENOMEM;
+#if !HAVE_REALLOC_0_NONNULL
+      n = 1;
 #endif
-      return result;
     }
 
+#if !HAVE_MALLOC_PTRDIFF
   ptrdiff_t signed_n;
   if (ckd_add (&signed_n, n, 0))
     {
       errno = ENOMEM;
       return NULL;
     }
+#endif
 
   void *result = realloc (p, n);
 

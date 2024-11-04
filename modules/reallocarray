@@ -4,6 +4,7 @@ reallocarray function that is glibc compatible.
 Files:
 lib/reallocarray.c
 m4/malloc.m4
+m4/realloc.m4
 m4/reallocarray.m4
 
 Depends-on:
