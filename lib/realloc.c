@@ -25,6 +25,10 @@
 #include <errno.h>
 #include <stdckdint.h>
 
+#ifdef __CHERI_PURE_CAPABILITY__
+# include <cheri.h>
+#endif
+
 /* Call the system's realloc below.  This file does not define
    _GL_USE_STDLIB_ALLOC because it needs Gnulib's malloc if present.  */
 #undef realloc
@@ -36,6 +40,8 @@
 void *
 rpl_realloc (void *p, size_t n)
 {
+  size_t n1 = n;
+
   if (n == 0)
     {
 #if NEED_SANITIZED_REALLOC
@@ -72,7 +78,7 @@ rpl_realloc (void *p, size_t n)
          caller sites.  */
 
 #if !HAVE_REALLOC_0_NONNULL
-      n = 1;
+      n1 = 1;
 #endif
     }
 
@@ -85,11 +91,16 @@ rpl_realloc (void *p, size_t n)
     }
 #endif
 
-  void *result = realloc (p, n);
+  void *result = realloc (p, n1);
 
 #if !HAVE_MALLOC_POSIX
   if (result == NULL)
     errno = ENOMEM;
+#endif
+
+#ifdef __CHERI_PURE_CAPABILITY__
+  if (result != NULL)
+    result = cheri_bounds_set (result, n);
 #endif
 
   return result;
