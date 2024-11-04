@@ -24,6 +24,11 @@
 
 #include "macros.h"
 
+/* Work around clang bug
+   <https://github.com/llvm/llvm-project/issues/114772>.  */
+void *(* volatile my_realloc) (void *, size_t) = realloc;
+#define realloc my_realloc
+
 int
 main (int argc, _GL_UNUSED char **argv)
 {

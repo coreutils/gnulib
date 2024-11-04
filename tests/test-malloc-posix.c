@@ -25,6 +25,11 @@
 
 #include "macros.h"
 
+/* Work around clang bug
+   <https://github.com/llvm/llvm-project/issues/114772>.  */
+void *(* volatile my_malloc) (size_t) = malloc;
+#define malloc my_malloc
+
 int
 main ()
 {
