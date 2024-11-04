@@ -19,25 +19,30 @@ This function fails if the alignment argument is smaller than
 macOS 14, AIX 7.3.1.
 
 @item
+This function returns a null pointer if the requested size is
+not a multiple of the alignment:
+Solaris 11.4.
+
+@item
 This function returns a null pointer if the size argument is zero:
-AIX 7.3.
+macOS 15, AIX 7.3, Solaris 11.4.
+
+@item
+On some platforms, @code{aligned_alloc} crashes if the requested size is
+not a multiple of the alignment:
+AddressSanitizer (gcc 11.2 or clang 13).
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
 @item
-On some platforms, @code{aligned_alloc} crashes if the requested size is
-not a multiple of the alignment:
-AddressSanitizer (gcc 11.2 or clang 13).
+This function is missing on many older platforms:
+glibc 2.15, macOS 10.14, FreeBSD 6.4, NetBSD 7.1, OpenBSD 6.0, Minix 3.1.8, AIX 7.1, HP-UX 11.31, Solaris 11.3, Cygwin 1.7.x, mingw, MSVC 14, Android 8.1.
 
 @item
 If the alignment and size are absurdly large, this function crashes:
 @c https://sourceware.org/bugzilla/show_bug.cgi?id=32301
 glibc 2.40.
-
-@item
-This function is missing on many older platforms:
-glibc 2.15, macOS 10.14, FreeBSD 6.4, NetBSD 7.1, OpenBSD 6.0, Minix 3.1.8, AIX 7.1, HP-UX 11.31, Solaris 11.3, Cygwin 1.7.x, mingw, MSVC 14, Android 8.1.
 @end itemize
 
 Gnulib has partial substitutes for @code{aligned_alloc}

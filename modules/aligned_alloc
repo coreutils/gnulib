@@ -8,6 +8,7 @@ m4/aligned_alloc.m4
 Depends-on:
 extensions
 stdlib
+malloc-posix    [test $REPLACE_ALIGNED_ALLOC = 1]
 
 configure.ac:
 gl_FUNC_ALIGNED_ALLOC
