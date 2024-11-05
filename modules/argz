@@ -10,6 +10,7 @@ Depends-on:
 gen-header
 memmove         [test -n "$ARGZ_H"]
 mempcpy         [test -n "$ARGZ_H"]
+realloc-posix   [test -n "$ARGZ_H"]
 stpcpy          [test -n "$ARGZ_H"]
 strndup         [test -n "$ARGZ_H"]
 strnlen         [test -n "$ARGZ_H"]
