@@ -178,5 +178,19 @@ main (int argc, char *argv[])
       }
   }
 
+  int volatile value;
+
+  /* Test zero-length operations on NULL pointers, allowed by
+     <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3322.pdf>.  */
+
+  value = (wcsncmp (NULL, L"x", 0) == 0);
+  ASSERT (value);
+
+  value = (wcsncmp (L"x", NULL, 0) == 0);
+  ASSERT (value);
+
+  value = (wcsncmp (NULL, NULL, 0) == 0);
+  ASSERT (value);
+
   return test_exit_status;
 }
