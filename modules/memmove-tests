@@ -1,0 +1,11 @@
+Files:
+tests/test-memmove.c
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-memmove
+check_PROGRAMS += test-memmove
