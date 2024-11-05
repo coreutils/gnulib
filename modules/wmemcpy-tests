@@ -1,0 +1,11 @@
+Files:
+tests/test-wmemcpy.c
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-wmemcpy
+check_PROGRAMS += test-wmemcpy
