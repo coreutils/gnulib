@@ -1,0 +1,10 @@
+Files:
+tests/test-qsort.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-qsort
+check_PROGRAMS += test-qsort

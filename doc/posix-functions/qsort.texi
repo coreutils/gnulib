@@ -4,7 +4,8 @@
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/qsort.html}
 
-Gnulib module: ---
+Gnulib module: qsort
+@mindex qsort
 
 Portability problems fixed by Gnulib:
 @itemize
