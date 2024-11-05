@@ -1,0 +1,11 @@
+Files:
+tests/test-bsearch.c
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-bsearch
+check_PROGRAMS += test-bsearch

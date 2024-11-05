@@ -1,0 +1,25 @@
+Description:
+Binary search in a sorted array.
+
+Status:
+obsolete
+
+Notice:
+This module is obsolete.
+
+Files:
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+
+Include:
+<stdlib.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+all
