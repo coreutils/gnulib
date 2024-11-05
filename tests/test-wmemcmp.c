@@ -91,5 +91,19 @@ main (int argc, char *argv[])
     ASSERT (wmemcmp (input2, input1, 1) > 0);
   }
 
+  int volatile value;
+
+  /* Test zero-length operations on NULL pointers, allowed by
+     <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3322.pdf>.  */
+
+  value = (wmemcmp (NULL, L"x", 0) == 0);
+  ASSERT (value);
+
+  value = (wmemcmp (L"x", NULL, 0) == 0);
+  ASSERT (value);
+
+  value = (wmemcmp (NULL, NULL, 0) == 0);
+  ASSERT (value);
+
   return test_exit_status;
 }
