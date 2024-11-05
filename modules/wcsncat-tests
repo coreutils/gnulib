@@ -1,0 +1,11 @@
+Files:
+tests/test-wcsncat.c
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-wcsncat
+check_PROGRAMS += test-wcsncat
