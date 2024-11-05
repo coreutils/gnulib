@@ -1,0 +1,11 @@
+Files:
+tests/test-wmemchr.c
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-wmemchr
+check_PROGRAMS += test-wmemchr
