@@ -1,5 +1,5 @@
 # realloc.m4
-# serial 38
+# serial 39
 dnl Copyright (C) 2007, 2009-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -73,5 +73,9 @@ AC_DEFUN([gl_FUNC_REALLOC_0_NONNULL],
     [*yes],
       [AC_DEFINE([HAVE_REALLOC_0_NONNULL], [1],
          [Define to 1 if realloc (..., 0) returns nonnull.])],
-    [REPLACE_REALLOC_FOR_REALLOC_POSIX=1])
+    [AS_CASE([$gl_cv_func_realloc_sanitize,$gl_cv_malloc_ptrdiff,$gl_cv_func_malloc_posix,$host],
+       [yes,*,*,* | *,no,*,* | *,*,*no,* | *,*,*,aarch64c-*-freebsd*],
+         [REPLACE_REALLOC_FOR_REALLOC_POSIX=1],
+       [# Optimize for common case of glibc 2.1.1+ and compatibles.
+        REPLACE_REALLOC_FOR_REALLOC_POSIX=2])])
 ])

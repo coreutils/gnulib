@@ -30,6 +30,8 @@
 # include <cheri.h>
 #endif
 
+#ifndef _GL_INLINE_RPL_REALLOC
+
 /* Change the size of an allocated block of memory P to N bytes,
    with error checking.  If P is NULL, use malloc.  Otherwise if N is zero,
    free P and return NULL.  */
@@ -41,7 +43,7 @@ rpl_realloc (void *p, size_t n)
 
   if (n == 0)
     {
-#if NEED_SANITIZED_REALLOC
+# if NEED_SANITIZED_REALLOC
       /* When P is non-null, ISO C23 §7.24.3.7.(3) says realloc (P, 0) has
          undefined behavior even though C17 and earlier partially defined
          the behavior.  Let the programmer know.
@@ -52,7 +54,7 @@ rpl_realloc (void *p, size_t n)
          we can revisit this code.  */
       if (p != NULL)
         abort ();
-#endif
+# endif
 
       /* realloc (NULL, 0) acts like glibc malloc (0), i.e., like malloc (1)
          except the caller cannot dereference any non-null return.
@@ -74,31 +76,33 @@ rpl_realloc (void *p, size_t n)
          matches BSD and V7 realloc, and requires no extra code at
          caller sites.  */
 
-#if !HAVE_REALLOC_0_NONNULL
+# if !HAVE_REALLOC_0_NONNULL
       n1 = 1;
-#endif
+# endif
     }
 
-#if !HAVE_MALLOC_PTRDIFF
+# if !HAVE_MALLOC_PTRDIFF
   ptrdiff_t signed_n;
   if (ckd_add (&signed_n, n, 0))
     {
       errno = ENOMEM;
       return NULL;
     }
-#endif
+# endif
 
   void *result = realloc (p, n1);
 
-#if !HAVE_MALLOC_POSIX
+# if !HAVE_MALLOC_POSIX
   if (result == NULL)
     errno = ENOMEM;
-#endif
+# endif
 
-#ifdef __CHERI_PURE_CAPABILITY__
+# ifdef __CHERI_PURE_CAPABILITY__
   if (result != NULL)
     result = cheri_bounds_set (result, n);
-#endif
+# endif
 
   return result;
 }
+
+#endif
