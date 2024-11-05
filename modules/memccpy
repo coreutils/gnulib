@@ -1,0 +1,25 @@
+Description:
+Copy delimited memory area.
+
+Status:
+obsolete
+
+Notice:
+This module is obsolete.
+
+Files:
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+
+Include:
+<string.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+all

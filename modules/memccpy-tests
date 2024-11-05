@@ -1,0 +1,11 @@
+Files:
+tests/test-memccpy.c
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-memccpy
+check_PROGRAMS += test-memccpy
