@@ -15,6 +15,10 @@ Mac OS X 10.5, FreeBSD 6.0, NetBSD 3.0, OpenBSD 3.8, Minix 3.1.8, HP-UX 11, Sola
 @item
 This function does not NUL-terminate the result on some platforms:
 AIX 5.1.
+@item
+This function does not support zero-length operations on NULL pointers
+on some platforms:
+AIX 7.3.
 @end itemize
 
 Portability problems not fixed by Gnulib:
