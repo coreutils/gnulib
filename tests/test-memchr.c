@@ -133,5 +133,12 @@ main (void)
 
   free (input);
 
+  /* Test zero-length operations on NULL pointers, allowed by
+     <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3322.pdf>.  */
+  {
+    int volatile value = (memchr (NULL, '?', 0) == NULL);
+    ASSERT (value);
+  }
+
   return test_exit_status;
 }
