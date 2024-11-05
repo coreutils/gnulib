@@ -27,9 +27,6 @@
 #endif
 
 #include <stdlib.h>
-#if defined __CHERI_PURE_CAPABILITY__
-# include <cheri.h>
-#endif
 
 _GL_INLINE_HEADER_BEGIN
 #ifndef SAFE_ALLOC_INLINE
@@ -41,23 +38,7 @@ extern "C" {
 #endif
 
 
-/* Don't call these directly - use the macros below.  */
-SAFE_ALLOC_INLINE void *
-safe_alloc_realloc_n (void *ptr, size_t count, size_t size)
-{
-  /* Work around reallocarray glitch by treating a 0 size as if it were 1,
-     so that returning NULL is equivalent to failing.  */
-  size_t countx = count;
-  size_t sizex = size;
-  if (count == 0 || size == 0)
-    countx = sizex = 1;
-  ptr = reallocarray (ptr, countx, sizex);
-#if defined __CHERI_PURE_CAPABILITY__
-  if (ptr != NULL && (count == 0 || size == 0))
-    ptr = cheri_bounds_set (ptr, 0);
-#endif
-  return ptr;
-}
+/* Don't call this directly - use the macros below.  */
 _GL_ATTRIBUTE_NODISCARD SAFE_ALLOC_INLINE int
 safe_alloc_check (void *ptr)
 {
@@ -103,7 +84,7 @@ safe_alloc_check (void *ptr)
  * Return -1 on failure to allocate, zero on success.
  */
 #define ALLOC_N_UNINITIALIZED(ptr, count) \
-  safe_alloc_check ((ptr) = safe_alloc_realloc_n (NULL, count, sizeof *(ptr)))
+  safe_alloc_check ((ptr) = reallocarray (NULL, count, sizeof *(ptr)))
 
 /**
  * REALLOC_N:
@@ -117,7 +98,7 @@ safe_alloc_check (void *ptr)
  * Return -1 on failure to reallocate, zero on success.
  */
 #define REALLOC_N(ptr, count) \
-  safe_alloc_check ((ptr) = safe_alloc_realloc_n (ptr, count, sizeof *(ptr)))
+  safe_alloc_check ((ptr) = reallocarray (ptr, count, sizeof *(ptr)))
 
 /**
  * FREE:
