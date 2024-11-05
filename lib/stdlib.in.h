@@ -1461,7 +1461,7 @@ _GL_WARN_ON_USE (setstate_r, "setstate_r is unportable - "
 
 #if @GNULIB_REALLOC_POSIX@
 # if @REPLACE_REALLOC_FOR_REALLOC_POSIX@
-#  if @REPLACE_REALLOC_FOR_REALLOC_POSIX@ == 2
+#  if @REPLACE_REALLOC_FOR_REALLOC_POSIX@ == 2 && !IN_GNULIB_TESTS
 #   define _GL_INLINE_RPL_REALLOC 1
 _GL_STDLIB_INLINE void *
 rpl_realloc (void *ptr, size_t size)
@@ -1474,7 +1474,7 @@ rpl_realloc (void *ptr, size_t size)
 #   undef realloc
 #   define realloc rpl_realloc
 #  endif
-#  if @REPLACE_REALLOC_FOR_REALLOC_POSIX@ != 2
+#  if !defined _GL_INLINE_RPL_REALLOC
 _GL_FUNCDECL_RPL (realloc, void *,
                   (void *ptr, size_t size),
                   _GL_ATTRIBUTE_DEALLOC_FREE _GL_ATTRIBUTE_NODISCARD);
