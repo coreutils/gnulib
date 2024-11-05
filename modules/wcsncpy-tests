@@ -1,0 +1,11 @@
+Files:
+tests/test-wcsncpy.c
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-wcsncpy
+check_PROGRAMS += test-wcsncpy
