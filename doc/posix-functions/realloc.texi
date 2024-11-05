@@ -32,45 +32,44 @@ Behavior is a real mess for @code{realloc (p, 0)} with non-null @code{p}.
 C23 says behavior is undefined.
 C89 through C17 say a successful call returns either a null pointer
 or a pointer to a new zero-sized memory region.
-POSIX.1-2017 extends C99 by saying that the call
-must set @code{errno} to an implementation-defined value,
+POSIX.1-2017 extends C99 by saying that if a successful call
+returns a null pointer it
+must also set @code{errno} to an implementation-defined value,
 and POSIX.1-2024 extends C17 a bit further by saying that
-the call must set @code{errno} to @code{EINVAL}.
+such a call must set @code{errno} to @code{EINVAL}.
 It is not known what POSIX.1-2024's successor will say,
 though presumably it will extend C23.
-In practice, platforms have one of the following behaviors:
+In practice, successful @code{realloc (p, 0)} calls
+have one of the following behaviors:
 
 @enumerate
 @item
-Always free @code{p} without changing @code{errno} and return a null pointer,
-even though this does not conform to POSIX:
-glibc 2.1.1--2.40, most likely glibc 2.41+ at least by default, Android.
+Free @code{p}, do not change @code{errno}, and return a null pointer:
+glibc 2.33--2.40 by default, Android.
 
 @item
-Always free @code{p}, possibly set @code{errno}, and return a null pointer:
+Free @code{p}, possibly set @code{errno}, and return a null pointer:
+glibc 1--2.1 if specially built with @code{REALLOC_ZERO_BYTES_FREES=1},
+glibc 2.1.1--2.32 by default,
 mingw, MSVC.
 
 @item
-Always free @code{p}, set @code{errno} to @code{EINVAL},
-and return a null pointer:
+Free @code{p}, set @code{errno} to @code{EINVAL}, and return a null pointer:
 AIX 7.3 without @code{_LINUX_SOURCE_COMPAT}.
 
 @item
-Always free @code{p} without changing @code{errno}
-and return a pointer to a new region of size zero:
-AIX 7.3 with @code{_LINUX_SOURCE_COMPAT}, glibc 1--2.1,
-perhaps glibc 2.41+ in some configurations.
-
-@item
-When successful free @code{p}, possibly set @code{errno},
-and return a pointer to a new region of size zero;
-when unsuccessful do not free @code{p}, set @code{errno},
-and return a null pointer:
+Free @code{p} and return a pointer to a new region of size zero:
+AIX 7.3 with @code{_LINUX_SOURCE_COMPAT}, glibc 1--2.1 by default,
+glibc 2.1.1--2.40 if specially built with @code{REALLOC_ZERO_BYTES_FREES=0},
 musl libc, macOS, FreeBSD, NetBSD, OpenBSD, Solaris, Cygwin.
 @end enumerate
 
 @noindent
-The @code{realloc-posix} module implements behavior (5).
+Behaviors (3) and (4) conform to POSIX; behaviors (1) and (2) do not.
+The @code{realloc-posix} module implements behavior (4) as it is more
+popular than (3) and is more useful in practice.  Behavior (4) is the
+only one of the four in which returning a a null pointer means failure,
+which is what non-expert programmers typically expect.
 
 A program not suspecting these variations in semantics will either:
 
@@ -78,12 +77,12 @@ A program not suspecting these variations in semantics will either:
 @item
 Leak memory (the still-valid @code{p}) if it unwisely does not check
 for @code{realloc} failure, when it assumes behavior (1), (2) or (3) but the
-system implements behavior (4) or (5).
+system implements behavior (4).
 
 @item
-Falsely respond to memory exhaustion (if it wisely checks for
-@code{realloc} failure), or have double-free bugs (if it does not check),
-when it assumes behavior (4) or (5) but the system implements (1), (2) or (3).
+Falsely respond to memory exhaustion (if it wisely checks for @code{realloc}
+failure), or have double-free bugs (if it unwisely does not check),
+when it assumes behavior (4) but the system implements (1), (2) or (3).
 @end itemize
 @end itemize
 
