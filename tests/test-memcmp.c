@@ -75,5 +75,19 @@ main (void)
       }
   }
 
+  int volatile value;
+
+  /* Test zero-length operations on NULL pointers, allowed by
+     <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3322.pdf>.  */
+
+  value = (memcmp (NULL, "x", 0) == 0);
+  ASSERT (value);
+
+  value = (memcmp ("x", NULL, 0) == 0);
+  ASSERT (value);
+
+  value = (memcmp (NULL, NULL, 0) == 0);
+  ASSERT (value);
+
   return test_exit_status;
 }
