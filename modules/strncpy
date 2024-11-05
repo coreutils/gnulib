@@ -1,0 +1,26 @@
+Description:
+Copy the initial part of a string.
+
+Status:
+obsolete
+
+Notice:
+This module is obsolete.
+
+Files:
+
+Depends-on:
+string
+
+configure.ac:
+
+Makefile.am:
+
+Include:
+<string.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+all

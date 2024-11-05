@@ -1,0 +1,11 @@
+Files:
+tests/test-strncpy.c
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-strncpy
+check_PROGRAMS += test-strncpy
