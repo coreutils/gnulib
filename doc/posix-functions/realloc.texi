@@ -11,24 +11,33 @@ Portability problems fixed by Gnulib:
 
 @itemize
 @item
-Upon failure, the function does not set @code{errno} to @code{ENOMEM} on
-some platforms:
-mingw, MSVC 14, Solaris 11.4.
+On some platforms, when the function fails it does not set @code{errno}:
+mingw, MSVC 14.
+
+@item
+On some platforms, when the function fails it might set @code{errno}
+to @code{EAGAIN} instead of to @code{ENOMEM}. Although POSIX allows
+@code{EAGAIN}, the @code{realloc-posix} module insists on @code{ENOMEM}
+which also conforms to POSIX and is GNU-compatible:
+Solaris 11.4.
 
 @item
 On some platforms, @code{realloc (p, n)} can succeed even if @code{n}
 exceeds @code{PTRDIFF_MAX}.  Although this behavior is arguably
-allowed by POSIX it can lead to behavior not defined by POSIX later,
+allowed by POSIX it is not compatible with GNU and
+can lead to behavior not defined by POSIX later,
 so @code{realloc-posix} does not allow going over the limit.
 
 @item
-It is not portable to call @code{realloc} with a size of 0.  With a
-null pointer argument, this is the same ambiguity as @code{malloc (0)}
-as to whether a successful call returns a null pointer or a pointer to a
-new zero-sized memory region.  The @code{realloc-posix} module
-implements the latter behavior.
+It is not portable to call @code{realloc} with a size of 0.
 
-Behavior is a real mess for @code{realloc (p, 0)} with non-null @code{p}.
+With a null pointer argument, this is the same ambiguity as @code{malloc (0)}
+as to whether a successful call returns a null pointer or a pointer to a
+new zero-sized memory region.  Although both behaviors conform to POSIX,
+@code{realloc-posix} insists on the latter behavior, which is
+compatible with GNU.
+
+With non-null @code{p}, behavior is a real mess for @code{realloc (p, 0)}.
 C23 says behavior is undefined.
 C89 through C17 say a successful call returns either a null pointer
 or a pointer to a new zero-sized memory region.
@@ -51,7 +60,7 @@ glibc 2.33--2.40 by default, Android.
 Free @code{p}, possibly set @code{errno}, and return a null pointer:
 glibc 1--2.1 if specially built with @code{REALLOC_ZERO_BYTES_FREES=1},
 glibc 2.1.1--2.32 by default,
-mingw, MSVC.
+mingw, MSVC 14.
 
 @item
 Free @code{p}, set @code{errno} to @code{EINVAL}, and return a null pointer:
@@ -66,9 +75,9 @@ musl libc, macOS, FreeBSD, NetBSD, OpenBSD, Solaris, Cygwin.
 
 @noindent
 Behaviors (3) and (4) conform to POSIX; behaviors (1) and (2) do not.
-The @code{realloc-posix} module implements behavior (4) as it is more
+The @code{realloc-posix} module insists on behavior (4) as it is more
 popular than (3) and is more useful in practice.  Behavior (4) is the
-only one of the four in which returning a a null pointer means failure,
+only one of the four in which returning a null pointer means failure,
 which is what non-expert programmers typically expect.
 
 A program not suspecting these variations in semantics will either:
@@ -84,6 +93,14 @@ Falsely respond to memory exhaustion (if it wisely checks for @code{realloc}
 failure), or have double-free bugs (if it unwisely does not check),
 when it assumes behavior (4) but the system implements (1), (2) or (3).
 @end itemize
+
+@item
+When @code{realloc (p, 0)} sets errno to @code{EINVAL} and returns null,
+a POSIX.1-2024 application cannot tell whether the call has succeeded
+and freed @code{p}, or has failed without freeing @code{p}.
+This is only a theoretical problem, though, as the only practical
+implementation with this behavior is AIX without @code{_LINUX_SOURCE_COMPAT},
+which behaves this way only when the call succeeds.
 @end itemize
 
 Portability problems not fixed by Gnulib:

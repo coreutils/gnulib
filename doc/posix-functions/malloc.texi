@@ -10,9 +10,15 @@ Gnulib module: malloc-posix
 Portability problems fixed by Gnulib:
 @itemize
 @item
-Upon failure, the function does not set @code{errno} to @code{ENOMEM} on
-some platforms:
-mingw, MSVC 14, Solaris 11.4.
+On some platforms, when the function fails it does not set @code{errno}:
+mingw, MSVC 14.
+
+@item
+On some platforms, when the function fails it might set @code{errno}
+to @code{EAGAIN} instead of to @code{ENOMEM}. Although POSIX allows
+@code{EAGAIN}, the @code{malloc-posix} module insists on @code{ENOMEM}
+which also conforms to POSIX and is GNU-compatible:
+Solaris 11.4.
 
 @item
 On some platforms, @code{malloc (n)} can succeed even if @code{n}

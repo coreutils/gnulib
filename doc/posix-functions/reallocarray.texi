@@ -27,6 +27,13 @@ This function is missing on many platforms:
 glibc 2.25, macOS 14, FreeBSD 10, NetBSD 7, OpenBSD 5.5, Minix 3.3.0, AIX 7.2, HP-UX 11, Solaris 11.4, Cygwin 1.7.x, mingw, MSVC 14, Android 9.0.
 
 @item
+On some platforms, when the function fails it might set @code{errno}
+to @code{EAGAIN} instead of to @code{ENOMEM}. Although POSIX allows
+@code{EAGAIN}, the @code{reallocarray} module insists on @code{ENOMEM}
+which also conforms to POSIX and is GNU-compatible:
+Solaris 11.4.
+
+@item
 On some platforms, @code{reallocarray (p, n, s)} can succeed even if
 multiplying @code{n} by @code{s} would exceed @code{PTRDIFF_MAX},
 which can lead to undefined behavior later:
@@ -41,4 +48,8 @@ that @code{realloc} does.  @xref{realloc}.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+When not growing an already-allocated region,
+@code{reallocarray}, like @code{realloc}, can fail and return a null pointer:
+glibc 2.40 and probably other platforms.
 @end itemize
