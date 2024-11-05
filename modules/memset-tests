@@ -1,0 +1,11 @@
+Files:
+tests/test-memset.c
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-memset
+check_PROGRAMS += test-memset
