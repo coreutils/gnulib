@@ -1,0 +1,11 @@
+Files:
+tests/test-strndup.c
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-strndup
+check_PROGRAMS += test-strndup
