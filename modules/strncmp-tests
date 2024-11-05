@@ -1,0 +1,11 @@
+Files:
+tests/test-strncmp.c
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-strncmp
+check_PROGRAMS += test-strncmp
