@@ -1,0 +1,11 @@
+Files:
+tests/test-wmemmove.c
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-wmemmove
+check_PROGRAMS += test-wmemmove
