@@ -1,5 +1,5 @@
 # calloc.m4
-# serial 35
+# serial 36
 dnl Copyright (C) 2004-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -20,7 +20,7 @@ AC_DEFUN([gl_FUNC_CALLOC_IF],
 [
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CACHE_CHECK([whether calloc (0, n) and calloc (n, 0) return nonnull],
-    [ac_cv_func_calloc_0_nonnull],
+    [gl_cv_func_calloc_0_nonnull],
     [AC_RUN_IFELSE(
        [AC_LANG_PROGRAM(
           [[#include <stdlib.h>
@@ -31,17 +31,17 @@ AC_DEFUN([gl_FUNC_CALLOC_IF],
             int result = !p;
             free (p);
             return result;]])],
-       [ac_cv_func_calloc_0_nonnull=yes],
-       [ac_cv_func_calloc_0_nonnull=no],
+       [gl_cv_func_calloc_0_nonnull=yes],
+       [gl_cv_func_calloc_0_nonnull=no],
        [AS_CASE([$host_os],
           [# Guess yes on platforms where we know the result.
            *-gnu* | freebsd* | netbsd* | openbsd* | bitrig* \
            | gnu* | *-musl* | midipix* | midnightbsd* \
            | hpux* | solaris* | cygwin* | mingw* | windows* | msys*],
-            [ac_cv_func_malloc_0_nonnull="guessing yes"],
-          [# Guess as follows if we don't know.
-           ac_cv_func_malloc_0_nonnull=$gl_cross_guess_normal])])])
-  AS_CASE([$ac_cv_func_calloc_0_nonnull], [*yes], [$1], [$2])
+            [gl_cv_func_calloc_0_nonnull="guessing yes"],
+          [# If we don't know, obey --enable-cross-guesses.
+           gl_cv_func_calloc_0_nonnull="$gl_cross_guess_normal"])])])
+  AS_CASE([$gl_cv_func_calloc_0_nonnull], [*yes], [$1], [$2])
 ])
 
 
