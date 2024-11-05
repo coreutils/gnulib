@@ -14,12 +14,14 @@ stdlib
 configure.ac:
 gl_FUNC_REALLOC_POSIX
 gl_FUNC_REALLOC_0_NONNULL
-if test $REPLACE_REALLOC_FOR_REALLOC_POSIX != 0; then
-  AC_LIBOBJ([realloc])
-fi
+gl_CONDITIONAL([GL_COND_OBJ_REALLOC_POSIX],
+               [test $REPLACE_REALLOC_FOR_REALLOC_POSIX != 0])
 gl_STDLIB_MODULE_INDICATOR([realloc-posix])
 
 Makefile.am:
+if GL_COND_OBJ_REALLOC_POSIX
+lib_SOURCES += realloc.c
+endif
 
 Include:
 <stdlib.h>
