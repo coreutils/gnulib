@@ -243,5 +243,12 @@ main ()
   test_heap ();
   test_stack ();
 
+  /* Test zero-length operations on NULL pointers, allowed by
+     <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3322.pdf>.  */
+  {
+    int volatile value = (memset_explicit (NULL, '?', 0) == NULL);
+    ASSERT (value);
+  }
+
   return test_exit_status;
 }
