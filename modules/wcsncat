@@ -1,12 +1,6 @@
 Description:
 wcsncat() function: append part of a wide string to a wide string.
 
-Status:
-obsolete
-
-Notice:
-This module is obsolete.
-
 Files:
 lib/wcsncat.c
 lib/wcsncat-impl.h
@@ -17,7 +11,8 @@ wchar
 
 configure.ac:
 gl_FUNC_WCSNCAT
-gl_CONDITIONAL([GL_COND_OBJ_WCSNCAT], [test $HAVE_WCSNCAT = 0])
+gl_CONDITIONAL([GL_COND_OBJ_WCSNCAT],
+               [test $HAVE_WCSNCAT = 0 || test $REPLACE_WCSNCAT = 1])
 gl_WCHAR_MODULE_INDICATOR([wcsncat])
 
 Makefile.am:

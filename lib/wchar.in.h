@@ -1149,14 +1149,27 @@ _GL_WARN_ON_USE (wcscat, "wcscat is unportable - "
 
 /* Append no more than N wide characters of SRC onto DEST.  */
 #if @GNULIB_WCSNCAT@
-# if !@HAVE_WCSNCAT@
+# if @REPLACE_WCSNCAT@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef wcsncat
+#   define wcsncat rpl_wcsncat
+#  endif
+_GL_FUNCDECL_RPL (wcsncat, wchar_t *,
+                  (wchar_t *restrict dest, const wchar_t *restrict src,
+                   size_t n), );
+_GL_CXXALIAS_RPL (wcsncat, wchar_t *,
+                  (wchar_t *restrict dest, const wchar_t *restrict src,
+                   size_t n));
+# else
+#  if !@HAVE_WCSNCAT@
 _GL_FUNCDECL_SYS (wcsncat, wchar_t *,
                   (wchar_t *restrict dest, const wchar_t *restrict src,
                    size_t n), );
-# endif
+#  endif
 _GL_CXXALIAS_SYS (wcsncat, wchar_t *,
                   (wchar_t *restrict dest, const wchar_t *restrict src,
                    size_t n));
+# endif
 # if __GLIBC__ >= 2
 _GL_CXXALIASWARN (wcsncat);
 # endif

@@ -9,6 +9,10 @@ Gnulib module: wcsncat
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+This function does not support zero-length operations on NULL pointers
+on some platforms:
+macOS 15, NetBSD 10.0, OpenBSD 7.6, Solaris 11.4, Cygwin 3.5.4.
 @end itemize
 
 Portability problems not fixed by Gnulib:
