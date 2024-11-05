@@ -1,5 +1,5 @@
 # malloc.m4
-# serial 41
+# serial 42
 dnl Copyright (C) 2007, 2009-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -45,8 +45,12 @@ AC_DEFUN([_AC_FUNC_MALLOC_IF],
 
 # gl_FUNC_MALLOC_GNU
 # ------------------
-# Define HAVE_MALLOC_0_NONNULL if malloc (0) returns nonnull.
-# Replace malloc if it is not compatible with GNU libc.
+# Test whether malloc (0) is compatible with GNU libc.
+# Replace malloc if not.
+# Define HAVE_MALLOC_0_NONNULL if malloc (0) returns nonnull (except upon
+# out-of-memory).
+# Define HAVE_MALLOC_PTRDIFF if malloc (N) reliably fails when N exceeds
+# PTRDIFF_MAX.
 AC_DEFUN([gl_FUNC_MALLOC_GNU],
 [
   AC_REQUIRE([gl_STDLIB_H_DEFAULTS])
@@ -66,8 +70,9 @@ AC_DEFUN([gl_FUNC_MALLOC_GNU],
 
 # gl_FUNC_MALLOC_PTRDIFF
 # ----------------------
-# Test whether malloc (N) reliably fails when N exceeds PTRDIFF_MAX,
-# and replace malloc otherwise.
+# Test whether malloc (N) reliably fails when N exceeds PTRDIFF_MAX.
+# Define HAVE_MALLOC_PTRDIFF if yes.
+# Replace malloc if not.
 AC_DEFUN([gl_FUNC_MALLOC_PTRDIFF],
 [
   AC_REQUIRE([gl_STDLIB_H_DEFAULTS])
@@ -81,7 +86,7 @@ AC_DEFUN([gl_FUNC_MALLOC_PTRDIFF],
 
 # Test whether malloc, realloc, calloc refuse to create objects
 # larger than what can be expressed in ptrdiff_t.
-# Set gl_cv_func_malloc_gnu and define MALLOC_PTRDIFF accordingly.
+# Set gl_cv_func_malloc_gnu.
 AC_DEFUN([gl_CHECK_MALLOC_PTRDIFF],
 [
   AC_CACHE_CHECK([whether malloc is ptrdiff_t safe],
