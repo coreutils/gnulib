@@ -8,10 +8,10 @@ dnl This file is offered as-is, without any warranty.
 
 m4_version_prereq([2.73], [], [
 # This is copied from upstream Autoconf here:
-# https://git.savannah.gnu.org/cgit/autoconf.git/tree/lib/autoconf/functions.m4?id=f8c82d292699fbce6d60abb46259a3781578f7fc#n971
+# https://git.savannah.gnu.org/cgit/autoconf.git/tree/lib/autoconf/functions.m4?id=1f38316f6af7bf63e5e7dd187ff6456e07ad743e#n971
 # _AC_FUNC_MALLOC_IF(IF-WORKS, IF-NOT[, UNKNOWN-ASSUME])
 # ------------------------------------------------------
-# If 'malloc (0, 0)' returns nonnull, run IF-WORKS, otherwise, IF-NOT.
+# If 'malloc (0)' returns nonnull, run IF-WORKS, otherwise, IF-NOT.
 # If it is not known whether it works, assume the shell word UNKNOWN-ASSUME,
 # which should end in "yes" or in something else (the latter is the default).
 AC_DEFUN([_AC_FUNC_MALLOC_IF],

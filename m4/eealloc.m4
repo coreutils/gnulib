@@ -36,7 +36,7 @@ AC_DEFUN([gl_EEREALLOC],
 
 m4_version_prereq([2.73], [], [
 # This is copied from upstream Autoconf here:
-# https://git.savannah.gnu.org/cgit/autoconf.git/tree/lib/autoconf/functions.m4?id=f8c82d292699fbce6d60abb46259a3781578f7fc#n1483
+# https://git.savannah.gnu.org/cgit/autoconf.git/tree/lib/autoconf/functions.m4?id=1f38316f6af7bf63e5e7dd187ff6456e07ad743e#n1483
 # _AC_FUNC_REALLOC_IF(IF-WORKS, IF-NOT[, UNKNOWN-ASSUME])
 # -------------------------------------------------------
 # If 'realloc (0, 0)' returns nonnull, run IF-WORKS, otherwise, IF-NOT.
