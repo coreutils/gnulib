@@ -58,5 +58,21 @@ main ()
     check (input, SIZEOF (input));
   }
 
+  int volatile value;
+
+  /* Test zero-length operations on NULL pointers, allowed by
+     <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3322.pdf>.  */
+
+#if 0 /* I think this is invalid, per ISO C 23 § 7.26.3.2.  */
+  value = (strncat (NULL, "x", 0) == NULL);
+  ASSERT (value);
+#endif
+
+  {
+    char y[1];
+    value = (strncat (y, NULL, 0) == y);
+    ASSERT (value);
+  }
+
   return test_exit_status;
 }
