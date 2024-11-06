@@ -26,7 +26,10 @@
 
 #include <errno.h>
 
-#include "dirent--.h"
+#if GNULIB_DIRENT_SAFER
+# include "dirent--.h"
+#endif
+
 #ifndef _D_EXACT_NAMLEN
 # define _D_EXACT_NAMLEN(dp)    strlen ((dp)->d_name)
 #endif
