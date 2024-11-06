@@ -28,9 +28,11 @@
 
 #include "macros.h"
 
+#if HAVE_ALIGNED_ALLOC
 void *(*volatile my_aligned_alloc) (size_t, size_t) = aligned_alloc;
-#undef aligned_alloc
-#define aligned_alloc my_aligned_alloc
+# undef aligned_alloc
+# define aligned_alloc my_aligned_alloc
+#endif
 
 #define ROUNDUP(x,y) (((x) + (y) - 1) & - (y))
 
