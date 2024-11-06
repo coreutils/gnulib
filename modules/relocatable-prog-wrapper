@@ -38,7 +38,6 @@ m4/largefile.m4
 m4/malloca.m4
 m4/canonicalize.m4
 m4/lstat.m4
-m4/eealloc.m4
 m4/environ.m4
 m4/free.m4
 m4/malloc.m4
