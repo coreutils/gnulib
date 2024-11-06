@@ -1,6 +1,13 @@
 Description:
 Memory allocation with expensive empty allocations
 
+Status:
+deprecated
+
+Notice:
+The eealloc module is deprecated.
+New code should use the malloc-gnu and/or realloc-posix modules.
+
 Files:
 lib/eealloc.h
 lib/eealloc.c

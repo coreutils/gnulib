@@ -74,6 +74,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2024-11-05  eealloc         This module is deprecated.  Use malloc-gnu or
+                            realloc-posix instead.
+
 2024-10-22  spawn-pipe      The functions 'create_pipe_out', 'create_pipe_in',
                             'create_pipe_bidi' now take a 4th argument
                             'const char * const *dll_dirs'. To maintain the
