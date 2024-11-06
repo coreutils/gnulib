@@ -165,8 +165,8 @@ flush_stdout (void)
 #if !_LIBC
   int stdout_fd;
 
-# if GNULIB_FREOPEN_SAFER
-  /* Use of gnulib's freopen-safer module normally ensures that
+# if GNULIB_FREOPEN_SAFER || GNULIB_XSTDOPEN
+  /* Gnulib's freopen-safer and/or xstdopen modules normally ensure that
        fileno (stdout) == 1
      whenever stdout is open.  */
   stdout_fd = STDOUT_FILENO;
