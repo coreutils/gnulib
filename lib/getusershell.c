@@ -33,13 +33,17 @@
 # endif
 #endif
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
 
-#include "stdio--.h"
 #include "filename.h"
 #include "xalloc.h"
+
+#if GNULIB_FOPEN_SAFER
+# include "stdio--.h"
+#endif
 
 #if ! defined ADDITIONAL_DEFAULT_SHELLS && defined __MSDOS__
 # define ADDITIONAL_DEFAULT_SHELLS \
