@@ -5,12 +5,12 @@ Files:
 lib/malloca.h
 lib/malloca.c
 m4/malloca.m4
-m4/eealloc.m4
 m4/malloc.m4
 
 Depends-on:
 alloca-opt
 assert-h
+extensions-aix
 idx
 stdckdint
 stdint
