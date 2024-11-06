@@ -16,6 +16,7 @@ pipe-posix
 
 configure.ac:
 gl_UNISTD_SAFER
+gl_MODULE_INDICATOR([unistd-safer])
 
 Makefile.am:
 lib_SOURCES += dup-safer.c fd-safer.c pipe-safer.c
