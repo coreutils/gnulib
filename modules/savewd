@@ -13,7 +13,6 @@ chdir
 errno
 extern-inline
 fchdir
-fcntl-safer
 fcntl-h
 filename
 raise

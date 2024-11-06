@@ -33,8 +33,11 @@
 
 #include "assure.h"
 #include "attribute.h"
-#include "fcntl-safer.h"
 #include "filename.h"
+
+#if GNULIB_FCNTL_SAFER
+# include "fcntl--.h"
+#endif
 
 #if defined _WIN32 && !defined __CYGWIN__
 # define fork() (assure (false), -1)
@@ -51,7 +54,7 @@ savewd_save (struct savewd *wd)
     case INITIAL_STATE:
       /* Save the working directory, or prepare to fall back if possible.  */
       {
-        int fd = open_safer (".", O_SEARCH);
+        int fd = open (".", O_SEARCH);
         if (0 <= fd)
           {
             wd->state = FD_STATE;
