@@ -12,6 +12,7 @@ gettext-h
 exitfail
 
 configure.ac:
+gl_MODULE_INDICATOR([xstdopen])
 
 Makefile.am:
 lib_SOURCES += xstdopen.c
