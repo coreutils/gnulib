@@ -40,6 +40,10 @@ AC_DEFUN([gl_FUNC_REALLOC_POSIX],
 # gl_FUNC_REALLOC_0_NONNULL
 # -------------------------
 # Replace realloc if realloc (..., 0) returns null.
+# Modules that use this macro directly or indirectly should depend
+# on extensions-aix, so that _LINUX_SOURCE_COMPAT gets defined
+# before this macro gets invoked.  This helps if !(__VEC__ || __AIXVEC),
+# and doesn't hurt otherwise.
 AC_DEFUN([gl_FUNC_REALLOC_0_NONNULL],
 [
   AC_REQUIRE([gl_STDLIB_H_DEFAULTS])
