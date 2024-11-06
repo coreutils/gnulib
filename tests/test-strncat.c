@@ -69,7 +69,7 @@ main ()
 #endif
 
   {
-    char y[1];
+    char y[2] = { 'x', '\0' };
     value = (strncat (y, NULL, 0) == y);
     ASSERT (value);
   }

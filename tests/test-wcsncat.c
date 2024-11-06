@@ -39,7 +39,7 @@ main ()
 #endif
 
   {
-    wchar_t y[1];
+    wchar_t y[2] = { L'x', 0 };
     value = (wcsncat (y, NULL, 0) == y);
     ASSERT (value);
   }
