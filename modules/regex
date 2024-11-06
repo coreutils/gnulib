@@ -11,8 +11,6 @@ lib/regex_internal.c
 lib/regex_internal.h
 lib/regexec.c
 lib/regcomp.c
-m4/eealloc.m4
-m4/malloc.m4
 m4/regex.m4
 m4/mbstate_t.m4
 
@@ -31,6 +29,7 @@ langinfo                [test $ac_use_included_regex = yes]
 libc-config             [test $ac_use_included_regex = yes]
 limits-h                [test $ac_use_included_regex = yes]
 lock                    [test $ac_use_included_regex = yes]
+malloc-gnu              [test $ac_use_included_regex = yes]
 memcmp                  [test $ac_use_included_regex = yes]
 memmove                 [test $ac_use_included_regex = yes]
 mbrtowc                 [test $ac_use_included_regex = yes]
