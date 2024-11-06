@@ -143,9 +143,12 @@ The @code{*-safer} modules:
 @code{stdlib-safer}.
 @end itemize
 
-The approach with the @code{xstdopen} module is simpler, but it adds three
+The approach with the @code{xstdopen} module is simple, but it adds three
 system calls to program startup.  Whereas the approach with the @code{*-safer}
-modules is more complex, but adds no overhead (no additional system calls)
+modules is more complicated and error-prone,
+and does not fix the problem if system library functions call one
+of the affected functions,
+but adds no overhead (no additional system calls)
 in the normal case.
 
 To use the approach with the @code{xstdopen} module:

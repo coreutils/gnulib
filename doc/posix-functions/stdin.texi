@@ -22,6 +22,7 @@ POSIX states that a setuid application can guarantee that fd 0 is
 open, but some systems guarantee this even for non-setuid programs.
 If an application is executed with fd 0 closed, use of @code{stdin}
 can affect an unrelated file that happened to be assigned to fd 0.
-The gnulib *-safer modules may be used to guarantee that fd 0 stays
+The gnulib @code{xstdopen} or the *-safer modules may be used to
+guarantee that fd 0 stays
 reserved for @code{stdin}.
 @end itemize
