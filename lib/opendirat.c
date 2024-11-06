@@ -22,8 +22,12 @@
 #include <opendirat.h>
 
 #include <errno.h>
-#include <fcntl--.h>
+#include <fcntl.h>
 #include <unistd.h>
+
+#ifdef GNULIB_OPENAT_SAFER
+# include "fcntl--.h"
+#endif
 
 /* Relative to DIR_FD, open the directory DIR, passing EXTRA_FLAGS to
    the underlying openat call.  On success, store into *PNEW_FD the

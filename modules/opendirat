@@ -10,7 +10,7 @@ c99
 dirent
 fcntl-h
 fdopendir
-openat-safer
+openat
 
 configure.ac:
 
