@@ -2645,7 +2645,6 @@ func_all_modules ()
   func_module ptsname
   func_module pwrite
   func_module readlink
-  func_module realloc-posix
   func_module recv
   func_module recvfrom
   func_module remove
