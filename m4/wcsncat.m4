@@ -1,5 +1,5 @@
 # wcsncat.m4
-# serial 3
+# serial 4
 dnl Copyright (C) 2011-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -31,7 +31,7 @@ AC_DEFUN([gl_FUNC_WCSNCAT],
             darwin* | netbsd* | openbsd* | solaris* | cygwin*)
               gl_cv_func_wcsncat_works="guessing no" ;;
             *)
-              gl_cv_func_strndup_works="guessing yes" ;;
+              gl_cv_func_wcsncat_works="guessing yes" ;;
           esac
          ])
       ])
