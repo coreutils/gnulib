@@ -115,13 +115,13 @@ get_aclinfo (char const *name, struct aclinfo *ai, int flags)
 {
   int scontext_err = ENOTSUP;
   ai->buf = ai->u.__gl_acl_ch;
-  ai->__gl_acl_alloc = sizeof ai->u.__gl_acl_ch;
+  ssize_t acl_alloc = sizeof ai->u.__gl_acl_ch;
 
   ssize_t (*lsxattr) (char const *, char *, size_t)
     = (flags & ACL_SYMLINK_FOLLOW ? listxattr : llistxattr);
   while (true)
     {
-      ai->size = lsxattr (name, ai->buf, ai->__gl_acl_alloc);
+      ai->size = lsxattr (name, ai->buf, acl_alloc);
       if (0 < ai->size)
         break;
       ai->u.err = ai->size < 0 ? errno : 0;
@@ -140,32 +140,30 @@ get_aclinfo (char const *name, struct aclinfo *ai, int flags)
       /* Grow allocation to at least 'size'.  Grow it by a nontrivial
          amount, to defend against denial of service by an adversary
          that fiddles with ACLs.  */
-      ssize_t larger_alloc;
-      if (ckd_add (&larger_alloc, ai->__gl_acl_alloc, ai->__gl_acl_alloc >> 1))
-        {
-          ai->u.err = ENOMEM;
-          break;
-        }
       if (ai->buf != ai->u.__gl_acl_ch)
         {
           free (ai->buf);
           ai->buf = ai->u.__gl_acl_ch;
-          ai->__gl_acl_alloc = sizeof ai->u.__gl_acl_ch;
         }
-      ssize_t newalloc = MAX (size, larger_alloc);
-      if (SIZE_MAX < newalloc)
+      if (ckd_add (&acl_alloc, acl_alloc, acl_alloc >> 1))
         {
           ai->u.err = ENOMEM;
           break;
         }
-      char *newbuf = malloc (newalloc);
+      if (acl_alloc < size)
+        acl_alloc = size;
+      if (SIZE_MAX < acl_alloc)
+        {
+          ai->u.err = ENOMEM;
+          break;
+        }
+      char *newbuf = malloc (acl_alloc);
       if (!newbuf)
         {
           ai->u.err = errno;
           break;
         }
       ai->buf = newbuf;
-      ai->__gl_acl_alloc = newalloc;
     }
 
   if (0 < ai->size)

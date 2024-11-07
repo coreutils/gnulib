@@ -49,11 +49,6 @@ struct aclinfo
      and u.err is the corresponding errno.  */
   ssize_t size;
 
-  /* The allocated size of buf.  This is sizeof u.__gl_acl_ch if the
-     buffer is not heap-allocated, and is larger otherwise.
-     For internal use only.  */
-  ssize_t __gl_acl_alloc;
-
   /* Security context string.  Do not modify its contents.  */
   char *scontext;
   /* Security context errno value.  It is zero if there was no
