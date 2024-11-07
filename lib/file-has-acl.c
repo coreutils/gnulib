@@ -28,6 +28,7 @@
 #include "acl.h"
 
 #include <dirent.h>
+#include <limits.h>
 
 #include "acl-internal.h"
 #include "attribute.h"
@@ -125,7 +126,7 @@ get_aclinfo (char const *name, struct aclinfo *ai, int flags)
       if (0 < ai->size)
         break;
       ai->u.err = ai->size < 0 ? errno : 0;
-      if (! (ai->size < 0 && ai->u.err == ERANGE))
+      if (! (ai->size < 0 && ai->u.err == ERANGE && acl_alloc < SSIZE_MAX))
         break;
 
       /* The buffer was too small.  Find how large it should have been.  */
@@ -146,10 +147,7 @@ get_aclinfo (char const *name, struct aclinfo *ai, int flags)
           ai->buf = ai->u.__gl_acl_ch;
         }
       if (ckd_add (&acl_alloc, acl_alloc, acl_alloc >> 1))
-        {
-          ai->u.err = ENOMEM;
-          break;
-        }
+        acl_alloc = SSIZE_MAX;
       if (acl_alloc < size)
         acl_alloc = size;
       if (SIZE_MAX < acl_alloc)
@@ -543,10 +541,7 @@ file_has_aclinfo (MAYBE_UNUSED char const *restrict name,
                 entries = malloced =
                   (aclent_t *) malloc (alloc * sizeof (aclent_t));
                 if (entries == NULL)
-                  {
-                    errno = ENOMEM;
-                    return -1;
-                  }
+                  return -1;
                 continue;
               }
             break;
@@ -616,10 +611,7 @@ file_has_aclinfo (MAYBE_UNUSED char const *restrict name,
                 alloc = 2 * alloc; /* <= alloc_max */
                 entries = malloced = (ace_t *) malloc (alloc * sizeof (ace_t));
                 if (entries == NULL)
-                  {
-                    errno = ENOMEM;
-                    return -1;
-                  }
+                  return -1;
                 continue;
               }
             break;
@@ -773,10 +765,7 @@ file_has_aclinfo (MAYBE_UNUSED char const *restrict name,
             free (acl);
           acl = malloc (aclsize);
           if (acl == NULL)
-            {
-              errno = ENOMEM;
-              return -1;
-            }
+            return -1;
         }
 
       if (type.u64 == ACL_AIXC)

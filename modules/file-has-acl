@@ -16,6 +16,8 @@ errno
 extern-inline
 minmax
 free-posix
+limits-h
+malloc-posix
 ssize_t
 stat
 stdbool
