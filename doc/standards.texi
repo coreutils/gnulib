@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate May 27, 2024
+@set lastupdate October 28, 2024
 @c %**end of header
 
 @dircategory GNU organization
@@ -390,38 +390,28 @@ compiler, then no one can compile them without having them installed
 already.  That would be extremely troublesome in certain cases.
 
 @node Standard C
-@section Standard C and Pre-Standard C
+@section Standard C
 @cindex ANSI C standard
 
-1989 Standard C is widespread enough now that it is ok to use its
+ISO C99 is widespread enough now that it is ok to use its
 features in programs.  There is one exception: do not ever use the
-``trigraph'' feature of Standard C.
+``trigraph'' misfeature introduced by C89 and not removed until C23.
 
-The 1999 and 2011 editions of Standard C are not fully supported
-on all platforms.  If you aim to support compilation by
-compilers other than GCC, you should not require these C
-features in your programs.  It is ok to use these features
-conditionally when the compiler supports them.
+Not all features of recent Standard C are fully supported on all
+platforms.  If you aim to support compilation by compilers other than
+GCC, you should generally not require newer Standard C features in
+your programs, or else use them conditionally on whether the compiler
+supports them.  The same goes for GNU C extensions such as variable
+length arrays.
 
-If your program is only meant to compile with GCC, then you can
-use these features if GCC supports them, when they give substantial
-benefit.
-
-However, it is easy to support pre-standard compilers in most programs,
-so if you know how to do that, feel free.
+If your program is only meant to compile with GCC, then you can use
+these features if GCC supports them.  Don't use features that GCC does
+not support, except conditionally as a way to use equivalent features
+to those that are used when compiling with GCC.
 
 @cindex function prototypes
-To support pre-standard C, instead of writing function definitions in
-standard prototype form,
-
-@example
-int
-foo (int x, int y)
-@dots{}
-@end example
-
-@noindent
-write the definition in pre-standard style like this,
+Before C89, functions needed to be written in the K&R style, like
+this:
 
 @example
 int
@@ -431,42 +421,24 @@ foo (x, y)
 @end example
 
 @noindent
-and use a separate declaration to specify the argument prototype:
+with a separate declaration to specify the argument prototype:
 
 @example
 int foo (int, int);
 @end example
 
-You need such a declaration anyway, in a header file, to get the benefit
-of prototypes in all the files where the function is called.  And once
-you have the declaration, you normally lose nothing by writing the
-function definition in the pre-standard style.
+Until the 2020s, that was the way to get the most portability to
+different compilers.  But not any more.
 
-This technique does not work for integer types narrower than @code{int}.
-If you think of an argument as being of a type narrower than @code{int},
-declare it as @code{int} instead.
+Nowadays, it is rare to find a C compiler which fails to support the
+prototype style of function definition.  It is more common to run into
+a compiler that has dropped support for the old K&R style.  Thus, to
+maximize portability, write function definitions in the Standard C
+style.
 
-There are a few special cases where this technique is hard to use.  For
-example, if a function argument needs to hold the system type
-@code{dev_t}, you run into trouble, because @code{dev_t} is shorter than
-@code{int} on some machines; but you cannot use @code{int} instead,
-because @code{dev_t} is wider than @code{int} on some machines.  There
-is no type you can safely use on all machines in a non-standard
-definition.  The only way to support non-standard C and pass such an
-argument is to check the width of @code{dev_t} using Autoconf and choose
-the argument type accordingly.  This may not be worth the trouble.
-
-In order to support pre-standard compilers that do not recognize
-prototypes, you may want to use a preprocessor macro like this:
-
-@example
-/* Declare the prototype for a general external function.  */
-#if defined (__STDC__) || defined (WINDOWSNT)
-#define P_(proto) proto
-#else
-#define P_(proto) ()
-#endif
-@end example
+You generally need a declaration for the function in addition to iss
+definition, usually in a header file, to get the benefit of prototypes
+in all the files where the function is called.
 
 @node Conditional Compilation
 @section Conditional Compilation
@@ -2480,19 +2452,6 @@ using Standard C syntax, the format is this:
 static char *
 concat (char *s1, char *s2)
 @{
-  @dots{}
-@}
-@end example
-
-@noindent
-or, if you want to use traditional C syntax, format the definition like
-this:
-
-@example
-static char *
-concat (s1, s2)        /* Name starts in column one here */
-     char *s1, *s2;
-@{                     /* Open brace in column one here */
   @dots{}
 @}
 @end example
