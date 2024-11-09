@@ -336,177 +336,165 @@ file_has_aclinfo (MAYBE_UNUSED char const *restrict name,
 {
   unsigned char d_type = flags & UCHAR_MAX;
 
-  /* Symbolic links lack extended attributes and ACLs on all supported
-     platforms, so don't bother trying to fetch them.  If the platform
-     supports not following symlinks this defends against some races
-     and avoids a syscall; otherwise this is essential.
+#if USE_LINUX_XATTR
+  int initial_errno = errno;
+  get_aclinfo (name, ai, flags);
 
-     First, initialize *AI for cases known to be unsupported.  */
-
-  if (!USE_LINUX_XATTR || d_type == DT_LNK)
+  if (ai->size <= 0)
     {
-      ai->buf = ai->u.__gl_acl_ch;
-      ai->size = -1;
-      ai->u.err = ENOTSUP;
-      ai->scontext = (char *) UNKNOWN_SECURITY_CONTEXT;
-      ai->scontext_err = ENOTSUP;
+      errno = ai->size < 0 ? ai->u.err : initial_errno;
+      return ai->size;
     }
 
-  /* Now set *AI for cases that might be supported, then check for ACLs.  */
+  /* In Fedora 39, a file can have both NFSv4 and POSIX ACLs,
+     but if it has an NFSv4 ACL that's the one that matters.
+     In earlier Fedora the two types of ACLs were mutually exclusive.
+     Attempt to work correctly on both kinds of systems.  */
 
-#if USE_ACL
+  if (!aclinfo_has_xattr (ai, XATTR_NAME_NFSV4_ACL))
+    return
+      (aclinfo_has_xattr (ai, XATTR_NAME_POSIX_ACL_ACCESS)
+       || ((d_type == DT_DIR || d_type == DT_UNKNOWN)
+           && aclinfo_has_xattr (ai, XATTR_NAME_POSIX_ACL_DEFAULT)));
+
+  /* A buffer large enough to hold any trivial NFSv4 ACL.
+     The max length of a trivial NFSv4 ACL is 6 words for owner,
+     6 for group, 7 for everyone, all times 2 because there are both
+     allow and deny ACEs.  There are 6 words for owner because of
+     type, flag, mask, wholen, "OWNER@"+pad and similarly for group;
+     everyone is another word to hold "EVERYONE@".  */
+  uint32_t buf[2 * (6 + 6 + 7)];
+
+  int ret = ((flags & ACL_SYMLINK_FOLLOW ? getxattr : lgetxattr)
+             (name, XATTR_NAME_NFSV4_ACL, buf, sizeof buf));
+  if (ret < 0)
+    switch (errno)
+      {
+      case ENODATA: return 0;
+      case ERANGE : return 1; /* ACL must be nontrivial.  */
+      default: return - acl_errno_valid (errno);
+      }
+
+  /* It looks like a trivial ACL, but investigate further.  */
+  ret = acl_nfs4_nontrivial (buf, ret);
+  errno = ret < 0 ? EINVAL : initial_errno;
+  return ret;
+
+#else /* !USE_LINUX_XATTR */
+
+  ai->buf = ai->u.__gl_acl_ch;
+  ai->size = -1;
+  ai->u.err = ENOTSUP;
+  ai->scontext = (char *) UNKNOWN_SECURITY_CONTEXT;
+  ai->scontext_err = ENOTSUP;
+
+# if USE_ACL
+#  if HAVE_ACL_GET_FILE
+
+  {
+    /* POSIX 1003.1e (draft 17 -- abandoned) specific version.  */
+    /* Linux, FreeBSD, Mac OS X, IRIX, Tru64, Cygwin >= 2.5 */
+    int ret;
+
+#   if HAVE_ACL_EXTENDED_FILE /* Linux */
+      /* On Linux, acl_extended_file is an optimized function: It only
+         makes two calls to getxattr(), one for ACL_TYPE_ACCESS, one for
+         ACL_TYPE_DEFAULT.  */
+    ret = ((flags & ACL_SYMLINK_FOLLOW
+            ? acl_extended_file
+            : acl_extended_file_nofollow)
+           (name));
+#   elif HAVE_ACL_TYPE_EXTENDED /* Mac OS X */
+    /* On Mac OS X, acl_get_file (name, ACL_TYPE_ACCESS)
+       and acl_get_file (name, ACL_TYPE_DEFAULT)
+       always return NULL / EINVAL.  There is no point in making
+       these two useless calls.  The real ACL is retrieved through
+       acl_get_file (name, ACL_TYPE_EXTENDED).  */
+    acl_t acl = ((flags & AC_SYMLINK_FOLLOW
+                  ? acl_get_file
+                  : acl_get_link_np)
+                 (name, ACL_TYPE_EXTENDED));
+    if (acl)
+      {
+        ret = acl_extended_nontrivial (acl);
+        acl_free (acl);
+      }
+    else
+      ret = -1;
+#   else /* FreeBSD, IRIX, Tru64, Cygwin >= 2.5 */
+    acl_t acl = ((flags & AC_SYMLINK_FOLLOW
+                  ? acl_get_file
+                  : acl_get_link_np)
+                 (name, ACL_TYPE_ACCESS));
+    if (acl)
+      {
+        ret = acl_access_nontrivial (acl);
+        int saved_errno = errno;
+        acl_free (acl);
+        errno = saved_errno;
+#    if HAVE_ACL_FREE_TEXT /* Tru64 */
+        /* On OSF/1, acl_get_file (name, ACL_TYPE_DEFAULT) always
+           returns NULL with errno not set.  There is no point in
+           making this call.  */
+#    else /* FreeBSD, IRIX, Cygwin >= 2.5 */
+        /* On Linux, FreeBSD, IRIX, acl_get_file (name, ACL_TYPE_ACCESS)
+           and acl_get_file (name, ACL_TYPE_DEFAULT) on a directory
+           either both succeed or both fail; it depends on the
+           file system.  Therefore there is no point in making the second
+           call if the first one already failed.  */
+        if (ret == 0
+            && (d_type == DT_DIR
+                || (d_type == DT_UNKNOWN && !(flags & _GL_DT_NOTDIR))))
+          {
+            acl = acl_get_file (name, ACL_TYPE_DEFAULT);
+            if (acl)
+              {
+#     ifdef __CYGWIN__ /* Cygwin >= 2.5 */
+                ret = acl_access_nontrivial (acl);
+                saved_errno = errno;
+                acl_free (acl);
+                errno = saved_errno;
+#     else
+                ret = (0 < acl_entries (acl));
+                acl_free (acl);
+#     endif
+              }
+            else
+              {
+                ret = -1;
+#     ifdef __CYGWIN__ /* Cygwin >= 2.5 */
+                if (d_type == DT_UNKNOWN)
+                  ret = 0;
+#     endif
+              }
+          }
+#    endif
+      }
+    else
+      ret = -1;
+#   endif
+
+    return ret < 0 ? - acl_errno_valid (errno) : ret;
+  }
+
+#  else /* !HAVE_ACL_GET_FILE */
+
+  /* The remaining APIs always follow symlinks and operate on
+     platforms where symlinks do not have ACLs, so skip the APIs if
+     NAME is known to be a symlink.  */
   if (d_type != DT_LNK)
     {
 
-# if USE_LINUX_XATTR
-      int initial_errno = errno;
-      get_aclinfo (name, ai, flags);
+#   if HAVE_FACL && defined GETACL /* Solaris, Cygwin < 2.5, not HP-UX */
 
-      if (ai->size <= 0)
-        {
-          errno = ai->size < 0 ? ai->u.err : initial_errno;
-          return ai->size;
-        }
-      else
-        {
-          /* In Fedora 39, a file can have both NFSv4 and POSIX ACLs,
-             but if it has an NFSv4 ACL that's the one that matters.
-             In earlier Fedora the two types of ACLs were mutually exclusive.
-             Attempt to work correctly on both kinds of systems.  */
-
-          if (!aclinfo_has_xattr (ai, XATTR_NAME_NFSV4_ACL))
-            return
-              (aclinfo_has_xattr (ai, XATTR_NAME_POSIX_ACL_ACCESS)
-               || ((d_type == DT_DIR || d_type == DT_UNKNOWN)
-                   && aclinfo_has_xattr (ai, XATTR_NAME_POSIX_ACL_DEFAULT)));
-
-          /* A buffer large enough to hold any trivial NFSv4 ACL.
-             The max length of a trivial NFSv4 ACL is 6 words for owner,
-             6 for group, 7 for everyone, all times 2 because there are both
-             allow and deny ACEs.  There are 6 words for owner because of
-             type, flag, mask, wholen, "OWNER@"+pad and similarly for group;
-             everyone is another word to hold "EVERYONE@".  */
-          uint32_t buf[2 * (6 + 6 + 7)];
-
-          int ret = ((flags & ACL_SYMLINK_FOLLOW ? getxattr : lgetxattr)
-                     (name, XATTR_NAME_NFSV4_ACL, buf, sizeof buf));
-          if (ret < 0)
-            switch (errno)
-              {
-              case ENODATA: return 0;
-              case ERANGE : return 1; /* ACL must be nontrivial.  */
-              }
-          else
-            {
-              /* It looks like a trivial ACL, but investigate further.  */
-              ret = acl_nfs4_nontrivial (buf, ret);
-              if (ret < 0)
-                {
-                  errno = EINVAL;
-                  return ret;
-                }
-              errno = initial_errno;
-            }
-
-          if (ret < 0)
-            return - acl_errno_valid (errno);
-          return ret;
-        }
-
-# elif HAVE_ACL_GET_FILE
-
-      /* POSIX 1003.1e (draft 17 -- abandoned) specific version.  */
-      /* Linux, FreeBSD, Mac OS X, IRIX, Tru64, Cygwin >= 2.5 */
-      int ret;
-
-#  if HAVE_ACL_EXTENDED_FILE /* Linux */
-        /* On Linux, acl_extended_file is an optimized function: It only
-           makes two calls to getxattr(), one for ACL_TYPE_ACCESS, one for
-           ACL_TYPE_DEFAULT.  */
-      ret = ((flags & ACL_SYMLINK_FOLLOW
-              ? acl_extended_file
-              : acl_extended_file_nofollow)
-             (name));
-#  elif HAVE_ACL_TYPE_EXTENDED /* Mac OS X */
-      /* On Mac OS X, acl_get_file (name, ACL_TYPE_ACCESS)
-         and acl_get_file (name, ACL_TYPE_DEFAULT)
-         always return NULL / EINVAL.  There is no point in making
-         these two useless calls.  The real ACL is retrieved through
-         acl_get_file (name, ACL_TYPE_EXTENDED).  */
-      acl_t acl = acl_get_file (name, ACL_TYPE_EXTENDED);
-      if (acl)
-        {
-          ret = acl_extended_nontrivial (acl);
-          acl_free (acl);
-        }
-      else
-        ret = -1;
-#  else /* FreeBSD, IRIX, Tru64, Cygwin >= 2.5 */
-      acl_t acl = acl_get_file (name, ACL_TYPE_ACCESS);
-      if (acl)
-        {
-          int saved_errno;
-
-          ret = acl_access_nontrivial (acl);
-          saved_errno = errno;
-          acl_free (acl);
-          errno = saved_errno;
-#   if HAVE_ACL_FREE_TEXT /* Tru64 */
-          /* On OSF/1, acl_get_file (name, ACL_TYPE_DEFAULT) always
-             returns NULL with errno not set.  There is no point in
-             making this call.  */
-#   else /* FreeBSD, IRIX, Cygwin >= 2.5 */
-          /* On Linux, FreeBSD, IRIX, acl_get_file (name, ACL_TYPE_ACCESS)
-             and acl_get_file (name, ACL_TYPE_DEFAULT) on a directory
-             either both succeed or both fail; it depends on the
-             file system.  Therefore there is no point in making the second
-             call if the first one already failed.  */
-          if (ret == 0
-              && (d_type == DT_DIR
-                  || (d_type == DT_UNKNOWN && !(flags & _GL_DT_NOTDIR))))
-            {
-              acl = acl_get_file (name, ACL_TYPE_DEFAULT);
-              if (acl)
-                {
-#    ifdef __CYGWIN__ /* Cygwin >= 2.5 */
-                  ret = acl_access_nontrivial (acl);
-                  saved_errno = errno;
-                  acl_free (acl);
-                  errno = saved_errno;
-#    else
-                  ret = (0 < acl_entries (acl));
-                  acl_free (acl);
-#    endif
-                }
-              else
-                {
-#    ifdef __CYGWIN__ /* Cygwin >= 2.5 */
-                  if (d_type == DT_UNKNOWN)
-                    ret = 0;
-                  else
-#    endif
-                    ret = -1;
-                }
-            }
-#   endif
-        }
-      else
-        ret = -1;
-#  endif
-      if (ret < 0)
-        return - acl_errno_valid (errno);
-      return ret;
-
-# elif HAVE_FACL && defined GETACL /* Solaris, Cygwin < 2.5, not HP-UX */
-
-#  if defined ACL_NO_TRIVIAL
+#    ifdef ACL_NO_TRIVIAL
 
       /* Solaris 10 (newer version), which has additional API declared in
          <sys/acl.h> (acl_t) and implemented in libsec (acl_set, acl_trivial,
          acl_fromtext, ...).  */
       return acl_trivial (name);
 
-#  else /* Solaris, Cygwin, general case */
+#    else /* Solaris, Cygwin, general case */
 
       /* Solaris 2.5 through Solaris 10, Cygwin, and contemporaneous versions
          of Unixware.  The acl() call returns the access and default ACL both
@@ -579,7 +567,7 @@ file_has_aclinfo (MAYBE_UNUSED char const *restrict name,
         free (malloced);
       }
 
-#   ifdef ACE_GETACL
+#     ifdef ACE_GETACL
       /* Solaris also has a different variant of ACLs, used in ZFS and NFSv4
          file systems (whereas the other ones are used in UFS file systems).  */
       {
@@ -652,12 +640,12 @@ file_has_aclinfo (MAYBE_UNUSED char const *restrict name,
           }
         free (malloced);
       }
-#   endif
+#     endif
 
       return 0;
-#  endif
+#    endif
 
-# elif HAVE_GETACL /* HP-UX */
+#   elif HAVE_GETACL /* HP-UX */
 
       {
         struct acl_entry entries[NACLENTRIES];
@@ -700,7 +688,7 @@ file_has_aclinfo (MAYBE_UNUSED char const *restrict name,
           }
       }
 
-#  if HAVE_ACLV_H /* HP-UX >= 11.11 */
+#    if HAVE_ACLV_H /* HP-UX >= 11.11 */
 
       {
         struct acl entries[NACLVENTRIES];
@@ -735,9 +723,9 @@ file_has_aclinfo (MAYBE_UNUSED char const *restrict name,
           }
       }
 
-#  endif
+#    endif
 
-# elif HAVE_ACLX_GET && defined ACL_AIX_WIP /* AIX */
+#   elif HAVE_ACLX_GET && defined ACL_AIX_WIP /* AIX */
 
       acl_type_t type;
       char aclbuf[1024];
@@ -792,7 +780,7 @@ file_has_aclinfo (MAYBE_UNUSED char const *restrict name,
           return -1;
         }
 
-# elif HAVE_STATACL /* older AIX */
+#   elif HAVE_STATACL /* older AIX */
 
       union { struct acl a; char room[4096]; } u;
 
@@ -801,7 +789,7 @@ file_has_aclinfo (MAYBE_UNUSED char const *restrict name,
 
       return acl_nontrivial (&u.a);
 
-# elif HAVE_ACLSORT /* NonStop Kernel */
+#   elif HAVE_ACLSORT /* NonStop Kernel */
 
       {
         struct acl entries[NACLENTRIES];
@@ -833,8 +821,10 @@ file_has_aclinfo (MAYBE_UNUSED char const *restrict name,
             return acl_nontrivial (count, entries);
           }
       }
-# endif
+#   endif
     }
+#  endif
+# endif
 #endif
 
   return 0;
