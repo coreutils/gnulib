@@ -22,6 +22,7 @@
        -> stat
           -> filename
           -> pathmax
+          -> stat-time
           -> verify
        -> areadlink
           -> careadlinkat

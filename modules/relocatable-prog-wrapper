@@ -16,6 +16,8 @@ lib/allocator.h
 lib/allocator.c
 lib/readlink.c
 lib/stat.c
+lib/stat-time.h
+lib/stat-time.c
 lib/canonicalize-lgpl.c
 lib/scratch_buffer.h
 lib/malloc/scratch_buffer.h
