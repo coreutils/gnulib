@@ -429,13 +429,13 @@ file_has_aclinfo (MAYBE_UNUSED char const *restrict name,
     else
       ret = -1;
 #   else /* FreeBSD, NetBSD >= 10, IRIX, Tru64, Cygwin >= 2.5 */
-    acl_t acl;
-#    if HAVE_ACL_GET_LINK_NP /* FreeBSD, NetBSD >= 10 */
-    if (!(flags & ACL_SYMLINK_FOLLOW))
-      acl = acl_get_link_np (name, ACL_TYPE_ACCESS);
-    else
+#    if !HAVE_ACL_GET_LINK_NP /* IRIX, Tru64, Cygwin >= 2.5 */
+#     define acl_get_link_np acl_get_file
 #    endif
-      acl = acl_get_file (name, ACL_TYPE_ACCESS);
+    acl_t acl = ((flags & AC_SYMLINK_FOLLOW
+                  ? acl_get_file
+                  : acl_get_link_np)
+                 (name, ACL_TYPE_ACCESS));
     if (acl)
       {
         ret = acl_access_nontrivial (acl);
