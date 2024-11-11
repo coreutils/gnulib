@@ -341,7 +341,7 @@ int
 file_has_aclinfo (MAYBE_UNUSED char const *restrict name,
                   struct aclinfo *restrict ai, int flags)
 {
-  _GL_UNUSED unsigned char d_type = flags & UCHAR_MAX;
+  MAYBE_UNUSED unsigned char d_type = flags & UCHAR_MAX;
 
 #if USE_LINUX_XATTR
   int initial_errno = errno;
