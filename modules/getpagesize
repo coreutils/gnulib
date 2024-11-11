@@ -10,7 +10,8 @@ unistd
 
 configure.ac:
 gl_FUNC_GETPAGESIZE
-gl_CONDITIONAL([GL_COND_OBJ_GETPAGESIZE], [test $REPLACE_GETPAGESIZE = 1])
+gl_CONDITIONAL([GL_COND_OBJ_GETPAGESIZE],
+               [test $HAVE_GETPAGESIZE = 0 || test $REPLACE_GETPAGESIZE = 1])
 gl_UNISTD_MODULE_INDICATOR([getpagesize])
 
 Makefile.am:
