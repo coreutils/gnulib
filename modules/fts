@@ -19,6 +19,7 @@ d-type
 fchdir
 fcntl
 fcntl-h
+fcntl-safer
 flexmember
 free-posix
 fstat
