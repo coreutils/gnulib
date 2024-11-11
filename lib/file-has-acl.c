@@ -39,7 +39,7 @@ static_assert (ACL_SYMLINK_FOLLOW & ~ (unsigned char) -1);
 
 static char const UNKNOWN_SECURITY_CONTEXT[] = "?";
 
-#if USE_ACL && HAVE_LINUX_XATTR_H && HAVE_LISTXATTR
+#if HAVE_LINUX_XATTR_H && HAVE_LISTXATTR
 # define USE_LINUX_XATTR true
 #else
 # define USE_LINUX_XATTR false
@@ -109,7 +109,8 @@ aclinfo_has_xattr (struct aclinfo const *ai, char const *xattr)
   return false;
 }
 
-/* Get attributes of the file NAME into AI.
+/* Get attributes of the file NAME into AI, if USE_ACL.
+   If FLAGS & ACL_GET_SCONTEXT, also get security context.
    If FLAGS & ACL_SYMLINK_FOLLOW, follow symbolic links.  */
 static void
 get_aclinfo (char const *name, struct aclinfo *ai, int flags)
@@ -118,53 +119,58 @@ get_aclinfo (char const *name, struct aclinfo *ai, int flags)
   ai->buf = ai->u.__gl_acl_ch;
   ssize_t acl_alloc = sizeof ai->u.__gl_acl_ch;
 
-  ssize_t (*lsxattr) (char const *, char *, size_t)
-    = (flags & ACL_SYMLINK_FOLLOW ? listxattr : llistxattr);
-  while (true)
+  if (! (USE_ACL || flags & ACL_GET_SCONTEXT))
+    ai->size = 0;
+  else
     {
-      ai->size = lsxattr (name, ai->buf, acl_alloc);
-      if (0 < ai->size)
-        break;
-      ai->u.err = ai->size < 0 ? errno : 0;
-      if (! (ai->size < 0 && ai->u.err == ERANGE && acl_alloc < SSIZE_MAX))
-        break;
+      ssize_t (*lsxattr) (char const *, char *, size_t)
+        = (flags & ACL_SYMLINK_FOLLOW ? listxattr : llistxattr);
+      while (true)
+        {
+          ai->size = lsxattr (name, ai->buf, acl_alloc);
+          if (0 < ai->size)
+            break;
+          ai->u.err = ai->size < 0 ? errno : 0;
+          if (! (ai->size < 0 && ai->u.err == ERANGE && acl_alloc < SSIZE_MAX))
+            break;
 
-      /* The buffer was too small.  Find how large it should have been.  */
-      ssize_t size = lsxattr (name, NULL, 0);
-      if (size <= 0)
-        {
-          ai->size = size;
-          ai->u.err = size < 0 ? errno : 0;
-          break;
-        }
+          /* The buffer was too small.  Find how large it should have been.  */
+          ssize_t size = lsxattr (name, NULL, 0);
+          if (size <= 0)
+            {
+              ai->size = size;
+              ai->u.err = size < 0 ? errno : 0;
+              break;
+            }
 
-      /* Grow allocation to at least 'size'.  Grow it by a nontrivial
-         amount, to defend against denial of service by an adversary
-         that fiddles with ACLs.  */
-      if (ai->buf != ai->u.__gl_acl_ch)
-        {
-          free (ai->buf);
-          ai->buf = ai->u.__gl_acl_ch;
+          /* Grow allocation to at least 'size'.  Grow it by a nontrivial
+             amount, to defend against denial of service by an adversary
+             that fiddles with ACLs.  */
+          if (ai->buf != ai->u.__gl_acl_ch)
+            {
+              free (ai->buf);
+              ai->buf = ai->u.__gl_acl_ch;
+            }
+          if (ckd_add (&acl_alloc, acl_alloc, acl_alloc >> 1))
+            acl_alloc = SSIZE_MAX;
+          if (acl_alloc < size)
+            acl_alloc = size;
+          if (SIZE_MAX < acl_alloc)
+            {
+              ai->u.err = ENOMEM;
+              break;
+            }
+          char *newbuf = malloc (acl_alloc);
+          if (!newbuf)
+            {
+              ai->u.err = errno;
+              break;
+            }
+          ai->buf = newbuf;
         }
-      if (ckd_add (&acl_alloc, acl_alloc, acl_alloc >> 1))
-        acl_alloc = SSIZE_MAX;
-      if (acl_alloc < size)
-        acl_alloc = size;
-      if (SIZE_MAX < acl_alloc)
-        {
-          ai->u.err = ENOMEM;
-          break;
-        }
-      char *newbuf = malloc (acl_alloc);
-      if (!newbuf)
-        {
-          ai->u.err = errno;
-          break;
-        }
-      ai->buf = newbuf;
     }
 
-  if (0 < ai->size)
+  if (0 < ai->size && flags & ACL_GET_SCONTEXT)
     {
       if (is_smack_enabled ())
         {
@@ -325,6 +331,7 @@ acl_nfs4_nontrivial (uint32_t *xattr, ssize_t nbytes)
    Set *AI to ACL info regardless of return value.
    FLAGS should be a <dirent.h> d_type value, optionally ORed with
      - _GL_DT_NOTDIR if it is known that NAME is not a directory,
+     - ACL_GET_SCONTEXT to retrieve extended attributes,
      - ACL_SYMLINK_FOLLOW to follow the link if NAME is a symbolic link.
    If the d_type value is not known, use DT_UNKNOWN though this may be less
    efficient.

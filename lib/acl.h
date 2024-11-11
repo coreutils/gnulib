@@ -32,9 +32,16 @@
 extern "C" {
 #endif
 
-/* Follow symlinks when getting an ACL.  This is a bitmask that is guaranteed
-   not to collide with any <dirent.h> DT_* or _GL_DT_* value.  */
-enum { ACL_SYMLINK_FOLLOW = 0x10000 };
+/* file_has_acl flags guaranteed to not collide with any <dirent.h>
+   DT_* or _GL_DT_* value.  */
+enum
+  {
+    /* Get scontext information as well.  */
+    ACL_GET_SCONTEXT = 0x10000,
+
+    /* Follow symlinks.  */
+    ACL_SYMLINK_FOLLOW = 0x20000,
+  };
 
 /* Information about an ACL.  */
 struct aclinfo
@@ -73,7 +80,7 @@ bool acl_errno_valid (int) _GL_ATTRIBUTE_CONST;
 int file_has_acl (char const *, struct stat const *);
 int file_has_aclinfo (char const *restrict, struct aclinfo *restrict, int);
 
-#if USE_ACL && HAVE_LINUX_XATTR_H && HAVE_LISTXATTR
+#if HAVE_LINUX_XATTR_H && HAVE_LISTXATTR
 bool aclinfo_has_xattr (struct aclinfo const *, char const *)
   _GL_ATTRIBUTE_PURE;
 void aclinfo_free (struct aclinfo *);
@@ -81,7 +88,7 @@ void aclinfo_free (struct aclinfo *);
 # define aclinfo_has_xattr(ai, xattr) false
 # define aclinfo_free(ai) ((void) 0)
 #endif
-#if (USE_ACL && HAVE_LINUX_XATTR_H && HAVE_LISTXATTR \
+#if (HAVE_LINUX_XATTR_H && HAVE_LISTXATTR \
      && (HAVE_SMACK || USE_SELINUX_SELINUX_H))
 void aclinfo_scontext_free (char *);
 #else
