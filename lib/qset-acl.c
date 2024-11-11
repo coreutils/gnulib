@@ -19,10 +19,10 @@
 
 #include <config.h>
 
-#define ACL_INTERNAL_INLINE _GL_EXTERN_INLINE
+/* Specification. */
+#include "acl.h"
 
 #include <string.h>
-#include "acl.h"
 
 #include "acl-internal.h"
 
