@@ -20,6 +20,7 @@
 #include <config.h>
 #include "nproc.h"
 
+#include <errno.h>
 #include <limits.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -122,6 +123,33 @@ num_processors_via_affinity_mask (void)
         cpuset_destroy (set);
         if (count > 0)
           return count;
+      }
+  }
+#elif HAVE_SCHED_GETAFFINITY_LIKE_GLIBC \
+  && defined CPU_ALLOC_SIZE /* glibc >= 2.6 */
+  {
+    unsigned int alloc_count = 1024;
+    while (1)
+      {
+        cpu_set_t *set = CPU_ALLOC (alloc_count);
+        if (set == NULL)
+          return 0;
+        unsigned int size = CPU_ALLOC_SIZE (alloc_count);
+        if (sched_getaffinity (0, size, set) == 0)
+          {
+            unsigned int count = CPU_COUNT_S (size, set);
+            CPU_FREE (set);
+            return count;
+          }
+        if (errno != EINVAL)
+          {
+            CPU_FREE (set);
+            return 0;
+          }
+        CPU_FREE (set);
+        alloc_count *= 2;
+        if (alloc_count == 0)
+          return 0;
       }
   }
 #elif HAVE_SCHED_GETAFFINITY_LIKE_GLIBC /* glibc >= 2.3.4 */
