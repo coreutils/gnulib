@@ -393,7 +393,7 @@ file_has_aclinfo (MAYBE_UNUSED char const *restrict name,
 
   {
     /* POSIX 1003.1e (draft 17 -- abandoned) specific version.  */
-    /* Linux, FreeBSD, Mac OS X, IRIX, Tru64, Cygwin >= 2.5 */
+    /* Linux, FreeBSD, NetBSD >= 10, Mac OS X, IRIX, Tru64, Cygwin >= 2.5 */
     int ret;
 
 #   if HAVE_ACL_EXTENDED_FILE /* Linux */
@@ -410,7 +410,7 @@ file_has_aclinfo (MAYBE_UNUSED char const *restrict name,
        always return NULL / EINVAL.  There is no point in making
        these two useless calls.  The real ACL is retrieved through
        acl_get_file (name, ACL_TYPE_EXTENDED).  */
-    acl_t acl = ((flags & AC_SYMLINK_FOLLOW
+    acl_t acl = ((flags & ACL_SYMLINK_FOLLOW
                   ? acl_get_file
                   : acl_get_link_np)
                  (name, ACL_TYPE_EXTENDED));
@@ -421,11 +421,14 @@ file_has_aclinfo (MAYBE_UNUSED char const *restrict name,
       }
     else
       ret = -1;
-#   else /* FreeBSD, IRIX, Tru64, Cygwin >= 2.5 */
-    acl_t acl = ((flags & AC_SYMLINK_FOLLOW
-                  ? acl_get_file
-                  : acl_get_link_np)
-                 (name, ACL_TYPE_ACCESS));
+#   else /* FreeBSD, NetBSD >= 10, IRIX, Tru64, Cygwin >= 2.5 */
+    acl_t acl;
+#    if HAVE_ACL_GET_LINK_NP /* FreeBSD, NetBSD >= 10 */
+    if (!(flags & ACL_SYMLINK_FOLLOW))
+      acl = acl_get_link_np (name, ACL_TYPE_ACCESS);
+    else
+#    endif
+      acl = acl_get_file (name, ACL_TYPE_ACCESS);
     if (acl)
       {
         ret = acl_access_nontrivial (acl);
@@ -436,8 +439,9 @@ file_has_aclinfo (MAYBE_UNUSED char const *restrict name,
         /* On OSF/1, acl_get_file (name, ACL_TYPE_DEFAULT) always
            returns NULL with errno not set.  There is no point in
            making this call.  */
-#    else /* FreeBSD, IRIX, Cygwin >= 2.5 */
-        /* On Linux, FreeBSD, IRIX, acl_get_file (name, ACL_TYPE_ACCESS)
+#    else /* FreeBSD, NetBSD >= 10, IRIX, Cygwin >= 2.5 */
+        /* On Linux, FreeBSD, NetBSD, IRIX,
+               acl_get_file (name, ACL_TYPE_ACCESS)
            and acl_get_file (name, ACL_TYPE_DEFAULT) on a directory
            either both succeed or both fail; it depends on the
            file system.  Therefore there is no point in making the second

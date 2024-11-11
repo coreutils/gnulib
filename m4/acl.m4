@@ -1,5 +1,5 @@
 # acl.m4
-# serial 33
+# serial 34
 dnl Copyright (C) 2002, 2004-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -34,8 +34,8 @@ AC_DEFUN_ONCE([gl_FUNC_ACL],
     if test $ac_cv_header_sys_acl_h = yes; then
       gl_saved_LIBS=$LIBS
 
-      dnl Test for POSIX-draft-like API (GNU/Linux, FreeBSD, Mac OS X,
-      dnl IRIX, Tru64, Cygwin >= 2.5).
+      dnl Test for POSIX-draft-like API (GNU/Linux, FreeBSD, NetBSD >= 10,
+      dnl Mac OS X, IRIX, Tru64, Cygwin >= 2.5).
       dnl -lacl is needed on GNU/Linux, -lpacl on OSF/1.
       if test $use_acl = 0; then
         AC_SEARCH_LIBS([acl_get_file], [acl pacl],
@@ -44,6 +44,7 @@ AC_DEFUN_ONCE([gl_FUNC_ACL],
            fi
            AC_CHECK_FUNCS(
              [acl_get_file acl_get_fd acl_set_file acl_set_fd \
+              acl_get_link_np \
               acl_free acl_from_mode acl_from_text \
               acl_delete_def_file acl_extended_file \
               acl_delete_fd_np acl_delete_file_np \
