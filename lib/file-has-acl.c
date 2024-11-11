@@ -331,12 +331,11 @@ acl_nfs4_nontrivial (uint32_t *xattr, ssize_t nbytes)
    Set *AI to ACL info regardless of return value.
    FLAGS should be a <dirent.h> d_type value, optionally ORed with
      - _GL_DT_NOTDIR if it is known that NAME is not a directory,
-     - ACL_GET_SCONTEXT to retrieve extended attributes,
-     - ACL_SYMLINK_FOLLOW to follow the link if NAME is a symbolic link.
+     - ACL_GET_SCONTEXT to retrieve security context and return 1 if present,
+     - ACL_SYMLINK_FOLLOW to follow the link if NAME is a symbolic link;
+       otherwise do not follow them if possible.
    If the d_type value is not known, use DT_UNKNOWN though this may be less
-   efficient.
-   If FLAGS & ACL_SYMLINK_FOLLOW, follow symlinks when retrieving ACL info;
-   otherwise do not follow them if possible.  */
+   efficient.  */
 int
 file_has_aclinfo (MAYBE_UNUSED char const *restrict name,
                   struct aclinfo *restrict ai, int flags)
@@ -429,13 +428,13 @@ file_has_aclinfo (MAYBE_UNUSED char const *restrict name,
     else
       ret = -1;
 #   else /* FreeBSD, NetBSD >= 10, IRIX, Tru64, Cygwin >= 2.5 */
-#    if !HAVE_ACL_GET_LINK_NP /* IRIX, Tru64, Cygwin >= 2.5 */
-#     define acl_get_link_np acl_get_file
+    acl_t (*acl_get_file_or_link) (char const *, acl_type_t) = acl_get_file;
+#    if HAVE_ACL_GET_LINK_NP /* FreeBSD, NetBSD >= 10 */
+    if (! (flags & ACL_SYMLINK_FOLLOW))
+      acl_get_file_or_link = acl_get_link_np;
 #    endif
-    acl_t acl = ((flags & AC_SYMLINK_FOLLOW
-                  ? acl_get_file
-                  : acl_get_link_np)
-                 (name, ACL_TYPE_ACCESS));
+
+    acl_t acl = acl_get_file_or_link (name, ACL_TYPE_ACCESS);
     if (acl)
       {
         ret = acl_access_nontrivial (acl);
@@ -457,7 +456,7 @@ file_has_aclinfo (MAYBE_UNUSED char const *restrict name,
             && (d_type == DT_DIR
                 || (d_type == DT_UNKNOWN && !(flags & _GL_DT_NOTDIR))))
           {
-            acl = acl_get_file (name, ACL_TYPE_DEFAULT);
+            acl = acl_get_file_or_link (name, ACL_TYPE_DEFAULT);
             if (acl)
               {
 #     ifdef __CYGWIN__ /* Cygwin >= 2.5 */
