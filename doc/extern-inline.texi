@@ -82,6 +82,15 @@ to accomplish the same ends.  Other non-C99 compilers use @code{static
 inline} so they suffer from code bloat, but they are not mainline
 platforms and will die out eventually.
 
+In this coding idiom,
+you need one @code{AAA_INLINE}-like macro per compilation unit,
+not one per header file.
+In other words, if the header file @file{aaa.h} defines functions
+defined in @file{aaa-foo.c} and @file{aaa-bar.c},
+you need different macros @code{AAA_FOO_INLINE} and @code{AAA_BAR_INLINE}.
+Use @code{AAA_FOO_INLINE} for the functions defined in @file{aaa-foo.c},
+and use @code{AAA_BAR_INLINE} for the functions defined in @file{aaa-bar.c}.
+
 @findex _GL_INLINE
 @code{_GL_INLINE} is a portable alternative to C99 plain @code{inline}.
 

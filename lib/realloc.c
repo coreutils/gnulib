@@ -21,6 +21,7 @@
 #define _GL_USE_STDLIB_ALLOC 1
 #include <config.h>
 
+#define _GL_REALLOC_INLINE _GL_EXTERN_INLINE
 #include <stdlib.h>
 
 #include <errno.h>

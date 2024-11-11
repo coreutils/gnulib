@@ -134,6 +134,9 @@ _GL_INLINE_HEADER_BEGIN
 #ifndef _GL_STDLIB_INLINE
 # define _GL_STDLIB_INLINE _GL_INLINE
 #endif
+#ifndef _GL_REALLOC_INLINE
+# define _GL_REALLOC_INLINE _GL_INLINE
+#endif
 
 /* _GL_ATTRIBUTE_DEALLOC (F, I) declares that the function returns pointers
    that can be freed by passing them as the Ith argument to the
@@ -1461,9 +1464,9 @@ _GL_WARN_ON_USE (setstate_r, "setstate_r is unportable - "
 
 #if @GNULIB_REALLOC_POSIX@
 # if @REPLACE_REALLOC_FOR_REALLOC_POSIX@
-#  if @REPLACE_REALLOC_FOR_REALLOC_POSIX@ == 2 && !IN_GNULIB_TESTS
+#  if @REPLACE_REALLOC_FOR_REALLOC_POSIX@ == 2
 #   define _GL_INLINE_RPL_REALLOC 1
-_GL_STDLIB_INLINE void *
+_GL_REALLOC_INLINE void *
 rpl_realloc (void *ptr, size_t size)
 {
   return realloc (ptr, size ? size : 1);
