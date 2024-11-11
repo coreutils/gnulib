@@ -118,7 +118,7 @@ freea (void *p)
       char *cp = p;
       small_t *sp = p;
 # if defined __CHERI_PURE_CAPABILITY__
-      void *mem = sp[-1];
+      void *mem = (void *) sp[-1];
 # else
       void *mem = cp - sp[-1];
 # endif
