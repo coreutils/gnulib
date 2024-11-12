@@ -1,6 +1,6 @@
 # A library of shell functions for autopull.sh, autogen.sh, and bootstrap.
 
-scriptlibversion=2024-07-21.12; # UTC
+scriptlibversion=2024-11-12.17; # UTC
 
 # Copyright (C) 2003-2024 Free Software Foundation, Inc.
 #
@@ -508,38 +508,45 @@ prepare_GNULIB_SRCDIR ()
       if test ! -d "$gnulib_path"; then
         # The subdirectory 'gnulib' does not yet exist. Clone into it.
         echo "$0: getting gnulib files..."
-        trap cleanup_gnulib HUP INT PIPE TERM
-        gnulib_url=${GNULIB_URL:-$default_gnulib_url}
-        shallow=
-        if test -z "$GNULIB_REVISION"; then
-          if git clone -h 2>&1 | grep -- --depth > /dev/null; then
-            shallow='--depth 2'
-          fi
-          git clone $shallow "$gnulib_url" "$gnulib_path" \
-            || cleanup_gnulib
+        if test -n "$GNULIB_REFDIR" && test -d "$GNULIB_REFDIR"/.git; then
+          # Use GNULIB_REFDIR as a reference.
+          git clone "$GNULIB_REFDIR" "$gnulib_path" || cleanup_gnulib
         else
-          if git fetch -h 2>&1 | grep -- --depth > /dev/null; then
-            shallow='--depth 2'
+          # GNULIB_REFDIR is not set or not usable. Ignore it.
+          trap cleanup_gnulib HUP INT PIPE TERM
+          gnulib_url=${GNULIB_URL:-$default_gnulib_url}
+          shallow=
+          if test -z "$GNULIB_REVISION"; then
+            if git clone -h 2>&1 | grep -- --depth > /dev/null; then
+              shallow='--depth 2'
+            fi
+            git clone $shallow "$gnulib_url" "$gnulib_path" \
+              || cleanup_gnulib
+          else
+            if git fetch -h 2>&1 | grep -- --depth > /dev/null; then
+              shallow='--depth 2'
+            fi
+            mkdir -p "$gnulib_path"
+            # Only want a shallow checkout of $GNULIB_REVISION,
+            # but git does not support cloning by commit hash.
+            # So attempt a shallow fetch by commit hash to minimize
+            # the amount of data downloaded and changes needed to be
+            # processed, which can drastically reduce download and
+            # processing time for checkout. If the fetch by commit fails,
+            # a shallow fetch can not be performed because we do not
+            # know what the depth of the commit is without fetching
+            # all commits. So fall back to fetching all commits.
+            git -C "$gnulib_path" init
+            git -C "$gnulib_path" remote add origin "$gnulib_url"
+            git -C "$gnulib_path" fetch $shallow origin "$GNULIB_REVISION" \
+              || git -C "$gnulib_path" fetch origin \
+              || cleanup_gnulib
+            git -C "$gnulib_path" reset --hard FETCH_HEAD
+            (cd "$gnulib_path" && git checkout "$GNULIB_REVISION") \
+              || cleanup_gnulib
           fi
-          mkdir -p "$gnulib_path"
-          # Only want a shallow checkout of $GNULIB_REVISION, but git does not
-          # support cloning by commit hash. So attempt a shallow fetch by commit
-          # hash to minimize the amount of data downloaded and changes needed to
-          # be processed, which can drastically reduce download and processing
-          # time for checkout. If the fetch by commit fails, a shallow fetch can
-          # not be performed because we do not know what the depth of the commit
-          # is without fetching all commits. So fall back to fetching all
-          # commits.
-          git -C "$gnulib_path" init
-          git -C "$gnulib_path" remote add origin "$gnulib_url"
-          git -C "$gnulib_path" fetch $shallow origin "$GNULIB_REVISION" \
-            || git -C "$gnulib_path" fetch origin \
-            || cleanup_gnulib
-          git -C "$gnulib_path" reset --hard FETCH_HEAD
-          (cd "$gnulib_path" && git checkout "$GNULIB_REVISION") \
-            || cleanup_gnulib
+          trap - HUP INT PIPE TERM
         fi
-        trap - HUP INT PIPE TERM
       else
         # The subdirectory 'gnulib' already exists.
         if test -n "$GNULIB_REVISION"; then
