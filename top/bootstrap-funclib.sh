@@ -1,6 +1,6 @@
 # A library of shell functions for autopull.sh, autogen.sh, and bootstrap.
 
-scriptlibversion=2024-11-12.20; # UTC
+scriptlibversion=2024-11-12.21; # UTC
 
 # Copyright (C) 2003-2024 Free Software Foundation, Inc.
 #
@@ -468,11 +468,10 @@ prepare_GNULIB_SRCDIR ()
       # if the GNULIB_REVISION is a commit hash that only exists in
       # origin. In this case, we need a 'git fetch' and then retry
       # 'git checkout "$GNULIB_REVISION"'.
-      (cd "$GNULIB_SRCDIR" \
-       && { git checkout "$GNULIB_REVISION" 2>/dev/null \
-            || { git fetch origin && git checkout "$GNULIB_REVISION"; }
-          }
-      ) || exit $?
+      git -C "$GNULIB_SRCDIR" checkout "$GNULIB_REVISION" 2>/dev/null \
+      || { git -C "$GNULIB_SRCDIR" fetch origin \
+           && git -C "$GNULIB_SRCDIR" checkout "$GNULIB_REVISION"; } \
+      || exit $?
     fi
   else
     if ! $use_git; then
@@ -547,8 +546,7 @@ prepare_GNULIB_SRCDIR ()
             || git -C "$gnulib_path" fetch origin \
             || cleanup_gnulib
           git -C "$gnulib_path" reset --hard FETCH_HEAD
-          (cd "$gnulib_path" && git checkout "$GNULIB_REVISION") \
-            || cleanup_gnulib
+          git -C "$gnulib_path" checkout "$GNULIB_REVISION" || cleanup_gnulib
         fi
         trap - HUP INT PIPE TERM
       else
@@ -561,11 +559,10 @@ prepare_GNULIB_SRCDIR ()
             # if the GNULIB_REVISION is a commit hash that only exists in
             # origin. In this case, we need a 'git fetch' and then retry
             # 'git checkout "$GNULIB_REVISION"'.
-            (cd "$gnulib_path" \
-             && { git checkout "$GNULIB_REVISION" 2>/dev/null \
-                  || { git fetch origin && git checkout "$GNULIB_REVISION"; }
-                }
-            ) || exit $?
+            git -C "$gnulib_path" checkout "$GNULIB_REVISION" 2>/dev/null \
+            || { git -C "$gnulib_path" fetch origin \
+                 && git -C "$gnulib_path" checkout "$GNULIB_REVISION"; } \
+            || exit $?
           else
             die "Error: GNULIB_REVISION is specified in bootstrap.conf," \
                 "but '$gnulib_path' contains no git history"
@@ -864,9 +861,7 @@ update_po_files() {
     && ls "$ref_po_dir"/*.po 2>/dev/null |
       sed 's|.*/||; s|\.po$||' > "$po_dir/LINGUAS" || return
 
-  langs=$(cd $ref_po_dir && echo *.po | sed 's/\.po//g')
-  test "$langs" = '*' && langs=x
-  for po in $langs; do
+  for po in x $(ls $ref_po_dir | sed -n 's/\.po$//p'); do
     case $po in x) continue;; esac
     new_po="$ref_po_dir/$po.po"
     cksum_file="$ref_po_dir/$po.s1"
@@ -1329,7 +1324,7 @@ autogen()
       || die 'cannot generate runtime-po/Makevars'
 
       # Copy identical files from po to runtime-po.
-      (cd po && cp -p Makefile.in.in *-quot *.header *.sed *.sin ../runtime-po)
+      cp -p po/Makefile.in.in po/*-quot po/*.header po/*.sed po/*.sin runtime-po
     fi
   fi
 
