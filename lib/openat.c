@@ -220,7 +220,6 @@ openat_permissive (int fd, char const *file, int flags, mode_t mode,
   struct saved_cwd saved_cwd;
   int saved_errno;
   int err;
-  bool save_ok;
 
   if (fd == AT_FDCWD || IS_ABSOLUTE_FILE_NAME (file))
     return open (file, flags, mode);
@@ -245,21 +244,33 @@ openat_permissive (int fd, char const *file, int flags, mode_t mode,
       }
   }
 
-  save_ok = (save_cwd (&saved_cwd) == 0);
-  if (! save_ok)
+  bool save_failed = save_cwd (&saved_cwd) < 0;
+
+  /* If save_cwd allocated a descriptor DFD other than FD, do another
+     save_cwd and then close DFD, so that the later open (if successful)
+     returns DFD (the lowest-numbered descriptor) as POSIX requires.  */
+  int dfd = saved_cwd.desc;
+  if (0 <= dfd && dfd != fd)
+    {
+      save_failed = save_cwd (&saved_cwd) < 0;
+      close (dfd);
+      dfd = saved_cwd.desc;
+    }
+
+  /* If saving the working directory collides with the user's requested fd,
+     then the user's fd must have been closed to begin with.  */
+  if (0 <= dfd && dfd == fd)
+    {
+      free_cwd (&saved_cwd);
+      errno = EBADF;
+      return -1;
+    }
+
+  if (save_failed)
     {
       if (! cwd_errno)
         openat_save_fail (errno);
       *cwd_errno = errno;
-    }
-  if (0 <= fd && fd == saved_cwd.desc)
-    {
-      /* If saving the working directory collides with the user's
-         requested fd, then the user's fd must have been closed to
-         begin with.  */
-      free_cwd (&saved_cwd);
-      errno = EBADF;
-      return -1;
     }
 
   err = fchdir (fd);
@@ -269,7 +280,7 @@ openat_permissive (int fd, char const *file, int flags, mode_t mode,
     {
       err = open (file, flags, mode);
       saved_errno = errno;
-      if (save_ok && restore_cwd (&saved_cwd) != 0)
+      if (!save_failed && restore_cwd (&saved_cwd) != 0)
         {
           if (! cwd_errno)
             {
