@@ -24,7 +24,9 @@
 # The environment variable GNULIB_TOOL_IMPL can have four possible values:
 #   - GNULIB_TOOL_IMPL=sh      chooses the shell implementation.
 #   - GNULIB_TOOL_IMPL=py      chooses the Python implementation.
-#   - GNULIB_TOOL_IMPL=        chooses the default (currently sh).
+#   - GNULIB_TOOL_IMPL=        chooses the default (the Python implementation
+#                              if a suitable Python version is found, the shell
+#                              implementation otherwise).
 #   - GNULIB_TOOL_IMPL=sh+py   runs both implementations and compares the
 #                              results.
 
