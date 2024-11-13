@@ -509,44 +509,64 @@ prepare_GNULIB_SRCDIR ()
         echo "$0: getting gnulib files..."
         trap cleanup_gnulib HUP INT PIPE TERM
         gnulib_url=${GNULIB_URL:-$default_gnulib_url}
-        shallow=
         if test -n "$GNULIB_REFDIR" && test -d "$GNULIB_REFDIR"/.git; then
           # Use GNULIB_REFDIR as a reference.
           git clone "$GNULIB_REFDIR" "$gnulib_path" \
           && git -C "$gnulib_path" remote set-url origin "$gnulib_url" \
           && if test -z "$GNULIB_REVISION"; then
-               git -C "$gnulib_path" pull origin
+               git -C "$gnulib_path" pull origin \
+               && {
+                 # We want the default branch of "$gnulib_url" (since that's
+                 # the behaviour if GNULIB_REFDIR is not specified), not the
+                 # current branch of "$GNULIB_REFDIR".
+                 default_branch=`LC_ALL=C git -C "$gnulib_path" \
+                                              remote show origin \
+                                 | sed -n -e 's/^ *HEAD branch: //p'`
+                 test -n "$default_branch" || default_branch='master'
+                 git -C "$gnulib_path" checkout "$default_branch"
+               }
              else
+               # The 'git checkout "$GNULIB_REVISION"' command succeeds if the
+               # GNULIB_REVISION is a commit hash that exists locally, or if it
+               # is a branch name that can be fetched from origin. It fails,
+               # however, if the GNULIB_REVISION is a commit hash that only
+               # exists in origin. In this case, we need a 'git fetch' and then
+               # retry 'git checkout "$GNULIB_REVISION"'.
                git -C "$gnulib_path" checkout "$GNULIB_REVISION" 2>/dev/null \
                || { git -C "$gnulib_path" fetch origin \
                     && git -C "$gnulib_path" checkout "$GNULIB_REVISION"; }
-             fi || cleanup_gnulib
-        elif test -z "$GNULIB_REVISION"; then
-          if git clone -h 2>&1 | grep -- --depth > /dev/null; then
-            shallow='--depth 2'
-          fi
-          git clone $shallow "$gnulib_url" "$gnulib_path" \
-            || cleanup_gnulib
+             fi \
+          || cleanup_gnulib
         else
-          if git fetch -h 2>&1 | grep -- --depth > /dev/null; then
-            shallow='--depth 2'
+          # GNULIB_REFDIR is not set or not usable. Ignore it.
+          shallow=
+          if test -z "$GNULIB_REVISION"; then
+            if git clone -h 2>&1 | grep -- --depth > /dev/null; then
+              shallow='--depth 2'
+            fi
+            git clone $shallow "$gnulib_url" "$gnulib_path" \
+              || cleanup_gnulib
+          else
+            if git fetch -h 2>&1 | grep -- --depth > /dev/null; then
+              shallow='--depth 2'
+            fi
+            mkdir -p "$gnulib_path"
+            # Only want a shallow checkout of $GNULIB_REVISION, but git does not
+            # support cloning by commit hash. So attempt a shallow fetch by
+            # commit hash to minimize the amount of data downloaded and changes
+            # needed to be processed, which can drastically reduce download and
+            # processing time for checkout. If the fetch by commit fails, a
+            # shallow fetch can not be performed because we do not know what the
+            # depth of the commit is without fetching all commits. So fall back
+            # to fetching all commits.
+            git -C "$gnulib_path" init
+            git -C "$gnulib_path" remote add origin "$gnulib_url"
+            git -C "$gnulib_path" fetch $shallow origin "$GNULIB_REVISION" \
+              || git -C "$gnulib_path" fetch origin \
+              || cleanup_gnulib
+            git -C "$gnulib_path" reset --hard FETCH_HEAD
+            git -C "$gnulib_path" checkout "$GNULIB_REVISION" || cleanup_gnulib
           fi
-          mkdir -p "$gnulib_path"
-          # Only want a shallow checkout of $GNULIB_REVISION, but git does not
-          # support cloning by commit hash. So attempt a shallow fetch by commit
-          # hash to minimize the amount of data downloaded and changes needed to
-          # be processed, which can drastically reduce download and processing
-          # time for checkout. If the fetch by commit fails, a shallow fetch can
-          # not be performed because we do not know what the depth of the commit
-          # is without fetching all commits. So fall back to fetching all
-          # commits.
-          git -C "$gnulib_path" init
-          git -C "$gnulib_path" remote add origin "$gnulib_url"
-          git -C "$gnulib_path" fetch $shallow origin "$GNULIB_REVISION" \
-            || git -C "$gnulib_path" fetch origin \
-            || cleanup_gnulib
-          git -C "$gnulib_path" reset --hard FETCH_HEAD
-          git -C "$gnulib_path" checkout "$GNULIB_REVISION" || cleanup_gnulib
         fi
         trap - HUP INT PIPE TERM
       else
@@ -554,11 +574,11 @@ prepare_GNULIB_SRCDIR ()
         if test -n "$GNULIB_REVISION"; then
           if test -d "$gnulib_path/.git"; then
             # The 'git checkout "$GNULIB_REVISION"' command succeeds if the
-            # GNULIB_REVISION is a commit hash that exists locally, or if it is
-            # branch name that can be fetched from origin. It fails, however,
-            # if the GNULIB_REVISION is a commit hash that only exists in
-            # origin. In this case, we need a 'git fetch' and then retry
-            # 'git checkout "$GNULIB_REVISION"'.
+            # GNULIB_REVISION is a commit hash that exists locally, or if it
+            # is a branch name that can be fetched from origin. It fails,
+            # however, if the GNULIB_REVISION is a commit hash that only
+            # exists in origin. In this case, we need a 'git fetch' and then
+            # retry 'git checkout "$GNULIB_REVISION"'.
             git -C "$gnulib_path" checkout "$GNULIB_REVISION" 2>/dev/null \
             || { git -C "$gnulib_path" fetch origin \
                  && git -C "$gnulib_path" checkout "$GNULIB_REVISION"; } \

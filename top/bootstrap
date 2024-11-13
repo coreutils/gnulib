@@ -117,7 +117,8 @@ Gnulib sources can be fetched in various ways:
 
  * Otherwise, if the 'gnulib' directory does not exist, Gnulib sources
    are cloned into that directory using git from \$GNULIB_URL, defaulting
-   to $default_gnulib_url.
+   to $default_gnulib_url; if GNULIB_REFDIR is set and is a git repository
+   its contents may be used to accelerate the process.
    If the configuration variable GNULIB_REVISION is set in bootstrap.conf,
    then that revision is checked out.
 
