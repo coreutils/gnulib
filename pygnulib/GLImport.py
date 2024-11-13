@@ -235,7 +235,7 @@ class GLImport(object):
             elif self.mode == MODES['remove-import']:
                 modules = [ module
                             for module in old
-                            if module in new ]
+                            if not module in new ]
             elif self.mode == MODES['update']:
                 modules = self.cache.getModules()
 
