@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate October 28, 2024
+@set lastupdate November 13, 2024
 @c %**end of header
 
 @dircategory GNU organization
@@ -529,7 +529,7 @@ users---it means that their programs or scripts will work more
 portably.  For instance, GCC implements nearly all the features of
 Standard C as specified by that standard.  C program developers would
 be unhappy if it did not.  And GNU utilities mostly follow
-specifications of POSIX.2; shell script writers and users would be
+specifications of POSIX; shell script writers and users would be
 unhappy if our programs were incompatible.
 
 But we do not follow either of these specifications rigidly, and there
@@ -544,16 +544,16 @@ you must specify @samp{--pedantic}, which was implemented only so that
 we can say ``GCC is a 100% implementation of the standard'', not
 because there is any reason to actually use it.
 
-POSIX.2 specifies that @samp{df} and @samp{du} must output sizes by
+POSIX specifies that @samp{df} and @samp{du} must output sizes by
 default in units of 512 bytes.  What users want is units of 1k, so
 that is what we do by default.  If you want the ridiculous behavior
 ``required'' by POSIX, you must set the environment variable
 @samp{POSIXLY_CORRECT} (which was originally going to be named
 @samp{POSIX_ME_HARDER}).
 
-GNU utilities also depart from the letter of the POSIX.2 specification
+GNU utilities also depart from the letter of the POSIX specification
 when they support long-named command-line options, and intermixing
-options with ordinary arguments.  This minor incompatibility with
+of options with ordinary arguments.  This minor incompatibility with
 POSIX is never a problem in practice, and it is very useful.
 
 In particular, don't reject a new feature, or remove an old one,
@@ -2456,7 +2456,7 @@ concat (char *s1, char *s2)
 @}
 @end example
 
-In Standard C, if the arguments don't fit nicely on one line,
+If the arguments don't fit nicely on one line,
 split it like this:
 
 @example
@@ -3041,9 +3041,10 @@ from zero.
 
 Historically, C implementations differed substantially, and many
 systems lacked a full implementation of ANSI/ISO C89.  Nowadays,
-however, all practical systems have a C89 compiler and GNU C supports
-almost all of C99 and some of C11.  Similarly, most systems implement
-POSIX.1-2001 libraries and tools, and many have POSIX.1-2008.
+however, all practical systems have a C89-or-later compiler and GNU C
+supports almost all of C23 (with options to select older versions of
+the standard).  Similarly, most systems implement POSIX.1-2008
+libraries and tools, and many have POSIX.1-2017.
 
 Hence, there is little reason to support old C or non-POSIX systems,
 and you may want to take advantage of standard C and POSIX to write
@@ -3077,7 +3078,7 @@ On Windows, @code{errno} is not set on failure.
 this regard.  Gnulib provides implementations of standard interfaces
 on many of the systems that lack them, including portable
 implementations of enhanced GNU interfaces, thereby making their use
-portable, and of POSIX-1.2008 interfaces, some of which are missing
+portable, and of POSIX interfaces, some of which are missing
 even on up-to-date GNU systems.
 
 @findex xmalloc, in Gnulib
@@ -3085,7 +3086,7 @@ even on up-to-date GNU systems.
 @findex data structures, in Gnulib
 Gnulib also provides many useful non-standard interfaces; for example,
 C implementations of standard data structures (hash tables, binary
-trees), error-checking type-safe wrappers for memory allocation
+trees), error-checking wrappers for memory allocation
 functions (@code{xmalloc}, @code{xrealloc}), and output of error
 messages.
 
