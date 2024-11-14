@@ -24,7 +24,9 @@
 
 # include <errno.h>
 
-# if _FILE_OFFSET_BITS == 64 /* set by module 'largefile' on all platforms */
+/* We need to test _FILE_OFFSET_BITS for mingw-w64
+   and _GL_WINDOWS_64_BIT_OFF_T for MSVC.  */
+# if (_FILE_OFFSET_BITS == 64 || _GL_WINDOWS_64_BIT_OFF_T)
 
 /* Large File Support: off_t is 64-bit, but _chsize() takes only a 32-bit
    argument.  Some newer versions of the Windows CRT have a _chsize_s function
