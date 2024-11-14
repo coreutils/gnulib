@@ -34,7 +34,10 @@ ftello (FILE *fp)
 # undef ftell
 # define ftello ftell
 #endif
-#if _GL_WINDOWS_64_BIT_OFF_T
+#if (defined _WIN32 && !defined __CYGWIN__) \
+    /* We need to test _FILE_OFFSET_BITS for mingw-w64 */   \
+    /* and _GL_WINDOWS_64_BIT_OFF_T for MSVC.  */           \
+    && (_FILE_OFFSET_BITS == 64 || _GL_WINDOWS_64_BIT_OFF_T)
 # undef ftello
 # if HAVE__FTELLI64 /* msvc, mingw64 */
 #  define ftello _ftelli64
