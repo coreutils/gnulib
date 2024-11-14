@@ -1,5 +1,5 @@
 # ftello.m4
-# serial 16
+# serial 17
 dnl Copyright (C) 2007-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -158,6 +158,10 @@ main (void)
 # Prerequisites of lib/ftello.c.
 AC_DEFUN([gl_PREREQ_FTELLO],
 [
+  if test $gl_cv_func_ftello != no; then
+    AC_DEFINE([HAVE_FTELLO], [1],
+      [Define to 1 if the system has the ftello function.])
+  fi
   dnl Native Windows has the function _ftelli64. mingw hides it, but mingw64
   dnl makes it usable again.
   AC_CHECK_FUNCS([_ftelli64])
