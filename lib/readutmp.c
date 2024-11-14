@@ -332,7 +332,7 @@ read_utmp_from_file (char const *file, idx_t *n_entries, STRUCT_UTMP **utmp_buf,
       return 0;
     }
 
-  struct utmp_alloc a = {0};
+  struct utmp_alloc a = { NULL, 0, 0, 0 };
 
 # if READUTMP_USE_SYSTEMD || HAVE_UTMPX_H || HAVE_UTMP_H
 

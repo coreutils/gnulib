@@ -197,7 +197,7 @@ print_errno_message (int errnum)
   if (__strerror_r (errnum, errbuf, sizeof errbuf) == 0)
     s = errbuf;
   else
-    s = 0;
+    s = NULL;
 # endif
 #else
   s = strerror (errnum);

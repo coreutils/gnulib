@@ -52,7 +52,7 @@ bitsetv_alloc (bitset_bindex n_vecs, bitset_bindex n_bits,
     }
 
   /* Null terminate table.  */
-  bsetv[i] = 0;
+  bsetv[i] = NULL;
   return bsetv;
 }
 

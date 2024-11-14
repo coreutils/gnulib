@@ -70,7 +70,7 @@ ARGMATCH_VERIFY (backup_args, backup_types);
 enum backup_type
 get_version (char const *context, char const *version)
 {
-  if (version == 0 || *version == 0)
+  if (version == NULL || *version == 0)
     return numbered_existing_backups;
   else
     return XARGMATCH (context, version, backup_args, backup_types);

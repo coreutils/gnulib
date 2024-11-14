@@ -87,7 +87,7 @@ typedef int (*comparison_function) (void const *, void const *, void *);
 
 static comparison_function const comparison_function_table[] =
   {
-    0,
+    NULL,
     direntry_cmp_name
 #if D_INO_IN_DIRENT
     , direntry_cmp_inode

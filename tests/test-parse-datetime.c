@@ -148,7 +148,7 @@ main (_GL_UNUSED int argc, char **argv)
   p = "2011-05-01T11:55:18";
   expected.tv_sec = ref_time - gmtoff;
   expected.tv_nsec = 0;
-  ASSERT (parse_datetime (&result, p, 0));
+  ASSERT (parse_datetime (&result, p, NULL));
   LOG (p, expected, result);
   ASSERT (expected.tv_sec == result.tv_sec
           && expected.tv_nsec == result.tv_nsec);
@@ -158,7 +158,7 @@ main (_GL_UNUSED int argc, char **argv)
   p = "2011-05-01 11:55:18";
   expected.tv_sec = ref_time - gmtoff;
   expected.tv_nsec = 0;
-  ASSERT (parse_datetime (&result, p, 0));
+  ASSERT (parse_datetime (&result, p, NULL));
   LOG (p, expected, result);
   ASSERT (expected.tv_sec == result.tv_sec
           && expected.tv_nsec == result.tv_nsec);
@@ -168,7 +168,7 @@ main (_GL_UNUSED int argc, char **argv)
   p = "2011-05-01 11:55:18J";
   expected.tv_sec = ref_time - gmtoff;
   expected.tv_nsec = 0;
-  ASSERT (parse_datetime (&result, p, 0));
+  ASSERT (parse_datetime (&result, p, NULL));
   LOG (p, expected, result);
   ASSERT (expected.tv_sec == result.tv_sec
           && expected.tv_nsec == result.tv_nsec);
@@ -179,7 +179,7 @@ main (_GL_UNUSED int argc, char **argv)
   p = "2011-05-01T11:55:18Z";
   expected.tv_sec = ref_time;
   expected.tv_nsec = 0;
-  ASSERT (parse_datetime (&result, p, 0));
+  ASSERT (parse_datetime (&result, p, NULL));
   LOG (p, expected, result);
   ASSERT (expected.tv_sec == result.tv_sec
           && expected.tv_nsec == result.tv_nsec);
@@ -189,7 +189,7 @@ main (_GL_UNUSED int argc, char **argv)
   p = "2011-05-01 11:55:18Z";
   expected.tv_sec = ref_time;
   expected.tv_nsec = 0;
-  ASSERT (parse_datetime (&result, p, 0));
+  ASSERT (parse_datetime (&result, p, NULL));
   LOG (p, expected, result);
   ASSERT (expected.tv_sec == result.tv_sec
           && expected.tv_nsec == result.tv_nsec);
@@ -200,7 +200,7 @@ main (_GL_UNUSED int argc, char **argv)
   p = "2011-05-01T11:55:18-07:00";
   expected.tv_sec = 1304276118;
   expected.tv_nsec = 0;
-  ASSERT (parse_datetime (&result, p, 0));
+  ASSERT (parse_datetime (&result, p, NULL));
   LOG (p, expected, result);
   ASSERT (expected.tv_sec == result.tv_sec
           && expected.tv_nsec == result.tv_nsec);
@@ -210,7 +210,7 @@ main (_GL_UNUSED int argc, char **argv)
   p = "2011-05-01 11:55:18-07:00";
   expected.tv_sec = 1304276118;
   expected.tv_nsec = 0;
-  ASSERT (parse_datetime (&result, p, 0));
+  ASSERT (parse_datetime (&result, p, NULL));
   LOG (p, expected, result);
   ASSERT (expected.tv_sec == result.tv_sec
           && expected.tv_nsec == result.tv_nsec);
@@ -221,7 +221,7 @@ main (_GL_UNUSED int argc, char **argv)
   p = "2011-05-01T11:55:18-07";
   expected.tv_sec = 1304276118;
   expected.tv_nsec = 0;
-  ASSERT (parse_datetime (&result, p, 0));
+  ASSERT (parse_datetime (&result, p, NULL));
   LOG (p, expected, result);
   ASSERT (expected.tv_sec == result.tv_sec
           && expected.tv_nsec == result.tv_nsec);
@@ -231,7 +231,7 @@ main (_GL_UNUSED int argc, char **argv)
   p = "2011-05-01 11:55:18-07";
   expected.tv_sec = 1304276118;
   expected.tv_nsec = 0;
-  ASSERT (parse_datetime (&result, p, 0));
+  ASSERT (parse_datetime (&result, p, NULL));
   LOG (p, expected, result);
   ASSERT (expected.tv_sec == result.tv_sec
           && expected.tv_nsec == result.tv_nsec);

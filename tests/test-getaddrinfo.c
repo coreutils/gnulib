@@ -82,7 +82,7 @@ simple (char const *host, char const *service)
   hints.ai_family = AF_UNSPEC;
   hints.ai_socktype = SOCK_STREAM;
 
-  res = getaddrinfo (host, service, 0, &ai0);
+  res = getaddrinfo (host, service, NULL, &ai0);
   err = errno;
 
   dbgprintf ("res %d: %s\n", res, gai_strerror (res));

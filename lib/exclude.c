@@ -260,7 +260,7 @@ new_exclude_segment (struct exclude *ex, enum exclude_type type, int options)
   switch (type)
     {
     case exclude_pattern:
-      sp->v.pat = (struct exclude_pattern) {0};
+      sp->v.pat = (struct exclude_pattern) { NULL, 0, 0 };
       break;
 
     case exclude_hash:

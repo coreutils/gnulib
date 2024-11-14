@@ -397,7 +397,7 @@ human_readable (uintmax_t n, char *buf, int opts,
 # define DEFAULT_BLOCK_SIZE 1024
 #endif
 
-static char const *const block_size_args[] = { "human-readable", "si", 0 };
+static char const *const block_size_args[] = { "human-readable", "si", NULL };
 static int const block_size_opts[] =
   {
     human_autoscale + human_SI + human_base_1024,

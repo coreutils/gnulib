@@ -241,7 +241,7 @@ main (void)
             {
               memset (&regs, 0, sizeof regs);
               i = re_search (&regex, data, sizeof data - 1,
-                             0, sizeof data - 1, 0);
+                             0, sizeof data - 1, NULL);
               if (i != 0 && i != 21)
                 report_error ("re_search '%s' on '%s' returned %d",
                               pat, data, i);
@@ -338,7 +338,7 @@ main (void)
   memset (&regex, 0, sizeof regex);
   static char const pat_b_a[] = "a[b-a]";
   s = re_compile_pattern (pat_b_a, sizeof pat_b_a - 1, &regex);
-  if (s == 0)
+  if (s == NULL)
     {
       report_error ("re_compile_pattern: failed to reject '%s'", pat_b_a);
       regfree (&regex);

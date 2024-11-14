@@ -696,7 +696,7 @@ bitset_stats_init (bitset bset, bitset_bindex n_bits, enum bitset_type type)
   /* Disable cache.  */
   bset->b.cindex = 0;
   bset->b.csize = 0;
-  bset->b.cdata = 0;
+  bset->b.cdata = NULL;
 
   BITSET_NBITS_ (bset) = n_bits;
 

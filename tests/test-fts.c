@@ -29,7 +29,7 @@
 #define BASE "t-fts.tmp"
 static char base[] = BASE; /* Not const, since argv needs non-const.  */
 static char const base_d[] = BASE "/d";
-static char *const argv[2] = { base, 0 };
+static char *const argv[2] = { base, NULL };
 
 static void
 perror_exit (char const *message, int status)
@@ -43,8 +43,8 @@ static void
 fts_dealloc (void)
 {
   static char dir[] = "./";
-  static char *const curr_dir[2] = { dir, 0 };
-  FTS *ftsp = fts_open (curr_dir, FTS_NOSTAT | FTS_PHYSICAL | FTS_CWDFD, 0);
+  static char *const curr_dir[2] = { dir, NULL };
+  FTS *ftsp = fts_open (curr_dir, FTS_NOSTAT | FTS_PHYSICAL | FTS_CWDFD, NULL);
   if (ftsp)
     {
       if (fts_close (ftsp) != 0)
@@ -59,7 +59,7 @@ static void
 remove_tree (void)
 {
   FTSENT *e;
-  FTS *ftsp = fts_open (argv, FTS_NOSTAT | FTS_PHYSICAL | FTS_CWDFD, 0);
+  FTS *ftsp = fts_open (argv, FTS_NOSTAT | FTS_PHYSICAL | FTS_CWDFD, NULL);
   if (ftsp)
     {
       while ((e = fts_read (ftsp)))
@@ -135,7 +135,8 @@ main (void)
     }
 
   /* Use fts to look for the needles.  */
-  ftsp = fts_open (argv, FTS_SEEDOT | FTS_NOSTAT | FTS_PHYSICAL | FTS_CWDFD, 0);
+  ftsp = fts_open (argv, FTS_SEEDOT | FTS_NOSTAT | FTS_PHYSICAL | FTS_CWDFD,
+                   NULL);
   if (!ftsp)
     perror_exit (base, 6);
   while ((e = fts_read (ftsp)))

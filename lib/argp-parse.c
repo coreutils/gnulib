@@ -77,13 +77,13 @@ static volatile int _argp_hang;
 
 static const struct argp_option argp_default_options[] =
 {
-  {"help",        '?',          0, 0,  N_("give this help list"), -1},
-  {"usage",       OPT_USAGE,    0, 0,  N_("give a short usage message"), 0},
+  {"help",        '?',          NULL, 0,  N_("give this help list"), -1},
+  {"usage",       OPT_USAGE,    NULL, 0,  N_("give a short usage message"), 0},
   {"program-name",OPT_PROGNAME, N_("NAME"), OPTION_HIDDEN,
    N_("set the program name"), 0},
   {"HANG",        OPT_HANG,    N_("SECS"), OPTION_ARG_OPTIONAL | OPTION_HIDDEN,
    N_("hang for SECS seconds (default 3600)"), 0},
-  {NULL, 0, 0, 0, NULL, 0}
+  {NULL, 0, NULL, 0, NULL, 0}
 };
 
 static error_t
@@ -139,8 +139,8 @@ static const struct argp argp_default_argp =
 
 static const struct argp_option argp_version_options[] =
 {
-  {"version",     'V',          0, 0,  N_("print program version"), -1},
-  {NULL, 0, 0, 0, NULL, 0}
+  {"version",     'V',          NULL, 0,  N_("print program version"), -1},
+  {NULL, 0, NULL, 0, NULL, 0}
 };
 
 static error_t
@@ -332,7 +332,7 @@ convert_options (const struct argp *argp,
                           ? optional_argument
                           : required_argument)
                        : no_argument);
-                    cvt->long_end->flag = 0;
+                    cvt->long_end->flag = NULL;
                     /* we add a disambiguating code to all the user's
                        values (which is removed before we actually call
                        the function to parse the value); this means that
@@ -408,7 +408,7 @@ parser_convert (struct parser *parser, const struct argp *argp, int flags)
   parser->argp = argp;
 
   if (argp)
-    parser->egroup = convert_options (argp, 0, 0, parser->groups, &cvt);
+    parser->egroup = convert_options (argp, NULL, 0, parser->groups, &cvt);
   else
     parser->egroup = parser->groups; /* No parsers at all! */
 }
@@ -537,7 +537,7 @@ parser_init (struct parser *parser, const struct argp *argp,
            makes very simple wrapper argps more convenient).  */
         group->child_inputs[0] = group->input;
 
-      err = group_parse (group, &parser->state, ARGP_KEY_INIT, 0);
+      err = group_parse (group, &parser->state, ARGP_KEY_INIT, NULL);
     }
   if (err == EBADKEY)
     err = 0;                    /* Some parser didn't understand.  */
@@ -586,11 +586,11 @@ parser_finalize (struct parser *parser,
                group < parser->egroup && (!err || err==EBADKEY);
                group++)
             if (group->args_processed == 0)
-              err = group_parse (group, &parser->state, ARGP_KEY_NO_ARGS, 0);
+              err = group_parse (group, &parser->state, ARGP_KEY_NO_ARGS, NULL);
           for (group = parser->egroup - 1;
                group >= parser->groups && (!err || err==EBADKEY);
                group--)
-            err = group_parse (group, &parser->state, ARGP_KEY_END, 0);
+            err = group_parse (group, &parser->state, ARGP_KEY_END, NULL);
 
           if (err == EBADKEY)
             err = 0;            /* Some parser didn't understand.  */
@@ -629,7 +629,7 @@ parser_finalize (struct parser *parser,
 
       /* Since we didn't exit, give each parser an error indication.  */
       for (group = parser->groups; group < parser->egroup; group++)
-        group_parse (group, &parser->state, ARGP_KEY_ERROR, 0);
+        group_parse (group, &parser->state, ARGP_KEY_ERROR, NULL);
     }
   else
     /* Notify parsers of success, and propagate back values from parsers.  */
@@ -640,14 +640,14 @@ parser_finalize (struct parser *parser,
       for (group = parser->egroup - 1
            ; group >= parser->groups && (!err || err == EBADKEY)
            ; group--)
-        err = group_parse (group, &parser->state, ARGP_KEY_SUCCESS, 0);
+        err = group_parse (group, &parser->state, ARGP_KEY_SUCCESS, NULL);
       if (err == EBADKEY)
         err = 0;                /* Some parser didn't understand.  */
     }
 
   /* Call parsers once more, to do any final cleanup.  Errors are ignored.  */
   for (group = parser->egroup - 1; group >= parser->groups; group--)
-    group_parse (group, &parser->state, ARGP_KEY_FINI, 0);
+    group_parse (group, &parser->state, ARGP_KEY_FINI, NULL);
 
   if (err == EBADKEY)
     err = EINVAL;
@@ -686,7 +686,7 @@ parser_parse_arg (struct parser *parser, char *val)
         {
           parser->state.next--; /* For ARGP_KEY_ARGS, put back the arg.  */
           key = ARGP_KEY_ARGS;
-          err = group_parse (group, &parser->state, key, 0);
+          err = group_parse (group, &parser->state, key, NULL);
         }
     }
 
@@ -799,11 +799,11 @@ parser_parse_next (struct parser *parser, int *arg_ebadkey)
       parser->opt_data.optopt = KEY_END;
       if (parser->state.flags & ARGP_LONG_ONLY)
         opt = _getopt_long_only_r (parser->state.argc, parser->state.argv,
-                                   parser->short_opts, parser->long_opts, 0,
+                                   parser->short_opts, parser->long_opts, NULL,
                                    &parser->opt_data);
       else
         opt = _getopt_long_r (parser->state.argc, parser->state.argv,
-                              parser->short_opts, parser->long_opts, 0,
+                              parser->short_opts, parser->long_opts, NULL,
                               &parser->opt_data);
       /* And see what getopt did.  */
       parser->state.next = parser->opt_data.optind;

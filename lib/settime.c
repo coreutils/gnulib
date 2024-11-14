@@ -43,7 +43,7 @@ settime (struct timespec const *ts)
   {
     struct timeval tv = { .tv_sec = ts->tv_sec,
                           .tv_usec = ts->tv_nsec / 1000 };
-    return settimeofday (&tv, 0);
+    return settimeofday (&tv, NULL);
   }
 #elif HAVE_STIME
   /* This fails to compile on OSF1 V5.1, due to stime requiring

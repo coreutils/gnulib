@@ -86,7 +86,7 @@ char const *const quoting_style_args[] =
   "escape",
   "locale",
   "clocale",
-  0
+  NULL
 };
 
 /* Correspondences to quoting style names.  */
@@ -255,7 +255,7 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
   size_t i;
   size_t len = 0;
   size_t orig_buffersize = 0;
-  char const *quote_string = 0;
+  char const *quote_string = NULL;
   size_t quote_string_len = 0;
   bool backslash_escapes = false;
   bool unibyte_locale = MB_CUR_MAX == 1;
@@ -811,7 +811,7 @@ quotearg_alloc_mem (char const *arg, size_t argsize, size_t *size,
   int e = errno;
   /* Elide embedded null bytes if we can't return a size.  */
   int flags = p->flags | (size ? 0 : QA_ELIDE_NULL_BYTES);
-  size_t bufsize = quotearg_buffer_restyled (0, 0, arg, argsize, p->style,
+  size_t bufsize = quotearg_buffer_restyled (NULL, 0, arg, argsize, p->style,
                                              flags, p->quote_these_too,
                                              p->left_quote,
                                              p->right_quote) + 1;

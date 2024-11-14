@@ -98,7 +98,7 @@ nap_works (int delay, struct stat old_st)
   struct timespec delay_spec;
   delay_spec.tv_sec = delay / 1000000000;
   delay_spec.tv_nsec = delay % 1000000000;
-  ASSERT (nanosleep (&delay_spec, 0) == 0);
+  ASSERT (nanosleep (&delay_spec, NULL) == 0);
   nap_get_stat (&st, 1);
 
   if (diff_timespec (get_stat_mtime (&st), get_stat_mtime (&old_st)))

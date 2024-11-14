@@ -622,7 +622,7 @@ static char
 hol_entry_first_short (const struct hol_entry *entry)
 {
   return hol_entry_short_iterate (entry, until_short,
-                                  entry->argp->argp_domain, 0);
+                                  entry->argp->argp_domain, NULL);
 }
 
 /* Returns the first valid long option in ENTRY, or NULL if there is none.  */
@@ -1357,7 +1357,7 @@ hol_help (struct hol *hol, const struct argp_state *state,
 {
   unsigned num;
   struct hol_entry *entry;
-  struct hol_help_state hhstate = { 0, 0, 0 };
+  struct hol_help_state hhstate = { NULL, 0, 0 };
 
   for (entry = hol->entries, num = hol->num_entries; num > 0; entry++, num--)
     hol_entry_help (entry, state, stream, &hhstate);
@@ -1369,7 +1369,7 @@ hol_help (struct hol *hol, const struct argp_state *state,
 Mandatory or optional arguments to long options are also mandatory or \
 optional for any corresponding short options.");
       const char *fstr = filter_doc (tstr, ARGP_KEY_HELP_DUP_ARGS_NOTE,
-                                     state ? state->root_argp : 0, state);
+                                     state ? state->root_argp : NULL, state);
       if (fstr && *fstr)
         {
           __argp_fmtstream_putc (stream, '\n');
@@ -1602,11 +1602,11 @@ argp_doc (const struct argp *argp, const struct argp_state *state,
   if (doc)
     {
       char *vt = strchr (doc, '\v');
-      inp_text = post ? (vt ? vt + 1 : 0) : doc;
+      inp_text = post ? (vt ? vt + 1 : NULL) : doc;
       inp_text_limit = (!post && vt) ? (vt - doc) : 0;
     }
   else
-    inp_text = 0;
+    inp_text = NULL;
 
   if (argp->help_filter)
     /* We have to filter the doc strings.  */
@@ -1648,7 +1648,7 @@ argp_doc (const struct argp *argp, const struct argp_state *state,
   if (post && argp->help_filter)
     /* Now see if we have to output a ARGP_KEY_HELP_EXTRA text.  */
     {
-      text = (*argp->help_filter) (ARGP_KEY_HELP_EXTRA, 0, input);
+      text = (*argp->help_filter) (ARGP_KEY_HELP_EXTRA, NULL, input);
       if (text)
         {
           if (anything || pre_blank)
@@ -1705,7 +1705,7 @@ _help (const struct argp *argp, const struct argp_state *state, FILE *stream,
 
   if (flags & (ARGP_HELP_USAGE | ARGP_HELP_SHORT_USAGE | ARGP_HELP_LONG))
     {
-      hol = argp_hol (argp, 0);
+      hol = argp_hol (argp, NULL);
 
       /* If present, these options always come last.  */
       hol_set_group (hol, "help", -1);
@@ -1822,7 +1822,7 @@ Try '%s --help' or '%s --usage' for more information.\n"),
 void __argp_help (const struct argp *argp, FILE *stream,
                   unsigned flags, char *name)
 {
-  _help (argp, 0, stream, flags, name);
+  _help (argp, NULL, stream, flags, name);
 }
 #ifdef weak_alias
 weak_alias (__argp_help, argp_help)
@@ -1857,7 +1857,7 @@ __argp_state_help (const struct argp_state *state, FILE *stream, unsigned flags)
       if (state && (state->flags & ARGP_LONG_ONLY))
         flags |= ARGP_HELP_LONG_ONLY;
 
-      _help (state ? state->root_argp : 0, state, stream, flags,
+      _help (state ? state->root_argp : NULL, state, stream, flags,
              state ? state->name : __argp_short_program_name ());
 
       if (!state || ! (state->flags & ARGP_NO_EXIT))
