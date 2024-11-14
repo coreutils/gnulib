@@ -1,0 +1,17 @@
+Status:
+longrunning-test
+
+Files:
+tests/test-fseeko-largefile.c
+tests/macros.h
+
+Depends-on:
+fsync
+ftruncate
+write
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-fseeko-largefile
+check_PROGRAMS += test-fseeko-largefile
