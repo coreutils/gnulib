@@ -24,10 +24,14 @@
 
 # include <errno.h>
 
-# if _GL_WINDOWS_64_BIT_OFF_T
+/* We need to test _FILE_OFFSET_BITS for mingw-w64
+   and _GL_WINDOWS_64_BIT_OFF_T for MSVC.  */
+# if (_FILE_OFFSET_BITS == 64 || _GL_WINDOWS_64_BIT_OFF_T)
 
 /* Large File Support: off_t is 64-bit, but _chsize() takes only a 32-bit
-   argument.  So, define a 64-bit safe SetFileSize function ourselves.  */
+   argument.  Some newer versions of the Windows CRT have a _chsize_s function
+   that takes a 64-bit argument, but we cannot rely on that.
+   So, define a 64-bit safe SetFileSize function ourselves.  */
 
 /* Ensure that <windows.h> declares GetFileSizeEx.  */
 #  if !defined _WIN32_WINNT || (_WIN32_WINNT < _WIN32_WINNT_WIN2K)
