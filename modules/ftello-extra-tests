@@ -1,0 +1,18 @@
+Status:
+longrunning-test
+
+Files:
+tests/test-ftello-largefile.c
+tests/macros.h
+
+Depends-on:
+fsync
+fseeko
+ftruncate
+write
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-ftello-largefile
+check_PROGRAMS += test-ftello-largefile
