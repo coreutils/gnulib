@@ -198,7 +198,7 @@ do_test (const char *rw_string)
       err = pthread_create (&threads[i], NULL,
                             rw_string[i] == 'R' ? reader_func :
                             rw_string[i] == 'W' ? writer_func :
-                            (abort (), NULL),
+                            (abort (), (void * (*) (void *)) NULL),
                             &locals[i]);
       if (err)
         {
