@@ -1,5 +1,5 @@
 # std-gnu23.m4
-# serial 2
+# serial 3
 
 # Prefer GNU C23 to earlier versions.
 
@@ -425,7 +425,9 @@ int function_with_unnamed_parameter (int) { return 0; }
 
 void c23_noreturn ();
 
-bool use_u8 = !u8"\xFF" == u8'\''x'\'';
+/* Test parsing of string and char UTF-8 literals (including hex escapes).
+   The parens pacify GCC 15.  */
+bool use_u8 = (!sizeof u8"\xFF") == (!u8'\''x'\'');
 
 bool check_that_bool_works = true | false | !nullptr;
 #if !true
