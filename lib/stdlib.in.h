@@ -377,7 +377,8 @@ _GL_WARN_ON_USE (atoll, "atoll is unportable - "
 #if @GNULIB_CALLOC_POSIX@
 # if @REPLACE_CALLOC_FOR_CALLOC_POSIX@ \
      || (@GNULIB_CALLOC_GNU@ && @REPLACE_CALLOC_FOR_CALLOC_GNU@)
-#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#  if !((defined __cplusplus && defined GNULIB_NAMESPACE) \
+        || _GL_USE_STDLIB_ALLOC)
 #   undef calloc
 #   define calloc rpl_calloc
 #  endif

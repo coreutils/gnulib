@@ -17,6 +17,8 @@
 
 /* written by Jim Meyering and Bruno Haible */
 
+/* Ensure that we call the system's calloc() below.  */
+#define _GL_USE_STDLIB_ALLOC 1
 #include <config.h>
 
 /* Specification.  */
@@ -24,9 +26,6 @@
 
 #include <errno.h>
 #include <stdckdint.h>
-
-/* Call the system's calloc below.  */
-#undef calloc
 
 /* Allocate and zero-fill an NxS-byte block of memory from the heap,
    even if N or S is zero.  */

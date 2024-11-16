@@ -17,6 +17,7 @@
 
 /* written by Jim Meyering and Bruno Haible */
 
+/* Ensure that we call the system's malloc() below.  */
 #define _GL_USE_STDLIB_ALLOC 1
 #include <config.h>
 
