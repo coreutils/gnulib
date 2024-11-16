@@ -1,5 +1,5 @@
 # std-gnu23.m4
-# serial 3
+# serial 4
 
 # Prefer GNU C23 to earlier versions.
 
@@ -462,9 +462,6 @@ static_assert (0 < -uione);
 
 #include <stddef.h>
 constexpr nullptr_t null_pointer = nullptr;
-
-#include <stdbit.h>
-static_assert (__STDC_ENDIAN_LITTLE__ != __STDC_ENDIAN_BIG__);
 
 static typeof (1 + 1L) two () { return 2; }
 static long int three () { return 3; }
