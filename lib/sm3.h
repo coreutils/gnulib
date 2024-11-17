@@ -22,7 +22,7 @@
 
    The official SM3 cryptographic hash algorithm specification is
    available at
-   <http://www.sca.gov.cn/sca/xwdt/2010-12/17/content_1002389.shtml>. */
+   <https://www.sca.gov.cn/sca/xwdt/2010-12/17/content_1002389.shtml>. */
 
 #ifndef SM3_H
 # define SM3_H 1

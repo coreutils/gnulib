@@ -2,7 +2,7 @@
 @subsection @code{logp1f}
 @findex logp1f
 
-ISO C23 specification:@* @url{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n3220.pdf} section 7.12.6.14
+ISO C23 specification:@* @url{https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3220.pdf} section 7.12.6.14
 
 Gnulib module: logp1f
 @mindex logp1f

@@ -516,7 +516,7 @@ int libsigsegv_version = LIBSIGSEGV_VERSION;
 
 /* _UC_MACHINE_SP is a platform independent macro.
    Defined in <machine/mcontext.h>, see
-     http://cvsweb.netbsd.org/bsdweb.cgi/src/sys/arch/$arch/include/mcontext.h
+     https://cvsweb.netbsd.org/bsdweb.cgi/src/sys/arch/$arch/include/mcontext.h
    Supported on alpha, amd64, i386, ia64, m68k, mips, powerpc, sparc since
    NetBSD 2.0.
    On i386, _UC_MACHINE_SP is the same as ->uc_mcontext.__gregs[_REG_UESP],

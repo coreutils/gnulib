@@ -165,7 +165,7 @@ modules one by one.
 @section The ISO C multithreading API
 
 The ISO C multithreading API is documented in ISO C 11
-@url{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf}.
+@url{https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf}.
 
 To make use of ISO C multithreading, even on platforms that don't support it
 or have severe bugs, use the following Gnulib modules:

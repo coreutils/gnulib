@@ -130,7 +130,7 @@ main (int argc, char *argv[])
       /* Expect fd 2 is closed.
          But on HP-UX 11, fd 2 gets automatically re-opened to /dev/null if it
          was closed.  Similarly on Android and on native Windows.  Future POSIX
-         will allow this, see <http://austingroupbugs.net/view.php?id=173>.  */
+         will allow this, see <https://austingroupbugs.net/view.php?id=173>.  */
 #if !(defined __hpux || defined __ANDROID__ || (defined _WIN32 && ! defined __CYGWIN__))
       if (!is_qemu)
         ASSERT (! is_open (STDERR_FILENO));

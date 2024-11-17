@@ -105,7 +105,7 @@ extern int libsigsegv_version;       /* Likewise */
  * to a global SIGSEGV handler.
  * On some platforms, the precise fault address is not known, only the memory
  * page into which the fault address falls. This is apparently allowed by POSIX:
- * <http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/signal.h.html>
+ * <https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/signal.h.html>
  * says: "For some implementations, the value of si_addr may be inaccurate."
  * In this case, the returned fault address is rounded down to a multiple of
  * getpagesize() = sysconf(_SC_PAGESIZE).

@@ -1,9 +1,9 @@
 @node stdalign.h
 @section @file{stdalign.h}
 
-ISO C23 specification:@* @url{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n3220.pdf} sections 6.5.3.4, 6.7.5, 7.15.
+ISO C23 specification:@* @url{https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3220.pdf} sections 6.5.3.4, 6.7.5, 7.15.
 
-C++11 specification:@* @url{http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2011/n3242.pdf} section 18.10.
+C++11 specification:@* @url{https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2011/n3242.pdf} section 18.10.
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/stdalign.h.html}
 

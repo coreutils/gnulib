@@ -2,7 +2,7 @@
 @subsection @code{ns_name_compress}
 @findex ns_name_compress
 
-Documentation:@* @uref{http://web.deu.edu.tr/doc/oreily/networking/dnsbind/ch14_02.htm}
+Documentation:@* @uref{https://web.deu.edu.tr/doc/oreily/networking/dnsbind/ch14_02.htm}
 
 Gnulib module: ---
 

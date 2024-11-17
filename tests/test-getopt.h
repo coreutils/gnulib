@@ -1263,7 +1263,7 @@ test_getopt (void)
 #if GNULIB_TEST_GETOPT_GNU
   /* If GNU extensions are supported, require compliance with POSIX
      interpretation on leading '+' behavior.
-     http://austingroupbugs.net/view.php?id=191  */
+     https://austingroupbugs.net/view.php?id=191  */
   for (start = OPTIND_MIN; start <= 1; start++)
     {
       int a_seen = 0;

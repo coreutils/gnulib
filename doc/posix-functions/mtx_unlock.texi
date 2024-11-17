@@ -2,7 +2,7 @@
 @subsection @code{mtx_unlock}
 @findex mtx_unlock
 
-ISO C23 specification:@* @url{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n3220.pdf} section 7.28.4.6.
+ISO C23 specification:@* @url{https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3220.pdf} section 7.28.4.6.
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/mtx_unlock.html}
 

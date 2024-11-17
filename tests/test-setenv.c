@@ -46,7 +46,7 @@ main (void)
   ASSERT (errno == EINVAL);
 #if 0
   /* glibc and gnulib's implementation guarantee this, but POSIX no
-     longer requires it: http://austingroupbugs.net/view.php?id=185  */
+     longer requires it: https://austingroupbugs.net/view.php?id=185  */
   errno = 0;
   ASSERT (setenv (NULL, "", 0) == -1);
   ASSERT (errno == EINVAL);

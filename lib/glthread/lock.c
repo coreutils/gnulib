@@ -269,7 +269,7 @@ glthread_rwlock_init_for_glibc (pthread_rwlock_t *lock)
   /* Note: PTHREAD_RWLOCK_PREFER_WRITER_NONRECURSIVE_NP is the only value that
      causes the writer to be preferred. PTHREAD_RWLOCK_PREFER_WRITER_NP does not
      do this; see
-     http://man7.org/linux/man-pages/man3/pthread_rwlockattr_setkind_np.3.html */
+     https://man7.org/linux/man-pages/man3/pthread_rwlockattr_setkind_np.3.html */
   err = pthread_rwlockattr_setkind_np (&attributes,
                                        PTHREAD_RWLOCK_PREFER_WRITER_NONRECURSIVE_NP);
   if (err == 0)

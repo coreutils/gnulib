@@ -32,7 +32,7 @@ int
 pipe (int fd[2])
 {
   /* Mingw changes fd to {-1,-1} on failure, but this violates
-     http://austingroupbugs.net/view.php?id=467 */
+     https://austingroupbugs.net/view.php?id=467 */
   int tmp[2];
   int result = _pipe (tmp, 4096, _O_BINARY);
   if (!result)

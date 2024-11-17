@@ -1,7 +1,7 @@
 @node uchar.h
 @section @file{uchar.h}
 
-ISO C23 specification:@* @url{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n3220.pdf} section 7.30.
+ISO C23 specification:@* @url{https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3220.pdf} section 7.30.
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/uchar.h.html}
 

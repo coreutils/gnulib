@@ -78,7 +78,7 @@ AC_DEFUN([gl_GETOPT_CHECK_HEADERS],
   fi
 
   dnl POSIX 2008 does not specify leading '+' behavior, but see
-  dnl http://austingroupbugs.net/view.php?id=191 for a recommendation on
+  dnl https://austingroupbugs.net/view.php?id=191 for a recommendation on
   dnl the next version of POSIX.  For now, we only guarantee leading '+'
   dnl behavior with getopt-gnu.
   if test -z "$gl_replace_getopt"; then

@@ -82,10 +82,10 @@ AC_DEFUN([gl_ALIGNASOF],
 
    References:
    ISO C23 (latest free draft
-   <http://www.open-std.org/jtc1/sc22/wg14/www/docs/n3096.pdf>)
+   <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3096.pdf>)
    sections 6.5.3.4, 6.7.5, 7.15.
    C++11 (latest free draft
-   <http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2011/n3242.pdf>)
+   <https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2011/n3242.pdf>)
    section 18.10. */
 
 /* alignof (TYPE), also known as _Alignof (TYPE), yields the alignment

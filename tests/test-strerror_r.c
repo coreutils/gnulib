@@ -57,7 +57,7 @@ main (void)
   /* POSIX requires strerror (0) to succeed.  Reject use of "Unknown
      error", but allow "Success", "No error", or even Solaris' "Error
      0" which are distinct patterns from true out-of-range strings.
-     http://austingroupbugs.net/view.php?id=382  */
+     https://austingroupbugs.net/view.php?id=382  */
   errno = 0;
   buf[0] = '\0';
   ret = strerror_r (0, buf, sizeof buf);
@@ -84,7 +84,7 @@ main (void)
      EINVAL for out-of-range values.  On error, POSIX permits buf to
      be empty, unchanged, or unterminated, but these are not useful,
      so we guarantee NUL-terminated truncated contents for all but
-     size 0.  http://austingroupbugs.net/view.php?id=398.  Also ensure
+     size 0.  https://austingroupbugs.net/view.php?id=398.  Also ensure
      that no out-of-bounds writes occur.  */
   {
     int errs[] = { EACCES, 0, -3, };

@@ -15,7 +15,7 @@ need some careful consideration, but some experience in using it would
 be good, too.  The intended/expected usage is along the lines of:
 
 1.  configure, build and install the thing.  Perhaps from:
-    http://autogen.sourceforge.net/data/
+    https://autogen.sourceforge.net/data/
     or roll your own, but the distribution should be there, I think.
 
 2.  fiddle a project to detect that it is "sufficiently recent" to

@@ -3,7 +3,7 @@
    SM3, published by State Encryption Management Bureau, China.
 
    SM3 cryptographic hash algorithm.
-   <http://www.sca.gov.cn/sca/xwdt/2010-12/17/content_1002389.shtml>
+   <https://www.sca.gov.cn/sca/xwdt/2010-12/17/content_1002389.shtml>
 
    Copyright (C) 2017-2024 Free Software Foundation, Inc.
 

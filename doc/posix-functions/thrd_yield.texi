@@ -2,7 +2,7 @@
 @subsection @code{thrd_yield}
 @findex thrd_yield
 
-ISO C23 specification:@* @url{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n3220.pdf} section 7.28.5.8.
+ISO C23 specification:@* @url{https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3220.pdf} section 7.28.5.8.
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/thrd_yield.html}
 

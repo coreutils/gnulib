@@ -2,7 +2,7 @@
 @subsection @code{cnd_signal}
 @findex cnd_signal
 
-ISO C23 specification:@* @url{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n3220.pdf} section 7.28.3.4.
+ISO C23 specification:@* @url{https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3220.pdf} section 7.28.3.4.
 
 POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9799919799/functions/cnd_signal.html}
 

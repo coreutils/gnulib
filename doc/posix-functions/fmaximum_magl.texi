@@ -2,7 +2,7 @@
 @subsection @code{fmaximum_magl}
 @findex fmaximum_magl
 
-ISO C23 specification:@* @url{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n3220.pdf} section 7.12.12.6
+ISO C23 specification:@* @url{https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3220.pdf} section 7.12.12.6
 
 Documentation:@*
 @ifinfo

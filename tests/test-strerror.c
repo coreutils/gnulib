@@ -53,7 +53,7 @@ main (void)
   /* POSIX requires strerror (0) to succeed.  Reject use of "Unknown
      error", but allow "Success", "No error", or even Solaris' "Error
      0" which are distinct patterns from true out-of-range strings.
-     http://austingroupbugs.net/view.php?id=382  */
+     https://austingroupbugs.net/view.php?id=382  */
   errno = 0;
   str = strerror (0);
   ASSERT (str);

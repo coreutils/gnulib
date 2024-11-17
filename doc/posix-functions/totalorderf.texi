@@ -2,7 +2,7 @@
 @subsection @code{totalorderf}
 @findex totalorderf
 
-ISO C23 specification:@* @url{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n3220.pdf} section F.10.12.1
+ISO C23 specification:@* @url{https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3220.pdf} section F.10.12.1
 
 Documentation:@*
 @itemize

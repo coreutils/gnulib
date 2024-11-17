@@ -284,7 +284,7 @@ test_float (void)
   ASSERT (FLT_IS_IEC_60559);
 #elif 0
   /* It is not clear what this macro actually means.  Cf.
-     <http://mailman.oakapple.net/pipermail/cfp-interest/2023-April/002760.html> */
+     <https://mailman.oakapple.net/pipermail/cfp-interest/2023-April/002760.html> */
   ASSERT (!FLT_IS_IEC_60559);
 #endif
 
@@ -383,7 +383,7 @@ test_double (void)
   ASSERT (DBL_IS_IEC_60559);
 #elif 0
   /* It is not clear what this macro actually means.  Cf.
-     <http://mailman.oakapple.net/pipermail/cfp-interest/2023-April/002760.html> */
+     <https://mailman.oakapple.net/pipermail/cfp-interest/2023-April/002760.html> */
   ASSERT (!DBL_IS_IEC_60559);
 #endif
 
@@ -479,7 +479,7 @@ test_long_double (void)
   ASSERT (LDBL_IS_IEC_60559);
 #elif 0
   /* It is not clear what this macro actually means.  Cf.
-     <http://mailman.oakapple.net/pipermail/cfp-interest/2023-April/002760.html> */
+     <https://mailman.oakapple.net/pipermail/cfp-interest/2023-April/002760.html> */
   ASSERT (!LDBL_IS_IEC_60559);
 #endif
 

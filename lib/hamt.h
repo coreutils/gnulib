@@ -40,7 +40,7 @@
    See also: Phil Bagwell (2000). Ideal Hash Trees (Report). Infoscience
    Department, École Polytechnique Fédérale de Lausanne.
 
-   http://infoscience.epfl.ch/record/64398/files/idealhashtrees.pdf  */
+   https://infoscience.epfl.ch/record/64398/files/idealhashtrees.pdf  */
 
 #ifndef _GL_HAMT_H
 #define _GL_HAMT_H
