@@ -1,11 +1,11 @@
 # std-gnu23.m4
-# serial 4
+# serial 5
 
 # Prefer GNU C23 to earlier versions.
 
 # This implementation is taken from GNU Autoconf lib/autoconf/c.m4
-# commit 93b3d33c1d09b05601b240bf17b83f50ac4a148b
-# dated Thu Sep 5 18:19:36 2024 -0700
+# commit d5d33c599143f6c36406eb860571fced1da49ea4
+# dated Sun Nov 17 09:00:49 2024 -0800
 # This implementation will be obsolete once we can assume Autoconf 2.73
 # or later is installed everywhere a Gnulib program might be developed.
 
@@ -481,6 +481,7 @@ ac_c_conftest_c23_main='
         goto label_at_end_of_block;
     label_at_end_of_block:
   }
+  ok |= !null_pointer;
   ok |= two != three;
 '
 ]])])
@@ -716,6 +717,7 @@ AS_IF([test "x$ac_cv_prog_cc_c$1" = xno],
   ac_cv_prog_cc_stdc=$ac_cv_prog_cc_c$1
   ac_prog_cc_stdc=c$1])])
 ])
+
 
 # _AC_PROG_CC_STDC_EDITION
 # ------------------------
