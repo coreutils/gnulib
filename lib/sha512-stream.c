@@ -23,9 +23,6 @@
 #include <config.h>
 
 /* Specification.  */
-#if HAVE_OPENSSL_SHA512
-# define GL_OPENSSL_INLINE _GL_EXTERN_INLINE
-#endif
 #include "sha512.h"
 
 #include <stdlib.h>

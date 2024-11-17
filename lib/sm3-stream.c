@@ -26,9 +26,6 @@
 #include <config.h>
 
 /* Specification.  */
-#if HAVE_OPENSSL_SM3
-# define GL_OPENSSL_INLINE _GL_EXTERN_INLINE
-#endif
 #include "sm3.h"
 
 #include <stdlib.h>
