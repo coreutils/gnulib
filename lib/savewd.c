@@ -240,17 +240,20 @@ savewd_finish (struct savewd *wd)
 {
   switch (wd->state)
     {
-    case INITIAL_STATE:
     case ERROR_STATE:
       break;
 
     case FD_STATE:
     case FD_POST_CHDIR_STATE:
       close (wd->val.fd);
+      FALLTHROUGH;
+    case INITIAL_STATE:
+      wd->val.errnum = 0;
       break;
 
     case FORKING_STATE:
       assure (wd->val.child < 0);
+      wd->val.errnum = 0;
       break;
 
     default:
