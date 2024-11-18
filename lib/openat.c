@@ -244,7 +244,7 @@ openat_permissive (int fd, char const *file, int flags, mode_t mode,
       }
   }
 
-  bool save_failed = save_cwd (&saved_cwd) < 0;
+  int save_failed = save_cwd (&saved_cwd) < 0 ? errno : 0;
 
   /* If save_cwd allocated a descriptor DFD other than FD, do another
      save_cwd and then close DFD, so that the later open (if successful)
@@ -252,7 +252,7 @@ openat_permissive (int fd, char const *file, int flags, mode_t mode,
   int dfd = saved_cwd.desc;
   if (0 <= dfd && dfd != fd)
     {
-      save_failed = save_cwd (&saved_cwd) < 0;
+      save_failed = save_cwd (&saved_cwd) < 0 ? errno : 0;
       close (dfd);
       dfd = saved_cwd.desc;
     }
@@ -269,8 +269,8 @@ openat_permissive (int fd, char const *file, int flags, mode_t mode,
   if (save_failed)
     {
       if (! cwd_errno)
-        openat_save_fail (errno);
-      *cwd_errno = errno;
+        openat_save_fail (save_failed);
+      *cwd_errno = save_failed;
     }
 
   err = fchdir (fd);
