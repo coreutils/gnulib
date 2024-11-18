@@ -271,18 +271,17 @@ openat_permissive (int fd, char const *file, int flags, mode_t mode,
   int err = fchdir (fd);
   int saved_errno = errno;
 
-  if (! err)
+  if (0 <= err)
     {
       err = open (file, flags, mode);
       saved_errno = errno;
-      if (!save_failed && restore_cwd (&saved_cwd) != 0)
+      if (!save_failed && restore_cwd (&saved_cwd) < 0)
         {
           if (! cwd_errno)
             {
               /* Don't write a message to just-created fd 2.  */
               saved_errno = errno;
-              if (err == STDERR_FILENO)
-                close (err);
+              close (err);
               openat_restore_fail (saved_errno);
             }
           *cwd_errno = errno;
