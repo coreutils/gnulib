@@ -61,17 +61,8 @@ orig_openat (int fd, char const *filename, int flags, mode_t mode)
 int
 rpl_openat (int dfd, char const *filename, int flags, ...)
 {
-  /* 0 = unknown, 1 = yes, -1 = no.  */
-#if GNULIB_defined_O_CLOEXEC
-  int have_cloexec = -1;
-#else
-  static int have_cloexec;
-#endif
+  mode_t mode = 0;
 
-  mode_t mode;
-  int fd;
-
-  mode = 0;
   if (flags & O_CREAT)
     {
       va_list arg;
@@ -116,8 +107,15 @@ rpl_openat (int dfd, char const *filename, int flags, ...)
     }
 # endif
 
-  fd = orig_openat (dfd, filename,
-                    flags & ~(have_cloexec < 0 ? O_CLOEXEC : 0), mode);
+  /* 0 = unknown, 1 = yes, -1 = no.  */
+#if GNULIB_defined_O_CLOEXEC
+  int have_cloexec = -1;
+#else
+  static int have_cloexec;
+#endif
+
+  int fd = orig_openat (dfd, filename,
+                        flags & ~(have_cloexec < 0 ? O_CLOEXEC : 0), mode);
 
   if (flags & O_CLOEXEC)
     {
@@ -217,10 +215,6 @@ int
 openat_permissive (int fd, char const *file, int flags, mode_t mode,
                    int *cwd_errno)
 {
-  struct saved_cwd saved_cwd;
-  int saved_errno;
-  int err;
-
   if (fd == AT_FDCWD || IS_ABSOLUTE_FILE_NAME (file))
     return open (file, flags, mode);
 
@@ -244,6 +238,7 @@ openat_permissive (int fd, char const *file, int flags, mode_t mode,
       }
   }
 
+  struct saved_cwd saved_cwd;
   int save_failed = save_cwd (&saved_cwd) < 0 ? errno : 0;
 
   /* If save_cwd allocated a descriptor DFD other than FD, do another
@@ -273,8 +268,8 @@ openat_permissive (int fd, char const *file, int flags, mode_t mode,
       *cwd_errno = save_failed;
     }
 
-  err = fchdir (fd);
-  saved_errno = errno;
+  int err = fchdir (fd);
+  int saved_errno = errno;
 
   if (! err)
     {
