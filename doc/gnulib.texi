@@ -1053,6 +1053,10 @@ null pointer type checking is more error prone.  In C, @code{_Generic}
 expressions cannot reliably distinguish the type of @code{nullptr}
 from integer or @code{void *} types.  C++ overloading has similar
 limitations.
+
+@item
+GCC 14 defines @code{nullptr_t} even when @code{<stddef.h>} is not
+included.  This bug should be fixed in GCC 15.
 @end itemize
 
 @node static_assert
