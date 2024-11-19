@@ -217,9 +217,17 @@ fallback_failure_callback (unsigned int code,
 void
 print_unicode_char (FILE *stream, unsigned int code, int exit_on_error)
 {
-  unicode_to_mb (code, fwrite_success_callback,
-                 exit_on_error
-                 ? exit_failure_callback
-                 : fallback_failure_callback,
-                 stream);
+  /* Simplify this subset to avoid potential iconv() issues
+     for that range at least.  */
+  if (32 <= code && code < 128)
+    {
+      char code_char = code;
+      fwrite_success_callback (&code_char, sizeof code_char, stream);
+    }
+  else
+    unicode_to_mb (code, fwrite_success_callback,
+                   exit_on_error
+                   ? exit_failure_callback
+                   : fallback_failure_callback,
+                   stream);
 }
