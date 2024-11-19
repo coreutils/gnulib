@@ -217,6 +217,12 @@
 /* Here we need to call the native sprintf, not rpl_sprintf.  */
 #undef sprintf
 
+/* macOS 12's "warning: 'sprintf' is deprecated" is pointless,
+   as sprintf is used safely here.  */
+#if defined __APPLE__ && defined __MACH__ && _GL_GNUC_PREREQ (4, 2)
+# pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#endif
+
 /* GCC >= 4.0 with -Wall emits unjustified "... may be used uninitialized"
    warnings in this file.  Use -Dlint to suppress them.  */
 #if defined GCC_LINT || defined lint

@@ -31,6 +31,12 @@
 /* Use the system functions, not the gnulib overrides in this file.  */
 #undef sprintf
 
+/* macOS 12's "warning: 'sprintf' is deprecated" is pointless,
+   as sprintf is used safely here.  */
+#if defined __APPLE__ && defined __MACH__ && _GL_GNUC_PREREQ (4, 2)
+# pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#endif
+
 char *
 strerror (int n)
 #undef strerror
