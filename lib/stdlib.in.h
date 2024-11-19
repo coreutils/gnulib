@@ -288,8 +288,8 @@ _GL_CXXALIASWARN (free);
 #elif defined GNULIB_POSIXCHECK
 # undef free
 /* Assume free is always declared.  */
-_GL_WARN_ON_USE (free, "free is not future POSIX compliant everywhere - "
-                 "use gnulib module free for portability");
+_GL_WARN_ON_USE (free, "free is not POSIX:2024 compliant everywhere - "
+                 "use gnulib module free-posix for portability");
 #endif
 
 
