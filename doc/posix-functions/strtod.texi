@@ -103,4 +103,10 @@ MSVC 14.
 
 @item
 The replacement function does not always return correctly rounded results.
+
+@item
+If no conversion could be performed, this function sets @code{errno}
+to @code{EINVAL} on some platforms.  Portable programs should check
+for no conversion by comparing @code{str} to @code{*endptr}, not by
+inspecting @code{errno}.
 @end itemize

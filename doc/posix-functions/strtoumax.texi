@@ -19,4 +19,9 @@ Portability problems not fixed by Gnulib:
 @item
 This function is only defined as a macro on some platforms:
 HP-UX 11.11.
+@item
+If no conversion could be performed, this function sets @code{errno}
+to @code{EINVAL} on some platforms.  Portable programs should check
+for no conversion by comparing @code{str} to @code{*endptr}, not by
+inspecting @code{errno}.
 @end itemize
