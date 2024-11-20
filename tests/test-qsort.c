@@ -19,6 +19,19 @@
 /* Specification.  */
 #include <stdlib.h>
 
+/* Test the library, not the compiler+library.  */
+static void
+lib_qsort (void *base, size_t nel, size_t width,
+           int (*compar) (void const *, void const *))
+{
+  return qsort (base, nel, width, compar);
+}
+static void (*volatile volatile_qsort) (void *, size_t, size_t,
+                                        int (*) (void const *, void const *))
+  = lib_qsort;
+#undef qsort
+#define qsort volatile_qsort
+
 static int
 cmp (const void *a, const void *b)
 {

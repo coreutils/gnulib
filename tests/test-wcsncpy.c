@@ -23,21 +23,29 @@
 
 #include "macros.h"
 
+/* Test the library, not the compiler+library.  */
+static wchar_t *
+lib_wcsncpy (wchar_t *ws1, wchar_t const *ws2, size_t n)
+{
+  return wcsncpy (ws1, ws2, n);
+}
+static wchar_t *(*volatile volatile_wcsncpy) (wchar_t *, wchar_t const *,
+                                              size_t)
+  = lib_wcsncpy;
+#undef wcsncpy
+#define wcsncpy volatile_wcsncpy
+
 int
 main (void)
 {
-  int volatile value;
-
   /* Test zero-length operations on NULL pointers, allowed by
      <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3322.pdf>.  */
 
-  value = (wcsncpy (NULL, L"x", 0) == NULL);
-  ASSERT (value);
+  ASSERT (wcsncpy (NULL, L"x", 0) == NULL);
 
   {
     wchar_t y[1];
-    value = (wcsncpy (y, NULL, 0) == y);
-    ASSERT (value);
+    ASSERT (wcsncpy (y, NULL, 0) == y);
   }
 
   return test_exit_status;

@@ -23,22 +23,25 @@
 
 #include "macros.h"
 
+/* Test the library, not the compiler+library.  */
+static int
+lib_strncmp (char const *s1, char const *s2, size_t n)
+{
+  return strncmp (s1, s2, n);
+}
+static int (*volatile volatile_strncmp) (char const *, char const *, size_t)
+  = lib_strncmp;
+#undef strncmp
+#define strncmp volatile_strncmp
+
 int
 main (void)
 {
-  int volatile value;
-
   /* Test zero-length operations on NULL pointers, allowed by
      <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3322.pdf>.  */
-
-  value = (strncmp (NULL, "x", 0) == 0);
-  ASSERT (value);
-
-  value = (strncmp ("x", NULL, 0) == 0);
-  ASSERT (value);
-
-  value = (strncmp (NULL, NULL, 0) == 0);
-  ASSERT (value);
+  ASSERT (strncmp (NULL, "x", 0) == 0);
+  ASSERT (strncmp ("x", NULL, 0) == 0);
+  ASSERT (strncmp (NULL, NULL, 0) == 0);
 
   return test_exit_status;
 }

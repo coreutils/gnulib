@@ -21,6 +21,20 @@
 
 #include "macros.h"
 
+/* Test the library, not the compiler+library.  */
+static void *
+lib_bsearch (void const *key, void const *base, size_t nel, size_t width,
+             int (*compar) (void const *, void const *))
+{
+  return bsearch (key, base, nel, width, compar);
+}
+static void *(*volatile volatile_bsearch) (void const *, void const *, size_t,
+                                           size_t,
+                                           int (*) (void const *, void const *))
+  = lib_bsearch;
+#undef bsearch
+#define bsearch volatile_bsearch
+
 static int
 cmp (const void *a, const void *b)
 {
@@ -30,13 +44,9 @@ cmp (const void *a, const void *b)
 int
 main (void)
 {
-  int volatile value;
-
   /* Test zero-length operations on NULL pointers, allowed by
      <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3322.pdf>.  */
-
-  value = (bsearch ("x", NULL, 0, 1, cmp) == NULL);
-  ASSERT (value);
+  ASSERT (bsearch ("x", NULL, 0, 1, cmp) == NULL);
 
   return test_exit_status;
 }

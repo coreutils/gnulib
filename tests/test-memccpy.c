@@ -23,21 +23,28 @@
 
 #include "macros.h"
 
+/* Test the library, not the compiler+library.  */
+static void *
+lib_memccpy (void *dest, void const *src, int c, size_t n)
+{
+  return memccpy (dest, src, c, n);
+}
+static void *(*volatile volatile_memccpy) (void *, void const *, int, size_t)
+  = lib_memccpy;
+#undef memccpy
+#define memccpy volatile_memccpy
+
 int
 main (void)
 {
-  int volatile value;
-
   /* Test zero-length operations on NULL pointers, allowed by
      <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3322.pdf>.  */
 
-  value = (memccpy (NULL, "x", '?', 0) == NULL);
-  ASSERT (value);
+  ASSERT (memccpy (NULL, "x", '?', 0) == NULL);
 
   {
     char y[1];
-    value = (memccpy (y, NULL, '?', 0) == NULL);
-    ASSERT (value);
+    ASSERT (memccpy (y, NULL, '?', 0) == NULL);
   }
 
   return test_exit_status;

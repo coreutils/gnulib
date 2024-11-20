@@ -23,16 +23,23 @@
 
 #include "macros.h"
 
+/* Test the library, not the compiler+library.  */
+static char *
+lib_strndup (char const *s, size_t size)
+{
+  return strndup (s, size);
+}
+static char *(*volatile volatile_strndup) (char const *, size_t)
+  = lib_strndup;
+#undef strndup
+#define strndup volatile_strndup
+
 int
 main (void)
 {
-  int volatile value;
-
   /* Test zero-length operations on NULL pointers, allowed by
      <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3322.pdf>.  */
-
-  value = (strndup (NULL, 0) != NULL);
-  ASSERT (value);
+  ASSERT (strndup (NULL, 0) != NULL);
 
   return test_exit_status;
 }

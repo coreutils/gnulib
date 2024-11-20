@@ -23,15 +23,23 @@
 
 #include "macros.h"
 
+/* Test the library, not the compiler+library.  */
+static wchar_t *
+lib_wmemset (wchar_t *ws, wchar_t wc, size_t n)
+{
+  return wmemset (ws, wc, n);
+}
+static wchar_t *(*volatile volatile_wmemset) (wchar_t *, wchar_t, size_t)
+  = lib_wmemset;
+#undef wmemset
+#define wmemset volatile_wmemset
+
 int
 main (void)
 {
   /* Test zero-length operations on NULL pointers, allowed by
      <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3322.pdf>.  */
-  {
-    int volatile value = (wmemset (NULL, L'?', 0) == NULL);
-    ASSERT (value);
-  }
+  ASSERT (wmemset (NULL, L'?', 0) == NULL);
 
   return test_exit_status;
 }

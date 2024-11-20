@@ -40,8 +40,20 @@ static char zero[SECRET_SIZE] = { 0 };
 
 /* Enable this to verify that the test is effective.  */
 #if 0
-# define memset_explicit(a, c, n)  memset (a, c, n)
+# undef memset_explicit
+# define memset_explicit memset
 #endif
+
+/* Test the library, not the compiler+library.  */
+static void *
+lib_memset_explicit (void *s, int c, size_t n)
+{
+  return memset_explicit (s, c, n);
+}
+static void *(*volatile volatile_memset_explicit) (void *, int, size_t)
+  = lib_memset_explicit;
+#undef memset_explicit
+#define memset_explicit volatile_memset_explicit
 
 /* Suppress GCC 13.2.1 false alarm, as this test needs a dangling pointer.  */
 #if _GL_GNUC_PREREQ (12, 0)
@@ -135,7 +147,7 @@ test_heap (void)
 {
   char *heapbuf = (char *) malloc (SECRET_SIZE);
   ASSERT (heapbuf);
-  uintptr_t volatile addr = (uintptr_t) heapbuf;
+  uintptr_t addr = (uintptr_t) heapbuf;
   memcpy (heapbuf, SECRET, SECRET_SIZE);
   memset_explicit (heapbuf, 0, SECRET_SIZE);
   free (heapbuf);
@@ -173,8 +185,7 @@ test_stack (void)
      1. Put a secret in memory and invoke memset_explicit on it.
      2. Verify that the memory has been erased.
    Implement them in the same function, so that they access the same memory
-   range on the stack.  Declare the local scalars to be volatile so they
-   are not optimized away.  That way, the test verifies that the compiler
+   range on the stack.  That way, the test verifies that the compiler
    does not eliminate a call to memset_explicit, even if data flow analysis
    reveals that the stack area is dead at the end of the function.  */
 static bool _GL_ATTRIBUTE_NOINLINE
@@ -184,7 +195,7 @@ __attribute__ ((__noclone__))
 # if _GL_GNUC_PREREQ (8, 0)
 __attribute__ ((__noipa__))
 # endif
-do_secret_stuff (int volatile pass, char *volatile *volatile last_stackbuf)
+do_secret_stuff (int pass, char *volatile *last_stackbuf)
 {
   char stackbuf[SECRET_SIZE];
   if (pass == 1)
@@ -245,10 +256,7 @@ main ()
 
   /* Test zero-length operations on NULL pointers, allowed by
      <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3322.pdf>.  */
-  {
-    int volatile value = (memset_explicit (NULL, '?', 0) == NULL);
-    ASSERT (value);
-  }
+  ASSERT (memset_explicit (NULL, '?', 0) == NULL);
 
   return test_exit_status;
 }

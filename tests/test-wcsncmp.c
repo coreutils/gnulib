@@ -25,6 +25,18 @@ SIGNATURE_CHECK (wcsncmp, int, (const wchar_t *, const wchar_t *, size_t));
 
 #include "macros.h"
 
+/* Test the library, not the compiler+library.  */
+static int
+lib_wcsncmp (wchar_t const *ws1, wchar_t const *ws2, size_t n)
+{
+  return wcsncmp (ws1, ws2, n);
+}
+static int (*volatile volatile_wcsncmp) (wchar_t const *,
+                                         wchar_t const *, size_t)
+  = lib_wcsncmp;
+#undef wcsncmp
+#define wcsncmp volatile_wcsncmp
+
 int
 main (int argc, char *argv[])
 {
@@ -178,19 +190,11 @@ main (int argc, char *argv[])
       }
   }
 
-  int volatile value;
-
   /* Test zero-length operations on NULL pointers, allowed by
      <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3322.pdf>.  */
-
-  value = (wcsncmp (NULL, L"x", 0) == 0);
-  ASSERT (value);
-
-  value = (wcsncmp (L"x", NULL, 0) == 0);
-  ASSERT (value);
-
-  value = (wcsncmp (NULL, NULL, 0) == 0);
-  ASSERT (value);
+  ASSERT (wcsncmp (NULL, L"x", 0) == 0);
+  ASSERT (wcsncmp (L"x", NULL, 0) == 0);
+  ASSERT (wcsncmp (NULL, NULL, 0) == 0);
 
   return test_exit_status;
 }

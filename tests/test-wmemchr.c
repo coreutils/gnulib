@@ -23,15 +23,23 @@
 
 #include "macros.h"
 
+/* Test the library, not the compiler+library.  */
+static wchar_t *
+lib_wmemchr (wchar_t const *s, wchar_t wc, size_t n)
+{
+  return wmemchr (s, wc, n);
+}
+static wchar_t *(*volatile volatile_wmemchr) (wchar_t const *, wchar_t, size_t)
+  = lib_wmemchr;
+#undef wmemchr
+#define wmemchr volatile_wmemchr
+
 int
 main (void)
 {
   /* Test zero-length operations on NULL pointers, allowed by
      <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3322.pdf>.  */
-  {
-    int volatile value = (wmemchr (NULL, L'?', 0) == NULL);
-    ASSERT (value);
-  }
+  ASSERT (wmemchr (NULL, L'?', 0) == NULL);
 
   return test_exit_status;
 }

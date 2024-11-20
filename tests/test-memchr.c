@@ -27,6 +27,17 @@ SIGNATURE_CHECK (memchr, void *, (void const *, int, size_t));
 #include "zerosize-ptr.h"
 #include "macros.h"
 
+/* Test the library, not the compiler+library.  */
+static void *
+lib_memchr (void const *s, int c, size_t n)
+{
+  return memchr (s, c, n);
+}
+static void *(*volatile volatile_memchr) (void const *, int, size_t)
+  = lib_memchr;
+#undef memchr
+#define memchr volatile_memchr
+
 /* Calculating void * + int is not portable, so this wrapper converts
    to char * to make the tests easier to write.  */
 #define MEMCHR (char *) memchr
@@ -135,10 +146,7 @@ main (void)
 
   /* Test zero-length operations on NULL pointers, allowed by
      <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3322.pdf>.  */
-  {
-    int volatile value = (memchr (NULL, '?', 0) == NULL);
-    ASSERT (value);
-  }
+  ASSERT (memchr (NULL, '?', 0) == NULL);
 
   return test_exit_status;
 }

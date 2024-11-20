@@ -23,21 +23,28 @@
 
 #include "macros.h"
 
+/* Test the library, not the compiler+library.  */
+static char *
+lib_strncpy (char *s1, char const *s2, size_t n)
+{
+  return strncpy (s1, s2, n);
+}
+static char *(*volatile volatile_strncpy) (char *, char const *, size_t)
+  = lib_strncpy;
+#undef strncpy
+#define strncpy volatile_strncpy
+
 int
 main (void)
 {
-  int volatile value;
-
   /* Test zero-length operations on NULL pointers, allowed by
      <https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3322.pdf>.  */
 
-  value = (strncpy (NULL, "x", 0) == NULL);
-  ASSERT (value);
+  ASSERT (strncpy (NULL, "x", 0) == NULL);
 
   {
     char y[1];
-    value = (strncpy (y, NULL, 0) == y);
-    ASSERT (value);
+    ASSERT (strncpy (y, NULL, 0) == y);
   }
 
   return test_exit_status;
