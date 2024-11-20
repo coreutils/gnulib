@@ -76,6 +76,12 @@ is_device (int fd)
 #undef strstr
 #undef write
 
+/* macOS 12's "warning: 'sprintf' is deprecated" is pointless,
+   as sprintf is used safely here.  */
+#if defined __APPLE__ && defined __MACH__ && _GL_GNUC_PREREQ (4, 2)
+# pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#endif
+
 #include "qemu.h"
 
 #if HAVE_MSVC_INVALID_PARAMETER_HANDLER

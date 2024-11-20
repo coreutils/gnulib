@@ -18,6 +18,7 @@
 
 #include "openat.h"
 
+/* This program tests deprecated functions 'statat' and 'lstatat'.  */
 #if _GL_GNUC_PREREQ (4, 3)
 # pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #endif

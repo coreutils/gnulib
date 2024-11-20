@@ -34,6 +34,11 @@ SIGNATURE_CHECK (fstatat, int, (int, char const *, struct stat *, int));
 #include "ignore-value.h"
 #include "macros.h"
 
+/* This program tests deprecated functions 'statat' and 'lstatat'.  */
+#if _GL_GNUC_PREREQ (4, 3)
+# pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#endif
+
 #ifndef BASE
 # define BASE "test-fstatat.t"
 #endif
