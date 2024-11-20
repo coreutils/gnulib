@@ -58,6 +58,10 @@
 #include "gettext.h"
 #define _(msgid) gettext (msgid)
 
+/* Here we need the original abort() function.  (Printing a stack trace
+   from within a signal handler is not going to work in most cases anyway.)  */
+#undef abort
+
 #if HAVE_STACK_OVERFLOW_RECOVERY
 
 /* Storage for the alternate signal stack.
