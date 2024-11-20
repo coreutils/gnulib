@@ -61,9 +61,12 @@ savewd_save (struct savewd *wd)
             wd->val.fd = fd;
             break;
           }
-# if O_SEARCH != O_RDONLY || (defined _WIN32 && !defined __CYGWIN__)
-        /* There is no point to forking if O_SEARCH conforms to POSIX,
-           or on native MS-Windows which lacks 'fork'.  */
+
+        /* There is no point to forking on native MS-Windows which lacks 'fork'.
+           Although there is also no point on systems that support O_SEARCH,
+           macOS 12.6 APFS open (".", O_SEARCH) incorrectly fails if "." is
+           mode 311, so do not attempt to optimize for O_SEARCH != O_RDONLY.  */
+# if defined _WIN32 && !defined __CYGWIN__
         bool try_fork = false;
 # else
         bool try_fork = errno == EACCES || errno == ESTALE;

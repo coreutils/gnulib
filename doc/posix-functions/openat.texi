@@ -33,6 +33,13 @@ Portability problems not fixed by Gnulib:
 The Gnulib replacement for @code{O_CLOEXEC} is not atomic, and so is
 not safe in the presence of multiple threads or signal handlers.
 @item
+The Gnulib replacement for @code{O_SEARCH} may require read access
+instead of search/execute access.
+@item
+On some platforms, @code{O_SEARCH} may reject directories
+where you have search access even though @code{O_SEARCH} is not replaced:
+macOS 12.6.
+@item
 @code{openat (fd, "symlink", O_NOFOLLOW ...)} fails with @code{errno}
 set to @code{EMLINK} instead of the POSIX-required @code{ELOOP} on
 some platforms:
