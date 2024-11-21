@@ -277,14 +277,16 @@ openat_permissive (int fd, char const *file, int flags, mode_t mode,
       saved_errno = errno;
       if (!save_failed && restore_cwd (&saved_cwd) < 0)
         {
+          int restore_cwd_errno = errno;
           if (! cwd_errno)
             {
-              /* Don't write a message to just-created fd 2.  */
-              saved_errno = errno;
-              close (err);
-              openat_restore_fail (saved_errno);
+              /* Do not leak ERR.  This also stops openat_restore_fail
+                 from messing up if ERR happens to equal STDERR_FILENO.  */
+              if (0 <= err)
+                close (err);
+              openat_restore_fail (restore_cwd_errno);
             }
-          *cwd_errno = errno;
+          *cwd_errno = restore_cwd_errno;
         }
     }
 
