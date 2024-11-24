@@ -2,7 +2,7 @@
 @subsection @code{glob_pattern_p}
 @findex glob_pattern_p
 
-Gnulib module: ---
+Gnulib module: glob
 
 Portability problems fixed by Gnulib:
 @itemize
