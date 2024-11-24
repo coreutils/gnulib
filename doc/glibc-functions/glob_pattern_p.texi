@@ -3,6 +3,7 @@
 @findex glob_pattern_p
 
 Gnulib module: glob
+@mindex glob
 
 Portability problems fixed by Gnulib:
 @itemize
