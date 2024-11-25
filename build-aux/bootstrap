@@ -37,7 +37,7 @@ medir=`dirname "$me"`
 
 # A library of shell functions for autopull.sh, autogen.sh, and bootstrap.
 
-scriptlibversion=2024-11-12.21; # UTC
+scriptlibversion=2024-11-25.15; # UTC
 
 # Copyright (C) 2003-2024 Free Software Foundation, Inc.
 #
