@@ -1,5 +1,5 @@
 # fpurge.m4
-# serial 15
+# serial 16
 dnl Copyright (C) 2007, 2009-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,7 +9,6 @@ dnl This file is offered as-is, without any warranty.
 AC_DEFUN([gl_FUNC_FPURGE],
 [
   AC_REQUIRE([gl_STDIO_H_DEFAULTS])
-  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CHECK_HEADERS_ONCE([stdio_ext.h])
   AC_CHECK_FUNCS_ONCE([fpurge])
   gl_CHECK_FUNCS_ANDROID([__fpurge], [[#include <stdio_ext.h>]])
@@ -55,12 +54,8 @@ AC_DEFUN([gl_FUNC_FPURGE],
               ]])],
            [gl_cv_func_fpurge_works=yes],
            [gl_cv_func_fpurge_works=no],
-           [case "$host_os" in
-                                  # Guess yes on musl systems.
-              *-musl* | midipix*) gl_cv_func_fpurge_works="guessing yes" ;;
-                                  # Otherwise obey --enable-cross-guesses.
-              *)                  gl_cv_func_fpurge_works="$gl_cross_guess_normal" ;;
-            esac
+           [# Obey --enable-cross-guesses.
+            gl_cv_func_fpurge_works="$gl_cross_guess_normal"
            ])
        else
          gl_cv_func_fpurge_works=no
