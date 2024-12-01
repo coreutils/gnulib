@@ -168,6 +168,9 @@ Print the SHA1 and SHA256 signature section for each C<@file>.
 
 # This digest function omits the "=" padding that is required by cksum,
 # so add the 0..2 bytes of padding required for each of Digest's algorithms.
+# To verify such a digest, users need
+#   - a particular command ('cksum -a sha256 --check')
+#   - and particular tools (coreutils >= 9.2 or OpenBSD's cksum since 2007).
 sub digest_file_base64_wrap ($$)
 {
   my ($file, $alg) = @_;
@@ -188,11 +191,11 @@ sub print_checksums (@)
 
   foreach my $f (@file)
     {
-      print '  ', digest_file_hex ($f, "SHA-1"), "  $f\n";
-      print '  ', digest_file_base64_wrap ($f, "SHA-256"), "  $f\n";
+      print "  File: $f\n";
+      print '  SHA1 sum:   ', digest_file_hex ($f, "SHA-1"), "\n";
+      print '  SHA256 sum: ', digest_file_hex ($f, "SHA-256"), "\n";
+      print "\n";
     }
-  print "\nVerify the base64 SHA256 checksum with cksum -a sha256 --check\n";
-  print "from coreutils-9.2 or OpenBSD's cksum since 2007.\n\n";
 }
 
 =item C<print_news_deltas ($news_file, $prev_version, $curr_version)
