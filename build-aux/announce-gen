@@ -123,7 +123,7 @@ sub sizes (@)
   my %res;
   foreach my $f (@file)
     {
-      my $cmd = "du -h $f";
+      my $cmd = "du -h -L $f";
       my $t = `$cmd`;
       # FIXME-someday: give a better diagnostic, a la $PROCESS_STATUS
       $@
