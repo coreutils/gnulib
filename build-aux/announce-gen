@@ -35,7 +35,7 @@
 eval 'exec perl -wSx "$0" "$@"'
      if 0;
 
-my $VERSION = '2024-07-17 02:16'; # UTC
+my $VERSION = '2024-12-02 20:10'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -95,6 +95,8 @@ The following are optional:
    --gpg-keyring-url=URL        URL pointing to keyring containing the key used
                                 to sign the tarballs
    --no-print-checksums         do not emit SHA1 or SHA256 checksums
+   --cksum-checksums            emit SHA256 checksums in a form that requires
+                                cksum from coreutils or OpenBSD
    --archive-suffix=SUF         add SUF to the list of archive suffixes
    --mail-headers=HEADERS       a space-separated list of mail headers, e.g.,
                                 To: x\@example.com Cc: y-announce\@example.com,...
@@ -180,21 +182,34 @@ sub digest_file_base64_wrap ($$)
   return $h . '=' x $pad{$alg};
 }
 
-sub print_checksums (@)
+sub print_checksums ($@)
 {
-  my (@file) = @_;
+  my ($prefer_cksum, @file) = @_;
 
   print "Here are the SHA1 and SHA256 checksums:\n";
   print "\n";
 
   use Digest::file qw(digest_file_hex digest_file_base64);
 
-  foreach my $f (@file)
+  if ($prefer_cksum)
     {
-      print "  File: $f\n";
-      print '  SHA1 sum:   ', digest_file_hex ($f, "SHA-1"), "\n";
-      print '  SHA256 sum: ', digest_file_hex ($f, "SHA-256"), "\n";
-      print "\n";
+      foreach my $f (@file)
+        {
+          print '  ', digest_file_hex ($f, "SHA-1"), "  $f\n";
+          print '  ', digest_file_base64_wrap ($f, "SHA-256"), "  $f\n";
+        }
+      print "\nVerify the base64 SHA256 checksum with cksum -a sha256 --check\n";
+      print "from coreutils-9.2 or OpenBSD's cksum since 2007.\n\n";
+    }
+  else
+    {
+      foreach my $f (@file)
+        {
+          print "  File: $f\n";
+          print '  SHA1 sum:   ', digest_file_hex ($f, "SHA-1"), "\n";
+          print '  SHA256 sum: ', digest_file_hex ($f, "SHA-256"), "\n";
+          print "\n";
+        }
     }
 }
 
@@ -428,6 +443,7 @@ sub readable_interval($)
   my $bootstrap_tools;
   my $gnulib_version;
   my $print_checksums_p = 1;
+  my $cksum_checksums_p;
   my $gpg_key_email;
   my $gpg_keyring_url;
 
@@ -456,6 +472,7 @@ sub readable_interval($)
      'bootstrap-tools=s'  => \$bootstrap_tools,
      'gnulib-version=s'   => \$gnulib_version,
      'print-checksums!'   => \$print_checksums_p,
+     'cksum-checksums'    => \$cksum_checksums_p,
      'archive-suffix=s'   => \@archive_suffixes,
 
      help => sub { usage 0 },
@@ -621,7 +638,7 @@ EOF
     }
 
   $print_checksums_p
-    and print_checksums (@sizable);
+    and print_checksums ($cksum_checksums_p, @sizable);
 
   print <<EOF;
 Use a .sig file to verify that the corresponding file (without the
