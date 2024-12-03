@@ -443,6 +443,13 @@ strerror_r (int errnum, char *buf, size_t buflen)
 
     if (ret == EINVAL && !*buf)
       {
+        /* gcc 14 produces a
+           "warning: 'Unknown error ' directive output truncated
+            writing 14 bytes into a region of size 2"
+           Thanks for the warning, but here the truncation is intentional.  */
+#if _GL_GNUC_PREREQ (7, 1)
+# pragma GCC diagnostic ignored "-Wformat-truncation"
+#endif
 #if defined __HAIKU__
         /* For consistency with perror().  */
         snprintf (buf, buflen, "Unknown Application Error (%d)", errnum);
