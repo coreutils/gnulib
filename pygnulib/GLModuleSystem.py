@@ -137,10 +137,12 @@ class GLModuleSystem:
                     or filename.endswith('.rej')
                     or filename.endswith('~'))
 
-    def list(self) -> list[str]:
+    def list(self, with_tests: bool | None = False) -> list[str]:
         '''Return the available module names as tuple. We could use a combination
         of os.walk() function and re module. However, it takes too much time to
-        complete, so this version uses subprocess to run shell commands.'''
+        complete, so this version uses subprocess to run shell commands.
+        Arguments are:
+        - with_tests: Include test module names, optional argument.'''
         result = ''
         localpath = self.config['localpath']
         find_args = ['find', 'modules', '-type', 'f', '-print']
@@ -166,7 +168,12 @@ class GLModuleSystem:
         # Filter out undesired file names.
         listing = [ line
                     for line in listing
-                    if self.file_is_module(line) and not _isTestsModuleName(line) ]
+                    if self.file_is_module(line) ]
+        # Check if test modules should be filtered out.
+        if not with_tests:
+            listing = [ line
+                        for line in listing
+                        if not _isTestsModuleName(line) ]
         modules = sorted(set(listing))
         return modules
 
@@ -557,59 +564,35 @@ class GLModule:
 
         return outmodules
 
+    def _getAllModules(self) -> list[GLModule]:
+        '''Return a list of all modules as a list of GLModule objects.'''
+        module_names = self.modulesystem.list(True)
+        modules = [ self.modulesystem.find(module)
+                    for module in module_names
+                    if module != '']
+        modules = [ module
+                    for module in modules
+                    if module is not None ]
+        return modules
+
+    def _getDependents(self, modules: list[GLModule] | None = None) -> list[GLModule]:
+        '''Internal function for getDependents and getDependentsRecursively
+        accepting an optional argument modules.'''
+        if 'dependents' not in self.cache:
+            result = []
+            if modules is None:
+                modules = self._getAllModules()
+            for module in modules:
+                if self in set(module.getDependenciesWithoutConditions()):
+                    result.append(module)
+            self.cache['dependents'] = result
+        return self.cache['dependents']
+
     def getDependents(self) -> list[GLModule]:
         '''Return list of dependents (a.k.a. "reverse dependencies"),
         as a list of GLModule objects.
         GLConfig: localpath.'''
-        if 'dependents' not in self.cache:
-            localpath = self.config['localpath']
-            # Find a set of module candidates quickly.
-            # TODO: Optimize. This approach is fine for a single getDependents
-            #       invocation, but not for 100 or 1000 of them.
-            # Convert the module name to a POSIX basic regex.
-            # Needs to handle . [ \ * ^ $.
-            regex = self.name.replace('\\', '\\\\').replace('[', '\\[').replace('^', '\\^')
-            regex = re.compile(r'([.*$])').sub(r'[\1]', regex)
-            line_regex = '^' + regex
-            # We can't add a '$' to line_regex, because that would fail to match
-            # lines that denote conditional dependencies. We could invoke grep
-            # twice, once to search for  line_regex + '$'  and once to search
-            # for   line_regex + [ <TAB>]  but that would be twice as slow.
-            # Read module candidates from gnulib root directory.
-            command = "find modules -type f -print | xargs -n 100 grep -l %s /dev/null | sed -e 's,^modules/,,'" % shlex.quote(line_regex)
-            with sp.Popen(command, shell=True, cwd=DIRS['root'], stdout=sp.PIPE) as proc:
-                result = proc.stdout.read().decode('UTF-8')
-            # Read module candidates from local directories.
-            if localpath != None and len(localpath) > 0:
-                command = "find modules -type f -print | xargs -n 100 grep -l %s /dev/null | sed -e 's,^modules/,,' -e 's,\\.diff$,,'" % shlex.quote(line_regex)
-                for localdir in localpath:
-                    with sp.Popen(command, shell=True, cwd=localdir, stdout=sp.PIPE) as proc:
-                        result += proc.stdout.read().decode('UTF-8')
-            listing = [ line
-                        for line in result.split('\n')
-                        if line.strip() ]
-            # Remove modules/ prefix from each file name.
-            pattern = re.compile(r'^modules/')
-            listing = [ pattern.sub('', line)
-                        for line in listing ]
-            # Filter out undesired file names.
-            listing = [ line
-                        for line in listing
-                        if self.modulesystem.file_is_module(line) ]
-            # ${module}-tests implicitly depends on ${module}, if both exist.
-            if self.isNonTests():
-                implicit_dependent = self.name+'-tests'
-                if self.modulesystem.exists(implicit_dependent):
-                    listing.append(implicit_dependent)
-            candidates = sorted(set(listing))
-            result = []
-            for name in candidates:
-                module = self.modulesystem.find(name)
-                if module:  # Ignore module candidates that don't actually exist.
-                    if self in module.getDependenciesWithoutConditions():
-                        result.append(module)
-            self.cache['dependents'] = result
-        return self.cache['dependents']
+        return self._getDependents()
 
     def getDependentsRecursively(self) -> set[GLModule]:
         '''Return a list of recursive dependents of this module,
@@ -617,6 +600,8 @@ class GLModule:
         handledmodules = set()
         inmodules = set()
         outmodules = set()
+
+        modules = self._getAllModules()
 
         # In order to process every module only once (for speed), process an "input
         # list" of modules, producing an "output list" of modules. During each round,
@@ -629,7 +614,7 @@ class GLModule:
             inmodules = set()  # Accumulator, queue for next round
             for module in inmodules_this_round:
                 outmodules.add(module)
-                inmodules = inmodules.union(module.getDependents())
+                inmodules = inmodules.union(module._getDependents(modules))
             handledmodules = handledmodules.union(inmodules_this_round)
             # Remove handledmodules from inmodules.
             inmodules = inmodules.difference(handledmodules)
