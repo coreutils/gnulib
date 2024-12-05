@@ -574,19 +574,6 @@ class GLModule:
 
         return outmodules
 
-    def _getDependents(self, modules: list[GLModule] | None = None) -> list[GLModule]:
-        '''Internal function for getDependentsRecursively
-        accepting an optional argument modules.'''
-        if 'dependents' not in self.cache:
-            result = []
-            if modules is None:
-                modules = self.modulesystem.getAllModules()
-            for module in modules:
-                if self in set(module.getDependenciesWithoutConditions()):
-                    result.append(module)
-            self.cache['dependents'] = result
-        return self.cache['dependents']
-
     def getDependents(self) -> list[GLModule]:
         '''Return list of dependents (a.k.a. "reverse dependencies"),
         as a list of GLModule objects.
@@ -639,6 +626,14 @@ class GLModule:
             self.cache['dependents'] = result
         return self.cache['dependents']
 
+    def _getDependents(self, modules: list[GLModule]) -> list[GLModule]:
+        '''Return the list of dependents of this module,
+        among the given set of modules.'''
+        result = []
+        for module in modules:
+            if self in set(module.getDependenciesWithoutConditions()):
+                result.append(module)
+        return result
 
     def getDependentsRecursively(self) -> set[GLModule]:
         '''Return a list of recursive dependents of this module,
