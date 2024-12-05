@@ -177,6 +177,16 @@ class GLModuleSystem:
         modules = sorted(set(listing))
         return modules
 
+    def getAllModules(self) -> list[GLModule]:
+        '''Return a list of all modules as a list of GLModule objects.'''
+        module_names = self.list(True)
+        modules = [ self.find(module)
+                    for module in module_names ]
+        modules = [ module
+                    for module in modules
+                    if module is not None ]
+        return modules
+
 
 #===============================================================================
 # Define GLModule class
@@ -564,24 +574,13 @@ class GLModule:
 
         return outmodules
 
-    def _getAllModules(self) -> list[GLModule]:
-        '''Return a list of all modules as a list of GLModule objects.'''
-        module_names = self.modulesystem.list(True)
-        modules = [ self.modulesystem.find(module)
-                    for module in module_names
-                    if module != '']
-        modules = [ module
-                    for module in modules
-                    if module is not None ]
-        return modules
-
     def _getDependents(self, modules: list[GLModule] | None = None) -> list[GLModule]:
         '''Internal function for getDependentsRecursively
         accepting an optional argument modules.'''
         if 'dependents' not in self.cache:
             result = []
             if modules is None:
-                modules = self._getAllModules()
+                modules = self.modulesystem.getAllModules()
             for module in modules:
                 if self in set(module.getDependenciesWithoutConditions()):
                     result.append(module)
@@ -648,7 +647,7 @@ class GLModule:
         inmodules = set()
         outmodules = set()
 
-        modules = self._getAllModules()
+        modules = self.modulesystem.getAllModules()
 
         # In order to process every module only once (for speed), process an "input
         # list" of modules, producing an "output list" of modules. During each round,
