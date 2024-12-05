@@ -1289,7 +1289,7 @@ def main(temp_directory: str) -> None:
         for name in modules:
             module = modulesystem.find(name)
             if module:
-                dependents = module.getDependents(top_level=True)
+                dependents = module.getDependents()
                 dependents_names = sorted([ m.name
                                             for m in dependents ])
                 sys.stdout.write(lines_to_multiline(dependents_names))

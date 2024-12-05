@@ -576,7 +576,7 @@ class GLModule:
         return modules
 
     def _getDependents(self, modules: list[GLModule] | None = None) -> list[GLModule]:
-        '''Internal function for getDependents and getDependentsRecursively
+        '''Internal function for getDependentsRecursively
         accepting an optional argument modules.'''
         if 'dependents' not in self.cache:
             result = []
@@ -588,56 +588,56 @@ class GLModule:
             self.cache['dependents'] = result
         return self.cache['dependents']
 
-    def getDependents(self, top_level: bool | None = True) -> list[GLModule]:
+    def getDependents(self) -> list[GLModule]:
         '''Return list of dependents (a.k.a. "reverse dependencies"),
         as a list of GLModule objects.
-        GLConfig: localpath. Arguments are:
-        - top_level: Optional argument, to use an optimized version from main().'''
-        # Only use optimized version, below if called from the main().
-        if not top_level:
-            return self._getDependents()
-        localpath = self.config['localpath']
-        # Find a set of module candidates quickly.
-        # Convert the module name to a POSIX basic regex.
-        # Needs to handle . [ \ * ^ $.
-        regex = self.name.replace('\\', '\\\\').replace('[', '\\[').replace('^', '\\^')
-        regex = re.compile(r'([.*$])').sub(r'[\1]', regex)
-        line_regex = '^' + regex
-        # We can't add a '$' to line_regex, because that would fail to match
-        # lines that denote conditional dependencies. We could invoke grep
-        # twice, once to search for  line_regex + '$'  and once to search
-        # for   line_regex + [ <TAB>]  but that would be twice as slow.
-        # Read module candidates from gnulib root directory.
-        command = "find modules -type f -print | xargs -n 100 grep -l %s /dev/null | sed -e 's,^modules/,,'" % shlex.quote(line_regex)
-        result = sp.run(command, shell=True, cwd=DIRS['root'], capture_output=True).stdout.decode('utf-8')
-        if localpath != None and len(localpath) > 0:
-            command = "find modules -type f -print | xargs -n 100 grep -l %s /dev/null | sed -e 's,^modules/,,' -e 's,\\.diff$,,'" % shlex.quote(line_regex)
-            for localdir in localpath:
-                result += sp.run(command, shell=True, cwd=localdir, capture_output=True).stdout.decode('utf-8')
-        listing = [ line
-                    for line in result.split('\n')
-                    if line.strip() ]
-        # Remove modules/ prefix from each file name.
-        pattern = re.compile(r'^modules/')
-        listing = [ pattern.sub('', line)
-                    for line in listing ]
-        # Filter out undesired file names.
-        listing = [ line
-                    for line in listing
-                    if self.modulesystem.file_is_module(line) ]
-        # ${module}-tests implicitly depends on ${module}, if both exist.
-        if self.isNonTests():
-            implicit_dependent = self.name+'-tests'
-            if self.modulesystem.exists(implicit_dependent):
-                listing.append(implicit_dependent)
-        candidates = sorted(set(listing))
-        result = []
-        for name in candidates:
-            module = self.modulesystem.find(name)
-            if module:  # Ignore module candidates that don't actually exist.
-                if self in module.getDependenciesWithoutConditions():
-                    result.append(module)
-        self.cache['dependents'] = result
+        This implementation is optimized for the case of a single invocation
+        of getDependents.  If you need multiple invocations, better use _getDependents.
+        GLConfig: localpath.'''
+        if 'dependents' not in self.cache:
+            localpath = self.config['localpath']
+            # Find a set of module candidates quickly.
+            # Convert the module name to a POSIX basic regex.
+            # Needs to handle . [ \ * ^ $.
+            regex = self.name.replace('\\', '\\\\').replace('[', '\\[').replace('^', '\\^')
+            regex = re.compile(r'([.*$])').sub(r'[\1]', regex)
+            line_regex = '^' + regex
+            # We can't add a '$' to line_regex, because that would fail to match
+            # lines that denote conditional dependencies. We could invoke grep
+            # twice, once to search for  line_regex + '$'  and once to search
+            # for   line_regex + [ <TAB>]  but that would be twice as slow.
+            # Read module candidates from gnulib root directory.
+            command = "find modules -type f -print | xargs -n 100 grep -l %s /dev/null | sed -e 's,^modules/,,'" % shlex.quote(line_regex)
+            result = sp.run(command, shell=True, cwd=DIRS['root'], capture_output=True).stdout.decode('utf-8')
+            # Read module candidates from local directories.
+            if localpath != None and len(localpath) > 0:
+                command = "find modules -type f -print | xargs -n 100 grep -l %s /dev/null | sed -e 's,^modules/,,' -e 's,\\.diff$,,'" % shlex.quote(line_regex)
+                for localdir in localpath:
+                    result += sp.run(command, shell=True, cwd=localdir, capture_output=True).stdout.decode('utf-8')
+            listing = [ line
+                        for line in result.split('\n')
+                        if line.strip() ]
+            # Remove modules/ prefix from each file name.
+            pattern = re.compile(r'^modules/')
+            listing = [ pattern.sub('', line)
+                        for line in listing ]
+            # Filter out undesired file names.
+            listing = [ line
+                        for line in listing
+                        if self.modulesystem.file_is_module(line) ]
+            # ${module}-tests implicitly depends on ${module}, if both exist.
+            if self.isNonTests():
+                implicit_dependent = self.name+'-tests'
+                if self.modulesystem.exists(implicit_dependent):
+                    listing.append(implicit_dependent)
+            candidates = sorted(set(listing))
+            result = []
+            for name in candidates:
+                module = self.modulesystem.find(name)
+                if module:  # Ignore module candidates that don't actually exist.
+                    if self in module.getDependenciesWithoutConditions():
+                        result.append(module)
+            self.cache['dependents'] = result
         return self.cache['dependents']
 
 
