@@ -2818,7 +2818,7 @@ _GL_EXTERN_C int gl_signbitl (long double arg);
 #  if defined signbit || defined GNULIB_NAMESPACE
 _GL_MATH_CXX_REAL_FLOATING_DECL_1 (signbit)
 #   undef signbit
-#   if __GNUC__ >= 6 || (defined __clang__ && !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __OpenBSD__ || defined _AIX || (defined _WIN32 && !defined __CYGWIN__)))
+#   if __cplusplus >= 201103L || __GNUC__ >= 6 || (defined __clang__ && !((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __OpenBSD__ || defined _AIX || (defined _WIN32 && !defined __CYGWIN__)))
   /* This platform's <cmath> possibly defines signbit through a set of inline
      functions.  */
 _GL_MATH_CXX_REAL_FLOATING_DECL_2 (signbit, rpl_signbit, bool)
