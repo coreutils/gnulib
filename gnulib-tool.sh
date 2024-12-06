@@ -5798,7 +5798,7 @@ s,//*$,/,'
   # Create po/ directory.
   if test -n "$pobase"; then
     # Create po makefile and auxiliary files.
-    for file in Makefile.in.in remove-potcdate.sin; do
+    for file in Makefile.in.in remove-potcdate.sed; do
       func_dest_tmpfilename $pobase/$file
       func_lookup_file build-aux/po/$file
       cat "$lookedup_file" > "$tmpfile"

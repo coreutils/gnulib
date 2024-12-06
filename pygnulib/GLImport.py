@@ -1081,7 +1081,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         filesystem = GLFileSystem(self.config)
         if pobase:
             # Create po makefile and auxiliary files.
-            for file in ['Makefile.in.in', 'remove-potcdate.sin']:
+            for file in ['Makefile.in.in', 'remove-potcdate.sed']:
                 tmpfile = assistant.tmpfilename(joinpath(pobase, file))
                 path = joinpath('build-aux', 'po', file)
                 lookedup, flag = filesystem.lookup(path)

@@ -8365,7 +8365,7 @@ This is the template configuration file.  After copying it into the
 top-level directory of your package, you need to customize it.
 
 @item build-aux/po/Makefile.in.in
-@itemx build-aux/po/remove-potcdate.sin
+@itemx build-aux/po/remove-potcdate.sed
 These are auxiliary files used by @code{bootstrap}.  You don't have to
 copy them yourself; @code{bootstrap} will do that.
 @end table
