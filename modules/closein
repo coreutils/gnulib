@@ -9,6 +9,7 @@ Depends-on:
 closeout
 freadahead
 fflush
+gettext-h
 stdbool
 unistd
 

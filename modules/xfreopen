@@ -9,6 +9,7 @@ Depends-on:
 error
 exitfail
 freopen
+gettext-h
 quote
 
 configure.ac:
