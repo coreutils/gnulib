@@ -18,6 +18,7 @@ c32toupper
 c99
 ctype
 flexmember
+gettext-h
 idx
 locale
 mbrtoc32-regular
