@@ -14,9 +14,15 @@ SHELL=bash
 # Produce some files that are not stored in the repository.
 all:
 
+# ==============================================================================
+# Documentation
+
 # Produce the documentation in readable form.
 info html dvi pdf:
 	cd doc && $(MAKE) $@ && $(MAKE) mostlyclean
+
+# ==============================================================================
+# Various checks
 
 # Collect the names of rules starting with 'sc_'.
 syntax-check-rules := $(sort $(shell sed -n 's/^\(sc_[a-zA-Z0-9_-]*\):.*/\1/p'\
@@ -246,6 +252,9 @@ sc_check_GL_INLINE_HEADER_use:
 sc_check_copyright:
 	@./check-copyright
 
+# ==============================================================================
+# Regenerating some files
+
 # Regenerate some files that are stored in the repository.
 regen: build-aux/bootstrap MODULES.html
 
@@ -260,6 +269,9 @@ build-aux/bootstrap: top/gen-bootstrap.sed top/bootstrap top/bootstrap-funclib.s
 # where it then appears at <https://www.gnu.org/software/gnulib/MODULES.html>.
 MODULES.html: MODULES.html.sh
 	./MODULES.html.sh > MODULES.html
+
+# ==============================================================================
+# Updating copyright notices
 
 # A perl BEGIN block to set Y to the current year number and W to Y-1.
 _year_and_prev = BEGIN{@t=localtime(time); $$y=$$t[5]+1900; $$w=$$y-1}
@@ -305,3 +317,63 @@ update-copyright:
 	perl -pi -e							\
 	  '$(_year_and_prev) s/^(scriptversion=)$$w.*/$$1$$y-01-01.00/i' \
 	  build-aux/gendocs.sh
+
+# ==============================================================================
+# Maintaining localizations
+
+# Creates an up-to-date POT file (in the po/ directory).
+gnulib.pot:
+	cd po && make
+
+# Creates a snapshot tarball for the Translation Project. Once created,
+# 1. upload it to alpha.gnu.org via
+#    $ build-aux/gnupload --to alpha.gnu.org:gnulib gnulib-????????.tar.gz
+# 2. notify <coordinator@translationproject.org>
+gnulib-tp-snapshot: gnulib.pot
+	version=`date -u +"%Y%m%d"`; \
+	dir=gnulib-$$version; \
+	mkdir $$dir \
+	&& for file in `find lib -type f` `find po -type f` COPYING; do \
+	     case $$file in \
+	       *.orig | *.rej | *~ | '.#'* | '#'*'#' ) ;; \
+	       *) \
+	         mkdir -p $$dir/`dirname $$file` || exit 1; \
+	         ln $$file $$dir/$$file || exit 1; \
+	     esac; \
+	   done \
+	&& { echo 'This tarball contains the GNU gnulib sources relevant for translators.'; \
+	     echo 'It is only meant for use by the translators and the translation coordinator.'; \
+	     echo 'If you are a developer, use a git checkout of the GNU gnulib project instead.'; \
+	   } > $$dir/README \
+	&& tar --owner=root --group=root -cf $$dir.tar $$dir \
+	&& gzip -9 --force $$dir.tar \
+	&& rm -rf $$dir \
+	&& ls -l $$dir.tar.gz
+
+# Creates a tarball with the gnulib localizations. Once created,
+# 1. upload it to ftp.gnu.org via
+#    $ build-aux/gnupload --to ftp.gnu.org:gnulib gnulib-l10n-????????.tar.gz
+# 2. notify your preferred distros so that they pick it up.
+gnulib-l10n-release: gnulib.pot
+	cp doc/COPYING.LESSERv2 gnulib-l10n/COPYING
+	mkdir -p gnulib-l10n/po \
+	&& cp po/Makevars gnulib-l10n/po/Makevars \
+	&& cp po/gnulib.pot gnulib-l10n/po/gnulib.pot
+	cd gnulib-l10n \
+	&& ./autogen.sh \
+	&& (cd po \
+	    && rm -f *.po \
+	    && wget --mirror --level=1 -nd -nv -A.po https://translationproject.org/latest/gnulib/ \
+	    && touch POTFILES.in \
+	    && ls -1 *.po | LC_ALL=C sort | sed -e 's/\.po$$//' > LINGUAS \
+	    && for file in *.po; do msgmerge --update --lang=$${file%.po} --previous $$file gnulib.pot || exit 1; done \
+	    && for file in *.po; do msgfmt -c -o $${file%.po}.gmo $$file || exit 1; done \
+	   ) \
+	&& ./configure \
+	&& make distcheck \
+	&& mv gnulib-l10n-????????.tar.gz .. \
+	&& make distclean \
+	&& ./autoclean.sh
+	ls -l gnulib-l10n-????????.tar.gz
+
+# ==============================================================================

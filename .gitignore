@@ -6,3 +6,4 @@
 allsnippets.tmp
 amsnippet.tmp
 testdir*
+/po/gnulib.pot
