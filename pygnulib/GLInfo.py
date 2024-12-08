@@ -262,7 +262,7 @@ Options for --import, --add/remove-import:
       --m4-base=DIRECTORY   Directory relative to --dir where *.m4 macros are
                             placed (default \"m4\").
       --po-base=DIRECTORY   Directory relative to --dir where *.po files are
-                            placed (default \"po\").
+                            placed (default \"po\"). Deprecated.
       --doc-base=DIRECTORY  Directory relative to --dir where doc files are
                             placed (default \"doc\").
       --tests-base=DIRECTORY
@@ -293,6 +293,7 @@ Options for --import, --add/remove-import:
                             'gl_INIT'. Default is 'gl'.
       --po-domain=NAME      Specify the prefix of the i18n domain. Usually use
                             the package name. A suffix '-gnulib' is appended.
+                            Deprecated.
       --witness-c-macro=NAME  Specify the C macro that is defined when the
                             sources in this directory are compiled or used.
       --vc-files            Update version control related files.

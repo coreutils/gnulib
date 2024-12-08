@@ -1047,7 +1047,47 @@ Gnulib provides some functions that emit translatable messages using GNU
 translations of these messages, which you should incorporate into your
 own programs.
 
-There are two basic ways to achieve this.  The first, and older, method
+The recommended way to achieve this is that
+your package depends on the package @samp{gnulib-l10n}.
+This package contains the Gnulib localizations as @code{.mo} files.
+
+In order to use this method, you must
+-- in each program that might use Gnulib code --
+add an extra line to the part of the program
+that initializes locale-dependent behavior.
+Where you would normally write something like:
+
+@example
+@group
+  setlocale (LC_ALL, "");
+  bindtextdomain (PACKAGE, LOCALEDIR);
+  textdomain (PACKAGE);
+@end group
+@end example
+
+@noindent
+you should add an additional @code{bindtextdomain} call to inform gettext of
+where the MO files for the extra message domain may be found:
+
+@example
+@group
+  bindtextdomain ("gnulib", GNULIB_LOCALEDIR);
+@end group
+@end example
+
+Since you do not change the @code{textdomain} call,
+the default message domain for your program remains the same
+and your own use of @code{gettext} functions will not be affected.
+
+If your package has a @code{DEPENDENCIES} file,
+for the ease of installers and distributors,
+you should add the @samp{gnulib-l10n} dependency in this file.
+
+Two older methods to use Gnulib localizations are deprecated:
+
+@itemize
+@item
+The first, and older, method
 is to list all the source files you use from Gnulib in your own
 @file{po/POTFILES.in} file.  This will cause all the relevant
 translatable strings to be included in your POT file.  When you send
@@ -1063,12 +1103,12 @@ It is also slow and causes substantial extra work, because a human
 translator must be in the loop for each language and you will need to
 incorporate their work on request.
 
-For these reasons, a new method was designed and is now recommended.  If
+@item
+The second method is that
 you pass the @code{--po-base=@var{directory}} and @code{--po-domain=@var{domain}}
-options to @code{gnulib-tool}, then @code{gnulib-tool} will create a
-separate directory with its own @file{POTFILES.in}, and fetch current
-translations directly from the Translation Project (using
-@command{rsync} or @command{wget}, whichever is available).
+options to @code{gnulib-tool}, then @code{gnulib-tool} creates a
+separate directory with its own @file{POTFILES.in}, and fetches current
+translations directly from the Translation Project (using @command{wget}).
 The POT file in this directory will be called
 @file{@var{domain}-gnulib.pot}, depending on the @var{domain} you gave to the
 @code{--po-domain} option (typically the same as the package name).
@@ -1080,37 +1120,10 @@ When you use these options, the functions in Gnulib are built
 in such a way that they will always use this domain regardless of the
 default domain set by @code{textdomain}.
 
-In order to use this method, you must---in each program that might use
-Gnulib code---add an extra line to the part of the program that
-initializes locale-dependent behavior.  Where you would normally write
-something like:
-
-@example
-@group
-  setlocale (LC_ALL, "");
-  bindtextdomain (PACKAGE, LOCALEDIR);
-  textdomain (PACKAGE);
-@end group
-@end example
-
-@noindent
-you should add an additional @code{bindtextdomain} call to inform
-gettext of where the MO files for the extra message domain may be found:
-
-@example
-@group
-  bindtextdomain (PACKAGE "-gnulib", LOCALEDIR);
-@end group
-@end example
-
-(This example assumes that the @var{domain} that you specified
-to @code{gnulib-tool} is the same as the value of the @code{PACKAGE}
-preprocessor macro.)
-
-Since you do not change the @code{textdomain} call, the default message
-domain for your program remains the same and your own use of @code{gettext}
-functions will not be affected.
-
+This method is deprecated because it adds complexity to your package
+and, additionally, mixes the ``autopull'' and ``autogen'' phases of
+package source preparation.
+@end itemize
 
 @node VCS Issues
 @section Integration with Version Control Systems
