@@ -29,7 +29,7 @@
 #endif
 
 #include "gettext.h"
-#define _(msgid) gettext (msgid)
+#define _(msgid) dgettext ("gnulib", msgid)
 
 /* If you use AM_INIT_AUTOMAKE's no-define option,
    PACKAGE is not defined.  Use PACKAGE_TARNAME instead.  */

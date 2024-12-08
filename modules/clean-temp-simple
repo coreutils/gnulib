@@ -20,6 +20,7 @@ fatal-signal
 rmdir
 linkedhash-list
 gettext-h
+gnulib-i18n
 
 configure.ac:
 AC_DEFINE([SIGNAL_SAFE_LIST], [1], [Define if lists must be signal-safe.])

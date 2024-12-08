@@ -13,6 +13,7 @@ error
 fcntl-h
 fstat
 gettext-h
+gnulib-i18n
 lchmod
 lchown
 mkancesdirs

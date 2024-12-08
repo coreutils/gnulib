@@ -39,7 +39,7 @@
 #include "xalloc.h"
 #include "gettext.h"
 
-#define _(str) gettext (str)
+#define _(msgid) dgettext ("gnulib", msgid)
 
 #include "pipe-filter-aux.h"
 

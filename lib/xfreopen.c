@@ -23,7 +23,7 @@
 #include "quote.h"
 
 #include "gettext.h"
-#define _(msgid) gettext (msgid)
+#define _(msgid) dgettext ("gnulib", msgid)
 
 void
 xfreopen (char const *filename, char const *mode, FILE *fp)

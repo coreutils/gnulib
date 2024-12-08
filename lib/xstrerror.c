@@ -25,7 +25,7 @@
 #include "xalloc.h"
 #include "gettext.h"
 
-#define _(msgid) gettext (msgid)
+#define _(msgid) dgettext ("gnulib", msgid)
 
 char *
 xstrerror (const char *message, int errnum)

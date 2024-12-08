@@ -45,7 +45,7 @@
 #include <wchar.h>
 
 #include "gettext.h"
-#define _(msgid) gettext (msgid)
+#define _(msgid) dgettext ("gnulib", msgid)
 #define N_(msgid) msgid
 
 #ifndef SIZE_MAX

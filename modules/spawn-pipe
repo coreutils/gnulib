@@ -18,6 +18,7 @@ filename
 findprog-in
 free-posix
 gettext-h
+gnulib-i18n
 msvc-nothrow
 open
 pipe2

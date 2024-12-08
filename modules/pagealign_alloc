@@ -12,6 +12,7 @@ error
 extensions
 getpagesize
 gettext-h
+gnulib-i18n
 open
 stdlib
 xalloc

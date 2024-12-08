@@ -100,10 +100,12 @@
 /* This is for other GNU distributions with internationalized messages.  */
 #if (HAVE_LIBINTL_H && ENABLE_NLS) || defined _LIBC
 # include <libintl.h>
+# undef gettext
 # ifdef _LIBC
-#  undef gettext
 #  define gettext(msgid) \
   __dcgettext (_libc_intl_domainname, msgid, LC_MESSAGES)
+# else
+#  define gettext(msgid) dgettext ("gnulib", msgid)
 # endif
 #else
 # undef gettext

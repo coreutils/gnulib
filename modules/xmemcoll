@@ -8,6 +8,7 @@ lib/xmemcoll.c
 Depends-on:
 memcoll
 gettext-h
+gnulib-i18n
 error
 quotearg
 exitfail

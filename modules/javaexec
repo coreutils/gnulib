@@ -16,6 +16,7 @@ xalloc
 xmalloca
 error
 gettext-h
+gnulib-i18n
 javaexec-script
 sh-filename
 

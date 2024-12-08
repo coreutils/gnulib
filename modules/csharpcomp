@@ -21,6 +21,7 @@ safe-read
 xmalloca
 xvasprintf
 gettext-h
+gnulib-i18n
 memcmp
 csharpcomp-script
 

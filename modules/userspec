@@ -12,6 +12,7 @@ xalloc
 xstrtol
 strdup
 gettext-h
+gnulib-i18n
 intprops
 inttostr
 stdbool

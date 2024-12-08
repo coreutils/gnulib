@@ -50,7 +50,7 @@
 #include "c-strstr.h"
 #include "gettext.h"
 
-#define _(str) gettext (str)
+#define _(msgid) dgettext ("gnulib", msgid)
 
 
 /* Survey of Java compilers.

@@ -12,6 +12,7 @@ error
 exitfail
 getprogname
 gettext-h
+gnulib-i18n
 memcmp
 quote
 quotearg

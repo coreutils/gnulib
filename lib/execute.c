@@ -40,7 +40,7 @@
 #include "xalloc.h"
 #include "gettext.h"
 
-#define _(str) gettext (str)
+#define _(msgid) dgettext ("gnulib", msgid)
 
 
 /* Choice of implementation for native Windows.

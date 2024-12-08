@@ -33,7 +33,7 @@
 #include <string.h>
 
 #include "gettext.h"
-#define _(Msgid)  gettext (Msgid)
+#define _(msgid) dgettext ("gnulib", msgid)
 
 #include "bitset/array.h"
 #include "bitset/base.h"

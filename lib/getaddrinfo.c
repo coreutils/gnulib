@@ -40,8 +40,8 @@
 #include <stdio.h>
 
 #include "gettext.h"
-#define _(String) gettext (String)
-#define N_(String) String
+#define _(msgid) dgettext ("gnulib", msgid)
+#define N_(msgid) msgid
 
 /* BeOS has AF_INET, but not PF_INET.  */
 #ifndef PF_INET

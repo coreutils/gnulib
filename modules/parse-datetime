@@ -16,6 +16,7 @@ c-ctype
 stdbool
 gettime
 gettext-h
+gnulib-i18n
 idx
 intprops
 inttypes

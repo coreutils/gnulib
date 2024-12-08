@@ -11,6 +11,7 @@ error
 exitfail
 extern-inline
 gettext-h
+gnulib-i18n
 stdbool
 verify
 

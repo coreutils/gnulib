@@ -60,7 +60,7 @@
 
 #include "gettext.h"
 
-#define _(str) gettext (str)
+#define _(msgid) dgettext ("gnulib", msgid)
 
 /* Bison's skeleton tests _STDLIB_H, while some stdlib.h headers
    use _STDLIB_H_ as witness.  Map the latter to the one bison uses.  */

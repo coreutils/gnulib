@@ -39,7 +39,7 @@
 #include "localeinfo.h"
 
 #include "gettext.h"
-#define _(str) gettext (str)
+#define _(msgid) dgettext ("gnulib", msgid)
 
 #if GAWK
 /* Use ISO C 99 API.  */

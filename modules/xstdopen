@@ -9,6 +9,7 @@ Depends-on:
 stdopen
 error
 gettext-h
+gnulib-i18n
 exitfail
 
 configure.ac:

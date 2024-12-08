@@ -25,7 +25,7 @@
 #include "verify.h"
 
 #include "gettext.h"
-#define _(msgid) gettext (msgid)
+#define _(msgid) dgettext ("gnulib", msgid)
 
 #if O_BINARY
 

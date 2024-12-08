@@ -27,8 +27,8 @@
 # include <libintl.h>
 #else
 # include "gettext.h"
-# define _(String) gettext (String)
-# define N_(String) String
+# define _(msgid) dgettext ("gnulib", msgid)
+# define N_(msgid) msgid
 #endif
 
 #if HAVE_DECL_GAI_STRERROR

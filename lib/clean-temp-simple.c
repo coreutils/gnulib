@@ -38,7 +38,7 @@
 #include "gl_linkedhash_list.h"
 #include "gettext.h"
 
-#define _(str) gettext (str)
+#define _(msgid) dgettext ("gnulib", msgid)
 
 
 /* Lock that protects the file_cleanup_list from concurrent modification in

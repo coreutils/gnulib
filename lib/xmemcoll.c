@@ -23,7 +23,7 @@
 #include <stdlib.h>
 
 #include "gettext.h"
-#define _(msgid) gettext (msgid)
+#define _(msgid) dgettext ("gnulib", msgid)
 
 #include <error.h>
 #include "exitfail.h"

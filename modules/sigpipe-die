@@ -8,6 +8,7 @@ lib/sigpipe-die.c
 Depends-on:
 error
 gettext-h
+gnulib-i18n
 exitfail
 sigpipe
 sigprocmask

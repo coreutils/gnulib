@@ -8,6 +8,7 @@ lib/set-acl.c
 Depends-on:
 error
 gettext-h
+gnulib-i18n
 qcopy-acl
 qset-acl
 quote

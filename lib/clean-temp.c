@@ -65,7 +65,7 @@
 # include "stdio--.h"
 #endif
 
-#define _(str) gettext (str)
+#define _(msgid) dgettext ("gnulib", msgid)
 
 /* GNU Hurd doesn't have PATH_MAX.  Use a fallback.
    Temporary directory names are usually not that long.  */

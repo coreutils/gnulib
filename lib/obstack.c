@@ -294,11 +294,14 @@ int obstack_exit_failure = EXIT_FAILURE;
 
 # ifdef _LIBC
 #  include <libintl.h>
+#  ifndef _
+#   define _(msgid) gettext (msgid)
+#  endif
 # else
 #  include "gettext.h"
-# endif
-# ifndef _
-#  define _(msgid) gettext (msgid)
+#  ifndef _
+#   define _(msgid) dgettext ("gnulib", msgid)
+#  endif
 # endif
 
 # ifdef _LIBC

@@ -17,6 +17,7 @@ findprog-in
 free-posix
 msvc-nothrow
 gettext-h
+gnulib-i18n
 spawn
 posix_spawn
 posix_spawnp

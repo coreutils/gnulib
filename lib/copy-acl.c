@@ -26,7 +26,7 @@
 #include "quote.h"
 #include <error.h>
 #include "gettext.h"
-#define _(msgid) gettext (msgid)
+#define _(msgid) dgettext ("gnulib", msgid)
 
 
 /* Copy access control lists from one file to another. If SOURCE_DESC is

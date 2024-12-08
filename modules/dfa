@@ -19,6 +19,7 @@ c99
 ctype
 flexmember
 gettext-h
+gnulib-i18n
 idx
 locale
 mbrtoc32-regular

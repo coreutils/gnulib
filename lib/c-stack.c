@@ -56,7 +56,7 @@
 #include "ignore-value.h"
 
 #include "gettext.h"
-#define _(msgid) gettext (msgid)
+#define _(msgid) dgettext ("gnulib", msgid)
 
 /* Here we need the original abort() function.  (Printing a stack trace
    from within a signal handler is not going to work in most cases anyway.)  */

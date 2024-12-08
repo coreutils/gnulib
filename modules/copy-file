@@ -16,6 +16,7 @@ error
 fstat
 full-write
 gettext-h
+gnulib-i18n
 ignore-value
 open
 qcopy-acl

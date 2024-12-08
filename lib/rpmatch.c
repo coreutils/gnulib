@@ -33,7 +33,7 @@
 # endif
 # include <regex.h>
 # include "gettext.h"
-# define _(msgid) gettext (msgid)
+# define _(msgid) dgettext ("gnulib", msgid)
 # define N_(msgid) gettext_noop (msgid)
 
 # if HAVE_LANGINFO_YESEXPR

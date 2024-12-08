@@ -20,6 +20,7 @@ extensions
 include_next
 gen-header
 gettext-h       [test $REPLACE_GETOPT = 1]
+gnulib-i18n     [test $REPLACE_GETOPT = 1]
 snippet/arg-nonnull
 
 configure.ac:

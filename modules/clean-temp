@@ -28,6 +28,7 @@ linkedhash-list
 linked-list
 xlist
 gettext-h
+gnulib-i18n
 
 configure.ac:
 

@@ -9,6 +9,7 @@ Depends-on:
 error
 extern-inline
 gettext-h
+gnulib-i18n
 exitfail
 
 configure.ac:

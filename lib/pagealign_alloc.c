@@ -35,7 +35,7 @@
 #include "xalloc.h"
 #include "gettext.h"
 
-#define _(str) gettext (str)
+#define _(msgid) dgettext ("gnulib", msgid)
 
 #if HAVE_MMAP
 /* Define MAP_FILE when it isn't otherwise.  */

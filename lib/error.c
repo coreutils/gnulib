@@ -38,7 +38,7 @@
 
 #if !_LIBC && ENABLE_NLS
 # include "gettext.h"
-# define _(msgid) gettext (msgid)
+# define _(msgid) dgettext ("gnulib", msgid)
 #endif
 
 #ifdef _LIBC

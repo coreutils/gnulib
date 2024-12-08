@@ -28,7 +28,7 @@
 #include "exitfail.h"
 
 #include "gettext.h"
-#define _(msgid) gettext (msgid)
+#define _(msgid) dgettext ("gnulib", msgid)
 
 _Noreturn void
 openat_save_fail (int errnum)

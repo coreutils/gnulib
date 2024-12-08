@@ -32,7 +32,7 @@
 
 #include "gethrxtime.h"
 #include "gettext.h"
-#define _(msgid) gettext (msgid)
+#define _(msgid) dgettext ("gnulib", msgid)
 #include "xalloc.h"
 
 /* See timevar.h for an explanation of timing variables.  */

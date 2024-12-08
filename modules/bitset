@@ -22,6 +22,7 @@ c99
 ffsl
 fopen-gnu
 gettext-h
+gnulib-i18n
 integer_length_l
 obstack
 stdbool

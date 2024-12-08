@@ -11,6 +11,7 @@ stddef
 stdio
 getprogname     [test $COMPILE_ERROR_C = 1]
 gettext-h       [test $COMPILE_ERROR_C = 1]
+gnulib-i18n     [test $COMPILE_ERROR_C = 1]
 strerror        [test $COMPILE_ERROR_C = 1]
 unistd          [test $COMPILE_ERROR_C = 1]
 msvc-nothrow    [test $COMPILE_ERROR_C = 1]

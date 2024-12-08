@@ -9,6 +9,7 @@ openat-h
 error
 exitfail
 gettext-h
+gnulib-i18n
 snippet/_Noreturn
 
 configure.ac:

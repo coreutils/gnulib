@@ -28,6 +28,7 @@ copy-file
 clean-temp-simple
 clean-temp
 gettext-h
+gnulib-i18n
 csharpexec-script
 
 configure.ac:

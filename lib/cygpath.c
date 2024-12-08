@@ -26,7 +26,7 @@
 #include "xalloc.h"
 #include "gettext.h"
 
-#define _(str) gettext (str)
+#define _(msgid) dgettext ("gnulib", msgid)
 
 #ifdef __CYGWIN__
 

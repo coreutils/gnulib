@@ -39,7 +39,7 @@
 #include "quote.h"
 #include "gettext.h"
 
-#define _(str) gettext (str)
+#define _(msgid) dgettext ("gnulib", msgid)
 
 enum { IO_SIZE = 32 * 1024 };
 

@@ -12,6 +12,7 @@ unistr/u8-uctomb
 iconv
 iconv_open
 gettext-h
+gnulib-i18n
 localcharset
 error
 stdio

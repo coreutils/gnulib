@@ -12,6 +12,7 @@ errno
 exitfail
 getprogname
 gettext-h
+gnulib-i18n
 idx
 ignore-value
 inttypes

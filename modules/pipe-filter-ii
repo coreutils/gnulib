@@ -14,6 +14,7 @@ error
 extern-inline
 fcntl-h
 gettext-h
+gnulib-i18n
 stdbool
 stdint
 stdlib

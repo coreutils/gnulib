@@ -8,6 +8,7 @@ lib/xstrerror.c
 
 Depends-on:
 gettext-h
+gnulib-i18n
 strerror_r-posix
 xalloc
 xvasprintf

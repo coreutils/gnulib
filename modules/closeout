@@ -8,6 +8,7 @@ lib/closeout.c
 Depends-on:
 close-stream
 gettext-h
+gnulib-i18n
 error
 quotearg
 exitfail

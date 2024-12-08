@@ -37,7 +37,7 @@
 #include <error.h>
 #include "gettext.h"
 
-#define _(str) gettext (str)
+#define _(msgid) dgettext ("gnulib", msgid)
 
 /* Get PKGDATADIR.  */
 #include "configmake.h"

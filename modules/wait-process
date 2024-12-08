@@ -13,6 +13,7 @@ error
 xalloc
 xalloc-die
 gettext-h
+gnulib-i18n
 stdbool
 stdlib
 sys_wait

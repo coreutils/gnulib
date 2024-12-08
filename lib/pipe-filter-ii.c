@@ -158,7 +158,7 @@ WaitForMultipleObjects (DWORD nCount, const HANDLE *pHandles, BOOL bWaitAll,
 #include "wait-process.h"
 #include "gettext.h"
 
-#define _(str) gettext (str)
+#define _(msgid) dgettext ("gnulib", msgid)
 
 #include "pipe-filter-aux.h"
 

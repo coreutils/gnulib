@@ -9,6 +9,7 @@ Depends-on:
 xalloc
 free-posix
 gettext-h
+gnulib-i18n
 
 configure.ac:
 
