@@ -1,0 +1,21 @@
+Description:
+Support for internationalization of Gnulib code.
+
+Files:
+m4/gnulib-i18n.m4
+m4/build-to-host.m4
+
+Depends-on:
+
+configure.ac:
+GNULIB_I18N
+
+Makefile.am:
+
+Include:
+
+License:
+GPLed build tool
+
+Maintainer:
+Bruno Haible
