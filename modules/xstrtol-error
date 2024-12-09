@@ -11,6 +11,7 @@ error
 exitfail
 getopt-gnu
 gettext-h
+gnulib-i18n
 
 configure.ac:
 
