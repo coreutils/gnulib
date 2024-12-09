@@ -82,8 +82,7 @@ main (_GL_UNUSED int argc, char *argv[])
         fputs ("Skipping test: no french Unicode locale is installed\n", stderr);
         return 77;
       }
-    textdomain ("test-quotearg");
-    bindtextdomain ("test-quotearg", getenv ("LOCALEDIR"));
+    bindtextdomain ("gnulib", getenv ("LOCALEDIR"));
 
     set_quoting_style (NULL, locale_quoting_style);
     compare_strings (use_quotearg_buffer, &locale_results[0].group1, false);

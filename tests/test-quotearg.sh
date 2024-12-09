@@ -14,7 +14,7 @@ fi
 
 # Work around a limitation of gettext() on native Windows in gettext 0.18.1:
 # the locale identifiers in the environment variables LC_ALL etc. have to
-# be in Unix conventions, not in native Window conventions.
+# be in Unix conventions, not in native Windows conventions.
 if test $locale = French_France.65001; then
   locale=fr_FR.UTF-8
 fi
