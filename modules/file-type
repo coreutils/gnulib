@@ -8,6 +8,7 @@ lib/file-type.c
 Depends-on:
 c-file-type
 gettext-h
+gnulib-i18n
 sys_stat
 
 configure.ac:
