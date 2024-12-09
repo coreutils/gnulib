@@ -15,6 +15,7 @@ top_builddir = ..
 XGETTEXT_OPTIONS = \
   --keyword=_ --flag=_:1:pass-c-format \
   --keyword=N_ --flag=N_:1:pass-c-format \
+  --keyword=gettext_noop --flag=gettext_noop:1:pass-c-format \
   --flag=error:3:c-format --flag=error_at_line:5:c-format \
   --flag=verror:3:c-format --flag=verror_at_line:5:c-format \
   --flag=argp_error:2:c-format --flag=argp_failure:4:c-format \

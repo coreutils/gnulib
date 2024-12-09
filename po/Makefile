@@ -12,7 +12,7 @@ $(DOMAIN).pot: force
 	  --package-version='$(VERSION)' \
 	  --msgid-bugs-address='$(MSGID_BUGS_ADDRESS)' \
 	  $(XGETTEXT_OPTIONS) \
-	  `cd .. && LC_ALL=C grep -l '[^A-Za-z_]_(' \`find lib '(' -name '*.c' -o -name '*.h' -o -name '*.y' ')' | LC_ALL=C sort\``
+	  `cd .. && find lib '(' -name '*.c' -o -name '*.h' -o -name '*.y' ')' | LC_ALL=C sort`
 	mv $(DOMAIN).po $(DOMAIN).pot
 
 force:
