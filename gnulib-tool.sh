@@ -5799,32 +5799,34 @@ s,//*$,/,'
   # Create po/ directory.
   if test -n "$pobase"; then
     # Create po makefile and auxiliary files.
-    for file in Makefile.in.in remove-potcdate.sed; do
+    for file in Makefile.in.in remove-potcdate.sin remove-potcdate.sed; do
       func_dest_tmpfilename $pobase/$file
-      func_lookup_file build-aux/po/$file
-      cat "$lookedup_file" > "$tmpfile"
-      if test -f "$destdir"/$pobase/$file; then
-        if cmp -s "$destdir"/$pobase/$file "$tmpfile"; then
-          rm -f "$tmpfile"
+      if test -r "$gnulib_dir/build-aux/po/$file"; then
+        func_lookup_file build-aux/po/$file
+        cat "$lookedup_file" > "$tmpfile"
+        if test -f "$destdir"/$pobase/$file; then
+          if cmp -s "$destdir"/$pobase/$file "$tmpfile"; then
+            rm -f "$tmpfile"
+          else
+            if $doit; then
+              echo "Updating $pobase/$file (backup in $pobase/$file~)"
+              mv -f "$destdir"/$pobase/$file "$destdir"/$pobase/$file~
+              mv -f "$tmpfile" "$destdir"/$pobase/$file
+            else
+              echo "Update $pobase/$file (backup in $pobase/$file~)"
+              rm -f "$tmpfile"
+            fi
+          fi
         else
           if $doit; then
-            echo "Updating $pobase/$file (backup in $pobase/$file~)"
-            mv -f "$destdir"/$pobase/$file "$destdir"/$pobase/$file~
+            echo "Creating $pobase/$file"
             mv -f "$tmpfile" "$destdir"/$pobase/$file
           else
-            echo "Update $pobase/$file (backup in $pobase/$file~)"
+            echo "Create $pobase/$file"
             rm -f "$tmpfile"
           fi
+          func_append added_files "$pobase/$file$nl"
         fi
-      else
-        if $doit; then
-          echo "Creating $pobase/$file"
-          mv -f "$tmpfile" "$destdir"/$pobase/$file
-        else
-          echo "Create $pobase/$file"
-          rm -f "$tmpfile"
-        fi
-        func_append added_files "$pobase/$file$nl"
       fi
     done
     # Create po makefile parameterization, part 1.

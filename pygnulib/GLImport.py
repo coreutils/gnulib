@@ -1081,26 +1081,27 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
         filesystem = GLFileSystem(self.config)
         if pobase:
             # Create po makefile and auxiliary files.
-            for file in ['Makefile.in.in', 'remove-potcdate.sed']:
+            for file in ['Makefile.in.in', 'remove-potcdate.sin', 'remove-potcdate.sed']:
                 tmpfile = assistant.tmpfilename(joinpath(pobase, file))
                 path = joinpath('build-aux', 'po', file)
-                lookedup, flag = filesystem.lookup(path)
-                copyfile(lookedup, tmpfile)
-                basename = joinpath(pobase, file)
-                filename, backup, flag = assistant.super_update(basename, tmpfile)
-                if flag == 1:
-                    if not self.config['dryrun']:
-                        print('Updating %s (backup in %s)' % (filename, backup))
-                    else:  # if self.config['dryrun']
-                        print('Update %s (backup in %s)' % (filename, backup))
-                elif flag == 2:
-                    if not self.config['dryrun']:
-                        print('Creating %s' % filename)
-                    else:  # if self.config['dryrun']:
-                        print('Create %s' % filename)
-                    filetable.added_files.append(filename)
-                if os.path.isfile(tmpfile):
-                    os.remove(tmpfile)
+                if os.path.exists(joinpath(DIRS['root'], path)):
+                    lookedup, flag = filesystem.lookup(path)
+                    copyfile(lookedup, tmpfile)
+                    basename = joinpath(pobase, file)
+                    filename, backup, flag = assistant.super_update(basename, tmpfile)
+                    if flag == 1:
+                        if not self.config['dryrun']:
+                            print('Updating %s (backup in %s)' % (filename, backup))
+                        else:  # if self.config['dryrun']
+                            print('Update %s (backup in %s)' % (filename, backup))
+                    elif flag == 2:
+                        if not self.config['dryrun']:
+                            print('Creating %s' % filename)
+                        else:  # if self.config['dryrun']:
+                            print('Create %s' % filename)
+                        filetable.added_files.append(filename)
+                    if os.path.isfile(tmpfile):
+                        os.remove(tmpfile)
 
             # Create po makefile parameterization, part 1.
             basename = joinpath(pobase, 'Makevars')
