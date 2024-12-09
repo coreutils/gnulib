@@ -29,7 +29,7 @@ extern "C" {
 /* Converts the Unicode character CODE to its multibyte representation
    in the current locale and calls the SUCCESS callback on the resulting
    byte sequence.  If an error occurs, invokes the FAILURE callback instead,
-   passing it CODE and an English error string.
+   passing it CODE and an English (or already localized) error string.
    Returns whatever the callback returned.
    Assumes that the locale doesn't change between two calls.  */
 extern long unicode_to_mb (unsigned int code,

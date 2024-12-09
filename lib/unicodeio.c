@@ -57,7 +57,7 @@
 /* Converts the Unicode character CODE to its multibyte representation
    in the current locale and calls the SUCCESS callback on the resulting
    byte sequence.  If an error occurs, invokes the FAILURE callback instead,
-   passing it CODE and an English error string.
+   passing it CODE and an English (or already localized) error string.
    Returns whatever the callback returned.
    Assumes that the locale doesn't change between two calls.  */
 long
@@ -99,16 +99,16 @@ unicode_to_mb (unsigned int code,
     {
 #if HAVE_ICONV
       if (utf8_to_local == (iconv_t)(-1))
-        return failure (code, N_("iconv function not usable"), callback_arg);
+        return failure (code, _("iconv function not usable"), callback_arg);
 #else
-      return failure (code, N_("iconv function not available"), callback_arg);
+      return failure (code, _("iconv function not available"), callback_arg);
 #endif
     }
 
   /* Convert the character to UTF-8.  */
   count = u8_uctomb ((unsigned char *) inbuf, code, sizeof (inbuf));
   if (count < 0)
-    return failure (code, N_("character out of range"), callback_arg);
+    return failure (code, _("character out of range"), callback_arg);
 
 #if HAVE_ICONV
   if (!is_utf8)
