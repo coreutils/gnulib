@@ -10,6 +10,7 @@ stdio
 error
 exitfail
 gettext-h
+gnulib-i18n
 stdarg
 
 configure.ac:

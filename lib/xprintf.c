@@ -24,6 +24,8 @@
 #include "exitfail.h"
 #include "gettext.h"
 
+#define _(msgid) dgettext ("gnulib", msgid)
+
 /* written by Jim Meyering */
 
 /* Just like printf, but call error if it fails without setting the
@@ -47,7 +49,7 @@ xvprintf (char const *restrict format, va_list args)
 {
   int retval = vprintf (format, args);
   if (retval < 0 && ! ferror (stdout))
-    error (exit_failure, errno, gettext ("cannot perform formatted output"));
+    error (exit_failure, errno, _("cannot perform formatted output"));
 
   return retval;
 }
@@ -73,7 +75,7 @@ xvfprintf (FILE *restrict stream, char const *restrict format, va_list args)
 {
   int retval = vfprintf (stream, format, args);
   if (retval < 0 && ! ferror (stream))
-    error (exit_failure, errno, gettext ("cannot perform formatted output"));
+    error (exit_failure, errno, _("cannot perform formatted output"));
 
   return retval;
 }
