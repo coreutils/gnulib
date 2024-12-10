@@ -35,7 +35,7 @@
 eval 'exec perl -wSx "$0" "$@"'
      if 0;
 
-my $VERSION = '2024-12-02 20:10'; # UTC
+my $VERSION = '2024-12-10 08:57'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -572,6 +572,8 @@ EOF
   chomp (my $n_ci = `git rev-list "v$v0..v$v1" | wc -l`);
   chomp (my $n_p = `git shortlog "v$v0..v$v1" | grep -c '^[^ ]'`);
 
+  my $this_commit_hash = `git log --pretty=%H -1 "v$v1"`;
+  chop $this_commit_hash;
   my $prev_release_date = `git log --pretty=%ct -1 "v$v0"`;
   my $this_release_date = `git log --pretty=%ct -1 "v$v1"`;
   my $n_seconds = $this_release_date - $prev_release_date;
@@ -592,11 +594,6 @@ $first_name [on behalf of the $package_name maintainers]
 
 Here is the GNU $package_name home page:
     https://gnu.org/s/$package_name/
-
-For a summary of changes and contributors, see:
-  https://git.sv.gnu.org/gitweb/?p=$package_name.git;a=shortlog;h=v$v1
-or run this command from a git-cloned $package_name directory:
-  git shortlog v$v0..v$v1
 
 EOF
 
@@ -689,6 +686,23 @@ keyring:
 
   wget -q https://ftp.gnu.org/gnu/gnu-keyring.gpg
   gpg --keyring gnu-keyring.gpg --verify $tarballs[0].sig
+EOF
+
+  print <<EOF;
+
+This release is based on the $package_name git repository, available as
+
+  git clone https://git.savannah.gnu.org/git/$package_name.git
+
+with commit $this_commit_hash tagged as v$v1.
+
+For a summary of changes and contributors, see:
+
+  https://git.sv.gnu.org/gitweb/?p=$package_name.git;a=shortlog;h=v$v1
+
+or run this command from a git-cloned $package_name directory:
+
+  git shortlog v$v0..v$v1
 EOF
 
   my @tool_versions = get_tool_versions (\@tool_list, $gnulib_version);
