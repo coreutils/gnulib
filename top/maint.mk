@@ -1550,6 +1550,8 @@ announcement_mail_headers_alpha =		\
 announcement_mail_Cc_beta = $(announcement_mail_Cc_alpha)
 announcement_mail_headers_beta = $(announcement_mail_headers_alpha)
 
+announce_gen_args ?=
+
 announcement_Cc_ ?= $(announcement_Cc_$(release-type))
 announcement_mail_headers_ ?= $(announcement_mail_headers_$(release-type))
 announcement: NEWS ChangeLog $(rel-files)
@@ -1571,7 +1573,8 @@ announcement: NEWS ChangeLog $(rel-files)
 	    --bootstrap-tools=$(bootstrap-tools)			\
 	    $$(case ,$(bootstrap-tools), in (*,gnulib,*)		\
 	       echo --gnulib-version=$(gnulib-version);; esac)		\
-	    $(addprefix --url-dir=, $(url_dir_list))
+	    $(addprefix --url-dir=, $(url_dir_list))			\
+	    $(announce_gen_args)
 
 .PHONY: release-commit
 release-commit:
