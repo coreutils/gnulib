@@ -18,7 +18,7 @@ macOS 10.8.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
-This function's behavior depends on locale, can return nonzero on
+This function's behavior depends on locale, and it can return nonzero on
 arguments other than the usual decimal digits:
 mingw, MSVC.
 @end itemize
