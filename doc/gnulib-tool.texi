@@ -1083,6 +1083,12 @@ If your package has a @code{DEPENDENCIES} file,
 for the ease of installers and distributors,
 you should add the @samp{gnulib-l10n} dependency in this file.
 
+If your package does not support localization,
+you can simplify its build process by using
+@code{gnulib-tool}'s @option{--avoid=gnulib-i18n} option.
+The package need not call @code{bindtextdomain} or @code{textdomain},
+and all Gnulib-generated messages will be in American English.
+
 Two older methods to use Gnulib localizations are deprecated:
 
 @itemize
