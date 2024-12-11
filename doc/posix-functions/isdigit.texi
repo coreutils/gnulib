@@ -17,9 +17,13 @@ macOS 10.8.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+This function's behavior depends on locale, can return nonzero on
+arguments other than the usual decimal digits:
+mingw, MSVC.
 @end itemize
 
-Note: This function's behaviour depends on the locale, but does not support
+Note: This function does not support
 the multibyte characters that occur in strings in locales with
 @code{MB_CUR_MAX > 1} (this includes all the common UTF-8 locales).
 There are five alternative APIs:
