@@ -21,6 +21,7 @@
 /* Specification.  */
 #include "bcp47.h"
 
+#include <stdlib.h>
 #include <string.h>
 
 #include "c-ctype.h"
@@ -421,6 +422,8 @@ bcp47_to_xpg (char *xpg, const char *bcp47, const char *codeset)
                   }
               }
           }
+        else
+          abort ();
       }
   }
 
