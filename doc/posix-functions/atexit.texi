@@ -15,4 +15,12 @@ This function is missing on some old platforms.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+The exit status can be incorrect for a process terminated by a signal
+during a call to a function registered by @code{atexit}.  This is
+because if a signal terminates a process after @code{exit} is called
+or @code{main} returns, the process's exit status is that specified by
+@code{exit}'s argument or by @code{main}'s return value, instead of
+being the exit status corresponding to the signal:
+z/OS 3.1.
 @end itemize
