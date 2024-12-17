@@ -21,9 +21,15 @@
 #include "crc.h"
 #include "endian.h"
 
+#ifdef GL_CRC_X86_64_PCLMUL
+#include "crc-x86_64.h"
+static bool pclmul_enabled = false;
+static bool pclmul_checked = false;
+#endif
+
 #include <string.h>
 
-#ifdef GL_CRC_SLICE_BY_8
+#if GL_CRC_SLICE_BY_8
 #include "crc-sliceby8.h"
 
 /*
@@ -109,6 +115,17 @@ uint32_t
 crc32_update_no_xor (uint32_t crc, const char *buf, size_t len)
 {
   size_t n, slice_alignment;
+#ifdef GL_CRC_X86_64_PCLMUL
+  if (!pclmul_checked)
+    {
+      pclmul_enabled = (0 < __builtin_cpu_supports ("pclmul")
+                        && 0 < __builtin_cpu_supports ("avx"));
+      pclmul_checked = true;
+    }
+
+  if (pclmul_enabled && len >= 16)
+    return crc32_update_no_xor_pclmul(crc, buf, len);
+#endif
 
   slice_alignment = (len & (-8));
 
@@ -179,6 +196,18 @@ uint32_t
 crc32_update_no_xor (uint32_t crc, const char *buf, size_t len)
 {
   size_t n;
+
+#ifdef GL_CRC_X86_64_PCLMUL
+  if (!pclmul_checked)
+    {
+      pclmul_enabled = (0 < __builtin_cpu_supports ("pclmul")
+                        && 0 < __builtin_cpu_supports ("avx"));
+      pclmul_checked = true;
+    }
+
+  if (pclmul_enabled && len >= 16)
+    return crc32_update_no_xor_pclmul(crc, buf, len);
+#endif
 
   for (n = 0; n < len; n++)
     crc = crc32_table[(crc ^ buf[n]) & 0xff] ^ (crc >> 8);

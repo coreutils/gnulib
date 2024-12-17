@@ -1,0 +1,28 @@
+Description:
+CRC32 implementation using x86_64 specific optimizations
+
+Files:
+lib/crc-x86_64.h
+lib/crc-x86_64-pclmul.c
+m4/crc-x86_64.m4
+
+Depends-on:
+stdint
+crc
+
+configure.ac:
+AC_REQUIRE([gl_CRC_X86_64_PCLMUL])
+
+Makefile.am:
+if GL_CRC_X86_64_PCLMUL
+  lib_SOURCES += crc-x86_64-pclmul.c
+endif
+
+Include:
+"crc.h"
+
+License:
+LGPL
+
+Maintainer:
+All
