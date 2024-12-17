@@ -19,7 +19,7 @@ if GL_CRC_X86_64_PCLMUL
 endif
 
 Include:
-"crc.h"
+"crc-x86_64.h"
 
 License:
 LGPL
