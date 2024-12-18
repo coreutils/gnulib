@@ -15,7 +15,7 @@ AC_REQUIRE([gl_CRC_X86_64_PCLMUL])
 
 Makefile.am:
 if GL_CRC_X86_64_PCLMUL
-  lib_SOURCES += crc-x86_64-pclmul.c
+lib_SOURCES += crc-x86_64-pclmul.c
 endif
 
 Include:
