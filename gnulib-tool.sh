@@ -3798,10 +3798,12 @@ func_emit_lib_Makefile_am ()
   fi
   if test "$libtool" = true; then
     libext=la
+    objext=lo
     perhapsLT=LT
     sed_eliminate_LDFLAGS="$sed_noop"
   else
     libext=a
+    objext=o
     perhapsLT=
     sed_eliminate_LDFLAGS='/^lib_LDFLAGS[	 ]*+=/d'
   fi
@@ -3842,6 +3844,9 @@ func_emit_lib_Makefile_am ()
                 -e 's,lib_LTLIBRARIES,lib%_LTLIBRARIES,g' \
                 -e "$sed_eliminate_LDFLAGS" \
                 -e "$sed_eliminate_NMD" \
+                -e "s,@LT@,$perhapsLT,g" \
+                -e "s,@la@,$libext,g" \
+                -e "s,@lo@,$objext,g" \
                 -e 's,lib_\([A-Z][A-Z]*\),'"${libname}_${libext}"'_\1,g' \
                 -e 's,\$(GNULIB_,$('"${module_indicator_prefix}"'_GNULIB_,' \
                 -e 's,lib%_LIBRARIES,lib_LIBRARIES,g' \
@@ -4180,9 +4185,13 @@ func_emit_tests_Makefile_am ()
   witness_macro="$1"
   if test "$libtool" = true; then
     libext=la
+    objext=lo
+    perhapsLT=LT
     sed_eliminate_LDFLAGS="$sed_noop"
   else
     libext=a
+    objext=o
+    perhapsLT=
     sed_eliminate_LDFLAGS='/^lib_LDFLAGS[	 ]*+=/d'
   fi
   # Replace NMD, so as to remove redundant "$(MKDIR_P) '.'" invocations.
@@ -4222,6 +4231,9 @@ func_emit_tests_Makefile_am ()
                 -e 's,lib_LTLIBRARIES,lib%_LTLIBRARIES,g' \
                 -e "$sed_eliminate_LDFLAGS" \
                 -e "$sed_eliminate_NMD" \
+                -e "s,@LT@,$perhapsLT,g" \
+                -e "s,@la@,$libext,g" \
+                -e "s,@lo@,$objext,g" \
                 -e 's,lib_\([A-Z][A-Z]*\),libtests_a_\1,g' \
                 -e 's,\$(GNULIB_,$('"${module_indicator_prefix}"'_GNULIB_,' \
                 -e 's,lib%_LIBRARIES,lib_LIBRARIES,g' \

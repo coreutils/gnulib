@@ -702,10 +702,12 @@ AC_DEFUN([%V1%_LIBSOURCES], [
             assign = '='
         if libtool:
             libext = 'la'
+            objext = 'lo'
             perhapsLT = 'LT'
             eliminate_LDFLAGS = False
         else:  # if not libtool
             libext = 'a'
+            objext = 'o'
             perhapsLT = ''
             eliminate_LDFLAGS = True
         if for_test:
@@ -739,6 +741,10 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                 # Replace NMD, so as to remove redundant "$(MKDIR_P) '.'" invocations.
                 # The logic is similar to how we define gl_source_base_prefix.
                 amsnippet1 = _eliminate_NMD(amsnippet1, automake_subdir)
+                # Replace @LT@, @la@, @lo@, depending on libtool.
+                amsnippet1 = amsnippet1.replace('@LT@', perhapsLT)
+                amsnippet1 = amsnippet1.replace('@la@', libext)
+                amsnippet1 = amsnippet1.replace('@lo@', objext)
                 pattern = re.compile(r'lib_([A-Z]+)', re.M)
                 amsnippet1 = pattern.sub(r'%s_%s_\1' % (libname, libext),
                                          amsnippet1)
@@ -992,9 +998,13 @@ AC_DEFUN([%V1%_LIBSOURCES], [
 
         if libtool:
             libext = 'la'
+            objext = 'lo'
+            perhapsLT = 'LT'
             eliminate_LDFLAGS = False
         else:  # if not libtool
             libext = 'a'
+            objext = 'o'
+            perhapsLT = ''
             eliminate_LDFLAGS = True
         if for_test:
             # When creating a package for testing: Attempt to provoke failures,
@@ -1034,6 +1044,10 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                 # Replace NMD, so as to remove redundant "$(MKDIR_P) '.'" invocations.
                 # The logic is similar to how we define gl_source_base_prefix.
                 amsnippet1 = _eliminate_NMD(amsnippet1, False)
+                # Replace @LT@, @la@, @lo@, depending on libtool.
+                amsnippet1 = amsnippet1.replace('@LT@', perhapsLT)
+                amsnippet1 = amsnippet1.replace('@la@', libext)
+                amsnippet1 = amsnippet1.replace('@lo@', objext)
                 pattern = re.compile(r'lib_([A-Z]+)', re.M)
                 amsnippet1 = pattern.sub(r'libtests_a_\1', amsnippet1)
                 amsnippet1 = amsnippet1.replace('$(GNULIB_', '$(' + module_indicator_prefix + '_GNULIB_')
