@@ -15,7 +15,17 @@ AC_REQUIRE([gl_CRC_X86_64_PCLMUL])
 
 Makefile.am:
 if GL_CRC_X86_64_PCLMUL
-lib_SOURCES += crc-x86_64-pclmul.c
+# We need a separate library, in order to compile crc-x86_64-pclmul.c with
+# particular CFLAGS.
+# (Recall that '#pragma GCC target (...)' works only with gcc, not with clang.
+# And the alternative approach of target-specific CFLAGS in 'make' syntax
+# <https://www.gnu.org/software/make/manual/html_node/Target_002dspecific.html>
+# is not portable: it does not work with OpenBSD 'make'.)
+noinst_@LT@LIBRARIES += libpclmul.@la@
+libpclmul_@la@_SOURCES = crc-x86_64-pclmul.c
+libpclmul_@la@_CFLAGS = $(AM_CFLAGS) -mavx -mpclmul
+lib_LIBADD += libpclmul_@la@-crc-x86_64-pclmul.@lo@
+lib_DEPENDENCIES += libpclmul.@la@
 endif
 
 Include:

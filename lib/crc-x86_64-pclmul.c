@@ -24,8 +24,6 @@
 
 #include <string.h>
 
-#pragma GCC push_options
-#pragma GCC target("pclmul,avx")
 uint32_t
 crc32_update_no_xor_pclmul (uint32_t crc, const void *buf, size_t len)
 {
@@ -204,5 +202,3 @@ crc32_update_no_xor_pclmul (uint32_t crc, const void *buf, size_t len)
 
   return crc;
 }
-
-#pragma GCC pop_options
