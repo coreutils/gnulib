@@ -72,7 +72,7 @@ execl (const char *program, const char *arg0, ...)
   }
 
   /* Invoke execv.  */
-  execv (program, argv);
+  execv (program, (char * const *) argv);
 
   /* If execv returned, it must have failed.  */
   int saved_errno = errno;
