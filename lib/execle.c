@@ -73,7 +73,7 @@ execle (const char *program, const char *arg0, ...)
   va_end (args);
 
   /* Invoke execve.  */
-  execve (program, argv, env);
+  execve (program, (char * const *) argv, env);
 
   /* If execve returned, it must have failed.  */
   int saved_errno = errno;

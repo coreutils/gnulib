@@ -72,7 +72,7 @@ execlp (const char *program, const char *arg0, ...)
   }
 
   /* Invoke execvp.  */
-  execvp (program, argv);
+  execvp (program, (char * const *) argv);
 
   /* If execvp returned, it must have failed.  */
   int saved_errno = errno;
