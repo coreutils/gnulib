@@ -277,6 +277,19 @@ test -n "$EXEEXT" && test -n "$BASH_VERSION" && shopt -s expand_aliases
 #  - try to create the desired directory.
 #  - make only $MAX_TRIES_ attempts
 
+# mkdir on msys2 does not support the '-m' option.
+case `(uname -o) 2>/dev/null` in
+  Msys)
+    mkdir ()
+    {
+      if test " $1" = " -m"; then
+        shift; shift
+      fi
+      /bin/mkdir "$@"
+    }
+    ;;
+esac
+
 # Helper function.  Print $N pseudo-random bytes from a-zA-Z0-9.
 rand_bytes_ ()
 {
