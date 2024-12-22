@@ -172,7 +172,7 @@ main (int argc, char *argv[])
           is = for_character ("\342\200\256", 3);
           ASSERT (is == 0);
         #endif
-        #if !(defined __FreeBSD__ || defined __DragonFly__ || defined __sun)
+        #if !(defined __FreeBSD__ || defined __DragonFly__ || defined __sun || (defined _WIN32 && !defined __CYGWIN__))
           /* U+3000 IDEOGRAPHIC SPACE */
           is = for_character ("\343\200\200", 3);
           ASSERT (is != 0);
