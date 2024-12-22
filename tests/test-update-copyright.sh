@@ -16,12 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-diffout=`diff -u /dev/null /dev/null 2>&1`
-if test x"$diffout" = x"" && test $? -eq 0; then
-  compare() { diff -u "$@"; }
-else
-  compare() { cmp "$@"; }
-fi
+. "${srcdir=.}/init.sh"; path_prepend_ .
 
 # Ensure the update-copyright program gets found.
 PATH=$abs_aux_dir:$PATH

@@ -671,7 +671,28 @@ for diff_opt_ in -u -U3 -c '' no; do
 done
 if test "$diff_opt_" != no; then
   if test -z "$diff_out_"; then
-    compare_ () { LC_ALL=C diff $diff_opt_ "$@"; }
+    # diff on msys2 does not support the '-' argument for denoting stdin.
+    case `(uname -o) 2>/dev/null` in
+      Msys)
+        compare_ ()
+        {
+          if test " $1" = " -"; then
+            cat > '(stdin)'
+            LC_ALL=C diff $diff_opt_ '(stdin)' "$2"
+          elif test " $2" = " -"; then
+            cat > '(stdin)'
+            LC_ALL=C diff $diff_opt_ "$1" '(stdin)'
+          else
+            LC_ALL=C diff $diff_opt_ "$@"
+          fi
+        }
+        ;;
+      *)
+        compare_ ()
+        {
+          LC_ALL=C diff $diff_opt_ "$@"
+        }
+    esac
   else
     compare_ ()
     {
